@@ -1,0 +1,136 @@
+
+set (scc_UIS
+	../ui/about.ui
+	../ui/channel_favourites.ui
+	../ui/channel_favourites_ad.ui
+	../ui/channel_homes.ui
+	../ui/channel_homes_ad.ui
+	../ui/channel_list.ui
+	../ui/channel_settings.ui
+	../ui/friends.ui
+	../ui/friends_ad.ui
+	../ui/ignore.ui
+	../ui/ignore_ad.ui
+	../ui/moderation.ui
+	../ui/options.ui
+	../ui/priv.ui
+	../ui/privilege.ui
+)
+
+set (scc_SRCS
+	commands.cpp
+	config.cpp
+	crypt.cpp
+	dlg_about.cpp
+	dlg_channel_favourites.cpp
+	dlg_channel_favourites_ad.cpp
+	dlg_channel_homes.cpp
+	dlg_channel_homes_ad.cpp
+	dlg_channel_list.cpp
+	dlg_channel_settings.cpp
+	dlg_friends.cpp
+	dlg_friends_ad.cpp
+	dlg_ignore.cpp
+	dlg_ignore_ad.cpp
+	dlg_moderation.cpp
+	dlg_options.cpp
+	dlg_priv.cpp
+	dlg_privilege.cpp
+	http.cpp
+	irc_auth.cpp
+	irc_kernel.cpp
+	log.cpp
+	main.cpp
+	mainwindow.cpp
+	network.cpp
+	qinputline.cpp
+	qnicklist.cpp
+	tab_container.cpp
+	tab_manager.cpp
+	tab_widget.cpp
+)
+
+set (scc_MOC_SRCS
+	commands.h
+	config.h
+	crypt.h
+	dlg_about.h
+	dlg_channel_favourites.h
+	dlg_channel_favourites_ad.h
+	dlg_channel_homes.h
+	dlg_channel_homes_ad.h
+	dlg_channel_list.h
+	dlg_channel_settings.h
+	dlg_friends.h
+	dlg_friends_ad.h
+	dlg_ignore.h
+	dlg_ignore_ad.h
+	dlg_moderation.h
+	dlg_options.h
+	dlg_priv.h
+	dlg_privilege.h
+	http.h
+	irc_auth.h
+	irc_kernel.h
+	log.h
+	mainwindow.h
+	network.h
+	qinputline.h
+	qnicklist.h
+	tab_container.h
+	tab_manager.h
+	tab_widget.h
+)
+
+# qt qtnetwork
+include_directories (
+	${QT_INCLUDE_DIR}
+	${QT_QTNETWORK_INCLUDE_DIR}
+)
+
+# qca2
+if (WIN32)
+	set (QCA2_INCLUDE_DIRS ${WIN32_QCA2_DIR}/include/QtCrypto)
+	set (QCA2_LIBRARY_DIRS ${WIN32_QCA2_DIR}/bin)
+	set (QCA2_LIBRARIES -lqca2)
+else (WIN32)
+	pkg_search_module (QCA2 REQUIRED qca2)
+endif (WIN32)
+
+include_directories (${QCA2_INCLUDE_DIRS})
+link_directories (${QCA2_LIBRARY_DIRS})
+add_definitions (${QCA2_CFLAGS_OTHER})
+
+# phonon
+if (WIN32)
+	set (PHONON_INCLUDE_DIRS ${QT_INCLUDE_DIR}/phonon)
+	set (PHONON_LIBRARY_DIRS ${QT_LIBRARY_DIR})
+	set (PHONON_LIBRARIES -lphonon4)
+else (WIN32)
+	pkg_search_module (PHONON REQUIRED phonon)
+endif (WIN32)
+
+include_directories (${PHONON_INCLUDE_DIRS})
+link_directories (${PHONON_LIBRARY_DIRS})
+
+# xml
+set (QT_USE_QTXML TRUE)
+
+# resources
+set (scc_QRC ../scc.qrc)
+qt4_add_resources (scc_QRC_SRCS ${scc_QRC})
+
+# ui
+QT4_WRAP_UI (scc_UIS_H ${scc_UIS})
+include_directories (${CMAKE_SOURCE_DIR}/ui)
+
+# mwindows
+if (MINGW)
+	SET(CMAKE_CXX_LINK_FLAGS "${CMAKE_CXX_LINK_FLAGS} -mwindows")
+endif (MINGW)
+
+# rest
+include (${QT_USE_FILE})
+qt_wrap_cpp (scc MOC_FILES ${scc_MOC_SRCS})
+add_executable (../scc ${scc_SRCS} ${MOC_FILES} ${scc_QRC_SRCS} ${scc_UIS_H})
+target_link_libraries (../scc ${QT_LIBRARIES} ${QT_QTNETWORK_LIBRARIES} ${QCA2_LIBRARIES} ${PHONON_LIBRARIES})
