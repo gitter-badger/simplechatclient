@@ -197,6 +197,11 @@ void network::disconnected()
         // update nick
         tabc->update_nick("(niezalogowany)");
 
+        // clear nicklist
+        QStringList strlOpenChannels = tabc->get_open_channels();
+        for (int i = 0; i < strlOpenChannels.size(); i++)
+            tabc->clear_nicklist(strlOpenChannels[i]);
+
         // reconnect
         network::reconnect();
     }

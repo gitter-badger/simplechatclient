@@ -978,6 +978,10 @@ void tab_widget::update_nick(QString strNick)
 
 void tab_widget::clear_nicklist()
 {
+    iNickCount = 0;
+    nickCount->setText(QString("Liczba osób: %1").arg(iNickCount));
+    nick_flag.clear();
+    nick_suffix.clear();
     nick_list->clear();
     nicklist.clear();
 }
