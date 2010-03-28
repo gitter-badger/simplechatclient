@@ -1,6 +1,7 @@
 
 set (scc_UIS
 	../ui/about.ui
+	../ui/cam.ui
 	../ui/channel_favourites.ui
 	../ui/channel_favourites_ad.ui
 	../ui/channel_homes.ui
@@ -22,6 +23,7 @@ set (scc_SRCS
 	config.cpp
 	crypt.cpp
 	dlg_about.cpp
+	dlg_cam.cpp
 	dlg_channel_favourites.cpp
 	dlg_channel_favourites_ad.cpp
 	dlg_channel_homes.cpp
@@ -55,6 +57,7 @@ set (scc_MOC_SRCS
 	config.h
 	crypt.h
 	dlg_about.h
+	dlg_cam.h
 	dlg_channel_favourites.h
 	dlg_channel_favourites_ad.h
 	dlg_channel_homes.h

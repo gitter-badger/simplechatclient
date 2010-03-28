@@ -12,6 +12,7 @@ SOURCES += src/commands.cpp \
     src/config.cpp \
     src/crypt.cpp \
     src/dlg_about.cpp \
+    src/dlg_cam.cpp \
     src/dlg_channel_favourites.cpp \
     src/dlg_channel_favourites_ad.cpp \
     src/dlg_channel_homes.cpp \
@@ -42,6 +43,7 @@ HEADERS += src/commands.h \
     src/config.h \
     src/crypt.h \
     src/dlg_about.h \
+    src/dlg_cam.h \
     src/dlg_channel_favourites.h \
     src/dlg_channel_favourites_ad.h \
     src/dlg_channel_homes.h \
@@ -69,6 +71,7 @@ HEADERS += src/commands.h \
     src/tab_manager.h \
     src/tab_widget.h
 FORMS += ui/about.ui \
+    ui/cam.ui \
     ui/channel_favourites.ui \
     ui/channel_favourites_ad.ui \
     ui/channel_homes.ui \

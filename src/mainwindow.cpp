@@ -349,6 +349,7 @@ void MainWindow::http_request_finished()
             {
                 QString strUOKey = strData.mid(strData.indexOf("<uoKey>")+7, strData.indexOf("</uoKey>") - strData.indexOf("<uoKey>") -7);
                 QString strNick = strData.mid(strData.indexOf("<zuoUsername>")+13, strData.indexOf("</zuoUsername>") - strData.indexOf("<zuoUsername>") -13);
+                settings.setValue("uokey", strUOKey);
                 if ((strUOKey.isEmpty() == false) && (strNick.isEmpty() == false))
                     pNetwork->send(QString("USER * %1  czat-app.onet.pl :%2").arg(strUOKey).arg(strNick));
                 pIrc_auth->request_uo_stop();

@@ -61,7 +61,6 @@ void irc_auth::timer_timeout()
 void irc_auth::request_uo()
 {
     int part = iTimer;
-    QString strUO;
     QString strVersion;
     bool bOverride;
     bool bSsl = true;
