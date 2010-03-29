@@ -81,6 +81,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     dlgignore = new dlg_ignore(&settings, pSocket, tabc);
     pIrc_auth = new irc_auth(pHttp, &settings);
     pNetwork = new network(pSocket, pHttp, tabc, connectAct, &settings, dlgchannel_settings, dlgchannel_homes, dlgchannel_list, dlgchannel_favourites, dlgfriends, dlgignore, dlgmoderation, pIrc_auth);
+    pNetwork->start(QThread::InheritPriority);
 
     tabc->show_msg("Status", "%F:courier%Witaj w programie Simple Chat Client %Ixhehe%", 0);
     tabc->show_msg("Status", "%F:courier%%Cff0000%Lista b³êdów%C000000%: http://tinyurl.com/yg3fjb4 %Ixpanda%", 0);
@@ -148,6 +149,8 @@ MainWindow::~MainWindow()
 {
     trayIcon->hide();
     settings.setValue("reconnect", "false");
+    pNetwork->quit();
+    pNetwork->wait(100);
     delete pNetwork;
     delete pIrc_auth;
     delete dlgfriends;
@@ -229,7 +232,7 @@ void MainWindow::button_connect()
             QString strNickCurrent = strNick;
             if (strNickCurrent[0] == '~')
                 strNickCurrent = strNick.right(strNick.length()-1);
-            pIrc_auth->request_uo_start(strNickCurrent, strPass);
+            pIrc_auth->request_uo(strNickCurrent, strPass);
         }
     }
     else
@@ -239,7 +242,6 @@ void MainWindow::button_connect()
         connectAct->setText("&Po³±cz");
         connectAct->setIconText("&Po³±cz");
         pNetwork->close();
-        pIrc_auth->request_uo_stop();
         // update nick
         tabc->update_nick("(niezalogowany)");
     }
@@ -352,14 +354,12 @@ void MainWindow::http_request_finished()
                 settings.setValue("uokey", strUOKey);
                 if ((strUOKey.isEmpty() == false) && (strNick.isEmpty() == false))
                     pNetwork->send(QString("USER * %1  czat-app.onet.pl :%2").arg(strUOKey).arg(strNick));
-                pIrc_auth->request_uo_stop();
                 return;
             }
             else
             {
                 tabc->show_msg("Status","Error: B³±d autoryzacji.", 9);
                 pNetwork->close();
-                pIrc_auth->request_uo_stop();
                 return;
             }
         }
@@ -377,7 +377,6 @@ void MainWindow::http_request_finished()
                 tabc->show_msg("Status", QString("Error: B³±d autoryzacji [%1]").arg(strReason), 9);
             }
             pNetwork->close();
-            pIrc_auth->request_uo_stop();
 
 //          raw 433 -> reconnect
             if (strData.indexOf("err_code=\"TRUE\"") != -1)

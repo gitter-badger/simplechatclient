@@ -25,6 +25,7 @@
 #include <QHttp>
 #include <QMutex>
 #include <QTcpSocket>
+#include <QThread>
 #include <QTimer>
 #include "crypt.h"
 #include "dlg_channel_favourites.h"
@@ -37,7 +38,7 @@
 #include "irc_kernel.h"
 #include "tab_container.h"
 
-class network : public QObject
+class network : public QThread
 {
     Q_OBJECT
 public:
@@ -76,6 +77,9 @@ private slots:
     void recv();
     void disconnected();
     void timeout();
+
+protected:
+    void run();
 
 };
 

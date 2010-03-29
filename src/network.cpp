@@ -40,16 +40,23 @@ network::network(QTcpSocket *param1, QHttp *param2, tab_container *param3, QActi
     settings->setValue("reconnect", "true");
     timer = new QTimer();
     timer->setInterval(1000*60*1); // 1 min
-    timer->start();
-    QObject::connect(timer, SIGNAL(timeout()), this, SLOT(timeout()));
-    QObject::connect(socket, SIGNAL(readyRead()), this, SLOT(recv()));
-    QObject::connect(socket, SIGNAL(disconnected()), this, SLOT(disconnected()));
+
 }
 
 network::~network()
 {
     socket->close();
     timer->stop();
+}
+
+void network::run()
+{
+    timer->start();
+    QObject::connect(timer, SIGNAL(timeout()), this, SLOT(timeout()));
+    QObject::connect(socket, SIGNAL(readyRead()), this, SLOT(recv()));
+    QObject::connect(socket, SIGNAL(disconnected()), this, SLOT(disconnected()));
+
+    exec();
 }
 
 void network::set_hostport(QString s, int p)
@@ -95,7 +102,6 @@ void network::reconnect()
         connectAct->setText("&Roz³±cz");
         connectAct->setIconText("&Roz³±cz");
         network::close();
-        pIrc_auth->request_uo_stop();
         network::connect();
         if (network::is_connected() == true)
         {
@@ -119,7 +125,7 @@ void network::reconnect()
             QString strNickCurrent = strNick;
             if (strNickCurrent[0] == '~')
                 strNickCurrent = strNick.right(strNick.length()-1);
-            pIrc_auth->request_uo_start(strNickCurrent, strPass);
+            pIrc_auth->request_uo(strNickCurrent, strPass);
         }
     }
 }

@@ -22,8 +22,8 @@
 #define IRC_AUTH_H
 
 #include <QHttp>
+#include <QMutex>
 #include <QObject>
-#include <QTimer>
 #include "http.h"
 
 class irc_auth : public QObject
@@ -31,23 +31,14 @@ class irc_auth : public QObject
     Q_OBJECT
 public:
     irc_auth(QHttp *, QSettings *);
-    ~irc_auth();
 
-    void request_uo_start(QString, QString);
-    void request_uo_stop();
-    void request_uo();
+    void request_uo(QString, QString);
     QString transform_key(QString);
 
 private:
-    http *pHttp;
-    QTimer *timer;
-    int iTimer;
-    QString strNick;
-    QString strPass;
+    QHttp *qHttp;
     QSettings *settings;
-
-private slots:
-    void timer_timeout();
+    QMutex mutex;
 
 };
 

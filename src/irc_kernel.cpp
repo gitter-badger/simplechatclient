@@ -1298,8 +1298,8 @@ void irc_kernel::raw_255n()
     QString strChannel = strDataList[4];
     QString strNick = strDataList[6];
 
-    QString strDisplay = QString("* Potwierdzam zmianê uprawnieñ dla %1").arg(strNick);
-    tabc->show_msg(strChannel, strDisplay, 5);
+    QString strDisplay = QString("* Potwierdzam zmianê uprawnieñ dla %1 w %2").arg(strNick).arg(strChannel);
+    tabc->show_msg_active(strDisplay, 5);
 }
 
 // :ChanServ!service@service.onet NOTICE #scc :256 Merovingian +o scc_test :channel privilege changed
@@ -1366,8 +1366,8 @@ void irc_kernel::raw_259n()
 
     QString strChannel = strDataList[4];
 
-    QString strDisplay = "* Nic nie zmieniono";
-    tabc->show_msg(strChannel, strDisplay, 7);
+    QString strDisplay = QString("* Nic nie zmieniono w %1").arg(strChannel);
+    tabc->show_msg_active(strDisplay, 7);
 }
 
 // :ChanServ!service@service.onet NOTICE scc_test :260 Merovingian #scc +o :channel privilege changed
@@ -1870,7 +1870,7 @@ void irc_kernel::raw_433()
 
     QString strMessage = QString("* Nick %1 jest ju¿ w u¿yciu").arg(strNick);
 
-    tabc->show_msg_active(strMessage, 9);
+    tabc->show_msg_all(strMessage, 9);
 
     settings->setValue("override", "on");
 }
@@ -1993,8 +1993,8 @@ void irc_kernel::raw_463n()
     QString strChannel = strDataList[4];
     QString strWhat = strDataList[5];
 
-    QString strMessage = QString("* %1 :Dostêp zabroniony, nie posiadasz odpowiednich uprawnieñ").arg(strWhat);
-    tabc->show_msg(strChannel, strMessage, 7);
+    QString strMessage = QString("* %1 :Dostêp zabroniony, nie posiadasz odpowiednich uprawnieñ w %2").arg(strWhat).arg(strChannel);
+    tabc->show_msg_active(strMessage, 7);
 }
 
 // :ChanServ!service@service.onet NOTICE scc_test :467 #scc :permission denied, you are not a channel owner
@@ -2020,8 +2020,8 @@ void irc_kernel::raw_468n()
 
     QString strChannel = strDataList[4];
 
-    QString strMessage = QString("* Dostêp zabroniony, nie posiadasz odpowiednich uprawnieñ");
-    tabc->show_msg(strChannel, strMessage, 7);
+    QString strMessage = QString("* Dostêp zabroniony, nie posiadasz odpowiednich uprawnieñ w %1").arg(strChannel);
+    tabc->show_msg_active(strMessage, 7);
 }
 
 // :ChanServ!service@service.onet NOTICE scc_test :472 #aaaaaaaaaaaaaaaaaaaaaaaaaaaaa :wait 60 seconds before next REGISTER
