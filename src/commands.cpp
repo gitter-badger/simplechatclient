@@ -252,6 +252,8 @@ QString commands::cmd_part()
 
 QString commands::cmd_invite()
 {
+    if (strDataList.value(1).isEmpty() == true) return QString::null;
+
     QString strNick = strDataList[1];
     QString strChannel = strChan;
 
