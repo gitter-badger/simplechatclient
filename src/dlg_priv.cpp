@@ -72,7 +72,7 @@ void dlg_priv::timer_timeout()
 // copy of network::send
 void dlg_priv::send(QString strData)
 {
-    if (socket->state() == QAbstractSocket::ConnectedState)
+    if ((socket->state() == QAbstractSocket::ConnectedState) && (socket->isWritable() == true))
     {
 #ifdef Q_WS_X11
         if (settings->value("debug").toString() == "on")
@@ -84,7 +84,7 @@ void dlg_priv::send(QString strData)
             qbaData.insert(i, strData.at(i));
 
         socket->write(qbaData);
-        if ((socket->state() == QAbstractSocket::ConnectedState) && (socket->waitForBytesWritten(30*1000) == false))
+        if ((socket->state() == QAbstractSocket::ConnectedState) && (socket->waitForBytesWritten() == false))
            tabc->show_msg("Status", QString("Error: Nie uda³o siê wys³aæ danych! [%1]").arg(socket->errorString()), 9);
     }
     else

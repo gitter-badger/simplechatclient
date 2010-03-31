@@ -118,7 +118,7 @@ void qnicklist::invite()
 // copy of network::send
 void qnicklist::send(QString strData)
 {
-    if (socket->state() == QAbstractSocket::ConnectedState)
+    if ((socket->state() == QAbstractSocket::ConnectedState) && (socket->isWritable() == true))
     {
 #ifdef Q_WS_X11
         if (settings->value("debug").toString() == "on")
@@ -130,7 +130,7 @@ void qnicklist::send(QString strData)
             qbaData.insert(i, strData.at(i));
 
         socket->write(qbaData);
-        if ((socket->state() == QAbstractSocket::ConnectedState) && (socket->waitForBytesWritten(30*1000) == false))
+        if ((socket->state() == QAbstractSocket::ConnectedState) && (socket->waitForBytesWritten() == false))
         {
             int nop;
             nop = 1;

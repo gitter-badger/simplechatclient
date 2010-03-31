@@ -21,10 +21,15 @@
 #ifndef DLG_CAM_H
 #define DLG_CAM_H
 
-class dlg_cam
+#include <QDialog>
+
+class dlg_cam : public QDialog
 {
+    Q_OBJECT
+
 public:
     dlg_cam();
+
 };
 
 #endif // DLG_CAM_H

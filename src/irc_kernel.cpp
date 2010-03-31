@@ -2353,7 +2353,7 @@ void irc_kernel::raw_951()
 // copy of network::send
 void irc_kernel::send(QString strData)
 {
-    if (socket->state() == QAbstractSocket::ConnectedState)
+    if ((socket->state() == QAbstractSocket::ConnectedState) && (socket->isWritable() == true))
     {
 #ifdef Q_WS_X11
         if (settings->value("debug").toString() == "on")
@@ -2365,7 +2365,7 @@ void irc_kernel::send(QString strData)
             qbaData.insert(i, strData.at(i));
 
         socket->write(qbaData);
-        if ((socket->state() == QAbstractSocket::ConnectedState) && (socket->waitForBytesWritten(30*1000) == false))
+        if ((socket->state() == QAbstractSocket::ConnectedState) && (socket->waitForBytesWritten() == false))
             tabc->show_msg_active(QString("Error: Nie uda³o siê wys³aæ danych! [%1]").arg(socket->errorString()), 9);
         else if (socket->state() == QAbstractSocket::UnconnectedState)
             tabc->show_msg_active("Error: Nie uda³o siê wys³aæ danych! [Not connected]", 9);

@@ -20,49 +20,48 @@
 
 #include "network.h"
 
-network::network(QTcpSocket *param1, QHttp *param2, tab_container *param3, QAction *param4, QSettings *param5, dlg_channel_settings *param6, dlg_channel_homes *param7, dlg_channel_list *param8, dlg_channel_favourites *param9, dlg_friends *param10, dlg_ignore *param11, dlg_moderation *param12, irc_auth *param13)
+network::network(QHttp *param1, QAction *param2, QSettings *param3)
 {
-    socket = param1;
-    http = param2;
-    tabc = param3;
-    connectAct = param4;
-    settings = param5;
-    dlgchannel_settings = param6;
-    dlgchannel_homes = param7;
-    dlgchannel_list = param8;
-    dlgchannel_favourites = param9;
-    dlgfriends = param10;
-    dlgignore = param11;
-    dlgmoderation = param12;
-    pIrc_auth = param13;
+    http = param1;
+    connectAct = param2;
+    settings = param3;
 
     iActive = 0;
     settings->setValue("reconnect", "true");
     timer = new QTimer();
     timer->setInterval(1000*60*1); // 1 min
+    timer->start();
+    socket = new QTcpSocket(this);
 
+    QObject::connect(timer, SIGNAL(timeout()), this, SLOT(timeout()));
+    QObject::connect(socket, SIGNAL(readyRead()), this, SLOT(recv()));
+    QObject::connect(socket, SIGNAL(disconnected()), this, SLOT(disconnected()));
 }
 
 network::~network()
 {
+    delete socket;
     socket->close();
     timer->stop();
-}
-
-void network::run()
-{
-    timer->start();
-    QObject::connect(timer, SIGNAL(timeout()), this, SLOT(timeout()));
-    QObject::connect(socket, SIGNAL(readyRead()), this, SLOT(recv()));
-    QObject::connect(socket, SIGNAL(disconnected()), this, SLOT(disconnected()));
-
-    exec();
 }
 
 void network::set_hostport(QString s, int p)
 {
     strServer = s;
     iPort = p;
+}
+
+void network::set_dlg(tab_container *param1, dlg_channel_settings *param2, dlg_channel_homes *param3, dlg_channel_list *param4, dlg_channel_favourites *param5, dlg_friends *param6, dlg_ignore *param7, dlg_moderation *param8, irc_auth *param9)
+{
+    tabc = param1;
+    dlgchannel_settings = param2;
+    dlgchannel_homes = param3;
+    dlgchannel_list = param4;
+    dlgchannel_favourites = param5;
+    dlgfriends = param6;
+    dlgignore = param7;
+    dlgmoderation = param8;
+    pIrc_auth = param9;
 }
 
 bool network::is_connected()
@@ -73,12 +72,17 @@ bool network::is_connected()
         return false;
 }
 
+bool network::is_writable()
+{
+    return socket->isWritable();
+}
+
 void network::connect()
 {
     if (socket->state() == QAbstractSocket::UnconnectedState)
     {
         socket->connectToHost(strServer, iPort);
-        if (socket->waitForConnected(30*1000))
+        if (socket->waitForConnected())
             tabc->show_msg_all("Po³±czono z serwerem", 9);
         else
         {
@@ -140,7 +144,7 @@ void network::close()
 
 void network::send(QString strData)
 {
-    if (socket->state() == QAbstractSocket::ConnectedState)
+    if ((socket->state() == QAbstractSocket::ConnectedState) && (socket->isWritable() == true))
     {
 #ifdef Q_WS_X11
         if (settings->value("debug").toString() == "on")
@@ -152,7 +156,7 @@ void network::send(QString strData)
             qbaData.insert(i, strData.at(i));
 
         socket->write(qbaData);
-        if ((socket->state() == QAbstractSocket::ConnectedState) && (socket->waitForBytesWritten(30*1000) == false))
+        if ((socket->state() == QAbstractSocket::ConnectedState) && (socket->waitForBytesWritten() == false))
             tabc->show_msg_active(QString("Error: Nie uda³o siê wys³aæ danych! [%1]").arg(socket->errorString()), 9);
         else if (socket->state() == QAbstractSocket::UnconnectedState)
             tabc->show_msg_active("Error: Nie uda³o siê wys³aæ danych! [Not connected]", 9);
@@ -191,7 +195,7 @@ void network::recv()
 
 void network::disconnected()
 {
-    if ((socket->state() == QAbstractSocket::UnconnectedState) || (socket->waitForDisconnected(30*1000)))
+    if ((socket->state() == QAbstractSocket::UnconnectedState) || (socket->waitForDisconnected()))
     {
         connectAct->setText("&Po³±cz");
         connectAct->setIconText("&Po³±cz");

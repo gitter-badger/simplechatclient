@@ -995,7 +995,7 @@ void tab_widget::set_open_channels(QStringList strOpenChannels)
 // copy of network::send
 void tab_widget::send(QString strData)
 {
-    if (socket->state() == QAbstractSocket::ConnectedState)
+    if ((socket->state() == QAbstractSocket::ConnectedState) && (socket->isWritable() == true))
     {
 #ifdef Q_WS_X11
         if (settings->value("debug").toString() == "on")
@@ -1007,7 +1007,7 @@ void tab_widget::send(QString strData)
             qbaData.insert(i, strData.at(i));
 
         socket->write(qbaData);
-        if ((socket->state() == QAbstractSocket::ConnectedState) && (socket->waitForBytesWritten(30*1000) == false))
+        if ((socket->state() == QAbstractSocket::ConnectedState) && (socket->waitForBytesWritten() == false))
            tab_widget::display_msg(QString("Error: Nie uda³o siê wys³aæ danych! [%1]").arg(socket->errorString()), 9);
     }
     else

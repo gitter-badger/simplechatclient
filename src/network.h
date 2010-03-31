@@ -24,8 +24,8 @@
 #include <QAction>
 #include <QHttp>
 #include <QMutex>
+#include <QObject>
 #include <QTcpSocket>
-#include <QThread>
 #include <QTimer>
 #include "crypt.h"
 #include "dlg_channel_favourites.h"
@@ -38,15 +38,18 @@
 #include "irc_kernel.h"
 #include "tab_container.h"
 
-class network : public QThread
+class network : public QObject
 {
     Q_OBJECT
 public:
-    network(QTcpSocket *, QHttp *, tab_container *, QAction *, QSettings *, dlg_channel_settings *, dlg_channel_homes *, dlg_channel_list *, dlg_channel_favourites *, dlg_friends *, dlg_ignore *, dlg_moderation *, irc_auth *);
+    network(QHttp *, QAction *, QSettings *);
     ~network();
+    QTcpSocket* get_socket() { return socket; }
     void set_hostport(QString, int);
+    void set_dlg(tab_container *, dlg_channel_settings *, dlg_channel_homes *, dlg_channel_list *, dlg_channel_favourites *, dlg_friends *, dlg_ignore *, dlg_moderation *, irc_auth *);
     void set_reconnect(bool);
     bool is_connected();
+    bool is_writable();
     void connect();
     void reconnect();
     void close();
@@ -77,9 +80,6 @@ private slots:
     void recv();
     void disconnected();
     void timeout();
-
-protected:
-    void run();
 
 };
 

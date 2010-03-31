@@ -26,7 +26,7 @@
    <string>Ustawienia kanałów</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="../scc.qrc">
+   <iconset>
     <normaloff>:/3rdparty/images/r2_32.png</normaloff>:/3rdparty/images/r2_32.png</iconset>
   </property>
   <widget class="QTabWidget" name="tabWidget">
@@ -529,8 +529,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>561</width>
-        <height>413</height>
+        <width>94</width>
+        <height>24</height>
        </rect>
       </property>
       <attribute name="label">
@@ -593,8 +593,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>561</width>
-        <height>413</height>
+        <width>94</width>
+        <height>24</height>
        </rect>
       </property>
       <attribute name="label">
@@ -679,6 +679,9 @@
           <property name="editTriggers">
            <set>QAbstractItemView::NoEditTriggers</set>
           </property>
+          <property name="selectionMode">
+           <enum>QAbstractItemView::SingleSelection</enum>
+          </property>
           <property name="selectionBehavior">
            <enum>QAbstractItemView::SelectRows</enum>
           </property>
@@ -750,6 +753,9 @@
           <property name="editTriggers">
            <set>QAbstractItemView::NoEditTriggers</set>
           </property>
+          <property name="selectionMode">
+           <enum>QAbstractItemView::SingleSelection</enum>
+          </property>
           <property name="selectionBehavior">
            <enum>QAbstractItemView::SelectRows</enum>
           </property>
@@ -811,8 +817,6 @@
    </property>
   </widget>
  </widget>
- <resources>
-  <include location="../scc.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>

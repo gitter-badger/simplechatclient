@@ -67,8 +67,11 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     settings.setValue("hide_formating", strHideFormating);
     settings.setValue("hide_join_part", strHideJoinPart);
 
-    pSocket = new QTcpSocket(this);
+
     pHttp = new QHttp(this);
+    pNetwork = new network(pHttp, connectAct, &settings);
+    pSocket = pNetwork->get_socket();
+
     tabm = new tab_manager(this, &settings);
     setCentralWidget(tabm);
     dlgchannel_settings = new dlg_channel_settings(&settings, pSocket);
@@ -80,8 +83,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     dlgfriends = new dlg_friends(&settings, pSocket, tabc);
     dlgignore = new dlg_ignore(&settings, pSocket, tabc);
     pIrc_auth = new irc_auth(pHttp, &settings);
-    pNetwork = new network(pSocket, pHttp, tabc, connectAct, &settings, dlgchannel_settings, dlgchannel_homes, dlgchannel_list, dlgchannel_favourites, dlgfriends, dlgignore, dlgmoderation, pIrc_auth);
-    pNetwork->start(QThread::InheritPriority);
+
+    pNetwork->set_dlg(tabc, dlgchannel_settings, dlgchannel_homes, dlgchannel_list, dlgchannel_favourites, dlgfriends, dlgignore, dlgmoderation, pIrc_auth);
 
     tabc->show_msg("Status", "%F:courier%Witaj w programie Simple Chat Client %Ixhehe%", 0);
     tabc->show_msg("Status", "%F:courier%%Cff0000%Lista b³êdów%C000000%: http://tinyurl.com/yg3fjb4 %Ixpanda%", 0);
@@ -149,8 +152,6 @@ MainWindow::~MainWindow()
 {
     trayIcon->hide();
     settings.setValue("reconnect", "false");
-    pNetwork->quit();
-    pNetwork->wait(100);
     delete pNetwork;
     delete pIrc_auth;
     delete dlgfriends;
@@ -162,7 +163,6 @@ MainWindow::~MainWindow()
     delete dlgchannel_settings;
     delete tabm;
     delete pHttp;
-    delete pSocket;
 }
 
 void MainWindow::set_debug(bool param1)
@@ -254,31 +254,31 @@ void MainWindow::options_dlg()
 
 void MainWindow::channel_list_dlg()
 {
-    if (pNetwork->is_connected() == true)
+    if ((pNetwork->is_connected() == true) && (pNetwork->is_writable() == true))
         dlgchannel_list->show();
 }
 
 void MainWindow::channel_homes_dlg()
 {
-    if (pNetwork->is_connected() == true)
+    if ((pNetwork->is_connected() == true) && (pNetwork->is_writable() == true))
         dlgchannel_homes->show();
 }
 
 void MainWindow::channel_favourites_dlg()
 {
-    if (pNetwork->is_connected() == true)
+    if ((pNetwork->is_connected() == true) && (pNetwork->is_writable() == true))
         dlgchannel_favourites->show();
 }
 
 void MainWindow::friends_dlg()
 {
-    if (pNetwork->is_connected() == true)
+    if ((pNetwork->is_connected() == true) && (pNetwork->is_writable() == true))
         dlgfriends->show();
 }
 
 void MainWindow::ignore_dlg()
 {
-    if (pNetwork->is_connected() == true)
+    if ((pNetwork->is_connected() == true) && (pNetwork->is_writable() == true))
         dlgignore->show();
 }
 

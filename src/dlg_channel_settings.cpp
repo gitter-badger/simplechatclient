@@ -358,20 +358,8 @@ void dlg_channel_settings::button_ban_del()
 {
     if (ui.tableWidget_3->selectedItems().isEmpty() == false)
     {
-        QList<QTableWidgetItem*> list = ui.tableWidget_3->selectedItems();
-        if (list.count()/3 == 1)
-        {
-            QString strRemoveNick = list.at(0)->text();
-            dlg_channel_settings::send(QString("CS BAN %1 DEL %2").arg(strChannel).arg(strRemoveNick));
-        }
-        else
-        {
-            for (int i = 0; i < (list.count()/3); i++)
-            {
-                QString strRemoveNick = list.at(i*3)->text();
-                dlg_channel_settings::send(QString("CS BAN %1 DEL %2").arg(strChannel).arg(strRemoveNick));
-            }
-        }
+        QString strRemoveNick = ui.tableWidget_3->selectedItems().at(0)->text();
+        dlg_channel_settings::send(QString("CS BAN %1 DEL %2").arg(strChannel).arg(strRemoveNick));
         dlg_channel_settings::send(QString("CS INFO %1").arg(strChannel));
         dlg_channel_settings::clear();
     }
@@ -390,20 +378,8 @@ void dlg_channel_settings::button_invite_del()
 {
     if (ui.tableWidget_4->selectedItems().isEmpty() == false)
     {
-        QList<QTableWidgetItem*> list = ui.tableWidget_4->selectedItems();
-        if (list.count()/3 == 1)
-        {
-            QString strRemoveNick = list.at(0)->text();
-            dlg_channel_settings::send(QString("CS INVITE %1 DEL %2").arg(strChannel).arg(strRemoveNick));
-        }
-        else
-        {
-            for (int i = 0; i < (list.count()/3); i++)
-            {
-                QString strRemoveNick = list.at(i*3)->text();
-                dlg_channel_settings::send(QString("CS INVITE %1 DEL %2").arg(strChannel).arg(strRemoveNick));
-            }
-        }
+        QString strRemoveNick = ui.tableWidget_4->selectedItems().at(0)->text();
+        dlg_channel_settings::send(QString("CS INVITE %1 DEL %2").arg(strChannel).arg(strRemoveNick));
         dlg_channel_settings::send(QString("CS INFO %1").arg(strChannel));
         dlg_channel_settings::clear();
     }
@@ -467,7 +443,7 @@ void dlg_channel_settings::clear()
 // copy of network::send
 void dlg_channel_settings::send(QString strData)
 {
-    if (socket->state() == QAbstractSocket::ConnectedState)
+    if ((socket->state() == QAbstractSocket::ConnectedState) && (socket->isWritable() == true))
     {
 #ifdef Q_WS_X11
         if (settings->value("debug").toString() == "on")
@@ -479,7 +455,7 @@ void dlg_channel_settings::send(QString strData)
             qbaData.insert(i, strData.at(i));
 
         socket->write(qbaData);
-        if ((socket->state() == QAbstractSocket::ConnectedState) && (socket->waitForBytesWritten(30*1000) == false))
+        if ((socket->state() == QAbstractSocket::ConnectedState) && (socket->waitForBytesWritten() == false))
         {
             int nop;
             nop = 1;
