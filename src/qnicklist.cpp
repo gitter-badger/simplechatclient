@@ -34,54 +34,72 @@ void qnicklist::set_open_channels(QStringList param1)
 
 void qnicklist::priv()
 {
+    if (this->selectedItems().count() == 0) return;
+
     QString strNick = this->selectedItems().at(0)->text();
     qnicklist::send(QString("PRIV %1").arg(strNick));
 }
 
 void qnicklist::whois()
 {
+    if (this->selectedItems().count() == 0) return;
+
     QString strNick = this->selectedItems().at(0)->text();
     qnicklist::send(QString("WHOIS %1 %1").arg(strNick));
 }
 
 void qnicklist::friends_add()
 {
+    if (this->selectedItems().count() == 0) return;
+
     QString strNick = this->selectedItems().at(0)->text();
     qnicklist::send(QString("NS FRIENDS ADD %1").arg(strNick));
 }
 
 void qnicklist::friends_del()
 {
+    if (this->selectedItems().count() == 0) return;
+
     QString strNick = this->selectedItems().at(0)->text();
     qnicklist::send(QString("NS FRIENDS DEL %1").arg(strNick));
 }
 
 void qnicklist::ignore_add()
 {
+    if (this->selectedItems().count() == 0) return;
+
     QString strNick = this->selectedItems().at(0)->text();
     qnicklist::send(QString("NS IGNORE ADD %1").arg(strNick));
 }
 
 void qnicklist::ignore_del()
 {
+    if (this->selectedItems().count() == 0) return;
+
     QString strNick = this->selectedItems().at(0)->text();
     qnicklist::send(QString("NS IGNORE DEL %1").arg(strNick));
 }
 
 void qnicklist::kick()
 {
+    if (this->selectedItems().count() == 0) return;
+
     QString strNick = this->selectedItems().at(0)->text();
     qnicklist::send(QString("KICK %1 %2").arg(strChannel).arg(strNick));
 }
 
 void qnicklist::ban()
 {
+    if (this->selectedItems().count() == 0) return;
+
     QString strNick = this->selectedItems().at(0)->text();
     qnicklist::send(QString("CS BAN %1 ADD %2").arg(strChannel).arg(strNick));
 }
 
 void qnicklist::kban()
 {
+    if (this->selectedItems().count() == 0) return;
+
     QString strNick = this->selectedItems().at(0)->text();
     QString strReason = "Zachowuj siê! Byle jak ale siê zachowuj!";
     qnicklist::send(QString("CS BAN %1 ADD %2").arg(strChannel).arg(strNick));
@@ -90,54 +108,72 @@ void qnicklist::kban()
 
 void qnicklist::op_add()
 {
+    if (this->selectedItems().count() == 0) return;
+
     QString strNick = this->selectedItems().at(0)->text();
     qnicklist::send(QString("CS OP %1 ADD %2").arg(strChannel).arg(strNick));
 }
 
 void qnicklist::op_del()
 {
+    if (this->selectedItems().count() == 0) return;
+
     QString strNick = this->selectedItems().at(0)->text();
     qnicklist::send(QString("CS OP %1 DEL %2").arg(strChannel).arg(strNick));
 }
 
 void qnicklist::halfop_add()
 {
+    if (this->selectedItems().count() == 0) return;
+
     QString strNick = this->selectedItems().at(0)->text();
     qnicklist::send(QString("CS HALFOP %1 ADD %2").arg(strChannel).arg(strNick));
 }
 
 void qnicklist::halfop_del()
 {
+    if (this->selectedItems().count() == 0) return;
+
     QString strNick = this->selectedItems().at(0)->text();
     qnicklist::send(QString("CS HALFOP %1 DEL %2").arg(strChannel).arg(strNick));
 }
 
 void qnicklist::moderator_add()
 {
+    if (this->selectedItems().count() == 0) return;
+
     QString strNick = this->selectedItems().at(0)->text();
     qnicklist::send(QString("CS MODERATOR %1 ADD %2").arg(strChannel).arg(strNick));
 }
 
 void qnicklist::moderator_del()
 {
+    if (this->selectedItems().count() == 0) return;
+
     QString strNick = this->selectedItems().at(0)->text();
     qnicklist::send(QString("CS MODERATOR %1 DEL %2").arg(strChannel).arg(strNick));
 }
 
 void qnicklist::voice_add()
 {
+    if (this->selectedItems().count() == 0) return;
+
     QString strNick = this->selectedItems().at(0)->text();
     qnicklist::send(QString("CS VOICE %1 ADD %2").arg(strChannel).arg(strNick));
 }
 
 void qnicklist::voice_del()
 {
+    if (this->selectedItems().count() == 0) return;
+
     QString strNick = this->selectedItems().at(0)->text();
     qnicklist::send(QString("CS VOICE %1 DEL %2").arg(strChannel).arg(strNick));
 }
 
 void qnicklist::invite()
 {
+    if (this->selectedItems().count() == 0) return;
+
     QAction *action = qobject_cast<QAction *>(sender());
     if (action)
     {
