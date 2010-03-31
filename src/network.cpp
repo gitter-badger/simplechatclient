@@ -40,9 +40,9 @@ network::network(QHttp *param1, QAction *param2, QSettings *param3)
 
 network::~network()
 {
-    delete socket;
-    socket->close();
     timer->stop();
+    socket->close();
+    delete socket;
 }
 
 void network::set_hostport(QString s, int p)
