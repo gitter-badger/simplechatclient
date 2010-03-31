@@ -247,6 +247,8 @@ void irc_kernel::kernel()
                 irc_kernel::raw_406n();
             else if (strDataList[3].toLower() == ":408")
                 irc_kernel::raw_408n();
+            else if (strDataList[3].toLower() == ":420")
+                irc_kernel::raw_420n();
             else if (strDataList[3].toLower() == ":421")
                 irc_kernel::raw_421n();
             else if (strDataList[3].toLower() == ":430")
@@ -1815,6 +1817,19 @@ void irc_kernel::raw_421()
     QString strCmd = strDataList[3];
 
     QString strMessage = QString("* %1 :Nieznane polecenie").arg(strCmd);
+
+    tabc->show_msg_active(strMessage, 7);
+}
+
+// :NickServ!service@service.onet NOTICE scc_test :420 aleksa7 :is already on your friend list
+void irc_kernel::raw_420n()
+{
+    if (strDataList.value(3).isEmpty() == true) return;
+    if (strDataList.value(4).isEmpty() == true) return;
+
+    QString strNick = strDataList[4];
+
+    QString strMessage = QString("* Nick %1 jest ju¿ na li¶cie przyjació³").arg(strNick);
 
     tabc->show_msg_active(strMessage, 7);
 }

@@ -44,6 +44,30 @@ void qnicklist::whois()
     qnicklist::send(QString("WHOIS %1 %1").arg(strNick));
 }
 
+void qnicklist::friends_add()
+{
+    QString strNick = this->selectedItems().at(0)->text();
+    qnicklist::send(QString("NS FRIENDS ADD %1").arg(strNick));
+}
+
+void qnicklist::friends_del()
+{
+    QString strNick = this->selectedItems().at(0)->text();
+    qnicklist::send(QString("NS FRIENDS DEL %1").arg(strNick));
+}
+
+void qnicklist::ignore_add()
+{
+    QString strNick = this->selectedItems().at(0)->text();
+    qnicklist::send(QString("NS IGNORE ADD %1").arg(strNick));
+}
+
+void qnicklist::ignore_del()
+{
+    QString strNick = this->selectedItems().at(0)->text();
+    qnicklist::send(QString("NS IGNORE DEL %1").arg(strNick));
+}
+
 void qnicklist::kick()
 {
     QString strNick = this->selectedItems().at(0)->text();
@@ -54,6 +78,14 @@ void qnicklist::ban()
 {
     QString strNick = this->selectedItems().at(0)->text();
     qnicklist::send(QString("CS BAN %1 ADD %2").arg(strChannel).arg(strNick));
+}
+
+void qnicklist::kban()
+{
+    QString strNick = this->selectedItems().at(0)->text();
+    QString strReason = "Zachowuj siê! Byle jak ale siê zachowuj!";
+    qnicklist::send(QString("CS BAN %1 ADD %2").arg(strChannel).arg(strNick));
+    qnicklist::send(QString("KICK %1 %2 :%3").arg(strChannel).arg(strNick).arg(strReason));
 }
 
 void qnicklist::op_add()
@@ -164,6 +196,14 @@ void qnicklist::contextMenuEvent(QContextMenuEvent *e)
     for (int j = strOpenChannels.count(); j < MaxOpenChannels; ++j)
         openChannelsActs[j]->setVisible(false);
 
+    QMenu *friends = new QMenu("Lista przyjació³");
+    friends->addAction("Dodaj do listy przyjació³", this, SLOT(friends_add()));
+    friends->addAction("Usuñ z listy przyjació³", this, SLOT(friends_del()));
+
+    QMenu *ignore = new QMenu("Lista ignorowanych");
+    ignore->addAction("Dodaj do listy ignorowanych", this, SLOT(ignore_add()));
+    ignore->addAction("Usuñ z listy ignorowanych", this, SLOT(ignore_del()));
+
     QMenu *privilege = new QMenu("Uprawnienia");
     privilege->addAction("Nadaj prawa super operatora", this, SLOT(op_add()));
     privilege->addAction("Odbierz prawa super operatora", this, SLOT(op_del()));
@@ -182,9 +222,12 @@ void qnicklist::contextMenuEvent(QContextMenuEvent *e)
     menu->addAction("Rozmowa prywatna", this, SLOT(priv()));
     menu->addAction("Whois", this, SLOT(whois()));
     menu->addMenu(minvite);
+    menu->addMenu(friends);
+    menu->addMenu(ignore);
     menu->addSeparator();
     menu->addAction("Wyrzuæ", this, SLOT(kick()));
-    menu->addAction("Zbanuj", this, SLOT(ban()));
+    menu->addAction("Cichy ban", this, SLOT(ban()));
+    menu->addAction("Banuj i wyrzuæ", this, SLOT(kban()));
     menu->addSeparator();
     menu->addMenu(privilege);
 

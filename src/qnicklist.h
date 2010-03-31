@@ -50,8 +50,13 @@ private:
 private slots:
     void priv();
     void whois();
+    void friends_add();
+    void friends_del();
+    void ignore_add();
+    void ignore_del();
     void kick();
     void ban();
+    void kban();
     void op_add();
     void op_del();
     void halfop_add();
