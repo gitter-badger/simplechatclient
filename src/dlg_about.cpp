@@ -27,7 +27,7 @@ dlg_about::dlg_about()
     ui.labelLogo->setPixmap(QPixmap(":/3rdparty/images/r2_128.png"));
 
     QString strDescription = "<p style=\"font-size:18px;font-weight:bold\">Simple Chat Client</p>";
-    strDescription += "<p>Version 1.0</p>";
+    strDescription += "<p>Version 1.0.1</p>";
     strDescription += "<p>&copy; 2010 Piotr £uczko</p>";
     strDescription += "<p><a style=\"text-decoration:none;\" href=\"http://simplechatclien.sourceforge.net/\">Home page</a></p>";
     strDescription += "<p>Licence <a style=\"text-decoration:none;\" href=\"http://www.fsf.org/licensing/licenses/gpl.html\">GPL v3</a></p>";
