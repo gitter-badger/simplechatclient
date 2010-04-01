@@ -20,11 +20,12 @@
 
 #include "qnicklist.h"
 
-qnicklist::qnicklist(QTcpSocket *param1, QSettings *param2, QString param3)
+qnicklist::qnicklist(QTcpSocket *param1, QSettings *param2, QString param3, dlg_cam *param4)
 {
     socket = param1;
     settings = param2;
     strChannel = param3;
+    dlgcam = param4;
 }
 
 void qnicklist::set_open_channels(QStringList param1)
@@ -46,6 +47,15 @@ void qnicklist::whois()
 
     QString strNick = this->selectedItems().at(0)->text();
     qnicklist::send(QString("WHOIS %1 %1").arg(strNick));
+}
+
+void qnicklist::cam()
+{
+    if (this->selectedItems().count() == 0) return;
+
+    QString strNick = this->selectedItems().at(0)->text();
+    dlgcam->set_nick(strNick);
+    dlgcam->show();
 }
 
 void qnicklist::friends_add()
@@ -257,6 +267,7 @@ void qnicklist::contextMenuEvent(QContextMenuEvent *e)
 
     menu->addAction("Rozmowa prywatna", this, SLOT(priv()));
     menu->addAction("Whois", this, SLOT(whois()));
+    menu->addAction("Kamerka", this, SLOT(cam()));
     menu->addMenu(minvite);
     menu->addMenu(friends);
     menu->addMenu(ignore);

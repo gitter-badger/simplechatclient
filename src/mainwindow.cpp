@@ -67,24 +67,26 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     settings.setValue("hide_formating", strHideFormating);
     settings.setValue("hide_join_part", strHideJoinPart);
 
+    tabm = new tab_manager(this, &settings);
+    setCentralWidget(tabm);
 
     pHttp = new QHttp(this);
     pNetwork = new network(pHttp, connectAct, &settings);
     pSocket = pNetwork->get_socket();
+    tabc = new tab_container(tabm, this, pSocket, &settings);
 
-    tabm = new tab_manager(this, &settings);
-    setCentralWidget(tabm);
     dlgchannel_settings = new dlg_channel_settings(&settings, pSocket);
     dlgmoderation = new dlg_moderation(&settings, pSocket);
-    tabc = new tab_container(tabm, this, pSocket, &settings, dlgchannel_settings, dlgmoderation);
     dlgchannel_list = new dlg_channel_list(&settings, pSocket, tabc);
     dlgchannel_homes = new dlg_channel_homes(&settings, pSocket, tabc, dlgchannel_settings);
     dlgchannel_favourites = new dlg_channel_favourites(&settings, pSocket, tabc);
     dlgfriends = new dlg_friends(&settings, pSocket, tabc);
     dlgignore = new dlg_ignore(&settings, pSocket, tabc);
+    dlgcam = new dlg_cam(&settings, pSocket);
     pIrc_auth = new irc_auth(pHttp, &settings);
 
-    pNetwork->set_dlg(tabc, dlgchannel_settings, dlgchannel_homes, dlgchannel_list, dlgchannel_favourites, dlgfriends, dlgignore, dlgmoderation, pIrc_auth);
+    pNetwork->set_dlg(tabc, pIrc_auth, dlgchannel_settings, dlgchannel_homes, dlgchannel_list, dlgchannel_favourites, dlgfriends, dlgignore, dlgmoderation);
+    tabc->set_dlg(dlgchannel_settings, dlgmoderation, dlgcam);
 
     tabc->show_msg("Status", "%F:courier%Witaj w programie Simple Chat Client %Ixhehe%", 0);
     tabc->show_msg("Status", "%F:courier%%Cff0000%Lista b³êdów%C000000%: http://tinyurl.com/yg3fjb4 %Ixpanda%", 0);
@@ -154,6 +156,7 @@ MainWindow::~MainWindow()
     settings.setValue("reconnect", "false");
     delete pNetwork;
     delete pIrc_auth;
+    delete dlgcam;
     delete dlgfriends;
     delete dlgchannel_favourites;
     delete dlgchannel_homes;

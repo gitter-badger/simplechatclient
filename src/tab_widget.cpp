@@ -20,13 +20,14 @@
 
 #include "tab_widget.h"
 
-tab_widget::tab_widget(QString param1, QWidget *parent, QTcpSocket *param2, QSettings *param3, dlg_channel_settings *param4, dlg_moderation *param5)
+tab_widget::tab_widget(QString param1, QWidget *parent, QTcpSocket *param2, QSettings *param3, dlg_channel_settings *param4, dlg_moderation *param5, dlg_cam *param6)
 {
     strName = param1;
     socket = param2;
     settings = param3;
     dlgchannel_settings = param4;
     dlgmoderation = param5;
+    dlgcam = param6;
 
     iNickCount = 0;
     bCursorPositionChanged = false;
@@ -177,7 +178,7 @@ tab_widget::tab_widget(QString param1, QWidget *parent, QTcpSocket *param2, QSet
 
     mainLayout = new QGridLayout(this);
 
-    nick_list = new qnicklist(socket, settings, strName);
+    nick_list = new qnicklist(socket, settings, strName, dlgcam);
     nick_list->setParent(this);
     nick_list->setSortingEnabled(false);
     nick_list->show();

@@ -29,18 +29,20 @@
 #include <QMenu>
 #include <QSettings>
 #include <QTcpSocket>
+#include "dlg_cam.h"
 
 class qnicklist : public QListWidget
 {
     Q_OBJECT
 public:
-    qnicklist(QTcpSocket *, QSettings *, QString);
+    qnicklist(QTcpSocket *, QSettings *, QString, dlg_cam *);
     void set_open_channels(QStringList);
 
 private:
     QTcpSocket *socket;
     QSettings *settings;
     QString strChannel;
+    dlg_cam *dlgcam;
     QStringList strOpenChannels;
     enum { MaxOpenChannels = 50 };
     QAction *openChannelsActs[MaxOpenChannels];
@@ -50,6 +52,7 @@ private:
 private slots:
     void priv();
     void whois();
+    void cam();
     void friends_add();
     void friends_del();
     void ignore_add();

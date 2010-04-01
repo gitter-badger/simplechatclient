@@ -22,13 +22,48 @@
 #define DLG_CAM_H
 
 #include <QDialog>
+#include <QDir>
+#include <QFile>
+#include <QHideEvent>
+#include <QSettings>
+#include <QShowEvent>
+#include <QTcpSocket>
+#include <QTimer>
+#include "ui_cam.h"
 
 class dlg_cam : public QDialog
 {
     Q_OBJECT
-
 public:
-    dlg_cam();
+    dlg_cam(QSettings *, QTcpSocket *);
+    ~dlg_cam();
+    void set_nick(QString);
+
+private:
+    Ui::uiCam ui;
+    QSettings *settings;
+    QTcpSocket *irc_socket;
+    QString strNick;
+    QTcpSocket *socket;
+    QString strDataRecv;
+    QTimer *timer;
+
+    void show_img(QByteArray);
+    void network_connect();
+    void network_send(QString);
+    void network_disconnect();
+    void send(QString);
+
+private slots:
+    void button_ok();
+    void network_read();
+    void network_connected();
+    void network_keepalive();
+    void network_disconnected();
+
+protected:
+    virtual void showEvent(QShowEvent *);
+    virtual void hideEvent(QHideEvent *);
 
 };
 

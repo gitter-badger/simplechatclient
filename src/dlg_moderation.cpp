@@ -162,7 +162,7 @@ void dlg_moderation::send(QString strData)
         {
             int nop;
             nop = 1;
-           //tabc->show_msg("Status", QString("Error: Nie uda³o siê wys³aæ danych! [%1]").arg(socket->errorString()), 9);
+            //tabc->show_msg("Status", QString("Error: Nie uda³o siê wys³aæ danych! [%1]").arg(socket->errorString()), 9);
         }
     }
     //else

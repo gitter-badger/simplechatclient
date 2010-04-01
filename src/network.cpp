@@ -51,17 +51,17 @@ void network::set_hostport(QString s, int p)
     iPort = p;
 }
 
-void network::set_dlg(tab_container *param1, dlg_channel_settings *param2, dlg_channel_homes *param3, dlg_channel_list *param4, dlg_channel_favourites *param5, dlg_friends *param6, dlg_ignore *param7, dlg_moderation *param8, irc_auth *param9)
+void network::set_dlg(tab_container *param1, irc_auth *param2, dlg_channel_settings *param3, dlg_channel_homes *param4, dlg_channel_list *param5, dlg_channel_favourites *param6, dlg_friends *param7, dlg_ignore *param8, dlg_moderation *param9)
 {
     tabc = param1;
-    dlgchannel_settings = param2;
-    dlgchannel_homes = param3;
-    dlgchannel_list = param4;
-    dlgchannel_favourites = param5;
-    dlgfriends = param6;
-    dlgignore = param7;
-    dlgmoderation = param8;
-    pIrc_auth = param9;
+    pIrc_auth = param2;
+    dlgchannel_settings = param3;
+    dlgchannel_homes = param4;
+    dlgchannel_list = param5;
+    dlgchannel_favourites = param6;
+    dlgfriends = param7;
+    dlgignore = param8;
+    dlgmoderation = param9;
 }
 
 bool network::is_connected()

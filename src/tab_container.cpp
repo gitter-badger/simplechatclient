@@ -20,14 +20,12 @@
 
 #include "tab_container.h"
 
-tab_container::tab_container(tab_manager *param1, QWidget *param2, QTcpSocket *param3, QSettings *param4, dlg_channel_settings *param5, dlg_moderation *param6)
+tab_container::tab_container(tab_manager *param1, QWidget *param2, QTcpSocket *param3, QSettings *param4)
 {
     tabm = param1;
     mainWin = param2;
     socket = param3;
     settings = param4;
-    dlgchannel_settings = param5;
-    dlgmoderation = param6;
     free_list = "ffffffffffffffffffffffffffffffffffffffffffffffffff"; // f = free  u = used
 }
 
@@ -45,6 +43,13 @@ tab_container::~tab_container()
             return;
         }
     }
+}
+
+void tab_container::set_dlg(dlg_channel_settings *param1, dlg_moderation *param2, dlg_cam *param3)
+{
+    dlgchannel_settings = param1;
+    dlgmoderation = param2;
+    dlgcam = param3;
 }
 
 bool tab_container::exist_tab(QString strChannel)
@@ -77,7 +82,7 @@ void tab_container::add_tab(QString strChannel,QWidget *parent)
         int iFree = tab_container::free_list_get();
         if (iFree != -1)
         {
-            tw[iFree] = new tab_widget(strChannel, parent, socket, settings, dlgchannel_settings, dlgmoderation);
+            tw[iFree] = new tab_widget(strChannel, parent, socket, settings, dlgchannel_settings, dlgmoderation, dlgcam);
             int iTab = tabm->addTab(tw[iFree], strChannel);
             tabm->setCurrentIndex(iTab);
             free_list[iFree] = 'u';
