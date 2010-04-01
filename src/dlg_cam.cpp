@@ -63,7 +63,7 @@ void dlg_cam::network_connect()
     {
         socket->connectToHost("czat-s.onet.pl", 5008);
         if (socket->waitForConnected())
-            ui.label_img->setText("Po³±czono z serwerem");
+            ui.label_img->setText("Po³±czono z serwerem kamerek<br>Trwa autoryzacja...");
         else
             ui.label_img->setText("Nie mo¿na po³±czyæ siê z serwerem kamerek");
 
@@ -149,6 +149,12 @@ void dlg_cam::network_read()
                 ui.label_desc->setText(strStatus);
             }
         }
+        else if (iCam_cmd == 403)
+        {
+            QString strError = bData;
+            QString strImg = ui.label_img->text() +"<br>"+strError;
+            ui.label_img->setText(strImg);
+        }
 
         bData.clear();
         iBytes_need = 0;
@@ -162,11 +168,18 @@ void dlg_cam::network_read()
     if ((bText == true) && (bAuthorized == false))
         strDataRecv += "\r\n";
 
-    if ((bText == true) && (strDataRecv.length() > 2) && (strDataRecv.at(strDataRecv.length()-1) != '\n')) return;
+    if ((bText == true) && (strDataRecv.length() > 2) && (strDataRecv.at(strDataRecv.length()-1) != '\n')) dlg_cam::network_read();
     else if ((bText == true) && (strDataRecv.length() > 2) && (strDataRecv.at(strDataRecv.length()-1) == '\n'))
     {
         strDataRecv = strDataRecv.left(strDataRecv.length()-2);
         QStringList strDataList = strDataRecv.split(" ");
+
+#ifdef Q_WS_X11
+        if (settings->value("debug").toString() == "on")
+            qDebug() << "CAM <- " << strDataRecv;
+#endif
+
+        strDataRecv.clear();
 
         // 202 17244 IMAGE_UPDATE_BIG Ekscentryk
         if (strDataList[0] == "202")
@@ -240,10 +253,18 @@ void dlg_cam::network_read()
         // 268 0
         else if (strDataList[0] == "268")
         {
-            ui.label_img->setText("Poprawnie autoryzowano");
             QString strUOKey = settings->value("uokey").toString();
             dlg_cam::network_send(QString("AUTH %1 3.1(applet)").arg(strUOKey));
             bAuthorized = true;
+        }
+        // 403 11 ACCESS_DENIED
+        // Invalid key
+        else if (strDataList[0] == "403")
+        {
+            ui.label_img->setText("B³±d autoryzacji");
+            bText = false;
+            iBytes_need = strDataList[1].toInt();
+            iCam_cmd = 403;
         }
         // 405 0 USER_GONE Restonka
         else if (strDataList[0] == "405")
@@ -270,14 +291,13 @@ void dlg_cam::network_read()
             dlg_cam::network_disconnect();
         }
 
-        strDataRecv.clear();
         dlg_cam::network_read();
     }
 }
 
 void dlg_cam::network_connected()
 {
-    ui.label_img->setText("Po³±czono z serwerem kamerek");
+    ui.label_img->setText("Po³±czono z serwerem kamerek<br>Trwa autoryzacja...");
     dlg_cam::network_send(QString("CAUTH %1 3.1(applet)").arg("1234567890123456"));
 }
 
