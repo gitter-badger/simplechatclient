@@ -7,26 +7,26 @@
     <x>0</x>
     <y>0</y>
     <width>322</width>
-    <height>300</height>
+    <height>330</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
     <width>322</width>
-    <height>300</height>
+    <height>330</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
     <width>322</width>
-    <height>300</height>
+    <height>330</height>
    </size>
   </property>
   <property name="windowTitle">
    <string>Kamerka</string>
   </property>
   <property name="windowIcon">
-   <iconset>
+   <iconset resource="../scc.qrc">
     <normaloff>:/3rdparty/images/r2_32.png</normaloff>:/3rdparty/images/r2_32.png</iconset>
   </property>
   <widget class="QWidget" name="verticalLayoutWidget">
@@ -35,7 +35,7 @@
      <x>0</x>
      <y>0</y>
      <width>322</width>
-     <height>301</height>
+     <height>321</height>
     </rect>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout">
@@ -62,6 +62,16 @@
      </widget>
     </item>
     <item>
+     <widget class="QLabel" name="label_desc">
+      <property name="text">
+       <string>Opis</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+    </item>
+    <item>
      <widget class="QLabel" name="label_img">
       <property name="minimumSize">
        <size>
@@ -76,7 +86,7 @@
        </size>
       </property>
       <property name="text">
-       <string/>
+       <string>Obraz</string>
       </property>
       <property name="alignment">
        <set>Qt::AlignCenter</set>
@@ -93,6 +103,8 @@
    </layout>
   </widget>
  </widget>
- <resources/>
+ <resources>
+  <include location="../scc.qrc"/>
+ </resources>
  <connections/>
 </ui>

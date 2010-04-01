@@ -22,11 +22,10 @@
 #define DLG_CAM_H
 
 #include <QDialog>
-#include <QDir>
-#include <QFile>
 #include <QHideEvent>
 #include <QSettings>
 #include <QShowEvent>
+#include <QStringList>
 #include <QTcpSocket>
 #include <QTimer>
 #include "ui_cam.h"
@@ -46,7 +45,13 @@ private:
     QString strNick;
     QTcpSocket *socket;
     QString strDataRecv;
+    QByteArray bData;
     QTimer *timer;
+    bool bText;
+    int iBytes_recv;
+    int iBytes_need;
+    int iCam_cmd;
+    bool bAuthorized;
 
     void show_img(QByteArray);
     void network_connect();

@@ -29,7 +29,7 @@ dlg_cam::dlg_cam(QSettings *param1, QTcpSocket *param2)
 
     socket = new QTcpSocket(this);
     timer = new QTimer(this);
-    timer->setInterval(15*1000);
+    timer->setInterval(1*1000); // 1 sec
 
     QObject::connect(ui.buttonBox, SIGNAL(accepted()), this, SLOT(button_ok()));
     QObject::connect(timer, SIGNAL(timeout()), this, SLOT(network_keepalive()));
@@ -40,6 +40,7 @@ dlg_cam::dlg_cam(QSettings *param1, QTcpSocket *param2)
 
 dlg_cam::~dlg_cam()
 {
+    timer->stop();
     delete socket;
 }
 
@@ -51,26 +52,9 @@ void dlg_cam::set_nick(QString param1)
 
 void dlg_cam::show_img(QByteArray data)
 {
-    QString path = QCoreApplication::applicationDirPath();
-
-    QDir d(path);
-    if (d.exists(path+"/tmp") == false)
-        d.mkdir(path+"/tmp");
-
-    QFile f(path+"/tmp/"+strNick+".cam");
-    if (!f.open(QIODevice::Append))
-        return;
-
-    QTextStream out(&f);
-    out << data;
-
-    f.close();
-
-    if (f.exists() == true)
-    {
-        QString img = path+"/tmp/"+strNick+".cam";
-        ui.label_img->setPixmap(QPixmap(img));
-    }
+    QPixmap pixmap;
+    pixmap.loadFromData(data);
+    ui.label_img->setPixmap(pixmap);
 }
 
 void dlg_cam::network_connect()
@@ -81,7 +65,13 @@ void dlg_cam::network_connect()
         if (socket->waitForConnected())
             ui.label_img->setText("Po³±czono z serwerem");
         else
-            ui.label_img->setText("Nie mo¿na po³±czyæ z serwerem kamerek");
+            ui.label_img->setText("Nie mo¿na po³±czyæ siê z serwerem kamerek");
+
+        bText = true;
+        bAuthorized = false;
+        iBytes_need = 0;
+        iBytes_recv = 0;
+        iCam_cmd = 0;
     }
 }
 
@@ -89,8 +79,10 @@ void dlg_cam::network_send(QString strData)
 {
     if ((socket->state() == QAbstractSocket::ConnectedState) && (socket->isWritable() == true))
     {
+#ifdef Q_WS_X11
         if (settings->value("debug").toString() == "on")
-            qDebug() << "-> " << strData;
+            qDebug() << "CAM -> " << strData;
+#endif
 
         strData += "\r\n";
         QByteArray qbaData;
@@ -118,26 +110,175 @@ void dlg_cam::network_disconnect()
 
 void dlg_cam::network_read()
 {
-    strDataRecv.append(socket->readAll());
-    if (strDataRecv.isEmpty()) return;
+    if (bText == true)
+    {
+        if (socket->bytesAvailable() <= 0) return;
 
-    if (strDataRecv[strDataRecv.length()-1] != '\n')
-        return;
+        for (int i = 0; i < socket->bytesAvailable(); i++)
+        {
+            QString b = socket->read(1);
+            strDataRecv += b;
+            if (b == "\n") break;
+        }
+    }
+    else
+    {
+        if (socket->bytesAvailable() <= 0) return;
 
-    QStringList strDataLine = strDataRecv.split("\r\n");
-    strDataRecv.clear();
+        for (int i = 0; i < socket->bytesAvailable(); i++)
+        {
+            if (iBytes_recv < iBytes_need)
+            {
+                bData += socket->read(1);
+                iBytes_recv++;
+            }
+        }
+    }
 
-    qDebug() << "recv:" << strDataLine;
+    if ((bText == false) && (iBytes_recv < iBytes_need)) dlg_cam::network_read();
+    if ((bText == false) && (iBytes_recv == iBytes_need))
+    {
+        if (iCam_cmd == 202)
+            dlg_cam::show_img(bData);
+        else if (iCam_cmd == 252)
+        {
+            QString strDesc = bData;
+            if (strDesc.left(9) == "SETSTATUS")
+            {
+                QString strStatus = strDesc.right(strDesc.length()-10);
+                ui.label_desc->setText(strStatus);
+            }
+        }
+
+        bData.clear();
+        iBytes_need = 0;
+        iBytes_recv = 0;
+        iCam_cmd = 0;
+        bText = true;
+
+        dlg_cam::network_read();
+    }
+
+    if ((bText == true) && (bAuthorized == false))
+        strDataRecv += "\r\n";
+
+    if ((bText == true) && (strDataRecv.length() > 2) && (strDataRecv.at(strDataRecv.length()-1) != '\n')) return;
+    else if ((bText == true) && (strDataRecv.length() > 2) && (strDataRecv.at(strDataRecv.length()-1) == '\n'))
+    {
+        strDataRecv = strDataRecv.left(strDataRecv.length()-2);
+        QStringList strDataList = strDataRecv.split(" ");
+
+        // 202 17244 IMAGE_UPDATE_BIG Ekscentryk
+        if (strDataList[0] == "202")
+        {
+            iBytes_need = strDataList[1].toInt();
+            if (iBytes_need != 0)
+            {
+                bText = false;
+                iCam_cmd = 202;
+            }
+            else
+            {
+                iBytes_need = 0;
+                ui.label_img->setText("Podany u¿ytkownik nie wysy³a obrazu");
+                dlg_cam::network_disconnect();
+            }
+        }
+        // 231 0 OK scc_test
+        else if (strDataList[0] == "231")
+        {
+            ui.label_img->setText("Pobieranie obrazu");
+            dlg_cam::network_send(QString("SUBSCRIBE_BIG * %1").arg(strNick));
+            timer->start();
+        }
+        // 232 0 CMODE 0
+        else if (strDataList[0] == "232")
+        {
+            // nothing
+        }
+        // 233 0 QUALITY_FACTOR 1
+        else if (strDataList[0] == "233")
+        {
+            // nothing
+        }
+        // 250 12519 OK
+        else if (strDataList[0] == "250")
+        {
+            // nothing
+        }
+        // 251 52 UPDATE
+        else if (strDataList[0] == "251")
+        {
+            bText = false;
+            iBytes_need = strDataList[1].toInt();
+            iCam_cmd = 251;
+        }
+        // 252 41 USER_STATUS pati28ash
+        else if (strDataList[0] == "252")
+        {
+            bText = false;
+            iBytes_need = strDataList[1].toInt();
+            iCam_cmd = 252;
+        }
+        // 253 0 USER_VOTES Delikatna 38
+        else if (strDataList[0] == "253")
+        {
+            // nothing
+        }
+        // 254 1489 USER_COUNT_UPDATE
+        else if (strDataList[0] == "254")
+        {
+            bText = false;
+            iBytes_need = strDataList[1].toInt();
+            iCam_cmd = 254;
+        }
+        // 264 0 CODE_ACCEPTED ffffffff 2147483647
+        else if (strDataList[0] == "264")
+        {
+            // nothing
+        }
+        // 268 0
+        else if (strDataList[0] == "268")
+        {
+            ui.label_img->setText("Poprawnie autoryzowano");
+            QString strUOKey = settings->value("uokey").toString();
+            dlg_cam::network_send(QString("AUTH %1 3.1(applet)").arg(strUOKey));
+            bAuthorized = true;
+        }
+        // 405 0 USER_GONE Restonka
+        else if (strDataList[0] == "405")
+        {
+            ui.label_img->setText("Podany u¿ytkownik opu¶ci³ czat");
+            dlg_cam::network_disconnect();
+        }
+        // 408 0 NO_SUCH_USER_SUBSCRIBE LOLexx
+        else if (strDataList[0] == "408")
+        {
+            ui.label_img->setText("Podany u¿ytkownik nie ma w³±czonej kamerki");
+            dlg_cam::network_disconnect();
+        }
+        // 412 0 SUBSCRIBE_FAILED olgusia32
+        else if (strDataList[0] == "412")
+        {
+            ui.label_img->setText("Nie uda³o siê pobraæ obrazu z kamerki");
+            dlg_cam::network_disconnect();
+        }
+        // 413 0 SUBSCRIBE_DENIED aliina
+        else if (strDataList[0] == "413")
+        {
+            ui.label_img->setText("Nie uda³o siê pobraæ obrazu z kamerki");
+            dlg_cam::network_disconnect();
+        }
+
+        strDataRecv.clear();
+        dlg_cam::network_read();
+    }
 }
 
 void dlg_cam::network_connected()
 {
-    QString strUOKey = settings->value("uokey").toString();
     ui.label_img->setText("Po³±czono z serwerem kamerek");
-    dlg_cam::network_send("CAUTH 1234567890123456 3.1(applet)");
-    dlg_cam::network_send(QString("AUTH %1 3.1(applet)").arg(strUOKey));
-    dlg_cam::network_send(QString("SUBSCRIBE_BIG * %1").arg(strNick));
-    timer->start();
+    dlg_cam::network_send(QString("CAUTH %1 3.1(applet)").arg("1234567890123456"));
 }
 
 void dlg_cam::network_keepalive()
@@ -151,7 +292,9 @@ void dlg_cam::network_keepalive()
 void dlg_cam::network_disconnected()
 {
     timer->stop();
-    ui.label_img->setText("Roz³±czono z serwerem kamerek");
+    QString strText = ui.label_img->text();
+    strText += "<br>Roz³±czono z serwerem kamerek";
+    ui.label_img->setText(strText);
 }
 
 // copy of network::send
@@ -161,7 +304,7 @@ void dlg_cam::send(QString strData)
     {
 #ifdef Q_WS_X11
         if (settings->value("debug").toString() == "on")
-            qDebug() << "-> " << strData;
+            qDebug() << "CAM -> " << strData;
 #endif
         strData += "\r\n";
         QByteArray qbaData;
@@ -189,6 +332,8 @@ void dlg_cam::showEvent(QShowEvent *event)
 {
     event->accept();
 
+    ui.label_img->setText("Uruchamianie obs³ugi kamerek");
+    ui.label_desc->setText("");
     dlg_cam::network_connect();
 }
 

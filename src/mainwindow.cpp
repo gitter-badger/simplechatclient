@@ -88,9 +88,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     pNetwork->set_dlg(tabc, pIrc_auth, dlgchannel_settings, dlgchannel_homes, dlgchannel_list, dlgchannel_favourites, dlgfriends, dlgignore, dlgmoderation);
     tabc->set_dlg(dlgchannel_settings, dlgmoderation, dlgcam);
 
-    tabc->show_msg("Status", "%F:courier%Witaj w programie Simple Chat Client %Ixhehe%", 0);
-    tabc->show_msg("Status", "%F:courier%%Cff0000%Lista b³êdów%C000000%: http://tinyurl.com/yg3fjb4 %Ixpanda%", 0);
-    tabc->show_msg("Status", "%F:courier%%Cff0000%Zg³aszanie b³êdów%C000000%: http://tinyurl.com/yfcseeh %Ixpanda%", 0);
+    tabc->show_msg("Status", "%Fi:courier%Witaj w programie Simple Chat Client %Ixhehe%", 0);
+    tabc->show_msg("Status", "%Fb:courier%%Cff6500%Oficjalna strona SCC%C000000%: http://simplechatclien.sourceforge.net/ %Ixoczko%", 0);
+    tabc->show_msg("Status", "%Fbi:courier%%Cff0000%Lista b³êdów%C000000%: http://tinyurl.com/yg3fjb4 %Ixpanda%", 0);
+    tabc->show_msg("Status", "%Fbi:courier%%Cff0000%Zg³aszanie b³êdów%C000000%: http://tinyurl.com/yfcseeh %Ixpanda%", 0);
 
 // main menu
     fileMenu = menuBar()->addMenu("&Plik");
