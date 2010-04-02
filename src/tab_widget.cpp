@@ -170,8 +170,8 @@ tab_widget::tab_widget(QString param1, QWidget *parent, QTcpSocket *param2, QSet
     toolBox->addWidget(bold);
     toolBox->addWidget(italic);
     toolBox->addWidget(fontfamily);
-    toolBox->addWidget(size);
     toolBox->addWidget(color);
+    toolBox->addWidget(size);
     toolBox->addWidget(channel_settings);
     toolBox->addWidget(moderation);
     toolWidget->setLayout(toolBox);
