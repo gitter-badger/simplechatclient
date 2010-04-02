@@ -20,17 +20,6 @@
 
 #include "tab_widget.h"
 
-void BeepThread::run()
-{
-    // beep
-    QString apath = QCoreApplication::applicationDirPath();
-    Phonon::MediaObject *mediaObject = new Phonon::MediaObject();
-    mediaObject->setCurrentSource(Phonon::MediaSource(apath+"/3rdparty/sounds/beep.wav"));
-    Phonon::AudioOutput *audioOutput = new Phonon::AudioOutput(Phonon::MusicCategory);
-    Phonon::Path path = Phonon::createPath(mediaObject, audioOutput);
-    mediaObject->play();
-}
-
 tab_widget::tab_widget(QString param1, QWidget *parent, QTcpSocket *param2, QSettings *param3, dlg_channel_settings *param4, dlg_moderation *param5, dlg_cam *param6)
 {
     strName = param1;
@@ -440,7 +429,25 @@ void tab_widget::display_message(QString strData, int iLevel)
     for (int i = 0; i < strData.length(); i++)
     {
         // colors
-        if ((i > 10) && (bLevel == false))
+        if ((i == 0) && (bLevel == false))
+        {
+            if (iLevel == 8) // hilight
+            {
+                textEdit->setTextColor(QColor(255, 0, 0, 255)); // red
+                bHilight = true;
+
+                // beep
+                QString apath = QCoreApplication::applicationDirPath();
+                Phonon::MediaObject *mediaObject = new Phonon::MediaObject();
+                mediaObject->setCurrentSource(Phonon::MediaSource(apath+"/3rdparty/sounds/beep.wav"));
+                Phonon::AudioOutput *audioOutput = new Phonon::AudioOutput(Phonon::MusicCategory);
+                Phonon::Path path = Phonon::createPath(mediaObject, audioOutput);
+                mediaObject->play();
+
+                bLevel = true;
+            }
+        }
+        else if ((i > 10) && (bLevel == false))
         {
             if (iLevel == 0)
                 textEdit->setTextColor(QColor(0, 0, 0, 255)); // black
@@ -458,14 +465,6 @@ void tab_widget::display_message(QString strData, int iLevel)
                 textEdit->setTextColor(QColor(0, 102, 255, 255)); // blue
             else if (iLevel == 7) // info
                 textEdit->setTextColor(QColor(102, 102, 102, 255)); // gray
-            else if (iLevel == 8) // hilight
-            {
-                textEdit->setTextColor(QColor(138, 0, 184, 255)); // purple
-                bHilight = true;
-
-                BeepThread *beep = new BeepThread();
-                QThreadPool::globalInstance()->start(beep);
-            }
             else if (iLevel == 9) // error
                 textEdit->setTextColor(QColor(255, 0, 0, 255)); // red
 

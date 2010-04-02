@@ -39,13 +39,11 @@
 #include <QPushButton>
 #include <QQueue>
 #include <QRgb>
-#include <QRunnable>
 #include <QSettings>
 #include <QSplitter>
 #include <QTcpSocket>
 #include <QTextEdit>
 #include <QTimer>
-#include <QThreadPool>
 #include <QWidget>
 #include "commands.h"
 #include "config.h"
@@ -55,13 +53,6 @@
 #include "log.h"
 #include "qinputline.h"
 #include "qnicklist.h"
-
-class BeepThread : public QRunnable
-{
-protected:
-    void run();
-
-};
 
 class tab_widget : public QWidget
 {
