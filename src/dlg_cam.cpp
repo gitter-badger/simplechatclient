@@ -145,6 +145,10 @@ void dlg_cam::network_read()
             QString strDesc = bData;
             if (strDesc.left(9) == "SETSTATUS")
             {
+#ifdef Q_WS_X11
+        if (settings->value("debug").toString() == "on")
+            qDebug() << "CAM <- " << strDesc;
+#endif
                 QString strStatus = strDesc.right(strDesc.length()-10);
                 ui.label_desc->setText(strStatus);
             }
@@ -152,6 +156,10 @@ void dlg_cam::network_read()
         else if (iCam_cmd == 403)
         {
             QString strError = bData;
+#ifdef Q_WS_X11
+        if (settings->value("debug").toString() == "on")
+            qDebug() << "CAM <- " << strError;
+#endif
             QString strImg = ui.label_img->text() +"<br>"+strError;
             ui.label_img->setText(strImg);
         }
