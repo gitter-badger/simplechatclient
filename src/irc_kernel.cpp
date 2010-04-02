@@ -302,17 +302,6 @@ void irc_kernel::kernel()
 #endif
 }
 
-// ERROR :Closing link (unknown@95.48.183.154) [Registration timeout]
-void irc_kernel::raw_error()
-{
-    QString strMessage;
-    for (int i = 0; i < strDataList.size(); i++) { if (i != 0) strMessage += " "; strMessage += strDataList[i]; }
-    if (strMessage[0] == ':')
-        strMessage = strMessage.right(strMessage.length()-1);
-
-    tabc->show_msg_all(strMessage, 7);
-}
-
 // PING :cf1f1.onet
 void irc_kernel::raw_ping()
 {
@@ -322,6 +311,17 @@ void irc_kernel::raw_ping()
 
     if (strServer.isEmpty() == false)
         irc_kernel::send(QString("PONG %1").arg(strServer));
+}
+
+// ERROR :Closing link (unknown@95.48.183.154) [Registration timeout]
+void irc_kernel::raw_error()
+{
+    QString strMessage;
+    for (int i = 0; i < strDataList.size(); i++) { if (i != 0) strMessage += " "; strMessage += strDataList[i]; }
+    if (strMessage[0] == ':')
+        strMessage = strMessage.right(strMessage.length()-1);
+
+    tabc->show_msg_all(strMessage, 7);
 }
 
 // :scc_test!51976824@3DE379.B7103A.6CF799.6902F4 JOIN #Quiz :rx,0

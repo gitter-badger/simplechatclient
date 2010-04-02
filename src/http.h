@@ -34,7 +34,7 @@ public:
     ~http();
 
     void request(QString, QString);
-    void request_new();
+    void request_clear();
 
 private:
     QHttp *pHttp;

@@ -171,7 +171,12 @@ void network::recv()
     if (strDataRecv.isEmpty()) return;
 
     if (strDataRecv[strDataRecv.length()-1] != '\n')
-        return;
+    {
+        if (socket->bytesAvailable() != 0)
+            network::recv();
+        else
+            return;
+    }
 
     QStringList strDataLine = strDataRecv.split("\r\n");
     strDataRecv.clear();

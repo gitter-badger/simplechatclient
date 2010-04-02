@@ -31,7 +31,7 @@ http::~http()
     pHttp->close();
 }
 
-void http::request_new()
+void http::request_clear()
 {
     strCookies.clear();
     pHttp->abort();
