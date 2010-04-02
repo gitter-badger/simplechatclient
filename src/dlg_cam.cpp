@@ -151,7 +151,7 @@ void dlg_cam::network_read()
 #endif
                 QString strStatus = strDesc.right(strDesc.length()-10);
 
-                // cut status if > 20
+                // cut status if > 200
                 if (strStatus.length() > 200)
                 {
                     strStatus = strStatus.left(200);
