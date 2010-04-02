@@ -155,18 +155,19 @@ MainWindow::~MainWindow()
 {
     trayIcon->hide();
     settings.setValue("reconnect", "false");
-    delete pNetwork;
     delete pIrc_auth;
     delete dlgcam;
+    delete dlgignore;
     delete dlgfriends;
     delete dlgchannel_favourites;
     delete dlgchannel_homes;
     delete dlgchannel_list;
-    delete tabc;
     delete dlgmoderation;
     delete dlgchannel_settings;
-    delete tabm;
+    delete tabc;
+    delete pNetwork;
     delete pHttp;
+    delete tabm;
 }
 
 void MainWindow::set_debug(bool param1)
