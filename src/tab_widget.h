@@ -21,6 +21,8 @@
 #ifndef TAB_WIDGET_H
 #define TAB_WIDGET_H
 
+#include <Phonon/AudioOutput>
+#include <Phonon/MediaObject>
 #include <QAction>
 #include <QtAlgorithms>
 #include <QDateTime>

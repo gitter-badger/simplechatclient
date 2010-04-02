@@ -23,8 +23,6 @@
 
 #include <QCoreApplication>
 #include <QKeyEvent>
-#include <Phonon/AudioOutput>
-#include <Phonon/MediaObject>
 #include <QSettings>
 #include <QStringList>
 #include <QTabBar>

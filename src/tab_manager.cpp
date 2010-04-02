@@ -42,14 +42,6 @@ void tab_manager::set_hilight(QString strName)
 
     int index = tab_manager::tab_pos(strName);
     tab->setTabTextColor(index, QColor(138, 0, 184, 255));
-
-    // beep
-    QString apath = QCoreApplication::applicationDirPath();
-    Phonon::MediaObject *mediaObject = new Phonon::MediaObject(this);
-    mediaObject->setCurrentSource(Phonon::MediaSource(apath+"/3rdparty/sounds/beep.wav"));
-    Phonon::AudioOutput *audioOutput = new Phonon::AudioOutput(Phonon::MusicCategory, this);
-    Phonon::Path path = Phonon::createPath(mediaObject, audioOutput);
-    mediaObject->play();
 }
 
 void tab_manager::set_alert(QString strName)

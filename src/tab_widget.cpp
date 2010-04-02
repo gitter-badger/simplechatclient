@@ -451,6 +451,14 @@ void tab_widget::display_message(QString strData, int iLevel)
             {
                 textEdit->setTextColor(QColor(138, 0, 184, 255)); // purple
                 bHilight = true;
+
+                // beep
+                QString apath = QCoreApplication::applicationDirPath();
+                Phonon::MediaObject *mediaObject = new Phonon::MediaObject(this);
+                mediaObject->setCurrentSource(Phonon::MediaSource(apath+"/3rdparty/sounds/beep.wav"));
+                Phonon::AudioOutput *audioOutput = new Phonon::AudioOutput(Phonon::MusicCategory, this);
+                Phonon::Path path = Phonon::createPath(mediaObject, audioOutput);
+                mediaObject->play();
             }
             else if (iLevel == 9) // error
                 textEdit->setTextColor(QColor(255, 0, 0, 255)); // red
