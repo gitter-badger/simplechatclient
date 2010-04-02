@@ -40,6 +40,7 @@ void tab_manager::set_hilight(QString strName)
     if (tab_manager::get_settings_key(strName).isEmpty() == false)
         strName = tab_manager::get_settings_key(strName);
 
+    alert_list->removeAll(strName);
     int index = tab_manager::tab_pos(strName);
     tab->setTabTextColor(index, QColor(138, 0, 184, 255));
 }

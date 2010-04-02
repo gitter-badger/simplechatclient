@@ -20,6 +20,17 @@
 
 #include "tab_widget.h"
 
+void BeepThread::run()
+{
+    // beep
+    QString apath = QCoreApplication::applicationDirPath();
+    Phonon::MediaObject *mediaObject = new Phonon::MediaObject();
+    mediaObject->setCurrentSource(Phonon::MediaSource(apath+"/3rdparty/sounds/beep.wav"));
+    Phonon::AudioOutput *audioOutput = new Phonon::AudioOutput(Phonon::MusicCategory);
+    Phonon::Path path = Phonon::createPath(mediaObject, audioOutput);
+    mediaObject->play();
+}
+
 tab_widget::tab_widget(QString param1, QWidget *parent, QTcpSocket *param2, QSettings *param3, dlg_channel_settings *param4, dlg_moderation *param5, dlg_cam *param6)
 {
     strName = param1;
@@ -452,13 +463,8 @@ void tab_widget::display_message(QString strData, int iLevel)
                 textEdit->setTextColor(QColor(138, 0, 184, 255)); // purple
                 bHilight = true;
 
-                // beep
-                QString apath = QCoreApplication::applicationDirPath();
-                Phonon::MediaObject *mediaObject = new Phonon::MediaObject(this);
-                mediaObject->setCurrentSource(Phonon::MediaSource(apath+"/3rdparty/sounds/beep.wav"));
-                Phonon::AudioOutput *audioOutput = new Phonon::AudioOutput(Phonon::MusicCategory, this);
-                Phonon::Path path = Phonon::createPath(mediaObject, audioOutput);
-                mediaObject->play();
+                BeepThread *beep = new BeepThread();
+                QThreadPool::globalInstance()->start(beep);
             }
             else if (iLevel == 9) // error
                 textEdit->setTextColor(QColor(255, 0, 0, 255)); // red

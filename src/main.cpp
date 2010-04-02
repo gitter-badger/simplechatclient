@@ -54,6 +54,7 @@ int main(int argc, char *argv[])
 
     QApplication app(argc, argv);
     QTextCodec::setCodecForCStrings(QTextCodec::codecForName("ISO-8859-2"));
+    QTextCodec::setCodecForTr(QTextCodec::codecForName("UTF-8"));
     const int x = QApplication::desktop()->availableGeometry().width();
     const int y = QApplication::desktop()->availableGeometry().height();
     const int xo = 800;
