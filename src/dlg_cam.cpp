@@ -29,7 +29,7 @@ dlg_cam::dlg_cam(QSettings *param1, QTcpSocket *param2)
 
     socket = new QTcpSocket(this);
     timer = new QTimer(this);
-    timer->setInterval(1*1000); // 1 sec
+    timer->setInterval(2*1000); // 2 sec
 
     QObject::connect(ui.buttonBox, SIGNAL(accepted()), this, SLOT(button_ok()));
     QObject::connect(timer, SIGNAL(timeout()), this, SLOT(network_keepalive()));

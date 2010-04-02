@@ -55,6 +55,8 @@ void qnicklist::cam()
 
     QString strNick = this->selectedItems().at(0)->text();
     dlgcam->set_nick(strNick);
+    if (dlgcam->isHidden() == false)
+        dlgcam->hide();
     dlgcam->show();
 }
 

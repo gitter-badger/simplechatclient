@@ -781,6 +781,8 @@ void irc_kernel::raw_topic()
 
     QString strDisplay = QString("* %1 ustawi³ nowy temat: %2").arg(strWho).arg(strMessage);
     tabc->show_msg(strChannel, strDisplay, 5);
+
+    tabc->set_topic(strChannel, strMessage);
 }
 
 // :Merovingian!26269559@2294E8.94913F.2E3993.4AF50D INVREJECT scc_test ^cf1f41038619

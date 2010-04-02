@@ -67,7 +67,7 @@ void qinputline::set_word(QString param1)
 bool qinputline::event(QEvent *e)
 {
     if (e->type() != QEvent::KeyPress)
-        QLineEdit::event(e);
+        return QLineEdit::event(e);
 
     QKeyEvent *k = static_cast<QKeyEvent*>(e);
 
