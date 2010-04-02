@@ -150,6 +150,14 @@ void dlg_cam::network_read()
             qDebug() << "CAM <- " << strDesc;
 #endif
                 QString strStatus = strDesc.right(strDesc.length()-10);
+
+                // cut status if > 20
+                if (strStatus.length() > 200)
+                {
+                    strStatus = strStatus.left(200);
+                    strStatus+= " ... ";
+                }
+
                 ui.label_desc->setText(strStatus);
             }
         }
