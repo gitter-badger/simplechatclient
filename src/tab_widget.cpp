@@ -599,7 +599,11 @@ void tab_widget::display_message(QString strData, int iLevel)
         {
             int x = strData.indexOf(" ",i+1);
             int y = strData.indexOf("href");
-            if ((x != -1) && (y != i-6) && (y != i-5))
+
+            if (x == -1)
+                x = strData.length()-1;
+
+            if ((y != i-6) && (y != i-5))
             {
                 QString strLink = strData.mid(i,x-i).toLower();
 
@@ -615,6 +619,8 @@ void tab_widget::display_message(QString strData, int iLevel)
                     textEdit->insertPlainText(QString("%1 ").arg(strLink));
 
                 i = x;
+                if (i == strData.length()-1) // fix position
+                    i--;
             }
             else
                 textEdit->insertPlainText(QString(strData[i]));
