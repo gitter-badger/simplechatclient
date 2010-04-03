@@ -122,7 +122,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     toolBar->addAction(friendsAct);
 
 // statusbar
-    statusBar()->showMessage("Gotowy");
+    QLabel *label_status = new QLabel();
+    label_status->setText("v1.0.2.151");
+    statusBar()->addWidget(label_status);
 
 // signals
     QObject::connect(connectAct, SIGNAL(triggered()), this, SLOT(button_connect()));
