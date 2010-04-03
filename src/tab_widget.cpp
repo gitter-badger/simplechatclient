@@ -407,6 +407,7 @@ void tab_widget::display_message(QString strData, int iLevel)
         textEdit->setCurrentCharFormat(cf);
         bCursorPositionChanged = false;
     }
+    if (textEdit->fontUnderline() != false) textEdit->setFontUnderline(false);
     if (textEdit->textColor() != QColor(0, 0, 0, 255)) textEdit->setTextColor(QColor(0, 0, 0, 255));
     if (textEdit->alignment() != Qt::AlignLeft) textEdit->setAlignment(Qt::AlignLeft);
     if (textEdit->fontFamily() != "Verdana") textEdit->setFontFamily("Verdana");
