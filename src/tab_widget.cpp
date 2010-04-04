@@ -595,7 +595,10 @@ void tab_widget::display_message(QString strData, int iLevel)
                 textEdit->insertPlainText(QString(strData[i]));
         }
         // link
-        else if ((strData[i] == 'h') && (strData.length() > i+1) && (strData[i+1] == 't') && (strData.length() > i+2) && (strData[i+2] == 't') && (strData.length() > i+3) && (strData[i+3] == 'p'))
+        else if (
+                ((strData[i] == 'h') && (strData.length() > i+1) && (strData[i+1] == 't') && (strData.length() > i+2) && (strData[i+2] == 't') && (strData.length() > i+3) && (strData[i+3] == 'p') && (strData.length() > i+4) && (strData[i+4] == 's') && (strData.length() > i+5) && (strData[i+5] == ':')) ||
+                ((strData[i] == 'h') && (strData.length() > i+1) && (strData[i+1] == 't') && (strData.length() > i+2) && (strData[i+2] == 't') && (strData.length() > i+3) && (strData[i+3] == 'p') && (strData.length() > i+4) && (strData[i+4] == ':'))
+            )
         {
             int x = strData.indexOf(" ",i+1);
             int y = strData.indexOf("href");
