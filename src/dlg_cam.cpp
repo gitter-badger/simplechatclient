@@ -150,15 +150,7 @@ void dlg_cam::network_read()
             qDebug() << "CAM <- " << strDesc;
 #endif
                 QString strStatus = strDesc.right(strDesc.length()-10);
-
-                // cut status if > 200
-                if (strStatus.length() > 200)
-                {
-                    strStatus = strStatus.left(200);
-                    strStatus+= " ... ";
-                }
-
-                ui.label_desc->setText(strStatus);
+                ui.textEdit->setText(strStatus);
             }
         }
         else if (iCam_cmd == 403)
@@ -369,7 +361,7 @@ void dlg_cam::showEvent(QShowEvent *event)
     event->accept();
 
     ui.label_img->setText("Uruchamianie obs³ugi kamerek");
-    ui.label_desc->setText("");
+    ui.textEdit->setText("");
     dlg_cam::network_connect();
 }
 
