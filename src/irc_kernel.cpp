@@ -20,20 +20,19 @@
 
 #include "irc_kernel.h"
 
-irc_kernel::irc_kernel(QTcpSocket *param1, QHttp *param2, tab_container *param3, QString param4, QSettings *param5, dlg_channel_settings *param6, dlg_channel_homes *param7, dlg_channel_list *param8, dlg_channel_favourites *param9, dlg_friends *param10, dlg_ignore *param11, dlg_moderation *param12)
+irc_kernel::irc_kernel(QTcpSocket *param1, tab_container *param2, QString param3, QSettings *param4, dlg_channel_settings *param5, dlg_channel_homes *param6, dlg_channel_list *param7, dlg_channel_favourites *param8, dlg_friends *param9, dlg_ignore *param10, dlg_moderation *param11)
 {
     socket = param1;
-    http = param2;
-    tabc = param3;
-    strData = param4;
-    settings = param5;
-    dlgchannel_settings = param6;
-    dlgchannel_homes = param7;
-    dlgchannel_list = param8;
-    dlgchannel_favourites = param9;
-    dlgfriends = param10;
-    dlgignore = param11;
-    dlgmoderation = param12;
+    tabc = param2;
+    strData = param3;
+    settings = param4;
+    dlgchannel_settings = param5;
+    dlgchannel_homes = param6;
+    dlgchannel_list = param7;
+    dlgchannel_favourites = param8;
+    dlgfriends = param9;
+    dlgignore = param10;
+    dlgmoderation = param11;
 
     strDataList = strData.split(" ");
 }
@@ -2159,7 +2158,7 @@ void irc_kernel::raw_801()
     if (strKey[0] == ':')
         strKey = strKey.right(strKey.length()-1);
 
-    irc_auth *pIrc_auth = new irc_auth(http, settings);
+    irc_auth *pIrc_auth = new irc_auth(settings, tabc, socket);
     QString strAuth = pIrc_auth->transform_key(strKey);
     delete pIrc_auth;
 

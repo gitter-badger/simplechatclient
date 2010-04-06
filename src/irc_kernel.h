@@ -21,7 +21,6 @@
 #ifndef IRC_KERNEL_H
 #define IRC_KERNEL_H
 
-#include <QHttp>
 #include <QMessageBox>
 #include <QObject>
 #include <QTcpSocket>
@@ -41,12 +40,11 @@ class irc_kernel : public QObject
 {
     Q_OBJECT
 public:
-    irc_kernel(QTcpSocket *, QHttp *, tab_container *, QString, QSettings *, dlg_channel_settings *, dlg_channel_homes *, dlg_channel_list *, dlg_channel_favourites *, dlg_friends *, dlg_ignore *, dlg_moderation *);
+    irc_kernel(QTcpSocket *, tab_container *, QString, QSettings *, dlg_channel_settings *, dlg_channel_homes *, dlg_channel_list *, dlg_channel_favourites *, dlg_friends *, dlg_ignore *, dlg_moderation *);
     void kernel();
 
 private:
     QTcpSocket *socket;
-    QHttp *http;
     tab_container *tabc;
     QString strData;
     QStringList strDataList;

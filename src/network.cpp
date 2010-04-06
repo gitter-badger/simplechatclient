@@ -20,11 +20,10 @@
 
 #include "network.h"
 
-network::network(QHttp *param1, QAction *param2, QSettings *param3)
+network::network(QAction *param1, QSettings *param2)
 {
-    http = param1;
-    connectAct = param2;
-    settings = param3;
+    connectAct = param1;
+    settings = param2;
 
     iActive = 0;
     settings->setValue("reconnect", "true");
@@ -40,6 +39,7 @@ network::network(QHttp *param1, QAction *param2, QSettings *param3)
 
 network::~network()
 {
+    delete pIrc_auth;
     timer->stop();
     socket->close();
     delete socket;
@@ -51,17 +51,18 @@ void network::set_hostport(QString s, int p)
     iPort = p;
 }
 
-void network::set_dlg(tab_container *param1, irc_auth *param2, dlg_channel_settings *param3, dlg_channel_homes *param4, dlg_channel_list *param5, dlg_channel_favourites *param6, dlg_friends *param7, dlg_ignore *param8, dlg_moderation *param9)
+void network::set_dlg(tab_container *param1, dlg_channel_settings *param2, dlg_channel_homes *param3, dlg_channel_list *param4, dlg_channel_favourites *param5, dlg_friends *param6, dlg_ignore *param7, dlg_moderation *param8)
 {
     tabc = param1;
-    pIrc_auth = param2;
-    dlgchannel_settings = param3;
-    dlgchannel_homes = param4;
-    dlgchannel_list = param5;
-    dlgchannel_favourites = param6;
-    dlgfriends = param7;
-    dlgignore = param8;
-    dlgmoderation = param9;
+    dlgchannel_settings = param2;
+    dlgchannel_homes = param3;
+    dlgchannel_list = param4;
+    dlgchannel_favourites = param5;
+    dlgfriends = param6;
+    dlgignore = param7;
+    dlgmoderation = param8;
+
+    pIrc_auth = new irc_auth(settings, tabc, socket);
 }
 
 bool network::is_connected()
@@ -190,7 +191,7 @@ void network::recv()
         if (strLine.isEmpty() == false)
         {
             mutex.lock();
-            irc_kernel *pIrc_kernel = new irc_kernel(socket, http, tabc, strLine, settings, dlgchannel_settings, dlgchannel_homes, dlgchannel_list, dlgchannel_favourites, dlgfriends, dlgignore, dlgmoderation);
+            irc_kernel *pIrc_kernel = new irc_kernel(socket, tabc, strLine, settings, dlgchannel_settings, dlgchannel_homes, dlgchannel_list, dlgchannel_favourites, dlgfriends, dlgignore, dlgmoderation);
             pIrc_kernel->kernel();
             delete pIrc_kernel;
             mutex.unlock();

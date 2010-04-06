@@ -20,10 +20,11 @@
 
 #include "irc_auth.h"
 
-irc_auth::irc_auth(QHttp *param1, QSettings *param2)
+irc_auth::irc_auth(QSettings *param1, tab_container *param2, QTcpSocket *param3)
 {
-    qHttp = param1;
-    settings = param2;
+    settings = param1;
+    tabc = param2;
+    socket = param3;
 }
 
 void irc_auth::request_uo(QString param1, QString param2)
@@ -43,15 +44,15 @@ void irc_auth::request_uo(QString param1, QString param2)
     else
         bOverride = false;
 
-    http *pHttp = new http(qHttp);
+    http *pHttp = new http();
+    QHttp *qHttp = pHttp->get_http();
     pHttp->request_clear();
 
     pHttp->request("http://czat.onet.pl/_s/deployOnetCzat.js", QString::null);
     QObject::connect(qHttp, SIGNAL(done(bool)), &loop, SLOT(quit()));
     loop.exec();
 
-    if (strVersion.isEmpty() == true)
-        strVersion = "20090619-1228_2";
+    strVersion = this->get_version(pHttp->read_http());
     strVersion = QString("1.1(%1 - R)").arg(strVersion);
 
     QString strNickLen = QString("%1").arg(strNick.length());
@@ -85,23 +86,25 @@ void irc_auth::request_uo(QString param1, QString param2)
         if (bOverride == true)
         {
             pHttp->request("http://czat.onet.pl/include/ajaxapi.xml.php3", QString("api_function=userOverride&params=a:1:{s:4:\"nick\";s:%1:\"%2\";}").arg(strNickLen).arg(strNick));
-            QObject::connect(qHttp, SIGNAL(requestFinished(int,bool)), &loop, SLOT(quit()));
+            QObject::connect(qHttp, SIGNAL(done(bool)), &loop, SLOT(quit()));
             loop.exec();
 
             settings->setValue("override", "off");
         }
 
         pHttp->request("http://czat.onet.pl/include/ajaxapi.xml.php3", QString("api_function=getUoKey&params=a:3:{s:4:\"nick\";s:%1:\"%2\";s:8:\"tempNick\";i:0;s:7:\"version\";s:%3:\"%4\";}").arg(strNickLen).arg(strNick).arg(strVersionLen).arg(strVersion));
-        QObject::connect(qHttp, SIGNAL(requestFinished(int,bool)), &loop, SLOT(quit()));
+        QObject::connect(qHttp, SIGNAL(done(bool)), &loop, SLOT(quit()));
         loop.exec();
     }
     // nicki tyldowe
     else
     {
         pHttp->request("http://czat.onet.pl/include/ajaxapi.xml.php3", QString("api_function=getUoKey&params=a:3:{s:4:\"nick\";s:%1:\"%2\";s:8:\"tempNick\";i:1;s:7:\"version\";s:%3:\"%4\";}").arg(strNickLen).arg(strNick).arg(strVersionLen).arg(strVersion));
-        QObject::connect(qHttp, SIGNAL(requestFinished(int,bool)), &loop, SLOT(quit()));
+        QObject::connect(qHttp, SIGNAL(done(bool)), &loop, SLOT(quit()));
         loop.exec();
     }
+
+    this->request_finished(pHttp->read_http());
 
     delete pHttp;
     mutex.unlock();
@@ -197,4 +200,92 @@ QString irc_auth::transform_key(QString s)
         strResult += ai[i];
 
     return strResult;
+}
+
+QString irc_auth::get_version(QString strData)
+{
+    if (strData.isEmpty() == false)
+    {
+        if (strData.indexOf("OnetCzatLoader") != -1)
+        {
+            QString strVersion = strData.mid(strData.indexOf("signed-OnetCzatLoader-")+22, strData.indexOf(".jar") - strData.indexOf("signed-OnetCzatLoader-") -22);
+            if ((strVersion.isEmpty() == false) && (strVersion.length() > 0) && (strVersion.length() < 20))
+                return strVersion;
+            else
+                return "20090619-1228_2";
+        }
+    }
+    else
+        return "20090619-1228_2";
+}
+
+void irc_auth::request_finished(QString strData)
+{
+    if (strData.isEmpty() == false)
+    {
+        // <?xml version="1.0" encoding="ISO-8859-2"?><root><uoKey>LY9j2sXwio0G_yo3PdpukDL8iZJGHXKs</uoKey><zuoUsername>~Succubi_test</zuoUsername><error err_code="TRUE"  err_text="warto¶æ prawdziwa" ></error></root>
+        if (strData.indexOf("uoKey") != -1)
+        {
+            if (strData.indexOf("err_code=\"TRUE\"") != -1)
+            {
+                QString strUOKey = strData.mid(strData.indexOf("<uoKey>")+7, strData.indexOf("</uoKey>") - strData.indexOf("<uoKey>") -7);
+                QString strNick = strData.mid(strData.indexOf("<zuoUsername>")+13, strData.indexOf("</zuoUsername>") - strData.indexOf("<zuoUsername>") -13);
+                settings->setValue("uokey", strUOKey);
+                if ((strUOKey.isEmpty() == false) && (strNick.isEmpty() == false) && (socket->state() == QAbstractSocket::ConnectedState) && (socket->isWritable() == true))
+                    this->send(QString("USER * %1  czat-app.onet.pl :%2").arg(strUOKey).arg(strNick));
+                return;
+            }
+            else
+            {
+                tabc->show_msg("Status","Error: B³±d autoryzacji.", 9);
+                socket->close();
+                return;
+            }
+        }
+        // <?xml version="1.0" encoding="ISO-8859-2"?><root><error err_code="-2"  err_text="U.ytkownik nie zalogowany" ></error></root>
+        else if (strData.indexOf("error err_code=") != -1)
+        {
+            if (strData.indexOf("err_code=\"TRUE\"") != -1)
+            {
+                tabc->show_msg("Status","Error: B³±d autoryzacji [Nick jest ju¿ zalogowany na czacie]", 9);
+            }
+            else
+            {
+                QString strReason = strData.mid(strData.indexOf("err_text=\"")+10, strData.indexOf("\" ></error>") - strData.indexOf("err_text=\"") -10);
+                if (strReason.length() > 100) strReason = "Unknown error";
+                tabc->show_msg("Status", QString("Error: B³±d autoryzacji [%1]").arg(strReason), 9);
+            }
+            socket->close();
+
+            return;
+        }
+    }
+    else
+    {
+        tabc->show_msg("Status","Error: B³±d autoryzacji.", 9);
+        socket->close();
+        return;
+    }
+}
+
+// copy of network::send
+void irc_auth::send(QString strData)
+{
+    if ((socket->state() == QAbstractSocket::ConnectedState) && (socket->isWritable() == true))
+    {
+#ifdef Q_WS_X11
+        if (settings->value("debug").toString() == "on")
+            qDebug() << "-> " << strData;
+#endif
+        strData += "\r\n";
+        QByteArray qbaData;
+        for ( int i = 0; i < strData.size(); i++)
+            qbaData.insert(i, strData.at(i));
+
+        socket->write(qbaData);
+        if ((socket->state() == QAbstractSocket::ConnectedState) && (socket->waitForBytesWritten() == false))
+           tabc->show_msg("Status", QString("Error: Nie uda³o siê wys³aæ danych! [%1]").arg(socket->errorString()), 9);
+    }
+    else
+        tabc->show_msg("Status", "Error: Nie uda³o siê wys³aæ danych! [Not connected]", 9);
 }

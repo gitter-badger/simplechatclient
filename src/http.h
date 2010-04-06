@@ -30,11 +30,13 @@ class http : public QObject
 {
     Q_OBJECT
 public:
-    http(QHttp *);
+    http();
     ~http();
 
     void request(QString, QString);
     void request_clear();
+    QHttp *get_http() { return pHttp; }
+    QString read_http() { return pHttp->readAll(); }
 
 private:
     QHttp *pHttp;

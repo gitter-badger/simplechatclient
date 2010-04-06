@@ -69,6 +69,7 @@ void dlg_priv::timer_timeout()
     strTimerChannel = QString::null;
     strTimerNick = QString::null;
 }
+
 // copy of network::send
 void dlg_priv::send(QString strData)
 {

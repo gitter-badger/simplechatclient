@@ -24,7 +24,6 @@
 #ifdef Q_WS_X11
 #include <QDebug>
 #endif
-#include <QHttp>
 #include <QSystemTrayIcon>
 #include <QTabWidget>
 #include <QTcpSocket>
@@ -58,7 +57,6 @@ private:
     QSettings settings;
     irc_auth *pIrc_auth;
     QTcpSocket *pSocket;
-    QHttp *pHttp;
     tab_manager *tabm;
     tab_container *tabc;
     network *pNetwork;
@@ -101,7 +99,6 @@ private slots:
     void tray_icon(QSystemTrayIcon::ActivationReason);
     void button_show();
     void tab_close_requested(int);
-    void http_request_finished();
 
 };
 

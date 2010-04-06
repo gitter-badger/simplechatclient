@@ -20,15 +20,16 @@
 
 #include "http.h"
 
-http::http(QHttp *param1)
+http::http()
 {
-    pHttp = param1;
+    pHttp = new QHttp(this);
     QObject::connect(pHttp, SIGNAL(responseHeaderReceived(const QHttpResponseHeader &)), this, SLOT(read_response_header(const QHttpResponseHeader &)));
 }
 
 http::~http()
 {
     pHttp->close();
+    delete pHttp;
 }
 
 void http::request_clear()
@@ -69,7 +70,7 @@ void http::request(QString strUrl, QString strContent)
 
     QHttpRequestHeader header(strMethod, strPath, 1, 1);
     header.setValue("Host", url.host());
-    header.setValue("User-Agent", "Mozilla/5.0 (compatible; MSIE 8.0; Windows NT 6.0; pl; rv:1.9.1.4; Trident/4.0;Gecko/20091028 Java/1.6.0_15");
+    header.setValue("User-Agent", "Mozilla/5.0 (compatible; MSIE 8.0; Windows NT 6.0; pl; rv:1.9.1.4; Trident/4.0;Gecko/20091028 Java/1.6.0_19");
     header.setValue("Content-Language", "pl");
     header.setValue("Content-Type", "application/x-www-form-urlencoded");
     header.setValue("Cache-Control", "no-cache");

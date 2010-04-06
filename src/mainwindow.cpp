@@ -70,8 +70,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     tabm = new tab_manager(this, &settings);
     setCentralWidget(tabm);
 
-    pHttp = new QHttp(this);
-    pNetwork = new network(pHttp, connectAct, &settings);
+    pNetwork = new network(connectAct, &settings);
     pSocket = pNetwork->get_socket();
     tabc = new tab_container(tabm, this, pSocket, &settings);
 
@@ -83,9 +82,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     dlgfriends = new dlg_friends(&settings, pSocket, tabc);
     dlgignore = new dlg_ignore(&settings, pSocket, tabc);
     dlgcam = new dlg_cam(&settings, pSocket);
-    pIrc_auth = new irc_auth(pHttp, &settings);
+    pIrc_auth = new irc_auth(&settings, tabc, pSocket);
 
-    pNetwork->set_dlg(tabc, pIrc_auth, dlgchannel_settings, dlgchannel_homes, dlgchannel_list, dlgchannel_favourites, dlgfriends, dlgignore, dlgmoderation);
+    pNetwork->set_dlg(tabc, dlgchannel_settings, dlgchannel_homes, dlgchannel_list, dlgchannel_favourites, dlgfriends, dlgignore, dlgmoderation);
     tabc->set_dlg(dlgchannel_settings, dlgmoderation, dlgcam);
 
     tabc->show_msg("Status", "%Fi:courier%Witaj w programie Simple Chat Client %Ixhehe%", 0);
@@ -123,7 +122,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
 // statusbar
     QLabel *label_status = new QLabel();
-    label_status->setText("v1.0.2.158");
+    label_status->setText("v1.0.2.159");
     statusBar()->addWidget(label_status);
 
 // signals
@@ -138,7 +137,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     QObject::connect(showAct, SIGNAL(triggered()), this, SLOT(button_show()));
     QObject::connect(closeAct, SIGNAL(triggered()), this, SLOT(button_close()));
     QObject::connect(tabm, SIGNAL(tabCloseRequested(int)), this, SLOT(tab_close_requested(int)));
-    QObject::connect(pHttp, SIGNAL(requestFinished(int, bool)), this, SLOT(http_request_finished()));
 
 // tray
     trayMenu = new QMenu();
@@ -168,7 +166,6 @@ MainWindow::~MainWindow()
     delete dlgchannel_settings;
     delete tabc;
     delete pNetwork;
-    delete pHttp;
     delete tabm;
 }
 
@@ -340,56 +337,6 @@ void MainWindow::tab_close_requested(int index)
                 if (pNetwork->is_connected() == true)
                     pNetwork->send(QString("PART %1").arg(strName));
             }
-        }
-    }
-}
-
-// http
-void MainWindow::http_request_finished()
-{
-    QByteArray ba = pHttp->readAll();
-    QString strData = ba;
-    if (strData.isEmpty() == false)
-    {
-        // <?xml version="1.0" encoding="ISO-8859-2"?><root><uoKey>LY9j2sXwio0G_yo3PdpukDL8iZJGHXKs</uoKey><zuoUsername>~Succubi_test</zuoUsername><error err_code="TRUE"  err_text="warto¶æ prawdziwa" ></error></root>
-        if (strData.indexOf("uoKey") != -1)
-        {
-            if (strData.indexOf("err_code=\"TRUE\"") != -1)
-            {
-                QString strUOKey = strData.mid(strData.indexOf("<uoKey>")+7, strData.indexOf("</uoKey>") - strData.indexOf("<uoKey>") -7);
-                QString strNick = strData.mid(strData.indexOf("<zuoUsername>")+13, strData.indexOf("</zuoUsername>") - strData.indexOf("<zuoUsername>") -13);
-                settings.setValue("uokey", strUOKey);
-                if ((strUOKey.isEmpty() == false) && (strNick.isEmpty() == false))
-                    pNetwork->send(QString("USER * %1  czat-app.onet.pl :%2").arg(strUOKey).arg(strNick));
-                return;
-            }
-            else
-            {
-                tabc->show_msg("Status","Error: B³±d autoryzacji.", 9);
-                pNetwork->close();
-                return;
-            }
-        }
-        // <?xml version="1.0" encoding="ISO-8859-2"?><root><error err_code="-2"  err_text="U.ytkownik nie zalogowany" ></error></root>
-        else if (strData.indexOf("error err_code=") != -1)
-        {
-            if (strData.indexOf("err_code=\"TRUE\"") != -1)
-            {
-                tabc->show_msg("Status","Error: B³±d autoryzacji [Nick jest ju¿ zalogowany na czacie]", 9);
-            }
-            else
-            {
-                QString strReason = strData.mid(strData.indexOf("err_text=\"")+10, strData.indexOf("\" ></error>") - strData.indexOf("err_text=\"") -10);
-                if (strReason.length() > 100) strReason = "Unknown error";
-                tabc->show_msg("Status", QString("Error: B³±d autoryzacji [%1]").arg(strReason), 9);
-            }
-            pNetwork->close();
-
-//          raw 433 -> reconnect
-            if (strData.indexOf("err_code=\"TRUE\"") != -1)
-                MainWindow::button_connect();
-
-            return;
         }
     }
 }

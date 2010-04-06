@@ -22,7 +22,6 @@
 #define NETWORK_H
 
 #include <QAction>
-#include <QHttp>
 #include <QMutex>
 #include <QObject>
 #include <QTcpSocket>
@@ -42,11 +41,11 @@ class network : public QObject
 {
     Q_OBJECT
 public:
-    network(QHttp *, QAction *, QSettings *);
+    network(QAction *, QSettings *);
     ~network();
     QTcpSocket* get_socket() { return socket; }
     void set_hostport(QString, int);
-    void set_dlg(tab_container *, irc_auth *, dlg_channel_settings *, dlg_channel_homes *, dlg_channel_list *, dlg_channel_favourites *, dlg_friends *, dlg_ignore *, dlg_moderation *);
+    void set_dlg(tab_container *, dlg_channel_settings *, dlg_channel_homes *, dlg_channel_list *, dlg_channel_favourites *, dlg_friends *, dlg_ignore *, dlg_moderation *);
     void set_reconnect(bool);
     bool is_connected();
     bool is_writable();
@@ -57,7 +56,6 @@ public:
 
 private:
     QTcpSocket *socket;
-    QHttp *http;
     tab_container *tabc;
     QAction *connectAct;
     QString strServer;
