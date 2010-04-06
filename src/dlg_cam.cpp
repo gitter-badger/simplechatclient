@@ -208,6 +208,8 @@ void dlg_cam::network_read()
         // 231 0 OK scc_test
         else if (strDataList[0] == "231")
         {
+            ui.label_img->setText("Ustawianie tylko ogl±dania");
+            dlg_cam::network_send("SENDMODE 0");
             ui.label_img->setText("Pobieranie obrazu");
             dlg_cam::network_send(QString("SUBSCRIBE_BIG * %1").arg(strNick));
             timer->start();
@@ -258,11 +260,16 @@ void dlg_cam::network_read()
         {
             // nothing
         }
+        // 267 0 SENDMODE=0
+        else if (strDataList[0] == "267")
+        {
+            // nothing
+        }
         // 268 0
         else if (strDataList[0] == "268")
         {
             QString strUOKey = settings->value("uokey").toString();
-            dlg_cam::network_send(QString("AUTH %1 3.1(applet)").arg(strUOKey));
+            dlg_cam::network_send(QString("AUTH %1 3.00.159").arg(strUOKey));
             bAuthorized = true;
         }
         // 403 11 ACCESS_DENIED
@@ -306,7 +313,7 @@ void dlg_cam::network_read()
 void dlg_cam::network_connected()
 {
     ui.label_img->setText("Po³±czono z serwerem kamerek<br>Trwa autoryzacja...");
-    dlg_cam::network_send(QString("CAUTH %1 3.1(applet)").arg("1234567890123456"));
+    dlg_cam::network_send(QString("CAUTH %1 3.00.159").arg("1234567890123456"));
 }
 
 void dlg_cam::network_keepalive()
