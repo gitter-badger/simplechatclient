@@ -1272,7 +1272,10 @@ void tab_widget::inputline_return_pressed()
                     if (bBold == true) weight += "b";
                     if (bItalic == true) weight += "i";
 
-                    strTextDisplay = "%C"+strCurrentColor+"%%F"+weight+":"+font+"%"+strTextDisplay;
+                    if ((weight != "") || (font != "verdana"))
+                        strTextDisplay = "%F"+weight+":"+font+"%"+strTextDisplay;
+                    if (strCurrentColor != "000000")
+                        strTextDisplay = "%C"+strCurrentColor+"%"+strTextDisplay;
 
                     QDateTime dt = QDateTime::currentDateTime();
                     QString strDT = dt.toString("[hh:mm:ss] ");
@@ -1303,7 +1306,11 @@ void tab_widget::inputline_return_pressed()
                 if (bBold == true) weight += "b";
                 if (bItalic == true) weight += "i";
 
-                strText = "%C"+strCurrentColor+"%%F"+weight+":"+font+"%"+strText;
+                if ((weight != "") || (font != "verdana"))
+                    strText = "%F"+weight+":"+font+"%"+strText;
+                if (strCurrentColor != "000000")
+                    strText = "%C"+strCurrentColor+"%"+strText;
+
                 strText = tab_widget::convert_emots(strText);
 
                 QDateTime dt = QDateTime::currentDateTime();
@@ -1363,7 +1370,10 @@ void tab_widget::moder_button_clicked()
                     if (bBold == true) weight += "b";
                     if (bItalic == true) weight += "i";
 
-                    strTextDisplay = "%F"+weight+":"+font+"%"+strTextDisplay;
+                    if ((weight != "") || (font != "verdana"))
+                        strTextDisplay = "%F"+weight+":"+font+"%"+strTextDisplay;
+                    if (strCurrentColor != "000000")
+                        strTextDisplay = "%C"+strCurrentColor+"%"+strTextDisplay;
 
                     QDateTime dt = QDateTime::currentDateTime();
                     QString strDT = dt.toString("[hh:mm:ss] ");
@@ -1394,7 +1404,11 @@ void tab_widget::moder_button_clicked()
                 if (bBold == true) weight += "b";
                 if (bItalic == true) weight += "i";
 
-                strText = "%F"+weight+":"+font+"%"+strText;
+                if ((weight != "") || (font != "verdana"))
+                    strText = "%F"+weight+":"+font+"%"+strText;
+                if (strCurrentColor != "000000")
+                    strText = "%C"+strCurrentColor+"%"+strText;
+
                 strText = tab_widget::convert_emots(strText);
 
                 QDateTime dt = QDateTime::currentDateTime();
