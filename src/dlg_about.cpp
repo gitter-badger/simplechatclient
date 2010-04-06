@@ -23,11 +23,12 @@
 dlg_about::dlg_about()
 {
     ui.setupUi(this);
+    setAttribute(Qt::WA_DeleteOnClose);
 
     ui.labelLogo->setPixmap(QPixmap(":/3rdparty/images/r2_128.png"));
 
     QString strDescription = "<p style=\"font-size:18px;font-weight:bold\">Simple Chat Client</p>";
-    strDescription += "<p>Version 1.0.1</p>";
+    strDescription += "<p>Version 1.0.2</p>";
     strDescription += "<p>&copy; 2010 Piotr £uczko</p>";
     strDescription += "<p><a style=\"text-decoration:none;\" href=\"http://simplechatclien.sourceforge.net/\">Home page</a></p>";
     strDescription += "<p>License <a style=\"text-decoration:none;\" href=\"http://www.fsf.org/licensing/licenses/gpl.html\">GPL v3</a></p>";
@@ -39,5 +40,5 @@ dlg_about::dlg_about()
 
 void dlg_about::button_ok()
 {
-    this->hide();
+    this->close();
 }

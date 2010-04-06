@@ -23,6 +23,7 @@
 dlg_options::dlg_options(QSettings *param1)
 {
     ui.setupUi(this);
+    setAttribute(Qt::WA_DeleteOnClose);
 
     settings = param1;
 
@@ -139,7 +140,7 @@ void dlg_options::hide_join_part()
 
 void dlg_options::button_cancel()
 {
-    this->hide();
+    this->close();
 }
 
 void dlg_options::button_ok()
@@ -159,5 +160,5 @@ void dlg_options::button_ok()
     pConfig->set_value("login-pass", strPass);
     delete pConfig;
 
-    this->hide();
+    this->close();
 }
