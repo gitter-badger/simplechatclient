@@ -211,12 +211,10 @@ QString irc_auth::get_version(QString strData)
             QString strVersion = strData.mid(strData.indexOf("signed-OnetCzatLoader-")+22, strData.indexOf(".jar") - strData.indexOf("signed-OnetCzatLoader-") -22);
             if ((strVersion.isEmpty() == false) && (strVersion.length() > 0) && (strVersion.length() < 20))
                 return strVersion;
-            else
-                return "20090619-1228_2";
         }
     }
-    else
-        return "20090619-1228_2";
+
+    return "20090619-1228_2";
 }
 
 void irc_auth::request_finished(QString strData)
