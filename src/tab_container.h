@@ -25,7 +25,6 @@
 #include <QSettings>
 #include <QTcpSocket>
 #include "config.h"
-#include "dlg_cam.h"
 #include "dlg_channel_settings.h"
 #include "dlg_moderation.h"
 #include "tab_manager.h"
@@ -37,7 +36,7 @@ class tab_container : public QObject
 public:
     tab_container(tab_manager *, QWidget *, QTcpSocket *, QSettings *);
     ~tab_container();
-    void set_dlg(dlg_channel_settings *, dlg_moderation *, dlg_cam *);
+    void set_dlg(dlg_channel_settings *, dlg_moderation *);
     bool exist_tab(QString);
     void add_tab(QString, QWidget *);
     void remove_tab(QString);
@@ -69,7 +68,6 @@ private:
     QSettings *settings;
     dlg_channel_settings *dlgchannel_settings;
     dlg_moderation *dlgmoderation;
-    dlg_cam *dlgcam;
 
     void update_open_channels();
     int free_list_get();

@@ -34,9 +34,7 @@ class dlg_cam : public QDialog
 {
     Q_OBJECT
 public:
-    dlg_cam(QSettings *, QTcpSocket *);
-    ~dlg_cam();
-    void set_nick(QString);
+    dlg_cam(QSettings *, QTcpSocket *, QString);
 
 private:
     Ui::uiCam ui;

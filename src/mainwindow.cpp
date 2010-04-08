@@ -81,11 +81,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     dlgchannel_favourites = new dlg_channel_favourites(&settings, pSocket, tabc);
     dlgfriends = new dlg_friends(&settings, pSocket, tabc);
     dlgignore = new dlg_ignore(&settings, pSocket, tabc);
-    dlgcam = new dlg_cam(&settings, pSocket);
     pIrc_auth = new irc_auth(&settings, tabc, pSocket);
 
     pNetwork->set_dlg(tabc, dlgchannel_settings, dlgchannel_homes, dlgchannel_list, dlgchannel_favourites, dlgfriends, dlgignore, dlgmoderation);
-    tabc->set_dlg(dlgchannel_settings, dlgmoderation, dlgcam);
+    tabc->set_dlg(dlgchannel_settings, dlgmoderation);
 
     tabc->show_msg("Status", "%Fi:courier%Witaj w programie Simple Chat Client %Ixhehe%", 0);
     tabc->show_msg("Status", "%Fb:courier%%C008100%Oficjalna strona SCC%C000000%: http://simplechatclien.sourceforge.net/ %Ixluzak%", 0);
@@ -122,7 +121,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
 // statusbar
     QLabel *label_status = new QLabel();
-    label_status->setText("v1.0.2.160");
+    label_status->setText("v1.0.3.163");
     statusBar()->addWidget(label_status);
 
 // signals
@@ -156,7 +155,6 @@ MainWindow::~MainWindow()
     trayIcon->hide();
     settings.setValue("reconnect", "false");
     delete pIrc_auth;
-    delete dlgcam;
     delete dlgignore;
     delete dlgfriends;
     delete dlgchannel_favourites;

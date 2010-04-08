@@ -35,14 +35,13 @@ class qnicklist : public QListWidget
 {
     Q_OBJECT
 public:
-    qnicklist(QTcpSocket *, QSettings *, QString, dlg_cam *);
+    qnicklist(QTcpSocket *, QSettings *, QString);
     void set_open_channels(QStringList);
 
 private:
     QTcpSocket *socket;
     QSettings *settings;
     QString strChannel;
-    dlg_cam *dlgcam;
     QStringList strOpenChannels;
     enum { MaxOpenChannels = 50 };
     QAction *openChannelsActs[MaxOpenChannels];

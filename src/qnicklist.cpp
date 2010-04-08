@@ -20,12 +20,11 @@
 
 #include "qnicklist.h"
 
-qnicklist::qnicklist(QTcpSocket *param1, QSettings *param2, QString param3, dlg_cam *param4)
+qnicklist::qnicklist(QTcpSocket *param1, QSettings *param2, QString param3)
 {
     socket = param1;
     settings = param2;
     strChannel = param3;
-    dlgcam = param4;
 }
 
 void qnicklist::set_open_channels(QStringList param1)
@@ -54,10 +53,7 @@ void qnicklist::cam()
     if (this->selectedItems().count() == 0) return;
 
     QString strNick = this->selectedItems().at(0)->text();
-    dlgcam->set_nick(strNick);
-    if (dlgcam->isHidden() == false)
-        dlgcam->hide();
-    dlgcam->show();
+    (new dlg_cam(settings, socket, strNick))->show();
 }
 
 void qnicklist::friends_add()

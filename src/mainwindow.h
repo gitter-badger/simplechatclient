@@ -31,7 +31,6 @@
 #include "config.h"
 #include "crypt.h"
 #include "dlg_about.h"
-#include "dlg_cam.h"
 #include "dlg_channel_favourites.h"
 #include "dlg_channel_homes.h"
 #include "dlg_channel_list.h"
@@ -67,7 +66,6 @@ private:
     dlg_friends *dlgfriends;
     dlg_ignore *dlgignore;
     dlg_moderation *dlgmoderation;
-    dlg_cam *dlgcam;
     QMenu *trayMenu;
     QSystemTrayIcon *trayIcon;
     QMenu *fileMenu;

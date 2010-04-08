@@ -20,14 +20,13 @@
 
 #include "tab_widget.h"
 
-tab_widget::tab_widget(QString param1, QWidget *parent, QTcpSocket *param2, QSettings *param3, dlg_channel_settings *param4, dlg_moderation *param5, dlg_cam *param6)
+tab_widget::tab_widget(QString param1, QWidget *parent, QTcpSocket *param2, QSettings *param3, dlg_channel_settings *param4, dlg_moderation *param5)
 {
     strName = param1;
     socket = param2;
     settings = param3;
     dlgchannel_settings = param4;
     dlgmoderation = param5;
-    dlgcam = param6;
 
     iNickCount = 0;
     bCursorPositionChanged = false;
@@ -178,7 +177,7 @@ tab_widget::tab_widget(QString param1, QWidget *parent, QTcpSocket *param2, QSet
 
     mainLayout = new QGridLayout(this);
 
-    nick_list = new qnicklist(socket, settings, strName, dlgcam);
+    nick_list = new qnicklist(socket, settings, strName);
     nick_list->setParent(this);
     nick_list->setSortingEnabled(false);
     nick_list->show();
@@ -440,6 +439,7 @@ void tab_widget::display_message(QString strData, int iLevel)
                 // beep
                 QString apath = QCoreApplication::applicationDirPath();
                 Phonon::MediaObject *mediaObject = new Phonon::MediaObject();
+                mediaObject->setTickInterval(1000);
                 mediaObject->setCurrentSource(Phonon::MediaSource(apath+"/3rdparty/sounds/beep.wav"));
                 Phonon::AudioOutput *audioOutput = new Phonon::AudioOutput(Phonon::MusicCategory);
                 Phonon::Path path = Phonon::createPath(mediaObject, audioOutput);

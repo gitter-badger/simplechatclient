@@ -47,7 +47,6 @@
 #include <QWidget>
 #include "commands.h"
 #include "config.h"
-#include "dlg_cam.h"
 #include "dlg_channel_settings.h"
 #include "dlg_moderation.h"
 #include "log.h"
@@ -58,7 +57,7 @@ class tab_widget : public QWidget
 {
     Q_OBJECT
 public:
-    tab_widget(QString, QWidget *, QTcpSocket *, QSettings *, dlg_channel_settings *, dlg_moderation *, dlg_cam *);
+    tab_widget(QString, QWidget *, QTcpSocket *, QSettings *, dlg_channel_settings *, dlg_moderation *);
     ~tab_widget();
     QString get_name() { return strName; }
     QString convert_emots(QString);
@@ -127,7 +126,6 @@ private:
     QGridLayout *mainLayout;
     dlg_channel_settings *dlgchannel_settings;
     dlg_moderation *dlgmoderation;
-    dlg_cam *dlgcam;
 
     QString strName;
     QTcpSocket *socket;

@@ -45,11 +45,10 @@ tab_container::~tab_container()
     }
 }
 
-void tab_container::set_dlg(dlg_channel_settings *param1, dlg_moderation *param2, dlg_cam *param3)
+void tab_container::set_dlg(dlg_channel_settings *param1, dlg_moderation *param2)
 {
     dlgchannel_settings = param1;
     dlgmoderation = param2;
-    dlgcam = param3;
 }
 
 bool tab_container::exist_tab(QString strChannel)
@@ -82,7 +81,7 @@ void tab_container::add_tab(QString strChannel,QWidget *parent)
         int iFree = tab_container::free_list_get();
         if (iFree != -1)
         {
-            tw[iFree] = new tab_widget(strChannel, parent, socket, settings, dlgchannel_settings, dlgmoderation, dlgcam);
+            tw[iFree] = new tab_widget(strChannel, parent, socket, settings, dlgchannel_settings, dlgmoderation);
             int iTab = tabm->addTab(tw[iFree], strChannel);
             tabm->setCurrentIndex(iTab);
             free_list[iFree] = 'u';

@@ -20,15 +20,17 @@
 
 #include "dlg_cam.h"
 
-dlg_cam::dlg_cam(QSettings *param1, QTcpSocket *param2)
+dlg_cam::dlg_cam(QSettings *param1, QTcpSocket *param2, QString param3)
 {
     ui.setupUi(this);
 
     settings = param1;
     irc_socket = param2;
+    strNick = param3;
+    ui.label->setText("<p style=\"font-weight:bold;\">"+strNick+"</p>");
 
-    socket = new QTcpSocket(this);
-    timer = new QTimer(this);
+    socket = new QTcpSocket();
+    timer = new QTimer();
     timer->setInterval(2*1000); // 2 sec
 
     QObject::connect(ui.buttonBox, SIGNAL(accepted()), this, SLOT(button_ok()));
@@ -36,18 +38,6 @@ dlg_cam::dlg_cam(QSettings *param1, QTcpSocket *param2)
     QObject::connect(socket, SIGNAL(connected()), this, SLOT(network_connected()));
     QObject::connect(socket, SIGNAL(disconnected()), this, SLOT(network_disconnected()));
     QObject::connect(socket, SIGNAL(readyRead()), this, SLOT(network_read()));
-}
-
-dlg_cam::~dlg_cam()
-{
-    timer->stop();
-    delete socket;
-}
-
-void dlg_cam::set_nick(QString param1)
-{
-    strNick = param1;
-    ui.label->setText("<p style=\"font-weight:bold;\">"+strNick+"</p>");
 }
 
 void dlg_cam::show_img(QByteArray data)
@@ -360,7 +350,7 @@ void dlg_cam::send(QString strData)
 
 void dlg_cam::button_ok()
 {
-    this->hide();
+    this->close();
 }
 
 void dlg_cam::showEvent(QShowEvent *event)
@@ -376,5 +366,7 @@ void dlg_cam::hideEvent(QHideEvent *event)
 {
     event->accept();
 
+    timer->stop();
     dlg_cam::network_disconnect();
+    delete socket;
 }
