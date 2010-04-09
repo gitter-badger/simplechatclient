@@ -53,7 +53,7 @@ void dlg_cam::network_connect()
     if (socket->state() == QAbstractSocket::UnconnectedState)
     {
         socket->connectToHost("czat-s.onet.pl", 5008);
-        if (socket->waitForConnected())
+        if ((socket->state() == QAbstractSocket::ConnectedState) || (socket->waitForConnected()))
             ui.label_img->setText("Po³±czono z serwerem kamerek<br>Trwa autoryzacja...");
         else
             ui.label_img->setText("Nie mo¿na po³±czyæ siê z serwerem kamerek");
@@ -96,6 +96,11 @@ void dlg_cam::network_disconnect()
     {
         dlg_cam::network_send(QString("UNSUBSCRIBE_BIG * %1").arg(strNick));
         socket->disconnectFromHost();
+        if ((socket->state() == QAbstractSocket::UnconnectedState) || (socket->waitForDisconnected()))
+        {
+            int nop;
+            nop = 1;
+        }
     }
 }
 

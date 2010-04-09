@@ -132,7 +132,7 @@ private:
     QString strLast_msg;
     QSettings *settings;
     QMutex mutex_nicklist;
-    QMutex mutex_beep;
+    QMutex mutex_notify;
     QTimer *timer;
     QMap<QString, QString> nick_flag;
     QMap<QString, QString> nick_suffix;

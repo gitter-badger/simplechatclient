@@ -39,7 +39,6 @@ private:
     QSettings *settings;
     QString strNick;
     QString strChannel;
-    QTimer *timer;
     QString strTimerChannel;
     QString strTimerNick;
 

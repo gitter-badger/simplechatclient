@@ -442,9 +442,9 @@ void tab_widget::display_message(QString strData, int iLevel)
                 textEdit->setTextColor(QColor(255, 0, 0, 255)); // red
                 bHilight = true;
 
-                mutex_beep.lock();
+                mutex_notify.lock();
                 notify->play();
-                mutex_beep.unlock();
+                mutex_notify.unlock();
 
                 bLevel = true;
             }

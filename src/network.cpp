@@ -140,6 +140,11 @@ void network::close()
     if (socket->state() == QAbstractSocket::ConnectedState)
     {
         socket->disconnectFromHost();
+        if ((socket->state() == QAbstractSocket::UnconnectedState) || (socket->waitForDisconnected(1000)))
+        {
+            int nop;
+            nop = 1;
+        }
     }
 }
 

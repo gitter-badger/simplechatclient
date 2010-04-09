@@ -30,12 +30,8 @@ dlg_priv::dlg_priv(QTcpSocket *param1, tab_container *param2, QSettings *param3,
     strNick = param4;
     strChannel = param5;
 
-    timer = new QTimer();
-    timer->setInterval(1000*1); // 1 sec
-
     ui.label->setText(QString("%1 zaprasza do rozmowy prywatnej").arg(strNick));
 
-    QObject::connect(timer, SIGNAL(timeout()), this, SLOT(timer_timeout()));
     QObject::connect(ui.pushButtonReject, SIGNAL(clicked()), this, SLOT(button_reject()));
     QObject::connect(ui.pushButtonIgnore, SIGNAL(clicked()), this, SLOT(button_ignore()));
     QObject::connect(ui.pushButtonAccept, SIGNAL(clicked()), this, SLOT(button_accept()));
@@ -58,13 +54,12 @@ void dlg_priv::button_accept()
     dlg_priv::send(QString("JOIN %1").arg(strChannel));
     strTimerChannel = strChannel;
     strTimerNick = strNick;
-    timer->start();
+    QTimer::singleShot(1000, this, SLOT(timer_timeout()));
     this->hide();
 }
 
 void dlg_priv::timer_timeout()
 {
-    timer->stop();
     tabc->rename_tab(strTimerChannel, strTimerNick);
     strTimerChannel = QString::null;
     strTimerNick = QString::null;
