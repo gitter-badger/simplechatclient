@@ -21,8 +21,6 @@
 #ifndef TAB_WIDGET_H
 #define TAB_WIDGET_H
 
-#include <Phonon/AudioOutput>
-#include <Phonon/MediaObject>
 #include <QAction>
 #include <QtAlgorithms>
 #include <QDateTime>
@@ -52,6 +50,7 @@
 #include "log.h"
 #include "qinputline.h"
 #include "qnicklist.h"
+#include "qnotify.h"
 
 class tab_widget : public QWidget
 {
@@ -126,12 +125,14 @@ private:
     QGridLayout *mainLayout;
     dlg_channel_settings *dlgchannel_settings;
     dlg_moderation *dlgmoderation;
+    qnotify *notify;
 
     QString strName;
     QTcpSocket *socket;
     QString strLast_msg;
     QSettings *settings;
-    QMutex mutex;
+    QMutex mutex_nicklist;
+    QMutex mutex_beep;
     QTimer *timer;
     QMap<QString, QString> nick_flag;
     QMap<QString, QString> nick_suffix;

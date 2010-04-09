@@ -18,61 +18,26 @@
  *                                                                          *
  ****************************************************************************/
 
-#ifndef QNICKLIST_H
-#define QNICKLIST_H
+#include "qnotify.h"
 
-#include <QContextMenuEvent>
-#ifdef Q_WS_X11
-#include <QDebug>
-#endif
-#include <QListWidget>
-#include <QMenu>
-#include <QSettings>
-#include <QTcpSocket>
-#include "dlg_cam.h"
-
-class qnicklist : public QListWidget
+qnotify::qnotify()
 {
-    Q_OBJECT
-public:
-    qnicklist(QTcpSocket *, QSettings *, QString);
-    ~qnicklist();
-    void set_open_channels(QStringList);
+}
 
-private:
-    QTcpSocket *socket;
-    QSettings *settings;
-    QString strChannel;
-    QStringList strOpenChannels;
-    enum { MaxOpenChannels = 50 };
-    QAction *openChannelsActs[MaxOpenChannels];
+void qnotify::play()
+{
+    QString apath = QCoreApplication::applicationDirPath();
+    Phonon::MediaObject *mediaObject = new Phonon::MediaObject();
+    mediaObject->setTickInterval(1*1000); // 1 sec
+    mediaObject->setCurrentSource(Phonon::MediaSource(apath+"/3rdparty/sounds/beep.wav"));
+    Phonon::AudioOutput *audioOutput = new Phonon::AudioOutput(Phonon::NotificationCategory);
+    Phonon::Path audioPath = Phonon::createPath(mediaObject, audioOutput);
 
-    void send(QString);
+    mediaObject->play();
+    QEventLoop loop;
+    QObject::connect(mediaObject, SIGNAL(finished()), &loop, SLOT(quit()));
+    loop.exec();
 
-private slots:
-    void priv();
-    void whois();
-    void cam();
-    void friends_add();
-    void friends_del();
-    void ignore_add();
-    void ignore_del();
-    void kick();
-    void ban();
-    void kban();
-    void op_add();
-    void op_del();
-    void halfop_add();
-    void halfop_del();
-    void moderator_add();
-    void moderator_del();
-    void voice_add();
-    void voice_del();
-    void invite();
-
-protected:
-    virtual void contextMenuEvent(QContextMenuEvent *);
-
-};
-
-#endif // QNICKLIST_H
+    delete audioOutput;
+    delete mediaObject;
+}

@@ -38,7 +38,8 @@ SOURCES += src/commands.cpp \
     src/qnicklist.cpp \
     src/tab_container.cpp \
     src/tab_manager.cpp \
-    src/tab_widget.cpp
+    src/tab_widget.cpp \
+    src/qnotify.cpp
 HEADERS += src/commands.h \
     src/config.h \
     src/crypt.h \
@@ -69,7 +70,8 @@ HEADERS += src/commands.h \
     src/qnicklist.h \
     src/tab_container.h \
     src/tab_manager.h \
-    src/tab_widget.h
+    src/tab_widget.h \
+    src/qnotify.h
 FORMS += ui/about.ui \
     ui/cam.ui \
     ui/channel_favourites.ui \

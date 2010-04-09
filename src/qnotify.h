@@ -18,61 +18,21 @@
  *                                                                          *
  ****************************************************************************/
 
-#ifndef QNICKLIST_H
-#define QNICKLIST_H
+#ifndef QNOTIFY_H
+#define QNOTIFY_H
 
-#include <QContextMenuEvent>
-#ifdef Q_WS_X11
-#include <QDebug>
-#endif
-#include <QListWidget>
-#include <QMenu>
-#include <QSettings>
-#include <QTcpSocket>
-#include "dlg_cam.h"
+#include <Phonon/AudioOutput>
+#include <Phonon/MediaObject>
+#include <QCoreApplication>
+#include <QObject>
 
-class qnicklist : public QListWidget
+class qnotify : public QObject
 {
     Q_OBJECT
 public:
-    qnicklist(QTcpSocket *, QSettings *, QString);
-    ~qnicklist();
-    void set_open_channels(QStringList);
-
-private:
-    QTcpSocket *socket;
-    QSettings *settings;
-    QString strChannel;
-    QStringList strOpenChannels;
-    enum { MaxOpenChannels = 50 };
-    QAction *openChannelsActs[MaxOpenChannels];
-
-    void send(QString);
-
-private slots:
-    void priv();
-    void whois();
-    void cam();
-    void friends_add();
-    void friends_del();
-    void ignore_add();
-    void ignore_del();
-    void kick();
-    void ban();
-    void kban();
-    void op_add();
-    void op_del();
-    void halfop_add();
-    void halfop_del();
-    void moderator_add();
-    void moderator_del();
-    void voice_add();
-    void voice_del();
-    void invite();
-
-protected:
-    virtual void contextMenuEvent(QContextMenuEvent *);
+        qnotify();
+        void play();
 
 };
 
-#endif // QNICKLIST_H
+#endif // QNOTIFY_H

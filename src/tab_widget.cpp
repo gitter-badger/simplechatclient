@@ -32,6 +32,8 @@ tab_widget::tab_widget(QString param1, QWidget *parent, QTcpSocket *param2, QSet
     bCursorPositionChanged = false;
     strCurrentColor = "000000";
 
+    notify = new qnotify();
+
     timer = new QTimer();
     timer->setInterval(1000*60*60*4); // 4h
     timer->start();
@@ -351,6 +353,10 @@ tab_widget::~tab_widget()
     textEdit->clear();
     nick_list->clear();
     nicklist.clear();
+
+    delete nick_list;
+    delete inputline;
+    delete notify;
 }
 
 QString tab_widget::convert_emots(QString strData)
@@ -436,14 +442,9 @@ void tab_widget::display_message(QString strData, int iLevel)
                 textEdit->setTextColor(QColor(255, 0, 0, 255)); // red
                 bHilight = true;
 
-                // beep
-                QString apath = QCoreApplication::applicationDirPath();
-                Phonon::MediaObject *mediaObject = new Phonon::MediaObject();
-                mediaObject->setTickInterval(1000);
-                mediaObject->setCurrentSource(Phonon::MediaSource(apath+"/3rdparty/sounds/beep.wav"));
-                Phonon::AudioOutput *audioOutput = new Phonon::AudioOutput(Phonon::MusicCategory);
-                Phonon::Path path = Phonon::createPath(mediaObject, audioOutput);
-                mediaObject->play();
+                mutex_beep.lock();
+                notify->play();
+                mutex_beep.unlock();
 
                 bLevel = true;
             }
@@ -864,7 +865,7 @@ void tab_widget::nicklist_clear()
 
 void tab_widget::nicklist_refresh()
 {
-    mutex.lock();
+    mutex_nicklist.lock();
     nick_list->clear();
 
     new_nicklist1.clear();
@@ -897,7 +898,7 @@ void tab_widget::nicklist_refresh()
         nick_list->addItem(new_nick);
     }
 
-    mutex.unlock();
+    mutex_nicklist.unlock();
 }
 
 void tab_widget::nicklist_sort()

@@ -27,6 +27,11 @@ qnicklist::qnicklist(QTcpSocket *param1, QSettings *param2, QString param3)
     strChannel = param3;
 }
 
+qnicklist::~qnicklist()
+{
+    strOpenChannels.clear();
+}
+
 void qnicklist::set_open_channels(QStringList param1)
 {
     strOpenChannels = param1;
