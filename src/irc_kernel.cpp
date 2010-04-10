@@ -520,10 +520,7 @@ void irc_kernel::raw_kick()
         strReason = strReason.right(strReason.length()-1);
 
     QString strDisplay;
-    if (settings->value("show_zuo").toString() == "on")
-        strDisplay = QString("* %1 [%2@%3] zosta³ wyrzucony z kana³u %4 przez %5. Powód: %6").arg(strNick).arg(strZUO).arg(strIP).arg(strChannel).arg(strWho).arg(strReason);
-    else
-        strDisplay = QString("* %1 [%2] zosta³ wyrzucony z kana³u %3 przez %4. Powód: %5").arg(strNick).arg(strIP).arg(strChannel).arg(strWho).arg(strReason);
+    strDisplay = QString("* %1 zosta³ wyrzucony z kana³u %2 przez %3. Powód: %4").arg(strNick).arg(strChannel).arg(strWho).arg(strReason);
 
     if (tabc->exist_tab(strChannel) == true)
         tabc->show_msg(strChannel, strDisplay, 4);

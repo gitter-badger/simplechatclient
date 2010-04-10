@@ -270,10 +270,10 @@ QString commands::cmd_kick()
     QString strReason;
     for (int i = 2; i < strDataList.size(); i++) { if (i != 2) strReason += " "; strReason += strDataList[i]; }
 
-    if (strReason.isEmpty() == false)
-        return QString("KICK %1 %2 :%3").arg(strChannel).arg(strNick).arg(strReason);
-    else
-        return QString("KICK %1 %2").arg(strChannel).arg(strNick);
+    if (strReason.isEmpty() == true)
+        strReason = "Zachowuj siê! Byle jak ale siê zachowuj!";
+
+    return QString("KICK %1 %2 :%3").arg(strChannel).arg(strNick).arg(strReason);
 }
 
 QString commands::cmd_ban()
