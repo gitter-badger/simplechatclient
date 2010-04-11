@@ -52,13 +52,15 @@ void dlg_channel_homes_ad::button_ok()
     else
         dlg_channel_homes_ad::send("CS HOMES");
 
-    this->hide();
+    ui.buttonBox->QObject::disconnect();
+    this->close();
 }
 
 void dlg_channel_homes_ad::button_cancel()
 {
     dlg_channel_homes_ad::send("CS HOMES");
-    this->hide();
+    ui.buttonBox->QObject::disconnect();
+    this->close();
 }
 
 // copy of network::send

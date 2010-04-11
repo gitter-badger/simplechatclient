@@ -58,6 +58,7 @@ config::config()
 config::~config()
 {
     file->close();
+    delete file;
 }
 
 void config::save()
@@ -69,6 +70,7 @@ void config::save()
     fs->open(QIODevice::WriteOnly | QIODevice::Truncate);
     fs->write(baSave);
     fs->close();
+    delete fs;
 }
 
 QString config::get_value(QString strKey)

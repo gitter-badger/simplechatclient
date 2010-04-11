@@ -52,13 +52,15 @@ void dlg_ignore_ad::button_ok()
     else
         dlg_ignore_ad::send("NS IGNORE");
 
-    this->hide();
+    ui.buttonBox->QObject::disconnect();
+    this->close();
 }
 
 void dlg_ignore_ad::button_cancel()
 {
     dlg_ignore_ad::send("NS IGNORE");
-    this->hide();
+    ui.buttonBox->QObject::disconnect();
+    this->close();
 }
 
 // copy of network::send

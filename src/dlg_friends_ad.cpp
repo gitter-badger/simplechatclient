@@ -50,12 +50,14 @@ void dlg_friends_ad::button_ok()
             dlg_friends_ad::send(QString("NS FRIENDS DEL %1").arg(strNick));
     }
 
-    this->hide();
+    ui.buttonBox->QObject::disconnect();
+    this->close();
 }
 
 void dlg_friends_ad::button_cancel()
 {
-    this->hide();
+    ui.buttonBox->QObject::disconnect();
+    this->close();
 }
 
 // copy of network::send

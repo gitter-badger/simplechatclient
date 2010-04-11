@@ -51,13 +51,15 @@ void dlg_channel_favourites_ad::button_ok()
     }
 
     dlg_channel_favourites_ad::send("NS FAVOURITES");
-    this->hide();
+    ui.buttonBox->QObject::disconnect();
+    this->close();
 }
 
 void dlg_channel_favourites_ad::button_cancel()
 {
     dlg_channel_favourites_ad::send("NS FAVOURITES");
-    this->hide();
+    ui.buttonBox->QObject::disconnect();
+    this->close();
 }
 
 // copy of network::send

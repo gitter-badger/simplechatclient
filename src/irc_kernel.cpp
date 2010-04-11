@@ -124,6 +124,8 @@ void irc_kernel::kernel()
             irc_kernel::raw_421();
         else if (strDataList[1].toLower() == "433")
             irc_kernel::raw_433();
+        else if (strDataList[1].toLower() == "443")
+            irc_kernel::raw_443();
         else if (strDataList[1].toLower() == "451")
             irc_kernel::raw_451();
         else if (strDataList[1].toLower() == "473")
@@ -1910,6 +1912,20 @@ void irc_kernel::raw_441n()
     QString strChannel = strDataList[4];
 
     QString strMessage = QString("* Kana³ %1 nie jest na li¶cie ulubionych").arg(strChannel);
+
+    tabc->show_msg_active(strMessage, 7);
+}
+
+// :cf1f4.onet 443 Merovingian scc #Scrabble :is already on channel
+void irc_kernel::raw_443()
+{
+    if (strDataList.value(3).isEmpty() == true) return;
+    if (strDataList.value(4).isEmpty() == true) return;
+
+    QString strNick = strDataList[3];
+    QString strChannel = strDataList[4];
+
+    QString strMessage = QString("* %1 jest ju¿ na kanale %2").arg(strNick).arg(strChannel);
 
     tabc->show_msg_active(strMessage, 7);
 }

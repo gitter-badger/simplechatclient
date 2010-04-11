@@ -31,6 +31,7 @@ class qinputline : public QLineEdit
     Q_OBJECT
 public:
     qinputline(QWidget*);
+    ~qinputline();
     void set_userslist(QListWidget *);
 
 private:

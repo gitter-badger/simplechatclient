@@ -104,14 +104,18 @@ void dlg_privilege::button_ok()
 
     dlg_privilege::clear();
     dlg_privilege::send(QString("CS INFO %1").arg(strChannel));
-    this->hide();
+
+    ui.buttonBox->QObject::disconnect();
+    this->close();
 }
 
 void dlg_privilege::button_cancel()
 {
     dlg_privilege::clear();
     dlg_privilege::send(QString("CS INFO %1").arg(strChannel));
-    this->hide();
+
+    ui.buttonBox->QObject::disconnect();
+    this->close();
 }
 
 void dlg_privilege::clear()

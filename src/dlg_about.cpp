@@ -40,5 +40,6 @@ dlg_about::dlg_about()
 
 void dlg_about::button_ok()
 {
+    ui.buttonBox->QObject::disconnect();
     this->close();
 }

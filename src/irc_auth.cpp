@@ -106,6 +106,7 @@ void irc_auth::request_uo(QString param1, QString param2)
 
     this->request_finished(pHttp->read_http());
 
+    pHttp->request_clear();
     delete pHttp;
     mutex.unlock();
 }

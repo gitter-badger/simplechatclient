@@ -27,6 +27,11 @@ qinputline::qinputline(QWidget *parent) : QLineEdit(parent)
     users_list = new QListWidget();
 }
 
+qinputline::~qinputline()
+{
+    strLastWord = QString::null;
+}
+
 void qinputline::set_userslist(QListWidget *param1)
 {
     users_list = param1;

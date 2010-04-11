@@ -40,13 +40,21 @@ dlg_priv::dlg_priv(QTcpSocket *param1, tab_container *param2, QSettings *param3,
 void dlg_priv::button_reject()
 {
     dlg_priv::send(QString("INVREJECT %1 %2").arg(strNick).arg(strChannel));
-    this->hide();
+
+    ui.pushButtonAccept->QObject::disconnect();
+    ui.pushButtonIgnore->QObject::disconnect();
+    ui.pushButtonReject->QObject::disconnect();
+    this->close();
 }
 
 void dlg_priv::button_ignore()
 {
     dlg_priv::send(QString("INVIGNORE %1 %2").arg(strNick).arg(strChannel));
-    this->hide();
+
+    ui.pushButtonAccept->QObject::disconnect();
+    ui.pushButtonIgnore->QObject::disconnect();
+    ui.pushButtonReject->QObject::disconnect();
+    this->close();
 }
 
 void dlg_priv::button_accept()
@@ -55,7 +63,11 @@ void dlg_priv::button_accept()
     strTimerChannel = strChannel;
     strTimerNick = strNick;
     QTimer::singleShot(1000, this, SLOT(timer_timeout()));
-    this->hide();
+
+    ui.pushButtonAccept->QObject::disconnect();
+    ui.pushButtonIgnore->QObject::disconnect();
+    ui.pushButtonReject->QObject::disconnect();
+    this->close();
 }
 
 void dlg_priv::timer_timeout()

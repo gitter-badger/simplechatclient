@@ -121,7 +121,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
 // statusbar
     QLabel *label_status = new QLabel();
-    label_status->setText("v1.0.3.166");
+    label_status->setText("v1.0.3.167");
     statusBar()->addWidget(label_status);
 
 // signals
@@ -154,6 +154,8 @@ MainWindow::~MainWindow()
 {
     trayIcon->hide();
     settings.setValue("reconnect", "false");
+    delete trayIcon;
+    delete trayMenu;
     delete pIrc_auth;
     delete dlgignore;
     delete dlgfriends;

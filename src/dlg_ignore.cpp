@@ -36,9 +36,7 @@ dlg_ignore::dlg_ignore(QSettings *param1, QTcpSocket *param2, tab_container *par
 
 void dlg_ignore::add_ignore(QString strNick)
 {
-    QListWidgetItem *nick;
-    nick = new QListWidgetItem(QIcon(":/3rdparty/images/people.png"), strNick);
-    ui.listWidget->addItem(nick);
+    ui.listWidget->addItem(new QListWidgetItem(QIcon(":/3rdparty/images/people.png"), strNick));
 }
 
 void dlg_ignore::clear()

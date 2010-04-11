@@ -35,6 +35,13 @@ tab_manager::tab_manager(QWidget *pMainWin, QSettings *param1) : QTabWidget(pMai
     QObject::connect(timer, SIGNAL(timeout()), this, SLOT(flash_tab()));
 }
 
+tab_manager::~tab_manager()
+{
+    timer->stop();
+    alert_list->clear();
+    delete alert_list;
+}
+
 void tab_manager::set_hilight(QString strName)
 {
     if (tab_manager::get_settings_key(strName).isEmpty() == false)

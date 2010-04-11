@@ -98,7 +98,8 @@ void qnicklist::kick()
     if (this->selectedItems().count() == 0) return;
 
     QString strNick = this->selectedItems().at(0)->text();
-    qnicklist::send(QString("KICK %1 %2").arg(strChannel).arg(strNick));
+    QString strReason = "Zachowuj siê! Byle jak ale siê zachowuj!";
+    qnicklist::send(QString("KICK %1 %2 :%3").arg(strChannel).arg(strNick).arg(strReason));
 }
 
 void qnicklist::ban()
@@ -282,4 +283,14 @@ void qnicklist::contextMenuEvent(QContextMenuEvent *e)
     menu->addMenu(privilege);
 
     menu->popup(e->globalPos());
+
+    QEventLoop loop;
+    QObject::connect(menu, SIGNAL(triggered(QAction*)), &loop, SLOT(quit()));
+    loop.exec();
+
+    delete menu;
+    delete privilege;
+    delete ignore;
+    delete friends;
+    delete minvite;
 }
