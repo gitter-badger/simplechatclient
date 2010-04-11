@@ -121,7 +121,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
 // statusbar
     QLabel *label_status = new QLabel();
-    label_status->setText("v1.0.3.167");
+    label_status->setText("v1.0.3.168");
     statusBar()->addWidget(label_status);
 
 // signals

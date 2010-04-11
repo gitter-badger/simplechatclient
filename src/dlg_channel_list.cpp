@@ -198,11 +198,13 @@ void dlg_channel_list::regionalneCellDoubleClicked(int row, int column)
 
 void dlg_channel_list::button_ok()
 {
+    dlg_channel_list::clear();
     this->hide();
 }
 
 void dlg_channel_list::button_cancel()
 {
+    dlg_channel_list::clear();
     this->hide();
 }
 

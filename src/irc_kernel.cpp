@@ -632,6 +632,7 @@ void irc_kernel::raw_mode()
                 }
                 ++i;
             }
+            flag_nick.clear();
         }
     }
     else

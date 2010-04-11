@@ -391,11 +391,15 @@ void dlg_channel_settings::button_invite_del()
 
 void dlg_channel_settings::button_ok()
 {
+    strChannel.clear();
+    dlg_channel_settings::clear();
     this->hide();
 }
 
 void dlg_channel_settings::button_cancel()
 {
+    strChannel.clear();
+    dlg_channel_settings::clear();
     this->hide();
 }
 

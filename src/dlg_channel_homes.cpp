@@ -53,6 +53,7 @@ void dlg_channel_homes::list_clicked(QModelIndex index)
     QString strChannel = ui.listWidget->item(i)->text();
     dlgchannel_settings->set_channel(strChannel);
     dlgchannel_settings->show();
+    ui.listWidget->clear();
     this->hide();
 }
 
@@ -70,11 +71,13 @@ void dlg_channel_homes::button_remove()
 
 void dlg_channel_homes::button_ok()
 {
+    ui.listWidget->clear();
     this->hide();
 }
 
 void dlg_channel_homes::button_cancel()
 {
+    ui.listWidget->clear();
     this->hide();
 }
 

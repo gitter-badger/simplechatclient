@@ -140,6 +140,8 @@ void dlg_options::hide_join_part()
 
 void dlg_options::button_cancel()
 {
+    ui.lineEditNick->clear();
+    ui.lineEditPass->clear();
     ui.buttonBox->QObject::disconnect();
     ui.checkBox->QObject::disconnect();
     ui.checkBox_2->QObject::disconnect();
@@ -165,6 +167,8 @@ void dlg_options::button_ok()
     pConfig->set_value("login-pass", strPass);
     delete pConfig;
 
+    ui.lineEditNick->clear();
+    ui.lineEditPass->clear();
     ui.buttonBox->QObject::disconnect();
     ui.checkBox->QObject::disconnect();
     ui.checkBox_2->QObject::disconnect();

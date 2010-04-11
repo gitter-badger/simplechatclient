@@ -58,11 +58,13 @@ void dlg_channel_favourites::button_remove()
 
 void dlg_channel_favourites::button_ok()
 {
+    ui.listWidget->clear();
     this->hide();
 }
 
 void dlg_channel_favourites::button_cancel()
 {
+    ui.listWidget->clear();
     this->hide();
 }
 

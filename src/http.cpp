@@ -29,6 +29,7 @@ http::http()
 http::~http()
 {
     pHttp->close();
+    pHttp->QObject::disconnect();
     delete pHttp;
 }
 

@@ -58,11 +58,13 @@ void dlg_ignore::button_remove()
 
 void dlg_ignore::button_ok()
 {
+    ui.listWidget->clear();
     this->hide();
 }
 
 void dlg_ignore::button_cancel()
 {
+    ui.listWidget->clear();
     this->hide();
 }
 

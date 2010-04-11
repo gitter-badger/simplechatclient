@@ -76,6 +76,7 @@ void dlg_moderation::del_msg(QString strData)
             dlg_moderation::refresh(strChannel);
         }
     }
+    strIDs.clear();
 }
 
 void dlg_moderation::refresh(QString strChannel)
@@ -83,16 +84,17 @@ void dlg_moderation::refresh(QString strChannel)
     if (ui.comboBox->currentText() == strChannel)
        ui.listWidget->clear();
 
-    QList <QString> ids = channel_id.values(strChannel);
-    for (int i = 0; i < ids.count(); i++)
+    QList <QString> strIDs = channel_id.values(strChannel);
+    for (int i = 0; i < strIDs.count(); i++)
     {
-        QString strID = ids.at(i);
+        QString strID = strIDs.at(i);
         QString strNick = id_nick.value(strID);
         QString strMessage = id_message.value(strID);
         QString strData = QString("%1 %2").arg(strNick).arg(strMessage);
         if (ui.comboBox->currentText() == strChannel)
             ui.listWidget->insertItem(ui.listWidget->count()-1, strData);
     }
+    strIDs.clear();
 }
 
 bool dlg_moderation::combo_exist(QString strChannel)
