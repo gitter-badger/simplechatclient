@@ -643,6 +643,7 @@ void tab_widget::display_message(QString strData, int iLevel)
 void tab_widget::set_topic(QString strTopic)
 {
     topic->setText(strTopic);
+    topic->setToolTip(strTopic);
     topic->setCursorPosition(0);
 }
 
