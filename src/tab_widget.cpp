@@ -643,8 +643,12 @@ void tab_widget::display_message(QString strData, int iLevel)
 void tab_widget::set_topic(QString strTopic)
 {
     topic->setText(strTopic);
-    topic->setToolTip(strTopic);
     topic->setCursorPosition(0);
+
+    strTopic.replace(QRegExp("%C(\\S+)%"),"");
+    strTopic.replace(QRegExp("%F(\\S+)%"),"");
+    strTopic.replace(QRegExp("%I(\\S+)%"),"<\\1>");
+    topic->setToolTip(strTopic);
 }
 
 void tab_widget::enable_topic()
@@ -679,6 +683,7 @@ void tab_widget::author_topic(QString strAuthor)
 void tab_widget::set_link(QString strUrl)
 {
     webLink->setText(QString("<a href=\"%1\" style=\"color:#0000FF;text-decoration:none;\" >Strona kana³u</a>").arg(strUrl));
+    webLink->setToolTip(strUrl);
 }
 
 // nick list
