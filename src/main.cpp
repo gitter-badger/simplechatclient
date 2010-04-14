@@ -35,7 +35,7 @@ int main(int argc, char *argv[])
             if (strcmp(argv[i], "--version") == 0)
             {
 #ifdef Q_WS_X11
-                qDebug() << "Simple Chat Client version 1.0.3";
+                qDebug() << "Simple Chat Client version 1.0";
 #endif
                 return 0;
             }

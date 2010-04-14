@@ -22,16 +22,18 @@
 #define DLG_ABOUT_H
 
 #include <QDialog>
+#include <QSettings>
 #include "ui_about.h"
 
 class dlg_about : public QDialog
 {
     Q_OBJECT
 public:
-    dlg_about();
+    dlg_about(QSettings *);
 
 private:
     Ui::uiAbout ui;
+    QSettings *settings;
 
 private slots:
     void button_ok();

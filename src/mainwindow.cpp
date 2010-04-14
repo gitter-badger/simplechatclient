@@ -59,6 +59,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     delete pConfig;
 
     settings.clear();
+    settings.setValue("version", "1.0.3.174");
     settings.setValue("logged", "off");
     settings.setValue("busy", "off");
     settings.setValue("override", "off");
@@ -122,7 +123,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
 // statusbar
     QLabel *label_status = new QLabel();
-    label_status->setText("v1.0.3.173");
+    label_status->setText("v"+settings.value("version").toString());
     statusBar()->addWidget(label_status);
 
 // signals
@@ -289,7 +290,7 @@ void MainWindow::ignore_dlg()
 
 void MainWindow::about_dlg()
 {
-    (new dlg_about)->show();
+    (new dlg_about(&settings))->show();
 }
 
 // tray
