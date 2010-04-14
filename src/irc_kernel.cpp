@@ -884,6 +884,10 @@ void irc_kernel::raw_moderate()
 // :cf1f4.onet 001 scc_test :Welcome to the OnetCzat IRC Network scc_test!51976824@83.28.35.219
 void irc_kernel::raw_001()
 {
+// busy
+    settings->setValue("logged", "on");
+
+// protocol
     irc_kernel::send("PROTOCTL ONETNAMESX");
 
 // auto rejoin

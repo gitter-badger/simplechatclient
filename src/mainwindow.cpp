@@ -59,6 +59,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     delete pConfig;
 
     settings.clear();
+    settings.setValue("logged", "off");
     settings.setValue("busy", "off");
     settings.setValue("override", "off");
     settings.setValue("autojoin_favourites", "on");
@@ -121,7 +122,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
 // statusbar
     QLabel *label_status = new QLabel();
-    label_status->setText("v1.0.3.172");
+    label_status->setText("v1.0.3.173");
     statusBar()->addWidget(label_status);
 
 // signals

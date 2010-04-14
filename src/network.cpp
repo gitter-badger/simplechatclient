@@ -105,7 +105,7 @@ void network::reconnect()
     {
         connectAct->setText("&Roz³±cz");
         connectAct->setIconText("&Roz³±cz");
-        if (network::is_connected() == true)
+        if ((network::is_connected() == true) && (settings->value("logged").toString() == "off"))
         {
             tabc->show_msg_all("Ponowne ³±czenie z serwerem...", 7);
             config *pConfig = new config();
@@ -133,7 +133,7 @@ void network::reconnect()
         else
         {
             network::connect();
-            if (network::is_connected() == true)
+            if ((network::is_connected() == true) && (settings->value("logged").toString() == "off"))
                 network::reconnect();
         }
     }
@@ -226,6 +226,9 @@ void network::disconnected()
         QStringList strlOpenChannels = tabc->get_open_channels();
         for (int i = 0; i < strlOpenChannels.size(); i++)
             tabc->clear_nicklist(strlOpenChannels[i]);
+
+        // state
+        settings->setValue("logged", "off");
 
         // reconnect
         QTimer::singleShot(30*1000, this, SLOT(reconnect()));
