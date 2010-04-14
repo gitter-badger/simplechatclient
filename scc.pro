@@ -27,7 +27,6 @@ SOURCES += src/commands.cpp \
     src/dlg_options.cpp \
     src/dlg_priv.cpp \
     src/dlg_privilege.cpp \
-    src/http.cpp \
     src/irc_auth.cpp \
     src/irc_kernel.cpp \
     src/log.cpp \
@@ -59,7 +58,6 @@ HEADERS += src/commands.h \
     src/dlg_options.h \
     src/dlg_priv.h \
     src/dlg_privilege.h \
-    src/http.h \
     src/irc_auth.h \
     src/irc_kernel.h \
     src/log.h \

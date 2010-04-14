@@ -21,10 +21,14 @@
 #ifndef IRC_AUTH_H
 #define IRC_AUTH_H
 
+#include <QHostInfo>
 #include <QMutex>
+#include <QNetworkAccessManager>
+#include <QNetworkCookieJar>
+#include <QNetworkReply>
 #include <QObject>
 #include <QTcpSocket>
-#include "http.h"
+#include <QUrl>
 #include "tab_container.h"
 
 class irc_auth : public QObject
@@ -36,7 +40,6 @@ public:
     QString transform_key(QString);
 
 private:
-    QHttp *qHttp;
     QSettings *settings;
     tab_container *tabc;
     QTcpSocket *socket;

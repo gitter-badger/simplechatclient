@@ -29,13 +29,20 @@ irc_auth::irc_auth(QSettings *param1, tab_container *param2, QTcpSocket *param3)
 
 void irc_auth::request_uo(QString param1, QString param2)
 {
-    mutex.lock();
+    QMutexLocker locker(&mutex);
+
     QString strNick = param1;
     QString strPass = param2;
     QString strVersion;
     bool bOverride;
-    bool bSsl = true;
-    QEventLoop loop;
+    QEventLoop eventLoop;
+    QNetworkReply* pReply;
+    QByteArray bData;
+    QString strData;
+
+    QNetworkAccessManager accessManager;
+    QNetworkCookieJar *cookieJar = new QNetworkCookieJar();
+    accessManager.setCookieJar(cookieJar);
 
     QString strOverride = settings->value("override").toString();
 
@@ -46,6 +53,7 @@ void irc_auth::request_uo(QString param1, QString param2)
 
     bool bHost1 = true;
     bool bHost2 = true;
+
     bool bHost3 = true;
 
     QHostInfo test_host1 = QHostInfo::fromName("czat.onet.pl");
@@ -62,77 +70,87 @@ void irc_auth::request_uo(QString param1, QString param2)
 
     if ((bHost1 == true) && (bHost2 == true) && (bHost3 == true))
     {
-        http *pHttp = new http();
-        QHttp *qHttp = pHttp->get_http();
-        pHttp->request_clear();
+        pReply = accessManager.get(QNetworkRequest(QUrl("http://czat.onet.pl/_s/deployOnetCzat.js")));
+        QObject::connect(pReply, SIGNAL(finished()), &eventLoop, SLOT(quit()));
+        eventLoop.exec();
 
-        pHttp->request("http://czat.onet.pl/_s/deployOnetCzat.js", QString::null);
-        QObject::connect(qHttp, SIGNAL(done(bool)), &loop, SLOT(quit()));
-        loop.exec();
-
-        strVersion = this->get_version(pHttp->read_http());
+        strVersion = this->get_version(pReply->readAll());
         strVersion = QString("1.1(%1 - R)").arg(strVersion);
+
+        delete pReply;
 
         QString strNickLen = QString("%1").arg(strNick.length());
         QString strVersionLen = QString("%1").arg(strVersion.length());
 
-        pHttp->request("http://czat.onet.pl/chat.html", "ch=&n=&p=&category=0");
-        QObject::connect(qHttp, SIGNAL(done(bool)), &loop, SLOT(quit()));
-        loop.exec();
+        bData = "ch=&n=&p=&category=0";
+        pReply = accessManager.post(QNetworkRequest(QUrl("http://czat.onet.pl/chat.html")), bData);
+        QObject::connect(pReply, SIGNAL(finished()), &eventLoop, SLOT(quit()));
+        eventLoop.exec();
+        delete pReply;
 
-        pHttp->request("http://kropka.onet.pl/_s/kropka/1?DV=czat/applet/FULL", QString::null);
-        QObject::connect(qHttp, SIGNAL(done(bool)), &loop, SLOT(quit()));
-        loop.exec();
+        pReply = accessManager.get(QNetworkRequest(QUrl("http://kropka.onet.pl/_s/kropka/1?DV=czat/applet/FULL")));
+        QObject::connect(pReply, SIGNAL(finished()), &eventLoop, SLOT(quit()));
+        eventLoop.exec();
+        delete pReply;
 
-        pHttp->request("http://czat.onet.pl/sk.gif", QString::null);
-        QObject::connect(qHttp, SIGNAL(done(bool)), &loop, SLOT(quit()));
-        loop.exec();
+        pReply = accessManager.get(QNetworkRequest(QUrl("http://czat.onet.pl/sk.gif")));
+        QObject::connect(pReply, SIGNAL(finished()), &eventLoop, SLOT(quit()));
+        eventLoop.exec();
+        delete pReply;
 
         // nicki stale
         if (strPass.isEmpty() == false)
         {
-            if (bSsl == true) pHttp->request("https://secure.onet.pl/_s/kropka/1?DV=secure", QString::null);
-            else pHttp->request("http://secure.onet.pl/_s/kropka/1?DV=secure", QString::null);
-            QObject::connect(qHttp, SIGNAL(done(bool)), &loop, SLOT(quit()));
-            loop.exec();
+            pReply = accessManager.get(QNetworkRequest(QUrl("https://secure.onet.pl/_s/kropka/1?DV=secure")));
+            QObject::connect(pReply, SIGNAL(finished()), &eventLoop, SLOT(quit()));
+            eventLoop.exec();
+            delete pReply;
 
-            if (bSsl == true) pHttp->request("https://secure.onet.pl/index.html", QString("r=secure.onet.pl&url=&login=%1&haslo=%2&ssl=on&ok=Ok").arg(strNick).arg(strPass));
-            else pHttp->request("http://secure.onet.pl/index.html", QString("r=secure.onet.pl&url=&login=%1&haslo=%2&ok=Ok").arg(strNick).arg(strPass));
-            QObject::connect(qHttp, SIGNAL(done(bool)), &loop, SLOT(quit()));
-            loop.exec();
+            strData = QString("r=secure.onet.pl&url=&login=%1&haslo=%2&ssl=on&ok=Ok").arg(strNick).arg(strPass);
+            bData = strData.toAscii();
+            pReply = accessManager.post(QNetworkRequest(QUrl("https://secure.onet.pl/index.html")), bData);
+            QObject::connect(pReply, SIGNAL(finished()), &eventLoop, SLOT(quit()));
+            eventLoop.exec();
+            delete pReply;
 
             if (bOverride == true)
             {
-                pHttp->request("http://czat.onet.pl/include/ajaxapi.xml.php3", QString("api_function=userOverride&params=a:1:{s:4:\"nick\";s:%1:\"%2\";}").arg(strNickLen).arg(strNick));
-                QObject::connect(qHttp, SIGNAL(done(bool)), &loop, SLOT(quit()));
-                loop.exec();
+                strData = QString("api_function=userOverride&params=a:1:{s:4:\"nick\";s:%1:\"%2\";}").arg(strNickLen).arg(strNick);
+                bData = strData.toAscii();
+                pReply = accessManager.post(QNetworkRequest(QUrl("http://czat.onet.pl/include/ajaxapi.xml.php3")), bData);
+                QObject::connect(pReply, SIGNAL(finished()), &eventLoop, SLOT(quit()));
+                eventLoop.exec();
+                delete pReply;
 
                 settings->setValue("override", "off");
             }
 
-            pHttp->request("http://czat.onet.pl/include/ajaxapi.xml.php3", QString("api_function=getUoKey&params=a:3:{s:4:\"nick\";s:%1:\"%2\";s:8:\"tempNick\";i:0;s:7:\"version\";s:%3:\"%4\";}").arg(strNickLen).arg(strNick).arg(strVersionLen).arg(strVersion));
-            QObject::connect(qHttp, SIGNAL(done(bool)), &loop, SLOT(quit()));
-            loop.exec();
+            strData = QString("api_function=getUoKey&params=a:3:{s:4:\"nick\";s:%1:\"%2\";s:8:\"tempNick\";i:0;s:7:\"version\";s:%3:\"%4\";}").arg(strNickLen).arg(strNick).arg(strVersionLen).arg(strVersion);
+            bData =  strData.toAscii();
+            pReply = accessManager.post(QNetworkRequest(QUrl("http://czat.onet.pl/include/ajaxapi.xml.php3")), bData);
+            QObject::connect(pReply, SIGNAL(finished()), &eventLoop, SLOT(quit()));
+            eventLoop.exec();
+            this->request_finished(pReply->readAll());
+            delete pReply;
         }
         // nicki tyldowe
         else
         {
-            pHttp->request("http://czat.onet.pl/include/ajaxapi.xml.php3", QString("api_function=getUoKey&params=a:3:{s:4:\"nick\";s:%1:\"%2\";s:8:\"tempNick\";i:1;s:7:\"version\";s:%3:\"%4\";}").arg(strNickLen).arg(strNick).arg(strVersionLen).arg(strVersion));
-            QObject::connect(qHttp, SIGNAL(done(bool)), &loop, SLOT(quit()));
-            loop.exec();
+            strData = QString("api_function=getUoKey&params=a:3:{s:4:\"nick\";s:%1:\"%2\";s:8:\"tempNick\";i:1;s:7:\"version\";s:%3:\"%4\";}").arg(strNickLen).arg(strNick).arg(strVersionLen).arg(strVersion);
+            bData =  strData.toAscii();
+            pReply = accessManager.post(QNetworkRequest(QUrl("http://czat.onet.pl/include/ajaxapi.xml.php3")), bData);
+            QObject::connect(pReply, SIGNAL(finished()), &eventLoop, SLOT(quit()));
+            eventLoop.exec();
+            this->request_finished(pReply->readAll());
+            delete pReply;
         }
-
-        this->request_finished(pHttp->read_http());
-
-        pHttp->request_clear();
-        delete pHttp;
     }
     else
     {
         tabc->show_msg("Status", QString("Error: B³±d autoryzacji [Brak dostêpno¶ci serwerów onet.pl]"), 9);
     }
 
-    mutex.unlock();
+    delete cookieJar;
 }
 
 QString irc_auth::transform_key(QString s)

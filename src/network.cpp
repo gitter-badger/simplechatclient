@@ -92,7 +92,7 @@ void network::connect()
             connectAct->setIconText("&Po³±cz");
 
             // reconnect
-            network::reconnect();
+            QTimer::singleShot(30*1000, this, SLOT(reconnect()));
         }
     }
     else
@@ -103,13 +103,11 @@ void network::reconnect()
 {
     if (settings->value("reconnect").toString() == "true")
     {
-        tabc->show_msg_all("Ponowne ³±czenie z serwerem...", 7);
         connectAct->setText("&Roz³±cz");
         connectAct->setIconText("&Roz³±cz");
-        network::close();
-        network::connect();
         if (network::is_connected() == true)
         {
+            tabc->show_msg_all("Ponowne ³±czenie z serwerem...", 7);
             config *pConfig = new config();
             QString strNick = pConfig->get_value("login-nick");
             QString strPass = pConfig->get_value("login-pass");
@@ -132,6 +130,12 @@ void network::reconnect()
                 strNickCurrent = strNick.right(strNick.length()-1);
             pIrc_auth->request_uo(strNickCurrent, strPass);
         }
+        else
+        {
+            network::connect();
+            if (network::is_connected() == true)
+                network::reconnect();
+        }
     }
 }
 
@@ -140,7 +144,7 @@ void network::close()
     if (socket->state() == QAbstractSocket::ConnectedState)
     {
         socket->disconnectFromHost();
-        if ((socket->state() == QAbstractSocket::UnconnectedState) || (socket->waitForDisconnected(1000)))
+        if ((socket->state() == QAbstractSocket::UnconnectedState) || (socket->waitForDisconnected()))
         {
             int nop;
             nop = 1;
@@ -224,7 +228,7 @@ void network::disconnected()
             tabc->clear_nicklist(strlOpenChannels[i]);
 
         // reconnect
-        network::reconnect();
+        QTimer::singleShot(30*1000, this, SLOT(reconnect()));
     }
 }
 

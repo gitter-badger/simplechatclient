@@ -50,7 +50,6 @@ public:
     bool is_connected();
     bool is_writable();
     void connect();
-    void reconnect();
     void close();
     void send(QString);
 
@@ -75,6 +74,7 @@ private:
     QMutex mutex;
 
 private slots:
+    void reconnect();
     void recv();
     void disconnected();
     void timeout();

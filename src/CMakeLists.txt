@@ -38,7 +38,6 @@ set (scc_SRCS
 	dlg_options.cpp
 	dlg_priv.cpp
 	dlg_privilege.cpp
-	http.cpp
 	irc_auth.cpp
 	irc_kernel.cpp
 	log.cpp
@@ -73,7 +72,6 @@ set (scc_MOC_SRCS
 	dlg_options.h
 	dlg_priv.h
 	dlg_privilege.h
-	http.h
 	irc_auth.h
 	irc_kernel.h
 	log.h
