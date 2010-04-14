@@ -35,7 +35,7 @@ tab_widget::tab_widget(QString param1, QWidget *parent, QTcpSocket *param2, QSet
     notify = new qnotify();
 
     timer = new QTimer();
-    timer->setInterval(1000*60*60*4); // 4h
+    timer->setInterval(4*60*60*1000); // 4h
     timer->start();
 
     inputline = new qinputline(this);
@@ -364,6 +364,54 @@ QString tab_widget::convert_emots(QString strData)
     strData.replace(QRegExp("(http:|https:)//"), "\\1\\\\"); // fix http https
     strData.replace(QRegExp("//([a-zA-Z0-9_-]+)\\b"), "%I\\1%");
     strData.replace(QRegExp("(http:|https:)\\\\\\\\"), "\\1//"); // fix http https
+    return strData;
+}
+
+QString tab_widget::replace_emots(QString strData)
+{
+    strData.replace(":)", "%Ixhaha%");
+    strData.replace(";)", "%Ixoczko%");
+
+    strData.replace(":(", "%Ixsmutek%");
+    strData.replace(";(", "%Ixbuu%");
+
+    strData.replace(":p", "%Ijezor%");
+    strData.replace(";p", "%Ijezyk%");
+    strData.replace(":P", "%Ijezor%");
+    strData.replace(";P", "%Ijezyk%");
+
+    strData.replace(":d", "%Ixhehe%");
+    strData.replace(";d", "%Ixhehe%");
+    strData.replace(":D", "%Ixhehe%");
+    strData.replace(";D", "%Ixhehe%");
+
+    strData.replace(":x", "%Ixanimru%");
+    strData.replace(";x", "%Ixanimru%");
+    strData.replace(":X", "%Ixanimru%");
+    strData.replace(";X", "%Ixanimru%");
+
+    strData.replace(":o", "%Ixpanda%");
+    strData.replace(";o", "%Ixpanda%");
+    strData.replace(":O", "%Ixpanda%");
+    strData.replace(";O", "%Ixpanda%");
+
+    strData.replace(":>", "%Ixluzak%");
+    strData.replace(";>", "%Ixluzak%");
+    strData.replace(":<", "%Ixsmutek%");
+    strData.replace(";<", "%Ixbuu%");
+
+    strData.replace(":/", "%Ixmm%");
+    strData.replace(";/", "%Ixmm%");
+    strData.replace(":\\", "%Ixmm%");
+    strData.replace(";\\", "%Ixmm%");
+
+    strData.replace(":]", "%Ixhaha%");
+    strData.replace(";]", "%Ixhaha%");
+    strData.replace(":[", "%Ixsmutek%");
+    strData.replace(";[", "%Ixbuu%");
+
+    strData.replace(";?", "%Ixco%");
+
     return strData;
 }
 
@@ -819,9 +867,9 @@ void tab_widget::add_user(QString strNick, QString strSuffix)
         nickCount->setText(QString("Liczba osób: %1").arg(iNickCount));
 
         if (iNickCount > 300)
-            timer->setInterval(1000*60*60*1); // 1h
+            timer->setInterval(1*60*60*1000); // 1h
         else
-            timer->setInterval(1000*60*60*4); // 4h
+            timer->setInterval(4*60*60*1000); // 4h
     }
 }
 
@@ -840,9 +888,9 @@ void tab_widget::del_user(QString strNick)
         nickCount->setText(QString("Liczba osób: %1").arg(iNickCount));
 
         if (iNickCount > 300)
-            timer->setInterval(1000*60*60*1); // 1h
+            timer->setInterval(1*60*60*1000); // 1h
         else
-            timer->setInterval(1000*60*60*4); // 4h
+            timer->setInterval(4*60*60*1000); // 4h
     }
 }
 
@@ -1284,6 +1332,11 @@ void tab_widget::inputline_return_pressed()
                     if (strCurrentColor != "000000")
                         strTextDisplay = "%C"+strCurrentColor+"%"+strTextDisplay;
 
+                    strTextSend = tab_widget::convert_emots(strTextSend);
+                    strTextSend = tab_widget::replace_emots(strTextSend);
+                    strTextDisplay = tab_widget::convert_emots(strTextDisplay);
+                    strTextDisplay = tab_widget::replace_emots(strTextDisplay);
+
                     QDateTime dt = QDateTime::currentDateTime();
                     QString strDT = dt.toString("[hh:mm:ss] ");
 
@@ -1319,6 +1372,7 @@ void tab_widget::inputline_return_pressed()
                     strText = "%C"+strCurrentColor+"%"+strText;
 
                 strText = tab_widget::convert_emots(strText);
+                strText = tab_widget::replace_emots(strText);
 
                 QDateTime dt = QDateTime::currentDateTime();
                 QString strDT = dt.toString("[hh:mm:ss] ");
@@ -1382,6 +1436,11 @@ void tab_widget::moder_button_clicked()
                     if (strCurrentColor != "000000")
                         strTextDisplay = "%C"+strCurrentColor+"%"+strTextDisplay;
 
+                    strTextSend = tab_widget::convert_emots(strTextSend);
+                    strTextSend = tab_widget::replace_emots(strTextSend);
+                    strTextDisplay = tab_widget::convert_emots(strTextDisplay);
+                    strTextDisplay = tab_widget::replace_emots(strTextDisplay);
+
                     QDateTime dt = QDateTime::currentDateTime();
                     QString strDT = dt.toString("[hh:mm:ss] ");
 
@@ -1417,6 +1476,7 @@ void tab_widget::moder_button_clicked()
                     strText = "%C"+strCurrentColor+"%"+strText;
 
                 strText = tab_widget::convert_emots(strText);
+                strText = tab_widget::replace_emots(strText);
 
                 QDateTime dt = QDateTime::currentDateTime();
                 QString strDT = dt.toString("[hh:mm:ss] ");

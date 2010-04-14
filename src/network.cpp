@@ -28,7 +28,7 @@ network::network(QAction *param1, QSettings *param2)
     iActive = 0;
     settings->setValue("reconnect", "true");
     timer = new QTimer();
-    timer->setInterval(1000*60*1); // 1 min
+    timer->setInterval(1*60*1000); // 1 min
     timer->start();
     socket = new QTcpSocket(this);
 

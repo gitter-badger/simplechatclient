@@ -60,6 +60,7 @@ public:
     ~tab_widget();
     QString get_name() { return strName; }
     QString convert_emots(QString);
+    QString replace_emots(QString);
     void display_msg(QString, QString, int);
     void display_msg(QString, int);
     void set_topic(QString);

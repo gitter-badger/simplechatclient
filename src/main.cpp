@@ -31,14 +31,6 @@ int main(int argc, char *argv[])
     {
         for (int i = 0; i < argc; i++)
         {
-            // version
-            if (strcmp(argv[i], "--version") == 0)
-            {
-#ifdef Q_WS_X11
-                qDebug() << "Simple Chat Client version 1.0";
-#endif
-                return 0;
-            }
             // debug
             if (strcmp(argv[i], "-debug") == 0)
             {
