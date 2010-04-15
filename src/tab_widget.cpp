@@ -369,8 +369,14 @@ QString tab_widget::convert_emots(QString strData)
 
 QString tab_widget::replace_emots(QString strData)
 {
+    strData.replace(":))", "%Ixhehe%");
+    strData.replace(";))", "%Ixhehe%");
+
     strData.replace(":)", "%Ixhaha%");
     strData.replace(";)", "%Ixoczko%");
+
+    strData.replace(":((", "%Ixbuu%");
+    strData.replace(";((", "%Ixbuu%");
 
     strData.replace(":(", "%Ixsmutek%");
     strData.replace(";(", "%Ixbuu%");
@@ -410,7 +416,23 @@ QString tab_widget::replace_emots(QString strData)
     strData.replace(":[", "%Ixsmutek%");
     strData.replace(";[", "%Ixbuu%");
 
+    strData.replace(":|", "%Iooo%");
+    strData.replace(";|", "%Iooo%");
+
+    strData.replace(":*", "%Ixcalus%");
+    strData.replace(";*", "%Icmok2%");
+
+    strData.replace(":s", "%Iskwaszony%");
+    strData.replace(";s", "%Iskwaszony%");
+    strData.replace(":S", "%Iskwaszony%");
+    strData.replace(";S", "%Iskwaszony%");
+
+    strData.replace("]:->", "%Ixdiabel%");
+    strData.replace("];->", "%Ixdiabel%");
+
     strData.replace(";?", "%Ixco%");
+    strData.replace("??", "%Ipytanie%");
+    strData.replace("!!", "%Iwykrzyknik%");
 
     return strData;
 }
