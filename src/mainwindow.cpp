@@ -59,7 +59,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     delete pConfig;
 
     settings.clear();
-    settings.setValue("version", "1.0.3.176");
+    settings.setValue("version", "1.0.3.177");
     settings.setValue("logged", "off");
     settings.setValue("busy", "off");
     settings.setValue("override", "off");

@@ -132,7 +132,8 @@ void network::reconnect()
         }
         else
         {
-            network::connect();
+            if (settings->value("logged").toString() == "off")
+                network::connect();
             if ((network::is_connected() == true) && (settings->value("logged").toString() == "off"))
                 network::reconnect();
         }
@@ -177,6 +178,8 @@ void network::send(QString strData)
 
 void network::recv()
 {
+    bool bCompleted = true;
+
     strDataRecv.append(socket->readAll());
     if (strDataRecv.isEmpty()) return;
 
@@ -185,11 +188,19 @@ void network::recv()
         if (socket->bytesAvailable() != 0)
             network::recv();
         else
-            return;
+            bCompleted = false;
     }
 
     QStringList strDataLine = strDataRecv.split("\r\n");
     strDataRecv.clear();
+    if (strDataLine.size() < 2)
+        network::recv();
+
+    if (bCompleted == false)
+    {
+        strDataRecv = strDataLine.last();
+        strDataLine.removeLast();
+    }
 
     QDateTime dt = QDateTime::currentDateTime();
     iActive = (int)dt.toTime_t();
@@ -199,13 +210,14 @@ void network::recv()
         QString strLine = strDataLine[i];
         if (strLine.isEmpty() == false)
         {
-            mutex.lock();
             irc_kernel *pIrc_kernel = new irc_kernel(socket, tabc, strLine, settings, dlgchannel_settings, dlgchannel_homes, dlgchannel_list, dlgchannel_favourites, dlgfriends, dlgignore, dlgmoderation);
             pIrc_kernel->kernel();
             delete pIrc_kernel;
-            mutex.unlock();
         }
     }
+
+    if (bCompleted == false)
+        QTimer::singleShot(3*1000, this, SLOT(recv()));
 }
 
 void network::disconnected()
