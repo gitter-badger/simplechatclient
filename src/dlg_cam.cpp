@@ -24,6 +24,7 @@ dlg_cam::dlg_cam(QSettings *param1, QTcpSocket *param2, QString param3)
 {
     ui.setupUi(this);
     setAttribute(Qt::WA_DeleteOnClose);
+    setWindowFlags(Qt::Dialog | Qt::WindowStaysOnTopHint);
 
     settings = param1;
     irc_socket = param2;

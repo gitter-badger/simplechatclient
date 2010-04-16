@@ -27,6 +27,7 @@ SOURCES += src/commands.cpp \
     src/dlg_options.cpp \
     src/dlg_priv.cpp \
     src/dlg_privilege.cpp \
+    src/dlg_update.cpp \
     src/irc_auth.cpp \
     src/irc_kernel.cpp \
     src/log.cpp \
@@ -35,10 +36,11 @@ SOURCES += src/commands.cpp \
     src/network.cpp \
     src/qinputline.cpp \
     src/qnicklist.cpp \
+    src/qnotify.cpp \
     src/tab_container.cpp \
     src/tab_manager.cpp \
     src/tab_widget.cpp \
-    src/qnotify.cpp
+    src/update.cpp
 HEADERS += src/commands.h \
     src/config.h \
     src/crypt.h \
@@ -58,6 +60,7 @@ HEADERS += src/commands.h \
     src/dlg_options.h \
     src/dlg_priv.h \
     src/dlg_privilege.h \
+    src/dlg_update.h \
     src/irc_auth.h \
     src/irc_kernel.h \
     src/log.h \
@@ -66,10 +69,11 @@ HEADERS += src/commands.h \
     src/network.h \
     src/qinputline.h \
     src/qnicklist.h \
+    src/qnotify.h \
     src/tab_container.h \
     src/tab_manager.h \
     src/tab_widget.h \
-    src/qnotify.h
+    src/update.h
 FORMS += ui/about.ui \
     ui/cam.ui \
     ui/channel_favourites.ui \
@@ -85,4 +89,5 @@ FORMS += ui/about.ui \
     ui/moderation.ui \
     ui/options.ui \
     ui/priv.ui \
-    ui/privilege.ui
+    ui/privilege.ui \
+    ui/update.ui

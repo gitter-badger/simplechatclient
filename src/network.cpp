@@ -192,9 +192,9 @@ void network::recv()
     }
 
     QStringList strDataLine = strDataRecv.split("\r\n");
-    strDataRecv.clear();
     if (strDataLine.size() < 2)
-        network::recv();
+        QTimer::singleShot(3*1000, this, SLOT(recv()));
+    strDataRecv.clear();
 
     if (bCompleted == false)
     {

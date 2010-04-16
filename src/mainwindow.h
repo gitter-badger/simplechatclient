@@ -43,6 +43,7 @@
 #include "network.h"
 #include "tab_container.h"
 #include "tab_manager.h"
+#include "update.h"
 
 class MainWindow : public QMainWindow
 {

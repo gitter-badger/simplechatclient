@@ -59,7 +59,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     delete pConfig;
 
     settings.clear();
-    settings.setValue("version", "1.0.3.177");
+    settings.setValue("version", "1.0.3.178");
     settings.setValue("logged", "off");
     settings.setValue("busy", "off");
     settings.setValue("override", "off");
@@ -92,6 +92,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     tabc->show_msg("Status", "%Fb:courier%%C008100%Oficjalna strona SCC%C000000%: http://simplechatclien.sourceforge.net/ %Ixluzak%", 0);
     tabc->show_msg("Status", "%Fbi:courier%%Cff0000%Lista b³êdów%C000000%: http://tinyurl.com/yg3fjb4 %Ixmm%", 0);
     tabc->show_msg("Status", "%Fbi:courier%%C8800ab%Zg³aszanie b³êdów%C000000%: http://tinyurl.com/yfcseeh %Ixco%", 0);
+
+    updater *pUpdater = new updater(&settings, tabc);
+    pUpdater->check_for_updates();
+    delete pUpdater;
 
 // main menu
     fileMenu = menuBar()->addMenu("&Plik");

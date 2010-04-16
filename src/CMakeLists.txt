@@ -16,6 +16,7 @@ set (scc_UIS
 	../ui/options.ui
 	../ui/priv.ui
 	../ui/privilege.ui
+	../ui/update.ui
 )
 
 set (scc_SRCS
@@ -38,6 +39,7 @@ set (scc_SRCS
 	dlg_options.cpp
 	dlg_priv.cpp
 	dlg_privilege.cpp
+	dlg_update.cpp
 	irc_auth.cpp
 	irc_kernel.cpp
 	log.cpp
@@ -50,6 +52,7 @@ set (scc_SRCS
 	tab_container.cpp
 	tab_manager.cpp
 	tab_widget.cpp
+	update.cpp
 )
 
 set (scc_MOC_SRCS
@@ -72,6 +75,7 @@ set (scc_MOC_SRCS
 	dlg_options.h
 	dlg_priv.h
 	dlg_privilege.h
+	dlg_update.h
 	irc_auth.h
 	irc_kernel.h
 	log.h
@@ -83,6 +87,7 @@ set (scc_MOC_SRCS
 	tab_container.h
 	tab_manager.h
 	tab_widget.h
+	update.h
 )
 
 # qt qtnetwork
