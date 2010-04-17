@@ -31,7 +31,7 @@ class dlg_options : public QDialog
 {
     Q_OBJECT
 public:
-    dlg_options(QSettings *);
+    dlg_options(QWidget *, QSettings *);
 
 private:
     Ui::uiOptions ui;

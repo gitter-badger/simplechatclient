@@ -20,7 +20,7 @@
 
 #include "dlg_options.h"
 
-dlg_options::dlg_options(QSettings *param1)
+dlg_options::dlg_options(QWidget *parent, QSettings *param1) : QDialog(parent)
 {
     ui.setupUi(this);
     setAttribute(Qt::WA_DeleteOnClose);

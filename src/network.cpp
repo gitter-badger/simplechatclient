@@ -210,9 +210,11 @@ void network::recv()
         QString strLine = strDataLine[i];
         if (strLine.isEmpty() == false)
         {
+            mutex.lock();
             irc_kernel *pIrc_kernel = new irc_kernel(socket, tabc, strLine, settings, dlgchannel_settings, dlgchannel_homes, dlgchannel_list, dlgchannel_favourites, dlgfriends, dlgignore, dlgmoderation);
             pIrc_kernel->kernel();
             delete pIrc_kernel;
+            mutex.unlock();
         }
     }
 

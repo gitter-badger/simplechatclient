@@ -246,6 +246,8 @@ void irc_kernel::kernel()
                 irc_kernel::raw_404n();
             else if (strDataList[3].toLower() == ":406")
                 irc_kernel::raw_406n();
+            else if (strDataList[3].toLower() == ":407")
+                irc_kernel::raw_407n();
             else if (strDataList[3].toLower() == ":408")
                 irc_kernel::raw_408n();
             else if (strDataList[3].toLower() == ":420")
@@ -1794,6 +1796,19 @@ void irc_kernel::raw_406n()
     QString strCmd = strDataList[4];
 
     QString strMessage = QString("* %1 :Nieznane polecenie").arg(strCmd);
+
+    tabc->show_msg_active(strMessage, 7);
+}
+
+// :ChanServ!service@service.onet NOTICE scc_test :407 VOICE :not enough parameters
+void irc_kernel::raw_407n()
+{
+    if (strDataList.value(3).isEmpty() == true) return;
+    if (strDataList.value(4).isEmpty() == true) return;
+
+    QString strCmd = strDataList[4];
+
+    QString strMessage = QString("* %1 :Nie wystarczaj±ca ilo¶æ parametrów").arg(strCmd);
 
     tabc->show_msg_active(strMessage, 7);
 }

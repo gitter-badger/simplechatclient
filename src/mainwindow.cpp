@@ -59,7 +59,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     delete pConfig;
 
     settings.clear();
-    settings.setValue("version", "1.0.3.178");
+    settings.setValue("version", "1.0.3.179");
     settings.setValue("logged", "off");
     settings.setValue("busy", "off");
     settings.setValue("override", "off");
@@ -170,8 +170,8 @@ MainWindow::~MainWindow()
     delete dlgchannel_list;
     delete dlgmoderation;
     delete dlgchannel_settings;
-    delete tabc;
     delete pNetwork;
+    delete tabc;
     delete tabm;
 }
 
@@ -259,7 +259,7 @@ void MainWindow::button_connect()
 
 void MainWindow::options_dlg()
 {
-    (new dlg_options(&settings))->show();
+    (new dlg_options(this, &settings))->show();
 }
 
 void MainWindow::channel_list_dlg()
@@ -294,7 +294,7 @@ void MainWindow::ignore_dlg()
 
 void MainWindow::about_dlg()
 {
-    (new dlg_about(&settings))->show();
+    (new dlg_about(this, &settings))->show();
 }
 
 // tray

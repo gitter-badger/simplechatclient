@@ -29,7 +29,7 @@ class dlg_about : public QDialog
 {
     Q_OBJECT
 public:
-    dlg_about(QSettings *);
+    dlg_about(QWidget *, QSettings *);
 
 private:
     Ui::uiAbout ui;
