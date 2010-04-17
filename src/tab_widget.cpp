@@ -679,7 +679,7 @@ void tab_widget::display_message(QString strData, int iLevel)
 
             if ((y != i-6) && (y != i-5))
             {
-                QString strLink = strData.mid(i,x-i).toLower();
+                QString strLink = strData.mid(i,x-i);
 
                 if (settings->value("hide_formating").toString() == "off")
                 {

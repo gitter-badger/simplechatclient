@@ -18,5 +18,4 @@ add_subdirectory (src)
 
 if (UNIX AND NOT APPLE)
 	install (FILES scc DESTINATION usr/local/bin)
-	install (FILES scc.conf DESTINATION usr/local/etc)
 endif (UNIX AND NOT APPLE)
