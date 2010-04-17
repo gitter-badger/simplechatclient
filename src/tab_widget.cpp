@@ -369,70 +369,9 @@ QString tab_widget::convert_emots(QString strData)
 
 QString tab_widget::replace_emots(QString strData)
 {
-    strData.replace(":))", "%Ixhehe%");
-    strData.replace(";))", "%Ixhehe%");
-
-    strData.replace(":)", "%Ixhaha%");
-    strData.replace(";)", "%Ixoczko%");
-
-    strData.replace(":((", "%Ixbuu%");
-    strData.replace(";((", "%Ixbuu%");
-
-    strData.replace(":(", "%Ixsmutek%");
-    strData.replace(";(", "%Ixbuu%");
-
-    strData.replace(":p", "%Ijezor%");
-    strData.replace(";p", "%Ijezyk%");
-    strData.replace(":P", "%Ijezor%");
-    strData.replace(";P", "%Ijezyk%");
-
-    strData.replace(":d", "%Ixhehe%");
-    strData.replace(";d", "%Ixhehe%");
-    strData.replace(":D", "%Ixhehe%");
-    strData.replace(";D", "%Ixhehe%");
-
-    strData.replace(":x", "%Ixanimru%");
-    strData.replace(";x", "%Ixanimru%");
-    strData.replace(":X", "%Ixanimru%");
-    strData.replace(";X", "%Ixanimru%");
-
-    strData.replace(":o", "%Ixpanda%");
-    strData.replace(";o", "%Ixpanda%");
-    strData.replace(":O", "%Ixpanda%");
-    strData.replace(";O", "%Ixpanda%");
-
-    strData.replace(":>", "%Ixluzak%");
-    strData.replace(";>", "%Ixluzak%");
-    strData.replace(":<", "%Ixsmutek%");
-    strData.replace(";<", "%Ixbuu%");
-
-    strData.replace(":/", "%Ixmm%");
-    strData.replace(";/", "%Ixmm%");
-    strData.replace(":\\", "%Ixmm%");
-    strData.replace(";\\", "%Ixmm%");
-
-    strData.replace(":]", "%Ixhaha%");
-    strData.replace(";]", "%Ixhaha%");
-    strData.replace(":[", "%Ixsmutek%");
-    strData.replace(";[", "%Ixbuu%");
-
-    strData.replace(":|", "%Iooo%");
-    strData.replace(";|", "%Iooo%");
-
-    strData.replace(":*", "%Ixcalus%");
-    strData.replace(";*", "%Icmok2%");
-
-    strData.replace(":s", "%Iskwaszony%");
-    strData.replace(";s", "%Iskwaszony%");
-    strData.replace(":S", "%Iskwaszony%");
-    strData.replace(";S", "%Iskwaszony%");
-
-    strData.replace("]:->", "%Ixdiabel%");
-    strData.replace("];->", "%Ixdiabel%");
-
-    strData.replace(";?", "%Ixco%");
-    strData.replace("??", "%Ipytanie%");
-    strData.replace("!!", "%Iwykrzyknik%");
+    replace *pReplace = new replace();
+    strData = pReplace->replace_emots(strData);
+    delete pReplace;
 
     return strData;
 }

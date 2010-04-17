@@ -49,6 +49,7 @@ set (scc_SRCS
 	qinputline.cpp
 	qnicklist.cpp
 	qnotify.cpp
+	replace.cpp
 	tab_container.cpp
 	tab_manager.cpp
 	tab_widget.cpp
@@ -84,6 +85,7 @@ set (scc_MOC_SRCS
 	qinputline.h
 	qnicklist.h
 	qnotify.h
+	replace.h
 	tab_container.h
 	tab_manager.h
 	tab_widget.h

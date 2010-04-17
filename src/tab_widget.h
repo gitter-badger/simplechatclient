@@ -51,6 +51,7 @@
 #include "qinputline.h"
 #include "qnicklist.h"
 #include "qnotify.h"
+#include "replace.h"
 
 class tab_widget : public QWidget
 {

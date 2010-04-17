@@ -37,6 +37,7 @@ SOURCES += src/commands.cpp \
     src/qinputline.cpp \
     src/qnicklist.cpp \
     src/qnotify.cpp \
+    src/replace.cpp \
     src/tab_container.cpp \
     src/tab_manager.cpp \
     src/tab_widget.cpp \
@@ -70,6 +71,7 @@ HEADERS += src/commands.h \
     src/qinputline.h \
     src/qnicklist.h \
     src/qnotify.h \
+    src/replace.h \
     src/tab_container.h \
     src/tab_manager.h \
     src/tab_widget.h \
