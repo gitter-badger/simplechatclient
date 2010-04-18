@@ -1080,6 +1080,23 @@ void irc_kernel::raw_161n()
                 dlgchannel_settings->add_limit(strValue.toInt());
             else if (strKey == "auditorium")
                 dlgchannel_settings->add_auditorium(strValue.toInt());
+            else if (strKey == "avatar")
+            {
+                QString strUrl = strValue;
+
+                QNetworkAccessManager accessManager;
+                QNetworkReply* pReply;
+                QEventLoop eventLoop;
+                pReply = accessManager.get(QNetworkRequest(QUrl(strUrl)));
+                QObject::connect(pReply, SIGNAL(finished()), &eventLoop, SLOT(quit()));
+                eventLoop.exec();
+
+                QByteArray bData = pReply->readAll();
+
+                delete pReply;
+
+                tabc->set_logo(strChannel, bData);
+            }
         }
     }
 }

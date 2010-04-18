@@ -42,6 +42,7 @@
 #include <QTcpSocket>
 #include <QTextEdit>
 #include <QTimer>
+#include <QVBoxLayout>
 #include <QWidget>
 #include "commands.h"
 #include "config.h"
@@ -78,22 +79,30 @@ public:
     void clear_nicklist();
     void set_open_channels(QStringList);
     bool nicklist_exist(QString);
+    void set_logo(QByteArray);
 
 private:
-    QLineEdit *topic;
-    QPushButton *topicButton;
-    QLabel *topicDetails;
+    QWidget *topWidget;
     QLabel *nickCount;
     QLabel *webLink;
     qnicklist *nick_list;
     QTextEdit *textEdit;
-    QLabel *nickLabel;
-    qinputline *inputline;
     QWidget *toolWidget;
-    QPushButton *sendButton;
-    QPushButton *moderSendButton;
+    QWidget *bottomWidget;
 
-    QHBoxLayout *toolBox;
+    QWidget *topLeftUpWidget;
+    QHBoxLayout *topLeftUpLayout;
+    QWidget *topLeftWidget;
+    QVBoxLayout *topLeftLayout;
+    QWidget *topRightWidget;
+    QVBoxLayout *topRightLayout;
+    QHBoxLayout *topLayout;
+    QLineEdit *topic;
+    QPushButton *topicButton;
+    QLabel *logo;
+    QLabel *topicDetails;
+
+    QHBoxLayout *toolLayout;
     QPushButton *bold;
     QPushButton *italic;
     QPushButton *fontfamily;
@@ -119,9 +128,15 @@ private:
     QAction *size18Act;
     QAction *size20Act;
 
+    QHBoxLayout *bottomLayout;
+    QLabel *nickLabel;
+    qinputline *inputline;
+    QPushButton *sendButton;
+    QPushButton *moderSendButton;
+
     QSplitter *splitter;
-    QGridLayout *leftLayout;
-    QGridLayout *rightLayout;
+    QVBoxLayout *leftLayout;
+    QVBoxLayout *rightLayout;
     QWidget *leftWidget;
     QWidget *rightWidget;
     QGridLayout *mainLayout;

@@ -176,6 +176,15 @@ void network::send(QString strData)
         tabc->show_msg_active("Error: Nie uda³o siê wys³aæ danych! [Not connected]", 9);
 }
 
+void network::kernel(QString strLine)
+{
+    //QMutexLocker locker(&mutex);
+
+    irc_kernel *pIrc_kernel = new irc_kernel(socket, tabc, strLine, settings, dlgchannel_settings, dlgchannel_homes, dlgchannel_list, dlgchannel_favourites, dlgfriends, dlgignore, dlgmoderation);
+    pIrc_kernel->kernel();
+    delete pIrc_kernel;
+}
+
 void network::recv()
 {
     bool bCompleted = true;
@@ -210,11 +219,7 @@ void network::recv()
         QString strLine = strDataLine[i];
         if (strLine.isEmpty() == false)
         {
-            mutex.lock();
-            irc_kernel *pIrc_kernel = new irc_kernel(socket, tabc, strLine, settings, dlgchannel_settings, dlgchannel_homes, dlgchannel_list, dlgchannel_favourites, dlgfriends, dlgignore, dlgmoderation);
-            pIrc_kernel->kernel();
-            delete pIrc_kernel;
-            mutex.unlock();
+            network::kernel(strLine);
         }
     }
 

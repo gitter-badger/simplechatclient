@@ -52,6 +52,7 @@ public:
     void connect();
     void close();
     void send(QString);
+    void kernel(QString);
 
 private:
     QTcpSocket *socket;

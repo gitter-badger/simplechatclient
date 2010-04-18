@@ -38,20 +38,79 @@ tab_widget::tab_widget(QString param1, QWidget *parent, QTcpSocket *param2, QSet
     timer->setInterval(4*60*60*1000); // 4h
     timer->start();
 
-    inputline = new qinputline(this);
-    inputline->setParent(this);
-    inputline->setMinimumWidth(400);
-    inputline->setMaxLength(300);
-    inputline->show();
-
     splitter = new QSplitter(this);
-    leftLayout = new QGridLayout();
-    rightLayout = new QGridLayout();
+    leftLayout = new QVBoxLayout();
+    rightLayout = new QVBoxLayout();
     leftWidget = new QWidget(this);
     rightWidget = new QWidget(this);
-    toolWidget = new QWidget(this);
-    toolBox = new QHBoxLayout(this);
-    toolBox->setAlignment(Qt::AlignLeft);
+
+    topic = new QLineEdit();
+    topic->setParent(this);
+    topic->setReadOnly(true);
+    topic->setMaxLength(200);
+    topic->show();
+
+    topicButton = new QPushButton(this);
+    topicButton->setText("Ustaw");
+    topicButton->setParent(this);
+    topicButton->show();
+
+    topicDetails = new QLabel();
+    topicDetails->setParent(this);
+    topicDetails->setOpenExternalLinks(false);
+    topicDetails->setAlignment(Qt::AlignLeft);
+    topicDetails->show();
+
+    logo = new QLabel(this);
+    logo->setText("logo");
+    logo->setParent(this);
+    logo->show();
+
+    topLeftUpWidget = new QWidget(this);
+    topLeftUpLayout = new QHBoxLayout();
+    topLeftUpLayout->addWidget(topic);
+    topLeftUpLayout->addWidget(topicButton);
+    topLeftUpWidget->setLayout(topLeftUpLayout);
+
+    topLeftWidget = new QWidget(this);
+    topLeftLayout = new QVBoxLayout();
+    topLeftLayout->addWidget(topLeftUpWidget);
+    topLeftLayout->addWidget(topicDetails);
+    topLeftWidget->setLayout(topLeftLayout);
+
+    topRightWidget = new QWidget(this);
+    topRightLayout = new QVBoxLayout();
+    topRightLayout->addWidget(logo);
+    topRightWidget->setLayout(topRightLayout);
+
+    topWidget = new QWidget(this);
+    topLayout = new QHBoxLayout();
+    topLayout->setAlignment(Qt::AlignLeft);
+    topLayout->addWidget(topLeftWidget);
+    topLayout->addWidget(topRightWidget);
+    topWidget->setLayout(topLayout);
+
+    webLink = new QLabel();
+    webLink->setParent(this);
+    webLink->setOpenExternalLinks(true);
+    webLink->setAlignment(Qt::AlignCenter);
+    webLink->show();
+
+    nickCount = new QLabel();
+    nickCount->setParent(this);
+    nickCount->setOpenExternalLinks(true);
+    nickCount->setAlignment(Qt::AlignCenter);
+    nickCount->show();
+
+    nick_list = new qnicklist(socket, settings, strName);
+    nick_list->setParent(this);
+    nick_list->setSortingEnabled(false);
+    nick_list->show();
+
+    textEdit = new QTextEdit(this);
+    textEdit->setParent(this);
+    textEdit->setReadOnly(true);
+    textEdit->show();
 
     bold = new QPushButton(this);
     bold->setFont(QFont("Times New Roman", -1, 75, false));
@@ -101,7 +160,6 @@ tab_widget::tab_widget(QString param1, QWidget *parent, QTcpSocket *param2, QSet
     fontfamily->setMaximumHeight(25);
     fontfamily->setMenu(fontMenu);
     fontfamily->show();
-    inputline->setFont(QFont("Verdana", -1, -1, false));
 
     size8Act = new QAction("8", this);
     size8Act->setFont(QFont("Verdana", 8, -1, false));
@@ -168,59 +226,28 @@ tab_widget::tab_widget(QString param1, QWidget *parent, QTcpSocket *param2, QSet
     moderation->setParent(this);
     moderation->show();
 
-    toolBox->addWidget(bold);
-    toolBox->addWidget(italic);
-    toolBox->addWidget(fontfamily);
-    toolBox->addWidget(color);
-    toolBox->addWidget(size);
-    toolBox->addWidget(channel_settings);
-    toolBox->addWidget(moderation);
-    toolWidget->setLayout(toolBox);
-
-    mainLayout = new QGridLayout(this);
-
-    nick_list = new qnicklist(socket, settings, strName);
-    nick_list->setParent(this);
-    nick_list->setSortingEnabled(false);
-    nick_list->show();
-
-    topic = new QLineEdit();
-    topic->setParent(this);
-    topic->setReadOnly(true);
-    topic->setMaxLength(200);
-    topic->show();
-
-    topicButton = new QPushButton(this);
-    topicButton->setText("Ustaw");
-    topicButton->setParent(this);
-    topicButton->show();
-
-    topicDetails = new QLabel();
-    topicDetails->setParent(this);
-    topicDetails->setOpenExternalLinks(false);
-    topicDetails->setAlignment(Qt::AlignLeft);
-    topicDetails->show();
-
-    nickCount = new QLabel();
-    nickCount->setParent(this);
-    nickCount->setOpenExternalLinks(true);
-    nickCount->setAlignment(Qt::AlignCenter);
-    nickCount->show();
-
-    webLink = new QLabel();
-    webLink->setParent(this);
-    webLink->setOpenExternalLinks(true);
-    webLink->setAlignment(Qt::AlignCenter);
-    webLink->show();
-
-    textEdit = new QTextEdit(this);
-    textEdit->setParent(this);
-    textEdit->setReadOnly(true);
-    textEdit->show();
+    toolWidget = new QWidget(this);
+    toolLayout = new QHBoxLayout();
+    toolLayout->setAlignment(Qt::AlignLeft);
+    toolLayout->addWidget(bold);
+    toolLayout->addWidget(italic);
+    toolLayout->addWidget(fontfamily);
+    toolLayout->addWidget(color);
+    toolLayout->addWidget(size);
+    toolLayout->addWidget(channel_settings);
+    toolLayout->addWidget(moderation);
+    toolWidget->setLayout(toolLayout);
 
     nickLabel = new QLabel();
     nickLabel->setParent(this);
     nickLabel->show();
+
+    inputline = new qinputline(this);
+    inputline->setParent(this);
+    inputline->setMinimumWidth(400);
+    inputline->setMaxLength(300);
+    inputline->setFont(QFont("Verdana", -1, -1, false));
+    inputline->show();
 
     sendButton = new QPushButton();
     sendButton->setText("Wy¶lij");
@@ -236,21 +263,34 @@ tab_widget::tab_widget(QString param1, QWidget *parent, QTcpSocket *param2, QSet
     moderSendButton->setMaximumHeight(25);
     moderSendButton->show();
 
+    bottomWidget = new QWidget(this);
+    bottomLayout = new QHBoxLayout();
+    bottomLayout->setAlignment(Qt::AlignLeft);
+    bottomLayout->addWidget(nickLabel);
+    bottomLayout->addWidget(inputline);
+    bottomLayout->addWidget(sendButton);
+    bottomLayout->addWidget(moderSendButton);
+    bottomWidget->setLayout(bottomLayout);
+
+    mainLayout = new QGridLayout();
+
     if (strName[0] == '#')
     {
-        rightLayout->addWidget(webLink,0,0,1,1);
-        rightLayout->addWidget(nickCount,1,0,1,1);
-        rightLayout->addWidget(nick_list,2,0,1,1);
+        topicButton->hide();
+        topLeftUpLayout->removeWidget(topicButton);
+        moderation->hide();
+        toolLayout->removeWidget(moderation);
+        moderSendButton->hide();
+        bottomLayout->removeWidget(moderSendButton);
 
-        leftLayout->addWidget(topic,0,0,1,4);
-        leftLayout->addWidget(topicButton,0,4,1,1);
-        leftLayout->addWidget(topicDetails,1,0,1,5);
-        leftLayout->addWidget(textEdit,2,0,1,5);
-        leftLayout->addWidget(toolWidget,3,0,1,5);
-        leftLayout->addWidget(nickLabel,4,0,1,1);
-        leftLayout->addWidget(inputline,4,1,1,1);
-        leftLayout->addWidget(sendButton,4,2,1,1);
-        leftLayout->addWidget(moderSendButton,4,3,1,1);
+        rightLayout->addWidget(webLink);
+        rightLayout->addWidget(nickCount);
+        rightLayout->addWidget(nick_list);
+
+        leftLayout->addWidget(topWidget);
+        leftLayout->addWidget(textEdit);
+        leftLayout->addWidget(toolWidget);
+        leftLayout->addWidget(bottomWidget);
 
         leftWidget->setLayout(leftLayout);
         rightWidget->setLayout(rightLayout);
@@ -264,16 +304,20 @@ tab_widget::tab_widget(QString param1, QWidget *parent, QTcpSocket *param2, QSet
         topic->hide();
         topicButton->hide();
         topicDetails->hide();
+        logo->hide();
         nickCount->hide();
         webLink->hide();
-        moderSendButton->hide();
 
-        rightLayout->addWidget(nick_list,0,0,1,1);
-        leftLayout->addWidget(textEdit,0,0,1,3);
-        leftLayout->addWidget(toolWidget,1,0,1,3);
-        leftLayout->addWidget(nickLabel,2,0,1,1);
-        leftLayout->addWidget(inputline,2,1,1,1);
-        leftLayout->addWidget(sendButton,2,2,1,1);
+        moderation->hide();
+        toolLayout->removeWidget(moderation);
+        moderSendButton->hide();
+        bottomLayout->removeWidget(moderSendButton);
+
+        rightLayout->addWidget(nick_list);
+
+        leftLayout->addWidget(textEdit);
+        leftLayout->addWidget(toolWidget);
+        leftLayout->addWidget(bottomWidget);
 
         leftWidget->setLayout(leftLayout);
         rightWidget->setLayout(rightLayout);
@@ -287,16 +331,19 @@ tab_widget::tab_widget(QString param1, QWidget *parent, QTcpSocket *param2, QSet
         topic->hide();
         topicButton->hide();
         topicDetails->hide();
+        logo->hide();
         nickCount->hide();
         webLink->hide();
         nick_list->hide();
-        moderSendButton->hide();
 
-        leftLayout->addWidget(textEdit,0,0,1,3);
-        leftLayout->addWidget(toolWidget,1,0,1,3);
-        leftLayout->addWidget(nickLabel,2,0,1,1);
-        leftLayout->addWidget(inputline,2,1,1,1);
-        leftLayout->addWidget(sendButton,2,2,1,1);
+        moderation->hide();
+        toolLayout->removeWidget(moderation);
+        moderSendButton->hide();
+        bottomLayout->removeWidget(moderSendButton);
+
+        leftLayout->addWidget(textEdit);
+        leftLayout->addWidget(toolWidget);
+        leftLayout->addWidget(bottomWidget);
 
         leftWidget->setLayout(leftLayout);
         rightWidget->setLayout(rightLayout);
@@ -307,9 +354,6 @@ tab_widget::tab_widget(QString param1, QWidget *parent, QTcpSocket *param2, QSet
     }
 
     if (strName == "Status") channel_settings->hide();
-    topicButton->hide();
-    moderation->hide();
-    moderSendButton->hide();
     this->setLayout(mainLayout);
 
     QObject::connect(timer, SIGNAL(timeout()), this, SLOT(timer_timeout()));
@@ -664,24 +708,30 @@ void tab_widget::enable_topic()
 {
     topic->setReadOnly(false);
     topicButton->show();
+    topLeftUpLayout->addWidget(topicButton);
 }
 
 void tab_widget::disable_topic()
 {
     topic->setReadOnly(true);
     topicButton->hide();
+    topLeftUpLayout->removeWidget(topicButton);
 }
 
 void tab_widget::enable_moderation()
 {
     moderation->show();
+    toolLayout->addWidget(moderation);
     moderSendButton->show();
+    bottomLayout->addWidget(moderSendButton);
 }
 
 void tab_widget::disable_moderation()
 {
     moderation->hide();
+    toolLayout->removeWidget(moderation);
     moderSendButton->hide();
+    bottomLayout->removeWidget(moderSendButton);
 }
 
 void tab_widget::author_topic(QString strAuthor)
@@ -1030,6 +1080,13 @@ void tab_widget::clear_nicklist()
 void tab_widget::set_open_channels(QStringList strOpenChannels)
 {
     nick_list->set_open_channels(strOpenChannels);
+}
+
+void tab_widget::set_logo(QByteArray bData)
+{
+    QPixmap pixmap;
+    pixmap.loadFromData(bData);
+    logo->setPixmap(pixmap);
 }
 
 // copy of network::send

@@ -42,10 +42,10 @@ dlg_cam::dlg_cam(QSettings *param1, QTcpSocket *param2, QString param3)
     QObject::connect(socket, SIGNAL(readyRead()), this, SLOT(network_read()));
 }
 
-void dlg_cam::show_img(QByteArray data)
+void dlg_cam::show_img(QByteArray bData)
 {
     QPixmap pixmap;
-    pixmap.loadFromData(data);
+    pixmap.loadFromData(bData);
     ui.label_img->setPixmap(pixmap);
 }
 

@@ -452,6 +452,18 @@ void tab_container::update_open_channels()
     }
 }
 
+void tab_container::set_logo(QString strChannel, QByteArray bData)
+{
+    for (int i = 0; i < 50; i++)
+    {
+        if (free_list[i] == 'u')
+        {
+            if (tw[i]->get_name() == strChannel)
+                tw[i]->set_logo(bData);
+        }
+    }
+}
+
 QStringList tab_container::get_open_channels()
 {
     QStringList strlResult;
