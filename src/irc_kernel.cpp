@@ -168,6 +168,8 @@ void irc_kernel::kernel()
             irc_kernel::raw_819();
         else if (strDataList[1].toLower() == "820")
             irc_kernel::raw_820();
+        else if (strDataList[1].toLower() == "821")
+            irc_kernel::raw_821();
         else if (strDataList[1].toLower() == "951")
             irc_kernel::raw_951();
         else if ((strDataList[1].toLower() == "notice") && (strDataList.value(3).isEmpty() == false))
@@ -2401,6 +2403,17 @@ void irc_kernel::raw_819()
 void irc_kernel::raw_820()
 {
     dlgchannel_list->sort();
+}
+
+// :cf1f3.onet 821 scc_test #scc :Channel is not moderated
+void irc_kernel::raw_821()
+{
+    if (strDataList.value(3).isEmpty() == true) return;
+
+    QString strChannel = strDataList[3];
+
+    QString strMessage = QString("* Kana³ %1 nie jest moderowany").arg(strChannel);
+    tabc->show_msg_active(strMessage, 7);
 }
 
 // :cf1f1.onet 951 scc_test scc_test :Added test!*@* <privatemessages,channelmessages,invites> to silence list

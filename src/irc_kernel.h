@@ -174,6 +174,7 @@ private:
     void raw_818();
     void raw_819();
     void raw_820();
+    void raw_821();
     void raw_951();
     void send(QString);
     QString get_settings_key(QString);

@@ -79,6 +79,7 @@ public:
     void set_open_channels(QStringList);
     bool nicklist_exist(QString);
     void set_logo(QByteArray);
+    void send_message(bool);
 
 private:
     QWidget *topWidget;

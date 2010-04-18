@@ -1312,7 +1312,7 @@ void tab_widget::color_clicked(int index)
 
 // input line
 
-void tab_widget::inputline_return_pressed()
+void tab_widget::send_message(bool bType)
 {
     QString strTextO = inputline->text();
     QStringList strTextA = strTextO.split(QRegExp("(\n|\r)"));
@@ -1404,11 +1404,23 @@ void tab_widget::inputline_return_pressed()
                 QString strDT = dt.toString("[hh:mm:ss] ");
 
                 log *l = new log();
-                l->save(strName, QString("%1<%2> %3").arg(strDT).arg(strMe).arg(strText));
 
-                strText = QString("PRIVMSG %1 :%2").arg(strName).arg(strText);
-                tab_widget::send(strText);
-                tab_widget::display_message(QString("%1<%2> %3").arg(strDT).arg(strMe).arg(strText.right(strText.length()-10-strName.length())), 0);
+                if (bType == true)
+                {
+                    l->save(strName, QString("%1<%2> %3").arg(strDT).arg(strMe).arg(strText));
+
+                    strText = QString("PRIVMSG %1 :%2").arg(strName).arg(strText);
+                    tab_widget::send(strText);
+                    tab_widget::display_message(QString("%1<%2> %3").arg(strDT).arg(strMe).arg(strText.right(strText.length()-10-strName.length())), 0);
+                }
+                else
+                {
+                    l->save(strName, QString("%1 *<%2> %3").arg(strDT).arg(strMe).arg(strText));
+
+                    strText = QString("MODERNOTICE %1 :%2").arg(strName).arg(strText);
+                    tab_widget::send(strText);
+                    tab_widget::display_message(QString("%1 *<%2> %3").arg(strDT).arg(strMe).arg(strText.right(strText.length()-14-strName.length())), 6);
+                }
 
                 inputline->clear();
             }
@@ -1416,108 +1428,14 @@ void tab_widget::inputline_return_pressed()
     }
 }
 
+void tab_widget::inputline_return_pressed()
+{
+    tab_widget::send_message(true);
+}
+
 void tab_widget::moder_button_clicked()
 {
-    QString strTextO = inputline->text();
-    QStringList strTextA = strTextO.split(QRegExp("(\n|\r)"));
-
-    for (int i = 0; i < strTextA.count(); i++)
-    {
-        QString strText = strTextA[i];
-        QString strTextOriginal = strText;
-        strLast_msg = strText;
-
-        config *pConfig = new config();
-        QString strMe = pConfig->get_value("login-nick");
-        delete pConfig;
-
-        if ((strText[0] == '/') && (strText[1] != '/'))
-        {
-            if (strText[0] == '/')
-                strText = strText.right(strText.length()-1);
-            strTextOriginal = strText;
-            QStringList strTextList = strText.split(" ");
-
-            commands *pCommands = new commands(strName, strText, settings);
-            strText = pCommands->execute();
-            delete pCommands;
-
-            if ((strTextList[0] == "help") || (strTextList[0] == "pomoc"))
-                tab_widget::display_msg(strText, 7);
-            else if (strTextList[0] == "me")
-            {
-                if (strTextOriginal.length() > 3)
-                {
-                    QString strTextSend = strText;
-                    QString strTextDisplay = strTextOriginal.right(strTextOriginal.length()-3);
-
-                    QString weight;
-                    QString font = fontfamily->text().toLower();
-
-                    if (bBold == true) weight += "b";
-                    if (bItalic == true) weight += "i";
-
-                    if ((weight != "") || (font != "verdana"))
-                        strTextDisplay = "%F"+weight+":"+font+"%"+strTextDisplay;
-                    if (strCurrentColor != "000000")
-                        strTextDisplay = "%C"+strCurrentColor+"%"+strTextDisplay;
-
-                    strTextSend = tab_widget::convert_emots(strTextSend);
-                    strTextSend = tab_widget::replace_emots(strTextSend);
-                    strTextDisplay = tab_widget::convert_emots(strTextDisplay);
-                    strTextDisplay = tab_widget::replace_emots(strTextDisplay);
-
-                    QDateTime dt = QDateTime::currentDateTime();
-                    QString strDT = dt.toString("[hh:mm:ss] ");
-
-                    log *l = new log();
-                    l->save(strName, QString("%1<%2> %3").arg(strDT).arg(strMe).arg(strTextDisplay));
-
-                    tab_widget::display_message(QString("%1<%2> %3ACTION %4%5").arg(strDT).arg(strMe).arg(QString(QByteArray("\x01"))).arg(strTextDisplay).arg(QString(QByteArray("\x01"))), 0);
-                    if (socket->state() == QAbstractSocket::ConnectedState)
-                        tab_widget::send(strTextSend);
-                }
-            }
-            else
-            {
-                if ((socket->state() == QAbstractSocket::ConnectedState) && (strText.length() > 0))
-                    tab_widget::send(strText);
-            }
-
-            inputline->clear();
-        }
-        else if (strName != "Status")
-        {
-            if ((socket->state() == QAbstractSocket::ConnectedState) && (strText.length() > 0))
-            {
-                QString weight;
-                QString font = fontfamily->text().toLower();
-
-                if (bBold == true) weight += "b";
-                if (bItalic == true) weight += "i";
-
-                if ((weight != "") || (font != "verdana"))
-                    strText = "%F"+weight+":"+font+"%"+strText;
-                if (strCurrentColor != "000000")
-                    strText = "%C"+strCurrentColor+"%"+strText;
-
-                strText = tab_widget::convert_emots(strText);
-                strText = tab_widget::replace_emots(strText);
-
-                QDateTime dt = QDateTime::currentDateTime();
-                QString strDT = dt.toString("[hh:mm:ss] ");
-
-                log *l = new log();
-                l->save(strName, QString("%1* <%2> %3").arg(strDT).arg(strMe).arg(strText));
-
-                strText = QString("MODERNOTICE %1 :%2").arg(strName).arg(strText);
-                tab_widget::send(strText);
-                tab_widget::display_message(QString("%1 *<%2> %3").arg(strDT).arg(strMe).arg(strText.right(strText.length()-14-strName.length())), 6);
-
-                inputline->clear();
-            }
-        }
-    }
+    tab_widget::send_message(false);
 }
 
 void tab_widget::channel_settings_clicked()
