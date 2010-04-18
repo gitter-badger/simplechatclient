@@ -43,6 +43,7 @@
 #include <QTextEdit>
 #include <QTimer>
 #include <QWidget>
+#include <QtWebKit/QWebView>
 #include "commands.h"
 #include "config.h"
 #include "dlg_channel_settings.h"
@@ -82,11 +83,21 @@ public:
     void send_message(bool);
 
 private:
+    QString strContent;
+    QString strContentStart;
+    QString strContentEnd;
+    QString strFontSize;
+    QString strFontWeight;
+    QString strFontFamily;
+    QString strFontAlign;
+    QString strFontColor;
+    QString strFontStyle;
+
     QWidget *topWidget;
     QLabel *nickCount;
     QLabel *webLink;
     qnicklist *nick_list;
-    QTextEdit *textEdit;
+    QWebView *textEdit;
     QWidget *toolWidget;
     QWidget *bottomWidget;
 
@@ -198,7 +209,6 @@ private slots:
     void moder_button_clicked();
     void topic_return_pressed();
 
-    void cursor_position_changed();
     void timer_timeout();
 
 protected:

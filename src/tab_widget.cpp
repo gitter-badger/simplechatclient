@@ -31,6 +31,10 @@ tab_widget::tab_widget(QString param1, QWidget *parent, QTcpSocket *param2, QSet
     iNickCount = 0;
     bCursorPositionChanged = false;
     strCurrentColor = "000000";
+    strFontSize = "10px";
+    strContentStart = "<html><body>";
+    //strContentStart.append("<script type=\"text/javascript\">window.onload = function(){setInterval('document.scrollTop = document.scrollHeight;', 1);}</script>");
+    strContentEnd = "</body></html>";
 
     notify = new qnotify();
 
@@ -113,9 +117,9 @@ tab_widget::tab_widget(QString param1, QWidget *parent, QTcpSocket *param2, QSet
     nick_list->setSortingEnabled(false);
     nick_list->show();
 
-    textEdit = new QTextEdit(this);
+    textEdit = new QWebView(this);
     textEdit->setParent(this);
-    textEdit->setReadOnly(true);
+    //textEdit->setReadOnly(true);
     textEdit->show();
 
     bold = new QPushButton(this);
@@ -392,8 +396,6 @@ tab_widget::tab_widget(QString param1, QWidget *parent, QTcpSocket *param2, QSet
     QObject::connect(channel_settings, SIGNAL(clicked()), this, SLOT(channel_settings_clicked()));
     QObject::connect(moderation, SIGNAL(clicked()), this, SLOT(moderation_clicked()));
     QObject::connect(moderSendButton, SIGNAL(clicked()), this, SLOT(moder_button_clicked()));
-
-    QObject::connect(textEdit, SIGNAL(cursorPositionChanged()), this, SLOT(cursor_position_changed()));
 }
 
 tab_widget::~tab_widget()
@@ -402,7 +404,8 @@ tab_widget::~tab_widget()
     nick_suffix.clear();
     nickLabel->clear();
     timer->stop();
-    textEdit->clear();
+    strContent.clear();
+    textEdit->setHtml(strContent, QUrl(""));
     nick_list->clear();
     nicklist.clear();
 
@@ -466,23 +469,17 @@ void tab_widget::display_msg(QString strData, int iLevel)
 
 void tab_widget::display_message(QString strData, int iLevel)
 {
-    if (bCursorPositionChanged == true)
-    {
-        QTextCharFormat cf = textEdit->currentCharFormat();
-        textEdit->moveCursor(QTextCursor::End, QTextCursor::MoveAnchor);
-        textEdit->setCurrentCharFormat(cf);
-        bCursorPositionChanged = false;
-    }
-    if (textEdit->fontUnderline() != false) textEdit->setFontUnderline(false);
-    if (textEdit->textColor() != QColor(0, 0, 0, 255)) textEdit->setTextColor(QColor(0, 0, 0, 255));
-    if (textEdit->alignment() != Qt::AlignLeft) textEdit->setAlignment(Qt::AlignLeft);
-    if (textEdit->fontFamily() != "Verdana") textEdit->setFontFamily("Verdana");
-    if (textEdit->fontItalic() == true) textEdit->setFontItalic(false);
-    if (textEdit->fontWeight() == 75) textEdit->setFontWeight(50);
+    if (strFontStyle == "italic") strFontStyle = "";
+    if (strFontColor != "#000000") strFontColor = "#000000";
+    if (strFontAlign != "left") strFontAlign = "left";
+    if (strFontFamily != "Verdana") strFontFamily = "Verdana";
+    if (strFontWeight == "bold") strFontWeight = "normal";
+
     strData+="\n";
-    textEdit->insertHtml("<p>");
+    strContent.append("<p style=\"font-style:"+strFontStyle+";color:"+strFontColor+";text-align:"+strFontAlign+";font-family:"+strFontFamily+";font-weight:"+strFontWeight+";font-size:"+strFontSize+";\">");
     bool bHilight = false;
     bool bLevel = false;
+    QString strContentLast;
 
     // if /me remove time/action
     if (strData.indexOf(QString(QByteArray("\x01"))) != -1)
@@ -493,6 +490,10 @@ void tab_widget::display_message(QString strData, int iLevel)
         if (strData.indexOf(">") != -1) strData = strData.remove(strData.indexOf(">"),1);
     }
 
+    strData.replace("&", "&amp;");
+    strData.replace("<", "&lt;");
+    strData.replace(">", "&gt;");
+
     for (int i = 0; i < strData.length(); i++)
     {
         // colors
@@ -500,7 +501,9 @@ void tab_widget::display_message(QString strData, int iLevel)
         {
             if (iLevel == 8) // hilight
             {
-                textEdit->setTextColor(QColor(255, 0, 0, 255)); // red
+                strFontColor = "#ff0000"; // red
+                strContent.append("<span style=\"color:"+strFontColor+";\">");
+                strContentLast = "</span>"+strContentLast;
                 bHilight = true;
 
                 mutex_notify.lock();
@@ -513,24 +516,26 @@ void tab_widget::display_message(QString strData, int iLevel)
         else if ((i > 10) && (bLevel == false))
         {
             if (iLevel == 0)
-                textEdit->setTextColor(QColor(0, 0, 0, 255)); // black
+                strFontColor = "#000000"; // black
             else if (iLevel == 1) // join
-                textEdit->setTextColor(QColor(0, 147, 0, 255)); // green
+                strFontColor = "#009300"; // green
             else if (iLevel == 2) // part
-                textEdit->setTextColor(QColor(71, 51, 255, 255)); // light blue
+                strFontColor = "#4733FF"; // light blue
             else if (iLevel == 3) // quit
-                textEdit->setTextColor(QColor(0, 0, 127, 255)); // dark blue
+                strFontColor = "#00007F"; // dark blue
             else if (iLevel == 4) // kick
-                textEdit->setTextColor(QColor(0, 0, 127, 255)); // dark blue
+                strFontColor = "#00007F"; // dark blue
             else if (iLevel == 5) // mode
-                textEdit->setTextColor(QColor(0, 147, 0, 255)); // green
+                strFontColor = "#009300"; // green
             else if (iLevel == 6) // notice
-                textEdit->setTextColor(QColor(0, 102, 255, 255)); // blue
+                strFontColor = "#0066FF"; // blue
             else if (iLevel == 7) // info
-                textEdit->setTextColor(QColor(102, 102, 102, 255)); // gray
+                strFontColor = "#666666"; // gray
             else if (iLevel == 9) // error
-                textEdit->setTextColor(QColor(255, 0, 0, 255)); // red
+                strFontColor = "#ff0000"; // red
 
+            strContent.append("<span style=\"color:"+strFontColor+";\">");
+            strContentLast = "</span>"+strContentLast;
             bLevel = true;
         }
 
@@ -538,7 +543,11 @@ void tab_widget::display_message(QString strData, int iLevel)
         if (QString(strData[i]) == QString(QByteArray("\x01")))
         {
             if (settings->value("hide_formating").toString() == "off")
-                textEdit->setAlignment(Qt::AlignHCenter);
+            {
+                strFontAlign = "center";
+                strContent.append("<span style=\"text-align:"+strFontAlign+";\">");
+                strContentLast = "</span>"+strContentLast;
+            }
         }
         // emoticons
         else if ((strData[i] == '%') && (strData.length() > i+1) && (strData[i+1] == 'I'))
@@ -554,29 +563,17 @@ void tab_widget::display_message(QString strData, int iLevel)
                 QFile f1(emoticonFull1);
                 QFile f2(emoticonFull2);
                 if ((f1.exists() == true) && (settings->value("hide_formating").toString() == "off"))
-                {
-                    QColor realcolor = textEdit->textColor(); // fix font color
-                    QFont realfont = textEdit->currentFont(); // fix font size
-                    textEdit->textCursor().insertImage(QImage(emoticonFull1));
-                    textEdit->setCurrentFont(realfont); // fix font size
-                    textEdit->setTextColor(realcolor); // fix font color
-                }
+                    strContent.append("<img src=\""+emoticonFull1+"\" alt=\""+emoticon+"\" />");
                 else if ((f2.exists() == true) && (settings->value("hide_formating").toString() == "off"))
-                {
-                    QColor realcolor = textEdit->textColor(); // fix font color
-                    QFont realfont = textEdit->currentFont(); // fix font size
-                    textEdit->textCursor().insertImage(QImage(emoticonFull2));
-                    textEdit->setCurrentFont(realfont); // fix font size
-                    textEdit->setTextColor(realcolor); // fix font color
-                }
+                    strContent.append("<img src=\""+emoticonFull2+"\" alt=\""+emoticon+"\" />");
                 // emoticon not exist or hide formating
                 else
-                    textEdit->insertPlainText("//"+emoticon);
+                    strContent.append("//"+emoticon);
                 i = x;
             }
             // not emoticon
             else
-                textEdit->insertPlainText(QString(strData[i]));
+                strContent.append(QString(strData[i]));
         }
         // font color
         else if ((strData[i] == '%') && (strData.length() > i+1) && (strData[i+1] == 'C'))
@@ -588,23 +585,22 @@ void tab_widget::display_message(QString strData, int iLevel)
                 QString strColor = strData.mid(i+2,x-i-2).toLower();
                 if ((strColor == "000000") || (strColor == "623c00") || (strColor == "c86c00") || (strColor == "ff6500") || (strColor == "ff0000") || (strColor == "e40f0f") || (strColor == "990033") || (strColor == "8800ab") || (strColor == "ce00ff") || (strColor == "0f2ab1") || (strColor == "3030ce") || (strColor == "006699") || (strColor == "1a866e") || (strColor == "008100") || (strColor == "959595"))
                 {
-                    bool ok;
-                    int r = strColor.mid(0,2).toUInt(&ok,16);
-                    int g = strColor.mid(2,2).toUInt(&ok,16);
-                    int b = strColor.mid(4,2).toUInt(&ok,16);
-
                     if ((bHilight == false) && (settings->value("hide_formating").toString() == "off"))
-                        textEdit->setTextColor(QColor(r, g, b, 255));
+                    {
+                        strFontColor = strColor;
+                        strContent.append("<span style=\"color:"+strFontColor+";\">");
+                        strContentLast = "</span>"+strContentLast;
+                    }
 
                     i = x;
                 }
                 // color not supported or hide formating
                 else
-                    textEdit->insertPlainText(QString(strData[i]));
+                    strContent.append(QString(strData[i]));
             }
             // not color
             else
-                textEdit->insertPlainText(QString(strData[i]));
+                strContent.append(QString(strData[i]));
         }
         // font
         else if ((strData[i] == '%') && (strData.length() > i+1) && (strData[i+1] == 'F'))
@@ -624,37 +620,42 @@ void tab_widget::display_message(QString strData, int iLevel)
 
                          for (int fw = 0; fw < strFontWeight.length(); fw++)
                          {
-                             if (strFontWeight[fw] == 'b') textEdit->setFontWeight(75);
-                             else if (strFontWeight[fw] == 'i') textEdit->setFontItalic(true);
+                             if (strFontWeight[fw] == 'b') strFontWeight = "bold";
+                             else if (strFontWeight[fw] == 'i') strFontStyle = "italic";
                          }
 
-                         if (strFontName == "arial") textEdit->setFontFamily("Arial");
-                         else if (strFontName == "times") textEdit->setFontFamily("Times New Roman");
-                         else if (strFontName == "verdana") textEdit->setFontFamily("Verdana");
-                         else if (strFontName == "tahoma") textEdit->setFontFamily("Tahoma");
-                         else if (strFontName == "courier") textEdit->setFontFamily("Courier New");
+                         if (strFontName == "arial") strFontFamily = "Arial";
+                         else if (strFontName == "times") strFontFamily = "Times New Roman";
+                         else if (strFontName == "verdana") strFontFamily = "Verdana";
+                         else if (strFontName == "tahoma") strFontFamily = "Tahoma";
+                         else if (strFontName == "courier") strFontFamily = "Courier New";
+
+                         strContent.append("<span style=\"font-weight:"+strFontWeight+";font-style:"+strFontStyle+";font-family:"+strFontFamily+";\">");
+                         strContentLast = "</span>"+strContentLast;
                     }
                     else
                     {
-                         if (strFont == "arial") textEdit->setFontFamily("Arial");
-                         else if (strFont == "times") textEdit->setFontFamily("Times New Roman");
-                         else if (strFont == "verdana") textEdit->setFontFamily("Verdana");
-                         else if (strFont == "tahoma") textEdit->setFontFamily("Tahoma");
-                         else if (strFont == "courier") textEdit->setFontFamily("Courier New");
+                         if (strFont == "arial") strFontFamily = "Arial";
+                         else if (strFont == "times") strFontFamily = "Times New Roman";
+                         else if (strFont == "verdana") strFontFamily = "Verdana";
+                         else if (strFont == "tahoma") strFontFamily = "Tahoma";
+                         else if (strFont == "courier") strFontFamily = "Courier New";
                          else
                          {
                              for (int fw = 0; fw < strFont.length(); fw++)
                              {
-                                 if (strFont[fw] == 'b') textEdit->setFontWeight(75);
-                                 else if (strFont[fw] == 'i') textEdit->setFontItalic(true);
+                                 if (strFont[fw] == 'b') strFontWeight = "bold";
+                                 else if (strFont[fw] == 'i') strFontStyle = "italic";
                              }
                          }
+                         strContent.append("<span style=\"font-weight:"+strFontWeight+";font-style:"+strFontStyle+";font-family:"+strFontFamily+";\">");
+                         strContentLast = "</span>"+strContentLast;
                     }
                 }
                 i = x;
             }
             else
-                textEdit->insertPlainText(QString(strData[i]));
+                strContent.append(QString(strData[i]));
         }
         // link
         else if (
@@ -674,29 +675,28 @@ void tab_widget::display_message(QString strData, int iLevel)
 
                 if (settings->value("hide_formating").toString() == "off")
                 {
-                    QColor realcolor = textEdit->textColor(); // fix font color
-                    QFont realfont = textEdit->currentFont(); // fix font size
-                    textEdit->insertHtml(QString("<a href=\"%1\">%1</a> ").arg(strLink));
-                    textEdit->setCurrentFont(realfont); // fix font size
-                    textEdit->setTextColor(realcolor); // fix font color
+                    strContent.append("<span style=\"color:#0000ff;\">");
+                    strContent.append(QString("%1 ").arg(strLink));
+                    strContentLast = "</span>"+strContentLast;
                 }
                 else
-                    textEdit->insertPlainText(QString("%1 ").arg(strLink));
+                    strContent.append(QString("%1 ").arg(strLink));
 
                 i = x;
                 if (i == strData.length()-1) // fix position
                     i--;
             }
             else
-                textEdit->insertPlainText(QString(strData[i]));
+                strContent.append(QString(strData[i]));
         }
         // not action, emoticon, color, font, link
         else
-            textEdit->insertPlainText(QString(strData[i]));
+            strContent.append(QString(strData[i]));
     }
 
-    textEdit->insertHtml("</p>");
-    textEdit->moveCursor(QTextCursor::End, QTextCursor::MoveAnchor);
+    strContent.append("</p>");
+    strContent = strContent+strContentLast;
+    textEdit->setHtml(strContentStart+strContent+strContentEnd,QUrl(""));
 }
 
 // window options
@@ -1127,13 +1127,13 @@ void tab_widget::bold_clicked()
     {
         bold->setDown(false);
         bBold = false;
-        inputline->setFont(QFont(fontfamily->text(), -1, 50, false));
+        strFontWeight = "";
     }
     else
     {
         bold->setDown(true);
         bBold = true;
-        inputline->setFont(QFont(fontfamily->text(), -1, 75, false));
+        strFontWeight = "bold";
     }
 }
 
@@ -1143,148 +1143,85 @@ void tab_widget::italic_clicked()
     {
         italic->setDown(false);
         bItalic = false;
-
-        if ((bBold == true) && (bItalic == true))
-            inputline->setFont(QFont(fontfamily->text(), -1, 75, true));
-        else if ((bBold == true) && (bItalic == false))
-            inputline->setFont(QFont(fontfamily->text(), -1, 75, false));
-        else if ((bBold == false) && (bItalic == true))
-            inputline->setFont(QFont(fontfamily->text(), -1, 50, true));
-        else if ((bBold == false) && (bItalic == false))
-            inputline->setFont(QFont(fontfamily->text(), -1, 50, false));
+        strFontStyle = "";
     }
     else
     {
         italic->setDown(true);
         bItalic = true;
-
-        if ((bBold == true) && (bItalic == true))
-            inputline->setFont(QFont(fontfamily->text(), -1, 75, true));
-        else if ((bBold == true) && (bItalic == false))
-            inputline->setFont(QFont(fontfamily->text(), -1, 75, false));
-        else if ((bBold == false) && (bItalic == true))
-            inputline->setFont(QFont(fontfamily->text(), -1, 50, true));
-        else if ((bBold == false) && (bItalic == false))
-            inputline->setFont(QFont(fontfamily->text(), -1, 50, false));
+        strFontStyle = "italic";
     }
 }
 
 void tab_widget::arial_triggered()
 {
     fontfamily->setText("Arial");
-
-    if ((bBold == true) && (bItalic == true))
-        inputline->setFont(QFont(fontfamily->text(), -1, 75, true));
-    else if ((bBold == true) && (bItalic == false))
-        inputline->setFont(QFont(fontfamily->text(), -1, 75, false));
-    else if ((bBold == false) && (bItalic == true))
-        inputline->setFont(QFont(fontfamily->text(), -1, 50, true));
-    else if ((bBold == false) && (bItalic == false))
-        inputline->setFont(QFont(fontfamily->text(), -1, 50, false));
+    strFontFamily = "Arial";
 }
 
 void tab_widget::times_triggered()
 {
     fontfamily->setText("Times");
-
-    if ((bBold == true) && (bItalic == true))
-        inputline->setFont(QFont(fontfamily->text(), -1, 75, true));
-    else if ((bBold == true) && (bItalic == false))
-        inputline->setFont(QFont(fontfamily->text(), -1, 75, false));
-    else if ((bBold == false) && (bItalic == true))
-        inputline->setFont(QFont(fontfamily->text(), -1, 50, true));
-    else if ((bBold == false) && (bItalic == false))
-        inputline->setFont(QFont(fontfamily->text(), -1, 50, false));
+    strFontFamily = "Times";
 }
 
 void tab_widget::verdana_triggered()
 {
     fontfamily->setText("Verdana");
+    strFontFamily = "Verdana";
 
-    if ((bBold == true) && (bItalic == true))
-        inputline->setFont(QFont(fontfamily->text(), -1, 75, true));
-    else if ((bBold == true) && (bItalic == false))
-        inputline->setFont(QFont(fontfamily->text(), -1, 75, false));
-    else if ((bBold == false) && (bItalic == true))
-        inputline->setFont(QFont(fontfamily->text(), -1, 50, true));
-    else if ((bBold == false) && (bItalic == false))
-        inputline->setFont(QFont(fontfamily->text(), -1, 50, false));
 }
 
 void tab_widget::tahoma_triggered()
 {
     fontfamily->setText("Tahoma");
-
-    if ((bBold == true) && (bItalic == true))
-        inputline->setFont(QFont(fontfamily->text(), -1, 75, true));
-    else if ((bBold == true) && (bItalic == false))
-        inputline->setFont(QFont(fontfamily->text(), -1, 75, false));
-    else if ((bBold == false) && (bItalic == true))
-        inputline->setFont(QFont(fontfamily->text(), -1, 50, true));
-    else if ((bBold == false) && (bItalic == false))
-        inputline->setFont(QFont(fontfamily->text(), -1, 50, false));
+    strFontFamily = "Tahoma";
 }
 
 void tab_widget::courier_triggered()
 {
     fontfamily->setText("Courier");
-
-    if ((bBold == true) && (bItalic == true))
-        inputline->setFont(QFont(fontfamily->text(), -1, 75, true));
-    else if ((bBold == true) && (bItalic == false))
-        inputline->setFont(QFont(fontfamily->text(), -1, 75, false));
-    else if ((bBold == false) && (bItalic == true))
-        inputline->setFont(QFont(fontfamily->text(), -1, 50, true));
-    else if ((bBold == false) && (bItalic == false))
-        inputline->setFont(QFont(fontfamily->text(), -1, 50, false));
+    strFontFamily = "Courier";
 }
 
 void tab_widget::size8_triggered()
 {
-    textEdit->selectAll();
-    textEdit->setFontPointSize(8);
+    strFontSize = "8px";
 }
 
 void tab_widget::size9_triggered()
 {
-    textEdit->selectAll();
-    textEdit->setFontPointSize(9);
+    strFontSize = "9px";
 }
 
 void tab_widget::size10_triggered()
 {
-    textEdit->selectAll();
-    textEdit->setFontPointSize(10);
+    strFontSize = "10px";
 }
 
 void tab_widget::size11_triggered()
 {
-    textEdit->selectAll();
-    textEdit->setFontPointSize(11);
+    strFontSize = "11px";
 }
 
 void tab_widget::size12_triggered()
 {
-    textEdit->selectAll();
-    textEdit->setFontPointSize(12);
+    strFontSize = "12px";
 }
 
 void tab_widget::size14_triggered()
 {
-    textEdit->selectAll();
-    textEdit->setFontPointSize(14);
+    strFontSize = "14px";
 }
 
 void tab_widget::size18_triggered()
 {
-    textEdit->selectAll();
-    textEdit->setFontPointSize(18);
+    strFontSize = "18px";
 }
 
 void tab_widget::size20_triggered()
 {
-    textEdit->selectAll();
-    textEdit->setFontPointSize(20);
+    strFontSize = "20px";
 }
 
 // color
@@ -1461,15 +1398,10 @@ void tab_widget::topic_return_pressed()
     tab_widget::send(QString("CS SET %1 TOPIC %2").arg(strName).arg(strText));
 }
 
-// fix if somebody move cursor
-void tab_widget::cursor_position_changed()
-{
-    bCursorPositionChanged = true;
-}
-
 void tab_widget::timer_timeout()
 {
-    this->textEdit->clear();
+    strContent.clear();
+    this->textEdit->setHtml(strContent, QUrl(""));
 }
 
 void tab_widget::keyPressEvent(QKeyEvent *e)

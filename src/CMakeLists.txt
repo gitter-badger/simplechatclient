@@ -126,6 +126,9 @@ link_directories (${PHONON_LIBRARY_DIRS})
 # xml
 set (QT_USE_QTXML TRUE)
 
+# webkit
+set(QT_USE_QTWEBKIT TRUE)
+
 # resources
 set (scc_QRC ../scc.qrc)
 qt4_add_resources (scc_QRC_SRCS ${scc_QRC})
