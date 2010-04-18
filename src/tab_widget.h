@@ -42,7 +42,6 @@
 #include <QTcpSocket>
 #include <QTextEdit>
 #include <QTimer>
-#include <QVBoxLayout>
 #include <QWidget>
 #include "commands.h"
 #include "config.h"

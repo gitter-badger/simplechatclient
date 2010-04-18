@@ -62,29 +62,35 @@ tab_widget::tab_widget(QString param1, QWidget *parent, QTcpSocket *param2, QSet
     topicDetails->show();
 
     logo = new QLabel(this);
-    logo->setText("logo");
     logo->setParent(this);
     logo->show();
 
     topLeftUpWidget = new QWidget(this);
     topLeftUpLayout = new QHBoxLayout();
+    topLeftUpLayout->setMargin(0);
+    topLeftUpLayout->setAlignment(Qt::AlignLeft);
     topLeftUpLayout->addWidget(topic);
     topLeftUpLayout->addWidget(topicButton);
     topLeftUpWidget->setLayout(topLeftUpLayout);
 
     topLeftWidget = new QWidget(this);
     topLeftLayout = new QVBoxLayout();
+    topLeftLayout->setMargin(0);
+    topLeftLayout->setAlignment(Qt::AlignTop);
     topLeftLayout->addWidget(topLeftUpWidget);
     topLeftLayout->addWidget(topicDetails);
     topLeftWidget->setLayout(topLeftLayout);
 
     topRightWidget = new QWidget(this);
     topRightLayout = new QVBoxLayout();
+    topRightLayout->setMargin(0);
+    topRightLayout->setAlignment(Qt::AlignTop);
     topRightLayout->addWidget(logo);
     topRightWidget->setLayout(topRightLayout);
 
     topWidget = new QWidget(this);
     topLayout = new QHBoxLayout();
+    topLayout->setMargin(0);
     topLayout->setAlignment(Qt::AlignLeft);
     topLayout->addWidget(topLeftWidget);
     topLayout->addWidget(topRightWidget);
@@ -228,6 +234,7 @@ tab_widget::tab_widget(QString param1, QWidget *parent, QTcpSocket *param2, QSet
 
     toolWidget = new QWidget(this);
     toolLayout = new QHBoxLayout();
+    toolLayout->setMargin(0);
     toolLayout->setAlignment(Qt::AlignLeft);
     toolLayout->addWidget(bold);
     toolLayout->addWidget(italic);
@@ -265,6 +272,7 @@ tab_widget::tab_widget(QString param1, QWidget *parent, QTcpSocket *param2, QSet
 
     bottomWidget = new QWidget(this);
     bottomLayout = new QHBoxLayout();
+    bottomLayout->setMargin(0);
     bottomLayout->setAlignment(Qt::AlignLeft);
     bottomLayout->addWidget(nickLabel);
     bottomLayout->addWidget(inputline);
