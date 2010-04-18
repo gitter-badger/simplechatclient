@@ -37,7 +37,6 @@ void irc_auth::request_uo(QString param1, QString param2)
     bool bOverride;
     QEventLoop eventLoop;
     QNetworkReply* pReply;
-    QByteArray bData;
     QString strData;
 
     QNetworkAccessManager accessManager;
@@ -82,8 +81,7 @@ void irc_auth::request_uo(QString param1, QString param2)
         QString strNickLen = QString("%1").arg(strNick.length());
         QString strVersionLen = QString("%1").arg(strVersion.length());
 
-        bData = "ch=&n=&p=&category=0";
-        pReply = accessManager.post(QNetworkRequest(QUrl("http://czat.onet.pl/chat.html")), bData);
+        pReply = accessManager.post(QNetworkRequest(QUrl("http://czat.onet.pl/chat.html")), "ch=&n=&p=&category=0");
         QObject::connect(pReply, SIGNAL(finished()), &eventLoop, SLOT(quit()));
         eventLoop.exec();
         delete pReply;
@@ -107,8 +105,7 @@ void irc_auth::request_uo(QString param1, QString param2)
             delete pReply;
 
             strData = QString("r=secure.onet.pl&url=&login=%1&haslo=%2&ssl=on&ok=Ok").arg(strNick).arg(strPass);
-            bData = strData.toAscii();
-            pReply = accessManager.post(QNetworkRequest(QUrl("https://secure.onet.pl/index.html")), bData);
+            pReply = accessManager.post(QNetworkRequest(QUrl("https://secure.onet.pl/index.html")), strData.toAscii());
             QObject::connect(pReply, SIGNAL(finished()), &eventLoop, SLOT(quit()));
             eventLoop.exec();
             delete pReply;
@@ -116,8 +113,7 @@ void irc_auth::request_uo(QString param1, QString param2)
             if (bOverride == true)
             {
                 strData = QString("api_function=userOverride&params=a:1:{s:4:\"nick\";s:%1:\"%2\";}").arg(strNickLen).arg(strNick);
-                bData = strData.toAscii();
-                pReply = accessManager.post(QNetworkRequest(QUrl("http://czat.onet.pl/include/ajaxapi.xml.php3")), bData);
+                pReply = accessManager.post(QNetworkRequest(QUrl("http://czat.onet.pl/include/ajaxapi.xml.php3")), strData.toAscii());
                 QObject::connect(pReply, SIGNAL(finished()), &eventLoop, SLOT(quit()));
                 eventLoop.exec();
                 delete pReply;
@@ -126,8 +122,7 @@ void irc_auth::request_uo(QString param1, QString param2)
             }
 
             strData = QString("api_function=getUoKey&params=a:3:{s:4:\"nick\";s:%1:\"%2\";s:8:\"tempNick\";i:0;s:7:\"version\";s:%3:\"%4\";}").arg(strNickLen).arg(strNick).arg(strVersionLen).arg(strVersion);
-            bData =  strData.toAscii();
-            pReply = accessManager.post(QNetworkRequest(QUrl("http://czat.onet.pl/include/ajaxapi.xml.php3")), bData);
+            pReply = accessManager.post(QNetworkRequest(QUrl("http://czat.onet.pl/include/ajaxapi.xml.php3")), strData.toAscii());
             QObject::connect(pReply, SIGNAL(finished()), &eventLoop, SLOT(quit()));
             eventLoop.exec();
             this->request_finished(pReply->readAll());
@@ -137,8 +132,7 @@ void irc_auth::request_uo(QString param1, QString param2)
         else
         {
             strData = QString("api_function=getUoKey&params=a:3:{s:4:\"nick\";s:%1:\"%2\";s:8:\"tempNick\";i:1;s:7:\"version\";s:%3:\"%4\";}").arg(strNickLen).arg(strNick).arg(strVersionLen).arg(strVersion);
-            bData =  strData.toAscii();
-            pReply = accessManager.post(QNetworkRequest(QUrl("http://czat.onet.pl/include/ajaxapi.xml.php3")), bData);
+            pReply = accessManager.post(QNetworkRequest(QUrl("http://czat.onet.pl/include/ajaxapi.xml.php3")), strData.toAscii());
             QObject::connect(pReply, SIGNAL(finished()), &eventLoop, SLOT(quit()));
             eventLoop.exec();
             this->request_finished(pReply->readAll());
