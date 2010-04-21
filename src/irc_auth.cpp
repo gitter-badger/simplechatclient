@@ -29,7 +29,7 @@ irc_auth::irc_auth(QSettings *param1, tab_container *param2, QTcpSocket *param3)
 
 void irc_auth::request_uo(QString param1, QString param2)
 {
-    QMutexLocker locker(&mutex);
+    //QMutexLocker locker(&mutex);
 
     QString strNick = param1;
     QString strPass = param2;

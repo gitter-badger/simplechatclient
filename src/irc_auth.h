@@ -22,7 +22,7 @@
 #define IRC_AUTH_H
 
 #include <QHostInfo>
-#include <QMutex>
+//#include <QMutex>
 #include <QNetworkAccessManager>
 #include <QNetworkCookieJar>
 #include <QNetworkReply>
@@ -43,7 +43,7 @@ private:
     QSettings *settings;
     tab_container *tabc;
     QTcpSocket *socket;
-    QMutex mutex;
+    //QMutex mutex;
 
     QString get_version(QString);
     void request_finished(QString);

@@ -31,9 +31,12 @@ tab_widget::tab_widget(QString param1, QWidget *parent, QTcpSocket *param2, QSet
     iNickCount = 0;
     bCursorPositionChanged = false;
     strCurrentColor = "000000";
-    strFontSize = "10px";
-    strContentStart = "<html><body>";
-    //strContentStart.append("<script type=\"text/javascript\">window.onload = function(){setInterval('document.scrollTop = document.scrollHeight;', 1);}</script>");
+    strFontSize = "11px";
+    strContentStart = "<html><body style=\"background-color:#ffffff;\">";
+    //strContentStart.append("<script type=\"text/javascript\">");
+    //strContentStart.append("window.onload = function(){ ");
+    //strContentStart.append("setInterval('window.scrollBy(0, window.innerHeight);', 100);");
+    //strContentStart.append("}</script>");
     strContentEnd = "</body></html>";
 
     notify = new qnotify();
@@ -208,21 +211,21 @@ tab_widget::tab_widget(QString param1, QWidget *parent, QTcpSocket *param2, QSet
 
     color = new QComboBox(this);
     color->setParent(this);
-    color->insertItem(0, QIcon(":/3rdparty/images/000000.png"),"");
-    color->insertItem(1, QIcon(":/3rdparty/images/623c00.png"),"");
-    color->insertItem(2, QIcon(":/3rdparty/images/c86c00.png"),"");
-    color->insertItem(3, QIcon(":/3rdparty/images/ff6500.png"),"");
-    color->insertItem(4, QIcon(":/3rdparty/images/ff0000.png"),"");
-    color->insertItem(5, QIcon(":/3rdparty/images/e40f0f.png"),"");
-    color->insertItem(6, QIcon(":/3rdparty/images/990033.png"),"");
-    color->insertItem(7, QIcon(":/3rdparty/images/8800ab.png"),"");
-    color->insertItem(8, QIcon(":/3rdparty/images/ce00ff.png"),"");
-    color->insertItem(9, QIcon(":/3rdparty/images/0f2ab1.png"),"");
-    color->insertItem(10, QIcon(":/3rdparty/images/3030ce.png"),"");
-    color->insertItem(11, QIcon(":/3rdparty/images/006699.png"),"");
-    color->insertItem(12, QIcon(":/3rdparty/images/1a866e.png"),"");
-    color->insertItem(13, QIcon(":/3rdparty/images/008100.png"),"");
-    color->insertItem(14, QIcon(":/3rdparty/images/959595.png"),"");
+    color->insertItem(0, QIcon(":/images/000000.png"),"");
+    color->insertItem(1, QIcon(":/images/623c00.png"),"");
+    color->insertItem(2, QIcon(":/images/c86c00.png"),"");
+    color->insertItem(3, QIcon(":/images/ff6500.png"),"");
+    color->insertItem(4, QIcon(":/images/ff0000.png"),"");
+    color->insertItem(5, QIcon(":/images/e40f0f.png"),"");
+    color->insertItem(6, QIcon(":/images/990033.png"),"");
+    color->insertItem(7, QIcon(":/images/8800ab.png"),"");
+    color->insertItem(8, QIcon(":/images/ce00ff.png"),"");
+    color->insertItem(9, QIcon(":/images/0f2ab1.png"),"");
+    color->insertItem(10, QIcon(":/images/3030ce.png"),"");
+    color->insertItem(11, QIcon(":/images/006699.png"),"");
+    color->insertItem(12, QIcon(":/images/1a866e.png"),"");
+    color->insertItem(13, QIcon(":/images/008100.png"),"");
+    color->insertItem(14, QIcon(":/images/959595.png"),"");
     color->setIconSize(QSize(50,10));
     color->show();
 
@@ -476,7 +479,7 @@ void tab_widget::display_message(QString strData, int iLevel)
     if (strFontWeight == "bold") strFontWeight = "normal";
 
     strData+="\n";
-    strContent.append("<p style=\"font-style:"+strFontStyle+";color:"+strFontColor+";text-align:"+strFontAlign+";font-family:"+strFontFamily+";font-weight:"+strFontWeight+";font-size:"+strFontSize+";\">");
+    strContent.append("<p style=\"margin:0;padding:0;font-style:"+strFontStyle+";color:"+strFontColor+";text-align:"+strFontAlign+";font-family:"+strFontFamily+";font-weight:"+strFontWeight+";font-size:"+strFontSize+";\">");
     bool bHilight = false;
     bool bLevel = false;
     QString strContentLast;
@@ -506,9 +509,9 @@ void tab_widget::display_message(QString strData, int iLevel)
                 strContentLast = "</span>"+strContentLast;
                 bHilight = true;
 
-                mutex_notify.lock();
+                //mutex_notify.lock();
                 notify->play();
-                mutex_notify.unlock();
+                //mutex_notify.unlock();
 
                 bLevel = true;
             }
@@ -697,6 +700,7 @@ void tab_widget::display_message(QString strData, int iLevel)
     strContent.append("</p>");
     strContent = strContent+strContentLast;
     textEdit->setHtml(strContentStart+strContent+strContentEnd,QUrl(""));
+    textEdit->page()->mainFrame()->setScrollPosition(QPoint(0, textEdit->page()->mainFrame()->scrollBarMaximum(Qt::Vertical)));
 }
 
 // window options
@@ -938,7 +942,7 @@ void tab_widget::nicklist_clear()
 
 void tab_widget::nicklist_refresh()
 {
-    mutex_nicklist.lock();
+    //mutex_nicklist.lock();
     nick_list->clear();
 
     new_nicklist1.clear();
@@ -966,12 +970,10 @@ void tab_widget::nicklist_refresh()
         else if (strStatus == "vip") icon = QIcon(":/3rdparty/images/vip.png");
         else if (strStatus == "user") icon = QIcon(":/3rdparty/images/user.png");
 
-        QListWidgetItem *new_nick;
-        new_nick = new QListWidgetItem(icon, strNick);
-        nick_list->addItem(new_nick);
+        nick_list->addItem(new QListWidgetItem(icon, strNick));
     }
 
-    mutex_nicklist.unlock();
+    //mutex_nicklist.unlock();
 }
 
 void tab_widget::nicklist_sort()

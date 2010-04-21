@@ -33,7 +33,7 @@
 #include <QListWidget>
 #include <QMap>
 #include <QMenu>
-#include <QMutex>
+//#include <QMutex>
 #include <QPushButton>
 #include <QQueue>
 #include <QRgb>
@@ -43,6 +43,7 @@
 #include <QTextEdit>
 #include <QTimer>
 #include <QWidget>
+#include <QtWebKit/QWebFrame>
 #include <QtWebKit/QWebView>
 #include "commands.h"
 #include "config.h"
@@ -159,8 +160,8 @@ private:
     QTcpSocket *socket;
     QString strLast_msg;
     QSettings *settings;
-    QMutex mutex_nicklist;
-    QMutex mutex_notify;
+    //QMutex mutex_nicklist;
+    //QMutex mutex_notify;
     QTimer *timer;
     QMap<QString, QString> nick_flag;
     QMap<QString, QString> nick_suffix;

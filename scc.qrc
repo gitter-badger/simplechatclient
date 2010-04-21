@@ -22,20 +22,20 @@
         <file>3rdparty/images/user.png</file>
         <file>3rdparty/images/vipcam.png</file>
         <file>3rdparty/images/vip.png</file>
-        <file>3rdparty/images/000000.png</file>
-        <file>3rdparty/images/623c00.png</file>
-        <file>3rdparty/images/c86c00.png</file>
-        <file>3rdparty/images/ff6500.png</file>
-        <file>3rdparty/images/ff0000.png</file>
-        <file>3rdparty/images/e40f0f.png</file>
-        <file>3rdparty/images/990033.png</file>
-        <file>3rdparty/images/8800ab.png</file>
-        <file>3rdparty/images/ce00ff.png</file>
-        <file>3rdparty/images/0f2ab1.png</file>
-        <file>3rdparty/images/3030ce.png</file>
-        <file>3rdparty/images/006699.png</file>
-        <file>3rdparty/images/1a866e.png</file>
-        <file>3rdparty/images/008100.png</file>
-        <file>3rdparty/images/959595.png</file>
+        <file>images/000000.png</file>
+        <file>images/623c00.png</file>
+        <file>images/c86c00.png</file>
+        <file>images/ff6500.png</file>
+        <file>images/ff0000.png</file>
+        <file>images/e40f0f.png</file>
+        <file>images/990033.png</file>
+        <file>images/8800ab.png</file>
+        <file>images/ce00ff.png</file>
+        <file>images/0f2ab1.png</file>
+        <file>images/3030ce.png</file>
+        <file>images/006699.png</file>
+        <file>images/1a866e.png</file>
+        <file>images/008100.png</file>
+        <file>images/959595.png</file>
     </qresource>
 </RCC>
