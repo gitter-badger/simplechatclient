@@ -33,10 +33,6 @@ tab_widget::tab_widget(QString param1, QWidget *parent, QTcpSocket *param2, QSet
     strCurrentColor = "000000";
     strFontSize = "11px";
     strContentStart = "<html><body style=\"background-color:#ffffff;\">";
-    //strContentStart.append("<script type=\"text/javascript\">");
-    //strContentStart.append("window.onload = function(){ ");
-    //strContentStart.append("setInterval('window.scrollBy(0, window.innerHeight);', 100);");
-    //strContentStart.append("}</script>");
     strContentEnd = "</body></html>";
 
     notify = new qnotify();
@@ -122,7 +118,6 @@ tab_widget::tab_widget(QString param1, QWidget *parent, QTcpSocket *param2, QSet
 
     textEdit = new QWebView(this);
     textEdit->setParent(this);
-    //textEdit->setReadOnly(true);
     textEdit->show();
 
     bold = new QPushButton(this);
@@ -399,6 +394,8 @@ tab_widget::tab_widget(QString param1, QWidget *parent, QTcpSocket *param2, QSet
     QObject::connect(channel_settings, SIGNAL(clicked()), this, SLOT(channel_settings_clicked()));
     QObject::connect(moderation, SIGNAL(clicked()), this, SLOT(moderation_clicked()));
     QObject::connect(moderSendButton, SIGNAL(clicked()), this, SLOT(moder_button_clicked()));
+
+    QObject::connect(textEdit, SIGNAL(loadFinished(bool)), this, SLOT(change_scroll_position()));
 }
 
 tab_widget::~tab_widget()
@@ -700,7 +697,6 @@ void tab_widget::display_message(QString strData, int iLevel)
     strContent.append("</p>");
     strContent = strContent+strContentLast;
     textEdit->setHtml(strContentStart+strContent+strContentEnd,QUrl(""));
-    textEdit->page()->mainFrame()->setScrollPosition(QPoint(0, textEdit->page()->mainFrame()->scrollBarMaximum(Qt::Vertical)));
 }
 
 // window options
@@ -1404,6 +1400,11 @@ void tab_widget::timer_timeout()
 {
     strContent.clear();
     this->textEdit->setHtml(strContent, QUrl(""));
+}
+
+void tab_widget::change_scroll_position()
+{
+    textEdit->page()->mainFrame()->setScrollBarValue(Qt::Vertical, textEdit->page()->mainFrame()->scrollBarMaximum(Qt::Vertical));
 }
 
 void tab_widget::keyPressEvent(QKeyEvent *e)

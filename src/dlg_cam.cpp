@@ -202,6 +202,18 @@ void dlg_cam::network_read()
                 dlg_cam::network_disconnect();
             }
         }
+        // 211 19995 Noemi_01@0
+        // 211 13584 Noemi_01@1
+        // 211 13584 Noemi_01@2
+        // 211 13584 Noemi_01@3
+        // 211 29 my_dwoje@4
+        // 211 17 myszka29brunetka@5
+        else if (strDataList[0] == "211")
+        {
+            bText = false;
+            iBytes_need = strDataList[1].toInt();
+            iCam_cmd = 211;
+        }
         // 231 0 OK scc_test
         else if (strDataList[0] == "231")
         {
@@ -301,6 +313,11 @@ void dlg_cam::network_read()
         {
             ui.label_img->setText("Nie uda³o siê pobraæ obrazu z kamerki");
             dlg_cam::network_disconnect();
+        }
+        // 508 0 SESSION_OVERRIDEN
+        else if (strDataList[0] == "508")
+        {
+            // nothing
         }
 
         dlg_cam::network_read();
