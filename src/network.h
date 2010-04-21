@@ -22,7 +22,6 @@
 #define NETWORK_H
 
 #include <QAction>
-//#include <QMutex>
 #include <QObject>
 #include <QTcpSocket>
 #include <QTimer>
@@ -72,7 +71,6 @@ private:
     QTimer *timer;
     int iActive;
     irc_auth *pIrc_auth;
-    //QMutex mutex;
 
 private slots:
     void reconnect();

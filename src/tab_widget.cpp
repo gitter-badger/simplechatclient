@@ -506,9 +506,7 @@ void tab_widget::display_message(QString strData, int iLevel)
                 strContentLast = "</span>"+strContentLast;
                 bHilight = true;
 
-                //mutex_notify.lock();
                 notify->play();
-                //mutex_notify.unlock();
 
                 bLevel = true;
             }
@@ -938,7 +936,6 @@ void tab_widget::nicklist_clear()
 
 void tab_widget::nicklist_refresh()
 {
-    //mutex_nicklist.lock();
     nick_list->clear();
 
     new_nicklist1.clear();
@@ -968,8 +965,6 @@ void tab_widget::nicklist_refresh()
 
         nick_list->addItem(new QListWidgetItem(icon, strNick));
     }
-
-    //mutex_nicklist.unlock();
 }
 
 void tab_widget::nicklist_sort()

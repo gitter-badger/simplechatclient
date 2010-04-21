@@ -43,6 +43,11 @@ void updater::check_for_updates()
     QString strAvailableRev = lAvailableVersion.last();
     int iAvailableRev = strAvailableRev.toInt();
 
+#ifdef Q_WS_X11
+        if (settings->value("debug").toString() == "on")
+            qDebug() << "Current rev: " << strCurrentRev << " Available rev: " << strAvailableRev;
+#endif
+
     if (iCurrentRev == iAvailableRev)
         tabc->show_msg_active("U¿ywasz aktualnej wersji programu.", 0);
     else if (iCurrentRev > iAvailableRev)
