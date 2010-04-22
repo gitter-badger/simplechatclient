@@ -208,6 +208,7 @@ private slots:
     void topic_return_pressed();
 
     void timer_timeout();
+
     void change_scroll_position();
 
 protected:

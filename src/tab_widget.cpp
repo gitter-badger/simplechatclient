@@ -469,11 +469,11 @@ void tab_widget::display_msg(QString strData, int iLevel)
 
 void tab_widget::display_message(QString strData, int iLevel)
 {
-    if (strFontStyle == "italic") strFontStyle = "";
+    if (strFontStyle != "normal") strFontStyle = "normal";
     if (strFontColor != "#000000") strFontColor = "#000000";
     if (strFontAlign != "left") strFontAlign = "left";
     if (strFontFamily != "Verdana") strFontFamily = "Verdana";
-    if (strFontWeight == "bold") strFontWeight = "normal";
+    if (strFontWeight != "normal") strFontWeight = "normal";
 
     strData+="\n";
     strContent.append("<p style=\"margin:0;padding:0;font-style:"+strFontStyle+";color:"+strFontColor+";text-align:"+strFontAlign+";font-family:"+strFontFamily+";font-weight:"+strFontWeight+";font-size:"+strFontSize+";\">");
@@ -543,8 +543,11 @@ void tab_widget::display_message(QString strData, int iLevel)
             if (settings->value("hide_formating").toString() == "off")
             {
                 strFontAlign = "center";
-                strContent.append("<span style=\"text-align:"+strFontAlign+";\">");
-                strContentLast = "</span>"+strContentLast;
+
+                int iLast1 = strContent.lastIndexOf("text-align:");
+                int iLast2 = strContent.indexOf(";",iLast1);
+                strContent.remove(iLast1, iLast2-iLast1);
+                strContent.insert(iLast1, "text-align:center");
             }
         }
         // emoticons
