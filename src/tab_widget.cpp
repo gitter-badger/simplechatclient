@@ -38,7 +38,7 @@ tab_widget::tab_widget(QString param1, QWidget *parent, QTcpSocket *param2, QSet
     notify = new qnotify();
 
     timer = new QTimer();
-    timer->setInterval(4*60*60*1000); // 4h
+    timer->setInterval(1*60*60*1000); // 1h
     timer->start();
 
     splitter = new QSplitter(this);
@@ -885,11 +885,6 @@ void tab_widget::add_user(QString strNick, QString strSuffix)
 
         iNickCount++;
         nickCount->setText(QString("Liczba osób: %1").arg(iNickCount));
-
-        if (iNickCount > 300)
-            timer->setInterval(1*60*60*1000); // 1h
-        else
-            timer->setInterval(4*60*60*1000); // 4h
     }
 }
 
@@ -906,11 +901,6 @@ void tab_widget::del_user(QString strNick)
 
         iNickCount--;
         nickCount->setText(QString("Liczba osób: %1").arg(iNickCount));
-
-        if (iNickCount > 300)
-            timer->setInterval(1*60*60*1000); // 1h
-        else
-            timer->setInterval(4*60*60*1000); // 4h
     }
 }
 
