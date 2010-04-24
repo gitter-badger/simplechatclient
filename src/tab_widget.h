@@ -40,7 +40,6 @@
 #include <QSplitter>
 #include <QTcpSocket>
 #include <QTextEdit>
-#include <QTimer>
 #include <QWidget>
 #include <QtWebKit/QWebFrame>
 #include <QtWebKit/QWebView>
@@ -159,7 +158,6 @@ private:
     QTcpSocket *socket;
     QString strLast_msg;
     QSettings *settings;
-    QTimer *timer;
     QMap<QString, QString> nick_flag;
     QMap<QString, QString> nick_suffix;
     QHash <QString, QString> nicklist;
@@ -206,8 +204,6 @@ private slots:
     void inputline_return_pressed();
     void moder_button_clicked();
     void topic_return_pressed();
-
-    void timer_timeout();
 
     void change_scroll_position();
 

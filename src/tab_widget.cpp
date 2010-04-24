@@ -37,10 +37,6 @@ tab_widget::tab_widget(QString param1, QWidget *parent, QTcpSocket *param2, QSet
 
     notify = new qnotify();
 
-    timer = new QTimer();
-    timer->setInterval(1*60*60*1000); // 1h
-    timer->start();
-
     splitter = new QSplitter(this);
     leftLayout = new QVBoxLayout();
     rightLayout = new QVBoxLayout();
@@ -366,7 +362,6 @@ tab_widget::tab_widget(QString param1, QWidget *parent, QTcpSocket *param2, QSet
     if (strName == "Status") channel_settings->hide();
     this->setLayout(mainLayout);
 
-    QObject::connect(timer, SIGNAL(timeout()), this, SLOT(timer_timeout()));
     QObject::connect(sendButton, SIGNAL(clicked()), this, SLOT(inputline_return_pressed()));
     QObject::connect(inputline, SIGNAL(returnPressed()), this, SLOT(inputline_return_pressed()));
     QObject::connect(topic, SIGNAL(returnPressed()), this, SLOT(topic_return_pressed()));
@@ -403,7 +398,6 @@ tab_widget::~tab_widget()
     nick_flag.clear();
     nick_suffix.clear();
     nickLabel->clear();
-    timer->stop();
     strContent.clear();
     textEdit->setHtml(strContent, QUrl(""));
     nick_list->clear();
@@ -474,6 +468,15 @@ void tab_widget::display_message(QString strData, int iLevel)
     if (strFontAlign != "left") strFontAlign = "left";
     if (strFontFamily != "Verdana") strFontFamily = "Verdana";
     if (strFontWeight != "normal") strFontWeight = "normal";
+    if (strContent.count("</p>") > 250)
+    {
+        QStringList list = strContent.split("</p>");
+        int iCount = strContent.count("</p>");
+        strContent.clear();
+        for (int i = iCount-250; i < iCount; i++)
+            strContent.append(list.at(i)+"</p>");
+        list.clear();
+    }
 
     strData+="\n";
     strContent.append("<p style=\"margin:0;padding:0;font-style:"+strFontStyle+";color:"+strFontColor+";text-align:"+strFontAlign+";font-family:"+strFontFamily+";font-weight:"+strFontWeight+";font-size:"+strFontSize+";\">");
@@ -1406,12 +1409,6 @@ void tab_widget::topic_return_pressed()
 {
     QString strText = topic->text();
     tab_widget::send(QString("CS SET %1 TOPIC %2").arg(strName).arg(strText));
-}
-
-void tab_widget::timer_timeout()
-{
-    strContent.clear();
-    this->textEdit->setHtml(strContent, QUrl(""));
 }
 
 void tab_widget::change_scroll_position()
