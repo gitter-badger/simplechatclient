@@ -31,15 +31,7 @@ dlg_cam::dlg_cam(QSettings *param1, QTcpSocket *param2, QString param3)
     strNick = param3;
     ui.label->setText("<p style=\"font-weight:bold;\">"+strNick+"</p>");
 
-    socket = new QTcpSocket();
-    timer = new QTimer();
-    timer->setInterval(2*1000); // 2 sec
-
     QObject::connect(ui.buttonBox, SIGNAL(accepted()), this, SLOT(button_ok()));
-    QObject::connect(timer, SIGNAL(timeout()), this, SLOT(network_keepalive()));
-    QObject::connect(socket, SIGNAL(connected()), this, SLOT(network_connected()));
-    QObject::connect(socket, SIGNAL(disconnected()), this, SLOT(network_disconnected()));
-    QObject::connect(socket, SIGNAL(readyRead()), this, SLOT(network_read()));
 }
 
 void dlg_cam::show_img(QByteArray bData)
@@ -383,6 +375,16 @@ void dlg_cam::showEvent(QShowEvent *event)
 
     ui.label_img->setText("Uruchamianie obs³ugi kamerek");
     ui.textEdit->setText("");
+
+    socket = new QTcpSocket();
+    timer = new QTimer();
+    timer->setInterval(2*1000); // 2 sec
+
+    QObject::connect(timer, SIGNAL(timeout()), this, SLOT(network_keepalive()));
+    QObject::connect(socket, SIGNAL(connected()), this, SLOT(network_connected()));
+    QObject::connect(socket, SIGNAL(disconnected()), this, SLOT(network_disconnected()));
+    QObject::connect(socket, SIGNAL(readyRead()), this, SLOT(network_read()));
+
     dlg_cam::network_connect();
 }
 
