@@ -1172,41 +1172,57 @@ void tab_widget::courier_triggered()
 
 void tab_widget::size8_triggered()
 {
+    strContent = strContent.replace("font-size:"+strFontSize, "font-size:8px");
+    textEdit->setHtml(strContentStart+strContent+strContentEnd,QUrl(""));
     strFontSize = "8px";
 }
 
 void tab_widget::size9_triggered()
 {
+    strContent = strContent.replace("font-size:"+strFontSize, "font-size:9px");
+    textEdit->setHtml(strContentStart+strContent+strContentEnd,QUrl(""));
     strFontSize = "9px";
 }
 
 void tab_widget::size10_triggered()
 {
+    strContent = strContent.replace("font-size:"+strFontSize, "font-size:10px");
+    textEdit->setHtml(strContentStart+strContent+strContentEnd,QUrl(""));
     strFontSize = "10px";
 }
 
 void tab_widget::size11_triggered()
 {
+    strContent = strContent.replace("font-size:"+strFontSize, "font-size:11px");
+    textEdit->setHtml(strContentStart+strContent+strContentEnd,QUrl(""));
     strFontSize = "11px";
 }
 
 void tab_widget::size12_triggered()
 {
+    strContent = strContent.replace("font-size:"+strFontSize, "font-size:12px");
+    textEdit->setHtml(strContentStart+strContent+strContentEnd,QUrl(""));
     strFontSize = "12px";
 }
 
 void tab_widget::size14_triggered()
 {
+    strContent = strContent.replace("font-size:"+strFontSize, "font-size:14px");
+    textEdit->setHtml(strContentStart+strContent+strContentEnd,QUrl(""));
     strFontSize = "14px";
 }
 
 void tab_widget::size18_triggered()
 {
+    strContent = strContent.replace("font-size:"+strFontSize, "font-size:18px");
+    textEdit->setHtml(strContentStart+strContent+strContentEnd,QUrl(""));
     strFontSize = "18px";
 }
 
 void tab_widget::size20_triggered()
 {
+    strContent = strContent.replace("font-size:"+strFontSize, "font-size:20px");
+    textEdit->setHtml(strContentStart+strContent+strContentEnd,QUrl(""));
     strFontSize = "20px";
 }
 
