@@ -197,7 +197,7 @@ tab_widget::tab_widget(QString param1, QWidget *parent, QTcpSocket *param2, QSet
     sizeMenu->addAction(size20Act);
 
     size = new QPushButton(this);
-    size->setText("a|A");
+    size->setText("Czcionka:"+strFontSize.left(strFontSize.length()-2));
     size->setParent(this);
     size->setMaximumWidth(250);
     size->setMaximumHeight(25);
@@ -1175,6 +1175,7 @@ void tab_widget::size8_triggered()
     strContent = strContent.replace("font-size:"+strFontSize, "font-size:8px");
     textEdit->setHtml(strContentStart+strContent+strContentEnd,QUrl(""));
     strFontSize = "8px";
+    size->setText("Czcionka:"+strFontSize.left(strFontSize.length()-2));
 }
 
 void tab_widget::size9_triggered()
@@ -1182,6 +1183,7 @@ void tab_widget::size9_triggered()
     strContent = strContent.replace("font-size:"+strFontSize, "font-size:9px");
     textEdit->setHtml(strContentStart+strContent+strContentEnd,QUrl(""));
     strFontSize = "9px";
+    size->setText("Czcionka:"+strFontSize.left(strFontSize.length()-2));
 }
 
 void tab_widget::size10_triggered()
@@ -1189,6 +1191,7 @@ void tab_widget::size10_triggered()
     strContent = strContent.replace("font-size:"+strFontSize, "font-size:10px");
     textEdit->setHtml(strContentStart+strContent+strContentEnd,QUrl(""));
     strFontSize = "10px";
+    size->setText("Czcionka:"+strFontSize.left(strFontSize.length()-2));
 }
 
 void tab_widget::size11_triggered()
@@ -1196,6 +1199,7 @@ void tab_widget::size11_triggered()
     strContent = strContent.replace("font-size:"+strFontSize, "font-size:11px");
     textEdit->setHtml(strContentStart+strContent+strContentEnd,QUrl(""));
     strFontSize = "11px";
+    size->setText("Czcionka:"+strFontSize.left(strFontSize.length()-2));
 }
 
 void tab_widget::size12_triggered()
@@ -1203,6 +1207,7 @@ void tab_widget::size12_triggered()
     strContent = strContent.replace("font-size:"+strFontSize, "font-size:12px");
     textEdit->setHtml(strContentStart+strContent+strContentEnd,QUrl(""));
     strFontSize = "12px";
+    size->setText("Czcionka:"+strFontSize.left(strFontSize.length()-2));
 }
 
 void tab_widget::size14_triggered()
@@ -1210,6 +1215,7 @@ void tab_widget::size14_triggered()
     strContent = strContent.replace("font-size:"+strFontSize, "font-size:14px");
     textEdit->setHtml(strContentStart+strContent+strContentEnd,QUrl(""));
     strFontSize = "14px";
+    size->setText("Czcionka:"+strFontSize.left(strFontSize.length()-2));
 }
 
 void tab_widget::size18_triggered()
@@ -1217,6 +1223,7 @@ void tab_widget::size18_triggered()
     strContent = strContent.replace("font-size:"+strFontSize, "font-size:18px");
     textEdit->setHtml(strContentStart+strContent+strContentEnd,QUrl(""));
     strFontSize = "18px";
+    size->setText("Czcionka:"+strFontSize.left(strFontSize.length()-2));
 }
 
 void tab_widget::size20_triggered()
@@ -1224,6 +1231,7 @@ void tab_widget::size20_triggered()
     strContent = strContent.replace("font-size:"+strFontSize, "font-size:20px");
     textEdit->setHtml(strContentStart+strContent+strContentEnd,QUrl(""));
     strFontSize = "20px";
+    size->setText("Czcionka:"+strFontSize.left(strFontSize.length()-2));
 }
 
 // color
