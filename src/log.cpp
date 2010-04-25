@@ -26,9 +26,9 @@ log::log()
 
 QString log::convert(QString strData)
 {
-    strData.replace(QRegExp("%C(\\S+)%"),"");
-    strData.replace(QRegExp("%F(\\S+)%"),"");
-    strData.replace(QRegExp("%I(\\S+)%"),"<\\1>");
+    strData.replace(QRegExp("%C([a-zA-Z0-9_-:]+)%"),"");
+    strData.replace(QRegExp("%F([a-zA-Z0-9_-:]+)%"),"");
+    strData.replace(QRegExp("%I([a-zA-Z0-9_-:]+)%"),"<\\1>");
     return strData;
 }
 
