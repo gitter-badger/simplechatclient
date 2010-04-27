@@ -57,11 +57,13 @@ update_thread::update_thread(QSettings *param1, tab_container *param2)
 
     updateThr = new updateThread(settings, tabc);
     QObject::connect(updateThr, SIGNAL(set_version(QString)), this, SLOT(setVersion(QString)));
-    updateThr->start();
+    updateThr->start(QThread::LowPriority);
 }
 
 update_thread::~update_thread()
 {
+    updateThr->quit();
+    updateThr->wait();
     delete updateThr;
 }
 
