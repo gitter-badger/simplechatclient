@@ -59,7 +59,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     delete pConfig;
 
     settings.clear();
-    settings.setValue("version", "1.0.4.197");
+    settings.setValue("version", "1.0.4.198");
     settings.setValue("debug", "off");
     settings.setValue("logged", "off");
     settings.setValue("busy", "off");
@@ -94,9 +94,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     tabc->show_msg("Status", "%Fbi:courier%%Cff0000%Lista b³êdów%C000000%: http://tinyurl.com/yg3fjb4 %Ixmm%", 0);
     tabc->show_msg("Status", "%Fbi:courier%%C8800ab%Zg³aszanie b³êdów%C000000%: http://tinyurl.com/yfcseeh %Ixco%", 0);
 
-    updater *pUpdater = new updater(&settings, tabc);
-    pUpdater->check_for_updates();
-    delete pUpdater;
+// update
+
+    updateThr = new update_thread(&settings, tabc);
 
 // main menu
     fileMenu = menuBar()->addMenu("&Plik");
@@ -163,6 +163,7 @@ MainWindow::~MainWindow()
     settings.setValue("reconnect", "false");
     delete trayIcon;
     delete trayMenu;
+    delete updateThr;
     delete pIrc_auth;
     delete dlgignore;
     delete dlgfriends;

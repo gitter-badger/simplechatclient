@@ -157,6 +157,7 @@ private:
     void raw_473();
     void raw_474();
     void raw_484();
+    void raw_530();
     void raw_600();
     void raw_601();
     void raw_602();

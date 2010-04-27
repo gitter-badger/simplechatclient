@@ -18,33 +18,54 @@
  *                                                                          *
  ****************************************************************************/
 
-#ifndef UPDATE_H
-#define UPDATE_H
+#include "update_thread.h"
 
-#include <QHostInfo>
-#include <QNetworkAccessManager>
-#include <QNetworkCookieJar>
-#include <QNetworkReply>
-#include <QObject>
-#include <QSettings>
-#include <QUrl>
-#include "dlg_update.h"
-#include "tab_container.h"
-
-class updater : public QObject
+updateThread::updateThread(QSettings *param1, tab_container *param2)
 {
-    Q_OBJECT
-public:
-    updater(QSettings *, tab_container *);
-    void check_for_updates(QString);
-    QString get_available_version();
+    settings = param1;
+    tabc = param2;
+    pUpdater = new updater(settings, tabc);
+}
 
-private:
-    QSettings *settings;
-    tab_container *tabc;
-    QString strCurrentVersion;
-    QString strAvailableVersion;
+updateThread::~updateThread()
+{
+    delete pUpdater;
+}
 
-};
+void updateThread::run()
+{
+    QTimer::singleShot(0, this, SLOT(doTheWork()));
 
-#endif // UPDATE_H
+    exec();
+}
+
+void updateThread::doTheWork()
+{
+    QString strVersion = pUpdater->get_available_version();
+    emit set_version(strVersion);
+}
+
+void updateThread::check_for_updates(QString param1)
+{
+    pUpdater->check_for_updates(param1);
+}
+
+update_thread::update_thread(QSettings *param1, tab_container *param2)
+{
+    settings = param1;
+    tabc = param2;
+
+    updateThr = new updateThread(settings, tabc);
+    QObject::connect(updateThr, SIGNAL(set_version(QString)), this, SLOT(setVersion(QString)));
+    updateThr->start();
+}
+
+update_thread::~update_thread()
+{
+    delete updateThr;
+}
+
+void update_thread::setVersion(QString param1)
+{
+    updateThr->check_for_updates(param1);
+}

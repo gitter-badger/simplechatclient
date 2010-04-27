@@ -43,7 +43,7 @@
 #include "network.h"
 #include "tab_container.h"
 #include "tab_manager.h"
-#include "update.h"
+#include "update_thread.h"
 
 class MainWindow : public QMainWindow
 {
@@ -67,6 +67,7 @@ private:
     dlg_friends *dlgfriends;
     dlg_ignore *dlgignore;
     dlg_moderation *dlgmoderation;
+    update_thread *updateThr;
     QMenu *trayMenu;
     QSystemTrayIcon *trayIcon;
     QMenu *fileMenu;

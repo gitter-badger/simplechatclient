@@ -41,7 +41,8 @@ SOURCES += src/commands.cpp \
     src/tab_container.cpp \
     src/tab_manager.cpp \
     src/tab_widget.cpp \
-    src/update.cpp
+    src/update.cpp \
+    src/update_thread.cpp
 HEADERS += src/commands.h \
     src/config.h \
     src/crypt.h \
@@ -75,7 +76,8 @@ HEADERS += src/commands.h \
     src/tab_container.h \
     src/tab_manager.h \
     src/tab_widget.h \
-    src/update.h
+    src/update.h \
+    src/update_thread.h
 FORMS += ui/about.ui \
     ui/cam.ui \
     ui/channel_favourites.ui \

@@ -54,6 +54,7 @@ set (scc_SRCS
 	tab_manager.cpp
 	tab_widget.cpp
 	update.cpp
+	update_thread.cpp
 )
 
 set (scc_MOC_SRCS
@@ -90,6 +91,7 @@ set (scc_MOC_SRCS
 	tab_manager.h
 	tab_widget.h
 	update.h
+	update_thread.h
 )
 
 # qt qtnetwork

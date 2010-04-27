@@ -26,14 +26,14 @@ updater::updater(QSettings *param1, tab_container *param2)
     tabc = param2;
 }
 
-void updater::check_for_updates()
+void updater::check_for_updates(QString param1)
 {
     strCurrentVersion = settings->value("version").toString();
     QStringList lCurrentVersion = strCurrentVersion.split(".");
     QString strCurrentRev = lCurrentVersion.last();
     int iCurrentRev = strCurrentRev.toInt();
 
-    strAvailableVersion = get_available_version();
+    strAvailableVersion = param1;
     if (strAvailableVersion == QString::null)
     {
         tabc->show_msg_active("Nie mo¿na pobraæ dostêpnej wersji programu.", 0);

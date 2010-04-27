@@ -216,9 +216,7 @@ void network::recv()
     {
         QString strLine = strDataLine[i];
         if (strLine.isEmpty() == false)
-        {
             network::kernel(strLine);
-        }
     }
 
     if (bCompleted == false)

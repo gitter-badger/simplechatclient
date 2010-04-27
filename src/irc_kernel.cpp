@@ -134,6 +134,8 @@ void irc_kernel::kernel()
             irc_kernel::raw_474();
         else if (strDataList[1].toLower() == "484")
             irc_kernel::raw_484();
+        else if (strDataList[1].toLower() == "530")
+            irc_kernel::raw_530();
         else if (strDataList[1].toLower() == "600")
             irc_kernel::raw_600();
         else if (strDataList[1].toLower() == "601")
@@ -2137,6 +2139,17 @@ void irc_kernel::raw_484()
     strMessage = "* "+strMessage;
 
     tabc->show_msg(strChannel, strMessage, 7);
+}
+
+//:cf1f2.onet 530 Merovingian #f :Only IRC operators may create new channels
+void irc_kernel::raw_530()
+{
+    if (strDataList.value(3).isEmpty() == true) return;
+
+    QString strChannel = strDataList[3];
+
+    QString strMessage = QString("* %1 :Tylko Administratorzy mog± tworzyæ nowe kana³y").arg(strChannel);
+    tabc->show_msg_active(strMessage, 7);
 }
 
 // :cf1f4.onet 600 scc_test Radowsky 16172032 690A6F.A8219B.7F5EC1.35E57C 1267055769 :arrived online
