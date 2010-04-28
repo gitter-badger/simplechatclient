@@ -34,7 +34,7 @@ void irc_auth::request_uo(QString param1, QString param2)
     QString strVersion;
     bool bOverride;
     QEventLoop eventLoop;
-    QNetworkReply* pReply;
+    QNetworkReply *pReply;
     QString strData;
 
     QNetworkAccessManager accessManager;

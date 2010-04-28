@@ -65,7 +65,7 @@ QString updater::get_available_version()
     strVersion = QString::null;
 
     QEventLoop eventLoop;
-    QNetworkReply* pReply;
+    QNetworkReply *pReply;
     QNetworkAccessManager accessManager;
     QNetworkCookieJar *cookieJar = new QNetworkCookieJar();
     accessManager.setCookieJar(cookieJar);

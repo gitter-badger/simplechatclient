@@ -18,56 +18,52 @@
  *                                                                          *
  ****************************************************************************/
 
-#include "update_thread.h"
+#ifndef CHANNEL_AVATAR_H
+#define CHANNEL_AVATAR_H
 
-updateThread::updateThread(QSettings *param1, tab_container *param2)
+#include <QNetworkAccessManager>
+#include <QNetworkReply>
+#include <QObject>
+#include <QThread>
+#include "tab_container.h"
+
+class channel_avatar_thread : public QThread
 {
-    settings = param1;
-    tabc = param2;
-    pUpdater = new updater(settings, tabc);
-}
+    Q_OBJECT
+public:
+    channel_avatar_thread(int, QString, QString);
+    void run();
 
-updateThread::~updateThread()
+private:
+    int i;
+    QString strUrl;
+    QString strChannel;
+
+private slots:
+    void threadWork();
+
+signals:
+    void set_avatar(int, QString, QByteArray);
+
+};
+
+class channel_avatar : public QObject
 {
-    delete pUpdater;
-}
+    Q_OBJECT
+public:
+    channel_avatar(tab_container *);
+    void start_thread(QString, QString);
 
-void updateThread::run()
-{
-    QTimer::singleShot(0, this, SLOT(threadWork()));
+private:
+    tab_container *tabc;
+    QString strUrl;
+    QString strChannel;
+    QList<channel_avatar_thread*> channelAvatarThr;
+    int i;
 
-    exec();
-}
+public slots:
+    void setAvatar(int, QString, QByteArray);
 
-void updateThread::threadWork()
-{
-    QString strVersion = pUpdater->get_available_version();
-    emit set_version(strVersion);
-}
+};
 
-void updateThread::check_for_updates(QString param1)
-{
-    pUpdater->check_for_updates(param1);
-}
-
-update_thread::update_thread(QSettings *param1, tab_container *param2)
-{
-    settings = param1;
-    tabc = param2;
-
-    updateThr = new updateThread(settings, tabc);
-    QObject::connect(updateThr, SIGNAL(set_version(QString)), this, SLOT(setVersion(QString)));
-    updateThr->start(QThread::LowPriority);
-}
-
-update_thread::~update_thread()
-{
-    updateThr->quit();
-    updateThr->wait();
-    delete updateThr;
-}
-
-void update_thread::setVersion(QString param1)
-{
-    updateThr->check_for_updates(param1);
-}
+#endif // CHANNEL_AVATAR_H

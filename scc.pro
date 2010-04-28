@@ -8,7 +8,8 @@ QT += network \
 TARGET = scc
 TEMPLATE = app
 RESOURCES += scc.qrc
-SOURCES += src/commands.cpp \
+SOURCES += src/channel_avatar.cpp \
+    src/commands.cpp \
     src/config.cpp \
     src/crypt.cpp \
     src/dlg_about.cpp \
@@ -43,7 +44,8 @@ SOURCES += src/commands.cpp \
     src/tab_widget.cpp \
     src/update.cpp \
     src/update_thread.cpp
-HEADERS += src/commands.h \
+HEADERS += src/channel_avatar.h \
+    src/commands.h \
     src/config.h \
     src/crypt.h \
     src/dlg_about.h \

@@ -42,7 +42,7 @@ private:
     updater *pUpdater;
 
 private slots:
-    void doTheWork();
+    void threadWork();
 
 signals:
     void set_version(QString);

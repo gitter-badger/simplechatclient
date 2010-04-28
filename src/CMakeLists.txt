@@ -20,6 +20,7 @@ set (scc_UIS
 )
 
 set (scc_SRCS
+	channel_avatar.cpp
 	commands.cpp
 	config.cpp
 	crypt.cpp
@@ -58,6 +59,7 @@ set (scc_SRCS
 )
 
 set (scc_MOC_SRCS
+	channel_avatar.h
 	commands.h
 	config.h
 	crypt.h

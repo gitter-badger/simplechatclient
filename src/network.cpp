@@ -39,6 +39,7 @@ network::network(QAction *param1, QSettings *param2)
 
 network::~network()
 {
+    delete pIrc_kernel;
     delete pIrc_auth;
     timer->stop();
     socket->close();
@@ -63,6 +64,7 @@ void network::set_dlg(tab_container *param1, dlg_channel_settings *param2, dlg_c
     dlgmoderation = param8;
 
     pIrc_auth = new irc_auth(settings, tabc, socket);
+    pIrc_kernel = new irc_kernel(socket, tabc, settings, dlgchannel_settings, dlgchannel_homes, dlgchannel_list, dlgchannel_favourites, dlgfriends, dlgignore, dlgmoderation);
 }
 
 bool network::is_connected()
@@ -178,9 +180,7 @@ void network::send(QString strData)
 
 void network::kernel(QString strLine)
 {
-    irc_kernel *pIrc_kernel = new irc_kernel(socket, tabc, strLine, settings, dlgchannel_settings, dlgchannel_homes, dlgchannel_list, dlgchannel_favourites, dlgfriends, dlgignore, dlgmoderation);
-    pIrc_kernel->kernel();
-    delete pIrc_kernel;
+    pIrc_kernel->kernel(strLine);
 }
 
 void network::recv()

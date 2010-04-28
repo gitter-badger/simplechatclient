@@ -20,25 +20,32 @@
 
 #include "irc_kernel.h"
 
-irc_kernel::irc_kernel(QTcpSocket *param1, tab_container *param2, QString param3, QSettings *param4, dlg_channel_settings *param5, dlg_channel_homes *param6, dlg_channel_list *param7, dlg_channel_favourites *param8, dlg_friends *param9, dlg_ignore *param10, dlg_moderation *param11)
+irc_kernel::irc_kernel(QTcpSocket *param1, tab_container *param2, QSettings *param3, dlg_channel_settings *param4, dlg_channel_homes *param5, dlg_channel_list *param6, dlg_channel_favourites *param7, dlg_friends *param8, dlg_ignore *param9, dlg_moderation *param10)
 {
     socket = param1;
     tabc = param2;
-    strData = param3;
-    settings = param4;
-    dlgchannel_settings = param5;
-    dlgchannel_homes = param6;
-    dlgchannel_list = param7;
-    dlgchannel_favourites = param8;
-    dlgfriends = param9;
-    dlgignore = param10;
-    dlgmoderation = param11;
+    settings = param3;
+    dlgchannel_settings = param4;
+    dlgchannel_homes = param5;
+    dlgchannel_list = param6;
+    dlgchannel_favourites = param7;
+    dlgfriends = param8;
+    dlgignore = param9;
+    dlgmoderation = param10;
 
-    strDataList = strData.split(" ");
+    channelAvatar = new channel_avatar(tabc);
 }
 
-void irc_kernel::kernel()
+irc_kernel::~irc_kernel()
 {
+    delete channelAvatar;
+}
+
+void irc_kernel::kernel(QString param1)
+{
+    strData = param1;
+    strDataList = strData.split(" ");
+
     if ((settings->value("debug_all").toString() == "on") && (strDataList.value(1).isEmpty() == false) && (strDataList[1].toLower() != "privmsg"))
        tabc->show_msg("Status", strData, 7);
 
@@ -1088,18 +1095,7 @@ void irc_kernel::raw_161n()
             {
                 QString strUrl = strValue;
 
-                QNetworkAccessManager accessManager;
-                QNetworkReply* pReply;
-                QEventLoop eventLoop;
-                pReply = accessManager.get(QNetworkRequest(QUrl(strUrl)));
-                QObject::connect(pReply, SIGNAL(finished()), &eventLoop, SLOT(quit()));
-                eventLoop.exec();
-
-                QByteArray bData = pReply->readAll();
-
-                delete pReply;
-
-                tabc->set_logo(strChannel, bData);
+                channelAvatar->start_thread(strUrl, strChannel);
             }
         }
     }

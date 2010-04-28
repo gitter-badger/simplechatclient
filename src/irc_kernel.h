@@ -24,6 +24,7 @@
 #include <QMessageBox>
 #include <QObject>
 #include <QTcpSocket>
+#include "channel_avatar.h"
 #include "config.h"
 #include "dlg_channel_favourites.h"
 #include "dlg_channel_homes.h"
@@ -40,15 +41,16 @@ class irc_kernel : public QObject
 {
     Q_OBJECT
 public:
-    irc_kernel(QTcpSocket *, tab_container *, QString, QSettings *, dlg_channel_settings *, dlg_channel_homes *, dlg_channel_list *, dlg_channel_favourites *, dlg_friends *, dlg_ignore *, dlg_moderation *);
-    void kernel();
+    irc_kernel(QTcpSocket *, tab_container *, QSettings *, dlg_channel_settings *, dlg_channel_homes *, dlg_channel_list *, dlg_channel_favourites *, dlg_friends *, dlg_ignore *, dlg_moderation *);
+    ~irc_kernel();
+    void kernel(QString);
 
 private:
     QTcpSocket *socket;
     tab_container *tabc;
-    QString strData;
     QStringList strDataList;
     QSettings *settings;
+    channel_avatar *channelAvatar;
     dlg_channel_settings *dlgchannel_settings;
     dlg_channel_homes *dlgchannel_homes;
     dlg_channel_list *dlgchannel_list;
@@ -56,6 +58,7 @@ private:
     dlg_friends *dlgfriends;
     dlg_ignore *dlgignore;
     dlg_moderation *dlgmoderation;
+    QString strData;
 
     void raw_error();
     void raw_ping();

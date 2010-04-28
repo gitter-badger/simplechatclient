@@ -18,56 +18,63 @@
  *                                                                          *
  ****************************************************************************/
 
-#include "update_thread.h"
+#include "channel_avatar.h"
 
-updateThread::updateThread(QSettings *param1, tab_container *param2)
+channel_avatar_thread::channel_avatar_thread(int param1, QString param2, QString param3)
 {
-    settings = param1;
-    tabc = param2;
-    pUpdater = new updater(settings, tabc);
+    i = param1;
+    strUrl = param2;
+    strChannel = param3;
 }
 
-updateThread::~updateThread()
-{
-    delete pUpdater;
-}
-
-void updateThread::run()
+void channel_avatar_thread::run()
 {
     QTimer::singleShot(0, this, SLOT(threadWork()));
 
     exec();
 }
 
-void updateThread::threadWork()
+void channel_avatar_thread::threadWork()
 {
-    QString strVersion = pUpdater->get_available_version();
-    emit set_version(strVersion);
+    QNetworkAccessManager accessManager;
+    QNetworkReply *pReply;
+    QEventLoop eventLoop;
+    pReply = accessManager.get(QNetworkRequest(QUrl(strUrl)));
+    QObject::connect(pReply, SIGNAL(finished()), &eventLoop, SLOT(quit()));
+    eventLoop.exec();
+
+    QByteArray bData = pReply->readAll();
+
+    delete pReply;
+
+    emit set_avatar(i, strChannel, bData);
 }
 
-void updateThread::check_for_updates(QString param1)
+channel_avatar::channel_avatar(tab_container *param1)
 {
-    pUpdater->check_for_updates(param1);
+    tabc = param1;
+    i = 0;
 }
 
-update_thread::update_thread(QSettings *param1, tab_container *param2)
+void channel_avatar::start_thread(QString param1, QString param2)
 {
-    settings = param1;
-    tabc = param2;
+    strUrl = param1;
+    strChannel = param2;
 
-    updateThr = new updateThread(settings, tabc);
-    QObject::connect(updateThr, SIGNAL(set_version(QString)), this, SLOT(setVersion(QString)));
-    updateThr->start(QThread::LowPriority);
+    channelAvatarThr.insert(i, new channel_avatar_thread(i, strUrl, strChannel));
+    QObject::connect(channelAvatarThr.at(i), SIGNAL(set_avatar(int, QString, QByteArray)), this, SLOT(setAvatar(int, QString, QByteArray)));
+    channelAvatarThr.at(i)->start(QThread::LowPriority);
+    i++;
 }
 
-update_thread::~update_thread()
+void channel_avatar::setAvatar(int iNumber, QString strChannel, QByteArray bData)
 {
-    updateThr->quit();
-    updateThr->wait();
-    delete updateThr;
-}
+    tabc->set_logo(strChannel, bData);
 
-void update_thread::setVersion(QString param1)
-{
-    updateThr->check_for_updates(param1);
+    channelAvatarThr.at(iNumber)->quit();
+    channelAvatarThr.at(iNumber)->wait();
+    channelAvatarThr.at(iNumber)->QObject::disconnect();
+    //delete (channelAvatarThr[iNumber]);
+    //channelAvatarThr.removeAt(iNumber);
+    //qDebug() << "i: " << iNumber << " count:" << channelAvatarThr.size();
 }

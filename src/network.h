@@ -71,6 +71,7 @@ private:
     QTimer *timer;
     int iActive;
     irc_auth *pIrc_auth;
+    irc_kernel *pIrc_kernel;
 
 private slots:
     void reconnect();
