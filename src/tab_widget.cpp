@@ -567,9 +567,21 @@ void tab_widget::display_message(QString strData, int iLevel)
                 QFile f1(emoticonFull1);
                 QFile f2(emoticonFull2);
                 if ((f1.exists() == true) && (settings->value("hide_formating").toString() == "off"))
+                {
+#ifdef Q_WS_X11
+                    strContent.append("<img src=\"file:"+emoticonFull1+"\" alt=\""+emoticon+"\" />");
+#else
                     strContent.append("<img src=\""+emoticonFull1+"\" alt=\""+emoticon+"\" />");
+#endif
+                }
                 else if ((f2.exists() == true) && (settings->value("hide_formating").toString() == "off"))
+                {
+#ifdef Q_WS_X11
+                    strContent.append("<img src=\"file:"+emoticonFull2+"\" alt=\""+emoticon+"\" />");
+#else
                     strContent.append("<img src=\""+emoticonFull2+"\" alt=\""+emoticon+"\" />");
+#endif
+                }
                 // emoticon not exist or hide formating
                 else
                     strContent.append("//"+emoticon);
