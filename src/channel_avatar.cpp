@@ -20,11 +20,10 @@
 
 #include "channel_avatar.h"
 
-channel_avatar_thread::channel_avatar_thread(int param1, QString param2, QString param3)
+channel_avatar_thread::channel_avatar_thread(QString param1, QString param2)
 {
-    i = param1;
-    strUrl = param2;
-    strChannel = param3;
+    strUrl = param1;
+    strChannel = param2;
 }
 
 void channel_avatar_thread::run()
@@ -47,34 +46,29 @@ void channel_avatar_thread::threadWork()
 
     delete pReply;
 
-    emit set_avatar(i, strChannel, bData);
+    emit set_avatar(strChannel, bData);
 }
 
-channel_avatar::channel_avatar(tab_container *param1)
+channel_avatar::channel_avatar(tab_container *param1, QString param2, QString param3)
 {
     tabc = param1;
-    i = 0;
+    strUrl = param2;
+    strChannel = param3;
 }
 
-void channel_avatar::start_thread(QString param1, QString param2)
+void channel_avatar::start_thread()
 {
-    strUrl = param1;
-    strChannel = param2;
-
-    channelAvatarThr.insert(i, new channel_avatar_thread(i, strUrl, strChannel));
-    QObject::connect(channelAvatarThr.at(i), SIGNAL(set_avatar(int, QString, QByteArray)), this, SLOT(setAvatar(int, QString, QByteArray)));
-    channelAvatarThr.at(i)->start(QThread::LowPriority);
-    i++;
+    channelAvatarThr = new channel_avatar_thread(strUrl, strChannel);
+    QObject::connect(channelAvatarThr, SIGNAL(set_avatar(QString, QByteArray)), this, SLOT(setAvatar(QString, QByteArray)));
+    channelAvatarThr->start(QThread::LowPriority);
 }
 
-void channel_avatar::setAvatar(int iNumber, QString strChannel, QByteArray bData)
+void channel_avatar::setAvatar(QString strChannel, QByteArray bData)
 {
     tabc->set_logo(strChannel, bData);
 
-    channelAvatarThr.at(iNumber)->quit();
-    channelAvatarThr.at(iNumber)->wait();
-    channelAvatarThr.at(iNumber)->QObject::disconnect();
-    //delete (channelAvatarThr[iNumber]);
-    //channelAvatarThr.removeAt(iNumber);
-    //qDebug() << "i: " << iNumber << " count:" << channelAvatarThr.size();
+    channelAvatarThr->quit();
+    channelAvatarThr->wait();
+    channelAvatarThr->QObject::disconnect();
+    delete channelAvatarThr;
 }

@@ -50,7 +50,7 @@ private:
     tab_container *tabc;
     QStringList strDataList;
     QSettings *settings;
-    channel_avatar *channelAvatar;
+    //channel_avatar *channelAvatar;
     dlg_channel_settings *dlgchannel_settings;
     dlg_channel_homes *dlgchannel_homes;
     dlg_channel_list *dlgchannel_list;

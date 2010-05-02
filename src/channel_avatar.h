@@ -31,11 +31,10 @@ class channel_avatar_thread : public QThread
 {
     Q_OBJECT
 public:
-    channel_avatar_thread(int, QString, QString);
+    channel_avatar_thread(QString, QString);
     void run();
 
 private:
-    int i;
     QString strUrl;
     QString strChannel;
 
@@ -43,7 +42,7 @@ private slots:
     void threadWork();
 
 signals:
-    void set_avatar(int, QString, QByteArray);
+    void set_avatar(QString, QByteArray);
 
 };
 
@@ -51,18 +50,17 @@ class channel_avatar : public QObject
 {
     Q_OBJECT
 public:
-    channel_avatar(tab_container *);
-    void start_thread(QString, QString);
+    channel_avatar(tab_container *, QString, QString);
+    void start_thread();
 
 private:
     tab_container *tabc;
     QString strUrl;
     QString strChannel;
-    QList<channel_avatar_thread*> channelAvatarThr;
-    int i;
+    channel_avatar_thread *channelAvatarThr;
 
 public slots:
-    void setAvatar(int, QString, QByteArray);
+    void setAvatar(QString, QByteArray);
 
 };
 

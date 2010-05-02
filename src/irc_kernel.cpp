@@ -33,12 +33,12 @@ irc_kernel::irc_kernel(QTcpSocket *param1, tab_container *param2, QSettings *par
     dlgignore = param9;
     dlgmoderation = param10;
 
-    channelAvatar = new channel_avatar(tabc);
+    //channelAvatar = new channel_avatar(tabc);
 }
 
 irc_kernel::~irc_kernel()
 {
-    delete channelAvatar;
+    //delete channelAvatar;
 }
 
 void irc_kernel::kernel(QString param1)
@@ -1095,7 +1095,8 @@ void irc_kernel::raw_161n()
             {
                 QString strUrl = strValue;
 
-                channelAvatar->start_thread(strUrl, strChannel);
+                (new channel_avatar(tabc, strUrl, strChannel))->start_thread();
+                //channelAvatar->start_thread(strUrl, strChannel);
             }
         }
     }
