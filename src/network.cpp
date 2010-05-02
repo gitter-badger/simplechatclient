@@ -260,5 +260,6 @@ void network::timeout()
         if (socket->state() == QAbstractSocket::ConnectedState)
             tabc->show_msg_all("Serwer nieaktywny od 301 sekund. Roz³±czanie...", 9);
         network::close();
+        iActive = iCurrent;
     }
 }
