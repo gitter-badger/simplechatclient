@@ -34,10 +34,12 @@ void qnotify::play()
     Phonon::Path audioPath = Phonon::createPath(mediaObject, audioOutput);
 
     mediaObject->play();
+
+#ifdef Q_WS_X11
     QEventLoop loop;
     QObject::connect(mediaObject, SIGNAL(finished()), &loop, SLOT(quit()));
     loop.exec();
-
+#endif
     delete audioOutput;
     delete mediaObject;
 }
