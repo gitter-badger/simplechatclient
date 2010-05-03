@@ -478,7 +478,7 @@ void tab_widget::display_message(QString strData, int iLevel)
         list.clear();
     }
 
-    //strData+="\n";
+    strData += " ";
     strContent.append("<p style=\"margin:0;padding:0;font-style:"+strFontStyle+";color:"+strFontColor+";text-align:"+strFontAlign+";font-family:"+strFontFamily+";font-weight:"+strFontWeight+";font-size:"+strFontSize+";\">");
     bool bHilight = false;
     bool bLevel = false;
