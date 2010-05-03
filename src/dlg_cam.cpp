@@ -226,7 +226,9 @@ void dlg_cam::network_read()
         // 250 12519 OK
         else if (strDataList[0] == "250")
         {
-            // nothing
+            bText = false;
+            iBytes_need = strDataList[1].toInt();
+            iCam_cmd = 250;
         }
         // 251 52 UPDATE
         else if (strDataList[0] == "251")
