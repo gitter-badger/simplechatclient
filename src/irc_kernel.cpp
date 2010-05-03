@@ -1377,6 +1377,8 @@ void irc_kernel::raw_258n()
 
     QString strDisplay = QString("* %1 zmieni³/a ustawienia kana³u %2").arg(strNick).arg(strChannel);
     tabc->show_msg(strChannel, strDisplay, 7);
+
+    irc_kernel::send(QString("CS INFO %1 i").arg(strChannel));
 }
 
 // :ChanServ!service@service.onet NOTICE scc_test :259 #scc :nothing changed
