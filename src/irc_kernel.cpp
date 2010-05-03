@@ -32,13 +32,6 @@ irc_kernel::irc_kernel(QTcpSocket *param1, tab_container *param2, QSettings *par
     dlgfriends = param8;
     dlgignore = param9;
     dlgmoderation = param10;
-
-    //channelAvatar = new channel_avatar(tabc);
-}
-
-irc_kernel::~irc_kernel()
-{
-    //delete channelAvatar;
 }
 
 void irc_kernel::kernel(QString param1)
