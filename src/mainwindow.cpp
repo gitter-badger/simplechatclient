@@ -59,7 +59,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     delete pConfig;
 
     settings.clear();
-    settings.setValue("version", "1.0.5.213");
+    settings.setValue("version", "1.0.5.214");
     settings.setValue("debug", "off");
     settings.setValue("logged", "off");
     settings.setValue("busy", "off");
@@ -125,6 +125,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     toolBar->addAction(channel_list_Act);
     toolBar->addAction(channel_homes_Act);
     toolBar->addAction(friendsAct);
+    toolBar->addAction(channel_favourites_Act);
 
 // statusbar
     QLabel *label_status = new QLabel();

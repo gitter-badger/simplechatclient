@@ -20,7 +20,7 @@
 
 #include "dlg_channel_favourites_ad.h"
 
-dlg_channel_favourites_ad::dlg_channel_favourites_ad(QTcpSocket *param1, tab_container *param2, QSettings *param3, QString param4)
+dlg_channel_favourites_ad::dlg_channel_favourites_ad(QTcpSocket *param1, tab_container *param2, QSettings *param3, QString param4, QString param5)
 {
     ui.setupUi(this);
 
@@ -28,6 +28,7 @@ dlg_channel_favourites_ad::dlg_channel_favourites_ad(QTcpSocket *param1, tab_con
     tabc = param2;
     settings = param3;
     strStatus = param4;
+    ui.lineEdit->setText(param5);
 
     if (strStatus == "add")
         ui.label->setText("Podaj nazwê nowego kana³u do ulubionych:");

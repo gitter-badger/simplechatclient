@@ -8,6 +8,7 @@ set (scc_UIS
 	../ui/channel_homes_ad.ui
 	../ui/channel_list.ui
 	../ui/channel_settings.ui
+	../ui/email.ui
 	../ui/friends.ui
 	../ui/friends_ad.ui
 	../ui/ignore.ui
@@ -32,6 +33,7 @@ set (scc_SRCS
 	dlg_channel_homes_ad.cpp
 	dlg_channel_list.cpp
 	dlg_channel_settings.cpp
+	dlg_email.cpp
 	dlg_friends.cpp
 	dlg_friends_ad.cpp
 	dlg_ignore.cpp
@@ -71,6 +73,7 @@ set (scc_MOC_SRCS
 	dlg_channel_homes_ad.h
 	dlg_channel_list.h
 	dlg_channel_settings.h
+	dlg_email.h
 	dlg_friends.h
 	dlg_friends_ad.h
 	dlg_ignore.h

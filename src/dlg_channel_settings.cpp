@@ -28,6 +28,7 @@ dlg_channel_settings::dlg_channel_settings(QSettings *param1, QTcpSocket *param2
     socket = param2;
 
     QObject::connect(ui.pushButton, SIGNAL(clicked()), this, SLOT(owner_changed()));
+    QObject::connect(ui.pushButton_19, SIGNAL(clicked()), this, SLOT(email_changed()));
     QObject::connect(ui.pushButton_3, SIGNAL(clicked()), this, SLOT(www_changed()));
     QObject::connect(ui.pushButton_4, SIGNAL(clicked()), this, SLOT(topic_changed()));
     QObject::connect(ui.pushButton_5, SIGNAL(clicked()), this, SLOT(desc_changed()));
@@ -81,6 +82,11 @@ void dlg_channel_settings::add_owner(QString strNick)
 {
     ui.label_13->clear();
     ui.label_13->setText(strNick);
+}
+
+void dlg_channel_settings::add_email(QString strEmail)
+{
+    ui.lineEdit->setText(strEmail);
 }
 
 void dlg_channel_settings::add_op(QString strNick)
@@ -173,8 +179,8 @@ void dlg_channel_settings::add_moderated(int iModerated)
 
 void dlg_channel_settings::add_www(QString strLink)
 {
-    ui.lineEdit->clear();
-    ui.lineEdit->setText(strLink);
+    ui.lineEdit_2->clear();
+    ui.lineEdit_2->setText(strLink);
 }
 
 void dlg_channel_settings::add_created(QString strTime)
@@ -187,8 +193,8 @@ void dlg_channel_settings::add_created(QString strTime)
 
 void dlg_channel_settings::add_password(QString strPassword)
 {
-    ui.lineEdit_4->clear();
-    ui.lineEdit_4->setText(strPassword);
+    ui.lineEdit_3->clear();
+    ui.lineEdit_3->setText(strPassword);
 }
 
 void dlg_channel_settings::add_limit(int iLimit)
@@ -215,9 +221,14 @@ void dlg_channel_settings::owner_changed()
     (new dlg_privilege("owner", strChannel, "add", socket, ui.tableWidget, ui.tableWidget_2, ui.tableWidget_3, ui.tableWidget_4, settings))->show();
 }
 
+void dlg_channel_settings::email_changed()
+{
+    (new dlg_email(strChannel, ui.lineEdit->text()))->show();
+}
+
 void dlg_channel_settings::www_changed()
 {
-    dlg_channel_settings::send(QString("CS SET %1 WWW %2").arg(strChannel).arg(ui.lineEdit->text()));
+    dlg_channel_settings::send(QString("CS SET %1 WWW %2").arg(strChannel).arg(ui.lineEdit_2->text()));
     dlg_channel_settings::send(QString("CS INFO %1").arg(strChannel));
 }
 
@@ -275,7 +286,7 @@ void dlg_channel_settings::guardian_clicked(int iLevel)
 
 void dlg_channel_settings::password_changed()
 {
-    dlg_channel_settings::send(QString("CS SET %1 PASSWORD %2").arg(strChannel).arg(ui.lineEdit_4->text()));
+    dlg_channel_settings::send(QString("CS SET %1 PASSWORD %2").arg(strChannel).arg(ui.lineEdit_3->text()));
     dlg_channel_settings::send(QString("CS INFO %1").arg(strChannel));
 }
 
@@ -428,7 +439,8 @@ void dlg_channel_settings::clear()
         ui.tableWidget_4->removeRow(i);
 
     ui.lineEdit->clear();
-    ui.lineEdit_4->clear();
+    ui.lineEdit_2->clear();
+    ui.lineEdit_3->clear();
     ui.plainTextEdit->clear();
     ui.plainTextEdit_2->clear();
     ui.label_13->clear();

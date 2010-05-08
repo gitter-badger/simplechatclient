@@ -27,6 +27,7 @@
 #include <QDateTime>
 #include <QDialog>
 #include <QTcpSocket>
+#include "dlg_email.h"
 #include "dlg_privilege.h"
 #include "ui_channel_settings.h"
 
@@ -39,6 +40,7 @@ public:
     void add_topic(QString);
     void add_pubpriv(int);
     void add_owner(QString);
+    void add_email(QString);
     void add_op(QString);
     void add_halfop(QString);
     void add_ban(QString, QString, QString);
@@ -69,6 +71,7 @@ protected:
 
 private slots:
     void owner_changed();
+    void email_changed();
     void www_changed();
     void topic_changed();
     void desc_changed();

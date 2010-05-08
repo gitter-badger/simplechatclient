@@ -20,6 +20,7 @@ SOURCES += src/channel_avatar.cpp \
     src/dlg_channel_homes_ad.cpp \
     src/dlg_channel_list.cpp \
     src/dlg_channel_settings.cpp \
+    src/dlg_email.cpp \
     src/dlg_friends.cpp \
     src/dlg_friends_ad.cpp \
     src/dlg_ignore.cpp \
@@ -56,6 +57,7 @@ HEADERS += src/channel_avatar.h \
     src/dlg_channel_homes_ad.h \
     src/dlg_channel_list.h \
     src/dlg_channel_settings.h \
+    src/dlg_email.h \
     src/dlg_friends.h \
     src/dlg_friends_ad.h \
     src/dlg_ignore.h \
@@ -88,6 +90,7 @@ FORMS += ui/about.ui \
     ui/channel_homes_ad.ui \
     ui/channel_list.ui \
     ui/channel_settings.ui \
+    ui/email.ui \
     ui/friends.ui \
     ui/friends_ad.ui \
     ui/ignore.ui \

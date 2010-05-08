@@ -1086,10 +1086,13 @@ void irc_kernel::raw_161n()
                 dlgchannel_settings->add_limit(strValue.toInt());
             else if (strKey == "auditorium")
                 dlgchannel_settings->add_auditorium(strValue.toInt());
+            else if (strKey == "email")
+                dlgchannel_settings->add_email(strValue);
             else if (strKey == "avatar")
             {
                 QString strUrl = strValue;
 
+                //dlgchannel_settings->add_avatar(strValue);
                 (new channel_avatar(tabc, strUrl, strChannel))->start_thread();
             }
         }

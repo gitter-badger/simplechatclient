@@ -18,34 +18,48 @@
  *                                                                          *
  ****************************************************************************/
 
-#ifndef DLG_CHANNEL_FAVOURITES_AD_H
-#define DLG_CHANNEL_FAVOURITES_AD_H
+#ifndef DLG_EMAIL_H
+#define DLG_EMAIL_H
 
 #include <QDialog>
-#include <QSettings>
-#include <QTcpSocket>
-#include "tab_container.h"
-#include "ui_channel_favourites_ad.h"
+#include <QDomDocument>
+#include <QHideEvent>
+#include <QHostInfo>
+#include <QMessageBox>
+#include <QNetworkAccessManager>
+#include <QNetworkCookieJar>
+#include <QNetworkReply>
+#include <QShowEvent>
+#include <QUrl>
+#include "ui_email.h"
 
-class dlg_channel_favourites_ad : public QDialog
+class dlg_email : public QDialog
 {
     Q_OBJECT
 public:
-    dlg_channel_favourites_ad(QTcpSocket *, tab_container *, QSettings *, QString, QString);
+    dlg_email(QString, QString);
 
 private:
-    Ui::uiChannelFavouritesAd ui;
-    QTcpSocket *socket;
-    tab_container *tabc;
-    QSettings *settings;
-    QString strStatus;
+    Ui::uiEmail ui;
+    QString strChannel;
+    QString strEmail;
+    QNetworkReply *pReply;
+    QNetworkAccessManager accessManager;
+    QNetworkCookieJar *cookieJar;
 
-    void send(QString);
+    void get_img();
+    void set_email();
+    void parse_result(QString);
 
 private slots:
     void button_ok();
+    void button_refresh();
     void button_cancel();
+
+protected:
+    virtual void showEvent(QShowEvent *);
+    virtual void hideEvent(QHideEvent *);
 
 };
 
-#endif // DLG_CHANNEL_FAVOURITES_AD_H
+#endif // DLG_EMAIL_H

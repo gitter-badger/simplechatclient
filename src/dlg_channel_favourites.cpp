@@ -47,13 +47,17 @@ void dlg_channel_favourites::clear()
 void dlg_channel_favourites::button_add()
 {
     ui.listWidget->clear();
-    (new dlg_channel_favourites_ad(socket, tabc, settings, "add"))->show();
+    (new dlg_channel_favourites_ad(socket, tabc, settings, "add", ""))->show();
 }
 
 void dlg_channel_favourites::button_remove()
 {
+    QString strSelected;
+    if (ui.listWidget->selectedItems().count() != 0)
+        strSelected = ui.listWidget->selectedItems().at(0)->text();
+
     ui.listWidget->clear();
-    (new dlg_channel_favourites_ad(socket, tabc, settings, "remove"))->show();
+    (new dlg_channel_favourites_ad(socket, tabc, settings, "remove", strSelected))->show();
 }
 
 void dlg_channel_favourites::button_ok()
