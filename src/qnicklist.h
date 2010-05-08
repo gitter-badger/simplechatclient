@@ -27,6 +27,7 @@
 #endif
 #include <QListWidget>
 #include <QMenu>
+#include <QQueue>
 #include <QSettings>
 #include <QTcpSocket>
 #include "dlg_cam.h"
@@ -38,6 +39,13 @@ public:
     qnicklist(QTcpSocket *, QSettings *, QString);
     ~qnicklist();
     void set_open_channels(QStringList);
+    void nicklist_add(QString, QString, QHash <QString, QString> *, QQueue <QString> *, QQueue <QString> *);
+    void nicklist_remove(QString, QHash <QString, QString> *, QQueue <QString> *, QQueue <QString> *);
+    bool nicklist_exist(QString, QHash <QString, QString> *);
+    void nicklist_clear(QHash <QString, QString> *, QQueue <QString> *, QQueue <QString> *);
+    void nicklist_refresh(QHash <QString, QString> *, QQueue <QString> *, QQueue <QString> *);
+    void nicklist_sort(QHash <QString, QString> *, QQueue <QString> *, QQueue <QString> *);
+    void nicklist_quicksort(QString strStatus, QHash <QString, QString> *, QQueue <QString> *, QQueue <QString> *);
 
 private:
     QTcpSocket *socket;

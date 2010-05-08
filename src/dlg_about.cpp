@@ -27,7 +27,7 @@ dlg_about::dlg_about(QWidget *parent, QSettings *param1) : QDialog(parent)
 
     settings = param1;
 
-    ui.labelLogo->setPixmap(QPixmap(":/3rdparty/images/r2_128.png"));
+    ui.labelLogo->setPixmap(QPixmap(":/images/logo_128.png"));
 
     QString strDescription = "<p style=\"font-size:18px;font-weight:bold\">Simple Chat Client</p>";
     strDescription += "<p>Version "+settings->value("version").toString()+"</p>";

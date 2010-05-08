@@ -197,6 +197,112 @@ void qnicklist::invite()
     }
 }
 
+// nicklist
+
+void qnicklist::nicklist_add(QString strNick, QString strStatus, QHash <QString, QString> *nicklist, QQueue <QString> *new_nicklist1, QQueue <QString> *new_nicklist2)
+{
+    nicklist->insert(strNick, strStatus);
+    qnicklist::nicklist_refresh(nicklist, new_nicklist1, new_nicklist2);
+}
+
+void qnicklist::nicklist_remove(QString strNick, QHash <QString, QString> *nicklist, QQueue <QString> *new_nicklist1, QQueue <QString> *new_nicklist2)
+{
+    nicklist->remove(strNick);
+    qnicklist::nicklist_refresh(nicklist, new_nicklist1, new_nicklist2);
+}
+
+bool qnicklist::nicklist_exist(QString strNick, QHash <QString, QString> *nicklist)
+{
+    return nicklist->contains(strNick);
+}
+
+void qnicklist::nicklist_clear(QHash <QString, QString> *nicklist, QQueue <QString> *new_nicklist1, QQueue <QString> *new_nicklist2)
+{
+    nicklist->clear();
+    qnicklist::nicklist_refresh(nicklist, new_nicklist1, new_nicklist2);
+}
+
+void qnicklist::nicklist_refresh(QHash <QString, QString> *nicklist, QQueue <QString> *new_nicklist1, QQueue <QString> *new_nicklist2)
+{
+    this->clear();
+
+    new_nicklist1->clear();
+    new_nicklist2->clear();
+
+    qnicklist::nicklist_sort(nicklist, new_nicklist1, new_nicklist2);
+
+    while (!new_nicklist1->isEmpty())
+    {
+        QString strNick = new_nicklist1->dequeue();
+        QString strStatus = new_nicklist2->dequeue();
+        QIcon icon;
+        //if (strStatus == "admincam") icon = QIcon(":/3rdparty/images/admincam.png");
+        //else if (strStatus == "ownercam") icon = QIcon(":/3rdparty/images/ownercam.png");
+        //else if (strStatus == "opcam") icon = QIcon(":/3rdparty/images/opcam.png");
+        //else if (strStatus == "halfopcam") icon = QIcon(":/3rdparty/images/halfopcam.png");
+        //else if (strStatus == "modcam") icon = QIcon(":/3rdparty/images/modcam.png");
+        //else if (strStatus == "vipcam") icon = QIcon(":/3rdparty/images/vipcam.png");
+        if (strStatus == "usercam") icon = QIcon(":/images/cam.png");
+        else if (strStatus == "admin") icon = QIcon(":/images/admin.png");
+        else if (strStatus == "owner") icon = QIcon(":/images/owner.png");
+        else if (strStatus == "op") icon = QIcon(":/images/op.png");
+        else if (strStatus == "halfop") icon = QIcon(":/images/halfop.png");
+        else if (strStatus == "mod") icon = QIcon(":/images/mod.png");
+        else if (strStatus == "vip") icon = QIcon(":/images/vip.png");
+        else if (strStatus == "user") icon = QIcon(":/images/user.png");
+
+        this->addItem(new QListWidgetItem(icon, strNick));
+    }
+}
+
+void qnicklist::nicklist_sort(QHash <QString, QString> *nicklist, QQueue <QString> *new_nicklist1, QQueue <QString> *new_nicklist2)
+{
+    qnicklist::nicklist_quicksort("admin", nicklist, new_nicklist1, new_nicklist2);
+    qnicklist::nicklist_quicksort("owner", nicklist, new_nicklist1, new_nicklist2);
+    qnicklist::nicklist_quicksort("op", nicklist, new_nicklist1, new_nicklist2);
+    qnicklist::nicklist_quicksort("halfop", nicklist, new_nicklist1, new_nicklist2);
+    qnicklist::nicklist_quicksort("mod", nicklist, new_nicklist1, new_nicklist2);
+    qnicklist::nicklist_quicksort("vip", nicklist, new_nicklist1, new_nicklist2);
+    qnicklist::nicklist_quicksort("user", nicklist, new_nicklist1, new_nicklist2);
+}
+
+bool caseInsensitiveLessThan(const QString &s1, const QString &s2)
+{
+    return s1.toLower() < s2.toLower();
+}
+
+void qnicklist::nicklist_quicksort(QString strStatus, QHash <QString, QString> *nicklist, QQueue <QString> *new_nicklist1, QQueue <QString> *new_nicklist2)
+{
+    QHash <QString, QString> status_nicklist;
+
+    QHash <QString, QString>::const_iterator i1 = nicklist->constBegin();
+    while (i1 != nicklist->constEnd())
+    {
+        if ((i1.value() == strStatus) || (i1.value() == strStatus+"cam"))
+            status_nicklist.insert(i1.key(), i1.value());
+
+        ++i1;
+    }
+
+    QStringList newlist;
+
+    QHash <QString, QString>::const_iterator i2 = status_nicklist.constBegin();
+    while (i2 != status_nicklist.constEnd())
+    {
+        newlist.insert(newlist.count(), i2.key());
+        ++i2;
+    }
+
+    qStableSort(newlist.begin(), newlist.end(), caseInsensitiveLessThan);
+
+    for (int i = 0; i < newlist.count(); i++)
+    {
+        QString strNick = newlist.at(i);
+        new_nicklist1->insert(new_nicklist1->count(), strNick);
+        new_nicklist2->insert(new_nicklist2->count(), status_nicklist[strNick]);
+    }
+}
+
 // copy of network::send
 void qnicklist::send(QString strData)
 {

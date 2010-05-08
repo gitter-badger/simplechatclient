@@ -141,6 +141,7 @@ private:
     void raw_404();
     void raw_430n();
     void raw_431n();
+    void raw_432();
     void raw_433();
     void raw_440n();
     void raw_441n();

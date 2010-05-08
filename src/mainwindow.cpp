@@ -26,10 +26,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 // init
     toolBar = new QToolBar();
     setWindowTitle("Simple Chat Client");
-    setWindowIcon(QIcon(":/3rdparty/images/r2_32.png"));
+    setWindowIcon(QIcon(":/images/logo_64.png"));
 
 // action
-    showAct = new QAction(QIcon(":/3rdparty/images/r2_32.png"),("P&oka¿"),this);
+    showAct = new QAction(QIcon(":/images/logo_64.png"),("P&oka¿"),this);
     connectAct = new QAction(QIcon(":/3rdparty/images/connect.png"),("&Po³±cz"),this);
     closeAct = new QAction(QIcon(":/3rdparty/images/exit.png"),("Za&koñcz"),this);
     optionsAct = new QAction(QIcon(":/3rdparty/images/options.png"),("O&pcje programu"),this);
@@ -38,7 +38,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     channel_favourites_Act = new QAction(QIcon(":/3rdparty/images/list.png"),("Ul&ubione kana³y"),this);
     friendsAct = new QAction(QIcon(":/3rdparty/images/people.png"),("Przy&jaciele"),this);
     ignoreAct = new QAction(QIcon(":/3rdparty/images/people.png"),("Ignorowa&ni"),this);
-    aboutAct = new QAction(QIcon(":/3rdparty/images/r2_32.png"),("&O programie SCC..."),this);
+    aboutAct = new QAction(QIcon(":/images/logo_64.png"),("&O programie SCC..."),this);
 
 // shortcut
     connectAct->setShortcuts(QKeySequence::New);
@@ -59,7 +59,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     delete pConfig;
 
     settings.clear();
-    settings.setValue("version", "1.0.5.212");
+    settings.setValue("version", "1.0.5.213");
     settings.setValue("debug", "off");
     settings.setValue("logged", "off");
     settings.setValue("busy", "off");
@@ -150,7 +150,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     trayMenu->addAction(closeAct);
 
     trayIcon = new QSystemTrayIcon(this);
-    trayIcon->setIcon(QIcon(":/3rdparty/images/r2_32.png"));
+    trayIcon->setIcon(QIcon(":/images/logo_64.png"));
     trayIcon->setContextMenu(trayMenu);
     trayIcon->show();
 

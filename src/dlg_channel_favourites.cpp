@@ -36,7 +36,7 @@ dlg_channel_favourites::dlg_channel_favourites(QSettings *param1, QTcpSocket *pa
 
 void dlg_channel_favourites::add_channel(QString strChannel)
 {
-    ui.listWidget->addItem(new QListWidgetItem(QIcon(":/3rdparty/images/channelavatar.png"), strChannel));
+    ui.listWidget->addItem(new QListWidgetItem(QIcon(":/images/channel_avatar.png"), strChannel));
 }
 
 void dlg_channel_favourites::clear()

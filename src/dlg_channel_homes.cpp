@@ -39,7 +39,7 @@ dlg_channel_homes::dlg_channel_homes(QSettings *param1, QTcpSocket *param2, tab_
 void dlg_channel_homes::add_channel(QString strChannel)
 {
     strChannel = strChannel.right(strChannel.length()-1); // remove status
-    ui.listWidget->addItem(new QListWidgetItem(QIcon(":/3rdparty/images/channelavatar.png"), strChannel));
+    ui.listWidget->addItem(new QListWidgetItem(QIcon(":/images/channel_avatar.png"), strChannel));
 }
 
 void dlg_channel_homes::clear()

@@ -122,6 +122,8 @@ void irc_kernel::kernel(QString param1)
             irc_kernel::raw_404();
         else if (strDataList[1].toLower() == "421")
             irc_kernel::raw_421();
+        else if (strDataList[1].toLower() == "432")
+            irc_kernel::raw_432();
         else if (strDataList[1].toLower() == "433")
             irc_kernel::raw_433();
         else if (strDataList[1].toLower() == "443")
@@ -1089,7 +1091,6 @@ void irc_kernel::raw_161n()
                 QString strUrl = strValue;
 
                 (new channel_avatar(tabc, strUrl, strChannel))->start_thread();
-                //channelAvatar->start_thread(strUrl, strChannel);
             }
         }
     }
@@ -1907,6 +1908,18 @@ void irc_kernel::raw_431n()
 
     dlgignore->clear();
     irc_kernel::send("NS IGNORE");
+}
+
+// :cf1f4.onet 432 1501-unknown ~?o? :Erroneous Nickname
+void irc_kernel::raw_432()
+{
+    if (strDataList.value(3).isEmpty() == true) return;
+
+    QString strNick = strDataList[3];
+
+    QString strMessage = QString("* Nick %1 jest nieprawid³owy").arg(strNick);
+
+    tabc->show_msg_all(strMessage, 9);
 }
 
 // :cf1f1.onet 433 * scc_test :Nickname is already in use.

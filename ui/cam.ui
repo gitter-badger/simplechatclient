@@ -26,8 +26,8 @@
    <string>Kamerka</string>
   </property>
   <property name="windowIcon">
-   <iconset>
-    <normaloff>:/3rdparty/images/r2_32.png</normaloff>:/3rdparty/images/r2_32.png</iconset>
+   <iconset resource="../scc.qrc">
+    <normaloff>:/images/logo_64.png</normaloff>:/images/logo_64.png</iconset>
   </property>
   <widget class="QWidget" name="verticalLayoutWidget">
    <property name="geometry">
@@ -125,6 +125,8 @@
    </layout>
   </widget>
  </widget>
- <resources/>
+ <resources>
+  <include location="../scc.qrc"/>
+ </resources>
  <connections/>
 </ui>

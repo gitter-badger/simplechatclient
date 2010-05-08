@@ -569,7 +569,7 @@ void tab_widget::display_message(QString strData, int iLevel)
                 if ((f1.exists() == true) && (settings->value("hide_formating").toString() == "off"))
                 {
 #ifdef Q_WS_X11
-                    strContent.append("<img src=\"file:"+emoticonFull1+"\" alt=\""+emoticon+"\" />");
+                    strContent.append("<img src=\"file://"+emoticonFull1+"\" alt=\""+emoticon+"\" />");
 #else
                     strContent.append("<img src=\""+emoticonFull1+"\" alt=\""+emoticon+"\" />");
 #endif
@@ -577,7 +577,7 @@ void tab_widget::display_message(QString strData, int iLevel)
                 else if ((f2.exists() == true) && (settings->value("hide_formating").toString() == "off"))
                 {
 #ifdef Q_WS_X11
-                    strContent.append("<img src=\"file:"+emoticonFull2+"\" alt=\""+emoticon+"\" />");
+                    strContent.append("<img src=\"file://"+emoticonFull2+"\" alt=\""+emoticon+"\" />");
 #else
                     strContent.append("<img src=\""+emoticonFull2+"\" alt=\""+emoticon+"\" />");
 #endif
@@ -921,106 +921,37 @@ void tab_widget::del_user(QString strNick)
 
 void tab_widget::nicklist_add(QString strNick, QString strStatus)
 {
-    nicklist.insert(strNick, strStatus);
-    tab_widget::nicklist_refresh();
+    nick_list->nicklist_add(strNick, strStatus, &nicklist, &new_nicklist1, &new_nicklist2);
 }
 
 void tab_widget::nicklist_remove(QString strNick)
 {
-    nicklist.remove(strNick);
-    tab_widget::nicklist_refresh();
+    nick_list->nicklist_remove(strNick, &nicklist, &new_nicklist1, &new_nicklist2);
 }
 
 bool tab_widget::nicklist_exist(QString strNick)
 {
-    return nicklist.contains(strNick);
+    return nick_list->nicklist_exist(strNick, &nicklist);
 }
 
 void tab_widget::nicklist_clear()
 {
-    nicklist.clear();
-    tab_widget::nicklist_refresh();
+    nick_list->nicklist_clear(&nicklist, &new_nicklist1, &new_nicklist2);
 }
 
 void tab_widget::nicklist_refresh()
 {
-    nick_list->clear();
-
-    new_nicklist1.clear();
-    new_nicklist2.clear();
-
-    tab_widget::nicklist_sort();
-
-    while (!new_nicklist1.isEmpty())
-    {
-        QString strNick = new_nicklist1.dequeue();
-        QString strStatus = new_nicklist2.dequeue();
-        QIcon icon;
-        if (strStatus == "admincam") icon = QIcon(":/3rdparty/images/admincam.png");
-        else if (strStatus == "ownercam") icon = QIcon(":/3rdparty/images/ownercam.png");
-        else if (strStatus == "opcam") icon = QIcon(":/3rdparty/images/opcam.png");
-        else if (strStatus == "halfopcam") icon = QIcon(":/3rdparty/images/halfopcam.png");
-        else if (strStatus == "modcam") icon = QIcon(":/3rdparty/images/modcam.png");
-        else if (strStatus == "vipcam") icon = QIcon(":/3rdparty/images/vipcam.png");
-        else if (strStatus == "usercam") icon = QIcon(":/3rdparty/images/usercam.png");
-        else if (strStatus == "admin") icon = QIcon(":/3rdparty/images/admin.png");
-        else if (strStatus == "owner") icon = QIcon(":/3rdparty/images/owner.png");
-        else if (strStatus == "op") icon = QIcon(":/3rdparty/images/op.png");
-        else if (strStatus == "halfop") icon = QIcon(":/3rdparty/images/halfop.png");
-        else if (strStatus == "mod") icon = QIcon(":/3rdparty/images/mod.png");
-        else if (strStatus == "vip") icon = QIcon(":/3rdparty/images/vip.png");
-        else if (strStatus == "user") icon = QIcon(":/3rdparty/images/user.png");
-
-        nick_list->addItem(new QListWidgetItem(icon, strNick));
-    }
+    nick_list->nicklist_refresh(&nicklist, &new_nicklist1, &new_nicklist2);
 }
 
 void tab_widget::nicklist_sort()
 {
-    tab_widget::nicklist_quicksort("admin");
-    tab_widget::nicklist_quicksort("owner");
-    tab_widget::nicklist_quicksort("op");
-    tab_widget::nicklist_quicksort("halfop");
-    tab_widget::nicklist_quicksort("mod");
-    tab_widget::nicklist_quicksort("vip");
-    tab_widget::nicklist_quicksort("user");
-}
-
-bool caseInsensitiveLessThan(const QString &s1, const QString &s2)
-{
-    return s1.toLower() < s2.toLower();
+    nick_list->nicklist_sort(&nicklist, &new_nicklist1, &new_nicklist2);
 }
 
 void tab_widget::nicklist_quicksort(QString strStatus)
 {
-    QHash <QString, QString> status_nicklist;
-
-    QHash <QString, QString>::const_iterator i1 = nicklist.constBegin();
-    while (i1 != nicklist.constEnd())
-    {
-        if ((i1.value() == strStatus) || (i1.value() == strStatus+"cam"))
-            status_nicklist.insert(i1.key(), i1.value());
-
-        ++i1;
-    }
-
-    QStringList newlist;
-
-    QHash <QString, QString>::const_iterator i2 = status_nicklist.constBegin();
-    while (i2 != status_nicklist.constEnd())
-    {
-        newlist.insert(newlist.count(), i2.key());
-        ++i2;
-    }
-
-    qStableSort(newlist.begin(), newlist.end(), caseInsensitiveLessThan);
-
-    for (int i = 0; i < newlist.count(); i++)
-    {
-        QString strNick = newlist.at(i);
-        new_nicklist1.insert(new_nicklist1.count(), strNick);
-        new_nicklist2.insert(new_nicklist2.count(), status_nicklist[strNick]);
-    }
+    nick_list->nicklist_quicksort(strStatus, &nicklist, &new_nicklist1, &new_nicklist2);
 }
 
 void tab_widget::change_flag(QString strNick, QString strNewFlag)
