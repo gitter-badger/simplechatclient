@@ -113,10 +113,11 @@ void dlg_email::parse_result(QString strResult)
         ui.lineEdit->clear();
 
         QMessageBox msgBox;
+        msgBox.setIcon(QMessageBox::Critical);
+        msgBox.setWindowIcon(QIcon(":/images/logo_64.png"));
+        msgBox.setStandardButtons(QMessageBox::Ok);
         msgBox.setWindowTitle("Error");
         msgBox.setText(strErrText);
-        msgBox.setStandardButtons(QMessageBox::Ok);
-        msgBox.setIcon(QMessageBox::Critical);
         msgBox.exec();
 
         dlg_email::get_img();

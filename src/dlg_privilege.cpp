@@ -98,6 +98,9 @@ void dlg_privilege::button_ok()
     {
         QMessageBox msgBox;
         msgBox.setIcon(QMessageBox::Warning);
+        msgBox.setWindowIcon(QIcon(":/images/logo_64.png"));
+        msgBox.setStandardButtons(QMessageBox::Ok);
+        msgBox.setWindowTitle("Error");
         msgBox.setText(QString("Nie podano nicka"));
         msgBox.exec();
     }

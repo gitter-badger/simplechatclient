@@ -545,8 +545,11 @@ void irc_kernel::raw_kick()
     {
         QMessageBox msgBox;
         msgBox.setIcon(QMessageBox::Information);
-        msgBox.setText(QString("%1 wyrzuci³ Cie z kana³u %2. Powód: %3").arg(strWho).arg(strChannel).arg(strReason));
+        msgBox.setWindowIcon(QIcon(":/images/logo_64.png"));
+        msgBox.setStandardButtons(QMessageBox::Ok);
+        msgBox.setText(QString("%1 wyrzuci³ Cie z kana³u %2. Powód: <br>%3").arg(strWho).arg(strChannel).arg(strReason));
         msgBox.exec();
+
         tabc->remove_tab(strChannel);
     }
 }
@@ -1253,6 +1256,8 @@ void irc_kernel::raw_250n()
 
     QMessageBox msgBox;
     msgBox.setIcon(QMessageBox::Information);
+    msgBox.setWindowIcon(QIcon(":/images/logo_64.png"));
+    msgBox.setStandardButtons(QMessageBox::Ok);
     msgBox.setText(QString("Pomy¶lnie utworzono kana³ %1").arg(strChannel));
     msgBox.exec();
 
@@ -1442,6 +1447,8 @@ void irc_kernel::raw_261n()
 
     QMessageBox msgBox;
     msgBox.setIcon(QMessageBox::Information);
+    msgBox.setWindowIcon(QIcon(":/images/logo_64.png"));
+    msgBox.setStandardButtons(QMessageBox::Ok);
     msgBox.setText(QString("Pomy¶lnie usuniêto kana³ %1").arg(strChannel));
     msgBox.exec();
 
