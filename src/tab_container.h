@@ -57,8 +57,10 @@ public:
     void change_flag(QString, QString);
     void update_nick(QString);
     void clear_nicklist(QString);
-    void set_logo(QString, QByteArray);
     QStringList get_open_channels();
+
+public slots:
+    void set_logo(QString, QByteArray);
 
 private:
     tab_manager *tabm;

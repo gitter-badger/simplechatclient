@@ -1095,8 +1095,7 @@ void irc_kernel::raw_161n()
             {
                 QString strUrl = strValue;
 
-                //dlgchannel_settings->add_avatar(strValue);
-                (new channel_avatar(tabc, strUrl, strChannel))->start_thread();
+                (new channel_avatar(tabc, strChannel, strUrl))->start_thread();
             }
         }
     }

@@ -35,14 +35,15 @@ public:
     void run();
 
 private:
-    QString strUrl;
     QString strChannel;
+    QString strUrl;
 
 private slots:
     void threadWork();
 
 signals:
     void set_avatar(QString, QByteArray);
+    void stop_thread();
 
 };
 
@@ -55,12 +56,12 @@ public:
 
 private:
     tab_container *tabc;
-    QString strUrl;
     QString strChannel;
+    QString strUrl;
     channel_avatar_thread *channelAvatarThr;
 
 public slots:
-    void setAvatar(QString, QByteArray);
+    void stop_thread();
 
 };
 

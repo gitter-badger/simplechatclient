@@ -256,13 +256,16 @@ void irc_auth::request_finished(QString strData)
 {
     if (strData.isEmpty() == false)
     {
+        QDomDocument doc;
+        doc.setContent(strData);
+
         // <?xml version="1.0" encoding="ISO-8859-2"?><root><uoKey>LY9j2sXwio0G_yo3PdpukDL8iZJGHXKs</uoKey><zuoUsername>~Succubi_test</zuoUsername><error err_code="TRUE"  err_text="wartość prawdziwa" ></error></root>
         if (strData.indexOf("uoKey") != -1)
         {
             if (strData.indexOf("err_code=\"TRUE\"") != -1)
             {
-                QString strUOKey = strData.mid(strData.indexOf("<uoKey>")+7, strData.indexOf("</uoKey>") - strData.indexOf("<uoKey>") -7);
-                QString strNick = strData.mid(strData.indexOf("<zuoUsername>")+13, strData.indexOf("</zuoUsername>") - strData.indexOf("<zuoUsername>") -13);
+                QString strUOKey = doc.elementsByTagName("uoKey").item(0).toElement().text();
+                QString strNick = doc.elementsByTagName("zuoUsername").item(0).toElement().text();
                 settings->setValue("uokey", strUOKey);
                 if ((strUOKey.isEmpty() == false) && (strNick.isEmpty() == false) && (socket->state() == QAbstractSocket::ConnectedState) && (socket->isWritable() == true))
                     this->send(QString("USER * %1  czat-app.onet.pl :%2").arg(strUOKey).arg(strNick));
@@ -284,9 +287,10 @@ void irc_auth::request_finished(QString strData)
             }
             else
             {
-                QString strReason = strData.mid(strData.indexOf("err_text=\"")+10, strData.indexOf("\" ></error>") - strData.indexOf("err_text=\"") -10);
-                if (strReason.length() > 100) strReason = "Unknown error";
-                tabc->show_msg("Status", QString("Error: Błąd autoryzacji [%1]").arg(strReason), 9);
+                QDomNode dError = doc.elementsByTagName("error").item(0);
+                QString strErrorText = dError.attributes().namedItem("err_text").nodeValue();
+
+                tabc->show_msg("Status", QString("Error: Błąd autoryzacji [%1]").arg(strErrorText), 9);
             }
             socket->close();
 

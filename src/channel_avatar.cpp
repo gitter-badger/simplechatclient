@@ -22,8 +22,8 @@
 
 channel_avatar_thread::channel_avatar_thread(QString param1, QString param2)
 {
-    strUrl = param1;
-    strChannel = param2;
+    strChannel = param1;
+    strUrl = param2;
 }
 
 void channel_avatar_thread::run()
@@ -47,26 +47,26 @@ void channel_avatar_thread::threadWork()
     delete pReply;
 
     emit set_avatar(strChannel, bData);
+    emit stop_thread();
 }
 
 channel_avatar::channel_avatar(tab_container *param1, QString param2, QString param3)
 {
     tabc = param1;
-    strUrl = param2;
-    strChannel = param3;
+    strChannel = param2;
+    strUrl = param3;
 }
 
 void channel_avatar::start_thread()
 {
-    channelAvatarThr = new channel_avatar_thread(strUrl, strChannel);
-    QObject::connect(channelAvatarThr, SIGNAL(set_avatar(QString, QByteArray)), this, SLOT(setAvatar(QString, QByteArray)));
+    channelAvatarThr = new channel_avatar_thread(strChannel, strUrl);
+    QObject::connect(channelAvatarThr, SIGNAL(set_avatar(QString, QByteArray)), tabc, SLOT(set_logo(QString, QByteArray)));
+    QObject::connect(channelAvatarThr, SIGNAL(stop_thread()), this, SLOT(stop_thread()));
     channelAvatarThr->start(QThread::LowPriority);
 }
 
-void channel_avatar::setAvatar(QString strChannel, QByteArray bData)
+void channel_avatar::stop_thread()
 {
-    tabc->set_logo(strChannel, bData);
-
     channelAvatarThr->quit();
     channelAvatarThr->wait();
     channelAvatarThr->QObject::disconnect();
