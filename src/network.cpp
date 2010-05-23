@@ -65,6 +65,8 @@ void network::set_dlg(tab_container *param1, dlg_channel_settings *param2, dlg_c
 
     pIrc_auth = new irc_auth(settings, tabc, socket);
     pIrc_kernel = new irc_kernel(socket, tabc, settings, dlgchannel_settings, dlgchannel_homes, dlgchannel_list, dlgchannel_favourites, dlgfriends, dlgignore, dlgmoderation);
+
+    QObject::connect(this, SIGNAL(send_to_kernel(QString)), pIrc_kernel, SLOT(kernel(QString)));
 }
 
 bool network::is_connected()
@@ -178,11 +180,6 @@ void network::send(QString strData)
         tabc->show_msg_active("Error: Nie uda³o siê wys³aæ danych! [Not connected]", 9);
 }
 
-void network::kernel(QString strLine)
-{
-    pIrc_kernel->kernel(strLine);
-}
-
 void network::recv()
 {
     bool bCompleted = true;
@@ -216,7 +213,7 @@ void network::recv()
     {
         QString strLine = strDataLine[i];
         if (strLine.isEmpty() == false)
-            network::kernel(strLine);
+            emit send_to_kernel(strLine);
     }
 
     if (bCompleted == false)

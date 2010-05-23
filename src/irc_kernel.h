@@ -42,6 +42,8 @@ class irc_kernel : public QObject
     Q_OBJECT
 public:
     irc_kernel(QTcpSocket *, tab_container *, QSettings *, dlg_channel_settings *, dlg_channel_homes *, dlg_channel_list *, dlg_channel_favourites *, dlg_friends *, dlg_ignore *, dlg_moderation *);
+
+public slots:
     void kernel(QString);
 
 private:

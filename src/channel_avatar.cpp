@@ -70,5 +70,6 @@ void channel_avatar::stop_thread()
     channelAvatarThr->quit();
     channelAvatarThr->wait();
     channelAvatarThr->QObject::disconnect();
+    channelAvatarThr->deleteLater();
     delete channelAvatarThr;
 }

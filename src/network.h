@@ -79,6 +79,9 @@ private slots:
     void disconnected();
     void timeout();
 
+signals:
+    void send_to_kernel(QString);
+
 };
 
 #endif // NETWORK_H
