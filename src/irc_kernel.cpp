@@ -985,8 +985,9 @@ void irc_kernel::raw_141n()
             irc_kernel::send(QString("JOIN %1").arg(strChannel));
     }
 
-    if (settings->value("autojoin_favourites").toString() == "on")
-        settings->setValue("autojoin_favourites", "off");
+    // turn off autojoin
+    //if (settings->value("autojoin_favourites").toString() == "on")
+        //settings->setValue("autojoin_favourites", "off");
 }
 
 // :NickServ!service@service.onet NOTICE scc_test :142 :end of favourites list
