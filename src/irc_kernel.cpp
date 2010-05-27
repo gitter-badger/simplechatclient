@@ -595,6 +595,8 @@ void irc_kernel::raw_mode()
             else if (strFlag == "-ips") strDisplay = QString("* Kana³ %1 nie jest ju¿ kana³em prywatnym (Ustawi³ %2)").arg(strNickChannel).arg(strWho);
             else if (strFlag == "+m") strDisplay = QString("* Kana³ %1 jest teraz kana³em moderowanym (Ustawi³ %2)").arg(strNickChannel).arg(strWho);
             else if (strFlag == "-m") strDisplay = QString("* Kana³ %1 nie jest ju¿ kana³em moderowanym (Ustawi³ %2)").arg(strNickChannel).arg(strWho);
+            else if (strFlag == "+u") strDisplay = QString("* Kana³ %1 jest teraz kana³em audytorowanym (Ustawi³ %2)").arg(strNickChannel).arg(strWho);
+            else if (strFlag == "-u") strDisplay = QString("* Kana³ %1 nie jest ju¿ kana³em audytorowanym (Ustawi³ %2)").arg(strNickChannel).arg(strWho);
             else strDisplay = QString("* Kana³ %1 ma teraz flage %2 (Ustawi³ %3)").arg(strNickChannel).arg(strFlag).arg(strWho);
             tabc->show_msg(strNickChannel, strDisplay, 5);
         }
