@@ -55,6 +55,8 @@ channel_avatar::channel_avatar(tab_container *param1, QString param2, QString pa
     tabc = param1;
     strChannel = param2;
     strUrl = param3;
+
+    start_thread();
 }
 
 void channel_avatar::start_thread()
@@ -72,4 +74,6 @@ void channel_avatar::stop_thread()
     channelAvatarThr->QObject::disconnect();
     channelAvatarThr->deleteLater();
     delete channelAvatarThr;
+
+    emit do_remove_thread(this);
 }

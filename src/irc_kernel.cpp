@@ -34,6 +34,17 @@ irc_kernel::irc_kernel(QTcpSocket *param1, tab_container *param2, QSettings *par
     dlgmoderation = param10;
 }
 
+void irc_kernel::remove_thread(channel_avatar* thr)
+{
+    thr->QObject::disconnect();
+    threadList.removeOne(thr);
+
+#ifdef Q_WS_X11
+    if (settings->value("debug").toString() == "on")
+        qDebug() << "Channel avatar thread -1 (size: " << threadList.size() << ")";
+#endif
+}
+
 void irc_kernel::kernel(QString param1)
 {
     strData = param1;
@@ -1096,7 +1107,13 @@ void irc_kernel::raw_161n()
             {
                 QString strUrl = strValue;
 
-                (new channel_avatar(tabc, strChannel, strUrl))->start_thread();
+                threadList.append(new channel_avatar(tabc, strChannel, strUrl));
+                QObject::connect(threadList.at(threadList.size()-1), SIGNAL(do_remove_thread(channel_avatar*)), this, SLOT(remove_thread(channel_avatar*)));
+
+#ifdef Q_WS_X11
+                if (settings->value("debug").toString() == "on")
+                    qDebug() << "Channel avatar thread +1 (size: " << threadList.size() << ")";
+#endif
             }
         }
     }

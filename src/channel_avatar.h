@@ -63,6 +63,9 @@ private:
 public slots:
     void stop_thread();
 
+signals:
+    void do_remove_thread(channel_avatar*);
+
 };
 
 #endif // CHANNEL_AVATAR_H
