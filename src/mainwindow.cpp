@@ -59,7 +59,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     delete pConfig;
 
     settings.clear();
-    settings.setValue("version", "1.0.5.219");
+    settings.setValue("version", "1.0.5.220");
     settings.setValue("debug", "off");
     settings.setValue("logged", "off");
     settings.setValue("busy", "off");
@@ -96,7 +96,13 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
 // update
 
-    updateThr = new update_thread(&settings, tabc);
+    uThreadList.append(new update_thread(&settings, tabc));
+    QObject::connect(uThreadList.at(uThreadList.size()-1), SIGNAL(do_remove_uthread(update_thread*)), this, SLOT(remove_uthread(update_thread*)));
+
+#ifdef Q_WS_X11
+    //if (settings.value("debug").toString() == "on")
+        qDebug() << "Update thread +1 (size: " << uThreadList.size() << ")";
+#endif
 
 // main menu
     fileMenu = menuBar()->addMenu("&Plik");
@@ -164,7 +170,6 @@ MainWindow::~MainWindow()
     settings.setValue("reconnect", "false");
     delete trayIcon;
     delete trayMenu;
-    delete updateThr;
     delete pIrc_auth;
     delete dlgignore;
     delete dlgfriends;
@@ -176,6 +181,17 @@ MainWindow::~MainWindow()
     delete pNetwork;
     delete tabc;
     delete tabm;
+}
+
+void MainWindow::remove_uthread(update_thread *thr)
+{
+    thr->QObject::disconnect();
+    uThreadList.removeOne(thr);
+
+#ifdef Q_WS_X11
+    //if (settings.value("debug").toString() == "on")
+        qDebug() << "Update thread -1 (size: " << uThreadList.size() << ")";
+#endif
 }
 
 void MainWindow::set_debug(bool param1)

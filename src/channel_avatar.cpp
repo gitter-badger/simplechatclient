@@ -56,11 +56,6 @@ channel_avatar::channel_avatar(tab_container *param1, QString param2, QString pa
     strChannel = param2;
     strUrl = param3;
 
-    start_thread();
-}
-
-void channel_avatar::start_thread()
-{
     channelAvatarThr = new channel_avatar_thread(strChannel, strUrl);
     QObject::connect(channelAvatarThr, SIGNAL(set_avatar(QString, QByteArray)), tabc, SLOT(set_logo(QString, QByteArray)));
     QObject::connect(channelAvatarThr, SIGNAL(stop_thread()), this, SLOT(stop_thread()));
@@ -75,5 +70,5 @@ void channel_avatar::stop_thread()
     channelAvatarThr->deleteLater();
     delete channelAvatarThr;
 
-    emit do_remove_thread(this);
+    emit do_remove_cathread(this);
 }

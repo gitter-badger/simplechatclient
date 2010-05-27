@@ -52,7 +52,6 @@ class channel_avatar : public QObject
     Q_OBJECT
 public:
     channel_avatar(tab_container *, QString, QString);
-    void start_thread();
 
 private:
     tab_container *tabc;
@@ -64,7 +63,7 @@ public slots:
     void stop_thread();
 
 signals:
-    void do_remove_thread(channel_avatar*);
+    void do_remove_cathread(channel_avatar*);
 
 };
 

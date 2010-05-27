@@ -59,7 +59,7 @@ private:
     dlg_ignore *dlgignore;
     dlg_moderation *dlgmoderation;
     QString strData;
-    QList <channel_avatar*> threadList;
+    QList <channel_avatar*> caThreadList;
 
     void raw_error();
     void raw_ping();
@@ -186,7 +186,7 @@ private:
     QString get_settings_key(QString);
 
 private slots:
-    void remove_thread(channel_avatar*);
+    void remove_cathread(channel_avatar*);
 
 };
 

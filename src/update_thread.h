@@ -46,6 +46,7 @@ private slots:
 
 signals:
     void set_version(QString);
+    void stop_thread();
 
 };
 
@@ -54,7 +55,6 @@ class update_thread : public QObject
     Q_OBJECT
 public:
     update_thread(QSettings *, tab_container *);
-    ~update_thread();
 
 private:
     QSettings *settings;
@@ -63,6 +63,10 @@ private:
 
 private slots:
     void setVersion(QString);
+    void stop_thread();
+
+signals:
+    void do_remove_uthread(update_thread*);
 
 };
 

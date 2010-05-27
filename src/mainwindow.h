@@ -67,7 +67,7 @@ private:
     dlg_friends *dlgfriends;
     dlg_ignore *dlgignore;
     dlg_moderation *dlgmoderation;
-    update_thread *updateThr;
+    QList <update_thread*> uThreadList;
     QMenu *trayMenu;
     QSystemTrayIcon *trayIcon;
     QMenu *fileMenu;
@@ -99,6 +99,7 @@ private slots:
     void tray_icon(QSystemTrayIcon::ActivationReason);
     void button_show();
     void tab_close_requested(int);
+    void remove_uthread(update_thread*);
 
 };
 
