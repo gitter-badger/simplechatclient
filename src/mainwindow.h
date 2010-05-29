@@ -39,7 +39,6 @@
 #include "dlg_ignore.h"
 #include "dlg_moderation.h"
 #include "dlg_options.h"
-#include "irc_auth.h"
 #include "network.h"
 #include "tab_container.h"
 #include "tab_manager.h"

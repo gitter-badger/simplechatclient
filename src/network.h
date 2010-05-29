@@ -45,6 +45,7 @@ public:
     QTcpSocket* get_socket() { return socket; }
     void set_hostport(QString, int);
     void set_dlg(tab_container *, dlg_channel_settings *, dlg_channel_homes *, dlg_channel_list *, dlg_channel_favourites *, dlg_friends *, dlg_ignore *, dlg_moderation *);
+    void set_nickpass(QString, QString, QString);
     void set_reconnect(bool);
     bool is_connected();
     bool is_writable();
@@ -68,6 +69,9 @@ private:
     dlg_friends *dlgfriends;
     dlg_ignore *dlgignore;
     dlg_moderation *dlgmoderation;
+    QString strNick;
+    QString strCurrentNick;
+    QString strPass;
     QTimer *timer;
     int iActive;
     irc_auth *pIrc_auth;
@@ -76,6 +80,7 @@ private:
 private slots:
     void reconnect();
     void recv();
+    void connected();
     void disconnected();
     void timeout();
 

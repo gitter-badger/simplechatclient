@@ -59,7 +59,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     delete pConfig;
 
     settings.clear();
-    settings.setValue("version", "1.0.5.222");
+    settings.setValue("version", "1.0.5.223");
     settings.setValue("debug", "off");
     settings.setValue("logged", "off");
     settings.setValue("busy", "off");
@@ -84,7 +84,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     dlgchannel_favourites = new dlg_channel_favourites(&settings, pSocket, tabc);
     dlgfriends = new dlg_friends(&settings, pSocket, tabc);
     dlgignore = new dlg_ignore(&settings, pSocket, tabc);
-    pIrc_auth = new irc_auth(&settings, tabc, pSocket);
 
     pNetwork->set_dlg(tabc, dlgchannel_settings, dlgchannel_homes, dlgchannel_list, dlgchannel_favourites, dlgfriends, dlgignore, dlgmoderation);
     tabc->set_dlg(dlgchannel_settings, dlgmoderation);
@@ -170,7 +169,6 @@ MainWindow::~MainWindow()
     settings.setValue("reconnect", "false");
     delete trayIcon;
     delete trayMenu;
-    delete pIrc_auth;
     delete dlgignore;
     delete dlgfriends;
     delete dlgchannel_favourites;
@@ -249,20 +247,16 @@ void MainWindow::button_connect()
     // connect
     if (pNetwork->is_connected() == false)
     {
+        QString strCurrentNick = strNick;
+            if (strCurrentNick[0] == '~')
+        strCurrentNick = strNick.right(strNick.length()-1);
+
         connectAct->setText("&Roz³±cz");
         connectAct->setIconText("&Roz³±cz");
         pNetwork->set_hostport("czat-app.onet.pl",5015);
+        pNetwork->set_nickpass(strNick, strCurrentNick, strPass);
         settings.setValue("reconnect", "true");
         pNetwork->connect();
-        if (pNetwork->is_connected() == true)
-        {
-            pNetwork->send(QString("NICK %1").arg(strNick));
-            pNetwork->send("AUTHKEY");
-            QString strNickCurrent = strNick;
-            if (strNickCurrent[0] == '~')
-                strNickCurrent = strNick.right(strNick.length()-1);
-            pIrc_auth->request_uo(strNickCurrent, strPass);
-        }
     }
     else
     {

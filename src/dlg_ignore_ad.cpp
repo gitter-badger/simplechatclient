@@ -77,9 +77,13 @@ void dlg_ignore_ad::send(QString strData)
         for ( int i = 0; i < strData.size(); i++)
             qbaData.insert(i, strData.at(i));
 
-        socket->write(qbaData);
-        if ((socket->state() == QAbstractSocket::ConnectedState) && (socket->waitForBytesWritten() == false))
-           tabc->show_msg("Status", QString("Error: Nie uda³o siê wys³aæ danych! [%1]").arg(socket->errorString()), 9);
+        if (socket->write(qbaData) == -1)
+        {
+            if (socket->state() == QAbstractSocket::ConnectedState)
+                tabc->show_msg_active(QString("Error: Nie uda³o siê wys³aæ danych! [%1]").arg(socket->errorString()), 9);
+            else if (socket->state() == QAbstractSocket::UnconnectedState)
+                tabc->show_msg_active("Error: Nie uda³o siê wys³aæ danych! [Not connected]", 9);
+        }
     }
     else
         tabc->show_msg("Status", "Error: Nie uda³o siê wys³aæ danych! [Not connected]", 9);

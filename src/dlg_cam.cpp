@@ -44,10 +44,6 @@ void dlg_cam::network_connect()
     if (socket->state() == QAbstractSocket::UnconnectedState)
     {
         socket->connectToHost("czat-s.onet.pl", 5008);
-        if ((socket->state() == QAbstractSocket::ConnectedState) || (socket->waitForConnected()))
-            ui.label_img->setText("Po³±czono z serwerem kamerek<br>Trwa autoryzacja...");
-        else
-            ui.label_img->setText("Nie mo¿na po³±czyæ siê z serwerem kamerek");
 
         bText = true;
         bAuthorized = false;
@@ -71,11 +67,13 @@ void dlg_cam::network_send(QString strData)
         for ( int i = 0; i < strData.size(); i++)
             qbaData.insert(i, strData.at(i));
 
-        socket->write(qbaData);
-        if ((socket->state() == QAbstractSocket::ConnectedState) && (socket->waitForBytesWritten() == false))
-            ui.label_img->setText(QString("Error: Nie uda³o siê wys³aæ danych! [%1]").arg(socket->errorString()));
-        else if (socket->state() == QAbstractSocket::UnconnectedState)
-            ui.label_img->setText("Error: Nie uda³o siê wys³aæ danych! [Not connected]");
+        if (socket->write(qbaData) == -1)
+        {
+            if (socket->state() == QAbstractSocket::ConnectedState)
+                ui.label_img->setText(QString("Error: Nie uda³o siê wys³aæ danych! [%1]").arg(socket->errorString()));
+            else if (socket->state() == QAbstractSocket::UnconnectedState)
+                ui.label_img->setText("Error: Nie uda³o siê wys³aæ danych! [Not connected]");
+        }
     }
     else
         ui.label_img->setText("Error: Nie uda³o siê wys³aæ danych! [Not connected]");
@@ -87,11 +85,6 @@ void dlg_cam::network_disconnect()
     {
         dlg_cam::network_send(QString("UNSUBSCRIBE_BIG * %1").arg(strNick));
         socket->disconnectFromHost();
-        if ((socket->state() == QAbstractSocket::UnconnectedState) || (socket->waitForDisconnected()))
-        {
-            int nop;
-            nop = 1;
-        }
     }
 }
 
@@ -353,12 +346,6 @@ void dlg_cam::send(QString strData)
             qbaData.insert(i, strData.at(i));
 
         irc_socket->write(qbaData);
-        if ((irc_socket->state() == QAbstractSocket::ConnectedState) && (irc_socket->waitForBytesWritten() == false))
-        {
-            int nop;
-            nop = 1;
-            //tabc->show_msg("Status", QString("Error: Nie uda³o siê wys³aæ danych! [%1]").arg(socket->errorString()), 9);
-        }
     }
     //else
         //tabc->show_msg("Status", "Error: Nie uda³o siê wys³aæ danych! [Not connected]", 9);
@@ -377,6 +364,9 @@ void dlg_cam::showEvent(QShowEvent *event)
     ui.textEdit->setText("");
 
     socket = new QTcpSocket();
+    socket->setSocketOption(QAbstractSocket::LowDelayOption, 1);
+    socket->setSocketOption(QAbstractSocket::KeepAliveOption, 0);
+
     timer = new QTimer();
     timer->setInterval(2*1000); // 2 sec
 
