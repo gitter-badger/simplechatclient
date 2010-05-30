@@ -307,6 +307,12 @@ void dlg_cam::network_read()
         {
             // nothing
         }
+        // 520 0 INVALID_UOKEY 1q3j0llVg40cu2784j9EVoz8sRdfNl3w
+        else if (strDataList[0] == "520")
+        {
+            ui.label_img->setText("Nieprawid³owy klucz autoryzacji");
+            dlg_cam::network_disconnect();
+        }
 
         dlg_cam::network_read();
     }
