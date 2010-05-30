@@ -40,6 +40,13 @@ dlg_channel_list::dlg_channel_list(QSettings *param1, QTcpSocket *param2, tab_co
 
 void dlg_channel_list::clear()
 {
+    list_1.clear();
+    list_2.clear();
+    list_3.clear();
+    list_4.clear();
+    list_5.clear();
+    list_6.clear();
+
     for (int i = ui.tableWidget_1->rowCount()-1; i >= 0; --i)
         ui.tableWidget_1->removeRow(i);
 
@@ -61,103 +68,128 @@ void dlg_channel_list::clear()
 
 void dlg_channel_list::add_channel(QString strName, QString strPeople, QString strCat, QString strType)
 {
-    ui.tableWidget_1->insertRow(ui.tableWidget_1->rowCount());
-    ui.tableWidget_1->setItem(ui.tableWidget_1->rowCount()-1, 0, new QTableWidgetItem(strName));
-    ui.tableWidget_1->setItem(ui.tableWidget_1->rowCount()-1, 1, new QTableWidgetItem(strPeople));
-    ui.tableWidget_1->setItem(ui.tableWidget_1->rowCount()-1, 2, new QTableWidgetItem(strCat));
-    ui.tableWidget_1->setItem(ui.tableWidget_1->rowCount()-1, 3, new QTableWidgetItem(strType));
+    QList <QString> add;
+    add << strName << strPeople << strCat << strType;
+    list_1 << add;
 
     if (strType == "Teen")
-    {
-        ui.tableWidget_2->insertRow(ui.tableWidget_2->rowCount());
-        ui.tableWidget_2->setItem(ui.tableWidget_2->rowCount()-1, 0, new QTableWidgetItem(strName));
-        ui.tableWidget_2->setItem(ui.tableWidget_2->rowCount()-1, 1, new QTableWidgetItem(strPeople));
-        ui.tableWidget_2->setItem(ui.tableWidget_2->rowCount()-1, 2, new QTableWidgetItem(strCat));
-        ui.tableWidget_2->setItem(ui.tableWidget_2->rowCount()-1, 3, new QTableWidgetItem(strType));
-    }
+        list_2.append(add);
     else if (strType == "Towarzyskie")
-    {
-        ui.tableWidget_3->insertRow(ui.tableWidget_3->rowCount());
-        ui.tableWidget_3->setItem(ui.tableWidget_3->rowCount()-1, 0, new QTableWidgetItem(strName));
-        ui.tableWidget_3->setItem(ui.tableWidget_3->rowCount()-1, 1, new QTableWidgetItem(strPeople));
-        ui.tableWidget_3->setItem(ui.tableWidget_3->rowCount()-1, 2, new QTableWidgetItem(strCat));
-        ui.tableWidget_3->setItem(ui.tableWidget_3->rowCount()-1, 3, new QTableWidgetItem(strType));
-    }
+        list_3.append(add);
     else if (strType == "Erotyczne")
-    {
-        ui.tableWidget_4->insertRow(ui.tableWidget_4->rowCount());
-        ui.tableWidget_4->setItem(ui.tableWidget_4->rowCount()-1, 0, new QTableWidgetItem(strName));
-        ui.tableWidget_4->setItem(ui.tableWidget_4->rowCount()-1, 1, new QTableWidgetItem(strPeople));
-        ui.tableWidget_4->setItem(ui.tableWidget_4->rowCount()-1, 2, new QTableWidgetItem(strCat));
-        ui.tableWidget_4->setItem(ui.tableWidget_4->rowCount()-1, 3, new QTableWidgetItem(strType));
-    }
+        list_4.append(add);
     else if (strType == "Tematyczne")
-    {
-        ui.tableWidget_5->insertRow(ui.tableWidget_5->rowCount());
-        ui.tableWidget_5->setItem(ui.tableWidget_5->rowCount()-1, 0, new QTableWidgetItem(strName));
-        ui.tableWidget_5->setItem(ui.tableWidget_5->rowCount()-1, 1, new QTableWidgetItem(strPeople));
-        ui.tableWidget_5->setItem(ui.tableWidget_5->rowCount()-1, 2, new QTableWidgetItem(strCat));
-        ui.tableWidget_5->setItem(ui.tableWidget_5->rowCount()-1, 3, new QTableWidgetItem(strType));
-    }
+        list_5.append(add);
     else if (strType == "Regionalne")
+        list_6.append(add);
+}
+
+void dlg_channel_list::create_list()
+{
+    for (int i = 0; i < list_1.size(); i++)
     {
-        ui.tableWidget_6->insertRow(ui.tableWidget_6->rowCount());
-        ui.tableWidget_6->setItem(ui.tableWidget_6->rowCount()-1, 0, new QTableWidgetItem(strName));
-        ui.tableWidget_6->setItem(ui.tableWidget_6->rowCount()-1, 1, new QTableWidgetItem(strPeople));
-        ui.tableWidget_6->setItem(ui.tableWidget_6->rowCount()-1, 2, new QTableWidgetItem(strCat));
-        ui.tableWidget_6->setItem(ui.tableWidget_6->rowCount()-1, 3, new QTableWidgetItem(strType));
+        QString strName = list_1[i][0];
+        QString strPeople = list_1[i][1];
+        QString strCat = list_1[i][2];
+        QString strType = list_1[i][3];
+
+        ui.tableWidget_1->insertRow(ui.tableWidget_1->rowCount());
+        ui.tableWidget_1->setItem(ui.tableWidget_1->rowCount()-1, 0, new QTableWidgetItem(strName));
+        ui.tableWidget_1->setItem(ui.tableWidget_1->rowCount()-1, 1, new QTableWidgetItem(strPeople));
+        ui.tableWidget_1->setItem(ui.tableWidget_1->rowCount()-1, 2, new QTableWidgetItem(strCat));
+        ui.tableWidget_1->setItem(ui.tableWidget_1->rowCount()-1, 3, new QTableWidgetItem(strType));
+
+        if (strType == "Teen")
+        {
+            ui.tableWidget_2->insertRow(ui.tableWidget_2->rowCount());
+            ui.tableWidget_2->setItem(ui.tableWidget_2->rowCount()-1, 0, new QTableWidgetItem(strName));
+            ui.tableWidget_2->setItem(ui.tableWidget_2->rowCount()-1, 1, new QTableWidgetItem(strPeople));
+            ui.tableWidget_2->setItem(ui.tableWidget_2->rowCount()-1, 2, new QTableWidgetItem(strCat));
+            ui.tableWidget_2->setItem(ui.tableWidget_2->rowCount()-1, 3, new QTableWidgetItem(strType));
+        }
+        else if (strType == "Towarzyskie")
+        {
+            ui.tableWidget_3->insertRow(ui.tableWidget_3->rowCount());
+            ui.tableWidget_3->setItem(ui.tableWidget_3->rowCount()-1, 0, new QTableWidgetItem(strName));
+            ui.tableWidget_3->setItem(ui.tableWidget_3->rowCount()-1, 1, new QTableWidgetItem(strPeople));
+            ui.tableWidget_3->setItem(ui.tableWidget_3->rowCount()-1, 2, new QTableWidgetItem(strCat));
+            ui.tableWidget_3->setItem(ui.tableWidget_3->rowCount()-1, 3, new QTableWidgetItem(strType));
+        }
+        else if (strType == "Erotyczne")
+        {
+            ui.tableWidget_4->insertRow(ui.tableWidget_4->rowCount());
+            ui.tableWidget_4->setItem(ui.tableWidget_4->rowCount()-1, 0, new QTableWidgetItem(strName));
+            ui.tableWidget_4->setItem(ui.tableWidget_4->rowCount()-1, 1, new QTableWidgetItem(strPeople));
+            ui.tableWidget_4->setItem(ui.tableWidget_4->rowCount()-1, 2, new QTableWidgetItem(strCat));
+            ui.tableWidget_4->setItem(ui.tableWidget_4->rowCount()-1, 3, new QTableWidgetItem(strType));
+        }
+        else if (strType == "Tematyczne")
+        {
+            ui.tableWidget_5->insertRow(ui.tableWidget_5->rowCount());
+            ui.tableWidget_5->setItem(ui.tableWidget_5->rowCount()-1, 0, new QTableWidgetItem(strName));
+            ui.tableWidget_5->setItem(ui.tableWidget_5->rowCount()-1, 1, new QTableWidgetItem(strPeople));
+            ui.tableWidget_5->setItem(ui.tableWidget_5->rowCount()-1, 2, new QTableWidgetItem(strCat));
+            ui.tableWidget_5->setItem(ui.tableWidget_5->rowCount()-1, 3, new QTableWidgetItem(strType));
+        }
+        else if (strType == "Regionalne")
+        {
+            ui.tableWidget_6->insertRow(ui.tableWidget_6->rowCount());
+            ui.tableWidget_6->setItem(ui.tableWidget_6->rowCount()-1, 0, new QTableWidgetItem(strName));
+            ui.tableWidget_6->setItem(ui.tableWidget_6->rowCount()-1, 1, new QTableWidgetItem(strPeople));
+            ui.tableWidget_6->setItem(ui.tableWidget_6->rowCount()-1, 2, new QTableWidgetItem(strCat));
+            ui.tableWidget_6->setItem(ui.tableWidget_6->rowCount()-1, 3, new QTableWidgetItem(strType));
+        }
     }
 }
 
-void dlg_channel_list::QuickSort(QTableWidget *tableWidget, int Lo, int Hi)
+void dlg_channel_list::QuickSort(QList< QList<QString> > *T, int Lo, int Hi)
 {
-    int column = 1;
     int i;
     int j;
-    int x = tableWidget->item(((Lo+Hi)/2), column)->text().toInt();
+    int x = T->at((Lo+Hi)/2).at(1).toInt();
     i = Lo;
     j = Hi;
     do
     {
-        while (tableWidget->item(i, column)->text().toInt() > x) ++i;
-        while (tableWidget->item(j, column)->text().toInt() < x) --j;
+        while (T->at(i).at(1).toInt() > x) ++i;
+        while (T->at(j).at(1).toInt() < x) --j;
         if (i<=j)
         {
-            QString item00 = tableWidget->item(i, 0)->text();
-            QString item01 = tableWidget->item(i, 1)->text();
-            QString item02 = tableWidget->item(i, 2)->text();
-            QString item03 = tableWidget->item(i, 3)->text();
+            QString item00 = T->at(i).at(0);
+            QString item01 = T->at(i).at(1);
+            QString item02 = T->at(i).at(2);
+            QString item03 = T->at(i).at(3);
 
-            QString item10 = tableWidget->item(j, 0)->text();
-            QString item11 = tableWidget->item(j, 1)->text();
-            QString item12 = tableWidget->item(j, 2)->text();
-            QString item13 = tableWidget->item(j, 3)->text();
+            QString item10 = T->at(j).at(0);
+            QString item11 = T->at(j).at(1);
+            QString item12 = T->at(j).at(2);
+            QString item13 = T->at(j).at(3);
 
-            tableWidget->item(i, 0)->setText(item10);
-            tableWidget->item(i, 1)->setText(item11);
-            tableWidget->item(i, 2)->setText(item12);
-            tableWidget->item(i, 3)->setText(item13);
+            QList<QString> a;
+            a << item10 << item11 << item12 << item13;
 
-            tableWidget->item(j, 0)->setText(item00);
-            tableWidget->item(j, 1)->setText(item01);
-            tableWidget->item(j, 2)->setText(item02);
-            tableWidget->item(j, 3)->setText(item03);
+            QList<QString> b;
+            b << item00 << item01 << item02 << item03;
+
+            T->replace(i,a);
+            T->replace(j,b);
 
             ++i; --j;
         }
     } while (i < j);
-    if (Lo < j) QuickSort(tableWidget, Lo, j);
-    if (Hi > i) QuickSort(tableWidget, i, Hi);
+    if (Lo < j) QuickSort(T, Lo, j);
+    if (Hi > i) QuickSort(T, i, Hi);
 }
 
 void dlg_channel_list::sort()
 {
-    QuickSort(ui.tableWidget_1, 0, ui.tableWidget_1->rowCount()-1);
-    QuickSort(ui.tableWidget_2, 0, ui.tableWidget_2->rowCount()-1);
-    QuickSort(ui.tableWidget_3, 0, ui.tableWidget_3->rowCount()-1);
-    QuickSort(ui.tableWidget_4, 0, ui.tableWidget_4->rowCount()-1);
-    QuickSort(ui.tableWidget_5, 0, ui.tableWidget_5->rowCount()-1);
-    QuickSort(ui.tableWidget_6, 0, ui.tableWidget_6->rowCount()-1);
+    QuickSort(&list_1, 0, list_1.size()-1);
+    QuickSort(&list_2, 0, list_2.size()-1);
+    QuickSort(&list_3, 0, list_3.size()-1);
+    QuickSort(&list_4, 0, list_4.size()-1);
+    QuickSort(&list_5, 0, list_5.size()-1);
+    QuickSort(&list_6, 0, list_6.size()-1);
+    dlg_channel_list::create_list();
 }
 
 void dlg_channel_list::allCellDoubleClicked(int row, int column)

@@ -33,6 +33,7 @@ public:
     dlg_channel_list(QSettings *, QTcpSocket *, tab_container *);
     void clear();
     void add_channel(QString, QString, QString, QString);
+    void create_list();
     void sort();
 
 private:
@@ -40,8 +41,14 @@ private:
     QSettings *settings;
     QTcpSocket *socket;
     tab_container *tabc;
+    QList< QList<QString> > list_1;
+    QList< QList<QString> > list_2;
+    QList< QList<QString> > list_3;
+    QList< QList<QString> > list_4;
+    QList< QList<QString> > list_5;
+    QList< QList<QString> > list_6;
 
-    void QuickSort(QTableWidget *, int, int);
+    void QuickSort(QList< QList<QString> > *, int, int);
     void send(QString);
 
 protected:
