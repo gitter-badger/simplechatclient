@@ -27,9 +27,10 @@ network::network(QAction *param1, QSettings *param2)
 
     iActive = 0;
     settings->setValue("reconnect", "true");
+
     timer = new QTimer();
     timer->setInterval(1*60*1000); // 1 min
-    timer->start();
+
     socket = new QTcpSocket(this);
     socket->setSocketOption(QAbstractSocket::LowDelayOption, 1);
     socket->setSocketOption(QAbstractSocket::KeepAliveOption, 0);
@@ -44,7 +45,8 @@ network::~network()
 {
     delete pIrc_kernel;
     delete pIrc_auth;
-    timer->stop();
+    if (timer->isActive() == true)
+        timer->stop();
     socket->close();
     delete socket;
 }
@@ -72,13 +74,6 @@ void network::set_dlg(tab_container *param1, dlg_channel_settings *param2, dlg_c
     QObject::connect(this, SIGNAL(send_to_kernel(QString)), pIrc_kernel, SLOT(kernel(QString)));
 }
 
-void network::set_nickpass(QString param1, QString param2, QString param3)
-{
-    strNick = param1;
-    strCurrentNick = param2;
-    strPass = param3;
-}
-
 bool network::is_connected()
 {
     if (socket->state() == QAbstractSocket::ConnectedState)
@@ -96,7 +91,11 @@ void network::connect()
 {
     if (socket->state() == QAbstractSocket::UnconnectedState)
     {
+        QDateTime dt = QDateTime::currentDateTime();
+        iActive = (int)dt.toTime_t();
+
         socket->connectToHost(strServer, iPort);
+        timer->start();
     }
     else
         tabc->show_msg_all("Error: Nie mo¿na siê po³±czyæ z serwerem - po³±czenie ju¿ istnieje!", 9);
@@ -106,39 +105,10 @@ void network::reconnect()
 {
     if (settings->value("reconnect").toString() == "true")
     {
-        connectAct->setText("&Roz³±cz");
-        connectAct->setIconText("&Roz³±cz");
-        if ((network::is_connected() == true) && (settings->value("logged").toString() == "off"))
+        if ((network::is_connected() == false) && (settings->value("logged").toString() == "off"))
         {
             tabc->show_msg_all("Ponowne ³±czenie z serwerem...", 7);
-            config *pConfig = new config();
-            QString strNick = pConfig->get_value("login-nick");
-            QString strPass = pConfig->get_value("login-pass");
-            delete pConfig;
-
-            // update nick
-            tabc->update_nick(strNick);
-
-            if (strPass.isEmpty() == false)
-            {
-                qcrypt *pCrypt = new qcrypt();
-                strPass = pCrypt->decrypt(strNick, strPass);
-                delete pCrypt;
-            }
-
-            network::send(QString("NICK %1").arg(strNick));
-            network::send("AUTHKEY");
-            QString strNickCurrent = strNick;
-            if (strNickCurrent[0] == '~')
-                strNickCurrent = strNick.right(strNick.length()-1);
-            pIrc_auth->request_uo(strNickCurrent, strPass);
-        }
-        else
-        {
-            if (settings->value("logged").toString() == "off")
-                network::connect();
-            if ((network::is_connected() == true) && (settings->value("logged").toString() == "off"))
-                network::reconnect();
+            network::connect();
         }
     }
 }
@@ -147,6 +117,7 @@ void network::close()
 {
     if (socket->state() == QAbstractSocket::ConnectedState)
     {
+        timer->stop();
         socket->disconnectFromHost();
     }
 }
@@ -220,8 +191,53 @@ void network::connected()
 {
     tabc->show_msg_all("Po³±czono z serwerem", 9);
 
+    config *pConfig = new config();
+
+    QString strNick = pConfig->get_value("login-nick");
+    QString strPass = pConfig->get_value("login-pass");
+
+    // nick & pass is null
+    if ((strNick.isEmpty() == true) && (strPass.isEmpty() == true))
+    {
+        pConfig->set_value("login-nick", "~test");
+        strNick = "~test";
+    }
+
+    // decrypt pass
+    if (strPass.isEmpty() == false)
+    {
+        qcrypt *pCrypt = new qcrypt();
+        strPass = pCrypt->decrypt(strNick, strPass);
+        delete pCrypt;
+    }
+
+    // correct nick
+    if ((strPass.isEmpty() == true) && (strNick[0] != '~'))
+    {
+        strNick = "~"+strNick;
+        pConfig->set_value("login-nick", strNick);
+    }
+    if ((strPass.isEmpty() == false) && (strNick[0] == '~'))
+    {
+        strNick = strNick.right(strNick.length()-1);
+        pConfig->set_value("login-nick", strNick);
+    }
+
+    delete pConfig;
+
+    // update nick
+    tabc->update_nick(strNick);
+
+    // set current nick
+    QString strCurrentNick = strNick;
+        if (strCurrentNick[0] == '~')
+    strCurrentNick = strNick.right(strNick.length()-1);
+
+    // send auth
     network::send(QString("NICK %1").arg(strNick));
     network::send("AUTHKEY");
+
+    // request uo key
     pIrc_auth->request_uo(strCurrentNick, strPass);
 }
 
@@ -231,6 +247,7 @@ void network::disconnected()
     {
         connectAct->setText("&Po³±cz");
         connectAct->setIconText("&Po³±cz");
+
         if (socket->error() != QAbstractSocket::UnknownSocketError)
             tabc->show_msg_all(QString("Roz³±czono z serwerem [%1]").arg(socket->errorString()), 9);
         else
@@ -246,6 +263,9 @@ void network::disconnected()
 
         // state
         settings->setValue("logged", "off");
+
+        // timer
+        timer->stop();
 
         // reconnect
         QTimer::singleShot(30*1000, this, SLOT(reconnect()));

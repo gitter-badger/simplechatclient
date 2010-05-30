@@ -59,7 +59,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     delete pConfig;
 
     settings.clear();
-    settings.setValue("version", "1.0.5.223");
+    settings.setValue("version", "1.0.5.224");
     settings.setValue("debug", "off");
     settings.setValue("logged", "off");
     settings.setValue("busy", "off");
@@ -207,54 +207,11 @@ void MainWindow::button_close()
 
 void MainWindow::button_connect()
 {
-    config *pConfig = new config();
-
-    QString strNick = pConfig->get_value("login-nick");
-    QString strPass = pConfig->get_value("login-pass");
-
-    // nick & pass is null
-    if ((strNick.isEmpty() == true) && (strPass.isEmpty() == true))
-    {
-        pConfig->set_value("login-nick", "~test");
-        strNick = "~test";
-    }
-
-    // decrypt pass
-    if (strPass.isEmpty() == false)
-    {
-        qcrypt *pCrypt = new qcrypt();
-        strPass = pCrypt->decrypt(strNick, strPass);
-        delete pCrypt;
-    }
-
-    // correct nick
-    if ((strPass.isEmpty() == true) && (strNick[0] != '~'))
-    {
-        strNick = "~"+strNick;
-        pConfig->set_value("login-nick", strNick);
-    }
-    if ((strPass.isEmpty() == false) && (strNick[0] == '~'))
-    {
-        strNick = strNick.right(strNick.length()-1);
-        pConfig->set_value("login-nick", strNick);
-    }
-
-    delete pConfig;
-
-    // update nick
-    tabc->update_nick(strNick);
-
-    // connect
     if (pNetwork->is_connected() == false)
     {
-        QString strCurrentNick = strNick;
-            if (strCurrentNick[0] == '~')
-        strCurrentNick = strNick.right(strNick.length()-1);
-
         connectAct->setText("&Roz³±cz");
         connectAct->setIconText("&Roz³±cz");
-        pNetwork->set_hostport("czat-app.onet.pl",5015);
-        pNetwork->set_nickpass(strNick, strCurrentNick, strPass);
+        pNetwork->set_hostport("czat-app.onet.pl", 5015);
         settings.setValue("reconnect", "true");
         pNetwork->connect();
     }
@@ -265,8 +222,6 @@ void MainWindow::button_connect()
         connectAct->setText("&Po³±cz");
         connectAct->setIconText("&Po³±cz");
         pNetwork->close();
-        // update nick
-        tabc->update_nick("(niezalogowany)");
     }
 }
 
