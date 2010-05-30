@@ -39,6 +39,7 @@ network::network(QAction *param1, QSettings *param2)
     QObject::connect(socket, SIGNAL(readyRead()), this, SLOT(recv()));
     QObject::connect(socket, SIGNAL(connected()), this, SLOT(connected()));
     QObject::connect(socket, SIGNAL(disconnected()), this, SLOT(disconnected()));
+    QObject::connect(socket, SIGNAL(error(QAbstractSocket::SocketError)), this, SLOT(error(QAbstractSocket::SocketError)));
 }
 
 network::~network()
@@ -116,10 +117,10 @@ void network::reconnect()
 void network::close()
 {
     if (socket->state() == QAbstractSocket::ConnectedState)
-    {
-        timer->stop();
         socket->disconnectFromHost();
-    }
+
+    if (timer->isActive() == true)
+        timer->stop();
 }
 
 void network::send(QString strData)
@@ -270,6 +271,17 @@ void network::disconnected()
         // reconnect
         QTimer::singleShot(30*1000, this, SLOT(reconnect()));
     }
+}
+
+void network::error(QAbstractSocket::SocketError err)
+{
+    connectAct->setText("&Po³±cz");
+    connectAct->setIconText("&Po³±cz");
+
+    tabc->show_msg_all(QString("Roz³±czono z serwerem [%1]").arg(socket->errorString()), 9);
+
+    if (socket->state() == QAbstractSocket::ConnectedState)
+        network::close();
 }
 
 void network::timeout()

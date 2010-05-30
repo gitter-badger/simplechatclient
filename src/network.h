@@ -78,6 +78,7 @@ private slots:
     void recv();
     void connected();
     void disconnected();
+    void error(QAbstractSocket::SocketError);
     void timeout();
 
 signals:

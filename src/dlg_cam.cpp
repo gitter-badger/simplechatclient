@@ -86,6 +86,9 @@ void dlg_cam::network_disconnect()
         dlg_cam::network_send(QString("UNSUBSCRIBE_BIG * %1").arg(strNick));
         socket->disconnectFromHost();
     }
+
+    if (timer->isActive() == true)
+        timer->stop();
 }
 
 void dlg_cam::network_read()
@@ -326,6 +329,7 @@ void dlg_cam::network_keepalive()
 void dlg_cam::network_disconnected()
 {
     timer->stop();
+
     QString strText = ui.label_img->text();
     strText += "<br>Roz³±czono z serwerem kamerek";
     ui.label_img->setText(strText);
@@ -351,6 +355,14 @@ void dlg_cam::send(QString strData)
         //tabc->show_msg("Status", "Error: Nie uda³o siê wys³aæ danych! [Not connected]", 9);
 }
 
+void dlg_cam::error(QAbstractSocket::SocketError err)
+{
+    ui.label_img->setText(QString("Roz³±czono z serwerem [%1]").arg(socket->errorString()));
+
+    if (socket->state() == QAbstractSocket::ConnectedState)
+        dlg_cam::network_disconnect();
+}
+
 void dlg_cam::button_ok()
 {
     this->close();
@@ -374,6 +386,7 @@ void dlg_cam::showEvent(QShowEvent *event)
     QObject::connect(timer, SIGNAL(timeout()), this, SLOT(network_keepalive()));
     QObject::connect(socket, SIGNAL(connected()), this, SLOT(network_connected()));
     QObject::connect(socket, SIGNAL(disconnected()), this, SLOT(network_disconnected()));
+    QObject::connect(socket, SIGNAL(error(QAbstractSocket::SocketError)), this, SLOT(error(QAbstractSocket::SocketError)));
     QObject::connect(socket, SIGNAL(readyRead()), this, SLOT(network_read()));
 
     dlg_cam::network_connect();
@@ -383,7 +396,6 @@ void dlg_cam::hideEvent(QHideEvent *event)
 {
     event->accept();
 
-    timer->stop();
     dlg_cam::network_disconnect();
     delete socket;
 

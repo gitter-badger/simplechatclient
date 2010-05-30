@@ -63,6 +63,7 @@ private slots:
     void network_connected();
     void network_keepalive();
     void network_disconnected();
+    void error(QAbstractSocket::SocketError);
 
 protected:
     virtual void showEvent(QShowEvent *);
