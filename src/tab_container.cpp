@@ -357,14 +357,14 @@ void tab_container::set_link(QString strChannel, QString strLink)
     }
 }
 
-void tab_container::add_user(QString strChannel, QString strNick, QString strSuffix)
+void tab_container::add_user(QString strChannel, QString strNick, QString strSuffix, int iRefresh)
 {
     for (int i = 0; i < 50; i++)
     {
         if (free_list[i] == 'u')
         {
             if (tw[i]->get_name() == strChannel)
-                tw[i]->add_user(strNick, strSuffix);
+                tw[i]->add_user(strNick, strSuffix, iRefresh);
         }
     }
 }
@@ -446,6 +446,18 @@ void tab_container::clear_all_nicklist()
     QStringList strlOpenChannels = this->get_open_channels();
     for (int i = 0; i < strlOpenChannels.size(); i++)
         this->clear_nicklist(strlOpenChannels[i]);
+}
+
+void tab_container::refresh_nicklist(QString strChannel)
+{
+    for (int i = 0; i < 50; i++)
+    {
+        if (free_list[i] == 'u')
+        {
+            if (tw[i]->get_name() == strChannel)
+                tw[i]->nicklist_refresh();
+        }
+    }
 }
 
 void tab_container::update_open_channels()

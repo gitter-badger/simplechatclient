@@ -771,7 +771,7 @@ void tab_widget::set_link(QString strUrl)
 
 // nick list
 
-void tab_widget::add_user(QString strNick, QString strSuffix)
+void tab_widget::add_user(QString strNick, QString strSuffix, int iRefresh)
 {
     QString strmFlag;
     QString strmSuffix;
@@ -895,6 +895,8 @@ void tab_widget::add_user(QString strNick, QString strSuffix)
     if (tab_widget::nicklist_exist(strNick) == false)
     {
         tab_widget::nicklist_add(strNick, strStatus);
+        if (iRefresh == 1)
+            tab_widget::nicklist_refresh();
 
         inputline->set_userslist(nick_list);
 
@@ -983,7 +985,7 @@ void tab_widget::change_flag(QString strNick, QString strNewFlag)
     else if ((strNewFlag == "-x") && (strSuffix.indexOf("x") != -1)) strSuffix.remove("x");
 
     tab_widget::del_user(strNick);
-    tab_widget::add_user(strFlag+strNick, strSuffix);
+    tab_widget::add_user(strFlag+strNick, strSuffix, 1);
 
     config *pConfig = new config();
     QString strMe = pConfig->get_value("login-nick");

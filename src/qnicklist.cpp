@@ -202,7 +202,6 @@ void qnicklist::invite()
 void qnicklist::nicklist_add(QString strNick, QString strStatus, QHash <QString, QString> *nicklist, QQueue <QString> *new_nicklist1, QQueue <QString> *new_nicklist2)
 {
     nicklist->insert(strNick, strStatus);
-    qnicklist::nicklist_refresh(nicklist, new_nicklist1, new_nicklist2);
 }
 
 void qnicklist::nicklist_remove(QString strNick, QHash <QString, QString> *nicklist, QQueue <QString> *new_nicklist1, QQueue <QString> *new_nicklist2)

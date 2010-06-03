@@ -50,7 +50,7 @@ public:
     void disable_topic(QString);
     void author_topic(QString, QString);
     void set_link(QString, QString);
-    void add_user(QString, QString, QString);
+    void add_user(QString, QString, QString, int);
     void del_user(QString, QString);
     void quit_user(QString, QString);
     void change_flag(QString, QString, QString);
@@ -58,6 +58,7 @@ public:
     void update_nick(QString);
     void clear_nicklist(QString);
     void clear_all_nicklist();
+    void refresh_nicklist(QString);
     QStringList get_open_channels();
 
 public slots:

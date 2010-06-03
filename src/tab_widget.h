@@ -71,7 +71,7 @@ public:
     void disable_moderation();
     void author_topic(QString);
     void set_link(QString);
-    void add_user(QString, QString);
+    void add_user(QString, QString, int);
     void del_user(QString);
     void change_flag(QString, QString);
     void update_nick(QString);
@@ -79,6 +79,7 @@ public:
     void set_open_channels(QStringList);
     bool nicklist_exist(QString);
     void set_logo(QByteArray);
+    void nicklist_refresh();
     void send_message(bool);
 
 private:
@@ -172,7 +173,6 @@ private:
     void nicklist_add(QString, QString);
     void nicklist_remove(QString);
     void nicklist_clear();
-    void nicklist_refresh();
     void nicklist_sort();
     void nicklist_quicksort(QString);
 

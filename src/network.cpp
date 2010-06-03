@@ -26,6 +26,7 @@ network::network(QWidget *parent, QAction *param1, QSettings *param2)
     settings = param2;
 
     networkThr = new networkThread(connectAct, settings);
+    networkThr->start(QThread::LowPriority);
 
     QObject::connect(networkThr, SIGNAL(send_to_kernel(QString)), parent, SLOT(kernel(QString)));
     QObject::connect(networkThr, SIGNAL(request_uo(QString, QString)), parent, SLOT(request_uo(QString, QString)));
@@ -38,8 +39,6 @@ network::network(QWidget *parent, QAction *param1, QSettings *param2)
     QObject::connect(this, SIGNAL(do_connect()), networkThr, SLOT(connect()));
     QObject::connect(this, SIGNAL(do_close()), networkThr, SLOT(close()));
     QObject::connect(this, SIGNAL(do_send(QString)), networkThr, SLOT(send(QString)));
-
-    networkThr->start(QThread::LowPriority);
 }
 
 network::~network()

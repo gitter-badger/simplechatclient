@@ -391,7 +391,7 @@ void irc_kernel::raw_join()
     if ((strNick == strMe) && (strChannel[0] != '^'))
         pNetwork->send(QString("CS INFO %1 i").arg(strChannel));
 
-    tabc->add_user(strChannel, strNick, strSuffix);
+    tabc->add_user(strChannel, strNick, strSuffix, 1);
 }
 
 // :scc_test!51976824@3DE379.B7103A.6CF799.6902F4 PART #scc
@@ -1701,7 +1701,7 @@ void irc_kernel::raw_353()
             QString strSuffix = strDataList[i];
             strSuffix = strSuffix.right(strSuffix.length() - strSuffix.indexOf("|") -1);
 
-            tabc->add_user(strChannel, strNick, strSuffix);
+            tabc->add_user(strChannel, strNick, strSuffix, 0);
         }
     }
 }
@@ -1709,7 +1709,11 @@ void irc_kernel::raw_353()
 // :cf1f2.onet 366 scc_test #scc :End of /NAMES list.
 void irc_kernel::raw_366()
 {
-// ignore
+    if (strDataList.value(3).isEmpty() == true) return;
+
+    QString strChannel = strDataList[3];
+
+    tabc->refresh_nicklist(strChannel);
 }
 
 // :cf1f4.onet 372 scc_test :- Onet Czat. Inny Wymiar Czatowania. Witamy
