@@ -59,7 +59,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     delete pConfig;
 
     settings.clear();
-    settings.setValue("version", "1.0.5.232");
+    settings.setValue("version", "1.0.5.233");
     settings.setValue("debug", "off");
     settings.setValue("logged", "off");
     settings.setValue("busy", "off");
@@ -208,7 +208,6 @@ void MainWindow::clear_nicklist(QString param1) { tabc->clear_nicklist(param1); 
 void MainWindow::clear_all_nicklist() { tabc->clear_all_nicklist(); }
 
 // args
-
 void MainWindow::set_debug(bool param1)
 {
     if (param1 == true)
@@ -218,7 +217,6 @@ void MainWindow::set_debug(bool param1)
 }
 
 // buttons
-
 void MainWindow::button_close()
 {
     this->close();

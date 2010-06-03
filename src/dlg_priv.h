@@ -44,6 +44,7 @@ private:
 
 private slots:
     void timer_timeout();
+    void button_whois();
     void button_reject();
     void button_ignore();
     void button_accept();

@@ -32,15 +32,22 @@ dlg_priv::dlg_priv(network *param1, tab_container *param2, QSettings *param3, QS
 
     ui.label->setText(QString("%1 zaprasza do rozmowy prywatnej").arg(strNick));
 
+    QObject::connect(ui.pushButtonWhois, SIGNAL(clicked()), this, SLOT(button_whois()));
     QObject::connect(ui.pushButtonReject, SIGNAL(clicked()), this, SLOT(button_reject()));
     QObject::connect(ui.pushButtonIgnore, SIGNAL(clicked()), this, SLOT(button_ignore()));
     QObject::connect(ui.pushButtonAccept, SIGNAL(clicked()), this, SLOT(button_accept()));
+}
+
+void dlg_priv::button_whois()
+{
+    pNetwork->send(QString("WHOIS %1 %1").arg(strNick));
 }
 
 void dlg_priv::button_reject()
 {
     pNetwork->send(QString("INVREJECT %1 %2").arg(strNick).arg(strChannel));
 
+    ui.pushButtonWhois->QObject::disconnect();
     ui.pushButtonAccept->QObject::disconnect();
     ui.pushButtonIgnore->QObject::disconnect();
     ui.pushButtonReject->QObject::disconnect();
@@ -51,6 +58,7 @@ void dlg_priv::button_ignore()
 {
     pNetwork->send(QString("INVIGNORE %1 %2").arg(strNick).arg(strChannel));
 
+    ui.pushButtonWhois->QObject::disconnect();
     ui.pushButtonAccept->QObject::disconnect();
     ui.pushButtonIgnore->QObject::disconnect();
     ui.pushButtonReject->QObject::disconnect();
@@ -64,6 +72,7 @@ void dlg_priv::button_accept()
     strTimerNick = strNick;
     QTimer::singleShot(1000, this, SLOT(timer_timeout()));
 
+    ui.pushButtonWhois->QObject::disconnect();
     ui.pushButtonAccept->QObject::disconnect();
     ui.pushButtonIgnore->QObject::disconnect();
     ui.pushButtonReject->QObject::disconnect();
