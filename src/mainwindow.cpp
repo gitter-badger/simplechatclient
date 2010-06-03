@@ -59,7 +59,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     delete pConfig;
 
     settings.clear();
-    settings.setValue("version", "1.0.5.228");
+    settings.setValue("version", "1.0.5.229");
     settings.setValue("debug", "off");
     settings.setValue("logged", "off");
     settings.setValue("busy", "off");
@@ -205,6 +205,7 @@ void MainWindow::show_msg_active(QString param1, int param2) { tabc->show_msg_ac
 void MainWindow::show_msg_all(QString param1, int param2) { tabc->show_msg_all(param1, param2); }
 void MainWindow::update_nick(QString param1) { tabc->update_nick(param1); }
 void MainWindow::clear_nicklist(QString param1) { tabc->clear_nicklist(param1); }
+void MainWindow::clear_all_nicklist() { tabc->clear_all_nicklist(); }
 
 // args
 

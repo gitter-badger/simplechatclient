@@ -57,6 +57,7 @@ public:
     void change_flag(QString, QString);
     void update_nick(QString);
     void clear_nicklist(QString);
+    void clear_all_nicklist();
     QStringList get_open_channels();
 
 public slots:

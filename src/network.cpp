@@ -33,6 +33,7 @@ network::network(QWidget *parent, QAction *param1, QSettings *param2)
     QObject::connect(networkThr, SIGNAL(show_msg_all(QString, int)), parent, SLOT(show_msg_all(QString, int)));
     QObject::connect(networkThr, SIGNAL(update_nick(QString)), parent, SLOT(update_nick(QString)));
     QObject::connect(networkThr, SIGNAL(clear_nicklist(QString)), parent, SLOT(clear_nicklist(QString)));
+    QObject::connect(networkThr, SIGNAL(clear_all_nicklist()), parent, SLOT(clear_all_nicklist()));
 
     QObject::connect(this, SIGNAL(do_connect()), networkThr, SLOT(connect()));
     QObject::connect(this, SIGNAL(do_close()), networkThr, SLOT(close()));

@@ -30,18 +30,6 @@ networkThread::networkThread(QAction *param1, QSettings *param2)
 
     iActive = 0;
     settings->setValue("reconnect", "true");
-    timer = new QTimer();
-    timer->setInterval(1*60*1000); // 1 min
-
-    socket = new QTcpSocket(this);
-    socket->setSocketOption(QAbstractSocket::LowDelayOption, 1);
-    socket->setSocketOption(QAbstractSocket::KeepAliveOption, 0);
-
-    QObject::connect(timer, SIGNAL(timeout()), this, SLOT(timeout()));
-    QObject::connect(socket, SIGNAL(readyRead()), this, SLOT(recv()));
-    QObject::connect(socket, SIGNAL(connected()), this, SLOT(connected()));
-    QObject::connect(socket, SIGNAL(disconnected()), this, SLOT(disconnected()));
-    QObject::connect(socket, SIGNAL(error(QAbstractSocket::SocketError)), this, SLOT(error(QAbstractSocket::SocketError)));
 }
 
 networkThread::~networkThread()
@@ -54,6 +42,19 @@ networkThread::~networkThread()
 
 void networkThread::run()
 {
+    timer = new QTimer();
+    timer->setInterval(1*60*1000); // 1 min
+
+    socket = new QTcpSocket(this);
+    socket->setSocketOption(QAbstractSocket::LowDelayOption, 1);
+    socket->setSocketOption(QAbstractSocket::KeepAliveOption, 0);
+
+    QObject::connect(timer, SIGNAL(timeout()), this, SLOT(timeout()), Qt::DirectConnection);
+    QObject::connect(socket, SIGNAL(readyRead()), this, SLOT(recv()), Qt::DirectConnection);
+    QObject::connect(socket, SIGNAL(connected()), this, SLOT(connected()), Qt::DirectConnection);
+    QObject::connect(socket, SIGNAL(disconnected()), this, SLOT(disconnected()), Qt::DirectConnection);
+    QObject::connect(socket, SIGNAL(error(QAbstractSocket::SocketError)), this, SLOT(error(QAbstractSocket::SocketError)), Qt::DirectConnection);
+
     exec();
 }
 
@@ -240,10 +241,7 @@ void networkThread::disconnected()
         emit update_nick("(niezalogowany)");
 
         // clear nicklist
-        /// TODO
-        //QStringList strlOpenChannels = tabc->get_open_channels();
-        //for (int i = 0; i < strlOpenChannels.size(); i++)
-            //emit clear_nicklist(strlOpenChannels[i]);
+        emit clear_all_nicklist();
 
         // state
         settings->setValue("logged", "off");

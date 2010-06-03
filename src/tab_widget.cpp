@@ -1224,10 +1224,10 @@ void tab_widget::send_message(bool bType)
                     if (bBold == true) weight += "b";
                     if (bItalic == true) weight += "i";
 
-                    if ((weight != "") || (font != "verdana"))
-                        strTextDisplay = "%F"+weight+":"+font+"%"+strTextDisplay;
                     if (strCurrentColor != "000000")
                         strTextDisplay = "%C"+strCurrentColor+"%"+strTextDisplay;
+                    if ((weight != "") || (font != "verdana"))
+                        strTextDisplay = "%F"+weight+":"+font+"%"+strTextDisplay;
 
                     strTextSend = tab_widget::convert_emots(strTextSend);
                     strTextSend = tab_widget::replace_emots(strTextSend);
@@ -1263,10 +1263,10 @@ void tab_widget::send_message(bool bType)
                 if (bBold == true) weight += "b";
                 if (bItalic == true) weight += "i";
 
-                if ((weight != "") || (font != "verdana"))
-                    strText = "%F"+weight+":"+font+"%"+strText;
                 if (strCurrentColor != "000000")
                     strText = "%C"+strCurrentColor+"%"+strText;
+                if ((weight != "") || (font != "verdana"))
+                    strText = "%F"+weight+":"+font+"%"+strText;
 
                 strText = tab_widget::convert_emots(strText);
                 strText = tab_widget::replace_emots(strText);

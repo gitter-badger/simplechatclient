@@ -60,6 +60,7 @@ public slots:
     void show_msg_all(QString, int);
     void update_nick(QString);
     void clear_nicklist(QString);
+    void clear_all_nicklist();
 
 private:
     QSettings settings;

@@ -441,6 +441,13 @@ void tab_container::clear_nicklist(QString strChannel)
     }
 }
 
+void tab_container::clear_all_nicklist()
+{
+    QStringList strlOpenChannels = this->get_open_channels();
+    for (int i = 0; i < strlOpenChannels.size(); i++)
+        this->clear_nicklist(strlOpenChannels[i]);
+}
+
 void tab_container::update_open_channels()
 {
     QStringList strOpenChannels = tab_container::get_open_channels();
