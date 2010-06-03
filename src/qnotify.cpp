@@ -40,6 +40,7 @@ void qnotify::play()
     QObject::connect(mediaObject, SIGNAL(finished()), &loop, SLOT(quit()));
     loop.exec();
 #endif
+
     delete audioOutput;
     delete mediaObject;
 }

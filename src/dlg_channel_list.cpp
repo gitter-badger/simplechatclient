@@ -47,28 +47,28 @@ void dlg_channel_list::clear()
     list_5.clear();
     list_6.clear();
 
-    for (int i = ui.tableWidget_1->rowCount()-1; i >= 0; --i)
-        ui.tableWidget_1->removeRow(i);
+    ui.tableWidget_1->clear();
+    ui.tableWidget_2->clear();
+    ui.tableWidget_3->clear();
+    ui.tableWidget_4->clear();
+    ui.tableWidget_5->clear();
+    ui.tableWidget_6->clear();
 
-    for (int i = ui.tableWidget_2->rowCount()-1; i >= 0; --i)
-        ui.tableWidget_2->removeRow(i);
+    ui.tableWidget_1->setRowCount(0);
+    ui.tableWidget_2->setRowCount(0);
+    ui.tableWidget_3->setRowCount(0);
+    ui.tableWidget_4->setRowCount(0);
+    ui.tableWidget_5->setRowCount(0);
+    ui.tableWidget_6->setRowCount(0);
 
-    for (int i = ui.tableWidget_3->rowCount()-1; i >= 0; --i)
-        ui.tableWidget_3->removeRow(i);
-
-    for (int i = ui.tableWidget_4->rowCount()-1; i >= 0; --i)
-        ui.tableWidget_4->removeRow(i);
-
-    for (int i = ui.tableWidget_5->rowCount()-1; i >= 0; --i)
-        ui.tableWidget_5->removeRow(i);
-
-    for (int i = ui.tableWidget_6->rowCount()-1; i >= 0; --i)
-        ui.tableWidget_6->removeRow(i);
+    QStringList strlLabels;
+    strlLabels << "Nazwa kana³u" << "Ilo¶æ osób" << "Kategoria" << "Typ";
+    ui.tableWidget_1->setHorizontalHeaderLabels(strlLabels);
 }
 
 void dlg_channel_list::add_channel(QString strName, QString strPeople, QString strCat, QString strType)
 {
-    QList <QString> add;
+    QVector <QString> add;
     add << strName << strPeople << strCat << strType;
     list_1 << add;
 
@@ -142,7 +142,7 @@ void dlg_channel_list::create_list()
     }
 }
 
-void dlg_channel_list::QuickSort(QList< QList<QString> > *T, int Lo, int Hi)
+void dlg_channel_list::QuickSort(QVector< QVector<QString> > *T, int Lo, int Hi)
 {
     int i;
     int j;
@@ -165,10 +165,10 @@ void dlg_channel_list::QuickSort(QList< QList<QString> > *T, int Lo, int Hi)
             QString item12 = T->at(j).at(2);
             QString item13 = T->at(j).at(3);
 
-            QList<QString> a;
+            QVector <QString> a;
             a << item10 << item11 << item12 << item13;
 
-            QList<QString> b;
+            QVector <QString> b;
             b << item00 << item01 << item02 << item03;
 
             T->replace(i,a);
@@ -190,6 +190,13 @@ void dlg_channel_list::sort()
     QuickSort(&list_5, 0, list_5.size()-1);
     QuickSort(&list_6, 0, list_6.size()-1);
     dlg_channel_list::create_list();
+
+    ui.tableWidget_1->resizeColumnsToContents();
+    ui.tableWidget_2->resizeColumnsToContents();
+    ui.tableWidget_3->resizeColumnsToContents();
+    ui.tableWidget_4->resizeColumnsToContents();
+    ui.tableWidget_5->resizeColumnsToContents();
+    ui.tableWidget_6->resizeColumnsToContents();
 }
 
 void dlg_channel_list::allCellDoubleClicked(int row, int column)
