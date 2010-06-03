@@ -72,12 +72,24 @@ void dlg_friends::clear()
 
 void dlg_friends::button_add()
 {
-    (new dlg_friends_ad(pNetwork, tabc, settings, "add"))->show();
+    (new dlg_friends_ad(pNetwork, tabc, settings, "add", ""))->show();
 }
 
 void dlg_friends::button_remove()
 {
-    (new dlg_friends_ad(pNetwork, tabc, settings, "remove"))->show();
+    QString strSelected;
+    if (ui.tabWidget->currentIndex() == 0)
+    {
+        if (ui.listWidget->selectedItems().count() != 0)
+            strSelected = ui.listWidget->selectedItems().at(0)->text();
+    }
+    else if (ui.tabWidget->currentIndex() == 1)
+    {
+        if (ui.listWidget_2->selectedItems().count() != 0)
+            strSelected = ui.listWidget_2->selectedItems().at(0)->text();
+    }
+
+    (new dlg_friends_ad(pNetwork, tabc, settings, "remove", strSelected))->show();
 }
 
 void dlg_friends::button_ok()

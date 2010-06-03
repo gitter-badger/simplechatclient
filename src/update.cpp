@@ -36,7 +36,7 @@ void updater::check_for_updates(QString param1)
     strAvailableVersion = param1;
     if (strAvailableVersion == QString::null)
     {
-        tabc->show_msg_active("Nie mo¿na pobraæ dostêpnej wersji programu.", 0);
+        tabc->show_msg("Status", "Nie mo¿na pobraæ dostêpnej wersji programu.", 0);
         return;
     }
     QStringList lAvailableVersion = strAvailableVersion.split(".");
@@ -49,12 +49,12 @@ void updater::check_for_updates(QString param1)
 #endif
 
     if (iCurrentRev == iAvailableRev)
-        tabc->show_msg_active("U¿ywasz aktualnej wersji programu.", 0);
+        tabc->show_msg("Status", "U¿ywasz aktualnej wersji programu.", 0);
     else if (iCurrentRev > iAvailableRev)
-        tabc->show_msg_active("U¿ywasz testowej wersji programu.", 0);
+        tabc->show_msg("Status", "U¿ywasz testowej wersji programu.", 0);
     else if (iCurrentRev < iAvailableRev)
     {
-        tabc->show_msg_active("Wymagana aktualizacja do wersji: "+strAvailableVersion, 0);
+        tabc->show_msg("Status", "Wymagana aktualizacja do wersji: "+strAvailableVersion, 0);
         (new dlg_update(strAvailableVersion))->show();
     }
 }
@@ -88,7 +88,7 @@ QString updater::get_available_version()
         strVersion = strSite.mid(strSite.indexOf("<!--version-->")+14, strSite.indexOf("<!--/version-->") - strSite.indexOf("<!--version-->")-14);
     }
     else
-        tabc->show_msg_active("Nie mo¿na po³±czyæ siê z serwerem aktualizacji.", 0);
+        tabc->show_msg("Status", "Nie mo¿na po³±czyæ siê z serwerem aktualizacji.", 0);
 
     return strVersion;
 }
