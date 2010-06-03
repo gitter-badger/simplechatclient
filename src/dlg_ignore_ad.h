@@ -31,7 +31,7 @@ class dlg_ignore_ad : public QDialog
 {
     Q_OBJECT
 public:
-    dlg_ignore_ad(network *, tab_container *, QSettings *, QString);
+    dlg_ignore_ad(network *, tab_container *, QSettings *, QString, QString);
 
 private:
     Ui::uiIgnoreAd ui;

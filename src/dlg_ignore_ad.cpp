@@ -20,7 +20,7 @@
 
 #include "dlg_ignore_ad.h"
 
-dlg_ignore_ad::dlg_ignore_ad(network *param1, tab_container *param2, QSettings *param3, QString param4)
+dlg_ignore_ad::dlg_ignore_ad(network *param1, tab_container *param2, QSettings *param3, QString param4, QString param5)
 {
     ui.setupUi(this);
 
@@ -28,6 +28,7 @@ dlg_ignore_ad::dlg_ignore_ad(network *param1, tab_container *param2, QSettings *
     tabc = param2;
     settings = param3;
     strStatus = param4;
+    ui.lineEdit->setText(param5);
 
     if (strStatus == "add")
         ui.label->setText("Podaj nazwê nicka do dodania:");

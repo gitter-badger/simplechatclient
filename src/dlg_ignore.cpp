@@ -47,13 +47,18 @@ void dlg_ignore::clear()
 void dlg_ignore::button_add()
 {
     ui.listWidget->clear();
-    (new dlg_ignore_ad(pNetwork, tabc, settings, "add"))->show();
+    (new dlg_ignore_ad(pNetwork, tabc, settings, "add", ""))->show();
 }
 
 void dlg_ignore::button_remove()
 {
+    QString strSelected;
+    if (ui.listWidget->selectedItems().count() != 0)
+        strSelected = ui.listWidget->selectedItems().at(0)->text();
+
     ui.listWidget->clear();
-    (new dlg_ignore_ad(pNetwork, tabc, settings, "remove"))->show();
+
+    (new dlg_ignore_ad(pNetwork, tabc, settings, "remove", strSelected))->show();
 }
 
 void dlg_ignore::button_ok()
