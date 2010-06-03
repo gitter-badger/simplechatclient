@@ -20,9 +20,9 @@
 
 #include "irc_kernel.h"
 
-irc_kernel::irc_kernel(QTcpSocket *param1, tab_container *param2, QSettings *param3, dlg_channel_settings *param4, dlg_channel_homes *param5, dlg_channel_list *param6, dlg_channel_favourites *param7, dlg_friends *param8, dlg_ignore *param9, dlg_moderation *param10)
+irc_kernel::irc_kernel(network *param1, tab_container *param2, QSettings *param3, dlg_channel_settings *param4, dlg_channel_homes *param5, dlg_channel_list *param6, dlg_channel_favourites *param7, dlg_friends *param8, dlg_ignore *param9, dlg_moderation *param10)
 {
-    socket = param1;
+    pNetwork = param1;
     tabc = param2;
     settings = param3;
     dlgchannel_settings = param4;
@@ -330,7 +330,7 @@ void irc_kernel::raw_ping()
     QString strServer = strDataList[1];
 
     if (strServer.isEmpty() == false)
-        irc_kernel::send(QString("PONG %1").arg(strServer));
+        pNetwork->send(QString("PONG %1").arg(strServer));
 }
 
 // ERROR :Closing link (unknown@95.48.183.154) [Registration timeout]
@@ -389,7 +389,7 @@ void irc_kernel::raw_join()
             tabc->clear_nicklist(strChannel);
     }
     if ((strNick == strMe) && (strChannel[0] != '^'))
-        irc_kernel::send(QString("CS INFO %1 i").arg(strChannel));
+        pNetwork->send(QString("CS INFO %1 i").arg(strChannel));
 
     tabc->add_user(strChannel, strNick, strSuffix);
 }
@@ -775,7 +775,7 @@ void irc_kernel::raw_invite()
     // priv
     if (strWhere[0] == '^')
     {
-        (new dlg_priv(socket, tabc, settings, strWho, strWhere))->show();
+        (new dlg_priv(pNetwork, tabc, settings, strWho, strWhere))->show();
     }
     // channel
     else
@@ -912,12 +912,12 @@ void irc_kernel::raw_001()
     settings->setValue("logged", "on");
 
 // protocol
-    irc_kernel::send("PROTOCTL ONETNAMESX");
+    pNetwork->send("PROTOCTL ONETNAMESX");
 
 // auto rejoin
     QStringList strlOpenChannels = tabc->get_open_channels();
     for (int i = 0; i < strlOpenChannels.size(); i++)
-        irc_kernel::send(QString("JOIN %1").arg(strlOpenChannels[i]));
+        pNetwork->send(QString("JOIN %1").arg(strlOpenChannels[i]));
 
 // busy
     settings->setValue("busy", "off");
@@ -995,7 +995,7 @@ void irc_kernel::raw_141n()
         dlgchannel_favourites->add_channel(strChannel);
 
         if (settings->value("autojoin_favourites").toString() == "on")
-            irc_kernel::send(QString("JOIN %1").arg(strChannel));
+            pNetwork->send(QString("JOIN %1").arg(strChannel));
     }
 
     // turn off autojoin
@@ -1221,7 +1221,7 @@ void irc_kernel::raw_230n()
     tabc->show_msg_active(strDisplay, 7);
 
     dlgignore->clear();
-    irc_kernel::send("NS IGNORE");
+    pNetwork->send("NS IGNORE");
 }
 
 // :NickServ!service@service.onet NOTICE scc_test :231 ~test :ignore removed from list
@@ -1235,7 +1235,7 @@ void irc_kernel::raw_231n()
     tabc->show_msg_active(strDisplay, 7);
 
     dlgignore->clear();
-    irc_kernel::send("NS IGNORE");
+    pNetwork->send("NS IGNORE");
 }
 
 // :NickServ!service@service.onet NOTICE scc_test :240 #scc :favourite added to list
@@ -1249,7 +1249,7 @@ void irc_kernel::raw_240n()
     tabc->show_msg_active(strDisplay, 7);
 
     dlgchannel_favourites->clear();
-    irc_kernel::send("NS FAVOURITES");
+    pNetwork->send("NS FAVOURITES");
 }
 
 // :NickServ!service@service.onet NOTICE scc_test :241 #scc :favourite removed from list
@@ -1263,7 +1263,7 @@ void irc_kernel::raw_241n()
     tabc->show_msg_active(strDisplay, 7);
 
     dlgchannel_favourites->clear();
-    irc_kernel::send("NS FAVOURITES");
+    pNetwork->send("NS FAVOURITES");
 }
 
 // :ChanServ!service@service.onet NOTICE scc_test :250 #czesctoja :channel registered
@@ -1281,8 +1281,8 @@ void irc_kernel::raw_250n()
     msgBox.exec();
 
     dlgchannel_homes->clear();
-    irc_kernel::send("CS HOMES");
-    irc_kernel::send(QString("JOIN %1").arg(strChannel));
+    pNetwork->send("CS HOMES");
+    pNetwork->send(QString("JOIN %1").arg(strChannel));
 }
 
 // :ChanServ!service@service.onet NOTICE scc_test :251 #czesctoja :has been dropped
@@ -1392,7 +1392,7 @@ void irc_kernel::raw_257n()
 
     QString strChannel = strDataList[4];
 
-    irc_kernel::send(QString("CS INFO %1 i").arg(strChannel));
+    pNetwork->send(QString("CS INFO %1 i").arg(strChannel));
 }
 
 // :ChanServ!service@service.onet NOTICE #scc :258 Merovingian * :channel settings changed
@@ -1406,7 +1406,7 @@ void irc_kernel::raw_258n()
     QString strDisplay = QString("* %1 zmieni³/a ustawienia kana³u %2").arg(strNick).arg(strChannel);
     tabc->show_msg(strChannel, strDisplay, 7);
 
-    irc_kernel::send(QString("CS INFO %1 i").arg(strChannel));
+    pNetwork->send(QString("CS INFO %1 i").arg(strChannel));
 }
 
 // :ChanServ!service@service.onet NOTICE scc_test :259 #scc :nothing changed
@@ -1472,8 +1472,8 @@ void irc_kernel::raw_261n()
     msgBox.exec();
 
     dlgchannel_homes->clear();
-    irc_kernel::send("CS HOMES");
-    irc_kernel::send(QString("PART %1").arg(strChannel));
+    pNetwork->send("CS HOMES");
+    pNetwork->send(QString("PART %1").arg(strChannel));
 }
 
 // :cf1f2.onet 301 scc_test Merovingian :nie ma
@@ -1869,7 +1869,7 @@ void irc_kernel::raw_408n()
     tabc->show_msg_active(strMessage, 7);
 
     dlgchannel_homes->clear();
-    irc_kernel::send("CS HOMES");
+    pNetwork->send("CS HOMES");
 }
 
 // :cf1f4.onet 421 scc_test MOD :Unknown command
@@ -1936,7 +1936,7 @@ void irc_kernel::raw_431n()
     tabc->show_msg_active(strMessage, 7);
 
     dlgignore->clear();
-    irc_kernel::send("NS IGNORE");
+    pNetwork->send("NS IGNORE");
 }
 
 // :cf1f4.onet 432 1501-unknown ~?o? :Erroneous Nickname
@@ -2026,7 +2026,7 @@ void irc_kernel::raw_452n()
     tabc->show_msg_active(strMessage, 7);
 
     dlgchannel_homes->clear();
-    irc_kernel::send("CS HOMES");
+    pNetwork->send("CS HOMES");
 }
 
 // :ChanServ!service@service.onet NOTICE scc_test :454 #aaaaaaaaaaaaaaaaaaaaaa :not enough unique channel name
@@ -2041,7 +2041,7 @@ void irc_kernel::raw_454n()
     tabc->show_msg_active(strMessage, 7);
 
     dlgchannel_homes->clear();
-    irc_kernel::send("CS HOMES");
+    pNetwork->send("CS HOMES");
 }
 
 // :ChanServ!service@service.onet NOTICE scc_test :458 #scc v scc :unable to remove non-existent privilege
@@ -2113,7 +2113,7 @@ void irc_kernel::raw_467n()
     tabc->show_msg_active(strMessage, 7);
 
     dlgchannel_homes->clear();
-    irc_kernel::send("CS HOMES");
+    pNetwork->send("CS HOMES");
 }
 
 // :ChanServ!service@service.onet NOTICE scc_test :468 #scc :permission denied, insufficient privileges
@@ -2257,12 +2257,12 @@ void irc_kernel::raw_801()
     if (strKey[0] == ':')
         strKey = strKey.right(strKey.length()-1);
 
-    irc_auth *pIrc_auth = new irc_auth(settings, tabc, socket);
+    irc_auth *pIrc_auth = new irc_auth(settings, tabc, pNetwork);
     QString strAuth = pIrc_auth->transform_key(strKey);
     delete pIrc_auth;
 
     if (strAuth.length() == 16)
-        irc_kernel::send(QString("AUTHKEY %1").arg(strAuth));
+        pNetwork->send(QString("AUTHKEY %1").arg(strAuth));
     else
         tabc->show_msg("Status", "Error: B³êdny klucz auth", 9);
 }
@@ -2474,32 +2474,6 @@ void irc_kernel::raw_951()
 
     QString strMessage = QString("* Dodano %1 do listy ignorowanych").arg(strNick);
     tabc->show_msg_active(strMessage, 7);
-}
-
-// copy of network::send
-void irc_kernel::send(QString strData)
-{
-    if ((socket->state() == QAbstractSocket::ConnectedState) && (socket->isWritable() == true))
-    {
-#ifdef Q_WS_X11
-        if (settings->value("debug").toString() == "on")
-            qDebug() << "-> " << strData;
-#endif
-        strData += "\r\n";
-        QByteArray qbaData;
-        for ( int i = 0; i < strData.size(); i++)
-            qbaData.insert(i, strData.at(i));
-
-        if (socket->write(qbaData) == -1)
-        {
-            if (socket->state() == QAbstractSocket::ConnectedState)
-                tabc->show_msg_active(QString("Error: Nie uda³o siê wys³aæ danych! [%1]").arg(socket->errorString()), 9);
-            else if (socket->state() == QAbstractSocket::UnconnectedState)
-                tabc->show_msg_active("Error: Nie uda³o siê wys³aæ danych! [Not connected]", 9);
-        }
-    }
-    else
-        tabc->show_msg_active("Error: Nie uda³o siê wys³aæ danych! [Not connected]", 9);
 }
 
 QString irc_kernel::get_settings_key(QString strFind)

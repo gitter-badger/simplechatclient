@@ -20,12 +20,12 @@
 
 #include "dlg_ignore.h"
 
-dlg_ignore::dlg_ignore(QSettings *param1, QTcpSocket *param2, tab_container *param3)
+dlg_ignore::dlg_ignore(QSettings *param1, network *param2, tab_container *param3)
 {
     ui.setupUi(this);
 
     settings = param1;
-    socket = param2;
+    pNetwork = param2;
     tabc = param3;
 
     QObject::connect(ui.pushButton, SIGNAL(clicked()), this, SLOT(button_add()));
@@ -47,13 +47,13 @@ void dlg_ignore::clear()
 void dlg_ignore::button_add()
 {
     ui.listWidget->clear();
-    (new dlg_ignore_ad(socket, tabc, settings, "add"))->show();
+    (new dlg_ignore_ad(pNetwork, tabc, settings, "add"))->show();
 }
 
 void dlg_ignore::button_remove()
 {
     ui.listWidget->clear();
-    (new dlg_ignore_ad(socket, tabc, settings, "remove"))->show();
+    (new dlg_ignore_ad(pNetwork, tabc, settings, "remove"))->show();
 }
 
 void dlg_ignore::button_ok()
@@ -68,36 +68,10 @@ void dlg_ignore::button_cancel()
     this->hide();
 }
 
-// copy of network::send
-void dlg_ignore::send(QString strData)
-{
-    if ((socket->state() == QAbstractSocket::ConnectedState) && (socket->isWritable() == true))
-    {
-#ifdef Q_WS_X11
-        if (settings->value("debug").toString() == "on")
-            qDebug() << "-> " << strData;
-#endif
-        strData += "\r\n";
-        QByteArray qbaData;
-        for ( int i = 0; i < strData.size(); i++)
-            qbaData.insert(i, strData.at(i));
-
-        if (socket->write(qbaData) == -1)
-        {
-            if (socket->state() == QAbstractSocket::ConnectedState)
-                tabc->show_msg_active(QString("Error: Nie uda³o siê wys³aæ danych! [%1]").arg(socket->errorString()), 9);
-            else if (socket->state() == QAbstractSocket::UnconnectedState)
-                tabc->show_msg_active("Error: Nie uda³o siê wys³aæ danych! [Not connected]", 9);
-        }
-    }
-    else
-        tabc->show_msg("Status", "Error: Nie uda³o siê wys³aæ danych! [Not connected]", 9);
-}
-
 void dlg_ignore::showEvent(QShowEvent *event)
 {
     event->accept();
 
     ui.listWidget->clear();
-    dlg_ignore::send("NS IGNORE");
+    pNetwork->send("NS IGNORE");
 }

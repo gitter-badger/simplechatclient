@@ -23,7 +23,6 @@
 
 #include <QMessageBox>
 #include <QObject>
-#include <QTcpSocket>
 #include "channel_avatar.h"
 #include "config.h"
 #include "dlg_channel_favourites.h"
@@ -35,19 +34,20 @@
 #include "dlg_moderation.h"
 #include "dlg_priv.h"
 #include "irc_auth.h"
+#include "network.h"
 #include "tab_container.h"
 
 class irc_kernel : public QObject
 {
     Q_OBJECT
 public:
-    irc_kernel(QTcpSocket *, tab_container *, QSettings *, dlg_channel_settings *, dlg_channel_homes *, dlg_channel_list *, dlg_channel_favourites *, dlg_friends *, dlg_ignore *, dlg_moderation *);
+    irc_kernel(network *, tab_container *, QSettings *, dlg_channel_settings *, dlg_channel_homes *, dlg_channel_list *, dlg_channel_favourites *, dlg_friends *, dlg_ignore *, dlg_moderation *);
 
 public slots:
     void kernel(QString);
 
 private:
-    QTcpSocket *socket;
+    network *pNetwork;
     tab_container *tabc;
     QStringList strDataList;
     QSettings *settings;
@@ -182,7 +182,6 @@ private:
     void raw_820();
     void raw_821();
     void raw_951();
-    void send(QString);
     QString get_settings_key(QString);
 
 private slots:

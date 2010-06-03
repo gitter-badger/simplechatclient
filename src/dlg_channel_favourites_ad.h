@@ -23,7 +23,7 @@
 
 #include <QDialog>
 #include <QSettings>
-#include <QTcpSocket>
+#include "network.h"
 #include "tab_container.h"
 #include "ui_channel_favourites_ad.h"
 
@@ -31,16 +31,14 @@ class dlg_channel_favourites_ad : public QDialog
 {
     Q_OBJECT
 public:
-    dlg_channel_favourites_ad(QTcpSocket *, tab_container *, QSettings *, QString, QString);
+    dlg_channel_favourites_ad(network *, tab_container *, QSettings *, QString, QString);
 
 private:
     Ui::uiChannelFavouritesAd ui;
-    QTcpSocket *socket;
+    network *pNetwork;
     tab_container *tabc;
     QSettings *settings;
     QString strStatus;
-
-    void send(QString);
 
 private slots:
     void button_ok();

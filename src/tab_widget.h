@@ -38,7 +38,6 @@
 #include <QRgb>
 #include <QSettings>
 #include <QSplitter>
-#include <QTcpSocket>
 #include <QTextEdit>
 #include <QWidget>
 #include <QtWebKit/QWebFrame>
@@ -48,6 +47,7 @@
 #include "dlg_channel_settings.h"
 #include "dlg_moderation.h"
 #include "log.h"
+#include "network.h"
 #include "qinputline.h"
 #include "qnicklist.h"
 #include "qnotify.h"
@@ -57,7 +57,7 @@ class tab_widget : public QWidget
 {
     Q_OBJECT
 public:
-    tab_widget(QString, QWidget *, QTcpSocket *, QSettings *, dlg_channel_settings *, dlg_moderation *);
+    tab_widget(QString, QWidget *, network *, QSettings *, dlg_channel_settings *, dlg_moderation *);
     ~tab_widget();
     QString get_name() { return strName; }
     QString convert_emots(QString);
@@ -155,7 +155,7 @@ private:
     qnotify *notify;
 
     QString strName;
-    QTcpSocket *socket;
+    network *pNetwork;
     QString strLast_msg;
     QSettings *settings;
     QMap<QString, QString> nick_flag;
@@ -177,7 +177,6 @@ private:
     void nicklist_quicksort(QString);
 
     void display_message(QString, int);
-    void send(QString);
 
 private slots:
     void bold_clicked();

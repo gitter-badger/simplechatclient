@@ -25,9 +25,9 @@
 #include <QDebug>
 #endif
 #include <QDialog>
-#include <QTcpSocket>
 #include "dlg_channel_homes_ad.h"
 #include "dlg_channel_settings.h"
+#include "network.h"
 #include "tab_container.h"
 #include "ui_channel_homes.h"
 
@@ -35,19 +35,17 @@ class dlg_channel_homes : public QDialog
 {
     Q_OBJECT
 public:
-    dlg_channel_homes(QSettings *, QTcpSocket *, tab_container *, dlg_channel_settings *);
+    dlg_channel_homes(QSettings *, network *, tab_container *, dlg_channel_settings *);
     void add_channel(QString);
     void clear();
 
 private:
     Ui::uiChannelHomes ui;
     QSettings *settings;
-    QTcpSocket *socket;
+    network *pNetwork;
     tab_container *tabc;
     dlg_channel_settings *dlgchannel_settings;
     dlg_channel_homes_ad *dlgchannel_homes_ad;
-
-    void send(QString);
 
 protected:
     virtual void showEvent(QShowEvent *event);

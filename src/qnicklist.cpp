@@ -20,9 +20,9 @@
 
 #include "qnicklist.h"
 
-qnicklist::qnicklist(QTcpSocket *param1, QSettings *param2, QString param3)
+qnicklist::qnicklist(network *param1, QSettings *param2, QString param3)
 {
-    socket = param1;
+    pNetwork = param1;
     settings = param2;
     strChannel = param3;
 }
@@ -42,7 +42,7 @@ void qnicklist::priv()
     if (this->selectedItems().count() == 0) return;
 
     QString strNick = this->selectedItems().at(0)->text();
-    qnicklist::send(QString("PRIV %1").arg(strNick));
+    pNetwork->send(QString("PRIV %1").arg(strNick));
 }
 
 void qnicklist::whois()
@@ -50,7 +50,7 @@ void qnicklist::whois()
     if (this->selectedItems().count() == 0) return;
 
     QString strNick = this->selectedItems().at(0)->text();
-    qnicklist::send(QString("WHOIS %1 %1").arg(strNick));
+    pNetwork->send(QString("WHOIS %1 %1").arg(strNick));
 }
 
 void qnicklist::cam()
@@ -58,7 +58,7 @@ void qnicklist::cam()
     if (this->selectedItems().count() == 0) return;
 
     QString strNick = this->selectedItems().at(0)->text();
-    (new dlg_cam(settings, socket, strNick))->show();
+    (new dlg_cam(settings, pNetwork, strNick))->show();
 }
 
 void qnicklist::friends_add()
@@ -66,7 +66,7 @@ void qnicklist::friends_add()
     if (this->selectedItems().count() == 0) return;
 
     QString strNick = this->selectedItems().at(0)->text();
-    qnicklist::send(QString("NS FRIENDS ADD %1").arg(strNick));
+    pNetwork->send(QString("NS FRIENDS ADD %1").arg(strNick));
 }
 
 void qnicklist::friends_del()
@@ -74,7 +74,7 @@ void qnicklist::friends_del()
     if (this->selectedItems().count() == 0) return;
 
     QString strNick = this->selectedItems().at(0)->text();
-    qnicklist::send(QString("NS FRIENDS DEL %1").arg(strNick));
+    pNetwork->send(QString("NS FRIENDS DEL %1").arg(strNick));
 }
 
 void qnicklist::ignore_add()
@@ -82,7 +82,7 @@ void qnicklist::ignore_add()
     if (this->selectedItems().count() == 0) return;
 
     QString strNick = this->selectedItems().at(0)->text();
-    qnicklist::send(QString("NS IGNORE ADD %1").arg(strNick));
+    pNetwork->send(QString("NS IGNORE ADD %1").arg(strNick));
 }
 
 void qnicklist::ignore_del()
@@ -90,7 +90,7 @@ void qnicklist::ignore_del()
     if (this->selectedItems().count() == 0) return;
 
     QString strNick = this->selectedItems().at(0)->text();
-    qnicklist::send(QString("NS IGNORE DEL %1").arg(strNick));
+    pNetwork->send(QString("NS IGNORE DEL %1").arg(strNick));
 }
 
 void qnicklist::kick()
@@ -99,7 +99,7 @@ void qnicklist::kick()
 
     QString strNick = this->selectedItems().at(0)->text();
     QString strReason = "Zachowuj siê! Byle jak ale siê zachowuj!";
-    qnicklist::send(QString("KICK %1 %2 :%3").arg(strChannel).arg(strNick).arg(strReason));
+    pNetwork->send(QString("KICK %1 %2 :%3").arg(strChannel).arg(strNick).arg(strReason));
 }
 
 void qnicklist::ban()
@@ -107,7 +107,7 @@ void qnicklist::ban()
     if (this->selectedItems().count() == 0) return;
 
     QString strNick = this->selectedItems().at(0)->text();
-    qnicklist::send(QString("CS BAN %1 ADD %2").arg(strChannel).arg(strNick));
+    pNetwork->send(QString("CS BAN %1 ADD %2").arg(strChannel).arg(strNick));
 }
 
 void qnicklist::kban()
@@ -116,8 +116,8 @@ void qnicklist::kban()
 
     QString strNick = this->selectedItems().at(0)->text();
     QString strReason = "Zachowuj siê! Byle jak ale siê zachowuj!";
-    qnicklist::send(QString("CS BAN %1 ADD %2").arg(strChannel).arg(strNick));
-    qnicklist::send(QString("KICK %1 %2 :%3").arg(strChannel).arg(strNick).arg(strReason));
+    pNetwork->send(QString("CS BAN %1 ADD %2").arg(strChannel).arg(strNick));
+    pNetwork->send(QString("KICK %1 %2 :%3").arg(strChannel).arg(strNick).arg(strReason));
 }
 
 void qnicklist::op_add()
@@ -125,7 +125,7 @@ void qnicklist::op_add()
     if (this->selectedItems().count() == 0) return;
 
     QString strNick = this->selectedItems().at(0)->text();
-    qnicklist::send(QString("CS OP %1 ADD %2").arg(strChannel).arg(strNick));
+    pNetwork->send(QString("CS OP %1 ADD %2").arg(strChannel).arg(strNick));
 }
 
 void qnicklist::op_del()
@@ -133,7 +133,7 @@ void qnicklist::op_del()
     if (this->selectedItems().count() == 0) return;
 
     QString strNick = this->selectedItems().at(0)->text();
-    qnicklist::send(QString("CS OP %1 DEL %2").arg(strChannel).arg(strNick));
+    pNetwork->send(QString("CS OP %1 DEL %2").arg(strChannel).arg(strNick));
 }
 
 void qnicklist::halfop_add()
@@ -141,7 +141,7 @@ void qnicklist::halfop_add()
     if (this->selectedItems().count() == 0) return;
 
     QString strNick = this->selectedItems().at(0)->text();
-    qnicklist::send(QString("CS HALFOP %1 ADD %2").arg(strChannel).arg(strNick));
+    pNetwork->send(QString("CS HALFOP %1 ADD %2").arg(strChannel).arg(strNick));
 }
 
 void qnicklist::halfop_del()
@@ -149,7 +149,7 @@ void qnicklist::halfop_del()
     if (this->selectedItems().count() == 0) return;
 
     QString strNick = this->selectedItems().at(0)->text();
-    qnicklist::send(QString("CS HALFOP %1 DEL %2").arg(strChannel).arg(strNick));
+    pNetwork->send(QString("CS HALFOP %1 DEL %2").arg(strChannel).arg(strNick));
 }
 
 void qnicklist::moderator_add()
@@ -157,7 +157,7 @@ void qnicklist::moderator_add()
     if (this->selectedItems().count() == 0) return;
 
     QString strNick = this->selectedItems().at(0)->text();
-    qnicklist::send(QString("CS MODERATOR %1 ADD %2").arg(strChannel).arg(strNick));
+    pNetwork->send(QString("CS MODERATOR %1 ADD %2").arg(strChannel).arg(strNick));
 }
 
 void qnicklist::moderator_del()
@@ -165,7 +165,7 @@ void qnicklist::moderator_del()
     if (this->selectedItems().count() == 0) return;
 
     QString strNick = this->selectedItems().at(0)->text();
-    qnicklist::send(QString("CS MODERATOR %1 DEL %2").arg(strChannel).arg(strNick));
+    pNetwork->send(QString("CS MODERATOR %1 DEL %2").arg(strChannel).arg(strNick));
 }
 
 void qnicklist::voice_add()
@@ -173,7 +173,7 @@ void qnicklist::voice_add()
     if (this->selectedItems().count() == 0) return;
 
     QString strNick = this->selectedItems().at(0)->text();
-    qnicklist::send(QString("CS VOICE %1 ADD %2").arg(strChannel).arg(strNick));
+    pNetwork->send(QString("CS VOICE %1 ADD %2").arg(strChannel).arg(strNick));
 }
 
 void qnicklist::voice_del()
@@ -181,7 +181,7 @@ void qnicklist::voice_del()
     if (this->selectedItems().count() == 0) return;
 
     QString strNick = this->selectedItems().at(0)->text();
-    qnicklist::send(QString("CS VOICE %1 DEL %2").arg(strChannel).arg(strNick));
+    pNetwork->send(QString("CS VOICE %1 DEL %2").arg(strChannel).arg(strNick));
 }
 
 void qnicklist::invite()
@@ -193,7 +193,7 @@ void qnicklist::invite()
     {
         QString strInviteChannel = action->data().toString();
         QString strNick = this->selectedItems().at(0)->text();
-        qnicklist::send(QString("INVITE %1 %2").arg(strNick).arg(strInviteChannel));
+        pNetwork->send(QString("INVITE %1 %2").arg(strNick).arg(strInviteChannel));
     }
 }
 
@@ -301,26 +301,6 @@ void qnicklist::nicklist_quicksort(QString strStatus, QHash <QString, QString> *
         new_nicklist1->insert(new_nicklist1->count(), strNick);
         new_nicklist2->insert(new_nicklist2->count(), status_nicklist[strNick]);
     }
-}
-
-// copy of network::send
-void qnicklist::send(QString strData)
-{
-    if ((socket->state() == QAbstractSocket::ConnectedState) && (socket->isWritable() == true))
-    {
-#ifdef Q_WS_X11
-        if (settings->value("debug").toString() == "on")
-            qDebug() << "-> " << strData;
-#endif
-        strData += "\r\n";
-        QByteArray qbaData;
-        for ( int i = 0; i < strData.size(); i++)
-            qbaData.insert(i, strData.at(i));
-
-        socket->write(qbaData);
-    }
-    //else
-        //tabc->show_msg("Status", "Error: Nie uda³o siê wys³aæ danych! [Not connected]");
 }
 
 void qnicklist::contextMenuEvent(QContextMenuEvent *e)

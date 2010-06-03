@@ -22,8 +22,8 @@
 #define DLG_IGNORE_H
 
 #include <QDialog>
-#include <QTcpSocket>
 #include "dlg_ignore_ad.h"
+#include "network.h"
 #include "tab_container.h"
 #include "ui_ignore.h"
 
@@ -31,17 +31,15 @@ class dlg_ignore : public QDialog
 {
     Q_OBJECT
 public:
-    dlg_ignore(QSettings *, QTcpSocket *, tab_container *);
+    dlg_ignore(QSettings *, network *, tab_container *);
     void add_ignore(QString);
     void clear();
 
 private:
     Ui::uiIgnore ui;
     QSettings *settings;
-    QTcpSocket *socket;
+    network *pNetwork;
     tab_container *tabc;
-
-    void send(QString);
 
 private slots:
     void button_add();

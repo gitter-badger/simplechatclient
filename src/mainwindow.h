@@ -26,7 +26,6 @@
 #endif
 #include <QSystemTrayIcon>
 #include <QTabWidget>
-#include <QTcpSocket>
 #include <QtGui/QMainWindow>
 #include "config.h"
 #include "crypt.h"
@@ -39,6 +38,8 @@
 #include "dlg_ignore.h"
 #include "dlg_moderation.h"
 #include "dlg_options.h"
+#include "irc_auth.h"
+#include "irc_kernel.h"
 #include "network.h"
 #include "tab_container.h"
 #include "tab_manager.h"
@@ -52,10 +53,16 @@ public:
     ~MainWindow();
     void set_debug(bool);
 
+public slots:
+    void kernel(QString);
+    void request_uo(QString, QString);
+    void show_msg_active(QString, int);
+    void show_msg_all(QString, int);
+    void update_nick(QString);
+    void clear_nicklist(QString);
+
 private:
     QSettings settings;
-    irc_auth *pIrc_auth;
-    QTcpSocket *pSocket;
     tab_manager *tabm;
     tab_container *tabc;
     network *pNetwork;
@@ -67,6 +74,8 @@ private:
     dlg_ignore *dlgignore;
     dlg_moderation *dlgmoderation;
     QList <update_thread*> uThreadList;
+    irc_kernel *pIrc_kernel;
+    irc_auth *pIrc_auth;
     QMenu *trayMenu;
     QSystemTrayIcon *trayIcon;
     QMenu *fileMenu;
@@ -99,6 +108,10 @@ private slots:
     void button_show();
     void tab_close_requested(int);
     void remove_uthread(update_thread*);
+
+signals:
+    void do_kernel(QString);
+    void do_request_uo(QString, QString);
 
 };
 

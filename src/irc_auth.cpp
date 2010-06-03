@@ -20,11 +20,11 @@
 
 #include "irc_auth.h"
 
-irc_auth::irc_auth(QSettings *param1, tab_container *param2, QTcpSocket *param3)
+irc_auth::irc_auth(QSettings *param1, tab_container *param2, network *param3)
 {
     settings = param1;
     tabc = param2;
-    socket = param3;
+    pNetwork = param3;
 }
 
 void irc_auth::request_uo(QString param1, QString param2)
@@ -267,14 +267,14 @@ void irc_auth::request_finished(QString strData)
                 QString strUOKey = doc.elementsByTagName("uoKey").item(0).toElement().text();
                 QString strNick = doc.elementsByTagName("zuoUsername").item(0).toElement().text();
                 settings->setValue("uokey", strUOKey);
-                if ((strUOKey.isEmpty() == false) && (strNick.isEmpty() == false) && (socket->state() == QAbstractSocket::ConnectedState) && (socket->isWritable() == true))
-                    this->send(QString("USER * %1  czat-app.onet.pl :%2").arg(strUOKey).arg(strNick));
+                if ((strUOKey.isEmpty() == false) && (strNick.isEmpty() == false) && (pNetwork->is_connected() == true) && (pNetwork->is_writable() == true))
+                    pNetwork->send(QString("USER * %1  czat-app.onet.pl :%2").arg(strUOKey).arg(strNick));
                 return;
             }
             else
             {
                 tabc->show_msg("Status","Error: B³±d autoryzacji.", 9);
-                socket->close();
+                //socket->close();
                 return;
             }
         }
@@ -292,7 +292,7 @@ void irc_auth::request_finished(QString strData)
 
                 tabc->show_msg("Status", QString("Error: B³±d autoryzacji [%1]").arg(strErrorText), 9);
             }
-            socket->close();
+            //socket->close();
 
             return;
         }
@@ -300,33 +300,7 @@ void irc_auth::request_finished(QString strData)
     else
     {
         tabc->show_msg("Status","Error: B³±d autoryzacji.", 9);
-        socket->close();
+        //socket->close();
         return;
     }
-}
-
-// copy of network::send
-void irc_auth::send(QString strData)
-{
-    if ((socket->state() == QAbstractSocket::ConnectedState) && (socket->isWritable() == true))
-    {
-#ifdef Q_WS_X11
-        if (settings->value("debug").toString() == "on")
-            qDebug() << "-> " << strData;
-#endif
-        strData += "\r\n";
-        QByteArray qbaData;
-        for ( int i = 0; i < strData.size(); i++)
-            qbaData.insert(i, strData.at(i));
-
-        if (socket->write(qbaData) == -1)
-        {
-            if (socket->state() == QAbstractSocket::ConnectedState)
-                tabc->show_msg_active(QString("Error: Nie uda³o siê wys³aæ danych! [%1]").arg(socket->errorString()), 9);
-            else if (socket->state() == QAbstractSocket::UnconnectedState)
-                tabc->show_msg_active("Error: Nie uda³o siê wys³aæ danych! [Not connected]", 9);
-        }
-    }
-    else
-        tabc->show_msg("Status", "Error: Nie uda³o siê wys³aæ danych! [Not connected]", 9);
 }

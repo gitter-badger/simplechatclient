@@ -23,14 +23,14 @@
 
 #include <QDialog>
 #include <QSettings>
-#include <QTcpSocket>
+#include "network.h"
 #include "ui_moderation.h"
 
 class dlg_moderation : public QDialog
 {
     Q_OBJECT
 public:
-    dlg_moderation(QSettings *, QTcpSocket *);
+    dlg_moderation(QSettings *, network *);
     ~dlg_moderation();
     void add_msg(QString, QString, QString, QString);
     void clear();
@@ -38,7 +38,7 @@ public:
 private:
     Ui::uiModeration ui;
     QSettings *settings;
-    QTcpSocket *socket;
+    network *pNetwork;
     QMultiHash <QString, QString> channel_id;
     QMultiHash <QString, QString> id_nick;
     QMultiHash <QString, QString> id_message;
@@ -46,7 +46,6 @@ private:
     void refresh(QString);
     void del_msg(QString);
     bool combo_exist(QString);
-    void send(QString);
 
 private slots:
     void combo_changed(int);

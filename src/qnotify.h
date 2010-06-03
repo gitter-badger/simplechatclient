@@ -30,8 +30,8 @@ class qnotify : public QObject
 {
     Q_OBJECT
 public:
-        qnotify();
-        void play();
+    qnotify();
+    void play();
 
 };
 

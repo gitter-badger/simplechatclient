@@ -20,11 +20,11 @@
 
 #include "dlg_channel_favourites_ad.h"
 
-dlg_channel_favourites_ad::dlg_channel_favourites_ad(QTcpSocket *param1, tab_container *param2, QSettings *param3, QString param4, QString param5)
+dlg_channel_favourites_ad::dlg_channel_favourites_ad(network *param1, tab_container *param2, QSettings *param3, QString param4, QString param5)
 {
     ui.setupUi(this);
 
-    socket = param1;
+    pNetwork = param1;
     tabc = param2;
     settings = param3;
     strStatus = param4;
@@ -46,45 +46,19 @@ void dlg_channel_favourites_ad::button_ok()
     if (strChannel.isEmpty() == false)
     {
         if (strStatus == "add")
-            dlg_channel_favourites_ad::send(QString("NS FAVOURITES ADD %1").arg(strChannel));
+            pNetwork->send(QString("NS FAVOURITES ADD %1").arg(strChannel));
         else
-            dlg_channel_favourites_ad::send(QString("NS FAVOURITES DEL %1").arg(strChannel));
+            pNetwork->send(QString("NS FAVOURITES DEL %1").arg(strChannel));
     }
 
-    dlg_channel_favourites_ad::send("NS FAVOURITES");
+    pNetwork->send("NS FAVOURITES");
     ui.buttonBox->QObject::disconnect();
     this->close();
 }
 
 void dlg_channel_favourites_ad::button_cancel()
 {
-    dlg_channel_favourites_ad::send("NS FAVOURITES");
+    pNetwork->send("NS FAVOURITES");
     ui.buttonBox->QObject::disconnect();
     this->close();
-}
-
-// copy of network::send
-void dlg_channel_favourites_ad::send(QString strData)
-{
-    if ((socket->state() == QAbstractSocket::ConnectedState) && (socket->isWritable() == true))
-    {
-#ifdef Q_WS_X11
-        if (settings->value("debug").toString() == "on")
-            qDebug() << "-> " << strData;
-#endif
-        strData += "\r\n";
-        QByteArray qbaData;
-        for ( int i = 0; i < strData.size(); i++)
-            qbaData.insert(i, strData.at(i));
-
-        if (socket->write(qbaData) == -1)
-        {
-            if (socket->state() == QAbstractSocket::ConnectedState)
-                tabc->show_msg_active(QString("Error: Nie uda³o siê wys³aæ danych! [%1]").arg(socket->errorString()), 9);
-            else if (socket->state() == QAbstractSocket::UnconnectedState)
-                tabc->show_msg_active("Error: Nie uda³o siê wys³aæ danych! [Not connected]", 9);
-        }
-    }
-    else
-        tabc->show_msg("Status", "Error: Nie uda³o siê wys³aæ danych! [Not connected]", 9);
 }

@@ -22,7 +22,7 @@
 #define DLG_PRIV_H
 
 #include <QDialog>
-#include <QTcpSocket>
+#include "network.h"
 #include "tab_container.h"
 #include "ui_priv.h"
 
@@ -30,19 +30,17 @@ class dlg_priv : public QDialog
 {
     Q_OBJECT
 public:
-    dlg_priv(QTcpSocket *, tab_container *, QSettings *, QString, QString);
+    dlg_priv(network *, tab_container *, QSettings *, QString, QString);
 
 private:
     Ui::uiPriv ui;
-    QTcpSocket *socket;
+    network *pNetwork;
     tab_container *tabc;
     QSettings *settings;
     QString strNick;
     QString strChannel;
     QString strTimerChannel;
     QString strTimerNick;
-
-    void send(QString);
 
 private slots:
     void timer_timeout();

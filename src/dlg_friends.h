@@ -22,8 +22,8 @@
 #define DLG_FRIENDS_H
 
 #include <QDialog>
-#include <QTcpSocket>
 #include "dlg_friends_ad.h"
+#include "network.h"
 #include "tab_container.h"
 #include "ui_friends.h"
 
@@ -31,7 +31,7 @@ class dlg_friends : public QDialog
 {
     Q_OBJECT
 public:
-    dlg_friends(QSettings *, QTcpSocket *, tab_container *);
+    dlg_friends(QSettings *, network *, tab_container *);
     void set_friend(QString, bool);
     void remove_friend(QString);
     void clear();
@@ -39,12 +39,11 @@ public:
 private:
     Ui::uiFriends ui;
     QSettings *settings;
-    QTcpSocket *socket;
+    network *pNetwork;
     tab_container *tabc;
     QMap<QString, bool> friends;
 
     void refresh();
-    void send(QString);
 
 private slots:
     void button_add();

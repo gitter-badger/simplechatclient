@@ -20,14 +20,14 @@
 
 #include "dlg_cam.h"
 
-dlg_cam::dlg_cam(QSettings *param1, QTcpSocket *param2, QString param3)
+dlg_cam::dlg_cam(QSettings *param1, network *param2, QString param3)
 {
     ui.setupUi(this);
     setAttribute(Qt::WA_DeleteOnClose);
     setWindowFlags(Qt::Dialog | Qt::WindowStaysOnTopHint);
 
     settings = param1;
-    irc_socket = param2;
+    pNetwork = param2;
     strNick = param3;
     ui.label->setText("<p style=\"font-weight:bold;\">"+strNick+"</p>");
 }
@@ -326,7 +326,7 @@ void dlg_cam::network_connected()
 
 void dlg_cam::network_keepalive()
 {
-    if ((irc_socket->state() == QAbstractSocket::ConnectedState) && (irc_socket->isWritable() == true))
+    if ((pNetwork->is_connected() == true) && (pNetwork->is_writable() == true))
         dlg_cam::network_send(QString("KEEPALIVE_BIG %1").arg(strNick));
     else
         timer->stop();
@@ -339,26 +339,6 @@ void dlg_cam::network_disconnected()
     QString strText = ui.label_img->text();
     strText += "<br>Roz³±czono z serwerem kamerek";
     ui.label_img->setText(strText);
-}
-
-// copy of network::send
-void dlg_cam::send(QString strData)
-{
-    if ((irc_socket->state() == QAbstractSocket::ConnectedState) && (irc_socket->isWritable() == true))
-    {
-#ifdef Q_WS_X11
-        if (settings->value("debug").toString() == "on")
-            qDebug() << "CAM -> " << strData;
-#endif
-        strData += "\r\n";
-        QByteArray qbaData;
-        for ( int i = 0; i < strData.size(); i++)
-            qbaData.insert(i, strData.at(i));
-
-        irc_socket->write(qbaData);
-    }
-    //else
-        //tabc->show_msg("Status", "Error: Nie uda³o siê wys³aæ danych! [Not connected]", 9);
 }
 
 void dlg_cam::error(QAbstractSocket::SocketError err)

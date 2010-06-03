@@ -49,6 +49,7 @@ set (scc_SRCS
 	main.cpp
 	mainwindow.cpp
 	network.cpp
+	network_thread.cpp
 	qinputline.cpp
 	qnicklist.cpp
 	qnotify.cpp
@@ -88,6 +89,7 @@ set (scc_MOC_SRCS
 	log.h
 	mainwindow.h
 	network.h
+	network_thread.h
 	qinputline.h
 	qnicklist.h
 	qnotify.h
@@ -98,6 +100,11 @@ set (scc_MOC_SRCS
 	update.h
 	update_thread.h
 )
+
+# debug
+if (UNIX)
+	set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -ggdb")
+endif (UNIX)
 
 # qt qtnetwork
 include_directories (
@@ -146,7 +153,7 @@ include_directories (${CMAKE_SOURCE_DIR}/ui)
 
 # mwindows
 if (MINGW)
-	SET(CMAKE_CXX_LINK_FLAGS "${CMAKE_CXX_LINK_FLAGS} -mwindows")
+	SET (CMAKE_CXX_LINK_FLAGS "${CMAKE_CXX_LINK_FLAGS} -mwindows")
 endif (MINGW)
 
 # rest

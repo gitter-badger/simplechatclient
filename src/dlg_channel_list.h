@@ -22,7 +22,7 @@
 #define DLG_CHANNEL_LIST_H
 
 #include <QDialog>
-#include <QTcpSocket>
+#include "network.h"
 #include "tab_container.h"
 #include "ui_channel_list.h"
 
@@ -30,7 +30,7 @@ class dlg_channel_list : public QDialog
 {
     Q_OBJECT
 public:
-    dlg_channel_list(QSettings *, QTcpSocket *, tab_container *);
+    dlg_channel_list(QSettings *, network *, tab_container *);
     void clear();
     void add_channel(QString, QString, QString, QString);
     void create_list();
@@ -39,7 +39,7 @@ public:
 private:
     Ui::uiChannelList ui;
     QSettings *settings;
-    QTcpSocket *socket;
+    network *pNetwork;
     tab_container *tabc;
     QList< QList<QString> > list_1;
     QList< QList<QString> > list_2;
@@ -49,7 +49,6 @@ private:
     QList< QList<QString> > list_6;
 
     void QuickSort(QList< QList<QString> > *, int, int);
-    void send(QString);
 
 protected:
     virtual void showEvent(QShowEvent *);

@@ -20,10 +20,10 @@
 
 #include "tab_widget.h"
 
-tab_widget::tab_widget(QString param1, QWidget *parent, QTcpSocket *param2, QSettings *param3, dlg_channel_settings *param4, dlg_moderation *param5)
+tab_widget::tab_widget(QString param1, QWidget *parent, network *param2, QSettings *param3, dlg_channel_settings *param4, dlg_moderation *param5)
 {
     strName = param1;
-    socket = param2;
+    pNetwork = param2;
     settings = param3;
     dlgchannel_settings = param4;
     dlgmoderation = param5;
@@ -107,7 +107,7 @@ tab_widget::tab_widget(QString param1, QWidget *parent, QTcpSocket *param2, QSet
     nickCount->setAlignment(Qt::AlignCenter);
     nickCount->show();
 
-    nick_list = new qnicklist(socket, settings, strName);
+    nick_list = new qnicklist(pNetwork, settings, strName);
     nick_list->setParent(this);
     nick_list->setSortingEnabled(false);
     nick_list->show();
@@ -1029,32 +1029,6 @@ void tab_widget::set_logo(QByteArray bData)
     logo->setPixmap(pixmap);
 }
 
-// copy of network::send
-void tab_widget::send(QString strData)
-{
-    if ((socket->state() == QAbstractSocket::ConnectedState) && (socket->isWritable() == true))
-    {
-#ifdef Q_WS_X11
-        if (settings->value("debug").toString() == "on")
-            qDebug() << "-> " << strData;
-#endif
-        strData += "\r\n";
-        QByteArray qbaData;
-        for ( int i = 0; i < strData.size(); i++)
-            qbaData.insert(i, strData.at(i));
-
-        if (socket->write(qbaData) == -1)
-        {
-            if (socket->state() == QAbstractSocket::ConnectedState)
-                tab_widget::display_msg(QString("Error: Nie uda³o siê wys³aæ danych! [%1]").arg(socket->errorString()), 9);
-            else if (socket->state() == QAbstractSocket::UnconnectedState)
-                tab_widget::display_msg("Error: Nie uda³o siê wys³aæ danych! [Not connected]", 9);
-        }
-    }
-    else
-        tab_widget::display_msg("Error: Nie uda³o siê wys³aæ danych! [Not connected]", 9);
-}
-
 // actions
 
 void tab_widget::bold_clicked()
@@ -1267,21 +1241,21 @@ void tab_widget::send_message(bool bType)
                     l->save(strName, QString("%1<%2> %3").arg(strDT).arg(strMe).arg(strTextDisplay));
 
                     tab_widget::display_message(QString("%1<%2> %3ACTION %4%5").arg(strDT).arg(strMe).arg(QString(QByteArray("\x01"))).arg(strTextDisplay).arg(QString(QByteArray("\x01"))), 0);
-                    if (socket->state() == QAbstractSocket::ConnectedState)
-                        tab_widget::send(strTextSend);
+                    if (pNetwork->is_connected() == true)
+                        pNetwork->send(strTextSend);
                 }
             }
             else
             {
-                if ((socket->state() == QAbstractSocket::ConnectedState) && (strText.length() > 0))
-                    tab_widget::send(strText);
+                if ((pNetwork->is_connected() == true) && (strText.length() > 0))
+                    pNetwork->send(strText);
             }
 
             inputline->clear();
         }
         else if (strName != "Status")
         {
-            if ((socket->state() == QAbstractSocket::ConnectedState) && (strText.length() > 0))
+            if ((pNetwork->is_connected() == true) && (strText.length() > 0))
             {
                 QString weight;
                 QString font = fontfamily->text().toLower();
@@ -1307,7 +1281,7 @@ void tab_widget::send_message(bool bType)
                     l->save(strName, QString("%1<%2> %3").arg(strDT).arg(strMe).arg(strText));
 
                     strText = QString("PRIVMSG %1 :%2").arg(strName).arg(strText);
-                    tab_widget::send(strText);
+                    pNetwork->send(strText);
                     tab_widget::display_message(QString("%1<%2> %3").arg(strDT).arg(strMe).arg(strText.right(strText.length()-10-strName.length())), 0);
                 }
                 else
@@ -1315,7 +1289,7 @@ void tab_widget::send_message(bool bType)
                     l->save(strName, QString("%1 *<%2> %3").arg(strDT).arg(strMe).arg(strText));
 
                     strText = QString("MODERNOTICE %1 :%2").arg(strName).arg(strText);
-                    tab_widget::send(strText);
+                    pNetwork->send(strText);
                     tab_widget::display_message(QString("%1 *<%2> %3").arg(strDT).arg(strMe).arg(strText.right(strText.length()-14-strName.length())), 6);
                 }
 
@@ -1337,7 +1311,7 @@ void tab_widget::moder_button_clicked()
 
 void tab_widget::channel_settings_clicked()
 {
-    if (socket->state() == QAbstractSocket::ConnectedState)
+    if (pNetwork->is_connected() == true)
     {
         if (strName != "Status")
         {
@@ -1355,7 +1329,7 @@ void tab_widget::moderation_clicked()
 void tab_widget::topic_return_pressed()
 {
     QString strText = topic->text();
-    tab_widget::send(QString("CS SET %1 TOPIC %2").arg(strName).arg(strText));
+    pNetwork->send(QString("CS SET %1 TOPIC %2").arg(strName).arg(strText));
 }
 
 void tab_widget::change_scroll_position()

@@ -22,8 +22,8 @@
 #define DLG_CHANNEL_FAVOURITES_H
 
 #include <QDialog>
-#include <QTcpSocket>
 #include "dlg_channel_favourites_ad.h"
+#include "network.h"
 #include "tab_container.h"
 #include "ui_channel_favourites.h"
 
@@ -31,17 +31,15 @@ class dlg_channel_favourites : public QDialog
 {
     Q_OBJECT
 public:
-    dlg_channel_favourites(QSettings *, QTcpSocket *, tab_container *);
+    dlg_channel_favourites(QSettings *, network *, tab_container *);
     void add_channel(QString);
     void clear();
 
 private:
     Ui::uiChannelFavourites ui;
     QSettings *settings;
-    QTcpSocket *socket;
+    network *pNetwork;
     tab_container *tabc;
-
-    void send(QString);
 
 private slots:
     void button_add();

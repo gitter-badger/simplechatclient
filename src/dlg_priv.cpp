@@ -20,11 +20,11 @@
 
 #include "dlg_priv.h"
 
-dlg_priv::dlg_priv(QTcpSocket *param1, tab_container *param2, QSettings *param3, QString param4, QString param5)
+dlg_priv::dlg_priv(network *param1, tab_container *param2, QSettings *param3, QString param4, QString param5)
 {
     ui.setupUi(this);
 
-    socket = param1;
+    pNetwork = param1;
     tabc = param2;
     settings = param3;
     strNick = param4;
@@ -39,7 +39,7 @@ dlg_priv::dlg_priv(QTcpSocket *param1, tab_container *param2, QSettings *param3,
 
 void dlg_priv::button_reject()
 {
-    dlg_priv::send(QString("INVREJECT %1 %2").arg(strNick).arg(strChannel));
+    pNetwork->send(QString("INVREJECT %1 %2").arg(strNick).arg(strChannel));
 
     ui.pushButtonAccept->QObject::disconnect();
     ui.pushButtonIgnore->QObject::disconnect();
@@ -49,7 +49,7 @@ void dlg_priv::button_reject()
 
 void dlg_priv::button_ignore()
 {
-    dlg_priv::send(QString("INVIGNORE %1 %2").arg(strNick).arg(strChannel));
+    pNetwork->send(QString("INVIGNORE %1 %2").arg(strNick).arg(strChannel));
 
     ui.pushButtonAccept->QObject::disconnect();
     ui.pushButtonIgnore->QObject::disconnect();
@@ -59,7 +59,7 @@ void dlg_priv::button_ignore()
 
 void dlg_priv::button_accept()
 {
-    dlg_priv::send(QString("JOIN %1").arg(strChannel));
+    pNetwork->send(QString("JOIN %1").arg(strChannel));
     strTimerChannel = strChannel;
     strTimerNick = strNick;
     QTimer::singleShot(1000, this, SLOT(timer_timeout()));
@@ -75,30 +75,4 @@ void dlg_priv::timer_timeout()
     tabc->rename_tab(strTimerChannel, strTimerNick);
     strTimerChannel = QString::null;
     strTimerNick = QString::null;
-}
-
-// copy of network::send
-void dlg_priv::send(QString strData)
-{
-    if ((socket->state() == QAbstractSocket::ConnectedState) && (socket->isWritable() == true))
-    {
-#ifdef Q_WS_X11
-        if (settings->value("debug").toString() == "on")
-            qDebug() << "-> " << strData;
-#endif
-        strData += "\r\n";
-        QByteArray qbaData;
-        for ( int i = 0; i < strData.size(); i++)
-            qbaData.insert(i, strData.at(i));
-
-        if (socket->write(qbaData) == -1)
-        {
-            if (socket->state() == QAbstractSocket::ConnectedState)
-                tabc->show_msg_active(QString("Error: Nie uda³o siê wys³aæ danych! [%1]").arg(socket->errorString()), 9);
-            else if (socket->state() == QAbstractSocket::UnconnectedState)
-                tabc->show_msg_active("Error: Nie uda³o siê wys³aæ danych! [Not connected]", 9);
-        }
-    }
-    else
-        tabc->show_msg("Status", "Error: Nie uda³o siê wys³aæ danych! [Not connected]", 9);
 }

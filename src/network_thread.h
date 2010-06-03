@@ -18,32 +18,58 @@
  *                                                                          *
  ****************************************************************************/
 
-#ifndef DLG_IGNORE_AD_H
-#define DLG_IGNORE_AD_H
+#ifndef NETWORK_THREAD_H
+#define NETWORK_THREAD_H
 
-#include <QDialog>
+#include <QAction>
+#include <QObject>
 #include <QSettings>
-#include "network.h"
-#include "tab_container.h"
-#include "ui_ignore_ad.h"
+#include <QTcpSocket>
+#include <QTimer>
+#include "crypt.h"
 
-class dlg_ignore_ad : public QDialog
+class networkThread : public QThread
 {
     Q_OBJECT
 public:
-    dlg_ignore_ad(network *, tab_container *, QSettings *, QString);
+    networkThread(QAction *, QSettings *);
+    ~networkThread();
+    void run();
+    void set_reconnect(bool);
+    bool is_connected();
+    bool is_writable();
+
+public slots:
+    void connect();
+    void close();
+    void send(QString);
 
 private:
-    Ui::uiIgnoreAd ui;
-    network *pNetwork;
-    tab_container *tabc;
+    QTcpSocket *socket;
+    QString strServer;
+    int iPort;
+    QTimer *timer;
+    int iActive;
     QSettings *settings;
-    QString strStatus;
+    QString strDataRecv;
+    QAction *connectAct;
 
 private slots:
-    void button_ok();
-    void button_cancel();
+    void reconnect();
+    void recv();
+    void connected();
+    void disconnected();
+    void error(QAbstractSocket::SocketError);
+    void timeout();
+
+signals:
+    void send_to_kernel(QString);
+    void request_uo(QString, QString);
+    void show_msg_all(QString, int);
+    void show_msg_active(QString, int);
+    void update_nick(QString);
+    void clear_nicklist(QString);
 
 };
 
-#endif // DLG_IGNORE_AD_H
+#endif // NETWORK_THREAD_H

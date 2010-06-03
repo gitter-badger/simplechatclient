@@ -20,280 +20,62 @@
 
 #include "network.h"
 
-network::network(QAction *param1, QSettings *param2)
+network::network(QWidget *parent, QAction *param1, QSettings *param2)
 {
     connectAct = param1;
     settings = param2;
 
-    iActive = 0;
-    settings->setValue("reconnect", "true");
+    networkThr = new networkThread(connectAct, settings);
 
-    timer = new QTimer();
-    timer->setInterval(1*60*1000); // 1 min
+    QObject::connect(networkThr, SIGNAL(send_to_kernel(QString)), parent, SLOT(kernel(QString)));
+    QObject::connect(networkThr, SIGNAL(request_uo(QString, QString)), parent, SLOT(request_uo(QString, QString)));
+    QObject::connect(networkThr, SIGNAL(show_msg_active(QString, int)), parent, SLOT(show_msg_active(QString, int)));
+    QObject::connect(networkThr, SIGNAL(show_msg_all(QString, int)), parent, SLOT(show_msg_all(QString, int)));
+    QObject::connect(networkThr, SIGNAL(update_nick(QString)), parent, SLOT(update_nick(QString)));
+    QObject::connect(networkThr, SIGNAL(clear_nicklist(QString)), parent, SLOT(clear_nicklist(QString)));
 
-    socket = new QTcpSocket(this);
-    socket->setSocketOption(QAbstractSocket::LowDelayOption, 1);
-    socket->setSocketOption(QAbstractSocket::KeepAliveOption, 0);
+    QObject::connect(this, SIGNAL(do_connect()), networkThr, SLOT(connect()));
+    QObject::connect(this, SIGNAL(do_close()), networkThr, SLOT(close()));
+    QObject::connect(this, SIGNAL(do_send(QString)), networkThr, SLOT(send(QString)));
 
-    QObject::connect(timer, SIGNAL(timeout()), this, SLOT(timeout()));
-    QObject::connect(socket, SIGNAL(readyRead()), this, SLOT(recv()));
-    QObject::connect(socket, SIGNAL(connected()), this, SLOT(connected()));
-    QObject::connect(socket, SIGNAL(disconnected()), this, SLOT(disconnected()));
-    QObject::connect(socket, SIGNAL(error(QAbstractSocket::SocketError)), this, SLOT(error(QAbstractSocket::SocketError)));
+    networkThr->start(QThread::LowPriority);
 }
 
 network::~network()
 {
-    delete pIrc_kernel;
-    delete pIrc_auth;
-    if (timer->isActive() == true)
-        timer->stop();
-    socket->close();
-    delete socket;
-}
-
-void network::set_hostport(QString s, int p)
-{
-    strServer = s;
-    iPort = p;
-}
-
-void network::set_dlg(tab_container *param1, dlg_channel_settings *param2, dlg_channel_homes *param3, dlg_channel_list *param4, dlg_channel_favourites *param5, dlg_friends *param6, dlg_ignore *param7, dlg_moderation *param8)
-{
-    tabc = param1;
-    dlgchannel_settings = param2;
-    dlgchannel_homes = param3;
-    dlgchannel_list = param4;
-    dlgchannel_favourites = param5;
-    dlgfriends = param6;
-    dlgignore = param7;
-    dlgmoderation = param8;
-
-    pIrc_auth = new irc_auth(settings, tabc, socket);
-    pIrc_kernel = new irc_kernel(socket, tabc, settings, dlgchannel_settings, dlgchannel_homes, dlgchannel_list, dlgchannel_favourites, dlgfriends, dlgignore, dlgmoderation);
-
-    QObject::connect(this, SIGNAL(send_to_kernel(QString)), pIrc_kernel, SLOT(kernel(QString)));
+    networkThr->quit();
+    networkThr->wait();
+    networkThr->deleteLater();
+    networkThr->QObject::disconnect();
+    delete networkThr;
 }
 
 bool network::is_connected()
 {
-    if (socket->state() == QAbstractSocket::ConnectedState)
-        return true;
-    else
-        return false;
+    return networkThr->is_connected();
 }
 
 bool network::is_writable()
 {
-    return socket->isWritable();
+    return networkThr->is_writable();
 }
 
 void network::connect()
 {
-    if (socket->state() == QAbstractSocket::UnconnectedState)
-    {
-        QDateTime dt = QDateTime::currentDateTime();
-        iActive = (int)dt.toTime_t();
-
-        socket->connectToHost(strServer, iPort);
-        timer->start();
-    }
-    else
-        tabc->show_msg_all("Error: Nie mo¿na siê po³±czyæ z serwerem - po³±czenie ju¿ istnieje!", 9);
-}
-
-void network::reconnect()
-{
-    if (settings->value("reconnect").toString() == "true")
-    {
-        if ((network::is_connected() == false) && (settings->value("logged").toString() == "off"))
-        {
-            tabc->show_msg_all("Ponowne ³±czenie z serwerem...", 7);
-            network::connect();
-        }
-    }
+    emit do_connect();
 }
 
 void network::close()
 {
-    if (socket->state() == QAbstractSocket::ConnectedState)
-        socket->disconnectFromHost();
-
-    if (timer->isActive() == true)
-        timer->stop();
+    emit do_close();
 }
 
 void network::send(QString strData)
 {
-    if ((socket->state() == QAbstractSocket::ConnectedState) && (socket->isWritable() == true))
-    {
-#ifdef Q_WS_X11
-        if (settings->value("debug").toString() == "on")
-            qDebug() << "-> " << strData;
-#endif
-        strData += "\r\n";
-        QByteArray qbaData;
-        for ( int i = 0; i < strData.size(); i++)
-            qbaData.insert(i, strData.at(i));
-
-        if (socket->write(qbaData) == -1)
-        {
-            if (socket->state() == QAbstractSocket::ConnectedState)
-                tabc->show_msg_active(QString("Error: Nie uda³o siê wys³aæ danych! [%1]").arg(socket->errorString()), 9);
-            else if (socket->state() == QAbstractSocket::UnconnectedState)
-                tabc->show_msg_active("Error: Nie uda³o siê wys³aæ danych! [Not connected]", 9);
-        }
-    }
-    else
-        tabc->show_msg_active("Error: Nie uda³o siê wys³aæ danych! [Not connected]", 9);
+    emit do_send(strData);
 }
 
-void network::recv()
+void network::send_slot(QString strData)
 {
-    bool bCompleted = true;
-
-    strDataRecv.append(socket->readAll());
-    if (strDataRecv.isEmpty()) return;
-
-    if (strDataRecv[strDataRecv.length()-1] != '\n')
-    {
-        if (socket->bytesAvailable() != 0)
-            network::recv();
-        else
-            bCompleted = false;
-    }
-
-    QStringList strDataLine = strDataRecv.split("\r\n");
-    if (strDataLine.size() < 2)
-        QTimer::singleShot(3*1000, this, SLOT(recv()));
-    strDataRecv.clear();
-
-    if (bCompleted == false)
-    {
-        strDataRecv = strDataLine.last();
-        strDataLine.removeLast();
-    }
-
-    QDateTime dt = QDateTime::currentDateTime();
-    iActive = (int)dt.toTime_t();
-
-    for (int i = 0; i < strDataLine.size(); i++)
-    {
-        QString strLine = strDataLine[i];
-        if (strLine.isEmpty() == false)
-            emit send_to_kernel(strLine);
-    }
-
-    if (bCompleted == false)
-        QTimer::singleShot(3*1000, this, SLOT(recv()));
-}
-
-void network::connected()
-{
-    tabc->show_msg_all("Po³±czono z serwerem", 9);
-
-    config *pConfig = new config();
-
-    QString strNick = pConfig->get_value("login-nick");
-    QString strPass = pConfig->get_value("login-pass");
-
-    // nick & pass is null
-    if ((strNick.isEmpty() == true) && (strPass.isEmpty() == true))
-    {
-        pConfig->set_value("login-nick", "~test");
-        strNick = "~test";
-    }
-
-    // decrypt pass
-    if (strPass.isEmpty() == false)
-    {
-        qcrypt *pCrypt = new qcrypt();
-        strPass = pCrypt->decrypt(strNick, strPass);
-        delete pCrypt;
-    }
-
-    // correct nick
-    if ((strPass.isEmpty() == true) && (strNick[0] != '~'))
-    {
-        strNick = "~"+strNick;
-        pConfig->set_value("login-nick", strNick);
-    }
-    if ((strPass.isEmpty() == false) && (strNick[0] == '~'))
-    {
-        strNick = strNick.right(strNick.length()-1);
-        pConfig->set_value("login-nick", strNick);
-    }
-
-    delete pConfig;
-
-    // update nick
-    tabc->update_nick(strNick);
-
-    // set current nick
-    QString strCurrentNick = strNick;
-        if (strCurrentNick[0] == '~')
-    strCurrentNick = strNick.right(strNick.length()-1);
-
-    // send auth
-    network::send(QString("NICK %1").arg(strNick));
-    network::send("AUTHKEY");
-
-    // request uo key
-    pIrc_auth->request_uo(strCurrentNick, strPass);
-}
-
-void network::disconnected()
-{
-    if (socket->state() == QAbstractSocket::UnconnectedState)
-    {
-        connectAct->setText("&Po³±cz");
-        connectAct->setIconText("&Po³±cz");
-
-        if (socket->error() != QAbstractSocket::UnknownSocketError)
-            tabc->show_msg_all(QString("Roz³±czono z serwerem [%1]").arg(socket->errorString()), 9);
-        else
-            tabc->show_msg_all("Roz³±czono z serwerem", 9);
-
-        // update nick
-        tabc->update_nick("(niezalogowany)");
-
-        // clear nicklist
-        QStringList strlOpenChannels = tabc->get_open_channels();
-        for (int i = 0; i < strlOpenChannels.size(); i++)
-            tabc->clear_nicklist(strlOpenChannels[i]);
-
-        // state
-        settings->setValue("logged", "off");
-
-        // timer
-        timer->stop();
-
-        // reconnect
-        QTimer::singleShot(30*1000, this, SLOT(reconnect()));
-    }
-}
-
-void network::error(QAbstractSocket::SocketError err)
-{
-    connectAct->setText("&Po³±cz");
-    connectAct->setIconText("&Po³±cz");
-
-    tabc->show_msg_all(QString("Roz³±czono z serwerem [%1]").arg(socket->errorString()), 9);
-
-    if (socket->state() == QAbstractSocket::ConnectedState)
-        network::close();
-}
-
-void network::timeout()
-{
-    QDateTime dt = QDateTime::currentDateTime();
-    int iCurrent = (int)dt.toTime_t();
-
-    if (iActive+301 < iCurrent)
-    {
-        if (socket->state() == QAbstractSocket::ConnectedState)
-            tabc->show_msg_all("Serwer nieaktywny od 301 sekund. Roz³±czanie...", 9);
-        network::close();
-        iActive = iCurrent;
-    }
+    emit do_send(strData);
 }

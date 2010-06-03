@@ -20,14 +20,14 @@
 
 #include "dlg_privilege.h"
 
-dlg_privilege::dlg_privilege(QString param1, QString param2, QString param3, QTcpSocket *param4, QTableWidget *param5, QTableWidget *param6, QTableWidget *param7, QTableWidget *param8, QSettings *param9)
+dlg_privilege::dlg_privilege(QString param1, QString param2, QString param3, network *param4, QTableWidget *param5, QTableWidget *param6, QTableWidget *param7, QTableWidget *param8, QSettings *param9)
 {
     ui.setupUi(this);
 
     strStatus = param1;
     strChannel = param2;
     strAddDel = param3;
-    socket = param4;
+    pNetwork = param4;
     opList = param5;
     halfopList = param6;
     banList = param7;
@@ -72,26 +72,26 @@ void dlg_privilege::button_ok()
         if (strAddDel == "add")
         {
             if (strStatus == "owner")
-                dlg_privilege::send(QString("CS TRANSFER %1 %2").arg(strChannel).arg(strNick));
+                pNetwork->send(QString("CS TRANSFER %1 %2").arg(strChannel).arg(strNick));
             else if (strStatus == "op")
-                dlg_privilege::send(QString("CS OP %1 ADD %2").arg(strChannel).arg(strNick));
+                pNetwork->send(QString("CS OP %1 ADD %2").arg(strChannel).arg(strNick));
             else if (strStatus == "halfop")
-                dlg_privilege::send(QString("CS HALFOP %1 ADD %2").arg(strChannel).arg(strNick));
+                pNetwork->send(QString("CS HALFOP %1 ADD %2").arg(strChannel).arg(strNick));
             else if (strStatus == "ban")
-                dlg_privilege::send(QString("CS BAN %1 ADD %2").arg(strChannel).arg(strNick));
+                pNetwork->send(QString("CS BAN %1 ADD %2").arg(strChannel).arg(strNick));
             else if (strStatus == "invite")
-                dlg_privilege::send(QString("CS INVITE %1 ADD %2").arg(strChannel).arg(strNick));
+                pNetwork->send(QString("CS INVITE %1 ADD %2").arg(strChannel).arg(strNick));
         }
         else
         {
             if (strStatus == "op")
-                dlg_privilege::send(QString("CS OP %1 DEL %2").arg(strChannel).arg(strNick));
+                pNetwork->send(QString("CS OP %1 DEL %2").arg(strChannel).arg(strNick));
             else if (strStatus == "halfop")
-                dlg_privilege::send(QString("CS HALFOP %1 DEL %2").arg(strChannel).arg(strNick));
+                pNetwork->send(QString("CS HALFOP %1 DEL %2").arg(strChannel).arg(strNick));
             else if (strStatus == "ban")
-                dlg_privilege::send(QString("CS BAN %1 DEL %2").arg(strChannel).arg(strNick));
+                pNetwork->send(QString("CS BAN %1 DEL %2").arg(strChannel).arg(strNick));
             else if (strStatus == "invite")
-                dlg_privilege::send(QString("CS INVITE %1 DEL %2").arg(strChannel).arg(strNick));
+                pNetwork->send(QString("CS INVITE %1 DEL %2").arg(strChannel).arg(strNick));
         }
     }
     else
@@ -106,7 +106,7 @@ void dlg_privilege::button_ok()
     }
 
     dlg_privilege::clear();
-    dlg_privilege::send(QString("CS INFO %1").arg(strChannel));
+    pNetwork->send(QString("CS INFO %1").arg(strChannel));
 
     ui.buttonBox->QObject::disconnect();
     this->close();
@@ -115,7 +115,7 @@ void dlg_privilege::button_ok()
 void dlg_privilege::button_cancel()
 {
     dlg_privilege::clear();
-    dlg_privilege::send(QString("CS INFO %1").arg(strChannel));
+    pNetwork->send(QString("CS INFO %1").arg(strChannel));
 
     ui.buttonBox->QObject::disconnect();
     this->close();
@@ -134,24 +134,4 @@ void dlg_privilege::clear()
 
     for (int i = inviteList->rowCount()-1; i >= 0; --i)
         inviteList->removeRow(i);
-}
-
-// copy of network::send
-void dlg_privilege::send(QString strData)
-{
-    if ((socket->state() == QAbstractSocket::ConnectedState) && (socket->isWritable() == true))
-    {
-#ifdef Q_WS_X11
-        if (settings->value("debug").toString() == "on")
-            qDebug() << "-> " << strData;
-#endif
-        strData += "\r\n";
-        QByteArray qbaData;
-        for ( int i = 0; i < strData.size(); i++)
-            qbaData.insert(i, strData.at(i));
-
-        socket->write(qbaData);
-    }
-    //else
-        //tabc->show_msg("Status", "Error: Nie uda³o siê wys³aæ danych! [Not connected]", 9);
 }

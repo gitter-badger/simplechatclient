@@ -20,11 +20,11 @@
 
 #include "tab_container.h"
 
-tab_container::tab_container(tab_manager *param1, QWidget *param2, QTcpSocket *param3, QSettings *param4)
+tab_container::tab_container(tab_manager *param1, QWidget *param2, network *param3, QSettings *param4)
 {
     tabm = param1;
     mainWin = param2;
-    socket = param3;
+    pNetwork = param3;
     settings = param4;
     free_list = "ffffffffffffffffffffffffffffffffffffffffffffffffff"; // f = free  u = used
 }
@@ -81,7 +81,7 @@ void tab_container::add_tab(QString strChannel,QWidget *parent)
         int iFree = tab_container::free_list_get();
         if (iFree != -1)
         {
-            tw[iFree] = new tab_widget(strChannel, parent, socket, settings, dlgchannel_settings, dlgmoderation);
+            tw[iFree] = new tab_widget(strChannel, parent, pNetwork, settings, dlgchannel_settings, dlgmoderation);
             int iTab = tabm->addTab(tw[iFree], strChannel);
             tabm->setCurrentIndex(iTab);
             free_list[iFree] = 'u';

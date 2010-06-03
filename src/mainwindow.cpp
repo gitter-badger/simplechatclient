@@ -59,7 +59,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     delete pConfig;
 
     settings.clear();
-    settings.setValue("version", "1.0.5.227");
+    settings.setValue("version", "1.0.5.228");
     settings.setValue("debug", "off");
     settings.setValue("logged", "off");
     settings.setValue("busy", "off");
@@ -73,19 +73,19 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     tabm = new tab_manager(this, &settings);
     setCentralWidget(tabm);
 
-    pNetwork = new network(connectAct, &settings);
-    pSocket = pNetwork->get_socket();
-    tabc = new tab_container(tabm, this, pSocket, &settings);
+    pNetwork = new network(this, connectAct, &settings);
+    tabc = new tab_container(tabm, this, pNetwork, &settings);
 
-    dlgchannel_settings = new dlg_channel_settings(&settings, pSocket);
-    dlgmoderation = new dlg_moderation(&settings, pSocket);
-    dlgchannel_list = new dlg_channel_list(&settings, pSocket, tabc);
-    dlgchannel_homes = new dlg_channel_homes(&settings, pSocket, tabc, dlgchannel_settings);
-    dlgchannel_favourites = new dlg_channel_favourites(&settings, pSocket, tabc);
-    dlgfriends = new dlg_friends(&settings, pSocket, tabc);
-    dlgignore = new dlg_ignore(&settings, pSocket, tabc);
+    dlgchannel_settings = new dlg_channel_settings(&settings, pNetwork);
+    dlgmoderation = new dlg_moderation(&settings, pNetwork);
+    dlgchannel_list = new dlg_channel_list(&settings, pNetwork, tabc);
+    dlgchannel_homes = new dlg_channel_homes(&settings, pNetwork, tabc, dlgchannel_settings);
+    dlgchannel_favourites = new dlg_channel_favourites(&settings, pNetwork, tabc);
+    dlgfriends = new dlg_friends(&settings, pNetwork, tabc);
+    dlgignore = new dlg_ignore(&settings, pNetwork, tabc);
+    pIrc_kernel = new irc_kernel(pNetwork, tabc, &settings, dlgchannel_settings, dlgchannel_homes, dlgchannel_list, dlgchannel_favourites, dlgfriends, dlgignore, dlgmoderation);
+    pIrc_auth = new irc_auth(&settings, tabc, pNetwork);
 
-    pNetwork->set_dlg(tabc, dlgchannel_settings, dlgchannel_homes, dlgchannel_list, dlgchannel_favourites, dlgfriends, dlgignore, dlgmoderation);
     tabc->set_dlg(dlgchannel_settings, dlgmoderation);
 
     tabc->show_msg("Status", "%Fi:courier%Witaj w programie Simple Chat Client %Ixhehe%", 0);
@@ -150,6 +150,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     QObject::connect(closeAct, SIGNAL(triggered()), this, SLOT(button_close()));
     QObject::connect(tabm, SIGNAL(tabCloseRequested(int)), this, SLOT(tab_close_requested(int)));
 
+    QObject::connect(this, SIGNAL(do_kernel(QString)), pIrc_kernel, SLOT(kernel(QString)));
+    QObject::connect(this, SIGNAL(do_request_uo(QString, QString)), pIrc_auth, SLOT(request_uo(QString, QString)));
+
 // tray
     trayMenu = new QMenu();
     trayMenu->addAction(showAct);
@@ -169,6 +172,8 @@ MainWindow::~MainWindow()
     settings.setValue("reconnect", "false");
     delete trayIcon;
     delete trayMenu;
+    delete pIrc_auth;
+    delete pIrc_kernel;
     delete dlgignore;
     delete dlgfriends;
     delete dlgchannel_favourites;
@@ -192,6 +197,17 @@ void MainWindow::remove_uthread(update_thread *thr)
 #endif
 }
 
+// slots
+
+void MainWindow::kernel(QString param1) { emit do_kernel(param1); }
+void MainWindow::request_uo(QString param1, QString param2) { emit do_request_uo(param1, param2); }
+void MainWindow::show_msg_active(QString param1, int param2) { tabc->show_msg_active(param1, param2); }
+void MainWindow::show_msg_all(QString param1, int param2) { tabc->show_msg_all(param1, param2); }
+void MainWindow::update_nick(QString param1) { tabc->update_nick(param1); }
+void MainWindow::clear_nicklist(QString param1) { tabc->clear_nicklist(param1); }
+
+// args
+
 void MainWindow::set_debug(bool param1)
 {
     if (param1 == true)
@@ -199,6 +215,8 @@ void MainWindow::set_debug(bool param1)
     else
         settings.setValue("debug", "off");
 }
+
+// buttons
 
 void MainWindow::button_close()
 {
@@ -211,7 +229,6 @@ void MainWindow::button_connect()
     {
         connectAct->setText("&Roz³±cz");
         connectAct->setIconText("&Roz³±cz");
-        pNetwork->set_hostport("czat-app.onet.pl", 5015);
         settings.setValue("reconnect", "true");
         pNetwork->connect();
     }

@@ -26,16 +26,16 @@
 #endif
 #include <QDateTime>
 #include <QDialog>
-#include <QTcpSocket>
 #include "dlg_email.h"
 #include "dlg_privilege.h"
+#include "network.h"
 #include "ui_channel_settings.h"
 
 class dlg_channel_settings : public QDialog
 {
     Q_OBJECT
 public:
-    dlg_channel_settings(QSettings *, QTcpSocket *);
+    dlg_channel_settings(QSettings *, network *);
     void set_channel(QString);
     void add_topic(QString);
     void add_pubpriv(int);
@@ -58,12 +58,11 @@ public:
 private:
     Ui::uiChannelSettings ui;
     QSettings *settings;
-    QTcpSocket *socket;
+    network *pNetwork;
     QString strChannel;
 
     bool exist_item(QString, QTableWidget *);
     void clear();
-    void send(QString);
 
 protected:
     virtual void showEvent(QShowEvent *);

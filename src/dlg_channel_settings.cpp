@@ -20,12 +20,12 @@
 
 #include "dlg_channel_settings.h"
 
-dlg_channel_settings::dlg_channel_settings(QSettings *param1, QTcpSocket *param2)
+dlg_channel_settings::dlg_channel_settings(QSettings *param1, network *param2)
 {
     ui.setupUi(this);
 
     settings = param1;
-    socket = param2;
+    pNetwork = param2;
 
     QObject::connect(ui.pushButton, SIGNAL(clicked()), this, SLOT(owner_changed()));
     QObject::connect(ui.pushButton_19, SIGNAL(clicked()), this, SLOT(email_changed()));
@@ -61,7 +61,7 @@ dlg_channel_settings::dlg_channel_settings(QSettings *param1, QTcpSocket *param2
 void dlg_channel_settings::set_channel(QString param1)
 {
     strChannel = param1;
-    dlg_channel_settings::send(QString("CS INFO %1").arg(strChannel));
+    pNetwork->send(QString("CS INFO %1").arg(strChannel));
 }
 
 void dlg_channel_settings::add_topic(QString strTopic)
@@ -218,7 +218,7 @@ void dlg_channel_settings::add_description(QString strDescription)
 
 void dlg_channel_settings::owner_changed()
 {
-    (new dlg_privilege("owner", strChannel, "add", socket, ui.tableWidget, ui.tableWidget_2, ui.tableWidget_3, ui.tableWidget_4, settings))->show();
+    (new dlg_privilege("owner", strChannel, "add", pNetwork, ui.tableWidget, ui.tableWidget_2, ui.tableWidget_3, ui.tableWidget_4, settings))->show();
 }
 
 void dlg_channel_settings::email_changed()
@@ -228,101 +228,101 @@ void dlg_channel_settings::email_changed()
 
 void dlg_channel_settings::www_changed()
 {
-    dlg_channel_settings::send(QString("CS SET %1 WWW %2").arg(strChannel).arg(ui.lineEdit_2->text()));
-    dlg_channel_settings::send(QString("CS INFO %1").arg(strChannel));
+    pNetwork->send(QString("CS SET %1 WWW %2").arg(strChannel).arg(ui.lineEdit_2->text()));
+    pNetwork->send(QString("CS INFO %1").arg(strChannel));
 }
 
 void dlg_channel_settings::topic_changed()
 {
-    dlg_channel_settings::send(QString("CS SET %1 TOPIC %2").arg(strChannel).arg(ui.plainTextEdit->toPlainText().replace(QRegExp("(\r|\n)"), "")));
-    dlg_channel_settings::send(QString("CS INFO %1").arg(strChannel));
+    pNetwork->send(QString("CS SET %1 TOPIC %2").arg(strChannel).arg(ui.plainTextEdit->toPlainText().replace(QRegExp("(\r|\n)"), "")));
+    pNetwork->send(QString("CS INFO %1").arg(strChannel));
 }
 
 void dlg_channel_settings::desc_changed()
 {
-    dlg_channel_settings::send(QString("CS SET %1 LONGDESC %2").arg(strChannel).arg(ui.plainTextEdit_2->toPlainText().replace(QRegExp("(\r|\n)"), "")));
-    dlg_channel_settings::send(QString("CS INFO %1").arg(strChannel));
+    pNetwork->send(QString("CS SET %1 LONGDESC %2").arg(strChannel).arg(ui.plainTextEdit_2->toPlainText().replace(QRegExp("(\r|\n)"), "")));
+    pNetwork->send(QString("CS INFO %1").arg(strChannel));
 }
 
 void dlg_channel_settings::status_pub()
 {
-    dlg_channel_settings::send(QString("CS SET %1 PRIVATE OFF").arg(strChannel));
-    dlg_channel_settings::send(QString("CS INFO %1").arg(strChannel));
+    pNetwork->send(QString("CS SET %1 PRIVATE OFF").arg(strChannel));
+    pNetwork->send(QString("CS INFO %1").arg(strChannel));
 }
 
 void dlg_channel_settings::status_priv()
 {
-    dlg_channel_settings::send(QString("CS SET %1 PRIVATE ON").arg(strChannel));
-    dlg_channel_settings::send(QString("CS INFO %1").arg(strChannel));
+    pNetwork->send(QString("CS SET %1 PRIVATE ON").arg(strChannel));
+    pNetwork->send(QString("CS INFO %1").arg(strChannel));
 }
 
 void dlg_channel_settings::category_changed(int index)
 {
-    dlg_channel_settings::send(QString("CS SET %1 CATMAJOR %2").arg(strChannel).arg(index+1));
-    dlg_channel_settings::send(QString("CS INFO %1").arg(strChannel));
+    pNetwork->send(QString("CS SET %1 CATMAJOR %2").arg(strChannel).arg(index+1));
+    pNetwork->send(QString("CS INFO %1").arg(strChannel));
 }
 
 void dlg_channel_settings::guardian_inactive()
 {
-    dlg_channel_settings::send(QString("CS SET %1 GUARDIAN 0").arg(strChannel));
-    dlg_channel_settings::send(QString("CS INFO %1").arg(strChannel));
+    pNetwork->send(QString("CS SET %1 GUARDIAN 0").arg(strChannel));
+    pNetwork->send(QString("CS INFO %1").arg(strChannel));
 }
 
 void dlg_channel_settings::guardian_active()
 {
     if (ui.comboBox_2->currentIndex() != -1)
-        dlg_channel_settings::send(QString("CS SET %1 GUARDIAN %2").arg(strChannel).arg(ui.comboBox_2->currentIndex()));
+        pNetwork->send(QString("CS SET %1 GUARDIAN %2").arg(strChannel).arg(ui.comboBox_2->currentIndex()));
     else
-        dlg_channel_settings::send(QString("CS SET %1 GUARDIAN 1").arg(strChannel));
-    dlg_channel_settings::send(QString("CS INFO %1").arg(strChannel));
+        pNetwork->send(QString("CS SET %1 GUARDIAN 1").arg(strChannel));
+    pNetwork->send(QString("CS INFO %1").arg(strChannel));
 }
 
 void dlg_channel_settings::guardian_clicked(int iLevel)
 {
     if (ui.radioButton_4->isChecked() == true)
-        dlg_channel_settings::send(QString("CS SET %1 GUARDIAN %2").arg(strChannel).arg(iLevel+1));
-    dlg_channel_settings::send(QString("CS INFO %1").arg(strChannel));
+        pNetwork->send(QString("CS SET %1 GUARDIAN %2").arg(strChannel).arg(iLevel+1));
+    pNetwork->send(QString("CS INFO %1").arg(strChannel));
 }
 
 void dlg_channel_settings::password_changed()
 {
-    dlg_channel_settings::send(QString("CS SET %1 PASSWORD %2").arg(strChannel).arg(ui.lineEdit_3->text()));
-    dlg_channel_settings::send(QString("CS INFO %1").arg(strChannel));
+    pNetwork->send(QString("CS SET %1 PASSWORD %2").arg(strChannel).arg(ui.lineEdit_3->text()));
+    pNetwork->send(QString("CS INFO %1").arg(strChannel));
 }
 
 void dlg_channel_settings::limit_changed(int iLimit)
 {
-    dlg_channel_settings::send(QString("CS SET %1 LIMIT %2").arg(strChannel).arg(iLimit));
-    dlg_channel_settings::send(QString("CS INFO %1").arg(strChannel));
+    pNetwork->send(QString("CS SET %1 LIMIT %2").arg(strChannel).arg(iLimit));
+    pNetwork->send(QString("CS INFO %1").arg(strChannel));
 }
 
 void dlg_channel_settings::moderated_inactive()
 {
-    dlg_channel_settings::send(QString("CS SET %1 MODERATED OFF").arg(strChannel));
-    dlg_channel_settings::send(QString("CS INFO %1").arg(strChannel));
+    pNetwork->send(QString("CS SET %1 MODERATED OFF").arg(strChannel));
+    pNetwork->send(QString("CS INFO %1").arg(strChannel));
 }
 
 void dlg_channel_settings::moderated_active()
 {
-    dlg_channel_settings::send(QString("CS SET %1 MODERATED ON").arg(strChannel));
-    dlg_channel_settings::send(QString("CS INFO %1").arg(strChannel));
+    pNetwork->send(QString("CS SET %1 MODERATED ON").arg(strChannel));
+    pNetwork->send(QString("CS INFO %1").arg(strChannel));
 }
 
 void dlg_channel_settings::auditorium_inactive()
 {
-    dlg_channel_settings::send(QString("CS SET %1 AUDITORIUM OFF").arg(strChannel));
-    dlg_channel_settings::send(QString("CS INFO %1").arg(strChannel));
+    pNetwork->send(QString("CS SET %1 AUDITORIUM OFF").arg(strChannel));
+    pNetwork->send(QString("CS INFO %1").arg(strChannel));
 }
 
 void dlg_channel_settings::auditorium_active()
 {
-    dlg_channel_settings::send(QString("CS SET %1 AUDITORIUM ON").arg(strChannel));
-    dlg_channel_settings::send(QString("CS INFO %1").arg(strChannel));
+    pNetwork->send(QString("CS SET %1 AUDITORIUM ON").arg(strChannel));
+    pNetwork->send(QString("CS INFO %1").arg(strChannel));
 }
 
 void dlg_channel_settings::button_op_add()
 {
-    (new dlg_privilege("op", strChannel, "add", socket, ui.tableWidget, ui.tableWidget_2, ui.tableWidget_3, ui.tableWidget_4, settings))->show();
+    (new dlg_privilege("op", strChannel, "add", pNetwork, ui.tableWidget, ui.tableWidget_2, ui.tableWidget_3, ui.tableWidget_4, settings))->show();
 }
 
 void dlg_channel_settings::button_op_del()
@@ -330,19 +330,19 @@ void dlg_channel_settings::button_op_del()
     if (ui.tableWidget->selectedItems().isEmpty() == false)
     {
         QString strRemoveNick = ui.tableWidget->selectedItems().at(0)->text();
-        dlg_channel_settings::send(QString("CS OP %1 DEL %2").arg(strChannel).arg(strRemoveNick));
-        dlg_channel_settings::send(QString("CS INFO %1").arg(strChannel));
+        pNetwork->send(QString("CS OP %1 DEL %2").arg(strChannel).arg(strRemoveNick));
+        pNetwork->send(QString("CS INFO %1").arg(strChannel));
         dlg_channel_settings::clear();
     }
     else
     {
-        (new dlg_privilege("op", strChannel, "del", socket, ui.tableWidget, ui.tableWidget_2, ui.tableWidget_3, ui.tableWidget_4, settings))->show();
+        (new dlg_privilege("op", strChannel, "del", pNetwork, ui.tableWidget, ui.tableWidget_2, ui.tableWidget_3, ui.tableWidget_4, settings))->show();
     }
 }
 
 void dlg_channel_settings::button_halfop_add()
 {
-    (new dlg_privilege("halfop", strChannel, "add", socket, ui.tableWidget, ui.tableWidget_2, ui.tableWidget_3, ui.tableWidget_4, settings))->show();
+    (new dlg_privilege("halfop", strChannel, "add", pNetwork, ui.tableWidget, ui.tableWidget_2, ui.tableWidget_3, ui.tableWidget_4, settings))->show();
 }
 
 void dlg_channel_settings::button_halfop_del()
@@ -350,19 +350,19 @@ void dlg_channel_settings::button_halfop_del()
     if (ui.tableWidget_2->selectedItems().isEmpty() == false)
     {
         QString strRemoveNick = ui.tableWidget_2->selectedItems().at(0)->text();
-        dlg_channel_settings::send(QString("CS HALFOP %1 DEL %2").arg(strChannel).arg(strRemoveNick));
-        dlg_channel_settings::send(QString("CS INFO %1").arg(strChannel));
+        pNetwork->send(QString("CS HALFOP %1 DEL %2").arg(strChannel).arg(strRemoveNick));
+        pNetwork->send(QString("CS INFO %1").arg(strChannel));
         dlg_channel_settings::clear();
     }
     else
     {
-        (new dlg_privilege("halfop", strChannel, "del", socket, ui.tableWidget, ui.tableWidget_2, ui.tableWidget_3, ui.tableWidget_4, settings))->show();
+        (new dlg_privilege("halfop", strChannel, "del", pNetwork, ui.tableWidget, ui.tableWidget_2, ui.tableWidget_3, ui.tableWidget_4, settings))->show();
     }
 }
 
 void dlg_channel_settings::button_ban_add()
 {
-    (new dlg_privilege("ban", strChannel, "add", socket, ui.tableWidget, ui.tableWidget_2, ui.tableWidget_3, ui.tableWidget_4, settings))->show();
+    (new dlg_privilege("ban", strChannel, "add", pNetwork, ui.tableWidget, ui.tableWidget_2, ui.tableWidget_3, ui.tableWidget_4, settings))->show();
 }
 
 void dlg_channel_settings::button_ban_del()
@@ -370,19 +370,19 @@ void dlg_channel_settings::button_ban_del()
     if (ui.tableWidget_3->selectedItems().isEmpty() == false)
     {
         QString strRemoveNick = ui.tableWidget_3->selectedItems().at(0)->text();
-        dlg_channel_settings::send(QString("CS BAN %1 DEL %2").arg(strChannel).arg(strRemoveNick));
-        dlg_channel_settings::send(QString("CS INFO %1").arg(strChannel));
+        pNetwork->send(QString("CS BAN %1 DEL %2").arg(strChannel).arg(strRemoveNick));
+        pNetwork->send(QString("CS INFO %1").arg(strChannel));
         dlg_channel_settings::clear();
     }
     else
     {
-        (new dlg_privilege("ban", strChannel, "del", socket, ui.tableWidget, ui.tableWidget_2, ui.tableWidget_3, ui.tableWidget_4, settings))->show();
+        (new dlg_privilege("ban", strChannel, "del", pNetwork, ui.tableWidget, ui.tableWidget_2, ui.tableWidget_3, ui.tableWidget_4, settings))->show();
     }
 }
 
 void dlg_channel_settings::button_invite_add()
 {
-    (new dlg_privilege("invite", strChannel, "add", socket, ui.tableWidget, ui.tableWidget_2, ui.tableWidget_3, ui.tableWidget_4, settings))->show();
+    (new dlg_privilege("invite", strChannel, "add", pNetwork, ui.tableWidget, ui.tableWidget_2, ui.tableWidget_3, ui.tableWidget_4, settings))->show();
 }
 
 void dlg_channel_settings::button_invite_del()
@@ -390,13 +390,13 @@ void dlg_channel_settings::button_invite_del()
     if (ui.tableWidget_4->selectedItems().isEmpty() == false)
     {
         QString strRemoveNick = ui.tableWidget_4->selectedItems().at(0)->text();
-        dlg_channel_settings::send(QString("CS INVITE %1 DEL %2").arg(strChannel).arg(strRemoveNick));
-        dlg_channel_settings::send(QString("CS INFO %1").arg(strChannel));
+        pNetwork->send(QString("CS INVITE %1 DEL %2").arg(strChannel).arg(strRemoveNick));
+        pNetwork->send(QString("CS INFO %1").arg(strChannel));
         dlg_channel_settings::clear();
     }
     else
     {
-        (new dlg_privilege("invite", strChannel, "del", socket, ui.tableWidget, ui.tableWidget_2, ui.tableWidget_3, ui.tableWidget_4, settings))->show();
+        (new dlg_privilege("invite", strChannel, "del", pNetwork, ui.tableWidget, ui.tableWidget_2, ui.tableWidget_3, ui.tableWidget_4, settings))->show();
     }
 }
 
@@ -454,26 +454,6 @@ void dlg_channel_settings::clear()
     ui.radioButton_6->setChecked(false);
     ui.radioButton_7->setChecked(false);
     ui.radioButton_8->setChecked(false);
-}
-
-// copy of network::send
-void dlg_channel_settings::send(QString strData)
-{
-    if ((socket->state() == QAbstractSocket::ConnectedState) && (socket->isWritable() == true))
-    {
-#ifdef Q_WS_X11
-        if (settings->value("debug").toString() == "on")
-            qDebug() << "-> " << strData;
-#endif
-        strData += "\r\n";
-        QByteArray qbaData;
-        for ( int i = 0; i < strData.size(); i++)
-            qbaData.insert(i, strData.at(i));
-
-        socket->write(qbaData);
-    }
-    //else
-        //tabc->show_msg("Status", "Error: Nie uda³o siê wys³aæ danych! [Not connected]", 9);
 }
 
 void dlg_channel_settings::showEvent(QShowEvent *event)

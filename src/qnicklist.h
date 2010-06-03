@@ -29,14 +29,14 @@
 #include <QMenu>
 #include <QQueue>
 #include <QSettings>
-#include <QTcpSocket>
 #include "dlg_cam.h"
+#include "network.h"
 
 class qnicklist : public QListWidget
 {
     Q_OBJECT
 public:
-    qnicklist(QTcpSocket *, QSettings *, QString);
+    qnicklist(network *, QSettings *, QString);
     ~qnicklist();
     void set_open_channels(QStringList);
     void nicklist_add(QString, QString, QHash <QString, QString> *, QQueue <QString> *, QQueue <QString> *);
@@ -48,14 +48,12 @@ public:
     void nicklist_quicksort(QString strStatus, QHash <QString, QString> *, QQueue <QString> *, QQueue <QString> *);
 
 private:
-    QTcpSocket *socket;
+    network *pNetwork;
     QSettings *settings;
     QString strChannel;
     QStringList strOpenChannels;
     enum { MaxOpenChannels = 50 };
     QAction *openChannelsActs[MaxOpenChannels];
-
-    void send(QString);
 
 private slots:
     void priv();

@@ -20,12 +20,12 @@
 
 #include "dlg_channel_list.h"
 
-dlg_channel_list::dlg_channel_list(QSettings *param1, QTcpSocket *param2, tab_container *param3)
+dlg_channel_list::dlg_channel_list(QSettings *param1, network *param2, tab_container *param3)
 {
     ui.setupUi(this);
 
     settings = param1;
-    socket = param2;
+    pNetwork = param2;
     tabc = param3;
 
     QObject::connect(ui.tableWidget_1, SIGNAL(cellDoubleClicked(int,int)), this, SLOT(allCellDoubleClicked(int,int)));
@@ -195,37 +195,37 @@ void dlg_channel_list::sort()
 void dlg_channel_list::allCellDoubleClicked(int row, int column)
 {
     QString strChannel = ui.tableWidget_1->item(row, 0)->text();
-    dlg_channel_list::send(QString("JOIN %1").arg(strChannel));
+    pNetwork->send(QString("JOIN %1").arg(strChannel));
 }
 
 void dlg_channel_list::teenCellDoubleClicked(int row, int column)
 {
     QString strChannel = ui.tableWidget_2->item(row, 0)->text();
-    dlg_channel_list::send(QString("JOIN %1").arg(strChannel));
+    pNetwork->send(QString("JOIN %1").arg(strChannel));
 }
 
 void dlg_channel_list::towarzyskieCellDoubleClicked(int row, int column)
 {
     QString strChannel = ui.tableWidget_3->item(row, 0)->text();
-    dlg_channel_list::send(QString("JOIN %1").arg(strChannel));
+    pNetwork->send(QString("JOIN %1").arg(strChannel));
 }
 
 void dlg_channel_list::erotyczneCellDoubleClicked(int row, int column)
 {
     QString strChannel = ui.tableWidget_4->item(row, 0)->text();
-    dlg_channel_list::send(QString("JOIN %1").arg(strChannel));
+    pNetwork->send(QString("JOIN %1").arg(strChannel));
 }
 
 void dlg_channel_list::tematyczneCellDoubleClicked(int row, int column)
 {
     QString strChannel = ui.tableWidget_5->item(row, 0)->text();
-    dlg_channel_list::send(QString("JOIN %1").arg(strChannel));
+    pNetwork->send(QString("JOIN %1").arg(strChannel));
 }
 
 void dlg_channel_list::regionalneCellDoubleClicked(int row, int column)
 {
     QString strChannel = ui.tableWidget_6->item(row, 0)->text();
-    dlg_channel_list::send(QString("JOIN %1").arg(strChannel));
+    pNetwork->send(QString("JOIN %1").arg(strChannel));
 }
 
 void dlg_channel_list::button_ok()
@@ -240,37 +240,11 @@ void dlg_channel_list::button_cancel()
     this->hide();
 }
 
-// copy of network::send
-void dlg_channel_list::send(QString strData)
-{
-    if ((socket->state() == QAbstractSocket::ConnectedState) && (socket->isWritable() == true))
-    {
-#ifdef Q_WS_X11
-        if (settings->value("debug").toString() == "on")
-            qDebug() << "-> " << strData;
-#endif
-        strData += "\r\n";
-        QByteArray qbaData;
-        for ( int i = 0; i < strData.size(); i++)
-            qbaData.insert(i, strData.at(i));
-
-        if (socket->write(qbaData) == -1)
-        {
-            if (socket->state() == QAbstractSocket::ConnectedState)
-                tabc->show_msg_active(QString("Error: Nie uda³o siê wys³aæ danych! [%1]").arg(socket->errorString()), 9);
-            else if (socket->state() == QAbstractSocket::UnconnectedState)
-                tabc->show_msg_active("Error: Nie uda³o siê wys³aæ danych! [Not connected]", 9);
-        }
-    }
-    else
-        tabc->show_msg("Status", "Error: Nie uda³o siê wys³aæ danych! [Not connected]", 9);
-}
-
 void dlg_channel_list::showEvent(QShowEvent *event)
 {
     event->accept();
 
-    dlg_channel_list::send("SLIST  R- 0 0 100 null");
+    pNetwork->send("SLIST  R- 0 0 100 null");
 }
 
 void dlg_channel_list::resizeEvent(QResizeEvent *event)

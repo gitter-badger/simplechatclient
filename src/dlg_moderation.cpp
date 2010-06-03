@@ -20,12 +20,12 @@
 
 #include "dlg_moderation.h"
 
-dlg_moderation::dlg_moderation(QSettings *param1, QTcpSocket *param2)
+dlg_moderation::dlg_moderation(QSettings *param1, network *param2)
 {
     ui.setupUi(this);
 
     settings = param1;
-    socket = param2;
+    pNetwork = param2;
 
     QObject::connect(ui.pushButton, SIGNAL(clicked()), this, SLOT(button_accept()));
     QObject::connect(ui.pushButton_2, SIGNAL(clicked()), this, SLOT(button_remove()));
@@ -127,7 +127,7 @@ void dlg_moderation::button_accept()
     for (int i = 1; i < strDataList.size(); i++) { if (i != 1) strMessage += " "; strMessage += strDataList[i]; }
 
     QString strDisplay = QString("MODERMSG %1 - %2 :%3").arg(strNick).arg(strChannel).arg(strMessage);
-    dlg_moderation::send(strDisplay);
+    pNetwork->send(strDisplay);
     dlg_moderation::del_msg(strData);
 }
 
@@ -143,24 +143,4 @@ void dlg_moderation::button_remove()
 void dlg_moderation::button_close()
 {
     this->hide();
-}
-
-// copy of network::send
-void dlg_moderation::send(QString strData)
-{
-    if ((socket->state() == QAbstractSocket::ConnectedState) && (socket->isWritable() == true))
-    {
-#ifdef Q_WS_X11
-        if (settings->value("debug").toString() == "on")
-            qDebug() << "-> " << strData;
-#endif
-        strData += "\r\n";
-        QByteArray qbaData;
-        for ( int i = 0; i < strData.size(); i++)
-            qbaData.insert(i, strData.at(i));
-
-        socket->write(qbaData);
-    }
-    //else
-        //tabc->show_msg("Status", "Error: Nie uda³o siê wys³aæ danych! [Not connected]", 9);
 }

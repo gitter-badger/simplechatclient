@@ -28,18 +28,19 @@
 #include <QStringList>
 #include <QTcpSocket>
 #include <QTimer>
+#include "network.h"
 #include "ui_cam.h"
 
 class dlg_cam : public QDialog
 {
     Q_OBJECT
 public:
-    dlg_cam(QSettings *, QTcpSocket *, QString);
+    dlg_cam(QSettings *, network *, QString);
 
 private:
     Ui::uiCam ui;
     QSettings *settings;
-    QTcpSocket *irc_socket;
+    network *pNetwork;
     QString strNick;
     QTcpSocket *socket;
     QString strDataRecv;
@@ -55,7 +56,6 @@ private:
     void network_connect();
     void network_send(QString);
     void network_disconnect();
-    void send(QString);
 
 private slots:
     void button_ok();

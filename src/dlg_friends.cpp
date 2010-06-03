@@ -20,12 +20,12 @@
 
 #include "dlg_friends.h"
 
-dlg_friends::dlg_friends(QSettings *param1, QTcpSocket *param2, tab_container *param3)
+dlg_friends::dlg_friends(QSettings *param1, network *param2, tab_container *param3)
 {
     ui.setupUi(this);
 
     settings = param1;
-    socket = param2;
+    pNetwork = param2;
     tabc = param3;
 
     QObject::connect(ui.pushButton, SIGNAL(clicked()), this, SLOT(button_add()));
@@ -72,12 +72,12 @@ void dlg_friends::clear()
 
 void dlg_friends::button_add()
 {
-    (new dlg_friends_ad(socket, tabc, settings, "add"))->show();
+    (new dlg_friends_ad(pNetwork, tabc, settings, "add"))->show();
 }
 
 void dlg_friends::button_remove()
 {
-    (new dlg_friends_ad(socket, tabc, settings, "remove"))->show();
+    (new dlg_friends_ad(pNetwork, tabc, settings, "remove"))->show();
 }
 
 void dlg_friends::button_ok()
@@ -88,30 +88,4 @@ void dlg_friends::button_ok()
 void dlg_friends::button_cancel()
 {
     this->hide();
-}
-
-// copy of network::send
-void dlg_friends::send(QString strData)
-{
-    if ((socket->state() == QAbstractSocket::ConnectedState) && (socket->isWritable() == true))
-    {
-#ifdef Q_WS_X11
-        if (settings->value("debug").toString() == "on")
-            qDebug() << "-> " << strData;
-#endif
-        strData += "\r\n";
-        QByteArray qbaData;
-        for ( int i = 0; i < strData.size(); i++)
-            qbaData.insert(i, strData.at(i));
-
-        if (socket->write(qbaData) == -1)
-        {
-            if (socket->state() == QAbstractSocket::ConnectedState)
-                tabc->show_msg_active(QString("Error: Nie uda³o siê wys³aæ danych! [%1]").arg(socket->errorString()), 9);
-            else if (socket->state() == QAbstractSocket::UnconnectedState)
-                tabc->show_msg_active("Error: Nie uda³o siê wys³aæ danych! [Not connected]", 9);
-        }
-    }
-    else
-        tabc->show_msg("Status", "Error: Nie uda³o siê wys³aæ danych! [Not connected]", 9);
 }

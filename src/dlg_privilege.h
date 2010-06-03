@@ -25,18 +25,18 @@
 #include <QMessageBox>
 #include <QSettings>
 #include <QTableWidget>
-#include <QTcpSocket>
+#include "network.h"
 #include "ui_privilege.h"
 
 class dlg_privilege : public QDialog
 {
     Q_OBJECT
 public:
-    dlg_privilege(QString, QString, QString, QTcpSocket *, QTableWidget *, QTableWidget *, QTableWidget *, QTableWidget *, QSettings *);
+    dlg_privilege(QString, QString, QString, network *, QTableWidget *, QTableWidget *, QTableWidget *, QTableWidget *, QSettings *);
 
 private:
     Ui::uiPrivilege ui;
-    QTcpSocket *socket;
+    network *pNetwork;
     QSettings *settings;
     QString strStatus;
     QString strChannel;
@@ -47,7 +47,6 @@ private:
     QTableWidget *inviteList;
 
     void clear();
-    void send(QString);
 
 private slots:
     void button_ok();

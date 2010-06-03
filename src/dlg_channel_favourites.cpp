@@ -20,12 +20,12 @@
 
 #include "dlg_channel_favourites.h"
 
-dlg_channel_favourites::dlg_channel_favourites(QSettings *param1, QTcpSocket *param2, tab_container *param3)
+dlg_channel_favourites::dlg_channel_favourites(QSettings *param1, network *param2, tab_container *param3)
 {
     ui.setupUi(this);
 
     settings = param1;
-    socket = param2;
+    pNetwork = param2;
     tabc = param3;
 
     QObject::connect(ui.pushButton, SIGNAL(clicked()), this, SLOT(button_add()));
@@ -47,7 +47,7 @@ void dlg_channel_favourites::clear()
 void dlg_channel_favourites::button_add()
 {
     ui.listWidget->clear();
-    (new dlg_channel_favourites_ad(socket, tabc, settings, "add", ""))->show();
+    (new dlg_channel_favourites_ad(pNetwork, tabc, settings, "add", ""))->show();
 }
 
 void dlg_channel_favourites::button_remove()
@@ -57,7 +57,7 @@ void dlg_channel_favourites::button_remove()
         strSelected = ui.listWidget->selectedItems().at(0)->text();
 
     ui.listWidget->clear();
-    (new dlg_channel_favourites_ad(socket, tabc, settings, "remove", strSelected))->show();
+    (new dlg_channel_favourites_ad(pNetwork, tabc, settings, "remove", strSelected))->show();
 }
 
 void dlg_channel_favourites::button_ok()
@@ -72,36 +72,10 @@ void dlg_channel_favourites::button_cancel()
     this->hide();
 }
 
-// copy of network::send
-void dlg_channel_favourites::send(QString strData)
-{
-    if ((socket->state() == QAbstractSocket::ConnectedState) && (socket->isWritable() == true))
-    {
-#ifdef Q_WS_X11
-        if (settings->value("debug").toString() == "on")
-            qDebug() << "-> " << strData;
-#endif
-        strData += "\r\n";
-        QByteArray qbaData;
-        for ( int i = 0; i < strData.size(); i++)
-            qbaData.insert(i, strData.at(i));
-
-        if (socket->write(qbaData) == -1)
-        {
-            if (socket->state() == QAbstractSocket::ConnectedState)
-                tabc->show_msg_active(QString("Error: Nie uda³o siê wys³aæ danych! [%1]").arg(socket->errorString()), 9);
-            else if (socket->state() == QAbstractSocket::UnconnectedState)
-                tabc->show_msg_active("Error: Nie uda³o siê wys³aæ danych! [Not connected]", 9);
-        }
-    }
-    else
-        tabc->show_msg("Status", "Error: Nie uda³o siê wys³aæ danych! [Not connected]", 9);
-}
-
 void dlg_channel_favourites::showEvent(QShowEvent *event)
 {
     event->accept();
 
     ui.listWidget->clear();
-    dlg_channel_favourites::send("NS FAVOURITES");
+    pNetwork->send("NS FAVOURITES");
 }

@@ -23,66 +23,33 @@
 
 #include <QAction>
 #include <QObject>
-#include <QTcpSocket>
-#include <QTimer>
-#include "crypt.h"
-#include "dlg_channel_favourites.h"
-#include "dlg_channel_homes.h"
-#include "dlg_channel_settings.h"
-#include "dlg_friends.h"
-#include "dlg_ignore.h"
-#include "dlg_moderation.h"
-#include "irc_auth.h"
-#include "irc_kernel.h"
-#include "tab_container.h"
+#include <QSettings>
+#include "network_thread.h"
 
 class network : public QObject
 {
     Q_OBJECT
 public:
-    network(QAction *, QSettings *);
+    network(QWidget *, QAction *, QSettings *);
     ~network();
-    QTcpSocket* get_socket() { return socket; }
-    void set_hostport(QString, int);
-    void set_dlg(tab_container *, dlg_channel_settings *, dlg_channel_homes *, dlg_channel_list *, dlg_channel_favourites *, dlg_friends *, dlg_ignore *, dlg_moderation *);
-    void set_reconnect(bool);
     bool is_connected();
     bool is_writable();
     void connect();
     void close();
     void send(QString);
-    void kernel(QString);
+
+public slots:
+    void send_slot(QString);
 
 private:
-    QTcpSocket *socket;
-    tab_container *tabc;
     QAction *connectAct;
-    QString strServer;
-    int iPort;
-    QString strDataRecv;
     QSettings *settings;
-    dlg_channel_settings *dlgchannel_settings;
-    dlg_channel_homes *dlgchannel_homes;
-    dlg_channel_list *dlgchannel_list;
-    dlg_channel_favourites *dlgchannel_favourites;
-    dlg_friends *dlgfriends;
-    dlg_ignore *dlgignore;
-    dlg_moderation *dlgmoderation;
-    QTimer *timer;
-    int iActive;
-    irc_auth *pIrc_auth;
-    irc_kernel *pIrc_kernel;
-
-private slots:
-    void reconnect();
-    void recv();
-    void connected();
-    void disconnected();
-    void error(QAbstractSocket::SocketError);
-    void timeout();
+    networkThread *networkThr;
 
 signals:
-    void send_to_kernel(QString);
+    void do_connect();
+    void do_close();
+    void do_send(QString);
 
 };
 
