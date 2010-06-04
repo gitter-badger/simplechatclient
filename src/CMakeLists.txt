@@ -25,6 +25,7 @@ set (scc_SRCS
 	commands.cpp
 	config.cpp
 	crypt.cpp
+	debug.cpp
 	dlg_about.cpp
 	dlg_cam.cpp
 	dlg_channel_favourites.cpp
@@ -66,6 +67,7 @@ set (scc_MOC_SRCS
 	commands.h
 	config.h
 	crypt.h
+	debug.h
 	dlg_about.h
 	dlg_cam.h
 	dlg_channel_favourites.h

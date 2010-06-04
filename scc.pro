@@ -12,6 +12,7 @@ SOURCES += src/channel_avatar.cpp \
     src/commands.cpp \
     src/config.cpp \
     src/crypt.cpp \
+    src/debug.cpp \
     src/dlg_about.cpp \
     src/dlg_cam.cpp \
     src/dlg_channel_favourites.cpp \
@@ -50,6 +51,7 @@ HEADERS += src/channel_avatar.h \
     src/commands.h \
     src/config.h \
     src/crypt.h \
+    src/debug.h \
     src/dlg_about.h \
     src/dlg_cam.h \
     src/dlg_channel_favourites.h \
