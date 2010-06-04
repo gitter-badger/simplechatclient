@@ -96,7 +96,11 @@ bool qinputline::event(QEvent *e)
 
         if (find.isEmpty() == false)
         {
-            qinputline::set_word(find.at(index)->text());
+            if (index > find.count())
+                index = 0;
+
+            QString strSetWord = find.at(index)->text();
+            qinputline::set_word(strSetWord);
 
             index++;
             if (index >= find.count())

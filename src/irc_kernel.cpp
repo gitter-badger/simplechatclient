@@ -2443,10 +2443,9 @@ void irc_kernel::raw_819()
             case 3:
                 strChannelCat = "Kultowy " + strChannelCat;
                 break;
-         }
+        }
 
-        if (strChannelPeople.toInt() > 0)
-            dlgchannel_list->add_channel(strChannelName, strChannelPeople, strChannelCat, strChannelType);
+        dlgchannel_list->add_channel(strChannelName, strChannelPeople, strChannelCat, strChannelType);
     }
 }
 
