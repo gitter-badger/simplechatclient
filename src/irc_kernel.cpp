@@ -929,6 +929,9 @@ void irc_kernel::raw_001()
     if (settings->value("auto_busy").toString() == "on")
         pNetwork->send("BUSY 1");
 
+// autojoin favourites
+    settings->setValue("autojoin_favourites", "on");
+
 }
 
 // :GuardServ!service@service.onet NOTICE scc_test :109 #scc :rzucanie miêsem nie bêdzie tolerowane
@@ -1003,8 +1006,8 @@ void irc_kernel::raw_141n()
     }
 
     // turn off autojoin
-    //if (settings->value("autojoin_favourites").toString() == "on")
-        //settings->setValue("autojoin_favourites", "off");
+    if (settings->value("autojoin_favourites").toString() == "on")
+        settings->setValue("autojoin_favourites", "off");
 }
 
 // :NickServ!service@service.onet NOTICE scc_test :142 :end of favourites list
