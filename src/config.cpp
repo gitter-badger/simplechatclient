@@ -151,6 +151,11 @@ void config::create_new_config()
     QDomText tLoginPass = doc.createTextNode(QString::null);
     eLoginPass.appendChild(tLoginPass);
 
+    QDomElement eAutoBusy = doc.createElement("auto_busy");
+    root.appendChild(eAutoBusy);
+    QDomText tAutoBusy = doc.createTextNode("off");
+    eAutoBusy.appendChild(tAutoBusy);
+
     QDomElement eDebugAll = doc.createElement("debug_all");
     root.appendChild(eDebugAll);
     QDomText tDebugAll = doc.createTextNode("off");

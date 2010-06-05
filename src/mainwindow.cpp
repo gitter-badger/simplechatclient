@@ -52,6 +52,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
 //  init all
     config *pConfig = new config();
+    QString strAutoBusy = pConfig->get_value("auto_busy");
     QString strDebugAll = pConfig->get_value("debug_all");
     QString strShowZuo = pConfig->get_value("show_zuo");
     QString strHideFormating = pConfig->get_value("hide_formating");
@@ -59,12 +60,13 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     delete pConfig;
 
     settings.clear();
-    settings.setValue("version", "1.0.5.238");
+    settings.setValue("version", "1.0.5.240");
     settings.setValue("debug", "off");
     settings.setValue("logged", "off");
     settings.setValue("busy", "off");
     settings.setValue("override", "off");
     settings.setValue("autojoin_favourites", "on");
+    settings.setValue("auto_busy", strAutoBusy);
     settings.setValue("debug_all", strDebugAll);
     settings.setValue("show_zuo", strShowZuo);
     settings.setValue("hide_formating", strHideFormating);

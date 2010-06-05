@@ -38,6 +38,7 @@ private:
     QSettings *settings;
 
 private slots:
+    void auto_busy();
     void debug_all();
     void show_zuo();
     void hide_formating();

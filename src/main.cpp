@@ -35,6 +35,10 @@ void crashHandler()
 {
     QString path = QCoreApplication::applicationDirPath();
 
+    QDir d(path);
+    if (d.exists(path+"/log") == false)
+        d.mkdir(path+"/log");
+
     QProcess pProcess;
 
     int pid = QCoreApplication::applicationPid();

@@ -30,6 +30,7 @@ dlg_options::dlg_options(QWidget *parent, QSettings *param1) : QDialog(parent)
     config *pConfig = new config();
     QString strNick = pConfig->get_value("login-nick");
     QString strPass = pConfig->get_value("login-pass");
+    QString strAutoBusy = pConfig->get_value("auto_busy");
     QString strDebugAll = pConfig->get_value("debug_all");
     QString strShowZuo = pConfig->get_value("show_zuo");
     QString strHideFormating = pConfig->get_value("hide_formating");
@@ -45,6 +46,11 @@ dlg_options::dlg_options(QWidget *parent, QSettings *param1) : QDialog(parent)
 
     ui.lineEditNick->setText(strNick);
     ui.lineEditPass->setText(strPass);
+
+    if (strAutoBusy == "on")
+        ui.checkBox_5->setChecked(true);
+    else
+        ui.checkBox_5->setChecked(false);
 
     if (strDebugAll == "on")
         ui.checkBox->setChecked(true);
@@ -66,12 +72,29 @@ dlg_options::dlg_options(QWidget *parent, QSettings *param1) : QDialog(parent)
     else
         ui.checkBox_4->setChecked(false);
 
+    QObject::connect(ui.checkBox_5, SIGNAL(clicked()), this, SLOT(auto_busy()));
     QObject::connect(ui.checkBox, SIGNAL(clicked()), this, SLOT(debug_all()));
     QObject::connect(ui.checkBox_2, SIGNAL(clicked()), this, SLOT(show_zuo()));
     QObject::connect(ui.checkBox_3, SIGNAL(clicked()), this, SLOT(hide_formating()));
     QObject::connect(ui.checkBox_4, SIGNAL(clicked()), this, SLOT(hide_join_part()));
     QObject::connect(ui.buttonBox, SIGNAL(accepted()), this, SLOT(button_ok()));
     QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(button_cancel()));
+}
+
+void dlg_options::auto_busy()
+{
+    config *pConfig = new config();
+    if (ui.checkBox_5->isChecked() == true)
+    {
+        pConfig->set_value("auto_busy", "on");
+        settings->setValue("auto_busy", "on");
+    }
+    else
+    {
+        pConfig->set_value("auto_busy", "off");
+        settings->setValue("auto_busy", "off");
+    }
+    delete pConfig;
 }
 
 void dlg_options::debug_all()

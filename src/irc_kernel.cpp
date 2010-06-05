@@ -925,6 +925,10 @@ void irc_kernel::raw_001()
 // clear friends
     dlgfriends->clear();
 
+// auto busy
+    if (settings->value("auto_busy").toString() == "on")
+        pNetwork->send("BUSY 1");
+
 }
 
 // :GuardServ!service@service.onet NOTICE scc_test :109 #scc :rzucanie miêsem nie bêdzie tolerowane
