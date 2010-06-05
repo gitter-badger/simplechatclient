@@ -24,6 +24,7 @@ dlg_options::dlg_options(QWidget *parent, QSettings *param1) : QDialog(parent)
 {
     ui.setupUi(this);
     setAttribute(Qt::WA_DeleteOnClose);
+    setWindowFlags(Qt::Dialog | Qt::WindowStaysOnTopHint);
 
     settings = param1;
 

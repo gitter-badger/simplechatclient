@@ -50,6 +50,12 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     friendsAct->setShortcut(tr("Ctrl+P"));
     ignoreAct->setShortcut(tr("Ctrl+I"));
 
+// show options if config not exist
+    QString path = QCoreApplication::applicationDirPath();
+    QString strConfigFile = path+"/scc.conf";
+    if (QFile::exists(strConfigFile) == false)
+        QTimer::singleShot(1000, this, SLOT(options_dlg()));
+
 //  init all
     config *pConfig = new config();
     QString strAutoBusy = pConfig->get_value("auto_busy");
@@ -60,7 +66,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     delete pConfig;
 
     settings.clear();
-    settings.setValue("version", "1.0.5.241");
+    settings.setValue("version", "1.0.5.242");
     settings.setValue("debug", "off");
     settings.setValue("logged", "off");
     settings.setValue("busy", "off");
