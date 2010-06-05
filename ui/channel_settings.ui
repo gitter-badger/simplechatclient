@@ -26,7 +26,7 @@
    <string>Ustawienia kanałów</string>
   </property>
   <property name="windowIcon">
-   <iconset>
+   <iconset resource="../scc.qrc">
     <normaloff>:/images/logo_64.png</normaloff>:/images/logo_64.png</iconset>
   </property>
   <widget class="QTabWidget" name="tabWidget">
@@ -554,8 +554,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>100</width>
-        <height>30</height>
+        <width>561</width>
+        <height>413</height>
        </rect>
       </property>
       <attribute name="label">
@@ -581,6 +581,9 @@
           </property>
           <property name="selectionBehavior">
            <enum>QAbstractItemView::SelectRows</enum>
+          </property>
+          <property name="sortingEnabled">
+           <bool>true</bool>
           </property>
           <property name="columnCount">
            <number>1</number>
@@ -618,8 +621,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>100</width>
-        <height>30</height>
+        <width>561</width>
+        <height>413</height>
        </rect>
       </property>
       <attribute name="label">
@@ -645,6 +648,9 @@
           </property>
           <property name="selectionBehavior">
            <enum>QAbstractItemView::SelectRows</enum>
+          </property>
+          <property name="sortingEnabled">
+           <bool>true</bool>
           </property>
           <property name="columnCount">
            <number>1</number>
@@ -710,6 +716,9 @@
           <property name="selectionBehavior">
            <enum>QAbstractItemView::SelectRows</enum>
           </property>
+          <property name="sortingEnabled">
+           <bool>true</bool>
+          </property>
           <property name="columnCount">
            <number>3</number>
           </property>
@@ -756,8 +765,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>100</width>
-        <height>30</height>
+        <width>561</width>
+        <height>413</height>
        </rect>
       </property>
       <attribute name="label">
@@ -783,6 +792,9 @@
           </property>
           <property name="selectionBehavior">
            <enum>QAbstractItemView::SelectRows</enum>
+          </property>
+          <property name="sortingEnabled">
+           <bool>true</bool>
           </property>
           <property name="columnCount">
            <number>3</number>
@@ -842,6 +854,8 @@
    </property>
   </widget>
  </widget>
- <resources/>
+ <resources>
+  <include location="../scc.qrc"/>
+ </resources>
  <connections/>
 </ui>

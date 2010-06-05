@@ -26,7 +26,7 @@
    <string>Lista ignorowanych</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="../scc.qrc">
+   <iconset>
     <normaloff>:/images/logo_64.png</normaloff>:/images/logo_64.png</iconset>
   </property>
   <widget class="QWidget" name="verticalLayoutWidget">
@@ -49,6 +49,9 @@
       </property>
       <property name="viewMode">
        <enum>QListView::IconMode</enum>
+      </property>
+      <property name="sortingEnabled">
+       <bool>true</bool>
       </property>
      </widget>
     </item>
@@ -80,8 +83,6 @@
    </layout>
   </widget>
  </widget>
- <resources>
-  <include location="../scc.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>

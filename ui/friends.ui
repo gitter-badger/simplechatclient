@@ -26,7 +26,7 @@
    <string>Lista przyjaciół</string>
   </property>
   <property name="windowIcon">
-   <iconset>
+   <iconset resource="../scc.qrc">
     <normaloff>:/images/logo_64.png</normaloff>:/images/logo_64.png</iconset>
   </property>
   <widget class="QWidget" name="verticalLayoutWidget">
@@ -57,6 +57,9 @@
           <height>231</height>
          </rect>
         </property>
+        <property name="sortingEnabled">
+         <bool>true</bool>
+        </property>
        </widget>
       </widget>
       <widget class="QWidget" name="tab_2">
@@ -71,6 +74,9 @@
           <width>351</width>
           <height>231</height>
          </rect>
+        </property>
+        <property name="sortingEnabled">
+         <bool>true</bool>
         </property>
        </widget>
       </widget>
@@ -104,6 +110,8 @@
    </layout>
   </widget>
  </widget>
- <resources/>
+ <resources>
+  <include location="../scc.qrc"/>
+ </resources>
  <connections/>
 </ui>
