@@ -31,7 +31,12 @@ class qnotify : public QObject
     Q_OBJECT
 public:
     qnotify();
+    ~qnotify();
     void play();
+
+private:
+    QString apath;
+    Phonon::MediaObject *music;
 
 };
 

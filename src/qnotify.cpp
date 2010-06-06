@@ -22,24 +22,20 @@
 
 qnotify::qnotify()
 {
+    apath = QCoreApplication::applicationDirPath();
+#ifdef Q_WS_WIN
+    music = Phonon::createPlayer(Phonon::MusicCategory, Phonon::MediaSource(apath+"\\3rdparty\\sounds\\beep.wav"));
+#else
+    music = Phonon::createPlayer(Phonon::MusicCategory, Phonon::MediaSource(apath+"/3rdparty/sounds/beep.wav"));
+#endif
+}
+
+qnotify::~qnotify()
+{
+    delete music;
 }
 
 void qnotify::play()
 {
-#ifdef Q_WS_X11
-    QString apath = QCoreApplication::applicationDirPath();
-    Phonon::MediaObject *mediaObject = new Phonon::MediaObject();
-    Phonon::AudioOutput *audioOutput = new Phonon::AudioOutput(Phonon::NotificationCategory);
-    Phonon::createPath(mediaObject, audioOutput);
-
-    mediaObject->enqueue(Phonon::MediaSource(apath+"/3rdparty/sounds/beep.wav"));
-    mediaObject->play();
-
-    QEventLoop loop;
-    QObject::connect(mediaObject, SIGNAL(finished()), &loop, SLOT(quit()));
-    loop.exec();
-
-    delete audioOutput;
-    delete mediaObject;
-#endif
+    music->play();
 }
