@@ -20,12 +20,12 @@
 
 #include "dlg_friends.h"
 
-dlg_friends::dlg_friends(QSettings *param1, network *param2, tab_container *param3)
+dlg_friends::dlg_friends(network *param1, QSettings *param2, tab_container *param3)
 {
     ui.setupUi(this);
 
-    settings = param1;
-    pNetwork = param2;
+    pNetwork = param1;
+    settings = param2;
     tabc = param3;
 
     QObject::connect(ui.pushButton, SIGNAL(clicked()), this, SLOT(button_add()));
@@ -72,7 +72,7 @@ void dlg_friends::clear()
 
 void dlg_friends::button_add()
 {
-    (new dlg_friends_ad(pNetwork, tabc, settings, "add", ""))->show();
+    (new dlg_friends_ad(pNetwork, settings, tabc, "add", ""))->show();
 }
 
 void dlg_friends::button_remove()
@@ -89,7 +89,7 @@ void dlg_friends::button_remove()
             strSelected = ui.listWidget_2->selectedItems().at(0)->text();
     }
 
-    (new dlg_friends_ad(pNetwork, tabc, settings, "remove", strSelected))->show();
+    (new dlg_friends_ad(pNetwork, settings, tabc, "remove", strSelected))->show();
 }
 
 void dlg_friends::button_ok()

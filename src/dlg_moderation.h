@@ -30,15 +30,15 @@ class dlg_moderation : public QDialog
 {
     Q_OBJECT
 public:
-    dlg_moderation(QSettings *, network *);
+    dlg_moderation(network *, QSettings *);
     ~dlg_moderation();
     void add_msg(QString, QString, QString, QString);
     void clear();
 
 private:
     Ui::uiModeration ui;
-    QSettings *settings;
     network *pNetwork;
+    QSettings *settings;
     QMultiHash <QString, QString> channel_id;
     QMultiHash <QString, QString> id_nick;
     QMultiHash <QString, QString> id_message;

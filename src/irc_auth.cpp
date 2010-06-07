@@ -20,11 +20,11 @@
 
 #include "irc_auth.h"
 
-irc_auth::irc_auth(QSettings *param1, tab_container *param2, network *param3)
+irc_auth::irc_auth(network *param1, QSettings *param2, tab_container *param3)
 {
-    settings = param1;
-    tabc = param2;
-    pNetwork = param3;
+    pNetwork = param1;
+    settings = param2;
+    tabc = param3;
 }
 
 void irc_auth::request_uo(QString param1, QString param2)

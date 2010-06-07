@@ -20,13 +20,13 @@
 
 #include "dlg_channel_homes_ad.h"
 
-dlg_channel_homes_ad::dlg_channel_homes_ad(network *param1, tab_container *param2, QSettings *param3, QString param4)
+dlg_channel_homes_ad::dlg_channel_homes_ad(network *param1, QSettings *param2, tab_container *param3, QString param4)
 {
     ui.setupUi(this);
 
     pNetwork = param1;
-    tabc = param2;
-    settings = param3;
+    settings = param2;
+    tabc = param3;
     strStatus = param4;
 
     if (strStatus == "create")

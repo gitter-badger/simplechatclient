@@ -18,74 +18,35 @@
  *                                                                          *
  ****************************************************************************/
 
-#include "dlg_channel_homes.h"
+#include "dlg_kick.h"
 
-dlg_channel_homes::dlg_channel_homes(network *param1, QSettings *param2, tab_container *param3, dlg_channel_settings *param4)
+dlg_kick::dlg_kick(network *param1, QSettings *param2, QString param3, QString param4)
 {
     ui.setupUi(this);
 
     pNetwork = param1;
     settings = param2;
-    tabc = param3;
-    dlgchannel_settings = param4;
+    strNick = param3;
+    strChannel = param4;
 
-    QObject::connect(ui.listWidget, SIGNAL(clicked(QModelIndex)), this, SLOT(list_clicked(QModelIndex)));
-    QObject::connect(ui.pushButton, SIGNAL(clicked()), this, SLOT(button_create()));
-    QObject::connect(ui.pushButton_2, SIGNAL(clicked()), this, SLOT(button_remove()));
     QObject::connect(ui.buttonBox, SIGNAL(accepted()), this, SLOT(button_ok()));
     QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(button_cancel()));
 }
 
-void dlg_channel_homes::add_channel(QString strChannel)
+void dlg_kick::button_ok()
 {
-    strChannel = strChannel.right(strChannel.length()-1); // remove status
-    ui.listWidget->addItem(new QListWidgetItem(QIcon(":/images/channel_avatar.png"), strChannel));
+    QString strReason = ui.lineEdit->text();
+    if (strReason.isEmpty() == true)
+        strReason = "Zachowuj siê! Byle jak ale siê zachowuj!";
+
+    pNetwork->send(QString("KICK %1 %2 :%3").arg(strChannel).arg(strNick).arg(strReason));
+
+    ui.buttonBox->QObject::disconnect();
+    this->close();
 }
 
-void dlg_channel_homes::clear()
+void dlg_kick::button_cancel()
 {
-    ui.listWidget->clear();
-}
-
-void dlg_channel_homes::list_clicked(QModelIndex index)
-{
-    int i = index.row();
-    QString strChannel = ui.listWidget->item(i)->text();
-    dlgchannel_settings->set_channel(strChannel);
-    dlgchannel_settings->show();
-    ui.listWidget->clear();
-    this->hide();
-}
-
-void dlg_channel_homes::button_create()
-{
-    ui.listWidget->clear();
-    (new dlg_channel_homes_ad(pNetwork, settings, tabc, "create"))->show();
-}
-
-void dlg_channel_homes::button_remove()
-{
-    ui.listWidget->clear();
-    (new dlg_channel_homes_ad(pNetwork, settings, tabc, "remove"))->show();
-}
-
-void dlg_channel_homes::button_ok()
-{
-    ui.listWidget->clear();
-    this->hide();
-}
-
-void dlg_channel_homes::button_cancel()
-{
-    ui.listWidget->clear();
-    this->hide();
-}
-
-void dlg_channel_homes::showEvent(QShowEvent *event)
-{
-    event->accept();
-
-    ui.listWidget->clear();
-
-    pNetwork->send("CS HOMES");
+    ui.buttonBox->QObject::disconnect();
+    this->close();
 }

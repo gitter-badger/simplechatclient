@@ -30,6 +30,7 @@
 #include <QQueue>
 #include <QSettings>
 #include "dlg_cam.h"
+#include "dlg_kick.h"
 #include "network.h"
 
 class qnicklist : public QListWidget

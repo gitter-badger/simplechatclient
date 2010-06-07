@@ -33,6 +33,7 @@ SOURCES += src/channel_avatar.cpp \
     src/dlg_update.cpp \
     src/irc_auth.cpp \
     src/irc_kernel.cpp \
+    src/dlg_kick.cpp \
     src/log.cpp \
     src/main.cpp \
     src/mainwindow.cpp \
@@ -72,6 +73,7 @@ HEADERS += src/channel_avatar.h \
     src/dlg_update.h \
     src/irc_auth.h \
     src/irc_kernel.h \
+    src/dlg_kick.h \
     src/log.h \
     src/main.h \
     src/mainwindow.h \
@@ -99,6 +101,7 @@ FORMS += ui/about.ui \
     ui/friends_ad.ui \
     ui/ignore.ui \
     ui/ignore_ad.ui \
+    ui/kick.ui \
     ui/moderation.ui \
     ui/options.ui \
     ui/priv.ui \

@@ -18,27 +18,26 @@
  *                                                                          *
  ****************************************************************************/
 
-#ifndef DLG_CHANNEL_FAVOURITES_AD_H
-#define DLG_CHANNEL_FAVOURITES_AD_H
+#ifndef DLG_KICK_H
+#define DLG_KICK_H
 
 #include <QDialog>
 #include <QSettings>
 #include "network.h"
-#include "tab_container.h"
-#include "ui_channel_favourites_ad.h"
+#include "ui_kick.h"
 
-class dlg_channel_favourites_ad : public QDialog
+class dlg_kick : public QDialog
 {
     Q_OBJECT
 public:
-    dlg_channel_favourites_ad(network *, QSettings *, tab_container *, QString, QString);
+    dlg_kick(network *, QSettings *, QString, QString);
 
 private:
-    Ui::uiChannelFavouritesAd ui;
+    Ui::uiKick ui;
     network *pNetwork;
     QSettings *settings;
-    tab_container *tabc;
-    QString strStatus;
+    QString strNick;
+    QString strChannel;
 
 private slots:
     void button_ok();
@@ -46,4 +45,4 @@ private slots:
 
 };
 
-#endif // DLG_CHANNEL_FAVOURITES_AD_H
+#endif // DLG_KICK_H

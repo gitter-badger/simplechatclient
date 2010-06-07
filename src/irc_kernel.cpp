@@ -20,11 +20,11 @@
 
 #include "irc_kernel.h"
 
-irc_kernel::irc_kernel(network *param1, tab_container *param2, QSettings *param3, dlg_channel_settings *param4, dlg_channel_homes *param5, dlg_channel_list *param6, dlg_channel_favourites *param7, dlg_friends *param8, dlg_ignore *param9, dlg_moderation *param10)
+irc_kernel::irc_kernel(network *param1, QSettings *param2, tab_container *param3, dlg_channel_settings *param4, dlg_channel_homes *param5, dlg_channel_list *param6, dlg_channel_favourites *param7, dlg_friends *param8, dlg_ignore *param9, dlg_moderation *param10)
 {
     pNetwork = param1;
-    tabc = param2;
-    settings = param3;
+    settings = param2;
+    tabc = param3;
     dlgchannel_settings = param4;
     dlgchannel_homes = param5;
     dlgchannel_list = param6;
@@ -775,7 +775,7 @@ void irc_kernel::raw_invite()
     // priv
     if (strWhere[0] == '^')
     {
-        (new dlg_priv(pNetwork, tabc, settings, strWho, strWhere))->show();
+        (new dlg_priv(pNetwork, settings, tabc, strWho, strWhere))->show();
     }
     // channel
     else
@@ -2268,7 +2268,7 @@ void irc_kernel::raw_801()
     if (strKey[0] == ':')
         strKey = strKey.right(strKey.length()-1);
 
-    irc_auth *pIrc_auth = new irc_auth(settings, tabc, pNetwork);
+    irc_auth *pIrc_auth = new irc_auth(pNetwork, settings, tabc);
     QString strAuth = pIrc_auth->transform_key(strKey);
     delete pIrc_auth;
 

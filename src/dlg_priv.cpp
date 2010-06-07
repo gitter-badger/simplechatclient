@@ -20,13 +20,13 @@
 
 #include "dlg_priv.h"
 
-dlg_priv::dlg_priv(network *param1, tab_container *param2, QSettings *param3, QString param4, QString param5)
+dlg_priv::dlg_priv(network *param1, QSettings *param2, tab_container *param3, QString param4, QString param5)
 {
     ui.setupUi(this);
 
     pNetwork = param1;
-    tabc = param2;
-    settings = param3;
+    settings = param2;
+    tabc = param3;
     strNick = param4;
     strChannel = param5;
 

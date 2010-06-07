@@ -58,7 +58,7 @@ void qnicklist::cam()
     if (this->selectedItems().count() == 0) return;
 
     QString strNick = this->selectedItems().at(0)->text();
-    (new dlg_cam(settings, pNetwork, strNick))->show();
+    (new dlg_cam(pNetwork, settings, strNick))->show();
 }
 
 void qnicklist::friends_add()
@@ -98,8 +98,7 @@ void qnicklist::kick()
     if (this->selectedItems().count() == 0) return;
 
     QString strNick = this->selectedItems().at(0)->text();
-    QString strReason = "Zachowuj siê! Byle jak ale siê zachowuj!";
-    pNetwork->send(QString("KICK %1 %2 :%3").arg(strChannel).arg(strNick).arg(strReason));
+    (new dlg_kick(pNetwork, settings, strNick, strChannel))->show();
 }
 
 void qnicklist::ban()

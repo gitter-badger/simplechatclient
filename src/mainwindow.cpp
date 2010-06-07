@@ -66,7 +66,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     delete pConfig;
 
     settings.clear();
-    settings.setValue("version", "1.0.5.244");
+    settings.setValue("version", "1.0.5.245");
     settings.setValue("debug", "off");
     settings.setValue("logged", "off");
     settings.setValue("busy", "off");
@@ -82,17 +82,17 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     setCentralWidget(tabm);
 
     pNetwork = new network(this, connectAct, &settings);
-    tabc = new tab_container(tabm, this, pNetwork, &settings);
+    tabc = new tab_container(pNetwork, &settings, tabm, this);
 
-    dlgchannel_settings = new dlg_channel_settings(&settings, pNetwork);
-    dlgmoderation = new dlg_moderation(&settings, pNetwork);
-    dlgchannel_list = new dlg_channel_list(&settings, pNetwork, tabc);
-    dlgchannel_homes = new dlg_channel_homes(&settings, pNetwork, tabc, dlgchannel_settings);
-    dlgchannel_favourites = new dlg_channel_favourites(&settings, pNetwork, tabc);
-    dlgfriends = new dlg_friends(&settings, pNetwork, tabc);
-    dlgignore = new dlg_ignore(&settings, pNetwork, tabc);
-    pIrc_kernel = new irc_kernel(pNetwork, tabc, &settings, dlgchannel_settings, dlgchannel_homes, dlgchannel_list, dlgchannel_favourites, dlgfriends, dlgignore, dlgmoderation);
-    pIrc_auth = new irc_auth(&settings, tabc, pNetwork);
+    dlgchannel_settings = new dlg_channel_settings(pNetwork, &settings);
+    dlgmoderation = new dlg_moderation(pNetwork, &settings);
+    dlgchannel_list = new dlg_channel_list(pNetwork, &settings, tabc);
+    dlgchannel_homes = new dlg_channel_homes(pNetwork, &settings, tabc, dlgchannel_settings);
+    dlgchannel_favourites = new dlg_channel_favourites(pNetwork, &settings, tabc);
+    dlgfriends = new dlg_friends(pNetwork, &settings, tabc);
+    dlgignore = new dlg_ignore(pNetwork, &settings, tabc);
+    pIrc_kernel = new irc_kernel(pNetwork, &settings, tabc, dlgchannel_settings, dlgchannel_homes, dlgchannel_list, dlgchannel_favourites, dlgfriends, dlgignore, dlgmoderation);
+    pIrc_auth = new irc_auth(pNetwork, &settings, tabc);
 
     tabc->set_dlg(dlgchannel_settings, dlgmoderation);
 

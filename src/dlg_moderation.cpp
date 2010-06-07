@@ -20,12 +20,12 @@
 
 #include "dlg_moderation.h"
 
-dlg_moderation::dlg_moderation(QSettings *param1, network *param2)
+dlg_moderation::dlg_moderation(network *param1, QSettings *param2)
 {
     ui.setupUi(this);
 
-    settings = param1;
-    pNetwork = param2;
+    pNetwork = param1;
+    settings = param2;
 
     QObject::connect(ui.pushButton, SIGNAL(clicked()), this, SLOT(button_accept()));
     QObject::connect(ui.pushButton_2, SIGNAL(clicked()), this, SLOT(button_remove()));

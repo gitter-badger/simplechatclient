@@ -34,7 +34,7 @@ class tab_container : public QObject
 {
     Q_OBJECT
 public:
-    tab_container(tab_manager *, QWidget *, network *, QSettings *);
+    tab_container(network *, QSettings *, tab_manager *, QWidget *);
     ~tab_container();
     void set_dlg(dlg_channel_settings *, dlg_moderation *);
     bool exist_tab(QString);
@@ -65,12 +65,12 @@ public slots:
     void set_logo(QString, QByteArray);
 
 private:
+    network *pNetwork;
+    QSettings *settings;
     tab_manager *tabm;
     tab_widget *tw[50];
     QString free_list;
     QWidget *mainWin;
-    network *pNetwork;
-    QSettings *settings;
     dlg_channel_settings *dlgchannel_settings;
     dlg_moderation *dlgmoderation;
 

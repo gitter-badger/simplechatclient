@@ -20,12 +20,12 @@
 
 #include "dlg_ignore.h"
 
-dlg_ignore::dlg_ignore(QSettings *param1, network *param2, tab_container *param3)
+dlg_ignore::dlg_ignore(network *param1, QSettings *param2, tab_container *param3)
 {
     ui.setupUi(this);
 
-    settings = param1;
-    pNetwork = param2;
+    pNetwork = param1;
+    settings = param2;
     tabc = param3;
 
     QObject::connect(ui.pushButton, SIGNAL(clicked()), this, SLOT(button_add()));
@@ -47,7 +47,7 @@ void dlg_ignore::clear()
 void dlg_ignore::button_add()
 {
     ui.listWidget->clear();
-    (new dlg_ignore_ad(pNetwork, tabc, settings, "add", ""))->show();
+    (new dlg_ignore_ad(pNetwork, settings, tabc, "add", ""))->show();
 }
 
 void dlg_ignore::button_remove()
@@ -58,7 +58,7 @@ void dlg_ignore::button_remove()
 
     ui.listWidget->clear();
 
-    (new dlg_ignore_ad(pNetwork, tabc, settings, "remove", strSelected))->show();
+    (new dlg_ignore_ad(pNetwork, settings, tabc, "remove", strSelected))->show();
 }
 
 void dlg_ignore::button_ok()

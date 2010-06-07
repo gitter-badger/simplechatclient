@@ -31,13 +31,13 @@ class dlg_friends_ad : public QDialog
 {
     Q_OBJECT
 public:
-    dlg_friends_ad(network *, tab_container *, QSettings *, QString, QString);
+    dlg_friends_ad(network *, QSettings *, tab_container *, QString, QString);
 
 private:
     Ui::uiFriendsAd ui;
     network *pNetwork;
-    tab_container *tabc;
     QSettings *settings;
+    tab_container *tabc;
     QString strStatus;
 
 private slots:

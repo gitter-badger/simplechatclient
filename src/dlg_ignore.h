@@ -31,14 +31,14 @@ class dlg_ignore : public QDialog
 {
     Q_OBJECT
 public:
-    dlg_ignore(QSettings *, network *, tab_container *);
+    dlg_ignore(network *, QSettings *, tab_container *);
     void add_ignore(QString);
     void clear();
 
 private:
     Ui::uiIgnore ui;
-    QSettings *settings;
     network *pNetwork;
+    QSettings *settings;
     tab_container *tabc;
 
 private slots:

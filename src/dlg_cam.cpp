@@ -20,14 +20,14 @@
 
 #include "dlg_cam.h"
 
-dlg_cam::dlg_cam(QSettings *param1, network *param2, QString param3)
+dlg_cam::dlg_cam(network *param1, QSettings *param2, QString param3)
 {
     ui.setupUi(this);
     setAttribute(Qt::WA_DeleteOnClose);
     setWindowFlags(Qt::Dialog | Qt::WindowStaysOnTopHint);
 
-    settings = param1;
-    pNetwork = param2;
+    pNetwork = param1;
+    settings = param2;
     strNick = param3;
     ui.label->setText("<p style=\"font-weight:bold;\">"+strNick+"</p>");
 }

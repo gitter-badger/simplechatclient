@@ -20,19 +20,19 @@
 
 #include "dlg_privilege.h"
 
-dlg_privilege::dlg_privilege(QString param1, QString param2, QString param3, network *param4, QTableWidget *param5, QTableWidget *param6, QTableWidget *param7, QTableWidget *param8, QSettings *param9)
+dlg_privilege::dlg_privilege(network *param1, QSettings *param2, QString param3, QString param4, QString param5, QTableWidget *param6, QTableWidget *param7, QTableWidget *param8, QTableWidget *param9)
 {
     ui.setupUi(this);
 
-    strStatus = param1;
-    strChannel = param2;
-    strAddDel = param3;
-    pNetwork = param4;
-    opList = param5;
-    halfopList = param6;
-    banList = param7;
-    inviteList = param8;
-    settings = param9;
+    pNetwork = param1;
+    settings = param2;
+    strStatus = param3;
+    strChannel = param4;
+    strAddDel = param5;
+    opList = param6;
+    halfopList = param7;
+    banList = param8;
+    inviteList = param9;
 
     if (strAddDel == "add")
     {

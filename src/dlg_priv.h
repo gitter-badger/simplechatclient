@@ -30,13 +30,13 @@ class dlg_priv : public QDialog
 {
     Q_OBJECT
 public:
-    dlg_priv(network *, tab_container *, QSettings *, QString, QString);
+    dlg_priv(network *, QSettings *, tab_container *, QString, QString);
 
 private:
     Ui::uiPriv ui;
     network *pNetwork;
-    tab_container *tabc;
     QSettings *settings;
+    tab_container *tabc;
     QString strNick;
     QString strChannel;
     QString strTimerChannel;

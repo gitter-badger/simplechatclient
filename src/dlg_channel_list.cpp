@@ -20,12 +20,12 @@
 
 #include "dlg_channel_list.h"
 
-dlg_channel_list::dlg_channel_list(QSettings *param1, network *param2, tab_container *param3)
+dlg_channel_list::dlg_channel_list(network *param1, QSettings *param2, tab_container *param3)
 {
     ui.setupUi(this);
 
-    settings = param1;
-    pNetwork = param2;
+    pNetwork = param1;
+    settings = param2;
     tabc = param3;
 
     QObject::connect(ui.tableWidget_1, SIGNAL(cellDoubleClicked(int,int)), this, SLOT(allCellDoubleClicked(int,int)));

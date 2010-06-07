@@ -20,12 +20,12 @@
 
 #include "dlg_channel_settings.h"
 
-dlg_channel_settings::dlg_channel_settings(QSettings *param1, network *param2)
+dlg_channel_settings::dlg_channel_settings(network *param1, QSettings *param2)
 {
     ui.setupUi(this);
 
-    settings = param1;
-    pNetwork = param2;
+    pNetwork = param1;
+    settings = param2;
 
     QObject::connect(ui.pushButton, SIGNAL(clicked()), this, SLOT(owner_changed()));
     QObject::connect(ui.pushButton_19, SIGNAL(clicked()), this, SLOT(email_changed()));
@@ -218,7 +218,7 @@ void dlg_channel_settings::add_description(QString strDescription)
 
 void dlg_channel_settings::owner_changed()
 {
-    (new dlg_privilege("owner", strChannel, "add", pNetwork, ui.tableWidget, ui.tableWidget_2, ui.tableWidget_3, ui.tableWidget_4, settings))->show();
+    (new dlg_privilege(pNetwork, settings, "owner", strChannel, "add", ui.tableWidget, ui.tableWidget_2, ui.tableWidget_3, ui.tableWidget_4))->show();
 }
 
 void dlg_channel_settings::email_changed()
@@ -322,7 +322,7 @@ void dlg_channel_settings::auditorium_active()
 
 void dlg_channel_settings::button_op_add()
 {
-    (new dlg_privilege("op", strChannel, "add", pNetwork, ui.tableWidget, ui.tableWidget_2, ui.tableWidget_3, ui.tableWidget_4, settings))->show();
+    (new dlg_privilege(pNetwork, settings, "op", strChannel, "add", ui.tableWidget, ui.tableWidget_2, ui.tableWidget_3, ui.tableWidget_4))->show();
 }
 
 void dlg_channel_settings::button_op_del()
@@ -336,13 +336,13 @@ void dlg_channel_settings::button_op_del()
     }
     else
     {
-        (new dlg_privilege("op", strChannel, "del", pNetwork, ui.tableWidget, ui.tableWidget_2, ui.tableWidget_3, ui.tableWidget_4, settings))->show();
+        (new dlg_privilege(pNetwork, settings, "op", strChannel, "del", ui.tableWidget, ui.tableWidget_2, ui.tableWidget_3, ui.tableWidget_4))->show();
     }
 }
 
 void dlg_channel_settings::button_halfop_add()
 {
-    (new dlg_privilege("halfop", strChannel, "add", pNetwork, ui.tableWidget, ui.tableWidget_2, ui.tableWidget_3, ui.tableWidget_4, settings))->show();
+    (new dlg_privilege(pNetwork, settings, "halfop", strChannel, "add", ui.tableWidget, ui.tableWidget_2, ui.tableWidget_3, ui.tableWidget_4))->show();
 }
 
 void dlg_channel_settings::button_halfop_del()
@@ -356,13 +356,13 @@ void dlg_channel_settings::button_halfop_del()
     }
     else
     {
-        (new dlg_privilege("halfop", strChannel, "del", pNetwork, ui.tableWidget, ui.tableWidget_2, ui.tableWidget_3, ui.tableWidget_4, settings))->show();
+        (new dlg_privilege(pNetwork, settings, "halfop", strChannel, "del", ui.tableWidget, ui.tableWidget_2, ui.tableWidget_3, ui.tableWidget_4))->show();
     }
 }
 
 void dlg_channel_settings::button_ban_add()
 {
-    (new dlg_privilege("ban", strChannel, "add", pNetwork, ui.tableWidget, ui.tableWidget_2, ui.tableWidget_3, ui.tableWidget_4, settings))->show();
+    (new dlg_privilege(pNetwork, settings, "ban", strChannel, "add", ui.tableWidget, ui.tableWidget_2, ui.tableWidget_3, ui.tableWidget_4))->show();
 }
 
 void dlg_channel_settings::button_ban_del()
@@ -376,13 +376,13 @@ void dlg_channel_settings::button_ban_del()
     }
     else
     {
-        (new dlg_privilege("ban", strChannel, "del", pNetwork, ui.tableWidget, ui.tableWidget_2, ui.tableWidget_3, ui.tableWidget_4, settings))->show();
+        (new dlg_privilege(pNetwork, settings, "ban", strChannel, "del", ui.tableWidget, ui.tableWidget_2, ui.tableWidget_3, ui.tableWidget_4))->show();
     }
 }
 
 void dlg_channel_settings::button_invite_add()
 {
-    (new dlg_privilege("invite", strChannel, "add", pNetwork, ui.tableWidget, ui.tableWidget_2, ui.tableWidget_3, ui.tableWidget_4, settings))->show();
+    (new dlg_privilege(pNetwork, settings, "invite", strChannel, "add", ui.tableWidget, ui.tableWidget_2, ui.tableWidget_3, ui.tableWidget_4))->show();
 }
 
 void dlg_channel_settings::button_invite_del()
@@ -396,7 +396,7 @@ void dlg_channel_settings::button_invite_del()
     }
     else
     {
-        (new dlg_privilege("invite", strChannel, "del", pNetwork, ui.tableWidget, ui.tableWidget_2, ui.tableWidget_3, ui.tableWidget_4, settings))->show();
+        (new dlg_privilege(pNetwork, settings, "invite", strChannel, "del", ui.tableWidget, ui.tableWidget_2, ui.tableWidget_3, ui.tableWidget_4))->show();
     }
 }
 

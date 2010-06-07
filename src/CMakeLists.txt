@@ -13,6 +13,7 @@ set (scc_UIS
 	../ui/friends_ad.ui
 	../ui/ignore.ui
 	../ui/ignore_ad.ui
+	../ui/kick.ui
 	../ui/moderation.ui
 	../ui/options.ui
 	../ui/priv.ui
@@ -39,6 +40,7 @@ set (scc_SRCS
 	dlg_friends_ad.cpp
 	dlg_ignore.cpp
 	dlg_ignore_ad.cpp
+	dlg_kick.cpp
 	dlg_moderation.cpp
 	dlg_options.cpp
 	dlg_priv.cpp
@@ -81,6 +83,7 @@ set (scc_MOC_SRCS
 	dlg_friends_ad.h
 	dlg_ignore.h
 	dlg_ignore_ad.h
+	dlg_kick.h
 	dlg_moderation.h
 	dlg_options.h
 	dlg_priv.h

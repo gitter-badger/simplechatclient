@@ -31,17 +31,17 @@ class dlg_friends : public QDialog
 {
     Q_OBJECT
 public:
-    dlg_friends(QSettings *, network *, tab_container *);
+    dlg_friends(network *, QSettings *, tab_container *);
     void set_friend(QString, bool);
     void remove_friend(QString);
     void clear();
 
 private:
     Ui::uiFriends ui;
-    QSettings *settings;
     network *pNetwork;
+    QSettings *settings;
     tab_container *tabc;
-    QMap<QString, bool> friends;
+    QMap <QString, bool> friends;
 
     void refresh();
 

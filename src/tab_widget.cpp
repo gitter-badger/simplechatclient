@@ -20,11 +20,11 @@
 
 #include "tab_widget.h"
 
-tab_widget::tab_widget(QString param1, QWidget *parent, network *param2, QSettings *param3, dlg_channel_settings *param4, dlg_moderation *param5)
+tab_widget::tab_widget(network *param1, QSettings *param2, QString param3, QWidget *parent, dlg_channel_settings *param4, dlg_moderation *param5)
 {
-    strName = param1;
-    pNetwork = param2;
-    settings = param3;
+    pNetwork = param1;
+    settings = param2;
+    strName = param3;
     dlgchannel_settings = param4;
     dlgmoderation = param5;
 

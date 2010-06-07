@@ -31,14 +31,14 @@ class dlg_channel_favourites : public QDialog
 {
     Q_OBJECT
 public:
-    dlg_channel_favourites(QSettings *, network *, tab_container *);
+    dlg_channel_favourites(network *, QSettings *, tab_container *);
     void add_channel(QString);
     void clear();
 
 private:
     Ui::uiChannelFavourites ui;
-    QSettings *settings;
     network *pNetwork;
+    QSettings *settings;
     tab_container *tabc;
 
 private slots:

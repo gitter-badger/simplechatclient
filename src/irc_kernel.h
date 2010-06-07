@@ -41,7 +41,7 @@ class irc_kernel : public QObject
 {
     Q_OBJECT
 public:
-    irc_kernel(network *, tab_container *, QSettings *, dlg_channel_settings *, dlg_channel_homes *, dlg_channel_list *, dlg_channel_favourites *, dlg_friends *, dlg_ignore *, dlg_moderation *);
+    irc_kernel(network *, QSettings *, tab_container *, dlg_channel_settings *, dlg_channel_homes *, dlg_channel_list *, dlg_channel_favourites *, dlg_friends *, dlg_ignore *, dlg_moderation *);
 
 public slots:
     void kernel(QString);
@@ -49,8 +49,8 @@ public slots:
 private:
     network *pNetwork;
     tab_container *tabc;
-    QStringList strDataList;
     QSettings *settings;
+    QStringList strDataList;
     dlg_channel_settings *dlgchannel_settings;
     dlg_channel_homes *dlgchannel_homes;
     dlg_channel_list *dlgchannel_list;

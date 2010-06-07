@@ -32,7 +32,7 @@ class dlg_privilege : public QDialog
 {
     Q_OBJECT
 public:
-    dlg_privilege(QString, QString, QString, network *, QTableWidget *, QTableWidget *, QTableWidget *, QTableWidget *, QSettings *);
+    dlg_privilege(network *, QSettings *, QString, QString, QString, QTableWidget *, QTableWidget *, QTableWidget *, QTableWidget *);
 
 private:
     Ui::uiPrivilege ui;

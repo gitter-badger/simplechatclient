@@ -34,16 +34,16 @@ class irc_auth : public QObject
 {
     Q_OBJECT
 public:
-    irc_auth(QSettings *, tab_container *, network *);
+    irc_auth(network *, QSettings *, tab_container *);
     QString transform_key(QString);
 
 public slots:
     void request_uo(QString, QString);
 
 private:
+    network *pNetwork;
     QSettings *settings;
     tab_container *tabc;
-    network *pNetwork;
 
     QString get_version(QString);
     void request_finished(QString);

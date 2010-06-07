@@ -31,13 +31,13 @@ class dlg_channel_homes_ad : public QDialog
 {
     Q_OBJECT
 public:
-    dlg_channel_homes_ad(network *, tab_container *, QSettings *, QString);
+    dlg_channel_homes_ad(network *, QSettings *, tab_container *, QString);
 
 private:
     Ui::uiChannelHomesAd ui;
     network *pNetwork;
-    tab_container *tabc;
     QSettings *settings;
+    tab_container *tabc;
     QString strStatus;
 
 private slots:

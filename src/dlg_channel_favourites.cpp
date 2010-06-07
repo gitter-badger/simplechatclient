@@ -20,12 +20,12 @@
 
 #include "dlg_channel_favourites.h"
 
-dlg_channel_favourites::dlg_channel_favourites(QSettings *param1, network *param2, tab_container *param3)
+dlg_channel_favourites::dlg_channel_favourites(network *param1, QSettings *param2, tab_container *param3)
 {
     ui.setupUi(this);
 
-    settings = param1;
-    pNetwork = param2;
+    pNetwork = param1;
+    settings = param2;
     tabc = param3;
 
     QObject::connect(ui.pushButton, SIGNAL(clicked()), this, SLOT(button_add()));
@@ -47,7 +47,7 @@ void dlg_channel_favourites::clear()
 void dlg_channel_favourites::button_add()
 {
     ui.listWidget->clear();
-    (new dlg_channel_favourites_ad(pNetwork, tabc, settings, "add", ""))->show();
+    (new dlg_channel_favourites_ad(pNetwork, settings, tabc, "add", ""))->show();
 }
 
 void dlg_channel_favourites::button_remove()
@@ -57,7 +57,7 @@ void dlg_channel_favourites::button_remove()
         strSelected = ui.listWidget->selectedItems().at(0)->text();
 
     ui.listWidget->clear();
-    (new dlg_channel_favourites_ad(pNetwork, tabc, settings, "remove", strSelected))->show();
+    (new dlg_channel_favourites_ad(pNetwork, settings, tabc, "remove", strSelected))->show();
 }
 
 void dlg_channel_favourites::button_ok()

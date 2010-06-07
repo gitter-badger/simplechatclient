@@ -30,7 +30,7 @@ class dlg_channel_list : public QDialog
 {
     Q_OBJECT
 public:
-    dlg_channel_list(QSettings *, network *, tab_container *);
+    dlg_channel_list(network *, QSettings *, tab_container *);
     void clear();
     void add_channel(QString, QString, QString, QString);
     void create_list();
@@ -38,8 +38,8 @@ public:
 
 private:
     Ui::uiChannelList ui;
-    QSettings *settings;
     network *pNetwork;
+    QSettings *settings;
     tab_container *tabc;
     QVector < QVector<QString> > list_1;
     QVector < QVector<QString> > list_2;

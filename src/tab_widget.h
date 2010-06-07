@@ -57,7 +57,7 @@ class tab_widget : public QWidget
 {
     Q_OBJECT
 public:
-    tab_widget(QString, QWidget *, network *, QSettings *, dlg_channel_settings *, dlg_moderation *);
+    tab_widget(network *, QSettings *, QString, QWidget *, dlg_channel_settings *, dlg_moderation *);
     ~tab_widget();
     QString get_name() { return strName; }
     QString convert_emots(QString);
@@ -155,10 +155,10 @@ private:
     dlg_moderation *dlgmoderation;
     qnotify *notify;
 
-    QString strName;
     network *pNetwork;
-    QString strLast_msg;
     QSettings *settings;
+    QString strName;
+    QString strLast_msg;
     QMap<QString, QString> nick_flag;
     QMap<QString, QString> nick_suffix;
     QHash <QString, QString> nicklist;
