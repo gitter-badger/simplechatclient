@@ -70,6 +70,7 @@ protected:
 
 private slots:
     void owner_changed();
+    void remove_channel_clicked();
     void email_changed();
     void www_changed();
     void topic_changed();

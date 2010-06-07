@@ -28,6 +28,7 @@ dlg_channel_settings::dlg_channel_settings(network *param1, QSettings *param2)
     settings = param2;
 
     QObject::connect(ui.pushButton, SIGNAL(clicked()), this, SLOT(owner_changed()));
+    QObject::connect(ui.pushButton_14, SIGNAL(clicked()), this, SLOT(remove_channel_clicked()));
     QObject::connect(ui.pushButton_19, SIGNAL(clicked()), this, SLOT(email_changed()));
     QObject::connect(ui.pushButton_3, SIGNAL(clicked()), this, SLOT(www_changed()));
     QObject::connect(ui.pushButton_4, SIGNAL(clicked()), this, SLOT(topic_changed()));
@@ -219,6 +220,11 @@ void dlg_channel_settings::add_description(QString strDescription)
 void dlg_channel_settings::owner_changed()
 {
     (new dlg_privilege(pNetwork, settings, "owner", strChannel, "add", ui.tableWidget, ui.tableWidget_2, ui.tableWidget_3, ui.tableWidget_4))->show();
+}
+
+void dlg_channel_settings::remove_channel_clicked()
+{
+    (new dlg_privilege(pNetwork, settings, "channel", strChannel, "del", ui.tableWidget, ui.tableWidget_2, ui.tableWidget_3, ui.tableWidget_4))->show();
 }
 
 void dlg_channel_settings::email_changed()

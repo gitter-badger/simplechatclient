@@ -57,6 +57,11 @@ dlg_privilege::dlg_privilege(network *param1, QSettings *param2, QString param3,
             ui.label->setText("Usuñ ban:");
         else if (strStatus == "invite")
             ui.label->setText("Usuñ zaproszenie:");
+        else if (strStatus == "channel")
+        {
+            ui.lineEdit->setText(strChannel);
+            ui.label->setText("<p style=\"font-weight:bold;\">Usuniêcie kana³u jest operacj± nieodwracaln±!</p>");
+        }
     }
 
     QObject::connect(ui.buttonBox, SIGNAL(accepted()), this, SLOT(button_ok()));
@@ -92,6 +97,8 @@ void dlg_privilege::button_ok()
                 pNetwork->send(QString("CS BAN %1 DEL %2").arg(strChannel).arg(strNick));
             else if (strStatus == "invite")
                 pNetwork->send(QString("CS INVITE %1 DEL %2").arg(strChannel).arg(strNick));
+            else if (strStatus == "channel")
+                pNetwork->send(QString("CS DROP %1").arg(strChannel));
         }
     }
     else
