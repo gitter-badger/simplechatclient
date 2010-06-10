@@ -27,6 +27,7 @@
 #include "network.h"
 #include "dlg_channel_settings.h"
 #include "dlg_moderation.h"
+#include "qnotify.h"
 #include "tab_manager.h"
 #include "tab_widget.h"
 
@@ -34,7 +35,7 @@ class tab_container : public QObject
 {
     Q_OBJECT
 public:
-    tab_container(network *, QSettings *, tab_manager *, QWidget *);
+    tab_container(network *, QSettings *, tab_manager *, QWidget *, qnotify *);
     ~tab_container();
     void set_dlg(dlg_channel_settings *, dlg_moderation *);
     bool exist_tab(QString);
@@ -71,6 +72,7 @@ private:
     tab_widget *tw[50];
     QString free_list;
     QWidget *mainWin;
+    qnotify *pNotify;
     dlg_channel_settings *dlgchannel_settings;
     dlg_moderation *dlgmoderation;
 

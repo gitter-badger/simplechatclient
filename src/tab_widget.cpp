@@ -20,13 +20,14 @@
 
 #include "tab_widget.h"
 
-tab_widget::tab_widget(network *param1, QSettings *param2, QString param3, QWidget *parent, dlg_channel_settings *param4, dlg_moderation *param5)
+tab_widget::tab_widget(network *param1, QSettings *param2, QString param3, QWidget *parent, qnotify *param4, dlg_channel_settings *param5, dlg_moderation *param6)
 {
     pNetwork = param1;
     settings = param2;
     strName = param3;
-    dlgchannel_settings = param4;
-    dlgmoderation = param5;
+    pNotify = param4;
+    dlgchannel_settings = param5;
+    dlgmoderation = param6;
 
     iNickCount = 0;
     bCursorPositionChanged = false;
@@ -34,8 +35,6 @@ tab_widget::tab_widget(network *param1, QSettings *param2, QString param3, QWidg
     strFontSize = "11px";
     strContentStart = "<html><body style=\"background-color:#ffffff;\">";
     strContentEnd = "</body></html>";
-
-    notify = new qnotify();
 
     splitter = new QSplitter(this);
     leftLayout = new QVBoxLayout();
@@ -405,7 +404,6 @@ tab_widget::~tab_widget()
 
     delete nick_list;
     delete inputline;
-    delete notify;
 }
 
 QString tab_widget::convert_emots(QString strData)
@@ -509,7 +507,7 @@ void tab_widget::display_message(QString strData, int iLevel)
                 strContentLast = "</span>"+strContentLast;
                 bHilight = true;
 
-                notify->play();
+                pNotify->play();
 
                 bLevel = true;
             }

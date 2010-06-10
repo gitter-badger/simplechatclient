@@ -41,6 +41,7 @@
 #include "irc_auth.h"
 #include "irc_kernel.h"
 #include "network.h"
+#include "qnotify.h"
 #include "tab_container.h"
 #include "tab_manager.h"
 #include "update_thread.h"
@@ -74,9 +75,10 @@ private:
     dlg_friends *dlgfriends;
     dlg_ignore *dlgignore;
     dlg_moderation *dlgmoderation;
-    QList <update_thread*> uThreadList;
     irc_kernel *pIrc_kernel;
     irc_auth *pIrc_auth;
+    qnotify *pNotify;
+    QList <update_thread*> uThreadList;
     QMenu *trayMenu;
     QSystemTrayIcon *trayIcon;
     QMenu *fileMenu;

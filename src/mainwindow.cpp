@@ -66,7 +66,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     delete pConfig;
 
     settings.clear();
-    settings.setValue("version", "1.0.5.245");
+    settings.setValue("version", "1.0.5.247");
     settings.setValue("debug", "off");
     settings.setValue("logged", "off");
     settings.setValue("busy", "off");
@@ -82,7 +82,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     setCentralWidget(tabm);
 
     pNetwork = new network(this, connectAct, &settings);
-    tabc = new tab_container(pNetwork, &settings, tabm, this);
+    pNotify = new qnotify();
+    tabc = new tab_container(pNetwork, &settings, tabm, this, pNotify);
 
     dlgchannel_settings = new dlg_channel_settings(pNetwork, &settings);
     dlgmoderation = new dlg_moderation(pNetwork, &settings);
@@ -190,6 +191,7 @@ MainWindow::~MainWindow()
     delete dlgmoderation;
     delete dlgchannel_settings;
     delete pNetwork;
+    delete pNotify;
     delete tabc;
     delete tabm;
 }

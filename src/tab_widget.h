@@ -57,7 +57,7 @@ class tab_widget : public QWidget
 {
     Q_OBJECT
 public:
-    tab_widget(network *, QSettings *, QString, QWidget *, dlg_channel_settings *, dlg_moderation *);
+    tab_widget(network *, QSettings *, QString, QWidget *, qnotify *, dlg_channel_settings *, dlg_moderation *);
     ~tab_widget();
     QString get_name() { return strName; }
     QString convert_emots(QString);
@@ -153,7 +153,7 @@ private:
     QGridLayout *mainLayout;
     dlg_channel_settings *dlgchannel_settings;
     dlg_moderation *dlgmoderation;
-    qnotify *notify;
+    qnotify *pNotify;
 
     network *pNetwork;
     QSettings *settings;
