@@ -20,11 +20,11 @@
 
 #include "log.h"
 
-log::log()
+Log::Log()
 {
 }
 
-QString log::convert(QString strData)
+QString Log::convert(QString strData)
 {
     strData.replace(QRegExp("%C([a-zA-Z0-9_-:]+)%"),"");
     strData.replace(QRegExp("%F([a-zA-Z0-9_-:]+)%"),"");
@@ -32,7 +32,7 @@ QString log::convert(QString strData)
     return strData;
 }
 
-void log::save(QString strChannel, QString strData)
+void Log::save(QString strChannel, QString strData)
 {
     QString path = QCoreApplication::applicationDirPath();
 
@@ -49,7 +49,7 @@ void log::save(QString strChannel, QString strData)
         return;
     }
 
-    strData = log::convert(strData);
+    strData = convert(strData);
 
     QTextStream out(&f);
     out << strData << "\r\n";

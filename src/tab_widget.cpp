@@ -20,7 +20,7 @@
 
 #include "tab_widget.h"
 
-tab_widget::tab_widget(network *param1, QSettings *param2, QString param3, QWidget *parent, qnotify *param4, dlg_channel_settings *param5, dlg_moderation *param6)
+TabWidget::TabWidget(Network *param1, QSettings *param2, QString param3, QWidget *parent, Notify *param4, DlgChannelSettings *param5, DlgModeration *param6)
 {
     pNetwork = param1;
     settings = param2;
@@ -106,7 +106,7 @@ tab_widget::tab_widget(network *param1, QSettings *param2, QString param3, QWidg
     nickCount->setAlignment(Qt::AlignCenter);
     nickCount->show();
 
-    nick_list = new qnicklist(pNetwork, settings, strName);
+    nick_list = new Nicklist(pNetwork, settings, strName);
     nick_list->setParent(this);
     nick_list->setSortingEnabled(false);
     nick_list->show();
@@ -246,7 +246,7 @@ tab_widget::tab_widget(network *param1, QSettings *param2, QString param3, QWidg
     nickLabel->setParent(this);
     nickLabel->show();
 
-    inputline = new qinputline(this);
+    inputline = new Inputline(this);
     inputline->setParent(this);
     inputline->setMinimumWidth(400);
     inputline->setMaxLength(300);
@@ -392,7 +392,7 @@ tab_widget::tab_widget(network *param1, QSettings *param2, QString param3, QWidg
     QObject::connect(textEdit, SIGNAL(loadFinished(bool)), this, SLOT(change_scroll_position()));
 }
 
-tab_widget::~tab_widget()
+TabWidget::~TabWidget()
 {
     nick_flag.clear();
     nick_suffix.clear();
@@ -406,7 +406,7 @@ tab_widget::~tab_widget()
     delete inputline;
 }
 
-QString tab_widget::convert_emots(QString strData)
+QString TabWidget::convert_emots(QString strData)
 {
     strData.replace(QRegExp("(http:|https:)//"), "\\1\\\\"); // fix http https
     strData.replace(QRegExp("//([a-zA-Z0-9_-]+)\\b"), "%I\\1%");
@@ -414,22 +414,22 @@ QString tab_widget::convert_emots(QString strData)
     return strData;
 }
 
-QString tab_widget::replace_emots(QString strData)
+QString TabWidget::replace_emots(QString strData)
 {
-    replace *pReplace = new replace();
+    Replace *pReplace = new Replace();
     strData = pReplace->replace_emots(strData);
     delete pReplace;
 
     return strData;
 }
 
-void tab_widget::display_msg(QString strTime, QString strData, int iLevel)
+void TabWidget::display_msg(QString strTime, QString strData, int iLevel)
 {
     QDateTime dt = QDateTime::fromTime_t(strTime.toInt());
     QString strDT = dt.toString("[hh:mm:ss] ");
     strData = strDT+strData;
 
-    log *l = new log();
+    Log *l = new Log();
     l->save(strName, strData);
 
     if ((iLevel == 1) || (iLevel == 2) || (iLevel == 3))
@@ -438,16 +438,16 @@ void tab_widget::display_msg(QString strTime, QString strData, int iLevel)
             return;
     }
 
-    tab_widget::display_message(strData, iLevel);
+    display_message(strData, iLevel);
 }
 
-void tab_widget::display_msg(QString strData, int iLevel)
+void TabWidget::display_msg(QString strData, int iLevel)
 {
     QDateTime dt = QDateTime::currentDateTime();
     QString strDT = dt.toString("[hh:mm:ss] ");
     strData = strDT+strData;
 
-    log *l = new log();
+    Log *l = new Log();
     l->save(strName, strData);
 
     if ((iLevel == 1) || (iLevel == 2) || (iLevel == 3))
@@ -456,10 +456,10 @@ void tab_widget::display_msg(QString strData, int iLevel)
             return;
     }
 
-    tab_widget::display_message(strData, iLevel);
+    display_message(strData, iLevel);
 }
 
-void tab_widget::display_message(QString strData, int iLevel)
+void TabWidget::display_message(QString strData, int iLevel)
 {
     if (strFontStyle != "normal") strFontStyle = "normal";
     if (strFontColor != "#000000") strFontColor = "#000000";
@@ -715,7 +715,7 @@ void tab_widget::display_message(QString strData, int iLevel)
 
 // window options
 
-void tab_widget::set_topic(QString strTopic)
+void TabWidget::set_topic(QString strTopic)
 {
     topic->setText(strTopic);
     topic->setCursorPosition(0);
@@ -726,21 +726,21 @@ void tab_widget::set_topic(QString strTopic)
     topic->setToolTip(strTopic);
 }
 
-void tab_widget::enable_topic()
+void TabWidget::enable_topic()
 {
     topic->setReadOnly(false);
     topicButton->show();
     topLeftUpLayout->addWidget(topicButton);
 }
 
-void tab_widget::disable_topic()
+void TabWidget::disable_topic()
 {
     topic->setReadOnly(true);
     topicButton->hide();
     topLeftUpLayout->removeWidget(topicButton);
 }
 
-void tab_widget::enable_moderation()
+void TabWidget::enable_moderation()
 {
     moderation->show();
     toolLayout->addWidget(moderation);
@@ -748,7 +748,7 @@ void tab_widget::enable_moderation()
     bottomLayout->addWidget(moderSendButton);
 }
 
-void tab_widget::disable_moderation()
+void TabWidget::disable_moderation()
 {
     moderation->hide();
     toolLayout->removeWidget(moderation);
@@ -756,12 +756,12 @@ void tab_widget::disable_moderation()
     bottomLayout->removeWidget(moderSendButton);
 }
 
-void tab_widget::author_topic(QString strAuthor)
+void TabWidget::author_topic(QString strAuthor)
 {
     topicDetails->setText(QString(" Autor tematu: %1").arg(strAuthor));
 }
 
-void tab_widget::set_link(QString strUrl)
+void TabWidget::set_link(QString strUrl)
 {
     webLink->setText(QString("<a href=\"%1\" style=\"color:#0000FF;text-decoration:none;\" >Strona kana³u</a>").arg(strUrl));
     webLink->setToolTip(strUrl);
@@ -769,7 +769,7 @@ void tab_widget::set_link(QString strUrl)
 
 // nick list
 
-void tab_widget::add_user(QString strNick, QString strSuffix, int iRefresh)
+void TabWidget::add_user(QString strNick, QString strSuffix, int iRefresh)
 {
     QString strmFlag;
     QString strmSuffix;
@@ -890,11 +890,11 @@ void tab_widget::add_user(QString strNick, QString strSuffix, int iRefresh)
         else strStatus = "user";
     }
 
-    if (tab_widget::nicklist_exist(strNick) == false)
+    if (nicklist_exist(strNick) == false)
     {
-        tab_widget::nicklist_add(strNick, strStatus);
+        nicklist_add(strNick, strStatus);
         if (iRefresh == 1)
-            tab_widget::nicklist_refresh();
+            nicklist_refresh();
 
         inputline->set_userslist(nick_list);
 
@@ -903,14 +903,14 @@ void tab_widget::add_user(QString strNick, QString strSuffix, int iRefresh)
     }
 }
 
-void tab_widget::del_user(QString strNick)
+void TabWidget::del_user(QString strNick)
 {
-    if (tab_widget::nicklist_exist(strNick) == true)
+    if (nicklist_exist(strNick) == true)
     {
         nick_flag.remove(strNick);
         nick_suffix.remove(strNick);
 
-        tab_widget::nicklist_remove(strNick);
+        nicklist_remove(strNick);
 
         inputline->set_userslist(nick_list);
 
@@ -919,42 +919,42 @@ void tab_widget::del_user(QString strNick)
     }
 }
 
-void tab_widget::nicklist_add(QString strNick, QString strStatus)
+void TabWidget::nicklist_add(QString strNick, QString strStatus)
 {
     nick_list->nicklist_add(strNick, strStatus, &nicklist, &new_nicklist1, &new_nicklist2);
 }
 
-void tab_widget::nicklist_remove(QString strNick)
+void TabWidget::nicklist_remove(QString strNick)
 {
     nick_list->nicklist_remove(strNick, &nicklist, &new_nicklist1, &new_nicklist2);
 }
 
-bool tab_widget::nicklist_exist(QString strNick)
+bool TabWidget::nicklist_exist(QString strNick)
 {
     return nick_list->nicklist_exist(strNick, &nicklist);
 }
 
-void tab_widget::nicklist_clear()
+void TabWidget::nicklist_clear()
 {
     nick_list->nicklist_clear(&nicklist, &new_nicklist1, &new_nicklist2);
 }
 
-void tab_widget::nicklist_refresh()
+void TabWidget::nicklist_refresh()
 {
     nick_list->nicklist_refresh(&nicklist, &new_nicklist1, &new_nicklist2);
 }
 
-void tab_widget::nicklist_sort()
+void TabWidget::nicklist_sort()
 {
     nick_list->nicklist_sort(&nicklist, &new_nicklist1, &new_nicklist2);
 }
 
-void tab_widget::nicklist_quicksort(QString strStatus)
+void TabWidget::nicklist_quicksort(QString strStatus)
 {
     nick_list->nicklist_quicksort(strStatus, &nicklist, &new_nicklist1, &new_nicklist2);
 }
 
-void tab_widget::change_flag(QString strNick, QString strNewFlag)
+void TabWidget::change_flag(QString strNick, QString strNewFlag)
 {
     QString strFlag = nick_flag[strNick];
     QString strSuffix = nick_suffix[strNick];
@@ -982,32 +982,32 @@ void tab_widget::change_flag(QString strNick, QString strNewFlag)
     else if ((strNewFlag == "+x") && (strSuffix.indexOf("x") == -1)) strSuffix.append("x");
     else if ((strNewFlag == "-x") && (strSuffix.indexOf("x") != -1)) strSuffix.remove("x");
 
-    tab_widget::del_user(strNick);
-    tab_widget::add_user(strFlag+strNick, strSuffix, 1);
+    del_user(strNick);
+    add_user(strFlag+strNick, strSuffix, 1);
 
-    config *pConfig = new config();
+    Config *pConfig = new Config();
     QString strMe = pConfig->get_value("login-nick");
     delete pConfig;
 
     if (strNick == strMe)
     {
-        if (strNewFlag == "+q") tab_widget::enable_topic();
-        else if (strNewFlag == "-q") tab_widget::disable_topic();
-        else if (strNewFlag == "+o") tab_widget::enable_topic();
-        else if (strNewFlag == "-o") tab_widget::disable_topic();
-        else if (strNewFlag == "+h") tab_widget::enable_topic();
-        else if (strNewFlag == "-h") tab_widget::disable_topic();
-        else if (strNewFlag == "+X") tab_widget::enable_moderation();
-        else if (strNewFlag == "-X") tab_widget::disable_moderation();
+        if (strNewFlag == "+q") enable_topic();
+        else if (strNewFlag == "-q") disable_topic();
+        else if (strNewFlag == "+o") enable_topic();
+        else if (strNewFlag == "-o") disable_topic();
+        else if (strNewFlag == "+h") enable_topic();
+        else if (strNewFlag == "-h") disable_topic();
+        else if (strNewFlag == "+X") enable_moderation();
+        else if (strNewFlag == "-X") disable_moderation();
     }
 }
 
-void tab_widget::update_nick(QString strNick)
+void TabWidget::update_nick(QString strNick)
 {
     nickLabel->setText(QString("<p style=\"font-weight:bold;\"> %1</p>").arg(strNick));
 }
 
-void tab_widget::clear_nicklist()
+void TabWidget::clear_nicklist()
 {
     iNickCount = 0;
     nickCount->setText(QString("Liczba osób: %1").arg(iNickCount));
@@ -1017,12 +1017,12 @@ void tab_widget::clear_nicklist()
     nicklist.clear();
 }
 
-void tab_widget::set_open_channels(QStringList strOpenChannels)
+void TabWidget::set_open_channels(QStringList strOpenChannels)
 {
     nick_list->set_open_channels(strOpenChannels);
 }
 
-void tab_widget::set_logo(QByteArray bData)
+void TabWidget::set_logo(QByteArray bData)
 {
     QPixmap pixmap;
     pixmap.loadFromData(bData);
@@ -1031,7 +1031,7 @@ void tab_widget::set_logo(QByteArray bData)
 
 // actions
 
-void tab_widget::bold_clicked()
+void TabWidget::bold_clicked()
 {
     if (bBold == true)
     {
@@ -1047,7 +1047,7 @@ void tab_widget::bold_clicked()
     }
 }
 
-void tab_widget::italic_clicked()
+void TabWidget::italic_clicked()
 {
     if (bItalic == true)
     {
@@ -1063,38 +1063,38 @@ void tab_widget::italic_clicked()
     }
 }
 
-void tab_widget::arial_triggered()
+void TabWidget::arial_triggered()
 {
     fontfamily->setText("Arial");
     strFontFamily = "Arial";
 }
 
-void tab_widget::times_triggered()
+void TabWidget::times_triggered()
 {
     fontfamily->setText("Times");
     strFontFamily = "Times";
 }
 
-void tab_widget::verdana_triggered()
+void TabWidget::verdana_triggered()
 {
     fontfamily->setText("Verdana");
     strFontFamily = "Verdana";
 
 }
 
-void tab_widget::tahoma_triggered()
+void TabWidget::tahoma_triggered()
 {
     fontfamily->setText("Tahoma");
     strFontFamily = "Tahoma";
 }
 
-void tab_widget::courier_triggered()
+void TabWidget::courier_triggered()
 {
     fontfamily->setText("Courier");
     strFontFamily = "Courier";
 }
 
-void tab_widget::size8_triggered()
+void TabWidget::size8_triggered()
 {
     strContent = strContent.replace("font-size:"+strFontSize, "font-size:8px");
     textEdit->setHtml(strContentStart+strContent+strContentEnd,QUrl(""));
@@ -1102,7 +1102,7 @@ void tab_widget::size8_triggered()
     size->setText("Czcionka:"+strFontSize.left(strFontSize.length()-2));
 }
 
-void tab_widget::size9_triggered()
+void TabWidget::size9_triggered()
 {
     strContent = strContent.replace("font-size:"+strFontSize, "font-size:9px");
     textEdit->setHtml(strContentStart+strContent+strContentEnd,QUrl(""));
@@ -1110,7 +1110,7 @@ void tab_widget::size9_triggered()
     size->setText("Czcionka:"+strFontSize.left(strFontSize.length()-2));
 }
 
-void tab_widget::size10_triggered()
+void TabWidget::size10_triggered()
 {
     strContent = strContent.replace("font-size:"+strFontSize, "font-size:10px");
     textEdit->setHtml(strContentStart+strContent+strContentEnd,QUrl(""));
@@ -1118,7 +1118,7 @@ void tab_widget::size10_triggered()
     size->setText("Czcionka:"+strFontSize.left(strFontSize.length()-2));
 }
 
-void tab_widget::size11_triggered()
+void TabWidget::size11_triggered()
 {
     strContent = strContent.replace("font-size:"+strFontSize, "font-size:11px");
     textEdit->setHtml(strContentStart+strContent+strContentEnd,QUrl(""));
@@ -1126,7 +1126,7 @@ void tab_widget::size11_triggered()
     size->setText("Czcionka:"+strFontSize.left(strFontSize.length()-2));
 }
 
-void tab_widget::size12_triggered()
+void TabWidget::size12_triggered()
 {
     strContent = strContent.replace("font-size:"+strFontSize, "font-size:12px");
     textEdit->setHtml(strContentStart+strContent+strContentEnd,QUrl(""));
@@ -1134,7 +1134,7 @@ void tab_widget::size12_triggered()
     size->setText("Czcionka:"+strFontSize.left(strFontSize.length()-2));
 }
 
-void tab_widget::size14_triggered()
+void TabWidget::size14_triggered()
 {
     strContent = strContent.replace("font-size:"+strFontSize, "font-size:14px");
     textEdit->setHtml(strContentStart+strContent+strContentEnd,QUrl(""));
@@ -1142,7 +1142,7 @@ void tab_widget::size14_triggered()
     size->setText("Czcionka:"+strFontSize.left(strFontSize.length()-2));
 }
 
-void tab_widget::size18_triggered()
+void TabWidget::size18_triggered()
 {
     strContent = strContent.replace("font-size:"+strFontSize, "font-size:18px");
     textEdit->setHtml(strContentStart+strContent+strContentEnd,QUrl(""));
@@ -1150,7 +1150,7 @@ void tab_widget::size18_triggered()
     size->setText("Czcionka:"+strFontSize.left(strFontSize.length()-2));
 }
 
-void tab_widget::size20_triggered()
+void TabWidget::size20_triggered()
 {
     strContent = strContent.replace("font-size:"+strFontSize, "font-size:20px");
     textEdit->setHtml(strContentStart+strContent+strContentEnd,QUrl(""));
@@ -1160,7 +1160,7 @@ void tab_widget::size20_triggered()
 
 // color
 
-void tab_widget::color_clicked(int index)
+void TabWidget::color_clicked(int index)
 {
     if (index == 0) strCurrentColor = "000000";
     else if (index == 1) strCurrentColor = "623c00";
@@ -1183,7 +1183,7 @@ void tab_widget::color_clicked(int index)
 
 // input line
 
-void tab_widget::send_message(bool bType)
+void TabWidget::send_message(bool bType)
 {
     QString strTextO = inputline->text();
     QStringList strTextA = strTextO.split(QRegExp("(\n|\r)"));
@@ -1194,7 +1194,7 @@ void tab_widget::send_message(bool bType)
         QString strTextOriginal = strText;
         strLast_msg = strText;
 
-        config *pConfig = new config();
+        Config *pConfig = new Config();
         QString strMe = pConfig->get_value("login-nick");
         delete pConfig;
 
@@ -1205,12 +1205,12 @@ void tab_widget::send_message(bool bType)
             strTextOriginal = strText;
             QStringList strTextList = strText.split(" ");
 
-            commands *pCommands = new commands(strName, strText, settings);
+            Commands *pCommands = new Commands(strName, strText, settings);
             strText = pCommands->execute();
             delete pCommands;
 
             if ((strTextList[0] == "help") || (strTextList[0] == "pomoc"))
-                tab_widget::display_msg(strText, 7);
+                display_msg(strText, 7);
             else if (strTextList[0] == "me")
             {
                 if (strTextOriginal.length() > 3)
@@ -1229,18 +1229,18 @@ void tab_widget::send_message(bool bType)
                     if ((weight != "") || (font != "verdana"))
                         strTextDisplay = "%F"+weight+":"+font+"%"+strTextDisplay;
 
-                    strTextSend = tab_widget::convert_emots(strTextSend);
-                    strTextSend = tab_widget::replace_emots(strTextSend);
-                    strTextDisplay = tab_widget::convert_emots(strTextDisplay);
-                    strTextDisplay = tab_widget::replace_emots(strTextDisplay);
+                    strTextSend = convert_emots(strTextSend);
+                    strTextSend = replace_emots(strTextSend);
+                    strTextDisplay = convert_emots(strTextDisplay);
+                    strTextDisplay = replace_emots(strTextDisplay);
 
                     QDateTime dt = QDateTime::currentDateTime();
                     QString strDT = dt.toString("[hh:mm:ss] ");
 
-                    log *l = new log();
+                    Log *l = new Log();
                     l->save(strName, QString("%1<%2> %3").arg(strDT).arg(strMe).arg(strTextDisplay));
 
-                    tab_widget::display_message(QString("%1<%2> %3ACTION %4%5").arg(strDT).arg(strMe).arg(QString(QByteArray("\x01"))).arg(strTextDisplay).arg(QString(QByteArray("\x01"))), 0);
+                    display_message(QString("%1<%2> %3ACTION %4%5").arg(strDT).arg(strMe).arg(QString(QByteArray("\x01"))).arg(strTextDisplay).arg(QString(QByteArray("\x01"))), 0);
                     if (pNetwork->is_connected() == true)
                         pNetwork->send(strTextSend);
                 }
@@ -1268,13 +1268,13 @@ void tab_widget::send_message(bool bType)
                 if ((weight != "") || (font != "verdana"))
                     strText = "%F"+weight+":"+font+"%"+strText;
 
-                strText = tab_widget::convert_emots(strText);
-                strText = tab_widget::replace_emots(strText);
+                strText = convert_emots(strText);
+                strText = replace_emots(strText);
 
                 QDateTime dt = QDateTime::currentDateTime();
                 QString strDT = dt.toString("[hh:mm:ss] ");
 
-                log *l = new log();
+                Log *l = new Log();
 
                 if (bType == true)
                 {
@@ -1282,7 +1282,7 @@ void tab_widget::send_message(bool bType)
 
                     strText = QString("PRIVMSG %1 :%2").arg(strName).arg(strText);
                     pNetwork->send(strText);
-                    tab_widget::display_message(QString("%1<%2> %3").arg(strDT).arg(strMe).arg(strText.right(strText.length()-10-strName.length())), 0);
+                    display_message(QString("%1<%2> %3").arg(strDT).arg(strMe).arg(strText.right(strText.length()-10-strName.length())), 0);
                 }
                 else
                 {
@@ -1290,7 +1290,7 @@ void tab_widget::send_message(bool bType)
 
                     strText = QString("MODERNOTICE %1 :%2").arg(strName).arg(strText);
                     pNetwork->send(strText);
-                    tab_widget::display_message(QString("%1 *<%2> %3").arg(strDT).arg(strMe).arg(strText.right(strText.length()-14-strName.length())), 6);
+                    display_message(QString("%1 *<%2> %3").arg(strDT).arg(strMe).arg(strText.right(strText.length()-14-strName.length())), 6);
                 }
 
                 inputline->clear();
@@ -1299,17 +1299,17 @@ void tab_widget::send_message(bool bType)
     }
 }
 
-void tab_widget::inputline_return_pressed()
+void TabWidget::inputline_return_pressed()
 {
-    tab_widget::send_message(true);
+    send_message(true);
 }
 
-void tab_widget::moder_button_clicked()
+void TabWidget::moder_button_clicked()
 {
-    tab_widget::send_message(false);
+    send_message(false);
 }
 
-void tab_widget::channel_settings_clicked()
+void TabWidget::channel_settings_clicked()
 {
     if (pNetwork->is_connected() == true)
     {
@@ -1321,23 +1321,23 @@ void tab_widget::channel_settings_clicked()
     }
 }
 
-void tab_widget::moderation_clicked()
+void TabWidget::moderation_clicked()
 {
     dlgmoderation->show();
 }
 
-void tab_widget::topic_return_pressed()
+void TabWidget::topic_return_pressed()
 {
     QString strText = topic->text();
     pNetwork->send(QString("CS SET %1 TOPIC %2").arg(strName).arg(strText));
 }
 
-void tab_widget::change_scroll_position()
+void TabWidget::change_scroll_position()
 {
     textEdit->page()->mainFrame()->setScrollBarValue(Qt::Vertical, textEdit->page()->mainFrame()->scrollBarMaximum(Qt::Vertical));
 }
 
-void tab_widget::keyPressEvent(QKeyEvent *e)
+void TabWidget::keyPressEvent(QKeyEvent *e)
 {
     if (e->key() == Qt::Key_Up)
     {

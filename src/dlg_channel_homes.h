@@ -31,21 +31,21 @@
 #include "tab_container.h"
 #include "ui_channel_homes.h"
 
-class dlg_channel_homes : public QDialog
+class DlgChannelHomes : public QDialog
 {
     Q_OBJECT
 public:
-    dlg_channel_homes(network *, QSettings *, tab_container *, dlg_channel_settings *);
+    DlgChannelHomes(Network *, QSettings *, TabContainer *, DlgChannelSettings *);
     void add_channel(QString);
     void clear();
 
 private:
     Ui::uiChannelHomes ui;
-    network *pNetwork;
+    Network *pNetwork;
     QSettings *settings;
-    tab_container *tabc;
-    dlg_channel_settings *dlgchannel_settings;
-    dlg_channel_homes_ad *dlgchannel_homes_ad;
+    TabContainer *tabc;
+    DlgChannelSettings *dlgchannel_settings;
+    DlgChannelHomesAd *dlgchannel_homes_ad;
 
 protected:
     virtual void showEvent(QShowEvent *event);

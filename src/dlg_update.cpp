@@ -20,7 +20,7 @@
 
 #include "dlg_update.h"
 
-dlg_update::dlg_update(QString param1)
+DlgUpdate::DlgUpdate(QString param1)
 {
     ui.setupUi(this);
     setAttribute(Qt::WA_DeleteOnClose);
@@ -41,13 +41,13 @@ dlg_update::dlg_update(QString param1)
     QObject::connect(ui.buttonBox, SIGNAL(accepted()), this, SLOT(button_ok()));
 }
 
-void dlg_update::button_ok()
+void DlgUpdate::button_ok()
 {
     this->close();
     exit(0);
 }
 
-void dlg_update::hideEvent(QHideEvent *event)
+void DlgUpdate::hideEvent(QHideEvent *event)
 {
     event->accept();
 

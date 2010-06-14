@@ -27,11 +27,11 @@
 #include <QThread>
 #include "tab_container.h"
 
-class channel_avatar_thread : public QThread
+class ChannelAvatarThread : public QThread
 {
     Q_OBJECT
 public:
-    channel_avatar_thread(QString, QString);
+    ChannelAvatarThread(QString, QString);
     void run();
 
 private:
@@ -39,7 +39,7 @@ private:
     QString strUrl;
 
 private slots:
-    void threadWork();
+    void thread_work();
 
 signals:
     void set_avatar(QString, QByteArray);
@@ -47,23 +47,23 @@ signals:
 
 };
 
-class channel_avatar : public QObject
+class ChannelAvatar : public QObject
 {
     Q_OBJECT
 public:
-    channel_avatar(tab_container *, QString, QString);
+    ChannelAvatar(TabContainer *, QString, QString);
 
 private:
-    tab_container *tabc;
+    TabContainer *tabc;
     QString strChannel;
     QString strUrl;
-    channel_avatar_thread *channelAvatarThr;
+    ChannelAvatarThread *channelAvatarThr;
 
 public slots:
     void stop_thread();
 
 signals:
-    void do_remove_cathread(channel_avatar*);
+    void do_remove_cathread(ChannelAvatar*);
 
 };
 

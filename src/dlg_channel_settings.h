@@ -31,11 +31,11 @@
 #include "network.h"
 #include "ui_channel_settings.h"
 
-class dlg_channel_settings : public QDialog
+class DlgChannelSettings : public QDialog
 {
     Q_OBJECT
 public:
-    dlg_channel_settings(network *, QSettings *);
+    DlgChannelSettings(Network *, QSettings *);
     void set_channel(QString);
     void add_topic(QString);
     void add_pubpriv(int);
@@ -57,7 +57,7 @@ public:
 
 private:
     Ui::uiChannelSettings ui;
-    network *pNetwork;
+    Network *pNetwork;
     QSettings *settings;
     QString strChannel;
 

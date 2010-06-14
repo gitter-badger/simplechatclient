@@ -28,11 +28,11 @@
 #include <QtCrypto>
 #include "config.h"
 
-class qcrypt : public QObject
+class Crypt : public QObject
 {
     Q_OBJECT
 public:
-    qcrypt();
+    Crypt();
     QString encrypt(QString, QString);
     QString decrypt(QString, QString);
 

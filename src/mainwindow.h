@@ -66,19 +66,19 @@ public slots:
 private:
     QSettings settings;
     tab_manager *tabm;
-    tab_container *tabc;
-    network *pNetwork;
-    dlg_channel_favourites *dlgchannel_favourites;
-    dlg_channel_homes *dlgchannel_homes;
-    dlg_channel_list *dlgchannel_list;
-    dlg_channel_settings *dlgchannel_settings;
-    dlg_friends *dlgfriends;
-    dlg_ignore *dlgignore;
-    dlg_moderation *dlgmoderation;
-    irc_kernel *pIrc_kernel;
-    irc_auth *pIrc_auth;
-    qnotify *pNotify;
-    QList <update_thread*> uThreadList;
+    TabContainer *tabc;
+    Network *pNetwork;
+    DlgChannelFavourites *dlgchannel_favourites;
+    DlgChannelHomes *dlgchannel_homes;
+    DlgChannelList *dlgchannel_list;
+    DlgChannelSettings *dlgchannel_settings;
+    DlgFriends *dlgfriends;
+    DlgIgnore *dlgignore;
+    DlgModeration *dlgmoderation;
+    IrcKernel *pIrc_kernel;
+    IrcAuth *pIrc_auth;
+    Notify *pNotify;
+    QList <UpdateThread*> uThreadList;
     QMenu *trayMenu;
     QSystemTrayIcon *trayIcon;
     QMenu *fileMenu;
@@ -110,7 +110,7 @@ private slots:
     void tray_icon(QSystemTrayIcon::ActivationReason);
     void button_show();
     void tab_close_requested(int);
-    void remove_uthread(update_thread*);
+    void remove_uthread(UpdateThread*);
 
 signals:
     void do_kernel(QString);

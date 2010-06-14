@@ -20,7 +20,7 @@
 
 #include "dlg_about.h"
 
-dlg_about::dlg_about(QWidget *parent, QSettings *param1) : QDialog(parent)
+DlgAbout::DlgAbout(QWidget *parent, QSettings *param1) : QDialog(parent)
 {
     ui.setupUi(this);
     setAttribute(Qt::WA_DeleteOnClose);
@@ -40,7 +40,7 @@ dlg_about::dlg_about(QWidget *parent, QSettings *param1) : QDialog(parent)
     QObject::connect(ui.buttonBox, SIGNAL(accepted()), this, SLOT(button_ok()));
 }
 
-void dlg_about::button_ok()
+void DlgAbout::button_ok()
 {
     ui.buttonBox->QObject::disconnect();
     this->close();

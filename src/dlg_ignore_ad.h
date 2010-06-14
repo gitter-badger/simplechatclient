@@ -27,17 +27,17 @@
 #include "tab_container.h"
 #include "ui_ignore_ad.h"
 
-class dlg_ignore_ad : public QDialog
+class DlgIgnoreAd : public QDialog
 {
     Q_OBJECT
 public:
-    dlg_ignore_ad(network *, QSettings *, tab_container *, QString, QString);
+    DlgIgnoreAd(Network *, QSettings *, TabContainer *, QString, QString);
 
 private:
     Ui::uiIgnoreAd ui;
-    network *pNetwork;
+    Network *pNetwork;
     QSettings *settings;
-    tab_container *tabc;
+    TabContainer *tabc;
     QString strStatus;
 
 private slots:

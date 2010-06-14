@@ -20,7 +20,7 @@
 
 #include "dlg_friends.h"
 
-dlg_friends::dlg_friends(network *param1, QSettings *param2, tab_container *param3)
+DlgFriends::DlgFriends(Network *param1, QSettings *param2, TabContainer *param3)
 {
     ui.setupUi(this);
 
@@ -34,19 +34,19 @@ dlg_friends::dlg_friends(network *param1, QSettings *param2, tab_container *para
     QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(button_cancel()));
 }
 
-void dlg_friends::set_friend(QString strNick, bool bStatus)
+void DlgFriends::set_friend(QString strNick, bool bStatus)
 {
     friends[strNick] = bStatus;
-    dlg_friends::refresh();
+    refresh();
 }
 
-void dlg_friends::remove_friend(QString strNick)
+void DlgFriends::remove_friend(QString strNick)
 {
     friends.remove(strNick);
-    dlg_friends::refresh();
+    refresh();
 }
 
-void dlg_friends::refresh()
+void DlgFriends::refresh()
 {
     ui.listWidget->clear();
     ui.listWidget_2->clear();
@@ -65,17 +65,17 @@ void dlg_friends::refresh()
     }
 }
 
-void dlg_friends::clear()
+void DlgFriends::clear()
 {
     friends.clear();
 }
 
-void dlg_friends::button_add()
+void DlgFriends::button_add()
 {
-    (new dlg_friends_ad(pNetwork, settings, tabc, "add", ""))->show();
+    (new DlgFriendsAd(pNetwork, settings, tabc, "add", ""))->show();
 }
 
-void dlg_friends::button_remove()
+void DlgFriends::button_remove()
 {
     QString strSelected;
     if (ui.tabWidget->currentIndex() == 0)
@@ -89,15 +89,15 @@ void dlg_friends::button_remove()
             strSelected = ui.listWidget_2->selectedItems().at(0)->text();
     }
 
-    (new dlg_friends_ad(pNetwork, settings, tabc, "remove", strSelected))->show();
+    (new DlgFriendsAd(pNetwork, settings, tabc, "remove", strSelected))->show();
 }
 
-void dlg_friends::button_ok()
+void DlgFriends::button_ok()
 {
     this->hide();
 }
 
-void dlg_friends::button_cancel()
+void DlgFriends::button_cancel()
 {
     this->hide();
 }

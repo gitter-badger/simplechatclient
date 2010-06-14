@@ -29,12 +29,12 @@
 #include <QFile>
 #include <QObject>
 
-class config : public QObject
+class Config : public QObject
 {
     Q_OBJECT
 public:
-    config();
-    ~config();
+    Config();
+    ~Config();
 
     QString get_value(QString);
     void set_value(QString, QString);

@@ -27,19 +27,19 @@
 #include "tab_container.h"
 #include "ui_channel_favourites.h"
 
-class dlg_channel_favourites : public QDialog
+class DlgChannelFavourites : public QDialog
 {
     Q_OBJECT
 public:
-    dlg_channel_favourites(network *, QSettings *, tab_container *);
+    DlgChannelFavourites(Network *, QSettings *, TabContainer *);
     void add_channel(QString);
     void clear();
 
 private:
     Ui::uiChannelFavourites ui;
-    network *pNetwork;
+    Network *pNetwork;
     QSettings *settings;
-    tab_container *tabc;
+    TabContainer *tabc;
 
 private slots:
     void button_add();

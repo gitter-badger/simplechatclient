@@ -23,11 +23,11 @@
 
 #include <QObject>
 
-class replace : public QObject
+class Replace : public QObject
 {
     Q_OBJECT
 public:
-    replace();
+    Replace();
     QString replace_emots(QString);
 
 };

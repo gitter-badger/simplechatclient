@@ -26,15 +26,15 @@
 #include "network.h"
 #include "ui_kick.h"
 
-class dlg_kick : public QDialog
+class DlgKick : public QDialog
 {
     Q_OBJECT
 public:
-    dlg_kick(network *, QSettings *, QString, QString);
+    DlgKick(Network *, QSettings *, QString, QString);
 
 private:
     Ui::uiKick ui;
-    network *pNetwork;
+    Network *pNetwork;
     QSettings *settings;
     QString strNick;
     QString strChannel;

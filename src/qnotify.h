@@ -26,12 +26,12 @@
 #include <QCoreApplication>
 #include <QObject>
 
-class qnotify : public QObject
+class Notify : public QObject
 {
     Q_OBJECT
 public:
-    qnotify();
-    ~qnotify();
+    Notify();
+    ~Notify();
     void play();
 
 private:

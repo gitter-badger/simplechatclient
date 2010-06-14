@@ -20,7 +20,7 @@
 
 #include "dlg_friends_ad.h"
 
-dlg_friends_ad::dlg_friends_ad(network *param1, QSettings *param2, tab_container *param3, QString param4, QString param5)
+DlgFriendsAd::DlgFriendsAd(Network *param1, QSettings *param2, TabContainer *param3, QString param4, QString param5)
 {
     ui.setupUi(this);
 
@@ -39,7 +39,7 @@ dlg_friends_ad::dlg_friends_ad(network *param1, QSettings *param2, tab_container
     QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(button_cancel()));
 }
 
-void dlg_friends_ad::button_ok()
+void DlgFriendsAd::button_ok()
 {
     QString strNick = ui.lineEdit->text();
 
@@ -55,7 +55,7 @@ void dlg_friends_ad::button_ok()
     this->close();
 }
 
-void dlg_friends_ad::button_cancel()
+void DlgFriendsAd::button_cancel()
 {
     ui.buttonBox->QObject::disconnect();
     this->close();

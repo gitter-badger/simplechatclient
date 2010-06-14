@@ -20,7 +20,7 @@
 
 #include "dlg_kick.h"
 
-dlg_kick::dlg_kick(network *param1, QSettings *param2, QString param3, QString param4)
+DlgKick::DlgKick(Network *param1, QSettings *param2, QString param3, QString param4)
 {
     ui.setupUi(this);
 
@@ -33,7 +33,7 @@ dlg_kick::dlg_kick(network *param1, QSettings *param2, QString param3, QString p
     QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(button_cancel()));
 }
 
-void dlg_kick::button_ok()
+void DlgKick::button_ok()
 {
     QString strReason = ui.lineEdit->text();
     if (strReason.isEmpty() == true)
@@ -45,7 +45,7 @@ void dlg_kick::button_ok()
     this->close();
 }
 
-void dlg_kick::button_cancel()
+void DlgKick::button_cancel()
 {
     ui.buttonBox->QObject::disconnect();
     this->close();

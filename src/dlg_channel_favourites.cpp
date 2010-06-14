@@ -20,7 +20,7 @@
 
 #include "dlg_channel_favourites.h"
 
-dlg_channel_favourites::dlg_channel_favourites(network *param1, QSettings *param2, tab_container *param3)
+DlgChannelFavourites::DlgChannelFavourites(Network *param1, QSettings *param2, TabContainer *param3)
 {
     ui.setupUi(this);
 
@@ -34,45 +34,45 @@ dlg_channel_favourites::dlg_channel_favourites(network *param1, QSettings *param
     QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(button_cancel()));
 }
 
-void dlg_channel_favourites::add_channel(QString strChannel)
+void DlgChannelFavourites::add_channel(QString strChannel)
 {
     ui.listWidget->addItem(new QListWidgetItem(QIcon(":/images/channel_avatar.png"), strChannel));
 }
 
-void dlg_channel_favourites::clear()
+void DlgChannelFavourites::clear()
 {
     ui.listWidget->clear();
 }
 
-void dlg_channel_favourites::button_add()
+void DlgChannelFavourites::button_add()
 {
     ui.listWidget->clear();
-    (new dlg_channel_favourites_ad(pNetwork, settings, tabc, "add", ""))->show();
+    (new DlgChannelFavouritesAd(pNetwork, settings, tabc, "add", ""))->show();
 }
 
-void dlg_channel_favourites::button_remove()
+void DlgChannelFavourites::button_remove()
 {
     QString strSelected;
     if (ui.listWidget->selectedItems().count() != 0)
         strSelected = ui.listWidget->selectedItems().at(0)->text();
 
     ui.listWidget->clear();
-    (new dlg_channel_favourites_ad(pNetwork, settings, tabc, "remove", strSelected))->show();
+    (new DlgChannelFavouritesAd(pNetwork, settings, tabc, "remove", strSelected))->show();
 }
 
-void dlg_channel_favourites::button_ok()
+void DlgChannelFavourites::button_ok()
 {
     ui.listWidget->clear();
     this->hide();
 }
 
-void dlg_channel_favourites::button_cancel()
+void DlgChannelFavourites::button_cancel()
 {
     ui.listWidget->clear();
     this->hide();
 }
 
-void dlg_channel_favourites::showEvent(QShowEvent *event)
+void DlgChannelFavourites::showEvent(QShowEvent *event)
 {
     event->accept();
 

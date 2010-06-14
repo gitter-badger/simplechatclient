@@ -37,29 +37,29 @@
 #include "network.h"
 #include "tab_container.h"
 
-class irc_kernel : public QObject
+class IrcKernel : public QObject
 {
     Q_OBJECT
 public:
-    irc_kernel(network *, QSettings *, tab_container *, dlg_channel_settings *, dlg_channel_homes *, dlg_channel_list *, dlg_channel_favourites *, dlg_friends *, dlg_ignore *, dlg_moderation *);
+    IrcKernel(Network *, QSettings *, TabContainer *, DlgChannelSettings *, DlgChannelHomes *, DlgChannelList *, DlgChannelFavourites *, DlgFriends *, DlgIgnore *, DlgModeration *);
 
 public slots:
     void kernel(QString);
 
 private:
-    network *pNetwork;
-    tab_container *tabc;
+    Network *pNetwork;
+    TabContainer *tabc;
     QSettings *settings;
     QStringList strDataList;
-    dlg_channel_settings *dlgchannel_settings;
-    dlg_channel_homes *dlgchannel_homes;
-    dlg_channel_list *dlgchannel_list;
-    dlg_channel_favourites *dlgchannel_favourites;
-    dlg_friends *dlgfriends;
-    dlg_ignore *dlgignore;
-    dlg_moderation *dlgmoderation;
+    DlgChannelSettings *dlgchannel_settings;
+    DlgChannelHomes *dlgchannel_homes;
+    DlgChannelList *dlgchannel_list;
+    DlgChannelFavourites *dlgchannel_favourites;
+    DlgFriends *dlgfriends;
+    DlgIgnore *dlgignore;
+    DlgModeration *dlgmoderation;
     QString strData;
-    QList <channel_avatar*> caThreadList;
+    QList <ChannelAvatar*> caThreadList;
 
     void raw_error();
     void raw_ping();
@@ -185,7 +185,7 @@ private:
     QString get_settings_key(QString);
 
 private slots:
-    void remove_cathread(channel_avatar*);
+    void remove_cathread(ChannelAvatar*);
 
 };
 

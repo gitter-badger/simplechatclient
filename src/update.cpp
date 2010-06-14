@@ -20,13 +20,13 @@
 
 #include "update.h"
 
-updater::updater(QSettings *param1, tab_container *param2)
+Updater::Updater(QSettings *param1, TabContainer *param2)
 {
     settings = param1;
     tabc = param2;
 }
 
-void updater::check_for_updates(QString param1)
+void Updater::check_for_updates(QString param1)
 {
     strCurrentVersion = settings->value("version").toString();
     QStringList lCurrentVersion = strCurrentVersion.split(".");
@@ -55,11 +55,11 @@ void updater::check_for_updates(QString param1)
     else if (iCurrentRev < iAvailableRev)
     {
         tabc->show_msg("Status", "Wymagana aktualizacja do wersji: "+strAvailableVersion, 0);
-        (new dlg_update(strAvailableVersion))->show();
+        (new DlgUpdate(strAvailableVersion))->show();
     }
 }
 
-QString updater::get_available_version()
+QString Updater::get_available_version()
 {
     QString strVersion;
     strVersion = QString::null;

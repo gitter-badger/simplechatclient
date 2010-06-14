@@ -25,11 +25,11 @@
 #include <QSettings>
 #include <QStringList>
 
-class commands : public QObject
+class Commands : public QObject
 {
     Q_OBJECT
 public:
-    commands(QString, QString, QSettings *);
+    Commands(QString, QString, QSettings *);
     QString execute();
 
 private:

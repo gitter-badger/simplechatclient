@@ -30,20 +30,20 @@
 #include "network.h"
 #include "tab_container.h"
 
-class irc_auth : public QObject
+class IrcAuth : public QObject
 {
     Q_OBJECT
 public:
-    irc_auth(network *, QSettings *, tab_container *);
+    IrcAuth(Network *, QSettings *, TabContainer *);
     QString transform_key(QString);
 
 public slots:
     void request_uo(QString, QString);
 
 private:
-    network *pNetwork;
+    Network *pNetwork;
     QSettings *settings;
-    tab_container *tabc;
+    TabContainer *tabc;
 
     QString get_version(QString);
     void request_finished(QString);

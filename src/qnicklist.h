@@ -33,12 +33,12 @@
 #include "dlg_kick.h"
 #include "network.h"
 
-class qnicklist : public QListWidget
+class Nicklist : public QListWidget
 {
     Q_OBJECT
 public:
-    qnicklist(network *, QSettings *, QString);
-    ~qnicklist();
+    Nicklist(Network *, QSettings *, QString);
+    ~Nicklist();
     void set_open_channels(QStringList);
     void nicklist_add(QString, QString, QHash <QString, QString> *, QQueue <QString> *, QQueue <QString> *);
     void nicklist_remove(QString, QHash <QString, QString> *, QQueue <QString> *, QQueue <QString> *);
@@ -46,15 +46,15 @@ public:
     void nicklist_clear(QHash <QString, QString> *, QQueue <QString> *, QQueue <QString> *);
     void nicklist_refresh(QHash <QString, QString> *, QQueue <QString> *, QQueue <QString> *);
     void nicklist_sort(QHash <QString, QString> *, QQueue <QString> *, QQueue <QString> *);
-    void nicklist_quicksort(QString strStatus, QHash <QString, QString> *, QQueue <QString> *, QQueue <QString> *);
+    void nicklist_quicksort(QString, QHash <QString, QString> *, QQueue <QString> *, QQueue <QString> *);
 
 private:
-    network *pNetwork;
+    Network *pNetwork;
     QSettings *settings;
     QString strChannel;
     QStringList strOpenChannels;
-    enum { MaxOpenChannels = 50 };
-    QAction *openChannelsActs[MaxOpenChannels];
+    enum { maxOpenChannels = 50 };
+    QAction *openChannelsActs[maxOpenChannels];
 
 private slots:
     void priv();

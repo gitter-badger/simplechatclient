@@ -28,15 +28,15 @@
 #include "network.h"
 #include "ui_privilege.h"
 
-class dlg_privilege : public QDialog
+class DlgPrivilege : public QDialog
 {
     Q_OBJECT
 public:
-    dlg_privilege(network *, QSettings *, QString, QString, QString, QTableWidget *, QTableWidget *, QTableWidget *, QTableWidget *);
+    DlgPrivilege(Network *, QSettings *, QString, QString, QString, QTableWidget *, QTableWidget *, QTableWidget *, QTableWidget *);
 
 private:
     Ui::uiPrivilege ui;
-    network *pNetwork;
+    Network *pNetwork;
     QSettings *settings;
     QString strStatus;
     QString strChannel;

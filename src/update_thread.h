@@ -27,22 +27,22 @@
 #include "tab_container.h"
 #include "update.h"
 
-class updateThread : public QThread
+class UpdateThreadClass : public QThread
 {
     Q_OBJECT
 public:
-    updateThread(QSettings *, tab_container *);
-    ~updateThread();
+    UpdateThreadClass(QSettings *, TabContainer *);
+    ~UpdateThreadClass();
     void run();
     void check_for_updates(QString);
 
 private:
     QSettings *settings;
-    tab_container *tabc;
-    updater *pUpdater;
+    TabContainer *tabc;
+    Updater *pUpdater;
 
 private slots:
-    void threadWork();
+    void thread_work();
 
 signals:
     void set_version(QString);
@@ -50,23 +50,23 @@ signals:
 
 };
 
-class update_thread : public QObject
+class UpdateThread : public QObject
 {
     Q_OBJECT
 public:
-    update_thread(QSettings *, tab_container *);
+    UpdateThread(QSettings *, TabContainer *);
 
 private:
     QSettings *settings;
-    tab_container *tabc;
-    updateThread *updateThr;
+    TabContainer *tabc;
+    UpdateThreadClass *updateThr;
 
 private slots:
     void setVersion(QString);
     void stop_thread();
 
 signals:
-    void do_remove_uthread(update_thread*);
+    void do_remove_uthread(UpdateThread*);
 
 };
 

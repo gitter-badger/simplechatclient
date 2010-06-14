@@ -20,7 +20,7 @@
 
 #include "dlg_ignore_ad.h"
 
-dlg_ignore_ad::dlg_ignore_ad(network *param1, QSettings *param2, tab_container *param3, QString param4, QString param5)
+DlgIgnoreAd::DlgIgnoreAd(Network *param1, QSettings *param2, TabContainer *param3, QString param4, QString param5)
 {
     ui.setupUi(this);
 
@@ -39,7 +39,7 @@ dlg_ignore_ad::dlg_ignore_ad(network *param1, QSettings *param2, tab_container *
     QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(button_cancel()));
 }
 
-void dlg_ignore_ad::button_ok()
+void DlgIgnoreAd::button_ok()
 {
     QString strNick = ui.lineEdit->text();
 
@@ -57,7 +57,7 @@ void dlg_ignore_ad::button_ok()
     this->close();
 }
 
-void dlg_ignore_ad::button_cancel()
+void DlgIgnoreAd::button_cancel()
 {
     pNetwork->send("NS IGNORE");
     ui.buttonBox->QObject::disconnect();

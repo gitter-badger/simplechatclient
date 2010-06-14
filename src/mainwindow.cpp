@@ -57,7 +57,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
         QTimer::singleShot(1000, this, SLOT(options_dlg()));
 
 //  init all
-    config *pConfig = new config();
+    Config *pConfig = new Config();
     QString strAutoBusy = pConfig->get_value("auto_busy");
     QString strDebugAll = pConfig->get_value("debug_all");
     QString strShowZuo = pConfig->get_value("show_zuo");
@@ -66,7 +66,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     delete pConfig;
 
     settings.clear();
-    settings.setValue("version", "1.0.5.248");
+    settings.setValue("version", "1.0.5.249");
     settings.setValue("debug", "off");
     settings.setValue("logged", "off");
     settings.setValue("busy", "off");
@@ -81,19 +81,19 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     tabm = new tab_manager(this, &settings);
     setCentralWidget(tabm);
 
-    pNetwork = new network(this, connectAct, &settings);
-    pNotify = new qnotify();
-    tabc = new tab_container(pNetwork, &settings, tabm, this, pNotify);
+    pNetwork = new Network(this, connectAct, &settings);
+    pNotify = new Notify();
+    tabc = new TabContainer(pNetwork, &settings, tabm, this, pNotify);
 
-    dlgchannel_settings = new dlg_channel_settings(pNetwork, &settings);
-    dlgmoderation = new dlg_moderation(pNetwork, &settings);
-    dlgchannel_list = new dlg_channel_list(pNetwork, &settings, tabc);
-    dlgchannel_homes = new dlg_channel_homes(pNetwork, &settings, tabc, dlgchannel_settings);
-    dlgchannel_favourites = new dlg_channel_favourites(pNetwork, &settings, tabc);
-    dlgfriends = new dlg_friends(pNetwork, &settings, tabc);
-    dlgignore = new dlg_ignore(pNetwork, &settings, tabc);
-    pIrc_kernel = new irc_kernel(pNetwork, &settings, tabc, dlgchannel_settings, dlgchannel_homes, dlgchannel_list, dlgchannel_favourites, dlgfriends, dlgignore, dlgmoderation);
-    pIrc_auth = new irc_auth(pNetwork, &settings, tabc);
+    dlgchannel_settings = new DlgChannelSettings(pNetwork, &settings);
+    dlgmoderation = new DlgModeration(pNetwork, &settings);
+    dlgchannel_list = new DlgChannelList(pNetwork, &settings, tabc);
+    dlgchannel_homes = new DlgChannelHomes(pNetwork, &settings, tabc, dlgchannel_settings);
+    dlgchannel_favourites = new DlgChannelFavourites(pNetwork, &settings, tabc);
+    dlgfriends = new DlgFriends(pNetwork, &settings, tabc);
+    dlgignore = new DlgIgnore(pNetwork, &settings, tabc);
+    pIrc_kernel = new IrcKernel(pNetwork, &settings, tabc, dlgchannel_settings, dlgchannel_homes, dlgchannel_list, dlgchannel_favourites, dlgfriends, dlgignore, dlgmoderation);
+    pIrc_auth = new IrcAuth(pNetwork, &settings, tabc);
 
     tabc->set_dlg(dlgchannel_settings, dlgmoderation);
 
@@ -104,8 +104,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
 // update
 
-    uThreadList.append(new update_thread(&settings, tabc));
-    QObject::connect(uThreadList.at(uThreadList.size()-1), SIGNAL(do_remove_uthread(update_thread*)), this, SLOT(remove_uthread(update_thread*)));
+    uThreadList.append(new UpdateThread(&settings, tabc));
+    QObject::connect(uThreadList.at(uThreadList.size()-1), SIGNAL(do_remove_uthread(UpdateThread*)), this, SLOT(remove_uthread(UpdateThread*)));
 
 #ifdef Q_WS_X11
     //if (settings.value("debug").toString() == "on")
@@ -196,7 +196,7 @@ MainWindow::~MainWindow()
     delete tabm;
 }
 
-void MainWindow::remove_uthread(update_thread *thr)
+void MainWindow::remove_uthread(UpdateThread *thr)
 {
     thr->QObject::disconnect();
     uThreadList.removeOne(thr);
@@ -253,7 +253,7 @@ void MainWindow::button_connect()
 
 void MainWindow::options_dlg()
 {
-    (new dlg_options(this, &settings))->show();
+    (new DlgOptions(this, &settings))->show();
 }
 
 void MainWindow::channel_list_dlg()
@@ -288,7 +288,7 @@ void MainWindow::ignore_dlg()
 
 void MainWindow::about_dlg()
 {
-    (new dlg_about(this, &settings))->show();
+    (new DlgAbout(this, &settings))->show();
 }
 
 // tray

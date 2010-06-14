@@ -20,7 +20,7 @@
 
 #include "dlg_channel_list.h"
 
-dlg_channel_list::dlg_channel_list(network *param1, QSettings *param2, tab_container *param3)
+DlgChannelList::DlgChannelList(Network *param1, QSettings *param2, TabContainer *param3)
 {
     ui.setupUi(this);
 
@@ -38,7 +38,7 @@ dlg_channel_list::dlg_channel_list(network *param1, QSettings *param2, tab_conta
     QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(button_cancel()));
 }
 
-void dlg_channel_list::clear()
+void DlgChannelList::clear()
 {
     list_1.clear();
     list_2.clear();
@@ -72,7 +72,7 @@ void dlg_channel_list::clear()
     ui.tableWidget_6->setHorizontalHeaderLabels(strlLabels);
 }
 
-void dlg_channel_list::add_channel(QString strName, QString strPeople, QString strCat, QString strType)
+void DlgChannelList::add_channel(QString strName, QString strPeople, QString strCat, QString strType)
 {
     QVector <QString> add;
     add << strName << strPeople << strCat << strType;
@@ -90,7 +90,7 @@ void dlg_channel_list::add_channel(QString strName, QString strPeople, QString s
         list_6.append(add);
 }
 
-void dlg_channel_list::create_list()
+void DlgChannelList::create_list()
 {
     // count rows
     int iAllCount = 0;
@@ -188,7 +188,7 @@ void dlg_channel_list::create_list()
     }
 }
 
-void dlg_channel_list::QuickSort(QVector< QVector<QString> > *T, int Lo, int Hi)
+void DlgChannelList::quickSort(QVector< QVector<QString> > *T, int Lo, int Hi)
 {
     int i;
     int j;
@@ -223,19 +223,19 @@ void dlg_channel_list::QuickSort(QVector< QVector<QString> > *T, int Lo, int Hi)
             ++i; --j;
         }
     } while (i < j);
-    if (Lo < j) QuickSort(T, Lo, j);
-    if (Hi > i) QuickSort(T, i, Hi);
+    if (Lo < j) quickSort(T, Lo, j);
+    if (Hi > i) quickSort(T, i, Hi);
 }
 
-void dlg_channel_list::sort()
+void DlgChannelList::sort()
 {
-    QuickSort(&list_1, 0, list_1.size()-1);
-    QuickSort(&list_2, 0, list_2.size()-1);
-    QuickSort(&list_3, 0, list_3.size()-1);
-    QuickSort(&list_4, 0, list_4.size()-1);
-    QuickSort(&list_5, 0, list_5.size()-1);
-    QuickSort(&list_6, 0, list_6.size()-1);
-    dlg_channel_list::create_list();
+    quickSort(&list_1, 0, list_1.size()-1);
+    quickSort(&list_2, 0, list_2.size()-1);
+    quickSort(&list_3, 0, list_3.size()-1);
+    quickSort(&list_4, 0, list_4.size()-1);
+    quickSort(&list_5, 0, list_5.size()-1);
+    quickSort(&list_6, 0, list_6.size()-1);
+    create_list();
 
     ui.tableWidget_1->resizeColumnsToContents();
     ui.tableWidget_2->resizeColumnsToContents();
@@ -245,62 +245,62 @@ void dlg_channel_list::sort()
     ui.tableWidget_6->resizeColumnsToContents();
 }
 
-void dlg_channel_list::allCellDoubleClicked(int row, int column)
+void DlgChannelList::allCellDoubleClicked(int row, int column)
 {
     QString strChannel = ui.tableWidget_1->item(row, 0)->text();
     pNetwork->send(QString("JOIN %1").arg(strChannel));
 }
 
-void dlg_channel_list::teenCellDoubleClicked(int row, int column)
+void DlgChannelList::teenCellDoubleClicked(int row, int column)
 {
     QString strChannel = ui.tableWidget_2->item(row, 0)->text();
     pNetwork->send(QString("JOIN %1").arg(strChannel));
 }
 
-void dlg_channel_list::towarzyskieCellDoubleClicked(int row, int column)
+void DlgChannelList::towarzyskieCellDoubleClicked(int row, int column)
 {
     QString strChannel = ui.tableWidget_3->item(row, 0)->text();
     pNetwork->send(QString("JOIN %1").arg(strChannel));
 }
 
-void dlg_channel_list::erotyczneCellDoubleClicked(int row, int column)
+void DlgChannelList::erotyczneCellDoubleClicked(int row, int column)
 {
     QString strChannel = ui.tableWidget_4->item(row, 0)->text();
     pNetwork->send(QString("JOIN %1").arg(strChannel));
 }
 
-void dlg_channel_list::tematyczneCellDoubleClicked(int row, int column)
+void DlgChannelList::tematyczneCellDoubleClicked(int row, int column)
 {
     QString strChannel = ui.tableWidget_5->item(row, 0)->text();
     pNetwork->send(QString("JOIN %1").arg(strChannel));
 }
 
-void dlg_channel_list::regionalneCellDoubleClicked(int row, int column)
+void DlgChannelList::regionalneCellDoubleClicked(int row, int column)
 {
     QString strChannel = ui.tableWidget_6->item(row, 0)->text();
     pNetwork->send(QString("JOIN %1").arg(strChannel));
 }
 
-void dlg_channel_list::button_ok()
+void DlgChannelList::button_ok()
 {
-    dlg_channel_list::clear();
+    clear();
     this->hide();
 }
 
-void dlg_channel_list::button_cancel()
+void DlgChannelList::button_cancel()
 {
-    dlg_channel_list::clear();
+    clear();
     this->hide();
 }
 
-void dlg_channel_list::showEvent(QShowEvent *event)
+void DlgChannelList::showEvent(QShowEvent *event)
 {
     event->accept();
 
     pNetwork->send("SLIST  R- 0 0 100 null");
 }
 
-void dlg_channel_list::resizeEvent(QResizeEvent *event)
+void DlgChannelList::resizeEvent(QResizeEvent *event)
 {
     ui.verticalLayoutWidget->setGeometry(QRect(0,0,this->width(), this->height()));
     ui.tabWidget->setGeometry(QRect(0,0,this->width(), this->height()));

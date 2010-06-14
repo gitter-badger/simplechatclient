@@ -31,17 +31,17 @@
 #include "dlg_update.h"
 #include "tab_container.h"
 
-class updater : public QObject
+class Updater : public QObject
 {
     Q_OBJECT
 public:
-    updater(QSettings *, tab_container *);
+    Updater(QSettings *, TabContainer *);
     void check_for_updates(QString);
     QString get_available_version();
 
 private:
     QSettings *settings;
-    tab_container *tabc;
+    TabContainer *tabc;
     QString strCurrentVersion;
     QString strAvailableVersion;
 

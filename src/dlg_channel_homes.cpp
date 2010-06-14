@@ -20,7 +20,7 @@
 
 #include "dlg_channel_homes.h"
 
-dlg_channel_homes::dlg_channel_homes(network *param1, QSettings *param2, tab_container *param3, dlg_channel_settings *param4)
+DlgChannelHomes::DlgChannelHomes(Network *param1, QSettings *param2, TabContainer *param3, DlgChannelSettings *param4)
 {
     ui.setupUi(this);
 
@@ -36,18 +36,18 @@ dlg_channel_homes::dlg_channel_homes(network *param1, QSettings *param2, tab_con
     QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(button_cancel()));
 }
 
-void dlg_channel_homes::add_channel(QString strChannel)
+void DlgChannelHomes::add_channel(QString strChannel)
 {
     strChannel = strChannel.right(strChannel.length()-1); // remove status
     ui.listWidget->addItem(new QListWidgetItem(QIcon(":/images/channel_avatar.png"), strChannel));
 }
 
-void dlg_channel_homes::clear()
+void DlgChannelHomes::clear()
 {
     ui.listWidget->clear();
 }
 
-void dlg_channel_homes::list_clicked(QModelIndex index)
+void DlgChannelHomes::list_clicked(QModelIndex index)
 {
     int i = index.row();
     QString strChannel = ui.listWidget->item(i)->text();
@@ -57,31 +57,31 @@ void dlg_channel_homes::list_clicked(QModelIndex index)
     this->hide();
 }
 
-void dlg_channel_homes::button_create()
+void DlgChannelHomes::button_create()
 {
     ui.listWidget->clear();
-    (new dlg_channel_homes_ad(pNetwork, settings, tabc, "create"))->show();
+    (new DlgChannelHomesAd(pNetwork, settings, tabc, "create"))->show();
 }
 
-void dlg_channel_homes::button_remove()
+void DlgChannelHomes::button_remove()
 {
     ui.listWidget->clear();
-    (new dlg_channel_homes_ad(pNetwork, settings, tabc, "remove"))->show();
+    (new DlgChannelHomesAd(pNetwork, settings, tabc, "remove"))->show();
 }
 
-void dlg_channel_homes::button_ok()
-{
-    ui.listWidget->clear();
-    this->hide();
-}
-
-void dlg_channel_homes::button_cancel()
+void DlgChannelHomes::button_ok()
 {
     ui.listWidget->clear();
     this->hide();
 }
 
-void dlg_channel_homes::showEvent(QShowEvent *event)
+void DlgChannelHomes::button_cancel()
+{
+    ui.listWidget->clear();
+    this->hide();
+}
+
+void DlgChannelHomes::showEvent(QShowEvent *event)
 {
     event->accept();
 

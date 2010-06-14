@@ -20,20 +20,20 @@
 
 #include "channel_avatar.h"
 
-channel_avatar_thread::channel_avatar_thread(QString param1, QString param2)
+ChannelAvatarThread::ChannelAvatarThread(QString param1, QString param2)
 {
     strChannel = param1;
     strUrl = param2;
 }
 
-void channel_avatar_thread::run()
+void ChannelAvatarThread::run()
 {
-    QTimer::singleShot(0, this, SLOT(threadWork()));
+    QTimer::singleShot(0, this, SLOT(thread_work()));
 
     exec();
 }
 
-void channel_avatar_thread::threadWork()
+void ChannelAvatarThread::thread_work()
 {
     QNetworkAccessManager accessManager;
     QNetworkReply *pReply;
@@ -50,19 +50,19 @@ void channel_avatar_thread::threadWork()
     emit stop_thread();
 }
 
-channel_avatar::channel_avatar(tab_container *param1, QString param2, QString param3)
+ChannelAvatar::ChannelAvatar(TabContainer *param1, QString param2, QString param3)
 {
     tabc = param1;
     strChannel = param2;
     strUrl = param3;
 
-    channelAvatarThr = new channel_avatar_thread(strChannel, strUrl);
+    channelAvatarThr = new ChannelAvatarThread(strChannel, strUrl);
     QObject::connect(channelAvatarThr, SIGNAL(set_avatar(QString, QByteArray)), tabc, SLOT(set_logo(QString, QByteArray)));
     QObject::connect(channelAvatarThr, SIGNAL(stop_thread()), this, SLOT(stop_thread()));
     channelAvatarThr->start(QThread::LowPriority);
 }
 
-void channel_avatar::stop_thread()
+void ChannelAvatar::stop_thread()
 {
     channelAvatarThr->quit();
     channelAvatarThr->wait();

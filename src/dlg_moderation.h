@@ -26,18 +26,18 @@
 #include "network.h"
 #include "ui_moderation.h"
 
-class dlg_moderation : public QDialog
+class DlgModeration : public QDialog
 {
     Q_OBJECT
 public:
-    dlg_moderation(network *, QSettings *);
-    ~dlg_moderation();
+    DlgModeration(Network *, QSettings *);
+    ~DlgModeration();
     void add_msg(QString, QString, QString, QString);
     void clear();
 
 private:
     Ui::uiModeration ui;
-    network *pNetwork;
+    Network *pNetwork;
     QSettings *settings;
     QMultiHash <QString, QString> channel_id;
     QMultiHash <QString, QString> id_nick;

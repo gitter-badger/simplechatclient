@@ -20,7 +20,7 @@
 
 #include "dlg_ignore.h"
 
-dlg_ignore::dlg_ignore(network *param1, QSettings *param2, tab_container *param3)
+DlgIgnore::DlgIgnore(Network *param1, QSettings *param2, TabContainer *param3)
 {
     ui.setupUi(this);
 
@@ -34,23 +34,23 @@ dlg_ignore::dlg_ignore(network *param1, QSettings *param2, tab_container *param3
     QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(button_cancel()));
 }
 
-void dlg_ignore::add_ignore(QString strNick)
+void DlgIgnore::add_ignore(QString strNick)
 {
     ui.listWidget->addItem(new QListWidgetItem(QIcon(":/3rdparty/images/people.png"), strNick));
 }
 
-void dlg_ignore::clear()
+void DlgIgnore::clear()
 {
     ui.listWidget->clear();
 }
 
-void dlg_ignore::button_add()
+void DlgIgnore::button_add()
 {
     ui.listWidget->clear();
-    (new dlg_ignore_ad(pNetwork, settings, tabc, "add", ""))->show();
+    (new DlgIgnoreAd(pNetwork, settings, tabc, "add", ""))->show();
 }
 
-void dlg_ignore::button_remove()
+void DlgIgnore::button_remove()
 {
     QString strSelected;
     if (ui.listWidget->selectedItems().count() != 0)
@@ -58,22 +58,22 @@ void dlg_ignore::button_remove()
 
     ui.listWidget->clear();
 
-    (new dlg_ignore_ad(pNetwork, settings, tabc, "remove", strSelected))->show();
+    (new DlgIgnoreAd(pNetwork, settings, tabc, "remove", strSelected))->show();
 }
 
-void dlg_ignore::button_ok()
+void DlgIgnore::button_ok()
 {
     ui.listWidget->clear();
     this->hide();
 }
 
-void dlg_ignore::button_cancel()
+void DlgIgnore::button_cancel()
 {
     ui.listWidget->clear();
     this->hide();
 }
 
-void dlg_ignore::showEvent(QShowEvent *event)
+void DlgIgnore::showEvent(QShowEvent *event)
 {
     event->accept();
 

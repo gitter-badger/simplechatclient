@@ -28,12 +28,12 @@
 #include <QTimer>
 #include "crypt.h"
 
-class networkThread : public QThread
+class NetworkThread : public QThread
 {
     Q_OBJECT
 public:
-    networkThread(QAction *, QSettings *);
-    ~networkThread();
+    NetworkThread(QAction *, QSettings *);
+    ~NetworkThread();
     void run();
     void set_reconnect(bool);
     bool is_connected();

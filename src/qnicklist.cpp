@@ -20,24 +20,24 @@
 
 #include "qnicklist.h"
 
-qnicklist::qnicklist(network *param1, QSettings *param2, QString param3)
+Nicklist::Nicklist(Network *param1, QSettings *param2, QString param3)
 {
     pNetwork = param1;
     settings = param2;
     strChannel = param3;
 }
 
-qnicklist::~qnicklist()
+Nicklist::~Nicklist()
 {
     strOpenChannels.clear();
 }
 
-void qnicklist::set_open_channels(QStringList param1)
+void Nicklist::set_open_channels(QStringList param1)
 {
     strOpenChannels = param1;
 }
 
-void qnicklist::priv()
+void Nicklist::priv()
 {
     if (this->selectedItems().count() == 0) return;
 
@@ -45,7 +45,7 @@ void qnicklist::priv()
     pNetwork->send(QString("PRIV %1").arg(strNick));
 }
 
-void qnicklist::whois()
+void Nicklist::whois()
 {
     if (this->selectedItems().count() == 0) return;
 
@@ -53,15 +53,15 @@ void qnicklist::whois()
     pNetwork->send(QString("WHOIS %1 %1").arg(strNick));
 }
 
-void qnicklist::cam()
+void Nicklist::cam()
 {
     if (this->selectedItems().count() == 0) return;
 
     QString strNick = this->selectedItems().at(0)->text();
-    (new dlg_cam(pNetwork, settings, strNick))->show();
+    (new DlgCam(pNetwork, settings, strNick))->show();
 }
 
-void qnicklist::friends_add()
+void Nicklist::friends_add()
 {
     if (this->selectedItems().count() == 0) return;
 
@@ -69,7 +69,7 @@ void qnicklist::friends_add()
     pNetwork->send(QString("NS FRIENDS ADD %1").arg(strNick));
 }
 
-void qnicklist::friends_del()
+void Nicklist::friends_del()
 {
     if (this->selectedItems().count() == 0) return;
 
@@ -77,7 +77,7 @@ void qnicklist::friends_del()
     pNetwork->send(QString("NS FRIENDS DEL %1").arg(strNick));
 }
 
-void qnicklist::ignore_add()
+void Nicklist::ignore_add()
 {
     if (this->selectedItems().count() == 0) return;
 
@@ -85,7 +85,7 @@ void qnicklist::ignore_add()
     pNetwork->send(QString("NS IGNORE ADD %1").arg(strNick));
 }
 
-void qnicklist::ignore_del()
+void Nicklist::ignore_del()
 {
     if (this->selectedItems().count() == 0) return;
 
@@ -93,15 +93,15 @@ void qnicklist::ignore_del()
     pNetwork->send(QString("NS IGNORE DEL %1").arg(strNick));
 }
 
-void qnicklist::kick()
+void Nicklist::kick()
 {
     if (this->selectedItems().count() == 0) return;
 
     QString strNick = this->selectedItems().at(0)->text();
-    (new dlg_kick(pNetwork, settings, strNick, strChannel))->show();
+    (new DlgKick(pNetwork, settings, strNick, strChannel))->show();
 }
 
-void qnicklist::ban()
+void Nicklist::ban()
 {
     if (this->selectedItems().count() == 0) return;
 
@@ -109,7 +109,7 @@ void qnicklist::ban()
     pNetwork->send(QString("CS BAN %1 ADD %2").arg(strChannel).arg(strNick));
 }
 
-void qnicklist::kban()
+void Nicklist::kban()
 {
     if (this->selectedItems().count() == 0) return;
 
@@ -119,7 +119,7 @@ void qnicklist::kban()
     pNetwork->send(QString("KICK %1 %2 :%3").arg(strChannel).arg(strNick).arg(strReason));
 }
 
-void qnicklist::op_add()
+void Nicklist::op_add()
 {
     if (this->selectedItems().count() == 0) return;
 
@@ -127,7 +127,7 @@ void qnicklist::op_add()
     pNetwork->send(QString("CS OP %1 ADD %2").arg(strChannel).arg(strNick));
 }
 
-void qnicklist::op_del()
+void Nicklist::op_del()
 {
     if (this->selectedItems().count() == 0) return;
 
@@ -135,7 +135,7 @@ void qnicklist::op_del()
     pNetwork->send(QString("CS OP %1 DEL %2").arg(strChannel).arg(strNick));
 }
 
-void qnicklist::halfop_add()
+void Nicklist::halfop_add()
 {
     if (this->selectedItems().count() == 0) return;
 
@@ -143,7 +143,7 @@ void qnicklist::halfop_add()
     pNetwork->send(QString("CS HALFOP %1 ADD %2").arg(strChannel).arg(strNick));
 }
 
-void qnicklist::halfop_del()
+void Nicklist::halfop_del()
 {
     if (this->selectedItems().count() == 0) return;
 
@@ -151,7 +151,7 @@ void qnicklist::halfop_del()
     pNetwork->send(QString("CS HALFOP %1 DEL %2").arg(strChannel).arg(strNick));
 }
 
-void qnicklist::moderator_add()
+void Nicklist::moderator_add()
 {
     if (this->selectedItems().count() == 0) return;
 
@@ -159,7 +159,7 @@ void qnicklist::moderator_add()
     pNetwork->send(QString("CS MODERATOR %1 ADD %2").arg(strChannel).arg(strNick));
 }
 
-void qnicklist::moderator_del()
+void Nicklist::moderator_del()
 {
     if (this->selectedItems().count() == 0) return;
 
@@ -167,7 +167,7 @@ void qnicklist::moderator_del()
     pNetwork->send(QString("CS MODERATOR %1 DEL %2").arg(strChannel).arg(strNick));
 }
 
-void qnicklist::voice_add()
+void Nicklist::voice_add()
 {
     if (this->selectedItems().count() == 0) return;
 
@@ -175,7 +175,7 @@ void qnicklist::voice_add()
     pNetwork->send(QString("CS VOICE %1 ADD %2").arg(strChannel).arg(strNick));
 }
 
-void qnicklist::voice_del()
+void Nicklist::voice_del()
 {
     if (this->selectedItems().count() == 0) return;
 
@@ -183,7 +183,7 @@ void qnicklist::voice_del()
     pNetwork->send(QString("CS VOICE %1 DEL %2").arg(strChannel).arg(strNick));
 }
 
-void qnicklist::invite()
+void Nicklist::invite()
 {
     if (this->selectedItems().count() == 0) return;
 
@@ -198,36 +198,36 @@ void qnicklist::invite()
 
 // nicklist
 
-void qnicklist::nicklist_add(QString strNick, QString strStatus, QHash <QString, QString> *nicklist, QQueue <QString> *new_nicklist1, QQueue <QString> *new_nicklist2)
+void Nicklist::nicklist_add(QString strNick, QString strStatus, QHash <QString, QString> *nicklist, QQueue <QString> *new_nicklist1, QQueue <QString> *new_nicklist2)
 {
     nicklist->insert(strNick, strStatus);
 }
 
-void qnicklist::nicklist_remove(QString strNick, QHash <QString, QString> *nicklist, QQueue <QString> *new_nicklist1, QQueue <QString> *new_nicklist2)
+void Nicklist::nicklist_remove(QString strNick, QHash <QString, QString> *nicklist, QQueue <QString> *new_nicklist1, QQueue <QString> *new_nicklist2)
 {
     nicklist->remove(strNick);
-    qnicklist::nicklist_refresh(nicklist, new_nicklist1, new_nicklist2);
+    nicklist_refresh(nicklist, new_nicklist1, new_nicklist2);
 }
 
-bool qnicklist::nicklist_exist(QString strNick, QHash <QString, QString> *nicklist)
+bool Nicklist::nicklist_exist(QString strNick, QHash <QString, QString> *nicklist)
 {
     return nicklist->contains(strNick);
 }
 
-void qnicklist::nicklist_clear(QHash <QString, QString> *nicklist, QQueue <QString> *new_nicklist1, QQueue <QString> *new_nicklist2)
+void Nicklist::nicklist_clear(QHash <QString, QString> *nicklist, QQueue <QString> *new_nicklist1, QQueue <QString> *new_nicklist2)
 {
     nicklist->clear();
-    qnicklist::nicklist_refresh(nicklist, new_nicklist1, new_nicklist2);
+    nicklist_refresh(nicklist, new_nicklist1, new_nicklist2);
 }
 
-void qnicklist::nicklist_refresh(QHash <QString, QString> *nicklist, QQueue <QString> *new_nicklist1, QQueue <QString> *new_nicklist2)
+void Nicklist::nicklist_refresh(QHash <QString, QString> *nicklist, QQueue <QString> *new_nicklist1, QQueue <QString> *new_nicklist2)
 {
     this->clear();
 
     new_nicklist1->clear();
     new_nicklist2->clear();
 
-    qnicklist::nicklist_sort(nicklist, new_nicklist1, new_nicklist2);
+    nicklist_sort(nicklist, new_nicklist1, new_nicklist2);
 
     while (!new_nicklist1->isEmpty())
     {
@@ -253,15 +253,15 @@ void qnicklist::nicklist_refresh(QHash <QString, QString> *nicklist, QQueue <QSt
     }
 }
 
-void qnicklist::nicklist_sort(QHash <QString, QString> *nicklist, QQueue <QString> *new_nicklist1, QQueue <QString> *new_nicklist2)
+void Nicklist::nicklist_sort(QHash <QString, QString> *nicklist, QQueue <QString> *new_nicklist1, QQueue <QString> *new_nicklist2)
 {
-    qnicklist::nicklist_quicksort("admin", nicklist, new_nicklist1, new_nicklist2);
-    qnicklist::nicklist_quicksort("owner", nicklist, new_nicklist1, new_nicklist2);
-    qnicklist::nicklist_quicksort("op", nicklist, new_nicklist1, new_nicklist2);
-    qnicklist::nicklist_quicksort("halfop", nicklist, new_nicklist1, new_nicklist2);
-    qnicklist::nicklist_quicksort("mod", nicklist, new_nicklist1, new_nicklist2);
-    qnicklist::nicklist_quicksort("vip", nicklist, new_nicklist1, new_nicklist2);
-    qnicklist::nicklist_quicksort("user", nicklist, new_nicklist1, new_nicklist2);
+    nicklist_quicksort("admin", nicklist, new_nicklist1, new_nicklist2);
+    nicklist_quicksort("owner", nicklist, new_nicklist1, new_nicklist2);
+    nicklist_quicksort("op", nicklist, new_nicklist1, new_nicklist2);
+    nicklist_quicksort("halfop", nicklist, new_nicklist1, new_nicklist2);
+    nicklist_quicksort("mod", nicklist, new_nicklist1, new_nicklist2);
+    nicklist_quicksort("vip", nicklist, new_nicklist1, new_nicklist2);
+    nicklist_quicksort("user", nicklist, new_nicklist1, new_nicklist2);
 }
 
 bool caseInsensitiveLessThan(const QString &s1, const QString &s2)
@@ -269,7 +269,7 @@ bool caseInsensitiveLessThan(const QString &s1, const QString &s2)
     return s1.toLower() < s2.toLower();
 }
 
-void qnicklist::nicklist_quicksort(QString strStatus, QHash <QString, QString> *nicklist, QQueue <QString> *new_nicklist1, QQueue <QString> *new_nicklist2)
+void Nicklist::nicklist_quicksort(QString strStatus, QHash <QString, QString> *nicklist, QQueue <QString> *new_nicklist1, QQueue <QString> *new_nicklist2)
 {
     QHash <QString, QString> status_nicklist;
 
@@ -301,18 +301,18 @@ void qnicklist::nicklist_quicksort(QString strStatus, QHash <QString, QString> *
     }
 }
 
-void qnicklist::contextMenuEvent(QContextMenuEvent *e)
+void Nicklist::contextMenuEvent(QContextMenuEvent *e)
 {
     QMenu *minvite = new QMenu("Zapro¶");
 
-    for (int i = 0; i < MaxOpenChannels; ++i)
+    for (int i = 0; i < maxOpenChannels; ++i)
     {
         openChannelsActs[i] = new QAction(this);
         openChannelsActs[i]->setVisible(false);
         connect(openChannelsActs[i], SIGNAL(triggered()), this, SLOT(invite()));
      }
 
-    for (int i = 0; i < MaxOpenChannels; ++i)
+    for (int i = 0; i < maxOpenChannels; ++i)
         minvite->addAction(openChannelsActs[i]);
 
     for (int i = 0; i < strOpenChannels.count(); ++i)
@@ -321,7 +321,7 @@ void qnicklist::contextMenuEvent(QContextMenuEvent *e)
         openChannelsActs[i]->setData(strOpenChannels[i]);
         openChannelsActs[i]->setVisible(true);
     }
-    for (int j = strOpenChannels.count(); j < MaxOpenChannels; ++j)
+    for (int j = strOpenChannels.count(); j < maxOpenChannels; ++j)
         openChannelsActs[j]->setVisible(false);
 
     QMenu *friends = new QMenu("Lista przyjació³");

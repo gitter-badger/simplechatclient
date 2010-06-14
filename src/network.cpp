@@ -20,12 +20,12 @@
 
 #include "network.h"
 
-network::network(QWidget *parent, QAction *param1, QSettings *param2)
+Network::Network(QWidget *parent, QAction *param1, QSettings *param2)
 {
     connectAct = param1;
     settings = param2;
 
-    networkThr = new networkThread(connectAct, settings);
+    networkThr = new NetworkThread(connectAct, settings);
     networkThr->start(QThread::LowPriority);
 
     QObject::connect(networkThr, SIGNAL(send_to_kernel(QString)), parent, SLOT(kernel(QString)));
@@ -41,7 +41,7 @@ network::network(QWidget *parent, QAction *param1, QSettings *param2)
     QObject::connect(this, SIGNAL(do_send(QString)), networkThr, SLOT(send(QString)));
 }
 
-network::~network()
+Network::~Network()
 {
     networkThr->quit();
     networkThr->wait();
@@ -50,32 +50,32 @@ network::~network()
     delete networkThr;
 }
 
-bool network::is_connected()
+bool Network::is_connected()
 {
     return networkThr->is_connected();
 }
 
-bool network::is_writable()
+bool Network::is_writable()
 {
     return networkThr->is_writable();
 }
 
-void network::connect()
+void Network::connect()
 {
     emit do_connect();
 }
 
-void network::close()
+void Network::close()
 {
     emit do_close();
 }
 
-void network::send(QString strData)
+void Network::send(QString strData)
 {
     emit do_send(strData);
 }
 
-void network::send_slot(QString strData)
+void Network::send_slot(QString strData)
 {
     emit do_send(strData);
 }

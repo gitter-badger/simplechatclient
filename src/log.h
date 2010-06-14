@@ -30,11 +30,11 @@
 #include <QDebug>
 #endif
 
-class log : public QObject
+class Log : public QObject
 {
     Q_OBJECT
 public:
-    log();
+    Log();
     void save(QString, QString);
 
 private:

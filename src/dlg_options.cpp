@@ -20,7 +20,7 @@
 
 #include "dlg_options.h"
 
-dlg_options::dlg_options(QWidget *parent, QSettings *param1) : QDialog(parent)
+DlgOptions::DlgOptions(QWidget *parent, QSettings *param1) : QDialog(parent)
 {
     ui.setupUi(this);
     setAttribute(Qt::WA_DeleteOnClose);
@@ -28,7 +28,7 @@ dlg_options::dlg_options(QWidget *parent, QSettings *param1) : QDialog(parent)
 
     settings = param1;
 
-    config *pConfig = new config();
+    Config *pConfig = new Config();
     QString strNick = pConfig->get_value("login-nick");
     QString strPass = pConfig->get_value("login-pass");
     QString strAutoBusy = pConfig->get_value("auto_busy");
@@ -40,7 +40,7 @@ dlg_options::dlg_options(QWidget *parent, QSettings *param1) : QDialog(parent)
 
     if (strPass.isEmpty() == false)
     {
-        qcrypt *pCrypt = new qcrypt();
+        Crypt *pCrypt = new Crypt();
         strPass = pCrypt->decrypt(strNick, strPass);
         delete pCrypt;
     }
@@ -82,9 +82,9 @@ dlg_options::dlg_options(QWidget *parent, QSettings *param1) : QDialog(parent)
     QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(button_cancel()));
 }
 
-void dlg_options::auto_busy()
+void DlgOptions::auto_busy()
 {
-    config *pConfig = new config();
+    Config *pConfig = new Config();
     if (ui.checkBox_5->isChecked() == true)
     {
         pConfig->set_value("auto_busy", "on");
@@ -98,9 +98,9 @@ void dlg_options::auto_busy()
     delete pConfig;
 }
 
-void dlg_options::debug_all()
+void DlgOptions::debug_all()
 {
-    config *pConfig = new config();
+    Config *pConfig = new Config();
     if (ui.checkBox->isChecked() == true)
     {
         pConfig->set_value("debug_all", "on");
@@ -114,9 +114,9 @@ void dlg_options::debug_all()
     delete pConfig;
 }
 
-void dlg_options::show_zuo()
+void DlgOptions::show_zuo()
 {
-    config *pConfig = new config();
+    Config *pConfig = new Config();
     if (ui.checkBox_2->isChecked() == true)
     {
         pConfig->set_value("show_zuo", "on");
@@ -130,9 +130,9 @@ void dlg_options::show_zuo()
     delete pConfig;
 }
 
-void dlg_options::hide_formating()
+void DlgOptions::hide_formating()
 {
-    config *pConfig = new config();
+    Config *pConfig = new Config();
     if (ui.checkBox_3->isChecked() == true)
     {
         pConfig->set_value("hide_formating", "on");
@@ -146,9 +146,9 @@ void dlg_options::hide_formating()
     delete pConfig;
 }
 
-void dlg_options::hide_join_part()
+void DlgOptions::hide_join_part()
 {
-    config *pConfig = new config();
+    Config *pConfig = new Config();
     if (ui.checkBox_4->isChecked() == true)
     {
         pConfig->set_value("hide_join_part", "on");
@@ -162,7 +162,7 @@ void dlg_options::hide_join_part()
     delete pConfig;
 }
 
-void dlg_options::button_cancel()
+void DlgOptions::button_cancel()
 {
     ui.lineEditNick->clear();
     ui.lineEditPass->clear();
@@ -174,19 +174,19 @@ void dlg_options::button_cancel()
     this->close();
 }
 
-void dlg_options::button_ok()
+void DlgOptions::button_ok()
 {
     QString strNick = ui.lineEditNick->text();
     QString strPass = ui.lineEditPass->text();
 
     if (strPass.isEmpty() == false)
     {
-        qcrypt *pCrypt = new qcrypt();
+        Crypt *pCrypt = new Crypt();
         strPass = pCrypt->encrypt(strNick, strPass);
         delete pCrypt;
     }
 
-    config *pConfig = new config();
+    Config *pConfig = new Config();
     pConfig->set_value("login-nick", strNick);
     pConfig->set_value("login-pass", strPass);
     delete pConfig;

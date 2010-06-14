@@ -27,19 +27,19 @@
 #include "tab_container.h"
 #include "ui_ignore.h"
 
-class dlg_ignore : public QDialog
+class DlgIgnore : public QDialog
 {
     Q_OBJECT
 public:
-    dlg_ignore(network *, QSettings *, tab_container *);
+    DlgIgnore(Network *, QSettings *, TabContainer *);
     void add_ignore(QString);
     void clear();
 
 private:
     Ui::uiIgnore ui;
-    network *pNetwork;
+    Network *pNetwork;
     QSettings *settings;
-    tab_container *tabc;
+    TabContainer *tabc;
 
 private slots:
     void button_add();

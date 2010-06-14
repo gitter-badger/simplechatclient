@@ -20,26 +20,26 @@
 
 #include "update_thread.h"
 
-updateThread::updateThread(QSettings *param1, tab_container *param2)
+UpdateThreadClass::UpdateThreadClass(QSettings *param1, TabContainer *param2)
 {
     settings = param1;
     tabc = param2;
-    pUpdater = new updater(settings, tabc);
+    pUpdater = new Updater(settings, tabc);
 }
 
-updateThread::~updateThread()
+UpdateThreadClass::~UpdateThreadClass()
 {
     delete pUpdater;
 }
 
-void updateThread::run()
+void UpdateThreadClass::run()
 {
-    QTimer::singleShot(0, this, SLOT(threadWork()));
+    QTimer::singleShot(0, this, SLOT(thread_work()));
 
     exec();
 }
 
-void updateThread::threadWork()
+void UpdateThreadClass::thread_work()
 {
     QString strVersion = pUpdater->get_available_version();
 
@@ -47,28 +47,28 @@ void updateThread::threadWork()
     emit stop_thread();
 }
 
-void updateThread::check_for_updates(QString param1)
+void UpdateThreadClass::check_for_updates(QString param1)
 {
     pUpdater->check_for_updates(param1);
 }
 
-update_thread::update_thread(QSettings *param1, tab_container *param2)
+UpdateThread::UpdateThread(QSettings *param1, TabContainer *param2)
 {
     settings = param1;
     tabc = param2;
 
-    updateThr = new updateThread(settings, tabc);
+    updateThr = new UpdateThreadClass(settings, tabc);
     QObject::connect(updateThr, SIGNAL(set_version(QString)), this, SLOT(setVersion(QString)));
     QObject::connect(updateThr, SIGNAL(stop_thread()), this, SLOT(stop_thread()));
     updateThr->start(QThread::LowPriority);
 }
 
-void update_thread::setVersion(QString param1)
+void UpdateThread::setVersion(QString param1)
 {
     updateThr->check_for_updates(param1);
 }
 
-void update_thread::stop_thread()
+void UpdateThread::stop_thread()
 {
     updateThr->quit();
     updateThr->wait();

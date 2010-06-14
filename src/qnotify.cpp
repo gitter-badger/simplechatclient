@@ -20,7 +20,7 @@
 
 #include "qnotify.h"
 
-qnotify::qnotify()
+Notify::Notify()
 {
     apath = QCoreApplication::applicationDirPath();
 #ifdef Q_WS_WIN
@@ -30,12 +30,12 @@ qnotify::qnotify()
 #endif
 }
 
-qnotify::~qnotify()
+Notify::~Notify()
 {
     delete music;
 }
 
-void qnotify::play()
+void Notify::play()
 {
     music->play();
 }

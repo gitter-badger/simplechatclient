@@ -20,7 +20,7 @@
 
 #include "dlg_priv.h"
 
-dlg_priv::dlg_priv(network *param1, QSettings *param2, tab_container *param3, QString param4, QString param5)
+DlgPriv::DlgPriv(Network *param1, QSettings *param2, TabContainer *param3, QString param4, QString param5)
 {
     ui.setupUi(this);
 
@@ -38,12 +38,12 @@ dlg_priv::dlg_priv(network *param1, QSettings *param2, tab_container *param3, QS
     QObject::connect(ui.pushButtonAccept, SIGNAL(clicked()), this, SLOT(button_accept()));
 }
 
-void dlg_priv::button_whois()
+void DlgPriv::button_whois()
 {
     pNetwork->send(QString("WHOIS %1 %1").arg(strNick));
 }
 
-void dlg_priv::button_reject()
+void DlgPriv::button_reject()
 {
     pNetwork->send(QString("INVREJECT %1 %2").arg(strNick).arg(strChannel));
 
@@ -54,7 +54,7 @@ void dlg_priv::button_reject()
     this->close();
 }
 
-void dlg_priv::button_ignore()
+void DlgPriv::button_ignore()
 {
     pNetwork->send(QString("INVIGNORE %1 %2").arg(strNick).arg(strChannel));
 
@@ -65,7 +65,7 @@ void dlg_priv::button_ignore()
     this->close();
 }
 
-void dlg_priv::button_accept()
+void DlgPriv::button_accept()
 {
     pNetwork->send(QString("JOIN %1").arg(strChannel));
     strTimerChannel = strChannel;
@@ -79,7 +79,7 @@ void dlg_priv::button_accept()
     this->close();
 }
 
-void dlg_priv::timer_timeout()
+void DlgPriv::timer_timeout()
 {
     tabc->rename_tab(strTimerChannel, strTimerNick);
     strTimerChannel = QString::null;

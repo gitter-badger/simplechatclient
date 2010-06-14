@@ -20,7 +20,7 @@
 
 #include "network_thread.h"
 
-networkThread::networkThread(QAction *param1, QSettings *param2)
+NetworkThread::NetworkThread(QAction *param1, QSettings *param2)
 {
     connectAct = param1;
     settings = param2;
@@ -44,7 +44,7 @@ networkThread::networkThread(QAction *param1, QSettings *param2)
     QObject::connect(socket, SIGNAL(error(QAbstractSocket::SocketError)), this, SLOT(error(QAbstractSocket::SocketError)));
 }
 
-networkThread::~networkThread()
+NetworkThread::~NetworkThread()
 {
     if (timer->isActive() == true)
         timer->stop();
@@ -52,12 +52,12 @@ networkThread::~networkThread()
     delete socket;
 }
 
-void networkThread::run()
+void NetworkThread::run()
 {
     exec();
 }
 
-bool networkThread::is_connected()
+bool NetworkThread::is_connected()
 {
     if (socket->state() == QAbstractSocket::ConnectedState)
         return true;
@@ -65,12 +65,12 @@ bool networkThread::is_connected()
         return false;
 }
 
-bool networkThread::is_writable()
+bool NetworkThread::is_writable()
 {
     return socket->isWritable();
 }
 
-void networkThread::connect()
+void NetworkThread::connect()
 {
     if (socket->state() == QAbstractSocket::UnconnectedState)
     {
@@ -84,7 +84,7 @@ void networkThread::connect()
         emit show_msg_all("Error: Nie mo¿na siê po³±czyæ z serwerem - po³±czenie ju¿ istnieje!", 9);
 }
 
-void networkThread::reconnect()
+void NetworkThread::reconnect()
 {
     if (settings->value("reconnect").toString() == "true")
     {
@@ -96,7 +96,7 @@ void networkThread::reconnect()
     }
 }
 
-void networkThread::close()
+void NetworkThread::close()
 {
     if (socket->state() == QAbstractSocket::ConnectedState)
         socket->disconnectFromHost();
@@ -105,7 +105,7 @@ void networkThread::close()
         timer->stop();
 }
 
-void networkThread::send(QString strData)
+void NetworkThread::send(QString strData)
 {
     if ((socket->state() == QAbstractSocket::ConnectedState) && (socket->isWritable() == true))
     {
@@ -130,7 +130,7 @@ void networkThread::send(QString strData)
         emit show_msg_active("Error: Nie uda³o siê wys³aæ danych! [Not connected]", 9);
 }
 
-void networkThread::recv()
+void NetworkThread::recv()
 {
     bool bCompleted = true;
 
@@ -170,11 +170,11 @@ void networkThread::recv()
         QTimer::singleShot(3*1000, this, SLOT(recv()));
 }
 
-void networkThread::connected()
+void NetworkThread::connected()
 {
     emit show_msg_all("Po³±czono z serwerem", 9);
 
-    config *pConfig = new config();
+    Config *pConfig = new Config();
 
     QString strNick = pConfig->get_value("login-nick");
     QString strPass = pConfig->get_value("login-pass");
@@ -189,7 +189,7 @@ void networkThread::connected()
     // decrypt pass
     if (strPass.isEmpty() == false)
     {
-        qcrypt *pCrypt = new qcrypt();
+        Crypt *pCrypt = new Crypt();
         strPass = pCrypt->decrypt(strNick, strPass);
         delete pCrypt;
     }
@@ -224,7 +224,7 @@ void networkThread::connected()
     emit request_uo(strCurrentNick, strPass);
 }
 
-void networkThread::disconnected()
+void NetworkThread::disconnected()
 {
     if (socket->state() == QAbstractSocket::UnconnectedState)
     {
@@ -253,7 +253,7 @@ void networkThread::disconnected()
     }
 }
 
-void networkThread::error(QAbstractSocket::SocketError err)
+void NetworkThread::error(QAbstractSocket::SocketError err)
 {
     connectAct->setText("&Po³±cz");
     connectAct->setIconText("&Po³±cz");
@@ -264,7 +264,7 @@ void networkThread::error(QAbstractSocket::SocketError err)
         emit close();
 }
 
-void networkThread::timeout()
+void NetworkThread::timeout()
 {
     QDateTime dt = QDateTime::currentDateTime();
     int iCurrent = (int)dt.toTime_t();

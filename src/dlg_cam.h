@@ -31,15 +31,15 @@
 #include "network.h"
 #include "ui_cam.h"
 
-class dlg_cam : public QDialog
+class DlgCam : public QDialog
 {
     Q_OBJECT
 public:
-    dlg_cam(network *, QSettings *, QString);
+    DlgCam(Network *, QSettings *, QString);
 
 private:
     Ui::uiCam ui;
-    network *pNetwork;
+    Network *pNetwork;
     QSettings *settings;
     QString strNick;
     QTcpSocket *socket;

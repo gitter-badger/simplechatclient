@@ -27,17 +27,17 @@
 #include "tab_container.h"
 #include "ui_channel_favourites_ad.h"
 
-class dlg_channel_favourites_ad : public QDialog
+class DlgChannelFavouritesAd : public QDialog
 {
     Q_OBJECT
 public:
-    dlg_channel_favourites_ad(network *, QSettings *, tab_container *, QString, QString);
+    DlgChannelFavouritesAd(Network *, QSettings *, TabContainer *, QString, QString);
 
 private:
     Ui::uiChannelFavouritesAd ui;
-    network *pNetwork;
+    Network *pNetwork;
     QSettings *settings;
-    tab_container *tabc;
+    TabContainer *tabc;
     QString strStatus;
 
 private slots:

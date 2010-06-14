@@ -27,11 +27,11 @@
 #include "crypt.h"
 #include "ui_options.h"
 
-class dlg_options : public QDialog
+class DlgOptions : public QDialog
 {
     Q_OBJECT
 public:
-    dlg_options(QWidget *, QSettings *);
+    DlgOptions(QWidget *, QSettings *);
 
 private:
     Ui::uiOptions ui;

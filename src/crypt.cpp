@@ -20,17 +20,17 @@
 
 #include "crypt.h"
 
-qcrypt::qcrypt()
+Crypt::Crypt()
 {
-    config *pConfig = new config();
+    Config *pConfig = new Config();
     strIv = pConfig->get_value("iv");
     delete pConfig;
 
     if (strIv.isEmpty() == true)
-        qcrypt::gen_iv();
+        gen_iv();
 }
 
-QString qcrypt::encrypt(QString strKey, QString strData)
+QString Crypt::encrypt(QString strKey, QString strData)
 {
     if ((strKey.isEmpty() == true) || (strData.isEmpty() == true))
     {
@@ -67,7 +67,7 @@ QString qcrypt::encrypt(QString strKey, QString strData)
     return QString::null;
 }
 
-QString qcrypt::decrypt(QString strKey, QString strData)
+QString Crypt::decrypt(QString strKey, QString strData)
 {
     if ((strKey.isEmpty() == true) || (strData.isEmpty() == true))
     {
@@ -104,7 +104,7 @@ QString qcrypt::decrypt(QString strKey, QString strData)
     return QString::null;
 }
 
-void qcrypt::gen_iv()
+void Crypt::gen_iv()
 {
     strIv.clear();
     QTime midnight(0, 0, 0);
@@ -137,7 +137,7 @@ void qcrypt::gen_iv()
         }
     }
 
-    config *pConfig = new config();
+    Config *pConfig = new Config();
     pConfig->set_value("iv", strIv);
     delete pConfig;
 }

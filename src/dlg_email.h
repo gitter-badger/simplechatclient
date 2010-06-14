@@ -33,11 +33,11 @@
 #include <QUrl>
 #include "ui_email.h"
 
-class dlg_email : public QDialog
+class DlgEmail : public QDialog
 {
     Q_OBJECT
 public:
-    dlg_email(QString, QString);
+    DlgEmail(QString, QString);
 
 private:
     Ui::uiEmail ui;

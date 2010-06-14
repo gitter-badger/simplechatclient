@@ -26,12 +26,12 @@
 #include <QSettings>
 #include "network_thread.h"
 
-class network : public QObject
+class Network : public QObject
 {
     Q_OBJECT
 public:
-    network(QWidget *, QAction *, QSettings *);
-    ~network();
+    Network(QWidget *, QAction *, QSettings *);
+    ~Network();
     bool is_connected();
     bool is_writable();
     void connect();
@@ -44,7 +44,7 @@ public slots:
 private:
     QAction *connectAct;
     QSettings *settings;
-    networkThread *networkThr;
+    NetworkThread *networkThr;
 
 signals:
     void do_connect();

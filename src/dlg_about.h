@@ -25,11 +25,11 @@
 #include <QSettings>
 #include "ui_about.h"
 
-class dlg_about : public QDialog
+class DlgAbout : public QDialog
 {
     Q_OBJECT
 public:
-    dlg_about(QWidget *, QSettings *);
+    DlgAbout(QWidget *, QSettings *);
 
 private:
     Ui::uiAbout ui;

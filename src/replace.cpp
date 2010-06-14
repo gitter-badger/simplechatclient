@@ -20,11 +20,11 @@
 
 #include "replace.h"
 
-replace::replace()
+Replace::Replace()
 {
 }
 
-QString replace::replace_emots(QString strData)
+QString Replace::replace_emots(QString strData)
 {
     strData.replace(":))", "%Ixhehe%");
     strData.replace(";))", "%Ixhehe%");
@@ -94,6 +94,7 @@ QString replace::replace_emots(QString strData)
     strData.replace(";?", "%Ixco%");
     strData.replace("??", "%Ipytanie%");
     strData.replace("!!", "%Iwykrzyknik%");
+    strData.replace("?!", "%Ipytanie%%Iwykrzyknik%");
 
     return strData;
 }

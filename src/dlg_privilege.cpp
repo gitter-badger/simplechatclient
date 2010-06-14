@@ -20,7 +20,7 @@
 
 #include "dlg_privilege.h"
 
-dlg_privilege::dlg_privilege(network *param1, QSettings *param2, QString param3, QString param4, QString param5, QTableWidget *param6, QTableWidget *param7, QTableWidget *param8, QTableWidget *param9)
+DlgPrivilege::DlgPrivilege(Network *param1, QSettings *param2, QString param3, QString param4, QString param5, QTableWidget *param6, QTableWidget *param7, QTableWidget *param8, QTableWidget *param9)
 {
     ui.setupUi(this);
 
@@ -68,7 +68,7 @@ dlg_privilege::dlg_privilege(network *param1, QSettings *param2, QString param3,
     QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(button_cancel()));
 }
 
-void dlg_privilege::button_ok()
+void DlgPrivilege::button_ok()
 {
     QString strNick = ui.lineEdit->text();
 
@@ -112,23 +112,23 @@ void dlg_privilege::button_ok()
         msgBox.exec();
     }
 
-    dlg_privilege::clear();
+    clear();
     pNetwork->send(QString("CS INFO %1").arg(strChannel));
 
     ui.buttonBox->QObject::disconnect();
     this->close();
 }
 
-void dlg_privilege::button_cancel()
+void DlgPrivilege::button_cancel()
 {
-    dlg_privilege::clear();
+    clear();
     pNetwork->send(QString("CS INFO %1").arg(strChannel));
 
     ui.buttonBox->QObject::disconnect();
     this->close();
 }
 
-void dlg_privilege::clear()
+void DlgPrivilege::clear()
 {
     for (int i = opList->rowCount()-1; i >= 0; --i)
         opList->removeRow(i);

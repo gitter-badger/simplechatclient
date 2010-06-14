@@ -26,17 +26,17 @@
 #include "tab_container.h"
 #include "ui_priv.h"
 
-class dlg_priv : public QDialog
+class DlgPriv : public QDialog
 {
     Q_OBJECT
 public:
-    dlg_priv(network *, QSettings *, tab_container *, QString, QString);
+    DlgPriv(Network *, QSettings *, TabContainer *, QString, QString);
 
 private:
     Ui::uiPriv ui;
-    network *pNetwork;
+    Network *pNetwork;
     QSettings *settings;
-    tab_container *tabc;
+    TabContainer *tabc;
     QString strNick;
     QString strChannel;
     QString strTimerChannel;

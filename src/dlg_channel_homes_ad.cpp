@@ -20,7 +20,7 @@
 
 #include "dlg_channel_homes_ad.h"
 
-dlg_channel_homes_ad::dlg_channel_homes_ad(network *param1, QSettings *param2, tab_container *param3, QString param4)
+DlgChannelHomesAd::DlgChannelHomesAd(Network *param1, QSettings *param2, TabContainer *param3, QString param4)
 {
     ui.setupUi(this);
 
@@ -38,7 +38,7 @@ dlg_channel_homes_ad::dlg_channel_homes_ad(network *param1, QSettings *param2, t
     QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(button_cancel()));
 }
 
-void dlg_channel_homes_ad::button_ok()
+void DlgChannelHomesAd::button_ok()
 {
     QString strChannel = ui.lineEdit->text();
 
@@ -56,7 +56,7 @@ void dlg_channel_homes_ad::button_ok()
     this->close();
 }
 
-void dlg_channel_homes_ad::button_cancel()
+void DlgChannelHomesAd::button_cancel()
 {
     pNetwork->send("CS HOMES");
     ui.buttonBox->QObject::disconnect();

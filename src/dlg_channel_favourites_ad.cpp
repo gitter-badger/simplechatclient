@@ -20,7 +20,7 @@
 
 #include "dlg_channel_favourites_ad.h"
 
-dlg_channel_favourites_ad::dlg_channel_favourites_ad(network *param1, QSettings *param2, tab_container *param3, QString param4, QString param5)
+DlgChannelFavouritesAd::DlgChannelFavouritesAd(Network *param1, QSettings *param2, TabContainer *param3, QString param4, QString param5)
 {
     ui.setupUi(this);
 
@@ -39,7 +39,7 @@ dlg_channel_favourites_ad::dlg_channel_favourites_ad(network *param1, QSettings 
     QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(button_cancel()));
 }
 
-void dlg_channel_favourites_ad::button_ok()
+void DlgChannelFavouritesAd::button_ok()
 {
     QString strChannel = ui.lineEdit->text();
 
@@ -56,7 +56,7 @@ void dlg_channel_favourites_ad::button_ok()
     this->close();
 }
 
-void dlg_channel_favourites_ad::button_cancel()
+void DlgChannelFavouritesAd::button_cancel()
 {
     pNetwork->send("NS FAVOURITES");
     ui.buttonBox->QObject::disconnect();

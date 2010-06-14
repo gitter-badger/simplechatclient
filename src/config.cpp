@@ -20,14 +20,14 @@
 
 #include "config.h"
 
-config::config()
+Config::Config()
 {
     QString path = QCoreApplication::applicationDirPath();
     strConfigFile = path+"/scc.conf";
     file = new QFile(strConfigFile);
 
     if (file->exists() == false)
-        config::create_new_config();
+        create_new_config();
 
     if (file->exists() == true)
     {
@@ -55,13 +55,13 @@ config::config()
     }
 }
 
-config::~config()
+Config::~Config()
 {
     file->close();
     delete file;
 }
 
-void config::save()
+void Config::save()
 {
     QString xml = doc.toString();
     QByteArray baSave = xml.toAscii();
@@ -73,7 +73,7 @@ void config::save()
     delete fs;
 }
 
-QString config::get_value(QString strKey)
+QString Config::get_value(QString strKey)
 {
     if ((doc.isNull() == true) || (file->isOpen() == false))
     {
@@ -100,7 +100,7 @@ QString config::get_value(QString strKey)
     return QString::null;
 }
 
-void config::set_value(QString strKey, QString strValue)
+void Config::set_value(QString strKey, QString strValue)
 {
     if ((doc.isNull() == true) || (file->isOpen() == false))
     {
@@ -132,10 +132,10 @@ void config::set_value(QString strKey, QString strValue)
     QDomText tSetValue = doc.createTextNode(strValue);
     eSetKey.appendChild(tSetValue);
 
-    config::save();
+    save();
 }
 
-void config::create_new_config()
+void Config::create_new_config()
 {
     doc.clear();
     QDomElement root = doc.createElement("config");
@@ -176,5 +176,5 @@ void config::create_new_config()
     QDomText tHideJoinPart = doc.createTextNode("off");
     eHideJoinPart.appendChild(tHideJoinPart);
 
-    config::save();
+    save();
 }

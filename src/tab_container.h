@@ -31,13 +31,13 @@
 #include "tab_manager.h"
 #include "tab_widget.h"
 
-class tab_container : public QObject
+class TabContainer : public QObject
 {
     Q_OBJECT
 public:
-    tab_container(network *, QSettings *, tab_manager *, QWidget *, qnotify *);
-    ~tab_container();
-    void set_dlg(dlg_channel_settings *, dlg_moderation *);
+    TabContainer(Network *, QSettings *, tab_manager *, QWidget *, Notify *);
+    ~TabContainer();
+    void set_dlg(DlgChannelSettings *, DlgModeration *);
     bool exist_tab(QString);
     void add_tab(QString, QWidget *);
     void remove_tab(QString);
@@ -66,15 +66,15 @@ public slots:
     void set_logo(QString, QByteArray);
 
 private:
-    network *pNetwork;
+    Network *pNetwork;
     QSettings *settings;
     tab_manager *tabm;
-    tab_widget *tw[50];
+    TabWidget *tw[50];
     QString free_list;
     QWidget *mainWin;
-    qnotify *pNotify;
-    dlg_channel_settings *dlgchannel_settings;
-    dlg_moderation *dlgmoderation;
+    Notify *pNotify;
+    DlgChannelSettings *dlgchannel_settings;
+    DlgModeration *dlgmoderation;
 
     void update_open_channels();
     int free_list_get();

@@ -20,14 +20,14 @@
 
 #include "irc_auth.h"
 
-irc_auth::irc_auth(network *param1, QSettings *param2, tab_container *param3)
+IrcAuth::IrcAuth(Network *param1, QSettings *param2, TabContainer *param3)
 {
     pNetwork = param1;
     settings = param2;
     tabc = param3;
 }
 
-void irc_auth::request_uo(QString param1, QString param2)
+void IrcAuth::request_uo(QString param1, QString param2)
 {
     QString strNick = param1;
     QString strPass = param2;
@@ -123,7 +123,7 @@ void irc_auth::request_uo(QString param1, QString param2)
             pReply = accessManager.post(QNetworkRequest(QUrl("http://czat.onet.pl/include/ajaxapi.xml.php3")), strData.toAscii());
             QObject::connect(pReply, SIGNAL(finished()), &eventLoop, SLOT(quit()));
             eventLoop.exec();
-            this->request_finished(pReply->readAll());
+            request_finished(pReply->readAll());
             delete pReply;
         }
         // nicki tyldowe
@@ -133,7 +133,7 @@ void irc_auth::request_uo(QString param1, QString param2)
             pReply = accessManager.post(QNetworkRequest(QUrl("http://czat.onet.pl/include/ajaxapi.xml.php3")), strData.toAscii());
             QObject::connect(pReply, SIGNAL(finished()), &eventLoop, SLOT(quit()));
             eventLoop.exec();
-            this->request_finished(pReply->readAll());
+            request_finished(pReply->readAll());
             delete pReply;
         }
     }
@@ -145,7 +145,7 @@ void irc_auth::request_uo(QString param1, QString param2)
     delete cookieJar;
 }
 
-QString irc_auth::transform_key(QString s)
+QString IrcAuth::transform_key(QString s)
 {
     static int f1[78] = {
         29, 43, 7, 5, 52, 58, 30, 59, 26, 35,
@@ -237,7 +237,7 @@ QString irc_auth::transform_key(QString s)
     return strResult;
 }
 
-QString irc_auth::get_version(QString strData)
+QString IrcAuth::get_version(QString strData)
 {
     if (strData.isEmpty() == false)
     {
@@ -252,7 +252,7 @@ QString irc_auth::get_version(QString strData)
     return "20090619-1228_2";
 }
 
-void irc_auth::request_finished(QString strData)
+void IrcAuth::request_finished(QString strData)
 {
     if (strData.isEmpty() == false)
     {

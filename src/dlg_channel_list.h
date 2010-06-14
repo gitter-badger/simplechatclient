@@ -26,11 +26,11 @@
 #include "tab_container.h"
 #include "ui_channel_list.h"
 
-class dlg_channel_list : public QDialog
+class DlgChannelList : public QDialog
 {
     Q_OBJECT
 public:
-    dlg_channel_list(network *, QSettings *, tab_container *);
+    DlgChannelList(Network *, QSettings *, TabContainer *);
     void clear();
     void add_channel(QString, QString, QString, QString);
     void create_list();
@@ -38,9 +38,9 @@ public:
 
 private:
     Ui::uiChannelList ui;
-    network *pNetwork;
+    Network *pNetwork;
     QSettings *settings;
-    tab_container *tabc;
+    TabContainer *tabc;
     QVector < QVector<QString> > list_1;
     QVector < QVector<QString> > list_2;
     QVector < QVector<QString> > list_3;
@@ -48,7 +48,7 @@ private:
     QVector < QVector<QString> > list_5;
     QVector < QVector<QString> > list_6;
 
-    void QuickSort(QVector< QVector<QString> > *, int, int);
+    void quickSort(QVector< QVector<QString> > *, int, int);
 
 protected:
     virtual void showEvent(QShowEvent *);

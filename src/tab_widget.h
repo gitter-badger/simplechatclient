@@ -53,12 +53,12 @@
 #include "qnotify.h"
 #include "replace.h"
 
-class tab_widget : public QWidget
+class TabWidget : public QWidget
 {
     Q_OBJECT
 public:
-    tab_widget(network *, QSettings *, QString, QWidget *, qnotify *, dlg_channel_settings *, dlg_moderation *);
-    ~tab_widget();
+    TabWidget(Network *, QSettings *, QString, QWidget *, Notify *, DlgChannelSettings *, DlgModeration *);
+    ~TabWidget();
     QString get_name() { return strName; }
     QString convert_emots(QString);
     QString replace_emots(QString);
@@ -96,7 +96,7 @@ private:
     QWidget *topWidget;
     QLabel *nickCount;
     QLabel *webLink;
-    qnicklist *nick_list;
+    Nicklist *nick_list;
     QWebView *textEdit;
     QWidget *toolWidget;
     QWidget *bottomWidget;
@@ -141,7 +141,7 @@ private:
 
     QHBoxLayout *bottomLayout;
     QLabel *nickLabel;
-    qinputline *inputline;
+    Inputline *inputline;
     QPushButton *sendButton;
     QPushButton *moderSendButton;
 
@@ -151,11 +151,11 @@ private:
     QWidget *leftWidget;
     QWidget *rightWidget;
     QGridLayout *mainLayout;
-    dlg_channel_settings *dlgchannel_settings;
-    dlg_moderation *dlgmoderation;
-    qnotify *pNotify;
+    DlgChannelSettings *dlgchannel_settings;
+    DlgModeration *dlgmoderation;
+    Notify *pNotify;
 
-    network *pNetwork;
+    Network *pNetwork;
     QSettings *settings;
     QString strName;
     QString strLast_msg;

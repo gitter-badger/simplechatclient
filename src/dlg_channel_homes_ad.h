@@ -27,17 +27,17 @@
 #include "tab_container.h"
 #include "ui_channel_homes_ad.h"
 
-class dlg_channel_homes_ad : public QDialog
+class DlgChannelHomesAd : public QDialog
 {
     Q_OBJECT
 public:
-    dlg_channel_homes_ad(network *, QSettings *, tab_container *, QString);
+    DlgChannelHomesAd(Network *, QSettings *, TabContainer *, QString);
 
 private:
     Ui::uiChannelHomesAd ui;
-    network *pNetwork;
+    Network *pNetwork;
     QSettings *settings;
-    tab_container *tabc;
+    TabContainer *tabc;
     QString strStatus;
 
 private slots:

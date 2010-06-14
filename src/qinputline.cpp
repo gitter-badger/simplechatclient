@@ -20,24 +20,24 @@
 
 #include "qinputline.h"
 
-qinputline::qinputline(QWidget *parent) : QLineEdit(parent)
+Inputline::Inputline(QWidget *parent) : QLineEdit(parent)
 {
     index = 0;
     strLastWord = QString::null;
     users_list = new QListWidget();
 }
 
-qinputline::~qinputline()
+Inputline::~Inputline()
 {
     strLastWord = QString::null;
 }
 
-void qinputline::set_userslist(QListWidget *param1)
+void Inputline::set_userslist(QListWidget *param1)
 {
     users_list = param1;
 }
 
-QString qinputline::get_word()
+QString Inputline::get_word()
 {
     QString strWord = this->text();
     if (strWord.isEmpty() == false)
@@ -51,7 +51,7 @@ QString qinputline::get_word()
     return strWord;
 }
 
-void qinputline::set_word(QString param1)
+void Inputline::set_word(QString param1)
 {
     //param1 += " ";
     QString strWord = this->text();
@@ -69,7 +69,7 @@ void qinputline::set_word(QString param1)
     }
 }
 
-bool qinputline::event(QEvent *e)
+bool Inputline::event(QEvent *e)
 {
     if (e->type() != QEvent::KeyPress)
         return QLineEdit::event(e);
@@ -81,7 +81,7 @@ bool qinputline::event(QEvent *e)
         if (users_list->count() == 0)
             return true;
 
-        QString strWord = qinputline::get_word();
+        QString strWord = get_word();
 
         if (strWord.isEmpty() == true)
             return true;
@@ -100,7 +100,7 @@ bool qinputline::event(QEvent *e)
                 index = 0;
 
             QString strSetWord = find.at(index)->text();
-            qinputline::set_word(strSetWord);
+            set_word(strSetWord);
 
             index++;
             if (index >= find.count())

@@ -20,7 +20,7 @@
 
 #include "tab_container.h"
 
-tab_container::tab_container(network *param1, QSettings *param2, tab_manager *param3, QWidget *param4, qnotify *param5)
+TabContainer::TabContainer(Network *param1, QSettings *param2, tab_manager *param3, QWidget *param4, Notify *param5)
 {
     pNetwork = param1;
     settings = param2;
@@ -30,7 +30,7 @@ tab_container::tab_container(network *param1, QSettings *param2, tab_manager *pa
     free_list = "ffffffffffffffffffffffffffffffffffffffffffffffffff"; // f = free  u = used
 }
 
-tab_container::~tab_container()
+TabContainer::~TabContainer()
 {
     for (int i = 0; i < 50; i++)
     {
@@ -40,19 +40,19 @@ tab_container::~tab_container()
             tabm->removeTab(tabm->tab_pos(strChannel));
             free_list[i] = 'f';
             delete tw[i];
-            tab_container::update_open_channels();
+            update_open_channels();
             return;
         }
     }
 }
 
-void tab_container::set_dlg(dlg_channel_settings *param1, dlg_moderation *param2)
+void TabContainer::set_dlg(DlgChannelSettings *param1, DlgModeration *param2)
 {
     dlgchannel_settings = param1;
     dlgmoderation = param2;
 }
 
-bool tab_container::exist_tab(QString strChannel)
+bool TabContainer::exist_tab(QString strChannel)
 {
     for (int i = 0; i < 50; i++)
     {
@@ -65,7 +65,7 @@ bool tab_container::exist_tab(QString strChannel)
     return false;
 }
 
-int tab_container::free_list_get()
+int TabContainer::free_list_get()
 {
     for (int i = 0; i < 50; i++)
     {
@@ -75,25 +75,25 @@ int tab_container::free_list_get()
     return -1;
 }
 
-void tab_container::add_tab(QString strChannel,QWidget *parent)
+void TabContainer::add_tab(QString strChannel,QWidget *parent)
 {
     if (exist_tab(strChannel) == false)
     {
-        int iFree = tab_container::free_list_get();
+        int iFree = free_list_get();
         if (iFree != -1)
         {
-            tw[iFree] = new tab_widget(pNetwork, settings, strChannel, parent, pNotify, dlgchannel_settings, dlgmoderation);
+            tw[iFree] = new TabWidget(pNetwork, settings, strChannel, parent, pNotify, dlgchannel_settings, dlgmoderation);
             int iTab = tabm->addTab(tw[iFree], strChannel);
             tabm->setCurrentIndex(iTab);
             free_list[iFree] = 'u';
-            tab_container::update_open_channels();
+            update_open_channels();
         }
         else
-            tab_container::show_msg("Status", "Error: Przekroczona dopuszczalna ilo¶æ kana³ów w kliencie", 9);
+            show_msg("Status", "Error: Przekroczona dopuszczalna ilo¶æ kana³ów w kliencie", 9);
     }
 }
 
-void tab_container::remove_tab(QString strChannel)
+void TabContainer::remove_tab(QString strChannel)
 {
     if (strChannel == "Status") return;
 
@@ -109,7 +109,7 @@ void tab_container::remove_tab(QString strChannel)
                     tabm->removeTab(tabm->tab_pos(strChannel));
                     free_list[i] = 'f';
                     delete tw[i];
-                    tab_container::update_open_channels();
+                    update_open_channels();
                     return;
                 }
             }
@@ -117,7 +117,7 @@ void tab_container::remove_tab(QString strChannel)
     }
 }
 
-void tab_container::rename_tab(QString strChannel, QString strNewName)
+void TabContainer::rename_tab(QString strChannel, QString strNewName)
 {
     if (exist_tab(strChannel) == true)
     {
@@ -129,7 +129,7 @@ void tab_container::rename_tab(QString strChannel, QString strNewName)
                 {
                     tabm->setTabText(tabm->tab_pos(strChannel), strNewName);
                     settings->setValue("priv"+strNewName, strChannel);
-                    tab_container::update_open_channels();
+                    update_open_channels();
                     return;
                 }
             }
@@ -137,7 +137,7 @@ void tab_container::rename_tab(QString strChannel, QString strNewName)
     }
 }
 
-void tab_container::show_msg(QString strTime, QString strChannel, QString strData, int iLevel)
+void TabContainer::show_msg(QString strTime, QString strChannel, QString strData, int iLevel)
 {
     if (exist_tab(strChannel) == true)
     {
@@ -150,7 +150,7 @@ void tab_container::show_msg(QString strTime, QString strChannel, QString strDat
                     strChannel = tw[i]->get_name();
 
                     // hilight
-                    config *pConfig = new config();
+                    Config *pConfig = new Config();
                     QString strMe = pConfig->get_value("login-nick");
                     delete pConfig;
 
@@ -183,12 +183,12 @@ void tab_container::show_msg(QString strTime, QString strChannel, QString strDat
     }
     else
     {
-        tab_container::add_tab(strChannel, mainWin);
-        tab_container::show_msg(strChannel, strData, iLevel);
+        add_tab(strChannel, mainWin);
+        show_msg(strChannel, strData, iLevel);
     }
 }
 
-void tab_container::show_msg(QString strChannel, QString strData, int iLevel)
+void TabContainer::show_msg(QString strChannel, QString strData, int iLevel)
 {
     if (exist_tab(strChannel) == true)
     {
@@ -201,7 +201,7 @@ void tab_container::show_msg(QString strChannel, QString strData, int iLevel)
                     strChannel = tw[i]->get_name();
 
                     // hilight
-                    config *pConfig = new config();
+                    Config *pConfig = new Config();
                     QString strMe = pConfig->get_value("login-nick");
                     delete pConfig;
 
@@ -234,12 +234,12 @@ void tab_container::show_msg(QString strChannel, QString strData, int iLevel)
     }
     else
     {
-        tab_container::add_tab(strChannel, mainWin);
-        tab_container::show_msg(strChannel, strData, iLevel);
+        add_tab(strChannel, mainWin);
+        show_msg(strChannel, strData, iLevel);
     }
 }
 
-void tab_container::show_msg_all(QString strData, int iLevel)
+void TabContainer::show_msg_all(QString strData, int iLevel)
 {
     for (int i = 0; i < 50; i++)
     {
@@ -253,7 +253,7 @@ void tab_container::show_msg_all(QString strData, int iLevel)
 }
 
 
-void tab_container::show_msg_active(QString strData, int iLevel)
+void TabContainer::show_msg_active(QString strData, int iLevel)
 {
     for (int i = 0; i < 50; i++)
     {
@@ -268,7 +268,7 @@ void tab_container::show_msg_active(QString strData, int iLevel)
     }
 }
 
-void tab_container::set_topic(QString strChannel, QString strTopic)
+void TabContainer::set_topic(QString strChannel, QString strTopic)
 {
     if (exist_tab(strChannel) == true)
     {
@@ -286,7 +286,7 @@ void tab_container::set_topic(QString strChannel, QString strTopic)
     }
 }
 
-void tab_container::enable_topic(QString strChannel)
+void TabContainer::enable_topic(QString strChannel)
 {
     if (exist_tab(strChannel) == true)
     {
@@ -304,7 +304,7 @@ void tab_container::enable_topic(QString strChannel)
     }
 }
 
-void tab_container::disable_topic(QString strChannel)
+void TabContainer::disable_topic(QString strChannel)
 {
     if (exist_tab(strChannel) == true)
     {
@@ -322,7 +322,7 @@ void tab_container::disable_topic(QString strChannel)
     }
 }
 
-void tab_container::author_topic(QString strChannel, QString strNick)
+void TabContainer::author_topic(QString strChannel, QString strNick)
 {
     if (exist_tab(strChannel) == true)
     {
@@ -340,7 +340,7 @@ void tab_container::author_topic(QString strChannel, QString strNick)
     }
 }
 
-void tab_container::set_link(QString strChannel, QString strLink)
+void TabContainer::set_link(QString strChannel, QString strLink)
 {
     if (exist_tab(strChannel) == true)
     {
@@ -358,7 +358,7 @@ void tab_container::set_link(QString strChannel, QString strLink)
     }
 }
 
-void tab_container::add_user(QString strChannel, QString strNick, QString strSuffix, int iRefresh)
+void TabContainer::add_user(QString strChannel, QString strNick, QString strSuffix, int iRefresh)
 {
     for (int i = 0; i < 50; i++)
     {
@@ -370,7 +370,7 @@ void tab_container::add_user(QString strChannel, QString strNick, QString strSuf
     }
 }
 
-void tab_container::del_user(QString strChannel, QString strNick)
+void TabContainer::del_user(QString strChannel, QString strNick)
 {
     for (int i = 0; i < 50; i++)
     {
@@ -382,7 +382,7 @@ void tab_container::del_user(QString strChannel, QString strNick)
     }
 }
 
-void tab_container::quit_user(QString strNick, QString strDisplay)
+void TabContainer::quit_user(QString strNick, QString strDisplay)
 {
     for (int i = 0; i < 50; i++)
     {
@@ -397,7 +397,7 @@ void tab_container::quit_user(QString strNick, QString strDisplay)
     }
 }
 
-void tab_container::change_flag(QString strNick, QString strChannel, QString strFlag)
+void TabContainer::change_flag(QString strNick, QString strChannel, QString strFlag)
 {
     for (int i = 0; i < 50; i++)
     {
@@ -409,7 +409,7 @@ void tab_container::change_flag(QString strNick, QString strChannel, QString str
     }
 }
 
-void tab_container::change_flag(QString strNick, QString strFlag)
+void TabContainer::change_flag(QString strNick, QString strFlag)
 {
     for (int i = 0; i < 50; i++)
     {
@@ -421,7 +421,7 @@ void tab_container::change_flag(QString strNick, QString strFlag)
     }
 }
 
-void tab_container::update_nick(QString strNick)
+void TabContainer::update_nick(QString strNick)
 {
     for (int i = 0; i < 50; i++)
     {
@@ -430,7 +430,7 @@ void tab_container::update_nick(QString strNick)
     }
 }
 
-void tab_container::clear_nicklist(QString strChannel)
+void TabContainer::clear_nicklist(QString strChannel)
 {
     for (int i = 0; i < 50; i++)
     {
@@ -442,14 +442,14 @@ void tab_container::clear_nicklist(QString strChannel)
     }
 }
 
-void tab_container::clear_all_nicklist()
+void TabContainer::clear_all_nicklist()
 {
     QStringList strlOpenChannels = this->get_open_channels();
     for (int i = 0; i < strlOpenChannels.size(); i++)
         this->clear_nicklist(strlOpenChannels[i]);
 }
 
-void tab_container::refresh_nicklist(QString strChannel)
+void TabContainer::refresh_nicklist(QString strChannel)
 {
     for (int i = 0; i < 50; i++)
     {
@@ -461,9 +461,9 @@ void tab_container::refresh_nicklist(QString strChannel)
     }
 }
 
-void tab_container::update_open_channels()
+void TabContainer::update_open_channels()
 {
-    QStringList strOpenChannels = tab_container::get_open_channels();
+    QStringList strOpenChannels = get_open_channels();
 
     for (int i = 0; i < 50; i++)
     {
@@ -472,7 +472,7 @@ void tab_container::update_open_channels()
     }
 }
 
-void tab_container::set_logo(QString strChannel, QByteArray bData)
+void TabContainer::set_logo(QString strChannel, QByteArray bData)
 {
     for (int i = 0; i < 50; i++)
     {
@@ -484,7 +484,7 @@ void tab_container::set_logo(QString strChannel, QByteArray bData)
     }
 }
 
-QStringList tab_container::get_open_channels()
+QStringList TabContainer::get_open_channels()
 {
     QStringList strlResult;
     for (int i = 0; i < 50; i++)

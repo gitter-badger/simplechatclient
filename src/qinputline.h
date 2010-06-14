@@ -26,19 +26,19 @@
 #include <QLineEdit>
 #include <QListWidget>
 
-class qinputline : public QLineEdit
+class Inputline : public QLineEdit
 {
     Q_OBJECT
 public:
-    qinputline(QWidget*);
-    ~qinputline();
+    Inputline(QWidget*);
+    ~Inputline();
     void set_userslist(QListWidget *);
 
 private:
     int index;
     QString strLastWord;
     QListWidget *users_list;
-    QList<QListWidgetItem *> find;
+    QList <QListWidgetItem *> find;
 
     QString get_word();
     void set_word(QString);

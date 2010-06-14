@@ -27,20 +27,20 @@
 #include "tab_container.h"
 #include "ui_friends.h"
 
-class dlg_friends : public QDialog
+class DlgFriends : public QDialog
 {
     Q_OBJECT
 public:
-    dlg_friends(network *, QSettings *, tab_container *);
+    DlgFriends(Network *, QSettings *, TabContainer *);
     void set_friend(QString, bool);
     void remove_friend(QString);
     void clear();
 
 private:
     Ui::uiFriends ui;
-    network *pNetwork;
+    Network *pNetwork;
     QSettings *settings;
-    tab_container *tabc;
+    TabContainer *tabc;
     QMap <QString, bool> friends;
 
     void refresh();

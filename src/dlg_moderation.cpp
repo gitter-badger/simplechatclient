@@ -20,7 +20,7 @@
 
 #include "dlg_moderation.h"
 
-dlg_moderation::dlg_moderation(network *param1, QSettings *param2)
+DlgModeration::DlgModeration(Network *param1, QSettings *param2)
 {
     ui.setupUi(this);
 
@@ -33,26 +33,26 @@ dlg_moderation::dlg_moderation(network *param1, QSettings *param2)
     QObject::connect(ui.comboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(combo_changed(int)));
 }
 
-dlg_moderation::~dlg_moderation()
+DlgModeration::~DlgModeration()
 {
     channel_id.clear();
     id_nick.clear();
     id_message.clear();
 }
 
-void dlg_moderation::add_msg(QString strID, QString strChannel, QString strNick, QString strMessage)
+void DlgModeration::add_msg(QString strID, QString strChannel, QString strNick, QString strMessage)
 {
-    if (dlg_moderation::combo_exist(strChannel) == false)
+    if (combo_exist(strChannel) == false)
         ui.comboBox->addItem(strChannel);
 
     channel_id.insert(strChannel, strID);
     id_nick.insert(strID, strNick);
     id_message.insert(strID, strMessage);
 
-    dlg_moderation::refresh(strChannel);
+    refresh(strChannel);
 }
 
-void dlg_moderation::del_msg(QString strData)
+void DlgModeration::del_msg(QString strData)
 {
     QStringList strDataList = strData.split(" ");
     QString strNick = strDataList[0];
@@ -73,13 +73,13 @@ void dlg_moderation::del_msg(QString strData)
             id_nick.remove(strID, strNick);
             id_message.remove(strID, strMessage);
 
-            dlg_moderation::refresh(strChannel);
+            refresh(strChannel);
         }
     }
     strIDs.clear();
 }
 
-void dlg_moderation::refresh(QString strChannel)
+void DlgModeration::refresh(QString strChannel)
 {
     if (ui.comboBox->currentText() == strChannel)
        ui.listWidget->clear();
@@ -97,7 +97,7 @@ void dlg_moderation::refresh(QString strChannel)
     strIDs.clear();
 }
 
-bool dlg_moderation::combo_exist(QString strChannel)
+bool DlgModeration::combo_exist(QString strChannel)
 {
     for (int i = 0; i < ui.comboBox->count(); i++)
     {
@@ -107,13 +107,13 @@ bool dlg_moderation::combo_exist(QString strChannel)
     return false;
 }
 
-void dlg_moderation::combo_changed(int index)
+void DlgModeration::combo_changed(int index)
 {
     QString strChannel = ui.comboBox->itemText(index);
-    dlg_moderation::refresh(strChannel);
+    refresh(strChannel);
 }
 
-void dlg_moderation::button_accept()
+void DlgModeration::button_accept()
 {
     if (ui.listWidget->selectedItems().count() == 0)
         return;
@@ -128,19 +128,19 @@ void dlg_moderation::button_accept()
 
     QString strDisplay = QString("MODERMSG %1 - %2 :%3").arg(strNick).arg(strChannel).arg(strMessage);
     pNetwork->send(strDisplay);
-    dlg_moderation::del_msg(strData);
+    del_msg(strData);
 }
 
-void dlg_moderation::button_remove()
+void DlgModeration::button_remove()
 {
     if (ui.listWidget->selectedItems().count() == 0)
         return;
 
     QString strData = ui.listWidget->selectedItems().at(0)->text();
-    dlg_moderation::del_msg(strData);
+    del_msg(strData);
 }
 
-void dlg_moderation::button_close()
+void DlgModeration::button_close()
 {
     this->hide();
 }

@@ -20,7 +20,7 @@
 
 #include "dlg_email.h"
 
-dlg_email::dlg_email(QString param1, QString param2)
+DlgEmail::DlgEmail(QString param1, QString param2)
 {
     ui.setupUi(this);
 
@@ -33,7 +33,7 @@ dlg_email::dlg_email(QString param1, QString param2)
     accessManager.setCookieJar(cookieJar);
 }
 
-void dlg_email::get_img()
+void DlgEmail::get_img()
 {
     QEventLoop eventLoop;
 
@@ -60,7 +60,7 @@ void dlg_email::get_img()
         ui.label_2->setText("Nie można pobrać obrazka");
 }
 
-void dlg_email::set_email()
+void DlgEmail::set_email()
 {
     QEventLoop eventLoop;
 
@@ -83,19 +83,19 @@ void dlg_email::set_email()
 
         delete pReply;
 
-        dlg_email::parse_result(strResult);
+        parse_result(strResult);
     }
     else
     {
         ui.lineEdit->clear();
-        dlg_email::get_img();
+        get_img();
     }
 
 }
 
 // <?xml version="1.0" encoding="ISO-8859-2"?><root><status>0</status><error err_code="0"  err_text="OK" ></error></root>
 ///<?xml version="1.0" encoding="ISO-8859-2"?><root><error err_code="-7"  err_text="Nieprawid.owy kod CAPTCHA" ></error></root>
-void dlg_email::parse_result(QString strResult)
+void DlgEmail::parse_result(QString strResult)
 {
     QDomDocument doc;
     doc.setContent(strResult);
@@ -120,36 +120,36 @@ void dlg_email::parse_result(QString strResult)
         msgBox.setText(strErrText);
         msgBox.exec();
 
-        dlg_email::get_img();
+        get_img();
     }
 }
 
-void dlg_email::button_ok()
+void DlgEmail::button_ok()
 {
-    dlg_email::set_email();
+    set_email();
 }
 
-void dlg_email::button_refresh()
+void DlgEmail::button_refresh()
 {
-    dlg_email::get_img();
+    get_img();
 }
 
-void dlg_email::button_cancel()
+void DlgEmail::button_cancel()
 {
     this->close();
 }
 
-void dlg_email::showEvent(QShowEvent *event)
+void DlgEmail::showEvent(QShowEvent *event)
 {
     event->accept();
 
     QObject::connect(ui.pushButton, SIGNAL(clicked()), this, SLOT(button_ok()));
     QObject::connect(ui.pushButton_2, SIGNAL(clicked()), this, SLOT(button_refresh()));
     QObject::connect(ui.pushButton_3, SIGNAL(clicked()), this, SLOT(button_cancel()));
-    dlg_email::get_img();
+    get_img();
 }
 
-void dlg_email::hideEvent(QHideEvent *event)
+void DlgEmail::hideEvent(QHideEvent *event)
 {
     event->accept();
 

@@ -25,11 +25,11 @@
 #include <QHideEvent>
 #include "ui_update.h"
 
-class dlg_update : public QDialog
+class DlgUpdate : public QDialog
 {
     Q_OBJECT
 public:
-    dlg_update(QString);
+    DlgUpdate(QString);
 
 private:
     Ui::uiUpdate ui;
