@@ -31,10 +31,10 @@ dlg_update::dlg_update(QString param1)
     QString strDisplay;
     strDisplay += "Dostêpna jest aktualizacja programu. Pobranie nowszej wersji mo¿liwe jest z adresu:<br>";
 #ifdef Q_WS_WIN
-    strDisplay += "<a href=\"http://sourceforge.net/projects/simplechatclien/files/scc-"+strVersion+".msi/download\">http://sourceforge.net/projects/simplechatclien/files/scc/1.0/scc-"+strVersion+".msi/download</a>";
+    strDisplay += "<a href=\"http://sourceforge.net/projects/simplechatclien/files/scc-"+strVersion+".msi/download\">http://sourceforge.net/projects/simplechatclien/files/scc-"+strVersion+".msi/download</a>";
 #endif
 #ifdef Q_WS_X11
-    strDisplay += "<a href=\"http://sourceforge.net/projects/simplechatclien/files/scc-"+strVersion+".tar.bz2/download\">http://sourceforge.net/projects/simplechatclien/files/scc/1.0/scc-"+strVersion+".tar.bz2/download</a>";
+    strDisplay += "<a href=\"http://sourceforge.net/projects/simplechatclien/files/scc-"+strVersion+".tar.bz2/download\">http://sourceforge.net/projects/simplechatclien/files/scc-"+strVersion+".tar.bz2/download</a>";
 #endif
     ui.label->setText(strDisplay);
 

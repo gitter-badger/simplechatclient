@@ -42,6 +42,7 @@ void updateThread::run()
 void updateThread::threadWork()
 {
     QString strVersion = pUpdater->get_available_version();
+
     emit set_version(strVersion);
     emit stop_thread();
 }

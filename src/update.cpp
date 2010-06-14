@@ -78,14 +78,18 @@ QString updater::get_available_version()
 
     if (bHost == true)
     {
-        pReply = accessManager.get(QNetworkRequest(QUrl("http://simplechatclien.sourceforge.net/")));
+        QString strSendVersion = settings->value("version").toString();
+        pReply = accessManager.get(QNetworkRequest(QUrl(QString("http://simplechatclien.sourceforge.net/update.php?version=%1").arg(strSendVersion))));
         QObject::connect(pReply, SIGNAL(finished()), &eventLoop, SLOT(quit()));
         eventLoop.exec();
 
         QString strSite = pReply->readAll();
         delete pReply;
 
-        strVersion = strSite.mid(strSite.indexOf("<!--version-->")+14, strSite.indexOf("<!--/version-->") - strSite.indexOf("<!--version-->")-14);
+        QDomDocument doc;
+        doc.setContent(strSite);
+
+        strVersion = doc.elementsByTagName("currentVersion").item(0).toElement().text();
     }
     else
         tabc->show_msg("Status", "Nie mo¿na po³±czyæ siê z serwerem aktualizacji.", 0);
