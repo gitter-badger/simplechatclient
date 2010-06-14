@@ -66,7 +66,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     delete pConfig;
 
     settings.clear();
-    settings.setValue("version", "1.0.5.249");
+    settings.setValue("version", "1.0.5.250");
     settings.setValue("debug", "off");
     settings.setValue("logged", "off");
     settings.setValue("busy", "off");
@@ -78,7 +78,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     settings.setValue("hide_formating", strHideFormating);
     settings.setValue("hide_join_part", strHideJoinPart);
 
-    tabm = new tab_manager(this, &settings);
+    tabm = new TabManager(this, &settings);
     setCentralWidget(tabm);
 
     pNetwork = new Network(this, connectAct, &settings);

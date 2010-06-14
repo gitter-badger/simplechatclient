@@ -20,7 +20,7 @@
 
 #include "tab_container.h"
 
-TabContainer::TabContainer(Network *param1, QSettings *param2, tab_manager *param3, QWidget *param4, Notify *param5)
+TabContainer::TabContainer(Network *param1, QSettings *param2, TabManager *param3, QWidget *param4, Notify *param5)
 {
     pNetwork = param1;
     settings = param2;

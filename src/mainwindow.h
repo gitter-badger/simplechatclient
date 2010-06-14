@@ -65,7 +65,7 @@ public slots:
 
 private:
     QSettings settings;
-    tab_manager *tabm;
+    TabManager *tabm;
     TabContainer *tabc;
     Network *pNetwork;
     DlgChannelFavourites *dlgchannel_favourites;

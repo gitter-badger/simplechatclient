@@ -29,12 +29,12 @@
 #include <QTabWidget>
 #include <QTimer>
 
-class tab_manager : public QTabWidget
+class TabManager : public QTabWidget
 {
     Q_OBJECT
 public:
-    tab_manager(QWidget *, QSettings *);
-    ~tab_manager();
+    TabManager(QWidget *, QSettings *);
+    ~TabManager();
     void set_hilight(QString);
     void set_alert(QString);
     int tab_pos(QString);

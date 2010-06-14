@@ -20,7 +20,7 @@
 
 #include "tab_manager.h"
 
-tab_manager::tab_manager(QWidget *pMainWin, QSettings *param1) : QTabWidget(pMainWin)
+TabManager::TabManager(QWidget *pMainWin, QSettings *param1) : QTabWidget(pMainWin)
 {
     mainWin = pMainWin;
     settings = param1;
@@ -35,36 +35,36 @@ tab_manager::tab_manager(QWidget *pMainWin, QSettings *param1) : QTabWidget(pMai
     QObject::connect(timer, SIGNAL(timeout()), this, SLOT(flash_tab()));
 }
 
-tab_manager::~tab_manager()
+TabManager::~TabManager()
 {
     timer->stop();
     alert_list->clear();
     delete alert_list;
 }
 
-void tab_manager::set_hilight(QString strName)
+void TabManager::set_hilight(QString strName)
 {
-    if (tab_manager::get_settings_key(strName).isEmpty() == false)
-        strName = tab_manager::get_settings_key(strName);
+    if (get_settings_key(strName).isEmpty() == false)
+        strName = get_settings_key(strName);
 
     alert_list->removeAll(strName);
-    int index = tab_manager::tab_pos(strName);
+    int index = tab_pos(strName);
     tab->setTabTextColor(index, QColor(138, 0, 184, 255));
 }
 
-void tab_manager::set_alert(QString strName)
+void TabManager::set_alert(QString strName)
 {
-    if (tab_manager::get_settings_key(strName).isEmpty() == false)
-        strName = tab_manager::get_settings_key(strName);
+    if (get_settings_key(strName).isEmpty() == false)
+        strName = get_settings_key(strName);
 
-    if (tab_manager::tab_pos(strName) != -1)
+    if (tab_pos(strName) != -1)
     {
         if (alert_list->contains(strName) == false)
             alert_list->append(strName);
     }
 }
 
-void tab_manager::current_tab_changed(int index)
+void TabManager::current_tab_changed(int index)
 {
     QString strName = tab->tabText(index);
     mainWin->setWindowTitle(QString("Simple Chat Client - [%1]").arg(strName));
@@ -78,10 +78,10 @@ void tab_manager::current_tab_changed(int index)
 
     color = QColor(0,0,0);
     alert_list->removeAll(strName);
-    tab->setTabTextColor(tab_manager::tab_pos(strName), color);
+    tab->setTabTextColor(tab_pos(strName), color);
 }
 
-void tab_manager::flash_tab()
+void TabManager::flash_tab()
 {
     if (color == QColor(255, 0, 0, 255))
         color = QColor(0, 0, 0, 255);
@@ -90,16 +90,16 @@ void tab_manager::flash_tab()
 
     for (int i = 0; i < alert_list->count(); i++)
     {
-        int index = tab_manager::tab_pos(alert_list->at(i));
+        int index = tab_pos(alert_list->at(i));
         if (tab->tabTextColor(index) != QColor(138, 0, 184, 255))
             tab->setTabTextColor(index, color);
     }
 }
 
-int tab_manager::tab_pos(QString strName)
+int TabManager::tab_pos(QString strName)
 {
-    if (tab_manager::get_settings_key(strName).isEmpty() == false)
-        strName = tab_manager::get_settings_key(strName);
+    if (get_settings_key(strName).isEmpty() == false)
+        strName = get_settings_key(strName);
 
     for (int i = 0; i < tab->count(); i++)
     {
@@ -109,7 +109,7 @@ int tab_manager::tab_pos(QString strName)
     return -1;
 }
 
-QString tab_manager::get_settings_key(QString strFind)
+QString TabManager::get_settings_key(QString strFind)
 {
     QStringList keys = settings->allKeys();
     for (int i = 0; i < keys.count(); i++)
