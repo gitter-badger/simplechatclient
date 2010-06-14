@@ -65,16 +65,16 @@ public slots:
 
 private:
     QSettings settings;
-    TabManager *tabm;
-    TabContainer *tabc;
+    TabManager *pTabM;
+    TabContainer *pTabC;
     Network *pNetwork;
-    DlgChannelFavourites *dlgchannel_favourites;
-    DlgChannelHomes *dlgchannel_homes;
-    DlgChannelList *dlgchannel_list;
-    DlgChannelSettings *dlgchannel_settings;
-    DlgFriends *dlgfriends;
-    DlgIgnore *dlgignore;
-    DlgModeration *dlgmoderation;
+    DlgChannelFavourites *pDlg_channel_favourites;
+    DlgChannelHomes *pDlg_channel_homes;
+    DlgChannelList *pDlg_channel_list;
+    DlgChannelSettings *pDlg_channel_settings;
+    DlgFriends *pDlg_friends;
+    DlgIgnore *pDlg_ignore;
+    DlgModeration *pDlg_moderation;
     IrcKernel *pIrc_kernel;
     IrcAuth *pIrc_auth;
     Notify *pNotify;

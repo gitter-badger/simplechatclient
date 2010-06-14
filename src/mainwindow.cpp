@@ -56,7 +56,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     if (QFile::exists(strConfigFile) == false)
         QTimer::singleShot(1000, this, SLOT(options_dlg()));
 
-//  init all
+// init all
     Config *pConfig = new Config();
     QString strAutoBusy = pConfig->get_value("auto_busy");
     QString strDebugAll = pConfig->get_value("debug_all");
@@ -66,7 +66,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     delete pConfig;
 
     settings.clear();
-    settings.setValue("version", "1.0.5.250");
+    settings.setValue("version", "1.0.5.251");
     settings.setValue("debug", "off");
     settings.setValue("logged", "off");
     settings.setValue("busy", "off");
@@ -78,33 +78,33 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     settings.setValue("hide_formating", strHideFormating);
     settings.setValue("hide_join_part", strHideJoinPart);
 
-    tabm = new TabManager(this, &settings);
-    setCentralWidget(tabm);
+    pTabM = new TabManager(this, &settings);
+    setCentralWidget(pTabM);
 
     pNetwork = new Network(this, connectAct, &settings);
     pNotify = new Notify();
-    tabc = new TabContainer(pNetwork, &settings, tabm, this, pNotify);
+    pTabC = new TabContainer(pNetwork, &settings, pTabM, this, pNotify);
 
-    dlgchannel_settings = new DlgChannelSettings(pNetwork, &settings);
-    dlgmoderation = new DlgModeration(pNetwork, &settings);
-    dlgchannel_list = new DlgChannelList(pNetwork, &settings, tabc);
-    dlgchannel_homes = new DlgChannelHomes(pNetwork, &settings, tabc, dlgchannel_settings);
-    dlgchannel_favourites = new DlgChannelFavourites(pNetwork, &settings, tabc);
-    dlgfriends = new DlgFriends(pNetwork, &settings, tabc);
-    dlgignore = new DlgIgnore(pNetwork, &settings, tabc);
-    pIrc_kernel = new IrcKernel(pNetwork, &settings, tabc, dlgchannel_settings, dlgchannel_homes, dlgchannel_list, dlgchannel_favourites, dlgfriends, dlgignore, dlgmoderation);
-    pIrc_auth = new IrcAuth(pNetwork, &settings, tabc);
+    pDlg_channel_settings = new DlgChannelSettings(pNetwork, &settings);
+    pDlg_moderation = new DlgModeration(pNetwork, &settings);
+    pDlg_channel_list = new DlgChannelList(pNetwork, &settings, pTabC);
+    pDlg_channel_homes = new DlgChannelHomes(pNetwork, &settings, pTabC, pDlg_channel_settings);
+    pDlg_channel_favourites = new DlgChannelFavourites(pNetwork, &settings, pTabC);
+    pDlg_friends = new DlgFriends(pNetwork, &settings, pTabC);
+    pDlg_ignore = new DlgIgnore(pNetwork, &settings, pTabC);
+    pIrc_kernel = new IrcKernel(pNetwork, &settings, pTabC, pDlg_channel_settings, pDlg_channel_homes, pDlg_channel_list, pDlg_channel_favourites, pDlg_friends, pDlg_ignore, pDlg_moderation);
+    pIrc_auth = new IrcAuth(pNetwork, &settings, pTabC);
 
-    tabc->set_dlg(dlgchannel_settings, dlgmoderation);
+    pTabC->set_dlg(pDlg_channel_settings, pDlg_moderation);
 
-    tabc->show_msg("Status", "%Fi:courier%Witaj w programie Simple Chat Client %Ixhehe%", 0);
-    tabc->show_msg("Status", "%Fb:courier%%C008100%Oficjalna strona SCC%C000000%: http://simplechatclien.sourceforge.net/ %Ixluzak%", 0);
-    tabc->show_msg("Status", "%Fbi:courier%%Cff0000%Lista b³êdów%C000000%: http://tinyurl.com/yg3fjb4 %Ixmm%", 0);
-    tabc->show_msg("Status", "%Fbi:courier%%C8800ab%Zg³aszanie b³êdów%C000000%: http://tinyurl.com/yfcseeh %Ixco%", 0);
+    pTabC->show_msg("Status", "%Fi:courier%Witaj w programie Simple Chat Client %Ixhehe%", 0);
+    pTabC->show_msg("Status", "%Fb:courier%%C008100%Oficjalna strona SCC%C000000%: http://simplechatclien.sourceforge.net/ %Ixluzak%", 0);
+    pTabC->show_msg("Status", "%Fbi:courier%%Cff0000%Lista b³êdów%C000000%: http://tinyurl.com/yg3fjb4 %Ixmm%", 0);
+    pTabC->show_msg("Status", "%Fbi:courier%%C8800ab%Zg³aszanie b³êdów%C000000%: http://tinyurl.com/yfcseeh %Ixco%", 0);
 
 // update
 
-    uThreadList.append(new UpdateThread(&settings, tabc));
+    uThreadList.append(new UpdateThread(&settings, pTabC));
     QObject::connect(uThreadList.at(uThreadList.size()-1), SIGNAL(do_remove_uthread(UpdateThread*)), this, SLOT(remove_uthread(UpdateThread*)));
 
 #ifdef Q_WS_X11
@@ -157,7 +157,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     QObject::connect(aboutAct, SIGNAL(triggered()), this, SLOT(about_dlg()));
     QObject::connect(showAct, SIGNAL(triggered()), this, SLOT(button_show()));
     QObject::connect(closeAct, SIGNAL(triggered()), this, SLOT(button_close()));
-    QObject::connect(tabm, SIGNAL(tabCloseRequested(int)), this, SLOT(tab_close_requested(int)));
+    QObject::connect(pTabM, SIGNAL(tabCloseRequested(int)), this, SLOT(tab_close_requested(int)));
 
     QObject::connect(this, SIGNAL(do_kernel(QString)), pIrc_kernel, SLOT(kernel(QString)));
     QObject::connect(this, SIGNAL(do_request_uo(QString, QString)), pIrc_auth, SLOT(request_uo(QString, QString)));
@@ -183,17 +183,17 @@ MainWindow::~MainWindow()
     delete trayMenu;
     delete pIrc_auth;
     delete pIrc_kernel;
-    delete dlgignore;
-    delete dlgfriends;
-    delete dlgchannel_favourites;
-    delete dlgchannel_homes;
-    delete dlgchannel_list;
-    delete dlgmoderation;
-    delete dlgchannel_settings;
+    delete pDlg_ignore;
+    delete pDlg_friends;
+    delete pDlg_channel_favourites;
+    delete pDlg_channel_homes;
+    delete pDlg_channel_list;
+    delete pDlg_moderation;
+    delete pDlg_channel_settings;
     delete pNetwork;
     delete pNotify;
-    delete tabc;
-    delete tabm;
+    delete pTabC;
+    delete pTabM;
 }
 
 void MainWindow::remove_uthread(UpdateThread *thr)
@@ -211,11 +211,11 @@ void MainWindow::remove_uthread(UpdateThread *thr)
 
 void MainWindow::kernel(QString param1) { emit do_kernel(param1); }
 void MainWindow::request_uo(QString param1, QString param2) { emit do_request_uo(param1, param2); }
-void MainWindow::show_msg_active(QString param1, int param2) { tabc->show_msg_active(param1, param2); }
-void MainWindow::show_msg_all(QString param1, int param2) { tabc->show_msg_all(param1, param2); }
-void MainWindow::update_nick(QString param1) { tabc->update_nick(param1); }
-void MainWindow::clear_nicklist(QString param1) { tabc->clear_nicklist(param1); }
-void MainWindow::clear_all_nicklist() { tabc->clear_all_nicklist(); }
+void MainWindow::show_msg_active(QString param1, int param2) { pTabC->show_msg_active(param1, param2); }
+void MainWindow::show_msg_all(QString param1, int param2) { pTabC->show_msg_all(param1, param2); }
+void MainWindow::update_nick(QString param1) { pTabC->update_nick(param1); }
+void MainWindow::clear_nicklist(QString param1) { pTabC->clear_nicklist(param1); }
+void MainWindow::clear_all_nicklist() { pTabC->clear_all_nicklist(); }
 
 // args
 void MainWindow::set_debug(bool param1)
@@ -259,31 +259,31 @@ void MainWindow::options_dlg()
 void MainWindow::channel_list_dlg()
 {
     if ((pNetwork->is_connected() == true) && (pNetwork->is_writable() == true))
-        dlgchannel_list->show();
+        pDlg_channel_list->show();
 }
 
 void MainWindow::channel_homes_dlg()
 {
     if ((pNetwork->is_connected() == true) && (pNetwork->is_writable() == true))
-        dlgchannel_homes->show();
+        pDlg_channel_homes->show();
 }
 
 void MainWindow::channel_favourites_dlg()
 {
     if ((pNetwork->is_connected() == true) && (pNetwork->is_writable() == true))
-        dlgchannel_favourites->show();
+        pDlg_channel_favourites->show();
 }
 
 void MainWindow::friends_dlg()
 {
     if ((pNetwork->is_connected() == true) && (pNetwork->is_writable() == true))
-        dlgfriends->show();
+        pDlg_friends->show();
 }
 
 void MainWindow::ignore_dlg()
 {
     if ((pNetwork->is_connected() == true) && (pNetwork->is_writable() == true))
-        dlgignore->show();
+        pDlg_ignore->show();
 }
 
 void MainWindow::about_dlg()
@@ -312,18 +312,18 @@ void MainWindow::button_show()
 // close tab
 void MainWindow::tab_close_requested(int index)
 {
-    QString strName = tabm->tabText(index);
+    QString strName = pTabM->tabText(index);
     if (strName != "Status")
     {
         if (strName[0] == '#')
         {
-            tabc->remove_tab(strName);
+            pTabC->remove_tab(strName);
             if (pNetwork->is_connected() == true)
                 pNetwork->send(QString("PART %1").arg(strName));
         }
         else
         {
-            if (tabc->exist_tab(strName) == false)
+            if (pTabC->exist_tab(strName) == false)
             {
                 QString strNewName = settings.value("priv"+strName).toString();
                 if (strNewName.isEmpty() == false)
