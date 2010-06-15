@@ -222,6 +222,16 @@ void Nicklist::nicklist_clear(QHash <QString, QString> *nicklist, QQueue <QStrin
 
 void Nicklist::nicklist_refresh(QHash <QString, QString> *nicklist, QQueue <QString> *new_nicklist1, QQueue <QString> *new_nicklist2)
 {
+// get selected item
+
+    QString strCurrentItemSelected;
+
+    QList <QListWidgetItem*> lSelectedItems = this->selectedItems();
+    if (lSelectedItems.isEmpty() == false)
+        strCurrentItemSelected = this->currentItem()->data(Qt::DisplayRole).toString();
+
+// clear
+
     this->clear();
 
     new_nicklist1->clear();
@@ -250,6 +260,17 @@ void Nicklist::nicklist_refresh(QHash <QString, QString> *nicklist, QQueue <QStr
         else if (strStatus == "user") icon = QIcon(":/images/user.png");
 
         this->addItem(new QListWidgetItem(icon, strNick));
+    }
+
+// set selected item
+
+    if (strCurrentItemSelected.isEmpty() == false)
+    {
+        for (int i = 0; i < this->count(); i++)
+        {
+            if (this->item(i)->data(Qt::DisplayRole).toString() == strCurrentItemSelected)
+                this->setCurrentItem(this->item(i));
+        }
     }
 }
 
