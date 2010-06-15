@@ -93,9 +93,9 @@ bool Inputline::event(QEvent *e)
             find.clear();
             for (int i = 0; i < users_list.count(); i++)
             {
-                if (users_list.at(i).startsWith(strWord) == true)
+                if (users_list.at(i).startsWith(strWord, Qt::CaseInsensitive) == true)
                     find.append(users_list.at(i));
-                if (users_list.at(i).startsWith("~"+strWord) == true)
+                if (users_list.at(i).startsWith("~"+strWord, Qt::CaseInsensitive) == true)
                     find.append(users_list.at(i));
             }
 
