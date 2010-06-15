@@ -37,8 +37,8 @@ public:
 private:
     int index;
     QString strLastWord;
-    QListWidget *users_list;
-    QList <QListWidgetItem *> find;
+    QList <QString> users_list;
+    QList <QString> find;
 
     QString get_word();
     void set_word(QString);
