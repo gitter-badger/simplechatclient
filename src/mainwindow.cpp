@@ -66,7 +66,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     delete pConfig;
 
     settings.clear();
-    settings.setValue("version", "1.0.5.255");
+    settings.setValue("version", "1.0.5.256");
     settings.setValue("debug", "off");
     settings.setValue("logged", "off");
     settings.setValue("busy", "off");
@@ -77,6 +77,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     settings.setValue("show_zuo", strShowZuo);
     settings.setValue("hide_formating", strHideFormating);
     settings.setValue("hide_join_part", strHideJoinPart);
+    settings.setValue("uokey", "");
     settings.setValue("onet_ubi", "");
     settings.setValue("onet_cid", "");
     settings.setValue("onet_sid", "");
@@ -107,7 +108,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     pTabC->show_msg("Status", "%Fbi:courier%%C8800ab%Zg³aszanie b³êdów%C000000%: http://tinyurl.com/yfcseeh %Ixco%", 0);
 
 // update
-
     uThreadList.append(new UpdateThread(&settings, pTabC));
     QObject::connect(uThreadList.at(uThreadList.size()-1), SIGNAL(do_remove_uthread(UpdateThread*)), this, SLOT(remove_uthread(UpdateThread*)));
 
@@ -194,8 +194,8 @@ MainWindow::~MainWindow()
     delete pDlg_channel_list;
     delete pDlg_moderation;
     delete pDlg_channel_settings;
-    delete pNetwork;
     delete pNotify;
+    delete pNetwork;
     delete pTabC;
     delete pTabM;
 }
