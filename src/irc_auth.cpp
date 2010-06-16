@@ -142,6 +142,23 @@ void IrcAuth::request_uo(QString param1, QString param2)
         tabc->show_msg("Status", QString("Error: B³±d autoryzacji [Brak dostêpno¶ci serwerów onet.pl]"), 9);
     }
 
+// save cookies
+    QList <QNetworkCookie> cookies = accessManager.cookieJar()->cookiesForUrl(QUrl("http://czat.onet.pl"));
+    for (QList <QNetworkCookie>::iterator i = cookies.begin(); i != cookies.end(); ++i)
+    {
+        QString strKey = i->name();
+        QString strValue = i->value();
+
+        if (strKey == "onet_ubi")
+            settings->setValue("onet_ubi", strValue);
+        else if (strKey == "onet_cid")
+            settings->setValue("onet_cid", strValue);
+        else if (strKey == "onet_sid")
+            settings->setValue("onet_sid", strValue);
+        else if (strKey == "onet_uid")
+            settings->setValue("onet_uid", strValue);
+    }
+
     delete cookieJar;
 }
 

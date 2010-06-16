@@ -20,17 +20,44 @@
 
 #include "dlg_email.h"
 
-DlgEmail::DlgEmail(QString param1, QString param2)
+DlgEmail::DlgEmail(QSettings *param1, QString param2, QString param3)
 {
     ui.setupUi(this);
 
-    strChannel = param1;
-    strEmail = param2;
+    settings = param1;
+    strChannel = param2;
+    strEmail = param3;
 
     strChannel = strChannel.right(strChannel.length()-1);
 
     cookieJar = new QNetworkCookieJar();
     accessManager.setCookieJar(cookieJar);
+
+    set_cookies();
+}
+
+void DlgEmail::set_cookies()
+{
+    QList <QNetworkCookie> cookieList;
+    QNetworkCookie cookie;
+
+    cookie.setName("onet_ubi");
+    cookie.setValue(settings->value("onet_ubi").toByteArray());
+    cookieList.append(cookie);
+
+    cookie.setName("onet_cid");
+    cookie.setValue(settings->value("onet_cid").toByteArray());
+    cookieList.append(cookie);
+
+    cookie.setName("onet_sid");
+    cookie.setValue(settings->value("onet_sid").toByteArray());
+    cookieList.append(cookie);
+
+    cookie.setName("onet_uid");
+    cookie.setValue(settings->value("onet_uid").toByteArray());
+    cookieList.append(cookie);
+
+    accessManager.cookieJar()->setCookiesFromUrl(cookieList, QUrl("http://czat.onet.pl"));
 }
 
 void DlgEmail::get_img()
@@ -39,8 +66,8 @@ void DlgEmail::get_img()
 
     bool bHost = true;
 
-    QHostInfo test_host = QHostInfo::fromName("czat.onet.pl");
-    if (test_host.error() != QHostInfo::NoError)
+    QHostInfo hCzatOnetPl = QHostInfo::fromName("czat.onet.pl");
+    if (hCzatOnetPl.error() != QHostInfo::NoError)
          bHost = false;
 
     if (bHost == true)
@@ -66,15 +93,16 @@ void DlgEmail::set_email()
 
     bool bHost = true;
 
-    QHostInfo test_host = QHostInfo::fromName("czat.onet.pl");
-    if (test_host.error() != QHostInfo::NoError)
+    QHostInfo hCzatOnetPl = QHostInfo::fromName("czat.onet.pl");
+    if (hCzatOnetPl.error() != QHostInfo::NoError)
          bHost = false;
 
     QString strResult;
+    QString strData;
 
     if (bHost == true)
     {
-        QString strData = QString("api_function=setChannelEmail&params=a:3:{s:4:\"name\";s:%1:\"%2\";s:5:\"email\";s:%3:\"%4\";s:4:\"code\";s:%5:\"%6\";}").arg(QString::number(strChannel.length())).arg(strChannel).arg(QString::number(strEmail.length())).arg(strEmail).arg(QString::number(ui.lineEdit->text().length())).arg(ui.lineEdit->text());
+        strData = QString("api_function=setChannelEmail&params=a:3:{s:4:\"name\";s:%1:\"%2\";s:5:\"email\";s:%3:\"%4\";s:4:\"code\";s:%5:\"%6\";}").arg(QString::number(strChannel.length())).arg(strChannel).arg(QString::number(strEmail.length())).arg(strEmail).arg(QString::number(ui.lineEdit->text().length())).arg(ui.lineEdit->text());
         pReply = accessManager.post(QNetworkRequest(QUrl("http://czat.onet.pl/include/ajaxapi.xml.php3")), strData.toAscii());
         QObject::connect(pReply, SIGNAL(finished()), &eventLoop, SLOT(quit()));
         eventLoop.exec();
@@ -153,6 +181,7 @@ void DlgEmail::hideEvent(QHideEvent *event)
 {
     event->accept();
 
+    delete cookieJar;
     ui.pushButton->QObject::disconnect();
     ui.pushButton_2->QObject::disconnect();
     ui.pushButton_3->QObject::disconnect();

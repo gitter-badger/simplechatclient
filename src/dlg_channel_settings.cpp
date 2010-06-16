@@ -229,7 +229,7 @@ void DlgChannelSettings::remove_channel_clicked()
 
 void DlgChannelSettings::email_changed()
 {
-    (new DlgEmail(strChannel, ui.lineEdit->text()))->show();
+    (new DlgEmail(settings, strChannel, ui.lineEdit->text()))->show();
 }
 
 void DlgChannelSettings::www_changed()

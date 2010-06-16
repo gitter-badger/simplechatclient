@@ -66,7 +66,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     delete pConfig;
 
     settings.clear();
-    settings.setValue("version", "1.0.5.254");
+    settings.setValue("version", "1.0.5.255");
     settings.setValue("debug", "off");
     settings.setValue("logged", "off");
     settings.setValue("busy", "off");
@@ -77,6 +77,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     settings.setValue("show_zuo", strShowZuo);
     settings.setValue("hide_formating", strHideFormating);
     settings.setValue("hide_join_part", strHideJoinPart);
+    settings.setValue("onet_ubi", "");
+    settings.setValue("onet_cid", "");
+    settings.setValue("onet_sid", "");
+    settings.setValue("onet_uid", "");
 
     pTabM = new TabManager(this, &settings);
     setCentralWidget(pTabM);

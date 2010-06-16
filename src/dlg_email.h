@@ -29,6 +29,7 @@
 #include <QNetworkAccessManager>
 #include <QNetworkCookieJar>
 #include <QNetworkReply>
+#include <QSettings>
 #include <QShowEvent>
 #include <QUrl>
 #include "ui_email.h"
@@ -37,16 +38,18 @@ class DlgEmail : public QDialog
 {
     Q_OBJECT
 public:
-    DlgEmail(QString, QString);
+    DlgEmail(QSettings *, QString, QString);
 
 private:
     Ui::uiEmail ui;
+    QSettings *settings;
     QString strChannel;
     QString strEmail;
     QNetworkReply *pReply;
     QNetworkAccessManager accessManager;
     QNetworkCookieJar *cookieJar;
 
+    void set_cookies();
     void get_img();
     void set_email();
     void parse_result(QString);
