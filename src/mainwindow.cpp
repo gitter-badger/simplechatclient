@@ -33,9 +33,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     connectAct = new QAction(QIcon(":/3rdparty/images/connect.png"),("&Po³±cz"),this);
     closeAct = new QAction(QIcon(":/3rdparty/images/exit.png"),("Za&koñcz"),this);
     optionsAct = new QAction(QIcon(":/3rdparty/images/options.png"),("O&pcje programu"),this);
-    channel_list_Act = new QAction(QIcon(":/3rdparty/images/list.png"),("&Lista kana³ów"),this);
-    channel_homes_Act = new QAction(QIcon(":/3rdparty/images/list.png"),("U&stawienia kana³ów"),this);
-    channel_favourites_Act = new QAction(QIcon(":/3rdparty/images/list.png"),("Ul&ubione kana³y"),this);
+    channel_listAct = new QAction(QIcon(":/3rdparty/images/list.png"),("&Lista kana³ów"),this);
+    channel_homesAct = new QAction(QIcon(":/3rdparty/images/list.png"),("U&stawienia kana³ów"),this);
+    channel_favouritesAct = new QAction(QIcon(":/3rdparty/images/list.png"),("Ul&ubione kana³y"),this);
     friendsAct = new QAction(QIcon(":/3rdparty/images/people.png"),("Przy&jaciele"),this);
     ignoreAct = new QAction(QIcon(":/3rdparty/images/people.png"),("Ignorowa&ni"),this);
     aboutAct = new QAction(QIcon(":/images/logo_64.png"),("&O programie SCC..."),this);
@@ -44,9 +44,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     connectAct->setShortcuts(QKeySequence::New);
     closeAct->setShortcut(tr("Ctrl+E"));
     optionsAct->setShortcut(tr("Ctrl+O"));
-    channel_list_Act->setShortcut(tr("Ctrl+L"));
-    channel_homes_Act->setShortcut(tr("Ctrl+M"));
-    channel_favourites_Act->setShortcut(tr("Ctrl+U"));
+    channel_listAct->setShortcut(tr("Ctrl+L"));
+    channel_homesAct->setShortcut(tr("Ctrl+M"));
+    channel_favouritesAct->setShortcut(tr("Ctrl+U"));
     friendsAct->setShortcut(tr("Ctrl+P"));
     ignoreAct->setShortcut(tr("Ctrl+I"));
 
@@ -66,7 +66,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     delete pConfig;
 
     settings.clear();
-    settings.setValue("version", "1.0.5.256");
+    settings.setValue("version", "1.0.5.257");
     settings.setValue("debug", "off");
     settings.setValue("logged", "off");
     settings.setValue("busy", "off");
@@ -126,9 +126,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     optionsMenu->addAction(optionsAct);
 
     chatMenu = menuBar()->addMenu("&Czat");
-    chatMenu->addAction(channel_list_Act);
-    chatMenu->addAction(channel_homes_Act);
-    chatMenu->addAction(channel_favourites_Act);
+    chatMenu->addAction(channel_listAct);
+    chatMenu->addAction(channel_homesAct);
+    chatMenu->addAction(channel_favouritesAct);
     chatMenu->addAction(friendsAct);
     chatMenu->addAction(ignoreAct);
 
@@ -140,10 +140,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     toolBar->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
     toolBar->addAction(connectAct);
     toolBar->addAction(optionsAct);
-    toolBar->addAction(channel_list_Act);
-    toolBar->addAction(channel_homes_Act);
+    toolBar->addAction(channel_listAct);
+    toolBar->addAction(channel_homesAct);
     toolBar->addAction(friendsAct);
-    toolBar->addAction(channel_favourites_Act);
+    toolBar->addAction(channel_favouritesAct);
 
 // statusbar
     QLabel *label_status = new QLabel();
@@ -153,9 +153,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 // signals
     QObject::connect(connectAct, SIGNAL(triggered()), this, SLOT(button_connect()));
     QObject::connect(optionsAct, SIGNAL(triggered()), this, SLOT(options_dlg()));
-    QObject::connect(channel_list_Act, SIGNAL(triggered()), this, SLOT(channel_list_dlg()));
-    QObject::connect(channel_homes_Act, SIGNAL(triggered()), this, SLOT(channel_homes_dlg()));
-    QObject::connect(channel_favourites_Act, SIGNAL(triggered()), this, SLOT(channel_favourites_dlg()));
+    QObject::connect(channel_listAct, SIGNAL(triggered()), this, SLOT(channel_list_dlg()));
+    QObject::connect(channel_homesAct, SIGNAL(triggered()), this, SLOT(channel_homes_dlg()));
+    QObject::connect(channel_favouritesAct, SIGNAL(triggered()), this, SLOT(channel_favourites_dlg()));
     QObject::connect(friendsAct, SIGNAL(triggered()), this, SLOT(friends_dlg()));
     QObject::connect(ignoreAct, SIGNAL(triggered()), this, SLOT(ignore_dlg()));
     QObject::connect(aboutAct, SIGNAL(triggered()), this, SLOT(about_dlg()));

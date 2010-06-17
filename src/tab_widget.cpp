@@ -478,7 +478,6 @@ void TabWidget::display_message(QString strData, int iLevel)
 
     strData += " ";
     strContent.append("<p style=\"margin:0;padding:0;font-style:"+strFontStyle+";color:"+strFontColor+";text-align:"+strFontAlign+";font-family:"+strFontFamily+";font-weight:"+strFontWeight+";font-size:"+strFontSize+";\">");
-    bool bHilight = false;
     bool bLevel = false;
     QString strContentLast;
 
@@ -498,21 +497,7 @@ void TabWidget::display_message(QString strData, int iLevel)
     for (int i = 0; i < strData.length(); i++)
     {
         // colors
-        if ((i == 0) && (bLevel == false))
-        {
-            if (iLevel == 8) // hilight
-            {
-                strFontColor = "#ff0000"; // red
-                strContent.append("<span style=\"color:"+strFontColor+";\">");
-                strContentLast = "</span>"+strContentLast;
-                bHilight = true;
-
-                pNotify->play();
-
-                bLevel = true;
-            }
-        }
-        else if ((i > 10) && (bLevel == false))
+        if ((i > 10) && (bLevel == false))
         {
             if (iLevel == 0)
                 strFontColor = "#000000"; // black
@@ -599,7 +584,7 @@ void TabWidget::display_message(QString strData, int iLevel)
                 QString strColor = strData.mid(i+2,x-i-2).toLower();
                 if ((strColor == "000000") || (strColor == "623c00") || (strColor == "c86c00") || (strColor == "ff6500") || (strColor == "ff0000") || (strColor == "e40f0f") || (strColor == "990033") || (strColor == "8800ab") || (strColor == "ce00ff") || (strColor == "0f2ab1") || (strColor == "3030ce") || (strColor == "006699") || (strColor == "1a866e") || (strColor == "008100") || (strColor == "959595"))
                 {
-                    if ((bHilight == false) && (settings->value("hide_formating").toString() == "off"))
+                    if (settings->value("hide_formating").toString() == "off")
                     {
                         strFontColor = strColor;
                         strContent.append("<span style=\"color:"+strFontColor+";\">");
@@ -706,6 +691,14 @@ void TabWidget::display_message(QString strData, int iLevel)
         // not action, emoticon, color, font, link
         else
             strContent.append(QString(strData[i]));
+    }
+
+    // hilight
+    if (iLevel == 8)
+    {
+        strContent.append("<hr>");
+
+        pNotify->play();
     }
 
     strContent = strContent+strContentLast;

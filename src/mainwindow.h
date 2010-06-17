@@ -90,9 +90,9 @@ private:
     QAction *connectAct;
     QAction *closeAct;
     QAction *optionsAct;
-    QAction *channel_list_Act;
-    QAction *channel_homes_Act;
-    QAction *channel_favourites_Act;
+    QAction *channel_listAct;
+    QAction *channel_homesAct;
+    QAction *channel_favouritesAct;
     QAction *friendsAct;
     QAction *ignoreAct;
     QAction *aboutAct;
