@@ -40,6 +40,11 @@ DlgModeration::~DlgModeration()
     id_message.clear();
 }
 
+void DlgModeration::set_active_channel(QString param1)
+{
+    strActiveChannel = param1;
+}
+
 void DlgModeration::add_msg(QString strID, QString strChannel, QString strNick, QString strMessage)
 {
     if (combo_exist(strChannel) == false)
@@ -49,40 +54,28 @@ void DlgModeration::add_msg(QString strID, QString strChannel, QString strNick, 
     id_nick.insert(strID, strNick);
     id_message.insert(strID, strMessage);
 
-    refresh(strChannel);
-}
-
-void DlgModeration::del_msg(QString strData)
-{
-    QStringList strDataList = strData.split(" ");
-    QString strNick = strDataList[0];
-    QString strMessage;
-    for (int i = 1; i < strDataList.size(); i++) { if (i != 1) strMessage += " "; strMessage += strDataList[i]; }
-
-    QString strID;
-    QList <QString> strIDs = id_message.keys(strMessage);
-    if (strIDs.count() == 1)
+    // refresh
+    QString strData = QString("<%2> %3").arg(strNick).arg(strMessage);
+    if (ui.comboBox->currentText() == strChannel)
     {
-        strID = strIDs.at(0);
-        QString strChannel;
-        QList <QString> strChannels = channel_id.keys(strID);
-        if (strChannels.count() == 1)
+        if (exist_in_widget(strData) == false)
         {
-            strChannel = strChannels.at(0);
-            channel_id.remove(strChannel, strID);
-            id_nick.remove(strID, strNick);
-            id_message.remove(strID, strMessage);
+            QDateTime dt = QDateTime::currentDateTime();
+            QString strDT = dt.toString("[hh:mm:ss] ");
+            strData = strDT+strData;
 
-            refresh(strChannel);
+            ui.listWidget->insertItem(ui.listWidget->count()-1, strData);
         }
     }
-    strIDs.clear();
 }
 
-void DlgModeration::refresh(QString strChannel)
+void DlgModeration::del_msg(QString strChannel, QString strData)
 {
-    if (ui.comboBox->currentText() == strChannel)
-       ui.listWidget->clear();
+    QStringList strDataList = strData.split(" ");
+    QString strCheckNick = strDataList[0];
+    strCheckNick.replace(QRegExp("<(.*)>"), "\\1");
+    QString strCheckMessage;
+    for (int i = 1; i < strDataList.size(); i++) { if (i != 1) strCheckMessage += " "; strCheckMessage += strDataList[i]; }
 
     QList <QString> strIDs = channel_id.values(strChannel);
     for (int i = 0; i < strIDs.count(); i++)
@@ -90,11 +83,63 @@ void DlgModeration::refresh(QString strChannel)
         QString strID = strIDs.at(i);
         QString strNick = id_nick.value(strID);
         QString strMessage = id_message.value(strID);
-        QString strData = QString("%1 %2").arg(strNick).arg(strMessage);
-        if (ui.comboBox->currentText() == strChannel)
-            ui.listWidget->insertItem(ui.listWidget->count()-1, strData);
+
+        if ((strCheckNick == strNick) && (strCheckMessage == strMessage))
+        {
+            channel_id.remove(strChannel, strID);
+            id_nick.remove(strID, strNick);
+            id_message.remove(strID, strMessage);
+        }
     }
     strIDs.clear();
+
+    // refresh
+    for (int i = 0; i < ui.listWidget->count(); i++)
+    {
+        if (exist_in_list(strChannel, ui.listWidget->item(i)->text()) == false)
+            ui.listWidget->takeItem(i);
+    }
+}
+
+bool DlgModeration::exist_in_widget(QString strMsg)
+{
+    for (int i = 0; i < ui.listWidget->count(); i++)
+    {
+        QString strCompare = ui.listWidget->item(i)->text();
+        strCompare = strCompare.right(strCompare.length()-11); // minus data
+
+        if (strCompare == strMsg)
+            return true;
+    }
+    return false;
+}
+
+bool DlgModeration::exist_in_list(QString strChannel, QString strMsg)
+{
+    strMsg = strMsg.right(strMsg.length()-11); // minus data
+
+    QList <QString> strIDs = channel_id.values(strChannel);
+    for (int i = 0; i < strIDs.count(); i++)
+    {
+        QString strID = strIDs.at(i);
+        QString strNick = id_nick.value(strID);
+        QString strMessage = id_message.value(strID);
+        QString strData = QString("<%1> %2").arg(strNick).arg(strMessage);
+
+        if (strMsg == strData)
+            return true;
+    }
+    return false;
+}
+
+int DlgModeration::combo_id(QString strChannel)
+{
+    for (int i = 0; i < ui.comboBox->count(); i++)
+    {
+        if (ui.comboBox->itemText(i) == strChannel)
+            return i;
+    }
+    return 0;
 }
 
 bool DlgModeration::combo_exist(QString strChannel)
@@ -109,8 +154,27 @@ bool DlgModeration::combo_exist(QString strChannel)
 
 void DlgModeration::combo_changed(int index)
 {
+    ui.listWidget->clear();
+
     QString strChannel = ui.comboBox->itemText(index);
-    refresh(strChannel);
+
+    QList <QString> strIDs = channel_id.values(strChannel);
+    for (int i = 0; i < strIDs.count(); i++)
+    {
+        QString strID = strIDs.at(i);
+        QString strNick = id_nick.value(strID);
+        QString strMessage = id_message.value(strID);
+        QString strData = QString("<%2> %3").arg(strNick).arg(strMessage);
+        if (exist_in_widget(strData) == false)
+        {
+            QDateTime dt = QDateTime::currentDateTime();
+            QString strDT = dt.toString("[hh:mm:ss] ");
+            strData = strDT+strData;
+
+            ui.listWidget->insertItem(ui.listWidget->count()-1, strData);
+        }
+    }
+    strIDs.clear();
 }
 
 void DlgModeration::button_accept()
@@ -118,17 +182,24 @@ void DlgModeration::button_accept()
     if (ui.listWidget->selectedItems().count() == 0)
         return;
 
+    QString strChannel = ui.comboBox->currentText();
     QString strData = ui.listWidget->selectedItems().at(0)->text();
+    strData = strData.right(strData.length()-11); // minus data
     QStringList strDataList = strData.split(" ");
 
-    QString strChannel = ui.comboBox->currentText();
     QString strNick = strDataList[0];
+    strNick.replace(QRegExp("<(.*)>"), "\\1");
+
     QString strMessage;
     for (int i = 1; i < strDataList.size(); i++) { if (i != 1) strMessage += " "; strMessage += strDataList[i]; }
 
-    QString strDisplay = QString("MODERMSG %1 - %2 :%3").arg(strNick).arg(strChannel).arg(strMessage);
-    pNetwork->send(strDisplay);
-    del_msg(strData);
+    QString strSend = QString("MODERMSG %1 - %2 :%3").arg(strNick).arg(strChannel).arg(strMessage);
+    pNetwork->send(strSend);
+
+    QString strDisplay = QString("<%1> %2").arg(strNick).arg(strMessage);
+    emit display_msg(strChannel, strDisplay, 0);
+
+    del_msg(strChannel, strData);
 }
 
 void DlgModeration::button_remove()
@@ -136,11 +207,23 @@ void DlgModeration::button_remove()
     if (ui.listWidget->selectedItems().count() == 0)
         return;
 
+    QString strChannel = ui.comboBox->currentText();
     QString strData = ui.listWidget->selectedItems().at(0)->text();
-    del_msg(strData);
+    strData = strData.right(strData.length()-11); // minus data
+
+    del_msg(strChannel, strData);
 }
 
 void DlgModeration::button_close()
 {
     this->hide();
+}
+
+void DlgModeration::showEvent(QShowEvent *event)
+{
+    event->accept();
+
+    int iId = combo_id(strActiveChannel);
+    ui.comboBox->setCurrentIndex(iId);
+    combo_changed(iId);
 }

@@ -484,6 +484,11 @@ void TabContainer::set_logo(QString strChannel, QByteArray bData)
     }
 }
 
+void TabContainer::sshow_msg(QString strChannel, QString strData, int iLevel)
+{
+    show_msg(strChannel, strData, iLevel);
+}
+
 QStringList TabContainer::get_open_channels()
 {
     QStringList strlResult;

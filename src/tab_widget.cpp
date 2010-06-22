@@ -751,7 +751,7 @@ void TabWidget::disable_moderation()
 
 void TabWidget::author_topic(QString strAuthor)
 {
-    topicDetails->setText(QString(" Autor tematu: %1").arg(strAuthor));
+    topicDetails->setText(QString("Autor tematu: %1").arg(strAuthor));
 }
 
 void TabWidget::set_link(QString strUrl)
@@ -1316,6 +1316,7 @@ void TabWidget::channel_settings_clicked()
 
 void TabWidget::moderation_clicked()
 {
+    dlgmoderation->set_active_channel(strName);
     dlgmoderation->show();
 }
 

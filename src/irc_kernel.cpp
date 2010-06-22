@@ -1823,6 +1823,9 @@ void IrcKernel::raw_404()
     if (strReason[strReason.length()-1] == ')')
         strReason = strReason.left(strReason.length()-1);
 
+    if (strReason == "+m")
+        strReason = "Brak moderatora na kanale!";
+
     QString strMessage = QString("* Nie mozna wys³aæ wiadomo¶ci do %1: %2").arg(strChannel).arg(strReason);
 
     tabc->show_msg_active(strMessage, 7);

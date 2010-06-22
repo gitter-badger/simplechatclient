@@ -23,6 +23,7 @@
 
 #include <QDialog>
 #include <QSettings>
+#include <QShowEvent>
 #include "network.h"
 #include "ui_moderation.h"
 
@@ -32,6 +33,7 @@ class DlgModeration : public QDialog
 public:
     DlgModeration(Network *, QSettings *);
     ~DlgModeration();
+    void set_active_channel(QString);
     void add_msg(QString, QString, QString, QString);
     void clear();
 
@@ -39,12 +41,15 @@ private:
     Ui::uiModeration ui;
     Network *pNetwork;
     QSettings *settings;
+    QString strActiveChannel;
     QMultiHash <QString, QString> channel_id;
     QMultiHash <QString, QString> id_nick;
     QMultiHash <QString, QString> id_message;
 
-    void refresh(QString);
-    void del_msg(QString);
+    bool exist_in_widget(QString);
+    bool exist_in_list(QString, QString);
+    void del_msg(QString, QString);
+    int combo_id(QString);
     bool combo_exist(QString);
 
 private slots:
@@ -52,6 +57,12 @@ private slots:
     void button_accept();
     void button_remove();
     void button_close();
+
+protected:
+    virtual void showEvent(QShowEvent *);
+
+signals:
+    void display_msg(QString, QString, int);
 
 };
 
