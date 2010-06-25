@@ -145,6 +145,8 @@ void IrcKernel::kernel(QString param1)
             raw_473();
         else if (strDataList[1].toLower() == "474")
             raw_474();
+        else if (strDataList[1].toLower() == "482")
+            raw_482();
         else if (strDataList[1].toLower() == "484")
             raw_484();
         else if (strDataList[1].toLower() == "530")
@@ -2169,6 +2171,17 @@ void IrcKernel::raw_474()
 
     QString strMessage = QString("* Nie mo¿esz wej¶æ do %1: Jeste¶ zbanowany").arg(strChannel);
     tabc->show_msg_active(strMessage, 7);
+}
+
+// :cf1f1.onet 482 Merovingian #Scrabble :Only a u-line may kick a u-line from a channel.
+void IrcKernel::raw_482()
+{
+    if (strDataList.value(3).isEmpty() == true) return;
+
+    QString strChannel = strDataList[3];
+
+    QString strMessage = QString("* Tylko u-line mo¿e wyrzuciæ u-line z kana³u.");
+    tabc->show_msg(strChannel, strMessage, 7);
 }
 
 // :cf1f4.onet 484 scc_test #scc :Can't kick scc as your spells are not good enough
