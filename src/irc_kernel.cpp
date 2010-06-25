@@ -1772,13 +1772,22 @@ void IrcKernel::raw_400n()
 }
 
 // :cf1f3.onet 401 scc_test scc :No such nick/channel
+// :cf1f4.onet 401 Merovingian ChanServ :is currently unavailable. Please try again later.
 void IrcKernel::raw_401()
 {
     if (strDataList.value(3).isEmpty() == true) return;
 
     QString strNick = strDataList[3];
 
-    QString strMessage = QString("* %1 :Nick lub kana³ nie istnieje").arg(strNick);
+    QString strMessage;
+    for (int i = 4; i < strDataList.size(); i++) { if (i != 4) strMessage += " "; strMessage += strDataList[i]; }
+    if (strMessage[0] == ':')
+        strMessage = strMessage.right(strMessage.length()-1);
+
+    if (strMessage == "No such nick/channel")
+        strMessage = QString("* %1 :Nick lub kana³ nie istnieje").arg(strNick);
+    else if (strMessage == "is currently unavailable. Please try again later.")
+        strMessage = QString("* %1 jest aktualnie niedostêpny. Spróbuj ponownie pó¼niej.").arg(strNick);
 
     tabc->show_msg_active(strMessage, 7);
 }
