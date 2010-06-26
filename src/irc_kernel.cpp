@@ -293,6 +293,8 @@ void IrcKernel::kernel(QString param1)
                 raw_461n();
             else if (strDataList[3].toLower() == ":463")
                 raw_463n();
+            else if (strDataList[3].toLower() == ":464")
+                raw_464n();
             else if (strDataList[3].toLower() == ":467")
                 raw_467n();
             else if (strDataList[3].toLower() == ":468")
@@ -2123,6 +2125,18 @@ void IrcKernel::raw_463n()
     QString strWhat = strDataList[5];
 
     QString strMessage = QString("* %1 :Dostêp zabroniony, nie posiadasz odpowiednich uprawnieñ w %2").arg(strWhat).arg(strChannel);
+    tabc->show_msg_active(strMessage, 7);
+}
+
+// :ChanServ!service@service.onet NOTICE Merovingian :464 TOPIC :invalid argument
+void IrcKernel::raw_464n()
+{
+    if (strDataList.value(3).isEmpty() == true) return;
+    if (strDataList.value(4).isEmpty() == true) return;
+
+    QString strWhat = strDataList[4];
+
+    QString strMessage = QString("* %1 :Nieprawid³owy argument").arg(strWhat);
     tabc->show_msg_active(strMessage, 7);
 }
 
