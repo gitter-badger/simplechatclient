@@ -365,7 +365,10 @@ void TabContainer::add_user(QString strChannel, QString strNick, QString strSuff
         if (free_list[i] == 'u')
         {
             if (tw[i]->get_name() == strChannel)
+            {
                 tw[i]->add_user(strNick, strSuffix, iRefresh);
+                return;
+            }
         }
     }
 }
@@ -377,7 +380,10 @@ void TabContainer::del_user(QString strChannel, QString strNick)
         if (free_list[i] == 'u')
         {
             if (tw[i]->get_name() == strChannel)
+            {
                 tw[i]->del_user(strNick);
+                return;
+            }
         }
     }
 }
@@ -403,8 +409,11 @@ void TabContainer::change_flag(QString strNick, QString strChannel, QString strF
     {
         if (free_list[i] == 'u')
         {
-            if ((tw[i]->get_name() == strChannel) && (tw[i]->nicklist_exist(strNick)))
+            if ((tw[i]->get_name() == strChannel) && (tw[i]->nicklist_exist(strNick) == true))
+            {
                 tw[i]->change_flag(strNick, strFlag);
+                return;
+            }
         }
     }
 }
@@ -437,7 +446,10 @@ void TabContainer::clear_nicklist(QString strChannel)
         if (free_list[i] == 'u')
         {
             if (tw[i]->get_name() == strChannel)
+            {
                 tw[i]->clear_nicklist();
+                return;
+            }
         }
     }
 }
@@ -456,7 +468,10 @@ void TabContainer::refresh_nicklist(QString strChannel)
         if (free_list[i] == 'u')
         {
             if (tw[i]->get_name() == strChannel)
+            {
                 tw[i]->nicklist_refresh();
+                return;
+            }
         }
     }
 }
@@ -479,7 +494,10 @@ void TabContainer::set_logo(QString strChannel, QByteArray bData)
         if (free_list[i] == 'u')
         {
             if (tw[i]->get_name() == strChannel)
+            {
                 tw[i]->set_logo(bData);
+                return;
+            }
         }
     }
 }
