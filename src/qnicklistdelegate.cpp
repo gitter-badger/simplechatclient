@@ -20,15 +20,15 @@
 
 #include "qnicklistdelegate.h"
 
-qnicklistdelegate::qnicklistdelegate(QObject *parent)
+NicklistDelegate::NicklistDelegate(QObject *parent)
 {
 }
 
-qnicklistdelegate::~qnicklistdelegate()
+NicklistDelegate::~NicklistDelegate()
 {
 }
 
-void qnicklistdelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
+void NicklistDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
     QRect r = option.rect;
 
@@ -108,7 +108,7 @@ void qnicklistdelegate::paint(QPainter *painter, const QStyleOptionViewItem &opt
     //painter->drawText(r.left(), r.top(), r.width(), r.height(), Qt::AlignLeft, description, &r);
 }
 
-QSize qnicklistdelegate::sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const
+QSize NicklistDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
     return QSize(200, 30);
 }

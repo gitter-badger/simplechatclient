@@ -109,7 +109,7 @@ TabWidget::TabWidget(Network *param1, QSettings *param2, QString param3, QWidget
     nick_list = new Nicklist(pNetwork, settings, strName);
     nick_list->setParent(this);
     nick_list->setSortingEnabled(false);
-    nick_list->setItemDelegate(new qnicklistdelegate(nick_list));
+    nick_list->setItemDelegate(new NicklistDelegate(nick_list));
     nick_list->show();
 
     textEdit = new QWebView(this);

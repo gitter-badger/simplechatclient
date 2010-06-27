@@ -24,11 +24,12 @@
 #include <QPainter>
 #include <QAbstractItemDelegate>
 
-class qnicklistdelegate : public QAbstractItemDelegate
+class NicklistDelegate : public QAbstractItemDelegate
 {
+    Q_OBJECT
 public:
-    qnicklistdelegate(QObject *parent = 0);
-    ~qnicklistdelegate();
+    NicklistDelegate(QObject *parent = 0);
+    ~NicklistDelegate();
 
     void paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const;
     QSize sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const;
