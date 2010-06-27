@@ -244,28 +244,30 @@ void Nicklist::nicklist_refresh(QHash <QString, QString> *nicklist, QQueue <QStr
         QString strNick = new_nicklist1->dequeue();
         QString strStatus = new_nicklist2->dequeue();
         QPixmap icon;
-        //if (strStatus == "admincam") icon = QPixmap(":/3rdparty/images/admincam.png");
-        //else if (strStatus == "ownercam") icon = QPixmap(":/3rdparty/images/ownercam.png");
-        //else if (strStatus == "opcam") icon = QPixmap(":/3rdparty/images/opcam.png");
-        //else if (strStatus == "halfopcam") icon = QPixmap(":/3rdparty/images/halfopcam.png");
-        //else if (strStatus == "modcam") icon = QPixmap(":/3rdparty/images/modcam.png");
-        //else if (strStatus == "vipcam") icon = QPixmap(":/3rdparty/images/vipcam.png");
-        if (strStatus == "usercam") icon = QPixmap(":/images/cam.png");
-        else if (strStatus == "admin") icon = QPixmap(":/images/admin.png");
+
+        bool bCam = false;
+        if (strStatus.indexOf("cam") != -1)
+        {
+            strStatus.replace("cam","");
+            bCam = true;
+        }
+
+        if (strStatus == "admin") icon = QPixmap(":/images/admin.png");
         else if (strStatus == "owner") icon = QPixmap(":/images/owner.png");
         else if (strStatus == "op") icon = QPixmap(":/images/op.png");
         else if (strStatus == "halfop") icon = QPixmap(":/images/halfop.png");
         else if (strStatus == "mod") icon = QPixmap(":/images/mod.png");
         else if (strStatus == "vip") icon = QPixmap(":/images/vip.png");
-        else if (strStatus == "user") icon = QPixmap(":/images/user.png");
-        else
-            icon = QPixmap(":/images/user.png");
 
         QListWidgetItem *item = new QListWidgetItem(this);
         item->setData(Qt::UserRole, strNick);
         item->setData(Qt::DecorationRole, icon);
+        if (bCam == true)
+            item->setData(Qt::UserRole+1, QPixmap(":/images/cam.png"));
+
+        // read from cache when refresh
         //if (item->data(Qt::UserRole+2).isNull() == false)
-            //item->setData(Qt::UserRole+2, item->data(Qt::UserRole+2));
+            //item->setData(Qt::UserRole+2, item->data(Qt::UserRole+1));
 
         list.append(item);
         this->addItem(item);

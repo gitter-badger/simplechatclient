@@ -81,21 +81,36 @@ void NicklistDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opti
 
     //GET STATUS, AVATAR, NICK, DESCRIPTION
     QIcon status = QIcon(qvariant_cast<QPixmap>(index.data(Qt::DecorationRole)));
+    QIcon cam = QIcon(qvariant_cast<QPixmap>(index.data(Qt::UserRole+1)));
     QIcon avatar = QIcon(qvariant_cast<QPixmap>(index.data(Qt::UserRole+2)));
     QString nick = index.data(Qt::UserRole).toString();
-    //QString description = index.data(Qt::UserRole+1).toString();
+    //QString description = index.data(Qt::UserRole+3).toString();
 
     int imageSpace = 10;
 
     // STATUS
-    r = option.rect.adjusted(imageSpace, 5, -5, -5);
-    status.paint(painter, r, Qt::AlignVCenter|Qt::AlignLeft);
-    imageSpace += 20;
+    if (status.isNull() == false)
+    {
+        r = option.rect.adjusted(imageSpace, 5, -5, -5);
+        status.paint(painter, r, Qt::AlignVCenter|Qt::AlignLeft);
+        imageSpace += 20;
+    }
+
+    // CAM
+    if (cam.isNull() == false)
+    {
+        r = option.rect.adjusted(imageSpace, 0, -10, 0);
+        cam.paint(painter, r, Qt::AlignVCenter|Qt::AlignLeft);
+        imageSpace += 20;
+    }
 
     // AVATAR
-    r = option.rect.adjusted(imageSpace, 0, -10, 0);
-    avatar.paint(painter, r, Qt::AlignVCenter|Qt::AlignLeft);
-    imageSpace += 30;
+    if (nick[0] != '~')
+    {
+        r = option.rect.adjusted(imageSpace, 0, -10, 0);
+        avatar.paint(painter, r, Qt::AlignVCenter|Qt::AlignLeft);
+        imageSpace += 30;
+    }
 
     // NICK
     r = option.rect.adjusted(imageSpace, -8, -10, -8);
