@@ -36,7 +36,7 @@ void Inputline::set_userslist(QListWidget *param1)
     users_list.clear();
 
     for (int i = 0; i < param1->count(); i++)
-        users_list.append(param1->item(i)->data(Qt::DisplayRole).toString());
+        users_list.append(param1->item(i)->data(Qt::UserRole).toString());
 }
 
 QString Inputline::get_word()

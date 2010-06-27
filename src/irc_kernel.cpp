@@ -34,14 +34,25 @@ IrcKernel::IrcKernel(Network *param1, QSettings *param2, TabContainer *param3, D
     dlgmoderation = param10;
 }
 
-void IrcKernel::remove_cathread(ChannelAvatar *thr)
+void IrcKernel::remove_cathread(ChannelAvatar *cathr)
 {
-    thr->QObject::disconnect();
-    caThreadList.removeOne(thr);
+    cathr->QObject::disconnect();
+    caThreadList.removeOne(cathr);
 
 #ifdef Q_WS_X11
     if (settings->value("debug").toString() == "on")
         qDebug() << "Channel avatar thread -1 (size: " << caThreadList.size() << ")";
+#endif
+}
+
+void IrcKernel::remove_nathread(NickAvatar *nathr)
+{
+    nathr->QObject::disconnect();
+    naThreadList.removeOne(nathr);
+
+#ifdef Q_WS_X11
+    if (settings->value("debug").toString() == "on")
+        qDebug() << "Nick avatar thread -1 (size: " << naThreadList.size() << ")";
 #endif
 }
 
@@ -193,6 +204,10 @@ void IrcKernel::kernel(QString param1)
         {
             if (strDataList[3].toLower() == ":109")
                 raw_109n();
+            else if (strDataList[3].toLower() == ":111")
+                raw_111n();
+            else if (strDataList[3].toLower() == ":112")
+                raw_112n();
             else if (strDataList[3].toLower() == ":121")
                 raw_121n();
             else if (strDataList[3].toLower() == ":122")
@@ -956,7 +971,39 @@ void IrcKernel::raw_109n()
     tabc->show_msg(strChannel, strMessage, 6);
 }
 
-//:NickServ!service@service.onet NOTICE scc_test :121 :scc_test Merovingian Succubi Radowsky
+// :NickServ!service@service.onet NOTICE Merovingian :111 aleksa7 type :2
+void IrcKernel::raw_111n()
+{
+    QString strNick = strDataList[4];
+    QString strInfo = strDataList[5];
+
+    QString strValue;
+    for (int i = 6; i < strDataList.size(); i++) { if (i != 6) strValue += " "; strValue += strDataList[i]; }
+    if (strValue[0] == ':')
+        strValue = strValue.right(strValue.length()-1);
+
+    if (strValue.isEmpty() == false)
+    {
+        if (strInfo == "avatar")
+        {
+            naThreadList.append(new NickAvatar(tabc, strNick, strValue));
+            QObject::connect(naThreadList.at(naThreadList.size()-1), SIGNAL(do_remove_nathread(NickAvatar*)), this, SLOT(remove_nathread(NickAvatar*)));
+
+#ifdef Q_WS_X11
+            if (settings->value("debug").toString() == "on")
+                qDebug() << "Nick avatar thread +1 (size: " << naThreadList.size() << ")";
+#endif
+        }
+    }
+}
+
+// :NickServ!service@service.onet NOTICE Merovingian :112 aleksa7 :end of user info
+void IrcKernel::raw_112n()
+{
+// ignore
+}
+
+// :NickServ!service@service.onet NOTICE scc_test :121 :scc_test Merovingian Succubi Radowsky
 void IrcKernel::raw_121n()
 {
     for (int i = 4; i < strDataList.size(); i++)

@@ -35,6 +35,7 @@
 #include "dlg_priv.h"
 #include "irc_auth.h"
 #include "network.h"
+#include "nick_avatar.h"
 #include "tab_container.h"
 
 class IrcKernel : public QObject
@@ -60,6 +61,7 @@ private:
     DlgModeration *dlgmoderation;
     QString strData;
     QList <ChannelAvatar*> caThreadList;
+    QList <NickAvatar*> naThreadList;
 
     void raw_error();
     void raw_ping();
@@ -79,6 +81,8 @@ private:
     void raw_moderate();
     void raw_001();
     void raw_109n();
+    void raw_111n();
+    void raw_112n();
     void raw_121n();
     void raw_122n();
     void raw_131n();
@@ -188,6 +192,7 @@ private:
 
 private slots:
     void remove_cathread(ChannelAvatar*);
+    void remove_nathread(NickAvatar*);
 
 };
 

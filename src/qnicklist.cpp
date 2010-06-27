@@ -41,7 +41,7 @@ void Nicklist::priv()
 {
     if (this->selectedItems().count() == 0) return;
 
-    QString strNick = this->selectedItems().at(0)->text();
+    QString strNick = this->selectedItems().at(0)->data(Qt::UserRole).toString();
     pNetwork->send(QString("PRIV %1").arg(strNick));
 }
 
@@ -49,7 +49,7 @@ void Nicklist::whois()
 {
     if (this->selectedItems().count() == 0) return;
 
-    QString strNick = this->selectedItems().at(0)->text();
+    QString strNick = this->selectedItems().at(0)->data(Qt::UserRole).toString();
     pNetwork->send(QString("WHOIS %1 %1").arg(strNick));
 }
 
@@ -57,7 +57,7 @@ void Nicklist::cam()
 {
     if (this->selectedItems().count() == 0) return;
 
-    QString strNick = this->selectedItems().at(0)->text();
+    QString strNick = this->selectedItems().at(0)->data(Qt::UserRole).toString();
     (new DlgCam(pNetwork, settings, strNick))->show();
 }
 
@@ -65,7 +65,7 @@ void Nicklist::friends_add()
 {
     if (this->selectedItems().count() == 0) return;
 
-    QString strNick = this->selectedItems().at(0)->text();
+    QString strNick = this->selectedItems().at(0)->data(Qt::UserRole).toString();
     pNetwork->send(QString("NS FRIENDS ADD %1").arg(strNick));
 }
 
@@ -73,7 +73,7 @@ void Nicklist::friends_del()
 {
     if (this->selectedItems().count() == 0) return;
 
-    QString strNick = this->selectedItems().at(0)->text();
+    QString strNick = this->selectedItems().at(0)->data(Qt::UserRole).toString();
     pNetwork->send(QString("NS FRIENDS DEL %1").arg(strNick));
 }
 
@@ -81,7 +81,7 @@ void Nicklist::ignore_add()
 {
     if (this->selectedItems().count() == 0) return;
 
-    QString strNick = this->selectedItems().at(0)->text();
+    QString strNick = this->selectedItems().at(0)->data(Qt::UserRole).toString();
     pNetwork->send(QString("NS IGNORE ADD %1").arg(strNick));
 }
 
@@ -89,7 +89,7 @@ void Nicklist::ignore_del()
 {
     if (this->selectedItems().count() == 0) return;
 
-    QString strNick = this->selectedItems().at(0)->text();
+    QString strNick = this->selectedItems().at(0)->data(Qt::UserRole).toString();
     pNetwork->send(QString("NS IGNORE DEL %1").arg(strNick));
 }
 
@@ -97,7 +97,7 @@ void Nicklist::kick()
 {
     if (this->selectedItems().count() == 0) return;
 
-    QString strNick = this->selectedItems().at(0)->text();
+    QString strNick = this->selectedItems().at(0)->data(Qt::UserRole).toString();
     (new DlgKick(pNetwork, settings, strNick, strChannel))->show();
 }
 
@@ -105,7 +105,7 @@ void Nicklist::ban()
 {
     if (this->selectedItems().count() == 0) return;
 
-    QString strNick = this->selectedItems().at(0)->text();
+    QString strNick = this->selectedItems().at(0)->data(Qt::UserRole).toString();
     pNetwork->send(QString("CS BAN %1 ADD %2").arg(strChannel).arg(strNick));
 }
 
@@ -113,7 +113,7 @@ void Nicklist::kban()
 {
     if (this->selectedItems().count() == 0) return;
 
-    QString strNick = this->selectedItems().at(0)->text();
+    QString strNick = this->selectedItems().at(0)->data(Qt::UserRole).toString();
     QString strReason = "Zachowuj siê! Byle jak ale siê zachowuj!";
     pNetwork->send(QString("CS BAN %1 ADD %2").arg(strChannel).arg(strNick));
     pNetwork->send(QString("KICK %1 %2 :%3").arg(strChannel).arg(strNick).arg(strReason));
@@ -123,7 +123,7 @@ void Nicklist::op_add()
 {
     if (this->selectedItems().count() == 0) return;
 
-    QString strNick = this->selectedItems().at(0)->text();
+    QString strNick = this->selectedItems().at(0)->data(Qt::UserRole).toString();
     pNetwork->send(QString("CS OP %1 ADD %2").arg(strChannel).arg(strNick));
 }
 
@@ -131,7 +131,7 @@ void Nicklist::op_del()
 {
     if (this->selectedItems().count() == 0) return;
 
-    QString strNick = this->selectedItems().at(0)->text();
+    QString strNick = this->selectedItems().at(0)->data(Qt::UserRole).toString();
     pNetwork->send(QString("CS OP %1 DEL %2").arg(strChannel).arg(strNick));
 }
 
@@ -139,7 +139,7 @@ void Nicklist::halfop_add()
 {
     if (this->selectedItems().count() == 0) return;
 
-    QString strNick = this->selectedItems().at(0)->text();
+    QString strNick = this->selectedItems().at(0)->data(Qt::UserRole).toString();
     pNetwork->send(QString("CS HALFOP %1 ADD %2").arg(strChannel).arg(strNick));
 }
 
@@ -147,7 +147,7 @@ void Nicklist::halfop_del()
 {
     if (this->selectedItems().count() == 0) return;
 
-    QString strNick = this->selectedItems().at(0)->text();
+    QString strNick = this->selectedItems().at(0)->data(Qt::UserRole).toString();
     pNetwork->send(QString("CS HALFOP %1 DEL %2").arg(strChannel).arg(strNick));
 }
 
@@ -155,7 +155,7 @@ void Nicklist::moderator_add()
 {
     if (this->selectedItems().count() == 0) return;
 
-    QString strNick = this->selectedItems().at(0)->text();
+    QString strNick = this->selectedItems().at(0)->data(Qt::UserRole).toString();
     pNetwork->send(QString("CS MODERATOR %1 ADD %2").arg(strChannel).arg(strNick));
 }
 
@@ -163,7 +163,7 @@ void Nicklist::moderator_del()
 {
     if (this->selectedItems().count() == 0) return;
 
-    QString strNick = this->selectedItems().at(0)->text();
+    QString strNick = this->selectedItems().at(0)->data(Qt::UserRole).toString();
     pNetwork->send(QString("CS MODERATOR %1 DEL %2").arg(strChannel).arg(strNick));
 }
 
@@ -171,7 +171,7 @@ void Nicklist::voice_add()
 {
     if (this->selectedItems().count() == 0) return;
 
-    QString strNick = this->selectedItems().at(0)->text();
+    QString strNick = this->selectedItems().at(0)->data(Qt::UserRole).toString();
     pNetwork->send(QString("CS VOICE %1 ADD %2").arg(strChannel).arg(strNick));
 }
 
@@ -179,7 +179,7 @@ void Nicklist::voice_del()
 {
     if (this->selectedItems().count() == 0) return;
 
-    QString strNick = this->selectedItems().at(0)->text();
+    QString strNick = this->selectedItems().at(0)->data(Qt::UserRole).toString();
     pNetwork->send(QString("CS VOICE %1 DEL %2").arg(strChannel).arg(strNick));
 }
 
@@ -191,7 +191,7 @@ void Nicklist::invite()
     if (action)
     {
         QString strInviteChannel = action->data().toString();
-        QString strNick = this->selectedItems().at(0)->text();
+        QString strNick = this->selectedItems().at(0)->data(Qt::UserRole).toString();
         pNetwork->send(QString("INVITE %1 %2").arg(strNick).arg(strInviteChannel));
     }
 }
@@ -228,7 +228,7 @@ void Nicklist::nicklist_refresh(QHash <QString, QString> *nicklist, QQueue <QStr
 
     QList <QListWidgetItem*> lSelectedItems = this->selectedItems();
     if (lSelectedItems.isEmpty() == false)
-        strCurrentItemSelected = this->currentItem()->data(Qt::DisplayRole).toString();
+        strCurrentItemSelected = this->currentItem()->data(Qt::UserRole).toString();
 
 // clear
 
@@ -243,23 +243,32 @@ void Nicklist::nicklist_refresh(QHash <QString, QString> *nicklist, QQueue <QStr
     {
         QString strNick = new_nicklist1->dequeue();
         QString strStatus = new_nicklist2->dequeue();
-        QIcon icon;
-        //if (strStatus == "admincam") icon = QIcon(":/3rdparty/images/admincam.png");
-        //else if (strStatus == "ownercam") icon = QIcon(":/3rdparty/images/ownercam.png");
-        //else if (strStatus == "opcam") icon = QIcon(":/3rdparty/images/opcam.png");
-        //else if (strStatus == "halfopcam") icon = QIcon(":/3rdparty/images/halfopcam.png");
-        //else if (strStatus == "modcam") icon = QIcon(":/3rdparty/images/modcam.png");
-        //else if (strStatus == "vipcam") icon = QIcon(":/3rdparty/images/vipcam.png");
-        if (strStatus == "usercam") icon = QIcon(":/images/cam.png");
-        else if (strStatus == "admin") icon = QIcon(":/images/admin.png");
-        else if (strStatus == "owner") icon = QIcon(":/images/owner.png");
-        else if (strStatus == "op") icon = QIcon(":/images/op.png");
-        else if (strStatus == "halfop") icon = QIcon(":/images/halfop.png");
-        else if (strStatus == "mod") icon = QIcon(":/images/mod.png");
-        else if (strStatus == "vip") icon = QIcon(":/images/vip.png");
-        else if (strStatus == "user") icon = QIcon(":/images/user.png");
+        QPixmap icon;
+        //if (strStatus == "admincam") icon = QPixmap(":/3rdparty/images/admincam.png");
+        //else if (strStatus == "ownercam") icon = QPixmap(":/3rdparty/images/ownercam.png");
+        //else if (strStatus == "opcam") icon = QPixmap(":/3rdparty/images/opcam.png");
+        //else if (strStatus == "halfopcam") icon = QPixmap(":/3rdparty/images/halfopcam.png");
+        //else if (strStatus == "modcam") icon = QPixmap(":/3rdparty/images/modcam.png");
+        //else if (strStatus == "vipcam") icon = QPixmap(":/3rdparty/images/vipcam.png");
+        if (strStatus == "usercam") icon = QPixmap(":/images/cam.png");
+        else if (strStatus == "admin") icon = QPixmap(":/images/admin.png");
+        else if (strStatus == "owner") icon = QPixmap(":/images/owner.png");
+        else if (strStatus == "op") icon = QPixmap(":/images/op.png");
+        else if (strStatus == "halfop") icon = QPixmap(":/images/halfop.png");
+        else if (strStatus == "mod") icon = QPixmap(":/images/mod.png");
+        else if (strStatus == "vip") icon = QPixmap(":/images/vip.png");
+        else if (strStatus == "user") icon = QPixmap(":/images/user.png");
+        else
+            icon = QPixmap(":/images/user.png");
 
-        this->addItem(new QListWidgetItem(icon, strNick));
+        QListWidgetItem *item = new QListWidgetItem(this);
+        item->setData(Qt::UserRole, strNick);
+        item->setData(Qt::DecorationRole, icon);
+        //if (item->data(Qt::UserRole+2).isNull() == false)
+            //item->setData(Qt::UserRole+2, item->data(Qt::UserRole+2));
+
+        list.append(item);
+        this->addItem(item);
     }
 
 // set selected item
@@ -268,7 +277,7 @@ void Nicklist::nicklist_refresh(QHash <QString, QString> *nicklist, QQueue <QStr
     {
         for (int i = 0; i < this->count(); i++)
         {
-            if (this->item(i)->data(Qt::DisplayRole).toString() == strCurrentItemSelected)
+            if (this->item(i)->data(Qt::UserRole).toString() == strCurrentItemSelected)
                 this->setCurrentItem(this->item(i));
         }
     }
@@ -392,4 +401,27 @@ void Nicklist::contextMenuEvent(QContextMenuEvent *e)
     delete ignore;
     delete friends;
     delete minvite;
+}
+
+void Nicklist::update_avatar(QString strNick, QByteArray bData)
+{
+// disabled function!
+    return;
+
+    if (list.isEmpty() == true)
+        return;
+
+    for (int i = 0; i < this->count(); i++)
+    {
+        QListWidgetItem *item = this->item(i);
+        qDebug() << "strNick:" << strNick;
+        qDebug() << "item:" << item->data(Qt::UserRole).toString();
+        if (item->data(Qt::UserRole).toString() == strNick)
+        {
+            QPixmap pixmap;
+            pixmap.loadFromData(bData);
+            item->setData(Qt::UserRole+2, pixmap);
+            return;
+        }
+    }
 }

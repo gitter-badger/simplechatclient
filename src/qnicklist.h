@@ -21,6 +21,9 @@
 #ifndef QNICKLIST_H
 #define QNICKLIST_H
 
+#include <QNetworkAccessManager>
+#include <QNetworkReply>
+
 #include <QContextMenuEvent>
 #ifdef Q_WS_X11
 #include <QDebug>
@@ -47,6 +50,7 @@ public:
     void nicklist_refresh(QHash <QString, QString> *, QQueue <QString> *, QQueue <QString> *);
     void nicklist_sort(QHash <QString, QString> *, QQueue <QString> *, QQueue <QString> *);
     void nicklist_quicksort(QString, QHash <QString, QString> *, QQueue <QString> *, QQueue <QString> *);
+    void update_avatar(QString, QByteArray);
 
 private:
     Network *pNetwork;
@@ -55,6 +59,7 @@ private:
     QStringList strOpenChannels;
     enum { maxOpenChannels = 50 };
     QAction *openChannelsActs[maxOpenChannels];
+    QList <QListWidgetItem *> list;
 
 private slots:
     void priv();

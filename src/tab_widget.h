@@ -50,6 +50,7 @@
 #include "network.h"
 #include "qinputline.h"
 #include "qnicklist.h"
+#include "qnicklistdelegate.h"
 #include "qnotify.h"
 #include "replace.h"
 
@@ -80,6 +81,7 @@ public:
     bool nicklist_exist(QString);
     void set_logo(QByteArray);
     void nicklist_refresh();
+    void update_nick_avatar(QString, QByteArray);
     void send_message(bool);
 
 private:
@@ -159,8 +161,8 @@ private:
     QSettings *settings;
     QString strName;
     QString strLast_msg;
-    QMap<QString, QString> nick_flag;
-    QMap<QString, QString> nick_suffix;
+    QMap <QString, QString> nick_flag;
+    QMap <QString, QString> nick_suffix;
     QHash <QString, QString> nicklist;
     QQueue <QString> new_nicklist1;
     QQueue <QString> new_nicklist2;

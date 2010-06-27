@@ -53,8 +53,10 @@ set (scc_SRCS
 	mainwindow.cpp
 	network.cpp
 	network_thread.cpp
+	nick_avatar.cpp
 	qinputline.cpp
 	qnicklist.cpp
+	qnicklistdelegate.cpp
 	qnotify.cpp
 	replace.cpp
 	tab_container.cpp
@@ -95,8 +97,10 @@ set (scc_MOC_SRCS
 	mainwindow.h
 	network.h
 	network_thread.h
+	nick_avatar.h
 	qinputline.h
 	qnicklist.h
+	qnicklistdelegate.h
 	qnotify.h
 	replace.h
 	tab_container.h

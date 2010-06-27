@@ -39,8 +39,10 @@ SOURCES += src/channel_avatar.cpp \
     src/mainwindow.cpp \
     src/network.cpp \
     src/network_thread.cpp \
+    src/nick_avatar.cpp \
     src/qinputline.cpp \
     src/qnicklist.cpp \
+    src/qnicklistdelegate.cpp \
     src/qnotify.cpp \
     src/replace.cpp \
     src/tab_container.cpp \
@@ -79,8 +81,10 @@ HEADERS += src/channel_avatar.h \
     src/mainwindow.h \
     src/network.h \
     src/network_thread.h \
+    src/nick_avatar.h \
     src/qinputline.h \
     src/qnicklist.h \
+    src/qnicklistdelegate.h \
     src/qnotify.h \
     src/replace.h \
     src/tab_container.h \

@@ -64,6 +64,7 @@ public:
 
 public slots:
     void set_logo(QString, QByteArray);
+    void update_nick_avatar(QString, QByteArray);
     void sshow_msg(QString, QString, int);
 
 private:

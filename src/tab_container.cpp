@@ -484,6 +484,18 @@ void TabContainer::set_logo(QString strChannel, QByteArray bData)
     }
 }
 
+void TabContainer::update_nick_avatar(QString strNick, QByteArray bData)
+{
+    for (int i = 0; i < 50; i++)
+    {
+        if (free_list[i] == 'u')
+        {
+            if (tw[i]->nicklist_exist(strNick) == true)
+                tw[i]->update_nick_avatar(strNick, bData);
+        }
+    }
+}
+
 void TabContainer::sshow_msg(QString strChannel, QString strData, int iLevel)
 {
     show_msg(strChannel, strData, iLevel);

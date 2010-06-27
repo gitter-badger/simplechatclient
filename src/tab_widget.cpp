@@ -109,6 +109,7 @@ TabWidget::TabWidget(Network *param1, QSettings *param2, QString param3, QWidget
     nick_list = new Nicklist(pNetwork, settings, strName);
     nick_list->setParent(this);
     nick_list->setSortingEnabled(false);
+    nick_list->setItemDelegate(new qnicklistdelegate(nick_list));
     nick_list->show();
 
     textEdit = new QWebView(this);
@@ -893,6 +894,11 @@ void TabWidget::add_user(QString strNick, QString strSuffix, int iRefresh)
 
         iNickCount++;
         nickCount->setText(QString("Liczba osób: %1").arg(iNickCount));
+
+// nick avatar
+
+        //if (strNick[0] != '~')
+            //pNetwork->send(QString("NS INFO %1 s").arg(strNick));
     }
 }
 
@@ -1020,6 +1026,11 @@ void TabWidget::set_logo(QByteArray bData)
     QPixmap pixmap;
     pixmap.loadFromData(bData);
     logo->setPixmap(pixmap);
+}
+
+void TabWidget::update_nick_avatar(QString strNick, QByteArray bData)
+{
+    nick_list->update_avatar(strNick, bData);
 }
 
 // actions
