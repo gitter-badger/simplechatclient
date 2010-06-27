@@ -125,5 +125,5 @@ void NicklistDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opti
 
 QSize NicklistDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
-    return QSize(200, 30);
+    return QSize(160, 30);
 }
