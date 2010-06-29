@@ -41,14 +41,14 @@ private:
     Network *pNetwork;
     QSettings *settings;
     TabContainer *tabc;
-    QVector < QVector<QString> > list_1;
-    QVector < QVector<QString> > list_2;
-    QVector < QVector<QString> > list_3;
-    QVector < QVector<QString> > list_4;
-    QVector < QVector<QString> > list_5;
-    QVector < QVector<QString> > list_6;
+    QList < QList<QString> > list_1;
+    QList < QList<QString> > list_2;
+    QList < QList<QString> > list_3;
+    QList < QList<QString> > list_4;
+    QList < QList<QString> > list_5;
+    QList < QList<QString> > list_6;
 
-    void quickSort(QVector< QVector<QString> > *, int, int);
+    void quickSort(QList< QList<QString> > *, int, int);
 
 protected:
     virtual void showEvent(QShowEvent *);

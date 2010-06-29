@@ -66,7 +66,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     delete pConfig;
 
     settings.clear();
-    settings.setValue("version", "1.0.5.266");
+    settings.setValue("version", "1.0.5.267");
     settings.setValue("debug", "off");
     settings.setValue("logged", "off");
     settings.setValue("busy", "off");
@@ -103,9 +103,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     pTabC->set_dlg(pDlg_channel_settings, pDlg_moderation);
 
     pTabC->show_msg("Status", "%Fi:courier%Witaj w programie Simple Chat Client %Ixhehe%", 0);
-    pTabC->show_msg("Status", "%Fb:courier%%C008100%Oficjalna strona SCC%C000000%: http://simplechatclien.sourceforge.net/ %Ixluzak%", 0);
-    pTabC->show_msg("Status", "%Fbi:courier%%Cff0000%Lista b³êdów%C000000%: http://tinyurl.com/yg3fjb4 %Ixmm%", 0);
-    pTabC->show_msg("Status", "%Fbi:courier%%C8800ab%Zg³aszanie b³êdów%C000000%: http://tinyurl.com/yfcseeh %Ixco%", 0);
+    pTabC->show_msg("Status", "%Fb:courier%%Cff6500%Oficjalna strona SCC%C000000%: http://simplechatclien.sourceforge.net/ %Ixluzak%", 0);
+    pTabC->show_msg("Status", "%Fb:courier%%C008100%Oficjalne forum SCC%C000000%: http://simplechatclien.sourceforge.net/forum/ %Ixoczko%", 0);
+    pTabC->show_msg("Status", "%Fbi:courier%%Cff0000%Lista b³êdów%C000000%: http://sourceforge.net/apps/trac/simplechatclien/report/6 %Ixmm%", 0);
+    pTabC->show_msg("Status", "%Fbi:courier%%C8800ab%Zg³aszanie b³êdów%C000000%: http://sourceforge.net/apps/trac/simplechatclien/newticket %Ixco%", 0);
 
 // update
     uThreadList.append(new UpdateThread(&settings, pTabC));

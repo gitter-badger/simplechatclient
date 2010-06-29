@@ -91,7 +91,7 @@ void NicklistDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opti
     // STATUS
     if (status.isNull() == false)
     {
-        r = option.rect.adjusted(imageSpace, 5, -5, -5);
+        r = option.rect.adjusted(imageSpace, 4, -5, -5);
         status.paint(painter, r, Qt::AlignVCenter|Qt::AlignLeft);
         imageSpace += 20;
     }

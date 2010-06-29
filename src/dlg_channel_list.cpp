@@ -74,7 +74,7 @@ void DlgChannelList::clear()
 
 void DlgChannelList::add_channel(QString strName, QString strPeople, QString strCat, QString strType)
 {
-    QVector <QString> add;
+    QList <QString> add;
     add << strName << strPeople << strCat << strType;
     list_1 << add;
 
@@ -188,7 +188,7 @@ void DlgChannelList::create_list()
     }
 }
 
-void DlgChannelList::quickSort(QVector< QVector<QString> > *T, int Lo, int Hi)
+void DlgChannelList::quickSort(QList< QList<QString> > *T, int Lo, int Hi)
 {
     int i;
     int j;
@@ -211,10 +211,10 @@ void DlgChannelList::quickSort(QVector< QVector<QString> > *T, int Lo, int Hi)
             QString item12 = T->at(j).at(2);
             QString item13 = T->at(j).at(3);
 
-            QVector <QString> a;
+            QList <QString> a;
             a << item10 << item11 << item12 << item13;
 
-            QVector <QString> b;
+            QList <QString> b;
             b << item00 << item01 << item02 << item03;
 
             T->replace(i,a);

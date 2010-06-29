@@ -1049,6 +1049,9 @@ void TabWidget::bold_clicked()
         bBold = true;
         strFontWeight = "bold";
     }
+
+    int iWeight = (bBold == true ? 75 : 50);
+    inputline->setFont(QFont(strFontFamily, -1, iWeight, bItalic));
 }
 
 void TabWidget::italic_clicked()
@@ -1065,18 +1068,27 @@ void TabWidget::italic_clicked()
         bItalic = true;
         strFontStyle = "italic";
     }
+
+    int iWeight = (bBold == true ? 75 : 50);
+    inputline->setFont(QFont(strFontFamily, -1, iWeight, bItalic));
 }
 
 void TabWidget::arial_triggered()
 {
     fontfamily->setText("Arial");
     strFontFamily = "Arial";
+
+    int iWeight = (bBold == true ? 75 : 50);
+    inputline->setFont(QFont(strFontFamily, -1, iWeight, bItalic));
 }
 
 void TabWidget::times_triggered()
 {
     fontfamily->setText("Times");
     strFontFamily = "Times";
+
+    int iWeight = (bBold == true ? 75 : 50);
+    inputline->setFont(QFont(strFontFamily, -1, iWeight, bItalic));
 }
 
 void TabWidget::verdana_triggered()
@@ -1084,18 +1096,26 @@ void TabWidget::verdana_triggered()
     fontfamily->setText("Verdana");
     strFontFamily = "Verdana";
 
+    int iWeight = (bBold == true ? 75 : 50);
+    inputline->setFont(QFont(strFontFamily, -1, iWeight, bItalic));
 }
 
 void TabWidget::tahoma_triggered()
 {
     fontfamily->setText("Tahoma");
     strFontFamily = "Tahoma";
+
+    int iWeight = (bBold == true ? 75 : 50);
+    inputline->setFont(QFont(strFontFamily, -1, iWeight, bItalic));
 }
 
 void TabWidget::courier_triggered()
 {
     fontfamily->setText("Courier");
     strFontFamily = "Courier";
+
+    int iWeight = (bBold == true ? 75 : 50);
+    inputline->setFont(QFont(strFontFamily, -1, iWeight, bItalic));
 }
 
 void TabWidget::size8_triggered()
