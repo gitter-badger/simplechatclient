@@ -31,12 +31,13 @@ class NickAvatarThread : public QThread
 {
     Q_OBJECT
 public:
-    NickAvatarThread(QString, QString);
+    NickAvatarThread(QString, QString, QMap <QString, QByteArray> *);
     void run();
 
 private:
     QString strNick;
     QString strUrl;
+    QMap <QString, QByteArray> *mNickAvatar;
 
 private slots:
     void thread_work();
@@ -51,15 +52,17 @@ class NickAvatar : public QObject
 {
     Q_OBJECT
 public:
-    NickAvatar(TabContainer *, QString, QString);
+    NickAvatar(TabContainer *, QString, QString, QMap <QString, QByteArray> *);
 
 private:
     TabContainer *tabc;
     QString strNick;
     QString strUrl;
+    QMap <QString, QByteArray> *mNickAvatar;
     NickAvatarThread *nickAvatarThr;
 
 public slots:
+    void set_nick_avatar(QString, QByteArray);
     void stop_thread();
 
 signals:

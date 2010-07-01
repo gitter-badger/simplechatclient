@@ -20,18 +20,19 @@
 
 #include "irc_kernel.h"
 
-IrcKernel::IrcKernel(Network *param1, QSettings *param2, TabContainer *param3, DlgChannelSettings *param4, DlgChannelHomes *param5, DlgChannelList *param6, DlgChannelFavourites *param7, DlgFriends *param8, DlgIgnore *param9, DlgModeration *param10)
+IrcKernel::IrcKernel(Network *param1, QSettings *param2, TabContainer *param3, QMap <QString, QByteArray> *param4, DlgChannelSettings *param5, DlgChannelHomes *param6, DlgChannelList *param7, DlgChannelFavourites *param8, DlgFriends *param9, DlgIgnore *param10, DlgModeration *param11)
 {
     pNetwork = param1;
     settings = param2;
     tabc = param3;
-    dlgchannel_settings = param4;
-    dlgchannel_homes = param5;
-    dlgchannel_list = param6;
-    dlgchannel_favourites = param7;
-    dlgfriends = param8;
-    dlgignore = param9;
-    dlgmoderation = param10;
+    mNickAvatar = param4;
+    dlgchannel_settings = param5;
+    dlgchannel_homes = param6;
+    dlgchannel_list = param7;
+    dlgchannel_favourites = param8;
+    dlgfriends = param9;
+    dlgignore = param10;
+    dlgmoderation = param11;
 }
 
 void IrcKernel::remove_cathread(ChannelAvatar *cathr)
@@ -152,6 +153,10 @@ void IrcKernel::kernel(QString param1)
             raw_443();
         else if (strDataList[1].toLower() == "451")
             raw_451();
+        else if (strDataList[1].toLower() == "470")
+            raw_470();
+        else if (strDataList[1].toLower() == "471")
+            raw_471();
         else if (strDataList[1].toLower() == "473")
             raw_473();
         else if (strDataList[1].toLower() == "474")
@@ -284,6 +289,8 @@ void IrcKernel::kernel(QString param1)
                 raw_407n();
             else if (strDataList[3].toLower() == ":408")
                 raw_408n();
+            else if (strDataList[3].toLower() == ":412")
+                raw_412n();
             else if (strDataList[3].toLower() == ":420")
                 raw_420n();
             else if (strDataList[3].toLower() == ":421")
@@ -523,6 +530,9 @@ void IrcKernel::raw_quit()
         strDisplay = QString("* %1 [%2@%3] opu¶ci³ irc [%4]").arg(strNick).arg(strZUO).arg(strIP).arg(strReason);
     else
         strDisplay = QString("* %1 [%2] opu¶ci³ irc [%3]").arg(strNick).arg(strIP).arg(strReason);
+
+    if (mNickAvatar->contains(strNick) == true)
+        mNickAvatar->remove(strNick);
 
     tabc->quit_user(strNick, strDisplay);
 }
@@ -986,7 +996,7 @@ void IrcKernel::raw_111n()
     {
         if (strInfo == "avatar")
         {
-            naThreadList.append(new NickAvatar(tabc, strNick, strValue));
+            naThreadList.append(new NickAvatar(tabc, strNick, strValue, mNickAvatar));
             QObject::connect(naThreadList.at(naThreadList.size()-1), SIGNAL(do_remove_nathread(NickAvatar*)), this, SLOT(remove_nathread(NickAvatar*)));
 
 #ifdef Q_WS_X11
@@ -1946,6 +1956,12 @@ void IrcKernel::raw_408n()
     pNetwork->send("CS HOMES");
 }
 
+// :NickServ!service@service.onet NOTICE ~Merovingian :412 admi :user's data is not ready
+void IrcKernel::raw_412n()
+{
+    // ignore
+}
+
 // :cf1f4.onet 421 scc_test MOD :Unknown command
 void IrcKernel::raw_421()
 {
@@ -2211,6 +2227,31 @@ void IrcKernel::raw_468n()
     QString strChannel = strDataList[4];
 
     QString strMessage = QString("* Dostêp zabroniony, nie posiadasz odpowiednich uprawnieñ w %1").arg(strChannel);
+    tabc->show_msg_active(strMessage, 7);
+}
+
+// :cf1f3.onet 470 ~Merovingian :#testy has become full, so you are automatically being transferred to the linked channel #Awaria
+void IrcKernel::raw_470()
+{
+    if (strDataList.value(3).isEmpty() == true) return;
+
+    QString strChannel = strDataList[3];
+    if (strChannel[0] == ':')
+        strChannel = strChannel.right(strChannel.length()-1);
+    QString strLinked = strDataList[strDataList.size()-1];
+
+    QString strMessage = QString("* Kana³ %1 jest pe³ny, zostajesz automatycznie przekieroway do kana³u %2").arg(strChannel).arg(strLinked);
+    tabc->show_msg("Status", strMessage, 7);
+}
+
+// :cf1f2.onet 471 ~Merovingian #testy :Cannot join channel (Channel is full)
+void IrcKernel::raw_471()
+{
+    if (strDataList.value(3).isEmpty() == true) return;
+
+    QString strChannel = strDataList[3];
+
+    QString strMessage = QString("* Nie mo¿esz wej¶æ do %1: Kana³ jest pe³ny").arg(strChannel);
     tabc->show_msg_active(strMessage, 7);
 }
 

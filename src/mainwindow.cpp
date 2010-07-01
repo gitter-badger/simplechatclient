@@ -66,7 +66,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     delete pConfig;
 
     settings.clear();
-    settings.setValue("version", "1.0.5.267");
+    settings.setValue("version", "1.0.5.268");
     settings.setValue("debug", "off");
     settings.setValue("logged", "off");
     settings.setValue("busy", "off");
@@ -88,7 +88,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
     pNetwork = new Network(this, connectAct, &settings);
     pNotify = new Notify();
-    pTabC = new TabContainer(pNetwork, &settings, pTabM, this, pNotify);
+    pTabC = new TabContainer(pNetwork, &settings, pTabM, this, pNotify, &mNickAvatar);
 
     pDlg_channel_settings = new DlgChannelSettings(pNetwork, &settings);
     pDlg_moderation = new DlgModeration(pNetwork, &settings);
@@ -97,7 +97,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     pDlg_channel_favourites = new DlgChannelFavourites(pNetwork, &settings, pTabC);
     pDlg_friends = new DlgFriends(pNetwork, &settings, pTabC);
     pDlg_ignore = new DlgIgnore(pNetwork, &settings, pTabC);
-    pIrc_kernel = new IrcKernel(pNetwork, &settings, pTabC, pDlg_channel_settings, pDlg_channel_homes, pDlg_channel_list, pDlg_channel_favourites, pDlg_friends, pDlg_ignore, pDlg_moderation);
+    pIrc_kernel = new IrcKernel(pNetwork, &settings, pTabC, &mNickAvatar, pDlg_channel_settings, pDlg_channel_homes, pDlg_channel_list, pDlg_channel_favourites, pDlg_friends, pDlg_ignore, pDlg_moderation);
     pIrc_auth = new IrcAuth(pNetwork, &settings, pTabC);
 
     pTabC->set_dlg(pDlg_channel_settings, pDlg_moderation);
@@ -183,6 +183,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
 MainWindow::~MainWindow()
 {
+    mNickAvatar.clear();
     trayIcon->hide();
     settings.setValue("reconnect", "false");
     delete trayIcon;

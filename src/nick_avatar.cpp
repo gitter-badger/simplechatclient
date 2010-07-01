@@ -19,10 +19,11 @@
  ****************************************************************************/
 
 #include "nick_avatar.h"
-NickAvatarThread::NickAvatarThread(QString param1, QString param2)
+NickAvatarThread::NickAvatarThread(QString param1, QString param2, QMap <QString, QByteArray> *param3)
 {
     strNick = param1;
     strUrl = param2;
+    mNickAvatar = param3;
 }
 
 void NickAvatarThread::run()
@@ -34,31 +35,42 @@ void NickAvatarThread::run()
 
 void NickAvatarThread::thread_work()
 {
-    QNetworkAccessManager accessManager;
-    QNetworkReply *pReply;
-    QEventLoop eventLoop;
-    pReply = accessManager.get(QNetworkRequest(QUrl(strUrl)));
-    QObject::connect(pReply, SIGNAL(finished()), &eventLoop, SLOT(quit()));
-    eventLoop.exec();
+    if (mNickAvatar->contains(strNick) == false)
+    {
+        QNetworkAccessManager accessManager;
+        QNetworkReply *pReply;
+        QEventLoop eventLoop;
+        pReply = accessManager.get(QNetworkRequest(QUrl(strUrl)));
+        QObject::connect(pReply, SIGNAL(finished()), &eventLoop, SLOT(quit()));
+        eventLoop.exec();
 
-    QByteArray bData = pReply->readAll();
+        QByteArray bData = pReply->readAll();
 
-    delete pReply;
+        delete pReply;
 
-    emit set_avatar(strNick, bData);
+        emit set_avatar(strNick, bData);
+    }
+
     emit stop_thread();
 }
 
-NickAvatar::NickAvatar(TabContainer *param1, QString param2, QString param3)
+NickAvatar::NickAvatar(TabContainer *param1, QString param2, QString param3, QMap <QString, QByteArray> *param4)
 {
     tabc = param1;
     strNick = param2;
     strUrl = param3;
+    mNickAvatar = param4;
 
-    nickAvatarThr = new NickAvatarThread(strNick, strUrl);
-    QObject::connect(nickAvatarThr, SIGNAL(set_avatar(QString, QByteArray)), tabc, SLOT(update_nick_avatar(QString, QByteArray)));
+    nickAvatarThr = new NickAvatarThread(strNick, strUrl, mNickAvatar);
+    QObject::connect(nickAvatarThr, SIGNAL(set_avatar(QString, QByteArray)), this, SLOT(set_nick_avatar(QString, QByteArray)));
     QObject::connect(nickAvatarThr, SIGNAL(stop_thread()), this, SLOT(stop_thread()));
     nickAvatarThr->start(QThread::LowPriority);
+}
+
+void NickAvatar::set_nick_avatar(QString strNick, QByteArray bAvatar)
+{
+    if (mNickAvatar->contains(strNick) == false)
+        mNickAvatar->insert(strNick, bAvatar);
 }
 
 void NickAvatar::stop_thread()

@@ -96,6 +96,7 @@ private:
     QAction *friendsAct;
     QAction *ignoreAct;
     QAction *aboutAct;
+    QMap <QString, QByteArray> mNickAvatar;
 
 private slots:
     void button_close();

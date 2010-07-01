@@ -20,11 +20,12 @@
 
 #include "qnicklist.h"
 
-Nicklist::Nicklist(Network *param1, QSettings *param2, QString param3)
+Nicklist::Nicklist(Network *param1, QSettings *param2, QString param3, QMap <QString, QByteArray> *param4)
 {
     pNetwork = param1;
     settings = param2;
     strChannel = param3;
+    mNickAvatar = param4;
 }
 
 Nicklist::~Nicklist()
@@ -266,10 +267,13 @@ void Nicklist::nicklist_refresh(QHash <QString, QString> *nicklist, QQueue <QStr
             item->setData(Qt::UserRole+1, QPixmap(":/images/cam.png"));
 
         // read from cache when refresh
-        //if (item->data(Qt::UserRole+2).isNull() == false)
-            //item->setData(Qt::UserRole+2, item->data(Qt::UserRole+1));
+        if (mNickAvatar->contains(strNick) == true)
+        {
+            QPixmap pixmap;
+            pixmap.loadFromData(mNickAvatar->value(strNick));
+            item->setData(Qt::UserRole+2, pixmap);
+        }
 
-        list.append(item);
         this->addItem(item);
     }
 
@@ -403,27 +407,4 @@ void Nicklist::contextMenuEvent(QContextMenuEvent *e)
     delete ignore;
     delete friends;
     delete minvite;
-}
-
-void Nicklist::update_avatar(QString strNick, QByteArray bData)
-{
-// disabled function!
-    return;
-
-    if (list.isEmpty() == true)
-        return;
-
-    for (int i = 0; i < this->count(); i++)
-    {
-        QListWidgetItem *item = this->item(i);
-        qDebug() << "strNick:" << strNick;
-        qDebug() << "item:" << item->data(Qt::UserRole).toString();
-        if (item->data(Qt::UserRole).toString() == strNick)
-        {
-            QPixmap pixmap;
-            pixmap.loadFromData(bData);
-            item->setData(Qt::UserRole+2, pixmap);
-            return;
-        }
-    }
 }

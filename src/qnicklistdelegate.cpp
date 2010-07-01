@@ -91,25 +91,34 @@ void NicklistDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opti
     // STATUS
     if (status.isNull() == false)
     {
-        r = option.rect.adjusted(imageSpace, 4, -5, -5);
+        r = option.rect.adjusted(imageSpace, -5, 5, 5);
         status.paint(painter, r, Qt::AlignVCenter|Qt::AlignLeft);
         imageSpace += 20;
+
+        r = option.rect.adjusted(imageSpace, 0, 10, 10);
+        imageSpace += 10;
     }
 
     // CAM
     if (cam.isNull() == false)
     {
-        r = option.rect.adjusted(imageSpace, 0, -10, 0);
+        r = option.rect.adjusted(imageSpace, 0, 20, 0);
         cam.paint(painter, r, Qt::AlignVCenter|Qt::AlignLeft);
         imageSpace += 20;
+
+        r = option.rect.adjusted(imageSpace, 0, 10, 10);
+        imageSpace += 10;
     }
 
     // AVATAR
     if (nick[0] != '~')
     {
-        r = option.rect.adjusted(imageSpace, 0, -10, 0);
+        r = option.rect.adjusted(imageSpace, 0, 10, 0);
         avatar.paint(painter, r, Qt::AlignVCenter|Qt::AlignLeft);
-        imageSpace += 30;
+        imageSpace += 35;
+
+        r = option.rect.adjusted(imageSpace, 0, 10, 10);
+        imageSpace += 10;
     }
 
     // NICK
@@ -125,5 +134,5 @@ void NicklistDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opti
 
 QSize NicklistDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
-    return QSize(160, 30);
+    return QSize(180, 35);
 }

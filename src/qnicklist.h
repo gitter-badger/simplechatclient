@@ -40,7 +40,7 @@ class Nicklist : public QListWidget
 {
     Q_OBJECT
 public:
-    Nicklist(Network *, QSettings *, QString);
+    Nicklist(Network *, QSettings *, QString, QMap <QString, QByteArray> *);
     ~Nicklist();
     void set_open_channels(QStringList);
     void nicklist_add(QString, QString, QHash <QString, QString> *, QQueue <QString> *, QQueue <QString> *);
@@ -59,7 +59,7 @@ private:
     QStringList strOpenChannels;
     enum { maxOpenChannels = 50 };
     QAction *openChannelsActs[maxOpenChannels];
-    QList <QListWidgetItem *> list;
+    QMap <QString, QByteArray> *mNickAvatar;
 
 private slots:
     void priv();

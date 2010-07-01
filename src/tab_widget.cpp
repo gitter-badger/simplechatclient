@@ -20,14 +20,15 @@
 
 #include "tab_widget.h"
 
-TabWidget::TabWidget(Network *param1, QSettings *param2, QString param3, QWidget *parent, Notify *param4, DlgChannelSettings *param5, DlgModeration *param6)
+TabWidget::TabWidget(Network *param1, QSettings *param2, QString param3, QWidget *parent, Notify *param4, QMap <QString, QByteArray> *param5, DlgChannelSettings *param6, DlgModeration *param7)
 {
     pNetwork = param1;
     settings = param2;
     strName = param3;
     pNotify = param4;
-    dlgchannel_settings = param5;
-    dlgmoderation = param6;
+    mNickAvatar = param5;
+    dlgchannel_settings = param6;
+    dlgmoderation = param7;
 
     iNickCount = 0;
     bCursorPositionChanged = false;
@@ -106,7 +107,7 @@ TabWidget::TabWidget(Network *param1, QSettings *param2, QString param3, QWidget
     nickCount->setAlignment(Qt::AlignCenter);
     nickCount->show();
 
-    nick_list = new Nicklist(pNetwork, settings, strName);
+    nick_list = new Nicklist(pNetwork, settings, strName, mNickAvatar);
     nick_list->setParent(this);
     nick_list->setSortingEnabled(false);
     nick_list->setItemDelegate(new NicklistDelegate(nick_list));
@@ -897,7 +898,7 @@ void TabWidget::add_user(QString strNick, QString strSuffix, int iRefresh)
 
 // nick avatar
 
-        //if (strNick[0] != '~')
+        //if ((strNick[0] != '~') && (mNickAvatar->contains(strNick) == false))
             //pNetwork->send(QString("NS INFO %1 s").arg(strNick));
     }
 }
@@ -1026,11 +1027,6 @@ void TabWidget::set_logo(QByteArray bData)
     QPixmap pixmap;
     pixmap.loadFromData(bData);
     logo->setPixmap(pixmap);
-}
-
-void TabWidget::update_nick_avatar(QString strNick, QByteArray bData)
-{
-    nick_list->update_avatar(strNick, bData);
 }
 
 // actions

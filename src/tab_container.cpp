@@ -20,13 +20,14 @@
 
 #include "tab_container.h"
 
-TabContainer::TabContainer(Network *param1, QSettings *param2, TabManager *param3, QWidget *param4, Notify *param5)
+TabContainer::TabContainer(Network *param1, QSettings *param2, TabManager *param3, QWidget *param4, Notify *param5, QMap <QString, QByteArray> *param6)
 {
     pNetwork = param1;
     settings = param2;
     tabm = param3;
     mainWin = param4;
     pNotify = param5;
+    mNickAvatar = param6;
     free_list = "ffffffffffffffffffffffffffffffffffffffffffffffffff"; // f = free  u = used
 }
 
@@ -82,7 +83,7 @@ void TabContainer::add_tab(QString strChannel,QWidget *parent)
         int iFree = free_list_get();
         if (iFree != -1)
         {
-            tw[iFree] = new TabWidget(pNetwork, settings, strChannel, parent, pNotify, dlgchannel_settings, dlgmoderation);
+            tw[iFree] = new TabWidget(pNetwork, settings, strChannel, parent, pNotify, mNickAvatar, dlgchannel_settings, dlgmoderation);
             int iTab = tabm->addTab(tw[iFree], strChannel);
             tabm->setCurrentIndex(iTab);
             free_list[iFree] = 'u';
@@ -456,6 +457,8 @@ void TabContainer::clear_nicklist(QString strChannel)
 
 void TabContainer::clear_all_nicklist()
 {
+    mNickAvatar->clear();
+
     QStringList strlOpenChannels = this->get_open_channels();
     for (int i = 0; i < strlOpenChannels.size(); i++)
         this->clear_nicklist(strlOpenChannels[i]);
@@ -498,18 +501,6 @@ void TabContainer::set_logo(QString strChannel, QByteArray bData)
                 tw[i]->set_logo(bData);
                 return;
             }
-        }
-    }
-}
-
-void TabContainer::update_nick_avatar(QString strNick, QByteArray bData)
-{
-    for (int i = 0; i < 50; i++)
-    {
-        if (free_list[i] == 'u')
-        {
-            if (tw[i]->nicklist_exist(strNick) == true)
-                tw[i]->update_nick_avatar(strNick, bData);
         }
     }
 }
