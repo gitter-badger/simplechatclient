@@ -20,14 +20,15 @@
 
 #include "dlg_channel_homes.h"
 
-DlgChannelHomes::DlgChannelHomes(Network *param1, QSettings *param2, TabContainer *param3, DlgChannelSettings *param4)
+DlgChannelHomes::DlgChannelHomes(Network *param1, QSettings *param2, TabContainer *param3, QMap <QString, QByteArray> *param4, DlgChannelSettings *param5)
 {
     ui.setupUi(this);
 
     pNetwork = param1;
     settings = param2;
     tabc = param3;
-    dlgchannel_settings = param4;
+    mChannelAvatar = param4;
+    dlgchannel_settings = param5;
 
     QObject::connect(ui.listWidget, SIGNAL(clicked(QModelIndex)), this, SLOT(list_clicked(QModelIndex)));
     QObject::connect(ui.pushButton, SIGNAL(clicked()), this, SLOT(button_create()));
@@ -39,7 +40,15 @@ DlgChannelHomes::DlgChannelHomes(Network *param1, QSettings *param2, TabContaine
 void DlgChannelHomes::add_channel(QString strChannel)
 {
     strChannel = strChannel.right(strChannel.length()-1); // remove status
-    ui.listWidget->addItem(new QListWidgetItem(QIcon(":/images/channel_avatar.png"), strChannel));
+
+    if (mChannelAvatar->contains(strChannel) == true)
+    {
+        QPixmap pixmap;
+        pixmap.loadFromData(mChannelAvatar->value(strChannel));
+        ui.listWidget->addItem(new QListWidgetItem(QIcon(pixmap), strChannel));
+    }
+    else
+        ui.listWidget->addItem(new QListWidgetItem(QIcon(":/images/channel_avatar.png"), strChannel));
 }
 
 void DlgChannelHomes::clear()

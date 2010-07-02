@@ -20,7 +20,7 @@
 
 #include "tab_container.h"
 
-TabContainer::TabContainer(Network *param1, QSettings *param2, TabManager *param3, QWidget *param4, Notify *param5, QMap <QString, QByteArray> *param6)
+TabContainer::TabContainer(Network *param1, QSettings *param2, TabManager *param3, QWidget *param4, Notify *param5, QMap <QString, QByteArray> *param6, QMap <QString, QByteArray> *param7)
 {
     pNetwork = param1;
     settings = param2;
@@ -28,6 +28,7 @@ TabContainer::TabContainer(Network *param1, QSettings *param2, TabManager *param
     mainWin = param4;
     pNotify = param5;
     mNickAvatar = param6;
+    mChannelAvatar = param7;
     free_list = "ffffffffffffffffffffffffffffffffffffffffffffffffff"; // f = free  u = used
 }
 
@@ -83,7 +84,7 @@ void TabContainer::add_tab(QString strChannel,QWidget *parent)
         int iFree = free_list_get();
         if (iFree != -1)
         {
-            tw[iFree] = new TabWidget(pNetwork, settings, strChannel, parent, pNotify, mNickAvatar, dlgchannel_settings, dlgmoderation);
+            tw[iFree] = new TabWidget(pNetwork, settings, strChannel, parent, pNotify, mNickAvatar, mChannelAvatar, dlgchannel_settings, dlgmoderation);
             int iTab = tabm->addTab(tw[iFree], strChannel);
             tabm->setCurrentIndex(iTab);
             free_list[iFree] = 'u';
@@ -458,6 +459,7 @@ void TabContainer::clear_nicklist(QString strChannel)
 void TabContainer::clear_all_nicklist()
 {
     mNickAvatar->clear();
+    mChannelAvatar->clear();
 
     QStringList strlOpenChannels = this->get_open_channels();
     for (int i = 0; i < strlOpenChannels.size(); i++)
@@ -490,7 +492,7 @@ void TabContainer::update_open_channels()
     }
 }
 
-void TabContainer::set_logo(QString strChannel, QByteArray bData)
+void TabContainer::update_logo(QString strChannel)
 {
     for (int i = 0; i < 50; i++)
     {
@@ -498,7 +500,7 @@ void TabContainer::set_logo(QString strChannel, QByteArray bData)
         {
             if (tw[i]->get_name() == strChannel)
             {
-                tw[i]->set_logo(bData);
+                tw[i]->update_logo();
                 return;
             }
         }

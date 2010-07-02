@@ -20,13 +20,14 @@
 
 #include "dlg_channel_favourites.h"
 
-DlgChannelFavourites::DlgChannelFavourites(Network *param1, QSettings *param2, TabContainer *param3)
+DlgChannelFavourites::DlgChannelFavourites(Network *param1, QSettings *param2, TabContainer *param3, QMap <QString, QByteArray> *param4)
 {
     ui.setupUi(this);
 
     pNetwork = param1;
     settings = param2;
     tabc = param3;
+    mChannelAvatar = param4;
 
     QObject::connect(ui.pushButton, SIGNAL(clicked()), this, SLOT(button_add()));
     QObject::connect(ui.pushButton_2, SIGNAL(clicked()), this, SLOT(button_remove()));
@@ -36,7 +37,14 @@ DlgChannelFavourites::DlgChannelFavourites(Network *param1, QSettings *param2, T
 
 void DlgChannelFavourites::add_channel(QString strChannel)
 {
-    ui.listWidget->addItem(new QListWidgetItem(QIcon(":/images/channel_avatar.png"), strChannel));
+    if (mChannelAvatar->contains(strChannel) == true)
+    {
+        QPixmap pixmap;
+        pixmap.loadFromData(mChannelAvatar->value(strChannel));
+        ui.listWidget->addItem(new QListWidgetItem(QIcon(pixmap), strChannel));
+    }
+    else
+        ui.listWidget->addItem(new QListWidgetItem(QIcon(":/images/channel_avatar.png"), strChannel));
 }
 
 void DlgChannelFavourites::clear()

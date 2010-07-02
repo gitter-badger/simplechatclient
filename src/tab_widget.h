@@ -58,7 +58,7 @@ class TabWidget : public QWidget
 {
     Q_OBJECT
 public:
-    TabWidget(Network *, QSettings *, QString, QWidget *, Notify *, QMap <QString, QByteArray> *, DlgChannelSettings *, DlgModeration *);
+    TabWidget(Network *, QSettings *, QString, QWidget *, Notify *, QMap <QString, QByteArray> *, QMap <QString, QByteArray> *, DlgChannelSettings *, DlgModeration *);
     ~TabWidget();
     QString get_name() { return strName; }
     QString convert_emots(QString);
@@ -79,7 +79,7 @@ public:
     void clear_nicklist();
     void set_open_channels(QStringList);
     bool nicklist_exist(QString);
-    void set_logo(QByteArray);
+    void update_logo();
     void nicklist_refresh();
     void send_message(bool);
 
@@ -156,6 +156,7 @@ private:
     DlgModeration *dlgmoderation;
     Notify *pNotify;
     QMap <QString, QByteArray> *mNickAvatar;
+    QMap <QString, QByteArray> *mChannelAvatar;
 
     Network *pNetwork;
     QSettings *settings;

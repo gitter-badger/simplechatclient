@@ -20,15 +20,16 @@
 
 #include "tab_widget.h"
 
-TabWidget::TabWidget(Network *param1, QSettings *param2, QString param3, QWidget *parent, Notify *param4, QMap <QString, QByteArray> *param5, DlgChannelSettings *param6, DlgModeration *param7)
+TabWidget::TabWidget(Network *param1, QSettings *param2, QString param3, QWidget *parent, Notify *param4, QMap <QString, QByteArray> *param5, QMap <QString, QByteArray> *param6, DlgChannelSettings *param7, DlgModeration *param8)
 {
     pNetwork = param1;
     settings = param2;
     strName = param3;
     pNotify = param4;
     mNickAvatar = param5;
-    dlgchannel_settings = param6;
-    dlgmoderation = param7;
+    mChannelAvatar = param6;
+    dlgchannel_settings = param7;
+    dlgmoderation = param8;
 
     iNickCount = 0;
     bCursorPositionChanged = false;
@@ -1017,11 +1018,14 @@ void TabWidget::set_open_channels(QStringList strOpenChannels)
     nick_list->set_open_channels(strOpenChannels);
 }
 
-void TabWidget::set_logo(QByteArray bData)
+void TabWidget::update_logo()
 {
-    QPixmap pixmap;
-    pixmap.loadFromData(bData);
-    logo->setPixmap(pixmap);
+    if (mChannelAvatar->contains(strName) == true)
+    {
+        QPixmap pixmap;
+        pixmap.loadFromData(mChannelAvatar->value(strName));
+        logo->setPixmap(pixmap);
+    }
 }
 
 // actions

@@ -42,7 +42,7 @@ class IrcKernel : public QObject
 {
     Q_OBJECT
 public:
-    IrcKernel(Network *, QSettings *, TabContainer *, QMap <QString, QByteArray> *, DlgChannelSettings *, DlgChannelHomes *, DlgChannelList *, DlgChannelFavourites *, DlgFriends *, DlgIgnore *, DlgModeration *);
+    IrcKernel(Network *, QSettings *, TabContainer *, QMap <QString, QByteArray> *, QMap <QString, QByteArray> *, DlgChannelSettings *, DlgChannelHomes *, DlgChannelList *, DlgChannelFavourites *, DlgFriends *, DlgIgnore *, DlgModeration *);
 
 public slots:
     void kernel(QString);
@@ -63,6 +63,7 @@ private:
     QList <ChannelAvatar*> caThreadList;
     QList <NickAvatar*> naThreadList;
     QMap <QString, QByteArray> *mNickAvatar;
+    QMap <QString, QByteArray> *mChannelAvatar;
 
     void raw_error();
     void raw_ping();

@@ -97,6 +97,7 @@ private:
     QAction *ignoreAct;
     QAction *aboutAct;
     QMap <QString, QByteArray> mNickAvatar;
+    QMap <QString, QByteArray> mChannelAvatar;
 
 private slots:
     void button_close();

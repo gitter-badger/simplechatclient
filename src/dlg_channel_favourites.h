@@ -31,7 +31,7 @@ class DlgChannelFavourites : public QDialog
 {
     Q_OBJECT
 public:
-    DlgChannelFavourites(Network *, QSettings *, TabContainer *);
+    DlgChannelFavourites(Network *, QSettings *, TabContainer *, QMap <QString, QByteArray> *);
     void add_channel(QString);
     void clear();
 
@@ -40,6 +40,7 @@ private:
     Network *pNetwork;
     QSettings *settings;
     TabContainer *tabc;
+    QMap <QString, QByteArray> *mChannelAvatar;
 
 private slots:
     void button_add();

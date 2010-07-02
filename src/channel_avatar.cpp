@@ -20,10 +20,11 @@
 
 #include "channel_avatar.h"
 
-ChannelAvatarThread::ChannelAvatarThread(QString param1, QString param2)
+ChannelAvatarThread::ChannelAvatarThread(QString param1, QString param2, QMap <QString, QByteArray> *param3)
 {
     strChannel = param1;
     strUrl = param2;
+    mChannelAvatar = param3;
 }
 
 void ChannelAvatarThread::run()
@@ -35,31 +36,46 @@ void ChannelAvatarThread::run()
 
 void ChannelAvatarThread::thread_work()
 {
-    QNetworkAccessManager accessManager;
-    QNetworkReply *pReply;
-    QEventLoop eventLoop;
-    pReply = accessManager.get(QNetworkRequest(QUrl(strUrl)));
-    QObject::connect(pReply, SIGNAL(finished()), &eventLoop, SLOT(quit()));
-    eventLoop.exec();
+    if (mChannelAvatar->contains(strChannel) == false)
+    {
+        QNetworkAccessManager accessManager;
+        QNetworkReply *pReply;
+        QEventLoop eventLoop;
+        pReply = accessManager.get(QNetworkRequest(QUrl(strUrl)));
+        QObject::connect(pReply, SIGNAL(finished()), &eventLoop, SLOT(quit()));
+        eventLoop.exec();
 
-    QByteArray bData = pReply->readAll();
+        QByteArray bData = pReply->readAll();
 
-    delete pReply;
+        delete pReply;
 
-    emit set_avatar(strChannel, bData);
+        emit set_channel_avatar(strChannel, bData);
+        emit set_avatar(strChannel);
+    }
+    else
+        emit set_avatar(strChannel);
+
     emit stop_thread();
 }
 
-ChannelAvatar::ChannelAvatar(TabContainer *param1, QString param2, QString param3)
+ChannelAvatar::ChannelAvatar(TabContainer *param1, QString param2, QString param3, QMap <QString, QByteArray> *param4)
 {
     tabc = param1;
     strChannel = param2;
     strUrl = param3;
+    mChannelAvatar = param4;
 
-    channelAvatarThr = new ChannelAvatarThread(strChannel, strUrl);
-    QObject::connect(channelAvatarThr, SIGNAL(set_avatar(QString, QByteArray)), tabc, SLOT(set_logo(QString, QByteArray)));
+    channelAvatarThr = new ChannelAvatarThread(strChannel, strUrl, mChannelAvatar);
+    QObject::connect(channelAvatarThr, SIGNAL(set_avatar(QString)), tabc, SLOT(update_logo(QString)));
+    QObject::connect(channelAvatarThr, SIGNAL(set_channel_avatar(QString, QByteArray)), this, SLOT(set_channel_avatar(QString, QByteArray)));
     QObject::connect(channelAvatarThr, SIGNAL(stop_thread()), this, SLOT(stop_thread()));
     channelAvatarThr->start(QThread::LowPriority);
+}
+
+void ChannelAvatar::set_channel_avatar(QString strChannel, QByteArray bAvatar)
+{
+    if (mChannelAvatar->contains(strChannel) == false)
+        mChannelAvatar->insert(strChannel, bAvatar);
 }
 
 void ChannelAvatar::stop_thread()

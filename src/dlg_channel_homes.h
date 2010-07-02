@@ -35,7 +35,7 @@ class DlgChannelHomes : public QDialog
 {
     Q_OBJECT
 public:
-    DlgChannelHomes(Network *, QSettings *, TabContainer *, DlgChannelSettings *);
+    DlgChannelHomes(Network *, QSettings *, TabContainer *, QMap <QString, QByteArray> *, DlgChannelSettings *);
     void add_channel(QString);
     void clear();
 
@@ -44,6 +44,7 @@ private:
     Network *pNetwork;
     QSettings *settings;
     TabContainer *tabc;
+    QMap <QString, QByteArray> *mChannelAvatar;
     DlgChannelSettings *dlgchannel_settings;
     DlgChannelHomesAd *dlgchannel_homes_ad;
 

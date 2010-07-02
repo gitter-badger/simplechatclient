@@ -20,19 +20,20 @@
 
 #include "irc_kernel.h"
 
-IrcKernel::IrcKernel(Network *param1, QSettings *param2, TabContainer *param3, QMap <QString, QByteArray> *param4, DlgChannelSettings *param5, DlgChannelHomes *param6, DlgChannelList *param7, DlgChannelFavourites *param8, DlgFriends *param9, DlgIgnore *param10, DlgModeration *param11)
+IrcKernel::IrcKernel(Network *param1, QSettings *param2, TabContainer *param3, QMap <QString, QByteArray> *param4, QMap <QString, QByteArray> *param5, DlgChannelSettings *param6, DlgChannelHomes *param7, DlgChannelList *param8, DlgChannelFavourites *param9, DlgFriends *param10, DlgIgnore *param11, DlgModeration *param12)
 {
     pNetwork = param1;
     settings = param2;
     tabc = param3;
     mNickAvatar = param4;
-    dlgchannel_settings = param5;
-    dlgchannel_homes = param6;
-    dlgchannel_list = param7;
-    dlgchannel_favourites = param8;
-    dlgfriends = param9;
-    dlgignore = param10;
-    dlgmoderation = param11;
+    mChannelAvatar = param5;
+    dlgchannel_settings = param6;
+    dlgchannel_homes = param7;
+    dlgchannel_list = param8;
+    dlgchannel_favourites = param9;
+    dlgfriends = param10;
+    dlgignore = param11;
+    dlgmoderation = param12;
 }
 
 void IrcKernel::remove_cathread(ChannelAvatar *cathr)
@@ -1177,7 +1178,7 @@ void IrcKernel::raw_161n()
             {
                 QString strUrl = strValue;
 
-                caThreadList.append(new ChannelAvatar(tabc, strChannel, strUrl));
+                caThreadList.append(new ChannelAvatar(tabc, strChannel, strUrl, mChannelAvatar));
                 QObject::connect(caThreadList.at(caThreadList.size()-1), SIGNAL(do_remove_cathread(ChannelAvatar*)), this, SLOT(remove_cathread(ChannelAvatar*)));
 
 #ifdef Q_WS_X11
