@@ -1770,6 +1770,10 @@ void IrcKernel::raw_353()
             strSuffix = strSuffix.right(strSuffix.length() - strSuffix.indexOf("|") -1);
 
             tabc->add_user(strChannel, strNick, strSuffix, 0);
+
+            // nick avatar
+            //if ((strNick[0] != '~') && (mNickAvatar->contains(strNick) == false))
+                //pNetwork->send(QString("NS INFO %1 s").arg(strNick));
         }
     }
 }
@@ -1830,6 +1834,7 @@ void IrcKernel::raw_400n()
     tabc->show_msg_active(strMessage, 7);
 }
 
+// :cf1f4.onet 401 ~Merovingian ~Merovingian1 :No such nick
 // :cf1f3.onet 401 scc_test scc :No such nick/channel
 // :cf1f4.onet 401 Merovingian ChanServ :is currently unavailable. Please try again later.
 void IrcKernel::raw_401()
@@ -1843,7 +1848,9 @@ void IrcKernel::raw_401()
     if (strMessage[0] == ':')
         strMessage = strMessage.right(strMessage.length()-1);
 
-    if (strMessage == "No such nick/channel")
+    if (strMessage == "No such nick")
+        strMessage = QString("* %1 :Nick nie istnieje").arg(strNick);
+    else if (strMessage == "No such nick/channel")
         strMessage = QString("* %1 :Nick lub kana³ nie istnieje").arg(strNick);
     else if (strMessage == "is currently unavailable. Please try again later.")
         strMessage = QString("* %1 jest aktualnie niedostêpny. Spróbuj ponownie pó¼niej.").arg(strNick);
@@ -2240,7 +2247,7 @@ void IrcKernel::raw_470()
         strChannel = strChannel.right(strChannel.length()-1);
     QString strLinked = strDataList[strDataList.size()-1];
 
-    QString strMessage = QString("* Kana³ %1 jest pe³ny, zostajesz automatycznie przekieroway do kana³u %2").arg(strChannel).arg(strLinked);
+    QString strMessage = QString("* Kana³ %1 jest pe³ny, zostajesz automatycznie przekierowany do kana³u %2").arg(strChannel).arg(strLinked);
     tabc->show_msg("Status", strMessage, 7);
 }
 

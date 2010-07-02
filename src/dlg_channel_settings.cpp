@@ -432,17 +432,32 @@ bool DlgChannelSettings::exist_item(QString strItem, QTableWidget *list)
 
 void DlgChannelSettings::clear()
 {
-    for (int i = ui.tableWidget->rowCount()-1; i >= 0; --i)
-        ui.tableWidget->removeRow(i);
+    ui.tableWidget->clear();
+    ui.tableWidget_2->clear();
+    ui.tableWidget_3->clear();
+    ui.tableWidget_4->clear();
 
-    for (int i = ui.tableWidget_2->rowCount()-1; i >= 0; --i)
-        ui.tableWidget_2->removeRow(i);
+    ui.tableWidget->setRowCount(0);
+    ui.tableWidget_2->setRowCount(0);
+    ui.tableWidget_3->setRowCount(0);
+    ui.tableWidget_4->setRowCount(0);
 
-    for (int i = ui.tableWidget_3->rowCount()-1; i >= 0; --i)
-        ui.tableWidget_3->removeRow(i);
+    QStringList strlLabels;
+    strlLabels << "Nick";
 
-    for (int i = ui.tableWidget_4->rowCount()-1; i >= 0; --i)
-        ui.tableWidget_4->removeRow(i);
+    QStringList strlLabels2;
+    strlLabels2 << "Nick" << "Za³o¿y³" << "Data/Czas";
+
+    ui.tableWidget->setHorizontalHeaderLabels(strlLabels);
+    ui.tableWidget_2->setHorizontalHeaderLabels(strlLabels);
+    ui.tableWidget_3->setHorizontalHeaderLabels(strlLabels2);
+    ui.tableWidget_4->setHorizontalHeaderLabels(strlLabels2);
+
+    // prevents crash!
+    ui.tableWidget->setSortingEnabled(false);
+    ui.tableWidget_2->setSortingEnabled(false);
+    ui.tableWidget_3->setSortingEnabled(false);
+    ui.tableWidget_4->setSortingEnabled(false);
 
     ui.lineEdit->clear();
     ui.lineEdit_2->clear();

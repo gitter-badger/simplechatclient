@@ -70,7 +70,7 @@ void DlgPriv::button_accept()
     pNetwork->send(QString("JOIN %1").arg(strChannel));
     strTimerChannel = strChannel;
     strTimerNick = strNick;
-    QTimer::singleShot(1000, this, SLOT(timer_timeout()));
+    QTimer::singleShot(1000*3, this, SLOT(timer_timeout()));
 
     ui.pushButtonWhois->QObject::disconnect();
     ui.pushButtonAccept->QObject::disconnect();

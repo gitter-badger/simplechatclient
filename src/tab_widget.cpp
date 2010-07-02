@@ -895,11 +895,6 @@ void TabWidget::add_user(QString strNick, QString strSuffix, int iRefresh)
 
         iNickCount++;
         nickCount->setText(QString("Liczba osób: %1").arg(iNickCount));
-
-// nick avatar
-
-        //if ((strNick[0] != '~') && (mNickAvatar->contains(strNick) == false))
-            //pNetwork->send(QString("NS INFO %1 s").arg(strNick));
     }
 }
 
