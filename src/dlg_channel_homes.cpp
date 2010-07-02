@@ -48,7 +48,10 @@ void DlgChannelHomes::add_channel(QString strChannel)
         ui.listWidget->addItem(new QListWidgetItem(QIcon(pixmap), strChannel));
     }
     else
+    {
         ui.listWidget->addItem(new QListWidgetItem(QIcon(":/images/channel_avatar.png"), strChannel));
+        pNetwork->send(QString("CS INFO %1 i").arg(strChannel));
+    }
 }
 
 void DlgChannelHomes::clear()
