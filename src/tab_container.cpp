@@ -492,7 +492,22 @@ void TabContainer::update_open_channels()
     }
 }
 
-void TabContainer::update_logo(QString strChannel)
+void TabContainer::update_nick_avatar(QString strNick)
+{
+    for (int i = 0; i < 50; i++)
+    {
+        if (free_list[i] == 'u')
+        {
+            if (tw[i]->nicklist_exist(strNick) == true)
+            {
+                tw[i]->update_nick_avatar();
+                return;
+            }
+        }
+    }
+}
+
+void TabContainer::update_channel_avatar(QString strChannel)
 {
     for (int i = 0; i < 50; i++)
     {
@@ -500,7 +515,7 @@ void TabContainer::update_logo(QString strChannel)
         {
             if (tw[i]->get_name() == strChannel)
             {
-                tw[i]->update_logo();
+                tw[i]->update_channel_avatar();
                 return;
             }
         }

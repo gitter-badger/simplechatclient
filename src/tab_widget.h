@@ -79,7 +79,8 @@ public:
     void clear_nicklist();
     void set_open_channels(QStringList);
     bool nicklist_exist(QString);
-    void update_logo();
+    void update_nick_avatar();
+    void update_channel_avatar();
     void nicklist_refresh();
     void send_message(bool);
 

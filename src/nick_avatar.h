@@ -43,7 +43,8 @@ private slots:
     void thread_work();
 
 signals:
-    void set_avatar(QString, QByteArray);
+    void set_avatar(QString);
+    void set_nick_avatar(QString, QByteArray);
     void stop_thread();
 
 };

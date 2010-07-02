@@ -1773,8 +1773,19 @@ void IrcKernel::raw_353()
             tabc->add_user(strChannel, strNick, strSuffix, 0);
 
             // nick avatar
-            //if ((strNick[0] != '~') && (mNickAvatar->contains(strNick) == false))
-                //pNetwork->send(QString("NS INFO %1 s").arg(strNick));
+            /*
+            if ((strNick[0] != '~') && (mNickAvatar->contains(strNick) == false))
+            {
+                QString strRequestNickAvatar = strNick;
+                if (strRequestNickAvatar.indexOf("`") != -1) strRequestNickAvatar.remove("`");
+                if (strRequestNickAvatar.indexOf("@") != -1) strRequestNickAvatar.remove("@");
+                if (strRequestNickAvatar.indexOf("%") != -1) strRequestNickAvatar.remove("%");
+                if (strRequestNickAvatar.indexOf("+") != -1) strRequestNickAvatar.remove("+");
+                if (strRequestNickAvatar.indexOf("!") != -1) strRequestNickAvatar.remove("!");
+                if (strRequestNickAvatar.indexOf("=") != -1) strRequestNickAvatar.remove("=");
+                pNetwork->send(QString("NS INFO %1 s").arg(strRequestNickAvatar));
+            }
+            */
         }
     }
 }

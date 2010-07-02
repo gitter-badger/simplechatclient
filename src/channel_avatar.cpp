@@ -66,7 +66,7 @@ ChannelAvatar::ChannelAvatar(TabContainer *param1, QString param2, QString param
     mChannelAvatar = param4;
 
     channelAvatarThr = new ChannelAvatarThread(strChannel, strUrl, mChannelAvatar);
-    QObject::connect(channelAvatarThr, SIGNAL(set_avatar(QString)), tabc, SLOT(update_logo(QString)));
+    QObject::connect(channelAvatarThr, SIGNAL(set_avatar(QString)), tabc, SLOT(update_channel_avatar(QString)));
     QObject::connect(channelAvatarThr, SIGNAL(set_channel_avatar(QString, QByteArray)), this, SLOT(set_channel_avatar(QString, QByteArray)));
     QObject::connect(channelAvatarThr, SIGNAL(stop_thread()), this, SLOT(stop_thread()));
     channelAvatarThr->start(QThread::LowPriority);

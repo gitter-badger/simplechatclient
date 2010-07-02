@@ -63,7 +63,8 @@ public:
     QStringList get_open_channels();
 
 public slots:
-    void update_logo(QString);
+    void update_nick_avatar(QString);
+    void update_channel_avatar(QString);
     void sshow_msg(QString, QString, int);
 
 private:

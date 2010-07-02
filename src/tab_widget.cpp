@@ -1018,7 +1018,12 @@ void TabWidget::set_open_channels(QStringList strOpenChannels)
     nick_list->set_open_channels(strOpenChannels);
 }
 
-void TabWidget::update_logo()
+void TabWidget::update_nick_avatar()
+{
+    nick_list->nicklist_refresh(&nicklist, &new_nicklist1, &new_nicklist2);
+}
+
+void TabWidget::update_channel_avatar()
 {
     if (mChannelAvatar->contains(strName) == true)
     {
