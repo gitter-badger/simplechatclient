@@ -31,7 +31,7 @@ class DlgIgnore : public QDialog
 {
     Q_OBJECT
 public:
-    DlgIgnore(Network *, QSettings *, TabContainer *);
+    DlgIgnore(Network *, QSettings *, TabContainer *, QMap <QString, QByteArray> *);
     void add_ignore(QString);
     void clear();
 
@@ -40,6 +40,7 @@ private:
     Network *pNetwork;
     QSettings *settings;
     TabContainer *tabc;
+    QMap <QString, QByteArray> *mNickAvatar;
 
 private slots:
     void button_add();

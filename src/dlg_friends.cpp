@@ -20,13 +20,14 @@
 
 #include "dlg_friends.h"
 
-DlgFriends::DlgFriends(Network *param1, QSettings *param2, TabContainer *param3)
+DlgFriends::DlgFriends(Network *param1, QSettings *param2, TabContainer *param3, QMap <QString, QByteArray> *param4)
 {
     ui.setupUi(this);
 
     pNetwork = param1;
     settings = param2;
     tabc = param3;
+    mNickAvatar = param4;
 
     QObject::connect(ui.pushButton, SIGNAL(clicked()), this, SLOT(button_add()));
     QObject::connect(ui.pushButton_2, SIGNAL(clicked()), this, SLOT(button_remove()));
@@ -37,13 +38,11 @@ DlgFriends::DlgFriends(Network *param1, QSettings *param2, TabContainer *param3)
 void DlgFriends::set_friend(QString strNick, bool bStatus)
 {
     friends[strNick] = bStatus;
-    refresh();
 }
 
 void DlgFriends::remove_friend(QString strNick)
 {
     friends.remove(strNick);
-    refresh();
 }
 
 void DlgFriends::refresh()
@@ -55,7 +54,19 @@ void DlgFriends::refresh()
     while (i != friends.constEnd())
     {
         QListWidgetItem *item;
-        item = new QListWidgetItem(QIcon(":/3rdparty/images/people.png"), i.key());
+
+        if (mNickAvatar->contains(i.key()) == true)
+        {
+            QPixmap pixmap;
+            pixmap.loadFromData(mNickAvatar->value(i.key()));
+            item = new QListWidgetItem(QIcon(pixmap), i.key());
+        }
+        else
+        {
+            item = new QListWidgetItem(QIcon(":/3rdparty/images/people.png"), i.key());
+            pNetwork->send(QString("NS INFO %1 s").arg(i.key()));
+        }
+
         if (i.value() == true)
             ui.listWidget->addItem(item);
         else
@@ -100,4 +111,11 @@ void DlgFriends::button_ok()
 void DlgFriends::button_cancel()
 {
     this->hide();
+}
+
+void DlgFriends::showEvent(QShowEvent *event)
+{
+    event->accept();
+
+    refresh();
 }

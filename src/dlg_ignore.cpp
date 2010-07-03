@@ -20,13 +20,14 @@
 
 #include "dlg_ignore.h"
 
-DlgIgnore::DlgIgnore(Network *param1, QSettings *param2, TabContainer *param3)
+DlgIgnore::DlgIgnore(Network *param1, QSettings *param2, TabContainer *param3, QMap <QString, QByteArray> *param4)
 {
     ui.setupUi(this);
 
     pNetwork = param1;
     settings = param2;
     tabc = param3;
+    mNickAvatar = param4;
 
     QObject::connect(ui.pushButton, SIGNAL(clicked()), this, SLOT(button_add()));
     QObject::connect(ui.pushButton_2, SIGNAL(clicked()), this, SLOT(button_remove()));
@@ -36,7 +37,17 @@ DlgIgnore::DlgIgnore(Network *param1, QSettings *param2, TabContainer *param3)
 
 void DlgIgnore::add_ignore(QString strNick)
 {
-    ui.listWidget->addItem(new QListWidgetItem(QIcon(":/3rdparty/images/people.png"), strNick));
+    if (mNickAvatar->contains(strNick) == true)
+    {
+        QPixmap pixmap;
+        pixmap.loadFromData(mNickAvatar->value(strNick));
+        ui.listWidget->addItem(new QListWidgetItem(QIcon(pixmap), strNick));
+    }
+    else
+    {
+        ui.listWidget->addItem(new QListWidgetItem(QIcon(":/3rdparty/images/people.png"), strNick));
+        pNetwork->send(QString("NS INFO %1 s").arg(strNick));
+    }
 }
 
 void DlgIgnore::clear()

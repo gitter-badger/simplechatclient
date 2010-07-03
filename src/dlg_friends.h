@@ -31,7 +31,7 @@ class DlgFriends : public QDialog
 {
     Q_OBJECT
 public:
-    DlgFriends(Network *, QSettings *, TabContainer *);
+    DlgFriends(Network *, QSettings *, TabContainer *, QMap <QString, QByteArray> *);
     void set_friend(QString, bool);
     void remove_friend(QString);
     void clear();
@@ -41,6 +41,7 @@ private:
     Network *pNetwork;
     QSettings *settings;
     TabContainer *tabc;
+    QMap <QString, QByteArray> *mNickAvatar;
     QMap <QString, bool> friends;
 
     void refresh();
@@ -50,6 +51,9 @@ private slots:
     void button_remove();
     void button_ok();
     void button_cancel();
+
+protected:
+    virtual void showEvent(QShowEvent *);
 
 };
 

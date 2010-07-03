@@ -37,6 +37,8 @@ NetworkThread::NetworkThread(QAction *param1, QSettings *param2)
     socket->setSocketOption(QAbstractSocket::LowDelayOption, 1);
     socket->setSocketOption(QAbstractSocket::KeepAliveOption, 0);
 
+    QTimer::singleShot(100, this, SLOT(send_buffer()));
+
     QObject::connect(timer, SIGNAL(timeout()), this, SLOT(timeout()));
     QObject::connect(socket, SIGNAL(readyRead()), this, SLOT(recv()));
     QObject::connect(socket, SIGNAL(connected()), this, SLOT(connected()));
@@ -105,7 +107,39 @@ void NetworkThread::close()
         timer->stop();
 }
 
-void NetworkThread::send(QString strData)
+void NetworkThread::send_buffer()
+{
+    QList <QString> sendBufferCopy;
+    for (int i = 0; i < sendBuffer.size(); i++)
+        sendBufferCopy.append(sendBuffer.at(i));
+
+    int iCount = sendBufferCopy.size();
+
+    if (iCount < 5)
+    {
+        for (int i = 0; i < iCount; i++)
+        {
+            send_data(sendBufferCopy.at(0));
+            sendBuffer.removeOne(sendBufferCopy.at(0));
+            sendBufferCopy.removeOne(sendBufferCopy.at(0));
+        }
+    }
+    else
+    {
+        for (int i = 0; i < 5; i++)
+        {
+            send_data(sendBufferCopy.at(0));
+            sendBuffer.removeOne(sendBufferCopy.at(0));
+            sendBufferCopy.removeOne(sendBufferCopy.at(0));
+        }
+        QTimer::singleShot(1000, this, SLOT(send_buffer()));
+        return;
+    }
+
+    QTimer::singleShot(100, this, SLOT(send_buffer()));
+}
+
+void NetworkThread::send_data(QString strData)
 {
     if ((socket->state() == QAbstractSocket::ConnectedState) && (socket->isWritable() == true))
     {
@@ -128,6 +162,11 @@ void NetworkThread::send(QString strData)
     }
     else
         emit show_msg_active("Error: Nie uda³o siê wys³aæ danych! [Not connected]", 9);
+}
+
+void NetworkThread::send(QString strData)
+{
+    sendBuffer << strData;
 }
 
 void NetworkThread::recv()

@@ -53,9 +53,13 @@ private:
     QSettings *settings;
     QString strDataRecv;
     QAction *connectAct;
+    QList <QString> sendBuffer;
+
+    void send_data(QString);
 
 private slots:
     void reconnect();
+    void send_buffer();
     void recv();
     void connected();
     void disconnected();
