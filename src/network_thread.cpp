@@ -109,6 +109,9 @@ void NetworkThread::close()
 
 void NetworkThread::send_buffer()
 {
+    if (socket->state() != QAbstractSocket::ConnectedState)
+        sendBuffer.clear();
+
     QList <QString> sendBufferCopy;
     for (int i = 0; i < sendBuffer.size(); i++)
         sendBufferCopy.append(sendBuffer.at(i));
