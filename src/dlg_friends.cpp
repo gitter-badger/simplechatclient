@@ -64,7 +64,8 @@ void DlgFriends::refresh()
         else
         {
             item = new QListWidgetItem(QIcon(":/3rdparty/images/people.png"), i.key());
-            pNetwork->send(QString("NS INFO %1 s").arg(i.key()));
+            if (settings->value("disable_avatars").toString() == "off")
+                pNetwork->send(QString("NS INFO %1 s").arg(i.key()));
         }
 
         if (i.value() == true)

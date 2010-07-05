@@ -46,7 +46,8 @@ void DlgIgnore::add_ignore(QString strNick)
     else
     {
         ui.listWidget->addItem(new QListWidgetItem(QIcon(":/3rdparty/images/people.png"), strNick));
-        pNetwork->send(QString("NS INFO %1 s").arg(strNick));
+        if (settings->value("disable_avatars").toString() == "off")
+            pNetwork->send(QString("NS INFO %1 s").arg(strNick));
     }
 }
 

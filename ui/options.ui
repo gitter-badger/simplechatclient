@@ -34,8 +34,8 @@
     <rect>
      <x>10</x>
      <y>10</y>
-     <width>361</width>
-     <height>161</height>
+     <width>351</width>
+     <height>171</height>
     </rect>
    </property>
    <property name="currentIndex">
@@ -110,57 +110,52 @@
     <attribute name="title">
      <string>Zaawansowane</string>
     </attribute>
-    <widget class="QCheckBox" name="checkBox_2">
+    <widget class="QWidget" name="verticalLayoutWidget_2">
      <property name="geometry">
       <rect>
-       <x>10</x>
-       <y>40</y>
-       <width>201</width>
-       <height>21</height>
+       <x>0</x>
+       <y>0</y>
+       <width>341</width>
+       <height>133</height>
       </rect>
      </property>
-     <property name="text">
-      <string>Pokazywanie ZUO</string>
-     </property>
-    </widget>
-    <widget class="QCheckBox" name="checkBox_3">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>70</y>
-       <width>201</width>
-       <height>23</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Wyłączenie formatowania</string>
-     </property>
-    </widget>
-    <widget class="QCheckBox" name="checkBox">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>10</y>
-       <width>201</width>
-       <height>23</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Debug</string>
-     </property>
-    </widget>
-    <widget class="QCheckBox" name="checkBox_4">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>100</y>
-       <width>201</width>
-       <height>23</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Ukrywanie wejść/wyjść</string>
-     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_2">
+      <item>
+       <widget class="QCheckBox" name="checkBox">
+        <property name="text">
+         <string>Debug</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="checkBox_2">
+        <property name="text">
+         <string>Pokazywanie ZUO</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="checkBox_3">
+        <property name="text">
+         <string>Wyłączenie formatowania</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="checkBox_4">
+        <property name="text">
+         <string>Ukrywanie wejść/wyjść</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="checkBox_6">
+        <property name="text">
+         <string>Wyłączenie avatarów</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
     </widget>
    </widget>
   </widget>
@@ -168,7 +163,7 @@
    <property name="geometry">
     <rect>
      <x>90</x>
-     <y>180</y>
+     <y>190</y>
      <width>210</width>
      <height>25</height>
     </rect>

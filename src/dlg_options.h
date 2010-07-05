@@ -43,6 +43,7 @@ private slots:
     void show_zuo();
     void hide_formating();
     void hide_join_part();
+    void disable_avatars();
     void button_ok();
     void button_cancel();
 

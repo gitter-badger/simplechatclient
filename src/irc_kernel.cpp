@@ -1782,7 +1782,10 @@ void IrcKernel::raw_353()
             if (strRequestNickAvatar.indexOf("=") != -1) strRequestNickAvatar.remove("=");
 
             if ((strRequestNickAvatar[0] != '~') && (mNickAvatar->contains(strRequestNickAvatar) == false))
-                pNetwork->send(QString("NS INFO %1 s").arg(strRequestNickAvatar));
+            {
+                if (settings->value("disable_avatars").toString() == "off")
+                    pNetwork->send(QString("NS INFO %1 s").arg(strRequestNickAvatar));
+            }
         }
     }
 }

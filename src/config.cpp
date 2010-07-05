@@ -141,40 +141,22 @@ void Config::create_new_config()
     QDomElement root = doc.createElement("config");
     doc.appendChild(root);
 
-    QDomElement eLoginNick = doc.createElement("login-nick");
-    root.appendChild(eLoginNick);
-    QDomText tLoginNick = doc.createTextNode("~test");
-    eLoginNick.appendChild(tLoginNick);
-
-    QDomElement eLoginPass = doc.createElement("login-pass");
-    root.appendChild(eLoginPass);
-    QDomText tLoginPass = doc.createTextNode(QString::null);
-    eLoginPass.appendChild(tLoginPass);
-
-    QDomElement eAutoBusy = doc.createElement("auto_busy");
-    root.appendChild(eAutoBusy);
-    QDomText tAutoBusy = doc.createTextNode("off");
-    eAutoBusy.appendChild(tAutoBusy);
-
-    QDomElement eDebugAll = doc.createElement("debug_all");
-    root.appendChild(eDebugAll);
-    QDomText tDebugAll = doc.createTextNode("off");
-    eDebugAll.appendChild(tDebugAll);
-
-    QDomElement eShowZuo = doc.createElement("show_zuo");
-    root.appendChild(eShowZuo);
-    QDomText tShowZuo = doc.createTextNode("off");
-    eShowZuo.appendChild(tShowZuo);
-
-    QDomElement eHideFormating = doc.createElement("hide_formating");
-    root.appendChild(eHideFormating);
-    QDomText tHideFormating = doc.createTextNode("off");
-    eHideFormating.appendChild(tHideFormating);
-
-    QDomElement eHideJoinPart = doc.createElement("hide_join_part");
-    root.appendChild(eHideJoinPart);
-    QDomText tHideJoinPart = doc.createTextNode("off");
-    eHideJoinPart.appendChild(tHideJoinPart);
+    add_config_value(&doc, &root, "login-nick", "~test");
+    add_config_value(&doc, &root, "login-pass", QString::null);
+    add_config_value(&doc, &root, "auto_busy", "off");
+    add_config_value(&doc, &root, "debug_all", "off");
+    add_config_value(&doc, &root, "show_zuo", "off");
+    add_config_value(&doc, &root, "hide_formating", "off");
+    add_config_value(&doc, &root, "hide_join_part", "off");
+    add_config_value(&doc, &root, "disable_avatars", "off");
 
     save();
+}
+
+void Config::add_config_value(QDomDocument *doc, QDomElement *root, QString strKey, QString strValue)
+{
+    QDomElement eKey = doc->createElement(strKey);
+    root->appendChild(eKey);
+    QDomText tValue = doc->createTextNode(strValue);
+    eKey.appendChild(tValue);
 }

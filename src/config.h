@@ -45,6 +45,7 @@ private:
     QDomDocument doc;
 
     void create_new_config();
+    void add_config_value(QDomDocument *, QDomElement *, QString, QString);
     void save();
 
 };

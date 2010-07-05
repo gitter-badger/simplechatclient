@@ -36,6 +36,7 @@ DlgOptions::DlgOptions(QWidget *parent, QSettings *param1) : QDialog(parent)
     QString strShowZuo = pConfig->get_value("show_zuo");
     QString strHideFormating = pConfig->get_value("hide_formating");
     QString strHideJoinPart = pConfig->get_value("hide_join_part");
+    QString strDisableAvatars = pConfig->get_value("disable_avatars");
     delete pConfig;
 
     if (strPass.isEmpty() == false)
@@ -73,11 +74,17 @@ DlgOptions::DlgOptions(QWidget *parent, QSettings *param1) : QDialog(parent)
     else
         ui.checkBox_4->setChecked(false);
 
+    if (strDisableAvatars == "on")
+        ui.checkBox_6->setChecked(true);
+    else
+        ui.checkBox_6->setChecked(false);
+
     QObject::connect(ui.checkBox_5, SIGNAL(clicked()), this, SLOT(auto_busy()));
     QObject::connect(ui.checkBox, SIGNAL(clicked()), this, SLOT(debug_all()));
     QObject::connect(ui.checkBox_2, SIGNAL(clicked()), this, SLOT(show_zuo()));
     QObject::connect(ui.checkBox_3, SIGNAL(clicked()), this, SLOT(hide_formating()));
     QObject::connect(ui.checkBox_4, SIGNAL(clicked()), this, SLOT(hide_join_part()));
+    QObject::connect(ui.checkBox_6, SIGNAL(clicked()), this, SLOT(disable_avatars()));
     QObject::connect(ui.buttonBox, SIGNAL(accepted()), this, SLOT(button_ok()));
     QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(button_cancel()));
 }
@@ -158,6 +165,22 @@ void DlgOptions::hide_join_part()
     {
         pConfig->set_value("hide_join_part", "off");
         settings->setValue("hide_join_part", "off");
+    }
+    delete pConfig;
+}
+
+void DlgOptions::disable_avatars()
+{
+    Config *pConfig = new Config();
+    if (ui.checkBox_6->isChecked() == true)
+    {
+        pConfig->set_value("disable_avatars", "on");
+        settings->setValue("disable_avatars", "on");
+    }
+    else
+    {
+        pConfig->set_value("disable_avatars", "off");
+        settings->setValue("disable_avatars", "off");
     }
     delete pConfig;
 }
