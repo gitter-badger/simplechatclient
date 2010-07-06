@@ -418,6 +418,13 @@ void IrcKernel::raw_join()
     if ((strNick == strMe) && (strChannel[0] != '^'))
         pNetwork->send(QString("CS INFO %1 i").arg(strChannel));
 
+    // nick avatar
+    if ((strNick[0] != '~') && (mNickAvatar->contains(strNick) == false))
+    {
+        if (settings->value("disable_avatars").toString() == "off")
+            pNetwork->send(QString("NS INFO %1 s").arg(strNick));
+    }
+
     tabc->add_user(strChannel, strNick, strSuffix, 1);
 }
 
