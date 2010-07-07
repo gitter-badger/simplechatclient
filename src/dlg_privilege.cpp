@@ -37,30 +37,30 @@ DlgPrivilege::DlgPrivilege(Network *param1, QSettings *param2, QString param3, Q
     if (strAddDel == "add")
     {
         if (strStatus == "owner")
-            ui.label->setText("<p style=\"font-weight:bold;\">W³a¶ciciel kana³u mo¿e byæ tylko jeden!</p><p>Podaj nick nowego w³a¶ciciela:</p>");
+            ui.label->setText("<p style=\"font-weight:bold;\">"+tr("The owner of the channel can be only one!")+"</p><p>"+tr("Enter the nickname of the new owner:")+"</p>");
         else if (strStatus == "op")
-            ui.label->setText("Dodaj super operatora:");
+            ui.label->setText(tr("Add super-operator:"));
         else if (strStatus == "halfop")
-            ui.label->setText("Dodaj operatora:");
+            ui.label->setText(tr("Add operator:"));
         else if (strStatus == "ban")
-            ui.label->setText("Dodaj ban:");
+            ui.label->setText(tr("Add ban:"));
         else if (strStatus == "invite")
-            ui.label->setText("Dodaj zaproszenie:");
+            ui.label->setText(tr("Add invitation:"));
     }
     else
     {
         if (strStatus == "op")
-            ui.label->setText("Usuñ super operatora:");
+            ui.label->setText(tr("Remove the super-operator:"));
         else if (strStatus == "halfop")
-            ui.label->setText("Usuñ operatora:");
+            ui.label->setText(tr("Remove operator:"));
         else if (strStatus == "ban")
-            ui.label->setText("Usuñ ban:");
+            ui.label->setText(tr("Remove ban:"));
         else if (strStatus == "invite")
-            ui.label->setText("Usuñ zaproszenie:");
+            ui.label->setText(tr("Delete invitation:"));
         else if (strStatus == "channel")
         {
             ui.lineEdit->setText(strChannel);
-            ui.label->setText("<p style=\"font-weight:bold;\">Usuniêcie kana³u jest operacj± nieodwracaln±!</p>");
+            ui.label->setText("<p style=\"font-weight:bold;\">"+tr("The removal of the channel operation is irreversible!")+"</p>");
         }
     }
 
@@ -108,7 +108,7 @@ void DlgPrivilege::button_ok()
         msgBox.setWindowIcon(QIcon(":/images/logo_64.png"));
         msgBox.setStandardButtons(QMessageBox::Ok);
         msgBox.setWindowTitle("Error");
-        msgBox.setText(QString("Nie podano nicka"));
+        msgBox.setText(QString(tr("No statement nick")));
         msgBox.exec();
     }
 

@@ -62,7 +62,7 @@ void DlgChannelList::clear()
     ui.tableWidget_6->setRowCount(0);
 
     QStringList strlLabels;
-    strlLabels << "Nazwa kana³u" << "Ilo¶æ osób" << "Kategoria" << "Typ";
+    strlLabels << tr("Channel name") << tr("Number of persons") << tr("Category") << tr("Type");
 
     ui.tableWidget_1->setHorizontalHeaderLabels(strlLabels);
     ui.tableWidget_2->setHorizontalHeaderLabels(strlLabels);

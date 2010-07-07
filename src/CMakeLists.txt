@@ -160,13 +160,16 @@ qt4_add_resources (scc_QRC_SRCS ${scc_QRC})
 QT4_WRAP_UI (scc_UIS_H ${scc_UIS})
 include_directories (${CMAKE_SOURCE_DIR}/ui)
 
-# mwindows
+# disable console on windows
 if (MINGW)
 	SET (CMAKE_CXX_LINK_FLAGS "${CMAKE_CXX_LINK_FLAGS} -mwindows")
 endif (MINGW)
 
 # rest
 include (${QT_USE_FILE})
+
 qt_wrap_cpp (scc MOC_FILES ${scc_MOC_SRCS})
 add_executable (../scc ${scc_SRCS} ${MOC_FILES} ${scc_QRC_SRCS} ${scc_UIS_H})
 target_link_libraries (../scc ${QT_LIBRARIES} ${QT_QTNETWORK_LIBRARIES} ${QCA2_LIBRARIES} ${PHONON_LIBRARIES})
+
+add_dependencies (../scc i18n)

@@ -31,9 +31,9 @@ DlgIgnoreAd::DlgIgnoreAd(Network *param1, QSettings *param2, TabContainer *param
     ui.lineEdit->setText(param5);
 
     if (strStatus == "add")
-        ui.label->setText("Podaj nazwê nicka do dodania:");
+        ui.label->setText(tr("Enter a nickname to be added:"));
     else
-        ui.label->setText("Podaj nazwê nicka do usuniêcia:");
+        ui.label->setText(tr("Enter a nickname for removal:"));
 
     QObject::connect(ui.buttonBox, SIGNAL(accepted()), this, SLOT(button_ok()));
     QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(button_cancel()));

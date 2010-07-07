@@ -29,7 +29,7 @@ DlgUpdate::DlgUpdate(QString param1)
     strVersion = param1;
 
     QString strDisplay;
-    strDisplay += "Dostêpna jest aktualizacja programu. Pobranie nowszej wersji mo¿liwe jest z adresu:<br>";
+    strDisplay += tr("An update is available. Download the newer version is available from the address:")+"<br>";
 #ifdef Q_WS_WIN
     strDisplay += "<a href=\"http://sourceforge.net/projects/simplechatclien/files/scc-"+strVersion+".msi/download\">http://sourceforge.net/projects/simplechatclien/files/scc-"+strVersion+".msi/download</a>";
 #endif

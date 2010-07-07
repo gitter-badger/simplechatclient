@@ -84,7 +84,7 @@ void DlgEmail::get_img()
         delete pReply;
     }
     else
-        ui.label_2->setText("Nie mo¿na pobraæ obrazka");
+        ui.label_2->setText(tr("Unable to download image"));
 }
 
 void DlgEmail::set_email()

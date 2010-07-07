@@ -91,7 +91,7 @@ void TabContainer::add_tab(QString strChannel,QWidget *parent)
             update_open_channels();
         }
         else
-            show_msg("Status", "Error: Przekroczona dopuszczalna ilo¶æ kana³ów w kliencie", 9);
+            show_msg("Status", tr("Error: Exceeded allowed number of channels in the client"), 9);
     }
 }
 

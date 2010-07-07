@@ -195,7 +195,7 @@ TabWidget::TabWidget(Network *param1, QSettings *param2, QString param3, QWidget
     sizeMenu->addAction(size20Act);
 
     size = new QPushButton(this);
-    size->setText("Czcionka:"+strFontSize.left(strFontSize.length()-2));
+    size->setText(tr("Font:")+strFontSize.left(strFontSize.length()-2));
     size->setParent(this);
     size->setMaximumWidth(250);
     size->setMaximumHeight(25);
@@ -223,12 +223,12 @@ TabWidget::TabWidget(Network *param1, QSettings *param2, QString param3, QWidget
     color->show();
 
     channel_settings = new QPushButton(this);
-    channel_settings->setText("Ustawienia");
+    channel_settings->setText(tr("Settings"));
     channel_settings->setParent(this);
     channel_settings->show();
 
     moderation = new QPushButton(this);
-    moderation->setText("Moderacja");
+    moderation->setText(tr("Moderation"));
     moderation->setParent(this);
     moderation->show();
 
@@ -257,16 +257,16 @@ TabWidget::TabWidget(Network *param1, QSettings *param2, QString param3, QWidget
     inputline->show();
 
     sendButton = new QPushButton();
-    sendButton->setText("Wy¶lij");
+    sendButton->setText(tr("Send"));
     sendButton->setParent(this);
     sendButton->setMaximumWidth(70);
     sendButton->setMaximumHeight(25);
     sendButton->show();
 
     moderSendButton = new QPushButton();
-    moderSendButton->setText("Prowadz±cy");
+    moderSendButton->setText(tr("Send to moderators"));
     moderSendButton->setParent(this);
-    moderSendButton->setMaximumWidth(100);
+    moderSendButton->setMaximumWidth(180);
     moderSendButton->setMaximumHeight(25);
     moderSendButton->show();
 
@@ -754,12 +754,12 @@ void TabWidget::disable_moderation()
 
 void TabWidget::author_topic(QString strAuthor)
 {
-    topicDetails->setText(QString("Autor tematu: %1").arg(strAuthor));
+    topicDetails->setText(QString(tr("Topic set by %1")).arg(strAuthor));
 }
 
 void TabWidget::set_link(QString strUrl)
 {
-    webLink->setText(QString("<a href=\"%1\" style=\"color:#0000FF;text-decoration:none;\" >Strona kana³u</a>").arg(strUrl));
+    webLink->setText(QString("<a href=\"%1\" style=\"color:#0000FF;text-decoration:none;\" >"+tr("Channel website")+"</a>").arg(strUrl));
     webLink->setToolTip(strUrl);
 }
 
@@ -895,7 +895,7 @@ void TabWidget::add_user(QString strNick, QString strSuffix, int iRefresh)
         inputline->set_userslist(nick_list);
 
         iNickCount++;
-        nickCount->setText(QString("Liczba osób: %1").arg(iNickCount));
+        nickCount->setText(QString(tr("%1 User(s)")).arg(iNickCount));
     }
 }
 
@@ -911,7 +911,7 @@ void TabWidget::del_user(QString strNick)
         inputline->set_userslist(nick_list);
 
         iNickCount--;
-        nickCount->setText(QString("Liczba osób: %1").arg(iNickCount));
+        nickCount->setText(QString(tr("%1 User(s)")).arg(iNickCount));
     }
 }
 
@@ -1006,7 +1006,7 @@ void TabWidget::update_nick(QString strNick)
 void TabWidget::clear_nicklist()
 {
     iNickCount = 0;
-    nickCount->setText(QString("Liczba osób: %1").arg(iNickCount));
+    nickCount->setText(QString(tr("%1 User(s)")).arg(iNickCount));
     nick_flag.clear();
     nick_suffix.clear();
     nick_list->clear();
@@ -1123,7 +1123,7 @@ void TabWidget::size8_triggered()
     strContent = strContent.replace("font-size:"+strFontSize, "font-size:8px");
     textEdit->setHtml(strContentStart+strContent+strContentEnd,QUrl(""));
     strFontSize = "8px";
-    size->setText("Czcionka:"+strFontSize.left(strFontSize.length()-2));
+    size->setText(tr("Font:")+strFontSize.left(strFontSize.length()-2));
 }
 
 void TabWidget::size9_triggered()
@@ -1131,7 +1131,7 @@ void TabWidget::size9_triggered()
     strContent = strContent.replace("font-size:"+strFontSize, "font-size:9px");
     textEdit->setHtml(strContentStart+strContent+strContentEnd,QUrl(""));
     strFontSize = "9px";
-    size->setText("Czcionka:"+strFontSize.left(strFontSize.length()-2));
+    size->setText(tr("Font:")+strFontSize.left(strFontSize.length()-2));
 }
 
 void TabWidget::size10_triggered()
@@ -1139,7 +1139,7 @@ void TabWidget::size10_triggered()
     strContent = strContent.replace("font-size:"+strFontSize, "font-size:10px");
     textEdit->setHtml(strContentStart+strContent+strContentEnd,QUrl(""));
     strFontSize = "10px";
-    size->setText("Czcionka:"+strFontSize.left(strFontSize.length()-2));
+    size->setText(tr("Font:")+strFontSize.left(strFontSize.length()-2));
 }
 
 void TabWidget::size11_triggered()
@@ -1147,7 +1147,7 @@ void TabWidget::size11_triggered()
     strContent = strContent.replace("font-size:"+strFontSize, "font-size:11px");
     textEdit->setHtml(strContentStart+strContent+strContentEnd,QUrl(""));
     strFontSize = "11px";
-    size->setText("Czcionka:"+strFontSize.left(strFontSize.length()-2));
+    size->setText(tr("Font:")+strFontSize.left(strFontSize.length()-2));
 }
 
 void TabWidget::size12_triggered()
@@ -1155,7 +1155,7 @@ void TabWidget::size12_triggered()
     strContent = strContent.replace("font-size:"+strFontSize, "font-size:12px");
     textEdit->setHtml(strContentStart+strContent+strContentEnd,QUrl(""));
     strFontSize = "12px";
-    size->setText("Czcionka:"+strFontSize.left(strFontSize.length()-2));
+    size->setText(tr("Font:")+strFontSize.left(strFontSize.length()-2));
 }
 
 void TabWidget::size14_triggered()
@@ -1163,7 +1163,7 @@ void TabWidget::size14_triggered()
     strContent = strContent.replace("font-size:"+strFontSize, "font-size:14px");
     textEdit->setHtml(strContentStart+strContent+strContentEnd,QUrl(""));
     strFontSize = "14px";
-    size->setText("Czcionka:"+strFontSize.left(strFontSize.length()-2));
+    size->setText(tr("Font:")+strFontSize.left(strFontSize.length()-2));
 }
 
 void TabWidget::size18_triggered()
@@ -1171,7 +1171,7 @@ void TabWidget::size18_triggered()
     strContent = strContent.replace("font-size:"+strFontSize, "font-size:18px");
     textEdit->setHtml(strContentStart+strContent+strContentEnd,QUrl(""));
     strFontSize = "18px";
-    size->setText("Czcionka:"+strFontSize.left(strFontSize.length()-2));
+    size->setText(tr("Font:")+strFontSize.left(strFontSize.length()-2));
 }
 
 void TabWidget::size20_triggered()
@@ -1179,7 +1179,7 @@ void TabWidget::size20_triggered()
     strContent = strContent.replace("font-size:"+strFontSize, "font-size:20px");
     textEdit->setHtml(strContentStart+strContent+strContentEnd,QUrl(""));
     strFontSize = "20px";
-    size->setText("Czcionka:"+strFontSize.left(strFontSize.length()-2));
+    size->setText(tr("Font:")+strFontSize.left(strFontSize.length()-2));
 }
 
 // color

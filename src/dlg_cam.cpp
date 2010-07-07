@@ -70,13 +70,13 @@ void DlgCam::network_send(QString strData)
         if (socket->write(qbaData) == -1)
         {
             if (socket->state() == QAbstractSocket::ConnectedState)
-                ui.label_img->setText(QString("Error: Nie uda³o siê wys³aæ danych! [%1]").arg(socket->errorString()));
+                ui.label_img->setText(QString(tr("Error: Failed to send data! [%1]")).arg(socket->errorString()));
             else if (socket->state() == QAbstractSocket::UnconnectedState)
-                ui.label_img->setText("Error: Nie uda³o siê wys³aæ danych! [Not connected]");
+                ui.label_img->setText(tr("Error: Failed to send data! [Not connected]"));
         }
     }
     else
-        ui.label_img->setText("Error: Nie uda³o siê wys³aæ danych! [Not connected]");
+        ui.label_img->setText(tr("Error: Failed to send data! [Not connected]"));
 }
 
 void DlgCam::network_disconnect()
@@ -184,7 +184,7 @@ void DlgCam::network_read()
             else
             {
                 iBytes_need = 0;
-                ui.label_img->setText("Podany u¿ytkownik nie wysy³a obrazu");
+                ui.label_img->setText(tr("This user does not send data"));
                 network_disconnect();
             }
         }
@@ -203,9 +203,9 @@ void DlgCam::network_read()
         // 231 0 OK scc_test
         else if (strDataList[0] == "231")
         {
-            ui.label_img->setText("Ustawianie tylko ogl±dania");
+            ui.label_img->setText(tr("Setting mode for viewing only"));
             network_send("SENDMODE 0");
-            ui.label_img->setText("Pobieranie obrazu");
+            ui.label_img->setText(tr("Downloading image"));
             network_send(QString("SUBSCRIBE_BIG * %1").arg(strNick));
             timer->start();
         }
@@ -273,7 +273,7 @@ void DlgCam::network_read()
         // Invalid key
         else if (strDataList[0] == "403")
         {
-            ui.label_img->setText("B³±d autoryzacji");
+            ui.label_img->setText(tr("Authorization failed"));
             bText = false;
             iBytes_need = strDataList[1].toInt();
             iCam_cmd = 403;
@@ -281,25 +281,25 @@ void DlgCam::network_read()
         // 405 0 USER_GONE Restonka
         else if (strDataList[0] == "405")
         {
-            ui.label_img->setText("Podany u¿ytkownik opu¶ci³ czat");
+            ui.label_img->setText(tr("The specified user has left the chat"));
             network_disconnect();
         }
         // 408 0 NO_SUCH_USER_SUBSCRIBE LOLexx
         else if (strDataList[0] == "408")
         {
-            ui.label_img->setText("Podany u¿ytkownik nie ma w³±czonej kamerki");
+            ui.label_img->setText(tr("The specified user does not have a webcam enabled"));
             network_disconnect();
         }
         // 412 0 SUBSCRIBE_FAILED olgusia32
         else if (strDataList[0] == "412")
         {
-            ui.label_img->setText("Nie uda³o siê pobraæ obrazu z kamerki");
+            ui.label_img->setText(tr("Failed to retrieve the image from the webcam"));
             network_disconnect();
         }
         // 413 0 SUBSCRIBE_DENIED aliina
         else if (strDataList[0] == "413")
         {
-            ui.label_img->setText("Nie uda³o siê pobraæ obrazu z kamerki");
+            ui.label_img->setText(tr("Failed to retrieve the image from the webcam"));
             network_disconnect();
         }
         // 508 0 SESSION_OVERRIDEN
@@ -310,7 +310,7 @@ void DlgCam::network_read()
         // 520 0 INVALID_UOKEY 1q3j0llVg40cu2784j9EVoz8sRdfNl3w
         else if (strDataList[0] == "520")
         {
-            ui.label_img->setText("Nieprawid³owy klucz autoryzacji");
+            ui.label_img->setText(tr("Invalid authorization key"));
             network_disconnect();
         }
 
@@ -320,7 +320,8 @@ void DlgCam::network_read()
 
 void DlgCam::network_connected()
 {
-    ui.label_img->setText("Po³±czono z serwerem kamerek<br>Trwa autoryzacja...");
+    ui.label_img->setText(tr("Connected to server webcam."));
+    ui.label_img->setText(ui.label_img->text()+"<br>"+tr("Please wait ..."));
     network_send(QString("CAUTH %1 3.00.159").arg("1234567890123456"));
 }
 
@@ -337,13 +338,13 @@ void DlgCam::network_disconnected()
     timer->stop();
 
     QString strText = ui.label_img->text();
-    strText += "<br>Roz³±czono z serwerem kamerek";
+    strText += "<br>"+tr("Disconnected from server webcams");
     ui.label_img->setText(strText);
 }
 
 void DlgCam::error(QAbstractSocket::SocketError err)
 {
-    ui.label_img->setText(QString("Roz³±czono z serwerem [%1]").arg(socket->errorString()));
+    ui.label_img->setText(QString(tr("Disconnected from server [%1]")).arg(socket->errorString()));
 
     if (socket->state() == QAbstractSocket::ConnectedState)
         network_disconnect();
@@ -358,7 +359,7 @@ void DlgCam::showEvent(QShowEvent *event)
 {
     event->accept();
 
-    ui.label_img->setText("Uruchamianie obs³ugi kamerek");
+    ui.label_img->setText(tr("Starting the service webcams"));
     ui.textEdit->setText("");
 
     socket = new QTcpSocket();

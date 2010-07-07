@@ -115,7 +115,7 @@ void Nicklist::kban()
     if (this->selectedItems().count() == 0) return;
 
     QString strNick = this->selectedItems().at(0)->data(Qt::UserRole).toString();
-    QString strReason = "Zachowuj siê! Byle jak ale siê zachowuj!";
+    QString strReason = tr("No reason");
     pNetwork->send(QString("CS BAN %1 ADD %2").arg(strChannel).arg(strNick));
     pNetwork->send(QString("KICK %1 %2 :%3").arg(strChannel).arg(strNick).arg(strReason));
 }
@@ -339,7 +339,7 @@ void Nicklist::nicklist_quicksort(QString strStatus, QHash <QString, QString> *n
 
 void Nicklist::contextMenuEvent(QContextMenuEvent *e)
 {
-    QMenu *minvite = new QMenu("Zapro¶");
+    QMenu *minvite = new QMenu(tr("Invite"));
 
     for (int i = 0; i < maxOpenChannels; ++i)
     {
@@ -360,39 +360,39 @@ void Nicklist::contextMenuEvent(QContextMenuEvent *e)
     for (int j = strOpenChannels.count(); j < maxOpenChannels; ++j)
         openChannelsActs[j]->setVisible(false);
 
-    QMenu *friends = new QMenu("Lista przyjació³");
-    friends->addAction("Dodaj do listy przyjació³", this, SLOT(friends_add()));
-    friends->addAction("Usuñ z listy przyjació³", this, SLOT(friends_del()));
+    QMenu *friends = new QMenu(tr("Friends list"));
+    friends->addAction(tr("Add to friends"), this, SLOT(friends_add()));
+    friends->addAction(tr("Remove from friends"), this, SLOT(friends_del()));
 
-    QMenu *ignore = new QMenu("Lista ignorowanych");
-    ignore->addAction("Dodaj do listy ignorowanych", this, SLOT(ignore_add()));
-    ignore->addAction("Usuñ z listy ignorowanych", this, SLOT(ignore_del()));
+    QMenu *ignore = new QMenu(tr("Ignore list"));
+    ignore->addAction(tr("Add to Ignore list"), this, SLOT(ignore_add()));
+    ignore->addAction(tr("Remove from Ignore list"), this, SLOT(ignore_del()));
 
-    QMenu *privilege = new QMenu("Uprawnienia");
-    privilege->addAction("Nadaj prawa super operatora", this, SLOT(op_add()));
-    privilege->addAction("Odbierz prawa super operatora", this, SLOT(op_del()));
+    QMenu *privilege = new QMenu(tr("Actions"));
+    privilege->addAction(tr("Give super operator status"), this, SLOT(op_add()));
+    privilege->addAction(tr("Take super operator status"), this, SLOT(op_del()));
     privilege->addSeparator();
-    privilege->addAction("Nadaj prawa operatora", this, SLOT(halfop_add()));
-    privilege->addAction("Odbierz prawa operatora", this, SLOT(halfop_del()));
+    privilege->addAction(tr("Give operator status"), this, SLOT(halfop_add()));
+    privilege->addAction(tr("Take operator status"), this, SLOT(halfop_del()));
     privilege->addSeparator();
-    privilege->addAction("Nadaj prawa moderatora", this, SLOT(moderator_add()));
-    privilege->addAction("Odbierz prawa moderatora", this, SLOT(moderator_del()));
+    privilege->addAction(tr("Give moderator status"), this, SLOT(moderator_add()));
+    privilege->addAction(tr("Take moderator status"), this, SLOT(moderator_del()));
     privilege->addSeparator();
-    privilege->addAction("Nadaj prawa go¶cia", this, SLOT(voice_add()));
-    privilege->addAction("Odbierz prawa go¶cia", this, SLOT(voice_del()));
+    privilege->addAction(tr("Give guest status"), this, SLOT(voice_add()));
+    privilege->addAction(tr("Take guest status"), this, SLOT(voice_del()));
 
     QMenu *menu = new QMenu(this);
 
-    menu->addAction("Rozmowa prywatna", this, SLOT(priv()));
-    menu->addAction("Whois", this, SLOT(whois()));
-    menu->addAction("Kamerka", this, SLOT(cam()));
+    menu->addAction(tr("Priv"), this, SLOT(priv()));
+    menu->addAction(tr("Whois"), this, SLOT(whois()));
+    menu->addAction(tr("Webcam"), this, SLOT(cam()));
     menu->addMenu(minvite);
     menu->addMenu(friends);
     menu->addMenu(ignore);
     menu->addSeparator();
-    menu->addAction("Wyrzuæ", this, SLOT(kick()));
-    menu->addAction("Cichy ban", this, SLOT(ban()));
-    menu->addAction("Banuj i wyrzuæ", this, SLOT(kban()));
+    menu->addAction(tr("Kick From Channel"), this, SLOT(kick()));
+    menu->addAction(tr("Ban From Channel"), this, SLOT(ban()));
+    menu->addAction(tr("Kick & Ban"), this, SLOT(kban()));
     menu->addSeparator();
     menu->addMenu(privilege);
 

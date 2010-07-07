@@ -116,7 +116,7 @@ bool DlgModeration::exist_in_widget(QString strMsg)
 
 bool DlgModeration::exist_in_list(QString strChannel, QString strMsg)
 {
-    strMsg = strMsg.right(strMsg.length()-11); // minus data
+    strMsg = strMsg.right(strMsg.length()-11); // minus date
 
     QList <QString> strIDs = channel_id.values(strChannel);
     for (int i = 0; i < strIDs.count(); i++)
@@ -184,7 +184,7 @@ void DlgModeration::button_accept()
 
     QString strChannel = ui.comboBox->currentText();
     QString strData = ui.listWidget->selectedItems().at(0)->text();
-    strData = strData.right(strData.length()-11); // minus data
+    strData = strData.right(strData.length()-11); // minus date
     QStringList strDataList = strData.split(" ");
 
     QString strNick = strDataList[0];
@@ -209,7 +209,7 @@ void DlgModeration::button_remove()
 
     QString strChannel = ui.comboBox->currentText();
     QString strData = ui.listWidget->selectedItems().at(0)->text();
-    strData = strData.right(strData.length()-11); // minus data
+    strData = strData.right(strData.length()-11); // minus date
 
     del_msg(strChannel, strData);
 }

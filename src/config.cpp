@@ -34,14 +34,14 @@ Config::Config()
         if (file->open(QIODevice::ReadWrite) == false)
         {
 #ifdef Q_WS_X11
-            qDebug() << "Error: config: Cannot read config file!";
+            qDebug() << tr("Error: config: Cannot read config file!");
 #endif
             return;
         }
         if (doc.setContent(file) == false)
         {
 #ifdef Q_WS_X11
-            qDebug() << "Error: config: Cannot set content from file!";
+            qDebug() << tr("Error: config: Cannot set content from file!");
 #endif
             return;
         }
@@ -49,7 +49,7 @@ Config::Config()
     else
     {
 #ifdef Q_WS_X11
-            qDebug() << "Error: config: Cannot open config file!";
+            qDebug() << tr("Error: config: Cannot open config file!");
 #endif
             return;
     }
@@ -78,7 +78,7 @@ QString Config::get_value(QString strKey)
     if ((doc.isNull() == true) || (file->isOpen() == false))
     {
 #ifdef Q_WS_X11
-        qDebug() << "Error: config: Cannot get value: " << strKey;
+        qDebug() << tr("Error: config: Cannot get value: ") << strKey;
 #endif
         return QString::null;
     }
@@ -105,7 +105,7 @@ void Config::set_value(QString strKey, QString strValue)
     if ((doc.isNull() == true) || (file->isOpen() == false))
     {
 #ifdef Q_WS_X11
-        qDebug() << "Error: config: Cannot set value: " << strKey;
+        qDebug() << tr("Error: config: Cannot set value: ") << strKey;
 #endif
         return;
     }

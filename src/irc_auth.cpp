@@ -139,7 +139,7 @@ void IrcAuth::request_uo(QString param1, QString param2)
     }
     else
     {
-        tabc->show_msg("Status", QString("Error: B³±d autoryzacji [Brak dostêpno¶ci serwerów onet.pl]"), 9);
+        tabc->show_msg("Status", tr("Error: Authentication error [onet.pl servers are not available]"), 9);
     }
 
 // save cookies
@@ -290,7 +290,7 @@ void IrcAuth::request_finished(QString strData)
             }
             else
             {
-                tabc->show_msg("Status","Error: B³±d autoryzacji.", 9);
+                tabc->show_msg("Status", tr("Error: Authorization Failed."), 9);
                 //socket->close();
                 return;
             }
@@ -300,14 +300,14 @@ void IrcAuth::request_finished(QString strData)
         {
             if (strData.indexOf("err_code=\"TRUE\"") != -1)
             {
-                tabc->show_msg("Status","Error: B³±d autoryzacji [Nick jest ju¿ zalogowany na czacie]", 9);
+                tabc->show_msg("Status", tr("Error: Authentication error [Nick is already logged into the chat]"), 9);
             }
             else
             {
                 QDomNode dError = doc.elementsByTagName("error").item(0);
                 QString strErrorText = dError.attributes().namedItem("err_text").nodeValue();
 
-                tabc->show_msg("Status", QString("Error: B³±d autoryzacji [%1]").arg(strErrorText), 9);
+                tabc->show_msg("Status", QString(tr("Error: Authentication error [%1]")).arg(strErrorText), 9);
             }
             //socket->close();
 
@@ -316,7 +316,7 @@ void IrcAuth::request_finished(QString strData)
     }
     else
     {
-        tabc->show_msg("Status","Error: B³±d autoryzacji.", 9);
+        tabc->show_msg("Status", tr("Error: Authorization Failed."), 9);
         //socket->close();
         return;
     }

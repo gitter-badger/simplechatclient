@@ -443,10 +443,10 @@ void DlgChannelSettings::clear()
     ui.tableWidget_4->setRowCount(0);
 
     QStringList strlLabels;
-    strlLabels << "Nick";
+    strlLabels << tr("Nick");
 
     QStringList strlLabels2;
-    strlLabels2 << "Nick" << "Za³o¿y³" << "Data/Czas";
+    strlLabels2 << tr("Nick") << tr("Created by") << tr("Date/Time");
 
     ui.tableWidget->setHorizontalHeaderLabels(strlLabels);
     ui.tableWidget_2->setHorizontalHeaderLabels(strlLabels);

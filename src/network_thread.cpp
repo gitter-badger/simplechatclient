@@ -83,7 +83,7 @@ void NetworkThread::connect()
         timer->start();
     }
     else
-        emit show_msg_all("Error: Nie mo¿na siê po³±czyæ z serwerem - po³±czenie ju¿ istnieje!", 9);
+        emit show_msg_all(tr("Error: Could not connect to the server - connection already exists!"), 9);
 }
 
 void NetworkThread::reconnect()
@@ -92,7 +92,7 @@ void NetworkThread::reconnect()
     {
         if ((this->is_connected() == false) && (settings->value("logged").toString() == "off"))
         {
-            emit show_msg_all("Ponowne ³±czenie z serwerem...", 7);
+            emit show_msg_all(tr("Reconnecting..."), 7);
             emit connect();
         }
     }
@@ -158,13 +158,13 @@ void NetworkThread::send_data(QString strData)
         if (socket->write(qbaData) == -1)
         {
             if (socket->state() == QAbstractSocket::ConnectedState)
-                emit show_msg_active(QString("Error: Nie uda³o siê wys³aæ danych! [%1]").arg(socket->errorString()), 9);
+                emit show_msg_active(QString(tr("Error: Could not send data! [%1]")).arg(socket->errorString()), 9);
             else if (socket->state() == QAbstractSocket::UnconnectedState)
-                emit show_msg_active("Error: Nie uda³o siê wys³aæ danych! [Not connected]", 9);
+                emit show_msg_active(tr("Error: Could not send data! [Not connected]"), 9);
         }
     }
     else
-        emit show_msg_active("Error: Nie uda³o siê wys³aæ danych! [Not connected]", 9);
+        emit show_msg_active(tr("Error: Could not send data! [Not Connected]"), 9);
 }
 
 void NetworkThread::send(QString strData)
@@ -214,7 +214,7 @@ void NetworkThread::recv()
 
 void NetworkThread::connected()
 {
-    emit show_msg_all("Po³±czono z serwerem", 9);
+    emit show_msg_all(tr("Connected to server"), 9);
 
     Config *pConfig = new Config();
 
@@ -270,16 +270,16 @@ void NetworkThread::disconnected()
 {
     if (socket->state() == QAbstractSocket::UnconnectedState)
     {
-        connectAct->setText("&Po³±cz");
-        connectAct->setIconText("&Po³±cz");
+        connectAct->setText(tr("&Connect"));
+        connectAct->setIconText(tr("&Connect"));
 
         if (socket->error() != QAbstractSocket::UnknownSocketError)
-            emit show_msg_all(QString("Roz³±czono z serwerem [%1]").arg(socket->errorString()), 9);
+            emit show_msg_all(QString(tr("Disconnected from server [%1]")).arg(socket->errorString()), 9);
         else
-            emit show_msg_all("Roz³±czono z serwerem", 9);
+            emit show_msg_all(tr("Disconnected from server"), 9);
 
         // update nick
-        emit update_nick("(niezalogowany)");
+        emit update_nick(tr("(Unregistered)"));
 
         // clear nicklist
         emit clear_all_nicklist();
@@ -297,10 +297,10 @@ void NetworkThread::disconnected()
 
 void NetworkThread::error(QAbstractSocket::SocketError err)
 {
-    connectAct->setText("&Po³±cz");
-    connectAct->setIconText("&Po³±cz");
+    connectAct->setText(tr("&Connect"));
+    connectAct->setIconText(tr("&Connect"));
 
-    emit show_msg_all(QString("Roz³±czono z serwerem [%1]").arg(socket->errorString()), 9);
+    emit show_msg_all(QString(tr("Disconnected from server [%1]")).arg(socket->errorString()), 9);
 
     if (socket->state() == QAbstractSocket::ConnectedState)
         emit close();
@@ -314,7 +314,7 @@ void NetworkThread::timeout()
     if (iActive+301 < iCurrent)
     {
         if (socket->state() == QAbstractSocket::ConnectedState)
-            emit show_msg_all("Serwer nieaktywny od 301 sekund. Roz³±czanie...", 9);
+            emit show_msg_all(tr("No PONG reply from server in 301 seconds. Disconnecting..."), 9);
         emit close();
         iActive = iCurrent;
     }

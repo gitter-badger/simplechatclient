@@ -21,6 +21,7 @@
 #include <QDesktopWidget>
 #include <QtGui/QApplication>
 #include <QTextCodec>
+#include <QTranslator>
 #include "debug.h"
 #include "mainwindow.h"
 
@@ -127,18 +128,30 @@ int main(int argc, char *argv[])
     sigaction(SIGHUP, &sv, NULL);
 #endif
 
+
     qInstallMsgHandler(messageHandler);
     QApplication app(argc, argv);
+
+    // set codec
     QTextCodec::setCodecForCStrings(QTextCodec::codecForName("ISO-8859-2"));
     QTextCodec::setCodecForTr(QTextCodec::codecForName("UTF-8"));
+
+    // set geometry
     const int x = QApplication::desktop()->availableGeometry().width();
     const int y = QApplication::desktop()->availableGeometry().height();
     const int xo = 800;
     const int yo = 600;
 
+    // set organization
     QCoreApplication::setOrganizationName("scc");
     QCoreApplication::setOrganizationDomain("simplechatclien.sourceforge.net");
     QCoreApplication::setApplicationName("scc");
+
+    // set translate
+    QString strPath = QCoreApplication::applicationDirPath();
+    QTranslator sccQm;
+    sccQm.load(strPath+"/i18n/scc_pl");
+    app.installTranslator(&sccQm);
 
     MainWindow mainWin;
     mainWin.set_debug(bDebug);

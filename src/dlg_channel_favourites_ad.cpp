@@ -31,9 +31,9 @@ DlgChannelFavouritesAd::DlgChannelFavouritesAd(Network *param1, QSettings *param
     ui.lineEdit->setText(param5);
 
     if (strStatus == "add")
-        ui.label->setText("Podaj nazwê nowego kana³u do ulubionych:");
+        ui.label->setText(tr("Enter the name of the new channel to add to favorites:"));
     else
-        ui.label->setText("Podaj nazwê kana³u do usuniêcia z ulubionych:");
+        ui.label->setText(tr("Enter the name of the channel to remove from the favorites:"));
 
     QObject::connect(ui.buttonBox, SIGNAL(accepted()), this, SLOT(button_ok()));
     QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(button_cancel()));

@@ -35,7 +35,7 @@ QString Crypt::encrypt(QString strKey, QString strData)
     if ((strKey.isEmpty() == true) || (strData.isEmpty() == true))
     {
 #ifdef Q_WS_X11
-        qDebug() << "Error: crypt: Cannot encrypt - empty argument";
+        qDebug() << tr("Error: crypt: Cannot encrypt - empty argument");
 #endif
         return QString::null;
     }
@@ -46,7 +46,7 @@ QString Crypt::encrypt(QString strKey, QString strData)
     if(!QCA::isSupported("aes256-cbc-pkcs7"))
     {
 #ifdef Q_WS_X11
-        qDebug() << "Error: AES256-CBC not supported!";
+        qDebug() << tr("Error: AES256-CBC not supported!");
 #endif
         return QString::null;
     }
@@ -72,7 +72,7 @@ QString Crypt::decrypt(QString strKey, QString strData)
     if ((strKey.isEmpty() == true) || (strData.isEmpty() == true))
     {
 #ifdef Q_WS_X11
-        qDebug() << "Error: crypt: Cannot decrypt - empty argument";
+        qDebug() << tr("Error: crypt: Cannot decrypt - empty argument");
 #endif
         return QString::null;
     }
@@ -83,7 +83,7 @@ QString Crypt::decrypt(QString strKey, QString strData)
     if(!QCA::isSupported("aes256-cbc-pkcs7"))
     {
 #ifdef Q_WS_X11
-        qDebug() << "Error: AES256-CBC not supported!";
+        qDebug() << tr("Error: AES256-CBC not supported!");
 #endif
         return QString::null;
     }

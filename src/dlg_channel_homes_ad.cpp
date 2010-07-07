@@ -30,9 +30,9 @@ DlgChannelHomesAd::DlgChannelHomesAd(Network *param1, QSettings *param2, TabCont
     strStatus = param4;
 
     if (strStatus == "create")
-        ui.label->setText("Podaj nazwê nowego kana³u:");
+        ui.label->setText(tr("Enter the name of the new channel:"));
     else
-        ui.label->setText("<p style=\"font-weight:bold;\">Usuniêcie kana³u jest operacj± nieodwracaln±!</p><p>Podaj nazwê kana³u do usuniêcia:</p>");
+        ui.label->setText("<p style=\"font-weight:bold;\">"+tr("The removal of the channel operation is irreversible!")+"</p><p>"+tr("Enter the name of the channel to remove:")+"</p>");
 
     QObject::connect(ui.buttonBox, SIGNAL(accepted()), this, SLOT(button_ok()));
     QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(button_cancel()));

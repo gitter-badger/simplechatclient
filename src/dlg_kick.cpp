@@ -37,7 +37,7 @@ void DlgKick::button_ok()
 {
     QString strReason = ui.lineEdit->text();
     if (strReason.isEmpty() == true)
-        strReason = "Zachowuj siê! Byle jak ale siê zachowuj!";
+        strReason = tr("No reason");
 
     pNetwork->send(QString("KICK %1 %2 :%3").arg(strChannel).arg(strNick).arg(strReason));
 

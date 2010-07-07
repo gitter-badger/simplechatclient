@@ -29,16 +29,16 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     setWindowIcon(QIcon(":/images/logo_64.png"));
 
 // action
-    showAct = new QAction(QIcon(":/images/logo_64.png"),("P&oka¿"),this);
-    connectAct = new QAction(QIcon(":/3rdparty/images/connect.png"),("&Po³±cz"),this);
-    closeAct = new QAction(QIcon(":/3rdparty/images/exit.png"),("Za&koñcz"),this);
-    optionsAct = new QAction(QIcon(":/3rdparty/images/options.png"),("O&pcje programu"),this);
-    channel_listAct = new QAction(QIcon(":/3rdparty/images/list.png"),("&Lista kana³ów"),this);
-    channel_homesAct = new QAction(QIcon(":/3rdparty/images/list.png"),("U&stawienia kana³ów"),this);
-    channel_favouritesAct = new QAction(QIcon(":/3rdparty/images/list.png"),("Ul&ubione kana³y"),this);
-    friendsAct = new QAction(QIcon(":/3rdparty/images/people.png"),("Przy&jaciele"),this);
-    ignoreAct = new QAction(QIcon(":/3rdparty/images/people.png"),("Ignorowa&ni"),this);
-    aboutAct = new QAction(QIcon(":/images/logo_64.png"),("&O programie SCC..."),this);
+    showAct = new QAction(QIcon(":/images/logo_64.png"),tr("Show"),this);
+    connectAct = new QAction(QIcon(":/3rdparty/images/connect.png"),tr("Connect"),this);
+    closeAct = new QAction(QIcon(":/3rdparty/images/exit.png"),tr("Close"),this);
+    optionsAct = new QAction(QIcon(":/3rdparty/images/options.png"),tr("Options"),this);
+    channel_listAct = new QAction(QIcon(":/3rdparty/images/list.png"),tr("Channel list"),this);
+    channel_homesAct = new QAction(QIcon(":/3rdparty/images/list.png"),tr("Channel settings"),this);
+    channel_favouritesAct = new QAction(QIcon(":/3rdparty/images/list.png"),tr("Favorite channels"),this);
+    friendsAct = new QAction(QIcon(":/3rdparty/images/people.png"),tr("Friends"),this);
+    ignoreAct = new QAction(QIcon(":/3rdparty/images/people.png"),tr("Ignored"),this);
+    aboutAct = new QAction(QIcon(":/images/logo_64.png"),tr("About SCC ..."),this);
 
 // shortcut
     connectAct->setShortcuts(QKeySequence::New);
@@ -67,7 +67,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     delete pConfig;
 
     settings.clear();
-    settings.setValue("version", "1.0.6.277");
+    settings.setValue("version", "1.0.6.278");
     settings.setValue("debug", "off");
     settings.setValue("logged", "off");
     settings.setValue("busy", "off");
@@ -104,11 +104,11 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
     pTabC->set_dlg(pDlg_channel_settings, pDlg_moderation);
 
-    pTabC->show_msg("Status", "%Fi:courier%Witaj w programie Simple Chat Client %Ixhehe%", 0);
-    pTabC->show_msg("Status", "%Fb:courier%%Cff6500%Oficjalna strona SCC%C000000%: http://simplechatclien.sourceforge.net/ %Ixluzak%", 0);
-    pTabC->show_msg("Status", "%Fb:courier%%C008100%Oficjalne forum SCC%C000000%: http://simplechatclien.sourceforge.net/forum/ %Ixoczko%", 0);
-    pTabC->show_msg("Status", "%Fbi:courier%%Cff0000%Lista b³êdów%C000000%: http://sourceforge.net/apps/trac/simplechatclien/report/6 %Ixmm%", 0);
-    pTabC->show_msg("Status", "%Fbi:courier%%C8800ab%Zg³aszanie b³êdów%C000000%: http://sourceforge.net/apps/trac/simplechatclien/newticket %Ixco%", 0);
+    pTabC->show_msg("Status", "%Fi:courier%"+tr("Welcome to the Simple Chat Client")+" %Ixhehe%", 0);
+    pTabC->show_msg("Status", "%Fb:courier%%Cff6500%"+tr("Official website")+" SCC%C000000%: http://simplechatclien.sourceforge.net/ %Ixluzak%", 0);
+    pTabC->show_msg("Status", "%Fb:courier%%C008100%"+tr("Official Forum")+" SCC%C000000%: http://simplechatclien.sourceforge.net/forum/ %Ixoczko%", 0);
+    pTabC->show_msg("Status", "%Fbi:courier%%Cff0000%"+tr("Known bugs:")+"%C000000%: http://sourceforge.net/apps/trac/simplechatclien/report/6 %Ixmm%", 0);
+    pTabC->show_msg("Status", "%Fbi:courier%%C8800ab%"+tr("Bug reporting:")+"%C000000%: http://sourceforge.net/apps/trac/simplechatclien/newticket %Ixco%", 0);
 
 // update
     uThreadList.append(new UpdateThread(&settings, pTabC));
@@ -120,26 +120,26 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 #endif
 
 // main menu
-    fileMenu = menuBar()->addMenu("&Plik");
+    fileMenu = menuBar()->addMenu(tr("&File"));
     fileMenu->addAction(connectAct);
     fileMenu->addSeparator();
     fileMenu->addAction(closeAct);
 
-    optionsMenu = menuBar()->addMenu("&Ustawienia");
+    optionsMenu = menuBar()->addMenu(tr("&Settings"));
     optionsMenu->addAction(optionsAct);
 
-    chatMenu = menuBar()->addMenu("&Czat");
+    chatMenu = menuBar()->addMenu(tr("&Chat"));
     chatMenu->addAction(channel_listAct);
     chatMenu->addAction(channel_homesAct);
     chatMenu->addAction(channel_favouritesAct);
     chatMenu->addAction(friendsAct);
     chatMenu->addAction(ignoreAct);
 
-    helpMenu = menuBar()->addMenu("Pomo&c");
+    helpMenu = menuBar()->addMenu(tr("He&lp"));
     helpMenu->addAction(aboutAct);
 
 // toolbar
-    toolBar = addToolBar("Pasek nawigacji");
+    toolBar = addToolBar(tr("Navigation bar"));
     toolBar->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
     toolBar->addAction(connectAct);
     toolBar->addAction(optionsAct);
@@ -246,8 +246,8 @@ void MainWindow::button_connect()
 {
     if (pNetwork->is_connected() == false)
     {
-        connectAct->setText("&Roz³±cz");
-        connectAct->setIconText("&Roz³±cz");
+        connectAct->setText(tr("&Disconnect"));
+        connectAct->setIconText(tr("&Disconnect"));
         settings.setValue("reconnect", "true");
         pNetwork->connect();
     }
@@ -255,8 +255,8 @@ void MainWindow::button_connect()
     {
         settings.setValue("reconnect", "false");
         pNetwork->send("QUIT");
-        connectAct->setText("&Po³±cz");
-        connectAct->setIconText("&Po³±cz");
+        connectAct->setText(tr("&Connect"));
+        connectAct->setIconText(tr("&Connect"));
         pNetwork->close();
     }
 }

@@ -44,7 +44,7 @@ void Log::save(QString strChannel, QString strData)
     if (!f.open(QIODevice::Append))
     {
 #ifdef Q_WS_X11
-        qDebug() << "Error: log: Cannot open file " << strChannel;
+        qDebug() << tr("Error: log: Cannot open file ") << strChannel;
 #endif
         return;
     }

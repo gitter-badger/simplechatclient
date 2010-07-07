@@ -30,7 +30,7 @@ DlgPriv::DlgPriv(Network *param1, QSettings *param2, TabContainer *param3, QStri
     strNick = param4;
     strChannel = param5;
 
-    ui.label->setText(QString("%1 zaprasza do rozmowy prywatnej").arg(strNick));
+    ui.label->setText(QString(tr("%1 invites you to priv")).arg(strNick));
 
     QObject::connect(ui.pushButtonWhois, SIGNAL(clicked()), this, SLOT(button_whois()));
     QObject::connect(ui.pushButtonReject, SIGNAL(clicked()), this, SLOT(button_reject()));
