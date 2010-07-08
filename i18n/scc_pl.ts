@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS><TS version="1.1" language="pl">
-<defaultcodec></defaultcodec>
+<!DOCTYPE TS>
+<TS version="2.0" language="pl">
 <context>
     <name>Config</name>
     <message>
@@ -25,6 +25,97 @@
     </message>
 </context>
 <context>
+    <name>Commands</name>
+    <message>
+        <source>* Available commands:</source>
+        <translation>* Dostępne komendy:</translation>
+    </message>
+    <message>
+        <source>/cycle or /hop</source>
+        <translation>/cycle lub /hop</translation>
+    </message>
+    <message>
+        <source>/me [text]</source>
+        <translation>/me [tekst]</translation>
+    </message>
+    <message>
+        <source>/topic [text]</source>
+        <translation>/topic [tekst]</translation>
+    </message>
+    <message>
+        <source>/join [channel] or /j [channel]</source>
+        <translation>/join [kanał] lub /j [kanał]</translation>
+    </message>
+    <message>
+        <source>/part or /p</source>
+        <translation>/part lub /p</translation>
+    </message>
+    <message>
+        <source>/priv [nick]</source>
+        <translation>/priv [nick]</translation>
+    </message>
+    <message>
+        <source>/ignore [[+|-]nick]</source>
+        <translation>/ignore [[+|-]nick]</translation>
+    </message>
+    <message>
+        <source>/friend [[+|-]nick]</source>
+        <translation>/friend [[+|-]nick]</translation>
+    </message>
+    <message>
+        <source>/whereis [nick] or /whois [nick] or /wi [nick] or /wii [nick]</source>
+        <translation>/whereis [nick] lub /whois [nick] lub /wi [nick] lub /wii [nick]</translation>
+    </message>
+    <message>
+        <source>/busy</source>
+        <translation>/busy</translation>
+    </message>
+    <message>
+        <source>/away [text]</source>
+        <translation>/away [tekst]</translation>
+    </message>
+    <message>
+        <source>/invite [nick]</source>
+        <translation>/invite [nick]</translation>
+    </message>
+    <message>
+        <source>/logout or /quit or /q</source>
+        <translation>/logout lub /quit lub /q</translation>
+    </message>
+    <message>
+        <source>/kick [nick] [reason]</source>
+        <translation>/kick [nick] [powód]</translation>
+    </message>
+    <message>
+        <source>/ban [[+|-]nick]</source>
+        <translation>/ban [[+|-]nick]</translation>
+    </message>
+    <message>
+        <source>/sop [[+|-]nick]</source>
+        <translation>/sop [[+|-]nick]</translation>
+    </message>
+    <message>
+        <source>/op [[+|-]nick]</source>
+        <translation>/op [[+|-]nick]</translation>
+    </message>
+    <message>
+        <source>/moder [[+|-]nick] or /moderator [[+|-]nick]</source>
+        <translation>/moder [[+|-]nick] lub /moderator [[+|-]nick]</translation>
+    </message>
+    <message>
+        <source>/vip [[+|-]nick]</source>
+        <translation>/vip [[+|-]nick]</translation>
+    </message>
+    <message>
+        <source>/help</source>
+        <translation>/help lub /pomoc</translation>
+    </message>
+    <message>
+        <source>No reason</source>
+        <translation>Zachowuj się! Byle jak ale się zachowuj!</translation>
+    </message>
+</context>
+<context>
     <name>Crypt</name>
     <message>
         <source>Error: crypt: Cannot encrypt - empty argument</source>
@@ -44,6 +135,10 @@
     <message>
         <source>Version</source>
         <translation>Wersja</translation>
+    </message>
+    <message>
+        <source>Author</source>
+        <translation>2010 Piotr Łuczko</translation>
     </message>
     <message>
         <source>Home page</source>
@@ -359,11 +454,11 @@
         <translation>Oficjalne forum</translation>
     </message>
     <message>
-        <source>Known bugs:</source>
+        <source>Known bugs</source>
         <translation>Lista błędów</translation>
     </message>
     <message>
-        <source>Bug reporting:</source>
+        <source>Bug reporting</source>
         <translation>Zgłaszanie błędów</translation>
     </message>
     <message>
@@ -574,5 +669,28 @@
         <source>%1 User(s)</source>
         <translation>Liczba osób: %1</translation>
     </message>
- </context>
+</context>
+<context>
+    <name>Updater</name>
+    <message>
+        <source>Can not download the available version.</source>
+        <translation>Nie można pobrać dostępnej wersji programu.</translation>
+    </message>
+    <message>
+        <source>You are using the current version.</source>
+        <translation>Używasz aktualnej wersji programu.</translation>
+    </message>
+    <message>
+        <source>You are using a test version.</source>
+        <translation>Używasz testowej wersji programu.</translation>
+    </message>
+    <message>
+        <source>A required update to version: </source>
+        <translation>Wymagana aktualizacja do wersji: </translation>
+    </message>
+    <message>
+        <source>Can not connect to update server.</source>
+        <translation>Nie można połączyć się z serwerem aktualizacji.</translation>
+    </message>
+</context>
 </TS>

@@ -1,7 +1,7 @@
 /****************************************************************************
  *                                                                          *
  *   This file is part of Simple Chat Client                                *
- *   Copyright (C) 2010 Piotr £uczko <piotr.luczko@gmail.com>               *
+ *   Copyright (C) 2010 Piotr ≈Åuczko <piotr.luczko@gmail.com>               *
  *                                                                          *
  *   This program is free software: you can redistribute it and/or modify   *
  *   it under the terms of the GNU General Public License as published by   *
@@ -67,7 +67,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     delete pConfig;
 
     settings.clear();
-    settings.setValue("version", "1.0.6.278");
+    settings.setValue("version", "1.0.6.279");
     settings.setValue("debug", "off");
     settings.setValue("logged", "off");
     settings.setValue("busy", "off");
@@ -107,8 +107,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     pTabC->show_msg("Status", "%Fi:courier%"+tr("Welcome to the Simple Chat Client")+" %Ixhehe%", 0);
     pTabC->show_msg("Status", "%Fb:courier%%Cff6500%"+tr("Official website")+" SCC%C000000%: http://simplechatclien.sourceforge.net/ %Ixluzak%", 0);
     pTabC->show_msg("Status", "%Fb:courier%%C008100%"+tr("Official Forum")+" SCC%C000000%: http://simplechatclien.sourceforge.net/forum/ %Ixoczko%", 0);
-    pTabC->show_msg("Status", "%Fbi:courier%%Cff0000%"+tr("Known bugs:")+"%C000000%: http://sourceforge.net/apps/trac/simplechatclien/report/6 %Ixmm%", 0);
-    pTabC->show_msg("Status", "%Fbi:courier%%C8800ab%"+tr("Bug reporting:")+"%C000000%: http://sourceforge.net/apps/trac/simplechatclien/newticket %Ixco%", 0);
+    pTabC->show_msg("Status", "%Fbi:courier%%Cff0000%"+tr("Known bugs")+"%C000000%: http://sourceforge.net/apps/trac/simplechatclien/report/6 %Ixmm%", 0);
+    pTabC->show_msg("Status", "%Fbi:courier%%C8800ab%"+tr("Bug reporting")+"%C000000%: http://sourceforge.net/apps/trac/simplechatclien/newticket %Ixco%", 0);
 
 // update
     uThreadList.append(new UpdateThread(&settings, pTabC));

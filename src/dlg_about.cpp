@@ -1,7 +1,7 @@
 /****************************************************************************
  *                                                                          *
  *   This file is part of Simple Chat Client                                *
- *   Copyright (C) 2010 Piotr £uczko <piotr.luczko@gmail.com>               *
+ *   Copyright (C) 2010 Piotr ≈Åuczko <piotr.luczko@gmail.com>               *
  *                                                                          *
  *   This program is free software: you can redistribute it and/or modify   *
  *   it under the terms of the GNU General Public License as published by   *
@@ -32,7 +32,7 @@ DlgAbout::DlgAbout(QWidget *parent, QSettings *param1) : QDialog(parent)
     QString strVersion = settings->value("version").toString();
     QString strDescription = "<p style=\"font-size:18px;font-weight:bold\">Simple Chat Client</p>";
     strDescription += "<p>"+tr("Version")+" "+strVersion+"</p>";
-    strDescription += "<p>&copy; 2010 Piotr £uczko</p>";
+    strDescription += "<p>&copy; "+tr("Author")+"</p>";
     strDescription += "<p><a style=\"text-decoration:none;\" href=\"http://simplechatclien.sourceforge.net/\">"+tr("Home page")+"</a></p>";
     strDescription += "<p>"+tr("License")+" <a style=\"text-decoration:none;\" href=\"http://www.fsf.org/licensing/licenses/gpl.html\">GPL v3</a></p>";
 

@@ -1,7 +1,7 @@
 /****************************************************************************
  *                                                                          *
  *   This file is part of Simple Chat Client                                *
- *   Copyright (C) 2010 Piotr £uczko <piotr.luczko@gmail.com>               *
+ *   Copyright (C) 2010 Piotr ≈Åuczko <piotr.luczko@gmail.com>               *
  *                                                                          *
  *   This program is free software: you can redistribute it and/or modify   *
  *   it under the terms of the GNU General Public License as published by   *
@@ -185,27 +185,27 @@ QString Commands::cmd_help()
 {
     QString strResult;
 
-    strResult = "* DostÍpne komendy:\n";
-    strResult.append("/cycle lub /hop\n");
-    strResult.append("/me [tekst]\n");
-    strResult.append("/topic [tekst]\n");
-    strResult.append("/join [kana≥] lub /j [kana≥]\n");
-    strResult.append("/part lub /p\n");
-    strResult.append("/priv [nick]\n");
-    strResult.append("/ignore [[+|-]nick]\n");
-    strResult.append("/friend [[+|-]nick]\n");
-    strResult.append("/whereis [nick] lub /whois [nick] lub /wi [nick] lub /wii [nick]\n");
-    strResult.append("/busy\n");
-    strResult.append("/away [tekst]\n");
-    strResult.append("/invite [nick]\n");
-    strResult.append("/logout lub /quit lub /q\n");
-    strResult.append("/kick [nick] [powÛd]\n");
-    strResult.append("/ban [[+|-]nick]\n");
-    strResult.append("/sop [[+|-]nick]\n");
-    strResult.append("/op [[+|-]nick]\n");
-    strResult.append("/moder [[+|-]nick] lub /moderator [[+|-]nick]\n");
-    strResult.append("/vip [[+|-]nick]\n");
-    strResult.append("/help lub /pomoc\n");
+    strResult = (tr("* Available commands:")+"<br>");
+    strResult.append(tr("/cycle or /hop")+"<br>");
+    strResult.append(tr("/me [text]")+"<br>");
+    strResult.append(tr("/topic [text]")+"<br>");
+    strResult.append(tr("/join [channel] or /j [channel]")+"<br>");
+    strResult.append(tr("/part or /p")+"<br>");
+    strResult.append(tr("/priv [nick]")+"<br>");
+    strResult.append(tr("/ignore [[+|-]nick]")+"<br>");
+    strResult.append(tr("/friend [[+|-]nick]")+"<br>");
+    strResult.append(tr("/whereis [nick] or /whois [nick] or /wi [nick] or /wii [nick]")+"<br>");
+    strResult.append(tr("/busy")+"<br>");
+    strResult.append(tr("/away [text]")+"<br>");
+    strResult.append(tr("/invite [nick]")+"<br>");
+    strResult.append(tr("/logout or /quit or /q")+"<br>");
+    strResult.append(tr("/kick [nick] [reason]")+"<br>");
+    strResult.append(tr("/ban [[+|-]nick]")+"<br>");
+    strResult.append(tr("/sop [[+|-]nick]")+"<br>");
+    strResult.append(tr("/op [[+|-]nick]")+"<br>");
+    strResult.append(tr("/moder [[+|-]nick] or /moderator [[+|-]nick]")+"<br>");
+    strResult.append(tr("/vip [[+|-]nick]")+"<br>");
+    strResult.append(tr("/help")+"<br>");
 
     return strResult;
 }
@@ -271,7 +271,7 @@ QString Commands::cmd_kick()
     for (int i = 2; i < strDataList.size(); i++) { if (i != 2) strReason += " "; strReason += strDataList[i]; }
 
     if (strReason.isEmpty() == true)
-        strReason = "Zachowuj siÍ! Byle jak ale siÍ zachowuj!";
+        strReason = tr("No reason");
 
     return QString("KICK %1 %2 :%3").arg(strChannel).arg(strNick).arg(strReason);
 }

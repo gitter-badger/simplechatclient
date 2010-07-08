@@ -1,7 +1,7 @@
 /****************************************************************************
  *                                                                          *
  *   This file is part of Simple Chat Client                                *
- *   Copyright (C) 2010 Piotr £uczko <piotr.luczko@gmail.com>               *
+ *   Copyright (C) 2010 Piotr ≈Åuczko <piotr.luczko@gmail.com>               *
  *                                                                          *
  *   This program is free software: you can redistribute it and/or modify   *
  *   it under the terms of the GNU General Public License as published by   *
@@ -36,7 +36,7 @@ void Updater::check_for_updates(QString param1)
     strAvailableVersion = param1;
     if (strAvailableVersion == QString::null)
     {
-        tabc->show_msg("Status", "Nie moøna pobraÊ dostÍpnej wersji programu.", 0);
+        tabc->show_msg("Status", tr("Can not download the available version."), 0);
         return;
     }
     QStringList lAvailableVersion = strAvailableVersion.split(".");
@@ -49,12 +49,12 @@ void Updater::check_for_updates(QString param1)
 #endif
 
     if (iCurrentRev == iAvailableRev)
-        tabc->show_msg("Status", "Uøywasz aktualnej wersji programu.", 0);
+        tabc->show_msg("Status", tr("You are using the current version."), 0);
     else if (iCurrentRev > iAvailableRev)
-        tabc->show_msg("Status", "Uøywasz testowej wersji programu.", 0);
+        tabc->show_msg("Status", tr("You are using a test version."), 0);
     else if (iCurrentRev < iAvailableRev)
     {
-        tabc->show_msg("Status", "Wymagana aktualizacja do wersji: "+strAvailableVersion, 0);
+        tabc->show_msg("Status", tr("A required update to version: ")+strAvailableVersion, 0);
         (new DlgUpdate(strAvailableVersion))->show();
     }
 }
@@ -92,7 +92,7 @@ QString Updater::get_available_version()
         strVersion = doc.elementsByTagName("currentVersion").item(0).toElement().text();
     }
     else
-        tabc->show_msg("Status", "Nie moøna po≥±czyÊ siÍ z serwerem aktualizacji.", 0);
+        tabc->show_msg("Status", tr("Can not connect to update server."), 0);
 
     return strVersion;
 }
