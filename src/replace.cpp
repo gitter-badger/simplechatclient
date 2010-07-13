@@ -38,10 +38,10 @@ QString Replace::replace_emots(QString strData)
     strData.replace(":(", "%Ixsmutek%");
     strData.replace(";(", "%Ixbuu%");
 
-    strData.replace(":p", "%Ijezor%");
-    strData.replace(";p", "%Ijezyk%");
-    strData.replace(":P", "%Ijezor%");
-    strData.replace(";P", "%Ijezyk%");
+    strData.replace(":p", "%Ijezyk%");
+    strData.replace(";p", "%Ijezor%");
+    strData.replace(":P", "%Ijezyk%");
+    strData.replace(";P", "%Ijezor%");
 
     strData.replace(":d", "%Ixhehe%");
     strData.replace(";d", "%Ixhehe%");
