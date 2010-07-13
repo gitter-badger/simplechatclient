@@ -1,7 +1,7 @@
 /****************************************************************************
  *                                                                          *
  *   This file is part of Simple Chat Client                                *
- *   Copyright (C) 2010 Piotr £uczko <piotr.luczko@gmail.com>               *
+ *   Copyright (C) 2010 Piotr ≈Åuczko <piotr.luczko@gmail.com>               *
  *                                                                          *
  *   This program is free software: you can redistribute it and/or modify   *
  *   it under the terms of the GNU General Public License as published by   *
@@ -399,9 +399,9 @@ void IrcKernel::raw_join()
 
     QString strDisplay;
     if (settings->value("show_zuo").toString() == "on")
-        strDisplay = QString("* %1 [%2@%3] wszed≥ do kana≥u %4").arg(strNick).arg(strZUO).arg(strIP).arg(strChannel);
+        strDisplay = QString(tr("* %1 [%2@%3] has joined %4")).arg(strNick).arg(strZUO).arg(strIP).arg(strChannel);
     else
-        strDisplay = QString("* %1 [%2] wszed≥ do kana≥u %3").arg(strNick).arg(strIP).arg(strChannel);
+        strDisplay = QString(tr("* %1 [%2] has joined %3")).arg(strNick).arg(strIP).arg(strChannel);
 
     tabc->show_msg(strChannel, strDisplay, 1);
 
@@ -459,16 +459,16 @@ void IrcKernel::raw_part()
     if (strReason.isEmpty() == false)
     {
         if (settings->value("show_zuo").toString() == "on")
-            strDisplay = QString("* %1 [%2@%3] wyszed≥ z kana≥u %4. PowÛd: %5").arg(strNick).arg(strZUO).arg(strIP).arg(strChannel).arg(strReason);
+            strDisplay = QString(tr("* %1 [%2@%3] has left %4 [%5]")).arg(strNick).arg(strZUO).arg(strIP).arg(strChannel).arg(strReason);
         else
-            strDisplay = QString("* %1 [%2] wyszed≥ z kana≥u %3. PowÛd: %4").arg(strNick).arg(strIP).arg(strChannel).arg(strReason);
+            strDisplay = QString(tr("* %1 [%2] has left %3 [%4]")).arg(strNick).arg(strIP).arg(strChannel).arg(strReason);
     }
     else
     {
         if (settings->value("show_zuo").toString() == "on")
-            strDisplay = QString("* %1 [%2@%3] wyszed≥ z kana≥u %4").arg(strNick).arg(strZUO).arg(strIP).arg(strChannel);
+            strDisplay = QString(tr("* %1 [%2@%3] has left %4")).arg(strNick).arg(strZUO).arg(strIP).arg(strChannel);
         else
-            strDisplay = QString("* %1 [%2] wyszed≥ z kana≥u %3").arg(strNick).arg(strIP).arg(strChannel);
+            strDisplay = QString(tr("* %1 [%2] has left %3")).arg(strNick).arg(strIP).arg(strChannel);
     }
 
     if (tabc->exist_tab(strChannel) == true) // fix for self part
@@ -535,9 +535,9 @@ void IrcKernel::raw_quit()
 
     QString strDisplay;
     if (settings->value("show_zuo").toString() == "on")
-        strDisplay = QString("* %1 [%2@%3] opu∂ci≥ irc [%4]").arg(strNick).arg(strZUO).arg(strIP).arg(strReason);
+        strDisplay = QString(tr("* %1 [%2@%3] has quit [%4]")).arg(strNick).arg(strZUO).arg(strIP).arg(strReason);
     else
-        strDisplay = QString("* %1 [%2] opu∂ci≥ irc [%3]").arg(strNick).arg(strIP).arg(strReason);
+        strDisplay = QString(tr("* %1 [%2] has quit [%3]")).arg(strNick).arg(strIP).arg(strReason);
 
     if (mNickAvatar->contains(strNick) == true)
         mNickAvatar->remove(strNick);
@@ -578,7 +578,7 @@ void IrcKernel::raw_kick()
         strReason = strReason.right(strReason.length()-1);
 
     QString strDisplay;
-    strDisplay = QString("* %1 zosta≥ wyrzucony z kana≥u %2 przez %3. PowÛd: %4").arg(strNick).arg(strChannel).arg(strWho).arg(strReason);
+    strDisplay = QString(tr("* %1 has been kicked from channel %2 by %3 Reason: %4")).arg(strNick).arg(strChannel).arg(strWho).arg(strReason);
 
     if (tabc->exist_tab(strChannel) == true)
         tabc->show_msg(strChannel, strDisplay, 4);
@@ -595,7 +595,7 @@ void IrcKernel::raw_kick()
         msgBox.setIcon(QMessageBox::Information);
         msgBox.setWindowIcon(QIcon(":/images/logo_64.png"));
         msgBox.setStandardButtons(QMessageBox::Ok);
-        msgBox.setText(QString("%1 wyrzuci≥ Cie z kana≥u %2. PowÛd: <br>%3").arg(strWho).arg(strChannel).arg(strReason));
+        msgBox.setText(QString(tr("You have been kicked from %1 by %2")+"<br>"+tr("Reason: %3")).arg(strWho).arg(strChannel).arg(strReason));
         msgBox.exec();
 
         tabc->remove_tab(strChannel);
@@ -628,13 +628,13 @@ void IrcKernel::raw_mode()
         {
             QString strFlag = strDataList[3];
             QString strDisplay;
-            if (strFlag == "+ips") strDisplay = QString("* Kana≥ %1 jest teraz kana≥em prywatnym (Ustawi≥ %2)").arg(strNickChannel).arg(strWho);
-            else if (strFlag == "-ips") strDisplay = QString("* Kana≥ %1 nie jest juø kana≥em prywatnym (Ustawi≥ %2)").arg(strNickChannel).arg(strWho);
-            else if (strFlag == "+m") strDisplay = QString("* Kana≥ %1 jest teraz kana≥em moderowanym (Ustawi≥ %2)").arg(strNickChannel).arg(strWho);
-            else if (strFlag == "-m") strDisplay = QString("* Kana≥ %1 nie jest juø kana≥em moderowanym (Ustawi≥ %2)").arg(strNickChannel).arg(strWho);
-            else if (strFlag == "+u") strDisplay = QString("* Kana≥ %1 jest teraz kana≥em audytywnym (Ustawi≥ %2)").arg(strNickChannel).arg(strWho);
-            else if (strFlag == "-u") strDisplay = QString("* Kana≥ %1 nie jest juø kana≥em audytywnym (Ustawi≥ %2)").arg(strNickChannel).arg(strWho);
-            else strDisplay = QString("* Kana≥ %1 ma teraz flage %2 (Ustawi≥ %3)").arg(strNickChannel).arg(strFlag).arg(strWho);
+            if (strFlag == "+ips") strDisplay = QString(tr("* Channel %1 is now a private channel (set by %2)")).arg(strNickChannel).arg(strWho);
+            else if (strFlag == "-ips") strDisplay = QString(tr("* Channel %1 is no longer a private channel (set by %2)")).arg(strNickChannel).arg(strWho);
+            else if (strFlag == "+m") strDisplay = QString(tr("* Channel %1 is now moderated channel (set by %2)")).arg(strNickChannel).arg(strWho);
+            else if (strFlag == "-m") strDisplay = QString(tr("* Channel %1 is no longer moderated channel (set by %2)")).arg(strNickChannel).arg(strWho);
+            else if (strFlag == "+u") strDisplay = QString(tr("* Channel %1 has now enabled auditorium mode (set by %2)")).arg(strNickChannel).arg(strWho);
+            else if (strFlag == "-u") strDisplay = QString(tr("* Channel %1 has no longer enabled auditorium mode (set by %2)")).arg(strNickChannel).arg(strWho);
+            else strDisplay = QString(tr("* Channel %1 now has a flag %2 (set by %3)").arg(strNickChannel).arg(strFlag)).arg(strWho);
             tabc->show_msg(strNickChannel, strDisplay, 5);
         }
         else
@@ -669,24 +669,24 @@ void IrcKernel::raw_mode()
 
                 if ((strFlag != "+e") && (strFlag != "-e"))
                 {
-                    if (strFlag == "+q") strDisplay = QString("* %1 jest teraz w≥a∂cicielem kana≥u %2 (Ustawi≥ %3)").arg(strNick).arg(strNickChannel).arg(strWho);
-                    else if (strFlag == "-q") strDisplay = QString("* %1 nie jest juø w≥a∂cicielem kana≥u %2 (Ustawi≥ %3)").arg(strNick).arg(strNickChannel).arg(strWho);
-                    else if (strFlag == "+o") strDisplay = QString("* %1 jest teraz super operatorem kana≥u %2 (Ustawi≥ %3)").arg(strNick).arg(strNickChannel).arg(strWho);
-                    else if (strFlag == "-o") strDisplay = QString("* %1 nie jest juø super operatorem kana≥u %2 (Ustawi≥ %3)").arg(strNick).arg(strNickChannel).arg(strWho);
-                    else if (strFlag == "+h") strDisplay = QString("* %1 jest teraz operatorem kana≥u %2 (Ustawi≥ %3)").arg(strNick).arg(strNickChannel).arg(strWho);
-                    else if (strFlag == "-h") strDisplay = QString("* %1 nie jest juø operatorem kana≥u %2 (Ustawi≥ %3)").arg(strNick).arg(strNickChannel).arg(strWho);
-                    else if (strFlag == "+v") strDisplay = QString("* %1 jest teraz go∂ciem kana≥u %2 (Ustawi≥ %3)").arg(strNick).arg(strNickChannel).arg(strWho);
-                    else if (strFlag == "-v") strDisplay = QString("* %1 nie jest juø go∂ciem kana≥u %2 (Ustawi≥ %3)").arg(strNick).arg(strNickChannel).arg(strWho);
-                    else if (strFlag == "+X") strDisplay = QString("* %1 jest teraz moderatorem kana≥u %2 (Ustawi≥ %3)").arg(strNick).arg(strNickChannel).arg(strWho);
-                    else if (strFlag == "-X") strDisplay = QString("* %1 nie jest juø moderatorem kana≥u %2 (Ustawi≥ %3)").arg(strNick).arg(strNickChannel).arg(strWho);
-                    else if (strFlag == "+Y") strDisplay = QString("* %1 jest teraz screenerem kana≥u %2 (Ustawi≥ %3)").arg(strNick).arg(strNickChannel).arg(strWho);
-                    else if (strFlag == "-Y") strDisplay = QString("* %1 nie jest juø screenerem kana≥u %2 (Ustawi≥ %3)").arg(strNick).arg(strNickChannel).arg(strWho);
-                    else if (strFlag == "+b") strDisplay = QString("* %1 jest teraz na li∂cie wyproszonych w %2 (Ustawi≥ %3)").arg(strNick).arg(strNickChannel).arg(strWho);
-                    else if (strFlag == "-b") strDisplay = QString("* %1 nie jest juø na li∂cie wyproszonych w %2 (Ustawi≥ %3)").arg(strNick).arg(strNickChannel).arg(strWho);
-                    else if (strFlag == "+I") strDisplay = QString("* %1 jest teraz na li∂cie zaproszonych w %2 (Ustawi≥ %3)").arg(strNick).arg(strNickChannel).arg(strWho);
-                    else if (strFlag == "-I") strDisplay = QString("* %1 nie jest juø na li∂cie zaproszonych w %2 (Ustawi≥ %3)").arg(strNick).arg(strNickChannel).arg(strWho);
+                    if (strFlag == "+q") strDisplay = QString(tr("* %1 is now the owner of the channel %2 (set by %3)")).arg(strNick).arg(strNickChannel).arg(strWho);
+                    else if (strFlag == "-q") strDisplay = QString(tr("* %1 is no longer the owner of the channel %2 (set by %3)")).arg(strNick).arg(strNickChannel).arg(strWho);
+                    else if (strFlag == "+o") strDisplay = QString(tr("* %1 is now super-operator on the channel %2 (set by %3)")).arg(strNick).arg(strNickChannel).arg(strWho);
+                    else if (strFlag == "-o") strDisplay = QString(tr("* %1 is no longer super-operator on the channel %2 (set by %3)")).arg(strNick).arg(strNickChannel).arg(strWho);
+                    else if (strFlag == "+h") strDisplay = QString(tr("* %1 is now the operator of the channel %2 (set by %3)")).arg(strNick).arg(strNickChannel).arg(strWho);
+                    else if (strFlag == "-h") strDisplay = QString(tr("* %1 is no longer the operator of the channel %2 (set by %3)")).arg(strNick).arg(strNickChannel).arg(strWho);
+                    else if (strFlag == "+v") strDisplay = QString(tr("* %1 is now a guest of channel %2 (set by %3)")).arg(strNick).arg(strNickChannel).arg(strWho);
+                    else if (strFlag == "-v") strDisplay = QString(tr("* %1 is no longer a guest of channel %2 (set by %3)")).arg(strNick).arg(strNickChannel).arg(strWho);
+                    else if (strFlag == "+X") strDisplay = QString(tr("* %1 is now moderator of the channel %2 (set by %3)")).arg(strNick).arg(strNickChannel).arg(strWho);
+                    else if (strFlag == "-X") strDisplay = QString(tr("* %1 is no longer moderating channel %2 (set by %3)")).arg(strNick).arg(strNickChannel).arg(strWho);
+                    else if (strFlag == "+Y") strDisplay = QString(tr("* %1 is now screener channel %2 (set by %3)")).arg(strNick).arg(strNickChannel).arg(strWho);
+                    else if (strFlag == "-Y") strDisplay = QString(tr("* %1 is no longer a screener channel %2 (set by %3)")).arg(strNick).arg(strNickChannel).arg(strWho);
+                    else if (strFlag == "+b") strDisplay = QString(tr("* %1 is now on the banned list in %2 (set by %3)")).arg(strNick).arg(strNickChannel).arg(strWho);
+                    else if (strFlag == "-b") strDisplay = QString(tr("* %1 is no longer on the banned list in %2 (set by %3)")).arg(strNick).arg(strNickChannel).arg(strWho);
+                    else if (strFlag == "+I") strDisplay = QString(tr("* %1 is now on the list of invitees in %2 (set by %3)")).arg(strNick).arg(strNickChannel).arg(strWho);
+                    else if (strFlag == "-I") strDisplay = QString(tr("* %1 is no longer on the list of invitees in %2 (set by %3)")).arg(strNick).arg(strNickChannel).arg(strWho);
                     else
-                        strDisplay = QString("* %1 ma teraz flage %2 (Ustawi≥ %3)").arg(strNick).arg(strFlag).arg(strWho);
+                        strDisplay = QString(tr("* %1 now has a flag %2 (set by %3)")).arg(strNick).arg(strFlag).arg(strWho);
 
                     tabc->show_msg(strNickChannel, strDisplay, 5);
                     tabc->change_flag(strNick, strNickChannel, strFlag);
@@ -704,16 +704,16 @@ void IrcKernel::raw_mode()
             if (strFlag[0] == ':') strFlag = strFlag.right(strFlag.length()-1);
             QString strDisplay;
 
-            if (strFlag == "+b") strDisplay = QString("* %1 jest oznaczony jako zajÍty").arg(strNickChannel);
-            else if (strFlag == "-b") strDisplay = QString("* %1 nie jest juø oznaczony jako zajÍty").arg(strNickChannel);
-            else if (strFlag == "+W") strDisplay = QString("* %1 ma teraz w≥±czon± kamerke publiczn±").arg(strNickChannel);
-            else if (strFlag == "-W") strDisplay = QString("* %1 ma teraz wy≥±czon± kamerke publiczn±").arg(strNickChannel);
-            else if (strFlag == "+V") strDisplay = QString("* %1 ma teraz w≥±czon± kamerke prywatn±").arg(strNickChannel);
-            else if (strFlag == "-V") strDisplay = QString("* %1 ma teraz wy≥±czon± kamerke prywatn±").arg(strNickChannel);
-            else if (strFlag == "+x") strDisplay = QString("* %1 ma teraz szyfrowane IP").arg(strNickChannel);
-            else if (strFlag == "-x") strDisplay = QString("* %1 nie ma juø szyfrowanego IP").arg(strNickChannel);
+            if (strFlag == "+b") strDisplay = QString(tr("* %1 is marked as busy")).arg(strNickChannel);
+            else if (strFlag == "-b") strDisplay = QString(tr("* %1 is no longer marked as busy")).arg(strNickChannel);
+            else if (strFlag == "+W") strDisplay = QString(tr("* %1 has now enabled public webcam")).arg(strNickChannel);
+            else if (strFlag == "-W") strDisplay = QString(tr("* %1 has no longer enabled public webcam")).arg(strNickChannel);
+            else if (strFlag == "+V") strDisplay = QString(tr("* %1 has now enabled private webcam")).arg(strNickChannel);
+            else if (strFlag == "-V") strDisplay = QString(tr("* %1 has no longer enabled private webcam")).arg(strNickChannel);
+            else if (strFlag == "+x") strDisplay = QString(tr("* %1 has now encrypted IP")).arg(strNickChannel);
+            else if (strFlag == "-x") strDisplay = QString(tr("* %1 has no longer encrypted IP")).arg(strNickChannel);
             else
-                strDisplay = QString("* %1 ma teraz flage %2").arg(strNickChannel).arg(strFlag);
+                strDisplay = QString(tr("* %1 now has a flag %2")).arg(strNickChannel).arg(strFlag);
 
             if ((strFlag != "+W") && (strFlag != "-W") && (strFlag != "+V") && (strFlag != "-V"))
                 tabc->show_msg("Status", strDisplay, 5);
@@ -725,12 +725,12 @@ void IrcKernel::raw_mode()
             QString strFlag = strDataList[3];
             QString strDisplay;
 
-            if (strFlag == "+r") strDisplay = QString("* %1 jest oznaczony jako ograniczony").arg(strNickChannel);
-            else if (strFlag == "-r") strDisplay = QString("* %1 nie jest juø oznaczony jako ograniczony").arg(strNickChannel);
-            else if (strFlag == "+b") strDisplay = QString("* %1 jest oznaczony jako zajÍty").arg(strNickChannel);
-            else if (strFlag == "-b") strDisplay = QString("* %1 nie jest juø oznaczony jako zajÍty").arg(strNickChannel);
+            if (strFlag == "+r") strDisplay = QString(tr("* %1 is marked as restricted")).arg(strNickChannel);
+            else if (strFlag == "-r") strDisplay = QString(tr("* %1 is no longer marked as restricted")).arg(strNickChannel);
+            else if (strFlag == "+b") strDisplay = QString(tr("* %1 is marked as busy")).arg(strNickChannel);
+            else if (strFlag == "-b") strDisplay = QString(tr("* %1 is no longer marked as busy")).arg(strNickChannel);
             else
-                strDisplay = QString("* %1 ma teraz flage %2").arg(strNickChannel).arg(strFlag);
+                strDisplay = QString(tr("* %1 now has a flag %2")).arg(strNickChannel).arg(strFlag);
 
             tabc->show_msg("Status", strDisplay, 5);
             tabc->change_flag(strNickChannel, strFlag);
@@ -817,7 +817,7 @@ void IrcKernel::raw_invite()
     // channel
     else
     {
-        QString strDisplay = QString("* %1[%2] zaprasza Cie do kana≥u %3. Napisz /j %4 aby tam wej∂Ê").arg(strWho).arg(strIP).arg(strWhere).arg(strWhere);
+        QString strDisplay = QString(tr("* %1 [%2] invites you to channel %3. Write /j %4 to get there")).arg(strWho).arg(strIP).arg(strWhere).arg(strWhere);
         tabc->show_msg_active(strDisplay, 7);
     }
 }
@@ -839,7 +839,7 @@ void IrcKernel::raw_topic()
     if (strMessage[0] == ':')
         strMessage = strMessage.right(strMessage.length()-1);
 
-    QString strDisplay = QString("* %1 ustawi≥ nowy temat: %2").arg(strWho).arg(strMessage);
+    QString strDisplay = QString(tr("* %1 changed the topic to: %2")).arg(strWho).arg(strMessage);
     tabc->show_msg(strChannel, strDisplay, 5);
 
     tabc->set_topic(strChannel, strMessage);
@@ -858,7 +858,7 @@ void IrcKernel::raw_invreject()
 
     QString strChannel = strDataList[3];
 
-    QString strDisplay = QString("* %1 odrzuci≥/a zaproszenie do rozmowy prywatnej").arg(strWho);
+    QString strDisplay = QString(tr("* %1 rejected an invitation to priv")).arg(strWho);
     tabc->show_msg(strChannel, strDisplay, 7);
 }
 
@@ -875,7 +875,7 @@ void IrcKernel::raw_invignore()
 
     QString strChannel = strDataList[3];
 
-    QString strDisplay = QString("* %1 zignorowa≥/a Twoje zaproszenie do rozmowy prywatnej").arg(strWho);
+    QString strDisplay = QString(tr("* %1 ignored your invitation to the priv")).arg(strWho);
     tabc->show_msg(strChannel, strDisplay, 7);
 
     tabc->rename_tab(strChannel, strWho);
@@ -971,7 +971,7 @@ void IrcKernel::raw_001()
 
 }
 
-// :GuardServ!service@service.onet NOTICE scc_test :109 #scc :rzucanie miÍsem nie bÍdzie tolerowane
+// :GuardServ!service@service.onet NOTICE scc_test :109 #scc :rzucanie miƒôsem nie bƒôdzie tolerowane
 void IrcKernel::raw_109n()
 {
     if (strDataList.value(3).isEmpty() == true) return;
@@ -1251,7 +1251,7 @@ void IrcKernel::raw_164n()
 // ignore
 }
 
-// :ChanServ!service@service.onet NOTICE ~test :165 #Relax :Nie waøne, czy szukasz dobrej zabawy, ...
+// :ChanServ!service@service.onet NOTICE ~test :165 #Relax :Nie wa≈ºne, czy szukasz dobrej zabawy, ...
 void IrcKernel::raw_165n()
 {
     if (strDataList.value(4).isEmpty() == true) return;
@@ -1271,7 +1271,7 @@ void IrcKernel::raw_220n()
 
     QString strNick = strDataList[4];
 
-    QString strDisplay = QString("* Dodano nick %1 do listy przyjaciÛ≥").arg(strNick);
+    QString strDisplay = QString(tr("* Added the nickname %1 to a friends list")).arg(strNick);
     tabc->show_msg_active(strDisplay, 7);
 }
 
@@ -1282,7 +1282,7 @@ void IrcKernel::raw_221n()
 
     QString strNick = strDataList[4];
 
-    QString strDisplay = QString("* UsuniÍto nick %1 z listy przyjaciÛ≥").arg(strNick);
+    QString strDisplay = QString(tr("* Removed the nickname %1 from your friends list")).arg(strNick);
     tabc->show_msg_active(strDisplay, 7);
 }
 
@@ -1293,7 +1293,7 @@ void IrcKernel::raw_230n()
 
     QString strNick = strDataList[4];
 
-    QString strDisplay = QString("* Dodano %1 do listy ignorowanych").arg(strNick);
+    QString strDisplay = QString(tr("* Added %1 to your ignore list")).arg(strNick);
     tabc->show_msg_active(strDisplay, 7);
 
     dlgignore->clear();
@@ -1307,7 +1307,7 @@ void IrcKernel::raw_231n()
 
     QString strNick = strDataList[4];
 
-    QString strDisplay = QString("* UsuniÍto %1 z listy ignorowanych").arg(strNick);
+    QString strDisplay = QString(tr("* Removed %1 from your ignore list")).arg(strNick);
     tabc->show_msg_active(strDisplay, 7);
 
     dlgignore->clear();
@@ -1321,7 +1321,7 @@ void IrcKernel::raw_240n()
 
     QString strChannel = strDataList[4];
 
-    QString strDisplay = QString("* Dodano kana≥ %1 do listy ulubionych").arg(strChannel);
+    QString strDisplay = QString(tr("* Added %1 channel to your favorites list")).arg(strChannel);
     tabc->show_msg_active(strDisplay, 7);
 
     dlgchannel_favourites->clear();
@@ -1335,7 +1335,7 @@ void IrcKernel::raw_241n()
 
     QString strChannel = strDataList[4];
 
-    QString strDisplay = QString("* UsuniÍto kana≥ %1 z listy ulubionych").arg(strChannel);
+    QString strDisplay = QString(tr("* Removed channel %1 from your favorites list")).arg(strChannel);
     tabc->show_msg_active(strDisplay, 7);
 
     dlgchannel_favourites->clear();
@@ -1353,7 +1353,7 @@ void IrcKernel::raw_250n()
     msgBox.setIcon(QMessageBox::Information);
     msgBox.setWindowIcon(QIcon(":/images/logo_64.png"));
     msgBox.setStandardButtons(QMessageBox::Ok);
-    msgBox.setText(QString("Pomy∂lnie utworzono kana≥ %1").arg(strChannel));
+    msgBox.setText(QString(tr("Successfully created a channel %1")).arg(strChannel));
     msgBox.exec();
 
     dlgchannel_homes->clear();
@@ -1368,7 +1368,7 @@ void IrcKernel::raw_251n()
 
     QString strChannel = strDataList[4];
 
-    QString strDisplay = QString("* UsuniÍto kana≥ %1").arg(strChannel);
+    QString strDisplay = QString(tr("* Channel %1 has been removed")).arg(strChannel);
     tabc->show_msg_active(strDisplay, 5);
 }
 
@@ -1379,7 +1379,7 @@ void IrcKernel::raw_252n()
 
     QString strChannel = strDataList[2];
 
-    QString strDisplay = QString("* Potwierdzam usuniÍcie kana≥u %1").arg(strChannel);
+    QString strDisplay = QString(tr("* Confirmed the removal of the channel %1")).arg(strChannel);
     tabc->show_msg(strChannel, strDisplay, 5);
 }
 
@@ -1394,7 +1394,7 @@ void IrcKernel::raw_253n()
     QString strWho = strDataList[2];
     QString strNick = strDataList[5];
 
-    QString strDisplay = QString("* %1 jest teraz w≥a∂cicielem kana≥u %2 (Ustawi≥ %3)").arg(strNick).arg(strChannel).arg(strWho);
+    QString strDisplay = QString(tr("* %1 is now the owner of the channel %2 (set by %3)")).arg(strNick).arg(strChannel).arg(strWho);
     tabc->show_msg(strChannel, strDisplay, 5);
 }
 
@@ -1408,7 +1408,7 @@ void IrcKernel::raw_254n()
     QString strWho = strDataList[4];
     QString strNick = strDataList[5];
 
-    QString strDisplay = QString("* %1 jest teraz w≥a∂cicielem kana≥u %2 (Ustawi≥ %3)").arg(strNick).arg(strChannel).arg(strWho);
+    QString strDisplay = QString(tr("* %1 is now the owner of the channel %2 (set by %3)")).arg(strNick).arg(strChannel).arg(strWho);
     tabc->show_msg(strChannel, strDisplay, 5);
 }
 
@@ -1422,7 +1422,7 @@ void IrcKernel::raw_255n()
     QString strChannel = strDataList[4];
     QString strNick = strDataList[6];
 
-    QString strDisplay = QString("* Potwierdzam zmianÍ uprawnieÒ dla %1 w %2").arg(strNick).arg(strChannel);
+    QString strDisplay = QString(tr("* Changing privileges confirmed for %1 at %2")).arg(strNick).arg(strChannel);
     tabc->show_msg_active(strDisplay, 5);
 }
 
@@ -1439,24 +1439,24 @@ void IrcKernel::raw_256n()
     QString strNick = strDataList[6];
     QString strDisplay;
 
-    if (strFlag == "+q") strDisplay = QString("* %1 jest teraz w≥a∂cicielem kana≥u %2 (Ustawi≥ %3)").arg(strNick).arg(strChannel).arg(strWho);
-    else if (strFlag == "-q") strDisplay = QString("* %1 nie jest juø w≥a∂cicielem kana≥u %2 (Ustawi≥ %3)").arg(strNick).arg(strChannel).arg(strWho);
-    else if (strFlag == "+o") strDisplay = QString("* %1 jest teraz super operatorem kana≥u %2 (Ustawi≥ %3)").arg(strNick).arg(strChannel).arg(strWho);
-    else if (strFlag == "-o") strDisplay = QString("* %1 nie jest juø super operatorem kana≥u %2 (Ustawi≥ %3)").arg(strNick).arg(strChannel).arg(strWho);
-    else if (strFlag == "+h") strDisplay = QString("* %1 jest teraz operatorem kana≥u %2 (Ustawi≥ %3)").arg(strNick).arg(strChannel).arg(strWho);
-    else if (strFlag == "-h") strDisplay = QString("* %1 nie jest juø operatorem kana≥u %2 (Ustawi≥ %3)").arg(strNick).arg(strChannel).arg(strWho);
-    else if (strFlag == "+v") strDisplay = QString("* %1 jest teraz go∂ciem kana≥u %2 (Ustawi≥ %3)").arg(strNick).arg(strChannel).arg(strWho);
-    else if (strFlag == "-v") strDisplay = QString("* %1 nie jest juø go∂ciem kana≥u %2 (Ustawi≥ %3)").arg(strNick).arg(strChannel).arg(strWho);
-    else if (strFlag == "+X") strDisplay = QString("* %1 jest teraz moderatorem kana≥u %2 (Ustawi≥ %3)").arg(strNick).arg(strChannel).arg(strWho);
-    else if (strFlag == "-X") strDisplay = QString("* %1 nie jest juø moderatorem kana≥u %2 (Ustawi≥ %3)").arg(strNick).arg(strChannel).arg(strWho);
-    else if (strFlag == "+Y") strDisplay = QString("* %1 jest teraz screenerem kana≥u %2 (Ustawi≥ %3)").arg(strNick).arg(strChannel).arg(strWho);
-    else if (strFlag == "-Y") strDisplay = QString("* %1 nie jest juø screenerem kana≥u %2 (Ustawi≥ %3)").arg(strNick).arg(strChannel).arg(strWho);
-    else if (strFlag == "+b") strDisplay = QString("* %1 jest teraz na li∂cie wyproszonych w %2 (Ustawi≥ %3)").arg(strNick).arg(strChannel).arg(strWho);
-    else if (strFlag == "-b") strDisplay = QString("* %1 nie jest juø na li∂cie wyproszonych w %2 (Ustawi≥ %3)").arg(strNick).arg(strChannel).arg(strWho);
-    else if (strFlag == "+I") strDisplay = QString("* %1 jest teraz na li∂cie zaproszonych w %2 (Ustawi≥ %3)").arg(strNick).arg(strChannel).arg(strWho);
-    else if (strFlag == "-I") strDisplay = QString("* %1 nie jest juø na li∂cie zaproszonych w %2 (Ustawi≥ %3)").arg(strNick).arg(strChannel).arg(strWho);
+    if (strFlag == "+q") strDisplay = QString(tr("* %1 is now the owner of the channel %2 (set by %3)")).arg(strNick).arg(strChannel).arg(strWho);
+    else if (strFlag == "-q") strDisplay = QString(tr("* %1 is no longer the owner of the channel %2 (set by %3)")).arg(strNick).arg(strChannel).arg(strWho);
+    else if (strFlag == "+o") strDisplay = QString(tr("* %1 is now super-operator on the channel %2 (set by %3)")).arg(strNick).arg(strChannel).arg(strWho);
+    else if (strFlag == "-o") strDisplay = QString(tr("* %1 is no longer super-operator on the channel %2 (set by %3)")).arg(strNick).arg(strChannel).arg(strWho);
+    else if (strFlag == "+h") strDisplay = QString(tr("* %1 is now the operator of the channel %2 (set by %3)")).arg(strNick).arg(strChannel).arg(strWho);
+    else if (strFlag == "-h") strDisplay = QString(tr("* %1 is no longer the operator of the channel %2 (set by %3)")).arg(strNick).arg(strChannel).arg(strWho);
+    else if (strFlag == "+v") strDisplay = QString(tr("* %1 is now a guest of channel %2 (set by %3)")).arg(strNick).arg(strChannel).arg(strWho);
+    else if (strFlag == "-v") strDisplay = QString(tr("* %1 is no longer a guest of channel %2 (set by %3)")).arg(strNick).arg(strChannel).arg(strWho);
+    else if (strFlag == "+X") strDisplay = QString(tr("* %1 is now moderator of the channel %2 (set by %3)")).arg(strNick).arg(strChannel).arg(strWho);
+    else if (strFlag == "-X") strDisplay = QString(tr("* %1 is no longer moderating channel %2 (set by %3)")).arg(strNick).arg(strChannel).arg(strWho);
+    else if (strFlag == "+Y") strDisplay = QString(tr("* %1 is now screener channel %2 (set by %3)")).arg(strNick).arg(strChannel).arg(strWho);
+    else if (strFlag == "-Y") strDisplay = QString(tr("* %1 is no longer a screener channel %2 (set by %3)")).arg(strNick).arg(strChannel).arg(strWho);
+    else if (strFlag == "+b") strDisplay = QString(tr("* %1 is now on the banned list in %2 (set by %3)")).arg(strNick).arg(strChannel).arg(strWho);
+    else if (strFlag == "-b") strDisplay = QString(tr("* %1 is no longer on the banned list in %2 (set by %3)")).arg(strNick).arg(strChannel).arg(strWho);
+    else if (strFlag == "+I") strDisplay = QString(tr("* %1 is now on the list of invitees in %2 (set by %3)")).arg(strNick).arg(strChannel).arg(strWho);
+    else if (strFlag == "-I") strDisplay = QString(tr("* %1 is no longer on the list of invitees in %2 (set by %3)")).arg(strNick).arg(strChannel).arg(strWho);
     else
-        strDisplay = QString("* %1 ma teraz flage %2 (Ustawi≥ %3)").arg(strNick).arg(strFlag).arg(strWho);
+        strDisplay = QString(tr("* %1 now has a flag %2 (set by %3)")).arg(strNick).arg(strFlag).arg(strWho);
 
     tabc->show_msg(strChannel, strDisplay, 5);
 }
@@ -1479,7 +1479,7 @@ void IrcKernel::raw_258n()
     QString strChannel = strDataList[2];
     QString strNick = strDataList[4];
 
-    QString strDisplay = QString("* %1 zmieni≥/a ustawienia kana≥u %2").arg(strNick).arg(strChannel);
+    QString strDisplay = QString(tr("* %1 changed channel %2 settings")).arg(strNick).arg(strChannel);
     tabc->show_msg(strChannel, strDisplay, 7);
 
     pNetwork->send(QString("CS INFO %1 i").arg(strChannel));
@@ -1492,7 +1492,7 @@ void IrcKernel::raw_259n()
 
     QString strChannel = strDataList[4];
 
-    QString strDisplay = QString("* Nic nie zmieniono w %1").arg(strChannel);
+    QString strDisplay = QString(tr("* Nothing changed in %1")).arg(strChannel);
     tabc->show_msg_active(strDisplay, 7);
 }
 
@@ -1510,24 +1510,24 @@ void IrcKernel::raw_260n()
     QString strNick = strDataList[2];
     QString strDisplay;
 
-    if (strFlag == "+q") strDisplay = QString("* %1 jest teraz w≥a∂cicielem kana≥u %2 (Ustawi≥ %3)").arg(strNick).arg(strChannel).arg(strWho);
-    else if (strFlag == "-q") strDisplay = QString("* %1 nie jest juø w≥a∂cicielem kana≥u %2 (Ustawi≥ %3)").arg(strNick).arg(strChannel).arg(strWho);
-    else if (strFlag == "+o") strDisplay = QString("* %1 jest teraz super operatorem kana≥u %2 (Ustawi≥ %3)").arg(strNick).arg(strChannel).arg(strWho);
-    else if (strFlag == "-o") strDisplay = QString("* %1 nie jest juø super operatorem kana≥u %2 (Ustawi≥ %3)").arg(strNick).arg(strChannel).arg(strWho);
-    else if (strFlag == "+h") strDisplay = QString("* %1 jest teraz operatorem kana≥u %2 (Ustawi≥ %3)").arg(strNick).arg(strChannel).arg(strWho);
-    else if (strFlag == "-h") strDisplay = QString("* %1 nie jest juø operatorem kana≥u %2 (Ustawi≥ %3)").arg(strNick).arg(strChannel).arg(strWho);
-    else if (strFlag == "+v") strDisplay = QString("* %1 jest teraz go∂ciem kana≥u %2 (Ustawi≥ %3)").arg(strNick).arg(strChannel).arg(strWho);
-    else if (strFlag == "-v") strDisplay = QString("* %1 nie jest juø go∂ciem kana≥u %2 (Ustawi≥ %3)").arg(strNick).arg(strChannel).arg(strWho);
-    else if (strFlag == "+X") strDisplay = QString("* %1 jest teraz moderatorem kana≥u %2 (Ustawi≥ %3)").arg(strNick).arg(strChannel).arg(strWho);
-    else if (strFlag == "-X") strDisplay = QString("* %1 nie jest juø moderatorem kana≥u %2 (Ustawi≥ %3)").arg(strNick).arg(strChannel).arg(strWho);
-    else if (strFlag == "+Y") strDisplay = QString("* %1 jest teraz screenerem kana≥u %2 (Ustawi≥ %3)").arg(strNick).arg(strChannel).arg(strWho);
-    else if (strFlag == "-Y") strDisplay = QString("* %1 nie jest juø screenerem kana≥u %2 (Ustawi≥ %3)").arg(strNick).arg(strChannel).arg(strWho);
-    else if (strFlag == "+b") strDisplay = QString("* %1 jest teraz na li∂cie wyproszonych w %2 (Ustawi≥ %3)").arg(strNick).arg(strChannel).arg(strWho);
-    else if (strFlag == "-b") strDisplay = QString("* %1 nie jest juø na li∂cie wyproszonych w %2 (Ustawi≥ %3)").arg(strNick).arg(strChannel).arg(strWho);
-    else if (strFlag == "+I") strDisplay = QString("* %1 jest teraz na li∂cie zaproszonych w %2 (Ustawi≥ %3)").arg(strNick).arg(strChannel).arg(strWho);
-    else if (strFlag == "-I") strDisplay = QString("* %1 nie jest juø na li∂cie zaproszonych w %2 (Ustawi≥ %3)").arg(strNick).arg(strChannel).arg(strWho);
+    if (strFlag == "+q") strDisplay = QString(tr("* %1 is now the owner of the channel %2 (set by %3)")).arg(strNick).arg(strChannel).arg(strWho);
+    else if (strFlag == "-q") strDisplay = QString(tr("* %1 is no longer the owner of the channel %2 (set by %3)")).arg(strNick).arg(strChannel).arg(strWho);
+    else if (strFlag == "+o") strDisplay = QString(tr("* %1 is now super-operator on the channel %2 (set by %3)")).arg(strNick).arg(strChannel).arg(strWho);
+    else if (strFlag == "-o") strDisplay = QString(tr("* %1 is no longer super-operator on the channel %2 (set by %3)")).arg(strNick).arg(strChannel).arg(strWho);
+    else if (strFlag == "+h") strDisplay = QString(tr("* %1 is now the operator of the channel %2 (set by %3)")).arg(strNick).arg(strChannel).arg(strWho);
+    else if (strFlag == "-h") strDisplay = QString(tr("* %1 is no longer the operator of the channel %2 (set by %3)")).arg(strNick).arg(strChannel).arg(strWho);
+    else if (strFlag == "+v") strDisplay = QString(tr("* %1 is now a guest of channel %2 (set by %3)")).arg(strNick).arg(strChannel).arg(strWho);
+    else if (strFlag == "-v") strDisplay = QString(tr("* %1 is no longer a guest of channel %2 (set by %3)")).arg(strNick).arg(strChannel).arg(strWho);
+    else if (strFlag == "+X") strDisplay = QString(tr("* %1 is now moderator of the channel %2 (set by %3)")).arg(strNick).arg(strChannel).arg(strWho);
+    else if (strFlag == "-X") strDisplay = QString(tr("* %1 is no longer moderating channel %2 (set by %3)")).arg(strNick).arg(strChannel).arg(strWho);
+    else if (strFlag == "+Y") strDisplay = QString(tr("* %1 is now screener channel %2 (set by %3)")).arg(strNick).arg(strChannel).arg(strWho);
+    else if (strFlag == "-Y") strDisplay = QString(tr("* %1 is no longer a screener channel %2 (set by %3)")).arg(strNick).arg(strChannel).arg(strWho);
+    else if (strFlag == "+b") strDisplay = QString(tr("* %1 is now on the banned list in %2 (set by %3)")).arg(strNick).arg(strChannel).arg(strWho);
+    else if (strFlag == "-b") strDisplay = QString(tr("* %1 is no longer on the banned list in %2 (set by %3)")).arg(strNick).arg(strChannel).arg(strWho);
+    else if (strFlag == "+I") strDisplay = QString(tr("* %1 is now on the list of invitees in %2 (set by %3)")).arg(strNick).arg(strChannel).arg(strWho);
+    else if (strFlag == "-I") strDisplay = QString(tr("* %1 is no longer on the list of invitees in %2 (set by %3)")).arg(strNick).arg(strChannel).arg(strWho);
     else
-        strDisplay = QString("* %1 ma teraz flage %2 (Ustawi≥ %3)").arg(strNick).arg(strFlag).arg(strWho);
+        strDisplay = QString(tr("* %1 now has a flag %2 (set by %3)")).arg(strNick).arg(strFlag).arg(strWho);
 
     tabc->show_msg(strChannel, strDisplay, 5);
 }
@@ -1544,7 +1544,7 @@ void IrcKernel::raw_261n()
     msgBox.setIcon(QMessageBox::Information);
     msgBox.setWindowIcon(QIcon(":/images/logo_64.png"));
     msgBox.setStandardButtons(QMessageBox::Ok);
-    msgBox.setText(QString("Pomy∂lnie usuniÍto kana≥ %1").arg(strChannel));
+    msgBox.setText(QString(tr("Successfully removed channel %1")).arg(strChannel));
     msgBox.exec();
 
     dlgchannel_homes->clear();
@@ -1564,21 +1564,21 @@ void IrcKernel::raw_301()
     if (strMessage[0] == ':')
         strMessage = strMessage.right(strMessage.length()-1);
 
-    QString strDisplay = QString("* %1 jest nieobecny z powodu: %2").arg(strNick).arg(strMessage);
+    QString strDisplay = QString(tr("%1 is away: %2")).arg(strNick).arg(strMessage);
     tabc->show_msg_active(strDisplay, 7);
 }
 
 // :cf1f3.onet 305 scc_test :You are no longer marked as being away
 void IrcKernel::raw_305()
 {
-    QString strDisplay = "* Nie jeste∂ juø oznaczony \"zaraz wracam\".";
+    QString strDisplay = tr("You are no longer marked as being away");
     tabc->show_msg_all(strDisplay, 7);
 }
 
 // :cf1f3.onet 306 scc_test :You have been marked as being away
 void IrcKernel::raw_306()
 {
-    QString strDisplay = "* Jeste∂ teraz oznaczony \"zaraz wracam\".";
+    QString strDisplay = tr("You have been marked as being away");
     tabc->show_msg_all(strDisplay, 7);
 }
 
@@ -1595,7 +1595,7 @@ void IrcKernel::raw_307()
         strMessage = strMessage.right(strMessage.length()-1);
 
     if (strMessage == "is a registered nick")
-        strMessage = "jest zarejestrowanym uøytkownikiem";
+        strMessage = tr("is a registered nick");
 
     QString strDisplay = QString("* %1 %2").arg(strNick).arg(strMessage);
     tabc->show_msg_active(strDisplay, 7);
@@ -1618,10 +1618,10 @@ void IrcKernel::raw_311()
     if (strIrcname[0] == ':')
         strIrcname = strIrcname.right(strIrcname.length()-1);
 
-    QString strDisplayNick = QString("* %1 to %2@%3").arg(strNick).arg(strZUO).arg(strIP);
+    QString strDisplayNick = QString(tr("* %1 is %2@%3")).arg(strNick).arg(strZUO).arg(strIP);
     tabc->show_msg_active(strDisplayNick, 7);
 
-    QString strDisplayIrcname = QString("* %1 ircname: %2").arg(strNick).arg(strIrcname);
+    QString strDisplayIrcname = QString(tr("* %1 ircname: %2")).arg(strNick).arg(strIrcname);
     tabc->show_msg_active(strDisplayIrcname, 7);
 }
 
@@ -1635,7 +1635,7 @@ void IrcKernel::raw_312()
     QString strServer;
     for (int i = 4; i < strDataList.size(); i++) { if (i != 4) strServer += " "; strServer += strDataList[i]; }
 
-    QString strDisplay = QString("* %1 uøywa serwera: %2").arg(strNick).arg(strServer);
+    QString strDisplay = QString(tr("* %1 is online via %2")).arg(strNick).arg(strServer);
     tabc->show_msg_active(strDisplay, 7);
 }
 
@@ -1646,7 +1646,7 @@ void IrcKernel::raw_313()
 
     QString strNick = strDataList[3];
 
-    QString strDisplay = QString("* %1 jest administratorem czata").arg(strNick);
+    QString strDisplay = QString(tr("* %1 is a GlobalOp on OnetCzat")).arg(strNick);
     tabc->show_msg_active(strDisplay, 7);
 }
 
@@ -1685,10 +1685,10 @@ void IrcKernel::raw_317()
     QDateTime dt_time = QDateTime::fromTime_t(strTime.toInt());
     QString strDT_time = dt_time.toString("dd/MM/yyyy hh:mm:ss");
 
-    QString strDisplayIdle = QString("* %1 jest nieobecny %2").arg(strNick).arg(strDT_idle);
+    QString strDisplayIdle = QString(tr("* %1 is away %2")).arg(strNick).arg(strDT_idle);
     tabc->show_msg_active(strDisplayIdle, 7);
 
-    QString strDisplaySignon = QString("* %1 jest zalogowany od %2").arg(strNick).arg(strDT_time);
+    QString strDisplaySignon = QString(tr("* %1 is logged in since %2")).arg(strNick).arg(strDT_time);
     tabc->show_msg_active(strDisplaySignon, 7);
 }
 
@@ -1717,7 +1717,7 @@ void IrcKernel::raw_319()
         strChannels += strChannel;
     }
 
-    QString strDisplay = QString("* %1 jest na kana≥ach: %2").arg(strNick).arg(strChannels);
+    QString strDisplay = QString(tr("* %1 is on channels: %2")).arg(strNick).arg(strChannels);
     tabc->show_msg_active(strDisplay, 7);
 }
 
@@ -1821,7 +1821,7 @@ void IrcKernel::raw_372()
 // :cf1f4.onet 375 scc_test :cf1f4.onet message of the day
 void IrcKernel::raw_375()
 {
-    QString strDisplay = "Wiadomo∂Ê dla uøytkownikÛw:";
+    QString strDisplay = tr("Message Of The Day:");
     tabc->show_msg("Status", strDisplay, 0);
 }
 
@@ -1838,7 +1838,7 @@ void IrcKernel::raw_396()
 
     QString strHost = strDataList[3];
 
-    QString strMessage = QString("* %1 jest teraz Twoim wy∂wietlanym hostem").arg(strHost);
+    QString strMessage = QString(tr("* %1 is now your displayed host")).arg(strHost);
 
     tabc->show_msg_active(strMessage, 7);
 }
@@ -1848,7 +1848,7 @@ void IrcKernel::raw_400n()
 {
     QString strNick = strDataList[2];
 
-    QString strMessage = QString("* %1 :Nick nie jest zarejestrowany").arg(strNick);
+    QString strMessage = QString(tr("* %1: Nick is not registered")).arg(strNick);
 
     tabc->show_msg_active(strMessage, 7);
 }
@@ -1868,11 +1868,11 @@ void IrcKernel::raw_401()
         strMessage = strMessage.right(strMessage.length()-1);
 
     if (strMessage == "No such nick")
-        strMessage = QString("* %1 :Nick nie istnieje").arg(strNick);
+        strMessage = QString(tr("* %1 :No such nick")).arg(strNick);
     else if (strMessage == "No such nick/channel")
-        strMessage = QString("* %1 :Nick lub kana≥ nie istnieje").arg(strNick);
+        strMessage = QString(tr("* %1 :No such nick/channel")).arg(strNick);
     else if (strMessage == "is currently unavailable. Please try again later.")
-        strMessage = QString("* %1 jest aktualnie niedostÍpny. SprÛbuj ponownie pÛºniej.").arg(strNick);
+        strMessage = QString(tr("* %1 is currently unavailable. Please try again later.")).arg(strNick);
 
     tabc->show_msg_active(strMessage, 7);
 }
@@ -1885,7 +1885,7 @@ void IrcKernel::raw_401n()
 
     QString strNick = strDataList[4];
 
-    QString strMessage = QString("* %1 :Nick nie istnieje").arg(strNick);
+    QString strMessage = QString(tr("* %1 :Nick does not exist")).arg(strNick);
 
     tabc->show_msg_active(strMessage, 7);
 }
@@ -1897,7 +1897,7 @@ void IrcKernel::raw_403()
 
     QString strChannel = strDataList[3];
 
-    QString strMessage = QString("* %1 :Nieprawid≥owa nazwa kana≥u").arg(strChannel);
+    QString strMessage = QString(tr("* %1 :Invalid channel name")).arg(strChannel);
 
     tabc->show_msg_active(strMessage, 7);
 }
@@ -1920,9 +1920,9 @@ void IrcKernel::raw_404()
         strReason = strReason.left(strReason.length()-1);
 
     if (strReason == "+m")
-        strReason = "Brak moderatora na kanale!";
+        strReason = tr("No moderator on the channel!");
 
-    QString strMessage = QString("* Nie mozna wys≥aÊ wiadomo∂ci do %1: %2").arg(strChannel).arg(strReason);
+    QString strMessage = QString(tr("* Unable to send a message to %1: %2")).arg(strChannel).arg(strReason);
 
     tabc->show_msg_active(strMessage, 7);
 }
@@ -1935,7 +1935,7 @@ void IrcKernel::raw_404n()
 
     QString strNick = strDataList[4];
 
-    QString strMessage = QString("* %1 :Nick nie jest zarejestrowany").arg(strNick);
+    QString strMessage = QString(tr("* %1 :User is not registred")).arg(strNick);
 
     tabc->show_msg_active(strMessage, 7);
 }
@@ -1948,7 +1948,7 @@ void IrcKernel::raw_406n()
 
     QString strCmd = strDataList[4];
 
-    QString strMessage = QString("* %1 :Nieznane polecenie").arg(strCmd);
+    QString strMessage = QString(tr("* %1 :Unknown command")).arg(strCmd);
 
     tabc->show_msg_active(strMessage, 7);
 }
@@ -1961,7 +1961,7 @@ void IrcKernel::raw_407n()
 
     QString strCmd = strDataList[4];
 
-    QString strMessage = QString("* %1 :Nie wystarczaj±ca ilo∂Ê parametrÛw").arg(strCmd);
+    QString strMessage = QString(tr("* %1 :Not enough parameters")).arg(strCmd);
 
     tabc->show_msg_active(strMessage, 7);
 }
@@ -1974,7 +1974,7 @@ void IrcKernel::raw_408n()
 
     QString strChannel = strDataList[4];
 
-    QString strMessage = QString("* %1 :Nie ma takiego kana≥u").arg(strChannel);
+    QString strMessage = QString(tr("* %1 :No such channel")).arg(strChannel);
 
     tabc->show_msg_active(strMessage, 7);
 
@@ -1995,7 +1995,7 @@ void IrcKernel::raw_421()
 
     QString strCmd = strDataList[3];
 
-    QString strMessage = QString("* %1 :Nieznane polecenie").arg(strCmd);
+    QString strMessage = QString(tr("* %1 :Unknown command")).arg(strCmd);
 
     tabc->show_msg_active(strMessage, 7);
 }
@@ -2008,7 +2008,7 @@ void IrcKernel::raw_420n()
 
     QString strNick = strDataList[4];
 
-    QString strMessage = QString("* Nick %1 jest juø na li∂cie przyjaciÛ≥").arg(strNick);
+    QString strMessage = QString(tr("* Nick %1 is already on your friend list")).arg(strNick);
 
     tabc->show_msg_active(strMessage, 7);
 }
@@ -2021,7 +2021,7 @@ void IrcKernel::raw_421n()
 
     QString strNick = strDataList[4];
 
-    QString strMessage = QString("* Nick %1 nie jest na li∂cie przyjaciÛ≥").arg(strNick);
+    QString strMessage = QString(tr("* Nick %1 is not on your friend list")).arg(strNick);
 
     tabc->show_msg_active(strMessage, 7);
 }
@@ -2034,7 +2034,7 @@ void IrcKernel::raw_430n()
 
     QString strNick = strDataList[4];
 
-    QString strMessage = QString("* %1 jest juø na li∂cie ignorowanych").arg(strNick);
+    QString strMessage = QString(tr("* %1 is already on your ignore list")).arg(strNick);
 
     tabc->show_msg_active(strMessage, 7);
 }
@@ -2047,7 +2047,7 @@ void IrcKernel::raw_431n()
 
     QString strNick = strDataList[4];
 
-    QString strMessage = QString("* %1 nie jest na li∂cie ignorowanych").arg(strNick);
+    QString strMessage = QString(tr("* %1 is not on your ignore list")).arg(strNick);
 
     tabc->show_msg_active(strMessage, 7);
 
@@ -2062,7 +2062,7 @@ void IrcKernel::raw_432()
 
     QString strNick = strDataList[3];
 
-    QString strMessage = QString("* Nick %1 jest nieprawid≥owy").arg(strNick);
+    QString strMessage = QString(tr("* %1 :Erroneous Nickname")).arg(strNick);
 
     tabc->show_msg_all(strMessage, 9);
 }
@@ -2074,7 +2074,7 @@ void IrcKernel::raw_433()
 
     QString strNick = strDataList[3];
 
-    QString strMessage = QString("* Nick %1 jest juø w uøyciu").arg(strNick);
+    QString strMessage = QString(tr("* Nickname %1 is already in use.")).arg(strNick);
 
     tabc->show_msg_all(strMessage, 9);
 
@@ -2089,7 +2089,7 @@ void IrcKernel::raw_440n()
 
     QString strChannel = strDataList[4];
 
-    QString strMessage = QString("* Kana≥ %1 jest juø na li∂cie ulubionych").arg(strChannel);
+    QString strMessage = QString(tr("* Channel %1 is already on your favourite list")).arg(strChannel);
 
     tabc->show_msg_active(strMessage, 7);
 }
@@ -2102,7 +2102,7 @@ void IrcKernel::raw_441n()
 
     QString strChannel = strDataList[4];
 
-    QString strMessage = QString("* Kana≥ %1 nie jest na li∂cie ulubionych").arg(strChannel);
+    QString strMessage = QString(tr("* Channel %1 is not on your favourite list")).arg(strChannel);
 
     tabc->show_msg_active(strMessage, 7);
 }
@@ -2116,7 +2116,7 @@ void IrcKernel::raw_443()
     QString strNick = strDataList[3];
     QString strChannel = strDataList[4];
 
-    QString strMessage = QString("* %1 jest juø na kanale %2").arg(strNick).arg(strChannel);
+    QString strMessage = QString(tr("* %1 is already on channel %2")).arg(strNick).arg(strChannel);
 
     tabc->show_msg_active(strMessage, 7);
 }
@@ -2126,7 +2126,7 @@ void IrcKernel::raw_451()
 {
     QString strCommand = strDataList[2];
 
-    QString strMessage = QString("* Nie jeste∂ zarejestrowany by wywo≥aÊ %1").arg(strCommand);
+    QString strMessage = QString(tr("* You have not registered to perform operation %1")).arg(strCommand);
     tabc->show_msg_active(strMessage, 7);
 }
 
@@ -2138,7 +2138,7 @@ void IrcKernel::raw_452n()
 
     QString strChannel = strDataList[4];
 
-    QString strMessage = QString("* %1 :Nazwa kana≥u juø istnieje").arg(strChannel);
+    QString strMessage = QString(tr("* %1 :Channel name already in use")).arg(strChannel);
     tabc->show_msg_active(strMessage, 7);
 
     dlgchannel_homes->clear();
@@ -2153,7 +2153,7 @@ void IrcKernel::raw_454n()
 
     QString strChannel = strDataList[4];
 
-    QString strMessage = QString("* %1 :Nazwa kana≥u nie jest unikalna").arg(strChannel);
+    QString strMessage = QString(tr("* %1 :Not enough unique channel name")).arg(strChannel);
     tabc->show_msg_active(strMessage, 7);
 
     dlgchannel_homes->clear();
@@ -2171,7 +2171,7 @@ void IrcKernel::raw_458n()
     QString strChannel = strDataList[4];
     QString strWho = strDataList[6];
 
-    QString strMessage = QString("* %1 :Nie moøna zdj±Ê nie nadanych uprawnieÒ").arg(strWho);
+    QString strMessage = QString(tr("* %1 :Unable to remove non-existent privilege")).arg(strWho);
     tabc->show_msg(strChannel, strMessage, 7);
 }
 
@@ -2186,7 +2186,7 @@ void IrcKernel::raw_459n()
     QString strChannel = strDataList[4];
     QString strWho = strDataList[6];
 
-    QString strMessage = QString("* %1 :Uprawnienia zosta≥y juø nadane").arg(strWho);
+    QString strMessage = QString(tr("* %1 :Channel privilege already given")).arg(strWho);
     tabc->show_msg(strChannel, strMessage, 7);
 }
 
@@ -2200,7 +2200,7 @@ void IrcKernel::raw_461n()
     QString strChannel = strDataList[4];
     QString strWho = strDataList[5];
 
-    QString strMessage = QString("* %1 :Nie moøna zbanowaÊ super operatora/operatora").arg(strWho);
+    QString strMessage = QString(tr("* %1 :Channel operators cannot be banned")).arg(strWho);
     tabc->show_msg(strChannel, strMessage, 7);
 }
 
@@ -2213,7 +2213,7 @@ void IrcKernel::raw_463n()
     QString strChannel = strDataList[4];
     QString strWhat = strDataList[5];
 
-    QString strMessage = QString("* %1 :DostÍp zabroniony, nie posiadasz odpowiednich uprawnieÒ w %2").arg(strWhat).arg(strChannel);
+    QString strMessage = QString(tr("* %1 :Permission denied, insufficient privileges in %2 channel")).arg(strWhat).arg(strChannel);
     tabc->show_msg_active(strMessage, 7);
 }
 
@@ -2225,7 +2225,7 @@ void IrcKernel::raw_464n()
 
     QString strWhat = strDataList[4];
 
-    QString strMessage = QString("* %1 :Nieprawid≥owy argument").arg(strWhat);
+    QString strMessage = QString(tr("* %1 :Invalid argument")).arg(strWhat);
     tabc->show_msg_active(strMessage, 7);
 }
 
@@ -2237,7 +2237,7 @@ void IrcKernel::raw_467n()
 
     QString strChannel = strDataList[4];
 
-    QString strMessage = QString("* %1 :DostÍp zabroniony, nie jeste∂ w≥a∂cicielem kana≥u").arg(strChannel);
+    QString strMessage = QString(tr("* %1 :Permission denied, you are not a channel owner")).arg(strChannel);
     tabc->show_msg_active(strMessage, 7);
 
     dlgchannel_homes->clear();
@@ -2252,7 +2252,7 @@ void IrcKernel::raw_468n()
 
     QString strChannel = strDataList[4];
 
-    QString strMessage = QString("* DostÍp zabroniony, nie posiadasz odpowiednich uprawnieÒ w %1").arg(strChannel);
+    QString strMessage = QString(tr("* Permission denied, insufficient privileges in %1 channel")).arg(strChannel);
     tabc->show_msg_active(strMessage, 7);
 }
 
@@ -2264,9 +2264,10 @@ void IrcKernel::raw_470()
     QString strChannel = strDataList[3];
     if (strChannel[0] == ':')
         strChannel = strChannel.right(strChannel.length()-1);
+
     QString strLinked = strDataList[strDataList.size()-1];
 
-    QString strMessage = QString("* Kana≥ %1 jest pe≥ny, zostajesz automatycznie przekierowany do kana≥u %2").arg(strChannel).arg(strLinked);
+    QString strMessage = QString(tr("* %1 has become full, so you are automatically being transferred to the linked channel %2")).arg(strChannel).arg(strLinked);
     tabc->show_msg("Status", strMessage, 7);
 }
 
@@ -2277,14 +2278,14 @@ void IrcKernel::raw_471()
 
     QString strChannel = strDataList[3];
 
-    QString strMessage = QString("* Nie moøesz wej∂Ê do %1: Kana≥ jest pe≥ny").arg(strChannel);
+    QString strMessage = QString(tr("* Cannot join channel %1: channel is full")).arg(strChannel);
     tabc->show_msg_active(strMessage, 7);
 }
 
 // :ChanServ!service@service.onet NOTICE scc_test :472 #aaaaaaaaaaaaaaaaaaaaaaaaaaaaa :wait 60 seconds before next REGISTER
 void IrcKernel::raw_472n()
 {
-    QString strMessage = QString("* Utworzenie kolejnego kana≥u bÍdzie moøliwe po up≥yniÍciu 60 sekund");
+    QString strMessage = QString(tr("* Wait 60 seconds before creating next channel"));
     tabc->show_msg_active(strMessage, 7);
 }
 
@@ -2295,7 +2296,7 @@ void IrcKernel::raw_473()
 
     QString strChannel = strDataList[3];
 
-    QString strMessage = QString("* Nie moøesz wej∂Ê do %1: Nie jeste∂ na li∂cie zaproszonych").arg(strChannel);
+    QString strMessage = QString(tr("* Cannot join channel %1: Invite only")).arg(strChannel);
     tabc->show_msg_active(strMessage, 7);
 }
 
@@ -2306,7 +2307,7 @@ void IrcKernel::raw_474()
 
     QString strChannel = strDataList[3];
 
-    QString strMessage = QString("* Nie moøesz wej∂Ê do %1: Jeste∂ zbanowany").arg(strChannel);
+    QString strMessage = QString(tr("* Cannot join channel %1: You're banned")).arg(strChannel);
     tabc->show_msg_active(strMessage, 7);
 }
 
@@ -2317,7 +2318,7 @@ void IrcKernel::raw_482()
 
     QString strChannel = strDataList[3];
 
-    QString strMessage = QString("* Tylko u-line moøe wyrzuciÊ u-line z kana≥u.");
+    QString strMessage = QString(tr("* Only a u-line may kick a u-line from a channel."));
     tabc->show_msg(strChannel, strMessage, 7);
 }
 
@@ -2346,7 +2347,7 @@ void IrcKernel::raw_530()
 
     QString strChannel = strDataList[3];
 
-    QString strMessage = QString("* %1 :Tylko Administratorzy mog± tworzyÊ nowe kana≥y").arg(strChannel);
+    QString strMessage = QString(tr("* %1 :Only IRC operators may create new channels")).arg(strChannel);
     tabc->show_msg_active(strMessage, 7);
 }
 
@@ -2357,7 +2358,7 @@ void IrcKernel::raw_600()
 
     QString strNick = strDataList[3];
 
-    QString strMessage = QString("* TwÛj przyjaciel %1 jest teraz on-line").arg(strNick);
+    QString strMessage = QString(tr("* Your friend %1 arrived online")).arg(strNick);
     tabc->show_msg_active(strMessage, 7);
 
     dlgfriends->set_friend(strNick, true);
@@ -2370,7 +2371,7 @@ void IrcKernel::raw_601()
 
     QString strNick = strDataList[3];
 
-    QString strMessage = QString("* TwÛj przyjaciel %1 jest teraz off-line").arg(strNick);
+    QString strMessage = QString(tr("* Your friend %1 went offline")).arg(strNick);
     tabc->show_msg_active(strMessage, 7);
 
     dlgfriends->set_friend(strNick, false);
@@ -2393,7 +2394,7 @@ void IrcKernel::raw_604()
 
     QString strNick = strDataList[3];
 
-    QString strMessage = QString("* TwÛj przyjaciel %1 jest teraz on-line").arg(strNick);
+    QString strMessage = QString(tr("* Your friend %1 is now on-line")).arg(strNick);
     tabc->show_msg_active(strMessage, 7);
 
     dlgfriends->set_friend(strNick, true);
@@ -2406,7 +2407,7 @@ void IrcKernel::raw_605()
 
     QString strNick = strDataList[3];
 
-    QString strMessage = QString("* TwÛj przyjaciel %1 jest teraz off-line").arg(strNick);
+    QString strMessage = QString(tr("* Your friend %1 is now off-line")).arg(strNick);
     tabc->show_msg_active(strMessage, 7);
 
     dlgfriends->set_friend(strNick, false);
@@ -2428,13 +2429,13 @@ void IrcKernel::raw_801()
     if (strAuth.length() == 16)
         pNetwork->send(QString("AUTHKEY %1").arg(strAuth));
     else
-        tabc->show_msg("Status", "Error: B≥Ídny klucz auth", 9);
+        tabc->show_msg("Status", tr("Error: Invalid auth key"), 9);
 }
 
 // :cf1f1.onet 802 * :Corrupted Nickname
 void IrcKernel::raw_802()
 {
-    QString strMessage = QString("* Nieprawid≥owy nick");
+    QString strMessage = QString(tr("* Corrupted Nickname"));
     tabc->show_msg_active(strMessage, 9);
 }
 
@@ -2443,7 +2444,7 @@ void IrcKernel::raw_807()
 {
     settings->setValue("busy", "on");
 
-    QString strDisplay = "* Jeste∂ teraz w stanie \"zajÍty\", nie bÍdziesz otrzymywaÊ øadnych prywatnych komunikatÛw.";
+    QString strDisplay = tr("* You are marked as busy");
     tabc->show_msg_all(strDisplay, 7);
 }
 
@@ -2452,7 +2453,7 @@ void IrcKernel::raw_808()
 {
     settings->setValue("busy", "off");
 
-    QString strDisplay = "* Nie jeste∂ juø \"zajÍty\" - moøesz otrzymywaÊ prywatne komunikaty.";
+    QString strDisplay = tr("You are no longer marked busy");
     tabc->show_msg_all(strDisplay, 7);
 }
 
@@ -2463,7 +2464,7 @@ void IrcKernel::raw_809()
 
     QString strNick = strDataList[3];
 
-    QString strMessage = QString("* %1 jest oznaczony jako zajÍty").arg(strNick);
+    QString strMessage = QString(tr("* %1 is busy")).arg(strNick);
     tabc->show_msg_active(strMessage, 7);
 }
 
@@ -2474,7 +2475,7 @@ void IrcKernel::raw_811()
 
     QString strNick = strDataList[3];
 
-    QString strMessage = QString("* Zignorowano rozmowÍ prywatn± od %1").arg(strNick);
+    QString strMessage = QString(tr("* Ignored priv from %1")).arg(strNick);
     tabc->show_msg_active(strMessage, 7);
 }
 
@@ -2485,7 +2486,7 @@ void IrcKernel::raw_812()
 
     QString strNick = strDataList[3];
 
-    QString strMessage = QString("* Odrzucono rozmowÍ prywatn± od %1").arg(strNick);
+    QString strMessage = QString(tr("* Rejected priv from %1")).arg(strNick);
     tabc->show_msg_active(strMessage, 7);
 }
 
@@ -2496,7 +2497,7 @@ void IrcKernel::raw_815()
 
     QString strNick = strDataList[3];
 
-    QString strDisplay = QString("* %1 ma w≥±czon± kamerÍ").arg(strNick);
+    QString strDisplay = QString(tr("* %1 has public webcam")).arg(strNick);
     tabc->show_msg_active(strDisplay, 7);
 }
 
@@ -2526,7 +2527,7 @@ void IrcKernel::raw_818()
     dlgchannel_list->clear();
 }
 
-// :cf1f3.onet 819 scc_test :#tarnÛw_dziki:g:1,#Øory:g:0,#M≥awa:O:0,#Lineage_II:_:1,#kakakak:O:0,#apostolat_yfl:_:0,#ITALIA_CLUB:i:23,#Fina≥_WO¶P:P:0,#sama_s≥odycz:O:0,#Suwa≥ki:i:14,#Mamu∂ki:O:0,#PokÛj_Rado∂ci:O:0,#Antwerpia:g:0,#Kolo_Gospodyn_Wiejskich:O:0,#Samotnia_Kurka:G:0,#Wszystko_o_grach:O:0,#VIPy_NowyS±cz:h:0,#tymczasowy:G:0,#Zielona_GÛra:h:2,#45slonko:P:0,#kawalek_nieba:O:0,#Wirtualna_Przyjazn:a:11,#Magiczny_swiat:O:1,#herbatka_u_cynamonki:P:0,#DEUTSCHLAND:i:111,#informatyka:`:1
+// :cf1f3.onet 819 scc_test :#tarn√≥w_dziki:g:1,#≈ªory:g:0,#M≈Çawa:O:0,#Lineage_II:_:1,#kakakak:O:0,#apostolat_yfl:_:0,#ITALIA_CLUB:i:23,#Fina≈Ç_WO≈öP:P:0,#sama_s≈Çodycz:O:0,#Suwa≈Çki:i:14,#Mamu≈õki:O:0,#Pok√≥j_Rado≈õci:O:0,#Antwerpia:g:0,#Kolo_Gospodyn_Wiejskich:O:0,#Samotnia_Kurka:G:0,#Wszystko_o_grach:O:0,#VIPy_NowySƒÖcz:h:0,#tymczasowy:G:0,#Zielona_G√≥ra:h:2,#45slonko:P:0,#kawalek_nieba:O:0,#Wirtualna_Przyjazn:a:11,#Magiczny_swiat:O:1,#herbatka_u_cynamonki:P:0,#DEUTSCHLAND:i:111,#informatyka:`:1
 void IrcKernel::raw_819()
 {
     QString strChannelsString;
@@ -2598,7 +2599,7 @@ void IrcKernel::raw_819()
                 strChannelCat = "Oswojony " + strChannelCat;
                 break;
             case 2:
-                strChannelCat = "Z klas± " + strChannelCat;
+                strChannelCat = "Z klasƒÖ " + strChannelCat;
                 break;
             case 3:
                 strChannelCat = "Kultowy " + strChannelCat;
@@ -2622,7 +2623,7 @@ void IrcKernel::raw_821()
 
     QString strChannel = strDataList[3];
 
-    QString strMessage = QString("* Kana≥ %1 nie jest moderowany").arg(strChannel);
+    QString strMessage = QString(tr("* Channel %1 is not moderated")).arg(strChannel);
     tabc->show_msg_active(strMessage, 7);
 }
 
@@ -2635,7 +2636,7 @@ void IrcKernel::raw_951()
 
     QString strNick = strDataList[5];
 
-    QString strMessage = QString("* Dodano %1 do listy ignorowanych").arg(strNick);
+    QString strMessage = QString(tr("* Added %1 to silence list")).arg(strNick);
     tabc->show_msg_active(strMessage, 7);
 }
 

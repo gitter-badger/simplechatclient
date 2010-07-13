@@ -393,6 +393,521 @@
     </message>
 </context>
 <context>
+    <name>IrcKernel</name>
+    <message>
+        <source>* %1 [%2@%3] has joined %4</source>
+        <translation>* %1 [%2@%3] wszedł do kanału %4</translation>
+    </message>
+    <message>
+        <source>* %1 [%2] has joined %3</source>
+        <translation>* %1 [%2] wszedł do kanału %3</translation>
+    </message>
+    <message>
+        <source>* %1 [%2@%3] has left %4 [%5]</source>
+        <translation>* %1 [%2@%3] wyszedł z kanału %4. Powód: %5</translation>
+    </message>
+    <message>
+        <source>* %1 [%2] has left %3 [%4]</source>
+        <translation>* %1 [%2] wyszedł z kanału %3. Powód: %4</translation>
+    </message>
+    <message>
+        <source>* %1 [%2@%3] has left %4</source>
+        <translation>* %1 [%2@%3] wyszedł z kanału %4</translation>
+    </message>
+    <message>
+        <source>* %1 [%2] has left %3</source>
+        <translation>* %1 [%2] wyszedł z kanału %3</translation>
+    </message>
+    <message>
+        <source>* %1 [%2@%3] has quit [%4]</source>
+        <translation>* %1 [%2@%3] opuścił irc [%4]</translation>
+    </message>
+    <message>
+        <source>* %1 [%2] has quit [%3]</source>
+        <translation>* %1 [%2] opuścił irc [%3]</translation>
+    </message>
+    <message>
+        <source>* %1 has been kicked from channel %2 by %3 Reason: %4</source>
+        <translation>* %1 został wyrzucony z kanału %2 przez %3. Powód: %4</translation>
+    </message>
+    <message>
+        <source>You have been kicked from %1 by %2</source>
+        <translation>%1 wyrzucił Cie z kanału %2</translation>
+    </message>
+    <message>
+        <source>Reason: %3</source>
+        <translation>Powód: %3</translation>
+    </message>
+    <message>
+        <source>* Channel %1 is now a private channel (set by %2)</source>
+        <translation>* Kanał %1 jest teraz kanałem prywatnym (Ustawił %2)</translation>
+    </message>
+    <message>
+        <source>* Channel %1 is no longer a private channel (set by %2)</source>
+        <translation>* Kanał %1 nie jest już kanałem prywatnym (Ustawił %2)</translation>
+    </message>
+    <message>
+        <source>* Channel %1 is now moderated channel (set by %2)</source>
+        <translation>* Kanał %1 jest teraz kanałem moderowanym (Ustawił %2)</translation>
+    </message>
+    <message>
+        <source>* Channel %1 is no longer moderated channel (set by %2)</source>
+        <translation>* Kanał %1 nie jest już kanałem moderowanym (Ustawił %2)</translation>
+    </message>
+    <message>
+        <source>* Channel %1 has now enabled auditorium mode (set by %2)</source>
+        <translation>* Kanał %1 jest teraz kanałem audytywnym (Ustawił %2)</translation>
+    </message>
+    <message>
+        <source>* Channel %1 has no longer enabled auditorium mode (set by %2)</source>
+        <translation>* Kanał %1 nie jest już kanałem audytywnym (Ustawił %2)</translation>
+    </message>
+    <message>
+        <source>* Channel %1 now has a flag %2 (set by %3)</source>
+        <translation>* Kanał %1 ma teraz flage %2 (Ustawił %3)</translation>
+    </message>
+    <message>
+        <source>* %1 is now the owner of the channel %2 (set by %3)</source>
+        <translation>* %1 jest teraz właścicielem kanału %2 (Ustawił %3)</translation>
+    </message>
+    <message>
+        <source>* %1 is no longer the owner of the channel %2 (set by %3)</source>
+        <translation>* %1 nie jest już właścicielem kanału %2 (Ustawił %3)</translation>
+    </message>
+    <message>
+        <source>* %1 is now super-operator on the channel %2 (set by %3)</source>
+        <translation>* %1 jest teraz super operatorem kanału %2 (Ustawił %3)</translation>
+    </message>
+    <message>
+        <source>* %1 is no longer super-operator on the channel %2 (set by %3)</source>
+        <translation>* %1 nie jest już super operatorem kanału %2 (Ustawił %3)</translation>
+    </message>
+    <message>
+        <source>* %1 is now the operator of the channel %2 (set by %3)</source>
+        <translation>* %1 jest teraz operatorem kanału %2 (Ustawił %3)</translation>
+    </message>
+    <message>
+        <source>* %1 is no longer the operator of the channel %2 (set by %3)</source>
+        <translation>* %1 nie jest już operatorem kanału %2 (Ustawił %3)</translation>
+    </message>
+    <message>
+        <source>* %1 is now a guest of channel %2 (set by %3)</source>
+        <translation>* %1 jest teraz gościem kanału %2 (Ustawił %3)</translation>
+    </message>
+    <message>
+        <source>* %1 is no longer a guest of channel %2 (set by %3)</source>
+        <translation>* %1 nie jest już gościem kanału %2 (Ustawił %3)</translation>
+    </message>
+    <message>
+        <source>* %1 is now moderator of the channel %2 (set by %3)</source>
+        <translation>* %1 jest teraz moderatorem kanału %2 (Ustawił %3)</translation>
+    </message>
+    <message>
+        <source>* %1 is no longer moderating channel %2 (set by %3)</source>
+        <translation>* %1 nie jest już moderatorem kanału %2 (Ustawił %3)</translation>
+    </message>
+    <message>
+        <source>* %1 is now screener channel %2 (set by %3)</source>
+        <translation>* %1 jest teraz screenerem kanału %2 (Ustawił %3)</translation>
+    </message>
+    <message>
+        <source>* %1 is no longer a screener channel %2 (set by %3)</source>
+        <translation>* %1 nie jest już screenerem kanału %2 (Ustawił %3)</translation>
+    </message>
+    <message>
+        <source>* %1 is now on the banned list in %2 (set by %3)</source>
+        <translation>* %1 jest teraz na liście wyproszonych w %2 (Ustawił %3)</translation>
+    </message>
+    <message>
+        <source>* %1 is no longer on the banned list in %2 (set by %3)</source>
+        <translation>* %1 nie jest już na liście wyproszonych w %2 (Ustawił %3)</translation>
+    </message>
+    <message>
+        <source>* %1 is now on the list of invitees in %2 (set by %3)</source>
+        <translation>* %1 jest teraz na liście zaproszonych w %2 (Ustawił %3)</translation>
+    </message>
+    <message>
+        <source>* %1 is no longer on the list of invitees in %2 (set by %3)</source>
+        <translation>* %1 nie jest już na liście zaproszonych w %2 (Ustawił %3)</translation>
+    </message>
+    <message>
+        <source>* %1 now has a flag %2 (set by %3)</source>
+        <translation>* %1 ma teraz flage %2 (Ustawił %3)</translation>
+    </message>
+    <message>
+        <source>* %1 is marked as busy</source>
+        <translation>* %1 jest oznaczony jako zajęty</translation>
+    </message>
+    <message>
+        <source>* %1 is no longer marked as busy</source>
+        <translation>* %1 nie jest już oznaczony jako zajęty</translation>
+    </message>
+    <message>
+        <source>* %1 has now enabled public webcam</source>
+        <translation>* %1 ma teraz włączoną kamerke publiczną</translation>
+    </message>
+    <message>
+        <source>* %1 has no longer enabled public webcam</source>
+        <translation>* %1 ma teraz wyłączoną kamerke publiczną</translation>
+    </message>
+    <message>
+        <source>* %1 has now enabled private webcam</source>
+        <translation>* %1 ma teraz włączoną kamerke prywatną</translation>
+    </message>
+    <message>
+        <source>* %1 has no longer enabled private webcam</source>
+        <translation>* %1 ma teraz wyłączoną kamerke prywatną</translation>
+    </message>
+    <message>
+        <source>* %1 has now encrypted IP</source>
+        <translation>* %1 ma teraz szyfrowane IP</translation>
+    </message>
+    <message>
+        <source>* %1 has no longer encrypted IP</source>
+        <translation>* %1 nie ma już szyfrowanego IP</translation>
+    </message>
+    <message>
+        <source>* %1 now has a flag %2</source>
+        <translation>* %1 ma teraz flage %2</translation>
+    </message>
+    <message>
+        <source>* %1 is marked as restricted</source>
+        <translation>* %1 jest oznaczony jako ograniczony</translation>
+    </message>
+    <message>
+        <source>* %1 is no longer marked as restricted</source>
+        <translation>* %1 nie jest już oznaczony jako ograniczony</translation>
+    </message>
+    <message>
+        <source>* %1 [%2] invites you to channel %3. Write /j %4 to get there</source>
+        <translation>* %1[%2] zaprasza Cie do kanału %3. Napisz /j %4 aby tam wejść</translation>
+    </message>
+    <message>
+        <source>* %1 changed the topic to: %2</source>
+        <translation>* %1 ustawił nowy temat: %2</translation>
+    </message>
+    <message>
+        <source>* %1 rejected an invitation to priv</source>
+        <translation>* %1 odrzucił/a zaproszenie do rozmowy prywatnej</translation>
+    </message>
+    <message>
+        <source>* %1 ignored your invitation to the priv</source>
+        <translation>* %1 zignorował/a Twoje zaproszenie do rozmowy prywatnej</translation>
+    </message>
+    <message>
+        <source>* Added the nickname %1 to a friends list</source>
+        <translation>* Dodano nick %1 do listy przyjaciół</translation>
+    </message>
+    <message>
+        <source>* Removed the nickname %1 from your friends list</source>
+        <translation>* Usunięto nick %1 z listy przyjaciół</translation>
+    </message>
+    <message>
+        <source>* Added %1 to your ignore list</source>
+        <translation>* Dodano %1 do listy ignorowanych</translation>
+    </message>
+    <message>
+        <source>* Removed %1 from your ignore list</source>
+        <translation>* Usunięto %1 z listy ignorowanych</translation>
+    </message>
+    <message>
+        <source>* Added %1 channel to your favorites list</source>
+        <translation>* Dodano kanał %1 do listy ulubionych</translation>
+    </message>
+    <message>
+        <source>* Removed channel %1 from your favorites list</source>
+        <translation>* Usunięto kanał %1 z listy ulubionych</translation>
+    </message>
+    <message>
+        <source>Successfully created a channel %1</source>
+        <translation>Pomyślnie utworzono kanał %1</translation>
+    </message>
+    <message>
+        <source>* Channel %1 has been removed</source>
+        <translation>* Usunięto kanał %1</translation>
+    </message>
+    <message>
+        <source>* Confirmed the removal of the channel %1</source>
+        <translation>* Potwierdzam usunięcie kanału %1</translation>
+    </message>
+    <message>
+        <source>* Changing privileges confirmed for %1 at %2</source>
+        <translation>* Potwierdzam zmianę uprawnień dla %1 w %2</translation>
+    </message>
+    <message>
+        <source>* %1 changed channel %2 settings</source>
+        <translation>* %1 zmienił/a ustawienia kanału %2</translation>
+    </message>
+    <message>
+        <source>* Nothing changed in %1</source>
+        <translation>* Nic nie zmieniono w %1</translation>
+    </message>
+    <message>
+        <source>Successfully removed channel %1</source>
+        <translation>Pomyślnie usunięto kanał %1</translation>
+    </message>
+    <message>
+        <source>%1 is away: %2</source>
+        <translation>* %1 jest nieobecny z powodu: %2</translation>
+    </message>
+    <message>
+        <source>You are no longer marked as being away</source>
+        <translation>* Nie jesteś już oznaczony "zaraz wracam".</translation>
+    </message>
+    <message>
+        <source>You have been marked as being away</source>
+        <translation>* Jesteś teraz oznaczony "zaraz wracam".</translation>
+    </message>
+    <message>
+        <source>is a registered nick</source>
+        <translation>jest zarejestrowanym użytkownikiem</translation>
+    </message>
+    <message>
+        <source>* %1 is %2@%3</source>
+        <translation>* %1 to %2@%3</translation>
+    </message>
+    <message>
+        <source>* %1 ircname: %2</source>
+        <translation>* %1 ircname: %2</translation>
+    </message>
+    <message>
+        <source>* %1 is online via %2</source>
+        <translation>* %1 używa serwera: %2</translation>
+    </message>
+    <message>
+        <source>* %1 is a GlobalOp on OnetCzat</source>
+        <translation>* %1 jest administratorem czata</translation>
+    </message>
+    <message>
+        <source>* %1 is away %2</source>
+        <translation>* %1 jest nieobecny %2</translation>
+    </message>
+    <message>
+        <source>* %1 is logged in since %2</source>
+        <translation>* %1 jest zalogowany od %2</translation>
+    </message>
+    <message>
+        <source>* %1 is on channels: %2</source>
+        <translation>* %1 jest na kanałach: %2</translation>
+    </message>
+    <message>
+        <source>Message Of The Day:</source>
+        <translation>Wiadomość dla użytkowników:</translation>
+    </message>
+    <message>
+        <source>* %1 is now your displayed host</source>
+        <translation>* %1 jest teraz Twoim wyświetlanym hostem</translation>
+    </message>
+    <message>
+        <source>* %1: Nick is not registered</source>
+        <translation>* %1 :Nick nie jest zarejestrowany</translation>
+    </message>
+    <message>
+        <source>* %1 :No such nick</source>
+        <translation>* %1 :Nick nie istnieje</translation>
+    </message>
+    <message>
+        <source>* %1 :No such nick/channel</source>
+        <translation>* %1 :Nick lub kanał nie istnieje</translation>
+    </message>
+    <message>
+        <source>* %1 is currently unavailable. Please try again later.</source>
+        <translation>* %1 jest aktualnie niedostępny. Spróbuj ponownie później.</translation>
+    </message>
+    <message>
+        <source>* %1 :Nick does not exist</source>
+        <translation>* %1 :Nick nie istnieje</translation>
+    </message>
+    <message>
+        <source>* %1 :Invalid channel name</source>
+        <translation>* %1 :Nieprawidłowa nazwa kanału</translation>
+    </message>
+    <message>
+        <source>No moderator on the channel!</source>
+        <translation>Brak moderatora na kanale!</translation>
+    </message>
+    <message>
+        <source>* Unable to send a message to %1: %2</source>
+        <translation>* Nie mozna wysłać wiadomości do %1: %2</translation>
+    </message>
+    <message>
+        <source>* %1 :User is not registred</source>
+        <translation>* %1 :Nick nie jest zarejestrowany</translation>
+    </message>
+    <message>
+        <source>* %1 :Unknown command</source>
+        <translation>* %1 :Nieznane polecenie</translation>
+    </message>
+    <message>
+        <source>* %1 :Not enough parameters</source>
+        <translation>* %1 :Nie wystarczająca ilość parametrów</translation>
+    </message>
+    <message>
+        <source>* %1 :No such channel</source>
+        <translation>* %1 :Nie ma takiego kanału</translation>
+    </message>
+    <message>
+        <source>* Nick %1 is already on your friend list</source>
+        <translation>* Nick %1 jest już na liście przyjaciół</translation>
+    </message>
+    <message>
+        <source>* Nick %1 is not on your friend list</source>
+        <translation>* Nick %1 nie jest na liście przyjaciół</translation>
+    </message>
+    <message>
+        <source>* %1 is already on your ignore list</source>
+        <translation>* %1 jest już na liście ignorowanych</translation>
+    </message>
+    <message>
+        <source>* %1 is not on your ignore list</source>
+        <translation>* %1 nie jest na liście ignorowanych</translation>
+    </message>
+    <message>
+        <source>* %1 :Erroneous Nickname</source>
+        <translation>* Nick %1 jest nieprawidłowy</translation>
+    </message>
+    <message>
+        <source>* Nickname %1 is already in use.</source>
+        <translation>* Nick %1 jest już w użyciu</translation>
+    </message>
+    <message>
+        <source>* Channel %1 is already on your favourite list</source>
+        <translation>* Kanał %1 jest już na liście ulubionych</translation>
+    </message>
+    <message>
+        <source>* Channel %1 is not on your favourite list</source>
+        <translation>* Kanał %1 nie jest na liście ulubionych</translation>
+    </message>
+    <message>
+        <source>* %1 is already on channel %2</source>
+        <translation>* %1 jest już na kanale %2</translation>
+    </message>
+    <message>
+        <source>* You have not registered to perform operation %1</source>
+        <translation>* Nie jesteś zarejestrowany by wywołać %1</translation>
+    </message>
+    <message>
+        <source>* %1 :Channel name already in use</source>
+        <translation>* %1 :Nazwa kanału już istnieje</translation>
+    </message>
+    <message>
+        <source>* %1 :Not enough unique channel name</source>
+        <translation>* %1 :Nazwa kanału nie jest unikalna</translation>
+    </message>
+    <message>
+        <source>* %1 :Unable to remove non-existent privilege</source>
+        <translation>* %1 :Nie można zdjąć nie nadanych uprawnień</translation>
+    </message>
+    <message>
+        <source>* %1 :Channel privilege already given</source>
+        <translation>* %1 :Uprawnienia zostały już nadane</translation>
+    </message>
+    <message>
+        <source>* %1 :Channel operators cannot be banned</source>
+        <translation>* %1 :Nie można zbanować super operatora/operatora</translation>
+    </message>
+    <message>
+        <source>* %1 :Permission denied, insufficient privileges in %2 channel</source>
+        <translation>* %1 :Dostęp zabroniony, nie posiadasz odpowiednich uprawnień w %2</translation>
+    </message>
+    <message>
+        <source>* %1 :Invalid argument</source>
+        <translation>* %1 :Nieprawidłowy argument</translation>
+    </message>
+    <message>
+        <source>* %1 :Permission denied, you are not a channel owner</source>
+        <translation>* %1 :Dostęp zabroniony, nie jesteś właścicielem kanału</translation>
+    </message>
+    <message>
+        <source>* Permission denied, insufficient privileges in %1 channel</source>
+        <translation>* Dostęp zabroniony, nie posiadasz odpowiednich uprawnień w %1</translation>
+    </message>
+    <message>
+        <source>* %1 has become full, so you are automatically being transferred to the linked channel %2</source>
+        <translation>* Kanał %1 jest pełny, zostajesz automatycznie przekierowany do kanału %2</translation>
+    </message>
+    <message>
+        <source>* Cannot join channel %1: channel is full</source>
+        <translation>* Nie możesz wejść do %1: Kanał jest pełny</translation>
+    </message>
+    <message>
+        <source>* Wait 60 seconds before creating next channel</source>
+        <translation>* Utworzenie kolejnego kanału będzie możliwe po upłynięciu 60 sekund</translation>
+    </message>
+    <message>
+        <source>* Cannot join channel %1: Invite only</source>
+        <translation>* Nie możesz wejść do %1: Nie jesteś na liście zaproszonych</translation>
+    </message>
+    <message>
+        <source>* Cannot join channel %1: You're banned</source>
+        <translation>* Nie możesz wejść do %1: Jesteś zbanowany</translation>
+    </message>
+    <message>
+        <source>* Only a u-line may kick a u-line from a channel.</source>
+        <translation>* Tylko u-line może wyrzucić u-line z kanału.</translation>
+    </message>
+    <message>
+        <source>* %1 :Only IRC operators may create new channels</source>
+        <translation>* %1 :Tylko Administratorzy mogą tworzyć nowe kanały</translation>
+    </message>
+    <message>
+        <source>* Your friend %1 arrived online</source>
+        <translation>* Twój przyjaciel %1 jest teraz on-line</translation>
+    </message>
+    <message>
+        <source>* Your friend %1 went offline</source>
+        <translation>* Twój przyjaciel %1 jest teraz off-line</translation>
+    </message>
+    <message>
+        <source>* Your friend %1 is now on-line</source>
+        <translation>* Twój przyjaciel %1 jest teraz on-line</translation>
+    </message>
+    <message>
+        <source>* Your friend %1 is now off-line</source>
+        <translation>* Twój przyjaciel %1 jest teraz off-line</translation>
+    </message>
+    <message>
+        <source>Error: Invalid auth key</source>
+        <translation>Error: Błędny klucz auth</translation>
+    </message>
+    <message>
+        <source>* Corrupted Nickname</source>
+        <translation>* Nieprawidłowy nick</translation>
+    </message>
+    <message>
+        <source>* You are marked as busy</source>
+        <translation>* Jesteś teraz w stanie "zajęty", nie będziesz otrzymywać żadnych prywatnych komunikatów.</translation>
+    </message>
+    <message>
+        <source>You are no longer marked busy</source>
+        <translation>* Nie jesteś już "zajęty" - możesz otrzymywać prywatne komunikaty.</translation>
+    </message>
+    <message>
+        <source>* %1 is busy</source>
+        <translation>* %1 jest oznaczony jako zajęty</translation>
+    </message>
+    <message>
+        <source>* Ignored priv from %1</source>
+        <translation>* Zignorowano rozmowę prywatną od %1</translation>
+    </message>
+    <message>
+        <source>* Rejected priv from %1</source>
+        <translation>* Odrzucono rozmowę prywatną od %1</translation>
+    </message>
+    <message>
+        <source>* %1 has public webcam</source>
+        <translation>* %1 ma włączoną kamerę</translation>
+    </message>
+    <message>
+        <source>* Channel %1 is not moderated</source>
+        <translation>* Kanał %1 nie jest moderowany</translation>
+    </message>
+    <message>
+        <source>* Added %1 to silence list</source>
+        <translation>* Dodano %1 do listy ignorowanych</translation>
+    </message>
+</context>
+<context>
     <name>Log</name>
     <message>
         <source>Error: log: Cannot open file </source>
@@ -677,7 +1192,7 @@
         <translation>Nie można pobrać dostępnej wersji programu.</translation>
     </message>
     <message>
-        <source>You are using the current version.</source>
+        <source>You are using up-to-date version.</source>
         <translation>Używasz aktualnej wersji programu.</translation>
     </message>
     <message>

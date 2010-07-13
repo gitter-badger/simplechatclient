@@ -49,7 +49,7 @@ void Updater::check_for_updates(QString param1)
 #endif
 
     if (iCurrentRev == iAvailableRev)
-        tabc->show_msg("Status", tr("You are using the current version."), 0);
+        tabc->show_msg("Status", tr("You are using up-to-date version."), 0);
     else if (iCurrentRev > iAvailableRev)
         tabc->show_msg("Status", tr("You are using a test version."), 0);
     else if (iCurrentRev < iAvailableRev)
