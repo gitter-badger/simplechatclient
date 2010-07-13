@@ -20,6 +20,7 @@
 
 #include <QDesktopWidget>
 #include <QtGui/QApplication>
+#include <QLocale>
 #include <QTextCodec>
 #include <QTranslator>
 #include "debug.h"
@@ -149,9 +150,9 @@ int main(int argc, char *argv[])
 
     // set translate
     QString strPath = QCoreApplication::applicationDirPath();
-    QTranslator sccQm;
-    sccQm.load(strPath+"/i18n/scc_pl");
-    app.installTranslator(&sccQm);
+    QTranslator sccTranslator;
+    sccTranslator.load(QString("%1/i18n/scc_%2").arg(strPath).arg(QLocale::system().name()));
+    app.installTranslator(&sccTranslator);
 
     MainWindow mainWin;
     mainWin.set_debug(bDebug);

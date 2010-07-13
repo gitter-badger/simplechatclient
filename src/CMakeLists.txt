@@ -66,12 +66,11 @@ set (scc_SRCS
 	update_thread.cpp
 )
 
-set (scc_MOC_SRCS
+set (scc_MOC_HDRS
 	channel_avatar.h
 	commands.h
 	config.h
 	crypt.h
-	debug.h
 	dlg_about.h
 	dlg_cam.h
 	dlg_channel_favourites.h
@@ -108,6 +107,10 @@ set (scc_MOC_SRCS
 	tab_widget.h
 	update.h
 	update_thread.h
+)
+
+set (scc_HDRS
+	debug.h
 )
 
 # debug
@@ -168,8 +171,8 @@ endif (MINGW)
 # rest
 include (${QT_USE_FILE})
 
-qt_wrap_cpp (scc MOC_FILES ${scc_MOC_SRCS})
-add_executable (../scc ${scc_SRCS} ${MOC_FILES} ${scc_QRC_SRCS} ${scc_UIS_H})
+qt_wrap_cpp (scc MOC_FILES ${scc_MOC_HDRS})
+add_executable (../scc ${scc_SRCS} ${MOC_FILES} ${scc_HDRS} ${scc_QRC_SRCS} ${scc_UIS_H})
 target_link_libraries (../scc ${QT_LIBRARIES} ${QT_QTNETWORK_LIBRARIES} ${QCA2_LIBRARIES} ${PHONON_LIBRARIES})
 
 add_dependencies (../scc i18n)
