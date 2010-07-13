@@ -695,6 +695,10 @@
         <translation>Wiadomość dla użytkowników:</translation>
     </message>
     <message>
+        <source>* Date and time of the server %1: %2</source>
+        <translation>* Data i czas serwera %1: %2</translation>
+    </message>
+    <message>
         <source>* %1 is now your displayed host</source>
         <translation>* %1 jest teraz Twoim wyświetlanym hostem</translation>
     </message>
@@ -717,6 +721,10 @@
     <message>
         <source>* %1 :Nick does not exist</source>
         <translation>* %1 :Nick nie istnieje</translation>
+    </message>
+    <message>
+        <source>* %1 :No such server</source>
+        <translation>* Nie ma takiego serwera %1</translation>
     </message>
     <message>
         <source>* %1 :Invalid channel name</source>
@@ -749,6 +757,14 @@
     <message>
         <source>* Nick %1 is already on your friend list</source>
         <translation>* Nick %1 jest już na liście przyjaciół</translation>
+    </message>
+    <message>
+        <source>Unknown command</source>
+        <translation>Nieznane polecenie</translation>
+    </message>
+    <message>
+        <source>This command has been disabled.</source>
+        <translation>To polecenie zostało wyłączone</translation>
     </message>
     <message>
         <source>* Nick %1 is not on your friend list</source>
@@ -843,8 +859,16 @@
         <translation>* Nie możesz wejść do %1: Jesteś zbanowany</translation>
     </message>
     <message>
+        <source>* Permission Denied - You do not have the required operator privileges</source>
+        <translation>* Dostęp zabroniony - Nie masz wymaganych uprawnień Administratora czata</translation>
+    </message>
+    <message>
         <source>* Only a u-line may kick a u-line from a channel.</source>
         <translation>* Tylko u-line może wyrzucić u-line z kanału.</translation>
+    </message>
+    <message>
+        <source>* Invalid oper credentials</source>
+        <translation>* Nieprawidłowe poświadczenia Operatora</translation>
     </message>
     <message>
         <source>* %1 :Only IRC operators may create new channels</source>
@@ -865,6 +889,10 @@
     <message>
         <source>* Your friend %1 is now off-line</source>
         <translation>* Twój przyjaciel %1 jest teraz off-line</translation>
+    </message>
+    <message>
+        <source>* You cannot identify as a server, you are a USER. IRC Operators informed.</source>
+        <translation>* Nie możesz identyfikować się jako serwer, jesteś użytkownikiem. Administratorzy czata zostali poinformowani o tym zdarzeniu.</translation>
     </message>
     <message>
         <source>Error: Invalid auth key</source>
