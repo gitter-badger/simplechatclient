@@ -26,58 +26,58 @@ Replace::Replace()
 
 QString Replace::replace_emots(QString strData)
 {
-    strData.replace(":))", "%Ixhehe%");
-    strData.replace(";))", "%Ixhehe%");
+    strData.replace(":))", "%Ihaha%");
+    strData.replace(";))", "%Ioczko%");
 
-    strData.replace(":)", "%Ixhaha%");
-    strData.replace(";)", "%Ixoczko%");
+    strData.replace(":)", "%Ihaha%");
+    strData.replace(";)", "%Ioczko%");
 
-    strData.replace(":((", "%Ixbuu%");
-    strData.replace(";((", "%Ixbuu%");
+    strData.replace(":((", "%Ibardzo_smutny%");
+    strData.replace(";((", "%Iszloch%");
 
-    strData.replace(":(", "%Ixsmutek%");
-    strData.replace(";(", "%Ixbuu%");
+    strData.replace(":(", "%Izal%");
+    strData.replace(";(", "%Iszloch%");
 
     strData.replace(":p", "%Ijezyk%");
     strData.replace(";p", "%Ijezor%");
     strData.replace(":P", "%Ijezyk%");
     strData.replace(";P", "%Ijezor%");
 
-    strData.replace(":d", "%Ixhehe%");
-    strData.replace(";d", "%Ixhehe%");
-    strData.replace(":D", "%Ixhehe%");
-    strData.replace(";D", "%Ixhehe%");
+    strData.replace(":d", "%Ihehe%");
+    strData.replace(";d", "%Ihehe%");
+    strData.replace(":D", "%Ihehe%");
+    strData.replace(";D", "%Ihehe%");
 
-    strData.replace(":x", "%Ixanimru%");
-    strData.replace(";x", "%Ixanimru%");
-    strData.replace(":X", "%Ixanimru%");
-    strData.replace(";X", "%Ixanimru%");
+    strData.replace(":x", "%Inie_powiem%");
+    strData.replace(";x", "%Inie_powiem%");
+    strData.replace(":X", "%Inie_powiem%");
+    strData.replace(";X", "%Inie_powiem%");
 
-    strData.replace(":o", "%Ixpanda%");
-    strData.replace(";o", "%Ixpanda%");
-    strData.replace(":O", "%Ixpanda%");
-    strData.replace(";O", "%Ixpanda%");
+    strData.replace(":o", "%Ipanda%");
+    strData.replace(";o", "%Ipanda%");
+    strData.replace(":O", "%Ipanda%");
+    strData.replace(";O", "%Ipanda%");
 
     strData.replace(":>", "%Ixluzak%");
     strData.replace(";>", "%Ixluzak%");
-    strData.replace(":<", "%Ixsmutek%");
-    strData.replace(";<", "%Ixbuu%");
+    strData.replace(":<", "%Iumm%");
+    strData.replace(";<", "%Ibuu%");
 
     if ((strData.indexOf("http://") == -1) && (strData.indexOf("https://") == -1))
-        strData.replace(":/", "%Ixmm%");
-    strData.replace(";/", "%Ixmm%");
-    strData.replace(":\\", "%Ixmm%");
-    strData.replace(";\\", "%Ixmm%");
+        strData.replace(":/", "%Ixsceptyk%");
+    strData.replace(";/", "%Ixsceptyk%");
+    strData.replace(":\\", "%Ixsceptyk%");
+    strData.replace(";\\", "%Ixsceptyk%");
 
-    strData.replace(":]", "%Ixhaha%");
-    strData.replace(";]", "%Ixhaha%");
-    strData.replace(":[", "%Ixsmutek%");
-    strData.replace(";[", "%Ixbuu%");
+    strData.replace(":]", "%Iusmieszek%");
+    strData.replace(";]", "%Ioczko%");
+    strData.replace(":[", "%Izal%");
+    strData.replace(";[", "%Iszloch%");
 
-    strData.replace(":|", "%Iooo%");
-    strData.replace(";|", "%Iooo%");
+    strData.replace(":|", "%Ixdepresja%");
+    strData.replace(";|", "%Ixdepresja%");
 
-    strData.replace(":*", "%Ixcalus%");
+    strData.replace(":*", "%Icmok%");
     strData.replace(";*", "%Icmok2%");
 
     strData.replace(":s", "%Iskwaszony%");
