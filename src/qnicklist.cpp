@@ -397,14 +397,4 @@ void Nicklist::contextMenuEvent(QContextMenuEvent *e)
     menu->addMenu(privilege);
 
     menu->popup(e->globalPos());
-
-    QEventLoop loop;
-    QObject::connect(menu, SIGNAL(triggered(QAction*)), &loop, SLOT(quit()));
-    loop.exec();
-
-    delete menu;
-    delete privilege;
-    delete ignore;
-    delete friends;
-    delete minvite;
 }
