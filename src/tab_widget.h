@@ -103,10 +103,10 @@ private:
     QWidget *toolWidget;
     QWidget *bottomWidget;
 
-    QWidget *topLeftUpWidget;
-    QHBoxLayout *topLeftUpLayout;
     QWidget *topLeftWidget;
     QVBoxLayout *topLeftLayout;
+    QWidget *topRightUpWidget;
+    QHBoxLayout *topRightUpLayout;
     QWidget *topRightWidget;
     QVBoxLayout *topRightLayout;
     QHBoxLayout *topLayout;

@@ -65,28 +65,28 @@ TabWidget::TabWidget(Network *param1, QSettings *param2, QString param3, QWidget
     logo->setParent(this);
     logo->show();
 
-    topLeftUpWidget = new QWidget(this);
-    topLeftUpLayout = new QHBoxLayout();
-    topLeftUpLayout->setMargin(0);
-    topLeftUpLayout->setAlignment(Qt::AlignLeft);
-    topLeftUpLayout->addWidget(topic);
-    topLeftUpLayout->addWidget(topicButton);
-    topLeftUpWidget->setLayout(topLeftUpLayout);
-
-    topLeftWidget = new QWidget(this);
-    topLeftLayout = new QVBoxLayout();
-    topLeftLayout->setMargin(0);
-    topLeftLayout->setAlignment(Qt::AlignTop);
-    topLeftLayout->addWidget(topLeftUpWidget);
-    topLeftLayout->addWidget(topicDetails);
-    topLeftWidget->setLayout(topLeftLayout);
+    topRightUpWidget = new QWidget(this);
+    topRightUpLayout = new QHBoxLayout();
+    topRightUpLayout->setMargin(0);
+    topRightUpLayout->setAlignment(Qt::AlignLeft);
+    topRightUpLayout->addWidget(topic);
+    topRightUpLayout->addWidget(topicButton);
+    topRightUpWidget->setLayout(topRightUpLayout);
 
     topRightWidget = new QWidget(this);
     topRightLayout = new QVBoxLayout();
     topRightLayout->setMargin(0);
     topRightLayout->setAlignment(Qt::AlignTop);
-    topRightLayout->addWidget(logo);
+    topRightLayout->addWidget(topRightUpWidget);
+    topRightLayout->addWidget(topicDetails);
     topRightWidget->setLayout(topRightLayout);
+
+    topLeftWidget = new QWidget(this);
+    topLeftLayout = new QVBoxLayout();
+    topLeftLayout->setMargin(0);
+    topLeftLayout->setAlignment(Qt::AlignTop);
+    topLeftLayout->addWidget(logo);
+    topLeftWidget->setLayout(topLeftLayout);
 
     topWidget = new QWidget(this);
     topLayout = new QHBoxLayout();
@@ -285,7 +285,7 @@ TabWidget::TabWidget(Network *param1, QSettings *param2, QString param3, QWidget
     if (strName[0] == '#')
     {
         topicButton->hide();
-        topLeftUpLayout->removeWidget(topicButton);
+        topRightUpLayout->removeWidget(topicButton);
         moderation->hide();
         toolLayout->removeWidget(moderation);
         moderSendButton->hide();
@@ -726,14 +726,14 @@ void TabWidget::enable_topic()
 {
     topic->setReadOnly(false);
     topicButton->show();
-    topLeftUpLayout->addWidget(topicButton);
+    topRightUpLayout->addWidget(topicButton);
 }
 
 void TabWidget::disable_topic()
 {
     topic->setReadOnly(true);
     topicButton->hide();
-    topLeftUpLayout->removeWidget(topicButton);
+    topRightUpLayout->removeWidget(topicButton);
 }
 
 void TabWidget::enable_moderation()
