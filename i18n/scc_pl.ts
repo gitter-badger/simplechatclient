@@ -439,34 +439,6 @@
         <translation>Powód: %3</translation>
     </message>
     <message>
-        <source>* Channel %1 is now a private channel (set by %2)</source>
-        <translation>* Kanał %1 jest teraz kanałem prywatnym (Ustawił %2)</translation>
-    </message>
-    <message>
-        <source>* Channel %1 is no longer a private channel (set by %2)</source>
-        <translation>* Kanał %1 nie jest już kanałem prywatnym (Ustawił %2)</translation>
-    </message>
-    <message>
-        <source>* Channel %1 is now moderated channel (set by %2)</source>
-        <translation>* Kanał %1 jest teraz kanałem moderowanym (Ustawił %2)</translation>
-    </message>
-    <message>
-        <source>* Channel %1 is no longer moderated channel (set by %2)</source>
-        <translation>* Kanał %1 nie jest już kanałem moderowanym (Ustawił %2)</translation>
-    </message>
-    <message>
-        <source>* Channel %1 has now enabled auditorium mode (set by %2)</source>
-        <translation>* Kanał %1 jest teraz kanałem audytywnym (Ustawił %2)</translation>
-    </message>
-    <message>
-        <source>* Channel %1 has no longer enabled auditorium mode (set by %2)</source>
-        <translation>* Kanał %1 nie jest już kanałem audytywnym (Ustawił %2)</translation>
-    </message>
-    <message>
-        <source>* Channel %1 now has a flag %2 (set by %3)</source>
-        <translation>* Kanał %1 ma teraz flage %2 (Ustawił %3)</translation>
-    </message>
-    <message>
         <source>* %1 is now the owner of the channel %2 (set by %3)</source>
         <translation>* %1 jest teraz właścicielem kanału %2 (Ustawił %3)</translation>
     </message>
@@ -529,6 +501,126 @@
     <message>
         <source>* %1 is no longer on the list of invitees in %2 (set by %3)</source>
         <translation>* %1 nie jest już na liście zaproszonych w %2 (Ustawił %3)</translation>
+    </message>
+    <message>
+        <source>* %1 now has ban exception flag in %2 (set by %3)</source>
+        <translation>* %1 posiada teraz wyjątek od bana w kanale %2 (Ustawił %3)</translation>
+    </message>
+    <message>
+        <source>* %1 no longer has a ban exception flag in %2 (set by %3)</source>
+        <translation>* %1 nie posiada już wyjątku od bana w kanale %2 (Ustawił %3)</translation>
+    </message>
+    <message>
+        <source>* Channel %1 will now have no external messages sent to the channel (set by %2)</source>
+        <translation>* Kanał %1 nie będzie teraz otrzymywać zewnętrznych wiadomości wysyłanych do kanału (Ustawił %2)</translation>
+    </message>
+    <message>
+        <source>* Channel %1 will now allow external messages sent to the channel (set by %2)</source>
+        <translation>* Kanał %1 będzie mógł teraz otrzymywać zewnętrzne wiadomości wysyłane do kanału (Ustawił %2)</translation>
+    </message>
+    <message>
+        <source>* Only channel operators can now change the topic in %1 channel (set by %2)</source>
+        <translation>* Tylko operatorzy będą mogli teraz zmieniać temat w kanale %1 (Ustawił %2)</translation>
+    </message>
+    <message>
+        <source>* Anyone can now change the topic in %1 channel (set by %2)</source>
+        <translation>* Każdy będzie mógł teraz zmienić temat w kanale %1 (Ustawił %2)</translation>
+    </message>
+    <message>
+        <source>* Channel %1 is now a hidden channel (set by %2)</source>
+        <translation>* Kanał %1 jest teraz kanałem ukrytym (Ustawił %2)</translation>
+    </message>
+    <message>
+        <source>* Channel %1 is no longer hidden channel (set by %2)</source>
+        <translation>* Kanał %1 nie jest już kanałem ukrytym (Ustawił %2)</translation>
+    </message>
+    <message>
+        <source>* Channel %1 is now a private channel (set by %2)</source>
+        <translation>* Kanał %1 jest teraz kanałem prywatnym (Ustawił %2)</translation>
+    </message>
+    <message>
+        <source>* Channel %1 is no longer a private channel (set by %2)</source>
+        <translation>* Kanał %1 nie jest już kanałem prywatnym (Ustawił %2)</translation>
+    </message>
+    <message>
+        <source>* Channel %1 is now a secret channel (set by %2)</source>
+        <translation>* Kanał %1 jest teraz kanałem sekretnym (Ustawił %2)</translation>
+    </message>
+    <message>
+        <source>* Channel %1 is no longer a secret channel (set by %2)</source>
+        <translation>* Kanał %1 nie jest już kanałem sekretnym (Ustawił %2)</translation>
+    </message>
+    <message>
+        <source>* Channel %1 is now moderated channel (set by %2)</source>
+        <translation>* Kanał %1 jest teraz kanałem moderowanym (Ustawił %2)</translation>
+    </message>
+    <message>
+        <source>* Channel %1 is no longer moderated channel (set by %2)</source>
+        <translation>* Kanał %1 nie jest już kanałem moderowanym (Ustawił %2)</translation>
+    </message>
+    <message>
+        <source>* Channel %1 now has enabled auditorium mode (set by %2)</source>
+        <translation>* Kanał %1 jest teraz kanałem audytywnym (Ustawił %2)</translation>
+    </message>
+    <message>
+        <source>* Channel %1 no longer has enabled auditorium mode (set by %2)</source>
+        <translation>* Kanał %1 nie jest już kanałem audytywnym (Ustawił %2)</translation>
+    </message>
+    <message>
+        <source>* Channel %1 now has max number of users set to %2 (set by %3)</source>
+        <translation>* Kanał %1 ma teraz ustawiony limit użytkowników na %2 (Ustawił %3)</translation>
+    </message>
+    <message>
+        <source>* Channel %1 no longer has max number of users set (set by %2)</source>
+        <translation>* Kanał %1 nie ma już ustawionego limitu użytkowników (Ustawił %2)</translation>
+    </message>
+    <message>
+        <source>* Channel %1 now has word censoring enabled (set by %2)</source>
+        <translation>* Kanał %1 ma teraz włączoną cenzure słów (Ustawił %2)</translation>
+    </message>
+    <message>
+        <source>* Channel %1 no longer has word censoring enabled (set by %2)</source>
+        <translation>* Kanał %1 nie ma już włączonej cenzury słów (Ustawił %2)</translation>
+    </message>
+    <message>
+        <source>* Channel %1 now has blocked kick (set by %2)</source>
+        <translation>* Kanał %1 ma teraz włączoną blokade wyrzucania użytkowników (Ustawił %2)</translation>
+    </message>
+    <message>
+        <source>* Channel %1 no longer has blocked kick (set by %2)</source>
+        <translation>* Kanał %1 nie ma już włączonej blokady wyrzucania użytkowników (Ustawił %2)</translation>
+    </message>
+    <message>
+        <source>* Channel %1 now has blocked invites for 1 hour (set by %2)</source>
+        <translation>* Kanał %1 posiada teraz blokade wysyłania zaproszeń przez 1 godzinę (Ustawił %2)</translation>
+    </message>
+    <message>
+        <source>* Channel %1 no longer has blocked invites (set by %2)</source>
+        <translation>* Kanał %1 nie posiada już blokady wysyłania zaproszeń (Ustawił %2)</translation>
+    </message>
+    <message>
+        <source>* Channel %1 now has limit redirection to %2 channel (set by %3)</source>
+        <translation>* Kanał %1 ma teraz ustawione przekierowanie do innego kanału gdy zostanie przekroczona ilość użytkowników w %2 (Ustawił %3)</translation>
+    </message>
+    <message>
+        <source>* Channel %1 no longer has limit redirection (set by %2)</source>
+        <translation>* Kanał %1 nie ma już ustawionego przekierowania do innego kanału gdy zostanie przekroczona ilość użytkowników (Ustawił %2)</translation>
+    </message>
+    <message>
+        <source>* Channel %1 now has status %2 (set by %3)</source>
+        <translation>* Kanał %1 ma teraz status %2 (Ustawił %3)</translation>
+    </message>
+    <message>
+        <source>* Channel %1 no longer has status %2 (set by %3)</source>
+        <translation>* Kanał %1 nie ma już statusu %2 (Ustawił %3)</translation>
+    </message>
+    <message>
+        <source>* Channel %1 now belongs to a category %2 (set by %3)</source>
+        <translation>* Kanał %1 należy teraz do kategorii %2 (Ustawił %3)</translation>
+    </message>
+    <message>
+        <source>* Channel %1 is no longer category %2 (set by %3)</source>
+        <translation>* Kanał %1 nie należy już do kategorii %2 (Ustawił %3)</translation>
     </message>
     <message>
         <source>* %1 now has a flag %2 (set by %3)</source>
