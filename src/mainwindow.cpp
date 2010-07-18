@@ -67,7 +67,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     delete pConfig;
 
     settings.clear();
-    settings.setValue("version", "1.0.6.289");
+    settings.setValue("version", "1.0.6.290");
     settings.setValue("debug", "off");
     settings.setValue("logged", "off");
     settings.setValue("busy", "off");
@@ -327,7 +327,6 @@ void MainWindow::tab_close_requested(int index)
     {
         if (strName[0] == '#')
         {
-            pTabC->remove_tab(strName);
             if (pNetwork->is_connected() == true)
                 pNetwork->send(QString("PART %1").arg(strName));
         }
