@@ -37,5 +37,6 @@ Notify::~Notify()
 
 void Notify::play()
 {
+    music->stop();
     music->play();
 }
