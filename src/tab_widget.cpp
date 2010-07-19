@@ -291,8 +291,19 @@ TabWidget::TabWidget(Network *param1, QSettings *param2, QString param3, QWidget
         moderSendButton->hide();
         bottomLayout->removeWidget(moderSendButton);
 
-        rightLayout->addWidget(webLink);
-        rightLayout->addWidget(nickCount);
+        if (settings->value("style") == "modern")
+        {
+            rightLayout->addWidget(webLink);
+            rightLayout->addWidget(nickCount);
+        }
+        else if (settings->value("style") == "classic")
+        {
+            webLink->hide();
+            nickCount->hide();
+            topicDetails->hide();
+            topLeftWidget->hide();
+        }
+
         rightLayout->addWidget(nick_list);
 
         leftLayout->addWidget(topWidget);
@@ -719,7 +730,11 @@ void TabWidget::set_topic(QString strTopic)
     strTopic.replace(QRegExp("%C(\\S+)%"),"");
     strTopic.replace(QRegExp("%F(\\S+)%"),"");
     strTopic.replace(QRegExp("%I(\\S+)%"),"<\\1>");
-    topic->setToolTip(strTopic);
+
+    if (settings->value("style") == "modern")
+        topic->setToolTip(strTopic);
+    else if (settings->value("style") == "classic")
+        topic->setToolTip(topicDetails->text());
 }
 
 void TabWidget::enable_topic()
@@ -755,6 +770,9 @@ void TabWidget::disable_moderation()
 void TabWidget::author_topic(QString strAuthor)
 {
     topicDetails->setText(QString(tr("Topic set by %1")).arg(strAuthor));
+
+    if (settings->value("style") == "classic")
+        topic->setToolTip(topicDetails->text());
 }
 
 void TabWidget::set_link(QString strUrl)

@@ -64,10 +64,11 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     QString strHideFormating = pConfig->get_value("hide_formating");
     QString strHideJoinPart = pConfig->get_value("hide_join_part");
     QString strDisableAvatars = pConfig->get_value("disable_avatars");
+    QString strStyle = pConfig->get_value("style");
     delete pConfig;
 
     settings.clear();
-    settings.setValue("version", "1.0.6.292");
+    settings.setValue("version", "1.0.6.293");
     settings.setValue("debug", "off");
     settings.setValue("logged", "off");
     settings.setValue("busy", "off");
@@ -79,6 +80,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     settings.setValue("hide_formating", strHideFormating);
     settings.setValue("hide_join_part", strHideJoinPart);
     settings.setValue("disable_avatars", strDisableAvatars);
+    settings.setValue("style", strStyle);
     settings.setValue("uokey", "");
     settings.setValue("onet_ubi", "");
     settings.setValue("onet_cid", "");
@@ -152,6 +154,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     QLabel *label_status = new QLabel();
     label_status->setText("v"+settings.value("version").toString());
     statusBar()->addWidget(label_status);
+
+    if (settings.value("style") == "classic")
+        toolBar->hide();
 
 // signals
     QObject::connect(connectAct, SIGNAL(triggered()), this, SLOT(button_connect()));

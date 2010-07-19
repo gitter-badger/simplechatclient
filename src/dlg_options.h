@@ -44,6 +44,8 @@ private slots:
     void hide_formating();
     void hide_join_part();
     void disable_avatars();
+    void set_modern_style();
+    void set_classic_style();
     void button_ok();
     void button_cancel();
 

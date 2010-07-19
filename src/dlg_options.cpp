@@ -37,6 +37,7 @@ DlgOptions::DlgOptions(QWidget *parent, QSettings *param1) : QDialog(parent)
     QString strHideFormating = pConfig->get_value("hide_formating");
     QString strHideJoinPart = pConfig->get_value("hide_join_part");
     QString strDisableAvatars = pConfig->get_value("disable_avatars");
+    QString strStyle = pConfig->get_value("style");
     delete pConfig;
 
     if (strPass.isEmpty() == false)
@@ -79,12 +80,19 @@ DlgOptions::DlgOptions(QWidget *parent, QSettings *param1) : QDialog(parent)
     else
         ui.checkBox_6->setChecked(false);
 
+    if (strStyle == "modern")
+        ui.radioButton->setChecked(true);
+    else
+        ui.radioButton_2->setChecked(true);
+
     QObject::connect(ui.checkBox_5, SIGNAL(clicked()), this, SLOT(auto_busy()));
     QObject::connect(ui.checkBox, SIGNAL(clicked()), this, SLOT(debug_all()));
     QObject::connect(ui.checkBox_2, SIGNAL(clicked()), this, SLOT(show_zuo()));
     QObject::connect(ui.checkBox_3, SIGNAL(clicked()), this, SLOT(hide_formating()));
     QObject::connect(ui.checkBox_4, SIGNAL(clicked()), this, SLOT(hide_join_part()));
     QObject::connect(ui.checkBox_6, SIGNAL(clicked()), this, SLOT(disable_avatars()));
+    QObject::connect(ui.radioButton, SIGNAL(clicked()), this, SLOT(set_modern_style()));
+    QObject::connect(ui.radioButton_2, SIGNAL(clicked()), this, SLOT(set_classic_style()));
     QObject::connect(ui.buttonBox, SIGNAL(accepted()), this, SLOT(button_ok()));
     QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(button_cancel()));
 }
@@ -185,6 +193,28 @@ void DlgOptions::disable_avatars()
     delete pConfig;
 }
 
+void DlgOptions::set_modern_style()
+{
+    Config *pConfig = new Config();
+    if (ui.radioButton->isChecked() == true)
+    {
+        pConfig->set_value("style", "modern");
+        settings->setValue("style", "modern");
+    }
+    delete pConfig;
+}
+
+void DlgOptions::set_classic_style()
+{
+    Config *pConfig = new Config();
+    if (ui.radioButton_2->isChecked() == true)
+    {
+        pConfig->set_value("style", "classic");
+        settings->setValue("style", "classic");
+    }
+    delete pConfig;
+}
+
 void DlgOptions::button_cancel()
 {
     ui.lineEditNick->clear();
@@ -194,6 +224,10 @@ void DlgOptions::button_cancel()
     ui.checkBox_2->QObject::disconnect();
     ui.checkBox_3->QObject::disconnect();
     ui.checkBox_4->QObject::disconnect();
+    ui.checkBox_5->QObject::disconnect();
+    ui.checkBox_6->QObject::disconnect();
+    ui.radioButton->QObject::disconnect();
+    ui.radioButton_2->QObject::disconnect();
     this->close();
 }
 
@@ -221,5 +255,9 @@ void DlgOptions::button_ok()
     ui.checkBox_2->QObject::disconnect();
     ui.checkBox_3->QObject::disconnect();
     ui.checkBox_4->QObject::disconnect();
+    ui.checkBox_5->QObject::disconnect();
+    ui.checkBox_6->QObject::disconnect();
+    ui.radioButton->QObject::disconnect();
+    ui.radioButton_2->QObject::disconnect();
     this->close();
 }

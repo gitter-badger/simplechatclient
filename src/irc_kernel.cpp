@@ -451,7 +451,7 @@ void IrcKernel::raw_join()
     // nick avatar
     if ((strNick[0] != '~') && (mNickAvatar->contains(strNick) == false))
     {
-        if (settings->value("disable_avatars").toString() == "off")
+        if ((settings->value("disable_avatars").toString() == "off") && (settings->value("style").toString() == "modern"))
             pNetwork->send(QString("NS INFO %1 s").arg(strNick));
     }
 
@@ -1265,13 +1265,16 @@ void IrcKernel::raw_161n()
             {
                 QString strUrl = strValue;
 
-                caThreadList.append(new ChannelAvatar(tabc, strChannel, strUrl, mChannelAvatar));
-                QObject::connect(caThreadList.at(caThreadList.size()-1), SIGNAL(do_remove_cathread(ChannelAvatar*)), this, SLOT(remove_cathread(ChannelAvatar*)));
+                if (settings->value("style").toString() == "modern")
+                {
+                    caThreadList.append(new ChannelAvatar(tabc, strChannel, strUrl, mChannelAvatar));
+                    QObject::connect(caThreadList.at(caThreadList.size()-1), SIGNAL(do_remove_cathread(ChannelAvatar*)), this, SLOT(remove_cathread(ChannelAvatar*)));
 
 #ifdef Q_WS_X11
-                if (settings->value("debug").toString() == "on")
-                    qDebug() << "Channel avatar thread +1 (size: " << caThreadList.size() << ")";
+                    if (settings->value("debug").toString() == "on")
+                        qDebug() << "Channel avatar thread +1 (size: " << caThreadList.size() << ")";
 #endif
+                }
             }
         }
     }
@@ -1943,7 +1946,7 @@ void IrcKernel::raw_353()
 
             if ((strRequestNickAvatar[0] != '~') && (mNickAvatar->contains(strRequestNickAvatar) == false))
             {
-                if (settings->value("disable_avatars").toString() == "off")
+                if ((settings->value("disable_avatars").toString() == "off") && (settings->value("style").toString() == "modern"))
                     pNetwork->send(QString("NS INFO %1 s").arg(strRequestNickAvatar));
             }
         }

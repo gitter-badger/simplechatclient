@@ -23,6 +23,7 @@
 
 #include <QPainter>
 #include <QAbstractItemDelegate>
+#include "config.h"
 
 class NicklistDelegate : public QAbstractItemDelegate
 {

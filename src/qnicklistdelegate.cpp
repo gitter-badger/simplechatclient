@@ -86,15 +86,28 @@ void NicklistDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opti
     QString nick = index.data(Qt::UserRole).toString();
     //QString description = index.data(Qt::UserRole+3).toString();
 
+    Config *pConfig = new Config();
+    QString strStyle = pConfig->get_value("style");
+    delete pConfig;
+
     int imageSpace = 10;
 
     // STATUS
     if (status.isNull() == false)
     {
-        r = option.rect.adjusted(imageSpace, -5, 5, 5);
-        status.paint(painter, r, Qt::AlignVCenter|Qt::AlignLeft);
-        imageSpace += 20;
-
+        if (strStyle == "modern")
+        {
+            r = option.rect.adjusted(imageSpace, -5, 5, 5);
+            status.paint(painter, r, Qt::AlignVCenter|Qt::AlignLeft);
+            imageSpace += 20;
+        }
+        else if (strStyle == "classic")
+        {
+            imageSpace = 5;
+            r = option.rect.adjusted(imageSpace, -4, 0, 4);
+            status.paint(painter, r, Qt::AlignVCenter|Qt::AlignLeft);
+            imageSpace += 10;
+        }
         r = option.rect.adjusted(imageSpace, 0, 10, 10);
         imageSpace += 10;
     }
@@ -102,16 +115,25 @@ void NicklistDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opti
     // CAM
     if (cam.isNull() == false)
     {
-        r = option.rect.adjusted(imageSpace, 0, 20, 0);
-        cam.paint(painter, r, Qt::AlignVCenter|Qt::AlignLeft);
-        imageSpace += 20;
+        if (strStyle == "modern")
+        {
+            r = option.rect.adjusted(imageSpace, 0, 20, 0);
+            cam.paint(painter, r, Qt::AlignVCenter|Qt::AlignLeft);
+            imageSpace += 20;
+        }
+        else if (strStyle == "classic")
+        {
+            r = option.rect.adjusted(imageSpace, 0, 20, 0);
+            cam.paint(painter, r, Qt::AlignVCenter|Qt::AlignLeft);
+            imageSpace += 10;
+        }
 
         r = option.rect.adjusted(imageSpace, 0, 10, 10);
         imageSpace += 10;
     }
 
     // AVATAR
-    if (nick[0] != '~')
+    if ((nick[0] != '~') && (strStyle == "modern"))
     {
         r = option.rect.adjusted(imageSpace, 0, 10, 0);
         avatar.paint(painter, r, Qt::AlignVCenter|Qt::AlignLeft);
@@ -122,9 +144,18 @@ void NicklistDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opti
     }
 
     // NICK
-    r = option.rect.adjusted(imageSpace, -8, -10, -8);
-    painter->setFont(QFont("Verdana", 9, QFont::Normal));
-    painter->drawText(r.left(), r.top(), r.width(), r.height(), Qt::AlignBottom|Qt::AlignLeft, nick, &r);
+    if (strStyle == "modern")
+    {
+        r = option.rect.adjusted(imageSpace, -8, -10, -8);
+        painter->setFont(QFont("Verdana", 9, QFont::Normal));
+        painter->drawText(r.left(), r.top(), r.width(), r.height(), Qt::AlignBottom|Qt::AlignLeft, nick, &r);
+    }
+    else if (strStyle == "classic")
+    {
+        r = option.rect.adjusted(imageSpace, -4, 0, -4);
+        painter->setFont(QFont("Verdana", 9, QFont::Normal));
+        painter->drawText(r.left(), r.top(), r.width(), r.height(), Qt::AlignBottom|Qt::AlignLeft, nick, &r);
+    }
 
     // DESCRIPTION
     //r = option.rect.adjusted(imageSpace, 35, -10, 0);
@@ -134,5 +165,12 @@ void NicklistDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opti
 
 QSize NicklistDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
-    return QSize(180, 35);
+    Config *pConfig = new Config();
+    QString strStyle = pConfig->get_value("style");
+    delete pConfig;
+
+    if (strStyle == "modern")
+        return QSize(180, 35);
+    else if (strStyle == "classic")
+        return QSize(100, 24);
 }
