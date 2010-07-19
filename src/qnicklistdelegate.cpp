@@ -87,6 +87,7 @@ void NicklistDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opti
     //QString description = index.data(Qt::UserRole+3).toString();
 
     Config *pConfig = new Config();
+    QString strDisableAvatars = pConfig->get_value("disable_avatars");
     QString strStyle = pConfig->get_value("style");
     delete pConfig;
 
@@ -133,7 +134,7 @@ void NicklistDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opti
     }
 
     // AVATAR
-    if ((nick[0] != '~') && (strStyle == "modern"))
+    if ((nick[0] != '~') && (strStyle == "modern") && (strDisableAvatars == "off"))
     {
         r = option.rect.adjusted(imageSpace, 0, 10, 0);
         avatar.paint(painter, r, Qt::AlignVCenter|Qt::AlignLeft);
