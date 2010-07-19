@@ -2042,6 +2042,7 @@ void IrcKernel::raw_400n()
 }
 
 // :cf1f4.onet 401 ~Merovingian ~Merovingian1 :No such nick
+// :cf1f3.onet 401 Merovingian #asdasdasd :No such channel
 // :cf1f3.onet 401 scc_test scc :No such nick/channel
 // :cf1f4.onet 401 Merovingian ChanServ :is currently unavailable. Please try again later.
 void IrcKernel::raw_401()
@@ -2057,6 +2058,8 @@ void IrcKernel::raw_401()
 
     if (strMessage == "No such nick")
         strMessage = QString(tr("* %1 :No such nick")).arg(strNick);
+    else if (strMessage == "No such channel")
+        strMessage = QString(tr("* %1 :No such channel")).arg(strNick);
     else if (strMessage == "No such nick/channel")
         strMessage = QString(tr("* %1 :No such nick/channel")).arg(strNick);
     else if (strMessage == "is currently unavailable. Please try again later.")
