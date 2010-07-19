@@ -309,6 +309,13 @@
     </message>
 </context>
 <context>
+    <name>DlgOptions</name>
+    <message>
+        <source>Restart program to apply the changes.</source>
+        <translation>Uruchom ponownie program aby zastosować wprowadzone zmiany.</translation>
+    </message>
+</context>
+<context>
     <name>DlgPriv</name>
     <message>
         <source>%1 invites you to priv</source>

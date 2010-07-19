@@ -202,6 +202,13 @@ void DlgOptions::set_modern_style()
         settings->setValue("style", "modern");
     }
     delete pConfig;
+
+    QMessageBox msgBox;
+    msgBox.setIcon(QMessageBox::Information);
+    msgBox.setWindowIcon(QIcon(":/images/logo_64.png"));
+    msgBox.setStandardButtons(QMessageBox::Ok);
+    msgBox.setText(QString(tr("Restart program to apply the changes.")));
+    msgBox.exec();
 }
 
 void DlgOptions::set_classic_style()
@@ -213,6 +220,13 @@ void DlgOptions::set_classic_style()
         settings->setValue("style", "classic");
     }
     delete pConfig;
+
+    QMessageBox msgBox;
+    msgBox.setIcon(QMessageBox::Information);
+    msgBox.setWindowIcon(QIcon(":/images/logo_64.png"));
+    msgBox.setStandardButtons(QMessageBox::Ok);
+    msgBox.setText(QString(tr("Restart program to apply the changes.")));
+    msgBox.exec();
 }
 
 void DlgOptions::button_cancel()

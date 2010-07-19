@@ -22,6 +22,7 @@
 #define DLG_OPTIONS_H
 
 #include <QDialog>
+#include <QMessageBox>
 #include <QSettings>
 #include "config.h"
 #include "crypt.h"
