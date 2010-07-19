@@ -149,6 +149,8 @@ void Config::create_new_config()
     add_config_value(&doc, &root, "hide_formating", "off");
     add_config_value(&doc, &root, "hide_join_part", "off");
     add_config_value(&doc, &root, "disable_avatars", "off");
+    add_config_value(&doc, &root, "disable_logs", "off");
+    add_config_value(&doc, &root, "disable_sounds", "off");
     add_config_value(&doc, &root, "style", "modern");
 
     save();

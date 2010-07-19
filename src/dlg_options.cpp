@@ -37,6 +37,8 @@ DlgOptions::DlgOptions(QWidget *parent, QSettings *param1) : QDialog(parent)
     QString strHideFormating = pConfig->get_value("hide_formating");
     QString strHideJoinPart = pConfig->get_value("hide_join_part");
     QString strDisableAvatars = pConfig->get_value("disable_avatars");
+    QString strDisableLogs = pConfig->get_value("disable_logs");
+    QString strDisableSounds = pConfig->get_value("disable_sounds");
     QString strStyle = pConfig->get_value("style");
     delete pConfig;
 
@@ -80,6 +82,16 @@ DlgOptions::DlgOptions(QWidget *parent, QSettings *param1) : QDialog(parent)
     else
         ui.checkBox_6->setChecked(false);
 
+    if (strDisableLogs == "on")
+        ui.checkBox_7->setChecked(true);
+    else
+        ui.checkBox_7->setChecked(false);
+
+    if (strDisableSounds == "on")
+        ui.checkBox_8->setChecked(true);
+    else
+        ui.checkBox_8->setChecked(false);
+
     if (strStyle == "modern")
         ui.radioButton->setChecked(true);
     else
@@ -91,6 +103,8 @@ DlgOptions::DlgOptions(QWidget *parent, QSettings *param1) : QDialog(parent)
     QObject::connect(ui.checkBox_3, SIGNAL(clicked()), this, SLOT(hide_formating()));
     QObject::connect(ui.checkBox_4, SIGNAL(clicked()), this, SLOT(hide_join_part()));
     QObject::connect(ui.checkBox_6, SIGNAL(clicked()), this, SLOT(disable_avatars()));
+    QObject::connect(ui.checkBox_7, SIGNAL(clicked()), this, SLOT(disable_logs()));
+    QObject::connect(ui.checkBox_8, SIGNAL(clicked()), this, SLOT(disable_sounds()));
     QObject::connect(ui.radioButton, SIGNAL(clicked()), this, SLOT(set_modern_style()));
     QObject::connect(ui.radioButton_2, SIGNAL(clicked()), this, SLOT(set_classic_style()));
     QObject::connect(ui.buttonBox, SIGNAL(accepted()), this, SLOT(button_ok()));
@@ -193,6 +207,38 @@ void DlgOptions::disable_avatars()
     delete pConfig;
 }
 
+void DlgOptions::disable_logs()
+{
+    Config *pConfig = new Config();
+    if (ui.checkBox_7->isChecked() == true)
+    {
+        pConfig->set_value("disable_logs", "on");
+        settings->setValue("disable_logs", "on");
+    }
+    else
+    {
+        pConfig->set_value("disable_logs", "off");
+        settings->setValue("disable_logs", "off");
+    }
+    delete pConfig;
+}
+
+void DlgOptions::disable_sounds()
+{
+    Config *pConfig = new Config();
+    if (ui.checkBox_8->isChecked() == true)
+    {
+        pConfig->set_value("disable_sounds", "on");
+        settings->setValue("disable_sounds", "on");
+    }
+    else
+    {
+        pConfig->set_value("disable_sounds", "off");
+        settings->setValue("disable_sounds", "off");
+    }
+    delete pConfig;
+}
+
 void DlgOptions::set_modern_style()
 {
     Config *pConfig = new Config();
@@ -244,6 +290,8 @@ void DlgOptions::button_cancel()
     ui.checkBox_4->QObject::disconnect();
     ui.checkBox_5->QObject::disconnect();
     ui.checkBox_6->QObject::disconnect();
+    ui.checkBox_7->QObject::disconnect();
+    ui.checkBox_8->QObject::disconnect();
     ui.radioButton->QObject::disconnect();
     ui.radioButton_2->QObject::disconnect();
     this->close();
@@ -275,6 +323,8 @@ void DlgOptions::button_ok()
     ui.checkBox_4->QObject::disconnect();
     ui.checkBox_5->QObject::disconnect();
     ui.checkBox_6->QObject::disconnect();
+    ui.checkBox_7->QObject::disconnect();
+    ui.checkBox_8->QObject::disconnect();
     ui.radioButton->QObject::disconnect();
     ui.radioButton_2->QObject::disconnect();
     this->close();

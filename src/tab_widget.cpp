@@ -443,8 +443,12 @@ void TabWidget::display_msg(QString strTime, QString strData, int iLevel)
     QString strDT = dt.toString("[hh:mm:ss] ");
     strData = strDT+strData;
 
-    Log *l = new Log();
-    l->save(strName, strData);
+    if (settings->value("disable_logs").toString() == "off")
+    {
+        Log *l = new Log();
+        l->save(strName, strData);
+        delete l;
+    }
 
     if ((iLevel == 1) || (iLevel == 2) || (iLevel == 3))
     {
@@ -461,8 +465,12 @@ void TabWidget::display_msg(QString strData, int iLevel)
     QString strDT = dt.toString("[hh:mm:ss] ");
     strData = strDT+strData;
 
-    Log *l = new Log();
-    l->save(strName, strData);
+    if (settings->value("disable_logs").toString() == "off")
+    {
+        Log *l = new Log();
+        l->save(strName, strData);
+        delete l;
+    }
 
     if ((iLevel == 1) || (iLevel == 2) || (iLevel == 3))
     {
@@ -712,7 +720,8 @@ void TabWidget::display_message(QString strData, int iLevel)
     {
         strContent.append("<hr>");
 
-        pNotify->play();
+        if (settings->value("disable_sounds").toString() == "off")
+            pNotify->play();
     }
 
     strContent = strContent+strContentLast;
@@ -1279,8 +1288,12 @@ void TabWidget::send_message(bool bType)
                     QDateTime dt = QDateTime::currentDateTime();
                     QString strDT = dt.toString("[hh:mm:ss] ");
 
-                    Log *l = new Log();
-                    l->save(strName, QString("%1<%2> %3").arg(strDT).arg(strMe).arg(strTextDisplay));
+                    if (settings->value("disable_logs").toString() == "off")
+                    {
+                        Log *l = new Log();
+                        l->save(strName, QString("%1<%2> %3").arg(strDT).arg(strMe).arg(strTextDisplay));
+                        delete l;
+                    }
 
                     display_message(QString("%1<%2> %3ACTION %4%5").arg(strDT).arg(strMe).arg(QString(QByteArray("\x01"))).arg(strTextDisplay).arg(QString(QByteArray("\x01"))), 0);
                     if (pNetwork->is_connected() == true)
@@ -1316,11 +1329,14 @@ void TabWidget::send_message(bool bType)
                 QDateTime dt = QDateTime::currentDateTime();
                 QString strDT = dt.toString("[hh:mm:ss] ");
 
-                Log *l = new Log();
-
                 if (bType == true)
                 {
-                    l->save(strName, QString("%1<%2> %3").arg(strDT).arg(strMe).arg(strText));
+                    if (settings->value("disable_logs").toString() == "off")
+                    {
+                        Log *l = new Log();
+                        l->save(strName, QString("%1<%2> %3").arg(strDT).arg(strMe).arg(strText));
+                        delete l;
+                    }
 
                     strText = QString("PRIVMSG %1 :%2").arg(strName).arg(strText);
                     pNetwork->send(strText);
@@ -1328,7 +1344,12 @@ void TabWidget::send_message(bool bType)
                 }
                 else
                 {
-                    l->save(strName, QString("%1 *<%2> %3").arg(strDT).arg(strMe).arg(strText));
+                    if (settings->value("disable_logs").toString() == "off")
+                    {
+                        Log *l = new Log();
+                        l->save(strName, QString("%1 *<%2> %3").arg(strDT).arg(strMe).arg(strText));
+                        delete l;
+                    }
 
                     strText = QString("MODERNOTICE %1 :%2").arg(strName).arg(strText);
                     pNetwork->send(strText);
