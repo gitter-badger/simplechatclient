@@ -203,6 +203,8 @@ void DlgOptions::set_modern_style()
     }
     delete pConfig;
 
+    this->close(); // fix stay on top
+
     QMessageBox msgBox;
     msgBox.setIcon(QMessageBox::Information);
     msgBox.setWindowIcon(QIcon(":/images/logo_64.png"));
@@ -220,6 +222,8 @@ void DlgOptions::set_classic_style()
         settings->setValue("style", "classic");
     }
     delete pConfig;
+
+    this->close(); // fix stay on top
 
     QMessageBox msgBox;
     msgBox.setIcon(QMessageBox::Information);
