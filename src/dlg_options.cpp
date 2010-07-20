@@ -40,6 +40,7 @@ DlgOptions::DlgOptions(QWidget *parent, QSettings *param1) : QDialog(parent)
     QString strDisableLogs = pConfig->get_value("disable_logs");
     QString strDisableSounds = pConfig->get_value("disable_sounds");
     QString strStyle = pConfig->get_value("style");
+    QString strBackgroundColor = pConfig->get_value("background_color");
     delete pConfig;
 
     if (strPass.isEmpty() == false)
@@ -51,6 +52,7 @@ DlgOptions::DlgOptions(QWidget *parent, QSettings *param1) : QDialog(parent)
 
     ui.lineEditNick->setText(strNick);
     ui.lineEditPass->setText(strPass);
+    ui.lineEditBackgroundColor->setText(strBackgroundColor);
 
     if (strAutoBusy == "on")
         ui.checkBox_5->setChecked(true);
@@ -283,6 +285,7 @@ void DlgOptions::button_cancel()
 {
     ui.lineEditNick->clear();
     ui.lineEditPass->clear();
+    ui.lineEditBackgroundColor->clear();
     ui.buttonBox->QObject::disconnect();
     ui.checkBox->QObject::disconnect();
     ui.checkBox_2->QObject::disconnect();
@@ -301,6 +304,7 @@ void DlgOptions::button_ok()
 {
     QString strNick = ui.lineEditNick->text();
     QString strPass = ui.lineEditPass->text();
+    QString strBackgroundColor = ui.lineEditBackgroundColor->text();
 
     if (strPass.isEmpty() == false)
     {
@@ -312,10 +316,14 @@ void DlgOptions::button_ok()
     Config *pConfig = new Config();
     pConfig->set_value("login-nick", strNick);
     pConfig->set_value("login-pass", strPass);
+    pConfig->set_value("background_color", strBackgroundColor);
     delete pConfig;
+
+    settings->setValue("background_color", strBackgroundColor);
 
     ui.lineEditNick->clear();
     ui.lineEditPass->clear();
+    ui.lineEditBackgroundColor->clear();
     ui.buttonBox->QObject::disconnect();
     ui.checkBox->QObject::disconnect();
     ui.checkBox_2->QObject::disconnect();

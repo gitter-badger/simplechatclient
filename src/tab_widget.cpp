@@ -31,11 +31,21 @@ TabWidget::TabWidget(Network *param1, QSettings *param2, QString param3, QWidget
     dlgchannel_settings = param7;
     dlgmoderation = param8;
 
+    QString strBackgroundColor = settings->value("background_color").toString();
+    strBackgroundColor.replace("&", "&amp;");
+    strBackgroundColor.replace("<", "&lt;");
+    strBackgroundColor.replace(">", "&gt;");
+    strBackgroundColor.replace("\"", "");
+    strBackgroundColor.replace("\'", "");
+    strBackgroundColor.replace("#", "");
+    strBackgroundColor.replace(";", "");
+    strBackgroundColor.replace("%", "");
+
     iNickCount = 0;
     bCursorPositionChanged = false;
     strCurrentColor = "000000";
     strFontSize = "11px";
-    strContentStart = "<html><body style=\"background-color:#ffffff;\">";
+    strContentStart = "<html><body style=\"background-color:#"+strBackgroundColor+";\">";
     strContentEnd = "</body></html>";
 
     splitter = new QSplitter(this);

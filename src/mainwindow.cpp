@@ -67,10 +67,11 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     QString strDisableLogs = pConfig->get_value("disable_logs");
     QString strDisableSounds = pConfig->get_value("disable_sounds");
     QString strStyle = pConfig->get_value("style");
+    QString strBackgroundColor = pConfig->get_value("background_color");
     delete pConfig;
 
     settings.clear();
-    settings.setValue("version", "1.0.6.297");
+    settings.setValue("version", "1.0.6.298");
     settings.setValue("debug", "off");
     settings.setValue("logged", "off");
     settings.setValue("busy", "off");
@@ -85,6 +86,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     settings.setValue("disable_logs", strDisableLogs);
     settings.setValue("disable_sounds", strDisableSounds);
     settings.setValue("style", strStyle);
+    settings.setValue("background_color", strBackgroundColor);
     settings.setValue("uokey", "");
     settings.setValue("onet_ubi", "");
     settings.setValue("onet_cid", "");
