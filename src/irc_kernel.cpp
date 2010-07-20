@@ -925,6 +925,7 @@ void IrcKernel::raw_topic()
     pNetwork->send(QString("CS INFO %1 i").arg(strChannel));
 }
 
+// :~test34534!anonymous@2294E8.94913F.A00186.1A3C28 INVREJECT Merovingian #Scrabble
 // :Merovingian!26269559@2294E8.94913F.2E3993.4AF50D INVREJECT scc_test ^cf1f41038619
 void IrcKernel::raw_invreject()
 {
@@ -938,10 +939,16 @@ void IrcKernel::raw_invreject()
 
     QString strChannel = strDataList[3];
 
-    QString strDisplay = QString(tr("* %1 rejected an invitation to priv")).arg(strWho);
+    QString strDisplay;
+    if (strChannel[0] == '^')
+        strDisplay = QString(tr("* %1 rejected an invitation to priv")).arg(strWho);
+    else
+        strDisplay = QString(tr("* %1 rejected an invitation to channel %2")).arg(strWho).arg(strChannel);
+
     tabc->show_msg(strChannel, strDisplay, 7);
 }
 
+// :~test34534!anonymous@2294E8.94913F.A00186.1A3C28 INVIGNORE Merovingian #Scrabble
 // :Merovingian!26269559@2294E8.94913F.A00186.4A2B76 INVIGNORE scc_test ^cf1f31294352
 void IrcKernel::raw_invignore()
 {
@@ -955,7 +962,12 @@ void IrcKernel::raw_invignore()
 
     QString strChannel = strDataList[3];
 
-    QString strDisplay = QString(tr("* %1 ignored your invitation to the priv")).arg(strWho);
+    QString strDisplay;
+    if (strChannel[0] == '^')
+        strDisplay = QString(tr("* %1 ignored your invitation to the priv")).arg(strWho);
+    else
+        strDisplay = QString(tr("* %1 ignored your invitation to the channel %2")).arg(strWho).arg(strChannel);
+
     tabc->show_msg(strChannel, strDisplay, 7);
 
     tabc->rename_tab(strChannel, strWho);
@@ -1901,6 +1913,7 @@ void IrcKernel::raw_333()
 // supported by raw 161
 }
 
+// :cf1f4.onet 341 Merovingian ~test34534 #Scrabble
 // :cf1f1.onet 341 scc_test Merovingian ^cf1f1162848
 void IrcKernel::raw_341()
 {

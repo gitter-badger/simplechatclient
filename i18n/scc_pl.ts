@@ -690,8 +690,16 @@
         <translation>* %1 odrzucił/a zaproszenie do rozmowy prywatnej</translation>
     </message>
     <message>
+        <source>* %1 rejected an invitation to channel %2</source>
+        <translation>* %1 odrzucił/a zaproszenie do kanału %2</translation>
+    </message>
+    <message>
         <source>* %1 ignored your invitation to the priv</source>
         <translation>* %1 zignorował/a Twoje zaproszenie do rozmowy prywatnej</translation>
+    </message>
+    <message>
+        <source>* %1 ignored your invitation to the channel %2</source>
+        <translation>* %1 zignorował/a Twoje zaproszenie do kanału %2</translation>
     </message>
     <message>
         <source>* Added the nickname %1 to a friends list</source>
