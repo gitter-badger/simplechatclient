@@ -291,7 +291,6 @@ void IrcAuth::request_finished(QString strData)
             else
             {
                 tabc->show_msg("Status", tr("Error: Authorization Failed."), 9);
-                //socket->close();
                 return;
             }
         }
@@ -309,7 +308,6 @@ void IrcAuth::request_finished(QString strData)
 
                 tabc->show_msg("Status", QString(tr("Error: Authentication error [%1]")).arg(strErrorText), 9);
             }
-            //socket->close();
 
             return;
         }
@@ -317,7 +315,6 @@ void IrcAuth::request_finished(QString strData)
     else
     {
         tabc->show_msg("Status", tr("Error: Authorization Failed."), 9);
-        //socket->close();
         return;
     }
 }

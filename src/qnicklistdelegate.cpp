@@ -32,16 +32,16 @@ void NicklistDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opti
 {
     QRect r = option.rect;
 
-    //Color: #C4C4C4
+    // #C4C4C4
     QPen linePen(QColor::fromRgb(211,211,211), 1, Qt::SolidLine);
 
-    //Color: #005A83
+    // #005A83
     QPen lineMarkedPen(QColor::fromRgb(0,90,131), 1, Qt::SolidLine);
 
-    //Color: #333
+    // #333333
     QPen fontPen(QColor::fromRgb(51,51,51), 1, Qt::SolidLine);
 
-    //Color: #fff
+    // #ffffff
     QPen fontMarkedPen(Qt::white, 1, Qt::SolidLine);
 
     if(option.state & QStyle::State_Selected)
@@ -53,7 +53,7 @@ void NicklistDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opti
         painter->setBrush(gradientSelected);
         painter->drawRect(r);
 
-        //BORDER
+        // border
         painter->setPen(lineMarkedPen);
         painter->drawLine(r.topLeft(),r.topRight());
         painter->drawLine(r.topRight(),r.bottomRight());
@@ -64,12 +64,19 @@ void NicklistDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opti
     }
     else
     {
-        //BACKGROUND
-        //ALTERNATING COLORS
-        painter->setBrush((index.row() % 2) ? Qt::white : QColor(252,252,252));
+        // background
+
+        Config *pConfig = new Config();
+        QString strBackgroundColor = pConfig->get_value("background_color");
+        delete pConfig;
+
+        if (QColor("#"+strBackgroundColor) != Qt::white)
+            painter->setBrush(QColor("#"+strBackgroundColor));
+        else
+            painter->setBrush((index.row() % 2) ? Qt::white : QColor(252,252,252));
         painter->drawRect(r);
 
-        //BORDER
+        // border
         painter->setPen(linePen);
         painter->drawLine(r.topLeft(),r.topRight());
         painter->drawLine(r.topRight(),r.bottomRight());
@@ -79,7 +86,7 @@ void NicklistDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opti
         painter->setPen(fontPen);
     }
 
-    //GET STATUS, AVATAR, NICK, DESCRIPTION
+    // get status, cam, avatar, nick, description
     QIcon status = QIcon(qvariant_cast<QPixmap>(index.data(Qt::DecorationRole)));
     QIcon cam = QIcon(qvariant_cast<QPixmap>(index.data(Qt::UserRole+1)));
     QIcon avatar = QIcon(qvariant_cast<QPixmap>(index.data(Qt::UserRole+2)));
@@ -93,7 +100,7 @@ void NicklistDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opti
 
     int imageSpace = 10;
 
-    // STATUS
+    // status
     if (status.isNull() == false)
     {
         if (strStyle == "modern")
@@ -113,7 +120,7 @@ void NicklistDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opti
         imageSpace += 10;
     }
 
-    // CAM
+    // cam
     if (cam.isNull() == false)
     {
         if (strStyle == "modern")
@@ -133,7 +140,7 @@ void NicklistDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opti
         imageSpace += 10;
     }
 
-    // AVATAR
+    // avatar
     if ((nick[0] != '~') && (strStyle == "modern") && (strDisableAvatars == "off"))
     {
         r = option.rect.adjusted(imageSpace, 0, 10, 0);
@@ -144,7 +151,7 @@ void NicklistDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opti
         imageSpace += 10;
     }
 
-    // NICK
+    // nick
     if (strStyle == "modern")
     {
         r = option.rect.adjusted(imageSpace, -8, -10, -8);
@@ -158,7 +165,7 @@ void NicklistDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opti
         painter->drawText(r.left(), r.top(), r.width(), r.height(), Qt::AlignBottom|Qt::AlignLeft, nick, &r);
     }
 
-    // DESCRIPTION
+    // description
     //r = option.rect.adjusted(imageSpace, 35, -10, 0);
     //painter->setFont(QFont("Lucida Grande", 5, QFont::Normal));
     //painter->drawText(r.left(), r.top(), r.width(), r.height(), Qt::AlignLeft, description, &r);
