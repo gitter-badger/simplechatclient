@@ -308,6 +308,13 @@ void NetworkThread::error(QAbstractSocket::SocketError err)
 
 void NetworkThread::timeout()
 {
+    // send ping
+    QDateTime dta = QDateTime::currentDateTime();
+    int i1 = (int)dta.toTime_t(); // seconds that have passed since 1970
+    QString t2 = dta.toString("zzz"); // miliseconds
+    emit send(QString("PING :%1.%2").arg(i1).arg(t2));
+
+    // check timeout
     QDateTime dt = QDateTime::currentDateTime();
     int iCurrent = (int)dt.toTime_t();
 

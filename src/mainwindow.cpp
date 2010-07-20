@@ -71,7 +71,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     delete pConfig;
 
     settings.clear();
-    settings.setValue("version", "1.0.6.300");
+    settings.setValue("version", "1.0.6.301");
     settings.setValue("debug", "off");
     settings.setValue("logged", "off");
     settings.setValue("busy", "off");
@@ -156,13 +156,14 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     toolBar->addAction(friendsAct);
     toolBar->addAction(channel_favouritesAct);
 
-// statusbar
-    QLabel *label_status = new QLabel();
-    label_status->setText("v"+settings.value("version").toString());
-    statusBar()->addWidget(label_status);
-
+    // hide toolbar if style == classic
     if (settings.value("style") == "classic")
         toolBar->hide();
+
+// statusbar
+    lLag = new QLabel();
+    lLag->setText("");
+    statusBar()->addWidget(lLag);
 
 // signals
     QObject::connect(connectAct, SIGNAL(triggered()), this, SLOT(button_connect()));
@@ -177,6 +178,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     QObject::connect(closeAct, SIGNAL(triggered()), this, SLOT(button_close()));
     QObject::connect(pTabM, SIGNAL(tabCloseRequested(int)), this, SLOT(tab_close_requested(int)));
     QObject::connect(pDlg_moderation, SIGNAL(display_msg(QString,QString,int)), pTabC, SLOT(sshow_msg(QString,QString,int)));
+    QObject::connect(pIrc_kernel, SIGNAL(set_statusbar(QString)), this, SLOT(set_statusbar(QString)));
 
     QObject::connect(this, SIGNAL(do_kernel(QString)), pIrc_kernel, SLOT(kernel(QString)));
     QObject::connect(this, SIGNAL(do_request_uo(QString, QString)), pIrc_auth, SLOT(request_uo(QString, QString)));
@@ -245,6 +247,12 @@ void MainWindow::set_debug(bool param1)
         settings.setValue("debug", "on");
     else
         settings.setValue("debug", "off");
+}
+
+// set statusbar
+void MainWindow::set_statusbar(QString strValue)
+{
+    lLag->setText(strValue);
 }
 
 // buttons

@@ -67,6 +67,7 @@ private:
 
     void raw_error();
     void raw_ping();
+    void raw_pong();
     void raw_join();
     void raw_part();
     void raw_quit();
@@ -213,6 +214,9 @@ private:
 private slots:
     void remove_cathread(ChannelAvatar*);
     void remove_nathread(NickAvatar*);
+
+signals:
+    void set_statusbar(QString);
 
 };
 

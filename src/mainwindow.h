@@ -55,6 +55,7 @@ public:
     void set_debug(bool);
 
 public slots:
+    void set_statusbar(QString);
     void kernel(QString);
     void request_uo(QString, QString);
     void show_msg_active(QString, int);
@@ -81,6 +82,7 @@ private:
     QList <UpdateThread*> uThreadList;
     QMenu *trayMenu;
     QSystemTrayIcon *trayIcon;
+    QLabel *lLag;
     QMenu *fileMenu;
     QMenu *optionsMenu;
     QMenu *chatMenu;

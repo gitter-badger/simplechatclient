@@ -72,6 +72,8 @@ void IrcKernel::kernel(QString param1)
             raw_ping();
         else if (strDataList[0].toLower() == "error")
             raw_error();
+        else if (strDataList[1].toLower() == "pong")
+            raw_pong();
         else if (strDataList[1].toLower() == "join")
             raw_join();
         else if (strDataList[1].toLower() == "part")
@@ -388,6 +390,57 @@ void IrcKernel::raw_ping()
 
     if (strServer.isEmpty() == false)
         pNetwork->send(QString("PONG %1").arg(strServer));
+}
+
+// :cf1f4.onet PONG cf1f4.onet :1279652441.189
+void IrcKernel::raw_pong()
+{
+    if (strDataList.value(1).isEmpty() == true) return;
+    if (strDataList.value(2).isEmpty() == true) return;
+    if (strDataList.value(3).isEmpty() == true) return;
+
+    QString strServerTime = strDataList[3];
+    if (strServerTime[0] == ':')
+        strServerTime = strServerTime.right(strServerTime.length()-1);
+
+    // get time from pong
+    QStringList strTimeAll = strServerTime.split(".");
+    int iTime1 = strTimeAll.at(0).toInt();
+    int iTime2 = strTimeAll.at(1).toInt();
+
+    // get current time
+    QDateTime dt = QDateTime::currentDateTime();
+    int iCurrentTime1 = (int)dt.toTime_t(); // seconds that have passed since 1970
+    int iCurrentTime2 = dt.toString("zzz").toInt(); // miliseconds
+
+    QString strTime = QString::number(iTime1)+QString::number(iTime2);
+    long long iTime = strTime.toLongLong();
+
+    QString strCurrent = QString::number(iCurrentTime1)+QString::number(iCurrentTime2);
+    long long iCurrent = strCurrent.toLongLong();
+
+    // calculate lag
+    int iLag = iCurrent-iTime;
+
+    // if not correct
+    if ((iLag < 0) || (iLag > 1000))
+        return;
+
+    QString strLag;
+    strLag = QString::number(iLag);
+
+    // display lag
+    if (strLag.length() > 3)
+        strLag = strLag.mid(0,strLag.length()-3)+"."+strLag.right(3);
+    else if (strLag.length() == 3)
+        strLag = "0."+strLag;
+    else if (strLag.length() == 2)
+        strLag = "0.0"+strLag;
+    else if (strLag.length() == 1)
+        strLag = "0.00"+strLag;
+
+    strLag = "Lag: "+strLag+"s";
+    emit set_statusbar(strLag);
 }
 
 // ERROR :Closing link (unknown@95.48.183.154) [Registration timeout]
