@@ -432,20 +432,20 @@ void IrcKernel::raw_pong()
 
     // get current time
     QDateTime dt = QDateTime::currentDateTime();
-    int iCurrentTime1 = (int)dt.toTime_t(); // seconds that have passed since 1970
-    int iCurrentTime2 = dt.toString("zzz").toInt(); // miliseconds
+    qint64 iCurrentTime1 = (qint64)dt.toTime_t(); // seconds that have passed since 1970
+    qint64 iCurrentTime2 = (dt.toString("zzz")).toLongLong(); // miliseconds
 
     QString strTime = QString::number(iTime1)+QString::number(iTime2);
-    long long iTime = strTime.toLongLong();
+    qint64 iTime = strTime.toLongLong();
 
     QString strCurrent = QString::number(iCurrentTime1)+QString::number(iCurrentTime2);
-    long long iCurrent = strCurrent.toLongLong();
+    qint64 iCurrent = strCurrent.toLongLong();
 
     // calculate lag
-    int iLag = iCurrent-iTime;
+    qint64 iLag = iCurrent-iTime;
 
     // if not correct
-    if ((iLag < 0) || (iLag > 1000))
+    if ((iLag < 0) || (iLag > 10000000))
         return;
 
     QString strLag;
