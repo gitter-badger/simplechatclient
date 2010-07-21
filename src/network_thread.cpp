@@ -32,6 +32,8 @@ NetworkThread::NetworkThread(QAction *param1, QSettings *param2)
     settings->setValue("reconnect", "true");
     timer = new QTimer();
     timer->setInterval(1*60*1000); // 1 min
+    timerLag = new QTimer();
+    timerLag->setInterval(30*1000); // 30 sec
 
     socket = new QTcpSocket(this);
     socket->setSocketOption(QAbstractSocket::LowDelayOption, 1);
@@ -40,6 +42,7 @@ NetworkThread::NetworkThread(QAction *param1, QSettings *param2)
     QTimer::singleShot(100, this, SLOT(send_buffer()));
 
     QObject::connect(timer, SIGNAL(timeout()), this, SLOT(timeout()));
+    QObject::connect(timerLag, SIGNAL(timeout()), this, SLOT(timeout_lag()));
     QObject::connect(socket, SIGNAL(readyRead()), this, SLOT(recv()));
     QObject::connect(socket, SIGNAL(connected()), this, SLOT(connected()));
     QObject::connect(socket, SIGNAL(disconnected()), this, SLOT(disconnected()));
@@ -50,6 +53,8 @@ NetworkThread::~NetworkThread()
 {
     if (timer->isActive() == true)
         timer->stop();
+    if (timerLag->isActive() == true)
+        timerLag->stop();
     socket->close();
     delete socket;
 }
@@ -81,6 +86,7 @@ void NetworkThread::connect()
 
         socket->connectToHost(strServer, iPort);
         timer->start();
+        timerLag->start();
     }
     else
         emit show_msg_all(tr("Error: Could not connect to the server - connection already exists!"), 9);
@@ -105,6 +111,8 @@ void NetworkThread::close()
 
     if (timer->isActive() == true)
         timer->stop();
+    if (timerLag->isActive() == true)
+        timerLag->stop();
 }
 
 void NetworkThread::send_buffer()
@@ -289,6 +297,7 @@ void NetworkThread::disconnected()
 
         // timer
         timer->stop();
+        timerLag->stop();
 
         // reconnect
         QTimer::singleShot(30*1000, this, SLOT(reconnect()));
@@ -308,13 +317,6 @@ void NetworkThread::error(QAbstractSocket::SocketError err)
 
 void NetworkThread::timeout()
 {
-    // send ping
-    QDateTime dta = QDateTime::currentDateTime();
-    int i1 = (int)dta.toTime_t(); // seconds that have passed since 1970
-    QString t2 = dta.toString("zzz"); // miliseconds
-    emit send(QString("PING :%1.%2").arg(i1).arg(t2));
-
-    // check timeout
     QDateTime dt = QDateTime::currentDateTime();
     int iCurrent = (int)dt.toTime_t();
 
@@ -325,4 +327,12 @@ void NetworkThread::timeout()
         emit close();
         iActive = iCurrent;
     }
+}
+
+void NetworkThread::timeout_lag()
+{
+    QDateTime dta = QDateTime::currentDateTime();
+    int i1 = (int)dta.toTime_t(); // seconds that have passed since 1970
+    QString t2 = dta.toString("zzz"); // miliseconds
+    emit send(QString("PING :%1.%2").arg(i1).arg(t2));
 }

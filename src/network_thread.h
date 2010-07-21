@@ -49,6 +49,7 @@ private:
     QString strServer;
     int iPort;
     QTimer *timer;
+    QTimer *timerLag;
     int iActive;
     QSettings *settings;
     QString strDataRecv;
@@ -65,6 +66,7 @@ private slots:
     void disconnected();
     void error(QAbstractSocket::SocketError);
     void timeout();
+    void timeout_lag();
 
 signals:
     void send_to_kernel(QString);

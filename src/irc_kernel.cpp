@@ -102,12 +102,34 @@ void IrcKernel::kernel(QString param1)
             raw_moderate();
         else if (strDataList[1].toLower() == "001")
             raw_001();
+        else if (strDataList[1].toLower() == "002")
+            raw_002();
+        else if (strDataList[1].toLower() == "003")
+            raw_003();
+        else if (strDataList[1].toLower() == "004")
+            raw_004();
+        else if (strDataList[1].toLower() == "005")
+            raw_005();
+        else if (strDataList[1].toLower() == "251")
+            raw_251();
+        else if (strDataList[1].toLower() == "252")
+            raw_252();
+        else if (strDataList[1].toLower() == "253")
+            raw_253();
+        else if (strDataList[1].toLower() == "254")
+            raw_254();
+        else if (strDataList[1].toLower() == "255")
+            raw_255();
         else if (strDataList[1].toLower() == "256")
             raw_256();
         else if (strDataList[1].toLower() == "257")
             raw_257();
         else if (strDataList[1].toLower() == "258")
             raw_258();
+        else if (strDataList[1].toLower() == "265")
+            raw_265();
+        else if (strDataList[1].toLower() == "266")
+            raw_266();
         else if (strDataList[1].toLower() == "259")
             raw_259();
         else if (strDataList[1].toLower() == "301")
@@ -1116,6 +1138,32 @@ void IrcKernel::raw_001()
 
 }
 
+// :cf1f4.onet 002 Merovingian :Your host is cf1f4.onet, running version InspIRCd-1.1
+void IrcKernel::raw_002()
+{
+// ignore
+}
+
+// :cf1f4.onet 003 Merovingian :This server was created 06:35:35 Jan 12 2010
+void IrcKernel::raw_003()
+{
+// ignore
+}
+
+// :cf1f4.onet 004 Merovingian cf1f4.onet InspIRCd-1.1 BGQRVWbinoqrswx DFGIJLMPQRVXYabcehiklmnopqrstuv FIJLXYabcehkloqv
+void IrcKernel::raw_004()
+{
+// ignore
+}
+
+// :cf1f4.onet 005 Merovingian WALLCHOPS WALLVOICES MODES=19 CHANTYPES=^# PREFIX=(qaohXYv)`&@%!=+ MAP MAXCHANNELS=20 MAXBANS=60 VBANLIST NICKLEN=32 CASEMAPPING=rfc1459 STATUSMSG=@%+ CHARSET=ascii :are supported by this server
+// :cf1f4.onet 005 Merovingian TOPICLEN=203 KICKLEN=255 MAXTARGETS=20 AWAYLEN=200 CHANMODES=Ibe,k,FJLcl,DGMPQRVimnprstu FNC NETWORK=OnetCzat MAXPARA=32 ELIST=MU OVERRIDE ONETNAMESX INVEX=I EXCEPTS=e :are supported by this server
+// :cf1f4.onet 005 Merovingian WATCH=200 INVIGNORE=100 USERIP ESILENCE SILENCE=100 NAMESX :are supported by this server
+void IrcKernel::raw_005()
+{
+// ignore
+}
+
 // :GuardServ!service@service.onet NOTICE scc_test :109 #scc :rzucanie mięsem nie będzie tolerowane
 void IrcKernel::raw_109n()
 {
@@ -1509,6 +1557,12 @@ void IrcKernel::raw_250n()
     pNetwork->send(QString("JOIN %1").arg(strChannel));
 }
 
+// :cf1f4.onet 251 Merovingian :There are 2300 users and 5 invisible on 10 servers
+void IrcKernel::raw_251()
+{
+// ignore
+}
+
 // :ChanServ!service@service.onet NOTICE scc_test :251 #czesctoja :has been dropped
 void IrcKernel::raw_251n()
 {
@@ -1520,6 +1574,12 @@ void IrcKernel::raw_251n()
     tabc->show_msg_active(strDisplay, 5);
 }
 
+// :cf1f4.onet 252 Merovingian 5 :operator(s) online
+void IrcKernel::raw_252()
+{
+// ignore
+}
+
 // :ChanServ!service@service.onet NOTICE #testabc :252 scc_test :has dropped this channel
 void IrcKernel::raw_252n()
 {
@@ -1529,6 +1589,12 @@ void IrcKernel::raw_252n()
 
     QString strDisplay = QString(tr("* Confirmed the removal of the channel %1")).arg(strChannel);
     tabc->show_msg(strChannel, strDisplay, 5);
+}
+
+// :cf1f4.onet 253 Merovingian 1 :unknown connections
+void IrcKernel::raw_253()
+{
+// ignore
 }
 
 // :ChanServ!service@service.onet NOTICE scc_test :253 #test_scc_moj Merovingian :channel owner changed
@@ -1546,6 +1612,12 @@ void IrcKernel::raw_253n()
     tabc->show_msg(strChannel, strDisplay, 5);
 }
 
+// :cf1f4.onet 254 Merovingian 4641 :channels formed
+void IrcKernel::raw_254()
+{
+// ignore
+}
+
 // :ChanServ!service@service.onet NOTICE #test_scc_moj :254 scc_test Merovingian :changed channel owner
 void IrcKernel::raw_254n()
 {
@@ -1558,6 +1630,12 @@ void IrcKernel::raw_254n()
 
     QString strDisplay = QString(tr("* %1 is now the owner of the channel %2 (set by %3)")).arg(strNick).arg(strChannel).arg(strWho);
     tabc->show_msg(strChannel, strDisplay, 5);
+}
+
+// :cf1f4.onet 255 Merovingian :I have 568 clients and 1 servers
+void IrcKernel::raw_255()
+{
+// ignore
 }
 
 // :ChanServ!service@service.onet NOTICE scc_test :255 #scc +b cos :channel privilege changed
@@ -1746,6 +1824,18 @@ void IrcKernel::raw_261n()
     dlgchannel_homes->clear();
     pNetwork->send("CS HOMES");
     pNetwork->send(QString("PART %1").arg(strChannel));
+}
+
+// :cf1f4.onet 265 Merovingian :Current Local Users: 568  Max: 1633
+void IrcKernel::raw_265()
+{
+// ignore
+}
+
+// :cf1f4.onet 266 Merovingian :Current Global Users: 2305  Max: 6562
+void IrcKernel::raw_266()
+{
+// ignore
 }
 
 // :cf1f2.onet 301 scc_test Merovingian :nie ma
