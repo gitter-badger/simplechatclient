@@ -474,7 +474,7 @@ void TabContainer::refresh_nicklist(QString strChannel)
         {
             if (tw[i]->get_name() == strChannel)
             {
-                tw[i]->nicklist_refresh();
+                tw[i]->nicklist_refresh_all();
                 return;
             }
         }

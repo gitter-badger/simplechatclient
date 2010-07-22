@@ -966,6 +966,12 @@ void TabWidget::nicklist_refresh()
     nick_list->nicklist_refresh(&nicklist, &new_nicklist1, &new_nicklist2);
 }
 
+void TabWidget::nicklist_refresh_all()
+{
+    nick_list->nicklist_refresh(&nicklist, &new_nicklist1, &new_nicklist2);
+    inputline->set_userslist(nick_list);
+}
+
 void TabWidget::nicklist_sort()
 {
     nick_list->nicklist_sort(&nicklist, &new_nicklist1, &new_nicklist2);

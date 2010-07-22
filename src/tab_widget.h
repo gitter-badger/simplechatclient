@@ -81,7 +81,7 @@ public:
     bool nicklist_exist(QString);
     void update_nick_avatar();
     void update_channel_avatar();
-    void nicklist_refresh();
+    void nicklist_refresh_all();
     void send_message(bool);
 
 private:
@@ -176,6 +176,7 @@ private:
     void nicklist_add(QString, QString);
     void nicklist_remove(QString);
     void nicklist_clear();
+    void nicklist_refresh();
     void nicklist_sort();
     void nicklist_quicksort(QString);
 
