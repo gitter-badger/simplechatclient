@@ -87,6 +87,7 @@ private:
     void raw_003();
     void raw_004();
     void raw_005();
+    void raw_100n();
     void raw_109n();
     void raw_111n();
     void raw_112n();

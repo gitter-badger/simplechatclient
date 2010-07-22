@@ -262,7 +262,9 @@ void IrcKernel::kernel(QString param1)
             raw_951();
         else if ((strDataList[1].toLower() == "notice") && (strDataList.value(3).isEmpty() == false))
         {
-            if (strDataList[3].toLower() == ":109")
+            if (strDataList[3].toLower() == ":100")
+                raw_100n();
+            else if (strDataList[3].toLower() == ":109")
                 raw_109n();
             else if (strDataList[3].toLower() == ":111")
                 raw_111n();
@@ -1162,6 +1164,27 @@ void IrcKernel::raw_004()
 void IrcKernel::raw_005()
 {
 // ignore
+}
+
+// Onet-Informuje!bot@service.onet NOTICE Merovingian :100 #gorący_pokój 1279807200 :Zapraszamy na spotkanie z Rafałem Głogowskim, ratownikiem krakowskiego WOPRU. Jak zachowywać się nad wodą? Na co zwracać uwagę?
+void IrcKernel::raw_100n()
+{
+    if (strDataList.value(3).isEmpty() == true) return;
+    if (strDataList.value(4).isEmpty() == true) return;
+    if (strDataList.value(5).isEmpty() == true) return;
+
+    QString strChannel = strDataList[4];
+    QString strTime = strDataList[5];
+    QDateTime dt = QDateTime::fromTime_t(strTime.toInt());
+    QString strDateTime = dt.toString("hh:mm");
+
+    QString strMessage;
+    for (int i = 6; i < strDataList.size(); i++) { if (i != 6) strMessage += " "; strMessage += strDataList[i]; }
+    if (strMessage[0] == ':')
+        strMessage = strMessage.right(strMessage.length()-1);
+
+    QString strDisplay = QString(tr("* %1 Starting at %2 on channel %3")).arg(strMessage).arg(strDateTime).arg(strChannel);
+    tabc->show_msg_active(strDisplay, 6);
 }
 
 // :GuardServ!service@service.onet NOTICE scc_test :109 #scc :rzucanie mięsem nie będzie tolerowane
