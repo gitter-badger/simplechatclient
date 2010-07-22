@@ -61,18 +61,6 @@ Config::~Config()
     delete file;
 }
 
-void Config::save()
-{
-    QString xml = doc.toString();
-    QByteArray baSave = xml.toAscii();
-
-    QFile *fs = new QFile(strConfigFile);
-    fs->open(QIODevice::WriteOnly | QIODevice::Truncate);
-    fs->write(baSave);
-    fs->close();
-    delete fs;
-}
-
 QString Config::get_value(QString strKey)
 {
     if ((doc.isNull() == true) || (file->isOpen() == false))
@@ -95,6 +83,69 @@ QString Config::get_value(QString strKey)
                 return e.text();
         }
         n = n.nextSibling();
+    }
+
+    // not exist value - save default, return default
+
+    if (strKey == "login-nick")
+    {
+        set_value("login-nick", "~test");
+        return "~test";
+    }
+    else if (strKey == "login-pass")
+    {
+        set_value("login-pass", QString::null);
+        return QString::null;
+    }
+    else if (strKey == "auto_busy")
+    {
+        set_value("auto_busy", "off");
+        return "off";
+    }
+    else if (strKey == "debug_all")
+    {
+        set_value("debug_all", "off");
+        return "off";
+    }
+    else if (strKey == "show_zuo")
+    {
+        set_value("show_zuo", "off");
+        return "off";
+    }
+    else if (strKey == "hide_formating")
+    {
+        set_value("hide_formating", "off");
+        return "off";
+    }
+    else if (strKey == "hide_join_part")
+    {
+        set_value("hide_join_part", "off");
+        return "off";
+    }
+    else if (strKey == "disable_avatars")
+    {
+        set_value("disable_avatars", "off");
+        return "off";
+    }
+    else if (strKey == "disable_logs")
+    {
+        set_value("disable_logs", "off");
+        return "off";
+    }
+    else if (strKey == "disable_sounds")
+    {
+        set_value("disable_sounds", "off");
+        return "off";
+    }
+    else if (strKey == "style")
+    {
+        set_value("style", "modern");
+        return "modern";
+    }
+    else if (strKey == "background_color")
+    {
+        set_value("background_color", "ffffff");
+        return "ffffff";
     }
 
     return QString::null;
@@ -163,4 +214,16 @@ void Config::add_config_value(QDomDocument *doc, QDomElement *root, QString strK
     root->appendChild(eKey);
     QDomText tValue = doc->createTextNode(strValue);
     eKey.appendChild(tValue);
+}
+
+void Config::save()
+{
+    QString xml = doc.toString();
+    QByteArray baSave = xml.toAscii();
+
+    QFile *fs = new QFile(strConfigFile);
+    fs->open(QIODevice::WriteOnly | QIODevice::Truncate);
+    fs->write(baSave);
+    fs->close();
+    delete fs;
 }
