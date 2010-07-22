@@ -137,7 +137,7 @@ TabWidget::TabWidget(Network *param1, QSettings *param2, QString param3, QWidget
     bold->setMaximumWidth(25);
     bold->setMaximumHeight(25);
     bold->show();
-    bBold = false;
+    bMyBold = false;
 
     italic = new QPushButton(this);
     italic->setFont(QFont("Times New Roman", -1, -1, true));
@@ -148,7 +148,7 @@ TabWidget::TabWidget(Network *param1, QSettings *param2, QString param3, QWidget
     italic->setMaximumWidth(25);
     italic->setMaximumHeight(25);
     italic->show();
-    bItalic = false;
+    bMyItalic = false;
 
     arialAct = new QAction("Arial", this);
     arialAct->setFont(QFont("Arial", -1, -1, false));
@@ -493,247 +493,226 @@ void TabWidget::display_msg(QString strData, int iLevel)
 
 void TabWidget::display_message(QString strData, int iLevel)
 {
-    if (strFontStyle != "normal") strFontStyle = "normal";
-    if (strFontColor != "#000000") strFontColor = "#000000";
-    if (strFontAlign != "left") strFontAlign = "left";
-    if (strFontFamily != "Verdana") strFontFamily = "Verdana";
-    if (strFontWeight != "normal") strFontWeight = "normal";
-    if (strContent.count("</p>") > 250)
+// fix max size
+    if (strContent.count("</p>") > 200)
     {
         QStringList list = strContent.split("</p>");
         int iCount = strContent.count("</p>");
         strContent.clear();
-        for (int i = iCount-250; i < iCount; i++)
+        for (int i = iCount-200; i < iCount; i++)
             strContent.append(list.at(i)+"</p>");
         list.clear();
     }
 
+// fix data
     strData += " ";
-    strContent.append("<p style=\"margin:0;padding:0;font-style:"+strFontStyle+";color:"+strFontColor+";text-align:"+strFontAlign+";font-family:"+strFontFamily+";font-weight:"+strFontWeight+";font-size:"+strFontSize+";\">");
-    bool bLevel = false;
-    QString strContentLast;
-
-    // if /me remove time/action
-    if (strData.indexOf(QString(QByteArray("\x01"))) != -1)
-    {
-        strData = strData.right(strData.length() - 11);
-        if (strData.indexOf("ACTION ") != -1) strData = strData.replace("ACTION ", QString::null);
-        if (strData.indexOf("<") != -1) strData = strData.remove(strData.indexOf("<"),1);
-        if (strData.indexOf(">") != -1) strData = strData.remove(strData.indexOf(">"),1);
-    }
-
     strData.replace("&", "&amp;");
     strData.replace("<", "&lt;");
     strData.replace(">", "&gt;");
 
-    for (int i = 0; i < strData.length(); i++)
+// content last
+    QString strContentLast;
+
+// colors
+    QString strFontColor;
+
+    if (iLevel == 0)
+        strFontColor = "#000000"; // black
+    else if (iLevel == 1) // join
+        strFontColor = "#009300"; // green
+    else if (iLevel == 2) // part
+        strFontColor = "#4733FF"; // light blue
+    else if (iLevel == 3) // quit
+        strFontColor = "#00007F"; // dark blue
+    else if (iLevel == 4) // kick
+        strFontColor = "#00007F"; // dark blue
+    else if (iLevel == 5) // mode
+        strFontColor = "#009300"; // green
+    else if (iLevel == 6) // notice
+        strFontColor = "#0066FF"; // blue
+    else if (iLevel == 7) // info
+        strFontColor = "#666666"; // gray
+    else if (iLevel == 9) // error
+        strFontColor = "#ff0000"; // red
+    else
+        strFontColor = "#000000"; // default black
+
+    strData.insert(11, "<span style=\"color:"+strFontColor+";\">");
+    strContentLast = "</span>"+strContentLast;
+
+// if /me remove time,action <>
+    if (strData.indexOf(QString(QByteArray("\x01"))) != -1)
     {
-        // colors
-        if ((i > 10) && (bLevel == false))
-        {
-            if (iLevel == 0)
-                strFontColor = "#000000"; // black
-            else if (iLevel == 1) // join
-                strFontColor = "#009300"; // green
-            else if (iLevel == 2) // part
-                strFontColor = "#4733FF"; // light blue
-            else if (iLevel == 3) // quit
-                strFontColor = "#00007F"; // dark blue
-            else if (iLevel == 4) // kick
-                strFontColor = "#00007F"; // dark blue
-            else if (iLevel == 5) // mode
-                strFontColor = "#009300"; // green
-            else if (iLevel == 6) // notice
-                strFontColor = "#0066FF"; // blue
-            else if (iLevel == 7) // info
-                strFontColor = "#666666"; // gray
-            else if (iLevel == 9) // error
-                strFontColor = "#ff0000"; // red
-
-            strContent.append("<span style=\"color:"+strFontColor+";\">");
-            strContentLast = "</span>"+strContentLast;
-            bLevel = true;
-        }
-
-        // /me
-        if (QString(strData[i]) == QString(QByteArray("\x01")))
-        {
-            if (settings->value("hide_formating").toString() == "off")
-            {
-                strFontAlign = "center";
-
-                int iLast1 = strContent.lastIndexOf("text-align:");
-                int iLast2 = strContent.indexOf(";",iLast1);
-                strContent.remove(iLast1, iLast2-iLast1);
-                strContent.insert(iLast1, "text-align:center");
-            }
-        }
-        // emoticons
-        else if ((strData[i] == '%') && (strData.length() > i+1) && (strData[i+1] == 'I'))
-        {
-            int x = strData.indexOf("%",i+1);
-            int y = strData.indexOf(" ",i+1);
-            if ((x != -1) && ((x < y) || (y == -1)))
-            {
-                QString path = QCoreApplication::applicationDirPath();
-                QString emoticon = strData.mid(i+2,x-i-2).toLower();
-                QString emoticonFull1 = path+"/3rdparty/emoticons/"+emoticon+".gif";
-                QString emoticonFull2 = path+"/3rdparty/emoticons_other/"+emoticon+".gif";
-                QFile f1(emoticonFull1);
-                QFile f2(emoticonFull2);
-                if ((f1.exists() == true) && (settings->value("hide_formating").toString() == "off"))
-                {
-#ifdef Q_WS_X11
-                    strContent.append("<img src=\"file://"+emoticonFull1+"\" alt=\""+emoticon+"\" />");
-#else
-                    strContent.append("<img src=\""+emoticonFull1+"\" alt=\""+emoticon+"\" />");
-#endif
-                }
-                else if ((f2.exists() == true) && (settings->value("hide_formating").toString() == "off"))
-                {
-#ifdef Q_WS_X11
-                    strContent.append("<img src=\"file://"+emoticonFull2+"\" alt=\""+emoticon+"\" />");
-#else
-                    strContent.append("<img src=\""+emoticonFull2+"\" alt=\""+emoticon+"\" />");
-#endif
-                }
-                // emoticon not exist or hide formating
-                else
-                    strContent.append("//"+emoticon);
-                i = x;
-            }
-            // not emoticon
-            else
-                strContent.append(QString(strData[i]));
-        }
-        // font color
-        else if ((strData[i] == '%') && (strData.length() > i+1) && (strData[i+1] == 'C'))
-        {
-            int x = strData.indexOf("%",i+1);
-            int y = strData.indexOf(" ",i+1);
-            if ((x != -1) && ((x < y) || (y == -1)))
-            {
-                QString strColor = strData.mid(i+2,x-i-2).toLower();
-                if ((strColor == "000000") || (strColor == "623c00") || (strColor == "c86c00") || (strColor == "ff6500") || (strColor == "ff0000") || (strColor == "e40f0f") || (strColor == "990033") || (strColor == "8800ab") || (strColor == "ce00ff") || (strColor == "0f2ab1") || (strColor == "3030ce") || (strColor == "006699") || (strColor == "1a866e") || (strColor == "008100") || (strColor == "959595"))
-                {
-                    if (settings->value("hide_formating").toString() == "off")
-                    {
-                        strFontColor = strColor;
-                        strContent.append("<span style=\"color:"+strFontColor+";\">");
-                        strContentLast = "</span>"+strContentLast;
-                    }
-
-                    i = x;
-                }
-                // color not supported or hide formating
-                else
-                    strContent.append(QString(strData[i]));
-            }
-            // not color
-            else
-                strContent.append(QString(strData[i]));
-        }
-        // font
-        else if ((strData[i] == '%') && (strData.length() > i+1) && (strData[i+1] == 'F'))
-        {
-            int x = strData.indexOf("%",i+1);
-            int y = strData.indexOf(" ",i+1);
-            if ((x != -1) && ((x < y) || (y == -1)))
-            {
-                QString strFont = strData.mid(i+2,x-i-2).toLower();
-
-                if (settings->value("hide_formating").toString() == "off")
-                {
-                    if (strFont.indexOf(":") != -1)
-                    {
-                        QString strFontWeight = strFont.left(strFont.indexOf(":"));
-                        QString strFontName = strFont.right(strFont.length()-strFont.indexOf(":")-1);
-
-                         for (int fw = 0; fw < strFontWeight.length(); fw++)
-                         {
-                             if (strFontWeight[fw] == 'b') strFontWeight = "bold";
-                             else if (strFontWeight[fw] == 'i') strFontStyle = "italic";
-                         }
-
-                         if (strFontName == "arial") strFontFamily = "Arial";
-                         else if (strFontName == "times") strFontFamily = "Times New Roman";
-                         else if (strFontName == "verdana") strFontFamily = "Verdana";
-                         else if (strFontName == "tahoma") strFontFamily = "Tahoma";
-                         else if (strFontName == "courier") strFontFamily = "Courier New";
-
-                         strContent.append("<span style=\"font-weight:"+strFontWeight+";font-style:"+strFontStyle+";font-family:"+strFontFamily+";\">");
-                         strContentLast = "</span>"+strContentLast;
-                    }
-                    else
-                    {
-                         if (strFont == "arial") strFontFamily = "Arial";
-                         else if (strFont == "times") strFontFamily = "Times New Roman";
-                         else if (strFont == "verdana") strFontFamily = "Verdana";
-                         else if (strFont == "tahoma") strFontFamily = "Tahoma";
-                         else if (strFont == "courier") strFontFamily = "Courier New";
-                         else
-                         {
-                             for (int fw = 0; fw < strFont.length(); fw++)
-                             {
-                                 if (strFont[fw] == 'b') strFontWeight = "bold";
-                                 else if (strFont[fw] == 'i') strFontStyle = "italic";
-                             }
-                         }
-                         strContent.append("<span style=\"font-weight:"+strFontWeight+";font-style:"+strFontStyle+";font-family:"+strFontFamily+";\">");
-                         strContentLast = "</span>"+strContentLast;
-                    }
-                }
-                i = x;
-            }
-            else
-                strContent.append(QString(strData[i]));
-        }
-        // link
-        else if (
-                ((strData[i] == 'h') && (strData.length() > i+1) && (strData[i+1] == 't') && (strData.length() > i+2) && (strData[i+2] == 't') && (strData.length() > i+3) && (strData[i+3] == 'p') && (strData.length() > i+4) && (strData[i+4] == 's') && (strData.length() > i+5) && (strData[i+5] == ':')) ||
-                ((strData[i] == 'h') && (strData.length() > i+1) && (strData[i+1] == 't') && (strData.length() > i+2) && (strData[i+2] == 't') && (strData.length() > i+3) && (strData[i+3] == 'p') && (strData.length() > i+4) && (strData[i+4] == ':'))
-            )
-        {
-            int x = strData.indexOf(" ",i+1);
-            int y = strData.indexOf("href");
-
-            if (x == -1)
-                x = strData.length()-1;
-
-            if ((y != i-6) && (y != i-5))
-            {
-                QString strLink = strData.mid(i,x-i);
-
-                if (settings->value("hide_formating").toString() == "off")
-                {
-                    strContent.append("<span style=\"color:#0000ff;\">");
-                    strContent.append(QString("%1 ").arg(strLink));
-                    strContentLast = "</span>"+strContentLast;
-                }
-                else
-                    strContent.append(QString("%1 ").arg(strLink));
-
-                i = x;
-                if (i == strData.length()-1) // fix position
-                    i--;
-            }
-            else
-                strContent.append(QString(strData[i]));
-        }
-        // not action, emoticon, color, font, link
-        else
-            strContent.append(QString(strData[i]));
+        strData = strData.right(strData.length() - 11);
+        if (strData.indexOf("ACTION ") != -1) strData = strData.replace("ACTION ", QString::null);
+        if (strData.indexOf("&lt;") != -1) strData = strData.remove(strData.indexOf("&lt;"),4);
+        if (strData.indexOf("&gt;") != -1) strData = strData.remove(strData.indexOf("&gt;"),4);
     }
 
-    // hilight
+// colors
+    if (settings->value("hide_formating").toString() == "off")
+    {
+        int iCount = strData.count("%C");
+
+        strData.replace("%C000000%", "<span style=\"color:#000000;\">");
+        strData.replace("%C623c00%", "<span style=\"color:#623c00;\">");
+        strData.replace("%Cc86c00%", "<span style=\"color:#c86c00;\">");
+        strData.replace("%Cff6500%", "<span style=\"color:#ff6500;\">");
+        strData.replace("%Cff0000%", "<span style=\"color:#ff0000;\">");
+        strData.replace("%Ce40f0f%", "<span style=\"color:#e40f0f;\">");
+        strData.replace("%C990033%", "<span style=\"color:#990033;\">");
+        strData.replace("%C8800ab%", "<span style=\"color:#8800ab;\">");
+        strData.replace("%Cce00ff%", "<span style=\"color:#ce00ff;\">");
+        strData.replace("%C0f2ab1%", "<span style=\"color:#0f2ab1;\">");
+        strData.replace("%C3030ce%", "<span style=\"color:#3030ce;\">");
+        strData.replace("%C006699%", "<span style=\"color:#006699;\">");
+        strData.replace("%C1a866e%", "<span style=\"color:#1a866e;\">");
+        strData.replace("%C008100%", "<span style=\"color:#008100;\">");
+        strData.replace("%C959595%", "<span style=\"color:#959595;\">");
+
+        QString strSpan;
+        for (int i = 0; i < iCount; i++)
+            strSpan += "</span>";
+
+        strContentLast = strSpan+strContentLast;
+    }
+
+// emoticons
+    if (strData.indexOf("%I") != -1)
+    {
+        QString strPath = QCoreApplication::applicationDirPath();
+
+        while (strData.indexOf("%I") != -1)
+        {
+            int iStartPos = strData.indexOf("%I");
+            int iEndPos = strData.indexOf("%", iStartPos+1);
+            iEndPos++;
+            QString strEmoticonFull = strData.mid(iStartPos, iEndPos-iStartPos);
+            QString strEmoticon = strEmoticonFull.mid(2,strEmoticonFull.length()-3);
+            QString strInsert;
+
+            QString strEmoticonFull1 = strPath+"/3rdparty/emoticons/"+strEmoticon+".gif";
+            QString strEmoticonFull2 = strPath+"/3rdparty/emoticons_other/"+strEmoticon+".gif";
+            QFile f1(strEmoticonFull1);
+            QFile f2(strEmoticonFull2);
+            if ((f1.exists() == true) && (settings->value("hide_formating").toString() == "off"))
+            {
+    #ifdef Q_WS_X11
+                strInsert = "<img src=\"file://"+strEmoticonFull1+"\" alt=\""+strEmoticon+"\" />";
+    #else
+                strInsert = "<img src=\""+strEmoticonFull1+"\" alt=\""+strEmoticon+"\" />";
+    #endif
+            }
+            else if ((f2.exists() == true) && (settings->value("hide_formating").toString() == "off"))
+            {
+    #ifdef Q_WS_X11
+                strInsert = "<img src=\"file://"+strEmoticonFull2+"\" alt=\""+strEmoticon+"\" />";
+    #else
+                strInsert = "<img src=\""+strEmoticonFull2+"\" alt=\""+strEmoticon+"\" />";
+    #endif
+            }
+            // emoticon not exist or hide formating
+            else
+                strInsert = "//"+strEmoticon;
+
+            strData.replace(strEmoticonFull, strInsert);
+        }
+    }
+
+// fonts
+    if (strData.indexOf("%F") != -1)
+    {
+        int iCount = strData.count("%F");
+
+        while (strData.indexOf("%F") != -1)
+        {
+            int iStartPos = strData.indexOf("%F");
+            int iEndPos = strData.indexOf("%", iStartPos+1);
+            iEndPos++;
+            QString strFontFull = strData.mid(iStartPos, iEndPos-iStartPos);
+            QString strFont = strFontFull.mid(2,strFontFull.length()-3);
+            QString strInsert;
+
+            QString strFontStyle = "normal";
+            QString strFontFamily = "Verdana";
+            QString strFontWeight = "normal";
+            QString strFontName = "Verdana";
+
+            if (strFont.indexOf(":") != -1)
+            {
+                strFontWeight = strFont.left(strFont.indexOf(":"));
+                strFontName = strFont.right(strFont.length()-strFont.indexOf(":")-1);
+
+                 for (int fw = 0; fw < strFontWeight.length(); fw++)
+                 {
+                     if (strFontWeight[fw] == 'b') strFontWeight = "bold";
+                     else if (strFontWeight[fw] == 'i') strFontStyle = "italic";
+                 }
+
+                 if (strFontName == "arial") strFontFamily = "Arial";
+                 else if (strFontName == "times") strFontFamily = "Times New Roman";
+                 else if (strFontName == "verdana") strFontFamily = "Verdana";
+                 else if (strFontName == "tahoma") strFontFamily = "Tahoma";
+                 else if (strFontName == "courier") strFontFamily = "Courier New";
+
+                 strInsert = "<span style=\"font-weight:"+strFontWeight+";font-style:"+strFontStyle+";font-family:"+strFontFamily+";\">";
+            }
+            else
+            {
+                 if (strFont == "arial") strFontFamily = "Arial";
+                 else if (strFont == "times") strFontFamily = "Times New Roman";
+                 else if (strFont == "verdana") strFontFamily = "Verdana";
+                 else if (strFont == "tahoma") strFontFamily = "Tahoma";
+                 else if (strFont == "courier") strFontFamily = "Courier New";
+                 else
+                 {
+                     for (int fw = 0; fw < strFont.length(); fw++)
+                     {
+                         if (strFont[fw] == 'b') strFontWeight = "bold";
+                         else if (strFont[fw] == 'i') strFontStyle = "italic";
+                     }
+                 }
+                 strInsert = "<span style=\"font-weight:"+strFontWeight+";font-style:"+strFontStyle+";font-family:"+strFontFamily+";\">";
+            }
+
+            strData.replace(strFontFull, strInsert);
+        }
+
+        QString strSpan;
+        for (int i = 0; i < iCount; i++)
+            strSpan += "</span>";
+
+        strContentLast = strSpan+strContentLast;
+    }
+
+// hilight
     if (iLevel == 8)
     {
-        strContent.append("<hr>");
+        strData.append("<hr>");
 
         if (settings->value("disable_sounds").toString() == "off")
             pNotify->play();
     }
 
+// init text
+    strContent.append("<p style=\"margin:0;padding:0;font-style:normal;color:#000000;text-align:left;font-family:Verdana;font-weight:normal;font-size:"+strFontSize+";\">");
+
+// /me
+    if (settings->value("hide_formating").toString() == "off")
+    {
+        if (strData.indexOf(QString(QByteArray("\x01"))) != -1)
+        {
+            int iLast1 = strContent.lastIndexOf("text-align:");
+            int iLast2 = strContent.indexOf(";",iLast1);
+            strContent.remove(iLast1, iLast2-iLast1);
+            strContent.insert(iLast1, "text-align:center");
+
+            strData.replace(QString(QByteArray("\x01")), "");
+        }
+    }
+
+// text
+    strContent.append(strData);
     strContent = strContent+strContentLast;
     strContent.append("</p>");
     textEdit->setHtml(strContentStart+strContent+strContentEnd,QUrl(""));
@@ -1074,85 +1053,85 @@ void TabWidget::update_channel_avatar()
 
 void TabWidget::bold_clicked()
 {
-    if (bBold == true)
+    if (bMyBold == true)
     {
         bold->setDown(false);
-        bBold = false;
-        strFontWeight = "";
+        bMyBold = false;
+        strMyFontWeight = "";
     }
     else
     {
         bold->setDown(true);
-        bBold = true;
-        strFontWeight = "bold";
+        bMyBold = true;
+        strMyFontWeight = "bold";
     }
 
-    int iWeight = (bBold == true ? 75 : 50);
-    inputline->setFont(QFont(strFontFamily, -1, iWeight, bItalic));
+    int iWeight = (bMyBold == true ? 75 : 50);
+    inputline->setFont(QFont(strMyFontFamily, -1, iWeight, bMyItalic));
 }
 
 void TabWidget::italic_clicked()
 {
-    if (bItalic == true)
+    if (bMyItalic == true)
     {
         italic->setDown(false);
-        bItalic = false;
-        strFontStyle = "";
+        bMyItalic = false;
+        strMyFontStyle = "";
     }
     else
     {
         italic->setDown(true);
-        bItalic = true;
-        strFontStyle = "italic";
+        bMyItalic = true;
+        strMyFontStyle = "italic";
     }
 
-    int iWeight = (bBold == true ? 75 : 50);
-    inputline->setFont(QFont(strFontFamily, -1, iWeight, bItalic));
+    int iWeight = (bMyBold == true ? 75 : 50);
+    inputline->setFont(QFont(strMyFontFamily, -1, iWeight, bMyItalic));
 }
 
 void TabWidget::arial_triggered()
 {
     fontfamily->setText("Arial");
-    strFontFamily = "Arial";
+    strMyFontFamily = "Arial";
 
-    int iWeight = (bBold == true ? 75 : 50);
-    inputline->setFont(QFont(strFontFamily, -1, iWeight, bItalic));
+    int iWeight = (bMyBold == true ? 75 : 50);
+    inputline->setFont(QFont(strMyFontFamily, -1, iWeight, bMyItalic));
 }
 
 void TabWidget::times_triggered()
 {
     fontfamily->setText("Times");
-    strFontFamily = "Times";
+    strMyFontFamily = "Times";
 
-    int iWeight = (bBold == true ? 75 : 50);
-    inputline->setFont(QFont(strFontFamily, -1, iWeight, bItalic));
+    int iWeight = (bMyBold == true ? 75 : 50);
+    inputline->setFont(QFont(strMyFontFamily, -1, iWeight, bMyItalic));
 }
 
 void TabWidget::verdana_triggered()
 {
     fontfamily->setText("Verdana");
-    strFontFamily = "Verdana";
+    strMyFontFamily = "Verdana";
 
-    int iWeight = (bBold == true ? 75 : 50);
-    inputline->setFont(QFont(strFontFamily, -1, iWeight, bItalic));
+    int iWeight = (bMyBold == true ? 75 : 50);
+    inputline->setFont(QFont(strMyFontFamily, -1, iWeight, bMyItalic));
 }
 
 void TabWidget::tahoma_triggered()
 {
     fontfamily->setText("Tahoma");
-    strFontFamily = "Tahoma";
+    strMyFontFamily = "Tahoma";
 
-    int iWeight = (bBold == true ? 75 : 50);
-    inputline->setFont(QFont(strFontFamily, -1, iWeight, bItalic));
+    int iWeight = (bMyBold == true ? 75 : 50);
+    inputline->setFont(QFont(strMyFontFamily, -1, iWeight, bMyItalic));
 }
 
 void TabWidget::courier_triggered()
 {
     fontfamily->setText("Courier");
-    strFontFamily = "Courier";
+    strMyFontFamily = "Courier";
 
-    int iWeight = (bBold == true ? 75 : 50);
-    inputline->setFont(QFont(strFontFamily, -1, iWeight, bItalic));
+    int iWeight = (bMyBold == true ? 75 : 50);
+    inputline->setFont(QFont(strMyFontFamily, -1, iWeight, bMyItalic));
 }
 
 void TabWidget::size8_triggered()
@@ -1282,8 +1261,8 @@ void TabWidget::send_message(bool bType)
                     QString weight;
                     QString font = fontfamily->text().toLower();
 
-                    if (bBold == true) weight += "b";
-                    if (bItalic == true) weight += "i";
+                    if (bMyBold == true) weight += "b";
+                    if (bMyItalic == true) weight += "i";
 
                     if (strCurrentColor != "000000")
                         strTextDisplay = "%C"+strCurrentColor+"%"+strTextDisplay;
@@ -1325,8 +1304,8 @@ void TabWidget::send_message(bool bType)
                 QString weight;
                 QString font = fontfamily->text().toLower();
 
-                if (bBold == true) weight += "b";
-                if (bItalic == true) weight += "i";
+                if (bMyBold == true) weight += "b";
+                if (bMyItalic == true) weight += "i";
 
                 if (strCurrentColor != "000000")
                     strText = "%C"+strCurrentColor+"%"+strText;

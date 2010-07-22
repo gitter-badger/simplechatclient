@@ -89,11 +89,12 @@ private:
     QString strContentStart;
     QString strContentEnd;
     QString strFontSize;
-    QString strFontWeight;
-    QString strFontFamily;
-    QString strFontAlign;
-    QString strFontColor;
-    QString strFontStyle;
+
+    bool bMyBold;
+    bool bMyItalic;
+    QString strMyFontWeight;
+    QString strMyFontStyle;
+    QString strMyFontFamily;
 
     QWidget *topWidget;
     QLabel *nickCount;
@@ -168,8 +169,6 @@ private:
     QHash <QString, QString> nicklist;
     QQueue <QString> new_nicklist1;
     QQueue <QString> new_nicklist2;
-    bool bBold;
-    bool bItalic;
     int iNickCount;
     bool bCursorPositionChanged;
     QString strCurrentColor;
