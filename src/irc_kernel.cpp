@@ -1756,6 +1756,7 @@ void IrcKernel::raw_258()
     tabc->show_msg("Status", strMessage, 7);
 }
 
+// :ChanServ!service@service.onet NOTICE #glupia_nazwa :258 ovo_ d :channel settings changed
 // :ChanServ!service@service.onet NOTICE #scc :258 Merovingian * :channel settings changed
 void IrcKernel::raw_258n()
 {

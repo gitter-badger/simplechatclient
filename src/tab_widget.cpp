@@ -312,6 +312,8 @@ TabWidget::TabWidget(Network *param1, QSettings *param2, QString param3, QWidget
             nickCount->hide();
             topicDetails->hide();
             topLeftWidget->hide();
+            rightLayout->setMargin(0);
+            leftLayout->setMargin(0);
         }
 
         rightLayout->addWidget(nick_list);
@@ -326,6 +328,10 @@ TabWidget::TabWidget(Network *param1, QSettings *param2, QString param3, QWidget
 
         splitter->addWidget(leftWidget);
         splitter->addWidget(rightWidget);
+
+        if (settings->value("style") == "classic")
+            mainLayout->setMargin(0);
+
         mainLayout->addWidget(splitter);
     }
     else if (strName[0] == '^')
