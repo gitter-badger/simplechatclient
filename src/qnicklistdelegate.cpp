@@ -70,8 +70,8 @@ void NicklistDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opti
         QString strBackgroundColor = pConfig->get_value("background_color");
         delete pConfig;
 
-        if (QColor("#"+strBackgroundColor) != Qt::white)
-            painter->setBrush(QColor("#"+strBackgroundColor));
+        if (QColor(strBackgroundColor) != Qt::white)
+            painter->setBrush(QColor(strBackgroundColor));
         else
             painter->setBrush((index.row() % 2) ? Qt::white : QColor(252,252,252));
         painter->drawRect(r);
