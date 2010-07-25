@@ -2746,6 +2746,8 @@ void IrcKernel::raw_475()
 
     QString strMessage = QString(tr("* Cannot join channel %1: Incorrect channel key")).arg(strChannel);
     tabc->show_msg_active(strMessage, 7);
+
+    (new DlgChannelKey(pNetwork, settings, strChannel))->show();
 }
 
 // :cf1f4.onet 481 Merovingian :Permission Denied - You do not have the required operator privileges

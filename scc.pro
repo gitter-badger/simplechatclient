@@ -19,6 +19,7 @@ SOURCES += src/channel_avatar.cpp \
     src/dlg_channel_favourites_ad.cpp \
     src/dlg_channel_homes.cpp \
     src/dlg_channel_homes_ad.cpp \
+    src/dlg_channel_key.cpp \
     src/dlg_channel_list.cpp \
     src/dlg_channel_settings.cpp \
     src/dlg_email.cpp \
@@ -61,6 +62,7 @@ HEADERS += src/channel_avatar.h \
     src/dlg_channel_favourites_ad.h \
     src/dlg_channel_homes.h \
     src/dlg_channel_homes_ad.h \
+    src/dlg_channel_key.h \
     src/dlg_channel_list.h \
     src/dlg_channel_settings.h \
     src/dlg_email.h \
@@ -98,6 +100,7 @@ FORMS += ui/about.ui \
     ui/channel_favourites_ad.ui \
     ui/channel_homes.ui \
     ui/channel_homes_ad.ui \
+    ui/channel_key.ui \
     ui/channel_list.ui \
     ui/channel_settings.ui \
     ui/email.ui \

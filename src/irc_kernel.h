@@ -27,6 +27,7 @@
 #include "config.h"
 #include "dlg_channel_favourites.h"
 #include "dlg_channel_homes.h"
+#include "dlg_channel_key.h"
 #include "dlg_channel_list.h"
 #include "dlg_channel_settings.h"
 #include "dlg_friends.h"

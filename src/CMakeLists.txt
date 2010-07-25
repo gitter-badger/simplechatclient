@@ -6,6 +6,7 @@ set (scc_UIS
 	../ui/channel_favourites_ad.ui
 	../ui/channel_homes.ui
 	../ui/channel_homes_ad.ui
+	../ui/channel_key.ui
 	../ui/channel_list.ui
 	../ui/channel_settings.ui
 	../ui/email.ui
@@ -33,6 +34,7 @@ set (scc_SRCS
 	dlg_channel_favourites_ad.cpp
 	dlg_channel_homes.cpp
 	dlg_channel_homes_ad.cpp
+	dlg_channel_key.cpp
 	dlg_channel_list.cpp
 	dlg_channel_settings.cpp
 	dlg_email.cpp
@@ -77,6 +79,7 @@ set (scc_MOC_HDRS
 	dlg_channel_favourites_ad.h
 	dlg_channel_homes.h
 	dlg_channel_homes_ad.h
+	dlg_channel_key.h
 	dlg_channel_list.h
 	dlg_channel_settings.h
 	dlg_email.h
