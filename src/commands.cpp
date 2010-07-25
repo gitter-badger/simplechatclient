@@ -95,7 +95,13 @@ QString Commands::cmd_join()
     if ((strChannel[0] != '#') && (strChannel[0] != '^'))
         strChannel = "#"+strChannel;
 
-    return QString("JOIN %1").arg(strChannel);
+    QString strKey;
+    for (int i = 2; i < strDataList.size(); i++) { if (i != 2) strKey += " "; strKey += strDataList[i]; }
+
+    if (strKey.isEmpty() == false)
+        return QString("JOIN %1 %2").arg(strChannel).arg(strKey);
+    else
+        return QString("JOIN %1").arg(strChannel);
 }
 
 QString Commands::cmd_priv()
@@ -189,7 +195,7 @@ QString Commands::cmd_help()
     strResult.append(tr("/cycle or /hop")+"<br>");
     strResult.append(tr("/me [text]")+"<br>");
     strResult.append(tr("/topic [text]")+"<br>");
-    strResult.append(tr("/join [channel] or /j [channel]")+"<br>");
+    strResult.append(tr("/join [channel] [key] or /j [channel] [key]")+"<br>");
     strResult.append(tr("/part or /p")+"<br>");
     strResult.append(tr("/priv [nick]")+"<br>");
     strResult.append(tr("/ignore [[+|-]nick]")+"<br>");

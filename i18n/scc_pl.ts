@@ -43,8 +43,8 @@
         <translation>/topic [tekst]</translation>
     </message>
     <message>
-        <source>/join [channel] or /j [channel]</source>
-        <translation>/join [kanał] lub /j [kanał]</translation>
+        <source>/join [channel] [key] or /j [channel] [key]</source>
+        <translation>/join [kanał] [klucz] lub /j [kanał] [klucz]</translation>
     </message>
     <message>
         <source>/part or /p</source>
@@ -518,6 +518,14 @@
         <translation>* %1 nie posiada już wyjątku od bana w kanale %2 (Ustawił %3)</translation>
     </message>
     <message>
+        <source>* Channel %1 now has key set to %2 (set by %3)</source>
+        <translation>* Kanał %1 ma teraz ustawiony klucz %2 (Ustawił %3)</translation>
+    </message>
+    <message>
+        <source>* Channel %1 no longer has key set (set by %2)</source>
+        <translation>* Kanał %1 nie ma już ustawionego klucza (Ustawił %2)</translation>
+    </message>
+    <message>
         <source>* Channel %1 will now have no external messages sent to the channel (set by %2)</source>
         <translation>* Kanał %1 nie będzie teraz otrzymywać zewnętrznych wiadomości wysyłanych do kanału (Ustawił %2)</translation>
     </message>
@@ -968,6 +976,10 @@
     <message>
         <source>* Cannot join channel %1: You're banned</source>
         <translation>* Nie możesz wejść do %1: Jesteś zbanowany</translation>
+    </message>
+    <message>
+        <source>* Cannot join channel %1: Incorrect channel key</source>
+        <translation>* Nie możesz wejść do %1: Nieprawidłowy klucz</translation>
     </message>
     <message>
         <source>* Permission Denied - You do not have the required operator privileges</source>

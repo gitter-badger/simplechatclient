@@ -210,6 +210,8 @@ void IrcKernel::kernel(QString param1)
             raw_473();
         else if (strDataList[1].toLower() == "474")
             raw_474();
+        else if (strDataList[1].toLower() == "475")
+            raw_475();
         else if (strDataList[1].toLower() == "481")
             raw_481();
         else if (strDataList[1].toLower() == "482")
@@ -788,6 +790,8 @@ void IrcKernel::raw_mode()
             else if (strFlag == "+e") strDisplay = QString(tr("* %1 now has ban exception flag in %2 (set by %3)")).arg(strNick).arg(strNickChannel).arg(strWho);
             else if (strFlag == "-e") strDisplay = QString(tr("* %1 no longer has a ban exception flag in %2 (set by %3)")).arg(strNick).arg(strNickChannel).arg(strWho);
 
+            else if (strFlag == "+k") strDisplay = QString(tr("* Channel %1 now has key set to %2 (set by %3)")).arg(strNickChannel).arg(strNick).arg(strWho);
+            else if (strFlag == "-k") strDisplay = QString(tr("* Channel %1 no longer has key set (set by %2)")).arg(strNickChannel).arg(strWho);
             else if (strFlag == "+n") strDisplay = QString(tr("* Channel %1 will now have no external messages sent to the channel (set by %2)")).arg(strNickChannel).arg(strWho);
             else if (strFlag == "-n") strDisplay = QString(tr("* Channel %1 will now allow external messages sent to the channel (set by %2)")).arg(strNickChannel).arg(strWho);
             else if (strFlag == "+t") strDisplay = QString(tr("* Only channel operators can now change the topic in %1 channel (set by %2)")).arg(strNickChannel).arg(strWho);
@@ -2730,6 +2734,17 @@ void IrcKernel::raw_474()
     QString strChannel = strDataList[3];
 
     QString strMessage = QString(tr("* Cannot join channel %1: You're banned")).arg(strChannel);
+    tabc->show_msg_active(strMessage, 7);
+}
+
+// :cf1f4.onet 475 Merovingian #glupia_nazwa :Cannot join channel (Incorrect channel key)
+void IrcKernel::raw_475()
+{
+    if (strDataList.value(3).isEmpty() == true) return;
+
+    QString strChannel = strDataList[3];
+
+    QString strMessage = QString(tr("* Cannot join channel %1: Incorrect channel key")).arg(strChannel);
     tabc->show_msg_active(strMessage, 7);
 }
 
