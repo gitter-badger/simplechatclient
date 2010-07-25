@@ -32,6 +32,8 @@ DlgOptions::DlgOptions(QWidget *parent, QSettings *param1) : QDialog(parent)
     ui.comboBox->setIconSize(QSize(50,10));
 
     QStringList comboBoxColors;
+// default
+    comboBoxColors << "#FFFFFF";
 // shades of red
     comboBoxColors << "#CD5C5C" << "#F08080" << "#FA8072" << "#E9967A" << "#FFA07A" << "#DC143C" << "#FF0000" << "#B22222" << "#8B0000";
 // shades of pink
