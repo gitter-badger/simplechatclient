@@ -224,7 +224,7 @@ TabWidget::TabWidget(Network *param1, QSettings *param2, QString param3, QWidget
     {
         QPixmap pixmap(50,10);
         pixmap.fill(QColor(strColor));
-        color->insertItem(14, pixmap, "");
+        color->insertItem(iComboBoxColors, pixmap, "");
         iComboBoxColors++;
     }
     color->show();

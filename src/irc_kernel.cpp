@@ -712,6 +712,7 @@ void IrcKernel::raw_kick()
 // :Merovingian!26269559@jest.piekny.i.uroczy.ma.przesliczne.oczy MODE Merovingian :+b
 // :Merovingian!26269559@2294E8.94913F.2EAEC9.11F26D MODE Merovingian :+b
 // :ankaszo!51613093@F4C727.446F67.966AC9.BAAE26 MODE ankaszo -W
+// :ChanServ!service@service.onet MODE #glupia_nazwa +k bum
 // :NickServ!service@service.onet MODE scc_test +r
 // :ChanServ!service@service.onet MODE #scc +ips
 // :ChanServ!service@service.onet MODE #scc +o scc_test
