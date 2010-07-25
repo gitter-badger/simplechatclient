@@ -22,7 +22,6 @@
 #define DLG_CHANNEL_LIST_H
 
 #include <QDialog>
-#include "network.h"
 #include "tab_container.h"
 #include "ui_channel_list.h"
 
@@ -30,7 +29,7 @@ class DlgChannelList : public QDialog
 {
     Q_OBJECT
 public:
-    DlgChannelList(Network *, QSettings *, TabContainer *);
+    DlgChannelList(QSettings *, TabContainer *);
     void clear();
     void add_channel(QString, QString, QString, QString);
     void create_list();
@@ -38,7 +37,6 @@ public:
 
 private:
     Ui::uiChannelList ui;
-    Network *pNetwork;
     QSettings *settings;
     TabContainer *tabc;
     QList < QList<QString> > list_1;
@@ -63,6 +61,9 @@ private slots:
     void regionalneCellDoubleClicked(int, int);
     void button_ok();
     void button_cancel();
+
+signals:
+    void send(QString);
 
 };
 

@@ -27,26 +27,27 @@
 #include <QNetworkReply>
 #include <QObject>
 #include <QUrl>
-#include "network.h"
 #include "tab_container.h"
 
 class IrcAuth : public QObject
 {
     Q_OBJECT
 public:
-    IrcAuth(Network *, QSettings *, TabContainer *);
+    IrcAuth(QSettings *, TabContainer *);
     QString transform_key(QString);
 
 public slots:
     void request_uo(QString, QString);
 
 private:
-    Network *pNetwork;
     QSettings *settings;
     TabContainer *tabc;
 
     QString get_version(QString);
     void request_finished(QString);
+
+signals:
+    void send(QString);
 
 };
 

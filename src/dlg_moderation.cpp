@@ -20,12 +20,11 @@
 
 #include "dlg_moderation.h"
 
-DlgModeration::DlgModeration(Network *param1, QSettings *param2)
+DlgModeration::DlgModeration(QSettings *param1)
 {
     ui.setupUi(this);
 
-    pNetwork = param1;
-    settings = param2;
+    settings = param1;
 
     QObject::connect(ui.pushButton, SIGNAL(clicked()), this, SLOT(button_accept()));
     QObject::connect(ui.pushButton_2, SIGNAL(clicked()), this, SLOT(button_remove()));
@@ -194,7 +193,7 @@ void DlgModeration::button_accept()
     for (int i = 1; i < strDataList.size(); i++) { if (i != 1) strMessage += " "; strMessage += strDataList[i]; }
 
     QString strSend = QString("MODERMSG %1 - %2 :%3").arg(strNick).arg(strChannel).arg(strMessage);
-    pNetwork->send(strSend);
+    emit send(strSend);
 
     QString strDisplay = QString("<%1> %2").arg(strNick).arg(strMessage);
     emit display_msg(strChannel, strDisplay, 0);

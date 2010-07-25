@@ -20,11 +20,10 @@
 
 #include "irc_auth.h"
 
-IrcAuth::IrcAuth(Network *param1, QSettings *param2, TabContainer *param3)
+IrcAuth::IrcAuth(QSettings *param1, TabContainer *param2)
 {
-    pNetwork = param1;
-    settings = param2;
-    tabc = param3;
+    settings = param1;
+    tabc = param2;
 }
 
 void IrcAuth::request_uo(QString param1, QString param2)
@@ -284,8 +283,8 @@ void IrcAuth::request_finished(QString strData)
                 QString strUOKey = doc.elementsByTagName("uoKey").item(0).toElement().text();
                 QString strNick = doc.elementsByTagName("zuoUsername").item(0).toElement().text();
                 settings->setValue("uokey", strUOKey);
-                if ((strUOKey.isEmpty() == false) && (strNick.isEmpty() == false) && (pNetwork->is_connected() == true) && (pNetwork->is_writable() == true))
-                    pNetwork->send(QString("USER * %1  czat-app.onet.pl :%2").arg(strUOKey).arg(strNick));
+                if ((strUOKey.isEmpty() == false) && (strNick.isEmpty() == false))
+                    emit send(QString("USER * %1  czat-app.onet.pl :%2").arg(strUOKey).arg(strNick));
                 return;
             }
             else

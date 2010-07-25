@@ -20,13 +20,12 @@
 
 #include "dlg_channel_list.h"
 
-DlgChannelList::DlgChannelList(Network *param1, QSettings *param2, TabContainer *param3)
+DlgChannelList::DlgChannelList(QSettings *param1, TabContainer *param2)
 {
     ui.setupUi(this);
 
-    pNetwork = param1;
-    settings = param2;
-    tabc = param3;
+    settings = param1;
+    tabc = param2;
 
     QObject::connect(ui.tableWidget_1, SIGNAL(cellDoubleClicked(int,int)), this, SLOT(allCellDoubleClicked(int,int)));
     QObject::connect(ui.tableWidget_2, SIGNAL(cellDoubleClicked(int,int)), this, SLOT(teenCellDoubleClicked(int,int)));
@@ -248,37 +247,37 @@ void DlgChannelList::sort()
 void DlgChannelList::allCellDoubleClicked(int row, int column)
 {
     QString strChannel = ui.tableWidget_1->item(row, 0)->text();
-    pNetwork->send(QString("JOIN %1").arg(strChannel));
+    emit send(QString("JOIN %1").arg(strChannel));
 }
 
 void DlgChannelList::teenCellDoubleClicked(int row, int column)
 {
     QString strChannel = ui.tableWidget_2->item(row, 0)->text();
-    pNetwork->send(QString("JOIN %1").arg(strChannel));
+    emit send(QString("JOIN %1").arg(strChannel));
 }
 
 void DlgChannelList::towarzyskieCellDoubleClicked(int row, int column)
 {
     QString strChannel = ui.tableWidget_3->item(row, 0)->text();
-    pNetwork->send(QString("JOIN %1").arg(strChannel));
+    emit send(QString("JOIN %1").arg(strChannel));
 }
 
 void DlgChannelList::erotyczneCellDoubleClicked(int row, int column)
 {
     QString strChannel = ui.tableWidget_4->item(row, 0)->text();
-    pNetwork->send(QString("JOIN %1").arg(strChannel));
+    emit send(QString("JOIN %1").arg(strChannel));
 }
 
 void DlgChannelList::tematyczneCellDoubleClicked(int row, int column)
 {
     QString strChannel = ui.tableWidget_5->item(row, 0)->text();
-    pNetwork->send(QString("JOIN %1").arg(strChannel));
+    emit send(QString("JOIN %1").arg(strChannel));
 }
 
 void DlgChannelList::regionalneCellDoubleClicked(int row, int column)
 {
     QString strChannel = ui.tableWidget_6->item(row, 0)->text();
-    pNetwork->send(QString("JOIN %1").arg(strChannel));
+    emit send(QString("JOIN %1").arg(strChannel));
 }
 
 void DlgChannelList::button_ok()
@@ -297,7 +296,7 @@ void DlgChannelList::showEvent(QShowEvent *event)
 {
     event->accept();
 
-    pNetwork->send("SLIST  R- 0 0 100 null");
+    emit send("SLIST  R- 0 0 100 null");
 }
 
 void DlgChannelList::resizeEvent(QResizeEvent *event)

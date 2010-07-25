@@ -2867,7 +2867,7 @@ void IrcKernel::raw_801()
     if (strKey[0] == ':')
         strKey = strKey.right(strKey.length()-1);
 
-    IrcAuth *pIrc_auth = new IrcAuth(pNetwork, settings, tabc);
+    IrcAuth *pIrc_auth = new IrcAuth(settings, tabc);
     QString strAuth = pIrc_auth->transform_key(strKey);
     delete pIrc_auth;
 

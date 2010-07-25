@@ -71,7 +71,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     delete pConfig;
 
     settings.clear();
-    settings.setValue("version", "1.0.6.309");
+    settings.setValue("version", "1.0.6.310");
     settings.setValue("debug", "off");
     settings.setValue("logged", "off");
     settings.setValue("busy", "off");
@@ -101,14 +101,14 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     pTabC = new TabContainer(pNetwork, &settings, pTabM, this, pNotify, &mNickAvatar, &mChannelAvatar);
 
     pDlg_channel_settings = new DlgChannelSettings(pNetwork, &settings);
-    pDlg_moderation = new DlgModeration(pNetwork, &settings);
-    pDlg_channel_list = new DlgChannelList(pNetwork, &settings, pTabC);
+    pDlg_moderation = new DlgModeration(&settings);
+    pDlg_channel_list = new DlgChannelList(&settings, pTabC);
     pDlg_channel_homes = new DlgChannelHomes(pNetwork, &settings, pTabC, &mChannelAvatar, pDlg_channel_settings);
     pDlg_channel_favourites = new DlgChannelFavourites(pNetwork, &settings, pTabC, &mChannelAvatar);
     pDlg_friends = new DlgFriends(pNetwork, &settings, pTabC, &mNickAvatar);
     pDlg_ignore = new DlgIgnore(pNetwork, &settings, pTabC, &mNickAvatar);
     pIrc_kernel = new IrcKernel(pNetwork, &settings, pTabC, &mNickAvatar, &mChannelAvatar, pDlg_channel_settings, pDlg_channel_homes, pDlg_channel_list, pDlg_channel_favourites, pDlg_friends, pDlg_ignore, pDlg_moderation);
-    pIrc_auth = new IrcAuth(pNetwork, &settings, pTabC);
+    pIrc_auth = new IrcAuth(&settings, pTabC);
 
     pTabC->set_dlg(pDlg_channel_settings, pDlg_moderation);
 
@@ -156,7 +156,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     toolBar->addAction(friendsAct);
     toolBar->addAction(channel_favouritesAct);
 
-    // hide toolbar if style == classic
+// hide toolbar if style == classic
     if (settings.value("style") == "classic")
         toolBar->hide();
 
@@ -179,6 +179,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     QObject::connect(pTabM, SIGNAL(tabCloseRequested(int)), this, SLOT(tab_close_requested(int)));
     QObject::connect(pDlg_moderation, SIGNAL(display_msg(QString,QString,int)), pTabC, SLOT(sshow_msg(QString,QString,int)));
     QObject::connect(pIrc_kernel, SIGNAL(set_statusbar(QString)), this, SLOT(set_statusbar(QString)));
+
+    QObject::connect(pDlg_moderation, SIGNAL(send(QString)), pNetwork, SLOT(send_slot(QString)));
+    QObject::connect(pDlg_channel_list, SIGNAL(send(QString)), pNetwork, SLOT(send_slot(QString)));
+    QObject::connect(pIrc_auth, SIGNAL(send(QString)), pNetwork, SLOT(send_slot(QString)));
 
     QObject::connect(this, SIGNAL(do_kernel(QString)), pIrc_kernel, SLOT(kernel(QString)));
     QObject::connect(this, SIGNAL(do_request_uo(QString, QString)), pIrc_auth, SLOT(request_uo(QString, QString)));

@@ -21,17 +21,17 @@
 #ifndef DLG_MODERATION_H
 #define DLG_MODERATION_H
 
+#include <QDateTime>
 #include <QDialog>
 #include <QSettings>
 #include <QShowEvent>
-#include "network.h"
 #include "ui_moderation.h"
 
 class DlgModeration : public QDialog
 {
     Q_OBJECT
 public:
-    DlgModeration(Network *, QSettings *);
+    DlgModeration(QSettings *);
     ~DlgModeration();
     void set_active_channel(QString);
     void add_msg(QString, QString, QString, QString);
@@ -39,7 +39,6 @@ public:
 
 private:
     Ui::uiModeration ui;
-    Network *pNetwork;
     QSettings *settings;
     QString strActiveChannel;
     QMultiHash <QString, QString> channel_id;
@@ -63,6 +62,7 @@ protected:
 
 signals:
     void display_msg(QString, QString, int);
+    void send(QString);
 
 };
 
