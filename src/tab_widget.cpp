@@ -214,22 +214,19 @@ TabWidget::TabWidget(Network *param1, QSettings *param2, QString param3, QWidget
 
     color = new QComboBox(this);
     color->setParent(this);
-    color->insertItem(0, QIcon(":/images/000000.png"),"");
-    color->insertItem(1, QIcon(":/images/623c00.png"),"");
-    color->insertItem(2, QIcon(":/images/c86c00.png"),"");
-    color->insertItem(3, QIcon(":/images/ff6500.png"),"");
-    color->insertItem(4, QIcon(":/images/ff0000.png"),"");
-    color->insertItem(5, QIcon(":/images/e40f0f.png"),"");
-    color->insertItem(6, QIcon(":/images/990033.png"),"");
-    color->insertItem(7, QIcon(":/images/8800ab.png"),"");
-    color->insertItem(8, QIcon(":/images/ce00ff.png"),"");
-    color->insertItem(9, QIcon(":/images/0f2ab1.png"),"");
-    color->insertItem(10, QIcon(":/images/3030ce.png"),"");
-    color->insertItem(11, QIcon(":/images/006699.png"),"");
-    color->insertItem(12, QIcon(":/images/1a866e.png"),"");
-    color->insertItem(13, QIcon(":/images/008100.png"),"");
-    color->insertItem(14, QIcon(":/images/959595.png"),"");
     color->setIconSize(QSize(50,10));
+
+    QStringList comboBoxColors;
+    comboBoxColors << "#000000" << "#623c00" << "#c86c00" << "#ff6500" << "#ff0000" << "#e40f0f" << "#990033" << "#8800ab" << "#ce00ff" << "#0f2ab1" << "#3030ce" << "#006699" << "#1a866e" << "#008100" << "#959595";
+
+    int iComboBoxColors = 0;
+    foreach (QString strColor, comboBoxColors)
+    {
+        QPixmap pixmap(50,10);
+        pixmap.fill(QColor(strColor));
+        color->insertItem(14, pixmap, "");
+        iComboBoxColors++;
+    }
     color->show();
 
     channel_settings = new QPushButton(this);
