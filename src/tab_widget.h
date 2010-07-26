@@ -167,17 +167,14 @@ private:
     QMap <QString, QString> nick_flag;
     QMap <QString, QString> nick_suffix;
     sNickStatus nick_status;
-    QHash <QString, QString> nicklist;
     int iNickCount;
     bool bCursorPositionChanged;
     QString strCurrentColor;
 
-    void nicklist_add(QString, QString);
+    void nicklist_add(QString, QString, int);
     void nicklist_remove(QString);
     void nicklist_clear();
-    void nicklist_refresh();
-    void nicklist_sort();
-    void nicklist_quicksort(QString);
+    //void nicklist_refresh();
 
     void display_message(QString, int);
 

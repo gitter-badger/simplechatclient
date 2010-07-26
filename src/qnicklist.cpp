@@ -199,29 +199,122 @@ void Nicklist::invite()
 
 // nicklist
 
-void Nicklist::nicklist_add(QString strNick, QString strStatus, QHash <QString, QString> *nicklist)
+void Nicklist::nicklist_add(QString strNick, QString strStatus, int iRefresh, sNickStatus *nick_status)
 {
-    nicklist->insert(strNick, strStatus);
+// add
+    NickStatus add;
+    add.nick = strNick;
+    add.status = strStatus;
+
+    nick_status->append(add);
+
+// return if dont refresh
+    if (iRefresh == 0)
+        return;
+    else
+        nicklist_refresh(nick_status);
 }
 
-void Nicklist::nicklist_remove(QString strNick, QHash <QString, QString> *nicklist, sNickStatus *nick_status)
+void Nicklist::nicklist_remove(QString strNick, sNickStatus *nick_status)
 {
-    nicklist->remove(strNick);
-    nicklist_refresh(nicklist, nick_status);
+    for (int i = 0; i < nick_status->count(); i++)
+    {
+        NickStatus check = nick_status->at(i);
+        if (check.nick == strNick)
+            nick_status->removeAt(i);
+    }
+
+    for (int i = 0; i < this->count(); i++)
+    {
+        if (this->item(i)->data(Qt::UserRole).toString() == strNick)
+            this->takeItem(i);
+    }
 }
 
-bool Nicklist::nicklist_exist(QString strNick, QHash <QString, QString> *nicklist)
+bool Nicklist::nicklist_exist(QString strNick, sNickStatus *nick_status)
 {
-    return nicklist->contains(strNick);
+    for (int i = 0; i < nick_status->count(); i++)
+    {
+        NickStatus check = nick_status->at(i);
+        if (check.nick == strNick)
+            return true;
+    }
+    return false;
 }
 
-void Nicklist::nicklist_clear(QHash <QString, QString> *nicklist, sNickStatus *nick_status)
+void Nicklist::nicklist_clear(sNickStatus *nick_status)
 {
-    nicklist->clear();
-    nicklist_refresh(nicklist, nick_status);
+    nick_status->clear();
 }
 
-void Nicklist::nicklist_refresh(QHash <QString, QString> *nicklist, sNickStatus *nick_status)
+void Nicklist::nicklist_sort(sNickStatus *nick_status)
+{
+    sNickStatus nick_status_sorted;
+
+    nicklist_quicksort("admin", nick_status, &nick_status_sorted);
+    nicklist_quicksort("owner", nick_status, &nick_status_sorted);
+    nicklist_quicksort("op", nick_status, &nick_status_sorted);
+    nicklist_quicksort("halfop", nick_status, &nick_status_sorted);
+    nicklist_quicksort("mod", nick_status, &nick_status_sorted);
+    nicklist_quicksort("vip", nick_status, &nick_status_sorted);
+    nicklist_quicksort("user", nick_status, &nick_status_sorted);
+
+// clear
+    nick_status->clear();
+
+// copy
+    for (int i = 0; i < nick_status_sorted.count(); i++)
+        nick_status->enqueue(nick_status_sorted.at(i));
+}
+
+bool caseInsensitiveLessThan(const QString &s1, const QString &s2)
+{
+    return s1.toLower() < s2.toLower();
+}
+
+void Nicklist::nicklist_quicksort(QString strStatus, sNickStatus *nick_status, sNickStatus *nick_status_sorted)
+{
+// create hash from nick_status by status
+    QHash <QString, QString> hNick_status;
+
+    for (int i = 0; i < nick_status->count(); i++)
+    {
+        NickStatus listNickStatus(nick_status->at(i));
+
+        QString strKey = listNickStatus.nick;
+        QString strValue = listNickStatus.status;
+
+        if ((strValue == strStatus) || (strValue == strStatus+"cam"))
+            hNick_status.insert(strKey, strValue);
+    }
+
+// change hash to QStringList
+    QStringList slNicklist;
+
+    QHash <QString, QString>::const_iterator i2 = hNick_status.constBegin();
+    while (i2 != hNick_status.constEnd())
+    {
+        slNicklist.insert(slNicklist.count(), i2.key());
+        ++i2;
+    }
+
+// sort slNicklist
+    qStableSort(slNicklist.begin(), slNicklist.end(), caseInsensitiveLessThan);
+
+// insert
+    for (int i = 0; i < slNicklist.count(); i++)
+    {
+        QString strNick = slNicklist.at(i);
+
+        NickStatus insert;
+        insert.nick = strNick;
+        insert.status = hNick_status[strNick];
+
+        nick_status_sorted->enqueue(insert);
+    }
+}
+
+void Nicklist::nicklist_refresh(sNickStatus *nick_status)
 {
 // get selected item
 
@@ -235,13 +328,11 @@ void Nicklist::nicklist_refresh(QHash <QString, QString> *nicklist, sNickStatus 
 
     this->clear();
 
-    nick_status->clear();
+    nicklist_sort(nick_status);
 
-    nicklist_sort(nicklist, nick_status);
-
-    while (!nick_status->isEmpty())
+    for (int i = 0; i < nick_status->count(); i++)
     {
-        NickStatus listNickStatus(nick_status->dequeue());
+        NickStatus listNickStatus(nick_status->at(i));
 
         QString strNick = listNickStatus.nick;
         QString strStatus = listNickStatus.status;
@@ -290,55 +381,21 @@ void Nicklist::nicklist_refresh(QHash <QString, QString> *nicklist, sNickStatus 
     }
 }
 
-void Nicklist::nicklist_sort(QHash <QString, QString> *nicklist, sNickStatus *nick_status)
+void Nicklist::nicklist_refresh_avatars()
 {
-    nicklist_quicksort("admin", nicklist, nick_status);
-    nicklist_quicksort("owner", nicklist, nick_status);
-    nicklist_quicksort("op", nicklist, nick_status);
-    nicklist_quicksort("halfop", nicklist, nick_status);
-    nicklist_quicksort("mod", nicklist, nick_status);
-    nicklist_quicksort("vip", nicklist, nick_status);
-    nicklist_quicksort("user", nicklist, nick_status);
-}
-
-bool caseInsensitiveLessThan(const QString &s1, const QString &s2)
-{
-    return s1.toLower() < s2.toLower();
-}
-
-void Nicklist::nicklist_quicksort(QString strStatus, QHash <QString, QString> *nicklist, sNickStatus *nick_status)
-{
-    QHash <QString, QString> status_nicklist;
-
-    QHash <QString, QString>::const_iterator i1 = nicklist->constBegin();
-    while (i1 != nicklist->constEnd())
+    for (int i = 0; i < this->count(); i++)
     {
-        if ((i1.value() == strStatus) || (i1.value() == strStatus+"cam"))
-            status_nicklist.insert(i1.key(), i1.value());
+        QString strNick = this->item(i)->data(Qt::UserRole).toString();
 
-        ++i1;
-    }
-
-    QStringList newlist;
-
-    QHash <QString, QString>::const_iterator i2 = status_nicklist.constBegin();
-    while (i2 != status_nicklist.constEnd())
-    {
-        newlist.insert(newlist.count(), i2.key());
-        ++i2;
-    }
-
-    qStableSort(newlist.begin(), newlist.end(), caseInsensitiveLessThan);
-
-    for (int i = 0; i < newlist.count(); i++)
-    {
-        QString strNick = newlist.at(i);
-
-        NickStatus insert;
-        insert.nick = strNick;
-        insert.status = status_nicklist[strNick];
-
-        nick_status->enqueue(insert);
+        if (this->item(i)->data(Qt::UserRole+2).isNull() == true)
+        {
+            if (mNickAvatar->contains(strNick) == true)
+            {
+                QPixmap pixmap;
+                pixmap.loadFromData(mNickAvatar->value(strNick));
+                this->item(i)->setData(Qt::UserRole+2, pixmap);
+            }
+        }
     }
 }
 

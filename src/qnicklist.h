@@ -51,13 +51,12 @@ public:
     Nicklist(Network *, QSettings *, QString, QMap <QString, QByteArray> *);
     ~Nicklist();
     void set_open_channels(QStringList);
-    void nicklist_add(QString, QString, QHash <QString, QString> *);
-    void nicklist_remove(QString, QHash <QString, QString> *, sNickStatus *);
-    bool nicklist_exist(QString, QHash <QString, QString> *);
-    void nicklist_clear(QHash <QString, QString> *, sNickStatus *);
-    void nicklist_refresh(QHash <QString, QString> *, sNickStatus *);
-    void nicklist_sort(QHash <QString, QString> *, sNickStatus *);
-    void nicklist_quicksort(QString, QHash <QString, QString> *, sNickStatus *);
+    void nicklist_add(QString, QString, int, sNickStatus *);
+    void nicklist_remove(QString, sNickStatus *);
+    bool nicklist_exist(QString, sNickStatus *);
+    void nicklist_clear(sNickStatus *);
+    void nicklist_refresh(sNickStatus *);
+    void nicklist_refresh_avatars();
     void update_avatar(QString, QByteArray);
 
 private:
@@ -68,6 +67,9 @@ private:
     enum { maxOpenChannels = 50 };
     QAction *openChannelsActs[maxOpenChannels];
     QMap <QString, QByteArray> *mNickAvatar;
+
+    void nicklist_sort(sNickStatus *);
+    void nicklist_quicksort(QString, sNickStatus *, sNickStatus *);
 
 private slots:
     void priv();

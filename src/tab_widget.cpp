@@ -423,11 +423,11 @@ TabWidget::~TabWidget()
 {
     nick_flag.clear();
     nick_suffix.clear();
+    nick_status.clear();
     nickLabel->clear();
     strContent.clear();
     textEdit->setHtml(strContent, QUrl(""));
     nick_list->clear();
-    nicklist.clear();
 
     delete nick_list;
     delete inputline;
@@ -917,9 +917,7 @@ void TabWidget::add_user(QString strNick, QString strSuffix, int iRefresh)
 
     if (nicklist_exist(strNick) == false)
     {
-        nicklist_add(strNick, strStatus);
-        if (iRefresh == 1)
-            nicklist_refresh();
+        nicklist_add(strNick, strStatus, iRefresh);
 
         inputline->set_userslist(nick_list);
 
@@ -944,45 +942,31 @@ void TabWidget::del_user(QString strNick)
     }
 }
 
-void TabWidget::nicklist_add(QString strNick, QString strStatus)
+void TabWidget::nicklist_add(QString strNick, QString strStatus, int iRefresh)
 {
-    nick_list->nicklist_add(strNick, strStatus, &nicklist);
+    nick_list->nicklist_add(strNick, strStatus, iRefresh, &nick_status);
 }
 
 void TabWidget::nicklist_remove(QString strNick)
 {
-    nick_list->nicklist_remove(strNick, &nicklist, &nick_status);
+    nick_list->nicklist_remove(strNick, &nick_status);
 }
 
 bool TabWidget::nicklist_exist(QString strNick)
 {
-    return nick_list->nicklist_exist(strNick, &nicklist);
+    return nick_list->nicklist_exist(strNick, &nick_status);
 }
 
 void TabWidget::nicklist_clear()
 {
-    nick_list->nicklist_clear(&nicklist, &nick_status);
-}
-
-void TabWidget::nicklist_refresh()
-{
-    nick_list->nicklist_refresh(&nicklist, &nick_status);
+    nick_list->nicklist_clear(&nick_status);
 }
 
 void TabWidget::nicklist_refresh_all()
 {
-    nick_list->nicklist_refresh(&nicklist, &nick_status);
+    //raw 366: End of /NAMES list.
+    nick_list->nicklist_refresh(&nick_status);
     inputline->set_userslist(nick_list);
-}
-
-void TabWidget::nicklist_sort()
-{
-    nick_list->nicklist_sort(&nicklist, &nick_status);
-}
-
-void TabWidget::nicklist_quicksort(QString strStatus)
-{
-    nick_list->nicklist_quicksort(strStatus, &nicklist, &nick_status);
 }
 
 void TabWidget::change_flag(QString strNick, QString strNewFlag)
@@ -1044,8 +1028,8 @@ void TabWidget::clear_nicklist()
     nickCount->setText(QString(tr("%1 User(s)")).arg(iNickCount));
     nick_flag.clear();
     nick_suffix.clear();
+    nick_status.clear();
     nick_list->clear();
-    nicklist.clear();
 }
 
 void TabWidget::set_open_channels(QStringList strOpenChannels)
@@ -1055,7 +1039,7 @@ void TabWidget::set_open_channels(QStringList strOpenChannels)
 
 void TabWidget::update_nick_avatar()
 {
-    nick_list->nicklist_refresh(&nicklist, &nick_status);
+    nick_list->nicklist_refresh_avatars();
 }
 
 void TabWidget::update_channel_avatar()
