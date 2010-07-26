@@ -199,15 +199,15 @@ void Nicklist::invite()
 
 // nicklist
 
-void Nicklist::nicklist_add(QString strNick, QString strStatus, QHash <QString, QString> *nicklist, QQueue <QString> *new_nicklist1, QQueue <QString> *new_nicklist2)
+void Nicklist::nicklist_add(QString strNick, QString strStatus, QHash <QString, QString> *nicklist)
 {
     nicklist->insert(strNick, strStatus);
 }
 
-void Nicklist::nicklist_remove(QString strNick, QHash <QString, QString> *nicklist, QQueue <QString> *new_nicklist1, QQueue <QString> *new_nicklist2)
+void Nicklist::nicklist_remove(QString strNick, QHash <QString, QString> *nicklist, sNickStatus *nick_status)
 {
     nicklist->remove(strNick);
-    nicklist_refresh(nicklist, new_nicklist1, new_nicklist2);
+    nicklist_refresh(nicklist, nick_status);
 }
 
 bool Nicklist::nicklist_exist(QString strNick, QHash <QString, QString> *nicklist)
@@ -215,13 +215,13 @@ bool Nicklist::nicklist_exist(QString strNick, QHash <QString, QString> *nicklis
     return nicklist->contains(strNick);
 }
 
-void Nicklist::nicklist_clear(QHash <QString, QString> *nicklist, QQueue <QString> *new_nicklist1, QQueue <QString> *new_nicklist2)
+void Nicklist::nicklist_clear(QHash <QString, QString> *nicklist, sNickStatus *nick_status)
 {
     nicklist->clear();
-    nicklist_refresh(nicklist, new_nicklist1, new_nicklist2);
+    nicklist_refresh(nicklist, nick_status);
 }
 
-void Nicklist::nicklist_refresh(QHash <QString, QString> *nicklist, QQueue <QString> *new_nicklist1, QQueue <QString> *new_nicklist2)
+void Nicklist::nicklist_refresh(QHash <QString, QString> *nicklist, sNickStatus *nick_status)
 {
 // get selected item
 
@@ -235,15 +235,16 @@ void Nicklist::nicklist_refresh(QHash <QString, QString> *nicklist, QQueue <QStr
 
     this->clear();
 
-    new_nicklist1->clear();
-    new_nicklist2->clear();
+    nick_status->clear();
 
-    nicklist_sort(nicklist, new_nicklist1, new_nicklist2);
+    nicklist_sort(nicklist, nick_status);
 
-    while (!new_nicklist1->isEmpty())
+    while (!nick_status->isEmpty())
     {
-        QString strNick = new_nicklist1->dequeue();
-        QString strStatus = new_nicklist2->dequeue();
+        NickStatus listNickStatus(nick_status->dequeue());
+
+        QString strNick = listNickStatus.nick;
+        QString strStatus = listNickStatus.status;
         QPixmap icon;
 
         bool bCam = false;
@@ -289,15 +290,15 @@ void Nicklist::nicklist_refresh(QHash <QString, QString> *nicklist, QQueue <QStr
     }
 }
 
-void Nicklist::nicklist_sort(QHash <QString, QString> *nicklist, QQueue <QString> *new_nicklist1, QQueue <QString> *new_nicklist2)
+void Nicklist::nicklist_sort(QHash <QString, QString> *nicklist, sNickStatus *nick_status)
 {
-    nicklist_quicksort("admin", nicklist, new_nicklist1, new_nicklist2);
-    nicklist_quicksort("owner", nicklist, new_nicklist1, new_nicklist2);
-    nicklist_quicksort("op", nicklist, new_nicklist1, new_nicklist2);
-    nicklist_quicksort("halfop", nicklist, new_nicklist1, new_nicklist2);
-    nicklist_quicksort("mod", nicklist, new_nicklist1, new_nicklist2);
-    nicklist_quicksort("vip", nicklist, new_nicklist1, new_nicklist2);
-    nicklist_quicksort("user", nicklist, new_nicklist1, new_nicklist2);
+    nicklist_quicksort("admin", nicklist, nick_status);
+    nicklist_quicksort("owner", nicklist, nick_status);
+    nicklist_quicksort("op", nicklist, nick_status);
+    nicklist_quicksort("halfop", nicklist, nick_status);
+    nicklist_quicksort("mod", nicklist, nick_status);
+    nicklist_quicksort("vip", nicklist, nick_status);
+    nicklist_quicksort("user", nicklist, nick_status);
 }
 
 bool caseInsensitiveLessThan(const QString &s1, const QString &s2)
@@ -305,7 +306,7 @@ bool caseInsensitiveLessThan(const QString &s1, const QString &s2)
     return s1.toLower() < s2.toLower();
 }
 
-void Nicklist::nicklist_quicksort(QString strStatus, QHash <QString, QString> *nicklist, QQueue <QString> *new_nicklist1, QQueue <QString> *new_nicklist2)
+void Nicklist::nicklist_quicksort(QString strStatus, QHash <QString, QString> *nicklist, sNickStatus *nick_status)
 {
     QHash <QString, QString> status_nicklist;
 
@@ -332,8 +333,12 @@ void Nicklist::nicklist_quicksort(QString strStatus, QHash <QString, QString> *n
     for (int i = 0; i < newlist.count(); i++)
     {
         QString strNick = newlist.at(i);
-        new_nicklist1->insert(new_nicklist1->count(), strNick);
-        new_nicklist2->insert(new_nicklist2->count(), status_nicklist[strNick]);
+
+        NickStatus insert;
+        insert.nick = strNick;
+        insert.status = status_nicklist[strNick];
+
+        nick_status->enqueue(insert);
     }
 }
 

@@ -36,6 +36,14 @@
 #include "dlg_kick.h"
 #include "network.h"
 
+struct NickStatus
+{
+    QString nick;
+    QString status;
+};
+typedef QQueue <NickStatus> sNickStatus;
+
+
 class Nicklist : public QListWidget
 {
     Q_OBJECT
@@ -43,13 +51,13 @@ public:
     Nicklist(Network *, QSettings *, QString, QMap <QString, QByteArray> *);
     ~Nicklist();
     void set_open_channels(QStringList);
-    void nicklist_add(QString, QString, QHash <QString, QString> *, QQueue <QString> *, QQueue <QString> *);
-    void nicklist_remove(QString, QHash <QString, QString> *, QQueue <QString> *, QQueue <QString> *);
+    void nicklist_add(QString, QString, QHash <QString, QString> *);
+    void nicklist_remove(QString, QHash <QString, QString> *, sNickStatus *);
     bool nicklist_exist(QString, QHash <QString, QString> *);
-    void nicklist_clear(QHash <QString, QString> *, QQueue <QString> *, QQueue <QString> *);
-    void nicklist_refresh(QHash <QString, QString> *, QQueue <QString> *, QQueue <QString> *);
-    void nicklist_sort(QHash <QString, QString> *, QQueue <QString> *, QQueue <QString> *);
-    void nicklist_quicksort(QString, QHash <QString, QString> *, QQueue <QString> *, QQueue <QString> *);
+    void nicklist_clear(QHash <QString, QString> *, sNickStatus *);
+    void nicklist_refresh(QHash <QString, QString> *, sNickStatus *);
+    void nicklist_sort(QHash <QString, QString> *, sNickStatus *);
+    void nicklist_quicksort(QString, QHash <QString, QString> *, sNickStatus *);
     void update_avatar(QString, QByteArray);
 
 private:

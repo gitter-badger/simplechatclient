@@ -166,9 +166,8 @@ private:
     QString strLast_msg;
     QMap <QString, QString> nick_flag;
     QMap <QString, QString> nick_suffix;
+    sNickStatus nick_status;
     QHash <QString, QString> nicklist;
-    QQueue <QString> new_nicklist1;
-    QQueue <QString> new_nicklist2;
     int iNickCount;
     bool bCursorPositionChanged;
     QString strCurrentColor;
