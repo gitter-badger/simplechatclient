@@ -221,13 +221,19 @@ void Nicklist::nicklist_remove(QString strNick, sNickStatus *nick_status)
     {
         NickStatus check = nick_status->at(i);
         if (check.nick == strNick)
+        {
             nick_status->removeAt(i);
+            break;
+        }
     }
 
     for (int i = 0; i < this->count(); i++)
     {
         if (this->item(i)->data(Qt::UserRole).toString() == strNick)
+        {
             this->takeItem(i);
+            break;
+        }
     }
 }
 
@@ -328,8 +334,10 @@ void Nicklist::nicklist_refresh(sNickStatus *nick_status)
 
     this->clear();
 
+// sort
     nicklist_sort(nick_status);
 
+// insert
     for (int i = 0; i < nick_status->count(); i++)
     {
         NickStatus listNickStatus(nick_status->at(i));
@@ -376,7 +384,10 @@ void Nicklist::nicklist_refresh(sNickStatus *nick_status)
         for (int i = 0; i < this->count(); i++)
         {
             if (this->item(i)->data(Qt::UserRole).toString() == strCurrentItemSelected)
+            {
                 this->setCurrentItem(this->item(i));
+                break;
+            }
         }
     }
 }
