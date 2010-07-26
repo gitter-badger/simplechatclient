@@ -71,7 +71,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     delete pConfig;
 
     settings.clear();
-    settings.setValue("version", "1.0.6.319");
+    settings.setValue("version", "1.0.6.320");
     settings.setValue("debug", "off");
     settings.setValue("logged", "off");
     settings.setValue("busy", "off");
@@ -352,6 +352,8 @@ void MainWindow::tab_close_requested(int index)
         {
             if (pNetwork->is_connected() == true)
                 pNetwork->send(QString("PART %1").arg(strName));
+            else
+                pTabC->remove_tab(strName);
         }
         else
         {
@@ -362,12 +364,16 @@ void MainWindow::tab_close_requested(int index)
                 {
                     if (pNetwork->is_connected() == true)
                         pNetwork->send(QString("PART %1").arg(strNewName));
+                    else
+                        pTabC->remove_tab(strNewName);
                 }
             }
             else
             {
                 if (pNetwork->is_connected() == true)
                     pNetwork->send(QString("PART %1").arg(strName));
+                else
+                    pTabC->remove_tab(strName);
             }
         }
     }

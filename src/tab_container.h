@@ -39,7 +39,6 @@ public:
     ~TabContainer();
     void set_dlg(DlgChannelSettings *, DlgModeration *);
     bool exist_tab(QString);
-    void add_tab(QString, QWidget *);
     void remove_tab(QString);
     void rename_tab(QString, QString);
     void show_msg(QString, QString, QString, int);
@@ -80,6 +79,7 @@ private:
     DlgChannelSettings *dlgchannel_settings;
     DlgModeration *dlgmoderation;
 
+    void add_tab(QString, QWidget *);
     void update_open_channels();
     int free_list_get();
 

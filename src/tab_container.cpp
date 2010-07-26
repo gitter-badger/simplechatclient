@@ -185,6 +185,7 @@ void TabContainer::show_msg(QString strTime, QString strChannel, QString strData
     }
     else
     {
+        pNetwork->send(QString("JOIN %1").arg(strChannel));
         add_tab(strChannel, mainWin);
         show_msg(strChannel, strData, iLevel);
     }
@@ -236,6 +237,7 @@ void TabContainer::show_msg(QString strChannel, QString strData, int iLevel)
     }
     else
     {
+        pNetwork->send(QString("JOIN %1").arg(strChannel));
         add_tab(strChannel, mainWin);
         show_msg(strChannel, strData, iLevel);
     }
