@@ -1616,7 +1616,7 @@ void IrcKernel::raw_252n()
     QString strChannel = strDataList[2];
 
     QString strDisplay = QString(tr("* Confirmed the removal of the channel %1")).arg(strChannel);
-    tabc->show_msg(strChannel, strDisplay, 5);
+    tabc->show_msg_active(strDisplay, 5);
 }
 
 // :cf1f4.onet 253 Merovingian 1 :unknown connections
