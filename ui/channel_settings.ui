@@ -322,7 +322,7 @@
            <x>0</x>
            <y>0</y>
            <width>371</width>
-           <height>41</height>
+           <height>31</height>
           </rect>
          </property>
          <layout class="QHBoxLayout" name="horizontalLayout">
@@ -354,7 +354,7 @@
         </property>
         <property name="maximumSize">
          <size>
-          <width>373</width>
+          <width>430</width>
           <height>43</height>
          </size>
         </property>
@@ -363,8 +363,8 @@
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>371</width>
-           <height>41</height>
+           <width>430</width>
+           <height>31</height>
           </rect>
          </property>
          <property name="sizePolicy">
@@ -375,7 +375,7 @@
          </property>
          <property name="maximumSize">
           <size>
-           <width>371</width>
+           <width>430</width>
            <height>41</height>
           </size>
          </property>
@@ -399,7 +399,7 @@
            <x>0</x>
            <y>0</y>
            <width>371</width>
-           <height>41</height>
+           <height>31</height>
           </rect>
          </property>
          <layout class="QHBoxLayout" name="horizontalLayout_5">
@@ -435,7 +435,7 @@
            <x>0</x>
            <y>0</y>
            <width>371</width>
-           <height>41</height>
+           <height>31</height>
           </rect>
          </property>
          <layout class="QHBoxLayout" name="horizontalLayout_6">
@@ -471,7 +471,7 @@
            <x>0</x>
            <y>0</y>
            <width>371</width>
-           <height>41</height>
+           <height>31</height>
           </rect>
          </property>
          <layout class="QHBoxLayout" name="horizontalLayout_3">
@@ -575,8 +575,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>561</width>
-        <height>413</height>
+        <width>100</width>
+        <height>30</height>
        </rect>
       </property>
       <attribute name="label">
@@ -642,8 +642,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>561</width>
-        <height>413</height>
+        <width>100</width>
+        <height>30</height>
        </rect>
       </property>
       <attribute name="label">
@@ -786,8 +786,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>561</width>
-        <height>413</height>
+        <width>100</width>
+        <height>30</height>
        </rect>
       </property>
       <attribute name="label">
