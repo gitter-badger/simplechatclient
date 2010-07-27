@@ -40,7 +40,7 @@
    </property>
    <layout class="QHBoxLayout" name="horizontalLayout">
     <item>
-     <widget class="QListWidget" name="listWidget">
+     <widget class="QListWidget" name="listWidget_options">
       <property name="maximumSize">
        <size>
         <width>120</width>
@@ -87,7 +87,7 @@
          <number>0</number>
         </property>
         <widget class="QWidget" name="spage_1">
-         <widget class="QGroupBox" name="groupBox">
+         <widget class="QGroupBox" name="groupBox_login_password">
           <property name="geometry">
            <rect>
             <x>10</x>
@@ -118,24 +118,24 @@
             <item>
              <layout class="QFormLayout" name="formLayout_5">
               <item row="0" column="0">
-               <widget class="QLabel" name="label_3">
+               <widget class="QLabel" name="label_nick">
                 <property name="text">
                  <string>Login:</string>
                 </property>
                </widget>
               </item>
               <item row="0" column="1">
-               <widget class="QLineEdit" name="lineEdit"/>
+               <widget class="QLineEdit" name="lineEdit_nick"/>
               </item>
               <item row="1" column="0">
-               <widget class="QLabel" name="label_4">
+               <widget class="QLabel" name="label_password">
                 <property name="text">
                  <string>Hasło:</string>
                 </property>
                </widget>
               </item>
               <item row="1" column="1">
-               <widget class="QLineEdit" name="lineEdit_2">
+               <widget class="QLineEdit" name="lineEdit_password">
                 <property name="echoMode">
                  <enum>QLineEdit::Password</enum>
                 </property>
@@ -146,7 +146,7 @@
            </layout>
           </widget>
          </widget>
-         <widget class="QGroupBox" name="groupBox_2">
+         <widget class="QGroupBox" name="groupBox_appearance">
           <property name="geometry">
            <rect>
             <x>10</x>
@@ -169,21 +169,21 @@
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_12">
             <item>
-             <widget class="QRadioButton" name="radioButton_3">
+             <widget class="QRadioButton" name="radioButton_modern_avatars">
               <property name="text">
                <string>Nowoczesny</string>
               </property>
              </widget>
             </item>
             <item>
-             <widget class="QRadioButton" name="radioButton_4">
+             <widget class="QRadioButton" name="radioButton_modern_no_avatars">
               <property name="text">
                <string>Nowoczesny bez avatarów</string>
               </property>
              </widget>
             </item>
             <item>
-             <widget class="QRadioButton" name="radioButton_5">
+             <widget class="QRadioButton" name="radioButton_classic">
               <property name="text">
                <string>Klasyczny</string>
               </property>
@@ -203,7 +203,7 @@
           </property>
           <layout class="QHBoxLayout" name="horizontalLayout_2">
            <item>
-            <widget class="QRadioButton" name="radioButton_1">
+            <widget class="QRadioButton" name="radioButton_nick_t">
              <property name="text">
               <string>Nick tymczasowy</string>
              </property>
@@ -216,7 +216,7 @@
             </widget>
            </item>
            <item>
-            <widget class="QRadioButton" name="radioButton_2">
+            <widget class="QRadioButton" name="radioButton_nick_s">
              <property name="text">
               <string>Nick stały</string>
              </property>
@@ -226,7 +226,7 @@
          </widget>
         </widget>
         <widget class="QWidget" name="spage_2">
-         <widget class="QTabWidget" name="tabWidget_3">
+         <widget class="QTabWidget" name="tabWidget_adv">
           <property name="geometry">
            <rect>
             <x>10</x>
@@ -241,7 +241,7 @@
           <property name="currentIndex">
            <number>0</number>
           </property>
-          <widget class="QWidget" name="tab_7">
+          <widget class="QWidget" name="tab_adv">
            <attribute name="title">
             <string>Zaawansowane</string>
            </attribute>
@@ -256,56 +256,56 @@
             </property>
             <layout class="QVBoxLayout" name="verticalLayout_8">
              <item>
-              <widget class="QCheckBox" name="checkBox_101">
+              <widget class="QCheckBox" name="checkBox_auto_busy">
                <property name="text">
                 <string>Tryb zajętości po zalogowaniu (busy)</string>
                </property>
               </widget>
              </item>
              <item>
-              <widget class="QCheckBox" name="checkBox_102">
+              <widget class="QCheckBox" name="checkBox_debug">
                <property name="text">
                 <string>Pokazywanie komunikatów serwera</string>
                </property>
               </widget>
              </item>
              <item>
-              <widget class="QCheckBox" name="checkBox_103">
+              <widget class="QCheckBox" name="checkBox_show_zuo">
                <property name="text">
                 <string>Pokazywanie ZUO</string>
                </property>
               </widget>
              </item>
              <item>
-              <widget class="QCheckBox" name="checkBox_104">
+              <widget class="QCheckBox" name="checkBox_hide_formating">
                <property name="text">
                 <string>Wyłączenie formatowania</string>
                </property>
               </widget>
              </item>
              <item>
-              <widget class="QCheckBox" name="checkBox_105">
+              <widget class="QCheckBox" name="checkBox_hide_join_part">
                <property name="text">
                 <string>Ukrywanie wejść/wyjść</string>
                </property>
               </widget>
              </item>
              <item>
-              <widget class="QCheckBox" name="checkBox_106">
+              <widget class="QCheckBox" name="checkBox_disable_avatars">
                <property name="text">
                 <string>Wyłączenie avatarów</string>
                </property>
               </widget>
              </item>
              <item>
-              <widget class="QCheckBox" name="checkBox_107">
+              <widget class="QCheckBox" name="checkBox_disable_logs">
                <property name="text">
                 <string>Wyłączenie logów</string>
                </property>
               </widget>
              </item>
              <item>
-              <widget class="QCheckBox" name="checkBox_108">
+              <widget class="QCheckBox" name="checkBox_disable_sounds">
                <property name="text">
                 <string>Wyłączenie dzwięków</string>
                </property>
@@ -314,7 +314,7 @@
             </layout>
            </widget>
           </widget>
-          <widget class="QWidget" name="tab_8">
+          <widget class="QWidget" name="tab_style">
            <attribute name="title">
             <string>Style</string>
            </attribute>
@@ -329,14 +329,14 @@
             </property>
             <layout class="QVBoxLayout" name="verticalLayout_10">
              <item>
-              <widget class="QRadioButton" name="radioButton_101">
+              <widget class="QRadioButton" name="radioButton_modern_style">
                <property name="text">
                 <string>Modern</string>
                </property>
               </widget>
              </item>
              <item>
-              <widget class="QRadioButton" name="radioButton_102">
+              <widget class="QRadioButton" name="radioButton_classic_style">
                <property name="text">
                 <string>Classic</string>
                </property>
@@ -345,7 +345,7 @@
             </layout>
            </widget>
           </widget>
-          <widget class="QWidget" name="tab_4">
+          <widget class="QWidget" name="tab_appearance">
            <attribute name="title">
             <string>Wygląd</string>
            </attribute>
@@ -365,14 +365,14 @@
                 <enum>QFormLayout::ExpandingFieldsGrow</enum>
                </property>
                <item row="0" column="0">
-                <widget class="QLabel" name="label_2">
+                <widget class="QLabel" name="label_background_color">
                  <property name="text">
                   <string>Kolor tła:</string>
                  </property>
                 </widget>
                </item>
                <item row="0" column="1">
-                <widget class="QComboBox" name="comboBox"/>
+                <widget class="QComboBox" name="comboBox_background_color"/>
                </item>
               </layout>
              </item>

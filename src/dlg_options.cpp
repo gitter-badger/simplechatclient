@@ -28,22 +28,22 @@ DlgOptions::DlgOptions(QWidget *parent, QSettings *param1) : QDialog(parent)
 
     settings = param1;
 
-    QListWidgetItem *basicConfButton = new QListWidgetItem(ui.listWidget);
+    QListWidgetItem *basicConfButton = new QListWidgetItem(ui.listWidget_options);
     basicConfButton->setIcon(QIcon(":/images/basic_conf.png"));
     basicConfButton->setText(tr("Basic"));
     basicConfButton->setTextAlignment(Qt::AlignHCenter);
     basicConfButton->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
 
-    QListWidgetItem *advConfButton = new QListWidgetItem(ui.listWidget);
+    QListWidgetItem *advConfButton = new QListWidgetItem(ui.listWidget_options);
     advConfButton->setIcon(QIcon(":/images/adv_conf.png"));
     advConfButton->setText(tr("Advanced"));
     advConfButton->setTextAlignment(Qt::AlignHCenter);
     advConfButton->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
 
-    ui.listWidget->setCurrentRow(0);
+    ui.listWidget_options->setCurrentRow(0);
 
 // comboBox colors
-    ui.comboBox->setIconSize(QSize(50,10));
+    ui.comboBox_background_color->setIconSize(QSize(50,10));
 
     QStringList comboBoxColors;
 // default
@@ -74,7 +74,7 @@ DlgOptions::DlgOptions(QWidget *parent, QSettings *param1) : QDialog(parent)
     {
         QPixmap pixmap(50,10);
         pixmap.fill(QColor(strColor));
-        ui.comboBox->insertItem(iComboBoxColors, pixmap, strColor);
+        ui.comboBox_background_color->insertItem(iComboBoxColors, pixmap, strColor);
         iComboBoxColors++;
     }
 
@@ -105,109 +105,109 @@ DlgOptions::DlgOptions(QWidget *parent, QSettings *param1) : QDialog(parent)
 // set nick staly/tyldowy
     if (strPass.isEmpty() == true)
     {
-        ui.radioButton_1->setChecked(true);
-        ui.radioButton_2->setChecked(false);
-        ui.label_4->hide();
-        ui.lineEdit_2->hide();
+        ui.radioButton_nick_t->setChecked(true);
+        ui.radioButton_nick_s->setChecked(false);
+        ui.label_password->hide();
+        ui.lineEdit_password->hide();
     }
     else
     {
-        ui.radioButton_1->setChecked(false);
-        ui.radioButton_2->setChecked(true);
+        ui.radioButton_nick_t->setChecked(false);
+        ui.radioButton_nick_s->setChecked(true);
     }
 
 // set nick and pass
-    ui.lineEdit->setText(strNick);
-    ui.lineEdit_2->setText(strPass);
+    ui.lineEdit_nick->setText(strNick);
+    ui.lineEdit_password->setText(strPass);
 
 // set style
     if (strStyle == "modern")
     {
         if (strDisableAvatars == "off")
-            ui.radioButton_3->setChecked(true);
+            ui.radioButton_modern_avatars->setChecked(true);
         else
-            ui.radioButton_4->setChecked(true);
+            ui.radioButton_modern_no_avatars->setChecked(true);
     }
     else if (strStyle == "classic")
-        ui.radioButton_5->setChecked(true);
+        ui.radioButton_classic->setChecked(true);
 
 // auto busy
     if (strAutoBusy == "on")
-        ui.checkBox_101->setChecked(true);
+        ui.checkBox_auto_busy->setChecked(true);
     else
-        ui.checkBox_101->setChecked(false);
+        ui.checkBox_auto_busy->setChecked(false);
 
 // debug
     if (strDebugAll == "on")
-        ui.checkBox_102->setChecked(true);
+        ui.checkBox_debug->setChecked(true);
     else
-        ui.checkBox_102->setChecked(false);
+        ui.checkBox_debug->setChecked(false);
 
 // show zuo
     if (strShowZuo == "on")
-        ui.checkBox_103->setChecked(true);
+        ui.checkBox_show_zuo->setChecked(true);
     else
-        ui.checkBox_103->setChecked(false);
+        ui.checkBox_show_zuo->setChecked(false);
 
 // hide formating
     if (strHideFormating == "on")
-        ui.checkBox_104->setChecked(true);
+        ui.checkBox_hide_formating->setChecked(true);
     else
-        ui.checkBox_104->setChecked(false);
+        ui.checkBox_hide_formating->setChecked(false);
 
 // hide join part
     if (strHideJoinPart == "on")
-        ui.checkBox_105->setChecked(true);
+        ui.checkBox_hide_join_part->setChecked(true);
     else
-        ui.checkBox_105->setChecked(false);
+        ui.checkBox_hide_join_part->setChecked(false);
 
 // disable avatars
     if (strDisableAvatars == "on")
-        ui.checkBox_106->setChecked(true);
+        ui.checkBox_disable_avatars->setChecked(true);
     else
-        ui.checkBox_106->setChecked(false);
+        ui.checkBox_disable_avatars->setChecked(false);
 
 // disable logs
     if (strDisableLogs == "on")
-        ui.checkBox_107->setChecked(true);
+        ui.checkBox_disable_logs->setChecked(true);
     else
-        ui.checkBox_107->setChecked(false);
+        ui.checkBox_disable_logs->setChecked(false);
 
 // disable sounds
     if (strDisableSounds == "on")
-        ui.checkBox_108->setChecked(true);
+        ui.checkBox_disable_sounds->setChecked(true);
     else
-        ui.checkBox_108->setChecked(false);
+        ui.checkBox_disable_sounds->setChecked(false);
 
 // style
     if (strStyle == "modern")
-        ui.radioButton_101->setChecked(true);
+        ui.radioButton_modern_style->setChecked(true);
     else if (strStyle == "classic")
-        ui.radioButton_102->setChecked(true);
+        ui.radioButton_classic_style->setChecked(true);
 
 // set color combobox
-    for (int i = 0; i < ui.comboBox->count(); i++)
+    for (int i = 0; i < ui.comboBox_background_color->count(); i++)
     {
-        if (ui.comboBox->itemText(i) == strBackgroundColor)
-            ui.comboBox->setCurrentIndex(i);
+        if (ui.comboBox_background_color->itemText(i) == strBackgroundColor)
+            ui.comboBox_background_color->setCurrentIndex(i);
     }
 
-    QObject::connect(ui.listWidget, SIGNAL(currentItemChanged(QListWidgetItem*,QListWidgetItem*)), this, SLOT(change_page(QListWidgetItem*,QListWidgetItem*)));
-    QObject::connect(ui.radioButton_1, SIGNAL(clicked()), this, SLOT(hide_pass()));
-    QObject::connect(ui.radioButton_2, SIGNAL(clicked()), this, SLOT(show_pass()));
-    QObject::connect(ui.radioButton_3, SIGNAL(clicked()), this, SLOT(set_modern_style_avatars()));
-    QObject::connect(ui.radioButton_4, SIGNAL(clicked()), this, SLOT(set_modern_style_no_avatars()));
-    QObject::connect(ui.radioButton_5, SIGNAL(clicked()), this, SLOT(set_classic_style()));
-    QObject::connect(ui.checkBox_101, SIGNAL(clicked()), this, SLOT(auto_busy()));
-    QObject::connect(ui.checkBox_102, SIGNAL(clicked()), this, SLOT(debug_all()));
-    QObject::connect(ui.checkBox_103, SIGNAL(clicked()), this, SLOT(show_zuo()));
-    QObject::connect(ui.checkBox_104, SIGNAL(clicked()), this, SLOT(hide_formating()));
-    QObject::connect(ui.checkBox_105, SIGNAL(clicked()), this, SLOT(hide_join_part()));
-    QObject::connect(ui.checkBox_106, SIGNAL(clicked()), this, SLOT(disable_avatars()));
-    QObject::connect(ui.checkBox_107, SIGNAL(clicked()), this, SLOT(disable_logs()));
-    QObject::connect(ui.checkBox_108, SIGNAL(clicked()), this, SLOT(disable_sounds()));
-    QObject::connect(ui.radioButton_101, SIGNAL(clicked()), this, SLOT(set_modern_style()));
-    QObject::connect(ui.radioButton_102, SIGNAL(clicked()), this, SLOT(set_classic_style()));
+    QObject::connect(ui.listWidget_options, SIGNAL(currentItemChanged(QListWidgetItem*,QListWidgetItem*)), this, SLOT(change_page(QListWidgetItem*,QListWidgetItem*)));
+    QObject::connect(ui.radioButton_nick_t, SIGNAL(clicked()), this, SLOT(hide_pass()));
+    QObject::connect(ui.radioButton_nick_s, SIGNAL(clicked()), this, SLOT(show_pass()));
+    QObject::connect(ui.radioButton_modern_avatars, SIGNAL(clicked()), this, SLOT(set_modern_style_avatars()));
+    QObject::connect(ui.radioButton_modern_no_avatars, SIGNAL(clicked()), this, SLOT(set_modern_style_no_avatars()));
+    QObject::connect(ui.radioButton_classic, SIGNAL(clicked()), this, SLOT(set_classic_style()));
+    QObject::connect(ui.checkBox_auto_busy, SIGNAL(clicked()), this, SLOT(auto_busy()));
+    QObject::connect(ui.checkBox_debug, SIGNAL(clicked()), this, SLOT(debug_all()));
+    QObject::connect(ui.checkBox_show_zuo, SIGNAL(clicked()), this, SLOT(show_zuo()));
+    QObject::connect(ui.checkBox_hide_formating, SIGNAL(clicked()), this, SLOT(hide_formating()));
+    QObject::connect(ui.checkBox_hide_join_part, SIGNAL(clicked()), this, SLOT(hide_join_part()));
+    QObject::connect(ui.checkBox_disable_avatars, SIGNAL(clicked()), this, SLOT(disable_avatars()));
+    QObject::connect(ui.checkBox_disable_logs, SIGNAL(clicked()), this, SLOT(disable_logs()));
+    QObject::connect(ui.checkBox_disable_sounds, SIGNAL(clicked()), this, SLOT(disable_sounds()));
+    QObject::connect(ui.radioButton_modern_style, SIGNAL(clicked()), this, SLOT(set_modern_style()));
+    QObject::connect(ui.radioButton_classic_style, SIGNAL(clicked()), this, SLOT(set_classic_style()));
     QObject::connect(ui.buttonBox, SIGNAL(accepted()), this, SLOT(button_ok()));
     QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(button_cancel()));
 }
@@ -217,19 +217,19 @@ void DlgOptions::change_page(QListWidgetItem *current, QListWidgetItem *previous
     if (!current)
         current = previous;
 
-    ui.stackedWidget->setCurrentIndex(ui.listWidget->row(current));
+    ui.stackedWidget->setCurrentIndex(ui.listWidget_options->row(current));
 }
 
 void DlgOptions::hide_pass()
 {
-    ui.label_4->hide();
-    ui.lineEdit_2->hide();
+    ui.label_password->hide();
+    ui.lineEdit_password->hide();
 }
 
 void DlgOptions::show_pass()
 {
-    ui.label_4->show();
-    ui.lineEdit_2->show();
+    ui.label_password->show();
+    ui.lineEdit_password->show();
 }
 
 void DlgOptions::set_modern_style_avatars()
@@ -281,7 +281,7 @@ void DlgOptions::set_modern_style_no_avatars()
 void DlgOptions::auto_busy()
 {
     Config *pConfig = new Config();
-    if (ui.checkBox_101->isChecked() == true)
+    if (ui.checkBox_auto_busy->isChecked() == true)
     {
         pConfig->set_value("auto_busy", "on");
         settings->setValue("auto_busy", "on");
@@ -297,7 +297,7 @@ void DlgOptions::auto_busy()
 void DlgOptions::debug_all()
 {
     Config *pConfig = new Config();
-    if (ui.checkBox_102->isChecked() == true)
+    if (ui.checkBox_debug->isChecked() == true)
     {
         pConfig->set_value("debug_all", "on");
         settings->setValue("debug_all", "on");
@@ -313,7 +313,7 @@ void DlgOptions::debug_all()
 void DlgOptions::show_zuo()
 {
     Config *pConfig = new Config();
-    if (ui.checkBox_103->isChecked() == true)
+    if (ui.checkBox_show_zuo->isChecked() == true)
     {
         pConfig->set_value("show_zuo", "on");
         settings->setValue("show_zuo", "on");
@@ -329,7 +329,7 @@ void DlgOptions::show_zuo()
 void DlgOptions::hide_formating()
 {
     Config *pConfig = new Config();
-    if (ui.checkBox_104->isChecked() == true)
+    if (ui.checkBox_hide_formating->isChecked() == true)
     {
         pConfig->set_value("hide_formating", "on");
         settings->setValue("hide_formating", "on");
@@ -345,7 +345,7 @@ void DlgOptions::hide_formating()
 void DlgOptions::hide_join_part()
 {
     Config *pConfig = new Config();
-    if (ui.checkBox_105->isChecked() == true)
+    if (ui.checkBox_hide_join_part->isChecked() == true)
     {
         pConfig->set_value("hide_join_part", "on");
         settings->setValue("hide_join_part", "on");
@@ -361,7 +361,7 @@ void DlgOptions::hide_join_part()
 void DlgOptions::disable_avatars()
 {
     Config *pConfig = new Config();
-    if (ui.checkBox_106->isChecked() == true)
+    if (ui.checkBox_disable_avatars->isChecked() == true)
     {
         pConfig->set_value("disable_avatars", "on");
         settings->setValue("disable_avatars", "on");
@@ -377,7 +377,7 @@ void DlgOptions::disable_avatars()
 void DlgOptions::disable_logs()
 {
     Config *pConfig = new Config();
-    if (ui.checkBox_107->isChecked() == true)
+    if (ui.checkBox_disable_logs->isChecked() == true)
     {
         pConfig->set_value("disable_logs", "on");
         settings->setValue("disable_logs", "on");
@@ -393,7 +393,7 @@ void DlgOptions::disable_logs()
 void DlgOptions::disable_sounds()
 {
     Config *pConfig = new Config();
-    if (ui.checkBox_108->isChecked() == true)
+    if (ui.checkBox_disable_sounds->isChecked() == true)
     {
         pConfig->set_value("disable_sounds", "on");
         settings->setValue("disable_sounds", "on");
@@ -450,25 +450,25 @@ void DlgOptions::set_classic_style()
 
 void DlgOptions::button_cancel()
 {
-    ui.lineEdit->clear();
-    ui.lineEdit_2->clear();
-    ui.comboBox->clear();
+    ui.radioButton_nick_t->QObject::disconnect();
+    ui.radioButton_nick_s->QObject::disconnect();
+    ui.lineEdit_nick->clear();
+    ui.lineEdit_password->clear();
+    ui.radioButton_modern_avatars->QObject::disconnect();
+    ui.radioButton_modern_no_avatars->QObject::disconnect();
+    ui.radioButton_classic->QObject::disconnect();
+    ui.checkBox_auto_busy->QObject::disconnect();
+    ui.checkBox_debug->QObject::disconnect();
+    ui.checkBox_show_zuo->QObject::disconnect();
+    ui.checkBox_hide_formating->QObject::disconnect();
+    ui.checkBox_hide_join_part->QObject::disconnect();
+    ui.checkBox_disable_avatars->QObject::disconnect();
+    ui.checkBox_disable_logs->QObject::disconnect();
+    ui.checkBox_disable_sounds->QObject::disconnect();
+    ui.radioButton_modern_style->QObject::disconnect();
+    ui.radioButton_classic_style->QObject::disconnect();
+    ui.comboBox_background_color->clear();
     ui.buttonBox->QObject::disconnect();
-    ui.checkBox_101->QObject::disconnect();
-    ui.checkBox_102->QObject::disconnect();
-    ui.checkBox_103->QObject::disconnect();
-    ui.checkBox_104->QObject::disconnect();
-    ui.checkBox_105->QObject::disconnect();
-    ui.checkBox_106->QObject::disconnect();
-    ui.checkBox_107->QObject::disconnect();
-    ui.checkBox_108->QObject::disconnect();
-    ui.radioButton_101->QObject::disconnect();
-    ui.radioButton_102->QObject::disconnect();
-    ui.radioButton_1->QObject::disconnect();
-    ui.radioButton_2->QObject::disconnect();
-    ui.radioButton_3->QObject::disconnect();
-    ui.radioButton_4->QObject::disconnect();
-    ui.radioButton_5->QObject::disconnect();
     this->close();
 }
 
@@ -478,40 +478,40 @@ void DlgOptions::button_ok()
     save_settings();
 
 // clear
-    ui.lineEdit->clear();
-    ui.lineEdit_2->clear();
-    ui.comboBox->clear();
+    ui.radioButton_nick_t->QObject::disconnect();
+    ui.radioButton_nick_s->QObject::disconnect();
+    ui.lineEdit_nick->clear();
+    ui.lineEdit_password->clear();
+    ui.radioButton_modern_avatars->QObject::disconnect();
+    ui.radioButton_modern_no_avatars->QObject::disconnect();
+    ui.radioButton_classic->QObject::disconnect();
+    ui.checkBox_auto_busy->QObject::disconnect();
+    ui.checkBox_debug->QObject::disconnect();
+    ui.checkBox_show_zuo->QObject::disconnect();
+    ui.checkBox_hide_formating->QObject::disconnect();
+    ui.checkBox_hide_join_part->QObject::disconnect();
+    ui.checkBox_disable_avatars->QObject::disconnect();
+    ui.checkBox_disable_logs->QObject::disconnect();
+    ui.checkBox_disable_sounds->QObject::disconnect();
+    ui.radioButton_modern_style->QObject::disconnect();
+    ui.radioButton_classic_style->QObject::disconnect();
+    ui.comboBox_background_color->clear();
     ui.buttonBox->QObject::disconnect();
-    ui.checkBox_101->QObject::disconnect();
-    ui.checkBox_102->QObject::disconnect();
-    ui.checkBox_103->QObject::disconnect();
-    ui.checkBox_104->QObject::disconnect();
-    ui.checkBox_105->QObject::disconnect();
-    ui.checkBox_106->QObject::disconnect();
-    ui.checkBox_107->QObject::disconnect();
-    ui.checkBox_108->QObject::disconnect();
-    ui.radioButton_101->QObject::disconnect();
-    ui.radioButton_102->QObject::disconnect();
-    ui.radioButton_1->QObject::disconnect();
-    ui.radioButton_2->QObject::disconnect();
-    ui.radioButton_3->QObject::disconnect();
-    ui.radioButton_4->QObject::disconnect();
-    ui.radioButton_5->QObject::disconnect();
     this->close();
 }
 
 void DlgOptions::save_settings()
 {
 // get values
-    QString strNick = ui.lineEdit->text();
-    QString strBackgroundColor = ui.comboBox->currentText();
+    QString strNick = ui.lineEdit_nick->text();
+    QString strBackgroundColor = ui.comboBox_background_color->currentText();
 
 // check nick
     QString strPass;
-    if (ui.radioButton_1->isChecked() == true)
+    if (ui.radioButton_nick_t->isChecked() == true)
         strPass = "";
-    else if (ui.radioButton_2->isChecked() == true)
-        strPass = ui.lineEdit_2->text();
+    else if (ui.radioButton_nick_s->isChecked() == true)
+        strPass = ui.lineEdit_password->text();
 
 // encrypt pass
     if (strPass.isEmpty() == false)
