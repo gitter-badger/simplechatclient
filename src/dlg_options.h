@@ -39,6 +39,11 @@ private:
     QSettings *settings;
 
 private slots:
+    void change_page(QListWidgetItem *, QListWidgetItem *);
+    void hide_pass();
+    void show_pass();
+    void set_modern_style_avatars();
+    void set_modern_style_no_avatars();
     void auto_busy();
     void debug_all();
     void show_zuo();

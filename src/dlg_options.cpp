@@ -28,6 +28,20 @@ DlgOptions::DlgOptions(QWidget *parent, QSettings *param1) : QDialog(parent)
 
     settings = param1;
 
+    QListWidgetItem *basicConfButton = new QListWidgetItem(ui.listWidget);
+    basicConfButton->setIcon(QIcon(":/images/basic_conf.png"));
+    basicConfButton->setText(tr("Basic"));
+    basicConfButton->setTextAlignment(Qt::AlignHCenter);
+    basicConfButton->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
+
+    QListWidgetItem *advConfButton = new QListWidgetItem(ui.listWidget);
+    advConfButton->setIcon(QIcon(":/images/adv_conf.png"));
+    advConfButton->setText(tr("Advanced"));
+    advConfButton->setTextAlignment(Qt::AlignHCenter);
+    advConfButton->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
+
+    ui.listWidget->setCurrentRow(0);
+
 // comboBox colors
     ui.comboBox->setIconSize(QSize(50,10));
 
@@ -88,9 +102,88 @@ DlgOptions::DlgOptions(QWidget *parent, QSettings *param1) : QDialog(parent)
         delete pCrypt;
     }
 
+// set nick staly/tyldowy
+    if (strPass.isEmpty() == true)
+    {
+        ui.radioButton_1->setChecked(true);
+        ui.radioButton_2->setChecked(false);
+        ui.label_4->hide();
+        ui.lineEdit_2->hide();
+    }
+    else
+    {
+        ui.radioButton_1->setChecked(false);
+        ui.radioButton_2->setChecked(true);
+    }
+
 // set nick and pass
-    ui.lineEditNick->setText(strNick);
-    ui.lineEditPass->setText(strPass);
+    ui.lineEdit->setText(strNick);
+    ui.lineEdit_2->setText(strPass);
+
+// set style
+    if (strStyle == "modern")
+    {
+        if (strDisableAvatars == "off")
+            ui.radioButton_3->setChecked(true);
+        else
+            ui.radioButton_4->setChecked(true);
+    }
+    else if (strStyle == "classic")
+        ui.radioButton_5->setChecked(true);
+
+// auto busy
+    if (strAutoBusy == "on")
+        ui.checkBox_101->setChecked(true);
+    else
+        ui.checkBox_101->setChecked(false);
+
+// debug
+    if (strDebugAll == "on")
+        ui.checkBox_102->setChecked(true);
+    else
+        ui.checkBox_102->setChecked(false);
+
+// show zuo
+    if (strShowZuo == "on")
+        ui.checkBox_103->setChecked(true);
+    else
+        ui.checkBox_103->setChecked(false);
+
+// hide formating
+    if (strHideFormating == "on")
+        ui.checkBox_104->setChecked(true);
+    else
+        ui.checkBox_104->setChecked(false);
+
+// hide join part
+    if (strHideJoinPart == "on")
+        ui.checkBox_105->setChecked(true);
+    else
+        ui.checkBox_105->setChecked(false);
+
+// disable avatars
+    if (strDisableAvatars == "on")
+        ui.checkBox_106->setChecked(true);
+    else
+        ui.checkBox_106->setChecked(false);
+
+// disable logs
+    if (strDisableLogs == "on")
+        ui.checkBox_107->setChecked(true);
+    else
+        ui.checkBox_107->setChecked(false);
+
+// disable sounds
+    if (strDisableSounds == "on")
+        ui.checkBox_108->setChecked(true);
+    else
+        ui.checkBox_108->setChecked(false);
+
+// style
+    if (strStyle == "modern")
+        ui.radioButton_101->setChecked(true);
+    else if (strStyle == "classic")
+        ui.radioButton_102->setChecked(true);
 
 // set color combobox
     for (int i = 0; i < ui.comboBox->count(); i++)
@@ -99,70 +192,88 @@ DlgOptions::DlgOptions(QWidget *parent, QSettings *param1) : QDialog(parent)
             ui.comboBox->setCurrentIndex(i);
     }
 
-// rest
-    if (strAutoBusy == "on")
-        ui.checkBox_5->setChecked(true);
-    else
-        ui.checkBox_5->setChecked(false);
-
-    if (strDebugAll == "on")
-        ui.checkBox->setChecked(true);
-    else
-        ui.checkBox->setChecked(false);
-
-    if (strShowZuo == "on")
-        ui.checkBox_2->setChecked(true);
-    else
-        ui.checkBox_2->setChecked(false);
-
-    if (strHideFormating == "on")
-        ui.checkBox_3->setChecked(true);
-    else
-        ui.checkBox_3->setChecked(false);
-
-    if (strHideJoinPart == "on")
-        ui.checkBox_4->setChecked(true);
-    else
-        ui.checkBox_4->setChecked(false);
-
-    if (strDisableAvatars == "on")
-        ui.checkBox_6->setChecked(true);
-    else
-        ui.checkBox_6->setChecked(false);
-
-    if (strDisableLogs == "on")
-        ui.checkBox_7->setChecked(true);
-    else
-        ui.checkBox_7->setChecked(false);
-
-    if (strDisableSounds == "on")
-        ui.checkBox_8->setChecked(true);
-    else
-        ui.checkBox_8->setChecked(false);
-
-    if (strStyle == "modern")
-        ui.radioButton->setChecked(true);
-    else
-        ui.radioButton_2->setChecked(true);
-
-    QObject::connect(ui.checkBox_5, SIGNAL(clicked()), this, SLOT(auto_busy()));
-    QObject::connect(ui.checkBox, SIGNAL(clicked()), this, SLOT(debug_all()));
-    QObject::connect(ui.checkBox_2, SIGNAL(clicked()), this, SLOT(show_zuo()));
-    QObject::connect(ui.checkBox_3, SIGNAL(clicked()), this, SLOT(hide_formating()));
-    QObject::connect(ui.checkBox_4, SIGNAL(clicked()), this, SLOT(hide_join_part()));
-    QObject::connect(ui.checkBox_6, SIGNAL(clicked()), this, SLOT(disable_avatars()));
-    QObject::connect(ui.checkBox_7, SIGNAL(clicked()), this, SLOT(disable_logs()));
-    QObject::connect(ui.checkBox_8, SIGNAL(clicked()), this, SLOT(disable_sounds()));
-    QObject::connect(ui.radioButton, SIGNAL(clicked()), this, SLOT(set_modern_style()));
-    QObject::connect(ui.radioButton_2, SIGNAL(clicked()), this, SLOT(set_classic_style()));
+    QObject::connect(ui.listWidget, SIGNAL(currentItemChanged(QListWidgetItem*,QListWidgetItem*)), this, SLOT(change_page(QListWidgetItem*,QListWidgetItem*)));
+    QObject::connect(ui.radioButton_1, SIGNAL(clicked()), this, SLOT(hide_pass()));
+    QObject::connect(ui.radioButton_2, SIGNAL(clicked()), this, SLOT(show_pass()));
+    QObject::connect(ui.radioButton_3, SIGNAL(clicked()), this, SLOT(set_modern_style_avatars()));
+    QObject::connect(ui.radioButton_4, SIGNAL(clicked()), this, SLOT(set_modern_style_no_avatars()));
+    QObject::connect(ui.radioButton_5, SIGNAL(clicked()), this, SLOT(set_classic_style()));
+    QObject::connect(ui.checkBox_101, SIGNAL(clicked()), this, SLOT(auto_busy()));
+    QObject::connect(ui.checkBox_102, SIGNAL(clicked()), this, SLOT(debug_all()));
+    QObject::connect(ui.checkBox_103, SIGNAL(clicked()), this, SLOT(show_zuo()));
+    QObject::connect(ui.checkBox_104, SIGNAL(clicked()), this, SLOT(hide_formating()));
+    QObject::connect(ui.checkBox_105, SIGNAL(clicked()), this, SLOT(hide_join_part()));
+    QObject::connect(ui.checkBox_106, SIGNAL(clicked()), this, SLOT(disable_avatars()));
+    QObject::connect(ui.checkBox_107, SIGNAL(clicked()), this, SLOT(disable_logs()));
+    QObject::connect(ui.checkBox_108, SIGNAL(clicked()), this, SLOT(disable_sounds()));
+    QObject::connect(ui.radioButton_101, SIGNAL(clicked()), this, SLOT(set_modern_style()));
+    QObject::connect(ui.radioButton_102, SIGNAL(clicked()), this, SLOT(set_classic_style()));
     QObject::connect(ui.buttonBox, SIGNAL(accepted()), this, SLOT(button_ok()));
     QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(button_cancel()));
+}
+
+void DlgOptions::change_page(QListWidgetItem *current, QListWidgetItem *previous)
+{
+    if (!current)
+        current = previous;
+
+    ui.stackedWidget->setCurrentIndex(ui.listWidget->row(current));
+}
+
+void DlgOptions::hide_pass()
+{
+    ui.label_4->hide();
+    ui.lineEdit_2->hide();
+}
+
+void DlgOptions::show_pass()
+{
+    ui.label_4->show();
+    ui.lineEdit_2->show();
+}
+
+void DlgOptions::set_modern_style_avatars()
+{
+    Config *pConfig = new Config();
+    pConfig->set_value("style", "modern");
+    settings->setValue("style", "modern");
+    pConfig->set_value("disable_avatars", "off");
+    settings->setValue("disable_avatars", "off");
+    delete pConfig;
+
+    this->close(); // fix stay on top
+
+    QMessageBox msgBox;
+    msgBox.setIcon(QMessageBox::Information);
+    msgBox.setWindowIcon(QIcon(":/images/logo_64.png"));
+    msgBox.setStandardButtons(QMessageBox::Ok);
+    msgBox.setText(QString(tr("Restart program to apply the changes.")));
+    msgBox.exec();
+}
+
+void DlgOptions::set_modern_style_no_avatars()
+{
+    Config *pConfig = new Config();
+    pConfig->set_value("style", "modern");
+    settings->setValue("style", "modern");
+    pConfig->set_value("disable_avatars", "on");
+    settings->setValue("disable_avatars", "on");
+    delete pConfig;
+
+    this->close(); // fix stay on top
+
+    QMessageBox msgBox;
+    msgBox.setIcon(QMessageBox::Information);
+    msgBox.setWindowIcon(QIcon(":/images/logo_64.png"));
+    msgBox.setStandardButtons(QMessageBox::Ok);
+    msgBox.setText(QString(tr("Restart program to apply the changes.")));
+    msgBox.exec();
 }
 
 void DlgOptions::auto_busy()
 {
     Config *pConfig = new Config();
-    if (ui.checkBox_5->isChecked() == true)
+    if (ui.checkBox_101->isChecked() == true)
     {
         pConfig->set_value("auto_busy", "on");
         settings->setValue("auto_busy", "on");
@@ -178,7 +289,7 @@ void DlgOptions::auto_busy()
 void DlgOptions::debug_all()
 {
     Config *pConfig = new Config();
-    if (ui.checkBox->isChecked() == true)
+    if (ui.checkBox_102->isChecked() == true)
     {
         pConfig->set_value("debug_all", "on");
         settings->setValue("debug_all", "on");
@@ -194,7 +305,7 @@ void DlgOptions::debug_all()
 void DlgOptions::show_zuo()
 {
     Config *pConfig = new Config();
-    if (ui.checkBox_2->isChecked() == true)
+    if (ui.checkBox_103->isChecked() == true)
     {
         pConfig->set_value("show_zuo", "on");
         settings->setValue("show_zuo", "on");
@@ -210,7 +321,7 @@ void DlgOptions::show_zuo()
 void DlgOptions::hide_formating()
 {
     Config *pConfig = new Config();
-    if (ui.checkBox_3->isChecked() == true)
+    if (ui.checkBox_104->isChecked() == true)
     {
         pConfig->set_value("hide_formating", "on");
         settings->setValue("hide_formating", "on");
@@ -226,7 +337,7 @@ void DlgOptions::hide_formating()
 void DlgOptions::hide_join_part()
 {
     Config *pConfig = new Config();
-    if (ui.checkBox_4->isChecked() == true)
+    if (ui.checkBox_105->isChecked() == true)
     {
         pConfig->set_value("hide_join_part", "on");
         settings->setValue("hide_join_part", "on");
@@ -242,7 +353,7 @@ void DlgOptions::hide_join_part()
 void DlgOptions::disable_avatars()
 {
     Config *pConfig = new Config();
-    if (ui.checkBox_6->isChecked() == true)
+    if (ui.checkBox_106->isChecked() == true)
     {
         pConfig->set_value("disable_avatars", "on");
         settings->setValue("disable_avatars", "on");
@@ -258,7 +369,7 @@ void DlgOptions::disable_avatars()
 void DlgOptions::disable_logs()
 {
     Config *pConfig = new Config();
-    if (ui.checkBox_7->isChecked() == true)
+    if (ui.checkBox_107->isChecked() == true)
     {
         pConfig->set_value("disable_logs", "on");
         settings->setValue("disable_logs", "on");
@@ -274,7 +385,7 @@ void DlgOptions::disable_logs()
 void DlgOptions::disable_sounds()
 {
     Config *pConfig = new Config();
-    if (ui.checkBox_8->isChecked() == true)
+    if (ui.checkBox_108->isChecked() == true)
     {
         pConfig->set_value("disable_sounds", "on");
         settings->setValue("disable_sounds", "on");
@@ -290,11 +401,8 @@ void DlgOptions::disable_sounds()
 void DlgOptions::set_modern_style()
 {
     Config *pConfig = new Config();
-    if (ui.radioButton->isChecked() == true)
-    {
-        pConfig->set_value("style", "modern");
-        settings->setValue("style", "modern");
-    }
+    pConfig->set_value("style", "modern");
+    settings->setValue("style", "modern");
     delete pConfig;
 
     this->close(); // fix stay on top
@@ -310,11 +418,8 @@ void DlgOptions::set_modern_style()
 void DlgOptions::set_classic_style()
 {
     Config *pConfig = new Config();
-    if (ui.radioButton_2->isChecked() == true)
-    {
-        pConfig->set_value("style", "classic");
-        settings->setValue("style", "classic");
-    }
+    pConfig->set_value("style", "classic");
+    settings->setValue("style", "classic");
     delete pConfig;
 
     this->close(); // fix stay on top
@@ -329,29 +434,41 @@ void DlgOptions::set_classic_style()
 
 void DlgOptions::button_cancel()
 {
-    ui.lineEditNick->clear();
-    ui.lineEditPass->clear();
+    ui.lineEdit->clear();
+    ui.lineEdit_2->clear();
     ui.comboBox->clear();
     ui.buttonBox->QObject::disconnect();
-    ui.checkBox->QObject::disconnect();
-    ui.checkBox_2->QObject::disconnect();
-    ui.checkBox_3->QObject::disconnect();
-    ui.checkBox_4->QObject::disconnect();
-    ui.checkBox_5->QObject::disconnect();
-    ui.checkBox_6->QObject::disconnect();
-    ui.checkBox_7->QObject::disconnect();
-    ui.checkBox_8->QObject::disconnect();
-    ui.radioButton->QObject::disconnect();
+    ui.checkBox_101->QObject::disconnect();
+    ui.checkBox_102->QObject::disconnect();
+    ui.checkBox_103->QObject::disconnect();
+    ui.checkBox_104->QObject::disconnect();
+    ui.checkBox_105->QObject::disconnect();
+    ui.checkBox_106->QObject::disconnect();
+    ui.checkBox_107->QObject::disconnect();
+    ui.checkBox_108->QObject::disconnect();
+    ui.radioButton_101->QObject::disconnect();
+    ui.radioButton_102->QObject::disconnect();
+    ui.radioButton_1->QObject::disconnect();
     ui.radioButton_2->QObject::disconnect();
+    ui.radioButton_3->QObject::disconnect();
+    ui.radioButton_4->QObject::disconnect();
+    ui.radioButton_5->QObject::disconnect();
     this->close();
 }
 
 void DlgOptions::button_ok()
 {
-    QString strNick = ui.lineEditNick->text();
-    QString strPass = ui.lineEditPass->text();
+    QString strNick = ui.lineEdit->text();
     QString strBackgroundColor = ui.comboBox->currentText();
 
+// check nick
+    QString strPass;
+    if (ui.radioButton_1->isChecked() == true)
+        strPass = "";
+    else if (ui.radioButton_2->isChecked() == true)
+        strPass = ui.lineEdit_2->text();
+
+// encrypt pass
     if (strPass.isEmpty() == false)
     {
         Crypt *pCrypt = new Crypt();
@@ -359,27 +476,35 @@ void DlgOptions::button_ok()
         delete pCrypt;
     }
 
+// save values
     Config *pConfig = new Config();
     pConfig->set_value("login-nick", strNick);
     pConfig->set_value("login-pass", strPass);
     pConfig->set_value("background_color", strBackgroundColor);
     delete pConfig;
 
+// save to settings
     settings->setValue("background_color", strBackgroundColor);
 
-    ui.lineEditNick->clear();
-    ui.lineEditPass->clear();
+// clear
+    ui.lineEdit->clear();
+    ui.lineEdit_2->clear();
     ui.comboBox->clear();
     ui.buttonBox->QObject::disconnect();
-    ui.checkBox->QObject::disconnect();
-    ui.checkBox_2->QObject::disconnect();
-    ui.checkBox_3->QObject::disconnect();
-    ui.checkBox_4->QObject::disconnect();
-    ui.checkBox_5->QObject::disconnect();
-    ui.checkBox_6->QObject::disconnect();
-    ui.checkBox_7->QObject::disconnect();
-    ui.checkBox_8->QObject::disconnect();
-    ui.radioButton->QObject::disconnect();
+    ui.checkBox_101->QObject::disconnect();
+    ui.checkBox_102->QObject::disconnect();
+    ui.checkBox_103->QObject::disconnect();
+    ui.checkBox_104->QObject::disconnect();
+    ui.checkBox_105->QObject::disconnect();
+    ui.checkBox_106->QObject::disconnect();
+    ui.checkBox_107->QObject::disconnect();
+    ui.checkBox_108->QObject::disconnect();
+    ui.radioButton_101->QObject::disconnect();
+    ui.radioButton_102->QObject::disconnect();
+    ui.radioButton_1->QObject::disconnect();
     ui.radioButton_2->QObject::disconnect();
+    ui.radioButton_3->QObject::disconnect();
+    ui.radioButton_4->QObject::disconnect();
+    ui.radioButton_5->QObject::disconnect();
     this->close();
 }

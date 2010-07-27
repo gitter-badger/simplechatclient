@@ -16,5 +16,7 @@
         <file>images/cam.png</file>
         <file>images/user.png</file>
         <file>images/channel_avatar.png</file>
+        <file>images/basic_conf.png</file>
+        <file>images/adv_conf.png</file>
     </qresource>
 </RCC>

@@ -311,6 +311,14 @@
 <context>
     <name>DlgOptions</name>
     <message>
+        <source>Basic</source>
+        <translation>Ogólne</translation>
+    </message>
+    <message>
+        <source>Advanced</source>
+        <translation>Zaawansowane</translation>
+    </message>
+    <message>
         <source>Restart program to apply the changes.</source>
         <translation>Uruchom ponownie program aby zastosować wprowadzone zmiany.</translation>
     </message>
