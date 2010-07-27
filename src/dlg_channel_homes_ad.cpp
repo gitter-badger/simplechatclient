@@ -31,9 +31,9 @@ DlgChannelHomesAd::DlgChannelHomesAd(Network *param1, QSettings *param2, TabCont
     strStatus = param4;
 
     if (strStatus == "create")
-        ui.label->setText(tr("Enter the name of the new channel:"));
+        ui.label_msg->setText(tr("Enter the name of the new channel:"));
     else
-        ui.label->setText("<p style=\"font-weight:bold;\">"+tr("The removal of the channel operation is irreversible!")+"</p><p>"+tr("Enter the name of the channel to remove:")+"</p>");
+        ui.label_msg->setText("<p style=\"font-weight:bold;\">"+tr("The removal of the channel operation is irreversible!")+"</p><p>"+tr("Enter the name of the channel to remove:")+"</p>");
 
     QObject::connect(ui.buttonBox, SIGNAL(accepted()), this, SLOT(button_ok()));
     QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(button_cancel()));
@@ -41,7 +41,7 @@ DlgChannelHomesAd::DlgChannelHomesAd(Network *param1, QSettings *param2, TabCont
 
 void DlgChannelHomesAd::button_ok()
 {
-    QString strChannel = ui.lineEdit->text();
+    QString strChannel = ui.lineEdit_channel->text();
 
     if (strChannel.isEmpty() == false)
     {

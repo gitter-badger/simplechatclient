@@ -31,12 +31,12 @@ DlgChannelHomes::DlgChannelHomes(Network *param1, QSettings *param2, TabContaine
     mChannelAvatar = param4;
     dlgchannel_settings = param5;
 
-    ui.pushButton->setText(tr("Create"));
-    ui.pushButton_2->setText(tr("Remove"));
+    ui.pushButton_create->setText(tr("Create"));
+    ui.pushButton_remove->setText(tr("Remove"));
 
-    QObject::connect(ui.listWidget, SIGNAL(clicked(QModelIndex)), this, SLOT(list_clicked(QModelIndex)));
-    QObject::connect(ui.pushButton, SIGNAL(clicked()), this, SLOT(button_create()));
-    QObject::connect(ui.pushButton_2, SIGNAL(clicked()), this, SLOT(button_remove()));
+    QObject::connect(ui.listWidget_channels, SIGNAL(clicked(QModelIndex)), this, SLOT(list_clicked(QModelIndex)));
+    QObject::connect(ui.pushButton_create, SIGNAL(clicked()), this, SLOT(button_create()));
+    QObject::connect(ui.pushButton_remove, SIGNAL(clicked()), this, SLOT(button_remove()));
     QObject::connect(ui.buttonBox, SIGNAL(accepted()), this, SLOT(button_ok()));
     QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(button_cancel()));
 }
@@ -49,51 +49,51 @@ void DlgChannelHomes::add_channel(QString strChannel)
     {
         QPixmap pixmap;
         pixmap.loadFromData(mChannelAvatar->value(strChannel));
-        ui.listWidget->addItem(new QListWidgetItem(QIcon(pixmap), strChannel));
+        ui.listWidget_channels->addItem(new QListWidgetItem(QIcon(pixmap), strChannel));
     }
     else
     {
-        ui.listWidget->addItem(new QListWidgetItem(QIcon(":/images/channel_avatar.png"), strChannel));
+        ui.listWidget_channels->addItem(new QListWidgetItem(QIcon(":/images/channel_avatar.png"), strChannel));
         pNetwork->send(QString("CS INFO %1 i").arg(strChannel));
     }
 }
 
 void DlgChannelHomes::clear()
 {
-    ui.listWidget->clear();
+    ui.listWidget_channels->clear();
 }
 
 void DlgChannelHomes::list_clicked(QModelIndex index)
 {
     int i = index.row();
-    QString strChannel = ui.listWidget->item(i)->text();
+    QString strChannel = ui.listWidget_channels->item(i)->text();
     dlgchannel_settings->set_channel(strChannel);
     dlgchannel_settings->show();
-    ui.listWidget->clear();
+    ui.listWidget_channels->clear();
     this->hide();
 }
 
 void DlgChannelHomes::button_create()
 {
-    ui.listWidget->clear();
+    ui.listWidget_channels->clear();
     (new DlgChannelHomesAd(pNetwork, settings, tabc, "create"))->show();
 }
 
 void DlgChannelHomes::button_remove()
 {
-    ui.listWidget->clear();
+    ui.listWidget_channels->clear();
     (new DlgChannelHomesAd(pNetwork, settings, tabc, "remove"))->show();
 }
 
 void DlgChannelHomes::button_ok()
 {
-    ui.listWidget->clear();
+    ui.listWidget_channels->clear();
     this->hide();
 }
 
 void DlgChannelHomes::button_cancel()
 {
-    ui.listWidget->clear();
+    ui.listWidget_channels->clear();
     this->hide();
 }
 
@@ -101,7 +101,7 @@ void DlgChannelHomes::showEvent(QShowEvent *event)
 {
     event->accept();
 
-    ui.listWidget->clear();
+    ui.listWidget_channels->clear();
 
     pNetwork->send("CS HOMES");
 }

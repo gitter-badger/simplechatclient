@@ -39,12 +39,12 @@ private:
     Ui::uiChannelList ui;
     QSettings *settings;
     TabContainer *tabc;
-    QList < QList<QString> > list_1;
-    QList < QList<QString> > list_2;
-    QList < QList<QString> > list_3;
-    QList < QList<QString> > list_4;
-    QList < QList<QString> > list_5;
-    QList < QList<QString> > list_6;
+    QList < QList<QString> > list_all;
+    QList < QList<QString> > list_teen;
+    QList < QList<QString> > list_towarzyskie;
+    QList < QList<QString> > list_erotyczne;
+    QList < QList<QString> > list_tematyczne;
+    QList < QList<QString> > list_regionalne;
 
     void quickSort(QList< QList<QString> > *, int, int);
 
@@ -53,12 +53,12 @@ protected:
     virtual void resizeEvent(QResizeEvent *);
 
 private slots:
-    void allCellDoubleClicked(int, int);
-    void teenCellDoubleClicked(int, int);
-    void towarzyskieCellDoubleClicked(int, int);
-    void erotyczneCellDoubleClicked(int, int);
-    void tematyczneCellDoubleClicked(int, int);
-    void regionalneCellDoubleClicked(int, int);
+    void all_CellDoubleClicked(int, int);
+    void teen_CellDoubleClicked(int, int);
+    void towarzyskie_CellDoubleClicked(int, int);
+    void erotyczne_CellDoubleClicked(int, int);
+    void tematyczne_CellDoubleClicked(int, int);
+    void regionalne_CellDoubleClicked(int, int);
     void button_ok();
     void button_cancel();
 

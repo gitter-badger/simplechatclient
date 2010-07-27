@@ -28,66 +28,66 @@ DlgChannelList::DlgChannelList(QSettings *param1, TabContainer *param2)
     settings = param1;
     tabc = param2;
 
-    QObject::connect(ui.tableWidget_1, SIGNAL(cellDoubleClicked(int,int)), this, SLOT(allCellDoubleClicked(int,int)));
-    QObject::connect(ui.tableWidget_2, SIGNAL(cellDoubleClicked(int,int)), this, SLOT(teenCellDoubleClicked(int,int)));
-    QObject::connect(ui.tableWidget_3, SIGNAL(cellDoubleClicked(int,int)), this, SLOT(towarzyskieCellDoubleClicked(int,int)));
-    QObject::connect(ui.tableWidget_4, SIGNAL(cellDoubleClicked(int,int)), this, SLOT(erotyczneCellDoubleClicked(int,int)));
-    QObject::connect(ui.tableWidget_5, SIGNAL(cellDoubleClicked(int,int)), this, SLOT(tematyczneCellDoubleClicked(int,int)));
-    QObject::connect(ui.tableWidget_6, SIGNAL(cellDoubleClicked(int,int)), this, SLOT(regionalneCellDoubleClicked(int,int)));
+    QObject::connect(ui.tableWidget_all, SIGNAL(cellDoubleClicked(int,int)), this, SLOT(all_CellDoubleClicked(int,int)));
+    QObject::connect(ui.tableWidget_teen, SIGNAL(cellDoubleClicked(int,int)), this, SLOT(teen_CellDoubleClicked(int,int)));
+    QObject::connect(ui.tableWidget_towarzyskie, SIGNAL(cellDoubleClicked(int,int)), this, SLOT(towarzyskie_CellDoubleClicked(int,int)));
+    QObject::connect(ui.tableWidget_erotyczne, SIGNAL(cellDoubleClicked(int,int)), this, SLOT(erotyczne_CellDoubleClicked(int,int)));
+    QObject::connect(ui.tableWidget_tematyczne, SIGNAL(cellDoubleClicked(int,int)), this, SLOT(tematyczne_CellDoubleClicked(int,int)));
+    QObject::connect(ui.tableWidget_regionalne, SIGNAL(cellDoubleClicked(int,int)), this, SLOT(regionalne_CellDoubleClicked(int,int)));
     QObject::connect(ui.buttonBox, SIGNAL(accepted()), this, SLOT(button_ok()));
     QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(button_cancel()));
 }
 
 void DlgChannelList::clear()
 {
-    list_1.clear();
-    list_2.clear();
-    list_3.clear();
-    list_4.clear();
-    list_5.clear();
-    list_6.clear();
+    list_all.clear();
+    list_teen.clear();
+    list_towarzyskie.clear();
+    list_erotyczne.clear();
+    list_tematyczne.clear();
+    list_regionalne.clear();
 
-    ui.tableWidget_1->clear();
-    ui.tableWidget_2->clear();
-    ui.tableWidget_3->clear();
-    ui.tableWidget_4->clear();
-    ui.tableWidget_5->clear();
-    ui.tableWidget_6->clear();
+    ui.tableWidget_all->clear();
+    ui.tableWidget_teen->clear();
+    ui.tableWidget_towarzyskie->clear();
+    ui.tableWidget_erotyczne->clear();
+    ui.tableWidget_tematyczne->clear();
+    ui.tableWidget_regionalne->clear();
 
-    ui.tableWidget_1->setRowCount(0);
-    ui.tableWidget_2->setRowCount(0);
-    ui.tableWidget_3->setRowCount(0);
-    ui.tableWidget_4->setRowCount(0);
-    ui.tableWidget_5->setRowCount(0);
-    ui.tableWidget_6->setRowCount(0);
+    ui.tableWidget_all->setRowCount(0);
+    ui.tableWidget_teen->setRowCount(0);
+    ui.tableWidget_towarzyskie->setRowCount(0);
+    ui.tableWidget_erotyczne->setRowCount(0);
+    ui.tableWidget_tematyczne->setRowCount(0);
+    ui.tableWidget_regionalne->setRowCount(0);
 
     QStringList strlLabels;
     strlLabels << tr("Channel name") << tr("Number of persons") << tr("Category") << tr("Type");
 
-    ui.tableWidget_1->setHorizontalHeaderLabels(strlLabels);
-    ui.tableWidget_2->setHorizontalHeaderLabels(strlLabels);
-    ui.tableWidget_3->setHorizontalHeaderLabels(strlLabels);
-    ui.tableWidget_4->setHorizontalHeaderLabels(strlLabels);
-    ui.tableWidget_5->setHorizontalHeaderLabels(strlLabels);
-    ui.tableWidget_6->setHorizontalHeaderLabels(strlLabels);
+    ui.tableWidget_all->setHorizontalHeaderLabels(strlLabels);
+    ui.tableWidget_teen->setHorizontalHeaderLabels(strlLabels);
+    ui.tableWidget_towarzyskie->setHorizontalHeaderLabels(strlLabels);
+    ui.tableWidget_erotyczne->setHorizontalHeaderLabels(strlLabels);
+    ui.tableWidget_tematyczne->setHorizontalHeaderLabels(strlLabels);
+    ui.tableWidget_regionalne->setHorizontalHeaderLabels(strlLabels);
 }
 
 void DlgChannelList::add_channel(QString strName, QString strPeople, QString strCat, QString strType)
 {
     QList <QString> add;
     add << strName << strPeople << strCat << strType;
-    list_1 << add;
+    list_all << add;
 
     if (strType == "Teen")
-        list_2.append(add);
+        list_teen.append(add);
     else if (strType == "Towarzyskie")
-        list_3.append(add);
+        list_towarzyskie.append(add);
     else if (strType == "Erotyczne")
-        list_4.append(add);
+        list_erotyczne.append(add);
     else if (strType == "Tematyczne")
-        list_5.append(add);
+        list_tematyczne.append(add);
     else if (strType == "Regionalne")
-        list_6.append(add);
+        list_regionalne.append(add);
 }
 
 void DlgChannelList::create_list()
@@ -100,9 +100,9 @@ void DlgChannelList::create_list()
     int iTematyczneCount = 0;
     int iRegionalneCount = 0;
 
-    for (int i = 0; i < list_1.size(); i++)
+    for (int i = 0; i < list_all.size(); i++)
     {
-        QString strType = list_1[i][3];
+        QString strType = list_all[i][3];
 
         iAllCount++;
         if (strType == "Teen")
@@ -117,12 +117,12 @@ void DlgChannelList::create_list()
             iRegionalneCount++;
     }
 
-    ui.tableWidget_1->setRowCount(iAllCount);
-    ui.tableWidget_2->setRowCount(iTeenCount);
-    ui.tableWidget_3->setRowCount(iTowarzyskieCount);
-    ui.tableWidget_4->setRowCount(iErotyczneCount);
-    ui.tableWidget_5->setRowCount(iTematyczneCount);
-    ui.tableWidget_6->setRowCount(iRegionalneCount);
+    ui.tableWidget_all->setRowCount(iAllCount);
+    ui.tableWidget_teen->setRowCount(iTeenCount);
+    ui.tableWidget_towarzyskie->setRowCount(iTowarzyskieCount);
+    ui.tableWidget_erotyczne->setRowCount(iErotyczneCount);
+    ui.tableWidget_tematyczne->setRowCount(iTematyczneCount);
+    ui.tableWidget_regionalne->setRowCount(iRegionalneCount);
 
     // table counters
     int iAllRow = 0;
@@ -132,57 +132,57 @@ void DlgChannelList::create_list()
     int iTematyczneRow = 0;
     int iRegionalneRow = 0;
 
-    for (int i = 0; i < list_1.size(); i++)
+    for (int i = 0; i < list_all.size(); i++)
     {
-        QString strName = list_1[i][0];
-        QString strPeople = list_1[i][1];
-        QString strCat = list_1[i][2];
-        QString strType = list_1[i][3];
+        QString strName = list_all[i][0];
+        QString strPeople = list_all[i][1];
+        QString strCat = list_all[i][2];
+        QString strType = list_all[i][3];
 
-        ui.tableWidget_1->setItem(iAllRow, 0, new QTableWidgetItem(strName));
-        ui.tableWidget_1->setItem(iAllRow, 1, new QTableWidgetItem(strPeople));
-        ui.tableWidget_1->setItem(iAllRow, 2, new QTableWidgetItem(strCat));
-        ui.tableWidget_1->setItem(iAllRow, 3, new QTableWidgetItem(strType));
+        ui.tableWidget_all->setItem(iAllRow, 0, new QTableWidgetItem(strName));
+        ui.tableWidget_all->setItem(iAllRow, 1, new QTableWidgetItem(strPeople));
+        ui.tableWidget_all->setItem(iAllRow, 2, new QTableWidgetItem(strCat));
+        ui.tableWidget_all->setItem(iAllRow, 3, new QTableWidgetItem(strType));
         iAllRow++;
 
         if (strType == "Teen")
         {
-            ui.tableWidget_2->setItem(iTeenRow, 0, new QTableWidgetItem(strName));
-            ui.tableWidget_2->setItem(iTeenRow, 1, new QTableWidgetItem(strPeople));
-            ui.tableWidget_2->setItem(iTeenRow, 2, new QTableWidgetItem(strCat));
-            ui.tableWidget_2->setItem(iTeenRow, 3, new QTableWidgetItem(strType));
+            ui.tableWidget_teen->setItem(iTeenRow, 0, new QTableWidgetItem(strName));
+            ui.tableWidget_teen->setItem(iTeenRow, 1, new QTableWidgetItem(strPeople));
+            ui.tableWidget_teen->setItem(iTeenRow, 2, new QTableWidgetItem(strCat));
+            ui.tableWidget_teen->setItem(iTeenRow, 3, new QTableWidgetItem(strType));
             iTeenRow++;
         }
         else if (strType == "Towarzyskie")
         {
-            ui.tableWidget_3->setItem(iTowarzyskieRow, 0, new QTableWidgetItem(strName));
-            ui.tableWidget_3->setItem(iTowarzyskieRow, 1, new QTableWidgetItem(strPeople));
-            ui.tableWidget_3->setItem(iTowarzyskieRow, 2, new QTableWidgetItem(strCat));
-            ui.tableWidget_3->setItem(iTowarzyskieRow, 3, new QTableWidgetItem(strType));
+            ui.tableWidget_towarzyskie->setItem(iTowarzyskieRow, 0, new QTableWidgetItem(strName));
+            ui.tableWidget_towarzyskie->setItem(iTowarzyskieRow, 1, new QTableWidgetItem(strPeople));
+            ui.tableWidget_towarzyskie->setItem(iTowarzyskieRow, 2, new QTableWidgetItem(strCat));
+            ui.tableWidget_towarzyskie->setItem(iTowarzyskieRow, 3, new QTableWidgetItem(strType));
             iTowarzyskieRow++;
         }
         else if (strType == "Erotyczne")
         {
-            ui.tableWidget_4->setItem(iErotyczneRow, 0, new QTableWidgetItem(strName));
-            ui.tableWidget_4->setItem(iErotyczneRow, 1, new QTableWidgetItem(strPeople));
-            ui.tableWidget_4->setItem(iErotyczneRow, 2, new QTableWidgetItem(strCat));
-            ui.tableWidget_4->setItem(iErotyczneRow, 3, new QTableWidgetItem(strType));
+            ui.tableWidget_erotyczne->setItem(iErotyczneRow, 0, new QTableWidgetItem(strName));
+            ui.tableWidget_erotyczne->setItem(iErotyczneRow, 1, new QTableWidgetItem(strPeople));
+            ui.tableWidget_erotyczne->setItem(iErotyczneRow, 2, new QTableWidgetItem(strCat));
+            ui.tableWidget_erotyczne->setItem(iErotyczneRow, 3, new QTableWidgetItem(strType));
             iErotyczneRow++;
         }
         else if (strType == "Tematyczne")
         {
-            ui.tableWidget_5->setItem(iTematyczneRow, 0, new QTableWidgetItem(strName));
-            ui.tableWidget_5->setItem(iTematyczneRow, 1, new QTableWidgetItem(strPeople));
-            ui.tableWidget_5->setItem(iTematyczneRow, 2, new QTableWidgetItem(strCat));
-            ui.tableWidget_5->setItem(iTematyczneRow, 3, new QTableWidgetItem(strType));
+            ui.tableWidget_tematyczne->setItem(iTematyczneRow, 0, new QTableWidgetItem(strName));
+            ui.tableWidget_tematyczne->setItem(iTematyczneRow, 1, new QTableWidgetItem(strPeople));
+            ui.tableWidget_tematyczne->setItem(iTematyczneRow, 2, new QTableWidgetItem(strCat));
+            ui.tableWidget_tematyczne->setItem(iTematyczneRow, 3, new QTableWidgetItem(strType));
             iTematyczneRow++;
         }
         else if (strType == "Regionalne")
         {
-            ui.tableWidget_6->setItem(iRegionalneRow, 0, new QTableWidgetItem(strName));
-            ui.tableWidget_6->setItem(iRegionalneRow, 1, new QTableWidgetItem(strPeople));
-            ui.tableWidget_6->setItem(iRegionalneRow, 2, new QTableWidgetItem(strCat));
-            ui.tableWidget_6->setItem(iRegionalneRow, 3, new QTableWidgetItem(strType));
+            ui.tableWidget_regionalne->setItem(iRegionalneRow, 0, new QTableWidgetItem(strName));
+            ui.tableWidget_regionalne->setItem(iRegionalneRow, 1, new QTableWidgetItem(strPeople));
+            ui.tableWidget_regionalne->setItem(iRegionalneRow, 2, new QTableWidgetItem(strCat));
+            ui.tableWidget_regionalne->setItem(iRegionalneRow, 3, new QTableWidgetItem(strType));
             iRegionalneRow++;
         }
     }
@@ -229,55 +229,55 @@ void DlgChannelList::quickSort(QList< QList<QString> > *T, int Lo, int Hi)
 
 void DlgChannelList::sort()
 {
-    quickSort(&list_1, 0, list_1.size()-1);
-    quickSort(&list_2, 0, list_2.size()-1);
-    quickSort(&list_3, 0, list_3.size()-1);
-    quickSort(&list_4, 0, list_4.size()-1);
-    quickSort(&list_5, 0, list_5.size()-1);
-    quickSort(&list_6, 0, list_6.size()-1);
+    quickSort(&list_all, 0, list_all.size()-1);
+    quickSort(&list_teen, 0, list_teen.size()-1);
+    quickSort(&list_towarzyskie, 0, list_towarzyskie.size()-1);
+    quickSort(&list_erotyczne, 0, list_erotyczne.size()-1);
+    quickSort(&list_tematyczne, 0, list_tematyczne.size()-1);
+    quickSort(&list_regionalne, 0, list_regionalne.size()-1);
     create_list();
 
-    ui.tableWidget_1->resizeColumnsToContents();
-    ui.tableWidget_2->resizeColumnsToContents();
-    ui.tableWidget_3->resizeColumnsToContents();
-    ui.tableWidget_4->resizeColumnsToContents();
-    ui.tableWidget_5->resizeColumnsToContents();
-    ui.tableWidget_6->resizeColumnsToContents();
+    ui.tableWidget_all->resizeColumnsToContents();
+    ui.tableWidget_teen->resizeColumnsToContents();
+    ui.tableWidget_towarzyskie->resizeColumnsToContents();
+    ui.tableWidget_erotyczne->resizeColumnsToContents();
+    ui.tableWidget_tematyczne->resizeColumnsToContents();
+    ui.tableWidget_regionalne->resizeColumnsToContents();
 }
 
-void DlgChannelList::allCellDoubleClicked(int row, int column)
+void DlgChannelList::all_CellDoubleClicked(int row, int column)
 {
-    QString strChannel = ui.tableWidget_1->item(row, 0)->text();
+    QString strChannel = ui.tableWidget_all->item(row, 0)->text();
     emit send(QString("JOIN %1").arg(strChannel));
 }
 
-void DlgChannelList::teenCellDoubleClicked(int row, int column)
+void DlgChannelList::teen_CellDoubleClicked(int row, int column)
 {
-    QString strChannel = ui.tableWidget_2->item(row, 0)->text();
+    QString strChannel = ui.tableWidget_teen->item(row, 0)->text();
     emit send(QString("JOIN %1").arg(strChannel));
 }
 
-void DlgChannelList::towarzyskieCellDoubleClicked(int row, int column)
+void DlgChannelList::towarzyskie_CellDoubleClicked(int row, int column)
 {
-    QString strChannel = ui.tableWidget_3->item(row, 0)->text();
+    QString strChannel = ui.tableWidget_towarzyskie->item(row, 0)->text();
     emit send(QString("JOIN %1").arg(strChannel));
 }
 
-void DlgChannelList::erotyczneCellDoubleClicked(int row, int column)
+void DlgChannelList::erotyczne_CellDoubleClicked(int row, int column)
 {
-    QString strChannel = ui.tableWidget_4->item(row, 0)->text();
+    QString strChannel = ui.tableWidget_erotyczne->item(row, 0)->text();
     emit send(QString("JOIN %1").arg(strChannel));
 }
 
-void DlgChannelList::tematyczneCellDoubleClicked(int row, int column)
+void DlgChannelList::tematyczne_CellDoubleClicked(int row, int column)
 {
-    QString strChannel = ui.tableWidget_5->item(row, 0)->text();
+    QString strChannel = ui.tableWidget_tematyczne->item(row, 0)->text();
     emit send(QString("JOIN %1").arg(strChannel));
 }
 
-void DlgChannelList::regionalneCellDoubleClicked(int row, int column)
+void DlgChannelList::regionalne_CellDoubleClicked(int row, int column)
 {
-    QString strChannel = ui.tableWidget_6->item(row, 0)->text();
+    QString strChannel = ui.tableWidget_regionalne->item(row, 0)->text();
     emit send(QString("JOIN %1").arg(strChannel));
 }
 
@@ -304,10 +304,10 @@ void DlgChannelList::resizeEvent(QResizeEvent *event)
 {
     ui.verticalLayoutWidget->setGeometry(QRect(0,0,this->width(), this->height()));
     ui.tabWidget->setGeometry(QRect(0,0,this->width(), this->height()));
-    ui.tableWidget_1->setGeometry(QRect(0,0,this->width()-10, this->height()-65));
-    ui.tableWidget_2->setGeometry(QRect(0,0,this->width()-10, this->height()-65));
-    ui.tableWidget_3->setGeometry(QRect(0,0,this->width()-10, this->height()-65));
-    ui.tableWidget_4->setGeometry(QRect(0,0,this->width()-10, this->height()-65));
-    ui.tableWidget_5->setGeometry(QRect(0,0,this->width()-10, this->height()-65));
-    ui.tableWidget_6->setGeometry(QRect(0,0,this->width()-10, this->height()-65));
+    ui.tableWidget_all->setGeometry(QRect(0,0,this->width()-10, this->height()-65));
+    ui.tableWidget_teen->setGeometry(QRect(0,0,this->width()-10, this->height()-65));
+    ui.tableWidget_towarzyskie->setGeometry(QRect(0,0,this->width()-10, this->height()-65));
+    ui.tableWidget_erotyczne->setGeometry(QRect(0,0,this->width()-10, this->height()-65));
+    ui.tableWidget_tematyczne->setGeometry(QRect(0,0,this->width()-10, this->height()-65));
+    ui.tableWidget_regionalne->setGeometry(QRect(0,0,this->width()-10, this->height()-65));
 }

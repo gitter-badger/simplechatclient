@@ -62,7 +62,6 @@ DlgChannelSettings::DlgChannelSettings(Network *param1, QSettings *param2)
 void DlgChannelSettings::set_channel(QString param1)
 {
     strChannel = param1;
-    ui.label_channel_name->setText(strChannel);
     pNetwork->send(QString("CS INFO %1").arg(strChannel));
 }
 
@@ -93,41 +92,41 @@ void DlgChannelSettings::add_email(QString strEmail)
 
 void DlgChannelSettings::add_op(QString strNick)
 {
-    if (exist_item(strNick, ui.tableWidget) == false)
+    if (exist_item(strNick, ui.tableWidget_op) == false)
     {
-        ui.tableWidget->insertRow(ui.tableWidget->rowCount());
-        ui.tableWidget->setItem(ui.tableWidget->rowCount()-1, 0, new QTableWidgetItem(strNick));
+        ui.tableWidget_op->insertRow(ui.tableWidget_op->rowCount());
+        ui.tableWidget_op->setItem(ui.tableWidget_op->rowCount()-1, 0, new QTableWidgetItem(strNick));
     }
 }
 
 void DlgChannelSettings::add_halfop(QString strNick)
 {
-    if (exist_item(strNick, ui.tableWidget_2) == false)
+    if (exist_item(strNick, ui.tableWidget_halfop) == false)
     {
-        ui.tableWidget_2->insertRow(ui.tableWidget_2->rowCount());
-        ui.tableWidget_2->setItem(ui.tableWidget_2->rowCount()-1, 0, new QTableWidgetItem(strNick));
+        ui.tableWidget_halfop->insertRow(ui.tableWidget_halfop->rowCount());
+        ui.tableWidget_halfop->setItem(ui.tableWidget_halfop->rowCount()-1, 0, new QTableWidgetItem(strNick));
     }
 }
 
 void DlgChannelSettings::add_ban(QString strNick, QString strWho, QString strDT)
 {
-    if (exist_item(strNick, ui.tableWidget_3) == false)
+    if (exist_item(strNick, ui.tableWidget_ban) == false)
     {
-        ui.tableWidget_3->insertRow(ui.tableWidget_3->rowCount());
-        ui.tableWidget_3->setItem(ui.tableWidget_3->rowCount()-1, 0, new QTableWidgetItem(strNick));
-        ui.tableWidget_3->setItem(ui.tableWidget_3->rowCount()-1, 1, new QTableWidgetItem(strWho));
-        ui.tableWidget_3->setItem(ui.tableWidget_3->rowCount()-1, 2, new QTableWidgetItem(strDT));
+        ui.tableWidget_ban->insertRow(ui.tableWidget_ban->rowCount());
+        ui.tableWidget_ban->setItem(ui.tableWidget_ban->rowCount()-1, 0, new QTableWidgetItem(strNick));
+        ui.tableWidget_ban->setItem(ui.tableWidget_ban->rowCount()-1, 1, new QTableWidgetItem(strWho));
+        ui.tableWidget_ban->setItem(ui.tableWidget_ban->rowCount()-1, 2, new QTableWidgetItem(strDT));
     }
 }
 
 void DlgChannelSettings::add_invite(QString strNick, QString strWho, QString strDT)
 {
-    if (exist_item(strNick, ui.tableWidget_4) == false)
+    if (exist_item(strNick, ui.tableWidget_invite) == false)
     {
-        ui.tableWidget_4->insertRow(ui.tableWidget_4->rowCount());
-        ui.tableWidget_4->setItem(ui.tableWidget_4->rowCount()-1, 0, new QTableWidgetItem(strNick));
-        ui.tableWidget_4->setItem(ui.tableWidget_4->rowCount()-1, 1, new QTableWidgetItem(strWho));
-        ui.tableWidget_4->setItem(ui.tableWidget_4->rowCount()-1, 2, new QTableWidgetItem(strDT));
+        ui.tableWidget_invite->insertRow(ui.tableWidget_invite->rowCount());
+        ui.tableWidget_invite->setItem(ui.tableWidget_invite->rowCount()-1, 0, new QTableWidgetItem(strNick));
+        ui.tableWidget_invite->setItem(ui.tableWidget_invite->rowCount()-1, 1, new QTableWidgetItem(strWho));
+        ui.tableWidget_invite->setItem(ui.tableWidget_invite->rowCount()-1, 2, new QTableWidgetItem(strDT));
     }
 }
 
@@ -220,12 +219,12 @@ void DlgChannelSettings::add_description(QString strDescription)
 
 void DlgChannelSettings::owner_changed()
 {
-    (new DlgPrivilege(pNetwork, settings, "owner", strChannel, "add", ui.tableWidget, ui.tableWidget_2, ui.tableWidget_3, ui.tableWidget_4))->show();
+    (new DlgPrivilege(pNetwork, settings, "owner", strChannel, "add", ui.tableWidget_op, ui.tableWidget_halfop, ui.tableWidget_ban, ui.tableWidget_invite))->show();
 }
 
 void DlgChannelSettings::remove_channel_clicked()
 {
-    (new DlgPrivilege(pNetwork, settings, "channel", strChannel, "del", ui.tableWidget, ui.tableWidget_2, ui.tableWidget_3, ui.tableWidget_4))->show();
+    (new DlgPrivilege(pNetwork, settings, "channel", strChannel, "del", ui.tableWidget_op, ui.tableWidget_halfop, ui.tableWidget_ban, ui.tableWidget_invite))->show();
 }
 
 void DlgChannelSettings::email_changed()
@@ -329,81 +328,81 @@ void DlgChannelSettings::auditorium_active()
 
 void DlgChannelSettings::button_op_add()
 {
-    (new DlgPrivilege(pNetwork, settings, "op", strChannel, "add", ui.tableWidget, ui.tableWidget_2, ui.tableWidget_3, ui.tableWidget_4))->show();
+    (new DlgPrivilege(pNetwork, settings, "op", strChannel, "add", ui.tableWidget_op, ui.tableWidget_halfop, ui.tableWidget_ban, ui.tableWidget_invite))->show();
 }
 
 void DlgChannelSettings::button_op_del()
 {
-    if (ui.tableWidget->selectedItems().isEmpty() == false)
+    if (ui.tableWidget_op->selectedItems().isEmpty() == false)
     {
-        QString strRemoveNick = ui.tableWidget->selectedItems().at(0)->text();
+        QString strRemoveNick = ui.tableWidget_op->selectedItems().at(0)->text();
         pNetwork->send(QString("CS OP %1 DEL %2").arg(strChannel).arg(strRemoveNick));
         pNetwork->send(QString("CS INFO %1").arg(strChannel));
         clear();
     }
     else
     {
-        (new DlgPrivilege(pNetwork, settings, "op", strChannel, "del", ui.tableWidget, ui.tableWidget_2, ui.tableWidget_3, ui.tableWidget_4))->show();
+        (new DlgPrivilege(pNetwork, settings, "op", strChannel, "del", ui.tableWidget_op, ui.tableWidget_halfop, ui.tableWidget_ban, ui.tableWidget_invite))->show();
     }
 }
 
 void DlgChannelSettings::button_halfop_add()
 {
-    (new DlgPrivilege(pNetwork, settings, "halfop", strChannel, "add", ui.tableWidget, ui.tableWidget_2, ui.tableWidget_3, ui.tableWidget_4))->show();
+    (new DlgPrivilege(pNetwork, settings, "halfop", strChannel, "add", ui.tableWidget_op, ui.tableWidget_halfop, ui.tableWidget_ban, ui.tableWidget_invite))->show();
 }
 
 void DlgChannelSettings::button_halfop_del()
 {
-    if (ui.tableWidget_2->selectedItems().isEmpty() == false)
+    if (ui.tableWidget_halfop->selectedItems().isEmpty() == false)
     {
-        QString strRemoveNick = ui.tableWidget_2->selectedItems().at(0)->text();
+        QString strRemoveNick = ui.tableWidget_halfop->selectedItems().at(0)->text();
         pNetwork->send(QString("CS HALFOP %1 DEL %2").arg(strChannel).arg(strRemoveNick));
         pNetwork->send(QString("CS INFO %1").arg(strChannel));
         clear();
     }
     else
     {
-        (new DlgPrivilege(pNetwork, settings, "halfop", strChannel, "del", ui.tableWidget, ui.tableWidget_2, ui.tableWidget_3, ui.tableWidget_4))->show();
+        (new DlgPrivilege(pNetwork, settings, "halfop", strChannel, "del", ui.tableWidget_op, ui.tableWidget_halfop, ui.tableWidget_ban, ui.tableWidget_invite))->show();
     }
 }
 
 void DlgChannelSettings::button_ban_add()
 {
-    (new DlgPrivilege(pNetwork, settings, "ban", strChannel, "add", ui.tableWidget, ui.tableWidget_2, ui.tableWidget_3, ui.tableWidget_4))->show();
+    (new DlgPrivilege(pNetwork, settings, "ban", strChannel, "add", ui.tableWidget_op, ui.tableWidget_halfop, ui.tableWidget_ban, ui.tableWidget_invite))->show();
 }
 
 void DlgChannelSettings::button_ban_del()
 {
-    if (ui.tableWidget_3->selectedItems().isEmpty() == false)
+    if (ui.tableWidget_ban->selectedItems().isEmpty() == false)
     {
-        QString strRemoveNick = ui.tableWidget_3->selectedItems().at(0)->text();
+        QString strRemoveNick = ui.tableWidget_ban->selectedItems().at(0)->text();
         pNetwork->send(QString("CS BAN %1 DEL %2").arg(strChannel).arg(strRemoveNick));
         pNetwork->send(QString("CS INFO %1").arg(strChannel));
         clear();
     }
     else
     {
-        (new DlgPrivilege(pNetwork, settings, "ban", strChannel, "del", ui.tableWidget, ui.tableWidget_2, ui.tableWidget_3, ui.tableWidget_4))->show();
+        (new DlgPrivilege(pNetwork, settings, "ban", strChannel, "del", ui.tableWidget_op, ui.tableWidget_halfop, ui.tableWidget_ban, ui.tableWidget_invite))->show();
     }
 }
 
 void DlgChannelSettings::button_invite_add()
 {
-    (new DlgPrivilege(pNetwork, settings, "invite", strChannel, "add", ui.tableWidget, ui.tableWidget_2, ui.tableWidget_3, ui.tableWidget_4))->show();
+    (new DlgPrivilege(pNetwork, settings, "invite", strChannel, "add", ui.tableWidget_op, ui.tableWidget_halfop, ui.tableWidget_ban, ui.tableWidget_invite))->show();
 }
 
 void DlgChannelSettings::button_invite_del()
 {
-    if (ui.tableWidget_4->selectedItems().isEmpty() == false)
+    if (ui.tableWidget_invite->selectedItems().isEmpty() == false)
     {
-        QString strRemoveNick = ui.tableWidget_4->selectedItems().at(0)->text();
+        QString strRemoveNick = ui.tableWidget_invite->selectedItems().at(0)->text();
         pNetwork->send(QString("CS INVITE %1 DEL %2").arg(strChannel).arg(strRemoveNick));
         pNetwork->send(QString("CS INFO %1").arg(strChannel));
         clear();
     }
     else
     {
-        (new DlgPrivilege(pNetwork, settings, "invite", strChannel, "del", ui.tableWidget, ui.tableWidget_2, ui.tableWidget_3, ui.tableWidget_4))->show();
+        (new DlgPrivilege(pNetwork, settings, "invite", strChannel, "del", ui.tableWidget_op, ui.tableWidget_halfop, ui.tableWidget_ban, ui.tableWidget_invite))->show();
     }
 }
 
@@ -433,15 +432,15 @@ bool DlgChannelSettings::exist_item(QString strItem, QTableWidget *list)
 
 void DlgChannelSettings::clear()
 {
-    ui.tableWidget->clear();
-    ui.tableWidget_2->clear();
-    ui.tableWidget_3->clear();
-    ui.tableWidget_4->clear();
+    ui.tableWidget_op->clear();
+    ui.tableWidget_halfop->clear();
+    ui.tableWidget_ban->clear();
+    ui.tableWidget_invite->clear();
 
-    ui.tableWidget->setRowCount(0);
-    ui.tableWidget_2->setRowCount(0);
-    ui.tableWidget_3->setRowCount(0);
-    ui.tableWidget_4->setRowCount(0);
+    ui.tableWidget_op->setRowCount(0);
+    ui.tableWidget_halfop->setRowCount(0);
+    ui.tableWidget_ban->setRowCount(0);
+    ui.tableWidget_invite->setRowCount(0);
 
     QStringList strlLabels;
     strlLabels << tr("Nick");
@@ -449,16 +448,16 @@ void DlgChannelSettings::clear()
     QStringList strlLabels2;
     strlLabels2 << tr("Nick") << tr("Created by") << tr("Date/Time");
 
-    ui.tableWidget->setHorizontalHeaderLabels(strlLabels);
-    ui.tableWidget_2->setHorizontalHeaderLabels(strlLabels);
-    ui.tableWidget_3->setHorizontalHeaderLabels(strlLabels2);
-    ui.tableWidget_4->setHorizontalHeaderLabels(strlLabels2);
+    ui.tableWidget_op->setHorizontalHeaderLabels(strlLabels);
+    ui.tableWidget_halfop->setHorizontalHeaderLabels(strlLabels);
+    ui.tableWidget_ban->setHorizontalHeaderLabels(strlLabels2);
+    ui.tableWidget_invite->setHorizontalHeaderLabels(strlLabels2);
 
     // prevents crash!
-    ui.tableWidget->setSortingEnabled(false);
-    ui.tableWidget_2->setSortingEnabled(false);
-    ui.tableWidget_3->setSortingEnabled(false);
-    ui.tableWidget_4->setSortingEnabled(false);
+    ui.tableWidget_op->setSortingEnabled(false);
+    ui.tableWidget_halfop->setSortingEnabled(false);
+    ui.tableWidget_ban->setSortingEnabled(false);
+    ui.tableWidget_invite->setSortingEnabled(false);
 
     ui.lineEdit_email->clear();
     ui.lineEdit_website->clear();
@@ -484,6 +483,8 @@ void DlgChannelSettings::showEvent(QShowEvent *event)
     event->accept();
 
     clear();
+
+    ui.label_channel_name->setText(strChannel);
 }
 
 void DlgChannelSettings::hideEvent(QHideEvent *event)

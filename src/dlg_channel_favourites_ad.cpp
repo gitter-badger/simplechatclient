@@ -29,12 +29,12 @@ DlgChannelFavouritesAd::DlgChannelFavouritesAd(Network *param1, QSettings *param
     settings = param2;
     tabc = param3;
     strStatus = param4;
-    ui.lineEdit->setText(param5);
+    ui.lineEdit_channel->setText(param5);
 
     if (strStatus == "add")
-        ui.label->setText(tr("Enter the name of the new channel to add to favorites:"));
+        ui.label_msg->setText(tr("Enter the name of the new channel to add to favorites:"));
     else
-        ui.label->setText(tr("Enter the name of the channel to remove from the favorites:"));
+        ui.label_msg->setText(tr("Enter the name of the channel to remove from the favorites:"));
 
     QObject::connect(ui.buttonBox, SIGNAL(accepted()), this, SLOT(button_ok()));
     QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(button_cancel()));
@@ -42,7 +42,7 @@ DlgChannelFavouritesAd::DlgChannelFavouritesAd(Network *param1, QSettings *param
 
 void DlgChannelFavouritesAd::button_ok()
 {
-    QString strChannel = ui.lineEdit->text();
+    QString strChannel = ui.lineEdit_channel->text();
 
     if (strChannel.isEmpty() == false)
     {

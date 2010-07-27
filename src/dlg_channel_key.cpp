@@ -29,7 +29,7 @@ DlgChannelKey::DlgChannelKey(Network *param1, QSettings *param2, QString param3)
     settings = param2;
     strChannel = param3;
 
-    ui.label->setText(tr("Enter key:"));
+    ui.label_msg->setText(tr("Enter key:"));
 
     QObject::connect(ui.buttonBox, SIGNAL(accepted()), this, SLOT(button_ok()));
     QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(button_cancel()));
@@ -37,7 +37,7 @@ DlgChannelKey::DlgChannelKey(Network *param1, QSettings *param2, QString param3)
 
 void DlgChannelKey::button_ok()
 {
-    QString strKey = ui.lineEdit->text();
+    QString strKey = ui.lineEdit_key->text();
     if (strKey.isEmpty() == false)
     {
         pNetwork->send(QString("JOIN %1 %2").arg(strChannel).arg(strKey));

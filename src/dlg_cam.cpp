@@ -30,7 +30,7 @@ DlgCam::DlgCam(Network *param1, QSettings *param2, QString param3)
     pNetwork = param1;
     settings = param2;
     strNick = param3;
-    ui.label->setText("<p style=\"font-weight:bold;\">"+strNick+"</p>");
+    ui.label_nick->setText("<p style=\"font-weight:bold;\">"+strNick+"</p>");
 }
 
 void DlgCam::show_img(QByteArray bData)
@@ -134,7 +134,7 @@ void DlgCam::network_read()
             qDebug() << "CAM <- " << strDesc;
 #endif
                 QString strStatus = strDesc.right(strDesc.length()-10);
-                ui.textEdit->setText(strStatus);
+                ui.textEdit_desc->setText(strStatus);
             }
         }
         else if (iCam_cmd == 403)
@@ -361,7 +361,7 @@ void DlgCam::showEvent(QShowEvent *event)
     event->accept();
 
     ui.label_img->setText(tr("Starting the service webcams"));
-    ui.textEdit->setText("");
+    ui.textEdit_desc->setText("");
 
     socket = new QTcpSocket();
     socket->setSocketOption(QAbstractSocket::LowDelayOption, 1);

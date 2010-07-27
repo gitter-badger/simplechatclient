@@ -40,14 +40,14 @@
    </property>
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
-     <widget class="QLabel" name="label">
+     <widget class="QLabel" name="label_msg">
       <property name="text">
        <string>Enter key:</string>
       </property>
      </widget>
     </item>
     <item>
-     <widget class="QLineEdit" name="lineEdit"/>
+     <widget class="QLineEdit" name="lineEdit_key"/>
     </item>
     <item>
      <widget class="QDialogButtonBox" name="buttonBox">

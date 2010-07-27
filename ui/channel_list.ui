@@ -23,7 +23,7 @@
    <string>Channel list</string>
   </property>
   <property name="windowIcon">
-   <iconset>
+   <iconset resource="../scc.qrc">
     <normaloff>:/images/logo_64.png</normaloff>:/images/logo_64.png</iconset>
   </property>
   <property name="modal">
@@ -54,7 +54,7 @@
        <attribute name="title">
         <string>Wszystkie</string>
        </attribute>
-       <widget class="QTableWidget" name="tableWidget_1">
+       <widget class="QTableWidget" name="tableWidget_all">
         <property name="geometry">
          <rect>
           <x>0</x>
@@ -104,7 +104,7 @@
        <attribute name="title">
         <string>Teen</string>
        </attribute>
-       <widget class="QTableWidget" name="tableWidget_2">
+       <widget class="QTableWidget" name="tableWidget_teen">
         <property name="geometry">
          <rect>
           <x>0</x>
@@ -154,7 +154,7 @@
        <attribute name="title">
         <string>Towarzyskie</string>
        </attribute>
-       <widget class="QTableWidget" name="tableWidget_3">
+       <widget class="QTableWidget" name="tableWidget_towarzyskie">
         <property name="geometry">
          <rect>
           <x>0</x>
@@ -204,7 +204,7 @@
        <attribute name="title">
         <string>Erotyczne</string>
        </attribute>
-       <widget class="QTableWidget" name="tableWidget_4">
+       <widget class="QTableWidget" name="tableWidget_erotyczne">
         <property name="geometry">
          <rect>
           <x>0</x>
@@ -254,7 +254,7 @@
        <attribute name="title">
         <string>Tematyczne</string>
        </attribute>
-       <widget class="QTableWidget" name="tableWidget_5">
+       <widget class="QTableWidget" name="tableWidget_tematyczne">
         <property name="geometry">
          <rect>
           <x>0</x>
@@ -304,7 +304,7 @@
        <attribute name="title">
         <string>Regionalne</string>
        </attribute>
-       <widget class="QTableWidget" name="tableWidget_6">
+       <widget class="QTableWidget" name="tableWidget_regionalne">
         <property name="geometry">
          <rect>
           <x>0</x>
@@ -362,6 +362,8 @@
    </layout>
   </widget>
  </widget>
- <resources/>
+ <resources>
+  <include location="../scc.qrc"/>
+ </resources>
  <connections/>
 </ui>

@@ -48,7 +48,7 @@
     <set>QDialogButtonBox::Ok</set>
    </property>
   </widget>
-  <widget class="QLabel" name="labelLogo">
+  <widget class="QLabel" name="label_logo">
    <property name="geometry">
     <rect>
      <x>1</x>
@@ -61,7 +61,7 @@
     <string>Logo</string>
    </property>
   </widget>
-  <widget class="QLabel" name="labelDescription">
+  <widget class="QLabel" name="label_description">
    <property name="geometry">
     <rect>
      <x>130</x>
