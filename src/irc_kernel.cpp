@@ -2019,7 +2019,7 @@ void IrcKernel::raw_317()
         strDT_idle = QString("%1h %2m %3s").arg(iDT_h).arg(iDT_m).arg(iDT_s);
     else if ((iDT_d == 0) && (iDT_h == 0) && (iDT_m > 0))
         strDT_idle = QString("%1m %2s").arg(iDT_m).arg(iDT_s);
-    else if ((iDT_d == 0) && (iDT_h == 0) && (iDT_m == 0) && (iDT_s > 0))
+    else if ((iDT_d == 0) && (iDT_h == 0) && (iDT_m == 0) && (iDT_s >= 0))
         strDT_idle = QString("%1s").arg(iDT_s);
 
     QDateTime dt_time = QDateTime::fromTime_t(strTime.toInt());
