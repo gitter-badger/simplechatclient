@@ -234,6 +234,10 @@ void DlgOptions::show_pass()
 
 void DlgOptions::set_modern_style_avatars()
 {
+// save settings
+    save_settings();
+
+// save style
     Config *pConfig = new Config();
     pConfig->set_value("style", "modern");
     settings->setValue("style", "modern");
@@ -253,6 +257,10 @@ void DlgOptions::set_modern_style_avatars()
 
 void DlgOptions::set_modern_style_no_avatars()
 {
+// save settings
+    save_settings();
+
+// save style
     Config *pConfig = new Config();
     pConfig->set_value("style", "modern");
     settings->setValue("style", "modern");
@@ -400,6 +408,10 @@ void DlgOptions::disable_sounds()
 
 void DlgOptions::set_modern_style()
 {
+// save settings
+    save_settings();
+
+// save style
     Config *pConfig = new Config();
     pConfig->set_value("style", "modern");
     settings->setValue("style", "modern");
@@ -417,6 +429,10 @@ void DlgOptions::set_modern_style()
 
 void DlgOptions::set_classic_style()
 {
+// save settings
+    save_settings();
+
+// save style
     Config *pConfig = new Config();
     pConfig->set_value("style", "classic");
     settings->setValue("style", "classic");
@@ -458,6 +474,35 @@ void DlgOptions::button_cancel()
 
 void DlgOptions::button_ok()
 {
+// save
+    save_settings();
+
+// clear
+    ui.lineEdit->clear();
+    ui.lineEdit_2->clear();
+    ui.comboBox->clear();
+    ui.buttonBox->QObject::disconnect();
+    ui.checkBox_101->QObject::disconnect();
+    ui.checkBox_102->QObject::disconnect();
+    ui.checkBox_103->QObject::disconnect();
+    ui.checkBox_104->QObject::disconnect();
+    ui.checkBox_105->QObject::disconnect();
+    ui.checkBox_106->QObject::disconnect();
+    ui.checkBox_107->QObject::disconnect();
+    ui.checkBox_108->QObject::disconnect();
+    ui.radioButton_101->QObject::disconnect();
+    ui.radioButton_102->QObject::disconnect();
+    ui.radioButton_1->QObject::disconnect();
+    ui.radioButton_2->QObject::disconnect();
+    ui.radioButton_3->QObject::disconnect();
+    ui.radioButton_4->QObject::disconnect();
+    ui.radioButton_5->QObject::disconnect();
+    this->close();
+}
+
+void DlgOptions::save_settings()
+{
+// get values
     QString strNick = ui.lineEdit->text();
     QString strBackgroundColor = ui.comboBox->currentText();
 
@@ -485,26 +530,4 @@ void DlgOptions::button_ok()
 
 // save to settings
     settings->setValue("background_color", strBackgroundColor);
-
-// clear
-    ui.lineEdit->clear();
-    ui.lineEdit_2->clear();
-    ui.comboBox->clear();
-    ui.buttonBox->QObject::disconnect();
-    ui.checkBox_101->QObject::disconnect();
-    ui.checkBox_102->QObject::disconnect();
-    ui.checkBox_103->QObject::disconnect();
-    ui.checkBox_104->QObject::disconnect();
-    ui.checkBox_105->QObject::disconnect();
-    ui.checkBox_106->QObject::disconnect();
-    ui.checkBox_107->QObject::disconnect();
-    ui.checkBox_108->QObject::disconnect();
-    ui.radioButton_101->QObject::disconnect();
-    ui.radioButton_102->QObject::disconnect();
-    ui.radioButton_1->QObject::disconnect();
-    ui.radioButton_2->QObject::disconnect();
-    ui.radioButton_3->QObject::disconnect();
-    ui.radioButton_4->QObject::disconnect();
-    ui.radioButton_5->QObject::disconnect();
-    this->close();
 }

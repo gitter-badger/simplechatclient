@@ -38,6 +38,8 @@ private:
     Ui::uiOptions ui;
     QSettings *settings;
 
+    void save_settings();
+
 private slots:
     void change_page(QListWidgetItem *, QListWidgetItem *);
     void hide_pass();
