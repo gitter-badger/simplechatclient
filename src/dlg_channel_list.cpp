@@ -23,6 +23,7 @@
 DlgChannelList::DlgChannelList(QSettings *param1, TabContainer *param2)
 {
     ui.setupUi(this);
+    setWindowTitle(tr("Channel list"));
 
     settings = param1;
     tabc = param2;

@@ -23,11 +23,15 @@
 DlgFriends::DlgFriends(Network *param1, QSettings *param2, TabContainer *param3, QMap <QString, QByteArray> *param4)
 {
     ui.setupUi(this);
+    setWindowTitle(tr("Friends list"));
 
     pNetwork = param1;
     settings = param2;
     tabc = param3;
     mNickAvatar = param4;
+
+    ui.pushButton->setText(tr("Add"));
+    ui.pushButton_2->setText(tr("Remove"));
 
     QObject::connect(ui.pushButton, SIGNAL(clicked()), this, SLOT(button_add()));
     QObject::connect(ui.pushButton_2, SIGNAL(clicked()), this, SLOT(button_remove()));

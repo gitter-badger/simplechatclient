@@ -23,12 +23,18 @@
 DlgPriv::DlgPriv(Network *param1, QSettings *param2, TabContainer *param3, QString param4, QString param5)
 {
     ui.setupUi(this);
+    setWindowTitle(tr("Invitation"));
 
     pNetwork = param1;
     settings = param2;
     tabc = param3;
     strNick = param4;
     strChannel = param5;
+
+    ui.pushButtonWhois->setText(tr("Whois"));
+    ui.pushButtonReject->setText(tr("Reject"));
+    ui.pushButtonIgnore->setText(tr("Ignore"));
+    ui.pushButtonAccept->setText(tr("Accept"));
 
     ui.label->setText(QString(tr("%1 invites you to priv")).arg(strNick));
 

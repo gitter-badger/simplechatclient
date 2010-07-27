@@ -58,7 +58,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>TextLabel</string>
+    <string>Logo</string>
    </property>
   </widget>
   <widget class="QLabel" name="labelDescription">
@@ -71,7 +71,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>TextLabel</string>
+    <string>About</string>
    </property>
    <property name="openExternalLinks">
     <bool>true</bool>

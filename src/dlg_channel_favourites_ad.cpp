@@ -23,6 +23,7 @@
 DlgChannelFavouritesAd::DlgChannelFavouritesAd(Network *param1, QSettings *param2, TabContainer *param3, QString param4, QString param5)
 {
     ui.setupUi(this);
+    setWindowTitle(tr("Change your favorite channels"));
 
     pNetwork = param1;
     settings = param2;

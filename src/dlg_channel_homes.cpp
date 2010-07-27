@@ -23,12 +23,16 @@
 DlgChannelHomes::DlgChannelHomes(Network *param1, QSettings *param2, TabContainer *param3, QMap <QString, QByteArray> *param4, DlgChannelSettings *param5)
 {
     ui.setupUi(this);
+    setWindowTitle(tr("Your channels"));
 
     pNetwork = param1;
     settings = param2;
     tabc = param3;
     mChannelAvatar = param4;
     dlgchannel_settings = param5;
+
+    ui.pushButton->setText(tr("Create"));
+    ui.pushButton_2->setText(tr("Remove"));
 
     QObject::connect(ui.listWidget, SIGNAL(clicked(QModelIndex)), this, SLOT(list_clicked(QModelIndex)));
     QObject::connect(ui.pushButton, SIGNAL(clicked()), this, SLOT(button_create()));

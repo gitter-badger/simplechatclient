@@ -23,7 +23,7 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>Zmiana ulubionych kanałów</string>
+   <string>Change your favorite channels</string>
   </property>
   <property name="windowIcon">
    <iconset resource="../scc.qrc">

@@ -23,8 +23,13 @@
 DlgModeration::DlgModeration(QSettings *param1)
 {
     ui.setupUi(this);
+    setWindowTitle(tr("Moderation"));
 
     settings = param1;
+
+    ui.label->setText(tr(" Channel: "));
+    ui.pushButton->setText(tr("Accept"));
+    ui.pushButton_2->setText(tr("Remove"));
 
     QObject::connect(ui.pushButton, SIGNAL(clicked()), this, SLOT(button_accept()));
     QObject::connect(ui.pushButton_2, SIGNAL(clicked()), this, SLOT(button_remove()));

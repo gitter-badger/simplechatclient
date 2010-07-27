@@ -20,10 +20,10 @@
    </sizepolicy>
   </property>
   <property name="windowTitle">
-   <string>Lista kanałów</string>
+   <string>Channel list</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="../scc.qrc">
+   <iconset>
     <normaloff>:/images/logo_64.png</normaloff>:/images/logo_64.png</iconset>
   </property>
   <property name="modal">
@@ -80,22 +80,22 @@
         </property>
         <column>
          <property name="text">
-          <string>Nazwa kanału</string>
+          <string>Channel name</string>
          </property>
         </column>
         <column>
          <property name="text">
-          <string>Ilość osób</string>
+          <string>Number of persons</string>
          </property>
         </column>
         <column>
          <property name="text">
-          <string>Kategoria</string>
+          <string>Category</string>
          </property>
         </column>
         <column>
          <property name="text">
-          <string>Typ</string>
+          <string>Type</string>
          </property>
         </column>
        </widget>
@@ -130,22 +130,22 @@
         </property>
         <column>
          <property name="text">
-          <string>Nazwa kanału</string>
+          <string>Channel name</string>
          </property>
         </column>
         <column>
          <property name="text">
-          <string>Ilość osób</string>
+          <string>Number of persons</string>
          </property>
         </column>
         <column>
          <property name="text">
-          <string>Kategoria</string>
+          <string>Category</string>
          </property>
         </column>
         <column>
          <property name="text">
-          <string>Typ</string>
+          <string>Type</string>
          </property>
         </column>
        </widget>
@@ -180,22 +180,22 @@
         </property>
         <column>
          <property name="text">
-          <string>Nazwa kanału</string>
+          <string>Channel name</string>
          </property>
         </column>
         <column>
          <property name="text">
-          <string>Ilość osób</string>
+          <string>Number of persons</string>
          </property>
         </column>
         <column>
          <property name="text">
-          <string>Kategoria</string>
+          <string>Category</string>
          </property>
         </column>
         <column>
          <property name="text">
-          <string>Typ</string>
+          <string>Type</string>
          </property>
         </column>
        </widget>
@@ -230,22 +230,22 @@
         </property>
         <column>
          <property name="text">
-          <string>Nazwa kanału</string>
+          <string>Channel name</string>
          </property>
         </column>
         <column>
          <property name="text">
-          <string>Ilość osób</string>
+          <string>Number of persons</string>
          </property>
         </column>
         <column>
          <property name="text">
-          <string>Kategoria</string>
+          <string>Category</string>
          </property>
         </column>
         <column>
          <property name="text">
-          <string>Typ</string>
+          <string>Type</string>
          </property>
         </column>
        </widget>
@@ -280,22 +280,22 @@
         </property>
         <column>
          <property name="text">
-          <string>Nazwa kanału</string>
+          <string>Channel name</string>
          </property>
         </column>
         <column>
          <property name="text">
-          <string>Ilość osób</string>
+          <string>Number of persons</string>
          </property>
         </column>
         <column>
          <property name="text">
-          <string>Kategoria</string>
+          <string>Category</string>
          </property>
         </column>
         <column>
          <property name="text">
-          <string>Typ</string>
+          <string>Type</string>
          </property>
         </column>
        </widget>
@@ -330,22 +330,22 @@
         </property>
         <column>
          <property name="text">
-          <string>Nazwa kanału</string>
+          <string>Channel name</string>
          </property>
         </column>
         <column>
          <property name="text">
-          <string>Ilość osób</string>
+          <string>Number of persons</string>
          </property>
         </column>
         <column>
          <property name="text">
-          <string>Kategoria</string>
+          <string>Category</string>
          </property>
         </column>
         <column>
          <property name="text">
-          <string>Typ</string>
+          <string>Type</string>
          </property>
         </column>
        </widget>
@@ -362,8 +362,6 @@
    </layout>
   </widget>
  </widget>
- <resources>
-  <include location="../scc.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>

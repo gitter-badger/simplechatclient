@@ -23,10 +23,16 @@
 DlgEmail::DlgEmail(QSettings *param1, QString param2, QString param3)
 {
     ui.setupUi(this);
+    setWindowTitle(tr("Change email address"));
 
     settings = param1;
     strChannel = param2;
     strEmail = param3;
+
+    ui.label->setText(tr("Enter the characters you see:"));
+    ui.pushButton->setText(tr("OK"));
+    ui.pushButton_2->setText(tr("Refresh"));
+    ui.pushButton_3->setText(tr("Cancel"));
 
     strChannel = strChannel.right(strChannel.length()-1);
 

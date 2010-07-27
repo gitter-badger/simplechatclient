@@ -23,7 +23,7 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>Powód wyrzucenia</string>
+   <string>Kick</string>
   </property>
   <property name="windowIcon">
    <iconset>
@@ -42,7 +42,7 @@
     <item>
      <widget class="QLabel" name="label">
       <property name="text">
-       <string>Podaj powód wyrzucenia:</string>
+       <string>Reason for kicking:</string>
       </property>
      </widget>
     </item>
@@ -51,7 +51,7 @@
       <item>
        <widget class="QLineEdit" name="lineEdit">
         <property name="text">
-         <string>Zachowuj się! Byle jak ale się zachowuj!</string>
+         <string>No reason</string>
         </property>
         <property name="maxLength">
          <number>255</number>

@@ -23,7 +23,7 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>Moderacja wiadomości</string>
+   <string>Moderation</string>
   </property>
   <property name="windowIcon">
    <iconset>
@@ -44,7 +44,7 @@
       <item>
        <widget class="QLabel" name="label">
         <property name="text">
-         <string> Kanał: </string>
+         <string> Channel: </string>
         </property>
        </widget>
       </item>
@@ -88,14 +88,14 @@
       <item>
        <widget class="QPushButton" name="pushButton">
         <property name="text">
-         <string>Akceptuj</string>
+         <string>Accept</string>
         </property>
        </widget>
       </item>
       <item>
        <widget class="QPushButton" name="pushButton_2">
         <property name="text">
-         <string>Usuń</string>
+         <string>Remove</string>
         </property>
        </widget>
       </item>

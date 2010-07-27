@@ -23,7 +23,7 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>Wymagany klucz</string>
+   <string>Key required</string>
   </property>
   <property name="windowIcon">
    <iconset>
@@ -42,7 +42,7 @@
     <item>
      <widget class="QLabel" name="label">
       <property name="text">
-       <string>Podaj klucz:</string>
+       <string>Enter key:</string>
       </property>
      </widget>
     </item>

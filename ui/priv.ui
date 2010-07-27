@@ -23,7 +23,7 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>Zaproszenie</string>
+   <string>Invitation</string>
   </property>
   <property name="windowIcon">
    <iconset>
@@ -42,7 +42,7 @@
     <item>
      <widget class="QLabel" name="label">
       <property name="text">
-       <string>TextLabel</string>
+       <string>Invite</string>
       </property>
      </widget>
     </item>
@@ -61,21 +61,21 @@
       <item>
        <widget class="QPushButton" name="pushButtonReject">
         <property name="text">
-         <string>Odrzuć</string>
+         <string>Reject</string>
         </property>
        </widget>
       </item>
       <item>
        <widget class="QPushButton" name="pushButtonIgnore">
         <property name="text">
-         <string>Ignoruj</string>
+         <string>Ignore</string>
         </property>
        </widget>
       </item>
       <item>
        <widget class="QPushButton" name="pushButtonAccept">
         <property name="text">
-         <string>Akceptuj</string>
+         <string>Accept</string>
         </property>
        </widget>
       </item>

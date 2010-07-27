@@ -23,10 +23,10 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>Zmiana uprawnień</string>
+   <string>Changing privileges</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="../scc.qrc">
+   <iconset>
     <normaloff>:/images/logo_64.png</normaloff>:/images/logo_64.png</iconset>
   </property>
   <widget class="QLabel" name="label">
@@ -39,7 +39,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>TextLabel</string>
+    <string>Message</string>
    </property>
   </widget>
   <widget class="QDialogButtonBox" name="buttonBox">
@@ -75,8 +75,6 @@
    </property>
   </widget>
  </widget>
- <resources>
-  <include location="../scc.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>

@@ -133,6 +133,10 @@
 <context>
     <name>DlgAbout</name>
     <message>
+        <source>About...</source>
+        <translation>O programie SCC...</translation>
+    </message>
+    <message>
         <source>Version</source>
         <translation>Wersja</translation>
     </message>
@@ -151,6 +155,10 @@
 </context>
 <context>
     <name>DlgCam</name>
+    <message>
+        <source>Webcam</source>
+        <translation>Kamerka</translation>
+    </message>
     <message>
         <source>Error: Failed to send data! [%1]</source>
         <translation>Error: Nie udało się wysłać danych! [%1]</translation>
@@ -213,7 +221,26 @@
     </message>
 </context>
 <context>
+    <name>DlgChannelFavourites</name>
+    <message>
+        <source>Favorite channels</source>
+        <translation>Ulubione kanały</translation>
+    </message>
+    <message>
+        <source>Add</source>
+        <translation>Dodaj</translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation>Usuń</translation>
+    </message>
+</context>
+<context>
     <name>DlgChannelFavouritesAd</name>
+    <message>
+        <source>Change your favorite channels</source>
+        <translation>Zmiana ulubionych kanałów</translation>
+    </message>
     <message>
         <source>Enter the name of the new channel to add to favorites:</source>
         <translation>Podaj nazwę nowego kanału do dodania do ulubionych:</translation>
@@ -224,7 +251,26 @@
     </message>
 </context>
 <context>
+    <name>DlgChannelHomes</name>
+    <message>
+        <source>Your channels</source>
+        <translation>Twoje kanały</translation>
+    </message>
+    <message>
+        <source>Create</source>
+        <translation>Utwórz</translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation>Usuń</translation>
+    </message>
+</context>
+<context>
     <name>DlgChannelHomesAd</name>
+    <message>
+        <source>Changing channels</source>
+        <translation>Zmiana kanałów</translation>
+    </message>
     <message>
         <source>Enter the name of the new channel:</source>
         <translation>Podaj nazwę nowego kanału:</translation>
@@ -239,7 +285,22 @@
     </message>
 </context>
 <context>
+    <name>DlgChannelKey</name>
+    <message>
+        <source>Key required</source>
+        <translation>Wymagany klucz</translation>
+    </message>
+    <message>
+        <source>Enter key:</source>
+        <translation>Podaj klucz:</translation>
+    </message>
+</context>
+<context>
     <name>DlgChannelList</name>
+    <message>
+        <source>Channel list</source>
+        <translation>Lista kanałów</translation>
+    </message>
     <message>
         <source>Channel name</source>
         <translation>Nazwa kanału</translation>
@@ -275,12 +336,51 @@
 <context>
     <name>DlgEmail</name>
     <message>
+        <source>Change email address</source>
+        <translation>Zmiana adresu e-mail</translation>
+    </message>
+    <message>
+        <source>Enter the characters you see:</source>
+        <translation>Przepisz kod z obrazka:</translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translation>OK</translation>
+    </message>
+    <message>
+        <source>Refresh</source>
+        <translation>Odśwież</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Anuluj</translation>
+    </message>
+    <message>
         <source>Unable to download image</source>
         <translation>Nie można pobrać obrazka</translation>
     </message>
 </context>
 <context>
+    <name>DlgFriends</name>
+    <message>
+        <source>Friends list</source>
+        <translation>Lista przyjaciół</translation>
+    </message>
+    <message>
+        <source>Add</source>
+        <translation>Dodaj</translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation>Usuń</translation>
+    </message>
+</context>
+<context>
     <name>DlgFriendsAd</name>
+    <message>
+        <source>Changing your friends list</source>
+        <translation>Zmiana listy przyjaciół</translation>
+    </message>
     <message>
         <source>Enter a nickname to be added:</source>
         <translation>Podaj nazwę nicka do dodania:</translation>
@@ -291,7 +391,26 @@
     </message>
 </context>
 <context>
+    <name>DlgIgnore</name>
+    <message>
+        <source>Ignore list</source>
+        <translation>Lista ignorowanych</translation>
+    </message>
+    <message>
+        <source>Add</source>
+        <translation>Dodaj</translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation>Usuń</translation>
+    </message>
+</context>
+<context>
     <name>DlgIgnoreAd</name>
+    <message>
+        <source>Change your ignore list</source>
+        <translation>Zmiana listy ignorowanych</translation>
+    </message>
     <message>
         <source>Enter a nickname to be added:</source>
         <translation>Podaj nazwę nicka do dodania:</translation>
@@ -304,8 +423,35 @@
 <context>
     <name>DlgKick</name>
     <message>
+        <source>Kick</source>
+        <translation>Kick</translation>
+    </message>
+    <message>
+        <source>Reason for kicking:</source>
+        <translation>Podaj powód wyrzucenia:</translation>
+    </message>
+    <message>
         <source>No reason</source>
         <translation>Zachowuj się! Byle jak ale się zachowuj!</translation>
+    </message>
+</context>
+<context>
+    <name>DlgModeration</name>
+    <message>
+        <source>Moderation</source>
+        <translation>Moderacja wiadomości</translation>
+    </message>
+    <message>
+        <source> Channel: </source>
+        <translation> Kanał: </translation>
+    </message>
+    <message>
+        <source>Accept</source>
+        <translation>Akceptuj</translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation>Usuń</translation>
     </message>
 </context>
 <context>
@@ -326,12 +472,36 @@
 <context>
     <name>DlgPriv</name>
     <message>
+        <source>Invitation</source>
+        <translation>Zaproszenie</translation>
+    </message>
+    <message>
+        <source>Whois</source>
+        <translation>Whois</translation>
+    </message>
+    <message>
+        <source>Reject</source>
+        <translation>Odrzuć</translation>
+    </message>
+    <message>
+        <source>Ignore</source>
+        <translation>Ignoruj</translation>
+    </message>
+    <message>
+        <source>Accept</source>
+        <translation>Akceptuj</translation>
+    </message>
+    <message>
         <source>%1 invites you to priv</source>
         <translation>%1 zaprasza do rozmowy prywatnej</translation>
     </message>
 </context>
 <context>
     <name>DlgPrivilege</name>
+    <message>
+        <source>Changing privileges</source>
+        <translation>Zmiana uprawnień</translation>
+    </message>
     <message>
         <source>The owner of the channel can be only one!</source>
         <translation>Właściciel kanału może być tylko jeden!</translation>
@@ -383,6 +553,10 @@
 </context>
 <context>
     <name>DlgUpdate</name>
+    <message>
+        <source>Update</source>
+        <translation>Aktualizacja</translation>
+    </message>
     <message>
         <source>An update is available. Download the newer version is available from the address:</source>
         <translation>Dostępna jest aktualizacja programu. Pobranie nowszej wersji możliwe jest z adresu:</translation>

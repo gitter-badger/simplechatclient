@@ -23,6 +23,7 @@
 DlgPrivilege::DlgPrivilege(Network *param1, QSettings *param2, QString param3, QString param4, QString param5, QTableWidget *param6, QTableWidget *param7, QTableWidget *param8, QTableWidget *param9)
 {
     ui.setupUi(this);
+    setWindowTitle(tr("Changing privileges"));
 
     pNetwork = param1;
     settings = param2;

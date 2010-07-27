@@ -23,11 +23,15 @@
 DlgKick::DlgKick(Network *param1, QSettings *param2, QString param3, QString param4)
 {
     ui.setupUi(this);
+    setWindowTitle(tr("Kick"));
 
     pNetwork = param1;
     settings = param2;
     strNick = param3;
     strChannel = param4;
+
+    ui.label->setText(tr("Reason for kicking:"));
+    ui.lineEdit->setText(tr("No reason"));
 
     QObject::connect(ui.buttonBox, SIGNAL(accepted()), this, SLOT(button_ok()));
     QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(button_cancel()));

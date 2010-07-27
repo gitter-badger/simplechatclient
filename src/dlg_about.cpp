@@ -24,6 +24,7 @@ DlgAbout::DlgAbout(QWidget *parent, QSettings *param1) : QDialog(parent)
 {
     ui.setupUi(this);
     setAttribute(Qt::WA_DeleteOnClose);
+    setWindowTitle(tr("About..."));
 
     settings = param1;
 

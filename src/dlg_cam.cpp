@@ -25,6 +25,7 @@ DlgCam::DlgCam(Network *param1, QSettings *param2, QString param3)
     ui.setupUi(this);
     setAttribute(Qt::WA_DeleteOnClose);
     setWindowFlags(Qt::Dialog | Qt::WindowStaysOnTopHint);
+    setWindowTitle(tr("Webcam"));
 
     pNetwork = param1;
     settings = param2;

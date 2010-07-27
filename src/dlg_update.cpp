@@ -25,6 +25,7 @@ DlgUpdate::DlgUpdate(QString param1)
     ui.setupUi(this);
     setAttribute(Qt::WA_DeleteOnClose);
     setWindowFlags(Qt::Dialog | Qt::WindowStaysOnTopHint);
+    setWindowTitle(tr("Update"));
 
     strVersion = param1;
 

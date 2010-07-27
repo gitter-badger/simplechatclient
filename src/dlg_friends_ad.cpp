@@ -23,6 +23,7 @@
 DlgFriendsAd::DlgFriendsAd(Network *param1, QSettings *param2, TabContainer *param3, QString param4, QString param5)
 {
     ui.setupUi(this);
+    setWindowTitle(tr("Changing your friends list"));
 
     pNetwork = param1;
     settings = param2;

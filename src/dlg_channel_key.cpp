@@ -23,10 +23,13 @@
 DlgChannelKey::DlgChannelKey(Network *param1, QSettings *param2, QString param3)
 {
     ui.setupUi(this);
+    setWindowTitle(tr("Key required"));
 
     pNetwork = param1;
     settings = param2;
     strChannel = param3;
+
+    ui.label->setText(tr("Enter key:"));
 
     QObject::connect(ui.buttonBox, SIGNAL(accepted()), this, SLOT(button_ok()));
     QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(button_cancel()));
