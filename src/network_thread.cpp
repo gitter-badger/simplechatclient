@@ -222,6 +222,9 @@ void NetworkThread::recv()
 
 void NetworkThread::connected()
 {
+    connectAct->setText(tr("&Disconnect"));
+    connectAct->setIconText(tr("&Disconnect"));
+
     emit show_msg_all(tr("Connected to server"), 9);
 
     Config *pConfig = new Config();

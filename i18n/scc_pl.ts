@@ -1187,6 +1187,10 @@
         <translation>Połączono z serwerem</translation>
     </message>
     <message>
+        <source>&amp;Disconnect</source>
+        <translation>&amp;Rozłącz</translation>
+    </message>
+    <message>
         <source>&amp;Connect</source>
         <translation>&amp;Połącz</translation>
     </message>
