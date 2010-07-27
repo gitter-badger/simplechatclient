@@ -37,7 +37,7 @@ DlgUpdate::DlgUpdate(QString param1)
 #ifdef Q_WS_X11
     strDisplay += "<a href=\"http://sourceforge.net/projects/simplechatclien/files/scc-"+strVersion+".tar.bz2/download\">http://sourceforge.net/projects/simplechatclien/files/scc-"+strVersion+".tar.bz2/download</a>";
 #endif
-    ui.label->setText(strDisplay);
+    ui.label_msg->setText(strDisplay);
 
     QObject::connect(ui.buttonBox, SIGNAL(accepted()), this, SLOT(button_ok()));
 }

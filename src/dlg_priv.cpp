@@ -31,17 +31,17 @@ DlgPriv::DlgPriv(Network *param1, QSettings *param2, TabContainer *param3, QStri
     strNick = param4;
     strChannel = param5;
 
-    ui.pushButtonWhois->setText(tr("Whois"));
-    ui.pushButtonReject->setText(tr("Reject"));
-    ui.pushButtonIgnore->setText(tr("Ignore"));
-    ui.pushButtonAccept->setText(tr("Accept"));
+    ui.pushButton_whois->setText(tr("Whois"));
+    ui.pushButton_reject->setText(tr("Reject"));
+    ui.pushButton_ignore->setText(tr("Ignore"));
+    ui.pushButton_accept->setText(tr("Accept"));
 
-    ui.label->setText(QString(tr("%1 invites you to priv")).arg(strNick));
+    ui.label_msg->setText(QString(tr("%1 invites you to priv")).arg(strNick));
 
-    QObject::connect(ui.pushButtonWhois, SIGNAL(clicked()), this, SLOT(button_whois()));
-    QObject::connect(ui.pushButtonReject, SIGNAL(clicked()), this, SLOT(button_reject()));
-    QObject::connect(ui.pushButtonIgnore, SIGNAL(clicked()), this, SLOT(button_ignore()));
-    QObject::connect(ui.pushButtonAccept, SIGNAL(clicked()), this, SLOT(button_accept()));
+    QObject::connect(ui.pushButton_whois, SIGNAL(clicked()), this, SLOT(button_whois()));
+    QObject::connect(ui.pushButton_reject, SIGNAL(clicked()), this, SLOT(button_reject()));
+    QObject::connect(ui.pushButton_ignore, SIGNAL(clicked()), this, SLOT(button_ignore()));
+    QObject::connect(ui.pushButton_accept, SIGNAL(clicked()), this, SLOT(button_accept()));
 }
 
 void DlgPriv::button_whois()
@@ -53,10 +53,10 @@ void DlgPriv::button_reject()
 {
     pNetwork->send(QString("INVREJECT %1 %2").arg(strNick).arg(strChannel));
 
-    ui.pushButtonWhois->QObject::disconnect();
-    ui.pushButtonAccept->QObject::disconnect();
-    ui.pushButtonIgnore->QObject::disconnect();
-    ui.pushButtonReject->QObject::disconnect();
+    ui.pushButton_whois->QObject::disconnect();
+    ui.pushButton_accept->QObject::disconnect();
+    ui.pushButton_ignore->QObject::disconnect();
+    ui.pushButton_reject->QObject::disconnect();
     this->close();
 }
 
@@ -64,10 +64,10 @@ void DlgPriv::button_ignore()
 {
     pNetwork->send(QString("INVIGNORE %1 %2").arg(strNick).arg(strChannel));
 
-    ui.pushButtonWhois->QObject::disconnect();
-    ui.pushButtonAccept->QObject::disconnect();
-    ui.pushButtonIgnore->QObject::disconnect();
-    ui.pushButtonReject->QObject::disconnect();
+    ui.pushButton_whois->QObject::disconnect();
+    ui.pushButton_accept->QObject::disconnect();
+    ui.pushButton_ignore->QObject::disconnect();
+    ui.pushButton_reject->QObject::disconnect();
     this->close();
 }
 
@@ -78,10 +78,10 @@ void DlgPriv::button_accept()
     strTimerNick = strNick;
     QTimer::singleShot(1000*3, this, SLOT(timer_timeout()));
 
-    ui.pushButtonWhois->QObject::disconnect();
-    ui.pushButtonAccept->QObject::disconnect();
-    ui.pushButtonIgnore->QObject::disconnect();
-    ui.pushButtonReject->QObject::disconnect();
+    ui.pushButton_whois->QObject::disconnect();
+    ui.pushButton_accept->QObject::disconnect();
+    ui.pushButton_ignore->QObject::disconnect();
+    ui.pushButton_reject->QObject::disconnect();
     this->close();
 }
 

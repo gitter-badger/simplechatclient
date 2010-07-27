@@ -30,11 +30,11 @@ DlgIgnore::DlgIgnore(Network *param1, QSettings *param2, TabContainer *param3, Q
     tabc = param3;
     mNickAvatar = param4;
 
-    ui.pushButton->setText(tr("Add"));
-    ui.pushButton_2->setText(tr("Remove"));
+    ui.pushButton_add->setText(tr("Add"));
+    ui.pushButton_remove->setText(tr("Remove"));
 
-    QObject::connect(ui.pushButton, SIGNAL(clicked()), this, SLOT(button_add()));
-    QObject::connect(ui.pushButton_2, SIGNAL(clicked()), this, SLOT(button_remove()));
+    QObject::connect(ui.pushButton_add, SIGNAL(clicked()), this, SLOT(button_add()));
+    QObject::connect(ui.pushButton_remove, SIGNAL(clicked()), this, SLOT(button_remove()));
     QObject::connect(ui.buttonBox, SIGNAL(accepted()), this, SLOT(button_ok()));
     QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(button_cancel()));
 }
@@ -45,11 +45,11 @@ void DlgIgnore::add_ignore(QString strNick)
     {
         QPixmap pixmap;
         pixmap.loadFromData(mNickAvatar->value(strNick));
-        ui.listWidget->addItem(new QListWidgetItem(QIcon(pixmap), strNick));
+        ui.listWidget_nicks->addItem(new QListWidgetItem(QIcon(pixmap), strNick));
     }
     else
     {
-        ui.listWidget->addItem(new QListWidgetItem(QIcon(":/3rdparty/images/people.png"), strNick));
+        ui.listWidget_nicks->addItem(new QListWidgetItem(QIcon(":/3rdparty/images/people.png"), strNick));
         if (settings->value("disable_avatars").toString() == "off")
             pNetwork->send(QString("NS INFO %1 s").arg(strNick));
     }
@@ -57,35 +57,35 @@ void DlgIgnore::add_ignore(QString strNick)
 
 void DlgIgnore::clear()
 {
-    ui.listWidget->clear();
+    ui.listWidget_nicks->clear();
 }
 
 void DlgIgnore::button_add()
 {
-    ui.listWidget->clear();
+    ui.listWidget_nicks->clear();
     (new DlgIgnoreAd(pNetwork, settings, tabc, "add", ""))->show();
 }
 
 void DlgIgnore::button_remove()
 {
     QString strSelected;
-    if (ui.listWidget->selectedItems().count() != 0)
-        strSelected = ui.listWidget->selectedItems().at(0)->text();
+    if (ui.listWidget_nicks->selectedItems().count() != 0)
+        strSelected = ui.listWidget_nicks->selectedItems().at(0)->text();
 
-    ui.listWidget->clear();
+    ui.listWidget_nicks->clear();
 
     (new DlgIgnoreAd(pNetwork, settings, tabc, "remove", strSelected))->show();
 }
 
 void DlgIgnore::button_ok()
 {
-    ui.listWidget->clear();
+    ui.listWidget_nicks->clear();
     this->hide();
 }
 
 void DlgIgnore::button_cancel()
 {
-    ui.listWidget->clear();
+    ui.listWidget_nicks->clear();
     this->hide();
 }
 
@@ -93,6 +93,6 @@ void DlgIgnore::showEvent(QShowEvent *event)
 {
     event->accept();
 
-    ui.listWidget->clear();
+    ui.listWidget_nicks->clear();
     pNetwork->send("NS IGNORE");
 }

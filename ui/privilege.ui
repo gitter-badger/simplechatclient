@@ -26,10 +26,10 @@
    <string>Changing privileges</string>
   </property>
   <property name="windowIcon">
-   <iconset>
+   <iconset resource="../scc.qrc">
     <normaloff>:/images/logo_64.png</normaloff>:/images/logo_64.png</iconset>
   </property>
-  <widget class="QLabel" name="label">
+  <widget class="QLabel" name="label_msg">
    <property name="geometry">
     <rect>
      <x>10</x>
@@ -75,6 +75,8 @@
    </property>
   </widget>
  </widget>
- <resources/>
+ <resources>
+  <include location="../scc.qrc"/>
+ </resources>
  <connections/>
 </ui>

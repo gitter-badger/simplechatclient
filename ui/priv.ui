@@ -40,7 +40,7 @@
    </property>
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
-     <widget class="QLabel" name="label">
+     <widget class="QLabel" name="label_msg">
       <property name="text">
        <string>Invite</string>
       </property>
@@ -49,7 +49,7 @@
     <item>
      <layout class="QHBoxLayout" name="horizontalLayout">
       <item>
-       <widget class="QPushButton" name="pushButtonWhois">
+       <widget class="QPushButton" name="pushButton_whois">
         <property name="text">
          <string>Whois</string>
         </property>
@@ -59,21 +59,21 @@
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="pushButtonReject">
+       <widget class="QPushButton" name="pushButton_reject">
         <property name="text">
          <string>Reject</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="pushButtonIgnore">
+       <widget class="QPushButton" name="pushButton_ignore">
         <property name="text">
          <string>Ignore</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="pushButtonAccept">
+       <widget class="QPushButton" name="pushButton_accept">
         <property name="text">
          <string>Accept</string>
         </property>

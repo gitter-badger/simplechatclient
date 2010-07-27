@@ -30,8 +30,8 @@ DlgKick::DlgKick(Network *param1, QSettings *param2, QString param3, QString par
     strNick = param3;
     strChannel = param4;
 
-    ui.label->setText(tr("Reason for kicking:"));
-    ui.lineEdit->setText(tr("No reason"));
+    ui.label_msg->setText(tr("Reason for kicking:"));
+    ui.lineEdit_reason->setText(tr("No reason"));
 
     QObject::connect(ui.buttonBox, SIGNAL(accepted()), this, SLOT(button_ok()));
     QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(button_cancel()));
@@ -39,7 +39,7 @@ DlgKick::DlgKick(Network *param1, QSettings *param2, QString param3, QString par
 
 void DlgKick::button_ok()
 {
-    QString strReason = ui.lineEdit->text();
+    QString strReason = ui.lineEdit_reason->text();
     if (strReason.isEmpty() == true)
         strReason = tr("No reason");
 

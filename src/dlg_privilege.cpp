@@ -38,30 +38,30 @@ DlgPrivilege::DlgPrivilege(Network *param1, QSettings *param2, QString param3, Q
     if (strAddDel == "add")
     {
         if (strStatus == "owner")
-            ui.label->setText("<p style=\"font-weight:bold;\">"+tr("The owner of the channel can be only one!")+"</p><p>"+tr("Enter the nickname of the new owner:")+"</p>");
+            ui.label_msg->setText("<p style=\"font-weight:bold;\">"+tr("The owner of the channel can be only one!")+"</p><p>"+tr("Enter the nickname of the new owner:")+"</p>");
         else if (strStatus == "op")
-            ui.label->setText(tr("Add super-operator:"));
+            ui.label_msg->setText(tr("Add super-operator:"));
         else if (strStatus == "halfop")
-            ui.label->setText(tr("Add operator:"));
+            ui.label_msg->setText(tr("Add operator:"));
         else if (strStatus == "ban")
-            ui.label->setText(tr("Add ban:"));
+            ui.label_msg->setText(tr("Add ban:"));
         else if (strStatus == "invite")
-            ui.label->setText(tr("Add invitation:"));
+            ui.label_msg->setText(tr("Add invitation:"));
     }
     else
     {
         if (strStatus == "op")
-            ui.label->setText(tr("Remove the super-operator:"));
+            ui.label_msg->setText(tr("Remove the super-operator:"));
         else if (strStatus == "halfop")
-            ui.label->setText(tr("Remove operator:"));
+            ui.label_msg->setText(tr("Remove operator:"));
         else if (strStatus == "ban")
-            ui.label->setText(tr("Remove ban:"));
+            ui.label_msg->setText(tr("Remove ban:"));
         else if (strStatus == "invite")
-            ui.label->setText(tr("Delete invitation:"));
+            ui.label_msg->setText(tr("Delete invitation:"));
         else if (strStatus == "channel")
         {
             ui.lineEdit->setText(strChannel);
-            ui.label->setText("<p style=\"font-weight:bold;\">"+tr("The removal of the channel operation is irreversible!")+"</p>");
+            ui.label_msg->setText("<p style=\"font-weight:bold;\">"+tr("The removal of the channel operation is irreversible!")+"</p>");
         }
     }
 

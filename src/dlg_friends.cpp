@@ -30,11 +30,11 @@ DlgFriends::DlgFriends(Network *param1, QSettings *param2, TabContainer *param3,
     tabc = param3;
     mNickAvatar = param4;
 
-    ui.pushButton->setText(tr("Add"));
-    ui.pushButton_2->setText(tr("Remove"));
+    ui.pushButton_add->setText(tr("Add"));
+    ui.pushButton_remove->setText(tr("Remove"));
 
-    QObject::connect(ui.pushButton, SIGNAL(clicked()), this, SLOT(button_add()));
-    QObject::connect(ui.pushButton_2, SIGNAL(clicked()), this, SLOT(button_remove()));
+    QObject::connect(ui.pushButton_add, SIGNAL(clicked()), this, SLOT(button_add()));
+    QObject::connect(ui.pushButton_remove, SIGNAL(clicked()), this, SLOT(button_remove()));
     QObject::connect(ui.buttonBox, SIGNAL(accepted()), this, SLOT(button_ok()));
     QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(button_cancel()));
 }
@@ -51,8 +51,8 @@ void DlgFriends::remove_friend(QString strNick)
 
 void DlgFriends::refresh()
 {
-    ui.listWidget->clear();
-    ui.listWidget_2->clear();
+    ui.listWidget_online->clear();
+    ui.listWidget_offline->clear();
 
     QMap<QString, bool>::const_iterator i = friends.constBegin();
     while (i != friends.constEnd())
@@ -73,9 +73,9 @@ void DlgFriends::refresh()
         }
 
         if (i.value() == true)
-            ui.listWidget->addItem(item);
+            ui.listWidget_online->addItem(item);
         else
-            ui.listWidget_2->addItem(item);
+            ui.listWidget_offline->addItem(item);
 
         ++i;
     }
@@ -96,13 +96,13 @@ void DlgFriends::button_remove()
     QString strSelected;
     if (ui.tabWidget->currentIndex() == 0)
     {
-        if (ui.listWidget->selectedItems().count() != 0)
-            strSelected = ui.listWidget->selectedItems().at(0)->text();
+        if (ui.listWidget_online->selectedItems().count() != 0)
+            strSelected = ui.listWidget_online->selectedItems().at(0)->text();
     }
     else if (ui.tabWidget->currentIndex() == 1)
     {
-        if (ui.listWidget_2->selectedItems().count() != 0)
-            strSelected = ui.listWidget_2->selectedItems().at(0)->text();
+        if (ui.listWidget_offline->selectedItems().count() != 0)
+            strSelected = ui.listWidget_offline->selectedItems().at(0)->text();
     }
 
     (new DlgFriendsAd(pNetwork, settings, tabc, "remove", strSelected))->show();

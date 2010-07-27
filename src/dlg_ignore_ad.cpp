@@ -29,12 +29,12 @@ DlgIgnoreAd::DlgIgnoreAd(Network *param1, QSettings *param2, TabContainer *param
     settings = param2;
     tabc = param3;
     strStatus = param4;
-    ui.lineEdit->setText(param5);
+    ui.lineEdit_nick->setText(param5);
 
     if (strStatus == "add")
-        ui.label->setText(tr("Enter a nickname to be added:"));
+        ui.label_msg->setText(tr("Enter a nickname to be added:"));
     else
-        ui.label->setText(tr("Enter a nickname for removal:"));
+        ui.label_msg->setText(tr("Enter a nickname for removal:"));
 
     QObject::connect(ui.buttonBox, SIGNAL(accepted()), this, SLOT(button_ok()));
     QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(button_cancel()));
@@ -42,7 +42,7 @@ DlgIgnoreAd::DlgIgnoreAd(Network *param1, QSettings *param2, TabContainer *param
 
 void DlgIgnoreAd::button_ok()
 {
-    QString strNick = ui.lineEdit->text();
+    QString strNick = ui.lineEdit_nick->text();
 
     if (strNick.isEmpty() == false)
     {

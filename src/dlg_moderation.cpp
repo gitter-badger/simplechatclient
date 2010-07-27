@@ -27,14 +27,14 @@ DlgModeration::DlgModeration(QSettings *param1)
 
     settings = param1;
 
-    ui.label->setText(tr(" Channel: "));
-    ui.pushButton->setText(tr("Accept"));
-    ui.pushButton_2->setText(tr("Remove"));
+    ui.label_channel->setText(tr(" Channel: "));
+    ui.pushButton_accept->setText(tr("Accept"));
+    ui.pushButton_remove->setText(tr("Remove"));
 
-    QObject::connect(ui.pushButton, SIGNAL(clicked()), this, SLOT(button_accept()));
-    QObject::connect(ui.pushButton_2, SIGNAL(clicked()), this, SLOT(button_remove()));
+    QObject::connect(ui.pushButton_accept, SIGNAL(clicked()), this, SLOT(button_accept()));
+    QObject::connect(ui.pushButton_remove, SIGNAL(clicked()), this, SLOT(button_remove()));
     QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(button_close()));
-    QObject::connect(ui.comboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(combo_changed(int)));
+    QObject::connect(ui.comboBox_channels, SIGNAL(currentIndexChanged(int)), this, SLOT(combo_changed(int)));
 }
 
 DlgModeration::~DlgModeration()
@@ -52,7 +52,7 @@ void DlgModeration::set_active_channel(QString param1)
 void DlgModeration::add_msg(QString strID, QString strChannel, QString strNick, QString strMessage)
 {
     if (combo_exist(strChannel) == false)
-        ui.comboBox->addItem(strChannel);
+        ui.comboBox_channels->addItem(strChannel);
 
     channel_id.insert(strChannel, strID);
     id_nick.insert(strID, strNick);
@@ -60,7 +60,7 @@ void DlgModeration::add_msg(QString strID, QString strChannel, QString strNick, 
 
     // refresh
     QString strData = QString("<%2> %3").arg(strNick).arg(strMessage);
-    if (ui.comboBox->currentText() == strChannel)
+    if (ui.comboBox_channels->currentText() == strChannel)
     {
         if (exist_in_widget(strData) == false)
         {
@@ -68,7 +68,7 @@ void DlgModeration::add_msg(QString strID, QString strChannel, QString strNick, 
             QString strDT = dt.toString("[hh:mm:ss] ");
             strData = strDT+strData;
 
-            ui.listWidget->insertItem(ui.listWidget->count()-1, strData);
+            ui.listWidget_msg->insertItem(ui.listWidget_msg->count()-1, strData);
         }
     }
 }
@@ -98,18 +98,18 @@ void DlgModeration::del_msg(QString strChannel, QString strData)
     strIDs.clear();
 
     // refresh
-    for (int i = 0; i < ui.listWidget->count(); i++)
+    for (int i = 0; i < ui.listWidget_msg->count(); i++)
     {
-        if (exist_in_list(strChannel, ui.listWidget->item(i)->text()) == false)
-            ui.listWidget->takeItem(i);
+        if (exist_in_list(strChannel, ui.listWidget_msg->item(i)->text()) == false)
+            ui.listWidget_msg->takeItem(i);
     }
 }
 
 bool DlgModeration::exist_in_widget(QString strMsg)
 {
-    for (int i = 0; i < ui.listWidget->count(); i++)
+    for (int i = 0; i < ui.listWidget_msg->count(); i++)
     {
-        QString strCompare = ui.listWidget->item(i)->text();
+        QString strCompare = ui.listWidget_msg->item(i)->text();
         strCompare = strCompare.right(strCompare.length()-11); // minus data
 
         if (strCompare == strMsg)
@@ -138,9 +138,9 @@ bool DlgModeration::exist_in_list(QString strChannel, QString strMsg)
 
 int DlgModeration::combo_id(QString strChannel)
 {
-    for (int i = 0; i < ui.comboBox->count(); i++)
+    for (int i = 0; i < ui.comboBox_channels->count(); i++)
     {
-        if (ui.comboBox->itemText(i) == strChannel)
+        if (ui.comboBox_channels->itemText(i) == strChannel)
             return i;
     }
     return 0;
@@ -148,9 +148,9 @@ int DlgModeration::combo_id(QString strChannel)
 
 bool DlgModeration::combo_exist(QString strChannel)
 {
-    for (int i = 0; i < ui.comboBox->count(); i++)
+    for (int i = 0; i < ui.comboBox_channels->count(); i++)
     {
-        if (ui.comboBox->itemText(i) == strChannel)
+        if (ui.comboBox_channels->itemText(i) == strChannel)
             return true;
     }
     return false;
@@ -158,9 +158,9 @@ bool DlgModeration::combo_exist(QString strChannel)
 
 void DlgModeration::combo_changed(int index)
 {
-    ui.listWidget->clear();
+    ui.listWidget_msg->clear();
 
-    QString strChannel = ui.comboBox->itemText(index);
+    QString strChannel = ui.comboBox_channels->itemText(index);
 
     QList <QString> strIDs = channel_id.values(strChannel);
     for (int i = 0; i < strIDs.count(); i++)
@@ -175,7 +175,7 @@ void DlgModeration::combo_changed(int index)
             QString strDT = dt.toString("[hh:mm:ss] ");
             strData = strDT+strData;
 
-            ui.listWidget->insertItem(ui.listWidget->count()-1, strData);
+            ui.listWidget_msg->insertItem(ui.listWidget_msg->count()-1, strData);
         }
     }
     strIDs.clear();
@@ -183,11 +183,11 @@ void DlgModeration::combo_changed(int index)
 
 void DlgModeration::button_accept()
 {
-    if (ui.listWidget->selectedItems().count() == 0)
+    if (ui.listWidget_msg->selectedItems().count() == 0)
         return;
 
-    QString strChannel = ui.comboBox->currentText();
-    QString strData = ui.listWidget->selectedItems().at(0)->text();
+    QString strChannel = ui.comboBox_channels->currentText();
+    QString strData = ui.listWidget_msg->selectedItems().at(0)->text();
     strData = strData.right(strData.length()-11); // minus date
     QStringList strDataList = strData.split(" ");
 
@@ -208,11 +208,11 @@ void DlgModeration::button_accept()
 
 void DlgModeration::button_remove()
 {
-    if (ui.listWidget->selectedItems().count() == 0)
+    if (ui.listWidget_msg->selectedItems().count() == 0)
         return;
 
-    QString strChannel = ui.comboBox->currentText();
-    QString strData = ui.listWidget->selectedItems().at(0)->text();
+    QString strChannel = ui.comboBox_channels->currentText();
+    QString strData = ui.listWidget_msg->selectedItems().at(0)->text();
     strData = strData.right(strData.length()-11); // minus date
 
     del_msg(strChannel, strData);
@@ -228,6 +228,6 @@ void DlgModeration::showEvent(QShowEvent *event)
     event->accept();
 
     int iId = combo_id(strActiveChannel);
-    ui.comboBox->setCurrentIndex(iId);
+    ui.comboBox_channels->setCurrentIndex(iId);
     combo_changed(iId);
 }

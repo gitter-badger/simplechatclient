@@ -29,10 +29,10 @@ DlgEmail::DlgEmail(QSettings *param1, QString param2, QString param3)
     strChannel = param2;
     strEmail = param3;
 
-    ui.label->setText(tr("Enter the characters you see:"));
-    ui.pushButton->setText(tr("OK"));
-    ui.pushButton_2->setText(tr("Refresh"));
-    ui.pushButton_3->setText(tr("Cancel"));
+    ui.label_msg->setText(tr("Enter the characters you see:"));
+    ui.pushButton_ok->setText(tr("OK"));
+    ui.pushButton_refresh->setText(tr("Refresh"));
+    ui.pushButton_cancel->setText(tr("Cancel"));
 
     strChannel = strChannel.right(strChannel.length()-1);
 
@@ -85,12 +85,12 @@ void DlgEmail::get_img()
         QByteArray bData = pReply->readAll();
         QPixmap pixmap;
         pixmap.loadFromData(bData);
-        ui.label_2->setPixmap(pixmap);
+        ui.label_img->setPixmap(pixmap);
 
         delete pReply;
     }
     else
-        ui.label_2->setText(tr("Unable to download image"));
+        ui.label_img->setText(tr("Unable to download image"));
 }
 
 void DlgEmail::set_email()
@@ -108,7 +108,7 @@ void DlgEmail::set_email()
 
     if (bHost == true)
     {
-        strData = QString("api_function=setChannelEmail&params=a:3:{s:4:\"name\";s:%1:\"%2\";s:5:\"email\";s:%3:\"%4\";s:4:\"code\";s:%5:\"%6\";}").arg(QString::number(strChannel.length())).arg(strChannel).arg(QString::number(strEmail.length())).arg(strEmail).arg(QString::number(ui.lineEdit->text().length())).arg(ui.lineEdit->text());
+        strData = QString("api_function=setChannelEmail&params=a:3:{s:4:\"name\";s:%1:\"%2\";s:5:\"email\";s:%3:\"%4\";s:4:\"code\";s:%5:\"%6\";}").arg(QString::number(strChannel.length())).arg(strChannel).arg(QString::number(strEmail.length())).arg(strEmail).arg(QString::number(ui.lineEdit_code->text().length())).arg(ui.lineEdit_code->text());
         pReply = accessManager.post(QNetworkRequest(QUrl("http://czat.onet.pl/include/ajaxapi.xml.php3")), strData.toAscii());
         QObject::connect(pReply, SIGNAL(finished()), &eventLoop, SLOT(quit()));
         eventLoop.exec();
@@ -121,7 +121,7 @@ void DlgEmail::set_email()
     }
     else
     {
-        ui.lineEdit->clear();
+        ui.lineEdit_code->clear();
         get_img();
     }
 
@@ -144,7 +144,7 @@ void DlgEmail::parse_result(QString strResult)
     }
     else
     {
-        ui.lineEdit->clear();
+        ui.lineEdit_code->clear();
 
         QMessageBox msgBox;
         msgBox.setIcon(QMessageBox::Critical);
@@ -165,6 +165,7 @@ void DlgEmail::button_ok()
 
 void DlgEmail::button_refresh()
 {
+    ui.lineEdit_code->clear();
     get_img();
 }
 
@@ -177,9 +178,9 @@ void DlgEmail::showEvent(QShowEvent *event)
 {
     event->accept();
 
-    QObject::connect(ui.pushButton, SIGNAL(clicked()), this, SLOT(button_ok()));
-    QObject::connect(ui.pushButton_2, SIGNAL(clicked()), this, SLOT(button_refresh()));
-    QObject::connect(ui.pushButton_3, SIGNAL(clicked()), this, SLOT(button_cancel()));
+    QObject::connect(ui.pushButton_ok, SIGNAL(clicked()), this, SLOT(button_ok()));
+    QObject::connect(ui.pushButton_refresh, SIGNAL(clicked()), this, SLOT(button_refresh()));
+    QObject::connect(ui.pushButton_cancel, SIGNAL(clicked()), this, SLOT(button_cancel()));
     get_img();
 }
 
@@ -188,7 +189,7 @@ void DlgEmail::hideEvent(QHideEvent *event)
     event->accept();
 
     delete cookieJar;
-    ui.pushButton->QObject::disconnect();
-    ui.pushButton_2->QObject::disconnect();
-    ui.pushButton_3->QObject::disconnect();
+    ui.pushButton_ok->QObject::disconnect();
+    ui.pushButton_refresh->QObject::disconnect();
+    ui.pushButton_cancel->QObject::disconnect();
 }
