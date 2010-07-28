@@ -1032,6 +1032,10 @@
         <translation>* Kanał %1 nie należy już do kategorii %2 (Ustawił %3)</translation>
     </message>
     <message>
+        <source>* Channel %1 now has a flag %2 (set by %3)</source>
+        <translation>* Kanał %1 ma teraz flage %2 (Ustawił %3)</translation>
+    </message>
+    <message>
         <source>* %1 now has a flag %2 (set by %3)</source>
         <translation>* %1 ma teraz flage %2 (Ustawił %3)</translation>
     </message>

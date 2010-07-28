@@ -754,12 +754,16 @@ void IrcKernel::raw_mode()
                 if (index <= strDataList.size()) // prevent crash!
                 {
                     QString strFlag = plusminus+c;
-                    // flag -l do not need value
                     // flag ntipsmuGQVL do not need value
-                    if ((strFlag != "-l") && (c != "n") && (c != "t") && (c != "i") && (c != "p") && (c != "s") && (c != "m") && (c != "u") && (c != "G") && (c != "Q") && (c != "V") && (c != "L"))
+                    if ((c != "n") && (c != "t") && (c != "i") && (c != "p") && (c != "s") && (c != "m") && (c != "u") && (c != "G") && (c != "Q") && (c != "V") && (c != "L"))
                     {
-                        flag_nick.insert(strFlag, strDataList[index]);
-                        index++;
+                        if (index >= strDataList.size())
+                            flag_nick.insert(strFlag, QString::null);
+                        else
+                        {
+                            flag_nick.insert(strFlag, strDataList[index]);
+                            index++;
+                        }
                     }
                     else
                         flag_nick.insert(strFlag, QString::null);
@@ -849,7 +853,12 @@ void IrcKernel::raw_mode()
             }
 
             else
-                strDisplay = QString(tr("* %1 now has a flag %2 (set by %3)")).arg(strNick).arg(strFlag).arg(strWho);
+            {
+                if (strNick.isEmpty() == true)
+                    strDisplay = QString(tr("* Channel %1 now has a flag %2 (set by %3)")).arg(strNickChannel).arg(strFlag).arg(strWho);
+                else
+                    strDisplay = QString(tr("* %1 now has a flag %2 (set by %3)")).arg(strNick).arg(strFlag).arg(strWho);
+            }
 
             tabc->show_msg(strNickChannel, strDisplay, 5);
             tabc->change_flag(strNick, strNickChannel, strFlag);
