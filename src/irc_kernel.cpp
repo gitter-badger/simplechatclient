@@ -715,6 +715,7 @@ void IrcKernel::raw_kick()
 // :Merovingian!26269559@2294E8.94913F.2EAEC9.11F26D MODE Merovingian :+b
 // :ankaszo!51613093@F4C727.446F67.966AC9.BAAE26 MODE ankaszo -W
 // :ChanServ!service@service.onet MODE #glupia_nazwa +k bum
+// :ChanServ!service@service.onet MODE #bzzzz -l
 // :NickServ!service@service.onet MODE scc_test +r
 // :ChanServ!service@service.onet MODE #scc +ips
 // :ChanServ!service@service.onet MODE #scc +o scc_test
@@ -753,8 +754,9 @@ void IrcKernel::raw_mode()
                 if (index <= strDataList.size()) // prevent crash!
                 {
                     QString strFlag = plusminus+c;
+                    // flag -l do not need value
                     // flag ntipsmuGQVL do not need value
-                    if ((c != "n") && (c != "t") && (c != "i") && (c != "p") && (c != "s") && (c != "m") && (c != "u") && (c != "G") && (c != "Q") && (c != "V") && (c != "L"))
+                    if ((strFlag != "-l") && (c != "n") && (c != "t") && (c != "i") && (c != "p") && (c != "s") && (c != "m") && (c != "u") && (c != "G") && (c != "Q") && (c != "V") && (c != "L"))
                     {
                         flag_nick.insert(strFlag, strDataList[index]);
                         index++;
