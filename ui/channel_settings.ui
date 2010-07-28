@@ -41,9 +41,9 @@
    <property name="currentIndex">
     <number>0</number>
    </property>
-   <widget class="QWidget" name="tab">
+   <widget class="QWidget" name="tab_1">
     <attribute name="title">
-     <string>Ogólne</string>
+     <string>General</string>
     </attribute>
     <widget class="QWidget" name="gridLayoutWidget">
      <property name="geometry">
@@ -58,35 +58,35 @@
       <item row="1" column="0">
        <widget class="QLabel" name="label_owner">
         <property name="text">
-         <string>Właściciel:</string>
+         <string>Owner:</string>
         </property>
        </widget>
       </item>
       <item row="3" column="0">
        <widget class="QLabel" name="label_created">
         <property name="text">
-         <string>Utworzono:</string>
+         <string>Created:</string>
         </property>
        </widget>
       </item>
       <item row="4" column="0">
        <widget class="QLabel" name="label_website">
         <property name="text">
-         <string>Strona kanału:</string>
+         <string>Website:</string>
         </property>
        </widget>
       </item>
       <item row="5" column="0">
        <widget class="QLabel" name="label_topic">
         <property name="text">
-         <string>Temat:</string>
+         <string>Topic:</string>
         </property>
        </widget>
       </item>
       <item row="6" column="0">
        <widget class="QLabel" name="label_desc">
         <property name="text">
-         <string>Opis:</string>
+         <string>Description:</string>
         </property>
        </widget>
       </item>
@@ -100,42 +100,42 @@
       <item row="8" column="0">
        <widget class="QLabel" name="label_category">
         <property name="text">
-         <string>Kategoria:</string>
+         <string>Category:</string>
         </property>
        </widget>
       </item>
       <item row="9" column="0">
        <widget class="QLabel" name="label_guardian">
         <property name="text">
-         <string>Anioł stróż:</string>
+         <string>Guardian:</string>
         </property>
        </widget>
       </item>
       <item row="10" column="0">
        <widget class="QLabel" name="label_password">
         <property name="text">
-         <string>Hasło:</string>
+         <string>Password:</string>
         </property>
        </widget>
       </item>
       <item row="11" column="0">
        <widget class="QLabel" name="label_limit">
         <property name="text">
-         <string>Limit nicków:</string>
+         <string>Limit:</string>
         </property>
        </widget>
       </item>
       <item row="12" column="0">
        <widget class="QLabel" name="label_moderation">
         <property name="text">
-         <string>Moderacja:</string>
+         <string>Moderation:</string>
         </property>
        </widget>
       </item>
       <item row="13" column="0">
        <widget class="QLabel" name="label_auditorium">
         <property name="text">
-         <string>Audytorium:</string>
+         <string>Auditorium:</string>
         </property>
        </widget>
       </item>
@@ -145,20 +145,6 @@
          <widget class="QLabel" name="label_owner_nick">
           <property name="text">
            <string>Unknown</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QPushButton" name="pushButton_transfer">
-          <property name="text">
-           <string>Przekaż</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QPushButton" name="pushButton_remove_channel">
-          <property name="text">
-           <string>Usuń</string>
           </property>
          </widget>
         </item>
@@ -201,7 +187,7 @@
         <item>
          <widget class="QPushButton" name="pushButton_set_password">
           <property name="text">
-           <string>Ustaw</string>
+           <string>Apply</string>
           </property>
          </widget>
         </item>
@@ -218,7 +204,7 @@
         <item>
          <widget class="QPushButton" name="pushButton_set_website">
           <property name="text">
-           <string>Ustaw</string>
+           <string>Apply</string>
           </property>
          </widget>
         </item>
@@ -256,8 +242,14 @@
             <verstretch>0</verstretch>
            </sizepolicy>
           </property>
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>16777215</height>
+           </size>
+          </property>
           <property name="text">
-           <string>Ustaw</string>
+           <string>Apply</string>
           </property>
          </widget>
         </item>
@@ -296,7 +288,7 @@
            </sizepolicy>
           </property>
           <property name="text">
-           <string>Ustaw</string>
+           <string>Apply</string>
           </property>
          </widget>
         </item>
@@ -329,14 +321,14 @@
           <item>
            <widget class="QRadioButton" name="radioButton_status_pub">
             <property name="text">
-             <string>Publiczny</string>
+             <string>Public</string>
             </property>
            </widget>
           </item>
           <item>
            <widget class="QRadioButton" name="radioButton_status_priv">
             <property name="text">
-             <string>Prywatny</string>
+             <string>Private</string>
             </property>
            </widget>
           </item>
@@ -380,7 +372,7 @@
           </size>
          </property>
          <property name="text">
-          <string>Data/Czas</string>
+          <string>Date/Time</string>
          </property>
         </widget>
        </widget>
@@ -406,14 +398,14 @@
           <item>
            <widget class="QRadioButton" name="radioButton_moderation_off">
             <property name="text">
-             <string>Wyłączona</string>
+             <string>Off</string>
             </property>
            </widget>
           </item>
           <item>
            <widget class="QRadioButton" name="radioButton_moderation_on">
             <property name="text">
-             <string>Włączona</string>
+             <string>On</string>
             </property>
            </widget>
           </item>
@@ -442,14 +434,14 @@
           <item>
            <widget class="QRadioButton" name="radioButton_auditorium_off">
             <property name="text">
-             <string>Wyłączone</string>
+             <string>Off</string>
             </property>
            </widget>
           </item>
           <item>
            <widget class="QRadioButton" name="radioButton_auditorium_on">
             <property name="text">
-             <string>Włączone</string>
+             <string>On</string>
             </property>
            </widget>
           </item>
@@ -478,14 +470,14 @@
           <item>
            <widget class="QRadioButton" name="radioButton_guardian_off">
             <property name="text">
-             <string>Wyłączony</string>
+             <string>Inactive</string>
             </property>
            </widget>
           </item>
           <item>
            <widget class="QRadioButton" name="radioButton_guardian_on">
             <property name="text">
-             <string>Włączony</string>
+             <string>Active</string>
             </property>
            </widget>
           </item>
@@ -493,17 +485,17 @@
            <widget class="QComboBox" name="comboBox_guardian_level">
             <item>
              <property name="text">
-              <string>Poziom 1</string>
+              <string>Level 1</string>
              </property>
             </item>
             <item>
              <property name="text">
-              <string>Poziom 2</string>
+              <string>Level 2</string>
              </property>
             </item>
             <item>
              <property name="text">
-              <string>Poziom 3</string>
+              <string>Level 3</string>
              </property>
             </item>
            </widget>
@@ -531,7 +523,7 @@
         <item>
          <widget class="QPushButton" name="pushButton_set_email">
           <property name="text">
-           <string>Ustaw</string>
+           <string>Apply</string>
           </property>
          </widget>
         </item>
@@ -540,23 +532,41 @@
       <item row="0" column="0">
        <widget class="QLabel" name="label_channel">
         <property name="text">
-         <string>Kanał:</string>
+         <string>Channel:</string>
         </property>
        </widget>
       </item>
       <item row="0" column="1">
-       <widget class="QLabel" name="label_channel_name">
-        <property name="text">
-         <string>Channel name</string>
-        </property>
-       </widget>
+       <layout class="QHBoxLayout" name="horizontalLayout_14">
+        <item>
+         <widget class="QLabel" name="label_channel_name">
+          <property name="text">
+           <string>Channel name</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="pushButton_transfer">
+          <property name="text">
+           <string>Transfer</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="pushButton_remove_channel">
+          <property name="text">
+           <string>Destroy</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
       </item>
      </layout>
     </widget>
    </widget>
    <widget class="QWidget" name="tab_2">
     <attribute name="title">
-     <string>Uprawnienia</string>
+     <string>Permissions</string>
     </attribute>
     <widget class="QToolBox" name="toolBox">
      <property name="geometry">
@@ -570,17 +580,17 @@
      <property name="currentIndex">
       <number>2</number>
      </property>
-     <widget class="QWidget" name="page">
+     <widget class="QWidget" name="page_1">
       <property name="geometry">
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>100</width>
-        <height>30</height>
+        <width>561</width>
+        <height>413</height>
        </rect>
       </property>
       <attribute name="label">
-       <string>Super operatorzy</string>
+       <string>Operators</string>
       </attribute>
       <widget class="QWidget" name="verticalLayoutWidget">
        <property name="geometry">
@@ -621,14 +631,14 @@
           <item>
            <widget class="QPushButton" name="pushButton_op_add">
             <property name="text">
-             <string>Dodaj</string>
+             <string>Add</string>
             </property>
            </widget>
           </item>
           <item>
            <widget class="QPushButton" name="pushButton_op_del">
             <property name="text">
-             <string>Usuń</string>
+             <string>Remove</string>
             </property>
            </widget>
           </item>
@@ -642,12 +652,12 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>100</width>
-        <height>30</height>
+        <width>561</width>
+        <height>413</height>
        </rect>
       </property>
       <attribute name="label">
-       <string>Operatorzy</string>
+       <string>Half-operators</string>
       </attribute>
       <widget class="QWidget" name="verticalLayoutWidget_2">
        <property name="geometry">
@@ -688,14 +698,14 @@
           <item>
            <widget class="QPushButton" name="pushButton_halfop_add">
             <property name="text">
-             <string>Dodaj</string>
+             <string>Add</string>
             </property>
            </widget>
           </item>
           <item>
            <widget class="QPushButton" name="pushButton_halfop_del">
             <property name="text">
-             <string>Usuń</string>
+             <string>Remove</string>
             </property>
            </widget>
           </item>
@@ -714,7 +724,7 @@
        </rect>
       </property>
       <attribute name="label">
-       <string>Wyproszeni</string>
+       <string>Banned</string>
       </attribute>
       <widget class="QWidget" name="verticalLayoutWidget_3">
        <property name="geometry">
@@ -750,12 +760,12 @@
           </column>
           <column>
            <property name="text">
-            <string>Założył</string>
+            <string>Created by</string>
            </property>
           </column>
           <column>
            <property name="text">
-            <string>Data/Czas</string>
+            <string>Date/Time</string>
            </property>
           </column>
          </widget>
@@ -765,14 +775,14 @@
           <item>
            <widget class="QPushButton" name="pushButton_ban_add">
             <property name="text">
-             <string>Dodaj</string>
+             <string>Add</string>
             </property>
            </widget>
           </item>
           <item>
            <widget class="QPushButton" name="pushButton_ban_del">
             <property name="text">
-             <string>Usuń</string>
+             <string>Remove</string>
             </property>
            </widget>
           </item>
@@ -786,12 +796,12 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>100</width>
-        <height>30</height>
+        <width>561</width>
+        <height>413</height>
        </rect>
       </property>
       <attribute name="label">
-       <string>Zaproszeni</string>
+       <string>Invited</string>
       </attribute>
       <widget class="QWidget" name="verticalLayoutWidget_4">
        <property name="geometry">
@@ -827,12 +837,12 @@
           </column>
           <column>
            <property name="text">
-            <string>Założył</string>
+            <string>Created by</string>
            </property>
           </column>
           <column>
            <property name="text">
-            <string>Data/Czas</string>
+            <string>Date/Time</string>
            </property>
           </column>
          </widget>
@@ -842,14 +852,14 @@
           <item>
            <widget class="QPushButton" name="pushButton_invite_add">
             <property name="text">
-             <string>Dodaj</string>
+             <string>Add</string>
             </property>
            </widget>
           </item>
           <item>
            <widget class="QPushButton" name="pushButton_invite_del">
             <property name="text">
-             <string>Usuń</string>
+             <string>Remove</string>
             </property>
            </widget>
           </item>

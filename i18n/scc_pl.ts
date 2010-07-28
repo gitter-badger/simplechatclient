@@ -321,6 +321,122 @@
 <context>
     <name>DlgChannelSettings</name>
     <message>
+        <source>General</source>
+        <translation>Ogólne</translation>
+    </message>
+    <message>
+        <source>Permissions</source>
+        <translation>Uprawnienia</translation>
+    </message>
+    <message>
+        <source>Channel:</source>
+        <translation>Kanał:</translation>
+    </message>
+    <message>
+        <source>Apply</source>
+        <translation>Ustaw</translation>
+    </message>
+    <message>
+        <source>Active</source>
+        <translation>Aktywny</translation>
+    </message>
+    <message>
+        <source>Inactive</source>
+        <translation>Nieaktywny</translation>
+    </message>
+    <message>
+        <source>On</source>
+        <translation>Włączone</translation>
+    </message>
+    <message>
+        <source>Off</source>
+        <translation>Wyłączone</translation>
+    </message>
+    <message>
+        <source>Owner:</source>
+        <translation>Właściciel:</translation>
+    </message>
+    <message>
+        <source>Transfer</source>
+        <translation>Przekaż</translation>
+    </message>
+    <message>
+        <source>Destroy</source>
+        <translation>Usuń</translation>
+    </message>
+    <message>
+        <source>Email:</source>
+        <translation>Email:</translation>
+    </message>
+    <message>
+        <source>Created:</source>
+        <translation>Utworzono:</translation>
+    </message>
+    <message>
+        <source>Date/Time</source>
+        <translation>Data/Czas</translation>
+    </message>
+    <message>
+        <source>Website:</source>
+        <translation>Strona kanału:</translation>
+    </message>
+    <message>
+        <source>Topic:</source>
+        <translation>Temat:</translation>
+    </message>
+    <message>
+        <source>Description:</source>
+        <translation>Opis:</translation>
+    </message>
+    <message>
+        <source>Status:</source>
+        <translation>Status:</translation>
+    </message>
+    <message>
+        <source>Public</source>
+        <translation>Publiczny</translation>
+    </message>
+    <message>
+        <source>Private</source>
+        <translation>Prywatny</translation>
+    </message>
+    <message>
+        <source>Category:</source>
+        <translation>Kategoria:</translation>
+    </message>
+    <message>
+        <source>Guardian:</source>
+        <translation>Anioł stróż:</translation>
+    </message>
+    <message>
+        <source>Level 1</source>
+        <translation>Poziom 1</translation>
+    </message>
+    <message>
+        <source>Level 2</source>
+        <translation>Poziom 2</translation>
+    </message>
+    <message>
+        <source>Level 3</source>
+        <translation>Poziom 3</translation>
+    </message>
+    <message>
+        <source>Password:</source>
+        <translation>Hasło:</translation>
+    </message>
+    <message>
+        <source>Limit:</source>
+        <translation>Limit nicków:</translation>
+    </message>
+    <message>
+        <source>Moderation:</source>
+        <translation>Moderacja:</translation>
+    </message>
+    <message>
+        <source>Auditorium:</source>
+        <translation>Audytorium:</translation>
+    </message>
+    <message>
         <source>Nick</source>
         <translation>Nick</translation>
     </message>
@@ -329,8 +445,28 @@
         <translation>Utworzone przez</translation>
     </message>
     <message>
-        <source>Date/Time</source>
-        <translation>Data/Czas</translation>
+        <source>Operators</source>
+        <translation>Super operatorzy</translation>
+    </message>
+    <message>
+        <source>Half-operators</source>
+        <translation>Operatorzy</translation>
+    </message>
+    <message>
+        <source>Banned</source>
+        <translation>Wyproszeni</translation>
+    </message>
+    <message>
+        <source>Invited</source>
+        <translation>Zaproszeni</translation>
+    </message>
+    <message>
+        <source>Add</source>
+        <translation>Dodaj</translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation>Usuń</translation>
     </message>
 </context>
 <context>
