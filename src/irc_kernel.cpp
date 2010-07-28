@@ -63,6 +63,11 @@ void IrcKernel::kernel(QString param1)
     strData = param1;
     strDataList = strData.split(" ");
 
+#ifdef Q_WS_X11
+    if (settings->value("debug").toString() == "on")
+        qDebug() << "<- " << strData;
+#endif
+
     if ((settings->value("debug_all").toString() == "on") && (strDataList.value(1).isEmpty() == false) && (strDataList[1].toLower() != "privmsg"))
        tabc->show_msg("Status", strData, 7);
 
@@ -400,11 +405,6 @@ void IrcKernel::kernel(QString param1)
 #endif
         }
     }
-
-#ifdef Q_WS_X11
-    if (settings->value("debug").toString() == "on")
-        qDebug() << "<- " << strData;
-#endif
 }
 
 // PING :cf1f1.onet
@@ -885,8 +885,8 @@ void IrcKernel::raw_mode()
             QString strFlag = strDataList[3];
             QString strDisplay;
 
-            if (strFlag == "+r") strDisplay = QString(tr("* %1 is marked as restricted")).arg(strNickChannel);
-            else if (strFlag == "-r") strDisplay = QString(tr("* %1 is no longer marked as restricted")).arg(strNickChannel);
+            if (strFlag == "+r") strDisplay = QString(tr("* %1 is marked as registered and identified")).arg(strNickChannel);
+            else if (strFlag == "-r") strDisplay = QString(tr("* %1 is no longer marked as registered and identified")).arg(strNickChannel);
             else if (strFlag == "+b") strDisplay = QString(tr("* %1 is marked as busy")).arg(strNickChannel);
             else if (strFlag == "-b") strDisplay = QString(tr("* %1 is no longer marked as busy")).arg(strNickChannel);
             else

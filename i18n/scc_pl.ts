@@ -996,12 +996,12 @@
         <translation>* %1 ma teraz flage %2</translation>
     </message>
     <message>
-        <source>* %1 is marked as restricted</source>
-        <translation>* %1 jest oznaczony jako ograniczony</translation>
+        <source>* %1 is marked as registered and identified</source>
+        <translation>* %1 jest oznaczony jako zarejestrowany</translation>
     </message>
     <message>
-        <source>* %1 is no longer marked as restricted</source>
-        <translation>* %1 nie jest już oznaczony jako ograniczony</translation>
+        <source>* %1 is no longer marked as registered and identified</source>
+        <translation>* %1 nie jest już oznaczony jako zarejestrowany</translation>
     </message>
     <message>
         <source>* %1 [%2] invites you to channel %3. Write /j %4 to get there</source>
