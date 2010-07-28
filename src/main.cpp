@@ -45,8 +45,36 @@ void crashHandler()
 
     int pid = QCoreApplication::applicationPid();
     QString strPid = QString::number(pid);
+    QString strRandom;
 
-    QString strCommand = "gdb --pid "+ strPid +" -ex \"set logging overwrite on\" -ex \"set logging file "+ path +"/log/crash.txt\" -ex \"set logging on\" -ex \"backtrace\" -ex \"info registers\" -ex \"x/16i $pc\" -ex \"thread apply all backtrace\" -ex \"up\" -ex \"list\" -ex \"quit\"";
+    while(strRandom.length() < 6)
+    {
+        int cat = qrand() % 3;
+
+        // 0-9
+        if (cat == 0)
+        {
+            int i = qrand() % 9;
+            QChar c = i+=48;
+            strRandom += c.toAscii();
+        }
+        // A-Z
+        else if (cat == 1)
+        {
+            int i = qrand() % 25;
+            QChar c = i+=65;
+            strRandom += c.toAscii();
+        }
+        // a-z
+        else if (cat == 2)
+        {
+            int i = qrand() % 25;
+            QChar c = i+=97;
+            strRandom += c.toAscii();
+        }
+    }
+
+    QString strCommand = "gdb --pid "+ strPid +" -ex \"set logging overwrite on\" -ex \"set logging file "+ path +"/log/crash-"+ strRandom +".txt\" -ex \"set logging on\" -ex \"backtrace\" -ex \"info registers\" -ex \"x/16i $pc\" -ex \"thread apply all backtrace\" -ex \"up\" -ex \"list\" -ex \"quit\"";
 
     pProcess.start(strCommand);
     pProcess.waitForFinished();
@@ -81,6 +109,18 @@ static void got_term(int z)
 static void got_hup(int z)
 {
     saveMessage("debug", "error: SIGHUP: HANGUP SIGNAL -- SIGNING OFF!");
+    crashHandler();
+}
+
+static void got_ill(int z)
+{
+    saveMessage("debug", "error: SIGILL: ILL SIGNAL -- SIGNING OFF!");
+    crashHandler();
+}
+
+static void got_abrt(int z)
+{
+    saveMessage("debug", "error: SIGABRT: ABRT SIGNAL -- SIGNING OFF!");
     crashHandler();
 }
 
@@ -127,6 +167,15 @@ int main(int argc, char *argv[])
     // sighup
     sv.sa_handler = got_hup;
     sigaction(SIGHUP, &sv, NULL);
+    // sigpipe
+    sv.sa_handler = SIG_IGN;
+    sigaction(SIGPIPE, &sv, NULL);
+    // sigill
+    sv.sa_handler = got_ill;
+    sigaction(SIGILL, &sv, NULL);
+    // sigabrt
+    sv.sa_handler = got_abrt;
+    sigaction(SIGABRT, &sv, NULL);
 #endif
 
 
