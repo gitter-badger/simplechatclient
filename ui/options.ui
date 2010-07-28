@@ -6,19 +6,19 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>604</width>
+    <width>590</width>
     <height>351</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>604</width>
+    <width>590</width>
     <height>351</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>604</width>
+    <width>590</width>
     <height>351</height>
    </size>
   </property>
@@ -34,7 +34,7 @@
     <rect>
      <x>10</x>
      <y>10</y>
-     <width>581</width>
+     <width>571</width>
      <height>331</height>
     </rect>
    </property>
@@ -43,21 +43,30 @@
      <widget class="QListWidget" name="listWidget_options">
       <property name="maximumSize">
        <size>
-        <width>120</width>
+        <width>110</width>
         <height>329</height>
        </size>
+      </property>
+      <property name="editTriggers">
+       <set>QAbstractItemView::DoubleClicked</set>
       </property>
       <property name="showDropIndicator" stdset="0">
        <bool>false</bool>
       </property>
       <property name="selectionMode">
-       <enum>QAbstractItemView::NoSelection</enum>
+       <enum>QAbstractItemView::SingleSelection</enum>
+      </property>
+      <property name="selectionBehavior">
+       <enum>QAbstractItemView::SelectRows</enum>
       </property>
       <property name="iconSize">
        <size>
         <width>64</width>
         <height>64</height>
        </size>
+      </property>
+      <property name="textElideMode">
+       <enum>Qt::ElideMiddle</enum>
       </property>
       <property name="movement">
        <enum>QListView::Static</enum>
@@ -69,10 +78,16 @@
        <bool>false</bool>
       </property>
       <property name="spacing">
-       <number>15</number>
+       <number>0</number>
       </property>
       <property name="viewMode">
        <enum>QListView::IconMode</enum>
+      </property>
+      <property name="modelColumn">
+       <number>0</number>
+      </property>
+      <property name="uniformItemSizes">
+       <bool>true</bool>
       </property>
       <property name="wordWrap">
        <bool>true</bool>
@@ -231,7 +246,7 @@
            <rect>
             <x>10</x>
             <y>0</y>
-            <width>431</width>
+            <width>441</width>
             <height>291</height>
            </rect>
           </property>
@@ -250,7 +265,7 @@
              <rect>
               <x>10</x>
               <y>0</y>
-              <width>401</width>
+              <width>411</width>
               <height>261</height>
              </rect>
             </property>
@@ -323,7 +338,7 @@
              <rect>
               <x>10</x>
               <y>0</y>
-              <width>401</width>
+              <width>411</width>
               <height>91</height>
              </rect>
             </property>
@@ -354,7 +369,7 @@
              <rect>
               <x>10</x>
               <y>10</y>
-              <width>401</width>
+              <width>411</width>
               <height>241</height>
              </rect>
             </property>

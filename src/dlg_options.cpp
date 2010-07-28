@@ -54,6 +54,7 @@ DlgOptions::DlgOptions(QWidget *parent, QSettings *param1) : QDialog(parent)
     ui.radioButton_classic_style->setText(tr("Classic"));
     ui.label_background_color->setText(tr("Background color:"));
 
+// options list
     QListWidgetItem *basicConfButton = new QListWidgetItem(ui.listWidget_options);
     basicConfButton->setIcon(QIcon(":/images/basic_conf.png"));
     basicConfButton->setText(tr("Basic"));

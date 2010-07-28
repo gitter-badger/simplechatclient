@@ -56,7 +56,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     if (QFile::exists(strConfigFile) == false)
         QTimer::singleShot(1000, this, SLOT(options_dlg()));
 
-// init all
+// config values
     Config *pConfig = new Config();
     QString strAutoBusy = pConfig->get_value("auto_busy");
     QString strDebugAll = pConfig->get_value("debug_all");
@@ -70,8 +70,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     QString strBackgroundColor = pConfig->get_value("background_color");
     delete pConfig;
 
+// settings
     settings.clear();
-    settings.setValue("version", "1.0.6.336");
+    settings.setValue("version", "1.0.6.337");
     settings.setValue("debug", "off");
     settings.setValue("logged", "off");
     settings.setValue("busy", "off");
@@ -93,6 +94,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     settings.setValue("onet_sid", "");
     settings.setValue("onet_uid", "");
 
+// init all
     pTabM = new TabManager(this, &settings);
     setCentralWidget(pTabM);
 
@@ -112,6 +114,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
     pTabC->set_dlg(pDlg_channel_settings, pDlg_moderation);
 
+// welcome
     pTabC->show_msg("Status", "%Fi:courier%"+tr("Welcome to the Simple Chat Client")+" %Ihehe%", 0);
     pTabC->show_msg("Status", "%Fb:courier%%Cff6500%"+tr("Official website")+" SCC%C000000%: http://simplechatclien.sourceforge.net/ %Izaskoczony%", 0);
     pTabC->show_msg("Status", "%Fb:courier%%C008100%"+tr("Official Forum")+" SCC%C000000%: http://simplechatclien.sourceforge.net/forum/ %Ioczko%", 0);
