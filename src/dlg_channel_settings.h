@@ -82,7 +82,7 @@ private slots:
     void guardian_active();
     void guardian_clicked(int);
     void password_changed();
-    void limit_changed(int);
+    void limit_changed();
     void moderated_inactive();
     void moderated_active();
     void auditorium_inactive();

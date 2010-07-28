@@ -61,6 +61,7 @@ DlgChannelSettings::DlgChannelSettings(Network *param1, QSettings *param2)
     ui.label_password->setText(tr("Password:"));
     ui.pushButton_set_password->setText(tr("Apply"));
     ui.label_limit->setText(tr("Limit:"));
+    ui.pushButton_set_limit->setText(tr("Apply"));
     ui.label_moderation->setText(tr("Moderation:"));
     ui.radioButton_moderation_off->setText(tr("Off"));
     ui.radioButton_moderation_on->setText(tr("On"));
@@ -89,7 +90,7 @@ DlgChannelSettings::DlgChannelSettings(Network *param1, QSettings *param2)
     QObject::connect(ui.radioButton_guardian_on, SIGNAL(clicked()), this, SLOT(guardian_active()));
     QObject::connect(ui.comboBox_guardian_level, SIGNAL(activated(int)), this, SLOT(guardian_clicked(int)));
     QObject::connect(ui.pushButton_set_password, SIGNAL(clicked()), this, SLOT(password_changed()));
-    QObject::connect(ui.spinBox_limit, SIGNAL(valueChanged(int)), this, SLOT(limit_changed(int)));
+    QObject::connect(ui.pushButton_set_limit, SIGNAL(clicked()), this, SLOT(limit_changed()));
     QObject::connect(ui.radioButton_moderation_off, SIGNAL(clicked()), this, SLOT(moderated_inactive()));
     QObject::connect(ui.radioButton_moderation_on, SIGNAL(clicked()), this, SLOT(moderated_active()));
     QObject::connect(ui.radioButton_auditorium_off, SIGNAL(clicked()), this, SLOT(auditorium_inactive()));
@@ -345,9 +346,9 @@ void DlgChannelSettings::password_changed()
     pNetwork->send(QString("CS INFO %1").arg(strChannel));
 }
 
-void DlgChannelSettings::limit_changed(int iLimit)
+void DlgChannelSettings::limit_changed()
 {
-    pNetwork->send(QString("CS SET %1 LIMIT %2").arg(strChannel).arg(iLimit));
+    pNetwork->send(QString("CS SET %1 LIMIT %2").arg(strChannel).arg(ui.spinBox_limit->value()));
     pNetwork->send(QString("CS INFO %1").arg(strChannel));
 }
 
