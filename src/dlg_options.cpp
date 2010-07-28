@@ -25,8 +25,34 @@ DlgOptions::DlgOptions(QWidget *parent, QSettings *param1) : QDialog(parent)
     ui.setupUi(this);
     setAttribute(Qt::WA_DeleteOnClose);
     setWindowFlags(Qt::Dialog | Qt::WindowStaysOnTopHint);
+    setWindowTitle(tr("Options"));
 
     settings = param1;
+
+// page basic
+    ui.radioButton_nick_t->setText(tr("Unregistered nickname"));
+    ui.radioButton_nick_s->setText(tr("Registered nickname"));
+    ui.label_nick->setText(tr("Nick:"));
+    ui.label_password->setText(tr("Password:"));
+    ui.groupBox_skins->setTitle(tr("Skins"));
+    ui.radioButton_modern_avatars->setText(tr("Modern"));
+    ui.radioButton_modern_no_avatars->setText(tr("Modern without avatars"));
+    ui.radioButton_classic->setText(tr("Classic"));
+// page adv
+    ui.tabWidget_adv->setTabText(0, tr("Advanced"));
+    ui.tabWidget_adv->setTabText(1, tr("Skins"));
+    ui.tabWidget_adv->setTabText(2, tr("Colors"));
+    ui.checkBox_auto_busy->setText(tr("Busy mode after you log in to chat"));
+    ui.checkBox_debug->setText(tr("Show messages from the server (debug)"));
+    ui.checkBox_show_zuo->setText(tr("Show ZUO"));
+    ui.checkBox_hide_formating->setText(tr("Disable formatting messages"));
+    ui.checkBox_hide_join_part->setText(tr("Hide join/part"));
+    ui.checkBox_disable_avatars->setText(tr("Disable avatars"));
+    ui.checkBox_disable_logs->setText(tr("Disable logs"));
+    ui.checkBox_disable_sounds->setText(tr("Disable sounds"));
+    ui.radioButton_modern_style->setText(tr("Modern"));
+    ui.radioButton_classic_style->setText(tr("Classic"));
+    ui.label_background_color->setText(tr("Background color:"));
 
     QListWidgetItem *basicConfButton = new QListWidgetItem(ui.listWidget_options);
     basicConfButton->setIcon(QIcon(":/images/basic_conf.png"));

@@ -593,6 +593,10 @@
 <context>
     <name>DlgOptions</name>
     <message>
+        <source>Options</source>
+        <translation>Opcje programu</translation>
+    </message>
+    <message>
         <source>Basic</source>
         <translation>Ogólne</translation>
     </message>
@@ -603,6 +607,78 @@
     <message>
         <source>Restart program to apply the changes.</source>
         <translation>Uruchom ponownie program aby zastosować wprowadzone zmiany.</translation>
+    </message>
+    <message>
+        <source>Unregistered nickname</source>
+        <translation>Nick tymczasowy</translation>
+    </message>
+    <message>
+        <source>Registered nickname</source>
+        <translation>Nick stały</translation>
+    </message>
+    <message>
+        <source>Nick:</source>
+        <translation>Login:</translation>
+    </message>
+    <message>
+        <source>Password:</source>
+        <translation>Hasło:</translation>
+    </message>
+    <message>
+        <source>Skins</source>
+        <translation>Wygląd</translation>
+    </message>
+    <message>
+        <source>Modern</source>
+        <translation>Nowoczesny</translation>
+    </message>
+    <message>
+        <source>Modern without avatars</source>
+        <translation>Nowoczesny bez avatarów</translation>
+    </message>
+    <message>
+        <source>Classic</source>
+        <translation>Klasyczny</translation>
+    </message>
+    <message>
+        <source>Colors</source>
+        <translation>Kolory</translation>
+    </message>
+    <message>
+        <source>Busy mode after you log in to chat</source>
+        <translation>Tryb zajętości po zalogowaniu (busy)</translation>
+    </message>
+    <message>
+        <source>Show messages from the server (debug)</source>
+        <translation>Pokazywanie komunikatów serwera</translation>
+    </message>
+    <message>
+        <source>Show ZUO</source>
+        <translation>Pokazywanie ZUO</translation>
+    </message>
+    <message>
+        <source>Disable formatting messages</source>
+        <translation>Wyłączenie formatowania</translation>
+    </message>
+    <message>
+        <source>Hide join/part</source>
+        <translation>Ukrywanie wejść/wyjść</translation>
+    </message>
+    <message>
+        <source>Disable avatars</source>
+        <translation>Wyłączenie avatarów</translation>
+    </message>
+    <message>
+        <source>Disable logs</source>
+        <translation>Wyłączenie logów</translation>
+    </message>
+    <message>
+        <source>Disable sounds</source>
+        <translation>Wyłączenie dzwięków</translation>
+    </message>
+    <message>
+        <source>Background color:</source>
+        <translation>Kolor tła:</translation>
     </message>
 </context>
 <context>

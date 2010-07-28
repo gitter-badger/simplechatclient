@@ -23,7 +23,7 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>Opcje programu</string>
+   <string>Options</string>
   </property>
   <property name="windowIcon">
    <iconset>
@@ -120,7 +120,7 @@
               <item row="0" column="0">
                <widget class="QLabel" name="label_nick">
                 <property name="text">
-                 <string>Login:</string>
+                 <string>Nick:</string>
                 </property>
                </widget>
               </item>
@@ -130,7 +130,7 @@
               <item row="1" column="0">
                <widget class="QLabel" name="label_password">
                 <property name="text">
-                 <string>Hasło:</string>
+                 <string>Password:</string>
                 </property>
                </widget>
               </item>
@@ -146,7 +146,7 @@
            </layout>
           </widget>
          </widget>
-         <widget class="QGroupBox" name="groupBox_appearance">
+         <widget class="QGroupBox" name="groupBox_skins">
           <property name="geometry">
            <rect>
             <x>10</x>
@@ -156,7 +156,7 @@
            </rect>
           </property>
           <property name="title">
-           <string>Wygląd</string>
+           <string>Skins</string>
           </property>
           <widget class="QWidget" name="verticalLayoutWidget_12">
            <property name="geometry">
@@ -171,21 +171,21 @@
             <item>
              <widget class="QRadioButton" name="radioButton_modern_avatars">
               <property name="text">
-               <string>Nowoczesny</string>
+               <string>Modern</string>
               </property>
              </widget>
             </item>
             <item>
              <widget class="QRadioButton" name="radioButton_modern_no_avatars">
               <property name="text">
-               <string>Nowoczesny bez avatarów</string>
+               <string>Modern without avatars</string>
               </property>
              </widget>
             </item>
             <item>
              <widget class="QRadioButton" name="radioButton_classic">
               <property name="text">
-               <string>Klasyczny</string>
+               <string>Classic</string>
               </property>
              </widget>
             </item>
@@ -205,7 +205,7 @@
            <item>
             <widget class="QRadioButton" name="radioButton_nick_t">
              <property name="text">
-              <string>Nick tymczasowy</string>
+              <string>Unregistered nickname</string>
              </property>
              <property name="checkable">
               <bool>true</bool>
@@ -218,7 +218,7 @@
            <item>
             <widget class="QRadioButton" name="radioButton_nick_s">
              <property name="text">
-              <string>Nick stały</string>
+              <string>Registered nickname</string>
              </property>
             </widget>
            </item>
@@ -243,7 +243,7 @@
           </property>
           <widget class="QWidget" name="tab_adv">
            <attribute name="title">
-            <string>Zaawansowane</string>
+            <string>Advanced</string>
            </attribute>
            <widget class="QWidget" name="verticalLayoutWidget_8">
             <property name="geometry">
@@ -258,56 +258,56 @@
              <item>
               <widget class="QCheckBox" name="checkBox_auto_busy">
                <property name="text">
-                <string>Tryb zajętości po zalogowaniu (busy)</string>
+                <string>Busy mode after you log in to chat</string>
                </property>
               </widget>
              </item>
              <item>
               <widget class="QCheckBox" name="checkBox_debug">
                <property name="text">
-                <string>Pokazywanie komunikatów serwera</string>
+                <string>Show messages from the server (debug)</string>
                </property>
               </widget>
              </item>
              <item>
               <widget class="QCheckBox" name="checkBox_show_zuo">
                <property name="text">
-                <string>Pokazywanie ZUO</string>
+                <string>Show ZUO</string>
                </property>
               </widget>
              </item>
              <item>
               <widget class="QCheckBox" name="checkBox_hide_formating">
                <property name="text">
-                <string>Wyłączenie formatowania</string>
+                <string>Disable formatting messages</string>
                </property>
               </widget>
              </item>
              <item>
               <widget class="QCheckBox" name="checkBox_hide_join_part">
                <property name="text">
-                <string>Ukrywanie wejść/wyjść</string>
+                <string>Hide join/part</string>
                </property>
               </widget>
              </item>
              <item>
               <widget class="QCheckBox" name="checkBox_disable_avatars">
                <property name="text">
-                <string>Wyłączenie avatarów</string>
+                <string>Disable avatars</string>
                </property>
               </widget>
              </item>
              <item>
               <widget class="QCheckBox" name="checkBox_disable_logs">
                <property name="text">
-                <string>Wyłączenie logów</string>
+                <string>Disable logs</string>
                </property>
               </widget>
              </item>
              <item>
               <widget class="QCheckBox" name="checkBox_disable_sounds">
                <property name="text">
-                <string>Wyłączenie dzwięków</string>
+                <string>Disable sounds</string>
                </property>
               </widget>
              </item>
@@ -316,7 +316,7 @@
           </widget>
           <widget class="QWidget" name="tab_style">
            <attribute name="title">
-            <string>Style</string>
+            <string>Skins</string>
            </attribute>
            <widget class="QWidget" name="verticalLayoutWidget_10">
             <property name="geometry">
@@ -347,7 +347,7 @@
           </widget>
           <widget class="QWidget" name="tab_appearance">
            <attribute name="title">
-            <string>Wygląd</string>
+            <string>Colors</string>
            </attribute>
            <widget class="QWidget" name="verticalLayoutWidget_11">
             <property name="geometry">
@@ -367,7 +367,7 @@
                <item row="0" column="0">
                 <widget class="QLabel" name="label_background_color">
                  <property name="text">
-                  <string>Kolor tła:</string>
+                  <string>Background color:</string>
                  </property>
                 </widget>
                </item>
