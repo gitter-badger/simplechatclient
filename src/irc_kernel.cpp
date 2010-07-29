@@ -980,17 +980,7 @@ void IrcKernel::raw_invite()
     if (strWhere[0] == ':')
         strWhere = strWhere.right(strWhere.length()-1);
 
-    // priv
-    if (strWhere[0] == '^')
-    {
-        (new DlgPriv(pNetwork, settings, tabc, strWho, strWhere))->show();
-    }
-    // channel
-    else
-    {
-        QString strDisplay = QString(tr("* %1 [%2] invites you to channel %3. Write /j %4 to get there")).arg(strWho).arg(strIP).arg(strWhere).arg(strWhere);
-        tabc->show_msg_active(strDisplay, 7);
-    }
+    (new DlgInvite(pNetwork, settings, tabc, strWho, strWhere))->show();
 }
 
 // :cf1f3.onet TOPIC #scc :Simple Chat Client; current version: beta;

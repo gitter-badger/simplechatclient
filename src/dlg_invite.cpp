@@ -18,9 +18,9 @@
  *                                                                          *
  ****************************************************************************/
 
-#include "dlg_priv.h"
+#include "dlg_invite.h"
 
-DlgPriv::DlgPriv(Network *param1, QSettings *param2, TabContainer *param3, QString param4, QString param5)
+DlgInvite::DlgInvite(Network *param1, QSettings *param2, TabContainer *param3, QString param4, QString param5)
 {
     ui.setupUi(this);
     setWindowTitle(tr("Invitation"));
@@ -36,7 +36,10 @@ DlgPriv::DlgPriv(Network *param1, QSettings *param2, TabContainer *param3, QStri
     ui.pushButton_ignore->setText(tr("Ignore"));
     ui.pushButton_accept->setText(tr("Accept"));
 
-    ui.label_msg->setText(QString(tr("%1 invites you to priv")).arg(strNick));
+    if (strChannel[0] == '^')
+        ui.label_msg->setText(QString(tr("%1 invites you to priv")).arg(strNick));
+    else
+        ui.label_msg->setText(QString(tr("%1 invites you to channel %2")).arg(strNick).arg(strChannel));
 
     QObject::connect(ui.pushButton_whois, SIGNAL(clicked()), this, SLOT(button_whois()));
     QObject::connect(ui.pushButton_reject, SIGNAL(clicked()), this, SLOT(button_reject()));
@@ -44,12 +47,12 @@ DlgPriv::DlgPriv(Network *param1, QSettings *param2, TabContainer *param3, QStri
     QObject::connect(ui.pushButton_accept, SIGNAL(clicked()), this, SLOT(button_accept()));
 }
 
-void DlgPriv::button_whois()
+void DlgInvite::button_whois()
 {
     pNetwork->send(QString("WHOIS %1 %1").arg(strNick));
 }
 
-void DlgPriv::button_reject()
+void DlgInvite::button_reject()
 {
     pNetwork->send(QString("INVREJECT %1 %2").arg(strNick).arg(strChannel));
 
@@ -60,7 +63,7 @@ void DlgPriv::button_reject()
     this->close();
 }
 
-void DlgPriv::button_ignore()
+void DlgInvite::button_ignore()
 {
     pNetwork->send(QString("INVIGNORE %1 %2").arg(strNick).arg(strChannel));
 
@@ -71,12 +74,17 @@ void DlgPriv::button_ignore()
     this->close();
 }
 
-void DlgPriv::button_accept()
+void DlgInvite::button_accept()
 {
     pNetwork->send(QString("JOIN %1").arg(strChannel));
-    strTimerChannel = strChannel;
-    strTimerNick = strNick;
-    QTimer::singleShot(1000*3, this, SLOT(timer_timeout()));
+
+// rename if priv
+    if (strChannel[0] == '^')
+    {
+        strTimerChannel = strChannel;
+        strTimerNick = strNick;
+        QTimer::singleShot(1000*3, this, SLOT(timer_timeout()));
+    }
 
     ui.pushButton_whois->QObject::disconnect();
     ui.pushButton_accept->QObject::disconnect();
@@ -85,7 +93,7 @@ void DlgPriv::button_accept()
     this->close();
 }
 
-void DlgPriv::timer_timeout()
+void DlgInvite::timer_timeout()
 {
     tabc->rename_tab(strTimerChannel, strTimerNick);
     strTimerChannel = QString::null;

@@ -33,7 +33,7 @@
 #include "dlg_friends.h"
 #include "dlg_ignore.h"
 #include "dlg_moderation.h"
-#include "dlg_priv.h"
+#include "dlg_invite.h"
 #include "irc_auth.h"
 #include "network.h"
 #include "nick_avatar.h"

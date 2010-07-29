@@ -24,16 +24,16 @@
 #include <QDialog>
 #include "network.h"
 #include "tab_container.h"
-#include "ui_priv.h"
+#include "ui_invite.h"
 
-class DlgPriv : public QDialog
+class DlgInvite : public QDialog
 {
     Q_OBJECT
 public:
-    DlgPriv(Network *, QSettings *, TabContainer *, QString, QString);
+    DlgInvite(Network *, QSettings *, TabContainer *, QString, QString);
 
 private:
-    Ui::uiPriv ui;
+    Ui::uiInvite ui;
     Network *pNetwork;
     QSettings *settings;
     TabContainer *tabc;

@@ -27,9 +27,9 @@ SOURCES += src/channel_avatar.cpp \
     src/dlg_friends_ad.cpp \
     src/dlg_ignore.cpp \
     src/dlg_ignore_ad.cpp \
+    src/dlg_invite.cpp \
     src/dlg_moderation.cpp \
     src/dlg_options.cpp \
-    src/dlg_priv.cpp \
     src/dlg_privilege.cpp \
     src/dlg_update.cpp \
     src/irc_auth.cpp \
@@ -70,9 +70,9 @@ HEADERS += src/channel_avatar.h \
     src/dlg_friends_ad.h \
     src/dlg_ignore.h \
     src/dlg_ignore_ad.h \
+    src/dlg_invite.h \
     src/dlg_moderation.h \
     src/dlg_options.h \
-    src/dlg_priv.h \
     src/dlg_privilege.h \
     src/dlg_update.h \
     src/irc_auth.h \
@@ -108,9 +108,9 @@ FORMS += ui/about.ui \
     ui/friends_ad.ui \
     ui/ignore.ui \
     ui/ignore_ad.ui \
+    ui/invite.ui \
     ui/kick.ui \
     ui/moderation.ui \
     ui/options.ui \
-    ui/priv.ui \
     ui/privilege.ui \
     ui/update.ui

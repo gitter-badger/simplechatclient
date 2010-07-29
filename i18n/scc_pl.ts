@@ -581,6 +581,37 @@
     </message>
 </context>
 <context>
+    <name>DlgInvite</name>
+    <message>
+        <source>Invitation</source>
+        <translation>Zaproszenie</translation>
+    </message>
+    <message>
+        <source>Whois</source>
+        <translation>Whois</translation>
+    </message>
+    <message>
+        <source>Reject</source>
+        <translation>Odrzuć</translation>
+    </message>
+    <message>
+        <source>Ignore</source>
+        <translation>Ignoruj</translation>
+    </message>
+    <message>
+        <source>Accept</source>
+        <translation>Akceptuj</translation>
+    </message>
+    <message>
+        <source>%1 invites you to channel %2</source>
+        <translation>%1 zaprasza Cie do kanału %2</translation>
+    </message>
+    <message>
+        <source>%1 invites you to priv</source>
+        <translation>%1 zaprasza Cie do rozmowy prywatnej</translation>
+    </message>
+</context>
+<context>
     <name>DlgKick</name>
     <message>
         <source>Kick</source>
@@ -703,33 +734,6 @@
     <message>
         <source>Background color:</source>
         <translation>Kolor tła:</translation>
-    </message>
-</context>
-<context>
-    <name>DlgPriv</name>
-    <message>
-        <source>Invitation</source>
-        <translation>Zaproszenie</translation>
-    </message>
-    <message>
-        <source>Whois</source>
-        <translation>Whois</translation>
-    </message>
-    <message>
-        <source>Reject</source>
-        <translation>Odrzuć</translation>
-    </message>
-    <message>
-        <source>Ignore</source>
-        <translation>Ignoruj</translation>
-    </message>
-    <message>
-        <source>Accept</source>
-        <translation>Akceptuj</translation>
-    </message>
-    <message>
-        <source>%1 invites you to priv</source>
-        <translation>%1 zaprasza do rozmowy prywatnej</translation>
     </message>
 </context>
 <context>
@@ -1110,10 +1114,6 @@
     <message>
         <source>* %1 is no longer marked as registered and identified</source>
         <translation>* %1 nie jest już oznaczony jako zarejestrowany</translation>
-    </message>
-    <message>
-        <source>* %1 [%2] invites you to channel %3. Write /j %4 to get there</source>
-        <translation>* %1[%2] zaprasza Cie do kanału %3. Napisz /j %4 aby tam wejść</translation>
     </message>
     <message>
         <source>* %1 changed the topic to: %2</source>
