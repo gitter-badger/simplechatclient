@@ -48,7 +48,7 @@
        <enum>QListView::Static</enum>
       </property>
       <property name="viewMode">
-       <enum>QListView::IconMode</enum>
+       <enum>QListView::ListMode</enum>
       </property>
       <property name="sortingEnabled">
        <bool>true</bool>
