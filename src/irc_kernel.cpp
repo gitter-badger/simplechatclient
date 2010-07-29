@@ -826,9 +826,9 @@ void IrcKernel::raw_mode()
             else if (strFlag.at(1) == QChar('F'))
             {
                 QString strStatus;
-                if (strNick == "1") strStatus = "Oswojony";
-                else if (strNick == "2") strStatus = "Z klasą";
-                else if (strNick == "3") strStatus = "Kultowy";
+                if (strNick == "1") strStatus = tr("Tame");
+                else if (strNick == "2") strStatus = tr("With class");
+                else if (strNick == "3") strStatus = tr("Cult");
                 else strStatus = "unknown";
 
                 if (strFlag.at(0) == QChar('+'))
@@ -839,11 +839,11 @@ void IrcKernel::raw_mode()
             else if (strFlag.at(1) == QChar('c'))
             {
                 QString strCategory;
-                if (strNick == "1") strCategory = "Teen";
-                else if (strNick == "2") strCategory = "Towarzyskie";
-                else if (strNick == "3") strCategory = "Erotyczne";
-                else if (strNick == "4") strCategory = "Tematyczne";
-                else if (strNick == "5") strCategory = "Regionalne";
+                if (strNick == "1") strCategory = tr("Teen");
+                else if (strNick == "2") strCategory = tr("Common");
+                else if (strNick == "3") strCategory = tr("Erotic");
+                else if (strNick == "4") strCategory = tr("Thematic");
+                else if (strNick == "5") strCategory = tr("Regional");
                 else strCategory = "unknown";
 
                 if (strFlag.at(0) == QChar('+'))
@@ -3043,40 +3043,40 @@ void IrcKernel::raw_819()
         switch(l)
         {
             case 1:
-                strChannelType = "Teen";
+                strChannelType = tr("Teen");
                 break;
             case 2:
-                strChannelType = "Towarzyskie";
+                strChannelType = tr("Common");
                 break;
             case 3:
-                strChannelType = "Erotyczne";
+                strChannelType = tr("Erotic");
                 break;
             case 4:
-                strChannelType = "Tematyczne";
+                strChannelType = tr("Thematic");
                 break;
             case 5:
-                strChannelType = "Regionalne";
+                strChannelType = tr("Regional");
                 break;
         }
 
         if (flag == true)
-            strChannelCat += "Moderowany ";
+            strChannelCat += tr("Moderated")+" ";
         if (flag1 == true)
-            strChannelCat += "Polecany ";
+            strChannelCat += tr("Recommended")+" ";
 
         switch(k)
         {
             case 0:
-                strChannelCat = "Dziki " + strChannelCat;
+                strChannelCat = tr("Wild")+" "+ strChannelCat;
                 break;
             case 1:
-                strChannelCat = "Oswojony " + strChannelCat;
+                strChannelCat = tr("Tame")+" "+ strChannelCat;
                 break;
             case 2:
-                strChannelCat = "Z klasą " + strChannelCat;
+                strChannelCat = tr("With class")+" "+ strChannelCat;
                 break;
             case 3:
-                strChannelCat = "Kultowy " + strChannelCat;
+                strChannelCat = tr("Cult")+" "+ strChannelCat;
                 break;
         }
 

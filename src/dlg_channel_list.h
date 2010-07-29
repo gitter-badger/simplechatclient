@@ -41,10 +41,10 @@ private:
     TabContainer *tabc;
     QList < QList<QString> > list_all;
     QList < QList<QString> > list_teen;
-    QList < QList<QString> > list_towarzyskie;
-    QList < QList<QString> > list_erotyczne;
-    QList < QList<QString> > list_tematyczne;
-    QList < QList<QString> > list_regionalne;
+    QList < QList<QString> > list_common;
+    QList < QList<QString> > list_erotic;
+    QList < QList<QString> > list_thematic;
+    QList < QList<QString> > list_regional;
 
     void quickSort(QList< QList<QString> > *, int, int);
 
@@ -55,10 +55,10 @@ protected:
 private slots:
     void all_CellDoubleClicked(int, int);
     void teen_CellDoubleClicked(int, int);
-    void towarzyskie_CellDoubleClicked(int, int);
-    void erotyczne_CellDoubleClicked(int, int);
-    void tematyczne_CellDoubleClicked(int, int);
-    void regionalne_CellDoubleClicked(int, int);
+    void common_CellDoubleClicked(int, int);
+    void erotic_CellDoubleClicked(int, int);
+    void thematic_CellDoubleClicked(int, int);
+    void regional_CellDoubleClicked(int, int);
     void button_ok();
     void button_cancel();
 

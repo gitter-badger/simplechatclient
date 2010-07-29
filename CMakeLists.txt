@@ -3,7 +3,7 @@
 
 project (scc)
 cmake_minimum_required (VERSION 2.8.0 FATAL_ERROR)
-set (QT_MIN_VERSION "4.6.2")
+set (QT_MIN_VERSION "4.6.3")
 find_package (Qt4 REQUIRED)
 
 # include

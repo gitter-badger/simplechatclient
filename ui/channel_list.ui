@@ -23,7 +23,7 @@
    <string>Channel list</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="../scc.qrc">
+   <iconset>
     <normaloff>:/images/logo_64.png</normaloff>:/images/logo_64.png</iconset>
   </property>
   <property name="modal">
@@ -52,7 +52,7 @@
       </property>
       <widget class="QWidget" name="tab_1">
        <attribute name="title">
-        <string>Wszystkie</string>
+        <string>All</string>
        </attribute>
        <widget class="QTableWidget" name="tableWidget_all">
         <property name="geometry">
@@ -152,9 +152,9 @@
       </widget>
       <widget class="QWidget" name="tab_3">
        <attribute name="title">
-        <string>Towarzyskie</string>
+        <string>Common</string>
        </attribute>
-       <widget class="QTableWidget" name="tableWidget_towarzyskie">
+       <widget class="QTableWidget" name="tableWidget_common">
         <property name="geometry">
          <rect>
           <x>0</x>
@@ -202,9 +202,9 @@
       </widget>
       <widget class="QWidget" name="tab_4">
        <attribute name="title">
-        <string>Erotyczne</string>
+        <string>Erotic</string>
        </attribute>
-       <widget class="QTableWidget" name="tableWidget_erotyczne">
+       <widget class="QTableWidget" name="tableWidget_erotic">
         <property name="geometry">
          <rect>
           <x>0</x>
@@ -252,9 +252,9 @@
       </widget>
       <widget class="QWidget" name="tab_5">
        <attribute name="title">
-        <string>Tematyczne</string>
+        <string>Thematic</string>
        </attribute>
-       <widget class="QTableWidget" name="tableWidget_tematyczne">
+       <widget class="QTableWidget" name="tableWidget_thematic">
         <property name="geometry">
          <rect>
           <x>0</x>
@@ -302,9 +302,9 @@
       </widget>
       <widget class="QWidget" name="tab_6">
        <attribute name="title">
-        <string>Regionalne</string>
+        <string>Regional</string>
        </attribute>
-       <widget class="QTableWidget" name="tableWidget_regionalne">
+       <widget class="QTableWidget" name="tableWidget_regional">
         <property name="geometry">
          <rect>
           <x>0</x>
@@ -362,8 +362,6 @@
    </layout>
   </widget>
  </widget>
- <resources>
-  <include location="../scc.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>

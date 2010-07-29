@@ -317,6 +317,30 @@
         <source>Type</source>
         <translation>Typ</translation>
     </message>
+    <message>
+        <source>All</source>
+        <translation>Wszystkie</translation>
+    </message>
+    <message>
+        <source>Teen</source>
+        <translation>Teen</translation>
+    </message>
+    <message>
+        <source>Common</source>
+        <translation>Towarzyskie</translation>
+    </message>
+    <message>
+        <source>Erotic</source>
+        <translation>Erotyczne</translation>
+    </message>
+    <message>
+        <source>Thematic</source>
+        <translation>Tematyczne</translation>
+    </message>
+    <message>
+        <source>Regional</source>
+        <translation>Regionalne</translation>
+    </message>
 </context>
 <context>
     <name>DlgChannelSettings</name>
@@ -1450,6 +1474,50 @@
     <message>
         <source>* %1 has public webcam</source>
         <translation>* %1 ma włączoną kamerę</translation>
+    </message>
+    <message>
+        <source>Teen</source>
+        <translation>Teen</translation>
+    </message>
+    <message>
+        <source>Common</source>
+        <translation>Towarzyskie</translation>
+    </message>
+    <message>
+        <source>Erotic</source>
+        <translation>Erotyczne</translation>
+    </message>
+    <message>
+        <source>Thematic</source>
+        <translation>Tematyczne</translation>
+    </message>
+    <message>
+        <source>Regional</source>
+        <translation>Regionalne</translation>
+    </message>
+    <message>
+        <source>Moderated</source>
+        <translation>Moderowany</translation>
+    </message>
+    <message>
+        <source>Recommended</source>
+        <translation>Polecany</translation>
+    </message>
+    <message>
+        <source>Wild</source>
+        <translation>Dziki</translation>
+    </message>
+    <message>
+        <source>Tame</source>
+        <translation>Oswojony</translation>
+    </message>
+    <message>
+        <source>With class</source>
+        <translation>Z klasą</translation>
+    </message>
+    <message>
+        <source>Cult</source>
+        <translation>Kultowy</translation>
     </message>
     <message>
         <source>* Channel %1 is not moderated</source>
