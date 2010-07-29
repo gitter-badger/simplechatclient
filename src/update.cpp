@@ -54,7 +54,7 @@ void Updater::check_for_updates(QString param1)
         tabc->show_msg("Status", tr("You are using a test version."), 0);
     else if (iCurrentRev < iAvailableRev)
     {
-        tabc->show_msg("Status", tr("A required update to version: ")+strAvailableVersion, 0);
+        tabc->show_msg("Status", tr("A new version is available."), 0);
         (new DlgUpdate(strAvailableVersion))->show();
     }
 }

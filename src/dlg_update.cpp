@@ -29,14 +29,15 @@ DlgUpdate::DlgUpdate(QString param1)
 
     strVersion = param1;
 
-    QString strDisplay;
-    strDisplay += tr("An update is available. Download the newer version is available from the address:")+"<br>";
+    QString strLink;
 #ifdef Q_WS_WIN
-    strDisplay += "<a href=\"http://sourceforge.net/projects/simplechatclien/files/scc-"+strVersion+".msi/download\">http://sourceforge.net/projects/simplechatclien/files/scc-"+strVersion+".msi/download</a>";
+    strLink += QString("<a href=\"http://sourceforge.net/projects/simplechatclien/files/scc-"+strVersion+".msi/download\">%1</a>").arg(tr("download"));
 #endif
 #ifdef Q_WS_X11
-    strDisplay += "<a href=\"http://sourceforge.net/projects/simplechatclien/files/scc-"+strVersion+".tar.bz2/download\">http://sourceforge.net/projects/simplechatclien/files/scc-"+strVersion+".tar.bz2/download</a>";
+    strLink += QString("<a href=\"http://sourceforge.net/projects/simplechatclien/files/scc-"+strVersion+".tar.bz2/download\">%1</a>").arg(tr("download"));
 #endif
+
+    QString strDisplay = QString(tr("A new version %1 is available. Please %2 an installer and upgrade.").arg(strVersion).arg(strLink));
     ui.label_msg->setText(strDisplay);
 
     QObject::connect(ui.buttonBox, SIGNAL(accepted()), this, SLOT(button_ok()));
@@ -45,7 +46,6 @@ DlgUpdate::DlgUpdate(QString param1)
 void DlgUpdate::button_ok()
 {
     this->close();
-    exit(0);
 }
 
 void DlgUpdate::hideEvent(QHideEvent *event)
@@ -53,5 +53,4 @@ void DlgUpdate::hideEvent(QHideEvent *event)
     event->accept();
 
     ui.buttonBox->QObject::disconnect();
-    exit(0);
 }

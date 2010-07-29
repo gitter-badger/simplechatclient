@@ -770,8 +770,12 @@
         <translation>Aktualizacja</translation>
     </message>
     <message>
-        <source>An update is available. Download the newer version is available from the address:</source>
-        <translation>Dostępna jest aktualizacja programu. Pobranie nowszej wersji możliwe jest z adresu:</translation>
+        <source>download</source>
+        <translation>pobierz</translation>
+    </message>
+    <message>
+        <source>A new version %1 is available. Please %2 an installer and upgrade.</source>
+        <translation>Nowa wersja %1 jest dostępna. Proszę %2 instalacje i zaktualizuj program.</translation>
     </message>
 </context>
 <context>
@@ -1753,8 +1757,8 @@
         <translation>Używasz testowej wersji programu.</translation>
     </message>
     <message>
-        <source>A required update to version: </source>
-        <translation>Wymagana aktualizacja do wersji: </translation>
+        <source>A new version is available.</source>
+        <translation>Nowa wersja programu jest dostępna.</translation>
     </message>
     <message>
         <source>Can not connect to update server.</source>
