@@ -1275,23 +1275,23 @@ void TabWidget::size20_triggered()
 
 void TabWidget::color_clicked(int index)
 {
-    if (index == 0) strCurrentColor = "000000";
-    else if (index == 1) strCurrentColor = "623c00";
-    else if (index == 2) strCurrentColor = "c86c00";
-    else if (index == 3) strCurrentColor = "ff6500";
-    else if (index == 4) strCurrentColor = "ff0000";
-    else if (index == 5) strCurrentColor = "e40f0f";
-    else if (index == 6) strCurrentColor = "990033";
-    else if (index == 7) strCurrentColor = "8800ab";
-    else if (index == 8) strCurrentColor = "ce00ff";
-    else if (index == 9) strCurrentColor = "0f2ab1";
-    else if (index == 10) strCurrentColor = "3030ce";
-    else if (index == 11) strCurrentColor = "006699";
-    else if (index == 12) strCurrentColor = "1a866e";
-    else if (index == 13) strCurrentColor = "008100";
-    else if (index == 14) strCurrentColor = "959595";
-    else strCurrentColor = "000000";
-    inputline->setStyleSheet(QString("color: #"+strCurrentColor));
+    if (index == 0) strCurrentColor = "#000000";
+    else if (index == 1) strCurrentColor = "#623c00";
+    else if (index == 2) strCurrentColor = "#c86c00";
+    else if (index == 3) strCurrentColor = "#ff6500";
+    else if (index == 4) strCurrentColor = "#ff0000";
+    else if (index == 5) strCurrentColor = "#e40f0f";
+    else if (index == 6) strCurrentColor = "#990033";
+    else if (index == 7) strCurrentColor = "#8800ab";
+    else if (index == 8) strCurrentColor = "#ce00ff";
+    else if (index == 9) strCurrentColor = "#0f2ab1";
+    else if (index == 10) strCurrentColor = "#3030ce";
+    else if (index == 11) strCurrentColor = "#006699";
+    else if (index == 12) strCurrentColor = "#1a866e";
+    else if (index == 13) strCurrentColor = "#008100";
+    else if (index == 14) strCurrentColor = "#959595";
+    else strCurrentColor = "#000000";
+    inputline->setStyleSheet(QString("color: "+strCurrentColor));
 }
 
 // input line
@@ -1337,8 +1337,8 @@ void TabWidget::send_message(bool bType)
                     if (bMyBold == true) weight += "b";
                     if (bMyItalic == true) weight += "i";
 
-                    if (strCurrentColor != "000000")
-                        strTextDisplay = "%C"+strCurrentColor+"%"+strTextDisplay;
+                    if (strCurrentColor != "#000000")
+                        strTextDisplay = "%C"+strCurrentColor.right(6)+"%"+strTextDisplay;
                     if ((weight != "") || (font != "verdana"))
                         strTextDisplay = "%F"+weight+":"+font+"%"+strTextDisplay;
 
@@ -1380,8 +1380,8 @@ void TabWidget::send_message(bool bType)
                 if (bMyBold == true) weight += "b";
                 if (bMyItalic == true) weight += "i";
 
-                if (strCurrentColor != "000000")
-                    strText = "%C"+strCurrentColor+"%"+strText;
+                if (strCurrentColor != "#000000")
+                    strText = "%C"+strCurrentColor.right(6)+"%"+strText;
                 if ((weight != "") || (font != "verdana"))
                     strText = "%F"+weight+":"+font+"%"+strText;
 
