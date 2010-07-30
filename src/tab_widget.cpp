@@ -479,24 +479,24 @@ void TabWidget::set_default()
 // set default color
     QString strMyColor = settings->value("my_color").toString();
     strCurrentColor = strMyColor;
-    inputline->setStyleSheet(QString("color: #"+strCurrentColor));
+    inputline->setStyleSheet(QString("color: "+strCurrentColor));
 
     int iMyColor;
-    if (strMyColor == "000000") iMyColor = 0;
-    else if (strMyColor == "623c00") iMyColor = 1;
-    else if (strMyColor == "c86c00") iMyColor = 2;
-    else if (strMyColor == "ff6500") iMyColor = 3;
-    else if (strMyColor == "ff0000") iMyColor = 4;
-    else if (strMyColor == "e40f0f") iMyColor = 5;
-    else if (strMyColor == "990033") iMyColor = 6;
-    else if (strMyColor == "8800ab") iMyColor = 7;
-    else if (strMyColor == "ce00ff") iMyColor = 8;
-    else if (strMyColor == "0f2ab1") iMyColor = 9;
-    else if (strMyColor == "3030ce") iMyColor = 10;
-    else if (strMyColor == "006699") iMyColor = 11;
-    else if (strMyColor == "1a866e") iMyColor = 12;
-    else if (strMyColor == "008100") iMyColor = 13;
-    else if (strMyColor == "959595") iMyColor = 14;
+    if (strMyColor == "#000000") iMyColor = 0;
+    else if (strMyColor == "#623c00") iMyColor = 1;
+    else if (strMyColor == "#c86c00") iMyColor = 2;
+    else if (strMyColor == "#ff6500") iMyColor = 3;
+    else if (strMyColor == "#ff0000") iMyColor = 4;
+    else if (strMyColor == "#e40f0f") iMyColor = 5;
+    else if (strMyColor == "#990033") iMyColor = 6;
+    else if (strMyColor == "#8800ab") iMyColor = 7;
+    else if (strMyColor == "#ce00ff") iMyColor = 8;
+    else if (strMyColor == "#0f2ab1") iMyColor = 9;
+    else if (strMyColor == "#3030ce") iMyColor = 10;
+    else if (strMyColor == "#006699") iMyColor = 11;
+    else if (strMyColor == "#1a866e") iMyColor = 12;
+    else if (strMyColor == "#008100") iMyColor = 13;
+    else if (strMyColor == "#959595") iMyColor = 14;
     else
         iMyColor = 0;
 

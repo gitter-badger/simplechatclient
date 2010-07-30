@@ -275,21 +275,21 @@ DlgOptions::DlgOptions(QWidget *parent, QSettings *param1) : QDialog(parent)
 // set my color combobox
     int iMyColor;
 
-    if (strMyColor == "000000") iMyColor = 0;
-    else if (strMyColor == "623c00") iMyColor = 1;
-    else if (strMyColor == "c86c00") iMyColor = 2;
-    else if (strMyColor == "ff6500") iMyColor = 3;
-    else if (strMyColor == "ff0000") iMyColor = 4;
-    else if (strMyColor == "e40f0f") iMyColor = 5;
-    else if (strMyColor == "990033") iMyColor = 6;
-    else if (strMyColor == "8800ab") iMyColor = 7;
-    else if (strMyColor == "ce00ff") iMyColor = 8;
-    else if (strMyColor == "0f2ab1") iMyColor = 9;
-    else if (strMyColor == "3030ce") iMyColor = 10;
-    else if (strMyColor == "006699") iMyColor = 11;
-    else if (strMyColor == "1a866e") iMyColor = 12;
-    else if (strMyColor == "008100") iMyColor = 13;
-    else if (strMyColor == "959595") iMyColor = 14;
+    if (strMyColor == "#000000") iMyColor = 0;
+    else if (strMyColor == "#623c00") iMyColor = 1;
+    else if (strMyColor == "#c86c00") iMyColor = 2;
+    else if (strMyColor == "#ff6500") iMyColor = 3;
+    else if (strMyColor == "#ff0000") iMyColor = 4;
+    else if (strMyColor == "#e40f0f") iMyColor = 5;
+    else if (strMyColor == "#990033") iMyColor = 6;
+    else if (strMyColor == "#8800ab") iMyColor = 7;
+    else if (strMyColor == "#ce00ff") iMyColor = 8;
+    else if (strMyColor == "#0f2ab1") iMyColor = 9;
+    else if (strMyColor == "#3030ce") iMyColor = 10;
+    else if (strMyColor == "#006699") iMyColor = 11;
+    else if (strMyColor == "#1a866e") iMyColor = 12;
+    else if (strMyColor == "#008100") iMyColor = 13;
+    else if (strMyColor == "#959595") iMyColor = 14;
     else
         iMyColor = 0;
 
@@ -609,22 +609,22 @@ void DlgOptions::set_my_color(int index)
 {
     QString strMyColor;
 
-    if (index == 0) strMyColor = "000000";
-    else if (index == 1) strMyColor = "623c00";
-    else if (index == 2) strMyColor = "c86c00";
-    else if (index == 3) strMyColor = "ff6500";
-    else if (index == 4) strMyColor = "ff0000";
-    else if (index == 5) strMyColor = "e40f0f";
-    else if (index == 6) strMyColor = "990033";
-    else if (index == 7) strMyColor = "8800ab";
-    else if (index == 8) strMyColor = "ce00ff";
-    else if (index == 9) strMyColor = "0f2ab1";
-    else if (index == 10) strMyColor = "3030ce";
-    else if (index == 11) strMyColor = "006699";
-    else if (index == 12) strMyColor = "1a866e";
-    else if (index == 13) strMyColor = "008100";
-    else if (index == 14) strMyColor = "959595";
-    else strMyColor = "000000";
+    if (index == 0) strMyColor = "#000000";
+    else if (index == 1) strMyColor = "#623c00";
+    else if (index == 2) strMyColor = "#c86c00";
+    else if (index == 3) strMyColor = "#ff6500";
+    else if (index == 4) strMyColor = "#ff0000";
+    else if (index == 5) strMyColor = "#e40f0f";
+    else if (index == 6) strMyColor = "#990033";
+    else if (index == 7) strMyColor = "#8800ab";
+    else if (index == 8) strMyColor = "#ce00ff";
+    else if (index == 9) strMyColor = "#0f2ab1";
+    else if (index == 10) strMyColor = "#3030ce";
+    else if (index == 11) strMyColor = "#006699";
+    else if (index == 12) strMyColor = "#1a866e";
+    else if (index == 13) strMyColor = "#008100";
+    else if (index == 14) strMyColor = "#959595";
+    else strMyColor = "#000000";
 
     Config *pConfig = new Config();
     pConfig->set_value("my_color", strMyColor);
