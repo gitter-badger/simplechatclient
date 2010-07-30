@@ -68,11 +68,15 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     QString strDisableSounds = pConfig->get_value("disable_sounds");
     QString strStyle = pConfig->get_value("style");
     QString strBackgroundColor = pConfig->get_value("background_color");
+    QString strMyBold = pConfig->get_value("my_bold");
+    QString strMyItalic = pConfig->get_value("my_italic");
+    QString strMyFont = pConfig->get_value("my_font");
+    QString strMyColor = pConfig->get_value("my_color");
     delete pConfig;
 
 // settings
     settings.clear();
-    settings.setValue("version", "1.0.6.344");
+    settings.setValue("version", "1.0.6.345");
     settings.setValue("debug", "off");
     settings.setValue("logged", "off");
     settings.setValue("busy", "off");
@@ -88,6 +92,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     settings.setValue("disable_sounds", strDisableSounds);
     settings.setValue("style", strStyle);
     settings.setValue("background_color", strBackgroundColor);
+    settings.setValue("my_bold", strMyBold);
+    settings.setValue("my_italic", strMyItalic);
+    settings.setValue("my_font", strMyFont);
+    settings.setValue("my_color", strMyColor);
     settings.setValue("uokey", "");
     settings.setValue("onet_ubi", "");
     settings.setValue("onet_cid", "");

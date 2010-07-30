@@ -61,6 +61,7 @@ public:
     TabWidget(Network *, QSettings *, QString, QWidget *, Notify *, QMap <QString, QByteArray> *, QMap <QString, QByteArray> *, DlgChannelSettings *, DlgModeration *);
     ~TabWidget();
     QString get_name() { return strName; }
+    void set_default();
     QString convert_emots(QString);
     QString replace_emots(QString);
     void display_msg(QString, QString, int);

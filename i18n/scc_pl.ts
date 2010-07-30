@@ -652,6 +652,14 @@
         <translation>Opcje programu</translation>
     </message>
     <message>
+        <source>On</source>
+        <translation>Włączony</translation>
+    </message>
+    <message>
+        <source>Off</source>
+        <translation>Wyłączony</translation>
+    </message>
+    <message>
         <source>Basic</source>
         <translation>Ogólne</translation>
     </message>
@@ -696,8 +704,8 @@
         <translation>Klasyczny</translation>
     </message>
     <message>
-        <source>Colors</source>
-        <translation>Kolory</translation>
+        <source>Other</source>
+        <translation>Inne</translation>
     </message>
     <message>
         <source>Busy mode after you log in to chat</source>
@@ -732,8 +740,32 @@
         <translation>Wyłączenie dzwięków</translation>
     </message>
     <message>
+        <source>Color</source>
+        <translation>Kolor</translation>
+    </message>
+    <message>
         <source>Background color:</source>
         <translation>Kolor tła:</translation>
+    </message>
+    <message>
+        <source>Default font</source>
+        <translation>Domyślna czcionka</translation>
+    </message>
+    <message>
+        <source>Bold:</source>
+        <translation>Pogrubienie:</translation>
+    </message>
+    <message>
+        <source>Italic:</source>
+        <translation>Kursywa:</translation>
+    </message>
+    <message>
+        <source>Font:</source>
+        <translation>Czcionka:</translation>
+    </message>
+    <message>
+        <source>Color:</source>
+        <translation>Kolor:</translation>
     </message>
 </context>
 <context>

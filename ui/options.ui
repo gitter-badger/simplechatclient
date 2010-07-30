@@ -364,36 +364,132 @@
             </widget>
             <widget class="QWidget" name="tab_appearance">
              <attribute name="title">
-              <string>Colors</string>
+              <string>Other</string>
              </attribute>
-             <widget class="QWidget" name="verticalLayoutWidget_11">
+             <widget class="QGroupBox" name="groupBox_color">
               <property name="geometry">
                <rect>
-                <x>10</x>
-                <y>10</y>
-                <width>421</width>
-                <height>261</height>
+                <x>0</x>
+                <y>20</y>
+                <width>441</width>
+                <height>71</height>
                </rect>
               </property>
-              <layout class="QVBoxLayout" name="verticalLayout_11">
-               <item>
-                <layout class="QFormLayout" name="formLayout_4">
-                 <property name="fieldGrowthPolicy">
-                  <enum>QFormLayout::ExpandingFieldsGrow</enum>
-                 </property>
-                 <item row="0" column="0">
-                  <widget class="QLabel" name="label_background_color">
+              <property name="title">
+               <string>Color</string>
+              </property>
+              <widget class="QWidget" name="layoutWidget">
+               <property name="geometry">
+                <rect>
+                 <x>10</x>
+                 <y>28</y>
+                 <width>421</width>
+                 <height>31</height>
+                </rect>
+               </property>
+               <layout class="QFormLayout" name="formLayout_4">
+                <property name="fieldGrowthPolicy">
+                 <enum>QFormLayout::ExpandingFieldsGrow</enum>
+                </property>
+                <item row="0" column="0">
+                 <widget class="QLabel" name="label_background_color">
+                  <property name="text">
+                   <string>Background color:</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="0" column="1">
+                 <widget class="QComboBox" name="comboBox_background_color"/>
+                </item>
+               </layout>
+              </widget>
+             </widget>
+             <widget class="QGroupBox" name="groupBox_my_font">
+              <property name="geometry">
+               <rect>
+                <x>0</x>
+                <y>100</y>
+                <width>441</width>
+                <height>151</height>
+               </rect>
+              </property>
+              <property name="title">
+               <string>Default font</string>
+              </property>
+              <widget class="QWidget" name="formLayoutWidget">
+               <property name="geometry">
+                <rect>
+                 <x>10</x>
+                 <y>29</y>
+                 <width>421</width>
+                 <height>121</height>
+                </rect>
+               </property>
+               <layout class="QFormLayout" name="formLayout">
+                <item row="0" column="0">
+                 <widget class="QLabel" name="label_my_bold">
+                  <property name="text">
+                   <string>Bold:</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="0" column="1">
+                 <widget class="QComboBox" name="comboBox_my_bold">
+                  <item>
                    <property name="text">
-                    <string>Background color:</string>
+                    <string>Off</string>
                    </property>
-                  </widget>
-                 </item>
-                 <item row="0" column="1">
-                  <widget class="QComboBox" name="comboBox_background_color"/>
-                 </item>
-                </layout>
-               </item>
-              </layout>
+                  </item>
+                  <item>
+                   <property name="text">
+                    <string>On</string>
+                   </property>
+                  </item>
+                 </widget>
+                </item>
+                <item row="1" column="0">
+                 <widget class="QLabel" name="label_my_italic">
+                  <property name="text">
+                   <string>Italic:</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="1" column="1">
+                 <widget class="QComboBox" name="comboBox_my_italic">
+                  <item>
+                   <property name="text">
+                    <string>Off</string>
+                   </property>
+                  </item>
+                  <item>
+                   <property name="text">
+                    <string>On</string>
+                   </property>
+                  </item>
+                 </widget>
+                </item>
+                <item row="2" column="0">
+                 <widget class="QLabel" name="label_my_font">
+                  <property name="text">
+                   <string>Font:</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="2" column="1">
+                 <widget class="QComboBox" name="comboBox_my_font"/>
+                </item>
+                <item row="3" column="0">
+                 <widget class="QLabel" name="label_my_color">
+                  <property name="text">
+                   <string>Color:</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="3" column="1">
+                 <widget class="QComboBox" name="comboBox_my_color"/>
+                </item>
+               </layout>
+              </widget>
              </widget>
             </widget>
            </widget>

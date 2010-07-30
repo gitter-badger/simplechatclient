@@ -41,7 +41,7 @@ DlgOptions::DlgOptions(QWidget *parent, QSettings *param1) : QDialog(parent)
 // page adv
     ui.tabWidget_adv->setTabText(0, tr("Advanced"));
     ui.tabWidget_adv->setTabText(1, tr("Skins"));
-    ui.tabWidget_adv->setTabText(2, tr("Colors"));
+    ui.tabWidget_adv->setTabText(2, tr("Other"));
     ui.checkBox_auto_busy->setText(tr("Busy mode after you log in to chat"));
     ui.checkBox_debug->setText(tr("Show messages from the server (debug)"));
     ui.checkBox_show_zuo->setText(tr("Show ZUO"));
@@ -52,7 +52,17 @@ DlgOptions::DlgOptions(QWidget *parent, QSettings *param1) : QDialog(parent)
     ui.checkBox_disable_sounds->setText(tr("Disable sounds"));
     ui.radioButton_modern_style->setText(tr("Modern"));
     ui.radioButton_classic_style->setText(tr("Classic"));
+    ui.groupBox_color->setTitle(tr("Color"));
     ui.label_background_color->setText(tr("Background color:"));
+    ui.groupBox_my_font->setTitle(tr("Default font"));
+    ui.label_my_bold->setText(tr("Bold:"));
+    ui.comboBox_my_bold->setItemText(0, tr("Off"));
+    ui.comboBox_my_bold->setItemText(1, tr("On"));
+    ui.label_my_italic->setText(tr("Italic:"));
+    ui.comboBox_my_italic->setItemText(0, tr("Off"));
+    ui.comboBox_my_italic->setItemText(1, tr("On"));
+    ui.label_my_font->setText(tr("Font:"));
+    ui.label_my_color->setText(tr("Color:"));
 
 // options list
     QListWidgetItem *basicConfButton = new QListWidgetItem(ui.listWidget_options);
@@ -105,6 +115,26 @@ DlgOptions::DlgOptions(QWidget *parent, QSettings *param1) : QDialog(parent)
         iComboBoxColors++;
     }
 
+// my font
+    QStringList strlMyFont;
+    strlMyFont << "Arial" << "Times" << "Verdana" << "Tahoma" << "Courier";
+    ui.comboBox_my_font->insertItems(0, strlMyFont);
+
+// my color
+    ui.comboBox_my_color->setIconSize(QSize(50,10));
+
+    QStringList comboBoxMyColors;
+    comboBoxMyColors << "#000000" << "#623c00" << "#c86c00" << "#ff6500" << "#ff0000" << "#e40f0f" << "#990033" << "#8800ab" << "#ce00ff" << "#0f2ab1" << "#3030ce" << "#006699" << "#1a866e" << "#008100" << "#959595";
+
+    int iComboBoxMyColors = 0;
+    foreach (QString strColor, comboBoxMyColors)
+    {
+        QPixmap pixmap(50,10);
+        pixmap.fill(QColor(strColor));
+        ui.comboBox_my_color->insertItem(iComboBoxMyColors, pixmap, "");
+        iComboBoxMyColors++;
+    }
+
 // config
     Config *pConfig = new Config();
     QString strNick = pConfig->get_value("login-nick");
@@ -119,6 +149,10 @@ DlgOptions::DlgOptions(QWidget *parent, QSettings *param1) : QDialog(parent)
     QString strDisableSounds = pConfig->get_value("disable_sounds");
     QString strStyle = pConfig->get_value("style");
     QString strBackgroundColor = pConfig->get_value("background_color");
+    QString strMyBold = pConfig->get_value("my_bold");
+    QString strMyItalic = pConfig->get_value("my_italic");
+    QString strMyFont = pConfig->get_value("my_font");
+    QString strMyColor = pConfig->get_value("my_color");
     delete pConfig;
 
 // decrypt pass
@@ -219,6 +253,49 @@ DlgOptions::DlgOptions(QWidget *parent, QSettings *param1) : QDialog(parent)
             ui.comboBox_background_color->setCurrentIndex(i);
     }
 
+// set my bold
+    if (strMyBold == "on")
+        ui.comboBox_my_bold->setCurrentIndex(1);
+    else
+        ui.comboBox_my_bold->setCurrentIndex(0);
+
+// set my italic
+    if (strMyItalic == "on")
+        ui.comboBox_my_italic->setCurrentIndex(1);
+    else
+        ui.comboBox_my_italic->setCurrentIndex(0);
+
+// set my font combobox
+    for (int i = 0; i < ui.comboBox_my_font->count(); i++)
+    {
+        if (ui.comboBox_my_font->itemText(i) == strMyFont)
+            ui.comboBox_my_font->setCurrentIndex(i);
+    }
+
+// set my color combobox
+    int iMyColor;
+
+    if (strMyColor == "000000") iMyColor = 0;
+    else if (strMyColor == "623c00") iMyColor = 1;
+    else if (strMyColor == "c86c00") iMyColor = 2;
+    else if (strMyColor == "ff6500") iMyColor = 3;
+    else if (strMyColor == "ff0000") iMyColor = 4;
+    else if (strMyColor == "e40f0f") iMyColor = 5;
+    else if (strMyColor == "990033") iMyColor = 6;
+    else if (strMyColor == "8800ab") iMyColor = 7;
+    else if (strMyColor == "ce00ff") iMyColor = 8;
+    else if (strMyColor == "0f2ab1") iMyColor = 9;
+    else if (strMyColor == "3030ce") iMyColor = 10;
+    else if (strMyColor == "006699") iMyColor = 11;
+    else if (strMyColor == "1a866e") iMyColor = 12;
+    else if (strMyColor == "008100") iMyColor = 13;
+    else if (strMyColor == "959595") iMyColor = 14;
+    else
+        iMyColor = 0;
+
+    ui.comboBox_my_color->setCurrentIndex(iMyColor);
+
+// signals
     QObject::connect(ui.listWidget_options, SIGNAL(currentItemChanged(QListWidgetItem*,QListWidgetItem*)), this, SLOT(change_page(QListWidgetItem*,QListWidgetItem*)));
     QObject::connect(ui.radioButton_nick_t, SIGNAL(clicked()), this, SLOT(hide_pass()));
     QObject::connect(ui.radioButton_nick_s, SIGNAL(clicked()), this, SLOT(show_pass()));
@@ -235,6 +312,10 @@ DlgOptions::DlgOptions(QWidget *parent, QSettings *param1) : QDialog(parent)
     QObject::connect(ui.checkBox_disable_sounds, SIGNAL(clicked()), this, SLOT(disable_sounds()));
     QObject::connect(ui.radioButton_modern_style, SIGNAL(clicked()), this, SLOT(set_modern_style()));
     QObject::connect(ui.radioButton_classic_style, SIGNAL(clicked()), this, SLOT(set_classic_style()));
+    QObject::connect(ui.comboBox_my_bold, SIGNAL(currentIndexChanged(int)), this, SLOT(set_my_bold(int)));
+    QObject::connect(ui.comboBox_my_italic, SIGNAL(currentIndexChanged(int)), this, SLOT(set_my_italic(int)));
+    QObject::connect(ui.comboBox_my_font, SIGNAL(currentIndexChanged(QString)), this, SLOT(set_my_font(QString)));
+    QObject::connect(ui.comboBox_my_color, SIGNAL(currentIndexChanged(int)), this, SLOT(set_my_color(int)));
     QObject::connect(ui.buttonBox, SIGNAL(accepted()), this, SLOT(button_ok()));
     QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(button_cancel()));
 }
@@ -475,27 +556,75 @@ void DlgOptions::set_classic_style()
     msgBox.exec();
 }
 
+void DlgOptions::set_my_bold(int index)
+{
+    Config *pConfig = new Config();
+    if (index == 0)
+    {
+        pConfig->set_value("my_bold", "off");
+        settings->setValue("my_bold", "off");
+    }
+    else
+    {
+        pConfig->set_value("my_bold", "on");
+        settings->setValue("my_bold", "on");
+    }
+    delete pConfig;
+}
+
+void DlgOptions::set_my_italic(int index)
+{
+    Config *pConfig = new Config();
+    if (index == 0)
+    {
+        pConfig->set_value("my_italic", "off");
+        settings->setValue("my_italic", "off");
+    }
+    else
+    {
+        pConfig->set_value("my_italic", "on");
+        settings->setValue("my_italic", "on");
+    }
+    delete pConfig;
+}
+
+void DlgOptions::set_my_font(QString strFont)
+{
+    Config *pConfig = new Config();
+    pConfig->set_value("my_font", strFont);
+    settings->setValue("my_font", strFont);
+    delete pConfig;
+}
+
+void DlgOptions::set_my_color(int index)
+{
+    QString strMyColor;
+
+    if (index == 0) strMyColor = "000000";
+    else if (index == 1) strMyColor = "623c00";
+    else if (index == 2) strMyColor = "c86c00";
+    else if (index == 3) strMyColor = "ff6500";
+    else if (index == 4) strMyColor = "ff0000";
+    else if (index == 5) strMyColor = "e40f0f";
+    else if (index == 6) strMyColor = "990033";
+    else if (index == 7) strMyColor = "8800ab";
+    else if (index == 8) strMyColor = "ce00ff";
+    else if (index == 9) strMyColor = "0f2ab1";
+    else if (index == 10) strMyColor = "3030ce";
+    else if (index == 11) strMyColor = "006699";
+    else if (index == 12) strMyColor = "1a866e";
+    else if (index == 13) strMyColor = "008100";
+    else if (index == 14) strMyColor = "959595";
+    else strMyColor = "000000";
+
+    Config *pConfig = new Config();
+    pConfig->set_value("my_color", strMyColor);
+    settings->setValue("my_color", strMyColor);
+    delete pConfig;
+}
+
 void DlgOptions::button_cancel()
 {
-    ui.radioButton_nick_t->QObject::disconnect();
-    ui.radioButton_nick_s->QObject::disconnect();
-    ui.lineEdit_nick->clear();
-    ui.lineEdit_password->clear();
-    ui.radioButton_modern_avatars->QObject::disconnect();
-    ui.radioButton_modern_no_avatars->QObject::disconnect();
-    ui.radioButton_classic->QObject::disconnect();
-    ui.checkBox_auto_busy->QObject::disconnect();
-    ui.checkBox_debug->QObject::disconnect();
-    ui.checkBox_show_zuo->QObject::disconnect();
-    ui.checkBox_hide_formating->QObject::disconnect();
-    ui.checkBox_hide_join_part->QObject::disconnect();
-    ui.checkBox_disable_avatars->QObject::disconnect();
-    ui.checkBox_disable_logs->QObject::disconnect();
-    ui.checkBox_disable_sounds->QObject::disconnect();
-    ui.radioButton_modern_style->QObject::disconnect();
-    ui.radioButton_classic_style->QObject::disconnect();
-    ui.comboBox_background_color->clear();
-    ui.buttonBox->QObject::disconnect();
     this->close();
 }
 
@@ -504,26 +633,6 @@ void DlgOptions::button_ok()
 // save
     save_settings();
 
-// clear
-    ui.radioButton_nick_t->QObject::disconnect();
-    ui.radioButton_nick_s->QObject::disconnect();
-    ui.lineEdit_nick->clear();
-    ui.lineEdit_password->clear();
-    ui.radioButton_modern_avatars->QObject::disconnect();
-    ui.radioButton_modern_no_avatars->QObject::disconnect();
-    ui.radioButton_classic->QObject::disconnect();
-    ui.checkBox_auto_busy->QObject::disconnect();
-    ui.checkBox_debug->QObject::disconnect();
-    ui.checkBox_show_zuo->QObject::disconnect();
-    ui.checkBox_hide_formating->QObject::disconnect();
-    ui.checkBox_hide_join_part->QObject::disconnect();
-    ui.checkBox_disable_avatars->QObject::disconnect();
-    ui.checkBox_disable_logs->QObject::disconnect();
-    ui.checkBox_disable_sounds->QObject::disconnect();
-    ui.radioButton_modern_style->QObject::disconnect();
-    ui.radioButton_classic_style->QObject::disconnect();
-    ui.comboBox_background_color->clear();
-    ui.buttonBox->QObject::disconnect();
     this->close();
 }
 

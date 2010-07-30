@@ -388,6 +388,10 @@ TabWidget::TabWidget(Network *param1, QSettings *param2, QString param3, QWidget
     if (strName == "Status") channel_settings->hide();
     this->setLayout(mainLayout);
 
+// set default font
+    set_default();
+
+// signals
     QObject::connect(sendButton, SIGNAL(clicked()), this, SLOT(inputline_return_pressed()));
     QObject::connect(inputline, SIGNAL(returnPressed()), this, SLOT(inputline_return_pressed()));
     QObject::connect(topic, SIGNAL(returnPressed()), this, SLOT(topic_return_pressed()));
@@ -431,6 +435,72 @@ TabWidget::~TabWidget()
 
     delete nick_list;
     delete inputline;
+}
+
+void TabWidget::set_default()
+{
+// set default bold
+    if (settings->value("my_bold").toString() == "on")
+    {
+        bold->setDown(true);
+        bMyBold = true;
+        strMyFontWeight = "bold";
+    }
+    else
+    {
+        bold->setDown(false);
+        bMyBold = false;
+        strMyFontWeight = "";
+    }
+
+// set default italic
+    if (settings->value("my_italic").toString() == "on")
+    {
+        italic->setDown(true);
+        bMyItalic = true;
+        strMyFontStyle = "italic";
+    }
+    else
+    {
+        italic->setDown(false);
+        bMyItalic = false;
+        strMyFontStyle = "";
+    }
+
+// refresh bold italic
+    int iWeight = (bMyBold == true ? 75 : 50);
+    inputline->setFont(QFont(strMyFontFamily, -1, iWeight, bMyItalic));
+
+// set default font
+    QString strMyFont = settings->value("my_font").toString();
+    fontfamily->setText(strMyFont);
+    strMyFontFamily = strMyFont;
+
+// set default color
+    QString strMyColor = settings->value("my_color").toString();
+    strCurrentColor = strMyColor;
+    inputline->setStyleSheet(QString("color: #"+strCurrentColor));
+
+    int iMyColor;
+    if (strMyColor == "000000") iMyColor = 0;
+    else if (strMyColor == "623c00") iMyColor = 1;
+    else if (strMyColor == "c86c00") iMyColor = 2;
+    else if (strMyColor == "ff6500") iMyColor = 3;
+    else if (strMyColor == "ff0000") iMyColor = 4;
+    else if (strMyColor == "e40f0f") iMyColor = 5;
+    else if (strMyColor == "990033") iMyColor = 6;
+    else if (strMyColor == "8800ab") iMyColor = 7;
+    else if (strMyColor == "ce00ff") iMyColor = 8;
+    else if (strMyColor == "0f2ab1") iMyColor = 9;
+    else if (strMyColor == "3030ce") iMyColor = 10;
+    else if (strMyColor == "006699") iMyColor = 11;
+    else if (strMyColor == "1a866e") iMyColor = 12;
+    else if (strMyColor == "008100") iMyColor = 13;
+    else if (strMyColor == "959595") iMyColor = 14;
+    else
+        iMyColor = 0;
+
+    color->setCurrentIndex(iMyColor);
 }
 
 QString TabWidget::convert_emots(QString strData)

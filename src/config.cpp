@@ -147,6 +147,26 @@ QString Config::get_value(QString strKey)
         set_value("background_color", "ffffff");
         return "ffffff";
     }
+    else if (strKey == "my_bold")
+    {
+        set_value("my_bold", "off");
+        return "off";
+    }
+    else if (strKey == "my_italic")
+    {
+        set_value("my_italic", "off");
+        return "off";
+    }
+    else if (strKey == "my_font")
+    {
+        set_value("my_font", "Verdana");
+        return "Verdana";
+    }
+    else if (strKey == "my_color")
+    {
+        set_value("my_color", "000000");
+        return "000000";
+    }
 
     return QString::null;
 }
@@ -204,6 +224,10 @@ void Config::create_new_config()
     add_config_value(&doc, &root, "disable_sounds", "off");
     add_config_value(&doc, &root, "style", "modern");
     add_config_value(&doc, &root, "background_color", "ffffff");
+    add_config_value(&doc, &root, "my_bold", "off");
+    add_config_value(&doc, &root, "my_italic", "off");
+    add_config_value(&doc, &root, "my_font", "Verdana");
+    add_config_value(&doc, &root, "my_color", "000000");
 
     save();
 }
