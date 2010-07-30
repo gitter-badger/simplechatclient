@@ -43,7 +43,7 @@ TabWidget::TabWidget(Network *param1, QSettings *param2, QString param3, QWidget
 
     iNickCount = 0;
     bCursorPositionChanged = false;
-    strCurrentColor = "000000";
+    strCurrentColor = "#000000";
     strFontSize = "11px";
     strContentStart = "<html><body style=\"background-color:#"+strBackgroundColor+";\">";
     strContentEnd = "</body></html>";
