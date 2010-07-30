@@ -312,6 +312,7 @@ DlgOptions::DlgOptions(QWidget *parent, QSettings *param1) : QDialog(parent)
     QObject::connect(ui.checkBox_disable_sounds, SIGNAL(clicked()), this, SLOT(disable_sounds()));
     QObject::connect(ui.radioButton_modern_style, SIGNAL(clicked()), this, SLOT(set_modern_style()));
     QObject::connect(ui.radioButton_classic_style, SIGNAL(clicked()), this, SLOT(set_classic_style()));
+    QObject::connect(ui.comboBox_background_color, SIGNAL(currentIndexChanged(QString)), this, SLOT(set_background_color(QString)));
     QObject::connect(ui.comboBox_my_bold, SIGNAL(currentIndexChanged(int)), this, SLOT(set_my_bold(int)));
     QObject::connect(ui.comboBox_my_italic, SIGNAL(currentIndexChanged(int)), this, SLOT(set_my_italic(int)));
     QObject::connect(ui.comboBox_my_font, SIGNAL(currentIndexChanged(QString)), this, SLOT(set_my_font(QString)));
@@ -556,6 +557,14 @@ void DlgOptions::set_classic_style()
     msgBox.exec();
 }
 
+void DlgOptions::set_background_color(QString strColor)
+{
+    Config *pConfig = new Config();
+    pConfig->set_value("background_color", strColor);
+    settings->setValue("background_color", strColor);
+    delete pConfig;
+}
+
 void DlgOptions::set_my_bold(int index)
 {
     Config *pConfig = new Config();
@@ -640,7 +649,6 @@ void DlgOptions::save_settings()
 {
 // get values
     QString strNick = ui.lineEdit_nick->text();
-    QString strBackgroundColor = ui.comboBox_background_color->currentText();
 
 // check nick
     QString strPass;
@@ -661,9 +669,5 @@ void DlgOptions::save_settings()
     Config *pConfig = new Config();
     pConfig->set_value("login-nick", strNick);
     pConfig->set_value("login-pass", strPass);
-    pConfig->set_value("background_color", strBackgroundColor);
     delete pConfig;
-
-// save to settings
-    settings->setValue("background_color", strBackgroundColor);
 }

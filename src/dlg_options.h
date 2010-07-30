@@ -56,6 +56,7 @@ private slots:
     void disable_sounds();
     void set_modern_style();
     void set_classic_style();
+    void set_background_color(QString);
     void set_my_bold(int);
     void set_my_italic(int);
     void set_my_font(QString);
