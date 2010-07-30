@@ -20,9 +20,10 @@
 
 #include "dlg_privilege.h"
 
-DlgPrivilege::DlgPrivilege(Network *param1, QSettings *param2, QString param3, QString param4, QString param5, QTableWidget *param6, QTableWidget *param7, QTableWidget *param8, QTableWidget *param9)
+DlgPrivilege::DlgPrivilege(QWidget *parent, Network *param1, QSettings *param2, QString param3, QString param4, QString param5, QTableWidget *param6, QTableWidget *param7, QTableWidget *param8, QTableWidget *param9) : QDialog(parent)
 {
     ui.setupUi(this);
+    setAttribute(Qt::WA_DeleteOnClose);
     setWindowTitle(tr("Changing privileges"));
 
     pNetwork = param1;

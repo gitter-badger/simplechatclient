@@ -38,7 +38,7 @@ class DlgEmail : public QDialog
 {
     Q_OBJECT
 public:
-    DlgEmail(QSettings *, QString, QString);
+    DlgEmail(QWidget *, QSettings *, QString, QString);
 
 private:
     Ui::uiEmail ui;

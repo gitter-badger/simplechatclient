@@ -20,11 +20,13 @@
 
 #include "dlg_friends.h"
 
-DlgFriends::DlgFriends(Network *param1, QSettings *param2, TabContainer *param3, QMap <QString, QByteArray> *param4)
+DlgFriends::DlgFriends(QWidget *parent, Network *param1, QSettings *param2, TabContainer *param3, QMap <QString, QByteArray> *param4) : QDialog(parent)
 {
     ui.setupUi(this);
+    setAttribute(Qt::WA_DeleteOnClose);
     setWindowTitle(tr("Friends list"));
 
+    myparent = parent;
     pNetwork = param1;
     settings = param2;
     tabc = param3;
@@ -88,7 +90,7 @@ void DlgFriends::clear()
 
 void DlgFriends::button_add()
 {
-    (new DlgFriendsAd(pNetwork, settings, tabc, "add", ""))->show();
+    (new DlgFriendsAd(myparent, pNetwork, settings, tabc, "add", ""))->show();
 }
 
 void DlgFriends::button_remove()
@@ -105,7 +107,7 @@ void DlgFriends::button_remove()
             strSelected = ui.listWidget_offline->selectedItems().at(0)->text();
     }
 
-    (new DlgFriendsAd(pNetwork, settings, tabc, "remove", strSelected))->show();
+    (new DlgFriendsAd(myparent, pNetwork, settings, tabc, "remove", strSelected))->show();
 }
 
 void DlgFriends::button_ok()

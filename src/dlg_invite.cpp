@@ -20,9 +20,10 @@
 
 #include "dlg_invite.h"
 
-DlgInvite::DlgInvite(Network *param1, QSettings *param2, TabContainer *param3, QString param4, QString param5)
+DlgInvite::DlgInvite(QWidget *parent, Network *param1, QSettings *param2, TabContainer *param3, QString param4, QString param5) : QDialog(parent)
 {
     ui.setupUi(this);
+    setAttribute(Qt::WA_DeleteOnClose);
     setWindowTitle(tr("Invitation"));
 
     pNetwork = param1;

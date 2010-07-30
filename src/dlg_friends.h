@@ -31,13 +31,14 @@ class DlgFriends : public QDialog
 {
     Q_OBJECT
 public:
-    DlgFriends(Network *, QSettings *, TabContainer *, QMap <QString, QByteArray> *);
+    DlgFriends(QWidget *, Network *, QSettings *, TabContainer *, QMap <QString, QByteArray> *);
     void set_friend(QString, bool);
     void remove_friend(QString);
     void clear();
 
 private:
     Ui::uiFriends ui;
+    QWidget *myparent;
     Network *pNetwork;
     QSettings *settings;
     TabContainer *tabc;

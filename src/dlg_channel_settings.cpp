@@ -20,10 +20,12 @@
 
 #include "dlg_channel_settings.h"
 
-DlgChannelSettings::DlgChannelSettings(Network *param1, QSettings *param2)
+DlgChannelSettings::DlgChannelSettings(QWidget *parent, Network *param1, QSettings *param2) : QDialog(parent)
 {
     ui.setupUi(this);
+    setAttribute(Qt::WA_DeleteOnClose);
 
+    myparent = parent;
     pNetwork = param1;
     settings = param2;
 
@@ -269,17 +271,17 @@ void DlgChannelSettings::add_description(QString strDescription)
 
 void DlgChannelSettings::owner_changed()
 {
-    (new DlgPrivilege(pNetwork, settings, "owner", strChannel, "add", ui.tableWidget_op, ui.tableWidget_halfop, ui.tableWidget_ban, ui.tableWidget_invite))->show();
+    (new DlgPrivilege(myparent, pNetwork, settings, "owner", strChannel, "add", ui.tableWidget_op, ui.tableWidget_halfop, ui.tableWidget_ban, ui.tableWidget_invite))->show();
 }
 
 void DlgChannelSettings::remove_channel_clicked()
 {
-    (new DlgPrivilege(pNetwork, settings, "channel", strChannel, "del", ui.tableWidget_op, ui.tableWidget_halfop, ui.tableWidget_ban, ui.tableWidget_invite))->show();
+    (new DlgPrivilege(myparent, pNetwork, settings, "channel", strChannel, "del", ui.tableWidget_op, ui.tableWidget_halfop, ui.tableWidget_ban, ui.tableWidget_invite))->show();
 }
 
 void DlgChannelSettings::email_changed()
 {
-    (new DlgEmail(settings, strChannel, ui.lineEdit_email->text()))->show();
+    (new DlgEmail(myparent, settings, strChannel, ui.lineEdit_email->text()))->show();
 }
 
 void DlgChannelSettings::www_changed()
@@ -378,7 +380,7 @@ void DlgChannelSettings::auditorium_active()
 
 void DlgChannelSettings::button_op_add()
 {
-    (new DlgPrivilege(pNetwork, settings, "op", strChannel, "add", ui.tableWidget_op, ui.tableWidget_halfop, ui.tableWidget_ban, ui.tableWidget_invite))->show();
+    (new DlgPrivilege(myparent, pNetwork, settings, "op", strChannel, "add", ui.tableWidget_op, ui.tableWidget_halfop, ui.tableWidget_ban, ui.tableWidget_invite))->show();
 }
 
 void DlgChannelSettings::button_op_del()
@@ -392,13 +394,13 @@ void DlgChannelSettings::button_op_del()
     }
     else
     {
-        (new DlgPrivilege(pNetwork, settings, "op", strChannel, "del", ui.tableWidget_op, ui.tableWidget_halfop, ui.tableWidget_ban, ui.tableWidget_invite))->show();
+        (new DlgPrivilege(myparent, pNetwork, settings, "op", strChannel, "del", ui.tableWidget_op, ui.tableWidget_halfop, ui.tableWidget_ban, ui.tableWidget_invite))->show();
     }
 }
 
 void DlgChannelSettings::button_halfop_add()
 {
-    (new DlgPrivilege(pNetwork, settings, "halfop", strChannel, "add", ui.tableWidget_op, ui.tableWidget_halfop, ui.tableWidget_ban, ui.tableWidget_invite))->show();
+    (new DlgPrivilege(myparent, pNetwork, settings, "halfop", strChannel, "add", ui.tableWidget_op, ui.tableWidget_halfop, ui.tableWidget_ban, ui.tableWidget_invite))->show();
 }
 
 void DlgChannelSettings::button_halfop_del()
@@ -412,13 +414,13 @@ void DlgChannelSettings::button_halfop_del()
     }
     else
     {
-        (new DlgPrivilege(pNetwork, settings, "halfop", strChannel, "del", ui.tableWidget_op, ui.tableWidget_halfop, ui.tableWidget_ban, ui.tableWidget_invite))->show();
+        (new DlgPrivilege(myparent, pNetwork, settings, "halfop", strChannel, "del", ui.tableWidget_op, ui.tableWidget_halfop, ui.tableWidget_ban, ui.tableWidget_invite))->show();
     }
 }
 
 void DlgChannelSettings::button_ban_add()
 {
-    (new DlgPrivilege(pNetwork, settings, "ban", strChannel, "add", ui.tableWidget_op, ui.tableWidget_halfop, ui.tableWidget_ban, ui.tableWidget_invite))->show();
+    (new DlgPrivilege(myparent, pNetwork, settings, "ban", strChannel, "add", ui.tableWidget_op, ui.tableWidget_halfop, ui.tableWidget_ban, ui.tableWidget_invite))->show();
 }
 
 void DlgChannelSettings::button_ban_del()
@@ -432,13 +434,13 @@ void DlgChannelSettings::button_ban_del()
     }
     else
     {
-        (new DlgPrivilege(pNetwork, settings, "ban", strChannel, "del", ui.tableWidget_op, ui.tableWidget_halfop, ui.tableWidget_ban, ui.tableWidget_invite))->show();
+        (new DlgPrivilege(myparent, pNetwork, settings, "ban", strChannel, "del", ui.tableWidget_op, ui.tableWidget_halfop, ui.tableWidget_ban, ui.tableWidget_invite))->show();
     }
 }
 
 void DlgChannelSettings::button_invite_add()
 {
-    (new DlgPrivilege(pNetwork, settings, "invite", strChannel, "add", ui.tableWidget_op, ui.tableWidget_halfop, ui.tableWidget_ban, ui.tableWidget_invite))->show();
+    (new DlgPrivilege(myparent, pNetwork, settings, "invite", strChannel, "add", ui.tableWidget_op, ui.tableWidget_halfop, ui.tableWidget_ban, ui.tableWidget_invite))->show();
 }
 
 void DlgChannelSettings::button_invite_del()
@@ -452,7 +454,7 @@ void DlgChannelSettings::button_invite_del()
     }
     else
     {
-        (new DlgPrivilege(pNetwork, settings, "invite", strChannel, "del", ui.tableWidget_op, ui.tableWidget_halfop, ui.tableWidget_ban, ui.tableWidget_invite))->show();
+        (new DlgPrivilege(myparent, pNetwork, settings, "invite", strChannel, "del", ui.tableWidget_op, ui.tableWidget_halfop, ui.tableWidget_ban, ui.tableWidget_invite))->show();
     }
 }
 

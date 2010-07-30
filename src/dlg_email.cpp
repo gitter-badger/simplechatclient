@@ -20,9 +20,10 @@
 
 #include "dlg_email.h"
 
-DlgEmail::DlgEmail(QSettings *param1, QString param2, QString param3)
+DlgEmail::DlgEmail(QWidget *parent, QSettings *param1, QString param2, QString param3) : QDialog(parent)
 {
     ui.setupUi(this);
+    setAttribute(Qt::WA_DeleteOnClose);
     setWindowTitle(tr("Change email address"));
 
     settings = param1;

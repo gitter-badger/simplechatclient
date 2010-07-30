@@ -20,7 +20,7 @@
 
 #include "dlg_cam.h"
 
-DlgCam::DlgCam(Network *param1, QSettings *param2, QString param3)
+DlgCam::DlgCam(QWidget *parent, Network *param1, QSettings *param2, QString param3) : QDialog(parent)
 {
     ui.setupUi(this);
     setAttribute(Qt::WA_DeleteOnClose);

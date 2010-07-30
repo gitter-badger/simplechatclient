@@ -20,11 +20,13 @@
 
 #include "dlg_channel_favourites.h"
 
-DlgChannelFavourites::DlgChannelFavourites(Network *param1, QSettings *param2, TabContainer *param3, QMap <QString, QByteArray> *param4)
+DlgChannelFavourites::DlgChannelFavourites(QWidget *parent, Network *param1, QSettings *param2, TabContainer *param3, QMap <QString, QByteArray> *param4) : QDialog(parent)
 {
     ui.setupUi(this);
+    setAttribute(Qt::WA_DeleteOnClose);
     setWindowTitle(tr("Favorite channels"));
 
+    myparent = parent;
     pNetwork = param1;
     settings = param2;
     tabc = param3;
@@ -62,7 +64,7 @@ void DlgChannelFavourites::clear()
 void DlgChannelFavourites::button_add()
 {
     ui.listWidget_channels->clear();
-    (new DlgChannelFavouritesAd(pNetwork, settings, tabc, "add", ""))->show();
+    (new DlgChannelFavouritesAd(myparent, pNetwork, settings, tabc, "add", ""))->show();
 }
 
 void DlgChannelFavourites::button_remove()
@@ -72,7 +74,7 @@ void DlgChannelFavourites::button_remove()
         strSelected = ui.listWidget_channels->selectedItems().at(0)->text();
 
     ui.listWidget_channels->clear();
-    (new DlgChannelFavouritesAd(pNetwork, settings, tabc, "remove", strSelected))->show();
+    (new DlgChannelFavouritesAd(myparent, pNetwork, settings, tabc, "remove", strSelected))->show();
 }
 
 void DlgChannelFavourites::button_ok()

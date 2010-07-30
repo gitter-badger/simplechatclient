@@ -20,8 +20,9 @@
 
 #include "qnicklist.h"
 
-Nicklist::Nicklist(Network *param1, QSettings *param2, QString param3, QMap <QString, QByteArray> *param4)
+Nicklist::Nicklist(QWidget *parent, Network *param1, QSettings *param2, QString param3, QMap <QString, QByteArray> *param4)
 {
+    myparent = parent;
     pNetwork = param1;
     settings = param2;
     strChannel = param3;
@@ -59,7 +60,7 @@ void Nicklist::cam()
     if (this->selectedItems().count() == 0) return;
 
     QString strNick = this->selectedItems().at(0)->data(Qt::UserRole).toString();
-    (new DlgCam(pNetwork, settings, strNick))->show();
+    (new DlgCam(myparent, pNetwork, settings, strNick))->show();
 }
 
 void Nicklist::friends_add()
@@ -99,7 +100,7 @@ void Nicklist::kick()
     if (this->selectedItems().count() == 0) return;
 
     QString strNick = this->selectedItems().at(0)->data(Qt::UserRole).toString();
-    (new DlgKick(pNetwork, settings, strNick, strChannel))->show();
+    (new DlgKick(myparent, pNetwork, settings, strNick, strChannel))->show();
 }
 
 void Nicklist::ban()

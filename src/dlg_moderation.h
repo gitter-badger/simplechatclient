@@ -31,7 +31,7 @@ class DlgModeration : public QDialog
 {
     Q_OBJECT
 public:
-    DlgModeration(QSettings *);
+    DlgModeration(QWidget *, QSettings *);
     ~DlgModeration();
     void set_active_channel(QString);
     void add_msg(QString, QString, QString, QString);

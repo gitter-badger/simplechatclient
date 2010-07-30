@@ -20,15 +20,15 @@
 
 #include "tab_container.h"
 
-TabContainer::TabContainer(Network *param1, QSettings *param2, TabManager *param3, QWidget *param4, Notify *param5, QMap <QString, QByteArray> *param6, QMap <QString, QByteArray> *param7)
+TabContainer::TabContainer(QWidget *parent, Network *param1, QSettings *param2, TabManager *param3, Notify *param4, QMap <QString, QByteArray> *param5, QMap <QString, QByteArray> *param6)
 {
+    myparent = parent;
     pNetwork = param1;
     settings = param2;
     tabm = param3;
-    mainWin = param4;
-    pNotify = param5;
-    mNickAvatar = param6;
-    mChannelAvatar = param7;
+    pNotify = param4;
+    mNickAvatar = param5;
+    mChannelAvatar = param6;
     free_list = "ffffffffffffffffffffffffffffffffffffffffffffffffff"; // f = free  u = used
 }
 
@@ -77,14 +77,14 @@ int TabContainer::free_list_get()
     return -1;
 }
 
-void TabContainer::add_tab(QString strChannel,QWidget *parent)
+void TabContainer::add_tab(QString strChannel)
 {
     if (exist_tab(strChannel) == false)
     {
         int iFree = free_list_get();
         if (iFree != -1)
         {
-            tw[iFree] = new TabWidget(pNetwork, settings, strChannel, parent, pNotify, mNickAvatar, mChannelAvatar, dlgchannel_settings, dlgmoderation);
+            tw[iFree] = new TabWidget(myparent, pNetwork, settings, strChannel, pNotify, mNickAvatar, mChannelAvatar, dlgchannel_settings, dlgmoderation);
             int iTab = tabm->addTab(tw[iFree], strChannel);
             tabm->setCurrentIndex(iTab);
             free_list[iFree] = 'u';
@@ -186,7 +186,7 @@ void TabContainer::show_msg(QString strTime, QString strChannel, QString strData
     else
     {
         pNetwork->send(QString("JOIN %1").arg(strChannel));
-        add_tab(strChannel, mainWin);
+        add_tab(strChannel);
         show_msg(strChannel, strData, iLevel);
     }
 }
@@ -238,7 +238,7 @@ void TabContainer::show_msg(QString strChannel, QString strData, int iLevel)
     else
     {
         pNetwork->send(QString("JOIN %1").arg(strChannel));
-        add_tab(strChannel, mainWin);
+        add_tab(strChannel);
         show_msg(strChannel, strData, iLevel);
     }
 }

@@ -20,9 +20,10 @@
 
 #include "dlg_channel_key.h"
 
-DlgChannelKey::DlgChannelKey(Network *param1, QSettings *param2, QString param3)
+DlgChannelKey::DlgChannelKey(QWidget *parent, Network *param1, QSettings *param2, QString param3) : QDialog(parent)
 {
     ui.setupUi(this);
+    setAttribute(Qt::WA_DeleteOnClose);
     setWindowTitle(tr("Key required"));
 
     pNetwork = param1;

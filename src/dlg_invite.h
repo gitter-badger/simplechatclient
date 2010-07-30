@@ -30,7 +30,7 @@ class DlgInvite : public QDialog
 {
     Q_OBJECT
 public:
-    DlgInvite(Network *, QSettings *, TabContainer *, QString, QString);
+    DlgInvite(QWidget *, Network *, QSettings *, TabContainer *, QString, QString);
 
 private:
     Ui::uiInvite ui;

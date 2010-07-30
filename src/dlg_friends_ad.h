@@ -31,7 +31,7 @@ class DlgFriendsAd : public QDialog
 {
     Q_OBJECT
 public:
-    DlgFriendsAd(Network *, QSettings *, TabContainer *, QString, QString);
+    DlgFriendsAd(QWidget *, Network *, QSettings *, TabContainer *, QString, QString);
 
 private:
     Ui::uiFriendsAd ui;

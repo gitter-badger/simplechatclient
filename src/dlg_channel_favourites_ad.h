@@ -31,7 +31,7 @@ class DlgChannelFavouritesAd : public QDialog
 {
     Q_OBJECT
 public:
-    DlgChannelFavouritesAd(Network *, QSettings *, TabContainer *, QString, QString);
+    DlgChannelFavouritesAd(QWidget *, Network *, QSettings *, TabContainer *, QString, QString);
 
 private:
     Ui::uiChannelFavouritesAd ui;

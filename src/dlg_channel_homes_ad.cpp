@@ -20,9 +20,10 @@
 
 #include "dlg_channel_homes_ad.h"
 
-DlgChannelHomesAd::DlgChannelHomesAd(Network *param1, QSettings *param2, TabContainer *param3, QString param4)
+DlgChannelHomesAd::DlgChannelHomesAd(QWidget *parent, Network *param1, QSettings *param2, TabContainer *param3, QString param4) : QDialog(parent)
 {
     ui.setupUi(this);
+    setAttribute(Qt::WA_DeleteOnClose);
     setWindowTitle(tr("Changing channels"));
 
     pNetwork = param1;

@@ -76,7 +76,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
 // settings
     settings.clear();
-    settings.setValue("version", "1.0.6.349");
+    settings.setValue("version", "1.0.6.350");
     settings.setValue("debug", "off");
     settings.setValue("logged", "off");
     settings.setValue("busy", "off");
@@ -108,16 +108,16 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
     pNetwork = new Network(this, connectAct, &settings);
     pNotify = new Notify();
-    pTabC = new TabContainer(pNetwork, &settings, pTabM, this, pNotify, &mNickAvatar, &mChannelAvatar);
+    pTabC = new TabContainer(this, pNetwork, &settings, pTabM, pNotify, &mNickAvatar, &mChannelAvatar);
 
-    pDlg_channel_settings = new DlgChannelSettings(pNetwork, &settings);
-    pDlg_moderation = new DlgModeration(&settings);
-    pDlg_channel_list = new DlgChannelList(&settings, pTabC);
-    pDlg_channel_homes = new DlgChannelHomes(pNetwork, &settings, pTabC, &mChannelAvatar, pDlg_channel_settings);
-    pDlg_channel_favourites = new DlgChannelFavourites(pNetwork, &settings, pTabC, &mChannelAvatar);
-    pDlg_friends = new DlgFriends(pNetwork, &settings, pTabC, &mNickAvatar);
-    pDlg_ignore = new DlgIgnore(pNetwork, &settings, pTabC, &mNickAvatar);
-    pIrc_kernel = new IrcKernel(pNetwork, &settings, pTabC, &mNickAvatar, &mChannelAvatar, pDlg_channel_settings, pDlg_channel_homes, pDlg_channel_list, pDlg_channel_favourites, pDlg_friends, pDlg_ignore, pDlg_moderation);
+    pDlg_channel_settings = new DlgChannelSettings(this, pNetwork, &settings);
+    pDlg_moderation = new DlgModeration(this, &settings);
+    pDlg_channel_list = new DlgChannelList(this, &settings, pTabC);
+    pDlg_channel_homes = new DlgChannelHomes(this, pNetwork, &settings, pTabC, &mChannelAvatar, pDlg_channel_settings);
+    pDlg_channel_favourites = new DlgChannelFavourites(this, pNetwork, &settings, pTabC, &mChannelAvatar);
+    pDlg_friends = new DlgFriends(this, pNetwork, &settings, pTabC, &mNickAvatar);
+    pDlg_ignore = new DlgIgnore(this, pNetwork, &settings, pTabC, &mNickAvatar);
+    pIrc_kernel = new IrcKernel(this, pNetwork, &settings, pTabC, &mNickAvatar, &mChannelAvatar, pDlg_channel_settings, pDlg_channel_homes, pDlg_channel_list, pDlg_channel_favourites, pDlg_friends, pDlg_ignore, pDlg_moderation);
     pIrc_auth = new IrcAuth(&settings, pTabC);
 
     pTabC->set_dlg(pDlg_channel_settings, pDlg_moderation);
@@ -130,7 +130,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     pTabC->show_msg("Status", "%Fbi:courier%%C8800ab%"+tr("Bug reporting")+"%C000000%: http://sourceforge.net/apps/trac/simplechatclien/newticket %Ipanda%", 0);
 
 // update
-    uThreadList.append(new UpdateThread(&settings, pTabC));
+    uThreadList.append(new UpdateThread(this, &settings, pTabC));
     QObject::connect(uThreadList.at(uThreadList.size()-1), SIGNAL(do_remove_uthread(UpdateThread*)), this, SLOT(remove_uthread(UpdateThread*)));
 
 #ifdef Q_WS_X11

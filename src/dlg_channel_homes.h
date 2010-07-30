@@ -35,12 +35,13 @@ class DlgChannelHomes : public QDialog
 {
     Q_OBJECT
 public:
-    DlgChannelHomes(Network *, QSettings *, TabContainer *, QMap <QString, QByteArray> *, DlgChannelSettings *);
+    DlgChannelHomes(QWidget *, Network *, QSettings *, TabContainer *, QMap <QString, QByteArray> *, DlgChannelSettings *);
     void add_channel(QString);
     void clear();
 
 private:
     Ui::uiChannelHomes ui;
+    QWidget *myparent;
     Network *pNetwork;
     QSettings *settings;
     TabContainer *tabc;

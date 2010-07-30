@@ -35,7 +35,7 @@ class DlgChannelSettings : public QDialog
 {
     Q_OBJECT
 public:
-    DlgChannelSettings(Network *, QSettings *);
+    DlgChannelSettings(QWidget *, Network *, QSettings *);
     void set_channel(QString);
     void add_topic(QString);
     void add_pubpriv(int);
@@ -57,6 +57,7 @@ public:
 
 private:
     Ui::uiChannelSettings ui;
+    QWidget *myparent;
     Network *pNetwork;
     QSettings *settings;
     QString strChannel;

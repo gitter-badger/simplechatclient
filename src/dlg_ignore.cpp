@@ -20,11 +20,13 @@
 
 #include "dlg_ignore.h"
 
-DlgIgnore::DlgIgnore(Network *param1, QSettings *param2, TabContainer *param3, QMap <QString, QByteArray> *param4)
+DlgIgnore::DlgIgnore(QWidget *parent, Network *param1, QSettings *param2, TabContainer *param3, QMap <QString, QByteArray> *param4) : QDialog(parent)
 {
     ui.setupUi(this);
+    setAttribute(Qt::WA_DeleteOnClose);
     setWindowTitle(tr("Ignore list"));
 
+    myparent = parent;
     pNetwork = param1;
     settings = param2;
     tabc = param3;
@@ -63,7 +65,7 @@ void DlgIgnore::clear()
 void DlgIgnore::button_add()
 {
     ui.listWidget_nicks->clear();
-    (new DlgIgnoreAd(pNetwork, settings, tabc, "add", ""))->show();
+    (new DlgIgnoreAd(myparent, pNetwork, settings, tabc, "add", ""))->show();
 }
 
 void DlgIgnore::button_remove()
@@ -74,7 +76,7 @@ void DlgIgnore::button_remove()
 
     ui.listWidget_nicks->clear();
 
-    (new DlgIgnoreAd(pNetwork, settings, tabc, "remove", strSelected))->show();
+    (new DlgIgnoreAd(myparent, pNetwork, settings, tabc, "remove", strSelected))->show();
 }
 
 void DlgIgnore::button_ok()

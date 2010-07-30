@@ -20,9 +20,10 @@
 
 #include "dlg_channel_list.h"
 
-DlgChannelList::DlgChannelList(QSettings *param1, TabContainer *param2)
+DlgChannelList::DlgChannelList(QWidget *parent, QSettings *param1, TabContainer *param2) : QDialog(parent)
 {
     ui.setupUi(this);
+    setAttribute(Qt::WA_DeleteOnClose);
     setWindowTitle(tr("Channel list"));
 
     settings = param1;

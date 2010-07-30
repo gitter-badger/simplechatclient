@@ -20,9 +20,10 @@
 
 #include "dlg_kick.h"
 
-DlgKick::DlgKick(Network *param1, QSettings *param2, QString param3, QString param4)
+DlgKick::DlgKick(QWidget *parent, Network *param1, QSettings *param2, QString param3, QString param4) : QDialog(parent)
 {
     ui.setupUi(this);
+    setAttribute(Qt::WA_DeleteOnClose);
     setWindowTitle(tr("Kick"));
 
     pNetwork = param1;

@@ -31,12 +31,13 @@ class DlgIgnore : public QDialog
 {
     Q_OBJECT
 public:
-    DlgIgnore(Network *, QSettings *, TabContainer *, QMap <QString, QByteArray> *);
+    DlgIgnore(QWidget *, Network *, QSettings *, TabContainer *, QMap <QString, QByteArray> *);
     void add_ignore(QString);
     void clear();
 
 private:
     Ui::uiIgnore ui;
+    QWidget *myparent;
     Network *pNetwork;
     QSettings *settings;
     TabContainer *tabc;

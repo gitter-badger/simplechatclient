@@ -20,11 +20,12 @@
 
 #include "update_thread.h"
 
-UpdateThreadClass::UpdateThreadClass(QSettings *param1, TabContainer *param2)
+UpdateThreadClass::UpdateThreadClass(QWidget *parent, QSettings *param1, TabContainer *param2)
 {
+    myparent = parent;
     settings = param1;
     tabc = param2;
-    pUpdater = new Updater(settings, tabc);
+    pUpdater = new Updater(myparent, settings, tabc);
 }
 
 UpdateThreadClass::~UpdateThreadClass()
@@ -52,12 +53,13 @@ void UpdateThreadClass::check_for_updates(QString param1)
     pUpdater->check_for_updates(param1);
 }
 
-UpdateThread::UpdateThread(QSettings *param1, TabContainer *param2)
+UpdateThread::UpdateThread(QWidget *parent, QSettings *param1, TabContainer *param2)
 {
+    myparent = parent;
     settings = param1;
     tabc = param2;
 
-    updateThr = new UpdateThreadClass(settings, tabc);
+    updateThr = new UpdateThreadClass(myparent, settings, tabc);
     QObject::connect(updateThr, SIGNAL(set_version(QString)), this, SLOT(setVersion(QString)));
     QObject::connect(updateThr, SIGNAL(stop_thread()), this, SLOT(stop_thread()));
     updateThr->start(QThread::LowPriority);

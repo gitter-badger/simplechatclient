@@ -48,7 +48,7 @@ class Nicklist : public QListWidget
 {
     Q_OBJECT
 public:
-    Nicklist(Network *, QSettings *, QString, QMap <QString, QByteArray> *);
+    Nicklist(QWidget *, Network *, QSettings *, QString, QMap <QString, QByteArray> *);
     ~Nicklist();
     void set_open_channels(QStringList);
     void nicklist_add(QString, QString, int, sNickStatus *);
@@ -60,6 +60,7 @@ public:
     void update_avatar(QString, QByteArray);
 
 private:
+    QWidget *myparent;
     Network *pNetwork;
     QSettings *settings;
     QString strChannel;

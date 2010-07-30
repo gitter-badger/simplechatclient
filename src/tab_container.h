@@ -35,7 +35,7 @@ class TabContainer : public QObject
 {
     Q_OBJECT
 public:
-    TabContainer(Network *, QSettings *, TabManager *, QWidget *, Notify *, QMap <QString, QByteArray> *, QMap <QString, QByteArray> *);
+    TabContainer(QWidget *, Network *, QSettings *, TabManager *, Notify *, QMap <QString, QByteArray> *, QMap <QString, QByteArray> *);
     ~TabContainer();
     void set_dlg(DlgChannelSettings *, DlgModeration *);
     bool exist_tab(QString);
@@ -67,19 +67,19 @@ public slots:
     void sshow_msg(QString, QString, int);
 
 private:
+    QWidget *myparent;
     Network *pNetwork;
     QSettings *settings;
     TabManager *tabm;
     TabWidget *tw[50];
     QString free_list;
-    QWidget *mainWin;
     Notify *pNotify;
     QMap <QString, QByteArray> *mNickAvatar;
     QMap <QString, QByteArray> *mChannelAvatar;
     DlgChannelSettings *dlgchannel_settings;
     DlgModeration *dlgmoderation;
 
-    void add_tab(QString, QWidget *);
+    void add_tab(QString);
     void update_open_channels();
     int free_list_get();
 

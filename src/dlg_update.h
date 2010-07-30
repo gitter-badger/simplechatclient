@@ -29,7 +29,7 @@ class DlgUpdate : public QDialog
 {
     Q_OBJECT
 public:
-    DlgUpdate(QString);
+    DlgUpdate(QWidget *, QString);
 
 private:
     Ui::uiUpdate ui;

@@ -31,12 +31,13 @@ class DlgChannelFavourites : public QDialog
 {
     Q_OBJECT
 public:
-    DlgChannelFavourites(Network *, QSettings *, TabContainer *, QMap <QString, QByteArray> *);
+    DlgChannelFavourites(QWidget *, Network *, QSettings *, TabContainer *, QMap <QString, QByteArray> *);
     void add_channel(QString);
     void clear();
 
 private:
     Ui::uiChannelFavourites ui;
+    QWidget *myparent;
     Network *pNetwork;
     QSettings *settings;
     TabContainer *tabc;

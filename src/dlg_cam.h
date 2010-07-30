@@ -35,7 +35,7 @@ class DlgCam : public QDialog
 {
     Q_OBJECT
 public:
-    DlgCam(Network *, QSettings *, QString);
+    DlgCam(QWidget *, Network *, QSettings *, QString);
 
 private:
     Ui::uiCam ui;

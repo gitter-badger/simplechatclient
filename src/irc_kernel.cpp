@@ -20,8 +20,9 @@
 
 #include "irc_kernel.h"
 
-IrcKernel::IrcKernel(Network *param1, QSettings *param2, TabContainer *param3, QMap <QString, QByteArray> *param4, QMap <QString, QByteArray> *param5, DlgChannelSettings *param6, DlgChannelHomes *param7, DlgChannelList *param8, DlgChannelFavourites *param9, DlgFriends *param10, DlgIgnore *param11, DlgModeration *param12)
+IrcKernel::IrcKernel(QWidget *parent, Network *param1, QSettings *param2, TabContainer *param3, QMap <QString, QByteArray> *param4, QMap <QString, QByteArray> *param5, DlgChannelSettings *param6, DlgChannelHomes *param7, DlgChannelList *param8, DlgChannelFavourites *param9, DlgFriends *param10, DlgIgnore *param11, DlgModeration *param12)
 {
+    myparent = parent;
     pNetwork = param1;
     settings = param2;
     tabc = param3;
@@ -980,7 +981,7 @@ void IrcKernel::raw_invite()
     if (strWhere[0] == ':')
         strWhere = strWhere.right(strWhere.length()-1);
 
-    (new DlgInvite(pNetwork, settings, tabc, strWho, strWhere))->show();
+    (new DlgInvite(myparent, pNetwork, settings, tabc, strWho, strWhere))->show();
 }
 
 // :cf1f3.onet TOPIC #scc :Simple Chat Client; current version: beta;
@@ -2748,7 +2749,7 @@ void IrcKernel::raw_475()
     QString strMessage = QString(tr("* Cannot join channel %1: Incorrect channel key")).arg(strChannel);
     tabc->show_msg_active(strMessage, 7);
 
-    (new DlgChannelKey(pNetwork, settings, strChannel))->show();
+    (new DlgChannelKey(myparent, pNetwork, settings, strChannel))->show();
 }
 
 // :cf1f4.onet 481 Merovingian :Permission Denied - You do not have the required operator privileges

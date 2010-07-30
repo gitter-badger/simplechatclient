@@ -20,8 +20,9 @@
 
 #include "update.h"
 
-Updater::Updater(QSettings *param1, TabContainer *param2)
+Updater::Updater(QWidget *parent, QSettings *param1, TabContainer *param2)
 {
+    myparent = parent;
     settings = param1;
     tabc = param2;
 }
@@ -55,7 +56,7 @@ void Updater::check_for_updates(QString param1)
     else if (iCurrentRev < iAvailableRev)
     {
         tabc->show_msg("Status", tr("A new version is available."), 0);
-        (new DlgUpdate(strAvailableVersion))->show();
+        (new DlgUpdate(myparent, strAvailableVersion))->show();
     }
 }
 

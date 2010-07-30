@@ -30,7 +30,7 @@ class DlgChannelKey : public QDialog
 {
     Q_OBJECT
 public:
-    DlgChannelKey(Network *, QSettings *, QString);
+    DlgChannelKey(QWidget *, Network *, QSettings *, QString);
 
 private:
     Ui::uiChannelKey ui;

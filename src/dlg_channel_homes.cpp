@@ -20,11 +20,13 @@
 
 #include "dlg_channel_homes.h"
 
-DlgChannelHomes::DlgChannelHomes(Network *param1, QSettings *param2, TabContainer *param3, QMap <QString, QByteArray> *param4, DlgChannelSettings *param5)
+DlgChannelHomes::DlgChannelHomes(QWidget *parent, Network *param1, QSettings *param2, TabContainer *param3, QMap <QString, QByteArray> *param4, DlgChannelSettings *param5) : QDialog(parent)
 {
     ui.setupUi(this);
+    setAttribute(Qt::WA_DeleteOnClose);
     setWindowTitle(tr("Your channels"));
 
+    myparent = parent;
     pNetwork = param1;
     settings = param2;
     tabc = param3;
@@ -76,13 +78,13 @@ void DlgChannelHomes::list_clicked(QModelIndex index)
 void DlgChannelHomes::button_create()
 {
     ui.listWidget_channels->clear();
-    (new DlgChannelHomesAd(pNetwork, settings, tabc, "create"))->show();
+    (new DlgChannelHomesAd(myparent, pNetwork, settings, tabc, "create"))->show();
 }
 
 void DlgChannelHomes::button_remove()
 {
     ui.listWidget_channels->clear();
-    (new DlgChannelHomesAd(pNetwork, settings, tabc, "remove"))->show();
+    (new DlgChannelHomesAd(myparent, pNetwork, settings, tabc, "remove"))->show();
 }
 
 void DlgChannelHomes::button_ok()

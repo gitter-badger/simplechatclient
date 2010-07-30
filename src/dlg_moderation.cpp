@@ -20,9 +20,10 @@
 
 #include "dlg_moderation.h"
 
-DlgModeration::DlgModeration(QSettings *param1)
+DlgModeration::DlgModeration(QWidget *parent, QSettings *param1) : QDialog(parent)
 {
     ui.setupUi(this);
+    setAttribute(Qt::WA_DeleteOnClose);
     setWindowTitle(tr("Moderation"));
 
     settings = param1;

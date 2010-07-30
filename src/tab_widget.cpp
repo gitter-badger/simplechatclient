@@ -20,8 +20,9 @@
 
 #include "tab_widget.h"
 
-TabWidget::TabWidget(Network *param1, QSettings *param2, QString param3, QWidget *parent, Notify *param4, QMap <QString, QByteArray> *param5, QMap <QString, QByteArray> *param6, DlgChannelSettings *param7, DlgModeration *param8)
+TabWidget::TabWidget(QWidget *parent, Network *param1, QSettings *param2, QString param3, Notify *param4, QMap <QString, QByteArray> *param5, QMap <QString, QByteArray> *param6, DlgChannelSettings *param7, DlgModeration *param8)
 {
+    myparent = parent;
     pNetwork = param1;
     settings = param2;
     strName = param3;
@@ -118,7 +119,7 @@ TabWidget::TabWidget(Network *param1, QSettings *param2, QString param3, QWidget
     nickCount->setAlignment(Qt::AlignCenter);
     nickCount->show();
 
-    nick_list = new Nicklist(pNetwork, settings, strName, mNickAvatar);
+    nick_list = new Nicklist(myparent, pNetwork, settings, strName, mNickAvatar);
     nick_list->setParent(this);
     nick_list->setSortingEnabled(false);
     nick_list->setItemDelegate(new NicklistDelegate(nick_list));

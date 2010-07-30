@@ -20,7 +20,7 @@
 
 #include "dlg_update.h"
 
-DlgUpdate::DlgUpdate(QString param1)
+DlgUpdate::DlgUpdate(QWidget *parent, QString param1) : QDialog(parent)
 {
     ui.setupUi(this);
     setAttribute(Qt::WA_DeleteOnClose);

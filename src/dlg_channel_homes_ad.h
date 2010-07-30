@@ -31,7 +31,7 @@ class DlgChannelHomesAd : public QDialog
 {
     Q_OBJECT
 public:
-    DlgChannelHomesAd(Network *, QSettings *, TabContainer *, QString);
+    DlgChannelHomesAd(QWidget *, Network *, QSettings *, TabContainer *, QString);
 
 private:
     Ui::uiChannelHomesAd ui;

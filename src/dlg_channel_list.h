@@ -29,7 +29,7 @@ class DlgChannelList : public QDialog
 {
     Q_OBJECT
 public:
-    DlgChannelList(QSettings *, TabContainer *);
+    DlgChannelList(QWidget *, QSettings *, TabContainer *);
     void clear();
     void add_channel(QString, QString, QString, QString);
     void create_list();
