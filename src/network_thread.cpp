@@ -269,12 +269,8 @@ void NetworkThread::connected()
         if (strCurrentNick[0] == '~')
     strCurrentNick = strNick.right(strNick.length()-1);
 
-    // send auth
-    emit send(QString("NICK %1").arg(strNick));
-    emit send("AUTHKEY");
-
     // request uo key
-    emit request_uo(strCurrentNick, strPass);
+    emit request_uo(strCurrentNick, strNick, strPass);
 }
 
 void NetworkThread::disconnected()

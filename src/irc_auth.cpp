@@ -26,10 +26,11 @@ IrcAuth::IrcAuth(QSettings *param1, TabContainer *param2)
     tabc = param2;
 }
 
-void IrcAuth::request_uo(QString param1, QString param2)
+void IrcAuth::request_uo(QString param1, QString param2, QString param3)
 {
     QString strNick = param1;
-    QString strPass = param2;
+    QString strNickAuth = param2;
+    QString strPass = param3;
     QString strVersion;
     bool bOverride;
     QEventLoop eventLoop;
@@ -114,15 +115,13 @@ void IrcAuth::request_uo(QString param1, QString param2)
                 QObject::connect(pReply, SIGNAL(finished()), &eventLoop, SLOT(quit()));
                 eventLoop.exec();
                 delete pReply;
-
-                settings->setValue("override", "off");
             }
 
             strData = QString("api_function=getUoKey&params=a:3:{s:4:\"nick\";s:%1:\"%2\";s:8:\"tempNick\";i:0;s:7:\"version\";s:%3:\"%4\";}").arg(strNickLen).arg(strNick).arg(strVersionLen).arg(strVersion);
             pReply = accessManager.post(QNetworkRequest(QUrl("http://czat.onet.pl/include/ajaxapi.xml.php3")), strData.toAscii());
             QObject::connect(pReply, SIGNAL(finished()), &eventLoop, SLOT(quit()));
             eventLoop.exec();
-            request_finished(pReply->readAll());
+            request_finished(strNickAuth, pReply->readAll());
             delete pReply;
         }
         // nicki tyldowe
@@ -132,7 +131,7 @@ void IrcAuth::request_uo(QString param1, QString param2)
             pReply = accessManager.post(QNetworkRequest(QUrl("http://czat.onet.pl/include/ajaxapi.xml.php3")), strData.toAscii());
             QObject::connect(pReply, SIGNAL(finished()), &eventLoop, SLOT(quit()));
             eventLoop.exec();
-            request_finished(pReply->readAll());
+            request_finished(strNickAuth, pReply->readAll());
             delete pReply;
         }
     }
@@ -268,7 +267,7 @@ QString IrcAuth::get_version(QString strData)
     return "20090619-1228_2";
 }
 
-void IrcAuth::request_finished(QString strData)
+void IrcAuth::request_finished(QString strNickAuth, QString strData)
 {
     if (strData.isEmpty() == false)
     {
@@ -283,8 +282,11 @@ void IrcAuth::request_finished(QString strData)
                 QString strUOKey = doc.elementsByTagName("uoKey").item(0).toElement().text();
                 QString strNick = doc.elementsByTagName("zuoUsername").item(0).toElement().text();
                 settings->setValue("uokey", strUOKey);
-                if ((strUOKey.isEmpty() == false) && (strNick.isEmpty() == false))
-                    emit send(QString("USER * %1  czat-app.onet.pl :%2").arg(strUOKey).arg(strNick));
+                settings->setValue("uo_nick", strNick);
+
+                // send auth
+                emit send(QString("NICK %1").arg(strNickAuth));
+                emit send("AUTHKEY");
                 return;
             }
             else

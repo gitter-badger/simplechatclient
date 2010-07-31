@@ -76,7 +76,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
 // settings
     settings.clear();
-    settings.setValue("version", "1.0.6.350");
+    settings.setValue("version", "1.0.6.351");
     settings.setValue("debug", "off");
     settings.setValue("logged", "off");
     settings.setValue("busy", "off");
@@ -97,6 +97,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     settings.setValue("my_font", strMyFont);
     settings.setValue("my_color", strMyColor);
     settings.setValue("uokey", "");
+    settings.setValue("uo_nick", "");
     settings.setValue("onet_ubi", "");
     settings.setValue("onet_cid", "");
     settings.setValue("onet_sid", "");
@@ -196,7 +197,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     QObject::connect(pIrc_auth, SIGNAL(send(QString)), pNetwork, SLOT(send_slot(QString)));
 
     QObject::connect(this, SIGNAL(do_kernel(QString)), pIrc_kernel, SLOT(kernel(QString)));
-    QObject::connect(this, SIGNAL(do_request_uo(QString, QString)), pIrc_auth, SLOT(request_uo(QString, QString)));
+    QObject::connect(this, SIGNAL(do_request_uo(QString, QString, QString)), pIrc_auth, SLOT(request_uo(QString, QString, QString)));
 
 // tray
     trayMenu = new QMenu();
@@ -248,7 +249,7 @@ void MainWindow::remove_uthread(UpdateThread *thr)
 // slots
 
 void MainWindow::kernel(QString param1) { emit do_kernel(param1); }
-void MainWindow::request_uo(QString param1, QString param2) { emit do_request_uo(param1, param2); }
+void MainWindow::request_uo(QString param1, QString param2, QString param3) { emit do_request_uo(param1, param2, param3); }
 void MainWindow::show_msg_active(QString param1, int param2) { pTabC->show_msg_active(param1, param2); }
 void MainWindow::show_msg_all(QString param1, int param2) { pTabC->show_msg_all(param1, param2); }
 void MainWindow::update_nick(QString param1) { pTabC->update_nick(param1); }

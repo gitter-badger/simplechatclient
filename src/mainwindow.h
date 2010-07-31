@@ -57,7 +57,7 @@ public:
 public slots:
     void set_statusbar(QString);
     void kernel(QString);
-    void request_uo(QString, QString);
+    void request_uo(QString, QString, QString);
     void show_msg_active(QString, int);
     void show_msg_all(QString, int);
     void update_nick(QString);
@@ -118,7 +118,7 @@ private slots:
 
 signals:
     void do_kernel(QString);
-    void do_request_uo(QString, QString);
+    void do_request_uo(QString, QString, QString);
 
 };
 

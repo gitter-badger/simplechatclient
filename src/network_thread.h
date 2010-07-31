@@ -70,7 +70,7 @@ private slots:
 
 signals:
     void send_to_kernel(QString);
-    void request_uo(QString, QString);
+    void request_uo(QString, QString, QString);
     void show_msg_all(QString, int);
     void show_msg_active(QString, int);
     void update_nick(QString);

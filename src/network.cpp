@@ -29,7 +29,7 @@ Network::Network(QWidget *parent, QAction *param1, QSettings *param2)
     networkThr->start(QThread::LowPriority);
 
     QObject::connect(networkThr, SIGNAL(send_to_kernel(QString)), parent, SLOT(kernel(QString)));
-    QObject::connect(networkThr, SIGNAL(request_uo(QString, QString)), parent, SLOT(request_uo(QString, QString)));
+    QObject::connect(networkThr, SIGNAL(request_uo(QString, QString, QString)), parent, SLOT(request_uo(QString, QString, QString)));
     QObject::connect(networkThr, SIGNAL(show_msg_active(QString, int)), parent, SLOT(show_msg_active(QString, int)));
     QObject::connect(networkThr, SIGNAL(show_msg_all(QString, int)), parent, SLOT(show_msg_all(QString, int)));
     QObject::connect(networkThr, SIGNAL(update_nick(QString)), parent, SLOT(update_nick(QString)));

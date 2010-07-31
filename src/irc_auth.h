@@ -37,14 +37,14 @@ public:
     QString transform_key(QString);
 
 public slots:
-    void request_uo(QString, QString);
+    void request_uo(QString, QString, QString);
 
 private:
     QSettings *settings;
     TabContainer *tabc;
 
     QString get_version(QString);
-    void request_finished(QString);
+    void request_finished(QString, QString);
 
 signals:
     void send(QString);

@@ -1145,6 +1145,8 @@ void IrcKernel::raw_001()
 // autojoin favourites
     settings->setValue("autojoin_favourites", "on");
 
+// override off
+    settings->setValue("override", "off");
 }
 
 // :cf1f4.onet 002 Merovingian :Your host is cf1f4.onet, running version InspIRCd-1.1
@@ -2483,6 +2485,10 @@ void IrcKernel::raw_433()
     tabc->show_msg_all(strMessage, 9);
 
     settings->setValue("override", "on");
+
+    // reconnect
+    pNetwork->close();
+    pNetwork->connect();
 }
 
 // :NickServ!service@service.onet NOTICE scc_test :440 #scc :is already on your favourite list
@@ -2892,7 +2898,13 @@ void IrcKernel::raw_801()
     delete pIrc_auth;
 
     if (strAuth.length() == 16)
+    {
         pNetwork->send(QString("AUTHKEY %1").arg(strAuth));
+        QString strUOKey = settings->value("uokey").toString();
+        QString strNickUo = settings->value("uo_nick").toString();
+        if ((strUOKey.isEmpty() == false) && (strNickUo.isEmpty() == false))
+            pNetwork->send(QString("USER * %1  czat-app.onet.pl :%2").arg(strUOKey).arg(strNickUo));
+    }
     else
         tabc->show_msg("Status", tr("Error: Invalid auth key"), 9);
 }
