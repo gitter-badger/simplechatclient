@@ -31,7 +31,7 @@ DlgUpdate::DlgUpdate(QWidget *parent, QString param1) : QDialog(parent)
 
     QString strLink;
 #ifdef Q_WS_WIN
-    strLink += QString("<a href=\"http://sourceforge.net/projects/simplechatclien/files/scc-"+strVersion+".msi/download\">%1</a>").arg(tr("download"));
+    strLink += QString("<a href=\"http://sourceforge.net/projects/simplechatclien/files/scc-"+strVersion+".exe/download\">%1</a>").arg(tr("download"));
 #endif
 #ifdef Q_WS_X11
     strLink += QString("<a href=\"http://sourceforge.net/projects/simplechatclien/files/scc-"+strVersion+".tar.bz2/download\">%1</a>").arg(tr("download"));
