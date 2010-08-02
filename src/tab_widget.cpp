@@ -123,7 +123,7 @@ TabWidget::TabWidget(QWidget *parent, Network *param1, QSettings *param2, QStrin
     nick_list->setParent(this);
     nick_list->setSortingEnabled(false);
     nick_list->setItemDelegate(new NicklistDelegate(nick_list));
-    nick_list->setStyleSheet(QString("background-color: #%1;").arg(strBackgroundColor));
+    //nick_list->setStyleSheet(QString("background-color: #%1;").arg(strBackgroundColor));
     nick_list->show();
 
     textEdit = new QWebView(this);
