@@ -76,7 +76,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
 // settings
     settings.clear();
-    settings.setValue("version", "1.0.6.356");
+    settings.setValue("version", "1.0.7.358");
     settings.setValue("debug", "off");
     settings.setValue("logged", "off");
     settings.setValue("busy", "off");
@@ -118,6 +118,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     pDlg_channel_favourites = new DlgChannelFavourites(this, pNetwork, &settings, pTabC, &mChannelAvatar);
     pDlg_friends = new DlgFriends(this, pNetwork, &settings, pTabC, &mNickAvatar);
     pDlg_ignore = new DlgIgnore(this, pNetwork, &settings, pTabC, &mNickAvatar);
+
     pIrc_kernel = new IrcKernel(this, pNetwork, &settings, pTabC, &mNickAvatar, &mChannelAvatar, pDlg_channel_settings, pDlg_channel_homes, pDlg_channel_list, pDlg_channel_favourites, pDlg_friends, pDlg_ignore, pDlg_moderation);
     pIrc_auth = new IrcAuth(&settings, pTabC);
 

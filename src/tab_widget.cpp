@@ -624,34 +624,6 @@ void TabWidget::display_message(QString strData, int iLevel)
         if (strData.indexOf("&gt;") != -1) strData = strData.remove(strData.indexOf("&gt;"),4);
     }
 
-// colors
-    if (settings->value("hide_formating").toString() == "off")
-    {
-        int iCount = strData.count("%C");
-
-        strData.replace("%C000000%", "<span style=\"color:#000000;\">");
-        strData.replace("%C623c00%", "<span style=\"color:#623c00;\">");
-        strData.replace("%Cc86c00%", "<span style=\"color:#c86c00;\">");
-        strData.replace("%Cff6500%", "<span style=\"color:#ff6500;\">");
-        strData.replace("%Cff0000%", "<span style=\"color:#ff0000;\">");
-        strData.replace("%Ce40f0f%", "<span style=\"color:#e40f0f;\">");
-        strData.replace("%C990033%", "<span style=\"color:#990033;\">");
-        strData.replace("%C8800ab%", "<span style=\"color:#8800ab;\">");
-        strData.replace("%Cce00ff%", "<span style=\"color:#ce00ff;\">");
-        strData.replace("%C0f2ab1%", "<span style=\"color:#0f2ab1;\">");
-        strData.replace("%C3030ce%", "<span style=\"color:#3030ce;\">");
-        strData.replace("%C006699%", "<span style=\"color:#006699;\">");
-        strData.replace("%C1a866e%", "<span style=\"color:#1a866e;\">");
-        strData.replace("%C008100%", "<span style=\"color:#008100;\">");
-        strData.replace("%C959595%", "<span style=\"color:#959595;\">");
-
-        QString strSpan;
-        for (int i = 0; i < iCount; i++)
-            strSpan += "</span>";
-
-        strContentLast = strSpan+strContentLast;
-    }
-
 // emoticons
     if (strData.indexOf("%I") != -1)
     {
@@ -661,7 +633,9 @@ void TabWidget::display_message(QString strData, int iLevel)
         {
             int iStartPos = strData.indexOf("%I");
             int iEndPos = strData.indexOf("%", iStartPos+1);
-            if (iEndPos != -1)
+            int iSpacePos = strData.indexOf(" ", iStartPos);
+
+            if ((iEndPos != -1) && ((iEndPos < iSpacePos) || (iSpacePos == -1)))
             {
                 iEndPos++;
                 QString strEmoticonFull = strData.mid(iStartPos, iEndPos-iStartPos);
@@ -708,7 +682,9 @@ void TabWidget::display_message(QString strData, int iLevel)
         {
             int iStartPos = strData.indexOf("%F");
             int iEndPos = strData.indexOf("%", iStartPos+1);
-            if (iEndPos != -1)
+            int iSpacePos = strData.indexOf(" ", iStartPos);
+
+            if ((iEndPos != -1) && ((iEndPos < iSpacePos) || (iSpacePos == -1)))
             {
                 iEndPos++;
                 QString strFontFull = strData.mid(iStartPos, iEndPos-iStartPos);
@@ -762,6 +738,34 @@ void TabWidget::display_message(QString strData, int iLevel)
             else
                 break;
         }
+
+        QString strSpan;
+        for (int i = 0; i < iCount; i++)
+            strSpan += "</span>";
+
+        strContentLast = strSpan+strContentLast;
+    }
+
+// colors
+    if (settings->value("hide_formating").toString() == "off")
+    {
+        int iCount = strData.count("%C");
+
+        strData.replace("%C000000%", "<span style=\"color:#000000;\">");
+        strData.replace("%C623c00%", "<span style=\"color:#623c00;\">");
+        strData.replace("%Cc86c00%", "<span style=\"color:#c86c00;\">");
+        strData.replace("%Cff6500%", "<span style=\"color:#ff6500;\">");
+        strData.replace("%Cff0000%", "<span style=\"color:#ff0000;\">");
+        strData.replace("%Ce40f0f%", "<span style=\"color:#e40f0f;\">");
+        strData.replace("%C990033%", "<span style=\"color:#990033;\">");
+        strData.replace("%C8800ab%", "<span style=\"color:#8800ab;\">");
+        strData.replace("%Cce00ff%", "<span style=\"color:#ce00ff;\">");
+        strData.replace("%C0f2ab1%", "<span style=\"color:#0f2ab1;\">");
+        strData.replace("%C3030ce%", "<span style=\"color:#3030ce;\">");
+        strData.replace("%C006699%", "<span style=\"color:#006699;\">");
+        strData.replace("%C1a866e%", "<span style=\"color:#1a866e;\">");
+        strData.replace("%C008100%", "<span style=\"color:#008100;\">");
+        strData.replace("%C959595%", "<span style=\"color:#959595;\">");
 
         QString strSpan;
         for (int i = 0; i < iCount; i++)
