@@ -76,7 +76,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
 // settings
     settings.clear();
-    settings.setValue("version", "1.0.7.362");
+    settings.setValue("version", "1.0.7.363");
     settings.setValue("debug", "off");
     settings.setValue("logged", "off");
     settings.setValue("busy", "off");
@@ -215,10 +215,17 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
 MainWindow::~MainWindow()
 {
+    // clear arrays
     mNickAvatar.clear();
     mChannelAvatar.clear();
     trayIcon->hide();
+
+    // close network
     settings.setValue("reconnect", "false");
+    pNetwork->send("QUIT");
+    pNetwork->close();
+
+    // delete objects
     delete trayIcon;
     delete trayMenu;
     delete pIrc_auth;

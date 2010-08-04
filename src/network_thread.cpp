@@ -51,11 +51,7 @@ NetworkThread::NetworkThread(QAction *param1, QSettings *param2)
 
 NetworkThread::~NetworkThread()
 {
-    if (timer->isActive() == true)
-        timer->stop();
-    if (timerLag->isActive() == true)
-        timerLag->stop();
-    socket->close();
+    emit close();
     delete socket;
 }
 
@@ -317,10 +313,10 @@ void NetworkThread::error(QAbstractSocket::SocketError err)
     connectAct->setText(tr("&Connect"));
     connectAct->setIconText(tr("&Connect"));
 
-    emit show_msg_all(QString(tr("Disconnected from server [%1]")).arg(socket->errorString()), 9);
-
     if (socket->state() == QAbstractSocket::ConnectedState)
         emit close();
+    else
+        emit show_msg_all(QString(tr("Disconnected from server [%1]")).arg(socket->errorString()), 9);
 }
 
 void NetworkThread::timeout()
