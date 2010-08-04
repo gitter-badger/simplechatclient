@@ -107,3 +107,9 @@ void DlgChannelHomes::showEvent(QShowEvent *event)
 
     pNetwork->send("CS HOMES");
 }
+
+void DlgChannelHomes::closeEvent(QCloseEvent *event)
+{
+    event->ignore();
+    this->hide();
+}

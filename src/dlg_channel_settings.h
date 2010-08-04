@@ -68,6 +68,7 @@ private:
 protected:
     virtual void showEvent(QShowEvent *);
     virtual void hideEvent(QHideEvent *);
+    virtual void closeEvent(QCloseEvent *);
 
 private slots:
     void owner_changed();

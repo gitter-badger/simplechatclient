@@ -232,3 +232,9 @@ void DlgModeration::showEvent(QShowEvent *event)
     ui.comboBox_channels->setCurrentIndex(iId);
     combo_changed(iId);
 }
+
+void DlgModeration::closeEvent(QCloseEvent *event)
+{
+    event->ignore();
+    this->hide();
+}

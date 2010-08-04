@@ -50,7 +50,8 @@ private:
     DlgChannelHomesAd *dlgchannel_homes_ad;
 
 protected:
-    virtual void showEvent(QShowEvent *event);
+    virtual void showEvent(QShowEvent *);
+    virtual void closeEvent(QCloseEvent *);
 
 private slots:
     void list_clicked(QModelIndex);

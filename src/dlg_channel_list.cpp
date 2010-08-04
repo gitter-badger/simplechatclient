@@ -319,3 +319,9 @@ void DlgChannelList::resizeEvent(QResizeEvent *event)
     ui.tableWidget_thematic->setGeometry(QRect(0,0,this->width()-10, this->height()-65));
     ui.tableWidget_regional->setGeometry(QRect(0,0,this->width()-10, this->height()-65));
 }
+
+void DlgChannelList::closeEvent(QCloseEvent *event)
+{
+    event->ignore();
+    this->hide();
+}

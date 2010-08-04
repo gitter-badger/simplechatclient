@@ -51,6 +51,7 @@ private:
 protected:
     virtual void showEvent(QShowEvent *);
     virtual void resizeEvent(QResizeEvent *);
+    virtual void closeEvent(QCloseEvent *);
 
 private slots:
     void all_CellDoubleClicked(int, int);

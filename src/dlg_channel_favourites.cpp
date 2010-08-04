@@ -96,3 +96,9 @@ void DlgChannelFavourites::showEvent(QShowEvent *event)
     ui.listWidget_channels->clear();
     pNetwork->send("NS FAVOURITES");
 }
+
+void DlgChannelFavourites::closeEvent(QCloseEvent *event)
+{
+    event->ignore();
+    this->hide();
+}

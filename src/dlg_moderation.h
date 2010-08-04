@@ -59,6 +59,7 @@ private slots:
 
 protected:
     virtual void showEvent(QShowEvent *);
+    virtual void closeEvent(QCloseEvent *);
 
 signals:
     void display_msg(QString, QString, int);

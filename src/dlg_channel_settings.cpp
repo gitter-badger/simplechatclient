@@ -545,3 +545,9 @@ void DlgChannelSettings::hideEvent(QHideEvent *event)
     strChannel.clear();
     clear();
 }
+
+void DlgChannelSettings::closeEvent(QCloseEvent *event)
+{
+    event->ignore();
+    this->hide();
+}

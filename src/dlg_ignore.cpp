@@ -98,3 +98,9 @@ void DlgIgnore::showEvent(QShowEvent *event)
     ui.listWidget_nicks->clear();
     pNetwork->send("NS IGNORE");
 }
+
+void DlgIgnore::closeEvent(QCloseEvent *event)
+{
+    event->ignore();
+    this->hide();
+}

@@ -126,3 +126,9 @@ void DlgFriends::showEvent(QShowEvent *event)
 
     refresh();
 }
+
+void DlgFriends::closeEvent(QCloseEvent *event)
+{
+    event->ignore();
+    this->hide();
+}
