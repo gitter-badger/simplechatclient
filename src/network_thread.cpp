@@ -106,9 +106,18 @@ void NetworkThread::reconnect()
 
 void NetworkThread::close()
 {
+    // if buffer is not empty - wait
+    if (sendBuffer.isEmpty() == false)
+    {
+        QTimer::singleShot(500, this, SLOT(close()));
+        return;
+    }
+
+    // close
     if (socket->state() == QAbstractSocket::ConnectedState)
         socket->disconnectFromHost();
 
+    // stop timers
     if (timer->isActive() == true)
         timer->stop();
     if (timerLag->isActive() == true)
