@@ -106,7 +106,8 @@ void IrcKernel::kernel(QString param1)
             raw_modernotice();
         else if (strDataList[1].toLower() == "moderate")
             raw_moderate();
-        else if (strDataList[1].toLower() == "001")
+
+        if (strDataList[1].toLower() == "001")
             raw_001();
         else if (strDataList[1].toLower() == "002")
             raw_002();
@@ -268,7 +269,8 @@ void IrcKernel::kernel(QString param1)
             raw_821();
         else if (strDataList[1].toLower() == "951")
             raw_951();
-        else if ((strDataList[1].toLower() == "notice") && (strDataList.value(3).isEmpty() == false))
+
+        if ((strDataList[1].toLower() == "notice") && (strDataList.value(3).isEmpty() == false))
         {
             if (strDataList[3].toLower() == ":100")
                 raw_100n();
@@ -390,20 +392,6 @@ void IrcKernel::kernel(QString param1)
                 raw_472n();
             else if (strDataList[1].toLower() == "notice")
                 raw_notice();
-            else
-            {
-#ifndef Q_WS_X11
-                if (settings->value("debug").toString() == "on")
-                    tabc->show_msg("Status", strData, 7);
-#endif
-            }
-        }
-        else
-        {
-#ifndef Q_WS_X11
-            if (settings->value("debug").toString() == "on")
-                tabc->show_msg("Status", strData, 7);
-#endif
         }
     }
 }

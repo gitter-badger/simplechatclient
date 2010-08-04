@@ -53,9 +53,8 @@ QString Inputline::get_word()
     return strWord;
 }
 
-void Inputline::set_word(QString param1)
+void Inputline::set_word(QString strSetWord)
 {
-    //param1 += " ";
     QString strWord = this->text();
     if (strWord.isEmpty() == false)
     {
@@ -66,8 +65,11 @@ void Inputline::set_word(QString param1)
         strWord = strWord.mid(iStart, iLength);
 
         QString strNewLine = this->text();
-        strNewLine = strNewLine.replace(iStart, iLength, param1);
+        strNewLine = strNewLine.replace(iStart, iLength, strSetWord);
         this->setText(strNewLine);
+
+        // set cursor
+        this->setCursorPosition(iStart-1+iLength+strSetWord.length());
     }
 }
 
