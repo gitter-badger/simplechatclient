@@ -288,6 +288,8 @@ void IrcKernel::kernel(QString param1)
                 raw_131n();
             else if (strDataList[3].toLower() == ":132")
                 raw_132n();
+            else if (strDataList[3].toLower() == ":133")
+                raw_133n();
             else if (strDataList[3].toLower() == ":141")
                 raw_141n();
             else if (strDataList[3].toLower() == ":142")
@@ -1270,6 +1272,24 @@ void IrcKernel::raw_131n()
 void IrcKernel::raw_132n()
 {
 // ignore
+}
+
+// :NickServ!service@service.onet NOTICE Merovingian :133 test_nick test_nick_nowy :ignored nick changed
+void IrcKernel::raw_133n()
+{
+    if (strDataList.value(4).isEmpty() == true) return;
+    if (strDataList.value(5).isEmpty() == true) return;
+
+    QString strOldNick = strDataList[4];
+    if (strOldNick[0] == ':')
+        strOldNick = strOldNick.right(strOldNick.length()-1);
+
+    QString strNewNick = strDataList[5];
+    if (strNewNick[0] == ':')
+        strNewNick = strNewNick.right(strNewNick.length()-1);
+
+    QString strDisplay = QString(tr("* %1 changed nickname to %2 from your ignored list")).arg(strOldNick).arg(strNewNick);
+    tabc->show_msg_active(strDisplay, 7);
 }
 
 // :NickServ!service@service.onet NOTICE scc_test :141 :#Scrabble #Quiz #scc

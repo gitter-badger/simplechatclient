@@ -1172,6 +1172,10 @@
         <translation>* %1 Rozpoczęcie o %2 na kanale %3</translation>
     </message>
     <message>
+        <source>* %1 changed nickname to %2 from your ignored list</source>
+        <translation>* %1 zmienił/a nick na %2 z Twojej listy ignorowanych</translation>
+    </message>
+    <message>
         <source>* Added the nickname %1 to a friends list</source>
         <translation>* Dodano nick %1 do listy przyjaciół</translation>
     </message>
