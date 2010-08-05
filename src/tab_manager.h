@@ -39,18 +39,18 @@ public:
     void set_alert(QString);
     int tab_pos(QString);
 
-    QStringList *alert_list;
-
 private:
     QTabBar *tab;
     QTimer *timer;
     QColor color;
     QWidget *mainWin;
     QSettings *settings;
+    QStringList alert_list;
 
     QString get_settings_key(QString);
 
 private slots:
+    void close_requested(int);
     void current_tab_changed(int);
     void flash_tab();
 

@@ -76,7 +76,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
 // settings
     settings.clear();
-    settings.setValue("version", "1.0.7.363");
+    settings.setValue("version", "1.0.7.364");
     settings.setValue("debug", "off");
     settings.setValue("logged", "off");
     settings.setValue("busy", "off");
@@ -228,6 +228,7 @@ MainWindow::~MainWindow()
     // delete objects
     delete trayIcon;
     delete trayMenu;
+    delete lLag;
     delete pIrc_auth;
     delete pIrc_kernel;
     delete pDlg_ignore;
