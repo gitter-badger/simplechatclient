@@ -47,7 +47,6 @@ private slots:
     void set_modern_style_avatars();
     void set_modern_style_no_avatars();
     void auto_busy();
-    void debug_all();
     void show_zuo();
     void hide_formating();
     void hide_join_part();

@@ -102,11 +102,6 @@ QString Config::get_value(QString strKey)
         set_value("auto_busy", "off");
         return "off";
     }
-    else if (strKey == "debug_all")
-    {
-        set_value("debug_all", "off");
-        return "off";
-    }
     else if (strKey == "show_zuo")
     {
         set_value("show_zuo", "off");
@@ -215,7 +210,6 @@ void Config::create_new_config()
     add_config_value(&doc, &root, "login-nick", "~test");
     add_config_value(&doc, &root, "login-pass", QString::null);
     add_config_value(&doc, &root, "auto_busy", "off");
-    add_config_value(&doc, &root, "debug_all", "off");
     add_config_value(&doc, &root, "show_zuo", "off");
     add_config_value(&doc, &root, "hide_formating", "off");
     add_config_value(&doc, &root, "hide_join_part", "off");

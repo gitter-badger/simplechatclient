@@ -712,10 +712,6 @@
         <translation>Tryb zajętości po zalogowaniu (busy)</translation>
     </message>
     <message>
-        <source>Show messages from the server (debug)</source>
-        <translation>Pokazywanie komunikatów serwera</translation>
-    </message>
-    <message>
         <source>Show ZUO</source>
         <translation>Pokazywanie ZUO</translation>
     </message>

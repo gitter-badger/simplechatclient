@@ -43,7 +43,6 @@ DlgOptions::DlgOptions(QWidget *parent, QSettings *param1) : QDialog(parent)
     ui.tabWidget_adv->setTabText(1, tr("Skins"));
     ui.tabWidget_adv->setTabText(2, tr("Other"));
     ui.checkBox_auto_busy->setText(tr("Busy mode after you log in to chat"));
-    ui.checkBox_debug->setText(tr("Show messages from the server (debug)"));
     ui.checkBox_show_zuo->setText(tr("Show ZUO"));
     ui.checkBox_hide_formating->setText(tr("Disable formatting messages"));
     ui.checkBox_hide_join_part->setText(tr("Hide join/part"));
@@ -140,7 +139,6 @@ DlgOptions::DlgOptions(QWidget *parent, QSettings *param1) : QDialog(parent)
     QString strNick = pConfig->get_value("login-nick");
     QString strPass = pConfig->get_value("login-pass");
     QString strAutoBusy = pConfig->get_value("auto_busy");
-    QString strDebugAll = pConfig->get_value("debug_all");
     QString strShowZuo = pConfig->get_value("show_zuo");
     QString strHideFormating = pConfig->get_value("hide_formating");
     QString strHideJoinPart = pConfig->get_value("hide_join_part");
@@ -197,12 +195,6 @@ DlgOptions::DlgOptions(QWidget *parent, QSettings *param1) : QDialog(parent)
         ui.checkBox_auto_busy->setChecked(true);
     else
         ui.checkBox_auto_busy->setChecked(false);
-
-// debug
-    if (strDebugAll == "on")
-        ui.checkBox_debug->setChecked(true);
-    else
-        ui.checkBox_debug->setChecked(false);
 
 // show zuo
     if (strShowZuo == "on")
@@ -303,7 +295,6 @@ DlgOptions::DlgOptions(QWidget *parent, QSettings *param1) : QDialog(parent)
     QObject::connect(ui.radioButton_modern_no_avatars, SIGNAL(clicked()), this, SLOT(set_modern_style_no_avatars()));
     QObject::connect(ui.radioButton_classic, SIGNAL(clicked()), this, SLOT(set_classic_style()));
     QObject::connect(ui.checkBox_auto_busy, SIGNAL(clicked()), this, SLOT(auto_busy()));
-    QObject::connect(ui.checkBox_debug, SIGNAL(clicked()), this, SLOT(debug_all()));
     QObject::connect(ui.checkBox_show_zuo, SIGNAL(clicked()), this, SLOT(show_zuo()));
     QObject::connect(ui.checkBox_hide_formating, SIGNAL(clicked()), this, SLOT(hide_formating()));
     QObject::connect(ui.checkBox_hide_join_part, SIGNAL(clicked()), this, SLOT(hide_join_part()));
@@ -399,22 +390,6 @@ void DlgOptions::auto_busy()
     {
         pConfig->set_value("auto_busy", "off");
         settings->setValue("auto_busy", "off");
-    }
-    delete pConfig;
-}
-
-void DlgOptions::debug_all()
-{
-    Config *pConfig = new Config();
-    if (ui.checkBox_debug->isChecked() == true)
-    {
-        pConfig->set_value("debug_all", "on");
-        settings->setValue("debug_all", "on");
-    }
-    else
-    {
-        pConfig->set_value("debug_all", "off");
-        settings->setValue("debug_all", "off");
     }
     delete pConfig;
 }

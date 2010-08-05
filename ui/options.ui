@@ -280,13 +280,6 @@
                 </widget>
                </item>
                <item>
-                <widget class="QCheckBox" name="checkBox_debug">
-                 <property name="text">
-                  <string>Show messages from the server (debug)</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
                 <widget class="QCheckBox" name="checkBox_show_zuo">
                  <property name="text">
                   <string>Show ZUO</string>

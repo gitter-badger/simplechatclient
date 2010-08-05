@@ -69,9 +69,6 @@ void IrcKernel::kernel(QString param1)
         qDebug() << "<- " << strData;
 #endif
 
-    if ((settings->value("debug_all").toString() == "on") && (strDataList.value(1).isEmpty() == false) && (strDataList[1].toLower() != "privmsg"))
-       tabc->show_msg("Status", strData, 7);
-
     if (strDataList.value(1).isEmpty() == false)
     {
         if (strDataList[0].toLower() == "ping")
