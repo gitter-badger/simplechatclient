@@ -1,0 +1,18 @@
+﻿Kompilacja Simple Chat Client pod Windows z źródła SVN (http://simplechatclien.sourceforge.net/)
+W instrukcji są podane najnowsze wersje programów które były dostępne w trakcie pisania.
+
+1.) Zainstaluj Visual C++ Studio 2008
+2.) Pobierz i zainstaluj Qt 4.6.3 for Windows (http://qt.nokia.com/downloads/windows-cpp-vs2008)
+3.) Pobierz i zainstaluj CMake 2.8.2 (http://www.cmake.org/files/v2.8/cmake-2.8.2-win32-x86.exe)
+    Podczas instalacji wybierz "Add CMake to the system PATH for all users"
+4.) Pobierz QCA2 for Visual Studio i rozpakuj zawartość do folderu C:\qca2  (http://delta.affinix.com/download/qca/2.0/qca-2.0.1-vs2005.zip)
+5.) Pobierz i zainstaluj Visual C++ 2008 Redistributable SP1 (http://www.microsoft.com/downloads/details.aspx?FamilyID=A5C84275-3B97-4AB7-A40D-3802B2AF5FC2&displaylang=en)
+6.) Pobierz i zainstaluj Win32 OpenSSL v1.0.0a Light (http://www.slproweb.com/download/Win32OpenSSL_Light-1_0_0a.exe)
+    Podczas instalacji wybierz "Copy OpenSSL DLLs to: The OpenSSL binaries (/bin) directory"
+7.) Pobierz i zainstaluj TortoiseSVN (http://downloads.sourceforge.net/tortoisesvn/TortoiseSVN-1.6.10.19898-win32-svn-1.6.12.msi?download)
+8.) Utworz folder scc_project a w nim folder scc
+9.) Wykonaj SVN Checkout programem TortoiseSVN w folderze scc
+    Jako "Url of repository" wpisz: https://simplechatclien.svn.sourceforge.net/svnroot/simplechatclien/trunk
+10.) Uruchom plik compile.bat z folderu scc
+11.) Uruchom plik scc.sln
+12.) Kliknij na ALL_BUILD i skompiluj jako Release
