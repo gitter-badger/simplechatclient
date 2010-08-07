@@ -63,6 +63,7 @@ public:
     QString get_name() { return strName; }
     void set_default();
     QString convert_emots(QString);
+    void convert_text(QString *, QString *);
     QString replace_emots(QString);
     void display_msg(QString, QString, int);
     void display_msg(QString, int);
