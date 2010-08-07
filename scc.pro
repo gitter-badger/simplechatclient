@@ -31,6 +31,7 @@ SOURCES += src/channel_avatar.cpp \
     src/dlg_moderation.cpp \
     src/dlg_options.cpp \
     src/dlg_privilege.cpp \
+    src/dlg_register_nick.cpp \
     src/dlg_update.cpp \
     src/irc_auth.cpp \
     src/irc_kernel.cpp \
@@ -74,6 +75,7 @@ HEADERS += src/channel_avatar.h \
     src/dlg_moderation.h \
     src/dlg_options.h \
     src/dlg_privilege.h \
+    src/dlg_register_nick.h \
     src/dlg_update.h \
     src/irc_auth.h \
     src/irc_kernel.h \
@@ -113,4 +115,5 @@ FORMS += ui/about.ui \
     ui/moderation.ui \
     ui/options.ui \
     ui/privilege.ui \
+    ui/register_nick.ui \
     ui/update.ui

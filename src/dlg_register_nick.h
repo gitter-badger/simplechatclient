@@ -18,54 +18,53 @@
  *                                                                          *
  ****************************************************************************/
 
-#ifndef DLG_OPTIONS_H
-#define DLG_OPTIONS_H
+#ifndef DLG_REGISTER_NICK_H
+#define DLG_REGISTER_NICK_H
 
 #include <QDialog>
+#include <QDomDocument>
+#include <QHideEvent>
+#include <QHostInfo>
 #include <QMessageBox>
+#include <QNetworkAccessManager>
+#include <QNetworkCookieJar>
+#include <QNetworkReply>
 #include <QSettings>
+#include <QShowEvent>
+#include <QUrl>
 #include "config.h"
 #include "crypt.h"
-#include "dlg_register_nick.h"
-#include "ui_options.h"
+#include "ui_register_nick.h"
 
-class DlgOptions : public QDialog
+class DlgRegisterNick : public QDialog
 {
     Q_OBJECT
 public:
-    DlgOptions(QWidget *, QSettings *);
+    DlgRegisterNick(QWidget *, QWidget *, QSettings *);
 
 private:
-    Ui::uiOptions ui;
-    QWidget *myparent;
+    Ui::uiRegisterNick ui;
+    QWidget *options;
     QSettings *settings;
+    QNetworkReply *pReply;
+    QNetworkAccessManager accessManager;
+    QNetworkCookieJar *cookieJar;
+    QMap <QString, QString> mCookies;
 
-    void save_settings();
+    void get_cookies();
+    void get_img();
+    void register_nick();
+    void parse_result(QString);
 
 private slots:
-    void change_page(QListWidgetItem *, QListWidgetItem *);
-    void hide_pass();
-    void show_pass();
-    void button_register_nick();
-    void set_modern_style_avatars();
-    void set_modern_style_no_avatars();
-    void auto_busy();
-    void show_zuo();
-    void hide_formating();
-    void hide_join_part();
-    void disable_avatars();
-    void disable_logs();
-    void disable_sounds();
-    void set_modern_style();
-    void set_classic_style();
-    void set_background_color(QString);
-    void set_my_bold(int);
-    void set_my_italic(int);
-    void set_my_font(QString);
-    void set_my_color(int);
+    void button_refresh();
     void button_ok();
     void button_cancel();
 
+protected:
+    virtual void showEvent(QShowEvent *);
+    virtual void hideEvent(QHideEvent *);
+
 };
 
-#endif // DLG_OPTIONS_H
+#endif // DLG_REGISTER_NICK_H

@@ -27,11 +27,14 @@ DlgOptions::DlgOptions(QWidget *parent, QSettings *param1) : QDialog(parent)
     setWindowFlags(Qt::Dialog | Qt::WindowStaysOnTopHint);
     setWindowTitle(tr("Options"));
 
+    myparent = parent;
     settings = param1;
 
 // page basic
-    ui.radioButton_nick_t->setText(tr("Unregistered nickname"));
-    ui.radioButton_nick_s->setText(tr("Registered nickname"));
+    ui.radioButton_unregistered_nick->setText(tr("Unregistered nick"));
+    ui.radioButton_registered_nick->setText(tr("Registered nick"));
+    ui.pushButton_register_nick->setText(tr("Register nick"));
+
     ui.label_nick->setText(tr("Nick:"));
     ui.label_password->setText(tr("Password:"));
     ui.groupBox_skins->setTitle(tr("Skins"));
@@ -164,15 +167,15 @@ DlgOptions::DlgOptions(QWidget *parent, QSettings *param1) : QDialog(parent)
 // set nick staly/tyldowy
     if (strPass.isEmpty() == true)
     {
-        ui.radioButton_nick_t->setChecked(true);
-        ui.radioButton_nick_s->setChecked(false);
+        ui.radioButton_unregistered_nick->setChecked(true);
+        ui.radioButton_registered_nick->setChecked(false);
         ui.label_password->hide();
         ui.lineEdit_password->hide();
     }
     else
     {
-        ui.radioButton_nick_t->setChecked(false);
-        ui.radioButton_nick_s->setChecked(true);
+        ui.radioButton_unregistered_nick->setChecked(false);
+        ui.radioButton_registered_nick->setChecked(true);
     }
 
 // set nick and pass
@@ -289,8 +292,9 @@ DlgOptions::DlgOptions(QWidget *parent, QSettings *param1) : QDialog(parent)
 
 // signals
     QObject::connect(ui.listWidget_options, SIGNAL(currentItemChanged(QListWidgetItem*,QListWidgetItem*)), this, SLOT(change_page(QListWidgetItem*,QListWidgetItem*)));
-    QObject::connect(ui.radioButton_nick_t, SIGNAL(clicked()), this, SLOT(hide_pass()));
-    QObject::connect(ui.radioButton_nick_s, SIGNAL(clicked()), this, SLOT(show_pass()));
+    QObject::connect(ui.radioButton_unregistered_nick, SIGNAL(clicked()), this, SLOT(hide_pass()));
+    QObject::connect(ui.radioButton_registered_nick, SIGNAL(clicked()), this, SLOT(show_pass()));
+    QObject::connect(ui.pushButton_register_nick, SIGNAL(clicked()), this, SLOT(button_register_nick()));
     QObject::connect(ui.radioButton_modern_avatars, SIGNAL(clicked()), this, SLOT(set_modern_style_avatars()));
     QObject::connect(ui.radioButton_modern_no_avatars, SIGNAL(clicked()), this, SLOT(set_modern_style_no_avatars()));
     QObject::connect(ui.radioButton_classic, SIGNAL(clicked()), this, SLOT(set_classic_style()));
@@ -330,6 +334,11 @@ void DlgOptions::show_pass()
 {
     ui.label_password->show();
     ui.lineEdit_password->show();
+}
+
+void DlgOptions::button_register_nick()
+{
+    (new DlgRegisterNick(myparent, this, settings))->show();
 }
 
 void DlgOptions::set_modern_style_avatars()
@@ -627,9 +636,9 @@ void DlgOptions::save_settings()
 
 // check nick
     QString strPass;
-    if (ui.radioButton_nick_t->isChecked() == true)
+    if (ui.radioButton_unregistered_nick->isChecked() == true)
         strPass = "";
-    else if (ui.radioButton_nick_s->isChecked() == true)
+    else if (ui.radioButton_registered_nick->isChecked() == true)
         strPass = ui.lineEdit_password->text();
 
 // encrypt pass

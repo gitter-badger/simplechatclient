@@ -19,6 +19,7 @@ set (scc_UIS
 	../ui/moderation.ui
 	../ui/options.ui
 	../ui/privilege.ui
+	../ui/register_nick.ui
 	../ui/update.ui
 )
 
@@ -47,6 +48,7 @@ set (scc_SRCS
 	dlg_moderation.cpp
 	dlg_options.cpp
 	dlg_privilege.cpp
+	dlg_register_nick.cpp
 	dlg_update.cpp
 	irc_auth.cpp
 	irc_kernel.cpp
@@ -92,6 +94,7 @@ set (scc_MOC_HDRS
 	dlg_moderation.h
 	dlg_options.h
 	dlg_privilege.h
+	dlg_register_nick.h
 	dlg_update.h
 	irc_auth.h
 	irc_kernel.h

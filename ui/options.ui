@@ -215,14 +215,14 @@
               <x>20</x>
               <y>20</y>
               <width>421</width>
-              <height>23</height>
+              <height>26</height>
              </rect>
             </property>
             <layout class="QHBoxLayout" name="horizontalLayout_2">
              <item>
-              <widget class="QRadioButton" name="radioButton_nick_t">
+              <widget class="QRadioButton" name="radioButton_unregistered_nick">
                <property name="text">
-                <string>Unregistered nickname</string>
+                <string>Unregistered nick</string>
                </property>
                <property name="checkable">
                 <bool>true</bool>
@@ -233,9 +233,16 @@
               </widget>
              </item>
              <item>
-              <widget class="QRadioButton" name="radioButton_nick_s">
+              <widget class="QRadioButton" name="radioButton_registered_nick">
                <property name="text">
-                <string>Registered nickname</string>
+                <string>Registered nick</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="pushButton_register_nick">
+               <property name="text">
+                <string>Register nick</string>
                </property>
               </widget>
              </item>

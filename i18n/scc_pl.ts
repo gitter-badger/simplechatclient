@@ -676,12 +676,16 @@
         <translation>Uruchom ponownie program aby zastosować wprowadzone zmiany.</translation>
     </message>
     <message>
-        <source>Unregistered nickname</source>
+        <source>Unregistered nick</source>
         <translation>Nick tymczasowy</translation>
     </message>
     <message>
-        <source>Registered nickname</source>
+        <source>Registered nick</source>
         <translation>Nick stały</translation>
+    </message>
+    <message>
+        <source>Register nick</source>
+        <translation>Zarejestruj nick</translation>
     </message>
     <message>
         <source>Nick:</source>
@@ -821,6 +825,65 @@
     <message>
         <source>No statement nick</source>
         <translation>Nie podano nicka</translation>
+    </message>
+</context>
+<context>
+    <name>DlgRegisterNick</name>
+    <message>
+        <source>Register nick</source>
+        <translation>Rejestracja nowego nicka</translation>
+    </message>
+    <message>
+        <source>Nick:</source>
+        <translation>Nick:</translation>
+    </message>
+    <message>
+        <source>Password:</source>
+        <translation>Hasło:</translation>
+    </message>
+    <message>
+        <source>Confirm password:</source>
+        <translation>Potwierdź hasło:</translation>
+    </message>
+    <message>
+        <source>Code:</source>
+        <translation>Kod:</translation>
+    </message>
+    <message>
+        <source>Refresh</source>
+        <translation>Odśwież</translation>
+    </message>
+    <message>
+        <source>Unable to download image</source>
+        <translation>Nie można pobrać obrazka</translation>
+    </message>
+    <message>
+        <source>Invalid password. Password must be at least 6 characters including at least one number.</source>
+        <translation>Niepoprawne hasło. Hasło musie mieć przynajmniej 6 znaków w tym co najmniej jedną cyfrę.</translation>
+    </message>
+    <message>
+        <source>Nick already exist</source>
+        <translation>Podany nick już istnieje</translation>
+    </message>
+    <message>
+        <source>Invalid code</source>
+        <translation>Nieprawidłowy kod</translation>
+    </message>
+    <message>
+        <source>Invalid nick</source>
+        <translation>Nieprawidłowy nick</translation>
+    </message>
+    <message>
+        <source>Unknown error: %1</source>
+        <translation>Nieznany błąd: %1</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation>Błąd</translation>
+    </message>
+    <message>
+        <source>Given passwords are not identical.</source>
+        <translation>Podane hasła nie są identyczne.</translation>
     </message>
 </context>
 <context>
