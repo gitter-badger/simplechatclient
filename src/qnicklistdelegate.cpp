@@ -181,4 +181,6 @@ QSize NicklistDelegate::sizeHint(const QStyleOptionViewItem &option, const QMode
         return QSize(180, 35);
     else if (strStyle == "classic")
         return QSize(100, 24);
+    else // default modern
+        return QSize(180, 35);
 }
