@@ -57,6 +57,7 @@ private slots:
     void list_clicked(QModelIndex);
     void button_create();
     void button_remove();
+    void button_join();
     void button_ok();
     void button_cancel();
 

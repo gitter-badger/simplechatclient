@@ -35,10 +35,12 @@ DlgChannelHomes::DlgChannelHomes(QWidget *parent, Network *param1, QSettings *pa
 
     ui.pushButton_create->setText(tr("Create"));
     ui.pushButton_remove->setText(tr("Remove"));
+    ui.pushButton_join->setText(tr("Join"));
 
-    QObject::connect(ui.listWidget_channels, SIGNAL(clicked(QModelIndex)), this, SLOT(list_clicked(QModelIndex)));
+    QObject::connect(ui.listWidget_channels, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(list_clicked(QModelIndex)));
     QObject::connect(ui.pushButton_create, SIGNAL(clicked()), this, SLOT(button_create()));
     QObject::connect(ui.pushButton_remove, SIGNAL(clicked()), this, SLOT(button_remove()));
+    QObject::connect(ui.pushButton_join, SIGNAL(clicked()), this, SLOT(button_join()));
     QObject::connect(ui.buttonBox, SIGNAL(accepted()), this, SLOT(button_ok()));
     QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(button_cancel()));
 }
@@ -85,6 +87,15 @@ void DlgChannelHomes::button_remove()
 {
     ui.listWidget_channels->clear();
     (new DlgChannelHomesAd(myparent, pNetwork, settings, tabc, "remove"))->show();
+}
+
+void DlgChannelHomes::button_join()
+{
+    if (ui.listWidget_channels->selectedItems().count() != 0)
+    {
+        QString strChannel = ui.listWidget_channels->selectedItems().at(0)->text();
+        pNetwork->send(QString("JOIN %1").arg(strChannel));
+    }
 }
 
 void DlgChannelHomes::button_ok()
