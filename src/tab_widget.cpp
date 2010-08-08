@@ -535,38 +535,43 @@ void TabWidget::convert_text(QString *strData, QString *strLastContent)
             int iEndPos = strData->indexOf("%", iStartPos+1);
             int iSpacePos = strData->indexOf(" ", iStartPos);
 
-            if ((iEndPos != -1) && ((iEndPos < iSpacePos) || (iSpacePos == -1)))
+            if (iEndPos != -1)
             {
-                iEndPos++;
-                QString strEmoticonFull = strData->mid(iStartPos, iEndPos-iStartPos);
-                QString strEmoticon = strEmoticonFull.mid(2,strEmoticonFull.length()-3);
-                QString strInsert;
+                if ((iEndPos < iSpacePos) || (iSpacePos == -1))
+                {
+                    iEndPos++;
+                    QString strEmoticonFull = strData->mid(iStartPos, iEndPos-iStartPos);
+                    QString strEmoticon = strEmoticonFull.mid(2,strEmoticonFull.length()-3);
+                    QString strInsert;
 
-                QString strEmoticonFull1 = strPath+"/3rdparty/emoticons/"+strEmoticon+".gif";
-                QString strEmoticonFull2 = strPath+"/3rdparty/emoticons_other/"+strEmoticon+".gif";
-                QFile f1(strEmoticonFull1);
-                QFile f2(strEmoticonFull2);
-                if ((f1.exists() == true) && (settings->value("hide_formating").toString() == "off"))
-                {
+                    QString strEmoticonFull1 = strPath+"/3rdparty/emoticons/"+strEmoticon+".gif";
+                    QString strEmoticonFull2 = strPath+"/3rdparty/emoticons_other/"+strEmoticon+".gif";
+                    QFile f1(strEmoticonFull1);
+                    QFile f2(strEmoticonFull2);
+                    if ((f1.exists() == true) && (settings->value("hide_formating").toString() == "off"))
+                    {
 #ifdef Q_WS_X11
-                    strInsert = "<img src=\"file://"+strEmoticonFull1+"\" alt=\""+strEmoticon+"\" />";
+                        strInsert = "<img src=\"file://"+strEmoticonFull1+"\" alt=\""+strEmoticon+"\" />";
 #else
-                    strInsert = "<img src=\""+strEmoticonFull1+"\" alt=\""+strEmoticon+"\" />";
+                        strInsert = "<img src=\""+strEmoticonFull1+"\" alt=\""+strEmoticon+"\" />";
 #endif
-                }
-                else if ((f2.exists() == true) && (settings->value("hide_formating").toString() == "off"))
-                {
+                    }
+                    else if ((f2.exists() == true) && (settings->value("hide_formating").toString() == "off"))
+                    {
 #ifdef Q_WS_X11
-                    strInsert = "<img src=\"file://"+strEmoticonFull2+"\" alt=\""+strEmoticon+"\" />";
+                        strInsert = "<img src=\"file://"+strEmoticonFull2+"\" alt=\""+strEmoticon+"\" />";
 #else
-                    strInsert = "<img src=\""+strEmoticonFull2+"\" alt=\""+strEmoticon+"\" />";
+                        strInsert = "<img src=\""+strEmoticonFull2+"\" alt=\""+strEmoticon+"\" />";
 #endif
+                    }
+                    // emoticon not exist or hide formating
+                    else
+                        strInsert = "//"+strEmoticon;
+
+                    strData->replace(strEmoticonFull, strInsert);
                 }
-                // emoticon not exist or hide formating
                 else
-                    strInsert = "//"+strEmoticon;
-
-                strData->replace(strEmoticonFull, strInsert);
+                    strData->insert(iStartPos+1, " "); // fix wrong %I
             }
             else
                 break;
@@ -584,56 +589,61 @@ void TabWidget::convert_text(QString *strData, QString *strLastContent)
             int iEndPos = strData->indexOf("%", iStartPos+1);
             int iSpacePos = strData->indexOf(" ", iStartPos);
 
-            if ((iEndPos != -1) && ((iEndPos < iSpacePos) || (iSpacePos == -1)))
+            if (iEndPos != -1)
             {
-                iEndPos++;
-                QString strFontFull = strData->mid(iStartPos, iEndPos-iStartPos);
-                QString strFont = strFontFull.mid(2,strFontFull.length()-3);
-                QString strInsert;
-
-                QString strFontStyle = "normal";
-                QString strFontFamily = "Verdana";
-                QString strFontWeight = "normal";
-                QString strFontName = "Verdana";
-
-                if (strFont.indexOf(":") != -1)
+                if ((iEndPos < iSpacePos) || (iSpacePos == -1))
                 {
-                     strFontWeight = strFont.left(strFont.indexOf(":"));
-                     strFontName = strFont.right(strFont.length()-strFont.indexOf(":")-1);
+                    iEndPos++;
+                    QString strFontFull = strData->mid(iStartPos, iEndPos-iStartPos);
+                    QString strFont = strFontFull.mid(2,strFontFull.length()-3);
+                    QString strInsert;
 
-                     for (int fw = 0; fw < strFontWeight.length(); fw++)
-                     {
-                         if (strFontWeight[fw] == 'b') strFontWeight = "bold";
-                         else if (strFontWeight[fw] == 'i') strFontStyle = "italic";
-                     }
+                    QString strFontStyle = "normal";
+                    QString strFontFamily = "Verdana";
+                    QString strFontWeight = "normal";
+                    QString strFontName = "Verdana";
 
-                     if (strFontName == "arial") strFontFamily = "Arial";
-                     else if (strFontName == "times") strFontFamily = "Times New Roman";
-                     else if (strFontName == "verdana") strFontFamily = "Verdana";
-                     else if (strFontName == "tahoma") strFontFamily = "Tahoma";
-                     else if (strFontName == "courier") strFontFamily = "Courier New";
+                    if (strFont.indexOf(":") != -1)
+                    {
+                         strFontWeight = strFont.left(strFont.indexOf(":"));
+                         strFontName = strFont.right(strFont.length()-strFont.indexOf(":")-1);
 
-                     strInsert = "<span style=\"font-weight:"+strFontWeight+";font-style:"+strFontStyle+";font-family:"+strFontFamily+";\">";
+                         for (int fw = 0; fw < strFontWeight.length(); fw++)
+                         {
+                             if (strFontWeight[fw] == 'b') strFontWeight = "bold";
+                             else if (strFontWeight[fw] == 'i') strFontStyle = "italic";
+                         }
+
+                         if (strFontName == "arial") strFontFamily = "Arial";
+                         else if (strFontName == "times") strFontFamily = "Times New Roman";
+                         else if (strFontName == "verdana") strFontFamily = "Verdana";
+                         else if (strFontName == "tahoma") strFontFamily = "Tahoma";
+                         else if (strFontName == "courier") strFontFamily = "Courier New";
+
+                         strInsert = "<span style=\"font-weight:"+strFontWeight+";font-style:"+strFontStyle+";font-family:"+strFontFamily+";\">";
+                    }
+                    else
+                    {
+                         if (strFont == "arial") strFontFamily = "Arial";
+                         else if (strFont == "times") strFontFamily = "Times New Roman";
+                         else if (strFont == "verdana") strFontFamily = "Verdana";
+                         else if (strFont == "tahoma") strFontFamily = "Tahoma";
+                         else if (strFont == "courier") strFontFamily = "Courier New";
+                         else
+                         {
+                             for (int fw = 0; fw < strFont.length(); fw++)
+                             {
+                                 if (strFont[fw] == 'b') strFontWeight = "bold";
+                                 else if (strFont[fw] == 'i') strFontStyle = "italic";
+                             }
+                         }
+                         strInsert = "<span style=\"font-weight:"+strFontWeight+";font-style:"+strFontStyle+";font-family:"+strFontFamily+";\">";
+                    }
+
+                    strData->replace(strFontFull, strInsert);
                 }
                 else
-                {
-                     if (strFont == "arial") strFontFamily = "Arial";
-                     else if (strFont == "times") strFontFamily = "Times New Roman";
-                     else if (strFont == "verdana") strFontFamily = "Verdana";
-                     else if (strFont == "tahoma") strFontFamily = "Tahoma";
-                     else if (strFont == "courier") strFontFamily = "Courier New";
-                     else
-                     {
-                         for (int fw = 0; fw < strFont.length(); fw++)
-                         {
-                             if (strFont[fw] == 'b') strFontWeight = "bold";
-                             else if (strFont[fw] == 'i') strFontStyle = "italic";
-                         }
-                     }
-                     strInsert = "<span style=\"font-weight:"+strFontWeight+";font-style:"+strFontStyle+";font-family:"+strFontFamily+";\">";
-                }
-
-                strData->replace(strFontFull, strInsert);
+                    strData->insert(iStartPos+1, " "); // fix wrong %F
             }
             else
                 break;
