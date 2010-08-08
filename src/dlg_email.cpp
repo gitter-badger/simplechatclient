@@ -104,17 +104,21 @@ void DlgEmail::set_email()
     if (hCzatOnetPl.error() != QHostInfo::NoError)
          bHost = false;
 
-    QString strResult;
     QString strData;
 
     if (bHost == true)
     {
-        strData = QString("api_function=setChannelEmail&params=a:3:{s:4:\"name\";s:%1:\"%2\";s:5:\"email\";s:%3:\"%4\";s:4:\"code\";s:%5:\"%6\";}").arg(QString::number(strChannel.length())).arg(strChannel).arg(QString::number(strEmail.length())).arg(strEmail).arg(QString::number(ui.lineEdit_code->text().length())).arg(ui.lineEdit_code->text());
+        QString strChannelLength = QString::number(strChannel.length());
+        QString strEmailLength = QString::number(strEmail.length());
+        QString strCodeLength = QString::number(ui.lineEdit_code->text().length());
+        QString strCode = ui.lineEdit_code->text();
+
+        strData = QString("api_function=setChannelEmail&params=a:3:{s:4:\"name\";s:%1:\"%2\";s:5:\"email\";s:%3:\"%4\";s:4:\"code\";s:%5:\"%6\";}").arg(strChannelLength).arg(strChannel).arg(strEmailLength).arg(strEmail).arg(strCodeLength).arg(strCode);
         pReply = accessManager.post(QNetworkRequest(QUrl("http://czat.onet.pl/include/ajaxapi.xml.php3")), strData.toAscii());
         QObject::connect(pReply, SIGNAL(finished()), &eventLoop, SLOT(quit()));
         eventLoop.exec();
 
-        strResult = pReply->readAll();
+        QString strResult = pReply->readAll();
 
         delete pReply;
 
@@ -125,7 +129,6 @@ void DlgEmail::set_email()
         ui.lineEdit_code->clear();
         get_img();
     }
-
 }
 
 // <?xml version="1.0" encoding="ISO-8859-2"?><root><status>0</status><error err_code="0"  err_text="OK" ></error></root>
