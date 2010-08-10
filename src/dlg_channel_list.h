@@ -47,6 +47,8 @@ private:
     QList < QList<QString> > list_regional;
 
     void quickSort(QList< QList<QString> > *, int, int);
+    void show_all_channels();
+    void apply_checkboxes();
 
 protected:
     virtual void showEvent(QShowEvent *);
@@ -62,6 +64,9 @@ private slots:
     void regional_CellDoubleClicked(int, int);
     void button_ok();
     void button_cancel();
+    void button_search();
+    void button_clear();
+    void hide_empty_channels();
 
 signals:
     void send(QString);

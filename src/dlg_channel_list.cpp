@@ -29,6 +29,25 @@ DlgChannelList::DlgChannelList(QWidget *parent, QSettings *param1, TabContainer 
     settings = param1;
     tabc = param2;
 
+    ui.label_channel_name->setText(tr("Channel name:"));
+    ui.pushButton_search->setText(tr("Search"));
+    ui.pushButton_clear->setText(tr("Clear"));
+
+    ui.checkBox_teen->setText(tr("Teen"));
+    ui.checkBox_common->setText(tr("Common"));
+    ui.checkBox_erotic->setText(tr("Erotic"));
+    ui.checkBox_thematic->setText(tr("Thematic"));
+    ui.checkBox_regional->setText(tr("Regional"));
+
+    ui.checkBox_wild->setText(tr("Wild"));
+    ui.checkBox_tame->setText(tr("Tame"));
+    ui.checkBox_with_class->setText(tr("With class"));
+    ui.checkBox_cult->setText(tr("Cult"));
+    ui.checkBox_moderated->setText(tr("Moderated"));
+    ui.checkBox_recommended->setText(tr("Recommended"));
+
+    ui.checkBox_hide_empty_channels->setText(tr("Hide empty channels"));
+
     ui.tabWidget->setTabText(0, tr("All"));
     ui.tabWidget->setTabText(1, tr("Teen"));
     ui.tabWidget->setTabText(2, tr("Common"));
@@ -44,6 +63,10 @@ DlgChannelList::DlgChannelList(QWidget *parent, QSettings *param1, TabContainer 
     QObject::connect(ui.tableWidget_regional, SIGNAL(cellDoubleClicked(int,int)), this, SLOT(regional_CellDoubleClicked(int,int)));
     QObject::connect(ui.buttonBox, SIGNAL(accepted()), this, SLOT(button_ok()));
     QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(button_cancel()));
+
+    QObject::connect(ui.pushButton_search, SIGNAL(clicked()), this, SLOT(button_search()));
+    QObject::connect(ui.pushButton_clear, SIGNAL(clicked()), this, SLOT(button_clear()));
+    QObject::connect(ui.checkBox_hide_empty_channels, SIGNAL(clicked()), this, SLOT(hide_empty_channels()));
 }
 
 void DlgChannelList::clear()
@@ -253,6 +276,311 @@ void DlgChannelList::sort()
     ui.tableWidget_regional->resizeColumnsToContents();
 }
 
+void DlgChannelList::show_all_channels()
+{
+    // all
+    for (int i = 0; i < ui.tableWidget_all->rowCount()-1; i++)
+        ui.tableWidget_all->showRow(i);
+
+    // teen
+    for (int i = 0; i < ui.tableWidget_teen->rowCount()-1; i++)
+        ui.tableWidget_teen->showRow(i);
+
+    // common
+    for (int i = 0; i < ui.tableWidget_common->rowCount()-1; i++)
+        ui.tableWidget_common->showRow(i);
+
+    // erotic
+    for (int i = 0; i < ui.tableWidget_erotic->rowCount()-1; i++)
+        ui.tableWidget_erotic->showRow(i);
+
+    // thematic
+    for (int i = 0; i < ui.tableWidget_thematic->rowCount()-1; i++)
+        ui.tableWidget_thematic->showRow(i);
+
+    // regional
+    for (int i = 0; i < ui.tableWidget_regional->rowCount()-1; i++)
+        ui.tableWidget_regional->showRow(i);
+}
+
+void DlgChannelList::apply_checkboxes()
+{
+    bool bShowTeen;
+    bool bShowCommon;
+    bool bShowErotic;
+    bool bShowThematic;
+    bool bShowRegional;
+
+    bool bShowWild;
+    bool bShowTame;
+    bool bShowWithClass;
+    bool bShowCult;
+    bool bShowModerated;
+    bool bShowRecommended;
+
+    // teen
+    if (ui.checkBox_teen->isChecked() == true)
+        bShowTeen = true;
+    else
+        bShowTeen = false;
+
+    // common
+    if (ui.checkBox_common->isChecked() == true)
+        bShowCommon = true;
+    else
+        bShowCommon = false;
+
+    // erotic
+    if (ui.checkBox_erotic->isChecked() == true)
+        bShowErotic = true;
+    else
+        bShowErotic = false;
+
+    // thematic
+    if (ui.checkBox_thematic->isChecked() == true)
+        bShowThematic = true;
+    else
+        bShowThematic = false;
+
+    // regional
+    if (ui.checkBox_regional->isChecked() == true)
+        bShowRegional = true;
+    else
+        bShowRegional = false;
+
+    // wild
+    if (ui.checkBox_wild->isChecked() == true)
+        bShowWild = true;
+    else
+        bShowWild = false;
+
+    // tame
+    if (ui.checkBox_tame->isChecked() == true)
+        bShowTame = true;
+    else
+        bShowTame = false;
+
+    // with class
+    if (ui.checkBox_with_class->isChecked() == true)
+        bShowWithClass = true;
+    else
+        bShowWithClass = false;
+
+    // cult
+    if (ui.checkBox_cult->isChecked() == true)
+        bShowCult = true;
+    else
+        bShowCult = false;
+
+    // moderated
+    if (ui.checkBox_moderated->isChecked() == true)
+        bShowModerated = true;
+    else
+        bShowModerated = false;
+
+    // recommended
+    if (ui.checkBox_recommended->isChecked() == true)
+        bShowRecommended = true;
+    else
+        bShowRecommended = false;
+
+    // all
+    for (int i = 0; i < ui.tableWidget_all->rowCount(); i++)
+    {
+        QString strCat = ui.tableWidget_all->item(i, 2)->text();
+        QString strType = ui.tableWidget_all->item(i, 3)->text();
+
+        if ((bShowTeen == false) && (strType == tr("Teen")))
+            ui.tableWidget_all->hideRow(i);
+
+        if ((bShowCommon == false) && (strType == tr("Common")))
+            ui.tableWidget_all->hideRow(i);
+
+        if ((bShowErotic == false) && (strType == tr("Erotic")))
+            ui.tableWidget_all->hideRow(i);
+
+        if ((bShowThematic == false) && (strType == tr("Thematic")))
+            ui.tableWidget_all->hideRow(i);
+
+        if ((bShowRegional == false) && (strType == tr("Regional")))
+            ui.tableWidget_all->hideRow(i);
+
+        if ((bShowWild == false) && (strCat.indexOf(tr("Wild")) != -1))
+        {
+            //if (((ui.checkBox_moderated->isChecked() == false) && (strCat.indexOf(tr("Moderated")) != -1)) && ((ui.checkBox_recommended->isChecked() == false) && (strCat.indexOf(tr("Recommended")) != -1)))
+                ui.tableWidget_all->hideRow(i);
+        }
+
+        if ((bShowTame == false) && (strCat.indexOf(tr("Tame")) != -1))
+        {
+            //if (((ui.checkBox_moderated->isChecked() == false) && (strCat.indexOf(tr("Moderated")) != -1)) && ((ui.checkBox_recommended->isChecked() == false) && (strCat.indexOf(tr("Recommended")) != -1)))
+                ui.tableWidget_all->hideRow(i);
+        }
+
+        if ((bShowWithClass == false) && (strCat.indexOf(tr("With class")) != -1))
+        {
+            //if (((ui.checkBox_moderated->isChecked() == false) && (strCat.indexOf(tr("Moderated")) != -1)) && ((ui.checkBox_recommended->isChecked() == false) && (strCat.indexOf(tr("Recommended")) != -1)))
+                ui.tableWidget_all->hideRow(i);
+        }
+
+        if ((bShowCult == false) && (strCat.indexOf(tr("Cult")) != -1))
+        {
+            //if (((ui.checkBox_moderated->isChecked() == false) && (strCat.indexOf(tr("Moderated")) != -1)) && ((ui.checkBox_recommended->isChecked() == false) && (strCat.indexOf(tr("Recommended")) != -1)))
+                ui.tableWidget_all->hideRow(i);
+        }
+    }
+
+    // teen
+    for (int i = 0; i < ui.tableWidget_teen->rowCount(); i++)
+    {
+        QString strCat = ui.tableWidget_teen->item(i, 2)->text();
+
+        if ((bShowWild == false) && (strCat.indexOf(tr("Wild")) != -1))
+        {
+            //if (((ui.checkBox_moderated->isChecked() == false) && (strCat.indexOf(tr("Moderated")) != -1)) && ((ui.checkBox_recommended->isChecked() == false) && (strCat.indexOf(tr("Recommended")) != -1)))
+                ui.tableWidget_teen->hideRow(i);
+        }
+
+        if ((bShowTame == false) && (strCat.indexOf(tr("Tame")) != -1))
+        {
+            //if (((ui.checkBox_moderated->isChecked() == false) && (strCat.indexOf(tr("Moderated")) != -1)) && ((ui.checkBox_recommended->isChecked() == false) && (strCat.indexOf(tr("Recommended")) != -1)))
+                ui.tableWidget_teen->hideRow(i);
+        }
+
+        if ((bShowWithClass == false) && (strCat.indexOf(tr("With class")) != -1))
+        {
+            //if (((ui.checkBox_moderated->isChecked() == false) && (strCat.indexOf(tr("Moderated")) != -1)) && ((ui.checkBox_recommended->isChecked() == false) && (strCat.indexOf(tr("Recommended")) != -1)))
+                ui.tableWidget_teen->hideRow(i);
+        }
+
+        if ((bShowCult == false) && (strCat.indexOf(tr("Cult")) != -1))
+        {
+            //if (((ui.checkBox_moderated->isChecked() == false) && (strCat.indexOf(tr("Moderated")) != -1)) && ((ui.checkBox_recommended->isChecked() == false) && (strCat.indexOf(tr("Recommended")) != -1)))
+                ui.tableWidget_teen->hideRow(i);
+        }
+    }
+
+    // common
+    for (int i = 0; i < ui.tableWidget_common->rowCount(); i++)
+    {
+        QString strCat = ui.tableWidget_common->item(i, 2)->text();
+
+        if ((bShowWild == false) && (strCat.indexOf(tr("Wild")) != -1))
+        {
+            //if (((ui.checkBox_moderated->isChecked() == false) && (strCat.indexOf(tr("Moderated")) != -1)) && ((ui.checkBox_recommended->isChecked() == false) && (strCat.indexOf(tr("Recommended")) != -1)))
+                ui.tableWidget_common->hideRow(i);
+        }
+
+        if ((bShowTame == false) && (strCat.indexOf(tr("Tame")) != -1))
+        {
+            //if (((ui.checkBox_moderated->isChecked() == false) && (strCat.indexOf(tr("Moderated")) != -1)) && ((ui.checkBox_recommended->isChecked() == false) && (strCat.indexOf(tr("Recommended")) != -1)))
+                ui.tableWidget_common->hideRow(i);
+        }
+
+        if ((bShowWithClass == false) && (strCat.indexOf(tr("With class")) != -1))
+        {
+            //if (((ui.checkBox_moderated->isChecked() == false) && (strCat.indexOf(tr("Moderated")) != -1)) && ((ui.checkBox_recommended->isChecked() == false) && (strCat.indexOf(tr("Recommended")) != -1)))
+                ui.tableWidget_common->hideRow(i);
+        }
+
+        if ((bShowCult == false) && (strCat.indexOf(tr("Cult")) != -1))
+        {
+            //if (((ui.checkBox_moderated->isChecked() == false) && (strCat.indexOf(tr("Moderated")) != -1)) && ((ui.checkBox_recommended->isChecked() == false) && (strCat.indexOf(tr("Recommended")) != -1)))
+                ui.tableWidget_common->hideRow(i);
+        }
+    }
+
+    // erotic
+    for (int i = 0; i < ui.tableWidget_erotic->rowCount(); i++)
+    {
+        QString strCat = ui.tableWidget_erotic->item(i, 2)->text();
+
+        if ((bShowWild == false) && (strCat.indexOf(tr("Wild")) != -1))
+        {
+            //if (((ui.checkBox_moderated->isChecked() == false) && (strCat.indexOf(tr("Moderated")) != -1)) && ((ui.checkBox_recommended->isChecked() == false) && (strCat.indexOf(tr("Recommended")) != -1)))
+                ui.tableWidget_erotic->hideRow(i);
+        }
+
+        if ((bShowTame == false) && (strCat.indexOf(tr("Tame")) != -1))
+        {
+            //if (((ui.checkBox_moderated->isChecked() == false) && (strCat.indexOf(tr("Moderated")) != -1)) && ((ui.checkBox_recommended->isChecked() == false) && (strCat.indexOf(tr("Recommended")) != -1)))
+                ui.tableWidget_erotic->hideRow(i);
+        }
+
+        if ((bShowWithClass == false) && (strCat.indexOf(tr("With class")) != -1))
+        {
+            //if (((ui.checkBox_moderated->isChecked() == false) && (strCat.indexOf(tr("Moderated")) != -1)) && ((ui.checkBox_recommended->isChecked() == false) && (strCat.indexOf(tr("Recommended")) != -1)))
+                ui.tableWidget_erotic->hideRow(i);
+        }
+
+        if ((bShowCult == false) && (strCat.indexOf(tr("Cult")) != -1))
+        {
+            //if (((ui.checkBox_moderated->isChecked() == false) && (strCat.indexOf(tr("Moderated")) != -1)) && ((ui.checkBox_recommended->isChecked() == false) && (strCat.indexOf(tr("Recommended")) != -1)))
+                ui.tableWidget_erotic->hideRow(i);
+        }
+    }
+
+    // thematic
+    for (int i = 0; i < ui.tableWidget_thematic->rowCount(); i++)
+    {
+        QString strCat = ui.tableWidget_thematic->item(i, 2)->text();
+
+        if ((bShowWild == false) && (strCat.indexOf(tr("Wild")) != -1))
+        {
+            //if (((ui.checkBox_moderated->isChecked() == false) && (strCat.indexOf(tr("Moderated")) != -1)) && ((ui.checkBox_recommended->isChecked() == false) && (strCat.indexOf(tr("Recommended")) != -1)))
+                ui.tableWidget_thematic->hideRow(i);
+        }
+
+        if ((bShowTame == false) && (strCat.indexOf(tr("Tame")) != -1))
+        {
+            //if (((ui.checkBox_moderated->isChecked() == false) && (strCat.indexOf(tr("Moderated")) != -1)) && ((ui.checkBox_recommended->isChecked() == false) && (strCat.indexOf(tr("Recommended")) != -1)))
+                ui.tableWidget_thematic->hideRow(i);
+        }
+
+        if ((bShowWithClass == false) && (strCat.indexOf(tr("With class")) != -1))
+        {
+            //if (((ui.checkBox_moderated->isChecked() == false) && (strCat.indexOf(tr("Moderated")) != -1)) && ((ui.checkBox_recommended->isChecked() == false) && (strCat.indexOf(tr("Recommended")) != -1)))
+                ui.tableWidget_thematic->hideRow(i);
+        }
+
+        if ((bShowCult == false) && (strCat.indexOf(tr("Cult")) != -1))
+        {
+            //if (((ui.checkBox_moderated->isChecked() == false) && (strCat.indexOf(tr("Moderated")) != -1)) && ((ui.checkBox_recommended->isChecked() == false) && (strCat.indexOf(tr("Recommended")) != -1)))
+                ui.tableWidget_thematic->hideRow(i);
+        }
+    }
+
+    // regional
+    for (int i = 0; i < ui.tableWidget_regional->rowCount(); i++)
+    {
+        QString strCat = ui.tableWidget_regional->item(i, 2)->text();
+
+        if ((bShowWild == false) && (strCat.indexOf(tr("Wild")) != -1))
+        {
+            //if (((ui.checkBox_moderated->isChecked() == false) && (strCat.indexOf(tr("Moderated")) != -1)) && ((ui.checkBox_recommended->isChecked() == false) && (strCat.indexOf(tr("Recommended")) != -1)))
+                ui.tableWidget_regional->hideRow(i);
+        }
+
+        if ((bShowTame == false) && (strCat.indexOf(tr("Tame")) != -1))
+        {
+            //if (((ui.checkBox_moderated->isChecked() == false) && (strCat.indexOf(tr("Moderated")) != -1)) && ((ui.checkBox_recommended->isChecked() == false) && (strCat.indexOf(tr("Recommended")) != -1)))
+                ui.tableWidget_regional->hideRow(i);
+        }
+
+        if ((bShowWithClass == false) && (strCat.indexOf(tr("With class")) != -1))
+        {
+            //if (((ui.checkBox_moderated->isChecked() == false) && (strCat.indexOf(tr("Moderated")) != -1)) && ((ui.checkBox_recommended->isChecked() == false) && (strCat.indexOf(tr("Recommended")) != -1)))
+                ui.tableWidget_regional->hideRow(i);
+        }
+
+        if ((bShowCult == false) && (strCat.indexOf(tr("Cult")) != -1))
+        {
+            //if (((ui.checkBox_moderated->isChecked() == false) && (strCat.indexOf(tr("Moderated")) != -1)) && ((ui.checkBox_recommended->isChecked() == false) && (strCat.indexOf(tr("Recommended")) != -1)))
+                ui.tableWidget_regional->hideRow(i);
+        }
+    }
+}
+
 void DlgChannelList::all_CellDoubleClicked(int row, int column)
 {
     QString strChannel = ui.tableWidget_all->item(row, 0)->text();
@@ -301,9 +629,194 @@ void DlgChannelList::button_cancel()
     this->hide();
 }
 
+void DlgChannelList::button_search()
+{
+    // show all channels
+    show_all_channels();
+
+    // apply checkboxes - hide selected channels
+    apply_checkboxes();
+
+    // find channel
+    // all
+    for (int i = 0; i < ui.tableWidget_all->rowCount(); i++)
+    {
+        QString strChannelName = ui.tableWidget_all->item(i, 0)->text();
+        if (strChannelName.indexOf(ui.lineEdit_search->text()) == -1)
+            ui.tableWidget_all->hideRow(i);
+    }
+
+    // teen
+    for (int i = 0; i < ui.tableWidget_teen->rowCount(); i++)
+    {
+        QString strChannelName = ui.tableWidget_teen->item(i, 0)->text();
+        if (strChannelName.indexOf(ui.lineEdit_search->text()) == -1)
+            ui.tableWidget_teen->hideRow(i);
+    }
+
+    // common
+    for (int i = 0; i < ui.tableWidget_common->rowCount(); i++)
+    {
+        QString strChannelName = ui.tableWidget_common->item(i, 0)->text();
+        if (strChannelName.indexOf(ui.lineEdit_search->text()) == -1)
+            ui.tableWidget_common->hideRow(i);
+    }
+
+    // erotic
+    for (int i = 0; i < ui.tableWidget_erotic->rowCount(); i++)
+    {
+        QString strChannelName = ui.tableWidget_erotic->item(i, 0)->text();
+        if (strChannelName.indexOf(ui.lineEdit_search->text()) == -1)
+            ui.tableWidget_erotic->hideRow(i);
+    }
+
+    // thematic
+    for (int i = 0; i < ui.tableWidget_thematic->rowCount(); i++)
+    {
+        QString strChannelName = ui.tableWidget_thematic->item(i, 0)->text();
+        if (strChannelName.indexOf(ui.lineEdit_search->text()) == -1)
+            ui.tableWidget_thematic->hideRow(i);
+    }
+
+    // regional
+    for (int i = 0; i < ui.tableWidget_regional->rowCount(); i++)
+    {
+        QString strChannelName = ui.tableWidget_regional->item(i, 0)->text();
+        if (strChannelName.indexOf(ui.lineEdit_search->text()) == -1)
+            ui.tableWidget_regional->hideRow(i);
+    }
+}
+
+void DlgChannelList::button_clear()
+{
+    ui.lineEdit_search->setText("");
+
+    ui.checkBox_teen->setChecked(true);
+    ui.checkBox_common->setChecked(true);
+    ui.checkBox_erotic->setChecked(true);
+    ui.checkBox_thematic->setChecked(true);
+    ui.checkBox_regional->setChecked(true);
+
+    ui.checkBox_wild->setChecked(true);
+    ui.checkBox_tame->setChecked(true);
+    ui.checkBox_with_class->setChecked(true);
+    ui.checkBox_cult->setChecked(true);
+    ui.checkBox_moderated->setChecked(true);
+    ui.checkBox_recommended->setChecked(true);
+
+    ui.checkBox_hide_empty_channels->setChecked(false);
+
+    show_all_channels();
+}
+
+void DlgChannelList::hide_empty_channels()
+{
+    bool bHide;
+
+    if (ui.checkBox_hide_empty_channels->isChecked() == true)
+        bHide = true;
+    else
+        bHide = false;
+
+    // all
+    for (int i = 0; i < ui.tableWidget_all->rowCount(); i++)
+    {
+        QString strPeople = ui.tableWidget_all->item(i, 1)->text();
+        if (strPeople == "0")
+        {
+            if (bHide == true)
+                ui.tableWidget_all->hideRow(i);
+            else
+                ui.tableWidget_all->showRow(i);
+        }
+    }
+
+    // teen
+    for (int i = 0; i < ui.tableWidget_teen->rowCount(); i++)
+    {
+        QString strPeople = ui.tableWidget_teen->item(i, 1)->text();
+        if (strPeople == "0")
+        {
+            if (bHide == true)
+                ui.tableWidget_teen->hideRow(i);
+            else
+                ui.tableWidget_teen->showRow(i);
+        }
+    }
+
+    // common
+    for (int i = 0; i < ui.tableWidget_common->rowCount(); i++)
+    {
+        QString strPeople = ui.tableWidget_common->item(i, 1)->text();
+        if (strPeople == "0")
+        {
+            if (bHide == true)
+                ui.tableWidget_common->hideRow(i);
+            else
+                ui.tableWidget_common->showRow(i);
+        }
+    }
+
+    // erotic
+    for (int i = 0; i < ui.tableWidget_erotic->rowCount(); i++)
+    {
+        QString strPeople = ui.tableWidget_erotic->item(i, 1)->text();
+        if (strPeople == "0")
+        {
+            if (bHide == true)
+                ui.tableWidget_erotic->hideRow(i);
+            else
+                ui.tableWidget_erotic->showRow(i);
+        }
+    }
+
+    // thematic
+    for (int i = 0; i < ui.tableWidget_thematic->rowCount(); i++)
+    {
+        QString strPeople = ui.tableWidget_thematic->item(i, 1)->text();
+        if (strPeople == "0")
+        {
+            if (bHide == true)
+                ui.tableWidget_thematic->hideRow(i);
+            else
+                ui.tableWidget_thematic->showRow(i);
+        }
+    }
+
+    // regional
+    for (int i = 0; i < ui.tableWidget_regional->rowCount(); i++)
+    {
+        QString strPeople = ui.tableWidget_regional->item(i, 1)->text();
+        if (strPeople == "0")
+        {
+            if (bHide == true)
+                ui.tableWidget_regional->hideRow(i);
+            else
+                ui.tableWidget_regional->showRow(i);
+        }
+    }
+}
+
 void DlgChannelList::showEvent(QShowEvent *event)
 {
     event->accept();
+
+    ui.lineEdit_search->setText("");
+
+    ui.checkBox_teen->setChecked(true);
+    ui.checkBox_common->setChecked(true);
+    ui.checkBox_erotic->setChecked(true);
+    ui.checkBox_thematic->setChecked(true);
+    ui.checkBox_regional->setChecked(true);
+
+    ui.checkBox_wild->setChecked(true);
+    ui.checkBox_tame->setChecked(true);
+    ui.checkBox_with_class->setChecked(true);
+    ui.checkBox_cult->setChecked(true);
+    ui.checkBox_moderated->setChecked(true);
+    ui.checkBox_recommended->setChecked(true);
+
+    ui.checkBox_hide_empty_channels->setChecked(false);
 
     emit send("SLIST  R- 0 0 100 null");
 }
@@ -312,12 +825,12 @@ void DlgChannelList::resizeEvent(QResizeEvent *event)
 {
     ui.verticalLayoutWidget->setGeometry(QRect(0,0,this->width(), this->height()));
     ui.tabWidget->setGeometry(QRect(0,0,this->width(), this->height()));
-    ui.tableWidget_all->setGeometry(QRect(0,0,this->width()-10, this->height()-65));
-    ui.tableWidget_teen->setGeometry(QRect(0,0,this->width()-10, this->height()-65));
-    ui.tableWidget_common->setGeometry(QRect(0,0,this->width()-10, this->height()-65));
-    ui.tableWidget_erotic->setGeometry(QRect(0,0,this->width()-10, this->height()-65));
-    ui.tableWidget_thematic->setGeometry(QRect(0,0,this->width()-10, this->height()-65));
-    ui.tableWidget_regional->setGeometry(QRect(0,0,this->width()-10, this->height()-65));
+    ui.tableWidget_all->setGeometry(QRect(0,0,this->width()-10, this->height()-170));
+    ui.tableWidget_teen->setGeometry(QRect(0,0,this->width()-10, this->height()-170));
+    ui.tableWidget_common->setGeometry(QRect(0,0,this->width()-10, this->height()-170));
+    ui.tableWidget_erotic->setGeometry(QRect(0,0,this->width()-10, this->height()-170));
+    ui.tableWidget_thematic->setGeometry(QRect(0,0,this->width()-10, this->height()-170));
+    ui.tableWidget_regional->setGeometry(QRect(0,0,this->width()-10, this->height()-170));
 }
 
 void DlgChannelList::closeEvent(QCloseEvent *event)

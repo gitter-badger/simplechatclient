@@ -322,6 +322,46 @@
         <translation>Typ</translation>
     </message>
     <message>
+        <source>Channel name:</source>
+        <translation>Nazwa kanału:</translation>
+    </message>
+    <message>
+        <source>Search</source>
+        <translation>Szukaj</translation>
+    </message>
+    <message>
+        <source>Clear</source>
+        <translation>Wyczyść</translation>
+    </message>
+    <message>
+        <source>Wild</source>
+        <translation>Dziki</translation>
+    </message>
+    <message>
+        <source>Tame</source>
+        <translation>Oswojony</translation>
+    </message>
+    <message>
+        <source>With class</source>
+        <translation>Z klasą</translation>
+    </message>
+    <message>
+        <source>Cult</source>
+        <translation>Kultowy</translation>
+    </message>
+    <message>
+        <source>Moderated</source>
+        <translation>Moderowany</translation>
+    </message>
+    <message>
+        <source>Recommended</source>
+        <translation>Polecany</translation>
+    </message>
+    <message>
+        <source>Hide empty channels</source>
+        <translation>Ukryj puste kanały</translation>
+    </message>
+    <message>
         <source>All</source>
         <translation>Wszystkie</translation>
     </message>
