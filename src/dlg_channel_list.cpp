@@ -824,7 +824,7 @@ void DlgChannelList::showEvent(QShowEvent *event)
 void DlgChannelList::resizeEvent(QResizeEvent *event)
 {
     ui.verticalLayoutWidget->setGeometry(QRect(0,0,this->width(), this->height()));
-    ui.tabWidget->setGeometry(QRect(0,0,this->width(), this->height()));
+    ui.tabWidget->setGeometry(QRect(1,117,this->width()-1, this->height()-117-35));
     ui.tableWidget_all->setGeometry(QRect(0,0,this->width()-10, this->height()-170));
     ui.tableWidget_teen->setGeometry(QRect(0,0,this->width()-10, this->height()-170));
     ui.tableWidget_common->setGeometry(QRect(0,0,this->width()-10, this->height()-170));
