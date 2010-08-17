@@ -122,6 +122,10 @@ void DlgCam::network_read()
     if ((bText == false) && (iBytes_recv < iBytes_need)) network_read();
     if ((bText == false) && (iBytes_recv == iBytes_need))
     {
+        //
+        // raw data
+        //
+
         if (iCam_cmd == 202)
             show_img(bData);
         else if (iCam_cmd == 252)
@@ -130,10 +134,11 @@ void DlgCam::network_read()
             if (strDesc.left(9) == "SETSTATUS")
             {
 #ifdef Q_WS_X11
-        if (settings->value("debug").toString() == "on")
-            qDebug() << "CAM <- " << strDesc;
+                if (settings->value("debug").toString() == "on")
+                    qDebug() << "CAM <- " << strDesc;
 #endif
                 QString strStatus = strDesc.right(strDesc.length()-10);
+                ui.textEdit_desc->show();
                 ui.textEdit_desc->setText(strStatus);
             }
         }
@@ -147,6 +152,10 @@ void DlgCam::network_read()
             QString strImg = ui.label_img->text() +"<br>"+strError;
             ui.label_img->setText(strImg);
         }
+
+        //
+        // end of raw data
+        //
 
         bData.clear();
         iBytes_need = 0;
@@ -172,6 +181,10 @@ void DlgCam::network_read()
 #endif
 
         strDataRecv.clear();
+
+        //
+        // text data
+        //
 
         // 202 17244 IMAGE_UPDATE_BIG Ekscentryk
         if (strDataList[0] == "202")
@@ -315,6 +328,10 @@ void DlgCam::network_read()
             network_disconnect();
         }
 
+        //
+        // end of text data
+        //
+
         network_read();
     }
 }
@@ -361,6 +378,7 @@ void DlgCam::showEvent(QShowEvent *event)
     event->accept();
 
     ui.label_img->setText(tr("Starting the service webcams"));
+    ui.textEdit_desc->hide();
     ui.textEdit_desc->setText("");
 
     socket = new QTcpSocket();
