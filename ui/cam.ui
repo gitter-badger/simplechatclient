@@ -7,19 +7,19 @@
     <x>0</x>
     <y>0</y>
     <width>322</width>
-    <height>400</height>
+    <height>342</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
     <width>322</width>
-    <height>400</height>
+    <height>342</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
     <width>322</width>
-    <height>400</height>
+    <height>342</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -35,7 +35,7 @@
      <x>0</x>
      <y>0</y>
      <width>322</width>
-     <height>391</height>
+     <height>341</height>
     </rect>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout">
@@ -53,6 +53,12 @@
         <height>20</height>
        </size>
       </property>
+      <property name="maximumSize">
+       <size>
+        <width>16777215</width>
+        <height>20</height>
+       </size>
+      </property>
       <property name="text">
        <string>Nick</string>
       </property>
@@ -62,32 +68,37 @@
      </widget>
     </item>
     <item>
-     <widget class="QWidget" name="w" native="true">
-      <property name="styleSheet">
-       <string>text-align:center;</string>
+     <widget class="QTextEdit" name="textEdit_desc">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
       </property>
-      <widget class="QTextEdit" name="textEdit_desc">
-       <property name="geometry">
-        <rect>
-         <x>3</x>
-         <y>-5</y>
-         <width>311</width>
-         <height>51</height>
-        </rect>
-       </property>
-       <property name="frameShape">
-        <enum>QFrame::NoFrame</enum>
-       </property>
-       <property name="frameShadow">
-        <enum>QFrame::Plain</enum>
-       </property>
-       <property name="undoRedoEnabled">
-        <bool>false</bool>
-       </property>
-       <property name="readOnly">
-        <bool>true</bool>
-       </property>
-      </widget>
+      <property name="minimumSize">
+       <size>
+        <width>0</width>
+        <height>38</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>16777215</width>
+        <height>38</height>
+       </size>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::NoFrame</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Plain</enum>
+      </property>
+      <property name="undoRedoEnabled">
+       <bool>false</bool>
+      </property>
+      <property name="readOnly">
+       <bool>true</bool>
+      </property>
      </widget>
     </item>
     <item>
@@ -117,6 +128,24 @@
     </item>
     <item>
      <widget class="QDialogButtonBox" name="buttonBox">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>0</width>
+        <height>25</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>16777215</width>
+        <height>25</height>
+       </size>
+      </property>
       <property name="standardButtons">
        <set>QDialogButtonBox::Ok</set>
       </property>
