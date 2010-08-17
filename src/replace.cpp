@@ -88,9 +88,6 @@ QString Replace::replace_emots(QString strData)
     strData.replace("]:->", "%Ixdiabel%");
     strData.replace("];->", "%Ixdiabel%");
 
-    strData.replace("xD", "%Ilol%");
-    strData.replace("XD", "%Ilol%");
-
     strData.replace(";?", "%Ixco%");
     strData.replace("??", "%Ipytanie%");
     strData.replace("!!", "%Iwykrzyknik%");
