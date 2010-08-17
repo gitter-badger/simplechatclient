@@ -46,6 +46,7 @@ QString Inputline::get_word()
     {
         int iLength = 0;
         int iStart = 0;
+
         iStart = strWord.lastIndexOf(' ', this->cursorPosition()-1)+1;
         iLength = this->cursorPosition()-iStart;
         strWord = strWord.mid(iStart, iLength);
@@ -60,6 +61,7 @@ void Inputline::set_word(QString strSetWord)
     {
         int iLength = 0;
         int iStart = 0;
+
         iStart = strWord.lastIndexOf(' ', this->cursorPosition()-1)+1;
         iLength = this->cursorPosition()-iStart;
         strWord = strWord.mid(iStart, iLength);
@@ -69,7 +71,7 @@ void Inputline::set_word(QString strSetWord)
         this->setText(strNewLine);
 
         // set cursor
-        this->setCursorPosition(iStart-1+iLength+strSetWord.length());
+        this->setCursorPosition(iStart+strSetWord.length());
     }
 }
 
