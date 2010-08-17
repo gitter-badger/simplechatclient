@@ -50,6 +50,8 @@ QString Inputline::get_word()
         iStart = strWord.lastIndexOf(' ', this->cursorPosition()-1)+1;
         iLength = this->cursorPosition()-iStart;
         strWord = strWord.mid(iStart, iLength);
+
+        strWord.replace(":", "");
     }
     return strWord;
 }
@@ -65,6 +67,9 @@ void Inputline::set_word(QString strSetWord)
         iStart = strWord.lastIndexOf(' ', this->cursorPosition()-1)+1;
         iLength = this->cursorPosition()-iStart;
         strWord = strWord.mid(iStart, iLength);
+
+        if (iStart == 0)
+            strSetWord += ":";
 
         QString strNewLine = this->text();
         strNewLine = strNewLine.replace(iStart, iLength, strSetWord);
