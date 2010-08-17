@@ -407,25 +407,53 @@ void DlgChannelList::apply_checkboxes()
 
         if ((bShowWild == false) && (strCat.indexOf(tr("Wild")) != -1))
         {
-            //if (((ui.checkBox_moderated->isChecked() == false) && (strCat.indexOf(tr("Moderated")) != -1)) && ((ui.checkBox_recommended->isChecked() == false) && (strCat.indexOf(tr("Recommended")) != -1)))
+            // moderated
+            if ((ui.checkBox_moderated->isChecked() == true) && (strCat.indexOf(tr("Moderated")) != -1))
+                ui.tableWidget_all->showRow(i);
+            // recommended
+            else if ((ui.checkBox_recommended->isChecked() == true) && (strCat.indexOf(tr("Recommended")) != -1))
+                ui.tableWidget_all->showRow(i);
+            // rest
+            else
                 ui.tableWidget_all->hideRow(i);
         }
 
         if ((bShowTame == false) && (strCat.indexOf(tr("Tame")) != -1))
         {
-            //if (((ui.checkBox_moderated->isChecked() == false) && (strCat.indexOf(tr("Moderated")) != -1)) && ((ui.checkBox_recommended->isChecked() == false) && (strCat.indexOf(tr("Recommended")) != -1)))
+            // moderated
+            if ((ui.checkBox_moderated->isChecked() == true) && (strCat.indexOf(tr("Moderated")) != -1))
+                ui.tableWidget_all->showRow(i);
+            // recommended
+            else if ((ui.checkBox_recommended->isChecked() == true) && (strCat.indexOf(tr("Recommended")) != -1))
+                ui.tableWidget_all->showRow(i);
+            // rest
+            else
                 ui.tableWidget_all->hideRow(i);
         }
 
         if ((bShowWithClass == false) && (strCat.indexOf(tr("With class")) != -1))
         {
-            //if (((ui.checkBox_moderated->isChecked() == false) && (strCat.indexOf(tr("Moderated")) != -1)) && ((ui.checkBox_recommended->isChecked() == false) && (strCat.indexOf(tr("Recommended")) != -1)))
+            // moderated
+            if ((ui.checkBox_moderated->isChecked() == true) && (strCat.indexOf(tr("Moderated")) != -1))
+                ui.tableWidget_all->showRow(i);
+            // recommended
+            else if ((ui.checkBox_recommended->isChecked() == true) && (strCat.indexOf(tr("Recommended")) != -1))
+                ui.tableWidget_all->showRow(i);
+            // rest
+            else
                 ui.tableWidget_all->hideRow(i);
         }
 
         if ((bShowCult == false) && (strCat.indexOf(tr("Cult")) != -1))
         {
-            //if (((ui.checkBox_moderated->isChecked() == false) && (strCat.indexOf(tr("Moderated")) != -1)) && ((ui.checkBox_recommended->isChecked() == false) && (strCat.indexOf(tr("Recommended")) != -1)))
+            // moderated
+            if ((ui.checkBox_moderated->isChecked() == true) && (strCat.indexOf(tr("Moderated")) != -1))
+                ui.tableWidget_all->showRow(i);
+            // recommended
+            else if ((ui.checkBox_recommended->isChecked() == true) && (strCat.indexOf(tr("Recommended")) != -1))
+                ui.tableWidget_all->showRow(i);
+            // rest
+            else
                 ui.tableWidget_all->hideRow(i);
         }
     }
@@ -437,25 +465,53 @@ void DlgChannelList::apply_checkboxes()
 
         if ((bShowWild == false) && (strCat.indexOf(tr("Wild")) != -1))
         {
-            //if (((ui.checkBox_moderated->isChecked() == false) && (strCat.indexOf(tr("Moderated")) != -1)) && ((ui.checkBox_recommended->isChecked() == false) && (strCat.indexOf(tr("Recommended")) != -1)))
+            // moderated
+            if ((ui.checkBox_moderated->isChecked() == true) && (strCat.indexOf(tr("Moderated")) != -1))
+                ui.tableWidget_teen->showRow(i);
+            // recommended
+            else if ((ui.checkBox_recommended->isChecked() == true) && (strCat.indexOf(tr("Recommended")) != -1))
+                ui.tableWidget_teen->showRow(i);
+            // rest
+            else
                 ui.tableWidget_teen->hideRow(i);
         }
 
         if ((bShowTame == false) && (strCat.indexOf(tr("Tame")) != -1))
         {
-            //if (((ui.checkBox_moderated->isChecked() == false) && (strCat.indexOf(tr("Moderated")) != -1)) && ((ui.checkBox_recommended->isChecked() == false) && (strCat.indexOf(tr("Recommended")) != -1)))
+            // moderated
+            if ((ui.checkBox_moderated->isChecked() == true) && (strCat.indexOf(tr("Moderated")) != -1))
+                ui.tableWidget_teen->showRow(i);
+            // recommended
+            else if ((ui.checkBox_recommended->isChecked() == true) && (strCat.indexOf(tr("Recommended")) != -1))
+                ui.tableWidget_teen->showRow(i);
+            // rest
+            else
                 ui.tableWidget_teen->hideRow(i);
         }
 
         if ((bShowWithClass == false) && (strCat.indexOf(tr("With class")) != -1))
         {
-            //if (((ui.checkBox_moderated->isChecked() == false) && (strCat.indexOf(tr("Moderated")) != -1)) && ((ui.checkBox_recommended->isChecked() == false) && (strCat.indexOf(tr("Recommended")) != -1)))
+            // moderated
+            if ((ui.checkBox_moderated->isChecked() == true) && (strCat.indexOf(tr("Moderated")) != -1))
+                ui.tableWidget_teen->showRow(i);
+            // recommended
+            else if ((ui.checkBox_recommended->isChecked() == true) && (strCat.indexOf(tr("Recommended")) != -1))
+                ui.tableWidget_teen->showRow(i);
+            // rest
+            else
                 ui.tableWidget_teen->hideRow(i);
         }
 
         if ((bShowCult == false) && (strCat.indexOf(tr("Cult")) != -1))
         {
-            //if (((ui.checkBox_moderated->isChecked() == false) && (strCat.indexOf(tr("Moderated")) != -1)) && ((ui.checkBox_recommended->isChecked() == false) && (strCat.indexOf(tr("Recommended")) != -1)))
+            // moderated
+            if ((ui.checkBox_moderated->isChecked() == true) && (strCat.indexOf(tr("Moderated")) != -1))
+                ui.tableWidget_teen->showRow(i);
+            // recommended
+            else if ((ui.checkBox_recommended->isChecked() == true) && (strCat.indexOf(tr("Recommended")) != -1))
+                ui.tableWidget_teen->showRow(i);
+            // rest
+            else
                 ui.tableWidget_teen->hideRow(i);
         }
     }
@@ -467,25 +523,53 @@ void DlgChannelList::apply_checkboxes()
 
         if ((bShowWild == false) && (strCat.indexOf(tr("Wild")) != -1))
         {
-            //if (((ui.checkBox_moderated->isChecked() == false) && (strCat.indexOf(tr("Moderated")) != -1)) && ((ui.checkBox_recommended->isChecked() == false) && (strCat.indexOf(tr("Recommended")) != -1)))
+            // moderated
+            if ((ui.checkBox_moderated->isChecked() == true) && (strCat.indexOf(tr("Moderated")) != -1))
+                ui.tableWidget_common->showRow(i);
+            // recommended
+            else if ((ui.checkBox_recommended->isChecked() == true) && (strCat.indexOf(tr("Recommended")) != -1))
+                ui.tableWidget_common->showRow(i);
+            // rest
+            else
                 ui.tableWidget_common->hideRow(i);
         }
 
         if ((bShowTame == false) && (strCat.indexOf(tr("Tame")) != -1))
         {
-            //if (((ui.checkBox_moderated->isChecked() == false) && (strCat.indexOf(tr("Moderated")) != -1)) && ((ui.checkBox_recommended->isChecked() == false) && (strCat.indexOf(tr("Recommended")) != -1)))
+            // moderated
+            if ((ui.checkBox_moderated->isChecked() == true) && (strCat.indexOf(tr("Moderated")) != -1))
+                ui.tableWidget_common->showRow(i);
+            // recommended
+            else if ((ui.checkBox_recommended->isChecked() == true) && (strCat.indexOf(tr("Recommended")) != -1))
+                ui.tableWidget_common->showRow(i);
+            // rest
+            else
                 ui.tableWidget_common->hideRow(i);
         }
 
         if ((bShowWithClass == false) && (strCat.indexOf(tr("With class")) != -1))
         {
-            //if (((ui.checkBox_moderated->isChecked() == false) && (strCat.indexOf(tr("Moderated")) != -1)) && ((ui.checkBox_recommended->isChecked() == false) && (strCat.indexOf(tr("Recommended")) != -1)))
+            // moderated
+            if ((ui.checkBox_moderated->isChecked() == true) && (strCat.indexOf(tr("Moderated")) != -1))
+                ui.tableWidget_common->showRow(i);
+            // recommended
+            else if ((ui.checkBox_recommended->isChecked() == true) && (strCat.indexOf(tr("Recommended")) != -1))
+                ui.tableWidget_common->showRow(i);
+            // rest
+            else
                 ui.tableWidget_common->hideRow(i);
         }
 
         if ((bShowCult == false) && (strCat.indexOf(tr("Cult")) != -1))
         {
-            //if (((ui.checkBox_moderated->isChecked() == false) && (strCat.indexOf(tr("Moderated")) != -1)) && ((ui.checkBox_recommended->isChecked() == false) && (strCat.indexOf(tr("Recommended")) != -1)))
+            // moderated
+            if ((ui.checkBox_moderated->isChecked() == true) && (strCat.indexOf(tr("Moderated")) != -1))
+                ui.tableWidget_common->showRow(i);
+            // recommended
+            else if ((ui.checkBox_recommended->isChecked() == true) && (strCat.indexOf(tr("Recommended")) != -1))
+                ui.tableWidget_common->showRow(i);
+            // rest
+            else
                 ui.tableWidget_common->hideRow(i);
         }
     }
@@ -497,25 +581,53 @@ void DlgChannelList::apply_checkboxes()
 
         if ((bShowWild == false) && (strCat.indexOf(tr("Wild")) != -1))
         {
-            //if (((ui.checkBox_moderated->isChecked() == false) && (strCat.indexOf(tr("Moderated")) != -1)) && ((ui.checkBox_recommended->isChecked() == false) && (strCat.indexOf(tr("Recommended")) != -1)))
+            // moderated
+            if ((ui.checkBox_moderated->isChecked() == true) && (strCat.indexOf(tr("Moderated")) != -1))
+                ui.tableWidget_erotic->showRow(i);
+            // recommended
+            else if ((ui.checkBox_recommended->isChecked() == true) && (strCat.indexOf(tr("Recommended")) != -1))
+                ui.tableWidget_erotic->showRow(i);
+            // rest
+            else
                 ui.tableWidget_erotic->hideRow(i);
         }
 
         if ((bShowTame == false) && (strCat.indexOf(tr("Tame")) != -1))
         {
-            //if (((ui.checkBox_moderated->isChecked() == false) && (strCat.indexOf(tr("Moderated")) != -1)) && ((ui.checkBox_recommended->isChecked() == false) && (strCat.indexOf(tr("Recommended")) != -1)))
+            // moderated
+            if ((ui.checkBox_moderated->isChecked() == true) && (strCat.indexOf(tr("Moderated")) != -1))
+                ui.tableWidget_erotic->showRow(i);
+            // recommended
+            else if ((ui.checkBox_recommended->isChecked() == true) && (strCat.indexOf(tr("Recommended")) != -1))
+                ui.tableWidget_erotic->showRow(i);
+            // rest
+            else
                 ui.tableWidget_erotic->hideRow(i);
         }
 
         if ((bShowWithClass == false) && (strCat.indexOf(tr("With class")) != -1))
         {
-            //if (((ui.checkBox_moderated->isChecked() == false) && (strCat.indexOf(tr("Moderated")) != -1)) && ((ui.checkBox_recommended->isChecked() == false) && (strCat.indexOf(tr("Recommended")) != -1)))
+            // moderated
+            if ((ui.checkBox_moderated->isChecked() == true) && (strCat.indexOf(tr("Moderated")) != -1))
+                ui.tableWidget_erotic->showRow(i);
+            // recommended
+            else if ((ui.checkBox_recommended->isChecked() == true) && (strCat.indexOf(tr("Recommended")) != -1))
+                ui.tableWidget_erotic->showRow(i);
+            // rest
+            else
                 ui.tableWidget_erotic->hideRow(i);
         }
 
         if ((bShowCult == false) && (strCat.indexOf(tr("Cult")) != -1))
         {
-            //if (((ui.checkBox_moderated->isChecked() == false) && (strCat.indexOf(tr("Moderated")) != -1)) && ((ui.checkBox_recommended->isChecked() == false) && (strCat.indexOf(tr("Recommended")) != -1)))
+            // moderated
+            if ((ui.checkBox_moderated->isChecked() == true) && (strCat.indexOf(tr("Moderated")) != -1))
+                ui.tableWidget_erotic->showRow(i);
+            // recommended
+            else if ((ui.checkBox_recommended->isChecked() == true) && (strCat.indexOf(tr("Recommended")) != -1))
+                ui.tableWidget_erotic->showRow(i);
+            // rest
+            else
                 ui.tableWidget_erotic->hideRow(i);
         }
     }
@@ -527,25 +639,53 @@ void DlgChannelList::apply_checkboxes()
 
         if ((bShowWild == false) && (strCat.indexOf(tr("Wild")) != -1))
         {
-            //if (((ui.checkBox_moderated->isChecked() == false) && (strCat.indexOf(tr("Moderated")) != -1)) && ((ui.checkBox_recommended->isChecked() == false) && (strCat.indexOf(tr("Recommended")) != -1)))
+            // moderated
+            if ((ui.checkBox_moderated->isChecked() == true) && (strCat.indexOf(tr("Moderated")) != -1))
+                ui.tableWidget_thematic->showRow(i);
+            // recommended
+            else if ((ui.checkBox_recommended->isChecked() == true) && (strCat.indexOf(tr("Recommended")) != -1))
+                ui.tableWidget_thematic->showRow(i);
+            // rest
+            else
                 ui.tableWidget_thematic->hideRow(i);
         }
 
         if ((bShowTame == false) && (strCat.indexOf(tr("Tame")) != -1))
         {
-            //if (((ui.checkBox_moderated->isChecked() == false) && (strCat.indexOf(tr("Moderated")) != -1)) && ((ui.checkBox_recommended->isChecked() == false) && (strCat.indexOf(tr("Recommended")) != -1)))
+            // moderated
+            if ((ui.checkBox_moderated->isChecked() == true) && (strCat.indexOf(tr("Moderated")) != -1))
+                ui.tableWidget_thematic->showRow(i);
+            // recommended
+            else if ((ui.checkBox_recommended->isChecked() == true) && (strCat.indexOf(tr("Recommended")) != -1))
+                ui.tableWidget_thematic->showRow(i);
+            // rest
+            else
                 ui.tableWidget_thematic->hideRow(i);
         }
 
         if ((bShowWithClass == false) && (strCat.indexOf(tr("With class")) != -1))
         {
-            //if (((ui.checkBox_moderated->isChecked() == false) && (strCat.indexOf(tr("Moderated")) != -1)) && ((ui.checkBox_recommended->isChecked() == false) && (strCat.indexOf(tr("Recommended")) != -1)))
+            // moderated
+            if ((ui.checkBox_moderated->isChecked() == true) && (strCat.indexOf(tr("Moderated")) != -1))
+                ui.tableWidget_thematic->showRow(i);
+            // recommended
+            else if ((ui.checkBox_recommended->isChecked() == true) && (strCat.indexOf(tr("Recommended")) != -1))
+                ui.tableWidget_thematic->showRow(i);
+            // rest
+            else
                 ui.tableWidget_thematic->hideRow(i);
         }
 
         if ((bShowCult == false) && (strCat.indexOf(tr("Cult")) != -1))
         {
-            //if (((ui.checkBox_moderated->isChecked() == false) && (strCat.indexOf(tr("Moderated")) != -1)) && ((ui.checkBox_recommended->isChecked() == false) && (strCat.indexOf(tr("Recommended")) != -1)))
+            // moderated
+            if ((ui.checkBox_moderated->isChecked() == true) && (strCat.indexOf(tr("Moderated")) != -1))
+                ui.tableWidget_thematic->showRow(i);
+            // recommended
+            else if ((ui.checkBox_recommended->isChecked() == true) && (strCat.indexOf(tr("Recommended")) != -1))
+                ui.tableWidget_thematic->showRow(i);
+            // rest
+            else
                 ui.tableWidget_thematic->hideRow(i);
         }
     }
@@ -557,25 +697,53 @@ void DlgChannelList::apply_checkboxes()
 
         if ((bShowWild == false) && (strCat.indexOf(tr("Wild")) != -1))
         {
-            //if (((ui.checkBox_moderated->isChecked() == false) && (strCat.indexOf(tr("Moderated")) != -1)) && ((ui.checkBox_recommended->isChecked() == false) && (strCat.indexOf(tr("Recommended")) != -1)))
+            // moderated
+            if ((ui.checkBox_moderated->isChecked() == true) && (strCat.indexOf(tr("Moderated")) != -1))
+                ui.tableWidget_regional->showRow(i);
+            // recommended
+            else if ((ui.checkBox_recommended->isChecked() == true) && (strCat.indexOf(tr("Recommended")) != -1))
+                ui.tableWidget_regional->showRow(i);
+            // rest
+            else
                 ui.tableWidget_regional->hideRow(i);
         }
 
         if ((bShowTame == false) && (strCat.indexOf(tr("Tame")) != -1))
         {
-            //if (((ui.checkBox_moderated->isChecked() == false) && (strCat.indexOf(tr("Moderated")) != -1)) && ((ui.checkBox_recommended->isChecked() == false) && (strCat.indexOf(tr("Recommended")) != -1)))
+            // moderated
+            if ((ui.checkBox_moderated->isChecked() == true) && (strCat.indexOf(tr("Moderated")) != -1))
+                ui.tableWidget_regional->showRow(i);
+            // recommended
+            else if ((ui.checkBox_recommended->isChecked() == true) && (strCat.indexOf(tr("Recommended")) != -1))
+                ui.tableWidget_regional->showRow(i);
+            // rest
+            else
                 ui.tableWidget_regional->hideRow(i);
         }
 
         if ((bShowWithClass == false) && (strCat.indexOf(tr("With class")) != -1))
         {
-            //if (((ui.checkBox_moderated->isChecked() == false) && (strCat.indexOf(tr("Moderated")) != -1)) && ((ui.checkBox_recommended->isChecked() == false) && (strCat.indexOf(tr("Recommended")) != -1)))
+            // moderated
+            if ((ui.checkBox_moderated->isChecked() == true) && (strCat.indexOf(tr("Moderated")) != -1))
+                ui.tableWidget_regional->showRow(i);
+            // recommended
+            else if ((ui.checkBox_recommended->isChecked() == true) && (strCat.indexOf(tr("Recommended")) != -1))
+                ui.tableWidget_regional->showRow(i);
+            // rest
+            else
                 ui.tableWidget_regional->hideRow(i);
         }
 
         if ((bShowCult == false) && (strCat.indexOf(tr("Cult")) != -1))
         {
-            //if (((ui.checkBox_moderated->isChecked() == false) && (strCat.indexOf(tr("Moderated")) != -1)) && ((ui.checkBox_recommended->isChecked() == false) && (strCat.indexOf(tr("Recommended")) != -1)))
+            // moderated
+            if ((ui.checkBox_moderated->isChecked() == true) && (strCat.indexOf(tr("Moderated")) != -1))
+                ui.tableWidget_regional->showRow(i);
+            // recommended
+            else if ((ui.checkBox_recommended->isChecked() == true) && (strCat.indexOf(tr("Recommended")) != -1))
+                ui.tableWidget_regional->showRow(i);
+            // rest
+            else
                 ui.tableWidget_regional->hideRow(i);
         }
     }
