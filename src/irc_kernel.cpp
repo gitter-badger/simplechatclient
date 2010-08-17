@@ -573,6 +573,10 @@ void IrcKernel::raw_part()
 
     tabc->del_user(strChannel, strNick);
 
+    // remove nick from avatars if not exist on open channels
+    if ((mNickAvatar->contains(strNick) == true) && (tabc->get_nick_channels(strNick) == 0))
+        mNickAvatar->remove(strNick);
+
     // if self part
 
     Config *pConfig = new Config();
@@ -581,6 +585,10 @@ void IrcKernel::raw_part()
 
     if (strNick == strMe)
     {
+        // remove nick avatars
+        tabc->clear_channel_all_nick_avatars(strChannel);
+
+        // close channel
         if (strChannel != "Status")
         {
             if (strChannel[0] == '#')
@@ -636,6 +644,7 @@ void IrcKernel::raw_quit()
     else
         strDisplay = QString(tr("* %1 [%2] has quit [%3]")).arg(strNick).arg(strIP).arg(strReason);
 
+    // remove nick from avatars
     if (mNickAvatar->contains(strNick) == true)
         mNickAvatar->remove(strNick);
 
@@ -681,6 +690,10 @@ void IrcKernel::raw_kick()
         tabc->show_msg(strChannel, strDisplay, 4);
 
     tabc->del_user(strChannel, strNick);
+
+    // remove nick from avatars if not exist on open channels
+    if ((mNickAvatar->contains(strNick) == true) && (tabc->get_nick_channels(strNick) == 0))
+        mNickAvatar->remove(strNick);
 
     Config *pConfig = new Config();
     QString strMe = pConfig->get_value("login-nick");
@@ -1216,13 +1229,16 @@ void IrcKernel::raw_111n()
     {
         if (strInfo == "avatar")
         {
-            naThreadList.append(new NickAvatar(tabc, strNick, strValue, mNickAvatar));
-            QObject::connect(naThreadList.at(naThreadList.size()-1), SIGNAL(do_remove_nathread(NickAvatar*)), this, SLOT(remove_nathread(NickAvatar*)));
+            if (mNickAvatar->contains(strNick) == false)
+            {
+                naThreadList.append(new NickAvatar(tabc, strNick, strValue, mNickAvatar));
+                QObject::connect(naThreadList.at(naThreadList.size()-1), SIGNAL(do_remove_nathread(NickAvatar*)), this, SLOT(remove_nathread(NickAvatar*)));
 
 #ifdef Q_WS_X11
-            if (settings->value("debug").toString() == "on")
-                qDebug() << "Nick avatar thread +1 (size: " << naThreadList.size() << ")";
+                if (settings->value("debug").toString() == "on")
+                    qDebug() << "Nick avatar thread +1 (size: " << naThreadList.size() << ")";
 #endif
+            }
         }
     }
 }

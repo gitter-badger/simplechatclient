@@ -84,6 +84,7 @@ public:
     void update_nick_avatar();
     void update_channel_avatar();
     void nicklist_refresh_all();
+    QStringList get_nicklist();
     void send_message(bool);
 
 private:
@@ -177,7 +178,6 @@ private:
     void nicklist_add(QString, QString, int);
     void nicklist_remove(QString);
     void nicklist_clear();
-    //void nicklist_refresh();
 
     void display_message(QString, int);
 

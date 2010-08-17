@@ -254,6 +254,21 @@ void Nicklist::nicklist_clear(sNickStatus *nick_status)
     nick_status->clear();
 }
 
+QStringList Nicklist::nicklist_get(sNickStatus *nick_status)
+{
+    QStringList slResult;
+
+    for (int i = 0; i < nick_status->count(); i++)
+    {
+        NickStatus listNickStatus(nick_status->at(i));
+
+        QString strKey = listNickStatus.nick;
+        slResult.append(strKey);
+    }
+
+    return slResult;
+}
+
 void Nicklist::nicklist_sort(sNickStatus *nick_status)
 {
     sNickStatus nick_status_sorted;

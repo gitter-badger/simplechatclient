@@ -468,6 +468,31 @@ void TabContainer::clear_all_nicklist()
         this->clear_nicklist(strlOpenChannels[i]);
 }
 
+void TabContainer::clear_channel_all_nick_avatars(QString strChannel)
+{
+    for (int i = 0; i < 50; i++)
+    {
+        if (free_list[i] == 'u')
+        {
+            if (tw[i]->get_name() == strChannel)
+            {
+                QStringList slList = tw[i]->get_nicklist();
+
+                for (int i = 0; i < slList.count(); i++)
+                {
+                    QString strNick = slList.at(i);
+
+                    // remove nick from avatars if not exist on open channels; must be 1 (current channel)
+                    if ((mNickAvatar->contains(strNick) == true) && (get_nick_channels(strNick) == 1))
+                        mNickAvatar->remove(strNick);
+                }
+
+                return;
+            }
+        }
+    }
+}
+
 void TabContainer::refresh_nicklist(QString strChannel)
 {
     for (int i = 0; i < 50; i++)
@@ -541,4 +566,20 @@ QStringList TabContainer::get_open_channels()
         }
     }
     return strlResult;
+}
+
+int TabContainer::get_nick_channels(QString strNick)
+{
+    int iResult = 0;
+
+    for (int i = 0; i < 50; i++)
+    {
+        if (free_list[i] == 'u')
+        {
+            if (tw[i]->nicklist_exist(strNick) == true)
+                iResult++;
+        }
+    }
+
+    return iResult;
 }

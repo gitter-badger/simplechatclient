@@ -1061,6 +1061,11 @@ void TabWidget::nicklist_refresh_all()
     inputline->set_userslist(nick_list);
 }
 
+QStringList TabWidget::get_nicklist()
+{
+    return nick_list->nicklist_get(&nick_status);
+}
+
 void TabWidget::change_flag(QString strNick, QString strNewFlag)
 {
     QString strFlag = nick_flag[strNick];

@@ -55,6 +55,7 @@ public:
     void nicklist_remove(QString, sNickStatus *);
     bool nicklist_exist(QString, sNickStatus *);
     void nicklist_clear(sNickStatus *);
+    QStringList nicklist_get(sNickStatus *);
     void nicklist_refresh(sNickStatus *);
     void nicklist_refresh_avatars();
     void update_avatar(QString, QByteArray);

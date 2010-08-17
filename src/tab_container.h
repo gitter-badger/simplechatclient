@@ -58,7 +58,9 @@ public:
     void update_nick(QString);
     void clear_nicklist(QString);
     void clear_all_nicklist();
+    void clear_channel_all_nick_avatars(QString);
     void refresh_nicklist(QString);
+    int get_nick_channels(QString);
     QStringList get_open_channels();
 
 public slots:
