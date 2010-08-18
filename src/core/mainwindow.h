@@ -38,9 +38,9 @@
 #include "dlg_ignore.h"
 #include "dlg_moderation.h"
 #include "dlg_options.h"
-#include "irc_auth.h"
-#include "irc_kernel.h"
 #include "network.h"
+#include "onet_auth.h"
+#include "onet_kernel.h"
 #include "qnotify.h"
 #include "tab_container.h"
 #include "tab_manager.h"
@@ -76,8 +76,8 @@ private:
     DlgFriends *pDlg_friends;
     DlgIgnore *pDlg_ignore;
     DlgModeration *pDlg_moderation;
-    IrcKernel *pIrc_kernel;
-    IrcAuth *pIrc_auth;
+    OnetKernel *pOnet_kernel;
+    OnetAuth *pOnet_auth;
     Notify *pNotify;
     QList <UpdateThread*> uThreadList;
     QMenu *trayMenu;

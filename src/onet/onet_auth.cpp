@@ -18,15 +18,15 @@
  *                                                                          *
  ****************************************************************************/
 
-#include "irc_auth.h"
+#include "onet_auth.h"
 
-IrcAuth::IrcAuth(QSettings *param1, TabContainer *param2)
+OnetAuth::OnetAuth(QSettings *param1, TabContainer *param2)
 {
     settings = param1;
     tabc = param2;
 }
 
-void IrcAuth::request_uo(QString param1, QString param2, QString param3)
+void OnetAuth::request_uo(QString param1, QString param2, QString param3)
 {
     QString strNick = param1;
     QString strNickAuth = param2;
@@ -160,7 +160,7 @@ void IrcAuth::request_uo(QString param1, QString param2, QString param3)
     delete cookieJar;
 }
 
-QString IrcAuth::transform_key(QString s)
+QString OnetAuth::transform_key(QString s)
 {
     static int f1[78] = {
         29, 43, 7, 5, 52, 58, 30, 59, 26, 35,
@@ -252,7 +252,7 @@ QString IrcAuth::transform_key(QString s)
     return strResult;
 }
 
-QString IrcAuth::get_version(QString strData)
+QString OnetAuth::get_version(QString strData)
 {
     if (strData.isEmpty() == false)
     {
@@ -267,7 +267,7 @@ QString IrcAuth::get_version(QString strData)
     return "20090619-1228_2";
 }
 
-void IrcAuth::request_finished(QString strNickAuth, QString strData)
+void OnetAuth::request_finished(QString strNickAuth, QString strData)
 {
     if (strData.isEmpty() == false)
     {

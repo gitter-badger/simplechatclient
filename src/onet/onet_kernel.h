@@ -18,8 +18,8 @@
  *                                                                          *
  ****************************************************************************/
 
-#ifndef IRC_KERNEL_H
-#define IRC_KERNEL_H
+#ifndef ONET_KERNEL_H
+#define ONET_KERNEL_H
 
 #include <QMessageBox>
 #include <QObject>
@@ -34,16 +34,16 @@
 #include "dlg_ignore.h"
 #include "dlg_moderation.h"
 #include "dlg_invite.h"
-#include "irc_auth.h"
 #include "network.h"
 #include "nick_avatar.h"
+#include "onet_auth.h"
 #include "tab_container.h"
 
-class IrcKernel : public QObject
+class OnetKernel : public QObject
 {
     Q_OBJECT
 public:
-    IrcKernel(QWidget *, Network *, QSettings *, TabContainer *, QMap <QString, QByteArray> *, QMap <QString, QByteArray> *, DlgChannelSettings *, DlgChannelHomes *, DlgChannelList *, DlgChannelFavourites *, DlgFriends *, DlgIgnore *, DlgModeration *);
+    OnetKernel(QWidget *, Network *, QSettings *, TabContainer *, QMap <QString, QByteArray> *, QMap <QString, QByteArray> *, DlgChannelSettings *, DlgChannelHomes *, DlgChannelList *, DlgChannelFavourites *, DlgFriends *, DlgIgnore *, DlgModeration *);
 
 public slots:
     void kernel(QString);
@@ -236,4 +236,4 @@ signals:
 
 };
 
-#endif // IRC_KERNEL_H
+#endif // ONET_KERNEL_H

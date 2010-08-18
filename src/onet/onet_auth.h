@@ -18,8 +18,8 @@
  *                                                                          *
  ****************************************************************************/
 
-#ifndef IRC_AUTH_H
-#define IRC_AUTH_H
+#ifndef ONET_AUTH_H
+#define ONET_AUTH_H
 
 #include <QHostInfo>
 #include <QNetworkAccessManager>
@@ -29,11 +29,11 @@
 #include <QUrl>
 #include "tab_container.h"
 
-class IrcAuth : public QObject
+class OnetAuth : public QObject
 {
     Q_OBJECT
 public:
-    IrcAuth(QSettings *, TabContainer *);
+    OnetAuth(QSettings *, TabContainer *);
     QString transform_key(QString);
 
 public slots:
@@ -51,4 +51,4 @@ signals:
 
 };
 
-#endif // IRC_AUTH_H
+#endif // ONET_AUTH_H

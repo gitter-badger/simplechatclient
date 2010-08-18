@@ -18,9 +18,9 @@
  *                                                                          *
  ****************************************************************************/
 
-#include "irc_kernel.h"
+#include "onet_kernel.h"
 
-IrcKernel::IrcKernel(QWidget *parent, Network *param1, QSettings *param2, TabContainer *param3, QMap <QString, QByteArray> *param4, QMap <QString, QByteArray> *param5, DlgChannelSettings *param6, DlgChannelHomes *param7, DlgChannelList *param8, DlgChannelFavourites *param9, DlgFriends *param10, DlgIgnore *param11, DlgModeration *param12)
+OnetKernel::OnetKernel(QWidget *parent, Network *param1, QSettings *param2, TabContainer *param3, QMap <QString, QByteArray> *param4, QMap <QString, QByteArray> *param5, DlgChannelSettings *param6, DlgChannelHomes *param7, DlgChannelList *param8, DlgChannelFavourites *param9, DlgFriends *param10, DlgIgnore *param11, DlgModeration *param12)
 {
     myparent = parent;
     pNetwork = param1;
@@ -37,7 +37,7 @@ IrcKernel::IrcKernel(QWidget *parent, Network *param1, QSettings *param2, TabCon
     dlgmoderation = param12;
 }
 
-void IrcKernel::remove_cathread(ChannelAvatar *cathr)
+void OnetKernel::remove_cathread(ChannelAvatar *cathr)
 {
     cathr->QObject::disconnect();
     caThreadList.removeOne(cathr);
@@ -48,7 +48,7 @@ void IrcKernel::remove_cathread(ChannelAvatar *cathr)
 #endif
 }
 
-void IrcKernel::remove_nathread(NickAvatar *nathr)
+void OnetKernel::remove_nathread(NickAvatar *nathr)
 {
     nathr->QObject::disconnect();
     naThreadList.removeOne(nathr);
@@ -59,7 +59,7 @@ void IrcKernel::remove_nathread(NickAvatar *nathr)
 #endif
 }
 
-void IrcKernel::kernel(QString param1)
+void OnetKernel::kernel(QString param1)
 {
     strData = param1;
     strDataList = strData.split(" ");
@@ -396,7 +396,7 @@ void IrcKernel::kernel(QString param1)
 }
 
 // PING :cf1f1.onet
-void IrcKernel::raw_ping()
+void OnetKernel::raw_ping()
 {
     if (strDataList.value(1).isEmpty() == true) return;
 
@@ -407,7 +407,7 @@ void IrcKernel::raw_ping()
 }
 
 // :cf1f4.onet PONG cf1f4.onet :1279652441.189
-void IrcKernel::raw_pong()
+void OnetKernel::raw_pong()
 {
     if (strDataList.value(1).isEmpty() == true) return;
     if (strDataList.value(2).isEmpty() == true) return;
@@ -458,7 +458,7 @@ void IrcKernel::raw_pong()
 }
 
 // ERROR :Closing link (unknown@95.48.183.154) [Registration timeout]
-void IrcKernel::raw_error()
+void OnetKernel::raw_error()
 {
     QString strMessage;
     for (int i = 0; i < strDataList.size(); i++) { if (i != 0) strMessage += " "; strMessage += strDataList[i]; }
@@ -469,7 +469,7 @@ void IrcKernel::raw_error()
 }
 
 // :scc_test!51976824@3DE379.B7103A.6CF799.6902F4 JOIN #Quiz :rx,0
-void IrcKernel::raw_join()
+void OnetKernel::raw_join()
 {
     if (strDataList.value(2).isEmpty() == true) return;
 
@@ -526,7 +526,7 @@ void IrcKernel::raw_join()
 }
 
 // :scc_test!51976824@3DE379.B7103A.6CF799.6902F4 PART #scc
-void IrcKernel::raw_part()
+void OnetKernel::raw_part()
 {
     if (strDataList.value(2).isEmpty() == true) return;
 
@@ -616,7 +616,7 @@ void IrcKernel::raw_part()
 }
 
 // :Stark!38566204@A5F2F1.68FE5E.DE32AF.62ECB9 QUIT :Client exited
-void IrcKernel::raw_quit()
+void OnetKernel::raw_quit()
 {
     if (strDataList.value(2).isEmpty() == true) return;
 
@@ -652,7 +652,7 @@ void IrcKernel::raw_quit()
 }
 
 // :scc_test!51976824@3DE379.B7103A.6CF799.6902F4 KICK #scc Moment_w_atmosferze :sio
-void IrcKernel::raw_kick()
+void OnetKernel::raw_kick()
 {
     if (strDataList.value(2).isEmpty() == true) return;
 
@@ -722,7 +722,7 @@ void IrcKernel::raw_kick()
 // :ChanServ!service@service.onet MODE #scc +o scc_test
 // :ChanServ!service@service.onet MODE #scc +eo *!51976824@* scc_test
 // :ChanServ!service@service.onet MODE #abc123 +il-e 1 *!51976824@*
-void IrcKernel::raw_mode()
+void OnetKernel::raw_mode()
 {
     if (strDataList.value(2).isEmpty() == true) return;
     if (strDataList.value(3).isEmpty() == true) return;
@@ -911,7 +911,7 @@ void IrcKernel::raw_mode()
 }
 
 // :Merovingian!26269559@2294E8.94913F.2EAEC9.11F26D PRIVMSG #scc :hello
-void IrcKernel::raw_privmsg()
+void OnetKernel::raw_privmsg()
 {
     if (strDataList.value(2).isEmpty() == true) return;
 
@@ -937,7 +937,7 @@ void IrcKernel::raw_privmsg()
 }
 
 // :cf1f2.onet NOTICE scc_test :Your message has been filtered and opers notified: spam #2480
-void IrcKernel::raw_notice()
+void OnetKernel::raw_notice()
 {
     if (strDataList.value(2).isEmpty() == true) return;
 
@@ -962,7 +962,7 @@ void IrcKernel::raw_notice()
 
 // :osa1987!47751777@F4C727.DA810F.7E1789.E71ED5 INVITE scc_test :^cf1f41437962
 // :Merovingian!26269559@jest.piekny.i.uroczy.ma.przesliczne.oczy INVITE scc_test :#Komputery
-void IrcKernel::raw_invite()
+void OnetKernel::raw_invite()
 {
     if (strDataList.value(2).isEmpty() == true) return;
     if (strDataList.value(3).isEmpty() == true) return;
@@ -985,7 +985,7 @@ void IrcKernel::raw_invite()
 }
 
 // :cf1f3.onet TOPIC #scc :Simple Chat Client; current version: beta;
-void IrcKernel::raw_topic()
+void OnetKernel::raw_topic()
 {
     if (strDataList.value(2).isEmpty() == true) return;
 
@@ -1011,7 +1011,7 @@ void IrcKernel::raw_topic()
 
 // :~test34534!anonymous@2294E8.94913F.A00186.1A3C28 INVREJECT Merovingian #Scrabble
 // :Merovingian!26269559@2294E8.94913F.2E3993.4AF50D INVREJECT scc_test ^cf1f41038619
-void IrcKernel::raw_invreject()
+void OnetKernel::raw_invreject()
 {
     if (strDataList.value(2).isEmpty() == true) return;
     if (strDataList.value(3).isEmpty() == true) return;
@@ -1034,7 +1034,7 @@ void IrcKernel::raw_invreject()
 
 // :~test34534!anonymous@2294E8.94913F.A00186.1A3C28 INVIGNORE Merovingian #Scrabble
 // :Merovingian!26269559@2294E8.94913F.A00186.4A2B76 INVIGNORE scc_test ^cf1f31294352
-void IrcKernel::raw_invignore()
+void OnetKernel::raw_invignore()
 {
     if (strDataList.value(2).isEmpty() == true) return;
     if (strDataList.value(3).isEmpty() == true) return;
@@ -1058,7 +1058,7 @@ void IrcKernel::raw_invignore()
 }
 
 // :~testa!anonymous@3DE379.B7103A.6CF799.6902F4 MODERMSG test1 - #Scrabble :%F:verdana%%Ihehe%
-void IrcKernel::raw_modermsg()
+void OnetKernel::raw_modermsg()
 {
     if (strDataList.value(2).isEmpty() == true) return;
     if (strDataList.value(3).isEmpty() == true) return;
@@ -1078,7 +1078,7 @@ void IrcKernel::raw_modermsg()
 }
 
 // :~testa!anonymous@3DE379.B7103A.6CF799.6902F4 MODERNOTICE #Scrabble :a
-void IrcKernel::raw_modernotice()
+void OnetKernel::raw_modernotice()
 {
     if (strDataList.value(2).isEmpty() == true) return;
 
@@ -1099,7 +1099,7 @@ void IrcKernel::raw_modernotice()
 }
 
 // :cf1f1.onet MODERATE ~testa opnick #channel cf1f44c3b4b870f8a :%F:verdana%ladnie to tak
-void IrcKernel::raw_moderate()
+void OnetKernel::raw_moderate()
 {
     if (strDataList.value(2).isEmpty() == true) return;
     if (strDataList.value(3).isEmpty() == true) return;
@@ -1119,7 +1119,7 @@ void IrcKernel::raw_moderate()
 }
 
 // :cf1f4.onet 001 scc_test :Welcome to the OnetCzat IRC Network scc_test!51976824@83.28.35.219
-void IrcKernel::raw_001()
+void OnetKernel::raw_001()
 {
 // busy
     settings->setValue("logged", "on");
@@ -1150,19 +1150,19 @@ void IrcKernel::raw_001()
 }
 
 // :cf1f4.onet 002 Merovingian :Your host is cf1f4.onet, running version InspIRCd-1.1
-void IrcKernel::raw_002()
+void OnetKernel::raw_002()
 {
 // ignore
 }
 
 // :cf1f4.onet 003 Merovingian :This server was created 06:35:35 Jan 12 2010
-void IrcKernel::raw_003()
+void OnetKernel::raw_003()
 {
 // ignore
 }
 
 // :cf1f4.onet 004 Merovingian cf1f4.onet InspIRCd-1.1 BGQRVWbinoqrswx DFGIJLMPQRVXYabcehiklmnopqrstuv FIJLXYabcehkloqv
-void IrcKernel::raw_004()
+void OnetKernel::raw_004()
 {
 // ignore
 }
@@ -1170,13 +1170,13 @@ void IrcKernel::raw_004()
 // :cf1f4.onet 005 Merovingian WALLCHOPS WALLVOICES MODES=19 CHANTYPES=^# PREFIX=(qaohXYv)`&@%!=+ MAP MAXCHANNELS=20 MAXBANS=60 VBANLIST NICKLEN=32 CASEMAPPING=rfc1459 STATUSMSG=@%+ CHARSET=ascii :are supported by this server
 // :cf1f4.onet 005 Merovingian TOPICLEN=203 KICKLEN=255 MAXTARGETS=20 AWAYLEN=200 CHANMODES=Ibe,k,FJLcl,DGMPQRVimnprstu FNC NETWORK=OnetCzat MAXPARA=32 ELIST=MU OVERRIDE ONETNAMESX INVEX=I EXCEPTS=e :are supported by this server
 // :cf1f4.onet 005 Merovingian WATCH=200 INVIGNORE=100 USERIP ESILENCE SILENCE=100 NAMESX :are supported by this server
-void IrcKernel::raw_005()
+void OnetKernel::raw_005()
 {
 // ignore
 }
 
 // Onet-Informuje!bot@service.onet NOTICE Merovingian :100 #gorący_pokój 1279807200 :Zapraszamy na spotkanie z Rafałem Głogowskim, ratownikiem krakowskiego WOPRU. Jak zachowywać się nad wodą? Na co zwracać uwagę?
-void IrcKernel::raw_100n()
+void OnetKernel::raw_100n()
 {
     if (strDataList.value(3).isEmpty() == true) return;
     if (strDataList.value(4).isEmpty() == true) return;
@@ -1197,7 +1197,7 @@ void IrcKernel::raw_100n()
 }
 
 // :GuardServ!service@service.onet NOTICE scc_test :109 #scc :rzucanie mięsem nie będzie tolerowane
-void IrcKernel::raw_109n()
+void OnetKernel::raw_109n()
 {
     if (strDataList.value(3).isEmpty() == true) return;
     if (strDataList.value(4).isEmpty() == true) return;
@@ -1215,7 +1215,7 @@ void IrcKernel::raw_109n()
 }
 
 // :NickServ!service@service.onet NOTICE Merovingian :111 aleksa7 type :2
-void IrcKernel::raw_111n()
+void OnetKernel::raw_111n()
 {
     QString strNick = strDataList[4];
     QString strInfo = strDataList[5];
@@ -1244,13 +1244,13 @@ void IrcKernel::raw_111n()
 }
 
 // :NickServ!service@service.onet NOTICE Merovingian :112 aleksa7 :end of user info
-void IrcKernel::raw_112n()
+void OnetKernel::raw_112n()
 {
 // ignore
 }
 
 // :NickServ!service@service.onet NOTICE scc_test :121 :scc_test Merovingian Succubi Radowsky
-void IrcKernel::raw_121n()
+void OnetKernel::raw_121n()
 {
     for (int i = 4; i < strDataList.size(); i++)
     {
@@ -1263,13 +1263,13 @@ void IrcKernel::raw_121n()
 }
 
 // :NickServ!service@service.onet NOTICE scc_test :122 :end of friend list
-void IrcKernel::raw_122n()
+void OnetKernel::raw_122n()
 {
 // ignore
 }
 
 // :NickServ!service@service.onet NOTICE scc_test :131 :arabeska22 test wilk ~test
-void IrcKernel::raw_131n()
+void OnetKernel::raw_131n()
 {
     for (int i = 4; i < strDataList.size(); i++)
     {
@@ -1282,13 +1282,13 @@ void IrcKernel::raw_131n()
 }
 
 // :NickServ!service@service.onet NOTICE scc_test :132 :end of ignore list
-void IrcKernel::raw_132n()
+void OnetKernel::raw_132n()
 {
 // ignore
 }
 
 // :NickServ!service@service.onet NOTICE Merovingian :133 test_nick test_nick_nowy :ignored nick changed
-void IrcKernel::raw_133n()
+void OnetKernel::raw_133n()
 {
     if (strDataList.value(4).isEmpty() == true) return;
     if (strDataList.value(5).isEmpty() == true) return;
@@ -1306,7 +1306,7 @@ void IrcKernel::raw_133n()
 }
 
 // :NickServ!service@service.onet NOTICE scc_test :141 :#Scrabble #Quiz #scc
-void IrcKernel::raw_141n()
+void OnetKernel::raw_141n()
 {
     for (int i = 4; i < strDataList.size(); i++)
     {
@@ -1326,13 +1326,13 @@ void IrcKernel::raw_141n()
 }
 
 // :NickServ!service@service.onet NOTICE scc_test :142 :end of favourites list
-void IrcKernel::raw_142n()
+void OnetKernel::raw_142n()
 {
 // ignore
 }
 
 // :ChanServ!service@service.onet NOTICE scc_test :151 :h#scc
-void IrcKernel::raw_151n()
+void OnetKernel::raw_151n()
 {
     for (int i = 4; i < strDataList.size(); i++)
     {
@@ -1345,13 +1345,13 @@ void IrcKernel::raw_151n()
 }
 
 // :ChanServ!service@service.onet NOTICE scc_test :152 :end of homes list
-void IrcKernel::raw_152n()
+void OnetKernel::raw_152n()
 {
 // ignore
 }
 
 // :ChanServ!service@service.onet NOTICE scc_test :160 #scc :Simple Chat Client;
-void IrcKernel::raw_160n()
+void OnetKernel::raw_160n()
 {
     if (strDataList.value(4).isEmpty() == true) return;
 
@@ -1367,7 +1367,7 @@ void IrcKernel::raw_160n()
 }
 
 // :ChanServ!service@service.onet NOTICE scc_test :161 #scc :topicAuthor=Merovingian rank=0.9095 topicDate=1251579281 private=1 password= limit=0 type=0 createdDate=1247005186 vEmail=0 www=http://simplechatclien.sourceforge.net/ catMajor=4 catMinor=0 official=0 recommended=0 protected=0 moderated=0 avatar=http://foto0.m.onet.pl/_m/e7bd33787bb5cd96031db4034e5f1d54,1,19,0.jpg status=ok guardian=3 auditorium=0
-void IrcKernel::raw_161n()
+void OnetKernel::raw_161n()
 {
     if (strDataList.value(4).isEmpty() == true) return;
 
@@ -1447,7 +1447,7 @@ void IrcKernel::raw_161n()
 }
 
 // :ChanServ!service@service.onet NOTICE scc_test :162 #lunar :q,Merovingian o,Radowsky o,aleksa7 o,chanky o,osa1987 h,scc_test o,MajkeI
-void IrcKernel::raw_162n()
+void OnetKernel::raw_162n()
 {
     for (int i = 5; i < strDataList.size(); i++)
     {
@@ -1470,7 +1470,7 @@ void IrcKernel::raw_162n()
 
 // :ChanServ!service@service.onet NOTICE scc_test :163 #scc b test2!*@* Merovingian :1253230938
 // :ChanServ!service@service.onet NOTICE scc_test :163 #lunar I Olka Merovingian :1252595321
-void IrcKernel::raw_163n()
+void OnetKernel::raw_163n()
 {
     if (strDataList.value(4).isEmpty() == true) return;
     if (strDataList.value(5).isEmpty() == true) return;
@@ -1495,13 +1495,13 @@ void IrcKernel::raw_163n()
 }
 
 // :ChanServ!service@service.onet NOTICE scc_test :164 #scc :end of channel info
-void IrcKernel::raw_164n()
+void OnetKernel::raw_164n()
 {
 // ignore
 }
 
 // :ChanServ!service@service.onet NOTICE ~test :165 #Relax :Nie ważne, czy szukasz dobrej zabawy, ...
-void IrcKernel::raw_165n()
+void OnetKernel::raw_165n()
 {
     if (strDataList.value(4).isEmpty() == true) return;
 
@@ -1514,7 +1514,7 @@ void IrcKernel::raw_165n()
 }
 
 // :NickServ!service@service.onet NOTICE scc_test :220 aaa :friend added to list
-void IrcKernel::raw_220n()
+void OnetKernel::raw_220n()
 {
     if (strDataList.value(4).isEmpty() == true) return;
 
@@ -1525,7 +1525,7 @@ void IrcKernel::raw_220n()
 }
 
 // :NickServ!service@service.onet NOTICE scc_test :221 scc_test :friend removed from list
-void IrcKernel::raw_221n()
+void OnetKernel::raw_221n()
 {
     if (strDataList.value(4).isEmpty() == true) return;
 
@@ -1536,7 +1536,7 @@ void IrcKernel::raw_221n()
 }
 
 // :NickServ!service@service.onet NOTICE scc_test :230 ~test :ignore added to list
-void IrcKernel::raw_230n()
+void OnetKernel::raw_230n()
 {
     if (strDataList.value(4).isEmpty() == true) return;
 
@@ -1550,7 +1550,7 @@ void IrcKernel::raw_230n()
 }
 
 // :NickServ!service@service.onet NOTICE scc_test :231 ~test :ignore removed from list
-void IrcKernel::raw_231n()
+void OnetKernel::raw_231n()
 {
     if (strDataList.value(4).isEmpty() == true) return;
 
@@ -1564,7 +1564,7 @@ void IrcKernel::raw_231n()
 }
 
 // :NickServ!service@service.onet NOTICE scc_test :240 #scc :favourite added to list
-void IrcKernel::raw_240n()
+void OnetKernel::raw_240n()
 {
     if (strDataList.value(4).isEmpty() == true) return;
 
@@ -1578,7 +1578,7 @@ void IrcKernel::raw_240n()
 }
 
 // :NickServ!service@service.onet NOTICE scc_test :241 #scc :favourite removed from list
-void IrcKernel::raw_241n()
+void OnetKernel::raw_241n()
 {
     if (strDataList.value(4).isEmpty() == true) return;
 
@@ -1592,7 +1592,7 @@ void IrcKernel::raw_241n()
 }
 
 // :ChanServ!service@service.onet NOTICE scc_test :250 #czesctoja :channel registered
-void IrcKernel::raw_250n()
+void OnetKernel::raw_250n()
 {
     if (strDataList.value(4).isEmpty() == true) return;
 
@@ -1611,13 +1611,13 @@ void IrcKernel::raw_250n()
 }
 
 // :cf1f4.onet 251 Merovingian :There are 2300 users and 5 invisible on 10 servers
-void IrcKernel::raw_251()
+void OnetKernel::raw_251()
 {
 // ignore
 }
 
 // :ChanServ!service@service.onet NOTICE scc_test :251 #czesctoja :has been dropped
-void IrcKernel::raw_251n()
+void OnetKernel::raw_251n()
 {
     if (strDataList.value(4).isEmpty() == true) return;
 
@@ -1628,13 +1628,13 @@ void IrcKernel::raw_251n()
 }
 
 // :cf1f4.onet 252 Merovingian 5 :operator(s) online
-void IrcKernel::raw_252()
+void OnetKernel::raw_252()
 {
 // ignore
 }
 
 // :ChanServ!service@service.onet NOTICE #testabc :252 scc_test :has dropped this channel
-void IrcKernel::raw_252n()
+void OnetKernel::raw_252n()
 {
     if (strDataList.value(4).isEmpty() == true) return;
 
@@ -1645,13 +1645,13 @@ void IrcKernel::raw_252n()
 }
 
 // :cf1f4.onet 253 Merovingian 1 :unknown connections
-void IrcKernel::raw_253()
+void OnetKernel::raw_253()
 {
 // ignore
 }
 
 // :ChanServ!service@service.onet NOTICE scc_test :253 #test_scc_moj Merovingian :channel owner changed
-void IrcKernel::raw_253n()
+void OnetKernel::raw_253n()
 {
     // kopia raw 254
     if (strDataList.value(4).isEmpty() == true) return;
@@ -1666,13 +1666,13 @@ void IrcKernel::raw_253n()
 }
 
 // :cf1f4.onet 254 Merovingian 4641 :channels formed
-void IrcKernel::raw_254()
+void OnetKernel::raw_254()
 {
 // ignore
 }
 
 // :ChanServ!service@service.onet NOTICE #test_scc_moj :254 scc_test Merovingian :changed channel owner
-void IrcKernel::raw_254n()
+void OnetKernel::raw_254n()
 {
     if (strDataList.value(4).isEmpty() == true) return;
     if (strDataList.value(5).isEmpty() == true) return;
@@ -1686,13 +1686,13 @@ void IrcKernel::raw_254n()
 }
 
 // :cf1f4.onet 255 Merovingian :I have 568 clients and 1 servers
-void IrcKernel::raw_255()
+void OnetKernel::raw_255()
 {
 // ignore
 }
 
 // :ChanServ!service@service.onet NOTICE scc_test :255 #scc +b cos :channel privilege changed
-void IrcKernel::raw_255n()
+void OnetKernel::raw_255n()
 {
     if (strDataList.value(4).isEmpty() == true) return;
     if (strDataList.value(5).isEmpty() == true) return;
@@ -1706,7 +1706,7 @@ void IrcKernel::raw_255n()
 }
 
 // :cf1f1.onet 256 ~test :Administrative info for cf1f1.onet
-void IrcKernel::raw_256()
+void OnetKernel::raw_256()
 {
     QString strMessage;
     for (int i = 3; i < strDataList.size(); i++) { if (i != 3) strMessage += " "; strMessage += strDataList[i]; }
@@ -1718,7 +1718,7 @@ void IrcKernel::raw_256()
 }
 
 // :ChanServ!service@service.onet NOTICE #scc :256 Merovingian +o scc_test :channel privilege changed
-void IrcKernel::raw_256n()
+void OnetKernel::raw_256n()
 {
     if (strDataList.value(4).isEmpty() == true) return;
     if (strDataList.value(5).isEmpty() == true) return;
@@ -1753,7 +1753,7 @@ void IrcKernel::raw_256n()
 }
 
 // :cf1f1.onet 257 ~test :Name     - Czat Admin
-void IrcKernel::raw_257()
+void OnetKernel::raw_257()
 {
     QString strMessage;
     for (int i = 3; i < strDataList.size(); i++) { if (i != 3) strMessage += " "; strMessage += strDataList[i]; }
@@ -1765,7 +1765,7 @@ void IrcKernel::raw_257()
 }
 
 // :ChanServ!service@service.onet NOTICE scc_test :257 #scc * :settings changed
-void IrcKernel::raw_257n()
+void OnetKernel::raw_257n()
 {
     if (strDataList.value(4).isEmpty() == true) return;
 
@@ -1775,7 +1775,7 @@ void IrcKernel::raw_257n()
 }
 
 // :cf1f1.onet 258 ~test :Nickname - czat_admin
-void IrcKernel::raw_258()
+void OnetKernel::raw_258()
 {
     QString strMessage;
     for (int i = 3; i < strDataList.size(); i++) { if (i != 3) strMessage += " "; strMessage += strDataList[i]; }
@@ -1788,7 +1788,7 @@ void IrcKernel::raw_258()
 
 // :ChanServ!service@service.onet NOTICE #glupia_nazwa :258 ovo_ d :channel settings changed
 // :ChanServ!service@service.onet NOTICE #scc :258 Merovingian * :channel settings changed
-void IrcKernel::raw_258n()
+void OnetKernel::raw_258n()
 {
     if (strDataList.value(4).isEmpty() == true) return;
 
@@ -1802,7 +1802,7 @@ void IrcKernel::raw_258n()
 }
 
 // :cf1f1.onet 259 ~test :E-Mail   - czat_admin@czat.onet.pl
-void IrcKernel::raw_259()
+void OnetKernel::raw_259()
 {
     QString strMessage;
     for (int i = 3; i < strDataList.size(); i++) { if (i != 3) strMessage += " "; strMessage += strDataList[i]; }
@@ -1814,7 +1814,7 @@ void IrcKernel::raw_259()
 }
 
 // :ChanServ!service@service.onet NOTICE scc_test :259 #scc :nothing changed
-void IrcKernel::raw_259n()
+void OnetKernel::raw_259n()
 {
     if (strDataList.value(4).isEmpty() == true) return;
 
@@ -1825,7 +1825,7 @@ void IrcKernel::raw_259n()
 }
 
 // :ChanServ!service@service.onet NOTICE scc_test :260 Merovingian #scc +o :channel privilege changed
-void IrcKernel::raw_260n()
+void OnetKernel::raw_260n()
 {
     // kopia raw 256
     if (strDataList.value(4).isEmpty() == true) return;
@@ -1861,7 +1861,7 @@ void IrcKernel::raw_260n()
 }
 
 // :ChanServ!service@service.onet NOTICE scc_test :261 scc_test #czesctoja :has dropped this channel
-void IrcKernel::raw_261n()
+void OnetKernel::raw_261n()
 {
     if (strDataList.value(4).isEmpty() == true) return;
     if (strDataList.value(5).isEmpty() == true) return;
@@ -1881,19 +1881,19 @@ void IrcKernel::raw_261n()
 }
 
 // :cf1f4.onet 265 Merovingian :Current Local Users: 568  Max: 1633
-void IrcKernel::raw_265()
+void OnetKernel::raw_265()
 {
 // ignore
 }
 
 // :cf1f4.onet 266 Merovingian :Current Global Users: 2305  Max: 6562
-void IrcKernel::raw_266()
+void OnetKernel::raw_266()
 {
 // ignore
 }
 
 // :cf1f2.onet 301 scc_test Merovingian :nie ma
-void IrcKernel::raw_301()
+void OnetKernel::raw_301()
 {
     if (strDataList.value(3).isEmpty() == true) return;
 
@@ -1909,7 +1909,7 @@ void IrcKernel::raw_301()
 }
 
 // :cf1f1.onet 303 ~test :Darom
-void IrcKernel::raw_303()
+void OnetKernel::raw_303()
 {
     if (strDataList.value(3).isEmpty() == true) return;
 
@@ -1922,7 +1922,7 @@ void IrcKernel::raw_303()
 }
 
 // :cf1f3.onet 304 ~test :SYNTAX OPER <username> <password>
-void IrcKernel::raw_304()
+void OnetKernel::raw_304()
 {
     QString strMessage;
     for (int i = 3; i < strDataList.size(); i++) { if (i != 3) strMessage += " "; strMessage += strDataList[i]; }
@@ -1934,21 +1934,21 @@ void IrcKernel::raw_304()
 }
 
 // :cf1f3.onet 305 scc_test :You are no longer marked as being away
-void IrcKernel::raw_305()
+void OnetKernel::raw_305()
 {
     QString strDisplay = tr("You are no longer marked as being away");
     tabc->show_msg_all(strDisplay, 7);
 }
 
 // :cf1f3.onet 306 scc_test :You have been marked as being away
-void IrcKernel::raw_306()
+void OnetKernel::raw_306()
 {
     QString strDisplay = tr("You have been marked as being away");
     tabc->show_msg_all(strDisplay, 7);
 }
 
 // :cf1f3.onet 307 scc_test Merovingian :is a registered nick
-void IrcKernel::raw_307()
+void OnetKernel::raw_307()
 {
     if (strDataList.value(3).isEmpty() == true) return;
 
@@ -1967,7 +1967,7 @@ void IrcKernel::raw_307()
 }
 
 // :cf1f1.onet 311 scc_test Merovingian 26269559 2294E8.94913F.196694.9BAE58 * :Merovingian
-void IrcKernel::raw_311()
+void OnetKernel::raw_311()
 {
     if (strDataList.value(3).isEmpty() == true) return;
     if (strDataList.value(4).isEmpty() == true) return;
@@ -1991,7 +1991,7 @@ void IrcKernel::raw_311()
 }
 
 // :cf1f2.onet 312 scc_test Merovingian *.onet :OnetCzat
-void IrcKernel::raw_312()
+void OnetKernel::raw_312()
 {
     if (strDataList.value(3).isEmpty() == true) return;
 
@@ -2005,7 +2005,7 @@ void IrcKernel::raw_312()
 }
 
 // :cf1f1.onet 313 scc_test Llanero :is a GlobalOp on OnetCzat
-void IrcKernel::raw_313()
+void OnetKernel::raw_313()
 {
     if (strDataList.value(3).isEmpty() == true) return;
 
@@ -2016,7 +2016,7 @@ void IrcKernel::raw_313()
 }
 
 // :cf1f3.onet 317 scc_test Merovingian 7 1263650617 :seconds idle, signon time
-void IrcKernel::raw_317()
+void OnetKernel::raw_317()
 {
     if (strDataList.value(3).isEmpty() == true) return;
     if (strDataList.value(4).isEmpty() == true) return;
@@ -2058,13 +2058,13 @@ void IrcKernel::raw_317()
 }
 
 // :cf1f4.onet 318 scc_test Merovingian :End of /WHOIS list.
-void IrcKernel::raw_318()
+void OnetKernel::raw_318()
 {
 // ignore
 }
 
 // :cf1f4.onet 319 scc_test Merovingian :#testy %#Komputery `#scc `#Quiz `#Scrabble `#hack
-void IrcKernel::raw_319()
+void OnetKernel::raw_319()
 {
     if (strDataList.value(3).isEmpty() == true) return;
 
@@ -2087,7 +2087,7 @@ void IrcKernel::raw_319()
 }
 
 // :cf1f4.onet 332 scc_test #scc :Simple Chat Client; current version: beta;
-void IrcKernel::raw_332()
+void OnetKernel::raw_332()
 {
     if (strDataList.value(3).isEmpty() == true) return;
     if (strDataList.value(4).isEmpty() == true) return;
@@ -2105,14 +2105,14 @@ void IrcKernel::raw_332()
 }
 
 // :cf1f1.onet 333 scc_test #scc Merovingian!26269559 1253193639
-void IrcKernel::raw_333()
+void OnetKernel::raw_333()
 {
 // supported by raw 161
 }
 
 // :cf1f4.onet 341 Merovingian ~test34534 #Scrabble
 // :cf1f1.onet 341 scc_test Merovingian ^cf1f1162848
-void IrcKernel::raw_341()
+void OnetKernel::raw_341()
 {
     if (strDataList.value(3).isEmpty() == true) return;
     if (strDataList.value(4).isEmpty() == true) return;
@@ -2125,7 +2125,7 @@ void IrcKernel::raw_341()
 }
 
 // :cf1f1.onet 353 scc_test = #scc :scc_test|rx,0 `@Merovingian|brx,1 @chanky|rx,1
-void IrcKernel::raw_353()
+void OnetKernel::raw_353()
 {
     if (strDataList.value(3).isEmpty() == true) return;
     if (strDataList.value(4).isEmpty() == true) return;
@@ -2164,7 +2164,7 @@ void IrcKernel::raw_353()
 }
 
 // :cf1f2.onet 366 scc_test #scc :End of /NAMES list.
-void IrcKernel::raw_366()
+void OnetKernel::raw_366()
 {
     if (strDataList.value(3).isEmpty() == true) return;
 
@@ -2174,7 +2174,7 @@ void IrcKernel::raw_366()
 }
 
 // :cf1f3.onet 371 ~test :Core Developers:
-void IrcKernel::raw_371()
+void OnetKernel::raw_371()
 {
     QString strMessage;
     for (int i = 3; i < strDataList.size(); i++) { if (i != 3) strMessage += " "; strMessage += strDataList[i]; }
@@ -2186,7 +2186,7 @@ void IrcKernel::raw_371()
 }
 
 // :cf1f4.onet 372 scc_test :- Onet Czat. Inny Wymiar Czatowania. Witamy
-void IrcKernel::raw_372()
+void OnetKernel::raw_372()
 {
     QString strMessage;
     for (int i = 3; i < strDataList.size(); i++) { if (i != 3) strMessage += " "; strMessage += strDataList[i]; }
@@ -2197,26 +2197,26 @@ void IrcKernel::raw_372()
 }
 
 // :cf1f3.onet 374 ~test :End of /INFO list
-void IrcKernel::raw_374()
+void OnetKernel::raw_374()
 {
 // ignore
 }
 
 // :cf1f4.onet 375 scc_test :cf1f4.onet message of the day
-void IrcKernel::raw_375()
+void OnetKernel::raw_375()
 {
     QString strDisplay = tr("Message Of The Day:");
     tabc->show_msg("Status", strDisplay, 0);
 }
 
 // :cf1f1.onet 376 scc_test :End of message of the day.
-void IrcKernel::raw_376()
+void OnetKernel::raw_376()
 {
 // ignore
 }
 
 // :cf1f2.onet 391 ~test cf1f2.onet :Tue Jul 13 18:33:05 2010
-void IrcKernel::raw_391()
+void OnetKernel::raw_391()
 {
     if (strDataList.value(3).isEmpty() == true) return;
 
@@ -2233,7 +2233,7 @@ void IrcKernel::raw_391()
 }
 
 // :cf1f2.onet 396 ~scc_test 3DE379.B7103A.6CF799.6902F4 :is now your displayed host
-void IrcKernel::raw_396()
+void OnetKernel::raw_396()
 {
     if (strDataList.value(3).isEmpty() == true) return;
 
@@ -2245,7 +2245,7 @@ void IrcKernel::raw_396()
 }
 
 // :ChanServ!service@service.onet NOTICE ~scc_test :400 :you are not registred
-void IrcKernel::raw_400n()
+void OnetKernel::raw_400n()
 {
     QString strNick = strDataList[2];
 
@@ -2258,7 +2258,7 @@ void IrcKernel::raw_400n()
 // :cf1f3.onet 401 Merovingian #asdasdasd :No such channel
 // :cf1f3.onet 401 scc_test scc :No such nick/channel
 // :cf1f4.onet 401 Merovingian ChanServ :is currently unavailable. Please try again later.
-void IrcKernel::raw_401()
+void OnetKernel::raw_401()
 {
     if (strDataList.value(3).isEmpty() == true) return;
 
@@ -2282,7 +2282,7 @@ void IrcKernel::raw_401()
 }
 
 // :ChanServ!service@service.onet NOTICE scc_test :401 aa :no such nick
-void IrcKernel::raw_401n()
+void OnetKernel::raw_401n()
 {
     if (strDataList.value(3).isEmpty() == true) return;
     if (strDataList.value(4).isEmpty() == true) return;
@@ -2295,7 +2295,7 @@ void IrcKernel::raw_401n()
 }
 
 // :cf1f4.onet 402 Merovingian a :No such server
-void IrcKernel::raw_402()
+void OnetKernel::raw_402()
 {
     if (strDataList.value(3).isEmpty() == true) return;
 
@@ -2307,7 +2307,7 @@ void IrcKernel::raw_402()
 }
 
 // :cf1f1.onet 403 ~testa #^cf1f41568 :Invalid channel name
-void IrcKernel::raw_403()
+void OnetKernel::raw_403()
 {
     if (strDataList.value(3).isEmpty() == true) return;
 
@@ -2320,7 +2320,7 @@ void IrcKernel::raw_403()
 
 // :cf1f1.onet 404 scc_test #Quiz :Cannot send to channel (+m)
 // :cf1f4.onet 404 ~scc_test #lunar :Cannot send to channel (no external messages)
-void IrcKernel::raw_404()
+void OnetKernel::raw_404()
 {
     if (strDataList.value(3).isEmpty() == true) return;
 
@@ -2344,7 +2344,7 @@ void IrcKernel::raw_404()
 }
 
 // :ChanServ!service@service.onet NOTICE scc_test :404 ~zwariowany_zdzich0 :user is not registred
-void IrcKernel::raw_404n()
+void OnetKernel::raw_404n()
 {
     if (strDataList.value(3).isEmpty() == true) return;
     if (strDataList.value(4).isEmpty() == true) return;
@@ -2357,7 +2357,7 @@ void IrcKernel::raw_404n()
 }
 
 // :ChanServ!service@service.onet NOTICE ~test :406 VHOST :unknown command
-void IrcKernel::raw_406n()
+void OnetKernel::raw_406n()
 {
     if (strDataList.value(3).isEmpty() == true) return;
     if (strDataList.value(4).isEmpty() == true) return;
@@ -2370,7 +2370,7 @@ void IrcKernel::raw_406n()
 }
 
 // :ChanServ!service@service.onet NOTICE scc_test :407 VOICE :not enough parameters
-void IrcKernel::raw_407n()
+void OnetKernel::raw_407n()
 {
     if (strDataList.value(3).isEmpty() == true) return;
     if (strDataList.value(4).isEmpty() == true) return;
@@ -2383,7 +2383,7 @@ void IrcKernel::raw_407n()
 }
 
 // :ChanServ!service@service.onet NOTICE scc_test :408 dsfdsf :no such channel
-void IrcKernel::raw_408n()
+void OnetKernel::raw_408n()
 {
     if (strDataList.value(3).isEmpty() == true) return;
     if (strDataList.value(4).isEmpty() == true) return;
@@ -2399,13 +2399,13 @@ void IrcKernel::raw_408n()
 }
 
 // :NickServ!service@service.onet NOTICE ~Merovingian :412 admi :user's data is not ready
-void IrcKernel::raw_412n()
+void OnetKernel::raw_412n()
 {
     // ignore
 }
 
 // :NickServ!service@service.onet NOTICE scc_test :420 aleksa7 :is already on your friend list
-void IrcKernel::raw_420n()
+void OnetKernel::raw_420n()
 {
     if (strDataList.value(3).isEmpty() == true) return;
     if (strDataList.value(4).isEmpty() == true) return;
@@ -2419,7 +2419,7 @@ void IrcKernel::raw_420n()
 
 // :cf1f2.onet 421 ~test VERSION :This command has been disabled.
 // :cf1f4.onet 421 scc_test MOD :Unknown command
-void IrcKernel::raw_421()
+void OnetKernel::raw_421()
 {
     if (strDataList.value(3).isEmpty() == true) return;
 
@@ -2441,7 +2441,7 @@ void IrcKernel::raw_421()
 }
 
 // :NickServ!service@service.onet NOTICE scc_test :421 aaa :is not on your friend list
-void IrcKernel::raw_421n()
+void OnetKernel::raw_421n()
 {
     if (strDataList.value(3).isEmpty() == true) return;
     if (strDataList.value(4).isEmpty() == true) return;
@@ -2454,7 +2454,7 @@ void IrcKernel::raw_421n()
 }
 
 // :NickServ!service@service.onet NOTICE scc_test :430 wilk :is already on your ignore list
-void IrcKernel::raw_430n()
+void OnetKernel::raw_430n()
 {
     if (strDataList.value(3).isEmpty() == true) return;
     if (strDataList.value(4).isEmpty() == true) return;
@@ -2467,7 +2467,7 @@ void IrcKernel::raw_430n()
 }
 
 // :NickServ!service@service.onet NOTICE scc_test :431 a :is not on your ignore list
-void IrcKernel::raw_431n()
+void OnetKernel::raw_431n()
 {
     if (strDataList.value(3).isEmpty() == true) return;
     if (strDataList.value(4).isEmpty() == true) return;
@@ -2483,7 +2483,7 @@ void IrcKernel::raw_431n()
 }
 
 // :cf1f4.onet 432 1501-unknown ~?o? :Erroneous Nickname
-void IrcKernel::raw_432()
+void OnetKernel::raw_432()
 {
     if (strDataList.value(3).isEmpty() == true) return;
 
@@ -2495,7 +2495,7 @@ void IrcKernel::raw_432()
 }
 
 // :cf1f1.onet 433 * scc_test :Nickname is already in use.
-void IrcKernel::raw_433()
+void OnetKernel::raw_433()
 {
     if (strDataList.value(3).isEmpty() == true) return;
 
@@ -2513,7 +2513,7 @@ void IrcKernel::raw_433()
 }
 
 // :NickServ!service@service.onet NOTICE scc_test :440 #scc :is already on your favourite list
-void IrcKernel::raw_440n()
+void OnetKernel::raw_440n()
 {
     if (strDataList.value(3).isEmpty() == true) return;
     if (strDataList.value(4).isEmpty() == true) return;
@@ -2526,7 +2526,7 @@ void IrcKernel::raw_440n()
 }
 
 // :NickServ!service@service.onet NOTICE scc_test :441 #scc :is not on your favourite list
-void IrcKernel::raw_441n()
+void OnetKernel::raw_441n()
 {
     if (strDataList.value(3).isEmpty() == true) return;
     if (strDataList.value(4).isEmpty() == true) return;
@@ -2539,7 +2539,7 @@ void IrcKernel::raw_441n()
 }
 
 // :cf1f4.onet 443 Merovingian scc #Scrabble :is already on channel
-void IrcKernel::raw_443()
+void OnetKernel::raw_443()
 {
     if (strDataList.value(3).isEmpty() == true) return;
     if (strDataList.value(4).isEmpty() == true) return;
@@ -2553,7 +2553,7 @@ void IrcKernel::raw_443()
 }
 
 // :cf1f3.onet 445 ~test :SUMMON has been disabled (depreciated command)
-void IrcKernel::raw_445()
+void OnetKernel::raw_445()
 {
     QString strMessage;
     for (int i = 3; i < strDataList.size(); i++) { if (i != 3) strMessage += " "; strMessage += strDataList[i]; }
@@ -2565,7 +2565,7 @@ void IrcKernel::raw_445()
 }
 
 // :cf1f3.onet 451 SLIST :You have not registered
-void IrcKernel::raw_451()
+void OnetKernel::raw_451()
 {
     QString strCommand = strDataList[2];
 
@@ -2574,7 +2574,7 @@ void IrcKernel::raw_451()
 }
 
 // :ChanServ!service@service.onet NOTICE scc_test :452 #aaa :channel name already in use
-void IrcKernel::raw_452n()
+void OnetKernel::raw_452n()
 {
     if (strDataList.value(3).isEmpty() == true) return;
     if (strDataList.value(4).isEmpty() == true) return;
@@ -2589,7 +2589,7 @@ void IrcKernel::raw_452n()
 }
 
 // :ChanServ!service@service.onet NOTICE scc_test :454 #aaaaaaaaaaaaaaaaaaaaaa :not enough unique channel name
-void IrcKernel::raw_454n()
+void OnetKernel::raw_454n()
 {
     if (strDataList.value(3).isEmpty() == true) return;
     if (strDataList.value(4).isEmpty() == true) return;
@@ -2604,7 +2604,7 @@ void IrcKernel::raw_454n()
 }
 
 // :ChanServ!service@service.onet NOTICE scc_test :458 #scc v scc :unable to remove non-existent privilege
-void IrcKernel::raw_458n()
+void OnetKernel::raw_458n()
 {
     if (strDataList.value(3).isEmpty() == true) return;
     if (strDataList.value(4).isEmpty() == true) return;
@@ -2619,7 +2619,7 @@ void IrcKernel::raw_458n()
 }
 
 // :ChanServ!service@service.onet NOTICE scc_test :459 #scc b test :channel privilege already given
-void IrcKernel::raw_459n()
+void OnetKernel::raw_459n()
 {
     if (strDataList.value(3).isEmpty() == true) return;
     if (strDataList.value(4).isEmpty() == true) return;
@@ -2634,7 +2634,7 @@ void IrcKernel::raw_459n()
 }
 
 // :cf1f2.onet 461 ~test OPER :Not enough parameters.
-void IrcKernel::raw_461()
+void OnetKernel::raw_461()
 {
     if (strDataList.value(3).isEmpty() == true) return;
 
@@ -2646,7 +2646,7 @@ void IrcKernel::raw_461()
 }
 
 // :ChanServ!service@service.onet NOTICE scc_test :461 #scc scc :channel operators cannot be banned
-void IrcKernel::raw_461n()
+void OnetKernel::raw_461n()
 {
     if (strDataList.value(3).isEmpty() == true) return;
     if (strDataList.value(4).isEmpty() == true) return;
@@ -2660,7 +2660,7 @@ void IrcKernel::raw_461n()
 }
 
 // :ChanServ!service@service.onet NOTICE scc_test :463 #lunar AUDITORIUM :permission denied, insufficient privileges
-void IrcKernel::raw_463n()
+void OnetKernel::raw_463n()
 {
     if (strDataList.value(3).isEmpty() == true) return;
     if (strDataList.value(4).isEmpty() == true) return;
@@ -2673,7 +2673,7 @@ void IrcKernel::raw_463n()
 }
 
 // :ChanServ!service@service.onet NOTICE Merovingian :464 TOPIC :invalid argument
-void IrcKernel::raw_464n()
+void OnetKernel::raw_464n()
 {
     if (strDataList.value(3).isEmpty() == true) return;
     if (strDataList.value(4).isEmpty() == true) return;
@@ -2685,7 +2685,7 @@ void IrcKernel::raw_464n()
 }
 
 // :ChanServ!service@service.onet NOTICE scc_test :467 #scc :permission denied, you are not a channel owner
-void IrcKernel::raw_467n()
+void OnetKernel::raw_467n()
 {
     if (strDataList.value(3).isEmpty() == true) return;
     if (strDataList.value(4).isEmpty() == true) return;
@@ -2700,7 +2700,7 @@ void IrcKernel::raw_467n()
 }
 
 // :ChanServ!service@service.onet NOTICE scc_test :468 #scc :permission denied, insufficient privileges
-void IrcKernel::raw_468n()
+void OnetKernel::raw_468n()
 {
     if (strDataList.value(3).isEmpty() == true) return;
     if (strDataList.value(4).isEmpty() == true) return;
@@ -2712,7 +2712,7 @@ void IrcKernel::raw_468n()
 }
 
 // :cf1f3.onet 470 ~Merovingian :#testy has become full, so you are automatically being transferred to the linked channel #Awaria
-void IrcKernel::raw_470()
+void OnetKernel::raw_470()
 {
     if (strDataList.value(3).isEmpty() == true) return;
 
@@ -2727,7 +2727,7 @@ void IrcKernel::raw_470()
 }
 
 // :cf1f2.onet 471 ~Merovingian #testy :Cannot join channel (Channel is full)
-void IrcKernel::raw_471()
+void OnetKernel::raw_471()
 {
     if (strDataList.value(3).isEmpty() == true) return;
 
@@ -2738,14 +2738,14 @@ void IrcKernel::raw_471()
 }
 
 // :ChanServ!service@service.onet NOTICE scc_test :472 #aaaaaaaaaaaaaaaaaaaaaaaaaaaaa :wait 60 seconds before next REGISTER
-void IrcKernel::raw_472n()
+void OnetKernel::raw_472n()
 {
     QString strMessage = QString(tr("* Wait 60 seconds before creating next channel"));
     tabc->show_msg_active(strMessage, 7);
 }
 
 // :cf1f3.onet 473 ~scc_test #lunar :Cannot join channel (Invite only)
-void IrcKernel::raw_473()
+void OnetKernel::raw_473()
 {
     if (strDataList.value(3).isEmpty() == true) return;
 
@@ -2756,7 +2756,7 @@ void IrcKernel::raw_473()
 }
 
 // :cf1f3.onet 474 ~scc_test #Quiz :Cannot join channel (You're banned)
-void IrcKernel::raw_474()
+void OnetKernel::raw_474()
 {
     if (strDataList.value(3).isEmpty() == true) return;
 
@@ -2767,7 +2767,7 @@ void IrcKernel::raw_474()
 }
 
 // :cf1f4.onet 475 Merovingian #glupia_nazwa :Cannot join channel (Incorrect channel key)
-void IrcKernel::raw_475()
+void OnetKernel::raw_475()
 {
     if (strDataList.value(3).isEmpty() == true) return;
 
@@ -2780,14 +2780,14 @@ void IrcKernel::raw_475()
 }
 
 // :cf1f4.onet 481 Merovingian :Permission Denied - You do not have the required operator privileges
-void IrcKernel::raw_481()
+void OnetKernel::raw_481()
 {
     QString strMessage = QString(tr("* Permission Denied - You do not have the required operator privileges"));
     tabc->show_msg_active(strMessage, 7);
 }
 
 // :cf1f1.onet 482 Merovingian #Scrabble :Only a u-line may kick a u-line from a channel.
-void IrcKernel::raw_482()
+void OnetKernel::raw_482()
 {
     if (strDataList.value(3).isEmpty() == true) return;
 
@@ -2799,7 +2799,7 @@ void IrcKernel::raw_482()
 
 // :cf1f4.onet 484 Merovingian #testy :Can't kick user advocato000 from channel (+Q set)
 // :cf1f4.onet 484 scc_test #scc :Can't kick scc as your spells are not good enough
-void IrcKernel::raw_484()
+void OnetKernel::raw_484()
 {
     if (strDataList.value(3).isEmpty() == true) return;
     if (strDataList.value(4).isEmpty() == true) return;
@@ -2817,7 +2817,7 @@ void IrcKernel::raw_484()
 }
 
 // :cf1f3.onet 491 ~test :Invalid oper credentials
-void IrcKernel::raw_491()
+void OnetKernel::raw_491()
 {
     QString strMessage = QString(tr("* Invalid oper credentials"));
 
@@ -2825,7 +2825,7 @@ void IrcKernel::raw_491()
 }
 
 //:cf1f2.onet 530 Merovingian #f :Only IRC operators may create new channels
-void IrcKernel::raw_530()
+void OnetKernel::raw_530()
 {
     if (strDataList.value(3).isEmpty() == true) return;
 
@@ -2836,7 +2836,7 @@ void IrcKernel::raw_530()
 }
 
 // :cf1f4.onet 600 scc_test Radowsky 16172032 690A6F.A8219B.7F5EC1.35E57C 1267055769 :arrived online
-void IrcKernel::raw_600()
+void OnetKernel::raw_600()
 {
     if (strDataList.value(3).isEmpty() == true) return;
 
@@ -2849,7 +2849,7 @@ void IrcKernel::raw_600()
 }
 
 // :cf1f4.onet 601 scc_test Radowsky 16172032 690A6F.A8219B.7F5EC1.35E57C 1267055692 :went offline
-void IrcKernel::raw_601()
+void OnetKernel::raw_601()
 {
     if (strDataList.value(3).isEmpty() == true) return;
 
@@ -2862,7 +2862,7 @@ void IrcKernel::raw_601()
 }
 
 // :cf1f3.onet 602 scc_test aaa * * 0 :stopped watching
-void IrcKernel::raw_602()
+void OnetKernel::raw_602()
 {
     if (strDataList.value(3).isEmpty() == true) return;
 
@@ -2872,7 +2872,7 @@ void IrcKernel::raw_602()
 }
 
 //:cf1f1.onet 604 scc_test scc_test 51976824 3DE379.B7103A.6CF799.6902F4 1267054441 :is online
-void IrcKernel::raw_604()
+void OnetKernel::raw_604()
 {
     if (strDataList.value(3).isEmpty() == true) return;
 
@@ -2885,7 +2885,7 @@ void IrcKernel::raw_604()
 }
 
 // :cf1f1.onet 605 scc_test Radowsky * * 0 :is offline
-void IrcKernel::raw_605()
+void OnetKernel::raw_605()
 {
     if (strDataList.value(3).isEmpty() == true) return;
 
@@ -2898,7 +2898,7 @@ void IrcKernel::raw_605()
 }
 
 // :cf1f1.onet 666 ~test :You cannot identify as a server, you are a USER. IRC Operators informed.
-void IrcKernel::raw_666()
+void OnetKernel::raw_666()
 {
     QString strMessage = QString(tr("* You cannot identify as a server, you are a USER. IRC Operators informed."));
 
@@ -2906,7 +2906,7 @@ void IrcKernel::raw_666()
 }
 
 //:cf1f3.onet 801 scc_test :q5VMy1wl6hKL5ZUt
-void IrcKernel::raw_801()
+void OnetKernel::raw_801()
 {
     if (strDataList.value(3).isEmpty() == true) return;
 
@@ -2914,9 +2914,9 @@ void IrcKernel::raw_801()
     if (strKey[0] == ':')
         strKey = strKey.right(strKey.length()-1);
 
-    IrcAuth *pIrc_auth = new IrcAuth(settings, tabc);
-    QString strAuth = pIrc_auth->transform_key(strKey);
-    delete pIrc_auth;
+    OnetAuth *pOnet_auth = new OnetAuth(settings, tabc);
+    QString strAuth = pOnet_auth->transform_key(strKey);
+    delete pOnet_auth;
 
     if (strAuth.length() == 16)
     {
@@ -2931,14 +2931,14 @@ void IrcKernel::raw_801()
 }
 
 // :cf1f1.onet 802 * :Corrupted Nickname
-void IrcKernel::raw_802()
+void OnetKernel::raw_802()
 {
     QString strMessage = QString(tr("* Corrupted Nickname"));
     tabc->show_msg_active(strMessage, 9);
 }
 
 // :cf1f2.onet 807 scc_test :You are marked as busy
-void IrcKernel::raw_807()
+void OnetKernel::raw_807()
 {
     settings->setValue("busy", "on");
 
@@ -2947,7 +2947,7 @@ void IrcKernel::raw_807()
 }
 
 // :cf1f2.onet 808 scc_test :You are no longer marked busy
-void IrcKernel::raw_808()
+void OnetKernel::raw_808()
 {
     settings->setValue("busy", "off");
 
@@ -2956,7 +2956,7 @@ void IrcKernel::raw_808()
 }
 
 // :cf1f2.onet 809 scc_test Succubi :is busy
-void IrcKernel::raw_809()
+void OnetKernel::raw_809()
 {
     if (strDataList.value(3).isEmpty() == true) return;
 
@@ -2967,7 +2967,7 @@ void IrcKernel::raw_809()
 }
 
 // :cf1f2.onet 811 scc_test Merovingian :Ignore invites
-void IrcKernel::raw_811()
+void OnetKernel::raw_811()
 {
     if (strDataList.value(3).isEmpty() == true) return;
 
@@ -2978,7 +2978,7 @@ void IrcKernel::raw_811()
 }
 
 // :cf1f2.onet 812 scc_test Merovingian ^cf1f41284615 :Invite rejected
-void IrcKernel::raw_812()
+void OnetKernel::raw_812()
 {
     if (strDataList.value(3).isEmpty() == true) return;
 
@@ -2989,7 +2989,7 @@ void IrcKernel::raw_812()
 }
 
 // :cf1f4.onet 815 ~test testnick :Public webcam
-void IrcKernel::raw_815()
+void OnetKernel::raw_815()
 {
     if (strDataList.value(3).isEmpty() == true) return;
 
@@ -3000,7 +3000,7 @@ void IrcKernel::raw_815()
 }
 
 // :cf1f2.onet 817 scc_test #scc 1253216797 mikefear - :%Fb:arial%%Ce40f0f%re
-void IrcKernel::raw_817()
+void OnetKernel::raw_817()
 {
     if (strDataList.value(3).isEmpty() == true) return;
     if (strDataList.value(4).isEmpty() == true) return;
@@ -3020,13 +3020,13 @@ void IrcKernel::raw_817()
 }
 
 // :cf1f3.onet 818 scc_test :Start of simple channels list.
-void IrcKernel::raw_818()
+void OnetKernel::raw_818()
 {
     dlgchannel_list->clear();
 }
 
 // :cf1f3.onet 819 scc_test :#tarnów_dziki:g:1,#Żory:g:0,#Mława:O:0,#Lineage_II:_:1,#kakakak:O:0,#apostolat_yfl:_:0,#ITALIA_CLUB:i:23,#Finał_WOŚP:P:0,#sama_słodycz:O:0,#Suwałki:i:14,#Mamuśki:O:0,#Pokój_Radości:O:0,#Antwerpia:g:0,#Kolo_Gospodyn_Wiejskich:O:0,#Samotnia_Kurka:G:0,#Wszystko_o_grach:O:0,#VIPy_NowySącz:h:0,#tymczasowy:G:0,#Zielona_Góra:h:2,#45slonko:P:0,#kawalek_nieba:O:0,#Wirtualna_Przyjazn:a:11,#Magiczny_swiat:O:1,#herbatka_u_cynamonki:P:0,#DEUTSCHLAND:i:111,#informatyka:`:1
-void IrcKernel::raw_819()
+void OnetKernel::raw_819()
 {
     QString strChannelsString;
     for (int i = 3; i < strDataList.size(); i++) { if (i != 3) strChannelsString += " "; strChannelsString += strDataList[i]; }
@@ -3109,13 +3109,13 @@ void IrcKernel::raw_819()
 }
 
 // :cf1f3.onet 820 scc_test :End of simple channel list.
-void IrcKernel::raw_820()
+void OnetKernel::raw_820()
 {
     dlgchannel_list->sort();
 }
 
 // :cf1f3.onet 821 scc_test #scc :Channel is not moderated
-void IrcKernel::raw_821()
+void OnetKernel::raw_821()
 {
     if (strDataList.value(3).isEmpty() == true) return;
 
@@ -3126,7 +3126,7 @@ void IrcKernel::raw_821()
 }
 
 // :cf1f1.onet 951 scc_test scc_test :Added test!*@* <privatemessages,channelmessages,invites> to silence list
-void IrcKernel::raw_951()
+void OnetKernel::raw_951()
 {
     if (strDataList.value(3).isEmpty() == true) return;
     if (strDataList.value(4).isEmpty() == true) return;
@@ -3138,7 +3138,7 @@ void IrcKernel::raw_951()
     tabc->show_msg_active(strMessage, 7);
 }
 
-QString IrcKernel::get_settings_key(QString strFind)
+QString OnetKernel::get_settings_key(QString strFind)
 {
     QStringList keys = settings->allKeys();
     for (int i = 0; i < keys.count(); i++)

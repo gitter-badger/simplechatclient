@@ -75,7 +75,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
 // settings
     settings.clear();
-    settings.setValue("version", "1.0.7.384");
+    settings.setValue("version", "1.0.7.385");
     settings.setValue("debug", "off");
     settings.setValue("logged", "off");
     settings.setValue("busy", "off");
@@ -117,8 +117,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     pDlg_friends = new DlgFriends(this, pNetwork, &settings, pTabC, &mNickAvatar);
     pDlg_ignore = new DlgIgnore(this, pNetwork, &settings, pTabC, &mNickAvatar);
 
-    pIrc_kernel = new IrcKernel(this, pNetwork, &settings, pTabC, &mNickAvatar, &mChannelAvatar, pDlg_channel_settings, pDlg_channel_homes, pDlg_channel_list, pDlg_channel_favourites, pDlg_friends, pDlg_ignore, pDlg_moderation);
-    pIrc_auth = new IrcAuth(&settings, pTabC);
+    pOnet_kernel = new OnetKernel(this, pNetwork, &settings, pTabC, &mNickAvatar, &mChannelAvatar, pDlg_channel_settings, pDlg_channel_homes, pDlg_channel_list, pDlg_channel_favourites, pDlg_friends, pDlg_ignore, pDlg_moderation);
+    pOnet_auth = new OnetAuth(&settings, pTabC);
 
     pTabC->set_dlg(pDlg_channel_settings, pDlg_moderation);
 
@@ -189,14 +189,14 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     QObject::connect(closeAct, SIGNAL(triggered()), this, SLOT(button_close()));
     QObject::connect(pTabM, SIGNAL(tabCloseRequested(int)), this, SLOT(tab_close_requested(int)));
     QObject::connect(pDlg_moderation, SIGNAL(display_msg(QString,QString,int)), pTabC, SLOT(sshow_msg(QString,QString,int)));
-    QObject::connect(pIrc_kernel, SIGNAL(set_statusbar(QString)), this, SLOT(set_statusbar(QString)));
+    QObject::connect(pOnet_kernel, SIGNAL(set_statusbar(QString)), this, SLOT(set_statusbar(QString)));
 
     QObject::connect(pDlg_moderation, SIGNAL(send(QString)), pNetwork, SLOT(send_slot(QString)));
     QObject::connect(pDlg_channel_list, SIGNAL(send(QString)), pNetwork, SLOT(send_slot(QString)));
-    QObject::connect(pIrc_auth, SIGNAL(send(QString)), pNetwork, SLOT(send_slot(QString)));
+    QObject::connect(pOnet_auth, SIGNAL(send(QString)), pNetwork, SLOT(send_slot(QString)));
 
-    QObject::connect(this, SIGNAL(do_kernel(QString)), pIrc_kernel, SLOT(kernel(QString)));
-    QObject::connect(this, SIGNAL(do_request_uo(QString, QString, QString)), pIrc_auth, SLOT(request_uo(QString, QString, QString)));
+    QObject::connect(this, SIGNAL(do_kernel(QString)), pOnet_kernel, SLOT(kernel(QString)));
+    QObject::connect(this, SIGNAL(do_request_uo(QString, QString, QString)), pOnet_auth, SLOT(request_uo(QString, QString, QString)));
 
 // tray
     trayMenu = new QMenu();
@@ -227,8 +227,8 @@ MainWindow::~MainWindow()
     delete trayIcon;
     delete trayMenu;
     delete lLag;
-    delete pIrc_auth;
-    delete pIrc_kernel;
+    delete pOnet_auth;
+    delete pOnet_kernel;
     delete pDlg_ignore;
     delete pDlg_friends;
     delete pDlg_channel_favourites;

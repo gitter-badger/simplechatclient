@@ -942,7 +942,7 @@
     </message>
 </context>
 <context>
-    <name>IrcAuth</name>
+    <name>OnetAuth</name>
     <message>
         <source>Error: Authentication error [onet.pl servers are not available]</source>
         <translation>Error: Błąd autoryzacji [Serwery onet.pl nie są dostępne]</translation>
@@ -961,7 +961,7 @@
     </message>
 </context>
 <context>
-    <name>IrcKernel</name>
+    <name>OnetKernel</name>
     <message>
         <source>* %1 [%2@%3] has joined %4</source>
         <translation>* %1 [%2@%3] wszedł do kanału %4</translation>
