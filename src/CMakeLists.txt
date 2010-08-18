@@ -75,7 +75,6 @@ set (scc_MOC_HDRS
 	common/commands.h
 	common/config.h
 	common/crypt.h
-	core/debug.h
 	gui/dlg_about.h
 	gui/dlg_cam.h
 	gui/dlg_channel_favourites.h
