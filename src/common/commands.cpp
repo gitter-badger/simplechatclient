@@ -191,27 +191,27 @@ QString Commands::cmd_help()
 {
     QString strResult;
 
-    strResult = (tr("* Available commands:")+"<br>");
-    strResult.append(tr("/cycle or /hop")+"<br>");
-    strResult.append(tr("/me [text]")+"<br>");
-    strResult.append(tr("/topic [text]")+"<br>");
-    strResult.append(tr("/join [channel] [key] or /j [channel] [key]")+"<br>");
-    strResult.append(tr("/part or /p")+"<br>");
-    strResult.append(tr("/priv [nick]")+"<br>");
-    strResult.append(tr("/ignore [[+|-]nick]")+"<br>");
-    strResult.append(tr("/friend [[+|-]nick]")+"<br>");
-    strResult.append(tr("/whereis [nick] or /whois [nick] or /wi [nick] or /wii [nick]")+"<br>");
-    strResult.append(tr("/busy")+"<br>");
-    strResult.append(tr("/away [text]")+"<br>");
-    strResult.append(tr("/invite [nick]")+"<br>");
-    strResult.append(tr("/logout or /quit or /q")+"<br>");
-    strResult.append(tr("/kick [nick] [reason]")+"<br>");
-    strResult.append(tr("/ban [[+|-]nick]")+"<br>");
-    strResult.append(tr("/sop [[+|-]nick]")+"<br>");
-    strResult.append(tr("/op [[+|-]nick]")+"<br>");
-    strResult.append(tr("/moder [[+|-]nick] or /moderator [[+|-]nick]")+"<br>");
-    strResult.append(tr("/vip [[+|-]nick]")+"<br>");
-    strResult.append(tr("/help")+"<br>");
+    strResult = (tr("* Available commands:")+";");
+    strResult.append(tr("/cycle or /hop")+";");
+    strResult.append(tr("/me [text]")+";");
+    strResult.append(tr("/topic [text]")+";");
+    strResult.append(tr("/join [channel] [key] or /j [channel] [key]")+";");
+    strResult.append(tr("/part or /p")+";");
+    strResult.append(tr("/priv [nick]")+";");
+    strResult.append(tr("/ignore [[+|-]nick]")+";");
+    strResult.append(tr("/friend [[+|-]nick]")+";");
+    strResult.append(tr("/whereis [nick] or /whois [nick] or /wi [nick] or /wii [nick]")+";");
+    strResult.append(tr("/busy")+";");
+    strResult.append(tr("/away [text]")+";");
+    strResult.append(tr("/invite [nick]")+";");
+    strResult.append(tr("/logout or /quit or /q")+";");
+    strResult.append(tr("/kick [nick] [reason]")+";");
+    strResult.append(tr("/ban [[+|-]nick]")+";");
+    strResult.append(tr("/sop [[+|-]nick]")+";");
+    strResult.append(tr("/op [[+|-]nick]")+";");
+    strResult.append(tr("/moder [[+|-]nick] or /moderator [[+|-]nick]")+";");
+    strResult.append(tr("/vip [[+|-]nick]")+";");
+    strResult.append(tr("/help"));
 
     return strResult;
 }

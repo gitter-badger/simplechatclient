@@ -1350,7 +1350,11 @@ void TabWidget::send_message(bool bType)
             delete pCommands;
 
             if ((strTextList[0] == "help") || (strTextList[0] == "pomoc"))
-                display_msg(strText, 7);
+            {
+                QStringList slHelp = strText.split(";");
+                for (int i = 0; i < slHelp.count(); i++)
+                    display_msg(slHelp.at(i), 7);
+            }
             else if (strTextList[0] == "me")
             {
                 if (strTextOriginal.length() > 3)
