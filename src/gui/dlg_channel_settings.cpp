@@ -184,6 +184,8 @@ void DlgChannelSettings::add_invite(QString strNick, QString strWho, QString str
 
 void DlgChannelSettings::add_cat(int iCatMajor, int iCatMinor)
 {
+    Q_UNUSED (iCatMinor);
+
     if (iCatMajor == 1) // teen
         ui.comboBox_category->setCurrentIndex(0);
     else if (iCatMajor == 2) // towarzyskie

@@ -751,36 +751,48 @@ void DlgChannelList::apply_checkboxes()
 
 void DlgChannelList::all_CellDoubleClicked(int row, int column)
 {
+    Q_UNUSED (column);
+
     QString strChannel = ui.tableWidget_all->item(row, 0)->text();
     emit send(QString("JOIN %1").arg(strChannel));
 }
 
 void DlgChannelList::teen_CellDoubleClicked(int row, int column)
 {
+    Q_UNUSED (column);
+
     QString strChannel = ui.tableWidget_teen->item(row, 0)->text();
     emit send(QString("JOIN %1").arg(strChannel));
 }
 
 void DlgChannelList::common_CellDoubleClicked(int row, int column)
 {
+    Q_UNUSED (column);
+
     QString strChannel = ui.tableWidget_common->item(row, 0)->text();
     emit send(QString("JOIN %1").arg(strChannel));
 }
 
 void DlgChannelList::erotic_CellDoubleClicked(int row, int column)
 {
+    Q_UNUSED (column);
+
     QString strChannel = ui.tableWidget_erotic->item(row, 0)->text();
     emit send(QString("JOIN %1").arg(strChannel));
 }
 
 void DlgChannelList::thematic_CellDoubleClicked(int row, int column)
 {
+    Q_UNUSED (column);
+
     QString strChannel = ui.tableWidget_thematic->item(row, 0)->text();
     emit send(QString("JOIN %1").arg(strChannel));
 }
 
 void DlgChannelList::regional_CellDoubleClicked(int row, int column)
 {
+    Q_UNUSED (column);
+
     QString strChannel = ui.tableWidget_regional->item(row, 0)->text();
     emit send(QString("JOIN %1").arg(strChannel));
 }
@@ -991,6 +1003,8 @@ void DlgChannelList::showEvent(QShowEvent *event)
 
 void DlgChannelList::resizeEvent(QResizeEvent *event)
 {
+    Q_UNUSED (event);
+
     ui.verticalLayoutWidget->setGeometry(QRect(0,0,this->width(), this->height()));
     ui.tabWidget->setGeometry(QRect(1,117,this->width()-1, this->height()-117-35));
     ui.tableWidget_all->setGeometry(QRect(0,0,this->width()-10, this->height()-170));

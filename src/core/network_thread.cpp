@@ -166,7 +166,7 @@ void NetworkThread::send_data(QString strData)
         strData += "\r\n";
         QByteArray qbaData;
         for ( int i = 0; i < strData.size(); i++)
-            qbaData.insert(i, strData.at(i));
+            qbaData.insert(i, strData.at(i).toAscii());
 
         if (socket->write(qbaData) == -1)
         {
@@ -310,6 +310,8 @@ void NetworkThread::disconnected()
 
 void NetworkThread::error(QAbstractSocket::SocketError err)
 {
+    Q_UNUSED (err);
+
     connectAct->setText(tr("&Connect"));
     connectAct->setIconText(tr("&Connect"));
 

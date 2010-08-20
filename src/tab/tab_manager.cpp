@@ -43,6 +43,8 @@ TabManager::~TabManager()
 
 void TabManager::close_requested(int index)
 {
+    Q_UNUSED (index);
+
     // remove from tab
     //tab->removeTab(index);
 

@@ -48,5 +48,4 @@ if (UNIX AND NOT APPLE)
 	install (FILES ${scc_INSTALL_SOUNDS_FILES} DESTINATION ${scc_INSTALL_DIR}/scc/3rdparty/sounds)
 	install (FILES ${scc_INSTALL_3RDPARTY_LICENSE} DESTINATION ${scc_INSTALL_DIR}/scc/3rdparty)
 
-
 endif (UNIX AND NOT APPLE)

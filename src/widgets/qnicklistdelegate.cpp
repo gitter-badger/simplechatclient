@@ -22,6 +22,7 @@
 
 NicklistDelegate::NicklistDelegate(QObject *parent)
 {
+    Q_UNUSED (parent);
 }
 
 NicklistDelegate::~NicklistDelegate()
@@ -173,6 +174,9 @@ void NicklistDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opti
 
 QSize NicklistDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
+    Q_UNUSED (option);
+    Q_UNUSED (index);
+
     Config *pConfig = new Config();
     QString strStyle = pConfig->get_value("style");
     delete pConfig;

@@ -66,7 +66,7 @@ void DlgCam::network_send(QString strData)
         strData += "\r\n";
         QByteArray qbaData;
         for ( int i = 0; i < strData.size(); i++)
-            qbaData.insert(i, strData.at(i));
+            qbaData.insert(i, strData.at(i).toAscii());
 
         if (socket->write(qbaData) == -1)
         {
@@ -362,6 +362,8 @@ void DlgCam::network_disconnected()
 
 void DlgCam::error(QAbstractSocket::SocketError err)
 {
+    Q_UNUSED (err);
+
     ui.label_img->setText(QString(tr("Disconnected from server [%1]")).arg(socket->errorString()));
 
     if (socket->state() == QAbstractSocket::ConnectedState)

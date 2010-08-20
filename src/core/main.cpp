@@ -84,42 +84,56 @@ void crashHandler()
 
 static void got_bus(int z)
 {
+    Q_UNUSED (z);
+
     saveMessage("debug", "error: SIGBUS: BUS ERROR -- CRASHING!");
     crashHandler();
 }
 
 static void got_segv(int z)
 {
+    Q_UNUSED (z);
+
     saveMessage("debug", "error: SIGSEGV: SEGMENT VIOLATION -- CRASHING!");
     crashHandler();
 }
 
 static void got_fpe(int z)
 {
+    Q_UNUSED (z);
+
     saveMessage("debug", "error: SIGFPE: FLOATING POINT ERROR -- CRASHING!");
     crashHandler();
 }
 
 static void got_term(int z)
 {
+    Q_UNUSED (z);
+
     saveMessage("debug", "error: SIGTERM: TERMINATE SIGNAL -- SIGNING OFF!");
     crashHandler();
 }
 
 static void got_hup(int z)
 {
+    Q_UNUSED (z);
+
     saveMessage("debug", "error: SIGHUP: HANGUP SIGNAL -- SIGNING OFF!");
     crashHandler();
 }
 
 static void got_ill(int z)
 {
+    Q_UNUSED (z);
+
     saveMessage("debug", "error: SIGILL: ILL SIGNAL -- SIGNING OFF!");
     crashHandler();
 }
 
 static void got_abrt(int z)
 {
+    Q_UNUSED (z);
+
     saveMessage("debug", "error: SIGABRT: ABRT SIGNAL -- SIGNING OFF!");
     crashHandler();
 }

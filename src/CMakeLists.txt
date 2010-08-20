@@ -124,19 +124,31 @@ if (UNIX)
 	set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -ggdb")
 endif (UNIX)
 
-# qt qtnetwork
+# qt
+find_package (Qt4 REQUIRED)
+
+# xml
+set (QT_USE_QTXML TRUE)
+
+# webkit
+set (QT_USE_QTWEBKIT TRUE)
+
+# rest
+include (${QT_USE_FILE})
+
+# include qt qtnetwork
 include_directories (
 	${QT_INCLUDE_DIR}
 	${QT_QTNETWORK_INCLUDE_DIR}
-	avatars
-	common
-	core
-	gui
-	notify
-	onet
-	tab
-	widgets
-	.
+	${CMAKE_CURRENT_SOURCE_DIR}
+	${CMAKE_CURRENT_SOURCE_DIR}/avatars
+	${CMAKE_CURRENT_SOURCE_DIR}/common
+	${CMAKE_CURRENT_SOURCE_DIR}/core
+	${CMAKE_CURRENT_SOURCE_DIR}/gui
+	${CMAKE_CURRENT_SOURCE_DIR}/notify
+	${CMAKE_CURRENT_SOURCE_DIR}/onet
+	${CMAKE_CURRENT_SOURCE_DIR}/tab
+	${CMAKE_CURRENT_SOURCE_DIR}/widgets
 )
 
 # qca2
@@ -172,18 +184,13 @@ endif (WIN32)
 include_directories (${PHONON_INCLUDE_DIRS})
 link_directories (${PHONON_LIBRARY_DIRS})
 
-# xml
-set (QT_USE_QTXML TRUE)
-
-# webkit
-set(QT_USE_QTWEBKIT TRUE)
-
 # resources
 set (scc_QRC ../scc.qrc)
 qt4_add_resources (scc_QRC_SRCS ${scc_QRC})
 
 # ui
-QT4_WRAP_UI (scc_UIS_H ${scc_UIS})
+qt4_wrap_ui (scc_UIS_H ${scc_UIS})
+
 include_directories (${CMAKE_SOURCE_DIR}/ui)
 
 # disable console on windows
@@ -191,17 +198,17 @@ if (MINGW)
 	SET (CMAKE_CXX_LINK_FLAGS "${CMAKE_CXX_LINK_FLAGS} -mwindows")
 endif (MINGW)
 
-# rest
-include (${QT_USE_FILE})
-
+# moc
 qt_wrap_cpp (scc MOC_FILES ${scc_MOC_HDRS})
 
-if (MSVC)
+# link
+if (MSVC) # windows
 	add_executable (../scc WIN32 ${scc_SRCS} ${MOC_FILES} ${scc_HDRS} ${scc_QRC_SRCS} ${scc_UIS_H})
-else (MSVC)
+else (MSVC) #linux
 	add_executable (../scc ${scc_SRCS} ${MOC_FILES} ${scc_HDRS} ${scc_QRC_SRCS} ${scc_UIS_H})
 endif (MSVC)
 
 target_link_libraries (../scc ${QT_LIBRARIES} ${QT_QTNETWORK_LIBRARIES} ${QCA2_LIBRARIES} ${PHONON_LIBRARIES})
 
+# i18n
 add_dependencies (../scc i18n)
