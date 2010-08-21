@@ -34,9 +34,11 @@ DlgFriends::DlgFriends(QWidget *parent, Network *param1, QSettings *param2, TabC
 
     ui.pushButton_add->setText(tr("Add"));
     ui.pushButton_remove->setText(tr("Remove"));
+    ui.pushButton_whois->setText(tr("Whois"));
 
     QObject::connect(ui.pushButton_add, SIGNAL(clicked()), this, SLOT(button_add()));
     QObject::connect(ui.pushButton_remove, SIGNAL(clicked()), this, SLOT(button_remove()));
+    QObject::connect(ui.pushButton_whois, SIGNAL(clicked()), this, SLOT(button_whois()));
     QObject::connect(ui.buttonBox, SIGNAL(accepted()), this, SLOT(button_ok()));
     QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(button_cancel()));
 }
@@ -108,6 +110,24 @@ void DlgFriends::button_remove()
     }
 
     (new DlgFriendsAd(myparent, pNetwork, settings, tabc, "remove", strSelected))->show();
+}
+
+void DlgFriends::button_whois()
+{
+    QString strSelected;
+    if (ui.tabWidget->currentIndex() == 0)
+    {
+        if (ui.listWidget_online->selectedItems().count() != 0)
+            strSelected = ui.listWidget_online->selectedItems().at(0)->text();
+    }
+    else if (ui.tabWidget->currentIndex() == 1)
+    {
+        if (ui.listWidget_offline->selectedItems().count() != 0)
+            strSelected = ui.listWidget_offline->selectedItems().at(0)->text();
+    }
+
+    if (strSelected.isEmpty() == false)
+        pNetwork->send(QString("WHOIS %1 :%1").arg(strSelected));
 }
 
 void DlgFriends::button_ok()

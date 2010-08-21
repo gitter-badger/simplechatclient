@@ -578,6 +578,10 @@
         <source>Remove</source>
         <translation>Usuń</translation>
     </message>
+    <message>
+        <source>Whois</source>
+        <translation>Whois</translation>
+    </message>
 </context>
 <context>
     <name>DlgFriendsAd</name>

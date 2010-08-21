@@ -50,6 +50,7 @@ private:
 private slots:
     void button_add();
     void button_remove();
+    void button_whois();
     void button_ok();
     void button_cancel();
 
