@@ -56,22 +56,12 @@ void DlgInvite::button_whois()
 void DlgInvite::button_reject()
 {
     pNetwork->send(QString("INVREJECT %1 %2").arg(strNick).arg(strChannel));
-
-    ui.pushButton_whois->QObject::disconnect();
-    ui.pushButton_accept->QObject::disconnect();
-    ui.pushButton_ignore->QObject::disconnect();
-    ui.pushButton_reject->QObject::disconnect();
     this->close();
 }
 
 void DlgInvite::button_ignore()
 {
     pNetwork->send(QString("INVIGNORE %1 %2").arg(strNick).arg(strChannel));
-
-    ui.pushButton_whois->QObject::disconnect();
-    ui.pushButton_accept->QObject::disconnect();
-    ui.pushButton_ignore->QObject::disconnect();
-    ui.pushButton_reject->QObject::disconnect();
     this->close();
 }
 
@@ -87,10 +77,7 @@ void DlgInvite::button_accept()
         QTimer::singleShot(1000*3, this, SLOT(timer_timeout()));
     }
 
-    ui.pushButton_whois->QObject::disconnect();
-    ui.pushButton_accept->QObject::disconnect();
-    ui.pushButton_ignore->QObject::disconnect();
-    ui.pushButton_reject->QObject::disconnect();
+// close
     this->close();
 }
 
