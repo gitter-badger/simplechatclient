@@ -18,23 +18,26 @@
  *                                                                          *
  ****************************************************************************/
 
-#ifndef QNICKLISTDELEGATE_H
-#define QNICKLISTDELEGATE_H
+#ifndef NOTIFY_H
+#define NOTIFY_H
 
-#include <QPainter>
-#include <QAbstractItemDelegate>
-#include "config.h"
+#include <Phonon/AudioOutput>
+#include <Phonon/MediaObject>
+#include <QCoreApplication>
+#include <QObject>
 
-class NicklistDelegate : public QAbstractItemDelegate
+class Notify : public QObject
 {
     Q_OBJECT
 public:
-    NicklistDelegate(QObject *parent = 0);
-    ~NicklistDelegate();
+    Notify();
+    ~Notify();
+    void play();
 
-    void paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const;
-    QSize sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const;
+private:
+    QString apath;
+    Phonon::MediaObject *music;
 
 };
 
-#endif // QNICKLISTDELEGATE_H
+#endif // NOTIFY_H

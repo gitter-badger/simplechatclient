@@ -75,7 +75,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
 // settings
     settings.clear();
-    settings.setValue("version", "1.0.7.389");
+    settings.setValue("version", "1.0.7.390");
     settings.setValue("debug", "off");
     settings.setValue("logged", "off");
     settings.setValue("busy", "off");
@@ -176,7 +176,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     lLag->setText("");
     statusBar()->addWidget(lLag);
 
-// signals
+// signals buttons
     QObject::connect(connectAct, SIGNAL(triggered()), this, SLOT(button_connect()));
     QObject::connect(optionsAct, SIGNAL(triggered()), this, SLOT(options_dlg()));
     QObject::connect(channel_listAct, SIGNAL(triggered()), this, SLOT(channel_list_dlg()));
@@ -187,14 +187,18 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     QObject::connect(aboutAct, SIGNAL(triggered()), this, SLOT(about_dlg()));
     QObject::connect(showAct, SIGNAL(triggered()), this, SLOT(button_show()));
     QObject::connect(closeAct, SIGNAL(triggered()), this, SLOT(button_close()));
+// signals tab
     QObject::connect(pTabM, SIGNAL(tabCloseRequested(int)), this, SLOT(tab_close_requested(int)));
     QObject::connect(pDlg_moderation, SIGNAL(display_msg(QString,QString,int)), pTabC, SLOT(sshow_msg(QString,QString,int)));
+// signals status bar
     QObject::connect(pOnet_kernel, SIGNAL(set_statusbar(QString)), this, SLOT(set_statusbar(QString)));
 
+// signals to network send
     QObject::connect(pDlg_moderation, SIGNAL(send(QString)), pNetwork, SLOT(send_slot(QString)));
     QObject::connect(pDlg_channel_list, SIGNAL(send(QString)), pNetwork, SLOT(send_slot(QString)));
     QObject::connect(pOnet_auth, SIGNAL(send(QString)), pNetwork, SLOT(send_slot(QString)));
 
+// signals onet kernel, onet auth
     QObject::connect(this, SIGNAL(do_kernel(QString)), pOnet_kernel, SLOT(kernel(QString)));
     QObject::connect(this, SIGNAL(do_request_uo(QString, QString, QString)), pOnet_auth, SLOT(request_uo(QString, QString, QString)));
 

@@ -18,8 +18,8 @@
  *                                                                          *
  ****************************************************************************/
 
-#ifndef QNICKLIST_H
-#define QNICKLIST_H
+#ifndef NICKLIST_H
+#define NICKLIST_H
 
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
@@ -99,4 +99,4 @@ protected:
 
 };
 
-#endif // QNICKLIST_H
+#endif // NICKLIST_H

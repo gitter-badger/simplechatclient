@@ -18,7 +18,7 @@
  *                                                                          *
  ****************************************************************************/
 
-#include "qnicklist.h"
+#include "nicklist.h"
 
 Nicklist::Nicklist(QWidget *parent, Network *param1, QSettings *param2, QString param3, QMap <QString, QByteArray> *param4)
 {

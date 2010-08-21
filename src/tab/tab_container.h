@@ -27,7 +27,7 @@
 #include "network.h"
 #include "dlg_channel_settings.h"
 #include "dlg_moderation.h"
-#include "qnotify.h"
+#include "notify.h"
 #include "tab_manager.h"
 #include "tab_widget.h"
 

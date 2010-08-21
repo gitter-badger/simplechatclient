@@ -41,7 +41,7 @@
 #include "network.h"
 #include "onet_auth.h"
 #include "onet_kernel.h"
-#include "qnotify.h"
+#include "notify.h"
 #include "tab_container.h"
 #include "tab_manager.h"
 #include "update_thread.h"

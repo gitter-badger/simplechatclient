@@ -25,10 +25,19 @@ set (scc_UIS
 
 set (scc_SRCS
 	avatars/channel_avatar.cpp
+	avatars/nick_avatar.cpp
 	common/commands.cpp
 	common/config.cpp
 	common/crypt.cpp
+	common/log.cpp
+	common/replace.cpp
 	core/debug.cpp
+	core/main.cpp
+	core/mainwindow.cpp
+	core/network.cpp
+	core/network_thread.cpp
+	core/update.cpp
+	core/update_thread.cpp
 	gui/dlg_about.cpp
 	gui/dlg_cam.cpp
 	gui/dlg_channel_favourites.cpp
@@ -50,31 +59,30 @@ set (scc_SRCS
 	gui/dlg_privilege.cpp
 	gui/dlg_register_nick.cpp
 	gui/dlg_update.cpp
+	notify/notify.cpp
 	onet/onet_auth.cpp
 	onet/onet_kernel.cpp
-	common/log.cpp
-	core/main.cpp
-	core/mainwindow.cpp
-	core/network.cpp
-	core/network_thread.cpp
-	avatars/nick_avatar.cpp
-	widgets/qinputline.cpp
-	widgets/qnicklist.cpp
-	widgets/qnicklistdelegate.cpp
-	notify/qnotify.cpp
-	common/replace.cpp
 	tab/tab_container.cpp
 	tab/tab_manager.cpp
 	tab/tab_widget.cpp
-	core/update.cpp
-	core/update_thread.cpp
+	widgets/inputline.cpp
+	widgets/nicklist.cpp
+	widgets/nicklistdelegate.cpp
 )
 
 set (scc_MOC_HDRS
 	avatars/channel_avatar.h
+	avatars/nick_avatar.h
 	common/commands.h
 	common/config.h
 	common/crypt.h
+	common/log.h
+	common/replace.h
+	core/mainwindow.h
+	core/network.h
+	core/network_thread.h
+	core/update.h
+	core/update_thread.h
 	gui/dlg_about.h
 	gui/dlg_cam.h
 	gui/dlg_channel_favourites.h
@@ -96,23 +104,15 @@ set (scc_MOC_HDRS
 	gui/dlg_privilege.h
 	gui/dlg_register_nick.h
 	gui/dlg_update.h
+	notify/notify.h
 	onet/onet_auth.h
 	onet/onet_kernel.h
-	common/log.h
-	core/mainwindow.h
-	core/network.h
-	core/network_thread.h
-	avatars/nick_avatar.h
-	widgets/qinputline.h
-	widgets/qnicklist.h
-	widgets/qnicklistdelegate.h
-	notify/qnotify.h
-	common/replace.h
 	tab/tab_container.h
 	tab/tab_manager.h
 	tab/tab_widget.h
-	core/update.h
-	core/update_thread.h
+	widgets/inputline.h
+	widgets/nicklist.h
+	widgets/nicklistdelegate.h
 )
 
 set (scc_HDRS

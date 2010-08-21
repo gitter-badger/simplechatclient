@@ -18,34 +18,23 @@
  *                                                                          *
  ****************************************************************************/
 
-#ifndef QINPUTLINE_H
-#define QINPUTLINE_H
+#ifndef NICKLISTDELEGATE_H
+#define NICKLISTDELEGATE_H
 
-#include <QEvent>
-#include <QKeyEvent>
-#include <QLineEdit>
-#include <QListWidget>
+#include <QPainter>
+#include <QAbstractItemDelegate>
+#include "config.h"
 
-class Inputline : public QLineEdit
+class NicklistDelegate : public QAbstractItemDelegate
 {
     Q_OBJECT
 public:
-    Inputline(QWidget*);
-    ~Inputline();
-    void set_userslist(QListWidget *);
+    NicklistDelegate(QObject *parent = 0);
+    ~NicklistDelegate();
 
-private:
-    int index;
-    QString strLastWord;
-    QList <QString> users_list;
-    QList <QString> find;
-
-    QString get_word();
-    void set_word(QString);
-
-protected:
-    virtual bool event(QEvent *);
+    void paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const;
+    QSize sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const;
 
 };
 
-#endif // QINPUTLINE_H
+#endif // NICKLISTDELEGATE_H

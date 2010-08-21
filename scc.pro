@@ -9,10 +9,19 @@ TARGET = scc
 TEMPLATE = app
 RESOURCES += scc.qrc
 SOURCES += src/avatars/channel_avatar.cpp \
+    src/avatars/nick_avatar.cpp \
     src/common/commands.cpp \
     src/common/config.cpp \
     src/common/crypt.cpp \
+    src/common/log.cpp \
+    src/common/replace.cpp \
     src/core/debug.cpp \
+    src/core/main.cpp \
+    src/core/mainwindow.cpp \
+    src/core/network.cpp \
+    src/core/network_thread.cpp \
+    src/core/update.cpp \
+    src/core/update_thread.cpp \
     src/gui/dlg_about.cpp \
     src/gui/dlg_cam.cpp \
     src/gui/dlg_channel_favourites.cpp \
@@ -34,29 +43,29 @@ SOURCES += src/avatars/channel_avatar.cpp \
     src/gui/dlg_privilege.cpp \
     src/gui/dlg_register_nick.cpp \
     src/gui/dlg_update.cpp \
+    src/notify/notify.cpp \
     src/onet/onet_auth.cpp \
     src/onet/onet_kernel.cpp \
-    src/common/log.cpp \
-    src/core/main.cpp \
-    src/core/mainwindow.cpp \
-    src/core/network.cpp \
-    src/core/network_thread.cpp \
-    src/avatars/nick_avatar.cpp \
-    src/widgets/qinputline.cpp \
-    src/widgets/qnicklist.cpp \
-    src/widgets/qnicklistdelegate.cpp \
-    src/notify/qnotify.cpp \
-    src/common/replace.cpp \
     src/tab/tab_container.cpp \
     src/tab/tab_manager.cpp \
     src/tab/tab_widget.cpp \
-    src/core/update.cpp \
-    src/core/update_thread.cpp
+    src/widgets/inputline.cpp \
+    src/widgets/nicklist.cpp \
+    src/widgets/nicklistdelegate.cpp
 HEADERS += src/avatars/channel_avatar.h \
+    src/avatars/nick_avatar.h \
     src/common/commands.h \
     src/common/config.h \
     src/common/crypt.h \
+    src/common/log.h \
+    src/common/replace.h \
     src/core/debug.h \
+    src/core/main.h \
+    src/core/mainwindow.h \
+    src/core/network.h \
+    src/core/network_thread.h \
+    src/core/update.h \
+    src/core/update_thread.h \
     src/gui/dlg_about.h \
     src/gui/dlg_cam.h \
     src/gui/dlg_channel_favourites.h \
@@ -78,24 +87,15 @@ HEADERS += src/avatars/channel_avatar.h \
     src/gui/dlg_privilege.h \
     src/gui/dlg_register_nick.h \
     src/gui/dlg_update.h \
+    src/notify/notify.h \
     src/onet/onet_auth.h \
     src/onet/onet_kernel.h \
-    src/common/log.h \
-    src/core/main.h \
-    src/core/mainwindow.h \
-    src/core/network.h \
-    src/core/network_thread.h \
-    src/avatars/nick_avatar.h \
-    src/widgets/qinputline.h \
-    src/widgets/qnicklist.h \
-    src/widgets/qnicklistdelegate.h \
-    src/notify/qnotify.h \
-    src/common/replace.h \
     src/tab/tab_container.h \
     src/tab/tab_manager.h \
     src/tab/tab_widget.h \
-    src/core/update.h \
-    src/core/update_thread.h
+    src/widgets/inputline.h \
+    src/widgets/nicklist.h \
+    src/widgets/nicklistdelegate.h
 FORMS += ui/about.ui \
     ui/cam.ui \
     ui/channel_favourites.ui \

@@ -18,7 +18,7 @@
  *                                                                          *
  ****************************************************************************/
 
-#include "qinputline.h"
+#include "inputline.h"
 
 Inputline::Inputline(QWidget *parent) : QLineEdit(parent)
 {

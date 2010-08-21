@@ -18,26 +18,34 @@
  *                                                                          *
  ****************************************************************************/
 
-#ifndef QNOTIFY_H
-#define QNOTIFY_H
+#ifndef INPUTLINE_H
+#define INPUTLINE_H
 
-#include <Phonon/AudioOutput>
-#include <Phonon/MediaObject>
-#include <QCoreApplication>
-#include <QObject>
+#include <QEvent>
+#include <QKeyEvent>
+#include <QLineEdit>
+#include <QListWidget>
 
-class Notify : public QObject
+class Inputline : public QLineEdit
 {
     Q_OBJECT
 public:
-    Notify();
-    ~Notify();
-    void play();
+    Inputline(QWidget*);
+    ~Inputline();
+    void set_userslist(QListWidget *);
 
 private:
-    QString apath;
-    Phonon::MediaObject *music;
+    int index;
+    QString strLastWord;
+    QList <QString> users_list;
+    QList <QString> find;
+
+    QString get_word();
+    void set_word(QString);
+
+protected:
+    virtual bool event(QEvent *);
 
 };
 
-#endif // QNOTIFY_H
+#endif // INPUTLINE_H

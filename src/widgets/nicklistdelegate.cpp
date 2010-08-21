@@ -18,7 +18,7 @@
  *                                                                          *
  ****************************************************************************/
 
-#include "qnicklistdelegate.h"
+#include "nicklistdelegate.h"
 
 NicklistDelegate::NicklistDelegate(QObject *parent)
 {

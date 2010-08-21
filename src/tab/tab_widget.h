@@ -48,10 +48,10 @@
 #include "dlg_moderation.h"
 #include "log.h"
 #include "network.h"
-#include "qinputline.h"
-#include "qnicklist.h"
-#include "qnicklistdelegate.h"
-#include "qnotify.h"
+#include "inputline.h"
+#include "nicklist.h"
+#include "nicklistdelegate.h"
+#include "notify.h"
 #include "replace.h"
 
 class TabWidget : public QWidget
