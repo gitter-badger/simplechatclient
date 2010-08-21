@@ -328,12 +328,20 @@ void DlgOptions::hide_pass()
 {
     ui.label_password->hide();
     ui.lineEdit_password->hide();
+
+    // fix nick
+    if (ui.lineEdit_nick->text()[0] != '~')
+        ui.lineEdit_nick->setText("~"+ui.lineEdit_nick->text());
 }
 
 void DlgOptions::show_pass()
 {
     ui.label_password->show();
     ui.lineEdit_password->show();
+
+    // fix nick
+    if (ui.lineEdit_nick->text()[0] == '~')
+        ui.lineEdit_nick->setText(ui.lineEdit_nick->text().right(ui.lineEdit_nick->text().length()-1));
 }
 
 void DlgOptions::button_register_nick()
@@ -637,9 +645,21 @@ void DlgOptions::save_settings()
 // check nick
     QString strPass;
     if (ui.radioButton_unregistered_nick->isChecked() == true)
+    {
+        // fix nick
+        if (strNick[0] != '~')
+            strNick = "~"+strNick;
+
         strPass = "";
+    }
     else if (ui.radioButton_registered_nick->isChecked() == true)
+    {
+        // fix nick
+        if (strNick[0] == '~')
+            strNick = strNick.right(strNick.length()-1);
+
         strPass = ui.lineEdit_password->text();
+    }
 
 // encrypt pass
     if (strPass.isEmpty() == false)
