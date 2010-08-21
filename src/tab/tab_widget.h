@@ -109,13 +109,10 @@ private:
 
     QWidget *topLeftWidget;
     QVBoxLayout *topLeftLayout;
-    QWidget *topRightUpWidget;
-    QHBoxLayout *topRightUpLayout;
     QWidget *topRightWidget;
     QVBoxLayout *topRightLayout;
     QHBoxLayout *topLayout;
-    QLineEdit *topic;
-    QPushButton *topicButton;
+    QWebView *topic;
     QLabel *logo;
     QLabel *topicDetails;
 
@@ -205,7 +202,6 @@ private slots:
     void moderation_clicked();
     void inputline_return_pressed();
     void moder_button_clicked();
-    void topic_return_pressed();
 
     void change_scroll_position();
 

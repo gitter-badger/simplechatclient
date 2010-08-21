@@ -55,16 +55,13 @@ TabWidget::TabWidget(QWidget *parent, Network *param1, QSettings *param2, QStrin
     leftWidget = new QWidget(this);
     rightWidget = new QWidget(this);
 
-    topic = new QLineEdit();
+    topic = new QWebView(this);
     topic->setParent(this);
-    topic->setReadOnly(true);
-    topic->setMaxLength(200);
+    topic->setMinimumHeight(30);
+    topic->setMinimumWidth(16777215);
+    topic->setMaximumHeight(30);
+    topic->setMaximumWidth(16777215);
     topic->show();
-
-    topicButton = new QPushButton(this);
-    topicButton->setText("Ustaw");
-    topicButton->setParent(this);
-    topicButton->show();
 
     topicDetails = new QLabel();
     topicDetails->setParent(this);
@@ -76,19 +73,12 @@ TabWidget::TabWidget(QWidget *parent, Network *param1, QSettings *param2, QStrin
     logo->setParent(this);
     logo->show();
 
-    topRightUpWidget = new QWidget(this);
-    topRightUpLayout = new QHBoxLayout();
-    topRightUpLayout->setMargin(0);
-    topRightUpLayout->setAlignment(Qt::AlignLeft);
-    topRightUpLayout->addWidget(topic);
-    topRightUpLayout->addWidget(topicButton);
-    topRightUpWidget->setLayout(topRightUpLayout);
-
     topRightWidget = new QWidget(this);
+    topRightWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
     topRightLayout = new QVBoxLayout();
     topRightLayout->setMargin(0);
     topRightLayout->setAlignment(Qt::AlignTop);
-    topRightLayout->addWidget(topRightUpWidget);
+    topRightLayout->addWidget(topic);
     topRightLayout->addWidget(topicDetails);
     topRightWidget->setLayout(topRightLayout);
 
@@ -293,8 +283,6 @@ TabWidget::TabWidget(QWidget *parent, Network *param1, QSettings *param2, QStrin
 
     if (strName[0] == '#')
     {
-        topicButton->hide();
-        topRightUpLayout->removeWidget(topicButton);
         moderation->hide();
         toolLayout->removeWidget(moderation);
         moderSendButton->hide();
@@ -336,7 +324,6 @@ TabWidget::TabWidget(QWidget *parent, Network *param1, QSettings *param2, QStrin
     else if (strName[0] == '^')
     {
         topic->hide();
-        topicButton->hide();
         topicDetails->hide();
         logo->hide();
         nickCount->hide();
@@ -363,7 +350,6 @@ TabWidget::TabWidget(QWidget *parent, Network *param1, QSettings *param2, QStrin
     else
     {
         topic->hide();
-        topicButton->hide();
         topicDetails->hide();
         logo->hide();
         nickCount->hide();
@@ -396,8 +382,6 @@ TabWidget::TabWidget(QWidget *parent, Network *param1, QSettings *param2, QStrin
 // signals
     QObject::connect(sendButton, SIGNAL(clicked()), this, SLOT(inputline_return_pressed()));
     QObject::connect(inputline, SIGNAL(returnPressed()), this, SLOT(inputline_return_pressed()));
-    QObject::connect(topic, SIGNAL(returnPressed()), this, SLOT(topic_return_pressed()));
-    QObject::connect(topicButton, SIGNAL(clicked()), this, SLOT(topic_return_pressed()));
     QObject::connect(bold, SIGNAL(clicked()), this, SLOT(bold_clicked()));
     QObject::connect(italic, SIGNAL(clicked()), this, SLOT(italic_clicked()));
 
@@ -827,9 +811,30 @@ void TabWidget::display_message(QString strData, int iLevel)
 
 void TabWidget::set_topic(QString strTopic)
 {
-    topic->setText(strTopic);
-    topic->setCursorPosition(0);
+    QString strData = strTopic;
 
+// replace
+    strData.replace("&", "&amp;");
+    strData.replace("<", "&lt;");
+    strData.replace(">", "&gt;");
+
+// content last
+    QString strContent;
+    QString strContentLast;
+    QString strContentStart = "<html><body style=\"margin:0;padding:0;font-style:normal;color:#000000;text-align:left;font-family:Verdana;font-weight:normal;font-size:12px;background-color:#FFFFFF;\">";
+    QString strContentEnd = "</body></html>";
+
+// convert emoticons, font
+    convert_text(&strData, &strContentLast);
+
+// init text
+    strContent = strData;
+    strContent = strContent+strContentLast;
+
+// set topic
+    topic->setHtml(strContentStart+strContent+strContentEnd,QUrl(""));
+
+// tooltip
     strTopic.replace(QRegExp("%C(\\S+)%"),"");
     strTopic.replace(QRegExp("%F(\\S+)%"),"");
     strTopic.replace(QRegExp("%I(\\S+)%"),"<\\1>");
@@ -842,16 +847,10 @@ void TabWidget::set_topic(QString strTopic)
 
 void TabWidget::enable_topic()
 {
-    topic->setReadOnly(false);
-    topicButton->show();
-    topRightUpLayout->addWidget(topicButton);
 }
 
 void TabWidget::disable_topic()
 {
-    topic->setReadOnly(true);
-    topicButton->hide();
-    topRightUpLayout->removeWidget(topicButton);
 }
 
 void TabWidget::enable_moderation()
@@ -1481,12 +1480,6 @@ void TabWidget::moderation_clicked()
 {
     dlgmoderation->set_active_channel(strName);
     dlgmoderation->show();
-}
-
-void TabWidget::topic_return_pressed()
-{
-    QString strText = topic->text();
-    pNetwork->send(QString("CS SET %1 TOPIC %2").arg(strName).arg(strText));
 }
 
 void TabWidget::change_scroll_position()
