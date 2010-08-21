@@ -100,8 +100,10 @@ private:
     QAction *aboutAct;
     QMap <QString, QByteArray> mNickAvatar;
     QMap <QString, QByteArray> mChannelAvatar;
+    QList <QString> lCloseChannelsList;
 
 private slots:
+    void force_close_tab();
     void button_close();
     void button_connect();
     void options_dlg();

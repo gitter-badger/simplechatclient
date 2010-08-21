@@ -75,7 +75,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
 // settings
     settings.clear();
-    settings.setValue("version", "1.0.7.390");
+    settings.setValue("version", "1.0.7.391");
     settings.setValue("debug", "off");
     settings.setValue("logged", "off");
     settings.setValue("busy", "off");
@@ -218,6 +218,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 MainWindow::~MainWindow()
 {
     // clear arrays
+    lCloseChannelsList.clear();
     mNickAvatar.clear();
     mChannelAvatar.clear();
     trayIcon->hide();
@@ -280,6 +281,16 @@ void MainWindow::set_debug(bool param1)
 void MainWindow::set_statusbar(QString strValue)
 {
     lLag->setText(strValue);
+}
+
+// force close tab after 10 sec
+void MainWindow::force_close_tab()
+{
+    while (lCloseChannelsList.isEmpty() == false)
+    {
+        QString strChannel = lCloseChannelsList.takeFirst();
+        pTabC->remove_tab(strChannel);
+    }
 }
 
 // buttons
@@ -374,7 +385,11 @@ void MainWindow::tab_close_requested(int index)
         if (strName[0] == '#')
         {
             if (pNetwork->is_connected() == true)
+            {
                 pNetwork->send(QString("PART %1").arg(strName));
+                lCloseChannelsList.append(strName);
+                QTimer::singleShot(1000*10, this, SLOT(force_close_tab())); // 10 sec
+            }
             else
                 pTabC->remove_tab(strName);
         }
@@ -386,7 +401,11 @@ void MainWindow::tab_close_requested(int index)
                 if (strNewName.isEmpty() == false)
                 {
                     if (pNetwork->is_connected() == true)
+                    {
                         pNetwork->send(QString("PART %1").arg(strNewName));
+                        lCloseChannelsList.append(strNewName);
+                        QTimer::singleShot(1000*10, this, SLOT(force_close_tab())); // 10 sec
+                    }
                     else
                         pTabC->remove_tab(strNewName);
                 }
@@ -394,7 +413,11 @@ void MainWindow::tab_close_requested(int index)
             else
             {
                 if (pNetwork->is_connected() == true)
+                {
                     pNetwork->send(QString("PART %1").arg(strName));
+                    lCloseChannelsList.append(strName);
+                    QTimer::singleShot(1000*10, this, SLOT(force_close_tab())); // 10 sec
+                }
                 else
                     pTabC->remove_tab(strName);
             }
