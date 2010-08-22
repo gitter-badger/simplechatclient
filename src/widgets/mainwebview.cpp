@@ -149,6 +149,7 @@ void MainWebView::contextMenuEvent(QContextMenuEvent *event)
 {
     QWebHitTestResult r = page()->mainFrame()->hitTestContent(event->pos());
 
+    // link
     if (r.linkUrl().isEmpty() == false)
     {
         strLink = r.linkUrl().toString();
@@ -236,7 +237,8 @@ void MainWebView::contextMenuEvent(QContextMenuEvent *event)
         }
         return;
     }
-    else
+    // selected text
+    else if (r.isContentSelected() == true)
     {
         QAction *copy = pageAction(QWebPage::CopyLinkToClipboard);
         copy->setShortcut(QKeySequence::Copy);
@@ -246,6 +248,10 @@ void MainWebView::contextMenuEvent(QContextMenuEvent *event)
         menu.exec(mapToGlobal(event->pos()));
         return;
     }
-
-    QWebView::contextMenuEvent(event);
+    // not selected text
+    else if (r.isContentSelected() == false)
+        return;
+    // other
+    else
+        QWebView::contextMenuEvent(event);
 }
