@@ -428,6 +428,8 @@ void Nicklist::nicklist_refresh_avatars()
 
 void Nicklist::contextMenuEvent(QContextMenuEvent *e)
 {
+    if (this->selectedItems().count() == 0) return;
+
     QMenu *minvite = new QMenu(tr("Invite"));
 
     for (int i = 0; i < maxOpenChannels; ++i)
@@ -470,8 +472,13 @@ void Nicklist::contextMenuEvent(QContextMenuEvent *e)
     privilege->addAction(tr("Give guest status"), this, SLOT(voice_add()));
     privilege->addAction(tr("Take guest status"), this, SLOT(voice_del()));
 
-    QMenu *menu = new QMenu(this);
+    QString strNick = this->selectedItems().at(0)->data(Qt::UserRole).toString();
+    QAction *nickAct = new QAction(strNick, this);
+    nickAct->setDisabled(true);
 
+    QMenu *menu = new QMenu(this);
+    menu->addAction(nickAct);
+    menu->addSeparator();
     menu->addAction(tr("Priv"), this, SLOT(priv()));
     menu->addAction(tr("Whois"), this, SLOT(whois()));
     menu->addAction(tr("Webcam"), this, SLOT(cam()));
