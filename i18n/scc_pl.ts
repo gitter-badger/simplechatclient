@@ -1976,4 +1976,103 @@
         <translation>Nie można połączyć się z serwerem aktualizacji.</translation>
     </message>
 </context>
+<context>
+    <name>MainWebView</name>
+    <message>
+        <source>Join</source>
+        <translation>Wejdź</translation>
+    </message>
+    <message>
+        <source>No reason</source>
+        <translation>Zachowuj się! Byle jak ale się zachowuj!</translation>
+    </message>
+    <message>
+        <source>Invite</source>
+        <translation>Zaproś</translation>
+    </message>
+    <message>
+        <source>Friends list</source>
+        <translation>Lista przyjaciół</translation>
+    </message>
+    <message>
+        <source>Add to friends</source>
+        <translation>Dodaj do listy przyjaciół</translation>
+    </message>
+    <message>
+        <source>Remove from friends</source>
+        <translation>Usuń z listy przyjaciół</translation>
+    </message>
+    <message>
+        <source>Ignore list</source>
+        <translation>Lista ignorowanych</translation>
+    </message>
+    <message>
+        <source>Add to Ignore list</source>
+        <translation>Dodaj do listy ignorowanych</translation>
+    </message>
+    <message>
+        <source>Remove from Ignore list</source>
+        <translation>Usuń z listy ignorowanych</translation>
+    </message>
+    <message>
+        <source>Actions</source>
+        <translation>Uprawnienia</translation>
+    </message>
+    <message>
+        <source>Give super operator status</source>
+        <translation>Nadaj prawa super operatora</translation>
+    </message>
+    <message>
+        <source>Take super operator status</source>
+        <translation>Odbierz prawa super operatora</translation>
+    </message>
+    <message>
+        <source>Give operator status</source>
+        <translation>Nadaj prawa operatora</translation>
+    </message>
+    <message>
+        <source>Take operator status</source>
+        <translation>Odbierz prawa operatora</translation>
+    </message>
+    <message>
+        <source>Give moderator status</source>
+        <translation>Nadaj prawa moderatora</translation>
+    </message>
+    <message>
+        <source>Take moderator status</source>
+        <translation>Odbierz prawa moderatora</translation>
+    </message>
+    <message>
+        <source>Give guest status</source>
+        <translation>Nadaj prawa gościa</translation>
+    </message>
+    <message>
+        <source>Take guest status</source>
+        <translation>Odbierz prawa gościa</translation>
+    </message>
+    <message>
+        <source>Priv</source>
+        <translation>Rozmowa prywatna</translation>
+    </message>
+    <message>
+        <source>Whois</source>
+        <translation>Whois</translation>
+    </message>
+    <message>
+        <source>Webcam</source>
+        <translation>Kamerka</translation>
+    </message>
+    <message>
+        <source>Kick From Channel</source>
+        <translation>Wyrzuć</translation>
+    </message>
+    <message>
+        <source>Ban From Channel</source>
+        <translation>Cichy ban</translation>
+    </message>
+    <message>
+        <source>Kick &amp; Ban</source>
+        <translation>Banuj i wyrzuć</translation>
+    </message>
+</context>
 </TS>

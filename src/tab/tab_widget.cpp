@@ -116,7 +116,7 @@ TabWidget::TabWidget(QWidget *parent, Network *param1, QSettings *param2, QStrin
     //nick_list->setStyleSheet(QString("background-color: #%1;").arg(strBackgroundColor));
     nick_list->show();
 
-    textEdit = new QWebView(this);
+    textEdit = new MainWebView(myparent, pNetwork, settings, strName);
     textEdit->setParent(this);
     textEdit->show();
 
@@ -731,6 +731,10 @@ void TabWidget::display_message(QString strData, int iLevel)
     strData.replace("&", "&amp;");
     strData.replace("<", "&lt;");
     strData.replace(">", "&gt;");
+    // nicks
+    strData.replace(QRegExp("&lt;(\\w+)&gt;"), "<a style=\"text-decoration:none;color:black;\" href=\"nick\\1\">&lt;\\1&gt;</a>");
+    // channels
+    strData.replace(QRegExp("#(\\w+)"), "<a style=\"text-decoration:none;\" href=\"chan#\\1\">#\\1</a>");
 
 // content last
     QString strContentLast;
@@ -1131,6 +1135,7 @@ void TabWidget::clear_nicklist()
 void TabWidget::set_open_channels(QStringList strOpenChannels)
 {
     nick_list->set_open_channels(strOpenChannels);
+    textEdit->set_open_channels(strOpenChannels);
 }
 
 void TabWidget::update_nick_avatar()

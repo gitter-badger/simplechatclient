@@ -50,6 +50,7 @@ SOURCES += src/avatars/channel_avatar.cpp \
     src/tab/tab_manager.cpp \
     src/tab/tab_widget.cpp \
     src/widgets/inputline.cpp \
+    src/widgets/mainwebview.cpp \
     src/widgets/nicklist.cpp \
     src/widgets/nicklistdelegate.cpp
 HEADERS += src/avatars/channel_avatar.h \
@@ -94,6 +95,7 @@ HEADERS += src/avatars/channel_avatar.h \
     src/tab/tab_manager.h \
     src/tab/tab_widget.h \
     src/widgets/inputline.h \
+    src/widgets/mainwebview.h \
     src/widgets/nicklist.h \
     src/widgets/nicklistdelegate.h
 FORMS += ui/about.ui \
