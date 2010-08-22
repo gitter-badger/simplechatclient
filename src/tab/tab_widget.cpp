@@ -732,9 +732,9 @@ void TabWidget::display_message(QString strData, int iLevel)
     strData.replace("<", "&lt;");
     strData.replace(">", "&gt;");
     // nicks
-    strData.replace(QRegExp("&lt;(\\w+)&gt;"), "<a style=\"text-decoration:none;color:black;\" href=\"nick\\1\">&lt;\\1&gt;</a>");
+    strData.replace(QRegExp("&lt;([~-_a-zA-Z0-9\xa1\xaf\xa6\xac\xca\xc6\xd1\xd3\xa3\xb1\xbf\xb6\xbc\xea\xe6\xf1\xf3\xb3]+)&gt;"), "<a style=\"text-decoration:none;color:black;\" href=\"nick\\1\">&lt;\\1&gt;</a>");
     // channels
-    strData.replace(QRegExp("#(\\w+)"), "<a style=\"text-decoration:none;\" href=\"chan#\\1\">#\\1</a>");
+    strData.replace(QRegExp("#([~-_a-zA-Z0-9\xa1\xaf\xa6\xac\xca\xc6\xd1\xd3\xa3\xb1\xbf\xb6\xbc\xea\xe6\xf1\xf3\xb3]+)"), "<a style=\"text-decoration:none;\" href=\"chan#\\1\">#\\1</a>");
 
 // content last
     QString strContentLast;
