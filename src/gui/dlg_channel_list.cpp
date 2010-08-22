@@ -29,9 +29,15 @@ DlgChannelList::DlgChannelList(QWidget *parent, QSettings *param1, TabContainer 
     settings = param1;
     tabc = param2;
 
+    ui.groupBox_search->setTitle(tr("Search"));
+    ui.groupBox_type->setTitle(tr("Type"));
+    ui.groupBox_category->setTitle(tr("Category"));
+
     ui.label_channel_name->setText(tr("Channel name:"));
     ui.pushButton_search->setText(tr("Search"));
     ui.pushButton_clear->setText(tr("Clear"));
+    ui.checkBox_hide_empty_channels->setText(tr("Hide empty channels"));
+    ui.checkBox_show_adv_options->setText(tr("Show advanced options"));
 
     ui.checkBox_teen->setText(tr("Teen"));
     ui.checkBox_common->setText(tr("Common"));
@@ -46,14 +52,16 @@ DlgChannelList::DlgChannelList(QWidget *parent, QSettings *param1, TabContainer 
     ui.checkBox_moderated->setText(tr("Moderated"));
     ui.checkBox_recommended->setText(tr("Recommended"));
 
-    ui.checkBox_hide_empty_channels->setText(tr("Hide empty channels"));
-
     ui.tabWidget->setTabText(0, tr("All"));
     ui.tabWidget->setTabText(1, tr("Teen"));
     ui.tabWidget->setTabText(2, tr("Common"));
     ui.tabWidget->setTabText(3, tr("Erotic"));
     ui.tabWidget->setTabText(4, tr("Thematic"));
     ui.tabWidget->setTabText(5, tr("Regional"));
+
+    // hide adv options
+    ui.groupBox_type->hide();
+    ui.groupBox_category->hide();
 
     QObject::connect(ui.tableWidget_all, SIGNAL(cellDoubleClicked(int,int)), this, SLOT(all_CellDoubleClicked(int,int)));
     QObject::connect(ui.tableWidget_teen, SIGNAL(cellDoubleClicked(int,int)), this, SLOT(teen_CellDoubleClicked(int,int)));
@@ -67,6 +75,7 @@ DlgChannelList::DlgChannelList(QWidget *parent, QSettings *param1, TabContainer 
     QObject::connect(ui.pushButton_search, SIGNAL(clicked()), this, SLOT(button_search()));
     QObject::connect(ui.pushButton_clear, SIGNAL(clicked()), this, SLOT(button_clear()));
     QObject::connect(ui.checkBox_hide_empty_channels, SIGNAL(clicked()), this, SLOT(hide_empty_channels()));
+    QObject::connect(ui.checkBox_show_adv_options, SIGNAL(clicked()), this, SLOT(show_adv_options()));
 }
 
 void DlgChannelList::clear()
@@ -977,6 +986,20 @@ void DlgChannelList::hide_empty_channels()
     }
 }
 
+void DlgChannelList::show_adv_options()
+{
+    if (ui.checkBox_show_adv_options->isChecked() == true)
+    {
+        ui.groupBox_type->show();
+        ui.groupBox_category->show();
+    }
+    else
+    {
+        ui.groupBox_type->hide();
+        ui.groupBox_category->hide();
+    }
+}
+
 void DlgChannelList::showEvent(QShowEvent *event)
 {
     event->accept();
@@ -1005,14 +1028,14 @@ void DlgChannelList::resizeEvent(QResizeEvent *event)
 {
     Q_UNUSED (event);
 
-    ui.verticalLayoutWidget->setGeometry(QRect(0,0,this->width(), this->height()));
-    ui.tabWidget->setGeometry(QRect(1,117,this->width()-1, this->height()-117-35));
-    ui.tableWidget_all->setGeometry(QRect(0,0,this->width()-10, this->height()-170));
-    ui.tableWidget_teen->setGeometry(QRect(0,0,this->width()-10, this->height()-170));
-    ui.tableWidget_common->setGeometry(QRect(0,0,this->width()-10, this->height()-170));
-    ui.tableWidget_erotic->setGeometry(QRect(0,0,this->width()-10, this->height()-170));
-    ui.tableWidget_thematic->setGeometry(QRect(0,0,this->width()-10, this->height()-170));
-    ui.tableWidget_regional->setGeometry(QRect(0,0,this->width()-10, this->height()-170));
+    ui.verticalLayoutWidget->setGeometry(QRect(0, 0, this->width(), this->height()));
+    ui.tabWidget->setGeometry(QRect(205, 1, this->width()-205, this->height()-30));
+    ui.tableWidget_all->setGeometry(QRect(0, 0, ui.tabWidget->width()-10, ui.tabWidget->height()-30));
+    ui.tableWidget_teen->setGeometry(QRect(0, 0, ui.tabWidget->width()-10, ui.tabWidget->height()-30));
+    ui.tableWidget_common->setGeometry(QRect(0, 0, ui.tabWidget->width()-10, ui.tabWidget->height()-30));
+    ui.tableWidget_erotic->setGeometry(QRect(0, 0, ui.tabWidget->width()-10, ui.tabWidget->height()-30));
+    ui.tableWidget_thematic->setGeometry(QRect(0, 0, ui.tabWidget->width()-10, ui.tabWidget->height()-30));
+    ui.tableWidget_regional->setGeometry(QRect(0, 0, ui.tabWidget->width()-10, ui.tabWidget->height()-30));
 }
 
 void DlgChannelList::closeEvent(QCloseEvent *event)

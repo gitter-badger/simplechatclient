@@ -334,6 +334,14 @@
         <translation>Wyczyść</translation>
     </message>
     <message>
+        <source>Hide empty channels</source>
+        <translation>Ukryj puste kanały</translation>
+    </message>
+    <message>
+        <source>Show advanced options</source>
+        <translation>Pokaż zaawansowane</translation>
+    </message>
+    <message>
         <source>Wild</source>
         <translation>Dziki</translation>
     </message>
@@ -356,10 +364,6 @@
     <message>
         <source>Recommended</source>
         <translation>Polecany</translation>
-    </message>
-    <message>
-        <source>Hide empty channels</source>
-        <translation>Ukryj puste kanały</translation>
     </message>
     <message>
         <source>All</source>

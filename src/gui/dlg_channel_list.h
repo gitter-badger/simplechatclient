@@ -67,6 +67,7 @@ private slots:
     void button_search();
     void button_clear();
     void hide_empty_channels();
+    void show_adv_options();
 
 signals:
     void send(QString);
