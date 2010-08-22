@@ -240,11 +240,11 @@ void MainWebView::contextMenuEvent(QContextMenuEvent *event)
     // selected text
     else if (r.isContentSelected() == true)
     {
-        QAction *copy = pageAction(QWebPage::CopyLinkToClipboard);
-        copy->setShortcut(QKeySequence::Copy);
+        QAction *copyAct = pageAction(QWebPage::Copy);
+        copyAct->setShortcut(QKeySequence::Copy);
 
         QMenu menu(this);
-        menu.addAction(copy);
+        menu.addAction(copyAct);
         menu.exec(mapToGlobal(event->pos()));
         return;
     }
