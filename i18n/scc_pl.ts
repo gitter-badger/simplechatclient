@@ -1979,8 +1979,8 @@
 <context>
     <name>MainWebView</name>
     <message>
-        <source>Join</source>
-        <translation>Wejdź</translation>
+        <source>Join channel</source>
+        <translation>Wejdź do kanału</translation>
     </message>
     <message>
         <source>No reason</source>

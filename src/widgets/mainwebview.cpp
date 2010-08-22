@@ -159,9 +159,13 @@ void MainWebView::contextMenuEvent(QContextMenuEvent *event)
         // channel
         if (strCat == "chan")
         {
+            QAction *nameAct = new QAction(strLink, this);
+            nameAct->setDisabled(true);
+
             QMenu *menu = new QMenu(strLink);
+            menu->addAction(nameAct);
             menu->addSeparator();
-            menu->addAction(tr("Join"), this, SLOT(join_channel()));
+            menu->addAction(tr("Join channel"), this, SLOT(join_channel()));
             menu->exec(mapToGlobal(event->pos()));
         }
         // nick
@@ -209,9 +213,11 @@ void MainWebView::contextMenuEvent(QContextMenuEvent *event)
             privilege->addAction(tr("Give guest status"), this, SLOT(voice_add()));
             privilege->addAction(tr("Take guest status"), this, SLOT(voice_del()));
 
-            QMenu *menu = new QMenu(this);
+            QAction *nameAct = new QAction(strLink, this);
+            nameAct->setDisabled(true);
 
-            menu->addAction(strLink);
+            QMenu *menu = new QMenu(this);
+            menu->addAction(nameAct);
             menu->addSeparator();
             menu->addAction(tr("Priv"), this, SLOT(priv()));
             menu->addAction(tr("Whois"), this, SLOT(whois()));
