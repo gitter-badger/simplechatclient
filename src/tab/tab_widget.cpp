@@ -686,6 +686,8 @@ void TabWidget::display_msg(QString strTime, QString strData, int iLevel)
     {
         if (settings->value("hide_join_part").toString() == "on")
             return;
+        if ((settings->value("hide_join_part_200").toString() == "on") && (iNickCount > 200))
+            return;
     }
 
     display_message(strData, iLevel);
@@ -707,6 +709,8 @@ void TabWidget::display_msg(QString strData, int iLevel)
     if ((iLevel == 1) || (iLevel == 2) || (iLevel == 3))
     {
         if (settings->value("hide_join_part").toString() == "on")
+            return;
+        if ((settings->value("hide_join_part_200").toString() == "on") && (iNickCount > 200))
             return;
     }
 

@@ -53,6 +53,7 @@ private slots:
     void show_zuo();
     void hide_formating();
     void hide_join_part();
+    void hide_join_part_200();
     void disable_avatars();
     void disable_logs();
     void disable_sounds();

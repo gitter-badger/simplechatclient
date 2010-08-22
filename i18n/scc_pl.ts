@@ -780,6 +780,10 @@
         <translation>Ukrywanie wejść/wyjść</translation>
     </message>
     <message>
+        <source>Hide join/part when number of nicks > 200</source>
+        <translation>Ukrywanie wejść/wyjść gdy liczba osób > 200</translation>
+    </message>
+    <message>
         <source>Disable avatars</source>
         <translation>Wyłączenie avatarów</translation>
     </message>

@@ -49,6 +49,7 @@ DlgOptions::DlgOptions(QWidget *parent, QSettings *param1) : QDialog(parent)
     ui.checkBox_show_zuo->setText(tr("Show ZUO"));
     ui.checkBox_hide_formating->setText(tr("Disable formatting messages"));
     ui.checkBox_hide_join_part->setText(tr("Hide join/part"));
+    ui.checkBox_hide_join_part_200->setText(tr("Hide join/part when number of nicks > 200"));
     ui.checkBox_disable_avatars->setText(tr("Disable avatars"));
     ui.checkBox_disable_logs->setText(tr("Disable logs"));
     ui.checkBox_disable_sounds->setText(tr("Disable sounds"));
@@ -145,6 +146,7 @@ DlgOptions::DlgOptions(QWidget *parent, QSettings *param1) : QDialog(parent)
     QString strShowZuo = pConfig->get_value("show_zuo");
     QString strHideFormating = pConfig->get_value("hide_formating");
     QString strHideJoinPart = pConfig->get_value("hide_join_part");
+    QString strHideJoinPart200 = pConfig->get_value("hide_join_part_200");
     QString strDisableAvatars = pConfig->get_value("disable_avatars");
     QString strDisableLogs = pConfig->get_value("disable_logs");
     QString strDisableSounds = pConfig->get_value("disable_sounds");
@@ -216,6 +218,12 @@ DlgOptions::DlgOptions(QWidget *parent, QSettings *param1) : QDialog(parent)
         ui.checkBox_hide_join_part->setChecked(true);
     else
         ui.checkBox_hide_join_part->setChecked(false);
+
+// hide join part
+    if (strHideJoinPart200 == "on")
+        ui.checkBox_hide_join_part_200->setChecked(true);
+    else
+        ui.checkBox_hide_join_part_200->setChecked(false);
 
 // disable avatars
     if (strDisableAvatars == "on")
@@ -302,6 +310,7 @@ DlgOptions::DlgOptions(QWidget *parent, QSettings *param1) : QDialog(parent)
     QObject::connect(ui.checkBox_show_zuo, SIGNAL(clicked()), this, SLOT(show_zuo()));
     QObject::connect(ui.checkBox_hide_formating, SIGNAL(clicked()), this, SLOT(hide_formating()));
     QObject::connect(ui.checkBox_hide_join_part, SIGNAL(clicked()), this, SLOT(hide_join_part()));
+    QObject::connect(ui.checkBox_hide_join_part_200, SIGNAL(clicked()), this, SLOT(hide_join_part_200()));
     QObject::connect(ui.checkBox_disable_avatars, SIGNAL(clicked()), this, SLOT(disable_avatars()));
     QObject::connect(ui.checkBox_disable_logs, SIGNAL(clicked()), this, SLOT(disable_logs()));
     QObject::connect(ui.checkBox_disable_sounds, SIGNAL(clicked()), this, SLOT(disable_sounds()));
@@ -455,6 +464,22 @@ void DlgOptions::hide_join_part()
     {
         pConfig->set_value("hide_join_part", "off");
         settings->setValue("hide_join_part", "off");
+    }
+    delete pConfig;
+}
+
+void DlgOptions::hide_join_part_200()
+{
+    Config *pConfig = new Config();
+    if (ui.checkBox_hide_join_part_200->isChecked() == true)
+    {
+        pConfig->set_value("hide_join_part_200", "on");
+        settings->setValue("hide_join_part_200", "on");
+    }
+    else
+    {
+        pConfig->set_value("hide_join_part_200", "off");
+        settings->setValue("hide_join_part_200", "off");
     }
     delete pConfig;
 }

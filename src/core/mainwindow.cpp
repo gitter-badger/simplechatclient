@@ -62,6 +62,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     QString strShowZuo = pConfig->get_value("show_zuo");
     QString strHideFormating = pConfig->get_value("hide_formating");
     QString strHideJoinPart = pConfig->get_value("hide_join_part");
+    QString strHideJoinPart200 = pConfig->get_value("hide_join_part_200");
     QString strDisableAvatars = pConfig->get_value("disable_avatars");
     QString strDisableLogs = pConfig->get_value("disable_logs");
     QString strDisableSounds = pConfig->get_value("disable_sounds");
@@ -75,7 +76,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
 // settings
     settings.clear();
-    settings.setValue("version", "1.0.7.404");
+    settings.setValue("version", "1.0.7.405");
     settings.setValue("debug", "off");
     settings.setValue("logged", "off");
     settings.setValue("busy", "off");
@@ -85,6 +86,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     settings.setValue("show_zuo", strShowZuo);
     settings.setValue("hide_formating", strHideFormating);
     settings.setValue("hide_join_part", strHideJoinPart);
+    settings.setValue("hide_join_part_200", strHideJoinPart200);
     settings.setValue("disable_avatars", strDisableAvatars);
     settings.setValue("disable_logs", strDisableLogs);
     settings.setValue("disable_sounds", strDisableSounds);

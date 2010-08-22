@@ -308,6 +308,13 @@
                 </widget>
                </item>
                <item>
+                <widget class="QCheckBox" name="checkBox_hide_join_part_200">
+                 <property name="text">
+                  <string>Hide join/part when number of nicks &gt; 200</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
                 <widget class="QCheckBox" name="checkBox_disable_avatars">
                  <property name="text">
                   <string>Disable avatars</string>
