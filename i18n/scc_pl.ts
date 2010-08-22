@@ -338,7 +338,7 @@
         <translation>Ukryj puste kanały</translation>
     </message>
     <message>
-        <source>Show advanced options</source>
+        <source>Show advanced</source>
         <translation>Pokaż zaawansowane</translation>
     </message>
     <message>

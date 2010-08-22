@@ -37,7 +37,7 @@ DlgChannelList::DlgChannelList(QWidget *parent, QSettings *param1, TabContainer 
     ui.pushButton_search->setText(tr("Search"));
     ui.pushButton_clear->setText(tr("Clear"));
     ui.checkBox_hide_empty_channels->setText(tr("Hide empty channels"));
-    ui.checkBox_show_adv_options->setText(tr("Show advanced options"));
+    ui.checkBox_show_adv_options->setText(tr("Show advanced"));
 
     ui.checkBox_teen->setText(tr("Teen"));
     ui.checkBox_common->setText(tr("Common"));
@@ -72,6 +72,7 @@ DlgChannelList::DlgChannelList(QWidget *parent, QSettings *param1, TabContainer 
     QObject::connect(ui.buttonBox, SIGNAL(accepted()), this, SLOT(button_ok()));
     QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(button_cancel()));
 
+    QObject::connect(ui.lineEdit_search, SIGNAL(returnPressed()), this, SLOT(button_search()));
     QObject::connect(ui.pushButton_search, SIGNAL(clicked()), this, SLOT(button_search()));
     QObject::connect(ui.pushButton_clear, SIGNAL(clicked()), this, SLOT(button_clear()));
     QObject::connect(ui.checkBox_hide_empty_channels, SIGNAL(clicked()), this, SLOT(hide_empty_channels()));
@@ -1042,4 +1043,17 @@ void DlgChannelList::closeEvent(QCloseEvent *event)
 {
     event->ignore();
     this->hide();
+}
+
+void DlgChannelList::keyPressEvent(QKeyEvent *event)
+{
+    switch (event->key())
+    {
+        case Qt::Key_Enter:
+        case Qt::Key_Return:
+            button_search();
+            break;
+        default:
+            QWidget::keyPressEvent(event);
+    }
 }
