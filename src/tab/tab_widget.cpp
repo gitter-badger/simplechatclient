@@ -993,26 +993,18 @@ void TabWidget::add_user(QString strNick, QString strSuffix, int iRefresh)
     nick_suffix.insert(strNick, strmSuffix);
     QString strStatus;
 
+    if (bAdmin == true) strStatus = "admin";
+    else if (bOwner == true) strStatus = "owner";
+    else if (bOp == true) strStatus = "op";
+    else if (bHalfop == true) strStatus = "halfop";
+    else if (bMod == true) strStatus = "mod";
+    else if (bVip == true) strStatus = "vip";
+    else strStatus = "user";
+
     if (bPublicCam == true)
-    {
-        if (bAdmin == true) strStatus = "admincam";
-        else if (bOwner == true) strStatus = "ownercam";
-        else if (bOp == true) strStatus = "opcam";
-        else if (bHalfop == true) strStatus = "halfopcam";
-        else if (bMod == true) strStatus = "modcam";
-        else if (bVip == true) strStatus = "vipcam";
-        else strStatus = "usercam";
-    }
-    else
-    {
-        if (bAdmin == true) strStatus = "admin";
-        else if (bOwner == true) strStatus = "owner";
-        else if (bOp == true) strStatus = "op";
-        else if (bHalfop == true) strStatus = "halfop";
-        else if (bMod == true) strStatus = "mod";
-        else if (bVip == true) strStatus = "vip";
-        else strStatus = "user";
-    }
+        strStatus += "cam";
+    if (bBusy == true)
+        strStatus += "busy";
 
     if (nicklist_exist(strNick) == false)
     {

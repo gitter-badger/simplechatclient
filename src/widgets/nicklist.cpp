@@ -306,7 +306,7 @@ void Nicklist::nicklist_quicksort(QString strStatus, sNickStatus *nick_status, s
         QString strKey = listNickStatus.nick;
         QString strValue = listNickStatus.status;
 
-        if ((strValue == strStatus) || (strValue == strStatus+"cam"))
+        if ((strValue == strStatus) || (strValue == strStatus+"cam") ||  (strValue == strStatus+"busy") || (strValue == strStatus+"cambusy"))
             hNick_status.insert(strKey, strValue);
     }
 
@@ -363,10 +363,17 @@ void Nicklist::nicklist_refresh(sNickStatus *nick_status)
         QPixmap icon;
 
         bool bCam = false;
+        bool bBusy = false;
+
         if (strStatus.indexOf("cam") != -1)
         {
             strStatus.replace("cam","");
             bCam = true;
+        }
+        if (strStatus.indexOf("busy") != -1)
+        {
+            strStatus.replace("busy","");
+            bBusy = true;
         }
 
         if (strStatus == "admin") icon = QPixmap(":/images/admin.png");
@@ -377,6 +384,8 @@ void Nicklist::nicklist_refresh(sNickStatus *nick_status)
         else if (strStatus == "vip") icon = QPixmap(":/images/vip.png");
 
         QListWidgetItem *item = new QListWidgetItem(this);
+        item->setData(Qt::UserRole+10, bCam);
+        item->setData(Qt::UserRole+11, bBusy);
         item->setData(Qt::UserRole, strNick);
         item->setData(Qt::DecorationRole, icon);
         if (bCam == true)

@@ -87,12 +87,14 @@ void NicklistDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opti
         painter->setPen(fontPen);
     }
 
-    // get status, cam, avatar, nick, description
+    // get status, cam, avatar, nick, description, cam, busy
     QIcon status = QIcon(qvariant_cast<QPixmap>(index.data(Qt::DecorationRole)));
     QIcon cam = QIcon(qvariant_cast<QPixmap>(index.data(Qt::UserRole+1)));
     QIcon avatar = QIcon(qvariant_cast<QPixmap>(index.data(Qt::UserRole+2)));
     QString nick = index.data(Qt::UserRole).toString();
     //QString description = index.data(Qt::UserRole+3).toString();
+    bool bCam = index.data(Qt::UserRole+10).toBool();
+    bool bBusy = index.data(Qt::UserRole+11).toBool();
 
     Config *pConfig = new Config();
     QString strDisableAvatars = pConfig->get_value("disable_avatars");
@@ -156,13 +158,13 @@ void NicklistDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opti
     if (strStyle == "modern")
     {
         r = option.rect.adjusted(imageSpace, -8, -10, -8);
-        painter->setFont(QFont("Verdana", 9, QFont::Normal));
+        painter->setFont(QFont("Verdana", 9, QFont::Normal, bBusy));
         painter->drawText(r.left(), r.top(), r.width(), r.height(), Qt::AlignBottom|Qt::AlignLeft, nick, &r);
     }
     else if (strStyle == "classic")
     {
         r = option.rect.adjusted(imageSpace, -4, 0, -4);
-        painter->setFont(QFont("Verdana", 9, QFont::Normal));
+        painter->setFont(QFont("Verdana", 9, QFont::Normal, bBusy));
         painter->drawText(r.left(), r.top(), r.width(), r.height(), Qt::AlignBottom|Qt::AlignLeft, nick, &r);
     }
 
