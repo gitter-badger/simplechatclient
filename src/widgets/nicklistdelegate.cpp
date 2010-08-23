@@ -158,13 +158,13 @@ void NicklistDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opti
     if (strStyle == "modern")
     {
         r = option.rect.adjusted(imageSpace, -8, -10, -8);
-        painter->setFont(QFont("Verdana", 9, QFont::Normal, bBusy));
+        painter->setFont(QFont("Verdana", 9, bBusy == true ? QFont::Light : QFont::Normal, bBusy));
         painter->drawText(r.left(), r.top(), r.width(), r.height(), Qt::AlignBottom|Qt::AlignLeft, nick, &r);
     }
     else if (strStyle == "classic")
     {
         r = option.rect.adjusted(imageSpace, -4, 0, -4);
-        painter->setFont(QFont("Verdana", 9, QFont::Normal, bBusy));
+        painter->setFont(QFont("Verdana", 9, bBusy == true ? QFont::Light : QFont::Normal, bBusy));
         painter->drawText(r.left(), r.top(), r.width(), r.height(), Qt::AlignBottom|Qt::AlignLeft, nick, &r);
     }
 
