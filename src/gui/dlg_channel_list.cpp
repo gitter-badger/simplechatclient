@@ -832,7 +832,7 @@ void DlgChannelList::button_search()
     for (int i = 0; i < ui.tableWidget_all->rowCount(); i++)
     {
         QString strChannelName = ui.tableWidget_all->item(i, 0)->text();
-        if (strChannelName.indexOf(ui.lineEdit_search->text()) == -1)
+        if (strChannelName.toLower().indexOf(ui.lineEdit_search->text().toLower()) == -1)
             ui.tableWidget_all->hideRow(i);
     }
 
@@ -840,7 +840,7 @@ void DlgChannelList::button_search()
     for (int i = 0; i < ui.tableWidget_teen->rowCount(); i++)
     {
         QString strChannelName = ui.tableWidget_teen->item(i, 0)->text();
-        if (strChannelName.indexOf(ui.lineEdit_search->text()) == -1)
+        if (strChannelName.toLower().indexOf(ui.lineEdit_search->text().toLower()) == -1)
             ui.tableWidget_teen->hideRow(i);
     }
 
@@ -848,7 +848,7 @@ void DlgChannelList::button_search()
     for (int i = 0; i < ui.tableWidget_common->rowCount(); i++)
     {
         QString strChannelName = ui.tableWidget_common->item(i, 0)->text();
-        if (strChannelName.indexOf(ui.lineEdit_search->text()) == -1)
+        if (strChannelName.toLower().indexOf(ui.lineEdit_search->text().toLower()) == -1)
             ui.tableWidget_common->hideRow(i);
     }
 
@@ -856,7 +856,7 @@ void DlgChannelList::button_search()
     for (int i = 0; i < ui.tableWidget_erotic->rowCount(); i++)
     {
         QString strChannelName = ui.tableWidget_erotic->item(i, 0)->text();
-        if (strChannelName.indexOf(ui.lineEdit_search->text()) == -1)
+        if (strChannelName.toLower().indexOf(ui.lineEdit_search->text().toLower()) == -1)
             ui.tableWidget_erotic->hideRow(i);
     }
 
@@ -864,7 +864,7 @@ void DlgChannelList::button_search()
     for (int i = 0; i < ui.tableWidget_thematic->rowCount(); i++)
     {
         QString strChannelName = ui.tableWidget_thematic->item(i, 0)->text();
-        if (strChannelName.indexOf(ui.lineEdit_search->text()) == -1)
+        if (strChannelName.toLower().indexOf(ui.lineEdit_search->text().toLower()) == -1)
             ui.tableWidget_thematic->hideRow(i);
     }
 
@@ -872,7 +872,7 @@ void DlgChannelList::button_search()
     for (int i = 0; i < ui.tableWidget_regional->rowCount(); i++)
     {
         QString strChannelName = ui.tableWidget_regional->item(i, 0)->text();
-        if (strChannelName.indexOf(ui.lineEdit_search->text()) == -1)
+        if (strChannelName.toLower().indexOf(ui.lineEdit_search->text().toLower()) == -1)
             ui.tableWidget_regional->hideRow(i);
     }
 }
