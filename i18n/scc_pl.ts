@@ -1941,6 +1941,10 @@
         <translation>Moderacja</translation>
     </message>
     <message>
+        <source>(Unregistered)</source>
+        <translation>(Niezalogowany)</translation>
+    </message>
+    <message>
         <source>Send</source>
         <translation>Wyślij</translation>
     </message>

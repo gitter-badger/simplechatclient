@@ -245,6 +245,7 @@ TabWidget::TabWidget(QWidget *parent, Network *param1, QSettings *param2, QStrin
     toolWidget->setLayout(toolLayout);
 
     nickLabel = new QLabel();
+    nickLabel->setText(QString("<p style=\"font-weight:bold;\"> %1</p>").arg(tr("(Unregistered)")));
     nickLabel->setParent(this);
     nickLabel->show();
 
@@ -355,14 +356,12 @@ TabWidget::TabWidget(QWidget *parent, Network *param1, QSettings *param2, QStrin
         nickCount->hide();
         webLink->hide();
         nick_list->hide();
+        toolWidget->hide();
 
-        moderation->hide();
-        toolLayout->removeWidget(moderation);
         moderSendButton->hide();
         bottomLayout->removeWidget(moderSendButton);
 
         leftLayout->addWidget(textEdit);
-        leftLayout->addWidget(toolWidget);
         leftLayout->addWidget(bottomWidget);
 
         leftWidget->setLayout(leftLayout);
