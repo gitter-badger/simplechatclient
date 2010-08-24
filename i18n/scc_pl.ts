@@ -1195,6 +1195,14 @@
         <translation>* Kanał %1 nie ma już ustawionego przekierowania do innego kanału gdy zostanie przekroczona ilość użytkowników (Ustawił %2)</translation>
     </message>
     <message>
+        <source>* Channel %1 now prevents users from automatically rejoining the channel when they are kicked. Limit is set to %2 sec. (set by %3)</source>
+        <translation>* Kanał %1 posiada teraz blokade uniemożliwiającą użytkownikom automatyczny powrót do kanału kiedy zostaną wyrzuceni. Limit wynosi %2 sec. (Ustawił %3)</translation>
+    </message>
+    <message>
+        <source>* Channel %1 no longer prevents users from automatically rejoining the channel when they are kicked (set by %2)</source>
+        <translation>* Kanał %1 nie posiada już blokady uniemożliwiającej użytkownikom na automatyczny powrót do kanału kiedy zostaną wyrzuceni (Ustawił %2)</translation>
+    </message>
+    <message>
         <source>* Channel %1 now has status %2 (set by %3)</source>
         <translation>* Kanał %1 ma teraz status %2 (Ustawił %3)</translation>
     </message>

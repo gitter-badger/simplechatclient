@@ -823,6 +823,8 @@ void OnetKernel::raw_mode()
             else if (strFlag == "-V") strDisplay = QString(tr("* Channel %1 no longer has blocked invites (set by %2)")).arg(strNickChannel).arg(strWho);
             else if (strFlag == "+L") strDisplay = QString(tr("* Channel %1 now has limit redirection to %2 channel (set by %3)")).arg(strNickChannel).arg(strNick).arg(strWho);
             else if (strFlag == "-L") strDisplay = QString(tr("* Channel %1 no longer has limit redirection (set by %2)")).arg(strNickChannel).arg(strWho);
+            else if (strFlag == "+J") strDisplay = QString(tr("* Channel %1 now prevents users from automatically rejoining the channel when they are kicked. Limit is set to %2 sec. (set by %3)")).arg(strNickChannel).arg(strNick).arg(strWho);
+            else if (strFlag == "-J") strDisplay = QString(tr("* Channel %1 no longer prevents users from automatically rejoining the channel when they are kicked (set by %2)")).arg(strNickChannel).arg(strWho);
 
             else if (strFlag.at(1) == QChar('F'))
             {
