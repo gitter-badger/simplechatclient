@@ -69,7 +69,7 @@ ChannelAvatar::ChannelAvatar(TabContainer *param1, QString param2, QString param
     QObject::connect(channelAvatarThr, SIGNAL(set_avatar(QString)), tabc, SLOT(update_channel_avatar(QString)));
     QObject::connect(channelAvatarThr, SIGNAL(set_channel_avatar(QString, QByteArray)), this, SLOT(set_channel_avatar(QString, QByteArray)));
     QObject::connect(channelAvatarThr, SIGNAL(stop_thread()), this, SLOT(stop_thread()));
-    channelAvatarThr->start(QThread::LowPriority);
+    channelAvatarThr->start(QThread::InheritPriority);
 }
 
 void ChannelAvatar::set_channel_avatar(QString strChannel, QByteArray bAvatar)

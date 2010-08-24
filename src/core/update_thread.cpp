@@ -62,7 +62,7 @@ UpdateThread::UpdateThread(QWidget *parent, QSettings *param1, TabContainer *par
     updateThr = new UpdateThreadClass(myparent, settings, tabc);
     QObject::connect(updateThr, SIGNAL(set_version(QString)), this, SLOT(setVersion(QString)));
     QObject::connect(updateThr, SIGNAL(stop_thread()), this, SLOT(stop_thread()));
-    updateThr->start(QThread::LowPriority);
+    updateThr->start(QThread::InheritPriority);
 }
 
 void UpdateThread::setVersion(QString param1)
