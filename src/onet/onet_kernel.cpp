@@ -1189,12 +1189,21 @@ void OnetKernel::raw_100n()
     QDateTime dt = QDateTime::fromTime_t(strTime.toInt());
     QString strDateTime = dt.toString("hh:mm");
 
+    qint64 iTime = strTime.toLongLong();
+    QDateTime dta = QDateTime::currentDateTime();
+    qint64 iCurrentTime = (qint64)dta.toTime_t();
+
     QString strMessage;
     for (int i = 6; i < strDataList.size(); i++) { if (i != 6) strMessage += " "; strMessage += strDataList[i]; }
     if (strMessage[0] == ':')
         strMessage = strMessage.right(strMessage.length()-1);
 
-    QString strDisplay = QString(tr("* %1 Starting at %2 on channel %3")).arg(strMessage).arg(strDateTime).arg(strChannel);
+    QString strDisplay;
+    if (iTime < iCurrentTime)
+        strDisplay = QString(tr("* %1 In progress on channel %2")).arg(strMessage).arg(strChannel);
+    else
+        strDisplay = QString(tr("* %1 Starting at %2 on channel %3")).arg(strMessage).arg(strDateTime).arg(strChannel);
+
     tabc->show_msg_active(strDisplay, 6);
 }
 

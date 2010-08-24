@@ -1291,6 +1291,10 @@
         <translation>* %1 zignorował/a Twoje zaproszenie do kanału %2</translation>
     </message>
     <message>
+        <source>* %1 In progress on channel %2</source>
+        <translation>* %1 Właśnie trwa na kanale %2</translation>
+    </message>
+    <message>
         <source>* %1 Starting at %2 on channel %3</source>
         <translation>* %1 Rozpoczęcie o %2 na kanale %3</translation>
     </message>
