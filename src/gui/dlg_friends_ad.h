@@ -24,20 +24,18 @@
 #include <QDialog>
 #include <QSettings>
 #include "network.h"
-#include "tab_container.h"
 #include "ui_friends_ad.h"
 
 class DlgFriendsAd : public QDialog
 {
     Q_OBJECT
 public:
-    DlgFriendsAd(QWidget *, Network *, QSettings *, TabContainer *, QString, QString);
+    DlgFriendsAd(QWidget *, Network *, QSettings *, QString, QString);
 
 private:
     Ui::uiFriendsAd ui;
     Network *pNetwork;
     QSettings *settings;
-    TabContainer *tabc;
     QString strStatus;
 
 private slots:

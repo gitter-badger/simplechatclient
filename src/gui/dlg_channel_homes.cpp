@@ -20,7 +20,7 @@
 
 #include "dlg_channel_homes.h"
 
-DlgChannelHomes::DlgChannelHomes(QWidget *parent, Network *param1, QSettings *param2, TabContainer *param3, QMap <QString, QByteArray> *param4, DlgChannelSettings *param5) : QDialog(parent)
+DlgChannelHomes::DlgChannelHomes(QWidget *parent, Network *param1, QSettings *param2, QMap <QString, QByteArray> *param3, DlgChannelSettings *param4) : QDialog(parent)
 {
     ui.setupUi(this);
     setAttribute(Qt::WA_DeleteOnClose);
@@ -29,9 +29,8 @@ DlgChannelHomes::DlgChannelHomes(QWidget *parent, Network *param1, QSettings *pa
     myparent = parent;
     pNetwork = param1;
     settings = param2;
-    tabc = param3;
-    mChannelAvatar = param4;
-    dlgchannel_settings = param5;
+    mChannelAvatar = param3;
+    dlgchannel_settings = param4;
 
     ui.pushButton_create->setText(tr("Create"));
     ui.pushButton_remove->setText(tr("Remove"));
@@ -80,13 +79,13 @@ void DlgChannelHomes::list_clicked(QModelIndex index)
 void DlgChannelHomes::button_create()
 {
     ui.listWidget_channels->clear();
-    (new DlgChannelHomesAd(myparent, pNetwork, settings, tabc, "create"))->show();
+    (new DlgChannelHomesAd(myparent, pNetwork, settings, "create"))->show();
 }
 
 void DlgChannelHomes::button_remove()
 {
     ui.listWidget_channels->clear();
-    (new DlgChannelHomesAd(myparent, pNetwork, settings, tabc, "remove"))->show();
+    (new DlgChannelHomesAd(myparent, pNetwork, settings, "remove"))->show();
 }
 
 void DlgChannelHomes::button_join()

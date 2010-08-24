@@ -20,7 +20,7 @@
 
 #include "dlg_ignore.h"
 
-DlgIgnore::DlgIgnore(QWidget *parent, Network *param1, QSettings *param2, TabContainer *param3, QMap <QString, QByteArray> *param4) : QDialog(parent)
+DlgIgnore::DlgIgnore(QWidget *parent, Network *param1, QSettings *param2, QMap <QString, QByteArray> *param3) : QDialog(parent)
 {
     ui.setupUi(this);
     setAttribute(Qt::WA_DeleteOnClose);
@@ -29,8 +29,7 @@ DlgIgnore::DlgIgnore(QWidget *parent, Network *param1, QSettings *param2, TabCon
     myparent = parent;
     pNetwork = param1;
     settings = param2;
-    tabc = param3;
-    mNickAvatar = param4;
+    mNickAvatar = param3;
 
     ui.pushButton_add->setText(tr("Add"));
     ui.pushButton_remove->setText(tr("Remove"));
@@ -65,7 +64,7 @@ void DlgIgnore::clear()
 void DlgIgnore::button_add()
 {
     ui.listWidget_nicks->clear();
-    (new DlgIgnoreAd(myparent, pNetwork, settings, tabc, "add", ""))->show();
+    (new DlgIgnoreAd(myparent, pNetwork, settings, "add", ""))->show();
 }
 
 void DlgIgnore::button_remove()
@@ -76,7 +75,7 @@ void DlgIgnore::button_remove()
 
     ui.listWidget_nicks->clear();
 
-    (new DlgIgnoreAd(myparent, pNetwork, settings, tabc, "remove", strSelected))->show();
+    (new DlgIgnoreAd(myparent, pNetwork, settings, "remove", strSelected))->show();
 }
 
 void DlgIgnore::button_ok()

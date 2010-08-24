@@ -23,7 +23,6 @@
 
 #include <QDialog>
 #include "network.h"
-#include "tab_container.h"
 #include "ui_channel_key.h"
 
 class DlgChannelKey : public QDialog

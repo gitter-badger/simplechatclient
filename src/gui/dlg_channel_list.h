@@ -21,15 +21,18 @@
 #ifndef DLG_CHANNEL_LIST_H
 #define DLG_CHANNEL_LIST_H
 
+#include <QCloseEvent>
 #include <QDialog>
-#include "tab_container.h"
+#include <QKeyEvent>
+#include <QSettings>
+#include <QShowEvent>
 #include "ui_channel_list.h"
 
 class DlgChannelList : public QDialog
 {
     Q_OBJECT
 public:
-    DlgChannelList(QWidget *, QSettings *, TabContainer *);
+    DlgChannelList(QWidget *, QSettings *);
     void clear();
     void add_channel(QString, QString, QString, QString);
     void create_list();
@@ -38,7 +41,6 @@ public:
 private:
     Ui::uiChannelList ui;
     QSettings *settings;
-    TabContainer *tabc;
     QList < QList<QString> > list_all;
     QList < QList<QString> > list_teen;
     QList < QList<QString> > list_common;

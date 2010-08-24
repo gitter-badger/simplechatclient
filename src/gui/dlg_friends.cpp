@@ -20,7 +20,7 @@
 
 #include "dlg_friends.h"
 
-DlgFriends::DlgFriends(QWidget *parent, Network *param1, QSettings *param2, TabContainer *param3, QMap <QString, QByteArray> *param4) : QDialog(parent)
+DlgFriends::DlgFriends(QWidget *parent, Network *param1, QSettings *param2, QMap <QString, QByteArray> *param3) : QDialog(parent)
 {
     ui.setupUi(this);
     setAttribute(Qt::WA_DeleteOnClose);
@@ -29,8 +29,7 @@ DlgFriends::DlgFriends(QWidget *parent, Network *param1, QSettings *param2, TabC
     myparent = parent;
     pNetwork = param1;
     settings = param2;
-    tabc = param3;
-    mNickAvatar = param4;
+    mNickAvatar = param3;
 
     ui.pushButton_add->setText(tr("Add"));
     ui.pushButton_remove->setText(tr("Remove"));
@@ -92,7 +91,7 @@ void DlgFriends::clear()
 
 void DlgFriends::button_add()
 {
-    (new DlgFriendsAd(myparent, pNetwork, settings, tabc, "add", ""))->show();
+    (new DlgFriendsAd(myparent, pNetwork, settings, "add", ""))->show();
 }
 
 void DlgFriends::button_remove()
@@ -109,7 +108,7 @@ void DlgFriends::button_remove()
             strSelected = ui.listWidget_offline->selectedItems().at(0)->text();
     }
 
-    (new DlgFriendsAd(myparent, pNetwork, settings, tabc, "remove", strSelected))->show();
+    (new DlgFriendsAd(myparent, pNetwork, settings, "remove", strSelected))->show();
 }
 
 void DlgFriends::button_whois()

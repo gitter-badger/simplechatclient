@@ -21,17 +21,18 @@
 #ifndef DLG_FRIENDS_H
 #define DLG_FRIENDS_H
 
+#include <QCloseEvent>
 #include <QDialog>
+#include <QShowEvent>
 #include "dlg_friends_ad.h"
 #include "network.h"
-#include "tab_container.h"
 #include "ui_friends.h"
 
 class DlgFriends : public QDialog
 {
     Q_OBJECT
 public:
-    DlgFriends(QWidget *, Network *, QSettings *, TabContainer *, QMap <QString, QByteArray> *);
+    DlgFriends(QWidget *, Network *, QSettings *, QMap <QString, QByteArray> *);
     void set_friend(QString, bool);
     void remove_friend(QString);
     void clear();
@@ -41,7 +42,6 @@ private:
     QWidget *myparent;
     Network *pNetwork;
     QSettings *settings;
-    TabContainer *tabc;
     QMap <QString, QByteArray> *mNickAvatar;
     QMap <QString, bool> friends;
 

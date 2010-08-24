@@ -21,17 +21,18 @@
 #ifndef DLG_IGNORE_H
 #define DLG_IGNORE_H
 
+#include <QCloseEvent>
 #include <QDialog>
+#include <QShowEvent>
 #include "dlg_ignore_ad.h"
 #include "network.h"
-#include "tab_container.h"
 #include "ui_ignore.h"
 
 class DlgIgnore : public QDialog
 {
     Q_OBJECT
 public:
-    DlgIgnore(QWidget *, Network *, QSettings *, TabContainer *, QMap <QString, QByteArray> *);
+    DlgIgnore(QWidget *, Network *, QSettings *, QMap <QString, QByteArray> *);
     void add_ignore(QString);
     void clear();
 
@@ -40,7 +41,6 @@ private:
     QWidget *myparent;
     Network *pNetwork;
     QSettings *settings;
-    TabContainer *tabc;
     QMap <QString, QByteArray> *mNickAvatar;
 
 private slots:

@@ -20,7 +20,7 @@
 
 #include "dlg_ignore_ad.h"
 
-DlgIgnoreAd::DlgIgnoreAd(QWidget *parent, Network *param1, QSettings *param2, TabContainer *param3, QString param4, QString param5) : QDialog(parent)
+DlgIgnoreAd::DlgIgnoreAd(QWidget *parent, Network *param1, QSettings *param2, QString param3, QString param4) : QDialog(parent)
 {
     ui.setupUi(this);
     setAttribute(Qt::WA_DeleteOnClose);
@@ -28,9 +28,8 @@ DlgIgnoreAd::DlgIgnoreAd(QWidget *parent, Network *param1, QSettings *param2, Ta
 
     pNetwork = param1;
     settings = param2;
-    tabc = param3;
-    strStatus = param4;
-    ui.lineEdit_nick->setText(param5);
+    strStatus = param3;
+    ui.lineEdit_nick->setText(param4);
 
     if (strStatus == "add")
         ui.label_msg->setText(tr("Enter a nickname to be added:"));

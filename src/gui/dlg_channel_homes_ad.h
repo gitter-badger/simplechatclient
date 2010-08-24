@@ -24,20 +24,18 @@
 #include <QDialog>
 #include <QSettings>
 #include "network.h"
-#include "tab_container.h"
 #include "ui_channel_homes_ad.h"
 
 class DlgChannelHomesAd : public QDialog
 {
     Q_OBJECT
 public:
-    DlgChannelHomesAd(QWidget *, Network *, QSettings *, TabContainer *, QString);
+    DlgChannelHomesAd(QWidget *, Network *, QSettings *, QString);
 
 private:
     Ui::uiChannelHomesAd ui;
     Network *pNetwork;
     QSettings *settings;
-    TabContainer *tabc;
     QString strStatus;
 
 private slots:

@@ -21,17 +21,18 @@
 #ifndef DLG_CHANNEL_FAVOURITES_H
 #define DLG_CHANNEL_FAVOURITES_H
 
+#include <QCloseEvent>
 #include <QDialog>
+#include <QShowEvent>
 #include "dlg_channel_favourites_ad.h"
 #include "network.h"
-#include "tab_container.h"
 #include "ui_channel_favourites.h"
 
 class DlgChannelFavourites : public QDialog
 {
     Q_OBJECT
 public:
-    DlgChannelFavourites(QWidget *, Network *, QSettings *, TabContainer *, QMap <QString, QByteArray> *);
+    DlgChannelFavourites(QWidget *, Network *, QSettings *, QMap <QString, QByteArray> *);
     void add_channel(QString);
     void clear();
 
@@ -40,7 +41,6 @@ private:
     QWidget *myparent;
     Network *pNetwork;
     QSettings *settings;
-    TabContainer *tabc;
     QMap <QString, QByteArray> *mChannelAvatar;
 
 private slots:

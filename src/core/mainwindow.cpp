@@ -76,7 +76,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
 // settings
     settings.clear();
-    settings.setValue("version", "1.0.7.415");
+    settings.setValue("version", "1.0.7.416");
     settings.setValue("debug", "off");
     settings.setValue("logged", "off");
     settings.setValue("busy", "off");
@@ -113,11 +113,11 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
     pDlg_channel_settings = new DlgChannelSettings(this, pNetwork, &settings);
     pDlg_moderation = new DlgModeration(this, &settings);
-    pDlg_channel_list = new DlgChannelList(this, &settings, pTabC);
-    pDlg_channel_homes = new DlgChannelHomes(this, pNetwork, &settings, pTabC, &mChannelAvatar, pDlg_channel_settings);
-    pDlg_channel_favourites = new DlgChannelFavourites(this, pNetwork, &settings, pTabC, &mChannelAvatar);
-    pDlg_friends = new DlgFriends(this, pNetwork, &settings, pTabC, &mNickAvatar);
-    pDlg_ignore = new DlgIgnore(this, pNetwork, &settings, pTabC, &mNickAvatar);
+    pDlg_channel_list = new DlgChannelList(this, &settings);
+    pDlg_channel_homes = new DlgChannelHomes(this, pNetwork, &settings, &mChannelAvatar, pDlg_channel_settings);
+    pDlg_channel_favourites = new DlgChannelFavourites(this, pNetwork, &settings, &mChannelAvatar);
+    pDlg_friends = new DlgFriends(this, pNetwork, &settings, &mNickAvatar);
+    pDlg_ignore = new DlgIgnore(this, pNetwork, &settings, &mNickAvatar);
 
     pOnet_kernel = new OnetKernel(this, pNetwork, &settings, pTabC, &mNickAvatar, &mChannelAvatar, pDlg_channel_settings, pDlg_channel_homes, pDlg_channel_list, pDlg_channel_favourites, pDlg_friends, pDlg_ignore, pDlg_moderation);
     pOnet_auth = new OnetAuth(&settings, pTabC);

@@ -20,7 +20,7 @@
 
 #include "dlg_channel_homes_ad.h"
 
-DlgChannelHomesAd::DlgChannelHomesAd(QWidget *parent, Network *param1, QSettings *param2, TabContainer *param3, QString param4) : QDialog(parent)
+DlgChannelHomesAd::DlgChannelHomesAd(QWidget *parent, Network *param1, QSettings *param2, QString param3) : QDialog(parent)
 {
     ui.setupUi(this);
     setAttribute(Qt::WA_DeleteOnClose);
@@ -28,8 +28,7 @@ DlgChannelHomesAd::DlgChannelHomesAd(QWidget *parent, Network *param1, QSettings
 
     pNetwork = param1;
     settings = param2;
-    tabc = param3;
-    strStatus = param4;
+    strStatus = param3;
 
     if (strStatus == "create")
         ui.label_msg->setText(tr("Enter the name of the new channel:"));
