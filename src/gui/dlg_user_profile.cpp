@@ -34,7 +34,7 @@ DlgUserProfile::DlgUserProfile(QWidget *parent, Network *param1, QSettings *para
     ui.label_birthdate->setText(tr("Birthdate:"));
     ui.label_city->setText(tr("City:"));
     ui.label_country->setText(tr("Country:"));
-    ui.label_shortDesc->setText(tr("ShortDesc:"));
+    ui.label_longDesc->setText(tr("Desc:"));
     ui.label_type->setText(tr("Type:"));
     ui.label_email->setText(tr("Email:"));
     ui.label_www->setText(tr("Website:"));
@@ -44,12 +44,12 @@ void DlgUserProfile::show_info()
 {
     ui.label_avatar->setText("");
     ui.label_nick->setText(QString("<p style=\"font-weight:bold;\"> %1</p>").arg(sCurrentNickInfo.nick));
-    ui.plainTextEdit_longDesc->setPlainText(sCurrentNickInfo.longDesc);
+    ui.plainTextEdit_shortDesc->setPlainText(sCurrentNickInfo.shortDesc);
     ui.lineEdit_sex->setText(convert_sex(sCurrentNickInfo.sex));
     ui.lineEdit_birthdate->setText(sCurrentNickInfo.birthdate);
     ui.lineEdit_city->setText(sCurrentNickInfo.city);
     ui.lineEdit_country->setText(convert_country(sCurrentNickInfo.country));
-    ui.plainTextEdit_shortDesc->setPlainText(sCurrentNickInfo.shortDesc);
+    ui.plainTextEdit_longDesc->setPlainText(sCurrentNickInfo.longDesc);
     ui.lineEdit_type->setText(convert_type(sCurrentNickInfo.type));
     ui.lineEdit_email->setText(sCurrentNickInfo.email);
     ui.lineEdit_www->setText(sCurrentNickInfo.www);

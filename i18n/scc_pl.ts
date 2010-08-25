@@ -2126,7 +2126,7 @@
         <translation>Kraj:</translation>
     </message>
     <message>
-        <source>ShortDesc:</source>
+        <source>Desc:</source>
         <translation>Opis:</translation>
     </message>
     <message>
