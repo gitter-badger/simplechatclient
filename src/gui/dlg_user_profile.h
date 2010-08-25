@@ -63,6 +63,7 @@ private:
 
     void show_info();
     QString convert_sex(QString);
+    QString convert_country(QString);
     QString convert_type(QString);
     void show_avatar(QString);
 
