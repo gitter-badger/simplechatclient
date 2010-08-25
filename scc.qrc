@@ -18,5 +18,6 @@
         <file>images/channel_avatar.png</file>
         <file>images/basic_conf.png</file>
         <file>images/adv_conf.png</file>
+        <file>images/dev.png</file>
     </qresource>
 </RCC>

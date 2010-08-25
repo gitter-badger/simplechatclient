@@ -168,6 +168,8 @@ void OnetKernel::kernel(QString param1)
             raw_333();
         else if (strDataList[1].toLower() == "353")
             raw_353();
+        else if (strDataList[1].toLower() == "355")
+            raw_355();
         else if (strDataList[1].toLower() == "366")
             raw_366();
         else if (strDataList[1].toLower() == "371")
@@ -2175,6 +2177,12 @@ void OnetKernel::raw_353()
             }
         }
     }
+}
+
+// :cf1f1.onet 355 Merovingian #uwaga 958 :users
+void OnetKernel::raw_355()
+{
+// ignore
 }
 
 // :cf1f2.onet 366 scc_test #scc :End of /NAMES list.

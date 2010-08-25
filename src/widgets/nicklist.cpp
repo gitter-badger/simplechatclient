@@ -287,6 +287,7 @@ void Nicklist::nicklist_sort(sNickStatus *nick_status)
 {
     sNickStatus nick_status_sorted;
 
+    nicklist_quicksort("dev", nick_status, &nick_status_sorted);
     nicklist_quicksort("admin", nick_status, &nick_status_sorted);
     nicklist_quicksort("owner", nick_status, &nick_status_sorted);
     nicklist_quicksort("op", nick_status, &nick_status_sorted);
@@ -390,7 +391,8 @@ void Nicklist::nicklist_refresh(sNickStatus *nick_status)
             bBusy = true;
         }
 
-        if (strStatus == "admin") icon = QPixmap(":/images/admin.png");
+        if (strStatus == "dev") icon = QPixmap(":/images/dev.png");
+        else if (strStatus == "admin") icon = QPixmap(":/images/admin.png");
         else if (strStatus == "owner") icon = QPixmap(":/images/owner.png");
         else if (strStatus == "op") icon = QPixmap(":/images/op.png");
         else if (strStatus == "halfop") icon = QPixmap(":/images/halfop.png");

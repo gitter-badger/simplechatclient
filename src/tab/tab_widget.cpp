@@ -755,6 +755,7 @@ void TabWidget::add_user(QString strNick, QString strSuffix, int iRefresh)
     bool bPublicCam = false;  // W
     bool bPrivCam = false;    // V
     bool bAdmin = false;      // o
+    bool bDeveloper = false;  // O
 
     for (int i = 0; i < strNick.length(); i++)
     {
@@ -829,6 +830,10 @@ void TabWidget::add_user(QString strNick, QString strSuffix, int iRefresh)
                     bAdmin = true;
                     strmSuffix.append("o");
                     break;
+            case 'O':
+                    bDeveloper = true;
+                    strmSuffix.append("O");
+                    break;
             default:
                     break;
         }
@@ -838,7 +843,8 @@ void TabWidget::add_user(QString strNick, QString strSuffix, int iRefresh)
     nick_suffix.insert(strNick, strmSuffix);
     QString strStatus;
 
-    if (bAdmin == true) strStatus = "admin";
+    if (bDeveloper == true) strStatus = "dev";
+    else if (bAdmin == true) strStatus = "admin";
     else if (bOwner == true) strStatus = "owner";
     else if (bOp == true) strStatus = "op";
     else if (bHalfop == true) strStatus = "halfop";

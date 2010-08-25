@@ -264,7 +264,7 @@ QString OnetAuth::get_version(QString strData)
         }
     }
 
-    return "20090619-1228_2";
+    return "20100816-1008";
 }
 
 void OnetAuth::request_finished(QString strNickAuth, QString strData)
