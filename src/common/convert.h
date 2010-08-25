@@ -18,63 +18,24 @@
  *                                                                          *
  ****************************************************************************/
 
-#ifndef DLG_USER_PROFILE_H
-#define DLG_USER_PROFILE_H
+#ifndef CONVERT_H
+#define CONVERT_H
 
-#include <QDialog>
-#include <QNetworkAccessManager>
-#include <QNetworkReply>
-#include "convert.h"
-#include "network.h"
-#include "ui_user_profile.h"
+#include <QCoreApplication>
+#include <QFile>
+#include <QObject>
+#include <QSettings>
 
-struct NickInfo
-{
-    QString nick;
-    QString avatar;
-    QString birthdate;
-    QString city;
-    QString country;
-    QString email;
-    QString longDesc;
-    QString offmsg; // not inportant
-    QString prefs; // not important
-    QString rank; // not important
-    QString sex;
-    QString shortDesc;
-    QString tags; // not important
-    QString type;
-    QString vEmail; // not important
-    QString www;
-};
-typedef NickInfo sNickInfo;
-
-
-class DlgUserProfile : public QDialog
+class Convert : public QObject
 {
     Q_OBJECT
 public:
-    DlgUserProfile(QWidget *, Network *, QSettings *, sNickInfo);
+    Convert(QSettings *);
+    void convert_text(QString *, QString *);
 
 private:
-    Ui::uiUserProfile ui;
-    Network *pNetwork;
     QSettings *settings;
-    sNickInfo sCurrentNickInfo;
-
-    void show_info();
-    QString convert_desc(QString);
-    QString convert_sex(QString);
-    QString convert_country(QString);
-    QString convert_type(QString);
-    void show_avatar(QString);
-
-private slots:
-    void button_close();
-
-protected:
-    virtual void showEvent(QShowEvent *);
 
 };
 
-#endif // DLG_USER_PROFILE_H
+#endif // CONVERT_H

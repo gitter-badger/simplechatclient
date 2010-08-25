@@ -54,7 +54,8 @@ SOURCES += src/avatars/channel_avatar.cpp \
     src/widgets/inputline.cpp \
     src/widgets/mainwebview.cpp \
     src/widgets/nicklist.cpp \
-    src/widgets/nicklistdelegate.cpp
+    src/widgets/nicklistdelegate.cpp \
+    src/common/convert.cpp
 HEADERS += src/avatars/channel_avatar.h \
     src/avatars/nick_avatar.h \
     src/common/commands.h \
@@ -101,7 +102,8 @@ HEADERS += src/avatars/channel_avatar.h \
     src/widgets/inputline.h \
     src/widgets/mainwebview.h \
     src/widgets/nicklist.h \
-    src/widgets/nicklistdelegate.h
+    src/widgets/nicklistdelegate.h \
+    src/common/convert.h
 FORMS += ui/about.ui \
     ui/cam.ui \
     ui/channel_favourites.ui \

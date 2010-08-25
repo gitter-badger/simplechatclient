@@ -2126,8 +2126,8 @@
         <translation>Kraj:</translation>
     </message>
     <message>
-        <source>Desc:</source>
-        <translation>Opis:</translation>
+        <source>Hobby:</source>
+        <translation>Zainteresowania:</translation>
     </message>
     <message>
         <source>Type:</source>

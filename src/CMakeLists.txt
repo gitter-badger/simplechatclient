@@ -30,6 +30,7 @@ set (scc_SRCS
 	avatars/nick_avatar.cpp
 	common/commands.cpp
 	common/config.cpp
+	common/convert.cpp
 	common/crypt.cpp
 	common/log.cpp
 	common/replace.cpp
@@ -80,6 +81,7 @@ set (scc_MOC_HDRS
 	avatars/nick_avatar.h
 	common/commands.h
 	common/config.h
+	common/convert.h
 	common/crypt.h
 	common/log.h
 	common/replace.h

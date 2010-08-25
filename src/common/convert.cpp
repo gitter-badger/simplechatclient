@@ -1,0 +1,189 @@
+/****************************************************************************
+ *                                                                          *
+ *   This file is part of Simple Chat Client                                *
+ *   Copyright (C) 2010 Piotr Łuczko <piotr.luczko@gmail.com>               *
+ *                                                                          *
+ *   This program is free software: you can redistribute it and/or modify   *
+ *   it under the terms of the GNU General Public License as published by   *
+ *   the Free Software Foundation, either version 3 of the License, or      *
+ *   (at your option) any later version.                                    *
+ *                                                                          *
+ *   This program is distributed in the hope that it will be useful,        *
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of         *
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the          *
+ *   GNU General Public License for more details.                           *
+ *                                                                          *
+ *   You should have received a copy of the GNU General Public License      *
+ *   along with this program.  If not, see <http://www.gnu.org/licenses/>.  *
+ *                                                                          *
+ ****************************************************************************/
+
+#include "convert.h"
+
+Convert::Convert(QSettings *param1)
+{
+    settings = param1;
+}
+
+void Convert::convert_text(QString *strData, QString *strLastContent)
+{
+// emoticons
+    if (strData->indexOf("%I") != -1)
+    {
+        QString strPath = QCoreApplication::applicationDirPath();
+
+        while (strData->indexOf("%I") != -1)
+        {
+            int iStartPos = strData->indexOf("%I");
+            int iEndPos = strData->indexOf("%", iStartPos+1);
+            int iSpacePos = strData->indexOf(" ", iStartPos);
+
+            if (iEndPos != -1)
+            {
+                if ((iEndPos < iSpacePos) || (iSpacePos == -1))
+                {
+                    iEndPos++;
+                    QString strEmoticonFull = strData->mid(iStartPos, iEndPos-iStartPos);
+                    QString strEmoticon = strEmoticonFull.mid(2,strEmoticonFull.length()-3);
+                    QString strInsert;
+
+                    QString strEmoticonFull1 = strPath+"/3rdparty/emoticons/"+strEmoticon+".gif";
+                    QString strEmoticonFull2 = strPath+"/3rdparty/emoticons_other/"+strEmoticon+".gif";
+                    QFile f1(strEmoticonFull1);
+                    QFile f2(strEmoticonFull2);
+                    if ((f1.exists() == true) && (settings->value("hide_formating").toString() == "off"))
+                    {
+#ifdef Q_WS_X11
+                        strInsert = "<img src=\"file://"+strEmoticonFull1+"\" alt=\""+strEmoticon+"\" />";
+#else
+                        strInsert = "<img src=\""+strEmoticonFull1+"\" alt=\""+strEmoticon+"\" />";
+#endif
+                    }
+                    else if ((f2.exists() == true) && (settings->value("hide_formating").toString() == "off"))
+                    {
+#ifdef Q_WS_X11
+                        strInsert = "<img src=\"file://"+strEmoticonFull2+"\" alt=\""+strEmoticon+"\" />";
+#else
+                        strInsert = "<img src=\""+strEmoticonFull2+"\" alt=\""+strEmoticon+"\" />";
+#endif
+                    }
+                    // emoticon not exist or hide formating
+                    else
+                        strInsert = "//"+strEmoticon;
+
+                    strData->replace(strEmoticonFull, strInsert);
+                }
+                else
+                    strData->insert(iStartPos+1, " "); // fix wrong %I
+            }
+            else
+                break;
+        }
+    }
+
+// fonts
+    if (strData->indexOf("%F") != -1)
+    {
+        int iCount = strData->count("%F");
+
+        while (strData->indexOf("%F") != -1)
+        {
+            int iStartPos = strData->indexOf("%F");
+            int iEndPos = strData->indexOf("%", iStartPos+1);
+            int iSpacePos = strData->indexOf(" ", iStartPos);
+
+            if (iEndPos != -1)
+            {
+                if ((iEndPos < iSpacePos) || (iSpacePos == -1))
+                {
+                    iEndPos++;
+                    QString strFontFull = strData->mid(iStartPos, iEndPos-iStartPos);
+                    QString strFont = strFontFull.mid(2,strFontFull.length()-3);
+                    QString strInsert;
+
+                    QString strFontStyle = "normal";
+                    QString strFontFamily = "Verdana";
+                    QString strFontWeight = "normal";
+                    QString strFontName = "Verdana";
+
+                    if (strFont.indexOf(":") != -1)
+                    {
+                         strFontWeight = strFont.left(strFont.indexOf(":"));
+                         strFontName = strFont.right(strFont.length()-strFont.indexOf(":")-1);
+
+                         for (int fw = 0; fw < strFontWeight.length(); fw++)
+                         {
+                             if (strFontWeight[fw] == 'b') strFontWeight = "bold";
+                             else if (strFontWeight[fw] == 'i') strFontStyle = "italic";
+                         }
+
+                         if (strFontName == "arial") strFontFamily = "Arial";
+                         else if (strFontName == "times") strFontFamily = "Times New Roman";
+                         else if (strFontName == "verdana") strFontFamily = "Verdana";
+                         else if (strFontName == "tahoma") strFontFamily = "Tahoma";
+                         else if (strFontName == "courier") strFontFamily = "Courier New";
+
+                         strInsert = "<span style=\"font-weight:"+strFontWeight+";font-style:"+strFontStyle+";font-family:"+strFontFamily+";\">";
+                    }
+                    else
+                    {
+                         if (strFont == "arial") strFontFamily = "Arial";
+                         else if (strFont == "times") strFontFamily = "Times New Roman";
+                         else if (strFont == "verdana") strFontFamily = "Verdana";
+                         else if (strFont == "tahoma") strFontFamily = "Tahoma";
+                         else if (strFont == "courier") strFontFamily = "Courier New";
+                         else
+                         {
+                             for (int fw = 0; fw < strFont.length(); fw++)
+                             {
+                                 if (strFont[fw] == 'b') strFontWeight = "bold";
+                                 else if (strFont[fw] == 'i') strFontStyle = "italic";
+                             }
+                         }
+                         strInsert = "<span style=\"font-weight:"+strFontWeight+";font-style:"+strFontStyle+";font-family:"+strFontFamily+";\">";
+                    }
+
+                    strData->replace(strFontFull, strInsert);
+                }
+                else
+                    strData->insert(iStartPos+1, " "); // fix wrong %F
+            }
+            else
+                break;
+        }
+
+        QString strSpan;
+        for (int i = 0; i < iCount; i++)
+            strSpan += "</span>";
+
+        (*strLastContent) = strSpan+(*strLastContent);
+    }
+
+// colors
+    if (settings->value("hide_formating").toString() == "off")
+    {
+        int iCount = strData->count("%C");
+
+        strData->replace("%C000000%", "<span style=\"color:#000000;\">");
+        strData->replace("%C623c00%", "<span style=\"color:#623c00;\">");
+        strData->replace("%Cc86c00%", "<span style=\"color:#c86c00;\">");
+        strData->replace("%Cff6500%", "<span style=\"color:#ff6500;\">");
+        strData->replace("%Cff0000%", "<span style=\"color:#ff0000;\">");
+        strData->replace("%Ce40f0f%", "<span style=\"color:#e40f0f;\">");
+        strData->replace("%C990033%", "<span style=\"color:#990033;\">");
+        strData->replace("%C8800ab%", "<span style=\"color:#8800ab;\">");
+        strData->replace("%Cce00ff%", "<span style=\"color:#ce00ff;\">");
+        strData->replace("%C0f2ab1%", "<span style=\"color:#0f2ab1;\">");
+        strData->replace("%C3030ce%", "<span style=\"color:#3030ce;\">");
+        strData->replace("%C006699%", "<span style=\"color:#006699;\">");
+        strData->replace("%C1a866e%", "<span style=\"color:#1a866e;\">");
+        strData->replace("%C008100%", "<span style=\"color:#008100;\">");
+        strData->replace("%C959595%", "<span style=\"color:#959595;\">");
+
+        QString strSpan;
+        for (int i = 0; i < iCount; i++)
+            strSpan += "</span>";
+
+        (*strLastContent) = strSpan+(*strLastContent);
+    }
+}
