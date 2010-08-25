@@ -1915,6 +1915,10 @@
         <translation>Whois</translation>
     </message>
     <message>
+        <source>Profile</source>
+        <translation>Wizytówka</translation>
+    </message>
+    <message>
         <source>Webcam</source>
         <translation>Kamerka</translation>
     </message>
@@ -2097,6 +2101,69 @@
     <message>
         <source>Kick &amp; Ban</source>
         <translation>Banuj i wyrzuć</translation>
+    </message>
+</context>
+<context>
+    <name>DlgUserProfile</name>
+    <message>
+        <source>Profile</source>
+        <translation>Wizytówka</translation>
+    </message>
+    <message>
+        <source>Sex:</source>
+        <translation>Płeć:</translation>
+    </message>
+    <message>
+        <source>Birthdate:</source>
+        <translation>Data urodzenia:</translation>
+    </message>
+    <message>
+        <source>City:</source>
+        <translation>Miasto:</translation>
+    </message>
+    <message>
+        <source>Country:</source>
+        <translation>Kraj:</translation>
+    </message>
+    <message>
+        <source>ShortDesc:</source>
+        <translation>Opis:</translation>
+    </message>
+    <message>
+        <source>Type:</source>
+        <translation>Status:</translation>
+    </message>
+    <message>
+        <source>Email:</source>
+        <translation>Email:</translation>
+    </message>
+    <message>
+        <source>Female</source>
+        <translation>Kobieta</translation>
+    </message>
+    <message>
+        <source>Male</source>
+        <translation>Mężczyzna</translation>
+    </message>
+    <message>
+        <source>Website:</source>
+        <translation>Website:</translation>
+    </message>
+    <message>
+        <source>Novice</source>
+        <translation>Nowicjusz</translation>
+    </message>
+    <message>
+        <source>Beginner</source>
+        <translation>Bywalec</translation>
+    </message>
+    <message>
+        <source>Master</source>
+        <translation>Wyjadacz</translation>
+    </message>
+    <message>
+        <source>Guru</source>
+        <translation>Guru</translation>
     </message>
 </context>
 </TS>

@@ -1251,6 +1251,9 @@ void OnetKernel::raw_111n()
 #endif
             }
         }
+
+        // set user info
+        tabc->set_user_info(strNick, strInfo, strValue);
     }
 }
 

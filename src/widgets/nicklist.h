@@ -23,6 +23,7 @@
 
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
+#include "dlg_user_profile.h"
 
 #include <QContextMenuEvent>
 #ifdef Q_WS_X11
@@ -51,6 +52,7 @@ public:
     Nicklist(QWidget *, Network *, QSettings *, QString, QMap <QString, QByteArray> *);
     ~Nicklist();
     void set_open_channels(QStringList);
+    void set_user_info(QString, QString, QString);
     void nicklist_add(QString, QString, int, sNickStatus *);
     void nicklist_remove(QString, sNickStatus *);
     bool nicklist_exist(QString, sNickStatus *);
@@ -69,6 +71,7 @@ private:
     enum { maxOpenChannels = 50 };
     QAction *openChannelsActs[maxOpenChannels];
     QMap <QString, QByteArray> *mNickAvatar;
+    sNickInfo sCurrentUserInfo;
 
     void nicklist_sort(sNickStatus *);
     void nicklist_quicksort(QString, sNickStatus *, sNickStatus *);
@@ -76,6 +79,7 @@ private:
 private slots:
     void priv();
     void whois();
+    void profile();
     void cam();
     void friends_add();
     void friends_del();
@@ -93,6 +97,7 @@ private slots:
     void voice_add();
     void voice_del();
     void invite();
+    void item_selected();
 
 protected:
     virtual void contextMenuEvent(QContextMenuEvent *);

@@ -43,6 +43,7 @@ SOURCES += src/avatars/channel_avatar.cpp \
     src/gui/dlg_privilege.cpp \
     src/gui/dlg_register_nick.cpp \
     src/gui/dlg_update.cpp \
+    src/gui/dlg_user_profile.cpp \
     src/notify/notify.cpp \
     src/onet/onet_auth.cpp \
     src/onet/onet_kernel.cpp \
@@ -88,6 +89,7 @@ HEADERS += src/avatars/channel_avatar.h \
     src/gui/dlg_privilege.h \
     src/gui/dlg_register_nick.h \
     src/gui/dlg_update.h \
+    src/gui/dlg_user_profile.h \
     src/notify/notify.h \
     src/onet/onet_auth.h \
     src/onet/onet_kernel.h \
@@ -118,4 +120,5 @@ FORMS += ui/about.ui \
     ui/options.ui \
     ui/privilege.ui \
     ui/register_nick.ui \
-    ui/update.ui
+    ui/update.ui \
+    ui/user_profile.ui

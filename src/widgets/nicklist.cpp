@@ -27,6 +27,8 @@ Nicklist::Nicklist(QWidget *parent, Network *param1, QSettings *param2, QString 
     settings = param2;
     strChannel = param3;
     mNickAvatar = param4;
+
+    QObject::connect(this, SIGNAL(itemSelectionChanged()), this, SLOT(item_selected()));
 }
 
 Nicklist::~Nicklist()
@@ -53,6 +55,18 @@ void Nicklist::whois()
 
     QString strNick = this->selectedItems().at(0)->data(Qt::UserRole).toString();
     pNetwork->send(QString("WHOIS %1 %1").arg(strNick));
+}
+
+void Nicklist::profile()
+{
+    if (this->selectedItems().count() == 0) return;
+
+    QString strNick = this->selectedItems().at(0)->data(Qt::UserRole).toString();
+
+    if (strNick == sCurrentUserInfo.nick)
+    {
+        (new DlgUserProfile(myparent, pNetwork, settings, sCurrentUserInfo))->show();
+    }
 }
 
 void Nicklist::cam()
@@ -435,6 +449,80 @@ void Nicklist::nicklist_refresh_avatars()
     }
 }
 
+void Nicklist::set_user_info(QString strNick, QString strKey, QString strValue)
+{
+    if (this->selectedItems().count() == 0) return;
+
+    QString strNickSelected = this->selectedItems().at(0)->data(Qt::UserRole).toString();
+
+    if (strNick == strNickSelected)
+    {
+        sCurrentUserInfo.nick = strNick;
+
+        if (strKey == "avatar")
+            sCurrentUserInfo.avatar = strValue;
+        else if (strKey == "birthdate")
+            sCurrentUserInfo.birthdate = strValue;
+        else if (strKey == "city")
+            sCurrentUserInfo.city = strValue;
+        else if (strKey == "country")
+            sCurrentUserInfo.country = strValue;
+        else if (strKey == "email")
+            sCurrentUserInfo.email = strValue;
+        else if (strKey == "longDesc")
+            sCurrentUserInfo.longDesc = strValue;
+        else if (strKey == "offmsg")
+            sCurrentUserInfo.offmsg = strValue;
+        else if (strKey == "prefs")
+            sCurrentUserInfo.prefs = strValue;
+        else if (strKey == "rank")
+            sCurrentUserInfo.rank = strValue;
+        else if (strKey == "sex")
+            sCurrentUserInfo.sex = strValue;
+        else if (strKey == "shortDesc")
+            sCurrentUserInfo.shortDesc = strValue;
+        else if (strKey == "tags")
+            sCurrentUserInfo.tags = strValue;
+        else if (strKey == "type")
+            sCurrentUserInfo.type = strValue;
+        else if (strKey == "vEmail")
+            sCurrentUserInfo.vEmail = strValue;
+        else if (strKey == "www")
+            sCurrentUserInfo.www = strValue;
+    }
+}
+
+void Nicklist::item_selected()
+{
+    if (this->selectedItems().count() == 0) return;
+
+    QString strNick = this->selectedItems().at(0)->data(Qt::UserRole).toString();
+
+    if (strNick[0] != '~')
+    {
+        // clear user info
+        sCurrentUserInfo.avatar = QString::null;
+        sCurrentUserInfo.birthdate = QString::null;
+        sCurrentUserInfo.city = QString::null;
+        sCurrentUserInfo.country = QString::null;
+        sCurrentUserInfo.email = QString::null;
+        sCurrentUserInfo.longDesc = QString::null;
+        sCurrentUserInfo.nick = QString::null;
+        sCurrentUserInfo.offmsg = QString::null;
+        sCurrentUserInfo.prefs = QString::null;
+        sCurrentUserInfo.rank = QString::null;
+        sCurrentUserInfo.sex = QString::null;
+        sCurrentUserInfo.shortDesc = QString::null;
+        sCurrentUserInfo.tags = QString::null;
+        sCurrentUserInfo.type = QString::null;
+        sCurrentUserInfo.vEmail = QString::null;
+        sCurrentUserInfo.www = QString::null;
+
+        // get new user info
+        pNetwork->send(QString("NS INFO %1").arg(strNick));
+    }
+}
+
 void Nicklist::contextMenuEvent(QContextMenuEvent *e)
 {
     if (this->selectedItems().count() == 0) return;
@@ -490,7 +578,11 @@ void Nicklist::contextMenuEvent(QContextMenuEvent *e)
     menu->addSeparator();
     menu->addAction(tr("Priv"), this, SLOT(priv()));
     menu->addAction(tr("Whois"), this, SLOT(whois()));
-    menu->addAction(tr("Webcam"), this, SLOT(cam()));
+    if (strNick[0] != '~')
+    {
+        menu->addAction(tr("Profile"), this, SLOT(profile()));
+        menu->addAction(tr("Webcam"), this, SLOT(cam()));
+    }
     menu->addMenu(minvite);
     menu->addMenu(friends);
     menu->addMenu(ignore);

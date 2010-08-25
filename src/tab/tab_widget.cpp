@@ -1127,6 +1127,11 @@ void TabWidget::clear_nicklist()
     nick_list->clear();
 }
 
+void TabWidget::set_user_info(QString strNick, QString strKey, QString strValue)
+{
+    nick_list->set_user_info(strNick, strKey, strValue);
+}
+
 void TabWidget::set_open_channels(QStringList strOpenChannels)
 {
     nick_list->set_open_channels(strOpenChannels);

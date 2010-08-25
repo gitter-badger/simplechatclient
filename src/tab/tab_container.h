@@ -61,6 +61,7 @@ public:
     void clear_channel_all_nick_avatars(QString);
     void refresh_nicklist(QString);
     int get_nick_channels(QString);
+    void set_user_info(QString, QString, QString);
     QStringList get_open_channels();
 
 public slots:

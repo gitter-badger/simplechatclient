@@ -80,6 +80,7 @@ public:
     void change_flag(QString, QString);
     void update_nick(QString);
     void clear_nicklist();
+    void set_user_info(QString, QString, QString);
     void set_open_channels(QStringList);
     bool nicklist_exist(QString);
     void update_nick_avatar();

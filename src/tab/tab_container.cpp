@@ -549,6 +549,18 @@ void TabContainer::update_channel_avatar(QString strChannel)
     }
 }
 
+void TabContainer::set_user_info(QString strNick, QString strKey, QString strValue)
+{
+    for (int i = 0; i < 50; i++)
+    {
+        if (free_list[i] == 'u')
+        {
+            if (tw[i]->nicklist_exist(strNick) == true)
+                tw[i]->set_user_info(strNick, strKey, strValue);
+        }
+    }
+}
+
 void TabContainer::sshow_msg(QString strChannel, QString strData, int iLevel)
 {
     show_msg(strChannel, strData, iLevel);
