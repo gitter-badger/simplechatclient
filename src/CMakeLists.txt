@@ -10,6 +10,7 @@ set (scc_UIS
 	../ui/channel_list.ui
 	../ui/channel_settings.ui
 	../ui/email.ui
+	../ui/emoticons.ui
 	../ui/friends.ui
 	../ui/friends_ad.ui
 	../ui/ignore.ui
@@ -49,6 +50,7 @@ set (scc_SRCS
 	gui/dlg_channel_list.cpp
 	gui/dlg_channel_settings.cpp
 	gui/dlg_email.cpp
+	gui/dlg_emoticons.cpp
 	gui/dlg_friends.cpp
 	gui/dlg_friends_ad.cpp
 	gui/dlg_ignore.cpp
@@ -96,6 +98,7 @@ set (scc_MOC_HDRS
 	gui/dlg_channel_list.h
 	gui/dlg_channel_settings.h
 	gui/dlg_email.h
+	gui/dlg_emoticons.h
 	gui/dlg_friends.h
 	gui/dlg_friends_ad.h
 	gui/dlg_ignore.h

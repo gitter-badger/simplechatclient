@@ -196,14 +196,6 @@ TabWidget::TabWidget(QWidget *parent, Network *param1, QSettings *param2, QStrin
     sizeMenu->addAction(size18Act);
     sizeMenu->addAction(size20Act);
 
-    size = new QPushButton(this);
-    size->setText(tr("Font:")+strFontSize.left(strFontSize.length()-2));
-    size->setParent(this);
-    size->setMaximumWidth(250);
-    size->setMaximumHeight(25);
-    size->setMenu(sizeMenu);
-    size->show();
-
     color = new QComboBox(this);
     color->setParent(this);
     color->setIconSize(QSize(50,10));
@@ -220,6 +212,18 @@ TabWidget::TabWidget(QWidget *parent, Network *param1, QSettings *param2, QStrin
         iComboBoxColors++;
     }
     color->show();
+
+    size = new QPushButton(this);
+    size->setText(tr("Font:")+strFontSize.left(strFontSize.length()-2));
+    size->setParent(this);
+    size->setMaximumWidth(250);
+    size->setMaximumHeight(25);
+    size->setMenu(sizeMenu);
+    size->show();
+
+    emoticons = new QPushButton(QIcon(":/images/logo_64.png"), "", this);
+    emoticons->setParent(this);
+    emoticons->show();
 
     channel_settings = new QPushButton(this);
     channel_settings->setText(tr("Settings"));
@@ -240,6 +244,7 @@ TabWidget::TabWidget(QWidget *parent, Network *param1, QSettings *param2, QStrin
     toolLayout->addWidget(fontfamily);
     toolLayout->addWidget(color);
     toolLayout->addWidget(size);
+    toolLayout->addWidget(emoticons);
     toolLayout->addWidget(channel_settings);
     toolLayout->addWidget(moderation);
     toolWidget->setLayout(toolLayout);
@@ -400,7 +405,7 @@ TabWidget::TabWidget(QWidget *parent, Network *param1, QSettings *param2, QStrin
     QObject::connect(size20Act, SIGNAL(triggered()), this, SLOT(size20_triggered()));
 
     QObject::connect(color, SIGNAL(currentIndexChanged(int)), this, SLOT(color_clicked(int)));
-
+    QObject::connect(emoticons, SIGNAL(clicked()), this, SLOT(emoticons_clicked()));
     QObject::connect(channel_settings, SIGNAL(clicked()), this, SLOT(channel_settings_clicked()));
     QObject::connect(moderation, SIGNAL(clicked()), this, SLOT(moderation_clicked()));
     QObject::connect(moderSendButton, SIGNAL(clicked()), this, SLOT(moder_button_clicked()));
@@ -1323,6 +1328,13 @@ void TabWidget::color_clicked(int index)
     else if (index == 14) strCurrentColor = "#959595";
     else strCurrentColor = "#000000";
     inputline->setStyleSheet(QString("color: "+strCurrentColor));
+}
+
+// emoticons
+
+void TabWidget::emoticons_clicked()
+{
+    (new DlgEmoticons(myparent, inputline))->show();
 }
 
 // input line

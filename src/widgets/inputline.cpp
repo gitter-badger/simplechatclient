@@ -39,6 +39,17 @@ void Inputline::set_userslist(QListWidget *param1)
         users_list.append(param1->item(i)->data(Qt::UserRole).toString());
 }
 
+void Inputline::insert_text(QString strText)
+{
+    // pos
+    int iPos = this->cursorPosition();
+
+    // insert text
+    QString strLine = this->text();
+    strLine.insert(iPos, strText);
+    this->setText(strLine);
+}
+
 QString Inputline::get_word()
 {
     QString strWord = this->text();

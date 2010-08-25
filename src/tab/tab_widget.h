@@ -45,6 +45,7 @@
 #include "commands.h"
 #include "config.h"
 #include "dlg_channel_settings.h"
+#include "dlg_emoticons.h"
 #include "dlg_moderation.h"
 #include "log.h"
 #include "network.h"
@@ -123,6 +124,7 @@ private:
     QPushButton *italic;
     QPushButton *fontfamily;
     QComboBox *color;
+    QPushButton *emoticons;
     QPushButton *channel_settings;
     QPushButton *moderation;
 
@@ -200,6 +202,7 @@ private slots:
 
     void color_clicked(int);
 
+    void emoticons_clicked();
     void channel_settings_clicked();
     void moderation_clicked();
     void inputline_return_pressed();

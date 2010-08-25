@@ -18,35 +18,37 @@
  *                                                                          *
  ****************************************************************************/
 
-#ifndef INPUTLINE_H
-#define INPUTLINE_H
+#ifndef DLG_EMOTICONS_H
+#define DLG_EMOTICONS_H
 
-#include <QEvent>
-#include <QKeyEvent>
-#include <QLineEdit>
-#include <QListWidget>
+#include <QDialog>
+#include <QDir>
+#include <QFileInfoList>
+#include <QShowEvent>
+#include "inputline.h"
+#include "ui_emoticons.h"
 
-class Inputline : public QLineEdit
+class DlgEmoticons : public QDialog
 {
     Q_OBJECT
 public:
-    Inputline(QWidget*);
-    ~Inputline();
-    void set_userslist(QListWidget *);
-    void insert_text(QString);
+    DlgEmoticons(QWidget *, Inputline *);
 
 private:
-    int index;
-    QString strLastWord;
-    QList <QString> users_list;
-    QList <QString> find;
+    Ui::uiEmoticons ui;
+    Inputline *inputline;
 
-    QString get_word();
-    void set_word(QString);
+    void get_emoticons();
+
+private slots:
+    void clicked_standard(QModelIndex);
+    void clicked_extended(QModelIndex);
+    void button_insert();
+    void button_close();
 
 protected:
-    virtual bool event(QEvent *);
+    void showEvent(QShowEvent *);
 
 };
 
-#endif // INPUTLINE_H
+#endif // DLG_EMOTICONS_H
