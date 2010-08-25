@@ -57,6 +57,12 @@
           <height>291</height>
          </rect>
         </property>
+        <property name="dragDropMode">
+         <enum>QAbstractItemView::NoDragDrop</enum>
+        </property>
+        <property name="movement">
+         <enum>QListView::Static</enum>
+        </property>
         <property name="viewMode">
          <enum>QListView::IconMode</enum>
         </property>
@@ -74,6 +80,12 @@
           <width>401</width>
           <height>291</height>
          </rect>
+        </property>
+        <property name="dragDropMode">
+         <enum>QAbstractItemView::NoDragDrop</enum>
+        </property>
+        <property name="movement">
+         <enum>QListView::Static</enum>
         </property>
         <property name="viewMode">
          <enum>QListView::IconMode</enum>
