@@ -1,1 +1,0 @@
-cmake . -G "Visual Studio 9 2008" -DWIN32_QCA2_DIR=C:\qca2
