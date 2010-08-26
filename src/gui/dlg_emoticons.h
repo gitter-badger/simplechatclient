@@ -24,6 +24,7 @@
 #include <QDialog>
 #include <QDir>
 #include <QFileInfoList>
+#include <QPixmap>
 #include <QShowEvent>
 #include "inputline.h"
 #include "ui_emoticons.h"

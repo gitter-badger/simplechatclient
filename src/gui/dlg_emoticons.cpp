@@ -47,7 +47,15 @@ void DlgEmoticons::get_emoticons()
         {
             QString strEmoticon = strFileName.remove(".gif");
 
-            ui.listWidget_standard->addItem(new QListWidgetItem(QIcon(path+"/3rdparty/emoticons/"+strFileName), strEmoticon));
+            QPixmap pix(path+"/3rdparty/emoticons/"+strFileName);
+            pix.scaled(30,30);
+
+            QListWidgetItem *item = new QListWidgetItem();
+            item->setIcon(QIcon(pix));
+            item->setData(Qt::UserRole, strEmoticon);
+            item->setToolTip(strEmoticon);
+
+            ui.listWidget_standard->addItem(item);
         }
     }
 
@@ -61,7 +69,15 @@ void DlgEmoticons::get_emoticons()
         {
             QString strEmoticon = strFileName.remove(".gif");
 
-            ui.listWidget_extended->addItem(new QListWidgetItem(QIcon(path+"/3rdparty/emoticons_other/"+strFileName), strEmoticon));
+            QPixmap pix(path+"/3rdparty/emoticons_other/"+strFileName);
+            pix.scaled(48,48);
+
+            QListWidgetItem *item = new QListWidgetItem();
+            item->setIcon(QIcon(pix));
+            item->setData(Qt::UserRole, strEmoticon);
+            item->setToolTip(strEmoticon);
+
+            ui.listWidget_extended->addItem(item);
         }
     }
 }
@@ -71,7 +87,7 @@ void DlgEmoticons::clicked_standard(QModelIndex index)
     QString strEmoticon;
 
     // get emoticon
-    strEmoticon = ui.listWidget_standard->item(index.row())->text();
+    strEmoticon = ui.listWidget_standard->item(index.row())->data(Qt::UserRole).toString();
 
     // insert emots
     if (strEmoticon.isEmpty() == false)
@@ -86,7 +102,7 @@ void DlgEmoticons::clicked_extended(QModelIndex index)
     QString strEmoticon;
 
     // get emoticon
-    strEmoticon = ui.listWidget_extended->item(index.row())->text();
+    strEmoticon = ui.listWidget_extended->item(index.row())->data(Qt::UserRole).toString();
 
     // insert emots
     if (strEmoticon.isEmpty() == false)
@@ -104,12 +120,12 @@ void DlgEmoticons::button_insert()
     if (ui.tabWidget->currentIndex() == 0)
     {
         if (ui.listWidget_standard->selectedItems().count() != 0)
-            strSelected = ui.listWidget_standard->selectedItems().at(0)->text();
+            strSelected = ui.listWidget_standard->selectedItems().at(0)->data(Qt::UserRole).toString();
     }
     else if (ui.tabWidget->currentIndex() == 1)
     {
         if (ui.listWidget_extended->selectedItems().count() != 0)
-            strSelected = ui.listWidget_extended->selectedItems().at(0)->text();
+            strSelected = ui.listWidget_extended->selectedItems().at(0)->data(Qt::UserRole).toString();
     }
 
     // insert emots
