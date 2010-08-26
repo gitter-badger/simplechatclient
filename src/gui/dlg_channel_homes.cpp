@@ -40,8 +40,7 @@ DlgChannelHomes::DlgChannelHomes(QWidget *parent, Network *param1, QSettings *pa
     QObject::connect(ui.pushButton_create, SIGNAL(clicked()), this, SLOT(button_create()));
     QObject::connect(ui.pushButton_remove, SIGNAL(clicked()), this, SLOT(button_remove()));
     QObject::connect(ui.pushButton_join, SIGNAL(clicked()), this, SLOT(button_join()));
-    QObject::connect(ui.buttonBox, SIGNAL(accepted()), this, SLOT(button_ok()));
-    QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(button_cancel()));
+    QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(button_close()));
 }
 
 void DlgChannelHomes::add_channel(QString strChannel)
@@ -97,13 +96,7 @@ void DlgChannelHomes::button_join()
     }
 }
 
-void DlgChannelHomes::button_ok()
-{
-    ui.listWidget_channels->clear();
-    this->hide();
-}
-
-void DlgChannelHomes::button_cancel()
+void DlgChannelHomes::button_close()
 {
     ui.listWidget_channels->clear();
     this->hide();

@@ -36,8 +36,7 @@ DlgIgnore::DlgIgnore(QWidget *parent, Network *param1, QSettings *param2, QMap <
 
     QObject::connect(ui.pushButton_add, SIGNAL(clicked()), this, SLOT(button_add()));
     QObject::connect(ui.pushButton_remove, SIGNAL(clicked()), this, SLOT(button_remove()));
-    QObject::connect(ui.buttonBox, SIGNAL(accepted()), this, SLOT(button_ok()));
-    QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(button_cancel()));
+    QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(button_close()));
 }
 
 void DlgIgnore::add_ignore(QString strNick)
@@ -78,13 +77,7 @@ void DlgIgnore::button_remove()
     (new DlgIgnoreAd(myparent, pNetwork, settings, "remove", strSelected))->show();
 }
 
-void DlgIgnore::button_ok()
-{
-    ui.listWidget_nicks->clear();
-    this->hide();
-}
-
-void DlgIgnore::button_cancel()
+void DlgIgnore::button_close()
 {
     ui.listWidget_nicks->clear();
     this->hide();

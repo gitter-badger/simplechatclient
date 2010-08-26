@@ -46,8 +46,7 @@ private:
 private slots:
     void button_add();
     void button_remove();
-    void button_ok();
-    void button_cancel();
+    void button_close();
 
 protected:
     virtual void showEvent(QShowEvent *);

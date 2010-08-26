@@ -68,8 +68,7 @@ DlgChannelList::DlgChannelList(QWidget *parent, QSettings *param1) : QDialog(par
     QObject::connect(ui.tableWidget_erotic, SIGNAL(cellDoubleClicked(int,int)), this, SLOT(erotic_CellDoubleClicked(int,int)));
     QObject::connect(ui.tableWidget_thematic, SIGNAL(cellDoubleClicked(int,int)), this, SLOT(thematic_CellDoubleClicked(int,int)));
     QObject::connect(ui.tableWidget_regional, SIGNAL(cellDoubleClicked(int,int)), this, SLOT(regional_CellDoubleClicked(int,int)));
-    QObject::connect(ui.buttonBox, SIGNAL(accepted()), this, SLOT(button_ok()));
-    QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(button_cancel()));
+    QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(button_close()));
 
     QObject::connect(ui.lineEdit_search, SIGNAL(returnPressed()), this, SLOT(button_search()));
     QObject::connect(ui.pushButton_search, SIGNAL(clicked()), this, SLOT(button_search()));
@@ -806,13 +805,7 @@ void DlgChannelList::regional_CellDoubleClicked(int row, int column)
     emit send(QString("JOIN %1").arg(strChannel));
 }
 
-void DlgChannelList::button_ok()
-{
-    clear();
-    this->hide();
-}
-
-void DlgChannelList::button_cancel()
+void DlgChannelList::button_close()
 {
     clear();
     this->hide();

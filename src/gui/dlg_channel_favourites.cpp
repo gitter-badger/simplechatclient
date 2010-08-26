@@ -36,8 +36,7 @@ DlgChannelFavourites::DlgChannelFavourites(QWidget *parent, Network *param1, QSe
 
     QObject::connect(ui.pushButton_add, SIGNAL(clicked()), this, SLOT(button_add()));
     QObject::connect(ui.pushButton_remove, SIGNAL(clicked()), this, SLOT(button_remove()));
-    QObject::connect(ui.buttonBox, SIGNAL(accepted()), this, SLOT(button_ok()));
-    QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(button_cancel()));
+    QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(button_close()));
 }
 
 void DlgChannelFavourites::add_channel(QString strChannel)
@@ -76,13 +75,7 @@ void DlgChannelFavourites::button_remove()
     (new DlgChannelFavouritesAd(myparent, pNetwork, settings, "remove", strSelected))->show();
 }
 
-void DlgChannelFavourites::button_ok()
-{
-    ui.listWidget_channels->clear();
-    this->hide();
-}
-
-void DlgChannelFavourites::button_cancel()
+void DlgChannelFavourites::button_close()
 {
     ui.listWidget_channels->clear();
     this->hide();

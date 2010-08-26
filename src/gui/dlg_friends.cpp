@@ -38,8 +38,7 @@ DlgFriends::DlgFriends(QWidget *parent, Network *param1, QSettings *param2, QMap
     QObject::connect(ui.pushButton_add, SIGNAL(clicked()), this, SLOT(button_add()));
     QObject::connect(ui.pushButton_remove, SIGNAL(clicked()), this, SLOT(button_remove()));
     QObject::connect(ui.pushButton_whois, SIGNAL(clicked()), this, SLOT(button_whois()));
-    QObject::connect(ui.buttonBox, SIGNAL(accepted()), this, SLOT(button_ok()));
-    QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(button_cancel()));
+    QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(button_close()));
 }
 
 void DlgFriends::set_friend(QString strNick, bool bStatus)
@@ -129,12 +128,7 @@ void DlgFriends::button_whois()
         pNetwork->send(QString("WHOIS %1 :%1").arg(strSelected));
 }
 
-void DlgFriends::button_ok()
-{
-    this->hide();
-}
-
-void DlgFriends::button_cancel()
+void DlgFriends::button_close()
 {
     this->hide();
 }
