@@ -21,6 +21,7 @@
 #ifndef DLG_OPTIONS_H
 #define DLG_OPTIONS_H
 
+#include <QColorDialog>
 #include <QDialog>
 #include <QMessageBox>
 #include <QSettings>
@@ -49,6 +50,7 @@ private slots:
     void button_register_nick();
     void set_modern_style_avatars();
     void set_modern_style_no_avatars();
+    void set_classic_style();
     void auto_busy();
     void show_zuo();
     void hide_formating();
@@ -57,13 +59,11 @@ private slots:
     void disable_avatars();
     void disable_logs();
     void disable_sounds();
-    void set_modern_style();
-    void set_classic_style();
-    void set_background_color(QString);
     void set_my_bold(int);
     void set_my_italic(int);
     void set_my_font(QString);
     void set_my_color(int);
+    void set_background_color();
     void button_ok();
     void button_cancel();
 

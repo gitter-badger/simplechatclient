@@ -43,8 +43,9 @@ DlgOptions::DlgOptions(QWidget *parent, QSettings *param1) : QDialog(parent)
     ui.radioButton_classic->setText(tr("Classic"));
 // page adv
     ui.tabWidget_adv->setTabText(0, tr("Advanced"));
-    ui.tabWidget_adv->setTabText(1, tr("Skins"));
-    ui.tabWidget_adv->setTabText(2, tr("Other"));
+    ui.tabWidget_adv->setTabText(1, tr("Other"));
+    ui.tabWidget_adv->setTabText(2, tr("Colors"));
+
     ui.checkBox_auto_busy->setText(tr("Busy mode after you log in to chat"));
     ui.checkBox_show_zuo->setText(tr("Show ZUO"));
     ui.checkBox_hide_formating->setText(tr("Disable formatting messages"));
@@ -53,10 +54,7 @@ DlgOptions::DlgOptions(QWidget *parent, QSettings *param1) : QDialog(parent)
     ui.checkBox_disable_avatars->setText(tr("Disable avatars"));
     ui.checkBox_disable_logs->setText(tr("Disable logs"));
     ui.checkBox_disable_sounds->setText(tr("Disable sounds"));
-    ui.radioButton_modern_style->setText(tr("Modern"));
-    ui.radioButton_classic_style->setText(tr("Classic"));
-    ui.groupBox_color->setTitle(tr("Color"));
-    ui.label_background_color->setText(tr("Background color:"));
+
     ui.groupBox_my_font->setTitle(tr("Default font"));
     ui.label_my_bold->setText(tr("Bold:"));
     ui.comboBox_my_bold->setItemText(0, tr("Off"));
@@ -66,6 +64,9 @@ DlgOptions::DlgOptions(QWidget *parent, QSettings *param1) : QDialog(parent)
     ui.comboBox_my_italic->setItemText(1, tr("On"));
     ui.label_my_font->setText(tr("Font:"));
     ui.label_my_color->setText(tr("Color:"));
+
+    ui.groupBox_color->setTitle(tr("Main window"));
+    ui.label_background_color->setText(tr("Background color:"));
 
 // options list
     QListWidgetItem *basicConfButton = new QListWidgetItem(ui.listWidget_options);
@@ -81,42 +82,6 @@ DlgOptions::DlgOptions(QWidget *parent, QSettings *param1) : QDialog(parent)
     advConfButton->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
 
     ui.listWidget_options->setCurrentRow(0);
-
-// comboBox colors
-    ui.comboBox_background_color->setIconSize(QSize(50,10));
-
-    QStringList comboBoxColors;
-// default
-    comboBoxColors << "#FFFFFF";
-// shades of red
-    comboBoxColors << "#CD5C5C" << "#F08080" << "#FA8072" << "#E9967A" << "#FFA07A" << "#DC143C" << "#FF0000" << "#B22222" << "#8B0000";
-// shades of pink
-    comboBoxColors << "#FFC0CB" << "#FFB6C1" << "#FF69B4" << "#FF1493" << "#C71585" << "#DB7093";
-// shades of orange
-    comboBoxColors << "#FFA07A" << "#FF7F50" << "#FF6347" << "#FF4500" << "#FF8C00" << "#FFA500";
-// shades of yellow
-    comboBoxColors << "#FFD700" << "#FFFF00" << "#FFFFE0" << "#FFFACD" << "#FAFAD2" << "#FFEFD5" << "#FFE4B5" << "#FFDAB9" << "#EEE8AA" << "#F0E68C" << "#BDB76B";
-// shades of purple
-    comboBoxColors << "#E6E6FA" << "#D8BFD8" << "#DDA0DD" << "#EE82EE" << "#DA70D6" << "#FF00FF" << "#BA55D3" << "#9370DB" << "#8A2BE2" << "#9400D3" << "#9932CC" << "#8B008B" << "#800080" << "#4B0082" << "#6A5ACD" << "#483D8B" << "#7B68EE";
-// shades of green
-    comboBoxColors << "#ADFF2F" << "#7FFF00" << "#7CFC00" << "#00FF00" << "#32CD32" << "#98DB98" << "#90EE90" << "#00FA9A" << "#00FF7F" << "#3CB371" << "#2E8B57" << "#228B22" << "#008000" << "#006400" << "#9ACD32" << "#6B8E23" << "#808000" << "#556B2F" << "#66CDAA" << "#8FBC8F" << "#20B2AA" << "#008B8B" << "#008080";
-// shades of blue
-    comboBoxColors << "#00FFFF" << "#E0FFFF" << "#AFEEEE" << "#7FFFD4" << "#40E0D0" << "#48D1CC" << "#00CED1" << "#5F9EA0" << "#4682B4" << "#B0C4DE" << "#B0E0E6" << "#ADD8E6" << "#87CEEB" << "#87CEFA" << "#00BFFF" << "#1E90FF" << "#6495ED" << "#7B68EE" << "#4169E1" << "#0000FF" << "#0000CD" << "#00008B" << "#000080" << "#191970";
-// shades of brown
-    comboBoxColors << "#FFF8DC" << "#FFEBCD" << "#FFE4C4" << "#FFDEAD" << "#F5DEB3" << "#DEB887" << "#D2B48C" << "#BC8F8F" << "#F4A460" << "#DAA520" << "#B8860B" << "#CD853F" << "#D2691E" << "#8B4513" << "#A0522D" << "#A52A2A" << "#800000";
-// shades of white
-    comboBoxColors << "#FFFFFF" << "#FFFAFA" << "#F0FFF0" << "#F5FFFA" << "#F0FFFF" << "#F0F8FF" << "#F8F8FF" << "#F5F5F5" << "#FFF5EE" << "#F5F5DC" << "#FDF5E6" << "#FFFAF0" << "#FFFFF0" << "#FAEBD7" << "#FAF0E6" << "#FFF0F5" << "#FFE4E1";
-// shades of gray
-    comboBoxColors << "#DCDCDC" << "#D3D3D3" << "#C0C0C0" << "#A9A9A9" << "#808080" << "#696969" << "#778899" << "#708090" << "#2F4F4F" << "#000000";
-
-    int iComboBoxColors = 0;
-    foreach (QString strColor, comboBoxColors)
-    {
-        QPixmap pixmap(50,10);
-        pixmap.fill(QColor(strColor));
-        ui.comboBox_background_color->insertItem(iComboBoxColors, pixmap, strColor);
-        iComboBoxColors++;
-    }
 
 // my font
     QStringList strlMyFont;
@@ -243,18 +208,10 @@ DlgOptions::DlgOptions(QWidget *parent, QSettings *param1) : QDialog(parent)
     else
         ui.checkBox_disable_sounds->setChecked(false);
 
-// style
-    if (strStyle == "modern")
-        ui.radioButton_modern_style->setChecked(true);
-    else if (strStyle == "classic")
-        ui.radioButton_classic_style->setChecked(true);
-
-// set color combobox
-    for (int i = 0; i < ui.comboBox_background_color->count(); i++)
-    {
-        if (ui.comboBox_background_color->itemText(i) == strBackgroundColor)
-            ui.comboBox_background_color->setCurrentIndex(i);
-    }
+// set background color
+    QPixmap bcolor(50,15);
+    bcolor.fill(QColor(strBackgroundColor));
+    ui.pushButton_background_color->setIcon(QIcon(bcolor));
 
 // set my bold
     if (strMyBold == "on")
@@ -314,13 +271,11 @@ DlgOptions::DlgOptions(QWidget *parent, QSettings *param1) : QDialog(parent)
     QObject::connect(ui.checkBox_disable_avatars, SIGNAL(clicked()), this, SLOT(disable_avatars()));
     QObject::connect(ui.checkBox_disable_logs, SIGNAL(clicked()), this, SLOT(disable_logs()));
     QObject::connect(ui.checkBox_disable_sounds, SIGNAL(clicked()), this, SLOT(disable_sounds()));
-    QObject::connect(ui.radioButton_modern_style, SIGNAL(clicked()), this, SLOT(set_modern_style()));
-    QObject::connect(ui.radioButton_classic_style, SIGNAL(clicked()), this, SLOT(set_classic_style()));
-    QObject::connect(ui.comboBox_background_color, SIGNAL(currentIndexChanged(QString)), this, SLOT(set_background_color(QString)));
     QObject::connect(ui.comboBox_my_bold, SIGNAL(currentIndexChanged(int)), this, SLOT(set_my_bold(int)));
     QObject::connect(ui.comboBox_my_italic, SIGNAL(currentIndexChanged(int)), this, SLOT(set_my_italic(int)));
     QObject::connect(ui.comboBox_my_font, SIGNAL(currentIndexChanged(QString)), this, SLOT(set_my_font(QString)));
     QObject::connect(ui.comboBox_my_color, SIGNAL(currentIndexChanged(int)), this, SLOT(set_my_color(int)));
+    QObject::connect(ui.pushButton_background_color, SIGNAL(clicked()), this, SLOT(set_background_color()));
     QObject::connect(ui.buttonBox, SIGNAL(accepted()), this, SLOT(button_ok()));
     QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(button_cancel()));
 }
@@ -392,6 +347,27 @@ void DlgOptions::set_modern_style_no_avatars()
     settings->setValue("style", "modern");
     pConfig->set_value("disable_avatars", "on");
     settings->setValue("disable_avatars", "on");
+    delete pConfig;
+
+    this->close(); // fix stay on top
+
+    QMessageBox msgBox;
+    msgBox.setIcon(QMessageBox::Information);
+    msgBox.setWindowIcon(QIcon(":/images/logo_64.png"));
+    msgBox.setStandardButtons(QMessageBox::Ok);
+    msgBox.setText(QString(tr("Restart program to apply the changes.")));
+    msgBox.exec();
+}
+
+void DlgOptions::set_classic_style()
+{
+// save settings
+    save_settings();
+
+// save style
+    Config *pConfig = new Config();
+    pConfig->set_value("style", "classic");
+    settings->setValue("style", "classic");
     delete pConfig;
 
     this->close(); // fix stay on top
@@ -532,56 +508,6 @@ void DlgOptions::disable_sounds()
     delete pConfig;
 }
 
-void DlgOptions::set_modern_style()
-{
-// save settings
-    save_settings();
-
-// save style
-    Config *pConfig = new Config();
-    pConfig->set_value("style", "modern");
-    settings->setValue("style", "modern");
-    delete pConfig;
-
-    this->close(); // fix stay on top
-
-    QMessageBox msgBox;
-    msgBox.setIcon(QMessageBox::Information);
-    msgBox.setWindowIcon(QIcon(":/images/logo_64.png"));
-    msgBox.setStandardButtons(QMessageBox::Ok);
-    msgBox.setText(QString(tr("Restart program to apply the changes.")));
-    msgBox.exec();
-}
-
-void DlgOptions::set_classic_style()
-{
-// save settings
-    save_settings();
-
-// save style
-    Config *pConfig = new Config();
-    pConfig->set_value("style", "classic");
-    settings->setValue("style", "classic");
-    delete pConfig;
-
-    this->close(); // fix stay on top
-
-    QMessageBox msgBox;
-    msgBox.setIcon(QMessageBox::Information);
-    msgBox.setWindowIcon(QIcon(":/images/logo_64.png"));
-    msgBox.setStandardButtons(QMessageBox::Ok);
-    msgBox.setText(QString(tr("Restart program to apply the changes.")));
-    msgBox.exec();
-}
-
-void DlgOptions::set_background_color(QString strColor)
-{
-    Config *pConfig = new Config();
-    pConfig->set_value("background_color", strColor);
-    settings->setValue("background_color", strColor);
-    delete pConfig;
-}
-
 void DlgOptions::set_my_bold(int index)
 {
     Config *pConfig = new Config();
@@ -647,6 +573,33 @@ void DlgOptions::set_my_color(int index)
     pConfig->set_value("my_color", strMyColor);
     settings->setValue("my_color", strMyColor);
     delete pConfig;
+}
+
+void DlgOptions::set_background_color()
+{
+    // get value
+    Config *pConfig0 = new Config();
+    QString strBackgroundColor = pConfig0->get_value("background_color");
+    delete pConfig0;
+
+    // color dialog
+    QColor cColor = QColorDialog::getColor(QColor(strBackgroundColor), this);
+
+    if (cColor.isValid() == true)
+    {
+        QString strColor = cColor.name();
+
+        // save to pushbutton
+        QPixmap bcolor(50,15);
+        bcolor.fill(QColor(cColor));
+        ui.pushButton_background_color->setIcon(QIcon(bcolor));
+
+        // save
+        Config *pConfig1 = new Config();
+        pConfig1->set_value("background_color", strColor);
+        settings->setValue("background_color", strColor);
+        delete pConfig1;
+    }
 }
 
 void DlgOptions::button_cancel()

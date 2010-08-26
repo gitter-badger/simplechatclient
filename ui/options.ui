@@ -338,84 +338,15 @@
               </layout>
              </widget>
             </widget>
-            <widget class="QWidget" name="tab_style">
-             <attribute name="title">
-              <string>Skins</string>
-             </attribute>
-             <widget class="QWidget" name="verticalLayoutWidget_10">
-              <property name="geometry">
-               <rect>
-                <x>10</x>
-                <y>0</y>
-                <width>421</width>
-                <height>91</height>
-               </rect>
-              </property>
-              <layout class="QVBoxLayout" name="verticalLayout_10">
-               <item>
-                <widget class="QRadioButton" name="radioButton_modern_style">
-                 <property name="text">
-                  <string>Modern</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QRadioButton" name="radioButton_classic_style">
-                 <property name="text">
-                  <string>Classic</string>
-                 </property>
-                </widget>
-               </item>
-              </layout>
-             </widget>
-            </widget>
             <widget class="QWidget" name="tab_appearance">
              <attribute name="title">
               <string>Other</string>
              </attribute>
-             <widget class="QGroupBox" name="groupBox_color">
-              <property name="geometry">
-               <rect>
-                <x>0</x>
-                <y>20</y>
-                <width>441</width>
-                <height>71</height>
-               </rect>
-              </property>
-              <property name="title">
-               <string>Color</string>
-              </property>
-              <widget class="QWidget" name="layoutWidget">
-               <property name="geometry">
-                <rect>
-                 <x>10</x>
-                 <y>28</y>
-                 <width>421</width>
-                 <height>31</height>
-                </rect>
-               </property>
-               <layout class="QFormLayout" name="formLayout_4">
-                <property name="fieldGrowthPolicy">
-                 <enum>QFormLayout::ExpandingFieldsGrow</enum>
-                </property>
-                <item row="0" column="0">
-                 <widget class="QLabel" name="label_background_color">
-                  <property name="text">
-                   <string>Background color:</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="0" column="1">
-                 <widget class="QComboBox" name="comboBox_background_color"/>
-                </item>
-               </layout>
-              </widget>
-             </widget>
              <widget class="QGroupBox" name="groupBox_my_font">
               <property name="geometry">
                <rect>
                 <x>0</x>
-                <y>100</y>
+                <y>10</y>
                 <width>441</width>
                 <height>151</height>
                </rect>
@@ -494,6 +425,59 @@
                 </item>
                 <item row="3" column="1">
                  <widget class="QComboBox" name="comboBox_my_color"/>
+                </item>
+               </layout>
+              </widget>
+             </widget>
+            </widget>
+            <widget class="QWidget" name="tab">
+             <attribute name="title">
+              <string>Colors</string>
+             </attribute>
+             <widget class="QGroupBox" name="groupBox_color">
+              <property name="geometry">
+               <rect>
+                <x>0</x>
+                <y>10</y>
+                <width>441</width>
+                <height>71</height>
+               </rect>
+              </property>
+              <property name="title">
+               <string>Main window</string>
+              </property>
+              <widget class="QWidget" name="layoutWidget">
+               <property name="geometry">
+                <rect>
+                 <x>10</x>
+                 <y>28</y>
+                 <width>421</width>
+                 <height>31</height>
+                </rect>
+               </property>
+               <layout class="QFormLayout" name="formLayout_4">
+                <property name="fieldGrowthPolicy">
+                 <enum>QFormLayout::ExpandingFieldsGrow</enum>
+                </property>
+                <item row="0" column="0">
+                 <widget class="QLabel" name="label_background_color">
+                  <property name="text">
+                   <string>Background color:</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="0" column="1">
+                 <widget class="QPushButton" name="pushButton_background_color">
+                  <property name="text">
+                   <string/>
+                  </property>
+                  <property name="iconSize">
+                   <size>
+                    <width>50</width>
+                    <height>15</height>
+                   </size>
+                  </property>
+                 </widget>
                 </item>
                </layout>
               </widget>

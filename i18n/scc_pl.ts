@@ -796,14 +796,6 @@
         <translation>Wyłączenie dzwięków</translation>
     </message>
     <message>
-        <source>Color</source>
-        <translation>Kolor</translation>
-    </message>
-    <message>
-        <source>Background color:</source>
-        <translation>Kolor tła:</translation>
-    </message>
-    <message>
         <source>Default font</source>
         <translation>Domyślna czcionka</translation>
     </message>
@@ -822,6 +814,18 @@
     <message>
         <source>Color:</source>
         <translation>Kolor:</translation>
+    </message>
+    <message>
+        <source>Colors</source>
+        <translation>Kolory</translation>
+    </message>
+    <message>
+        <source>Main window</source>
+        <translation>Okno główne</translation>
+    </message>
+    <message>
+        <source>Background color:</source>
+        <translation>Kolor tła:</translation>
     </message>
 </context>
 <context>
