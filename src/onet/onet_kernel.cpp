@@ -872,15 +872,31 @@ void OnetKernel::raw_mode()
         }
         flag_nick.clear();
     }
+    // nick
     else
     {
-        if (strWho == strNickChannel)
-        {
-            QString strFlag = strDataList[3];
-            if (strFlag[0] == ':') strFlag = strFlag.right(strFlag.length()-1);
-            QString strDisplay;
+        // get args
+        QString strFlag = strDataList[3];
+        if (strFlag[0] == ':') strFlag = strFlag.right(strFlag.length()-1);
 
-            if (strFlag == "+b") strDisplay = QString(tr("* %1 is marked as busy")).arg(strNickChannel);
+        // get +-
+        QString plusminus = strFlag.at(0);
+        // fix flag
+        strFlag = strFlag.right(strFlag.length()-1);
+
+        // create flags list
+        QStringList slFlags;
+        for (int i = 0; i < strFlag.count(); i++)
+            slFlags << strFlag.at(i);
+
+        foreach (strFlag, slFlags)
+        {
+            strFlag = plusminus+strFlag;
+
+            QString strDisplay;
+            if (strFlag == "+O") strDisplay = QString(tr("* %1 is marked as NetAdmin")).arg(strNickChannel);
+            else if (strFlag == "-O") strDisplay = QString(tr("* %1 is no longer marked as NetAdmin")).arg(strNickChannel);
+            else if (strFlag == "+b") strDisplay = QString(tr("* %1 is marked as busy")).arg(strNickChannel);
             else if (strFlag == "-b") strDisplay = QString(tr("* %1 is no longer marked as busy")).arg(strNickChannel);
             else if (strFlag == "+W") strDisplay = QString(tr("* %1 has now enabled public webcam")).arg(strNickChannel);
             else if (strFlag == "-W") strDisplay = QString(tr("* %1 has no longer enabled public webcam")).arg(strNickChannel);
@@ -888,27 +904,14 @@ void OnetKernel::raw_mode()
             else if (strFlag == "-V") strDisplay = QString(tr("* %1 has no longer enabled private webcam")).arg(strNickChannel);
             else if (strFlag == "+x") strDisplay = QString(tr("* %1 has now encrypted IP")).arg(strNickChannel);
             else if (strFlag == "-x") strDisplay = QString(tr("* %1 has no longer encrypted IP")).arg(strNickChannel);
+            else if (strFlag == "+r") strDisplay = QString(tr("* %1 is marked as registered and identified")).arg(strNickChannel);
+            else if (strFlag == "-r") strDisplay = QString(tr("* %1 is no longer marked as registered and identified")).arg(strNickChannel);
             else
                 strDisplay = QString(tr("* %1 now has a flag %2")).arg(strNickChannel).arg(strFlag);
 
-            if ((strFlag != "+W") && (strFlag != "-W") && (strFlag != "+V") && (strFlag != "-V"))
+            if ((strFlag != "+W") && (strFlag != "-W") && (strFlag != "+V") && (strFlag != "-V") && (strFlag != "+b") && (strFlag != "-b"))
                 tabc->show_msg("Status", strDisplay, 5);
 
-            tabc->change_flag(strNickChannel, strFlag);
-        }
-        else
-        {
-            QString strFlag = strDataList[3];
-            QString strDisplay;
-
-            if (strFlag == "+r") strDisplay = QString(tr("* %1 is marked as registered and identified")).arg(strNickChannel);
-            else if (strFlag == "-r") strDisplay = QString(tr("* %1 is no longer marked as registered and identified")).arg(strNickChannel);
-            else if (strFlag == "+b") strDisplay = QString(tr("* %1 is marked as busy")).arg(strNickChannel);
-            else if (strFlag == "-b") strDisplay = QString(tr("* %1 is no longer marked as busy")).arg(strNickChannel);
-            else
-                strDisplay = QString(tr("* %1 now has a flag %2")).arg(strNickChannel).arg(strFlag);
-
-            tabc->show_msg("Status", strDisplay, 5);
             tabc->change_flag(strNickChannel, strFlag);
         }
     }
@@ -2021,13 +2024,26 @@ void OnetKernel::raw_312()
 }
 
 // :cf1f1.onet 313 scc_test Llanero :is a GlobalOp on OnetCzat
+// :cf1f2.onet 313 Merovingian Darom :is a NetAdmin on OnetCzat
 void OnetKernel::raw_313()
 {
     if (strDataList.value(3).isEmpty() == true) return;
 
     QString strNick = strDataList[3];
 
-    QString strDisplay = QString(tr("* %1 is a GlobalOp on OnetCzat")).arg(strNick);
+    QString strMessage;
+    for (int i = 4; i < strDataList.size(); i++) { if (i != 4) strMessage += " "; strMessage += strDataList[i]; }
+    if (strMessage[0] == ':')
+        strMessage = strMessage.right(strMessage.length()-1);
+
+    QString strDisplay;
+    if (strMessage == "is a GlobalOp on OnetCzat")
+        strDisplay = QString(tr("* %1 is a GlobalOp on OnetCzat")).arg(strNick);
+    else if (strMessage == "is a NetAdmin on OnetCzat")
+        strDisplay = QString(tr("* %1 is a NetAdmin on OnetCzat")).arg(strNick);
+    else
+        strDisplay = strMessage;
+
     tabc->show_msg_active(strDisplay, 7);
 }
 

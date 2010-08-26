@@ -1227,6 +1227,14 @@
         <translation>* %1 ma teraz flage %2 (Ustawił %3)</translation>
     </message>
     <message>
+        <source>* %1 is marked as NetAdmin</source>
+        <translation>* %1 jest oznaczony jako administrator czata</translation>
+    </message>
+    <message>
+        <source>* %1 is no longer marked as NetAdmin</source>
+        <translation>* %1 nie jest już oznaczony jako administrator czata</translation>
+    </message>
+    <message>
         <source>* %1 is marked as busy</source>
         <translation>* %1 jest oznaczony jako zajęty</translation>
     </message>
@@ -1259,16 +1267,16 @@
         <translation>* %1 nie ma już szyfrowanego IP</translation>
     </message>
     <message>
-        <source>* %1 now has a flag %2</source>
-        <translation>* %1 ma teraz flage %2</translation>
-    </message>
-    <message>
         <source>* %1 is marked as registered and identified</source>
         <translation>* %1 jest oznaczony jako zarejestrowany</translation>
     </message>
     <message>
         <source>* %1 is no longer marked as registered and identified</source>
         <translation>* %1 nie jest już oznaczony jako zarejestrowany</translation>
+    </message>
+    <message>
+        <source>* %1 now has a flag %2</source>
+        <translation>* %1 ma teraz flage %2</translation>
     </message>
     <message>
         <source>* %1 changed the topic to: %2</source>
@@ -1385,6 +1393,10 @@
     <message>
         <source>* %1 is a GlobalOp on OnetCzat</source>
         <translation>* %1 jest administratorem czata</translation>
+    </message>
+    <message>
+        <source>* %1 is a NetAdmin on OnetCzat</source>
+        <translation>* %1 jest głównym administratorem czata</translation>
     </message>
     <message>
         <source>* %1 is away %2</source>

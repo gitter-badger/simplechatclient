@@ -933,6 +933,8 @@ void TabWidget::change_flag(QString strNick, QString strNewFlag)
     else if ((strNewFlag == "-X") && (strFlag.indexOf("!") != -1)) strFlag.remove("!");
     else if ((strNewFlag == "+Y") && (strFlag.indexOf("=") == -1)) strFlag.append("=");
     else if ((strNewFlag == "-Y") && (strFlag.indexOf("=") != -1)) strFlag.remove("=");
+    else if ((strNewFlag == "+O") && (strSuffix.indexOf("O") == -1)) strSuffix.append("O");
+    else if ((strNewFlag == "-O") && (strSuffix.indexOf("O") != -1)) strSuffix.remove("O");
     else if ((strNewFlag == "+b") && (strSuffix.indexOf("b") == -1)) strSuffix.append("b");
     else if ((strNewFlag == "-b") && (strSuffix.indexOf("b") != -1)) strSuffix.remove("b");
     else if ((strNewFlag == "+r") && (strSuffix.indexOf("r") == -1)) strSuffix.append("r");
