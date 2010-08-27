@@ -6,19 +6,19 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>603</width>
+    <width>562</width>
     <height>600</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>603</width>
+    <width>562</width>
     <height>600</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>603</width>
+    <width>562</width>
     <height>600</height>
    </size>
   </property>
@@ -26,7 +26,7 @@
    <string>Ustawienia kanałów</string>
   </property>
   <property name="windowIcon">
-   <iconset>
+   <iconset resource="../scc.qrc">
     <normaloff>:/images/logo_64.png</normaloff>:/images/logo_64.png</iconset>
   </property>
   <widget class="QTabWidget" name="tabWidget">
@@ -34,7 +34,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>601</width>
+     <width>561</width>
      <height>561</height>
     </rect>
    </property>
@@ -48,7 +48,7 @@
     <widget class="QWidget" name="gridLayoutWidget">
      <property name="geometry">
       <rect>
-       <x>30</x>
+       <x>10</x>
        <y>0</y>
        <width>537</width>
        <height>531</height>
@@ -650,7 +650,7 @@
       <rect>
        <x>0</x>
        <y>0</y>
-       <width>571</width>
+       <width>551</width>
        <height>531</height>
       </rect>
      </property>
@@ -662,7 +662,7 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>561</width>
+        <width>541</width>
         <height>413</height>
        </rect>
       </property>
@@ -672,7 +672,7 @@
       <widget class="QWidget" name="verticalLayoutWidget">
        <property name="geometry">
         <rect>
-         <x>50</x>
+         <x>40</x>
          <y>0</y>
          <width>461</width>
          <height>401</height>
@@ -699,6 +699,12 @@
           <property name="columnCount">
            <number>1</number>
           </property>
+          <attribute name="verticalHeaderVisible">
+           <bool>false</bool>
+          </attribute>
+          <attribute name="verticalHeaderVisible">
+           <bool>false</bool>
+          </attribute>
           <column>
            <property name="text">
             <string>Nick</string>
@@ -732,7 +738,7 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>561</width>
+        <width>541</width>
         <height>413</height>
        </rect>
       </property>
@@ -742,7 +748,7 @@
       <widget class="QWidget" name="verticalLayoutWidget_2">
        <property name="geometry">
         <rect>
-         <x>50</x>
+         <x>40</x>
          <y>0</y>
          <width>471</width>
          <height>401</height>
@@ -769,6 +775,12 @@
           <property name="columnCount">
            <number>1</number>
           </property>
+          <attribute name="verticalHeaderVisible">
+           <bool>false</bool>
+          </attribute>
+          <attribute name="verticalHeaderVisible">
+           <bool>false</bool>
+          </attribute>
           <column>
            <property name="text">
             <string>Nick</string>
@@ -802,7 +814,7 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>561</width>
+        <width>541</width>
         <height>413</height>
        </rect>
       </property>
@@ -812,7 +824,7 @@
       <widget class="QWidget" name="verticalLayoutWidget_3">
        <property name="geometry">
         <rect>
-         <x>50</x>
+         <x>40</x>
          <y>0</y>
          <width>461</width>
          <height>401</height>
@@ -836,6 +848,12 @@
           <property name="columnCount">
            <number>3</number>
           </property>
+          <attribute name="verticalHeaderVisible">
+           <bool>false</bool>
+          </attribute>
+          <attribute name="verticalHeaderVisible">
+           <bool>false</bool>
+          </attribute>
           <column>
            <property name="text">
             <string>Nick</string>
@@ -879,7 +897,7 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>561</width>
+        <width>541</width>
         <height>413</height>
        </rect>
       </property>
@@ -889,7 +907,7 @@
       <widget class="QWidget" name="verticalLayoutWidget_4">
        <property name="geometry">
         <rect>
-         <x>50</x>
+         <x>40</x>
          <y>0</y>
          <width>461</width>
          <height>401</height>
@@ -916,6 +934,12 @@
           <property name="columnCount">
            <number>3</number>
           </property>
+          <attribute name="verticalHeaderVisible">
+           <bool>false</bool>
+          </attribute>
+          <attribute name="verticalHeaderVisible">
+           <bool>false</bool>
+          </attribute>
           <column>
            <property name="text">
             <string>Nick</string>
@@ -960,7 +984,7 @@
   <widget class="QDialogButtonBox" name="buttonBox">
    <property name="geometry">
     <rect>
-     <x>220</x>
+     <x>200</x>
      <y>570</y>
      <width>166</width>
      <height>25</height>
@@ -971,6 +995,8 @@
    </property>
   </widget>
  </widget>
- <resources/>
+ <resources>
+  <include location="../scc.qrc"/>
+ </resources>
  <connections/>
 </ui>
