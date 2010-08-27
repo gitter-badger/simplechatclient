@@ -222,7 +222,10 @@ void MainWebView::contextMenuEvent(QContextMenuEvent *event)
             menu->addSeparator();
             menu->addAction(tr("Priv"), this, SLOT(priv()));
             menu->addAction(tr("Whois"), this, SLOT(whois()));
-            menu->addAction(tr("Webcam"), this, SLOT(cam()));
+            if (strLink[0] != '~')
+            {
+                menu->addAction(tr("Webcam"), this, SLOT(cam()));
+            }
             menu->addMenu(minvite);
             menu->addMenu(friends);
             menu->addMenu(ignore);
