@@ -1350,6 +1350,9 @@ void OnetKernel::raw_142n()
 // ignore
 }
 
+// offline senders
+// :NickServ!service@service.onet NOTICE Merovingian :151 :jubee_blue
+// channel homes
 // :ChanServ!service@service.onet NOTICE scc_test :151 :h#scc
 void OnetKernel::raw_151n()
 {
@@ -1359,7 +1362,8 @@ void OnetKernel::raw_151n()
         if (strChannel[0] == ':')
             strChannel = strChannel.right(strChannel.length()-1);
 
-        dlgchannel_homes->add_channel(strChannel);
+        if (strChannel[0] == '#')
+            dlgchannel_homes->add_channel(strChannel);
     }
 }
 
