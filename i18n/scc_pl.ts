@@ -131,6 +131,17 @@
     </message>
 </context>
 <context>
+    <name>Kamerzysta</name>
+    <message>
+        <source>Kamerzysta not found!</source>
+        <translation>Nie znaleziono Kamerzysty!</translation>
+    </message>
+    <message>
+        <source>Kamerzysta is wrong installed!</source>
+        <translation>Program Kamerzysta jest nie poprawnie zainstalowany!</translation>
+    </message>
+</context>
+<context>
     <name>Log</name>
     <message>
         <source>Error: log: Cannot open file </source>

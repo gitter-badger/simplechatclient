@@ -63,7 +63,12 @@ void MainWebView::profile()
 
 void MainWebView::cam()
 {
+#ifdef Q_WS_WIN
+    QString strUOKey = settings->value("uokey").toString();
+    (new Kamerzysta(strNick, strUOKey));
+#else
     (new DlgCam(myparent, pNetwork, settings, strNick))->show();
+#endif
 }
 
 void MainWebView::friends_add()

@@ -14,6 +14,7 @@ SOURCES += src/avatars/channel_avatar.cpp \
     src/common/config.cpp \
     src/common/convert.cpp \
     src/common/crypt.cpp \
+	src/common/kamerzysta.cpp \
     src/common/log.cpp \
     src/common/replace.cpp \
     src/core/debug.cpp \
@@ -63,6 +64,7 @@ HEADERS += src/avatars/channel_avatar.h \
     src/common/convert.h \
     src/common/crypt.h \
     src/common/log.h \
+	src/common/kamerzysta.h \
     src/common/replace.h \
     src/core/debug.h \
     src/core/main.h \

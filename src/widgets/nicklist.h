@@ -35,6 +35,9 @@
 #include <QSettings>
 #include "dlg_cam.h"
 #include "dlg_kick.h"
+#ifdef Q_WS_WIN
+#include "kamerzysta.h"
+#endif
 #include "network.h"
 
 struct NickStatus

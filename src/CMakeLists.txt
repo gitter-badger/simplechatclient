@@ -32,6 +32,7 @@ set (scc_SRCS
 	common/config.cpp
 	common/convert.cpp
 	common/crypt.cpp
+	common/kamerzysta.cpp
 	common/log.cpp
 	common/replace.cpp
 	core/debug.cpp
@@ -83,6 +84,7 @@ set (scc_MOC_HDRS
 	common/config.h
 	common/convert.h
 	common/crypt.h
+	common/kamerzysta.h
 	common/log.h
 	common/replace.h
 	core/mainwindow.h
@@ -214,8 +216,12 @@ qt_wrap_cpp (scc MOC_FILES ${scc_MOC_HDRS})
 # link
 if (MSVC) # windows
 	add_executable (../scc WIN32 ${scc_SRCS} ${MOC_FILES} ${scc_HDRS} ${scc_QRC_SRCS} ${scc_UIS_H})
-else (MSVC) #linux
-	add_executable (../scc ${scc_SRCS} ${MOC_FILES} ${scc_HDRS} ${scc_QRC_SRCS} ${scc_UIS_H})
+else (MSVC) # mingw or linux
+	if (MINGW) # mingw
+		add_executable (../scc ${scc_SRCS} ${MOC_FILES} ${scc_HDRS} ${scc_QRC_SRCS} ${scc_UIS_H})
+	else (MINGW) # linux
+		add_executable (../scc ${scc_SRCS} ${MOC_FILES} ${scc_HDRS} ${scc_QRC_SRCS} ${scc_UIS_H})
+	endif (MINGW)
 endif (MSVC)
 
 target_link_libraries (../scc ${QT_LIBRARIES} ${QT_QTNETWORK_LIBRARIES} ${QCA2_LIBRARIES} ${PHONON_LIBRARIES})
