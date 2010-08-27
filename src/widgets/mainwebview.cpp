@@ -30,7 +30,7 @@ MainWebView::MainWebView(QWidget *parent, Network *param1, QSettings *param2, QS
 
 void MainWebView::join_channel()
 {
-    pNetwork->send(QString("JOIN %1").arg(strNick));
+    pNetwork->send(QString("JOIN %1").arg(strChannel));
 }
 
 MainWebView::~MainWebView()
@@ -199,14 +199,14 @@ void MainWebView::contextMenuEvent(QContextMenuEvent *event)
     // link
     if (r.linkUrl().isEmpty() == false)
     {
-        strLink = r.linkUrl().toString();
+        QString strLink = r.linkUrl().toString();
         QString strCat = strLink.left(4);
         strLink = strLink.right(strLink.length()-4);
 
         // channel
         if (strCat == "chan")
         {
-            QString strChannel = strLink;
+            strChannel = strLink;
 
             QAction *nameAct = new QAction(strChannel, this);
             nameAct->setDisabled(true);

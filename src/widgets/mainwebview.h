@@ -49,7 +49,6 @@ private:
     QSettings *settings;
     QString strChannel;
     QString strNick;
-    QString strLink;
     QStringList strOpenChannels;
     enum { maxOpenChannels = 50 };
     QAction *openChannelsActs[maxOpenChannels];
