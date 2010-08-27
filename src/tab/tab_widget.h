@@ -107,7 +107,7 @@ private:
     QLabel *nickCount;
     QLabel *webLink;
     Nicklist *nick_list;
-    MainWebView *textEdit;
+    MainWebView *mainWebView;
     QWidget *toolWidget;
     QWidget *bottomWidget;
 

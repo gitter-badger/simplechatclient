@@ -116,9 +116,9 @@ TabWidget::TabWidget(QWidget *parent, Network *param1, QSettings *param2, QStrin
     //nick_list->setStyleSheet(QString("background-color: #%1;").arg(strBackgroundColor));
     nick_list->show();
 
-    textEdit = new MainWebView(myparent, pNetwork, settings, strName);
-    textEdit->setParent(this);
-    textEdit->show();
+    mainWebView = new MainWebView(myparent, pNetwork, settings, strName);
+    mainWebView->setParent(this);
+    mainWebView->show();
 
     bold = new QPushButton(this);
     bold->setFont(QFont("Times New Roman", -1, 75, false));
@@ -312,7 +312,7 @@ TabWidget::TabWidget(QWidget *parent, Network *param1, QSettings *param2, QStrin
         rightLayout->addWidget(nick_list);
 
         leftLayout->addWidget(topWidget);
-        leftLayout->addWidget(textEdit);
+        leftLayout->addWidget(mainWebView);
         leftLayout->addWidget(toolWidget);
         leftLayout->addWidget(bottomWidget);
 
@@ -342,7 +342,7 @@ TabWidget::TabWidget(QWidget *parent, Network *param1, QSettings *param2, QStrin
 
         rightLayout->addWidget(nick_list);
 
-        leftLayout->addWidget(textEdit);
+        leftLayout->addWidget(mainWebView);
         leftLayout->addWidget(toolWidget);
         leftLayout->addWidget(bottomWidget);
 
@@ -366,7 +366,7 @@ TabWidget::TabWidget(QWidget *parent, Network *param1, QSettings *param2, QStrin
         moderSendButton->hide();
         bottomLayout->removeWidget(moderSendButton);
 
-        leftLayout->addWidget(textEdit);
+        leftLayout->addWidget(mainWebView);
         leftLayout->addWidget(bottomWidget);
 
         leftWidget->setLayout(leftLayout);
@@ -410,7 +410,7 @@ TabWidget::TabWidget(QWidget *parent, Network *param1, QSettings *param2, QStrin
     QObject::connect(moderation, SIGNAL(clicked()), this, SLOT(moderation_clicked()));
     QObject::connect(moderSendButton, SIGNAL(clicked()), this, SLOT(moder_button_clicked()));
 
-    QObject::connect(textEdit, SIGNAL(loadFinished(bool)), this, SLOT(change_scroll_position()));
+    QObject::connect(mainWebView, SIGNAL(loadFinished(bool)), this, SLOT(change_scroll_position()));
 }
 
 TabWidget::~TabWidget()
@@ -420,7 +420,7 @@ TabWidget::~TabWidget()
     nick_status.clear();
     nickLabel->clear();
     strContent.clear();
-    textEdit->setHtml(strContent, QUrl(""));
+    mainWebView->setHtml(strContent, QUrl(""));
     nick_list->clear();
 
     delete nick_list;
@@ -649,12 +649,11 @@ void TabWidget::display_message(QString strData, int iLevel)
 // init text
     strContent.append("<p style=\"margin:0;padding:0;font-style:normal;color:#000000;text-align:"+strTextAlign+";font-family:Verdana;font-weight:normal;font-size:"+strFontSize+";text-decoration:"+strTextDecoration+";\">");
 
-
 // text
     strContent.append(strData);
     strContent = strContent+strContentLast;
     strContent.append("</p>");
-    textEdit->setHtml(strContentStart+strContent+strContentEnd,QUrl(""));
+    mainWebView->setHtml(strContentStart+strContent+strContentEnd,QUrl(""));
 }
 
 // window options
@@ -983,12 +982,13 @@ void TabWidget::clear_nicklist()
 void TabWidget::set_user_info(QString strNick, QString strKey, QString strValue)
 {
     nick_list->set_user_info(strNick, strKey, strValue);
+    mainWebView->set_user_info(strNick, strKey, strValue);
 }
 
 void TabWidget::set_open_channels(QStringList strOpenChannels)
 {
     nick_list->set_open_channels(strOpenChannels);
-    textEdit->set_open_channels(strOpenChannels);
+    mainWebView->set_open_channels(strOpenChannels);
 }
 
 void TabWidget::update_nick_avatar()
@@ -1019,7 +1019,7 @@ void TabWidget::refresh_background_color()
     strBackgroundColor.replace("%", "");
 
     strContentStart = "<html><body style=\"background-color:#"+strBackgroundColor+";\">";
-    textEdit->setHtml(strContentStart+strContent+strContentEnd,QUrl(""));
+    mainWebView->setHtml(strContentStart+strContent+strContentEnd,QUrl(""));
 }
 
 // actions
@@ -1110,7 +1110,7 @@ void TabWidget::courier_triggered()
 void TabWidget::size8_triggered()
 {
     strContent = strContent.replace("font-size:"+strFontSize, "font-size:8px");
-    textEdit->setHtml(strContentStart+strContent+strContentEnd,QUrl(""));
+    mainWebView->setHtml(strContentStart+strContent+strContentEnd,QUrl(""));
     strFontSize = "8px";
     size->setText(tr("Font:")+strFontSize.left(strFontSize.length()-2));
 }
@@ -1118,7 +1118,7 @@ void TabWidget::size8_triggered()
 void TabWidget::size9_triggered()
 {
     strContent = strContent.replace("font-size:"+strFontSize, "font-size:9px");
-    textEdit->setHtml(strContentStart+strContent+strContentEnd,QUrl(""));
+    mainWebView->setHtml(strContentStart+strContent+strContentEnd,QUrl(""));
     strFontSize = "9px";
     size->setText(tr("Font:")+strFontSize.left(strFontSize.length()-2));
 }
@@ -1126,7 +1126,7 @@ void TabWidget::size9_triggered()
 void TabWidget::size10_triggered()
 {
     strContent = strContent.replace("font-size:"+strFontSize, "font-size:10px");
-    textEdit->setHtml(strContentStart+strContent+strContentEnd,QUrl(""));
+    mainWebView->setHtml(strContentStart+strContent+strContentEnd,QUrl(""));
     strFontSize = "10px";
     size->setText(tr("Font:")+strFontSize.left(strFontSize.length()-2));
 }
@@ -1134,7 +1134,7 @@ void TabWidget::size10_triggered()
 void TabWidget::size11_triggered()
 {
     strContent = strContent.replace("font-size:"+strFontSize, "font-size:11px");
-    textEdit->setHtml(strContentStart+strContent+strContentEnd,QUrl(""));
+    mainWebView->setHtml(strContentStart+strContent+strContentEnd,QUrl(""));
     strFontSize = "11px";
     size->setText(tr("Font:")+strFontSize.left(strFontSize.length()-2));
 }
@@ -1142,7 +1142,7 @@ void TabWidget::size11_triggered()
 void TabWidget::size12_triggered()
 {
     strContent = strContent.replace("font-size:"+strFontSize, "font-size:12px");
-    textEdit->setHtml(strContentStart+strContent+strContentEnd,QUrl(""));
+    mainWebView->setHtml(strContentStart+strContent+strContentEnd,QUrl(""));
     strFontSize = "12px";
     size->setText(tr("Font:")+strFontSize.left(strFontSize.length()-2));
 }
@@ -1150,7 +1150,7 @@ void TabWidget::size12_triggered()
 void TabWidget::size14_triggered()
 {
     strContent = strContent.replace("font-size:"+strFontSize, "font-size:14px");
-    textEdit->setHtml(strContentStart+strContent+strContentEnd,QUrl(""));
+    mainWebView->setHtml(strContentStart+strContent+strContentEnd,QUrl(""));
     strFontSize = "14px";
     size->setText(tr("Font:")+strFontSize.left(strFontSize.length()-2));
 }
@@ -1158,7 +1158,7 @@ void TabWidget::size14_triggered()
 void TabWidget::size18_triggered()
 {
     strContent = strContent.replace("font-size:"+strFontSize, "font-size:18px");
-    textEdit->setHtml(strContentStart+strContent+strContentEnd,QUrl(""));
+    mainWebView->setHtml(strContentStart+strContent+strContentEnd,QUrl(""));
     strFontSize = "18px";
     size->setText(tr("Font:")+strFontSize.left(strFontSize.length()-2));
 }
@@ -1166,7 +1166,7 @@ void TabWidget::size18_triggered()
 void TabWidget::size20_triggered()
 {
     strContent = strContent.replace("font-size:"+strFontSize, "font-size:20px");
-    textEdit->setHtml(strContentStart+strContent+strContentEnd,QUrl(""));
+    mainWebView->setHtml(strContentStart+strContent+strContentEnd,QUrl(""));
     strFontSize = "20px";
     size->setText(tr("Font:")+strFontSize.left(strFontSize.length()-2));
 }
@@ -1365,7 +1365,7 @@ void TabWidget::moderation_clicked()
 
 void TabWidget::change_scroll_position()
 {
-    textEdit->page()->mainFrame()->setScrollBarValue(Qt::Vertical, textEdit->page()->mainFrame()->scrollBarMaximum(Qt::Vertical));
+    mainWebView->page()->mainFrame()->setScrollBarValue(Qt::Vertical, mainWebView->page()->mainFrame()->scrollBarMaximum(Qt::Vertical));
 }
 
 void TabWidget::keyPressEvent(QKeyEvent *e)

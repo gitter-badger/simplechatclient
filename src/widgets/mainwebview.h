@@ -21,6 +21,10 @@
 #ifndef MAINWEBVIEW_H
 #define MAINWEBVIEW_H
 
+#include <QNetworkAccessManager>
+#include <QNetworkReply>
+#include "dlg_user_profile.h"
+
 #include <QContextMenuEvent>
 #include <QMenu>
 #include <QSettings>
@@ -37,6 +41,7 @@ public:
     MainWebView(QWidget *, Network *, QSettings *, QString);
     ~MainWebView();
     void set_open_channels(QStringList);
+    void set_user_info(QString, QString, QString);
 
 private:
     QWidget *myparent;
@@ -48,11 +53,13 @@ private:
     QStringList strOpenChannels;
     enum { maxOpenChannels = 50 };
     QAction *openChannelsActs[maxOpenChannels];
+    sNickInfo sCurrentUserInfo;
 
 private slots:
     void join_channel();
     void priv();
     void whois();
+    void profile();
     void cam();
     void friends_add();
     void friends_del();

@@ -53,6 +53,14 @@ void MainWebView::whois()
     pNetwork->send(QString("WHOIS %1 %1").arg(strNick));
 }
 
+void MainWebView::profile()
+{
+    if (strNick == sCurrentUserInfo.nick)
+    {
+        (new DlgUserProfile(myparent, pNetwork, settings, sCurrentUserInfo))->show();
+    }
+}
+
 void MainWebView::cam()
 {
     (new DlgCam(myparent, pNetwork, settings, strNick))->show();
@@ -145,6 +153,45 @@ void MainWebView::invite()
     }
 }
 
+void MainWebView::set_user_info(QString strNickInfo, QString strKey, QString strValue)
+{
+    if (strNickInfo == strNick)
+    {
+        sCurrentUserInfo.nick = strNick;
+
+        if (strKey == "avatar")
+            sCurrentUserInfo.avatar = strValue;
+        else if (strKey == "birthdate")
+            sCurrentUserInfo.birthdate = strValue;
+        else if (strKey == "city")
+            sCurrentUserInfo.city = strValue;
+        else if (strKey == "country")
+            sCurrentUserInfo.country = strValue;
+        else if (strKey == "email")
+            sCurrentUserInfo.email = strValue;
+        else if (strKey == "longDesc")
+            sCurrentUserInfo.longDesc = strValue;
+        else if (strKey == "offmsg")
+            sCurrentUserInfo.offmsg = strValue;
+        else if (strKey == "prefs")
+            sCurrentUserInfo.prefs = strValue;
+        else if (strKey == "rank")
+            sCurrentUserInfo.rank = strValue;
+        else if (strKey == "sex")
+            sCurrentUserInfo.sex = strValue;
+        else if (strKey == "shortDesc")
+            sCurrentUserInfo.shortDesc = strValue;
+        else if (strKey == "tags")
+            sCurrentUserInfo.tags = strValue;
+        else if (strKey == "type")
+            sCurrentUserInfo.type = strValue;
+        else if (strKey == "vEmail")
+            sCurrentUserInfo.vEmail = strValue;
+        else if (strKey == "www")
+            sCurrentUserInfo.www = strValue;
+    }
+}
+
 void MainWebView::contextMenuEvent(QContextMenuEvent *event)
 {
     QWebHitTestResult r = page()->mainFrame()->hitTestContent(event->pos());
@@ -155,15 +202,16 @@ void MainWebView::contextMenuEvent(QContextMenuEvent *event)
         strLink = r.linkUrl().toString();
         QString strCat = strLink.left(4);
         strLink = strLink.right(strLink.length()-4);
-        strNick = strLink;
 
         // channel
         if (strCat == "chan")
         {
-            QAction *nameAct = new QAction(strLink, this);
+            QString strChannel = strLink;
+
+            QAction *nameAct = new QAction(strChannel, this);
             nameAct->setDisabled(true);
 
-            QMenu *menu = new QMenu(strLink);
+            QMenu *menu = new QMenu(strChannel);
             menu->addAction(nameAct);
             menu->addSeparator();
             menu->addAction(tr("Join channel"), this, SLOT(join_channel()));
@@ -172,6 +220,32 @@ void MainWebView::contextMenuEvent(QContextMenuEvent *event)
         // nick
         else
         {
+            strNick = strLink;
+
+            if (strNick[0] != '~')
+            {
+                // clear user info
+                sCurrentUserInfo.avatar = QString::null;
+                sCurrentUserInfo.birthdate = QString::null;
+                sCurrentUserInfo.city = QString::null;
+                sCurrentUserInfo.country = QString::null;
+                sCurrentUserInfo.email = QString::null;
+                sCurrentUserInfo.longDesc = QString::null;
+                sCurrentUserInfo.nick = QString::null;
+                sCurrentUserInfo.offmsg = QString::null;
+                sCurrentUserInfo.prefs = QString::null;
+                sCurrentUserInfo.rank = QString::null;
+                sCurrentUserInfo.sex = QString::null;
+                sCurrentUserInfo.shortDesc = QString::null;
+                sCurrentUserInfo.tags = QString::null;
+                sCurrentUserInfo.type = QString::null;
+                sCurrentUserInfo.vEmail = QString::null;
+                sCurrentUserInfo.www = QString::null;
+
+                // get new user info
+                pNetwork->send(QString("NS INFO %1").arg(strNick));
+            }
+
             QMenu *minvite = new QMenu(tr("Invite"));
 
             for (int i = 0; i < maxOpenChannels; ++i)
@@ -214,7 +288,7 @@ void MainWebView::contextMenuEvent(QContextMenuEvent *event)
             privilege->addAction(tr("Give guest status"), this, SLOT(voice_add()));
             privilege->addAction(tr("Take guest status"), this, SLOT(voice_del()));
 
-            QAction *nameAct = new QAction(strLink, this);
+            QAction *nameAct = new QAction(strNick, this);
             nameAct->setDisabled(true);
 
             QMenu *menu = new QMenu(this);
@@ -222,8 +296,9 @@ void MainWebView::contextMenuEvent(QContextMenuEvent *event)
             menu->addSeparator();
             menu->addAction(tr("Priv"), this, SLOT(priv()));
             menu->addAction(tr("Whois"), this, SLOT(whois()));
-            if (strLink[0] != '~')
+            if (strNick[0] != '~')
             {
+                menu->addAction(tr("Profile"), this, SLOT(profile()));
                 menu->addAction(tr("Webcam"), this, SLOT(cam()));
             }
             menu->addMenu(minvite);

@@ -2103,6 +2103,10 @@
         <translation>Whois</translation>
     </message>
     <message>
+        <source>Profile</source>
+        <translation>Wizytówka</translation>
+    </message>
+    <message>
         <source>Webcam</source>
         <translation>Kamerka</translation>
     </message>
