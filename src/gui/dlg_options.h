@@ -21,10 +21,12 @@
 #ifndef DLG_OPTIONS_H
 #define DLG_OPTIONS_H
 
+#include <QCloseEvent>
 #include <QColorDialog>
 #include <QDialog>
 #include <QMessageBox>
 #include <QSettings>
+#include <QShowEvent>
 #include "config.h"
 #include "crypt.h"
 #include "dlg_register_nick.h"
@@ -66,6 +68,13 @@ private slots:
     void set_background_color();
     void button_ok();
     void button_cancel();
+
+protected:
+    virtual void showEvent(QShowEvent *);
+    virtual void closeEvent(QCloseEvent *);
+
+signals:
+    void refresh_background_color();
 
 };
 

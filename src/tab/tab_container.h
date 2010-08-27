@@ -63,6 +63,7 @@ public:
     int get_nick_channels(QString);
     void set_user_info(QString, QString, QString);
     QStringList get_open_channels();
+    void refresh_background_color();
 
 public slots:
     void update_nick_avatar(QString);

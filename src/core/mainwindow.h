@@ -79,6 +79,7 @@ private:
     OnetKernel *pOnet_kernel;
     OnetAuth *pOnet_auth;
     Notify *pNotify;
+    DlgOptions *pOptions;
     QList <UpdateThread*> uThreadList;
     QMenu *trayMenu;
     QSystemTrayIcon *trayIcon;
@@ -103,6 +104,7 @@ private:
     QList <QString> lCloseChannelsList;
 
 private slots:
+    void refresh_background_color();
     void force_close_tab();
     void button_close();
     void button_connect();

@@ -1007,6 +1007,22 @@ void TabWidget::update_channel_avatar()
     }
 }
 
+void TabWidget::refresh_background_color()
+{
+    QString strBackgroundColor = settings->value("background_color").toString();
+    strBackgroundColor.replace("&", "&amp;");
+    strBackgroundColor.replace("<", "&lt;");
+    strBackgroundColor.replace(">", "&gt;");
+    strBackgroundColor.replace("\"", "");
+    strBackgroundColor.replace("\'", "");
+    strBackgroundColor.replace("#", "");
+    strBackgroundColor.replace(";", "");
+    strBackgroundColor.replace("%", "");
+
+    strContentStart = "<html><body style=\"background-color:#"+strBackgroundColor+";\">";
+    textEdit->setHtml(strContentStart+strContent+strContentEnd,QUrl(""));
+}
+
 // actions
 
 void TabWidget::bold_clicked()

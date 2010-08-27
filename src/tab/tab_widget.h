@@ -86,6 +86,7 @@ public:
     bool nicklist_exist(QString);
     void update_nick_avatar();
     void update_channel_avatar();
+    void refresh_background_color();
     void nicklist_refresh_all();
     QStringList get_nicklist();
     void send_message(bool);

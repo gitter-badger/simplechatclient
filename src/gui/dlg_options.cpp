@@ -103,158 +103,6 @@ DlgOptions::DlgOptions(QWidget *parent, QSettings *param1) : QDialog(parent)
         iComboBoxMyColors++;
     }
 
-// config
-    Config *pConfig = new Config();
-    QString strNick = pConfig->get_value("login-nick");
-    QString strPass = pConfig->get_value("login-pass");
-    QString strAutoBusy = pConfig->get_value("auto_busy");
-    QString strShowZuo = pConfig->get_value("show_zuo");
-    QString strHideFormating = pConfig->get_value("hide_formating");
-    QString strHideJoinPart = pConfig->get_value("hide_join_part");
-    QString strHideJoinPart200 = pConfig->get_value("hide_join_part_200");
-    QString strDisableAvatars = pConfig->get_value("disable_avatars");
-    QString strDisableLogs = pConfig->get_value("disable_logs");
-    QString strDisableSounds = pConfig->get_value("disable_sounds");
-    QString strStyle = pConfig->get_value("style");
-    QString strBackgroundColor = pConfig->get_value("background_color");
-    QString strMyBold = pConfig->get_value("my_bold");
-    QString strMyItalic = pConfig->get_value("my_italic");
-    QString strMyFont = pConfig->get_value("my_font");
-    QString strMyColor = pConfig->get_value("my_color");
-    delete pConfig;
-
-// decrypt pass
-    if (strPass.isEmpty() == false)
-    {
-        Crypt *pCrypt = new Crypt();
-        strPass = pCrypt->decrypt(strNick, strPass);
-        delete pCrypt;
-    }
-
-// set nick staly/tyldowy
-    if (strPass.isEmpty() == true)
-    {
-        ui.radioButton_unregistered_nick->setChecked(true);
-        ui.radioButton_registered_nick->setChecked(false);
-        ui.label_password->hide();
-        ui.lineEdit_password->hide();
-    }
-    else
-    {
-        ui.radioButton_unregistered_nick->setChecked(false);
-        ui.radioButton_registered_nick->setChecked(true);
-    }
-
-// set nick and pass
-    ui.lineEdit_nick->setText(strNick);
-    ui.lineEdit_password->setText(strPass);
-
-// set style
-    if (strStyle == "modern")
-    {
-        if (strDisableAvatars == "off")
-            ui.radioButton_modern_avatars->setChecked(true);
-        else
-            ui.radioButton_modern_no_avatars->setChecked(true);
-    }
-    else if (strStyle == "classic")
-        ui.radioButton_classic->setChecked(true);
-
-// auto busy
-    if (strAutoBusy == "on")
-        ui.checkBox_auto_busy->setChecked(true);
-    else
-        ui.checkBox_auto_busy->setChecked(false);
-
-// show zuo
-    if (strShowZuo == "on")
-        ui.checkBox_show_zuo->setChecked(true);
-    else
-        ui.checkBox_show_zuo->setChecked(false);
-
-// hide formating
-    if (strHideFormating == "on")
-        ui.checkBox_hide_formating->setChecked(true);
-    else
-        ui.checkBox_hide_formating->setChecked(false);
-
-// hide join part
-    if (strHideJoinPart == "on")
-        ui.checkBox_hide_join_part->setChecked(true);
-    else
-        ui.checkBox_hide_join_part->setChecked(false);
-
-// hide join part
-    if (strHideJoinPart200 == "on")
-        ui.checkBox_hide_join_part_200->setChecked(true);
-    else
-        ui.checkBox_hide_join_part_200->setChecked(false);
-
-// disable avatars
-    if (strDisableAvatars == "on")
-        ui.checkBox_disable_avatars->setChecked(true);
-    else
-        ui.checkBox_disable_avatars->setChecked(false);
-
-// disable logs
-    if (strDisableLogs == "on")
-        ui.checkBox_disable_logs->setChecked(true);
-    else
-        ui.checkBox_disable_logs->setChecked(false);
-
-// disable sounds
-    if (strDisableSounds == "on")
-        ui.checkBox_disable_sounds->setChecked(true);
-    else
-        ui.checkBox_disable_sounds->setChecked(false);
-
-// set background color
-    QPixmap bcolor(50,15);
-    bcolor.fill(QColor(strBackgroundColor));
-    ui.pushButton_background_color->setIcon(QIcon(bcolor));
-
-// set my bold
-    if (strMyBold == "on")
-        ui.comboBox_my_bold->setCurrentIndex(1);
-    else
-        ui.comboBox_my_bold->setCurrentIndex(0);
-
-// set my italic
-    if (strMyItalic == "on")
-        ui.comboBox_my_italic->setCurrentIndex(1);
-    else
-        ui.comboBox_my_italic->setCurrentIndex(0);
-
-// set my font combobox
-    for (int i = 0; i < ui.comboBox_my_font->count(); i++)
-    {
-        if (ui.comboBox_my_font->itemText(i) == strMyFont)
-            ui.comboBox_my_font->setCurrentIndex(i);
-    }
-
-// set my color combobox
-    int iMyColor;
-
-    if (strMyColor == "#000000") iMyColor = 0;
-    else if (strMyColor == "#623c00") iMyColor = 1;
-    else if (strMyColor == "#c86c00") iMyColor = 2;
-    else if (strMyColor == "#ff6500") iMyColor = 3;
-    else if (strMyColor == "#ff0000") iMyColor = 4;
-    else if (strMyColor == "#e40f0f") iMyColor = 5;
-    else if (strMyColor == "#990033") iMyColor = 6;
-    else if (strMyColor == "#8800ab") iMyColor = 7;
-    else if (strMyColor == "#ce00ff") iMyColor = 8;
-    else if (strMyColor == "#0f2ab1") iMyColor = 9;
-    else if (strMyColor == "#3030ce") iMyColor = 10;
-    else if (strMyColor == "#006699") iMyColor = 11;
-    else if (strMyColor == "#1a866e") iMyColor = 12;
-    else if (strMyColor == "#008100") iMyColor = 13;
-    else if (strMyColor == "#959595") iMyColor = 14;
-    else
-        iMyColor = 0;
-
-    ui.comboBox_my_color->setCurrentIndex(iMyColor);
-
 // signals
     QObject::connect(ui.listWidget_options, SIGNAL(currentItemChanged(QListWidgetItem*,QListWidgetItem*)), this, SLOT(change_page(QListWidgetItem*,QListWidgetItem*)));
     QObject::connect(ui.radioButton_unregistered_nick, SIGNAL(clicked()), this, SLOT(hide_pass()));
@@ -599,12 +447,15 @@ void DlgOptions::set_background_color()
         pConfig1->set_value("background_color", strColor);
         settings->setValue("background_color", strColor);
         delete pConfig1;
+
+        // refresh tabs
+        emit refresh_background_color();
     }
 }
 
 void DlgOptions::button_cancel()
 {
-    this->close();
+    this->hide();
 }
 
 void DlgOptions::button_ok()
@@ -612,7 +463,7 @@ void DlgOptions::button_ok()
 // save
     save_settings();
 
-    this->close();
+    this->hide();
 }
 
 void DlgOptions::save_settings()
@@ -652,4 +503,167 @@ void DlgOptions::save_settings()
     pConfig->set_value("login-nick", strNick);
     pConfig->set_value("login-pass", strPass);
     delete pConfig;
+}
+
+void DlgOptions::showEvent(QShowEvent *event)
+{
+    event->accept();
+
+// config
+    Config *pConfig = new Config();
+    QString strNick = pConfig->get_value("login-nick");
+    QString strPass = pConfig->get_value("login-pass");
+    QString strAutoBusy = pConfig->get_value("auto_busy");
+    QString strShowZuo = pConfig->get_value("show_zuo");
+    QString strHideFormating = pConfig->get_value("hide_formating");
+    QString strHideJoinPart = pConfig->get_value("hide_join_part");
+    QString strHideJoinPart200 = pConfig->get_value("hide_join_part_200");
+    QString strDisableAvatars = pConfig->get_value("disable_avatars");
+    QString strDisableLogs = pConfig->get_value("disable_logs");
+    QString strDisableSounds = pConfig->get_value("disable_sounds");
+    QString strStyle = pConfig->get_value("style");
+    QString strBackgroundColor = pConfig->get_value("background_color");
+    QString strMyBold = pConfig->get_value("my_bold");
+    QString strMyItalic = pConfig->get_value("my_italic");
+    QString strMyFont = pConfig->get_value("my_font");
+    QString strMyColor = pConfig->get_value("my_color");
+    delete pConfig;
+
+// decrypt pass
+    if (strPass.isEmpty() == false)
+    {
+        Crypt *pCrypt = new Crypt();
+        strPass = pCrypt->decrypt(strNick, strPass);
+        delete pCrypt;
+    }
+
+// set nick staly/tyldowy
+    if (strPass.isEmpty() == true)
+    {
+        ui.radioButton_unregistered_nick->setChecked(true);
+        ui.radioButton_registered_nick->setChecked(false);
+        ui.label_password->hide();
+        ui.lineEdit_password->hide();
+    }
+    else
+    {
+        ui.radioButton_unregistered_nick->setChecked(false);
+        ui.radioButton_registered_nick->setChecked(true);
+    }
+
+// set nick and pass
+    ui.lineEdit_nick->setText(strNick);
+    ui.lineEdit_password->setText(strPass);
+
+// set style
+    if (strStyle == "modern")
+    {
+        if (strDisableAvatars == "off")
+            ui.radioButton_modern_avatars->setChecked(true);
+        else
+            ui.radioButton_modern_no_avatars->setChecked(true);
+    }
+    else if (strStyle == "classic")
+        ui.radioButton_classic->setChecked(true);
+
+// auto busy
+    if (strAutoBusy == "on")
+        ui.checkBox_auto_busy->setChecked(true);
+    else
+        ui.checkBox_auto_busy->setChecked(false);
+
+// show zuo
+    if (strShowZuo == "on")
+        ui.checkBox_show_zuo->setChecked(true);
+    else
+        ui.checkBox_show_zuo->setChecked(false);
+
+// hide formating
+    if (strHideFormating == "on")
+        ui.checkBox_hide_formating->setChecked(true);
+    else
+        ui.checkBox_hide_formating->setChecked(false);
+
+// hide join part
+    if (strHideJoinPart == "on")
+        ui.checkBox_hide_join_part->setChecked(true);
+    else
+        ui.checkBox_hide_join_part->setChecked(false);
+
+// hide join part
+    if (strHideJoinPart200 == "on")
+        ui.checkBox_hide_join_part_200->setChecked(true);
+    else
+        ui.checkBox_hide_join_part_200->setChecked(false);
+
+// disable avatars
+    if (strDisableAvatars == "on")
+        ui.checkBox_disable_avatars->setChecked(true);
+    else
+        ui.checkBox_disable_avatars->setChecked(false);
+
+// disable logs
+    if (strDisableLogs == "on")
+        ui.checkBox_disable_logs->setChecked(true);
+    else
+        ui.checkBox_disable_logs->setChecked(false);
+
+// disable sounds
+    if (strDisableSounds == "on")
+        ui.checkBox_disable_sounds->setChecked(true);
+    else
+        ui.checkBox_disable_sounds->setChecked(false);
+
+// set background color
+    QPixmap bcolor(50,15);
+    bcolor.fill(QColor(strBackgroundColor));
+    ui.pushButton_background_color->setIcon(QIcon(bcolor));
+
+// set my bold
+    if (strMyBold == "on")
+        ui.comboBox_my_bold->setCurrentIndex(1);
+    else
+        ui.comboBox_my_bold->setCurrentIndex(0);
+
+// set my italic
+    if (strMyItalic == "on")
+        ui.comboBox_my_italic->setCurrentIndex(1);
+    else
+        ui.comboBox_my_italic->setCurrentIndex(0);
+
+// set my font combobox
+    for (int i = 0; i < ui.comboBox_my_font->count(); i++)
+    {
+        if (ui.comboBox_my_font->itemText(i) == strMyFont)
+            ui.comboBox_my_font->setCurrentIndex(i);
+    }
+
+// set my color combobox
+    int iMyColor;
+
+    if (strMyColor == "#000000") iMyColor = 0;
+    else if (strMyColor == "#623c00") iMyColor = 1;
+    else if (strMyColor == "#c86c00") iMyColor = 2;
+    else if (strMyColor == "#ff6500") iMyColor = 3;
+    else if (strMyColor == "#ff0000") iMyColor = 4;
+    else if (strMyColor == "#e40f0f") iMyColor = 5;
+    else if (strMyColor == "#990033") iMyColor = 6;
+    else if (strMyColor == "#8800ab") iMyColor = 7;
+    else if (strMyColor == "#ce00ff") iMyColor = 8;
+    else if (strMyColor == "#0f2ab1") iMyColor = 9;
+    else if (strMyColor == "#3030ce") iMyColor = 10;
+    else if (strMyColor == "#006699") iMyColor = 11;
+    else if (strMyColor == "#1a866e") iMyColor = 12;
+    else if (strMyColor == "#008100") iMyColor = 13;
+    else if (strMyColor == "#959595") iMyColor = 14;
+    else
+        iMyColor = 0;
+
+    ui.comboBox_my_color->setCurrentIndex(iMyColor);
+}
+
+void DlgOptions::closeEvent(QCloseEvent *event)
+{
+    event->ignore();
+    this->hide();
 }

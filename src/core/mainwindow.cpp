@@ -76,7 +76,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
 // settings
     settings.clear();
-    settings.setValue("version", "1.0.7.431");
+    settings.setValue("version", "1.0.7.432");
     settings.setValue("debug", "off");
     settings.setValue("logged", "off");
     settings.setValue("busy", "off");
@@ -123,6 +123,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     pOnet_auth = new OnetAuth(&settings, pTabC);
 
     pTabC->set_dlg(pDlg_channel_settings, pDlg_moderation);
+
+    pOptions = new DlgOptions(this, &settings);
 
 // welcome
     pTabC->show_msg("Status", "%Fi:courier%"+tr("Welcome to the Simple Chat Client")+" %Ihehe%", 0);
@@ -204,6 +206,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     QObject::connect(this, SIGNAL(do_kernel(QString)), pOnet_kernel, SLOT(kernel(QString)));
     QObject::connect(this, SIGNAL(do_request_uo(QString, QString, QString)), pOnet_auth, SLOT(request_uo(QString, QString, QString)));
 
+// signal refresh background color
+    QObject::connect(pOptions, SIGNAL(refresh_background_color()), this, SLOT(refresh_background_color()));
+
 // tray
     trayMenu = new QMenu();
     trayMenu->addAction(showAct);
@@ -234,6 +239,7 @@ MainWindow::~MainWindow()
     delete trayIcon;
     delete trayMenu;
     delete lLag;
+    delete pOptions;
     delete pOnet_auth;
     delete pOnet_kernel;
     delete pDlg_ignore;
@@ -285,6 +291,11 @@ void MainWindow::set_statusbar(QString strValue)
     lLag->setText(strValue);
 }
 
+void MainWindow::refresh_background_color()
+{
+    pTabC->refresh_background_color();
+}
+
 // force close tab after 10 sec
 void MainWindow::force_close_tab()
 {
@@ -322,7 +333,7 @@ void MainWindow::button_connect()
 
 void MainWindow::options_dlg()
 {
-    (new DlgOptions(this, &settings))->show();
+    pOptions->show();
 }
 
 void MainWindow::channel_list_dlg()
