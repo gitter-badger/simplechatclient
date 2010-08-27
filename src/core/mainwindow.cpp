@@ -76,7 +76,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
 // settings
     settings.clear();
-    settings.setValue("version", "1.0.7.433");
+    settings.setValue("version", "1.0.7.434");
     settings.setValue("debug", "off");
     settings.setValue("logged", "off");
     settings.setValue("busy", "off");
@@ -163,6 +163,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
 // toolbar
     toolBar = addToolBar(tr("Navigation bar"));
+    toolBar->setIconSize(QSize(16,16));
     toolBar->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
     toolBar->addAction(connectAct);
     toolBar->addAction(optionsAct);
