@@ -12,6 +12,7 @@ SOURCES += src/avatars/channel_avatar.cpp \
     src/avatars/nick_avatar.cpp \
     src/common/commands.cpp \
     src/common/config.cpp \
+    src/common/convert.cpp \
     src/common/crypt.cpp \
     src/common/log.cpp \
     src/common/replace.cpp \
@@ -54,12 +55,12 @@ SOURCES += src/avatars/channel_avatar.cpp \
     src/widgets/inputline.cpp \
     src/widgets/mainwebview.cpp \
     src/widgets/nicklist.cpp \
-    src/widgets/nicklistdelegate.cpp \
-    src/common/convert.cpp
+    src/widgets/nicklistdelegate.cpp
 HEADERS += src/avatars/channel_avatar.h \
     src/avatars/nick_avatar.h \
     src/common/commands.h \
     src/common/config.h \
+    src/common/convert.h \
     src/common/crypt.h \
     src/common/log.h \
     src/common/replace.h \
@@ -102,8 +103,7 @@ HEADERS += src/avatars/channel_avatar.h \
     src/widgets/inputline.h \
     src/widgets/mainwebview.h \
     src/widgets/nicklist.h \
-    src/widgets/nicklistdelegate.h \
-    src/common/convert.h
+    src/widgets/nicklistdelegate.h
 FORMS += ui/about.ui \
     ui/cam.ui \
     ui/channel_favourites.ui \

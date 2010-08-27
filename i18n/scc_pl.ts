@@ -2,29 +2,6 @@
 <!DOCTYPE TS>
 <TS version="2.0" language="pl">
 <context>
-    <name>Config</name>
-    <message>
-        <source>Error: config: Cannot read config file!</source>
-        <translation>Błąd: config: Nie można odczytać pliku konfiguracji!</translation>
-    </message>
-    <message>
-        <source>Error: config: Cannot set content from file!</source>
-        <translation>Błąd: config: Nie można ustawić zawartości pliku!</translation>
-    </message>
-    <message>
-        <source>Error: config: Cannot open config file!</source>
-        <translation>Błąd: config: Nie można otworzyć pliku konfiguracji!</translation>
-    </message>
-    <message>
-        <source>Error: config: Cannot get value: </source>
-        <translation>Błąd: config: Nie można pobrać wartości: </translation>
-    </message>
-    <message>
-        <source>Error: config: Cannot set value: </source>
-        <translation>Błąd: config: Nie można ustawić wartości: </translation>
-    </message>
-</context>
-<context>
     <name>Commands</name>
     <message>
         <source>* Available commands:</source>
@@ -116,6 +93,29 @@
     </message>
 </context>
 <context>
+    <name>Config</name>
+    <message>
+        <source>Error: config: Cannot read config file!</source>
+        <translation>Błąd: config: Nie można odczytać pliku konfiguracji!</translation>
+    </message>
+    <message>
+        <source>Error: config: Cannot set content from file!</source>
+        <translation>Błąd: config: Nie można ustawić zawartości pliku!</translation>
+    </message>
+    <message>
+        <source>Error: config: Cannot open config file!</source>
+        <translation>Błąd: config: Nie można otworzyć pliku konfiguracji!</translation>
+    </message>
+    <message>
+        <source>Error: config: Cannot get value: </source>
+        <translation>Błąd: config: Nie można pobrać wartości: </translation>
+    </message>
+    <message>
+        <source>Error: config: Cannot set value: </source>
+        <translation>Błąd: config: Nie można ustawić wartości: </translation>
+    </message>
+</context>
+<context>
     <name>Crypt</name>
     <message>
         <source>Error: crypt: Cannot encrypt - empty argument</source>
@@ -128,6 +128,174 @@
     <message>
         <source>Error: crypt: Cannot decrypt - empty argument</source>
         <translation>Błąd: crypt: Nie można odszyfrować danych - pusty parametr</translation>
+    </message>
+</context>
+<context>
+    <name>Log</name>
+    <message>
+        <source>Error: log: Cannot open file </source>
+        <translation>Błąd: log: Nie można otworzyć pliku </translation>
+    </message>
+</context>
+<context>
+    <name>MainWindow</name>
+    <message>
+        <source>Show</source>
+        <translation>Pokaż</translation>
+    </message>
+    <message>
+        <source>Connect</source>
+        <translation>Połącz</translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation>Zakończ</translation>
+    </message>
+    <message>
+        <source>Options</source>
+        <translation>Opcje programu</translation>
+    </message>
+    <message>
+        <source>Channel list</source>
+        <translation>Lista kanałów</translation>
+    </message>
+    <message>
+        <source>Channel settings</source>
+        <translation>Ustawienia kanałów</translation>
+    </message>
+    <message>
+        <source>Favorite channels</source>
+        <translation>Ulubione kanały</translation>
+    </message>
+    <message>
+        <source>Friends</source>
+        <translation>Przyjaciele</translation>
+    </message>
+    <message>
+        <source>Ignored</source>
+        <translation>Ignorowani</translation>
+    </message>
+    <message>
+        <source>About SCC ...</source>
+        <translation>O programie SCC...</translation>
+    </message>
+    <message>
+        <source>Welcome to the Simple Chat Client</source>
+        <translation>Witaj w programie Simple Chat Client</translation>
+    </message>
+    <message>
+        <source>Official website</source>
+        <translation>Oficjalna strona</translation>
+    </message>
+    <message>
+        <source>Official Forum</source>
+        <translation>Oficjalne forum</translation>
+    </message>
+    <message>
+        <source>Known bugs</source>
+        <translation>Lista błędów</translation>
+    </message>
+    <message>
+        <source>Bug reporting</source>
+        <translation>Zgłaszanie błędów</translation>
+    </message>
+    <message>
+        <source>&amp;File</source>
+        <translation>&amp;Plik</translation>
+    </message>
+    <message>
+        <source>&amp;Settings</source>
+        <translation>&amp;Ustawienia</translation>
+    </message>
+    <message>
+        <source>&amp;Chat</source>
+        <translation>&amp;Czat</translation>
+    </message>
+    <message>
+        <source>He&amp;lp</source>
+        <translation>Pomo&amp;c</translation>
+    </message>
+    <message>
+        <source>Navigation bar</source>
+        <translation>Pasek nawigacji</translation>
+    </message>
+    <message>
+        <source>&amp;Disconnect</source>
+        <translation>&amp;Rozłącz</translation>
+    </message>
+    <message>
+        <source>&amp;Connect</source>
+        <translation>&amp;Połącz</translation>
+    </message>
+</context>
+<context>
+    <name>NetworkThread</name>
+    <message>
+        <source>Error: Could not connect to the server - connection already exists!</source>
+        <translation>Error: Nie można się połączyć z serwerem - połączenie już istnieje!</translation>
+    </message>
+    <message>
+        <source>Reconnecting...</source>
+        <translation>Ponowne łączenie z serwerem...</translation>
+    </message>
+    <message>
+        <source>Error: Could not send data! [%1]</source>
+        <translation>Error: Nie udało się wysłać danych! [%1]</translation>
+    </message>
+    <message>
+        <source>Error: Could not send data! [Not connected]</source>
+        <translation>Error: Nie udało się wysłać danych! [Not connected]</translation>
+    </message>
+    <message>
+        <source>Connected to server</source>
+        <translation>Połączono z serwerem</translation>
+    </message>
+    <message>
+        <source>&amp;Disconnect</source>
+        <translation>&amp;Rozłącz</translation>
+    </message>
+    <message>
+        <source>&amp;Connect</source>
+        <translation>&amp;Połącz</translation>
+    </message>
+    <message>
+        <source>Disconnected from server [%1]</source>
+        <translation>Rozłączono z serwerem [%1]</translation>
+    </message>
+    <message>
+        <source>Disconnected from server</source>
+        <translation>Rozłączono z serwerem</translation>
+    </message>
+    <message>
+        <source>(Unregistered)</source>
+        <translation>(Niezalogowany)</translation>
+    </message>
+    <message>
+        <source>No PONG reply from server in 301 seconds. Disconnecting...</source>
+        <translation>Serwer nieaktywny od 301 sekund. Rozłączanie...</translation>
+    </message>
+</context>
+<context>
+    <name>Updater</name>
+    <message>
+        <source>Can not download the available version.</source>
+        <translation>Nie można pobrać dostępnej wersji programu.</translation>
+    </message>
+    <message>
+        <source>You are using up-to-date version.</source>
+        <translation>Używasz aktualnej wersji programu.</translation>
+    </message>
+    <message>
+        <source>You are using a test version.</source>
+        <translation>Używasz testowej wersji programu.</translation>
+    </message>
+    <message>
+        <source>A new version is available.</source>
+        <translation>Nowa wersja programu jest dostępna.</translation>
+    </message>
+    <message>
+        <source>Can not connect to update server.</source>
+        <translation>Nie można połączyć się z serwerem aktualizacji.</translation>
     </message>
 </context>
 <context>
@@ -569,6 +737,25 @@
     </message>
 </context>
 <context>
+    <name>DlgEmoticons</name>
+    <message>
+        <source>Emoticons</source>
+        <translation>Emotikony</translation>
+    </message>
+    <message>
+        <source>Standard</source>
+        <translation>Standardowe</translation>
+    </message>
+    <message>
+        <source>Extended</source>
+        <translation>Rozszerzone</translation>
+    </message>
+    <message>
+        <source>Insert</source>
+        <translation>Wstaw</translation>
+    </message>
+</context>
+<context>
     <name>DlgFriends</name>
     <message>
         <source>Friends list</source>
@@ -955,6 +1142,73 @@
     <message>
         <source>A new version %1 is available. Please %2 an installer and upgrade.</source>
         <translation>Nowa wersja %1 jest dostępna. Proszę %2 instalacje i zaktualizuj program.</translation>
+    </message>
+</context>
+<context>
+    <name>DlgUserProfile</name>
+    <message>
+        <source>Profile</source>
+        <translation>Wizytówka</translation>
+    </message>
+    <message>
+        <source>Sex:</source>
+        <translation>Płeć:</translation>
+    </message>
+    <message>
+        <source>Birthdate:</source>
+        <translation>Data urodzenia:</translation>
+    </message>
+    <message>
+        <source>City:</source>
+        <translation>Miasto:</translation>
+    </message>
+    <message>
+        <source>Country:</source>
+        <translation>Kraj:</translation>
+    </message>
+    <message>
+        <source>Hobby:</source>
+        <translation>Zainteresowania:</translation>
+    </message>
+    <message>
+        <source>Type:</source>
+        <translation>Status:</translation>
+    </message>
+    <message>
+        <source>Email:</source>
+        <translation>Email:</translation>
+    </message>
+    <message>
+        <source>Female</source>
+        <translation>Kobieta</translation>
+    </message>
+    <message>
+        <source>Male</source>
+        <translation>Mężczyzna</translation>
+    </message>
+    <message>
+        <source>Website:</source>
+        <translation>Website:</translation>
+    </message>
+    <message>
+        <source>Novice</source>
+        <translation>Nowicjusz</translation>
+    </message>
+    <message>
+        <source>Beginner</source>
+        <translation>Bywalec</translation>
+    </message>
+    <message>
+        <source>Master</source>
+        <translation>Wyjadacz</translation>
+    </message>
+    <message>
+        <source>Guru</source>
+        <translation>Guru</translation>
+    </message>
+    <message>
+        <source>Afghanistan,Albania,Algeria,Andorra,Angola,Anguilla,Antarctica,Antigua and Barbuda,Netherlands Antilles,Saudi Arabia,Argentina,Armenia,Aruba,Australia,Austria,Azerbaijan,Bahamas,Bahrain,Bangladesh,Barbados,Belgium,Belize,Benin,Bermuda,Bhutan,Belarus,Bolivia,Bosnia and Herzegovina,Botswana,Brazil,Brunei,British Indian Ocean Territory,British Virgin Islands,Bulgaria,Burkina Faso,Burundi,Chile,China,Croatia,Cyprus,Chad,Czech Republic,Denmark,Dominica,Dominican Republic,Djibouti,Egypt,Ecuador,Eritrea,Estonia,Ethiopia,Falkland Islands,Russian Federation,Fiji,Philippines,Finland,France,Gambia,Gaon,South Georgia and South Sandwich Islands,Ghana,Gibraltar,Greece,Grenada,Greenland,Georgia,Guam,Guyana,French Guiana,Guadeloupe,Guatemala,Guinea,Guinea Bissau,Equatorial Guinea,Haiti,Heard,Spain,Holland,Honduras,Hong Kong,India,Indonesia,Iraq,Iran,Ireland,Iceland,Israel,Jamaica,Japan,Yemen,Jordan,Yugoslavia,Cayman Islands,Cambodia,Cameroon,Canada,Qatar,Kazakhstan,Kenya,Kyrgyzstan,Kiribati,Colombia,Comoros,Congo,South Korea,North Korea,Costa Rica,Cuba,Kuwait,Laos,Lesotho,Lebanon,Liberia,Libya,Liechtenstein,Lithuania,Latvia,Luxembourg,Macedonia,Madagascar,Mayotte,Macau,Malawi,Maldives,Malaysia,Mali,Malta,Marshall Islands,Morocco,Martinique,Mauritania,Mauritius,Mexico,Micronesia,Moldova,Monaco,Mongolia,Montserrat,Mozambique,Myanmar,Namibia,Nauru,Nepal,Germany,Niger,Nigeria,Nicaragua,Niue,Norway,New Caledonia,New Zealand,Oman,Pakistan,Palau,Panama,Papua New Guinea,Paraguay,Peru,Pitcairn,French Polynesia,Poland,Puerto Rico,Portugal,South Africa,Cape Verde,Reunion,Rwanda,Romania,Western Sahara,Saint Christopher and Nevis,Saint Lucia,Saint Vincent and the Grenadines,Saint-Perr and Miquelon,Salvador,Samoa,American Samoa,San Marino,Senegal,Seychelles,Sierra Leone,Singapore,Slovakia,Slovenia,Somalia,Sri Lanka,United States,Swaziland,Sudan,Suriname,Svalbard and Jan Mayen island,Syria,Switzerland,Sweden,Tajikistan,Thailand,Taiwan,Tanzania,Timor-Leste,Togo,Tokelau,Tonga,Trinidad and Tobago,Tunisia,Turkey,Turkmenistan,Turks and Caicos Islands,Tuvalu,Uganda,Ukraine,Uruguay,Uzbekistan,Vanuatu,Wallis and Futuna Islands,Vatican City,Venezuela,Hungary,Great Britain,United Kingdom,Vietnam,Italy,Ivory Coast,Bouvet Island,Christmas Island,Norfolk Island,Saint Helena,Cook Islands,U.S. Virgin Islands,Cocos Islands,Marshall Islands,Faroe Islands,Solomon Islands,Sao Tome and Principe,Zaire,Zambia,Zimbabwe,United Arab Emirates</source>
+        <translation>Afganistan,Albania,Algieria,Andora,Angola,Anguilla,Antarktyda,Antigua i Barbuda,Antyle Holenderskie,Arabia Saudyjska,Argentyna,Armenia,Aruba,Australia,Austria,Azerbejdżan,Bahamy,Bahrajn,Bangladesz,Barbados,Belgia,Belize,Benin,Bermudy,Bhutan,Białoruś,Boliwia,Bośnia i Hercegowina,Botswana,Brazylia,Brunei,Brytyjskie Terytorium Oceanu Indyjskiego,Brytyjskie Wyspy Dziewicze,Bułgaria,Burkina Faso,Burundi,Chile,Chiny,Chorwacja,Cypr,Czad,Czechy,Dania,Dominika,Dominikana,Dżibuti,Egipt,Ekwador,Erytrea,Estonia,Etiopia,Falklandy,Federacja Rosyjska,Fidżi,Filipiny,Finlandia,Francja,Gambia,Gaon,Georgia Południowa i Sandwich Południowy,Ghana,Gibraltar,Grecja,Grenada,Grenlandia,Gruzja,Guam,Gujana,Gujana Francuska,Gwadelupa,Gwatemala,Gwinea,Gwinea Bissau,Gwinea Równikowa,Haiti,Heard,Hiszpania,Holandia,Honduras,Hongkong,Indie,Indonezja,Irak,Iran,Irlandia,Islandia,Izrael,Jamajka,Japonia,Jemen,Jordania,Jugosławia,Kajmany,Kambodża,Kamerun,Kanada,Katar,Kazachstan,Kenia,Kirgistan,Kiribati,Kolumbia,Komory,Kongo,Korea Południowa,Korea Północna,Kostaryka,Kuba,Kuwejt,Laos,Lesoto,Liban,Liberia,Libia,Liechtenstein,Litwa,Luksemburg,Łotwa,Macedonia,Madagaskar,Majotta,Makau,Malawi,Malediwy,Malezja,Mali,Malta,Mariany Północne,Maroko,Martynika,Mauretania,Mauritius,Meksyk,Mikronezja,Mołdawia,Monako,Mongolia,Montserrat,Mozambik,Myanmar,Namibia,Nauru,Nepal,Niemcy,Niger,Nigeria,Nikaragua,Niue,Norwegia,Nowa Kaledonia,Nowa Zelandia,Oman,Pakistan,Palau,Panama,Papua-Nowa Gwinea,Paragwaj,Peru,Pitcairn,Polinezja Francuska,Polska,Portoryko,Portugalia,Republika Południowej Afryki,Republika Zielonego Przylądka,Reunion,Ruanda,Rumunia,Sahara Zachodnia,Saint Christopher i Nevis,Saint Lucia,Saint Vincent i Grenadyny,Saint-Perre i Miquelon,Salwador,Samoa,Samoa Amerykańskie,San Marino,Senegal,Seszele,Sierra Leone,Singapur,Słowacja,Słowenia,Somalia,Sri Lanka,Stany Zjednoczone,Suazi,Sudan,Surinam,Svalbard i wyspa Jan Mayen,Syria,Szwajcaria,Szwecja,Tadżykistan,Tajlandia,Tajwan,Tanzania,Timor Wschodni,Togo,Tokelau,Tonga,Trynidad i Tobago,Tunezja,Turcja,Turkmenistan,Turks i Caicos,Tuwalu,Uganda,Ukraina,Urugwaj,Uzbekistan,Vanuatu,Wallis i Futuna,Watykan,Wenezuela,Węgry,Wielka Brytania,Wielka Brytania,Wietnam,Włochy,Wybrzeże Kości Słoniowej,Wyspa Bouveta,Wyspa Bożego Narodzenia,Wyspa Norfolk,Wyspa Świętej Heleny,Wyspy Cooka,Wyspy Dziewicze Stanów Zjednoczonych,Wyspy Kokosowe,Wyspy Marshalla,Wyspy Owcze,Wyspy Salomona,Wyspy Świętego Tomasza i Książęca,Zair,Zambia,Zimbabwe,Zjednoczone Emiraty Arabskie</translation>
     </message>
 </context>
 <context>
@@ -1708,250 +1962,6 @@
     </message>
 </context>
 <context>
-    <name>Log</name>
-    <message>
-        <source>Error: log: Cannot open file </source>
-        <translation>Błąd: log: Nie można otworzyć pliku </translation>
-    </message>
-</context>
-<context>
-    <name>MainWindow</name>
-    <message>
-        <source>Show</source>
-        <translation>Pokaż</translation>
-    </message>
-    <message>
-        <source>Connect</source>
-        <translation>Połącz</translation>
-    </message>
-    <message>
-        <source>Close</source>
-        <translation>Zakończ</translation>
-    </message>
-    <message>
-        <source>Options</source>
-        <translation>Opcje programu</translation>
-    </message>
-    <message>
-        <source>Channel list</source>
-        <translation>Lista kanałów</translation>
-    </message>
-    <message>
-        <source>Channel settings</source>
-        <translation>Ustawienia kanałów</translation>
-    </message>
-    <message>
-        <source>Favorite channels</source>
-        <translation>Ulubione kanały</translation>
-    </message>
-    <message>
-        <source>Friends</source>
-        <translation>Przyjaciele</translation>
-    </message>
-    <message>
-        <source>Ignored</source>
-        <translation>Ignorowani</translation>
-    </message>
-    <message>
-        <source>About SCC ...</source>
-        <translation>O programie SCC...</translation>
-    </message>
-    <message>
-        <source>Welcome to the Simple Chat Client</source>
-        <translation>Witaj w programie Simple Chat Client</translation>
-    </message>
-    <message>
-        <source>Official website</source>
-        <translation>Oficjalna strona</translation>
-    </message>
-    <message>
-        <source>Official Forum</source>
-        <translation>Oficjalne forum</translation>
-    </message>
-    <message>
-        <source>Known bugs</source>
-        <translation>Lista błędów</translation>
-    </message>
-    <message>
-        <source>Bug reporting</source>
-        <translation>Zgłaszanie błędów</translation>
-    </message>
-    <message>
-        <source>&amp;File</source>
-        <translation>&amp;Plik</translation>
-    </message>
-    <message>
-        <source>&amp;Settings</source>
-        <translation>&amp;Ustawienia</translation>
-    </message>
-    <message>
-        <source>&amp;Chat</source>
-        <translation>&amp;Czat</translation>
-    </message>
-    <message>
-        <source>He&amp;lp</source>
-        <translation>Pomo&amp;c</translation>
-    </message>
-    <message>
-        <source>Navigation bar</source>
-        <translation>Pasek nawigacji</translation>
-    </message>
-    <message>
-        <source>&amp;Disconnect</source>
-        <translation>&amp;Rozłącz</translation>
-    </message>
-    <message>
-        <source>&amp;Connect</source>
-        <translation>&amp;Połącz</translation>
-    </message>
-</context>
-<context>
-    <name>NetworkThread</name>
-    <message>
-        <source>Error: Could not connect to the server - connection already exists!</source>
-        <translation>Error: Nie można się połączyć z serwerem - połączenie już istnieje!</translation>
-    </message>
-    <message>
-        <source>Reconnecting...</source>
-        <translation>Ponowne łączenie z serwerem...</translation>
-    </message>
-    <message>
-        <source>Error: Could not send data! [%1]</source>
-        <translation>Error: Nie udało się wysłać danych! [%1]</translation>
-    </message>
-    <message>
-        <source>Error: Could not send data! [Not connected]</source>
-        <translation>Error: Nie udało się wysłać danych! [Not connected]</translation>
-    </message>
-    <message>
-        <source>Connected to server</source>
-        <translation>Połączono z serwerem</translation>
-    </message>
-    <message>
-        <source>&amp;Disconnect</source>
-        <translation>&amp;Rozłącz</translation>
-    </message>
-    <message>
-        <source>&amp;Connect</source>
-        <translation>&amp;Połącz</translation>
-    </message>
-    <message>
-        <source>Disconnected from server [%1]</source>
-        <translation>Rozłączono z serwerem [%1]</translation>
-    </message>
-    <message>
-        <source>Disconnected from server</source>
-        <translation>Rozłączono z serwerem</translation>
-    </message>
-    <message>
-        <source>(Unregistered)</source>
-        <translation>(Niezalogowany)</translation>
-    </message>
-    <message>
-        <source>No PONG reply from server in 301 seconds. Disconnecting...</source>
-        <translation>Serwer nieaktywny od 301 sekund. Rozłączanie...</translation>
-    </message>
-</context>
-<context>
-    <name>Nicklist</name>
-    <message>
-        <source>No reason</source>
-        <translation>Zachowuj się! Byle jak ale się zachowuj!</translation>
-    </message>
-    <message>
-        <source>Invite</source>
-        <translation>Zaproś</translation>
-    </message>
-    <message>
-        <source>Friends list</source>
-        <translation>Lista przyjaciół</translation>
-    </message>
-    <message>
-        <source>Add to friends</source>
-        <translation>Dodaj do listy przyjaciół</translation>
-    </message>
-    <message>
-        <source>Remove from friends</source>
-        <translation>Usuń z listy przyjaciół</translation>
-    </message>
-    <message>
-        <source>Ignore list</source>
-        <translation>Lista ignorowanych</translation>
-    </message>
-    <message>
-        <source>Add to Ignore list</source>
-        <translation>Dodaj do listy ignorowanych</translation>
-    </message>
-    <message>
-        <source>Remove from Ignore list</source>
-        <translation>Usuń z listy ignorowanych</translation>
-    </message>
-    <message>
-        <source>Actions</source>
-        <translation>Uprawnienia</translation>
-    </message>
-    <message>
-        <source>Give super operator status</source>
-        <translation>Nadaj prawa super operatora</translation>
-    </message>
-    <message>
-        <source>Take super operator status</source>
-        <translation>Odbierz prawa super operatora</translation>
-    </message>
-    <message>
-        <source>Give operator status</source>
-        <translation>Nadaj prawa operatora</translation>
-    </message>
-    <message>
-        <source>Take operator status</source>
-        <translation>Odbierz prawa operatora</translation>
-    </message>
-    <message>
-        <source>Give moderator status</source>
-        <translation>Nadaj prawa moderatora</translation>
-    </message>
-    <message>
-        <source>Take moderator status</source>
-        <translation>Odbierz prawa moderatora</translation>
-    </message>
-    <message>
-        <source>Give guest status</source>
-        <translation>Nadaj prawa gościa</translation>
-    </message>
-    <message>
-        <source>Take guest status</source>
-        <translation>Odbierz prawa gościa</translation>
-    </message>
-    <message>
-        <source>Priv</source>
-        <translation>Rozmowa prywatna</translation>
-    </message>
-    <message>
-        <source>Whois</source>
-        <translation>Whois</translation>
-    </message>
-    <message>
-        <source>Profile</source>
-        <translation>Wizytówka</translation>
-    </message>
-    <message>
-        <source>Webcam</source>
-        <translation>Kamerka</translation>
-    </message>
-    <message>
-        <source>Kick From Channel</source>
-        <translation>Wyrzuć</translation>
-    </message>
-    <message>
-        <source>Ban From Channel</source>
-        <translation>Cichy ban</translation>
-    </message>
-    <message>
-        <source>Kick &amp; Ban</source>
-        <translation>Banuj i wyrzuć</translation>
-    </message>
-</context>
-<context>
     <name>TabContainer</name>
     <message>
         <source>Error: Exceeded allowed number of channels in the client</source>
@@ -1995,29 +2005,6 @@
     <message>
         <source>%1 User(s)</source>
         <translation>Liczba osób: %1</translation>
-    </message>
-</context>
-<context>
-    <name>Updater</name>
-    <message>
-        <source>Can not download the available version.</source>
-        <translation>Nie można pobrać dostępnej wersji programu.</translation>
-    </message>
-    <message>
-        <source>You are using up-to-date version.</source>
-        <translation>Używasz aktualnej wersji programu.</translation>
-    </message>
-    <message>
-        <source>You are using a test version.</source>
-        <translation>Używasz testowej wersji programu.</translation>
-    </message>
-    <message>
-        <source>A new version is available.</source>
-        <translation>Nowa wersja programu jest dostępna.</translation>
-    </message>
-    <message>
-        <source>Can not connect to update server.</source>
-        <translation>Nie można połączyć się z serwerem aktualizacji.</translation>
     </message>
 </context>
 <context>
@@ -2124,90 +2111,102 @@
     </message>
 </context>
 <context>
-    <name>DlgUserProfile</name>
+    <name>Nicklist</name>
+    <message>
+        <source>No reason</source>
+        <translation>Zachowuj się! Byle jak ale się zachowuj!</translation>
+    </message>
+    <message>
+        <source>Invite</source>
+        <translation>Zaproś</translation>
+    </message>
+    <message>
+        <source>Friends list</source>
+        <translation>Lista przyjaciół</translation>
+    </message>
+    <message>
+        <source>Add to friends</source>
+        <translation>Dodaj do listy przyjaciół</translation>
+    </message>
+    <message>
+        <source>Remove from friends</source>
+        <translation>Usuń z listy przyjaciół</translation>
+    </message>
+    <message>
+        <source>Ignore list</source>
+        <translation>Lista ignorowanych</translation>
+    </message>
+    <message>
+        <source>Add to Ignore list</source>
+        <translation>Dodaj do listy ignorowanych</translation>
+    </message>
+    <message>
+        <source>Remove from Ignore list</source>
+        <translation>Usuń z listy ignorowanych</translation>
+    </message>
+    <message>
+        <source>Actions</source>
+        <translation>Uprawnienia</translation>
+    </message>
+    <message>
+        <source>Give super operator status</source>
+        <translation>Nadaj prawa super operatora</translation>
+    </message>
+    <message>
+        <source>Take super operator status</source>
+        <translation>Odbierz prawa super operatora</translation>
+    </message>
+    <message>
+        <source>Give operator status</source>
+        <translation>Nadaj prawa operatora</translation>
+    </message>
+    <message>
+        <source>Take operator status</source>
+        <translation>Odbierz prawa operatora</translation>
+    </message>
+    <message>
+        <source>Give moderator status</source>
+        <translation>Nadaj prawa moderatora</translation>
+    </message>
+    <message>
+        <source>Take moderator status</source>
+        <translation>Odbierz prawa moderatora</translation>
+    </message>
+    <message>
+        <source>Give guest status</source>
+        <translation>Nadaj prawa gościa</translation>
+    </message>
+    <message>
+        <source>Take guest status</source>
+        <translation>Odbierz prawa gościa</translation>
+    </message>
+    <message>
+        <source>Priv</source>
+        <translation>Rozmowa prywatna</translation>
+    </message>
+    <message>
+        <source>Whois</source>
+        <translation>Whois</translation>
+    </message>
     <message>
         <source>Profile</source>
         <translation>Wizytówka</translation>
     </message>
     <message>
-        <source>Sex:</source>
-        <translation>Płeć:</translation>
+        <source>Webcam</source>
+        <translation>Kamerka</translation>
     </message>
     <message>
-        <source>Birthdate:</source>
-        <translation>Data urodzenia:</translation>
+        <source>Kick From Channel</source>
+        <translation>Wyrzuć</translation>
     </message>
     <message>
-        <source>City:</source>
-        <translation>Miasto:</translation>
+        <source>Ban From Channel</source>
+        <translation>Cichy ban</translation>
     </message>
     <message>
-        <source>Country:</source>
-        <translation>Kraj:</translation>
-    </message>
-    <message>
-        <source>Hobby:</source>
-        <translation>Zainteresowania:</translation>
-    </message>
-    <message>
-        <source>Type:</source>
-        <translation>Status:</translation>
-    </message>
-    <message>
-        <source>Email:</source>
-        <translation>Email:</translation>
-    </message>
-    <message>
-        <source>Female</source>
-        <translation>Kobieta</translation>
-    </message>
-    <message>
-        <source>Male</source>
-        <translation>Mężczyzna</translation>
-    </message>
-    <message>
-        <source>Website:</source>
-        <translation>Website:</translation>
-    </message>
-    <message>
-        <source>Novice</source>
-        <translation>Nowicjusz</translation>
-    </message>
-    <message>
-        <source>Beginner</source>
-        <translation>Bywalec</translation>
-    </message>
-    <message>
-        <source>Master</source>
-        <translation>Wyjadacz</translation>
-    </message>
-    <message>
-        <source>Guru</source>
-        <translation>Guru</translation>
-    </message>
-    <message>
-        <source>Afghanistan,Albania,Algeria,Andorra,Angola,Anguilla,Antarctica,Antigua and Barbuda,Netherlands Antilles,Saudi Arabia,Argentina,Armenia,Aruba,Australia,Austria,Azerbaijan,Bahamas,Bahrain,Bangladesh,Barbados,Belgium,Belize,Benin,Bermuda,Bhutan,Belarus,Bolivia,Bosnia and Herzegovina,Botswana,Brazil,Brunei,British Indian Ocean Territory,British Virgin Islands,Bulgaria,Burkina Faso,Burundi,Chile,China,Croatia,Cyprus,Chad,Czech Republic,Denmark,Dominica,Dominican Republic,Djibouti,Egypt,Ecuador,Eritrea,Estonia,Ethiopia,Falkland Islands,Russian Federation,Fiji,Philippines,Finland,France,Gambia,Gaon,South Georgia and South Sandwich Islands,Ghana,Gibraltar,Greece,Grenada,Greenland,Georgia,Guam,Guyana,French Guiana,Guadeloupe,Guatemala,Guinea,Guinea Bissau,Equatorial Guinea,Haiti,Heard,Spain,Holland,Honduras,Hong Kong,India,Indonesia,Iraq,Iran,Ireland,Iceland,Israel,Jamaica,Japan,Yemen,Jordan,Yugoslavia,Cayman Islands,Cambodia,Cameroon,Canada,Qatar,Kazakhstan,Kenya,Kyrgyzstan,Kiribati,Colombia,Comoros,Congo,South Korea,North Korea,Costa Rica,Cuba,Kuwait,Laos,Lesotho,Lebanon,Liberia,Libya,Liechtenstein,Lithuania,Latvia,Luxembourg,Macedonia,Madagascar,Mayotte,Macau,Malawi,Maldives,Malaysia,Mali,Malta,Marshall Islands,Morocco,Martinique,Mauritania,Mauritius,Mexico,Micronesia,Moldova,Monaco,Mongolia,Montserrat,Mozambique,Myanmar,Namibia,Nauru,Nepal,Germany,Niger,Nigeria,Nicaragua,Niue,Norway,New Caledonia,New Zealand,Oman,Pakistan,Palau,Panama,Papua New Guinea,Paraguay,Peru,Pitcairn,French Polynesia,Poland,Puerto Rico,Portugal,South Africa,Cape Verde,Reunion,Rwanda,Romania,Western Sahara,Saint Christopher and Nevis,Saint Lucia,Saint Vincent and the Grenadines,Saint-Perr and Miquelon,Salvador,Samoa,American Samoa,San Marino,Senegal,Seychelles,Sierra Leone,Singapore,Slovakia,Slovenia,Somalia,Sri Lanka,United States,Swaziland,Sudan,Suriname,Svalbard and Jan Mayen island,Syria,Switzerland,Sweden,Tajikistan,Thailand,Taiwan,Tanzania,Timor-Leste,Togo,Tokelau,Tonga,Trinidad and Tobago,Tunisia,Turkey,Turkmenistan,Turks and Caicos Islands,Tuvalu,Uganda,Ukraine,Uruguay,Uzbekistan,Vanuatu,Wallis and Futuna Islands,Vatican City,Venezuela,Hungary,Great Britain,United Kingdom,Vietnam,Italy,Ivory Coast,Bouvet Island,Christmas Island,Norfolk Island,Saint Helena,Cook Islands,U.S. Virgin Islands,Cocos Islands,Marshall Islands,Faroe Islands,Solomon Islands,Sao Tome and Principe,Zaire,Zambia,Zimbabwe,United Arab Emirates</source>
-        <translation>Afganistan,Albania,Algieria,Andora,Angola,Anguilla,Antarktyda,Antigua i Barbuda,Antyle Holenderskie,Arabia Saudyjska,Argentyna,Armenia,Aruba,Australia,Austria,Azerbejdżan,Bahamy,Bahrajn,Bangladesz,Barbados,Belgia,Belize,Benin,Bermudy,Bhutan,Białoruś,Boliwia,Bośnia i Hercegowina,Botswana,Brazylia,Brunei,Brytyjskie Terytorium Oceanu Indyjskiego,Brytyjskie Wyspy Dziewicze,Bułgaria,Burkina Faso,Burundi,Chile,Chiny,Chorwacja,Cypr,Czad,Czechy,Dania,Dominika,Dominikana,Dżibuti,Egipt,Ekwador,Erytrea,Estonia,Etiopia,Falklandy,Federacja Rosyjska,Fidżi,Filipiny,Finlandia,Francja,Gambia,Gaon,Georgia Południowa i Sandwich Południowy,Ghana,Gibraltar,Grecja,Grenada,Grenlandia,Gruzja,Guam,Gujana,Gujana Francuska,Gwadelupa,Gwatemala,Gwinea,Gwinea Bissau,Gwinea Równikowa,Haiti,Heard,Hiszpania,Holandia,Honduras,Hongkong,Indie,Indonezja,Irak,Iran,Irlandia,Islandia,Izrael,Jamajka,Japonia,Jemen,Jordania,Jugosławia,Kajmany,Kambodża,Kamerun,Kanada,Katar,Kazachstan,Kenia,Kirgistan,Kiribati,Kolumbia,Komory,Kongo,Korea Południowa,Korea Północna,Kostaryka,Kuba,Kuwejt,Laos,Lesoto,Liban,Liberia,Libia,Liechtenstein,Litwa,Luksemburg,Łotwa,Macedonia,Madagaskar,Majotta,Makau,Malawi,Malediwy,Malezja,Mali,Malta,Mariany Północne,Maroko,Martynika,Mauretania,Mauritius,Meksyk,Mikronezja,Mołdawia,Monako,Mongolia,Montserrat,Mozambik,Myanmar,Namibia,Nauru,Nepal,Niemcy,Niger,Nigeria,Nikaragua,Niue,Norwegia,Nowa Kaledonia,Nowa Zelandia,Oman,Pakistan,Palau,Panama,Papua-Nowa Gwinea,Paragwaj,Peru,Pitcairn,Polinezja Francuska,Polska,Portoryko,Portugalia,Republika Południowej Afryki,Republika Zielonego Przylądka,Reunion,Ruanda,Rumunia,Sahara Zachodnia,Saint Christopher i Nevis,Saint Lucia,Saint Vincent i Grenadyny,Saint-Perre i Miquelon,Salwador,Samoa,Samoa Amerykańskie,San Marino,Senegal,Seszele,Sierra Leone,Singapur,Słowacja,Słowenia,Somalia,Sri Lanka,Stany Zjednoczone,Suazi,Sudan,Surinam,Svalbard i wyspa Jan Mayen,Syria,Szwajcaria,Szwecja,Tadżykistan,Tajlandia,Tajwan,Tanzania,Timor Wschodni,Togo,Tokelau,Tonga,Trynidad i Tobago,Tunezja,Turcja,Turkmenistan,Turks i Caicos,Tuwalu,Uganda,Ukraina,Urugwaj,Uzbekistan,Vanuatu,Wallis i Futuna,Watykan,Wenezuela,Węgry,Wielka Brytania,Wielka Brytania,Wietnam,Włochy,Wybrzeże Kości Słoniowej,Wyspa Bouveta,Wyspa Bożego Narodzenia,Wyspa Norfolk,Wyspa Świętej Heleny,Wyspy Cooka,Wyspy Dziewicze Stanów Zjednoczonych,Wyspy Kokosowe,Wyspy Marshalla,Wyspy Owcze,Wyspy Salomona,Wyspy Świętego Tomasza i Książęca,Zair,Zambia,Zimbabwe,Zjednoczone Emiraty Arabskie</translation>
-    </message>
-</context>
-
-<context>
-    <name>DlgEmoticons</name>
-    <message>
-        <source>Emoticons</source>
-        <translation>Emotikony</translation>
-    </message>
-    <message>
-        <source>Standard</source>
-        <translation>Standardowe</translation>
-    </message>
-    <message>
-        <source>Extended</source>
-        <translation>Rozszerzone</translation>
-    </message>
-    <message>
-        <source>Insert</source>
-        <translation>Wstaw</translation>
+        <source>Kick &amp; Ban</source>
+        <translation>Banuj i wyrzuć</translation>
     </message>
 </context>
 </TS>
