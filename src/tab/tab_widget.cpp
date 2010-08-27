@@ -626,30 +626,29 @@ void TabWidget::display_message(QString strData, int iLevel)
     delete convertText;
 
 // hilight
+    QString strTextDecoration = "none";
     if (iLevel == 8)
     {
-        strData.append("<hr>");
+        strTextDecoration = "underline";
 
         if (settings->value("disable_sounds").toString() == "off")
             pNotify->play();
     }
 
-// init text
-    strContent.append("<p style=\"margin:0;padding:0;font-style:normal;color:#000000;text-align:left;font-family:Verdana;font-weight:normal;font-size:"+strFontSize+";\">");
-
 // /me
+    QString strTextAlign = "left";
     if (settings->value("hide_formating").toString() == "off")
     {
         if (strData.indexOf(QString(QByteArray("\x01"))) != -1)
         {
-            int iLast1 = strContent.lastIndexOf("text-align:");
-            int iLast2 = strContent.indexOf(";",iLast1);
-            strContent.remove(iLast1, iLast2-iLast1);
-            strContent.insert(iLast1, "text-align:center");
-
+            strTextAlign = "center";
             strData.replace(QString(QByteArray("\x01")), "");
         }
     }
+
+// init text
+    strContent.append("<p style=\"margin:0;padding:0;font-style:normal;color:#000000;text-align:"+strTextAlign+";font-family:Verdana;font-weight:normal;font-size:"+strFontSize+";text-decoration:"+strTextDecoration+";\">");
+
 
 // text
     strContent.append(strData);
