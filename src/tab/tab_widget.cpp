@@ -20,7 +20,7 @@
 
 #include "tab_widget.h"
 
-TabWidget::TabWidget(QWidget *parent, Network *param1, QSettings *param2, QString param3, Notify *param4, QMap <QString, QByteArray> *param5, QMap <QString, QByteArray> *param6, DlgChannelSettings *param7, DlgModeration *param8)
+TabWidget::TabWidget(QWidget *parent, Network *param1, QSettings *param2, QString param3, Notify *param4, QMap <QString, QByteArray> *param5, QMap <QString, QByteArray> *param6, DlgChannelSettings *param7, DlgModeration *param8, QTcpSocket *param9)
 {
     myparent = parent;
     pNetwork = param1;
@@ -31,6 +31,7 @@ TabWidget::TabWidget(QWidget *parent, Network *param1, QSettings *param2, QStrin
     mChannelAvatar = param6;
     dlgchannel_settings = param7;
     dlgmoderation = param8;
+    camSocket = param9;
 
     QString strBackgroundColor = settings->value("background_color").toString();
     strBackgroundColor.replace("&", "&amp;");
@@ -109,14 +110,14 @@ TabWidget::TabWidget(QWidget *parent, Network *param1, QSettings *param2, QStrin
     nickCount->setAlignment(Qt::AlignCenter);
     nickCount->show();
 
-    nick_list = new Nicklist(myparent, pNetwork, settings, strName, mNickAvatar);
+    nick_list = new Nicklist(myparent, pNetwork, settings, strName, mNickAvatar, camSocket);
     nick_list->setParent(this);
     nick_list->setSortingEnabled(false);
     nick_list->setItemDelegate(new NicklistDelegate(nick_list));
     //nick_list->setStyleSheet(QString("background-color: #%1;").arg(strBackgroundColor));
     nick_list->show();
 
-    mainWebView = new MainWebView(myparent, pNetwork, settings, strName);
+    mainWebView = new MainWebView(myparent, pNetwork, settings, strName, camSocket);
     mainWebView->setParent(this);
     mainWebView->show();
 

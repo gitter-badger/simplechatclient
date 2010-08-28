@@ -20,12 +20,13 @@
 
 #include "mainwebview.h"
 
-MainWebView::MainWebView(QWidget *parent, Network *param1, QSettings *param2, QString param3)
+MainWebView::MainWebView(QWidget *parent, Network *param1, QSettings *param2, QString param3, QTcpSocket *param4)
 {
     myparent = parent;
     pNetwork = param1;
     settings = param2;
     strChannel = param3;
+    camSocket = param4;
 }
 
 void MainWebView::join_channel()
@@ -65,7 +66,7 @@ void MainWebView::cam()
 {
 #ifdef Q_WS_WIN
     QString strUOKey = settings->value("uokey").toString();
-    (new Kamerzysta())->show(strNick, strUOKey);
+    (new Kamerzysta(camSocket))->show(strNick, strUOKey);
 #else
     (new DlgCam(myparent, pNetwork, settings, strNick))->show();
 #endif

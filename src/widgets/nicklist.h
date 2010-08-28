@@ -52,7 +52,7 @@ class Nicklist : public QListWidget
 {
     Q_OBJECT
 public:
-    Nicklist(QWidget *, Network *, QSettings *, QString, QMap <QString, QByteArray> *);
+    Nicklist(QWidget *, Network *, QSettings *, QString, QMap <QString, QByteArray> *, QTcpSocket *);
     ~Nicklist();
     void set_open_channels(QStringList);
     void set_user_info(QString, QString, QString);
@@ -71,9 +71,10 @@ private:
     QSettings *settings;
     QString strChannel;
     QStringList strOpenChannels;
+    QMap <QString, QByteArray> *mNickAvatar;
+    QTcpSocket *camSocket;
     enum { maxOpenChannels = 50 };
     QAction *openChannelsActs[maxOpenChannels];
-    QMap <QString, QByteArray> *mNickAvatar;
     sNickInfo sCurrentUserInfo;
 
     void nicklist_sort(sNickStatus *);

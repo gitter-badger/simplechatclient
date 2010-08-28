@@ -36,7 +36,7 @@ class Kamerzysta : public QObject
 {
     Q_OBJECT
 public:
-    Kamerzysta();
+    Kamerzysta(QTcpSocket *);
     ~Kamerzysta();
     void show(QString, QString);
 
@@ -57,10 +57,8 @@ private:
 
 private slots:
     void network_create();
-    void network_connected();
     void network_send(QString);
     void network_disconnect();
-    void network_disconnected();
     void network_read();
     void error(QAbstractSocket::SocketError);
 

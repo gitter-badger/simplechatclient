@@ -35,7 +35,7 @@ class TabContainer : public QObject
 {
     Q_OBJECT
 public:
-    TabContainer(QWidget *, Network *, QSettings *, TabManager *, Notify *, QMap <QString, QByteArray> *, QMap <QString, QByteArray> *);
+    TabContainer(QWidget *, Network *, QSettings *, TabManager *, Notify *, QMap <QString, QByteArray> *, QMap <QString, QByteArray> *, QTcpSocket *);
     ~TabContainer();
     void set_dlg(DlgChannelSettings *, DlgModeration *);
     bool exist_tab(QString);
@@ -82,6 +82,7 @@ private:
     QMap <QString, QByteArray> *mChannelAvatar;
     DlgChannelSettings *dlgchannel_settings;
     DlgModeration *dlgmoderation;
+    QTcpSocket *camSocket;
 
     void add_tab(QString);
     void update_open_channels();

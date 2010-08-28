@@ -61,7 +61,7 @@ class TabWidget : public QWidget
 {
     Q_OBJECT
 public:
-    TabWidget(QWidget *, Network *, QSettings *, QString, Notify *, QMap <QString, QByteArray> *, QMap <QString, QByteArray> *, DlgChannelSettings *, DlgModeration *);
+    TabWidget(QWidget *, Network *, QSettings *, QString, Notify *, QMap <QString, QByteArray> *, QMap <QString, QByteArray> *, DlgChannelSettings *, DlgModeration *, QTcpSocket *);
     ~TabWidget();
     QString get_name() { return strName; }
     void set_default();
@@ -164,6 +164,7 @@ private:
     Notify *pNotify;
     QMap <QString, QByteArray> *mNickAvatar;
     QMap <QString, QByteArray> *mChannelAvatar;
+    QTcpSocket *camSocket;
 
     QWidget *myparent;
     Network *pNetwork;

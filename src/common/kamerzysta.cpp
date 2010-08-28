@@ -20,14 +20,12 @@
 
 #include "kamerzysta.h"
 
-Kamerzysta::Kamerzysta()
+Kamerzysta::Kamerzysta(QTcpSocket *param1)
 {
-    socket = new QTcpSocket();
+    socket = param1;
     socket->setSocketOption(QAbstractSocket::LowDelayOption, 1);
     socket->setSocketOption(QAbstractSocket::KeepAliveOption, 0);
 
-    QObject::connect(socket, SIGNAL(connected()), this, SLOT(network_connected()));
-    QObject::connect(socket, SIGNAL(disconnected()), this, SLOT(network_disconnected()));
     QObject::connect(socket, SIGNAL(error(QAbstractSocket::SocketError)), this, SLOT(error(QAbstractSocket::SocketError)));
     QObject::connect(socket, SIGNAL(readyRead()), this, SLOT(network_read()));
 }
@@ -35,7 +33,6 @@ Kamerzysta::Kamerzysta()
 Kamerzysta::~Kamerzysta()
 {
     network_disconnect();
-    delete socket;
 }
 
 void Kamerzysta::show(QString param1, QString param2)
@@ -127,8 +124,6 @@ void Kamerzysta::kamerzysta_not_running()
 
 void Kamerzysta::kamerzysta_running()
 {
-    get_port();
-    network_connect();
     network_send(QString("e%1").arg(strNick));
 }
 
@@ -156,10 +151,6 @@ void Kamerzysta::network_connect()
         socket->connectToHost("localhost", iPort);
 }
 
-void Kamerzysta::network_connected()
-{
-}
-
 void Kamerzysta::network_send(QString strData)
 {
     if ((socket->state() == QAbstractSocket::ConnectedState) && (socket->isWritable() == true))
@@ -179,10 +170,6 @@ void Kamerzysta::network_disconnect()
         socket->disconnectFromHost();
 }
 
-void Kamerzysta::network_disconnected()
-{
-}
-
 void Kamerzysta::network_read()
 {
     if (socket->bytesAvailable() <= 0) return;
@@ -191,29 +178,24 @@ void Kamerzysta::network_read()
     {
         QString b = socket->read(1);
         strDataRecv += b;
-        if (b == "\n") break;
     }
 
-    if ((strDataRecv.length() > 1) && (strDataRecv.at(strDataRecv.length()-1) != '\n')) network_read();
-    else if ((strDataRecv.length() > 1) && (strDataRecv.at(strDataRecv.length()-1) == '\n'))
+    strDataRecv.replace(QRegExp("(\r|\n)"), "");
+
+    // data
+    if (strDataRecv == "d")
     {
-        strDataRecv.replace(QRegExp("(\r|\n)"), "");
+        Config *pConfig = new Config();
+        QString strMe = pConfig->get_value("login-nick");
+        delete pConfig;
 
-        // data
-        if (strDataRecv == "d")
-        {
-            Config *pConfig = new Config();
-            QString strMe = pConfig->get_value("login-nick");
-            delete pConfig;
-
-            network_send(QString("d%1|%2").arg(strMe).arg(strUOKey));
-            if (strNick != strMe)
-                network_send(QString("e%1").arg(strNick).arg(strUOKey));
-        }
-
-        strDataRecv.clear();
-        network_read();
+        network_send(QString("d%1|%2").arg(strMe).arg(strUOKey));
+        if (strNick != strMe)
+            network_send(QString("e%1").arg(strNick).arg(strUOKey));
     }
+
+    strDataRecv.clear();
+    network_read();
 }
 
 void Kamerzysta::error(QAbstractSocket::SocketError err)

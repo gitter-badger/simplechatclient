@@ -20,13 +20,14 @@
 
 #include "nicklist.h"
 
-Nicklist::Nicklist(QWidget *parent, Network *param1, QSettings *param2, QString param3, QMap <QString, QByteArray> *param4)
+Nicklist::Nicklist(QWidget *parent, Network *param1, QSettings *param2, QString param3, QMap <QString, QByteArray> *param4, QTcpSocket *param5)
 {
     myparent = parent;
     pNetwork = param1;
     settings = param2;
     strChannel = param3;
     mNickAvatar = param4;
+    camSocket = param5;
 
     QObject::connect(this, SIGNAL(itemSelectionChanged()), this, SLOT(item_selected()));
 }
@@ -76,7 +77,7 @@ void Nicklist::cam()
     QString strNick = this->selectedItems().at(0)->data(Qt::UserRole).toString();
 #ifdef Q_WS_WIN
     QString strUOKey = settings->value("uokey").toString();
-    (new Kamerzysta())->show(strNick, strUOKey);
+    (new Kamerzysta(camSocket))->show(strNick, strUOKey);
 #else
     (new DlgCam(myparent, pNetwork, settings, strNick))->show();
 #endif

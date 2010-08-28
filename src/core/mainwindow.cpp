@@ -82,7 +82,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
 // settings
     settings.clear();
-    settings.setValue("version", "1.0.7.448");
+    settings.setValue("version", "1.0.7.449");
     settings.setValue("debug", "off");
     settings.setValue("logged", "off");
     settings.setValue("busy", "off");
@@ -110,12 +110,14 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     settings.setValue("onet_uid", "");
 
 // init all
+    camSocket = new QTcpSocket();
+
     pTabM = new TabManager(this, &settings);
     setCentralWidget(pTabM);
 
     pNetwork = new Network(this, connectAct, &settings);
     pNotify = new Notify();
-    pTabC = new TabContainer(this, pNetwork, &settings, pTabM, pNotify, &mNickAvatar, &mChannelAvatar);
+    pTabC = new TabContainer(this, pNetwork, &settings, pTabM, pNotify, &mNickAvatar, &mChannelAvatar, camSocket);
 
     pDlg_channel_settings = new DlgChannelSettings(this, pNetwork, &settings);
     pDlg_moderation = new DlgModeration(this, &settings);
@@ -265,6 +267,7 @@ MainWindow::~MainWindow()
     delete pNetwork;
     delete pTabC;
     delete pTabM;
+    delete camSocket;
 }
 
 void MainWindow::remove_uthread(UpdateThread *thr)
@@ -388,7 +391,7 @@ void MainWindow::cams_clicked()
         delete pConfig;
 
         QString strUOKey = settings.value("uokey").toString();
-        (new Kamerzysta())->show(strMe, strUOKey);
+        (new Kamerzysta(camSocket))->show(strMe, strUOKey);
     }
 #endif
 }

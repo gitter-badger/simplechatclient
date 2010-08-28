@@ -69,6 +69,7 @@ public slots:
 
 private:
     QSettings settings;
+    QTcpSocket *camSocket;
     TabManager *pTabM;
     TabContainer *pTabC;
     Network *pNetwork;
