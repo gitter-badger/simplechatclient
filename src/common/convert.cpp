@@ -27,60 +27,6 @@ Convert::Convert(QSettings *param1)
 
 void Convert::convert_text(QString *strData, QString *strLastContent)
 {
-// emoticons
-    if (strData->indexOf("%I") != -1)
-    {
-        QString strPath = QCoreApplication::applicationDirPath();
-
-        while (strData->indexOf("%I") != -1)
-        {
-            int iStartPos = strData->indexOf("%I");
-            int iEndPos = strData->indexOf("%", iStartPos+1);
-            int iSpacePos = strData->indexOf(" ", iStartPos);
-
-            if (iEndPos != -1)
-            {
-                if ((iEndPos < iSpacePos) || (iSpacePos == -1))
-                {
-                    iEndPos++;
-                    QString strEmoticonFull = strData->mid(iStartPos, iEndPos-iStartPos);
-                    QString strEmoticon = strEmoticonFull.mid(2,strEmoticonFull.length()-3);
-                    QString strInsert;
-
-                    QString strEmoticonFull1 = strPath+"/3rdparty/emoticons/"+strEmoticon+".gif";
-                    QString strEmoticonFull2 = strPath+"/3rdparty/emoticons_other/"+strEmoticon+".gif";
-                    QFile f1(strEmoticonFull1);
-                    QFile f2(strEmoticonFull2);
-                    if ((f1.exists() == true) && (settings->value("hide_formating").toString() == "off"))
-                    {
-#ifdef Q_WS_X11
-                        strInsert = "<img src=\"file://"+strEmoticonFull1+"\" alt=\""+strEmoticon+"\" />";
-#else
-                        strInsert = "<img src=\""+strEmoticonFull1+"\" alt=\""+strEmoticon+"\" />";
-#endif
-                    }
-                    else if ((f2.exists() == true) && (settings->value("hide_formating").toString() == "off"))
-                    {
-#ifdef Q_WS_X11
-                        strInsert = "<img src=\"file://"+strEmoticonFull2+"\" alt=\""+strEmoticon+"\" />";
-#else
-                        strInsert = "<img src=\""+strEmoticonFull2+"\" alt=\""+strEmoticon+"\" />";
-#endif
-                    }
-                    // emoticon not exist or hide formating
-                    else
-                        strInsert = "//"+strEmoticon;
-
-                    strData->replace(strEmoticonFull, strInsert);
-                }
-                else
-                    strData->insert(iStartPos+1, " "); // fix wrong %I
-            }
-            else
-                break;
-        }
-    }
-
 // fonts
     if (strData->indexOf("%F") != -1)
     {
@@ -185,5 +131,59 @@ void Convert::convert_text(QString *strData, QString *strLastContent)
             strSpan += "</span>";
 
         (*strLastContent) = strSpan+(*strLastContent);
+    }
+
+// emoticons
+    if (strData->indexOf("%I") != -1)
+    {
+        QString strPath = QCoreApplication::applicationDirPath();
+
+        while (strData->indexOf("%I") != -1)
+        {
+            int iStartPos = strData->indexOf("%I");
+            int iEndPos = strData->indexOf("%", iStartPos+1);
+            int iSpacePos = strData->indexOf(" ", iStartPos);
+
+            if (iEndPos != -1)
+            {
+                if ((iEndPos < iSpacePos) || (iSpacePos == -1))
+                {
+                    iEndPos++;
+                    QString strEmoticonFull = strData->mid(iStartPos, iEndPos-iStartPos);
+                    QString strEmoticon = strEmoticonFull.mid(2,strEmoticonFull.length()-3);
+                    QString strInsert;
+
+                    QString strEmoticonFull1 = strPath+"/3rdparty/emoticons/"+strEmoticon+".gif";
+                    QString strEmoticonFull2 = strPath+"/3rdparty/emoticons_other/"+strEmoticon+".gif";
+                    QFile f1(strEmoticonFull1);
+                    QFile f2(strEmoticonFull2);
+                    if ((f1.exists() == true) && (settings->value("hide_formating").toString() == "off"))
+                    {
+#ifdef Q_WS_X11
+                        strInsert = "<img src=\"file://"+strEmoticonFull1+"\" alt=\""+strEmoticon+"\" />";
+#else
+                        strInsert = "<img src=\""+strEmoticonFull1+"\" alt=\""+strEmoticon+"\" />";
+#endif
+                    }
+                    else if ((f2.exists() == true) && (settings->value("hide_formating").toString() == "off"))
+                    {
+#ifdef Q_WS_X11
+                        strInsert = "<img src=\"file://"+strEmoticonFull2+"\" alt=\""+strEmoticon+"\" />";
+#else
+                        strInsert = "<img src=\""+strEmoticonFull2+"\" alt=\""+strEmoticon+"\" />";
+#endif
+                    }
+                    // emoticon not exist or hide formating
+                    else
+                        strInsert = "//"+strEmoticon;
+
+                    strData->replace(strEmoticonFull, strInsert);
+                }
+                else
+                    strData->insert(iStartPos+1, " "); // fix wrong %I
+            }
+            else
+                break;
+        }
     }
 }
