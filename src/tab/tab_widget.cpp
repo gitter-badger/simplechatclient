@@ -351,6 +351,10 @@ TabWidget::TabWidget(QWidget *parent, Network *param1, QSettings *param2, QStrin
 
         splitter->addWidget(leftWidget);
         splitter->addWidget(rightWidget);
+
+        if (settings->value("style") == "classic")
+            mainLayout->setMargin(0);
+
         mainLayout->addWidget(splitter);
     }
     else
@@ -374,6 +378,10 @@ TabWidget::TabWidget(QWidget *parent, Network *param1, QSettings *param2, QStrin
 
         splitter->addWidget(leftWidget);
         splitter->addWidget(rightWidget);
+
+        if (settings->value("style") == "classic")
+            mainLayout->setMargin(0);
+
         mainLayout->addWidget(splitter);
     }
 
