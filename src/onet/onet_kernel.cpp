@@ -2561,8 +2561,11 @@ void OnetKernel::raw_433()
     settings->setValue("override", "on");
 
     // reconnect
-    pNetwork->close();
-    pNetwork->connect();
+    if (strNick[0] != '~')
+    {
+        pNetwork->close();
+        pNetwork->connect();
+    }
 }
 
 // :NickServ!service@service.onet NOTICE scc_test :440 #scc :is already on your favourite list
