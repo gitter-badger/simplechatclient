@@ -52,6 +52,12 @@ void Kamerzysta::get_path()
         strAppPath = strAppPath+"\\Application Data\\Kamerzysta";
     else if (dir.exists(strAppPath+"\\AppData\\Kamerzysta") == true)
         strAppPath = strAppPath+"\\AppData\\Kamerzysta";
+    else if (dir.exists(strAppPath+"\\AppData\\Local\\Kamerzysta") == true)
+        strAppPath = strAppPath+"\\AppData\\Local\\Kamerzysta";
+    else if (dir.exists(strAppPath+"\\AppData\\LocalLow\\Kamerzysta") == true)
+        strAppPath = strAppPath+"\\AppData\\LocalLow\\Kamerzysta";
+    else if (dir.exists(strAppPath+"\\AppData\\Roaming\\Kamerzysta") == true)
+        strAppPath = strAppPath+"\\AppData\\Roaming\\Kamerzysta";
     else if (dir.exists(strAppPath+"\\Dane aplikacji\\Kamerzysta") == true)
         strAppPath = strAppPath+"\\Dane aplikacji\\Kamerzysta";
     else
@@ -86,7 +92,7 @@ void Kamerzysta::kamerzysta_not_running()
     else
     {
         QFile file(strAppPath+"\\installPath");
-        if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
+        if (file.open(QIODevice::ReadOnly | QIODevice::Text) == false)
             return;
 
         QTextStream in(&file);

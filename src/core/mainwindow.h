@@ -38,6 +38,9 @@
 #include "dlg_ignore.h"
 #include "dlg_moderation.h"
 #include "dlg_options.h"
+#ifdef Q_WS_WIN
+#include "kamerzysta.h"
+#endif
 #include "network.h"
 #include "onet_auth.h"
 #include "onet_kernel.h"
@@ -98,6 +101,9 @@ private:
     QAction *channel_favouritesAct;
     QAction *friendsAct;
     QAction *ignoreAct;
+#ifdef Q_WS_WIN
+    QAction *camsAct;
+#endif
     QAction *aboutAct;
     QMap <QString, QByteArray> mNickAvatar;
     QMap <QString, QByteArray> mChannelAvatar;
@@ -114,6 +120,7 @@ private slots:
     void channel_favourites_dlg();
     void friends_dlg();
     void ignore_dlg();
+    void cams_clicked();
     void about_dlg();
     void tray_icon(QSystemTrayIcon::ActivationReason);
     void button_show();

@@ -38,6 +38,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     channel_favouritesAct = new QAction(QIcon(":/3rdparty/images/list.png"),tr("Favorite channels"),this);
     friendsAct = new QAction(QIcon(":/3rdparty/images/people.png"),tr("Friends"),this);
     ignoreAct = new QAction(QIcon(":/3rdparty/images/people.png"),tr("Ignored"),this);
+#ifdef Q_WS_WIN
+    camsAct = new QAction(QIcon(":/images/cam.png"),tr("Cams"),this);
+#endif
     aboutAct = new QAction(QIcon(":/images/logo_64.png"),tr("About SCC ..."),this);
 
 // shortcut
@@ -49,6 +52,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     channel_favouritesAct->setShortcut(tr("Ctrl+U"));
     friendsAct->setShortcut(tr("Ctrl+P"));
     ignoreAct->setShortcut(tr("Ctrl+I"));
+#ifdef Q_WS_WIN
+    camsAct->setShortcut(tr("Ctrl+K"));
+#endif
 
 // show options if config not exist
     QString path = QCoreApplication::applicationDirPath();
@@ -76,7 +82,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
 // settings
     settings.clear();
-    settings.setValue("version", "1.0.7.440");
+    settings.setValue("version", "1.0.7.442");
     settings.setValue("debug", "off");
     settings.setValue("logged", "off");
     settings.setValue("busy", "off");
@@ -157,6 +163,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     chatMenu->addAction(channel_favouritesAct);
     chatMenu->addAction(friendsAct);
     chatMenu->addAction(ignoreAct);
+#ifdef Q_WS_WIN
+    chatMenu->addAction(camsAct);
+#endif
 
     helpMenu = menuBar()->addMenu(tr("He&lp"));
     helpMenu->addAction(aboutAct);
@@ -171,10 +180,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     toolBar->addAction(channel_homesAct);
     toolBar->addAction(friendsAct);
     toolBar->addAction(channel_favouritesAct);
-
-// hide toolbar if style == classic
-    if (settings.value("style") == "classic")
-        toolBar->hide();
+#ifdef Q_WS_WIN
+    toolBar->addAction(camsAct);
+#endif
 
 // statusbar
     lLag = new QLabel();
@@ -189,6 +197,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     QObject::connect(channel_favouritesAct, SIGNAL(triggered()), this, SLOT(channel_favourites_dlg()));
     QObject::connect(friendsAct, SIGNAL(triggered()), this, SLOT(friends_dlg()));
     QObject::connect(ignoreAct, SIGNAL(triggered()), this, SLOT(ignore_dlg()));
+#ifdef Q_WS_WIN
+    QObject::connect(camsAct, SIGNAL(triggered()), this, SLOT(cams_clicked()));
+#endif
     QObject::connect(aboutAct, SIGNAL(triggered()), this, SLOT(about_dlg()));
     QObject::connect(showAct, SIGNAL(triggered()), this, SLOT(button_show()));
     QObject::connect(closeAct, SIGNAL(triggered()), this, SLOT(button_close()));
@@ -365,6 +376,21 @@ void MainWindow::ignore_dlg()
 {
     if ((pNetwork->is_connected() == true) && (pNetwork->is_writable() == true))
         pDlg_ignore->show();
+}
+
+void MainWindow::cams_clicked()
+{
+#ifdef Q_WS_WIN
+    if ((pNetwork->is_connected() == true) && (pNetwork->is_writable() == true))
+    {
+        Config *pConfig = new Config();
+        QString strMe = pConfig->get_value("login-nick");
+        delete pConfig;
+
+        QString strUOKey = settings.value("uokey").toString();
+        (new Kamerzysta(strMe, strUOKey));
+    }
+#endif
 }
 
 void MainWindow::about_dlg()

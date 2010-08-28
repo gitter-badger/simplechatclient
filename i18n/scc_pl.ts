@@ -187,6 +187,10 @@
         <translation>Ignorowani</translation>
     </message>
     <message>
+        <source>Cams</source>
+        <translation>Kamerki</translation>
+    </message>
+    <message>
         <source>About SCC ...</source>
         <translation>O programie SCC...</translation>
     </message>

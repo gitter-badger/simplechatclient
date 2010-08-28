@@ -50,10 +50,10 @@ private:
     void kamerzysta_not_running();
     void kamerzysta_running();
     void get_port();
+    void network_connect();
 
 private slots:
     void network_create();
-    void network_connect();
     void network_connected();
     void network_send(QString);
     void network_disconnect();
