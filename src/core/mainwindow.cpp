@@ -82,7 +82,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
 // settings
     settings.clear();
-    settings.setValue("version", "1.0.7.445");
+    settings.setValue("version", "1.0.7.446");
     settings.setValue("debug", "off");
     settings.setValue("logged", "off");
     settings.setValue("busy", "off");
@@ -388,7 +388,7 @@ void MainWindow::cams_clicked()
         delete pConfig;
 
         QString strUOKey = settings.value("uokey").toString();
-        (new Kamerzysta(strMe, strUOKey));
+        (new Kamerzysta())->show(strMe, strUOKey);
     }
 #endif
 }

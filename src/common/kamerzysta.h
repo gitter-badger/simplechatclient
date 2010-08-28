@@ -30,13 +30,15 @@
 #include <QTcpSocket>
 #include <QTimer>
 #include <QTextStream>
+#include "config.h"
 
 class Kamerzysta : public QObject
 {
     Q_OBJECT
 public:
-    Kamerzysta(QString, QString);
+    Kamerzysta();
     ~Kamerzysta();
+    void show(QString, QString);
 
 private:
     QString strNick;
@@ -45,6 +47,7 @@ private:
     QString strKamerzystaFile;
     int iPort;
     QTcpSocket *socket;
+    QString strDataRecv;
 
     void get_path();
     void kamerzysta_not_running();

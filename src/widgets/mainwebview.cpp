@@ -65,7 +65,7 @@ void MainWebView::cam()
 {
 #ifdef Q_WS_WIN
     QString strUOKey = settings->value("uokey").toString();
-    (new Kamerzysta(strNick, strUOKey));
+    (new Kamerzysta())->show(strNick, strUOKey);
 #else
     (new DlgCam(myparent, pNetwork, settings, strNick))->show();
 #endif
