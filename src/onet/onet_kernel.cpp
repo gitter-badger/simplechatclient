@@ -1356,14 +1356,25 @@ void OnetKernel::raw_142n()
 // :ChanServ!service@service.onet NOTICE scc_test :151 :h#scc
 void OnetKernel::raw_151n()
 {
-    for (int i = 4; i < strDataList.size(); i++)
-    {
-        QString strChannel = strDataList[i];
-        if (strChannel[0] == ':')
-            strChannel = strChannel.right(strChannel.length()-1);
+    QString strNick = strDataList[0];
+    if (strNick[0] == ':')
+        strNick = strNick.right(strNick.length()-1);
+    strNick = strNick.left(strNick.indexOf('!'));
 
-        if (strChannel[0] == '#')
+    if (strNick == "ChanServ")
+    {
+        for (int i = 4; i < strDataList.size(); i++)
+        {
+            QString strChannel = strDataList[i];
+            if (strChannel[0] == ':')
+                strChannel = strChannel.right(strChannel.length()-1);
+
             dlgchannel_homes->add_channel(strChannel);
+        }
+    }
+    else if (strNick == "NickServ")
+    {
+        // ignore
     }
 }
 
