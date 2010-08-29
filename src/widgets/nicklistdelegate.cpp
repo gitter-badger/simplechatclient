@@ -185,13 +185,19 @@ QSize NicklistDelegate::sizeHint(const QStyleOptionViewItem &option, const QMode
     Q_UNUSED (index);
 
     Config *pConfig = new Config();
+    QString strDisableAvatars = pConfig->get_value("disable_avatars");
     QString strStyle = pConfig->get_value("style");
     delete pConfig;
 
     if (strStyle == "modern")
-        return QSize(180, 35);
+    {
+        if (strDisableAvatars == "off") // modern with avatars
+            return QSize(180, 35);
+        else // modern no avatars
+            return QSize(140, 35);
+    }
     else if (strStyle == "classic")
         return QSize(100, 24);
-    else // default modern
-        return QSize(180, 35);
+    else // default modern no avatars
+        return QSize(140, 35);
 }
