@@ -41,6 +41,7 @@ DlgOptions::DlgOptions(QWidget *parent, QSettings *param1) : QDialog(parent)
     ui.radioButton_modern_avatars->setText(tr("Modern"));
     ui.radioButton_modern_no_avatars->setText(tr("Modern without avatars"));
     ui.radioButton_classic->setText(tr("Classic"));
+    ui.groupBox_language->setTitle(tr("Language"));
 // page adv
     ui.tabWidget_adv->setTabText(0, tr("Advanced"));
     ui.tabWidget_adv->setTabText(1, tr("Other"));
@@ -83,6 +84,11 @@ DlgOptions::DlgOptions(QWidget *parent, QSettings *param1) : QDialog(parent)
 
     ui.listWidget_options->setCurrentRow(0);
 
+// language
+    QStringList strlLanguage;
+    strlLanguage << tr("English") << tr("Polish");
+    ui.comboBox_language->addItems(strlLanguage);
+
 // my font
     QStringList strlMyFont;
     strlMyFont << "Arial" << "Times" << "Verdana" << "Tahoma" << "Courier";
@@ -111,6 +117,7 @@ DlgOptions::DlgOptions(QWidget *parent, QSettings *param1) : QDialog(parent)
     QObject::connect(ui.radioButton_modern_avatars, SIGNAL(clicked()), this, SLOT(set_modern_style_avatars()));
     QObject::connect(ui.radioButton_modern_no_avatars, SIGNAL(clicked()), this, SLOT(set_modern_style_no_avatars()));
     QObject::connect(ui.radioButton_classic, SIGNAL(clicked()), this, SLOT(set_classic_style()));
+    QObject::connect(ui.comboBox_language, SIGNAL(currentIndexChanged(int)), this, SLOT(language_changed(int)));
     QObject::connect(ui.checkBox_auto_busy, SIGNAL(clicked()), this, SLOT(auto_busy()));
     QObject::connect(ui.checkBox_show_zuo, SIGNAL(clicked()), this, SLOT(show_zuo()));
     QObject::connect(ui.checkBox_hide_formating, SIGNAL(clicked()), this, SLOT(hide_formating()));
@@ -226,6 +233,27 @@ void DlgOptions::set_classic_style()
     msgBox.setStandardButtons(QMessageBox::Ok);
     msgBox.setText(QString(tr("Restart program to apply the changes.")));
     msgBox.exec();
+}
+
+void DlgOptions::language_changed(int index)
+{
+    Config *pConfig = new Config();
+    if (index == 0) // english
+    {
+        pConfig->set_value("language", "en");
+        settings->setValue("language", "en");
+    }
+    else if (index == 1) // polish
+    {
+        pConfig->set_value("language", "pl");
+        settings->setValue("language", "pl");
+    }
+    else // polish
+    {
+        pConfig->set_value("language", "pl");
+        settings->setValue("language", "pl");
+    }
+    delete pConfig;
 }
 
 void DlgOptions::auto_busy()
@@ -513,6 +541,7 @@ void DlgOptions::showEvent(QShowEvent *event)
     Config *pConfig = new Config();
     QString strNick = pConfig->get_value("login-nick");
     QString strPass = pConfig->get_value("login-pass");
+    QString strLanguage = pConfig->get_value("language");
     QString strAutoBusy = pConfig->get_value("auto_busy");
     QString strShowZuo = pConfig->get_value("show_zuo");
     QString strHideFormating = pConfig->get_value("hide_formating");
@@ -565,6 +594,14 @@ void DlgOptions::showEvent(QShowEvent *event)
     }
     else if (strStyle == "classic")
         ui.radioButton_classic->setChecked(true);
+
+// language
+    if (strLanguage == "en")
+        ui.comboBox_language->setCurrentIndex(0);
+    else if (strLanguage == "pl")
+        ui.comboBox_language->setCurrentIndex(1);
+    else
+        ui.comboBox_language->setCurrentIndex(1);
 
 // auto busy
     if (strAutoBusy == "on")

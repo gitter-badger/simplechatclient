@@ -962,8 +962,16 @@
         <translation>Klasyczny</translation>
     </message>
     <message>
-        <source>Other</source>
-        <translation>Inne</translation>
+        <source>Language</source>
+        <translation>Język</translation>
+    </message>
+    <message>
+        <source>English</source>
+        <translation>Angielski</translation>
+    </message>
+    <message>
+        <source>Polish</source>
+        <translation>Polski</translation>
     </message>
     <message>
         <source>Busy mode after you log in to chat</source>
@@ -992,6 +1000,10 @@
     <message>
         <source>Disable logs</source>
         <translation>Wyłączenie logów</translation>
+    </message>
+    <message>
+        <source>Other</source>
+        <translation>Inne</translation>
     </message>
     <message>
         <source>Disable sounds</source>

@@ -885,11 +885,11 @@ void OnetKernel::raw_mode()
         strFlag = strFlag.right(strFlag.length()-1);
 
         // create flags list
-        QStringList slFlags;
+        QStringList strlFlags;
         for (int i = 0; i < strFlag.count(); i++)
-            slFlags << strFlag.at(i);
+            strlFlags << strFlag.at(i);
 
-        foreach (strFlag, slFlags)
+        foreach (strFlag, strlFlags)
         {
             strFlag = plusminus+strFlag;
 

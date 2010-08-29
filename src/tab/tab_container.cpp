@@ -477,11 +477,11 @@ void TabContainer::clear_channel_all_nick_avatars(QString strChannel)
         {
             if (tw[i]->get_name() == strChannel)
             {
-                QStringList slList = tw[i]->get_nicklist();
+                QStringList strlList = tw[i]->get_nicklist();
 
-                for (int i = 0; i < slList.count(); i++)
+                for (int i = 0; i < strlList.count(); i++)
                 {
-                    QString strNick = slList.at(i);
+                    QString strNick = strlList.at(i);
 
                     // remove nick from avatars if not exist on open channels; must be 1 (current channel)
                     if ((mNickAvatar->contains(strNick) == true) && (get_nick_channels(strNick) == 1))

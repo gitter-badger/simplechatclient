@@ -53,6 +53,7 @@ private slots:
     void set_modern_style_avatars();
     void set_modern_style_no_avatars();
     void set_classic_style();
+    void language_changed(int);
     void auto_busy();
     void show_zuo();
     void hide_formating();

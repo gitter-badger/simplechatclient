@@ -64,6 +64,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
 // config values
     Config *pConfig = new Config();
+    QString strLanguage = pConfig->get_value("language");
     QString strAutoBusy = pConfig->get_value("auto_busy");
     QString strShowZuo = pConfig->get_value("show_zuo");
     QString strHideFormating = pConfig->get_value("hide_formating");
@@ -82,12 +83,13 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
 // settings
     settings.clear();
-    settings.setValue("version", "1.0.7.450");
+    settings.setValue("version", "1.0.7.451");
     settings.setValue("debug", "off");
     settings.setValue("logged", "off");
     settings.setValue("busy", "off");
     settings.setValue("override", "off");
     settings.setValue("autojoin_favourites", "on");
+    settings.setValue("language", strLanguage);
     settings.setValue("auto_busy", strAutoBusy);
     settings.setValue("show_zuo", strShowZuo);
     settings.setValue("hide_formating", strHideFormating);

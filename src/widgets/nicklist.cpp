@@ -276,17 +276,17 @@ void Nicklist::nicklist_clear(sNickStatus *nick_status)
 
 QStringList Nicklist::nicklist_get(sNickStatus *nick_status)
 {
-    QStringList slResult;
+    QStringList strlResult;
 
     for (int i = 0; i < nick_status->count(); i++)
     {
         NickStatus listNickStatus(nick_status->at(i));
 
         QString strKey = listNickStatus.nick;
-        slResult.append(strKey);
+        strlResult.append(strKey);
     }
 
-    return slResult;
+    return strlResult;
 }
 
 void Nicklist::nicklist_sort(sNickStatus *nick_status)
@@ -332,22 +332,22 @@ void Nicklist::nicklist_quicksort(QString strStatus, sNickStatus *nick_status, s
     }
 
 // change hash to QStringList
-    QStringList slNicklist;
+    QStringList strlNicklist;
 
     QHash <QString, QString>::const_iterator i2 = hNick_status.constBegin();
     while (i2 != hNick_status.constEnd())
     {
-        slNicklist.insert(slNicklist.count(), i2.key());
+        strlNicklist.insert(strlNicklist.count(), i2.key());
         ++i2;
     }
 
-// sort slNicklist
-    qStableSort(slNicklist.begin(), slNicklist.end(), caseInsensitiveLessThan);
+// sort strlNicklist
+    qStableSort(strlNicklist.begin(), strlNicklist.end(), caseInsensitiveLessThan);
 
 // insert
-    for (int i = 0; i < slNicklist.count(); i++)
+    for (int i = 0; i < strlNicklist.count(); i++)
     {
-        QString strNick = slNicklist.at(i);
+        QString strNick = strlNicklist.at(i);
 
         NickStatus insert;
         insert.nick = strNick;

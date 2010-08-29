@@ -97,6 +97,11 @@ QString Config::get_value(QString strKey)
         set_value("login-pass", QString::null);
         return QString::null;
     }
+    else if (strKey == "language")
+    {
+        set_value("language", "pl");
+        return "pl";
+    }
     else if (strKey == "auto_busy")
     {
         set_value("auto_busy", "off");
@@ -214,6 +219,7 @@ void Config::create_new_config()
 
     add_config_value(&doc, &root, "login-nick", "~test");
     add_config_value(&doc, &root, "login-pass", QString::null);
+    add_config_value(&doc, &root, "language", "pl");
     add_config_value(&doc, &root, "auto_busy", "off");
     add_config_value(&doc, &root, "show_zuo", "off");
     add_config_value(&doc, &root, "hide_formating", "off");

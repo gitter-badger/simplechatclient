@@ -23,6 +23,7 @@
 #include <QLocale>
 #include <QTextCodec>
 #include <QTranslator>
+#include "config.h"
 #include "debug.h"
 #include "mainwindow.h"
 
@@ -211,10 +212,18 @@ int main(int argc, char *argv[])
     QCoreApplication::setOrganizationDomain("simplechatclien.sourceforge.net");
     QCoreApplication::setApplicationName("scc");
 
+    // get translate
+    Config *pConfig = new Config();
+    QString strLanguage = pConfig->get_value("language");
+    delete pConfig;
+
     // set translate
     QString strPath = QCoreApplication::applicationDirPath();
     QTranslator sccTranslator;
-    sccTranslator.load(QString("%1/i18n/scc_%2").arg(strPath).arg(QLocale::system().name()));
+    if (strLanguage.isEmpty() == true)
+        sccTranslator.load(QString("%1/i18n/scc_%2").arg(strPath).arg(QLocale::system().name()));
+    else
+        sccTranslator.load(QString("%1/i18n/scc_%2").arg(strPath).arg(strLanguage));
     app.installTranslator(&sccTranslator);
 
     MainWindow mainWin;

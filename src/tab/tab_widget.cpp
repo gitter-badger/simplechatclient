@@ -1234,9 +1234,9 @@ void TabWidget::send_message(bool bType)
 
             if ((strTextList[0] == "help") || (strTextList[0] == "pomoc"))
             {
-                QStringList slHelp = strText.split(";");
-                for (int i = 0; i < slHelp.count(); i++)
-                    display_msg(slHelp.at(i), 7);
+                QStringList strlHelp = strText.split(";");
+                for (int i = 0; i < strlHelp.count(); i++)
+                    display_msg(strlHelp.at(i), 7);
             }
             else if (strTextList[0] == "me")
             {
