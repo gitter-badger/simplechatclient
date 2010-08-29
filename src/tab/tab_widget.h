@@ -65,6 +65,7 @@ public:
     ~TabWidget();
     QString get_name() { return strName; }
     void set_default();
+    QString addslashes(QString);
     QString convert_emots(QString);
     QString replace_emots(QString);
     void display_msg(QString, QString, int);

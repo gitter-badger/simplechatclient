@@ -180,6 +180,56 @@ QString Config::get_value(QString strKey)
         set_value("my_color", "#000000");
         return "#000000";
     }
+    else if (strKey == "default_font_color")
+    {
+        set_value("default_font_color", "#000000");
+        return "#000000";
+    }
+    else if (strKey == "font_color_level_1")
+    {
+        set_value("font_color_level_1", "#009300");
+        return "#009300";
+    }
+    else if (strKey == "font_color_level_2")
+    {
+        set_value("font_color_level_2", "#4733FF");
+        return "#4733FF";
+    }
+    else if (strKey == "font_color_level_3")
+    {
+        set_value("font_color_level_3", "#00007F");
+        return "#00007F";
+    }
+    else if (strKey == "font_color_level_4")
+    {
+        set_value("font_color_level_4", "#00007F");
+        return "#00007F";
+    }
+    else if (strKey == "font_color_level_5")
+    {
+        set_value("font_color_level_5", "#009300");
+        return "#009300";
+    }
+    else if (strKey == "font_color_level_6")
+    {
+        set_value("font_color_level_6", "#0066FF");
+        return "#0066FF";
+    }
+    else if (strKey == "font_color_level_7")
+    {
+        set_value("font_color_level_7", "#666666");
+        return "#666666";
+    }
+    else if (strKey == "font_color_level_9")
+    {
+        set_value("font_color_level_9", "#ff0000");
+        return "#ff0000";
+    }
+    else if (strKey == "channel_font_color")
+    {
+        set_value("channel_font_color", "#0000ff");
+        return "#0000ff";
+    }
 
     return QString::null;
 }
@@ -242,6 +292,16 @@ void Config::create_new_config()
     add_config_value(&doc, &root, "my_italic", "off");
     add_config_value(&doc, &root, "my_font", "Verdana");
     add_config_value(&doc, &root, "my_color", "#000000");
+    add_config_value(&doc, &root, "default_font_color", "#000000");
+    add_config_value(&doc, &root, "font_color_level_1", "#009300");
+    add_config_value(&doc, &root, "font_color_level_2", "#4733FF");
+    add_config_value(&doc, &root, "font_color_level_3", "#00007F");
+    add_config_value(&doc, &root, "font_color_level_4", "#00007F");
+    add_config_value(&doc, &root, "font_color_level_5", "#009300");
+    add_config_value(&doc, &root, "font_color_level_6", "#0066FF");
+    add_config_value(&doc, &root, "font_color_level_7", "#666666");
+    add_config_value(&doc, &root, "font_color_level_9", "#ff0000");
+    add_config_value(&doc, &root, "channel_font_color", "#0000ff");
 
     save();
 }

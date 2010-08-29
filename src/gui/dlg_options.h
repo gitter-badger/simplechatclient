@@ -67,6 +67,16 @@ private slots:
     void set_my_font(QString);
     void set_my_color(int);
     void set_background_color();
+    void set_default_font_color();
+    void set_join_font_color();
+    void set_part_font_color();
+    void set_quit_font_color();
+    void set_kick_font_color();
+    void set_mode_font_color();
+    void set_notice_font_color();
+    void set_info_font_color();
+    void set_error_font_color();
+    void set_channel_font_color();
     void button_ok();
     void button_cancel();
 

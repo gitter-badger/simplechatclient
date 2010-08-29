@@ -79,11 +79,21 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     QString strMyItalic = pConfig->get_value("my_italic");
     QString strMyFont = pConfig->get_value("my_font");
     QString strMyColor = pConfig->get_value("my_color");
+    QString strDefaultFontColor = pConfig->get_value("default_font_color");
+    QString strJoinFontColor = pConfig->get_value("font_color_level_1");
+    QString strPartFontColor = pConfig->get_value("font_color_level_2");
+    QString strQuitFontColor = pConfig->get_value("font_color_level_3");
+    QString strKickFontColor = pConfig->get_value("font_color_level_4");
+    QString strModeFontColor = pConfig->get_value("font_color_level_5");
+    QString strNoticeFontColor = pConfig->get_value("font_color_level_6");
+    QString strInfoFontColor = pConfig->get_value("font_color_level_7");
+    QString strErrorFontColor = pConfig->get_value("font_color_level_9");
+    QString strChannelFontColor = pConfig->get_value("channel_font_color");
     delete pConfig;
 
 // settings
     settings.clear();
-    settings.setValue("version", "1.0.7.453");
+    settings.setValue("version", "1.0.7.454");
     settings.setValue("debug", "off");
     settings.setValue("logged", "off");
     settings.setValue("busy", "off");
@@ -104,6 +114,17 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     settings.setValue("my_italic", strMyItalic);
     settings.setValue("my_font", strMyFont);
     settings.setValue("my_color", strMyColor);
+    settings.setValue("default_font_color", strDefaultFontColor);
+    settings.setValue("join_font_color", strJoinFontColor);
+    settings.setValue("font_color_level_1", strJoinFontColor);
+    settings.setValue("font_color_level_2", strPartFontColor);
+    settings.setValue("font_color_level_3", strQuitFontColor);
+    settings.setValue("font_color_level_4", strKickFontColor);
+    settings.setValue("font_color_level_5", strModeFontColor);
+    settings.setValue("font_color_level_6", strNoticeFontColor);
+    settings.setValue("font_color_level_7", strInfoFontColor);
+    settings.setValue("font_color_level_9", strErrorFontColor);
+    settings.setValue("channel_font_color", strChannelFontColor);
     settings.setValue("uokey", "");
     settings.setValue("uo_nick", "");
     settings.setValue("onet_ubi", "");
@@ -138,10 +159,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
 // welcome
     pTabC->show_msg("Status", "%Fi:courier%"+tr("Welcome to the Simple Chat Client")+" %Ihehe%", 0);
-    pTabC->show_msg("Status", "%Fb:courier%%Cff6500%"+tr("Official website")+" SCC%C000000%: http://simplechatclien.sourceforge.net/ %Izaskoczony%", 0);
-    pTabC->show_msg("Status", "%Fb:courier%%C008100%"+tr("Official Forum")+" SCC%C000000%: http://simplechatclien.sourceforge.net/forum/ %Ioczko%", 0);
-    pTabC->show_msg("Status", "%Fbi:courier%%Cff0000%"+tr("Known bugs")+"%C000000%: http://sourceforge.net/apps/trac/simplechatclien/report/6 %Iskwaszony%", 0);
-    pTabC->show_msg("Status", "%Fbi:courier%%C8800ab%"+tr("Bug reporting")+"%C000000%: http://sourceforge.net/apps/trac/simplechatclien/newticket %Ipanda%", 0);
+    pTabC->show_msg("Status", "%Fb:courier%%Cff6500%"+tr("Official website")+" SCC%C3030ce%: http://simplechatclien.sourceforge.net/ %Izaskoczony%", 0);
+    pTabC->show_msg("Status", "%Fb:courier%%C008100%"+tr("Official Forum")+" SCC%C3030ce%: http://simplechatclien.sourceforge.net/forum/ %Ioczko%", 0);
+    pTabC->show_msg("Status", "%Fbi:courier%%Cff0000%"+tr("Known bugs")+"%C3030ce%: http://sourceforge.net/apps/trac/simplechatclien/report/6 %Iskwaszony%", 0);
+    pTabC->show_msg("Status", "%Fbi:courier%%C8800ab%"+tr("Bug reporting")+"%C3030ce%: http://sourceforge.net/apps/trac/simplechatclien/newticket %Ipanda%", 0);
 
 // update
     QTimer::singleShot(1000*5, this, SLOT(check_update()));

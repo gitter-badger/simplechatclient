@@ -33,21 +33,13 @@ TabWidget::TabWidget(QWidget *parent, Network *param1, QSettings *param2, QStrin
     dlgmoderation = param8;
     camSocket = param9;
 
-    QString strBackgroundColor = settings->value("background_color").toString();
-    strBackgroundColor.replace("&", "&amp;");
-    strBackgroundColor.replace("<", "&lt;");
-    strBackgroundColor.replace(">", "&gt;");
-    strBackgroundColor.replace("\"", "");
-    strBackgroundColor.replace("\'", "");
-    strBackgroundColor.replace("#", "");
-    strBackgroundColor.replace(";", "");
-    strBackgroundColor.replace("%", "");
+    QString strBackgroundColor = addslashes(settings->value("background_color").toString());
 
     iNickCount = 0;
     bCursorPositionChanged = false;
     strCurrentColor = "#000000";
     strFontSize = "11px";
-    strContentStart = "<html><body style=\"background-color:#"+strBackgroundColor+";\">";
+    strContentStart = "<html><body style=\"background-color:"+strBackgroundColor+";\">";
     strContentEnd = "</body></html>";
 
     splitter = new QSplitter(this);
@@ -496,6 +488,18 @@ void TabWidget::set_default()
     color->setCurrentIndex(iMyColor);
 }
 
+QString TabWidget::addslashes(QString strData)
+{
+    strData.replace("&", "&amp;");
+    strData.replace("<", "&lt;");
+    strData.replace(">", "&gt;");
+    strData.replace("\"", "");
+    strData.replace("\'", "");
+    strData.replace(";", "");
+    strData.replace("%", "");
+    return strData;
+}
+
 QString TabWidget::convert_emots(QString strData)
 {
     strData.replace(QRegExp("(http:|https:)//"), "\\1\\\\"); // fix http https
@@ -579,10 +583,10 @@ void TabWidget::display_message(QString strData, int iLevel)
     strData.replace("&", "&amp;");
     strData.replace("<", "&lt;");
     strData.replace(">", "&gt;");
-    // nicks
-    strData.replace(QRegExp("&lt;([~-_a-zA-Z0-9\xa1\xaf\xa6\xac\xca\xc6\xd1\xd3\xa3\xb1\xbf\xb6\xbc\xea\xe6\xf1\xf3\xb3]+)&gt;"), "<a style=\"text-decoration:none;color:black;\" href=\"nick\\1\">&lt;\\1&gt;</a>");
     // channels
-    strData.replace(QRegExp("#([~-_a-zA-Z0-9\xa1\xaf\xa6\xac\xca\xc6\xd1\xd3\xa3\xb1\xbf\xb6\xbc\xea\xe6\xf1\xf3\xb3]+)"), "<a style=\"text-decoration:none;\" href=\"chan#\\1\">#\\1</a>");
+    strData.replace(QRegExp("#([~-_a-zA-Z0-9\xa1\xaf\xa6\xac\xca\xc6\xd1\xd3\xa3\xb1\xbf\xb6\xbc\xea\xe6\xf1\xf3\xb3]+)"), "<a style=\"text-decoration:none;color:"+addslashes(settings->value("channel_font_color").toString())+"\" href=\"chan#\\1\">#\\1</a>");
+    // nicks
+    strData.replace(QRegExp("&lt;([~-_a-zA-Z0-9\xa1\xaf\xa6\xac\xca\xc6\xd1\xd3\xa3\xb1\xbf\xb6\xbc\xea\xe6\xf1\xf3\xb3]+)&gt;"), "<a style=\"text-decoration:none;color:"+addslashes(settings->value("default_font_color").toString())+";\" href=\"nick\\1\">&lt;\\1&gt;</a>");
 
 // content last
     QString strContentLast;
@@ -591,25 +595,25 @@ void TabWidget::display_message(QString strData, int iLevel)
     QString strFontColor;
 
     if (iLevel == 0)
-        strFontColor = "#000000"; // black
+        strFontColor = addslashes(settings->value("default_font_color").toString()); // default black
     else if (iLevel == 1) // join
-        strFontColor = "#009300"; // green
+        strFontColor = addslashes(settings->value("font_color_level_1").toString()); // default green
     else if (iLevel == 2) // part
-        strFontColor = "#4733FF"; // light blue
+        strFontColor = addslashes(settings->value("font_color_level_2").toString()); // default light blue
     else if (iLevel == 3) // quit
-        strFontColor = "#00007F"; // dark blue
+        strFontColor = addslashes(settings->value("font_color_level_3").toString()); // default dark blue
     else if (iLevel == 4) // kick
-        strFontColor = "#00007F"; // dark blue
+        strFontColor = addslashes(settings->value("font_color_level_4").toString()); // default dark blue
     else if (iLevel == 5) // mode
-        strFontColor = "#009300"; // green
+        strFontColor = addslashes(settings->value("font_color_level_5").toString()); // default green
     else if (iLevel == 6) // notice
-        strFontColor = "#0066FF"; // blue
+        strFontColor = addslashes(settings->value("font_color_level_6").toString()); // default blue
     else if (iLevel == 7) // info
-        strFontColor = "#666666"; // gray
+        strFontColor = addslashes(settings->value("font_color_level_7").toString()); // default gray
     else if (iLevel == 9) // error
-        strFontColor = "#ff0000"; // red
+        strFontColor = addslashes(settings->value("font_color_level_9").toString()); // default red
     else
-        strFontColor = "#000000"; // default black
+        strFontColor = addslashes(settings->value("default_font_color").toString()); // default black
 
     strData.insert(11, "<span style=\"color:"+strFontColor+";\">");
     strContentLast = "</span>"+strContentLast;
@@ -650,7 +654,7 @@ void TabWidget::display_message(QString strData, int iLevel)
     }
 
 // init text
-    strContent.append("<p style=\"margin:0;padding:0;font-style:normal;color:#000000;text-align:"+strTextAlign+";font-family:Verdana;font-weight:normal;font-size:"+strFontSize+";text-decoration:"+strTextDecoration+";\">");
+    strContent.append("<p style=\"margin:0;padding:0;font-style:normal;color:"+addslashes(settings->value("default_font_color").toString())+";text-align:"+strTextAlign+";font-family:Verdana;font-weight:normal;font-size:"+strFontSize+";text-decoration:"+strTextDecoration+";\">");
 
 // text
     strContent.append(strData);
@@ -1011,15 +1015,7 @@ void TabWidget::update_channel_avatar()
 
 void TabWidget::refresh_background_color()
 {
-    QString strBackgroundColor = settings->value("background_color").toString();
-    strBackgroundColor.replace("&", "&amp;");
-    strBackgroundColor.replace("<", "&lt;");
-    strBackgroundColor.replace(">", "&gt;");
-    strBackgroundColor.replace("\"", "");
-    strBackgroundColor.replace("\'", "");
-    strBackgroundColor.replace("#", "");
-    strBackgroundColor.replace(";", "");
-    strBackgroundColor.replace("%", "");
+    QString strBackgroundColor = addslashes(settings->value("background_color").toString());
 
     strContentStart = "<html><body style=\"background-color:#"+strBackgroundColor+";\">";
     mainWebView->setHtml(strContentStart+strContent+strContentEnd,QUrl(""));

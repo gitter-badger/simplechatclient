@@ -7,19 +7,19 @@
     <x>0</x>
     <y>0</y>
     <width>562</width>
-    <height>382</height>
+    <height>412</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
     <width>562</width>
-    <height>382</height>
+    <height>412</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
     <width>562</width>
-    <height>382</height>
+    <height>412</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -35,7 +35,7 @@
      <x>0</x>
      <y>0</y>
      <width>561</width>
-     <height>381</height>
+     <height>411</height>
     </rect>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout">
@@ -46,7 +46,7 @@
         <property name="maximumSize">
          <size>
           <width>110</width>
-          <height>345</height>
+          <height>380</height>
          </size>
         </property>
         <property name="editTriggers">
@@ -108,7 +108,7 @@
             <property name="geometry">
              <rect>
               <x>0</x>
-              <y>50</y>
+              <y>60</y>
               <width>441</width>
               <height>81</height>
              </rect>
@@ -167,7 +167,7 @@
             <property name="geometry">
              <rect>
               <x>0</x>
-              <y>140</y>
+              <y>160</y>
               <width>441</width>
               <height>111</height>
              </rect>
@@ -213,7 +213,7 @@
             <property name="geometry">
              <rect>
               <x>10</x>
-              <y>10</y>
+              <y>20</y>
               <width>421</width>
               <height>26</height>
              </rect>
@@ -252,7 +252,7 @@
             <property name="geometry">
              <rect>
               <x>0</x>
-              <y>260</y>
+              <y>290</y>
               <width>441</width>
               <height>71</height>
              </rect>
@@ -279,7 +279,7 @@
               <x>0</x>
               <y>0</y>
               <width>441</width>
-              <height>341</height>
+              <height>381</height>
              </rect>
             </property>
             <property name="tabPosition">
@@ -298,7 +298,7 @@
                 <x>0</x>
                 <y>0</y>
                 <width>431</width>
-                <height>311</height>
+                <height>341</height>
                </rect>
               </property>
               <layout class="QVBoxLayout" name="verticalLayout_8">
@@ -457,52 +457,283 @@
              <attribute name="title">
               <string>Colors</string>
              </attribute>
-             <widget class="QGroupBox" name="groupBox_color">
+             <widget class="QToolBox" name="toolBox">
               <property name="geometry">
                <rect>
                 <x>0</x>
-                <y>10</y>
+                <y>0</y>
                 <width>431</width>
-                <height>71</height>
+                <height>351</height>
                </rect>
               </property>
-              <property name="title">
-               <string>Main window</string>
+              <property name="currentIndex">
+               <number>0</number>
               </property>
-              <widget class="QWidget" name="layoutWidget">
+              <widget class="QWidget" name="page">
                <property name="geometry">
                 <rect>
-                 <x>10</x>
-                 <y>28</y>
-                 <width>411</width>
-                 <height>31</height>
+                 <x>0</x>
+                 <y>0</y>
+                 <width>421</width>
+                 <height>287</height>
                 </rect>
                </property>
-               <layout class="QFormLayout" name="formLayout_4">
-                <property name="fieldGrowthPolicy">
-                 <enum>QFormLayout::ExpandingFieldsGrow</enum>
+               <attribute name="label">
+                <string>Main window</string>
+               </attribute>
+               <widget class="QWidget" name="horizontalLayoutWidget">
+                <property name="geometry">
+                 <rect>
+                  <x>0</x>
+                  <y>0</y>
+                  <width>421</width>
+                  <height>181</height>
+                 </rect>
                 </property>
-                <item row="0" column="0">
-                 <widget class="QLabel" name="label_background_color">
-                  <property name="text">
-                   <string>Background color:</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="0" column="1">
-                 <widget class="QPushButton" name="pushButton_background_color">
-                  <property name="text">
-                   <string/>
-                  </property>
-                  <property name="iconSize">
-                   <size>
-                    <width>50</width>
-                    <height>15</height>
-                   </size>
-                  </property>
-                 </widget>
-                </item>
-               </layout>
+                <layout class="QHBoxLayout" name="horizontalLayout_3">
+                 <item>
+                  <layout class="QFormLayout" name="formLayout_6">
+                   <item row="0" column="0">
+                    <widget class="QLabel" name="label_background_color">
+                     <property name="text">
+                      <string>Background color:</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="0" column="1">
+                    <widget class="QPushButton" name="pushButton_background_color">
+                     <property name="text">
+                      <string/>
+                     </property>
+                     <property name="iconSize">
+                      <size>
+                       <width>50</width>
+                       <height>15</height>
+                      </size>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="1" column="0">
+                    <widget class="QLabel" name="label_default_font_color">
+                     <property name="text">
+                      <string>Default font color:</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="1" column="1">
+                    <widget class="QPushButton" name="pushButton_default_font_color">
+                     <property name="text">
+                      <string/>
+                     </property>
+                     <property name="iconSize">
+                      <size>
+                       <width>50</width>
+                       <height>15</height>
+                      </size>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="2" column="0">
+                    <widget class="QLabel" name="label_channel_font_color">
+                     <property name="text">
+                      <string>Channel font color:</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="2" column="1">
+                    <widget class="QPushButton" name="pushButton_channel_font_color">
+                     <property name="text">
+                      <string/>
+                     </property>
+                     <property name="iconSize">
+                      <size>
+                       <width>50</width>
+                       <height>15</height>
+                      </size>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="3" column="0">
+                    <widget class="QLabel" name="label_join_font_color">
+                     <property name="text">
+                      <string>Join font color:</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="3" column="1">
+                    <widget class="QPushButton" name="pushButton_join_font_color">
+                     <property name="text">
+                      <string/>
+                     </property>
+                     <property name="iconSize">
+                      <size>
+                       <width>50</width>
+                       <height>15</height>
+                      </size>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="4" column="0">
+                    <widget class="QLabel" name="label_part_font_color">
+                     <property name="text">
+                      <string>Part font color:</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="4" column="1">
+                    <widget class="QPushButton" name="pushButton_part_font_color">
+                     <property name="text">
+                      <string/>
+                     </property>
+                     <property name="iconSize">
+                      <size>
+                       <width>50</width>
+                       <height>15</height>
+                      </size>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="5" column="0">
+                    <widget class="QLabel" name="label_quit_font_color">
+                     <property name="text">
+                      <string>Quit font color:</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="5" column="1">
+                    <widget class="QPushButton" name="pushButton_quit_font_color">
+                     <property name="text">
+                      <string/>
+                     </property>
+                     <property name="iconSize">
+                      <size>
+                       <width>50</width>
+                       <height>15</height>
+                      </size>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                 <item>
+                  <layout class="QFormLayout" name="formLayout_3">
+                   <item row="0" column="0">
+                    <widget class="QLabel" name="label_kick_font_color">
+                     <property name="text">
+                      <string>Kick font color:</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="0" column="1">
+                    <widget class="QPushButton" name="pushButton_kick_font_color">
+                     <property name="text">
+                      <string/>
+                     </property>
+                     <property name="iconSize">
+                      <size>
+                       <width>50</width>
+                       <height>15</height>
+                      </size>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="1" column="0">
+                    <widget class="QLabel" name="label_mode_font_color">
+                     <property name="text">
+                      <string>Mode font color:</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="1" column="1">
+                    <widget class="QPushButton" name="pushButton_mode_font_color">
+                     <property name="text">
+                      <string/>
+                     </property>
+                     <property name="iconSize">
+                      <size>
+                       <width>50</width>
+                       <height>15</height>
+                      </size>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="2" column="0">
+                    <widget class="QLabel" name="label_notice_font_color">
+                     <property name="text">
+                      <string>Notice font color:</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="2" column="1">
+                    <widget class="QPushButton" name="pushButton_notice_font_color">
+                     <property name="text">
+                      <string/>
+                     </property>
+                     <property name="iconSize">
+                      <size>
+                       <width>50</width>
+                       <height>15</height>
+                      </size>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="3" column="0">
+                    <widget class="QLabel" name="label_info_font_color">
+                     <property name="text">
+                      <string>Info font color:</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="3" column="1">
+                    <widget class="QPushButton" name="pushButton_info_font_color">
+                     <property name="text">
+                      <string/>
+                     </property>
+                     <property name="iconSize">
+                      <size>
+                       <width>50</width>
+                       <height>15</height>
+                      </size>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="4" column="0">
+                    <widget class="QLabel" name="label_error_font_color">
+                     <property name="text">
+                      <string>Error font color:</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="4" column="1">
+                    <widget class="QPushButton" name="pushButton_error_font_color">
+                     <property name="text">
+                      <string/>
+                     </property>
+                     <property name="iconSize">
+                      <size>
+                       <width>50</width>
+                       <height>15</height>
+                      </size>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                </layout>
+               </widget>
+              </widget>
+              <widget class="QWidget" name="page_2">
+               <property name="geometry">
+                <rect>
+                 <x>0</x>
+                 <y>0</y>
+                 <width>421</width>
+                 <height>287</height>
+                </rect>
+               </property>
+               <attribute name="label">
+                <string>Nicklist</string>
+               </attribute>
               </widget>
              </widget>
             </widget>

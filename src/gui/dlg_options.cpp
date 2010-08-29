@@ -66,8 +66,19 @@ DlgOptions::DlgOptions(QWidget *parent, QSettings *param1) : QDialog(parent)
     ui.label_my_font->setText(tr("Font:"));
     ui.label_my_color->setText(tr("Color:"));
 
-    ui.groupBox_color->setTitle(tr("Main window"));
+    ui.toolBox->setItemText(0,tr("Main window"));
+    ui.toolBox->setItemText(1,tr("Nicklist"));
     ui.label_background_color->setText(tr("Background color:"));
+    ui.label_default_font_color->setText(tr("Default font color:"));
+    ui.label_join_font_color->setText(tr("Join color:"));
+    ui.label_part_font_color->setText(tr("Part color:"));
+    ui.label_quit_font_color->setText(tr("Quit color:"));
+    ui.label_kick_font_color->setText(tr("Kick color:"));
+    ui.label_mode_font_color->setText(tr("Mode color:"));
+    ui.label_notice_font_color->setText(tr("Notice color:"));
+    ui.label_info_font_color->setText(tr("Info color:"));
+    ui.label_error_font_color->setText(tr("Error color:"));
+    ui.label_channel_font_color->setText(tr("Channel color:"));
 
 // options list
     QListWidgetItem *basicConfButton = new QListWidgetItem(ui.listWidget_options);
@@ -131,6 +142,16 @@ DlgOptions::DlgOptions(QWidget *parent, QSettings *param1) : QDialog(parent)
     QObject::connect(ui.comboBox_my_font, SIGNAL(currentIndexChanged(QString)), this, SLOT(set_my_font(QString)));
     QObject::connect(ui.comboBox_my_color, SIGNAL(currentIndexChanged(int)), this, SLOT(set_my_color(int)));
     QObject::connect(ui.pushButton_background_color, SIGNAL(clicked()), this, SLOT(set_background_color()));
+    QObject::connect(ui.pushButton_default_font_color, SIGNAL(clicked()), this, SLOT(set_default_font_color()));
+    QObject::connect(ui.pushButton_join_font_color, SIGNAL(clicked()), this, SLOT(set_join_font_color()));
+    QObject::connect(ui.pushButton_part_font_color, SIGNAL(clicked()), this, SLOT(set_part_font_color()));
+    QObject::connect(ui.pushButton_quit_font_color, SIGNAL(clicked()), this, SLOT(set_quit_font_color()));
+    QObject::connect(ui.pushButton_kick_font_color, SIGNAL(clicked()), this, SLOT(set_kick_font_color()));
+    QObject::connect(ui.pushButton_mode_font_color, SIGNAL(clicked()), this, SLOT(set_mode_font_color()));
+    QObject::connect(ui.pushButton_notice_font_color, SIGNAL(clicked()), this, SLOT(set_notice_font_color()));
+    QObject::connect(ui.pushButton_info_font_color, SIGNAL(clicked()), this, SLOT(set_info_font_color()));
+    QObject::connect(ui.pushButton_error_font_color, SIGNAL(clicked()), this, SLOT(set_error_font_color()));
+    QObject::connect(ui.pushButton_channel_font_color, SIGNAL(clicked()), this, SLOT(set_channel_font_color()));
     QObject::connect(ui.buttonBox, SIGNAL(accepted()), this, SLOT(button_ok()));
     QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(button_cancel()));
 }
@@ -481,6 +502,276 @@ void DlgOptions::set_background_color()
     }
 }
 
+void DlgOptions::set_default_font_color()
+{
+    // get value
+    Config *pConfig0 = new Config();
+    QString strDefaultFontColor = pConfig0->get_value("default_font_color");
+    delete pConfig0;
+
+    // color dialog
+    QColor cColor = QColorDialog::getColor(QColor(strDefaultFontColor), this);
+
+    if (cColor.isValid() == true)
+    {
+        QString strColor = cColor.name();
+
+        // save to pushbutton
+        QPixmap bcolor(50,15);
+        bcolor.fill(QColor(cColor));
+        ui.pushButton_default_font_color->setIcon(QIcon(bcolor));
+
+        // save
+        Config *pConfig1 = new Config();
+        pConfig1->set_value("default_font_color", strColor);
+        settings->setValue("default_font_color", strColor);
+        delete pConfig1;
+    }
+}
+
+void DlgOptions::set_join_font_color()
+{
+    // get value
+    Config *pConfig0 = new Config();
+    QString strJoinFontColor = pConfig0->get_value("font_color_level_1");
+    delete pConfig0;
+
+    // color dialog
+    QColor cColor = QColorDialog::getColor(QColor(strJoinFontColor), this);
+
+    if (cColor.isValid() == true)
+    {
+        QString strColor = cColor.name();
+
+        // save to pushbutton
+        QPixmap bcolor(50,15);
+        bcolor.fill(QColor(cColor));
+        ui.pushButton_join_font_color->setIcon(QIcon(bcolor));
+
+        // save
+        Config *pConfig1 = new Config();
+        pConfig1->set_value("font_color_level_1", strColor);
+        settings->setValue("font_color_level_1", strColor);
+        delete pConfig1;
+    }
+}
+
+void DlgOptions::set_part_font_color()
+{
+    // get value
+    Config *pConfig0 = new Config();
+    QString strPartFontColor = pConfig0->get_value("font_color_level_2");
+    delete pConfig0;
+
+    // color dialog
+    QColor cColor = QColorDialog::getColor(QColor(strPartFontColor), this);
+
+    if (cColor.isValid() == true)
+    {
+        QString strColor = cColor.name();
+
+        // save to pushbutton
+        QPixmap bcolor(50,15);
+        bcolor.fill(QColor(cColor));
+        ui.pushButton_part_font_color->setIcon(QIcon(bcolor));
+
+        // save
+        Config *pConfig1 = new Config();
+        pConfig1->set_value("font_color_level_2", strColor);
+        settings->setValue("font_color_level_2", strColor);
+        delete pConfig1;
+    }
+}
+
+void DlgOptions::set_quit_font_color()
+{
+    // get value
+    Config *pConfig0 = new Config();
+    QString strQuitFontColor = pConfig0->get_value("font_color_level_3");
+    delete pConfig0;
+
+    // color dialog
+    QColor cColor = QColorDialog::getColor(QColor(strQuitFontColor), this);
+
+    if (cColor.isValid() == true)
+    {
+        QString strColor = cColor.name();
+
+        // save to pushbutton
+        QPixmap bcolor(50,15);
+        bcolor.fill(QColor(cColor));
+        ui.pushButton_quit_font_color->setIcon(QIcon(bcolor));
+
+        // save
+        Config *pConfig1 = new Config();
+        pConfig1->set_value("font_color_level_3", strColor);
+        settings->setValue("font_color_level_3", strColor);
+        delete pConfig1;
+    }
+}
+
+void DlgOptions::set_kick_font_color()
+{
+    // get value
+    Config *pConfig0 = new Config();
+    QString strKickFontColor = pConfig0->get_value("font_color_level_4");
+    delete pConfig0;
+
+    // color dialog
+    QColor cColor = QColorDialog::getColor(QColor(strKickFontColor), this);
+
+    if (cColor.isValid() == true)
+    {
+        QString strColor = cColor.name();
+
+        // save to pushbutton
+        QPixmap bcolor(50,15);
+        bcolor.fill(QColor(cColor));
+        ui.pushButton_kick_font_color->setIcon(QIcon(bcolor));
+
+        // save
+        Config *pConfig1 = new Config();
+        pConfig1->set_value("font_color_level_4", strColor);
+        settings->setValue("font_color_level_4", strColor);
+        delete pConfig1;
+    }
+}
+
+void DlgOptions::set_mode_font_color()
+{
+    // get value
+    Config *pConfig0 = new Config();
+    QString strModeFontColor = pConfig0->get_value("font_color_level_5");
+    delete pConfig0;
+
+    // color dialog
+    QColor cColor = QColorDialog::getColor(QColor(strModeFontColor), this);
+
+    if (cColor.isValid() == true)
+    {
+        QString strColor = cColor.name();
+
+        // save to pushbutton
+        QPixmap bcolor(50,15);
+        bcolor.fill(QColor(cColor));
+        ui.pushButton_mode_font_color->setIcon(QIcon(bcolor));
+
+        // save
+        Config *pConfig1 = new Config();
+        pConfig1->set_value("font_color_level_5", strColor);
+        settings->setValue("font_color_level_5", strColor);
+        delete pConfig1;
+    }
+}
+
+void DlgOptions::set_notice_font_color()
+{
+    // get value
+    Config *pConfig0 = new Config();
+    QString strNoticeFontColor = pConfig0->get_value("font_color_level_6");
+    delete pConfig0;
+
+    // color dialog
+    QColor cColor = QColorDialog::getColor(QColor(strNoticeFontColor), this);
+
+    if (cColor.isValid() == true)
+    {
+        QString strColor = cColor.name();
+
+        // save to pushbutton
+        QPixmap bcolor(50,15);
+        bcolor.fill(QColor(cColor));
+        ui.pushButton_notice_font_color->setIcon(QIcon(bcolor));
+
+        // save
+        Config *pConfig1 = new Config();
+        pConfig1->set_value("font_color_level_6", strColor);
+        settings->setValue("font_color_level_6", strColor);
+        delete pConfig1;
+    }
+}
+
+void DlgOptions::set_info_font_color()
+{
+    // get value
+    Config *pConfig0 = new Config();
+    QString strInfoFontColor = pConfig0->get_value("font_color_level_7");
+    delete pConfig0;
+
+    // color dialog
+    QColor cColor = QColorDialog::getColor(QColor(strInfoFontColor), this);
+
+    if (cColor.isValid() == true)
+    {
+        QString strColor = cColor.name();
+
+        // save to pushbutton
+        QPixmap bcolor(50,15);
+        bcolor.fill(QColor(cColor));
+        ui.pushButton_info_font_color->setIcon(QIcon(bcolor));
+
+        // save
+        Config *pConfig1 = new Config();
+        pConfig1->set_value("font_color_level_7", strColor);
+        settings->setValue("font_color_level_7", strColor);
+        delete pConfig1;
+    }
+}
+
+void DlgOptions::set_error_font_color()
+{
+    // get value
+    Config *pConfig0 = new Config();
+    QString strErrorFontColor = pConfig0->get_value("font_color_level_9");
+    delete pConfig0;
+
+    // color dialog
+    QColor cColor = QColorDialog::getColor(QColor(strErrorFontColor), this);
+
+    if (cColor.isValid() == true)
+    {
+        QString strColor = cColor.name();
+
+        // save to pushbutton
+        QPixmap bcolor(50,15);
+        bcolor.fill(QColor(cColor));
+        ui.pushButton_error_font_color->setIcon(QIcon(bcolor));
+
+        // save
+        Config *pConfig1 = new Config();
+        pConfig1->set_value("font_color_level_9", strColor);
+        settings->setValue("font_color_level_9", strColor);
+        delete pConfig1;
+    }
+}
+
+void DlgOptions::set_channel_font_color()
+{
+    // get value
+    Config *pConfig0 = new Config();
+    QString strChannelFontColor = pConfig0->get_value("channel_font_color");
+    delete pConfig0;
+
+    // color dialog
+    QColor cColor = QColorDialog::getColor(QColor(strChannelFontColor), this);
+
+    if (cColor.isValid() == true)
+    {
+        QString strColor = cColor.name();
+
+        // save to pushbutton
+        QPixmap bcolor(50,15);
+        bcolor.fill(QColor(cColor));
+        ui.pushButton_channel_font_color->setIcon(QIcon(bcolor));
+
+        // save
+        Config *pConfig1 = new Config();
+        pConfig1->set_value("channel_font_color", strColor);
+        settings->setValue("channel_font_color", strColor);
+        delete pConfig1;
+    }
+}
+
 void DlgOptions::button_cancel()
 {
     this->hide();
@@ -556,6 +847,16 @@ void DlgOptions::showEvent(QShowEvent *event)
     QString strMyItalic = pConfig->get_value("my_italic");
     QString strMyFont = pConfig->get_value("my_font");
     QString strMyColor = pConfig->get_value("my_color");
+    QString strDefaultFontColor = pConfig->get_value("default_font_color");
+    QString strJoinFontColor = pConfig->get_value("font_color_level_1");
+    QString strPartFontColor = pConfig->get_value("font_color_level_2");
+    QString strQuitFontColor = pConfig->get_value("font_color_level_3");
+    QString strKickFontColor = pConfig->get_value("font_color_level_4");
+    QString strModeFontColor = pConfig->get_value("font_color_level_5");
+    QString strNoticeFontColor = pConfig->get_value("font_color_level_6");
+    QString strInfoFontColor = pConfig->get_value("font_color_level_7");
+    QString strErrorFontColor = pConfig->get_value("font_color_level_9");
+    QString strChannelFontColor = pConfig->get_value("channel_font_color");
     delete pConfig;
 
 // decrypt pass
@@ -651,11 +952,6 @@ void DlgOptions::showEvent(QShowEvent *event)
     else
         ui.checkBox_disable_sounds->setChecked(false);
 
-// set background color
-    QPixmap bcolor(50,15);
-    bcolor.fill(QColor(strBackgroundColor));
-    ui.pushButton_background_color->setIcon(QIcon(bcolor));
-
 // set my bold
     if (strMyBold == "on")
         ui.comboBox_my_bold->setCurrentIndex(1);
@@ -697,6 +993,61 @@ void DlgOptions::showEvent(QShowEvent *event)
         iMyColor = 0;
 
     ui.comboBox_my_color->setCurrentIndex(iMyColor);
+
+// set background color
+    QPixmap bcolor(50,15);
+    bcolor.fill(QColor(strBackgroundColor));
+    ui.pushButton_background_color->setIcon(QIcon(bcolor));
+
+// set default font color
+    QPixmap dfcolor(50,15);
+    dfcolor.fill(QColor(strDefaultFontColor));
+    ui.pushButton_default_font_color->setIcon(QIcon(dfcolor));
+
+// set join font color
+    QPixmap jfcolor(50,15);
+    jfcolor.fill(QColor(strJoinFontColor));
+    ui.pushButton_join_font_color->setIcon(QIcon(jfcolor));
+
+// set part font color
+    QPixmap pfcolor(50,15);
+    pfcolor.fill(QColor(strPartFontColor));
+    ui.pushButton_part_font_color->setIcon(QIcon(pfcolor));
+
+// set quit font color
+    QPixmap qfcolor(50,15);
+    qfcolor.fill(QColor(strQuitFontColor));
+    ui.pushButton_quit_font_color->setIcon(QIcon(qfcolor));
+
+// set kick font color
+    QPixmap kfcolor(50,15);
+    kfcolor.fill(QColor(strKickFontColor));
+    ui.pushButton_kick_font_color->setIcon(QIcon(kfcolor));
+
+// set mode font color
+    QPixmap mfcolor(50,15);
+    mfcolor.fill(QColor(strModeFontColor));
+    ui.pushButton_mode_font_color->setIcon(QIcon(mfcolor));
+
+// set notice font color
+    QPixmap nfcolor(50,15);
+    nfcolor.fill(QColor(strNoticeFontColor));
+    ui.pushButton_notice_font_color->setIcon(QIcon(nfcolor));
+
+// set info font color
+    QPixmap ifcolor(50,15);
+    ifcolor.fill(QColor(strInfoFontColor));
+    ui.pushButton_info_font_color->setIcon(QIcon(ifcolor));
+
+// set error font color
+    QPixmap efcolor(50,15);
+    efcolor.fill(QColor(strErrorFontColor));
+    ui.pushButton_error_font_color->setIcon(QIcon(efcolor));
+
+// set error font color
+    QPixmap cfcolor(50,15);
+    cfcolor.fill(QColor(strChannelFontColor));
+    ui.pushButton_channel_font_color->setIcon(QIcon(cfcolor));
 }
 
 void DlgOptions::closeEvent(QCloseEvent *event)

@@ -1041,6 +1041,50 @@
         <source>Background color:</source>
         <translation>Kolor tła:</translation>
     </message>
+    <message>
+        <source>Default font color:</source>
+        <translation>Domyślny kolor czcionki:</translation>
+    </message>
+    <message>
+        <source>Join color:</source>
+        <translation>Kolor Join:</translation>
+    </message>
+    <message>
+        <source>Part color:</source>
+        <translation>Kolor Part:</translation>
+    </message>
+    <message>
+        <source>Quit color:</source>
+        <translation>Kolor Quit:</translation>
+    </message>
+    <message>
+        <source>Kick color:</source>
+        <translation>Kolor Kick:</translation>
+    </message>
+    <message>
+        <source>Mode color:</source>
+        <translation>Kolor Mode:</translation>
+    </message>
+    <message>
+        <source>Notice color:</source>
+        <translation>Kolor Notice:</translation>
+    </message>
+    <message>
+        <source>Info color:</source>
+        <translation>Kolor Info:</translation>
+    </message>
+    <message>
+        <source>Error color:</source>
+        <translation>Kolor błędów:</translation>
+    </message>
+    <message>
+        <source>Channel color:</source>
+        <translation>Kolor kanałów:</translation>
+    </message>
+    <message>
+        <source>Nicklist</source>
+        <translation>Lista nicków</translation>
+    </message>
 </context>
 <context>
     <name>DlgPrivilege</name>
