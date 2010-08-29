@@ -20,13 +20,15 @@
 
 #include "config.h"
 
-Config::Config()
+Config::Config(bool bCreate)
 {
+    bCreateConfig = bCreate;
+
     QString path = QCoreApplication::applicationDirPath();
     strConfigFile = path+"/scc.conf";
     file = new QFile(strConfigFile);
 
-    if (file->exists() == false)
+    if ((file->exists() == false) && (bCreateConfig == true))
         create_new_config();
 
     if (file->exists() == true)
@@ -49,9 +51,10 @@ Config::Config()
     else
     {
 #ifdef Q_WS_X11
+        if (bCreateConfig == true)
             qDebug() << tr("Error: config: Cannot open config file!");
 #endif
-            return;
+        return;
     }
 }
 
@@ -66,7 +69,8 @@ QString Config::get_value(QString strKey)
     if ((doc.isNull() == true) || (file->isOpen() == false))
     {
 #ifdef Q_WS_X11
-        qDebug() << tr("Error: config: Cannot get value: ") << strKey;
+        if (bCreateConfig == true)
+            qDebug() << tr("Error: config: Cannot get value: ") << strKey;
 #endif
         return QString::null;
     }
@@ -84,6 +88,10 @@ QString Config::get_value(QString strKey)
         }
         n = n.nextSibling();
     }
+
+    // not create config
+    if (bCreateConfig == false)
+        return QString::null;
 
     // not exist value - save default, return default
 

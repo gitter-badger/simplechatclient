@@ -33,13 +33,14 @@ class Config : public QObject
 {
     Q_OBJECT
 public:
-    Config();
+    Config(bool bCreate = true);
     ~Config();
 
     QString get_value(QString);
     void set_value(QString, QString);
 
 private:
+    bool bCreateConfig;
     QString strConfigFile;
     QFile *file;
     QDomDocument doc;

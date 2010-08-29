@@ -213,7 +213,7 @@ int main(int argc, char *argv[])
     QCoreApplication::setApplicationName("scc");
 
     // get translate
-    Config *pConfig = new Config();
+    Config *pConfig = new Config(false);
     QString strLanguage = pConfig->get_value("language");
     delete pConfig;
 
