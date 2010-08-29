@@ -111,6 +111,7 @@ private:
     QList <QString> lCloseChannelsList;
 
 private slots:
+    void check_update();
     void refresh_background_color();
     void force_close_tab();
     void button_close();

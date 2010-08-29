@@ -83,7 +83,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
 // settings
     settings.clear();
-    settings.setValue("version", "1.0.7.451");
+    settings.setValue("version", "1.0.7.452");
     settings.setValue("debug", "off");
     settings.setValue("logged", "off");
     settings.setValue("busy", "off");
@@ -144,13 +144,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     pTabC->show_msg("Status", "%Fbi:courier%%C8800ab%"+tr("Bug reporting")+"%C000000%: http://sourceforge.net/apps/trac/simplechatclien/newticket %Ipanda%", 0);
 
 // update
-    uThreadList.append(new UpdateThread(this, &settings, pTabC));
-    QObject::connect(uThreadList.at(uThreadList.size()-1), SIGNAL(do_remove_uthread(UpdateThread*)), this, SLOT(remove_uthread(UpdateThread*)));
-
-#ifdef Q_WS_X11
-    //if (settings.value("debug").toString() == "on")
-        qDebug() << "Update thread +1 (size: " << uThreadList.size() << ")";
-#endif
+    QTimer::singleShot(1000*5, this, SLOT(check_update()));
 
 // main menu
     fileMenu = menuBar()->addMenu(tr("&File"));
@@ -306,6 +300,18 @@ void MainWindow::set_debug(bool param1)
 void MainWindow::set_statusbar(QString strValue)
 {
     lLag->setText(strValue);
+}
+
+void MainWindow::check_update()
+{
+// update
+    uThreadList.append(new UpdateThread(this, &settings, pTabC));
+    QObject::connect(uThreadList.at(uThreadList.size()-1), SIGNAL(do_remove_uthread(UpdateThread*)), this, SLOT(remove_uthread(UpdateThread*)));
+
+#ifdef Q_WS_X11
+    //if (settings.value("debug").toString() == "on")
+        qDebug() << "Update thread +1 (size: " << uThreadList.size() << ")";
+#endif
 }
 
 void MainWindow::refresh_background_color()
