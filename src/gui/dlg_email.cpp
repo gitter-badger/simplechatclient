@@ -69,6 +69,9 @@ void DlgEmail::set_cookies()
 
 void DlgEmail::get_img()
 {
+    // disable button
+    ui.pushButton_refresh->setEnabled(false);
+
     QEventLoop eventLoop;
 
     bool bHost = true;
@@ -92,6 +95,9 @@ void DlgEmail::get_img()
     }
     else
         ui.label_img->setText(tr("Unable to download image"));
+
+    // enable button
+    ui.pushButton_refresh->setEnabled(true);
 }
 
 void DlgEmail::set_email()

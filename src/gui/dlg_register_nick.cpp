@@ -74,6 +74,9 @@ void DlgRegisterNick::get_cookies()
 
 void DlgRegisterNick::get_img()
 {
+    // disable button
+    ui.pushButton_refresh->setEnabled(false);
+
     QEventLoop eventLoop;
 
     bool bHost = true;
@@ -98,6 +101,9 @@ void DlgRegisterNick::get_img()
     }
     else
         ui.label_img->setText(tr("Unable to download image"));
+
+    // enable button
+    ui.pushButton_refresh->setEnabled(true);
 }
 
 void DlgRegisterNick::register_nick()
