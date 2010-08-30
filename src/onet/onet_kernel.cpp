@@ -492,9 +492,13 @@ void OnetKernel::raw_join()
     if (strChannel[0] == ':')
         strChannel = strChannel.right(strChannel.length()-1);
 
-    QString strSuffix = strDataList[3];
-    if (strSuffix[0] == ':')
-        strSuffix = strSuffix.right(strSuffix.length()-1);
+    QString strSuffix;
+    if (strDataList.value(3).isEmpty() == false)
+    {
+        strSuffix= strDataList[3];
+        if (strSuffix[0] == ':')
+            strSuffix = strSuffix.right(strSuffix.length()-1);
+    }
 
     QString strDisplay;
     if (settings->value("show_zuo").toString() == "on")

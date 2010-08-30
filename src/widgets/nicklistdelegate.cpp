@@ -34,26 +34,30 @@ void NicklistDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opti
     QRect r = option.rect;
 
     // #C4C4C4
-    QPen linePen(QColor::fromRgb(211,211,211), 1, Qt::SolidLine);
+    QPen linePen(QColor("#C4C4C4"), 1, Qt::SolidLine);
 
     // #005A83
-    QPen lineMarkedPen(QColor::fromRgb(0,90,131), 1, Qt::SolidLine);
+    QPen lineMarkedPen(QColor("#005A83"), 1, Qt::SolidLine);
 
     // #333333
-    QPen fontPen(QColor::fromRgb(51,51,51), 1, Qt::SolidLine);
+    QPen fontPen(QColor("#333333"), 1, Qt::SolidLine);
 
     // #ffffff
-    QPen fontMarkedPen(Qt::white, 1, Qt::SolidLine);
+    QPen fontMarkedPen(QColor("#ffffff"), 1, Qt::SolidLine);
 
-    // gray
-    QPen grayPen(Qt::gray, 1, Qt::SolidLine);
+    // #a0a0a4
+    QPen grayPen(QColor("#a0a0a4"), 1, Qt::SolidLine);
 
-    if(option.state & QStyle::State_Selected)
+    QColor cGradient1 = QColor("#77D5F7");
+    QColor cGradient2 = QColor("#1B86B7");
+    QColor cGradient3 = QColor("#0078AE");
+
+    if (option.state & QStyle::State_Selected)
     {
         QLinearGradient gradientSelected(r.left(),r.top(),r.left(),r.height()+r.top());
-        gradientSelected.setColorAt(0.0, QColor::fromRgb(119,213,247));
-        gradientSelected.setColorAt(0.9, QColor::fromRgb(27,134,183));
-        gradientSelected.setColorAt(1.0, QColor::fromRgb(0,120,174));
+        gradientSelected.setColorAt(0.0, cGradient1);
+        gradientSelected.setColorAt(0.9, cGradient2);
+        gradientSelected.setColorAt(1.0, cGradient3);
         painter->setBrush(gradientSelected);
         painter->drawRect(r);
 
@@ -98,6 +102,7 @@ void NicklistDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opti
     //QString description = index.data(Qt::UserRole+3).toString();
     bool bCam = index.data(Qt::UserRole+10).toBool();
     bool bBusy = index.data(Qt::UserRole+11).toBool();
+    Q_UNUSED (bCam);
 
     Config *pConfig = new Config();
     QString strDisableAvatars = pConfig->get_value("disable_avatars");
