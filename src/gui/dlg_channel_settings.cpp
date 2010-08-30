@@ -522,6 +522,8 @@ void DlgChannelSettings::clear()
     ui.label_owner_nick->clear();
     ui.label_datetime->clear();
     ui.spinBox_limit->setValue(0);
+    ui.comboBox_category->setCurrentIndex(-1);
+    ui.comboBox_guardian_level->setCurrentIndex(-1);
     ui.radioButton_status_pub->setChecked(false);
     ui.radioButton_status_priv->setChecked(false);
     ui.radioButton_guardian_off->setChecked(false);
