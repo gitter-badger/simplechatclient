@@ -77,6 +77,15 @@ private slots:
     void set_info_font_color();
     void set_error_font_color();
     void set_channel_font_color();
+    void set_nicklist_background_color();
+    void set_nicklist_line_color();
+    void set_nicklist_selected_line_color();
+    void set_nicklist_nick_color();
+    void set_nicklist_selected_nick_color();
+    void set_nicklist_busy_nick_color();
+    void set_nicklist_gradient_1_color();
+    void set_nicklist_gradient_2_color();
+    void set_nicklist_gradient_3_color();
     void button_ok();
     void button_cancel();
 

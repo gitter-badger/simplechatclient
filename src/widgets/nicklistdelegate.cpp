@@ -33,24 +33,36 @@ void NicklistDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opti
 {
     QRect r = option.rect;
 
-    // #C4C4C4
-    QPen linePen(QColor("#C4C4C4"), 1, Qt::SolidLine);
+    Config *pConfigInit = new Config();
+    QString strNicklistBackgroundColor = pConfigInit->get_value("nicklist_background_color");
+    QString strNicklistLineColor = pConfigInit->get_value("nicklist_line_color");
+    QString strNicklistSelectedLineColor = pConfigInit->get_value("nicklist_selected_line_color");
+    QString strNicklistNickColor = pConfigInit->get_value("nicklist_nick_color");
+    QString strNicklistSelectedNickColor = pConfigInit->get_value("nicklist_selected_nick_color");
+    QString strNicklistBusyNickColor = pConfigInit->get_value("nicklist_busy_nick_color");
+    QString strNicklistGradient1Color = pConfigInit->get_value("nicklist_gradient_1_color");
+    QString strNicklistGradient2Color = pConfigInit->get_value("nicklist_gradient_2_color");
+    QString strNicklistGradient3Color = pConfigInit->get_value("nicklist_gradient_3_color");
+    delete pConfigInit;
 
-    // #005A83
-    QPen lineMarkedPen(QColor("#005A83"), 1, Qt::SolidLine);
+    // default #c4c4c4
+    QPen linePen(QColor(strNicklistLineColor), 1, Qt::SolidLine);
 
-    // #333333
-    QPen fontPen(QColor("#333333"), 1, Qt::SolidLine);
+    // default #005a83
+    QPen selectedLinePen(QColor(strNicklistSelectedLineColor), 1, Qt::SolidLine);
 
-    // #ffffff
-    QPen fontMarkedPen(QColor("#ffffff"), 1, Qt::SolidLine);
+    // default #333333
+    QPen fontPen(QColor(strNicklistNickColor), 1, Qt::SolidLine);
 
-    // #a0a0a4
-    QPen grayPen(QColor("#a0a0a4"), 1, Qt::SolidLine);
+    // default #ffffff
+    QPen selectedFontPen(QColor(strNicklistSelectedNickColor), 1, Qt::SolidLine);
 
-    QColor cGradient1 = QColor("#77D5F7");
-    QColor cGradient2 = QColor("#1B86B7");
-    QColor cGradient3 = QColor("#0078AE");
+    // default #a0a0a4
+    QPen busyPen(QColor(strNicklistBusyNickColor), 1, Qt::SolidLine);
+
+    QColor cGradient1 = QColor(strNicklistGradient1Color);
+    QColor cGradient2 = QColor(strNicklistGradient2Color);
+    QColor cGradient3 = QColor(strNicklistGradient3Color);
 
     if (option.state & QStyle::State_Selected)
     {
@@ -62,24 +74,19 @@ void NicklistDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opti
         painter->drawRect(r);
 
         // border
-        painter->setPen(lineMarkedPen);
+        painter->setPen(selectedLinePen);
         painter->drawLine(r.topLeft(),r.topRight());
         painter->drawLine(r.topRight(),r.bottomRight());
         painter->drawLine(r.bottomLeft(),r.bottomRight());
         painter->drawLine(r.topLeft(),r.bottomLeft());
 
-        painter->setPen(fontMarkedPen);
+        painter->setPen(selectedFontPen);
     }
     else
     {
         // background
-
-        Config *pConfig = new Config();
-        QString strBackgroundColor = pConfig->get_value("background_color");
-        delete pConfig;
-
-        if (QColor(strBackgroundColor) != Qt::white)
-            painter->setBrush(QColor(strBackgroundColor));
+        if (QColor(strNicklistBackgroundColor) != Qt::white)
+            painter->setBrush(QColor(strNicklistBackgroundColor));
         else
             painter->setBrush((index.row() % 2) ? Qt::white : QColor(252,252,252));
         painter->drawRect(r);
@@ -166,14 +173,14 @@ void NicklistDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opti
     if (strStyle == "modern")
     {
         r = option.rect.adjusted(imageSpace, -8, -10, -8);
-        if ((bBusy == true) && (!(option.state & QStyle::State_Selected))) painter->setPen(grayPen); // gray
+        if ((bBusy == true) && (!(option.state & QStyle::State_Selected))) painter->setPen(busyPen); // gray
         painter->setFont(QFont("Verdana", 9, bBusy == true ? QFont::Light : QFont::Normal, bBusy));
         painter->drawText(r.left(), r.top(), r.width(), r.height(), Qt::AlignBottom|Qt::AlignLeft, nick, &r);
     }
     else if (strStyle == "classic")
     {
         r = option.rect.adjusted(imageSpace, -4, 0, -4);
-        if ((bBusy == true) && (!(option.state & QStyle::State_Selected))) painter->setPen(grayPen); // gray
+        if ((bBusy == true) && (!(option.state & QStyle::State_Selected))) painter->setPen(busyPen); // gray
         painter->setFont(QFont("Verdana", 9, bBusy == true ? QFont::Light : QFont::Normal, bBusy));
         painter->drawText(r.left(), r.top(), r.width(), r.height(), Qt::AlignBottom|Qt::AlignLeft, nick, &r);
     }

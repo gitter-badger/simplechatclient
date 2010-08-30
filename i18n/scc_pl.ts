@@ -1085,6 +1085,38 @@
         <source>Nicklist</source>
         <translation>Lista nicków</translation>
     </message>
+    <message>
+        <source>Line color:</source>
+        <translation>Kolor lini:</translation>
+    </message>
+    <message>
+        <source>Selected line color:</source>
+        <translation>Kolor zaznaczonej lini:</translation>
+    </message>
+    <message>
+        <source>Nick color:</source>
+        <translation>Kolor nicka:</translation>
+    </message>
+    <message>
+        <source>Selected nick color:</source>
+        <translation>Kolor zaznaczonego nicka:</translation>
+    </message>
+    <message>
+        <source>Busy nick color:</source>
+        <translation>Kolor zajętego nicka:</translation>
+    </message>
+    <message>
+        <source>Gradient 1:</source>
+        <translation>Gradient 1:</translation>
+    </message>
+    <message>
+        <source>Gradient 2:</source>
+        <translation>Gradient 2:</translation>
+    </message>
+    <message>
+        <source>Gradient 3:</source>
+        <translation>Gradient 3:</translation>
+    </message>
 </context>
 <context>
     <name>DlgPrivilege</name>

@@ -230,6 +230,51 @@ QString Config::get_value(QString strKey)
         set_value("channel_font_color", "#0000ff");
         return "#0000ff";
     }
+    else if (strKey == "nicklist_background_color")
+    {
+        set_value("nicklist_background_color", "#ffffff");
+        return "#ffffff";
+    }
+    else if (strKey == "nicklist_line_color")
+    {
+        set_value("nicklist_line_color", "#c4c4c4");
+        return "#c4c4c4";
+    }
+    else if (strKey == "nicklist_selected_line_color")
+    {
+        set_value("nicklist_selected_line_color", "#005a83");
+        return "#005a83";
+    }
+    else if (strKey == "nicklist_nick_color")
+    {
+        set_value("nicklist_nick_color", "#333333");
+        return "#333333";
+    }
+    else if (strKey == "nicklist_selected_nick_color")
+    {
+        set_value("nicklist_selected_nick_color", "#ffffff");
+        return "#ffffff";
+    }
+    else if (strKey == "nicklist_busy_nick_color")
+    {
+        set_value("nicklist_busy_nick_color", "#a0a0a4");
+        return "#a0a0a4";
+    }
+    else if (strKey == "nicklist_gradient_1_color")
+    {
+        set_value("nicklist_gradient_1_color", "#77d5f7");
+        return "#77d5f7";
+    }
+    else if (strKey == "nicklist_gradient_2_color")
+    {
+        set_value("nicklist_gradient_2_color", "#1b86b7");
+        return "#1b86b7";
+    }
+    else if (strKey == "nicklist_gradient_3_color")
+    {
+        set_value("nicklist_gradient_3_color", "#0078ae");
+        return "#0078ae";
+    }
 
     return QString::null;
 }
@@ -302,6 +347,15 @@ void Config::create_new_config()
     add_config_value(&doc, &root, "font_color_level_7", "#666666");
     add_config_value(&doc, &root, "font_color_level_9", "#ff0000");
     add_config_value(&doc, &root, "channel_font_color", "#0000ff");
+    add_config_value(&doc, &root, "nicklist_background_color", "#ffffff");
+    add_config_value(&doc, &root, "nicklist_line_color", "#c4c4c4");
+    add_config_value(&doc, &root, "nicklist_selected_line_color", "#005a83");
+    add_config_value(&doc, &root, "nicklist_nick_color", "#333333");
+    add_config_value(&doc, &root, "nicklist_selected_nick_color", "#ffffff");
+    add_config_value(&doc, &root, "nicklist_busy_nick_color", "#a0a0a4");
+    add_config_value(&doc, &root, "nicklist_gradient_1_color", "#77d5f7");
+    add_config_value(&doc, &root, "nicklist_gradient_2_color", "#1b86b7");
+    add_config_value(&doc, &root, "nicklist_gradient_3_color", "#0078ae");
 
     save();
 }

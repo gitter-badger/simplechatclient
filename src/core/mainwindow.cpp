@@ -89,11 +89,20 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     QString strInfoFontColor = pConfig->get_value("font_color_level_7");
     QString strErrorFontColor = pConfig->get_value("font_color_level_9");
     QString strChannelFontColor = pConfig->get_value("channel_font_color");
+    QString strNicklistBackgroundColor = pConfig->get_value("nicklist_background_color");
+    QString strNicklistLineColor = pConfig->get_value("nicklist_line_color");
+    QString strNicklistSelectedLineColor = pConfig->get_value("nicklist_selected_line_color");
+    QString strNicklistNickColor = pConfig->get_value("nicklist_nick_color");
+    QString strNicklistSelectedNickColor = pConfig->get_value("nicklist_selected_nick_color");
+    QString strNicklistBusyNickColor = pConfig->get_value("nicklist_busy_nick_color");
+    QString strNicklistGradient1Color = pConfig->get_value("nicklist_gradient_1_color");
+    QString strNicklistGradient2Color = pConfig->get_value("nicklist_gradient_2_color");
+    QString strNicklistGradient3Color = pConfig->get_value("nicklist_gradient_3_color");
     delete pConfig;
 
 // settings
     settings.clear();
-    settings.setValue("version", "1.0.7.456");
+    settings.setValue("version", "1.0.7.457");
     settings.setValue("debug", "off");
     settings.setValue("logged", "off");
     settings.setValue("busy", "off");
@@ -125,6 +134,15 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     settings.setValue("font_color_level_7", strInfoFontColor);
     settings.setValue("font_color_level_9", strErrorFontColor);
     settings.setValue("channel_font_color", strChannelFontColor);
+    settings.setValue("nicklist_background_color", strNicklistBackgroundColor);
+    settings.setValue("nicklist_line_color", strNicklistLineColor);
+    settings.setValue("nicklist_selected_line_color", strNicklistSelectedLineColor);
+    settings.setValue("nicklist_nick_color", strNicklistNickColor);
+    settings.setValue("nicklist_selected_nick_color", strNicklistSelectedNickColor);
+    settings.setValue("nicklist_busy_nick_color", strNicklistBusyNickColor);
+    settings.setValue("nicklist_gradient_1_color", strNicklistGradient1Color);
+    settings.setValue("nicklist_gradient_2_color", strNicklistGradient2Color);
+    settings.setValue("nicklist_gradient_3_color", strNicklistGradient3Color);
     settings.setValue("uokey", "");
     settings.setValue("uo_nick", "");
     settings.setValue("onet_ubi", "");

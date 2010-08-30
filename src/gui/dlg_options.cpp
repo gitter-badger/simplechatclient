@@ -68,6 +68,7 @@ DlgOptions::DlgOptions(QWidget *parent, QSettings *param1) : QDialog(parent)
 
     ui.toolBox->setItemText(0,tr("Main window"));
     ui.toolBox->setItemText(1,tr("Nicklist"));
+
     ui.label_background_color->setText(tr("Background color:"));
     ui.label_default_font_color->setText(tr("Default font color:"));
     ui.label_join_font_color->setText(tr("Join color:"));
@@ -79,6 +80,16 @@ DlgOptions::DlgOptions(QWidget *parent, QSettings *param1) : QDialog(parent)
     ui.label_info_font_color->setText(tr("Info color:"));
     ui.label_error_font_color->setText(tr("Error color:"));
     ui.label_channel_font_color->setText(tr("Channel color:"));
+
+    ui.label_nicklist_background_color->setText(tr("Background color:"));
+    ui.label_nicklist_line_color->setText(tr("Line color:"));
+    ui.label_nicklist_selected_line_color->setText(tr("Selected line color:"));
+    ui.label_nicklist_nick_color->setText(tr("Nick color:"));
+    ui.label_nicklist_selected_nick_color->setText(tr("Selected nick color:"));
+    ui.label_nicklist_busy_nick_color->setText(tr("Busy nick color:"));
+    ui.label_nicklist_gradient_1_color->setText(tr("Gradient 1:"));
+    ui.label_nicklist_gradient_2_color->setText(tr("Gradient 2:"));
+    ui.label_nicklist_gradient_3_color->setText(tr("Gradient 3:"));
 
 // options list
     QListWidgetItem *basicConfButton = new QListWidgetItem(ui.listWidget_options);
@@ -152,6 +163,15 @@ DlgOptions::DlgOptions(QWidget *parent, QSettings *param1) : QDialog(parent)
     QObject::connect(ui.pushButton_info_font_color, SIGNAL(clicked()), this, SLOT(set_info_font_color()));
     QObject::connect(ui.pushButton_error_font_color, SIGNAL(clicked()), this, SLOT(set_error_font_color()));
     QObject::connect(ui.pushButton_channel_font_color, SIGNAL(clicked()), this, SLOT(set_channel_font_color()));
+    QObject::connect(ui.pushButton_nicklist_background_color, SIGNAL(clicked()), this, SLOT(set_nicklist_background_color()));
+    QObject::connect(ui.pushButton_nicklist_line_color, SIGNAL(clicked()), this, SLOT(set_nicklist_line_color()));
+    QObject::connect(ui.pushButton_nicklist_selected_line_color, SIGNAL(clicked()), this, SLOT(set_nicklist_selected_line_color()));
+    QObject::connect(ui.pushButton_nicklist_nick_color, SIGNAL(clicked()), this, SLOT(set_nicklist_nick_color()));
+    QObject::connect(ui.pushButton_nicklist_selected_nick_color, SIGNAL(clicked()), this, SLOT(set_nicklist_selected_nick_color()));
+    QObject::connect(ui.pushButton_nicklist_busy_nick_color, SIGNAL(clicked()), this, SLOT(set_nicklist_busy_nick_color()));
+    QObject::connect(ui.pushButton_nicklist_gradient_1_color, SIGNAL(clicked()), this, SLOT(set_nicklist_gradient_1_color()));
+    QObject::connect(ui.pushButton_nicklist_gradient_2_color, SIGNAL(clicked()), this, SLOT(set_nicklist_gradient_2_color()));
+    QObject::connect(ui.pushButton_nicklist_gradient_3_color, SIGNAL(clicked()), this, SLOT(set_nicklist_gradient_3_color()));
     QObject::connect(ui.buttonBox, SIGNAL(accepted()), this, SLOT(button_ok()));
     QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(button_cancel()));
 }
@@ -476,20 +496,20 @@ void DlgOptions::set_background_color()
 {
     // get value
     Config *pConfig0 = new Config();
-    QString strBackgroundColor = pConfig0->get_value("background_color");
+    QString strDefaultColor = pConfig0->get_value("background_color");
     delete pConfig0;
 
     // color dialog
-    QColor cColor = QColorDialog::getColor(QColor(strBackgroundColor), this);
+    QColor cColor = QColorDialog::getColor(QColor(strDefaultColor), this);
 
     if (cColor.isValid() == true)
     {
         QString strColor = cColor.name();
 
         // save to pushbutton
-        QPixmap bcolor(50,15);
-        bcolor.fill(QColor(cColor));
-        ui.pushButton_background_color->setIcon(QIcon(bcolor));
+        QPixmap color(50,15);
+        color.fill(QColor(cColor));
+        ui.pushButton_background_color->setIcon(QIcon(color));
 
         // save
         Config *pConfig1 = new Config();
@@ -506,20 +526,20 @@ void DlgOptions::set_default_font_color()
 {
     // get value
     Config *pConfig0 = new Config();
-    QString strDefaultFontColor = pConfig0->get_value("default_font_color");
+    QString strDefaultColor = pConfig0->get_value("default_font_color");
     delete pConfig0;
 
     // color dialog
-    QColor cColor = QColorDialog::getColor(QColor(strDefaultFontColor), this);
+    QColor cColor = QColorDialog::getColor(QColor(strDefaultColor), this);
 
     if (cColor.isValid() == true)
     {
         QString strColor = cColor.name();
 
         // save to pushbutton
-        QPixmap bcolor(50,15);
-        bcolor.fill(QColor(cColor));
-        ui.pushButton_default_font_color->setIcon(QIcon(bcolor));
+        QPixmap color(50,15);
+        color.fill(QColor(cColor));
+        ui.pushButton_default_font_color->setIcon(QIcon(color));
 
         // save
         Config *pConfig1 = new Config();
@@ -533,20 +553,20 @@ void DlgOptions::set_join_font_color()
 {
     // get value
     Config *pConfig0 = new Config();
-    QString strJoinFontColor = pConfig0->get_value("font_color_level_1");
+    QString strDefaultColor = pConfig0->get_value("font_color_level_1");
     delete pConfig0;
 
     // color dialog
-    QColor cColor = QColorDialog::getColor(QColor(strJoinFontColor), this);
+    QColor cColor = QColorDialog::getColor(QColor(strDefaultColor), this);
 
     if (cColor.isValid() == true)
     {
         QString strColor = cColor.name();
 
         // save to pushbutton
-        QPixmap bcolor(50,15);
-        bcolor.fill(QColor(cColor));
-        ui.pushButton_join_font_color->setIcon(QIcon(bcolor));
+        QPixmap color(50,15);
+        color.fill(QColor(cColor));
+        ui.pushButton_join_font_color->setIcon(QIcon(color));
 
         // save
         Config *pConfig1 = new Config();
@@ -560,20 +580,20 @@ void DlgOptions::set_part_font_color()
 {
     // get value
     Config *pConfig0 = new Config();
-    QString strPartFontColor = pConfig0->get_value("font_color_level_2");
+    QString strDefaultColor = pConfig0->get_value("font_color_level_2");
     delete pConfig0;
 
     // color dialog
-    QColor cColor = QColorDialog::getColor(QColor(strPartFontColor), this);
+    QColor cColor = QColorDialog::getColor(QColor(strDefaultColor), this);
 
     if (cColor.isValid() == true)
     {
         QString strColor = cColor.name();
 
         // save to pushbutton
-        QPixmap bcolor(50,15);
-        bcolor.fill(QColor(cColor));
-        ui.pushButton_part_font_color->setIcon(QIcon(bcolor));
+        QPixmap color(50,15);
+        color.fill(QColor(cColor));
+        ui.pushButton_part_font_color->setIcon(QIcon(color));
 
         // save
         Config *pConfig1 = new Config();
@@ -587,20 +607,20 @@ void DlgOptions::set_quit_font_color()
 {
     // get value
     Config *pConfig0 = new Config();
-    QString strQuitFontColor = pConfig0->get_value("font_color_level_3");
+    QString strDefaultColor = pConfig0->get_value("font_color_level_3");
     delete pConfig0;
 
     // color dialog
-    QColor cColor = QColorDialog::getColor(QColor(strQuitFontColor), this);
+    QColor cColor = QColorDialog::getColor(QColor(strDefaultColor), this);
 
     if (cColor.isValid() == true)
     {
         QString strColor = cColor.name();
 
         // save to pushbutton
-        QPixmap bcolor(50,15);
-        bcolor.fill(QColor(cColor));
-        ui.pushButton_quit_font_color->setIcon(QIcon(bcolor));
+        QPixmap color(50,15);
+        color.fill(QColor(cColor));
+        ui.pushButton_quit_font_color->setIcon(QIcon(color));
 
         // save
         Config *pConfig1 = new Config();
@@ -614,20 +634,20 @@ void DlgOptions::set_kick_font_color()
 {
     // get value
     Config *pConfig0 = new Config();
-    QString strKickFontColor = pConfig0->get_value("font_color_level_4");
+    QString strDefaultColor = pConfig0->get_value("font_color_level_4");
     delete pConfig0;
 
     // color dialog
-    QColor cColor = QColorDialog::getColor(QColor(strKickFontColor), this);
+    QColor cColor = QColorDialog::getColor(QColor(strDefaultColor), this);
 
     if (cColor.isValid() == true)
     {
         QString strColor = cColor.name();
 
         // save to pushbutton
-        QPixmap bcolor(50,15);
-        bcolor.fill(QColor(cColor));
-        ui.pushButton_kick_font_color->setIcon(QIcon(bcolor));
+        QPixmap color(50,15);
+        color.fill(QColor(cColor));
+        ui.pushButton_kick_font_color->setIcon(QIcon(color));
 
         // save
         Config *pConfig1 = new Config();
@@ -641,20 +661,20 @@ void DlgOptions::set_mode_font_color()
 {
     // get value
     Config *pConfig0 = new Config();
-    QString strModeFontColor = pConfig0->get_value("font_color_level_5");
+    QString strDefaultColor = pConfig0->get_value("font_color_level_5");
     delete pConfig0;
 
     // color dialog
-    QColor cColor = QColorDialog::getColor(QColor(strModeFontColor), this);
+    QColor cColor = QColorDialog::getColor(QColor(strDefaultColor), this);
 
     if (cColor.isValid() == true)
     {
         QString strColor = cColor.name();
 
         // save to pushbutton
-        QPixmap bcolor(50,15);
-        bcolor.fill(QColor(cColor));
-        ui.pushButton_mode_font_color->setIcon(QIcon(bcolor));
+        QPixmap color(50,15);
+        color.fill(QColor(cColor));
+        ui.pushButton_mode_font_color->setIcon(QIcon(color));
 
         // save
         Config *pConfig1 = new Config();
@@ -668,20 +688,20 @@ void DlgOptions::set_notice_font_color()
 {
     // get value
     Config *pConfig0 = new Config();
-    QString strNoticeFontColor = pConfig0->get_value("font_color_level_6");
+    QString strDefaultColor = pConfig0->get_value("font_color_level_6");
     delete pConfig0;
 
     // color dialog
-    QColor cColor = QColorDialog::getColor(QColor(strNoticeFontColor), this);
+    QColor cColor = QColorDialog::getColor(QColor(strDefaultColor), this);
 
     if (cColor.isValid() == true)
     {
         QString strColor = cColor.name();
 
         // save to pushbutton
-        QPixmap bcolor(50,15);
-        bcolor.fill(QColor(cColor));
-        ui.pushButton_notice_font_color->setIcon(QIcon(bcolor));
+        QPixmap color(50,15);
+        color.fill(QColor(cColor));
+        ui.pushButton_notice_font_color->setIcon(QIcon(color));
 
         // save
         Config *pConfig1 = new Config();
@@ -695,20 +715,20 @@ void DlgOptions::set_info_font_color()
 {
     // get value
     Config *pConfig0 = new Config();
-    QString strInfoFontColor = pConfig0->get_value("font_color_level_7");
+    QString strDefaultColor = pConfig0->get_value("font_color_level_7");
     delete pConfig0;
 
     // color dialog
-    QColor cColor = QColorDialog::getColor(QColor(strInfoFontColor), this);
+    QColor cColor = QColorDialog::getColor(QColor(strDefaultColor), this);
 
     if (cColor.isValid() == true)
     {
         QString strColor = cColor.name();
 
         // save to pushbutton
-        QPixmap bcolor(50,15);
-        bcolor.fill(QColor(cColor));
-        ui.pushButton_info_font_color->setIcon(QIcon(bcolor));
+        QPixmap color(50,15);
+        color.fill(QColor(cColor));
+        ui.pushButton_info_font_color->setIcon(QIcon(color));
 
         // save
         Config *pConfig1 = new Config();
@@ -722,20 +742,20 @@ void DlgOptions::set_error_font_color()
 {
     // get value
     Config *pConfig0 = new Config();
-    QString strErrorFontColor = pConfig0->get_value("font_color_level_9");
+    QString strDefaultColor = pConfig0->get_value("font_color_level_9");
     delete pConfig0;
 
     // color dialog
-    QColor cColor = QColorDialog::getColor(QColor(strErrorFontColor), this);
+    QColor cColor = QColorDialog::getColor(QColor(strDefaultColor), this);
 
     if (cColor.isValid() == true)
     {
         QString strColor = cColor.name();
 
         // save to pushbutton
-        QPixmap bcolor(50,15);
-        bcolor.fill(QColor(cColor));
-        ui.pushButton_error_font_color->setIcon(QIcon(bcolor));
+        QPixmap color(50,15);
+        color.fill(QColor(cColor));
+        ui.pushButton_error_font_color->setIcon(QIcon(color));
 
         // save
         Config *pConfig1 = new Config();
@@ -749,25 +769,267 @@ void DlgOptions::set_channel_font_color()
 {
     // get value
     Config *pConfig0 = new Config();
-    QString strChannelFontColor = pConfig0->get_value("channel_font_color");
+    QString strDefaultColor = pConfig0->get_value("channel_font_color");
     delete pConfig0;
 
     // color dialog
-    QColor cColor = QColorDialog::getColor(QColor(strChannelFontColor), this);
+    QColor cColor = QColorDialog::getColor(QColor(strDefaultColor), this);
 
     if (cColor.isValid() == true)
     {
         QString strColor = cColor.name();
 
         // save to pushbutton
-        QPixmap bcolor(50,15);
-        bcolor.fill(QColor(cColor));
-        ui.pushButton_channel_font_color->setIcon(QIcon(bcolor));
+        QPixmap color(50,15);
+        color.fill(QColor(cColor));
+        ui.pushButton_channel_font_color->setIcon(QIcon(color));
 
         // save
         Config *pConfig1 = new Config();
         pConfig1->set_value("channel_font_color", strColor);
         settings->setValue("channel_font_color", strColor);
+        delete pConfig1;
+    }
+}
+
+void DlgOptions::set_nicklist_background_color()
+{
+    // get value
+    Config *pConfig0 = new Config();
+    QString strDefaultColor = pConfig0->get_value("nicklist_background_color");
+    delete pConfig0;
+
+    // color dialog
+    QColor cColor = QColorDialog::getColor(QColor(strDefaultColor), this);
+
+    if (cColor.isValid() == true)
+    {
+        QString strColor = cColor.name();
+
+        // save to pushbutton
+        QPixmap color(50,15);
+        color.fill(QColor(cColor));
+        ui.pushButton_nicklist_background_color->setIcon(QIcon(color));
+
+        // save
+        Config *pConfig1 = new Config();
+        pConfig1->set_value("nicklist_background_color", strColor);
+        settings->setValue("nicklist_background_color", strColor);
+        delete pConfig1;
+    }
+}
+
+void DlgOptions::set_nicklist_line_color()
+{
+    // get value
+    Config *pConfig0 = new Config();
+    QString strDefaultColor = pConfig0->get_value("nicklist_line_color");
+    delete pConfig0;
+
+    // color dialog
+    QColor cColor = QColorDialog::getColor(QColor(strDefaultColor), this);
+
+    if (cColor.isValid() == true)
+    {
+        QString strColor = cColor.name();
+
+        // save to pushbutton
+        QPixmap color(50,15);
+        color.fill(QColor(cColor));
+        ui.pushButton_nicklist_line_color->setIcon(QIcon(color));
+
+        // save
+        Config *pConfig1 = new Config();
+        pConfig1->set_value("nicklist_line_color", strColor);
+        settings->setValue("nicklist_line_color", strColor);
+        delete pConfig1;
+    }
+}
+
+void DlgOptions::set_nicklist_selected_line_color()
+{
+    // get value
+    Config *pConfig0 = new Config();
+    QString strDefaultColor = pConfig0->get_value("nicklist_selected_line_color");
+    delete pConfig0;
+
+    // color dialog
+    QColor cColor = QColorDialog::getColor(QColor(strDefaultColor), this);
+
+    if (cColor.isValid() == true)
+    {
+        QString strColor = cColor.name();
+
+        // save to pushbutton
+        QPixmap color(50,15);
+        color.fill(QColor(cColor));
+        ui.pushButton_nicklist_selected_line_color->setIcon(QIcon(color));
+
+        // save
+        Config *pConfig1 = new Config();
+        pConfig1->set_value("nicklist_selected_line_color", strColor);
+        settings->setValue("nicklist_selected_line_color", strColor);
+        delete pConfig1;
+    }
+}
+
+void DlgOptions::set_nicklist_nick_color()
+{
+    // get value
+    Config *pConfig0 = new Config();
+    QString strDefaultColor = pConfig0->get_value("nicklist_nick_color");
+    delete pConfig0;
+
+    // color dialog
+    QColor cColor = QColorDialog::getColor(QColor(strDefaultColor), this);
+
+    if (cColor.isValid() == true)
+    {
+        QString strColor = cColor.name();
+
+        // save to pushbutton
+        QPixmap color(50,15);
+        color.fill(QColor(cColor));
+        ui.pushButton_nicklist_nick_color->setIcon(QIcon(color));
+
+        // save
+        Config *pConfig1 = new Config();
+        pConfig1->set_value("nicklist_nick_color", strColor);
+        settings->setValue("nicklist_nick_color", strColor);
+        delete pConfig1;
+    }
+}
+
+void DlgOptions::set_nicklist_selected_nick_color()
+{
+    // get value
+    Config *pConfig0 = new Config();
+    QString strDefaultColor = pConfig0->get_value("nicklist_selected_nick_color");
+    delete pConfig0;
+
+    // color dialog
+    QColor cColor = QColorDialog::getColor(QColor(strDefaultColor), this);
+
+    if (cColor.isValid() == true)
+    {
+        QString strColor = cColor.name();
+
+        // save to pushbutton
+        QPixmap color(50,15);
+        color.fill(QColor(cColor));
+        ui.pushButton_nicklist_selected_nick_color->setIcon(QIcon(color));
+
+        // save
+        Config *pConfig1 = new Config();
+        pConfig1->set_value("nicklist_selected_nick_color", strColor);
+        settings->setValue("nicklist_selected_nick_color", strColor);
+        delete pConfig1;
+    }
+}
+
+void DlgOptions::set_nicklist_busy_nick_color()
+{
+    // get value
+    Config *pConfig0 = new Config();
+    QString strDefaultColor = pConfig0->get_value("nicklist_busy_nick_color");
+    delete pConfig0;
+
+    // color dialog
+    QColor cColor = QColorDialog::getColor(QColor(strDefaultColor), this);
+
+    if (cColor.isValid() == true)
+    {
+        QString strColor = cColor.name();
+
+        // save to pushbutton
+        QPixmap color(50,15);
+        color.fill(QColor(cColor));
+        ui.pushButton_nicklist_busy_nick_color->setIcon(QIcon(color));
+
+        // save
+        Config *pConfig1 = new Config();
+        pConfig1->set_value("nicklist_busy_nick_color", strColor);
+        settings->setValue("nicklist_busy_nick_color", strColor);
+        delete pConfig1;
+    }
+}
+
+void DlgOptions::set_nicklist_gradient_1_color()
+{
+    // get value
+    Config *pConfig0 = new Config();
+    QString strDefaultColor = pConfig0->get_value("nicklist_gradient_1_color");
+    delete pConfig0;
+
+    // color dialog
+    QColor cColor = QColorDialog::getColor(QColor(strDefaultColor), this);
+
+    if (cColor.isValid() == true)
+    {
+        QString strColor = cColor.name();
+
+        // save to pushbutton
+        QPixmap color(50,15);
+        color.fill(QColor(cColor));
+        ui.pushButton_nicklist_gradient_1_color->setIcon(QIcon(color));
+
+        // save
+        Config *pConfig1 = new Config();
+        pConfig1->set_value("nicklist_gradient_1_color", strColor);
+        settings->setValue("nicklist_gradient_1_color", strColor);
+        delete pConfig1;
+    }
+}
+
+void DlgOptions::set_nicklist_gradient_2_color()
+{
+    // get value
+    Config *pConfig0 = new Config();
+    QString strDefaultColor = pConfig0->get_value("nicklist_gradient_2_color");
+    delete pConfig0;
+
+    // color dialog
+    QColor cColor = QColorDialog::getColor(QColor(strDefaultColor), this);
+
+    if (cColor.isValid() == true)
+    {
+        QString strColor = cColor.name();
+
+        // save to pushbutton
+        QPixmap color(50,15);
+        color.fill(QColor(cColor));
+        ui.pushButton_nicklist_gradient_2_color->setIcon(QIcon(color));
+
+        // save
+        Config *pConfig1 = new Config();
+        pConfig1->set_value("nicklist_gradient_2_color", strColor);
+        settings->setValue("nicklist_gradient_2_color", strColor);
+        delete pConfig1;
+    }
+}
+void DlgOptions::set_nicklist_gradient_3_color()
+{
+    // get value
+    Config *pConfig0 = new Config();
+    QString strDefaultColor = pConfig0->get_value("nicklist_gradient_3_color");
+    delete pConfig0;
+
+    // color dialog
+    QColor cColor = QColorDialog::getColor(QColor(strDefaultColor), this);
+
+    if (cColor.isValid() == true)
+    {
+        QString strColor = cColor.name();
+
+        // save to pushbutton
+        QPixmap color(50,15);
+        color.fill(QColor(cColor));
+        ui.pushButton_nicklist_gradient_3_color->setIcon(QIcon(color));
+
+        // save
+        Config *pConfig1 = new Config();
+        pConfig1->set_value("nicklist_gradient_3_color", strColor);
+        settings->setValue("nicklist_gradient_3_color", strColor);
         delete pConfig1;
     }
 }
@@ -832,7 +1094,9 @@ void DlgOptions::showEvent(QShowEvent *event)
     Config *pConfig = new Config();
     QString strNick = pConfig->get_value("login-nick");
     QString strPass = pConfig->get_value("login-pass");
+    QString strStyle = pConfig->get_value("style");
     QString strLanguage = pConfig->get_value("language");
+
     QString strAutoBusy = pConfig->get_value("auto_busy");
     QString strShowZuo = pConfig->get_value("show_zuo");
     QString strHideFormating = pConfig->get_value("hide_formating");
@@ -841,12 +1105,13 @@ void DlgOptions::showEvent(QShowEvent *event)
     QString strDisableAvatars = pConfig->get_value("disable_avatars");
     QString strDisableLogs = pConfig->get_value("disable_logs");
     QString strDisableSounds = pConfig->get_value("disable_sounds");
-    QString strStyle = pConfig->get_value("style");
-    QString strBackgroundColor = pConfig->get_value("background_color");
+
     QString strMyBold = pConfig->get_value("my_bold");
     QString strMyItalic = pConfig->get_value("my_italic");
     QString strMyFont = pConfig->get_value("my_font");
     QString strMyColor = pConfig->get_value("my_color");
+
+    QString strBackgroundColor = pConfig->get_value("background_color");
     QString strDefaultFontColor = pConfig->get_value("default_font_color");
     QString strJoinFontColor = pConfig->get_value("font_color_level_1");
     QString strPartFontColor = pConfig->get_value("font_color_level_2");
@@ -857,6 +1122,17 @@ void DlgOptions::showEvent(QShowEvent *event)
     QString strInfoFontColor = pConfig->get_value("font_color_level_7");
     QString strErrorFontColor = pConfig->get_value("font_color_level_9");
     QString strChannelFontColor = pConfig->get_value("channel_font_color");
+
+    QString strNicklistBackgroundColor = pConfig->get_value("nicklist_background_color");
+    QString strNicklistLineColor = pConfig->get_value("nicklist_line_color");
+    QString strNicklistSelectedLineColor = pConfig->get_value("nicklist_selected_line_color");
+    QString strNicklistNickColor = pConfig->get_value("nicklist_nick_color");
+    QString strNicklistSelectedNickColor = pConfig->get_value("nicklist_selected_nick_color");
+    QString strNicklistBusyNickColor = pConfig->get_value("nicklist_busy_nick_color");
+    QString strNicklistGradient1Color = pConfig->get_value("nicklist_gradient_1_color");
+    QString strNicklistGradient2Color = pConfig->get_value("nicklist_gradient_2_color");
+    QString strNicklistGradient3Color = pConfig->get_value("nicklist_gradient_3_color");
+
     delete pConfig;
 
 // decrypt pass
@@ -1048,6 +1324,51 @@ void DlgOptions::showEvent(QShowEvent *event)
     QPixmap cfcolor(50,15);
     cfcolor.fill(QColor(strChannelFontColor));
     ui.pushButton_channel_font_color->setIcon(QIcon(cfcolor));
+
+// set nicklist background color
+    QPixmap nbcolor(50,15);
+    nbcolor.fill(QColor(strNicklistBackgroundColor));
+    ui.pushButton_nicklist_background_color->setIcon(QIcon(nbcolor));
+
+// set nicklist line color
+    QPixmap nlcolor(50,15);
+    nlcolor.fill(QColor(strNicklistLineColor));
+    ui.pushButton_nicklist_line_color->setIcon(QIcon(nlcolor));
+
+// set nicklist selected line color
+    QPixmap nslcolor(50,15);
+    nslcolor.fill(QColor(strNicklistSelectedLineColor));
+    ui.pushButton_nicklist_selected_line_color->setIcon(QIcon(nslcolor));
+
+// set nicklist nick color
+    QPixmap nncolor(50,15);
+    nncolor.fill(QColor(strNicklistNickColor));
+    ui.pushButton_nicklist_nick_color->setIcon(QIcon(nncolor));
+
+// set nicklist selected nick color
+    QPixmap nsncolor(50,15);
+    nsncolor.fill(QColor(strNicklistSelectedNickColor));
+    ui.pushButton_nicklist_selected_nick_color->setIcon(QIcon(nsncolor));
+
+// set nicklist busy nick color
+    QPixmap nbncolor(50,15);
+    nbncolor.fill(QColor(strNicklistBusyNickColor));
+    ui.pushButton_nicklist_busy_nick_color->setIcon(QIcon(nbncolor));
+
+// set nicklist gradient 1 color
+    QPixmap ng1color(50,15);
+    ng1color.fill(QColor(strNicklistGradient1Color));
+    ui.pushButton_nicklist_gradient_1_color->setIcon(QIcon(ng1color));
+
+// set nicklist gradient 2 color
+    QPixmap ng2color(50,15);
+    ng2color.fill(QColor(strNicklistGradient2Color));
+    ui.pushButton_nicklist_gradient_2_color->setIcon(QIcon(ng2color));
+
+// set nicklist gradient 3 color
+    QPixmap ng3color(50,15);
+    ng3color.fill(QColor(strNicklistGradient3Color));
+    ui.pushButton_nicklist_gradient_3_color->setIcon(QIcon(ng3color));
 }
 
 void DlgOptions::closeEvent(QCloseEvent *event)
