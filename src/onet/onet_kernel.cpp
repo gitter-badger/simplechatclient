@@ -2176,6 +2176,7 @@ void OnetKernel::raw_341()
 }
 
 // :cf1f1.onet 353 scc_test = #scc :scc_test|rx,0 `@Merovingian|brx,1 @chanky|rx,1
+// :cf1f3.onet 353 Merovingian = #hack :%Hacker %weed %cvf @Majkel SzperaCZ_11 Merovingian `ChanServ %but
 void OnetKernel::raw_353()
 {
     if (strDataList.value(3).isEmpty() == true) return;
@@ -2192,7 +2193,10 @@ void OnetKernel::raw_353()
             strNick = strNick.left(strNick.indexOf("|"));
 
             QString strSuffix = strDataList[i];
-            strSuffix = strSuffix.right(strSuffix.length() - strSuffix.indexOf("|") -1);
+            if (strSuffix.indexOf("|") != -1)
+                strSuffix = strSuffix.right(strSuffix.length() - strSuffix.indexOf("|") -1);
+            else
+                strSuffix = QString::null;
 
             tabc->add_user(strChannel, strNick, strSuffix, 0);
 
