@@ -26,7 +26,7 @@
    <string>Options</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="../scc.qrc">
+   <iconset>
     <normaloff>:/images/logo_64.png</normaloff>:/images/logo_64.png</iconset>
   </property>
   <widget class="QWidget" name="verticalLayoutWidget">
@@ -721,6 +721,19 @@
                  </item>
                 </layout>
                </widget>
+               <widget class="QPushButton" name="pushButton_mainwindow_restore_default">
+                <property name="geometry">
+                 <rect>
+                  <x>140</x>
+                  <y>190</y>
+                  <width>140</width>
+                  <height>24</height>
+                 </rect>
+                </property>
+                <property name="text">
+                 <string>Restore default</string>
+                </property>
+               </widget>
               </widget>
               <widget class="QWidget" name="page_2">
                <property name="geometry">
@@ -934,6 +947,19 @@
                  </item>
                 </layout>
                </widget>
+               <widget class="QPushButton" name="pushButton_nicklist_restore_default">
+                <property name="geometry">
+                 <rect>
+                  <x>140</x>
+                  <y>180</y>
+                  <width>140</width>
+                  <height>24</height>
+                 </rect>
+                </property>
+                <property name="text">
+                 <string>Restore default</string>
+                </property>
+               </widget>
               </widget>
              </widget>
             </widget>
@@ -961,8 +987,6 @@
    </layout>
   </widget>
  </widget>
- <resources>
-  <include location="../scc.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>

@@ -43,6 +43,8 @@ private:
     QWidget *myparent;
     QSettings *settings;
 
+    void set_mainwindow_colors();
+    void set_nicklist_colors();
     void save_settings();
 
 private slots:
@@ -77,6 +79,7 @@ private slots:
     void set_info_font_color();
     void set_error_font_color();
     void set_channel_font_color();
+    void mainwindow_restore_default();
     void set_nicklist_background_color();
     void set_nicklist_line_color();
     void set_nicklist_selected_line_color();
@@ -86,6 +89,7 @@ private slots:
     void set_nicklist_gradient_1_color();
     void set_nicklist_gradient_2_color();
     void set_nicklist_gradient_3_color();
+    void nicklist_restore_default();
     void button_ok();
     void button_cancel();
 

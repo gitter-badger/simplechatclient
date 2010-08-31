@@ -914,6 +914,10 @@
         <translation>Wyłączony</translation>
     </message>
     <message>
+        <source>Restore default</source>
+        <translation>Przywróć domyślne</translation>
+    </message>
+    <message>
         <source>Basic</source>
         <translation>Ogólne</translation>
     </message>

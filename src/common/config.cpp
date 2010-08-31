@@ -332,11 +332,11 @@ void Config::create_new_config()
     add_config_value(&doc, &root, "disable_logs", "off");
     add_config_value(&doc, &root, "disable_sounds", "off");
     add_config_value(&doc, &root, "style", "modern");
-    add_config_value(&doc, &root, "background_color", "#ffffff");
     add_config_value(&doc, &root, "my_bold", "off");
     add_config_value(&doc, &root, "my_italic", "off");
     add_config_value(&doc, &root, "my_font", "Verdana");
     add_config_value(&doc, &root, "my_color", "#000000");
+    add_config_value(&doc, &root, "background_color", "#ffffff");
     add_config_value(&doc, &root, "default_font_color", "#000000");
     add_config_value(&doc, &root, "font_color_level_1", "#009300");
     add_config_value(&doc, &root, "font_color_level_2", "#4733FF");
