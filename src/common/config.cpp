@@ -270,11 +270,6 @@ QString Config::get_value(QString strKey)
         set_value("nicklist_gradient_2_color", "#1b86b7");
         return "#1b86b7";
     }
-    else if (strKey == "nicklist_gradient_3_color")
-    {
-        set_value("nicklist_gradient_3_color", "#0078ae");
-        return "#0078ae";
-    }
 
     return QString::null;
 }
@@ -355,7 +350,6 @@ void Config::create_new_config()
     add_config_value(&doc, &root, "nicklist_busy_nick_color", "#a0a0a4");
     add_config_value(&doc, &root, "nicklist_gradient_1_color", "#77d5f7");
     add_config_value(&doc, &root, "nicklist_gradient_2_color", "#1b86b7");
-    add_config_value(&doc, &root, "nicklist_gradient_3_color", "#0078ae");
 
     save();
 }

@@ -62,14 +62,12 @@ void NicklistDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opti
 
     QColor cGradient1 = QColor(strNicklistGradient1Color);
     QColor cGradient2 = QColor(strNicklistGradient2Color);
-    QColor cGradient3 = QColor(strNicklistGradient3Color);
 
     if (option.state & QStyle::State_Selected)
     {
         QLinearGradient gradientSelected(r.left(),r.top(),r.left(),r.height()+r.top());
         gradientSelected.setColorAt(0.0, cGradient1);
-        gradientSelected.setColorAt(0.9, cGradient2);
-        gradientSelected.setColorAt(1.0, cGradient3);
+        gradientSelected.setColorAt(1.0, cGradient2);
         painter->setBrush(gradientSelected);
         painter->drawRect(r);
 

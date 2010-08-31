@@ -1117,10 +1117,6 @@
         <source>Gradient 2:</source>
         <translation>Gradient 2:</translation>
     </message>
-    <message>
-        <source>Gradient 3:</source>
-        <translation>Gradient 3:</translation>
-    </message>
 </context>
 <context>
     <name>DlgPrivilege</name>

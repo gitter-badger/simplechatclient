@@ -97,12 +97,11 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     QString strNicklistBusyNickColor = pConfig->get_value("nicklist_busy_nick_color");
     QString strNicklistGradient1Color = pConfig->get_value("nicklist_gradient_1_color");
     QString strNicklistGradient2Color = pConfig->get_value("nicklist_gradient_2_color");
-    QString strNicklistGradient3Color = pConfig->get_value("nicklist_gradient_3_color");
     delete pConfig;
 
 // settings
     settings.clear();
-    settings.setValue("version", "1.0.7.460");
+    settings.setValue("version", "1.0.7.461");
     settings.setValue("debug", "off");
     settings.setValue("logged", "off");
     settings.setValue("busy", "off");
@@ -142,7 +141,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     settings.setValue("nicklist_busy_nick_color", strNicklistBusyNickColor);
     settings.setValue("nicklist_gradient_1_color", strNicklistGradient1Color);
     settings.setValue("nicklist_gradient_2_color", strNicklistGradient2Color);
-    settings.setValue("nicklist_gradient_3_color", strNicklistGradient3Color);
     settings.setValue("uokey", "");
     settings.setValue("uo_nick", "");
     settings.setValue("onet_ubi", "");

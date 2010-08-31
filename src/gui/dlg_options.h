@@ -88,7 +88,6 @@ private slots:
     void set_nicklist_busy_nick_color();
     void set_nicklist_gradient_1_color();
     void set_nicklist_gradient_2_color();
-    void set_nicklist_gradient_3_color();
     void nicklist_restore_default();
     void button_ok();
     void button_cancel();

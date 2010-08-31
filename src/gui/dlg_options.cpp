@@ -90,7 +90,6 @@ DlgOptions::DlgOptions(QWidget *parent, QSettings *param1) : QDialog(parent)
     ui.label_nicklist_busy_nick_color->setText(tr("Busy nick color:"));
     ui.label_nicklist_gradient_1_color->setText(tr("Gradient 1:"));
     ui.label_nicklist_gradient_2_color->setText(tr("Gradient 2:"));
-    ui.label_nicklist_gradient_3_color->setText(tr("Gradient 3:"));
     ui.pushButton_nicklist_restore_default->setText(tr("Restore default"));
 
 // options list
@@ -174,7 +173,6 @@ DlgOptions::DlgOptions(QWidget *parent, QSettings *param1) : QDialog(parent)
     QObject::connect(ui.pushButton_nicklist_busy_nick_color, SIGNAL(clicked()), this, SLOT(set_nicklist_busy_nick_color()));
     QObject::connect(ui.pushButton_nicklist_gradient_1_color, SIGNAL(clicked()), this, SLOT(set_nicklist_gradient_1_color()));
     QObject::connect(ui.pushButton_nicklist_gradient_2_color, SIGNAL(clicked()), this, SLOT(set_nicklist_gradient_2_color()));
-    QObject::connect(ui.pushButton_nicklist_gradient_3_color, SIGNAL(clicked()), this, SLOT(set_nicklist_gradient_3_color()));
     QObject::connect(ui.pushButton_nicklist_restore_default, SIGNAL(clicked()), this, SLOT(nicklist_restore_default()));
     QObject::connect(ui.buttonBox, SIGNAL(accepted()), this, SLOT(button_ok()));
     QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(button_cancel()));
@@ -1057,32 +1055,6 @@ void DlgOptions::set_nicklist_gradient_2_color()
         delete pConfig1;
     }
 }
-void DlgOptions::set_nicklist_gradient_3_color()
-{
-    // get value
-    Config *pConfig0 = new Config();
-    QString strDefaultColor = pConfig0->get_value("nicklist_gradient_3_color");
-    delete pConfig0;
-
-    // color dialog
-    QColor cColor = QColorDialog::getColor(QColor(strDefaultColor), this);
-
-    if (cColor.isValid() == true)
-    {
-        QString strColor = cColor.name();
-
-        // save to pushbutton
-        QPixmap color(50,15);
-        color.fill(QColor(cColor));
-        ui.pushButton_nicklist_gradient_3_color->setIcon(QIcon(color));
-
-        // save
-        Config *pConfig1 = new Config();
-        pConfig1->set_value("nicklist_gradient_3_color", strColor);
-        settings->setValue("nicklist_gradient_3_color", strColor);
-        delete pConfig1;
-    }
-}
 
 void DlgOptions::nicklist_restore_default()
 {
@@ -1111,9 +1083,6 @@ void DlgOptions::nicklist_restore_default()
 
     pConfig->set_value("nicklist_gradient_2_color", "#1b86b7");
     settings->setValue("nicklist_gradient_2_color", "#1b86b7");
-
-    pConfig->set_value("nicklist_gradient_3_color", "#0078ae");
-    settings->setValue("nicklist_gradient_3_color", "#0078ae");
 
     delete pConfig;
 
@@ -1217,7 +1186,6 @@ void DlgOptions::set_nicklist_colors()
     QString strNicklistBusyNickColor = pConfig->get_value("nicklist_busy_nick_color");
     QString strNicklistGradient1Color = pConfig->get_value("nicklist_gradient_1_color");
     QString strNicklistGradient2Color = pConfig->get_value("nicklist_gradient_2_color");
-    QString strNicklistGradient3Color = pConfig->get_value("nicklist_gradient_3_color");
     delete pConfig;
 
 // set nicklist background color
@@ -1259,11 +1227,6 @@ void DlgOptions::set_nicklist_colors()
     QPixmap ng2color(50,15);
     ng2color.fill(QColor(strNicklistGradient2Color));
     ui.pushButton_nicklist_gradient_2_color->setIcon(QIcon(ng2color));
-
-// set nicklist gradient 3 color
-    QPixmap ng3color(50,15);
-    ng3color.fill(QColor(strNicklistGradient3Color));
-    ui.pushButton_nicklist_gradient_3_color->setIcon(QIcon(ng3color));
 }
 
 void DlgOptions::save_settings()
