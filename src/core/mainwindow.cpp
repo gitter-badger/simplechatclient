@@ -101,7 +101,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
 // settings
     settings.clear();
-    settings.setValue("version", "1.0.7.462");
+    settings.setValue("version", "1.0.7.463");
     settings.setValue("debug", "off");
     settings.setValue("logged", "off");
     settings.setValue("busy", "off");
@@ -254,7 +254,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     QObject::connect(this, SIGNAL(do_request_uo(QString, QString, QString)), pOnet_auth, SLOT(request_uo(QString, QString, QString)));
 
 // signal refresh background color
-    QObject::connect(pOptions, SIGNAL(refresh_background_color()), this, SLOT(refresh_background_color()));
+    QObject::connect(pOptions, SIGNAL(refresh_colors()), pTabC, SLOT(refresh_colors()));
 
 // tray
     trayMenu = new QMenu();
@@ -349,11 +349,6 @@ void MainWindow::check_update()
     //if (settings.value("debug").toString() == "on")
         qDebug() << "Update thread +1 (size: " << uThreadList.size() << ")";
 #endif
-}
-
-void MainWindow::refresh_background_color()
-{
-    pTabC->refresh_background_color();
 }
 
 // force close tab after 10 sec

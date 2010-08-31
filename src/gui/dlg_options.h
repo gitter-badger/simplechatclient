@@ -97,7 +97,7 @@ protected:
     virtual void closeEvent(QCloseEvent *);
 
 signals:
-    void refresh_background_color();
+    void refresh_colors();
 
 };
 

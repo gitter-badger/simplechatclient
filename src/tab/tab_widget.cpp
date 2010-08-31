@@ -584,9 +584,9 @@ void TabWidget::display_message(QString strData, int iLevel)
     strData.replace("<", "&lt;");
     strData.replace(">", "&gt;");
     // channels
-    strData.replace(QRegExp("#([~-_a-zA-Z0-9\xa1\xaf\xa6\xac\xca\xc6\xd1\xd3\xa3\xb1\xbf\xb6\xbc\xea\xe6\xf1\xf3\xb3]+)"), "<a style=\"text-decoration:none;color:"+addslashes(settings->value("channel_font_color").toString())+"\" href=\"chan#\\1\">#\\1</a>");
+    strData.replace(QRegExp("#([~-_a-zA-Z0-9\xa1\xaf\xa6\xac\xca\xc6\xd1\xd3\xa3\xb1\xbf\xb6\xbc\xea\xe6\xf1\xf3\xb3]+)"), "<a id=\"level_chan\" style=\"color:"+addslashes(settings->value("channel_font_color").toString())+";text-decoration:none;\" href=\"chan#\\1\">#\\1</a>");
     // nicks
-    strData.replace(QRegExp("&lt;([~-_a-zA-Z0-9\xa1\xaf\xa6\xac\xca\xc6\xd1\xd3\xa3\xb1\xbf\xb6\xbc\xea\xe6\xf1\xf3\xb3]+)&gt;"), "<a style=\"text-decoration:none;color:"+addslashes(settings->value("default_font_color").toString())+";\" href=\"nick\\1\">&lt;\\1&gt;</a>");
+    strData.replace(QRegExp("&lt;([~-_a-zA-Z0-9\xa1\xaf\xa6\xac\xca\xc6\xd1\xd3\xa3\xb1\xbf\xb6\xbc\xea\xe6\xf1\xf3\xb3]+)&gt;"), "<a id=\"level_0\" style=\"color:"+addslashes(settings->value("default_font_color").toString())+";text-decoration:none;\" href=\"nick\\1\">&lt;\\1&gt;</a>");
 
 // content last
     QString strContentLast;
@@ -613,9 +613,12 @@ void TabWidget::display_message(QString strData, int iLevel)
     else if (iLevel == 9) // error
         strFontColor = addslashes(settings->value("font_color_level_9").toString()); // default red
     else
+    {
+        iLevel = 0;
         strFontColor = addslashes(settings->value("default_font_color").toString()); // default black
+    }
 
-    strData.insert(11, "<span style=\"color:"+strFontColor+";\">");
+    strData.insert(11, "<span id=\"level_"+QString::number(iLevel)+"\" style=\"color:"+strFontColor+";\">");
     strContentLast = "</span>"+strContentLast;
 
 // if /me remove time,action <>
@@ -654,7 +657,7 @@ void TabWidget::display_message(QString strData, int iLevel)
     }
 
 // init text
-    strContent.append("<p style=\"margin:0;padding:0;font-style:normal;color:"+addslashes(settings->value("default_font_color").toString())+";text-align:"+strTextAlign+";font-family:Verdana;font-weight:normal;font-size:"+strFontSize+";text-decoration:"+strTextDecoration+";\">");
+    strContent.append("<p id=\"level_0\" style=\"color:"+addslashes(settings->value("default_font_color").toString())+";margin:0;padding:0;font-style:normal;text-align:"+strTextAlign+";font-family:Verdana;font-weight:normal;font-size:"+strFontSize+";text-decoration:"+strTextDecoration+";\">");
 
 // text
     strContent.append(strData);
@@ -892,6 +895,11 @@ void TabWidget::del_user(QString strNick)
     }
 }
 
+void TabWidget::replace_color(QString level, QString color)
+{
+    strContent.replace(QRegExp(QString("id=\"level_%1\" style=\"color:#(......);").arg(level)), QString("id=\"level_%1\" style=\"color:%2;").arg(level).arg(color));
+}
+
 void TabWidget::nicklist_add(QString strNick, QString strStatus, int iRefresh)
 {
     nick_list->nicklist_add(strNick, strStatus, iRefresh, &nick_status);
@@ -1016,10 +1024,32 @@ void TabWidget::update_channel_avatar()
     }
 }
 
-void TabWidget::refresh_background_color()
+void TabWidget::refresh_colors()
 {
-    QString strDefaultFontColor = addslashes(settings->value("default_font_color").toString());
+    // get values
     QString strBackgroundColor = addslashes(settings->value("background_color").toString());
+    QString strDefaultFontColor = addslashes(settings->value("default_font_color").toString());
+    QString strJoinFontColor = addslashes(settings->value("font_color_level_1").toString());
+    QString strPartFontColor = addslashes(settings->value("font_color_level_2").toString());
+    QString strQuitFontColor = addslashes(settings->value("font_color_level_3").toString());
+    QString strKickFontColor = addslashes(settings->value("font_color_level_4").toString());
+    QString strModeFontColor = addslashes(settings->value("font_color_level_5").toString());
+    QString strNoticeFontColor = addslashes(settings->value("font_color_level_6").toString());
+    QString strInfoFontColor = addslashes(settings->value("font_color_level_7").toString());
+    QString strErrorFontColor = addslashes(settings->value("font_color_level_9").toString());
+    QString strChannelFontColor = addslashes(settings->value("channel_font_color").toString());
+
+    // refresh colors
+    replace_color("0", strDefaultFontColor);
+    replace_color("1", strJoinFontColor);
+    replace_color("2", strPartFontColor);
+    replace_color("3", strQuitFontColor);
+    replace_color("4", strKickFontColor);
+    replace_color("5", strModeFontColor);
+    replace_color("6", strNoticeFontColor);
+    replace_color("7", strInfoFontColor);
+    replace_color("9", strErrorFontColor);
+    replace_color("chan", strChannelFontColor);
 
     // mainwebview
     strContentStart = "<html><body style=\"background-color:"+strBackgroundColor+";\">";

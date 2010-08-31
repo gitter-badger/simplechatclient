@@ -87,7 +87,7 @@ public:
     bool nicklist_exist(QString);
     void update_nick_avatar();
     void update_channel_avatar();
-    void refresh_background_color();
+    void refresh_colors();
     void nicklist_refresh_all();
     QStringList get_nicklist();
     void send_message(bool);
@@ -179,6 +179,8 @@ private:
     bool bCursorPositionChanged;
     QString strCurrentColor;
     QString strTopicContent;
+
+    void replace_color(QString, QString);
 
     void nicklist_add(QString, QString, int);
     void nicklist_remove(QString);

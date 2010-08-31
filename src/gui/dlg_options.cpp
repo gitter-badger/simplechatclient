@@ -520,7 +520,7 @@ void DlgOptions::set_background_color()
         delete pConfig1;
 
         // refresh tabs
-        emit refresh_background_color();
+        emit refresh_colors();
     }
 }
 
@@ -550,7 +550,7 @@ void DlgOptions::set_default_font_color()
         delete pConfig1;
 
         // refresh tabs
-        emit refresh_background_color();
+        emit refresh_colors();
     }
 }
 
@@ -578,6 +578,9 @@ void DlgOptions::set_join_font_color()
         pConfig1->set_value("font_color_level_1", strColor);
         settings->setValue("font_color_level_1", strColor);
         delete pConfig1;
+
+        // refresh tabs
+        emit refresh_colors();
     }
 }
 
@@ -605,6 +608,9 @@ void DlgOptions::set_part_font_color()
         pConfig1->set_value("font_color_level_2", strColor);
         settings->setValue("font_color_level_2", strColor);
         delete pConfig1;
+
+        // refresh tabs
+        emit refresh_colors();
     }
 }
 
@@ -632,6 +638,9 @@ void DlgOptions::set_quit_font_color()
         pConfig1->set_value("font_color_level_3", strColor);
         settings->setValue("font_color_level_3", strColor);
         delete pConfig1;
+
+        // refresh tabs
+        emit refresh_colors();
     }
 }
 
@@ -659,6 +668,9 @@ void DlgOptions::set_kick_font_color()
         pConfig1->set_value("font_color_level_4", strColor);
         settings->setValue("font_color_level_4", strColor);
         delete pConfig1;
+
+        // refresh tabs
+        emit refresh_colors();
     }
 }
 
@@ -686,6 +698,9 @@ void DlgOptions::set_mode_font_color()
         pConfig1->set_value("font_color_level_5", strColor);
         settings->setValue("font_color_level_5", strColor);
         delete pConfig1;
+
+        // refresh tabs
+        emit refresh_colors();
     }
 }
 
@@ -713,6 +728,9 @@ void DlgOptions::set_notice_font_color()
         pConfig1->set_value("font_color_level_6", strColor);
         settings->setValue("font_color_level_6", strColor);
         delete pConfig1;
+
+        // refresh tabs
+        emit refresh_colors();
     }
 }
 
@@ -740,6 +758,9 @@ void DlgOptions::set_info_font_color()
         pConfig1->set_value("font_color_level_7", strColor);
         settings->setValue("font_color_level_7", strColor);
         delete pConfig1;
+
+        // refresh tabs
+        emit refresh_colors();
     }
 }
 
@@ -767,6 +788,9 @@ void DlgOptions::set_error_font_color()
         pConfig1->set_value("font_color_level_9", strColor);
         settings->setValue("font_color_level_9", strColor);
         delete pConfig1;
+
+        // refresh tabs
+        emit refresh_colors();
     }
 }
 
@@ -794,6 +818,9 @@ void DlgOptions::set_channel_font_color()
         pConfig1->set_value("channel_font_color", strColor);
         settings->setValue("channel_font_color", strColor);
         delete pConfig1;
+
+        // refresh tabs
+        emit refresh_colors();
     }
 }
 
@@ -840,7 +867,7 @@ void DlgOptions::mainwindow_restore_default()
     set_mainwindow_colors();
 
     // refresh tabs
-    emit refresh_background_color();
+    emit refresh_colors();
 }
 
 void DlgOptions::set_nicklist_background_color()

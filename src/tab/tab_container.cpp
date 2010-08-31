@@ -562,18 +562,18 @@ void TabContainer::set_user_info(QString strNick, QString strKey, QString strVal
     }
 }
 
-void TabContainer::refresh_background_color()
+void TabContainer::sshow_msg(QString strChannel, QString strData, int iLevel)
+{
+    show_msg(strChannel, strData, iLevel);
+}
+
+void TabContainer::refresh_colors()
 {
     for (int i = 0; i < 50; i++)
     {
         if (free_list[i] == 'u')
-            tw[i]->refresh_background_color();
+            tw[i]->refresh_colors();
     }
-}
-
-void TabContainer::sshow_msg(QString strChannel, QString strData, int iLevel)
-{
-    show_msg(strChannel, strData, iLevel);
 }
 
 QStringList TabContainer::get_open_channels()

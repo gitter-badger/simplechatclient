@@ -63,12 +63,12 @@ public:
     int get_nick_channels(QString);
     void set_user_info(QString, QString, QString);
     QStringList get_open_channels();
-    void refresh_background_color();
 
 public slots:
     void update_nick_avatar(QString);
     void update_channel_avatar(QString);
     void sshow_msg(QString, QString, int);
+    void refresh_colors();
 
 private:
     QWidget *myparent;
