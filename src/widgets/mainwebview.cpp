@@ -297,7 +297,7 @@ void MainWebView::contextMenuEvent(QContextMenuEvent *event)
             QAction *nameAct = new QAction(strNick, this);
             nameAct->setDisabled(true);
 
-            QMenu *menu = new QMenu(this);
+            QMenu *menu = new QMenu(strNick);
             menu->addAction(nameAct);
             menu->addSeparator();
             menu->addAction(tr("Priv"), this, SLOT(priv()));
@@ -327,7 +327,7 @@ void MainWebView::contextMenuEvent(QContextMenuEvent *event)
         QAction *copyAct = pageAction(QWebPage::Copy);
         copyAct->setShortcut(QKeySequence::Copy);
 
-        QMenu menu(this);
+        QMenu menu("copy");
         menu.addAction(copyAct);
         menu.exec(mapToGlobal(event->pos()));
         return;

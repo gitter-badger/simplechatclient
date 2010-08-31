@@ -581,7 +581,7 @@ void Nicklist::contextMenuEvent(QContextMenuEvent *e)
     QAction *nickAct = new QAction(strNick, this);
     nickAct->setDisabled(true);
 
-    QMenu *menu = new QMenu(this);
+    QMenu *menu = new QMenu(strNick);
     menu->addAction(nickAct);
     menu->addSeparator();
     menu->addAction(tr("Priv"), this, SLOT(priv()));

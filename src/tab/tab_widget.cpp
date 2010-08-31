@@ -33,6 +33,7 @@ TabWidget::TabWidget(QWidget *parent, Network *param1, QSettings *param2, QStrin
     dlgmoderation = param8;
     camSocket = param9;
 
+    QString strDefaultFontColor = addslashes(settings->value("default_font_color").toString());
     QString strBackgroundColor = addslashes(settings->value("background_color").toString());
 
     iNickCount = 0;
@@ -106,7 +107,6 @@ TabWidget::TabWidget(QWidget *parent, Network *param1, QSettings *param2, QStrin
     nick_list->setParent(this);
     nick_list->setSortingEnabled(false);
     nick_list->setItemDelegate(new NicklistDelegate(nick_list));
-    //nick_list->setStyleSheet(QString("background-color: #%1;").arg(strBackgroundColor));
     nick_list->show();
 
     mainWebView = new MainWebView(myparent, pNetwork, settings, strName, camSocket);
@@ -146,7 +146,7 @@ TabWidget::TabWidget(QWidget *parent, Network *param1, QSettings *param2, QStrin
     courierAct = new QAction("Courier", this);
     courierAct->setFont(QFont("Courier New", -1, -1, false));
 
-    fontMenu = new QMenu();
+    fontMenu = new QMenu(this);
     fontMenu->addAction(arialAct);
     fontMenu->addAction(timesAct);
     fontMenu->addAction(verdanaAct);
@@ -179,7 +179,7 @@ TabWidget::TabWidget(QWidget *parent, Network *param1, QSettings *param2, QStrin
     size20Act = new QAction("20", this);
     size20Act->setFont(QFont("Verdana", 20, -1, false));
 
-    sizeMenu = new QMenu();
+    sizeMenu = new QMenu(this);
     sizeMenu->addAction(size8Act);
     sizeMenu->addAction(size9Act);
     sizeMenu->addAction(size10Act);
@@ -216,6 +216,7 @@ TabWidget::TabWidget(QWidget *parent, Network *param1, QSettings *param2, QStrin
 
     emoticons = new QPushButton(QIcon(":/images/logo_64.png"), "", this);
     emoticons->setParent(this);
+    emoticons->setMaximumHeight(25);
     emoticons->show();
 
     channel_settings = new QPushButton(this);
@@ -320,11 +321,16 @@ TabWidget::TabWidget(QWidget *parent, Network *param1, QSettings *param2, QStrin
     }
     else if (strName[0] == '^')
     {
+        logo->hide();
         topic->hide();
         topicDetails->hide();
-        logo->hide();
-        nickCount->hide();
+        topRightWidget->hide();
+        topLeftWidget->hide();
+        topWidget->hide();
+
         webLink->hide();
+        nickCount->hide();
+        nick_list->hide();
 
         moderation->hide();
         toolLayout->removeWidget(moderation);
@@ -348,12 +354,25 @@ TabWidget::TabWidget(QWidget *parent, Network *param1, QSettings *param2, QStrin
     }
     else
     {
+        logo->hide();
         topic->hide();
         topicDetails->hide();
-        logo->hide();
-        nickCount->hide();
+        topRightWidget->hide();
+        topLeftWidget->hide();
+        topWidget->hide();
+
         webLink->hide();
+        nickCount->hide();
         nick_list->hide();
+
+        bold->hide();
+        italic->hide();
+        fontfamily->hide();
+        color->hide();
+        size->hide();
+        emoticons->hide();
+        channel_settings->hide();
+        moderation->hide();
         toolWidget->hide();
 
         moderSendButton->hide();
@@ -377,6 +396,14 @@ TabWidget::TabWidget(QWidget *parent, Network *param1, QSettings *param2, QStrin
 
 // set default font
     set_default();
+
+// set colors
+    inputline->setStyleSheet(QString("color:%1;").arg(strDefaultFontColor));
+
+    if (strBackgroundColor.toLower() != "#ffffff")
+        this->setStyleSheet(QString("color:%1;background-color:%2;").arg(strDefaultFontColor).arg(strBackgroundColor));
+    else
+        this->setStyleSheet(QString::null);
 
 // signals
     QObject::connect(sendButton, SIGNAL(clicked()), this, SLOT(inputline_return_pressed()));
@@ -1050,8 +1077,18 @@ void TabWidget::refresh_colors()
     replace_color("5", strModeFontColor);
     replace_color("6", strNoticeFontColor);
     replace_color("7", strInfoFontColor);
+    replace_color("8", strDefaultFontColor);
     replace_color("9", strErrorFontColor);
     replace_color("chan", strChannelFontColor);
+
+    // inputline
+    inputline->setStyleSheet(QString("color:%1;").arg(strDefaultFontColor));
+
+    // this
+    if (strBackgroundColor.toLower() != "#ffffff")
+        this->setStyleSheet(QString("color:%1;background-color:%2;").arg(strDefaultFontColor).arg(strBackgroundColor));
+    else
+        this->setStyleSheet(QString::null);
 
     // mainwebview
     strContentStart = "<html><body style=\"background-color:"+strBackgroundColor+";\">";
