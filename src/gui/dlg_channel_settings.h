@@ -37,23 +37,23 @@ class DlgChannelSettings : public QDialog
 public:
     DlgChannelSettings(QWidget *, Network *, QSettings *);
     void set_channel(QString);
-    void add_topic(QString);
-    void add_pubpriv(int);
-    void add_owner(QString);
-    void add_email(QString);
-    void add_op(QString);
-    void add_halfop(QString);
-    void add_ban(QString, QString, QString);
-    void add_invite(QString, QString, QString);
-    void add_cat(int, int);
-    void add_guardian(int);
-    void add_moderated(int);
-    void add_www(QString);
-    void add_created(QString);
-    void add_password(QString);
-    void add_limit(int);
-    void add_auditorium(int);
-    void add_description(QString);
+    void add_topic(QString, QString);
+    void add_pubpriv(QString, int);
+    void add_owner(QString, QString);
+    void add_email(QString, QString);
+    void add_cat(QString, int, int);
+    void add_guardian(QString, int);
+    void add_moderated(QString, int);
+    void add_www(QString, QString);
+    void add_created(QString, QString);
+    void add_password(QString, QString);
+    void add_limit(QString, int);
+    void add_auditorium(QString, int);
+    void add_description(QString, QString);
+    void add_op(QString, QString);
+    void add_halfop(QString, QString);
+    void add_ban(QString, QString, QString, QString);
+    void add_invite(QString, QString, QString, QString);
 
 private:
     Ui::uiChannelSettings ui;

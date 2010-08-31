@@ -117,73 +117,43 @@ void DlgChannelSettings::set_channel(QString param1)
     pNetwork->send(QString("CS INFO %1").arg(strChannel));
 }
 
-void DlgChannelSettings::add_topic(QString strTopic)
+void DlgChannelSettings::add_topic(QString strCheckChannel, QString strTopic)
 {
+    if (strCheckChannel != strChannel) return; // not this channel
+
     ui.plainTextEdit_topic->clear();
     ui.plainTextEdit_topic->insertPlainText(strTopic);
 }
 
-void DlgChannelSettings::add_pubpriv(int i)
+void DlgChannelSettings::add_pubpriv(QString strCheckChannel, int i)
 {
+    if (strCheckChannel != strChannel) return; // not this channel
+
     if (i == 1)
         ui.radioButton_status_priv->setChecked(true);
     else if (i == 0)
         ui.radioButton_status_pub->setChecked(true);
 }
 
-void DlgChannelSettings::add_owner(QString strNick)
+void DlgChannelSettings::add_owner(QString strCheckChannel, QString strNick)
 {
+    if (strCheckChannel != strChannel) return; // not this channel
+
     ui.label_owner_nick->clear();
     ui.label_owner_nick->setText(strNick);
 }
 
-void DlgChannelSettings::add_email(QString strEmail)
+void DlgChannelSettings::add_email(QString strCheckChannel, QString strEmail)
 {
+    if (strCheckChannel != strChannel) return; // not this channel
+
     ui.lineEdit_email->setText(strEmail);
 }
 
-void DlgChannelSettings::add_op(QString strNick)
+void DlgChannelSettings::add_cat(QString strCheckChannel, int iCatMajor, int iCatMinor)
 {
-    if (exist_item(strNick, ui.tableWidget_op) == false)
-    {
-        ui.tableWidget_op->insertRow(ui.tableWidget_op->rowCount());
-        ui.tableWidget_op->setItem(ui.tableWidget_op->rowCount()-1, 0, new QTableWidgetItem(strNick));
-    }
-}
+    if (strCheckChannel != strChannel) return; // not this channel
 
-void DlgChannelSettings::add_halfop(QString strNick)
-{
-    if (exist_item(strNick, ui.tableWidget_halfop) == false)
-    {
-        ui.tableWidget_halfop->insertRow(ui.tableWidget_halfop->rowCount());
-        ui.tableWidget_halfop->setItem(ui.tableWidget_halfop->rowCount()-1, 0, new QTableWidgetItem(strNick));
-    }
-}
-
-void DlgChannelSettings::add_ban(QString strNick, QString strWho, QString strDT)
-{
-    if (exist_item(strNick, ui.tableWidget_ban) == false)
-    {
-        ui.tableWidget_ban->insertRow(ui.tableWidget_ban->rowCount());
-        ui.tableWidget_ban->setItem(ui.tableWidget_ban->rowCount()-1, 0, new QTableWidgetItem(strNick));
-        ui.tableWidget_ban->setItem(ui.tableWidget_ban->rowCount()-1, 1, new QTableWidgetItem(strWho));
-        ui.tableWidget_ban->setItem(ui.tableWidget_ban->rowCount()-1, 2, new QTableWidgetItem(strDT));
-    }
-}
-
-void DlgChannelSettings::add_invite(QString strNick, QString strWho, QString strDT)
-{
-    if (exist_item(strNick, ui.tableWidget_invite) == false)
-    {
-        ui.tableWidget_invite->insertRow(ui.tableWidget_invite->rowCount());
-        ui.tableWidget_invite->setItem(ui.tableWidget_invite->rowCount()-1, 0, new QTableWidgetItem(strNick));
-        ui.tableWidget_invite->setItem(ui.tableWidget_invite->rowCount()-1, 1, new QTableWidgetItem(strWho));
-        ui.tableWidget_invite->setItem(ui.tableWidget_invite->rowCount()-1, 2, new QTableWidgetItem(strDT));
-    }
-}
-
-void DlgChannelSettings::add_cat(int iCatMajor, int iCatMinor)
-{
     Q_UNUSED (iCatMinor);
 
     if (iCatMajor == 1) // teen
@@ -200,8 +170,10 @@ void DlgChannelSettings::add_cat(int iCatMajor, int iCatMinor)
         ui.comboBox_category->setCurrentIndex(-1);
 }
 
-void DlgChannelSettings::add_guardian(int iGuardianLevel)
+void DlgChannelSettings::add_guardian(QString strCheckChannel, int iGuardianLevel)
 {
+    if (strCheckChannel != strChannel) return; // not this channel
+
     if (iGuardianLevel == 0)
     {
         ui.radioButton_guardian_off->setChecked(true);
@@ -224,51 +196,113 @@ void DlgChannelSettings::add_guardian(int iGuardianLevel)
     }
 }
 
-void DlgChannelSettings::add_moderated(int iModerated)
+void DlgChannelSettings::add_moderated(QString strCheckChannel, int iModerated)
 {
+    if (strCheckChannel != strChannel) return; // not this channel
+
     if (iModerated == 0)
         ui.radioButton_moderation_off->setChecked(true);
     else if (iModerated == 1)
         ui.radioButton_moderation_on->setChecked(true);
 }
 
-void DlgChannelSettings::add_www(QString strLink)
+void DlgChannelSettings::add_www(QString strCheckChannel, QString strLink)
 {
+    if (strCheckChannel != strChannel) return; // not this channel
+
     ui.lineEdit_website->clear();
     ui.lineEdit_website->setText(strLink);
 }
 
-void DlgChannelSettings::add_created(QString strTime)
+void DlgChannelSettings::add_created(QString strCheckChannel, QString strTime)
 {
+    if (strCheckChannel != strChannel) return; // not this channel
+
     QDateTime dt = QDateTime::fromTime_t(strTime.toInt());
     QString strDT = dt.toString("dd/MM/yyyy hh:mm:ss");
     ui.label_datetime->clear();
     ui.label_datetime->setText(strDT);
 }
 
-void DlgChannelSettings::add_password(QString strPassword)
+void DlgChannelSettings::add_password(QString strCheckChannel, QString strPassword)
 {
+    if (strCheckChannel != strChannel) return; // not this channel
+
     ui.lineEdit_password->clear();
     ui.lineEdit_password->setText(strPassword);
 }
 
-void DlgChannelSettings::add_limit(int iLimit)
+void DlgChannelSettings::add_limit(QString strCheckChannel, int iLimit)
 {
+    if (strCheckChannel != strChannel) return; // not this channel
+
     ui.spinBox_limit->setValue(iLimit);
 }
 
-void DlgChannelSettings::add_auditorium(int iAuditorium)
+void DlgChannelSettings::add_auditorium(QString strCheckChannel, int iAuditorium)
 {
+    if (strCheckChannel != strChannel) return; // not this channel
+
     if (iAuditorium == 0)
         ui.radioButton_auditorium_off->setChecked(true);
     else if (iAuditorium == 1)
         ui.radioButton_auditorium_on->setChecked(true);
 }
 
-void DlgChannelSettings::add_description(QString strDescription)
+void DlgChannelSettings::add_description(QString strCheckChannel, QString strDescription)
 {
+    if (strCheckChannel != strChannel) return; // not this channel
+
     ui.plainTextEdit_desc->clear();
     ui.plainTextEdit_desc->insertPlainText(strDescription);
+}
+
+void DlgChannelSettings::add_op(QString strCheckChannel, QString strNick)
+{
+    if (strCheckChannel != strChannel) return; // not this channel
+
+    if (exist_item(strNick, ui.tableWidget_op) == false)
+    {
+        ui.tableWidget_op->insertRow(ui.tableWidget_op->rowCount());
+        ui.tableWidget_op->setItem(ui.tableWidget_op->rowCount()-1, 0, new QTableWidgetItem(strNick));
+    }
+}
+
+void DlgChannelSettings::add_halfop(QString strCheckChannel, QString strNick)
+{
+    if (strCheckChannel != strChannel) return; // not this channel
+
+    if (exist_item(strNick, ui.tableWidget_halfop) == false)
+    {
+        ui.tableWidget_halfop->insertRow(ui.tableWidget_halfop->rowCount());
+        ui.tableWidget_halfop->setItem(ui.tableWidget_halfop->rowCount()-1, 0, new QTableWidgetItem(strNick));
+    }
+}
+
+void DlgChannelSettings::add_ban(QString strCheckChannel, QString strNick, QString strWho, QString strDT)
+{
+    if (strCheckChannel != strChannel) return; // not this channel
+
+    if (exist_item(strNick, ui.tableWidget_ban) == false)
+    {
+        ui.tableWidget_ban->insertRow(ui.tableWidget_ban->rowCount());
+        ui.tableWidget_ban->setItem(ui.tableWidget_ban->rowCount()-1, 0, new QTableWidgetItem(strNick));
+        ui.tableWidget_ban->setItem(ui.tableWidget_ban->rowCount()-1, 1, new QTableWidgetItem(strWho));
+        ui.tableWidget_ban->setItem(ui.tableWidget_ban->rowCount()-1, 2, new QTableWidgetItem(strDT));
+    }
+}
+
+void DlgChannelSettings::add_invite(QString strCheckChannel, QString strNick, QString strWho, QString strDT)
+{
+    if (strCheckChannel != strChannel) return; // not this channel
+
+    if (exist_item(strNick, ui.tableWidget_invite) == false)
+    {
+        ui.tableWidget_invite->insertRow(ui.tableWidget_invite->rowCount());
+        ui.tableWidget_invite->setItem(ui.tableWidget_invite->rowCount()-1, 0, new QTableWidgetItem(strNick));
+        ui.tableWidget_invite->setItem(ui.tableWidget_invite->rowCount()-1, 1, new QTableWidgetItem(strWho));
+        ui.tableWidget_invite->setItem(ui.tableWidget_invite->rowCount()-1, 2, new QTableWidgetItem(strDT));
+    }
 }
 
 void DlgChannelSettings::owner_changed()

@@ -610,6 +610,8 @@ void TabWidget::display_message(QString strData, int iLevel)
         strFontColor = addslashes(settings->value("font_color_level_6").toString()); // default blue
     else if (iLevel == 7) // info
         strFontColor = addslashes(settings->value("font_color_level_7").toString()); // default gray
+    else if (iLevel == 8) // hilight no color
+        strFontColor = addslashes(settings->value("default_font_color").toString()); // default black
     else if (iLevel == 9) // error
         strFontColor = addslashes(settings->value("font_color_level_9").toString()); // default red
     else

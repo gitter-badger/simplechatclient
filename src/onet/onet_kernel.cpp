@@ -1400,7 +1400,7 @@ void OnetKernel::raw_160n()
     if (strTopic[0] == ':')
         strTopic = strTopic.right(strTopic.length()-1);
 
-    dlgchannel_settings->add_topic(strTopic);
+    dlgchannel_settings->add_topic(strChannel, strTopic);
     tabc->set_topic(strChannel, strTopic);
 }
 
@@ -1424,9 +1424,16 @@ void OnetKernel::raw_161n()
         {
             if (strKey == "www")
             {
-                tabc->set_link(strChannel, strValue);
-                dlgchannel_settings->add_www(strValue);
+                dlgchannel_settings->add_www(strChannel, strValue);
+                if (strValue.isEmpty() == false)
+                    tabc->set_link(strChannel, strValue);
             }
+            else if (strKey == "createdDate")
+                dlgchannel_settings->add_created(strChannel, strValue);
+            else if (strKey == "password")
+                dlgchannel_settings->add_password(strChannel, strValue);
+            else if (strKey == "email")
+                dlgchannel_settings->add_email(strChannel, strValue);
             else if (strKey == "topicAuthor")
                 strTopicAuthor = strValue;
             else if (strKey == "topicDate")
@@ -1443,28 +1450,22 @@ void OnetKernel::raw_161n()
             else if (strKey == "private")
             {
                 if (strValue == "0")
-                    dlgchannel_settings->add_pubpriv(0);
+                    dlgchannel_settings->add_pubpriv(strChannel, 0);
                 else if (strValue == "1")
-                    dlgchannel_settings->add_pubpriv(1);
+                    dlgchannel_settings->add_pubpriv(strChannel, 1);
             }
             else if (strKey == "catMajor")
                 iCatMajor = strValue.toInt();
             else if (strKey == "catMinor")
-                dlgchannel_settings->add_cat(iCatMajor, strValue.toInt());
+                dlgchannel_settings->add_cat(strChannel, iCatMajor, strValue.toInt());
             else if (strKey == "guardian")
-                dlgchannel_settings->add_guardian(strValue.toInt());
+                dlgchannel_settings->add_guardian(strChannel, strValue.toInt());
             else if (strKey == "moderated")
-                dlgchannel_settings->add_moderated(strValue.toInt());
-            else if (strKey == "createdDate")
-                dlgchannel_settings->add_created(strValue);
-            else if (strKey == "password")
-                dlgchannel_settings->add_password(strValue);
+                dlgchannel_settings->add_moderated(strChannel, strValue.toInt());
             else if (strKey == "limit")
-                dlgchannel_settings->add_limit(strValue.toInt());
+                dlgchannel_settings->add_limit(strChannel, strValue.toInt());
             else if (strKey == "auditorium")
-                dlgchannel_settings->add_auditorium(strValue.toInt());
-            else if (strKey == "email")
-                dlgchannel_settings->add_email(strValue);
+                dlgchannel_settings->add_auditorium(strChannel, strValue.toInt());
             else if (strKey == "avatar")
             {
                 QString strUrl = strValue;
@@ -1487,6 +1488,8 @@ void OnetKernel::raw_161n()
 // :ChanServ!service@service.onet NOTICE scc_test :162 #lunar :q,Merovingian o,Radowsky o,aleksa7 o,chanky o,osa1987 h,scc_test o,MajkeI
 void OnetKernel::raw_162n()
 {
+    QString strChannel = strDataList[4];
+
     for (int i = 5; i < strDataList.size(); i++)
     {
         QString strLine = strDataList[i];
@@ -1497,11 +1500,11 @@ void OnetKernel::raw_162n()
         if ((strKey.isEmpty() == false) && (strValue.isEmpty() == false))
         {
             if (strKey == "q")
-                dlgchannel_settings->add_owner(strValue);
+                dlgchannel_settings->add_owner(strChannel, strValue);
             else if (strKey == "o")
-                dlgchannel_settings->add_op(strValue);
+                dlgchannel_settings->add_op(strChannel, strValue);
             else if (strKey == "h")
-                dlgchannel_settings->add_halfop(strValue);
+                dlgchannel_settings->add_halfop(strChannel, strValue);
         }
     }
 }
@@ -1516,6 +1519,7 @@ void OnetKernel::raw_163n()
     if (strDataList.value(7).isEmpty() == true) return;
     if (strDataList.value(8).isEmpty() == true) return;
 
+    QString strChannel = strDataList[4];
     QString strFlag = strDataList[5];
     QString strNick = strDataList[6];
     QString strWho = strDataList[7];
@@ -1527,9 +1531,9 @@ void OnetKernel::raw_163n()
     strDT = dt.toString("dd/MM/yyyy hh:mm:ss");
 
     if (strFlag == "b")
-        dlgchannel_settings->add_ban(strNick, strWho, strDT);
+        dlgchannel_settings->add_ban(strChannel, strNick, strWho, strDT);
     else if (strFlag == "I")
-        dlgchannel_settings->add_invite(strNick, strWho, strDT);
+        dlgchannel_settings->add_invite(strChannel, strNick, strWho, strDT);
 }
 
 // :ChanServ!service@service.onet NOTICE scc_test :164 #scc :end of channel info
@@ -1543,12 +1547,14 @@ void OnetKernel::raw_165n()
 {
     if (strDataList.value(4).isEmpty() == true) return;
 
+    QString strChannel = strDataList[4];
+
     QString strDescription;
     for (int i = 5; i < strDataList.size(); i++) { if (i != 5) strDescription += " "; strDescription += strDataList[i]; }
     if (strDescription[0] == ':')
         strDescription = strDescription.right(strDescription.length()-1);
 
-    dlgchannel_settings->add_description(strDescription);
+    dlgchannel_settings->add_description(strChannel, strDescription);
 }
 
 // :NickServ!service@service.onet NOTICE scc_test :220 aaa :friend added to list
