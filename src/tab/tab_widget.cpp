@@ -674,10 +674,13 @@ void TabWidget::set_topic(QString strTopic)
     strData.replace("<", "&lt;");
     strData.replace(">", "&gt;");
 
+// colors
+    QString strDefaultFontColor = addslashes(settings->value("default_font_color").toString());
+    QString strBackgroundColor = addslashes(settings->value("background_color").toString());
+
 // content last
-    QString strContent;
     QString strContentLast;
-    QString strContentStart = "<html><body style=\"margin:0;padding:0;font-style:normal;color:#000000;text-align:left;font-family:Verdana;font-weight:normal;font-size:12px;background-color:#FFFFFF;\">";
+    QString strContentStart = "<html><body style=\"margin:0;padding:0;font-style:normal;color:"+strDefaultFontColor+";text-align:left;font-family:Verdana;font-weight:normal;font-size:12px;background-color:"+strBackgroundColor+";\">";
     QString strContentEnd = "</body></html>";
 
 // convert emoticons, font
@@ -686,11 +689,11 @@ void TabWidget::set_topic(QString strTopic)
     delete convertText;
 
 // init text
-    strContent = strData;
-    strContent = strContent+strContentLast;
+    strTopicContent = strData;
+    strTopicContent = strTopicContent+strContentLast;
 
 // set topic
-    topic->setHtml(strContentStart+strContent+strContentEnd,QUrl(""));
+    topic->setHtml(strContentStart+strTopicContent+strContentEnd,QUrl(""));
 
 // tooltip
     strTopic.replace(QRegExp("%C(\\S+)%"),"");
@@ -1015,10 +1018,17 @@ void TabWidget::update_channel_avatar()
 
 void TabWidget::refresh_background_color()
 {
+    QString strDefaultFontColor = addslashes(settings->value("default_font_color").toString());
     QString strBackgroundColor = addslashes(settings->value("background_color").toString());
 
-    strContentStart = "<html><body style=\"background-color:#"+strBackgroundColor+";\">";
+    // mainwebview
+    strContentStart = "<html><body style=\"background-color:"+strBackgroundColor+";\">";
     mainWebView->setHtml(strContentStart+strContent+strContentEnd,QUrl(""));
+
+    // topic
+    QString strTopicContentStart = "<html><body style=\"margin:0;padding:0;font-style:normal;color:"+strDefaultFontColor+";text-align:left;font-family:Verdana;font-weight:normal;font-size:12px;background-color:"+strBackgroundColor+";\">";
+    QString strTopicContentEnd = "</body></html>";
+    topic->setHtml(strTopicContentStart+strTopicContent+strTopicContentEnd,QUrl(""));
 }
 
 // actions

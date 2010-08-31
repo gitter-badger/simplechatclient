@@ -178,6 +178,7 @@ private:
     int iNickCount;
     bool bCursorPositionChanged;
     QString strCurrentColor;
+    QString strTopicContent;
 
     void nicklist_add(QString, QString, int);
     void nicklist_remove(QString);

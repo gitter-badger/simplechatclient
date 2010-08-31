@@ -548,6 +548,9 @@ void DlgOptions::set_default_font_color()
         pConfig1->set_value("default_font_color", strColor);
         settings->setValue("default_font_color", strColor);
         delete pConfig1;
+
+        // refresh tabs
+        emit refresh_background_color();
     }
 }
 
