@@ -23,8 +23,8 @@
 
 #include <QCloseEvent>
 #include <QDialog>
+#include <QInputDialog>
 #include <QShowEvent>
-#include "dlg_friends_ad.h"
 #include "network.h"
 #include "ui_friends.h"
 

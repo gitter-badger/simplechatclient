@@ -90,7 +90,11 @@ void DlgFriends::clear()
 
 void DlgFriends::button_add()
 {
-    (new DlgFriendsAd(myparent, pNetwork, settings, "add", ""))->show();
+    bool ok;
+    QString strText = QInputDialog::getText(this, tr("Changing your friends list"), tr("Enter a nickname to be added:"), QLineEdit::Normal, QString::null, &ok);
+
+    if ((ok == true) && (strText.isEmpty() == false))
+        pNetwork->send(QString("NS FRIENDS ADD %1").arg(strText));
 }
 
 void DlgFriends::button_remove()
@@ -107,7 +111,11 @@ void DlgFriends::button_remove()
             strSelected = ui.listWidget_offline->selectedItems().at(0)->text();
     }
 
-    (new DlgFriendsAd(myparent, pNetwork, settings, "remove", strSelected))->show();
+    bool ok;
+    QString strText = QInputDialog::getText(this, tr("Changing your friends list"), tr("Enter a nickname for removal:"), QLineEdit::Normal, strSelected, &ok);
+
+    if ((ok == true) && (strText.isEmpty() == false))
+        pNetwork->send(QString("NS FRIENDS DEL %1").arg(strText));
 }
 
 void DlgFriends::button_whois()

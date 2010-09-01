@@ -782,9 +782,6 @@
         <source>Whois</source>
         <translation>Whois</translation>
     </message>
-</context>
-<context>
-    <name>DlgFriendsAd</name>
     <message>
         <source>Changing your friends list</source>
         <translation>Zmiana listy przyjaciół</translation>

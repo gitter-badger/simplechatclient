@@ -10,7 +10,6 @@ set (scc_UIS
 	../ui/email.ui
 	../ui/emoticons.ui
 	../ui/friends.ui
-	../ui/friends_ad.ui
 	../ui/ignore.ui
 	../ui/ignore_ad.ui
 	../ui/invite.ui
@@ -50,7 +49,6 @@ set (scc_SRCS
 	gui/dlg_email.cpp
 	gui/dlg_emoticons.cpp
 	gui/dlg_friends.cpp
-	gui/dlg_friends_ad.cpp
 	gui/dlg_ignore.cpp
 	gui/dlg_ignore_ad.cpp
 	gui/dlg_invite.cpp
@@ -98,7 +96,6 @@ set (scc_MOC_HDRS
 	gui/dlg_email.h
 	gui/dlg_emoticons.h
 	gui/dlg_friends.h
-	gui/dlg_friends_ad.h
 	gui/dlg_ignore.h
 	gui/dlg_ignore_ad.h
 	gui/dlg_invite.h
