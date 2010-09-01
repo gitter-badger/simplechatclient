@@ -1259,7 +1259,7 @@
     </message>
     <message>
         <source>Birthdate:</source>
-        <translation>Data urodzenia:</translation>
+        <translation>Data ur.:</translation>
     </message>
     <message>
         <source>City:</source>
@@ -1271,15 +1271,11 @@
     </message>
     <message>
         <source>Hobby:</source>
-        <translation>Zainteresowania:</translation>
+        <translation>Hobby:</translation>
     </message>
     <message>
         <source>Type:</source>
         <translation>Status:</translation>
-    </message>
-    <message>
-        <source>Email:</source>
-        <translation>Email:</translation>
     </message>
     <message>
         <source>Female</source>

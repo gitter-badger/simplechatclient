@@ -36,7 +36,6 @@ DlgUserProfile::DlgUserProfile(QWidget *parent, Network *param1, QSettings *para
     ui.label_country->setText(tr("Country:"));
     ui.label_hobby->setText(tr("Hobby:"));
     ui.label_type->setText(tr("Type:"));
-    ui.label_email->setText(tr("Email:"));
     ui.label_www->setText(tr("Website:"));
 }
 
@@ -51,7 +50,6 @@ void DlgUserProfile::show_info()
     ui.lineEdit_country->setText(convert_country(sCurrentNickInfo.country));
     ui.plainTextEdit_hobby->setPlainText(sCurrentNickInfo.longDesc);
     ui.lineEdit_type->setText(convert_type(sCurrentNickInfo.type));
-    ui.lineEdit_email->setText(sCurrentNickInfo.email);
     ui.lineEdit_www->setText(sCurrentNickInfo.www);
 
     if (sCurrentNickInfo.avatar.isEmpty() == false)

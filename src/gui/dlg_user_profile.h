@@ -35,7 +35,7 @@ struct NickInfo
     QString birthdate;
     QString city;
     QString country;
-    QString email;
+    QString email; // not important
     QString longDesc;
     QString offmsg; // not inportant
     QString prefs; // not important

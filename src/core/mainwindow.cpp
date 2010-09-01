@@ -101,7 +101,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
 // settings
     settings.clear();
-    settings.setValue("version", "1.0.7.467");
+    settings.setValue("version", "1.0.7.468");
     settings.setValue("debug", "off");
     settings.setValue("logged", "off");
     settings.setValue("busy", "off");
@@ -117,13 +117,12 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     settings.setValue("disable_logs", strDisableLogs);
     settings.setValue("disable_sounds", strDisableSounds);
     settings.setValue("style", strStyle);
-    settings.setValue("background_color", strBackgroundColor);
     settings.setValue("my_bold", strMyBold);
     settings.setValue("my_italic", strMyItalic);
     settings.setValue("my_font", strMyFont);
     settings.setValue("my_color", strMyColor);
+    settings.setValue("background_color", strBackgroundColor);
     settings.setValue("default_font_color", strDefaultFontColor);
-    settings.setValue("join_font_color", strJoinFontColor);
     settings.setValue("font_color_level_1", strJoinFontColor);
     settings.setValue("font_color_level_2", strPartFontColor);
     settings.setValue("font_color_level_3", strQuitFontColor);
@@ -253,7 +252,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     QObject::connect(this, SIGNAL(do_kernel(QString)), pOnet_kernel, SLOT(kernel(QString)));
     QObject::connect(this, SIGNAL(do_request_uo(QString, QString, QString)), pOnet_auth, SLOT(request_uo(QString, QString, QString)));
 
-// signal refresh background color
+// signal refresh colors
     QObject::connect(pOptions, SIGNAL(refresh_colors()), pTabC, SLOT(refresh_colors()));
 
 // tray
