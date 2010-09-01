@@ -115,7 +115,11 @@ TabWidget::TabWidget(QWidget *parent, Network *param1, QSettings *param2, QStrin
 
     bold = new QPushButton(this);
     bold->setFont(QFont("Times New Roman", -1, 75, false));
+#ifdef Q_WS_X11
+    bold->setText("b");
+#else
     bold->setText("B");
+#endif
     bold->setParent(this);
     bold->setFlat(true);
     bold->setCheckable(true);
