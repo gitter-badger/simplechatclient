@@ -28,7 +28,6 @@ SOURCES += src/avatars/channel_avatar.cpp \
     src/gui/dlg_cam.cpp \
     src/gui/dlg_channel_favourites.cpp \
     src/gui/dlg_channel_homes.cpp \
-    src/gui/dlg_channel_homes_ad.cpp \
     src/gui/dlg_channel_key.cpp \
     src/gui/dlg_channel_list.cpp \
     src/gui/dlg_channel_settings.cpp \
@@ -76,7 +75,6 @@ HEADERS += src/avatars/channel_avatar.h \
     src/gui/dlg_cam.h \
     src/gui/dlg_channel_favourites.h \
     src/gui/dlg_channel_homes.h \
-    src/gui/dlg_channel_homes_ad.h \
     src/gui/dlg_channel_key.h \
     src/gui/dlg_channel_list.h \
     src/gui/dlg_channel_settings.h \
@@ -108,7 +106,6 @@ FORMS += ui/about.ui \
     ui/cam.ui \
     ui/channel_favourites.ui \
     ui/channel_homes.ui \
-    ui/channel_homes_ad.ui \
     ui/channel_key.ui \
     ui/channel_list.ui \
     ui/channel_settings.ui \

@@ -21,11 +21,8 @@
 #ifndef DLG_CHANNEL_HOMES_H
 #define DLG_CHANNEL_HOMES_H
 
-#ifdef Q_WS_X11
-#include <QDebug>
-#endif
 #include <QDialog>
-#include "dlg_channel_homes_ad.h"
+#include <QInputDialog>
 #include "dlg_channel_settings.h"
 #include "network.h"
 #include "ui_channel_homes.h"
@@ -45,7 +42,6 @@ private:
     QSettings *settings;
     QMap <QString, QByteArray> *mChannelAvatar;
     DlgChannelSettings *dlgchannel_settings;
-    DlgChannelHomesAd *dlgchannel_homes_ad;
 
 protected:
     virtual void showEvent(QShowEvent *);

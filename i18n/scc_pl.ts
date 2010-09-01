@@ -448,9 +448,6 @@
         <source>Join</source>
         <translation>Wejdź</translation>
     </message>
-</context>
-<context>
-    <name>DlgChannelHomesAd</name>
     <message>
         <source>Changing channels</source>
         <translation>Zmiana kanałów</translation>
