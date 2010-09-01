@@ -809,9 +809,6 @@
         <source>Remove</source>
         <translation>Usuń</translation>
     </message>
-</context>
-<context>
-    <name>DlgIgnoreAd</name>
     <message>
         <source>Change your ignore list</source>
         <translation>Zmiana listy ignorowanych</translation>

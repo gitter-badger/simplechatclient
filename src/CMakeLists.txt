@@ -11,7 +11,6 @@ set (scc_UIS
 	../ui/emoticons.ui
 	../ui/friends.ui
 	../ui/ignore.ui
-	../ui/ignore_ad.ui
 	../ui/invite.ui
 	../ui/kick.ui
 	../ui/moderation.ui
@@ -50,7 +49,6 @@ set (scc_SRCS
 	gui/dlg_emoticons.cpp
 	gui/dlg_friends.cpp
 	gui/dlg_ignore.cpp
-	gui/dlg_ignore_ad.cpp
 	gui/dlg_invite.cpp
 	gui/dlg_kick.cpp
 	gui/dlg_moderation.cpp
@@ -97,7 +95,6 @@ set (scc_MOC_HDRS
 	gui/dlg_emoticons.h
 	gui/dlg_friends.h
 	gui/dlg_ignore.h
-	gui/dlg_ignore_ad.h
 	gui/dlg_invite.h
 	gui/dlg_kick.h
 	gui/dlg_moderation.h
