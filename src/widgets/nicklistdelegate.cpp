@@ -42,7 +42,6 @@ void NicklistDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opti
     QString strNicklistBusyNickColor = pConfigInit->get_value("nicklist_busy_nick_color");
     QString strNicklistGradient1Color = pConfigInit->get_value("nicklist_gradient_1_color");
     QString strNicklistGradient2Color = pConfigInit->get_value("nicklist_gradient_2_color");
-    QString strNicklistGradient3Color = pConfigInit->get_value("nicklist_gradient_3_color");
     delete pConfigInit;
 
     // default #c4c4c4
@@ -121,12 +120,25 @@ void NicklistDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opti
     {
         if (strStyle == "modern")
         {
-            r = option.rect.adjusted(imageSpace, -5, 5, 5);
-            status.paint(painter, r, Qt::AlignVCenter|Qt::AlignLeft);
-            imageSpace += 20;
+            if (strDisableAvatars == "off")
+            {
+                // modern with avatars
+                r = option.rect.adjusted(imageSpace, -5, 5, 5);
+                status.paint(painter, r, Qt::AlignVCenter|Qt::AlignLeft);
+                imageSpace += 20;
+            }
+            else
+            {
+                // modern without avatars
+                imageSpace = 5;
+                r = option.rect.adjusted(imageSpace, -4, 0, 4);
+                status.paint(painter, r, Qt::AlignVCenter|Qt::AlignLeft);
+                imageSpace += 10;
+            }
         }
         else if (strStyle == "classic")
         {
+            // classic
             imageSpace = 5;
             r = option.rect.adjusted(imageSpace, -4, 0, 4);
             status.paint(painter, r, Qt::AlignVCenter|Qt::AlignLeft);
@@ -141,12 +153,24 @@ void NicklistDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opti
     {
         if (strStyle == "modern")
         {
-            r = option.rect.adjusted(imageSpace, 0, 20, 0);
-            cam.paint(painter, r, Qt::AlignVCenter|Qt::AlignLeft);
-            imageSpace += 20;
+            if (strDisableAvatars == "off")
+            {
+                // modern with avatars
+                r = option.rect.adjusted(imageSpace, 0, 20, 0);
+                cam.paint(painter, r, Qt::AlignVCenter|Qt::AlignLeft);
+                imageSpace += 20;
+            }
+            else
+            {
+                // modern without avatars
+                r = option.rect.adjusted(imageSpace, 0, 20, 0);
+                cam.paint(painter, r, Qt::AlignVCenter|Qt::AlignLeft);
+                imageSpace += 10;
+            }
         }
         else if (strStyle == "classic")
         {
+            // classic
             r = option.rect.adjusted(imageSpace, 0, 20, 0);
             cam.paint(painter, r, Qt::AlignVCenter|Qt::AlignLeft);
             imageSpace += 10;
@@ -170,18 +194,33 @@ void NicklistDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opti
     // nick
     if (strStyle == "modern")
     {
-        r = option.rect.adjusted(imageSpace, -8, -10, -8);
-        if ((bBusy == true) && (!(option.state & QStyle::State_Selected))) painter->setPen(busyPen); // gray
-        painter->setFont(QFont("Verdana", 9, bBusy == true ? QFont::Light : QFont::Normal, bBusy));
-        painter->drawText(r.left(), r.top(), r.width(), r.height(), Qt::AlignBottom|Qt::AlignLeft, nick, &r);
+        if (strDisableAvatars == "off")
+        {
+            // modern with avatars
+            r = option.rect.adjusted(imageSpace, -8, -10, -8);
+            if ((bBusy == true) && (!(option.state & QStyle::State_Selected))) painter->setPen(busyPen); // gray
+            painter->setFont(QFont("Verdana", 9, bBusy == true ? QFont::Light : QFont::Normal, bBusy));
+            painter->drawText(r.left(), r.top(), r.width(), r.height(), Qt::AlignBottom|Qt::AlignLeft, nick, &r);
+        }
+        else
+        {
+            // modern without avatars
+            r = option.rect.adjusted(imageSpace, -4, 0, -4);
+            if ((bBusy == true) && (!(option.state & QStyle::State_Selected))) painter->setPen(busyPen); // gray
+            painter->setFont(QFont("Verdana", 9, bBusy == true ? QFont::Light : QFont::Normal, bBusy));
+            painter->drawText(r.left(), r.top(), r.width(), r.height(), Qt::AlignBottom|Qt::AlignLeft, nick, &r);
+        }
     }
     else if (strStyle == "classic")
     {
+        // classic
         r = option.rect.adjusted(imageSpace, -4, 0, -4);
         if ((bBusy == true) && (!(option.state & QStyle::State_Selected))) painter->setPen(busyPen); // gray
         painter->setFont(QFont("Verdana", 9, bBusy == true ? QFont::Light : QFont::Normal, bBusy));
         painter->drawText(r.left(), r.top(), r.width(), r.height(), Qt::AlignBottom|Qt::AlignLeft, nick, &r);
     }
+
+    painter->setPen(linePen);
 
     // description
     //r = option.rect.adjusted(imageSpace, 35, -10, 0);
@@ -203,11 +242,11 @@ QSize NicklistDelegate::sizeHint(const QStyleOptionViewItem &option, const QMode
     {
         if (strDisableAvatars == "off") // modern with avatars
             return QSize(180, 35);
-        else // modern no avatars
-            return QSize(140, 35);
+        else // modern without avatars
+            return QSize(100, 24);
     }
-    else if (strStyle == "classic")
+    else if (strStyle == "classic") // classic
         return QSize(100, 24);
-    else // default modern no avatars
-        return QSize(140, 35);
+    else // default modern without avatars
+        return QSize(100, 24);
 }
