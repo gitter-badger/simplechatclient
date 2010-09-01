@@ -3,7 +3,6 @@ set (scc_UIS
 	../ui/about.ui
 	../ui/cam.ui
 	../ui/channel_favourites.ui
-	../ui/channel_favourites_ad.ui
 	../ui/channel_homes.ui
 	../ui/channel_homes_ad.ui
 	../ui/channel_key.ui
@@ -45,7 +44,6 @@ set (scc_SRCS
 	gui/dlg_about.cpp
 	gui/dlg_cam.cpp
 	gui/dlg_channel_favourites.cpp
-	gui/dlg_channel_favourites_ad.cpp
 	gui/dlg_channel_homes.cpp
 	gui/dlg_channel_homes_ad.cpp
 	gui/dlg_channel_key.cpp
@@ -95,7 +93,6 @@ set (scc_MOC_HDRS
 	gui/dlg_about.h
 	gui/dlg_cam.h
 	gui/dlg_channel_favourites.h
-	gui/dlg_channel_favourites_ad.h
 	gui/dlg_channel_homes.h
 	gui/dlg_channel_homes_ad.h
 	gui/dlg_channel_key.h

@@ -14,7 +14,7 @@ SOURCES += src/avatars/channel_avatar.cpp \
     src/common/config.cpp \
     src/common/convert.cpp \
     src/common/crypt.cpp \
-	src/common/kamerzysta.cpp \
+    src/common/kamerzysta.cpp \
     src/common/log.cpp \
     src/common/replace.cpp \
     src/core/debug.cpp \
@@ -27,7 +27,6 @@ SOURCES += src/avatars/channel_avatar.cpp \
     src/gui/dlg_about.cpp \
     src/gui/dlg_cam.cpp \
     src/gui/dlg_channel_favourites.cpp \
-    src/gui/dlg_channel_favourites_ad.cpp \
     src/gui/dlg_channel_homes.cpp \
     src/gui/dlg_channel_homes_ad.cpp \
     src/gui/dlg_channel_key.cpp \
@@ -64,7 +63,7 @@ HEADERS += src/avatars/channel_avatar.h \
     src/common/convert.h \
     src/common/crypt.h \
     src/common/log.h \
-	src/common/kamerzysta.h \
+    src/common/kamerzysta.h \
     src/common/replace.h \
     src/core/debug.h \
     src/core/main.h \
@@ -76,7 +75,6 @@ HEADERS += src/avatars/channel_avatar.h \
     src/gui/dlg_about.h \
     src/gui/dlg_cam.h \
     src/gui/dlg_channel_favourites.h \
-    src/gui/dlg_channel_favourites_ad.h \
     src/gui/dlg_channel_homes.h \
     src/gui/dlg_channel_homes_ad.h \
     src/gui/dlg_channel_key.h \
@@ -109,7 +107,6 @@ HEADERS += src/avatars/channel_avatar.h \
 FORMS += ui/about.ui \
     ui/cam.ui \
     ui/channel_favourites.ui \
-    ui/channel_favourites_ad.ui \
     ui/channel_homes.ui \
     ui/channel_homes_ad.ui \
     ui/channel_key.ui \

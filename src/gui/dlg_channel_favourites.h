@@ -23,8 +23,8 @@
 
 #include <QCloseEvent>
 #include <QDialog>
+#include <QInputDialog>
 #include <QShowEvent>
-#include "dlg_channel_favourites_ad.h"
 #include "network.h"
 #include "ui_channel_favourites.h"
 

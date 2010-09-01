@@ -62,7 +62,14 @@ void DlgChannelFavourites::clear()
 void DlgChannelFavourites::button_add()
 {
     ui.listWidget_channels->clear();
-    (new DlgChannelFavouritesAd(myparent, pNetwork, settings, "add", ""))->show();
+
+    bool ok;
+    QString strText = QInputDialog::getText(this, tr("Change your favorite channels"), tr("Enter the name of the new channel to add to favorites:"), QLineEdit::Normal, QString::null, &ok);
+
+    if ((ok == true) && (strText.isEmpty() == false))
+        pNetwork->send(QString("NS FAVOURITES ADD %1").arg(strText));
+
+    pNetwork->send("NS FAVOURITES");
 }
 
 void DlgChannelFavourites::button_remove()
@@ -72,7 +79,14 @@ void DlgChannelFavourites::button_remove()
         strSelected = ui.listWidget_channels->selectedItems().at(0)->text();
 
     ui.listWidget_channels->clear();
-    (new DlgChannelFavouritesAd(myparent, pNetwork, settings, "remove", strSelected))->show();
+
+    bool ok;
+    QString strText = QInputDialog::getText(this, tr("Change your favorite channels"), tr("Enter the name of the channel to remove from the favorites:"), QLineEdit::Normal, strSelected, &ok);
+
+    if ((ok == true) && (strText.isEmpty() == false))
+        pNetwork->send(QString("NS FAVOURITES DEL %1").arg(strText));
+
+    pNetwork->send("NS FAVOURITES");
 }
 
 void DlgChannelFavourites::button_close()

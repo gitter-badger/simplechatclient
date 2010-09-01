@@ -417,9 +417,6 @@
         <source>Remove</source>
         <translation>Usuń</translation>
     </message>
-</context>
-<context>
-    <name>DlgChannelFavouritesAd</name>
     <message>
         <source>Change your favorite channels</source>
         <translation>Zmiana ulubionych kanałów</translation>
