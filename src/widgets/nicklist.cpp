@@ -506,7 +506,7 @@ void Nicklist::item_selected()
 
     QString strNick = this->selectedItems().at(0)->data(Qt::UserRole).toString();
 
-    if (strNick[0] != '~')
+    if ((strNick[0] != '~') && (sCurrentUserInfo.nick != strNick))
     {
         // clear user info
         sCurrentUserInfo.avatar = QString::null;
