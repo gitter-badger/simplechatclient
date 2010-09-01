@@ -334,7 +334,6 @@ TabWidget::TabWidget(QWidget *parent, Network *param1, QSettings *param2, QStrin
 
         webLink->hide();
         nickCount->hide();
-        nick_list->hide();
 
         moderation->hide();
         toolLayout->removeWidget(moderation);
