@@ -138,6 +138,8 @@ void OnetKernel::kernel(QString param1)
             raw_259();
         else if (strDataList[1].toLower() == "301")
             raw_301();
+        else if (strDataList[1].toLower() == "302")
+            raw_302();
         else if (strDataList[1].toLower() == "303")
             raw_303();
         else if (strDataList[1].toLower() == "304")
@@ -154,6 +156,10 @@ void OnetKernel::kernel(QString param1)
             raw_312();
         else if (strDataList[1].toLower() == "313")
             raw_313();
+        else if (strDataList[1].toLower() == "315")
+            raw_315();
+        else if (strDataList[1].toLower() == "316")
+            raw_316();
         else if (strDataList[1].toLower() == "317")
             raw_317();
         else if (strDataList[1].toLower() == "318")
@@ -166,12 +172,16 @@ void OnetKernel::kernel(QString param1)
             raw_341();
         else if (strDataList[1].toLower() == "333")
             raw_333();
+        else if (strDataList[1].toLower() == "352")
+            raw_352();
         else if (strDataList[1].toLower() == "353")
             raw_353();
         else if (strDataList[1].toLower() == "355")
             raw_355();
         else if (strDataList[1].toLower() == "366")
             raw_366();
+        else if (strDataList[1].toLower() == "369")
+            raw_369();
         else if (strDataList[1].toLower() == "371")
             raw_371();
         else if (strDataList[1].toLower() == "372")
@@ -194,6 +204,8 @@ void OnetKernel::kernel(QString param1)
             raw_403();
         else if (strDataList[1].toLower() == "404")
             raw_404();
+        else if (strDataList[1].toLower() == "406")
+            raw_406();
         else if (strDataList[1].toLower() == "421")
             raw_421();
         else if (strDataList[1].toLower() == "432")
@@ -208,6 +220,8 @@ void OnetKernel::kernel(QString param1)
             raw_451();
         else if (strDataList[1].toLower() == "461")
             raw_461();
+        else if (strDataList[1].toLower() == "462")
+            raw_462();
         else if (strDataList[1].toLower() == "470")
             raw_470();
         else if (strDataList[1].toLower() == "471")
@@ -240,6 +254,12 @@ void OnetKernel::kernel(QString param1)
             raw_605();
         else if (strDataList[1].toLower() == "666")
             raw_666();
+        else if (strDataList[1].toLower() == "702")
+            raw_702();
+        else if (strDataList[1].toLower() == "703")
+            raw_703();
+        else if (strDataList[1].toLower() == "704")
+            raw_704();
         else if (strDataList[1].toLower() == "801")
             raw_801();
         else if (strDataList[1].toLower() == "802")
@@ -1234,6 +1254,7 @@ void OnetKernel::raw_109n()
     tabc->show_msg(strChannel, strMessage, 6);
 }
 
+// NS INFO aleksa7
 // :NickServ!service@service.onet NOTICE Merovingian :111 aleksa7 type :2
 void OnetKernel::raw_111n()
 {
@@ -1266,12 +1287,14 @@ void OnetKernel::raw_111n()
     }
 }
 
+// NS INFO aleksa7
 // :NickServ!service@service.onet NOTICE Merovingian :112 aleksa7 :end of user info
 void OnetKernel::raw_112n()
 {
 // ignore
 }
 
+// NS FRIENDS
 // :NickServ!service@service.onet NOTICE scc_test :121 :scc_test Merovingian Succubi Radowsky
 void OnetKernel::raw_121n()
 {
@@ -1285,12 +1308,14 @@ void OnetKernel::raw_121n()
     }
 }
 
+// NS FRIENDS
 // :NickServ!service@service.onet NOTICE scc_test :122 :end of friend list
 void OnetKernel::raw_122n()
 {
 // ignore
 }
 
+// NS IGNORE
 // :NickServ!service@service.onet NOTICE scc_test :131 :arabeska22 test wilk ~test
 void OnetKernel::raw_131n()
 {
@@ -1304,6 +1329,7 @@ void OnetKernel::raw_131n()
     }
 }
 
+// NS IGNORE
 // :NickServ!service@service.onet NOTICE scc_test :132 :end of ignore list
 void OnetKernel::raw_132n()
 {
@@ -1328,6 +1354,7 @@ void OnetKernel::raw_133n()
     tabc->show_msg_active(strDisplay, 7);
 }
 
+// NS FAVOURITES
 // :NickServ!service@service.onet NOTICE scc_test :141 :#Scrabble #Quiz #scc
 void OnetKernel::raw_141n()
 {
@@ -1348,15 +1375,16 @@ void OnetKernel::raw_141n()
         settings->setValue("autojoin_favourites", "off");
 }
 
+// NS FAVOURITES
 // :NickServ!service@service.onet NOTICE scc_test :142 :end of favourites list
 void OnetKernel::raw_142n()
 {
 // ignore
 }
 
-// offline senders
+// NS OFFLINE
 // :NickServ!service@service.onet NOTICE Merovingian :151 :jubee_blue
-// channel homes
+// CS HOMES
 // :ChanServ!service@service.onet NOTICE scc_test :151 :h#scc
 void OnetKernel::raw_151n()
 {
@@ -1382,12 +1410,16 @@ void OnetKernel::raw_151n()
     }
 }
 
+// NS OFFLINE
+// :NickServ!service@service.onet NOTICE Merovingian :152 :end of offline senders list
+// CS HOMES
 // :ChanServ!service@service.onet NOTICE scc_test :152 :end of homes list
 void OnetKernel::raw_152n()
 {
 // ignore
 }
 
+// CS INFO #scc
 // :ChanServ!service@service.onet NOTICE scc_test :160 #scc :Simple Chat Client;
 void OnetKernel::raw_160n()
 {
@@ -1404,6 +1436,7 @@ void OnetKernel::raw_160n()
     tabc->set_topic(strChannel, strTopic);
 }
 
+// CS INFO #scc
 // :ChanServ!service@service.onet NOTICE scc_test :161 #scc :topicAuthor=Merovingian rank=0.9095 topicDate=1251579281 private=1 password= limit=0 type=0 createdDate=1247005186 vEmail=0 www=http://simplechatclien.sourceforge.net/ catMajor=4 catMinor=0 official=0 recommended=0 protected=0 moderated=0 avatar=http://foto0.m.onet.pl/_m/e7bd33787bb5cd96031db4034e5f1d54,1,19,0.jpg status=ok guardian=3 auditorium=0
 void OnetKernel::raw_161n()
 {
@@ -1485,6 +1518,7 @@ void OnetKernel::raw_161n()
     }
 }
 
+// CS INFO #lunar
 // :ChanServ!service@service.onet NOTICE scc_test :162 #lunar :q,Merovingian o,Radowsky o,aleksa7 o,chanky o,osa1987 h,scc_test o,MajkeI
 void OnetKernel::raw_162n()
 {
@@ -1509,8 +1543,9 @@ void OnetKernel::raw_162n()
     }
 }
 
+// CS INFO #scc
 // :ChanServ!service@service.onet NOTICE scc_test :163 #scc b test2!*@* Merovingian :1253230938
-// :ChanServ!service@service.onet NOTICE scc_test :163 #lunar I Olka Merovingian :1252595321
+// :ChanServ!service@service.onet NOTICE scc_test :163 #scc I Olka Merovingian :1252595321
 void OnetKernel::raw_163n()
 {
     if (strDataList.value(4).isEmpty() == true) return;
@@ -1536,12 +1571,14 @@ void OnetKernel::raw_163n()
         dlgchannel_settings->add_invite(strChannel, strNick, strWho, strDT);
 }
 
+// CS INFO #scc
 // :ChanServ!service@service.onet NOTICE scc_test :164 #scc :end of channel info
 void OnetKernel::raw_164n()
 {
 // ignore
 }
 
+// CS INFO #Relax
 // :ChanServ!service@service.onet NOTICE ~test :165 #Relax :Nie ważne, czy szukasz dobrej zabawy, ...
 void OnetKernel::raw_165n()
 {
@@ -1557,6 +1594,7 @@ void OnetKernel::raw_165n()
     dlgchannel_settings->add_description(strChannel, strDescription);
 }
 
+// NS FRIENDS ADD aaa
 // :NickServ!service@service.onet NOTICE scc_test :220 aaa :friend added to list
 void OnetKernel::raw_220n()
 {
@@ -1568,6 +1606,7 @@ void OnetKernel::raw_220n()
     tabc->show_msg_active(strDisplay, 7);
 }
 
+// NS FRIENDS DEL aaa
 // :NickServ!service@service.onet NOTICE scc_test :221 scc_test :friend removed from list
 void OnetKernel::raw_221n()
 {
@@ -1579,6 +1618,7 @@ void OnetKernel::raw_221n()
     tabc->show_msg_active(strDisplay, 7);
 }
 
+// NS IGNORE ADD ~test
 // :NickServ!service@service.onet NOTICE scc_test :230 ~test :ignore added to list
 void OnetKernel::raw_230n()
 {
@@ -1593,6 +1633,7 @@ void OnetKernel::raw_230n()
     pNetwork->send("NS IGNORE");
 }
 
+// NS IGNORE DEL aaa
 // :NickServ!service@service.onet NOTICE scc_test :231 ~test :ignore removed from list
 void OnetKernel::raw_231n()
 {
@@ -1607,6 +1648,7 @@ void OnetKernel::raw_231n()
     pNetwork->send("NS IGNORE");
 }
 
+// NS FAVOURITES ADD scc
 // :NickServ!service@service.onet NOTICE scc_test :240 #scc :favourite added to list
 void OnetKernel::raw_240n()
 {
@@ -1621,6 +1663,7 @@ void OnetKernel::raw_240n()
     pNetwork->send("NS FAVOURITES");
 }
 
+// NS FAVOURITES DEL scc
 // :NickServ!service@service.onet NOTICE scc_test :241 #scc :favourite removed from list
 void OnetKernel::raw_241n()
 {
@@ -1635,6 +1678,7 @@ void OnetKernel::raw_241n()
     pNetwork->send("NS FAVOURITES");
 }
 
+// CS REGISTER czesctoja
 // :ChanServ!service@service.onet NOTICE scc_test :250 #czesctoja :channel registered
 void OnetKernel::raw_250n()
 {
@@ -1654,12 +1698,14 @@ void OnetKernel::raw_250n()
     pNetwork->send(QString("JOIN %1").arg(strChannel));
 }
 
+// LUSERS
 // :cf1f4.onet 251 Merovingian :There are 2300 users and 5 invisible on 10 servers
 void OnetKernel::raw_251()
 {
 // ignore
 }
 
+// CS DROP czesctoja
 // :ChanServ!service@service.onet NOTICE scc_test :251 #czesctoja :has been dropped
 void OnetKernel::raw_251n()
 {
@@ -1671,12 +1717,14 @@ void OnetKernel::raw_251n()
     tabc->show_msg_active(strDisplay, 5);
 }
 
+// LUSERS
 // :cf1f4.onet 252 Merovingian 5 :operator(s) online
 void OnetKernel::raw_252()
 {
 // ignore
 }
 
+// CS DROP czesctoja
 // :ChanServ!service@service.onet NOTICE #testabc :252 scc_test :has dropped this channel
 void OnetKernel::raw_252n()
 {
@@ -1688,6 +1736,7 @@ void OnetKernel::raw_252n()
     tabc->show_msg_active(strDisplay, 5);
 }
 
+// LUSERS
 // :cf1f4.onet 253 Merovingian 1 :unknown connections
 void OnetKernel::raw_253()
 {
@@ -1709,12 +1758,14 @@ void OnetKernel::raw_253n()
     tabc->show_msg(strChannel, strDisplay, 5);
 }
 
+// LUSERS
 // :cf1f4.onet 254 Merovingian 4641 :channels formed
 void OnetKernel::raw_254()
 {
 // ignore
 }
 
+// CS TRANSFER #test_scc_moj Merovingian
 // :ChanServ!service@service.onet NOTICE #test_scc_moj :254 scc_test Merovingian :changed channel owner
 void OnetKernel::raw_254n()
 {
@@ -1729,12 +1780,14 @@ void OnetKernel::raw_254n()
     tabc->show_msg(strChannel, strDisplay, 5);
 }
 
+// LUSERS
 // :cf1f4.onet 255 Merovingian :I have 568 clients and 1 servers
 void OnetKernel::raw_255()
 {
 // ignore
 }
 
+// CS BAN #scc ADD cos
 // :ChanServ!service@service.onet NOTICE scc_test :255 #scc +b cos :channel privilege changed
 void OnetKernel::raw_255n()
 {
@@ -1749,6 +1802,7 @@ void OnetKernel::raw_255n()
     tabc->show_msg_active(strDisplay, 5);
 }
 
+// ADMIN
 // :cf1f1.onet 256 ~test :Administrative info for cf1f1.onet
 void OnetKernel::raw_256()
 {
@@ -1796,6 +1850,7 @@ void OnetKernel::raw_256n()
     tabc->show_msg(strChannel, strDisplay, 5);
 }
 
+// ADMIN
 // :cf1f1.onet 257 ~test :Name     - Czat Admin
 void OnetKernel::raw_257()
 {
@@ -1818,6 +1873,7 @@ void OnetKernel::raw_257n()
     pNetwork->send(QString("CS INFO %1 i").arg(strChannel));
 }
 
+// ADMIN
 // :cf1f1.onet 258 ~test :Nickname - czat_admin
 void OnetKernel::raw_258()
 {
@@ -1845,6 +1901,7 @@ void OnetKernel::raw_258n()
     pNetwork->send(QString("CS INFO %1 i").arg(strChannel));
 }
 
+// ADMIN
 // :cf1f1.onet 259 ~test :E-Mail   - czat_admin@czat.onet.pl
 void OnetKernel::raw_259()
 {
@@ -1904,6 +1961,7 @@ void OnetKernel::raw_260n()
     tabc->show_msg(strChannel, strDisplay, 5);
 }
 
+// CS DROP #czesctoja
 // :ChanServ!service@service.onet NOTICE scc_test :261 scc_test #czesctoja :has dropped this channel
 void OnetKernel::raw_261n()
 {
@@ -1924,18 +1982,21 @@ void OnetKernel::raw_261n()
     pNetwork->send(QString("PART %1").arg(strChannel));
 }
 
+// LUSERS
 // :cf1f4.onet 265 Merovingian :Current Local Users: 568  Max: 1633
 void OnetKernel::raw_265()
 {
 // ignore
 }
 
+// LUSERS
 // :cf1f4.onet 266 Merovingian :Current Global Users: 2305  Max: 6562
 void OnetKernel::raw_266()
 {
 // ignore
 }
 
+// WHOIS Merovingian
 // :cf1f2.onet 301 scc_test Merovingian :nie ma
 void OnetKernel::raw_301()
 {
@@ -1952,6 +2013,22 @@ void OnetKernel::raw_301()
     tabc->show_msg_active(strDisplay, 7);
 }
 
+// USERHOST a
+// :cf1f2.onet 302 Merovingian :
+// USERHOST aleksa7
+// :cf1f2.onet 302 Merovingian :aleksa7=+14833406@44DC43.4DB130.368946.600B51
+void OnetKernel::raw_302()
+{
+    QString strMessage;
+    for (int i = 3; i < strDataList.size(); i++) { if (i != 3) strMessage += " "; strMessage += strDataList[i]; }
+    if (strMessage[0] == ':')
+        strMessage = strMessage.right(strMessage.length()-1);
+    strMessage = "* "+strMessage;
+
+    tabc->show_msg_active(strMessage, 7);
+}
+
+// ISON
 // :cf1f1.onet 303 ~test :Darom
 void OnetKernel::raw_303()
 {
@@ -1965,6 +2042,7 @@ void OnetKernel::raw_303()
     tabc->show_msg_active(strDisplay, 7);
 }
 
+// OPER
 // :cf1f3.onet 304 ~test :SYNTAX OPER <username> <password>
 void OnetKernel::raw_304()
 {
@@ -1977,6 +2055,7 @@ void OnetKernel::raw_304()
     tabc->show_msg_active(strMessage, 7);
 }
 
+// AWAY :
 // :cf1f3.onet 305 scc_test :You are no longer marked as being away
 void OnetKernel::raw_305()
 {
@@ -1984,6 +2063,7 @@ void OnetKernel::raw_305()
     tabc->show_msg_all(strDisplay, 7);
 }
 
+// AWAY :reason
 // :cf1f3.onet 306 scc_test :You have been marked as being away
 void OnetKernel::raw_306()
 {
@@ -1991,6 +2071,7 @@ void OnetKernel::raw_306()
     tabc->show_msg_all(strDisplay, 7);
 }
 
+// WHOIS
 // :cf1f3.onet 307 scc_test Merovingian :is a registered nick
 void OnetKernel::raw_307()
 {
@@ -2010,6 +2091,7 @@ void OnetKernel::raw_307()
     tabc->show_msg_active(strDisplay, 7);
 }
 
+// WHOIS
 // :cf1f1.onet 311 scc_test Merovingian 26269559 2294E8.94913F.196694.9BAE58 * :Merovingian
 void OnetKernel::raw_311()
 {
@@ -2034,7 +2116,10 @@ void OnetKernel::raw_311()
     tabc->show_msg_active(strDisplayIrcname, 7);
 }
 
+// WHOIS
 // :cf1f2.onet 312 scc_test Merovingian *.onet :OnetCzat
+// WHOWAS
+// :cf1f2.onet 312 Merovingian merovingian *.onet :Wed Sep  1 18:37:42 2010
 void OnetKernel::raw_312()
 {
     if (strDataList.value(3).isEmpty() == true) return;
@@ -2048,6 +2133,7 @@ void OnetKernel::raw_312()
     tabc->show_msg_active(strDisplay, 7);
 }
 
+// WHOIS
 // :cf1f1.onet 313 scc_test Llanero :is a GlobalOp on OnetCzat
 // :cf1f2.onet 313 Merovingian Darom :is a NetAdmin on OnetCzat
 void OnetKernel::raw_313()
@@ -2072,6 +2158,40 @@ void OnetKernel::raw_313()
     tabc->show_msg_active(strDisplay, 7);
 }
 
+// WHO
+// :cf1f2.onet 315 Merovingian a :End of /WHO list.
+void OnetKernel::raw_315()
+{
+// ignore
+}
+
+// WHOWAS
+// :cf1f2.onet 314 Merovingian merovingian 26269559 2294E8.94913F.75F4D7.D7A8A7 * :Merovingian
+void OnetKernel::raw_316()
+{
+    // copy of raw 311
+    if (strDataList.value(3).isEmpty() == true) return;
+    if (strDataList.value(4).isEmpty() == true) return;
+    if (strDataList.value(5).isEmpty() == true) return;
+    if (strDataList.value(7).isEmpty() == true) return;
+
+    QString strNick = strDataList[3];
+    QString strZUO = strDataList[4];
+    QString strIP = strDataList[5];
+    QString strIrcname;
+
+    for (int i = 7; i < strDataList.size(); i++) { if (i != 7) strIrcname += " "; strIrcname += strDataList[i]; }
+    if (strIrcname[0] == ':')
+        strIrcname = strIrcname.right(strIrcname.length()-1);
+
+    QString strDisplayNick = QString(tr("* %1 is %2@%3")).arg(strNick).arg(strZUO).arg(strIP);
+    tabc->show_msg_active(strDisplayNick, 7);
+
+    QString strDisplayIrcname = QString(tr("* %1 ircname: %2")).arg(strNick).arg(strIrcname);
+    tabc->show_msg_active(strDisplayIrcname, 7);
+}
+
+// WHOIS
 // :cf1f3.onet 317 scc_test Merovingian 7 1263650617 :seconds idle, signon time
 void OnetKernel::raw_317()
 {
@@ -2114,12 +2234,14 @@ void OnetKernel::raw_317()
     tabc->show_msg_active(strDisplaySignon, 7);
 }
 
+// WHOIS
 // :cf1f4.onet 318 scc_test Merovingian :End of /WHOIS list.
 void OnetKernel::raw_318()
 {
 // ignore
 }
 
+// WHOIS
 // :cf1f4.onet 319 scc_test Merovingian :#testy %#Komputery `#scc `#Quiz `#Scrabble `#hack
 void OnetKernel::raw_319()
 {
@@ -2181,6 +2303,22 @@ void OnetKernel::raw_341()
         tabc->rename_tab(strChannel, strNick);
 }
 
+// WHO
+// :cf1f2.onet 352 Merovingian #testy 12265854 F3F8AF.464CED.BF6592.28AAB2 *.onet Darom G` :0 Darom
+// :cf1f2.onet 352 Merovingian * 26269559 2294E8.94913F.75F4D7.D7A8A7 *.onet Merovingian H :0 Merovingian
+// :cf1f2.onet 352 Merovingian #uwaga 43347263 0AD995.BF5FE3.665A1E.9BBABB *.onet Llanero G@ :0 Llanero
+// :cf1f2.onet 352 Merovingian #RADIO_PIORUNFM_PL 14833406 44DC43.4DB130.368946.600B51 *.onet aleksa7 H% :0 aleksa7
+// :cf1f2.onet 352 Merovingian * 18359115 admin.łona *.onet MAS_PSOTKA G :0 onet-czat
+void OnetKernel::raw_352()
+{
+    QString strMessage;
+    for (int i = 3; i < strDataList.size(); i++) { if (i != 3) strMessage += " "; strMessage += strDataList[i]; }
+    strMessage = "* "+strMessage;
+
+    tabc->show_msg_active(strMessage, 7);
+}
+
+// NAMES
 // :cf1f1.onet 353 scc_test = #scc :scc_test|rx,0 `@Merovingian|brx,1 @chanky|rx,1
 // :cf1f3.onet 353 Merovingian = #hack :%Hacker %weed %cvf @Majkel SzperaCZ_11 Merovingian `ChanServ %but
 void OnetKernel::raw_353()
@@ -2230,6 +2368,7 @@ void OnetKernel::raw_355()
 // ignore
 }
 
+// NAMES
 // :cf1f2.onet 366 scc_test #scc :End of /NAMES list.
 void OnetKernel::raw_366()
 {
@@ -2240,6 +2379,14 @@ void OnetKernel::raw_366()
     tabc->refresh_nicklist(strChannel);
 }
 
+// WHOWAS
+// :cf1f2.onet 369 Merovingian merovingian :End of WHOWAS
+void OnetKernel::raw_369()
+{
+// ignore
+}
+
+// INFO
 // :cf1f3.onet 371 ~test :Core Developers:
 void OnetKernel::raw_371()
 {
@@ -2252,6 +2399,7 @@ void OnetKernel::raw_371()
     tabc->show_msg("Status", strMessage, 7);
 }
 
+// MOTD
 // :cf1f4.onet 372 scc_test :- Onet Czat. Inny Wymiar Czatowania. Witamy
 void OnetKernel::raw_372()
 {
@@ -2263,12 +2411,14 @@ void OnetKernel::raw_372()
     tabc->show_msg("Status", strMessage, 0);
 }
 
+// INFO
 // :cf1f3.onet 374 ~test :End of /INFO list
 void OnetKernel::raw_374()
 {
 // ignore
 }
 
+// MOTD
 // :cf1f4.onet 375 scc_test :cf1f4.onet message of the day
 void OnetKernel::raw_375()
 {
@@ -2276,12 +2426,14 @@ void OnetKernel::raw_375()
     tabc->show_msg("Status", strDisplay, 0);
 }
 
+// MOTD
 // :cf1f1.onet 376 scc_test :End of message of the day.
 void OnetKernel::raw_376()
 {
 // ignore
 }
 
+// TIME
 // :cf1f2.onet 391 ~test cf1f2.onet :Tue Jul 13 18:33:05 2010
 void OnetKernel::raw_391()
 {
@@ -2419,6 +2571,19 @@ void OnetKernel::raw_404n()
     QString strNick = strDataList[4];
 
     QString strMessage = QString(tr("* %1 :User is not registred")).arg(strNick);
+
+    tabc->show_msg_active(strMessage, 7);
+}
+
+// WHOWAS a
+//:cf1f2.onet 406 Merovingian a :There was no such nickname
+void OnetKernel::raw_406()
+{
+    if (strDataList.value(3).isEmpty() == true) return;
+
+    QString strNick = strDataList[3];
+
+    QString strMessage = QString(tr("* %1 :There was no such nickname")).arg(strNick);
 
     tabc->show_msg_active(strMessage, 7);
 }
@@ -2729,6 +2894,14 @@ void OnetKernel::raw_461n()
     tabc->show_msg(strChannel, strMessage, 7);
 }
 
+// PASS
+// :cf1f2.onet 462 Merovingian :You may not reregister
+void OnetKernel::raw_462()
+{
+    QString strMessage = QString(tr("* You may not reregister"));
+    tabc->show_msg_active(strMessage, 7);
+}
+
 // :ChanServ!service@service.onet NOTICE scc_test :463 #lunar AUDITORIUM :permission denied, insufficient privileges
 void OnetKernel::raw_463n()
 {
@@ -2931,6 +3104,7 @@ void OnetKernel::raw_601()
     dlgfriends->set_friend(strNick, false);
 }
 
+// NS FRIENDS DEL nick
 // :cf1f3.onet 602 scc_test aaa * * 0 :stopped watching
 void OnetKernel::raw_602()
 {
@@ -2967,12 +3141,42 @@ void OnetKernel::raw_605()
     dlgfriends->set_friend(strNick, false);
 }
 
+// SERVER
 // :cf1f1.onet 666 ~test :You cannot identify as a server, you are a USER. IRC Operators informed.
 void OnetKernel::raw_666()
 {
     QString strMessage = QString(tr("* You cannot identify as a server, you are a USER. IRC Operators informed."));
 
     tabc->show_msg_active(strMessage, 7);
+}
+
+// COMMANDS
+// :cf1f2.onet 702 Merovingian :ZLINE <core> 1
+// MODULES
+// :cf1f2.onet 702 Merovingian :m_onetauditorium.so
+void OnetKernel::raw_702()
+{
+    QString strMessage;
+    for (int i = 3; i < strDataList.size(); i++) { if (i != 3) strMessage += " "; strMessage += strDataList[i]; }
+    if (strMessage[0] == ':')
+        strMessage = strMessage.right(strMessage.length()-1);
+    strMessage = "* "+strMessage;
+
+    tabc->show_msg_active(strMessage, 7);
+}
+
+// MODULES
+// :cf1f2.onet 703 Merovingian :End of MODULES list
+void OnetKernel::raw_703()
+{
+// ignore
+}
+
+// COMMANDS
+// :cf1f2.onet 704 Merovingian :End of COMMANDS list
+void OnetKernel::raw_704()
+{
+// ignore
 }
 
 //:cf1f3.onet 801 scc_test :q5VMy1wl6hKL5ZUt
@@ -3007,6 +3211,7 @@ void OnetKernel::raw_802()
     tabc->show_msg_active(strMessage, 9);
 }
 
+// BUSY 1
 // :cf1f2.onet 807 scc_test :You are marked as busy
 void OnetKernel::raw_807()
 {
@@ -3016,6 +3221,7 @@ void OnetKernel::raw_807()
     tabc->show_msg_all(strDisplay, 7);
 }
 
+// BUSY 0
 // :cf1f2.onet 808 scc_test :You are no longer marked busy
 void OnetKernel::raw_808()
 {
@@ -3025,6 +3231,7 @@ void OnetKernel::raw_808()
     tabc->show_msg_all(strDisplay, 7);
 }
 
+// WHOIS
 // :cf1f2.onet 809 scc_test Succubi :is busy
 void OnetKernel::raw_809()
 {
@@ -3058,6 +3265,7 @@ void OnetKernel::raw_812()
     tabc->show_msg_active(strMessage, 7);
 }
 
+// WHOIS
 // :cf1f4.onet 815 ~test testnick :Public webcam
 void OnetKernel::raw_815()
 {
@@ -3089,12 +3297,14 @@ void OnetKernel::raw_817()
         tabc->show_msg(strTime, strChannel, QString("<%1> %2").arg(strNick).arg(strMessage), 0);
 }
 
+// SLIST
 // :cf1f3.onet 818 scc_test :Start of simple channels list.
 void OnetKernel::raw_818()
 {
     dlgchannel_list->clear();
 }
 
+// SLIST
 // :cf1f3.onet 819 scc_test :#tarnów_dziki:g:1,#Żory:g:0,#Mława:O:0,#Lineage_II:_:1,#kakakak:O:0,#apostolat_yfl:_:0,#ITALIA_CLUB:i:23,#Finał_WOŚP:P:0,#sama_słodycz:O:0,#Suwałki:i:14,#Mamuśki:O:0,#Pokój_Radości:O:0,#Antwerpia:g:0,#Kolo_Gospodyn_Wiejskich:O:0,#Samotnia_Kurka:G:0,#Wszystko_o_grach:O:0,#VIPy_NowySącz:h:0,#tymczasowy:G:0,#Zielona_Góra:h:2,#45slonko:P:0,#kawalek_nieba:O:0,#Wirtualna_Przyjazn:a:11,#Magiczny_swiat:O:1,#herbatka_u_cynamonki:P:0,#DEUTSCHLAND:i:111,#informatyka:`:1
 void OnetKernel::raw_819()
 {
@@ -3178,6 +3388,7 @@ void OnetKernel::raw_819()
     }
 }
 
+// SLIST
 // :cf1f3.onet 820 scc_test :End of simple channel list.
 void OnetKernel::raw_820()
 {
@@ -3195,6 +3406,7 @@ void OnetKernel::raw_821()
     tabc->show_msg_active(strMessage, 7);
 }
 
+// NS IGNORE ADD nick
 // :cf1f1.onet 951 scc_test scc_test :Added test!*@* <privatemessages,channelmessages,invites> to silence list
 void OnetKernel::raw_951()
 {

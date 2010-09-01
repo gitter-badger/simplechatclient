@@ -1820,6 +1820,10 @@
         <translation>* %1 :Nick nie jest zarejestrowany</translation>
     </message>
     <message>
+        <source>* %1 :There was no such nickname</source>
+        <translation>* %1 :Nie było takiego nicka</translation>
+    </message>
+    <message>
         <source>* %1 :Unknown command</source>
         <translation>* %1 :Nieznane polecenie</translation>
     </message>
@@ -1898,6 +1902,10 @@
     <message>
         <source>* %1 :Channel operators cannot be banned</source>
         <translation>* %1 :Nie można zbanować super operatora/operatora</translation>
+    </message>
+    <message>
+        <source>* You may not reregister</source>
+        <translation>* Nie możesz się ponownie zarejestrować</translation>
     </message>
     <message>
         <source>* %1 :Permission denied, insufficient privileges in %2 channel</source>

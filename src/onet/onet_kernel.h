@@ -138,6 +138,7 @@ private:
     void raw_265();
     void raw_266();
     void raw_301();
+    void raw_302();
     void raw_303();
     void raw_304();
     void raw_305();
@@ -146,15 +147,19 @@ private:
     void raw_311();
     void raw_312();
     void raw_313();
+    void raw_315();
+    void raw_316();
     void raw_317();
     void raw_318();
     void raw_319();
     void raw_332();
     void raw_333();
     void raw_341();
+    void raw_352();
     void raw_353();
     void raw_355();
     void raw_366();
+    void raw_369();
     void raw_371();
     void raw_372();
     void raw_374();
@@ -168,6 +173,7 @@ private:
     void raw_402();
     void raw_403();
     void raw_404n();
+    void raw_406();
     void raw_406n();
     void raw_407n();
     void raw_408n();
@@ -191,6 +197,7 @@ private:
     void raw_459n();
     void raw_461();
     void raw_461n();
+    void raw_462();
     void raw_463n();
     void raw_464n();
     void raw_467n();
@@ -212,6 +219,9 @@ private:
     void raw_604();
     void raw_605();
     void raw_666();
+    void raw_702();
+    void raw_703();
+    void raw_704();
     void raw_801();
     void raw_802();
     void raw_807();
