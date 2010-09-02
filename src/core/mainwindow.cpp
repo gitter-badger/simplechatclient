@@ -101,7 +101,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
 // settings
     settings.clear();
-    settings.setValue("version", "1.0.7.480");
+    settings.setValue("version", "1.0.7.481");
     settings.setValue("debug", "off");
     settings.setValue("logged", "off");
     settings.setValue("busy", "off");

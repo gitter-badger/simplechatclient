@@ -38,7 +38,6 @@ TabWidget::TabWidget(QWidget *parent, Network *param1, QSettings *param2, QStrin
 
     iNickCount = 0;
     bCursorPositionChanged = false;
-    bScroll = true;
     strCurrentColor = "#000000";
     strFontSize = "11px";
     strContentStart = "<html><body style=\"background-color:"+strBackgroundColor+";\">";
@@ -263,6 +262,7 @@ TabWidget::TabWidget(QWidget *parent, Network *param1, QSettings *param2, QStrin
     scroll->setFlat(true);
     scroll->setCheckable(true);
     scroll->show();
+    bScroll = true;
 
     toolWidget = new QWidget(this);
     toolLayout = new QHBoxLayout();
@@ -558,8 +558,9 @@ void TabWidget::set_default()
 
     color->setCurrentIndex(iMyColor);
 
-// set scroll
+// set default scroll
     scroll->setDown(true);
+    bScroll = true;
 }
 
 QString TabWidget::addslashes(QString strData)
@@ -1381,6 +1382,8 @@ void TabWidget::scroll_clicked()
         scroll->setDown(true);
         bScroll = true;
     }
+
+    inputline->setFocus();
 }
 
 // input line
