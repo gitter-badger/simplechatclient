@@ -114,13 +114,14 @@ TabWidget::TabWidget(QWidget *parent, Network *param1, QSettings *param2, QStrin
     mainWebView->show();
 
     bold = new QPushButton(this);
+    bold->setParent(this);
+    bold->setToolTip(tr("Bold"));
     bold->setFont(QFont("Times New Roman", -1, 75, false));
 #ifdef Q_WS_X11
     bold->setText("b");
 #else
     bold->setText("B");
 #endif
-    bold->setParent(this);
     bold->setFlat(true);
     bold->setCheckable(true);
     bold->setMaximumWidth(25);
@@ -129,9 +130,10 @@ TabWidget::TabWidget(QWidget *parent, Network *param1, QSettings *param2, QStrin
     bMyBold = false;
 
     italic = new QPushButton(this);
+    italic->setParent(this);
+    italic->setToolTip(tr("Italic"));
     italic->setFont(QFont("Times New Roman", -1, -1, true));
     italic->setText("I");
-    italic->setParent(this);
     italic->setFlat(true);
     italic->setCheckable(true);
     italic->setMaximumWidth(25);
@@ -158,13 +160,32 @@ TabWidget::TabWidget(QWidget *parent, Network *param1, QSettings *param2, QStrin
     fontMenu->addAction(courierAct);
 
     fontfamily = new QPushButton(this);
+    fontfamily->setParent(this);
+    fontfamily->setToolTip(tr("Font family"));
     fontfamily->setFont(QFont("Verdana", -1, -1, false));
     fontfamily->setText("Verdana");
-    fontfamily->setParent(this);
     fontfamily->setMaximumWidth(250);
     fontfamily->setMaximumHeight(25);
     fontfamily->setMenu(fontMenu);
     fontfamily->show();
+
+    color = new QComboBox(this);
+    color->setParent(this);
+    color->setToolTip(tr("Font color"));
+    color->setIconSize(QSize(50,10));
+
+    QStringList comboBoxColors;
+    comboBoxColors << "#000000" << "#623c00" << "#c86c00" << "#ff6500" << "#ff0000" << "#e40f0f" << "#990033" << "#8800ab" << "#ce00ff" << "#0f2ab1" << "#3030ce" << "#006699" << "#1a866e" << "#008100" << "#959595";
+
+    int iComboBoxColors = 0;
+    foreach (QString strColor, comboBoxColors)
+    {
+        QPixmap pixmap(50,10);
+        pixmap.fill(QColor(strColor));
+        color->insertItem(iComboBoxColors, pixmap, "");
+        iComboBoxColors++;
+    }
+    color->show();
 
     size8Act = new QAction("8", this);
     size8Act->setFont(QFont("Verdana", 8, -1, false));
@@ -193,26 +214,10 @@ TabWidget::TabWidget(QWidget *parent, Network *param1, QSettings *param2, QStrin
     sizeMenu->addAction(size18Act);
     sizeMenu->addAction(size20Act);
 
-    color = new QComboBox(this);
-    color->setParent(this);
-    color->setIconSize(QSize(50,10));
-
-    QStringList comboBoxColors;
-    comboBoxColors << "#000000" << "#623c00" << "#c86c00" << "#ff6500" << "#ff0000" << "#e40f0f" << "#990033" << "#8800ab" << "#ce00ff" << "#0f2ab1" << "#3030ce" << "#006699" << "#1a866e" << "#008100" << "#959595";
-
-    int iComboBoxColors = 0;
-    foreach (QString strColor, comboBoxColors)
-    {
-        QPixmap pixmap(50,10);
-        pixmap.fill(QColor(strColor));
-        color->insertItem(iComboBoxColors, pixmap, "");
-        iComboBoxColors++;
-    }
-    color->show();
-
     size = new QPushButton(this);
-    size->setText(tr("Font:")+strFontSize.left(strFontSize.length()-2));
     size->setParent(this);
+    size->setToolTip(tr("Font size"));
+    size->setText(tr("Font:")+strFontSize.left(strFontSize.length()-2));
     size->setMaximumWidth(250);
     size->setMaximumHeight(25);
     size->setMenu(sizeMenu);
@@ -220,6 +225,7 @@ TabWidget::TabWidget(QWidget *parent, Network *param1, QSettings *param2, QStrin
 
     emoticons = new QPushButton(QIcon(":/images/logo_64.png"), "", this);
     emoticons->setParent(this);
+    emoticons->setToolTip(tr("Emoticons"));
     emoticons->setMaximumHeight(25);
     emoticons->show();
 
@@ -229,18 +235,21 @@ TabWidget::TabWidget(QWidget *parent, Network *param1, QSettings *param2, QStrin
     separator->show();
 
     channel_settings = new QPushButton(this);
-    channel_settings->setText(tr("Settings"));
     channel_settings->setParent(this);
+    channel_settings->setToolTip(tr("Channel settings"));
+    channel_settings->setText(tr("Settings"));
     channel_settings->show();
 
     moderation = new QPushButton(this);
-    moderation->setText(tr("Moderation"));
     moderation->setParent(this);
+    moderation->setToolTip(tr("Moderation"));
+    moderation->setText(tr("Moderation"));
     moderation->show();
 
     clear = new QPushButton(this);
-    clear->setText(tr("Clear"));
     clear->setParent(this);
+    clear->setToolTip(tr("Clear"));
+    clear->setText(tr("Clear"));
     clear->show();
 
     toolWidget = new QWidget(this);
@@ -260,8 +269,8 @@ TabWidget::TabWidget(QWidget *parent, Network *param1, QSettings *param2, QStrin
     toolWidget->setLayout(toolLayout);
 
     nickLabel = new QLabel();
-    nickLabel->setText(QString("<p style=\"font-weight:bold;\"> %1</p>").arg(tr("(Unregistered)")));
     nickLabel->setParent(this);
+    nickLabel->setText(QString("<p style=\"font-weight:bold;\"> %1</p>").arg(tr("(Unregistered)")));
     nickLabel->show();
 
     inputline = new Inputline(this);
@@ -272,15 +281,17 @@ TabWidget::TabWidget(QWidget *parent, Network *param1, QSettings *param2, QStrin
     inputline->show();
 
     sendButton = new QPushButton();
-    sendButton->setText(tr("Send"));
     sendButton->setParent(this);
+    sendButton->setToolTip(tr("Send"));
+    sendButton->setText(tr("Send"));
     sendButton->setMaximumWidth(70);
     sendButton->setMaximumHeight(25);
     sendButton->show();
 
     moderSendButton = new QPushButton();
-    moderSendButton->setText(tr("Send to moderators"));
     moderSendButton->setParent(this);
+    moderSendButton->setToolTip(tr("Send to moderators"));
+    moderSendButton->setText(tr("Send to moderators"));
     moderSendButton->setMaximumWidth(180);
     moderSendButton->setMaximumHeight(25);
     moderSendButton->show();

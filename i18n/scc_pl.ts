@@ -2105,6 +2105,34 @@
         <source>Send to moderators</source>
         <translation>Wyślij do moderatorów</translation>
     </message>
+    <message>
+        <source>Bold</source>
+        <translation>Pogrubienie</translation>
+    </message>
+    <message>
+        <source>Italic</source>
+        <translation>Kursywa</translation>
+    </message>
+    <message>
+        <source>Font family</source>
+        <translation>Rodzaj czcionki</translation>
+    </message>
+    <message>
+        <source>Font color</source>
+        <translation>Kolor czcionki</translation>
+    </message>
+    <message>
+        <source>Font size</source>
+        <translation>Wielkość czcionki</translation>
+    </message>
+    <message>
+        <source>Emoticons</source>
+        <translation>Emotikony</translation>
+    </message>
+    <message>
+        <source>Channel settings</source>
+        <translation>Ustawienia kanału</translation>
+    </message>
 </context>
 <context>
     <name>MainWebView</name>
