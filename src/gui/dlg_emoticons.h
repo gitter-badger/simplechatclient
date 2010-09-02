@@ -38,10 +38,14 @@ public:
 private:
     Ui::uiEmoticons ui;
     Inputline *inputline;
+    bool bDoneStandard;
+    bool bDoneExtended;
 
-    void get_emoticons();
+    void get_emoticons_standard();
+    void get_emoticons_extended();
 
 private slots:
+    void current_tab_changed(int);
     void clicked_standard(QModelIndex);
     void clicked_extended(QModelIndex);
     void button_insert();

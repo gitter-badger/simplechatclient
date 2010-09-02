@@ -33,7 +33,7 @@ DlgEmoticons::DlgEmoticons(QWidget *parent, Inputline *param1) : QDialog(parent)
     ui.pushButton_insert->setText(tr("Insert"));
 }
 
-void DlgEmoticons::get_emoticons()
+void DlgEmoticons::get_emoticons_standard()
 {
     QString path = QCoreApplication::applicationDirPath();
 
@@ -59,6 +59,13 @@ void DlgEmoticons::get_emoticons()
         }
     }
 
+    bDoneStandard = true;
+}
+
+void DlgEmoticons::get_emoticons_extended()
+{
+    QString path = QCoreApplication::applicationDirPath();
+
     // extended
     QDir dExtendedEmoticons = path+"/3rdparty/emoticons_other";
     QFileInfoList filExtendedEmoticons = dExtendedEmoticons.entryInfoList();
@@ -80,6 +87,16 @@ void DlgEmoticons::get_emoticons()
             ui.listWidget_extended->addItem(item);
         }
     }
+
+    bDoneExtended = true;
+}
+
+void DlgEmoticons::current_tab_changed(int index)
+{
+    if ((index == 0) && (bDoneStandard == false))
+        get_emoticons_standard();
+    else if ((index == 1) && (bDoneExtended == false))
+        get_emoticons_extended();
 }
 
 void DlgEmoticons::clicked_standard(QModelIndex index)
@@ -147,8 +164,11 @@ void DlgEmoticons::showEvent(QShowEvent *event)
 
     ui.listWidget_standard->clear();
     ui.listWidget_extended->clear();
-    get_emoticons();
+    bDoneStandard = false;
+    bDoneExtended = false;
+    get_emoticons_standard();
 
+    QObject::connect(ui.tabWidget, SIGNAL(currentChanged(int)), this, SLOT(current_tab_changed(int)));
     QObject::connect(ui.listWidget_standard, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(clicked_standard(QModelIndex)));
     QObject::connect(ui.listWidget_extended, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(clicked_extended(QModelIndex)));
     QObject::connect(ui.pushButton_insert, SIGNAL(clicked()), this, SLOT(button_insert()));
