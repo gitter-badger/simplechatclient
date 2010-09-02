@@ -2066,6 +2066,22 @@
 <context>
     <name>TabWidget</name>
     <message>
+        <source>Topic set by %1</source>
+        <translation>Temat ustawiony przez %1</translation>
+    </message>
+    <message>
+        <source>Channel website</source>
+        <translation>Strona kanału</translation>
+    </message>
+    <message>
+        <source>%1 User(s)</source>
+        <translation>Liczba osób: %1</translation>
+    </message>
+    <message>
+        <source>(Unregistered)</source>
+        <translation>(Niezalogowany)</translation>
+    </message>
+    <message>
         <source>Font:</source>
         <translation>Czcionka:</translation>
     </message>
@@ -2078,8 +2094,8 @@
         <translation>Moderacja</translation>
     </message>
     <message>
-        <source>(Unregistered)</source>
-        <translation>(Niezalogowany)</translation>
+        <source>Clear</source>
+        <translation>Wyczyść</translation>
     </message>
     <message>
         <source>Send</source>
@@ -2088,18 +2104,6 @@
     <message>
         <source>Send to moderators</source>
         <translation>Wyślij do moderatorów</translation>
-    </message>
-    <message>
-        <source>Topic set by %1</source>
-        <translation>Temat ustawiony przez %1</translation>
-    </message>
-    <message>
-        <source>Channel website</source>
-        <translation>Strona kanału</translation>
-    </message>
-    <message>
-        <source>%1 User(s)</source>
-        <translation>Liczba osób: %1</translation>
     </message>
 </context>
 <context>

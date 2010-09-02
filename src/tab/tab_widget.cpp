@@ -223,6 +223,11 @@ TabWidget::TabWidget(QWidget *parent, Network *param1, QSettings *param2, QStrin
     emoticons->setMaximumHeight(25);
     emoticons->show();
 
+    separator = new QLabel();
+    separator->setText(" | ");
+    separator->setEnabled(false);
+    separator->show();
+
     channel_settings = new QPushButton(this);
     channel_settings->setText(tr("Settings"));
     channel_settings->setParent(this);
@@ -232,6 +237,11 @@ TabWidget::TabWidget(QWidget *parent, Network *param1, QSettings *param2, QStrin
     moderation->setText(tr("Moderation"));
     moderation->setParent(this);
     moderation->show();
+
+    clear = new QPushButton(this);
+    clear->setText(tr("Clear"));
+    clear->setParent(this);
+    clear->show();
 
     toolWidget = new QWidget(this);
     toolLayout = new QHBoxLayout();
@@ -243,8 +253,10 @@ TabWidget::TabWidget(QWidget *parent, Network *param1, QSettings *param2, QStrin
     toolLayout->addWidget(color);
     toolLayout->addWidget(size);
     toolLayout->addWidget(emoticons);
+    toolLayout->addWidget(separator);
     toolLayout->addWidget(channel_settings);
     toolLayout->addWidget(moderation);
+    toolLayout->addWidget(clear);
     toolWidget->setLayout(toolLayout);
 
     nickLabel = new QLabel();
@@ -374,8 +386,10 @@ TabWidget::TabWidget(QWidget *parent, Network *param1, QSettings *param2, QStrin
         color->hide();
         size->hide();
         emoticons->hide();
+        separator->hide();
         channel_settings->hide();
         moderation->hide();
+        clear->hide();
         toolWidget->hide();
 
         moderSendButton->hide();
@@ -434,6 +448,7 @@ TabWidget::TabWidget(QWidget *parent, Network *param1, QSettings *param2, QStrin
     QObject::connect(channel_settings, SIGNAL(clicked()), this, SLOT(channel_settings_clicked()));
     QObject::connect(moderation, SIGNAL(clicked()), this, SLOT(moderation_clicked()));
     QObject::connect(moderSendButton, SIGNAL(clicked()), this, SLOT(moder_button_clicked()));
+    QObject::connect(clear, SIGNAL(clicked()), this, SLOT(clear_clicked()));
 
     QObject::connect(mainWebView, SIGNAL(loadFinished(bool)), this, SLOT(change_scroll_position()));
 }
@@ -1282,6 +1297,36 @@ void TabWidget::emoticons_clicked()
     (new DlgEmoticons(myparent, inputline))->show();
 }
 
+// channel settings
+
+void TabWidget::channel_settings_clicked()
+{
+    if (pNetwork->is_connected() == true)
+    {
+        if (strName != "Status")
+        {
+            dlgchannel_settings->set_channel(strName);
+            dlgchannel_settings->show();
+        }
+    }
+}
+
+// moderation
+
+void TabWidget::moderation_clicked()
+{
+    dlgmoderation->set_active_channel(strName);
+    dlgmoderation->show();
+}
+
+// clear
+
+void TabWidget::clear_clicked()
+{
+    strContent.clear();
+    mainWebView->setHtml(strContentStart+strContent+strContentEnd,QUrl(""));
+}
+
 // input line
 
 void TabWidget::send_message(bool bType)
@@ -1424,24 +1469,6 @@ void TabWidget::inputline_return_pressed()
 void TabWidget::moder_button_clicked()
 {
     send_message(false);
-}
-
-void TabWidget::channel_settings_clicked()
-{
-    if (pNetwork->is_connected() == true)
-    {
-        if (strName != "Status")
-        {
-            dlgchannel_settings->set_channel(strName);
-            dlgchannel_settings->show();
-        }
-    }
-}
-
-void TabWidget::moderation_clicked()
-{
-    dlgmoderation->set_active_channel(strName);
-    dlgmoderation->show();
 }
 
 void TabWidget::change_scroll_position()

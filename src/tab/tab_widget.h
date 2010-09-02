@@ -127,8 +127,10 @@ private:
     QPushButton *fontfamily;
     QComboBox *color;
     QPushButton *emoticons;
+    QLabel *separator;
     QPushButton *channel_settings;
     QPushButton *moderation;
+    QPushButton *clear;
 
     QMenu *fontMenu;
     QAction *arialAct;
@@ -211,6 +213,7 @@ private slots:
     void emoticons_clicked();
     void channel_settings_clicked();
     void moderation_clicked();
+    void clear_clicked();
     void inputline_return_pressed();
     void moder_button_clicked();
 
