@@ -445,7 +445,7 @@ TabWidget::~TabWidget()
     nick_status.clear();
     nickLabel->clear();
     strContent.clear();
-    mainWebView->setHtml(strContent, QUrl(""));
+    mainWebView->setHtml(strContent,QUrl(""));
     nick_list->clear();
 
     delete nick_list;
@@ -598,12 +598,12 @@ void TabWidget::display_msg(QString strData, int iLevel)
 void TabWidget::display_message(QString strData, int iLevel)
 {
 // fix max size
-    if (strContent.count("</p>") > 200)
+    if (strContent.count("</p>") > 150)
     {
         QStringList list = strContent.split("</p>");
         int iCount = strContent.count("</p>");
         strContent.clear();
-        for (int i = iCount-200; i < iCount; i++)
+        for (int i = iCount-150; i < iCount; i++)
             strContent.append(list.at(i)+"</p>");
         list.clear();
     }
