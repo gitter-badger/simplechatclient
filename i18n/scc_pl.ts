@@ -2094,10 +2094,6 @@
         <translation>Moderacja</translation>
     </message>
     <message>
-        <source>Clear</source>
-        <translation>Wyczyść</translation>
-    </message>
-    <message>
         <source>Send</source>
         <translation>Wyślij</translation>
     </message>
@@ -2132,6 +2128,14 @@
     <message>
         <source>Channel settings</source>
         <translation>Ustawienia kanału</translation>
+    </message>
+    <message>
+        <source>Clear</source>
+        <translation>Wyczyść</translation>
+    </message>
+    <message>
+        <source>Scroll</source>
+        <translation>Wstrzymaj/Wznów przewijanie</translation>
     </message>
 </context>
 <context>

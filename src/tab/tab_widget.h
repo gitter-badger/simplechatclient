@@ -131,6 +131,7 @@ private:
     QPushButton *channel_settings;
     QPushButton *moderation;
     QPushButton *clear;
+    QPushButton *scroll;
 
     QMenu *fontMenu;
     QAction *arialAct;
@@ -181,6 +182,8 @@ private:
     bool bCursorPositionChanged;
     QString strCurrentColor;
     QString strTopicContent;
+    bool bScroll;
+    int iScrollBarValue;
 
     void replace_color(QString, QString);
 
@@ -209,11 +212,11 @@ private slots:
     void size20_triggered();
 
     void color_clicked(int);
-
     void emoticons_clicked();
     void channel_settings_clicked();
     void moderation_clicked();
     void clear_clicked();
+    void scroll_clicked();
     void inputline_return_pressed();
     void moder_button_clicked();
 

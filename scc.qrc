@@ -19,5 +19,7 @@
         <file>images/basic_conf.png</file>
         <file>images/adv_conf.png</file>
         <file>images/dev.png</file>
+        <file>images/arrow.png</file>
+        <file>images/clear.png</file>
     </qresource>
 </RCC>
