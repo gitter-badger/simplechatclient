@@ -231,6 +231,7 @@ TabWidget::TabWidget(QWidget *parent, Network *param1, QSettings *param2, QStrin
     emoticons->show();
 
     separator = new QLabel();
+    separator->setParent(this);
     separator->setText(" | ");
     separator->setEnabled(false);
     separator->show();
