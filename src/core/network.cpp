@@ -20,12 +20,13 @@
 
 #include "network.h"
 
-Network::Network(QWidget *parent, QAction *param1, QSettings *param2)
+Network::Network(QWidget *parent, QSettings *param1, QAction *param2, QAction *param3)
 {
-    connectAct = param1;
-    settings = param2;
+    settings = param1;
+    connectAct = param2;
+    lagAct = param3;
 
-    networkThr = new NetworkThread(connectAct, settings);
+    networkThr = new NetworkThread(settings, connectAct, lagAct);
     networkThr->start(QThread::InheritPriority);
 
     QObject::connect(networkThr, SIGNAL(send_to_kernel(QString)), parent, SLOT(kernel(QString)));

@@ -478,7 +478,7 @@ void OnetKernel::raw_pong()
         strLag = "0.00"+strLag;
 
     strLag = "Lag: "+strLag+"s";
-    emit set_statusbar(strLag);
+    emit set_lag(strLag);
 }
 
 // ERROR :Closing link (unknown@95.48.183.154) [Registration timeout]

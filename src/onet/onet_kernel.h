@@ -244,7 +244,7 @@ private slots:
     void remove_nathread(NickAvatar*);
 
 signals:
-    void set_statusbar(QString);
+    void set_lag(QString);
 
 };
 

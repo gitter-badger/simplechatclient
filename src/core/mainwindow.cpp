@@ -42,6 +42,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     camsAct = new QAction(QIcon(":/images/cam.png"),tr("Cams"),this);
 #endif
     aboutAct = new QAction(QIcon(":/images/logo_64.png"),tr("About SCC ..."),this);
+    lagAct = new QAction("Lag: 0s", this);
 
 // shortcut
     connectAct->setShortcuts(QKeySequence::New);
@@ -101,7 +102,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
 // settings
     settings.clear();
-    settings.setValue("version", "1.0.7.490");
+    settings.setValue("version", "1.0.7.491");
     settings.setValue("debug", "off");
     settings.setValue("logged", "off");
     settings.setValue("busy", "off");
@@ -153,7 +154,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     pTabM = new TabManager(this, &settings);
     setCentralWidget(pTabM);
 
-    pNetwork = new Network(this, connectAct, &settings);
+    pNetwork = new Network(this, &settings, connectAct, lagAct);
     pNotify = new Notify();
     pTabC = new TabContainer(this, pNetwork, &settings, pTabM, pNotify, &mNickAvatar, &mChannelAvatar, camSocket);
 
@@ -217,11 +218,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 #ifdef Q_WS_WIN
     toolBar->addAction(camsAct);
 #endif
-
-// statusbar
-    lLag = new QLabel();
-    lLag->setText("");
-    statusBar()->addWidget(lLag);
+    toolBar->addSeparator();
+    toolBar->addAction(lagAct);
 
 // signals buttons
     QObject::connect(connectAct, SIGNAL(triggered()), this, SLOT(button_connect()));
@@ -240,8 +238,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 // signals tab
     QObject::connect(pTabM, SIGNAL(tabCloseRequested(int)), this, SLOT(tab_close_requested(int)));
     QObject::connect(pDlg_moderation, SIGNAL(display_msg(QString,QString,int)), pTabC, SLOT(sshow_msg(QString,QString,int)));
-// signals status bar
-    QObject::connect(pOnet_kernel, SIGNAL(set_statusbar(QString)), this, SLOT(set_statusbar(QString)));
+// signals lag
+    QObject::connect(pOnet_kernel, SIGNAL(set_lag(QString)), this, SLOT(set_lag(QString)));
 
 // signals to network send
     QObject::connect(pDlg_moderation, SIGNAL(send(QString)), pNetwork, SLOT(send_slot(QString)));
@@ -284,7 +282,6 @@ MainWindow::~MainWindow()
     // delete objects
     delete trayIcon;
     delete trayMenu;
-    delete lLag;
     delete pOptions;
     delete pOnet_auth;
     delete pOnet_kernel;
@@ -332,10 +329,10 @@ void MainWindow::set_debug(bool param1)
         settings.setValue("debug", "off");
 }
 
-// set statusbar
-void MainWindow::set_statusbar(QString strValue)
+// set lag
+void MainWindow::set_lag(QString strValue)
 {
-    lLag->setText(strValue);
+    lagAct->setText(strValue);
 }
 
 void MainWindow::check_update()

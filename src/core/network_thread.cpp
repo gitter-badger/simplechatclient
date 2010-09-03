@@ -20,10 +20,11 @@
 
 #include "network_thread.h"
 
-NetworkThread::NetworkThread(QAction *param1, QSettings *param2)
+NetworkThread::NetworkThread(QSettings *param1, QAction *param2, QAction *param3)
 {
-    connectAct = param1;
-    settings = param2;
+    settings = param1;
+    connectAct = param2;
+    lagAct = param3;
 
     strServer = "czat-app.onet.pl";
     iPort = 5015;
@@ -229,6 +230,7 @@ void NetworkThread::connected()
 {
     connectAct->setText(tr("&Disconnect"));
     connectAct->setIconText(tr("&Disconnect"));
+    lagAct->setText("Lag: 0s");
 
     emit show_msg_all(tr("Connected to server"), 9);
 
@@ -284,6 +286,7 @@ void NetworkThread::disconnected()
     {
         connectAct->setText(tr("&Connect"));
         connectAct->setIconText(tr("&Connect"));
+        lagAct->setText("Lag: 0s");
 
         if (socket->error() != QAbstractSocket::UnknownSocketError)
             emit show_msg_all(QString(tr("Disconnected from server [%1]")).arg(socket->errorString()), 9);
@@ -314,6 +317,7 @@ void NetworkThread::error(QAbstractSocket::SocketError err)
 
     connectAct->setText(tr("&Connect"));
     connectAct->setIconText(tr("&Connect"));
+    lagAct->setText("Lag: 0s");
 
     if (socket->state() == QAbstractSocket::ConnectedState)
         emit close();
