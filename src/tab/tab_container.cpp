@@ -40,11 +40,17 @@ TabContainer::~TabContainer()
         if (free_list[i] == 'u')
         {
             QString strChannel = tw[i]->get_name();
+
+            // log
+            QString strData = "--- Log closed "+QDateTime::currentDateTime().toString(Qt::TextDate);
+            Log *l = new Log();
+            l->save(strChannel, strData);
+            delete l;
+
+            // remove
             tabm->removeTab(tabm->tab_pos(strChannel));
             free_list[i] = 'f';
             delete tw[i];
-            update_open_channels();
-            return;
         }
     }
 }
@@ -85,6 +91,13 @@ void TabContainer::add_tab(QString strChannel)
         int iFree = free_list_get();
         if (iFree != -1)
         {
+            // log
+            QString strData = "--- Log opened "+QDateTime::currentDateTime().toString(Qt::TextDate);
+            Log *l = new Log();
+            l->save(strChannel, strData);
+            delete l;
+
+            // create
             tw[iFree] = new TabWidget(myparent, pNetwork, settings, strChannel, pNotify, mNickAvatar, mChannelAvatar, dlgchannel_settings, dlgmoderation, camSocket);
             int iTab = tabm->addTab(tw[iFree], strChannel);
             tabm->setCurrentIndex(iTab);
@@ -108,6 +121,13 @@ void TabContainer::remove_tab(QString strChannel)
             {
                 if (tw[i]->get_name() == strChannel)
                 {
+                    // log
+                    QString strData = "--- Log closed "+QDateTime::currentDateTime().toString(Qt::TextDate);
+                    Log *l = new Log();
+                    l->save(strChannel, strData);
+                    delete l;
+
+                    // remove
                     strChannel = tw[i]->get_name();
                     tabm->removeTab(tabm->tab_pos(strChannel));
                     free_list[i] = 'f';
