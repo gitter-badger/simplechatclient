@@ -499,13 +499,13 @@ void TabWidget::set_default()
 // set default bold
     if (settings->value("my_bold").toString() == "on")
     {
-        bold->setDown(true);
+        bold->setChecked(true);
         bMyBold = true;
         strMyFontWeight = "bold";
     }
     else
     {
-        bold->setDown(false);
+        bold->setChecked(false);
         bMyBold = false;
         strMyFontWeight = "";
     }
@@ -513,13 +513,13 @@ void TabWidget::set_default()
 // set default italic
     if (settings->value("my_italic").toString() == "on")
     {
-        italic->setDown(true);
+        italic->setChecked(true);
         bMyItalic = true;
         strMyFontStyle = "italic";
     }
     else
     {
-        italic->setDown(false);
+        italic->setChecked(false);
         bMyItalic = false;
         strMyFontStyle = "";
     }
@@ -560,7 +560,7 @@ void TabWidget::set_default()
     color->setCurrentIndex(iMyColor);
 
 // set default scroll
-    scroll->setDown(true);
+    scroll->setChecked(true);
     bScroll = true;
 }
 
@@ -1158,13 +1158,13 @@ void TabWidget::bold_clicked()
 {
     if (bMyBold == true)
     {
-        bold->setDown(false);
+        bold->setChecked(false);
         bMyBold = false;
         strMyFontWeight = "";
     }
     else
     {
-        bold->setDown(true);
+        bold->setChecked(true);
         bMyBold = true;
         strMyFontWeight = "bold";
     }
@@ -1177,13 +1177,13 @@ void TabWidget::italic_clicked()
 {
     if (bMyItalic == true)
     {
-        italic->setDown(false);
+        italic->setChecked(false);
         bMyItalic = false;
         strMyFontStyle = "";
     }
     else
     {
-        italic->setDown(true);
+        italic->setChecked(true);
         bMyItalic = true;
         strMyFontStyle = "italic";
     }
@@ -1375,12 +1375,12 @@ void TabWidget::scroll_clicked()
 {
     if (bScroll == true)
     {
-        scroll->setDown(false);
+        scroll->setChecked(false);
         bScroll = false;
     }
     else
     {
-        scroll->setDown(true);
+        scroll->setChecked(true);
         bScroll = true;
     }
 
