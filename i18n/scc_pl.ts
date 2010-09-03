@@ -2082,10 +2082,6 @@
         <translation>(Niezalogowany)</translation>
     </message>
     <message>
-        <source>Font:</source>
-        <translation>Czcionka:</translation>
-    </message>
-    <message>
         <source>Settings</source>
         <translation>Ustawienia</translation>
     </message>

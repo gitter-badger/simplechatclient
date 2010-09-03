@@ -217,8 +217,8 @@ TabWidget::TabWidget(QWidget *parent, Network *param1, QSettings *param2, QStrin
     size = new QPushButton(this);
     size->setParent(this);
     size->setToolTip(tr("Font size"));
-    size->setText(tr("Font:")+strFontSize.left(strFontSize.length()-2));
-    size->setMaximumWidth(250);
+    size->setFont(QFont("Times New Roman", -1, -1, false));
+    size->setText("F");
     size->setMaximumHeight(25);
     size->setMenu(sizeMenu);
     size->show();
@@ -1247,7 +1247,6 @@ void TabWidget::size8_triggered()
     iScrollBarValue = mainWebView->page()->mainFrame()->scrollBarValue(Qt::Vertical);
     mainWebView->setHtml(strContentStart+strContent+strContentEnd,QUrl(""));
     strFontSize = "8px";
-    size->setText(tr("Font:")+strFontSize.left(strFontSize.length()-2));
 }
 
 void TabWidget::size9_triggered()
@@ -1256,7 +1255,6 @@ void TabWidget::size9_triggered()
     iScrollBarValue = mainWebView->page()->mainFrame()->scrollBarValue(Qt::Vertical);
     mainWebView->setHtml(strContentStart+strContent+strContentEnd,QUrl(""));
     strFontSize = "9px";
-    size->setText(tr("Font:")+strFontSize.left(strFontSize.length()-2));
 }
 
 void TabWidget::size10_triggered()
@@ -1265,7 +1263,6 @@ void TabWidget::size10_triggered()
     iScrollBarValue = mainWebView->page()->mainFrame()->scrollBarValue(Qt::Vertical);
     mainWebView->setHtml(strContentStart+strContent+strContentEnd,QUrl(""));
     strFontSize = "10px";
-    size->setText(tr("Font:")+strFontSize.left(strFontSize.length()-2));
 }
 
 void TabWidget::size11_triggered()
@@ -1274,7 +1271,6 @@ void TabWidget::size11_triggered()
     iScrollBarValue = mainWebView->page()->mainFrame()->scrollBarValue(Qt::Vertical);
     mainWebView->setHtml(strContentStart+strContent+strContentEnd,QUrl(""));
     strFontSize = "11px";
-    size->setText(tr("Font:")+strFontSize.left(strFontSize.length()-2));
 }
 
 void TabWidget::size12_triggered()
@@ -1283,7 +1279,6 @@ void TabWidget::size12_triggered()
     iScrollBarValue = mainWebView->page()->mainFrame()->scrollBarValue(Qt::Vertical);
     mainWebView->setHtml(strContentStart+strContent+strContentEnd,QUrl(""));
     strFontSize = "12px";
-    size->setText(tr("Font:")+strFontSize.left(strFontSize.length()-2));
 }
 
 void TabWidget::size14_triggered()
@@ -1292,7 +1287,6 @@ void TabWidget::size14_triggered()
     iScrollBarValue = mainWebView->page()->mainFrame()->scrollBarValue(Qt::Vertical);
     mainWebView->setHtml(strContentStart+strContent+strContentEnd,QUrl(""));
     strFontSize = "14px";
-    size->setText(tr("Font:")+strFontSize.left(strFontSize.length()-2));
 }
 
 void TabWidget::size18_triggered()
@@ -1301,7 +1295,6 @@ void TabWidget::size18_triggered()
     iScrollBarValue = mainWebView->page()->mainFrame()->scrollBarValue(Qt::Vertical);
     mainWebView->setHtml(strContentStart+strContent+strContentEnd,QUrl(""));
     strFontSize = "18px";
-    size->setText(tr("Font:")+strFontSize.left(strFontSize.length()-2));
 }
 
 void TabWidget::size20_triggered()
@@ -1310,7 +1303,6 @@ void TabWidget::size20_triggered()
     iScrollBarValue = mainWebView->page()->mainFrame()->scrollBarValue(Qt::Vertical);
     mainWebView->setHtml(strContentStart+strContent+strContentEnd,QUrl(""));
     strFontSize = "20px";
-    size->setText(tr("Font:")+strFontSize.left(strFontSize.length()-2));
 }
 
 // color
