@@ -26,7 +26,7 @@
    <string>Options</string>
   </property>
   <property name="windowIcon">
-   <iconset>
+   <iconset resource="../scc.qrc">
     <normaloff>:/images/logo_64.png</normaloff>:/images/logo_64.png</iconset>
   </property>
   <widget class="QWidget" name="verticalLayoutWidget">
@@ -295,9 +295,9 @@
              <widget class="QWidget" name="verticalLayoutWidget_8">
               <property name="geometry">
                <rect>
-                <x>0</x>
+                <x>10</x>
                 <y>0</y>
-                <width>431</width>
+                <width>421</width>
                 <height>341</height>
                </rect>
               </property>
@@ -368,9 +368,9 @@
              <widget class="QGroupBox" name="groupBox_my_font">
               <property name="geometry">
                <rect>
-                <x>0</x>
+                <x>10</x>
                 <y>10</y>
-                <width>431</width>
+                <width>411</width>
                 <height>151</height>
                </rect>
               </property>
@@ -380,13 +380,16 @@
               <widget class="QWidget" name="formLayoutWidget">
                <property name="geometry">
                 <rect>
-                 <x>10</x>
-                 <y>29</y>
-                 <width>411</width>
-                 <height>121</height>
+                 <x>20</x>
+                 <y>9</y>
+                 <width>371</width>
+                 <height>141</height>
                 </rect>
                </property>
                <layout class="QFormLayout" name="formLayout">
+                <property name="formAlignment">
+                 <set>Qt::AlignCenter</set>
+                </property>
                 <item row="0" column="0">
                  <widget class="QLabel" name="label_my_bold">
                   <property name="text">
@@ -396,6 +399,12 @@
                 </item>
                 <item row="0" column="1">
                  <widget class="QComboBox" name="comboBox_my_bold">
+                  <property name="maximumSize">
+                   <size>
+                    <width>100</width>
+                    <height>16777215</height>
+                   </size>
+                  </property>
                   <item>
                    <property name="text">
                     <string>Off</string>
@@ -417,6 +426,12 @@
                 </item>
                 <item row="1" column="1">
                  <widget class="QComboBox" name="comboBox_my_italic">
+                  <property name="maximumSize">
+                   <size>
+                    <width>100</width>
+                    <height>16777215</height>
+                   </size>
+                  </property>
                   <item>
                    <property name="text">
                     <string>Off</string>
@@ -437,7 +452,14 @@
                  </widget>
                 </item>
                 <item row="2" column="1">
-                 <widget class="QComboBox" name="comboBox_my_font"/>
+                 <widget class="QComboBox" name="comboBox_my_font">
+                  <property name="maximumSize">
+                   <size>
+                    <width>100</width>
+                    <height>16777215</height>
+                   </size>
+                  </property>
+                 </widget>
                 </item>
                 <item row="3" column="0">
                  <widget class="QLabel" name="label_my_color">
@@ -447,7 +469,14 @@
                  </widget>
                 </item>
                 <item row="3" column="1">
-                 <widget class="QComboBox" name="comboBox_my_color"/>
+                 <widget class="QComboBox" name="comboBox_my_color">
+                  <property name="maximumSize">
+                   <size>
+                    <width>100</width>
+                    <height>16777215</height>
+                   </size>
+                  </property>
+                 </widget>
                 </item>
                </layout>
               </widget>
@@ -460,9 +489,9 @@
              <widget class="QToolBox" name="toolBox">
               <property name="geometry">
                <rect>
-                <x>0</x>
+                <x>5</x>
                 <y>0</y>
-                <width>431</width>
+                <width>428</width>
                 <height>351</height>
                </rect>
               </property>
@@ -474,8 +503,8 @@
                 <rect>
                  <x>0</x>
                  <y>0</y>
-                 <width>421</width>
-                 <height>287</height>
+                 <width>98</width>
+                 <height>28</height>
                 </rect>
                </property>
                <attribute name="label">
@@ -740,8 +769,8 @@
                 <rect>
                  <x>0</x>
                  <y>0</y>
-                 <width>421</width>
-                 <height>287</height>
+                 <width>98</width>
+                 <height>28</height>
                 </rect>
                </property>
                <attribute name="label">
@@ -753,7 +782,7 @@
                   <x>0</x>
                   <y>0</y>
                   <width>421</width>
-                  <height>168</height>
+                  <height>172</height>
                  </rect>
                 </property>
                 <layout class="QHBoxLayout" name="horizontalLayout_4">
@@ -970,6 +999,8 @@
    </layout>
   </widget>
  </widget>
- <resources/>
+ <resources>
+  <include location="../scc.qrc"/>
+ </resources>
  <connections/>
 </ui>

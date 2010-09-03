@@ -648,9 +648,9 @@
     <widget class="QToolBox" name="toolBox">
      <property name="geometry">
       <rect>
-       <x>0</x>
+       <x>10</x>
        <y>0</y>
-       <width>551</width>
+       <width>531</width>
        <height>531</height>
       </rect>
      </property>
@@ -662,8 +662,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>541</width>
-        <height>413</height>
+        <width>98</width>
+        <height>28</height>
        </rect>
       </property>
       <attribute name="label">
@@ -702,9 +702,6 @@
           <attribute name="verticalHeaderVisible">
            <bool>false</bool>
           </attribute>
-          <attribute name="verticalHeaderVisible">
-           <bool>false</bool>
-          </attribute>
           <column>
            <property name="text">
             <string>Nick</string>
@@ -738,8 +735,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>541</width>
-        <height>413</height>
+        <width>98</width>
+        <height>28</height>
        </rect>
       </property>
       <attribute name="label">
@@ -778,9 +775,6 @@
           <attribute name="verticalHeaderVisible">
            <bool>false</bool>
           </attribute>
-          <attribute name="verticalHeaderVisible">
-           <bool>false</bool>
-          </attribute>
           <column>
            <property name="text">
             <string>Nick</string>
@@ -814,8 +808,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>541</width>
-        <height>413</height>
+        <width>531</width>
+        <height>423</height>
        </rect>
       </property>
       <attribute name="label">
@@ -848,9 +842,6 @@
           <property name="columnCount">
            <number>3</number>
           </property>
-          <attribute name="verticalHeaderVisible">
-           <bool>false</bool>
-          </attribute>
           <attribute name="verticalHeaderVisible">
            <bool>false</bool>
           </attribute>
@@ -897,8 +888,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>541</width>
-        <height>413</height>
+        <width>98</width>
+        <height>28</height>
        </rect>
       </property>
       <attribute name="label">
@@ -934,9 +925,6 @@
           <property name="columnCount">
            <number>3</number>
           </property>
-          <attribute name="verticalHeaderVisible">
-           <bool>false</bool>
-          </attribute>
           <attribute name="verticalHeaderVisible">
            <bool>false</bool>
           </attribute>

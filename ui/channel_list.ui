@@ -9,7 +9,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>714</width>
+    <width>716</width>
     <height>600</height>
    </rect>
   </property>
@@ -23,7 +23,7 @@
    <string>Channel list</string>
   </property>
   <property name="windowIcon">
-   <iconset>
+   <iconset resource="../scc.qrc">
     <normaloff>:/images/logo_64.png</normaloff>:/images/logo_64.png</iconset>
   </property>
   <property name="modal">
@@ -58,10 +58,10 @@
         <widget class="QGroupBox" name="groupBox_search">
          <property name="geometry">
           <rect>
-           <x>0</x>
+           <x>10</x>
            <y>0</y>
-           <width>191</width>
-           <height>171</height>
+           <width>181</width>
+           <height>161</height>
           </rect>
          </property>
          <property name="maximumSize">
@@ -77,8 +77,8 @@
           <property name="geometry">
            <rect>
             <x>10</x>
-            <y>30</y>
-            <width>171</width>
+            <y>20</y>
+            <width>161</width>
             <height>131</height>
            </rect>
           </property>
@@ -131,9 +131,9 @@
         <widget class="QGroupBox" name="groupBox_type">
          <property name="geometry">
           <rect>
-           <x>0</x>
+           <x>10</x>
            <y>170</y>
-           <width>191</width>
+           <width>181</width>
            <height>161</height>
           </rect>
          </property>
@@ -157,7 +157,7 @@
            <rect>
             <x>10</x>
             <y>22</y>
-            <width>171</width>
+            <width>161</width>
             <height>133</height>
            </rect>
           </property>
@@ -203,9 +203,9 @@
         <widget class="QGroupBox" name="groupBox_category">
          <property name="geometry">
           <rect>
-           <x>0</x>
+           <x>10</x>
            <y>340</y>
-           <width>191</width>
+           <width>181</width>
            <height>201</height>
           </rect>
          </property>
@@ -229,7 +229,7 @@
            <rect>
             <x>10</x>
             <y>30</y>
-            <width>171</width>
+            <width>161</width>
             <height>160</height>
            </rect>
           </property>
@@ -335,12 +335,6 @@
           <attribute name="verticalHeaderShowSortIndicator" stdset="0">
            <bool>false</bool>
           </attribute>
-          <attribute name="verticalHeaderVisible">
-           <bool>false</bool>
-          </attribute>
-          <attribute name="verticalHeaderShowSortIndicator" stdset="0">
-           <bool>false</bool>
-          </attribute>
           <column>
            <property name="text">
             <string>Channel name</string>
@@ -394,9 +388,6 @@
           <property name="selectionBehavior">
            <enum>QAbstractItemView::SelectRows</enum>
           </property>
-          <attribute name="verticalHeaderVisible">
-           <bool>false</bool>
-          </attribute>
           <attribute name="verticalHeaderVisible">
            <bool>false</bool>
           </attribute>
@@ -456,9 +447,6 @@
           <attribute name="verticalHeaderVisible">
            <bool>false</bool>
           </attribute>
-          <attribute name="verticalHeaderVisible">
-           <bool>false</bool>
-          </attribute>
           <column>
            <property name="text">
             <string>Channel name</string>
@@ -512,9 +500,6 @@
           <property name="selectionBehavior">
            <enum>QAbstractItemView::SelectRows</enum>
           </property>
-          <attribute name="verticalHeaderVisible">
-           <bool>false</bool>
-          </attribute>
           <attribute name="verticalHeaderVisible">
            <bool>false</bool>
           </attribute>
@@ -574,9 +559,6 @@
           <attribute name="verticalHeaderVisible">
            <bool>false</bool>
           </attribute>
-          <attribute name="verticalHeaderVisible">
-           <bool>false</bool>
-          </attribute>
           <column>
            <property name="text">
             <string>Channel name</string>
@@ -633,9 +615,6 @@
           <attribute name="verticalHeaderVisible">
            <bool>false</bool>
           </attribute>
-          <attribute name="verticalHeaderVisible">
-           <bool>false</bool>
-          </attribute>
           <column>
            <property name="text">
             <string>Channel name</string>
@@ -672,6 +651,8 @@
    </layout>
   </widget>
  </widget>
- <resources/>
+ <resources>
+  <include location="../scc.qrc"/>
+ </resources>
  <connections/>
 </ui>
