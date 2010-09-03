@@ -156,6 +156,8 @@ void OnetKernel::kernel(QString param1)
             raw_312();
         else if (strDataList[1].toLower() == "313")
             raw_313();
+        else if (strDataList[1].toLower() == "314")
+            raw_314();
         else if (strDataList[1].toLower() == "315")
             raw_315();
         else if (strDataList[1].toLower() == "316")
@@ -2156,6 +2158,32 @@ void OnetKernel::raw_313()
         strDisplay = strMessage;
 
     tabc->show_msg_active(strDisplay, 7);
+}
+
+// WHOWAS
+// :cf1f4.onet 314 Merovingian wilk 54995510 44DC43.553BE3.6C367A.FFF110 * :admin on ...
+void OnetKernel::raw_314()
+{
+    // copy of raw 311
+    if (strDataList.value(3).isEmpty() == true) return;
+    if (strDataList.value(4).isEmpty() == true) return;
+    if (strDataList.value(5).isEmpty() == true) return;
+    if (strDataList.value(7).isEmpty() == true) return;
+
+    QString strNick = strDataList[3];
+    QString strZUO = strDataList[4];
+    QString strIP = strDataList[5];
+    QString strIrcname;
+
+    for (int i = 7; i < strDataList.size(); i++) { if (i != 7) strIrcname += " "; strIrcname += strDataList[i]; }
+    if (strIrcname[0] == ':')
+        strIrcname = strIrcname.right(strIrcname.length()-1);
+
+    QString strDisplayNick = QString(tr("* %1 is %2@%3")).arg(strNick).arg(strZUO).arg(strIP);
+    tabc->show_msg_active(strDisplayNick, 7);
+
+    QString strDisplayIrcname = QString(tr("* %1 ircname: %2")).arg(strNick).arg(strIrcname);
+    tabc->show_msg_active(strDisplayIrcname, 7);
 }
 
 // WHO
