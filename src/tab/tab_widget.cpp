@@ -573,7 +573,11 @@ QString TabWidget::addslashes(QString strData)
     strData.replace("\'", "");
     strData.replace(";", "");
     strData.replace("%", "");
-    return strData;
+
+    if (strData.isEmpty() == true)
+        return "#000000";
+    else
+        return strData;
 }
 
 QString TabWidget::convert_emots(QString strData)
