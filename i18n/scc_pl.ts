@@ -1744,6 +1744,10 @@
         <translation>* %1 jest głównym administratorem czata</translation>
     </message>
     <message>
+        <source>Too many results</source>
+        <translation>Zbyt wiele wyników</translation>
+    </message>
+    <message>
         <source>* %1 is away %2</source>
         <translation>* %1 jest nieobecny %2</translation>
     </message>

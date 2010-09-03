@@ -2160,9 +2160,25 @@ void OnetKernel::raw_313()
 
 // WHO
 // :cf1f2.onet 315 Merovingian a :End of /WHO list.
+// :cf1f4.onet 315 Merovingian #16_17_18_19_lat :Too many results
 void OnetKernel::raw_315()
 {
-// ignore
+    if (strDataList.value(3).isEmpty() == true) return;
+
+    QString strNickChannel = strDataList[3];
+
+    QString strMessage;
+    for (int i = 4; i < strDataList.size(); i++) { if (i != 4) strMessage += " "; strMessage += strDataList[i]; }
+    if (strMessage[0] == ':')
+        strMessage = strMessage.right(strMessage.length()-1);
+
+    if (strMessage == "End of /WHO list.")
+        return;
+    else if (strMessage == "Too many results")
+        strMessage = tr("Too many results");
+
+    QString strDisplay = QString("* %1 :%2").arg(strNickChannel).arg(strMessage);
+    tabc->show_msg_active(strDisplay, 7);
 }
 
 // WHOWAS
