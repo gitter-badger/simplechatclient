@@ -66,27 +66,22 @@ Config::~Config()
 
 QString Config::get_value(QString strKey)
 {
-    if ((doc.isNull() == true) || (file->isOpen() == false))
+    // if config file was opened successfully
+    if ((doc.isNull() == false) && (file->isOpen() == true))
     {
-#ifdef Q_WS_X11
-        if (bCreateConfig == true)
-            qDebug() << tr("Error: config: Cannot get value: ") << strKey;
-#endif
-        return QString::null;
-    }
+        QDomElement docElem = doc.documentElement();
+        QDomNode n = docElem.firstChild();
 
-    QDomElement docElem = doc.documentElement();
-    QDomNode n = docElem.firstChild();
-
-    while (n.isNull() == false)
-    {
-        QDomElement e = n.toElement();
-        if (e.isNull() == false)
+        while (n.isNull() == false)
         {
-            if (e.tagName() == strKey)
-                return e.text();
+            QDomElement e = n.toElement();
+            if (e.isNull() == false)
+            {
+                if (e.tagName() == strKey)
+                    return e.text();
+            }
+            n = n.nextSibling();
         }
-        n = n.nextSibling();
     }
 
     // not create config
@@ -270,6 +265,12 @@ QString Config::get_value(QString strKey)
         set_value("nicklist_gradient_2_color", "#1b86b7");
         return "#1b86b7";
     }
+
+#ifdef Q_WS_X11
+    // exception: iv
+    if ((bCreateConfig == true) && (strKey != "iv"))
+        qDebug() << tr("Error: config: Cannot get value: ") << strKey;
+#endif
 
     return QString::null;
 }
