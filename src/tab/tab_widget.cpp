@@ -219,6 +219,7 @@ TabWidget::TabWidget(QWidget *parent, Network *param1, QSettings *param2, QStrin
     size->setToolTip(tr("Font size"));
     size->setFont(QFont("Times New Roman", -1, -1, false));
     size->setText("F");
+    size->setMaximumWidth(45);
     size->setMaximumHeight(25);
     size->setMenu(sizeMenu);
     size->show();
