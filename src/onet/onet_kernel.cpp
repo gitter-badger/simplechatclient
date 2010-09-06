@@ -3242,7 +3242,7 @@ void OnetKernel::raw_801()
         QString strUOKey = settings->value("uokey").toString();
         QString strNickUo = settings->value("uo_nick").toString();
         if ((strUOKey.isEmpty() == false) && (strNickUo.isEmpty() == false))
-            pNetwork->send(QString("USER * %1  czat-app.onet.pl :%2").arg(strUOKey).arg(strNickUo));
+            pNetwork->send(QString("USER * %1 czat-app.onet.pl :%2").arg(strUOKey).arg(strNickUo));
     }
     else
         tabc->show_msg("Status", tr("Error: Invalid auth key"), 9);

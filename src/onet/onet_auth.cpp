@@ -97,13 +97,14 @@ void OnetAuth::request_uo(QString param1, QString param2, QString param3)
         // nicki stale
         if (strPass.isEmpty() == false)
         {
-            pReply = accessManager.get(QNetworkRequest(QUrl("https://secure.onet.pl/_s/kropka/1?DV=secure")));
+            pReply = accessManager.get(QNetworkRequest(QUrl("http://kropka.onet.pl/_s/kropka/1?DV=secure")));
             QObject::connect(pReply, SIGNAL(finished()), &eventLoop, SLOT(quit()));
             eventLoop.exec();
             delete pReply;
 
             strData = QString("r=secure.onet.pl&url=&login=%1&haslo=%2&ssl=on&ok=Ok").arg(strNick).arg(strPass);
             pReply = accessManager.post(QNetworkRequest(QUrl("https://secure.onet.pl/index.html")), strData.toAscii());
+            pReply->ignoreSslErrors();
             QObject::connect(pReply, SIGNAL(finished()), &eventLoop, SLOT(quit()));
             eventLoop.exec();
             delete pReply;
