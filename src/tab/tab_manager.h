@@ -36,23 +36,17 @@ public:
     TabManager(QWidget *, QSettings *);
     ~TabManager();
     void set_hilight(QString);
-    void set_alert(QString);
+    void set_alert(QString, QColor);
     int tab_pos(QString);
+    QString tab_name(int);
 
 private:
-    QTabBar *tab;
-    QTimer *timer;
-    QColor color;
-    QWidget *mainWin;
+    QWidget *myparent;
     QSettings *settings;
-    QStringList alert_list;
-
-    QString get_settings_key(QString);
+    QTabBar *tab;
 
 private slots:
-    void close_requested(int);
     void current_tab_changed(int);
-    void flash_tab();
 
 };
 

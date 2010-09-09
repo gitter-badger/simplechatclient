@@ -66,6 +66,7 @@ private:
     QList <NickAvatar*> naThreadList;
     QMap <QString, QByteArray> *mNickAvatar;
     QMap <QString, QByteArray> *mChannelAvatar;
+    QMap <QString, QString> mOldNameNewName; // rename channels
 
     void raw_error();
     void raw_ping();
@@ -242,6 +243,7 @@ private:
 private slots:
     void remove_cathread(ChannelAvatar*);
     void remove_nathread(NickAvatar*);
+    void timer_rename_channel();
 
 signals:
     void set_lag(QString);

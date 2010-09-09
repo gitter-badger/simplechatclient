@@ -30,14 +30,14 @@ TabContainer::TabContainer(QWidget *parent, Network *param1, QSettings *param2, 
     mNickAvatar = param5;
     mChannelAvatar = param6;
     camSocket = param7;
-    free_list = "ffffffffffffffffffffffffffffffffffffffffffffffffff"; // f = free  u = used
+    strFreeUsedList = "ffffffffffffffffffffffffffffffffffffffffffffffffff"; // f = free  u = used
 }
 
 TabContainer::~TabContainer()
 {
     for (int i = 0; i < 50; i++)
     {
-        if (free_list[i] == 'u')
+        if (strFreeUsedList[i] == 'u')
         {
             QString strChannel = tw[i]->get_name();
 
@@ -48,8 +48,10 @@ TabContainer::~TabContainer()
             delete l;
 
             // remove
-            tabm->removeTab(tabm->tab_pos(strChannel));
-            free_list[i] = 'f';
+            int iTab = tabm->tab_pos(strChannel);
+            if (iTab != -1)
+                tabm->removeTab(iTab);
+            strFreeUsedList[i] = 'f';
             delete tw[i];
         }
     }
@@ -65,7 +67,7 @@ bool TabContainer::exist_tab(QString strChannel)
 {
     for (int i = 0; i < 50; i++)
     {
-        if (free_list[i] == 'u')
+        if (strFreeUsedList[i] == 'u')
         {
             if (tw[i]->get_name() == strChannel)
                 return true;
@@ -78,7 +80,7 @@ int TabContainer::free_list_get()
 {
     for (int i = 0; i < 50; i++)
     {
-        if (free_list[i] == 'f')
+        if (strFreeUsedList[i] == 'f')
             return i;
     }
     return -1;
@@ -100,8 +102,9 @@ void TabContainer::add_tab(QString strChannel)
             // create
             tw[iFree] = new TabWidget(myparent, pNetwork, settings, strChannel, pNotify, mNickAvatar, mChannelAvatar, dlgchannel_settings, dlgmoderation, camSocket);
             int iTab = tabm->addTab(tw[iFree], strChannel);
+            strFreeUsedList[iFree] = 'u';
             tabm->setCurrentIndex(iTab);
-            free_list[iFree] = 'u';
+            create_channel_names();
             update_open_channels();
         }
         else
@@ -117,7 +120,7 @@ void TabContainer::remove_tab(QString strChannel)
     {
         for (int i = 0; i < 50; i++)
         {
-            if (free_list[i] == 'u')
+            if (strFreeUsedList[i] == 'u')
             {
                 if (tw[i]->get_name() == strChannel)
                 {
@@ -129,9 +132,12 @@ void TabContainer::remove_tab(QString strChannel)
 
                     // remove
                     strChannel = tw[i]->get_name();
-                    tabm->removeTab(tabm->tab_pos(strChannel));
-                    free_list[i] = 'f';
+                    strFreeUsedList[i] = 'f';
+                    int iTab = tabm->tab_pos(strChannel);
+                    if (iTab != -1)
+                        tabm->removeTab(iTab);
                     delete tw[i];
+                    create_channel_names();
                     update_open_channels();
                     return;
                 }
@@ -146,13 +152,16 @@ void TabContainer::rename_tab(QString strChannel, QString strNewName)
     {
         for (int i = 0; i < 50; i++)
         {
-            if (free_list[i] == 'u')
+            if (strFreeUsedList[i] == 'u')
             {
                 if (tw[i]->get_name() == strChannel)
                 {
-                    tabm->setTabText(tabm->tab_pos(strChannel), strNewName);
-                    settings->setValue("priv"+strNewName, strChannel);
-                    update_open_channels();
+                    int iTab = tabm->tab_pos(strChannel);
+                    if (iTab != -1)
+                    {
+                        tabm->setTabText(iTab, strNewName);
+                        update_open_channels();
+                    }
                     return;
                 }
             }
@@ -166,7 +175,7 @@ void TabContainer::show_msg(QString strTime, QString strChannel, QString strData
     {
         for (int i = 0; i < 50; i++)
         {
-            if (free_list[i] == 'u')
+            if (strFreeUsedList[i] == 'u')
             {
                 if (tw[i]->get_name() == strChannel)
                 {
@@ -189,14 +198,19 @@ void TabContainer::show_msg(QString strTime, QString strChannel, QString strData
                         {
                             tw[i]->display_msg(strTime, strData, iLevel);
                             if (tabm->tab_pos(strChannel) != tabm->currentIndex())
-                                tabm->set_alert(strChannel);
+                                tabm->set_alert(strChannel, QColor(0, 147, 0, 255)); // green
                         }
                     }
                     else
                     {
                         tw[i]->display_msg(strTime, strData, iLevel);
                         if (tabm->tab_pos(strChannel) != tabm->currentIndex())
-                            tabm->set_alert(strChannel);
+                        {
+                            if (iLevel != 0)
+                                tabm->set_alert(strChannel, QColor(0, 147, 0, 255)); // green
+                            else
+                                tabm->set_alert(strChannel, QColor(255, 0, 0, 255)); // red
+                        }
                     }
 
                     return;
@@ -218,7 +232,7 @@ void TabContainer::show_msg(QString strChannel, QString strData, int iLevel)
     {
         for (int i = 0; i < 50; i++)
         {
-            if (free_list[i] == 'u')
+            if (strFreeUsedList[i] == 'u')
             {
                 if (tw[i]->get_name() == strChannel)
                 {
@@ -241,14 +255,19 @@ void TabContainer::show_msg(QString strChannel, QString strData, int iLevel)
                         {
                             tw[i]->display_msg(strData, iLevel);
                             if (tabm->tab_pos(strChannel) != tabm->currentIndex())
-                                tabm->set_alert(strChannel);
+                                tabm->set_alert(strChannel, QColor(0, 147, 0, 255)); // green
                         }
                     }
                     else
                     {
                         tw[i]->display_msg(strData, iLevel);
                         if (tabm->tab_pos(strChannel) != tabm->currentIndex())
-                            tabm->set_alert(strChannel);
+                        {
+                            if (iLevel != 0)
+                                tabm->set_alert(strChannel, QColor(0, 147, 0, 255)); // green
+                            else
+                                tabm->set_alert(strChannel, QColor(255, 0, 0, 255)); // red
+                        }
                     }
 
                     return;
@@ -268,21 +287,25 @@ void TabContainer::show_msg_all(QString strData, int iLevel)
 {
     for (int i = 0; i < 50; i++)
     {
-        if (free_list[i] == 'u')
+        if (strFreeUsedList[i] == 'u')
         {
             tw[i]->display_msg(strData, iLevel);
             if (tabm->tab_pos(tw[i]->get_name()) != tabm->currentIndex())
-                tabm->set_alert(tw[i]->get_name());
+            {
+                if (iLevel != 0)
+                    tabm->set_alert(tw[i]->get_name(), QColor(0, 147, 0, 255)); // green
+                else
+                    tabm->set_alert(tw[i]->get_name(), QColor(255, 0, 0, 255)); // red
+            }
         }
     }
 }
-
 
 void TabContainer::show_msg_active(QString strData, int iLevel)
 {
     for (int i = 0; i < 50; i++)
     {
-        if (free_list[i] == 'u')
+        if (strFreeUsedList[i] == 'u')
         {
             if (tabm->tab_pos(tw[i]->get_name()) == tabm->currentIndex())
             {
@@ -299,7 +322,7 @@ void TabContainer::set_topic(QString strChannel, QString strTopic)
     {
         for (int i = 0; i < 50; i++)
         {
-            if (free_list[i] == 'u')
+            if (strFreeUsedList[i] == 'u')
             {
                 if (tw[i]->get_name() == strChannel)
                 {
@@ -317,7 +340,7 @@ void TabContainer::enable_topic(QString strChannel)
     {
         for (int i = 0; i < 50; i++)
         {
-            if (free_list[i] == 'u')
+            if (strFreeUsedList[i] == 'u')
             {
                 if (tw[i]->get_name() == strChannel)
                 {
@@ -335,7 +358,7 @@ void TabContainer::disable_topic(QString strChannel)
     {
         for (int i = 0; i < 50; i++)
         {
-            if (free_list[i] == 'u')
+            if (strFreeUsedList[i] == 'u')
             {
                 if (tw[i]->get_name() == strChannel)
                 {
@@ -353,7 +376,7 @@ void TabContainer::author_topic(QString strChannel, QString strNick)
     {
         for (int i = 0; i < 50; i++)
         {
-            if (free_list[i] == 'u')
+            if (strFreeUsedList[i] == 'u')
             {
                 if (tw[i]->get_name() == strChannel)
                 {
@@ -371,7 +394,7 @@ void TabContainer::set_link(QString strChannel, QString strLink)
     {
         for (int i = 0; i < 50; i++)
         {
-            if (free_list[i] == 'u')
+            if (strFreeUsedList[i] == 'u')
             {
                 if (tw[i]->get_name() == strChannel)
                 {
@@ -387,7 +410,7 @@ void TabContainer::add_user(QString strChannel, QString strNick, QString strSuff
 {
     for (int i = 0; i < 50; i++)
     {
-        if (free_list[i] == 'u')
+        if (strFreeUsedList[i] == 'u')
         {
             if (tw[i]->get_name() == strChannel)
             {
@@ -402,7 +425,7 @@ void TabContainer::del_user(QString strChannel, QString strNick)
 {
     for (int i = 0; i < 50; i++)
     {
-        if (free_list[i] == 'u')
+        if (strFreeUsedList[i] == 'u')
         {
             if (tw[i]->get_name() == strChannel)
             {
@@ -417,7 +440,7 @@ void TabContainer::quit_user(QString strNick, QString strDisplay)
 {
     for (int i = 0; i < 50; i++)
     {
-        if (free_list[i] == 'u')
+        if (strFreeUsedList[i] == 'u')
         {
             if (tw[i]->nicklist_exist(strNick) == true)
             {
@@ -432,7 +455,7 @@ void TabContainer::change_flag(QString strNick, QString strChannel, QString strF
 {
     for (int i = 0; i < 50; i++)
     {
-        if (free_list[i] == 'u')
+        if (strFreeUsedList[i] == 'u')
         {
             if ((tw[i]->get_name() == strChannel) && (tw[i]->nicklist_exist(strNick) == true))
             {
@@ -447,7 +470,7 @@ void TabContainer::change_flag(QString strNick, QString strFlag)
 {
     for (int i = 0; i < 50; i++)
     {
-        if (free_list[i] == 'u')
+        if (strFreeUsedList[i] == 'u')
         {
             if (tw[i]->nicklist_exist(strNick) == true)
                 tw[i]->change_flag(strNick, strFlag);
@@ -459,7 +482,7 @@ void TabContainer::update_nick(QString strNick)
 {
     for (int i = 0; i < 50; i++)
     {
-        if (free_list[i] == 'u')
+        if (strFreeUsedList[i] == 'u')
             tw[i]->update_nick(strNick);
     }
 }
@@ -468,7 +491,7 @@ void TabContainer::clear_nicklist(QString strChannel)
 {
     for (int i = 0; i < 50; i++)
     {
-        if (free_list[i] == 'u')
+        if (strFreeUsedList[i] == 'u')
         {
             if (tw[i]->get_name() == strChannel)
             {
@@ -493,7 +516,7 @@ void TabContainer::clear_channel_all_nick_avatars(QString strChannel)
 {
     for (int i = 0; i < 50; i++)
     {
-        if (free_list[i] == 'u')
+        if (strFreeUsedList[i] == 'u')
         {
             if (tw[i]->get_name() == strChannel)
             {
@@ -518,7 +541,7 @@ void TabContainer::refresh_nicklist(QString strChannel)
 {
     for (int i = 0; i < 50; i++)
     {
-        if (free_list[i] == 'u')
+        if (strFreeUsedList[i] == 'u')
         {
             if (tw[i]->get_name() == strChannel)
             {
@@ -535,7 +558,7 @@ void TabContainer::update_open_channels()
 
     for (int i = 0; i < 50; i++)
     {
-        if (free_list[i] == 'u')
+        if (strFreeUsedList[i] == 'u')
                 tw[i]->set_open_channels(strOpenChannels);
     }
 }
@@ -544,7 +567,7 @@ void TabContainer::update_nick_avatar(QString strNick)
 {
     for (int i = 0; i < 50; i++)
     {
-        if (free_list[i] == 'u')
+        if (strFreeUsedList[i] == 'u')
         {
             if (tw[i]->nicklist_exist(strNick) == true)
             {
@@ -559,7 +582,7 @@ void TabContainer::update_channel_avatar(QString strChannel)
 {
     for (int i = 0; i < 50; i++)
     {
-        if (free_list[i] == 'u')
+        if (strFreeUsedList[i] == 'u')
         {
             if (tw[i]->get_name() == strChannel)
             {
@@ -574,7 +597,7 @@ void TabContainer::set_user_info(QString strNick, QString strKey, QString strVal
 {
     for (int i = 0; i < 50; i++)
     {
-        if (free_list[i] == 'u')
+        if (strFreeUsedList[i] == 'u')
         {
             if (tw[i]->nicklist_exist(strNick) == true)
                 tw[i]->set_user_info(strNick, strKey, strValue);
@@ -591,9 +614,22 @@ void TabContainer::refresh_colors()
 {
     for (int i = 0; i < 50; i++)
     {
-        if (free_list[i] == 'u')
+        if (strFreeUsedList[i] == 'u')
             tw[i]->refresh_colors();
     }
+}
+
+void TabContainer::create_channel_names()
+{
+    QStringList strlChannelNames;
+
+    for (int i = 0; i < 50; i++)
+    {
+        if (strFreeUsedList[i] == 'u')
+            strlChannelNames.append(tw[i]->get_name());
+    }
+
+    settings->setValue("channel_names", strlChannelNames);
 }
 
 QStringList TabContainer::get_open_channels()
@@ -601,7 +637,7 @@ QStringList TabContainer::get_open_channels()
     QStringList strlResult;
     for (int i = 0; i < 50; i++)
     {
-        if (free_list[i] == 'u')
+        if (strFreeUsedList[i] == 'u')
         {
             if (tw[i]->get_name() != "Status")
                 strlResult.append(tw[i]->get_name());
@@ -616,7 +652,7 @@ int TabContainer::get_nick_channels(QString strNick)
 
     for (int i = 0; i < 50; i++)
     {
-        if (free_list[i] == 'u')
+        if (strFreeUsedList[i] == 'u')
         {
             if (tw[i]->nicklist_exist(strNick) == true)
                 iResult++;

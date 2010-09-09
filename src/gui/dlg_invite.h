@@ -39,11 +39,8 @@ private:
     TabContainer *tabc;
     QString strNick;
     QString strChannel;
-    QString strTimerChannel;
-    QString strTimerNick;
 
 private slots:
-    void timer_timeout();
     void button_whois();
     void button_reject();
     void button_ignore();

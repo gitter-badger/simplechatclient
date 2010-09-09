@@ -20,120 +20,67 @@
 
 #include "tab_manager.h"
 
-TabManager::TabManager(QWidget *pMainWin, QSettings *param1) : QTabWidget(pMainWin)
+TabManager::TabManager(QWidget *parent, QSettings *param1) : QTabWidget(parent)
 {
-    mainWin = pMainWin;
+    myparent = parent;
     settings = param1;
     tab = tabBar();
-    this->setTabsClosable(true);
-    color = QColor(255, 0, 0, 255);
-    timer = new QTimer(this);
-    timer->setInterval(500);
-    timer->start();
-    QObject::connect(tab, SIGNAL(tabCloseRequested(int)), this, SLOT(close_requested(int)));
+    setTabsClosable(true);
     QObject::connect(tab, SIGNAL(currentChanged(int)), this, SLOT(current_tab_changed(int)));
-    QObject::connect(timer, SIGNAL(timeout()), this, SLOT(flash_tab()));
 }
 
 TabManager::~TabManager()
 {
-    timer->stop();
-    alert_list.clear();
-}
-
-void TabManager::close_requested(int index)
-{
-    Q_UNUSED (index);
-
-    // remove from tab
-    //tab->removeTab(index);
-
-    // remove from settings and alert list
-    QStringList keys = settings->allKeys();
-    for (int i = 0; i < keys.count(); i++)
-    {
-        if ((keys.at(i).length() > 4) && (keys.at(i).left(4) == "priv"))
-        {
-            alert_list.removeAll(settings->value(keys.at(i)).toString());
-            settings->remove(keys.at(i));
-        }
-    }
 }
 
 void TabManager::set_hilight(QString strName)
 {
-    if (get_settings_key(strName).isEmpty() == false)
-        strName = get_settings_key(strName);
-
-    alert_list.removeAll(strName);
     int index = tab_pos(strName);
     tab->setTabTextColor(index, QColor(138, 0, 184, 255));
 }
 
-void TabManager::set_alert(QString strName)
+void TabManager::set_alert(QString strName, QColor cColor)
 {
-    if (get_settings_key(strName).isEmpty() == false)
-        strName = get_settings_key(strName);
+    int index = tab_pos(strName);
 
-    if (tab_pos(strName) != -1)
-    {
-        if (alert_list.contains(strName) == false)
-            alert_list.append(strName);
-    }
-}
-
-void TabManager::current_tab_changed(int index)
-{
-    QString strName = tab->tabText(index);
-    mainWin->setWindowTitle(QString("Simple Chat Client - [%1]").arg(strName));
-
-    // if strName not exist convert strName to ^c1f1..
-    if (alert_list.contains(strName) == false)
-    {
-        if (settings->value("priv"+strName).toString().isEmpty() == false)
-            strName = settings->value("priv"+strName).toString();
-    }
-
-    color = QColor(0,0,0);
-    alert_list.removeAll(strName);
-    tab->setTabTextColor(tab_pos(strName), color);
-}
-
-void TabManager::flash_tab()
-{
-    if (color == QColor(255, 0, 0, 255))
-        color = QColor(0, 0, 0, 255);
-    else if (color == QColor(0, 0, 0, 255))
-        color = QColor(255, 0, 0, 255);
-
-    for (int i = 0; i < alert_list.count(); i++)
-    {
-        int index = tab_pos(alert_list.at(i));
-        if (tab->tabTextColor(index) != QColor(138, 0, 184, 255))
-            tab->setTabTextColor(index, color);
-    }
+    // if not hilighted and not current color
+    if ((tab->tabTextColor(index) != QColor(138, 0, 184, 255)) && (tab->tabTextColor(index) != cColor))
+        tab->setTabTextColor(index, cColor);
 }
 
 int TabManager::tab_pos(QString strName)
 {
-    if (get_settings_key(strName).isEmpty() == false)
-        strName = get_settings_key(strName);
+    QStringList strlChannelNames = settings->value("channel_names").toStringList();
 
-    for (int i = 0; i < tab->count(); i++)
+    int i = 0;
+    QStringListIterator strliChannelNames (strlChannelNames);
+    while (strliChannelNames.hasNext())
     {
-        if (tab->tabText(i) == strName)
+        if (strliChannelNames.next() == strName)
             return i;
+        i++;
     }
+
     return -1;
 }
 
-QString TabManager::get_settings_key(QString strFind)
+QString TabManager::tab_name(int index)
 {
-    QStringList keys = settings->allKeys();
-    for (int i = 0; i < keys.count(); i++)
-    {
-        if ((keys.at(i).length() > 4) && (settings->value(keys.at(i)).toString() == strFind))
-            return keys.at(i).right(keys.at(i).length()-4);
-    }
-    return QString::null;
+    if (index == -1) return QString::null; // prevent crash
+
+    QStringList strlChannelNames = settings->value("channel_names").toStringList();
+
+    if (index < strlChannelNames.size())
+        return strlChannelNames.at(index);
+    else
+        return QString::null;
+}
+
+void TabManager::current_tab_changed(int index)
+{
+    QString strTabText = tabText(index);
+    myparent->setWindowTitle(QString("Simple Chat Client - [%1]").arg(strTabText));
+
+    QString strName = tab_name(index);
+    tab->setTabTextColor(tab_pos(strName), QColor(0,0,0));
 }

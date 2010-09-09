@@ -59,6 +59,25 @@ void OnetKernel::remove_nathread(NickAvatar *nathr)
 #endif
 }
 
+void OnetKernel::timer_rename_channel()
+{
+    QMap <QString, QString>::const_iterator i = mOldNameNewName.begin();
+    while (i != mOldNameNewName.constEnd())
+    {
+        QString strOldName = i.key();
+        QString strNewName = i.value();
+        if (tabc->exist_tab(strOldName) == true)
+        {
+            tabc->rename_tab(strOldName, strNewName);
+            mOldNameNewName.remove(strOldName);
+        }
+        else
+            QTimer::singleShot(1000*5, this, SLOT(timer_rename_channel()));
+
+        ++i;
+    }
+}
+
 void OnetKernel::kernel(QString param1)
 {
     strData = param1;
@@ -618,28 +637,7 @@ void OnetKernel::raw_part()
 
         // close channel
         if (strChannel != "Status")
-        {
-            if (strChannel[0] == '#')
-                tabc->remove_tab(strChannel);
-            else
-            {
-                QString strNewChannel = get_settings_key(strChannel);
-                if (strNewChannel.isEmpty() == false)
-                {
-                    tabc->remove_tab(strChannel);
-                    QString strRemoveSettingsKey = "priv"+strNewChannel;
-                    if (settings->contains(strRemoveSettingsKey) == true)
-                        settings->remove(strRemoveSettingsKey);
-                }
-                else
-                {
-                    tabc->remove_tab(strChannel);
-                    QString strRemoveSettingsKey = "priv"+strChannel;
-                    if (settings->contains(strRemoveSettingsKey) == true)
-                        settings->remove(strRemoveSettingsKey);
-                }
-            }
-        }
+            tabc->remove_tab(strChannel);
     }
 }
 
@@ -2344,7 +2342,10 @@ void OnetKernel::raw_341()
     QString strChannel = strDataList[4];
 
     if (strChannel[0] == '^')
-        tabc->rename_tab(strChannel, strNick);
+    {
+        mOldNameNewName.insert(strChannel, strNick);
+        QTimer::singleShot(1000*3, this, SLOT(timer_rename_channel()));
+    }
 }
 
 // WHO
@@ -2388,19 +2389,33 @@ void OnetKernel::raw_353()
 
             tabc->add_user(strChannel, strNick, strSuffix, 0);
 
-            // nick avatar
-            QString strRequestNickAvatar = strNick;
-            if (strRequestNickAvatar.indexOf("`") != -1) strRequestNickAvatar.remove("`");
-            if (strRequestNickAvatar.indexOf("@") != -1) strRequestNickAvatar.remove("@");
-            if (strRequestNickAvatar.indexOf("%") != -1) strRequestNickAvatar.remove("%");
-            if (strRequestNickAvatar.indexOf("+") != -1) strRequestNickAvatar.remove("+");
-            if (strRequestNickAvatar.indexOf("!") != -1) strRequestNickAvatar.remove("!");
-            if (strRequestNickAvatar.indexOf("=") != -1) strRequestNickAvatar.remove("=");
+            QString strCleanNick = strNick;
+            if (strCleanNick.indexOf("`") != -1) strCleanNick.remove("`");
+            if (strCleanNick.indexOf("@") != -1) strCleanNick.remove("@");
+            if (strCleanNick.indexOf("%") != -1) strCleanNick.remove("%");
+            if (strCleanNick.indexOf("+") != -1) strCleanNick.remove("+");
+            if (strCleanNick.indexOf("!") != -1) strCleanNick.remove("!");
+            if (strCleanNick.indexOf("=") != -1) strCleanNick.remove("=");
 
-            if ((strRequestNickAvatar[0] != '~') && (mNickAvatar->contains(strRequestNickAvatar) == false))
+            // if ^ rename channel
+            if (strChannel[0] == '^')
+            {
+                Config *pConfig = new Config();
+                QString strMe = pConfig->get_value("login-nick");
+                delete pConfig;
+
+                if (strCleanNick != strMe)
+                {
+                    mOldNameNewName.insert(strChannel, strCleanNick);
+                    QTimer::singleShot(1000*3, this, SLOT(timer_rename_channel()));
+                }
+            }
+
+            // nick avatar
+            if ((strCleanNick[0] != '~') && (mNickAvatar->contains(strCleanNick) == false))
             {
                 if ((settings->value("disable_avatars").toString() == "off") && (settings->value("style").toString() == "modern"))
-                    pNetwork->send(QString("NS INFO %1 s").arg(strRequestNickAvatar));
+                    pNetwork->send(QString("NS INFO %1 s").arg(strCleanNick));
             }
         }
     }

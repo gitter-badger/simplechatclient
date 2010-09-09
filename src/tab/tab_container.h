@@ -63,6 +63,7 @@ public:
     void refresh_nicklist(QString);
     int get_nick_channels(QString);
     void set_user_info(QString, QString, QString);
+    void create_channel_names();
     QStringList get_open_channels();
 
 public slots:
@@ -77,7 +78,7 @@ private:
     QSettings *settings;
     TabManager *tabm;
     TabWidget *tw[50];
-    QString free_list;
+    QString strFreeUsedList;
     Notify *pNotify;
     QMap <QString, QByteArray> *mNickAvatar;
     QMap <QString, QByteArray> *mChannelAvatar;

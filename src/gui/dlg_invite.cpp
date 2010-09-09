@@ -68,22 +68,5 @@ void DlgInvite::button_ignore()
 void DlgInvite::button_accept()
 {
     pNetwork->send(QString("JOIN %1").arg(strChannel));
-
-// rename if priv
-    if (strChannel[0] == '^')
-    {
-        strTimerChannel = strChannel;
-        strTimerNick = strNick;
-        QTimer::singleShot(1000*3, this, SLOT(timer_timeout()));
-    }
-
-// close
     this->close();
-}
-
-void DlgInvite::timer_timeout()
-{
-    tabc->rename_tab(strTimerChannel, strTimerNick);
-    strTimerChannel = QString::null;
-    strTimerNick = QString::null;
 }
