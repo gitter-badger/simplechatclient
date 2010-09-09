@@ -132,6 +132,16 @@ void Convert::convert_text(QString *strData, QString *strLastContent)
 
         (*strLastContent) = strSpan+(*strLastContent);
     }
+    else
+    {
+        // remove colors
+        QStringList strlReplace;
+        strlReplace << "%C000000%" << "%C623c00%" << "%Cc86c00%" << "%Cff6500%" << "%Cff0000%" << "%Ce40f0f%" << "%C990033%" << "%C8800ab%" << "%Cce00ff%" << "%C0f2ab1%" << "%C3030ce%" << "%C006699%" << "%C1a866e%" << "%C008100%" << "%C959595%";
+
+        QStringListIterator strliReplace (strlReplace);
+        while (strliReplace.hasNext())
+            strData->replace(strliReplace.next(), "");
+    }
 
 // emoticons
     if (strData->indexOf("%I") != -1)

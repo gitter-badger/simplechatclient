@@ -25,6 +25,7 @@
 #include <QFile>
 #include <QObject>
 #include <QSettings>
+#include <QStringListIterator>
 
 class Convert : public QObject
 {
