@@ -444,8 +444,12 @@ void TabContainer::quit_user(QString strNick, QString strDisplay)
         {
             if (tw[i]->nicklist_exist(strNick) == true)
             {
-                tw[i]->display_msg(strDisplay, 3);
+                int iLevel = 3;
+                tw[i]->display_msg(strDisplay, iLevel);
                 tw[i]->del_user(strNick);
+
+                if (tabm->tab_pos(tw[i]->get_name()) != tabm->currentIndex())
+                    tabm->set_alert(tw[i]->get_name(), QColor(0, 147, 0, 255)); // green
             }
         }
     }
