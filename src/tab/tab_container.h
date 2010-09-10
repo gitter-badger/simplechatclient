@@ -41,7 +41,7 @@ public:
     void set_dlg(DlgChannelSettings *, DlgModeration *);
     bool exist_tab(QString);
     void remove_tab(QString);
-    void rename_tab(QString, QString);
+    bool rename_tab(QString, QString);
     void show_msg(QString, QString, QString, int);
     void show_msg(QString, QString, int);
     void show_msg_all(QString, int);

@@ -146,7 +146,7 @@ void TabContainer::remove_tab(QString strChannel)
     }
 }
 
-void TabContainer::rename_tab(QString strChannel, QString strNewName)
+bool TabContainer::rename_tab(QString strChannel, QString strNewName)
 {
     if (exist_tab(strChannel) == true)
     {
@@ -159,14 +159,19 @@ void TabContainer::rename_tab(QString strChannel, QString strNewName)
                     int iTab = tabm->tab_pos(strChannel);
                     if (iTab != -1)
                     {
-                        tabm->setTabText(iTab, strNewName);
-                        update_open_channels();
+                        if (tabm->tabText(iTab)[0] == '^')
+                        {
+                            tabm->setTabText(iTab, strNewName);
+                            update_open_channels();
+                            return true;
+                        }
                     }
-                    return;
+                    return false;
                 }
             }
         }
     }
+    return false;
 }
 
 void TabContainer::show_msg(QString strTime, QString strChannel, QString strData, int iLevel)

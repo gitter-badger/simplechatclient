@@ -68,8 +68,11 @@ void OnetKernel::timer_rename_channel()
         QString strNewName = i.value();
         if (tabc->exist_tab(strOldName) == true)
         {
-            tabc->rename_tab(strOldName, strNewName);
-            mOldNameNewName.remove(strOldName);
+            bool bRenamed = tabc->rename_tab(strOldName, strNewName);
+            if (bRenamed == true)
+                mOldNameNewName.remove(strOldName);
+            else
+                QTimer::singleShot(1000*5, this, SLOT(timer_rename_channel()));
         }
         else
             QTimer::singleShot(1000*5, this, SLOT(timer_rename_channel()));
