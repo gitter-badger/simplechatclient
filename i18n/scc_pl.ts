@@ -1796,6 +1796,10 @@
         <translation>* Nie ma takiego serwera %1</translation>
     </message>
     <message>
+        <source>* %1 :Invalid mask</source>
+        <translation>* %1 :Nieprawidłowa maska</translation>
+    </message>
+    <message>
         <source>* %1 :Invalid channel name</source>
         <translation>* %1 :Nieprawidłowa nazwa kanału</translation>
     </message>

@@ -393,6 +393,8 @@ void OnetKernel::kernel(QString param1)
                 raw_400n();
             else if (strDataList[3].toLower() == ":401")
                 raw_401n();
+            else if (strDataList[3].toLower() == ":402")
+                raw_402n();
             else if (strDataList[3].toLower() == ":404")
                 raw_404n();
             else if (strDataList[3].toLower() == ":406")
@@ -2583,6 +2585,18 @@ void OnetKernel::raw_402()
     QString strServer = strDataList[3];
 
     QString strMessage = QString(tr("* %1 :No such server")).arg(strServer);
+
+    tabc->show_msg_active(strMessage, 7);
+}
+
+// :ChanServ!service@service.onet NOTICE Merovingian :402 !*@*aa :invalid mask
+void OnetKernel::raw_402n()
+{
+    if (strDataList.value(3).isEmpty() == true) return;
+
+    QString strMask = strDataList[4];
+
+    QString strMessage = QString(tr("* %1 :Invalid mask")).arg(strMask);
 
     tabc->show_msg_active(strMessage, 7);
 }
