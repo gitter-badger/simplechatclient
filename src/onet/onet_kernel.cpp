@@ -1310,6 +1310,9 @@ void OnetKernel::raw_121n()
             strNick = strNick.right(strNick.length()-1);
 
         dlgfriends->set_friend(strNick, false);
+
+        if (dlgfriends->isHidden() == false)
+            dlgfriends->refresh();
     }
 }
 
@@ -3165,6 +3168,9 @@ void OnetKernel::raw_600()
     tabc->show_msg_active(strMessage, 7);
 
     dlgfriends->set_friend(strNick, true);
+
+    if (dlgfriends->isHidden() == false)
+        dlgfriends->refresh();
 }
 
 // :cf1f4.onet 601 scc_test Radowsky 16172032 690A6F.A8219B.7F5EC1.35E57C 1267055692 :went offline
@@ -3178,6 +3184,9 @@ void OnetKernel::raw_601()
     tabc->show_msg_active(strMessage, 7);
 
     dlgfriends->set_friend(strNick, false);
+
+    if (dlgfriends->isHidden() == false)
+        dlgfriends->refresh();
 }
 
 // NS FRIENDS DEL nick
@@ -3189,6 +3198,9 @@ void OnetKernel::raw_602()
     QString strNick = strDataList[3];
 
     dlgfriends->remove_friend(strNick);
+
+    if (dlgfriends->isHidden() == false)
+        dlgfriends->refresh();
 }
 
 //:cf1f1.onet 604 scc_test scc_test 51976824 3DE379.B7103A.6CF799.6902F4 1267054441 :is online
@@ -3202,6 +3214,9 @@ void OnetKernel::raw_604()
     tabc->show_msg_active(strMessage, 7);
 
     dlgfriends->set_friend(strNick, true);
+
+    if (dlgfriends->isHidden() == false)
+        dlgfriends->refresh();
 }
 
 // :cf1f1.onet 605 scc_test Radowsky * * 0 :is offline
@@ -3215,6 +3230,9 @@ void OnetKernel::raw_605()
     tabc->show_msg_active(strMessage, 7);
 
     dlgfriends->set_friend(strNick, false);
+
+    if (dlgfriends->isHidden() == false)
+        dlgfriends->refresh();
 }
 
 // SERVER

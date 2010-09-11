@@ -36,6 +36,7 @@ public:
     void set_friend(QString, bool);
     void remove_friend(QString);
     void clear();
+    void refresh();
 
 private:
     Ui::uiFriends ui;
@@ -44,8 +45,6 @@ private:
     QSettings *settings;
     QMap <QString, QByteArray> *mNickAvatar;
     QMap <QString, bool> friends;
-
-    void refresh();
 
 private slots:
     void button_add();
