@@ -1093,8 +1093,8 @@ void DlgOptions::nicklist_restore_default()
     pConfig->set_value("nicklist_background_color", "#ffffff");
     settings->setValue("nicklist_background_color", "#ffffff");
 
-    pConfig->set_value("nicklist_line_color", "#c4c4c4");
-    settings->setValue("nicklist_line_color", "#c4c4c4");
+    pConfig->set_value("nicklist_line_color", "#dde4db");
+    settings->setValue("nicklist_line_color", "#dde4db");
 
     pConfig->set_value("nicklist_selected_line_color", "#005a83");
     settings->setValue("nicklist_selected_line_color", "#005a83");
