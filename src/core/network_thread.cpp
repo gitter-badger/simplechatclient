@@ -132,7 +132,11 @@ void NetworkThread::send_buffer()
 
     int iCount = sendBufferCopy.size();
 
-    if (iCount < 5)
+    int iLimit = 5;
+    if ((settings->value("style").toString() == "classic") || (settings->value("disable_avatars").toString() == "on"))
+        iLimit = 4096;
+
+    if (iCount < iLimit)
     {
         for (int i = 0; i < iCount; i++)
         {
@@ -143,7 +147,7 @@ void NetworkThread::send_buffer()
     }
     else
     {
-        for (int i = 0; i < 5; i++)
+        for (int i = 0; i < iLimit; i++)
         {
             send_data(sendBufferCopy.at(0));
             sendBuffer.removeOne(sendBufferCopy.at(0));
