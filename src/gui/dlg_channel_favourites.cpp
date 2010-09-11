@@ -20,7 +20,7 @@
 
 #include "dlg_channel_favourites.h"
 
-DlgChannelFavourites::DlgChannelFavourites(QWidget *parent, Network *param1, QSettings *param2, QMap <QString, QByteArray> *param3) : QDialog(parent)
+DlgChannelFavourites::DlgChannelFavourites(QWidget *parent, Network *param1, QMap <QString, QByteArray> *param2) : QDialog(parent)
 {
     ui.setupUi(this);
     setAttribute(Qt::WA_DeleteOnClose);
@@ -28,8 +28,7 @@ DlgChannelFavourites::DlgChannelFavourites(QWidget *parent, Network *param1, QSe
 
     myparent = parent;
     pNetwork = param1;
-    settings = param2;
-    mChannelAvatar = param3;
+    mChannelAvatar = param2;
 
     ui.pushButton_add->setText(tr("Add"));
     ui.pushButton_remove->setText(tr("Remove"));

@@ -20,7 +20,7 @@
 
 #include "dlg_cam.h"
 
-DlgCam::DlgCam(QWidget *parent, Network *param1, QSettings *param2, QString param3) : QDialog(parent)
+DlgCam::DlgCam(QWidget *parent, Network *param1, QString param2) : QDialog(parent)
 {
     ui.setupUi(this);
     setAttribute(Qt::WA_DeleteOnClose);
@@ -28,8 +28,7 @@ DlgCam::DlgCam(QWidget *parent, Network *param1, QSettings *param2, QString para
     setWindowTitle(tr("Webcam"));
 
     pNetwork = param1;
-    settings = param2;
-    strNick = param3;
+    strNick = param2;
     ui.label_nick->setText("<p style=\"font-weight:bold;\">"+strNick+"</p>");
 }
 
@@ -59,7 +58,8 @@ void DlgCam::network_send(QString strData)
     if ((socket->state() == QAbstractSocket::ConnectedState) && (socket->isWritable() == true))
     {
 #ifdef Q_WS_X11
-        if (settings->value("debug").toString() == "on")
+        QSettings settings;
+        if (settings.value("debug").toString() == "on")
             qDebug() << "CAM -> " << strData;
 #endif
 
@@ -134,7 +134,8 @@ void DlgCam::network_read()
             if (strDesc.left(9) == "SETSTATUS")
             {
 #ifdef Q_WS_X11
-                if (settings->value("debug").toString() == "on")
+                QSettings settings;
+                if (settings.value("debug").toString() == "on")
                     qDebug() << "CAM <- " << strDesc;
 #endif
                 QString strStatus = strDesc.right(strDesc.length()-10);
@@ -146,8 +147,9 @@ void DlgCam::network_read()
         {
             QString strError = bData;
 #ifdef Q_WS_X11
-        if (settings->value("debug").toString() == "on")
-            qDebug() << "CAM <- " << strError;
+            QSettings settings;
+            if (settings.value("debug").toString() == "on")
+                qDebug() << "CAM <- " << strError;
 #endif
             QString strImg = ui.label_img->text() +"<br>"+strError;
             ui.label_img->setText(strImg);
@@ -176,7 +178,8 @@ void DlgCam::network_read()
         QStringList strDataList = strDataRecv.split(" ");
 
 #ifdef Q_WS_X11
-        if (settings->value("debug").toString() == "on")
+        QSettings settings;
+        if (settings.value("debug").toString() == "on")
             qDebug() << "CAM <- " << strDataRecv;
 #endif
 
@@ -279,7 +282,8 @@ void DlgCam::network_read()
         // 268 0
         else if (strDataList[0] == "268")
         {
-            QString strUOKey = settings->value("uokey").toString();
+            QSettings settings;
+            QString strUOKey = settings.value("uokey").toString();
             network_send(QString("AUTH %1 3.00.159").arg(strUOKey));
             bAuthorized = true;
         }

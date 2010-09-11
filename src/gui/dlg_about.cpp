@@ -20,17 +20,16 @@
 
 #include "dlg_about.h"
 
-DlgAbout::DlgAbout(QWidget *parent, QSettings *param1) : QDialog(parent)
+DlgAbout::DlgAbout(QWidget *parent) : QDialog(parent)
 {
     ui.setupUi(this);
     setAttribute(Qt::WA_DeleteOnClose);
     setWindowTitle(tr("About..."));
 
-    settings = param1;
-
     ui.label_logo->setPixmap(QPixmap(":/images/logo_128.png"));
 
-    QString strVersion = settings->value("version").toString();
+    QSettings settings;
+    QString strVersion = settings.value("version").toString();
     QString strDescription = "<p style=\"font-size:18px;font-weight:bold\">Simple Chat Client</p>";
     strDescription += "<p>"+tr("Version")+" "+strVersion+"</p>";
     strDescription += "<p>&copy; "+tr("Author")+"</p>";

@@ -20,10 +20,9 @@
 
 #include "onet_auth.h"
 
-OnetAuth::OnetAuth(QSettings *param1, TabContainer *param2)
+OnetAuth::OnetAuth(TabContainer *param1)
 {
-    settings = param1;
-    tabc = param2;
+    tabc = param1;
 }
 
 void OnetAuth::request_uo(QString param1, QString param2, QString param3)
@@ -41,7 +40,8 @@ void OnetAuth::request_uo(QString param1, QString param2, QString param3)
     QNetworkCookieJar *cookieJar = new QNetworkCookieJar();
     accessManager.setCookieJar(cookieJar);
 
-    QString strOverride = settings->value("override").toString();
+    QSettings settings;
+    QString strOverride = settings.value("override").toString();
 
     if (strOverride == "on")
         bOverride = true;
@@ -149,13 +149,13 @@ void OnetAuth::request_uo(QString param1, QString param2, QString param3)
         QString strValue = i->value();
 
         if (strKey == "onet_ubi")
-            settings->setValue("onet_ubi", strValue);
+            settings.setValue("onet_ubi", strValue);
         else if (strKey == "onet_cid")
-            settings->setValue("onet_cid", strValue);
+            settings.setValue("onet_cid", strValue);
         else if (strKey == "onet_sid")
-            settings->setValue("onet_sid", strValue);
+            settings.setValue("onet_sid", strValue);
         else if (strKey == "onet_uid")
-            settings->setValue("onet_uid", strValue);
+            settings.setValue("onet_uid", strValue);
     }
 
     delete cookieJar;
@@ -282,8 +282,9 @@ void OnetAuth::request_finished(QString strNickAuth, QString strData)
             {
                 QString strUOKey = doc.elementsByTagName("uoKey").item(0).toElement().text();
                 QString strNick = doc.elementsByTagName("zuoUsername").item(0).toElement().text();
-                settings->setValue("uokey", strUOKey);
-                settings->setValue("uo_nick", strNick);
+                QSettings settings;
+                settings.setValue("uokey", strUOKey);
+                settings.setValue("uo_nick", strNick);
 
                 // send auth
                 emit send(QString("NICK %1").arg(strNickAuth));

@@ -32,7 +32,7 @@ class DlgIgnore : public QDialog
 {
     Q_OBJECT
 public:
-    DlgIgnore(QWidget *, Network *, QSettings *, QMap <QString, QByteArray> *);
+    DlgIgnore(QWidget *, Network *, QMap <QString, QByteArray> *);
     void add_ignore(QString);
     void clear();
 
@@ -40,7 +40,6 @@ private:
     Ui::uiIgnore ui;
     QWidget *myparent;
     Network *pNetwork;
-    QSettings *settings;
     QMap <QString, QByteArray> *mNickAvatar;
 
 private slots:

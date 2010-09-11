@@ -31,11 +31,8 @@ class Convert : public QObject
 {
     Q_OBJECT
 public:
-    Convert(QSettings *);
+    Convert();
     void convert_text(QString *, QString *);
-
-private:
-    QSettings *settings;
 
 };
 

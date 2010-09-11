@@ -20,17 +20,17 @@
 
 #include "network_thread.h"
 
-NetworkThread::NetworkThread(QSettings *param1, QAction *param2, QAction *param3)
+NetworkThread::NetworkThread(QAction *param1, QAction *param2)
 {
-    settings = param1;
-    connectAct = param2;
-    lagAct = param3;
+    connectAct = param1;
+    lagAct = param2;
 
     strServer = "czat-app.onet.pl";
     iPort = 5015;
 
     iActive = 0;
-    settings->setValue("reconnect", "true");
+    QSettings settings;
+    settings.setValue("reconnect", "true");
     timer = new QTimer();
     timer->setInterval(1*60*1000); // 1 min
     timerLag = new QTimer();
@@ -91,9 +91,10 @@ void NetworkThread::connect()
 
 void NetworkThread::reconnect()
 {
-    if (settings->value("reconnect").toString() == "true")
+    QSettings settings;
+    if (settings.value("reconnect").toString() == "true")
     {
-        if ((this->is_connected() == false) && (settings->value("logged").toString() == "off"))
+        if ((this->is_connected() == false) && (settings.value("logged").toString() == "off"))
         {
             emit show_msg_all(tr("Reconnecting..."), 7);
             emit connect();
@@ -133,7 +134,8 @@ void NetworkThread::send_buffer()
     int iCount = sendBufferCopy.size();
 
     int iLimit = 5;
-    if ((settings->value("style").toString() == "classic") || (settings->value("disable_avatars").toString() == "on"))
+    QSettings settings;
+    if ((settings.value("style").toString() == "classic") || (settings.value("disable_avatars").toString() == "on"))
         iLimit = 4096;
 
     if (iCount < iLimit)
@@ -165,7 +167,8 @@ void NetworkThread::send_data(QString strData)
     if ((socket->state() == QAbstractSocket::ConnectedState) && (socket->isWritable() == true))
     {
 #ifdef Q_WS_X11
-        if (settings->value("debug").toString() == "on")
+        QSettings settings;
+        if (settings.value("debug").toString() == "on")
             qDebug() << "-> " << strData;
 #endif
         strData += "\r\n";
@@ -304,7 +307,8 @@ void NetworkThread::disconnected()
         emit clear_all_nicklist();
 
         // state
-        settings->setValue("logged", "off");
+        QSettings settings;
+        settings.setValue("logged", "off");
 
         // timer
         timer->stop();

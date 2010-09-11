@@ -20,11 +20,10 @@
 
 #include "commands.h"
 
-Commands::Commands(QString param1, QString param2, QSettings *param3)
+Commands::Commands(QString param1, QString param2)
 {
     strChan = param1;
     strData = param2;
-    settings = param3;
     strDataList = strData.split(" ");
 }
 
@@ -156,7 +155,8 @@ QString Commands::cmd_whereis()
 
 QString Commands::cmd_busy()
 {
-    QString strBusy = settings->value("busy").toString();
+    QSettings settings;
+    QString strBusy = settings.value("busy").toString();
 
     if (strBusy == "on")
         return "BUSY 0";
@@ -179,7 +179,8 @@ QString Commands::cmd_quit()
     QString strReason;
     for (int i = 1; i < strDataList.size(); i++) { if (i != 1) strReason += " "; strReason += strDataList[i]; }
 
-    settings->setValue("reconnect", "false");
+    QSettings settings;
+    settings.setValue("reconnect", "false");
 
     if (strReason.isEmpty() == false)
         return QString("QUIT :%1").arg(strReason);

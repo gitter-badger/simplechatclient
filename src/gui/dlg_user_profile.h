@@ -54,12 +54,11 @@ class DlgUserProfile : public QDialog
 {
     Q_OBJECT
 public:
-    DlgUserProfile(QWidget *, Network *, QSettings *, sNickInfo);
+    DlgUserProfile(QWidget *, Network *, sNickInfo);
 
 private:
     Ui::uiUserProfile ui;
     Network *pNetwork;
-    QSettings *settings;
     sNickInfo sCurrentNickInfo;
 
     void show_info();

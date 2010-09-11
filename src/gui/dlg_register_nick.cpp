@@ -20,14 +20,13 @@
 
 #include "dlg_register_nick.h"
 
-DlgRegisterNick::DlgRegisterNick(QWidget *parent, QWidget *param1, QSettings *param2) : QDialog(parent)
+DlgRegisterNick::DlgRegisterNick(QWidget *parent, QWidget *param1) : QDialog(parent)
 {
     ui.setupUi(this);
     setAttribute(Qt::WA_DeleteOnClose);
     setWindowTitle(tr("Register nick"));
 
     options = param1;
-    settings = param2;
 
     // close options
     options->close();

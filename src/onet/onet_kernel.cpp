@@ -20,21 +20,20 @@
 
 #include "onet_kernel.h"
 
-OnetKernel::OnetKernel(QWidget *parent, Network *param1, QSettings *param2, TabContainer *param3, QMap <QString, QByteArray> *param4, QMap <QString, QByteArray> *param5, DlgChannelSettings *param6, DlgChannelHomes *param7, DlgChannelList *param8, DlgChannelFavourites *param9, DlgFriends *param10, DlgIgnore *param11, DlgModeration *param12)
+OnetKernel::OnetKernel(QWidget *parent, Network *param1, TabContainer *param2, QMap <QString, QByteArray> *param3, QMap <QString, QByteArray> *param4, DlgChannelSettings *param5, DlgChannelHomes *param6, DlgChannelList *param7, DlgChannelFavourites *param8, DlgFriends *param9, DlgIgnore *param10, DlgModeration *param11)
 {
     myparent = parent;
     pNetwork = param1;
-    settings = param2;
-    tabc = param3;
-    mNickAvatar = param4;
-    mChannelAvatar = param5;
-    dlgchannel_settings = param6;
-    dlgchannel_homes = param7;
-    dlgchannel_list = param8;
-    dlgchannel_favourites = param9;
-    dlgfriends = param10;
-    dlgignore = param11;
-    dlgmoderation = param12;
+    tabc = param2;
+    mNickAvatar = param3;
+    mChannelAvatar = param4;
+    dlgchannel_settings = param5;
+    dlgchannel_homes = param6;
+    dlgchannel_list = param7;
+    dlgchannel_favourites = param8;
+    dlgfriends = param9;
+    dlgignore = param10;
+    dlgmoderation = param11;
 }
 
 void OnetKernel::remove_cathread(ChannelAvatar *cathr)
@@ -43,7 +42,8 @@ void OnetKernel::remove_cathread(ChannelAvatar *cathr)
     caThreadList.removeOne(cathr);
 
 #ifdef Q_WS_X11
-    if (settings->value("debug").toString() == "on")
+    QSettings settings;
+    if (settings.value("debug").toString() == "on")
         qDebug() << "Channel avatar thread -1 (size: " << caThreadList.size() << ")";
 #endif
 }
@@ -54,7 +54,8 @@ void OnetKernel::remove_nathread(NickAvatar *nathr)
     naThreadList.removeOne(nathr);
 
 #ifdef Q_WS_X11
-    if (settings->value("debug").toString() == "on")
+    QSettings settings;
+    if (settings.value("debug").toString() == "on")
         qDebug() << "Nick avatar thread -1 (size: " << naThreadList.size() << ")";
 #endif
 }
@@ -87,7 +88,8 @@ void OnetKernel::kernel(QString param1)
     strDataList = strData.split(" ");
 
 #ifdef Q_WS_X11
-    if (settings->value("debug").toString() == "on")
+    QSettings settings;
+    if (settings.value("debug").toString() == "on")
         qDebug() << "<- " << strData;
 #endif
 
@@ -546,8 +548,9 @@ void OnetKernel::raw_join()
             strSuffix = strSuffix.right(strSuffix.length()-1);
     }
 
+    QSettings settings;
     QString strDisplay;
-    if (settings->value("show_zuo").toString() == "on")
+    if (settings.value("show_zuo").toString() == "on")
         strDisplay = QString(tr("* %1 [%2@%3] has joined %4")).arg(strNick).arg(strZUO).arg(strIP).arg(strChannel);
     else
         strDisplay = QString(tr("* %1 [%2] has joined %3")).arg(strNick).arg(strIP).arg(strChannel);
@@ -570,7 +573,7 @@ void OnetKernel::raw_join()
     // nick avatar
     if ((strNick[0] != '~') && (mNickAvatar->contains(strNick) == false))
     {
-        if ((settings->value("disable_avatars").toString() == "off") && (settings->value("style").toString() == "modern"))
+        if ((settings.value("disable_avatars").toString() == "off") && (settings.value("style").toString() == "modern"))
             pNetwork->send(QString("NS INFO %1 s").arg(strNick));
     }
 
@@ -604,17 +607,18 @@ void OnetKernel::raw_part()
     if (strReason[0] == ':')
         strReason = strReason.right(strReason.length()-1);
 
+    QSettings settings;
     QString strDisplay;
     if (strReason.isEmpty() == false)
     {
-        if (settings->value("show_zuo").toString() == "on")
+        if (settings.value("show_zuo").toString() == "on")
             strDisplay = QString(tr("* %1 [%2@%3] has left %4 [%5]")).arg(strNick).arg(strZUO).arg(strIP).arg(strChannel).arg(strReason);
         else
             strDisplay = QString(tr("* %1 [%2] has left %3 [%4]")).arg(strNick).arg(strIP).arg(strChannel).arg(strReason);
     }
     else
     {
-        if (settings->value("show_zuo").toString() == "on")
+        if (settings.value("show_zuo").toString() == "on")
             strDisplay = QString(tr("* %1 [%2@%3] has left %4")).arg(strNick).arg(strZUO).arg(strIP).arg(strChannel);
         else
             strDisplay = QString(tr("* %1 [%2] has left %3")).arg(strNick).arg(strIP).arg(strChannel);
@@ -669,8 +673,9 @@ void OnetKernel::raw_quit()
     if (strReason[0] == ':')
         strReason = strReason.right(strReason.length()-1);
 
+    QSettings settings;
     QString strDisplay;
-    if (settings->value("show_zuo").toString() == "on")
+    if (settings.value("show_zuo").toString() == "on")
         strDisplay = QString(tr("* %1 [%2@%3] has quit [%4]")).arg(strNick).arg(strZUO).arg(strIP).arg(strReason);
     else
         strDisplay = QString(tr("* %1 [%2] has quit [%3]")).arg(strNick).arg(strIP).arg(strReason);
@@ -1017,7 +1022,7 @@ void OnetKernel::raw_invite()
     if (strWhere[0] == ':')
         strWhere = strWhere.right(strWhere.length()-1);
 
-    (new DlgInvite(myparent, pNetwork, settings, tabc, strWho, strWhere))->show();
+    (new DlgInvite(myparent, pNetwork, tabc, strWho, strWhere))->show();
 }
 
 // :cf1f3.onet TOPIC #scc :Simple Chat Client; current version: beta;
@@ -1157,8 +1162,10 @@ void OnetKernel::raw_moderate()
 // :cf1f4.onet 001 scc_test :Welcome to the OnetCzat IRC Network scc_test!51976824@83.28.35.219
 void OnetKernel::raw_001()
 {
+    QSettings settings;
+
 // busy
-    settings->setValue("logged", "on");
+    settings.setValue("logged", "on");
 
 // protocol
     pNetwork->send("PROTOCTL ONETNAMESX");
@@ -1169,20 +1176,20 @@ void OnetKernel::raw_001()
         pNetwork->send(QString("JOIN %1").arg(strlOpenChannels[i]));
 
 // busy
-    settings->setValue("busy", "off");
+    settings.setValue("busy", "off");
 
 // clear friends
     dlgfriends->clear();
 
 // auto busy
-    if (settings->value("auto_busy").toString() == "on")
+    if (settings.value("auto_busy").toString() == "on")
         pNetwork->send("BUSY 1");
 
 // autojoin favourites
-    settings->setValue("autojoin_favourites", "on");
+    settings.setValue("autojoin_favourites", "on");
 
 // override off
-    settings->setValue("override", "off");
+    settings.setValue("override", "off");
 }
 
 // :cf1f4.onet 002 Merovingian :Your host is cf1f4.onet, running version InspIRCd-1.1
@@ -1281,7 +1288,8 @@ void OnetKernel::raw_111n()
                 QObject::connect(naThreadList.at(naThreadList.size()-1), SIGNAL(do_remove_nathread(NickAvatar*)), this, SLOT(remove_nathread(NickAvatar*)));
 
 #ifdef Q_WS_X11
-                if (settings->value("debug").toString() == "on")
+                QSettings settings;
+                if (settings.value("debug").toString() == "on")
                     qDebug() << "Nick avatar thread +1 (size: " << naThreadList.size() << ")";
 #endif
             }
@@ -1366,6 +1374,8 @@ void OnetKernel::raw_133n()
 // :NickServ!service@service.onet NOTICE scc_test :141 :#Scrabble #Quiz #scc
 void OnetKernel::raw_141n()
 {
+    QSettings settings;
+
     for (int i = 4; i < strDataList.size(); i++)
     {
         QString strChannel = strDataList[i];
@@ -1374,13 +1384,13 @@ void OnetKernel::raw_141n()
 
         dlgchannel_favourites->add_channel(strChannel);
 
-        if (settings->value("autojoin_favourites").toString() == "on")
+        if (settings.value("autojoin_favourites").toString() == "on")
             pNetwork->send(QString("JOIN %1").arg(strChannel));
     }
 
     // turn off autojoin
-    if (settings->value("autojoin_favourites").toString() == "on")
-        settings->setValue("autojoin_favourites", "off");
+    if (settings.value("autojoin_favourites").toString() == "on")
+        settings.setValue("autojoin_favourites", "off");
 }
 
 // NS FAVOURITES
@@ -1511,13 +1521,14 @@ void OnetKernel::raw_161n()
             {
                 QString strUrl = strValue;
 
-                if (settings->value("style").toString() == "modern")
+                QSettings settings;
+                if (settings.value("style").toString() == "modern")
                 {
                     caThreadList.append(new ChannelAvatar(tabc, strChannel, strUrl, mChannelAvatar));
                     QObject::connect(caThreadList.at(caThreadList.size()-1), SIGNAL(do_remove_cathread(ChannelAvatar*)), this, SLOT(remove_cathread(ChannelAvatar*)));
 
 #ifdef Q_WS_X11
-                    if (settings->value("debug").toString() == "on")
+                    if (settings.value("debug").toString() == "on")
                         qDebug() << "Channel avatar thread +1 (size: " << caThreadList.size() << ")";
 #endif
                 }
@@ -2422,7 +2433,8 @@ void OnetKernel::raw_353()
             // nick avatar
             if ((strCleanNick[0] != '~') && (mNickAvatar->contains(strCleanNick) == false))
             {
-                if ((settings->value("disable_avatars").toString() == "off") && (settings->value("style").toString() == "modern"))
+                QSettings settings;
+                if ((settings.value("disable_avatars").toString() == "off") && (settings.value("style").toString() == "modern"))
                     pNetwork->send(QString("NS INFO %1 s").arg(strCleanNick));
             }
         }
@@ -2816,7 +2828,8 @@ void OnetKernel::raw_433()
 
     tabc->show_msg_all(strMessage, 9);
 
-    settings->setValue("override", "on");
+    QSettings settings;
+    settings.setValue("override", "on");
 
     // reconnect
     if (strNick[0] != '~')
@@ -3098,7 +3111,7 @@ void OnetKernel::raw_475()
     QString strMessage = QString(tr("* Cannot join channel %1: Incorrect channel key")).arg(strChannel);
     tabc->show_msg_active(strMessage, 7);
 
-    (new DlgChannelKey(myparent, pNetwork, settings, strChannel))->show();
+    (new DlgChannelKey(myparent, pNetwork, strChannel))->show();
 }
 
 // :cf1f4.onet 481 Merovingian :Permission Denied - You do not have the required operator privileges
@@ -3282,15 +3295,16 @@ void OnetKernel::raw_801()
     if (strKey[0] == ':')
         strKey = strKey.right(strKey.length()-1);
 
-    OnetAuth *pOnet_auth = new OnetAuth(settings, tabc);
+    OnetAuth *pOnet_auth = new OnetAuth(tabc);
     QString strAuth = pOnet_auth->transform_key(strKey);
     delete pOnet_auth;
 
     if (strAuth.length() == 16)
     {
+        QSettings settings;
         pNetwork->send(QString("AUTHKEY %1").arg(strAuth));
-        QString strUOKey = settings->value("uokey").toString();
-        QString strNickUo = settings->value("uo_nick").toString();
+        QString strUOKey = settings.value("uokey").toString();
+        QString strNickUo = settings.value("uo_nick").toString();
         if ((strUOKey.isEmpty() == false) && (strNickUo.isEmpty() == false))
             pNetwork->send(QString("USER * %1 czat-app.onet.pl :%2").arg(strUOKey).arg(strNickUo));
     }
@@ -3309,7 +3323,8 @@ void OnetKernel::raw_802()
 // :cf1f2.onet 807 scc_test :You are marked as busy
 void OnetKernel::raw_807()
 {
-    settings->setValue("busy", "on");
+    QSettings settings;
+    settings.setValue("busy", "on");
 
     QString strDisplay = tr("* You are marked as busy");
     tabc->show_msg_all(strDisplay, 7);
@@ -3319,7 +3334,8 @@ void OnetKernel::raw_807()
 // :cf1f2.onet 808 scc_test :You are no longer marked busy
 void OnetKernel::raw_808()
 {
-    settings->setValue("busy", "off");
+    QSettings settings;
+    settings.setValue("busy", "off");
 
     QString strDisplay = tr("You are no longer marked busy");
     tabc->show_msg_all(strDisplay, 7);
@@ -3512,15 +3528,4 @@ void OnetKernel::raw_951()
 
     QString strMessage = QString(tr("* Added %1 to silence list")).arg(strNick);
     tabc->show_msg_active(strMessage, 7);
-}
-
-QString OnetKernel::get_settings_key(QString strFind)
-{
-    QStringList keys = settings->allKeys();
-    for (int i = 0; i < keys.count(); i++)
-    {
-        if ((keys.at(i).length() > 4) && (settings->value(keys.at(i)).toString() == strFind))
-            return keys.at(i).right(keys.at(i).length()-4);
-    }
-    return QString::null;
 }

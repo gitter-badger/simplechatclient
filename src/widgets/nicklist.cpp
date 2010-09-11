@@ -20,14 +20,13 @@
 
 #include "nicklist.h"
 
-Nicklist::Nicklist(QWidget *parent, Network *param1, QSettings *param2, QString param3, QMap <QString, QByteArray> *param4, QTcpSocket *param5)
+Nicklist::Nicklist(QWidget *parent, Network *param1, QString param2, QMap <QString, QByteArray> *param3, QTcpSocket *param4)
 {
     myparent = parent;
     pNetwork = param1;
-    settings = param2;
-    strChannel = param3;
-    mNickAvatar = param4;
-    camSocket = param5;
+    strChannel = param2;
+    mNickAvatar = param3;
+    camSocket = param4;
 
     QObject::connect(this, SIGNAL(itemSelectionChanged()), this, SLOT(item_selected()));
 }
@@ -66,7 +65,7 @@ void Nicklist::profile()
 
     if (strNick == sCurrentUserInfo.nick)
     {
-        (new DlgUserProfile(myparent, pNetwork, settings, sCurrentUserInfo))->show();
+        (new DlgUserProfile(myparent, pNetwork, sCurrentUserInfo))->show();
     }
 }
 
@@ -76,10 +75,11 @@ void Nicklist::cam()
 
     QString strNick = this->selectedItems().at(0)->data(Qt::UserRole).toString();
 #ifdef Q_WS_WIN
-    QString strUOKey = settings->value("uokey").toString();
+    QSettings settings;
+    QString strUOKey = settings.value("uokey").toString();
     (new Kamerzysta(camSocket))->show(strNick, strUOKey);
 #else
-    (new DlgCam(myparent, pNetwork, settings, strNick))->show();
+    (new DlgCam(myparent, pNetwork, strNick))->show();
 #endif
 }
 
@@ -120,7 +120,7 @@ void Nicklist::kick()
     if (this->selectedItems().count() == 0) return;
 
     QString strNick = this->selectedItems().at(0)->data(Qt::UserRole).toString();
-    (new DlgKick(myparent, pNetwork, settings, strNick, strChannel))->show();
+    (new DlgKick(myparent, pNetwork, strNick, strChannel))->show();
 }
 
 void Nicklist::ban()

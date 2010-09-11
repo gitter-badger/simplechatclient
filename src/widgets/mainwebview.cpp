@@ -20,13 +20,12 @@
 
 #include "mainwebview.h"
 
-MainWebView::MainWebView(QWidget *parent, Network *param1, QSettings *param2, QString param3, QTcpSocket *param4)
+MainWebView::MainWebView(QWidget *parent, Network *param1, QString param2, QTcpSocket *param3)
 {
     myparent = parent;
     pNetwork = param1;
-    settings = param2;
-    strChannel = param3;
-    camSocket = param4;
+    strChannel = param2;
+    camSocket = param3;
 }
 
 void MainWebView::join_channel()
@@ -58,17 +57,18 @@ void MainWebView::profile()
 {
     if (strNick == sCurrentUserInfo.nick)
     {
-        (new DlgUserProfile(myparent, pNetwork, settings, sCurrentUserInfo))->show();
+        (new DlgUserProfile(myparent, pNetwork, sCurrentUserInfo))->show();
     }
 }
 
 void MainWebView::cam()
 {
 #ifdef Q_WS_WIN
-    QString strUOKey = settings->value("uokey").toString();
+    QSettings settings;
+    QString strUOKey = settings.value("uokey").toString();
     (new Kamerzysta(camSocket))->show(strNick, strUOKey);
 #else
-    (new DlgCam(myparent, pNetwork, settings, strNick))->show();
+    (new DlgCam(myparent, pNetwork, strNick))->show();
 #endif
 }
 
@@ -94,7 +94,7 @@ void MainWebView::ignore_del()
 
 void MainWebView::kick()
 {
-    (new DlgKick(myparent, pNetwork, settings, strNick, strChannel))->show();
+    (new DlgKick(myparent, pNetwork, strNick, strChannel))->show();
 }
 
 void MainWebView::ban()

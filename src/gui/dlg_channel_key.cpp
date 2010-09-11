@@ -20,15 +20,14 @@
 
 #include "dlg_channel_key.h"
 
-DlgChannelKey::DlgChannelKey(QWidget *parent, Network *param1, QSettings *param2, QString param3) : QDialog(parent)
+DlgChannelKey::DlgChannelKey(QWidget *parent, Network *param1, QString param2) : QDialog(parent)
 {
     ui.setupUi(this);
     setAttribute(Qt::WA_DeleteOnClose);
     setWindowTitle(tr("Key required"));
 
     pNetwork = param1;
-    settings = param2;
-    strChannel = param3;
+    strChannel = param2;
 
     ui.label_msg->setText(tr("Enter key:"));
 

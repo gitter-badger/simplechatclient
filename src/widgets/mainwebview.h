@@ -41,7 +41,7 @@ class MainWebView : public QWebView
 {
     Q_OBJECT
 public:
-    MainWebView(QWidget *, Network *, QSettings *, QString, QTcpSocket *);
+    MainWebView(QWidget *, Network *, QString, QTcpSocket *);
     ~MainWebView();
     void set_open_channels(QStringList);
     void set_user_info(QString, QString, QString);
@@ -49,7 +49,6 @@ public:
 private:
     QWidget *myparent;
     Network *pNetwork;
-    QSettings *settings;
     QString strChannel;
     QTcpSocket *camSocket;
     QString strNick;

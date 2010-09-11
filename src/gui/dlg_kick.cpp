@@ -20,16 +20,15 @@
 
 #include "dlg_kick.h"
 
-DlgKick::DlgKick(QWidget *parent, Network *param1, QSettings *param2, QString param3, QString param4) : QDialog(parent)
+DlgKick::DlgKick(QWidget *parent, Network *param1, QString param2, QString param3) : QDialog(parent)
 {
     ui.setupUi(this);
     setAttribute(Qt::WA_DeleteOnClose);
     setWindowTitle(tr("Kick"));
 
     pNetwork = param1;
-    settings = param2;
-    strNick = param3;
-    strChannel = param4;
+    strNick = param2;
+    strChannel = param3;
 
     ui.label_msg->setText(tr("Reason for kicking:"));
     ui.lineEdit_reason->setText(tr("No reason"));

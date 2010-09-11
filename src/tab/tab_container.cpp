@@ -20,16 +20,15 @@
 
 #include "tab_container.h"
 
-TabContainer::TabContainer(QWidget *parent, Network *param1, QSettings *param2, TabManager *param3, Notify *param4, QMap <QString, QByteArray> *param5, QMap <QString, QByteArray> *param6, QTcpSocket *param7)
+TabContainer::TabContainer(QWidget *parent, Network *param1, TabManager *param2, Notify *param3, QMap <QString, QByteArray> *param4, QMap <QString, QByteArray> *param5, QTcpSocket *param6)
 {
     myparent = parent;
     pNetwork = param1;
-    settings = param2;
-    tabm = param3;
-    pNotify = param4;
-    mNickAvatar = param5;
-    mChannelAvatar = param6;
-    camSocket = param7;
+    tabm = param2;
+    pNotify = param3;
+    mNickAvatar = param4;
+    mChannelAvatar = param5;
+    camSocket = param6;
     strFreeUsedList = "ffffffffffffffffffffffffffffffffffffffffffffffffff"; // f = free  u = used
 }
 
@@ -100,7 +99,7 @@ void TabContainer::add_tab(QString strChannel)
             delete l;
 
             // create
-            tw[iFree] = new TabWidget(myparent, pNetwork, settings, strChannel, pNotify, mNickAvatar, mChannelAvatar, dlgchannel_settings, dlgmoderation, camSocket);
+            tw[iFree] = new TabWidget(myparent, pNetwork, strChannel, pNotify, mNickAvatar, mChannelAvatar, dlgchannel_settings, dlgmoderation, camSocket);
             int iTab = tabm->addTab(tw[iFree], strChannel);
             strFreeUsedList[iFree] = 'u';
             tabm->setCurrentIndex(iTab);
@@ -638,7 +637,8 @@ void TabContainer::create_channel_names()
             strlChannelNames.append(tw[i]->get_name());
     }
 
-    settings->setValue("channel_names", strlChannelNames);
+    QSettings settings;
+    settings.setValue("channel_names", strlChannelNames);
 }
 
 QStringList TabContainer::get_open_channels()

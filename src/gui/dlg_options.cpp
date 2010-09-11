@@ -20,7 +20,7 @@
 
 #include "dlg_options.h"
 
-DlgOptions::DlgOptions(QWidget *parent, QSettings *param1) : QDialog(parent)
+DlgOptions::DlgOptions(QWidget *parent) : QDialog(parent)
 {
     ui.setupUi(this);
     setAttribute(Qt::WA_DeleteOnClose);
@@ -28,7 +28,6 @@ DlgOptions::DlgOptions(QWidget *parent, QSettings *param1) : QDialog(parent)
     setWindowTitle(tr("Options"));
 
     myparent = parent;
-    settings = param1;
 
 // page basic
     ui.radioButton_unregistered_nick->setText(tr("Unregistered nick"));
@@ -208,7 +207,7 @@ void DlgOptions::show_pass()
 
 void DlgOptions::button_register_nick()
 {
-    (new DlgRegisterNick(myparent, this, settings))->show();
+    (new DlgRegisterNick(myparent, this))->show();
 }
 
 void DlgOptions::set_modern_style_avatars()
@@ -217,11 +216,12 @@ void DlgOptions::set_modern_style_avatars()
     save_settings();
 
 // save style
+    QSettings settings;
     Config *pConfig = new Config();
     pConfig->set_value("style", "modern");
-    settings->setValue("style", "modern");
+    settings.setValue("style", "modern");
     pConfig->set_value("disable_avatars", "off");
-    settings->setValue("disable_avatars", "off");
+    settings.setValue("disable_avatars", "off");
     delete pConfig;
 
     this->close(); // fix stay on top
@@ -240,11 +240,12 @@ void DlgOptions::set_modern_style_no_avatars()
     save_settings();
 
 // save style
+    QSettings settings;
     Config *pConfig = new Config();
     pConfig->set_value("style", "modern");
-    settings->setValue("style", "modern");
+    settings.setValue("style", "modern");
     pConfig->set_value("disable_avatars", "on");
-    settings->setValue("disable_avatars", "on");
+    settings.setValue("disable_avatars", "on");
     delete pConfig;
 
     this->close(); // fix stay on top
@@ -263,9 +264,10 @@ void DlgOptions::set_classic_style()
     save_settings();
 
 // save style
+    QSettings settings;
     Config *pConfig = new Config();
     pConfig->set_value("style", "classic");
-    settings->setValue("style", "classic");
+    settings.setValue("style", "classic");
     delete pConfig;
 
     this->close(); // fix stay on top
@@ -280,190 +282,202 @@ void DlgOptions::set_classic_style()
 
 void DlgOptions::language_changed(int index)
 {
+    QSettings settings;
     Config *pConfig = new Config();
     if (index == 0) // english
     {
         pConfig->set_value("language", "en");
-        settings->setValue("language", "en");
+        settings.setValue("language", "en");
     }
     else if (index == 1) // polish
     {
         pConfig->set_value("language", "pl");
-        settings->setValue("language", "pl");
+        settings.setValue("language", "pl");
     }
     else // polish
     {
         pConfig->set_value("language", "pl");
-        settings->setValue("language", "pl");
+        settings.setValue("language", "pl");
     }
     delete pConfig;
 }
 
 void DlgOptions::auto_busy()
 {
+    QSettings settings;
     Config *pConfig = new Config();
     if (ui.checkBox_auto_busy->isChecked() == true)
     {
         pConfig->set_value("auto_busy", "on");
-        settings->setValue("auto_busy", "on");
+        settings.setValue("auto_busy", "on");
     }
     else
     {
         pConfig->set_value("auto_busy", "off");
-        settings->setValue("auto_busy", "off");
+        settings.setValue("auto_busy", "off");
     }
     delete pConfig;
 }
 
 void DlgOptions::show_zuo()
 {
+    QSettings settings;
     Config *pConfig = new Config();
     if (ui.checkBox_show_zuo->isChecked() == true)
     {
         pConfig->set_value("show_zuo", "on");
-        settings->setValue("show_zuo", "on");
+        settings.setValue("show_zuo", "on");
     }
     else
     {
         pConfig->set_value("show_zuo", "off");
-        settings->setValue("show_zuo", "off");
+        settings.setValue("show_zuo", "off");
     }
     delete pConfig;
 }
 
 void DlgOptions::hide_formating()
 {
+    QSettings settings;
     Config *pConfig = new Config();
     if (ui.checkBox_hide_formating->isChecked() == true)
     {
         pConfig->set_value("hide_formating", "on");
-        settings->setValue("hide_formating", "on");
+        settings.setValue("hide_formating", "on");
     }
     else
     {
         pConfig->set_value("hide_formating", "off");
-        settings->setValue("hide_formating", "off");
+        settings.setValue("hide_formating", "off");
     }
     delete pConfig;
 }
 
 void DlgOptions::hide_join_part()
 {
+    QSettings settings;
     Config *pConfig = new Config();
     if (ui.checkBox_hide_join_part->isChecked() == true)
     {
         pConfig->set_value("hide_join_part", "on");
-        settings->setValue("hide_join_part", "on");
+        settings.setValue("hide_join_part", "on");
     }
     else
     {
         pConfig->set_value("hide_join_part", "off");
-        settings->setValue("hide_join_part", "off");
+        settings.setValue("hide_join_part", "off");
     }
     delete pConfig;
 }
 
 void DlgOptions::hide_join_part_200()
 {
+    QSettings settings;
     Config *pConfig = new Config();
     if (ui.checkBox_hide_join_part_200->isChecked() == true)
     {
         pConfig->set_value("hide_join_part_200", "on");
-        settings->setValue("hide_join_part_200", "on");
+        settings.setValue("hide_join_part_200", "on");
     }
     else
     {
         pConfig->set_value("hide_join_part_200", "off");
-        settings->setValue("hide_join_part_200", "off");
+        settings.setValue("hide_join_part_200", "off");
     }
     delete pConfig;
 }
 
 void DlgOptions::disable_avatars()
 {
+    QSettings settings;
     Config *pConfig = new Config();
     if (ui.checkBox_disable_avatars->isChecked() == true)
     {
         pConfig->set_value("disable_avatars", "on");
-        settings->setValue("disable_avatars", "on");
+        settings.setValue("disable_avatars", "on");
     }
     else
     {
         pConfig->set_value("disable_avatars", "off");
-        settings->setValue("disable_avatars", "off");
+        settings.setValue("disable_avatars", "off");
     }
     delete pConfig;
 }
 
 void DlgOptions::disable_logs()
 {
+    QSettings settings;
     Config *pConfig = new Config();
     if (ui.checkBox_disable_logs->isChecked() == true)
     {
         pConfig->set_value("disable_logs", "on");
-        settings->setValue("disable_logs", "on");
+        settings.setValue("disable_logs", "on");
     }
     else
     {
         pConfig->set_value("disable_logs", "off");
-        settings->setValue("disable_logs", "off");
+        settings.setValue("disable_logs", "off");
     }
     delete pConfig;
 }
 
 void DlgOptions::disable_sounds()
 {
+    QSettings settings;
     Config *pConfig = new Config();
     if (ui.checkBox_disable_sounds->isChecked() == true)
     {
         pConfig->set_value("disable_sounds", "on");
-        settings->setValue("disable_sounds", "on");
+        settings.setValue("disable_sounds", "on");
     }
     else
     {
         pConfig->set_value("disable_sounds", "off");
-        settings->setValue("disable_sounds", "off");
+        settings.setValue("disable_sounds", "off");
     }
     delete pConfig;
 }
 
 void DlgOptions::set_my_bold(int index)
 {
+    QSettings settings;
     Config *pConfig = new Config();
     if (index == 0)
     {
         pConfig->set_value("my_bold", "off");
-        settings->setValue("my_bold", "off");
+        settings.setValue("my_bold", "off");
     }
     else
     {
         pConfig->set_value("my_bold", "on");
-        settings->setValue("my_bold", "on");
+        settings.setValue("my_bold", "on");
     }
     delete pConfig;
 }
 
 void DlgOptions::set_my_italic(int index)
 {
+    QSettings settings;
     Config *pConfig = new Config();
     if (index == 0)
     {
         pConfig->set_value("my_italic", "off");
-        settings->setValue("my_italic", "off");
+        settings.setValue("my_italic", "off");
     }
     else
     {
         pConfig->set_value("my_italic", "on");
-        settings->setValue("my_italic", "on");
+        settings.setValue("my_italic", "on");
     }
     delete pConfig;
 }
 
 void DlgOptions::set_my_font(QString strFont)
 {
+    QSettings settings;
     Config *pConfig = new Config();
     pConfig->set_value("my_font", strFont);
-    settings->setValue("my_font", strFont);
+    settings.setValue("my_font", strFont);
     delete pConfig;
 }
 
@@ -488,9 +502,10 @@ void DlgOptions::set_my_color(int index)
     else if (index == 14) strMyColor = "#959595";
     else strMyColor = "#000000";
 
+    QSettings settings;
     Config *pConfig = new Config();
     pConfig->set_value("my_color", strMyColor);
-    settings->setValue("my_color", strMyColor);
+    settings.setValue("my_color", strMyColor);
     delete pConfig;
 }
 
@@ -514,9 +529,10 @@ void DlgOptions::set_background_color()
         ui.pushButton_background_color->setIcon(QIcon(color));
 
         // save
+        QSettings settings;
         Config *pConfig1 = new Config();
         pConfig1->set_value("background_color", strColor);
-        settings->setValue("background_color", strColor);
+        settings.setValue("background_color", strColor);
         delete pConfig1;
 
         // refresh tabs
@@ -544,9 +560,10 @@ void DlgOptions::set_default_font_color()
         ui.pushButton_default_font_color->setIcon(QIcon(color));
 
         // save
+        QSettings settings;
         Config *pConfig1 = new Config();
         pConfig1->set_value("default_font_color", strColor);
-        settings->setValue("default_font_color", strColor);
+        settings.setValue("default_font_color", strColor);
         delete pConfig1;
 
         // refresh tabs
@@ -574,9 +591,10 @@ void DlgOptions::set_join_font_color()
         ui.pushButton_join_font_color->setIcon(QIcon(color));
 
         // save
+        QSettings settings;
         Config *pConfig1 = new Config();
         pConfig1->set_value("font_color_level_1", strColor);
-        settings->setValue("font_color_level_1", strColor);
+        settings.setValue("font_color_level_1", strColor);
         delete pConfig1;
 
         // refresh tabs
@@ -604,9 +622,10 @@ void DlgOptions::set_part_font_color()
         ui.pushButton_part_font_color->setIcon(QIcon(color));
 
         // save
+        QSettings settings;
         Config *pConfig1 = new Config();
         pConfig1->set_value("font_color_level_2", strColor);
-        settings->setValue("font_color_level_2", strColor);
+        settings.setValue("font_color_level_2", strColor);
         delete pConfig1;
 
         // refresh tabs
@@ -634,9 +653,10 @@ void DlgOptions::set_quit_font_color()
         ui.pushButton_quit_font_color->setIcon(QIcon(color));
 
         // save
+        QSettings settings;
         Config *pConfig1 = new Config();
         pConfig1->set_value("font_color_level_3", strColor);
-        settings->setValue("font_color_level_3", strColor);
+        settings.setValue("font_color_level_3", strColor);
         delete pConfig1;
 
         // refresh tabs
@@ -664,9 +684,10 @@ void DlgOptions::set_kick_font_color()
         ui.pushButton_kick_font_color->setIcon(QIcon(color));
 
         // save
+        QSettings settings;
         Config *pConfig1 = new Config();
         pConfig1->set_value("font_color_level_4", strColor);
-        settings->setValue("font_color_level_4", strColor);
+        settings.setValue("font_color_level_4", strColor);
         delete pConfig1;
 
         // refresh tabs
@@ -694,9 +715,10 @@ void DlgOptions::set_mode_font_color()
         ui.pushButton_mode_font_color->setIcon(QIcon(color));
 
         // save
+        QSettings settings;
         Config *pConfig1 = new Config();
         pConfig1->set_value("font_color_level_5", strColor);
-        settings->setValue("font_color_level_5", strColor);
+        settings.setValue("font_color_level_5", strColor);
         delete pConfig1;
 
         // refresh tabs
@@ -724,9 +746,10 @@ void DlgOptions::set_notice_font_color()
         ui.pushButton_notice_font_color->setIcon(QIcon(color));
 
         // save
+        QSettings settings;
         Config *pConfig1 = new Config();
         pConfig1->set_value("font_color_level_6", strColor);
-        settings->setValue("font_color_level_6", strColor);
+        settings.setValue("font_color_level_6", strColor);
         delete pConfig1;
 
         // refresh tabs
@@ -754,9 +777,10 @@ void DlgOptions::set_info_font_color()
         ui.pushButton_info_font_color->setIcon(QIcon(color));
 
         // save
+        QSettings settings;
         Config *pConfig1 = new Config();
         pConfig1->set_value("font_color_level_7", strColor);
-        settings->setValue("font_color_level_7", strColor);
+        settings.setValue("font_color_level_7", strColor);
         delete pConfig1;
 
         // refresh tabs
@@ -784,9 +808,10 @@ void DlgOptions::set_error_font_color()
         ui.pushButton_error_font_color->setIcon(QIcon(color));
 
         // save
+        QSettings settings;
         Config *pConfig1 = new Config();
         pConfig1->set_value("font_color_level_9", strColor);
-        settings->setValue("font_color_level_9", strColor);
+        settings.setValue("font_color_level_9", strColor);
         delete pConfig1;
 
         // refresh tabs
@@ -814,9 +839,10 @@ void DlgOptions::set_channel_font_color()
         ui.pushButton_channel_font_color->setIcon(QIcon(color));
 
         // save
+        QSettings settings;
         Config *pConfig1 = new Config();
         pConfig1->set_value("channel_font_color", strColor);
-        settings->setValue("channel_font_color", strColor);
+        settings.setValue("channel_font_color", strColor);
         delete pConfig1;
 
         // refresh tabs
@@ -826,40 +852,41 @@ void DlgOptions::set_channel_font_color()
 
 void DlgOptions::mainwindow_restore_default()
 {
+    QSettings settings;
     Config *pConfig = new Config();
 
     pConfig->set_value("background_color", "#ffffff");
-    settings->setValue("background_color", "#ffffff");
+    settings.setValue("background_color", "#ffffff");
 
     pConfig->set_value("default_font_color", "#000000");
-    settings->setValue("default_font_color", "#000000");
+    settings.setValue("default_font_color", "#000000");
 
     pConfig->set_value("font_color_level_1", "#009300");
-    settings->setValue("font_color_level_1", "#009300");
+    settings.setValue("font_color_level_1", "#009300");
 
     pConfig->set_value("font_color_level_2", "#4733FF");
-    settings->setValue("font_color_level_2", "#4733FF");
+    settings.setValue("font_color_level_2", "#4733FF");
 
     pConfig->set_value("font_color_level_3", "#00007F");
-    settings->setValue("font_color_level_3", "#00007F");
+    settings.setValue("font_color_level_3", "#00007F");
 
     pConfig->set_value("font_color_level_4", "#00007F");
-    settings->setValue("font_color_level_4", "#00007F");
+    settings.setValue("font_color_level_4", "#00007F");
 
     pConfig->set_value("font_color_level_5", "#009300");
-    settings->setValue("font_color_level_5", "#009300");
+    settings.setValue("font_color_level_5", "#009300");
 
     pConfig->set_value("font_color_level_6", "#0066FF");
-    settings->setValue("font_color_level_6", "#0066FF");
+    settings.setValue("font_color_level_6", "#0066FF");
 
     pConfig->set_value("font_color_level_7", "#666666");
-    settings->setValue("font_color_level_7", "#666666");
+    settings.setValue("font_color_level_7", "#666666");
 
     pConfig->set_value("font_color_level_9", "#ff0000");
-    settings->setValue("font_color_level_9", "#ff0000");
+    settings.setValue("font_color_level_9", "#ff0000");
 
     pConfig->set_value("channel_font_color", "#0000ff");
-    settings->setValue("channel_font_color", "#0000ff");
+    settings.setValue("channel_font_color", "#0000ff");
 
     delete pConfig;
 
@@ -890,9 +917,10 @@ void DlgOptions::set_nicklist_background_color()
         ui.pushButton_nicklist_background_color->setIcon(QIcon(color));
 
         // save
+        QSettings settings;
         Config *pConfig1 = new Config();
         pConfig1->set_value("nicklist_background_color", strColor);
-        settings->setValue("nicklist_background_color", strColor);
+        settings.setValue("nicklist_background_color", strColor);
         delete pConfig1;
     }
 }
@@ -917,9 +945,10 @@ void DlgOptions::set_nicklist_line_color()
         ui.pushButton_nicklist_line_color->setIcon(QIcon(color));
 
         // save
+        QSettings settings;
         Config *pConfig1 = new Config();
         pConfig1->set_value("nicklist_line_color", strColor);
-        settings->setValue("nicklist_line_color", strColor);
+        settings.setValue("nicklist_line_color", strColor);
         delete pConfig1;
     }
 }
@@ -944,9 +973,10 @@ void DlgOptions::set_nicklist_selected_line_color()
         ui.pushButton_nicklist_selected_line_color->setIcon(QIcon(color));
 
         // save
+        QSettings settings;
         Config *pConfig1 = new Config();
         pConfig1->set_value("nicklist_selected_line_color", strColor);
-        settings->setValue("nicklist_selected_line_color", strColor);
+        settings.setValue("nicklist_selected_line_color", strColor);
         delete pConfig1;
     }
 }
@@ -971,9 +1001,10 @@ void DlgOptions::set_nicklist_nick_color()
         ui.pushButton_nicklist_nick_color->setIcon(QIcon(color));
 
         // save
+        QSettings settings;
         Config *pConfig1 = new Config();
         pConfig1->set_value("nicklist_nick_color", strColor);
-        settings->setValue("nicklist_nick_color", strColor);
+        settings.setValue("nicklist_nick_color", strColor);
         delete pConfig1;
     }
 }
@@ -998,9 +1029,10 @@ void DlgOptions::set_nicklist_selected_nick_color()
         ui.pushButton_nicklist_selected_nick_color->setIcon(QIcon(color));
 
         // save
+        QSettings settings;
         Config *pConfig1 = new Config();
         pConfig1->set_value("nicklist_selected_nick_color", strColor);
-        settings->setValue("nicklist_selected_nick_color", strColor);
+        settings.setValue("nicklist_selected_nick_color", strColor);
         delete pConfig1;
     }
 }
@@ -1025,9 +1057,10 @@ void DlgOptions::set_nicklist_busy_nick_color()
         ui.pushButton_nicklist_busy_nick_color->setIcon(QIcon(color));
 
         // save
+        QSettings settings;
         Config *pConfig1 = new Config();
         pConfig1->set_value("nicklist_busy_nick_color", strColor);
-        settings->setValue("nicklist_busy_nick_color", strColor);
+        settings.setValue("nicklist_busy_nick_color", strColor);
         delete pConfig1;
     }
 }
@@ -1052,9 +1085,10 @@ void DlgOptions::set_nicklist_gradient_1_color()
         ui.pushButton_nicklist_gradient_1_color->setIcon(QIcon(color));
 
         // save
+        QSettings settings;
         Config *pConfig1 = new Config();
         pConfig1->set_value("nicklist_gradient_1_color", strColor);
-        settings->setValue("nicklist_gradient_1_color", strColor);
+        settings.setValue("nicklist_gradient_1_color", strColor);
         delete pConfig1;
     }
 }
@@ -1079,40 +1113,42 @@ void DlgOptions::set_nicklist_gradient_2_color()
         ui.pushButton_nicklist_gradient_2_color->setIcon(QIcon(color));
 
         // save
+        QSettings settings;
         Config *pConfig1 = new Config();
         pConfig1->set_value("nicklist_gradient_2_color", strColor);
-        settings->setValue("nicklist_gradient_2_color", strColor);
+        settings.setValue("nicklist_gradient_2_color", strColor);
         delete pConfig1;
     }
 }
 
 void DlgOptions::nicklist_restore_default()
 {
+    QSettings settings;
     Config *pConfig = new Config();
 
     pConfig->set_value("nicklist_background_color", "#ffffff");
-    settings->setValue("nicklist_background_color", "#ffffff");
+    settings.setValue("nicklist_background_color", "#ffffff");
 
     pConfig->set_value("nicklist_line_color", "#dde4db");
-    settings->setValue("nicklist_line_color", "#dde4db");
+    settings.setValue("nicklist_line_color", "#dde4db");
 
     pConfig->set_value("nicklist_selected_line_color", "#005a83");
-    settings->setValue("nicklist_selected_line_color", "#005a83");
+    settings.setValue("nicklist_selected_line_color", "#005a83");
 
     pConfig->set_value("nicklist_nick_color", "#333333");
-    settings->setValue("nicklist_nick_color", "#333333");
+    settings.setValue("nicklist_nick_color", "#333333");
 
     pConfig->set_value("nicklist_selected_nick_color", "#ffffff");
-    settings->setValue("nicklist_selected_nick_color", "#ffffff");
+    settings.setValue("nicklist_selected_nick_color", "#ffffff");
 
     pConfig->set_value("nicklist_busy_nick_color", "#a0a0a4");
-    settings->setValue("nicklist_busy_nick_color", "#a0a0a4");
+    settings.setValue("nicklist_busy_nick_color", "#a0a0a4");
 
     pConfig->set_value("nicklist_gradient_1_color", "#77d5f7");
-    settings->setValue("nicklist_gradient_1_color", "#77d5f7");
+    settings.setValue("nicklist_gradient_1_color", "#77d5f7");
 
     pConfig->set_value("nicklist_gradient_2_color", "#1b86b7");
-    settings->setValue("nicklist_gradient_2_color", "#1b86b7");
+    settings.setValue("nicklist_gradient_2_color", "#1b86b7");
 
     delete pConfig;
 

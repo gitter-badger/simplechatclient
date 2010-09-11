@@ -33,7 +33,7 @@ class TabManager : public QTabWidget
 {
     Q_OBJECT
 public:
-    TabManager(QWidget *, QSettings *);
+    TabManager(QWidget *);
     ~TabManager();
     void set_hilight(QString);
     void set_alert(QString, QColor);
@@ -42,7 +42,6 @@ public:
 
 private:
     QWidget *myparent;
-    QSettings *settings;
     QTabBar *tab;
 
 private slots:

@@ -20,13 +20,11 @@
 
 #include "dlg_moderation.h"
 
-DlgModeration::DlgModeration(QWidget *parent, QSettings *param1) : QDialog(parent)
+DlgModeration::DlgModeration(QWidget *parent) : QDialog(parent)
 {
     ui.setupUi(this);
     setAttribute(Qt::WA_DeleteOnClose);
     setWindowTitle(tr("Moderation"));
-
-    settings = param1;
 
     ui.label_channel->setText(tr(" Channel: "));
     ui.pushButton_accept->setText(tr("Accept"));

@@ -102,7 +102,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
 // settings
     settings.clear();
-    settings.setValue("version", "1.0.9.504");
+    settings.setValue("version", "1.0.9.505");
     settings.setValue("debug", "off");
     settings.setValue("logged", "off");
     settings.setValue("busy", "off");
@@ -152,27 +152,27 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 // init all
     camSocket = new QTcpSocket();
 
-    pTabM = new TabManager(this, &settings);
+    pTabM = new TabManager(this);
     setCentralWidget(pTabM);
 
-    pNetwork = new Network(this, &settings, connectAct, lagAct);
+    pNetwork = new Network(this, connectAct, lagAct);
     pNotify = new Notify();
-    pTabC = new TabContainer(this, pNetwork, &settings, pTabM, pNotify, &mNickAvatar, &mChannelAvatar, camSocket);
+    pTabC = new TabContainer(this, pNetwork, pTabM, pNotify, &mNickAvatar, &mChannelAvatar, camSocket);
 
-    pDlg_channel_settings = new DlgChannelSettings(this, pNetwork, &settings);
-    pDlg_moderation = new DlgModeration(this, &settings);
-    pDlg_channel_list = new DlgChannelList(this, &settings);
-    pDlg_channel_homes = new DlgChannelHomes(this, pNetwork, &settings, &mChannelAvatar, pDlg_channel_settings);
-    pDlg_channel_favourites = new DlgChannelFavourites(this, pNetwork, &settings, &mChannelAvatar);
-    pDlg_friends = new DlgFriends(this, pNetwork, &settings, &mNickAvatar);
-    pDlg_ignore = new DlgIgnore(this, pNetwork, &settings, &mNickAvatar);
+    pDlg_channel_settings = new DlgChannelSettings(this, pNetwork);
+    pDlg_moderation = new DlgModeration(this);
+    pDlg_channel_list = new DlgChannelList(this);
+    pDlg_channel_homes = new DlgChannelHomes(this, pNetwork, &mChannelAvatar, pDlg_channel_settings);
+    pDlg_channel_favourites = new DlgChannelFavourites(this, pNetwork, &mChannelAvatar);
+    pDlg_friends = new DlgFriends(this, pNetwork, &mNickAvatar);
+    pDlg_ignore = new DlgIgnore(this, pNetwork, &mNickAvatar);
 
-    pOnet_kernel = new OnetKernel(this, pNetwork, &settings, pTabC, &mNickAvatar, &mChannelAvatar, pDlg_channel_settings, pDlg_channel_homes, pDlg_channel_list, pDlg_channel_favourites, pDlg_friends, pDlg_ignore, pDlg_moderation);
-    pOnet_auth = new OnetAuth(&settings, pTabC);
+    pOnet_kernel = new OnetKernel(this, pNetwork, pTabC, &mNickAvatar, &mChannelAvatar, pDlg_channel_settings, pDlg_channel_homes, pDlg_channel_list, pDlg_channel_favourites, pDlg_friends, pDlg_ignore, pDlg_moderation);
+    pOnet_auth = new OnetAuth(pTabC);
 
     pTabC->set_dlg(pDlg_channel_settings, pDlg_moderation);
 
-    pOptions = new DlgOptions(this, &settings);
+    pOptions = new DlgOptions(this);
 
 // welcome
     pTabC->show_msg("Status", "%Fi:courier%"+tr("Welcome to the Simple Chat Client")+" %Ihehe%", 0);
@@ -339,7 +339,7 @@ void MainWindow::set_lag(QString strValue)
 void MainWindow::check_update()
 {
 // update
-    uThreadList.append(new UpdateThread(this, &settings, pTabC));
+    uThreadList.append(new UpdateThread(this, pTabC));
     QObject::connect(uThreadList.at(uThreadList.size()-1), SIGNAL(do_remove_uthread(UpdateThread*)), this, SLOT(remove_uthread(UpdateThread*)));
 
 #ifdef Q_WS_X11
@@ -435,7 +435,7 @@ void MainWindow::cams_clicked()
 
 void MainWindow::about_dlg()
 {
-    (new DlgAbout(this, &settings))->show();
+    (new DlgAbout(this))->show();
 }
 
 // tray

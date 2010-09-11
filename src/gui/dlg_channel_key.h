@@ -29,12 +29,11 @@ class DlgChannelKey : public QDialog
 {
     Q_OBJECT
 public:
-    DlgChannelKey(QWidget *, Network *, QSettings *, QString);
+    DlgChannelKey(QWidget *, Network *, QString);
 
 private:
     Ui::uiChannelKey ui;
     Network *pNetwork;
-    QSettings *settings;
     QString strChannel;
 
 private slots:

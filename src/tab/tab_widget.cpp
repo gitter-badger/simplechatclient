@@ -20,21 +20,21 @@
 
 #include "tab_widget.h"
 
-TabWidget::TabWidget(QWidget *parent, Network *param1, QSettings *param2, QString param3, Notify *param4, QMap <QString, QByteArray> *param5, QMap <QString, QByteArray> *param6, DlgChannelSettings *param7, DlgModeration *param8, QTcpSocket *param9)
+TabWidget::TabWidget(QWidget *parent, Network *param1, QString param2, Notify *param3, QMap <QString, QByteArray> *param4, QMap <QString, QByteArray> *param5, DlgChannelSettings *param6, DlgModeration *param7, QTcpSocket *param8)
 {
     myparent = parent;
     pNetwork = param1;
-    settings = param2;
-    strName = param3;
-    pNotify = param4;
-    mNickAvatar = param5;
-    mChannelAvatar = param6;
-    dlgchannel_settings = param7;
-    dlgmoderation = param8;
-    camSocket = param9;
+    strName = param2;
+    pNotify = param3;
+    mNickAvatar = param4;
+    mChannelAvatar = param5;
+    dlgchannel_settings = param6;
+    dlgmoderation = param7;
+    camSocket = param8;
 
-    QString strDefaultFontColor = addslashes(settings->value("default_font_color").toString());
-    QString strBackgroundColor = addslashes(settings->value("background_color").toString());
+    QSettings settings;
+    QString strDefaultFontColor = addslashes(settings.value("default_font_color").toString());
+    QString strBackgroundColor = addslashes(settings.value("background_color").toString());
 
     iNickCount = 0;
     bCursorPositionChanged = false;
@@ -103,13 +103,13 @@ TabWidget::TabWidget(QWidget *parent, Network *param1, QSettings *param2, QStrin
     nickCount->setAlignment(Qt::AlignCenter);
     nickCount->show();
 
-    nick_list = new Nicklist(myparent, pNetwork, settings, strName, mNickAvatar, camSocket);
+    nick_list = new Nicklist(myparent, pNetwork, strName, mNickAvatar, camSocket);
     nick_list->setParent(this);
     nick_list->setSortingEnabled(false);
     nick_list->setItemDelegate(new NicklistDelegate(nick_list));
     nick_list->show();
 
-    mainWebView = new MainWebView(myparent, pNetwork, settings, strName, camSocket);
+    mainWebView = new MainWebView(myparent, pNetwork, strName, camSocket);
     mainWebView->setParent(this);
     mainWebView->show();
 
@@ -330,12 +330,12 @@ TabWidget::TabWidget(QWidget *parent, Network *param1, QSettings *param2, QStrin
         moderSendButton->hide();
         bottomLayout->removeWidget(moderSendButton);
 
-        if (settings->value("style") == "modern")
+        if (settings.value("style") == "modern")
         {
             rightLayout->addWidget(webLink);
             rightLayout->addWidget(nickCount);
         }
-        else if (settings->value("style") == "classic")
+        else if (settings.value("style") == "classic")
         {
             webLink->hide();
             nickCount->hide();
@@ -497,8 +497,10 @@ TabWidget::~TabWidget()
 
 void TabWidget::set_default()
 {
+    QSettings settings;
+
 // set default bold
-    if (settings->value("my_bold").toString() == "on")
+    if (settings.value("my_bold").toString() == "on")
     {
         bold->setChecked(true);
         bMyBold = true;
@@ -512,7 +514,7 @@ void TabWidget::set_default()
     }
 
 // set default italic
-    if (settings->value("my_italic").toString() == "on")
+    if (settings.value("my_italic").toString() == "on")
     {
         italic->setChecked(true);
         bMyItalic = true;
@@ -530,12 +532,12 @@ void TabWidget::set_default()
     inputline->setFont(QFont(strMyFontFamily, -1, iWeight, bMyItalic));
 
 // set default font
-    QString strMyFont = settings->value("my_font").toString();
+    QString strMyFont = settings.value("my_font").toString();
     fontfamily->setText(strMyFont);
     strMyFontFamily = strMyFont;
 
 // set default color
-    QString strMyColor = settings->value("my_color").toString();
+    QString strMyColor = settings.value("my_color").toString();
     strCurrentColor = strMyColor;
     inputline->setStyleSheet(QString("color: "+strCurrentColor));
 
@@ -604,7 +606,8 @@ void TabWidget::display_msg(QString strTime, QString strData, int iLevel)
     QString strDT = dt.toString("[hh:mm:ss] ");
     strData = strDT+strData;
 
-    if (settings->value("disable_logs").toString() == "off")
+    QSettings settings;
+    if (settings.value("disable_logs").toString() == "off")
     {
         Log *l = new Log();
         l->save(strName, strData);
@@ -613,9 +616,9 @@ void TabWidget::display_msg(QString strTime, QString strData, int iLevel)
 
     if ((iLevel == 1) || (iLevel == 2) || (iLevel == 3))
     {
-        if (settings->value("hide_join_part").toString() == "on")
+        if (settings.value("hide_join_part").toString() == "on")
             return;
-        if ((settings->value("hide_join_part_200").toString() == "on") && (iNickCount > 200))
+        if ((settings.value("hide_join_part_200").toString() == "on") && (iNickCount > 200))
             return;
     }
 
@@ -628,7 +631,8 @@ void TabWidget::display_msg(QString strData, int iLevel)
     QString strDT = dt.toString("[hh:mm:ss] ");
     strData = strDT+strData;
 
-    if (settings->value("disable_logs").toString() == "off")
+    QSettings settings;
+    if (settings.value("disable_logs").toString() == "off")
     {
         Log *l = new Log();
         l->save(strName, strData);
@@ -637,9 +641,9 @@ void TabWidget::display_msg(QString strData, int iLevel)
 
     if ((iLevel == 1) || (iLevel == 2) || (iLevel == 3))
     {
-        if (settings->value("hide_join_part").toString() == "on")
+        if (settings.value("hide_join_part").toString() == "on")
             return;
-        if ((settings->value("hide_join_part_200").toString() == "on") && (iNickCount > 200))
+        if ((settings.value("hide_join_part_200").toString() == "on") && (iNickCount > 200))
             return;
     }
 
@@ -648,6 +652,8 @@ void TabWidget::display_msg(QString strData, int iLevel)
 
 void TabWidget::display_message(QString strData, int iLevel)
 {
+    QSettings settings;
+
 // fix max size
     if (strContent.count("</p>") > 150)
     {
@@ -665,9 +671,9 @@ void TabWidget::display_message(QString strData, int iLevel)
     strData.replace("<", "&lt;");
     strData.replace(">", "&gt;");
     // channels
-    strData.replace(QRegExp("#([~-_a-zA-Z0-9\xa1\xaf\xa6\xac\xca\xc6\xd1\xd3\xa3\xb1\xbf\xb6\xbc\xea\xe6\xf1\xf3\xb3]+)"), "<a id=\"level_chan\" style=\"color:"+addslashes(settings->value("channel_font_color").toString())+";text-decoration:none;\" href=\"chan#\\1\">#\\1</a>");
+    strData.replace(QRegExp("#([~-_a-zA-Z0-9\xa1\xaf\xa6\xac\xca\xc6\xd1\xd3\xa3\xb1\xbf\xb6\xbc\xea\xe6\xf1\xf3\xb3]+)"), "<a id=\"level_chan\" style=\"color:"+addslashes(settings.value("channel_font_color").toString())+";text-decoration:none;\" href=\"chan#\\1\">#\\1</a>");
     // nicks
-    strData.replace(QRegExp("&lt;([~-_a-zA-Z0-9\xa1\xaf\xa6\xac\xca\xc6\xd1\xd3\xa3\xb1\xbf\xb6\xbc\xea\xe6\xf1\xf3\xb3]+)&gt;"), "<a id=\"level_0\" style=\"color:"+addslashes(settings->value("default_font_color").toString())+";text-decoration:none;\" href=\"nick\\1\">&lt;\\1&gt;</a>");
+    strData.replace(QRegExp("&lt;([~-_a-zA-Z0-9\xa1\xaf\xa6\xac\xca\xc6\xd1\xd3\xa3\xb1\xbf\xb6\xbc\xea\xe6\xf1\xf3\xb3]+)&gt;"), "<a id=\"level_0\" style=\"color:"+addslashes(settings.value("default_font_color").toString())+";text-decoration:none;\" href=\"nick\\1\">&lt;\\1&gt;</a>");
 
 // content last
     QString strContentLast;
@@ -676,29 +682,29 @@ void TabWidget::display_message(QString strData, int iLevel)
     QString strFontColor;
 
     if (iLevel == 0)
-        strFontColor = addslashes(settings->value("default_font_color").toString()); // default black
+        strFontColor = addslashes(settings.value("default_font_color").toString()); // default black
     else if (iLevel == 1) // join
-        strFontColor = addslashes(settings->value("font_color_level_1").toString()); // default green
+        strFontColor = addslashes(settings.value("font_color_level_1").toString()); // default green
     else if (iLevel == 2) // part
-        strFontColor = addslashes(settings->value("font_color_level_2").toString()); // default light blue
+        strFontColor = addslashes(settings.value("font_color_level_2").toString()); // default light blue
     else if (iLevel == 3) // quit
-        strFontColor = addslashes(settings->value("font_color_level_3").toString()); // default dark blue
+        strFontColor = addslashes(settings.value("font_color_level_3").toString()); // default dark blue
     else if (iLevel == 4) // kick
-        strFontColor = addslashes(settings->value("font_color_level_4").toString()); // default dark blue
+        strFontColor = addslashes(settings.value("font_color_level_4").toString()); // default dark blue
     else if (iLevel == 5) // mode
-        strFontColor = addslashes(settings->value("font_color_level_5").toString()); // default green
+        strFontColor = addslashes(settings.value("font_color_level_5").toString()); // default green
     else if (iLevel == 6) // notice
-        strFontColor = addslashes(settings->value("font_color_level_6").toString()); // default blue
+        strFontColor = addslashes(settings.value("font_color_level_6").toString()); // default blue
     else if (iLevel == 7) // info
-        strFontColor = addslashes(settings->value("font_color_level_7").toString()); // default gray
+        strFontColor = addslashes(settings.value("font_color_level_7").toString()); // default gray
     else if (iLevel == 8) // hilight no color
-        strFontColor = addslashes(settings->value("default_font_color").toString()); // default black
+        strFontColor = addslashes(settings.value("default_font_color").toString()); // default black
     else if (iLevel == 9) // error
-        strFontColor = addslashes(settings->value("font_color_level_9").toString()); // default red
+        strFontColor = addslashes(settings.value("font_color_level_9").toString()); // default red
     else
     {
         iLevel = 0;
-        strFontColor = addslashes(settings->value("default_font_color").toString()); // default black
+        strFontColor = addslashes(settings.value("default_font_color").toString()); // default black
     }
 
     strData.insert(11, "<span id=\"level_"+QString::number(iLevel)+"\" style=\"color:"+strFontColor+";\">");
@@ -714,7 +720,7 @@ void TabWidget::display_message(QString strData, int iLevel)
     }
 
 // convert emoticons, font
-    Convert *convertText = new Convert(settings);
+    Convert *convertText = new Convert();
     convertText->convert_text(&strData, &strContentLast);
     delete convertText;
 
@@ -724,13 +730,13 @@ void TabWidget::display_message(QString strData, int iLevel)
     {
         strTextDecoration = "underline";
 
-        if (settings->value("disable_sounds").toString() == "off")
+        if (settings.value("disable_sounds").toString() == "off")
             pNotify->play();
     }
 
 // /me
     QString strTextAlign = "left";
-    if (settings->value("hide_formating").toString() == "off")
+    if (settings.value("hide_formating").toString() == "off")
     {
         if (strData.indexOf(QString(QByteArray("\x01"))) != -1)
         {
@@ -740,7 +746,7 @@ void TabWidget::display_message(QString strData, int iLevel)
     }
 
 // init text
-    strContent.append("<p id=\"level_0\" style=\"color:"+addslashes(settings->value("default_font_color").toString())+";margin:0;padding:0;font-style:normal;text-align:"+strTextAlign+";font-family:Verdana;font-weight:normal;font-size:"+strFontSize+";text-decoration:"+strTextDecoration+";\">");
+    strContent.append("<p id=\"level_0\" style=\"color:"+addslashes(settings.value("default_font_color").toString())+";margin:0;padding:0;font-style:normal;text-align:"+strTextAlign+";font-family:Verdana;font-weight:normal;font-size:"+strFontSize+";text-decoration:"+strTextDecoration+";\">");
 
 // text
     strContent.append(strData);
@@ -763,8 +769,9 @@ void TabWidget::set_topic(QString strTopic)
     strData.replace(">", "&gt;");
 
 // colors
-    QString strDefaultFontColor = addslashes(settings->value("default_font_color").toString());
-    QString strBackgroundColor = addslashes(settings->value("background_color").toString());
+    QSettings settings;
+    QString strDefaultFontColor = addslashes(settings.value("default_font_color").toString());
+    QString strBackgroundColor = addslashes(settings.value("background_color").toString());
 
 // content last
     QString strContentLast;
@@ -772,7 +779,7 @@ void TabWidget::set_topic(QString strTopic)
     QString strContentEnd = "</body></html>";
 
 // convert emoticons, font
-    Convert *convertText = new Convert(settings);
+    Convert *convertText = new Convert();
     convertText->convert_text(&strData, &strContentLast);
     delete convertText;
 
@@ -788,9 +795,9 @@ void TabWidget::set_topic(QString strTopic)
     strTopic.replace(QRegExp("%F(\\S+)%"),"");
     strTopic.replace(QRegExp("%I(\\S+)%"),"<\\1>");
 
-    if (settings->value("style") == "modern")
+    if (settings.value("style") == "modern")
         topic->setToolTip(strTopic);
-    else if (settings->value("style") == "classic")
+    else if (settings.value("style") == "classic")
         topic->setToolTip(topicDetails->text());
 }
 
@@ -822,7 +829,8 @@ void TabWidget::author_topic(QString strAuthor)
 {
     topicDetails->setText(QString(tr("Topic set by %1")).arg(strAuthor));
 
-    if (settings->value("style") == "classic")
+    QSettings settings;
+    if (settings.value("style") == "classic")
         topic->setToolTip(topicDetails->text());
 }
 
@@ -1112,17 +1120,18 @@ void TabWidget::update_channel_avatar()
 void TabWidget::refresh_colors()
 {
     // get values
-    QString strBackgroundColor = addslashes(settings->value("background_color").toString());
-    QString strDefaultFontColor = addslashes(settings->value("default_font_color").toString());
-    QString strJoinFontColor = addslashes(settings->value("font_color_level_1").toString());
-    QString strPartFontColor = addslashes(settings->value("font_color_level_2").toString());
-    QString strQuitFontColor = addslashes(settings->value("font_color_level_3").toString());
-    QString strKickFontColor = addslashes(settings->value("font_color_level_4").toString());
-    QString strModeFontColor = addslashes(settings->value("font_color_level_5").toString());
-    QString strNoticeFontColor = addslashes(settings->value("font_color_level_6").toString());
-    QString strInfoFontColor = addslashes(settings->value("font_color_level_7").toString());
-    QString strErrorFontColor = addslashes(settings->value("font_color_level_9").toString());
-    QString strChannelFontColor = addslashes(settings->value("channel_font_color").toString());
+    QSettings settings;
+    QString strBackgroundColor = addslashes(settings.value("background_color").toString());
+    QString strDefaultFontColor = addslashes(settings.value("default_font_color").toString());
+    QString strJoinFontColor = addslashes(settings.value("font_color_level_1").toString());
+    QString strPartFontColor = addslashes(settings.value("font_color_level_2").toString());
+    QString strQuitFontColor = addslashes(settings.value("font_color_level_3").toString());
+    QString strKickFontColor = addslashes(settings.value("font_color_level_4").toString());
+    QString strModeFontColor = addslashes(settings.value("font_color_level_5").toString());
+    QString strNoticeFontColor = addslashes(settings.value("font_color_level_6").toString());
+    QString strInfoFontColor = addslashes(settings.value("font_color_level_7").toString());
+    QString strErrorFontColor = addslashes(settings.value("font_color_level_9").toString());
+    QString strChannelFontColor = addslashes(settings.value("channel_font_color").toString());
 
     // refresh colors
     replace_color("0", strDefaultFontColor);
@@ -1408,7 +1417,7 @@ void TabWidget::send_message(bool bType)
             strTextOriginal = strText;
             QStringList strTextList = strText.split(" ");
 
-            Commands *pCommands = new Commands(strName, strText, settings);
+            Commands *pCommands = new Commands(strName, strText);
             strText = pCommands->execute();
             delete pCommands;
 
@@ -1444,7 +1453,8 @@ void TabWidget::send_message(bool bType)
                     QDateTime dt = QDateTime::currentDateTime();
                     QString strDT = dt.toString("[hh:mm:ss] ");
 
-                    if (settings->value("disable_logs").toString() == "off")
+                    QSettings settings;
+                    if (settings.value("disable_logs").toString() == "off")
                     {
                         Log *l = new Log();
                         l->save(strName, QString("%1<%2> %3").arg(strDT).arg(strMe).arg(strTextDisplay));
@@ -1487,7 +1497,8 @@ void TabWidget::send_message(bool bType)
 
                 if (bType == true)
                 {
-                    if (settings->value("disable_logs").toString() == "off")
+                    QSettings settings;
+                    if (settings.value("disable_logs").toString() == "off")
                     {
                         Log *l = new Log();
                         l->save(strName, QString("%1<%2> %3").arg(strDT).arg(strMe).arg(strText));
@@ -1500,7 +1511,8 @@ void TabWidget::send_message(bool bType)
                 }
                 else
                 {
-                    if (settings->value("disable_logs").toString() == "off")
+                    QSettings settings;
+                    if (settings.value("disable_logs").toString() == "off")
                     {
                         Log *l = new Log();
                         l->save(strName, QString("%1 *<%2> %3").arg(strDT).arg(strMe).arg(strText));

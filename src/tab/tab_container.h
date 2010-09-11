@@ -36,7 +36,7 @@ class TabContainer : public QObject
 {
     Q_OBJECT
 public:
-    TabContainer(QWidget *, Network *, QSettings *, TabManager *, Notify *, QMap <QString, QByteArray> *, QMap <QString, QByteArray> *, QTcpSocket *);
+    TabContainer(QWidget *, Network *, TabManager *, Notify *, QMap <QString, QByteArray> *, QMap <QString, QByteArray> *, QTcpSocket *);
     ~TabContainer();
     void set_dlg(DlgChannelSettings *, DlgModeration *);
     bool exist_tab(QString);
@@ -75,7 +75,6 @@ public slots:
 private:
     QWidget *myparent;
     Network *pNetwork;
-    QSettings *settings;
     TabManager *tabm;
     TabWidget *tw[50];
     QString strFreeUsedList;

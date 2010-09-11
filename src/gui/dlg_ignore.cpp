@@ -20,7 +20,7 @@
 
 #include "dlg_ignore.h"
 
-DlgIgnore::DlgIgnore(QWidget *parent, Network *param1, QSettings *param2, QMap <QString, QByteArray> *param3) : QDialog(parent)
+DlgIgnore::DlgIgnore(QWidget *parent, Network *param1, QMap <QString, QByteArray> *param2) : QDialog(parent)
 {
     ui.setupUi(this);
     setAttribute(Qt::WA_DeleteOnClose);
@@ -28,8 +28,7 @@ DlgIgnore::DlgIgnore(QWidget *parent, Network *param1, QSettings *param2, QMap <
 
     myparent = parent;
     pNetwork = param1;
-    settings = param2;
-    mNickAvatar = param3;
+    mNickAvatar = param2;
 
     ui.pushButton_add->setText(tr("Add"));
     ui.pushButton_remove->setText(tr("Remove"));
@@ -49,8 +48,9 @@ void DlgIgnore::add_ignore(QString strNick)
     }
     else
     {
+        QSettings settings;
         ui.listWidget_nicks->addItem(new QListWidgetItem(QIcon(":/3rdparty/images/people.png"), strNick));
-        if (settings->value("disable_avatars").toString() == "off")
+        if (settings.value("disable_avatars").toString() == "off")
             pNetwork->send(QString("NS INFO %1 s").arg(strNick));
     }
 }

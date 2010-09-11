@@ -32,7 +32,7 @@ class DlgChannelFavourites : public QDialog
 {
     Q_OBJECT
 public:
-    DlgChannelFavourites(QWidget *, Network *, QSettings *, QMap <QString, QByteArray> *);
+    DlgChannelFavourites(QWidget *, Network *, QMap <QString, QByteArray> *);
     void add_channel(QString);
     void clear();
 
@@ -40,7 +40,6 @@ private:
     Ui::uiChannelFavourites ui;
     QWidget *myparent;
     Network *pNetwork;
-    QSettings *settings;
     QMap <QString, QByteArray> *mChannelAvatar;
 
 private slots:

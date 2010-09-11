@@ -43,7 +43,7 @@ class OnetKernel : public QObject
 {
     Q_OBJECT
 public:
-    OnetKernel(QWidget *, Network *, QSettings *, TabContainer *, QMap <QString, QByteArray> *, QMap <QString, QByteArray> *, DlgChannelSettings *, DlgChannelHomes *, DlgChannelList *, DlgChannelFavourites *, DlgFriends *, DlgIgnore *, DlgModeration *);
+    OnetKernel(QWidget *, Network *, TabContainer *, QMap <QString, QByteArray> *, QMap <QString, QByteArray> *, DlgChannelSettings *, DlgChannelHomes *, DlgChannelList *, DlgChannelFavourites *, DlgFriends *, DlgIgnore *, DlgModeration *);
 
 public slots:
     void kernel(QString);
@@ -52,7 +52,6 @@ private:
     QWidget *myparent;
     Network *pNetwork;
     TabContainer *tabc;
-    QSettings *settings;
     QStringList strDataList;
     DlgChannelSettings *dlgchannel_settings;
     DlgChannelHomes *dlgchannel_homes;
@@ -239,7 +238,6 @@ private:
     void raw_820();
     void raw_821();
     void raw_951();
-    QString get_settings_key(QString);
 
 private slots:
     void remove_cathread(ChannelAvatar*);

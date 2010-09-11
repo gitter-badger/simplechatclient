@@ -20,10 +20,9 @@
 
 #include "tab_manager.h"
 
-TabManager::TabManager(QWidget *parent, QSettings *param1) : QTabWidget(parent)
+TabManager::TabManager(QWidget *parent) : QTabWidget(parent)
 {
     myparent = parent;
-    settings = param1;
     tab = tabBar();
     setTabsClosable(true);
     QObject::connect(tab, SIGNAL(currentChanged(int)), this, SLOT(current_tab_changed(int)));
@@ -50,7 +49,8 @@ void TabManager::set_alert(QString strName, QColor cColor)
 
 int TabManager::tab_pos(QString strName)
 {
-    QStringList strlChannelNames = settings->value("channel_names").toStringList();
+    QSettings settings;
+    QStringList strlChannelNames = settings.value("channel_names").toStringList();
 
     int i = 0;
     QStringListIterator strliChannelNames (strlChannelNames);
@@ -68,7 +68,8 @@ QString TabManager::tab_name(int index)
 {
     if (index == -1) return QString::null; // prevent crash
 
-    QStringList strlChannelNames = settings->value("channel_names").toStringList();
+    QSettings settings;
+    QStringList strlChannelNames = settings.value("channel_names").toStringList();
 
     if (index < strlChannelNames.size())
         return strlChannelNames.at(index);

@@ -20,15 +20,14 @@
 
 #include "dlg_user_profile.h"
 
-DlgUserProfile::DlgUserProfile(QWidget *parent, Network *param1, QSettings *param2, sNickInfo param3) : QDialog(parent)
+DlgUserProfile::DlgUserProfile(QWidget *parent, Network *param1, sNickInfo param2) : QDialog(parent)
 {
     ui.setupUi(this);
     setAttribute(Qt::WA_DeleteOnClose);
     setWindowTitle(tr("Profile"));
 
     pNetwork = param1;
-    settings = param2;
-    sCurrentNickInfo = param3;
+    sCurrentNickInfo = param2;
 
     ui.label_sex->setText(tr("Sex:"));
     ui.label_birthdate->setText(tr("Birthdate:"));
@@ -68,7 +67,7 @@ QString DlgUserProfile::convert_desc(QString strContent)
     strContent.replace(">", "&gt;");
 
     // convert
-    Convert *convertText = new Convert(settings);
+    Convert *convertText = new Convert();
     convertText->convert_text(&strContent, &strContentLast);
     delete convertText;
 

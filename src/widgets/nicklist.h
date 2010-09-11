@@ -52,7 +52,7 @@ class Nicklist : public QListWidget
 {
     Q_OBJECT
 public:
-    Nicklist(QWidget *, Network *, QSettings *, QString, QMap <QString, QByteArray> *, QTcpSocket *);
+    Nicklist(QWidget *, Network *, QString, QMap <QString, QByteArray> *, QTcpSocket *);
     ~Nicklist();
     void set_open_channels(QStringList);
     void set_user_info(QString, QString, QString);
@@ -68,7 +68,6 @@ public:
 private:
     QWidget *myparent;
     Network *pNetwork;
-    QSettings *settings;
     QString strChannel;
     QStringList strOpenChannels;
     QMap <QString, QByteArray> *mNickAvatar;

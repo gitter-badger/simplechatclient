@@ -35,13 +35,12 @@ class Updater : public QObject
 {
     Q_OBJECT
 public:
-    Updater(QWidget *, QSettings *, TabContainer *);
+    Updater(QWidget *, TabContainer *);
     void check_for_updates(QString);
     QString get_available_version();
 
 private:
     QWidget *myparent;
-    QSettings *settings;
     TabContainer *tabc;
     QString strCurrentVersion;
     QString strAvailableVersion;

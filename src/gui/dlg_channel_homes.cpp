@@ -20,7 +20,7 @@
 
 #include "dlg_channel_homes.h"
 
-DlgChannelHomes::DlgChannelHomes(QWidget *parent, Network *param1, QSettings *param2, QMap <QString, QByteArray> *param3, DlgChannelSettings *param4) : QDialog(parent)
+DlgChannelHomes::DlgChannelHomes(QWidget *parent, Network *param1, QMap <QString, QByteArray> *param2, DlgChannelSettings *param3) : QDialog(parent)
 {
     ui.setupUi(this);
     setAttribute(Qt::WA_DeleteOnClose);
@@ -28,9 +28,8 @@ DlgChannelHomes::DlgChannelHomes(QWidget *parent, Network *param1, QSettings *pa
 
     myparent = parent;
     pNetwork = param1;
-    settings = param2;
-    mChannelAvatar = param3;
-    dlgchannel_settings = param4;
+    mChannelAvatar = param2;
+    dlgchannel_settings = param3;
 
     ui.pushButton_create->setText(tr("Create"));
     ui.pushButton_remove->setText(tr("Remove"));

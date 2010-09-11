@@ -32,7 +32,7 @@ class DlgChannelList : public QDialog
 {
     Q_OBJECT
 public:
-    DlgChannelList(QWidget *, QSettings *);
+    DlgChannelList(QWidget *);
     void clear();
     void add_channel(QString, QString, QString, QString);
     void create_list();
@@ -40,7 +40,6 @@ public:
 
 private:
     Ui::uiChannelList ui;
-    QSettings *settings;
     QList < QList<QString> > list_all;
     QList < QList<QString> > list_teen;
     QList < QList<QString> > list_common;

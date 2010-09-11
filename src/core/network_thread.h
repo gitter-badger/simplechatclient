@@ -32,7 +32,7 @@ class NetworkThread : public QThread
 {
     Q_OBJECT
 public:
-    NetworkThread(QSettings *, QAction *, QAction *);
+    NetworkThread(QAction *, QAction *);
     ~NetworkThread();
     void run();
     void set_reconnect(bool);
@@ -45,7 +45,6 @@ public slots:
     void send(QString);
 
 private:
-    QSettings *settings;
     QAction *connectAct;
     QAction *lagAct;
     QTcpSocket *socket;

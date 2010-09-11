@@ -31,7 +31,7 @@ class DlgChannelHomes : public QDialog
 {
     Q_OBJECT
 public:
-    DlgChannelHomes(QWidget *, Network *, QSettings *, QMap <QString, QByteArray> *, DlgChannelSettings *);
+    DlgChannelHomes(QWidget *, Network *, QMap <QString, QByteArray> *, DlgChannelSettings *);
     void add_channel(QString);
     void clear();
 
@@ -39,7 +39,6 @@ private:
     Ui::uiChannelHomes ui;
     QWidget *myparent;
     Network *pNetwork;
-    QSettings *settings;
     QMap <QString, QByteArray> *mChannelAvatar;
     DlgChannelSettings *dlgchannel_settings;
 

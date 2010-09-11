@@ -30,12 +30,11 @@ class DlgKick : public QDialog
 {
     Q_OBJECT
 public:
-    DlgKick(QWidget *, Network *, QSettings *, QString, QString);
+    DlgKick(QWidget *, Network *, QString, QString);
 
 private:
     Ui::uiKick ui;
     Network *pNetwork;
-    QSettings *settings;
     QString strNick;
     QString strChannel;
 

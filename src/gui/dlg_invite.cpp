@@ -20,17 +20,16 @@
 
 #include "dlg_invite.h"
 
-DlgInvite::DlgInvite(QWidget *parent, Network *param1, QSettings *param2, TabContainer *param3, QString param4, QString param5) : QDialog(parent)
+DlgInvite::DlgInvite(QWidget *parent, Network *param1, TabContainer *param2, QString param3, QString param4) : QDialog(parent)
 {
     ui.setupUi(this);
     setAttribute(Qt::WA_DeleteOnClose);
     setWindowTitle(tr("Invitation"));
 
     pNetwork = param1;
-    settings = param2;
-    tabc = param3;
-    strNick = param4;
-    strChannel = param5;
+    tabc = param2;
+    strNick = param3;
+    strChannel = param4;
 
     ui.pushButton_whois->setText(tr("Whois"));
     ui.pushButton_reject->setText(tr("Reject"));

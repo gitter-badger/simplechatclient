@@ -36,12 +36,11 @@ class DlgOptions : public QDialog
 {
     Q_OBJECT
 public:
-    DlgOptions(QWidget *, QSettings *);
+    DlgOptions(QWidget *);
 
 private:
     Ui::uiOptions ui;
     QWidget *myparent;
-    QSettings *settings;
 
     void set_mainwindow_colors();
     void set_nicklist_colors();

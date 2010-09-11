@@ -31,14 +31,13 @@ class UpdateThreadClass : public QThread
 {
     Q_OBJECT
 public:
-    UpdateThreadClass(QWidget *, QSettings *, TabContainer *);
+    UpdateThreadClass(QWidget *, TabContainer *);
     ~UpdateThreadClass();
     void run();
     void check_for_updates(QString);
 
 private:
     QWidget *myparent;
-    QSettings *settings;
     TabContainer *tabc;
     Updater *pUpdater;
 
@@ -55,11 +54,10 @@ class UpdateThread : public QObject
 {
     Q_OBJECT
 public:
-    UpdateThread(QWidget *, QSettings *, TabContainer *);
+    UpdateThread(QWidget *, TabContainer *);
 
 private:
     QWidget *myparent;
-    QSettings *settings;
     TabContainer *tabc;
     UpdateThreadClass *updateThr;
 

@@ -40,12 +40,11 @@ class DlgRegisterNick : public QDialog
 {
     Q_OBJECT
 public:
-    DlgRegisterNick(QWidget *, QWidget *, QSettings *);
+    DlgRegisterNick(QWidget *, QWidget *);
 
 private:
     Ui::uiRegisterNick ui;
     QWidget *options;
-    QSettings *settings;
     QNetworkReply *pReply;
     QNetworkAccessManager accessManager;
     QNetworkCookieJar *cookieJar;

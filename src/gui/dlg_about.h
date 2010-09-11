@@ -29,11 +29,10 @@ class DlgAbout : public QDialog
 {
     Q_OBJECT
 public:
-    DlgAbout(QWidget *, QSettings *);
+    DlgAbout(QWidget *);
 
 private:
     Ui::uiAbout ui;
-    QSettings *settings;
 
 private slots:
     void button_ok();

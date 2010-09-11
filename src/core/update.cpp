@@ -20,16 +20,16 @@
 
 #include "update.h"
 
-Updater::Updater(QWidget *parent, QSettings *param1, TabContainer *param2)
+Updater::Updater(QWidget *parent, TabContainer *param1)
 {
     myparent = parent;
-    settings = param1;
-    tabc = param2;
+    tabc = param1;
 }
 
 void Updater::check_for_updates(QString param1)
 {
-    strCurrentVersion = settings->value("version").toString();
+    QSettings settings;
+    strCurrentVersion = settings.value("version").toString();
     QStringList lCurrentVersion = strCurrentVersion.split(".");
     QString strCurrentRev = lCurrentVersion.last();
     int iCurrentRev = strCurrentRev.toInt();
@@ -45,7 +45,7 @@ void Updater::check_for_updates(QString param1)
     int iAvailableRev = strAvailableRev.toInt();
 
 #ifdef Q_WS_X11
-        if (settings->value("debug").toString() == "on")
+        if (settings.value("debug").toString() == "on")
             qDebug() << "Current rev: " << strCurrentRev << " Available rev: " << strAvailableRev;
 #endif
 
@@ -79,7 +79,8 @@ QString Updater::get_available_version()
 
     if (bHost == true)
     {
-        QString strSendVersion = settings->value("version").toString();
+        QSettings settings;
+        QString strSendVersion = settings.value("version").toString();
         pReply = accessManager.get(QNetworkRequest(QUrl(QString("http://simplechatclien.sourceforge.net/update.php?version=%1").arg(strSendVersion))));
         QObject::connect(pReply, SIGNAL(finished()), &eventLoop, SLOT(quit()));
         eventLoop.exec();

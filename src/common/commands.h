@@ -29,14 +29,13 @@ class Commands : public QObject
 {
     Q_OBJECT
 public:
-    Commands(QString, QString, QSettings *);
+    Commands(QString, QString);
     QString execute();
 
 private:
     QString strChan;
     QString strData;
     QStringList strDataList;
-    QSettings *settings;
 
     QString cmd_join();
     QString cmd_priv();

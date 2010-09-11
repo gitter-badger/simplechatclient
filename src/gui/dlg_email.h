@@ -38,11 +38,10 @@ class DlgEmail : public QDialog
 {
     Q_OBJECT
 public:
-    DlgEmail(QWidget *, QSettings *, QString, QString);
+    DlgEmail(QWidget *, QString, QString);
 
 private:
     Ui::uiEmail ui;
-    QSettings *settings;
     QString strChannel;
     QString strEmail;
     QNetworkReply *pReply;

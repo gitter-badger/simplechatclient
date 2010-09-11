@@ -61,7 +61,7 @@ class TabWidget : public QWidget
 {
     Q_OBJECT
 public:
-    TabWidget(QWidget *, Network *, QSettings *, QString, Notify *, QMap <QString, QByteArray> *, QMap <QString, QByteArray> *, DlgChannelSettings *, DlgModeration *, QTcpSocket *);
+    TabWidget(QWidget *, Network *, QString, Notify *, QMap <QString, QByteArray> *, QMap <QString, QByteArray> *, DlgChannelSettings *, DlgModeration *, QTcpSocket *);
     ~TabWidget();
     QString get_name() { return strName; }
     void set_default();
@@ -172,7 +172,6 @@ private:
 
     QWidget *myparent;
     Network *pNetwork;
-    QSettings *settings;
     QString strName;
     QString strLast_msg;
     QMap <QString, QString> nick_flag;

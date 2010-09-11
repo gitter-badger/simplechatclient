@@ -20,13 +20,11 @@
 
 #include "dlg_channel_list.h"
 
-DlgChannelList::DlgChannelList(QWidget *parent, QSettings *param1) : QDialog(parent)
+DlgChannelList::DlgChannelList(QWidget *parent) : QDialog(parent)
 {
     ui.setupUi(this);
     setAttribute(Qt::WA_DeleteOnClose);
     setWindowTitle(tr("Channel list"));
-
-    settings = param1;
 
     ui.groupBox_search->setTitle(tr("Search"));
     ui.groupBox_type->setTitle(tr("Type"));

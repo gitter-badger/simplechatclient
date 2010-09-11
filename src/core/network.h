@@ -30,7 +30,7 @@ class Network : public QObject
 {
     Q_OBJECT
 public:
-    Network(QWidget *, QSettings *, QAction *, QAction *);
+    Network(QWidget *, QAction *, QAction *);
     ~Network();
     bool is_connected();
     bool is_writable();
@@ -42,7 +42,6 @@ public slots:
     void send_slot(QString);
 
 private:
-    QSettings *settings;
     QAction *connectAct;
     QAction *lagAct;
     NetworkThread *networkThr;

@@ -31,7 +31,7 @@ class DlgModeration : public QDialog
 {
     Q_OBJECT
 public:
-    DlgModeration(QWidget *, QSettings *);
+    DlgModeration(QWidget *);
     ~DlgModeration();
     void set_active_channel(QString);
     void add_msg(QString, QString, QString, QString);
@@ -39,7 +39,6 @@ public:
 
 private:
     Ui::uiModeration ui;
-    QSettings *settings;
     QString strActiveChannel;
     QMultiHash <QString, QString> channel_id;
     QMultiHash <QString, QString> id_nick;

@@ -20,15 +20,14 @@
 
 #include "dlg_email.h"
 
-DlgEmail::DlgEmail(QWidget *parent, QSettings *param1, QString param2, QString param3) : QDialog(parent)
+DlgEmail::DlgEmail(QWidget *parent, QString param1, QString param2) : QDialog(parent)
 {
     ui.setupUi(this);
     setAttribute(Qt::WA_DeleteOnClose);
     setWindowTitle(tr("Change email address"));
 
-    settings = param1;
-    strChannel = param2;
-    strEmail = param3;
+    strChannel = param1;
+    strEmail = param2;
 
     ui.label_msg->setText(tr("Enter the characters you see:"));
     ui.pushButton_ok->setText(tr("OK"));
@@ -47,21 +46,22 @@ void DlgEmail::set_cookies()
 {
     QList <QNetworkCookie> cookieList;
     QNetworkCookie cookie;
+    QSettings settings;
 
     cookie.setName("onet_ubi");
-    cookie.setValue(settings->value("onet_ubi").toByteArray());
+    cookie.setValue(settings.value("onet_ubi").toByteArray());
     cookieList.append(cookie);
 
     cookie.setName("onet_cid");
-    cookie.setValue(settings->value("onet_cid").toByteArray());
+    cookie.setValue(settings.value("onet_cid").toByteArray());
     cookieList.append(cookie);
 
     cookie.setName("onet_sid");
-    cookie.setValue(settings->value("onet_sid").toByteArray());
+    cookie.setValue(settings.value("onet_sid").toByteArray());
     cookieList.append(cookie);
 
     cookie.setName("onet_uid");
-    cookie.setValue(settings->value("onet_uid").toByteArray());
+    cookie.setValue(settings.value("onet_uid").toByteArray());
     cookieList.append(cookie);
 
     accessManager.cookieJar()->setCookiesFromUrl(cookieList, QUrl("http://czat.onet.pl"));
