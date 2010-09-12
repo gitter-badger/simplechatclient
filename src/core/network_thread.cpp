@@ -210,7 +210,7 @@ void NetworkThread::recv()
 
     QStringList strDataLine = strDataRecv.split("\r\n");
     if (strDataLine.size() < 2)
-        QTimer::singleShot(3*1000, this, SLOT(recv()));
+        QTimer::singleShot(100, this, SLOT(recv()));
     strDataRecv.clear();
 
     if (bCompleted == false)
@@ -230,7 +230,7 @@ void NetworkThread::recv()
     }
 
     if (bCompleted == false)
-        QTimer::singleShot(3*1000, this, SLOT(recv()));
+        QTimer::singleShot(100, this, SLOT(recv()));
 }
 
 void NetworkThread::connected()
