@@ -26,6 +26,8 @@ Kamerzysta::Kamerzysta(QTcpSocket *param1)
     socket->setSocketOption(QAbstractSocket::LowDelayOption, 1);
     socket->setSocketOption(QAbstractSocket::KeepAliveOption, 0);
 
+    QObject::connect(socket, SIGNAL(connected()), this, SLOT(network_connected()));
+    QObject::connect(socket, SIGNAL(disconnected()), this, SLOT(network_disconnected()));
     QObject::connect(socket, SIGNAL(error(QAbstractSocket::SocketError)), this, SLOT(error(QAbstractSocket::SocketError)));
     QObject::connect(socket, SIGNAL(readyRead()), this, SLOT(network_read()));
 }
@@ -39,6 +41,15 @@ void Kamerzysta::show(QString param1, QString param2)
 {
     strNick = param1;
     strUOKey = param2;
+
+    QSettings settings;
+    if (settings.value("debug").toString() == "on")
+    {
+        Log *l = new Log();
+        l->save("kamerzysta", "Nick:"+strNick);
+        l->save("kamerzysta", "UO:"+strUOKey);
+        delete l;
+    }
 
     get_path();
 }
@@ -71,10 +82,36 @@ void Kamerzysta::get_path()
         return;
     }
 
+    QSettings settings;
+    if (settings.value("debug").toString() == "on")
+    {
+        Log *l = new Log();
+        l->save("kamerzysta", "App path:"+strAppPath);
+        delete l;
+    }
+
     if (QFile::exists(strAppPath+"\\port") == true)
+    {
+        if (settings.value("debug").toString() == "on")
+        {
+            Log *l = new Log();
+            l->save("kamerzysta", "Port:exist");
+            delete l;
+        }
+
         kamerzysta_running();
+    }
     else
+    {
+        if (settings.value("debug").toString() == "on")
+        {
+            Log *l = new Log();
+            l->save("kamerzysta", "Port:not exist");
+            delete l;
+        }
+
         kamerzysta_not_running();
+    }
 }
 
 void Kamerzysta::kamerzysta_not_running()
@@ -98,6 +135,14 @@ void Kamerzysta::kamerzysta_not_running()
         QTextStream in(&file);
         strKamerzystaFile = in.readLine();
         file.close();
+    }
+
+    QSettings settings;
+    if (settings.value("debug").toString() == "on")
+    {
+        Log *l = new Log();
+        l->save("kamerzysta", "Install path:"+strKamerzystaFile);
+        delete l;
     }
 
     if ((strKamerzystaFile.isEmpty() == false) && (QFile::exists(strKamerzystaFile) == true))
@@ -127,6 +172,28 @@ void Kamerzysta::kamerzysta_running()
     network_send(QString("e%1").arg(strNick));
 }
 
+void Kamerzysta::network_connected()
+{
+    QSettings settings;
+    if (settings.value("debug").toString() == "on")
+    {
+        Log *l = new Log();
+        l->save("kamerzysta", "Connected");
+        delete l;
+    }
+}
+
+void Kamerzysta::network_disconnected()
+{
+    QSettings settings;
+    if (settings.value("debug").toString() == "on")
+    {
+        Log *l = new Log();
+        l->save("kamerzysta", "Disconnected");
+        delete l;
+    }
+}
+
 void Kamerzysta::network_create()
 {
     get_port();
@@ -143,10 +210,26 @@ void Kamerzysta::get_port()
     QString strPort = in.readLine();
     iPort = strPort.toInt();
     file.close();
+
+    QSettings settings;
+    if (settings.value("debug").toString() == "on")
+    {
+        Log *l = new Log();
+        l->save("kamerzysta", "Port:"+strPort);
+        delete l;
+    }
 }
 
 void Kamerzysta::network_connect()
 {
+    QSettings settings;
+    if (settings.value("debug").toString() == "on")
+    {
+        Log *l = new Log();
+        l->save("kamerzysta", "Connecting...");
+        delete l;
+    }
+
     if (socket->state() == QAbstractSocket::UnconnectedState)
         socket->connectToHost("localhost", iPort);
 }
@@ -160,12 +243,28 @@ void Kamerzysta::network_send(QString strData)
         for ( int i = 0; i < strData.size(); i++)
             qbaData.insert(i, strData.at(i).toAscii());
 
+        QSettings settings;
+        if (settings.value("debug").toString() == "on")
+        {
+            Log *l = new Log();
+            l->save("kamerzysta", "Send:"+QString(qbaData));
+            delete l;
+        }
+
         socket->write(qbaData);
     }
 }
 
 void Kamerzysta::network_disconnect()
 {
+    QSettings settings;
+    if (settings.value("debug").toString() == "on")
+    {
+        Log *l = new Log();
+        l->save("kamerzysta", "Disconnecting...");
+        delete l;
+    }
+
     if (socket->state() == QAbstractSocket::ConnectedState)
         socket->disconnectFromHost();
 }
@@ -194,6 +293,14 @@ void Kamerzysta::network_read()
             network_send(QString("e%1").arg(strNick).arg(strUOKey));
     }
 
+    QSettings settings;
+    if (settings.value("debug").toString() == "on")
+    {
+        Log *l = new Log();
+        l->save("kamerzysta", "Recv:"+strDataRecv);
+        delete l;
+    }
+
     strDataRecv.clear();
     network_read();
 }
@@ -201,6 +308,14 @@ void Kamerzysta::network_read()
 void Kamerzysta::error(QAbstractSocket::SocketError err)
 {
     Q_UNUSED (err);
+
+    QSettings settings;
+    if (settings.value("debug").toString() == "on")
+    {
+        Log *l = new Log();
+        l->save("kamerzysta", "Error:"+socket->errorString());
+        delete l;
+    }
 
     if (socket->state() == QAbstractSocket::ConnectedState)
         network_disconnect();

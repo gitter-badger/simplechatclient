@@ -27,10 +27,12 @@
 #include <QMessageBox>
 #include <QObject>
 #include <QProcess>
+#include <QSettings>
 #include <QTcpSocket>
 #include <QTimer>
 #include <QTextStream>
 #include "config.h"
+#include "log.h"
 
 class Kamerzysta : public QObject
 {
@@ -56,6 +58,8 @@ private:
     void network_connect();
 
 private slots:
+    void network_connected();
+    void network_disconnected();
     void network_create();
     void network_send(QString);
     void network_disconnect();
