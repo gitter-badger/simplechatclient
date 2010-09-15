@@ -2080,7 +2080,7 @@ void OnetKernel::raw_304()
 void OnetKernel::raw_305()
 {
     QString strDisplay = tr("You are no longer marked as being away");
-    tabc->show_msg_all(strDisplay, 7);
+    tabc->show_msg_active(strDisplay, 7);
 }
 
 // AWAY :reason
@@ -2088,7 +2088,7 @@ void OnetKernel::raw_305()
 void OnetKernel::raw_306()
 {
     QString strDisplay = tr("You have been marked as being away");
-    tabc->show_msg_all(strDisplay, 7);
+    tabc->show_msg_active(strDisplay, 7);
 }
 
 // WHOIS
@@ -3346,7 +3346,7 @@ void OnetKernel::raw_807()
     settings.setValue("busy", "on");
 
     QString strDisplay = tr("* You are marked as busy");
-    tabc->show_msg_all(strDisplay, 7);
+    tabc->show_msg_active(strDisplay, 7);
 }
 
 // BUSY 0
@@ -3357,7 +3357,7 @@ void OnetKernel::raw_808()
     settings.setValue("busy", "off");
 
     QString strDisplay = tr("You are no longer marked busy");
-    tabc->show_msg_all(strDisplay, 7);
+    tabc->show_msg_active(strDisplay, 7);
 }
 
 // WHOIS
