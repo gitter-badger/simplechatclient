@@ -88,6 +88,7 @@ private:
     void add_tab(QString);
     void update_open_channels();
     int free_list_get();
+    int get_index(QString);
 
 };
 

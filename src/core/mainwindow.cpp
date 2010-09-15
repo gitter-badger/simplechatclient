@@ -39,7 +39,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     friendsAct = new QAction(QIcon(":/3rdparty/images/people.png"),tr("Friends"),this);
     ignoreAct = new QAction(QIcon(":/3rdparty/images/people.png"),tr("Ignored"),this);
 #ifdef Q_WS_WIN
-    camsAct = new QAction(QIcon(":/images/cam.png"),tr("Cams"),this);
+    camsAct = new QAction(QIcon(":/images/pubcam.png"),tr("Cams"),this);
 #endif
     aboutAct = new QAction(QIcon(":/images/logo_64.png"),tr("About SCC ..."),this);
     lagAct = new QAction("Lag: 0s", this);
@@ -102,7 +102,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
 // settings
     settings.clear();
-    settings.setValue("version", "1.0.9.512");
+    settings.setValue("version", "1.0.9.513");
     settings.setValue("debug", "off");
     settings.setValue("logged", "off");
     settings.setValue("busy", "off");
