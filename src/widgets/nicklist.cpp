@@ -59,87 +59,65 @@ void Nicklist::nicklist_add(QString strNick, QString strStatus, sNickStatus *nic
     nick_status->append(add);
 
 // add to widget
-    QPixmap icon;
-    if (strStatus.indexOf("O") != -1) icon = QPixmap(":/images/dev.png");
-    else if (strStatus.indexOf("o") != -1) icon = QPixmap(":/images/admin.png");
-    else if (strStatus.indexOf("`") != -1) icon = QPixmap(":/images/owner.png");
-    else if (strStatus.indexOf("@") != -1) icon = QPixmap(":/images/op.png");
-    else if (strStatus.indexOf("%") != -1) icon = QPixmap(":/images/halfop.png");
-    else if (strStatus.indexOf("!") != -1) icon = QPixmap(":/images/mod.png");
-    else if (strStatus.indexOf("=") != -1) icon = QPixmap(":/images/screener.png");
-    else if (strStatus.indexOf("+") != -1) icon = QPixmap(":/images/voice.png");
-
-    QTreeWidgetItem *item = new QTreeWidgetItem();
-    item->setText(0, strNick);
-    item->setIcon(0, icon);
-    item->setData(0, Qt::UserRole, icon);
-
-    if (strStatus.indexOf("W") != -1)
-        item->setData(0, Qt::UserRole+1, QPixmap(":/images/pubcam.png"));
-    if (strStatus.indexOf("V") != -1)
-        item->setData(0, Qt::UserRole+1, QPixmap(":/images/privcam.png"));
-
-    item->setData(0, Qt::DisplayRole, strNick);
-
-    // read from cache when refresh
-    if (mNickAvatar->contains(strNick) == true)
-    {
-        QPixmap pixmap;
-        pixmap.loadFromData(mNickAvatar->value(strNick));
-        item->setData(0, Qt::UserRole+2, pixmap);
-    }
-
-    //item->setData(0, Qt::UserRole+10, bBusy);
-
     if (strStatus.indexOf("O") != -1)
     {
-        if (exist_parent(tr("Developer(s)")) == false) add_parent(tr("Developer(s)"), QPixmap(":/images/dev.png"));
-        add_child(tr("Developer(s)"), item);
+        QPixmap icon = QPixmap(":/images/dev.png");
+        if (exist_parent(tr("Developer(s)")) == false) add_parent(tr("Developer(s)"), icon);
+        add_child(tr("Developer(s)"), create_child(strNick, strStatus, icon), icon);
     }
     if (strStatus.indexOf("o") != -1)
     {
-        if (exist_parent(tr("Admin(s)")) == false) add_parent(tr("Admin(s)"), QPixmap(":/images/admin.png"));
-        add_child(tr("Admin(s)"), item);
+        QPixmap icon = QPixmap(":/images/admin.png");
+        if (exist_parent(tr("Admin(s)")) == false) add_parent(tr("Admin(s)"), icon);
+        add_child(tr("Admin(s)"), create_child(strNick, strStatus, icon), icon);
     }
     if (strStatus.indexOf("`") != -1)
     {
-        if (exist_parent(tr("Owner(s)")) == false) add_parent(tr("Owner(s)"), QPixmap(":/images/owner.png"));
-        add_child(tr("Owner(s)"), item);
+        QPixmap icon = QPixmap(":/images/owner.png");
+        if (exist_parent(tr("Owner(s)")) == false) add_parent(tr("Owner(s)"), icon);
+        add_child(tr("Owner(s)"), create_child(strNick, strStatus, icon), icon);
     }
     if (strStatus.indexOf("@") != -1)
     {
-        if (exist_parent(tr("Op(s)")) == false) add_parent(tr("Op(s)"), QPixmap(":/images/op.png"));
-        add_child(tr("Op(s)"), item);
+        QPixmap icon = QPixmap(":/images/op.png");
+        if (exist_parent(tr("Op(s)")) == false) add_parent(tr("Op(s)"), icon);
+        add_child(tr("Op(s)"), create_child(strNick, strStatus, icon), icon);
     }
     if (strStatus.indexOf("%") != -1)
     {
-        if (exist_parent(tr("HalfOp(s)")) == false) add_parent(tr("HalfOp(s)"), QPixmap(":/images/halfop.png"));
-        add_child(tr("HalfOp(s)"), item);
+        QPixmap icon = QPixmap(":/images/halfop.png");
+        if (exist_parent(tr("HalfOp(s)")) == false) add_parent(tr("HalfOp(s)"), icon);
+        add_child(tr("HalfOp(s)"), create_child(strNick, strStatus, icon), icon);
     }
     if (strStatus.indexOf("!") != -1)
     {
-        if (exist_parent(tr("Mod(s)")) == false) add_parent(tr("Mod(s)"), QPixmap(":/images/mod.png"));
-        add_child(tr("Mod(s)"), item);
+        QPixmap icon = QPixmap(":/images/mod.png");
+        if (exist_parent(tr("Mod(s)")) == false) add_parent(tr("Mod(s)"), icon);
+        add_child(tr("Mod(s)"), create_child(strNick, strStatus, icon), icon);
     }
     if (strStatus.indexOf("=") != -1)
     {
-        if (exist_parent(tr("Screener(s)")) == false) add_parent(tr("Screener(s)"), QPixmap(":/images/screener.png"));
-        add_child(tr("Screener(s)"), item);
+        QPixmap icon = QPixmap(":/images/screener.png");
+        if (exist_parent(tr("Screener(s)")) == false) add_parent(tr("Screener(s)"), icon);
+        add_child(tr("Screener(s)"), create_child(strNick, strStatus, icon), icon);
     }
     if (strStatus.indexOf("+") != -1)
     {
-        if (exist_parent(tr("Voice(s)")) == false) add_parent(tr("Voice(s)"), QPixmap(":/images/voice.png"));
-        add_child(tr("Voice(s)"), item);
+        QPixmap icon = QPixmap(":/images/voice.png");
+        if (exist_parent(tr("Voice(s)")) == false) add_parent(tr("Voice(s)"), icon);
+        add_child(tr("Voice(s)"), create_child(strNick, strStatus, icon), icon);
     }
     if ((strStatus.indexOf("W") != -1) || (strStatus.indexOf("V") != -1))
     {
-        if (exist_parent(tr("Cam(s)")) == false) add_parent(tr("Cam(s)"), QPixmap(":/images/cam.png"));
-        add_child(tr("Cam(s)"), item);
+        QPixmap icon = QPixmap(":/images/pubcam.png");
+        if (exist_parent(tr("Cam(s)")) == false) add_parent(tr("Cam(s)"), icon);
+        add_child(tr("Cam(s)"), create_child(strNick, strStatus, icon), icon);
     }
     if ((strStatus.indexOf("O") == -1) && (strStatus.indexOf("o") == -1) && (strStatus.indexOf("`") == -1) && (strStatus.indexOf("@") == -1) && (strStatus.indexOf("%") == -1) && (strStatus.indexOf("!") == -1) && (strStatus.indexOf("+") == -1))
     {
-        if (exist_parent(tr("User(s)")) == false) add_parent(tr("User(s)"), QPixmap(":/images/user.png"));
-        add_child(tr("User(s)"), item);
+        QPixmap icon = QPixmap(":/images/user.png");
+        if (exist_parent(tr("User(s)")) == false) add_parent(tr("User(s)"), icon);
+        add_child(tr("User(s)"), create_child(strNick, strStatus, icon), icon);
     }
 }
 
@@ -279,14 +257,17 @@ void Nicklist::remove_parent(QString strName)
     }
 }
 
-void Nicklist::add_child(QString strParentName, QTreeWidgetItem *item)
+void Nicklist::add_child(QString strParentName, QTreeWidgetItem *item, QPixmap icon)
 {
     for (int i = 0; i < this->topLevelItemCount(); i++)
     {
         QTreeWidgetItem *parent_item = this->topLevelItem(i);
         QString strParent = parent_item->text(0);
         if (strParent == strParentName)
+        {
+            item->setIcon(0, icon);
             parent_item->addChild(item);
+        }
     }
 }
 
@@ -325,6 +306,32 @@ void Nicklist::remove_child(QString strName)
             }
         }
     }
+}
+
+QTreeWidgetItem* Nicklist::create_child(QString strNick, QString strStatus, QPixmap icon)
+{
+    QTreeWidgetItem *item = new QTreeWidgetItem();
+    item->setText(0, strNick);
+    item->setIcon(0, icon);
+    item->setData(0, Qt::UserRole, icon);
+
+    if (strStatus.indexOf("W") != -1)
+        item->setData(0, Qt::UserRole+1, QPixmap(":/images/pubcam.png"));
+    if (strStatus.indexOf("V") != -1)
+        item->setData(0, Qt::UserRole+1, QPixmap(":/images/privcam.png"));
+
+    item->setData(0, Qt::DisplayRole, strNick);
+
+    // read from cache when refresh
+    if (mNickAvatar->contains(strNick) == true)
+    {
+        QPixmap pixmap;
+        pixmap.loadFromData(mNickAvatar->value(strNick));
+        item->setData(0, Qt::UserRole+2, pixmap);
+    }
+
+    //item->setData(0, Qt::UserRole+10, bBusy);
+    return item;
 }
 
 void Nicklist::priv()
@@ -511,7 +518,7 @@ void Nicklist::item_selected()
     QString strNick = this->selectedItems().at(0)->text(0);
 
     // return if not nick
-    if ((strNick == tr("Dev(s)")) || (strNick == tr("Admin(s)")) || (strNick == tr("Owner(s)")) || (strNick == tr("Op(s)")) || (strNick == tr("HalfOp(s)")) || (strNick == tr("Mod(s)")) || (strNick == tr("Screener(s)")) || (strNick == tr("Voice(s)")) || (strNick == tr("Cams(s)")) || (strNick == tr("User(s)")))
+    if ((strNick == tr("Dev(s)")) || (strNick == tr("Admin(s)")) || (strNick == tr("Owner(s)")) || (strNick == tr("Op(s)")) || (strNick == tr("HalfOp(s)")) || (strNick == tr("Mod(s)")) || (strNick == tr("Screener(s)")) || (strNick == tr("Voice(s)")) || (strNick == tr("Cam(s)")) || (strNick == tr("User(s)")))
         return;
 
     if ((strNick[0] != '~') && (sCurrentUserInfo.nick != strNick))

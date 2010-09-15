@@ -21,5 +21,6 @@
         <file>images/clear.png</file>
         <file>images/voice.png</file>
         <file>images/pubcam.png</file>
+        <file>images/screener.png</file>
     </qresource>
 </RCC>

@@ -77,9 +77,10 @@ private:
     void add_parent(QString, QPixmap);
     bool exist_parent(QString);
     void remove_parent(QString);
-    void add_child(QString, QTreeWidgetItem *);
+    void add_child(QString, QTreeWidgetItem *, QPixmap);
     bool exist_child(QString, QString);
     void remove_child(QString);
+    QTreeWidgetItem* create_child(QString, QString, QPixmap);
 
 private slots:
     void priv();
