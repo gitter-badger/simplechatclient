@@ -11,9 +11,7 @@
         <file>images/op.png</file>
         <file>images/halfop.png</file>
         <file>images/admin.png</file>
-        <file>images/vip.png</file>
         <file>images/mod.png</file>
-        <file>images/cam.png</file>
         <file>images/user.png</file>
         <file>images/channel_avatar.png</file>
         <file>images/basic_conf.png</file>
@@ -21,5 +19,7 @@
         <file>images/dev.png</file>
         <file>images/arrow.png</file>
         <file>images/clear.png</file>
+        <file>images/voice.png</file>
+        <file>images/pubcam.png</file>
     </qresource>
 </RCC>

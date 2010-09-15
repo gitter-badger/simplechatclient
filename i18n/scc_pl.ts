@@ -2248,6 +2248,42 @@
 <context>
     <name>Nicklist</name>
     <message>
+        <source>Developer(s)</source>
+        <translation>Developer(rzy)</translation>
+    </message>
+    <message>
+        <source>Admin(s)</source>
+        <translation>Administrator(rzy)</translation>
+    </message>
+    <message>
+        <source>Owner(s)</source>
+        <translation>Właściciel(e)</translation>
+    </message>
+    <message>
+        <source>Op(s)</source>
+        <translation>Super Operator(rzy)</translation>
+    </message>
+    <message>
+        <source>HalfOp(s)</source>
+        <translation>Operator(rzy)</translation>
+    </message>
+    <message>
+        <source>Mod(s)</source>
+        <translation>Moderator(rzy)</translation>
+    </message>
+    <message>
+        <source>Voice(s)</source>
+        <translation>Gość(cie)</translation>
+    </message>
+    <message>
+        <source>Cam(s)</source>
+        <translation>Kamerka(ki)</translation>
+    </message>
+    <message>
+        <source>User(s)</source>
+        <translation>Użytkownik(cy)</translation>
+    </message>
+    <message>
         <source>No reason</source>
         <translation>Zachowuj się! Byle jak ale się zachowuj!</translation>
     </message>

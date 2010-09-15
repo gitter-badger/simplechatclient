@@ -546,6 +546,7 @@ void OnetKernel::raw_join()
         strSuffix= strDataList[3];
         if (strSuffix[0] == ':')
             strSuffix = strSuffix.right(strSuffix.length()-1);
+        strSuffix = strSuffix.right(strSuffix.length()-2);
     }
 
     QSettings settings;
@@ -577,7 +578,7 @@ void OnetKernel::raw_join()
             pNetwork->send(QString("NS INFO %1 s").arg(strNick));
     }
 
-    tabc->add_user(strChannel, strNick, strSuffix, 1);
+    tabc->add_user(strChannel, strNick, strSuffix);
 }
 
 // :scc_test!51976824@3DE379.B7103A.6CF799.6902F4 PART #scc
@@ -2385,6 +2386,22 @@ void OnetKernel::raw_352()
 // NAMES
 // :cf1f1.onet 353 scc_test = #scc :scc_test|rx,0 `@Merovingian|brx,1 @chanky|rx,1
 // :cf1f3.onet 353 Merovingian = #hack :%Hacker %weed %cvf @Majkel SzperaCZ_11 Merovingian `ChanServ %but
+
+// owner      `
+// op         @
+// halfop     %
+// mod        !
+// voice      +
+// screener   =
+
+// busy       b
+// restricted r
+// encrypted  x
+// publiccam  W
+// privcam    V
+// admin      o
+// developer  O
+
 void OnetKernel::raw_353()
 {
     if (strDataList.value(3).isEmpty() == true) return;
@@ -2406,15 +2423,17 @@ void OnetKernel::raw_353()
             else
                 strSuffix = QString::null;
 
-            tabc->add_user(strChannel, strNick, strSuffix, 0);
-
             QString strCleanNick = strNick;
-            if (strCleanNick.indexOf("`") != -1) strCleanNick.remove("`");
-            if (strCleanNick.indexOf("@") != -1) strCleanNick.remove("@");
-            if (strCleanNick.indexOf("%") != -1) strCleanNick.remove("%");
-            if (strCleanNick.indexOf("+") != -1) strCleanNick.remove("+");
-            if (strCleanNick.indexOf("!") != -1) strCleanNick.remove("!");
-            if (strCleanNick.indexOf("=") != -1) strCleanNick.remove("=");
+
+            QString strStatus = strSuffix;
+            if (strCleanNick.indexOf("`") != -1) { strCleanNick.remove("`"); strStatus.append("`"); }
+            if (strCleanNick.indexOf("@") != -1) { strCleanNick.remove("@"); strStatus.append("@"); }
+            if (strCleanNick.indexOf("%") != -1) { strCleanNick.remove("%"); strStatus.append("%"); }
+            if (strCleanNick.indexOf("+") != -1) { strCleanNick.remove("+"); strStatus.append("+"); }
+            if (strCleanNick.indexOf("!") != -1) { strCleanNick.remove("!"); strStatus.append("!"); }
+            if (strCleanNick.indexOf("=") != -1) { strCleanNick.remove("="); strStatus.append("="); }
+
+            tabc->add_user(strChannel, strCleanNick, strStatus);
 
             // if ^ rename channel
             if (strChannel[0] == '^')

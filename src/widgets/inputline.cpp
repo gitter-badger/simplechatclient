@@ -31,12 +31,21 @@ Inputline::~Inputline()
     strLastWord = QString::null;
 }
 
-void Inputline::set_userslist(QListWidget *param1)
+void Inputline::set_userslist(QTreeWidget *treeWidget)
 {
     users_list.clear();
 
-    for (int i = 0; i < param1->count(); i++)
-        users_list.append(param1->item(i)->data(Qt::UserRole).toString());
+    for (int i = 0; i < treeWidget->topLevelItemCount(); i++)
+    {
+        QTreeWidgetItem *parent_item = treeWidget->topLevelItem(i);
+        for (int x = 0; x < parent_item->childCount(); x++)
+        {
+            QTreeWidgetItem *child_item = parent_item->child(x);
+            QString strChild = child_item->text(0);
+
+            users_list.append(strChild);
+        }
+    }
 }
 
 void Inputline::insert_text(QString strText)

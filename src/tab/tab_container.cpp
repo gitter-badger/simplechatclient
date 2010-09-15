@@ -410,7 +410,7 @@ void TabContainer::set_link(QString strChannel, QString strLink)
     }
 }
 
-void TabContainer::add_user(QString strChannel, QString strNick, QString strSuffix, int iRefresh)
+void TabContainer::add_user(QString strChannel, QString strNick, QString strStatus)
 {
     for (int i = 0; i < 50; i++)
     {
@@ -418,7 +418,7 @@ void TabContainer::add_user(QString strChannel, QString strNick, QString strSuff
         {
             if (tw[i]->get_name() == strChannel)
             {
-                tw[i]->add_user(strNick, strSuffix, iRefresh);
+                tw[i]->add_user(strNick, strStatus);
                 return;
             }
         }

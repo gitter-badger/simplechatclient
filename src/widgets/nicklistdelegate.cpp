@@ -99,14 +99,16 @@ void NicklistDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opti
     }
 
     // get status, cam, avatar, nick, description, cam, busy
-    QIcon status = QIcon(qvariant_cast<QPixmap>(index.data(Qt::DecorationRole)));
+    QIcon status = QIcon(qvariant_cast<QPixmap>(index.data(Qt::UserRole)));
     QIcon cam = QIcon(qvariant_cast<QPixmap>(index.data(Qt::UserRole+1)));
     QIcon avatar = QIcon(qvariant_cast<QPixmap>(index.data(Qt::UserRole+2)));
-    QString nick = index.data(Qt::UserRole).toString();
+    QString nick = index.data(Qt::DecorationRole).toString();
     //QString description = index.data(Qt::UserRole+3).toString();
-    bool bCam = index.data(Qt::UserRole+10).toBool();
-    bool bBusy = index.data(Qt::UserRole+11).toBool();
-    Q_UNUSED (bCam);
+    bool bBusy = index.data(Qt::UserRole+10).toBool();
+    bool bPubCam = index.data(Qt::UserRole+11).toBool();
+    bool bPrivCam = index.data(Qt::UserRole+12).toBool();
+    Q_UNUSED (bPubCam);
+    Q_UNUSED (bPrivCam);
 
     Config *pConfig = new Config();
     QString strDisableAvatars = pConfig->get_value("disable_avatars");

@@ -51,7 +51,7 @@ public:
     void disable_topic(QString);
     void author_topic(QString, QString);
     void set_link(QString, QString);
-    void add_user(QString, QString, QString, int);
+    void add_user(QString, QString, QString);
     void del_user(QString, QString);
     void quit_user(QString, QString);
     void change_flag(QString, QString, QString);

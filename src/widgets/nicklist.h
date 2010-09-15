@@ -29,10 +29,10 @@
 #ifdef Q_WS_X11
 #include <QDebug>
 #endif
-#include <QListWidget>
 #include <QMenu>
 #include <QQueue>
 #include <QSettings>
+#include <QTreeWidget>
 #include "dlg_cam.h"
 #include "dlg_kick.h"
 #ifdef Q_WS_WIN
@@ -48,7 +48,7 @@ struct NickStatus
 typedef QQueue <NickStatus> sNickStatus;
 
 
-class Nicklist : public QListWidget
+class Nicklist : public QTreeWidget
 {
     Q_OBJECT
 public:
@@ -56,12 +56,10 @@ public:
     ~Nicklist();
     void set_open_channels(QStringList);
     void set_user_info(QString, QString, QString);
-    void nicklist_add(QString, QString, int, sNickStatus *);
+    void nicklist_add(QString, QString, sNickStatus *);
     void nicklist_remove(QString, sNickStatus *);
     bool nicklist_exist(QString, sNickStatus *);
-    void nicklist_clear(sNickStatus *);
     QStringList nicklist_get(sNickStatus *);
-    void nicklist_refresh(sNickStatus *);
     void nicklist_refresh_avatars();
     void update_avatar(QString, QByteArray);
 
@@ -76,8 +74,12 @@ private:
     QAction *openChannelsActs[maxOpenChannels];
     sNickInfo sCurrentUserInfo;
 
-    void nicklist_sort(sNickStatus *);
-    void nicklist_quicksort(QString, sNickStatus *, sNickStatus *);
+    void add_parent(QString, QPixmap);
+    bool exist_parent(QString);
+    void remove_parent(QString);
+    void add_child(QString, QTreeWidgetItem *);
+    bool exist_child(QString, QString);
+    void remove_child(QString);
 
 private slots:
     void priv();

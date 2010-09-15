@@ -105,8 +105,7 @@ TabWidget::TabWidget(QWidget *parent, Network *param1, QString param2, Notify *p
 
     nick_list = new Nicklist(myparent, pNetwork, strName, mNickAvatar, camSocket);
     nick_list->setParent(this);
-    nick_list->setSortingEnabled(false);
-    nick_list->setItemDelegate(new NicklistDelegate(nick_list));
+    //nick_list->setItemDelegate(new NicklistDelegate(nick_list));
     nick_list->show();
 
     mainWebView = new MainWebView(myparent, pNetwork, strName, camSocket);
@@ -483,13 +482,10 @@ TabWidget::TabWidget(QWidget *parent, Network *param1, QString param2, Notify *p
 
 TabWidget::~TabWidget()
 {
-    nick_flag.clear();
-    nick_suffix.clear();
     nick_status.clear();
     nickLabel->clear();
     strContent.clear();
     mainWebView->setHtml(strContent,QUrl(""));
-    nick_list->clear();
 
     delete nick_list;
     delete inputline;
@@ -842,129 +838,11 @@ void TabWidget::set_link(QString strUrl)
 
 // nick list
 
-void TabWidget::add_user(QString strNick, QString strSuffix, int iRefresh)
+void TabWidget::add_user(QString strNick, QString strStatus)
 {
-    QString strmFlag;
-    QString strmSuffix;
-    bool bOwner = false;      // `
-    bool bOp = false;         // @
-    bool bHalfop = false;     // %
-    bool bMod = false;        // !
-    bool bVip = false;        // +
-    bool bScreener = false;   // =
-
-    bool bBusy = false;       // b
-    bool bRestricted = false; // r
-    bool bEncrypted = false;  // x
-    bool bPublicCam = false;  // W
-    bool bPrivCam = false;    // V
-    bool bAdmin = false;      // o
-    bool bDeveloper = false;  // O
-
-    for (int i = 0; i < strNick.length(); i++)
-    {
-        switch(strNick[i].toAscii())
-        {
-            case '`':
-                    bOwner = true;
-                    strNick = strNick.right(strNick.length()-1);
-                    strmFlag.append("`");
-                    i--;
-                    break;
-            case '@':
-                    bOp = true;
-                    strNick = strNick.right(strNick.length()-1);
-                    strmFlag.append("@");
-                    i--;
-                    break;
-            case '%':
-                    bHalfop = true;
-                    strNick = strNick.right(strNick.length()-1);
-                    strmFlag.append("%");
-                    i--;
-                    break;
-            case '!':
-                    bMod = true;
-                    strNick = strNick.right(strNick.length()-1);
-                    strmFlag.append("!");
-                    i--;
-                    break;
-            case '+':
-                    bVip = true;
-                    strNick = strNick.right(strNick.length()-1);
-                    strmFlag.append("+");
-                    i--;
-                    break;
-            case '=':
-                    bScreener = true;
-                    strNick = strNick.right(strNick.length()-1);
-                    strmFlag.append("=");
-                    i--;
-                    break;
-            default:
-                    break;
-        }
-    }
-
-    for (int i = 0; i < strSuffix.length(); i++)
-    {
-        switch(strSuffix[i].toAscii())
-        {
-            case 'b':
-                    bBusy = true;
-                    strmSuffix.append("b");
-                    break;
-            case 'r':
-                    bRestricted = true;
-                    strmSuffix.append("r");
-                    break;
-            case 'x':
-                    bEncrypted = true;
-                    strmSuffix.append("x");
-                    break;
-            case 'W':
-                    bPublicCam = true;
-                    strmSuffix.append("W");
-                    break;
-            case 'V':
-                    bPrivCam = true;
-                    strmSuffix.append("V");
-                    break;
-            case 'o':
-                    bAdmin = true;
-                    strmSuffix.append("o");
-                    break;
-            case 'O':
-                    bDeveloper = true;
-                    strmSuffix.append("O");
-                    break;
-            default:
-                    break;
-        }
-    }
-
-    nick_flag.insert(strNick, strmFlag);
-    nick_suffix.insert(strNick, strmSuffix);
-    QString strStatus;
-
-    if (bDeveloper == true) strStatus = "dev";
-    else if (bAdmin == true) strStatus = "admin";
-    else if (bOwner == true) strStatus = "owner";
-    else if (bOp == true) strStatus = "op";
-    else if (bHalfop == true) strStatus = "halfop";
-    else if (bMod == true) strStatus = "mod";
-    else if (bVip == true) strStatus = "vip";
-    else strStatus = "user";
-
-    if (bPublicCam == true)
-        strStatus += "cam";
-    if (bBusy == true)
-        strStatus += "busy";
-
     if (nicklist_exist(strNick) == false)
     {
-        nicklist_add(strNick, strStatus, iRefresh);
-
+        nicklist_add(strNick, strStatus);
         inputline->set_userslist(nick_list);
 
         iNickCount++;
@@ -976,11 +854,7 @@ void TabWidget::del_user(QString strNick)
 {
     if (nicklist_exist(strNick) == true)
     {
-        nick_flag.remove(strNick);
-        nick_suffix.remove(strNick);
-
         nicklist_remove(strNick);
-
         inputline->set_userslist(nick_list);
 
         iNickCount--;
@@ -993,9 +867,9 @@ void TabWidget::replace_color(QString level, QString color)
     strContent.replace(QRegExp(QString("id=\"level_%1\" style=\"color:#(......);").arg(level)), QString("id=\"level_%1\" style=\"color:%2;").arg(level).arg(color));
 }
 
-void TabWidget::nicklist_add(QString strNick, QString strStatus, int iRefresh)
+void TabWidget::nicklist_add(QString strNick, QString strStatus)
 {
-    nick_list->nicklist_add(strNick, strStatus, iRefresh, &nick_status);
+    nick_list->nicklist_add(strNick, strStatus, &nick_status);
 }
 
 void TabWidget::nicklist_remove(QString strNick)
@@ -1008,15 +882,9 @@ bool TabWidget::nicklist_exist(QString strNick)
     return nick_list->nicklist_exist(strNick, &nick_status);
 }
 
-void TabWidget::nicklist_clear()
-{
-    nick_list->nicklist_clear(&nick_status);
-}
-
 void TabWidget::nicklist_refresh_all()
 {
     //raw 366: End of /NAMES list.
-    nick_list->nicklist_refresh(&nick_status);
     inputline->set_userslist(nick_list);
 }
 
@@ -1027,36 +895,36 @@ QStringList TabWidget::get_nicklist()
 
 void TabWidget::change_flag(QString strNick, QString strNewFlag)
 {
-    QString strFlag = nick_flag[strNick];
-    QString strSuffix = nick_suffix[strNick];
+    NickStatus ns;
+    QString strStatus = ns.status;
 
-    if ((strNewFlag == "+q") && (strFlag.indexOf("`") == -1)) strFlag.append("`");
-    else if ((strNewFlag == "-q") && (strFlag.indexOf("`") != -1)) strFlag.remove("`");
-    else if ((strNewFlag == "+o") && (strFlag.indexOf("@") == -1)) strFlag.append("@");
-    else if ((strNewFlag == "-o") && (strFlag.indexOf("@") != -1)) strFlag.remove("@");
-    else if ((strNewFlag == "+h") && (strFlag.indexOf("%") == -1)) strFlag.append("%");
-    else if ((strNewFlag == "-h") && (strFlag.indexOf("%") != -1)) strFlag.remove("%");
-    else if ((strNewFlag == "+v") && (strFlag.indexOf("+") == -1)) strFlag.append("+");
-    else if ((strNewFlag == "-v") && (strFlag.indexOf("+") != -1)) strFlag.remove("+");
-    else if ((strNewFlag == "+X") && (strFlag.indexOf("!") == -1)) strFlag.append("!");
-    else if ((strNewFlag == "-X") && (strFlag.indexOf("!") != -1)) strFlag.remove("!");
-    else if ((strNewFlag == "+Y") && (strFlag.indexOf("=") == -1)) strFlag.append("=");
-    else if ((strNewFlag == "-Y") && (strFlag.indexOf("=") != -1)) strFlag.remove("=");
-    else if ((strNewFlag == "+O") && (strSuffix.indexOf("O") == -1)) strSuffix.append("O");
-    else if ((strNewFlag == "-O") && (strSuffix.indexOf("O") != -1)) strSuffix.remove("O");
-    else if ((strNewFlag == "+b") && (strSuffix.indexOf("b") == -1)) strSuffix.append("b");
-    else if ((strNewFlag == "-b") && (strSuffix.indexOf("b") != -1)) strSuffix.remove("b");
-    else if ((strNewFlag == "+r") && (strSuffix.indexOf("r") == -1)) strSuffix.append("r");
-    else if ((strNewFlag == "-r") && (strSuffix.indexOf("r") != -1)) strSuffix.remove("r");
-    else if ((strNewFlag == "+W") && (strSuffix.indexOf("W") == -1)) strSuffix.append("W");
-    else if ((strNewFlag == "-W") && (strSuffix.indexOf("W") != -1)) strSuffix.remove("W");
-    else if ((strNewFlag == "+V") && (strSuffix.indexOf("V") == -1)) strSuffix.append("V");
-    else if ((strNewFlag == "-V") && (strSuffix.indexOf("V") != -1)) strSuffix.remove("V");
-    else if ((strNewFlag == "+x") && (strSuffix.indexOf("x") == -1)) strSuffix.append("x");
-    else if ((strNewFlag == "-x") && (strSuffix.indexOf("x") != -1)) strSuffix.remove("x");
+    if ((strNewFlag == "+q") && (strStatus.indexOf("`") == -1)) strStatus.append("`");
+    else if ((strNewFlag == "-q") && (strStatus.indexOf("`") != -1)) strStatus.remove("`");
+    else if ((strNewFlag == "+o") && (strStatus.indexOf("@") == -1)) strStatus.append("@");
+    else if ((strNewFlag == "-o") && (strStatus.indexOf("@") != -1)) strStatus.remove("@");
+    else if ((strNewFlag == "+h") && (strStatus.indexOf("%") == -1)) strStatus.append("%");
+    else if ((strNewFlag == "-h") && (strStatus.indexOf("%") != -1)) strStatus.remove("%");
+    else if ((strNewFlag == "+v") && (strStatus.indexOf("+") == -1)) strStatus.append("+");
+    else if ((strNewFlag == "-v") && (strStatus.indexOf("+") != -1)) strStatus.remove("+");
+    else if ((strNewFlag == "+X") && (strStatus.indexOf("!") == -1)) strStatus.append("!");
+    else if ((strNewFlag == "-X") && (strStatus.indexOf("!") != -1)) strStatus.remove("!");
+    else if ((strNewFlag == "+Y") && (strStatus.indexOf("=") == -1)) strStatus.append("=");
+    else if ((strNewFlag == "-Y") && (strStatus.indexOf("=") != -1)) strStatus.remove("=");
+    else if ((strNewFlag == "+O") && (strStatus.indexOf("O") == -1)) strStatus.append("O");
+    else if ((strNewFlag == "-O") && (strStatus.indexOf("O") != -1)) strStatus.remove("O");
+    else if ((strNewFlag == "+b") && (strStatus.indexOf("b") == -1)) strStatus.append("b");
+    else if ((strNewFlag == "-b") && (strStatus.indexOf("b") != -1)) strStatus.remove("b");
+    else if ((strNewFlag == "+r") && (strStatus.indexOf("r") == -1)) strStatus.append("r");
+    else if ((strNewFlag == "-r") && (strStatus.indexOf("r") != -1)) strStatus.remove("r");
+    else if ((strNewFlag == "+W") && (strStatus.indexOf("W") == -1)) strStatus.append("W");
+    else if ((strNewFlag == "-W") && (strStatus.indexOf("W") != -1)) strStatus.remove("W");
+    else if ((strNewFlag == "+V") && (strStatus.indexOf("V") == -1)) strStatus.append("V");
+    else if ((strNewFlag == "-V") && (strStatus.indexOf("V") != -1)) strStatus.remove("V");
+    else if ((strNewFlag == "+x") && (strStatus.indexOf("x") == -1)) strStatus.append("x");
+    else if ((strNewFlag == "-x") && (strStatus.indexOf("x") != -1)) strStatus.remove("x");
 
     del_user(strNick);
-    add_user(strFlag+strNick, strSuffix, 1);
+    add_user(strNick, strStatus);
 
     Config *pConfig = new Config();
     QString strMe = pConfig->get_value("login-nick");
@@ -1084,8 +952,6 @@ void TabWidget::clear_nicklist()
 {
     iNickCount = 0;
     nickCount->setText(QString(tr("%1 User(s)")).arg(iNickCount));
-    nick_flag.clear();
-    nick_suffix.clear();
     nick_status.clear();
     nick_list->clear();
 }

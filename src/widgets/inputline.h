@@ -24,7 +24,7 @@
 #include <QEvent>
 #include <QKeyEvent>
 #include <QLineEdit>
-#include <QListWidget>
+#include <QTreeWidget>
 
 class Inputline : public QLineEdit
 {
@@ -32,7 +32,7 @@ class Inputline : public QLineEdit
 public:
     Inputline(QWidget*);
     ~Inputline();
-    void set_userslist(QListWidget *);
+    void set_userslist(QTreeWidget *);
     void insert_text(QString);
 
 private:

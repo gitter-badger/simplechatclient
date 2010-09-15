@@ -77,7 +77,7 @@ public:
     void disable_moderation();
     void author_topic(QString);
     void set_link(QString);
-    void add_user(QString, QString, int);
+    void add_user(QString, QString);
     void del_user(QString);
     void change_flag(QString, QString);
     void update_nick(QString);
@@ -174,8 +174,6 @@ private:
     Network *pNetwork;
     QString strName;
     QString strLast_msg;
-    QMap <QString, QString> nick_flag;
-    QMap <QString, QString> nick_suffix;
     sNickStatus nick_status;
     int iNickCount;
     bool bCursorPositionChanged;
@@ -186,9 +184,8 @@ private:
 
     void replace_color(QString, QString);
 
-    void nicklist_add(QString, QString, int);
+    void nicklist_add(QString, QString);
     void nicklist_remove(QString);
-    void nicklist_clear();
 
     void display_message(QString, int);
 
