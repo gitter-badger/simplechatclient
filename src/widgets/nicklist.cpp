@@ -67,6 +67,7 @@ void Nicklist::nicklist_add(QString strNick, QString strStatus, sNickStatus *nic
     else if (strStatus.indexOf("%") != -1) icon = QPixmap(":/images/halfop.png");
     else if (strStatus.indexOf("!") != -1) icon = QPixmap(":/images/mod.png");
     else if (strStatus.indexOf("+") != -1) icon = QPixmap(":/images/voice.png");
+    else if (strStatus.indexOf("=") != -1) icon = QPixmap(":/images/screener.png");
 
     QTreeWidgetItem *item = new QTreeWidgetItem();
     item->setText(0, strNick);
@@ -119,6 +120,11 @@ void Nicklist::nicklist_add(QString strNick, QString strStatus, sNickStatus *nic
     {
         if (exist_parent(tr("Mod(s)")) == false) add_parent(tr("Mod(s)"), QPixmap(":/images/mod.png"));
         add_child(tr("Mod(s)"), item);
+    }
+    if (strStatus.indexOf("=") != -1)
+    {
+        if (exist_parent(tr("Screener(s)")) == false) add_parent(tr("Screener(s)"), QPixmap(":/images/screener.png"));
+        add_child(tr("Screener(s)"), item);
     }
     if (strStatus.indexOf("+") != -1)
     {

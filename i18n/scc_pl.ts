@@ -2272,6 +2272,10 @@
         <translation>Moderator(rzy)</translation>
     </message>
     <message>
+        <source>Screener(s)</source>
+        <translation>Screener(rzy)</translation>
+    </message>
+    <message>
         <source>Voice(s)</source>
         <translation>Gość(cie)</translation>
     </message>

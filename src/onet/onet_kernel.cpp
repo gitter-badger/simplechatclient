@@ -2391,8 +2391,8 @@ void OnetKernel::raw_352()
 // op         @
 // halfop     %
 // mod        !
-// voice      +
 // screener   =
+// voice      +
 
 // busy       b
 // restricted r
