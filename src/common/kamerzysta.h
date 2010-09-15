@@ -23,6 +23,7 @@
 
 #include <QDir>
 #include <QFile>
+#include <QHostAddress>
 #include <QIcon>
 #include <QMessageBox>
 #include <QObject>

@@ -237,7 +237,7 @@ void Kamerzysta::network_connect()
     }
 
     if (socket->state() == QAbstractSocket::UnconnectedState)
-        socket->connectToHost("localhost", iPort);
+        socket->connectToHost(QHostAddress::LocalHost, iPort);
 }
 
 void Kamerzysta::network_send(QString strData)
