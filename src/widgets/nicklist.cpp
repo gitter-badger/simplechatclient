@@ -66,8 +66,8 @@ void Nicklist::nicklist_add(QString strNick, QString strStatus, sNickStatus *nic
     else if (strStatus.indexOf("@") != -1) icon = QPixmap(":/images/op.png");
     else if (strStatus.indexOf("%") != -1) icon = QPixmap(":/images/halfop.png");
     else if (strStatus.indexOf("!") != -1) icon = QPixmap(":/images/mod.png");
-    else if (strStatus.indexOf("+") != -1) icon = QPixmap(":/images/voice.png");
     else if (strStatus.indexOf("=") != -1) icon = QPixmap(":/images/screener.png");
+    else if (strStatus.indexOf("+") != -1) icon = QPixmap(":/images/voice.png");
 
     QTreeWidgetItem *item = new QTreeWidgetItem();
     item->setText(0, strNick);
@@ -141,8 +141,6 @@ void Nicklist::nicklist_add(QString strNick, QString strStatus, sNickStatus *nic
         if (exist_parent(tr("User(s)")) == false) add_parent(tr("User(s)"), QPixmap(":/images/user.png"));
         add_child(tr("User(s)"), item);
     }
-
-    this->expandAll();
 }
 
 void Nicklist::nicklist_remove(QString strNick, sNickStatus *nick_status)
@@ -212,7 +210,7 @@ void Nicklist::set_user_info(QString strNick, QString strKey, QString strValue)
 {
     if (this->selectedItems().count() == 0) return;
 
-    QString strNickSelected = this->selectedItems().at(0)->data(0, Qt::DisplayRole).toString();
+    QString strNickSelected = this->selectedItems().at(0)->text(0);
 
     if (strNick == strNickSelected)
     {
@@ -511,6 +509,10 @@ void Nicklist::item_selected()
     if (this->selectedItems().count() == 0) return;
 
     QString strNick = this->selectedItems().at(0)->text(0);
+
+    // return if not nick
+    if ((strNick == tr("Dev(s)")) || (strNick == tr("Admin(s)")) || (strNick == tr("Owner(s)")) || (strNick == tr("Op(s)")) || (strNick == tr("HalfOp(s)")) || (strNick == tr("Mod(s)")) || (strNick == tr("Screener(s)")) || (strNick == tr("Voice(s)")) || (strNick == tr("Cams(s)")) || (strNick == tr("User(s)")))
+        return;
 
     if ((strNick[0] != '~') && (sCurrentUserInfo.nick != strNick))
     {
