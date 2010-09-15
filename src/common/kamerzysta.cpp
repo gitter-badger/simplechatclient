@@ -163,7 +163,8 @@ void Kamerzysta::kamerzysta_not_running()
         QDir::setCurrent(path);
 
         // network
-        QTimer::singleShot(1000*10, this, SLOT(network_create()));
+        iTryGetPort = 0;
+        QTimer::singleShot(1, this, SLOT(get_port()));
     }
 }
 
@@ -194,22 +195,18 @@ void Kamerzysta::network_disconnected()
     }
 }
 
-void Kamerzysta::network_create()
-{
-    get_port();
-    network_connect();
-}
-
 void Kamerzysta::get_port()
 {
-    QFile file(strAppPath+"\\port");
-    if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
-        return;
+    QString strPort;
 
-    QTextStream in(&file);
-    QString strPort = in.readLine();
-    iPort = strPort.toInt();
-    file.close();
+    QFile file(strAppPath+"\\port");
+    if (file.open(QIODevice::ReadOnly | QIODevice::Text) == true)
+    {
+        QTextStream in(&file);
+        strPort = in.readLine();
+        iPort = strPort.toInt();
+        file.close();
+    }
 
     QSettings settings;
     if (settings.value("debug").toString() == "on")
@@ -217,6 +214,15 @@ void Kamerzysta::get_port()
         Log *l = new Log();
         l->save("kamerzysta", "Port:"+strPort);
         delete l;
+    }
+
+    iTryGetPort++;
+    if (strPort.isEmpty() == false)
+        network_connect();
+    else
+    {
+        if (iTryGetPort < 120)
+            QTimer::singleShot(1000*1, this, SLOT(get_port()));
     }
 }
 

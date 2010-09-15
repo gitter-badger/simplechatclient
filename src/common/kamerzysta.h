@@ -50,17 +50,17 @@ private:
     int iPort;
     QTcpSocket *socket;
     QString strDataRecv;
+    int iTryGetPort;
 
     void get_path();
     void kamerzysta_not_running();
     void kamerzysta_running();
-    void get_port();
     void network_connect();
 
 private slots:
     void network_connected();
     void network_disconnected();
-    void network_create();
+    void get_port();
     void network_send(QString);
     void network_disconnect();
     void network_read();
