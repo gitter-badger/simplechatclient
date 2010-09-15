@@ -70,7 +70,7 @@ void DlgFriends::refresh()
         {
             QSettings settings;
             item = new QListWidgetItem(QIcon(":/3rdparty/images/people.png"), i.key());
-            if (settings.value("disable_avatars").toString() == "off")
+            if ((settings.value("disable_avatars").toString() == "off") && (settings.value("style").toString() != "classic"))
                 pNetwork->send(QString("NS INFO %1 s").arg(i.key()));
         }
 
