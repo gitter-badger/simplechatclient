@@ -47,76 +47,96 @@ void Nicklist::set_open_channels(QStringList param1)
 
 // nicklist
 
-void Nicklist::nicklist_add(QString strNick, QString strStatus, sNickStatus *nick_status)
+// owner      `
+// op         @
+// halfop     %
+// mod        !
+// screener   =
+// voice      +
+
+// busy       b
+// registered r
+// encrypted  x
+// publiccam  W
+// privcam    V
+// admin      o
+// developer  O
+
+void Nicklist::nicklist_add(QString strNick, QString strPrefix, QString strSuffix, sNickStatus *nick_status)
 {
 // add
     NickStatus add;
     add.nick = strNick;
-    add.status = strStatus;
+    add.prefix = strPrefix;
+    add.suffix = strSuffix;
 
 // add to nick list
     nick_status->append(add);
 
+    qDebug() << "nicklist nick:" << strNick;
+    qDebug() << "nicklist prefix:" << strPrefix;
+    qDebug() << "nicklist suffix:" << strSuffix;
+
 // add to widget
-    if (strStatus.indexOf("O") != -1)
+    if (strSuffix.indexOf("O") != -1)
     {
         QPixmap icon = QPixmap(":/images/dev.png");
         if (exist_parent(tr("Developer(s)")) == false) add_parent(tr("Developer(s)"), icon);
-        add_child(tr("Developer(s)"), create_child(strNick, strStatus, tr("Developer(s)"), icon));
+        if (exist_child(strNick, tr("Developer(s)")) == false) add_child(tr("Developer(s)"), create_child(strNick, strSuffix, tr("Developer(s)"), icon));
     }
-    if (strStatus.indexOf("o") != -1)
+    if (strSuffix.indexOf("o") != -1)
     {
         QPixmap icon = QPixmap(":/images/admin.png");
         if (exist_parent(tr("Admin(s)")) == false) add_parent(tr("Admin(s)"), icon);
-        add_child(tr("Admin(s)"), create_child(strNick, strStatus, tr("Admin(s)"), icon));
+        if (exist_child(strNick, tr("Admin(s)")) == false) add_child(tr("Admin(s)"), create_child(strNick, strSuffix, tr("Admin(s)"), icon));
     }
-    if (strStatus.indexOf("`") != -1)
+    if (strPrefix.indexOf("`") != -1)
     {
         QPixmap icon = QPixmap(":/images/owner.png");
         if (exist_parent(tr("Owner(s)")) == false) add_parent(tr("Owner(s)"), icon);
-        add_child(tr("Owner(s)"), create_child(strNick, strStatus, tr("Owner(s)"), icon));
+        if (exist_child(strNick, tr("Owner(s)")) == false) add_child(tr("Owner(s)"), create_child(strNick, strSuffix, tr("Owner(s)"), icon));
     }
-    if (strStatus.indexOf("@") != -1)
+    if (strPrefix.indexOf("@") != -1)
     {
         QPixmap icon = QPixmap(":/images/op.png");
         if (exist_parent(tr("Op(s)")) == false) add_parent(tr("Op(s)"), icon);
-        add_child(tr("Op(s)"), create_child(strNick, strStatus, tr("Op(s)"), icon));
+        if (exist_child(strNick, tr("Op(s)")) == false) add_child(tr("Op(s)"), create_child(strNick, strSuffix, tr("Op(s)"), icon));
     }
-    if (strStatus.indexOf("%") != -1)
+    if (strPrefix.indexOf("%") != -1)
     {
         QPixmap icon = QPixmap(":/images/halfop.png");
         if (exist_parent(tr("HalfOp(s)")) == false) add_parent(tr("HalfOp(s)"), icon);
-        add_child(tr("HalfOp(s)"), create_child(strNick, strStatus, tr("HalfOp(s)"), icon));
+        if (exist_child(strNick, tr("HalfOp(s)")) == false) add_child(tr("HalfOp(s)"), create_child(strNick, strSuffix, tr("HalfOp(s)"), icon));
     }
-    if (strStatus.indexOf("!") != -1)
+    if (strPrefix.indexOf("!") != -1)
     {
         QPixmap icon = QPixmap(":/images/mod.png");
         if (exist_parent(tr("Mod(s)")) == false) add_parent(tr("Mod(s)"), icon);
-        add_child(tr("Mod(s)"), create_child(strNick, strStatus, tr("Mod(s)"), icon));
+        if (exist_child(strNick, tr("Mod(s)")) == false) add_child(tr("Mod(s)"), create_child(strNick, strSuffix, tr("Mod(s)"), icon));
     }
-    if (strStatus.indexOf("=") != -1)
+    if (strPrefix.indexOf("=") != -1)
     {
         QPixmap icon = QPixmap(":/images/screener.png");
         if (exist_parent(tr("Screener(s)")) == false) add_parent(tr("Screener(s)"), icon);
-        add_child(tr("Screener(s)"), create_child(strNick, strStatus, tr("Screener(s)"), icon));
+        if (exist_child(strNick, tr("Screener(s)")) == false) add_child(tr("Screener(s)"), create_child(strNick, strSuffix, tr("Screener(s)"), icon));
     }
-    if (strStatus.indexOf("+") != -1)
+    if (strPrefix.indexOf("+") != -1)
     {
         QPixmap icon = QPixmap(":/images/voice.png");
         if (exist_parent(tr("Voice(s)")) == false) add_parent(tr("Voice(s)"), icon);
-        add_child(tr("Voice(s)"), create_child(strNick, strStatus, tr("Voice(s)"), icon));
+        if (exist_child(strNick, tr("Voice(s)")) == false) add_child(tr("Voice(s)"), create_child(strNick, strSuffix, tr("Voice(s)"), icon));
     }
-    if ((strStatus.indexOf("W") != -1) || (strStatus.indexOf("V") != -1))
+    if ((strSuffix.indexOf("W") != -1) || (strSuffix.indexOf("V") != -1))
     {
         QPixmap icon = QPixmap(":/images/pubcam.png");
         if (exist_parent(tr("Cam(s)")) == false) add_parent(tr("Cam(s)"), icon);
-        add_child(tr("Cam(s)"), create_child(strNick, strStatus, tr("Cam(s)"), icon));
+        if (exist_child(strNick, tr("Cam(s)")) == false) add_child(tr("Cam(s)"), create_child(strNick, strSuffix, tr("Cam(s)"), icon));
     }
-    if ((strStatus.indexOf("O") == -1) && (strStatus.indexOf("o") == -1) && (strStatus.indexOf("`") == -1) && (strStatus.indexOf("@") == -1) && (strStatus.indexOf("%") == -1) && (strStatus.indexOf("!") == -1) && (strStatus.indexOf("+") == -1))
+    if ((strSuffix.indexOf("O") == -1) && (strSuffix.indexOf("o") == -1) && (strPrefix.indexOf("`") == -1) && (strPrefix.indexOf("@") == -1) && (strPrefix.indexOf("%") == -1) && (strPrefix.indexOf("!") == -1) && (strPrefix.indexOf("+") == -1))
     {
         QPixmap icon = QPixmap(":/images/user.png");
         if (exist_parent(tr("User(s)")) == false) add_parent(tr("User(s)"), icon);
-        add_child(tr("User(s)"), create_child(strNick, strStatus, tr("User(s)"), icon));
+        if (exist_child(strNick, tr("User(s)")) == false) add_child(tr("User(s)"), create_child(strNick, strSuffix, tr("User(s)"), icon));
     }
 }
 
@@ -351,21 +371,21 @@ void Nicklist::remove_child(QString strName)
     }
 }
 
-QTreeWidgetItem* Nicklist::create_child(QString strNick, QString strStatus, QString strParent, QPixmap icon)
+QTreeWidgetItem* Nicklist::create_child(QString strNick, QString strSuffix, QString strParent, QPixmap icon)
 {
     QTreeWidgetItem *item = new QTreeWidgetItem();
     item->setText(0, strNick);
     item->setIcon(0, icon);
     item->setData(0, Qt::UserRole, icon);
 
-    if (strStatus.indexOf("W") != -1)
+    if (strSuffix.indexOf("W") != -1)
     {
         QPixmap newicon = QPixmap(":/images/pubcam.png");
         item->setData(0, Qt::UserRole+1, newicon);
         if (strParent == tr("Cam(s)"))
             item->setIcon(0, newicon);
     }
-    if (strStatus.indexOf("V") != -1)
+    if (strSuffix.indexOf("V") != -1)
     {
         QPixmap newicon = QPixmap(":/images/privcam.png");
         item->setData(0, Qt::UserRole+1, newicon);
@@ -383,7 +403,8 @@ QTreeWidgetItem* Nicklist::create_child(QString strNick, QString strStatus, QStr
         item->setData(0, Qt::UserRole+2, pixmap);
     }
 
-    //item->setData(0, Qt::UserRole+10, bBusy);
+    item->setData(0, Qt::UserRole+10, strSuffix.indexOf("b") != -1 ? false : true);
+
     return item;
 }
 
@@ -603,6 +624,12 @@ void Nicklist::contextMenuEvent(QContextMenuEvent *e)
 {
     if (this->selectedItems().count() == 0) return;
 
+    QString strNick = this->selectedItems().at(0)->text(0);
+
+    // return if not nick
+    if ((strNick == tr("Dev(s)")) || (strNick == tr("Admin(s)")) || (strNick == tr("Owner(s)")) || (strNick == tr("Op(s)")) || (strNick == tr("HalfOp(s)")) || (strNick == tr("Mod(s)")) || (strNick == tr("Screener(s)")) || (strNick == tr("Voice(s)")) || (strNick == tr("Cam(s)")) || (strNick == tr("User(s)")))
+        return;
+
     QMenu *minvite = new QMenu(tr("Invite"));
 
     for (int i = 0; i < maxOpenChannels; ++i)
@@ -645,7 +672,6 @@ void Nicklist::contextMenuEvent(QContextMenuEvent *e)
     privilege->addAction(tr("Give guest status"), this, SLOT(voice_add()));
     privilege->addAction(tr("Take guest status"), this, SLOT(voice_del()));
 
-    QString strNick = this->selectedItems().at(0)->text(0);
     QAction *nickAct = new QAction(strNick, this);
     nickAct->setDisabled(true);
 

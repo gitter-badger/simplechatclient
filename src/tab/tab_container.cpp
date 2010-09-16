@@ -332,11 +332,11 @@ void TabContainer::set_link(QString strChannel, QString strLink)
         tw[iTw]->set_link(strLink);
 }
 
-void TabContainer::add_user(QString strChannel, QString strNick, QString strStatus)
+void TabContainer::add_user(QString strChannel, QString strNick, QString strPrefix, QString strSuffix)
 {
     int iTw = get_index(strChannel);
     if (iTw != -1)
-        tw[iTw]->add_user(strNick, strStatus);
+        tw[iTw]->add_user(strNick, strPrefix, strSuffix);
 }
 
 void TabContainer::del_user(QString strChannel, QString strNick)

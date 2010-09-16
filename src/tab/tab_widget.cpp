@@ -838,11 +838,11 @@ void TabWidget::set_link(QString strUrl)
 
 // nick list
 
-void TabWidget::add_user(QString strNick, QString strStatus)
+void TabWidget::add_user(QString strNick, QString strPrefix, QString strSuffix)
 {
     if (nicklist_exist(strNick) == false)
     {
-        nicklist_add(strNick, strStatus);
+        nicklist_add(strNick, strPrefix, strSuffix);
         inputline->set_userslist(nick_list);
 
         iNickCount++;
@@ -867,9 +867,9 @@ void TabWidget::replace_color(QString level, QString color)
     strContent.replace(QRegExp(QString("id=\"level_%1\" style=\"color:#(......);").arg(level)), QString("id=\"level_%1\" style=\"color:%2;").arg(level).arg(color));
 }
 
-void TabWidget::nicklist_add(QString strNick, QString strStatus)
+void TabWidget::nicklist_add(QString strNick, QString strPrefix, QString strSuffix)
 {
-    nick_list->nicklist_add(strNick, strStatus, &nick_status);
+    nick_list->nicklist_add(strNick, strPrefix, strSuffix, &nick_status);
 }
 
 void TabWidget::nicklist_remove(QString strNick)
@@ -896,36 +896,50 @@ QStringList TabWidget::get_nicklist()
 
 void TabWidget::change_flag(QString strNick, QString strNewFlag)
 {
-    NickStatus ns;
-    QString strStatus = ns.status;
+    QString strOldPrefix;
+    QString strOldSuffix;
 
-    if ((strNewFlag == "+q") && (strStatus.indexOf("`") == -1)) strStatus.append("`");
-    else if ((strNewFlag == "-q") && (strStatus.indexOf("`") != -1)) strStatus.remove("`");
-    else if ((strNewFlag == "+o") && (strStatus.indexOf("@") == -1)) strStatus.append("@");
-    else if ((strNewFlag == "-o") && (strStatus.indexOf("@") != -1)) strStatus.remove("@");
-    else if ((strNewFlag == "+h") && (strStatus.indexOf("%") == -1)) strStatus.append("%");
-    else if ((strNewFlag == "-h") && (strStatus.indexOf("%") != -1)) strStatus.remove("%");
-    else if ((strNewFlag == "+v") && (strStatus.indexOf("+") == -1)) strStatus.append("+");
-    else if ((strNewFlag == "-v") && (strStatus.indexOf("+") != -1)) strStatus.remove("+");
-    else if ((strNewFlag == "+X") && (strStatus.indexOf("!") == -1)) strStatus.append("!");
-    else if ((strNewFlag == "-X") && (strStatus.indexOf("!") != -1)) strStatus.remove("!");
-    else if ((strNewFlag == "+Y") && (strStatus.indexOf("=") == -1)) strStatus.append("=");
-    else if ((strNewFlag == "-Y") && (strStatus.indexOf("=") != -1)) strStatus.remove("=");
-    else if ((strNewFlag == "+O") && (strStatus.indexOf("O") == -1)) strStatus.append("O");
-    else if ((strNewFlag == "-O") && (strStatus.indexOf("O") != -1)) strStatus.remove("O");
-    else if ((strNewFlag == "+b") && (strStatus.indexOf("b") == -1)) strStatus.append("b");
-    else if ((strNewFlag == "-b") && (strStatus.indexOf("b") != -1)) strStatus.remove("b");
-    else if ((strNewFlag == "+r") && (strStatus.indexOf("r") == -1)) strStatus.append("r");
-    else if ((strNewFlag == "-r") && (strStatus.indexOf("r") != -1)) strStatus.remove("r");
-    else if ((strNewFlag == "+W") && (strStatus.indexOf("W") == -1)) strStatus.append("W");
-    else if ((strNewFlag == "-W") && (strStatus.indexOf("W") != -1)) strStatus.remove("W");
-    else if ((strNewFlag == "+V") && (strStatus.indexOf("V") == -1)) strStatus.append("V");
-    else if ((strNewFlag == "-V") && (strStatus.indexOf("V") != -1)) strStatus.remove("V");
-    else if ((strNewFlag == "+x") && (strStatus.indexOf("x") == -1)) strStatus.append("x");
-    else if ((strNewFlag == "-x") && (strStatus.indexOf("x") != -1)) strStatus.remove("x");
+    for (int i = 0; i < nick_status.count(); i++)
+    {
+        if (nick_status.at(i).nick == strNick)
+        {
+            strOldPrefix = nick_status.at(i).prefix;
+            strOldSuffix = nick_status.at(i).suffix;
+            break;
+        }
+    }
+
+    QString strPrefix = strOldPrefix;
+    QString strSuffix = strOldSuffix;
+
+    if ((strNewFlag == "+q") && (strPrefix.indexOf("`") == -1)) strPrefix.append("`");
+    else if ((strNewFlag == "-q") && (strPrefix.indexOf("`") != -1)) strPrefix.remove("`");
+    else if ((strNewFlag == "+o") && (strPrefix.indexOf("@") == -1)) strPrefix.append("@");
+    else if ((strNewFlag == "-o") && (strPrefix.indexOf("@") != -1)) strPrefix.remove("@");
+    else if ((strNewFlag == "+h") && (strPrefix.indexOf("%") == -1)) strPrefix.append("%");
+    else if ((strNewFlag == "-h") && (strPrefix.indexOf("%") != -1)) strPrefix.remove("%");
+    else if ((strNewFlag == "+X") && (strPrefix.indexOf("!") == -1)) strPrefix.append("!");
+    else if ((strNewFlag == "-X") && (strPrefix.indexOf("!") != -1)) strPrefix.remove("!");
+    else if ((strNewFlag == "+Y") && (strPrefix.indexOf("=") == -1)) strPrefix.append("=");
+    else if ((strNewFlag == "-Y") && (strPrefix.indexOf("=") != -1)) strPrefix.remove("=");
+    else if ((strNewFlag == "+v") && (strPrefix.indexOf("+") == -1)) strPrefix.append("+");
+    else if ((strNewFlag == "-v") && (strPrefix.indexOf("+") != -1)) strPrefix.remove("+");
+
+    else if ((strNewFlag == "+O") && (strSuffix.indexOf("O") == -1)) strSuffix.append("O");
+    else if ((strNewFlag == "-O") && (strSuffix.indexOf("O") != -1)) strSuffix.remove("O");
+    else if ((strNewFlag == "+b") && (strSuffix.indexOf("b") == -1)) strSuffix.append("b");
+    else if ((strNewFlag == "-b") && (strSuffix.indexOf("b") != -1)) strSuffix.remove("b");
+    else if ((strNewFlag == "+r") && (strSuffix.indexOf("r") == -1)) strSuffix.append("r");
+    else if ((strNewFlag == "-r") && (strSuffix.indexOf("r") != -1)) strSuffix.remove("r");
+    else if ((strNewFlag == "+W") && (strSuffix.indexOf("W") == -1)) strSuffix.append("W");
+    else if ((strNewFlag == "-W") && (strSuffix.indexOf("W") != -1)) strSuffix.remove("W");
+    else if ((strNewFlag == "+V") && (strSuffix.indexOf("V") == -1)) strSuffix.append("V");
+    else if ((strNewFlag == "-V") && (strSuffix.indexOf("V") != -1)) strSuffix.remove("V");
+    else if ((strNewFlag == "+x") && (strSuffix.indexOf("x") == -1)) strSuffix.append("x");
+    else if ((strNewFlag == "-x") && (strSuffix.indexOf("x") != -1)) strSuffix.remove("x");
 
     del_user(strNick);
-    add_user(strNick, strStatus);
+    add_user(strNick, strPrefix, strSuffix);
 
     Config *pConfig = new Config();
     QString strMe = pConfig->get_value("login-nick");

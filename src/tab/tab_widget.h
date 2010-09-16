@@ -77,7 +77,7 @@ public:
     void disable_moderation();
     void author_topic(QString);
     void set_link(QString);
-    void add_user(QString, QString);
+    void add_user(QString, QString, QString);
     void del_user(QString);
     void change_flag(QString, QString);
     void update_nick(QString);
@@ -184,7 +184,7 @@ private:
 
     void replace_color(QString, QString);
 
-    void nicklist_add(QString, QString);
+    void nicklist_add(QString, QString, QString);
     void nicklist_remove(QString);
 
     void display_message(QString, int);

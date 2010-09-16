@@ -43,7 +43,8 @@
 struct NickStatus
 {
     QString nick;
-    QString status;
+    QString prefix;
+    QString suffix;
 };
 typedef QQueue <NickStatus> sNickStatus;
 
@@ -56,7 +57,7 @@ public:
     ~Nicklist();
     void set_open_channels(QStringList);
     void set_user_info(QString, QString, QString);
-    void nicklist_add(QString, QString, sNickStatus *);
+    void nicklist_add(QString, QString, QString, sNickStatus *);
     void nicklist_remove(QString, sNickStatus *);
     bool nicklist_exist(QString, sNickStatus *);
     QStringList nicklist_get(sNickStatus *);

@@ -546,7 +546,7 @@ void OnetKernel::raw_join()
         strSuffix= strDataList[3];
         if (strSuffix[0] == ':')
             strSuffix = strSuffix.right(strSuffix.length()-1);
-        strSuffix = strSuffix.right(strSuffix.length()-2);
+        strSuffix = strSuffix.left(strSuffix.length()-2);
     }
 
     QSettings settings;
@@ -578,7 +578,7 @@ void OnetKernel::raw_join()
             pNetwork->send(QString("NS INFO %1 s").arg(strNick));
     }
 
-    tabc->add_user(strChannel, strNick, strSuffix);
+    tabc->add_user(strChannel, strNick, QString::null, strSuffix);
 }
 
 // :scc_test!51976824@3DE379.B7103A.6CF799.6902F4 PART #scc
@@ -2395,7 +2395,7 @@ void OnetKernel::raw_352()
 // voice      +
 
 // busy       b
-// restricted r
+// registered r
 // encrypted  x
 // publiccam  W
 // privcam    V
@@ -2419,21 +2419,24 @@ void OnetKernel::raw_353()
 
             QString strSuffix = strDataList[i];
             if (strSuffix.indexOf("|") != -1)
+            {
                 strSuffix = strSuffix.right(strSuffix.length() - strSuffix.indexOf("|") -1);
+                strSuffix = strSuffix.left(strSuffix.length()-2);
+            }
             else
                 strSuffix = QString::null;
 
             QString strCleanNick = strNick;
 
-            QString strStatus = strSuffix;
-            if (strCleanNick.indexOf("`") != -1) { strCleanNick.remove("`"); strStatus.append("`"); }
-            if (strCleanNick.indexOf("@") != -1) { strCleanNick.remove("@"); strStatus.append("@"); }
-            if (strCleanNick.indexOf("%") != -1) { strCleanNick.remove("%"); strStatus.append("%"); }
-            if (strCleanNick.indexOf("+") != -1) { strCleanNick.remove("+"); strStatus.append("+"); }
-            if (strCleanNick.indexOf("!") != -1) { strCleanNick.remove("!"); strStatus.append("!"); }
-            if (strCleanNick.indexOf("=") != -1) { strCleanNick.remove("="); strStatus.append("="); }
+            QString strPrefix;
+            if (strCleanNick.indexOf("`") != -1) { strCleanNick.remove("`"); strPrefix.append("`"); }
+            if (strCleanNick.indexOf("@") != -1) { strCleanNick.remove("@"); strPrefix.append("@"); }
+            if (strCleanNick.indexOf("%") != -1) { strCleanNick.remove("%"); strPrefix.append("%"); }
+            if (strCleanNick.indexOf("!") != -1) { strCleanNick.remove("!"); strPrefix.append("!"); }
+            if (strCleanNick.indexOf("=") != -1) { strCleanNick.remove("="); strPrefix.append("="); }
+            if (strCleanNick.indexOf("+") != -1) { strCleanNick.remove("+"); strPrefix.append("+"); }
 
-            tabc->add_user(strChannel, strCleanNick, strStatus);
+            tabc->add_user(strChannel, strCleanNick, strPrefix, strSuffix);
 
             // if ^ rename channel
             if (strChannel[0] == '^')
