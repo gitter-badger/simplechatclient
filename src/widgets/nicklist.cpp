@@ -231,6 +231,8 @@ void Nicklist::add_parent(QString strName, QPixmap px)
     QTreeWidgetItem *item = new QTreeWidgetItem(this);
     item->setText(0, strName);
     item->setIcon(0, px);
+
+    sort_parent();
 }
 
 bool Nicklist::exist_parent(QString strName)
@@ -253,6 +255,48 @@ void Nicklist::remove_parent(QString strName)
         QString strText = item->text(0);
         if (strText == strName)
             delete this->takeTopLevelItem(i);
+    }
+}
+
+int Nicklist::index_parent(QString strName)
+{
+    for (int i = 0; i < this->topLevelItemCount(); i++)
+    {
+        QTreeWidgetItem *parent_item = this->topLevelItem(i);
+        QString strParent = parent_item->text(0);
+
+        if (strParent == strName)
+            return i;
+    }
+    return -1;
+}
+
+void Nicklist::move_parent(int index, int top)
+{
+    // move
+    QTreeWidgetItem *parent_item = this->takeTopLevelItem(index);
+    this->insertTopLevelItem(top, parent_item);
+
+    // scroll
+    this->topLevelItem(top)->setExpanded(true);
+}
+
+void Nicklist::sort_parent()
+{
+    QStringList strlNames;
+    strlNames << tr("User(s)") << tr("Cam(s)") << tr("Voice(s)") << tr("Screener(s)") << tr("Mod(s)") << tr("HalfOp(s)") << tr("Op(s)") << tr("Owner(s)") << tr("Admin(s)") << tr("Developer(s)");
+
+    QStringListIterator strliNames(strlNames);
+    while (strliNames.hasNext())
+    {
+        QString strName = strliNames.next();
+
+        if (exist_parent(strName) == true)
+        {
+            int index = index_parent(strName);
+            if ((index != 0) && (index != -1))
+                move_parent(index, 0);
+        }
     }
 }
 

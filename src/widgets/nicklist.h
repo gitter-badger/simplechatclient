@@ -77,6 +77,9 @@ private:
     void add_parent(QString, QPixmap);
     bool exist_parent(QString);
     void remove_parent(QString);
+    int index_parent(QString);
+    void move_parent(int, int);
+    void sort_parent();
     void add_child(QString, QTreeWidgetItem *);
     bool exist_child(QString, QString);
     void remove_child(QString);
