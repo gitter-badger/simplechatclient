@@ -101,8 +101,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     delete pConfig;
 
 // settings
+    QSettings settings;
     settings.clear();
-    settings.setValue("version", "1.0.9.519");
+    settings.setValue("version", "1.0.9.520");
     settings.setValue("debug", "off");
     settings.setValue("logged", "off");
     settings.setValue("busy", "off");
@@ -276,6 +277,7 @@ MainWindow::~MainWindow()
     trayIcon->hide();
 
     // close network
+    QSettings settings;
     settings.setValue("reconnect", "false");
     pNetwork->send("QUIT");
     pNetwork->close();
@@ -295,6 +297,7 @@ MainWindow::~MainWindow()
     delete pDlg_channel_settings;
     delete pNotify;
     delete pNetwork;
+    settings.clear();
     delete pTabC;
     delete pTabM;
     delete camSocket;
@@ -324,6 +327,7 @@ void MainWindow::clear_all_nicklist() { pTabC->clear_all_nicklist(); }
 // args
 void MainWindow::set_debug(bool param1)
 {
+    QSettings settings;
     if (param1 == true)
         settings.setValue("debug", "on");
     else
@@ -366,6 +370,7 @@ void MainWindow::button_close()
 
 void MainWindow::button_connect()
 {
+    QSettings settings;
     if (pNetwork->is_connected() == false)
     {
         connectAct->setText(tr("&Disconnect"));
@@ -459,6 +464,7 @@ void MainWindow::button_show()
 // close tab
 void MainWindow::tab_close_requested(int index)
 {
+    QSettings settings;
     QStringList strlChannelNames = settings.value("channel_names").toStringList();
 
     QString strName;

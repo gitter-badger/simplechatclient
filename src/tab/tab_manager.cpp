@@ -28,10 +28,6 @@ TabManager::TabManager(QWidget *parent) : QTabWidget(parent)
     QObject::connect(tab, SIGNAL(currentChanged(int)), this, SLOT(current_tab_changed(int)));
 }
 
-TabManager::~TabManager()
-{
-}
-
 void TabManager::set_hilight(QString strName)
 {
     int index = tab_pos(strName);

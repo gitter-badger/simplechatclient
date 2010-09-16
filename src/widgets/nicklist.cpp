@@ -73,10 +73,6 @@ void Nicklist::nicklist_add(QString strNick, QString strPrefix, QString strSuffi
 // add to nick list
     nick_status->append(add);
 
-    qDebug() << "nicklist nick:" << strNick;
-    qDebug() << "nicklist prefix:" << strPrefix;
-    qDebug() << "nicklist suffix:" << strSuffix;
-
 // add to widget
     if (strSuffix.indexOf("O") != -1)
     {

@@ -68,7 +68,6 @@ public slots:
     void clear_all_nicklist();
 
 private:
-    QSettings settings;
     QTcpSocket *camSocket;
     TabManager *pTabM;
     TabContainer *pTabC;

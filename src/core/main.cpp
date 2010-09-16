@@ -212,6 +212,22 @@ int main(int argc, char *argv[])
     QCoreApplication::setOrganizationDomain("simplechatclien.sourceforge.net");
     QCoreApplication::setApplicationName("scc");
 
+    // detect already running
+    /*
+    QSettings settings;
+    if (settings.value("uokey").toString().isEmpty() == false)
+    {
+        QMessageBox msgBox;
+        msgBox.setIcon(QMessageBox::Critical);
+        msgBox.setWindowIcon(QIcon(":/images/logo_64.png"));
+        msgBox.setStandardButtons(QMessageBox::Ok);
+        msgBox.setText("Simple Chat Client is already running");
+        msgBox.exec();
+
+        exit(0);
+    }
+    */
+
     // get translate
     Config *pConfig = new Config(false);
     QString strLanguage = pConfig->get_value("language");

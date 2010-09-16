@@ -34,7 +34,6 @@ class TabManager : public QTabWidget
     Q_OBJECT
 public:
     TabManager(QWidget *);
-    ~TabManager();
     void set_hilight(QString);
     void set_alert(QString, QColor);
     int tab_pos(QString);
