@@ -885,6 +885,7 @@ bool TabWidget::nicklist_exist(QString strNick)
 void TabWidget::nicklist_refresh_all()
 {
     //raw 366: End of /NAMES list.
+    nick_list->expandAll();
     inputline->set_userslist(nick_list);
 }
 
