@@ -103,7 +103,7 @@ TabWidget::TabWidget(QWidget *parent, Network *param1, QString param2, Notify *p
     nickCount->setAlignment(Qt::AlignCenter);
     nickCount->show();
 
-    nick_list = new Nicklist(myparent, pNetwork, strName, mNickAvatar, camSocket);
+    nick_list = new NickListWidget(myparent, pNetwork, strName, mNickAvatar, camSocket);
     nick_list->setParent(this);
     //nick_list->setItemDelegate(new NicklistDelegate(nick_list));
     nick_list->show();
@@ -869,17 +869,17 @@ void TabWidget::replace_color(QString level, QString color)
 
 void TabWidget::nicklist_add(QString strNick, QString strPrefix, QString strSuffix)
 {
-    nick_list->nicklist_add(strNick, strPrefix, strSuffix, &nick_status);
+    nick_list->add(strNick, strPrefix, strSuffix, &nick_status);
 }
 
 void TabWidget::nicklist_remove(QString strNick)
 {
-    nick_list->nicklist_remove(strNick, &nick_status);
+    nick_list->remove(strNick, &nick_status);
 }
 
 bool TabWidget::nicklist_exist(QString strNick)
 {
-    return nick_list->nicklist_exist(strNick, &nick_status);
+    return nick_list->exist(strNick, &nick_status);
 }
 
 void TabWidget::nicklist_refresh_all()
@@ -891,7 +891,7 @@ void TabWidget::nicklist_refresh_all()
 
 QStringList TabWidget::get_nicklist()
 {
-    return nick_list->nicklist_get(&nick_status);
+    return nick_list->get(&nick_status);
 }
 
 void TabWidget::change_flag(QString strNick, QString strNewFlag)
@@ -985,7 +985,7 @@ void TabWidget::set_open_channels(QStringList strOpenChannels)
 
 void TabWidget::update_nick_avatar()
 {
-    nick_list->nicklist_refresh_avatars();
+    nick_list->refresh_avatars();
 }
 
 void TabWidget::update_channel_avatar()

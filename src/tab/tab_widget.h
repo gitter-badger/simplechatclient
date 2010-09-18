@@ -52,8 +52,8 @@
 #include "network.h"
 #include "inputline.h"
 #include "mainwebview.h"
-#include "nicklist.h"
 #include "nicklistdelegate.h"
+#include "nicklistwidget.h"
 #include "notify.h"
 #include "replace.h"
 
@@ -107,7 +107,7 @@ private:
     QWidget *topWidget;
     QLabel *nickCount;
     QLabel *webLink;
-    Nicklist *nick_list;
+    NickListWidget *nick_list;
     MainWebView *mainWebView;
     QWidget *toolWidget;
     QWidget *bottomWidget;

@@ -18,8 +18,8 @@
  *                                                                          *
  ****************************************************************************/
 
-#ifndef NICKLIST_H
-#define NICKLIST_H
+#ifndef NICKLISTWIDGET_H
+#define NICKLISTWIDGET_H
 
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
@@ -49,19 +49,19 @@ struct NickStatus
 typedef QQueue <NickStatus> sNickStatus;
 
 
-class Nicklist : public QTreeWidget
+class NickListWidget : public QTreeWidget
 {
     Q_OBJECT
 public:
-    Nicklist(QWidget *, Network *, QString, QMap <QString, QByteArray> *, QTcpSocket *);
-    ~Nicklist();
+    NickListWidget(QWidget *, Network *, QString, QMap <QString, QByteArray> *, QTcpSocket *);
+    ~NickListWidget();
     void set_open_channels(QStringList);
     void set_user_info(QString, QString, QString);
-    void nicklist_add(QString, QString, QString, sNickStatus *);
-    void nicklist_remove(QString, sNickStatus *);
-    bool nicklist_exist(QString, sNickStatus *);
-    QStringList nicklist_get(sNickStatus *);
-    void nicklist_refresh_avatars();
+    void add(QString, QString, QString, sNickStatus *);
+    void remove(QString, sNickStatus *);
+    bool exist(QString, sNickStatus *);
+    QStringList get(sNickStatus *);
+    void refresh_avatars();
     void update_avatar(QString, QByteArray);
 
 private:
@@ -114,4 +114,4 @@ protected:
 
 };
 
-#endif // NICKLIST_H
+#endif // NICKLISTWIDGET_H
