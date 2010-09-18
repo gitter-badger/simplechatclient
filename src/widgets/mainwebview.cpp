@@ -20,12 +20,13 @@
 
 #include "mainwebview.h"
 
-MainWebView::MainWebView(QWidget *parent, Network *param1, QString param2, QTcpSocket *param3)
+MainWebView::MainWebView(QWidget *parent, Network *param1, QString param2, QTcpSocket *param3, sNickStatus *param4)
 {
     myparent = parent;
     pNetwork = param1;
     strChannel = param2;
     camSocket = param3;
+    nickStatus = param4;
 }
 
 void MainWebView::join_channel()
@@ -261,6 +262,19 @@ void MainWebView::contextMenuEvent(QContextMenuEvent *event)
                 pNetwork->send(QString("NS INFO %1").arg(strNick));
             }
 
+            QString strPrefix;
+            QString strSuffix;
+
+            for (int i = 0; i < nickStatus->count(); i++)
+            {
+                if (nickStatus->at(i).nick == strNick)
+                {
+                    strPrefix = nickStatus->at(i).prefix;
+                    strSuffix = nickStatus->at(i).suffix;
+                    break;
+                }
+            }
+
             QMenu *minvite = new QMenu(tr("Invite"));
 
             for (int i = 0; i < maxOpenChannels; ++i)
@@ -291,17 +305,26 @@ void MainWebView::contextMenuEvent(QContextMenuEvent *event)
             ignore->addAction(tr("Remove from Ignore list"), this, SLOT(ignore_del()));
 
             QMenu *privilege = new QMenu(tr("Actions"));
-            privilege->addAction(tr("Give super operator status"), this, SLOT(op_add()));
-            privilege->addAction(tr("Take super operator status"), this, SLOT(op_del()));
-            privilege->addSeparator();
-            privilege->addAction(tr("Give operator status"), this, SLOT(halfop_add()));
-            privilege->addAction(tr("Take operator status"), this, SLOT(halfop_del()));
-            privilege->addSeparator();
-            privilege->addAction(tr("Give moderator status"), this, SLOT(moderator_add()));
-            privilege->addAction(tr("Take moderator status"), this, SLOT(moderator_del()));
-            privilege->addSeparator();
-            privilege->addAction(tr("Give guest status"), this, SLOT(voice_add()));
-            privilege->addAction(tr("Take guest status"), this, SLOT(voice_del()));
+
+            if (strPrefix.indexOf("@") == -1)
+                privilege->addAction(tr("Give super operator status"), this, SLOT(op_add()));
+            else
+                privilege->addAction(tr("Take super operator status"), this, SLOT(op_del()));
+
+            if (strPrefix.indexOf("%") == -1)
+                privilege->addAction(tr("Give operator status"), this, SLOT(halfop_add()));
+            else
+                privilege->addAction(tr("Take operator status"), this, SLOT(halfop_del()));
+
+            if (strPrefix.indexOf("!") == -1)
+                privilege->addAction(tr("Give moderator status"), this, SLOT(moderator_add()));
+            else
+                privilege->addAction(tr("Take moderator status"), this, SLOT(moderator_del()));
+
+            if (strPrefix.indexOf("+") == -1)
+                privilege->addAction(tr("Give guest status"), this, SLOT(voice_add()));
+            else
+                privilege->addAction(tr("Take guest status"), this, SLOT(voice_del()));
 
             QAction *nameAct = new QAction(strNick, this);
             nameAct->setDisabled(true);

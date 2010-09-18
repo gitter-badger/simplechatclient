@@ -107,7 +107,7 @@ private:
     QWidget *topWidget;
     QLabel *nickCount;
     QLabel *webLink;
-    NickListWidget *nick_list;
+    NickListWidget *nicklist;
     MainWebView *mainWebView;
     QWidget *toolWidget;
     QWidget *bottomWidget;
@@ -174,7 +174,7 @@ private:
     Network *pNetwork;
     QString strName;
     QString strLast_msg;
-    sNickStatus nick_status;
+    sNickStatus nickStatus;
     int iNickCount;
     bool bCursorPositionChanged;
     QString strCurrentColor;

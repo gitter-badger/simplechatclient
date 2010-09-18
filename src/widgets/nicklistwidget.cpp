@@ -20,13 +20,14 @@
 
 #include "nicklistwidget.h"
 
-NickListWidget::NickListWidget(QWidget *parent, Network *param1, QString param2, QMap <QString, QByteArray> *param3, QTcpSocket *param4)
+NickListWidget::NickListWidget(QWidget *parent, Network *param1, QString param2, QMap <QString, QByteArray> *param3, QTcpSocket *param4, sNickStatus *param5)
 {
     myparent = parent;
     pNetwork = param1;
     strChannel = param2;
     mNickAvatar = param3;
     camSocket = param4;
+    nickStatus = param5;
 
     setAnimated(true);
     header()->hide();
@@ -638,6 +639,19 @@ void NickListWidget::contextMenuEvent(QContextMenuEvent *e)
     if ((strNick == tr("Dev(s)")) || (strNick == tr("Admin(s)")) || (strNick == tr("Owner(s)")) || (strNick == tr("Op(s)")) || (strNick == tr("HalfOp(s)")) || (strNick == tr("Mod(s)")) || (strNick == tr("Screener(s)")) || (strNick == tr("Voice(s)")) || (strNick == tr("Cam(s)")) || (strNick == tr("User(s)")))
         return;
 
+    QString strPrefix;
+    QString strSuffix;
+
+    for (int i = 0; i < nickStatus->count(); i++)
+    {
+        if (nickStatus->at(i).nick == strNick)
+        {
+            strPrefix = nickStatus->at(i).prefix;
+            strSuffix = nickStatus->at(i).suffix;
+            break;
+        }
+    }
+
     QMenu *minvite = new QMenu(tr("Invite"));
 
     for (int i = 0; i < maxOpenChannels; ++i)
@@ -668,17 +682,26 @@ void NickListWidget::contextMenuEvent(QContextMenuEvent *e)
     ignore->addAction(tr("Remove from Ignore list"), this, SLOT(ignore_del()));
 
     QMenu *privilege = new QMenu(tr("Actions"));
-    privilege->addAction(tr("Give super operator status"), this, SLOT(op_add()));
-    privilege->addAction(tr("Take super operator status"), this, SLOT(op_del()));
-    privilege->addSeparator();
-    privilege->addAction(tr("Give operator status"), this, SLOT(halfop_add()));
-    privilege->addAction(tr("Take operator status"), this, SLOT(halfop_del()));
-    privilege->addSeparator();
-    privilege->addAction(tr("Give moderator status"), this, SLOT(moderator_add()));
-    privilege->addAction(tr("Take moderator status"), this, SLOT(moderator_del()));
-    privilege->addSeparator();
-    privilege->addAction(tr("Give guest status"), this, SLOT(voice_add()));
-    privilege->addAction(tr("Take guest status"), this, SLOT(voice_del()));
+
+    if (strPrefix.indexOf("@") == -1)
+        privilege->addAction(tr("Give super operator status"), this, SLOT(op_add()));
+    else
+        privilege->addAction(tr("Take super operator status"), this, SLOT(op_del()));
+
+    if (strPrefix.indexOf("%") == -1)
+        privilege->addAction(tr("Give operator status"), this, SLOT(halfop_add()));
+    else
+        privilege->addAction(tr("Take operator status"), this, SLOT(halfop_del()));
+
+    if (strPrefix.indexOf("!") == -1)
+        privilege->addAction(tr("Give moderator status"), this, SLOT(moderator_add()));
+    else
+        privilege->addAction(tr("Take moderator status"), this, SLOT(moderator_del()));
+
+    if (strPrefix.indexOf("+") == -1)
+        privilege->addAction(tr("Give guest status"), this, SLOT(voice_add()));
+    else
+        privilege->addAction(tr("Take guest status"), this, SLOT(voice_del()));
 
     QAction *nickAct = new QAction(strNick, this);
     nickAct->setDisabled(true);

@@ -41,7 +41,7 @@ class MainWebView : public QWebView
 {
     Q_OBJECT
 public:
-    MainWebView(QWidget *, Network *, QString, QTcpSocket *);
+    MainWebView(QWidget *, Network *, QString, QTcpSocket *, sNickStatus *);
     ~MainWebView();
     void set_open_channels(QStringList);
     void set_user_info(QString, QString, QString);
@@ -56,6 +56,7 @@ private:
     enum { maxOpenChannels = 50 };
     QAction *openChannelsActs[maxOpenChannels];
     sNickInfo sCurrentUserInfo;
+    sNickStatus *nickStatus;
 
 private slots:
     void join_channel();

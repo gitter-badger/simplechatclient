@@ -31,7 +31,6 @@
 #endif
 #include <QInputDialog>
 #include <QMenu>
-#include <QQueue>
 #include <QSettings>
 #include <QTreeWidget>
 #include "dlg_cam.h"
@@ -40,20 +39,11 @@
 #endif
 #include "network.h"
 
-struct NickStatus
-{
-    QString nick;
-    QString prefix;
-    QString suffix;
-};
-typedef QQueue <NickStatus> sNickStatus;
-
-
 class NickListWidget : public QTreeWidget
 {
     Q_OBJECT
 public:
-    NickListWidget(QWidget *, Network *, QString, QMap <QString, QByteArray> *, QTcpSocket *);
+    NickListWidget(QWidget *, Network *, QString, QMap <QString, QByteArray> *, QTcpSocket *, sNickStatus *);
     ~NickListWidget();
     void set_open_channels(QStringList);
     void set_user_info(QString, QString, QString);
@@ -74,6 +64,7 @@ private:
     enum { maxOpenChannels = 50 };
     QAction *openChannelsActs[maxOpenChannels];
     sNickInfo sCurrentUserInfo;
+    sNickStatus *nickStatus;
 
     void add_parent(QString, QPixmap);
     bool exist_parent(QString);

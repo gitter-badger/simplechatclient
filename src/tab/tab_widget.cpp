@@ -103,12 +103,12 @@ TabWidget::TabWidget(QWidget *parent, Network *param1, QString param2, Notify *p
     nickCount->setAlignment(Qt::AlignCenter);
     nickCount->show();
 
-    nick_list = new NickListWidget(myparent, pNetwork, strName, mNickAvatar, camSocket);
-    nick_list->setParent(this);
-    //nick_list->setItemDelegate(new NicklistDelegate(nick_list));
-    nick_list->show();
+    nicklist = new NickListWidget(myparent, pNetwork, strName, mNickAvatar, camSocket, &nickStatus);
+    nicklist->setParent(this);
+    //nicklist->setItemDelegate(new NicklistDelegate(nicklist));
+    nicklist->show();
 
-    mainWebView = new MainWebView(myparent, pNetwork, strName, camSocket);
+    mainWebView = new MainWebView(myparent, pNetwork, strName, camSocket, &nickStatus);
     mainWebView->setParent(this);
     mainWebView->show();
 
@@ -344,7 +344,7 @@ TabWidget::TabWidget(QWidget *parent, Network *param1, QString param2, Notify *p
             leftLayout->setMargin(0);
         }
 
-        rightLayout->addWidget(nick_list);
+        rightLayout->addWidget(nicklist);
 
         leftLayout->addWidget(topWidget);
         leftLayout->addWidget(mainWebView);
@@ -377,7 +377,7 @@ TabWidget::TabWidget(QWidget *parent, Network *param1, QString param2, Notify *p
         moderSendButton->hide();
         bottomLayout->removeWidget(moderSendButton);
 
-        rightLayout->addWidget(nick_list);
+        rightLayout->addWidget(nicklist);
 
         leftLayout->addWidget(mainWebView);
         leftLayout->addWidget(toolWidget);
@@ -403,7 +403,7 @@ TabWidget::TabWidget(QWidget *parent, Network *param1, QString param2, Notify *p
 
         webLink->hide();
         nickCount->hide();
-        nick_list->hide();
+        nicklist->hide();
 
         bold->hide();
         italic->hide();
@@ -482,12 +482,12 @@ TabWidget::TabWidget(QWidget *parent, Network *param1, QString param2, Notify *p
 
 TabWidget::~TabWidget()
 {
-    nick_status.clear();
+    nickStatus.clear();
     nickLabel->clear();
     strContent.clear();
     mainWebView->setHtml(strContent,QUrl(""));
 
-    delete nick_list;
+    delete nicklist;
     delete inputline;
 }
 
@@ -843,7 +843,7 @@ void TabWidget::add_user(QString strNick, QString strPrefix, QString strSuffix)
     if (nicklist_exist(strNick) == false)
     {
         nicklist_add(strNick, strPrefix, strSuffix);
-        inputline->set_userslist(nick_list);
+        inputline->set_userslist(nicklist);
 
         iNickCount++;
         nickCount->setText(QString(tr("%1 User(s)")).arg(iNickCount));
@@ -855,7 +855,7 @@ void TabWidget::del_user(QString strNick)
     if (nicklist_exist(strNick) == true)
     {
         nicklist_remove(strNick);
-        inputline->set_userslist(nick_list);
+        inputline->set_userslist(nicklist);
 
         iNickCount--;
         nickCount->setText(QString(tr("%1 User(s)")).arg(iNickCount));
@@ -869,29 +869,29 @@ void TabWidget::replace_color(QString level, QString color)
 
 void TabWidget::nicklist_add(QString strNick, QString strPrefix, QString strSuffix)
 {
-    nick_list->add(strNick, strPrefix, strSuffix, &nick_status);
+    nicklist->add(strNick, strPrefix, strSuffix, &nickStatus);
 }
 
 void TabWidget::nicklist_remove(QString strNick)
 {
-    nick_list->remove(strNick, &nick_status);
+    nicklist->remove(strNick, &nickStatus);
 }
 
 bool TabWidget::nicklist_exist(QString strNick)
 {
-    return nick_list->exist(strNick, &nick_status);
+    return nicklist->exist(strNick, &nickStatus);
 }
 
 void TabWidget::nicklist_refresh_all()
 {
     //raw 366: End of /NAMES list.
-    nick_list->expandAll();
-    inputline->set_userslist(nick_list);
+    nicklist->expandAll();
+    inputline->set_userslist(nicklist);
 }
 
 QStringList TabWidget::get_nicklist()
 {
-    return nick_list->get(&nick_status);
+    return nicklist->get(&nickStatus);
 }
 
 void TabWidget::change_flag(QString strNick, QString strNewFlag)
@@ -899,12 +899,12 @@ void TabWidget::change_flag(QString strNick, QString strNewFlag)
     QString strOldPrefix;
     QString strOldSuffix;
 
-    for (int i = 0; i < nick_status.count(); i++)
+    for (int i = 0; i < nickStatus.count(); i++)
     {
-        if (nick_status.at(i).nick == strNick)
+        if (nickStatus.at(i).nick == strNick)
         {
-            strOldPrefix = nick_status.at(i).prefix;
-            strOldSuffix = nick_status.at(i).suffix;
+            strOldPrefix = nickStatus.at(i).prefix;
+            strOldSuffix = nickStatus.at(i).suffix;
             break;
         }
     }
@@ -967,25 +967,25 @@ void TabWidget::clear_nicklist()
 {
     iNickCount = 0;
     nickCount->setText(QString(tr("%1 User(s)")).arg(iNickCount));
-    nick_status.clear();
-    nick_list->clear();
+    nickStatus.clear();
+    nicklist->clear();
 }
 
 void TabWidget::set_user_info(QString strNick, QString strKey, QString strValue)
 {
-    nick_list->set_user_info(strNick, strKey, strValue);
+    nicklist->set_user_info(strNick, strKey, strValue);
     mainWebView->set_user_info(strNick, strKey, strValue);
 }
 
 void TabWidget::set_open_channels(QStringList strOpenChannels)
 {
-    nick_list->set_open_channels(strOpenChannels);
+    nicklist->set_open_channels(strOpenChannels);
     mainWebView->set_open_channels(strOpenChannels);
 }
 
 void TabWidget::update_nick_avatar()
 {
-    nick_list->refresh_avatars();
+    nicklist->refresh_avatars();
 }
 
 void TabWidget::update_channel_avatar()

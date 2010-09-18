@@ -23,10 +23,20 @@
 
 #include <QAction>
 #include <QObject>
+#include <QQueue>
 #include <QSettings>
 #include <QTcpSocket>
 #include <QTimer>
 #include "crypt.h"
+
+struct NickStatus
+{
+    QString nick;
+    QString prefix;
+    QString suffix;
+};
+typedef QQueue <NickStatus> sNickStatus;
+
 
 class NetworkThread : public QThread
 {
