@@ -29,12 +29,12 @@
 #ifdef Q_WS_X11
 #include <QDebug>
 #endif
+#include <QInputDialog>
 #include <QMenu>
 #include <QQueue>
 #include <QSettings>
 #include <QTreeWidget>
 #include "dlg_cam.h"
-#include "dlg_kick.h"
 #ifdef Q_WS_WIN
 #include "kamerzysta.h"
 #endif

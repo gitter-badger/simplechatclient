@@ -854,21 +854,6 @@
     </message>
 </context>
 <context>
-    <name>DlgKick</name>
-    <message>
-        <source>Kick</source>
-        <translation>Kick</translation>
-    </message>
-    <message>
-        <source>Reason for kicking:</source>
-        <translation>Podaj powód wyrzucenia:</translation>
-    </message>
-    <message>
-        <source>No reason</source>
-        <translation>Zachowuj się! Byle jak ale się zachowuj!</translation>
-    </message>
-</context>
-<context>
     <name>DlgModeration</name>
     <message>
         <source>Moderation</source>
@@ -2244,9 +2229,13 @@
         <source>Kick &amp; Ban</source>
         <translation>Banuj i wyrzuć</translation>
     </message>
+    <message>
+        <source>Reason for kicking:</source>
+        <translation>Podaj powód wyrzucenia:</translation>
+    </message>
 </context>
 <context>
-    <name>Nicklist</name>
+    <name>NickListWidget</name>
     <message>
         <source>Developer(s)</source>
         <translation>Developer(rzy)</translation>
@@ -2286,6 +2275,10 @@
     <message>
         <source>User(s)</source>
         <translation>Użytkownik(cy)</translation>
+    </message>
+    <message>
+        <source>Reason for kicking:</source>
+        <translation>Podaj powód wyrzucenia:</translation>
     </message>
     <message>
         <source>No reason</source>

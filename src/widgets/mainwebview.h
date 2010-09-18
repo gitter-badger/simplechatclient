@@ -26,12 +26,12 @@
 #include "dlg_user_profile.h"
 
 #include <QContextMenuEvent>
+#include <QInputDialog>
 #include <QMenu>
 #include <QSettings>
 #include <QWebHitTestResult>
 #include <QWebView>
 #include "dlg_cam.h"
-#include "dlg_kick.h"
 #ifdef Q_WS_WIN
 #include "kamerzysta.h"
 #endif

@@ -12,7 +12,6 @@ set (scc_UIS
 	../ui/friends.ui
 	../ui/ignore.ui
 	../ui/invite.ui
-	../ui/kick.ui
 	../ui/moderation.ui
 	../ui/options.ui
 	../ui/privilege.ui
@@ -50,7 +49,6 @@ set (scc_SRCS
 	gui/dlg_friends.cpp
 	gui/dlg_ignore.cpp
 	gui/dlg_invite.cpp
-	gui/dlg_kick.cpp
 	gui/dlg_moderation.cpp
 	gui/dlg_options.cpp
 	gui/dlg_privilege.cpp
@@ -96,7 +94,6 @@ set (scc_MOC_HDRS
 	gui/dlg_friends.h
 	gui/dlg_ignore.h
 	gui/dlg_invite.h
-	gui/dlg_kick.h
 	gui/dlg_moderation.h
 	gui/dlg_options.h
 	gui/dlg_privilege.h

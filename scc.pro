@@ -37,7 +37,6 @@ SOURCES += src/avatars/channel_avatar.cpp \
     src/gui/dlg_ignore.cpp \
     src/gui/dlg_ignore_ad.cpp \
     src/gui/dlg_invite.cpp \
-    src/gui/dlg_kick.cpp \
     src/gui/dlg_moderation.cpp \
     src/gui/dlg_options.cpp \
     src/gui/dlg_privilege.cpp \
@@ -83,7 +82,6 @@ HEADERS += src/avatars/channel_avatar.h \
     src/gui/dlg_ignore.h \
     src/gui/dlg_ignore_ad.h \
     src/gui/dlg_invite.h \
-    src/gui/dlg_kick.h \
     src/gui/dlg_moderation.h \
     src/gui/dlg_options.h \
     src/gui/dlg_privilege.h \
@@ -113,7 +111,6 @@ FORMS += ui/about.ui \
     ui/ignore.ui \
     ui/ignore_ad.ui \
     ui/invite.ui \
-    ui/kick.ui \
     ui/moderation.ui \
     ui/options.ui \
     ui/privilege.ui \

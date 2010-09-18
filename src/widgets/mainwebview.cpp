@@ -94,7 +94,11 @@ void MainWebView::ignore_del()
 
 void MainWebView::kick()
 {
-    (new DlgKick(myparent, pNetwork, strNick, strChannel))->show();
+    bool ok;
+    QString strText = QInputDialog::getText(this, tr("Kick From Channel"), tr("Reason for kicking:"), QLineEdit::Normal, tr("No reason"), &ok);
+
+    if ((ok == true) && (strText.isEmpty() == false))
+        pNetwork->send(QString("KICK %1 %2 :%3").arg(strChannel).arg(strNick).arg(strText));
 }
 
 void MainWebView::ban()
@@ -104,9 +108,14 @@ void MainWebView::ban()
 
 void MainWebView::kban()
 {
-    QString strReason = tr("No reason");
-    pNetwork->send(QString("CS BAN %1 ADD %2").arg(strChannel).arg(strNick));
-    pNetwork->send(QString("KICK %1 %2 :%3").arg(strChannel).arg(strNick).arg(strReason));
+    bool ok;
+    QString strText = QInputDialog::getText(this, tr("Kick & Ban"), tr("Reason for kicking:"), QLineEdit::Normal, tr("No reason"), &ok);
+
+    if ((ok == true) && (strText.isEmpty() == false))
+    {
+        pNetwork->send(QString("CS BAN %1 ADD %2").arg(strChannel).arg(strNick));
+        pNetwork->send(QString("KICK %1 %2 :%3").arg(strChannel).arg(strNick).arg(strText));
+    }
 }
 
 void MainWebView::op_add()
