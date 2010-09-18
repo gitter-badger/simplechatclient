@@ -103,7 +103,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 // settings
     QSettings settings;
     settings.clear();
-    settings.setValue("version", "1.0.9.525");
+    settings.setValue("version", "1.0.9.526");
     settings.setValue("debug", "off");
     settings.setValue("logged", "off");
     settings.setValue("busy", "off");
@@ -424,6 +424,7 @@ void MainWindow::cams_clicked()
         QString strMe = pConfig->get_value("login-nick");
         delete pConfig;
 
+        QSettings settings;
         QString strUOKey = settings.value("uokey").toString();
         (new Kamerzysta(camSocket))->show(strMe, strUOKey);
     }
