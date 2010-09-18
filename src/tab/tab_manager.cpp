@@ -28,49 +28,16 @@ TabManager::TabManager(QWidget *parent) : QTabWidget(parent)
     QObject::connect(tab, SIGNAL(currentChanged(int)), this, SLOT(current_tab_changed(int)));
 }
 
-void TabManager::set_hilight(QString strName)
+void TabManager::set_hilight(int index)
 {
-    int index = tab_pos(strName);
     tab->setTabTextColor(index, QColor(138, 0, 184, 255));
 }
 
-void TabManager::set_alert(QString strName, QColor cColor)
+void TabManager::set_alert(int index, QColor color)
 {
-    int index = tab_pos(strName);
-
     // if not hilighted and not current color
-    if ((tab->tabTextColor(index) != QColor(138, 0, 184, 255)) && (tab->tabTextColor(index) != cColor))
-        tab->setTabTextColor(index, cColor);
-}
-
-int TabManager::tab_pos(QString strName)
-{
-    QSettings settings;
-    QStringList strlChannelNames = settings.value("channel_names").toStringList();
-
-    int i = 0;
-    QStringListIterator strliChannelNames (strlChannelNames);
-    while (strliChannelNames.hasNext())
-    {
-        if (strliChannelNames.next() == strName)
-            return i;
-        i++;
-    }
-
-    return -1;
-}
-
-QString TabManager::tab_name(int index)
-{
-    if (index == -1) return QString::null; // prevent crash
-
-    QSettings settings;
-    QStringList strlChannelNames = settings.value("channel_names").toStringList();
-
-    if (index < strlChannelNames.size())
-        return strlChannelNames.at(index);
-    else
-        return QString::null;
+    if ((tab->tabTextColor(index) != QColor(138, 0, 184, 255)) && (tab->tabTextColor(index) != color))
+        tab->setTabTextColor(index, color);
 }
 
 void TabManager::current_tab_changed(int index)
@@ -78,6 +45,5 @@ void TabManager::current_tab_changed(int index)
     QString strTabText = tabText(index);
     myparent->setWindowTitle(QString("Simple Chat Client - [%1]").arg(strTabText));
 
-    QString strName = tab_name(index);
-    tab->setTabTextColor(tab_pos(strName), QColor(0,0,0));
+    tab->setTabTextColor(index, QColor(0,0,0));
 }

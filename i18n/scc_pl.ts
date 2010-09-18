@@ -2050,13 +2050,6 @@
     </message>
 </context>
 <context>
-    <name>TabContainer</name>
-    <message>
-        <source>Error: Exceeded allowed number of channels in the client</source>
-        <translation>Error: Przekroczona dopuszczalna ilość kanałów w kliencie</translation>
-    </message>
-</context>
-<context>
     <name>TabWidget</name>
     <message>
         <source>Topic set by %1</source>

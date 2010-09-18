@@ -21,23 +21,16 @@
 #ifndef TAB_MANAGER_H
 #define TAB_MANAGER_H
 
-#include <QCoreApplication>
-#include <QKeyEvent>
-#include <QSettings>
-#include <QStringList>
 #include <QTabBar>
 #include <QTabWidget>
-#include <QTimer>
 
 class TabManager : public QTabWidget
 {
     Q_OBJECT
 public:
     TabManager(QWidget *);
-    void set_hilight(QString);
-    void set_alert(QString, QColor);
-    int tab_pos(QString);
-    QString tab_name(int);
+    void set_hilight(int);
+    void set_alert(int, QColor);
 
 private:
     QWidget *myparent;

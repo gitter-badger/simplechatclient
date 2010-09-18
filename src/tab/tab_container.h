@@ -42,6 +42,7 @@ public:
     bool exist_tab(QString);
     void remove_tab(QString);
     bool rename_tab(QString, QString);
+    void part_tab(int);
     void show_msg(QString, QString, QString, int);
     void show_msg(QString, QString, int);
     void show_msg_all(QString, int);
@@ -63,7 +64,6 @@ public:
     void refresh_nicklist(QString);
     int get_nick_channels(QString);
     void set_user_info(QString, QString, QString);
-    void create_channel_names();
     QStringList get_open_channels();
 
 public slots:
@@ -75,9 +75,8 @@ public slots:
 private:
     QWidget *myparent;
     Network *pNetwork;
-    TabManager *tabm;
-    TabWidget *tw[50];
-    QString strFreeUsedList;
+    TabManager *pTabM;
+    QList <TabWidget *> tw;
     Notify *pNotify;
     QMap <QString, QByteArray> *mNickAvatar;
     QMap <QString, QByteArray> *mChannelAvatar;
@@ -87,7 +86,6 @@ private:
 
     void add_tab(QString);
     void update_open_channels();
-    int free_list_get();
     int get_index(QString);
 
 };

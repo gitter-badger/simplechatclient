@@ -107,11 +107,9 @@ private:
     QAction *lagAct;
     QMap <QString, QByteArray> mNickAvatar;
     QMap <QString, QByteArray> mChannelAvatar;
-    QList <QString> lCloseChannelsList;
 
 private slots:
     void check_update();
-    void force_close_tab();
     void button_close();
     void button_connect();
     void options_dlg();

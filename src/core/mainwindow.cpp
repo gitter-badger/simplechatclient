@@ -103,7 +103,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 // settings
     QSettings settings;
     settings.clear();
-    settings.setValue("version", "1.0.9.522");
+    settings.setValue("version", "1.0.9.523");
     settings.setValue("debug", "off");
     settings.setValue("logged", "off");
     settings.setValue("busy", "off");
@@ -148,7 +148,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     settings.setValue("onet_cid", "");
     settings.setValue("onet_sid", "");
     settings.setValue("onet_uid", "");
-    settings.setValue("channel_names", "");
 
 // init all
     camSocket = new QTcpSocket();
@@ -271,7 +270,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 MainWindow::~MainWindow()
 {
     // clear arrays
-    lCloseChannelsList.clear();
     mNickAvatar.clear();
     mChannelAvatar.clear();
     trayIcon->hide();
@@ -297,10 +295,12 @@ MainWindow::~MainWindow()
     delete pDlg_channel_settings;
     delete pNotify;
     delete pNetwork;
-    settings.clear();
     delete pTabC;
     delete pTabM;
     delete camSocket;
+
+    // clear settings
+    settings.clear();
 }
 
 void MainWindow::remove_uthread(UpdateThread *thr)
@@ -350,16 +350,6 @@ void MainWindow::check_update()
     //if (settings.value("debug").toString() == "on")
         qDebug() << "Update thread +1 (size: " << uThreadList.size() << ")";
 #endif
-}
-
-// force close tab after 10 sec
-void MainWindow::force_close_tab()
-{
-    while (lCloseChannelsList.isEmpty() == false)
-    {
-        QString strChannel = lCloseChannelsList.takeFirst();
-        pTabC->remove_tab(strChannel);
-    }
 }
 
 // buttons
@@ -461,27 +451,9 @@ void MainWindow::button_show()
     this->showNormal();
 }
 
-// close tab
+// part tab
 void MainWindow::tab_close_requested(int index)
 {
-    QSettings settings;
-    QStringList strlChannelNames = settings.value("channel_names").toStringList();
-
-    QString strName;
-    if (index < strlChannelNames.count())
-        strName = strlChannelNames.at(index);
-    else
-        strName = QString::null;
-
-    if (strName != "Status")
-    {
-        if (pNetwork->is_connected() == true)
-        {
-            pNetwork->send(QString("PART %1").arg(strName));
-            lCloseChannelsList.append(strName);
-            QTimer::singleShot(1000*10, this, SLOT(force_close_tab())); // 10 sec
-        }
-        else
-            pTabC->remove_tab(strName);
-    }
+    if (index != 0)
+        pTabC->part_tab(index);
 }
