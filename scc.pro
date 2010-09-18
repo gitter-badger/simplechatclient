@@ -23,7 +23,6 @@ SOURCES += src/avatars/channel_avatar.cpp \
     src/core/network.cpp \
     src/core/network_thread.cpp \
     src/core/update.cpp \
-    src/core/update_thread.cpp \
     src/gui/dlg_about.cpp \
     src/gui/dlg_cam.cpp \
     src/gui/dlg_channel_favourites.cpp \
@@ -68,7 +67,6 @@ HEADERS += src/avatars/channel_avatar.h \
     src/core/network.h \
     src/core/network_thread.h \
     src/core/update.h \
-    src/core/update_thread.h \
     src/gui/dlg_about.h \
     src/gui/dlg_cam.h \
     src/gui/dlg_channel_favourites.h \

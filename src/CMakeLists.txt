@@ -36,7 +36,6 @@ set (scc_SRCS
 	core/network.cpp
 	core/network_thread.cpp
 	core/update.cpp
-	core/update_thread.cpp
 	gui/dlg_about.cpp
 	gui/dlg_cam.cpp
 	gui/dlg_channel_favourites.cpp
@@ -81,7 +80,6 @@ set (scc_MOC_HDRS
 	core/network.h
 	core/network_thread.h
 	core/update.h
-	core/update_thread.h
 	gui/dlg_about.h
 	gui/dlg_cam.h
 	gui/dlg_channel_favourites.h

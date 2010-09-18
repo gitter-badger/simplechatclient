@@ -47,7 +47,7 @@
 #include "notify.h"
 #include "tab_container.h"
 #include "tab_manager.h"
-#include "update_thread.h"
+#include "update.h"
 
 class MainWindow : public QMainWindow
 {
@@ -83,7 +83,7 @@ private:
     OnetAuth *pOnet_auth;
     Notify *pNotify;
     DlgOptions *pOptions;
-    QList <UpdateThread*> uThreadList;
+    QList <Update*> uThreadList;
     QMenu *trayMenu;
     QSystemTrayIcon *trayIcon;
     QMenu *fileMenu;
@@ -123,7 +123,7 @@ private slots:
     void tray_icon(QSystemTrayIcon::ActivationReason);
     void button_show();
     void tab_close_requested(int);
-    void remove_uthread(UpdateThread*);
+    void remove_uthread(Update*);
 
 signals:
     void do_kernel(QString);

@@ -103,7 +103,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 // settings
     QSettings settings;
     settings.clear();
-    settings.setValue("version", "1.0.9.523");
+    settings.setValue("version", "1.0.9.524");
     settings.setValue("debug", "off");
     settings.setValue("logged", "off");
     settings.setValue("busy", "off");
@@ -303,13 +303,14 @@ MainWindow::~MainWindow()
     settings.clear();
 }
 
-void MainWindow::remove_uthread(UpdateThread *thr)
+void MainWindow::remove_uthread(Update *thr)
 {
     thr->QObject::disconnect();
     uThreadList.removeOne(thr);
 
 #ifdef Q_WS_X11
-    //if (settings.value("debug").toString() == "on")
+    QSettings settings;
+    if (settings.value("debug").toString() == "on")
         qDebug() << "Update thread -1 (size: " << uThreadList.size() << ")";
 #endif
 }
@@ -343,11 +344,12 @@ void MainWindow::set_lag(QString strValue)
 void MainWindow::check_update()
 {
 // update
-    uThreadList.append(new UpdateThread(this, pTabC));
-    QObject::connect(uThreadList.at(uThreadList.size()-1), SIGNAL(do_remove_uthread(UpdateThread*)), this, SLOT(remove_uthread(UpdateThread*)));
+    uThreadList.append(new Update(this, pTabC));
+    QObject::connect(uThreadList.at(uThreadList.size()-1), SIGNAL(do_remove_uthread(Update*)), this, SLOT(remove_uthread(Update*)));
 
 #ifdef Q_WS_X11
-    //if (settings.value("debug").toString() == "on")
+    QSettings settings;
+    if (settings.value("debug").toString() == "on")
         qDebug() << "Update thread +1 (size: " << uThreadList.size() << ")";
 #endif
 }

@@ -21,29 +21,46 @@
 #ifndef UPDATE_H
 #define UPDATE_H
 
-#include <QHostInfo>
 #include <QNetworkAccessManager>
-#include <QNetworkCookieJar>
 #include <QNetworkReply>
 #include <QObject>
-#include <QSettings>
-#include <QUrl>
+#include <QThread>
 #include "dlg_update.h"
 #include "tab_container.h"
 
-class Updater : public QObject
+class UpdateThread : public QThread
 {
     Q_OBJECT
 public:
-    Updater(QWidget *, TabContainer *);
-    void check_for_updates(QString);
-    QString get_available_version();
+    UpdateThread();
+    void run();
+
+private slots:
+    void thread_work();
+
+signals:
+    void version(QString);
+    void stop_thread();
+
+};
+
+class Update : public QObject
+{
+    Q_OBJECT
+public:
+    Update(QWidget *, TabContainer *);
 
 private:
     QWidget *myparent;
     TabContainer *tabc;
-    QString strCurrentVersion;
-    QString strAvailableVersion;
+    UpdateThread *updateThr;
+
+public slots:
+    void version(QString);
+    void stop_thread();
+
+signals:
+    void do_remove_uthread(Update*);
 
 };
 

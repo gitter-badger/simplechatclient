@@ -291,7 +291,7 @@
     </message>
 </context>
 <context>
-    <name>Updater</name>
+    <name>Update</name>
     <message>
         <source>Can not download the available version.</source>
         <translation>Nie można pobrać dostępnej wersji programu.</translation>
