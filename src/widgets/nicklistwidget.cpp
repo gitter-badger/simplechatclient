@@ -351,6 +351,9 @@ bool NickListWidget::exist_child(QString strChildName, QString strParentName)
 
 void NickListWidget::remove_child(QString strName)
 {
+    QStringList strlRemoveParent;
+
+    // remove all childs
     for (int i = 0; i < this->topLevelItemCount(); i++)
     {
         QTreeWidgetItem *parent_item = this->topLevelItem(i);
@@ -362,11 +365,17 @@ void NickListWidget::remove_child(QString strName)
             if (strChild == strName)
             {
                 parent_item->removeChild(child_item);
+
                 if (parent_item->childCount() == 0)
-                    remove_parent(strParent);
+                    strlRemoveParent.append(strParent);
             }
         }
     }
+
+    // remove empty parents
+    QStringListIterator strliRemoveParent(strlRemoveParent);
+    while (strliRemoveParent.hasNext())
+        remove_parent(strliRemoveParent.next());
 }
 
 QTreeWidgetItem* NickListWidget::create_child(QString strNick, QString strSuffix, QString strParent, QPixmap icon)
