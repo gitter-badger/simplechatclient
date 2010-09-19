@@ -130,7 +130,7 @@ void NickListWidget::add(QString strNick, QString strPrefix, QString strSuffix, 
         if (exist_parent(tr("Cam(s)")) == false) add_parent(tr("Cam(s)"), icon);
         if (exist_child(strNick, tr("Cam(s)")) == false) add_child(tr("Cam(s)"), create_child(strNick, strSuffix, tr("Cam(s)"), icon));
     }
-    if ((strSuffix.indexOf("O") == -1) && (strSuffix.indexOf("o") == -1) && (strPrefix.indexOf("`") == -1) && (strPrefix.indexOf("@") == -1) && (strPrefix.indexOf("%") == -1) && (strPrefix.indexOf("!") == -1) && (strPrefix.indexOf("+") == -1))
+    if ((strSuffix.indexOf("O") == -1) && (strSuffix.indexOf("o") == -1) && (strPrefix.indexOf("`") == -1) && (strPrefix.indexOf("@") == -1) && (strPrefix.indexOf("%") == -1) && (strPrefix.indexOf("!") == -1) && (strPrefix.indexOf("=") == -1) && (strPrefix.indexOf("+") == -1) && (strSuffix.indexOf("W") == -1) && (strSuffix.indexOf("V") == -1))
     {
         QPixmap icon = QPixmap(":/images/user.png");
         if (exist_parent(tr("User(s)")) == false) add_parent(tr("User(s)"), icon);
