@@ -48,8 +48,6 @@ public:
     void show_msg_all(QString, int);
     void show_msg_active(QString, int);
     void set_topic(QString, QString);
-    void enable_topic(QString);
-    void disable_topic(QString);
     void author_topic(QString, QString);
     void set_link(QString, QString);
     void add_user(QString, QString, QString, QString);

@@ -274,20 +274,6 @@ void TabContainer::set_topic(QString strChannel, QString strTopic)
         tw[i]->set_topic(strTopic);
 }
 
-void TabContainer::enable_topic(QString strChannel)
-{
-    int i = get_index(strChannel);
-    if (i != -1)
-        tw[i]->enable_topic();
-}
-
-void TabContainer::disable_topic(QString strChannel)
-{
-    int i = get_index(strChannel);
-    if (i != -1)
-        tw[i]->disable_topic();
-}
-
 void TabContainer::author_topic(QString strChannel, QString strNick)
 {
     int i = get_index(strChannel);

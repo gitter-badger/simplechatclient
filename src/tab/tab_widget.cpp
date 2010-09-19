@@ -797,14 +797,6 @@ void TabWidget::set_topic(QString strTopic)
         topic->setToolTip(topicDetails->text());
 }
 
-void TabWidget::enable_topic()
-{
-}
-
-void TabWidget::disable_topic()
-{
-}
-
 void TabWidget::enable_moderation()
 {
     moderation->show();
@@ -947,13 +939,7 @@ void TabWidget::change_flag(QString strNick, QString strNewFlag)
 
     if (strNick == strMe)
     {
-        if (strNewFlag == "+q") enable_topic();
-        else if (strNewFlag == "-q") disable_topic();
-        else if (strNewFlag == "+o") enable_topic();
-        else if (strNewFlag == "-o") disable_topic();
-        else if (strNewFlag == "+h") enable_topic();
-        else if (strNewFlag == "-h") disable_topic();
-        else if (strNewFlag == "+X") enable_moderation();
+        if (strNewFlag == "+X") enable_moderation();
         else if (strNewFlag == "-X") disable_moderation();
     }
 }

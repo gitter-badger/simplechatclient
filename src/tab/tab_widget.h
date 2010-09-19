@@ -71,8 +71,6 @@ public:
     void display_msg(QString, QString, int);
     void display_msg(QString, int);
     void set_topic(QString);
-    void enable_topic();
-    void disable_topic();
     void enable_moderation();
     void disable_moderation();
     void author_topic(QString);
