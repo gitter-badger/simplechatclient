@@ -24,6 +24,7 @@
 #include <QDialog>
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
+#include <QPushButton>
 #include "convert.h"
 #include "network.h"
 #include "ui_user_profile.h"

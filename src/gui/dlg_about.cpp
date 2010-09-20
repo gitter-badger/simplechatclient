@@ -26,6 +26,8 @@ DlgAbout::DlgAbout(QWidget *parent) : QDialog(parent)
     setAttribute(Qt::WA_DeleteOnClose);
     setWindowTitle(tr("About..."));
 
+    ui.buttonBox->button(QDialogButtonBox::Ok)->setIcon(QIcon(":/images/oxygen/16x16/dialog-ok.png"));
+
     ui.label_logo->setPixmap(QPixmap(":/images/logo_128.png"));
 
     QSettings settings;

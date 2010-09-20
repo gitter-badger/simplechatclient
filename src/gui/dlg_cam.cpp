@@ -27,6 +27,8 @@ DlgCam::DlgCam(QWidget *parent, Network *param1, QString param2) : QDialog(paren
     setWindowFlags(Qt::Dialog | Qt::WindowStaysOnTopHint);
     setWindowTitle(tr("Webcam"));
 
+    ui.buttonBox->button(QDialogButtonBox::Ok)->setIcon(QIcon(":/images/oxygen/16x16/dialog-ok.png"));
+
     pNetwork = param1;
     strNick = param2;
     ui.label_nick->setText("<p style=\"font-weight:bold;\">"+strNick+"</p>");

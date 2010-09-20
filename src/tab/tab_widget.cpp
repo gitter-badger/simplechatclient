@@ -112,15 +112,10 @@ TabWidget::TabWidget(QWidget *parent, Network *param1, QString param2, Notify *p
     mainWebView->setParent(this);
     mainWebView->show();
 
-    bold = new QPushButton(this);
+    bold = new QPushButton(QIcon(":/images/oxygen/16x16/format-text-bold.png"), "", this);
     bold->setParent(this);
     bold->setToolTip(tr("Bold"));
     bold->setFont(QFont("Times New Roman", -1, 75, false));
-#ifdef Q_WS_X11
-    bold->setText("b");
-#else
-    bold->setText("B");
-#endif
     bold->setFlat(true);
     bold->setCheckable(true);
     bold->setMaximumWidth(25);
@@ -128,11 +123,10 @@ TabWidget::TabWidget(QWidget *parent, Network *param1, QString param2, Notify *p
     bold->show();
     bMyBold = false;
 
-    italic = new QPushButton(this);
+    italic = new QPushButton(QIcon(":/images/oxygen/16x16/format-text-italic.png"), "", this);
     italic->setParent(this);
     italic->setToolTip(tr("Italic"));
     italic->setFont(QFont("Times New Roman", -1, -1, true));
-    italic->setText("I");
     italic->setFlat(true);
     italic->setCheckable(true);
     italic->setMaximumWidth(25);
@@ -213,17 +207,15 @@ TabWidget::TabWidget(QWidget *parent, Network *param1, QString param2, Notify *p
     sizeMenu->addAction(size18Act);
     sizeMenu->addAction(size20Act);
 
-    size = new QPushButton(this);
+    size = new QPushButton(QIcon(":/images/oxygen/16x16/format-font-size-more.png"), "", this);
     size->setParent(this);
     size->setToolTip(tr("Font size"));
     size->setFont(QFont("Times New Roman", -1, -1, false));
-    size->setText("F");
-    size->setMaximumWidth(45);
     size->setMaximumHeight(25);
     size->setMenu(sizeMenu);
     size->show();
 
-    emoticons = new QPushButton(QIcon(":/images/logo_64.png"), "", this);
+    emoticons = new QPushButton(QIcon(":/images/oxygen/16x16/face-smile.png"), "", this);
     emoticons->setParent(this);
     emoticons->setToolTip(tr("Emoticons"));
     emoticons->setMaximumWidth(25);
@@ -236,10 +228,9 @@ TabWidget::TabWidget(QWidget *parent, Network *param1, QString param2, Notify *p
     separator->setEnabled(false);
     separator->show();
 
-    channel_settings = new QPushButton(this);
+    channel_settings = new QPushButton(QIcon(":/images/oxygen/16x16/configure.png"), tr("Settings"), this);
     channel_settings->setParent(this);
     channel_settings->setToolTip(tr("Channel settings"));
-    channel_settings->setText(tr("Settings"));
     channel_settings->show();
 
     moderation = new QPushButton(this);
@@ -248,14 +239,14 @@ TabWidget::TabWidget(QWidget *parent, Network *param1, QString param2, Notify *p
     moderation->setText(tr("Moderation"));
     moderation->show();
 
-    clear = new QPushButton(QIcon(":/images/clear.png"), "", this);
+    clear = new QPushButton(QIcon(":/images/oxygen/16x16/draw-eraser.png"), "", this);
     clear->setParent(this);
     clear->setToolTip(tr("Clear"));
     clear->setMaximumWidth(25);
     clear->setMaximumHeight(25);
     clear->show();
 
-    scroll = new QPushButton(QIcon(":/images/arrow.png"), "", this);
+    scroll = new QPushButton(QIcon(":/images/oxygen/16x16/arrow-down.png"), "", this);
     scroll->setParent(this);
     scroll->setToolTip(tr("Scroll"));
     scroll->setMaximumWidth(25);
@@ -294,11 +285,10 @@ TabWidget::TabWidget(QWidget *parent, Network *param1, QString param2, Notify *p
     inputline->setFont(QFont("Verdana", -1, -1, false));
     inputline->show();
 
-    sendButton = new QPushButton();
+    sendButton = new QPushButton(QIcon(":/images/oxygen/16x16/go-next.png"), tr("Send"), this);
     sendButton->setParent(this);
     sendButton->setToolTip(tr("Send"));
-    sendButton->setText(tr("Send"));
-    sendButton->setMaximumWidth(70);
+    sendButton->setMaximumWidth(75);
     sendButton->setMaximumHeight(25);
     sendButton->show();
 
@@ -561,6 +551,7 @@ void TabWidget::set_default()
 // set default scroll
     scroll->setChecked(true);
     bScroll = true;
+    scroll->setIcon(QIcon(":/images/oxygen/16x16/arrow-down.png"));
 }
 
 QString TabWidget::addslashes(QString strData)
@@ -1250,11 +1241,13 @@ void TabWidget::scroll_clicked()
     {
         scroll->setChecked(false);
         bScroll = false;
+        scroll->setIcon(QIcon(":/images/oxygen/16x16/arrow-up.png"));
     }
     else
     {
         scroll->setChecked(true);
         bScroll = true;
+        scroll->setIcon(QIcon(":/images/oxygen/16x16/arrow-down.png"));
     }
 
     inputline->setFocus();

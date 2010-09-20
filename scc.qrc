@@ -1,7 +1,5 @@
 <RCC>
     <qresource prefix="/">
-        <file>3rdparty/images/connect.png</file>
-        <file>3rdparty/images/exit.png</file>
         <file>3rdparty/images/list.png</file>
         <file>3rdparty/images/options.png</file>
         <file>3rdparty/images/people.png</file>
@@ -17,11 +15,41 @@
         <file>images/basic_conf.png</file>
         <file>images/adv_conf.png</file>
         <file>images/dev.png</file>
-        <file>images/arrow.png</file>
-        <file>images/clear.png</file>
         <file>images/voice.png</file>
         <file>images/pubcam.png</file>
         <file>images/screener.png</file>
         <file>images/privcam.png</file>
+        <file>images/oxygen/16x16/dialog-cancel.png</file>
+        <file>images/oxygen/16x16/dialog-close.png</file>
+        <file>images/oxygen/16x16/draw-eraser.png</file>
+        <file>images/oxygen/16x16/edit-find.png</file>
+        <file>images/oxygen/16x16/irc-close-channel.png</file>
+        <file>images/oxygen/16x16/irc-join-channel.png</file>
+        <file>images/oxygen/16x16/legalmoves.png</file>
+        <file>images/oxygen/16x16/view-refresh.png</file>
+        <file>images/oxygen/16x16/dialog-ok.png</file>
+        <file>images/oxygen/16x16/user-group-new.png</file>
+        <file>images/oxygen/16x16/user-group-delete.png</file>
+        <file>images/oxygen/16x16/dialog-ok-apply.png</file>
+        <file>images/oxygen/16x16/list-add.png</file>
+        <file>images/oxygen/16x16/list-remove.png</file>
+        <file>images/oxygen/16x16/insert-image.png</file>
+        <file>images/oxygen/16x16/list-add-user.png</file>
+        <file>images/oxygen/16x16/list-remove-user.png</file>
+        <file>images/oxygen/16x16/user-properties.png</file>
+        <file>images/oxygen/16x16/user-busy.png</file>
+        <file>images/oxygen/16x16/user-invisible.png</file>
+        <file>images/oxygen/16x16/user-online.png</file>
+        <file>images/oxygen/16x16/face-smile.png</file>
+        <file>images/oxygen/16x16/arrow-down.png</file>
+        <file>images/oxygen/16x16/arrow-up.png</file>
+        <file>images/oxygen/16x16/network-connect.png</file>
+        <file>images/oxygen/16x16/network-disconnect.png</file>
+        <file>images/oxygen/16x16/application-exit.png</file>
+        <file>images/oxygen/16x16/configure.png</file>
+        <file>images/oxygen/16x16/format-text-bold.png</file>
+        <file>images/oxygen/16x16/format-text-italic.png</file>
+        <file>images/oxygen/16x16/format-font-size-more.png</file>
+        <file>images/oxygen/16x16/go-next.png</file>
     </qresource>
 </RCC>

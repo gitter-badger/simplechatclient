@@ -23,6 +23,7 @@
 
 #include <QDialog>
 #include <QMessageBox>
+#include <QPushButton>
 #include <QSettings>
 #include <QTableWidget>
 #include "network.h"

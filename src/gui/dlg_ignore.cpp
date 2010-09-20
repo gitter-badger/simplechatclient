@@ -30,6 +30,10 @@ DlgIgnore::DlgIgnore(QWidget *parent, Network *param1, QMap <QString, QByteArray
     pNetwork = param1;
     mNickAvatar = param2;
 
+    ui.pushButton_add->setIcon(QIcon(":/images/oxygen/16x16/list-add-user.png"));
+    ui.pushButton_remove->setIcon(QIcon(":/images/oxygen/16x16/list-remove-user.png"));
+    ui.buttonBox->button(QDialogButtonBox::Close)->setIcon(QIcon(":/images/oxygen/16x16/dialog-close.png"));
+
     ui.pushButton_add->setText(tr("Add"));
     ui.pushButton_remove->setText(tr("Remove"));
 

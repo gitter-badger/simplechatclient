@@ -29,6 +29,10 @@ DlgEmail::DlgEmail(QWidget *parent, QString param1, QString param2) : QDialog(pa
     strChannel = param1;
     strEmail = param2;
 
+    ui.pushButton_ok->setIcon(QIcon(":/images/oxygen/16x16/dialog-ok.png"));
+    ui.pushButton_refresh->setIcon(QIcon(":/images/oxygen/16x16/view-refresh.png"));
+    ui.pushButton_cancel->setIcon(QIcon(":/images/oxygen/16x16/dialog-cancel.png"));
+
     ui.label_msg->setText(tr("Enter the characters you see:"));
     ui.pushButton_ok->setText(tr("OK"));
     ui.pushButton_refresh->setText(tr("Refresh"));

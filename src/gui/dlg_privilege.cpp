@@ -35,6 +35,9 @@ DlgPrivilege::DlgPrivilege(QWidget *parent, Network *param1, QString param2, QSt
     banList = param7;
     inviteList = param8;
 
+    ui.buttonBox->button(QDialogButtonBox::Ok)->setIcon(QIcon(":/images/oxygen/16x16/dialog-ok.png"));
+    ui.buttonBox->button(QDialogButtonBox::Cancel)->setIcon(QIcon(":/images/oxygen/16x16/dialog-cancel.png"));
+
     if (strAddDel == "add")
     {
         if (strStatus == "owner")

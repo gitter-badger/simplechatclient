@@ -28,6 +28,25 @@ DlgChannelSettings::DlgChannelSettings(QWidget *parent, Network *param1) : QDial
     myparent = parent;
     pNetwork = param1;
 
+    ui.pushButton_transfer->setIcon(QIcon(":/images/oxygen/16x16/user-group-new.png"));
+    ui.pushButton_remove_channel->setIcon(QIcon(":/images/oxygen/16x16/user-group-delete.png"));
+    ui.pushButton_set_email->setIcon(QIcon(":/images/oxygen/16x16/dialog-ok-apply.png"));
+    ui.pushButton_set_website->setIcon(QIcon(":/images/oxygen/16x16/dialog-ok-apply.png"));
+    ui.pushButton_set_topic->setIcon(QIcon(":/images/oxygen/16x16/dialog-ok-apply.png"));
+    ui.pushButton_set_desc->setIcon(QIcon(":/images/oxygen/16x16/dialog-ok-apply.png"));
+    ui.pushButton_set_password->setIcon(QIcon(":/images/oxygen/16x16/dialog-ok-apply.png"));
+    ui.pushButton_set_limit->setIcon(QIcon(":/images/oxygen/16x16/dialog-ok-apply.png"));
+    ui.pushButton_op_add->setIcon(QIcon(":/images/oxygen/16x16/list-add.png"));
+    ui.pushButton_op_del->setIcon(QIcon(":/images/oxygen/16x16/list-remove.png"));
+    ui.pushButton_halfop_add->setIcon(QIcon(":/images/oxygen/16x16/list-add.png"));
+    ui.pushButton_halfop_del->setIcon(QIcon(":/images/oxygen/16x16/list-remove.png"));
+    ui.pushButton_ban_add->setIcon(QIcon(":/images/oxygen/16x16/list-add.png"));
+    ui.pushButton_ban_del->setIcon(QIcon(":/images/oxygen/16x16/list-remove.png"));
+    ui.pushButton_invite_add->setIcon(QIcon(":/images/oxygen/16x16/list-add.png"));
+    ui.pushButton_invite_del->setIcon(QIcon(":/images/oxygen/16x16/list-remove.png"));
+    ui.buttonBox->button(QDialogButtonBox::Ok)->setIcon(QIcon(":/images/oxygen/16x16/dialog-ok.png"));
+    ui.buttonBox->button(QDialogButtonBox::Cancel)->setIcon(QIcon(":/images/oxygen/16x16/dialog-cancel.png"));
+
     ui.tabWidget->setTabText(0, tr("General"));
     ui.tabWidget->setTabText(1, tr("Permissions"));
     ui.toolBox->setItemText(0, tr("Operators"));

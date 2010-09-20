@@ -31,6 +31,11 @@ DlgInvite::DlgInvite(QWidget *parent, Network *param1, TabContainer *param2, QSt
     strNick = param3;
     strChannel = param4;
 
+    ui.pushButton_whois->setIcon(QIcon(":/images/oxygen/16x16/user-properties.png"));
+    ui.pushButton_reject->setIcon(QIcon(":/images/oxygen/16x16/user-invisible.png"));
+    ui.pushButton_ignore->setIcon(QIcon(":/images/oxygen/16x16/user-busy.png"));
+    ui.pushButton_accept->setIcon(QIcon(":/images/oxygen/16x16/user-online.png"));
+
     ui.pushButton_whois->setText(tr("Whois"));
     ui.pushButton_reject->setText(tr("Reject"));
     ui.pushButton_ignore->setText(tr("Ignore"));

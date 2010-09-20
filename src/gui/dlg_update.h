@@ -23,6 +23,7 @@
 
 #include <QDialog>
 #include <QHideEvent>
+#include <QPushButton>
 #include "ui_update.h"
 
 class DlgUpdate : public QDialog

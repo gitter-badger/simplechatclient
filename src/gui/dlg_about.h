@@ -22,6 +22,7 @@
 #define DLG_ABOUT_H
 
 #include <QDialog>
+#include <QPushButton>
 #include <QSettings>
 #include "ui_about.h"
 

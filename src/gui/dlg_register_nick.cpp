@@ -31,6 +31,10 @@ DlgRegisterNick::DlgRegisterNick(QWidget *parent, QWidget *param1) : QDialog(par
     // close options
     options->close();
 
+    ui.buttonBox->button(QDialogButtonBox::Ok)->setIcon(QIcon(":/images/oxygen/16x16/dialog-ok.png"));
+    ui.buttonBox->button(QDialogButtonBox::Cancel)->setIcon(QIcon(":/images/oxygen/16x16/dialog-cancel.png"));
+    ui.pushButton_refresh->setIcon(QIcon(":/images/oxygen/16x16/view-refresh.png"));
+
     ui.label_nick->setText(tr("Nick:"));
     ui.label_password->setText(tr("Password:"));
     ui.label_confirm_password->setText(tr("Confirm password:"));

@@ -29,6 +29,8 @@ DlgUserProfile::DlgUserProfile(QWidget *parent, Network *param1, sNickInfo param
     pNetwork = param1;
     sCurrentNickInfo = param2;
 
+    ui.buttonBox->button(QDialogButtonBox::Close)->setIcon(QIcon(":/images/oxygen/16x16/dialog-close.png"));
+
     ui.label_sex->setText(tr("Sex:"));
     ui.label_birthdate->setText(tr("Birthdate:"));
     ui.label_city->setText(tr("City:"));

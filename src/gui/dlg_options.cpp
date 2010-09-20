@@ -29,6 +29,9 @@ DlgOptions::DlgOptions(QWidget *parent) : QDialog(parent)
 
     myparent = parent;
 
+    ui.buttonBox->button(QDialogButtonBox::Ok)->setIcon(QIcon(":/images/oxygen/16x16/dialog-ok.png"));
+    ui.buttonBox->button(QDialogButtonBox::Cancel)->setIcon(QIcon(":/images/oxygen/16x16/dialog-cancel.png"));
+
 // page basic
     ui.radioButton_unregistered_nick->setText(tr("Unregistered nick"));
     ui.radioButton_registered_nick->setText(tr("Registered nick"));

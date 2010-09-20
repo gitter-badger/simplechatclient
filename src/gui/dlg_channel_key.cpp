@@ -29,6 +29,9 @@ DlgChannelKey::DlgChannelKey(QWidget *parent, Network *param1, QString param2) :
     pNetwork = param1;
     strChannel = param2;
 
+    ui.buttonBox->button(QDialogButtonBox::Ok)->setIcon(QIcon(":/images/oxygen/16x16/dialog-ok.png"));
+    ui.buttonBox->button(QDialogButtonBox::Cancel)->setIcon(QIcon(":/images/oxygen/16x16/dialog-cancel.png"));
+
     ui.label_msg->setText(tr("Enter key:"));
 
     QObject::connect(ui.buttonBox, SIGNAL(accepted()), this, SLOT(button_ok()));

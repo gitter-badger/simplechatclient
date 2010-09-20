@@ -28,6 +28,9 @@ DlgEmoticons::DlgEmoticons(QWidget *parent, Inputline *param1) : QDialog(parent)
 
     inputline = param1;
 
+    ui.pushButton_insert->setIcon(QIcon(":/images/oxygen/16x16/insert-image.png"));
+    ui.buttonBox->button(QDialogButtonBox::Close)->setIcon(QIcon(":/images/oxygen/16x16/dialog-close.png"));
+
     ui.tabWidget->setTabText(0, tr("Standard"));
     ui.tabWidget->setTabText(1, tr("Extended"));
     ui.pushButton_insert->setText(tr("Insert"));

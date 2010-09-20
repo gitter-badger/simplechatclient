@@ -31,6 +31,11 @@ DlgChannelHomes::DlgChannelHomes(QWidget *parent, Network *param1, QMap <QString
     mChannelAvatar = param2;
     dlgchannel_settings = param3;
 
+    ui.pushButton_create->setIcon(QIcon(":/images/oxygen/16x16/irc-join-channel.png"));
+    ui.pushButton_remove->setIcon(QIcon(":/images/oxygen/16x16/irc-close-channel.png"));
+    ui.pushButton_join->setIcon(QIcon(":/images/oxygen/16x16/legalmoves.png"));
+    ui.buttonBox->button(QDialogButtonBox::Close)->setIcon(QIcon(":/images/oxygen/16x16/dialog-close.png"));
+
     ui.pushButton_create->setText(tr("Create"));
     ui.pushButton_remove->setText(tr("Remove"));
     ui.pushButton_join->setText(tr("Join"));

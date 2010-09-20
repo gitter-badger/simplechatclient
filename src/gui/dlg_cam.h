@@ -23,6 +23,7 @@
 
 #include <QDialog>
 #include <QHideEvent>
+#include <QPushButton>
 #include <QSettings>
 #include <QShowEvent>
 #include <QStringList>

@@ -26,6 +26,10 @@ DlgChannelList::DlgChannelList(QWidget *parent) : QDialog(parent)
     setAttribute(Qt::WA_DeleteOnClose);
     setWindowTitle(tr("Channel list"));
 
+    ui.pushButton_search->setIcon(QIcon(":/images/oxygen/16x16/edit-find.png"));
+    ui.pushButton_clear->setIcon(QIcon(":/images/oxygen/16x16/draw-eraser.png"));
+    ui.buttonBox->button(QDialogButtonBox::Close)->setIcon(QIcon(":/images/oxygen/16x16/dialog-close.png"));
+
     ui.groupBox_search->setTitle(tr("Search"));
     ui.groupBox_type->setTitle(tr("Type"));
     ui.groupBox_category->setTitle(tr("Category"));

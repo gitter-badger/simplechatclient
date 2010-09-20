@@ -30,6 +30,10 @@ DlgChannelFavourites::DlgChannelFavourites(QWidget *parent, Network *param1, QMa
     pNetwork = param1;
     mChannelAvatar = param2;
 
+    ui.pushButton_add->setIcon(QIcon(":/images/oxygen/16x16/irc-join-channel.png"));
+    ui.pushButton_remove->setIcon(QIcon(":/images/oxygen/16x16/irc-close-channel.png"));
+    ui.buttonBox->button(QDialogButtonBox::Close)->setIcon(QIcon(":/images/oxygen/16x16/dialog-close.png"));
+
     ui.pushButton_add->setText(tr("Add"));
     ui.pushButton_remove->setText(tr("Remove"));
 

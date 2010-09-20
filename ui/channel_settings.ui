@@ -26,7 +26,7 @@
    <string>Ustawienia kanałów</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="../scc.qrc">
+   <iconset>
     <normaloff>:/images/logo_64.png</normaloff>:/images/logo_64.png</iconset>
   </property>
   <widget class="QTabWidget" name="tabWidget">
@@ -188,13 +188,13 @@
          <widget class="QPushButton" name="pushButton_set_password">
           <property name="minimumSize">
            <size>
-            <width>67</width>
+            <width>75</width>
             <height>24</height>
            </size>
           </property>
           <property name="maximumSize">
            <size>
-            <width>67</width>
+            <width>75</width>
             <height>24</height>
            </size>
           </property>
@@ -214,13 +214,13 @@
          <widget class="QPushButton" name="pushButton_set_website">
           <property name="minimumSize">
            <size>
-            <width>67</width>
+            <width>75</width>
             <height>24</height>
            </size>
           </property>
           <property name="maximumSize">
            <size>
-            <width>67</width>
+            <width>75</width>
             <height>24</height>
            </size>
           </property>
@@ -265,13 +265,13 @@
           </property>
           <property name="minimumSize">
            <size>
-            <width>67</width>
+            <width>75</width>
             <height>24</height>
            </size>
           </property>
           <property name="maximumSize">
            <size>
-            <width>67</width>
+            <width>75</width>
             <height>24</height>
            </size>
           </property>
@@ -316,13 +316,13 @@
           </property>
           <property name="minimumSize">
            <size>
-            <width>67</width>
+            <width>75</width>
             <height>24</height>
            </size>
           </property>
           <property name="maximumSize">
            <size>
-            <width>67</width>
+            <width>75</width>
             <height>24</height>
            </size>
           </property>
@@ -563,13 +563,13 @@
          <widget class="QPushButton" name="pushButton_set_email">
           <property name="minimumSize">
            <size>
-            <width>67</width>
+            <width>75</width>
             <height>24</height>
            </size>
           </property>
           <property name="maximumSize">
            <size>
-            <width>67</width>
+            <width>75</width>
             <height>24</height>
            </size>
           </property>
@@ -621,13 +621,13 @@
          <widget class="QPushButton" name="pushButton_set_limit">
           <property name="minimumSize">
            <size>
-            <width>67</width>
+            <width>75</width>
             <height>24</height>
            </size>
           </property>
           <property name="maximumSize">
            <size>
-            <width>67</width>
+            <width>75</width>
             <height>24</height>
            </size>
           </property>
@@ -662,8 +662,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>98</width>
-        <height>28</height>
+        <width>100</width>
+        <height>30</height>
        </rect>
       </property>
       <attribute name="label">
@@ -702,6 +702,9 @@
           <attribute name="verticalHeaderVisible">
            <bool>false</bool>
           </attribute>
+          <attribute name="verticalHeaderVisible">
+           <bool>false</bool>
+          </attribute>
           <column>
            <property name="text">
             <string>Nick</string>
@@ -735,8 +738,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>98</width>
-        <height>28</height>
+        <width>100</width>
+        <height>30</height>
        </rect>
       </property>
       <attribute name="label">
@@ -775,6 +778,9 @@
           <attribute name="verticalHeaderVisible">
            <bool>false</bool>
           </attribute>
+          <attribute name="verticalHeaderVisible">
+           <bool>false</bool>
+          </attribute>
           <column>
            <property name="text">
             <string>Nick</string>
@@ -808,8 +814,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>531</width>
-        <height>423</height>
+        <width>521</width>
+        <height>413</height>
        </rect>
       </property>
       <attribute name="label">
@@ -842,6 +848,9 @@
           <property name="columnCount">
            <number>3</number>
           </property>
+          <attribute name="verticalHeaderVisible">
+           <bool>false</bool>
+          </attribute>
           <attribute name="verticalHeaderVisible">
            <bool>false</bool>
           </attribute>
@@ -888,8 +897,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>98</width>
-        <height>28</height>
+        <width>100</width>
+        <height>30</height>
        </rect>
       </property>
       <attribute name="label">
@@ -925,6 +934,9 @@
           <property name="columnCount">
            <number>3</number>
           </property>
+          <attribute name="verticalHeaderVisible">
+           <bool>false</bool>
+          </attribute>
           <attribute name="verticalHeaderVisible">
            <bool>false</bool>
           </attribute>
@@ -983,8 +995,6 @@
    </property>
   </widget>
  </widget>
- <resources>
-  <include location="../scc.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>
