@@ -103,6 +103,8 @@ void DlgIgnore::button_close()
 void DlgIgnore::showEvent(QShowEvent *event)
 {
     event->accept();
+    // center screen
+    move(QApplication::desktop()->screen()->rect().center() - rect().center());
 
     ui.listWidget_nicks->clear();
     pNetwork->send("NS IGNORE");

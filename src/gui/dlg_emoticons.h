@@ -21,6 +21,7 @@
 #ifndef DLG_EMOTICONS_H
 #define DLG_EMOTICONS_H
 
+#include <QDesktopWidget>
 #include <QDialog>
 #include <QDir>
 #include <QFileInfoList>

@@ -25,6 +25,8 @@ DlgAbout::DlgAbout(QWidget *parent) : QDialog(parent)
     ui.setupUi(this);
     setAttribute(Qt::WA_DeleteOnClose);
     setWindowTitle(tr("About..."));
+    // center screen
+    move(QApplication::desktop()->screen()->rect().center() - rect().center());
 
     ui.buttonBox->button(QDialogButtonBox::Ok)->setIcon(QIcon(":/images/oxygen/16x16/dialog-ok.png"));
 

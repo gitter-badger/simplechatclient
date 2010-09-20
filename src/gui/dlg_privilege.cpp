@@ -25,6 +25,8 @@ DlgPrivilege::DlgPrivilege(QWidget *parent, Network *param1, QString param2, QSt
     ui.setupUi(this);
     setAttribute(Qt::WA_DeleteOnClose);
     setWindowTitle(tr("Changing privileges"));
+    // center screen
+    move(QApplication::desktop()->screen()->rect().center() - rect().center());
 
     pNetwork = param1;
     strStatus = param2;

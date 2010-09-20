@@ -149,6 +149,8 @@ void DlgFriends::button_close()
 void DlgFriends::showEvent(QShowEvent *event)
 {
     event->accept();
+    // center screen
+    move(QApplication::desktop()->screen()->rect().center() - rect().center());
 
     refresh();
 }

@@ -23,6 +23,7 @@
 
 #include <QCloseEvent>
 #include <QDialog>
+#include <QDesktopWidget>
 #include <QKeyEvent>
 #include <QSettings>
 #include <QShowEvent>

@@ -229,6 +229,8 @@ void DlgModeration::button_close()
 void DlgModeration::showEvent(QShowEvent *event)
 {
     event->accept();
+    // center screen
+    move(QApplication::desktop()->screen()->rect().center() - rect().center());
 
     int iId = combo_id(strActiveChannel);
     ui.comboBox_channels->setCurrentIndex(iId);

@@ -22,6 +22,7 @@
 #define DLG_EMAIL_H
 
 #include <QDialog>
+#include <QDesktopWidget>
 #include <QDomDocument>
 #include <QHideEvent>
 #include <QHostInfo>

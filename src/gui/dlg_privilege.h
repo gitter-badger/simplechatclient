@@ -21,6 +21,7 @@
 #ifndef DLG_PRIVILEGE_H
 #define DLG_PRIVILEGE_H
 
+#include <QDesktopWidget>
 #include <QDialog>
 #include <QMessageBox>
 #include <QPushButton>

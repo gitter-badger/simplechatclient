@@ -21,6 +21,7 @@
 #ifndef DLG_ABOUT_H
 #define DLG_ABOUT_H
 
+#include <QDesktopWidget>
 #include <QDialog>
 #include <QPushButton>
 #include <QSettings>

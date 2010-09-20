@@ -21,6 +21,7 @@
 #ifndef DLG_CAM_H
 #define DLG_CAM_H
 
+#include <QDesktopWidget>
 #include <QDialog>
 #include <QHideEvent>
 #include <QPushButton>

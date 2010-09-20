@@ -25,6 +25,8 @@ DlgInvite::DlgInvite(QWidget *parent, Network *param1, TabContainer *param2, QSt
     ui.setupUi(this);
     setAttribute(Qt::WA_DeleteOnClose);
     setWindowTitle(tr("Invitation"));
+    // center screen
+    move(QApplication::desktop()->screen()->rect().center() - rect().center());
 
     pNetwork = param1;
     tabc = param2;

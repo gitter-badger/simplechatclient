@@ -26,6 +26,8 @@ DlgUpdate::DlgUpdate(QWidget *parent, QString param1) : QDialog(parent)
     setAttribute(Qt::WA_DeleteOnClose);
     setWindowFlags(Qt::Dialog | Qt::WindowStaysOnTopHint);
     setWindowTitle(tr("Update"));
+    // center screen
+    move(QApplication::desktop()->screen()->rect().center() - rect().center());
 
     strVersion = param1;
 

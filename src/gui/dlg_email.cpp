@@ -191,6 +191,8 @@ void DlgEmail::button_cancel()
 void DlgEmail::showEvent(QShowEvent *event)
 {
     event->accept();
+    // center screen
+    move(QApplication::desktop()->screen()->rect().center() - rect().center());
 
     QObject::connect(ui.pushButton_ok, SIGNAL(clicked()), this, SLOT(button_ok()));
     QObject::connect(ui.pushButton_refresh, SIGNAL(clicked()), this, SLOT(button_refresh()));

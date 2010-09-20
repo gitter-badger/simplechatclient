@@ -179,6 +179,8 @@ void DlgUserProfile::button_close()
 void DlgUserProfile::showEvent(QShowEvent *event)
 {
     event->accept();
+    // center screen
+    move(QApplication::desktop()->screen()->rect().center() - rect().center());
 
     show_info();
 

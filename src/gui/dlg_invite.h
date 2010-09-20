@@ -21,6 +21,7 @@
 #ifndef DLG_PRIV_H
 #define DLG_PRIV_H
 
+#include <QDesktopWidget>
 #include <QDialog>
 #include "network.h"
 #include "tab_container.h"

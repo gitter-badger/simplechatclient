@@ -22,6 +22,7 @@
 #define DLG_MODERATION_H
 
 #include <QDateTime>
+#include <QDesktopWidget>
 #include <QDialog>
 #include <QSettings>
 #include <QShowEvent>

@@ -164,6 +164,8 @@ void DlgEmoticons::button_close()
 void DlgEmoticons::showEvent(QShowEvent *event)
 {
     event->accept();
+    // center screen
+    move(QApplication::desktop()->screen()->rect().center() - rect().center());
 
     ui.listWidget_standard->clear();
     ui.listWidget_extended->clear();

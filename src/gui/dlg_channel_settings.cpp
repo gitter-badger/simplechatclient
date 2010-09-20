@@ -589,6 +589,8 @@ void DlgChannelSettings::clear()
 void DlgChannelSettings::showEvent(QShowEvent *event)
 {
     event->accept();
+    // center screen
+    move(QApplication::desktop()->screen()->rect().center() - rect().center());
 
     clear();
 

@@ -21,6 +21,7 @@
 #ifndef DLG_REGISTER_NICK_H
 #define DLG_REGISTER_NICK_H
 
+#include <QDesktopWidget>
 #include <QDialog>
 #include <QDomDocument>
 #include <QHideEvent>

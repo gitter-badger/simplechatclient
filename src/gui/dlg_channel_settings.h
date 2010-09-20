@@ -25,6 +25,7 @@
 #include <QDebug>
 #endif
 #include <QDateTime>
+#include <QDesktopWidget>
 #include <QDialog>
 #include "dlg_email.h"
 #include "dlg_privilege.h"

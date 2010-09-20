@@ -21,6 +21,7 @@
 #ifndef DLG_USER_PROFILE_H
 #define DLG_USER_PROFILE_H
 
+#include <QDesktopWidget>
 #include <QDialog>
 #include <QNetworkAccessManager>
 #include <QNetworkReply>

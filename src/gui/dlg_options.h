@@ -23,6 +23,7 @@
 
 #include <QCloseEvent>
 #include <QColorDialog>
+#include <QDesktopWidget>
 #include <QDialog>
 #include <QMessageBox>
 #include <QSettings>

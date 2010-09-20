@@ -22,6 +22,7 @@
 #define DLG_CHANNEL_HOMES_H
 
 #include <QDialog>
+#include <QDesktopWidget>
 #include <QInputDialog>
 #include "dlg_channel_settings.h"
 #include "network.h"

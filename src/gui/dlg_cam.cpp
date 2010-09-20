@@ -384,6 +384,8 @@ void DlgCam::button_ok()
 void DlgCam::showEvent(QShowEvent *event)
 {
     event->accept();
+    // center screen
+    move(QApplication::desktop()->screen()->rect().center() - rect().center());
 
     ui.label_img->setText(tr("Starting the service webcams"));
     ui.textEdit_desc->hide();

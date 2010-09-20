@@ -21,6 +21,7 @@
 #ifndef DLG_UPDATE_H
 #define DLG_UPDATE_H
 
+#include <QDesktopWidget>
 #include <QDialog>
 #include <QHideEvent>
 #include <QPushButton>

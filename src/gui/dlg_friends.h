@@ -22,6 +22,7 @@
 #define DLG_FRIENDS_H
 
 #include <QCloseEvent>
+#include <QDesktopWidget>
 #include <QDialog>
 #include <QInputDialog>
 #include <QShowEvent>

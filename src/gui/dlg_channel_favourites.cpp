@@ -101,6 +101,8 @@ void DlgChannelFavourites::button_close()
 void DlgChannelFavourites::showEvent(QShowEvent *event)
 {
     event->accept();
+    // center screen
+    move(QApplication::desktop()->screen()->rect().center() - rect().center());
 
     ui.listWidget_channels->clear();
     pNetwork->send("NS FAVOURITES");

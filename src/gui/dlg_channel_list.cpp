@@ -998,6 +998,8 @@ void DlgChannelList::show_adv_options()
 void DlgChannelList::showEvent(QShowEvent *event)
 {
     event->accept();
+    // center screen
+    move(QApplication::desktop()->screen()->rect().center() - rect().center());
 
     ui.lineEdit_search->setText("");
 

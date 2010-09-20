@@ -123,6 +123,8 @@ void DlgChannelHomes::button_close()
 void DlgChannelHomes::showEvent(QShowEvent *event)
 {
     event->accept();
+    // center screen
+    move(QApplication::desktop()->screen()->rect().center() - rect().center());
 
     ui.listWidget_channels->clear();
 

@@ -1340,6 +1340,8 @@ void DlgOptions::save_settings()
 void DlgOptions::showEvent(QShowEvent *event)
 {
     event->accept();
+    // center screen
+    move(QApplication::desktop()->screen()->rect().center() - rect().center());
 
 // config
     Config *pConfig = new Config();

@@ -22,6 +22,7 @@
 #define DLG_CHANNEL_KEY_H
 
 #include <QDialog>
+#include <QDesktopWidget>
 #include <QPushButton>
 #include "network.h"
 #include "ui_channel_key.h"
