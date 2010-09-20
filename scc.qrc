@@ -1,8 +1,5 @@
 <RCC>
     <qresource prefix="/">
-        <file>3rdparty/images/list.png</file>
-        <file>3rdparty/images/options.png</file>
-        <file>3rdparty/images/people.png</file>
         <file>images/logo_128.png</file>
         <file>images/logo_64.png</file>
         <file>images/owner.png</file>
@@ -51,5 +48,12 @@
         <file>images/oxygen/16x16/format-text-italic.png</file>
         <file>images/oxygen/16x16/format-font-size-more.png</file>
         <file>images/oxygen/16x16/go-next.png</file>
+        <file>images/oxygen/16x16/go-last.png</file>
+        <file>images/oxygen/16x16/view-pim-tasks.png</file>
+        <file>images/oxygen/16x16/preferences-system.png</file>
+        <file>images/oxygen/16x16/documentation.png</file>
+        <file>images/oxygen/16x16/meeting-attending.png</file>
+        <file>images/oxygen/16x16/emblem-favorite.png</file>
+        <file>images/oxygen/16x16/meeting-attending-tentative.png</file>
     </qresource>
 </RCC>

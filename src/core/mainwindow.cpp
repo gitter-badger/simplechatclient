@@ -32,12 +32,12 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     showAct = new QAction(QIcon(":/images/logo_64.png"),tr("Show"),this);
     connectAct = new QAction(QIcon(":/images/oxygen/16x16/network-disconnect.png"),tr("Connect"),this);
     closeAct = new QAction(QIcon(":/images/oxygen/16x16/application-exit.png"),tr("Close"),this);
-    optionsAct = new QAction(QIcon(":/3rdparty/images/options.png"),tr("Options"),this);
-    channel_listAct = new QAction(QIcon(":/3rdparty/images/list.png"),tr("Channel list"),this);
-    channel_homesAct = new QAction(QIcon(":/3rdparty/images/list.png"),tr("Channel settings"),this);
-    channel_favouritesAct = new QAction(QIcon(":/3rdparty/images/list.png"),tr("Favorite channels"),this);
-    friendsAct = new QAction(QIcon(":/3rdparty/images/people.png"),tr("Friends"),this);
-    ignoreAct = new QAction(QIcon(":/3rdparty/images/people.png"),tr("Ignored"),this);
+    optionsAct = new QAction(QIcon(":/images/oxygen/16x16/preferences-system.png"),tr("Options"),this);
+    channel_listAct = new QAction(QIcon(":/images/oxygen/16x16/documentation.png"),tr("Channel list"),this);
+    channel_homesAct = new QAction(QIcon(":/images/oxygen/16x16/configure.png"),tr("Channel settings"),this);
+    channel_favouritesAct = new QAction(QIcon(":/images/oxygen/16x16/emblem-favorite.png"),tr("Favorite channels"),this);
+    friendsAct = new QAction(QIcon(":/images/oxygen/16x16/meeting-attending.png"),tr("Friends"),this);
+    ignoreAct = new QAction(QIcon(":/images/oxygen/16x16/meeting-attending-tentative.png"),tr("Ignored"),this);
 #ifdef Q_WS_WIN
     camsAct = new QAction(QIcon(":/images/pubcam.png"),tr("Cams"),this);
 #endif
@@ -103,7 +103,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 // settings
     QSettings settings;
     settings.clear();
-    settings.setValue("version", "1.0.9.530");
+    settings.setValue("version", "1.0.9.531");
     settings.setValue("debug", "off");
     settings.setValue("logged", "off");
     settings.setValue("busy", "off");

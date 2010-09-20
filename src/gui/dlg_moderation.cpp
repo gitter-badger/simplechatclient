@@ -30,7 +30,7 @@ DlgModeration::DlgModeration(QWidget *parent) : QDialog(parent)
     ui.pushButton_remove->setIcon(QIcon(":/images/oxygen/16x16/list-remove.png"));
     ui.buttonBox->button(QDialogButtonBox::Close)->setIcon(QIcon(":/images/oxygen/16x16/dialog-close.png"));
 
-    ui.label_channel->setText(tr(" Channel: "));
+    ui.label_channel->setText(tr("Channel: "));
     ui.pushButton_accept->setText(tr("Accept"));
     ui.pushButton_remove->setText(tr("Remove"));
 

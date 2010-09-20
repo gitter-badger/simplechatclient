@@ -233,10 +233,9 @@ TabWidget::TabWidget(QWidget *parent, Network *param1, QString param2, Notify *p
     channel_settings->setToolTip(tr("Channel settings"));
     channel_settings->show();
 
-    moderation = new QPushButton(this);
+    moderation = new QPushButton(QIcon(":/images/oxygen/16x16/go-last.png"), tr("Moderation"), this);
     moderation->setParent(this);
     moderation->setToolTip(tr("Moderation"));
-    moderation->setText(tr("Moderation"));
     moderation->show();
 
     clear = new QPushButton(QIcon(":/images/oxygen/16x16/draw-eraser.png"), "", this);
@@ -292,11 +291,9 @@ TabWidget::TabWidget(QWidget *parent, Network *param1, QString param2, Notify *p
     sendButton->setMaximumHeight(25);
     sendButton->show();
 
-    moderSendButton = new QPushButton();
+    moderSendButton = new QPushButton(QIcon(":/images/oxygen/16x16/view-pim-tasks.png"), tr("Send to moderators"), this);
     moderSendButton->setParent(this);
     moderSendButton->setToolTip(tr("Send to moderators"));
-    moderSendButton->setText(tr("Send to moderators"));
-    moderSendButton->setMaximumWidth(180);
     moderSendButton->setMaximumHeight(25);
     moderSendButton->show();
 
