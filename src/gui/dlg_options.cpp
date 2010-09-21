@@ -86,8 +86,6 @@ DlgOptions::DlgOptions(QWidget *parent) : QDialog(parent)
     ui.pushButton_mainwindow_restore_default->setText(tr("Restore default"));
 
     ui.label_nicklist_background_color->setText(tr("Background color:"));
-    ui.label_nicklist_line_color->setText(tr("Line color:"));
-    ui.label_nicklist_selected_line_color->setText(tr("Selected line color:"));
     ui.label_nicklist_nick_color->setText(tr("Nick color:"));
     ui.label_nicklist_selected_nick_color->setText(tr("Selected nick color:"));
     ui.label_nicklist_busy_nick_color->setText(tr("Busy nick color:"));
@@ -169,8 +167,6 @@ DlgOptions::DlgOptions(QWidget *parent) : QDialog(parent)
     QObject::connect(ui.pushButton_channel_font_color, SIGNAL(clicked()), this, SLOT(set_channel_font_color()));
     QObject::connect(ui.pushButton_mainwindow_restore_default, SIGNAL(clicked()), this, SLOT(mainwindow_restore_default()));
     QObject::connect(ui.pushButton_nicklist_background_color, SIGNAL(clicked()), this, SLOT(set_nicklist_background_color()));
-    QObject::connect(ui.pushButton_nicklist_line_color, SIGNAL(clicked()), this, SLOT(set_nicklist_line_color()));
-    QObject::connect(ui.pushButton_nicklist_selected_line_color, SIGNAL(clicked()), this, SLOT(set_nicklist_selected_line_color()));
     QObject::connect(ui.pushButton_nicklist_nick_color, SIGNAL(clicked()), this, SLOT(set_nicklist_nick_color()));
     QObject::connect(ui.pushButton_nicklist_selected_nick_color, SIGNAL(clicked()), this, SLOT(set_nicklist_selected_nick_color()));
     QObject::connect(ui.pushButton_nicklist_busy_nick_color, SIGNAL(clicked()), this, SLOT(set_nicklist_busy_nick_color()));
@@ -272,6 +268,8 @@ void DlgOptions::set_classic_style()
     Config *pConfig = new Config();
     pConfig->set_value("style", "classic");
     settings.setValue("style", "classic");
+    pConfig->set_value("disable_avatars", "on");
+    settings.setValue("disable_avatars", "on");
     delete pConfig;
 
     this->close(); // fix stay on top
@@ -929,62 +927,6 @@ void DlgOptions::set_nicklist_background_color()
     }
 }
 
-void DlgOptions::set_nicklist_line_color()
-{
-    // get value
-    Config *pConfig0 = new Config();
-    QString strDefaultColor = pConfig0->get_value("nicklist_line_color");
-    delete pConfig0;
-
-    // color dialog
-    QColor cColor = QColorDialog::getColor(QColor(strDefaultColor), this);
-
-    if (cColor.isValid() == true)
-    {
-        QString strColor = cColor.name();
-
-        // save to pushbutton
-        QPixmap color(50,15);
-        color.fill(QColor(cColor));
-        ui.pushButton_nicklist_line_color->setIcon(QIcon(color));
-
-        // save
-        QSettings settings;
-        Config *pConfig1 = new Config();
-        pConfig1->set_value("nicklist_line_color", strColor);
-        settings.setValue("nicklist_line_color", strColor);
-        delete pConfig1;
-    }
-}
-
-void DlgOptions::set_nicklist_selected_line_color()
-{
-    // get value
-    Config *pConfig0 = new Config();
-    QString strDefaultColor = pConfig0->get_value("nicklist_selected_line_color");
-    delete pConfig0;
-
-    // color dialog
-    QColor cColor = QColorDialog::getColor(QColor(strDefaultColor), this);
-
-    if (cColor.isValid() == true)
-    {
-        QString strColor = cColor.name();
-
-        // save to pushbutton
-        QPixmap color(50,15);
-        color.fill(QColor(cColor));
-        ui.pushButton_nicklist_selected_line_color->setIcon(QIcon(color));
-
-        // save
-        QSettings settings;
-        Config *pConfig1 = new Config();
-        pConfig1->set_value("nicklist_selected_line_color", strColor);
-        settings.setValue("nicklist_selected_line_color", strColor);
-        delete pConfig1;
-    }
-}
-
 void DlgOptions::set_nicklist_nick_color()
 {
     // get value
@@ -1133,12 +1075,6 @@ void DlgOptions::nicklist_restore_default()
     pConfig->set_value("nicklist_background_color", "#ffffff");
     settings.setValue("nicklist_background_color", "#ffffff");
 
-    pConfig->set_value("nicklist_line_color", "#dde4db");
-    settings.setValue("nicklist_line_color", "#dde4db");
-
-    pConfig->set_value("nicklist_selected_line_color", "#005a83");
-    settings.setValue("nicklist_selected_line_color", "#005a83");
-
     pConfig->set_value("nicklist_nick_color", "#333333");
     settings.setValue("nicklist_nick_color", "#333333");
 
@@ -1249,8 +1185,6 @@ void DlgOptions::set_nicklist_colors()
 {
     Config *pConfig = new Config();
     QString strNicklistBackgroundColor = pConfig->get_value("nicklist_background_color");
-    QString strNicklistLineColor = pConfig->get_value("nicklist_line_color");
-    QString strNicklistSelectedLineColor = pConfig->get_value("nicklist_selected_line_color");
     QString strNicklistNickColor = pConfig->get_value("nicklist_nick_color");
     QString strNicklistSelectedNickColor = pConfig->get_value("nicklist_selected_nick_color");
     QString strNicklistBusyNickColor = pConfig->get_value("nicklist_busy_nick_color");
@@ -1262,16 +1196,6 @@ void DlgOptions::set_nicklist_colors()
     QPixmap nbcolor(50,15);
     nbcolor.fill(QColor(strNicklistBackgroundColor));
     ui.pushButton_nicklist_background_color->setIcon(QIcon(nbcolor));
-
-// set nicklist line color
-    QPixmap nlcolor(50,15);
-    nlcolor.fill(QColor(strNicklistLineColor));
-    ui.pushButton_nicklist_line_color->setIcon(QIcon(nlcolor));
-
-// set nicklist selected line color
-    QPixmap nslcolor(50,15);
-    nslcolor.fill(QColor(strNicklistSelectedLineColor));
-    ui.pushButton_nicklist_selected_line_color->setIcon(QIcon(nslcolor));
 
 // set nicklist nick color
     QPixmap nncolor(50,15);

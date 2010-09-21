@@ -54,7 +54,7 @@ void DlgIgnore::add_ignore(QString strNick)
     {
         QSettings settings;
         ui.listWidget_nicks->addItem(new QListWidgetItem(QIcon(":/images/oxygen/16x16/meeting-attending-tentative.png"), strNick));
-        if ((settings.value("disable_avatars").toString() == "off") && (settings.value("style").toString() != "classic"))
+        if (settings.value("disable_avatars").toString() == "off") // with avatars
             pNetwork->send(QString("NS INFO %1 s").arg(strNick));
     }
 }

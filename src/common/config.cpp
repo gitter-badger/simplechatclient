@@ -230,16 +230,6 @@ QString Config::get_value(QString strKey)
         set_value("nicklist_background_color", "#ffffff");
         return "#ffffff";
     }
-    else if (strKey == "nicklist_line_color")
-    {
-        set_value("nicklist_line_color", "#dde4db");
-        return "#dde4db";
-    }
-    else if (strKey == "nicklist_selected_line_color")
-    {
-        set_value("nicklist_selected_line_color", "#005a83");
-        return "#005a83";
-    }
     else if (strKey == "nicklist_nick_color")
     {
         set_value("nicklist_nick_color", "#333333");
@@ -344,8 +334,6 @@ void Config::create_new_config()
     add_config_value(&doc, &root, "font_color_level_9", "#ff0000");
     add_config_value(&doc, &root, "channel_font_color", "#0000ff");
     add_config_value(&doc, &root, "nicklist_background_color", "#ffffff");
-    add_config_value(&doc, &root, "nicklist_line_color", "#dde4db");
-    add_config_value(&doc, &root, "nicklist_selected_line_color", "#005a83");
     add_config_value(&doc, &root, "nicklist_nick_color", "#333333");
     add_config_value(&doc, &root, "nicklist_selected_nick_color", "#ffffff");
     add_config_value(&doc, &root, "nicklist_busy_nick_color", "#a0a0a4");

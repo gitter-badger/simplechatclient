@@ -75,7 +75,7 @@ void DlgFriends::refresh()
         {
             QSettings settings;
             item = new QListWidgetItem(QIcon(":/images/oxygen/16x16/meeting-attending.png"), i.key());
-            if ((settings.value("disable_avatars").toString() == "off") && (settings.value("style").toString() != "classic"))
+            if (settings.value("disable_avatars").toString() == "off") // with avatars
                 pNetwork->send(QString("NS INFO %1 s").arg(i.key()));
         }
 

@@ -1063,14 +1063,6 @@
         <translation>Lista nicków</translation>
     </message>
     <message>
-        <source>Line color:</source>
-        <translation>Kolor lini:</translation>
-    </message>
-    <message>
-        <source>Selected line color:</source>
-        <translation>Kolor zaznaczonej lini:</translation>
-    </message>
-    <message>
         <source>Nick color:</source>
         <translation>Kolor nicka:</translation>
     </message>
@@ -2225,6 +2217,49 @@
     <message>
         <source>Reason for kicking:</source>
         <translation>Podaj powód wyrzucenia:</translation>
+    </message>
+</context>
+<context>
+    <name>NickListDelegate</name>
+    <message>
+        <source>Developer(s)</source>
+        <translation>Developer(rzy)</translation>
+    </message>
+    <message>
+        <source>Admin(s)</source>
+        <translation>Administrator(rzy)</translation>
+    </message>
+    <message>
+        <source>Owner(s)</source>
+        <translation>Właściciel(e)</translation>
+    </message>
+    <message>
+        <source>Op(s)</source>
+        <translation>Super Operator(rzy)</translation>
+    </message>
+    <message>
+        <source>HalfOp(s)</source>
+        <translation>Operator(rzy)</translation>
+    </message>
+    <message>
+        <source>Mod(s)</source>
+        <translation>Moderator(rzy)</translation>
+    </message>
+    <message>
+        <source>Screener(s)</source>
+        <translation>Screener(rzy)</translation>
+    </message>
+    <message>
+        <source>Voice(s)</source>
+        <translation>Gość(cie)</translation>
+    </message>
+    <message>
+        <source>Cam(s)</source>
+        <translation>Kamerka(ki)</translation>
+    </message>
+    <message>
+        <source>User(s)</source>
+        <translation>Użytkownik(cy)</translation>
     </message>
 </context>
 <context>

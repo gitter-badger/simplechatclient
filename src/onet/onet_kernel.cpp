@@ -574,7 +574,7 @@ void OnetKernel::raw_join()
     // nick avatar
     if ((strNick[0] != '~') && (mNickAvatar->contains(strNick) == false))
     {
-        if ((settings.value("disable_avatars").toString() == "off") && (settings.value("style").toString() == "modern"))
+        if (settings.value("disable_avatars").toString() == "off") // with avatars
             pNetwork->send(QString("NS INFO %1 s").arg(strNick));
     }
 
@@ -2456,7 +2456,7 @@ void OnetKernel::raw_353()
             if ((strCleanNick[0] != '~') && (mNickAvatar->contains(strCleanNick) == false))
             {
                 QSettings settings;
-                if ((settings.value("disable_avatars").toString() == "off") && (settings.value("style").toString() == "modern"))
+                if (settings.value("disable_avatars").toString() == "off") // with avatars
                     pNetwork->send(QString("NS INFO %1 s").arg(strCleanNick));
             }
         }

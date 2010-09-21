@@ -50,21 +50,18 @@ TabWidget::TabWidget(QWidget *parent, Network *param1, QString param2, Notify *p
     rightWidget = new QWidget(this);
 
     topic = new QWebView(this);
-    topic->setParent(this);
     topic->setMinimumHeight(30);
     topic->setMinimumWidth(16777215);
     topic->setMaximumHeight(30);
     topic->setMaximumWidth(16777215);
     topic->show();
 
-    topicDetails = new QLabel();
-    topicDetails->setParent(this);
+    topicDetails = new QLabel(this);
     topicDetails->setOpenExternalLinks(false);
     topicDetails->setAlignment(Qt::AlignLeft);
     topicDetails->show();
 
     logo = new QLabel(this);
-    logo->setParent(this);
     logo->show();
 
     topRightWidget = new QWidget(this);
@@ -91,21 +88,19 @@ TabWidget::TabWidget(QWidget *parent, Network *param1, QString param2, Notify *p
     topLayout->addWidget(topRightWidget);
     topWidget->setLayout(topLayout);
 
-    webLink = new QLabel();
-    webLink->setParent(this);
+    webLink = new QLabel(this);
     webLink->setOpenExternalLinks(true);
     webLink->setAlignment(Qt::AlignCenter);
     webLink->show();
 
-    nickCount = new QLabel();
-    nickCount->setParent(this);
+    nickCount = new QLabel(this);
     nickCount->setOpenExternalLinks(true);
     nickCount->setAlignment(Qt::AlignCenter);
     nickCount->show();
 
     nicklist = new NickListWidget(myparent, pNetwork, strName, mNickAvatar, camSocket, &nickStatus);
     nicklist->setParent(this);
-    //nicklist->setItemDelegate(new NicklistDelegate(nicklist));
+    nicklist->setItemDelegate(new NickListDelegate(nicklist));
     nicklist->show();
 
     mainWebView = new MainWebView(myparent, pNetwork, strName, camSocket, &nickStatus);
@@ -113,7 +108,6 @@ TabWidget::TabWidget(QWidget *parent, Network *param1, QString param2, Notify *p
     mainWebView->show();
 
     bold = new QPushButton(QIcon(":/images/oxygen/16x16/format-text-bold.png"), "", this);
-    bold->setParent(this);
     bold->setToolTip(tr("Bold"));
     bold->setFont(QFont("Times New Roman", -1, 75, false));
     bold->setFlat(true);
@@ -124,7 +118,6 @@ TabWidget::TabWidget(QWidget *parent, Network *param1, QString param2, Notify *p
     bMyBold = false;
 
     italic = new QPushButton(QIcon(":/images/oxygen/16x16/format-text-italic.png"), "", this);
-    italic->setParent(this);
     italic->setToolTip(tr("Italic"));
     italic->setFont(QFont("Times New Roman", -1, -1, true));
     italic->setFlat(true);
@@ -153,7 +146,6 @@ TabWidget::TabWidget(QWidget *parent, Network *param1, QString param2, Notify *p
     fontMenu->addAction(courierAct);
 
     fontfamily = new QPushButton(this);
-    fontfamily->setParent(this);
     fontfamily->setToolTip(tr("Font family"));
     fontfamily->setFont(QFont("Verdana", -1, -1, false));
     fontfamily->setText("Verdana");
@@ -163,7 +155,6 @@ TabWidget::TabWidget(QWidget *parent, Network *param1, QString param2, Notify *p
     fontfamily->show();
 
     color = new QComboBox(this);
-    color->setParent(this);
     color->setToolTip(tr("Font color"));
     color->setIconSize(QSize(50,10));
 
@@ -208,7 +199,6 @@ TabWidget::TabWidget(QWidget *parent, Network *param1, QString param2, Notify *p
     sizeMenu->addAction(size20Act);
 
     size = new QPushButton(QIcon(":/images/oxygen/16x16/format-font-size-more.png"), "", this);
-    size->setParent(this);
     size->setToolTip(tr("Font size"));
     size->setFont(QFont("Times New Roman", -1, -1, false));
     size->setMaximumHeight(25);
@@ -216,37 +206,31 @@ TabWidget::TabWidget(QWidget *parent, Network *param1, QString param2, Notify *p
     size->show();
 
     emoticons = new QPushButton(QIcon(":/images/oxygen/16x16/face-smile.png"), "", this);
-    emoticons->setParent(this);
     emoticons->setToolTip(tr("Emoticons"));
     emoticons->setMaximumWidth(25);
     emoticons->setMaximumHeight(25);
     emoticons->show();
 
-    separator = new QLabel();
-    separator->setParent(this);
+    separator = new QLabel(this);
     separator->setText(" | ");
     separator->setEnabled(false);
     separator->show();
 
     channel_settings = new QPushButton(QIcon(":/images/oxygen/16x16/configure.png"), tr("Settings"), this);
-    channel_settings->setParent(this);
     channel_settings->setToolTip(tr("Channel settings"));
     channel_settings->show();
 
     moderation = new QPushButton(QIcon(":/images/oxygen/16x16/go-last.png"), tr("Moderation"), this);
-    moderation->setParent(this);
     moderation->setToolTip(tr("Moderation"));
     moderation->show();
 
     clear = new QPushButton(QIcon(":/images/oxygen/16x16/draw-eraser.png"), "", this);
-    clear->setParent(this);
     clear->setToolTip(tr("Clear"));
     clear->setMaximumWidth(25);
     clear->setMaximumHeight(25);
     clear->show();
 
     scroll = new QPushButton(QIcon(":/images/oxygen/16x16/arrow-down.png"), "", this);
-    scroll->setParent(this);
     scroll->setToolTip(tr("Scroll"));
     scroll->setMaximumWidth(25);
     scroll->setMaximumHeight(25);
@@ -272,27 +256,23 @@ TabWidget::TabWidget(QWidget *parent, Network *param1, QString param2, Notify *p
     toolLayout->addWidget(scroll);
     toolWidget->setLayout(toolLayout);
 
-    nickLabel = new QLabel();
-    nickLabel->setParent(this);
+    nickLabel = new QLabel(this);
     nickLabel->setText(QString("<p style=\"font-weight:bold;\"> %1</p>").arg(tr("(Unregistered)")));
     nickLabel->show();
 
     inputline = new Inputline(this);
-    inputline->setParent(this);
     inputline->setMinimumWidth(400);
     inputline->setMaxLength(300);
     inputline->setFont(QFont("Verdana", -1, -1, false));
     inputline->show();
 
     sendButton = new QPushButton(QIcon(":/images/oxygen/16x16/go-next.png"), tr("Send"), this);
-    sendButton->setParent(this);
     sendButton->setToolTip(tr("Send"));
     sendButton->setMaximumWidth(75);
     sendButton->setMaximumHeight(25);
     sendButton->show();
 
     moderSendButton = new QPushButton(QIcon(":/images/oxygen/16x16/view-pim-tasks.png"), tr("Send to moderators"), this);
-    moderSendButton->setParent(this);
     moderSendButton->setToolTip(tr("Send to moderators"));
     moderSendButton->setMaximumHeight(25);
     moderSendButton->show();

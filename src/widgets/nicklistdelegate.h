@@ -21,16 +21,17 @@
 #ifndef NICKLISTDELEGATE_H
 #define NICKLISTDELEGATE_H
 
-#include <QPainter>
 #include <QAbstractItemDelegate>
+#include <QPainter>
+#include <QSettings>
 #include "config.h"
 
-class NicklistDelegate : public QAbstractItemDelegate
+class NickListDelegate : public QAbstractItemDelegate
 {
     Q_OBJECT
 public:
-    NicklistDelegate(QObject *parent = 0);
-    ~NicklistDelegate();
+    NickListDelegate(QObject *parent = 0);
+    ~NickListDelegate();
 
     void paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const;
     QSize sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const;

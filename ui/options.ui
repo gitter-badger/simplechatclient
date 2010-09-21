@@ -26,7 +26,7 @@
    <string>Options</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="../scc.qrc">
+   <iconset>
     <normaloff>:/images/logo_64.png</normaloff>:/images/logo_64.png</iconset>
   </property>
   <widget class="QWidget" name="verticalLayoutWidget">
@@ -503,8 +503,8 @@
                 <rect>
                  <x>0</x>
                  <y>0</y>
-                 <width>98</width>
-                 <height>28</height>
+                 <width>418</width>
+                 <height>287</height>
                 </rect>
                </property>
                <attribute name="label">
@@ -769,8 +769,8 @@
                 <rect>
                  <x>0</x>
                  <y>0</y>
-                 <width>98</width>
-                 <height>28</height>
+                 <width>418</width>
+                 <height>287</height>
                 </rect>
                </property>
                <attribute name="label">
@@ -788,6 +788,9 @@
                 <layout class="QHBoxLayout" name="horizontalLayout_4">
                  <item>
                   <layout class="QFormLayout" name="formLayout_4">
+                   <property name="fieldGrowthPolicy">
+                    <enum>QFormLayout::ExpandingFieldsGrow</enum>
+                   </property>
                    <item row="0" column="0">
                     <widget class="QLabel" name="label_nicklist_background_color">
                      <property name="text">
@@ -809,53 +812,13 @@
                     </widget>
                    </item>
                    <item row="1" column="0">
-                    <widget class="QLabel" name="label_nicklist_line_color">
-                     <property name="text">
-                      <string>Line color:</string>
-                     </property>
-                    </widget>
-                   </item>
-                   <item row="1" column="1">
-                    <widget class="QPushButton" name="pushButton_nicklist_line_color">
-                     <property name="text">
-                      <string/>
-                     </property>
-                     <property name="iconSize">
-                      <size>
-                       <width>50</width>
-                       <height>15</height>
-                      </size>
-                     </property>
-                    </widget>
-                   </item>
-                   <item row="2" column="0">
-                    <widget class="QLabel" name="label_nicklist_selected_line_color">
-                     <property name="text">
-                      <string>Selected line color:</string>
-                     </property>
-                    </widget>
-                   </item>
-                   <item row="2" column="1">
-                    <widget class="QPushButton" name="pushButton_nicklist_selected_line_color">
-                     <property name="text">
-                      <string/>
-                     </property>
-                     <property name="iconSize">
-                      <size>
-                       <width>50</width>
-                       <height>15</height>
-                      </size>
-                     </property>
-                    </widget>
-                   </item>
-                   <item row="3" column="0">
                     <widget class="QLabel" name="label_nicklist_nick_color">
                      <property name="text">
                       <string>Nick color:</string>
                      </property>
                     </widget>
                    </item>
-                   <item row="3" column="1">
+                   <item row="1" column="1">
                     <widget class="QPushButton" name="pushButton_nicklist_nick_color">
                      <property name="text">
                       <string/>
@@ -868,14 +831,14 @@
                      </property>
                     </widget>
                    </item>
-                   <item row="4" column="0">
+                   <item row="2" column="0">
                     <widget class="QLabel" name="label_nicklist_selected_nick_color">
                      <property name="text">
                       <string>Selected nick color:</string>
                      </property>
                     </widget>
                    </item>
-                   <item row="4" column="1">
+                   <item row="2" column="1">
                     <widget class="QPushButton" name="pushButton_nicklist_selected_nick_color">
                      <property name="text">
                       <string/>
@@ -888,14 +851,14 @@
                      </property>
                     </widget>
                    </item>
-                   <item row="5" column="0">
+                   <item row="3" column="0">
                     <widget class="QLabel" name="label_nicklist_busy_nick_color">
                      <property name="text">
                       <string>Busy nick color:</string>
                      </property>
                     </widget>
                    </item>
-                   <item row="5" column="1">
+                   <item row="3" column="1">
                     <widget class="QPushButton" name="pushButton_nicklist_busy_nick_color">
                      <property name="text">
                       <string/>
@@ -999,8 +962,6 @@
    </layout>
   </widget>
  </widget>
- <resources>
-  <include location="../scc.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>

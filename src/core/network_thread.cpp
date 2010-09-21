@@ -135,7 +135,7 @@ void NetworkThread::send_buffer()
 
     int iLimit = 5;
     QSettings settings;
-    if ((settings.value("style").toString() == "classic") || (settings.value("disable_avatars").toString() == "on"))
+    if (settings.value("disable_avatars").toString() == "on") // without avatars
         iLimit = 4096;
 
     if (iCount < iLimit)

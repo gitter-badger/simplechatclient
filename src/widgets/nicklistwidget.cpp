@@ -191,11 +191,11 @@ void NickListWidget::refresh_avatars()
             QTreeWidgetItem *child_item = parent_item->child(x);
             QString strChild = child_item->text(0);
 
-            if ((strChild[0] != '~') && (child_item->data(0, Qt::UserRole+2).isNull() == true) && (mNickAvatar->contains(strChild) == true))
+            if ((strChild[0] != '~') && (child_item->data(0, Qt::UserRole+1).isNull() == true) && (mNickAvatar->contains(strChild) == true))
             {
                 QPixmap pixmap;
                 pixmap.loadFromData(mNickAvatar->value(strChild));
-                child_item->setData(0, Qt::UserRole+2, pixmap);
+                child_item->setData(0, Qt::UserRole+1, pixmap);
             }
         }
     }
@@ -248,7 +248,7 @@ void NickListWidget::add_parent(QString strName, QPixmap px)
 {
     QTreeWidgetItem *item = new QTreeWidgetItem(this);
     item->setText(0, strName);
-    item->setIcon(0, px);
+    item->setData(0, Qt::UserRole, px);
 
     sort_parent();
 }
@@ -382,20 +382,17 @@ QTreeWidgetItem* NickListWidget::create_child(QString strNick, QString strSuffix
 {
     QTreeWidgetItem *item = new QTreeWidgetItem();
     item->setText(0, strNick);
-    item->setIcon(0, icon);
     item->setData(0, Qt::UserRole, icon);
 
     if (strSuffix.indexOf("W") != -1)
     {
         QPixmap newicon = QPixmap(":/images/pubcam.png");
-        item->setData(0, Qt::UserRole+1, newicon);
         if (strParent == tr("Cam(s)"))
             item->setIcon(0, newicon);
     }
     if (strSuffix.indexOf("V") != -1)
     {
         QPixmap newicon = QPixmap(":/images/privcam.png");
-        item->setData(0, Qt::UserRole+1, newicon);
         if (strParent == tr("Cam(s)"))
             item->setIcon(0, newicon);
     }
@@ -407,10 +404,10 @@ QTreeWidgetItem* NickListWidget::create_child(QString strNick, QString strSuffix
     {
         QPixmap pixmap;
         pixmap.loadFromData(mNickAvatar->value(strNick));
-        item->setData(0, Qt::UserRole+2, pixmap);
+        item->setData(0, Qt::UserRole+1, pixmap);
     }
 
-    item->setData(0, Qt::UserRole+10, strSuffix.indexOf("b") != -1 ? false : true);
+    item->setData(0, Qt::UserRole+10, strSuffix.indexOf("b") != -1 ? true : false);
 
     return item;
 }
