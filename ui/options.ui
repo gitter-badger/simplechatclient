@@ -6,20 +6,20 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>642</width>
-    <height>412</height>
+    <width>634</width>
+    <height>407</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>642</width>
-    <height>412</height>
+    <width>634</width>
+    <height>407</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>642</width>
-    <height>412</height>
+    <width>634</width>
+    <height>407</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -29,878 +29,870 @@
    <iconset resource="../scc.qrc">
     <normaloff>:/images/logo_64.png</normaloff>:/images/logo_64.png</iconset>
   </property>
-  <widget class="QWidget" name="verticalLayoutWidget">
+  <widget class="QDialogButtonBox" name="buttonBox">
    <property name="geometry">
     <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>641</width>
-     <height>411</height>
+     <x>7</x>
+     <y>380</y>
+     <width>621</width>
+     <height>25</height>
     </rect>
    </property>
-   <layout class="QVBoxLayout" name="verticalLayout">
-    <item>
-     <layout class="QHBoxLayout" name="horizontalLayout">
-      <item>
-       <widget class="QTreeWidget" name="treeWidget_options">
-        <property name="maximumSize">
-         <size>
-          <width>180</width>
-          <height>380</height>
-         </size>
-        </property>
-        <property name="editTriggers">
-         <set>QAbstractItemView::DoubleClicked</set>
-        </property>
-        <property name="showDropIndicator" stdset="0">
-         <bool>false</bool>
-        </property>
-        <property name="selectionMode">
-         <enum>QAbstractItemView::SingleSelection</enum>
-        </property>
-        <property name="selectionBehavior">
-         <enum>QAbstractItemView::SelectRows</enum>
-        </property>
-        <property name="iconSize">
-         <size>
-          <width>64</width>
-          <height>64</height>
-         </size>
-        </property>
-        <property name="textElideMode">
-         <enum>Qt::ElideMiddle</enum>
-        </property>
-        <attribute name="headerVisible">
-         <bool>false</bool>
-        </attribute>
-        <column>
-         <property name="text">
-          <string notr="true">1</string>
-         </property>
-        </column>
-       </widget>
-      </item>
-      <item>
-       <layout class="QVBoxLayout" name="verticalLayout_5">
+   <property name="standardButtons">
+    <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+   </property>
+  </widget>
+  <widget class="QSplitter" name="splitter">
+   <property name="geometry">
+    <rect>
+     <x>5</x>
+     <y>5</y>
+     <width>631</width>
+     <height>371</height>
+    </rect>
+   </property>
+   <property name="orientation">
+    <enum>Qt::Horizontal</enum>
+   </property>
+   <widget class="QTreeWidget" name="treeWidget_options">
+    <property name="maximumSize">
+     <size>
+      <width>180</width>
+      <height>380</height>
+     </size>
+    </property>
+    <property name="editTriggers">
+     <set>QAbstractItemView::DoubleClicked</set>
+    </property>
+    <property name="showDropIndicator" stdset="0">
+     <bool>false</bool>
+    </property>
+    <property name="selectionMode">
+     <enum>QAbstractItemView::SingleSelection</enum>
+    </property>
+    <property name="selectionBehavior">
+     <enum>QAbstractItemView::SelectRows</enum>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>64</width>
+      <height>64</height>
+     </size>
+    </property>
+    <property name="textElideMode">
+     <enum>Qt::ElideMiddle</enum>
+    </property>
+    <attribute name="headerVisible">
+     <bool>false</bool>
+    </attribute>
+    <attribute name="headerVisible">
+     <bool>false</bool>
+    </attribute>
+    <column>
+     <property name="text">
+      <string notr="true">1</string>
+     </property>
+    </column>
+   </widget>
+   <widget class="QStackedWidget" name="stackedWidget">
+    <property name="currentIndex">
+     <number>0</number>
+    </property>
+    <widget class="QWidget" name="spage_3">
+     <widget class="QGroupBox" name="groupBox_login_password">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>60</y>
+        <width>441</width>
+        <height>81</height>
+       </rect>
+      </property>
+      <property name="title">
+       <string/>
+      </property>
+      <property name="flat">
+       <bool>false</bool>
+      </property>
+      <property name="checkable">
+       <bool>false</bool>
+      </property>
+      <widget class="QWidget" name="verticalLayoutWidget_10">
+       <property name="geometry">
+        <rect>
+         <x>90</x>
+         <y>10</y>
+         <width>251</width>
+         <height>61</height>
+        </rect>
+       </property>
+       <layout class="QVBoxLayout" name="verticalLayout_10">
         <item>
-         <widget class="QStackedWidget" name="stackedWidget">
-          <property name="currentIndex">
-           <number>0</number>
+         <layout class="QFormLayout" name="formLayout_7">
+          <item row="0" column="0">
+           <widget class="QLabel" name="label_nick">
+            <property name="text">
+             <string>Nick:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QLineEdit" name="lineEdit_nick"/>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="label_password">
+            <property name="text">
+             <string>Password:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QLineEdit" name="lineEdit_password">
+            <property name="echoMode">
+             <enum>QLineEdit::Password</enum>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+     <widget class="QGroupBox" name="groupBox_skins">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>160</y>
+        <width>441</width>
+        <height>111</height>
+       </rect>
+      </property>
+      <property name="title">
+       <string>Skins</string>
+      </property>
+      <widget class="QWidget" name="verticalLayoutWidget_13">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>30</y>
+         <width>421</width>
+         <height>73</height>
+        </rect>
+       </property>
+       <layout class="QVBoxLayout" name="verticalLayout_13">
+        <item>
+         <widget class="QRadioButton" name="radioButton_modern_avatars">
+          <property name="text">
+           <string>Modern</string>
           </property>
-          <widget class="QWidget" name="spage_1">
-           <widget class="QGroupBox" name="groupBox_login_password">
-            <property name="geometry">
-             <rect>
-              <x>0</x>
-              <y>60</y>
-              <width>441</width>
-              <height>81</height>
-             </rect>
-            </property>
-            <property name="title">
-             <string/>
-            </property>
-            <property name="flat">
-             <bool>false</bool>
-            </property>
-            <property name="checkable">
-             <bool>false</bool>
-            </property>
-            <widget class="QWidget" name="verticalLayoutWidget_9">
-             <property name="geometry">
-              <rect>
-               <x>90</x>
-               <y>10</y>
-               <width>251</width>
-               <height>61</height>
-              </rect>
-             </property>
-             <layout class="QVBoxLayout" name="verticalLayout_9">
-              <item>
-               <layout class="QFormLayout" name="formLayout_5">
-                <item row="0" column="0">
-                 <widget class="QLabel" name="label_nick">
-                  <property name="text">
-                   <string>Nick:</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="0" column="1">
-                 <widget class="QLineEdit" name="lineEdit_nick"/>
-                </item>
-                <item row="1" column="0">
-                 <widget class="QLabel" name="label_password">
-                  <property name="text">
-                   <string>Password:</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="1" column="1">
-                 <widget class="QLineEdit" name="lineEdit_password">
-                  <property name="echoMode">
-                   <enum>QLineEdit::Password</enum>
-                  </property>
-                 </widget>
-                </item>
-               </layout>
-              </item>
-             </layout>
-            </widget>
-           </widget>
-           <widget class="QGroupBox" name="groupBox_skins">
-            <property name="geometry">
-             <rect>
-              <x>0</x>
-              <y>160</y>
-              <width>441</width>
-              <height>111</height>
-             </rect>
-            </property>
-            <property name="title">
-             <string>Skins</string>
-            </property>
-            <widget class="QWidget" name="verticalLayoutWidget_12">
-             <property name="geometry">
-              <rect>
-               <x>10</x>
-               <y>30</y>
-               <width>421</width>
-               <height>73</height>
-              </rect>
-             </property>
-             <layout class="QVBoxLayout" name="verticalLayout_12">
-              <item>
-               <widget class="QRadioButton" name="radioButton_modern_avatars">
-                <property name="text">
-                 <string>Modern</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QRadioButton" name="radioButton_modern_no_avatars">
-                <property name="text">
-                 <string>Modern without avatars</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QRadioButton" name="radioButton_classic">
-                <property name="text">
-                 <string>Classic</string>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </widget>
-           </widget>
-           <widget class="QWidget" name="horizontalLayoutWidget_2">
-            <property name="geometry">
-             <rect>
-              <x>10</x>
-              <y>20</y>
-              <width>421</width>
-              <height>26</height>
-             </rect>
-            </property>
-            <layout class="QHBoxLayout" name="horizontalLayout_2">
-             <item>
-              <widget class="QRadioButton" name="radioButton_unregistered_nick">
-               <property name="text">
-                <string>Unregistered nick</string>
-               </property>
-               <property name="checkable">
-                <bool>true</bool>
-               </property>
-               <property name="checked">
-                <bool>false</bool>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QRadioButton" name="radioButton_registered_nick">
-               <property name="text">
-                <string>Registered nick</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QPushButton" name="pushButton_register_nick">
-               <property name="text">
-                <string>Register nick</string>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </widget>
-           <widget class="QGroupBox" name="groupBox_language">
-            <property name="geometry">
-             <rect>
-              <x>0</x>
-              <y>290</y>
-              <width>441</width>
-              <height>71</height>
-             </rect>
-            </property>
-            <property name="title">
-             <string>Language</string>
-            </property>
-            <widget class="QComboBox" name="comboBox_language">
-             <property name="geometry">
-              <rect>
-               <x>170</x>
-               <y>30</y>
-               <width>91</width>
-               <height>20</height>
-              </rect>
-             </property>
-            </widget>
-           </widget>
-          </widget>
-          <widget class="QWidget" name="spage_2">
-           <widget class="QWidget" name="verticalLayoutWidget_8">
-            <property name="geometry">
-             <rect>
-              <x>10</x>
-              <y>10</y>
-              <width>431</width>
-              <height>351</height>
-             </rect>
-            </property>
-            <layout class="QVBoxLayout" name="verticalLayout_8">
-             <item>
-              <widget class="QCheckBox" name="checkBox_auto_busy">
-               <property name="text">
-                <string>Busy mode after you log in to chat</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QCheckBox" name="checkBox_show_zuo">
-               <property name="text">
-                <string>Show ZUO</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QCheckBox" name="checkBox_hide_formating">
-               <property name="text">
-                <string>Disable formatting messages</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QCheckBox" name="checkBox_hide_join_part">
-               <property name="text">
-                <string>Hide join/part</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QCheckBox" name="checkBox_hide_join_part_200">
-               <property name="text">
-                <string>Hide join/part when number of nicks &gt; 200</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QCheckBox" name="checkBox_disable_avatars">
-               <property name="text">
-                <string>Disable avatars</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QCheckBox" name="checkBox_disable_logs">
-               <property name="text">
-                <string>Disable logs</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QCheckBox" name="checkBox_disable_sounds">
-               <property name="text">
-                <string>Disable sounds</string>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </widget>
-          </widget>
-          <widget class="QWidget" name="page">
-           <widget class="QGroupBox" name="groupBox_my_font">
-            <property name="geometry">
-             <rect>
-              <x>10</x>
-              <y>20</y>
-              <width>431</width>
-              <height>171</height>
-             </rect>
-            </property>
-            <property name="title">
-             <string>Default font</string>
-            </property>
-            <widget class="QWidget" name="formLayoutWidget">
-             <property name="geometry">
-              <rect>
-               <x>20</x>
-               <y>9</y>
-               <width>391</width>
-               <height>151</height>
-              </rect>
-             </property>
-             <layout class="QFormLayout" name="formLayout">
-              <property name="formAlignment">
-               <set>Qt::AlignCenter</set>
-              </property>
-              <item row="0" column="0">
-               <widget class="QLabel" name="label_my_bold">
-                <property name="text">
-                 <string>Bold:</string>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="1">
-               <widget class="QComboBox" name="comboBox_my_bold">
-                <property name="maximumSize">
-                 <size>
-                  <width>100</width>
-                  <height>16777215</height>
-                 </size>
-                </property>
-                <item>
-                 <property name="text">
-                  <string>Off</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>On</string>
-                 </property>
-                </item>
-               </widget>
-              </item>
-              <item row="1" column="0">
-               <widget class="QLabel" name="label_my_italic">
-                <property name="text">
-                 <string>Italic:</string>
-                </property>
-               </widget>
-              </item>
-              <item row="1" column="1">
-               <widget class="QComboBox" name="comboBox_my_italic">
-                <property name="maximumSize">
-                 <size>
-                  <width>100</width>
-                  <height>16777215</height>
-                 </size>
-                </property>
-                <item>
-                 <property name="text">
-                  <string>Off</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>On</string>
-                 </property>
-                </item>
-               </widget>
-              </item>
-              <item row="2" column="0">
-               <widget class="QLabel" name="label_my_font">
-                <property name="text">
-                 <string>Font:</string>
-                </property>
-               </widget>
-              </item>
-              <item row="2" column="1">
-               <widget class="QComboBox" name="comboBox_my_font">
-                <property name="maximumSize">
-                 <size>
-                  <width>100</width>
-                  <height>16777215</height>
-                 </size>
-                </property>
-               </widget>
-              </item>
-              <item row="3" column="0">
-               <widget class="QLabel" name="label_my_color">
-                <property name="text">
-                 <string>Color:</string>
-                </property>
-               </widget>
-              </item>
-              <item row="3" column="1">
-               <widget class="QComboBox" name="comboBox_my_color">
-                <property name="maximumSize">
-                 <size>
-                  <width>100</width>
-                  <height>16777215</height>
-                 </size>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </widget>
-           </widget>
-          </widget>
-          <widget class="QWidget" name="page_3">
-           <widget class="QTabWidget" name="tabWidget">
-            <property name="geometry">
-             <rect>
-              <x>0</x>
-              <y>0</y>
-              <width>451</width>
-              <height>371</height>
-             </rect>
-            </property>
-            <property name="currentIndex">
-             <number>0</number>
-            </property>
-            <widget class="QWidget" name="tabWidgetPage1">
-             <attribute name="title">
-              <string>Main window</string>
-             </attribute>
-             <widget class="QWidget" name="horizontalLayoutWidget">
-              <property name="geometry">
-               <rect>
-                <x>10</x>
-                <y>0</y>
-                <width>421</width>
-                <height>181</height>
-               </rect>
-              </property>
-              <layout class="QHBoxLayout" name="horizontalLayout_3">
-               <item>
-                <layout class="QFormLayout" name="formLayout_6">
-                 <item row="0" column="0">
-                  <widget class="QLabel" name="label_background_color">
-                   <property name="text">
-                    <string>Background color:</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="0" column="1">
-                  <widget class="QPushButton" name="pushButton_background_color">
-                   <property name="text">
-                    <string/>
-                   </property>
-                   <property name="iconSize">
-                    <size>
-                     <width>50</width>
-                     <height>15</height>
-                    </size>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="1" column="0">
-                  <widget class="QLabel" name="label_default_font_color">
-                   <property name="text">
-                    <string>Default font color:</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="1" column="1">
-                  <widget class="QPushButton" name="pushButton_default_font_color">
-                   <property name="text">
-                    <string/>
-                   </property>
-                   <property name="iconSize">
-                    <size>
-                     <width>50</width>
-                     <height>15</height>
-                    </size>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="2" column="0">
-                  <widget class="QLabel" name="label_channel_font_color">
-                   <property name="text">
-                    <string>Channel font color:</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="2" column="1">
-                  <widget class="QPushButton" name="pushButton_channel_font_color">
-                   <property name="text">
-                    <string/>
-                   </property>
-                   <property name="iconSize">
-                    <size>
-                     <width>50</width>
-                     <height>15</height>
-                    </size>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="3" column="0">
-                  <widget class="QLabel" name="label_join_font_color">
-                   <property name="text">
-                    <string>Join font color:</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="3" column="1">
-                  <widget class="QPushButton" name="pushButton_join_font_color">
-                   <property name="text">
-                    <string/>
-                   </property>
-                   <property name="iconSize">
-                    <size>
-                     <width>50</width>
-                     <height>15</height>
-                    </size>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="4" column="0">
-                  <widget class="QLabel" name="label_part_font_color">
-                   <property name="text">
-                    <string>Part font color:</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="4" column="1">
-                  <widget class="QPushButton" name="pushButton_part_font_color">
-                   <property name="text">
-                    <string/>
-                   </property>
-                   <property name="iconSize">
-                    <size>
-                     <width>50</width>
-                     <height>15</height>
-                    </size>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="5" column="0">
-                  <widget class="QLabel" name="label_quit_font_color">
-                   <property name="text">
-                    <string>Quit font color:</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="5" column="1">
-                  <widget class="QPushButton" name="pushButton_quit_font_color">
-                   <property name="text">
-                    <string/>
-                   </property>
-                   <property name="iconSize">
-                    <size>
-                     <width>50</width>
-                     <height>15</height>
-                    </size>
-                   </property>
-                  </widget>
-                 </item>
-                </layout>
-               </item>
-               <item>
-                <layout class="QFormLayout" name="formLayout_3">
-                 <item row="0" column="0">
-                  <widget class="QLabel" name="label_kick_font_color">
-                   <property name="text">
-                    <string>Kick font color:</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="0" column="1">
-                  <widget class="QPushButton" name="pushButton_kick_font_color">
-                   <property name="text">
-                    <string/>
-                   </property>
-                   <property name="iconSize">
-                    <size>
-                     <width>50</width>
-                     <height>15</height>
-                    </size>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="1" column="0">
-                  <widget class="QLabel" name="label_mode_font_color">
-                   <property name="text">
-                    <string>Mode font color:</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="1" column="1">
-                  <widget class="QPushButton" name="pushButton_mode_font_color">
-                   <property name="text">
-                    <string/>
-                   </property>
-                   <property name="iconSize">
-                    <size>
-                     <width>50</width>
-                     <height>15</height>
-                    </size>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="2" column="0">
-                  <widget class="QLabel" name="label_notice_font_color">
-                   <property name="text">
-                    <string>Notice font color:</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="2" column="1">
-                  <widget class="QPushButton" name="pushButton_notice_font_color">
-                   <property name="text">
-                    <string/>
-                   </property>
-                   <property name="iconSize">
-                    <size>
-                     <width>50</width>
-                     <height>15</height>
-                    </size>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="3" column="0">
-                  <widget class="QLabel" name="label_info_font_color">
-                   <property name="text">
-                    <string>Info font color:</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="3" column="1">
-                  <widget class="QPushButton" name="pushButton_info_font_color">
-                   <property name="text">
-                    <string/>
-                   </property>
-                   <property name="iconSize">
-                    <size>
-                     <width>50</width>
-                     <height>15</height>
-                    </size>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="4" column="0">
-                  <widget class="QLabel" name="label_error_font_color">
-                   <property name="text">
-                    <string>Error font color:</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="4" column="1">
-                  <widget class="QPushButton" name="pushButton_error_font_color">
-                   <property name="text">
-                    <string/>
-                   </property>
-                   <property name="iconSize">
-                    <size>
-                     <width>50</width>
-                     <height>15</height>
-                    </size>
-                   </property>
-                  </widget>
-                 </item>
-                </layout>
-               </item>
-              </layout>
-             </widget>
-             <widget class="QPushButton" name="pushButton_mainwindow_restore_default">
-              <property name="geometry">
-               <rect>
-                <x>150</x>
-                <y>190</y>
-                <width>140</width>
-                <height>24</height>
-               </rect>
-              </property>
-              <property name="text">
-               <string>Restore default</string>
-              </property>
-             </widget>
-            </widget>
-            <widget class="QWidget" name="tabWidgetPage2">
-             <attribute name="title">
-              <string>Nicklist</string>
-             </attribute>
-             <widget class="QWidget" name="horizontalLayoutWidget_3">
-              <property name="geometry">
-               <rect>
-                <x>10</x>
-                <y>0</y>
-                <width>421</width>
-                <height>181</height>
-               </rect>
-              </property>
-              <layout class="QHBoxLayout" name="horizontalLayout_4">
-               <item>
-                <layout class="QFormLayout" name="formLayout_4">
-                 <property name="fieldGrowthPolicy">
-                  <enum>QFormLayout::ExpandingFieldsGrow</enum>
-                 </property>
-                 <item row="0" column="0">
-                  <widget class="QLabel" name="label_nicklist_background_color">
-                   <property name="text">
-                    <string>Background color:</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="0" column="1">
-                  <widget class="QPushButton" name="pushButton_nicklist_background_color">
-                   <property name="text">
-                    <string/>
-                   </property>
-                   <property name="iconSize">
-                    <size>
-                     <width>50</width>
-                     <height>15</height>
-                    </size>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="1" column="0">
-                  <widget class="QLabel" name="label_nicklist_nick_color">
-                   <property name="text">
-                    <string>Nick color:</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="1" column="1">
-                  <widget class="QPushButton" name="pushButton_nicklist_nick_color">
-                   <property name="text">
-                    <string/>
-                   </property>
-                   <property name="iconSize">
-                    <size>
-                     <width>50</width>
-                     <height>15</height>
-                    </size>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="2" column="0">
-                  <widget class="QLabel" name="label_nicklist_selected_nick_color">
-                   <property name="text">
-                    <string>Selected nick color:</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="2" column="1">
-                  <widget class="QPushButton" name="pushButton_nicklist_selected_nick_color">
-                   <property name="text">
-                    <string/>
-                   </property>
-                   <property name="iconSize">
-                    <size>
-                     <width>50</width>
-                     <height>15</height>
-                    </size>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="3" column="0">
-                  <widget class="QLabel" name="label_nicklist_busy_nick_color">
-                   <property name="text">
-                    <string>Busy nick color:</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="3" column="1">
-                  <widget class="QPushButton" name="pushButton_nicklist_busy_nick_color">
-                   <property name="text">
-                    <string/>
-                   </property>
-                   <property name="iconSize">
-                    <size>
-                     <width>50</width>
-                     <height>15</height>
-                    </size>
-                   </property>
-                  </widget>
-                 </item>
-                </layout>
-               </item>
-               <item>
-                <layout class="QFormLayout" name="formLayout_2">
-                 <property name="fieldGrowthPolicy">
-                  <enum>QFormLayout::ExpandingFieldsGrow</enum>
-                 </property>
-                 <item row="0" column="0">
-                  <widget class="QLabel" name="label_nicklist_gradient_1_color">
-                   <property name="text">
-                    <string>Gradient 1:</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="0" column="1">
-                  <widget class="QPushButton" name="pushButton_nicklist_gradient_1_color">
-                   <property name="text">
-                    <string/>
-                   </property>
-                   <property name="iconSize">
-                    <size>
-                     <width>50</width>
-                     <height>15</height>
-                    </size>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="1" column="0">
-                  <widget class="QLabel" name="label_nicklist_gradient_2_color">
-                   <property name="text">
-                    <string>Gradient 2:</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="1" column="1">
-                  <widget class="QPushButton" name="pushButton_nicklist_gradient_2_color">
-                   <property name="text">
-                    <string/>
-                   </property>
-                   <property name="iconSize">
-                    <size>
-                     <width>50</width>
-                     <height>15</height>
-                    </size>
-                   </property>
-                  </widget>
-                 </item>
-                </layout>
-               </item>
-              </layout>
-             </widget>
-             <widget class="QPushButton" name="pushButton_nicklist_restore_default">
-              <property name="geometry">
-               <rect>
-                <x>150</x>
-                <y>190</y>
-                <width>140</width>
-                <height>24</height>
-               </rect>
-              </property>
-              <property name="text">
-               <string>Restore default</string>
-              </property>
-             </widget>
-            </widget>
-           </widget>
-          </widget>
+         </widget>
+        </item>
+        <item>
+         <widget class="QRadioButton" name="radioButton_modern_no_avatars">
+          <property name="text">
+           <string>Modern without avatars</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QRadioButton" name="radioButton_classic">
+          <property name="text">
+           <string>Classic</string>
+          </property>
          </widget>
         </item>
        </layout>
-      </item>
-     </layout>
-    </item>
-    <item>
-     <widget class="QDialogButtonBox" name="buttonBox">
-      <property name="orientation">
-       <enum>Qt::Horizontal</enum>
-      </property>
-      <property name="standardButtons">
-       <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
-      </property>
-      <property name="centerButtons">
-       <bool>false</bool>
-      </property>
+      </widget>
      </widget>
-    </item>
-   </layout>
+     <widget class="QWidget" name="horizontalLayoutWidget_4">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>20</y>
+        <width>421</width>
+        <height>26</height>
+       </rect>
+      </property>
+      <layout class="QHBoxLayout" name="horizontalLayout_5">
+       <item>
+        <widget class="QRadioButton" name="radioButton_unregistered_nick">
+         <property name="text">
+          <string>Unregistered nick</string>
+         </property>
+         <property name="checkable">
+          <bool>true</bool>
+         </property>
+         <property name="checked">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QRadioButton" name="radioButton_registered_nick">
+         <property name="text">
+          <string>Registered nick</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButton_register_nick">
+         <property name="text">
+          <string>Register nick</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QGroupBox" name="groupBox_language">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>290</y>
+        <width>441</width>
+        <height>71</height>
+       </rect>
+      </property>
+      <property name="title">
+       <string>Language</string>
+      </property>
+      <widget class="QComboBox" name="comboBox_language">
+       <property name="geometry">
+        <rect>
+         <x>170</x>
+         <y>30</y>
+         <width>91</width>
+         <height>20</height>
+        </rect>
+       </property>
+      </widget>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="spage_4">
+     <widget class="QWidget" name="verticalLayoutWidget_11">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>10</y>
+        <width>431</width>
+        <height>351</height>
+       </rect>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout_11">
+       <item>
+        <widget class="QCheckBox" name="checkBox_auto_busy">
+         <property name="text">
+          <string>Busy mode after you log in to chat</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="checkBox_show_zuo">
+         <property name="text">
+          <string>Show ZUO</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="checkBox_hide_formating">
+         <property name="text">
+          <string>Disable formatting messages</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="checkBox_hide_join_part">
+         <property name="text">
+          <string>Hide join/part</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="checkBox_hide_join_part_200">
+         <property name="text">
+          <string>Hide join/part when number of nicks &gt; 200</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="checkBox_disable_avatars">
+         <property name="text">
+          <string>Disable avatars</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="checkBox_disable_logs">
+         <property name="text">
+          <string>Disable logs</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="checkBox_disable_sounds">
+         <property name="text">
+          <string>Disable sounds</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="page">
+     <widget class="QGroupBox" name="groupBox_my_font">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>20</y>
+        <width>441</width>
+        <height>171</height>
+       </rect>
+      </property>
+      <property name="title">
+       <string>Default font</string>
+      </property>
+      <widget class="QWidget" name="formLayoutWidget">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>9</y>
+         <width>401</width>
+         <height>151</height>
+        </rect>
+       </property>
+       <layout class="QFormLayout" name="formLayout_8">
+        <property name="formAlignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+        <item row="0" column="0">
+         <widget class="QLabel" name="label_my_bold">
+          <property name="text">
+           <string>Bold:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <widget class="QComboBox" name="comboBox_my_bold">
+          <property name="maximumSize">
+           <size>
+            <width>100</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <item>
+           <property name="text">
+            <string>Off</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>On</string>
+           </property>
+          </item>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QLabel" name="label_my_italic">
+          <property name="text">
+           <string>Italic:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="1">
+         <widget class="QComboBox" name="comboBox_my_italic">
+          <property name="maximumSize">
+           <size>
+            <width>100</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <item>
+           <property name="text">
+            <string>Off</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>On</string>
+           </property>
+          </item>
+         </widget>
+        </item>
+        <item row="2" column="0">
+         <widget class="QLabel" name="label_my_font">
+          <property name="text">
+           <string>Font:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="1">
+         <widget class="QComboBox" name="comboBox_my_font">
+          <property name="maximumSize">
+           <size>
+            <width>100</width>
+            <height>16777215</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="0">
+         <widget class="QLabel" name="label_my_color">
+          <property name="text">
+           <string>Color:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="1">
+         <widget class="QComboBox" name="comboBox_my_color">
+          <property name="maximumSize">
+           <size>
+            <width>100</width>
+            <height>16777215</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="page_4">
+     <widget class="QTabWidget" name="tabWidget">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>441</width>
+        <height>371</height>
+       </rect>
+      </property>
+      <property name="currentIndex">
+       <number>0</number>
+      </property>
+      <widget class="QWidget" name="tabWidgetPage1">
+       <attribute name="title">
+        <string>Main window</string>
+       </attribute>
+       <widget class="QWidget" name="horizontalLayoutWidget_5">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>0</y>
+          <width>421</width>
+          <height>181</height>
+         </rect>
+        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout_6">
+         <item>
+          <layout class="QFormLayout" name="formLayout_9">
+           <item row="0" column="0">
+            <widget class="QLabel" name="label_background_color">
+             <property name="text">
+              <string>Background color:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="1">
+            <widget class="QPushButton" name="pushButton_background_color">
+             <property name="text">
+              <string/>
+             </property>
+             <property name="iconSize">
+              <size>
+               <width>50</width>
+               <height>15</height>
+              </size>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="0">
+            <widget class="QLabel" name="label_default_font_color">
+             <property name="text">
+              <string>Default font color:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="1">
+            <widget class="QPushButton" name="pushButton_default_font_color">
+             <property name="text">
+              <string/>
+             </property>
+             <property name="iconSize">
+              <size>
+               <width>50</width>
+               <height>15</height>
+              </size>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="0">
+            <widget class="QLabel" name="label_channel_font_color">
+             <property name="text">
+              <string>Channel font color:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="1">
+            <widget class="QPushButton" name="pushButton_channel_font_color">
+             <property name="text">
+              <string/>
+             </property>
+             <property name="iconSize">
+              <size>
+               <width>50</width>
+               <height>15</height>
+              </size>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="0">
+            <widget class="QLabel" name="label_join_font_color">
+             <property name="text">
+              <string>Join font color:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="1">
+            <widget class="QPushButton" name="pushButton_join_font_color">
+             <property name="text">
+              <string/>
+             </property>
+             <property name="iconSize">
+              <size>
+               <width>50</width>
+               <height>15</height>
+              </size>
+             </property>
+            </widget>
+           </item>
+           <item row="4" column="0">
+            <widget class="QLabel" name="label_part_font_color">
+             <property name="text">
+              <string>Part font color:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="4" column="1">
+            <widget class="QPushButton" name="pushButton_part_font_color">
+             <property name="text">
+              <string/>
+             </property>
+             <property name="iconSize">
+              <size>
+               <width>50</width>
+               <height>15</height>
+              </size>
+             </property>
+            </widget>
+           </item>
+           <item row="5" column="0">
+            <widget class="QLabel" name="label_quit_font_color">
+             <property name="text">
+              <string>Quit font color:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="5" column="1">
+            <widget class="QPushButton" name="pushButton_quit_font_color">
+             <property name="text">
+              <string/>
+             </property>
+             <property name="iconSize">
+              <size>
+               <width>50</width>
+               <height>15</height>
+              </size>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <layout class="QFormLayout" name="formLayout_10">
+           <item row="0" column="0">
+            <widget class="QLabel" name="label_kick_font_color">
+             <property name="text">
+              <string>Kick font color:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="1">
+            <widget class="QPushButton" name="pushButton_kick_font_color">
+             <property name="text">
+              <string/>
+             </property>
+             <property name="iconSize">
+              <size>
+               <width>50</width>
+               <height>15</height>
+              </size>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="0">
+            <widget class="QLabel" name="label_mode_font_color">
+             <property name="text">
+              <string>Mode font color:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="1">
+            <widget class="QPushButton" name="pushButton_mode_font_color">
+             <property name="text">
+              <string/>
+             </property>
+             <property name="iconSize">
+              <size>
+               <width>50</width>
+               <height>15</height>
+              </size>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="0">
+            <widget class="QLabel" name="label_notice_font_color">
+             <property name="text">
+              <string>Notice font color:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="1">
+            <widget class="QPushButton" name="pushButton_notice_font_color">
+             <property name="text">
+              <string/>
+             </property>
+             <property name="iconSize">
+              <size>
+               <width>50</width>
+               <height>15</height>
+              </size>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="0">
+            <widget class="QLabel" name="label_info_font_color">
+             <property name="text">
+              <string>Info font color:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="1">
+            <widget class="QPushButton" name="pushButton_info_font_color">
+             <property name="text">
+              <string/>
+             </property>
+             <property name="iconSize">
+              <size>
+               <width>50</width>
+               <height>15</height>
+              </size>
+             </property>
+            </widget>
+           </item>
+           <item row="4" column="0">
+            <widget class="QLabel" name="label_error_font_color">
+             <property name="text">
+              <string>Error font color:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="4" column="1">
+            <widget class="QPushButton" name="pushButton_error_font_color">
+             <property name="text">
+              <string/>
+             </property>
+             <property name="iconSize">
+              <size>
+               <width>50</width>
+               <height>15</height>
+              </size>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QPushButton" name="pushButton_mainwindow_restore_default">
+        <property name="geometry">
+         <rect>
+          <x>150</x>
+          <y>190</y>
+          <width>140</width>
+          <height>24</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Restore default</string>
+        </property>
+       </widget>
+      </widget>
+      <widget class="QWidget" name="tabWidgetPage2">
+       <attribute name="title">
+        <string>Nicklist</string>
+       </attribute>
+       <widget class="QWidget" name="horizontalLayoutWidget_6">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>0</y>
+          <width>421</width>
+          <height>181</height>
+         </rect>
+        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout_7">
+         <item>
+          <layout class="QFormLayout" name="formLayout_11">
+           <property name="fieldGrowthPolicy">
+            <enum>QFormLayout::ExpandingFieldsGrow</enum>
+           </property>
+           <item row="0" column="0">
+            <widget class="QLabel" name="label_nicklist_background_color">
+             <property name="text">
+              <string>Background color:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="1">
+            <widget class="QPushButton" name="pushButton_nicklist_background_color">
+             <property name="text">
+              <string/>
+             </property>
+             <property name="iconSize">
+              <size>
+               <width>50</width>
+               <height>15</height>
+              </size>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="0">
+            <widget class="QLabel" name="label_nicklist_nick_color">
+             <property name="text">
+              <string>Nick color:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="1">
+            <widget class="QPushButton" name="pushButton_nicklist_nick_color">
+             <property name="text">
+              <string/>
+             </property>
+             <property name="iconSize">
+              <size>
+               <width>50</width>
+               <height>15</height>
+              </size>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="0">
+            <widget class="QLabel" name="label_nicklist_selected_nick_color">
+             <property name="text">
+              <string>Selected nick color:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="1">
+            <widget class="QPushButton" name="pushButton_nicklist_selected_nick_color">
+             <property name="text">
+              <string/>
+             </property>
+             <property name="iconSize">
+              <size>
+               <width>50</width>
+               <height>15</height>
+              </size>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="0">
+            <widget class="QLabel" name="label_nicklist_busy_nick_color">
+             <property name="text">
+              <string>Busy nick color:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="1">
+            <widget class="QPushButton" name="pushButton_nicklist_busy_nick_color">
+             <property name="text">
+              <string/>
+             </property>
+             <property name="iconSize">
+              <size>
+               <width>50</width>
+               <height>15</height>
+              </size>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <layout class="QFormLayout" name="formLayout_12">
+           <property name="fieldGrowthPolicy">
+            <enum>QFormLayout::ExpandingFieldsGrow</enum>
+           </property>
+           <item row="0" column="0">
+            <widget class="QLabel" name="label_nicklist_gradient_1_color">
+             <property name="text">
+              <string>Gradient 1:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="1">
+            <widget class="QPushButton" name="pushButton_nicklist_gradient_1_color">
+             <property name="text">
+              <string/>
+             </property>
+             <property name="iconSize">
+              <size>
+               <width>50</width>
+               <height>15</height>
+              </size>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="0">
+            <widget class="QLabel" name="label_nicklist_gradient_2_color">
+             <property name="text">
+              <string>Gradient 2:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="1">
+            <widget class="QPushButton" name="pushButton_nicklist_gradient_2_color">
+             <property name="text">
+              <string/>
+             </property>
+             <property name="iconSize">
+              <size>
+               <width>50</width>
+               <height>15</height>
+              </size>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QPushButton" name="pushButton_nicklist_restore_default">
+        <property name="geometry">
+         <rect>
+          <x>150</x>
+          <y>190</y>
+          <width>140</width>
+          <height>24</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Restore default</string>
+        </property>
+       </widget>
+      </widget>
+     </widget>
+    </widget>
+   </widget>
   </widget>
  </widget>
  <resources>
