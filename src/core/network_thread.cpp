@@ -134,10 +134,6 @@ void NetworkThread::send_buffer()
     int iCount = sendBufferCopy.size();
 
     int iLimit = 5;
-    QSettings settings;
-    if (settings.value("disable_avatars").toString() == "on") // without avatars
-        iLimit = 4096;
-
     if (iCount < iLimit)
     {
         for (int i = 0; i < iCount; i++)
@@ -190,7 +186,11 @@ void NetworkThread::send_data(QString strData)
 
 void NetworkThread::send(QString strData)
 {
-    sendBuffer << strData;
+    QSettings settings;
+    if (settings.value("disable_avatars").toString() == "on") // without avatars
+        send_data(strData);
+    else // with avatars
+        sendBuffer << strData;
 }
 
 void NetworkThread::recv()
