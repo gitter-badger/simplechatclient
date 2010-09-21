@@ -9,8 +9,6 @@
         <file>images/mod.png</file>
         <file>images/user.png</file>
         <file>images/channel_avatar.png</file>
-        <file>images/basic_conf.png</file>
-        <file>images/adv_conf.png</file>
         <file>images/dev.png</file>
         <file>images/voice.png</file>
         <file>images/pubcam.png</file>
@@ -55,5 +53,9 @@
         <file>images/oxygen/16x16/meeting-attending.png</file>
         <file>images/oxygen/16x16/emblem-favorite.png</file>
         <file>images/oxygen/16x16/meeting-attending-tentative.png</file>
+        <file>images/oxygen/16x16/dialog-warning.png</file>
+        <file>images/oxygen/16x16/view-media-artist.png</file>
+        <file>images/oxygen/16x16/format-text-color.png</file>
+        <file>images/oxygen/16x16/view-media-visualization.png</file>
     </qresource>
 </RCC>

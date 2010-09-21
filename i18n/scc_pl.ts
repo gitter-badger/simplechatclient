@@ -979,10 +979,6 @@
         <translation>Wyłączenie logów</translation>
     </message>
     <message>
-        <source>Other</source>
-        <translation>Inne</translation>
-    </message>
-    <message>
         <source>Disable sounds</source>
         <translation>Wyłączenie dzwięków</translation>
     </message>

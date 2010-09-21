@@ -48,7 +48,7 @@ private:
     void save_settings();
 
 private slots:
-    void change_page(QListWidgetItem *, QListWidgetItem *);
+    void change_page(QTreeWidgetItem *, QTreeWidgetItem *);
     void hide_pass();
     void show_pass();
     void button_register_nick();

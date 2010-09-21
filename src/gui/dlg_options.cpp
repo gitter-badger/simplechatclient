@@ -45,11 +45,8 @@ DlgOptions::DlgOptions(QWidget *parent) : QDialog(parent)
     ui.radioButton_modern_no_avatars->setText(tr("Modern without avatars"));
     ui.radioButton_classic->setText(tr("Classic"));
     ui.groupBox_language->setTitle(tr("Language"));
-// page adv
-    ui.tabWidget_adv->setTabText(0, tr("Advanced"));
-    ui.tabWidget_adv->setTabText(1, tr("Other"));
-    ui.tabWidget_adv->setTabText(2, tr("Colors"));
 
+// page adv
     ui.checkBox_auto_busy->setText(tr("Busy mode after you log in to chat"));
     ui.checkBox_show_zuo->setText(tr("Show ZUO"));
     ui.checkBox_hide_formating->setText(tr("Disable formatting messages"));
@@ -59,6 +56,7 @@ DlgOptions::DlgOptions(QWidget *parent) : QDialog(parent)
     ui.checkBox_disable_logs->setText(tr("Disable logs"));
     ui.checkBox_disable_sounds->setText(tr("Disable sounds"));
 
+// page default font
     ui.groupBox_my_font->setTitle(tr("Default font"));
     ui.label_my_bold->setText(tr("Bold:"));
     ui.comboBox_my_bold->setItemText(0, tr("Off"));
@@ -69,8 +67,9 @@ DlgOptions::DlgOptions(QWidget *parent) : QDialog(parent)
     ui.label_my_font->setText(tr("Font:"));
     ui.label_my_color->setText(tr("Color:"));
 
-    ui.toolBox->setItemText(0,tr("Main window"));
-    ui.toolBox->setItemText(1,tr("Nicklist"));
+// page colors
+    ui.tabWidget->setTabText(0,tr("Main window"));
+    ui.tabWidget->setTabText(1,tr("Nicklist"));
 
     ui.label_background_color->setText(tr("Background color:"));
     ui.label_default_font_color->setText(tr("Default font color:"));
@@ -94,19 +93,27 @@ DlgOptions::DlgOptions(QWidget *parent) : QDialog(parent)
     ui.pushButton_nicklist_restore_default->setText(tr("Restore default"));
 
 // options list
-    QListWidgetItem *basicConfButton = new QListWidgetItem(ui.listWidget_options);
-    basicConfButton->setIcon(QIcon(":/images/basic_conf.png"));
-    basicConfButton->setText(tr("Basic"));
-    basicConfButton->setTextAlignment(Qt::AlignHCenter);
-    basicConfButton->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
+    QTreeWidgetItem *basic = new QTreeWidgetItem(ui.treeWidget_options);
+    basic->setIcon(0, QIcon(":/images/oxygen/16x16/view-media-artist.png"));
+    basic->setText(0, tr("Basic"));
+    basic->setToolTip(0, tr("Basic"));
 
-    QListWidgetItem *advConfButton = new QListWidgetItem(ui.listWidget_options);
-    advConfButton->setIcon(QIcon(":/images/adv_conf.png"));
-    advConfButton->setText(tr("Advanced"));
-    advConfButton->setTextAlignment(Qt::AlignHCenter);
-    advConfButton->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
+    QTreeWidgetItem *adv = new QTreeWidgetItem(ui.treeWidget_options);
+    adv->setIcon(0, QIcon(":/images/oxygen/16x16/dialog-warning.png"));
+    adv->setText(0, tr("Advanced"));
+    adv->setToolTip(0, tr("Advanced"));
 
-    ui.listWidget_options->setCurrentRow(0);
+    QTreeWidgetItem *defaultfont = new QTreeWidgetItem(ui.treeWidget_options);
+    defaultfont->setIcon(0, QIcon(":/images/oxygen/16x16/format-text-color.png"));
+    defaultfont->setText(0, tr("Default font"));
+    defaultfont->setToolTip(0, tr("Default font"));
+
+    QTreeWidgetItem *colors = new QTreeWidgetItem(ui.treeWidget_options);
+    colors->setIcon(0, QIcon(":/images/oxygen/16x16/view-media-visualization.png"));
+    colors->setText(0, tr("Colors"));
+    colors->setToolTip(0, tr("Colors"));
+
+    ui.treeWidget_options->setCurrentItem(ui.treeWidget_options->itemAt(0,0));
 
 // language
     QStringList strlLanguage;
@@ -134,7 +141,7 @@ DlgOptions::DlgOptions(QWidget *parent) : QDialog(parent)
     }
 
 // signals
-    QObject::connect(ui.listWidget_options, SIGNAL(currentItemChanged(QListWidgetItem*,QListWidgetItem*)), this, SLOT(change_page(QListWidgetItem*,QListWidgetItem*)));
+    QObject::connect(ui.treeWidget_options, SIGNAL(currentItemChanged(QTreeWidgetItem*,QTreeWidgetItem*)), this, SLOT(change_page(QTreeWidgetItem*,QTreeWidgetItem*)));
     QObject::connect(ui.radioButton_unregistered_nick, SIGNAL(clicked()), this, SLOT(hide_pass()));
     QObject::connect(ui.radioButton_registered_nick, SIGNAL(clicked()), this, SLOT(show_pass()));
     QObject::connect(ui.pushButton_register_nick, SIGNAL(clicked()), this, SLOT(button_register_nick()));
@@ -177,12 +184,12 @@ DlgOptions::DlgOptions(QWidget *parent) : QDialog(parent)
     QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(button_cancel()));
 }
 
-void DlgOptions::change_page(QListWidgetItem *current, QListWidgetItem *previous)
+void DlgOptions::change_page(QTreeWidgetItem *current, QTreeWidgetItem *previous)
 {
     if (!current)
         current = previous;
 
-    ui.stackedWidget->setCurrentIndex(ui.listWidget_options->row(current));
+    ui.stackedWidget->setCurrentIndex(ui.treeWidget_options->currentIndex().row());
 }
 
 void DlgOptions::hide_pass()
