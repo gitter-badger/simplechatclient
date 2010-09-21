@@ -58,11 +58,13 @@ void NickListDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opti
         painter->fillRect(option.rect, QBrush(backgroundGradient));
         painter->setPen(selectedFontPen);
     }
+#ifndef Q_WS_WIN
     else if (option.state & QStyle::State_MouseOver)
     {
         painter->fillRect(option.rect, option.palette.highlight());
         painter->setPen(selectedFontPen);
     }
+#endif
     else
         painter->setPen(fontPen);
 
