@@ -43,7 +43,6 @@
 #include <QtWebKit/QWebFrame>
 #include <QtWebKit/QWebView>
 #include "commands.h"
-#include "config.h"
 #include "convert.h"
 #include "dlg_channel_settings.h"
 #include "dlg_emoticons.h"

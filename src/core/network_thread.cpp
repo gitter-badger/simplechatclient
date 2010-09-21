@@ -242,17 +242,13 @@ void NetworkThread::connected()
 
     emit show_msg_all(tr("Connected to server"), 9);
 
-    Config *pConfig = new Config();
-
-    QString strNick = pConfig->get_value("login-nick");
-    QString strPass = pConfig->get_value("login-pass");
+    QSettings settings;
+    QString strNick = settings.value("nick").toString();
+    QString strPass = settings.value("pass").toString();
 
     // nick & pass is null
     if ((strNick.isEmpty() == true) && (strPass.isEmpty() == true))
-    {
-        pConfig->set_value("login-nick", "~test");
         strNick = "~test";
-    }
 
     // decrypt pass
     if (strPass.isEmpty() == false)
@@ -264,16 +260,13 @@ void NetworkThread::connected()
 
     // correct nick
     if ((strPass.isEmpty() == true) && (strNick[0] != '~'))
-    {
         strNick = "~"+strNick;
-        pConfig->set_value("login-nick", strNick);
-    }
     if ((strPass.isEmpty() == false) && (strNick[0] == '~'))
-    {
         strNick = strNick.right(strNick.length()-1);
-        pConfig->set_value("login-nick", strNick);
-    }
 
+    Config *pConfig = new Config();
+    settings.setValue("nick", strNick);
+    pConfig->set_value("login-nick", strNick);
     delete pConfig;
 
     // update nick

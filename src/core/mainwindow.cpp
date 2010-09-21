@@ -65,6 +65,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
 // config values
     Config *pConfig = new Config();
+    QString strLoginNick = pConfig->get_value("login-nick");
+    QString strLoginPass = pConfig->get_value("login-pass");
     QString strLanguage = pConfig->get_value("language");
     QString strAutoBusy = pConfig->get_value("auto_busy");
     QString strShowZuo = pConfig->get_value("show_zuo");
@@ -105,12 +107,14 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 // settings
     QSettings settings;
     settings.clear();
-    settings.setValue("version", "1.0.9.536");
+    settings.setValue("version", "1.0.9.537");
     settings.setValue("debug", "off");
     settings.setValue("logged", "off");
     settings.setValue("busy", "off");
     settings.setValue("override", "off");
     settings.setValue("autojoin_favourites", "on");
+    settings.setValue("nick", strLoginNick);
+    settings.setValue("pass", strLoginPass);
     settings.setValue("language", strLanguage);
     settings.setValue("auto_busy", strAutoBusy);
     settings.setValue("show_zuo", strShowZuo);
@@ -422,11 +426,8 @@ void MainWindow::cams_clicked()
 #ifdef Q_WS_WIN
     if ((pNetwork->is_connected() == true) && (pNetwork->is_writable() == true))
     {
-        Config *pConfig = new Config();
-        QString strMe = pConfig->get_value("login-nick");
-        delete pConfig;
-
         QSettings settings;
+        QString strMe = settings.value("nick").toString();
         QString strUOKey = settings.value("uokey").toString();
         (new Kamerzysta(camSocket))->show(strMe, strUOKey);
     }

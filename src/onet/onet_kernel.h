@@ -24,7 +24,6 @@
 #include <QMessageBox>
 #include <QObject>
 #include "channel_avatar.h"
-#include "config.h"
 #include "dlg_channel_favourites.h"
 #include "dlg_channel_homes.h"
 #include "dlg_channel_key.h"

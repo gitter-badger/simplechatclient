@@ -195,6 +195,10 @@ void DlgRegisterNick::parse_result(QString strResult)
         }
 
         // save values
+        QSettings settings;
+        settings.setValue("nick", strNick);
+        settings.setValue("pass", strPassword);
+
         Config *pConfig = new Config();
         pConfig->set_value("login-nick", strNick);
         pConfig->set_value("login-pass", strPassword);

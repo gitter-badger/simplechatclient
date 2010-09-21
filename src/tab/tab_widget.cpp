@@ -901,9 +901,8 @@ void TabWidget::change_flag(QString strNick, QString strNewFlag)
     del_user(strNick);
     add_user(strNick, strPrefix, strSuffix);
 
-    Config *pConfig = new Config();
-    QString strMe = pConfig->get_value("login-nick");
-    delete pConfig;
+    QSettings settings;
+    QString strMe = settings.value("nick").toString();
 
     if (strNick == strMe)
     {
@@ -1243,9 +1242,8 @@ void TabWidget::send_message(bool bType)
         QString strTextOriginal = strText;
         strLast_msg = strText;
 
-        Config *pConfig = new Config();
-        QString strMe = pConfig->get_value("login-nick");
-        delete pConfig;
+        QSettings settings;
+        QString strMe = settings.value("nick").toString();
 
         if ((strText[0] == '/') && (strText[1] != '/'))
         {

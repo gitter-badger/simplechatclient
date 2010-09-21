@@ -152,9 +152,8 @@ void TabContainer::show_msg(QString strTime, QString strChannel, QString strData
     if (i != -1)
     {
         // hilight
-        Config *pConfig = new Config();
-        QString strMe = pConfig->get_value("login-nick");
-        delete pConfig;
+        QSettings settings;
+        QString strMe = settings.value("nick").toString();
 
         if (strData.indexOf(QRegExp("(\\s|\\W)"+strMe+"\\b")) != -1)
         {
@@ -199,9 +198,8 @@ void TabContainer::show_msg(QString strChannel, QString strData, int iLevel)
     if (i != -1)
     {
         // hilight
-        Config *pConfig = new Config();
-        QString strMe = pConfig->get_value("login-nick");
-        delete pConfig;
+        QSettings settings;
+        QString strMe = settings.value("nick").toString();
 
         if (strData.indexOf(QRegExp("(\\s|\\W)"+strMe+"\\b")) != -1)
         {

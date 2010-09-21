@@ -23,7 +23,6 @@
 
 #include <QObject>
 #include <QSettings>
-#include "config.h"
 #include "log.h"
 #include "network.h"
 #include "dlg_channel_settings.h"

@@ -558,9 +558,7 @@ void OnetKernel::raw_join()
 
     tabc->show_msg(strChannel, strDisplay, 1);
 
-    Config *pConfig = new Config();
-    QString strMe = pConfig->get_value("login-nick");
-    delete pConfig;
+    QString strMe = settings.value("nick").toString();
 
     if (strNick == strMe)
     {
@@ -636,9 +634,7 @@ void OnetKernel::raw_part()
 
     // if self part
 
-    Config *pConfig = new Config();
-    QString strMe = pConfig->get_value("login-nick");
-    delete pConfig;
+    QString strMe = settings.value("nick").toString();
 
     if (strNick == strMe)
     {
@@ -732,9 +728,8 @@ void OnetKernel::raw_kick()
     if ((mNickAvatar->contains(strNick) == true) && (tabc->get_nick_channels(strNick) == 0))
         mNickAvatar->remove(strNick);
 
-    Config *pConfig = new Config();
-    QString strMe = pConfig->get_value("login-nick");
-    delete pConfig;
+    QSettings settings;
+    QString strMe = settings.value("nick").toString();
 
     if (strNick == strMe)
     {
@@ -2441,9 +2436,8 @@ void OnetKernel::raw_353()
             // if ^ rename channel
             if (strChannel[0] == '^')
             {
-                Config *pConfig = new Config();
-                QString strMe = pConfig->get_value("login-nick");
-                delete pConfig;
+                QSettings settings;
+                QString strMe = settings.value("nick").toString();
 
                 if (strCleanNick != strMe)
                 {

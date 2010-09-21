@@ -1256,6 +1256,10 @@ void DlgOptions::save_settings()
     }
 
 // save values
+    QSettings settings;
+    settings.setValue("nick", strNick);
+    settings.setValue("pass", strPass);
+
     Config *pConfig = new Config();
     pConfig->set_value("login-nick", strNick);
     pConfig->set_value("login-pass", strPass);
