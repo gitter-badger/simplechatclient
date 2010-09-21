@@ -6,19 +6,19 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>612</width>
+    <width>642</width>
     <height>412</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>612</width>
+    <width>642</width>
     <height>412</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>612</width>
+    <width>642</width>
     <height>412</height>
    </size>
   </property>
@@ -34,7 +34,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>611</width>
+     <width>641</width>
      <height>411</height>
     </rect>
    </property>
@@ -45,7 +45,7 @@
        <widget class="QTreeWidget" name="treeWidget_options">
         <property name="maximumSize">
          <size>
-          <width>160</width>
+          <width>180</width>
           <height>380</height>
          </size>
         </property>
@@ -265,7 +265,7 @@
              <rect>
               <x>10</x>
               <y>10</y>
-              <width>421</width>
+              <width>431</width>
               <height>351</height>
              </rect>
             </property>
@@ -335,7 +335,7 @@
              <rect>
               <x>10</x>
               <y>20</y>
-              <width>411</width>
+              <width>431</width>
               <height>171</height>
              </rect>
             </property>
@@ -347,7 +347,7 @@
               <rect>
                <x>20</x>
                <y>9</y>
-               <width>371</width>
+               <width>391</width>
                <height>151</height>
               </rect>
              </property>
@@ -453,21 +453,21 @@
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>428</width>
+              <width>451</width>
               <height>371</height>
              </rect>
             </property>
             <property name="currentIndex">
              <number>0</number>
             </property>
-            <widget class="QWidget" name="tabWidgetPage1" native="true">
+            <widget class="QWidget" name="tabWidgetPage1">
              <attribute name="title">
               <string>Main window</string>
              </attribute>
              <widget class="QWidget" name="horizontalLayoutWidget">
               <property name="geometry">
                <rect>
-                <x>0</x>
+                <x>10</x>
                 <y>0</y>
                 <width>421</width>
                 <height>181</height>
@@ -707,7 +707,7 @@
              <widget class="QPushButton" name="pushButton_mainwindow_restore_default">
               <property name="geometry">
                <rect>
-                <x>140</x>
+                <x>150</x>
                 <y>190</y>
                 <width>140</width>
                 <height>24</height>
@@ -718,14 +718,14 @@
               </property>
              </widget>
             </widget>
-            <widget class="QWidget" name="tabWidgetPage2" native="true">
+            <widget class="QWidget" name="tabWidgetPage2">
              <attribute name="title">
               <string>Nicklist</string>
              </attribute>
              <widget class="QWidget" name="horizontalLayoutWidget_3">
               <property name="geometry">
                <rect>
-                <x>0</x>
+                <x>10</x>
                 <y>0</y>
                 <width>421</width>
                 <height>181</height>
@@ -871,7 +871,7 @@
              <widget class="QPushButton" name="pushButton_nicklist_restore_default">
               <property name="geometry">
                <rect>
-                <x>140</x>
+                <x>150</x>
                 <y>190</y>
                 <width>140</width>
                 <height>24</height>
