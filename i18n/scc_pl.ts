@@ -1078,6 +1078,14 @@
         <source>Gradient 2:</source>
         <translation>Gradient 2:</translation>
     </message>
+    <message>
+        <source>Embedded styles</source>
+        <translation>Wbudowane skórki</translation>
+    </message>
+    <message>
+        <source>Set</source>
+        <translation>Ustaw</translation>
+    </message>
 </context>
 <context>
     <name>DlgPrivilege</name>

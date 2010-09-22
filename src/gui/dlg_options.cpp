@@ -30,6 +30,7 @@ DlgOptions::DlgOptions(QWidget *parent) : QDialog(parent)
     myparent = parent;
 
     ui.pushButton_register_nick->setIcon(QIcon(":/images/oxygen/16x16/list-add-user.png"));
+    ui.pushButton_set_embedded_style->setIcon(QIcon(":/images/oxygen/16x16/dialog-ok-apply.png"));
     ui.buttonBox->button(QDialogButtonBox::Ok)->setIcon(QIcon(":/images/oxygen/16x16/dialog-ok.png"));
     ui.buttonBox->button(QDialogButtonBox::Cancel)->setIcon(QIcon(":/images/oxygen/16x16/dialog-cancel.png"));
 
@@ -92,6 +93,10 @@ DlgOptions::DlgOptions(QWidget *parent) : QDialog(parent)
     ui.label_nicklist_gradient_2_color->setText(tr("Gradient 2:"));
     ui.pushButton_nicklist_restore_default->setText(tr("Restore default"));
 
+// page embedded styles
+    ui.groupBox_embedded_styles->setTitle(tr("Embedded styles"));
+    ui.pushButton_set_embedded_style->setText(tr("Set"));
+
 // options list
     QTreeWidgetItem *basic = new QTreeWidgetItem(ui.treeWidget_options);
     basic->setIcon(0, QIcon(":/images/oxygen/16x16/view-media-artist.png"));
@@ -112,6 +117,11 @@ DlgOptions::DlgOptions(QWidget *parent) : QDialog(parent)
     colors->setIcon(0, QIcon(":/images/oxygen/16x16/view-media-visualization.png"));
     colors->setText(0, tr("Colors"));
     colors->setToolTip(0, tr("Colors"));
+
+    QTreeWidgetItem *embedded_styles = new QTreeWidgetItem(ui.treeWidget_options);
+    embedded_styles->setIcon(0, QIcon(":/images/oxygen/16x16/system-switch-user.png"));
+    embedded_styles->setText(0, tr("Embedded styles"));
+    embedded_styles->setToolTip(0, tr("Embedded styles"));
 
     ui.treeWidget_options->setCurrentItem(ui.treeWidget_options->itemAt(0,0));
 
@@ -139,6 +149,10 @@ DlgOptions::DlgOptions(QWidget *parent) : QDialog(parent)
         ui.comboBox_my_color->insertItem(iComboBoxMyColors, pixmap, "");
         iComboBoxMyColors++;
     }
+
+// embedded styles
+    foreach (QString strStyleName, QStyleFactory::keys())
+        ui.comboBox_embedded_styles->addItem(strStyleName);
 
 // signals
     QObject::connect(ui.treeWidget_options, SIGNAL(currentItemChanged(QTreeWidgetItem*,QTreeWidgetItem*)), this, SLOT(change_page(QTreeWidgetItem*,QTreeWidgetItem*)));
@@ -180,6 +194,7 @@ DlgOptions::DlgOptions(QWidget *parent) : QDialog(parent)
     QObject::connect(ui.pushButton_nicklist_gradient_1_color, SIGNAL(clicked()), this, SLOT(set_nicklist_gradient_1_color()));
     QObject::connect(ui.pushButton_nicklist_gradient_2_color, SIGNAL(clicked()), this, SLOT(set_nicklist_gradient_2_color()));
     QObject::connect(ui.pushButton_nicklist_restore_default, SIGNAL(clicked()), this, SLOT(nicklist_restore_default()));
+    QObject::connect(ui.pushButton_set_embedded_style, SIGNAL(clicked()), this, SLOT(set_embedded_style()));
     QObject::connect(ui.buttonBox, SIGNAL(accepted()), this, SLOT(button_ok()));
     QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(button_cancel()));
 }
@@ -1101,6 +1116,12 @@ void DlgOptions::nicklist_restore_default()
 
     // set
     set_nicklist_colors();
+}
+
+void DlgOptions::set_embedded_style()
+{
+    QStyle *style = QStyleFactory::create(ui.comboBox_embedded_styles->currentText());
+    QApplication::setStyle(style);
 }
 
 void DlgOptions::button_cancel()

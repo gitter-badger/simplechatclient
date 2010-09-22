@@ -28,6 +28,7 @@
 #include <QMessageBox>
 #include <QSettings>
 #include <QShowEvent>
+#include <QStyleFactory>
 #include "config.h"
 #include "crypt.h"
 #include "dlg_register_nick.h"
@@ -87,6 +88,7 @@ private slots:
     void set_nicklist_gradient_1_color();
     void set_nicklist_gradient_2_color();
     void nicklist_restore_default();
+    void set_embedded_style();
     void button_ok();
     void button_cancel();
 

@@ -57,5 +57,6 @@
         <file>images/oxygen/16x16/view-media-artist.png</file>
         <file>images/oxygen/16x16/format-text-color.png</file>
         <file>images/oxygen/16x16/view-media-visualization.png</file>
+        <file>images/oxygen/16x16/system-switch-user.png</file>
     </qresource>
 </RCC>
