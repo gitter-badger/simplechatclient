@@ -636,7 +636,10 @@ void NickListWidget::item_selected()
 void NickListWidget::mousePressEvent(QMouseEvent *event)
 {
     if (event->button()== Qt::RightButton)
+    {
+        QTreeWidget::mousePressEvent(event);
         item_selected();
+    }
     else
         QTreeWidget::mousePressEvent(event);
 }
