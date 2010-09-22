@@ -33,8 +33,6 @@ NickListWidget::NickListWidget(QWidget *parent, Network *param1, QString param2,
     header()->hide();
     setSortingEnabled(false);
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-
-    QObject::connect(this, SIGNAL(itemSelectionChanged()), this, SLOT(item_selected()));
 }
 
 NickListWidget::~NickListWidget()
@@ -633,6 +631,14 @@ void NickListWidget::item_selected()
         // get new user info
         pNetwork->send(QString("NS INFO %1").arg(strNick));
     }
+}
+
+void NickListWidget::mousePressEvent(QMouseEvent *event)
+{
+    if (event->button()== Qt::RightButton)
+        item_selected();
+    else
+        QTreeWidget::mousePressEvent(event);
 }
 
 void NickListWidget::contextMenuEvent(QContextMenuEvent *e)

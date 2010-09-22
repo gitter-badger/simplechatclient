@@ -76,6 +76,7 @@ private:
     bool exist_child(QString, QString);
     void remove_child(QString);
     QTreeWidgetItem* create_child(QString, QString, QString, QPixmap);
+    void item_selected();
 
 private slots:
     void priv();
@@ -98,9 +99,9 @@ private slots:
     void voice_add();
     void voice_del();
     void invite();
-    void item_selected();
 
 protected:
+    virtual void mousePressEvent(QMouseEvent *);
     virtual void contextMenuEvent(QContextMenuEvent *);
 
 };
