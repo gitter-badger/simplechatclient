@@ -26,7 +26,7 @@
    <string>Options</string>
   </property>
   <property name="windowIcon">
-   <iconset>
+   <iconset resource="../scc.qrc">
     <normaloff>:/images/logo_64.png</normaloff>:/images/logo_64.png</iconset>
   </property>
   <widget class="QDialogButtonBox" name="buttonBox">
@@ -715,9 +715,9 @@
        <widget class="QPushButton" name="pushButton_mainwindow_restore_default">
         <property name="geometry">
          <rect>
-          <x>150</x>
+          <x>140</x>
           <y>190</y>
-          <width>140</width>
+          <width>160</width>
           <height>24</height>
          </rect>
         </property>
@@ -879,9 +879,9 @@
        <widget class="QPushButton" name="pushButton_nicklist_restore_default">
         <property name="geometry">
          <rect>
-          <x>150</x>
+          <x>140</x>
           <y>190</y>
-          <width>140</width>
+          <width>160</width>
           <height>24</height>
          </rect>
         </property>
@@ -896,9 +896,9 @@
      <widget class="QGroupBox" name="groupBox_embedded_styles">
       <property name="geometry">
        <rect>
-        <x>50</x>
+        <x>0</x>
         <y>20</y>
-        <width>351</width>
+        <width>441</width>
         <height>131</height>
        </rect>
       </property>
@@ -908,7 +908,7 @@
       <widget class="QComboBox" name="comboBox_embedded_styles">
        <property name="geometry">
         <rect>
-         <x>129</x>
+         <x>170</x>
          <y>40</y>
          <width>91</width>
          <height>25</height>
@@ -918,7 +918,7 @@
       <widget class="QPushButton" name="pushButton_set_embedded_style">
        <property name="geometry">
         <rect>
-         <x>130</x>
+         <x>170</x>
          <y>80</y>
          <width>91</width>
          <height>24</height>
@@ -933,6 +933,8 @@
    </widget>
   </widget>
  </widget>
- <resources/>
+ <resources>
+  <include location="../scc.qrc"/>
+ </resources>
  <connections/>
 </ui>
