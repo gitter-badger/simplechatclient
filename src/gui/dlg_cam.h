@@ -44,26 +44,26 @@ private:
     Network *pNetwork;
     QString strNick;
     QTcpSocket *socket;
-    QString strDataRecv;
-    QByteArray bData;
     QTimer *timer;
     bool bText;
-    int iBytes_recv;
-    int iBytes_need;
     int iCam_cmd;
-    bool bAuthorized;
+    QByteArray bData;
+    int iBytes_need;
+    int iBytes_recv;
 
     void show_img(QByteArray);
     void network_connect();
     void network_send(QString);
     void network_disconnect();
+    void data_kernel();
+    void text_kernel(QString);
 
 private slots:
     void button_ok();
     void network_read();
     void network_connected();
-    void network_keepalive();
     void network_disconnected();
+    void network_keepalive();
     void error(QAbstractSocket::SocketError);
 
 protected:
