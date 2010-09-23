@@ -237,7 +237,7 @@ void NetworkThread::connected()
 {
     connectAct->setText(tr("&Disconnect"));
     connectAct->setIconText(tr("&Disconnect"));
-    connectAct->setIcon(QIcon(":/images/oxygen/16x16/network-connect.png"));
+    connectAct->setIcon(QIcon(":/images/oxygen/16x16/network-disconnect.png"));
     lagAct->setText("Lag: 0s");
 
     emit show_msg_all(tr("Connected to server"), 9);
@@ -287,7 +287,7 @@ void NetworkThread::disconnected()
     {
         connectAct->setText(tr("&Connect"));
         connectAct->setIconText(tr("&Connect"));
-        connectAct->setIcon(QIcon(":/images/oxygen/16x16/network-disconnect.png"));
+        connectAct->setIcon(QIcon(":/images/oxygen/16x16/network-connect.png"));
         lagAct->setText("Lag: 0s");
 
         if (socket->error() != QAbstractSocket::UnknownSocketError)
@@ -320,7 +320,7 @@ void NetworkThread::error(QAbstractSocket::SocketError err)
 
     connectAct->setText(tr("&Connect"));
     connectAct->setIconText(tr("&Connect"));
-    connectAct->setIcon(QIcon(":/images/oxygen/16x16/network-disconnect.png"));
+    connectAct->setIcon(QIcon(":/images/oxygen/16x16/network-connect.png"));
     lagAct->setText("Lag: 0s");
 
     if (socket->state() == QAbstractSocket::ConnectedState)

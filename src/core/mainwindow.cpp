@@ -30,7 +30,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
 // action
     showAct = new QAction(QIcon(":/images/logo_64.png"),tr("Show"),this);
-    connectAct = new QAction(QIcon(":/images/oxygen/16x16/network-disconnect.png"),tr("Connect"),this);
+    connectAct = new QAction(QIcon(":/images/oxygen/16x16/network-connect.png"),tr("Connect"),this);
     closeAct = new QAction(QIcon(":/images/oxygen/16x16/application-exit.png"),tr("Close"),this);
     optionsAct = new QAction(QIcon(":/images/oxygen/16x16/preferences-system.png"),tr("Options"),this);
     channel_listAct = new QAction(QIcon(":/images/oxygen/16x16/documentation.png"),tr("Channel list"),this);
@@ -107,7 +107,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 // settings
     QSettings settings;
     settings.clear();
-    settings.setValue("version", "1.0.9.546");
+    settings.setValue("version", "1.0.9.547");
     settings.setValue("debug", "off");
     settings.setValue("logged", "off");
     settings.setValue("busy", "off");
@@ -371,7 +371,7 @@ void MainWindow::button_connect()
     {
         connectAct->setText(tr("&Disconnect"));
         connectAct->setIconText(tr("&Disconnect"));
-        connectAct->setIcon(QIcon(":/images/oxygen/16x16/network-connect.png"));
+        connectAct->setIcon(QIcon(":/images/oxygen/16x16/network-disconnect.png"));
         settings.setValue("reconnect", "true");
         pNetwork->connect();
     }
@@ -381,7 +381,7 @@ void MainWindow::button_connect()
         pNetwork->send("QUIT");
         connectAct->setText(tr("&Connect"));
         connectAct->setIconText(tr("&Connect"));
-        connectAct->setIcon(QIcon(":/images/oxygen/16x16/network-disconnect.png"));
+        connectAct->setIcon(QIcon(":/images/oxygen/16x16/network-connect.png"));
         pNetwork->close();
     }
 }
