@@ -216,7 +216,8 @@ private slots:
     void change_scroll_position();
 
 protected:
-    virtual void keyPressEvent(QKeyEvent*);
+    virtual void resizeEvent(QResizeEvent *);
+    virtual void keyPressEvent(QKeyEvent *);
 
 };
 

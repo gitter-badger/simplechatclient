@@ -1383,6 +1383,21 @@ void TabWidget::change_scroll_position()
         mainWebView->page()->mainFrame()->setScrollBarValue(Qt::Vertical, iScrollBarValue);
 }
 
+void TabWidget::resizeEvent(QResizeEvent *e)
+{
+    // resize splitter
+    if (strName != "Status")
+    {
+        QList <int> sizes;
+        sizes.append(this->width()-180); // size widget 1
+        sizes.append(180); // size widget 2
+        splitter->setSizes(sizes);
+    }
+
+    // standard handle event
+    QWidget::resizeEvent(e);
+}
+
 void TabWidget::keyPressEvent(QKeyEvent *e)
 {
     if (e->key() == Qt::Key_Up)
