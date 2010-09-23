@@ -1179,7 +1179,7 @@ void OnetKernel::raw_001()
 {
     QSettings settings;
 
-// busy
+// logged
     settings.setValue("logged", "on");
 
 // protocol

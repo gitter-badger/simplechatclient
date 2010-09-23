@@ -277,38 +277,32 @@ void Kamerzysta::network_disconnect()
 
 void Kamerzysta::network_read()
 {
-    if (socket->bytesAvailable() <= 0) return;
-
-    for (int i = 0; i < socket->bytesAvailable(); i++)
+    while(socket->canReadLine())
     {
-        QString b = socket->read(1);
-        strDataRecv += b;
+        // read line
+        QByteArray data = socket->readLine().trimmed();
+        QString strDataRecv = QString(data);
+
+        // data
+        if (strDataRecv == "d")
+        {
+            Config *pConfig = new Config();
+            QString strMe = pConfig->get_value("login-nick");
+            delete pConfig;
+
+            network_send(QString("d%1|%2").arg(strMe).arg(strUOKey));
+            if (strNick != strMe)
+                network_send(QString("e%1").arg(strNick).arg(strUOKey));
+        }
+
+        QSettings settings;
+        if (settings.value("debug").toString() == "on")
+        {
+            Log *l = new Log();
+            l->save("kamerzysta", "Recv:"+strDataRecv);
+            delete l;
+        }
     }
-
-    strDataRecv.replace(QRegExp("(\r|\n)"), "");
-
-    // data
-    if (strDataRecv == "d")
-    {
-        Config *pConfig = new Config();
-        QString strMe = pConfig->get_value("login-nick");
-        delete pConfig;
-
-        network_send(QString("d%1|%2").arg(strMe).arg(strUOKey));
-        if (strNick != strMe)
-            network_send(QString("e%1").arg(strNick).arg(strUOKey));
-    }
-
-    QSettings settings;
-    if (settings.value("debug").toString() == "on")
-    {
-        Log *l = new Log();
-        l->save("kamerzysta", "Recv:"+strDataRecv);
-        delete l;
-    }
-
-    strDataRecv.clear();
-    network_read();
 }
 
 void Kamerzysta::error(QAbstractSocket::SocketError err)

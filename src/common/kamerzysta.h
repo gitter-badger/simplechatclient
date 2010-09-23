@@ -50,7 +50,6 @@ private:
     QString strKamerzystaFile;
     int iPort;
     QTcpSocket *socket;
-    QString strDataRecv;
     int iTryGetPort;
 
     void get_path();

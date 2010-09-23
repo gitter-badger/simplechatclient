@@ -63,7 +63,6 @@ private:
     QTimer *timer;
     QTimer *timerLag;
     int iActive;
-    QString strDataRecv;
     QList <QString> sendBuffer;
 
     void send_data(QString);

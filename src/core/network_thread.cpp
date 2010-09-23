@@ -195,42 +195,18 @@ void NetworkThread::send(QString strData)
 
 void NetworkThread::recv()
 {
-    bool bCompleted = true;
-
-    strDataRecv.append(socket->readAll());
-    if (strDataRecv.isEmpty()) return;
-
-    if (strDataRecv[strDataRecv.length()-1] != '\n')
+    while(socket->canReadLine())
     {
-        if (socket->bytesAvailable() != 0)
-            this->recv();
-        else
-            bCompleted = false;
+        // read line
+        QByteArray data = socket->readLine().trimmed();
+
+        // set active
+        QDateTime dt = QDateTime::currentDateTime();
+        iActive = (int)dt.toTime_t();
+
+        // process to kernel
+        emit send_to_kernel(QString(data));
     }
-
-    QStringList strDataLine = strDataRecv.split("\r\n");
-    if (strDataLine.size() < 2)
-        QTimer::singleShot(100, this, SLOT(recv()));
-    strDataRecv.clear();
-
-    if (bCompleted == false)
-    {
-        strDataRecv = strDataLine.last();
-        strDataLine.removeLast();
-    }
-
-    QDateTime dt = QDateTime::currentDateTime();
-    iActive = (int)dt.toTime_t();
-
-    for (int i = 0; i < strDataLine.size(); i++)
-    {
-        QString strLine = strDataLine[i];
-        if (strLine.isEmpty() == false)
-            emit send_to_kernel(strLine);
-    }
-
-    if (bCompleted == false)
-        QTimer::singleShot(100, this, SLOT(recv()));
 }
 
 void NetworkThread::connected()
@@ -348,5 +324,8 @@ void NetworkThread::timeout_lag()
     QDateTime dta = QDateTime::currentDateTime();
     int i1 = (int)dta.toTime_t(); // seconds that have passed since 1970
     QString t2 = dta.toString("zzz"); // miliseconds
-    emit send(QString("PING :%1.%2").arg(i1).arg(t2));
+
+    QSettings settings;
+    if ((is_connected() == true) && (is_writable() == true) && (settings.value("logged").toString() == "on"))
+        emit send(QString("PING :%1.%2").arg(i1).arg(t2));
 }
