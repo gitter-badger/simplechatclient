@@ -233,21 +233,19 @@ int main(int argc, char *argv[])
     QString strLanguage = pConfig->get_value("language");
     delete pConfig;
 
+    // set system locale if not found config language
+    if (strLanguage.isEmpty() == true)
+        strLanguage = QLocale::system().name();
+
     // set translate
     QString strPath = QCoreApplication::applicationDirPath();
 
     QTranslator qtTranslator;
-    if (strLanguage.isEmpty() == true)
-        qtTranslator.load(QString("%1/i18n/qt_%2").arg(strPath).arg(QLocale::system().name()));
-    else
-        qtTranslator.load(QString("%1/i18n/qt_%2").arg(strPath).arg(strLanguage));
+    qtTranslator.load(QString("%1/i18n/qt_%2").arg(strPath).arg(strLanguage));
     app.installTranslator(&qtTranslator);
 
     QTranslator sccTranslator;
-    if (strLanguage.isEmpty() == true)
-        sccTranslator.load(QString("%1/i18n/scc_%2").arg(strPath).arg(QLocale::system().name()));
-    else
-        sccTranslator.load(QString("%1/i18n/scc_%2").arg(strPath).arg(strLanguage));
+    sccTranslator.load(QString("%1/i18n/scc_%2").arg(strPath).arg(strLanguage));
     app.installTranslator(&sccTranslator);
 
     // set locale
