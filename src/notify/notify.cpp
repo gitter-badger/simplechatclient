@@ -23,20 +23,25 @@
 Notify::Notify()
 {
     apath = QCoreApplication::applicationDirPath();
-#ifdef Q_WS_WIN
-    music = Phonon::createPlayer(Phonon::MusicCategory, Phonon::MediaSource(apath+"\\3rdparty\\sounds\\beep.wav"));
-#else
-    music = Phonon::createPlayer(Phonon::MusicCategory, Phonon::MediaSource(apath+"/3rdparty/sounds/beep.wav"));
-#endif
+    phonon_created = false;
 }
 
 Notify::~Notify()
 {
-    delete music;
+    if (phonon_created == true)
+        delete music;
 }
 
 void Notify::play()
 {
+    // create if not exist
+    if (phonon_created == false)
+    {
+        phonon_created = true;
+        music = Phonon::createPlayer(Phonon::NotificationCategory, Phonon::MediaSource(apath+"/3rdparty/sounds/beep.wav"));
+    }
+
+    // play
     music->stop();
     music->play();
 }

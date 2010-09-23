@@ -37,6 +37,7 @@ public:
 private:
     QString apath;
     Phonon::MediaObject *music;
+    bool phonon_created;
 
 };
 
