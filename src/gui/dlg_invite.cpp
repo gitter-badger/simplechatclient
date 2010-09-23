@@ -20,7 +20,7 @@
 
 #include "dlg_invite.h"
 
-DlgInvite::DlgInvite(QWidget *parent, Network *param1, TabContainer *param2, QString param3, QString param4) : QDialog(parent)
+DlgInvite::DlgInvite(QWidget *parent, Network *param1, QString param2, QString param3) : QDialog(parent)
 {
     ui.setupUi(this);
     setAttribute(Qt::WA_DeleteOnClose);
@@ -29,9 +29,8 @@ DlgInvite::DlgInvite(QWidget *parent, Network *param1, TabContainer *param2, QSt
     move(QApplication::desktop()->screen()->rect().center() - rect().center());
 
     pNetwork = param1;
-    tabc = param2;
-    strNick = param3;
-    strChannel = param4;
+    strNick = param2;
+    strChannel = param3;
 
     ui.pushButton_whois->setIcon(QIcon(":/images/oxygen/16x16/user-properties.png"));
     ui.pushButton_reject->setIcon(QIcon(":/images/oxygen/16x16/user-invisible.png"));

@@ -1020,7 +1020,7 @@ void OnetKernel::raw_invite()
     if (strWhere[0] == ':')
         strWhere = strWhere.right(strWhere.length()-1);
 
-    (new DlgInvite(myparent, pNetwork, tabc, strWho, strWhere))->show();
+    (new DlgInvite(myparent, pNetwork, strWho, strWhere))->show();
 }
 
 // :cf1f3.onet TOPIC #scc :Simple Chat Client; current version: beta;

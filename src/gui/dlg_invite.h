@@ -24,19 +24,17 @@
 #include <QDesktopWidget>
 #include <QDialog>
 #include "network.h"
-#include "tab_container.h"
 #include "ui_invite.h"
 
 class DlgInvite : public QDialog
 {
     Q_OBJECT
 public:
-    DlgInvite(QWidget *, Network *, TabContainer *, QString, QString);
+    DlgInvite(QWidget *, Network *, QString, QString);
 
 private:
     Ui::uiInvite ui;
     Network *pNetwork;
-    TabContainer *tabc;
     QString strNick;
     QString strChannel;
 
