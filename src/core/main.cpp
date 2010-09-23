@@ -235,12 +235,23 @@ int main(int argc, char *argv[])
 
     // set translate
     QString strPath = QCoreApplication::applicationDirPath();
+
+    QTranslator qtTranslator;
+    if (strLanguage.isEmpty() == true)
+        qtTranslator.load(QString("%1/i18n/qt_%2").arg(strPath).arg(QLocale::system().name()));
+    else
+        qtTranslator.load(QString("%1/i18n/qt_%2").arg(strPath).arg(strLanguage));
+    app.installTranslator(&qtTranslator);
+
     QTranslator sccTranslator;
     if (strLanguage.isEmpty() == true)
         sccTranslator.load(QString("%1/i18n/scc_%2").arg(strPath).arg(QLocale::system().name()));
     else
         sccTranslator.load(QString("%1/i18n/scc_%2").arg(strPath).arg(strLanguage));
     app.installTranslator(&sccTranslator);
+
+    // set locale
+    //QLocale::setDefault(QLocale::system());
 
     MainWindow mainWin;
     mainWin.set_debug(bDebug);

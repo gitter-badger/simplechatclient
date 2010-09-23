@@ -1,5 +1,6 @@
 
 set (TRANSLATION_SRCS
+	qt_pl.ts
 	scc_pl.ts
 )
 
