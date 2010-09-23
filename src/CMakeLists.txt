@@ -14,7 +14,6 @@ set (scc_UIS
 	../ui/invite.ui
 	../ui/moderation.ui
 	../ui/options.ui
-	../ui/privilege.ui
 	../ui/register_nick.ui
 	../ui/update.ui
 	../ui/user_profile.ui
@@ -50,7 +49,6 @@ set (scc_SRCS
 	gui/dlg_invite.cpp
 	gui/dlg_moderation.cpp
 	gui/dlg_options.cpp
-	gui/dlg_privilege.cpp
 	gui/dlg_register_nick.cpp
 	gui/dlg_update.cpp
 	gui/dlg_user_profile.cpp
@@ -94,7 +92,6 @@ set (scc_MOC_HDRS
 	gui/dlg_invite.h
 	gui/dlg_moderation.h
 	gui/dlg_options.h
-	gui/dlg_privilege.h
 	gui/dlg_register_nick.h
 	gui/dlg_update.h
 	gui/dlg_user_profile.h

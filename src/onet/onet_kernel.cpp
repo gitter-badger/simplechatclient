@@ -423,6 +423,8 @@ void OnetKernel::kernel(QString param1)
                 raw_452n();
             else if (strDataList[3].toLower() == ":454")
                 raw_454n();
+            else if (strDataList[3].toLower() == ":456")
+                raw_456n();
             else if (strDataList[3].toLower() == ":458")
                 raw_458n();
             else if (strDataList[3].toLower() == ":459")
@@ -2944,6 +2946,19 @@ void OnetKernel::raw_454n()
 
     dlgchannel_homes->clear();
     pNetwork->send("CS HOMES");
+}
+
+// :ChanServ!service@service.onet NOTICE Merovingian :456 #test2 Merovingian :is already channel owner
+void OnetKernel::raw_456n()
+{
+    if (strDataList.value(3).isEmpty() == true) return;
+    if (strDataList.value(4).isEmpty() == true) return;
+    if (strDataList.value(5).isEmpty() == true) return;
+
+    QString strNick = strDataList[5];
+
+    QString strMessage = QString(tr("* %1 is already channel owner")).arg(strNick);
+    tabc->show_msg_active(strMessage, 7);
 }
 
 // :ChanServ!service@service.onet NOTICE scc_test :458 #scc v scc :unable to remove non-existent privilege

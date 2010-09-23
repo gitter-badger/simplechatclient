@@ -27,8 +27,8 @@
 #include <QDateTime>
 #include <QDesktopWidget>
 #include <QDialog>
+#include <QInputDialog>
 #include "dlg_email.h"
-#include "dlg_privilege.h"
 #include "network.h"
 #include "ui_channel_settings.h"
 

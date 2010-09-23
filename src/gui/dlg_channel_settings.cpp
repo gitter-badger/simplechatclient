@@ -325,12 +325,30 @@ void DlgChannelSettings::add_invite(QString strCheckChannel, QString strNick, QS
 
 void DlgChannelSettings::owner_changed()
 {
-    (new DlgPrivilege(myparent, pNetwork, "owner", strChannel, "add", ui.tableWidget_op, ui.tableWidget_halfop, ui.tableWidget_ban, ui.tableWidget_invite))->show();
+    QString strMsg = "<p style=\"font-weight:bold;\">"+tr("The owner of the channel can be only one!")+"</p><p>"+tr("Enter the nickname of the new owner:")+"</p>";
+    bool ok;
+    QString strNick = QInputDialog::getText(this, tr("Changing privileges"), strMsg, QLineEdit::Normal, QString::null, &ok);
+
+    if ((ok == true) && (strNick.isEmpty() == false))
+        pNetwork->send(QString("CS TRANSFER %1 %2").arg(strChannel).arg(strNick));
+
+    clear();
+    ui.label_channel_name->setText(strChannel);
+    pNetwork->send(QString("CS INFO %1").arg(strChannel));
 }
 
 void DlgChannelSettings::remove_channel_clicked()
 {
-    (new DlgPrivilege(myparent, pNetwork, "channel", strChannel, "del", ui.tableWidget_op, ui.tableWidget_halfop, ui.tableWidget_ban, ui.tableWidget_invite))->show();
+    QString strMsg = "<p style=\"font-weight:bold;\">"+tr("The removal of the channel operation is irreversible!")+"</p>";
+    bool ok;
+    QString strText = QInputDialog::getText(this, tr("Changing privileges"), strMsg, QLineEdit::Normal, strChannel, &ok);
+
+    if ((ok == true) && (strText.isEmpty() == false))
+        pNetwork->send(QString("CS DROP %1").arg(strText));
+
+    strChannel.clear();
+    clear();
+    this->hide();
 }
 
 void DlgChannelSettings::email_changed()
@@ -434,7 +452,15 @@ void DlgChannelSettings::auditorium_active()
 
 void DlgChannelSettings::button_op_add()
 {
-    (new DlgPrivilege(myparent, pNetwork, "op", strChannel, "add", ui.tableWidget_op, ui.tableWidget_halfop, ui.tableWidget_ban, ui.tableWidget_invite))->show();
+    bool ok;
+    QString strNick = QInputDialog::getText(this, tr("Changing privileges"), tr("Add super-operator:"), QLineEdit::Normal, QString::null, &ok);
+
+    if ((ok == true) && (strNick.isEmpty() == false))
+        pNetwork->send(QString("CS OP %1 ADD %2").arg(strChannel).arg(strNick));
+
+    clear();
+    ui.label_channel_name->setText(strChannel);
+    pNetwork->send(QString("CS INFO %1").arg(strChannel));
 }
 
 void DlgChannelSettings::button_op_del()
@@ -448,13 +474,29 @@ void DlgChannelSettings::button_op_del()
     }
     else
     {
-        (new DlgPrivilege(myparent, pNetwork, "op", strChannel, "del", ui.tableWidget_op, ui.tableWidget_halfop, ui.tableWidget_ban, ui.tableWidget_invite))->show();
+        bool ok;
+        QString strNick = QInputDialog::getText(this, tr("Changing privileges"), tr("Remove the super-operator:"), QLineEdit::Normal, QString::null, &ok);
+
+        if ((ok == true) && (strNick.isEmpty() == false))
+            pNetwork->send(QString("CS OP %1 DEL %2").arg(strChannel).arg(strNick));
+
+        clear();
+        ui.label_channel_name->setText(strChannel);
+        pNetwork->send(QString("CS INFO %1").arg(strChannel));
     }
 }
 
 void DlgChannelSettings::button_halfop_add()
 {
-    (new DlgPrivilege(myparent, pNetwork, "halfop", strChannel, "add", ui.tableWidget_op, ui.tableWidget_halfop, ui.tableWidget_ban, ui.tableWidget_invite))->show();
+    bool ok;
+    QString strNick = QInputDialog::getText(this, tr("Changing privileges"), tr("Add operator:"), QLineEdit::Normal, QString::null, &ok);
+
+    if ((ok == true) && (strNick.isEmpty() == false))
+        pNetwork->send(QString("CS HALFOP %1 ADD %2").arg(strChannel).arg(strNick));
+
+    clear();
+    ui.label_channel_name->setText(strChannel);
+    pNetwork->send(QString("CS INFO %1").arg(strChannel));
 }
 
 void DlgChannelSettings::button_halfop_del()
@@ -468,13 +510,29 @@ void DlgChannelSettings::button_halfop_del()
     }
     else
     {
-        (new DlgPrivilege(myparent, pNetwork, "halfop", strChannel, "del", ui.tableWidget_op, ui.tableWidget_halfop, ui.tableWidget_ban, ui.tableWidget_invite))->show();
+        bool ok;
+        QString strNick = QInputDialog::getText(this, tr("Changing privileges"), tr("Remove operator:"), QLineEdit::Normal, QString::null, &ok);
+
+        if ((ok == true) && (strNick.isEmpty() == false))
+            pNetwork->send(QString("CS HALFOP %1 DEL %2").arg(strChannel).arg(strNick));
+
+        clear();
+        ui.label_channel_name->setText(strChannel);
+        pNetwork->send(QString("CS INFO %1").arg(strChannel));
     }
 }
 
 void DlgChannelSettings::button_ban_add()
 {
-    (new DlgPrivilege(myparent, pNetwork, "ban", strChannel, "add", ui.tableWidget_op, ui.tableWidget_halfop, ui.tableWidget_ban, ui.tableWidget_invite))->show();
+    bool ok;
+    QString strNick = QInputDialog::getText(this, tr("Changing privileges"), tr("Add ban:"), QLineEdit::Normal, QString::null, &ok);
+
+    if ((ok == true) && (strNick.isEmpty() == false))
+        pNetwork->send(QString("CS BAN %1 ADD %2").arg(strChannel).arg(strNick));
+
+    clear();
+    ui.label_channel_name->setText(strChannel);
+    pNetwork->send(QString("CS INFO %1").arg(strChannel));
 }
 
 void DlgChannelSettings::button_ban_del()
@@ -488,13 +546,29 @@ void DlgChannelSettings::button_ban_del()
     }
     else
     {
-        (new DlgPrivilege(myparent, pNetwork, "ban", strChannel, "del", ui.tableWidget_op, ui.tableWidget_halfop, ui.tableWidget_ban, ui.tableWidget_invite))->show();
+        bool ok;
+        QString strNick = QInputDialog::getText(this, tr("Changing privileges"), tr("Remove ban:"), QLineEdit::Normal, QString::null, &ok);
+
+        if ((ok == true) && (strNick.isEmpty() == false))
+            pNetwork->send(QString("CS BAN %1 DEL %2").arg(strChannel).arg(strNick));
+
+        clear();
+        ui.label_channel_name->setText(strChannel);
+        pNetwork->send(QString("CS INFO %1").arg(strChannel));
     }
 }
 
 void DlgChannelSettings::button_invite_add()
 {
-    (new DlgPrivilege(myparent, pNetwork, "invite", strChannel, "add", ui.tableWidget_op, ui.tableWidget_halfop, ui.tableWidget_ban, ui.tableWidget_invite))->show();
+    bool ok;
+    QString strNick = QInputDialog::getText(this, tr("Changing privileges"), tr("Add invitation:"), QLineEdit::Normal, QString::null, &ok);
+
+    if ((ok == true) && (strNick.isEmpty() == false))
+        pNetwork->send(QString("CS INVITE %1 ADD %2").arg(strChannel).arg(strNick));
+
+    clear();
+    ui.label_channel_name->setText(strChannel);
+    pNetwork->send(QString("CS INFO %1").arg(strChannel));
 }
 
 void DlgChannelSettings::button_invite_del()
@@ -508,7 +582,15 @@ void DlgChannelSettings::button_invite_del()
     }
     else
     {
-        (new DlgPrivilege(myparent, pNetwork, "invite", strChannel, "del", ui.tableWidget_op, ui.tableWidget_halfop, ui.tableWidget_ban, ui.tableWidget_invite))->show();
+        bool ok;
+        QString strNick = QInputDialog::getText(this, tr("Changing privileges"), tr("Delete invitation:"), QLineEdit::Normal, QString::null, &ok);
+
+        if ((ok == true) && (strNick.isEmpty() == false))
+            pNetwork->send(QString("CS INVITE %1 DEL %2").arg(strChannel).arg(strNick));
+
+        clear();
+        ui.label_channel_name->setText(strChannel);
+        pNetwork->send(QString("CS INFO %1").arg(strChannel));
     }
 }
 

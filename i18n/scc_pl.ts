@@ -717,6 +717,54 @@
         <source>Remove</source>
         <translation>Usuń</translation>
     </message>
+    <message>
+        <source>Changing privileges</source>
+        <translation>Zmiana uprawnień</translation>
+    </message>
+    <message>
+        <source>The owner of the channel can be only one!</source>
+        <translation>Właściciel kanału może być tylko jeden!</translation>
+    </message>
+    <message>
+        <source>Enter the nickname of the new owner:</source>
+        <translation>Podaj nick nowego właściciela:</translation>
+    </message>
+    <message>
+        <source>The removal of the channel operation is irreversible!</source>
+        <translation>Usunięcie kanału jest operacją nieodwracalną!</translation>
+    </message>
+    <message>
+        <source>Add super-operator:</source>
+        <translation>Dodaj super operatora:</translation>
+    </message>
+    <message>
+        <source>Add operator:</source>
+        <translation>Dodaj operatora:</translation>
+    </message>
+    <message>
+        <source>Add ban:</source>
+        <translation>Dodaj ban:</translation>
+    </message>
+    <message>
+        <source>Add invitation:</source>
+        <translation>Dodaj zaproszenie:</translation>
+    </message>
+    <message>
+        <source>Remove the super-operator:</source>
+        <translation>Usuń super operatora:</translation>
+    </message>
+    <message>
+        <source>Remove operator:</source>
+        <translation>Usuń operatora:</translation>
+    </message>
+    <message>
+        <source>Remove ban:</source>
+        <translation>Usuń ban:</translation>
+    </message>
+    <message>
+        <source>Delete invitation:</source>
+        <translation>Usuń zaproszenie:</translation>
+    </message>
 </context>
 <context>
     <name>DlgEmail</name>
@@ -1085,61 +1133,6 @@
     <message>
         <source>Set</source>
         <translation>Ustaw</translation>
-    </message>
-</context>
-<context>
-    <name>DlgPrivilege</name>
-    <message>
-        <source>Changing privileges</source>
-        <translation>Zmiana uprawnień</translation>
-    </message>
-    <message>
-        <source>The owner of the channel can be only one!</source>
-        <translation>Właściciel kanału może być tylko jeden!</translation>
-    </message>
-    <message>
-        <source>Enter the nickname of the new owner:</source>
-        <translation>Podaj nick nowego właściciela:</translation>
-    </message>
-    <message>
-        <source>Add super-operator:</source>
-        <translation>Dodaj super operatora:</translation>
-    </message>
-    <message>
-        <source>Add operator:</source>
-        <translation>Dodaj operatora:</translation>
-    </message>
-    <message>
-        <source>Add ban:</source>
-        <translation>Dodaj ban:</translation>
-    </message>
-    <message>
-        <source>Add invitation:</source>
-        <translation>Dodaj zaproszenie:</translation>
-    </message>
-    <message>
-        <source>Remove the super-operator:</source>
-        <translation>Usuń super operatora:</translation>
-    </message>
-    <message>
-        <source>Remove operator:</source>
-        <translation>Usuń operatora:</translation>
-    </message>
-    <message>
-        <source>Remove ban:</source>
-        <translation>Usuń ban:</translation>
-    </message>
-    <message>
-        <source>Delete invitation:</source>
-        <translation>Usuń zaproszenie:</translation>
-    </message>
-    <message>
-        <source>The removal of the channel operation is irreversible!</source>
-        <translation>Usunięcie kanału jest operacją nieodwracalną!</translation>
-    </message>
-    <message>
-        <source>No statement nick</source>
-        <translation>Nie podano nicka</translation>
     </message>
 </context>
 <context>
@@ -1867,6 +1860,10 @@
     <message>
         <source>* %1 :Not enough unique channel name</source>
         <translation>* %1 :Nazwa kanału nie jest unikalna</translation>
+    </message>
+    <message>
+        <source>* %1 is already channel owner</source>
+        <translation>* %1 jest już właścicielem kanału</translation>
     </message>
     <message>
         <source>* %1 :Unable to remove non-existent privilege</source>
