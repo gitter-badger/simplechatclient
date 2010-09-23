@@ -43,7 +43,8 @@ void Inputline::set_userslist(QTreeWidget *treeWidget)
             QTreeWidgetItem *child_item = parent_item->child(x);
             QString strChild = child_item->text(0);
 
-            users_list.append(strChild);
+            if (users_list.contains(strChild) == false) // add if not exist
+                users_list.append(strChild);
         }
     }
 }
