@@ -54,6 +54,7 @@ class ChannelAvatar : public QObject
     Q_OBJECT
 public:
     ChannelAvatar(TabContainer *, QString, QString, QMap <QString, QByteArray> *);
+    void kill_thread();
 
 private:
     TabContainer *tabc;

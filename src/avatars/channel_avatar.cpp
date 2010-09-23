@@ -72,6 +72,15 @@ ChannelAvatar::ChannelAvatar(TabContainer *param1, QString param2, QString param
     channelAvatarThr->start(QThread::InheritPriority);
 }
 
+void ChannelAvatar::kill_thread()
+{
+    channelAvatarThr->quit();
+    channelAvatarThr->wait();
+    channelAvatarThr->QObject::disconnect();
+    channelAvatarThr->deleteLater();
+    delete channelAvatarThr;
+}
+
 void ChannelAvatar::set_channel_avatar(QString strChannel, QByteArray bAvatar)
 {
     if (mChannelAvatar->contains(strChannel) == false)
@@ -80,11 +89,6 @@ void ChannelAvatar::set_channel_avatar(QString strChannel, QByteArray bAvatar)
 
 void ChannelAvatar::stop_thread()
 {
-    channelAvatarThr->quit();
-    channelAvatarThr->wait();
-    channelAvatarThr->QObject::disconnect();
-    channelAvatarThr->deleteLater();
-    delete channelAvatarThr;
-
+    kill_thread();
     emit do_remove_cathread(this);
 }

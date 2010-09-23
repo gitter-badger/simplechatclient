@@ -36,6 +36,23 @@ OnetKernel::OnetKernel(QWidget *parent, Network *param1, TabContainer *param2, Q
     dlgmoderation = param11;
 }
 
+OnetKernel::~OnetKernel()
+{
+    // kill channel avatar threads
+    while(caThreadList.isEmpty() == false)
+    {
+        caThreadList.first()->kill_thread();
+        caThreadList.removeFirst();;
+    }
+
+    // kill nick avatar threads
+    while(naThreadList.isEmpty() == false)
+    {
+        naThreadList.first()->kill_thread();
+        naThreadList.removeFirst();
+    }
+}
+
 void OnetKernel::remove_cathread(ChannelAvatar *cathr)
 {
     cathr->QObject::disconnect();

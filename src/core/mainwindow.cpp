@@ -107,7 +107,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 // settings
     QSettings settings;
     settings.clear();
-    settings.setValue("version", "1.0.9.554");
+    settings.setValue("version", "1.0.9.555");
     settings.setValue("debug", "off");
     settings.setValue("logged", "off");
     settings.setValue("busy", "off");
@@ -273,6 +273,13 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
 MainWindow::~MainWindow()
 {
+    // kill update threads
+    while(uThreadList.isEmpty() == false)
+    {
+        uThreadList.first()->kill_thread();
+        uThreadList.removeFirst();;
+    }
+
     // clear arrays
     mNickAvatar.clear();
     mChannelAvatar.clear();

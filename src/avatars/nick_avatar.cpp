@@ -69,6 +69,15 @@ NickAvatar::NickAvatar(TabContainer *param1, QString param2, QString param3, QMa
     nickAvatarThr->start(QThread::InheritPriority);
 }
 
+void NickAvatar::kill_thread()
+{
+    nickAvatarThr->quit();
+    nickAvatarThr->wait();
+    nickAvatarThr->QObject::disconnect();
+    nickAvatarThr->deleteLater();
+    delete nickAvatarThr;
+}
+
 void NickAvatar::set_nick_avatar(QString strNick, QByteArray bAvatar)
 {
     if (mNickAvatar->contains(strNick) == false)
@@ -77,11 +86,6 @@ void NickAvatar::set_nick_avatar(QString strNick, QByteArray bAvatar)
 
 void NickAvatar::stop_thread()
 {
-    nickAvatarThr->quit();
-    nickAvatarThr->wait();
-    nickAvatarThr->QObject::disconnect();
-    nickAvatarThr->deleteLater();
-    delete nickAvatarThr;
-
+    kill_thread();
     emit do_remove_nathread(this);
 }

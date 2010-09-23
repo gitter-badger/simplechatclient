@@ -49,6 +49,7 @@ class Update : public QObject
     Q_OBJECT
 public:
     Update(QWidget *, TabContainer *);
+    void kill_thread();
 
 private:
     QWidget *myparent;

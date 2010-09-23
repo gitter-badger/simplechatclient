@@ -54,6 +54,7 @@ class NickAvatar : public QObject
     Q_OBJECT
 public:
     NickAvatar(TabContainer *, QString, QString, QMap <QString, QByteArray> *);
+    void kill_thread();
 
 private:
     TabContainer *tabc;

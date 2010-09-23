@@ -82,6 +82,15 @@ Update::Update(QWidget *parent, TabContainer *param1)
     updateThr->start(QThread::InheritPriority);
 }
 
+void Update::kill_thread()
+{
+    updateThr->quit();
+    updateThr->wait();
+    updateThr->deleteLater();
+    updateThr->QObject::disconnect();
+    delete updateThr;
+}
+
 void Update::version(QString strAvailableVersion)
 {
     QSettings settings;
@@ -117,11 +126,6 @@ void Update::version(QString strAvailableVersion)
 
 void Update::stop_thread()
 {
-    updateThr->quit();
-    updateThr->wait();
-    updateThr->deleteLater();
-    updateThr->QObject::disconnect();
-    delete updateThr;
-
+    kill_thread();
     emit do_remove_uthread(this);
 }
