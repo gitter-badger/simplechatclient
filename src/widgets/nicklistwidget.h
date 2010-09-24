@@ -75,7 +75,7 @@ private:
     void add_child(QString, QTreeWidgetItem *);
     bool exist_child(QString, QString);
     void remove_child(QString);
-    QTreeWidgetItem* create_child(QString, QString, QString, QPixmap);
+    QTreeWidgetItem* create_child(QString, QString, QPixmap);
     void item_selected();
 
 private slots:
