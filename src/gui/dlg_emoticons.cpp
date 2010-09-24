@@ -42,24 +42,23 @@ void DlgEmoticons::get_emoticons_standard()
 
     // standard
     QDir dStandardEmoticons = path+"/3rdparty/emoticons";
-    QFileInfoList filStandardEmoticons = dStandardEmoticons.entryInfoList();
-    for (int i = 0; i < filStandardEmoticons.size(); ++i)
+    QStringList slFiles = dStandardEmoticons.entryList(QStringList("*.gif"), QDir::Files | QDir::NoSymLinks);
+
+    for (int i = 0; i < slFiles.count(); i++)
     {
-        QString strFileName = filStandardEmoticons.at(i).fileName();
-        if (strFileName.indexOf("gif") != -1)
-        {
-            QString strEmoticon = strFileName.remove(".gif");
+        QString strFileName = slFiles.at(i);
+        QString strEmoticon = strFileName;
+        strEmoticon.remove(".gif");
 
-            QPixmap pix(path+"/3rdparty/emoticons/"+strFileName);
-            pix.scaled(30,30);
+        QPixmap pix = QPixmap(path+"/3rdparty/emoticons/"+strFileName);
+        pix.scaled(30,30);
 
-            QListWidgetItem *item = new QListWidgetItem();
-            item->setIcon(QIcon(pix));
-            item->setData(Qt::UserRole, strEmoticon);
-            item->setToolTip(strEmoticon);
+        QListWidgetItem *item = new QListWidgetItem();
+        item->setIcon(QIcon(pix));
+        item->setData(Qt::UserRole, strEmoticon);
+        item->setToolTip(strEmoticon);
 
-            ui.listWidget_standard->addItem(item);
-        }
+        ui.listWidget_standard->addItem(item);
     }
 
     bDoneStandard = true;
@@ -71,24 +70,23 @@ void DlgEmoticons::get_emoticons_extended()
 
     // extended
     QDir dExtendedEmoticons = path+"/3rdparty/emoticons_other";
-    QFileInfoList filExtendedEmoticons = dExtendedEmoticons.entryInfoList();
-    for (int i = 0; i < filExtendedEmoticons.size(); ++i)
+    QStringList slFiles = dExtendedEmoticons.entryList(QStringList("*.gif"), QDir::Files | QDir::NoSymLinks);
+
+    for (int i = 0; i < slFiles.count(); i++)
     {
-        QString strFileName = filExtendedEmoticons.at(i).fileName();
-        if (strFileName.indexOf("gif") != -1)
-        {
-            QString strEmoticon = strFileName.remove(".gif");
+        QString strFileName = slFiles.at(i);
+        QString strEmoticon = strFileName;
+        strEmoticon.remove(".gif");
 
-            QPixmap pix(path+"/3rdparty/emoticons_other/"+strFileName);
-            pix.scaled(48,48);
+        QPixmap pix = QPixmap(path+"/3rdparty/emoticons_other/"+strFileName);
+        pix.scaled(30,30);
 
-            QListWidgetItem *item = new QListWidgetItem();
-            item->setIcon(QIcon(pix));
-            item->setData(Qt::UserRole, strEmoticon);
-            item->setToolTip(strEmoticon);
+        QListWidgetItem *item = new QListWidgetItem();
+        item->setIcon(QIcon(pix));
+        item->setData(Qt::UserRole, strEmoticon);
+        item->setToolTip(strEmoticon);
 
-            ui.listWidget_extended->addItem(item);
-        }
+        ui.listWidget_extended->addItem(item);
     }
 
     bDoneExtended = true;

@@ -24,7 +24,6 @@
 #include <QDesktopWidget>
 #include <QDialog>
 #include <QDir>
-#include <QFileInfoList>
 #include <QPixmap>
 #include <QShowEvent>
 #include "inputline.h"
