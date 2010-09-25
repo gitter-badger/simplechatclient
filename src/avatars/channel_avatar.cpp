@@ -90,5 +90,5 @@ void ChannelAvatar::set_channel_avatar(QString strChannel, QByteArray bAvatar)
 void ChannelAvatar::stop_thread()
 {
     kill_thread();
-    emit do_remove_cathread(this);
+    emit sremove_cathread(this);
 }

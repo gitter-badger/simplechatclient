@@ -17,6 +17,7 @@ SOURCES += src/avatars/channel_avatar.cpp \
     src/common/kamerzysta.cpp \
     src/common/log.cpp \
     src/common/replace.cpp \
+    src/core/core.cpp \
     src/core/debug.cpp \
     src/core/main.cpp \
     src/core/mainwindow.cpp \
@@ -60,6 +61,7 @@ HEADERS += src/avatars/channel_avatar.h \
     src/common/log.h \
     src/common/kamerzysta.h \
     src/common/replace.h \
+    src/core/core.h \
     src/core/debug.h \
     src/core/main.h \
     src/core/mainwindow.h \

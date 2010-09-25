@@ -71,10 +71,9 @@ void UpdateThread::thread_work()
 
 // ------------------------------------------------------------ //
 
-Update::Update(QWidget *parent, TabContainer *param1)
+Update::Update(QWidget *parent)
 {
     myparent = parent;
-    tabc = param1;
 
     updateThr = new UpdateThread();
     QObject::connect(updateThr, SIGNAL(version(QString)), this, SLOT(version(QString)));
@@ -101,7 +100,7 @@ void Update::version(QString strAvailableVersion)
 
     if (strAvailableVersion == QString::null)
     {
-        tabc->show_msg("Status", tr("Can not download the available version."), 0);
+        //tabc->show_msg("Status", tr("Can not download the available version."), 0);
         return;
     }
     QStringList lAvailableVersion = strAvailableVersion.split(".");
@@ -113,13 +112,13 @@ void Update::version(QString strAvailableVersion)
             qDebug() << "Current rev: " << strCurrentRev << " Available rev: " << strAvailableRev;
 #endif
 
-    if (iCurrentRev == iAvailableRev)
-        tabc->show_msg("Status", tr("You are using up-to-date version."), 0);
-    else if (iCurrentRev > iAvailableRev)
-        tabc->show_msg("Status", tr("You are using a test version."), 0);
-    else if (iCurrentRev < iAvailableRev)
+    //if (iCurrentRev == iAvailableRev)
+        //tabc->show_msg("Status", tr("You are using up-to-date version."), 0);
+    //else if (iCurrentRev > iAvailableRev)
+        //tabc->show_msg("Status", tr("You are using a test version."), 0);
+    if (iCurrentRev < iAvailableRev)
     {
-        tabc->show_msg("Status", tr("A new version is available."), 0);
+        //tabc->show_msg("Status", tr("A new version is available."), 0);
         (new DlgUpdate(myparent, strAvailableVersion))->show();
     }
 }
@@ -127,5 +126,5 @@ void Update::version(QString strAvailableVersion)
 void Update::stop_thread()
 {
     kill_thread();
-    emit do_remove_uthread(this);
+    emit sremove_uthread(this);
 }

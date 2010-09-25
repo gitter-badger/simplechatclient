@@ -29,6 +29,7 @@ set (scc_SRCS
 	common/kamerzysta.cpp
 	common/log.cpp
 	common/replace.cpp
+	core/core.cpp
 	core/debug.cpp
 	core/main.cpp
 	core/mainwindow.cpp
@@ -74,6 +75,7 @@ set (scc_MOC_HDRS
 	common/kamerzysta.h
 	common/log.h
 	common/replace.h
+	core/core.h
 	core/mainwindow.h
 	core/network.h
 	core/network_thread.h

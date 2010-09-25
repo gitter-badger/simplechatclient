@@ -1300,7 +1300,7 @@ void OnetKernel::raw_111n()
             if (mNickAvatar->contains(strNick) == false)
             {
                 naThreadList.append(new NickAvatar(tabc, strNick, strValue, mNickAvatar));
-                QObject::connect(naThreadList.at(naThreadList.size()-1), SIGNAL(do_remove_nathread(NickAvatar*)), this, SLOT(remove_nathread(NickAvatar*)));
+                QObject::connect(naThreadList.at(naThreadList.size()-1), SIGNAL(sremove_nathread(NickAvatar*)), this, SLOT(remove_nathread(NickAvatar*)));
 
 #ifdef Q_WS_X11
                 QSettings settings;
@@ -1540,7 +1540,7 @@ void OnetKernel::raw_161n()
                 if (settings.value("style").toString() == "modern")
                 {
                     caThreadList.append(new ChannelAvatar(tabc, strChannel, strUrl, mChannelAvatar));
-                    QObject::connect(caThreadList.at(caThreadList.size()-1), SIGNAL(do_remove_cathread(ChannelAvatar*)), this, SLOT(remove_cathread(ChannelAvatar*)));
+                    QObject::connect(caThreadList.at(caThreadList.size()-1), SIGNAL(sremove_cathread(ChannelAvatar*)), this, SLOT(remove_cathread(ChannelAvatar*)));
 
 #ifdef Q_WS_X11
                     if (settings.value("debug").toString() == "on")

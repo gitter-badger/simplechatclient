@@ -66,7 +66,12 @@ public:
 public slots:
     void update_nick_avatar(QString);
     void update_channel_avatar(QString);
-    void sshow_msg(QString, QString, int);
+    void slot_show_msg(QString, QString, int);
+    void slot_show_msg_active(QString, int);
+    void slot_show_msg_all(QString, int);
+    void slot_update_nick(QString);
+    void slot_clear_nicklist(QString);
+    void slot_clear_all_nicklist();
     void refresh_colors();
 
 private:

@@ -418,9 +418,34 @@ void TabContainer::set_user_info(QString strNick, QString strKey, QString strVal
     }
 }
 
-void TabContainer::sshow_msg(QString strChannel, QString strData, int iLevel)
+void TabContainer::slot_show_msg(QString strChannel, QString strData, int iLevel)
 {
     show_msg(strChannel, strData, iLevel);
+}
+
+void TabContainer::slot_show_msg_active(QString strData, int iLevel)
+{
+    show_msg_active(strData, iLevel);
+}
+
+void TabContainer::slot_show_msg_all(QString strData, int iLevel)
+{
+    show_msg_all(strData, iLevel);
+}
+
+void TabContainer::slot_update_nick(QString strNick)
+{
+    update_nick(strNick);
+}
+
+void TabContainer::slot_clear_nicklist(QString strChannel)
+{
+    clear_nicklist(strChannel);
+}
+
+void TabContainer::slot_clear_all_nicklist()
+{
+    clear_all_nicklist();
 }
 
 void TabContainer::refresh_colors()

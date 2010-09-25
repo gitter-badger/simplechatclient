@@ -149,6 +149,29 @@
     </message>
 </context>
 <context>
+    <name>Core</name>
+    <message>
+        <source>Welcome to the Simple Chat Client</source>
+        <translation>Witaj w programie Simple Chat Client</translation>
+    </message>
+    <message>
+        <source>Official website</source>
+        <translation>Oficjalna strona</translation>
+    </message>
+    <message>
+        <source>Official Forum</source>
+        <translation>Oficjalne forum</translation>
+    </message>
+    <message>
+        <source>Known bugs</source>
+        <translation>Lista błędów</translation>
+    </message>
+    <message>
+        <source>Bug reporting</source>
+        <translation>Zgłaszanie błędów</translation>
+    </message>
+</context>
+<context>
     <name>MainWindow</name>
     <message>
         <source>Show</source>
@@ -193,26 +216,6 @@
     <message>
         <source>About SCC ...</source>
         <translation>O programie SCC...</translation>
-    </message>
-    <message>
-        <source>Welcome to the Simple Chat Client</source>
-        <translation>Witaj w programie Simple Chat Client</translation>
-    </message>
-    <message>
-        <source>Official website</source>
-        <translation>Oficjalna strona</translation>
-    </message>
-    <message>
-        <source>Official Forum</source>
-        <translation>Oficjalne forum</translation>
-    </message>
-    <message>
-        <source>Known bugs</source>
-        <translation>Lista błędów</translation>
-    </message>
-    <message>
-        <source>Bug reporting</source>
-        <translation>Zgłaszanie błędów</translation>
     </message>
     <message>
         <source>&amp;File</source>

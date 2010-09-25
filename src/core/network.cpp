@@ -20,25 +20,27 @@
 
 #include "network.h"
 
-Network::Network(QWidget *parent, QAction *param1, QAction *param2)
+Network::Network(QAction *param1, QAction *param2, QString param3, int param4)
 {
     connectAct = param1;
     lagAct = param2;
+    strServer = param3;
+    iPort = param4;
 
-    networkThr = new NetworkThread(connectAct, lagAct);
+    networkThr = new NetworkThread(connectAct, lagAct, strServer, iPort);
     networkThr->start(QThread::InheritPriority);
 
-    QObject::connect(networkThr, SIGNAL(send_to_kernel(QString)), parent, SLOT(kernel(QString)));
-    QObject::connect(networkThr, SIGNAL(request_uo(QString, QString, QString)), parent, SLOT(request_uo(QString, QString, QString)));
-    QObject::connect(networkThr, SIGNAL(show_msg_active(QString, int)), parent, SLOT(show_msg_active(QString, int)));
-    QObject::connect(networkThr, SIGNAL(show_msg_all(QString, int)), parent, SLOT(show_msg_all(QString, int)));
-    QObject::connect(networkThr, SIGNAL(update_nick(QString)), parent, SLOT(update_nick(QString)));
-    QObject::connect(networkThr, SIGNAL(clear_nicklist(QString)), parent, SLOT(clear_nicklist(QString)));
-    QObject::connect(networkThr, SIGNAL(clear_all_nicklist()), parent, SLOT(clear_all_nicklist()));
+    QObject::connect(networkThr, SIGNAL(send_to_kernel(QString)), this, SLOT(slot_kernel(QString)));
+    QObject::connect(networkThr, SIGNAL(request_uo(QString, QString, QString)), this, SLOT(slot_request_uo(QString, QString, QString)));
+    QObject::connect(networkThr, SIGNAL(show_msg_active(QString, int)), this, SLOT(slot_show_msg_active(QString, int)));
+    QObject::connect(networkThr, SIGNAL(show_msg_all(QString, int)), this, SLOT(slot_show_msg_all(QString, int)));
+    QObject::connect(networkThr, SIGNAL(update_nick(QString)), this, SLOT(slot_update_nick(QString)));
+    QObject::connect(networkThr, SIGNAL(clear_nicklist(QString)), this, SLOT(slot_clear_nicklist(QString)));
+    QObject::connect(networkThr, SIGNAL(clear_all_nicklist()), this, SLOT(slot_clear_all_nicklist()));
 
-    QObject::connect(this, SIGNAL(do_connect()), networkThr, SLOT(connect()));
-    QObject::connect(this, SIGNAL(do_close()), networkThr, SLOT(close()));
-    QObject::connect(this, SIGNAL(do_send(QString)), networkThr, SLOT(send(QString)));
+    QObject::connect(this, SIGNAL(sconnect()), networkThr, SLOT(connect()));
+    QObject::connect(this, SIGNAL(sclose()), networkThr, SLOT(close()));
+    QObject::connect(this, SIGNAL(ssend(QString)), networkThr, SLOT(send(QString)));
 }
 
 Network::~Network()
@@ -49,6 +51,17 @@ Network::~Network()
     networkThr->QObject::disconnect();
     delete networkThr;
 }
+
+// from network
+void Network::slot_kernel(QString p1) { emit kernel(p1); }
+void Network::slot_request_uo(QString p1, QString p2, QString p3) { emit request_uo(p1, p2, p3); }
+void Network::slot_show_msg_active(QString p1, int p2) { emit show_msg_active(p1, p2); }
+void Network::slot_show_msg_all(QString p1, int p2) { emit show_msg_active(p1, p2); }
+void Network::slot_update_nick(QString p1) { emit update_nick(p1); }
+void Network::slot_clear_nicklist(QString p1) { emit clear_nicklist(p1); }
+void Network::slot_clear_all_nicklist() { emit clear_all_nicklist(); }
+
+// to network
 
 bool Network::is_connected()
 {
@@ -62,20 +75,20 @@ bool Network::is_writable()
 
 void Network::connect()
 {
-    emit do_connect();
+    emit sconnect();
 }
 
 void Network::close()
 {
-    emit do_close();
+    emit sclose();
 }
 
 void Network::send(QString strData)
 {
-    emit do_send(strData);
+    emit ssend(strData);
 }
 
-void Network::send_slot(QString strData)
+void Network::slot_send(QString strData)
 {
-    emit do_send(strData);
+    emit ssend(strData);
 }

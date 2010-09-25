@@ -18,72 +18,42 @@
  *                                                                          *
  ****************************************************************************/
 
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#ifndef CORE_H
+#define CORE_H
 
-#ifdef Q_WS_X11
-#include <QDebug>
+#include <QMainWindow>
+#include <QMenuBar>
+#include <QObject>
+#include <QTabWidget>
+#include <QToolBar>
+#include "dlg_channel_favourites.h"
+#include "dlg_channel_homes.h"
+#include "dlg_channel_list.h"
+#include "dlg_channel_settings.h"
+#include "dlg_friends.h"
+#include "dlg_ignore.h"
+#include "dlg_moderation.h"
+#ifdef Q_WS_WIN
+#include "kamerzysta.h"
 #endif
-#include <QSystemTrayIcon>
-#include <QtGui/QMainWindow>
-#include "config.h"
-#include "core.h"
-#include "crypt.h"
-#include "dlg_about.h"
-#include "dlg_options.h"
-#include "notify.h"
-#include "update.h"
+#include "network.h"
+#include "onet_auth.h"
+#include "onet_kernel.h"
+#include "tab_container.h"
+#include "tab_manager.h"
 
-class MainWindow : public QMainWindow
+class Core : public QObject
 {
     Q_OBJECT
 public:
-    MainWindow(QWidget *parent = 0);
-    ~MainWindow();
-    void set_debug(bool);
-
-private:
-    QList <Core*> coreServers;
-    QList <Update*> uThreadList;
-    DlgOptions *pOptions;
-    Notify *pNotify;
-
-    QToolBar *toolBar;
-    QMenu *fileMenu;
-    QMenu *optionsMenu;
-    QMenu *helpMenu;
-    QAction *connectAct;
-    QAction *closeAct;
-    QAction *optionsAct;
-    QAction *showAct;
-    QAction *aboutAct;
-    QMenu *trayMenu;
-    QSystemTrayIcon *trayIcon;
-
-    // onet actions
-    QMenu *chatMenu;
-    QAction *channel_listAct;
-    QAction *channel_homesAct;
-    QAction *channel_favouritesAct;
-    QAction *friendsAct;
-    QAction *ignoreAct;
-#ifdef Q_WS_WIN
-    QAction *camsAct;
-#endif
-
-    void create_settings();
-
-private slots:
-    void check_update();
+    Core(QMainWindow *, QString, int, Notify *, QAction *, QToolBar *);
+    ~Core();
     void refresh_colors();
-    void button_connect();
-    void button_close();
-    void open_options();
-    void open_about();
-    void button_show();
-    void tray_icon(QSystemTrayIcon::ActivationReason);
-    void remove_uthread(Update*);
-
+    // temp
+    void network_connect();
+    void network_disconnect();
+    void network_send(QString);
+    bool network_is_connected();
     // onet dialogs
     void open_channel_list();
     void open_channel_homes();
@@ -91,6 +61,46 @@ private slots:
     void open_friends();
     void open_ignore();
     void open_cams();
+
+public slots:
+    void set_lag(QString);
+
+private:
+    // params
+    QMainWindow *myparent;
+    QString strServer;
+    int iPort;
+    Notify *pNotify;
+    QAction *connectAct;
+    QToolBar *toolBar;
+
+    // require
+    QTcpSocket *camSocket;
+    TabManager *pTabM;
+    TabContainer *pTabC;
+    Network *pNetwork;
+    OnetKernel *pOnet_kernel;
+    OnetAuth *pOnet_auth;
+    DlgChannelFavourites *pDlg_channel_favourites;
+    DlgChannelHomes *pDlg_channel_homes;
+    DlgChannelList *pDlg_channel_list;
+    DlgChannelSettings *pDlg_channel_settings;
+    DlgFriends *pDlg_friends;
+    DlgIgnore *pDlg_ignore;
+    DlgModeration *pDlg_moderation;
+    QMap <QString, QByteArray> mNickAvatar;
+    QMap <QString, QByteArray> mChannelAvatar;
+
+    // lag
+    QAction *lagAct;
+
+private slots:
+    void tab_close_requested(int);
+
+signals:
+    void skernel(QString);
+    void srequest_uo(QString, QString, QString);
+
 };
 
-#endif // MAINWINDOW_H
+#endif // CORE_H

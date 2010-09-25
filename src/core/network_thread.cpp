@@ -20,13 +20,12 @@
 
 #include "network_thread.h"
 
-NetworkThread::NetworkThread(QAction *param1, QAction *param2)
+NetworkThread::NetworkThread(QAction *param1, QAction *param2, QString param3, int param4)
 {
     connectAct = param1;
     lagAct = param2;
-
-    strServer = "czat-app.onet.pl";
-    iPort = 5015;
+    strServer = param3;
+    iPort = param4;
 
     iActive = 0;
     QSettings settings;

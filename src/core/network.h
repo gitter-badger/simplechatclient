@@ -30,7 +30,7 @@ class Network : public QObject
 {
     Q_OBJECT
 public:
-    Network(QWidget *, QAction *, QAction *);
+    Network(QAction *, QAction *, QString, int);
     ~Network();
     bool is_connected();
     bool is_writable();
@@ -39,17 +39,35 @@ public:
     void send(QString);
 
 public slots:
-    void send_slot(QString);
+    void slot_kernel(QString);
+    void slot_request_uo(QString, QString, QString);
+    void slot_show_msg_active(QString, int);
+    void slot_show_msg_all(QString, int);
+    void slot_update_nick(QString);
+    void slot_clear_nicklist(QString);
+    void slot_clear_all_nicklist();
+
+    void slot_send(QString);
 
 private:
+    NetworkThread *networkThr;
     QAction *connectAct;
     QAction *lagAct;
-    NetworkThread *networkThr;
+    QString strServer;
+    int iPort;
 
 signals:
-    void do_connect();
-    void do_close();
-    void do_send(QString);
+    void kernel(QString);
+    void request_uo(QString, QString, QString);
+    void show_msg_active(QString, int);
+    void show_msg_all(QString, int);
+    void update_nick(QString);
+    void clear_nicklist(QString);
+    void clear_all_nicklist();
+
+    void sconnect();
+    void sclose();
+    void ssend(QString);
 
 };
 

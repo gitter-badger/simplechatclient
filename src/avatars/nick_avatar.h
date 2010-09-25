@@ -68,7 +68,7 @@ public slots:
     void stop_thread();
 
 signals:
-    void do_remove_nathread(NickAvatar*);
+    void sremove_nathread(NickAvatar*);
 
 };
 #endif // NICK_AVATAR_H

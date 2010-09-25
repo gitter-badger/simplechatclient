@@ -68,7 +68,7 @@ public slots:
     void stop_thread();
 
 signals:
-    void do_remove_cathread(ChannelAvatar*);
+    void sremove_cathread(ChannelAvatar*);
 
 };
 

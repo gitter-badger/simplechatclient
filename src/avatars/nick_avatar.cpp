@@ -87,5 +87,5 @@ void NickAvatar::set_nick_avatar(QString strNick, QByteArray bAvatar)
 void NickAvatar::stop_thread()
 {
     kill_thread();
-    emit do_remove_nathread(this);
+    emit sremove_nathread(this);
 }

@@ -21,12 +21,19 @@
 #ifndef UPDATE_H
 #define UPDATE_H
 
+#ifdef Q_WS_X11
+#include <QDebug>
+#endif
+#include <QDomDocument>
+#include <QHostInfo>
 #include <QNetworkAccessManager>
+#include <QNetworkCookieJar>
 #include <QNetworkReply>
 #include <QObject>
+#include <QSettings>
 #include <QThread>
+#include <QTimer>
 #include "dlg_update.h"
-#include "tab_container.h"
 
 class UpdateThread : public QThread
 {
@@ -48,12 +55,11 @@ class Update : public QObject
 {
     Q_OBJECT
 public:
-    Update(QWidget *, TabContainer *);
+    Update(QWidget *);
     void kill_thread();
 
 private:
     QWidget *myparent;
-    TabContainer *tabc;
     UpdateThread *updateThr;
 
 public slots:
@@ -61,7 +67,7 @@ public slots:
     void stop_thread();
 
 signals:
-    void do_remove_uthread(Update*);
+    void sremove_uthread(Update*);
 
 };
 
