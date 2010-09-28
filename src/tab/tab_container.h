@@ -23,6 +23,7 @@
 
 #include <QObject>
 #include <QSettings>
+#include "inputlinewidget.h"
 #include "log.h"
 #include "network.h"
 #include "dlg_channel_settings.h"
@@ -35,8 +36,9 @@ class TabContainer : public QObject
 {
     Q_OBJECT
 public:
-    TabContainer(QWidget *, Network *, TabManager *, Notify *, QMap <QString, QByteArray> *, QMap <QString, QByteArray> *, QTcpSocket *);
+    TabContainer(QWidget *, Network *, TabManager *, Notify *, QMap <QString, QByteArray> *, QMap <QString, QByteArray> *, QTcpSocket *, InputLineWidget *);
     ~TabContainer();
+    inline QString get_name(int i) { if ((i < 0) || (i > tw.count())) return QString::null; else return tw[i]->get_name(); }
     void set_dlg(DlgChannelSettings *, DlgModeration *);
     bool exist_tab(QString);
     void remove_tab(QString);
@@ -54,7 +56,6 @@ public:
     void quit_user(QString, QString);
     void change_flag(QString, QString, QString);
     void change_flag(QString, QString);
-    void update_nick(QString);
     void clear_nicklist(QString);
     void clear_all_nicklist();
     void clear_channel_all_nick_avatars(QString);
@@ -69,9 +70,9 @@ public slots:
     void slot_show_msg(QString, QString, int);
     void slot_show_msg_active(QString, int);
     void slot_show_msg_all(QString, int);
-    void slot_update_nick(QString);
     void slot_clear_nicklist(QString);
     void slot_clear_all_nicklist();
+    void slot_display_message(QString, QString, int);
     void refresh_colors();
 
 private:
@@ -85,6 +86,7 @@ private:
     DlgChannelSettings *dlgchannel_settings;
     DlgModeration *dlgmoderation;
     QTcpSocket *camSocket;
+    InputLineWidget *inputlinewidget;
 
     void add_tab(QString);
     void update_open_channels();

@@ -581,7 +581,7 @@ void OnetKernel::raw_join()
 
     if (strNick == strMe)
     {
-        tabc->update_nick(strNick);
+        emit update_nick(strNick);
         if (tabc->exist_tab(strChannel))
             tabc->clear_nicklist(strChannel);
     }

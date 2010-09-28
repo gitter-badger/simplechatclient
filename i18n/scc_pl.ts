@@ -151,6 +151,10 @@
 <context>
     <name>Core</name>
     <message>
+        <source>Inputline</source>
+        <translation>Pasek wpisywania tekstów</translation>
+    </message>
+    <message>
         <source>Welcome to the Simple Chat Client</source>
         <translation>Witaj w programie Simple Chat Client</translation>
     </message>
@@ -2060,24 +2064,12 @@
         <translation>Liczba osób: %1</translation>
     </message>
     <message>
-        <source>(Unregistered)</source>
-        <translation>(Niezalogowany)</translation>
-    </message>
-    <message>
         <source>Settings</source>
         <translation>Ustawienia</translation>
     </message>
     <message>
         <source>Moderation</source>
         <translation>Moderacja</translation>
-    </message>
-    <message>
-        <source>Send</source>
-        <translation>Wyślij</translation>
-    </message>
-    <message>
-        <source>Send to moderators</source>
-        <translation>Wyślij do moderatorów</translation>
     </message>
     <message>
         <source>Bold</source>
@@ -2114,6 +2106,21 @@
     <message>
         <source>Scroll</source>
         <translation>Wstrzymaj/Wznów przewijanie</translation>
+    </message>
+</context>
+<context>
+    <name>InputLineWidget</name>
+    <message>
+        <source>(Unregistered)</source>
+        <translation>(Niezalogowany)</translation>
+    </message>
+    <message>
+        <source>Send</source>
+        <translation>Wyślij</translation>
+    </message>
+    <message>
+        <source>Send to moderators</source>
+        <translation>Wyślij do moderatorów</translation>
     </message>
 </context>
 <context>

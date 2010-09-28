@@ -18,25 +18,61 @@
  *                                                                          *
  ****************************************************************************/
 
-#ifndef TAB_MANAGER_H
-#define TAB_MANAGER_H
+#ifndef INPUTLINEWIDGET_H
+#define INPUTLINEWIDGET_H
 
-#include <QTabBar>
-#include <QTabWidget>
+#include <QHBoxLayout>
+#include <QLabel>
+#include <QPushButton>
+#include <QWidget>
+#include "commands.h"
+#include "inputline.h"
+#include "log.h"
+#include "network.h"
+#include "replace.h"
 
-class TabManager : public QTabWidget
+class InputLineWidget : public QWidget
 {
     Q_OBJECT
 public:
-    TabManager(QWidget *);
-    void set_hilight(int);
-    void set_alert(int, QColor);
-    void set_color(int, QColor);
+    InputLineWidget(QWidget *, Network *);
+    void set_active(QString);
+    void insert_text(QString);
+    void set_font(QFont);
+    void set_userslist(QTreeWidget *);
+    void set_moderation(bool);
+    void set_style_sheet(QString);
+    QString convert_emots(QString);
+    QString replace_emots(QString);
+    void send_message(bool);
+
+public slots:
+    void update_nick(QString);
 
 private:
+    // params
     QWidget *myparent;
-    QTabBar *tab;
+    Network *pNetwork;
+    // require
+    QHBoxLayout *mainLayout;
+    QLabel *nickLabel;
+    InputLine *inputLine;
+    QPushButton *sendButton;
+    QPushButton *moderSendButton;
+    QString strChannel;
+    QString strLast_msg;
+
+private slots:
+    void inputline_return_pressed();
+    void moder_button_clicked();
+
+protected:
+    virtual void keyPressEvent(QKeyEvent *);
+
+signals:
+    void show_msg(QString, QString, int);
+    void display_message(QString, QString, int);
 
 };
 
-#endif // TAB_MANAGER_H
+#endif // INPUTLINEWIDGET_H

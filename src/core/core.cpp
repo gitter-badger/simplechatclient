@@ -40,7 +40,18 @@ Core::Core(QMainWindow *parent, QString param1, int param2, Notify *param3, QAct
     myparent->setCentralWidget(pTabM);
 
     pNetwork = new Network(connectAct, lagAct, strServer, iPort);
-    pTabC = new TabContainer(myparent, pNetwork, pTabM, pNotify, &mNickAvatar, &mChannelAvatar, camSocket);
+
+    // inputlinewidget dock
+    inputLineDockWidget = new QDockWidget(myparent);
+    inputLineDockWidget->setFocus();
+    inputLineDockWidget->setToolTip(tr("Inputline"));
+    inputLineDockWidget->setAllowedAreas(Qt::TopDockWidgetArea | Qt::BottomDockWidgetArea); // top and bottom
+    inputLineDockWidget->setFeatures(QDockWidget::DockWidgetMovable); // disable closable
+    inputLineWidget = new InputLineWidget(inputLineDockWidget, pNetwork);
+    inputLineDockWidget->setWidget(inputLineWidget);
+    myparent->addDockWidget(Qt::BottomDockWidgetArea, inputLineDockWidget);
+
+    pTabC = new TabContainer(myparent, pNetwork, pTabM, pNotify, &mNickAvatar, &mChannelAvatar, camSocket, inputLineWidget);
 
     pDlg_channel_settings = new DlgChannelSettings(myparent, pNetwork);
     pDlg_moderation = new DlgModeration(myparent);
@@ -68,10 +79,16 @@ Core::Core(QMainWindow *parent, QString param1, int param2, Notify *param3, QAct
 
     // signals tab
     QObject::connect(pTabM, SIGNAL(tabCloseRequested(int)), this, SLOT(tab_close_requested(int)));
+    QObject::connect(pTabM, SIGNAL(currentChanged(int)), this, SLOT(current_tab_changed(int)));
     QObject::connect(pDlg_moderation, SIGNAL(display_msg(QString,QString,int)), pTabC, SLOT(slot_show_msg(QString,QString,int)));
+
+    // signals inputLineWidget
+    QObject::connect(inputLineWidget, SIGNAL(show_msg(QString,QString,int)), pTabC, SLOT(slot_show_msg(QString,QString,int)));
+    QObject::connect(inputLineWidget, SIGNAL(display_message(QString,QString,int)), pTabC, SLOT(slot_display_message(QString,QString,int)));
 
     // signals lag
     QObject::connect(pOnet_kernel, SIGNAL(set_lag(QString)), this, SLOT(set_lag(QString)));
+    QObject::connect(pOnet_kernel, SIGNAL(update_nick(QString)), inputLineWidget, SLOT(update_nick(QString)));
 
     // signals to network
     QObject::connect(pDlg_moderation, SIGNAL(send(QString)), pNetwork, SLOT(slot_send(QString)));
@@ -80,10 +97,10 @@ Core::Core(QMainWindow *parent, QString param1, int param2, Notify *param3, QAct
 
     // signals from network
     QObject::connect(pNetwork, SIGNAL(kernel(QString)), pOnet_kernel, SLOT(kernel(QString)));
-    QObject::connect(pNetwork, SIGNAL(request_uo(QString, QString, QString)), pOnet_auth, SLOT(request_uo(QString,QString,QString)));
-    QObject::connect(pNetwork, SIGNAL(show_msg_active(QString, int)), pTabC, SLOT(slot_show_msg_active(QString, int)));
-    QObject::connect(pNetwork, SIGNAL(show_msg_all(QString, int)), pTabC, SLOT(slot_show_msg_all(QString, int)));
-    QObject::connect(pNetwork, SIGNAL(update_nick(QString)), pTabC, SLOT(slot_update_nick(QString)));
+    QObject::connect(pNetwork, SIGNAL(request_uo(QString,QString,QString)), pOnet_auth, SLOT(request_uo(QString,QString,QString)));
+    QObject::connect(pNetwork, SIGNAL(show_msg_active(QString,int)), pTabC, SLOT(slot_show_msg_active(QString,int)));
+    QObject::connect(pNetwork, SIGNAL(show_msg_all(QString,int)), pTabC, SLOT(slot_show_msg_all(QString,int)));
+    QObject::connect(pNetwork, SIGNAL(update_nick(QString)), inputLineWidget, SLOT(update_nick(QString)));
     QObject::connect(pNetwork, SIGNAL(clear_nicklist(QString)), pTabC, SLOT(slot_clear_nicklist(QString)));
     QObject::connect(pNetwork, SIGNAL(clear_all_nicklist()), pTabC, SLOT(slot_clear_all_nicklist()));
 }
@@ -110,6 +127,7 @@ Core::~Core()
     delete pDlg_moderation;
     delete pDlg_channel_settings;
     delete pNetwork;
+    delete inputLineWidget;
     delete pTabC;
     delete pTabM;
     delete camSocket;
@@ -193,4 +211,17 @@ void Core::tab_close_requested(int index)
 {
     if (index != 0)
         pTabC->part_tab(index);
+}
+
+void Core::current_tab_changed(int index)
+{
+    // change name
+    QString strTabText = pTabM->tabText(index);
+    myparent->setWindowTitle(QString("Simple Chat Client - [%1]").arg(strTabText));
+
+    // change color
+    pTabM->set_color(index, QColor(0,0,0));
+
+    // set active
+    inputLineWidget->set_active(pTabC->get_name(index));
 }

@@ -26,12 +26,12 @@
 #include <QLineEdit>
 #include <QTreeWidget>
 
-class Inputline : public QLineEdit
+class InputLine : public QLineEdit
 {
     Q_OBJECT
 public:
-    Inputline(QWidget*);
-    ~Inputline();
+    InputLine(QWidget*);
+    ~InputLine();
     void set_userslist(QTreeWidget *);
     void insert_text(QString);
 

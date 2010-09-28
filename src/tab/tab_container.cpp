@@ -20,7 +20,7 @@
 
 #include "tab_container.h"
 
-TabContainer::TabContainer(QWidget *parent, Network *param1, TabManager *param2, Notify *param3, QMap <QString, QByteArray> *param4, QMap <QString, QByteArray> *param5, QTcpSocket *param6)
+TabContainer::TabContainer(QWidget *parent, Network *param1, TabManager *param2, Notify *param3, QMap <QString, QByteArray> *param4, QMap <QString, QByteArray> *param5, QTcpSocket *param6, InputLineWidget *param7)
 {
     myparent = parent;
     pNetwork = param1;
@@ -29,6 +29,7 @@ TabContainer::TabContainer(QWidget *parent, Network *param1, TabManager *param2,
     mNickAvatar = param4;
     mChannelAvatar = param5;
     camSocket = param6;
+    inputlinewidget = param7;
 }
 
 TabContainer::~TabContainer()
@@ -86,7 +87,7 @@ void TabContainer::add_tab(QString strChannel)
         delete l;
 
         // create
-        tw.append(new TabWidget(myparent, pNetwork, strChannel, pNotify, mNickAvatar, mChannelAvatar, dlgchannel_settings, dlgmoderation, camSocket));
+        tw.append(new TabWidget(myparent, pNetwork, strChannel, pNotify, mNickAvatar, mChannelAvatar, dlgchannel_settings, dlgmoderation, camSocket, inputlinewidget));
         pTabM->addTab(tw.at(tw.count()-1), strChannel);
         pTabM->setCurrentIndex(tw.count()-1);
 
@@ -335,12 +336,6 @@ void TabContainer::change_flag(QString strNick, QString strFlag)
     }
 }
 
-void TabContainer::update_nick(QString strNick)
-{
-    for (int i = 0; i < tw.count(); i++)
-        tw[i]->update_nick(strNick);
-}
-
 void TabContainer::clear_nicklist(QString strChannel)
 {
     int i = get_index(strChannel);
@@ -433,11 +428,6 @@ void TabContainer::slot_show_msg_all(QString strData, int iLevel)
     show_msg_all(strData, iLevel);
 }
 
-void TabContainer::slot_update_nick(QString strNick)
-{
-    update_nick(strNick);
-}
-
 void TabContainer::slot_clear_nicklist(QString strChannel)
 {
     clear_nicklist(strChannel);
@@ -446,6 +436,13 @@ void TabContainer::slot_clear_nicklist(QString strChannel)
 void TabContainer::slot_clear_all_nicklist()
 {
     clear_all_nicklist();
+}
+
+void TabContainer::slot_display_message(QString strChannel, QString strData, int iLevel)
+{
+    int i = get_index(strChannel);
+    if (i != -1)
+        tw[i]->display_message(strData, iLevel);
 }
 
 void TabContainer::refresh_colors()

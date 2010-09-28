@@ -20,13 +20,13 @@
 
 #include "dlg_emoticons.h"
 
-DlgEmoticons::DlgEmoticons(QWidget *parent, Inputline *param1) : QDialog(parent)
+DlgEmoticons::DlgEmoticons(QWidget *parent, InputLineWidget *param1) : QDialog(parent)
 {
     ui.setupUi(this);
     setAttribute(Qt::WA_DeleteOnClose);
     setWindowTitle(tr("Emoticons"));
 
-    inputline = param1;
+    inputlinewidget = param1;
 
     ui.pushButton_insert->setIcon(QIcon(":/images/oxygen/16x16/insert-image.png"));
     ui.buttonBox->button(QDialogButtonBox::Close)->setIcon(QIcon(":/images/oxygen/16x16/dialog-close.png"));
@@ -109,7 +109,7 @@ void DlgEmoticons::clicked_standard(QModelIndex index)
 
     // insert emots
     if (strEmoticon.isEmpty() == false)
-        inputline->insert_text("//"+strEmoticon);
+        inputlinewidget->insert_text("//"+strEmoticon);
 
     // close
     this->close();
@@ -124,7 +124,7 @@ void DlgEmoticons::clicked_extended(QModelIndex index)
 
     // insert emots
     if (strEmoticon.isEmpty() == false)
-        inputline->insert_text("//"+strEmoticon);
+        inputlinewidget->insert_text("//"+strEmoticon);
 
     // close
     this->close();
@@ -148,7 +148,7 @@ void DlgEmoticons::button_insert()
 
     // insert emots
     if (strSelected.isEmpty() == false)
-        inputline->insert_text("//"+strSelected);
+        inputlinewidget->insert_text("//"+strSelected);
 
     // close
     this->close();

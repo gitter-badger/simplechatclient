@@ -20,18 +20,18 @@
 
 #include "inputline.h"
 
-Inputline::Inputline(QWidget *parent) : QLineEdit(parent)
+InputLine::InputLine(QWidget *parent) : QLineEdit(parent)
 {
     index = 0;
     strLastWord = QString::null;
 }
 
-Inputline::~Inputline()
+InputLine::~InputLine()
 {
     strLastWord = QString::null;
 }
 
-void Inputline::set_userslist(QTreeWidget *treeWidget)
+void InputLine::set_userslist(QTreeWidget *treeWidget)
 {
     users_list.clear();
 
@@ -49,7 +49,7 @@ void Inputline::set_userslist(QTreeWidget *treeWidget)
     }
 }
 
-void Inputline::insert_text(QString strText)
+void InputLine::insert_text(QString strText)
 {
     // pos
     int iPos = this->cursorPosition();
@@ -60,7 +60,7 @@ void Inputline::insert_text(QString strText)
     this->setText(strLine);
 }
 
-QString Inputline::get_word()
+QString InputLine::get_word()
 {
     QString strWord = this->text();
     if (strWord.isEmpty() == false)
@@ -77,7 +77,7 @@ QString Inputline::get_word()
     return strWord;
 }
 
-void Inputline::set_word(QString strSetWord)
+void InputLine::set_word(QString strSetWord)
 {
     QString strWord = this->text();
     if (strWord.isEmpty() == false)
@@ -101,7 +101,7 @@ void Inputline::set_word(QString strSetWord)
     }
 }
 
-bool Inputline::event(QEvent *e)
+bool InputLine::event(QEvent *e)
 {
     if (e->type() != QEvent::KeyPress)
         return QLineEdit::event(e);

@@ -20,7 +20,7 @@
 
 #include "tab_widget.h"
 
-TabWidget::TabWidget(QWidget *parent, Network *param1, QString param2, Notify *param3, QMap <QString, QByteArray> *param4, QMap <QString, QByteArray> *param5, DlgChannelSettings *param6, DlgModeration *param7, QTcpSocket *param8)
+TabWidget::TabWidget(QWidget *parent, Network *param1, QString param2, Notify *param3, QMap <QString, QByteArray> *param4, QMap <QString, QByteArray> *param5, DlgChannelSettings *param6, DlgModeration *param7, QTcpSocket *param8, InputLineWidget *param9)
 {
     myparent = parent;
     pNetwork = param1;
@@ -31,6 +31,7 @@ TabWidget::TabWidget(QWidget *parent, Network *param1, QString param2, Notify *p
     dlgchannel_settings = param6;
     dlgmoderation = param7;
     camSocket = param8;
+    inputLineWidget = param9;
 
     QSettings settings;
     QString strDefaultFontColor = addslashes(settings.value("default_font_color").toString());
@@ -256,45 +257,12 @@ TabWidget::TabWidget(QWidget *parent, Network *param1, QString param2, Notify *p
     toolLayout->addWidget(scroll);
     toolWidget->setLayout(toolLayout);
 
-    nickLabel = new QLabel(this);
-    nickLabel->setText(QString("<p style=\"font-weight:bold;\"> %1</p>").arg(tr("(Unregistered)")));
-    nickLabel->show();
-
-    inputline = new Inputline(this);
-    inputline->setMinimumWidth(400);
-    inputline->setMaxLength(300);
-    inputline->setFont(QFont("Verdana", -1, -1, false));
-    inputline->show();
-
-    sendButton = new QPushButton(QIcon(":/images/oxygen/16x16/go-next.png"), tr("Send"), this);
-    sendButton->setToolTip(tr("Send"));
-    sendButton->setMaximumWidth(75);
-    sendButton->setMaximumHeight(25);
-    sendButton->show();
-
-    moderSendButton = new QPushButton(QIcon(":/images/oxygen/16x16/view-pim-tasks.png"), tr("Send to moderators"), this);
-    moderSendButton->setToolTip(tr("Send to moderators"));
-    moderSendButton->setMaximumHeight(25);
-    moderSendButton->show();
-
-    bottomWidget = new QWidget(this);
-    bottomLayout = new QHBoxLayout();
-    bottomLayout->setMargin(0);
-    bottomLayout->setAlignment(Qt::AlignLeft);
-    bottomLayout->addWidget(nickLabel);
-    bottomLayout->addWidget(inputline);
-    bottomLayout->addWidget(sendButton);
-    bottomLayout->addWidget(moderSendButton);
-    bottomWidget->setLayout(bottomLayout);
-
     mainLayout = new QGridLayout();
 
     if (strName[0] == '#')
     {
         moderation->hide();
         toolLayout->removeWidget(moderation);
-        moderSendButton->hide();
-        bottomLayout->removeWidget(moderSendButton);
 
         if (settings.value("style") == "modern")
         {
@@ -316,7 +284,6 @@ TabWidget::TabWidget(QWidget *parent, Network *param1, QString param2, Notify *p
         leftLayout->addWidget(topWidget);
         leftLayout->addWidget(mainWebView);
         leftLayout->addWidget(toolWidget);
-        leftLayout->addWidget(bottomWidget);
 
         leftWidget->setLayout(leftLayout);
         rightWidget->setLayout(rightLayout);
@@ -341,14 +308,11 @@ TabWidget::TabWidget(QWidget *parent, Network *param1, QString param2, Notify *p
 
         moderation->hide();
         toolLayout->removeWidget(moderation);
-        moderSendButton->hide();
-        bottomLayout->removeWidget(moderSendButton);
 
         rightLayout->addWidget(nicklist);
 
         leftLayout->addWidget(mainWebView);
         leftLayout->addWidget(toolWidget);
-        leftLayout->addWidget(bottomWidget);
 
         leftWidget->setLayout(leftLayout);
         rightWidget->setLayout(rightLayout);
@@ -385,11 +349,8 @@ TabWidget::TabWidget(QWidget *parent, Network *param1, QString param2, Notify *p
         scroll->hide();
         toolWidget->hide();
 
-        moderSendButton->hide();
-        bottomLayout->removeWidget(moderSendButton);
 
         leftLayout->addWidget(mainWebView);
-        leftLayout->addWidget(bottomWidget);
 
         leftWidget->setLayout(leftLayout);
         rightWidget->setLayout(rightLayout);
@@ -408,7 +369,7 @@ TabWidget::TabWidget(QWidget *parent, Network *param1, QString param2, Notify *p
     set_default();
 
 // set colors
-    inputline->setStyleSheet(QString("color:%1;").arg(strDefaultFontColor));
+    inputLineWidget->set_style_sheet(QString("color:%1;").arg(strDefaultFontColor));
 
     if (strBackgroundColor.toLower() != "#ffffff")
         this->setStyleSheet(QString("color:%1;background-color:%2;").arg(strDefaultFontColor).arg(strBackgroundColor));
@@ -416,8 +377,6 @@ TabWidget::TabWidget(QWidget *parent, Network *param1, QString param2, Notify *p
         this->setStyleSheet(QString::null);
 
 // signals
-    QObject::connect(sendButton, SIGNAL(clicked()), this, SLOT(inputline_return_pressed()));
-    QObject::connect(inputline, SIGNAL(returnPressed()), this, SLOT(inputline_return_pressed()));
     QObject::connect(bold, SIGNAL(clicked()), this, SLOT(bold_clicked()));
     QObject::connect(italic, SIGNAL(clicked()), this, SLOT(italic_clicked()));
 
@@ -440,7 +399,6 @@ TabWidget::TabWidget(QWidget *parent, Network *param1, QString param2, Notify *p
     QObject::connect(emoticons, SIGNAL(clicked()), this, SLOT(emoticons_clicked()));
     QObject::connect(channel_settings, SIGNAL(clicked()), this, SLOT(channel_settings_clicked()));
     QObject::connect(moderation, SIGNAL(clicked()), this, SLOT(moderation_clicked()));
-    QObject::connect(moderSendButton, SIGNAL(clicked()), this, SLOT(moder_button_clicked()));
     QObject::connect(clear, SIGNAL(clicked()), this, SLOT(clear_clicked()));
     QObject::connect(scroll, SIGNAL(clicked()), this, SLOT(scroll_clicked()));
 
@@ -450,12 +408,10 @@ TabWidget::TabWidget(QWidget *parent, Network *param1, QString param2, Notify *p
 TabWidget::~TabWidget()
 {
     nickStatus.clear();
-    nickLabel->clear();
     strContent.clear();
     mainWebView->setHtml(strContent,QUrl(""));
 
     delete nicklist;
-    delete inputline;
 }
 
 void TabWidget::set_default()
@@ -492,7 +448,7 @@ void TabWidget::set_default()
 
 // refresh bold italic
     int iWeight = (bMyBold == true ? 75 : 50);
-    inputline->setFont(QFont(strMyFontFamily, -1, iWeight, bMyItalic));
+    inputLineWidget->set_font(QFont(strMyFontFamily, -1, iWeight, bMyItalic));
 
 // set default font
     QString strMyFont = settings.value("my_font").toString();
@@ -502,7 +458,7 @@ void TabWidget::set_default()
 // set default color
     QString strMyColor = settings.value("my_color").toString();
     strCurrentColor = strMyColor;
-    inputline->setStyleSheet(QString("color: "+strCurrentColor));
+    inputLineWidget->set_style_sheet(QString("color: "+strCurrentColor));
 
     int iMyColor;
     if (strMyColor == "#000000") iMyColor = 0;
@@ -545,23 +501,6 @@ QString TabWidget::addslashes(QString strData)
         return "#000000";
     else
         return strData;
-}
-
-QString TabWidget::convert_emots(QString strData)
-{
-    strData.replace(QRegExp("(http:|https:)//"), "\\1\\\\"); // fix http https
-    strData.replace(QRegExp("//([a-zA-Z0-9_-]+)\\b"), "%I\\1%");
-    strData.replace(QRegExp("(http:|https:)\\\\\\\\"), "\\1//"); // fix http https
-    return strData;
-}
-
-QString TabWidget::replace_emots(QString strData)
-{
-    Replace *pReplace = new Replace();
-    strData = pReplace->replace_emots(strData);
-    delete pReplace;
-
-    return strData;
 }
 
 void TabWidget::display_msg(QString strTime, QString strData, int iLevel)
@@ -769,16 +708,14 @@ void TabWidget::enable_moderation()
 {
     moderation->show();
     toolLayout->addWidget(moderation);
-    moderSendButton->show();
-    bottomLayout->addWidget(moderSendButton);
+    inputLineWidget->set_moderation(true);
 }
 
 void TabWidget::disable_moderation()
 {
     moderation->hide();
     toolLayout->removeWidget(moderation);
-    moderSendButton->hide();
-    bottomLayout->removeWidget(moderSendButton);
+    inputLineWidget->set_moderation(false);
 }
 
 void TabWidget::author_topic(QString strAuthor)
@@ -803,7 +740,7 @@ void TabWidget::add_user(QString strNick, QString strPrefix, QString strSuffix)
     if (nicklist_exist(strNick) == false)
     {
         nicklist_add(strNick, strPrefix, strSuffix);
-        inputline->set_userslist(nicklist);
+        inputLineWidget->set_userslist(nicklist);
 
         iNickCount++;
         nickCount->setText(QString(tr("%1 User(s)")).arg(iNickCount));
@@ -815,7 +752,7 @@ void TabWidget::del_user(QString strNick)
     if (nicklist_exist(strNick) == true)
     {
         nicklist_remove(strNick);
-        inputline->set_userslist(nicklist);
+        inputLineWidget->set_userslist(nicklist);
 
         iNickCount--;
         nickCount->setText(QString(tr("%1 User(s)")).arg(iNickCount));
@@ -846,7 +783,7 @@ void TabWidget::nicklist_refresh_all()
 {
     //raw 366: End of /NAMES list.
     nicklist->expandAll();
-    inputline->set_userslist(nicklist);
+    inputLineWidget->set_userslist(nicklist);
 }
 
 QStringList TabWidget::get_nicklist()
@@ -909,11 +846,6 @@ void TabWidget::change_flag(QString strNick, QString strNewFlag)
         if (strNewFlag == "+X") enable_moderation();
         else if (strNewFlag == "-X") disable_moderation();
     }
-}
-
-void TabWidget::update_nick(QString strNick)
-{
-    nickLabel->setText(QString("<p style=\"font-weight:bold;\"> %1</p>").arg(strNick));
 }
 
 void TabWidget::clear_nicklist()
@@ -981,7 +913,7 @@ void TabWidget::refresh_colors()
     replace_color("chan", strChannelFontColor);
 
     // inputline
-    inputline->setStyleSheet(QString("color:%1;").arg(strDefaultFontColor));
+    inputLineWidget->set_style_sheet(QString("color:%1;").arg(strDefaultFontColor));
 
     // this
     if (strBackgroundColor.toLower() != "#ffffff")
@@ -1004,85 +936,101 @@ void TabWidget::refresh_colors()
 
 void TabWidget::bold_clicked()
 {
+    QSettings settings;
     if (bMyBold == true)
     {
         bold->setChecked(false);
         bMyBold = false;
         strMyFontWeight = "";
+        settings.setValue("my_bold", "off");
     }
     else
     {
         bold->setChecked(true);
         bMyBold = true;
         strMyFontWeight = "bold";
+        settings.setValue("my_bold", "on");
     }
 
     int iWeight = (bMyBold == true ? 75 : 50);
-    inputline->setFont(QFont(strMyFontFamily, -1, iWeight, bMyItalic));
+    inputLineWidget->set_font(QFont(strMyFontFamily, -1, iWeight, bMyItalic));
 }
 
 void TabWidget::italic_clicked()
 {
+    QSettings settings;
     if (bMyItalic == true)
     {
         italic->setChecked(false);
         bMyItalic = false;
         strMyFontStyle = "";
+        settings.setValue("my_italic", "off");
     }
     else
     {
         italic->setChecked(true);
         bMyItalic = true;
         strMyFontStyle = "italic";
+        settings.setValue("my_italic", "on");
     }
 
     int iWeight = (bMyBold == true ? 75 : 50);
-    inputline->setFont(QFont(strMyFontFamily, -1, iWeight, bMyItalic));
+    inputLineWidget->set_font(QFont(strMyFontFamily, -1, iWeight, bMyItalic));
 }
 
 void TabWidget::arial_triggered()
 {
     fontfamily->setText("Arial");
     strMyFontFamily = "Arial";
+    QSettings settings;
+    settings.setValue("my_font", strMyFontFamily);
 
     int iWeight = (bMyBold == true ? 75 : 50);
-    inputline->setFont(QFont(strMyFontFamily, -1, iWeight, bMyItalic));
+    inputLineWidget->set_font(QFont(strMyFontFamily, -1, iWeight, bMyItalic));
 }
 
 void TabWidget::times_triggered()
 {
     fontfamily->setText("Times");
     strMyFontFamily = "Times";
+    QSettings settings;
+    settings.setValue("my_font", strMyFontFamily);
 
     int iWeight = (bMyBold == true ? 75 : 50);
-    inputline->setFont(QFont(strMyFontFamily, -1, iWeight, bMyItalic));
+    inputLineWidget->set_font(QFont(strMyFontFamily, -1, iWeight, bMyItalic));
 }
 
 void TabWidget::verdana_triggered()
 {
     fontfamily->setText("Verdana");
     strMyFontFamily = "Verdana";
+    QSettings settings;
+    settings.setValue("my_font", strMyFontFamily);
 
     int iWeight = (bMyBold == true ? 75 : 50);
-    inputline->setFont(QFont(strMyFontFamily, -1, iWeight, bMyItalic));
+    inputLineWidget->set_font(QFont(strMyFontFamily, -1, iWeight, bMyItalic));
 }
 
 void TabWidget::tahoma_triggered()
 {
     fontfamily->setText("Tahoma");
     strMyFontFamily = "Tahoma";
+    QSettings settings;
+    settings.setValue("my_font", strMyFontFamily);
 
     int iWeight = (bMyBold == true ? 75 : 50);
-    inputline->setFont(QFont(strMyFontFamily, -1, iWeight, bMyItalic));
+    inputLineWidget->set_font(QFont(strMyFontFamily, -1, iWeight, bMyItalic));
 }
 
 void TabWidget::courier_triggered()
 {
     fontfamily->setText("Courier");
     strMyFontFamily = "Courier";
+    QSettings settings;
+    settings.setValue("my_font", strMyFontFamily);
 
     int iWeight = (bMyBold == true ? 75 : 50);
-    inputline->setFont(QFont(strMyFontFamily, -1, iWeight, bMyItalic));
+    inputLineWidget->set_font(QFont(strMyFontFamily, -1, iWeight, bMyItalic));
 }
 
 void TabWidget::size8_triggered()
@@ -1169,14 +1117,17 @@ void TabWidget::color_clicked(int index)
     else if (index == 13) strCurrentColor = "#008100";
     else if (index == 14) strCurrentColor = "#959595";
     else strCurrentColor = "#000000";
-    inputline->setStyleSheet(QString("color: "+strCurrentColor));
+
+    QSettings settings;
+    settings.setValue("my_color", strCurrentColor);
+    inputLineWidget->set_style_sheet(QString("color: "+strCurrentColor));
 }
 
 // emoticons
 
 void TabWidget::emoticons_clicked()
 {
-    (new DlgEmoticons(myparent, inputline))->show();
+    (new DlgEmoticons(myparent, inputLineWidget))->show();
 }
 
 // channel settings
@@ -1226,153 +1177,7 @@ void TabWidget::scroll_clicked()
         scroll->setIcon(QIcon(":/images/oxygen/16x16/arrow-down.png"));
     }
 
-    inputline->setFocus();
-}
-
-// input line
-
-void TabWidget::send_message(bool bType)
-{
-    QString strTextO = inputline->text();
-    QStringList strTextA = strTextO.split(QRegExp("(\n|\r)"));
-
-    for (int i = 0; i < strTextA.count(); i++)
-    {
-        QString strText = strTextA[i];
-        QString strTextOriginal = strText;
-        strLast_msg = strText;
-
-        QSettings settings;
-        QString strMe = settings.value("nick").toString();
-
-        if ((strText[0] == '/') && (strText[1] != '/'))
-        {
-            if (strText[0] == '/')
-                strText = strText.right(strText.length()-1);
-            strTextOriginal = strText;
-            QStringList strTextList = strText.split(" ");
-
-            Commands *pCommands = new Commands(strName, strText);
-            strText = pCommands->execute();
-            delete pCommands;
-
-            if ((strTextList[0] == "help") || (strTextList[0] == "pomoc"))
-            {
-                QStringList strlHelp = strText.split(";");
-                for (int i = 0; i < strlHelp.count(); i++)
-                    display_msg(strlHelp.at(i), 7);
-            }
-            else if (strTextList[0] == "me")
-            {
-                if (strTextOriginal.length() > 3)
-                {
-                    QString strTextSend = strText;
-                    QString strTextDisplay = strTextOriginal.right(strTextOriginal.length()-3);
-
-                    QString weight;
-                    QString font = fontfamily->text().toLower();
-
-                    if (bMyBold == true) weight += "b";
-                    if (bMyItalic == true) weight += "i";
-
-                    if (strCurrentColor != "#000000")
-                        strTextDisplay = "%C"+strCurrentColor.right(6)+"%"+strTextDisplay;
-                    if ((weight != "") || (font != "verdana"))
-                        strTextDisplay = "%F"+weight+":"+font+"%"+strTextDisplay;
-
-                    strTextSend = convert_emots(strTextSend);
-                    strTextSend = replace_emots(strTextSend);
-                    strTextDisplay = convert_emots(strTextDisplay);
-                    strTextDisplay = replace_emots(strTextDisplay);
-
-                    QDateTime dt = QDateTime::currentDateTime();
-                    QString strDT = dt.toString("[hh:mm:ss] ");
-
-                    QSettings settings;
-                    if (settings.value("disable_logs").toString() == "off")
-                    {
-                        Log *l = new Log();
-                        l->save(strName, QString("%1<%2> %3").arg(strDT).arg(strMe).arg(strTextDisplay));
-                        delete l;
-                    }
-
-                    display_message(QString("%1<%2> %3ACTION %4%5").arg(strDT).arg(strMe).arg(QString(QByteArray("\x01"))).arg(strTextDisplay).arg(QString(QByteArray("\x01"))), 0);
-                    if (pNetwork->is_connected() == true)
-                        pNetwork->send(strTextSend);
-                }
-            }
-            else
-            {
-                if ((pNetwork->is_connected() == true) && (strText.length() > 0))
-                    pNetwork->send(strText);
-            }
-
-            inputline->clear();
-        }
-        else if (strName != "Status")
-        {
-            if ((pNetwork->is_connected() == true) && (strText.length() > 0))
-            {
-                QString weight;
-                QString font = fontfamily->text().toLower();
-
-                if (bMyBold == true) weight += "b";
-                if (bMyItalic == true) weight += "i";
-
-                if (strCurrentColor != "#000000")
-                    strText = "%C"+strCurrentColor.right(6)+"%"+strText;
-                if ((weight != "") || (font != "verdana"))
-                    strText = "%F"+weight+":"+font+"%"+strText;
-
-                strText = convert_emots(strText);
-                strText = replace_emots(strText);
-
-                QDateTime dt = QDateTime::currentDateTime();
-                QString strDT = dt.toString("[hh:mm:ss] ");
-
-                if (bType == true)
-                {
-                    QSettings settings;
-                    if (settings.value("disable_logs").toString() == "off")
-                    {
-                        Log *l = new Log();
-                        l->save(strName, QString("%1<%2> %3").arg(strDT).arg(strMe).arg(strText));
-                        delete l;
-                    }
-
-                    strText = QString("PRIVMSG %1 :%2").arg(strName).arg(strText);
-                    pNetwork->send(strText);
-                    display_message(QString("%1<%2> %3").arg(strDT).arg(strMe).arg(strText.right(strText.length()-10-strName.length())), 0);
-                }
-                else
-                {
-                    QSettings settings;
-                    if (settings.value("disable_logs").toString() == "off")
-                    {
-                        Log *l = new Log();
-                        l->save(strName, QString("%1 *<%2> %3").arg(strDT).arg(strMe).arg(strText));
-                        delete l;
-                    }
-
-                    strText = QString("MODERNOTICE %1 :%2").arg(strName).arg(strText);
-                    pNetwork->send(strText);
-                    display_message(QString("%1 *<%2> %3").arg(strDT).arg(strMe).arg(strText.right(strText.length()-14-strName.length())), 6);
-                }
-
-                inputline->clear();
-            }
-        }
-    }
-}
-
-void TabWidget::inputline_return_pressed()
-{
-    send_message(true);
-}
-
-void TabWidget::moder_button_clicked()
-{
-    send_message(false);
+    inputLineWidget->setFocus();
 }
 
 void TabWidget::change_scroll_position()
@@ -1396,21 +1201,4 @@ void TabWidget::resizeEvent(QResizeEvent *e)
 
     // standard handle event
     QWidget::resizeEvent(e);
-}
-
-void TabWidget::keyPressEvent(QKeyEvent *e)
-{
-    if (e->key() == Qt::Key_Up)
-    {
-        inputline->clear();
-        inputline->setText(strLast_msg);
-        inputline->setFocus();
-    }
-    else if (e->key() == Qt::Key_Down)
-    {
-        inputline->clear();
-        inputline->setFocus();
-    }
-
-    QWidget::keyPressEvent(e);
 }

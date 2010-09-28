@@ -247,6 +247,7 @@ private slots:
 
 signals:
     void set_lag(QString);
+    void update_nick(QString);
 
 };
 

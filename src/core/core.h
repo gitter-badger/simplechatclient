@@ -21,6 +21,7 @@
 #ifndef CORE_H
 #define CORE_H
 
+#include <QDockWidget>
 #include <QMainWindow>
 #include <QMenuBar>
 #include <QObject>
@@ -33,6 +34,7 @@
 #include "dlg_friends.h"
 #include "dlg_ignore.h"
 #include "dlg_moderation.h"
+#include "inputlinewidget.h"
 #ifdef Q_WS_WIN
 #include "kamerzysta.h"
 #endif
@@ -77,6 +79,8 @@ private:
     // require
     QTcpSocket *camSocket;
     TabManager *pTabM;
+    InputLineWidget *inputLineWidget;
+    QDockWidget *inputLineDockWidget;
     TabContainer *pTabC;
     Network *pNetwork;
     OnetKernel *pOnet_kernel;
@@ -96,6 +100,7 @@ private:
 
 private slots:
     void tab_close_requested(int);
+    void current_tab_changed(int);
 
 signals:
     void skernel(QString);

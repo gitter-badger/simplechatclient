@@ -25,7 +25,6 @@ TabManager::TabManager(QWidget *parent) : QTabWidget(parent)
     myparent = parent;
     tab = tabBar();
     setTabsClosable(true);
-    QObject::connect(tab, SIGNAL(currentChanged(int)), this, SLOT(current_tab_changed(int)));
 }
 
 void TabManager::set_hilight(int index)
@@ -40,10 +39,7 @@ void TabManager::set_alert(int index, QColor color)
         tab->setTabTextColor(index, color);
 }
 
-void TabManager::current_tab_changed(int index)
+void TabManager::set_color(int index, QColor color)
 {
-    QString strTabText = tabText(index);
-    myparent->setWindowTitle(QString("Simple Chat Client - [%1]").arg(strTabText));
-
-    tab->setTabTextColor(index, QColor(0,0,0));
+    tab->setTabTextColor(index, color);
 }

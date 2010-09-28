@@ -26,18 +26,18 @@
 #include <QDir>
 #include <QPixmap>
 #include <QShowEvent>
-#include "inputline.h"
+#include "inputlinewidget.h"
 #include "ui_emoticons.h"
 
 class DlgEmoticons : public QDialog
 {
     Q_OBJECT
 public:
-    DlgEmoticons(QWidget *, Inputline *);
+    DlgEmoticons(QWidget *, InputLineWidget *);
 
 private:
     Ui::uiEmoticons ui;
-    Inputline *inputline;
+    InputLineWidget *inputlinewidget;
     bool bDoneStandard;
     bool bDoneExtended;
 

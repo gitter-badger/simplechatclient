@@ -42,33 +42,30 @@
 #include <QWidget>
 #include <QtWebKit/QWebFrame>
 #include <QtWebKit/QWebView>
-#include "commands.h"
 #include "convert.h"
 #include "dlg_channel_settings.h"
 #include "dlg_emoticons.h"
 #include "dlg_moderation.h"
+#include "inputlinewidget.h"
 #include "log.h"
 #include "network.h"
-#include "inputline.h"
 #include "mainwebview.h"
 #include "nicklistdelegate.h"
 #include "nicklistwidget.h"
 #include "notify.h"
-#include "replace.h"
 
 class TabWidget : public QWidget
 {
     Q_OBJECT
 public:
-    TabWidget(QWidget *, Network *, QString, Notify *, QMap <QString, QByteArray> *, QMap <QString, QByteArray> *, DlgChannelSettings *, DlgModeration *, QTcpSocket *);
+    TabWidget(QWidget *, Network *, QString, Notify *, QMap <QString, QByteArray> *, QMap <QString, QByteArray> *, DlgChannelSettings *, DlgModeration *, QTcpSocket *, InputLineWidget *);
     ~TabWidget();
     QString get_name() { return strName; }
     void set_default();
     QString addslashes(QString);
-    QString convert_emots(QString);
-    QString replace_emots(QString);
     void display_msg(QString, QString, int);
     void display_msg(QString, int);
+    void display_message(QString, int); // private, exteption: inputlinewidget
     void set_topic(QString);
     void enable_moderation();
     void disable_moderation();
@@ -77,7 +74,6 @@ public:
     void add_user(QString, QString, QString);
     void del_user(QString);
     void change_flag(QString, QString);
-    void update_nick(QString);
     void clear_nicklist();
     void set_user_info(QString, QString, QString);
     void set_open_channels(QStringList);
@@ -107,7 +103,6 @@ private:
     NickListWidget *nicklist;
     MainWebView *mainWebView;
     QWidget *toolWidget;
-    QWidget *bottomWidget;
 
     QWidget *topLeftWidget;
     QVBoxLayout *topLeftLayout;
@@ -148,12 +143,6 @@ private:
     QAction *size18Act;
     QAction *size20Act;
 
-    QHBoxLayout *bottomLayout;
-    QLabel *nickLabel;
-    Inputline *inputline;
-    QPushButton *sendButton;
-    QPushButton *moderSendButton;
-
     QSplitter *splitter;
     QVBoxLayout *leftLayout;
     QVBoxLayout *rightLayout;
@@ -166,6 +155,7 @@ private:
     QMap <QString, QByteArray> *mNickAvatar;
     QMap <QString, QByteArray> *mChannelAvatar;
     QTcpSocket *camSocket;
+    InputLineWidget *inputLineWidget;
 
     QWidget *myparent;
     Network *pNetwork;
@@ -183,8 +173,6 @@ private:
 
     void nicklist_add(QString, QString, QString);
     void nicklist_remove(QString);
-
-    void display_message(QString, int);
 
 private slots:
     void bold_clicked();
@@ -210,14 +198,11 @@ private slots:
     void moderation_clicked();
     void clear_clicked();
     void scroll_clicked();
-    void inputline_return_pressed();
-    void moder_button_clicked();
 
     void change_scroll_position();
 
 protected:
     virtual void resizeEvent(QResizeEvent *);
-    virtual void keyPressEvent(QKeyEvent *);
 
 };
 
