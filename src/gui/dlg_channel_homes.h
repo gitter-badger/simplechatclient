@@ -43,6 +43,8 @@ private:
     QMap <QString, QByteArray> *mChannelAvatar;
     DlgChannelSettings *dlgchannel_settings;
 
+    bool exist_channel(QString);
+
 protected:
     virtual void showEvent(QShowEvent *);
     virtual void closeEvent(QCloseEvent *);

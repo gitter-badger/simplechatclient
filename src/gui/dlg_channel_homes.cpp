@@ -50,6 +50,7 @@ DlgChannelHomes::DlgChannelHomes(QWidget *parent, Network *param1, QMap <QString
 void DlgChannelHomes::add_channel(QString strChannel)
 {
     strChannel = strChannel.right(strChannel.length()-1); // remove status
+    if (exist_channel(strChannel) == true) return; // already exist in list
 
     if (mChannelAvatar->contains(strChannel) == true)
     {
@@ -67,6 +68,16 @@ void DlgChannelHomes::add_channel(QString strChannel)
 void DlgChannelHomes::clear()
 {
     ui.listWidget_channels->clear();
+}
+
+bool DlgChannelHomes::exist_channel(QString strChannel)
+{
+    for (int i = 0; i < ui.listWidget_channels->count(); i++)
+    {
+        if (ui.listWidget_channels->item(i)->text() == strChannel)
+            return true;
+    }
+    return false;
 }
 
 void DlgChannelHomes::list_clicked(QModelIndex index)
