@@ -34,11 +34,14 @@
 #include "dlg_friends.h"
 #include "dlg_ignore.h"
 #include "dlg_moderation.h"
-#include "inputlinewidget.h"
+#include "inputlinedockwidget.h"
 #ifdef Q_WS_WIN
 #include "kamerzysta.h"
 #endif
 #include "network.h"
+#include "nicklistdelegate.h"
+#include "nicklistwidget.h"
+#include "nicklistdockwidget.h"
 #include "onet_auth.h"
 #include "onet_kernel.h"
 #include "tab_container.h"
@@ -63,9 +66,27 @@ public:
     void open_friends();
     void open_ignore();
     void open_cams();
+    // nicklist
+    bool nicklist_exist(QString, QString);
 
 public slots:
     void set_lag(QString);
+    void create_nicklist(QString);
+    void remove_nicklist(QString);
+    void add_user(QString, QString, QString, QString);
+    void del_user(QString, QString);
+    void nicklist_refresh(QString);
+    void quit_user(QString,QString);
+    void change_flag(QString, QString, QString);
+    void change_flag(QString, QString);
+
+/*
+    void clear_nicklist();
+    void set_user_info(QString, QString, QString);
+    void update_nick_avatar();
+    void update_channel_avatar();
+    QStringList get_nicklist();
+*/
 
 private:
     // params
@@ -79,8 +100,8 @@ private:
     // require
     QTcpSocket *camSocket;
     TabManager *pTabM;
-    InputLineWidget *inputLineWidget;
-    QDockWidget *inputLineDockWidget;
+    InputLineDockWidget *inputLineDockWidget;
+    NickListDockWidget *nickListDockWidget;
     TabContainer *pTabC;
     Network *pNetwork;
     OnetKernel *pOnet_kernel;
@@ -94,6 +115,10 @@ private:
     DlgModeration *pDlg_moderation;
     QMap <QString, QByteArray> mNickAvatar;
     QMap <QString, QByteArray> mChannelAvatar;
+    QDockWidget *bottomDockWidget;
+    QDockWidget *rightDockWidget;
+    QMap <QString, NickListWidget*> mChannelNickListWidget;
+    sChannelNickStatus mChannelNickStatus;
 
     // lag
     QAction *lagAct;

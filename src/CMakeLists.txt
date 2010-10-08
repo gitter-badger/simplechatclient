@@ -59,11 +59,12 @@ set (scc_SRCS
 	tab/tab_container.cpp
 	tab/tab_manager.cpp
 	tab/tab_widget.cpp
-	widgets/inputline.cpp
 	widgets/inputlinewidget.cpp
+	widgets/inputlinedockwidget.cpp
 	widgets/mainwebview.cpp
 	widgets/nicklistdelegate.cpp
 	widgets/nicklistwidget.cpp
+	widgets/nicklistdockwidget.cpp
 )
 
 set (scc_MOC_HDRS
@@ -104,11 +105,12 @@ set (scc_MOC_HDRS
 	tab/tab_container.h
 	tab/tab_manager.h
 	tab/tab_widget.h
-	widgets/inputline.h
 	widgets/inputlinewidget.h
+	widgets/inputlinedockwidget.h
 	widgets/mainwebview.h
 	widgets/nicklistdelegate.h
 	widgets/nicklistwidget.h
+	widgets/nicklistdockwidget.h
 )
 
 set (scc_HDRS

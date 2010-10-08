@@ -20,7 +20,7 @@
 
 #include "tab_widget.h"
 
-TabWidget::TabWidget(QWidget *parent, Network *param1, QString param2, Notify *param3, QMap <QString, QByteArray> *param4, QMap <QString, QByteArray> *param5, DlgChannelSettings *param6, DlgModeration *param7, QTcpSocket *param8, InputLineWidget *param9)
+TabWidget::TabWidget(QWidget *parent, Network *param1, QString param2, Notify *param3, QMap <QString, QByteArray> *param4, QMap <QString, QByteArray> *param5, DlgChannelSettings *param6, DlgModeration *param7, QTcpSocket *param8, InputLineDockWidget *param9, sChannelNickStatus *param10)
 {
     myparent = parent;
     pNetwork = param1;
@@ -32,23 +32,20 @@ TabWidget::TabWidget(QWidget *parent, Network *param1, QString param2, Notify *p
     dlgmoderation = param7;
     camSocket = param8;
     inputLineWidget = param9;
+    mChannelNickStatus = param10;
 
     QSettings settings;
     QString strDefaultFontColor = addslashes(settings.value("default_font_color").toString());
     QString strBackgroundColor = addslashes(settings.value("background_color").toString());
 
-    iNickCount = 0;
     bCursorPositionChanged = false;
     strCurrentColor = "#000000";
     strFontSize = "11px";
     strContentStart = "<html><body style=\"background-color:"+strBackgroundColor+";\">";
     strContentEnd = "</body></html>";
 
-    splitter = new QSplitter(this);
-    leftLayout = new QVBoxLayout();
-    rightLayout = new QVBoxLayout();
-    leftWidget = new QWidget(this);
-    rightWidget = new QWidget(this);
+    mainLayout = new QVBoxLayout();
+    mainWidget = new QWidget(this);
 
     topic = new QWebView(this);
     topic->setMinimumHeight(30);
@@ -89,22 +86,7 @@ TabWidget::TabWidget(QWidget *parent, Network *param1, QString param2, Notify *p
     topLayout->addWidget(topRightWidget);
     topWidget->setLayout(topLayout);
 
-    webLink = new QLabel(this);
-    webLink->setOpenExternalLinks(true);
-    webLink->setAlignment(Qt::AlignCenter);
-    webLink->show();
-
-    nickCount = new QLabel(this);
-    nickCount->setOpenExternalLinks(true);
-    nickCount->setAlignment(Qt::AlignCenter);
-    nickCount->show();
-
-    nicklist = new NickListWidget(myparent, pNetwork, strName, mNickAvatar, camSocket, &nickStatus);
-    nicklist->setParent(this);
-    nicklist->setItemDelegate(new NickListDelegate(nicklist));
-    nicklist->show();
-
-    mainWebView = new MainWebView(myparent, pNetwork, strName, camSocket, &nickStatus);
+    mainWebView = new MainWebView(myparent, pNetwork, strName, camSocket, mChannelNickStatus);
     mainWebView->setParent(this);
     mainWebView->show();
 
@@ -212,9 +194,9 @@ TabWidget::TabWidget(QWidget *parent, Network *param1, QString param2, Notify *p
     emoticons->setMaximumHeight(25);
     emoticons->show();
 
-    separator = new QLabel(this);
-    separator->setText(" | ");
-    separator->setEnabled(false);
+    separator = new QFrame(this);
+    separator->setFrameShape(QFrame::VLine);
+    separator->setFrameShadow(QFrame::Sunken);
     separator->show();
 
     channel_settings = new QPushButton(QIcon(":/images/oxygen/16x16/configure.png"), tr("Settings"), this);
@@ -257,42 +239,21 @@ TabWidget::TabWidget(QWidget *parent, Network *param1, QString param2, Notify *p
     toolLayout->addWidget(scroll);
     toolWidget->setLayout(toolLayout);
 
-    mainLayout = new QGridLayout();
-
     if (strName[0] == '#')
     {
         moderation->hide();
         toolLayout->removeWidget(moderation);
 
-        if (settings.value("style") == "modern")
+        if (settings.value("style") == "classic")
         {
-            rightLayout->addWidget(webLink);
-            rightLayout->addWidget(nickCount);
-        }
-        else if (settings.value("style") == "classic")
-        {
-            webLink->hide();
-            nickCount->hide();
             topicDetails->hide();
             topLeftWidget->hide();
-            rightLayout->setMargin(0);
-            leftLayout->setMargin(0);
         }
 
-        rightLayout->addWidget(nicklist);
-
-        leftLayout->addWidget(topWidget);
-        leftLayout->addWidget(mainWebView);
-        leftLayout->addWidget(toolWidget);
-
-        leftWidget->setLayout(leftLayout);
-        rightWidget->setLayout(rightLayout);
-
-        splitter->addWidget(leftWidget);
-        splitter->addWidget(rightWidget);
-
-        mainLayout->setMargin(0);
-        mainLayout->addWidget(splitter);
+        mainLayout->addWidget(topWidget);
+        mainLayout->addWidget(mainWebView);
+        mainLayout->addWidget(toolWidget);
+        mainWidget->setLayout(mainLayout);
     }
     else if (strName[0] == '^')
     {
@@ -303,25 +264,12 @@ TabWidget::TabWidget(QWidget *parent, Network *param1, QString param2, Notify *p
         topLeftWidget->hide();
         topWidget->hide();
 
-        webLink->hide();
-        nickCount->hide();
-
         moderation->hide();
         toolLayout->removeWidget(moderation);
 
-        rightLayout->addWidget(nicklist);
-
-        leftLayout->addWidget(mainWebView);
-        leftLayout->addWidget(toolWidget);
-
-        leftWidget->setLayout(leftLayout);
-        rightWidget->setLayout(rightLayout);
-
-        splitter->addWidget(leftWidget);
-        splitter->addWidget(rightWidget);
-
-        mainLayout->setMargin(0);
-        mainLayout->addWidget(splitter);
+        mainLayout->addWidget(mainWebView);
+        mainLayout->addWidget(toolWidget);
+        mainWidget->setLayout(mainLayout);
     }
     else
     {
@@ -331,10 +279,6 @@ TabWidget::TabWidget(QWidget *parent, Network *param1, QString param2, Notify *p
         topRightWidget->hide();
         topLeftWidget->hide();
         topWidget->hide();
-
-        webLink->hide();
-        nickCount->hide();
-        nicklist->hide();
 
         bold->hide();
         italic->hide();
@@ -349,20 +293,13 @@ TabWidget::TabWidget(QWidget *parent, Network *param1, QString param2, Notify *p
         scroll->hide();
         toolWidget->hide();
 
-
-        leftLayout->addWidget(mainWebView);
-
-        leftWidget->setLayout(leftLayout);
-        rightWidget->setLayout(rightLayout);
-
-        splitter->addWidget(leftWidget);
-        splitter->addWidget(rightWidget);
-
-        mainLayout->setMargin(0);
-        mainLayout->addWidget(splitter);
+        mainLayout->addWidget(mainWebView);
+        mainWidget->setLayout(mainLayout);
     }
 
     if (strName == "Status") channel_settings->hide();
+
+    mainLayout->setMargin(0);
     this->setLayout(mainLayout);
 
 // set default font
@@ -407,11 +344,8 @@ TabWidget::TabWidget(QWidget *parent, Network *param1, QString param2, Notify *p
 
 TabWidget::~TabWidget()
 {
-    nickStatus.clear();
     strContent.clear();
     mainWebView->setHtml(strContent,QUrl(""));
-
-    delete nicklist;
 }
 
 void TabWidget::set_default()
@@ -521,8 +455,9 @@ void TabWidget::display_msg(QString strTime, QString strData, int iLevel)
     {
         if (settings.value("hide_join_part").toString() == "on")
             return;
-        if ((settings.value("hide_join_part_200").toString() == "on") && (iNickCount > 200))
-            return;
+        /// REGRESSION
+        //if ((settings.value("hide_join_part_200").toString() == "on") && (iNickCount > 200))
+            //return;
     }
 
     display_message(strData, iLevel);
@@ -546,8 +481,9 @@ void TabWidget::display_msg(QString strData, int iLevel)
     {
         if (settings.value("hide_join_part").toString() == "on")
             return;
-        if ((settings.value("hide_join_part_200").toString() == "on") && (iNickCount > 200))
-            return;
+        /// REGRESSION
+        //if ((settings.value("hide_join_part_200").toString() == "on") && (iNickCount > 200))
+            //return;
     }
 
     display_message(strData, iLevel);
@@ -727,150 +663,21 @@ void TabWidget::author_topic(QString strAuthor)
         topic->setToolTip(topicDetails->text());
 }
 
-void TabWidget::set_link(QString strUrl)
-{
-    webLink->setText(QString("<a href=\"%1\" style=\"color:#0000FF;text-decoration:none;\" >"+tr("Channel website")+"</a>").arg(strUrl));
-    webLink->setToolTip(strUrl);
-}
-
-// nick list
-
-void TabWidget::add_user(QString strNick, QString strPrefix, QString strSuffix)
-{
-    if (nicklist_exist(strNick) == false)
-    {
-        nicklist_add(strNick, strPrefix, strSuffix);
-        inputLineWidget->set_userslist(nicklist);
-
-        iNickCount++;
-        nickCount->setText(QString(tr("%1 User(s)")).arg(iNickCount));
-    }
-}
-
-void TabWidget::del_user(QString strNick)
-{
-    if (nicklist_exist(strNick) == true)
-    {
-        nicklist_remove(strNick);
-        inputLineWidget->set_userslist(nicklist);
-
-        iNickCount--;
-        nickCount->setText(QString(tr("%1 User(s)")).arg(iNickCount));
-    }
-}
-
 void TabWidget::replace_color(QString level, QString color)
 {
     strContent.replace(QRegExp(QString("id=\"level_%1\" style=\"color:#(......);").arg(level)), QString("id=\"level_%1\" style=\"color:%2;").arg(level).arg(color));
 }
 
-void TabWidget::nicklist_add(QString strNick, QString strPrefix, QString strSuffix)
-{
-    nicklist->add(strNick, strPrefix, strSuffix, &nickStatus);
-}
-
-void TabWidget::nicklist_remove(QString strNick)
-{
-    nicklist->remove(strNick, &nickStatus);
-}
-
-bool TabWidget::nicklist_exist(QString strNick)
-{
-    return nicklist->exist(strNick, &nickStatus);
-}
-
-void TabWidget::nicklist_refresh_all()
-{
-    //raw 366: End of /NAMES list.
-    nicklist->expandAll();
-    inputLineWidget->set_userslist(nicklist);
-}
-
-QStringList TabWidget::get_nicklist()
-{
-    return nicklist->get(&nickStatus);
-}
-
-void TabWidget::change_flag(QString strNick, QString strNewFlag)
-{
-    QString strOldPrefix;
-    QString strOldSuffix;
-
-    for (int i = 0; i < nickStatus.count(); i++)
-    {
-        if (nickStatus.at(i).nick == strNick)
-        {
-            strOldPrefix = nickStatus.at(i).prefix;
-            strOldSuffix = nickStatus.at(i).suffix;
-            break;
-        }
-    }
-
-    QString strPrefix = strOldPrefix;
-    QString strSuffix = strOldSuffix;
-
-    if ((strNewFlag == "+q") && (strPrefix.indexOf("`") == -1)) strPrefix.append("`");
-    else if ((strNewFlag == "-q") && (strPrefix.indexOf("`") != -1)) strPrefix.remove("`");
-    else if ((strNewFlag == "+o") && (strPrefix.indexOf("@") == -1)) strPrefix.append("@");
-    else if ((strNewFlag == "-o") && (strPrefix.indexOf("@") != -1)) strPrefix.remove("@");
-    else if ((strNewFlag == "+h") && (strPrefix.indexOf("%") == -1)) strPrefix.append("%");
-    else if ((strNewFlag == "-h") && (strPrefix.indexOf("%") != -1)) strPrefix.remove("%");
-    else if ((strNewFlag == "+X") && (strPrefix.indexOf("!") == -1)) strPrefix.append("!");
-    else if ((strNewFlag == "-X") && (strPrefix.indexOf("!") != -1)) strPrefix.remove("!");
-    else if ((strNewFlag == "+Y") && (strPrefix.indexOf("=") == -1)) strPrefix.append("=");
-    else if ((strNewFlag == "-Y") && (strPrefix.indexOf("=") != -1)) strPrefix.remove("=");
-    else if ((strNewFlag == "+v") && (strPrefix.indexOf("+") == -1)) strPrefix.append("+");
-    else if ((strNewFlag == "-v") && (strPrefix.indexOf("+") != -1)) strPrefix.remove("+");
-
-    else if ((strNewFlag == "+O") && (strSuffix.indexOf("O") == -1)) strSuffix.append("O");
-    else if ((strNewFlag == "-O") && (strSuffix.indexOf("O") != -1)) strSuffix.remove("O");
-    else if ((strNewFlag == "+b") && (strSuffix.indexOf("b") == -1)) strSuffix.append("b");
-    else if ((strNewFlag == "-b") && (strSuffix.indexOf("b") != -1)) strSuffix.remove("b");
-    else if ((strNewFlag == "+r") && (strSuffix.indexOf("r") == -1)) strSuffix.append("r");
-    else if ((strNewFlag == "-r") && (strSuffix.indexOf("r") != -1)) strSuffix.remove("r");
-    else if ((strNewFlag == "+W") && (strSuffix.indexOf("W") == -1)) strSuffix.append("W");
-    else if ((strNewFlag == "-W") && (strSuffix.indexOf("W") != -1)) strSuffix.remove("W");
-    else if ((strNewFlag == "+V") && (strSuffix.indexOf("V") == -1)) strSuffix.append("V");
-    else if ((strNewFlag == "-V") && (strSuffix.indexOf("V") != -1)) strSuffix.remove("V");
-    else if ((strNewFlag == "+x") && (strSuffix.indexOf("x") == -1)) strSuffix.append("x");
-    else if ((strNewFlag == "-x") && (strSuffix.indexOf("x") != -1)) strSuffix.remove("x");
-
-    del_user(strNick);
-    add_user(strNick, strPrefix, strSuffix);
-
-    QSettings settings;
-    QString strMe = settings.value("nick").toString();
-
-    if (strNick == strMe)
-    {
-        if (strNewFlag == "+X") enable_moderation();
-        else if (strNewFlag == "-X") disable_moderation();
-    }
-}
-
-void TabWidget::clear_nicklist()
-{
-    iNickCount = 0;
-    nickCount->setText(QString(tr("%1 User(s)")).arg(iNickCount));
-    nickStatus.clear();
-    nicklist->clear();
-}
-
 void TabWidget::set_user_info(QString strNick, QString strKey, QString strValue)
 {
-    nicklist->set_user_info(strNick, strKey, strValue);
+    //nicklist->set_user_info(strNick, strKey, strValue);
     mainWebView->set_user_info(strNick, strKey, strValue);
 }
 
 void TabWidget::set_open_channels(QStringList strOpenChannels)
 {
-    nicklist->set_open_channels(strOpenChannels);
+    //nicklist->set_open_channels(strOpenChannels);
     mainWebView->set_open_channels(strOpenChannels);
-}
-
-void TabWidget::update_nick_avatar()
-{
-    nicklist->refresh_avatars();
 }
 
 void TabWidget::update_channel_avatar()
@@ -1186,19 +993,4 @@ void TabWidget::change_scroll_position()
         mainWebView->page()->mainFrame()->setScrollBarValue(Qt::Vertical, mainWebView->page()->mainFrame()->scrollBarMaximum(Qt::Vertical));
     else
         mainWebView->page()->mainFrame()->setScrollBarValue(Qt::Vertical, iScrollBarValue);
-}
-
-void TabWidget::resizeEvent(QResizeEvent *e)
-{
-    // resize splitter
-    if (strName != "Status")
-    {
-        QList <int> sizes;
-        sizes.append(this->width()-180); // size widget 1
-        sizes.append(180); // size widget 2
-        splitter->setSizes(sizes);
-    }
-
-    // standard handle event
-    QWidget::resizeEvent(e);
 }

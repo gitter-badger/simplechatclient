@@ -582,8 +582,9 @@ void OnetKernel::raw_join()
     if (strNick == strMe)
     {
         emit update_nick(strNick);
-        if (tabc->exist_tab(strChannel))
-            tabc->clear_nicklist(strChannel);
+        /// REGRESSION
+        //if (tabc->exist_tab(strChannel))
+            //tabc->clear_nicklist(strChannel);
     }
     if ((strNick == strMe) && (strChannel[0] != '^'))
         pNetwork->send(QString("CS INFO %1 i").arg(strChannel));
@@ -595,7 +596,7 @@ void OnetKernel::raw_join()
             pNetwork->send(QString("NS INFO %1 s").arg(strNick));
     }
 
-    tabc->add_user(strChannel, strNick, QString::null, strSuffix);
+    emit add_user(strChannel, strNick, QString::null, strSuffix);
 }
 
 // :scc_test!51976824@3DE379.B7103A.6CF799.6902F4 PART #scc
@@ -645,11 +646,12 @@ void OnetKernel::raw_part()
     if (tabc->exist_tab(strChannel) == true) // fix for self part
         tabc->show_msg(strChannel, strDisplay, 2);
 
-    tabc->del_user(strChannel, strNick);
+    emit del_user(strChannel, strNick);
 
     // remove nick from avatars if not exist on open channels
-    if ((mNickAvatar->contains(strNick) == true) && (tabc->get_nick_channels(strNick) == 0))
-        mNickAvatar->remove(strNick);
+    /// REGRESSION
+    //if ((mNickAvatar->contains(strNick) == true) && (tabc->get_nick_channels(strNick) == 0))
+        //mNickAvatar->remove(strNick);
 
     // if self part
 
@@ -658,7 +660,7 @@ void OnetKernel::raw_part()
     if (strNick == strMe)
     {
         // remove nick avatars
-        tabc->clear_channel_all_nick_avatars(strChannel);
+        //tabc->clear_channel_all_nick_avatars(strChannel);
 
         // close channel
         if (strChannel != "Status")
@@ -700,7 +702,7 @@ void OnetKernel::raw_quit()
     if (mNickAvatar->contains(strNick) == true)
         mNickAvatar->remove(strNick);
 
-    tabc->quit_user(strNick, strDisplay);
+    emit quit_user(strNick, strDisplay);
 }
 
 // :scc_test!51976824@3DE379.B7103A.6CF799.6902F4 KICK #scc Moment_w_atmosferze :sio
@@ -741,11 +743,12 @@ void OnetKernel::raw_kick()
     if (tabc->exist_tab(strChannel) == true)
         tabc->show_msg(strChannel, strDisplay, 4);
 
-    tabc->del_user(strChannel, strNick);
+    emit del_user(strChannel, strNick);
 
     // remove nick from avatars if not exist on open channels
-    if ((mNickAvatar->contains(strNick) == true) && (tabc->get_nick_channels(strNick) == 0))
-        mNickAvatar->remove(strNick);
+    /// REGRESSION
+    //if ((mNickAvatar->contains(strNick) == true) && (tabc->get_nick_channels(strNick) == 0))
+        //mNickAvatar->remove(strNick);
 
     QSettings settings;
     QString strMe = settings.value("nick").toString();
@@ -915,7 +918,7 @@ void OnetKernel::raw_mode()
             }
 
             tabc->show_msg(strNickChannel, strDisplay, 5);
-            tabc->change_flag(strNick, strNickChannel, strFlag);
+            emit change_flag(strNick, strNickChannel, strFlag);
 
             ++i;
         }
@@ -961,7 +964,7 @@ void OnetKernel::raw_mode()
             if ((strFlag != "+W") && (strFlag != "-W") && (strFlag != "+V") && (strFlag != "-V") && (strFlag != "+b") && (strFlag != "-b"))
                 tabc->show_msg("Status", strDisplay, 5);
 
-            tabc->change_flag(strNickChannel, strFlag);
+            emit change_flag(strNickChannel, strFlag);
         }
     }
 }
@@ -1491,8 +1494,9 @@ void OnetKernel::raw_161n()
             if (strKey == "www")
             {
                 dlgchannel_settings->add_www(strChannel, strValue);
-                if (strValue.isEmpty() == false)
-                    tabc->set_link(strChannel, strValue);
+                /// REGRESSION
+                //if (strValue.isEmpty() == false)
+                    //tabc->set_link(strChannel, strValue);
             }
             else if (strKey == "createdDate")
                 dlgchannel_settings->add_created(strChannel, strValue);
@@ -2450,7 +2454,7 @@ void OnetKernel::raw_353()
             if (strCleanNick.indexOf("=") != -1) { strCleanNick.remove("="); strPrefix.append("="); }
             if (strCleanNick.indexOf("+") != -1) { strCleanNick.remove("+"); strPrefix.append("+"); }
 
-            tabc->add_user(strChannel, strCleanNick, strPrefix, strSuffix);
+            emit add_user(strChannel, strCleanNick, strPrefix, strSuffix);
 
             // if ^ rename channel
             if (strChannel[0] == '^')
@@ -2490,7 +2494,7 @@ void OnetKernel::raw_366()
 
     QString strChannel = strDataList[3];
 
-    tabc->refresh_nicklist(strChannel);
+    emit nicklist_refresh(strChannel);
 }
 
 // WHOWAS

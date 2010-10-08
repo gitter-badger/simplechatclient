@@ -21,23 +21,15 @@
 #ifndef TAB_WIDGET_H
 #define TAB_WIDGET_H
 
-#include <QAction>
-#include <QtAlgorithms>
 #include <QDateTime>
-#include <QGridLayout>
 #include <QHBoxLayout>
 #include <QIcon>
-#include <QKeyEvent>
 #include <QLabel>
 #include <QLineEdit>
-#include <QListWidget>
 #include <QMap>
 #include <QMenu>
 #include <QPushButton>
-#include <QQueue>
 #include <QRgb>
-#include <QSettings>
-#include <QSplitter>
 #include <QTextEdit>
 #include <QWidget>
 #include <QtWebKit/QWebFrame>
@@ -46,21 +38,19 @@
 #include "dlg_channel_settings.h"
 #include "dlg_emoticons.h"
 #include "dlg_moderation.h"
-#include "inputlinewidget.h"
+#include "inputlinedockwidget.h"
 #include "log.h"
 #include "network.h"
 #include "mainwebview.h"
-#include "nicklistdelegate.h"
-#include "nicklistwidget.h"
 #include "notify.h"
 
 class TabWidget : public QWidget
 {
     Q_OBJECT
 public:
-    TabWidget(QWidget *, Network *, QString, Notify *, QMap <QString, QByteArray> *, QMap <QString, QByteArray> *, DlgChannelSettings *, DlgModeration *, QTcpSocket *, InputLineWidget *);
+    TabWidget(QWidget *, Network *, QString, Notify *, QMap <QString, QByteArray> *, QMap <QString, QByteArray> *, DlgChannelSettings *, DlgModeration *, QTcpSocket *, InputLineDockWidget *, sChannelNickStatus *);
     ~TabWidget();
-    QString get_name() { return strName; }
+    inline QString get_name() { return strName; }
     void set_default();
     QString addslashes(QString);
     void display_msg(QString, QString, int);
@@ -70,19 +60,10 @@ public:
     void enable_moderation();
     void disable_moderation();
     void author_topic(QString);
-    void set_link(QString);
-    void add_user(QString, QString, QString);
-    void del_user(QString);
-    void change_flag(QString, QString);
-    void clear_nicklist();
+    void update_channel_avatar();
     void set_user_info(QString, QString, QString);
     void set_open_channels(QStringList);
-    bool nicklist_exist(QString);
-    void update_nick_avatar();
-    void update_channel_avatar();
     void refresh_colors();
-    void nicklist_refresh_all();
-    QStringList get_nicklist();
     void send_message(bool);
 
 private:
@@ -98,9 +79,6 @@ private:
     QString strMyFontFamily;
 
     QWidget *topWidget;
-    QLabel *nickCount;
-    QLabel *webLink;
-    NickListWidget *nicklist;
     MainWebView *mainWebView;
     QWidget *toolWidget;
 
@@ -119,7 +97,7 @@ private:
     QPushButton *fontfamily;
     QComboBox *color;
     QPushButton *emoticons;
-    QLabel *separator;
+    QFrame *separator;
     QPushButton *channel_settings;
     QPushButton *moderation;
     QPushButton *clear;
@@ -143,36 +121,27 @@ private:
     QAction *size18Act;
     QAction *size20Act;
 
-    QSplitter *splitter;
-    QVBoxLayout *leftLayout;
-    QVBoxLayout *rightLayout;
-    QWidget *leftWidget;
-    QWidget *rightWidget;
-    QGridLayout *mainLayout;
+    QVBoxLayout *mainLayout;
+    QWidget *mainWidget;
     DlgChannelSettings *dlgchannel_settings;
     DlgModeration *dlgmoderation;
     Notify *pNotify;
     QMap <QString, QByteArray> *mNickAvatar;
     QMap <QString, QByteArray> *mChannelAvatar;
     QTcpSocket *camSocket;
-    InputLineWidget *inputLineWidget;
+    InputLineDockWidget *inputLineWidget;
+    sChannelNickStatus *mChannelNickStatus;
 
     QWidget *myparent;
     Network *pNetwork;
     QString strName;
-    QString strLast_msg;
-    sNickStatus nickStatus;
-    int iNickCount;
-    bool bCursorPositionChanged;
     QString strCurrentColor;
     QString strTopicContent;
+    bool bCursorPositionChanged;
     bool bScroll;
     int iScrollBarValue;
 
     void replace_color(QString, QString);
-
-    void nicklist_add(QString, QString, QString);
-    void nicklist_remove(QString);
 
 private slots:
     void bold_clicked();
@@ -200,9 +169,6 @@ private slots:
     void scroll_clicked();
 
     void change_scroll_position();
-
-protected:
-    virtual void resizeEvent(QResizeEvent *);
 
 };
 

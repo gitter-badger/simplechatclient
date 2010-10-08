@@ -21,57 +21,31 @@
 #ifndef INPUTLINEWIDGET_H
 #define INPUTLINEWIDGET_H
 
-#include <QHBoxLayout>
-#include <QLabel>
-#include <QPushButton>
-#include <QWidget>
-#include "commands.h"
-#include "inputline.h"
-#include "log.h"
-#include "network.h"
-#include "replace.h"
+#include <QEvent>
+#include <QKeyEvent>
+#include <QLineEdit>
+#include <QTreeWidget>
 
-class InputLineWidget : public QWidget
+class InputLineWidget : public QLineEdit
 {
     Q_OBJECT
 public:
-    InputLineWidget(QWidget *, Network *);
-    void set_active(QString);
+    InputLineWidget(QWidget*);
+    ~InputLineWidget();
+    void set_userslist(QList <QString>);
     void insert_text(QString);
-    void set_font(QFont);
-    void set_userslist(QTreeWidget *);
-    void set_moderation(bool);
-    void set_style_sheet(QString);
-    QString convert_emots(QString);
-    QString replace_emots(QString);
-    void send_message(bool);
-
-public slots:
-    void update_nick(QString);
 
 private:
-    // params
-    QWidget *myparent;
-    Network *pNetwork;
-    // require
-    QHBoxLayout *mainLayout;
-    QLabel *nickLabel;
-    InputLine *inputLine;
-    QPushButton *sendButton;
-    QPushButton *moderSendButton;
-    QString strChannel;
-    QString strLast_msg;
+    int index;
+    QString strLastWord;
+    QList <QString> usersList;
+    QList <QString> find;
 
-private slots:
-    void inputline_return_pressed();
-    void moder_button_clicked();
+    QString get_word();
+    void set_word(QString);
 
 protected:
-    virtual void keyPressEvent(QKeyEvent *);
-
-signals:
-    void show_msg(QString, QString, int);
-    void display_message(QString, QString, int);
+    virtual bool event(QEvent *);
 
 };
 

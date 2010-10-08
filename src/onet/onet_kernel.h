@@ -248,6 +248,12 @@ private slots:
 signals:
     void set_lag(QString);
     void update_nick(QString);
+    void add_user(QString,QString,QString,QString);
+    void del_user(QString,QString);
+    void nicklist_refresh(QString);
+    void quit_user(QString,QString);
+    void change_flag(QString,QString,QString);
+    void change_flag(QString,QString);
 
 };
 

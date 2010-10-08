@@ -20,14 +20,14 @@
 
 #include "nicklistwidget.h"
 
-NickListWidget::NickListWidget(QWidget *parent, Network *param1, QString param2, QMap <QString, QByteArray> *param3, QTcpSocket *param4, sNickStatus *param5)
+NickListWidget::NickListWidget(QWidget *parent, Network *param1, QString param2, QMap <QString, QByteArray> *param3, QTcpSocket *param4, sChannelNickStatus *param5)
 {
     myparent = parent;
     pNetwork = param1;
     strChannel = param2;
     mNickAvatar = param3;
     camSocket = param4;
-    nickStatus = param5;
+    mChannelNickStatus = param5;
 
     setAnimated(true);
     header()->hide();
@@ -38,6 +38,15 @@ NickListWidget::NickListWidget(QWidget *parent, Network *param1, QString param2,
 NickListWidget::~NickListWidget()
 {
     strOpenChannels.clear();
+
+    for (int i = 0; i < mChannelNickStatus->count(); i++)
+    {
+        if (mChannelNickStatus->at(i).channel == strChannel)
+        {
+            mChannelNickStatus->removeAt(i);
+            i--;
+        }
+    }
 }
 
 void NickListWidget::set_open_channels(QStringList param1)
@@ -53,6 +62,7 @@ void NickListWidget::set_open_channels(QStringList param1)
 // mod        !
 // screener   =
 // voice      +
+// ?          &
 
 // busy       b
 // registered r
@@ -62,16 +72,17 @@ void NickListWidget::set_open_channels(QStringList param1)
 // admin      o
 // developer  O
 
-void NickListWidget::add(QString strNick, QString strPrefix, QString strSuffix, sNickStatus *nick_status)
+void NickListWidget::add(QString strNick, QString strPrefix, QString strSuffix, sChannelNickStatus *mChannelNickStatus)
 {
 // add
     NickStatus add;
+    add.channel = strChannel;
     add.nick = strNick;
     add.prefix = strPrefix;
     add.suffix = strSuffix;
 
 // add to nick list
-    nick_status->append(add);
+    mChannelNickStatus->append(add);
 
 // add to widget
     if (strSuffix.indexOf("O") != -1)
@@ -141,16 +152,15 @@ void NickListWidget::add(QString strNick, QString strPrefix, QString strSuffix, 
     }
 }
 
-void NickListWidget::remove(QString strNick, sNickStatus *nick_status)
+void NickListWidget::remove(QString strNick, sChannelNickStatus *mChannelNickStatus)
 {
 // remove from nick list
-    for (int i = 0; i < nick_status->count(); i++)
+    for (int i = 0; i < mChannelNickStatus->count(); i++)
     {
-        NickStatus check = nick_status->at(i);
-        if (check.nick == strNick)
+        if ((mChannelNickStatus->at(i).nick == strNick) && (mChannelNickStatus->at(i).channel == strChannel))
         {
-            nick_status->removeAt(i);
-            break;
+            mChannelNickStatus->removeAt(i);
+            i--;
         }
     }
 
@@ -158,27 +168,27 @@ void NickListWidget::remove(QString strNick, sNickStatus *nick_status)
     remove_child(strNick);
 }
 
-bool NickListWidget::exist(QString strNick, sNickStatus *nick_status)
+bool NickListWidget::exist(QString strNick, sChannelNickStatus *mChannelNickStatus)
 {
-    for (int i = 0; i < nick_status->count(); i++)
+    for (int i = 0; i < mChannelNickStatus->count(); i++)
     {
-        NickStatus check = nick_status->at(i);
-        if (check.nick == strNick)
+        if ((mChannelNickStatus->at(i).nick == strNick) && (mChannelNickStatus->at(i).channel == strChannel))
             return true;
     }
     return false;
 }
 
-QStringList NickListWidget::get(sNickStatus *nick_status)
+QStringList NickListWidget::get(sChannelNickStatus *mChannelNickStatus)
 {
     QStringList strlResult;
 
-    for (int i = 0; i < nick_status->count(); i++)
+    for (int i = 0; i < mChannelNickStatus->count(); i++)
     {
-        NickStatus listNickStatus(nick_status->at(i));
-
-        QString strKey = listNickStatus.nick;
-        strlResult.append(strKey);
+        if (mChannelNickStatus->at(i).channel == strChannel)
+        {
+            QString strKey = mChannelNickStatus->at(i).nick;
+            strlResult.append(strKey);
+        }
     }
 
     return strlResult;
@@ -275,7 +285,10 @@ void NickListWidget::remove_parent(QString strName)
         QTreeWidgetItem *item = this->topLevelItem(i);
         QString strText = item->text(0);
         if (strText == strName)
+        {
             delete this->takeTopLevelItem(i);
+            i--;
+        }
     }
 }
 
@@ -371,6 +384,7 @@ void NickListWidget::remove_child(QString strName)
 
                 if (parent_item->childCount() == 0)
                     strlRemoveParent.append(strParent);
+                i--;
             }
         }
     }
@@ -648,12 +662,12 @@ void NickListWidget::contextMenuEvent(QContextMenuEvent *e)
     QString strPrefix;
     QString strSuffix;
 
-    for (int i = 0; i < nickStatus->count(); i++)
+    for (int i = 0; i < mChannelNickStatus->count(); i++)
     {
-        if (nickStatus->at(i).nick == strNick)
+        if ((mChannelNickStatus->at(i).nick == strNick) && (mChannelNickStatus->at(i).channel == strChannel))
         {
-            strPrefix = nickStatus->at(i).prefix;
-            strSuffix = nickStatus->at(i).suffix;
+            strPrefix = mChannelNickStatus->at(i).prefix;
+            strSuffix = mChannelNickStatus->at(i).suffix;
             break;
         }
     }

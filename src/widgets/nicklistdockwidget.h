@@ -18,75 +18,20 @@
  *                                                                          *
  ****************************************************************************/
 
-#ifndef NETWORK_THREAD_H
-#define NETWORK_THREAD_H
+#ifndef NICKLISTDOCKWIDGET_H
+#define NICKLISTDOCKWIDGET_H
 
-#include <QAction>
-#include <QObject>
-#include <QQueue>
-#include <QSettings>
-#include <QTcpSocket>
-#include <QTimer>
-#include "crypt.h"
+#include <QStackedWidget>
 
-struct NickStatus
-{
-    QString channel;
-    QString nick;
-    QString prefix;
-    QString suffix;
-};
-typedef QList<NickStatus> sChannelNickStatus;
-
-
-class NetworkThread : public QThread
+class NickListDockWidget : public QStackedWidget
 {
     Q_OBJECT
 public:
-    NetworkThread(QAction *, QAction *, QString, int);
-    ~NetworkThread();
-    void run();
-    void set_reconnect(bool);
-    bool is_connected();
-    bool is_writable();
-
-public slots:
-    void connect();
-    void close();
-    void send(QString);
+    NickListDockWidget(QWidget *);
 
 private:
-    QAction *connectAct;
-    QAction *lagAct;
-    QString strServer;
-    int iPort;
-    QTcpSocket *socket;
-    QTimer *timer;
-    QTimer *timerLag;
-    int iActive;
-    QList <QString> sendBuffer;
-
-    void send_data(QString);
-
-private slots:
-    void reconnect();
-    void send_buffer();
-    void recv();
-    void connected();
-    void disconnected();
-    void error(QAbstractSocket::SocketError);
-    void timeout();
-    void timeout_lag();
-
-signals:
-    void send_to_kernel(QString);
-    void request_uo(QString, QString, QString);
-    void show_msg_all(QString, int);
-    void show_msg_active(QString, int);
-    void update_nick(QString);
-    void clear_nicklist(QString);
-    void clear_all_nicklist();
+    QWidget *myparent;
 
 };
 
-#endif // NETWORK_THREAD_H
+#endif // NICKLISTDOCKWIDGET_H

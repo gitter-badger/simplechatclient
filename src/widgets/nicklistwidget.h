@@ -18,8 +18,8 @@
  *                                                                          *
  ****************************************************************************/
 
-#ifndef NICKLISTWIDGET_H
-#define NICKLISTWIDGET_H
+#ifndef NICKLISTTREEWIDGET_H
+#define NICKLISTTREEWIDGET_H
 
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
@@ -43,14 +43,14 @@ class NickListWidget : public QTreeWidget
 {
     Q_OBJECT
 public:
-    NickListWidget(QWidget *, Network *, QString, QMap <QString, QByteArray> *, QTcpSocket *, sNickStatus *);
+    NickListWidget(QWidget *, Network *, QString, QMap <QString, QByteArray> *, QTcpSocket *, sChannelNickStatus *);
     ~NickListWidget();
     void set_open_channels(QStringList);
     void set_user_info(QString, QString, QString);
-    void add(QString, QString, QString, sNickStatus *);
-    void remove(QString, sNickStatus *);
-    bool exist(QString, sNickStatus *);
-    QStringList get(sNickStatus *);
+    void add(QString, QString, QString, sChannelNickStatus *mChannelNickStatus);
+    void remove(QString, sChannelNickStatus *mChannelNickStatus);
+    bool exist(QString, sChannelNickStatus *mChannelNickStatus);
+    QStringList get(sChannelNickStatus *mChannelNickStatus);
     void refresh_avatars();
     void update_avatar(QString, QByteArray);
 
@@ -64,7 +64,7 @@ private:
     enum { maxOpenChannels = 50 };
     QAction *openChannelsActs[maxOpenChannels];
     sNickInfo sCurrentUserInfo;
-    sNickStatus *nickStatus;
+    sChannelNickStatus *mChannelNickStatus;
 
     void add_parent(QString, QPixmap);
     bool exist_parent(QString);
@@ -106,4 +106,4 @@ protected:
 
 };
 
-#endif // NICKLISTWIDGET_H
+#endif // NICKLISTTREEWIDGET_H

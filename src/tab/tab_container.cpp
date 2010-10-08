@@ -20,7 +20,7 @@
 
 #include "tab_container.h"
 
-TabContainer::TabContainer(QWidget *parent, Network *param1, TabManager *param2, Notify *param3, QMap <QString, QByteArray> *param4, QMap <QString, QByteArray> *param5, QTcpSocket *param6, InputLineWidget *param7)
+TabContainer::TabContainer(QWidget *parent, Network *param1, TabManager *param2, Notify *param3, QMap <QString, QByteArray> *param4, QMap <QString, QByteArray> *param5, QTcpSocket *param6, InputLineDockWidget *param7, sChannelNickStatus *param8)
 {
     myparent = parent;
     pNetwork = param1;
@@ -30,6 +30,7 @@ TabContainer::TabContainer(QWidget *parent, Network *param1, TabManager *param2,
     mChannelAvatar = param5;
     camSocket = param6;
     inputlinewidget = param7;
+    mChannelNickStatus = param8;
 }
 
 TabContainer::~TabContainer()
@@ -38,7 +39,10 @@ TabContainer::~TabContainer()
     {
         QString strChannel = tw[i]->get_name();
 
-        // remove
+        // remove nicklist
+        emit remove_nicklist(strChannel);
+
+        // remove tab
         delete tw.at(i);
         tw.removeAt(i);
 
@@ -86,8 +90,11 @@ void TabContainer::add_tab(QString strChannel)
         l->save(strChannel, strData);
         delete l;
 
-        // create
-        tw.append(new TabWidget(myparent, pNetwork, strChannel, pNotify, mNickAvatar, mChannelAvatar, dlgchannel_settings, dlgmoderation, camSocket, inputlinewidget));
+        // create nicklist
+        emit create_nicklist(strChannel);
+
+        // create tab
+        tw.append(new TabWidget(myparent, pNetwork, strChannel, pNotify, mNickAvatar, mChannelAvatar, dlgchannel_settings, dlgmoderation, camSocket, inputlinewidget, mChannelNickStatus));
         pTabM->addTab(tw.at(tw.count()-1), strChannel);
         pTabM->setCurrentIndex(tw.count()-1);
 
@@ -103,7 +110,10 @@ void TabContainer::remove_tab(QString strChannel)
     int i = get_index(strChannel);
     if (i != -1)
     {
-        // remove
+        // remove nicklist
+        emit remove_nicklist(strChannel);
+
+        // remove tab
         delete tw.at(i);
         tw.removeAt(i);
 
@@ -115,6 +125,10 @@ void TabContainer::remove_tab(QString strChannel)
         Log *l = new Log();
         l->save(strChannel, strData);
         delete l;
+
+        // change tab if not active
+        if (i != pTabM->currentIndex())
+            emit currentChanged(pTabM->currentIndex());
 
         return;
     }
@@ -182,8 +196,6 @@ void TabContainer::show_msg(QString strTime, QString strChannel, QString strData
                     pTabM->set_alert(i, QColor(255, 0, 0, 255)); // red
             }
         }
-
-        return;
     }
     else
     {
@@ -228,8 +240,6 @@ void TabContainer::show_msg(QString strChannel, QString strData, int iLevel)
                     pTabM->set_alert(i, QColor(255, 0, 0, 255)); // red
             }
         }
-
-        return;
     }
     else
     {
@@ -280,101 +290,18 @@ void TabContainer::author_topic(QString strChannel, QString strNick)
         tw[i]->author_topic(strNick);
 }
 
-void TabContainer::set_link(QString strChannel, QString strLink)
+void TabContainer::enable_moderation(QString strChannel)
 {
     int i = get_index(strChannel);
     if (i != -1)
-        tw[i]->set_link(strLink);
+        tw[i]->enable_moderation();
 }
 
-void TabContainer::add_user(QString strChannel, QString strNick, QString strPrefix, QString strSuffix)
+void TabContainer::disable_moderation(QString strChannel)
 {
     int i = get_index(strChannel);
     if (i != -1)
-        tw[i]->add_user(strNick, strPrefix, strSuffix);
-}
-
-void TabContainer::del_user(QString strChannel, QString strNick)
-{
-    int i = get_index(strChannel);
-    if (i != -1)
-        tw[i]->del_user(strNick);
-}
-
-void TabContainer::quit_user(QString strNick, QString strDisplay)
-{
-    for (int i = 0; i < tw.count(); i++)
-    {
-        if (tw[i]->nicklist_exist(strNick) == true)
-        {
-            int iLevel = 3;
-            tw[i]->display_msg(strDisplay, iLevel);
-            tw[i]->del_user(strNick);
-
-            if (i != pTabM->currentIndex())
-                pTabM->set_alert(i, QColor(0, 147, 0, 255)); // green
-        }
-    }
-}
-
-void TabContainer::change_flag(QString strNick, QString strChannel, QString strFlag)
-{
-    int i = get_index(strChannel);
-    if (i != -1)
-    {
-        if (tw[i]->nicklist_exist(strNick) == true)
-            tw[i]->change_flag(strNick, strFlag);
-    }
-}
-
-void TabContainer::change_flag(QString strNick, QString strFlag)
-{
-    for (int i = 0; i < tw.count(); i++)
-    {
-        if (tw[i]->nicklist_exist(strNick) == true)
-            tw[i]->change_flag(strNick, strFlag);
-    }
-}
-
-void TabContainer::clear_nicklist(QString strChannel)
-{
-    int i = get_index(strChannel);
-    if (i != -1)
-        tw[i]->clear_nicklist();
-}
-
-void TabContainer::clear_all_nicklist()
-{
-    mNickAvatar->clear();
-    mChannelAvatar->clear();
-
-    for (int i = 0; i < tw.count(); i++)
-        tw[i]->clear_nicklist();
-}
-
-void TabContainer::clear_channel_all_nick_avatars(QString strChannel)
-{
-    int i = get_index(strChannel);
-    if (i != -1)
-    {
-        QStringList strlList = tw[i]->get_nicklist();
-
-        for (int i = 0; i < strlList.count(); i++)
-        {
-            QString strNick = strlList.at(i);
-
-            // remove nick from avatars if not exist on open channels; must be 1 (current channel)
-            if ((mNickAvatar->contains(strNick) == true) && (get_nick_channels(strNick) == 1))
-                mNickAvatar->remove(strNick);
-        }
-    }
-}
-
-void TabContainer::refresh_nicklist(QString strChannel)
-{
-    int i = get_index(strChannel);
-    if (i != -1)
-        tw[i]->nicklist_refresh_all();
+        tw[i]->disable_moderation();
 }
 
 void TabContainer::update_open_channels()
@@ -383,18 +310,6 @@ void TabContainer::update_open_channels()
 
     for (int i = 0; i < tw.count(); i++)
         tw[i]->set_open_channels(strOpenChannels);
-}
-
-void TabContainer::update_nick_avatar(QString strNick)
-{
-    for (int i = 0; i < tw.count(); i++)
-    {
-        if (tw[i]->nicklist_exist(strNick) == true)
-        {
-            tw[i]->update_nick_avatar();
-            return;
-        }
-    }
 }
 
 void TabContainer::update_channel_avatar(QString strChannel)
@@ -408,8 +323,9 @@ void TabContainer::set_user_info(QString strNick, QString strKey, QString strVal
 {
     for (int i = 0; i < tw.count(); i++)
     {
-        if (tw[i]->nicklist_exist(strNick) == true)
-            tw[i]->set_user_info(strNick, strKey, strValue);
+        /// REGRESSION
+        //if (tw[i]->nicklist_exist(strNick) == true)
+            //tw[i]->set_user_info(strNick, strKey, strValue);
     }
 }
 
@@ -430,12 +346,12 @@ void TabContainer::slot_show_msg_all(QString strData, int iLevel)
 
 void TabContainer::slot_clear_nicklist(QString strChannel)
 {
-    clear_nicklist(strChannel);
+    //clear_nicklist(strChannel);
 }
 
 void TabContainer::slot_clear_all_nicklist()
 {
-    clear_all_nicklist();
+    //clear_all_nicklist();
 }
 
 void TabContainer::slot_display_message(QString strChannel, QString strData, int iLevel)
@@ -460,17 +376,4 @@ QStringList TabContainer::get_open_channels()
             strlResult.append(tw[i]->get_name());
     }
     return strlResult;
-}
-
-int TabContainer::get_nick_channels(QString strNick)
-{
-    int iResult = 0;
-
-    for (int i = 0; i < tw.count(); i++)
-    {
-        if (tw[i]->nicklist_exist(strNick) == true)
-            iResult++;
-    }
-
-    return iResult;
 }

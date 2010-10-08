@@ -1475,13 +1475,6 @@ void DlgOptions::showEvent(QShowEvent *event)
         ui.pushButton_register_nick->setDisabled(true);
         ui.groupBox_login_password->setDisabled(true);
     }
-    else
-    {
-        ui.radioButton_registered_nick->setDisabled(false);
-        ui.radioButton_unregistered_nick->setDisabled(false);
-        ui.pushButton_register_nick->setDisabled(false);
-        ui.groupBox_login_password->setDisabled(false);
-    }
 }
 
 void DlgOptions::closeEvent(QCloseEvent *event)

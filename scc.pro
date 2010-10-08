@@ -48,11 +48,12 @@ SOURCES += src/avatars/channel_avatar.cpp \
     src/tab/tab_container.cpp \
     src/tab/tab_manager.cpp \
     src/tab/tab_widget.cpp \
-    src/widgets/inputline.cpp \
     src/widgets/inputlinewidget.cpp \
+    src/widgets/inputlinedockwidget.cpp \
     src/widgets/mainwebview.cpp \
     src/widgets/nicklistdelegate.cpp \
-    src/widgets/nicklistwidget.cpp
+    src/widgets/nicklistwidget.cpp \
+    src/widgets/nicklistdockwidget.cpp
 HEADERS += src/avatars/channel_avatar.h \
     src/avatars/nick_avatar.h \
     src/common/commands.h \
@@ -93,11 +94,12 @@ HEADERS += src/avatars/channel_avatar.h \
     src/tab/tab_container.h \
     src/tab/tab_manager.h \
     src/tab/tab_widget.h \
-    src/widgets/inputline.h \
     src/widgets/inputlinewidget.h \
+    src/widgets/inputlinedockwidget.h \
     src/widgets/mainwebview.h \
     src/widgets/nicklistdelegate.h \
-    src/widgets/nicklistwidget.h
+    src/widgets/nicklistwidget.h \
+    src/widgets/nicklistdockwidget.h
 FORMS += ui/about.ui \
     ui/cam.ui \
     ui/channel_favourites.ui \

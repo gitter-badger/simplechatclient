@@ -23,7 +23,7 @@
 
 #include <QObject>
 #include <QSettings>
-#include "inputlinewidget.h"
+#include "inputlinedockwidget.h"
 #include "log.h"
 #include "network.h"
 #include "dlg_channel_settings.h"
@@ -36,7 +36,7 @@ class TabContainer : public QObject
 {
     Q_OBJECT
 public:
-    TabContainer(QWidget *, Network *, TabManager *, Notify *, QMap <QString, QByteArray> *, QMap <QString, QByteArray> *, QTcpSocket *, InputLineWidget *);
+    TabContainer(QWidget *, Network *, TabManager *, Notify *, QMap <QString, QByteArray> *, QMap <QString, QByteArray> *, QTcpSocket *, InputLineDockWidget *, sChannelNickStatus *);
     ~TabContainer();
     inline QString get_name(int i) { if ((i < 0) || (i > tw.count())) return QString::null; else return tw[i]->get_name(); }
     void set_dlg(DlgChannelSettings *, DlgModeration *);
@@ -50,22 +50,12 @@ public:
     void show_msg_active(QString, int);
     void set_topic(QString, QString);
     void author_topic(QString, QString);
-    void set_link(QString, QString);
-    void add_user(QString, QString, QString, QString);
-    void del_user(QString, QString);
-    void quit_user(QString, QString);
-    void change_flag(QString, QString, QString);
-    void change_flag(QString, QString);
-    void clear_nicklist(QString);
-    void clear_all_nicklist();
-    void clear_channel_all_nick_avatars(QString);
-    void refresh_nicklist(QString);
-    int get_nick_channels(QString);
+    void enable_moderation(QString);
+    void disable_moderation(QString);
     void set_user_info(QString, QString, QString);
     QStringList get_open_channels();
 
 public slots:
-    void update_nick_avatar(QString);
     void update_channel_avatar(QString);
     void slot_show_msg(QString, QString, int);
     void slot_show_msg_active(QString, int);
@@ -86,11 +76,17 @@ private:
     DlgChannelSettings *dlgchannel_settings;
     DlgModeration *dlgmoderation;
     QTcpSocket *camSocket;
-    InputLineWidget *inputlinewidget;
+    InputLineDockWidget *inputlinewidget;
+    sChannelNickStatus *mChannelNickStatus;
 
     void add_tab(QString);
     void update_open_channels();
     int get_index(QString);
+
+signals:
+    void create_nicklist(QString);
+    void remove_nicklist(QString);
+    void currentChanged(int);
 
 };
 

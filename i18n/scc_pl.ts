@@ -2109,7 +2109,7 @@
     </message>
 </context>
 <context>
-    <name>InputLineWidget</name>
+    <name>InputLineDockWidget</name>
     <message>
         <source>(Unregistered)</source>
         <translation>(Niezalogowany)</translation>

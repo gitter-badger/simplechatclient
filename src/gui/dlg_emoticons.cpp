@@ -20,7 +20,7 @@
 
 #include "dlg_emoticons.h"
 
-DlgEmoticons::DlgEmoticons(QWidget *parent, InputLineWidget *param1) : QDialog(parent)
+DlgEmoticons::DlgEmoticons(QWidget *parent, InputLineDockWidget *param1) : QDialog(parent)
 {
     ui.setupUi(this);
     setAttribute(Qt::WA_DeleteOnClose);

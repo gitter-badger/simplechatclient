@@ -41,17 +41,27 @@ Core::Core(QMainWindow *parent, QString param1, int param2, Notify *param3, QAct
 
     pNetwork = new Network(connectAct, lagAct, strServer, iPort);
 
-    // inputlinewidget dock
-    inputLineDockWidget = new QDockWidget(myparent);
-    inputLineDockWidget->setFocus();
-    inputLineDockWidget->setToolTip(tr("Inputline"));
-    inputLineDockWidget->setAllowedAreas(Qt::TopDockWidgetArea | Qt::BottomDockWidgetArea); // top and bottom
-    inputLineDockWidget->setFeatures(QDockWidget::DockWidgetMovable); // disable closable
-    inputLineWidget = new InputLineWidget(inputLineDockWidget, pNetwork);
-    inputLineDockWidget->setWidget(inputLineWidget);
-    myparent->addDockWidget(Qt::BottomDockWidgetArea, inputLineDockWidget);
+    // inputlinewidget
+    bottomDockWidget = new QDockWidget(myparent);
+    bottomDockWidget->setFocus();
+    bottomDockWidget->setToolTip(tr("Inputline"));
+    bottomDockWidget->setAllowedAreas(Qt::TopDockWidgetArea | Qt::BottomDockWidgetArea); // top and bottom
+    bottomDockWidget->setFeatures(QDockWidget::DockWidgetMovable); // disable closable
+    inputLineDockWidget = new InputLineDockWidget(bottomDockWidget, pNetwork);
+    bottomDockWidget->setWidget(inputLineDockWidget);
+    myparent->addDockWidget(Qt::BottomDockWidgetArea, bottomDockWidget);
 
-    pTabC = new TabContainer(myparent, pNetwork, pTabM, pNotify, &mNickAvatar, &mChannelAvatar, camSocket, inputLineWidget);
+    // nicklistwidget
+    rightDockWidget = new QDockWidget(myparent);
+    rightDockWidget->setFocus();
+    rightDockWidget->setToolTip(tr("Nicklist"));
+    rightDockWidget->setAllowedAreas(Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea); // left and right
+    rightDockWidget->setFeatures(QDockWidget::DockWidgetMovable); // disable closable
+    nickListDockWidget = new NickListDockWidget(rightDockWidget);
+    rightDockWidget->setWidget(nickListDockWidget);
+    myparent->addDockWidget(Qt::RightDockWidgetArea, rightDockWidget);
+
+    pTabC = new TabContainer(myparent, pNetwork, pTabM, pNotify, &mNickAvatar, &mChannelAvatar, camSocket, inputLineDockWidget, &mChannelNickStatus);
 
     pDlg_channel_settings = new DlgChannelSettings(myparent, pNetwork);
     pDlg_moderation = new DlgModeration(myparent);
@@ -66,6 +76,9 @@ Core::Core(QMainWindow *parent, QString param1, int param2, Notify *param3, QAct
 
     pTabC->set_dlg(pDlg_channel_settings, pDlg_moderation);
 
+    // hide on status
+    rightDockWidget->hide();
+
     // welcome
     pTabC->show_msg("Status", "%Fi:courier%"+tr("Welcome to the Simple Chat Client")+" %Ihehe%", 0);
     pTabC->show_msg("Status", "%Fb:courier%%Cff6500%"+tr("Official website")+" SCC%C3030ce%: http://simplechatclien.sourceforge.net/ %Izaskoczony%", 0);
@@ -77,18 +90,31 @@ Core::Core(QMainWindow *parent, QString param1, int param2, Notify *param3, QAct
     toolBar->addSeparator();
     toolBar->addAction(lagAct);
 
+    // signals from tabc
+    QObject::connect(pTabC, SIGNAL(create_nicklist(QString)), this, SLOT(create_nicklist(QString)));
+    QObject::connect(pTabC, SIGNAL(remove_nicklist(QString)), this, SLOT(remove_nicklist(QString)));
+    QObject::connect(pTabC, SIGNAL(currentChanged(int)), this, SLOT(current_tab_changed(int)));
+
     // signals tab
     QObject::connect(pTabM, SIGNAL(tabCloseRequested(int)), this, SLOT(tab_close_requested(int)));
     QObject::connect(pTabM, SIGNAL(currentChanged(int)), this, SLOT(current_tab_changed(int)));
     QObject::connect(pDlg_moderation, SIGNAL(display_msg(QString,QString,int)), pTabC, SLOT(slot_show_msg(QString,QString,int)));
 
     // signals inputLineWidget
-    QObject::connect(inputLineWidget, SIGNAL(show_msg(QString,QString,int)), pTabC, SLOT(slot_show_msg(QString,QString,int)));
-    QObject::connect(inputLineWidget, SIGNAL(display_message(QString,QString,int)), pTabC, SLOT(slot_display_message(QString,QString,int)));
+    QObject::connect(inputLineDockWidget, SIGNAL(show_msg(QString,QString,int)), pTabC, SLOT(slot_show_msg(QString,QString,int)));
+    QObject::connect(inputLineDockWidget, SIGNAL(display_message(QString,QString,int)), pTabC, SLOT(slot_display_message(QString,QString,int)));
 
     // signals lag
     QObject::connect(pOnet_kernel, SIGNAL(set_lag(QString)), this, SLOT(set_lag(QString)));
-    QObject::connect(pOnet_kernel, SIGNAL(update_nick(QString)), inputLineWidget, SLOT(update_nick(QString)));
+    QObject::connect(pOnet_kernel, SIGNAL(update_nick(QString)), inputLineDockWidget, SLOT(update_nick(QString)));
+
+    // signals from kernel to nicklist
+    QObject::connect(pOnet_kernel, SIGNAL(add_user(QString,QString,QString,QString)), this, SLOT(add_user(QString,QString,QString,QString)));
+    QObject::connect(pOnet_kernel, SIGNAL(del_user(QString,QString)), this, SLOT(del_user(QString,QString)));
+    QObject::connect(pOnet_kernel, SIGNAL(nicklist_refresh(QString)), this, SLOT(nicklist_refresh(QString)));
+    QObject::connect(pOnet_kernel, SIGNAL(quit_user(QString,QString)), this, SLOT(quit_user(QString,QString)));
+    QObject::connect(pOnet_kernel, SIGNAL(change_flag(QString,QString,QString)), this, SLOT(change_flag(QString,QString,QString)));
+    QObject::connect(pOnet_kernel, SIGNAL(change_flag(QString,QString)), this, SLOT(change_flag(QString,QString)));
 
     // signals to network
     QObject::connect(pDlg_moderation, SIGNAL(send(QString)), pNetwork, SLOT(slot_send(QString)));
@@ -100,7 +126,7 @@ Core::Core(QMainWindow *parent, QString param1, int param2, Notify *param3, QAct
     QObject::connect(pNetwork, SIGNAL(request_uo(QString,QString,QString)), pOnet_auth, SLOT(request_uo(QString,QString,QString)));
     QObject::connect(pNetwork, SIGNAL(show_msg_active(QString,int)), pTabC, SLOT(slot_show_msg_active(QString,int)));
     QObject::connect(pNetwork, SIGNAL(show_msg_all(QString,int)), pTabC, SLOT(slot_show_msg_all(QString,int)));
-    QObject::connect(pNetwork, SIGNAL(update_nick(QString)), inputLineWidget, SLOT(update_nick(QString)));
+    QObject::connect(pNetwork, SIGNAL(update_nick(QString)), inputLineDockWidget, SLOT(update_nick(QString)));
     QObject::connect(pNetwork, SIGNAL(clear_nicklist(QString)), pTabC, SLOT(slot_clear_nicklist(QString)));
     QObject::connect(pNetwork, SIGNAL(clear_all_nicklist()), pTabC, SLOT(slot_clear_all_nicklist()));
 }
@@ -108,6 +134,7 @@ Core::Core(QMainWindow *parent, QString param1, int param2, Notify *param3, QAct
 Core::~Core()
 {
     // clear arrays
+    mChannelNickStatus.clear();
     mNickAvatar.clear();
     mChannelAvatar.clear();
 
@@ -127,7 +154,8 @@ Core::~Core()
     delete pDlg_moderation;
     delete pDlg_channel_settings;
     delete pNetwork;
-    delete inputLineWidget;
+    delete bottomDockWidget;
+    delete rightDockWidget;
     delete pTabC;
     delete pTabM;
     delete camSocket;
@@ -213,15 +241,277 @@ void Core::tab_close_requested(int index)
         pTabC->part_tab(index);
 }
 
+// tab changed
 void Core::current_tab_changed(int index)
 {
-    // change name
+    QString strChannel = pTabC->get_name(index);
+
+    // change tab name
     QString strTabText = pTabM->tabText(index);
     myparent->setWindowTitle(QString("Simple Chat Client - [%1]").arg(strTabText));
 
-    // change color
+    // change tab color
     pTabM->set_color(index, QColor(0,0,0));
 
-    // set active
-    inputLineWidget->set_active(pTabC->get_name(index));
+    // set tab active
+    inputLineDockWidget->set_active(strChannel);
+
+    // nicklist hide/show Status
+    if (index == 0)
+        rightDockWidget->hide();
+    else
+        rightDockWidget->show();
+
+    // nicklist
+    if (mChannelNickListWidget.contains(strChannel))
+    {
+        // switch
+        NickListWidget *nlw = mChannelNickListWidget.value(strChannel);
+        nickListDockWidget->setCurrentWidget(nlw);
+    }
+    else
+    {
+        // create new
+        create_nicklist(strChannel);
+    }
 }
+
+void Core::create_nicklist(QString strChannel)
+{
+    if (mChannelNickListWidget.contains(strChannel) == false)
+    {
+        NickListWidget *nicklist = new NickListWidget(myparent, pNetwork, strChannel, &mNickAvatar, camSocket, &mChannelNickStatus);
+        nicklist->setParent(nickListDockWidget);
+        nicklist->setItemDelegate(new NickListDelegate(nicklist));
+        nicklist->show();
+
+        mChannelNickListWidget.insert(strChannel, nicklist);
+        nickListDockWidget->addWidget(nicklist);
+    }
+}
+
+void Core::remove_nicklist(QString strChannel)
+{
+    if (mChannelNickListWidget.contains(strChannel) == true)
+    {
+        nickListDockWidget->removeWidget(mChannelNickListWidget.value(strChannel));
+        delete mChannelNickListWidget.value(strChannel);
+        mChannelNickListWidget.remove(strChannel);
+    }
+}
+
+// nick list
+
+bool Core::nicklist_exist(QString strChannel, QString strNick)
+{
+    return mChannelNickListWidget.value(strChannel)->exist(strNick, &mChannelNickStatus);
+}
+
+void Core::add_user(QString strChannel, QString strNick, QString strPrefix, QString strSuffix)
+{
+    if (nicklist_exist(strChannel, strNick) == false)
+    {
+        mChannelNickListWidget.value(strChannel)->add(strNick, strPrefix, strSuffix, &mChannelNickStatus);
+        inputLineDockWidget->set_userslist(mChannelNickListWidget.value(strChannel));
+
+        /// REGRESSION
+        //iNickCount++;
+        //nickCount->setText(QString(tr("%1 User(s)")).arg(iNickCount));
+    }
+}
+
+void Core::del_user(QString strChannel, QString strNick)
+{
+    if (nicklist_exist(strChannel, strNick) == true)
+    {
+        mChannelNickListWidget.value(strChannel)->remove(strNick, &mChannelNickStatus);
+        inputLineDockWidget->set_userslist(mChannelNickListWidget.value(strChannel));
+
+        /// REGRESSION
+        //iNickCount--;
+        //nickCount->setText(QString(tr("%1 User(s)")).arg(iNickCount));
+    }
+}
+
+void Core::nicklist_refresh(QString strChannel)
+{
+    //raw 366: End of /NAMES list.
+    mChannelNickListWidget.value(strChannel)->expandAll();
+    inputLineDockWidget->set_userslist(mChannelNickListWidget.value(strChannel));
+}
+
+void Core::quit_user(QString strNick, QString strDisplay)
+{
+    int x = 0;
+    QMapIterator <QString, NickListWidget*> i(mChannelNickListWidget);
+    while (i.hasNext())
+    {
+        i.next();
+        QString strChannel = i.key();
+        if (nicklist_exist(strChannel, strNick) == true)
+        {
+            int iLevel = 3;
+            pTabC->show_msg(strChannel, strDisplay, iLevel);
+            del_user(strChannel, strNick);
+
+            if (x != pTabM->currentIndex())
+                pTabM->set_alert(x, QColor(0, 147, 0, 255)); // green
+        }
+        x++;
+    }
+}
+
+void Core::change_flag(QString strNick, QString strChannel, QString strNewFlag)
+{
+    QString strOldPrefix;
+    QString strOldSuffix;
+
+    for (int i = 0; i < mChannelNickStatus.count(); i++)
+    {
+        if ((mChannelNickStatus.at(i).nick == strNick) && (mChannelNickStatus.at(i).channel == strChannel))
+        {
+            strOldPrefix = mChannelNickStatus.at(i).prefix;
+            strOldSuffix = mChannelNickStatus.at(i).suffix;
+            break;
+        }
+    }
+
+    QString strPrefix = strOldPrefix;
+    QString strSuffix = strOldSuffix;
+
+    if ((strNewFlag == "+q") && (strPrefix.indexOf("`") == -1)) strPrefix.append("`");
+    else if ((strNewFlag == "-q") && (strPrefix.indexOf("`") != -1)) strPrefix.remove("`");
+    else if ((strNewFlag == "+o") && (strPrefix.indexOf("@") == -1)) strPrefix.append("@");
+    else if ((strNewFlag == "-o") && (strPrefix.indexOf("@") != -1)) strPrefix.remove("@");
+    else if ((strNewFlag == "+h") && (strPrefix.indexOf("%") == -1)) strPrefix.append("%");
+    else if ((strNewFlag == "-h") && (strPrefix.indexOf("%") != -1)) strPrefix.remove("%");
+    else if ((strNewFlag == "+X") && (strPrefix.indexOf("!") == -1)) strPrefix.append("!");
+    else if ((strNewFlag == "-X") && (strPrefix.indexOf("!") != -1)) strPrefix.remove("!");
+    else if ((strNewFlag == "+Y") && (strPrefix.indexOf("=") == -1)) strPrefix.append("=");
+    else if ((strNewFlag == "-Y") && (strPrefix.indexOf("=") != -1)) strPrefix.remove("=");
+    else if ((strNewFlag == "+v") && (strPrefix.indexOf("+") == -1)) strPrefix.append("+");
+    else if ((strNewFlag == "-v") && (strPrefix.indexOf("+") != -1)) strPrefix.remove("+");
+
+    else if ((strNewFlag == "+O") && (strSuffix.indexOf("O") == -1)) strSuffix.append("O");
+    else if ((strNewFlag == "-O") && (strSuffix.indexOf("O") != -1)) strSuffix.remove("O");
+    else if ((strNewFlag == "+b") && (strSuffix.indexOf("b") == -1)) strSuffix.append("b");
+    else if ((strNewFlag == "-b") && (strSuffix.indexOf("b") != -1)) strSuffix.remove("b");
+    else if ((strNewFlag == "+r") && (strSuffix.indexOf("r") == -1)) strSuffix.append("r");
+    else if ((strNewFlag == "-r") && (strSuffix.indexOf("r") != -1)) strSuffix.remove("r");
+    else if ((strNewFlag == "+W") && (strSuffix.indexOf("W") == -1)) strSuffix.append("W");
+    else if ((strNewFlag == "-W") && (strSuffix.indexOf("W") != -1)) strSuffix.remove("W");
+    else if ((strNewFlag == "+V") && (strSuffix.indexOf("V") == -1)) strSuffix.append("V");
+    else if ((strNewFlag == "-V") && (strSuffix.indexOf("V") != -1)) strSuffix.remove("V");
+    else if ((strNewFlag == "+x") && (strSuffix.indexOf("x") == -1)) strSuffix.append("x");
+    else if ((strNewFlag == "-x") && (strSuffix.indexOf("x") != -1)) strSuffix.remove("x");
+
+    del_user(strChannel, strNick);
+    add_user(strChannel, strNick, strPrefix, strSuffix);
+
+    QSettings settings;
+    QString strMe = settings.value("nick").toString();
+
+    if (strNick == strMe)
+    {
+        if (strNewFlag == "+X") pTabC->enable_moderation(strChannel);
+        else if (strNewFlag == "-X") pTabC->disable_moderation(strChannel);
+    }
+}
+
+void Core::change_flag(QString strNick, QString strFlag)
+{
+    QMapIterator <QString, NickListWidget*> i(mChannelNickListWidget);
+    while (i.hasNext())
+    {
+        i.next();
+        QString strChannel = i.key();
+        if (nicklist_exist(strChannel, strNick) == true)
+            change_flag(strNick, strChannel, strFlag);
+    }
+}
+
+/*
+
+/// REGRESSION
+
+QStringList TabWidget::get_nicklist()
+{
+    return nicklist->get(&nickStatus);
+}
+
+void TabWidget::set_link(QString strUrl)
+{
+    webLink->setText(QString("<a href=\"%1\" style=\"color:#0000FF;text-decoration:none;\" >"+tr("Channel website")+"</a>").arg(strUrl));
+    webLink->setToolTip(strUrl);
+}
+
+void TabWidget::clear_nicklist()
+{
+    iNickCount = 0;
+    nickCount->setText(QString(tr("%1 User(s)")).arg(iNickCount));
+    nickStatus.clear();
+    nicklist->clear();
+}
+
+void TabContainer::clear_nicklist(QString strChannel)
+{
+    int i = get_index(strChannel);
+    if (i != -1)
+        tw[i]->clear_nicklist();
+}
+
+void TabContainer::clear_all_nicklist()
+{
+    mNickAvatar->clear();
+    mChannelAvatar->clear();
+
+    for (int i = 0; i < tw.count(); i++)
+        tw[i]->clear_nicklist();
+}
+
+void TabContainer::clear_channel_all_nick_avatars(QString strChannel)
+{
+    int i = get_index(strChannel);
+    if (i != -1)
+    {
+        QStringList strlList = tw[i]->get_nicklist();
+
+        for (int i = 0; i < strlList.count(); i++)
+        {
+            QString strNick = strlList.at(i);
+
+            // remove nick from avatars if not exist on open channels; must be 1 (current channel)
+            if ((mNickAvatar->contains(strNick) == true) && (get_nick_channels(strNick) == 1))
+                mNickAvatar->remove(strNick);
+        }
+    }
+}
+
+void TabWidget::update_nick_avatar()
+{
+    nicklist->refresh_avatars();
+}
+void TabContainer::update_nick_avatar(QString strNick)
+{
+    for (int i = 0; i < tw.count(); i++)
+    {
+        if (tw[i]->nicklist_exist(strNick) == true)
+        {
+            tw[i]->update_nick_avatar();
+            return;
+        }
+    }
+}
+int TabContainer::get_nick_channels(QString strNick)
+{
+    int iResult = 0;
+
+    for (int i = 0; i < tw.count(); i++)
+    {
+        if (tw[i]->nicklist_exist(strNick) == true)
+            iResult++;
+    }
+
+    return iResult;
+}
+*/

@@ -20,13 +20,13 @@
 
 #include "mainwebview.h"
 
-MainWebView::MainWebView(QWidget *parent, Network *param1, QString param2, QTcpSocket *param3, sNickStatus *param4)
+MainWebView::MainWebView(QWidget *parent, Network *param1, QString param2, QTcpSocket *param3, sChannelNickStatus *param4)
 {
     myparent = parent;
     pNetwork = param1;
     strChannel = param2;
     camSocket = param3;
-    nickStatus = param4;
+    mChannelNickStatus = param4;
 }
 
 void MainWebView::join_channel()
@@ -265,12 +265,12 @@ void MainWebView::contextMenuEvent(QContextMenuEvent *event)
             QString strPrefix;
             QString strSuffix;
 
-            for (int i = 0; i < nickStatus->count(); i++)
+            for (int i = 0; i < mChannelNickStatus->count(); i++)
             {
-                if (nickStatus->at(i).nick == strNick)
+                if ((mChannelNickStatus->at(i).nick == strNick) && (mChannelNickStatus->at(i).channel == strChannel))
                 {
-                    strPrefix = nickStatus->at(i).prefix;
-                    strSuffix = nickStatus->at(i).suffix;
+                    strPrefix = mChannelNickStatus->at(i).prefix;
+                    strSuffix = mChannelNickStatus->at(i).suffix;
                     break;
                 }
             }
