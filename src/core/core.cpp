@@ -380,31 +380,47 @@ void Core::change_flag(QString strNick, QString strChannel, QString strNewFlag)
     QString strPrefix = strOldPrefix;
     QString strSuffix = strOldSuffix;
 
-    if ((strNewFlag == "+q") && (strPrefix.indexOf("`") == -1)) strPrefix.append("`");
-    else if ((strNewFlag == "-q") && (strPrefix.indexOf("`") != -1)) strPrefix.remove("`");
-    else if ((strNewFlag == "+o") && (strPrefix.indexOf("@") == -1)) strPrefix.append("@");
-    else if ((strNewFlag == "-o") && (strPrefix.indexOf("@") != -1)) strPrefix.remove("@");
-    else if ((strNewFlag == "+h") && (strPrefix.indexOf("%") == -1)) strPrefix.append("%");
-    else if ((strNewFlag == "-h") && (strPrefix.indexOf("%") != -1)) strPrefix.remove("%");
-    else if ((strNewFlag == "+X") && (strPrefix.indexOf("!") == -1)) strPrefix.append("!");
-    else if ((strNewFlag == "-X") && (strPrefix.indexOf("!") != -1)) strPrefix.remove("!");
-    else if ((strNewFlag == "+Y") && (strPrefix.indexOf("=") == -1)) strPrefix.append("=");
-    else if ((strNewFlag == "-Y") && (strPrefix.indexOf("=") != -1)) strPrefix.remove("=");
-    else if ((strNewFlag == "+v") && (strPrefix.indexOf("+") == -1)) strPrefix.append("+");
-    else if ((strNewFlag == "-v") && (strPrefix.indexOf("+") != -1)) strPrefix.remove("+");
+    // prefix
+    QString strPrefix1 = "qaohXYv";
+    QString strPrefix2 = "`&@%!=+";
 
-    else if ((strNewFlag == "+O") && (strSuffix.indexOf("O") == -1)) strSuffix.append("O");
-    else if ((strNewFlag == "-O") && (strSuffix.indexOf("O") != -1)) strSuffix.remove("O");
-    else if ((strNewFlag == "+b") && (strSuffix.indexOf("b") == -1)) strSuffix.append("b");
-    else if ((strNewFlag == "-b") && (strSuffix.indexOf("b") != -1)) strSuffix.remove("b");
-    else if ((strNewFlag == "+r") && (strSuffix.indexOf("r") == -1)) strSuffix.append("r");
-    else if ((strNewFlag == "-r") && (strSuffix.indexOf("r") != -1)) strSuffix.remove("r");
-    else if ((strNewFlag == "+W") && (strSuffix.indexOf("W") == -1)) strSuffix.append("W");
-    else if ((strNewFlag == "-W") && (strSuffix.indexOf("W") != -1)) strSuffix.remove("W");
-    else if ((strNewFlag == "+V") && (strSuffix.indexOf("V") == -1)) strSuffix.append("V");
-    else if ((strNewFlag == "-V") && (strSuffix.indexOf("V") != -1)) strSuffix.remove("V");
-    else if ((strNewFlag == "+x") && (strSuffix.indexOf("x") == -1)) strSuffix.append("x");
-    else if ((strNewFlag == "-x") && (strSuffix.indexOf("x") != -1)) strSuffix.remove("x");
+    for (int i = 0; i < strPrefix1.count(); i++)
+    {
+        QString plusminus = strNewFlag.at(0);
+        QString strFlag = strNewFlag.at(1);
+
+        if (plusminus == "+")
+        {
+            if ((strFlag == strPrefix1.at(i)) && (strPrefix.indexOf(strPrefix2.at(i)) == -1))
+                strPrefix.append(strPrefix2.at(i));
+        }
+        else
+        {
+            if ((strFlag == strPrefix1.at(i)) && (strPrefix.indexOf(strPrefix2.at(i)) != -1))
+                strPrefix.remove(strPrefix2.at(i));
+        }
+    }
+
+    // suffix
+    QString strSuffix1 = "ObrWVx";
+    QString strSuffix2 = "ObrWVx";
+
+    for (int i = 0; i < strSuffix1.count(); i++)
+    {
+        QString plusminus = strNewFlag.at(0);
+        QString strFlag = strNewFlag.at(1);
+
+        if (plusminus == "+")
+        {
+            if ((strFlag == strSuffix1.at(i)) && (strSuffix.indexOf(strSuffix2.at(i)) == -1))
+                strSuffix.append(strSuffix2.at(i));
+        }
+        else
+        {
+            if ((strFlag == strSuffix1.at(i)) && (strSuffix.indexOf(strSuffix2.at(i)) != -1))
+                strSuffix.remove(strSuffix2.at(i));
+        }
+    }
 
     del_user(strChannel, strNick);
     add_user(strChannel, strNick, strPrefix, strSuffix);

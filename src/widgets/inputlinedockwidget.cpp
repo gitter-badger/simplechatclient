@@ -24,6 +24,7 @@ InputLineDockWidget::InputLineDockWidget(QWidget *parent, Network *param1) : QWi
 {
     myparent = parent;
     pNetwork = param1;
+    setMaximumHeight(30);
 
     nickLabel = new QLabel(myparent);
     nickLabel->setText(QString("<p style=\"font-weight:bold;\"> %1</p>").arg(tr("(Unregistered)")));
