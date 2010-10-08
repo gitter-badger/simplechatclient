@@ -254,6 +254,7 @@ signals:
     void quit_user(QString,QString);
     void change_flag(QString,QString,QString);
     void change_flag(QString,QString);
+    void clear_nicklist(QString);
 
 };
 

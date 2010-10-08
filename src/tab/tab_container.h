@@ -36,7 +36,7 @@ class TabContainer : public QObject
 {
     Q_OBJECT
 public:
-    TabContainer(QWidget *, Network *, TabManager *, Notify *, QMap <QString, QByteArray> *, QMap <QString, QByteArray> *, QTcpSocket *, InputLineDockWidget *, sChannelNickStatus *);
+    TabContainer(QWidget *, Network *, TabManager *, Notify *, QMap <QString, QByteArray> *, QTcpSocket *, InputLineDockWidget *, sChannelNickStatus *);
     ~TabContainer();
     inline QString get_name(int i) { if ((i < 0) || (i > tw.count())) return QString::null; else return tw[i]->get_name(); }
     void set_dlg(DlgChannelSettings *, DlgModeration *);
@@ -60,8 +60,6 @@ public slots:
     void slot_show_msg(QString, QString, int);
     void slot_show_msg_active(QString, int);
     void slot_show_msg_all(QString, int);
-    void slot_clear_nicklist(QString);
-    void slot_clear_all_nicklist();
     void slot_display_message(QString, QString, int);
     void refresh_colors();
 
@@ -71,7 +69,6 @@ private:
     TabManager *pTabM;
     QList <TabWidget *> tw;
     Notify *pNotify;
-    QMap <QString, QByteArray> *mNickAvatar;
     QMap <QString, QByteArray> *mChannelAvatar;
     DlgChannelSettings *dlgchannel_settings;
     DlgModeration *dlgmoderation;

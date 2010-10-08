@@ -20,17 +20,16 @@
 
 #include "tab_container.h"
 
-TabContainer::TabContainer(QWidget *parent, Network *param1, TabManager *param2, Notify *param3, QMap <QString, QByteArray> *param4, QMap <QString, QByteArray> *param5, QTcpSocket *param6, InputLineDockWidget *param7, sChannelNickStatus *param8)
+TabContainer::TabContainer(QWidget *parent, Network *param1, TabManager *param2, Notify *param3, QMap <QString, QByteArray> *param4, QTcpSocket *param5, InputLineDockWidget *param6, sChannelNickStatus *param7)
 {
     myparent = parent;
     pNetwork = param1;
     pTabM = param2;
     pNotify = param3;
-    mNickAvatar = param4;
-    mChannelAvatar = param5;
-    camSocket = param6;
-    inputlinewidget = param7;
-    mChannelNickStatus = param8;
+    mChannelAvatar = param4;
+    camSocket = param5;
+    inputlinewidget = param6;
+    mChannelNickStatus = param7;
 }
 
 TabContainer::~TabContainer()
@@ -94,7 +93,7 @@ void TabContainer::add_tab(QString strChannel)
         emit create_nicklist(strChannel);
 
         // create tab
-        tw.append(new TabWidget(myparent, pNetwork, strChannel, pNotify, mNickAvatar, mChannelAvatar, dlgchannel_settings, dlgmoderation, camSocket, inputlinewidget, mChannelNickStatus));
+        tw.append(new TabWidget(myparent, pNetwork, strChannel, pNotify, mChannelAvatar, dlgchannel_settings, dlgmoderation, camSocket, inputlinewidget, mChannelNickStatus));
         pTabM->addTab(tw.at(tw.count()-1), strChannel);
         pTabM->setCurrentIndex(tw.count()-1);
 
@@ -342,16 +341,6 @@ void TabContainer::slot_show_msg_active(QString strData, int iLevel)
 void TabContainer::slot_show_msg_all(QString strData, int iLevel)
 {
     show_msg_all(strData, iLevel);
-}
-
-void TabContainer::slot_clear_nicklist(QString strChannel)
-{
-    //clear_nicklist(strChannel);
-}
-
-void TabContainer::slot_clear_all_nicklist()
-{
-    //clear_all_nicklist();
 }
 
 void TabContainer::slot_display_message(QString strChannel, QString strData, int iLevel)

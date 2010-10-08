@@ -61,7 +61,7 @@ Core::Core(QMainWindow *parent, QString param1, int param2, Notify *param3, QAct
     rightDockWidget->setWidget(nickListDockWidget);
     myparent->addDockWidget(Qt::RightDockWidgetArea, rightDockWidget);
 
-    pTabC = new TabContainer(myparent, pNetwork, pTabM, pNotify, &mNickAvatar, &mChannelAvatar, camSocket, inputLineDockWidget, &mChannelNickStatus);
+    pTabC = new TabContainer(myparent, pNetwork, pTabM, pNotify, &mChannelAvatar, camSocket, inputLineDockWidget, &mChannelNickStatus);
 
     pDlg_channel_settings = new DlgChannelSettings(myparent, pNetwork);
     pDlg_moderation = new DlgModeration(myparent);
@@ -107,6 +107,7 @@ Core::Core(QMainWindow *parent, QString param1, int param2, Notify *param3, QAct
     // signals lag
     QObject::connect(pOnet_kernel, SIGNAL(set_lag(QString)), this, SLOT(set_lag(QString)));
     QObject::connect(pOnet_kernel, SIGNAL(update_nick(QString)), inputLineDockWidget, SLOT(update_nick(QString)));
+    QObject::connect(pOnet_kernel, SIGNAL(clear_nicklist(QString)), this, SLOT(clear_nicklist(QString)));
 
     // signals from kernel to nicklist
     QObject::connect(pOnet_kernel, SIGNAL(add_user(QString,QString,QString,QString)), this, SLOT(add_user(QString,QString,QString,QString)));
@@ -127,8 +128,8 @@ Core::Core(QMainWindow *parent, QString param1, int param2, Notify *param3, QAct
     QObject::connect(pNetwork, SIGNAL(show_msg_active(QString,int)), pTabC, SLOT(slot_show_msg_active(QString,int)));
     QObject::connect(pNetwork, SIGNAL(show_msg_all(QString,int)), pTabC, SLOT(slot_show_msg_all(QString,int)));
     QObject::connect(pNetwork, SIGNAL(update_nick(QString)), inputLineDockWidget, SLOT(update_nick(QString)));
-    QObject::connect(pNetwork, SIGNAL(clear_nicklist(QString)), pTabC, SLOT(slot_clear_nicklist(QString)));
-    QObject::connect(pNetwork, SIGNAL(clear_all_nicklist()), pTabC, SLOT(slot_clear_all_nicklist()));
+    QObject::connect(pNetwork, SIGNAL(clear_nicklist(QString)), this, SLOT(clear_nicklist(QString)));
+    QObject::connect(pNetwork, SIGNAL(clear_all_nicklist()), this, SLOT(clear_all_nicklist()));
 }
 
 Core::~Core()
@@ -430,6 +431,33 @@ void Core::change_flag(QString strNick, QString strFlag)
     }
 }
 
+void Core::clear_nicklist(QString strChannel)
+{
+    //iNickCount = 0;
+    //nickCount->setText(QString(tr("%1 User(s)")).arg(iNickCount));
+
+    for (int i = 0; i < mChannelNickStatus.count(); i++)
+    {
+        if (mChannelNickStatus.at(i).channel == strChannel)
+        {
+            mChannelNickStatus.removeAt(i);
+            i--;
+        }
+    }
+}
+
+void Core::clear_all_nicklist()
+{
+    mChannelNickStatus.clear();
+    mNickAvatar.clear();
+    mChannelAvatar.clear();
+
+    QStringList strlChannels = pTabC->get_open_channels();
+
+    for (int i = 0; i < strlChannels.count(); i++)
+        mChannelNickListWidget.value(strlChannels.at(i))->clear();
+}
+
 /*
 
 /// REGRESSION
@@ -443,30 +471,6 @@ void TabWidget::set_link(QString strUrl)
 {
     webLink->setText(QString("<a href=\"%1\" style=\"color:#0000FF;text-decoration:none;\" >"+tr("Channel website")+"</a>").arg(strUrl));
     webLink->setToolTip(strUrl);
-}
-
-void TabWidget::clear_nicklist()
-{
-    iNickCount = 0;
-    nickCount->setText(QString(tr("%1 User(s)")).arg(iNickCount));
-    nickStatus.clear();
-    nicklist->clear();
-}
-
-void TabContainer::clear_nicklist(QString strChannel)
-{
-    int i = get_index(strChannel);
-    if (i != -1)
-        tw[i]->clear_nicklist();
-}
-
-void TabContainer::clear_all_nicklist()
-{
-    mNickAvatar->clear();
-    mChannelAvatar->clear();
-
-    for (int i = 0; i < tw.count(); i++)
-        tw[i]->clear_nicklist();
 }
 
 void TabContainer::clear_channel_all_nick_avatars(QString strChannel)

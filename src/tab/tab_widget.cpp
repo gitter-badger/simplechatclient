@@ -20,19 +20,18 @@
 
 #include "tab_widget.h"
 
-TabWidget::TabWidget(QWidget *parent, Network *param1, QString param2, Notify *param3, QMap <QString, QByteArray> *param4, QMap <QString, QByteArray> *param5, DlgChannelSettings *param6, DlgModeration *param7, QTcpSocket *param8, InputLineDockWidget *param9, sChannelNickStatus *param10)
+TabWidget::TabWidget(QWidget *parent, Network *param1, QString param2, Notify *param3, QMap <QString, QByteArray> *param4, DlgChannelSettings *param5, DlgModeration *param6, QTcpSocket *param7, InputLineDockWidget *param8, sChannelNickStatus *param9)
 {
     myparent = parent;
     pNetwork = param1;
     strName = param2;
     pNotify = param3;
-    mNickAvatar = param4;
-    mChannelAvatar = param5;
-    dlgchannel_settings = param6;
-    dlgmoderation = param7;
-    camSocket = param8;
-    inputLineWidget = param9;
-    mChannelNickStatus = param10;
+    mChannelAvatar = param4;
+    dlgchannel_settings = param5;
+    dlgmoderation = param6;
+    camSocket = param7;
+    inputLineWidget = param8;
+    mChannelNickStatus = param9;
 
     QSettings settings;
     QString strDefaultFontColor = addslashes(settings.value("default_font_color").toString());

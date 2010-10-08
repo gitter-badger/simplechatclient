@@ -582,9 +582,9 @@ void OnetKernel::raw_join()
     if (strNick == strMe)
     {
         emit update_nick(strNick);
-        /// REGRESSION
-        //if (tabc->exist_tab(strChannel))
-            //tabc->clear_nicklist(strChannel);
+
+        if (tabc->exist_tab(strChannel))
+            emit clear_nicklist(strChannel);
     }
     if ((strNick == strMe) && (strChannel[0] != '^'))
         pNetwork->send(QString("CS INFO %1 i").arg(strChannel));
@@ -659,6 +659,7 @@ void OnetKernel::raw_part()
 
     if (strNick == strMe)
     {
+        /// REGRESSION
         // remove nick avatars
         //tabc->clear_channel_all_nick_avatars(strChannel);
 

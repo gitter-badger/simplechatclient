@@ -79,9 +79,10 @@ public slots:
     void quit_user(QString,QString);
     void change_flag(QString, QString, QString);
     void change_flag(QString, QString);
+    void clear_nicklist(QString);
+    void clear_all_nicklist();
 
 /*
-    void clear_nicklist();
     void set_user_info(QString, QString, QString);
     void update_nick_avatar();
     void update_channel_avatar();
