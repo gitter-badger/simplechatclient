@@ -59,16 +59,6 @@ void TabContainer::set_dlg(DlgChannelSettings *param1, DlgModeration *param2)
     dlgmoderation = param2;
 }
 
-bool TabContainer::exist_tab(QString strChannel)
-{
-    for (int i = 0; i < tw.count(); i++)
-    {
-        if (tw[i]->get_name() == strChannel)
-            return true;
-    }
-    return false;
-}
-
 int TabContainer::get_index(QString strName)
 {
     for (int i = 0; i < tw.count(); i++)
@@ -77,6 +67,16 @@ int TabContainer::get_index(QString strName)
             return i;
     }
     return -1;
+}
+
+bool TabContainer::exist_tab(QString strChannel)
+{
+    for (int i = 0; i < tw.count(); i++)
+    {
+        if (tw[i]->get_name() == strChannel)
+            return true;
+    }
+    return false;
 }
 
 void TabContainer::add_tab(QString strChannel)
@@ -316,16 +316,6 @@ void TabContainer::update_channel_avatar(QString strChannel)
     int i = get_index(strChannel);
     if (i != -1)
         tw[i]->update_channel_avatar();
-}
-
-void TabContainer::set_user_info(QString strNick, QString strKey, QString strValue)
-{
-    for (int i = 0; i < tw.count(); i++)
-    {
-        /// REGRESSION
-        //if (tw[i]->nicklist_exist(strNick) == true)
-            //tw[i]->set_user_info(strNick, strKey, strValue);
-    }
 }
 
 void TabContainer::slot_show_msg(QString strChannel, QString strData, int iLevel)

@@ -132,10 +132,15 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     QObject::connect(trayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)), this, SLOT(tray_icon(QSystemTrayIcon::ActivationReason)));
 
     // show options if config not exist
-    QString path = QCoreApplication::applicationDirPath();
+    QString path;
+#ifdef Q_WS_X11
+    path = QDir::homePath()+"/.scc";
+#else
+    path = QCoreApplication::applicationDirPath();
+#endif
     QString strConfigFile = path+"/scc.conf";
     if (QFile::exists(strConfigFile) == false)
-        QTimer::singleShot(1000, this, SLOT(options_dlg()));
+        QTimer::singleShot(1000, this, SLOT(open_options()));
 
     // create settings
     create_settings();
@@ -241,7 +246,7 @@ void MainWindow::create_settings()
     // settings
     QSettings settings;
     settings.clear();
-    settings.setValue("version", "1.0.9.566");
+    settings.setValue("version", "1.0.9.567");
     settings.setValue("debug", "off");
     settings.setValue("logged", "off");
     settings.setValue("busy", "off");

@@ -52,7 +52,6 @@ public:
     void author_topic(QString, QString);
     void enable_moderation(QString);
     void disable_moderation(QString);
-    void set_user_info(QString, QString, QString);
     QStringList get_open_channels();
 
 public slots:

@@ -24,7 +24,21 @@ Config::Config(bool bCreate)
 {
     bCreateConfig = bCreate;
 
-    QString path = QCoreApplication::applicationDirPath();
+    QString path;
+
+#ifdef Q_WS_X11
+    path = QDir::homePath()+"/.scc";
+#else
+    path = QCoreApplication::applicationDirPath();
+#endif
+
+    // create dir if not exist
+#ifdef Q_WS_X11
+    QDir d(path);
+    if (d.exists(path) == false)
+        d.mkdir(path);
+#endif
+
     strConfigFile = path+"/scc.conf";
     file = new QFile(strConfigFile);
 

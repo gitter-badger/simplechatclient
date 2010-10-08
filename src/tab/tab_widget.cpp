@@ -667,12 +667,6 @@ void TabWidget::replace_color(QString level, QString color)
     strContent.replace(QRegExp(QString("id=\"level_%1\" style=\"color:#(......);").arg(level)), QString("id=\"level_%1\" style=\"color:%2;").arg(level).arg(color));
 }
 
-void TabWidget::set_user_info(QString strNick, QString strKey, QString strValue)
-{
-    //nicklist->set_user_info(strNick, strKey, strValue);
-    mainWebView->set_user_info(strNick, strKey, strValue);
-}
-
 void TabWidget::set_open_channels(QStringList strOpenChannels)
 {
     //nicklist->set_open_channels(strOpenChannels);

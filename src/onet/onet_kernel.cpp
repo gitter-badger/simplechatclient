@@ -1317,7 +1317,7 @@ void OnetKernel::raw_111n()
         }
 
         // set user info
-        tabc->set_user_info(strNick, strInfo, strValue);
+        emit set_user_info(strNick, strInfo, strValue);
     }
 }
 
@@ -1787,7 +1787,7 @@ void OnetKernel::raw_253()
 // :ChanServ!service@service.onet NOTICE scc_test :253 #test_scc_moj Merovingian :channel owner changed
 void OnetKernel::raw_253n()
 {
-    // kopia raw 254
+    // copy raw 254
     if (strDataList.value(4).isEmpty() == true) return;
     if (strDataList.value(5).isEmpty() == true) return;
 
@@ -1969,7 +1969,7 @@ void OnetKernel::raw_259n()
 // :ChanServ!service@service.onet NOTICE scc_test :260 Merovingian #scc +o :channel privilege changed
 void OnetKernel::raw_260n()
 {
-    // kopia raw 256
+    // copy raw 256
     if (strDataList.value(4).isEmpty() == true) return;
     if (strDataList.value(5).isEmpty() == true) return;
     if (strDataList.value(6).isEmpty() == true) return;

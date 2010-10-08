@@ -54,7 +54,7 @@ Core::Core(QMainWindow *parent, QString param1, int param2, Notify *param3, QAct
     // nicklistwidget
     rightDockWidget = new QDockWidget(myparent);
     rightDockWidget->setFocus();
-    rightDockWidget->setToolTip(tr("Nicklist"));
+    //rightDockWidget->setToolTip(tr("Nicklist"));
     rightDockWidget->setAllowedAreas(Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea); // left and right
     rightDockWidget->setFeatures(QDockWidget::DockWidgetMovable); // disable closable
     nickListDockWidget = new NickListDockWidget(rightDockWidget);
@@ -116,6 +116,7 @@ Core::Core(QMainWindow *parent, QString param1, int param2, Notify *param3, QAct
     QObject::connect(pOnet_kernel, SIGNAL(quit_user(QString,QString)), this, SLOT(quit_user(QString,QString)));
     QObject::connect(pOnet_kernel, SIGNAL(change_flag(QString,QString,QString)), this, SLOT(change_flag(QString,QString,QString)));
     QObject::connect(pOnet_kernel, SIGNAL(change_flag(QString,QString)), this, SLOT(change_flag(QString,QString)));
+    QObject::connect(pOnet_kernel, SIGNAL(set_user_info(QString,QString,QString)), this, SLOT(set_user_info(QString,QString,QString)));
 
     // signals to network
     QObject::connect(pDlg_moderation, SIGNAL(send(QString)), pNetwork, SLOT(slot_send(QString)));
@@ -474,6 +475,37 @@ void Core::clear_all_nicklist()
         mChannelNickListWidget.value(strlChannels.at(i))->clear();
 }
 
+void Core::set_user_info(QString strNick, QString strKey, QString strValue)
+{
+    QStringList strlChannels = pTabC->get_open_channels();
+
+    for (int i = 0; i < strlChannels.count(); i++)
+    {
+        if (mChannelNickListWidget.value(strlChannels.at(i))->exist(strNick, &mChannelNickStatus) == true)
+            mChannelNickListWidget.value(strlChannels.at(i))->set_user_info(strNick, strKey, strValue);
+    }
+
+    /// REGRESSION
+    //mainWebView->set_user_info(strNick, strKey, strValue);
+}
+
+/*
+void TabWidget::update_nick_avatar()
+{
+    nicklist->refresh_avatars();
+}
+void TabContainer::update_nick_avatar(QString strNick)
+{
+    for (int i = 0; i < tw.count(); i++)
+    {
+        if (tw[i]->nicklist_exist(strNick) == true)
+        {
+            tw[i]->update_nick_avatar();
+            return;
+        }
+    }
+}
+
 /*
 
 /// REGRESSION
@@ -507,21 +539,6 @@ void TabContainer::clear_channel_all_nick_avatars(QString strChannel)
     }
 }
 
-void TabWidget::update_nick_avatar()
-{
-    nicklist->refresh_avatars();
-}
-void TabContainer::update_nick_avatar(QString strNick)
-{
-    for (int i = 0; i < tw.count(); i++)
-    {
-        if (tw[i]->nicklist_exist(strNick) == true)
-        {
-            tw[i]->update_nick_avatar();
-            return;
-        }
-    }
-}
 int TabContainer::get_nick_channels(QString strNick)
 {
     int iResult = 0;

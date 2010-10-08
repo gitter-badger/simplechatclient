@@ -61,7 +61,6 @@ public:
     void disable_moderation();
     void author_topic(QString);
     void update_channel_avatar();
-    void set_user_info(QString, QString, QString);
     void set_open_channels(QStringList);
     void refresh_colors();
     void send_message(bool);

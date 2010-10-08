@@ -26,6 +26,7 @@
 #ifdef Q_WS_X11
 #include <QDebug>
 #endif
+#include <QDir>
 #include <QFile>
 #include <QObject>
 

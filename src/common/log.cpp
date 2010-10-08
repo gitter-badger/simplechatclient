@@ -34,11 +34,22 @@ QString Log::convert(QString strData)
 
 void Log::save(QString strChannel, QString strData)
 {
-    QString path = QCoreApplication::applicationDirPath();
+    QString path;
+
+#ifdef Q_WS_X11
+    path = QDir::homePath()+"/.scc";
+#else
+    path = QCoreApplication::applicationDirPath();
+#endif
 
     QDir d(path);
     if (d.exists(path+"/log") == false)
+    {
+#ifdef Q_WS_X11
+        d.mkdir(path);
+#endif
         d.mkdir(path+"/log");
+    }
 
     QFile f(path+"/log/"+strChannel+".txt");
     if (!f.open(QIODevice::Append))
