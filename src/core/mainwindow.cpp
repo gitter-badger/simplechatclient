@@ -66,6 +66,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     fileMenu->addSeparator();
     fileMenu->addAction(closeAct);
 
+    // view menu
+    viewMenu = menuBar()->addMenu(tr("&View"));
+
     // options menu
     optionsMenu = menuBar()->addMenu(tr("&Settings"));
     optionsMenu->addAction(optionsAct);
@@ -156,7 +159,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     QObject::connect(pOptions, SIGNAL(refresh_colors()), this, SLOT(refresh_colors()));
 
     // create basic core
-    coreServers.append(new Core(this, "czat-app.onet.pl", 5015, pNotify, connectAct, toolBar));
+    coreServers.append(new Core(this, "czat-app.onet.pl", 5015, pNotify, connectAct, toolBar, viewMenu));
 }
 
 MainWindow::~MainWindow()
@@ -246,7 +249,7 @@ void MainWindow::create_settings()
     // settings
     QSettings settings;
     settings.clear();
-    settings.setValue("version", "1.0.9.571");
+    settings.setValue("version", "1.0.9.572");
     settings.setValue("debug", "off");
     settings.setValue("logged", "off");
     settings.setValue("busy", "off");

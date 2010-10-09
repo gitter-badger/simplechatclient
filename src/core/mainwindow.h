@@ -50,6 +50,7 @@ private:
 
     QToolBar *toolBar;
     QMenu *fileMenu;
+    QMenu *viewMenu;
     QMenu *optionsMenu;
     QMenu *helpMenu;
     QAction *connectAct;

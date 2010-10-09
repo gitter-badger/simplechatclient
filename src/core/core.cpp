@@ -20,7 +20,7 @@
 
 #include "core.h"
 
-Core::Core(QMainWindow *parent, QString param1, int param2, Notify *param3, QAction *param4, QToolBar *param5)
+Core::Core(QMainWindow *parent, QString param1, int param2, Notify *param3, QAction *param4, QToolBar *param5, QMenu *param6)
 {
     // params
     myparent = parent;
@@ -29,6 +29,7 @@ Core::Core(QMainWindow *parent, QString param1, int param2, Notify *param3, QAct
     pNotify = param3;
     connectAct = param4;
     toolBar = param5;
+    viewMenu = param6;
 
     // lag
     lagAct = new QAction("Lag: 0s", myparent);
@@ -42,24 +43,21 @@ Core::Core(QMainWindow *parent, QString param1, int param2, Notify *param3, QAct
     pNetwork = new Network(connectAct, lagAct, strServer, iPort);
 
     // inputlinewidget
-    bottomDockWidget = new QDockWidget(myparent);
+    bottomDockWidget = new QDockWidget(tr("Inputline"), myparent);
     bottomDockWidget->setFocus();
-    bottomDockWidget->setToolTip(tr("Inputline"));
     bottomDockWidget->setAllowedAreas(Qt::TopDockWidgetArea | Qt::BottomDockWidgetArea); // top and bottom
-    bottomDockWidget->setFeatures(QDockWidget::DockWidgetMovable); // disable closable
     inputLineDockWidget = new InputLineDockWidget(bottomDockWidget, pNetwork);
     bottomDockWidget->setWidget(inputLineDockWidget);
     myparent->addDockWidget(Qt::BottomDockWidgetArea, bottomDockWidget);
+    viewMenu->addAction(bottomDockWidget->toggleViewAction());
 
     // nicklistwidget
-    rightDockWidget = new QDockWidget(myparent);
-    rightDockWidget->setFocus();
-    //rightDockWidget->setToolTip(tr("Nicklist"));
+    rightDockWidget = new QDockWidget(tr("Users"), myparent);
     rightDockWidget->setAllowedAreas(Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea); // left and right
-    rightDockWidget->setFeatures(QDockWidget::DockWidgetMovable); // disable closable
     nickListDockWidget = new NickListDockWidget(rightDockWidget);
     rightDockWidget->setWidget(nickListDockWidget);
     myparent->addDockWidget(Qt::RightDockWidgetArea, rightDockWidget);
+    viewMenu->addAction(rightDockWidget->toggleViewAction());
 
     pTabC = new TabContainer(myparent, pNetwork, pTabM, pNotify, &mChannelAvatar, camSocket, inputLineDockWidget, &mChannelNickStatus);
 

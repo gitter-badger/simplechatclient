@@ -152,7 +152,11 @@
     <name>Core</name>
     <message>
         <source>Inputline</source>
-        <translation>Pasek wpisywania tekstów</translation>
+        <translation>Wpisywanie wiadomości</translation>
+    </message>
+    <message>
+        <source>Users</source>
+        <translation>Użytkownicy</translation>
     </message>
     <message>
         <source>Welcome to the Simple Chat Client</source>
@@ -224,6 +228,10 @@
     <message>
         <source>&amp;File</source>
         <translation>&amp;Plik</translation>
+    </message>
+    <message>
+        <source>&amp;View</source>
+        <translation>&amp;Widok</translation>
     </message>
     <message>
         <source>&amp;Settings</source>

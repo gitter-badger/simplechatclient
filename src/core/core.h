@@ -51,7 +51,7 @@ class Core : public QObject
 {
     Q_OBJECT
 public:
-    Core(QMainWindow *, QString, int, Notify *, QAction *, QToolBar *);
+    Core(QMainWindow *, QString, int, Notify *, QAction *, QToolBar *, QMenu *);
     ~Core();
     void refresh_colors();
     // temp
@@ -97,6 +97,7 @@ private:
     Notify *pNotify;
     QAction *connectAct;
     QToolBar *toolBar;
+    QMenu *viewMenu;
 
     // require
     QTcpSocket *camSocket;
