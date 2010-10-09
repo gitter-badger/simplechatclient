@@ -2307,11 +2307,11 @@ void OnetKernel::raw_317()
     else if ((iDT_d == 0) && (iDT_h == 0) && (iDT_m == 0) && (iDT_s >= 0))
         strDT_idle = QString("%1s").arg(iDT_s);
 
-    QDateTime dt_time = QDateTime::fromTime_t(strTime.toInt());
-    QString strDT_time = dt_time.toString("dd/MM/yyyy hh:mm:ss");
-
     QString strDisplayIdle = QString(tr("* %1 is away %2")).arg(strNick).arg(strDT_idle);
     tabc->show_msg_active(strDisplayIdle, 7);
+
+    QDateTime dt_time = QDateTime::fromTime_t(strTime.toInt());
+    QString strDT_time = dt_time.toString("dd/MM/yyyy hh:mm:ss");
 
     QString strDisplaySignon = QString(tr("* %1 is logged in since %2")).arg(strNick).arg(strDT_time);
     tabc->show_msg_active(strDisplaySignon, 7);

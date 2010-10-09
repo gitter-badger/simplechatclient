@@ -61,22 +61,23 @@ private:
     QString strServer;
     int iPort;
     QTcpSocket *socket;
-    QTimer *timer;
+    QTimer *timerPingPong;
     QTimer *timerLag;
+    QTimer *timerQueue;
     int iActive;
-    QList <QString> sendBuffer;
+    QList <QString> msgSendQueue;
 
-    void send_data(QString);
+    void write(QString);
 
 private slots:
     void reconnect();
-    void send_buffer();
     void recv();
     void connected();
     void disconnected();
     void error(QAbstractSocket::SocketError);
-    void timeout();
+    void timeout_pingpong();
     void timeout_lag();
+    void timeout_queue();
 
 signals:
     void send_to_kernel(QString);

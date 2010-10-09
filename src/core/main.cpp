@@ -172,6 +172,7 @@ int main(int argc, char *argv[])
 
     Q_INIT_RESOURCE(scc);
 
+    // linux crash handler
 #ifdef Q_WS_X11
     struct sigaction sv;
 

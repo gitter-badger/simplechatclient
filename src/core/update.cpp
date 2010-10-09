@@ -100,6 +100,7 @@ void Update::version(QString strAvailableVersion)
 
     if (strAvailableVersion == QString::null)
     {
+        /// REGRESSION
         //tabc->show_msg("Status", tr("Can not download the available version."), 0);
         return;
     }

@@ -30,23 +30,25 @@ NetworkThread::NetworkThread(QAction *param1, QAction *param2, QString param3, i
     iActive = 0;
     QSettings settings;
     settings.setValue("reconnect", "true");
-    timer = new QTimer();
-    timer->setInterval(1*60*1000); // 1 min
+    timerPingPong = new QTimer();
+    timerPingPong->setInterval(1*60*1000); // 1 min
     timerLag = new QTimer();
     timerLag->setInterval(30*1000); // 30 sec
+    timerQueue = new QTimer();
+    timerQueue->setInterval(0.5*1000); // 0.5 sec
 
     socket = new QTcpSocket(this);
     socket->setSocketOption(QAbstractSocket::LowDelayOption, 1);
     socket->setSocketOption(QAbstractSocket::KeepAliveOption, 0);
 
-    QTimer::singleShot(100, this, SLOT(send_buffer()));
-
-    QObject::connect(timer, SIGNAL(timeout()), this, SLOT(timeout()));
-    QObject::connect(timerLag, SIGNAL(timeout()), this, SLOT(timeout_lag()));
     QObject::connect(socket, SIGNAL(readyRead()), this, SLOT(recv()));
     QObject::connect(socket, SIGNAL(connected()), this, SLOT(connected()));
     QObject::connect(socket, SIGNAL(disconnected()), this, SLOT(disconnected()));
     QObject::connect(socket, SIGNAL(error(QAbstractSocket::SocketError)), this, SLOT(error(QAbstractSocket::SocketError)));
+
+    QObject::connect(timerPingPong, SIGNAL(timeout()), this, SLOT(timeout_pingpong()));
+    QObject::connect(timerLag, SIGNAL(timeout()), this, SLOT(timeout_lag()));
+    QObject::connect(timerQueue, SIGNAL(timeout()), this, SLOT(timeout_queue()));
 }
 
 NetworkThread::~NetworkThread()
@@ -81,8 +83,10 @@ void NetworkThread::connect()
         iActive = (int)dt.toTime_t();
 
         socket->connectToHost(strServer, iPort);
-        timer->start();
+
+        timerPingPong->start();
         timerLag->start();
+        timerQueue->start();
     }
     else
         emit show_msg_all(tr("Error: Could not connect to the server - connection already exists!"), 9);
@@ -103,8 +107,8 @@ void NetworkThread::reconnect()
 
 void NetworkThread::close()
 {
-    // if buffer is not empty - wait
-    if (sendBuffer.isEmpty() == false)
+    // if queue is not empty - wait
+    if (msgSendQueue.isEmpty() == false)
     {
         QTimer::singleShot(500, this, SLOT(close()));
         return;
@@ -115,49 +119,15 @@ void NetworkThread::close()
         socket->disconnectFromHost();
 
     // stop timers
-    if (timer->isActive() == true)
-        timer->stop();
+    if (timerPingPong->isActive() == true)
+        timerPingPong->stop();
     if (timerLag->isActive() == true)
         timerLag->stop();
+    if (timerQueue->isActive() == true)
+        timerQueue->stop();
 }
 
-void NetworkThread::send_buffer()
-{
-    if (socket->state() != QAbstractSocket::ConnectedState)
-        sendBuffer.clear();
-
-    QList <QString> sendBufferCopy;
-    for (int i = 0; i < sendBuffer.size(); i++)
-        sendBufferCopy.append(sendBuffer.at(i));
-
-    int iCount = sendBufferCopy.size();
-
-    int iLimit = 5;
-    if (iCount < iLimit)
-    {
-        for (int i = 0; i < iCount; i++)
-        {
-            send_data(sendBufferCopy.at(0));
-            sendBuffer.removeOne(sendBufferCopy.at(0));
-            sendBufferCopy.removeOne(sendBufferCopy.at(0));
-        }
-    }
-    else
-    {
-        for (int i = 0; i < iLimit; i++)
-        {
-            send_data(sendBufferCopy.at(0));
-            sendBuffer.removeOne(sendBufferCopy.at(0));
-            sendBufferCopy.removeOne(sendBufferCopy.at(0));
-        }
-        QTimer::singleShot(1000, this, SLOT(send_buffer()));
-        return;
-    }
-
-    QTimer::singleShot(100, this, SLOT(send_buffer()));
-}
-
-void NetworkThread::send_data(QString strData)
+void NetworkThread::write(QString strData)
 {
     if ((socket->state() == QAbstractSocket::ConnectedState) && (socket->isWritable() == true))
     {
@@ -187,9 +157,9 @@ void NetworkThread::send(QString strData)
 {
     QSettings settings;
     if (settings.value("disable_avatars").toString() == "on") // without avatars
-        send_data(strData);
+        write(strData);
     else // with avatars
-        sendBuffer << strData;
+        msgSendQueue.append(strData);
 }
 
 void NetworkThread::recv()
@@ -281,8 +251,9 @@ void NetworkThread::disconnected()
         settings.setValue("logged", "off");
 
         // timer
-        timer->stop();
+        timerPingPong->stop();
         timerLag->stop();
+        timerQueue->stop();
 
         // reconnect
         QTimer::singleShot(30*1000, this, SLOT(reconnect()));
@@ -304,7 +275,7 @@ void NetworkThread::error(QAbstractSocket::SocketError err)
         emit show_msg_all(QString(tr("Disconnected from server [%1]")).arg(socket->errorString()), 9);
 }
 
-void NetworkThread::timeout()
+void NetworkThread::timeout_pingpong()
 {
     QDateTime dt = QDateTime::currentDateTime();
     int iCurrent = (int)dt.toTime_t();
@@ -327,4 +298,16 @@ void NetworkThread::timeout_lag()
     QSettings settings;
     if ((is_connected() == true) && (is_writable() == true) && (settings.value("logged").toString() == "on"))
         emit send(QString("PING :%1.%2").arg(i1).arg(t2));
+}
+
+void NetworkThread::timeout_queue()
+{
+    if (socket->state() != QAbstractSocket::ConnectedState)
+    {
+        msgSendQueue.clear();
+        return;
+    }
+
+    if (msgSendQueue.size() > 0)
+        write(msgSendQueue.takeFirst());
 }
