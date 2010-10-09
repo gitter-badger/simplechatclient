@@ -51,6 +51,7 @@ public:
     TabWidget(QWidget *, Network *, QString, Notify *, QMap <QString, QByteArray> *, DlgChannelSettings *, DlgModeration *, QTcpSocket *, InputLineDockWidget *, sChannelNickStatus *);
     ~TabWidget();
     inline QString get_name() { return strName; }
+    inline MainWebView* get_webview() { return mainWebView; }
     void set_default();
     QString addslashes(QString);
     void display_msg(QString, QString, int);

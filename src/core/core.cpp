@@ -481,12 +481,14 @@ void Core::set_user_info(QString strNick, QString strKey, QString strValue)
 
     for (int i = 0; i < strlChannels.count(); i++)
     {
+        // nicklist
         if (mChannelNickListWidget.value(strlChannels.at(i))->exist(strNick, &mChannelNickStatus) == true)
             mChannelNickListWidget.value(strlChannels.at(i))->set_user_info(strNick, strKey, strValue);
-    }
 
-    /// REGRESSION
-    //mainWebView->set_user_info(strNick, strKey, strValue);
+        // mainwebview
+        MainWebView *mainWebView = pTabC->get_webview(strlChannels.at(i));
+        mainWebView->set_user_info(strNick, strKey, strValue);
+    }
 }
 
 /*

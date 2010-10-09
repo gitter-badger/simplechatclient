@@ -53,7 +53,7 @@ NetworkThread::NetworkThread(QAction *param1, QAction *param2, QString param3, i
 
 NetworkThread::~NetworkThread()
 {
-    emit close();
+    close();
     delete socket;
 }
 
@@ -110,7 +110,7 @@ void NetworkThread::close()
     // if queue is not empty - wait
     if (msgSendQueue.isEmpty() == false)
     {
-        QTimer::singleShot(500, this, SLOT(close()));
+        QTimer::singleShot(100, this, SLOT(close()));
         return;
     }
 

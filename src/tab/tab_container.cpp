@@ -356,3 +356,10 @@ QStringList TabContainer::get_open_channels()
     }
     return strlResult;
 }
+
+MainWebView* TabContainer::get_webview(QString strChannel)
+{
+    int i = get_index(strChannel);
+    if (i != -1)
+        return tw[i]->get_webview();
+}

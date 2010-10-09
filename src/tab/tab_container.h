@@ -53,6 +53,7 @@ public:
     void enable_moderation(QString);
     void disable_moderation(QString);
     QStringList get_open_channels();
+    MainWebView* get_webview(QString);
 
 public slots:
     void update_channel_avatar(QString);
