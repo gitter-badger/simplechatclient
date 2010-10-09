@@ -37,6 +37,7 @@ class InputLineDockWidget : public QWidget
 public:
     InputLineDockWidget(QWidget *, Network *);
     void set_active(QString);
+    inline QString get_active() { return strChannel; }
     void insert_text(QString);
     void set_font(QFont);
     void set_userslist(QTreeWidget *);

@@ -190,7 +190,10 @@ void Core::refresh_colors()
 }
 
 // set lag
-void Core::set_lag(QString strValue) { lagAct->setText(strValue); }
+void Core::set_lag(QString strValue)
+{
+    lagAct->setText(strValue);
+}
 
 // onet dialogs
 void Core::open_channel_list()
@@ -276,6 +279,9 @@ void Core::current_tab_changed(int index)
         // create new
         create_nicklist(strChannel);
     }
+
+    // set inputline users
+    inputLineDockWidget->set_userslist(mChannelNickListWidget.value(strChannel));
 }
 
 void Core::create_nicklist(QString strChannel)
@@ -314,7 +320,10 @@ void Core::add_user(QString strChannel, QString strNick, QString strPrefix, QStr
     if (nicklist_exist(strChannel, strNick) == false)
     {
         mChannelNickListWidget.value(strChannel)->add(strNick, strPrefix, strSuffix, &mChannelNickStatus);
-        inputLineDockWidget->set_userslist(mChannelNickListWidget.value(strChannel));
+
+        // set inputline users
+        if (inputLineDockWidget->get_active() == strChannel)
+            inputLineDockWidget->set_userslist(mChannelNickListWidget.value(strChannel));
 
         /// REGRESSION
         //iNickCount++;
@@ -327,7 +336,10 @@ void Core::del_user(QString strChannel, QString strNick)
     if (nicklist_exist(strChannel, strNick) == true)
     {
         mChannelNickListWidget.value(strChannel)->remove(strNick, &mChannelNickStatus);
-        inputLineDockWidget->set_userslist(mChannelNickListWidget.value(strChannel));
+
+        // set inputline users
+        if (inputLineDockWidget->get_active() == strChannel)
+            inputLineDockWidget->set_userslist(mChannelNickListWidget.value(strChannel));
 
         /// REGRESSION
         //iNickCount--;
@@ -450,6 +462,7 @@ void Core::change_flag(QString strNick, QString strFlag)
 
 void Core::clear_nicklist(QString strChannel)
 {
+    /// REGRESSION
     //iNickCount = 0;
     //nickCount->setText(QString(tr("%1 User(s)")).arg(iNickCount));
 
