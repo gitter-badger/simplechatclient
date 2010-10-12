@@ -79,11 +79,14 @@ void NetworkThread::connect()
 {
     if (socket->state() == QAbstractSocket::UnconnectedState)
     {
+        // set active
         QDateTime dt = QDateTime::currentDateTime();
         iActive = (int)dt.toTime_t();
 
+        // connect
         socket->connectToHost(strServer, iPort);
 
+        // start timers
         timerPingPong->start();
         timerLag->start();
         timerQueue->start();
@@ -268,6 +271,10 @@ void NetworkThread::error(QAbstractSocket::SocketError err)
     connectAct->setIconText(tr("&Connect"));
     connectAct->setIcon(QIcon(":/images/oxygen/16x16/network-connect.png"));
     lagAct->setText("Lag: 0s");
+
+    // state
+    QSettings settings;
+    settings.setValue("logged", "off");
 
     if (socket->state() == QAbstractSocket::ConnectedState)
         emit close();

@@ -25,6 +25,31 @@ OnetAuth::OnetAuth(TabContainer *param1)
     tabc = param1;
 }
 
+QString OnetAuth::network_request(QNetworkAccessManager *accessManager, QString strLink, QString strContent)
+{
+    QEventLoop eventLoop;
+    QNetworkReply *pReply;
+
+    if (strContent.isEmpty())
+        pReply = accessManager->get(QNetworkRequest(QUrl(strLink)));
+    else
+        pReply = accessManager->post(QNetworkRequest(QUrl(strLink)), strContent.toAscii());
+
+    pReply->ignoreSslErrors();
+    QObject::connect(pReply, SIGNAL(finished()), &eventLoop, SLOT(quit()));
+    eventLoop.exec();
+
+    QString strData = pReply->readAll();
+    QString strRedir = pReply->attribute(QNetworkRequest::RedirectionTargetAttribute).toString();
+
+    pReply->deleteLater();
+
+    if (strRedir.isEmpty() == false)
+        network_request(accessManager, strRedir, QString::null);
+    else
+        return strData;
+}
+
 void OnetAuth::request_uo(QString param1, QString param2, QString param3)
 {
     QString strNick = param1;
@@ -32,8 +57,6 @@ void OnetAuth::request_uo(QString param1, QString param2, QString param3)
     QString strPass = param3;
     QString strVersion;
     bool bOverride;
-    QEventLoop eventLoop;
-    QNetworkReply *pReply;
     QString strData;
 
     QNetworkAccessManager accessManager;
@@ -48,9 +71,16 @@ void OnetAuth::request_uo(QString param1, QString param2, QString param3)
     else
         bOverride = false;
 
+    QString strRandom = "";
+    while(strRandom.length() < 11)
+    {
+        int i = qrand() % 9;
+        QChar c = i+=48;
+        strRandom += c.toAscii();
+    }
+
     bool bHost1 = true;
     bool bHost2 = true;
-
     bool bHost3 = true;
 
     QHostInfo test_host1 = QHostInfo::fromName("czat.onet.pl");
@@ -67,81 +97,79 @@ void OnetAuth::request_uo(QString param1, QString param2, QString param3)
 
     if ((bHost1 == true) && (bHost2 == true) && (bHost3 == true))
     {
-        pReply = accessManager.get(QNetworkRequest(QUrl("http://czat.onet.pl/_s/deployOnetCzat.js")));
-        QObject::connect(pReply, SIGNAL(finished()), &eventLoop, SLOT(quit()));
-        eventLoop.exec();
+        QString strKropka;
 
-        strVersion = this->get_version(pReply->readAll());
+        // chat
+        strKropka = network_request(&accessManager, "http://czat.onet.pl/chat.html", "ch=&n=&p=&category=0");
+        strKropka = get_kropka(strKropka);
+
+        // deploy
+        strVersion = network_request(&accessManager, "http://czat.onet.pl/_s/deployOnetCzat.js", QString::null);
+        strVersion = this->get_version(strVersion);
         strVersion = QString("1.1(%1 - R)").arg(strVersion);
-
-        delete pReply;
 
         QString strNickLen = QString("%1").arg(strNick.length());
         QString strVersionLen = QString("%1").arg(strVersion.length());
 
-        pReply = accessManager.post(QNetworkRequest(QUrl("http://czat.onet.pl/chat.html")), "ch=&n=&p=&category=0");
-        QObject::connect(pReply, SIGNAL(finished()), &eventLoop, SLOT(quit()));
-        eventLoop.exec();
-        delete pReply;
+        // kropka
+        strKropka += "&RI=&C1=&CL=std153&CS=1024x768&CW=1024x768&DU=http://czat.onet.pl/chat.html&DR=http://czat.onet.pl";
+        network_request(&accessManager, strKropka, QString::null);
 
-        pReply = accessManager.get(QNetworkRequest(QUrl("http://kropka.onet.pl/_s/kropka/1?DV=czat/applet/FULL")));
-        QObject::connect(pReply, SIGNAL(finished()), &eventLoop, SLOT(quit()));
-        eventLoop.exec();
-        delete pReply;
+        // targetowanie behawioralne - rc
+        network_request(&accessManager, QString("http://rc.onetwl.pl/Get/onet/JS/GetRcmd.js?ord=%1").arg(strRandom), QString::null);
 
-        pReply = accessManager.get(QNetworkRequest(QUrl("http://czat.onet.pl/sk.gif")));
-        QObject::connect(pReply, SIGNAL(finished()), &eventLoop, SLOT(quit()));
-        eventLoop.exec();
-        delete pReply;
+        // targetowanie behawioralne - tr
+        QString strContentGroup = "";
+        QString strParams = "&CustomerId=onet&WebsiteId=czat.onet.pl&AC=on";
+        network_request(&accessManager, QString("http://tr.onetwl.pl/Cnt/onet/CP/%1?ord=%2%3").arg(strContentGroup).arg(strRandom).arg(strParams), QString::null);
 
-        // nicki stale
+        // full
+        network_request(&accessManager, "http://kropka.onet.pl/_s/kropka/1?DV=czat/applet/FULL", QString::null);
+
+        // sk
+        network_request(&accessManager, "http://czat.onet.pl/sk.gif", QString::null);
+
+        // registered nick
         if (strPass.isEmpty() == false)
         {
-            pReply = accessManager.get(QNetworkRequest(QUrl("http://kropka.onet.pl/_s/kropka/1?DV=secure")));
-            QObject::connect(pReply, SIGNAL(finished()), &eventLoop, SLOT(quit()));
-            eventLoop.exec();
-            delete pReply;
+            QString strSecureKropka;
 
-            strData = QString("r=secure.onet.pl&url=&login=%1&haslo=%2&ssl=on&ok=Ok").arg(strNick).arg(strPass);
-            pReply = accessManager.post(QNetworkRequest(QUrl("https://secure.onet.pl/index.html")), strData.toAscii());
-            pReply->ignoreSslErrors();
-            QObject::connect(pReply, SIGNAL(finished()), &eventLoop, SLOT(quit()));
-            eventLoop.exec();
-            delete pReply;
+            // secure
+            strSecureKropka = network_request(&accessManager, "http://secure.onet.pl/", QString::null);
+            strSecureKropka = get_kropka(strSecureKropka);
+
+            // secure kropka
+            strSecureKropka += "&RI=&C1=&CL=std153&SX=secure.onet.pl&CS=&CW=&DU=http://secure.onet.pl/&DR=";
+            network_request(&accessManager, strSecureKropka, QString::null);
+
+            // secure login
+            strData = QString("r=&url=&login=%1&haslo=%2&app_id=20&ssl=1&ok=1").arg(strNick).arg(strPass);
+            network_request(&accessManager, "https://secure.onet.pl/mlogin.html", strData);
 
             if (bOverride == true)
             {
+                // override
                 strData = QString("api_function=userOverride&params=a:1:{s:4:\"nick\";s:%1:\"%2\";}").arg(strNickLen).arg(strNick);
-                pReply = accessManager.post(QNetworkRequest(QUrl("http://czat.onet.pl/include/ajaxapi.xml.php3")), strData.toAscii());
-                QObject::connect(pReply, SIGNAL(finished()), &eventLoop, SLOT(quit()));
-                eventLoop.exec();
-                delete pReply;
+                network_request(&accessManager, "http://czat.onet.pl/include/ajaxapi.xml.php3", strData);
             }
 
+            // getuo
             strData = QString("api_function=getUoKey&params=a:3:{s:4:\"nick\";s:%1:\"%2\";s:8:\"tempNick\";i:0;s:7:\"version\";s:%3:\"%4\";}").arg(strNickLen).arg(strNick).arg(strVersionLen).arg(strVersion);
-            pReply = accessManager.post(QNetworkRequest(QUrl("http://czat.onet.pl/include/ajaxapi.xml.php3")), strData.toAscii());
-            QObject::connect(pReply, SIGNAL(finished()), &eventLoop, SLOT(quit()));
-            eventLoop.exec();
-            request_finished(strNickAuth, pReply->readAll());
-            delete pReply;
+            QString strGetUo = network_request(&accessManager, "http://czat.onet.pl/include/ajaxapi.xml.php3", strData);
+            request_finished(strNickAuth, strGetUo);
         }
-        // nicki tyldowe
+        // unregistered nick
         else
         {
             strData = QString("api_function=getUoKey&params=a:3:{s:4:\"nick\";s:%1:\"%2\";s:8:\"tempNick\";i:1;s:7:\"version\";s:%3:\"%4\";}").arg(strNickLen).arg(strNick).arg(strVersionLen).arg(strVersion);
-            pReply = accessManager.post(QNetworkRequest(QUrl("http://czat.onet.pl/include/ajaxapi.xml.php3")), strData.toAscii());
-            QObject::connect(pReply, SIGNAL(finished()), &eventLoop, SLOT(quit()));
-            eventLoop.exec();
-            request_finished(strNickAuth, pReply->readAll());
-            delete pReply;
+            QString strGetUo = network_request(&accessManager, "http://czat.onet.pl/include/ajaxapi.xml.php3", strData);
+            request_finished(strNickAuth, strGetUo);
         }
     }
     else
-    {
         tabc->show_msg("Status", tr("Error: Authentication error [onet.pl servers are not available]"), 9);
-    }
 
-// save cookies
+    // save cookies
     QList <QNetworkCookie> cookies = accessManager.cookieJar()->cookiesForUrl(QUrl("http://czat.onet.pl"));
     for (QList <QNetworkCookie>::iterator i = cookies.begin(); i != cookies.end(); ++i)
     {
@@ -221,7 +249,7 @@ QString OnetAuth::transform_key(QString s)
     for (int i = 0; i < 16; i++)
         ai[i] = f1[ai[i] + i];
 
-//  arraycopy
+    //  arraycopy
     for (int i = 0; i < 16; i++) ai1[i] = ai[i];
 
     for (int i = 0; i < 16; i++)
@@ -230,7 +258,7 @@ QString OnetAuth::transform_key(QString s)
     for (int i = 0; i < 16; i++)
         ai[i] = f2[ai[i] + i];
 
-//  arraycopy
+    //  arraycopy
     for (int i = 0; i < 16; i++) ai1[i] = ai[i];
 
     for (int i = 0; i < 16; i++)
@@ -245,7 +273,7 @@ QString OnetAuth::transform_key(QString s)
         ai[i] = j >= 10 ? j >= 36 ? (97 + j) - 36 : (65 + j) - 10 : 48 + j;
     }
 
-//  result
+    //  result
     QString strResult;
     for (int i = 0; i < 16; i++)
         strResult += ai[i];
@@ -259,13 +287,32 @@ QString OnetAuth::get_version(QString strData)
     {
         if (strData.indexOf("OnetCzatLoader") != -1)
         {
-            QString strVersion = strData.mid(strData.indexOf("signed-OnetCzatLoader-")+22, strData.indexOf(".jar") - strData.indexOf("signed-OnetCzatLoader-") -22);
+            QString strFind1 = "signed-OnetCzatLoader-";
+            QString strFind2 = ".jar";
+            int iPos1 = strData.indexOf(strFind1)+strFind1.length();
+            int iPos2 = strData.indexOf(strFind2, iPos1);
+            QString strVersion = strData.mid(iPos1, iPos2-iPos1);
+
             if ((strVersion.isEmpty() == false) && (strVersion.length() > 0) && (strVersion.length() < 20))
                 return strVersion;
         }
     }
 
     return "20100816-1008";
+}
+
+QString OnetAuth::get_kropka(QString strData)
+{
+    QString strResult;
+    if (strData.isEmpty() == false)
+    {
+        QString strFind1 = "onetKropka.src = '";
+        QString strFind2 = "'";
+        int iPos1 = strData.indexOf(strFind1)+strFind1.length();
+        int iPos2 = strData.indexOf(strFind2, iPos1);
+        strResult = strData.mid(iPos1, iPos2-iPos1);
+    }
+    return strResult;
 }
 
 void OnetAuth::request_finished(QString strNickAuth, QString strData)

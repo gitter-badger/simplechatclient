@@ -433,9 +433,11 @@ void Core::change_flag(QString strNick, QString strChannel, QString strNewFlag)
         }
     }
 
+    // change flag
     del_user(strChannel, strNick);
     add_user(strChannel, strNick, strPrefix, strSuffix);
 
+    // me ?
     QSettings settings;
     QString strMe = settings.value("nick").toString();
 
@@ -552,6 +554,7 @@ void TabContainer::clear_channel_all_nick_avatars(QString strChannel)
     }
 }
 
+// for avatars (if nick not in any channels->remove avatar)
 int TabContainer::get_nick_channels(QString strNick)
 {
     int iResult = 0;

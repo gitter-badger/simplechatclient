@@ -42,7 +42,9 @@ public slots:
 private:
     TabContainer *tabc;
 
+    QString network_request(QNetworkAccessManager *, QString, QString);
     QString get_version(QString);
+    QString get_kropka(QString);
     void request_finished(QString, QString);
 
 signals:

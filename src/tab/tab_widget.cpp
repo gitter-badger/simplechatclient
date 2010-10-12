@@ -454,6 +454,7 @@ void TabWidget::display_msg(QString strTime, QString strData, int iLevel)
     {
         if (settings.value("hide_join_part").toString() == "on")
             return;
+
         /// REGRESSION
         //if ((settings.value("hide_join_part_200").toString() == "on") && (iNickCount > 200))
             //return;

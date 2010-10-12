@@ -249,7 +249,7 @@ void MainWindow::create_settings()
     // settings
     QSettings settings;
     settings.clear();
-    settings.setValue("version", "1.0.9.572");
+    settings.setValue("version", "1.0.9.573");
     settings.setValue("debug", "off");
     settings.setValue("logged", "off");
     settings.setValue("busy", "off");
@@ -332,6 +332,7 @@ void MainWindow::button_connect()
     else
     {
         settings.setValue("reconnect", "false");
+        settings.setValue("logged", "off");
         coreServers.at(0)->network_send("QUIT");
         connectAct->setText(tr("&Connect"));
         connectAct->setIconText(tr("&Connect"));
