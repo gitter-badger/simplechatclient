@@ -191,7 +191,7 @@ void OnetAuth::request_uo(QString param1, QString param2, QString param3)
 
 QString OnetAuth::transform_key(QString s)
 {
-    static int f1[78] = {
+    static int f1[] = {
         29, 43, 7, 5, 52, 58, 30, 59, 26, 35,
         35, 49, 45, 4, 22, 4, 0, 7, 4, 30,
         51, 39, 16, 6, 32, 13, 40, 44, 14, 58,
@@ -336,6 +336,7 @@ void OnetAuth::request_finished(QString strNickAuth, QString strData)
                 // send auth
                 emit send(QString("NICK %1").arg(strNickAuth));
                 emit send("AUTHKEY");
+
                 return;
             }
             else

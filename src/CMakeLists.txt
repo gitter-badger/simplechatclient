@@ -122,6 +122,11 @@ if (UNIX)
 	set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -ggdb")
 endif (UNIX)
 
+if (UNIX AND NOT APPLE)
+	set (CMAKE_C_FLAGS "-W -Wall -fno-strict-aliasing ${CMAKE_C_FLAGS}")
+	set (CMAKE_CXX_FLAGS "-W -Wall -fno-strict-aliasing ${CMAKE_CXX_FLAGS}")
+endif (UNIX AND NOT APPLE)
+
 # qt
 find_package (Qt4 REQUIRED)
 

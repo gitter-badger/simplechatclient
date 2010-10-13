@@ -505,6 +505,9 @@ void Core::set_user_info(QString strNick, QString strKey, QString strValue)
 }
 
 /*
+
+/// REGRESSION
+
 void TabWidget::update_nick_avatar()
 {
     nicklist->refresh_avatars();
@@ -520,10 +523,6 @@ void TabContainer::update_nick_avatar(QString strNick)
         }
     }
 }
-
-/*
-
-/// REGRESSION
 
 QStringList TabWidget::get_nicklist()
 {
