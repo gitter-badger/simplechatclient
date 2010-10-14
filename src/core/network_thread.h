@@ -22,6 +22,7 @@
 #define NETWORK_THREAD_H
 
 #include <QAction>
+#include <QHostInfo>
 #include <QObject>
 #include <QQueue>
 #include <QSettings>

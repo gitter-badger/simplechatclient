@@ -151,7 +151,7 @@
 <context>
     <name>Core</name>
     <message>
-        <source>Inputline</source>
+        <source>Typing messages</source>
         <translation>Wpisywanie wiadomości</translation>
     </message>
     <message>
@@ -261,6 +261,10 @@
 <context>
     <name>NetworkThread</name>
     <message>
+        <source>Error: Could not connect to the server [%1]</source>
+        <translation>Error: Nie można się połączyć z serwerem [%1]</translation>
+    </message>
+    <message>
         <source>Error: Could not connect to the server - connection already exists!</source>
         <translation>Error: Nie można się połączyć z serwerem - połączenie już istnieje!</translation>
     </message>
@@ -339,7 +343,7 @@
         <translation>Wersja</translation>
     </message>
     <message>
-        <source>Author</source>
+        <source>2010 Piotr Luczko</source>
         <translation>2010 Piotr Łuczko</translation>
     </message>
     <message>

@@ -35,7 +35,7 @@ NetworkThread::NetworkThread(QAction *param1, QAction *param2, QString param3, i
     timerLag = new QTimer();
     timerLag->setInterval(30*1000); // 30 sec
     timerQueue = new QTimer();
-    timerQueue->setInterval(0.5*1000); // 0.5 sec
+    timerQueue->setInterval(500); // 0.5 sec
 
     socket = new QTcpSocket(this);
     socket->setSocketOption(QAbstractSocket::LowDelayOption, 1);
@@ -79,12 +79,24 @@ void NetworkThread::connect()
 {
     if (socket->state() == QAbstractSocket::UnconnectedState)
     {
+        // host
+        QHostInfo hInfo = QHostInfo::fromName(strServer);
+
+        if (hInfo.error() != QHostInfo::NoError)
+        {
+            emit show_msg_all(QString(tr("Error: Could not connect to the server [%1]")).arg(hInfo.errorString()), 9);
+            return;
+        }
+
+        // random
+        int iRandom = qrand() % hInfo.addresses().count();
+
         // set active
         QDateTime dt = QDateTime::currentDateTime();
         iActive = (int)dt.toTime_t();
 
         // connect
-        socket->connectToHost(strServer, iPort);
+        socket->connectToHost(hInfo.addresses().at(iRandom).toString(), iPort);
 
         // start timers
         timerPingPong->start();

@@ -43,7 +43,7 @@ Core::Core(QMainWindow *parent, QString param1, int param2, Notify *param3, QAct
     pNetwork = new Network(connectAct, lagAct, strServer, iPort);
 
     // inputlinewidget
-    bottomDockWidget = new QDockWidget(tr("Inputline"), myparent);
+    bottomDockWidget = new QDockWidget(tr("Typing messages"), myparent);
     bottomDockWidget->setFocus();
     bottomDockWidget->setAllowedAreas(Qt::TopDockWidgetArea | Qt::BottomDockWidgetArea); // top and bottom
     inputLineDockWidget = new InputLineDockWidget(bottomDockWidget, pNetwork);
