@@ -46,8 +46,8 @@ QString OnetAuth::network_request(QNetworkAccessManager *accessManager, QString 
 
     if (strRedir.isEmpty() == false)
         network_request(accessManager, strRedir, QString::null);
-    else
-        return strData;
+
+    return strData;
 }
 
 void OnetAuth::request_uo(QString param1, QString param2, QString param3)
