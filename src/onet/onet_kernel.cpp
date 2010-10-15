@@ -570,10 +570,21 @@ void OnetKernel::raw_join()
 
     QSettings settings;
     QString strDisplay;
-    if (settings.value("show_zuo").toString() == "on")
-        strDisplay = QString(tr("* %1 [%2@%3] has joined %4")).arg(strNick).arg(strZUO).arg(strIP).arg(strChannel);
+
+    if (strChannel[0] != '^')
+    {
+        if (settings.value("show_zuo").toString() == "on")
+            strDisplay = QString(tr("* %1 [%2@%3] has joined %4")).arg(strNick).arg(strZUO).arg(strIP).arg(strChannel);
+        else
+            strDisplay = QString(tr("* %1 [%2] has joined %3")).arg(strNick).arg(strIP).arg(strChannel);
+    }
     else
-        strDisplay = QString(tr("* %1 [%2] has joined %3")).arg(strNick).arg(strIP).arg(strChannel);
+    {
+        if (settings.value("show_zuo").toString() == "on")
+            strDisplay = QString(tr("* %1 [%2@%3] has joined priv")).arg(strNick).arg(strZUO).arg(strIP);
+        else
+            strDisplay = QString(tr("* %1 [%2] has joined priv")).arg(strNick).arg(strIP);
+    }
 
     tabc->show_msg(strChannel, strDisplay, 1);
 
@@ -628,19 +639,30 @@ void OnetKernel::raw_part()
 
     QSettings settings;
     QString strDisplay;
-    if (strReason.isEmpty() == false)
+
+    if (strChannel[0] != '^')
     {
-        if (settings.value("show_zuo").toString() == "on")
-            strDisplay = QString(tr("* %1 [%2@%3] has left %4 [%5]")).arg(strNick).arg(strZUO).arg(strIP).arg(strChannel).arg(strReason);
+        if (strReason.isEmpty() == false)
+        {
+            if (settings.value("show_zuo").toString() == "on")
+                strDisplay = QString(tr("* %1 [%2@%3] has left %4 [%5]")).arg(strNick).arg(strZUO).arg(strIP).arg(strChannel).arg(strReason);
+            else
+                strDisplay = QString(tr("* %1 [%2] has left %3 [%4]")).arg(strNick).arg(strIP).arg(strChannel).arg(strReason);
+        }
         else
-            strDisplay = QString(tr("* %1 [%2] has left %3 [%4]")).arg(strNick).arg(strIP).arg(strChannel).arg(strReason);
+        {
+            if (settings.value("show_zuo").toString() == "on")
+                strDisplay = QString(tr("* %1 [%2@%3] has left %4")).arg(strNick).arg(strZUO).arg(strIP).arg(strChannel);
+            else
+                strDisplay = QString(tr("* %1 [%2] has left %3")).arg(strNick).arg(strIP).arg(strChannel);
+        }
     }
     else
     {
         if (settings.value("show_zuo").toString() == "on")
-            strDisplay = QString(tr("* %1 [%2@%3] has left %4")).arg(strNick).arg(strZUO).arg(strIP).arg(strChannel);
+            strDisplay = QString(tr("* %1 [%2@%3] has left priv")).arg(strNick).arg(strZUO).arg(strIP);
         else
-            strDisplay = QString(tr("* %1 [%2] has left %3")).arg(strNick).arg(strIP).arg(strChannel);
+            strDisplay = QString(tr("* %1 [%2] has left priv")).arg(strNick).arg(strIP);
     }
 
     if (tabc->exist_tab(strChannel) == true) // fix for self part

@@ -1321,6 +1321,14 @@
         <translation>* %1 [%2] wszedł do kanału %3</translation>
     </message>
     <message>
+        <source>* %1 [%2@%3] has joined priv</source>
+        <translation>* %1 [%2@%3] dołączył do rozmowy prywatnej</translation>
+    </message>
+    <message>
+        <source>* %1 [%2] has joined priv</source>
+        <translation>* %1 [%2] dołączył do rozmowy prywatnej</translation>
+    </message>
+    <message>
         <source>* %1 [%2@%3] has left %4 [%5]</source>
         <translation>* %1 [%2@%3] wyszedł z kanału %4. Powód: %5</translation>
     </message>
@@ -1335,6 +1343,14 @@
     <message>
         <source>* %1 [%2] has left %3</source>
         <translation>* %1 [%2] wyszedł z kanału %3</translation>
+    </message>
+    <message>
+        <source>* %1 [%2@%3] has left priv</source>
+        <translation>* %1 [%2@%3] zakończył rozmowę prywatną</translation>
+    </message>
+    <message>
+        <source>* %1 [%2] has left priv</source>
+        <translation>* %1 [%2] zakończył rozmowę prywatną</translation>
     </message>
     <message>
         <source>* %1 [%2@%3] has quit [%4]</source>
