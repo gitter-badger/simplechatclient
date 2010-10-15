@@ -366,8 +366,8 @@ void Core::quit_user(QString strNick, QString strDisplay)
             pTabC->show_msg(strChannel, strDisplay, iLevel);
             del_user(strChannel, strNick);
 
-            if (i != pTabM->currentIndex())
-                pTabM->set_alert(i, QColor(0, 147, 0, 255)); // green
+            if (i+1 != pTabM->currentIndex())
+                pTabM->set_alert(i+1, QColor(0, 147, 0, 255)); // green
         }
     }
 }
