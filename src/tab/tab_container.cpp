@@ -318,6 +318,11 @@ void TabContainer::update_channel_avatar(QString strChannel)
         tw[i]->update_channel_avatar();
 }
 
+void TabContainer::slot_update_nick_avatar(QString strNick)
+{
+    emit update_nick_avatar(strNick);
+}
+
 void TabContainer::slot_show_msg(QString strChannel, QString strData, int iLevel)
 {
     show_msg(strChannel, strData, iLevel);

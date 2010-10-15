@@ -63,7 +63,7 @@ NickAvatar::NickAvatar(TabContainer *param1, QString param2, QString param3, QMa
     mNickAvatar = param4;
 
     nickAvatarThr = new NickAvatarThread(strNick, strUrl, mNickAvatar);
-    QObject::connect(nickAvatarThr, SIGNAL(set_avatar(QString)), tabc, SLOT(update_nick_avatar(QString)));
+    QObject::connect(nickAvatarThr, SIGNAL(set_avatar(QString)), tabc, SLOT(slot_update_nick_avatar(QString)));
     QObject::connect(nickAvatarThr, SIGNAL(set_nick_avatar(QString, QByteArray)), this, SLOT(set_nick_avatar(QString, QByteArray)));
     QObject::connect(nickAvatarThr, SIGNAL(stop_thread()), this, SLOT(stop_thread()));
     nickAvatarThr->start(QThread::InheritPriority);

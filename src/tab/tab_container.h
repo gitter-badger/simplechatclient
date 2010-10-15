@@ -57,6 +57,7 @@ public:
 
 public slots:
     void update_channel_avatar(QString);
+    void slot_update_nick_avatar(QString);
     void slot_show_msg(QString, QString, int);
     void slot_show_msg_active(QString, int);
     void slot_show_msg_all(QString, int);
@@ -84,6 +85,7 @@ signals:
     void create_nicklist(QString);
     void remove_nicklist(QString);
     void currentChanged(int);
+    void update_nick_avatar(QString);
 
 };
 

@@ -82,9 +82,9 @@ public slots:
     void clear_nicklist(QString);
     void clear_all_nicklist();
     void set_user_info(QString, QString, QString);
+    void update_nick_avatar(QString);
 
 /*
-    void update_nick_avatar();
     void update_channel_avatar();
     QStringList get_nicklist();
 */

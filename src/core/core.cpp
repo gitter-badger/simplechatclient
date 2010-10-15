@@ -92,6 +92,7 @@ Core::Core(QMainWindow *parent, QString param1, int param2, Notify *param3, QAct
     QObject::connect(pTabC, SIGNAL(create_nicklist(QString)), this, SLOT(create_nicklist(QString)));
     QObject::connect(pTabC, SIGNAL(remove_nicklist(QString)), this, SLOT(remove_nicklist(QString)));
     QObject::connect(pTabC, SIGNAL(currentChanged(int)), this, SLOT(current_tab_changed(int)));
+    QObject::connect(pTabC, SIGNAL(update_nick_avatar(QString)), this, SLOT(update_nick_avatar(QString)));
 
     // signals tab
     QObject::connect(pTabM, SIGNAL(tabCloseRequested(int)), this, SLOT(tab_close_requested(int)));
@@ -504,35 +505,31 @@ void Core::set_user_info(QString strNick, QString strKey, QString strValue)
     }
 }
 
-/*
-
-/// REGRESSION
-
-void TabWidget::update_nick_avatar()
+void Core::update_nick_avatar(QString strNick)
 {
-    nicklist->refresh_avatars();
-}
-void TabContainer::update_nick_avatar(QString strNick)
-{
-    for (int i = 0; i < tw.count(); i++)
+    QStringList strlChannels = pTabC->get_open_channels();
+
+    for (int i = 0; i < strlChannels.count(); i++)
     {
-        if (tw[i]->nicklist_exist(strNick) == true)
-        {
-            tw[i]->update_nick_avatar();
-            return;
-        }
+        // nicklist
+        if (mChannelNickListWidget.value(strlChannels.at(i))->exist(strNick, &mChannelNickStatus) == true)
+            mChannelNickListWidget.value(strlChannels.at(i))->refresh_avatars();
     }
 }
 
-QStringList TabWidget::get_nicklist()
-{
-    return nicklist->get(&nickStatus);
-}
+/*
+
+/// REGRESSION
 
 void TabWidget::set_link(QString strUrl)
 {
     webLink->setText(QString("<a href=\"%1\" style=\"color:#0000FF;text-decoration:none;\" >"+tr("Channel website")+"</a>").arg(strUrl));
     webLink->setToolTip(strUrl);
+}
+
+QStringList TabWidget::get_nicklist()
+{
+    return nicklist->get(&nickStatus);
 }
 
 void TabContainer::clear_channel_all_nick_avatars(QString strChannel)
