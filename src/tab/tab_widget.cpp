@@ -138,7 +138,7 @@ TabWidget::TabWidget(QWidget *parent, Network *param1, QString param2, Notify *p
 
     color = new QComboBox(this);
     color->setToolTip(tr("Font color"));
-    color->setIconSize(QSize(50,10));
+    color->setIconSize(QSize(20,10));
 
     QStringList comboBoxColors;
     comboBoxColors << "#000000" << "#623c00" << "#c86c00" << "#ff6500" << "#ff0000" << "#e40f0f" << "#990033" << "#8800ab" << "#ce00ff" << "#0f2ab1" << "#3030ce" << "#006699" << "#1a866e" << "#008100" << "#959595";
@@ -146,7 +146,7 @@ TabWidget::TabWidget(QWidget *parent, Network *param1, QString param2, Notify *p
     int iComboBoxColors = 0;
     foreach (QString strColor, comboBoxColors)
     {
-        QPixmap pixmap(50,10);
+        QPixmap pixmap(20,10);
         pixmap.fill(QColor(strColor));
         color->insertItem(iComboBoxColors, pixmap, "");
         iComboBoxColors++;
@@ -198,7 +198,7 @@ TabWidget::TabWidget(QWidget *parent, Network *param1, QString param2, Notify *p
     separator->setFrameShadow(QFrame::Sunken);
     separator->show();
 
-    channel_settings = new QPushButton(QIcon(":/images/oxygen/16x16/configure.png"), tr("Settings"), this);
+    channel_settings = new QPushButton(QIcon(":/images/oxygen/16x16/configure.png"), "", this);
     channel_settings->setToolTip(tr("Channel settings"));
     channel_settings->show();
 

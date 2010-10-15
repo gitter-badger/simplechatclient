@@ -2092,10 +2092,6 @@
         <translation>Liczba osób: %1</translation>
     </message>
     <message>
-        <source>Settings</source>
-        <translation>Ustawienia</translation>
-    </message>
-    <message>
         <source>Moderation</source>
         <translation>Moderacja</translation>
     </message>
