@@ -99,6 +99,7 @@ void TabContainer::add_tab(QString strChannel)
 
         // update
         update_open_channels();
+        emit set_open_channels();
     }
 }
 
@@ -118,6 +119,7 @@ void TabContainer::remove_tab(QString strChannel)
 
         // update
         update_open_channels();
+        emit set_open_channels();
 
         // log
         QString strData = "--- Log closed "+QDateTime::currentDateTime().toString(Qt::TextDate);
@@ -143,6 +145,7 @@ bool TabContainer::rename_tab(QString strChannel, QString strNewName)
             pTabM->setTabText(i, strNewName);
 
             update_open_channels();
+            emit set_open_channels();
 
             return true;
         }

@@ -27,6 +27,8 @@ MainWebView::MainWebView(QWidget *parent, Network *param1, QString param2, QTcpS
     strChannel = param2;
     camSocket = param3;
     mChannelNickStatus = param4;
+
+    strNick = QString::null;
 }
 
 void MainWebView::join_channel()

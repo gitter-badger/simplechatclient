@@ -45,6 +45,7 @@ public:
     ~MainWebView();
     void set_open_channels(QStringList);
     void set_user_info(QString, QString, QString);
+    inline QString get_current_nick() { return strNick; }
 
 private:
     QWidget *myparent;

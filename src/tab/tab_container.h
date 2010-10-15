@@ -86,6 +86,7 @@ signals:
     void remove_nicklist(QString);
     void currentChanged(int);
     void update_nick_avatar(QString);
+    void set_open_channels();
 
 };
 

@@ -165,6 +165,8 @@ TabWidget::TabWidget(QWidget *parent, Network *param1, QString param2, Notify *p
     size12Act->setFont(QFont("Verdana", 12, -1, false));
     size14Act = new QAction("14", this);
     size14Act->setFont(QFont("Verdana", 14, -1, false));
+    size16Act = new QAction("16", this);
+    size16Act->setFont(QFont("Verdana", 16, -1, false));
     size18Act = new QAction("18", this);
     size18Act->setFont(QFont("Verdana", 18, -1, false));
     size20Act = new QAction("20", this);
@@ -177,6 +179,7 @@ TabWidget::TabWidget(QWidget *parent, Network *param1, QString param2, Notify *p
     sizeMenu->addAction(size11Act);
     sizeMenu->addAction(size12Act);
     sizeMenu->addAction(size14Act);
+    sizeMenu->addAction(size16Act);
     sizeMenu->addAction(size18Act);
     sizeMenu->addAction(size20Act);
 
@@ -328,6 +331,7 @@ TabWidget::TabWidget(QWidget *parent, Network *param1, QString param2, Notify *p
     QObject::connect(size11Act, SIGNAL(triggered()), this, SLOT(size11_triggered()));
     QObject::connect(size12Act, SIGNAL(triggered()), this, SLOT(size12_triggered()));
     QObject::connect(size14Act, SIGNAL(triggered()), this, SLOT(size14_triggered()));
+    QObject::connect(size16Act, SIGNAL(triggered()), this, SLOT(size16_triggered()));
     QObject::connect(size18Act, SIGNAL(triggered()), this, SLOT(size18_triggered()));
     QObject::connect(size20Act, SIGNAL(triggered()), this, SLOT(size20_triggered()));
 
@@ -670,7 +674,6 @@ void TabWidget::replace_color(QString level, QString color)
 
 void TabWidget::set_open_channels(QStringList strOpenChannels)
 {
-    //nicklist->set_open_channels(strOpenChannels);
     mainWebView->set_open_channels(strOpenChannels);
 }
 
@@ -880,6 +883,14 @@ void TabWidget::size14_triggered()
     iScrollBarValue = mainWebView->page()->mainFrame()->scrollBarValue(Qt::Vertical);
     mainWebView->setHtml(strContentStart+strContent+strContentEnd,QUrl(""));
     strFontSize = "14px";
+}
+
+void TabWidget::size16_triggered()
+{
+    strContent = strContent.replace("font-size:"+strFontSize, "font-size:16px");
+    iScrollBarValue = mainWebView->page()->mainFrame()->scrollBarValue(Qt::Vertical);
+    mainWebView->setHtml(strContentStart+strContent+strContentEnd,QUrl(""));
+    strFontSize = "16px";
 }
 
 void TabWidget::size18_triggered()

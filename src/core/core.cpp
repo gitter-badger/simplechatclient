@@ -93,6 +93,7 @@ Core::Core(QMainWindow *parent, QString param1, int param2, Notify *param3, QAct
     QObject::connect(pTabC, SIGNAL(remove_nicklist(QString)), this, SLOT(remove_nicklist(QString)));
     QObject::connect(pTabC, SIGNAL(currentChanged(int)), this, SLOT(current_tab_changed(int)));
     QObject::connect(pTabC, SIGNAL(update_nick_avatar(QString)), this, SLOT(update_nick_avatar(QString)));
+    QObject::connect(pTabC, SIGNAL(set_open_channels()), this, SLOT(set_open_channels()));
 
     // signals tab
     QObject::connect(pTabM, SIGNAL(tabCloseRequested(int)), this, SLOT(tab_close_requested(int)));
@@ -355,22 +356,19 @@ void Core::nicklist_refresh(QString strChannel)
 
 void Core::quit_user(QString strNick, QString strDisplay)
 {
-    int x = 0;
-    QMapIterator <QString, NickListWidget*> i(mChannelNickListWidget);
-    while (i.hasNext())
+    QStringList strlChannels = pTabC->get_open_channels();
+    for (int i = 0; i < strlChannels.count(); i++)
     {
-        i.next();
-        QString strChannel = i.key();
+        QString strChannel = strlChannels.at(i);
         if (nicklist_exist(strChannel, strNick) == true)
         {
             int iLevel = 3;
             pTabC->show_msg(strChannel, strDisplay, iLevel);
             del_user(strChannel, strNick);
 
-            if (x != pTabM->currentIndex())
-                pTabM->set_alert(x, QColor(0, 147, 0, 255)); // green
+            if (i != pTabM->currentIndex())
+                pTabM->set_alert(i, QColor(0, 147, 0, 255)); // green
         }
-        x++;
     }
 }
 
@@ -453,11 +451,11 @@ void Core::change_flag(QString strNick, QString strChannel, QString strNewFlag)
 
 void Core::change_flag(QString strNick, QString strFlag)
 {
-    QMapIterator <QString, NickListWidget*> i(mChannelNickListWidget);
-    while (i.hasNext())
+    QStringList strlChannels = pTabC->get_open_channels();
+    for (int i = 0; i < strlChannels.count(); i++)
     {
-        i.next();
-        QString strChannel = i.key();
+        QString strChannel = strlChannels.at(i);
+
         if (nicklist_exist(strChannel, strNick) == true)
             change_flag(strNick, strChannel, strFlag);
     }
@@ -494,28 +492,43 @@ void Core::clear_all_nicklist()
 void Core::set_user_info(QString strNick, QString strKey, QString strValue)
 {
     QStringList strlChannels = pTabC->get_open_channels();
-
     for (int i = 0; i < strlChannels.count(); i++)
     {
+        QString strChannel = strlChannels.at(i);
+
         // nicklist
-        if (mChannelNickListWidget.value(strlChannels.at(i))->exist(strNick, &mChannelNickStatus) == true)
-            mChannelNickListWidget.value(strlChannels.at(i))->set_user_info(strNick, strKey, strValue);
+        if (mChannelNickListWidget.value(strChannel)->exist(strNick, &mChannelNickStatus) == true)
+            mChannelNickListWidget.value(strChannel)->set_user_info(strNick, strKey, strValue);
 
         // mainwebview
-        MainWebView *mainWebView = pTabC->get_webview(strlChannels.at(i));
-        mainWebView->set_user_info(strNick, strKey, strValue);
+        MainWebView *mainWebView = pTabC->get_webview(strChannel);
+
+        if (mainWebView->get_current_nick() == strNick)
+            mainWebView->set_user_info(strNick, strKey, strValue);
     }
 }
 
 void Core::update_nick_avatar(QString strNick)
 {
     QStringList strlChannels = pTabC->get_open_channels();
-
     for (int i = 0; i < strlChannels.count(); i++)
     {
+        QString strChannel = strlChannels.at(i);
+
         // nicklist
-        if (mChannelNickListWidget.value(strlChannels.at(i))->exist(strNick, &mChannelNickStatus) == true)
-            mChannelNickListWidget.value(strlChannels.at(i))->refresh_avatars();
+        if (mChannelNickListWidget.value(strChannel)->exist(strNick, &mChannelNickStatus) == true)
+            mChannelNickListWidget.value(strChannel)->refresh_avatars();
+    }
+}
+
+void Core::set_open_channels()
+{
+    QStringList strlChannels = pTabC->get_open_channels();
+    for (int i = 0; i < strlChannels.count(); i++)
+    {
+        QString strChannel = strlChannels.at(i);
+
+        mChannelNickListWidget.value(strChannel)->set_open_channels(strlChannels);
     }
 }
 

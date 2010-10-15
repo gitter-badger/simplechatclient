@@ -118,6 +118,7 @@ private:
     QAction *size11Act;
     QAction *size12Act;
     QAction *size14Act;
+    QAction *size16Act;
     QAction *size18Act;
     QAction *size20Act;
 
@@ -157,6 +158,7 @@ private slots:
     void size11_triggered();
     void size12_triggered();
     void size14_triggered();
+    void size16_triggered();
     void size18_triggered();
     void size20_triggered();
 
