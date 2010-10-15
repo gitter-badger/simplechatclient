@@ -170,10 +170,11 @@ void NetworkThread::write(QString strData)
 
 void NetworkThread::send(QString strData)
 {
-    QSettings settings;
-    if (settings.value("disable_avatars").toString() == "on") // without avatars
-        write(strData);
-    else // with avatars
+    /// default enabled queue
+    //QSettings settings;
+    //if (settings.value("disable_avatars").toString() == "on") // without avatars
+        //write(strData);
+    //else // with avatars
         msgSendQueue.append(strData);
 }
 
