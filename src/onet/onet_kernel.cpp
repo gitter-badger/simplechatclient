@@ -941,9 +941,7 @@ void OnetKernel::raw_mode()
             }
 
             tabc->show_msg(strNickChannel, strDisplay, 5);
-
-            if ((strFlag.contains("e") == false) && (strFlag.contains("b") == false)) // not nick
-                emit change_flag(strNick, strNickChannel, strFlag);
+            emit change_flag(strNick, strNickChannel, strFlag);
 
             ++i;
         }

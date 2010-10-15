@@ -376,6 +376,8 @@ void Core::quit_user(QString strNick, QString strDisplay)
 
 void Core::change_flag(QString strNick, QString strChannel, QString strNewFlag)
 {
+    if (nicklist_exist(strChannel, strNick) == false) return; // nick not exist
+
     QString strOldPrefix;
     QString strOldSuffix;
 
