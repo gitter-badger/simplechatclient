@@ -35,7 +35,7 @@ NetworkThread::NetworkThread(QAction *param1, QAction *param2, QString param3, i
     timerLag = new QTimer();
     timerLag->setInterval(30*1000); // 30 sec
     timerQueue = new QTimer();
-    timerQueue->setInterval(500); // 0.5 sec
+    timerQueue->setInterval(300); // 0.3 sec
 
     socket = new QTcpSocket(this);
     socket->setSocketOption(QAbstractSocket::LowDelayOption, 1);
