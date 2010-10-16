@@ -42,7 +42,7 @@ class OnetKernel : public QObject
 {
     Q_OBJECT
 public:
-    OnetKernel(QWidget *, Network *, TabContainer *, QMap <QString, QByteArray> *, QMap <QString, QByteArray> *, DlgChannelSettings *, DlgChannelHomes *, DlgChannelList *, DlgChannelFavourites *, DlgFriends *, DlgIgnore *, DlgModeration *);
+    OnetKernel(QWidget *, Network *, TabContainer *, Notify *, QMap <QString, QByteArray> *, QMap <QString, QByteArray> *, DlgChannelSettings *, DlgChannelHomes *, DlgChannelList *, DlgChannelFavourites *, DlgFriends *, DlgIgnore *, DlgModeration *);
     ~OnetKernel();
 
 public slots:
@@ -52,7 +52,9 @@ private:
     QWidget *myparent;
     Network *pNetwork;
     TabContainer *tabc;
-    QStringList strDataList;
+    Notify *pNotify;
+    QMap <QString, QByteArray> *mNickAvatar;
+    QMap <QString, QByteArray> *mChannelAvatar;
     DlgChannelSettings *dlgchannel_settings;
     DlgChannelHomes *dlgchannel_homes;
     DlgChannelList *dlgchannel_list;
@@ -61,10 +63,9 @@ private:
     DlgIgnore *dlgignore;
     DlgModeration *dlgmoderation;
     QString strData;
+    QStringList strDataList;
     QList <ChannelAvatar*> caThreadList;
     QList <NickAvatar*> naThreadList;
-    QMap <QString, QByteArray> *mNickAvatar;
-    QMap <QString, QByteArray> *mChannelAvatar;
     QMap <QString, QString> mOldNameNewName; // rename channels
 
     void raw_error();

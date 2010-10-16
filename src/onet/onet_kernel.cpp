@@ -20,20 +20,21 @@
 
 #include "onet_kernel.h"
 
-OnetKernel::OnetKernel(QWidget *parent, Network *param1, TabContainer *param2, QMap <QString, QByteArray> *param3, QMap <QString, QByteArray> *param4, DlgChannelSettings *param5, DlgChannelHomes *param6, DlgChannelList *param7, DlgChannelFavourites *param8, DlgFriends *param9, DlgIgnore *param10, DlgModeration *param11)
+OnetKernel::OnetKernel(QWidget *parent, Network *param1, TabContainer *param2, Notify *param3, QMap <QString, QByteArray> *param4, QMap <QString, QByteArray> *param5, DlgChannelSettings *param6, DlgChannelHomes *param7, DlgChannelList *param8, DlgChannelFavourites *param9, DlgFriends *param10, DlgIgnore *param11, DlgModeration *param12)
 {
     myparent = parent;
     pNetwork = param1;
     tabc = param2;
-    mNickAvatar = param3;
-    mChannelAvatar = param4;
-    dlgchannel_settings = param5;
-    dlgchannel_homes = param6;
-    dlgchannel_list = param7;
-    dlgchannel_favourites = param8;
-    dlgfriends = param9;
-    dlgignore = param10;
-    dlgmoderation = param11;
+    pNotify = param3;
+    mNickAvatar = param4;
+    mChannelAvatar = param5;
+    dlgchannel_settings = param6;
+    dlgchannel_homes = param7;
+    dlgchannel_list = param8;
+    dlgchannel_favourites = param9;
+    dlgfriends = param10;
+    dlgignore = param11;
+    dlgmoderation = param12;
 }
 
 OnetKernel::~OnetKernel()
@@ -1063,6 +1064,7 @@ void OnetKernel::raw_invite()
     if (strWhere[0] == ':')
         strWhere = strWhere.right(strWhere.length()-1);
 
+    pNotify->play("query");
     (new DlgInvite(myparent, pNetwork, strWho, strWhere))->show();
 }
 

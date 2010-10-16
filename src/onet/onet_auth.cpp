@@ -298,7 +298,7 @@ QString OnetAuth::get_version(QString strData)
         }
     }
 
-    return "20100816-1008";
+    return "20101008-1609";
 }
 
 QString OnetAuth::get_kropka(QString strData)

@@ -32,7 +32,7 @@ class Notify : public QObject
 public:
     Notify();
     ~Notify();
-    void play();
+    void play(QString);
 
 private:
     QString apath;

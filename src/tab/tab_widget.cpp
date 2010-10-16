@@ -574,7 +574,7 @@ void TabWidget::display_message(QString strData, int iLevel)
         strTextDecoration = "underline";
 
         if (settings.value("disable_sounds").toString() == "off")
-            pNotify->play();
+            pNotify->play("beep");
     }
 
 // /me

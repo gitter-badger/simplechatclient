@@ -69,7 +69,7 @@ Core::Core(QMainWindow *parent, QString param1, int param2, Notify *param3, QAct
     pDlg_friends = new DlgFriends(myparent, pNetwork, &mNickAvatar);
     pDlg_ignore = new DlgIgnore(myparent, pNetwork, &mNickAvatar);
 
-    pOnet_kernel = new OnetKernel(myparent, pNetwork, pTabC, &mNickAvatar, &mChannelAvatar, pDlg_channel_settings, pDlg_channel_homes, pDlg_channel_list, pDlg_channel_favourites, pDlg_friends, pDlg_ignore, pDlg_moderation);
+    pOnet_kernel = new OnetKernel(myparent, pNetwork, pTabC, pNotify, &mNickAvatar, &mChannelAvatar, pDlg_channel_settings, pDlg_channel_homes, pDlg_channel_list, pDlg_channel_favourites, pDlg_friends, pDlg_ignore, pDlg_moderation);
     pOnet_auth = new OnetAuth(pTabC);
 
     pTabC->set_dlg(pDlg_channel_settings, pDlg_moderation);

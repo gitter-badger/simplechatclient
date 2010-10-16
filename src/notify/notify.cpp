@@ -31,8 +31,14 @@ Notify::~Notify()
     delete music;
 }
 
-void Notify::play()
+void Notify::play(QString strWhat)
 {
     music->stop();
+
+    if (strWhat == "query")
+        music->setCurrentSource(apath+"/3rdparty/sounds/query.wav");
+    else
+        music->setCurrentSource(apath+"/3rdparty/sounds/beep.wav");
+
     music->play();
 }

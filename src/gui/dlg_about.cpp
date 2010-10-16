@@ -50,9 +50,7 @@ DlgAbout::DlgAbout(QWidget *parent) : QDialog(parent)
     strAuthors += "<dd>"+tr("Project Founder")+", "+tr("Lead Developer")+"</dd>";
     strAuthors += "</dl>";
 
-    QString strThanksTo = "<p style=\"font-size:12px\">"+tr("Special thanks to:")+"</p>";
-    strThanksTo += "<p style=\"font-weight:bold\"> Ovo_</p>";
-    strThanksTo += "<p>"+tr("...and for all those who supported the project.")+"</p>";
+    QString strThanksTo = "<p>"+tr("Thanks to <b>ovo_</b> for creating graphics, to all persons who actively support the development of the project and special thanks to <b>Darom</b>.")+"</p>";
 
     ui.label_logo->setPixmap(QPixmap(":/images/logo_64.png"));
     ui.label_version->setText(strVersion);
