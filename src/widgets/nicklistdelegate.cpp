@@ -36,7 +36,6 @@ void NickListDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opti
     QRect r = option.rect;
 
     QSettings settings;
-    QString strNicklistBackgroundColor = settings.value("nicklist_background_color").toString();
     QString strNicklistNickColor = settings.value("nicklist_nick_color").toString();
     QString strNicklistSelectedNickColor = settings.value("nicklist_selected_nick_color").toString();
     QString strNicklistBusyNickColor = settings.value("nicklist_busy_nick_color").toString();

@@ -237,7 +237,6 @@ void MainWindow::create_settings()
     QString strInfoFontColor = pConfig->get_value("font_color_level_7");
     QString strErrorFontColor = pConfig->get_value("font_color_level_9");
     QString strChannelFontColor = pConfig->get_value("channel_font_color");
-    QString strNicklistBackgroundColor = pConfig->get_value("nicklist_background_color");
     QString strNicklistNickColor = pConfig->get_value("nicklist_nick_color");
     QString strNicklistSelectedNickColor = pConfig->get_value("nicklist_selected_nick_color");
     QString strNicklistBusyNickColor = pConfig->get_value("nicklist_busy_nick_color");
@@ -252,7 +251,7 @@ void MainWindow::create_settings()
     // settings
     QSettings settings;
     settings.clear();
-    settings.setValue("version", "1.0.9.587");
+    settings.setValue("version", "1.0.9.588");
     settings.setValue("debug", "off");
     settings.setValue("logged", "off");
     settings.setValue("busy", "off");
@@ -285,7 +284,6 @@ void MainWindow::create_settings()
     settings.setValue("font_color_level_7", strInfoFontColor);
     settings.setValue("font_color_level_9", strErrorFontColor);
     settings.setValue("channel_font_color", strChannelFontColor);
-    settings.setValue("nicklist_background_color", strNicklistBackgroundColor);
     settings.setValue("nicklist_nick_color", strNicklistNickColor);
     settings.setValue("nicklist_selected_nick_color", strNicklistSelectedNickColor);
     settings.setValue("nicklist_busy_nick_color", strNicklistBusyNickColor);
