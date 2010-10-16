@@ -54,7 +54,7 @@ public:
     Core(QMainWindow *, QString, int, Notify *, QAction *, QToolBar *, QMenu *);
     ~Core();
     void refresh_colors();
-    // temp
+
     void network_connect();
     void network_disconnect();
     void network_send(QString);

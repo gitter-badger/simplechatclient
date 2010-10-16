@@ -308,8 +308,6 @@ TabWidget::TabWidget(QWidget *parent, Network *param1, QString param2, Notify *p
     set_default();
 
 // set colors
-    inputLineWidget->set_style_sheet(QString("color:%1;").arg(strDefaultFontColor));
-
     if (strBackgroundColor.toLower() != "#ffffff")
         this->setStyleSheet(QString("color:%1;background-color:%2;").arg(strDefaultFontColor).arg(strBackgroundColor));
     else
@@ -395,7 +393,6 @@ void TabWidget::set_default()
 // set default color
     QString strMyColor = settings.value("my_color").toString();
     strCurrentColor = strMyColor;
-    inputLineWidget->set_style_sheet(QString("color: "+strCurrentColor));
 
     int iMyColor;
     if (strMyColor == "#000000") iMyColor = 0;
@@ -716,9 +713,6 @@ void TabWidget::refresh_colors()
     replace_color("9", strErrorFontColor);
     replace_color("chan", strChannelFontColor);
 
-    // inputline
-    inputLineWidget->set_style_sheet(QString("color:%1;").arg(strDefaultFontColor));
-
     // this
     if (strBackgroundColor.toLower() != "#ffffff")
         this->setStyleSheet(QString("color:%1;background-color:%2;").arg(strDefaultFontColor).arg(strBackgroundColor));
@@ -932,7 +926,6 @@ void TabWidget::color_clicked(int index)
 
     QSettings settings;
     settings.setValue("my_color", strCurrentColor);
-    inputLineWidget->set_style_sheet(QString("color: "+strCurrentColor));
 }
 
 // emoticons

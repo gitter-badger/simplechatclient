@@ -42,7 +42,6 @@ public:
     void set_font(QFont);
     void set_userslist(QTreeWidget *);
     void set_moderation(bool);
-    void set_style_sheet(QString);
     QString convert_emots(QString);
     QString replace_emots(QString);
     void send_message(bool);

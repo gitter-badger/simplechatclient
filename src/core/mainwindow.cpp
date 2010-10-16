@@ -152,6 +152,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     pOptions = new DlgOptions(this);
     pNotify = new Notify();
 
+    // refresh colors
+    refresh_colors();
+
     // update
     QTimer::singleShot(1000*5, this, SLOT(check_update()));
 
@@ -249,7 +252,7 @@ void MainWindow::create_settings()
     // settings
     QSettings settings;
     settings.clear();
-    settings.setValue("version", "1.0.9.586");
+    settings.setValue("version", "1.0.9.587");
     settings.setValue("debug", "off");
     settings.setValue("logged", "off");
     settings.setValue("busy", "off");
@@ -312,6 +315,15 @@ void MainWindow::check_update()
 // refresh colors
 void MainWindow::refresh_colors()
 {
+    QSettings settings;
+    QString strBackgroundColor = settings.value("background_color").toString();
+    QString strDefaultFontColor = settings.value("default_font_color").toString();
+
+    if (strBackgroundColor.toLower() != "#ffffff")
+        this->setStyleSheet(QString("color:%1;background-color:%2;").arg(strDefaultFontColor).arg(strBackgroundColor));
+    else
+        this->setStyleSheet(QString::null);
+
     for (int i = 0; i < coreServers.count(); i++)
         coreServers.at(i)->refresh_colors();
 }

@@ -101,11 +101,6 @@ void InputLineDockWidget::set_userslist(QTreeWidget *treeWidget)
     inputLine->set_userslist(usersList);
 }
 
-void InputLineDockWidget::set_style_sheet(QString strStyle)
-{
-    inputLine->setStyleSheet(strStyle);
-}
-
 void InputLineDockWidget::set_moderation(bool m)
 {
     if (m == true)
