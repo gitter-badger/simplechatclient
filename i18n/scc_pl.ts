@@ -339,12 +339,24 @@
         <translation>O programie SCC...</translation>
     </message>
     <message>
-        <source>Version</source>
-        <translation>Wersja</translation>
+        <source>&amp;About</source>
+        <translation>&amp;O programie</translation>
     </message>
     <message>
-        <source>2010 Piotr Luczko</source>
-        <translation>2010 Piotr Łuczko</translation>
+        <source>A&amp;uthors</source>
+        <translation>A&amp;utorzy</translation>
+    </message>
+    <message>
+        <source>T&amp;hanks to</source>
+        <translation>Po&amp;dziękowania</translation>
+    </message>
+    <message>
+        <source>Simple chat client</source>
+        <translation>Prosty klient czatowy</translation>
+    </message>
+    <message>
+        <source>Version</source>
+        <translation>Wersja</translation>
     </message>
     <message>
         <source>Home page</source>
@@ -353,6 +365,26 @@
     <message>
         <source>License</source>
         <translation>Licencja</translation>
+    </message>
+    <message>
+        <source>Piotr Luczko</source>
+        <translation>Piotr Łuczko</translation>
+    </message>
+    <message>
+        <source>Project Founder</source>
+        <translation>Założyciel projektu</translation>
+    </message>
+    <message>
+        <source>Lead Developer</source>
+        <translation>Główny programista</translation>
+    </message>
+    <message>
+        <source>Special thanks to:</source>
+        <translation>Specjalne podziękowania dla:</translation>
+    </message>
+    <message>
+        <source>...and for all those who supported the project.</source>
+        <translation>...oraz dla wszystkich które aktywnie wsparły rozwój projektu.</translation>
     </message>
 </context>
 <context>

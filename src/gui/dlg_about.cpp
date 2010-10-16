@@ -29,18 +29,36 @@ DlgAbout::DlgAbout(QWidget *parent) : QDialog(parent)
     move(QApplication::desktop()->screen()->rect().center() - rect().center());
 
     ui.buttonBox->button(QDialogButtonBox::Ok)->setIcon(QIcon(":/images/oxygen/16x16/dialog-ok.png"));
-
-    ui.label_logo->setPixmap(QPixmap(":/images/logo_128.png"));
+    ui.tabWidget->setTabText(0, tr("&About"));
+    ui.tabWidget->setTabText(1, tr("A&uthors"));
+    ui.tabWidget->setTabText(2, tr("T&hanks to"));
 
     QSettings settings;
-    QString strVersion = settings.value("version").toString();
-    QString strDescription = "<p style=\"font-size:18px;font-weight:bold\">Simple Chat Client</p>";
-    strDescription += "<p>"+tr("Version")+" "+strVersion+"</p>";
-    strDescription += "<p>&copy; "+tr("2010 Piotr Luczko")+"</p>";
-    strDescription += "<p><a style=\"text-decoration:none;\" href=\"http://simplechatclien.sourceforge.net/\">"+tr("Home page")+"</a></p>";
-    strDescription += "<p>"+tr("License")+" <a style=\"text-decoration:none;\" href=\"http://www.fsf.org/licensing/licenses/gpl.html\">GPL v3</a></p>";
+    QString version = settings.value("version").toString();
 
-    ui.label_description->setText(strDescription);
+    QString strVersion = "<p style=\"font-size:16px;font-weight:bold\">Simple Chat Client</p>";
+    strVersion += "<p style=\"font-weight:bold\">"+tr("Version")+" "+version+"</p>";
+
+    QString strAbout = "<p>"+tr("Simple chat client")+"</p>";
+    strAbout += "<p>&copy; 2010 by the Simple Chat Client Project</p>";
+    strAbout += "<p><a style=\"text-decoration:none;\" href=\"http://simplechatclien.sf.net/\">"+tr("Home page")+"</a></p>";
+    strAbout += "<p>"+tr("License")+" <a style=\"text-decoration:none;\" href=\"http://www.fsf.org/licensing/licenses/gpl.html\">GPL v3</a></p>";
+
+    QString strAuthors = "<dl>";
+    strAuthors += "<dt><b>"+tr("Piotr Luczko")+"</b></dt>";
+    strAuthors += "<dd><a href=\"mailto:piotr.luczko@gmail.com\">piotr.luczko@gmail.com</a></dd>";
+    strAuthors += "<dd>"+tr("Project Founder")+", "+tr("Lead Developer")+"</dd>";
+    strAuthors += "</dl>";
+
+    QString strThanksTo = "<p style=\"font-size:12px\">"+tr("Special thanks to:")+"</p>";
+    strThanksTo += "<p style=\"font-weight:bold\"> Ovo_</p>";
+    strThanksTo += "<p>"+tr("...and for all those who supported the project.")+"</p>";
+
+    ui.label_logo->setPixmap(QPixmap(":/images/logo_64.png"));
+    ui.label_version->setText(strVersion);
+    ui.label_about->setText(strAbout);
+    ui.label_authors->setText(strAuthors);
+    ui.label_thanks_to->setText(strThanksTo);
 
     QObject::connect(ui.buttonBox, SIGNAL(accepted()), this, SLOT(button_ok()));
 }
