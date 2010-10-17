@@ -156,6 +156,7 @@ void OnetAuth::request_uo(QString param1, QString param2, QString param3)
             // getuo
             strData = QString("api_function=getUoKey&params=a:3:{s:4:\"nick\";s:%1:\"%2\";s:8:\"tempNick\";i:0;s:7:\"version\";s:%3:\"%4\";}").arg(strNickLen).arg(strNick).arg(strVersionLen).arg(strVersion);
             QString strGetUo = network_request(&accessManager, "http://czat.onet.pl/include/ajaxapi.xml.php3", strData);
+
             request_finished(strNickAuth, strGetUo);
         }
         // unregistered nick
@@ -163,6 +164,7 @@ void OnetAuth::request_uo(QString param1, QString param2, QString param3)
         {
             strData = QString("api_function=getUoKey&params=a:3:{s:4:\"nick\";s:%1:\"%2\";s:8:\"tempNick\";i:1;s:7:\"version\";s:%3:\"%4\";}").arg(strNickLen).arg(strNick).arg(strVersionLen).arg(strVersion);
             QString strGetUo = network_request(&accessManager, "http://czat.onet.pl/include/ajaxapi.xml.php3", strData);
+
             request_finished(strNickAuth, strGetUo);
         }
     }

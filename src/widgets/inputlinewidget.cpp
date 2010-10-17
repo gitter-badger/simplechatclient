@@ -56,11 +56,16 @@ QString InputLineWidget::get_word()
         int iLength = 0;
         int iStart = 0;
 
-        iStart = strWord.lastIndexOf(' ', this->cursorPosition()-1)+1;
+        // if first word -1, if next -2
+        if (this->cursorPosition()-1 == 0)
+            iStart = strWord.lastIndexOf(' ', this->cursorPosition()-1)+1;
+        else
+            iStart = strWord.lastIndexOf(' ', this->cursorPosition()-2)+1;
+
         iLength = this->cursorPosition()-iStart;
         strWord = strWord.mid(iStart, iLength);
 
-        strWord.replace(":", "");
+        strWord.replace(" ", "");
     }
     return strWord;
 }
@@ -73,12 +78,16 @@ void InputLineWidget::set_word(QString strSetWord)
         int iLength = 0;
         int iStart = 0;
 
-        iStart = strWord.lastIndexOf(' ', this->cursorPosition()-1)+1;
+        // if first word -1, if next -2
+        if (this->cursorPosition()-1 == 0)
+            iStart = strWord.lastIndexOf(' ', this->cursorPosition()-1)+1;
+        else
+            iStart = strWord.lastIndexOf(' ', this->cursorPosition()-2)+1;
+
         iLength = this->cursorPosition()-iStart;
         strWord = strWord.mid(iStart, iLength);
 
-        if (iStart == 0)
-            strSetWord += ":";
+        strSetWord += " ";
 
         QString strNewLine = this->text();
         strNewLine = strNewLine.replace(iStart, iLength, strSetWord);
