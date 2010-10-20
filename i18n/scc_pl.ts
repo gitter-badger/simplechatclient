@@ -226,6 +226,10 @@
         <translation>O programie SCC...</translation>
     </message>
     <message>
+        <source>Notes</source>
+        <translation>Notatki</translation>
+    </message>
+    <message>
         <source>&amp;File</source>
         <translation>&amp;Plik</translation>
     </message>
@@ -965,6 +969,17 @@
     <message>
         <source>Remove</source>
         <translation>Usuń</translation>
+    </message>
+</context>
+<context>
+    <name>DlgNotes</name>
+    <message>
+        <source>Notes</source>
+        <translation>Notatki</translation>
+    </message>
+    <message>
+        <source>Error: notes: Cannot read notes file!</source>
+        <translation>Error: notes: Nie można odczytać pliku notatek!</translation>
     </message>
 </context>
 <context>

@@ -38,6 +38,7 @@ SOURCES += src/avatars/channel_avatar.cpp \
     src/gui/dlg_ignore_ad.cpp \
     src/gui/dlg_invite.cpp \
     src/gui/dlg_moderation.cpp \
+    src/gui/dlg_notes.cpp \
     src/gui/dlg_options.cpp \
     src/gui/dlg_register_nick.cpp \
     src/gui/dlg_update.cpp \
@@ -84,6 +85,7 @@ HEADERS += src/avatars/channel_avatar.h \
     src/gui/dlg_ignore_ad.h \
     src/gui/dlg_invite.h \
     src/gui/dlg_moderation.h \
+    src/gui/dlg_notes.h \
     src/gui/dlg_options.h \
     src/gui/dlg_register_nick.h \
     src/gui/dlg_update.h \
@@ -117,4 +119,5 @@ FORMS += ui/about.ui \
     ui/options.ui \
     ui/register_nick.ui \
     ui/update.ui \
-    ui/user_profile.ui
+    ui/user_profile.ui \
+    ui/notes.ui

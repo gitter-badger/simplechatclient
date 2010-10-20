@@ -34,6 +34,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     closeAct = new QAction(QIcon(":/images/oxygen/16x16/application-exit.png"), tr("Close"), this);
     optionsAct = new QAction(QIcon(":/images/oxygen/16x16/preferences-system.png"), tr("Options"), this);
     aboutAct = new QAction(QIcon(":/images/logo_64.png"), tr("About SCC ..."), this);
+    notesAct = new QAction(QIcon(":/images/oxygen/16x16/story-editor.png"), tr("Notes"), this);
 
     // onet action
     channel_listAct = new QAction(QIcon(":/images/oxygen/16x16/documentation.png"), tr("Channel list"), this);
@@ -104,6 +105,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     toolBar->addAction(camsAct);
 #endif
 
+    // notes
+    toolBar->addAction(notesAct);
+
     // signals buttons
     QObject::connect(connectAct, SIGNAL(triggered()), this, SLOT(button_connect()));
     QObject::connect(closeAct, SIGNAL(triggered()), this, SLOT(button_close()));
@@ -120,6 +124,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 #ifdef Q_WS_WIN
     QObject::connect(camsAct, SIGNAL(triggered()), this, SLOT(open_cams()));
 #endif
+
+    // notes
+    QObject::connect(notesAct, SIGNAL(triggered()), this, SLOT(open_notes()));
 
     // tray
     trayMenu = new QMenu();
@@ -251,7 +258,7 @@ void MainWindow::create_settings()
     // settings
     QSettings settings;
     settings.clear();
-    settings.setValue("version", "1.0.9.590");
+    settings.setValue("version", "1.0.9.591");
     settings.setValue("debug", "off");
     settings.setValue("logged", "off");
     settings.setValue("busy", "off");
@@ -425,4 +432,9 @@ void MainWindow::open_ignore()
 void MainWindow::open_cams()
 {
     coreServers.at(0)->open_cams();
+}
+
+void MainWindow::open_notes()
+{
+    (new DlgNotes(this))->show();
 }

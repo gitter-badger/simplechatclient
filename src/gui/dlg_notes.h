@@ -18,83 +18,39 @@
  *                                                                          *
  ****************************************************************************/
 
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#ifndef DLG_NOTES_H
+#define DLG_NOTES_H
 
+#include <QDesktopWidget>
 #ifdef Q_WS_X11
 #include <QDebug>
 #endif
-#include <QSystemTrayIcon>
-#include <QtGui/QMainWindow>
-#include "config.h"
-#include "core.h"
-#include "crypt.h"
-#include "dlg_about.h"
-#include "dlg_notes.h"
-#include "dlg_options.h"
-#include "notify.h"
-#include "update.h"
+#include <QDialog>
+#include <QDir>
+#include <QFile>
+#include <QPushButton>
+#include "ui_notes.h"
 
-class MainWindow : public QMainWindow
+class DlgNotes : public QDialog
 {
     Q_OBJECT
 public:
-    MainWindow(QWidget *parent = 0);
-    ~MainWindow();
-    void set_debug(bool);
+    DlgNotes(QWidget *);
 
 private:
-    QList <Core*> coreServers;
-    QList <Update*> uThreadList;
-    DlgOptions *pOptions;
-    Notify *pNotify;
+    Ui::uiNotes ui;
+    QWidget *myparent;
+    QString path;
+    QString strNotesFile;
 
-    QToolBar *toolBar;
-    QMenu *fileMenu;
-    QMenu *viewMenu;
-    QMenu *optionsMenu;
-    QMenu *helpMenu;
-    QAction *connectAct;
-    QAction *closeAct;
-    QAction *optionsAct;
-    QAction *showAct;
-    QAction *aboutAct;
-    QAction *notesAct;
-    QMenu *trayMenu;
-    QSystemTrayIcon *trayIcon;
-
-    // onet actions
-    QMenu *chatMenu;
-    QAction *channel_listAct;
-    QAction *channel_homesAct;
-    QAction *channel_favouritesAct;
-    QAction *friendsAct;
-    QAction *ignoreAct;
-#ifdef Q_WS_WIN
-    QAction *camsAct;
-#endif
-
-    void create_settings();
+    void read_path();
+    void read();
+    void save();
 
 private slots:
-    void check_update();
-    void refresh_colors();
-    void button_connect();
-    void button_close();
-    void open_options();
-    void open_about();
-    void open_notes();
-    void button_show();
-    void tray_icon(QSystemTrayIcon::ActivationReason);
-    void remove_uthread(Update*);
+    void button_ok();
+    void button_cancel();
 
-    // onet dialogs
-    void open_channel_list();
-    void open_channel_homes();
-    void open_channel_favourites();
-    void open_friends();
-    void open_ignore();
-    void open_cams();
 };
 
-#endif // MAINWINDOW_H
+#endif // DLG_NOTES_H
