@@ -149,14 +149,9 @@ QString Config::get_value(QString strKey)
         set_value("disable_avatars", "on");
         return "on";
     }
-    else if (strKey == "disable_logs")
+    else if (strKey == "disable_emots")
     {
-        set_value("disable_logs", "off");
-        return "off";
-    }
-    else if (strKey == "disable_sounds")
-    {
-        set_value("disable_sounds", "off");
+        set_value("disable_emots", "off");
         return "off";
     }
     else if (strKey == "style")
@@ -264,6 +259,11 @@ QString Config::get_value(QString strKey)
         set_value("nicklist_gradient_2_color", "#1b86b7");
         return "#1b86b7";
     }
+    else if (strKey == "disable_logs")
+    {
+        set_value("disable_logs", "off");
+        return "off";
+    }
     else if (strKey == "sound_beep")
     {
         QString path = QCoreApplication::applicationDirPath();
@@ -277,6 +277,11 @@ QString Config::get_value(QString strKey)
         QString strSoundQuery = path+"/3rdparty/sounds/query.wav";
         set_value("sound_query", strSoundQuery);
         return strSoundQuery;
+    }
+    else if (strKey == "disable_sounds")
+    {
+        set_value("disable_sounds", "off");
+        return "off";
     }
 
 #ifdef Q_WS_X11
@@ -342,8 +347,7 @@ void Config::create_new_config()
     add_config_value(&doc, &root, "hide_join_part", "off");
     add_config_value(&doc, &root, "hide_join_part_200", "on");
     add_config_value(&doc, &root, "disable_avatars", "on");
-    add_config_value(&doc, &root, "disable_logs", "off");
-    add_config_value(&doc, &root, "disable_sounds", "off");
+    add_config_value(&doc, &root, "disable_emots", "off");
     add_config_value(&doc, &root, "style", "modern");
     add_config_value(&doc, &root, "my_bold", "off");
     add_config_value(&doc, &root, "my_italic", "off");
@@ -365,8 +369,10 @@ void Config::create_new_config()
     add_config_value(&doc, &root, "nicklist_busy_nick_color", "#a0a0a4");
     add_config_value(&doc, &root, "nicklist_gradient_1_color", "#77d5f7");
     add_config_value(&doc, &root, "nicklist_gradient_2_color", "#1b86b7");
+    add_config_value(&doc, &root, "disable_logs", "off");
     add_config_value(&doc, &root, "sound_beep", strSoundBeep);
     add_config_value(&doc, &root, "sound_query", strSoundQuery);
+    add_config_value(&doc, &root, "disable_sounds", "off");
 
     save();
 }

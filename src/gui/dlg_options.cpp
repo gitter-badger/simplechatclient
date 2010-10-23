@@ -72,6 +72,7 @@ DlgOptions::DlgOptions(QWidget *parent, Notify *param1) : QDialog(parent)
     ui.checkBox_hide_join_part->setText(tr("Hide join/part"));
     ui.checkBox_hide_join_part_200->setText(tr("Hide join/part when number of nicks > 200"));
     ui.checkBox_disable_avatars->setText(tr("Disable avatars"));
+    ui.checkBox_disable_emots->setText(tr("Disable emoticons"));
 
     // page default font
     ui.groupBox_my_font->setTitle(tr("Default font"));
@@ -226,6 +227,7 @@ DlgOptions::DlgOptions(QWidget *parent, Notify *param1) : QDialog(parent)
     QObject::connect(ui.checkBox_hide_join_part, SIGNAL(clicked()), this, SLOT(hide_join_part()));
     QObject::connect(ui.checkBox_hide_join_part_200, SIGNAL(clicked()), this, SLOT(hide_join_part_200()));
     QObject::connect(ui.checkBox_disable_avatars, SIGNAL(clicked()), this, SLOT(disable_avatars()));
+    QObject::connect(ui.checkBox_disable_emots, SIGNAL(clicked()), this, SLOT(disable_emots()));
     QObject::connect(ui.comboBox_my_bold, SIGNAL(currentIndexChanged(int)), this, SLOT(set_my_bold(int)));
     QObject::connect(ui.comboBox_my_italic, SIGNAL(currentIndexChanged(int)), this, SLOT(set_my_italic(int)));
     QObject::connect(ui.comboBox_my_font, SIGNAL(currentIndexChanged(QString)), this, SLOT(set_my_font(QString)));
@@ -485,6 +487,23 @@ void DlgOptions::disable_avatars()
     {
         pConfig->set_value("disable_avatars", "off");
         settings.setValue("disable_avatars", "off");
+    }
+    delete pConfig;
+}
+
+void DlgOptions::disable_emots()
+{
+    QSettings settings;
+    Config *pConfig = new Config();
+    if (ui.checkBox_disable_emots->isChecked() == true)
+    {
+        pConfig->set_value("disable_emots", "on");
+        settings.setValue("disable_emots", "on");
+    }
+    else
+    {
+        pConfig->set_value("disable_emots", "off");
+        settings.setValue("disable_emots", "off");
     }
     delete pConfig;
 }
@@ -1399,13 +1418,16 @@ void DlgOptions::showEvent(QShowEvent *event)
     QString strHideJoinPart = pConfig->get_value("hide_join_part");
     QString strHideJoinPart200 = pConfig->get_value("hide_join_part_200");
     QString strDisableAvatars = pConfig->get_value("disable_avatars");
-    QString strDisableLogs = pConfig->get_value("disable_logs");
-    QString strDisableSounds = pConfig->get_value("disable_sounds");
+    QString strDisableEmots = pConfig->get_value("disable_emots");
 
     QString strMyBold = pConfig->get_value("my_bold");
     QString strMyItalic = pConfig->get_value("my_italic");
     QString strMyFont = pConfig->get_value("my_font");
     QString strMyColor = pConfig->get_value("my_color");
+
+    QString strDisableLogs = pConfig->get_value("disable_logs");
+
+    QString strDisableSounds = pConfig->get_value("disable_sounds");
 
     delete pConfig;
 
@@ -1490,17 +1512,11 @@ void DlgOptions::showEvent(QShowEvent *event)
     else
         ui.checkBox_disable_avatars->setChecked(false);
 
-// disable logs
-    if (strDisableLogs == "on")
-        ui.checkBox_disable_logs->setChecked(true);
+// disable emots
+    if (strDisableEmots == "on")
+        ui.checkBox_disable_emots->setChecked(true);
     else
-        ui.checkBox_disable_logs->setChecked(false);
-
-// disable sounds
-    if (strDisableSounds == "on")
-        ui.checkBox_disable_sounds->setChecked(true);
-    else
-        ui.checkBox_disable_sounds->setChecked(false);
+        ui.checkBox_disable_emots->setChecked(false);
 
 // set my bold
     if (strMyBold == "on")
@@ -1549,6 +1565,18 @@ void DlgOptions::showEvent(QShowEvent *event)
 
 // set nicklist colors
     set_nicklist_colors();
+
+// disable logs
+    if (strDisableLogs == "on")
+        ui.checkBox_disable_logs->setChecked(true);
+    else
+        ui.checkBox_disable_logs->setChecked(false);
+
+// disable sounds
+    if (strDisableSounds == "on")
+        ui.checkBox_disable_sounds->setChecked(true);
+    else
+        ui.checkBox_disable_sounds->setChecked(false);
 
 // disable change nick if connected
     QSettings settings;

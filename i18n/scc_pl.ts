@@ -1085,6 +1085,10 @@
         <translation>Wyłączenie avatarów</translation>
     </message>
     <message>
+        <source>Disable emoticons</source>
+        <translation>Wyłączenie emotikonów</translation>
+    </message>
+    <message>
         <source>Default font</source>
         <translation>Domyślna czcionka</translation>
     </message>

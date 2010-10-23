@@ -226,8 +226,7 @@ void MainWindow::create_settings()
     QString strHideJoinPart = pConfig->get_value("hide_join_part");
     QString strHideJoinPart200 = pConfig->get_value("hide_join_part_200");
     QString strDisableAvatars = pConfig->get_value("disable_avatars");
-    QString strDisableLogs = pConfig->get_value("disable_logs");
-    QString strDisableSounds = pConfig->get_value("disable_sounds");
+    QString strDisableEmots = pConfig->get_value("disable_emots");
     QString strStyle = pConfig->get_value("style");
     QString strBackgroundColor = pConfig->get_value("background_color");
     QString strMyBold = pConfig->get_value("my_bold");
@@ -249,8 +248,10 @@ void MainWindow::create_settings()
     QString strNicklistBusyNickColor = pConfig->get_value("nicklist_busy_nick_color");
     QString strNicklistGradient1Color = pConfig->get_value("nicklist_gradient_1_color");
     QString strNicklistGradient2Color = pConfig->get_value("nicklist_gradient_2_color");
+    QString strDisableLogs = pConfig->get_value("disable_logs");
     QString strSoundBeep = pConfig->get_value("sound_beep");
     QString strSoundQuery = pConfig->get_value("sound_query");
+    QString strDisableSounds = pConfig->get_value("disable_sounds");
     delete pConfig;
 
     // fix config values
@@ -260,7 +261,7 @@ void MainWindow::create_settings()
     // settings
     QSettings settings;
     settings.clear();
-    settings.setValue("version", "1.0.9.596");
+    settings.setValue("version", "1.0.9.597");
     settings.setValue("debug", "off");
     settings.setValue("logged", "off");
     settings.setValue("busy", "off");
@@ -275,8 +276,7 @@ void MainWindow::create_settings()
     settings.setValue("hide_join_part", strHideJoinPart);
     settings.setValue("hide_join_part_200", strHideJoinPart200);
     settings.setValue("disable_avatars", strDisableAvatars);
-    settings.setValue("disable_logs", strDisableLogs);
-    settings.setValue("disable_sounds", strDisableSounds);
+    settings.setValue("disable_emots", strDisableEmots);
     settings.setValue("style", strStyle);
     settings.setValue("my_bold", strMyBold);
     settings.setValue("my_italic", strMyItalic);
@@ -298,8 +298,10 @@ void MainWindow::create_settings()
     settings.setValue("nicklist_busy_nick_color", strNicklistBusyNickColor);
     settings.setValue("nicklist_gradient_1_color", strNicklistGradient1Color);
     settings.setValue("nicklist_gradient_2_color", strNicklistGradient2Color);
+    settings.setValue("disable_logs", strDisableLogs);
     settings.setValue("sound_beep", strSoundBeep);
     settings.setValue("sound_query", strSoundQuery);
+    settings.setValue("disable_sounds", strDisableSounds);
     settings.setValue("uokey", "");
     settings.setValue("uo_nick", "");
     settings.setValue("onet_ubi", "");

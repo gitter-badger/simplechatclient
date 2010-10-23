@@ -317,6 +317,13 @@
          </property>
         </widget>
        </item>
+       <item>
+        <widget class="QCheckBox" name="checkBox_disable_emots">
+         <property name="text">
+          <string>Disable emoticons</string>
+         </property>
+        </widget>
+       </item>
       </layout>
      </widget>
     </widget>

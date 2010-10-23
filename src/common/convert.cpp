@@ -167,7 +167,7 @@ void Convert::convert_text(QString *strData, QString *strLastContent)
                     QString strEmoticonFull2 = strPath+"/3rdparty/emoticons_other/"+strEmoticon+".gif";
                     QFile f1(strEmoticonFull1);
                     QFile f2(strEmoticonFull2);
-                    if ((f1.exists() == true) && (settings.value("hide_formating").toString() == "off"))
+                    if ((f1.exists() == true) && (settings.value("hide_formating").toString() == "off") && (settings.value("disable_emots").toString() == "off"))
                     {
 #ifdef Q_WS_X11
                         strInsert = "<img src=\"file://"+strEmoticonFull1+"\" alt=\""+strEmoticon+"\" />";
@@ -175,7 +175,7 @@ void Convert::convert_text(QString *strData, QString *strLastContent)
                         strInsert = "<img src=\""+strEmoticonFull1+"\" alt=\""+strEmoticon+"\" />";
 #endif
                     }
-                    else if ((f2.exists() == true) && (settings.value("hide_formating").toString() == "off"))
+                    else if ((f2.exists() == true) && (settings.value("hide_formating").toString() == "off") && (settings.value("disable_emots").toString() == "off"))
                     {
 #ifdef Q_WS_X11
                         strInsert = "<img src=\"file://"+strEmoticonFull2+"\" alt=\""+strEmoticon+"\" />";
@@ -183,7 +183,7 @@ void Convert::convert_text(QString *strData, QString *strLastContent)
                         strInsert = "<img src=\""+strEmoticonFull2+"\" alt=\""+strEmoticon+"\" />";
 #endif
                     }
-                    // emoticon not exist or hide formating
+                    // emoticon not exist or hide formating or disabled emots
                     else
                         strInsert = "//"+strEmoticon;
 
