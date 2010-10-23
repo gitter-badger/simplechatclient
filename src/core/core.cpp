@@ -312,12 +312,15 @@ void Core::remove_nicklist(QString strChannel)
 
 bool Core::nicklist_exist(QString strChannel, QString strNick)
 {
-    return mChannelNickListWidget.value(strChannel)->exist(strNick, &mChannelNickStatus);
+    if (mChannelNickListWidget.contains(strChannel) == true)
+        return mChannelNickListWidget.value(strChannel)->exist(strNick, &mChannelNickStatus);
+    else
+        return false;
 }
 
 void Core::add_user(QString strChannel, QString strNick, QString strPrefix, QString strSuffix)
 {
-    if (nicklist_exist(strChannel, strNick) == false)
+    if ((nicklist_exist(strChannel, strNick) == false) && (mChannelNickListWidget.contains(strChannel) == true))
     {
         mChannelNickListWidget.value(strChannel)->add(strNick, strPrefix, strSuffix, &mChannelNickStatus);
 
@@ -333,7 +336,7 @@ void Core::add_user(QString strChannel, QString strNick, QString strPrefix, QStr
 
 void Core::del_user(QString strChannel, QString strNick)
 {
-    if (nicklist_exist(strChannel, strNick) == true)
+    if ((nicklist_exist(strChannel, strNick) == true) && (mChannelNickListWidget.contains(strChannel) == true))
     {
         mChannelNickListWidget.value(strChannel)->remove(strNick, &mChannelNickStatus);
 
@@ -350,8 +353,11 @@ void Core::del_user(QString strChannel, QString strNick)
 void Core::nicklist_refresh(QString strChannel)
 {
     //raw 366: End of /NAMES list.
-    mChannelNickListWidget.value(strChannel)->expandAll();
-    inputLineDockWidget->set_userslist(mChannelNickListWidget.value(strChannel));
+    if (mChannelNickListWidget.contains(strChannel) == true)
+    {
+        mChannelNickListWidget.value(strChannel)->expandAll();
+        inputLineDockWidget->set_userslist(mChannelNickListWidget.value(strChannel));
+    }
 }
 
 void Core::quit_user(QString strNick, QString strDisplay)
