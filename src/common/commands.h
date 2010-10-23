@@ -21,6 +21,8 @@
 #ifndef COMMANDS_H
 #define COMMANDS_H
 
+#include <QIcon>
+#include <QMessageBox>
 #include <QObject>
 #include <QSettings>
 #include <QStringList>

@@ -528,7 +528,23 @@ void DlgChannelSettings::button_ban_add()
     QString strNick = QInputDialog::getText(this, tr("Changing privileges"), tr("Add ban:"), QLineEdit::Normal, QString::null, &ok);
 
     if ((ok == true) && (strNick.isEmpty() == false))
-        pNetwork->send(QString("CS BAN %1 ADD %2").arg(strChannel).arg(strNick));
+    {
+        if (strNick.contains("*") == true)
+        {
+            QMessageBox msgBox;
+            msgBox.setIcon(QMessageBox::Warning);
+            msgBox.setWindowIcon(QIcon(":/images/logo_64.png"));
+            msgBox.setStandardButtons(QMessageBox::Ok | QMessageBox::Cancel);
+            msgBox.setWindowTitle(tr("Warning"));
+            msgBox.setText(tr("This ban will ban large numbers of people. Are you sure you want to use this ban?"));
+            int iResult = msgBox.exec();
+
+            if (iResult == QMessageBox::Ok)
+                pNetwork->send(QString("CS BAN %1 ADD %2").arg(strChannel).arg(strNick));
+        }
+        else
+            pNetwork->send(QString("CS BAN %1 ADD %2").arg(strChannel).arg(strNick));
+    }
 
     clear();
     ui.label_channel_name->setText(strChannel);

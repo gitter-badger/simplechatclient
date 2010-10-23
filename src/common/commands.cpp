@@ -293,6 +293,22 @@ QString Commands::cmd_ban()
     QChar cPlusMinus =  strNick[0];
     strNick = strNick.right(strNick.length()-1);
 
+    if ((strNick.contains("*") == true) && (cPlusMinus == '+'))
+    {
+        QMessageBox msgBox;
+        msgBox.setIcon(QMessageBox::Warning);
+        msgBox.setWindowIcon(QIcon(":/images/logo_64.png"));
+        msgBox.setStandardButtons(QMessageBox::Ok | QMessageBox::Cancel);
+        msgBox.setWindowTitle(tr("Warning"));
+        msgBox.setText(tr("This ban will ban large numbers of people. Are you sure you want to use this ban?"));
+        int iResult = msgBox.exec();
+
+        if (iResult == QMessageBox::Ok)
+            return QString("CS BAN %1 ADD %2").arg(strChannel).arg(strNick);
+        else
+            return QString::null;
+    }
+
     if (cPlusMinus == '+')
         return QString("CS BAN %1 ADD %2").arg(strChannel).arg(strNick);
     else if (cPlusMinus == '-')

@@ -91,6 +91,14 @@
         <source>No reason</source>
         <translation>Zachowuj się! Byle jak ale się zachowuj!</translation>
     </message>
+    <message>
+        <source>Warning</source>
+        <translation>Ostrzeżenie</translation>
+    </message>
+    <message>
+        <source>This ban will ban large numbers of people. Are you sure you want to use this ban?</source>
+        <translation>Ten ban spowoduje zablokowanie dużej ilości osób. Czy na pewno chcesz użyć taki ban?</translation>
+    </message>
 </context>
 <context>
     <name>Config</name>
@@ -815,6 +823,14 @@
     <message>
         <source>Delete invitation:</source>
         <translation>Usuń zaproszenie:</translation>
+    </message>
+    <message>
+        <source>Warning</source>
+        <translation>Ostrzeżenie</translation>
+    </message>
+    <message>
+        <source>This ban will ban large numbers of people. Are you sure you want to use this ban?</source>
+        <translation>Ten ban spowoduje zablokowanie dużej ilości osób. Czy na pewno chcesz użyć taki ban?</translation>
     </message>
 </context>
 <context>
