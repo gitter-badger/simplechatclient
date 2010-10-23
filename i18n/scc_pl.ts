@@ -1090,7 +1090,7 @@
     </message>
     <message>
         <source>Disable sounds</source>
-        <translation>Wyłączenie dzwięków</translation>
+        <translation>Wyłączenie dźwięków</translation>
     </message>
     <message>
         <source>Default font</source>
@@ -1198,7 +1198,7 @@
     </message>
     <message>
         <source>Sounds</source>
-        <translation>Dzwięki</translation>
+        <translation>Dźwięki</translation>
     </message>
     <message>
         <source>Beep</source>

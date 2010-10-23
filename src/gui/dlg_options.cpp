@@ -62,7 +62,6 @@ DlgOptions::DlgOptions(QWidget *parent, Notify *param1) : QDialog(parent)
     ui.checkBox_hide_join_part_200->setText(tr("Hide join/part when number of nicks > 200"));
     ui.checkBox_disable_avatars->setText(tr("Disable avatars"));
     ui.checkBox_disable_logs->setText(tr("Disable logs"));
-    ui.checkBox_disable_sounds->setText(tr("Disable sounds"));
 
 // page default font
     ui.groupBox_my_font->setTitle(tr("Default font"));
@@ -105,6 +104,7 @@ DlgOptions::DlgOptions(QWidget *parent, Notify *param1) : QDialog(parent)
     ui.label_sound_query->setText(tr("Query"));
     ui.pushButton_sound_beep_change->setText(tr("Change"));
     ui.pushButton_sound_query_change->setText(tr("Change"));
+    ui.checkBox_disable_sounds->setText(tr("Disable sounds"));
 
 // page embedded styles
     ui.groupBox_embedded_styles->setTitle(tr("Embedded styles"));
@@ -193,7 +193,6 @@ DlgOptions::DlgOptions(QWidget *parent, Notify *param1) : QDialog(parent)
     QObject::connect(ui.checkBox_hide_join_part_200, SIGNAL(clicked()), this, SLOT(hide_join_part_200()));
     QObject::connect(ui.checkBox_disable_avatars, SIGNAL(clicked()), this, SLOT(disable_avatars()));
     QObject::connect(ui.checkBox_disable_logs, SIGNAL(clicked()), this, SLOT(disable_logs()));
-    QObject::connect(ui.checkBox_disable_sounds, SIGNAL(clicked()), this, SLOT(disable_sounds()));
     QObject::connect(ui.comboBox_my_bold, SIGNAL(currentIndexChanged(int)), this, SLOT(set_my_bold(int)));
     QObject::connect(ui.comboBox_my_italic, SIGNAL(currentIndexChanged(int)), this, SLOT(set_my_italic(int)));
     QObject::connect(ui.comboBox_my_font, SIGNAL(currentIndexChanged(QString)), this, SLOT(set_my_font(QString)));
@@ -221,6 +220,7 @@ DlgOptions::DlgOptions(QWidget *parent, Notify *param1) : QDialog(parent)
     QObject::connect(ui.pushButton_play_query, SIGNAL(clicked()), this, SLOT(try_play_query()));
     QObject::connect(ui.pushButton_sound_beep_change, SIGNAL(clicked()), this, SLOT(set_sound_beep()));
     QObject::connect(ui.pushButton_sound_query_change, SIGNAL(clicked()), this, SLOT(set_sound_query()));
+    QObject::connect(ui.checkBox_disable_sounds, SIGNAL(clicked()), this, SLOT(disable_sounds()));
     QObject::connect(ui.buttonBox, SIGNAL(accepted()), this, SLOT(button_ok()));
     QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(button_cancel()));
 }
@@ -467,23 +467,6 @@ void DlgOptions::disable_logs()
     {
         pConfig->set_value("disable_logs", "off");
         settings.setValue("disable_logs", "off");
-    }
-    delete pConfig;
-}
-
-void DlgOptions::disable_sounds()
-{
-    QSettings settings;
-    Config *pConfig = new Config();
-    if (ui.checkBox_disable_sounds->isChecked() == true)
-    {
-        pConfig->set_value("disable_sounds", "on");
-        settings.setValue("disable_sounds", "on");
-    }
-    else
-    {
-        pConfig->set_value("disable_sounds", "off");
-        settings.setValue("disable_sounds", "off");
     }
     delete pConfig;
 }
@@ -1171,6 +1154,23 @@ void DlgOptions::set_sound_query()
         delete pConfig;
         ui.lineEdit_sound_query->setText(fileName);
     }
+}
+
+void DlgOptions::disable_sounds()
+{
+    QSettings settings;
+    Config *pConfig = new Config();
+    if (ui.checkBox_disable_sounds->isChecked() == true)
+    {
+        pConfig->set_value("disable_sounds", "on");
+        settings.setValue("disable_sounds", "on");
+    }
+    else
+    {
+        pConfig->set_value("disable_sounds", "off");
+        settings.setValue("disable_sounds", "off");
+    }
+    delete pConfig;
 }
 
 void DlgOptions::button_cancel()

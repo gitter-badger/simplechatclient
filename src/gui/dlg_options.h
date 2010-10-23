@@ -67,7 +67,6 @@ private slots:
     void hide_join_part_200();
     void disable_avatars();
     void disable_logs();
-    void disable_sounds();
     void set_my_bold(int);
     void set_my_italic(int);
     void set_my_font(QString);
@@ -95,6 +94,7 @@ private slots:
     void try_play_query();
     void set_sound_beep();
     void set_sound_query();
+    void disable_sounds();
     void button_ok();
     void button_cancel();
 

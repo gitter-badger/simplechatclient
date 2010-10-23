@@ -324,13 +324,6 @@
          </property>
         </widget>
        </item>
-       <item>
-        <widget class="QCheckBox" name="checkBox_disable_sounds">
-         <property name="text">
-          <string>Disable sounds</string>
-         </property>
-        </widget>
-       </item>
       </layout>
      </widget>
     </widget>
@@ -911,10 +904,10 @@
      <widget class="QGroupBox" name="groupBox_sounds">
       <property name="geometry">
        <rect>
-        <x>30</x>
-        <y>30</y>
-        <width>391</width>
-        <height>191</height>
+        <x>0</x>
+        <y>20</y>
+        <width>441</width>
+        <height>171</height>
        </rect>
       </property>
       <property name="title">
@@ -923,10 +916,10 @@
       <widget class="QWidget" name="verticalLayoutWidget">
        <property name="geometry">
         <rect>
-         <x>30</x>
+         <x>60</x>
          <y>30</y>
          <width>321</width>
-         <height>141</height>
+         <height>121</height>
         </rect>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout">
@@ -993,6 +986,13 @@
            </widget>
           </item>
          </layout>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="checkBox_disable_sounds">
+          <property name="text">
+           <string>Disable sounds</string>
+          </property>
+         </widget>
         </item>
        </layout>
       </widget>
