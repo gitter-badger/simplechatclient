@@ -1085,14 +1085,6 @@
         <translation>Wyłączenie avatarów</translation>
     </message>
     <message>
-        <source>Disable logs</source>
-        <translation>Wyłączenie logów</translation>
-    </message>
-    <message>
-        <source>Disable sounds</source>
-        <translation>Wyłączenie dźwięków</translation>
-    </message>
-    <message>
         <source>Default font</source>
         <translation>Domyślna czcionka</translation>
     </message>
@@ -1219,6 +1211,26 @@
     <message>
         <source>All Files (*);;Mp3 Files (*.mp3);;Wave Files (*.wav)</source>
         <translation>Wszystkie pliki (*);;Pliki Mp3 (*.mp3);;Pliki Wave (*.wav)</translation>
+    </message>
+    <message>
+        <source>Disable sounds</source>
+        <translation>Wyłączenie dźwięków</translation>
+    </message>
+    <message>
+        <source>Logs</source>
+        <translation>Logi</translation>
+    </message>
+    <message>
+        <source>Default logs folder:</source>
+        <translation>Domyślny folder logów:</translation>
+    </message>
+    <message>
+        <source>Open folder</source>
+        <translation>Otwórz folder</translation>
+    </message>
+    <message>
+        <source>Disable logs</source>
+        <translation>Wyłączenie logów</translation>
     </message>
 </context>
 <context>

@@ -61,5 +61,7 @@
         <file>images/oxygen/16x16/story-editor.png</file>
         <file>images/oxygen/16x16/media-playback-start.png</file>
         <file>images/oxygen/16x16/document-edit.png</file>
+        <file>images/oxygen/16x16/text-field.png</file>
+        <file>images/oxygen/16x16/text-frame-link.png</file>
     </qresource>
 </RCC>

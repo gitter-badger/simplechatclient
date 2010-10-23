@@ -30,18 +30,30 @@ DlgOptions::DlgOptions(QWidget *parent, Notify *param1) : QDialog(parent)
     myparent = parent;
     pNotify = param1;
 
+    // open folder command
+#ifdef Q_WS_X11
+    if (QFile::exists("/usr/bin/nautilus") == true)
+        strOpenFolderCommand = "nautilus";
+    else if (QFile::exists("/usr/bin/dolphin") == true)
+        strOpenFolderCommand = "dolphin";
+#endif
+#ifdef Q_WS_WIN
+    strOpenFolderCommand = "explorer.exe";
+#endif
+
     ui.pushButton_register_nick->setIcon(QIcon(":/images/oxygen/16x16/list-add-user.png"));
     ui.pushButton_mainwindow_restore_default->setIcon(QIcon(":/images/oxygen/16x16/edit-undo.png"));
     ui.pushButton_nicklist_restore_default->setIcon(QIcon(":/images/oxygen/16x16/edit-undo.png"));
     ui.pushButton_set_embedded_style->setIcon(QIcon(":/images/oxygen/16x16/dialog-ok-apply.png"));
-    ui.buttonBox->button(QDialogButtonBox::Ok)->setIcon(QIcon(":/images/oxygen/16x16/dialog-ok.png"));
-    ui.buttonBox->button(QDialogButtonBox::Cancel)->setIcon(QIcon(":/images/oxygen/16x16/dialog-cancel.png"));
     ui.pushButton_play_beep->setIcon(QIcon(":/images/oxygen/16x16/media-playback-start.png"));
     ui.pushButton_play_query->setIcon(QIcon(":/images/oxygen/16x16/media-playback-start.png"));
     ui.pushButton_sound_beep_change->setIcon(QIcon(":/images/oxygen/16x16/document-edit.png"));
     ui.pushButton_sound_query_change->setIcon(QIcon(":/images/oxygen/16x16/document-edit.png"));
+    ui.pushButton_logs_open_folder->setIcon(QIcon(":/images/oxygen/16x16/text-field.png"));
+    ui.buttonBox->button(QDialogButtonBox::Ok)->setIcon(QIcon(":/images/oxygen/16x16/dialog-ok.png"));
+    ui.buttonBox->button(QDialogButtonBox::Cancel)->setIcon(QIcon(":/images/oxygen/16x16/dialog-cancel.png"));
 
-// page basic
+    // page basic
     ui.radioButton_unregistered_nick->setText(tr("Unregistered nick"));
     ui.radioButton_registered_nick->setText(tr("Registered nick"));
     ui.pushButton_register_nick->setText(tr("Register nick"));
@@ -54,16 +66,15 @@ DlgOptions::DlgOptions(QWidget *parent, Notify *param1) : QDialog(parent)
     ui.radioButton_classic->setText(tr("Classic"));
     ui.groupBox_language->setTitle(tr("Language"));
 
-// page adv
+    // page adv
     ui.checkBox_auto_busy->setText(tr("Busy mode after you log in to chat"));
     ui.checkBox_show_zuo->setText(tr("Show ZUO"));
     ui.checkBox_hide_formating->setText(tr("Disable formatting messages"));
     ui.checkBox_hide_join_part->setText(tr("Hide join/part"));
     ui.checkBox_hide_join_part_200->setText(tr("Hide join/part when number of nicks > 200"));
     ui.checkBox_disable_avatars->setText(tr("Disable avatars"));
-    ui.checkBox_disable_logs->setText(tr("Disable logs"));
 
-// page default font
+    // page default font
     ui.groupBox_my_font->setTitle(tr("Default font"));
     ui.label_my_bold->setText(tr("Bold:"));
     ui.comboBox_my_bold->setItemText(0, tr("Off"));
@@ -74,7 +85,7 @@ DlgOptions::DlgOptions(QWidget *parent, Notify *param1) : QDialog(parent)
     ui.label_my_font->setText(tr("Font:"));
     ui.label_my_color->setText(tr("Color:"));
 
-// page colors
+    // page colors
     ui.tabWidget->setTabText(0,tr("Main window"));
     ui.tabWidget->setTabText(1,tr("Nicklist"));
 
@@ -98,7 +109,11 @@ DlgOptions::DlgOptions(QWidget *parent, Notify *param1) : QDialog(parent)
     ui.label_nicklist_gradient_2_color->setText(tr("Gradient 2:"));
     ui.pushButton_nicklist_restore_default->setText(tr("Restore default"));
 
-// page sounds
+    // page embedded styles
+    ui.groupBox_embedded_styles->setTitle(tr("Embedded styles"));
+    ui.pushButton_set_embedded_style->setText(tr("Set"));
+
+    // page sounds
     ui.groupBox_sounds->setTitle(tr("Sounds"));
     ui.label_sound_beep->setText(tr("Beep"));
     ui.label_sound_query->setText(tr("Query"));
@@ -106,11 +121,13 @@ DlgOptions::DlgOptions(QWidget *parent, Notify *param1) : QDialog(parent)
     ui.pushButton_sound_query_change->setText(tr("Change"));
     ui.checkBox_disable_sounds->setText(tr("Disable sounds"));
 
-// page embedded styles
-    ui.groupBox_embedded_styles->setTitle(tr("Embedded styles"));
-    ui.pushButton_set_embedded_style->setText(tr("Set"));
+    // page logs
+    ui.groupBox_logs->setTitle(tr("Logs"));
+    ui.label_logs->setText(tr("Default logs folder:"));
+    ui.pushButton_logs_open_folder->setText(tr("Open folder"));
+    ui.checkBox_disable_logs->setText(tr("Disable logs"));
 
-// options list
+    // options list
     QTreeWidgetItem *basic = new QTreeWidgetItem(ui.treeWidget_options);
     basic->setIcon(0, QIcon(":/images/oxygen/16x16/view-media-artist.png"));
     basic->setText(0, tr("Basic"));
@@ -141,19 +158,24 @@ DlgOptions::DlgOptions(QWidget *parent, Notify *param1) : QDialog(parent)
     sounds->setText(0, tr("Sounds"));
     sounds->setToolTip(0, tr("Sounds"));
 
+    QTreeWidgetItem *logs = new QTreeWidgetItem(ui.treeWidget_options);
+    logs->setIcon(0, QIcon(":/images/oxygen/16x16/text-frame-link.png"));
+    logs->setText(0, tr("Logs"));
+    logs->setToolTip(0, tr("Logs"));
+
     ui.treeWidget_options->setCurrentItem(ui.treeWidget_options->itemAt(0,0));
 
-// language
+    // language
     QStringList strlLanguage;
     strlLanguage << tr("English") << tr("Polish");
     ui.comboBox_language->addItems(strlLanguage);
 
-// my font
+    // my font
     QStringList strlMyFont;
     strlMyFont << "Arial" << "Times" << "Verdana" << "Tahoma" << "Courier";
     ui.comboBox_my_font->insertItems(0, strlMyFont);
 
-// my color
+    // my color
     ui.comboBox_my_color->setIconSize(QSize(50,10));
 
     QStringList comboBoxMyColors;
@@ -168,16 +190,28 @@ DlgOptions::DlgOptions(QWidget *parent, Notify *param1) : QDialog(parent)
         iComboBoxMyColors++;
     }
 
-// embedded styles
+    // embedded styles
     foreach (QString strStyleName, QStyleFactory::keys())
         ui.comboBox_embedded_styles->addItem(strStyleName);
 
-// sound beep
+    // sound beep
     QSettings settings;
     ui.lineEdit_sound_beep->setText(settings.value("sound_beep").toString());
     ui.lineEdit_sound_query->setText(settings.value("sound_query").toString());
 
-// signals
+    // logs
+    QString strLogsPath;
+#ifdef Q_WS_X11
+    strLogsPath = QDir::homePath()+"/.scc";
+#else
+    strLogsPath = QCoreApplication::applicationDirPath();
+#endif
+    ui.lineEdit_logs_folder->setText(strLogsPath);
+
+    if (strOpenFolderCommand.isEmpty() == true)
+        ui.pushButton_logs_open_folder->setEnabled(false);
+
+    // signals
     QObject::connect(ui.treeWidget_options, SIGNAL(currentItemChanged(QTreeWidgetItem*,QTreeWidgetItem*)), this, SLOT(change_page(QTreeWidgetItem*,QTreeWidgetItem*)));
     QObject::connect(ui.radioButton_unregistered_nick, SIGNAL(clicked()), this, SLOT(hide_pass()));
     QObject::connect(ui.radioButton_registered_nick, SIGNAL(clicked()), this, SLOT(show_pass()));
@@ -192,7 +226,6 @@ DlgOptions::DlgOptions(QWidget *parent, Notify *param1) : QDialog(parent)
     QObject::connect(ui.checkBox_hide_join_part, SIGNAL(clicked()), this, SLOT(hide_join_part()));
     QObject::connect(ui.checkBox_hide_join_part_200, SIGNAL(clicked()), this, SLOT(hide_join_part_200()));
     QObject::connect(ui.checkBox_disable_avatars, SIGNAL(clicked()), this, SLOT(disable_avatars()));
-    QObject::connect(ui.checkBox_disable_logs, SIGNAL(clicked()), this, SLOT(disable_logs()));
     QObject::connect(ui.comboBox_my_bold, SIGNAL(currentIndexChanged(int)), this, SLOT(set_my_bold(int)));
     QObject::connect(ui.comboBox_my_italic, SIGNAL(currentIndexChanged(int)), this, SLOT(set_my_italic(int)));
     QObject::connect(ui.comboBox_my_font, SIGNAL(currentIndexChanged(QString)), this, SLOT(set_my_font(QString)));
@@ -221,6 +254,8 @@ DlgOptions::DlgOptions(QWidget *parent, Notify *param1) : QDialog(parent)
     QObject::connect(ui.pushButton_sound_beep_change, SIGNAL(clicked()), this, SLOT(set_sound_beep()));
     QObject::connect(ui.pushButton_sound_query_change, SIGNAL(clicked()), this, SLOT(set_sound_query()));
     QObject::connect(ui.checkBox_disable_sounds, SIGNAL(clicked()), this, SLOT(disable_sounds()));
+    QObject::connect(ui.pushButton_logs_open_folder, SIGNAL(clicked()), this, SLOT(open_logs_folder()));
+    QObject::connect(ui.checkBox_disable_logs, SIGNAL(clicked()), this, SLOT(disable_logs()));
     QObject::connect(ui.buttonBox, SIGNAL(accepted()), this, SLOT(button_ok()));
     QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(button_cancel()));
 }
@@ -450,23 +485,6 @@ void DlgOptions::disable_avatars()
     {
         pConfig->set_value("disable_avatars", "off");
         settings.setValue("disable_avatars", "off");
-    }
-    delete pConfig;
-}
-
-void DlgOptions::disable_logs()
-{
-    QSettings settings;
-    Config *pConfig = new Config();
-    if (ui.checkBox_disable_logs->isChecked() == true)
-    {
-        pConfig->set_value("disable_logs", "on");
-        settings.setValue("disable_logs", "on");
-    }
-    else
-    {
-        pConfig->set_value("disable_logs", "off");
-        settings.setValue("disable_logs", "off");
     }
     delete pConfig;
 }
@@ -1169,6 +1187,31 @@ void DlgOptions::disable_sounds()
     {
         pConfig->set_value("disable_sounds", "off");
         settings.setValue("disable_sounds", "off");
+    }
+    delete pConfig;
+}
+
+void DlgOptions::open_logs_folder()
+{
+    QString strLogsPath = ui.lineEdit_logs_folder->text();
+
+    QProcess pProcess;
+    pProcess.execute(strOpenFolderCommand+" "+strLogsPath);
+}
+
+void DlgOptions::disable_logs()
+{
+    QSettings settings;
+    Config *pConfig = new Config();
+    if (ui.checkBox_disable_logs->isChecked() == true)
+    {
+        pConfig->set_value("disable_logs", "on");
+        settings.setValue("disable_logs", "on");
+    }
+    else
+    {
+        pConfig->set_value("disable_logs", "off");
+        settings.setValue("disable_logs", "off");
     }
     delete pConfig;
 }

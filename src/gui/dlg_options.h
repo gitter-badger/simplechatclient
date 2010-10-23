@@ -27,6 +27,7 @@
 #include <QDialog>
 #include <QFileDialog>
 #include <QMessageBox>
+#include <QProcess>
 #include <QSettings>
 #include <QShowEvent>
 #include <QStyleFactory>
@@ -46,6 +47,7 @@ private:
     Ui::uiOptions ui;
     QWidget *myparent;
     Notify *pNotify;
+    QString strOpenFolderCommand;
 
     void set_mainwindow_colors();
     void set_nicklist_colors();
@@ -66,7 +68,6 @@ private slots:
     void hide_join_part();
     void hide_join_part_200();
     void disable_avatars();
-    void disable_logs();
     void set_my_bold(int);
     void set_my_italic(int);
     void set_my_font(QString);
@@ -95,6 +96,8 @@ private slots:
     void set_sound_beep();
     void set_sound_query();
     void disable_sounds();
+    void open_logs_folder();
+    void disable_logs();
     void button_ok();
     void button_cancel();
 
