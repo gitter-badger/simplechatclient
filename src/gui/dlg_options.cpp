@@ -36,8 +36,7 @@ DlgOptions::DlgOptions(QWidget *parent, Notify *param1) : QDialog(parent)
         strOpenFolderCommand = "nautilus";
     else if (QFile::exists("/usr/bin/dolphin") == true)
         strOpenFolderCommand = "dolphin";
-#endif
-#ifdef Q_WS_WIN
+#else
     strOpenFolderCommand = "explorer.exe";
 #endif
 
@@ -202,9 +201,10 @@ DlgOptions::DlgOptions(QWidget *parent, Notify *param1) : QDialog(parent)
     // logs
     QString strLogsPath;
 #ifdef Q_WS_X11
-    strLogsPath = QDir::homePath()+"/.scc";
+    strLogsPath = QDir::homePath()+"/.scc/log";
 #else
-    strLogsPath = QCoreApplication::applicationDirPath();
+    strLogsPath = QCoreApplication::applicationDirPath()+"/log";
+    strLogsPath.replace("/", "\\");
 #endif
     ui.lineEdit_logs_folder->setText(strLogsPath);
 
