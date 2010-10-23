@@ -264,6 +264,20 @@ QString Config::get_value(QString strKey)
         set_value("nicklist_gradient_2_color", "#1b86b7");
         return "#1b86b7";
     }
+    else if (strKey == "sound_beep")
+    {
+        QString path = QCoreApplication::applicationDirPath();
+        QString strSoundBeep = path+"/3rdparty/sounds/beep.wav";
+        set_value("sound_beep", strSoundBeep);
+        return strSoundBeep;
+    }
+    else if (strKey == "sound_query")
+    {
+        QString path = QCoreApplication::applicationDirPath();
+        QString strSoundQuery = path+"/3rdparty/sounds/query.wav";
+        set_value("sound_query", strSoundQuery);
+        return strSoundQuery;
+    }
 
 #ifdef Q_WS_X11
     // exception: iv
@@ -315,6 +329,10 @@ void Config::create_new_config()
     QDomElement root = doc.createElement("config");
     doc.appendChild(root);
 
+    QString path = QCoreApplication::applicationDirPath();
+    QString strSoundBeep = path+"/3rdparty/sounds/beep.wav";
+    QString strSoundQuery = path+"/3rdparty/sounds/query.wav";
+
     add_config_value(&doc, &root, "login-nick", "~test");
     add_config_value(&doc, &root, "login-pass", QString::null);
     add_config_value(&doc, &root, "language", "pl");
@@ -347,6 +365,8 @@ void Config::create_new_config()
     add_config_value(&doc, &root, "nicklist_busy_nick_color", "#a0a0a4");
     add_config_value(&doc, &root, "nicklist_gradient_1_color", "#77d5f7");
     add_config_value(&doc, &root, "nicklist_gradient_2_color", "#1b86b7");
+    add_config_value(&doc, &root, "sound_beep", strSoundBeep);
+    add_config_value(&doc, &root, "sound_query", strSoundQuery);
 
     save();
 }

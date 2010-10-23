@@ -25,12 +25,14 @@
 #include <QColorDialog>
 #include <QDesktopWidget>
 #include <QDialog>
+#include <QFileDialog>
 #include <QMessageBox>
 #include <QSettings>
 #include <QShowEvent>
 #include <QStyleFactory>
 #include "config.h"
 #include "crypt.h"
+#include "notify.h"
 #include "dlg_register_nick.h"
 #include "ui_options.h"
 
@@ -38,11 +40,12 @@ class DlgOptions : public QDialog
 {
     Q_OBJECT
 public:
-    DlgOptions(QWidget *);
+    DlgOptions(QWidget *, Notify *);
 
 private:
     Ui::uiOptions ui;
     QWidget *myparent;
+    Notify *pNotify;
 
     void set_mainwindow_colors();
     void set_nicklist_colors();
@@ -88,6 +91,10 @@ private slots:
     void set_nicklist_gradient_2_color();
     void nicklist_restore_default();
     void set_embedded_style();
+    void try_play_beep();
+    void try_play_query();
+    void set_sound_beep();
+    void set_sound_query();
     void button_ok();
     void button_cancel();
 

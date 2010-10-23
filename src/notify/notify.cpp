@@ -22,8 +22,10 @@
 
 Notify::Notify()
 {
-    apath = QCoreApplication::applicationDirPath();
-    music = Phonon::createPlayer(Phonon::NotificationCategory, Phonon::MediaSource(apath+"/3rdparty/sounds/beep.wav"));
+    QSettings settings;
+    QString strSoundBeep = settings.value("sound_beep").toString();
+    music = Phonon::createPlayer(Phonon::NotificationCategory, Phonon::MediaSource(strSoundBeep));
+    strCurrent = "beep";
 }
 
 Notify::~Notify()
@@ -35,10 +37,25 @@ void Notify::play(QString strWhat)
 {
     music->stop();
 
+    QSettings settings;
     if (strWhat == "query")
-        music->setCurrentSource(apath+"/3rdparty/sounds/query.wav");
+    {
+        if (strCurrent != "query")
+        {
+            QString strSoundQuery = settings.value("sound_query").toString();
+            music->setCurrentSource(strSoundQuery);
+            strCurrent = "query";
+        }
+    }
     else
-        music->setCurrentSource(apath+"/3rdparty/sounds/beep.wav");
+    {
+        if (strCurrent != "beep")
+        {
+            QString strSoundBeep = settings.value("sound_beep").toString();
+            music->setCurrentSource(strSoundBeep);
+            strCurrent = "beep";
+        }
+    }
 
     music->play();
 }

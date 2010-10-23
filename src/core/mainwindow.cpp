@@ -156,8 +156,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     create_settings();
 
     // options & notify
-    pOptions = new DlgOptions(this);
     pNotify = new Notify();
+    pOptions = new DlgOptions(this, pNotify);
 
     // refresh colors
     refresh_colors();
@@ -249,6 +249,8 @@ void MainWindow::create_settings()
     QString strNicklistBusyNickColor = pConfig->get_value("nicklist_busy_nick_color");
     QString strNicklistGradient1Color = pConfig->get_value("nicklist_gradient_1_color");
     QString strNicklistGradient2Color = pConfig->get_value("nicklist_gradient_2_color");
+    QString strSoundBeep = pConfig->get_value("sound_beep");
+    QString strSoundQuery = pConfig->get_value("sound_query");
     delete pConfig;
 
     // fix config values
@@ -258,7 +260,7 @@ void MainWindow::create_settings()
     // settings
     QSettings settings;
     settings.clear();
-    settings.setValue("version", "1.0.9.591");
+    settings.setValue("version", "1.0.9.592");
     settings.setValue("debug", "off");
     settings.setValue("logged", "off");
     settings.setValue("busy", "off");
@@ -296,6 +298,8 @@ void MainWindow::create_settings()
     settings.setValue("nicklist_busy_nick_color", strNicklistBusyNickColor);
     settings.setValue("nicklist_gradient_1_color", strNicklistGradient1Color);
     settings.setValue("nicklist_gradient_2_color", strNicklistGradient2Color);
+    settings.setValue("sound_beep", strSoundBeep);
+    settings.setValue("sound_query", strSoundQuery);
     settings.setValue("uokey", "");
     settings.setValue("uo_nick", "");
     settings.setValue("onet_ubi", "");

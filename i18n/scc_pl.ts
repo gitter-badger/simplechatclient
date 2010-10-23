@@ -1196,6 +1196,30 @@
         <source>Set</source>
         <translation>Ustaw</translation>
     </message>
+    <message>
+        <source>Sounds</source>
+        <translation>Dzwięki</translation>
+    </message>
+    <message>
+        <source>Beep</source>
+        <translation>Beep</translation>
+    </message>
+    <message>
+        <source>Query</source>
+        <translation>Zaproszenia</translation>
+    </message>
+    <message>
+        <source>Change</source>
+        <translation>Zmień</translation>
+    </message>
+    <message>
+        <source>Select Audio File</source>
+        <translation>Wybierz plik audio</translation>
+    </message>
+    <message>
+        <source>All Files (*);;Mp3 Files (*.mp3);;Wave Files (*.wav)</source>
+        <translation>Wszystkie pliki (*);;Pliki Mp3 (*.mp3);;Pliki Wave (*.wav)</translation>
+    </message>
 </context>
 <context>
     <name>DlgRegisterNick</name>

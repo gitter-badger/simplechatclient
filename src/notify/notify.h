@@ -25,6 +25,7 @@
 #include <Phonon/MediaObject>
 #include <QCoreApplication>
 #include <QObject>
+#include <QSettings>
 
 class Notify : public QObject
 {
@@ -37,6 +38,7 @@ public:
 private:
     QString apath;
     Phonon::MediaObject *music;
+    QString strCurrent;
 
 };
 

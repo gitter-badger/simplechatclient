@@ -122,7 +122,7 @@ set (scc_HDRS
 
 # debug
 if (UNIX)
-	set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -ggdb")
+	set (CMAKE_CXX_FLAGS "-ggdb ${CMAKE_CXX_FLAGS}")
 endif (UNIX)
 
 if (UNIX AND NOT APPLE)
@@ -138,6 +138,9 @@ set (QT_USE_QTXML TRUE)
 
 # webkit
 set (QT_USE_QTWEBKIT TRUE)
+
+# phonon
+set (QT_USE_PHONON TRUE)
 
 # rest
 include (${QT_USE_FILE})
@@ -167,28 +170,20 @@ if (WIN32)
 		set (QCA2_LIBRARIES ${WIN32_QCA2_DIR}/lib/qca2.lib)
 	endif (MINGW)
 else (WIN32)
-	pkg_search_module (QCA2 REQUIRED qca2)
+# check for qca2
+	find_package (QCA2)
+	if (QCA2_FOUND)
+		set (QCA2_INCLUDE_DIRS ${QT_INCLUDE_DIR}/../QtCrypto)
+		set (QCA2_LIBRARY_DIRS ${QT_LIBRARY_DIR})
+		set (QCA2_LIBRARIES -lqca)
+	endif (QCA2_FOUND)
+# if not working try:
+# pkg_search_module (QCA2 REQUIRED qca2)
 endif (WIN32)
 
 include_directories (${QCA2_INCLUDE_DIRS})
 link_directories (${QCA2_LIBRARY_DIRS})
 add_definitions (${QCA2_CFLAGS_OTHER})
-
-# phonon
-if (WIN32)
-	set (PHONON_INCLUDE_DIRS ${QT_INCLUDE_DIR}/phonon)
-	set (PHONON_LIBRARY_DIRS ${QT_LIBRARY_DIR})
-	if (MINGW)
-		set (PHONON_LIBRARIES -lphonon4)
-	else (MINGW)
-		set (PHONON_LIBRARIES ${QT_LIBRARY_DIR}/phonon4.lib)
-	endif (MINGW)
-else (WIN32)
-	pkg_search_module (PHONON REQUIRED phonon)
-endif (WIN32)
-
-include_directories (${PHONON_INCLUDE_DIRS})
-link_directories (${PHONON_LIBRARY_DIRS})
 
 # resources
 set (scc_QRC ../scc.qrc)
@@ -218,7 +213,7 @@ else (MSVC) # mingw or linux
 	endif (MINGW)
 endif (MSVC)
 
-target_link_libraries (../scc ${QT_LIBRARIES} ${QT_QTNETWORK_LIBRARIES} ${QCA2_LIBRARIES} ${PHONON_LIBRARIES})
+target_link_libraries (../scc ${QT_LIBRARIES} ${QT_QTNETWORK_LIBRARIES} ${QCA2_LIBRARIES})
 
 # i18n
 add_dependencies (../scc i18n)

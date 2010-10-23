@@ -20,7 +20,7 @@
 
 #include "dlg_options.h"
 
-DlgOptions::DlgOptions(QWidget *parent) : QDialog(parent)
+DlgOptions::DlgOptions(QWidget *parent, Notify *param1) : QDialog(parent)
 {
     ui.setupUi(this);
     setAttribute(Qt::WA_DeleteOnClose);
@@ -28,6 +28,7 @@ DlgOptions::DlgOptions(QWidget *parent) : QDialog(parent)
     setWindowTitle(tr("Options"));
 
     myparent = parent;
+    pNotify = param1;
 
     ui.pushButton_register_nick->setIcon(QIcon(":/images/oxygen/16x16/list-add-user.png"));
     ui.pushButton_mainwindow_restore_default->setIcon(QIcon(":/images/oxygen/16x16/edit-undo.png"));
@@ -35,6 +36,10 @@ DlgOptions::DlgOptions(QWidget *parent) : QDialog(parent)
     ui.pushButton_set_embedded_style->setIcon(QIcon(":/images/oxygen/16x16/dialog-ok-apply.png"));
     ui.buttonBox->button(QDialogButtonBox::Ok)->setIcon(QIcon(":/images/oxygen/16x16/dialog-ok.png"));
     ui.buttonBox->button(QDialogButtonBox::Cancel)->setIcon(QIcon(":/images/oxygen/16x16/dialog-cancel.png"));
+    ui.pushButton_play_beep->setIcon(QIcon(":/images/oxygen/16x16/media-playback-start.png"));
+    ui.pushButton_play_query->setIcon(QIcon(":/images/oxygen/16x16/media-playback-start.png"));
+    ui.pushButton_sound_beep_change->setIcon(QIcon(":/images/oxygen/16x16/document-edit.png"));
+    ui.pushButton_sound_query_change->setIcon(QIcon(":/images/oxygen/16x16/document-edit.png"));
 
 // page basic
     ui.radioButton_unregistered_nick->setText(tr("Unregistered nick"));
@@ -94,6 +99,13 @@ DlgOptions::DlgOptions(QWidget *parent) : QDialog(parent)
     ui.label_nicklist_gradient_2_color->setText(tr("Gradient 2:"));
     ui.pushButton_nicklist_restore_default->setText(tr("Restore default"));
 
+// page sounds
+    ui.groupBox_sounds->setTitle(tr("Sounds"));
+    ui.label_sound_beep->setText(tr("Beep"));
+    ui.label_sound_query->setText(tr("Query"));
+    ui.pushButton_sound_beep_change->setText(tr("Change"));
+    ui.pushButton_sound_query_change->setText(tr("Change"));
+
 // page embedded styles
     ui.groupBox_embedded_styles->setTitle(tr("Embedded styles"));
     ui.pushButton_set_embedded_style->setText(tr("Set"));
@@ -123,6 +135,11 @@ DlgOptions::DlgOptions(QWidget *parent) : QDialog(parent)
     embedded_styles->setIcon(0, QIcon(":/images/oxygen/16x16/system-switch-user.png"));
     embedded_styles->setText(0, tr("Embedded styles"));
     embedded_styles->setToolTip(0, tr("Embedded styles"));
+
+    QTreeWidgetItem *sounds = new QTreeWidgetItem(ui.treeWidget_options);
+    sounds->setIcon(0, QIcon(":/images/oxygen/16x16/media-playback-start.png"));
+    sounds->setText(0, tr("Sounds"));
+    sounds->setToolTip(0, tr("Sounds"));
 
     ui.treeWidget_options->setCurrentItem(ui.treeWidget_options->itemAt(0,0));
 
@@ -154,6 +171,11 @@ DlgOptions::DlgOptions(QWidget *parent) : QDialog(parent)
 // embedded styles
     foreach (QString strStyleName, QStyleFactory::keys())
         ui.comboBox_embedded_styles->addItem(strStyleName);
+
+// sound beep
+    QSettings settings;
+    ui.lineEdit_sound_beep->setText(settings.value("sound_beep").toString());
+    ui.lineEdit_sound_query->setText(settings.value("sound_query").toString());
 
 // signals
     QObject::connect(ui.treeWidget_options, SIGNAL(currentItemChanged(QTreeWidgetItem*,QTreeWidgetItem*)), this, SLOT(change_page(QTreeWidgetItem*,QTreeWidgetItem*)));
@@ -195,6 +217,10 @@ DlgOptions::DlgOptions(QWidget *parent) : QDialog(parent)
     QObject::connect(ui.pushButton_nicklist_gradient_2_color, SIGNAL(clicked()), this, SLOT(set_nicklist_gradient_2_color()));
     QObject::connect(ui.pushButton_nicklist_restore_default, SIGNAL(clicked()), this, SLOT(nicklist_restore_default()));
     QObject::connect(ui.pushButton_set_embedded_style, SIGNAL(clicked()), this, SLOT(set_embedded_style()));
+    QObject::connect(ui.pushButton_play_beep, SIGNAL(clicked()), this, SLOT(try_play_beep()));
+    QObject::connect(ui.pushButton_play_query, SIGNAL(clicked()), this, SLOT(try_play_query()));
+    QObject::connect(ui.pushButton_sound_beep_change, SIGNAL(clicked()), this, SLOT(set_sound_beep()));
+    QObject::connect(ui.pushButton_sound_query_change, SIGNAL(clicked()), this, SLOT(set_sound_query()));
     QObject::connect(ui.buttonBox, SIGNAL(accepted()), this, SLOT(button_ok()));
     QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(button_cancel()));
 }
@@ -1091,6 +1117,60 @@ void DlgOptions::set_embedded_style()
 {
     QStyle *style = QStyleFactory::create(ui.comboBox_embedded_styles->currentText());
     QApplication::setStyle(style);
+}
+
+void DlgOptions::try_play_beep()
+{
+    pNotify->play("beep");
+}
+
+void DlgOptions::try_play_query()
+{
+    pNotify->play("query");
+}
+
+void DlgOptions::set_sound_beep()
+{
+    QString selectedFilter;
+    QString fileName = QFileDialog::getOpenFileName(this,
+                                     tr("Select Audio File"),
+                                     ui.lineEdit_sound_beep->text(),
+                                     tr("All Files (*);;Mp3 Files (*.mp3);;Wave Files (*.wav)"),
+                                     &selectedFilter,
+                                     0);
+    if (fileName.isEmpty() == false)
+    {
+        QSettings settings;
+        Config *pConfig = new Config();
+
+        pConfig->set_value("sound_beep", fileName);
+        settings.setValue("sound_beep", fileName);
+
+        delete pConfig;
+        ui.lineEdit_sound_beep->setText(fileName);
+    }
+}
+
+void DlgOptions::set_sound_query()
+{
+    QString selectedFilter;
+    QString fileName = QFileDialog::getOpenFileName(this,
+                                     tr("Select Audio File"),
+                                     ui.lineEdit_sound_query->text(),
+                                     tr("All Files (*);;Mp3 Files (*.mp3);;Wave Files (*.wav)"),
+                                     &selectedFilter,
+                                     0);
+    if (fileName.isEmpty() == false)
+    {
+        QSettings settings;
+        Config *pConfig = new Config();
+
+        pConfig->set_value("sound_query", fileName);
+        settings.setValue("sound_query", fileName);
+
+        delete pConfig;
+        ui.lineEdit_sound_query->setText(fileName);
+    }
 }
 
 void DlgOptions::button_cancel()

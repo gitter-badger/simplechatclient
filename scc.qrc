@@ -59,5 +59,7 @@
         <file>images/oxygen/16x16/system-switch-user.png</file>
         <file>images/oxygen/16x16/edit-undo.png</file>
         <file>images/oxygen/16x16/story-editor.png</file>
+        <file>images/oxygen/16x16/media-playback-start.png</file>
+        <file>images/oxygen/16x16/document-edit.png</file>
     </qresource>
 </RCC>
