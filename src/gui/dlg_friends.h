@@ -47,6 +47,7 @@ private:
     QMap <QString, bool> friends;
 
 private slots:
+    void tab_changed(int);
     void button_add();
     void button_remove();
     void button_whois();

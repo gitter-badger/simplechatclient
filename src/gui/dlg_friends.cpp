@@ -39,6 +39,7 @@ DlgFriends::DlgFriends(QWidget *parent, Network *param1, QMap <QString, QByteArr
     ui.pushButton_remove->setText(tr("Remove"));
     ui.pushButton_whois->setText(tr("Whois"));
 
+    QObject::connect(ui.tabWidget, SIGNAL(currentChanged(int)), this, SLOT(tab_changed(int)));
     QObject::connect(ui.pushButton_add, SIGNAL(clicked()), this, SLOT(button_add()));
     QObject::connect(ui.pushButton_remove, SIGNAL(clicked()), this, SLOT(button_remove()));
     QObject::connect(ui.pushButton_whois, SIGNAL(clicked()), this, SLOT(button_whois()));
@@ -91,6 +92,16 @@ void DlgFriends::refresh()
 void DlgFriends::clear()
 {
     friends.clear();
+}
+
+void DlgFriends::tab_changed(int index)
+{
+    // online - show whois
+    if ((index == 0) && (ui.pushButton_whois->isHidden() == true))
+        ui.pushButton_whois->setHidden(false);
+    // offline - hide whois
+    else if ((index == 1) && (ui.pushButton_whois->isHidden() == false))
+        ui.pushButton_whois->setHidden(true);
 }
 
 void DlgFriends::button_add()
