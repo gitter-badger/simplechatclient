@@ -44,6 +44,8 @@ DlgChannelFavourites::DlgChannelFavourites(QWidget *parent, Network *param1, QMa
 
 void DlgChannelFavourites::add_channel(QString strChannel)
 {
+    if (exist_channel(strChannel) == true) return; // already exist in list
+
     if (mChannelAvatar->contains(strChannel) == true)
     {
         QPixmap pixmap;
@@ -57,6 +59,16 @@ void DlgChannelFavourites::add_channel(QString strChannel)
     }
 }
 
+bool DlgChannelFavourites::exist_channel(QString strChannel)
+{
+    for (int i = 0; i < ui.listWidget_channels->count(); i++)
+    {
+        if (ui.listWidget_channels->item(i)->text() == strChannel)
+            return true;
+    }
+    return false;
+}
+
 void DlgChannelFavourites::clear()
 {
     ui.listWidget_channels->clear();
@@ -65,6 +77,8 @@ void DlgChannelFavourites::clear()
 void DlgChannelFavourites::button_add()
 {
     ui.listWidget_channels->clear();
+
+    clear();
 
     bool ok;
     QString strText = QInputDialog::getText(this, tr("Change your favorite channels"), tr("Enter the name of the new channel to add to favorites:"), QLineEdit::Normal, QString::null, &ok);
@@ -81,7 +95,7 @@ void DlgChannelFavourites::button_remove()
     if (ui.listWidget_channels->selectedItems().count() != 0)
         strSelected = ui.listWidget_channels->selectedItems().at(0)->text();
 
-    ui.listWidget_channels->clear();
+    clear();
 
     bool ok;
     QString strText = QInputDialog::getText(this, tr("Change your favorite channels"), tr("Enter the name of the channel to remove from the favorites:"), QLineEdit::Normal, strSelected, &ok);

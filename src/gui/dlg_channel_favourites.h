@@ -43,6 +43,8 @@ private:
     Network *pNetwork;
     QMap <QString, QByteArray> *mChannelAvatar;
 
+    bool exist_channel(QString);
+
 private slots:
     void button_add();
     void button_remove();
