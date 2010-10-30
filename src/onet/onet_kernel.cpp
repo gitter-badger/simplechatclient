@@ -487,6 +487,10 @@ void OnetKernel::raw_pong()
     if (strServerTime[0] == ':')
         strServerTime = strServerTime.right(strServerTime.length()-1);
 
+    // check correct pong
+    if (strServerTime.contains(QRegExp("(\\d+)\\.(\\d+)")) == false)
+        return; // incorrect
+
     // get time from pong
     QStringList strTimeAll = strServerTime.split(".");
     int iTime1 = strTimeAll.at(0).toInt();

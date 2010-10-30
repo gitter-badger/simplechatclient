@@ -42,24 +42,8 @@ Core::Core(QMainWindow *parent, QString param1, int param2, Notify *param3, QAct
 
     pNetwork = new Network(connectAct, lagAct, strServer, iPort);
 
-    // inputlinewidget
-    bottomDockWidget = new QDockWidget(tr("Typing messages"), myparent);
-    bottomDockWidget->setFocus();
-    bottomDockWidget->setAllowedAreas(Qt::TopDockWidgetArea | Qt::BottomDockWidgetArea); // top and bottom
-    inputLineDockWidget = new InputLineDockWidget(bottomDockWidget, pNetwork);
-    bottomDockWidget->setWidget(inputLineDockWidget);
-    myparent->addDockWidget(Qt::BottomDockWidgetArea, bottomDockWidget);
-    viewMenu->addAction(bottomDockWidget->toggleViewAction());
-
-    // nicklistwidget
-    rightDockWidget = new QDockWidget(tr("Users"), myparent);
-    rightDockWidget->setAllowedAreas(Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea); // left and right
-    nickListDockWidget = new NickListDockWidget(rightDockWidget);
-    rightDockWidget->setWidget(nickListDockWidget);
-    myparent->addDockWidget(Qt::RightDockWidgetArea, rightDockWidget);
-    viewMenu->addAction(rightDockWidget->toggleViewAction());
-
-    pTabC = new TabContainer(myparent, pNetwork, pTabM, pNotify, &mChannelAvatar, camSocket, inputLineDockWidget, &mChannelNickStatus);
+    // classes
+    pTabC = new TabContainer(myparent, pNetwork, pTabM, pNotify, &mChannelAvatar, camSocket, &mChannelNickStatus);
 
     pDlg_channel_settings = new DlgChannelSettings(myparent, pNetwork);
     pDlg_moderation = new DlgModeration(myparent);
@@ -72,10 +56,26 @@ Core::Core(QMainWindow *parent, QString param1, int param2, Notify *param3, QAct
     pOnet_kernel = new OnetKernel(myparent, pNetwork, pTabC, pNotify, &mNickAvatar, &mChannelAvatar, pDlg_channel_settings, pDlg_channel_homes, pDlg_channel_list, pDlg_channel_favourites, pDlg_friends, pDlg_ignore, pDlg_moderation);
     pOnet_auth = new OnetAuth(pTabC);
 
-    pTabC->set_dlg(pDlg_channel_settings, pDlg_moderation);
+    // inputlinewidget
+    bottomDockWidget = new QDockWidget(tr("Typing messages"), myparent);
+    bottomDockWidget->setFocus();
+    bottomDockWidget->setAllowedAreas(Qt::TopDockWidgetArea | Qt::BottomDockWidgetArea); // top and bottom
+    inputLineDockWidget = new InputLineDockWidget(bottomDockWidget, pNetwork, pDlg_channel_settings, pDlg_moderation);
+    bottomDockWidget->setWidget(inputLineDockWidget);
+    myparent->addDockWidget(Qt::BottomDockWidgetArea, bottomDockWidget);
+    viewMenu->addAction(bottomDockWidget->toggleViewAction());
 
-    // hide on status
+    // nicklistwidget
+    rightDockWidget = new QDockWidget(tr("Users"), myparent);
+    rightDockWidget->setAllowedAreas(Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea); // left and right
+    nickListDockWidget = new NickListDockWidget(rightDockWidget);
+    rightDockWidget->setWidget(nickListDockWidget);
+    myparent->addDockWidget(Qt::RightDockWidgetArea, rightDockWidget);
+    viewMenu->addAction(rightDockWidget->toggleViewAction());
+
+    // hide nicklist and toolwidget on status
     rightDockWidget->hide();
+    inputLineDockWidget->hide_toolwidget();
 
     // welcome
     pTabC->show_msg("Status", "%Fi:courier%"+tr("Welcome to the Simple Chat Client")+" %Ihehe%", 0);
@@ -103,10 +103,13 @@ Core::Core(QMainWindow *parent, QString param1, int param2, Notify *param3, QAct
     // signals inputLineWidget
     QObject::connect(inputLineDockWidget, SIGNAL(show_msg(QString,QString,int)), pTabC, SLOT(slot_show_msg(QString,QString,int)));
     QObject::connect(inputLineDockWidget, SIGNAL(display_message(QString,QString,int)), pTabC, SLOT(slot_display_message(QString,QString,int)));
+    QObject::connect(inputLineDockWidget, SIGNAL(change_font_size(QString)), pTabC, SLOT(slot_change_font_size(QString)));
+    QObject::connect(inputLineDockWidget, SIGNAL(clear_content(QString)), pTabC, SLOT(slot_clear_content(QString)));
+    QObject::connect(inputLineDockWidget, SIGNAL(set_scroll(QString,bool)), pTabC, SLOT(slot_set_scroll(QString,bool)));
 
     // signals lag
     QObject::connect(pOnet_kernel, SIGNAL(set_lag(QString)), this, SLOT(set_lag(QString)));
-    QObject::connect(pOnet_kernel, SIGNAL(update_nick(QString)), inputLineDockWidget, SLOT(update_nick(QString)));
+    QObject::connect(pOnet_kernel, SIGNAL(update_nick(QString)), inputLineDockWidget, SLOT(slot_update_nick(QString)));
     QObject::connect(pOnet_kernel, SIGNAL(clear_nicklist(QString)), this, SLOT(clear_nicklist(QString)));
 
     // signals from kernel to nicklist
@@ -128,7 +131,7 @@ Core::Core(QMainWindow *parent, QString param1, int param2, Notify *param3, QAct
     QObject::connect(pNetwork, SIGNAL(request_uo(QString,QString,QString)), pOnet_auth, SLOT(request_uo(QString,QString,QString)));
     QObject::connect(pNetwork, SIGNAL(show_msg_active(QString,int)), pTabC, SLOT(slot_show_msg_active(QString,int)));
     QObject::connect(pNetwork, SIGNAL(show_msg_all(QString,int)), pTabC, SLOT(slot_show_msg_all(QString,int)));
-    QObject::connect(pNetwork, SIGNAL(update_nick(QString)), inputLineDockWidget, SLOT(update_nick(QString)));
+    QObject::connect(pNetwork, SIGNAL(update_nick(QString)), inputLineDockWidget, SLOT(slot_update_nick(QString)));
     QObject::connect(pNetwork, SIGNAL(clear_nicklist(QString)), this, SLOT(clear_nicklist(QString)));
     QObject::connect(pNetwork, SIGNAL(clear_all_nicklist()), this, SLOT(clear_all_nicklist()));
 }
@@ -261,11 +264,23 @@ void Core::current_tab_changed(int index)
     // set tab active
     inputLineDockWidget->set_active(strChannel);
 
-    // nicklist hide/show Status
+    // hide/show Status nicklist and toolwdiget
     if (index == 0)
+    {
         rightDockWidget->hide();
+        inputLineDockWidget->hide_toolwidget();
+    }
     else
+    {
         rightDockWidget->show();
+        inputLineDockWidget->show_toolwidget();
+    }
+
+    // hide/show settings on priv
+    if (strChannel[0] == '^')
+        inputLineDockWidget->hide_channel_settings();
+    else
+        inputLineDockWidget->show_channel_settings();
 
     // nicklist
     if (mChannelNickListWidget.contains(strChannel))
@@ -450,8 +465,8 @@ void Core::change_flag(QString strNick, QString strChannel, QString strNewFlag)
 
     if (strNick == strMe)
     {
-        if (strNewFlag == "+X") pTabC->enable_moderation(strChannel);
-        else if (strNewFlag == "-X") pTabC->disable_moderation(strChannel);
+        if (strNewFlag == "+X") inputLineDockWidget->enable_moderation();
+        else if (strNewFlag == "-X") inputLineDockWidget->disable_moderation();
     }
 }
 

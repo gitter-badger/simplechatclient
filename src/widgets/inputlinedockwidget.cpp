@@ -20,284 +20,78 @@
 
 #include "inputlinedockwidget.h"
 
-InputLineDockWidget::InputLineDockWidget(QWidget *parent, Network *param1) : QWidget(parent)
+InputLineDockWidget::InputLineDockWidget(QWidget *parent, Network *param1, DlgChannelSettings *param2, DlgModeration *param3) : QWidget(parent)
 {
+    setMinimumHeight(60);
+    setMaximumHeight(60);
     myparent = parent;
+
     pNetwork = param1;
-    setMaximumHeight(30);
+    dlgchannel_settings = param2;
+    dlgmoderation = param3;
 
-    nickLabel = new QLabel(myparent);
-    nickLabel->setText(QString("<p style=\"font-weight:bold;\"> %1</p>").arg(tr("(Unregistered)")));
-    nickLabel->show();
+    QVBoxLayout *mainLayout = new QVBoxLayout();
 
-    inputLine = new InputLineWidget(myparent);
-    inputLine->setMinimumWidth(350);
-    inputLine->setMaxLength(300);
-    inputLine->setFont(QFont("Verdana", -1, -1, false));
-    inputLine->show();
+    pInputWidget = new InputWidget(myparent, pNetwork);
+    pInputWidget->show();
 
-    sendButton = new QPushButton(QIcon(":/images/oxygen/16x16/go-next.png"), tr("Send"), myparent);
-    sendButton->setToolTip(tr("Send"));
-    sendButton->setMaximumWidth(85);
-    sendButton->setMaximumHeight(25);
-    sendButton->show();
+    pToolWidget = new ToolWidget(myparent, pNetwork, pInputWidget, dlgchannel_settings, dlgmoderation);
+    pToolWidget->show();
 
-    moderSendButton = new QPushButton(QIcon(":/images/oxygen/16x16/view-pim-tasks.png"), tr("Send to moderators"), myparent);
-    moderSendButton->setToolTip(tr("Send to moderators"));
-    moderSendButton->setMaximumHeight(25);
-    moderSendButton->show();
+    mainLayout->addWidget(pToolWidget);
+    mainLayout->addWidget(pInputWidget);
+    this->setLayout(mainLayout);
 
-    mainLayout = new QHBoxLayout();
-    mainLayout->setMargin(0);
-    mainLayout->setAlignment(Qt::AlignLeft);
-    mainLayout->addWidget(nickLabel);
-    mainLayout->addWidget(inputLine);
-    mainLayout->addWidget(sendButton);
-    mainLayout->addWidget(moderSendButton);
-    setLayout(mainLayout);
-
-    moderSendButton->hide();
-
-    QObject::connect(sendButton, SIGNAL(clicked()), this, SLOT(inputline_return_pressed()));
-    QObject::connect(inputLine, SIGNAL(returnPressed()), this, SLOT(inputline_return_pressed()));
-    QObject::connect(moderSendButton, SIGNAL(clicked()), this, SLOT(moder_button_clicked()));
+    QObject::connect(this, SIGNAL(update_nick(QString)), pInputWidget, SLOT(update_nick(QString)));
+    QObject::connect(pInputWidget, SIGNAL(display_message(QString,QString,int)), this, SLOT(slot_display_message(QString,QString,int)));
+    QObject::connect(pInputWidget, SIGNAL(show_msg(QString,QString,int)), this, SLOT(slot_show_msg(QString,QString,int)));
+    QObject::connect(pToolWidget, SIGNAL(change_font_size(QString)), this, SLOT(slot_change_font_size(QString)));
+    QObject::connect(pToolWidget, SIGNAL(clear_content(QString)), this, SLOT(slot_clear_content(QString)));
+    QObject::connect(pToolWidget, SIGNAL(set_scroll(QString, bool)), this, SLOT(slot_set_scroll(QString, bool)));
 }
 
-void InputLineDockWidget::set_active(QString strName)
+void InputLineDockWidget::enable_moderation()
 {
-    strChannel = strName;
-
-    moderSendButton->hide();
-    mainLayout->removeWidget(moderSendButton);
+    pToolWidget->set_moderation(true);
+    pInputWidget->set_moderation(true);
 }
 
-void InputLineDockWidget::insert_text(QString strText)
+void InputLineDockWidget::disable_moderation()
 {
-    inputLine->insert_text(strText);
+    pToolWidget->set_moderation(false);
+    pInputWidget->set_moderation(false);
 }
 
-void InputLineDockWidget::set_font(QFont font)
+// input widget
+
+void InputLineDockWidget::slot_update_nick(QString strNick)
 {
-    inputLine->setFont(font);
+    emit update_nick(strNick);
 }
 
-void InputLineDockWidget::set_userslist(QTreeWidget *treeWidget)
+void InputLineDockWidget::slot_display_message(QString strChannel, QString strData, int iLevel)
 {
-    QList <QString> usersList;
-
-    for (int i = 0; i < treeWidget->topLevelItemCount(); i++)
-    {
-        QTreeWidgetItem *parent_item = treeWidget->topLevelItem(i);
-        for (int x = 0; x < parent_item->childCount(); x++)
-        {
-            QTreeWidgetItem *child_item = parent_item->child(x);
-            QString strChild = child_item->text(0);
-
-            if (usersList.contains(strChild) == false) // add if not exist
-                usersList.append(strChild);
-        }
-    }
-
-    inputLine->set_userslist(usersList);
+    emit display_message(strChannel, strData, iLevel);
 }
 
-void InputLineDockWidget::set_moderation(bool m)
+void InputLineDockWidget::slot_show_msg(QString strChannel, QString strData, int iLevel)
 {
-    if (m == true)
-    {
-        moderSendButton->show();
-        mainLayout->addWidget(moderSendButton);
-    }
-    else
-    {
-        moderSendButton->hide();
-        mainLayout->removeWidget(moderSendButton);
-    }
+    emit show_msg(strChannel, strData, iLevel);
 }
 
-QString InputLineDockWidget::convert_emots(QString strData)
+// tool widget
+
+void InputLineDockWidget::slot_change_font_size(QString strSize)
 {
-    strData.replace(QRegExp("(http:|https:)//"), "\\1\\\\"); // fix http https
-    strData.replace(QRegExp("//([a-zA-Z0-9_-]+)\\b"), "%I\\1%");
-    strData.replace(QRegExp("(http:|https:)\\\\\\\\"), "\\1//"); // fix http https
-    return strData;
+    emit change_font_size(strSize);
 }
 
-QString InputLineDockWidget::replace_emots(QString strData)
+void InputLineDockWidget::slot_clear_content(QString strChannel)
 {
-    Replace *pReplace = new Replace();
-    strData = pReplace->replace_emots(strData);
-    delete pReplace;
-
-    return strData;
+    emit clear_content(strChannel);
 }
 
-void InputLineDockWidget::send_message(bool bType)
+void InputLineDockWidget::slot_set_scroll(QString strChannel, bool bSetScroll)
 {
-    QString strTextO = inputLine->text();
-    QStringList strTextA = strTextO.split(QRegExp("(\n|\r)"));
-
-    for (int i = 0; i < strTextA.count(); i++)
-    {
-        QString strText = strTextA[i];
-        QString strTextOriginal = strText;
-        strLast_msg = strText;
-
-        QSettings settings;
-        QString strMe = settings.value("nick").toString();
-        QString strCurrentColor = settings.value("my_color").toString();
-        QString strFontFamily = settings.value("my_font").toString();
-        bool bMyBold = settings.value("my_bold").toString() == "on" ? true : false;
-        bool bMyItalic = settings.value("my_italic").toString() == "on" ? true : false;
-
-        if ((strText[0] == '/') && (strText[1] != '/'))
-        {
-            if (strText[0] == '/')
-                strText = strText.right(strText.length()-1);
-            strTextOriginal = strText;
-            QStringList strTextList = strText.split(" ");
-
-            Commands *pCommands = new Commands(strChannel, strText);
-            strText = pCommands->execute();
-            delete pCommands;
-
-            if ((strTextList[0] == "help") || (strTextList[0] == "pomoc"))
-            {
-                QStringList strlHelp = strText.split(";");
-                for (int i = 0; i < strlHelp.count(); i++)
-                    emit show_msg(strChannel, strlHelp.at(i), 7);
-            }
-            else if (strTextList[0] == "me")
-            {
-                if (strTextOriginal.length() > 3)
-                {
-                    QString strTextSend = strText;
-                    QString strTextDisplay = strTextOriginal.right(strTextOriginal.length()-3);
-
-                    QString weight;
-                    QString font = strFontFamily.toLower();
-
-                    if (bMyBold == true) weight += "b";
-                    if (bMyItalic == true) weight += "i";
-
-                    if (strCurrentColor != "#000000")
-                        strTextDisplay = "%C"+strCurrentColor.right(6)+"%"+strTextDisplay;
-                    if ((weight != "") || (font != "verdana"))
-                        strTextDisplay = "%F"+weight+":"+font+"%"+strTextDisplay;
-
-                    strTextSend = convert_emots(strTextSend);
-                    strTextSend = replace_emots(strTextSend);
-                    strTextDisplay = convert_emots(strTextDisplay);
-                    strTextDisplay = replace_emots(strTextDisplay);
-
-                    QDateTime dt = QDateTime::currentDateTime();
-                    QString strDT = dt.toString("[hh:mm:ss] ");
-
-                    QSettings settings;
-                    if (settings.value("disable_logs").toString() == "off")
-                    {
-                        Log *l = new Log();
-                        l->save(strChannel, QString("%1<%2> %3").arg(strDT).arg(strMe).arg(strTextDisplay));
-                        delete l;
-                    }
-
-                    emit display_message(strChannel, QString("%1<%2> %3ACTION %4%5").arg(strDT).arg(strMe).arg(QString(QByteArray("\x01"))).arg(strTextDisplay).arg(QString(QByteArray("\x01"))), 0);
-                    if (pNetwork->is_connected() == true)
-                        pNetwork->send(strTextSend);
-                }
-            }
-            else
-            {
-                if ((pNetwork->is_connected() == true) && (strText.length() > 0))
-                    pNetwork->send(strText);
-            }
-
-            inputLine->clear();
-        }
-        else if (strChannel != "Status")
-        {
-            if ((pNetwork->is_connected() == true) && (strText.length() > 0))
-            {
-                QString weight;
-                QString font = strFontFamily.toLower();
-
-                if (bMyBold == true) weight += "b";
-                if (bMyItalic == true) weight += "i";
-
-                if (strCurrentColor != "#000000")
-                    strText = "%C"+strCurrentColor.right(6)+"%"+strText;
-                if ((weight != "") || (font != "verdana"))
-                    strText = "%F"+weight+":"+font+"%"+strText;
-
-                strText = convert_emots(strText);
-                strText = replace_emots(strText);
-
-                QDateTime dt = QDateTime::currentDateTime();
-                QString strDT = dt.toString("[hh:mm:ss] ");
-
-                if (bType == true)
-                {
-                    QSettings settings;
-                    if (settings.value("disable_logs").toString() == "off")
-                    {
-                        Log *l = new Log();
-                        l->save(strChannel, QString("%1<%2> %3").arg(strDT).arg(strMe).arg(strText));
-                        delete l;
-                    }
-
-                    strText = QString("PRIVMSG %1 :%2").arg(strChannel).arg(strText);
-                    pNetwork->send(strText);
-                    emit display_message(strChannel, QString("%1<%2> %3").arg(strDT).arg(strMe).arg(strText.right(strText.length()-10-strChannel.length())), 0);
-                }
-                else
-                {
-                    QSettings settings;
-                    if (settings.value("disable_logs").toString() == "off")
-                    {
-                        Log *l = new Log();
-                        l->save(strChannel, QString("%1 *<%2> %3").arg(strDT).arg(strMe).arg(strText));
-                        delete l;
-                    }
-
-                    strText = QString("MODERNOTICE %1 :%2").arg(strChannel).arg(strText);
-                    pNetwork->send(strText);
-                    emit display_message(strChannel, QString("%1 *<%2> %3").arg(strDT).arg(strMe).arg(strText.right(strText.length()-14-strChannel.length())), 6);
-                }
-
-                inputLine->clear();
-            }
-        }
-    }
-}
-
-void InputLineDockWidget::update_nick(QString strNick)
-{
-    nickLabel->setText(QString("<p style=\"font-weight:bold;\"> %1</p>").arg(strNick));
-}
-
-void InputLineDockWidget::inputline_return_pressed()
-{
-    send_message(true);
-}
-
-void InputLineDockWidget::moder_button_clicked()
-{
-    send_message(false);
-}
-
-void InputLineDockWidget::keyPressEvent(QKeyEvent *e)
-{
-    if (e->key() == Qt::Key_Up)
-    {
-        inputLine->clear();
-        inputLine->setText(strLast_msg);
-        inputLine->setFocus();
-    }
-    else if (e->key() == Qt::Key_Down)
-    {
-        inputLine->clear();
-        inputLine->setFocus();
-    }
-
-    QWidget::keyPressEvent(e);
+    emit set_scroll(strChannel, bSetScroll);
 }

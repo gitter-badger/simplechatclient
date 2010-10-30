@@ -25,53 +25,52 @@
 #include <QLabel>
 #include <QPushButton>
 #include <QWidget>
-#include "commands.h"
-#include "inputlinewidget.h"
+#include "inputwidget.h"
 #include "log.h"
 #include "network.h"
-#include "replace.h"
+#include "toolwidget.h"
 
 class InputLineDockWidget : public QWidget
 {
     Q_OBJECT
 public:
-    InputLineDockWidget(QWidget *, Network *);
-    void set_active(QString);
-    inline QString get_active() { return strChannel; }
-    void insert_text(QString);
-    void set_font(QFont);
-    void set_userslist(QTreeWidget *);
-    void set_moderation(bool);
-    QString convert_emots(QString);
-    QString replace_emots(QString);
-    void send_message(bool);
+    InputLineDockWidget(QWidget *, Network *, DlgChannelSettings *, DlgModeration *);
+    // input widget
+    void enable_moderation();
+    void disable_moderation();
+    inline void hide_toolwidget() { pToolWidget->hide(); }
+    inline void show_toolwidget() { pToolWidget->show(); }
+    inline void hide_channel_settings() { pToolWidget->set_channel_settings(false); }
+    inline void show_channel_settings() { pToolWidget->set_channel_settings(true); }
+    inline void set_active(QString strChannel) {  pInputWidget->set_active(strChannel); }
+    inline QString get_active() { return pInputWidget->get_active(); }
+    inline void set_userslist(QTreeWidget *treeWidget) { pInputWidget->set_userslist(treeWidget); }
 
 public slots:
-    void update_nick(QString);
+    void slot_update_nick(QString);
+    void slot_display_message(QString, QString, int);
+    void slot_show_msg(QString, QString, int);
+    void slot_change_font_size(QString);
+    void slot_clear_content(QString);
+    void slot_set_scroll(QString, bool);
 
 private:
     // params
     QWidget *myparent;
     Network *pNetwork;
-    // require
-    QHBoxLayout *mainLayout;
-    QLabel *nickLabel;
-    InputLineWidget *inputLine;
-    QPushButton *sendButton;
-    QPushButton *moderSendButton;
-    QString strChannel;
-    QString strLast_msg;
-
-private slots:
-    void inputline_return_pressed();
-    void moder_button_clicked();
-
-protected:
-    virtual void keyPressEvent(QKeyEvent *);
+    DlgChannelSettings *dlgchannel_settings;
+    DlgModeration *dlgmoderation;
+    // other
+    InputWidget *pInputWidget;
+    ToolWidget *pToolWidget;
 
 signals:
-    void show_msg(QString, QString, int);
-    void display_message(QString, QString, int);
+    void update_nick(QString);
+    void display_message(QString,QString,int);
+    void show_msg(QString,QString,int);
+    void change_font_size(QString);
+    void clear_content(QString);
+    void set_scroll(QString, bool);
 
 };
 

@@ -20,7 +20,7 @@
 
 #include "tab_container.h"
 
-TabContainer::TabContainer(QWidget *parent, Network *param1, TabManager *param2, Notify *param3, QMap <QString, QByteArray> *param4, QTcpSocket *param5, InputLineDockWidget *param6, sChannelNickStatus *param7)
+TabContainer::TabContainer(QWidget *parent, Network *param1, TabManager *param2, Notify *param3, QMap <QString, QByteArray> *param4, QTcpSocket *param5, sChannelNickStatus *param6)
 {
     myparent = parent;
     pNetwork = param1;
@@ -28,8 +28,7 @@ TabContainer::TabContainer(QWidget *parent, Network *param1, TabManager *param2,
     pNotify = param3;
     mChannelAvatar = param4;
     camSocket = param5;
-    inputlinewidget = param6;
-    mChannelNickStatus = param7;
+    mChannelNickStatus = param6;
 }
 
 TabContainer::~TabContainer()
@@ -51,12 +50,6 @@ TabContainer::~TabContainer()
         l->save(strChannel, strData);
         delete l;
     }
-}
-
-void TabContainer::set_dlg(DlgChannelSettings *param1, DlgModeration *param2)
-{
-    dlgchannel_settings = param1;
-    dlgmoderation = param2;
 }
 
 int TabContainer::get_index(QString strName)
@@ -93,7 +86,7 @@ void TabContainer::add_tab(QString strChannel)
         emit create_nicklist(strChannel);
 
         // create tab
-        tw.append(new TabWidget(myparent, pNetwork, strChannel, pNotify, mChannelAvatar, dlgchannel_settings, dlgmoderation, camSocket, inputlinewidget, mChannelNickStatus));
+        tw.append(new TabWidget(myparent, pNetwork, strChannel, pNotify, mChannelAvatar, camSocket, mChannelNickStatus));
         pTabM->addTab(tw.at(tw.count()-1), strChannel);
         pTabM->setCurrentIndex(tw.count()-1);
 
@@ -292,20 +285,6 @@ void TabContainer::author_topic(QString strChannel, QString strNick)
         tw[i]->author_topic(strNick);
 }
 
-void TabContainer::enable_moderation(QString strChannel)
-{
-    int i = get_index(strChannel);
-    if (i != -1)
-        tw[i]->enable_moderation();
-}
-
-void TabContainer::disable_moderation(QString strChannel)
-{
-    int i = get_index(strChannel);
-    if (i != -1)
-        tw[i]->disable_moderation();
-}
-
 void TabContainer::update_open_channels()
 {
     QStringList strOpenChannels = get_open_channels();
@@ -346,6 +325,26 @@ void TabContainer::slot_display_message(QString strChannel, QString strData, int
     int i = get_index(strChannel);
     if (i != -1)
         tw[i]->display_message(strData, iLevel);
+}
+
+void TabContainer::slot_change_font_size(QString strSize)
+{
+    for (int i = 0; i < tw.count(); i++)
+        tw[i]->change_font_size(strSize);
+}
+
+void TabContainer::slot_clear_content(QString strChannel)
+{
+    int i = get_index(strChannel);
+    if (i != -1)
+        tw[i]->clear_content();
+}
+
+void TabContainer::slot_set_scroll(QString strChannel, bool bSetScroll)
+{
+    int i = get_index(strChannel);
+    if (i != -1)
+        tw[i]->set_scroll(bSetScroll);
 }
 
 void TabContainer::refresh_colors()

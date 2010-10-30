@@ -18,42 +18,64 @@
  *                                                                          *
  ****************************************************************************/
 
-#ifndef DLG_EMOTICONS_H
-#define DLG_EMOTICONS_H
+#ifndef INPUTWIDGET_H
+#define INPUTWIDGET_H
 
-#include <QDesktopWidget>
-#include <QDialog>
-#include <QDir>
-#include <QPixmap>
-#include <QShowEvent>
-#include "inputwidget.h"
-#include "ui_emoticons.h"
+#include <QComboBox>
+#include <QHBoxLayout>
+#include <QLabel>
+#include <QPushButton>
+#include <QSettings>
+#include <QWidget>
+#include "commands.h"
+#include "inputlinewidget.h"
+#include "log.h"
+#include "network.h"
+#include "replace.h"
+#include "replace.h"
 
-class DlgEmoticons : public QDialog
+class InputWidget : public QWidget
 {
     Q_OBJECT
 public:
-    DlgEmoticons(QWidget *, InputWidget *);
+    InputWidget(QWidget *, Network *);
+    void set_active(QString);
+    inline QString get_active() { return strChannel; }
+    void insert_text(QString);
+    void set_font(QFont);
+    void set_userslist(QTreeWidget *);
+    void set_moderation(bool);
+    QString convert_emots(QString);
+    QString replace_emots(QString);
+    void send_message(bool);
+
+public slots:
+    void update_nick(QString);
 
 private:
-    Ui::uiEmoticons ui;
-    InputWidget *inputwidget;
-    bool bDoneStandard;
-    bool bDoneExtended;
-
-    void get_emoticons_standard();
-    void get_emoticons_extended();
+    // params
+    QWidget *myparent;
+    Network *pNetwork;
+    // inputline widget
+    QHBoxLayout *mainLayout;
+    QLabel *nickLabel;
+    InputLineWidget *inputLine;
+    QPushButton *sendButton;
+    QPushButton *moderSendButton;
+    QString strChannel;
+    QString strLast_msg;
 
 private slots:
-    void current_tab_changed(int);
-    void clicked_standard(QModelIndex);
-    void clicked_extended(QModelIndex);
-    void button_insert();
-    void button_close();
+    void inputline_return_pressed();
+    void moder_button_clicked();
 
 protected:
-    void showEvent(QShowEvent *);
+    virtual void keyPressEvent(QKeyEvent *);
+
+signals:
+    void show_msg(QString, QString, int);
+    void display_message(QString, QString, int);
 
 };
 
-#endif // DLG_EMOTICONS_H
+#endif // INPUTWIDGET_H

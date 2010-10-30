@@ -60,8 +60,8 @@
         <translation>/logout lub /quit lub /q</translation>
     </message>
     <message>
-        <source>/kick [nick] [reason]</source>
-        <translation>/kick [nick] [powód]</translation>
+        <source>/kick [nick] [reason] or /k [nick] [reason]</source>
+        <translation>/kick [nick] [powód] lub /k [nick] [powód]</translation>
     </message>
     <message>
         <source>/ban [[+|-]nick]</source>
@@ -975,7 +975,7 @@
         <translation>Moderacja wiadomości</translation>
     </message>
     <message>
-        <source> Channel: </source>
+        <source>Channel: </source>
         <translation> Kanał: </translation>
     </message>
     <message>
@@ -2190,49 +2190,9 @@
         <source>%1 User(s)</source>
         <translation>Liczba osób: %1</translation>
     </message>
-    <message>
-        <source>Moderation</source>
-        <translation>Moderacja</translation>
-    </message>
-    <message>
-        <source>Bold</source>
-        <translation>Pogrubienie</translation>
-    </message>
-    <message>
-        <source>Italic</source>
-        <translation>Kursywa</translation>
-    </message>
-    <message>
-        <source>Font family</source>
-        <translation>Rodzaj czcionki</translation>
-    </message>
-    <message>
-        <source>Font color</source>
-        <translation>Kolor czcionki</translation>
-    </message>
-    <message>
-        <source>Font size</source>
-        <translation>Wielkość czcionki</translation>
-    </message>
-    <message>
-        <source>Emoticons</source>
-        <translation>Emotikony</translation>
-    </message>
-    <message>
-        <source>Channel settings</source>
-        <translation>Ustawienia kanału</translation>
-    </message>
-    <message>
-        <source>Clear</source>
-        <translation>Wyczyść</translation>
-    </message>
-    <message>
-        <source>Scroll</source>
-        <translation>Wstrzymaj/Wznów przewijanie</translation>
-    </message>
 </context>
 <context>
-    <name>InputLineDockWidget</name>
+    <name>InputWidget</name>
     <message>
         <source>(Unregistered)</source>
         <translation>(Niezalogowany)</translation>
@@ -2537,6 +2497,49 @@
     <message>
         <source>Kick &amp; Ban</source>
         <translation>Banuj i wyrzuć</translation>
+    </message>
+</context>
+<context>
+    <name>ToolWidget</name>
+    <message>
+        <source>Bold</source>
+        <translation>Pogrubienie</translation>
+    </message>
+    <message>
+        <source>Italic</source>
+        <translation>Kursywa</translation>
+    </message>
+    <message>
+        <source>Font family</source>
+        <translation>Rodzaj czcionki</translation>
+    </message>
+    <message>
+        <source>Font color</source>
+        <translation>Kolor czcionki</translation>
+    </message>
+    <message>
+        <source>Font size</source>
+        <translation>Wielkość czcionki</translation>
+    </message>
+    <message>
+        <source>Emoticons</source>
+        <translation>Emotikony</translation>
+    </message>
+    <message>
+        <source>Channel settings</source>
+        <translation>Ustawienia kanału</translation>
+    </message>
+    <message>
+        <source>Moderation</source>
+        <translation>Moderacja</translation>
+    </message>
+    <message>
+        <source>Clear</source>
+        <translation>Wyczyść</translation>
+    </message>
+    <message>
+        <source>Scroll</source>
+        <translation>Wstrzymaj/Wznów przewijanie</translation>
     </message>
 </context>
 </TS>

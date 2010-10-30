@@ -20,25 +20,22 @@
 
 #include "tab_widget.h"
 
-TabWidget::TabWidget(QWidget *parent, Network *param1, QString param2, Notify *param3, QMap <QString, QByteArray> *param4, DlgChannelSettings *param5, DlgModeration *param6, QTcpSocket *param7, InputLineDockWidget *param8, sChannelNickStatus *param9)
+TabWidget::TabWidget(QWidget *parent, Network *param1, QString param2, Notify *param3, QMap <QString, QByteArray> *param4, QTcpSocket *param5, sChannelNickStatus *param6)
 {
     myparent = parent;
     pNetwork = param1;
     strName = param2;
     pNotify = param3;
     mChannelAvatar = param4;
-    dlgchannel_settings = param5;
-    dlgmoderation = param6;
-    camSocket = param7;
-    inputLineWidget = param8;
-    mChannelNickStatus = param9;
+    camSocket = param5;
+    mChannelNickStatus = param6;
 
     QSettings settings;
     QString strDefaultFontColor = addslashes(settings.value("default_font_color").toString());
     QString strBackgroundColor = addslashes(settings.value("background_color").toString());
 
+    bScroll = true;
     bCursorPositionChanged = false;
-    strCurrentColor = "#000000";
     strFontSize = "11px";
     strContentStart = "<html><body style=\"background-color:"+strBackgroundColor+";\">";
     strContentEnd = "</body></html>";
@@ -89,163 +86,8 @@ TabWidget::TabWidget(QWidget *parent, Network *param1, QString param2, Notify *p
     mainWebView->setParent(this);
     mainWebView->show();
 
-    bold = new QPushButton(QIcon(":/images/oxygen/16x16/format-text-bold.png"), "", this);
-    bold->setToolTip(tr("Bold"));
-    bold->setFont(QFont("Times New Roman", -1, 75, false));
-    bold->setFlat(true);
-    bold->setCheckable(true);
-    bold->setMaximumWidth(25);
-    bold->setMaximumHeight(25);
-    bold->show();
-    bMyBold = false;
-
-    italic = new QPushButton(QIcon(":/images/oxygen/16x16/format-text-italic.png"), "", this);
-    italic->setToolTip(tr("Italic"));
-    italic->setFont(QFont("Times New Roman", -1, -1, true));
-    italic->setFlat(true);
-    italic->setCheckable(true);
-    italic->setMaximumWidth(25);
-    italic->setMaximumHeight(25);
-    italic->show();
-    bMyItalic = false;
-
-    arialAct = new QAction("Arial", this);
-    arialAct->setFont(QFont("Arial", -1, -1, false));
-    timesAct = new QAction("Times", this);
-    timesAct->setFont(QFont("Times New Roman", -1, -1, false));
-    verdanaAct = new QAction("Verdana", this);
-    verdanaAct->setFont(QFont("Verdana", -1, -1, false));
-    tahomaAct = new QAction("Tahoma", this);
-    tahomaAct->setFont(QFont("Tahoma", -1, -1, false));
-    courierAct = new QAction("Courier", this);
-    courierAct->setFont(QFont("Courier New", -1, -1, false));
-
-    fontMenu = new QMenu(this);
-    fontMenu->addAction(arialAct);
-    fontMenu->addAction(timesAct);
-    fontMenu->addAction(verdanaAct);
-    fontMenu->addAction(tahomaAct);
-    fontMenu->addAction(courierAct);
-
-    fontfamily = new QPushButton(this);
-    fontfamily->setToolTip(tr("Font family"));
-    fontfamily->setFont(QFont("Verdana", -1, -1, false));
-    fontfamily->setText("Verdana");
-    fontfamily->setMaximumWidth(250);
-    fontfamily->setMaximumHeight(25);
-    fontfamily->setMenu(fontMenu);
-    fontfamily->show();
-
-    color = new QComboBox(this);
-    color->setToolTip(tr("Font color"));
-    color->setIconSize(QSize(20,10));
-
-    QStringList comboBoxColors;
-    comboBoxColors << "#000000" << "#623c00" << "#c86c00" << "#ff6500" << "#ff0000" << "#e40f0f" << "#990033" << "#8800ab" << "#ce00ff" << "#0f2ab1" << "#3030ce" << "#006699" << "#1a866e" << "#008100" << "#959595";
-
-    int iComboBoxColors = 0;
-    foreach (QString strColor, comboBoxColors)
-    {
-        QPixmap pixmap(20,10);
-        pixmap.fill(QColor(strColor));
-        color->insertItem(iComboBoxColors, pixmap, "");
-        iComboBoxColors++;
-    }
-    color->show();
-
-    size8Act = new QAction("8", this);
-    size8Act->setFont(QFont("Verdana", 8, -1, false));
-    size9Act = new QAction("9", this);
-    size9Act->setFont(QFont("Verdana", 9, -1, false));
-    size10Act = new QAction("10", this);
-    size10Act->setFont(QFont("Verdana", 10, -1, false));
-    size11Act = new QAction("11", this);
-    size11Act->setFont(QFont("Verdana", 11, -1, false));
-    size12Act = new QAction("12", this);
-    size12Act->setFont(QFont("Verdana", 12, -1, false));
-    size14Act = new QAction("14", this);
-    size14Act->setFont(QFont("Verdana", 14, -1, false));
-    size16Act = new QAction("16", this);
-    size16Act->setFont(QFont("Verdana", 16, -1, false));
-    size18Act = new QAction("18", this);
-    size18Act->setFont(QFont("Verdana", 18, -1, false));
-    size20Act = new QAction("20", this);
-    size20Act->setFont(QFont("Verdana", 20, -1, false));
-
-    sizeMenu = new QMenu(this);
-    sizeMenu->addAction(size8Act);
-    sizeMenu->addAction(size9Act);
-    sizeMenu->addAction(size10Act);
-    sizeMenu->addAction(size11Act);
-    sizeMenu->addAction(size12Act);
-    sizeMenu->addAction(size14Act);
-    sizeMenu->addAction(size16Act);
-    sizeMenu->addAction(size18Act);
-    sizeMenu->addAction(size20Act);
-
-    size = new QPushButton(QIcon(":/images/oxygen/16x16/format-font-size-more.png"), "", this);
-    size->setToolTip(tr("Font size"));
-    size->setFont(QFont("Times New Roman", -1, -1, false));
-    size->setMaximumHeight(25);
-    size->setMenu(sizeMenu);
-    size->show();
-
-    emoticons = new QPushButton(QIcon(":/images/oxygen/16x16/face-smile.png"), "", this);
-    emoticons->setToolTip(tr("Emoticons"));
-    emoticons->setMaximumWidth(25);
-    emoticons->setMaximumHeight(25);
-    emoticons->show();
-
-    separator = new QFrame(this);
-    separator->setFrameShape(QFrame::VLine);
-    separator->setFrameShadow(QFrame::Sunken);
-    separator->show();
-
-    channel_settings = new QPushButton(QIcon(":/images/oxygen/16x16/configure.png"), "", this);
-    channel_settings->setToolTip(tr("Channel settings"));
-    channel_settings->show();
-
-    moderation = new QPushButton(QIcon(":/images/oxygen/16x16/go-last.png"), tr("Moderation"), this);
-    moderation->setToolTip(tr("Moderation"));
-    moderation->show();
-
-    clear = new QPushButton(QIcon(":/images/oxygen/16x16/draw-eraser.png"), "", this);
-    clear->setToolTip(tr("Clear"));
-    clear->setMaximumWidth(25);
-    clear->setMaximumHeight(25);
-    clear->show();
-
-    scroll = new QPushButton(QIcon(":/images/oxygen/16x16/arrow-down.png"), "", this);
-    scroll->setToolTip(tr("Scroll"));
-    scroll->setMaximumWidth(25);
-    scroll->setMaximumHeight(25);
-    scroll->setFlat(true);
-    scroll->setCheckable(true);
-    scroll->show();
-    bScroll = true;
-
-    toolWidget = new QWidget(this);
-    toolLayout = new QHBoxLayout();
-    toolLayout->setMargin(0);
-    toolLayout->setAlignment(Qt::AlignLeft);
-    toolLayout->addWidget(bold);
-    toolLayout->addWidget(italic);
-    toolLayout->addWidget(fontfamily);
-    toolLayout->addWidget(color);
-    toolLayout->addWidget(size);
-    toolLayout->addWidget(emoticons);
-    toolLayout->addWidget(separator);
-    toolLayout->addWidget(channel_settings);
-    toolLayout->addWidget(moderation);
-    toolLayout->addWidget(clear);
-    toolLayout->addWidget(scroll);
-    toolWidget->setLayout(toolLayout);
-
     if (strName[0] == '#')
     {
-        moderation->hide();
-        toolLayout->removeWidget(moderation);
-
         if (settings.value("style") == "classic")
         {
             topicDetails->hide();
@@ -254,7 +96,6 @@ TabWidget::TabWidget(QWidget *parent, Network *param1, QString param2, Notify *p
 
         mainLayout->addWidget(topWidget);
         mainLayout->addWidget(mainWebView);
-        mainLayout->addWidget(toolWidget);
         mainWidget->setLayout(mainLayout);
     }
     else if (strName[0] == '^')
@@ -266,11 +107,7 @@ TabWidget::TabWidget(QWidget *parent, Network *param1, QString param2, Notify *p
         topLeftWidget->hide();
         topWidget->hide();
 
-        moderation->hide();
-        toolLayout->removeWidget(moderation);
-
         mainLayout->addWidget(mainWebView);
-        mainLayout->addWidget(toolWidget);
         mainWidget->setLayout(mainLayout);
     }
     else
@@ -282,64 +119,20 @@ TabWidget::TabWidget(QWidget *parent, Network *param1, QString param2, Notify *p
         topLeftWidget->hide();
         topWidget->hide();
 
-        bold->hide();
-        italic->hide();
-        fontfamily->hide();
-        color->hide();
-        size->hide();
-        emoticons->hide();
-        separator->hide();
-        channel_settings->hide();
-        moderation->hide();
-        clear->hide();
-        scroll->hide();
-        toolWidget->hide();
-
         mainLayout->addWidget(mainWebView);
         mainWidget->setLayout(mainLayout);
     }
 
-    if (strName == "Status") channel_settings->hide();
-
     mainLayout->setMargin(0);
     this->setLayout(mainLayout);
 
-// set default font
-    set_default();
-
-// set colors
+    // set colors
     if (strBackgroundColor.toLower() != "#ffffff")
         this->setStyleSheet(QString("color:%1;background-color:%2;").arg(strDefaultFontColor).arg(strBackgroundColor));
     else
         this->setStyleSheet(QString::null);
 
-// signals
-    QObject::connect(bold, SIGNAL(clicked()), this, SLOT(bold_clicked()));
-    QObject::connect(italic, SIGNAL(clicked()), this, SLOT(italic_clicked()));
-
-    QObject::connect(arialAct, SIGNAL(triggered()), this, SLOT(arial_triggered()));
-    QObject::connect(timesAct, SIGNAL(triggered()), this, SLOT(times_triggered()));
-    QObject::connect(verdanaAct, SIGNAL(triggered()), this, SLOT(verdana_triggered()));
-    QObject::connect(tahomaAct, SIGNAL(triggered()), this, SLOT(tahoma_triggered()));
-    QObject::connect(courierAct, SIGNAL(triggered()), this, SLOT(courier_triggered()));
-
-    QObject::connect(size8Act, SIGNAL(triggered()), this, SLOT(size8_triggered()));
-    QObject::connect(size9Act, SIGNAL(triggered()), this, SLOT(size9_triggered()));
-    QObject::connect(size10Act, SIGNAL(triggered()), this, SLOT(size10_triggered()));
-    QObject::connect(size11Act, SIGNAL(triggered()), this, SLOT(size11_triggered()));
-    QObject::connect(size12Act, SIGNAL(triggered()), this, SLOT(size12_triggered()));
-    QObject::connect(size14Act, SIGNAL(triggered()), this, SLOT(size14_triggered()));
-    QObject::connect(size16Act, SIGNAL(triggered()), this, SLOT(size16_triggered()));
-    QObject::connect(size18Act, SIGNAL(triggered()), this, SLOT(size18_triggered()));
-    QObject::connect(size20Act, SIGNAL(triggered()), this, SLOT(size20_triggered()));
-
-    QObject::connect(color, SIGNAL(currentIndexChanged(int)), this, SLOT(color_clicked(int)));
-    QObject::connect(emoticons, SIGNAL(clicked()), this, SLOT(emoticons_clicked()));
-    QObject::connect(channel_settings, SIGNAL(clicked()), this, SLOT(channel_settings_clicked()));
-    QObject::connect(moderation, SIGNAL(clicked()), this, SLOT(moderation_clicked()));
-    QObject::connect(clear, SIGNAL(clicked()), this, SLOT(clear_clicked()));
-    QObject::connect(scroll, SIGNAL(clicked()), this, SLOT(scroll_clicked()));
-
+    // signals
     QObject::connect(mainWebView, SIGNAL(loadFinished(bool)), this, SLOT(change_scroll_position()));
 }
 
@@ -347,78 +140,6 @@ TabWidget::~TabWidget()
 {
     strContent.clear();
     mainWebView->setHtml(strContent,QUrl(""));
-}
-
-void TabWidget::set_default()
-{
-    QSettings settings;
-
-// set default bold
-    if (settings.value("my_bold").toString() == "on")
-    {
-        bold->setChecked(true);
-        bMyBold = true;
-        strMyFontWeight = "bold";
-    }
-    else
-    {
-        bold->setChecked(false);
-        bMyBold = false;
-        strMyFontWeight = "";
-    }
-
-// set default italic
-    if (settings.value("my_italic").toString() == "on")
-    {
-        italic->setChecked(true);
-        bMyItalic = true;
-        strMyFontStyle = "italic";
-    }
-    else
-    {
-        italic->setChecked(false);
-        bMyItalic = false;
-        strMyFontStyle = "";
-    }
-
-// refresh bold italic
-    int iWeight = (bMyBold == true ? 75 : 50);
-    inputLineWidget->set_font(QFont(strMyFontFamily, -1, iWeight, bMyItalic));
-
-// set default font
-    QString strMyFont = settings.value("my_font").toString();
-    fontfamily->setText(strMyFont);
-    strMyFontFamily = strMyFont;
-
-// set default color
-    QString strMyColor = settings.value("my_color").toString();
-    strCurrentColor = strMyColor;
-
-    int iMyColor;
-    if (strMyColor == "#000000") iMyColor = 0;
-    else if (strMyColor == "#623c00") iMyColor = 1;
-    else if (strMyColor == "#c86c00") iMyColor = 2;
-    else if (strMyColor == "#ff6500") iMyColor = 3;
-    else if (strMyColor == "#ff0000") iMyColor = 4;
-    else if (strMyColor == "#e40f0f") iMyColor = 5;
-    else if (strMyColor == "#990033") iMyColor = 6;
-    else if (strMyColor == "#8800ab") iMyColor = 7;
-    else if (strMyColor == "#ce00ff") iMyColor = 8;
-    else if (strMyColor == "#0f2ab1") iMyColor = 9;
-    else if (strMyColor == "#3030ce") iMyColor = 10;
-    else if (strMyColor == "#006699") iMyColor = 11;
-    else if (strMyColor == "#1a866e") iMyColor = 12;
-    else if (strMyColor == "#008100") iMyColor = 13;
-    else if (strMyColor == "#959595") iMyColor = 14;
-    else
-        iMyColor = 0;
-
-    color->setCurrentIndex(iMyColor);
-
-// set default scroll
-    scroll->setChecked(true);
-    bScroll = true;
-    scroll->setIcon(QIcon(":/images/oxygen/16x16/arrow-down.png"));
 }
 
 QString TabWidget::addslashes(QString strData)
@@ -641,20 +362,6 @@ void TabWidget::set_topic(QString strTopic)
         topic->setToolTip(topicDetails->text());
 }
 
-void TabWidget::enable_moderation()
-{
-    moderation->show();
-    toolLayout->addWidget(moderation);
-    inputLineWidget->set_moderation(true);
-}
-
-void TabWidget::disable_moderation()
-{
-    moderation->hide();
-    toolLayout->removeWidget(moderation);
-    inputLineWidget->set_moderation(false);
-}
-
 void TabWidget::author_topic(QString strAuthor)
 {
     topicDetails->setText(QString(tr("Topic set by %1")).arg(strAuthor));
@@ -669,11 +376,6 @@ void TabWidget::replace_color(QString level, QString color)
     strContent.replace(QRegExp(QString("id=\"level_%1\" style=\"color:#(......);").arg(level)), QString("id=\"level_%1\" style=\"color:%2;").arg(level).arg(color));
 }
 
-void TabWidget::set_open_channels(QStringList strOpenChannels)
-{
-    mainWebView->set_open_channels(strOpenChannels);
-}
-
 void TabWidget::update_channel_avatar()
 {
     if (mChannelAvatar->contains(strName) == true)
@@ -682,6 +384,30 @@ void TabWidget::update_channel_avatar()
         pixmap.loadFromData(mChannelAvatar->value(strName));
         logo->setPixmap(pixmap);
     }
+}
+
+void TabWidget::set_open_channels(QStringList strOpenChannels)
+{
+    mainWebView->set_open_channels(strOpenChannels);
+}
+
+void TabWidget::change_font_size(QString strSize)
+{
+    strContent = strContent.replace("font-size:"+strFontSize, "font-size:"+strSize);
+    iScrollBarValue = mainWebView->page()->mainFrame()->scrollBarValue(Qt::Vertical);
+    mainWebView->setHtml(strContentStart+strContent+strContentEnd,QUrl(""));
+    strFontSize = strSize;
+}
+
+void TabWidget::clear_content()
+{
+    strContent.clear();
+    mainWebView->setHtml(strContentStart+strContent+strContentEnd,QUrl(""));
+}
+
+void TabWidget::set_scroll(bool bSetScroll)
+{
+    bScroll = bSetScroll;
 }
 
 void TabWidget::refresh_colors()
@@ -728,261 +454,6 @@ void TabWidget::refresh_colors()
     QString strTopicContentStart = "<html><body style=\"margin:0;padding:0;font-style:normal;color:"+strDefaultFontColor+";text-align:left;font-family:Verdana;font-weight:normal;font-size:12px;background-color:"+strBackgroundColor+";\">";
     QString strTopicContentEnd = "</body></html>";
     topic->setHtml(strTopicContentStart+strTopicContent+strTopicContentEnd,QUrl(""));
-}
-
-// actions
-
-void TabWidget::bold_clicked()
-{
-    QSettings settings;
-    if (bMyBold == true)
-    {
-        bold->setChecked(false);
-        bMyBold = false;
-        strMyFontWeight = "";
-        settings.setValue("my_bold", "off");
-    }
-    else
-    {
-        bold->setChecked(true);
-        bMyBold = true;
-        strMyFontWeight = "bold";
-        settings.setValue("my_bold", "on");
-    }
-
-    int iWeight = (bMyBold == true ? 75 : 50);
-    inputLineWidget->set_font(QFont(strMyFontFamily, -1, iWeight, bMyItalic));
-}
-
-void TabWidget::italic_clicked()
-{
-    QSettings settings;
-    if (bMyItalic == true)
-    {
-        italic->setChecked(false);
-        bMyItalic = false;
-        strMyFontStyle = "";
-        settings.setValue("my_italic", "off");
-    }
-    else
-    {
-        italic->setChecked(true);
-        bMyItalic = true;
-        strMyFontStyle = "italic";
-        settings.setValue("my_italic", "on");
-    }
-
-    int iWeight = (bMyBold == true ? 75 : 50);
-    inputLineWidget->set_font(QFont(strMyFontFamily, -1, iWeight, bMyItalic));
-}
-
-void TabWidget::arial_triggered()
-{
-    fontfamily->setText("Arial");
-    strMyFontFamily = "Arial";
-    QSettings settings;
-    settings.setValue("my_font", strMyFontFamily);
-
-    int iWeight = (bMyBold == true ? 75 : 50);
-    inputLineWidget->set_font(QFont(strMyFontFamily, -1, iWeight, bMyItalic));
-}
-
-void TabWidget::times_triggered()
-{
-    fontfamily->setText("Times");
-    strMyFontFamily = "Times";
-    QSettings settings;
-    settings.setValue("my_font", strMyFontFamily);
-
-    int iWeight = (bMyBold == true ? 75 : 50);
-    inputLineWidget->set_font(QFont(strMyFontFamily, -1, iWeight, bMyItalic));
-}
-
-void TabWidget::verdana_triggered()
-{
-    fontfamily->setText("Verdana");
-    strMyFontFamily = "Verdana";
-    QSettings settings;
-    settings.setValue("my_font", strMyFontFamily);
-
-    int iWeight = (bMyBold == true ? 75 : 50);
-    inputLineWidget->set_font(QFont(strMyFontFamily, -1, iWeight, bMyItalic));
-}
-
-void TabWidget::tahoma_triggered()
-{
-    fontfamily->setText("Tahoma");
-    strMyFontFamily = "Tahoma";
-    QSettings settings;
-    settings.setValue("my_font", strMyFontFamily);
-
-    int iWeight = (bMyBold == true ? 75 : 50);
-    inputLineWidget->set_font(QFont(strMyFontFamily, -1, iWeight, bMyItalic));
-}
-
-void TabWidget::courier_triggered()
-{
-    fontfamily->setText("Courier");
-    strMyFontFamily = "Courier";
-    QSettings settings;
-    settings.setValue("my_font", strMyFontFamily);
-
-    int iWeight = (bMyBold == true ? 75 : 50);
-    inputLineWidget->set_font(QFont(strMyFontFamily, -1, iWeight, bMyItalic));
-}
-
-void TabWidget::size8_triggered()
-{
-    strContent = strContent.replace("font-size:"+strFontSize, "font-size:8px");
-    iScrollBarValue = mainWebView->page()->mainFrame()->scrollBarValue(Qt::Vertical);
-    mainWebView->setHtml(strContentStart+strContent+strContentEnd,QUrl(""));
-    strFontSize = "8px";
-}
-
-void TabWidget::size9_triggered()
-{
-    strContent = strContent.replace("font-size:"+strFontSize, "font-size:9px");
-    iScrollBarValue = mainWebView->page()->mainFrame()->scrollBarValue(Qt::Vertical);
-    mainWebView->setHtml(strContentStart+strContent+strContentEnd,QUrl(""));
-    strFontSize = "9px";
-}
-
-void TabWidget::size10_triggered()
-{
-    strContent = strContent.replace("font-size:"+strFontSize, "font-size:10px");
-    iScrollBarValue = mainWebView->page()->mainFrame()->scrollBarValue(Qt::Vertical);
-    mainWebView->setHtml(strContentStart+strContent+strContentEnd,QUrl(""));
-    strFontSize = "10px";
-}
-
-void TabWidget::size11_triggered()
-{
-    strContent = strContent.replace("font-size:"+strFontSize, "font-size:11px");
-    iScrollBarValue = mainWebView->page()->mainFrame()->scrollBarValue(Qt::Vertical);
-    mainWebView->setHtml(strContentStart+strContent+strContentEnd,QUrl(""));
-    strFontSize = "11px";
-}
-
-void TabWidget::size12_triggered()
-{
-    strContent = strContent.replace("font-size:"+strFontSize, "font-size:12px");
-    iScrollBarValue = mainWebView->page()->mainFrame()->scrollBarValue(Qt::Vertical);
-    mainWebView->setHtml(strContentStart+strContent+strContentEnd,QUrl(""));
-    strFontSize = "12px";
-}
-
-void TabWidget::size14_triggered()
-{
-    strContent = strContent.replace("font-size:"+strFontSize, "font-size:14px");
-    iScrollBarValue = mainWebView->page()->mainFrame()->scrollBarValue(Qt::Vertical);
-    mainWebView->setHtml(strContentStart+strContent+strContentEnd,QUrl(""));
-    strFontSize = "14px";
-}
-
-void TabWidget::size16_triggered()
-{
-    strContent = strContent.replace("font-size:"+strFontSize, "font-size:16px");
-    iScrollBarValue = mainWebView->page()->mainFrame()->scrollBarValue(Qt::Vertical);
-    mainWebView->setHtml(strContentStart+strContent+strContentEnd,QUrl(""));
-    strFontSize = "16px";
-}
-
-void TabWidget::size18_triggered()
-{
-    strContent = strContent.replace("font-size:"+strFontSize, "font-size:18px");
-    iScrollBarValue = mainWebView->page()->mainFrame()->scrollBarValue(Qt::Vertical);
-    mainWebView->setHtml(strContentStart+strContent+strContentEnd,QUrl(""));
-    strFontSize = "18px";
-}
-
-void TabWidget::size20_triggered()
-{
-    strContent = strContent.replace("font-size:"+strFontSize, "font-size:20px");
-    iScrollBarValue = mainWebView->page()->mainFrame()->scrollBarValue(Qt::Vertical);
-    mainWebView->setHtml(strContentStart+strContent+strContentEnd,QUrl(""));
-    strFontSize = "20px";
-}
-
-// color
-
-void TabWidget::color_clicked(int index)
-{
-    if (index == 0) strCurrentColor = "#000000";
-    else if (index == 1) strCurrentColor = "#623c00";
-    else if (index == 2) strCurrentColor = "#c86c00";
-    else if (index == 3) strCurrentColor = "#ff6500";
-    else if (index == 4) strCurrentColor = "#ff0000";
-    else if (index == 5) strCurrentColor = "#e40f0f";
-    else if (index == 6) strCurrentColor = "#990033";
-    else if (index == 7) strCurrentColor = "#8800ab";
-    else if (index == 8) strCurrentColor = "#ce00ff";
-    else if (index == 9) strCurrentColor = "#0f2ab1";
-    else if (index == 10) strCurrentColor = "#3030ce";
-    else if (index == 11) strCurrentColor = "#006699";
-    else if (index == 12) strCurrentColor = "#1a866e";
-    else if (index == 13) strCurrentColor = "#008100";
-    else if (index == 14) strCurrentColor = "#959595";
-    else strCurrentColor = "#000000";
-
-    QSettings settings;
-    settings.setValue("my_color", strCurrentColor);
-}
-
-// emoticons
-
-void TabWidget::emoticons_clicked()
-{
-    (new DlgEmoticons(myparent, inputLineWidget))->show();
-}
-
-// channel settings
-
-void TabWidget::channel_settings_clicked()
-{
-    if (pNetwork->is_connected() == true)
-    {
-        if (strName != "Status")
-        {
-            dlgchannel_settings->set_channel(strName);
-            dlgchannel_settings->show();
-        }
-    }
-}
-
-// moderation
-
-void TabWidget::moderation_clicked()
-{
-    dlgmoderation->set_active_channel(strName);
-    dlgmoderation->show();
-}
-
-// clear
-
-void TabWidget::clear_clicked()
-{
-    strContent.clear();
-    mainWebView->setHtml(strContentStart+strContent+strContentEnd,QUrl(""));
-}
-
-// scroll
-
-void TabWidget::scroll_clicked()
-{
-    if (bScroll == true)
-    {
-        scroll->setChecked(false);
-        bScroll = false;
-        scroll->setIcon(QIcon(":/images/oxygen/16x16/arrow-up.png"));
-    }
-    else
-    {
-        scroll->setChecked(true);
-        bScroll = true;
-        scroll->setIcon(QIcon(":/images/oxygen/16x16/arrow-down.png"));
-    }
-
-    inputLineWidget->setFocus();
 }
 
 void TabWidget::change_scroll_position()

@@ -26,6 +26,8 @@
 #endif
 #include <QObject>
 #include <QtCrypto>
+// in OpenSuSE 11 try this:
+//#include <QtCrypto/QtCrypto>
 #include "config.h"
 
 class Crypt : public QObject

@@ -23,7 +23,6 @@
 
 #include <QObject>
 #include <QSettings>
-#include "inputlinedockwidget.h"
 #include "log.h"
 #include "network.h"
 #include "dlg_channel_settings.h"
@@ -36,10 +35,9 @@ class TabContainer : public QObject
 {
     Q_OBJECT
 public:
-    TabContainer(QWidget *, Network *, TabManager *, Notify *, QMap <QString, QByteArray> *, QTcpSocket *, InputLineDockWidget *, sChannelNickStatus *);
+    TabContainer(QWidget *, Network *, TabManager *, Notify *, QMap <QString, QByteArray> *, QTcpSocket *, sChannelNickStatus *);
     ~TabContainer();
     inline QString get_name(int i) { if ((i < 0) || (i > tw.count())) return QString::null; else return tw[i]->get_name(); }
-    void set_dlg(DlgChannelSettings *, DlgModeration *);
     bool exist_tab(QString);
     void remove_tab(QString);
     bool rename_tab(QString, QString);
@@ -50,8 +48,6 @@ public:
     void show_msg_active(QString, int);
     void set_topic(QString, QString);
     void author_topic(QString, QString);
-    void enable_moderation(QString);
-    void disable_moderation(QString);
     QStringList get_open_channels();
     MainWebView* get_webview(QString);
 
@@ -62,20 +58,24 @@ public slots:
     void slot_show_msg_active(QString, int);
     void slot_show_msg_all(QString, int);
     void slot_display_message(QString, QString, int);
+    void slot_change_font_size(QString);
+    void slot_clear_content(QString);
+    void slot_set_scroll(QString, bool);
     void refresh_colors();
 
 private:
+    // params
     QWidget *myparent;
     Network *pNetwork;
     TabManager *pTabM;
-    QList <TabWidget *> tw;
     Notify *pNotify;
     QMap <QString, QByteArray> *mChannelAvatar;
     DlgChannelSettings *dlgchannel_settings;
     DlgModeration *dlgmoderation;
     QTcpSocket *camSocket;
-    InputLineDockWidget *inputlinewidget;
     sChannelNickStatus *mChannelNickStatus;
+    // other
+    QList <TabWidget *> tw;
 
     void add_tab(QString);
     void update_open_channels();

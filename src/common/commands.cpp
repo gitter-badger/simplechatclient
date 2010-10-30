@@ -66,7 +66,7 @@ QString Commands::execute()
                 strResult = cmd_part();
             else if (strDataList[0].toLower() == "invite")
                 strResult = cmd_invite();
-            else if (strDataList[0].toLower() == "kick")
+            else if ((strDataList[0].toLower() == "kick") || (strDataList[0].toLower() == "k"))
                 strResult = cmd_kick();
             else if (strDataList[0].toLower() == "ban")
                 strResult = cmd_ban();
@@ -206,7 +206,7 @@ QString Commands::cmd_help()
     strResult.append(tr("/away [text]")+";");
     strResult.append(tr("/invite [nick]")+";");
     strResult.append(tr("/logout or /quit or /q")+";");
-    strResult.append(tr("/kick [nick] [reason]")+";");
+    strResult.append(tr("/kick [nick] [reason] or /k [nick] [reason]")+";");
     strResult.append(tr("/ban [[+|-]nick]")+";");
     strResult.append(tr("/sop [[+|-]nick]")+";");
     strResult.append(tr("/op [[+|-]nick]")+";");
