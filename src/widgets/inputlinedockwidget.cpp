@@ -48,6 +48,7 @@ InputLineDockWidget::InputLineDockWidget(QWidget *parent, Network *param1, DlgCh
     QObject::connect(pToolWidget, SIGNAL(change_font_size(QString)), this, SLOT(slot_change_font_size(QString)));
     QObject::connect(pToolWidget, SIGNAL(clear_content(QString)), this, SLOT(slot_clear_content(QString)));
     QObject::connect(pToolWidget, SIGNAL(set_scroll(QString, bool)), this, SLOT(slot_set_scroll(QString, bool)));
+    QObject::connect(pInputWidget, SIGNAL(show_hide_toolwidget()), this, SLOT(slot_show_hide_toolwidget()));
 }
 
 void InputLineDockWidget::enable_moderation()
@@ -60,6 +61,26 @@ void InputLineDockWidget::disable_moderation()
 {
     pToolWidget->set_moderation(false);
     pInputWidget->set_moderation(false);
+}
+
+void InputLineDockWidget::show_toolwidget()
+{
+    // hide toolwidget
+    setMinimumHeight(60);
+    setMaximumHeight(60);
+    pToolWidget->show();
+    // refresh icon
+    pInputWidget->set_toolwidget_icon(true);
+}
+
+void InputLineDockWidget::hide_toolwidget()
+{
+    // hide toolwidget
+    setMinimumHeight(30);
+    setMaximumHeight(30);
+    pToolWidget->hide();
+    // refresh icon
+    pInputWidget->set_toolwidget_icon(false);
 }
 
 // input widget
@@ -77,6 +98,14 @@ void InputLineDockWidget::slot_display_message(QString strChannel, QString strDa
 void InputLineDockWidget::slot_show_msg(QString strChannel, QString strData, int iLevel)
 {
     emit show_msg(strChannel, strData, iLevel);
+}
+
+void InputLineDockWidget::slot_show_hide_toolwidget()
+{
+    if (pToolWidget->isHidden() == true)
+        show_toolwidget();
+    else
+        hide_toolwidget();
 }
 
 // tool widget

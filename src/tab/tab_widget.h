@@ -58,6 +58,16 @@ public:
     void send_message(bool);
 
 private:
+    // params
+    QWidget *myparent;
+    Network *pNetwork;
+    QString strName;
+    Notify *pNotify;
+    QMap <QString, QByteArray> *mChannelAvatar;
+    QTcpSocket *camSocket;
+    sChannelNickStatus *mChannelNickStatus;
+
+    // other
     QString strContent;
     QString strContentStart;
     QString strContentEnd;
@@ -66,6 +76,8 @@ private:
     QWidget *topWidget;
     MainWebView *mainWebView;
 
+    QVBoxLayout *mainLayout;
+    QWidget *mainWidget;
     QWidget *topLeftWidget;
     QVBoxLayout *topLeftLayout;
     QWidget *topRightWidget;
@@ -75,16 +87,6 @@ private:
     QLabel *logo;
     QLabel *topicDetails;
 
-    QVBoxLayout *mainLayout;
-    QWidget *mainWidget;
-    Notify *pNotify;
-    QMap <QString, QByteArray> *mChannelAvatar;
-    QTcpSocket *camSocket;
-    sChannelNickStatus *mChannelNickStatus;
-
-    QWidget *myparent;
-    Network *pNetwork;
-    QString strName;
     QString strTopicContent;
     bool bCursorPositionChanged;
     int iScrollBarValue;

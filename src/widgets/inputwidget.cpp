@@ -46,6 +46,10 @@ InputWidget::InputWidget(QWidget *parent, Network *param1) : QWidget(parent)
     moderSendButton->setMaximumHeight(25);
     moderSendButton->show();
 
+    showHideToolWidget = new QPushButton(QIcon(":/images/oxygen/16x16/text-frame-unlink.png"), "", myparent);
+    showHideToolWidget->setToolTip(tr("Show/Hide tool widget"));
+    showHideToolWidget->show();
+
     mainLayout = new QHBoxLayout();
     mainLayout->setMargin(0);
     mainLayout->setAlignment(Qt::AlignLeft);
@@ -53,6 +57,7 @@ InputWidget::InputWidget(QWidget *parent, Network *param1) : QWidget(parent)
     mainLayout->addWidget(inputLine);
     mainLayout->addWidget(sendButton);
     mainLayout->addWidget(moderSendButton);
+    mainLayout->addWidget(showHideToolWidget);
     setLayout(mainLayout);
 
     // default hidden
@@ -61,14 +66,12 @@ InputWidget::InputWidget(QWidget *parent, Network *param1) : QWidget(parent)
     QObject::connect(sendButton, SIGNAL(clicked()), this, SLOT(inputline_return_pressed()));
     QObject::connect(inputLine, SIGNAL(returnPressed()), this, SLOT(inputline_return_pressed()));
     QObject::connect(moderSendButton, SIGNAL(clicked()), this, SLOT(moder_button_clicked()));
+    QObject::connect(showHideToolWidget, SIGNAL(clicked()), this, SLOT(show_hide_toolwidget_clicked()));
 }
 
 void InputWidget::set_active(QString strName)
 {
     strChannel = strName;
-
-    moderSendButton->hide();
-    mainLayout->removeWidget(moderSendButton);
 }
 
 void InputWidget::insert_text(QString strText)
@@ -104,15 +107,17 @@ void InputWidget::set_userslist(QTreeWidget *treeWidget)
 void InputWidget::set_moderation(bool m)
 {
     if (m == true)
-    {
         moderSendButton->show();
-        mainLayout->addWidget(moderSendButton);
-    }
     else
-    {
         moderSendButton->hide();
-        mainLayout->removeWidget(moderSendButton);
-    }
+}
+
+void InputWidget::set_toolwidget_icon(bool bShowHide)
+{
+    if (bShowHide == true)
+        showHideToolWidget->setIcon(QIcon(":/images/oxygen/16x16/text-frame-unlink.png"));
+    else
+        showHideToolWidget->setIcon(QIcon(":/images/oxygen/16x16/text-frame-link.png"));
 }
 
 QString InputWidget::convert_emots(QString strData)
@@ -283,6 +288,11 @@ void InputWidget::inputline_return_pressed()
 void InputWidget::moder_button_clicked()
 {
     send_message(false);
+}
+
+void InputWidget::show_hide_toolwidget_clicked()
+{
+    emit show_hide_toolwidget();
 }
 
 void InputWidget::keyPressEvent(QKeyEvent *e)

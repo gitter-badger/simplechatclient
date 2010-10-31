@@ -75,7 +75,6 @@ Core::Core(QMainWindow *parent, QString param1, int param2, Notify *param3, QAct
 
     // hide nicklist and toolwidget on status
     rightDockWidget->hide();
-    inputLineDockWidget->hide_toolwidget();
 
     // welcome
     pTabC->show_msg("Status", "%Fi:courier%"+tr("Welcome to the Simple Chat Client")+" %Ihehe%", 0);
@@ -264,17 +263,11 @@ void Core::current_tab_changed(int index)
     // set tab active
     inputLineDockWidget->set_active(strChannel);
 
-    // hide/show Status nicklist and toolwdiget
+    // hide/show Status nicklist
     if (index == 0)
-    {
         rightDockWidget->hide();
-        inputLineDockWidget->hide_toolwidget();
-    }
     else
-    {
         rightDockWidget->show();
-        inputLineDockWidget->show_toolwidget();
-    }
 
     // hide/show settings on priv
     if (strChannel[0] == '^')

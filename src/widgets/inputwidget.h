@@ -45,6 +45,7 @@ public:
     void set_font(QFont);
     void set_userslist(QTreeWidget *);
     void set_moderation(bool);
+    void set_toolwidget_icon(bool);
     QString convert_emots(QString);
     QString replace_emots(QString);
     void send_message(bool);
@@ -58,6 +59,7 @@ private:
     Network *pNetwork;
     // inputline widget
     QHBoxLayout *mainLayout;
+    QPushButton *showHideToolWidget;
     QLabel *nickLabel;
     InputLineWidget *inputLine;
     QPushButton *sendButton;
@@ -68,6 +70,7 @@ private:
 private slots:
     void inputline_return_pressed();
     void moder_button_clicked();
+    void show_hide_toolwidget_clicked();
 
 protected:
     virtual void keyPressEvent(QKeyEvent *);
@@ -75,6 +78,7 @@ protected:
 signals:
     void show_msg(QString, QString, int);
     void display_message(QString, QString, int);
+    void show_hide_toolwidget();
 
 };
 

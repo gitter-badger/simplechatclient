@@ -35,11 +35,10 @@ class InputLineDockWidget : public QWidget
     Q_OBJECT
 public:
     InputLineDockWidget(QWidget *, Network *, DlgChannelSettings *, DlgModeration *);
-    // input widget
     void enable_moderation();
     void disable_moderation();
-    inline void hide_toolwidget() { pToolWidget->hide(); }
-    inline void show_toolwidget() { pToolWidget->show(); }
+    void hide_toolwidget();
+    void show_toolwidget();
     inline void hide_channel_settings() { pToolWidget->set_channel_settings(false); }
     inline void show_channel_settings() { pToolWidget->set_channel_settings(true); }
     inline void set_active(QString strChannel) {  pInputWidget->set_active(strChannel); }
@@ -50,6 +49,7 @@ public slots:
     void slot_update_nick(QString);
     void slot_display_message(QString, QString, int);
     void slot_show_msg(QString, QString, int);
+    void slot_show_hide_toolwidget();
     void slot_change_font_size(QString);
     void slot_clear_content(QString);
     void slot_set_scroll(QString, bool);

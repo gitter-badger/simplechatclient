@@ -2205,6 +2205,10 @@
         <source>Send to moderators</source>
         <translation>Wyślij do moderatorów</translation>
     </message>
+    <message>
+        <source>Show/Hide tool widget</source>
+	<translation>Pokaż/Ukryj pasek narzędzi</translation>
+    </message>
 </context>
 <context>
     <name>MainWebView</name>

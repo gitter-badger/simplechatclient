@@ -63,5 +63,7 @@
         <file>images/oxygen/16x16/document-edit.png</file>
         <file>images/oxygen/16x16/text-field.png</file>
         <file>images/oxygen/16x16/text-frame-link.png</file>
+        <file>images/oxygen/16x16/text-frame-unlink.png</file>
+        <file>images/oxygen/16x16/folder-txt.png</file>
     </qresource>
 </RCC>

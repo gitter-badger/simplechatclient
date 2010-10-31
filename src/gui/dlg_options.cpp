@@ -48,7 +48,7 @@ DlgOptions::DlgOptions(QWidget *parent, Notify *param1) : QDialog(parent)
     ui.pushButton_play_query->setIcon(QIcon(":/images/oxygen/16x16/media-playback-start.png"));
     ui.pushButton_sound_beep_change->setIcon(QIcon(":/images/oxygen/16x16/document-edit.png"));
     ui.pushButton_sound_query_change->setIcon(QIcon(":/images/oxygen/16x16/document-edit.png"));
-    ui.pushButton_logs_open_folder->setIcon(QIcon(":/images/oxygen/16x16/text-field.png"));
+    ui.pushButton_logs_open_folder->setIcon(QIcon(":/images/oxygen/16x16/folder-txt.png"));
     ui.buttonBox->button(QDialogButtonBox::Ok)->setIcon(QIcon(":/images/oxygen/16x16/dialog-ok.png"));
     ui.buttonBox->button(QDialogButtonBox::Cancel)->setIcon(QIcon(":/images/oxygen/16x16/dialog-cancel.png"));
 
@@ -159,7 +159,7 @@ DlgOptions::DlgOptions(QWidget *parent, Notify *param1) : QDialog(parent)
     sounds->setToolTip(0, tr("Sounds"));
 
     QTreeWidgetItem *logs = new QTreeWidgetItem(ui.treeWidget_options);
-    logs->setIcon(0, QIcon(":/images/oxygen/16x16/text-frame-link.png"));
+    logs->setIcon(0, QIcon(":/images/oxygen/16x16/text-field.png"));
     logs->setText(0, tr("Logs"));
     logs->setToolTip(0, tr("Logs"));
 
