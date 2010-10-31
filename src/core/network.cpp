@@ -56,7 +56,7 @@ Network::~Network()
 void Network::slot_kernel(QString p1) { emit kernel(p1); }
 void Network::slot_request_uo(QString p1, QString p2, QString p3) { emit request_uo(p1, p2, p3); }
 void Network::slot_show_msg_active(QString p1, int p2) { emit show_msg_active(p1, p2); }
-void Network::slot_show_msg_all(QString p1, int p2) { emit show_msg_active(p1, p2); }
+void Network::slot_show_msg_all(QString p1, int p2) { emit show_msg_all(p1, p2); }
 void Network::slot_update_nick(QString p1) { emit update_nick(p1); }
 void Network::slot_clear_nicklist(QString p1) { emit clear_nicklist(p1); }
 void Network::slot_clear_all_nicklist() { emit clear_all_nicklist(); }

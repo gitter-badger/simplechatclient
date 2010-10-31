@@ -58,6 +58,7 @@ Core::Core(QMainWindow *parent, QString param1, int param2, Notify *param3, QAct
 
     // inputlinewidget
     bottomDockWidget = new QDockWidget(tr("Typing messages"), myparent);
+    bottomDockWidget->setFeatures(QDockWidget::DockWidgetMovable | QDockWidget::DockWidgetClosable | QDockWidget::DockWidgetFloatable);
     bottomDockWidget->setFocus();
     bottomDockWidget->setAllowedAreas(Qt::TopDockWidgetArea | Qt::BottomDockWidgetArea); // top and bottom
     inputLineDockWidget = new InputLineDockWidget(bottomDockWidget, pNetwork, pDlg_channel_settings, pDlg_moderation);
@@ -67,6 +68,7 @@ Core::Core(QMainWindow *parent, QString param1, int param2, Notify *param3, QAct
 
     // nicklistwidget
     rightDockWidget = new QDockWidget(tr("Users"), myparent);
+    bottomDockWidget->setFeatures(QDockWidget::DockWidgetMovable | QDockWidget::DockWidgetClosable | QDockWidget::DockWidgetFloatable);
     rightDockWidget->setAllowedAreas(Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea); // left and right
     nickListDockWidget = new NickListDockWidget(rightDockWidget);
     rightDockWidget->setWidget(nickListDockWidget);
