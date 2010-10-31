@@ -39,6 +39,7 @@ public:
     ToolWidget(QWidget *, Network *, InputWidget *, DlgChannelSettings *, DlgModeration *);
     void set_moderation(bool);
     void set_channel_settings(bool);
+    void change_scroll(bool); // set scroll after change tab page
 
 private:
     // params

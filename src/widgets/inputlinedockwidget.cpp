@@ -134,3 +134,9 @@ void InputLineDockWidget::slot_set_scroll(QString strChannel, bool bSetScroll)
 {
     emit set_scroll(strChannel, bSetScroll);
 }
+
+// set scroll after change tab page
+void InputLineDockWidget::change_scroll(bool bEnable)
+{
+    pToolWidget->change_scroll(bEnable);
+}

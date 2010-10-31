@@ -290,6 +290,10 @@ void Core::current_tab_changed(int index)
 
     // set inputline users
     inputLineDockWidget->set_userslist(mChannelNickListWidget.value(strChannel));
+
+    // set scroll
+    bool bChangeScroll = pTabC->get_scroll(strChannel);
+    inputLineDockWidget->change_scroll(bChangeScroll);
 }
 
 void Core::create_nicklist(QString strChannel)

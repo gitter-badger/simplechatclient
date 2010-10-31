@@ -50,6 +50,7 @@ public:
     void author_topic(QString, QString);
     QStringList get_open_channels();
     MainWebView* get_webview(QString);
+    bool get_scroll(QString);
 
 public slots:
     void update_channel_avatar(QString);

@@ -43,6 +43,7 @@ public:
     ~TabWidget();
     inline QString get_name() { return strName; }
     inline MainWebView* get_webview() { return mainWebView; }
+    inline bool get_scroll() { return bScroll; }
     QString addslashes(QString);
     void display_msg(QString, QString, int);
     void display_msg(QString, int);

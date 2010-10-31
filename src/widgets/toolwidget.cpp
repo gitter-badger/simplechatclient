@@ -303,6 +303,23 @@ void ToolWidget::set_channel_settings(bool bEnable)
         channel_settings->hide();
 }
 
+// set scroll after change tab page
+void ToolWidget::change_scroll(bool bEnable)
+{
+    if (bEnable == true)
+    {
+        scroll->setChecked(true);
+        bScroll = true;
+        scroll->setIcon(QIcon(":/images/oxygen/16x16/arrow-down.png"));
+    }
+    else
+    {
+        scroll->setChecked(false);
+        bScroll = false;
+        scroll->setIcon(QIcon(":/images/oxygen/16x16/arrow-up.png"));
+    }
+}
+
 void ToolWidget::bold_clicked()
 {
     QSettings settings;

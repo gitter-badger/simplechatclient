@@ -44,6 +44,7 @@ public:
     inline void set_active(QString strChannel) {  pInputWidget->set_active(strChannel); }
     inline QString get_active() { return pInputWidget->get_active(); }
     inline void set_userslist(QTreeWidget *treeWidget) { pInputWidget->set_userslist(treeWidget); }
+    void change_scroll(bool); // set scroll after change tab page
 
 public slots:
     void slot_update_nick(QString);
