@@ -22,14 +22,14 @@
 
 InputLineDockWidget::InputLineDockWidget(QWidget *parent, Network *param1, DlgChannelSettings *param2, DlgModeration *param3) : QWidget(parent)
 {
-    setMinimumHeight(60);
-    setMaximumHeight(60);
     myparent = parent;
 
+    // params
     pNetwork = param1;
     dlgchannel_settings = param2;
     dlgmoderation = param3;
 
+    // layout
     QVBoxLayout *mainLayout = new QVBoxLayout();
 
     pInputWidget = new InputWidget(myparent, pNetwork);
@@ -40,8 +40,14 @@ InputLineDockWidget::InputLineDockWidget(QWidget *parent, Network *param1, DlgCh
 
     mainLayout->addWidget(pToolWidget);
     mainLayout->addWidget(pInputWidget);
-    this->setLayout(mainLayout);
+    setLayout(mainLayout);
 
+    // set minimum size
+    int iMinimumSize = sizeHint().height();
+    setMinimumHeight(iMinimumSize);
+    setMaximumHeight(iMinimumSize);
+
+    // signals
     QObject::connect(this, SIGNAL(update_nick(QString)), pInputWidget, SLOT(update_nick(QString)));
     QObject::connect(pInputWidget, SIGNAL(display_message(QString,QString,int)), this, SLOT(slot_display_message(QString,QString,int)));
     QObject::connect(pInputWidget, SIGNAL(show_msg(QString,QString,int)), this, SLOT(slot_show_msg(QString,QString,int)));
@@ -65,10 +71,12 @@ void InputLineDockWidget::disable_moderation()
 
 void InputLineDockWidget::show_toolwidget()
 {
-    // hide toolwidget
-    setMinimumHeight(60);
-    setMaximumHeight(60);
+    // show toolwidget
     pToolWidget->show();
+    // set minimum size
+    int iMinimumSize = sizeHint().height();
+    setMinimumHeight(iMinimumSize);
+    setMaximumHeight(iMinimumSize);
     // refresh icon
     pInputWidget->set_toolwidget_icon(true);
 }
@@ -76,9 +84,11 @@ void InputLineDockWidget::show_toolwidget()
 void InputLineDockWidget::hide_toolwidget()
 {
     // hide toolwidget
-    setMinimumHeight(30);
-    setMaximumHeight(30);
     pToolWidget->hide();
+    // set minimum size
+    int iMinimumSize = sizeHint().height();
+    setMinimumHeight(iMinimumSize);
+    setMaximumHeight(iMinimumSize);
     // refresh icon
     pInputWidget->set_toolwidget_icon(false);
 }
