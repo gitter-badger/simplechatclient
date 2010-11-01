@@ -29,15 +29,16 @@ Config::Config(bool bCreate)
 #ifdef Q_WS_X11
     path = QDir::homePath()+"/.scc";
 #else
-    path = QCoreApplication::applicationDirPath();
+    QSettings settings(QSettings::UserScope, "Microsoft", "Windows");
+    settings.beginGroup("CurrentVersion/Explorer/Shell Folders");
+    path = settings.value("Personal").toString();
+    path += "/scc";
 #endif
 
     // create dir if not exist
-#ifdef Q_WS_X11
     QDir d(path);
     if (d.exists(path) == false)
         d.mkdir(path);
-#endif
 
     strConfigFile = path+"/scc.conf";
     file = new QFile(strConfigFile);

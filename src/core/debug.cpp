@@ -27,17 +27,20 @@ void saveMessage(QString strFilename, QString strData)
 #ifdef Q_WS_X11
     path = QDir::homePath()+"/.scc";
 #else
-    path = QCoreApplication::applicationDirPath();
+    QSettings settings(QSettings::UserScope, "Microsoft", "Windows");
+    settings.beginGroup("CurrentVersion/Explorer/Shell Folders");
+    path = settings.value("Personal").toString();
+    path += "/scc";
 #endif
 
+    // create dir if not exist
     QDir d(path);
-    if (d.exists(path+"/log") == false)
-    {
-#ifdef Q_WS_X11
+    if (d.exists(path) == false)
         d.mkdir(path);
-#endif
-        d.mkdir(path+"/log");
-    }
+
+    QDir d1(path);
+    if (d1.exists(path+"/log") == false)
+        d1.mkdir(path+"/log");
 
     QFile f(path+"/log/"+strFilename+".txt");
     if (!f.open(QIODevice::Append))

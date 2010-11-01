@@ -56,21 +56,15 @@ void Kamerzysta::show(QString param1, QString param2)
 
 void Kamerzysta::get_path()
 {
+    QSettings settings(QSettings::UserScope, "Microsoft", "Windows");
+    settings.beginGroup("CurrentVersion/Explorer/Shell Folders");
+    strAppPath = settings.value("AppData").toString();
+
     strAppPath = QDir::toNativeSeparators(QDir::homePath());
     QDir dir;
 
-    if (dir.exists(strAppPath+"\\Application Data\\Kamerzysta") == true)
-        strAppPath = strAppPath+"\\Application Data\\Kamerzysta";
-    else if (dir.exists(strAppPath+"\\AppData\\Kamerzysta") == true)
-        strAppPath = strAppPath+"\\AppData\\Kamerzysta";
-    else if (dir.exists(strAppPath+"\\AppData\\Local\\Kamerzysta") == true)
-        strAppPath = strAppPath+"\\AppData\\Local\\Kamerzysta";
-    else if (dir.exists(strAppPath+"\\AppData\\LocalLow\\Kamerzysta") == true)
-        strAppPath = strAppPath+"\\AppData\\LocalLow\\Kamerzysta";
-    else if (dir.exists(strAppPath+"\\AppData\\Roaming\\Kamerzysta") == true)
-        strAppPath = strAppPath+"\\AppData\\Roaming\\Kamerzysta";
-    else if (dir.exists(strAppPath+"\\Dane aplikacji\\Kamerzysta") == true)
-        strAppPath = strAppPath+"\\Dane aplikacji\\Kamerzysta";
+    if (dir.exists(strAppPath+"\\Kamerzysta") == true)
+        strAppPath = strAppPath+"\\Kamerzysta";
     else
     {
         QMessageBox msgBox;
@@ -82,8 +76,8 @@ void Kamerzysta::get_path()
         return;
     }
 
-    QSettings settings;
-    if (settings.value("debug").toString() == "on")
+    QSettings mySettings;
+    if (mySettings.value("debug").toString() == "on")
     {
         Log *l = new Log();
         l->save("kamerzysta", "App path:"+strAppPath);
@@ -92,7 +86,7 @@ void Kamerzysta::get_path()
 
     if (QFile::exists(strAppPath+"\\port") == true)
     {
-        if (settings.value("debug").toString() == "on")
+        if (mySettings.value("debug").toString() == "on")
         {
             Log *l = new Log();
             l->save("kamerzysta", "Port:exist");
@@ -103,7 +97,7 @@ void Kamerzysta::get_path()
     }
     else
     {
-        if (settings.value("debug").toString() == "on")
+        if (mySettings.value("debug").toString() == "on")
         {
             Log *l = new Log();
             l->save("kamerzysta", "Port:not exist");

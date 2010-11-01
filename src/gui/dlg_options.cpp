@@ -204,7 +204,12 @@ DlgOptions::DlgOptions(QWidget *parent, Notify *param1) : QDialog(parent)
 #ifdef Q_WS_X11
     strLogsPath = QDir::homePath()+"/.scc/log";
 #else
-    strLogsPath = QCoreApplication::applicationDirPath()+"/log";
+    QSettings settings(QSettings::UserScope, "Microsoft", "Windows");
+    settings.beginGroup("CurrentVersion/Explorer/Shell Folders");
+    QString path = settings.value("Personal").toString();
+    path += "/scc";
+
+    strLogsPath = path+"/log";
     strLogsPath.replace("/", "\\");
 #endif
     ui.lineEdit_logs_folder->setText(strLogsPath);

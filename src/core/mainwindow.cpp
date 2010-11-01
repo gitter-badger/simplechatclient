@@ -146,7 +146,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 #ifdef Q_WS_X11
     path = QDir::homePath()+"/.scc";
 #else
-    path = QCoreApplication::applicationDirPath();
+    QSettings settings(QSettings::UserScope, "Microsoft", "Windows");
+    settings.beginGroup("CurrentVersion/Explorer/Shell Folders");
+    path = settings.value("Personal").toString();
+    path += "/scc";
 #endif
     QString strConfigFile = path+"/scc.conf";
     if (QFile::exists(strConfigFile) == false)
@@ -261,7 +264,7 @@ void MainWindow::create_settings()
     // settings
     QSettings settings;
     settings.clear();
-    settings.setValue("version", "1.0.9.605");
+    settings.setValue("version", "1.0.9.606");
     settings.setValue("debug", "off");
     settings.setValue("logged", "off");
     settings.setValue("busy", "off");

@@ -206,6 +206,10 @@ void DlgCam::text_kernel(QString strData)
         qDebug() << "CAM <- " << strData;
 #endif
 
+    // check correct text
+    if (strDataList.count() < 2)
+        return;
+
     // 202 17244 IMAGE_UPDATE_BIG Ekscentryk
     if (strDataList[0] == "202")
     {

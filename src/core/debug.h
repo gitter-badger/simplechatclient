@@ -28,6 +28,9 @@
 #ifdef Q_WS_X11
 #include <QDebug>
 #endif
+// for abort()
+#include <stdio.h>
+#include <stdlib.h>
 
 void saveMessage(QString, QString);
 void messageHandler(QtMsgType, const char *);
