@@ -29,6 +29,9 @@
 #ifdef Q_WS_X11
 #include <QDebug>
 #endif
+#ifndef Q_WS_X11
+#include <QSettings>
+#endif
 
 class Log : public QObject
 {

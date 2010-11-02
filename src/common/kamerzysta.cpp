@@ -60,11 +60,12 @@ void Kamerzysta::get_path()
     settings.beginGroup("CurrentVersion/Explorer/Shell Folders");
     strAppPath = settings.value("AppData").toString();
 
-    strAppPath = QDir::toNativeSeparators(QDir::homePath());
     QDir dir;
-
-    if (dir.exists(strAppPath+"\\Kamerzysta") == true)
-        strAppPath = strAppPath+"\\Kamerzysta";
+    if (dir.exists(strAppPath+"/Kamerzysta") == true)
+    {
+        strAppPath = strAppPath+"/Kamerzysta";
+        strAppPath.replace("/", "\\");
+    }
     else
     {
         QMessageBox msgBox;

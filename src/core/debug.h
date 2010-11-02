@@ -28,6 +28,9 @@
 #ifdef Q_WS_X11
 #include <QDebug>
 #endif
+#ifndef Q_WS_X11
+#include <QSettings>
+#endif
 // for abort()
 #include <stdio.h>
 #include <stdlib.h>

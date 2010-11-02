@@ -29,6 +29,7 @@
 #include <QDir>
 #include <QFile>
 #include <QPushButton>
+#include <QSettings>
 #include "ui_notes.h"
 
 class DlgNotes : public QDialog

@@ -195,9 +195,9 @@ DlgOptions::DlgOptions(QWidget *parent, Notify *param1) : QDialog(parent)
         ui.comboBox_embedded_styles->addItem(strStyleName);
 
     // sound beep
-    QSettings settings;
-    ui.lineEdit_sound_beep->setText(settings.value("sound_beep").toString());
-    ui.lineEdit_sound_query->setText(settings.value("sound_query").toString());
+    QSettings mySettings;
+    ui.lineEdit_sound_beep->setText(mySettings.value("sound_beep").toString());
+    ui.lineEdit_sound_query->setText(mySettings.value("sound_query").toString());
 
     // logs
     QString strLogsPath;

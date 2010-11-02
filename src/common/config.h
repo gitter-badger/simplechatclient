@@ -29,6 +29,9 @@
 #include <QDir>
 #include <QFile>
 #include <QObject>
+#ifndef Q_WS_X11
+#include <QSettings>
+#endif
 
 class Config : public QObject
 {
