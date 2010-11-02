@@ -121,6 +121,7 @@ Core::Core(QMainWindow *parent, QString param1, int param2, Notify *param3, QAct
     QObject::connect(pOnet_kernel, SIGNAL(change_flag(QString,QString,QString)), this, SLOT(change_flag(QString,QString,QString)));
     QObject::connect(pOnet_kernel, SIGNAL(change_flag(QString,QString)), this, SLOT(change_flag(QString,QString)));
     QObject::connect(pOnet_kernel, SIGNAL(set_user_info(QString,QString,QString)), this, SLOT(set_user_info(QString,QString,QString)));
+    QObject::connect(pOnet_kernel, SIGNAL(clear_channel_all_nick_avatars(QString)), this, SLOT(clear_channel_all_nick_avatars(QString)));
 
     // signals to network
     QObject::connect(pDlg_moderation, SIGNAL(send(QString)), pNetwork, SLOT(slot_send(QString)));
@@ -547,6 +548,21 @@ void Core::update_nick_avatar(QString strNick)
     }
 }
 
+// clear all channel avatars
+void Core::clear_channel_all_nick_avatars(QString strChannel)
+{
+    QStringList strlNicks = mChannelNickListWidget.value(strChannel)->get(&mChannelNickStatus);
+
+    for (int i = 0; i < strlNicks.count(); i++)
+    {
+        QString strNick = strlNicks.at(i);
+
+        // remove nick avatar if nick is only in current channel; must be 1 (current channel)
+        if ((mNickAvatar.contains(strNick) == true) && (pTabC->get_nick_channels(strNick) == 1))
+            mNickAvatar.remove(strNick);
+    }
+}
+
 void Core::set_open_channels()
 {
     QStringList strlChannels = pTabC->get_open_channels();
@@ -568,40 +584,4 @@ void TabWidget::set_link(QString strUrl)
     webLink->setToolTip(strUrl);
 }
 
-QStringList TabWidget::get_nicklist()
-{
-    return nicklist->get(&nickStatus);
-}
-
-void TabContainer::clear_channel_all_nick_avatars(QString strChannel)
-{
-    int i = get_index(strChannel);
-    if (i != -1)
-    {
-        QStringList strlList = tw[i]->get_nicklist();
-
-        for (int i = 0; i < strlList.count(); i++)
-        {
-            QString strNick = strlList.at(i);
-
-            // remove nick from avatars if not exist on open channels; must be 1 (current channel)
-            if ((mNickAvatar->contains(strNick) == true) && (get_nick_channels(strNick) == 1))
-                mNickAvatar->remove(strNick);
-        }
-    }
-}
-
-// for avatars (if nick not in any channels->remove avatar)
-int TabContainer::get_nick_channels(QString strNick)
-{
-    int iResult = 0;
-
-    for (int i = 0; i < tw.count(); i++)
-    {
-        if (tw[i]->nicklist_exist(strNick) == true)
-            iResult++;
-    }
-
-    return iResult;
-}
 */

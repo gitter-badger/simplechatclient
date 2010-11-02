@@ -675,10 +675,9 @@ void OnetKernel::raw_part()
 
     emit del_user(strChannel, strNick);
 
-    // remove nick from avatars if not exist on open channels
-    /// REGRESSION
-    //if ((mNickAvatar->contains(strNick) == true) && (tabc->get_nick_channels(strNick) == 0))
-        //mNickAvatar->remove(strNick);
+    // remove nick avatar if not exist on any channel
+    if ((mNickAvatar->contains(strNick) == true) && (tabc->get_nick_channels(strNick) == 0))
+        mNickAvatar->remove(strNick);
 
     // if self part
 
@@ -686,9 +685,8 @@ void OnetKernel::raw_part()
 
     if (strNick == strMe)
     {
-        /// REGRESSION
         // remove nick avatars
-        //tabc->clear_channel_all_nick_avatars(strChannel);
+        emit clear_channel_all_nick_avatars(strChannel);
 
         // close channel
         if (strChannel != "Status")
@@ -774,9 +772,8 @@ void OnetKernel::raw_kick()
     emit del_user(strChannel, strNick);
 
     // remove nick from avatars if not exist on open channels
-    /// REGRESSION
-    //if ((mNickAvatar->contains(strNick) == true) && (tabc->get_nick_channels(strNick) == 0))
-        //mNickAvatar->remove(strNick);
+    if ((mNickAvatar->contains(strNick) == true) && (tabc->get_nick_channels(strNick) == 0))
+        mNickAvatar->remove(strNick);
 
     QSettings settings;
     QString strMe = settings.value("nick").toString();

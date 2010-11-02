@@ -395,3 +395,18 @@ void TabContainer::del_user(QString strChannel)
     if (i != -1)
         return tw[i]->del_user();
 }
+
+// for avatars (if nick not in any channels -> remove avatar)
+int TabContainer::get_nick_channels(QString strNick)
+{
+    int iResult = 0;
+
+    for (int i = 0; i < mChannelNickStatus->count(); i++)
+    {
+        if (mChannelNickStatus->at(i).nick == strNick)
+            iResult++;
+    }
+
+    qDebug() << "get nick channels -> nick: " << strNick << " channels: " << iResult;
+    return iResult;
+}

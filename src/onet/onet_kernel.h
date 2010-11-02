@@ -257,6 +257,7 @@ signals:
     void change_flag(QString,QString);
     void clear_nicklist(QString);
     void set_user_info(QString,QString,QString);
+    void clear_channel_all_nick_avatars(QString);
 
 };
 
