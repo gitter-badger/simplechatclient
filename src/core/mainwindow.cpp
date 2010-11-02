@@ -236,6 +236,7 @@ void MainWindow::create_settings()
     QString strMyItalic = pConfig->get_value("my_italic");
     QString strMyFont = pConfig->get_value("my_font");
     QString strMyColor = pConfig->get_value("my_color");
+    QString strFontSize = pConfig->get_value("font_size");
     QString strDefaultFontColor = pConfig->get_value("default_font_color");
     QString strJoinFontColor = pConfig->get_value("font_color_level_1");
     QString strPartFontColor = pConfig->get_value("font_color_level_2");
@@ -264,7 +265,7 @@ void MainWindow::create_settings()
     // settings
     QSettings settings;
     settings.clear();
-    settings.setValue("version", "1.0.9.608");
+    settings.setValue("version", "1.0.9.609");
     settings.setValue("debug", "off");
     settings.setValue("logged", "off");
     settings.setValue("busy", "off");
@@ -285,6 +286,7 @@ void MainWindow::create_settings()
     settings.setValue("my_italic", strMyItalic);
     settings.setValue("my_font", strMyFont);
     settings.setValue("my_color", strMyColor);
+    settings.setValue("font_size", strFontSize);
     settings.setValue("background_color", strBackgroundColor);
     settings.setValue("default_font_color", strDefaultFontColor);
     settings.setValue("font_color_level_1", strJoinFontColor);

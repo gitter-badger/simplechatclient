@@ -33,11 +33,11 @@ TabWidget::TabWidget(QWidget *parent, Network *param1, QString param2, Notify *p
     QSettings settings;
     QString strDefaultFontColor = addslashes(settings.value("default_font_color").toString());
     QString strBackgroundColor = addslashes(settings.value("background_color").toString());
+    strFontSize = settings.value("font_size").toString();
 
     iNickCount = 0;
     bScroll = true;
     bCursorPositionChanged = false;
-    strFontSize = "11px";
     strContentStart = "<html><body style=\"background-color:"+strBackgroundColor+";\">";
     strContentEnd = "</body></html>";
 

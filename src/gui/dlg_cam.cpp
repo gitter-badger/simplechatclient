@@ -95,6 +95,7 @@ void DlgCam::network_disconnect()
 
 void DlgCam::network_read()
 {
+    // read text
     if (bText == true)
     {
         if (socket->bytesAvailable() <= 0) return;
@@ -104,6 +105,7 @@ void DlgCam::network_read()
         QString strData = QString(data);
         text_kernel(strData);
     }
+    // read data (image, description)
     else
     {
         if (socket->bytesAvailable() <= 0) return;
@@ -121,6 +123,7 @@ void DlgCam::network_read()
             data_kernel();
     }
 
+    // again
     network_read();
 }
 

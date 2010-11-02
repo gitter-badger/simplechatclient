@@ -84,6 +84,7 @@ DlgOptions::DlgOptions(QWidget *parent, Notify *param1) : QDialog(parent)
     ui.comboBox_my_italic->setItemText(1, tr("On"));
     ui.label_my_font->setText(tr("Font:"));
     ui.label_my_color->setText(tr("Color:"));
+    ui.label_font_size->setText(tr("Font size:"));
 
     // page colors
     ui.tabWidget->setTabText(0,tr("Main window"));
@@ -190,6 +191,13 @@ DlgOptions::DlgOptions(QWidget *parent, Notify *param1) : QDialog(parent)
         iComboBoxMyColors++;
     }
 
+    // font size
+    QStringList comboBoxFontSize;
+    comboBoxFontSize << "8" << "9" << "10" << "11" << "12" << "14" << "16" << "18" << "20";
+
+    foreach (QString strFontSize, comboBoxFontSize)
+        ui.comboBox_font_size->addItem(strFontSize);
+
     // embedded styles
     foreach (QString strStyleName, QStyleFactory::keys())
         ui.comboBox_embedded_styles->addItem(strStyleName);
@@ -237,6 +245,7 @@ DlgOptions::DlgOptions(QWidget *parent, Notify *param1) : QDialog(parent)
     QObject::connect(ui.comboBox_my_italic, SIGNAL(currentIndexChanged(int)), this, SLOT(set_my_italic(int)));
     QObject::connect(ui.comboBox_my_font, SIGNAL(currentIndexChanged(QString)), this, SLOT(set_my_font(QString)));
     QObject::connect(ui.comboBox_my_color, SIGNAL(currentIndexChanged(int)), this, SLOT(set_my_color(int)));
+    QObject::connect(ui.comboBox_font_size, SIGNAL(currentIndexChanged(QString)), this, SLOT(set_font_size(QString)));
     QObject::connect(ui.pushButton_background_color, SIGNAL(clicked()), this, SLOT(set_background_color()));
     QObject::connect(ui.pushButton_default_font_color, SIGNAL(clicked()), this, SLOT(set_default_font_color()));
     QObject::connect(ui.pushButton_join_font_color, SIGNAL(clicked()), this, SLOT(set_join_font_color()));
@@ -581,6 +590,15 @@ void DlgOptions::set_my_color(int index)
     Config *pConfig = new Config();
     pConfig->set_value("my_color", strMyColor);
     settings.setValue("my_color", strMyColor);
+    delete pConfig;
+}
+
+void DlgOptions::set_font_size(QString strFontSize)
+{
+    QSettings settings;
+    Config *pConfig = new Config();
+    pConfig->set_value("font_size", strFontSize+"px");
+    settings.setValue("font_size", strFontSize+"px");
     delete pConfig;
 }
 
@@ -1429,6 +1447,7 @@ void DlgOptions::showEvent(QShowEvent *event)
     QString strMyItalic = pConfig->get_value("my_italic");
     QString strMyFont = pConfig->get_value("my_font");
     QString strMyColor = pConfig->get_value("my_color");
+    QString strFontSize = pConfig->get_value("font_size");
 
     QString strDisableLogs = pConfig->get_value("disable_logs");
 
@@ -1564,6 +1583,23 @@ void DlgOptions::showEvent(QShowEvent *event)
         iMyColor = 0;
 
     ui.comboBox_my_color->setCurrentIndex(iMyColor);
+
+// set font size combobox
+    int iFontSize;
+
+    if (strFontSize == "8px") iFontSize = 0;
+    else if (strFontSize == "9px") iFontSize = 1;
+    else if (strFontSize == "10px") iFontSize = 2;
+    else if (strFontSize == "11px") iFontSize = 3;
+    else if (strFontSize == "12px") iFontSize = 4;
+    else if (strFontSize == "14px") iFontSize = 5;
+    else if (strFontSize == "16px") iFontSize = 6;
+    else if (strFontSize == "18px") iFontSize = 7;
+    else if (strFontSize == "20px") iFontSize = 8;
+    else
+        iFontSize = 0;
+
+    ui.comboBox_font_size->setCurrentIndex(iFontSize);
 
 // set mainwindow colors
     set_mainwindow_colors();

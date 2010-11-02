@@ -1125,6 +1125,10 @@
         <translation>Kolor:</translation>
     </message>
     <message>
+        <source>Font size:</source>
+        <translation>Wielkość czcionki:</translation>
+    </message>
+    <message>
         <source>Colors</source>
         <translation>Kolory</translation>
     </message>

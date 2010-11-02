@@ -73,6 +73,7 @@ private slots:
     void set_my_italic(int);
     void set_my_font(QString);
     void set_my_color(int);
+    void set_font_size(QString);
     void set_background_color();
     void set_default_font_color();
     void set_join_font_color();

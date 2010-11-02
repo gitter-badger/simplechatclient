@@ -99,7 +99,7 @@ QString Config::get_value(QString strKey)
         }
     }
 
-    // not create config
+    // do not create config
     if (bCreateConfig == false)
         return QString::null;
 
@@ -184,6 +184,11 @@ QString Config::get_value(QString strKey)
     {
         set_value("my_color", "#000000");
         return "#000000";
+    }
+    else if (strKey == "font_size")
+    {
+        set_value("font_size", "11px");
+        return "11px";
     }
     else if (strKey == "default_font_color")
     {
@@ -354,6 +359,7 @@ void Config::create_new_config()
     add_config_value(&doc, &root, "my_italic", "off");
     add_config_value(&doc, &root, "my_font", "Verdana");
     add_config_value(&doc, &root, "my_color", "#000000");
+    add_config_value(&doc, &root, "font_size", "11px");
     add_config_value(&doc, &root, "background_color", "#ffffff");
     add_config_value(&doc, &root, "default_font_color", "#000000");
     add_config_value(&doc, &root, "font_color_level_1", "#009300");
