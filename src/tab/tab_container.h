@@ -51,6 +51,8 @@ public:
     QStringList get_open_channels();
     MainWebView* get_webview(QString);
     bool get_scroll(QString);
+    void add_user(QString); // update nick count for option hide join/part when > 200
+    void del_user(QString); // update nick count for option hide join/part when > 200
 
 public slots:
     void update_channel_avatar(QString);

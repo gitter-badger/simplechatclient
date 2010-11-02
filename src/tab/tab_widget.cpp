@@ -34,6 +34,7 @@ TabWidget::TabWidget(QWidget *parent, Network *param1, QString param2, Notify *p
     QString strDefaultFontColor = addslashes(settings.value("default_font_color").toString());
     QString strBackgroundColor = addslashes(settings.value("background_color").toString());
 
+    iNickCount = 0;
     bScroll = true;
     bCursorPositionChanged = false;
     strFontSize = "11px";
@@ -177,9 +178,8 @@ void TabWidget::display_msg(QString strTime, QString strData, int iLevel)
         if (settings.value("hide_join_part").toString() == "on")
             return;
 
-        /// REGRESSION
-        //if ((settings.value("hide_join_part_200").toString() == "on") && (iNickCount > 200))
-            //return;
+        if ((settings.value("hide_join_part_200").toString() == "on") && (iNickCount > 200))
+            return;
     }
 
     display_message(strData, iLevel);
@@ -203,9 +203,9 @@ void TabWidget::display_msg(QString strData, int iLevel)
     {
         if (settings.value("hide_join_part").toString() == "on")
             return;
-        /// REGRESSION
-        //if ((settings.value("hide_join_part_200").toString() == "on") && (iNickCount > 200))
-            //return;
+
+        if ((settings.value("hide_join_part_200").toString() == "on") && (iNickCount > 200))
+            return;
     }
 
     display_message(strData, iLevel);

@@ -1877,7 +1877,7 @@
     </message>
     <message>
         <source>* %1 is now your displayed host</source>
-        <translation>* %1 jest teraz Twoim wyświetlanym hostem</translation>
+        <translation>* Twoim wyświetlanym hostem jest teraz: %1</translation>
     </message>
     <message>
         <source>* %1: Nick is not registered</source>

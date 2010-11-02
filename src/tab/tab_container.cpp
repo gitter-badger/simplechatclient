@@ -379,3 +379,19 @@ bool TabContainer::get_scroll(QString strChannel)
     else
         return true;
 }
+
+// update nick count for option hide join/part when > 200
+void TabContainer::add_user(QString strChannel)
+{
+    int i = get_index(strChannel);
+    if (i != -1)
+        return tw[i]->add_user();
+}
+
+// update nick count for option hide join/part when > 200
+void TabContainer::del_user(QString strChannel)
+{
+    int i = get_index(strChannel);
+    if (i != -1)
+        return tw[i]->del_user();
+}

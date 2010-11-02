@@ -342,6 +342,9 @@ void Core::add_user(QString strChannel, QString strNick, QString strPrefix, QStr
         if (inputLineDockWidget->get_active() == strChannel)
             inputLineDockWidget->set_userslist(mChannelNickListWidget.value(strChannel));
 
+        // update nick count for option hide join/part when > 200
+        pTabC->add_user(strChannel);
+
         /// REGRESSION
         //iNickCount++;
         //nickCount->setText(QString(tr("%1 User(s)")).arg(iNickCount));
@@ -357,6 +360,9 @@ void Core::del_user(QString strChannel, QString strNick)
         // set inputline users
         if (inputLineDockWidget->get_active() == strChannel)
             inputLineDockWidget->set_userslist(mChannelNickListWidget.value(strChannel));
+
+        // update nick count for option hide join/part when > 200
+        pTabC->del_user(strChannel);
 
         /// REGRESSION
         //iNickCount--;
