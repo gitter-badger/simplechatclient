@@ -43,9 +43,11 @@ Config::Config(bool bCreate)
     strConfigFile = path+"/scc.conf";
     file = new QFile(strConfigFile);
 
+    // if not exist - create new
     if ((file->exists() == false) && (bCreateConfig == true))
         create_new_config();
 
+    // try read
     if (file->exists() == true)
     {
         if (file->open(QIODevice::ReadWrite) == false)
@@ -105,10 +107,14 @@ QString Config::get_value(QString strKey)
 
     // not exist value - save default, return default
 
+    QString path = QCoreApplication::applicationDirPath();
+    QString strSoundBeep = path+"/3rdparty/sounds/beep.wav";
+    QString strSoundQuery = path+"/3rdparty/sounds/query.wav";
+
     QStringList strlKeys;
-    strlKeys << "nick" << "pass" << "language" << "auto_busy" << "show_zuo" << "hide_formating" << "hide_join_part" << "hide_join_part_200" << "disable_avatars" << "disable_emots" << "style" << "background_color" << "my_bold" << "my_italic" << "my_font" << "my_color" << "font_size" << "default_font_color" << "font_color_level_1" << "font_color_level_2" << "font_color_level_3" << "font_color_level_4" << "font_color_level_5" << "font_color_level_6" << "font_color_level_7" << "font_color_level_9" << "channel_font_color" << "nicklist_nick_color" << "nicklist_selected_nick_color" << "nicklist_busy_nick_color" << "nicklist_gradient_1_color" << "nicklist_gradient_2_color" << "disable_logs" << "disable_sounds";
+    strlKeys << "nick" << "pass" << "language" << "auto_busy" << "show_zuo" << "hide_formating" << "hide_join_part" << "hide_join_part_200" << "disable_avatars" << "disable_emots" << "style" << "background_color" << "my_bold" << "my_italic" << "my_font" << "my_color" << "font_size" << "default_font_color" << "font_color_level_1" << "font_color_level_2" << "font_color_level_3" << "font_color_level_4" << "font_color_level_5" << "font_color_level_6" << "font_color_level_7" << "font_color_level_9" << "channel_font_color" << "nicklist_nick_color" << "nicklist_selected_nick_color" << "nicklist_busy_nick_color" << "nicklist_gradient_1_color" << "nicklist_gradient_2_color" << "disable_logs" << "sound_beep" << "sound_query" << "disable_sounds";
     QStringList strlValues;
-    strlValues << "~test" << "" << "pl" << "off" << "off" << "off" << "off" << "on" << "on" << "off" << "modern" << "#ffffff" << "off" << "off" << "Verdana" << "#000000" << "11px" << "#000000" << "#009300" << "#4733FF" << "#00007F" << "#00007F" << "#009300" << "#0066FF" << "#666666" << "#ff0000" << "#0000ff" << "#333333" << "#ffffff" << "#a0a0a4" << "#77d5f7" << "#1b86b7" << "off" << "off";
+    strlValues << "~test" << "" << "pl" << "off" << "off" << "off" << "off" << "on" << "on" << "off" << "modern" << "#ffffff" << "off" << "off" << "Verdana" << "#000000" << "11px" << "#000000" << "#009300" << "#4733FF" << "#00007F" << "#00007F" << "#009300" << "#0066FF" << "#666666" << "#ff0000" << "#0000ff" << "#333333" << "#ffffff" << "#a0a0a4" << "#77d5f7" << "#1b86b7" << "off" << strSoundBeep << strSoundQuery << "off";
 
     for (int i = 0; i < strlKeys.count(); i++)
     {
@@ -117,21 +123,6 @@ QString Config::get_value(QString strKey)
             set_value(strlKeys.at(i), strlValues.at(i));
             return strlValues.at(i);
         }
-    }
-
-    if (strKey == "sound_beep")
-    {
-        QString path = QCoreApplication::applicationDirPath();
-        QString strSoundBeep = path+"/3rdparty/sounds/beep.wav";
-        set_value("sound_beep", strSoundBeep);
-        return strSoundBeep;
-    }
-    else if (strKey == "sound_query")
-    {
-        QString path = QCoreApplication::applicationDirPath();
-        QString strSoundQuery = path+"/3rdparty/sounds/query.wav";
-        set_value("sound_query", strSoundQuery);
-        return strSoundQuery;
     }
 
 #ifdef Q_WS_X11
@@ -155,8 +146,11 @@ QMap <QString, QString> Config::read_config()
         while (n.isNull() == false)
         {
             QDomElement e = n.toElement();
+
+            // save to map
             if (e.isNull() == false)
                 mResult.insert(e.tagName(), e.text());
+
             n = n.nextSibling();
         }
     }
@@ -209,42 +203,13 @@ void Config::create_new_config()
     QString strSoundBeep = path+"/3rdparty/sounds/beep.wav";
     QString strSoundQuery = path+"/3rdparty/sounds/query.wav";
 
-    add_config_value(&doc, &root, "nick", "~test");
-    add_config_value(&doc, &root, "pass", "");
-    add_config_value(&doc, &root, "language", "pl");
-    add_config_value(&doc, &root, "auto_busy", "off");
-    add_config_value(&doc, &root, "show_zuo", "off");
-    add_config_value(&doc, &root, "hide_formating", "off");
-    add_config_value(&doc, &root, "hide_join_part", "off");
-    add_config_value(&doc, &root, "hide_join_part_200", "on");
-    add_config_value(&doc, &root, "disable_avatars", "on");
-    add_config_value(&doc, &root, "disable_emots", "off");
-    add_config_value(&doc, &root, "style", "modern");
-    add_config_value(&doc, &root, "my_bold", "off");
-    add_config_value(&doc, &root, "my_italic", "off");
-    add_config_value(&doc, &root, "my_font", "Verdana");
-    add_config_value(&doc, &root, "my_color", "#000000");
-    add_config_value(&doc, &root, "font_size", "11px");
-    add_config_value(&doc, &root, "background_color", "#ffffff");
-    add_config_value(&doc, &root, "default_font_color", "#000000");
-    add_config_value(&doc, &root, "font_color_level_1", "#009300");
-    add_config_value(&doc, &root, "font_color_level_2", "#4733FF");
-    add_config_value(&doc, &root, "font_color_level_3", "#00007F");
-    add_config_value(&doc, &root, "font_color_level_4", "#00007F");
-    add_config_value(&doc, &root, "font_color_level_5", "#009300");
-    add_config_value(&doc, &root, "font_color_level_6", "#0066FF");
-    add_config_value(&doc, &root, "font_color_level_7", "#666666");
-    add_config_value(&doc, &root, "font_color_level_9", "#ff0000");
-    add_config_value(&doc, &root, "channel_font_color", "#0000ff");
-    add_config_value(&doc, &root, "nicklist_nick_color", "#333333");
-    add_config_value(&doc, &root, "nicklist_selected_nick_color", "#ffffff");
-    add_config_value(&doc, &root, "nicklist_busy_nick_color", "#a0a0a4");
-    add_config_value(&doc, &root, "nicklist_gradient_1_color", "#77d5f7");
-    add_config_value(&doc, &root, "nicklist_gradient_2_color", "#1b86b7");
-    add_config_value(&doc, &root, "disable_logs", "off");
-    add_config_value(&doc, &root, "sound_beep", strSoundBeep);
-    add_config_value(&doc, &root, "sound_query", strSoundQuery);
-    add_config_value(&doc, &root, "disable_sounds", "off");
+    QStringList strlKeys;
+    strlKeys << "nick" << "pass" << "language" << "auto_busy" << "show_zuo" << "hide_formating" << "hide_join_part" << "hide_join_part_200" << "disable_avatars" << "disable_emots" << "style" << "background_color" << "my_bold" << "my_italic" << "my_font" << "my_color" << "font_size" << "default_font_color" << "font_color_level_1" << "font_color_level_2" << "font_color_level_3" << "font_color_level_4" << "font_color_level_5" << "font_color_level_6" << "font_color_level_7" << "font_color_level_9" << "channel_font_color" << "nicklist_nick_color" << "nicklist_selected_nick_color" << "nicklist_busy_nick_color" << "nicklist_gradient_1_color" << "nicklist_gradient_2_color" << "disable_logs" << "sound_beep" << "sound_query" << "disable_sounds";
+    QStringList strlValues;
+    strlValues << "~test" << "" << "pl" << "off" << "off" << "off" << "off" << "on" << "on" << "off" << "modern" << "#ffffff" << "off" << "off" << "Verdana" << "#000000" << "11px" << "#000000" << "#009300" << "#4733FF" << "#00007F" << "#00007F" << "#009300" << "#0066FF" << "#666666" << "#ff0000" << "#0000ff" << "#333333" << "#ffffff" << "#a0a0a4" << "#77d5f7" << "#1b86b7" << "off" << strSoundBeep << strSoundQuery << "off";
+
+    for (int i = 0; i < strlKeys.count(); i++)
+        add_config_value(&doc, &root, strlKeys.at(i), strlValues.at(i));
 
     save();
 }
