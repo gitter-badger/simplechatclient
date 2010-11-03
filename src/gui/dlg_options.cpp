@@ -1417,8 +1417,8 @@ void DlgOptions::save_settings()
     settings.setValue("pass", strPass);
 
     Config *pConfig = new Config();
-    pConfig->set_value("login-nick", strNick);
-    pConfig->set_value("login-pass", strPass);
+    pConfig->set_value("nick", strNick);
+    pConfig->set_value("pass", strPass);
     delete pConfig;
 }
 
@@ -1430,8 +1430,8 @@ void DlgOptions::showEvent(QShowEvent *event)
 
 // config
     Config *pConfig = new Config();
-    QString strNick = pConfig->get_value("login-nick");
-    QString strPass = pConfig->get_value("login-pass");
+    QString strNick = pConfig->get_value("nick");
+    QString strPass = pConfig->get_value("pass");
     QString strStyle = pConfig->get_value("style");
     QString strLanguage = pConfig->get_value("language");
 

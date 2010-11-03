@@ -105,172 +105,21 @@ QString Config::get_value(QString strKey)
 
     // not exist value - save default, return default
 
-    if (strKey == "login-nick")
+    QStringList strlKeys;
+    strlKeys << "nick" << "pass" << "language" << "auto_busy" << "show_zuo" << "hide_formating" << "hide_join_part" << "hide_join_part_200" << "disable_avatars" << "disable_emots" << "style" << "background_color" << "my_bold" << "my_italic" << "my_font" << "my_color" << "font_size" << "default_font_color" << "font_color_level_1" << "font_color_level_2" << "font_color_level_3" << "font_color_level_4" << "font_color_level_5" << "font_color_level_6" << "font_color_level_7" << "font_color_level_9" << "channel_font_color" << "nicklist_nick_color" << "nicklist_selected_nick_color" << "nicklist_busy_nick_color" << "nicklist_gradient_1_color" << "nicklist_gradient_2_color" << "disable_logs" << "disable_sounds";
+    QStringList strlValues;
+    strlValues << "~test" << "" << "pl" << "off" << "off" << "off" << "off" << "on" << "on" << "off" << "modern" << "#ffffff" << "off" << "off" << "Verdana" << "#000000" << "11px" << "#000000" << "#009300" << "#4733FF" << "#00007F" << "#00007F" << "#009300" << "#0066FF" << "#666666" << "#ff0000" << "#0000ff" << "#333333" << "#ffffff" << "#a0a0a4" << "#77d5f7" << "#1b86b7" << "off" << "off";
+
+    for (int i = 0; i < strlKeys.count(); i++)
     {
-        set_value("login-nick", "~test");
-        return "~test";
+        if (strKey == strlKeys.at(i))
+        {
+            set_value(strlKeys.at(i), strlValues.at(i));
+            return strlValues.at(i);
+        }
     }
-    else if (strKey == "login-pass")
-    {
-        set_value("login-pass", QString::null);
-        return QString::null;
-    }
-    else if (strKey == "language")
-    {
-        set_value("language", "pl");
-        return "pl";
-    }
-    else if (strKey == "auto_busy")
-    {
-        set_value("auto_busy", "off");
-        return "off";
-    }
-    else if (strKey == "show_zuo")
-    {
-        set_value("show_zuo", "off");
-        return "off";
-    }
-    else if (strKey == "hide_formating")
-    {
-        set_value("hide_formating", "off");
-        return "off";
-    }
-    else if (strKey == "hide_join_part")
-    {
-        set_value("hide_join_part", "off");
-        return "off";
-    }
-    else if (strKey == "hide_join_part_200")
-    {
-        set_value("hide_join_part_200", "on");
-        return "on";
-    }
-    else if (strKey == "disable_avatars")
-    {
-        set_value("disable_avatars", "on");
-        return "on";
-    }
-    else if (strKey == "disable_emots")
-    {
-        set_value("disable_emots", "off");
-        return "off";
-    }
-    else if (strKey == "style")
-    {
-        set_value("style", "modern");
-        return "modern";
-    }
-    else if (strKey == "background_color")
-    {
-        set_value("background_color", "#ffffff");
-        return "#ffffff";
-    }
-    else if (strKey == "my_bold")
-    {
-        set_value("my_bold", "off");
-        return "off";
-    }
-    else if (strKey == "my_italic")
-    {
-        set_value("my_italic", "off");
-        return "off";
-    }
-    else if (strKey == "my_font")
-    {
-        set_value("my_font", "Verdana");
-        return "Verdana";
-    }
-    else if (strKey == "my_color")
-    {
-        set_value("my_color", "#000000");
-        return "#000000";
-    }
-    else if (strKey == "font_size")
-    {
-        set_value("font_size", "11px");
-        return "11px";
-    }
-    else if (strKey == "default_font_color")
-    {
-        set_value("default_font_color", "#000000");
-        return "#000000";
-    }
-    else if (strKey == "font_color_level_1")
-    {
-        set_value("font_color_level_1", "#009300");
-        return "#009300";
-    }
-    else if (strKey == "font_color_level_2")
-    {
-        set_value("font_color_level_2", "#4733FF");
-        return "#4733FF";
-    }
-    else if (strKey == "font_color_level_3")
-    {
-        set_value("font_color_level_3", "#00007F");
-        return "#00007F";
-    }
-    else if (strKey == "font_color_level_4")
-    {
-        set_value("font_color_level_4", "#00007F");
-        return "#00007F";
-    }
-    else if (strKey == "font_color_level_5")
-    {
-        set_value("font_color_level_5", "#009300");
-        return "#009300";
-    }
-    else if (strKey == "font_color_level_6")
-    {
-        set_value("font_color_level_6", "#0066FF");
-        return "#0066FF";
-    }
-    else if (strKey == "font_color_level_7")
-    {
-        set_value("font_color_level_7", "#666666");
-        return "#666666";
-    }
-    else if (strKey == "font_color_level_9")
-    {
-        set_value("font_color_level_9", "#ff0000");
-        return "#ff0000";
-    }
-    else if (strKey == "channel_font_color")
-    {
-        set_value("channel_font_color", "#0000ff");
-        return "#0000ff";
-    }
-    else if (strKey == "nicklist_nick_color")
-    {
-        set_value("nicklist_nick_color", "#333333");
-        return "#333333";
-    }
-    else if (strKey == "nicklist_selected_nick_color")
-    {
-        set_value("nicklist_selected_nick_color", "#ffffff");
-        return "#ffffff";
-    }
-    else if (strKey == "nicklist_busy_nick_color")
-    {
-        set_value("nicklist_busy_nick_color", "#a0a0a4");
-        return "#a0a0a4";
-    }
-    else if (strKey == "nicklist_gradient_1_color")
-    {
-        set_value("nicklist_gradient_1_color", "#77d5f7");
-        return "#77d5f7";
-    }
-    else if (strKey == "nicklist_gradient_2_color")
-    {
-        set_value("nicklist_gradient_2_color", "#1b86b7");
-        return "#1b86b7";
-    }
-    else if (strKey == "disable_logs")
-    {
-        set_value("disable_logs", "off");
-        return "off";
-    }
-    else if (strKey == "sound_beep")
+
+    if (strKey == "sound_beep")
     {
         QString path = QCoreApplication::applicationDirPath();
         QString strSoundBeep = path+"/3rdparty/sounds/beep.wav";
@@ -284,11 +133,6 @@ QString Config::get_value(QString strKey)
         set_value("sound_query", strSoundQuery);
         return strSoundQuery;
     }
-    else if (strKey == "disable_sounds")
-    {
-        set_value("disable_sounds", "off");
-        return "off";
-    }
 
 #ifdef Q_WS_X11
     // exception: iv
@@ -297,6 +141,27 @@ QString Config::get_value(QString strKey)
 #endif
 
     return QString::null;
+}
+
+QMap <QString, QString> Config::read_config()
+{
+    QMap <QString, QString> mResult;
+
+    if ((doc.isNull() == false) && (file->isOpen() == true))
+    {
+        QDomElement docElem = doc.documentElement();
+        QDomNode n = docElem.firstChild();
+
+        while (n.isNull() == false)
+        {
+            QDomElement e = n.toElement();
+            if (e.isNull() == false)
+                mResult.insert(e.tagName(), e.text());
+            n = n.nextSibling();
+        }
+    }
+
+    return mResult;
 }
 
 void Config::set_value(QString strKey, QString strValue)
@@ -344,8 +209,8 @@ void Config::create_new_config()
     QString strSoundBeep = path+"/3rdparty/sounds/beep.wav";
     QString strSoundQuery = path+"/3rdparty/sounds/query.wav";
 
-    add_config_value(&doc, &root, "login-nick", "~test");
-    add_config_value(&doc, &root, "login-pass", QString::null);
+    add_config_value(&doc, &root, "nick", "~test");
+    add_config_value(&doc, &root, "pass", "");
     add_config_value(&doc, &root, "language", "pl");
     add_config_value(&doc, &root, "auto_busy", "off");
     add_config_value(&doc, &root, "show_zuo", "off");

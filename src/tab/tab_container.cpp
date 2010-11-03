@@ -407,6 +407,5 @@ int TabContainer::get_nick_channels(QString strNick)
             iResult++;
     }
 
-    qDebug() << "get nick channels -> nick: " << strNick << " channels: " << iResult;
     return iResult;
 }

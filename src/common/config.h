@@ -41,6 +41,7 @@ public:
     ~Config();
 
     QString get_value(QString);
+    QMap <QString, QString> read_config();
     void set_value(QString, QString);
 
 private:

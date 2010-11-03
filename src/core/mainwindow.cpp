@@ -218,101 +218,38 @@ void MainWindow::set_debug(bool param1)
 // create settings
 void MainWindow::create_settings()
 {
-    // config values
-    Config *pConfig = new Config();
-    QString strLoginNick = pConfig->get_value("login-nick");
-    QString strLoginPass = pConfig->get_value("login-pass");
-    QString strLanguage = pConfig->get_value("language");
-    QString strAutoBusy = pConfig->get_value("auto_busy");
-    QString strShowZuo = pConfig->get_value("show_zuo");
-    QString strHideFormating = pConfig->get_value("hide_formating");
-    QString strHideJoinPart = pConfig->get_value("hide_join_part");
-    QString strHideJoinPart200 = pConfig->get_value("hide_join_part_200");
-    QString strDisableAvatars = pConfig->get_value("disable_avatars");
-    QString strDisableEmots = pConfig->get_value("disable_emots");
-    QString strStyle = pConfig->get_value("style");
-    QString strBackgroundColor = pConfig->get_value("background_color");
-    QString strMyBold = pConfig->get_value("my_bold");
-    QString strMyItalic = pConfig->get_value("my_italic");
-    QString strMyFont = pConfig->get_value("my_font");
-    QString strMyColor = pConfig->get_value("my_color");
-    QString strFontSize = pConfig->get_value("font_size");
-    QString strDefaultFontColor = pConfig->get_value("default_font_color");
-    QString strJoinFontColor = pConfig->get_value("font_color_level_1");
-    QString strPartFontColor = pConfig->get_value("font_color_level_2");
-    QString strQuitFontColor = pConfig->get_value("font_color_level_3");
-    QString strKickFontColor = pConfig->get_value("font_color_level_4");
-    QString strModeFontColor = pConfig->get_value("font_color_level_5");
-    QString strNoticeFontColor = pConfig->get_value("font_color_level_6");
-    QString strInfoFontColor = pConfig->get_value("font_color_level_7");
-    QString strErrorFontColor = pConfig->get_value("font_color_level_9");
-    QString strChannelFontColor = pConfig->get_value("channel_font_color");
-    QString strNicklistNickColor = pConfig->get_value("nicklist_nick_color");
-    QString strNicklistSelectedNickColor = pConfig->get_value("nicklist_selected_nick_color");
-    QString strNicklistBusyNickColor = pConfig->get_value("nicklist_busy_nick_color");
-    QString strNicklistGradient1Color = pConfig->get_value("nicklist_gradient_1_color");
-    QString strNicklistGradient2Color = pConfig->get_value("nicklist_gradient_2_color");
-    QString strDisableLogs = pConfig->get_value("disable_logs");
-    QString strSoundBeep = pConfig->get_value("sound_beep");
-    QString strSoundQuery = pConfig->get_value("sound_query");
-    QString strDisableSounds = pConfig->get_value("disable_sounds");
-    delete pConfig;
-
-    // fix config values
-    if (strStyle == "classic")
-        strDisableAvatars = "on";
-
-    // settings
+    // default settings
     QSettings settings;
     settings.clear();
-    settings.setValue("version", "1.0.9.610");
+    settings.setValue("version", "1.0.9.611");
     settings.setValue("debug", "off");
     settings.setValue("logged", "off");
     settings.setValue("busy", "off");
     settings.setValue("override", "off");
     settings.setValue("autojoin_favourites", "on");
-    settings.setValue("nick", strLoginNick);
-    settings.setValue("pass", strLoginPass);
-    settings.setValue("language", strLanguage);
-    settings.setValue("auto_busy", strAutoBusy);
-    settings.setValue("show_zuo", strShowZuo);
-    settings.setValue("hide_formating", strHideFormating);
-    settings.setValue("hide_join_part", strHideJoinPart);
-    settings.setValue("hide_join_part_200", strHideJoinPart200);
-    settings.setValue("disable_avatars", strDisableAvatars);
-    settings.setValue("disable_emots", strDisableEmots);
-    settings.setValue("style", strStyle);
-    settings.setValue("my_bold", strMyBold);
-    settings.setValue("my_italic", strMyItalic);
-    settings.setValue("my_font", strMyFont);
-    settings.setValue("my_color", strMyColor);
-    settings.setValue("font_size", strFontSize);
-    settings.setValue("background_color", strBackgroundColor);
-    settings.setValue("default_font_color", strDefaultFontColor);
-    settings.setValue("font_color_level_1", strJoinFontColor);
-    settings.setValue("font_color_level_2", strPartFontColor);
-    settings.setValue("font_color_level_3", strQuitFontColor);
-    settings.setValue("font_color_level_4", strKickFontColor);
-    settings.setValue("font_color_level_5", strModeFontColor);
-    settings.setValue("font_color_level_6", strNoticeFontColor);
-    settings.setValue("font_color_level_7", strInfoFontColor);
-    settings.setValue("font_color_level_9", strErrorFontColor);
-    settings.setValue("channel_font_color", strChannelFontColor);
-    settings.setValue("nicklist_nick_color", strNicklistNickColor);
-    settings.setValue("nicklist_selected_nick_color", strNicklistSelectedNickColor);
-    settings.setValue("nicklist_busy_nick_color", strNicklistBusyNickColor);
-    settings.setValue("nicklist_gradient_1_color", strNicklistGradient1Color);
-    settings.setValue("nicklist_gradient_2_color", strNicklistGradient2Color);
-    settings.setValue("disable_logs", strDisableLogs);
-    settings.setValue("sound_beep", strSoundBeep);
-    settings.setValue("sound_query", strSoundQuery);
-    settings.setValue("disable_sounds", strDisableSounds);
     settings.setValue("uokey", "");
     settings.setValue("uo_nick", "");
     settings.setValue("onet_ubi", "");
     settings.setValue("onet_cid", "");
     settings.setValue("onet_sid", "");
     settings.setValue("onet_uid", "");
+
+    // config values
+    Config *pConfig = new Config();
+    QMap <QString, QString> mConfigValues = pConfig->read_config();
+    delete pConfig;
+
+    // set settings
+    QMapIterator <QString, QString> i(mConfigValues);
+    while (i.hasNext())
+    {
+        i.next();
+        settings.setValue(i.key(), i.value());
+    }
+
+    // fix config values
+    if (settings.value("style").toString() == "classic")
+        settings.setValue("disable_avatars", "on");
 }
 
 void MainWindow::check_update()

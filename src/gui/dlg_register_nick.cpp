@@ -200,8 +200,8 @@ void DlgRegisterNick::parse_result(QString strResult)
         settings.setValue("pass", strPassword);
 
         Config *pConfig = new Config();
-        pConfig->set_value("login-nick", strNick);
-        pConfig->set_value("login-pass", strPassword);
+        pConfig->set_value("nick", strNick);
+        pConfig->set_value("pass", strPassword);
         delete pConfig;
 
         // close

@@ -282,7 +282,7 @@ void Kamerzysta::network_read()
         if (strDataRecv == "d")
         {
             Config *pConfig = new Config();
-            QString strMe = pConfig->get_value("login-nick");
+            QString strMe = pConfig->get_value("nick");
             delete pConfig;
 
             network_send(QString("d%1|%2").arg(strMe).arg(strUOKey));

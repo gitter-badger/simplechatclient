@@ -227,7 +227,7 @@ void NetworkThread::connected()
 
     Config *pConfig = new Config();
     settings.setValue("nick", strNick);
-    pConfig->set_value("login-nick", strNick);
+    pConfig->set_value("nick", strNick);
     delete pConfig;
 
     // update nick
