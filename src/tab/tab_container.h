@@ -39,6 +39,7 @@ public:
     ~TabContainer();
     inline QString get_name(int i) { if ((i < 0) || (i > tw.count())) return QString::null; else return tw[i]->get_name(); }
     bool exist_tab(QString);
+    void add_tab(QString);
     void remove_tab(QString);
     bool rename_tab(QString, QString);
     void part_tab(int);
@@ -81,7 +82,6 @@ private:
     // other
     QList <TabWidget *> tw;
 
-    void add_tab(QString);
     void update_open_channels();
     int get_index(QString);
 

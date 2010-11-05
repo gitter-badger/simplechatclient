@@ -51,7 +51,7 @@ public slots:
 private:
     QWidget *myparent;
     Network *pNetwork;
-    TabContainer *tabc;
+    TabContainer *pTabC;
     Notify *pNotify;
     QMap <QString, QByteArray> *mNickAvatar;
     QMap <QString, QByteArray> *mChannelAvatar;
