@@ -62,15 +62,18 @@ private:
     Ui::uiUserProfile ui;
     Network *pNetwork;
     sNickInfo sCurrentNickInfo;
+    int iWidth;
 
     void show_info();
     QString convert_desc(QString);
     QString convert_sex(QString);
+    QString convert_age(QString);
     QString convert_country(QString);
     QString convert_type(QString);
     void show_avatar(QString);
 
 private slots:
+    void button_more();
     void button_close();
 
 protected:

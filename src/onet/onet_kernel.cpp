@@ -1264,7 +1264,15 @@ void OnetKernel::raw_004()
 // :cf1f4.onet 005 Merovingian WATCH=200 INVIGNORE=100 USERIP ESILENCE SILENCE=100 NAMESX :are supported by this server
 void OnetKernel::raw_005()
 {
-// ignore
+    for (int i = 0; i < strDataList.size(); i++)
+    {
+        if (strDataList.at(i).indexOf("=") != -1)
+        {
+            QString strData = strDataList.at(i);
+            QString strKey = strData.mid(0, strData.indexOf('='));
+            QString strValue = strData.mid(strData.indexOf('=')+1, strData.length() - strData.indexOf('='));
+        }
+    }
 }
 
 // Onet-Informuje!bot@service.onet NOTICE Merovingian :100 #gorący_pokój 1279807200 :Zapraszamy na spotkanie z Rafałem Głogowskim, ratownikiem krakowskiego WOPRU. Jak zachowywać się nad wodą? Na co zwracać uwagę?

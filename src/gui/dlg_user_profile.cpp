@@ -25,27 +25,80 @@ DlgUserProfile::DlgUserProfile(QWidget *parent, Network *param1, sNickInfo param
     ui.setupUi(this);
     setAttribute(Qt::WA_DeleteOnClose);
     setWindowTitle(tr("Profile"));
+    // center screen
+    move(QApplication::desktop()->screen()->rect().center() - rect().center());
 
     pNetwork = param1;
     sCurrentNickInfo = param2;
 
+    // set width
+    iWidth = ui.verticalLayout->sizeHint().width();
+
+    ui.toolButton_zoom->setIcon(QIcon(":/images/oxygen/16x16/page-zoom.png"));
+    ui.pushButton_more->setIcon(QIcon(":/images/oxygen/16x16/list-add.png"));
     ui.buttonBox->button(QDialogButtonBox::Close)->setIcon(QIcon(":/images/oxygen/16x16/dialog-close.png"));
 
+    // hide more
+    ui.widget_more->hide();
+
+    // resize
+    int iHeight = ui.verticalLayout->sizeHint().height() - ui.formLayout_more->sizeHint().height();
+    setMinimumHeight(iHeight);
+    setMaximumHeight(iHeight);
+    setMinimumWidth(iWidth);
+    setMaximumWidth(iWidth);
+    resize(iWidth, iHeight);
+
     ui.label_sex->setText(tr("Sex:"));
+    ui.label_age->setText(tr("Age:"));
     ui.label_birthdate->setText(tr("Birthdate:"));
     ui.label_city->setText(tr("City:"));
     ui.label_country->setText(tr("Country:"));
     ui.label_hobby->setText(tr("Hobby:"));
     ui.label_type->setText(tr("Type:"));
     ui.label_www->setText(tr("Website:"));
+    ui.pushButton_more->setText(tr("More..."));
+
+    QObject::connect(ui.pushButton_more, SIGNAL(clicked()), this, SLOT(button_more()));
+}
+
+void DlgUserProfile::button_more()
+{
+    if (ui.widget_more->isHidden() == true)
+    {
+        ui.widget_more->show();
+        ui.pushButton_more->setIcon(QIcon(":/images/oxygen/16x16/list-remove.png"));
+        ui.pushButton_more->setText(tr("Less..."));
+
+        int iHeight = ui.verticalLayout->sizeHint().height();
+        setMinimumHeight(iHeight);
+        setMaximumHeight(iHeight);
+        setMinimumWidth(iWidth);
+        setMaximumWidth(iWidth);
+        resize(iWidth, iHeight);
+    }
+    else
+    {
+        ui.widget_more->hide();
+        ui.pushButton_more->setIcon(QIcon(":/images/oxygen/16x16/list-add.png"));
+        ui.pushButton_more->setText(tr("More..."));
+
+        int iHeight = ui.verticalLayout->sizeHint().height() - ui.formLayout_more->sizeHint().height();
+        setMinimumHeight(iHeight);
+        setMaximumHeight(iHeight);
+        setMinimumWidth(iWidth);
+        setMaximumWidth(iWidth);
+        resize(iWidth, iHeight);
+    }
 }
 
 void DlgUserProfile::show_info()
 {
     ui.label_avatar->setText("");
     ui.label_nick->setText(QString("<p style=\"font-weight:bold;\"> %1</p>").arg(sCurrentNickInfo.nick));
-    ui.webView_desc->setHtml(convert_desc(sCurrentNickInfo.shortDesc), QUrl(""));
+    ui.textEdit_desc->setHtml(convert_desc(sCurrentNickInfo.shortDesc));
     ui.lineEdit_sex->setText(convert_sex(sCurrentNickInfo.sex));
+    ui.lineEdit_age->setText(convert_age(sCurrentNickInfo.birthdate));
     ui.lineEdit_birthdate->setText(sCurrentNickInfo.birthdate);
     ui.lineEdit_city->setText(sCurrentNickInfo.city);
     ui.lineEdit_country->setText(convert_country(sCurrentNickInfo.country));
@@ -86,6 +139,21 @@ QString DlgUserProfile::convert_sex(QString strSex)
         strSex = tr("Male");
 
     return strSex;
+}
+
+QString DlgUserProfile::convert_age(QString strDate)
+{
+    if (strDate.isEmpty() == true) return QString::null; // empty date
+
+    strDate.replace(QRegExp("(\\d+)-(\\d+)-(\\d+)"), "\\1");
+    QDate dDate = QDate::currentDate();
+    QString strCurrentYear = QString::number(dDate.year());
+
+    int iYear = strDate.toInt();
+    int iCurrentYear = strCurrentYear.toInt();
+    int iAge = iCurrentYear - iYear;
+
+    return QString::number(iAge);
 }
 
 QString DlgUserProfile::convert_country(QString strCountry)
@@ -151,9 +219,9 @@ void DlgUserProfile::show_avatar(QString strUrl)
     if (strUrl.indexOf(",") == -1) return; // wrong url
 
     // change url
-    QStringList lUrl = strUrl.split(",");
-    lUrl[1] = "3";
-    strUrl = lUrl.join(",");
+    //QStringList lUrl = strUrl.split(",");
+    //lUrl[1] = "3";
+    //strUrl = lUrl.join(",");
 
     // get url
     QNetworkAccessManager accessManager;

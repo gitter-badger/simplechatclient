@@ -133,6 +133,10 @@ void NetworkThread::close()
     if (socket->state() == QAbstractSocket::ConnectedState)
         socket->disconnectFromHost();
 
+    // state
+    QSettings settings;
+    settings.setValue("logged", "off");
+
     // stop timers
     if (timerPingPong->isActive() == true)
         timerPingPong->stop();
