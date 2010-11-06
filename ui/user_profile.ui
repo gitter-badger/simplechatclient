@@ -6,20 +6,20 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>326</width>
-    <height>398</height>
+    <width>294</width>
+    <height>362</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>326</width>
-    <height>398</height>
+    <width>294</width>
+    <height>362</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>326</width>
-    <height>398</height>
+    <width>294</width>
+    <height>362</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -34,8 +34,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>325</width>
-     <height>396</height>
+     <width>292</width>
+     <height>361</height>
     </rect>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout">
@@ -60,11 +60,28 @@
       <item>
        <layout class="QHBoxLayout" name="horizontalLayout_2">
         <item>
-         <widget class="QToolButton" name="toolButton_zoom">
-          <property name="text">
-           <string/>
-          </property>
-         </widget>
+         <layout class="QVBoxLayout" name="verticalLayout_2">
+          <item>
+           <spacer name="verticalSpacer">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>40</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QToolButton" name="toolButton_zoom">
+            <property name="text">
+             <string/>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </item>
         <item>
          <widget class="QLabel" name="label_avatar">
@@ -92,13 +109,13 @@
          <widget class="QTextEdit" name="textEdit_desc">
           <property name="minimumSize">
            <size>
-            <width>0</width>
-            <height>50</height>
+            <width>190</width>
+            <height>70</height>
            </size>
           </property>
           <property name="maximumSize">
            <size>
-            <width>16777215</width>
+            <width>190</width>
             <height>70</height>
            </size>
           </property>
@@ -107,38 +124,25 @@
        </layout>
       </item>
       <item>
-       <layout class="QFormLayout" name="formLayout_age_sex">
-        <property name="labelAlignment">
-         <set>Qt::AlignCenter</set>
-        </property>
-        <property name="formAlignment">
-         <set>Qt::AlignCenter</set>
-        </property>
-        <item row="0" column="0">
-         <widget class="QLabel" name="label_sex">
-          <property name="text">
-           <string>Sex:</string>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="0">
+       <layout class="QHBoxLayout" name="horizontalLayout">
+        <item>
          <widget class="QLabel" name="label_age">
           <property name="text">
            <string>Age:</string>
           </property>
          </widget>
         </item>
-        <item row="0" column="1">
-         <widget class="QLineEdit" name="lineEdit_sex">
+        <item>
+         <widget class="QLineEdit" name="lineEdit_age">
           <property name="minimumSize">
            <size>
-            <width>114</width>
+            <width>50</width>
             <height>0</height>
            </size>
           </property>
           <property name="maximumSize">
            <size>
-            <width>114</width>
+            <width>50</width>
             <height>16777215</height>
            </size>
           </property>
@@ -147,8 +151,15 @@
           </property>
          </widget>
         </item>
-        <item row="1" column="1">
-         <widget class="QLineEdit" name="lineEdit_age">
+        <item>
+         <widget class="QLabel" name="label_sex">
+          <property name="text">
+           <string>Sex:</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLineEdit" name="lineEdit_sex">
           <property name="minimumSize">
            <size>
             <width>114</width>
@@ -172,13 +183,13 @@
        <widget class="QWidget" name="widget_more" native="true">
         <property name="minimumSize">
          <size>
-          <width>321</width>
+          <width>282</width>
           <height>201</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
-          <width>321</width>
+          <width>282</width>
           <height>201</height>
          </size>
         </property>
@@ -187,13 +198,16 @@
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>319</width>
+           <width>291</width>
            <height>197</height>
           </rect>
          </property>
          <layout class="QFormLayout" name="formLayout_more">
           <property name="fieldGrowthPolicy">
            <enum>QFormLayout::ExpandingFieldsGrow</enum>
+          </property>
+          <property name="labelAlignment">
+           <set>Qt::AlignCenter</set>
           </property>
           <property name="formAlignment">
            <set>Qt::AlignCenter</set>
@@ -238,13 +252,13 @@
            <widget class="QLineEdit" name="lineEdit_city">
             <property name="minimumSize">
              <size>
-              <width>250</width>
+              <width>200</width>
               <height>25</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
-              <width>250</width>
+              <width>200</width>
               <height>25</height>
              </size>
             </property>
@@ -267,13 +281,13 @@
            <widget class="QLineEdit" name="lineEdit_country">
             <property name="minimumSize">
              <size>
-              <width>250</width>
+              <width>200</width>
               <height>25</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
-              <width>250</width>
+              <width>200</width>
               <height>25</height>
              </size>
             </property>
@@ -296,13 +310,13 @@
            <widget class="QPlainTextEdit" name="plainTextEdit_hobby">
             <property name="minimumSize">
              <size>
-              <width>250</width>
+              <width>200</width>
               <height>50</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
-              <width>250</width>
+              <width>200</width>
               <height>50</height>
              </size>
             </property>
@@ -351,13 +365,13 @@
            <widget class="QLineEdit" name="lineEdit_www">
             <property name="minimumSize">
              <size>
-              <width>250</width>
+              <width>200</width>
               <height>25</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
-              <width>250</width>
+              <width>200</width>
               <height>25</height>
              </size>
             </property>
