@@ -1337,25 +1337,32 @@ void OnetKernel::raw_111n()
     if (strValue[0] == ':')
         strValue = strValue.right(strValue.length()-1);
 
+    QString strAvatarLink;
+
+    // process info
     if (strValue.isEmpty() == false)
     {
         if (strInfo == "avatar")
-        {
-            if (mNickAvatar->contains(strNick) == false)
-            {
-                naThreadList.append(new NickAvatar(pTabC, strNick, strValue, mNickAvatar));
-                QObject::connect(naThreadList.at(naThreadList.size()-1), SIGNAL(sremove_nathread(NickAvatar*)), this, SLOT(remove_nathread(NickAvatar*)));
-
-#ifdef Q_WS_X11
-                QSettings settings;
-                if (settings.value("debug").toString() == "on")
-                    qDebug() << "Nick avatar thread +1 (size: " << naThreadList.size() << ")";
-#endif
-            }
-        }
+            strAvatarLink = strValue;
 
         // set user info
         emit set_user_info(strNick, strInfo, strValue);
+    }
+
+    // get avatar
+    if (strAvatarLink.isEmpty() == false)
+    {
+        if (mNickAvatar->contains(strNick) == false)
+        {
+            naThreadList.append(new NickAvatar(pTabC, strNick, strAvatarLink, mNickAvatar));
+            QObject::connect(naThreadList.at(naThreadList.size()-1), SIGNAL(sremove_nathread(NickAvatar*)), this, SLOT(remove_nathread(NickAvatar*)));
+
+#ifdef Q_WS_X11
+            QSettings settings;
+            if (settings.value("debug").toString() == "on")
+                qDebug() << "Nick avatar thread +1 (size: " << naThreadList.size() << ")";
+#endif
+        }
     }
 }
 
