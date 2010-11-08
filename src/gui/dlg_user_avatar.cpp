@@ -18,71 +18,35 @@
  *                                                                          *
  ****************************************************************************/
 
-#ifndef DLG_USER_PROFILE_H
-#define DLG_USER_PROFILE_H
-
-#include <QDesktopWidget>
-#include <QDialog>
-#include <QNetworkAccessManager>
-#include <QNetworkReply>
-#include <QPushButton>
-#include "convert.h"
 #include "dlg_user_avatar.h"
-#include "network.h"
-#include "ui_user_profile.h"
 
-struct NickInfo
+DlgUserAvatar::DlgUserAvatar(QWidget *parent, QPixmap param1) : QDialog(parent)
 {
-    QString nick;
-    QString avatar;
-    QString birthdate;
-    QString city;
-    QString country;
-    QString email; // not important
-    QString longDesc;
-    QString offmsg; // not inportant
-    QString prefs; // not important
-    QString rank; // not important
-    QString sex;
-    QString shortDesc;
-    QString tags; // not important
-    QString type;
-    QString vEmail; // not important
-    QString www;
-};
-typedef NickInfo sNickInfo;
+    ui.setupUi(this);
+    setAttribute(Qt::WA_DeleteOnClose);
+    setWindowTitle(tr("Avatar"));
+    // center screen
+    move(QApplication::desktop()->screen()->rect().center() - rect().center());
 
+    myparent = parent;
+    avatar = param1;
 
-class DlgUserProfile : public QDialog
+    // slider value 5
+    ui.label_avatar->setPixmap(avatar.scaled(QSize(250,250)));
+
+    QObject::connect(ui.horizontalSlider, SIGNAL(valueChanged(int)), this, SLOT(slider_value_changed(int)));
+    QObject::connect(ui.buttonBox, SIGNAL(accepted()), this, SLOT(button_ok()));
+}
+
+void DlgUserAvatar::slider_value_changed(int iValue)
 {
-    Q_OBJECT
-public:
-    DlgUserProfile(QWidget *, Network *, sNickInfo);
+    int iSize = 50;
+    iSize *= iValue;
 
-private:
-    Ui::uiUserProfile ui;
-    QWidget *myparent;
-    Network *pNetwork;
-    sNickInfo sCurrentNickInfo;
-    int iWidth; // widget width
-    QPixmap avatar;
+    ui.label_avatar->setPixmap(avatar.scaled(QSize(iSize,iSize)));
+}
 
-    void show_info();
-    QString convert_desc(QString);
-    QString convert_sex(QString);
-    QString convert_age(QString);
-    QString convert_country(QString);
-    QString convert_type(QString);
-    void show_avatar(QString);
-
-private slots:
-    void button_zoom();
-    void button_more();
-    void button_close();
-
-protected:
-    virtual void showEvent(QShowEvent *);
-
-};
-
-#endif // DLG_USER_PROFILE_H
+void DlgUserAvatar::button_ok()
+{
+    close();
+}

@@ -48,7 +48,10 @@ DlgFriends::DlgFriends(QWidget *parent, Network *param1, QMap <QString, QByteArr
 
 void DlgFriends::set_friend(QString strNick, bool bStatus)
 {
-    friends[strNick] = bStatus;
+    if (friends.contains(strNick))
+        friends[strNick] = bStatus;
+    else
+        friends.insert(strNick, bStatus);
 }
 
 void DlgFriends::remove_friend(QString strNick)

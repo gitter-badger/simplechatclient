@@ -18,71 +18,28 @@
  *                                                                          *
  ****************************************************************************/
 
-#ifndef DLG_USER_PROFILE_H
-#define DLG_USER_PROFILE_H
+#ifndef DLG_USER_AVATAR_H
+#define DLG_USER_AVATAR_H
 
-#include <QDesktopWidget>
 #include <QDialog>
-#include <QNetworkAccessManager>
-#include <QNetworkReply>
-#include <QPushButton>
-#include "convert.h"
-#include "dlg_user_avatar.h"
-#include "network.h"
-#include "ui_user_profile.h"
+#include <QDesktopWidget>
+#include "ui_user_avatar.h"
 
-struct NickInfo
-{
-    QString nick;
-    QString avatar;
-    QString birthdate;
-    QString city;
-    QString country;
-    QString email; // not important
-    QString longDesc;
-    QString offmsg; // not inportant
-    QString prefs; // not important
-    QString rank; // not important
-    QString sex;
-    QString shortDesc;
-    QString tags; // not important
-    QString type;
-    QString vEmail; // not important
-    QString www;
-};
-typedef NickInfo sNickInfo;
-
-
-class DlgUserProfile : public QDialog
+class DlgUserAvatar : public QDialog
 {
     Q_OBJECT
 public:
-    DlgUserProfile(QWidget *, Network *, sNickInfo);
+    DlgUserAvatar(QWidget *, QPixmap);
 
 private:
-    Ui::uiUserProfile ui;
+    Ui::uiUserAvatar ui;
     QWidget *myparent;
-    Network *pNetwork;
-    sNickInfo sCurrentNickInfo;
-    int iWidth; // widget width
     QPixmap avatar;
 
-    void show_info();
-    QString convert_desc(QString);
-    QString convert_sex(QString);
-    QString convert_age(QString);
-    QString convert_country(QString);
-    QString convert_type(QString);
-    void show_avatar(QString);
-
 private slots:
-    void button_zoom();
-    void button_more();
-    void button_close();
-
-protected:
-    virtual void showEvent(QShowEvent *);
+    void slider_value_changed(int);
+    void button_ok();
 
 };
 
-#endif // DLG_USER_PROFILE_H
+#endif // DLG_USER_AVATAR_H

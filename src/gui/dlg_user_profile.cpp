@@ -28,6 +28,7 @@ DlgUserProfile::DlgUserProfile(QWidget *parent, Network *param1, sNickInfo param
     // center screen
     move(QApplication::desktop()->screen()->rect().center() - rect().center());
 
+    myparent = parent;
     pNetwork = param1;
     sCurrentNickInfo = param2;
 
@@ -59,7 +60,13 @@ DlgUserProfile::DlgUserProfile(QWidget *parent, Network *param1, sNickInfo param
     ui.label_www->setText(tr("Website:"));
     ui.pushButton_more->setText(tr("More..."));
 
+    QObject::connect(ui.toolButton_zoom, SIGNAL(clicked()), this, SLOT(button_zoom()));
     QObject::connect(ui.pushButton_more, SIGNAL(clicked()), this, SLOT(button_more()));
+}
+
+void DlgUserProfile::button_zoom()
+{
+    (new DlgUserAvatar(myparent, avatar))->show();
 }
 
 void DlgUserProfile::button_more()
@@ -219,9 +226,9 @@ void DlgUserProfile::show_avatar(QString strUrl)
     if (strUrl.indexOf(",") == -1) return; // wrong url
 
     // change url
-    //QStringList lUrl = strUrl.split(",");
-    //lUrl[1] = "3";
-    //strUrl = lUrl.join(",");
+    QStringList lUrl = strUrl.split(",");
+    lUrl[1] = "10";
+    strUrl = lUrl.join(",");
 
     // get url
     QNetworkAccessManager accessManager;
@@ -234,9 +241,8 @@ void DlgUserProfile::show_avatar(QString strUrl)
     QByteArray bData = pReply->readAll();
 
     // show avatar
-    QPixmap pixmap;
-    pixmap.loadFromData(bData);
-    ui.label_avatar->setPixmap(pixmap);
+    avatar.loadFromData(bData);
+    ui.label_avatar->setPixmap(avatar.scaled(QSize(50,50)));
 }
 
 void DlgUserProfile::button_close()

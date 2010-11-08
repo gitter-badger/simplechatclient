@@ -48,6 +48,8 @@ InputWidget::InputWidget(QWidget *parent, Network *param1) : QWidget(parent)
 
     showHideToolWidget = new QPushButton(QIcon(":/images/oxygen/16x16/text-frame-unlink.png"), "", myparent);
     showHideToolWidget->setToolTip(tr("Show/Hide tool widget"));
+    showHideToolWidget->setMaximumWidth(25);
+    showHideToolWidget->setMaximumHeight(25);
     showHideToolWidget->show();
 
     mainLayout = new QHBoxLayout();

@@ -392,7 +392,7 @@
     </message>
     <message>
         <source>Thanks to &lt;b&gt;ovo_&lt;/b&gt; for creating graphics, to all persons who actively support the development of the project and special thanks to &lt;b&gt;Darom&lt;/b&gt;.</source>
-        <translation> Podziękowania dla &lt;b&gt;ovo_&lt;/b&gt; za wykonanie elementów grafiki, dla wszytkich, którzy aktywnie wsparli rozwój projektu oraz szczególne podziękowania dla &lt;b&gt;Darom&lt;/b&gt;.</translation>
+        <translation> Podziękowania dla &lt;b&gt;ovo_&lt;/b&gt; za wykonanie elementów grafiki, dla wszystkich, którzy aktywnie wsparli rozwój projektu oraz szczególne podziękowania dla &lt;b&gt;Darom&lt;/b&gt;.</translation>
     </message>
 </context>
 <context>
@@ -1329,6 +1329,13 @@
     <message>
         <source>A new version %1 is available. Please %2 an installer and upgrade.</source>
         <translation>Nowa wersja %1 jest dostępna. Proszę %2 instalacje i zaktualizuj program.</translation>
+    </message>
+</context>
+<context>
+    <name>DlgUserAvatar</name>
+    <message>
+        <source>Avatar</source>
+        <translation>Avatar</translation>
     </message>
 </context>
 <context>

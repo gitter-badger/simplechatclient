@@ -17,6 +17,7 @@ set (scc_UIS
 	../ui/options.ui
 	../ui/register_nick.ui
 	../ui/update.ui
+	../ui/user_avatar.ui
 	../ui/user_profile.ui
 )
 
@@ -54,6 +55,7 @@ set (scc_SRCS
 	gui/dlg_options.cpp
 	gui/dlg_register_nick.cpp
 	gui/dlg_update.cpp
+	gui/dlg_user_avatar.cpp
 	gui/dlg_user_profile.cpp
 	notify/notify.cpp
 	onet/onet_auth.cpp
@@ -103,6 +105,7 @@ set (scc_MOC_HDRS
 	gui/dlg_options.h
 	gui/dlg_register_nick.h
 	gui/dlg_update.h
+	gui/dlg_user_avatar.h
 	gui/dlg_user_profile.h
 	notify/notify.h
 	onet/onet_auth.h

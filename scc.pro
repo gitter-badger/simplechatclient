@@ -56,7 +56,8 @@ SOURCES += src/avatars/channel_avatar.cpp \
     src/widgets/nicklistwidget.cpp \
     src/widgets/nicklistdockwidget.cpp \
     src/widgets/toolwidget.cpp \
-    src/widgets/inputwidget.cpp
+    src/widgets/inputwidget.cpp \
+    src/gui/dlg_user_avatar.cpp
 HEADERS += src/avatars/channel_avatar.h \
     src/avatars/nick_avatar.h \
     src/common/commands.h \
@@ -105,7 +106,8 @@ HEADERS += src/avatars/channel_avatar.h \
     src/widgets/nicklistwidget.h \
     src/widgets/nicklistdockwidget.h \
     src/widgets/toolwidget.h \
-    src/widgets/inputwidget.h
+    src/widgets/inputwidget.h \
+    src/gui/dlg_user_avatar.h
 FORMS += ui/about.ui \
     ui/cam.ui \
     ui/channel_favourites.ui \
@@ -124,4 +126,5 @@ FORMS += ui/about.ui \
     ui/register_nick.ui \
     ui/update.ui \
     ui/user_profile.ui \
-    ui/notes.ui
+    ui/notes.ui \
+    ui/user_avatar.ui

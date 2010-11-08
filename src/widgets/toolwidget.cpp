@@ -144,6 +144,8 @@ ToolWidget::ToolWidget(QWidget *parent, Network *param1, InputWidget *param2, Dl
 
     channel_settings = new QPushButton(QIcon(":/images/oxygen/16x16/configure.png"), "", this);
     channel_settings->setToolTip(tr("Channel settings"));
+    channel_settings->setMaximumWidth(25);
+    channel_settings->setMaximumHeight(25);
     channel_settings->show();
 
     moderation = new QPushButton(QIcon(":/images/oxygen/16x16/go-last.png"), tr("Moderation"), this);
