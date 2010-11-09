@@ -67,6 +67,7 @@ DlgOptions::DlgOptions(QWidget *parent, Notify *param1) : QDialog(parent)
 
     // page adv
     ui.checkBox_auto_busy->setText(tr("Busy mode after you log in to chat"));
+    ui.checkBox_disable_autojoin_favourites->setText(tr("Disable autojoin favourite channels"));
     ui.checkBox_show_zuo->setText(tr("Show ZUO"));
     ui.checkBox_hide_formating->setText(tr("Disable font size, color..."));
     ui.checkBox_hide_join_part->setText(tr("Hide join/part"));
@@ -236,6 +237,7 @@ DlgOptions::DlgOptions(QWidget *parent, Notify *param1) : QDialog(parent)
     QObject::connect(ui.radioButton_classic, SIGNAL(clicked()), this, SLOT(set_classic_style()));
     QObject::connect(ui.comboBox_language, SIGNAL(currentIndexChanged(int)), this, SLOT(language_changed(int)));
     QObject::connect(ui.checkBox_auto_busy, SIGNAL(clicked()), this, SLOT(auto_busy()));
+    QObject::connect(ui.checkBox_disable_autojoin_favourites, SIGNAL(clicked()), this, SLOT(disable_autojoin_favourites()));
     QObject::connect(ui.checkBox_show_zuo, SIGNAL(clicked()), this, SLOT(show_zuo()));
     QObject::connect(ui.checkBox_hide_formating, SIGNAL(clicked()), this, SLOT(hide_formating()));
     QObject::connect(ui.checkBox_hide_join_part, SIGNAL(clicked()), this, SLOT(hide_join_part()));
@@ -418,6 +420,23 @@ void DlgOptions::auto_busy()
     {
         pConfig->set_value("auto_busy", "off");
         settings.setValue("auto_busy", "off");
+    }
+    delete pConfig;
+}
+
+void DlgOptions::disable_autojoin_favourites()
+{
+    QSettings settings;
+    Config *pConfig = new Config();
+    if (ui.checkBox_disable_autojoin_favourites->isChecked() == true)
+    {
+        pConfig->set_value("disable_autojoin_favourites", "on");
+        settings.setValue("disable_autojoin_favourites", "on");
+    }
+    else
+    {
+        pConfig->set_value("disable_autojoin_favourites", "off");
+        settings.setValue("disable_autojoin_favourites", "off");
     }
     delete pConfig;
 }
@@ -1455,6 +1474,7 @@ void DlgOptions::showEvent(QShowEvent *event)
     QString strLanguage = pConfig->get_value("language");
 
     QString strAutoBusy = pConfig->get_value("auto_busy");
+    QString strDisableAutojoinFavourites = pConfig->get_value("disable_autojoin_favourites");
     QString strShowZuo = pConfig->get_value("show_zuo");
     QString strHideFormating = pConfig->get_value("hide_formating");
     QString strHideJoinPart = pConfig->get_value("hide_join_part");
@@ -1525,6 +1545,12 @@ void DlgOptions::showEvent(QShowEvent *event)
         ui.checkBox_auto_busy->setChecked(true);
     else
         ui.checkBox_auto_busy->setChecked(false);
+
+// auto busy
+    if (strDisableAutojoinFavourites == "on")
+        ui.checkBox_disable_autojoin_favourites->setChecked(true);
+    else
+        ui.checkBox_disable_autojoin_favourites->setChecked(false);
 
 // show zuo
     if (strShowZuo == "on")

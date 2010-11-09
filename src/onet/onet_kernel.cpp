@@ -1234,8 +1234,8 @@ void OnetKernel::raw_001()
     if (settings.value("auto_busy").toString() == "on")
         pNetwork->send("BUSY 1");
 
-// autojoin favourites
-    settings.setValue("autojoin_favourites", "on");
+// ignore_raw_141
+    settings.setValue("ignore_raw_141", "off");
 
 // override off
     settings.setValue("override", "off");
@@ -1450,13 +1450,13 @@ void OnetKernel::raw_141n()
 
         dlgchannel_favourites->add_channel(strChannel);
 
-        if (settings.value("autojoin_favourites").toString() == "on")
+        if ((settings.value("ignore_raw_141").toString() == "off") && (settings.value("disable_autojoin_favourites").toString() == "off"))
             pNetwork->send(QString("JOIN %1").arg(strChannel));
     }
 
-    // turn off autojoin
-    if (settings.value("autojoin_favourites").toString() == "on")
-        settings.setValue("autojoin_favourites", "off");
+    // turn on ignore_raw_141
+    if (settings.value("ignore_raw_141").toString() == "off")
+        settings.setValue("ignore_raw_141", "on");
 }
 
 // NS FAVOURITES

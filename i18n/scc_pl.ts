@@ -1081,6 +1081,10 @@
         <translation>Tryb zajętości po zalogowaniu</translation>
     </message>
     <message>
+        <source>Disable autojoin favourite channels</source>
+        <translation>Wyłącz automatyczne wchodzenie do ulubionych kanałów</translation>
+    </message>
+    <message>
         <source>Show ZUO</source>
         <translation>Pokaż numer ZUO</translation>
     </message>

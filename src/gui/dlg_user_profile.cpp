@@ -68,6 +68,7 @@ void DlgUserProfile::avatar_finished()
 {
     QByteArray bData = pReply->readAll();
     pReply->QObject::disconnect();
+    pReply->deleteLater();
 
     // show avatar
     if (bData.isEmpty() == false)

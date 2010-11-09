@@ -63,6 +63,7 @@ private slots:
     void set_classic_style();
     void language_changed(int);
     void auto_busy();
+    void disable_autojoin_favourites();
     void show_zuo();
     void hide_formating();
     void hide_join_part();

@@ -283,6 +283,13 @@
         </widget>
        </item>
        <item>
+        <widget class="QCheckBox" name="checkBox_disable_autojoin_favourites">
+         <property name="text">
+          <string>Disable autojoin favourite channels</string>
+         </property>
+        </widget>
+       </item>
+       <item>
         <widget class="QCheckBox" name="checkBox_show_zuo">
          <property name="text">
           <string>Show ZUO</string>
