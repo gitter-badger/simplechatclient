@@ -133,6 +133,10 @@ QString DlgUserProfile::convert_desc(QString strContent)
     convertText->convert_text(&strContent, &strContentLast);
     delete convertText;
 
+#ifdef Q_WS_X11
+    strContent.replace("file://", "");
+#endif
+
     // return
     strContent = strContent+strContentLast;
     return (strContentStart+strContent+strContentEnd);
