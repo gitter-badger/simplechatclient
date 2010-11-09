@@ -102,6 +102,7 @@ void DlgUserProfile::button_more()
 void DlgUserProfile::show_info()
 {
     ui.label_avatar->setText("");
+    ui.toolButton_zoom->setEnabled(false);
     ui.label_nick->setText(QString("<p style=\"font-weight:bold;\"> %1</p>").arg(sCurrentNickInfo.nick));
     ui.textEdit_desc->setHtml(convert_desc(sCurrentNickInfo.shortDesc));
     ui.lineEdit_sex->setText(convert_sex(sCurrentNickInfo.sex));
@@ -114,7 +115,10 @@ void DlgUserProfile::show_info()
     ui.lineEdit_www->setText(sCurrentNickInfo.www);
 
     if (sCurrentNickInfo.avatar.isEmpty() == false)
+    {
         show_avatar(sCurrentNickInfo.avatar);
+        ui.toolButton_zoom->setEnabled(true);
+    }
 }
 
 QString DlgUserProfile::convert_desc(QString strContent)
@@ -245,8 +249,11 @@ void DlgUserProfile::show_avatar(QString strUrl)
     QByteArray bData = pReply->readAll();
 
     // show avatar
-    avatar.loadFromData(bData);
-    ui.label_avatar->setPixmap(avatar.scaled(QSize(50,50)));
+    if (bData.isEmpty() == false)
+    {
+        avatar.loadFromData(bData);
+        ui.label_avatar->setPixmap(avatar.scaled(QSize(50,50)));
+    }
 }
 
 void DlgUserProfile::button_close()
