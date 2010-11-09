@@ -54,7 +54,8 @@ NetworkThread::NetworkThread(QAction *param1, QAction *param2, QString param3, i
 NetworkThread::~NetworkThread()
 {
     close();
-    delete socket;
+
+    socket->deleteLater();
 }
 
 void NetworkThread::run()
