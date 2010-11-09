@@ -324,6 +324,13 @@
          </property>
         </widget>
        </item>
+       <item>
+        <widget class="QCheckBox" name="checkBox_disable_replaces">
+         <property name="text">
+          <string>Disable replaces</string>
+         </property>
+        </widget>
+       </item>
       </layout>
      </widget>
     </widget>

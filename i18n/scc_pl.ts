@@ -1078,31 +1078,35 @@
     </message>
     <message>
         <source>Busy mode after you log in to chat</source>
-        <translation>Tryb zajętości po zalogowaniu (busy)</translation>
+        <translation>Tryb zajętości po zalogowaniu</translation>
     </message>
     <message>
         <source>Show ZUO</source>
-        <translation>Pokazywanie ZUO</translation>
+        <translation>Pokaż numer ZUO</translation>
     </message>
     <message>
-        <source>Disable formatting messages</source>
-        <translation>Wyłączenie formatowania</translation>
+        <source>Disable font size, color...</source>
+        <translation>Wyłącz wielkość, kolor czcionek...</translation>
     </message>
     <message>
         <source>Hide join/part</source>
-        <translation>Ukrywanie wejść/wyjść</translation>
+        <translation>Ukryj wejścia/wyjścia</translation>
     </message>
     <message>
-        <source>Hide join/part when number of nicks > 200</source>
-        <translation>Ukrywanie wejść/wyjść gdy liczba osób > 200</translation>
+        <source>Hide join/part on big channels</source>
+        <translation>Ukryj wejścia/wyjścia osób w dużych kanałach</translation>
     </message>
     <message>
         <source>Disable avatars</source>
-        <translation>Wyłączenie avatarów</translation>
+        <translation>Wyłącz avatary</translation>
     </message>
     <message>
         <source>Disable emoticons</source>
-        <translation>Wyłączenie emotikonów</translation>
+        <translation>Wyłącz obrazki</translation>
+    </message>
+    <message>
+        <source>Disable replaces</source>
+        <translation>Wyłącz zamianę emotikon</translation>
     </message>
     <message>
         <source>Default font</source>
@@ -1238,7 +1242,7 @@
     </message>
     <message>
         <source>Disable sounds</source>
-        <translation>Wyłączenie dźwięków</translation>
+        <translation>Wyłącz dźwięki</translation>
     </message>
     <message>
         <source>Logs</source>
@@ -1254,7 +1258,7 @@
     </message>
     <message>
         <source>Disable logs</source>
-        <translation>Wyłączenie logów</translation>
+        <translation>Wyłącz logi</translation>
     </message>
 </context>
 <context>

@@ -22,6 +22,7 @@
 #define REPLACE_H
 
 #include <QObject>
+#include <QSettings>
 
 class Replace : public QObject
 {

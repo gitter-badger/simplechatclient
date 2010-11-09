@@ -26,6 +26,10 @@ Replace::Replace()
 
 QString Replace::replace_emots(QString strData)
 {
+    // return if disable replaces == on
+    QSettings settings;
+    if (settings.value("disable_replaces").toString() == "on") return strData;
+
     strData.replace(":))", "%Ihaha%");
     strData.replace(";))", "%Ioczko%");
 

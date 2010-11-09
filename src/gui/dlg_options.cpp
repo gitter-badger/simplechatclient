@@ -68,11 +68,12 @@ DlgOptions::DlgOptions(QWidget *parent, Notify *param1) : QDialog(parent)
     // page adv
     ui.checkBox_auto_busy->setText(tr("Busy mode after you log in to chat"));
     ui.checkBox_show_zuo->setText(tr("Show ZUO"));
-    ui.checkBox_hide_formating->setText(tr("Disable formatting messages"));
+    ui.checkBox_hide_formating->setText(tr("Disable font size, color..."));
     ui.checkBox_hide_join_part->setText(tr("Hide join/part"));
-    ui.checkBox_hide_join_part_200->setText(tr("Hide join/part when number of nicks > 200"));
+    ui.checkBox_hide_join_part_200->setText(tr("Hide join/part on big channels"));
     ui.checkBox_disable_avatars->setText(tr("Disable avatars"));
     ui.checkBox_disable_emots->setText(tr("Disable emoticons"));
+    ui.checkBox_disable_replaces->setText(tr("Disable replaces"));
 
     // page default font
     ui.groupBox_my_font->setTitle(tr("Default font"));
@@ -241,6 +242,7 @@ DlgOptions::DlgOptions(QWidget *parent, Notify *param1) : QDialog(parent)
     QObject::connect(ui.checkBox_hide_join_part_200, SIGNAL(clicked()), this, SLOT(hide_join_part_200()));
     QObject::connect(ui.checkBox_disable_avatars, SIGNAL(clicked()), this, SLOT(disable_avatars()));
     QObject::connect(ui.checkBox_disable_emots, SIGNAL(clicked()), this, SLOT(disable_emots()));
+    QObject::connect(ui.checkBox_disable_replaces, SIGNAL(clicked()), this, SLOT(disable_replaces()));
     QObject::connect(ui.comboBox_my_bold, SIGNAL(currentIndexChanged(int)), this, SLOT(set_my_bold(int)));
     QObject::connect(ui.comboBox_my_italic, SIGNAL(currentIndexChanged(int)), this, SLOT(set_my_italic(int)));
     QObject::connect(ui.comboBox_my_font, SIGNAL(currentIndexChanged(QString)), this, SLOT(set_my_font(QString)));
@@ -518,6 +520,23 @@ void DlgOptions::disable_emots()
     {
         pConfig->set_value("disable_emots", "off");
         settings.setValue("disable_emots", "off");
+    }
+    delete pConfig;
+}
+
+void DlgOptions::disable_replaces()
+{
+    QSettings settings;
+    Config *pConfig = new Config();
+    if (ui.checkBox_disable_replaces->isChecked() == true)
+    {
+        pConfig->set_value("disable_replaces", "on");
+        settings.setValue("disable_replaces", "on");
+    }
+    else
+    {
+        pConfig->set_value("disable_replaces", "off");
+        settings.setValue("disable_replaces", "off");
     }
     delete pConfig;
 }
@@ -1442,6 +1461,7 @@ void DlgOptions::showEvent(QShowEvent *event)
     QString strHideJoinPart200 = pConfig->get_value("hide_join_part_200");
     QString strDisableAvatars = pConfig->get_value("disable_avatars");
     QString strDisableEmots = pConfig->get_value("disable_emots");
+    QString strDisableReplaces = pConfig->get_value("disable_replaces");
 
     QString strMyBold = pConfig->get_value("my_bold");
     QString strMyItalic = pConfig->get_value("my_italic");
@@ -1541,6 +1561,12 @@ void DlgOptions::showEvent(QShowEvent *event)
         ui.checkBox_disable_emots->setChecked(true);
     else
         ui.checkBox_disable_emots->setChecked(false);
+
+// disable replaces
+    if (strDisableReplaces == "on")
+        ui.checkBox_disable_replaces->setChecked(true);
+    else
+        ui.checkBox_disable_replaces->setChecked(false);
 
 // set my bold
     if (strMyBold == "on")
