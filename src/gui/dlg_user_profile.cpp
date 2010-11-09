@@ -64,6 +64,23 @@ DlgUserProfile::DlgUserProfile(QWidget *parent, Network *param1, sNickInfo param
     QObject::connect(ui.pushButton_more, SIGNAL(clicked()), this, SLOT(button_more()));
 }
 
+void DlgUserProfile::avatar_finished()
+{
+    QByteArray bData = pReply->readAll();
+    pReply->QObject::disconnect();
+
+    // show avatar
+    if (bData.isEmpty() == false)
+    {
+        // display
+        avatar.loadFromData(bData);
+        ui.label_avatar->setPixmap(avatar.scaled(QSize(50,50)));
+
+        // enable zoom
+        ui.toolButton_zoom->setEnabled(true);
+    }
+}
+
 void DlgUserProfile::button_zoom()
 {
     (new DlgUserAvatar(myparent, avatar))->show();
@@ -115,10 +132,7 @@ void DlgUserProfile::show_info()
     ui.lineEdit_www->setText(sCurrentNickInfo.www);
 
     if (sCurrentNickInfo.avatar.isEmpty() == false)
-    {
         show_avatar(sCurrentNickInfo.avatar);
-        ui.toolButton_zoom->setEnabled(true);
-    }
 }
 
 QString DlgUserProfile::convert_desc(QString strContent)
@@ -239,21 +253,8 @@ void DlgUserProfile::show_avatar(QString strUrl)
     strUrl = lUrl.join(",");
 
     // get url
-    QNetworkAccessManager accessManager;
-    QNetworkReply *pReply;
-    QEventLoop eventLoop;
     pReply = accessManager.get(QNetworkRequest(QUrl(strUrl)));
-    QObject::connect(pReply, SIGNAL(finished()), &eventLoop, SLOT(quit()));
-    eventLoop.exec();
-
-    QByteArray bData = pReply->readAll();
-
-    // show avatar
-    if (bData.isEmpty() == false)
-    {
-        avatar.loadFromData(bData);
-        ui.label_avatar->setPixmap(avatar.scaled(QSize(50,50)));
-    }
+    QObject::connect(pReply, SIGNAL(finished()), this, SLOT(avatar_finished()));
 }
 
 void DlgUserProfile::button_close()

@@ -66,6 +66,8 @@ private:
     sNickInfo sCurrentNickInfo;
     int iWidth; // widget width
     QPixmap avatar;
+    QNetworkAccessManager accessManager;
+    QNetworkReply *pReply;
 
     void show_info();
     QString convert_desc(QString);
@@ -76,6 +78,7 @@ private:
     void show_avatar(QString);
 
 private slots:
+    void avatar_finished();
     void button_zoom();
     void button_more();
     void button_close();
