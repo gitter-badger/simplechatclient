@@ -72,6 +72,7 @@ private slots:
     void kick();
     void ban();
     void kban();
+    void ipban();
     void op_add();
     void op_del();
     void halfop_add();

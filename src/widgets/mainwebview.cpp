@@ -121,6 +121,11 @@ void MainWebView::kban()
     }
 }
 
+void MainWebView::ipban()
+{
+    pNetwork->send(QString("CS BANIP %1 ADD %2").arg(strChannel).arg(strNick));
+}
+
 void MainWebView::op_add()
 {
     pNetwork->send(QString("CS OP %1 ADD %2").arg(strChannel).arg(strNick));
@@ -348,6 +353,7 @@ void MainWebView::contextMenuEvent(QContextMenuEvent *event)
             menu->addAction(tr("Kick From Channel"), this, SLOT(kick()));
             menu->addAction(tr("Ban From Channel"), this, SLOT(ban()));
             menu->addAction(tr("Kick & Ban"), this, SLOT(kban()));
+            menu->addAction(tr("IP Ban"), this, SLOT(ipban()));
             menu->addSeparator();
             menu->addMenu(privilege);
 

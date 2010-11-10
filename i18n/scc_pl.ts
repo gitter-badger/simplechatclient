@@ -2344,6 +2344,10 @@
         <translation>Banuj i wyrzuć</translation>
     </message>
     <message>
+        <source>IP Ban</source>
+        <translation>Banuj IP</translation>
+    </message>
+    <message>
         <source>Reason for kicking:</source>
         <translation>Podaj powód wyrzucenia:</translation>
     </message>
@@ -2532,6 +2536,10 @@
     <message>
         <source>Kick &amp; Ban</source>
         <translation>Banuj i wyrzuć</translation>
+    </message>
+    <message>
+        <source>IP Ban</source>
+        <translation>Banuj IP</translation>
     </message>
 </context>
 <context>
