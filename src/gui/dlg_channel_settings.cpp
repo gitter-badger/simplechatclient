@@ -139,6 +139,9 @@ void DlgChannelSettings::add_topic(QString strCheckChannel, QString strTopic)
 {
     if (strCheckChannel != strChannel) return; // not this channel
 
+    // convert emoticons
+    strTopic.replace(QRegExp("%I([a-zA-Z0-9_-]+)%"), "//\\1");
+
     ui.plainTextEdit_topic->clear();
     ui.plainTextEdit_topic->insertPlainText(strTopic);
 }
@@ -364,7 +367,11 @@ void DlgChannelSettings::www_changed()
 
 void DlgChannelSettings::topic_changed()
 {
-    pNetwork->send(QString("CS SET %1 TOPIC %2").arg(strChannel).arg(ui.plainTextEdit_topic->toPlainText().replace(QRegExp("(\r|\n)"), "")));
+    QString strTopic = ui.plainTextEdit_topic->toPlainText();
+    strTopic.replace(QRegExp("(\r|\n)"), "");
+    strTopic.replace(QRegExp("//([a-zA-Z0-9_-]+)"), "%I\\1%");
+
+    pNetwork->send(QString("CS SET %1 TOPIC %2").arg(strChannel).arg(strTopic));
     pNetwork->send(QString("CS INFO %1").arg(strChannel));
 }
 
