@@ -47,7 +47,7 @@ void ChannelAvatarThread::thread_work()
 
         QByteArray bData = pReply->readAll();
 
-        delete pReply;
+        pReply->deleteLater();
 
         emit set_channel_avatar(strChannel, bData);
         emit set_avatar(strChannel);

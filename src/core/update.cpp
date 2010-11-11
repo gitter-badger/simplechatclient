@@ -57,7 +57,7 @@ void UpdateThread::thread_work()
         eventLoop.exec();
 
         QString strSite = pReply->readAll();
-        delete pReply;
+        pReply->deleteLater();
 
         QDomDocument doc;
         doc.setContent(strSite);

@@ -46,7 +46,7 @@ void NickAvatarThread::thread_work()
 
         QByteArray bData = pReply->readAll();
 
-        delete pReply;
+        pReply->deleteLater();
 
         emit set_nick_avatar(strNick, bData);
         emit set_avatar(strNick);

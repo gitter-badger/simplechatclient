@@ -95,7 +95,7 @@ void DlgEmail::get_img()
         pixmap.loadFromData(bData);
         ui.label_img->setPixmap(pixmap);
 
-        delete pReply;
+        pReply->deleteLater();
     }
     else
         ui.label_img->setText(tr("Unable to download image"));
@@ -130,7 +130,7 @@ void DlgEmail::set_email()
 
         QString strResult = pReply->readAll();
 
-        delete pReply;
+        pReply->deleteLater();
 
         parse_result(strResult);
     }

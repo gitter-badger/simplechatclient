@@ -71,7 +71,7 @@ void DlgRegisterNick::get_cookies()
             mCookies.insert(strKey, strValue);
         }
 
-        delete pReply;
+        pReply->deleteLater();
     }
 }
 
@@ -100,7 +100,7 @@ void DlgRegisterNick::get_img()
         pixmap.loadFromData(bData);
         ui.label_img->setPixmap(pixmap);
 
-        delete pReply;
+        pReply->deleteLater();
     }
     else
         ui.label_img->setText(tr("Unable to download image"));
@@ -157,7 +157,7 @@ void DlgRegisterNick::register_nick()
 
         QString strResult = pReply->readAll();
 
-        delete pReply;
+        pReply->deleteLater();
 
         parse_result(strResult);
     }
