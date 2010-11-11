@@ -241,6 +241,9 @@ QString Commands::cmd_topic()
     QString strMessage;
     for (int i = 1; i < strDataList.size(); i++) { if (i != 1) strMessage += " "; strMessage += strDataList[i]; }
 
+    // convert emoticons
+    strMessage.replace(QRegExp("//([a-zA-Z0-9_-]+)"), "%I\\1%");
+
     return QString("CS SET %1 TOPIC %2").arg(strChannel).arg(strMessage);
 }
 
