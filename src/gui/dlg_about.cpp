@@ -36,8 +36,8 @@ DlgAbout::DlgAbout(QWidget *parent) : QDialog(parent)
     QSettings settings;
     QString version = settings.value("version").toString();
 
-    QString strVersion = "<p style=\"font-size:16px;font-weight:bold\">Simple Chat Client</p>";
-    strVersion += "<p style=\"font-weight:bold\">"+tr("Version")+" "+version+"</p>";
+    QString strVersion = "<p style=\"font-size:16px;\"><b>Simple Chat Client</b></p>";
+    strVersion += "<p><b>"+tr("Version")+" "+version+"</b></p>";
 
     QString strAbout = "<p>"+tr("Simple chat client")+"</p>";
     strAbout += "<p>&copy; 2010 by the Simple Chat Client Project</p>";

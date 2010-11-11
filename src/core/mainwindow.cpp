@@ -221,7 +221,7 @@ void MainWindow::create_settings()
     // default settings
     QSettings settings;
     settings.clear();
-    settings.setValue("version", "1.0.9.627");
+    settings.setValue("version", "1.0.9.628");
     settings.setValue("debug", "off");
     settings.setValue("logged", "off");
     settings.setValue("busy", "off");
@@ -252,9 +252,9 @@ void MainWindow::create_settings()
         settings.setValue("disable_avatars", "on");
 }
 
+// update
 void MainWindow::check_update()
 {
-// update
     uThreadList.append(new Update(this));
     QObject::connect(uThreadList.at(uThreadList.size()-1), SIGNAL(sremove_uthread(Update*)), this, SLOT(remove_uthread(Update*)));
 

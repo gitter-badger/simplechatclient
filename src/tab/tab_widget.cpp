@@ -215,7 +215,7 @@ void TabWidget::display_message(QString strData, int iLevel)
 {
     QSettings settings;
 
-// fix max size
+    // fix max size
     if (strContent.count("</p>") > 150)
     {
         QStringList list = strContent.split("</p>");
@@ -226,7 +226,7 @@ void TabWidget::display_message(QString strData, int iLevel)
         list.clear();
     }
 
-// fix data
+    // fix data
     strData += " ";
     strData.replace("&", "&amp;");
     strData.replace("<", "&lt;");
@@ -236,10 +236,10 @@ void TabWidget::display_message(QString strData, int iLevel)
     // nicks
     strData.replace(QRegExp("&lt;([~-_a-zA-Z0-9\xa1\xaf\xa6\xac\xca\xc6\xd1\xd3\xa3\xb1\xbf\xb6\xbc\xea\xe6\xf1\xf3\xb3]+)&gt;"), "<a id=\"level_0\" style=\"color:"+addslashes(settings.value("default_font_color").toString())+";text-decoration:none;\" href=\"nick\\1\">&lt;\\1&gt;</a>");
 
-// content last
+    // content last
     QString strContentLast;
 
-// colors
+    // colors
     QString strFontColor;
 
     if (iLevel == 0)
@@ -271,7 +271,7 @@ void TabWidget::display_message(QString strData, int iLevel)
     strData.insert(11, "<span id=\"level_"+QString::number(iLevel)+"\" style=\"color:"+strFontColor+";\">");
     strContentLast = "</span>"+strContentLast;
 
-// if /me remove time,action <>
+    // if /me remove time,action <>
     if (strData.indexOf(QString(QByteArray("\x01"))) != -1)
     {
         strData = strData.right(strData.length() - 11);
@@ -280,12 +280,12 @@ void TabWidget::display_message(QString strData, int iLevel)
         if (strData.indexOf("&gt;") != -1) strData = strData.remove(strData.indexOf("&gt;"),4);
     }
 
-// convert emoticons, font
+    // convert emoticons, font
     Convert *convertText = new Convert();
     convertText->convert_text(&strData, &strContentLast);
     delete convertText;
 
-// hilight
+    // hilight
     QString strTextDecoration = "none";
     if (iLevel == 8)
     {
@@ -295,7 +295,7 @@ void TabWidget::display_message(QString strData, int iLevel)
             pNotify->play("beep");
     }
 
-// /me
+    // /me
     QString strTextAlign = "left";
     if (settings.value("hide_formating").toString() == "off")
     {
@@ -306,10 +306,10 @@ void TabWidget::display_message(QString strData, int iLevel)
         }
     }
 
-// init text
+    // init text
     strContent.append("<p id=\"level_0\" style=\"color:"+addslashes(settings.value("default_font_color").toString())+";margin:0;padding:0;font-style:normal;text-align:"+strTextAlign+";font-family:Verdana;font-weight:normal;font-size:"+strFontSize+";text-decoration:"+strTextDecoration+";\">");
 
-// text
+    // text
     strContent.append(strData);
     strContent = strContent+strContentLast;
     strContent.append("</p>");
@@ -324,34 +324,34 @@ void TabWidget::set_topic(QString strTopic)
 {
     QString strData = strTopic;
 
-// replace
+    // replace
     strData.replace("&", "&amp;");
     strData.replace("<", "&lt;");
     strData.replace(">", "&gt;");
 
-// colors
+    // colors
     QSettings settings;
     QString strDefaultFontColor = addslashes(settings.value("default_font_color").toString());
     QString strBackgroundColor = addslashes(settings.value("background_color").toString());
 
-// content last
+    // content last
     QString strContentLast;
     QString strContentStart = "<html><body style=\"margin:0;padding:0;font-style:normal;color:"+strDefaultFontColor+";text-align:left;font-family:Verdana;font-weight:normal;font-size:12px;background-color:"+strBackgroundColor+";\">";
     QString strContentEnd = "</body></html>";
 
-// convert emoticons, font
+    // convert emoticons, font
     Convert *convertText = new Convert();
     convertText->convert_text(&strData, &strContentLast);
     delete convertText;
 
-// init text
+    // init text
     strTopicContent = strData;
     strTopicContent = strTopicContent+strContentLast;
 
-// set topic
+    // set topic
     topic->setHtml(strContentStart+strTopicContent+strContentEnd,QUrl(""));
 
-// tooltip
+    // tooltip
     strTopic.replace(QRegExp("%C(\\S+)%"),"");
     strTopic.replace(QRegExp("%F(\\S+)%"),"");
     strTopic.replace(QRegExp("%I(\\S+)%"),"<\\1>");

@@ -279,7 +279,7 @@ void InputWidget::send_message(bool bType)
 
 void InputWidget::update_nick(QString strNick)
 {
-    nickLabel->setText(QString("<p style=\"font-weight:bold;\"> %1</p>").arg(strNick));
+    nickLabel->setText(QString("<b>%1</b>").arg(strNick));
 }
 
 void InputWidget::inputline_return_pressed()

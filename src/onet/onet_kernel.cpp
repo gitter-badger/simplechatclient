@@ -1213,31 +1213,31 @@ void OnetKernel::raw_001()
 {
     QSettings settings;
 
-// logged
+    // logged
     settings.setValue("logged", "on");
 
-// protocol
+    // protocol
     pNetwork->send("PROTOCTL ONETNAMESX");
 
-// auto rejoin
+    // auto rejoin
     QStringList strlOpenChannels = pTabC->get_open_channels();
     for (int i = 0; i < strlOpenChannels.size(); i++)
         pNetwork->send(QString("JOIN %1").arg(strlOpenChannels[i]));
 
-// busy
+    // busy
     settings.setValue("busy", "off");
 
-// clear friends
+    // clear friends
     dlgfriends->clear();
 
-// auto busy
+    // auto busy
     if (settings.value("auto_busy").toString() == "on")
         pNetwork->send("BUSY 1");
 
-// ignore_raw_141
+    // ignore_raw_141
     settings.setValue("ignore_raw_141", "off");
 
-// override off
+    // override off
     settings.setValue("override", "off");
 }
 

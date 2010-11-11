@@ -74,17 +74,17 @@ void NickListWidget::set_open_channels(QStringList param1)
 
 void NickListWidget::add(QString strNick, QString strPrefix, QString strSuffix, sChannelNickStatus *mChannelNickStatus)
 {
-// add
+    // add
     NickStatus add;
     add.channel = strChannel;
     add.nick = strNick;
     add.prefix = strPrefix;
     add.suffix = strSuffix;
 
-// add to nick list
+    // add to nick list
     mChannelNickStatus->append(add);
 
-// add to widget
+    // add to widget
     if (strSuffix.indexOf("O") != -1)
     {
         QPixmap icon = QPixmap(":/images/dev.png");
@@ -154,7 +154,7 @@ void NickListWidget::add(QString strNick, QString strPrefix, QString strSuffix, 
 
 void NickListWidget::remove(QString strNick, sChannelNickStatus *mChannelNickStatus)
 {
-// remove from nick list
+    // remove from nick list
     for (int i = 0; i < mChannelNickStatus->count(); i++)
     {
         if ((mChannelNickStatus->at(i).nick == strNick) && (mChannelNickStatus->at(i).channel == strChannel))
@@ -164,7 +164,7 @@ void NickListWidget::remove(QString strNick, sChannelNickStatus *mChannelNickSta
         }
     }
 
-// remove from widget
+    // remove from widget
     remove_child(strNick);
 }
 

@@ -315,10 +315,10 @@ void DlgOptions::button_register_nick()
 
 void DlgOptions::set_modern_style_avatars()
 {
-// save settings
+    // save settings
     save_settings();
 
-// save style
+    // save style
     QSettings settings;
     Config *pConfig = new Config();
     pConfig->set_value("style", "modern");
@@ -339,10 +339,10 @@ void DlgOptions::set_modern_style_avatars()
 
 void DlgOptions::set_modern_style_no_avatars()
 {
-// save settings
+    // save settings
     save_settings();
 
-// save style
+    // save style
     QSettings settings;
     Config *pConfig = new Config();
     pConfig->set_value("style", "modern");
@@ -363,10 +363,10 @@ void DlgOptions::set_modern_style_no_avatars()
 
 void DlgOptions::set_classic_style()
 {
-// save settings
+    // save settings
     save_settings();
 
-// save style
+    // save style
     QSettings settings;
     Config *pConfig = new Config();
     pConfig->set_value("style", "classic");
@@ -1303,7 +1303,7 @@ void DlgOptions::button_cancel()
 
 void DlgOptions::button_ok()
 {
-// save
+    // save
     save_settings();
 
     this->hide();
@@ -1325,57 +1325,57 @@ void DlgOptions::set_mainwindow_colors()
     QString strChannelFontColor = pConfig->get_value("channel_font_color");
     delete pConfig;
 
-// set background color
+    // set background color
     QPixmap bcolor(50,15);
     bcolor.fill(QColor(strBackgroundColor));
     ui.pushButton_background_color->setIcon(QIcon(bcolor));
 
-// set default font color
+    // set default font color
     QPixmap dfcolor(50,15);
     dfcolor.fill(QColor(strDefaultFontColor));
     ui.pushButton_default_font_color->setIcon(QIcon(dfcolor));
 
-// set join font color
+    // set join font color
     QPixmap jfcolor(50,15);
     jfcolor.fill(QColor(strJoinFontColor));
     ui.pushButton_join_font_color->setIcon(QIcon(jfcolor));
 
-// set part font color
+    // set part font color
     QPixmap pfcolor(50,15);
     pfcolor.fill(QColor(strPartFontColor));
     ui.pushButton_part_font_color->setIcon(QIcon(pfcolor));
 
-// set quit font color
+    // set quit font color
     QPixmap qfcolor(50,15);
     qfcolor.fill(QColor(strQuitFontColor));
     ui.pushButton_quit_font_color->setIcon(QIcon(qfcolor));
 
-// set kick font color
+    // set kick font color
     QPixmap kfcolor(50,15);
     kfcolor.fill(QColor(strKickFontColor));
     ui.pushButton_kick_font_color->setIcon(QIcon(kfcolor));
 
-// set mode font color
+    // set mode font color
     QPixmap mfcolor(50,15);
     mfcolor.fill(QColor(strModeFontColor));
     ui.pushButton_mode_font_color->setIcon(QIcon(mfcolor));
 
-// set notice font color
+    // set notice font color
     QPixmap nfcolor(50,15);
     nfcolor.fill(QColor(strNoticeFontColor));
     ui.pushButton_notice_font_color->setIcon(QIcon(nfcolor));
 
-// set info font color
+    // set info font color
     QPixmap ifcolor(50,15);
     ifcolor.fill(QColor(strInfoFontColor));
     ui.pushButton_info_font_color->setIcon(QIcon(ifcolor));
 
-// set error font color
+    // set error font color
     QPixmap efcolor(50,15);
     efcolor.fill(QColor(strErrorFontColor));
     ui.pushButton_error_font_color->setIcon(QIcon(efcolor));
 
-// set channel font color
+    // set channel font color
     QPixmap cfcolor(50,15);
     cfcolor.fill(QColor(strChannelFontColor));
     ui.pushButton_channel_font_color->setIcon(QIcon(cfcolor));
@@ -1391,27 +1391,27 @@ void DlgOptions::set_nicklist_colors()
     QString strNicklistGradient2Color = pConfig->get_value("nicklist_gradient_2_color");
     delete pConfig;
 
-// set nicklist nick color
+    // set nicklist nick color
     QPixmap nncolor(50,15);
     nncolor.fill(QColor(strNicklistNickColor));
     ui.pushButton_nicklist_nick_color->setIcon(QIcon(nncolor));
 
-// set nicklist selected nick color
+    // set nicklist selected nick color
     QPixmap nsncolor(50,15);
     nsncolor.fill(QColor(strNicklistSelectedNickColor));
     ui.pushButton_nicklist_selected_nick_color->setIcon(QIcon(nsncolor));
 
-// set nicklist busy nick color
+    // set nicklist busy nick color
     QPixmap nbncolor(50,15);
     nbncolor.fill(QColor(strNicklistBusyNickColor));
     ui.pushButton_nicklist_busy_nick_color->setIcon(QIcon(nbncolor));
 
-// set nicklist gradient 1 color
+    // set nicklist gradient 1 color
     QPixmap ng1color(50,15);
     ng1color.fill(QColor(strNicklistGradient1Color));
     ui.pushButton_nicklist_gradient_1_color->setIcon(QIcon(ng1color));
 
-// set nicklist gradient 2 color
+    // set nicklist gradient 2 color
     QPixmap ng2color(50,15);
     ng2color.fill(QColor(strNicklistGradient2Color));
     ui.pushButton_nicklist_gradient_2_color->setIcon(QIcon(ng2color));
@@ -1419,10 +1419,10 @@ void DlgOptions::set_nicklist_colors()
 
 void DlgOptions::save_settings()
 {
-// get values
+    // get values
     QString strNick = ui.lineEdit_nick->text();
 
-// check nick
+    // check nick
     QString strPass;
     if (ui.radioButton_unregistered_nick->isChecked() == true)
     {
@@ -1441,7 +1441,7 @@ void DlgOptions::save_settings()
         strPass = ui.lineEdit_password->text();
     }
 
-// encrypt pass
+    // encrypt pass
     if (strPass.isEmpty() == false)
     {
         Crypt *pCrypt = new Crypt();
@@ -1449,7 +1449,7 @@ void DlgOptions::save_settings()
         delete pCrypt;
     }
 
-// save values
+    // save values
     QSettings settings;
     settings.setValue("nick", strNick);
     settings.setValue("pass", strPass);
@@ -1466,7 +1466,7 @@ void DlgOptions::showEvent(QShowEvent *event)
     // center screen
     move(QApplication::desktop()->screen()->rect().center() - rect().center());
 
-// config
+    // config
     Config *pConfig = new Config();
     QString strNick = pConfig->get_value("nick");
     QString strPass = pConfig->get_value("pass");
@@ -1495,7 +1495,7 @@ void DlgOptions::showEvent(QShowEvent *event)
 
     delete pConfig;
 
-// decrypt pass
+    // decrypt pass
     if (strPass.isEmpty() == false)
     {
         Crypt *pCrypt = new Crypt();
@@ -1503,7 +1503,7 @@ void DlgOptions::showEvent(QShowEvent *event)
         delete pCrypt;
     }
 
-// set nick staly/tyldowy
+    // set nick staly/tyldowy
     if (strPass.isEmpty() == true)
     {
         ui.radioButton_unregistered_nick->setChecked(true);
@@ -1517,11 +1517,11 @@ void DlgOptions::showEvent(QShowEvent *event)
         ui.radioButton_registered_nick->setChecked(true);
     }
 
-// set nick and pass
+    // set nick and pass
     ui.lineEdit_nick->setText(strNick);
     ui.lineEdit_password->setText(strPass);
 
-// set style
+    // set style
     if (strStyle == "modern")
     {
         if (strDisableAvatars == "off")
@@ -1532,7 +1532,7 @@ void DlgOptions::showEvent(QShowEvent *event)
     else if (strStyle == "classic")
         ui.radioButton_classic->setChecked(true);
 
-// language
+    // language
     if (strLanguage == "en")
         ui.comboBox_language->setCurrentIndex(0);
     else if (strLanguage == "pl")
@@ -1540,80 +1540,80 @@ void DlgOptions::showEvent(QShowEvent *event)
     else
         ui.comboBox_language->setCurrentIndex(1);
 
-// auto busy
+    // auto busy
     if (strAutoBusy == "on")
         ui.checkBox_auto_busy->setChecked(true);
     else
         ui.checkBox_auto_busy->setChecked(false);
 
-// auto busy
+    // auto busy
     if (strDisableAutojoinFavourites == "on")
         ui.checkBox_disable_autojoin_favourites->setChecked(true);
     else
         ui.checkBox_disable_autojoin_favourites->setChecked(false);
 
-// show zuo
+    // show zuo
     if (strShowZuo == "on")
         ui.checkBox_show_zuo->setChecked(true);
     else
         ui.checkBox_show_zuo->setChecked(false);
 
-// hide formating
+    // hide formating
     if (strHideFormating == "on")
         ui.checkBox_hide_formating->setChecked(true);
     else
         ui.checkBox_hide_formating->setChecked(false);
 
-// hide join part
+    // hide join part
     if (strHideJoinPart == "on")
         ui.checkBox_hide_join_part->setChecked(true);
     else
         ui.checkBox_hide_join_part->setChecked(false);
 
-// hide join part
+    // hide join part
     if (strHideJoinPart200 == "on")
         ui.checkBox_hide_join_part_200->setChecked(true);
     else
         ui.checkBox_hide_join_part_200->setChecked(false);
 
-// disable avatars
+    // disable avatars
     if (strDisableAvatars == "on")
         ui.checkBox_disable_avatars->setChecked(true);
     else
         ui.checkBox_disable_avatars->setChecked(false);
 
-// disable emots
+    // disable emots
     if (strDisableEmots == "on")
         ui.checkBox_disable_emots->setChecked(true);
     else
         ui.checkBox_disable_emots->setChecked(false);
 
-// disable replaces
+    // disable replaces
     if (strDisableReplaces == "on")
         ui.checkBox_disable_replaces->setChecked(true);
     else
         ui.checkBox_disable_replaces->setChecked(false);
 
-// set my bold
+    // set my bold
     if (strMyBold == "on")
         ui.comboBox_my_bold->setCurrentIndex(1);
     else
         ui.comboBox_my_bold->setCurrentIndex(0);
 
-// set my italic
+    // set my italic
     if (strMyItalic == "on")
         ui.comboBox_my_italic->setCurrentIndex(1);
     else
         ui.comboBox_my_italic->setCurrentIndex(0);
 
-// set my font combobox
+    // set my font combobox
     for (int i = 0; i < ui.comboBox_my_font->count(); i++)
     {
         if (ui.comboBox_my_font->itemText(i) == strMyFont)
             ui.comboBox_my_font->setCurrentIndex(i);
     }
 
-// set my color combobox
+    // set my color combobox
     int iMyColor;
 
     if (strMyColor == "#000000") iMyColor = 0;
@@ -1636,7 +1636,7 @@ void DlgOptions::showEvent(QShowEvent *event)
 
     ui.comboBox_my_color->setCurrentIndex(iMyColor);
 
-// set font size combobox
+    // set font size combobox
     int iFontSize;
 
     if (strFontSize == "8px") iFontSize = 0;
@@ -1653,25 +1653,25 @@ void DlgOptions::showEvent(QShowEvent *event)
 
     ui.comboBox_font_size->setCurrentIndex(iFontSize);
 
-// set mainwindow colors
+    // set mainwindow colors
     set_mainwindow_colors();
 
-// set nicklist colors
+    // set nicklist colors
     set_nicklist_colors();
 
-// disable logs
+    // disable logs
     if (strDisableLogs == "on")
         ui.checkBox_disable_logs->setChecked(true);
     else
         ui.checkBox_disable_logs->setChecked(false);
 
-// disable sounds
+    // disable sounds
     if (strDisableSounds == "on")
         ui.checkBox_disable_sounds->setChecked(true);
     else
         ui.checkBox_disable_sounds->setChecked(false);
 
-// disable change nick if connected
+    // disable change nick if connected
     QSettings settings;
     if (settings.value("logged").toString() == "on")
     {

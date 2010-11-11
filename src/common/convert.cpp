@@ -26,7 +26,7 @@ Convert::Convert()
 
 void Convert::convert_text(QString *strData, QString *strLastContent)
 {
-// fonts
+    // fonts
     if (strData->indexOf("%F") != -1)
     {
         int iCount = strData->count("%F");
@@ -104,7 +104,7 @@ void Convert::convert_text(QString *strData, QString *strLastContent)
         (*strLastContent) = strSpan+(*strLastContent);
     }
 
-// colors
+    // colors
     QSettings settings;
     if (settings.value("hide_formating").toString() == "off")
     {
@@ -143,7 +143,7 @@ void Convert::convert_text(QString *strData, QString *strLastContent)
             strData->replace(strliReplace.next(), "");
     }
 
-// emoticons
+    // emoticons
     if (strData->indexOf("%I") != -1)
     {
         QString strPath = QCoreApplication::applicationDirPath();
