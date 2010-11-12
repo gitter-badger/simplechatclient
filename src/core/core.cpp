@@ -52,9 +52,12 @@ Core::Core(QMainWindow *parent, QString param1, int param2, Notify *param3, QAct
     pDlg_channel_favourites = new DlgChannelFavourites(myparent, pNetwork, &mChannelAvatar);
     pDlg_friends = new DlgFriends(myparent, pNetwork, &mNickAvatar);
     pDlg_ignore = new DlgIgnore(myparent, pNetwork, &mNickAvatar);
+    pDlg_user_profile = new DlgUserProfile(myparent, pNetwork);
 
     pOnet_kernel = new OnetKernel(myparent, pNetwork, pTabC, pNotify, &mNickAvatar, &mChannelAvatar, pDlg_channel_settings, pDlg_channel_homes, pDlg_channel_list, pDlg_channel_favourites, pDlg_friends, pDlg_ignore, pDlg_moderation);
     pOnet_auth = new OnetAuth(pTabC);
+
+    pTabC->set_dlg(pDlg_user_profile);
 
     // inputlinewidget
     bottomDockWidget = new QDockWidget(tr("Typing messages"), myparent);
@@ -121,7 +124,7 @@ Core::Core(QMainWindow *parent, QString param1, int param2, Notify *param3, QAct
     QObject::connect(pOnet_kernel, SIGNAL(quit_user(QString,QString)), this, SLOT(quit_user(QString,QString)));
     QObject::connect(pOnet_kernel, SIGNAL(change_flag(QString,QString,QString)), this, SLOT(change_flag(QString,QString,QString)));
     QObject::connect(pOnet_kernel, SIGNAL(change_flag(QString,QString)), this, SLOT(change_flag(QString,QString)));
-    QObject::connect(pOnet_kernel, SIGNAL(set_user_info(QString,QString,QString)), this, SLOT(set_user_info(QString,QString,QString)));
+    QObject::connect(pOnet_kernel, SIGNAL(set_user_info(QString,QString,QString)), pDlg_user_profile, SLOT(set_user_info(QString,QString,QString)));
     QObject::connect(pOnet_kernel, SIGNAL(clear_channel_all_nick_avatars(QString)), this, SLOT(clear_channel_all_nick_avatars(QString)));
 
     // signals to network
@@ -154,6 +157,7 @@ Core::~Core()
 
     delete pOnet_auth;
     delete pOnet_kernel;
+    delete pDlg_user_profile;
     delete pDlg_ignore;
     delete pDlg_friends;
     delete pDlg_channel_favourites;
@@ -304,7 +308,7 @@ void Core::create_nicklist(QString strChannel)
 {
     if (mChannelNickListWidget.contains(strChannel) == false)
     {
-        NickListWidget *nicklist = new NickListWidget(myparent, pNetwork, strChannel, &mNickAvatar, camSocket, &mChannelNickStatus);
+        NickListWidget *nicklist = new NickListWidget(myparent, pNetwork, strChannel, &mNickAvatar, camSocket, &mChannelNickStatus, pDlg_user_profile);
         nicklist->setParent(nickListDockWidget);
         nicklist->setItemDelegate(new NickListDelegate(nicklist));
         nicklist->show();
@@ -515,25 +519,6 @@ void Core::clear_all_nicklist()
 
     for (int i = 0; i < strlChannels.count(); i++)
         mChannelNickListWidget.value(strlChannels.at(i))->clear();
-}
-
-void Core::set_user_info(QString strNick, QString strKey, QString strValue)
-{
-    QStringList strlChannels = pTabC->get_open_channels();
-    for (int i = 0; i < strlChannels.count(); i++)
-    {
-        QString strChannel = strlChannels.at(i);
-
-        // nicklist
-        if (mChannelNickListWidget.value(strChannel)->exist(strNick, &mChannelNickStatus) == true)
-            mChannelNickListWidget.value(strChannel)->set_user_info(strNick, strKey, strValue);
-
-        // mainwebview
-        MainWebView *mainWebView = pTabC->get_webview(strChannel);
-
-        if (mainWebView->get_current_nick() == strNick)
-            mainWebView->set_user_info(strNick, strKey, strValue);
-    }
 }
 
 void Core::update_nick_avatar(QString strNick)

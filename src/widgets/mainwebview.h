@@ -41,23 +41,24 @@ class MainWebView : public QWebView
 {
     Q_OBJECT
 public:
-    MainWebView(QWidget *, Network *, QString, QTcpSocket *, sChannelNickStatus *);
+    MainWebView(QWidget *, Network *, QString, QTcpSocket *, sChannelNickStatus *, DlgUserProfile *);
     ~MainWebView();
     void set_open_channels(QStringList);
-    void set_user_info(QString, QString, QString);
     inline QString get_current_nick() { return strNick; }
 
 private:
+    // params
     QWidget *myparent;
     Network *pNetwork;
     QString strChannel;
     QTcpSocket *camSocket;
+    sChannelNickStatus *mChannelNickStatus;
+    DlgUserProfile *pDlg_user_profile;
+    // other
     QString strNick;
     QStringList strOpenChannels;
     enum { maxOpenChannels = 50 };
     QAction *openChannelsActs[maxOpenChannels];
-    sNickInfo sCurrentUserInfo;
-    sChannelNickStatus *mChannelNickStatus;
 
 private slots:
     void join_channel();

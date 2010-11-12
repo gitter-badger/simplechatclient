@@ -20,7 +20,7 @@
 
 #include "nicklistwidget.h"
 
-NickListWidget::NickListWidget(QWidget *parent, Network *param1, QString param2, QMap <QString, QByteArray> *param3, QTcpSocket *param4, sChannelNickStatus *param5)
+NickListWidget::NickListWidget(QWidget *parent, Network *param1, QString param2, QMap <QString, QByteArray> *param3, QTcpSocket *param4, sChannelNickStatus *param5, DlgUserProfile *param6)
 {
     myparent = parent;
     pNetwork = param1;
@@ -28,6 +28,7 @@ NickListWidget::NickListWidget(QWidget *parent, Network *param1, QString param2,
     mNickAvatar = param3;
     camSocket = param4;
     mChannelNickStatus = param5;
+    pDlg_user_profile = param6;
 
     setAnimated(true);
     header()->hide();
@@ -214,49 +215,6 @@ void NickListWidget::refresh_avatars()
     }
 }
 
-void NickListWidget::set_user_info(QString strNick, QString strKey, QString strValue)
-{
-    if (this->selectedItems().count() == 0) return;
-
-    QString strNickSelected = this->selectedItems().at(0)->text(0);
-
-    if (strNick == strNickSelected)
-    {
-        sCurrentUserInfo.nick = strNick;
-
-        if (strKey == "avatar")
-            sCurrentUserInfo.avatar = strValue;
-        else if (strKey == "birthdate")
-            sCurrentUserInfo.birthdate = strValue;
-        else if (strKey == "city")
-            sCurrentUserInfo.city = strValue;
-        else if (strKey == "country")
-            sCurrentUserInfo.country = strValue;
-        else if (strKey == "email")
-            sCurrentUserInfo.email = strValue;
-        else if (strKey == "longDesc")
-            sCurrentUserInfo.longDesc = strValue;
-        else if (strKey == "offmsg")
-            sCurrentUserInfo.offmsg = strValue;
-        else if (strKey == "prefs")
-            sCurrentUserInfo.prefs = strValue;
-        else if (strKey == "rank")
-            sCurrentUserInfo.rank = strValue;
-        else if (strKey == "sex")
-            sCurrentUserInfo.sex = strValue;
-        else if (strKey == "shortDesc")
-            sCurrentUserInfo.shortDesc = strValue;
-        else if (strKey == "tags")
-            sCurrentUserInfo.tags = strValue;
-        else if (strKey == "type")
-            sCurrentUserInfo.type = strValue;
-        else if (strKey == "vEmail")
-            sCurrentUserInfo.vEmail = strValue;
-        else if (strKey == "www")
-            sCurrentUserInfo.www = strValue;
-    }
-}
-
 void NickListWidget::add_parent(QString strName, QPixmap px)
 {
     QTreeWidgetItem *item = new QTreeWidgetItem(this);
@@ -437,9 +395,10 @@ void NickListWidget::profile()
 
     QString strNick = this->selectedItems().at(0)->text(0);
 
-    if (strNick == sCurrentUserInfo.nick)
+    if (strNick[0] != '~')
     {
-        (new DlgUserProfile(myparent, pNetwork, sCurrentUserInfo))->show();
+        pDlg_user_profile->set_nick(strNick);
+        pDlg_user_profile->show();
     }
 }
 
@@ -609,52 +568,6 @@ void NickListWidget::invite()
         QString strNick = this->selectedItems().at(0)->text(0);
         pNetwork->send(QString("INVITE %1 %2").arg(strNick).arg(strInviteChannel));
     }
-}
-
-void NickListWidget::item_selected()
-{
-    if (this->selectedItems().count() == 0) return;
-
-    QString strNick = this->selectedItems().at(0)->text(0);
-
-    // return if not nick
-    if ((strNick == tr("Dev(s)")) || (strNick == tr("Admin(s)")) || (strNick == tr("Owner(s)")) || (strNick == tr("Op(s)")) || (strNick == tr("HalfOp(s)")) || (strNick == tr("Mod(s)")) || (strNick == tr("Screener(s)")) || (strNick == tr("Voice(s)")) || (strNick == tr("Cam(s)")) || (strNick == tr("User(s)")))
-        return;
-
-    if ((strNick[0] != '~') && (sCurrentUserInfo.nick != strNick))
-    {
-        // clear user info
-        sCurrentUserInfo.avatar = QString::null;
-        sCurrentUserInfo.birthdate = QString::null;
-        sCurrentUserInfo.city = QString::null;
-        sCurrentUserInfo.country = QString::null;
-        sCurrentUserInfo.email = QString::null;
-        sCurrentUserInfo.longDesc = QString::null;
-        sCurrentUserInfo.nick = QString::null;
-        sCurrentUserInfo.offmsg = QString::null;
-        sCurrentUserInfo.prefs = QString::null;
-        sCurrentUserInfo.rank = QString::null;
-        sCurrentUserInfo.sex = QString::null;
-        sCurrentUserInfo.shortDesc = QString::null;
-        sCurrentUserInfo.tags = QString::null;
-        sCurrentUserInfo.type = QString::null;
-        sCurrentUserInfo.vEmail = QString::null;
-        sCurrentUserInfo.www = QString::null;
-
-        // get new user info
-        pNetwork->send(QString("NS INFO %1").arg(strNick));
-    }
-}
-
-void NickListWidget::mousePressEvent(QMouseEvent *event)
-{
-    if (event->button()== Qt::RightButton)
-    {
-        QTreeWidget::mousePressEvent(event);
-        item_selected();
-    }
-    else
-        QTreeWidget::mousePressEvent(event);
 }
 
 void NickListWidget::contextMenuEvent(QContextMenuEvent *e)

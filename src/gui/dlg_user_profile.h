@@ -31,44 +31,27 @@
 #include "network.h"
 #include "ui_user_profile.h"
 
-struct NickInfo
-{
-    QString nick;
-    QString avatar;
-    QString birthdate;
-    QString city;
-    QString country;
-    QString email; // not important
-    QString longDesc;
-    QString offmsg; // not inportant
-    QString prefs; // not important
-    QString rank; // not important
-    QString sex;
-    QString shortDesc;
-    QString tags; // not important
-    QString type;
-    QString vEmail; // not important
-    QString www;
-};
-typedef NickInfo sNickInfo;
-
-
 class DlgUserProfile : public QDialog
 {
     Q_OBJECT
 public:
-    DlgUserProfile(QWidget *, Network *, sNickInfo);
+    DlgUserProfile(QWidget *, Network *);
+    void set_nick(QString);
+
+public slots:
+    void set_user_info(QString, QString, QString);
 
 private:
     Ui::uiUserProfile ui;
     QWidget *myparent;
     Network *pNetwork;
-    sNickInfo sCurrentNickInfo;
     int iWidth; // widget width
     QPixmap avatar;
     QNetworkAccessManager accessManager;
     QNetworkReply *pReply;
+    QString strNick;
 
+    void clear_info();
     void show_info();
     QString convert_desc(QString);
     QString convert_sex(QString);
@@ -85,6 +68,7 @@ private slots:
 
 protected:
     virtual void showEvent(QShowEvent *);
+    virtual void closeEvent(QCloseEvent *);
 
 };
 

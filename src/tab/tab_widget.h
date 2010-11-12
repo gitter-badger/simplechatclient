@@ -39,10 +39,9 @@ class TabWidget : public QWidget
 {
     Q_OBJECT
 public:
-    TabWidget(QWidget *, Network *, QString, Notify *, QMap <QString, QByteArray> *, QTcpSocket *, sChannelNickStatus *);
+    TabWidget(QWidget *, Network *, QString, Notify *, QMap <QString, QByteArray> *, QTcpSocket *, sChannelNickStatus *, DlgUserProfile *);
     ~TabWidget();
     inline QString get_name() { return strName; }
-    inline MainWebView* get_webview() { return mainWebView; }
     inline bool get_scroll() { return bScroll; }
     inline void add_user() { iNickCount++; } // update nick count for option hide join/part when > 200
     inline void del_user() { iNickCount--; } // update nick count for option hide join/part when > 200
@@ -69,6 +68,7 @@ private:
     QMap <QString, QByteArray> *mChannelAvatar;
     QTcpSocket *camSocket;
     sChannelNickStatus *mChannelNickStatus;
+    DlgUserProfile *pDlg_user_profile;
 
     // other
     QString strContent;

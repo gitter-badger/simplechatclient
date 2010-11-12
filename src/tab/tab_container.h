@@ -37,6 +37,7 @@ class TabContainer : public QObject
 public:
     TabContainer(QWidget *, Network *, TabManager *, Notify *, QMap <QString, QByteArray> *, QTcpSocket *, sChannelNickStatus *);
     ~TabContainer();
+    void set_dlg(DlgUserProfile *);
     inline QString get_name(int i) { if ((i < 0) || (i > tw.count())) return QString::null; else return tw[i]->get_name(); }
     bool exist_tab(QString);
     void add_tab(QString);
@@ -50,7 +51,6 @@ public:
     void set_topic(QString, QString);
     void author_topic(QString, QString);
     QStringList get_open_channels();
-    MainWebView* get_webview(QString);
     bool get_scroll(QString);
     void add_user(QString); // update nick count for option hide join/part when > 200
     void del_user(QString); // update nick count for option hide join/part when > 200
@@ -79,6 +79,7 @@ private:
     DlgModeration *dlgmoderation;
     QTcpSocket *camSocket;
     sChannelNickStatus *mChannelNickStatus;
+    DlgUserProfile *pDlg_user_profile;
     // other
     QList <TabWidget *> tw;
 

@@ -20,7 +20,7 @@
 
 #include "dlg_user_profile.h"
 
-DlgUserProfile::DlgUserProfile(QWidget *parent, Network *param1, sNickInfo param2) : QDialog(parent)
+DlgUserProfile::DlgUserProfile(QWidget *parent, Network *param1) : QDialog(parent)
 {
     ui.setupUi(this);
     setAttribute(Qt::WA_DeleteOnClose);
@@ -30,7 +30,6 @@ DlgUserProfile::DlgUserProfile(QWidget *parent, Network *param1, sNickInfo param
 
     myparent = parent;
     pNetwork = param1;
-    sCurrentNickInfo = param2;
 
     // set width
     iWidth = ui.verticalLayout->sizeHint().width();
@@ -38,17 +37,6 @@ DlgUserProfile::DlgUserProfile(QWidget *parent, Network *param1, sNickInfo param
     ui.toolButton_zoom->setIcon(QIcon(":/images/oxygen/16x16/page-zoom.png"));
     ui.pushButton_more->setIcon(QIcon(":/images/oxygen/16x16/list-add.png"));
     ui.buttonBox->button(QDialogButtonBox::Close)->setIcon(QIcon(":/images/oxygen/16x16/dialog-close.png"));
-
-    // hide more
-    ui.widget_more->hide();
-
-    // resize
-    int iHeight = ui.verticalLayout->sizeHint().height() - ui.formLayout_more->sizeHint().height();
-    setMinimumHeight(iHeight);
-    setMaximumHeight(iHeight);
-    setMinimumWidth(iWidth);
-    setMaximumWidth(iWidth);
-    resize(iWidth, iHeight);
 
     ui.label_sex->setText(tr("Sex:"));
     ui.label_age->setText(tr("Age:"));
@@ -62,6 +50,51 @@ DlgUserProfile::DlgUserProfile(QWidget *parent, Network *param1, sNickInfo param
 
     QObject::connect(ui.toolButton_zoom, SIGNAL(clicked()), this, SLOT(button_zoom()));
     QObject::connect(ui.pushButton_more, SIGNAL(clicked()), this, SLOT(button_more()));
+    QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(button_close()));
+}
+
+void DlgUserProfile::set_nick(QString n)
+{
+    strNick = n;
+
+    // clear
+    clear_info();
+
+    //set label
+    ui.label_nick->setText(QString("<b>%1</b>").arg(strNick));
+
+    // get new user info
+    pNetwork->send(QString("NS INFO %1").arg(strNick));
+}
+
+void DlgUserProfile::set_user_info(QString strCheckNick, QString strKey, QString strValue)
+{
+    if (strCheckNick != strNick) return; // incorrect nick
+
+    if (strKey == "avatar")
+    {
+        if (strValue.isEmpty() == false)
+            show_avatar(strValue);
+    }
+    else if (strKey == "birthdate")
+    {
+        ui.lineEdit_age->setText(convert_age(strValue));
+        ui.lineEdit_birthdate->setText(strValue);
+    }
+    else if (strKey == "city")
+        ui.lineEdit_city->setText(strValue);
+    else if (strKey == "country")
+        ui.lineEdit_country->setText(convert_country(strValue));
+    else if (strKey == "longDesc")
+        ui.plainTextEdit_hobby->setPlainText(strValue);
+    else if (strKey == "sex")
+        ui.lineEdit_sex->setText(convert_sex(strValue));
+    else if (strKey == "shortDesc")
+        ui.textEdit_desc->setHtml(convert_desc(strValue));
+    else if (strKey == "type")
+        ui.lineEdit_type->setText(convert_type(strValue));
+    else if (strKey == "www")
+        ui.lineEdit_www->setText(strValue);
 }
 
 void DlgUserProfile::avatar_finished()
@@ -117,23 +150,20 @@ void DlgUserProfile::button_more()
     }
 }
 
-void DlgUserProfile::show_info()
+void DlgUserProfile::clear_info()
 {
-    ui.label_avatar->setText("");
+    ui.label_avatar->clear();
     ui.toolButton_zoom->setEnabled(false);
-    ui.label_nick->setText(QString("<p style=\"font-weight:bold;\"> %1</p>").arg(sCurrentNickInfo.nick));
-    ui.textEdit_desc->setHtml(convert_desc(sCurrentNickInfo.shortDesc));
-    ui.lineEdit_sex->setText(convert_sex(sCurrentNickInfo.sex));
-    ui.lineEdit_age->setText(convert_age(sCurrentNickInfo.birthdate));
-    ui.lineEdit_birthdate->setText(sCurrentNickInfo.birthdate);
-    ui.lineEdit_city->setText(sCurrentNickInfo.city);
-    ui.lineEdit_country->setText(convert_country(sCurrentNickInfo.country));
-    ui.plainTextEdit_hobby->setPlainText(sCurrentNickInfo.longDesc);
-    ui.lineEdit_type->setText(convert_type(sCurrentNickInfo.type));
-    ui.lineEdit_www->setText(sCurrentNickInfo.www);
-
-    if (sCurrentNickInfo.avatar.isEmpty() == false)
-        show_avatar(sCurrentNickInfo.avatar);
+    ui.label_nick->clear();
+    ui.textEdit_desc->clear();
+    ui.lineEdit_sex->clear();
+    ui.lineEdit_age->clear();
+    ui.lineEdit_birthdate->clear();
+    ui.lineEdit_city->clear();
+    ui.lineEdit_country->clear();
+    ui.plainTextEdit_hobby->clear();
+    ui.lineEdit_type->clear();
+    ui.lineEdit_www->clear();
 }
 
 QString DlgUserProfile::convert_desc(QString strContent)
@@ -260,7 +290,7 @@ void DlgUserProfile::show_avatar(QString strUrl)
 
 void DlgUserProfile::button_close()
 {
-    this->close();
+    this->hide();
 }
 
 void DlgUserProfile::showEvent(QShowEvent *event)
@@ -269,7 +299,26 @@ void DlgUserProfile::showEvent(QShowEvent *event)
     // center screen
     move(QApplication::desktop()->screen()->rect().center() - rect().center());
 
-    show_info();
+    // is hidden?
+    if (ui.widget_more->isHidden() == false)
+    {
+        // change text
+        ui.widget_more->hide();
+        ui.pushButton_more->setIcon(QIcon(":/images/oxygen/16x16/list-add.png"));
+        ui.pushButton_more->setText(tr("More..."));
 
-    QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(button_close()));
+        // resize
+        int iHeight = ui.verticalLayout->sizeHint().height() - ui.formLayout_more->sizeHint().height();
+        setMinimumHeight(iHeight);
+        setMaximumHeight(iHeight);
+        setMinimumWidth(iWidth);
+        setMaximumWidth(iWidth);
+        resize(iWidth, iHeight);
+    }
+}
+
+void DlgUserProfile::closeEvent(QCloseEvent *event)
+{
+    event->ignore();
+    this->hide();
 }

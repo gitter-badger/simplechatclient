@@ -300,7 +300,7 @@ void DlgChannelSettings::add_halfop(QString strCheckChannel, QString strNick)
     }
 }
 
-void DlgChannelSettings::add_ban(QString strCheckChannel, QString strNick, QString strWho, QString strDT)
+void DlgChannelSettings::add_ban(QString strCheckChannel, QString strNick, QString strWho, QString strDT, QString strIPNick)
 {
     if (strCheckChannel != strChannel) return; // not this channel
 

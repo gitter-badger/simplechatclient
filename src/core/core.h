@@ -81,7 +81,6 @@ public slots:
     void change_flag(QString, QString);
     void clear_nicklist(QString);
     void clear_all_nicklist();
-    void set_user_info(QString, QString, QString);
     void update_nick_avatar(QString);
     void clear_channel_all_nick_avatars(QString);
     void set_open_channels();
@@ -111,6 +110,7 @@ private:
     DlgChannelSettings *pDlg_channel_settings;
     DlgFriends *pDlg_friends;
     DlgIgnore *pDlg_ignore;
+    DlgUserProfile *pDlg_user_profile;
     DlgModeration *pDlg_moderation;
     QMap <QString, QByteArray> mNickAvatar;
     QMap <QString, QByteArray> mChannelAvatar;

@@ -52,6 +52,11 @@ TabContainer::~TabContainer()
     }
 }
 
+void TabContainer::set_dlg(DlgUserProfile *param1)
+{
+    pDlg_user_profile = param1;
+}
+
 int TabContainer::get_index(QString strName)
 {
     for (int i = 0; i < tw.count(); i++)
@@ -86,7 +91,7 @@ void TabContainer::add_tab(QString strChannel)
         emit create_nicklist(strChannel);
 
         // create tab
-        tw.append(new TabWidget(myparent, pNetwork, strChannel, pNotify, mChannelAvatar, camSocket, mChannelNickStatus));
+        tw.append(new TabWidget(myparent, pNetwork, strChannel, pNotify, mChannelAvatar, camSocket, mChannelNickStatus, pDlg_user_profile));
         pTabM->addTab(tw.at(tw.count()-1), strChannel);
         pTabM->setCurrentIndex(tw.count()-1);
 
@@ -350,13 +355,6 @@ QStringList TabContainer::get_open_channels()
             strlResult.append(tw[i]->get_name());
     }
     return strlResult;
-}
-
-MainWebView* TabContainer::get_webview(QString strChannel)
-{
-    int i = get_index(strChannel);
-    if (i != -1)
-        return tw[i]->get_webview();
 }
 
 bool TabContainer::get_scroll(QString strChannel)

@@ -20,7 +20,7 @@
 
 #include "tab_widget.h"
 
-TabWidget::TabWidget(QWidget *parent, Network *param1, QString param2, Notify *param3, QMap <QString, QByteArray> *param4, QTcpSocket *param5, sChannelNickStatus *param6)
+TabWidget::TabWidget(QWidget *parent, Network *param1, QString param2, Notify *param3, QMap <QString, QByteArray> *param4, QTcpSocket *param5, sChannelNickStatus *param6, DlgUserProfile *param7)
 {
     myparent = parent;
     pNetwork = param1;
@@ -29,6 +29,7 @@ TabWidget::TabWidget(QWidget *parent, Network *param1, QString param2, Notify *p
     mChannelAvatar = param4;
     camSocket = param5;
     mChannelNickStatus = param6;
+    pDlg_user_profile = param7;
 
     QSettings settings;
     QString strDefaultFontColor = addslashes(settings.value("default_font_color").toString());
@@ -83,7 +84,7 @@ TabWidget::TabWidget(QWidget *parent, Network *param1, QString param2, Notify *p
     topLayout->addWidget(topRightWidget);
     topWidget->setLayout(topLayout);
 
-    mainWebView = new MainWebView(myparent, pNetwork, strName, camSocket, mChannelNickStatus);
+    mainWebView = new MainWebView(myparent, pNetwork, strName, camSocket, mChannelNickStatus, pDlg_user_profile);
     mainWebView->setParent(this);
     mainWebView->show();
 

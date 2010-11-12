@@ -43,10 +43,9 @@ class NickListWidget : public QTreeWidget
 {
     Q_OBJECT
 public:
-    NickListWidget(QWidget *, Network *, QString, QMap <QString, QByteArray> *, QTcpSocket *, sChannelNickStatus *);
+    NickListWidget(QWidget *, Network *, QString, QMap <QString, QByteArray> *, QTcpSocket *, sChannelNickStatus *, DlgUserProfile *);
     ~NickListWidget();
     void set_open_channels(QStringList);
-    void set_user_info(QString, QString, QString);
     void add(QString, QString, QString, sChannelNickStatus *mChannelNickStatus);
     void remove(QString, sChannelNickStatus *mChannelNickStatus);
     bool exist(QString, sChannelNickStatus *mChannelNickStatus);
@@ -55,16 +54,18 @@ public:
     void update_avatar(QString, QByteArray);
 
 private:
+    // params
     QWidget *myparent;
     Network *pNetwork;
     QString strChannel;
     QStringList strOpenChannels;
     QMap <QString, QByteArray> *mNickAvatar;
     QTcpSocket *camSocket;
+    sChannelNickStatus *mChannelNickStatus;
+    DlgUserProfile *pDlg_user_profile;
+    // other
     enum { maxOpenChannels = 50 };
     QAction *openChannelsActs[maxOpenChannels];
-    sNickInfo sCurrentUserInfo;
-    sChannelNickStatus *mChannelNickStatus;
 
     void add_parent(QString, QPixmap);
     bool exist_parent(QString);
@@ -76,7 +77,6 @@ private:
     bool exist_child(QString, QString);
     void remove_child(QString);
     QTreeWidgetItem* create_child(QString, QString, QPixmap);
-    void item_selected();
 
 private slots:
     void priv();
@@ -102,7 +102,6 @@ private slots:
     void invite();
 
 protected:
-    virtual void mousePressEvent(QMouseEvent *);
     virtual void contextMenuEvent(QContextMenuEvent *);
 
 };

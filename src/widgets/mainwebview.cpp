@@ -20,13 +20,14 @@
 
 #include "mainwebview.h"
 
-MainWebView::MainWebView(QWidget *parent, Network *param1, QString param2, QTcpSocket *param3, sChannelNickStatus *param4)
+MainWebView::MainWebView(QWidget *parent, Network *param1, QString param2, QTcpSocket *param3, sChannelNickStatus *param4, DlgUserProfile *param5)
 {
     myparent = parent;
     pNetwork = param1;
     strChannel = param2;
     camSocket = param3;
     mChannelNickStatus = param4;
+    pDlg_user_profile = param5;
 
     strNick = QString::null;
 }
@@ -58,9 +59,10 @@ void MainWebView::whois()
 
 void MainWebView::profile()
 {
-    if (strNick == sCurrentUserInfo.nick)
+    if (strNick[0] != '~')
     {
-        (new DlgUserProfile(myparent, pNetwork, sCurrentUserInfo))->show();
+        pDlg_user_profile->set_nick(strNick);
+        pDlg_user_profile->show();
     }
 }
 
@@ -176,45 +178,6 @@ void MainWebView::invite()
     }
 }
 
-void MainWebView::set_user_info(QString strNickInfo, QString strKey, QString strValue)
-{
-    if (strNickInfo == strNick)
-    {
-        sCurrentUserInfo.nick = strNick;
-
-        if (strKey == "avatar")
-            sCurrentUserInfo.avatar = strValue;
-        else if (strKey == "birthdate")
-            sCurrentUserInfo.birthdate = strValue;
-        else if (strKey == "city")
-            sCurrentUserInfo.city = strValue;
-        else if (strKey == "country")
-            sCurrentUserInfo.country = strValue;
-        else if (strKey == "email")
-            sCurrentUserInfo.email = strValue;
-        else if (strKey == "longDesc")
-            sCurrentUserInfo.longDesc = strValue;
-        else if (strKey == "offmsg")
-            sCurrentUserInfo.offmsg = strValue;
-        else if (strKey == "prefs")
-            sCurrentUserInfo.prefs = strValue;
-        else if (strKey == "rank")
-            sCurrentUserInfo.rank = strValue;
-        else if (strKey == "sex")
-            sCurrentUserInfo.sex = strValue;
-        else if (strKey == "shortDesc")
-            sCurrentUserInfo.shortDesc = strValue;
-        else if (strKey == "tags")
-            sCurrentUserInfo.tags = strValue;
-        else if (strKey == "type")
-            sCurrentUserInfo.type = strValue;
-        else if (strKey == "vEmail")
-            sCurrentUserInfo.vEmail = strValue;
-        else if (strKey == "www")
-            sCurrentUserInfo.www = strValue;
-    }
-}
-
 void MainWebView::contextMenuEvent(QContextMenuEvent *event)
 {
     QWebHitTestResult r = page()->mainFrame()->hitTestContent(event->pos());
@@ -244,30 +207,6 @@ void MainWebView::contextMenuEvent(QContextMenuEvent *event)
         else
         {
             strNick = strLink;
-
-            if (strNick[0] != '~')
-            {
-                // clear user info
-                sCurrentUserInfo.avatar = QString::null;
-                sCurrentUserInfo.birthdate = QString::null;
-                sCurrentUserInfo.city = QString::null;
-                sCurrentUserInfo.country = QString::null;
-                sCurrentUserInfo.email = QString::null;
-                sCurrentUserInfo.longDesc = QString::null;
-                sCurrentUserInfo.nick = QString::null;
-                sCurrentUserInfo.offmsg = QString::null;
-                sCurrentUserInfo.prefs = QString::null;
-                sCurrentUserInfo.rank = QString::null;
-                sCurrentUserInfo.sex = QString::null;
-                sCurrentUserInfo.shortDesc = QString::null;
-                sCurrentUserInfo.tags = QString::null;
-                sCurrentUserInfo.type = QString::null;
-                sCurrentUserInfo.vEmail = QString::null;
-                sCurrentUserInfo.www = QString::null;
-
-                // get new user info
-                pNetwork->send(QString("NS INFO %1").arg(strNick));
-            }
 
             QString strPrefix;
             QString strSuffix;

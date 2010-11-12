@@ -1630,8 +1630,9 @@ void OnetKernel::raw_162n()
 }
 
 // CS INFO #scc
-// :ChanServ!service@service.onet NOTICE scc_test :163 #scc b test2!*@* Merovingian :1253230938
-// :ChanServ!service@service.onet NOTICE scc_test :163 #scc I Olka Merovingian :1252595321
+// :ChanServ!service@service.onet NOTICE Merovingian :163 #scc I Olka Merovingian 1289498809 :
+// :ChanServ!service@service.onet NOTICE Merovingian :163 #scc b test!*@* Merovingian 1289498776 :
+// :ChanServ!service@service.onet NOTICE Merovingian :163 #scc b *!*@haxgu3xx7ptcn4u72yrkbp4daq Merovingian 1289497781 :Tony_Montana
 void OnetKernel::raw_163n()
 {
     if (strDataList.value(4).isEmpty() == true) return;
@@ -1645,14 +1646,15 @@ void OnetKernel::raw_163n()
     QString strNick = strDataList[6];
     QString strWho = strDataList[7];
     QString strDT = strDataList[8];
-    if (strDT[0] == ':')
-        strDT = strDT.right(strDT.length()-1);
+    QString strIPNick = strDataList[9];
+    if (strIPNick[0] == ':')
+        strIPNick = strIPNick.right(strIPNick.length()-1);
 
     QDateTime dt = QDateTime::fromTime_t(strDT.toInt());
     strDT = dt.toString("dd/MM/yyyy hh:mm:ss");
 
     if (strFlag == "b")
-        dlgchannel_settings->add_ban(strChannel, strNick, strWho, strDT);
+        dlgchannel_settings->add_ban(strChannel, strNick, strWho, strDT, strIPNick);
     else if (strFlag == "I")
         dlgchannel_settings->add_invite(strChannel, strNick, strWho, strDT);
 }

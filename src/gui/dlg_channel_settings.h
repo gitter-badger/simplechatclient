@@ -53,7 +53,7 @@ public:
     void add_description(QString, QString);
     void add_op(QString, QString);
     void add_halfop(QString, QString);
-    void add_ban(QString, QString, QString, QString);
+    void add_ban(QString, QString, QString, QString, QString);
     void add_invite(QString, QString, QString, QString);
 
 private:
