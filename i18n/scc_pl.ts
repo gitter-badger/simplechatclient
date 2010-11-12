@@ -2147,8 +2147,16 @@
         <translation>* Zignorowano rozmowę prywatną od %1</translation>
     </message>
     <message>
+        <source>* Ignored invite from %1</source>
+        <translation>* Zignorowano zaproszenie od %1</translation>
+    </message>
+    <message>
         <source>* Rejected priv from %1</source>
         <translation>* Odrzucono rozmowę prywatną od %1</translation>
+    </message>
+    <message>
+        <source>* Rejected invite to %1 from %2</source>
+        <translation>* Odrzucono zaproszenie do %1 od %2</translation>
     </message>
     <message>
         <source>* %1 has public webcam</source>

@@ -3495,18 +3495,33 @@ void OnetKernel::raw_811()
 
     QString strNick = strDataList[3];
 
-    QString strMessage = QString(tr("* Ignored priv from %1")).arg(strNick);
+    QString strMessage;
+
+    if (strNick[0] == '^')
+        strMessage = QString(tr("* Ignored priv from %1")).arg(strNick);
+    else
+        strMessage = QString(tr("* Ignored invite from %1")).arg(strNick);
+
     pTabC->show_msg_active(strMessage, 7);
 }
 
 // :cf1f2.onet 812 scc_test Merovingian ^cf1f41284615 :Invite rejected
+// :cf1f3.onet 812 Merovingian Vasquez_ #Kraina_Lagodności :Invite rejected
 void OnetKernel::raw_812()
 {
     if (strDataList.value(3).isEmpty() == true) return;
+    if (strDataList.value(4).isEmpty() == true) return;
 
     QString strNick = strDataList[3];
+    QString strChannel = strDataList[4];
 
-    QString strMessage = QString(tr("* Rejected priv from %1")).arg(strNick);
+    QString strMessage;
+
+    if (strChannel[0] == '^')
+        strMessage = QString(tr("* Rejected priv from %1")).arg(strNick);
+    else
+        strMessage = QString(tr("* Rejected invite to %1 from %2")).arg(strChannel).arg(strNick);
+
     pTabC->show_msg_active(strMessage, 7);
 }
 
