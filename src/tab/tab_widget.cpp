@@ -43,6 +43,7 @@ TabWidget::TabWidget(QWidget *parent, Network *param1, QString param2, Notify *p
     strContentEnd = "</body></html>";
 
     mainLayout = new QVBoxLayout();
+    mainLayout->setMargin(0);
     mainWidget = new QWidget(this);
 
     topic = new QWebView(this);
@@ -53,15 +54,18 @@ TabWidget::TabWidget(QWidget *parent, Network *param1, QString param2, Notify *p
     topic->show();
 
     topicDetails = new QLabel(this);
+    topicDetails->setMargin(0);
     topicDetails->setOpenExternalLinks(false);
     topicDetails->setAlignment(Qt::AlignLeft);
     topicDetails->show();
 
-    logo = new QLabel(this);
-    logo->show();
+    avatar = new QLabel(this);
+    avatar->setMaximumSize(QSize(50,50));
+    avatar->setMargin(0);
+    avatar->show();
 
     topRightWidget = new QWidget(this);
-    topRightWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
+    //topRightWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
     topRightLayout = new QVBoxLayout();
     topRightLayout->setMargin(0);
     topRightLayout->setAlignment(Qt::AlignTop);
@@ -73,7 +77,7 @@ TabWidget::TabWidget(QWidget *parent, Network *param1, QString param2, Notify *p
     topLeftLayout = new QVBoxLayout();
     topLeftLayout->setMargin(0);
     topLeftLayout->setAlignment(Qt::AlignTop);
-    topLeftLayout->addWidget(logo);
+    topLeftLayout->addWidget(avatar);
     topLeftWidget->setLayout(topLeftLayout);
 
     topWidget = new QWidget(this);
@@ -102,7 +106,7 @@ TabWidget::TabWidget(QWidget *parent, Network *param1, QString param2, Notify *p
     }
     else if (strName[0] == '^')
     {
-        logo->hide();
+        avatar->hide();
         topic->hide();
         topicDetails->hide();
         topRightWidget->hide();
@@ -114,7 +118,7 @@ TabWidget::TabWidget(QWidget *parent, Network *param1, QString param2, Notify *p
     }
     else
     {
-        logo->hide();
+        avatar->hide();
         topic->hide();
         topicDetails->hide();
         topRightWidget->hide();
@@ -125,7 +129,12 @@ TabWidget::TabWidget(QWidget *parent, Network *param1, QString param2, Notify *p
         mainWidget->setLayout(mainLayout);
     }
 
-    mainLayout->setMargin(0);
+    // hide avatar
+    topLeftWidget->hide();
+    // hide topic details
+    topicDetails->hide();
+
+    // show layout
     this->setLayout(mainLayout);
 
     // set colors
@@ -365,6 +374,7 @@ void TabWidget::set_topic(QString strTopic)
 
 void TabWidget::author_topic(QString strAuthor)
 {
+    topicDetails->show();
     topicDetails->setText(QString(tr("Topic set by %1")).arg(strAuthor));
 
     QSettings settings;
@@ -381,9 +391,13 @@ void TabWidget::update_channel_avatar()
 {
     if (mChannelAvatar->contains(strName) == true)
     {
+        // show widget
+        topLeftWidget->show();
+
+        // display avatar
         QPixmap pixmap;
         pixmap.loadFromData(mChannelAvatar->value(strName));
-        logo->setPixmap(pixmap);
+        avatar->setPixmap(pixmap);
     }
 }
 

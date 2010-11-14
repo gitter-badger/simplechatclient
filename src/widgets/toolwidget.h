@@ -63,11 +63,12 @@ private:
     QPushButton *fontfamily;
     QComboBox *color;
     QPushButton *emoticons;
-    QFrame *separator;
+    QFrame *separator1;
     QPushButton *channel_settings;
     QPushButton *moderation;
     QPushButton *clear;
     QPushButton *scroll;
+    QFrame *separator2;
 
     QMenu *fontMenu;
     QAction *arialAct;

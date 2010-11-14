@@ -87,7 +87,7 @@ private:
     QVBoxLayout *topRightLayout;
     QHBoxLayout *topLayout;
     QWebView *topic;
-    QLabel *logo;
+    QLabel *avatar;
     QLabel *topicDetails;
 
     QString strTopicContent;

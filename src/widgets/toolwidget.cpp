@@ -137,10 +137,10 @@ ToolWidget::ToolWidget(QWidget *parent, Network *param1, InputWidget *param2, Dl
     emoticons->setMaximumHeight(25);
     emoticons->show();
 
-    separator = new QFrame(this);
-    separator->setFrameShape(QFrame::VLine);
-    separator->setFrameShadow(QFrame::Sunken);
-    separator->show();
+    separator1 = new QFrame(this);
+    separator1->setFrameShape(QFrame::VLine);
+    separator1->setFrameShadow(QFrame::Sunken);
+    separator1->show();
 
     channel_settings = new QPushButton(QIcon(":/images/oxygen/16x16/configure.png"), "", this);
     channel_settings->setToolTip(tr("Channel settings"));
@@ -167,6 +167,11 @@ ToolWidget::ToolWidget(QWidget *parent, Network *param1, InputWidget *param2, Dl
     scroll->show();
     bScroll = true;
 
+    separator2 = new QFrame(this);
+    separator2->setFrameShape(QFrame::VLine);
+    separator2->setFrameShadow(QFrame::Sunken);
+    separator2->show();
+
     toolLayout = new QHBoxLayout();
     toolLayout->setMargin(0);
     toolLayout->setAlignment(Qt::AlignLeft);
@@ -176,11 +181,12 @@ ToolWidget::ToolWidget(QWidget *parent, Network *param1, InputWidget *param2, Dl
     toolLayout->addWidget(color);
     toolLayout->addWidget(size);
     toolLayout->addWidget(emoticons);
-    toolLayout->addWidget(separator);
+    toolLayout->addWidget(separator1);
     toolLayout->addWidget(channel_settings);
     toolLayout->addWidget(moderation);
     toolLayout->addWidget(clear);
     toolLayout->addWidget(scroll);
+    toolLayout->addWidget(separator2);
     setLayout(toolLayout);
 
     // set default
