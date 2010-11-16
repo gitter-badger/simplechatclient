@@ -125,9 +125,8 @@ void TabContainer::remove_tab(QString strChannel)
         l->save(strChannel, strData);
         delete l;
 
-        // change tab if not active
-        if (i != pTabM->currentIndex())
-            emit currentChanged(pTabM->currentIndex());
+        // change tab
+        emit currentChanged(pTabM->currentIndex());
 
         return;
     }
