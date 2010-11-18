@@ -32,7 +32,6 @@ ToolWidget::ToolWidget(QWidget *parent, Network *param1, InputWidget *param2, Dl
 
     bold = new QPushButton(QIcon(":/images/oxygen/16x16/format-text-bold.png"), "", this);
     bold->setToolTip(tr("Bold"));
-    bold->setFont(QFont("Times New Roman", -1, 75, false));
     bold->setFlat(true);
     bold->setCheckable(true);
     bold->setMaximumWidth(25);
@@ -42,7 +41,6 @@ ToolWidget::ToolWidget(QWidget *parent, Network *param1, InputWidget *param2, Dl
 
     italic = new QPushButton(QIcon(":/images/oxygen/16x16/format-text-italic.png"), "", this);
     italic->setToolTip(tr("Italic"));
-    italic->setFont(QFont("Times New Roman", -1, -1, true));
     italic->setFlat(true);
     italic->setCheckable(true);
     italic->setMaximumWidth(25);

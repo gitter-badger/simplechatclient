@@ -457,6 +457,8 @@ void OnetKernel::kernel(QString param1)
                 raw_467n();
             else if (strDataList[3].toLower() == ":468")
                 raw_468n();
+            else if (strDataList[3].toLower() == ":469")
+                raw_469n();
             else if (strDataList[3].toLower() == ":472")
                 raw_472n();
             else if (strDataList[1].toLower() == "notice")
@@ -3177,6 +3179,18 @@ void OnetKernel::raw_468n()
     QString strChannel = strDataList[4];
 
     QString strMessage = QString(tr("* Permission denied, insufficient privileges in %1 channel")).arg(strChannel);
+    pTabC->show_msg_active(strMessage, 7);
+}
+
+// :ChanServ!service@service.onet NOTICE Merovingian :469 #Czat :channel is private
+void OnetKernel::raw_469n()
+{
+    if (strDataList.value(3).isEmpty() == true) return;
+    if (strDataList.value(4).isEmpty() == true) return;
+
+    QString strChannel = strDataList[4];
+
+    QString strMessage = QString(tr("* Channel %1 is private")).arg(strChannel);
     pTabC->show_msg_active(strMessage, 7);
 }
 

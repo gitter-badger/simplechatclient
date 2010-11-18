@@ -65,7 +65,7 @@ TabWidget::TabWidget(QWidget *parent, Network *param1, QString param2, Notify *p
     avatar->show();
 
     topRightWidget = new QWidget(this);
-    //topRightWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
+    topRightWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
     topRightLayout = new QVBoxLayout();
     topRightLayout->setMargin(0);
     topRightLayout->setAlignment(Qt::AlignTop);

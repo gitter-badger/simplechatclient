@@ -2063,6 +2063,10 @@
         <translation>* Dostęp zabroniony, nie posiadasz odpowiednich uprawnień w %1</translation>
     </message>
     <message>
+        <source>* Channel %1 is private</source>
+        <translation>* Kanał %1 jest prywatny</translation>
+    </message>
+    <message>
         <source>* %1 has become full, so you are automatically being transferred to the linked channel %2</source>
         <translation>* Kanał %1 jest pełny, zostajesz automatycznie przekierowany do kanału %2</translation>
     </message>

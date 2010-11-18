@@ -103,6 +103,7 @@ private slots:
 
 protected:
     virtual void contextMenuEvent(QContextMenuEvent *);
+    virtual void resizeEvent(QResizeEvent *);
 
 };
 

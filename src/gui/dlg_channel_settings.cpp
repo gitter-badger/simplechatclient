@@ -33,6 +33,8 @@ DlgChannelSettings::DlgChannelSettings(QWidget *parent, Network *param1) : QDial
     ui.pushButton_set_email->setIcon(QIcon(":/images/oxygen/16x16/dialog-ok-apply.png"));
     ui.pushButton_set_website->setIcon(QIcon(":/images/oxygen/16x16/dialog-ok-apply.png"));
     ui.pushButton_set_topic->setIcon(QIcon(":/images/oxygen/16x16/dialog-ok-apply.png"));
+    ui.pushButton_bold->setIcon(QIcon(":/images/oxygen/16x16/format-text-bold.png"));
+    ui.pushButton_italic->setIcon(QIcon(":/images/oxygen/16x16/format-text-italic.png"));
     ui.pushButton_set_desc->setIcon(QIcon(":/images/oxygen/16x16/dialog-ok-apply.png"));
     ui.pushButton_set_password->setIcon(QIcon(":/images/oxygen/16x16/dialog-ok-apply.png"));
     ui.pushButton_set_limit->setIcon(QIcon(":/images/oxygen/16x16/dialog-ok-apply.png"));
@@ -65,6 +67,8 @@ DlgChannelSettings::DlgChannelSettings(QWidget *parent, Network *param1) : QDial
     ui.label_website->setText(tr("Website:"));
     ui.pushButton_set_website->setText(tr("Apply"));
     ui.label_topic->setText(tr("Topic:"));
+    ui.pushButton_bold->setText("");
+    ui.pushButton_italic->setText("");
     ui.pushButton_set_topic->setText(tr("Apply"));
     ui.label_desc->setText(tr("Description:"));
     ui.pushButton_set_desc->setText(tr("Apply"));
@@ -96,6 +100,39 @@ DlgChannelSettings::DlgChannelSettings(QWidget *parent, Network *param1) : QDial
     ui.pushButton_ban_del->setText(tr("Remove"));
     ui.pushButton_invite_add->setText(tr("Add"));
     ui.pushButton_invite_del->setText(tr("Remove"));
+
+    // bold
+    ui.pushButton_bold->setCheckable(true);
+
+    // italic
+    ui.pushButton_italic->setCheckable(true);
+
+    // font
+    QStringList comboBoxFont;
+    comboBoxFont << "Arial" << "Times" << "Verdana" << "Tahoma" << "Courier";
+
+    int iComboBoxFont = 0;
+    foreach (QString strFont, comboBoxFont)
+    {
+        ui.comboBox_font->insertItem(iComboBoxFont, strFont);
+        iComboBoxFont++;
+    }
+
+    // color
+    ui.comboBox_color->setToolTip(tr("Font color"));
+    ui.comboBox_color->setIconSize(QSize(50,10));
+
+    QStringList comboBoxColors;
+    comboBoxColors << "#000000" << "#623c00" << "#c86c00" << "#ff6500" << "#ff0000" << "#e40f0f" << "#990033" << "#8800ab" << "#ce00ff" << "#0f2ab1" << "#3030ce" << "#006699" << "#1a866e" << "#008100" << "#959595";
+
+    int iComboBoxColors = 0;
+    foreach (QString strColor, comboBoxColors)
+    {
+        QPixmap pixmap(50,10);
+        pixmap.fill(QColor(strColor));
+        ui.comboBox_color->insertItem(iComboBoxColors, pixmap, "");
+        iComboBoxColors++;
+    }
 
     QObject::connect(ui.pushButton_transfer, SIGNAL(clicked()), this, SLOT(owner_changed()));
     QObject::connect(ui.pushButton_remove_channel, SIGNAL(clicked()), this, SLOT(remove_channel_clicked()));
@@ -141,6 +178,76 @@ void DlgChannelSettings::add_topic(QString strCheckChannel, QString strTopic)
 
     // convert emoticons
     strTopic.replace(QRegExp("%I([a-zA-Z0-9_-]+)%"), "//\\1");
+
+    // convert font
+    while (strTopic.indexOf("%F") != -1)
+    {
+        int iStartPos = strTopic.indexOf("%F");
+        int iEndPos = strTopic.indexOf("%", iStartPos+1);
+        int iSpacePos = strTopic.indexOf(" ", iStartPos);
+
+        if (iEndPos != -1)
+        {
+            if ((iEndPos < iSpacePos) || (iSpacePos == -1))
+            {
+                iEndPos++;
+                QString strFontFull = strTopic.mid(iStartPos, iEndPos-iStartPos);
+                QString strFont = strFontFull.mid(2,strFontFull.length()-3);
+
+                if (strFont.indexOf(":") != -1)
+                {
+                    QString strFontWeight = strFont.left(strFont.indexOf(":"));
+                    QString strFontName = strFont.right(strFont.length()-strFont.indexOf(":")-1);
+
+                    for (int fw = 0; fw < strFontWeight.length(); fw++)
+                    {
+                        if (strFontWeight[fw] == 'b') ui.pushButton_bold->setChecked(true);
+                        else if (strFontWeight[fw] == 'i') ui.pushButton_italic->setChecked(true);
+                    }
+
+                    if (strFontName == "arial") ui.comboBox_font->setCurrentIndex(0);
+                    else if (strFontName == "times") ui.comboBox_font->setCurrentIndex(1);
+                    else if (strFontName == "verdana") ui.comboBox_font->setCurrentIndex(2);
+                    else if (strFontName == "tahoma") ui.comboBox_font->setCurrentIndex(3);
+                    else if (strFontName == "courier") ui.comboBox_font->setCurrentIndex(4);
+                }
+                else
+                {
+                    if (strFont == "arial") ui.comboBox_font->setCurrentIndex(0);
+                    else if (strFont == "times") ui.comboBox_font->setCurrentIndex(1);
+                    else if (strFont == "verdana") ui.comboBox_font->setCurrentIndex(2);
+                    else if (strFont == "tahoma") ui.comboBox_font->setCurrentIndex(3);
+                    else if (strFont == "courier") ui.comboBox_font->setCurrentIndex(4);
+                    else
+                    {
+                        for (int fw = 0; fw < strFont.length(); fw++)
+                        {
+                            if (strFont[fw] == 'b') ui.pushButton_bold->setChecked(true);
+                            else if (strFont[fw] == 'i') ui.pushButton_italic->setChecked(true);
+                        }
+                    }
+                }
+
+                strTopic.replace(strFontFull, "");
+            }
+        }
+    }
+
+    // convert color
+    QStringList strlFontColors;
+    strlFontColors << "#000000" << "#623c00" << "#c86c00" << "#ff6500" << "#ff0000" << "#e40f0f" << "#990033" << "#8800ab" << "#ce00ff" << "#0f2ab1" << "#3030ce" << "#006699" << "#1a866e" << "#008100" << "#959595";
+
+    int iFontColor = 0;
+    foreach (QString strFontColor, strlFontColors)
+    {
+        strFontColor = "%C"+strFontColor.right(6)+"%";
+
+        if (strTopic.contains(strFontColor) == true)
+            ui.comboBox_color->setCurrentIndex(iFontColor);
+
+        strTopic.replace(strFontColor, "");
+        iFontColor++;
+    }
 
     ui.plainTextEdit_topic->clear();
     ui.plainTextEdit_topic->insertPlainText(strTopic);
@@ -369,7 +476,40 @@ void DlgChannelSettings::topic_changed()
 {
     QString strTopic = ui.plainTextEdit_topic->toPlainText();
     strTopic.replace(QRegExp("(\r|\n)"), "");
-    strTopic.replace(QRegExp("//([a-zA-Z0-9_-]+)"), "%I\\1%");
+    strTopic.replace(QRegExp("(http:|https:)//"), "\\1\\\\"); // fix http https
+    strTopic.replace(QRegExp("//([a-zA-Z0-9_-]+)\\b"), "%I\\1%");
+    strTopic.replace(QRegExp("(http:|https:)\\\\\\\\"), "\\1//"); // fix http https
+
+    bool bBold = false;
+    bool bItalic = false;
+    QString strFontName;
+    QString strFontColor;
+    QString strFontWeight;
+
+    // bold
+    if (ui.pushButton_bold->isChecked() == true) bBold = true;
+
+    // italic
+    if (ui.pushButton_italic->isChecked() == true) bItalic = true;
+
+    // font name
+    strFontName = ui.comboBox_font->currentText().toLower();
+
+    // font color
+    QStringList strlFontColors;
+    strlFontColors << "#000000" << "#623c00" << "#c86c00" << "#ff6500" << "#ff0000" << "#e40f0f" << "#990033" << "#8800ab" << "#ce00ff" << "#0f2ab1" << "#3030ce" << "#006699" << "#1a866e" << "#008100" << "#959595";
+
+    if (ui.comboBox_color->currentIndex() != -1)
+        strFontColor = strlFontColors.at(ui.comboBox_color->currentIndex());
+
+    // set topic
+    if (bBold == true) strFontWeight += "b";
+    if (bItalic == true) strFontWeight += "i";
+
+    if (strFontColor != "#000000")
+        strTopic = "%C"+strFontColor.right(6)+"%"+strTopic;
+    if ((strFontWeight != "") || (strFontName != "verdana"))
+        strTopic = "%F"+strFontWeight+":"+strFontName+"%"+strTopic;
 
     pNetwork->send(QString("CS SET %1 TOPIC %2").arg(strChannel).arg(strTopic));
     pNetwork->send(QString("CS INFO %1").arg(strChannel));
@@ -674,6 +814,10 @@ void DlgChannelSettings::clear()
     ui.lineEdit_website->clear();
     ui.lineEdit_password->clear();
     ui.plainTextEdit_topic->clear();
+    ui.pushButton_bold->setChecked(false);
+    ui.pushButton_italic->setChecked(false);
+    ui.comboBox_font->setCurrentIndex(-1);
+    ui.comboBox_color->setCurrentIndex(-1);
     ui.plainTextEdit_desc->clear();
     ui.label_channel_name->clear();
     ui.label_owner_nick->clear();
