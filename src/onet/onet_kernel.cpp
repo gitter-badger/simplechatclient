@@ -1083,15 +1083,16 @@ void OnetKernel::raw_topic()
 
     QString strChannel = strDataList[2];
 
-    QString strMessage;
-    for (int i = 3; i < strDataList.size(); i++) { if (i != 3) strMessage += " "; strMessage += strDataList[i]; }
-    if (strMessage[0] == ':')
-        strMessage = strMessage.right(strMessage.length()-1);
+    QString strTopic;
+    for (int i = 3; i < strDataList.size(); i++) { if (i != 3) strTopic += " "; strTopic += strDataList[i]; }
+    if (strTopic[0] == ':')
+        strTopic = strTopic.right(strTopic.length()-1);
 
-    QString strDisplay = QString(tr("* %1 changed the topic to: %2")).arg(strWho).arg(strMessage);
+    QString strDisplay = QString(tr("* %1 changed the topic to: %2")).arg(strWho).arg(strTopic);
 
     pTabC->show_msg(strChannel, strDisplay, 5);
-    pTabC->set_topic(strChannel, strMessage);
+    dlgchannel_settings->add_topic(strChannel, strTopic);
+    pTabC->set_topic(strChannel, strTopic);
     pNetwork->send(QString("CS INFO %1 i").arg(strChannel));
 }
 
