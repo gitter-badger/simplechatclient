@@ -161,12 +161,13 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     // options & notify
     pNotify = new Notify();
     pOptions = new DlgOptions(this, pNotify);
+    pUpdate = new Update(this);
 
     // refresh colors
     refresh_colors();
 
     // update
-    QTimer::singleShot(1000*5, this, SLOT(check_update()));
+    pUpdate->check_update();
 
     // signal refresh colors
     QObject::connect(pOptions, SIGNAL(refresh_colors()), this, SLOT(refresh_colors()));
@@ -181,12 +182,8 @@ MainWindow::~MainWindow()
     while(coreServers.isEmpty() == false)
         coreServers.removeFirst();
 
-    // kill update threads
-    while(uThreadList.isEmpty() == false)
-    {
-        uThreadList.first()->kill_thread();
-        uThreadList.removeFirst();;
-    }
+    // delete update
+    delete pUpdate;
 
     // hide tray
     trayIcon->hide();
@@ -221,7 +218,7 @@ void MainWindow::create_settings()
     // default settings
     QSettings settings;
     settings.clear();
-    settings.setValue("version", "1.0.9.633");
+    settings.setValue("version", "1.0.9.634");
     settings.setValue("debug", "off");
     settings.setValue("logged", "off");
     settings.setValue("busy", "off");
@@ -250,19 +247,6 @@ void MainWindow::create_settings()
     // fix config values
     if (settings.value("style").toString() == "classic")
         settings.setValue("disable_avatars", "on");
-}
-
-// update
-void MainWindow::check_update()
-{
-    uThreadList.append(new Update(this));
-    QObject::connect(uThreadList.at(uThreadList.size()-1), SIGNAL(sremove_uthread(Update*)), this, SLOT(remove_uthread(Update*)));
-
-#ifdef Q_WS_X11
-    QSettings settings;
-    if (settings.value("debug").toString() == "on")
-        qDebug() << "Update thread +1 (size: " << uThreadList.size() << ")";
-#endif
 }
 
 // refresh colors
@@ -337,18 +321,6 @@ void MainWindow::tray_icon(QSystemTrayIcon::ActivationReason activationReason)
         else
             this->showNormal();
     }
-}
-
-void MainWindow::remove_uthread(Update *thr)
-{
-    thr->QObject::disconnect();
-    uThreadList.removeOne(thr);
-
-#ifdef Q_WS_X11
-    QSettings settings;
-    if (settings.value("debug").toString() == "on")
-        qDebug() << "Update thread -1 (size: " << uThreadList.size() << ")";
-#endif
 }
 
 // onet dialogs

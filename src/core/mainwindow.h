@@ -45,9 +45,9 @@ public:
 
 private:
     QList <Core*> coreServers;
-    QList <Update*> uThreadList;
     DlgOptions *pOptions;
     Notify *pNotify;
+    Update *pUpdate;
 
     QToolBar *toolBar;
     QMenu *fileMenu;
@@ -77,7 +77,6 @@ private:
     void create_settings();
 
 private slots:
-    void check_update();
     void refresh_colors();
     void button_connect();
     void button_close();
@@ -86,7 +85,6 @@ private slots:
     void open_notes();
     void button_show();
     void tray_icon(QSystemTrayIcon::ActivationReason);
-    void remove_uthread(Update*);
 
     // onet dialogs
     void open_channel_list();

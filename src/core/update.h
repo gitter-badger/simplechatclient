@@ -27,47 +27,27 @@
 #include <QDomDocument>
 #include <QHostInfo>
 #include <QNetworkAccessManager>
-#include <QNetworkCookieJar>
 #include <QNetworkReply>
 #include <QObject>
 #include <QSettings>
-#include <QThread>
-#include <QTimer>
 #include "dlg_update.h"
-
-class UpdateThread : public QThread
-{
-    Q_OBJECT
-public:
-    UpdateThread();
-    void run();
-
-private slots:
-    void thread_work();
-
-signals:
-    void version(QString);
-    void stop_thread();
-
-};
 
 class Update : public QObject
 {
     Q_OBJECT
 public:
     Update(QWidget *);
-    void kill_thread();
+    void check_update();
 
 private:
     QWidget *myparent;
-    UpdateThread *updateThr;
+    QNetworkReply *pReply;
+    QNetworkAccessManager accessManager;
 
-public slots:
     void version(QString);
-    void stop_thread();
 
-signals:
-    void sremove_uthread(Update*);
+private slots:
+    void update_finished();
 
 };
 

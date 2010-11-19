@@ -20,28 +20,13 @@
 
 #include "update.h"
 
-UpdateThread::UpdateThread()
+Update::Update(QWidget *parent)
 {
+    myparent = parent;
 }
 
-void UpdateThread::run()
+void Update::check_update()
 {
-    QTimer::singleShot(0, this, SLOT(thread_work()));
-
-    exec();
-}
-
-void UpdateThread::thread_work()
-{
-    QString strVersion;
-    strVersion = QString::null;
-
-    QEventLoop eventLoop;
-    QNetworkReply *pReply;
-    QNetworkAccessManager accessManager;
-    QNetworkCookieJar *cookieJar = new QNetworkCookieJar();
-    accessManager.setCookieJar(cookieJar);
-
     bool bHost = true;
 
     QHostInfo test_host = QHostInfo::fromName("simplechatclien.sourceforge.net");
@@ -52,42 +37,10 @@ void UpdateThread::thread_work()
     {
         QSettings settings;
         QString strSendVersion = settings.value("version").toString();
+
         pReply = accessManager.get(QNetworkRequest(QUrl(QString("http://simplechatclien.sourceforge.net/update.php?version=%1").arg(strSendVersion))));
-        QObject::connect(pReply, SIGNAL(finished()), &eventLoop, SLOT(quit()));
-        eventLoop.exec();
-
-        QString strSite = pReply->readAll();
-        pReply->deleteLater();
-
-        QDomDocument doc;
-        doc.setContent(strSite);
-
-        strVersion = doc.elementsByTagName("currentVersion").item(0).toElement().text();
-        emit version(strVersion);
+        QObject::connect(pReply, SIGNAL(finished()), this, SLOT(update_finished()));
     }
-
-    emit stop_thread();
-}
-
-// ------------------------------------------------------------ //
-
-Update::Update(QWidget *parent)
-{
-    myparent = parent;
-
-    updateThr = new UpdateThread();
-    QObject::connect(updateThr, SIGNAL(version(QString)), this, SLOT(version(QString)));
-    QObject::connect(updateThr, SIGNAL(stop_thread()), this, SLOT(stop_thread()));
-    updateThr->start(QThread::InheritPriority);
-}
-
-void Update::kill_thread()
-{
-    updateThr->quit();
-    updateThr->wait();
-    updateThr->deleteLater();
-    updateThr->QObject::disconnect();
-    delete updateThr;
 }
 
 void Update::version(QString strAvailableVersion)
@@ -126,8 +79,18 @@ void Update::version(QString strAvailableVersion)
     }
 }
 
-void Update::stop_thread()
+void Update::update_finished()
 {
-    kill_thread();
-    emit sremove_uthread(this);
+    QString strSite = pReply->readAll();
+    pReply->QObject::disconnect();
+    pReply->deleteLater();
+
+    if (strSite.isEmpty() == false)
+    {
+        QDomDocument doc;
+        doc.setContent(strSite);
+
+        QString strVersion = doc.elementsByTagName("currentVersion").item(0).toElement().text();
+        version(strVersion);
+    }
 }
