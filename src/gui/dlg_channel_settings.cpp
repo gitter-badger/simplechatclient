@@ -506,10 +506,14 @@ void DlgChannelSettings::topic_changed()
     if (bBold == true) strFontWeight += "b";
     if (bItalic == true) strFontWeight += "i";
 
-    if (strFontColor != "#000000")
+    if (strFontName == "verdana")
+        strFontName = "";
+    if ((strFontColor != "#000000") && (strFontColor.isEmpty() == false))
         strTopic = "%C"+strFontColor.right(6)+"%"+strTopic;
-    if ((strFontWeight != "") || (strFontName != "verdana"))
-        strTopic = "%F"+strFontWeight+":"+strFontName+"%"+strTopic;
+    if ((strFontWeight.isEmpty() == false) && (strFontName.isEmpty() == false))
+        strFontName = ":"+strFontName;
+    if ((strFontWeight.isEmpty() == false) || (strFontName.isEmpty() == false))
+        strTopic = "%F"+strFontWeight+strFontName+"%"+strTopic;
 
     pNetwork->send(QString("CS SET %1 TOPIC %2").arg(strChannel).arg(strTopic));
     pNetwork->send(QString("CS INFO %1").arg(strChannel));

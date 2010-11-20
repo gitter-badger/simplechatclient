@@ -65,7 +65,7 @@ TabWidget::TabWidget(QWidget *parent, Network *param1, QString param2, Notify *p
     avatar->show();
 
     topRightWidget = new QWidget(this);
-    topRightWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
+    topRightWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Minimum);
     topRightLayout = new QVBoxLayout();
     topRightLayout->setMargin(0);
     topRightLayout->setAlignment(Qt::AlignTop);
@@ -81,6 +81,7 @@ TabWidget::TabWidget(QWidget *parent, Network *param1, QString param2, Notify *p
     topLeftWidget->setLayout(topLeftLayout);
 
     topWidget = new QWidget(this);
+    topWidget->setMaximumHeight(50);
     topLayout = new QHBoxLayout();
     topLayout->setMargin(0);
     topLayout->setAlignment(Qt::AlignLeft);
