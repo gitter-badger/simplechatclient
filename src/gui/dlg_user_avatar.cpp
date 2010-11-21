@@ -31,11 +31,25 @@ DlgUserAvatar::DlgUserAvatar(QWidget *parent, QPixmap param1) : QDialog(parent)
     myparent = parent;
     avatar = param1;
 
+    ui.toolButton_zoom_out->setIcon(QIcon(":/images/oxygen/16x16/list-remove.png"));
+    ui.toolButton_zoom_in->setIcon(QIcon(":/images/oxygen/16x16/list-add.png"));
+
     // slider value 5
     ui.label_avatar->setPixmap(avatar.scaled(QSize(250,250)));
 
+    QObject::connect(ui.toolButton_zoom_out, SIGNAL(clicked()), this, SLOT(button_zoom_out()));
     QObject::connect(ui.horizontalSlider, SIGNAL(valueChanged(int)), this, SLOT(slider_value_changed(int)));
+    QObject::connect(ui.toolButton_zoom_in, SIGNAL(clicked()), this, SLOT(button_zoom_in()));
     QObject::connect(ui.buttonBox, SIGNAL(accepted()), this, SLOT(button_ok()));
+}
+
+void DlgUserAvatar::button_zoom_out()
+{
+    int value = ui.horizontalSlider->value();
+    value--;
+
+    if (value >= ui.horizontalSlider->minimum())
+        ui.horizontalSlider->setValue(value);
 }
 
 void DlgUserAvatar::slider_value_changed(int iValue)
@@ -44,6 +58,15 @@ void DlgUserAvatar::slider_value_changed(int iValue)
     iSize *= iValue;
 
     ui.label_avatar->setPixmap(avatar.scaled(QSize(iSize,iSize)));
+}
+
+void DlgUserAvatar::button_zoom_in()
+{
+    int value = ui.horizontalSlider->value();
+    value++;
+
+    if (value <= ui.horizontalSlider->maximum())
+        ui.horizontalSlider->setValue(value);
 }
 
 void DlgUserAvatar::button_ok()

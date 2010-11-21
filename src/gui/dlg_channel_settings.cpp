@@ -261,6 +261,10 @@ void DlgChannelSettings::add_topic(QString strCheckChannel, QString strTopic)
     if (ui.comboBox_color->currentIndex() == -1)
         ui.comboBox_color->setCurrentIndex(0);
 
+    // default verdana
+    if (ui.comboBox_font->currentIndex() == -1)
+        ui.comboBox_font->setCurrentIndex(2);
+
     // set topic
     ui.plainTextEdit_topic->clear();
     ui.plainTextEdit_topic->insertPlainText(strTopic);
