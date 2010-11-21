@@ -51,6 +51,7 @@ public:
     void display_message(QString, int); // private, exteption: inputlinewidget
     void set_topic(QString);
     void author_topic(QString);
+    void set_link(QString);
     void update_channel_avatar();
     void set_open_channels(QStringList);
     void change_font_size(QString);
@@ -76,19 +77,22 @@ private:
     QString strContentEnd;
     QString strFontSize;
 
-    QWidget *topWidget;
-    MainWebView *mainWebView;
-
     QVBoxLayout *mainLayout;
     QWidget *mainWidget;
     QWidget *topLeftWidget;
     QVBoxLayout *topLeftLayout;
     QWidget *topRightWidget;
     QVBoxLayout *topRightLayout;
+    QWidget *detailsWidget;
+    QHBoxLayout *detailsLayout;
+    QWidget *topWidget;
     QHBoxLayout *topLayout;
+
     QWebView *topic;
     QLabel *avatar;
     QLabel *topicDetails;
+    QLabel *websiteLink;
+    MainWebView *mainWebView;
 
     QString strTopicContent;
     bool bCursorPositionChanged;

@@ -59,10 +59,23 @@ TabWidget::TabWidget(QWidget *parent, Network *param1, QString param2, Notify *p
     topicDetails->setAlignment(Qt::AlignLeft);
     topicDetails->show();
 
+    websiteLink = new QLabel(this);
+    websiteLink->setMargin(0);
+    websiteLink->setOpenExternalLinks(true);
+    websiteLink->setAlignment(Qt::AlignRight);
+    websiteLink->show();
+
     avatar = new QLabel(this);
     avatar->setMaximumSize(QSize(50,50));
     avatar->setMargin(0);
     avatar->show();
+
+    detailsWidget = new QWidget(this);
+    detailsLayout = new QHBoxLayout();
+    detailsLayout->setMargin(0);
+    detailsLayout->addWidget(topicDetails);
+    detailsLayout->addWidget(websiteLink);
+    detailsWidget->setLayout(detailsLayout);
 
     topRightWidget = new QWidget(this);
     topRightWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Minimum);
@@ -70,7 +83,7 @@ TabWidget::TabWidget(QWidget *parent, Network *param1, QString param2, Notify *p
     topRightLayout->setMargin(0);
     topRightLayout->setAlignment(Qt::AlignTop);
     topRightLayout->addWidget(topic);
-    topRightLayout->addWidget(topicDetails);
+    topRightLayout->addWidget(detailsWidget);
     topRightWidget->setLayout(topRightLayout);
 
     topLeftWidget = new QWidget(this);
@@ -134,6 +147,8 @@ TabWidget::TabWidget(QWidget *parent, Network *param1, QString param2, Notify *p
     topLeftWidget->hide();
     // hide topic details
     topicDetails->hide();
+    // hide website link
+    websiteLink->hide();
 
     // show layout
     this->setLayout(mainLayout);
@@ -380,6 +395,14 @@ void TabWidget::author_topic(QString strAuthor)
     QSettings settings;
     if (settings.value("style") == "classic")
         topic->setToolTip(topicDetails->text());
+}
+
+void TabWidget::set_link(QString strUrl)
+{
+    websiteLink->show();
+
+    websiteLink->setText(QString("<a href=\"%1\" style=\"color:#0000FF;text-decoration:none;\" >"+tr("Channel website")+"</a>").arg(strUrl));
+    websiteLink->setToolTip(strUrl);
 }
 
 void TabWidget::replace_color(QString level, QString color)

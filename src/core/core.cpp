@@ -559,15 +559,3 @@ void Core::set_open_channels()
         mChannelNickListWidget.value(strChannel)->set_open_channels(strlChannels);
     }
 }
-
-/*
-
-/// REGRESSION
-
-void TabWidget::set_link(QString strUrl)
-{
-    webLink->setText(QString("<a href=\"%1\" style=\"color:#0000FF;text-decoration:none;\" >"+tr("Channel website")+"</a>").arg(strUrl));
-    webLink->setToolTip(strUrl);
-}
-
-*/

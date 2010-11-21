@@ -50,6 +50,7 @@ public:
     void show_msg_active(QString, int);
     void set_topic(QString, QString);
     void author_topic(QString, QString);
+    void set_link(QString, QString);
     QStringList get_open_channels();
     bool get_scroll(QString);
     void add_user(QString); // update nick count for option hide join/part when > 200

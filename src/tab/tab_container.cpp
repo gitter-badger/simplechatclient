@@ -277,6 +277,13 @@ void TabContainer::author_topic(QString strChannel, QString strNick)
         tw[i]->author_topic(strNick);
 }
 
+void TabContainer::set_link(QString strChannel, QString strLink)
+{
+    int i = get_index(strChannel);
+    if (i != -1)
+        tw[i]->set_link(strLink);
+}
+
 void TabContainer::update_open_channels()
 {
     QStringList strOpenChannels = get_open_channels();

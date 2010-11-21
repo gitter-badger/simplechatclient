@@ -1545,9 +1545,8 @@ void OnetKernel::raw_161n()
             if (strKey == "www")
             {
                 dlgchannel_settings->add_www(strChannel, strValue);
-                /// REGRESSION
-                //if (strValue.isEmpty() == false)
-                    //pTabC->set_link(strChannel, strValue);
+                if (strValue.isEmpty() == false)
+                    pTabC->set_link(strChannel, strValue);
             }
             else if (strKey == "createdDate")
                 dlgchannel_settings->add_created(strChannel, strValue);
