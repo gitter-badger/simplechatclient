@@ -26,6 +26,8 @@ Convert::Convert()
 
 void Convert::convert_text(QString *strData, QString *strLastContent)
 {
+    (*strData) += " "; // fix convert algorithm
+
     // fonts
     if (strData->indexOf("%F") != -1)
     {
@@ -44,51 +46,51 @@ void Convert::convert_text(QString *strData, QString *strLastContent)
                     iEndPos++;
                     QString strFontFull = strData->mid(iStartPos, iEndPos-iStartPos);
                     QString strFont = strFontFull.mid(2,strFontFull.length()-3);
-                    QString strInsert;
+                    strFont = strFont.toLower();
 
                     QString strFontStyle = "normal";
-                    QString strFontFamily = "Verdana";
-                    QString strFontWeight = "normal";
-                    QString strFontName = "Verdana";
+                    QString strFontWeight;
+                    QString strFontName;
 
                     if (strFont.indexOf(":") != -1)
                     {
-                         strFontWeight = strFont.left(strFont.indexOf(":"));
-                         strFontName = strFont.right(strFont.length()-strFont.indexOf(":")-1);
-
-                         for (int fw = 0; fw < strFontWeight.length(); fw++)
-                         {
-                             if (strFontWeight[fw] == 'b') strFontWeight = "bold";
-                             else if (strFontWeight[fw] == 'i') strFontStyle = "italic";
-                         }
-
-                         if (strFontName == "arial") strFontFamily = "Arial";
-                         else if (strFontName == "times") strFontFamily = "Times New Roman";
-                         else if (strFontName == "verdana") strFontFamily = "Verdana";
-                         else if (strFontName == "tahoma") strFontFamily = "Tahoma";
-                         else if (strFontName == "courier") strFontFamily = "Courier New";
-
-                         strInsert = "<span style=\"font-weight:"+strFontWeight+";font-style:"+strFontStyle+";font-family:"+strFontFamily+";\">";
+                        strFontWeight = strFont.left(strFont.indexOf(":"));
+                        strFontName = strFont.right(strFont.length()-strFont.indexOf(":")-1);
                     }
                     else
                     {
-                         if (strFont == "arial") strFontFamily = "Arial";
-                         else if (strFont == "times") strFontFamily = "Times New Roman";
-                         else if (strFont == "verdana") strFontFamily = "Verdana";
-                         else if (strFont == "tahoma") strFontFamily = "Tahoma";
-                         else if (strFont == "courier") strFontFamily = "Courier New";
-                         else
-                         {
-                             for (int fw = 0; fw < strFont.length(); fw++)
-                             {
-                                 if (strFont[fw] == 'b') strFontWeight = "bold";
-                                 else if (strFont[fw] == 'i') strFontStyle = "italic";
-                             }
-                         }
-                         strInsert = "<span style=\"font-weight:"+strFontWeight+";font-style:"+strFontStyle+";font-family:"+strFontFamily+";\">";
+                        QRegExp rx("((b|i)?)((b|i)?)");
+                        if (rx.exactMatch(strFont) == true)
+                            strFontWeight = strFont;
                     }
 
-                    strData->replace(strFontFull, strInsert);
+                    if (strFontWeight.isEmpty() == false)
+                    {
+                        for (int fw = 0; fw < strFontWeight.length(); fw++)
+                        {
+                            if (strFontWeight[fw] == 'b') strFontWeight = "bold";
+                            else if (strFontWeight[fw] == 'i') strFontStyle = "italic";
+                        }
+                    }
+
+                    if ((strFontName.isEmpty() == false) || (strFontWeight.isEmpty() == false))
+                    {
+                        QString strFontFamily;
+                        if (strFontName == "arial") strFontFamily = "Arial";
+                        else if (strFontName == "times") strFontFamily = "Times New Roman";
+                        else if (strFontName == "verdana") strFontFamily = "Verdana";
+                        else if (strFontName == "tahoma") strFontFamily = "Tahoma";
+                        else if (strFontName == "courier") strFontFamily = "Courier New";
+                        else strFontFamily = "Verdana";
+
+                        if (strFontWeight.isEmpty() == true)
+                            strFontWeight = "normal";
+
+                        QString strInsert = "<span style=\"font-weight:"+strFontWeight+";font-style:"+strFontStyle+";font-family:"+strFontFamily+";\">";
+                        strData->replace(strFontFull, strInsert);
+                    }
+                    else
+                        strData->insert(iStartPos+1, " "); // fix wrong %F
                 }
                 else
                     strData->insert(iStartPos+1, " "); // fix wrong %F

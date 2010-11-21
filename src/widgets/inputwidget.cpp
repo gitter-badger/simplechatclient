@@ -191,7 +191,7 @@ void InputWidget::send_message(bool bType)
                         font = "";
                     if ((strCurrentColor != "#000000") && (strCurrentColor.isEmpty() == false))
                         strTextDisplay = "%C"+strCurrentColor.right(6)+"%"+strTextDisplay;
-                    if ((weight.isEmpty() == false) && (font.isEmpty() == false))
+                    if (font.isEmpty() == false)
                         font = ":"+font;
                     if ((weight.isEmpty() == false) || (font.isEmpty() == false))
                         strTextDisplay = "%F"+weight+font+"%"+strTextDisplay;
@@ -239,7 +239,7 @@ void InputWidget::send_message(bool bType)
                     font = "";
                 if ((strCurrentColor != "#000000") && (strCurrentColor.isEmpty() == false))
                     strText = "%C"+strCurrentColor.right(6)+"%"+strText;
-                if ((weight.isEmpty() == false) && (font.isEmpty() == false))
+                if (font.isEmpty() == false)
                     font = ":"+font;
                 if ((weight.isEmpty() == false) || (font.isEmpty() == false))
                     strText = "%F"+weight+font+"%"+strText;

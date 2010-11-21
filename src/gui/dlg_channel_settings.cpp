@@ -175,6 +175,7 @@ void DlgChannelSettings::set_channel(QString param1)
 void DlgChannelSettings::add_topic(QString strCheckChannel, QString strTopic)
 {
     if (strCheckChannel != strChannel) return; // not this channel
+    strTopic += " "; // fix convert algorithm
 
     // convert emoticons
     strTopic.replace(QRegExp("%I([a-zA-Z0-9_-]+)%"), "//\\1");
@@ -193,44 +194,51 @@ void DlgChannelSettings::add_topic(QString strCheckChannel, QString strTopic)
                 iEndPos++;
                 QString strFontFull = strTopic.mid(iStartPos, iEndPos-iStartPos);
                 QString strFont = strFontFull.mid(2,strFontFull.length()-3);
+                strFont = strFont.toLower();
+
+                QString strFontWeight;
+                QString strFontName;
 
                 if (strFont.indexOf(":") != -1)
                 {
-                    QString strFontWeight = strFont.left(strFont.indexOf(":"));
-                    QString strFontName = strFont.right(strFont.length()-strFont.indexOf(":")-1);
+                    strFontWeight = strFont.left(strFont.indexOf(":"));
+                    strFontName = strFont.right(strFont.length()-strFont.indexOf(":")-1);
+                }
+                else
+                {
+                    QRegExp rx("((b|i)?)((b|i)?)");
+                    if (rx.exactMatch(strFont) == true)
+                        strFontWeight = strFont;
+                }
 
+                if (strFontWeight.isEmpty() == false)
+                {
                     for (int fw = 0; fw < strFontWeight.length(); fw++)
                     {
                         if (strFontWeight[fw] == 'b') ui.pushButton_bold->setChecked(true);
                         else if (strFontWeight[fw] == 'i') ui.pushButton_italic->setChecked(true);
                     }
+                }
 
+                if ((strFontName.isEmpty() == false) || (strFontWeight.isEmpty() == false))
+                {
                     if (strFontName == "arial") ui.comboBox_font->setCurrentIndex(0);
                     else if (strFontName == "times") ui.comboBox_font->setCurrentIndex(1);
                     else if (strFontName == "verdana") ui.comboBox_font->setCurrentIndex(2);
                     else if (strFontName == "tahoma") ui.comboBox_font->setCurrentIndex(3);
                     else if (strFontName == "courier") ui.comboBox_font->setCurrentIndex(4);
+                    else ui.comboBox_font->setCurrentIndex(2);
+
+                    strTopic.replace(strFontFull, "");
                 }
                 else
-                {
-                    if (strFont == "arial") ui.comboBox_font->setCurrentIndex(0);
-                    else if (strFont == "times") ui.comboBox_font->setCurrentIndex(1);
-                    else if (strFont == "verdana") ui.comboBox_font->setCurrentIndex(2);
-                    else if (strFont == "tahoma") ui.comboBox_font->setCurrentIndex(3);
-                    else if (strFont == "courier") ui.comboBox_font->setCurrentIndex(4);
-                    else
-                    {
-                        for (int fw = 0; fw < strFont.length(); fw++)
-                        {
-                            if (strFont[fw] == 'b') ui.pushButton_bold->setChecked(true);
-                            else if (strFont[fw] == 'i') ui.pushButton_italic->setChecked(true);
-                        }
-                    }
-                }
-
-                strTopic.replace(strFontFull, "");
+                    strTopic.insert(iStartPos+1, " "); // fix wrong %F
             }
+            else
+                strTopic.insert(iStartPos+1, " "); // fix wrong %F
         }
+        else
+            break;
     }
 
     // convert color
@@ -249,6 +257,11 @@ void DlgChannelSettings::add_topic(QString strCheckChannel, QString strTopic)
         iFontColor++;
     }
 
+    // default #000000
+    if (ui.comboBox_color->currentIndex() == -1)
+        ui.comboBox_color->setCurrentIndex(0);
+
+    // set topic
     ui.plainTextEdit_topic->clear();
     ui.plainTextEdit_topic->insertPlainText(strTopic);
 }
@@ -510,7 +523,7 @@ void DlgChannelSettings::topic_changed()
         strFontName = "";
     if ((strFontColor != "#000000") && (strFontColor.isEmpty() == false))
         strTopic = "%C"+strFontColor.right(6)+"%"+strTopic;
-    if ((strFontWeight.isEmpty() == false) && (strFontName.isEmpty() == false))
+    if (strFontName.isEmpty() == false)
         strFontName = ":"+strFontName;
     if ((strFontWeight.isEmpty() == false) || (strFontName.isEmpty() == false))
         strTopic = "%F"+strFontWeight+strFontName+"%"+strTopic;

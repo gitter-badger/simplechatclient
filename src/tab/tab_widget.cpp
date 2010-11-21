@@ -238,7 +238,6 @@ void TabWidget::display_message(QString strData, int iLevel)
     }
 
     // fix data
-    strData += " ";
     strData.replace("&", "&amp;");
     strData.replace("<", "&lt;");
     strData.replace(">", "&gt;");
