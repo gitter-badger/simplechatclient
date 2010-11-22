@@ -434,6 +434,20 @@ void DlgChannelSettings::add_ban(QString strCheckChannel, QString strNick, QStri
         ui.tableWidget_ban->setItem(ui.tableWidget_ban->rowCount()-1, 0, new QTableWidgetItem(strNick));
         ui.tableWidget_ban->setItem(ui.tableWidget_ban->rowCount()-1, 1, new QTableWidgetItem(strWho));
         ui.tableWidget_ban->setItem(ui.tableWidget_ban->rowCount()-1, 2, new QTableWidgetItem(strDT));
+
+        if (strIPNick.isEmpty() == true)
+        {
+            ui.tableWidget_ban->setItem(ui.tableWidget_ban->rowCount()-1, 0, new QTableWidgetItem(strNick));
+            ui.tableWidget_ban->setItem(ui.tableWidget_ban->rowCount()-1, 3, new QTableWidgetItem(strIPNick));
+        }
+        else
+        {
+            QTableWidgetItem *iIPNick = new QTableWidgetItem(strIPNick);
+            iIPNick->setTextColor(QColor("#ff0000")); // set color
+            iIPNick->setData(Qt::UserRole, strNick); // set original ban mask
+
+            ui.tableWidget_ban->setItem(ui.tableWidget_ban->rowCount()-1, 0, iIPNick);
+        }
     }
 }
 
@@ -723,8 +737,16 @@ void DlgChannelSettings::button_ban_del()
 {
     if (ui.tableWidget_ban->selectedItems().isEmpty() == false)
     {
+        bool bIPBan = false;
+        if (ui.tableWidget_ban->selectedItems().at(0)->data(Qt::UserRole).isNull() == false)
+            bIPBan = true;
+
         QString strRemoveNick = ui.tableWidget_ban->selectedItems().at(0)->text();
-        pNetwork->send(QString("CS BAN %1 DEL %2").arg(strChannel).arg(strRemoveNick));
+        if (bIPBan == true)
+            pNetwork->send(QString("CS BANIP %1 DEL %2").arg(strChannel).arg(strRemoveNick));
+        else
+            pNetwork->send(QString("CS BAN %1 DEL %2").arg(strChannel).arg(strRemoveNick));
+
         pNetwork->send(QString("CS INFO %1").arg(strChannel));
         clear();
     }

@@ -415,6 +415,8 @@ void OnetKernel::kernel(QString param1)
                 raw_401n();
             else if (strDataList[3].toLower() == ":402")
                 raw_402n();
+            else if (strDataList[3].toLower() == ":403")
+                raw_403n();
             else if (strDataList[3].toLower() == ":404")
                 raw_404n();
             else if (strDataList[3].toLower() == ":406")
@@ -2741,6 +2743,19 @@ void OnetKernel::raw_403()
         if (pTabC->exist_tab(strChannel) == true)
             pTabC->remove_tab(strChannel);
     }
+}
+
+// CS BANIP #scc ADD wilk
+// :ChanServ!service@service.onet NOTICE Merovingian :403 wilk :user is not on-line
+void OnetKernel::raw_403n()
+{
+    if (strDataList.value(3).isEmpty() == true) return;
+
+    QString strNick = strDataList[4];
+
+    QString strMessage = QString(tr("* %1 :User is not on-line")).arg(strNick);
+
+    pTabC->show_msg_active(strMessage, 7);
 }
 
 // :cf1f1.onet 404 scc_test #Quiz :Cannot send to channel (+m)

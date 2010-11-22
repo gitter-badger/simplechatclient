@@ -110,7 +110,7 @@ TabWidget::TabWidget(QWidget *parent, Network *param1, QString param2, Notify *p
     {
         if (settings.value("style") == "classic")
         {
-            topicDetails->hide();
+            detailsWidget->hide();
             topLeftWidget->hide();
         }
 
@@ -123,6 +123,8 @@ TabWidget::TabWidget(QWidget *parent, Network *param1, QString param2, Notify *p
         avatar->hide();
         topic->hide();
         topicDetails->hide();
+        websiteLink->hide();
+        detailsWidget->hide();
         topRightWidget->hide();
         topLeftWidget->hide();
         topWidget->hide();
@@ -135,6 +137,8 @@ TabWidget::TabWidget(QWidget *parent, Network *param1, QString param2, Notify *p
         avatar->hide();
         topic->hide();
         topicDetails->hide();
+        websiteLink->hide();
+        detailsWidget->hide();
         topRightWidget->hide();
         topLeftWidget->hide();
         topWidget->hide();

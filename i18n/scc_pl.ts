@@ -1943,6 +1943,10 @@
         <translation>* %1 :Nieprawidłowa nazwa kanału</translation>
     </message>
     <message>
+        <source>* %1 :User is not on-line</source>
+        <translation>* %1 nie jest teraz zalogowany</translation>
+    </message>
+    <message>
         <source>No moderator on the channel!</source>
         <translation>Brak moderatora na kanale!</translation>
     </message>
