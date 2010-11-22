@@ -445,6 +445,7 @@ void DlgChannelSettings::add_ban(QString strCheckChannel, QString strNick, QStri
             QTableWidgetItem *iIPNick = new QTableWidgetItem(strIPNick);
             iIPNick->setTextColor(QColor("#ff0000")); // set color
             iIPNick->setData(Qt::UserRole, strNick); // set original ban mask
+            iIPNick->setToolTip(QString(tr("IP Mask: %1").arg(strNick.remove("*!*@")))); // set tooltip
 
             ui.tableWidget_ban->setItem(ui.tableWidget_ban->rowCount()-1, 0, iIPNick);
         }

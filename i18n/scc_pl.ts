@@ -832,6 +832,10 @@
         <source>This ban will ban large numbers of people. Are you sure you want to use this ban?</source>
         <translation>Ten ban spowoduje zablokowanie dużej ilości osób. Czy na pewno chcesz użyć taki ban?</translation>
     </message>
+    <message>
+        <source>IP Mask: %1</source>
+        <translation>Maska IP: %1</translation>
+    </message>
 </context>
 <context>
     <name>DlgEmail</name>
