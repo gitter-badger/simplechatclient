@@ -169,7 +169,6 @@ DlgChannelSettings::DlgChannelSettings(QWidget *parent, Network *param1) : QDial
 void DlgChannelSettings::set_channel(QString param1)
 {
     strChannel = param1;
-    pNetwork->send(QString("CS INFO %1").arg(strChannel));
 }
 
 void DlgChannelSettings::add_topic(QString strCheckChannel, QString strTopic)
@@ -886,14 +885,15 @@ void DlgChannelSettings::showEvent(QShowEvent *event)
     move(QApplication::desktop()->screen()->rect().center() - rect().center());
 
     clear();
-
     ui.label_channel_name->setText(strChannel);
+
+    pNetwork->send(QString("CS INFO %1").arg(strChannel));
 }
 
 void DlgChannelSettings::hideEvent(QHideEvent *event)
 {
     event->accept();
-    strChannel.clear();
+
     clear();
 }
 

@@ -52,6 +52,7 @@ private:
     void set_mainwindow_colors();
     void set_nicklist_colors();
     void save_settings();
+    void clear_settings();
 
 private slots:
     void change_page(QTreeWidgetItem *, QTreeWidgetItem *);

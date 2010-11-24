@@ -1460,12 +1460,8 @@ void DlgOptions::save_settings()
     delete pConfig;
 }
 
-void DlgOptions::showEvent(QShowEvent *event)
+void DlgOptions::clear_settings()
 {
-    event->accept();
-    // center screen
-    move(QApplication::desktop()->screen()->rect().center() - rect().center());
-
     // config
     Config *pConfig = new Config();
     QString strNick = pConfig->get_value("nick");
@@ -1687,6 +1683,15 @@ void DlgOptions::showEvent(QShowEvent *event)
         ui.pushButton_register_nick->setDisabled(false);
         ui.groupBox_login_password->setDisabled(false);
     }
+}
+
+void DlgOptions::showEvent(QShowEvent *event)
+{
+    event->accept();
+    // center screen
+    move(QApplication::desktop()->screen()->rect().center() - rect().center());
+
+    clear_settings();
 }
 
 void DlgOptions::closeEvent(QCloseEvent *event)
