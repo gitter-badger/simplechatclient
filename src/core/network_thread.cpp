@@ -85,7 +85,16 @@ void NetworkThread::connect()
 
         if (hInfo.error() != QHostInfo::NoError)
         {
+            connectAct->setText(tr("&Connect"));
+            connectAct->setIconText(tr("&Connect"));
+            connectAct->setIcon(QIcon(":/images/oxygen/16x16/network-connect.png"));
+            lagAct->setText("Lag: 0s");
+
             emit show_msg_all(QString(tr("Error: Could not connect to the server [%1]")).arg(hInfo.errorString()), 9);
+
+            // reconnect
+            QTimer::singleShot(30*1000, this, SLOT(reconnect()));
+
             return;
         }
 
@@ -290,14 +299,28 @@ void NetworkThread::error(QAbstractSocket::SocketError err)
     connectAct->setIcon(QIcon(":/images/oxygen/16x16/network-connect.png"));
     lagAct->setText("Lag: 0s");
 
-    // state
-    QSettings settings;
-    settings.setValue("logged", "off");
-
     if (socket->state() == QAbstractSocket::ConnectedState)
         emit close();
     else
         emit show_msg_all(QString(tr("Disconnected from server [%1]")).arg(socket->errorString()), 9);
+
+    // update nick
+    emit update_nick(tr("(Unregistered)"));
+
+    // clear nicklist
+    emit clear_all_nicklist();
+
+    // state
+    QSettings settings;
+    settings.setValue("logged", "off");
+
+    // timer
+    timerPingPong->stop();
+    timerLag->stop();
+    timerQueue->stop();
+
+    // reconnect
+    QTimer::singleShot(30*1000, this, SLOT(reconnect()));
 }
 
 void NetworkThread::timeout_pingpong()
