@@ -28,6 +28,7 @@ NetworkThread::NetworkThread(QAction *param1, QAction *param2, QString param3, i
     iPort = param4;
 
     iActive = 0;
+    bReconnecting = false;
     QSettings settings;
     settings.setValue("reconnect", "true");
     timerPingPong = new QTimer();
@@ -93,7 +94,11 @@ void NetworkThread::connect()
             emit show_msg_all(QString(tr("Error: Could not connect to the server [%1]")).arg(hInfo.errorString()), 9);
 
             // reconnect
-            QTimer::singleShot(30*1000, this, SLOT(reconnect()));
+            if (bReconnecting == false)
+            {
+                bReconnecting = true;
+                QTimer::singleShot(30*1000, this, SLOT(reconnect()));
+            }
 
             return;
         }
@@ -124,6 +129,8 @@ void NetworkThread::reconnect()
     {
         if ((this->is_connected() == false) && (settings.value("logged").toString() == "off"))
         {
+            bReconnecting = false;
+
             emit show_msg_all(tr("Reconnecting..."), 7);
             emit connect();
         }
@@ -286,7 +293,11 @@ void NetworkThread::disconnected()
         timerQueue->stop();
 
         // reconnect
-        QTimer::singleShot(30*1000, this, SLOT(reconnect()));
+        if (bReconnecting == false)
+        {
+            bReconnecting = true;
+            QTimer::singleShot(30*1000, this, SLOT(reconnect()));
+        }
     }
 }
 
@@ -320,7 +331,11 @@ void NetworkThread::error(QAbstractSocket::SocketError err)
     timerQueue->stop();
 
     // reconnect
-    QTimer::singleShot(30*1000, this, SLOT(reconnect()));
+    if (bReconnecting == false)
+    {
+        bReconnecting = true;
+        QTimer::singleShot(30*1000, this, SLOT(reconnect()));
+    }
 }
 
 void NetworkThread::timeout_pingpong()

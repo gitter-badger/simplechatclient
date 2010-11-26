@@ -67,6 +67,7 @@ private:
     QTimer *timerQueue;
     int iActive;
     QList <QString> msgSendQueue;
+    bool bReconnecting;
 
     void write(QString);
 
