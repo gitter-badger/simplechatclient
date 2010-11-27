@@ -392,7 +392,7 @@ void DlgCam::hideEvent(QHideEvent *event)
     event->accept();
 
     network_disconnect();
-    delete socket;
+    socket->deleteLater();
 
     ui.buttonBox->QObject::disconnect();
     timer->QObject::disconnect();

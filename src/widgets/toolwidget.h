@@ -68,7 +68,7 @@ private:
     QPushButton *moderation;
     QPushButton *clear;
     QPushButton *scroll;
-    QFrame *separator2;
+    //QFrame *separator2;
 
     QMenu *fontMenu;
     QAction *arialAct;

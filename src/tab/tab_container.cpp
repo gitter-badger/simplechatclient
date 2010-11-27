@@ -388,6 +388,14 @@ void TabContainer::del_user(QString strChannel)
         return tw[i]->del_user();
 }
 
+// update nick count for option hide join/part when > 200
+void TabContainer::clear_users(QString strChannel)
+{
+    int i = get_index(strChannel);
+    if (i != -1)
+        return tw[i]->clear_users();
+}
+
 // for avatars (if nick not in any channels -> remove avatar)
 int TabContainer::get_nick_channels(QString strNick)
 {

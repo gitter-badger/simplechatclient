@@ -145,9 +145,7 @@ Core::Core(QMainWindow *parent, QString param1, int param2, Notify *param3, QAct
 Core::~Core()
 {
     // clear arrays
-    mChannelNickStatus.clear();
-    mNickAvatar.clear();
-    mChannelAvatar.clear();
+    clear_all_nicklist();
 
     // close network
     QSettings settings;
@@ -499,6 +497,7 @@ void Core::clear_nicklist(QString strChannel)
     //iNickCount = 0;
     //nickCount->setText(QString(tr("%1 User(s)")).arg(iNickCount));
 
+    // clear
     for (int i = 0; i < mChannelNickStatus.count(); i++)
     {
         if (mChannelNickStatus.at(i).channel == strChannel)
@@ -507,6 +506,9 @@ void Core::clear_nicklist(QString strChannel)
             i--;
         }
     }
+
+    // clear nick count for option hide join/part when > 200
+    pTabC->clear_users(strChannel);
 }
 
 void Core::clear_all_nicklist()
@@ -518,7 +520,12 @@ void Core::clear_all_nicklist()
     QStringList strlChannels = pTabC->get_open_channels();
 
     for (int i = 0; i < strlChannels.count(); i++)
+    {
         mChannelNickListWidget.value(strlChannels.at(i))->clear();
+
+        // clear nick count for option hide join/part when > 200
+        pTabC->clear_users(strlChannels.at(i));
+    }
 }
 
 void Core::update_nick_avatar(QString strNick)

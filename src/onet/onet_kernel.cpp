@@ -989,7 +989,7 @@ void OnetKernel::raw_mode()
             else
                 strDisplay = QString(tr("* %1 now has a flag %2")).arg(strNickChannel).arg(strFlag);
 
-            if ((strFlag != "+W") && (strFlag != "-W") && (strFlag != "+V") && (strFlag != "-V") && (strFlag != "+b") && (strFlag != "-b"))
+            if ((strFlag == "+r") || (strFlag == "-r") || (strFlag == "+x") || (strFlag == "-x"))
                 pTabC->show_msg("Status", strDisplay, 5);
 
             emit change_flag(strNickChannel, strFlag);

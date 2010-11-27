@@ -24,7 +24,6 @@
 #include <QAbstractItemDelegate>
 #include <QPainter>
 #include <QSettings>
-#include "config.h"
 
 class NickListDelegate : public QAbstractItemDelegate
 {

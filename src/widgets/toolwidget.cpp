@@ -165,10 +165,10 @@ ToolWidget::ToolWidget(QWidget *parent, Network *param1, InputWidget *param2, Dl
     scroll->show();
     bScroll = true;
 
-    separator2 = new QFrame(this);
-    separator2->setFrameShape(QFrame::VLine);
-    separator2->setFrameShadow(QFrame::Sunken);
-    separator2->show();
+    //separator2 = new QFrame(this);
+    //separator2->setFrameShape(QFrame::VLine);
+    //separator2->setFrameShadow(QFrame::Sunken);
+    //separator2->show();
 
     toolLayout = new QHBoxLayout();
     toolLayout->setMargin(0);
@@ -184,7 +184,7 @@ ToolWidget::ToolWidget(QWidget *parent, Network *param1, InputWidget *param2, Dl
     toolLayout->addWidget(moderation);
     toolLayout->addWidget(clear);
     toolLayout->addWidget(scroll);
-    toolLayout->addWidget(separator2);
+    //toolLayout->addWidget(separator2);
     setLayout(toolLayout);
 
     // set default

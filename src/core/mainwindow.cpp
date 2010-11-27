@@ -201,7 +201,6 @@ MainWindow::~MainWindow()
     settings.clear();
 }
 
-
 // args
 void MainWindow::set_debug(bool param1)
 {
@@ -218,7 +217,7 @@ void MainWindow::create_settings()
     // default settings
     QSettings settings;
     settings.clear();
-    settings.setValue("version", "1.0.9.644");
+    settings.setValue("version", "1.0.9.645");
     settings.setValue("debug", "off");
     settings.setValue("logged", "off");
     settings.setValue("busy", "off");
