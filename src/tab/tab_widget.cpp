@@ -405,7 +405,7 @@ void TabWidget::set_link(QString strUrl)
 {
     websiteLink->show();
 
-    websiteLink->setText(QString("<a href=\"%1\" style=\"color:#0000FF;text-decoration:none;\" >"+tr("Channel website")+"</a>").arg(strUrl));
+    websiteLink->setText(QString("<a href=\"%1\" style=\"color:#0000FF;text-decoration:none;\" >&nbsp;&nbsp;"+tr("Channel website")+"&nbsp;&nbsp;</a>").arg(strUrl));
     websiteLink->setToolTip(strUrl);
 }
 
