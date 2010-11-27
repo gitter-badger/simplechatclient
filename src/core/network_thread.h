@@ -55,6 +55,7 @@ public slots:
     void connect();
     void close();
     void send(QString);
+    void clear_queue();
 
 private:
     QAction *connectAct;
@@ -68,6 +69,7 @@ private:
     int iActive;
     QList <QString> msgSendQueue;
     bool bReconnecting;
+    bool bDefaultEnabledQueue;
 
     void write(QString);
 

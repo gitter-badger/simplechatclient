@@ -150,6 +150,7 @@ Core::~Core()
     // close network
     QSettings settings;
     settings.setValue("reconnect", "false");
+    pNetwork->clear_queue();
     pNetwork->send("QUIT");
     pNetwork->close();
 
@@ -164,10 +165,10 @@ Core::~Core()
     delete pDlg_moderation;
     delete pDlg_channel_settings;
     delete pNetwork;
-    delete bottomDockWidget;
-    delete rightDockWidget;
     delete pTabC;
     delete pTabM;
+    delete bottomDockWidget;
+    delete rightDockWidget;
     delete camSocket;
 }
 
@@ -189,6 +190,11 @@ void Core::network_send(QString data)
 bool Core::network_is_connected()
 {
     return pNetwork->is_connected();
+}
+
+void Core::network_clear_queue()
+{
+    pNetwork->clear_queue();
 }
 
 // refresh colors

@@ -180,7 +180,10 @@ MainWindow::~MainWindow()
 {
     // kill core servers
     while(coreServers.isEmpty() == false)
+    {
+        delete coreServers.first();
         coreServers.removeFirst();
+    }
 
     // delete update
     delete pUpdate;
@@ -217,7 +220,7 @@ void MainWindow::create_settings()
     // default settings
     QSettings settings;
     settings.clear();
-    settings.setValue("version", "1.0.9.646");
+    settings.setValue("version", "1.0.9.647");
     settings.setValue("debug", "off");
     settings.setValue("logged", "off");
     settings.setValue("busy", "off");
@@ -281,6 +284,7 @@ void MainWindow::button_connect()
     {
         settings.setValue("reconnect", "false");
         settings.setValue("logged", "off");
+        coreServers.at(0)->network_clear_queue();
         coreServers.at(0)->network_send("QUIT");
         connectAct->setText(tr("&Connect"));
         connectAct->setIconText(tr("&Connect"));

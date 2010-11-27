@@ -37,6 +37,7 @@ public:
     void connect();
     void close();
     void send(QString);
+    void clear_queue();
 
 public slots:
     void slot_kernel(QString);
@@ -68,6 +69,7 @@ signals:
     void sconnect();
     void sclose();
     void ssend(QString);
+    void sclear_queue();
 
 };
 

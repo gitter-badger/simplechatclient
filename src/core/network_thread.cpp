@@ -29,6 +29,7 @@ NetworkThread::NetworkThread(QAction *param1, QAction *param2, QString param3, i
 
     iActive = 0;
     bReconnecting = false;
+    bDefaultEnabledQueue = true;
     QSettings settings;
     settings.setValue("reconnect", "true");
     timerPingPong = new QTimer();
@@ -75,6 +76,11 @@ bool NetworkThread::is_connected()
 bool NetworkThread::is_writable()
 {
     return socket->isWritable();
+}
+
+void NetworkThread::clear_queue()
+{
+    msgSendQueue.clear();
 }
 
 void NetworkThread::connect()
@@ -139,11 +145,11 @@ void NetworkThread::reconnect()
 
 void NetworkThread::close()
 {
-    // if queue is not empty - wait
+    // if queue is not empty - send all
     if (msgSendQueue.isEmpty() == false)
     {
-        QTimer::singleShot(100, this, SLOT(close()));
-        return;
+        while (msgSendQueue.size() != 0)
+            write(msgSendQueue.takeFirst());
     }
 
     // close
@@ -191,12 +197,19 @@ void NetworkThread::write(QString strData)
 
 void NetworkThread::send(QString strData)
 {
-    /// default enabled queue
-    //QSettings settings;
-    //if (settings.value("disable_avatars").toString() == "on") // without avatars
-        //write(strData);
-    //else // with avatars
+    // default enabled queue
+    if (bDefaultEnabledQueue == true)
+    {
         msgSendQueue.append(strData);
+    }
+    else
+    {
+        QSettings settings;
+        if (settings.value("disable_avatars").toString() == "on") // without avatars
+            write(strData);
+        else // with avatars
+            msgSendQueue.append(strData);
+    }
 }
 
 void NetworkThread::recv()

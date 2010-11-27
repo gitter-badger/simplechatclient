@@ -59,6 +59,7 @@ public:
     void network_disconnect();
     void network_send(QString);
     bool network_is_connected();
+    void network_clear_queue();
     // onet dialogs
     void open_channel_list();
     void open_channel_homes();

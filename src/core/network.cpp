@@ -41,6 +41,7 @@ Network::Network(QAction *param1, QAction *param2, QString param3, int param4)
     QObject::connect(this, SIGNAL(sconnect()), networkThr, SLOT(connect()));
     QObject::connect(this, SIGNAL(sclose()), networkThr, SLOT(close()));
     QObject::connect(this, SIGNAL(ssend(QString)), networkThr, SLOT(send(QString)));
+    QObject::connect(this, SIGNAL(sclear_queue()), networkThr, SLOT(clear_queue()));
 }
 
 Network::~Network()
@@ -86,6 +87,11 @@ void Network::close()
 void Network::send(QString strData)
 {
     emit ssend(strData);
+}
+
+void Network::clear_queue()
+{
+    emit sclear_queue();
 }
 
 void Network::slot_send(QString strData)
