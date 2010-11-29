@@ -1675,6 +1675,10 @@ void DlgOptions::clear_settings()
         ui.radioButton_unregistered_nick->setDisabled(true);
         ui.pushButton_register_nick->setDisabled(true);
         ui.groupBox_login_password->setDisabled(true);
+        ui.groupBox_skins->setDisabled(true);
+        ui.radioButton_modern_avatars->setDisabled(true);
+        ui.radioButton_modern_no_avatars->setDisabled(true);
+        ui.radioButton_classic->setDisabled(true);
     }
     else
     {
@@ -1682,6 +1686,10 @@ void DlgOptions::clear_settings()
         ui.radioButton_unregistered_nick->setDisabled(false);
         ui.pushButton_register_nick->setDisabled(false);
         ui.groupBox_login_password->setDisabled(false);
+        ui.groupBox_skins->setDisabled(false);
+        ui.radioButton_modern_avatars->setDisabled(false);
+        ui.radioButton_modern_no_avatars->setDisabled(false);
+        ui.radioButton_classic->setDisabled(false);
     }
 }
 
