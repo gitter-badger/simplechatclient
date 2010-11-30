@@ -199,17 +199,15 @@ void NickListWidget::refresh_avatars()
 {
     for (int i = 0; i < this->topLevelItemCount(); i++)
     {
-        QTreeWidgetItem *parent_item = this->topLevelItem(i);
-        for (int x = 0; x < parent_item->childCount(); x++)
+        for (int x = 0; x < this->topLevelItem(i)->childCount(); x++)
         {
-            QTreeWidgetItem *child_item = parent_item->child(x);
-            QString strChild = child_item->text(0);
+            QString strChild = this->topLevelItem(i)->child(x)->text(0);
 
-            if ((strChild[0] != '~') && (child_item->data(0, Qt::UserRole+1).isNull() == true) && (mNickAvatar->contains(strChild) == true))
+            if ((strChild[0] != '~') && (this->topLevelItem(i)->child(x)->data(0, Qt::UserRole+1).isNull() == true) && (mNickAvatar->contains(strChild) == true))
             {
                 QPixmap pixmap;
                 pixmap.loadFromData(mNickAvatar->value(strChild));
-                child_item->setData(0, Qt::UserRole+1, pixmap);
+                this->topLevelItem(i)->child(x)->setData(0, Qt::UserRole+1, pixmap);
             }
         }
     }
@@ -217,7 +215,7 @@ void NickListWidget::refresh_avatars()
 
 void NickListWidget::add_parent(QString strName, QPixmap px)
 {
-    QTreeWidgetItem *item = new QTreeWidgetItem(this);
+    MyTreeWidgetItem *item = new MyTreeWidgetItem(this);
     item->setText(0, strName);
     item->setData(0, Qt::UserRole, px);
 
@@ -228,8 +226,7 @@ bool NickListWidget::exist_parent(QString strName)
 {
     for (int i = 0; i < this->topLevelItemCount(); i++)
     {
-        QTreeWidgetItem *item = this->topLevelItem(i);
-        QString strText = item->text(0);
+        QString strText = this->topLevelItem(i)->text(0);
         if (strText == strName)
             return true;
     }
@@ -240,8 +237,7 @@ void NickListWidget::remove_parent(QString strName)
 {
     for (int i = 0; i < this->topLevelItemCount(); i++)
     {
-        QTreeWidgetItem *item = this->topLevelItem(i);
-        QString strText = item->text(0);
+        QString strText = this->topLevelItem(i)->text(0);
         if (strText == strName)
         {
             delete this->takeTopLevelItem(i);
@@ -254,8 +250,7 @@ int NickListWidget::index_parent(QString strName)
 {
     for (int i = 0; i < this->topLevelItemCount(); i++)
     {
-        QTreeWidgetItem *parent_item = this->topLevelItem(i);
-        QString strParent = parent_item->text(0);
+        QString strParent = this->topLevelItem(i)->text(0);
 
         if (strParent == strName)
             return i;
@@ -266,8 +261,7 @@ int NickListWidget::index_parent(QString strName)
 void NickListWidget::move_parent(int index, int top)
 {
     // move
-    QTreeWidgetItem *parent_item = this->takeTopLevelItem(index);
-    this->insertTopLevelItem(top, parent_item);
+    this->insertTopLevelItem(top, this->takeTopLevelItem(index));
 
     // scroll
     this->topLevelItem(top)->setExpanded(true);
@@ -292,16 +286,15 @@ void NickListWidget::sort_parent()
     }
 }
 
-void NickListWidget::add_child(QString strParentName, QTreeWidgetItem *item)
+void NickListWidget::add_child(QString strParentName, MyTreeWidgetItem *item)
 {
     for (int i = 0; i < this->topLevelItemCount(); i++)
     {
-        QTreeWidgetItem *parent_item = this->topLevelItem(i);
-        QString strParent = parent_item->text(0);
+        QString strParent = this->topLevelItem(i)->text(0);
         if (strParent == strParentName)
         {
-            parent_item->addChild(item);
-            parent_item->sortChildren(0, Qt::AscendingOrder);
+            this->topLevelItem(i)->addChild(item);
+            this->topLevelItem(i)->sortChildren(0, Qt::AscendingOrder);
         }
     }
 }
@@ -310,12 +303,10 @@ bool NickListWidget::exist_child(QString strChildName, QString strParentName)
 {
     for (int i = 0; i < this->topLevelItemCount(); i++)
     {
-        QTreeWidgetItem *parent_item = this->topLevelItem(i);
-        QString strParent = parent_item->text(0);
-        for (int x = 0; x < parent_item->childCount(); x++)
+        QString strParent = this->topLevelItem(i)->text(0);
+        for (int x = 0; x < this->topLevelItem(i)->childCount(); x++)
         {
-            QTreeWidgetItem *child_item = parent_item->child(x);
-            QString strChild = child_item->text(0);
+            QString strChild = this->topLevelItem(i)->child(x)->text(0);
             if ((strParent == strParentName) && (strChild == strChildName))
                 return true;
         }
@@ -325,26 +316,37 @@ bool NickListWidget::exist_child(QString strChildName, QString strParentName)
 
 void NickListWidget::remove_child(QString strName)
 {
+    QMultiMap <int, QTreeWidgetItem*> mRemoveChild;
     QStringList strlRemoveParent;
 
     // remove all childs
     for (int i = 0; i < this->topLevelItemCount(); i++)
     {
-        QTreeWidgetItem *parent_item = this->topLevelItem(i);
-        QString strParent = parent_item->text(0);
-        for (int x = 0; x < parent_item->childCount(); x++)
+        QString strParent = this->topLevelItem(i)->text(0);
+        for (int x = 0; x < this->topLevelItem(i)->childCount(); x++)
         {
-            QTreeWidgetItem *child_item = parent_item->child(x);
-            QString strChild = child_item->text(0);
+            QString strChild = this->topLevelItem(i)->child(x)->text(0);
             if (strChild == strName)
             {
-                parent_item->removeChild(child_item);
+                // add remove child
+                mRemoveChild.insert(i,this->topLevelItem(i)->child(x));
 
-                if (parent_item->childCount() == 0)
+                // remove parent if empty
+                if (this->topLevelItem(i)->childCount() == 1) // 1 = last
                     strlRemoveParent.append(strParent);
-                i--;
             }
         }
+    }
+
+    // remove childs
+    QMapIterator <int, QTreeWidgetItem*> iter(mRemoveChild);
+    while (iter.hasNext())
+    {
+        iter.next();
+        int i = iter.key();
+        QTreeWidgetItem *item = iter.value();
+
+        this->topLevelItem(i)->removeChild(item);
     }
 
     // remove empty parents
@@ -353,9 +355,9 @@ void NickListWidget::remove_child(QString strName)
         remove_parent(strliRemoveParent.next());
 }
 
-QTreeWidgetItem* NickListWidget::create_child(QString strNick, QString strSuffix, QPixmap icon)
+MyTreeWidgetItem* NickListWidget::create_child(QString strNick, QString strSuffix, QPixmap icon)
 {
-    QTreeWidgetItem *item = new QTreeWidgetItem();
+    MyTreeWidgetItem *item = new MyTreeWidgetItem();
     item->setData(0, Qt::UserRole, icon);
     item->setText(0, strNick);
     item->setData(0, Qt::DisplayRole, strNick);
