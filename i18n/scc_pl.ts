@@ -2226,6 +2226,10 @@
         <source>* Added %1 to silence list</source>
         <translation>* Dodano %1 do listy ignorowanych</translation>
     </message>
+    <message>
+        <source>* %1 is already on your silence list</source>
+        <translation>* %1 jest już na liście ignorowanych</translation>
+    </message>
 </context>
 <context>
     <name>TabWidget</name>

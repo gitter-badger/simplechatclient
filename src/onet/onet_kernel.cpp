@@ -332,6 +332,8 @@ void OnetKernel::kernel(QString param1)
             raw_821();
         else if (strDataList[1].toLower() == "951")
             raw_951();
+        else if (strDataList[1].toLower() == "952")
+            raw_952();
 
         if ((strDataList[1].toLower() == "notice") && (strDataList.value(3).isEmpty() == false))
         {
@@ -3706,5 +3708,19 @@ void OnetKernel::raw_951()
     QString strNick = strDataList[5];
 
     QString strMessage = QString(tr("* Added %1 to silence list")).arg(strNick);
+    pTabC->show_msg_active(strMessage, 7);
+}
+
+// :cf1f4.onet 952 Merovingian Merovingian :Succubi!*@* <privatemessages,channelmessages,invites> is already on your silence list
+void OnetKernel::raw_952()
+{
+    if (strDataList.value(3).isEmpty() == true) return;
+    if (strDataList.value(4).isEmpty() == true) return;
+
+    QString strNick = strDataList[4];
+    if (strNick[0] == ':')
+        strNick = strNick.right(strNick.length()-1);
+
+    QString strMessage = QString(tr("* %1 is already on your silence list")).arg(strNick);
     pTabC->show_msg_active(strMessage, 7);
 }

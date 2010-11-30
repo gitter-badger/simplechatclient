@@ -242,6 +242,7 @@ private:
     void raw_820();
     void raw_821();
     void raw_951();
+    void raw_952();
 
 private slots:
     void remove_cathread(ChannelAvatar*);
