@@ -59,7 +59,6 @@ public:
     void clear_content();
     void set_scroll(bool);
     void refresh_colors();
-    void send_message(bool);
 
 private:
     // params
