@@ -56,6 +56,7 @@ public:
     void add_user(QString); // update nick count for option hide join/part when > 200
     void del_user(QString); // update nick count for option hide join/part when > 200
     void clear_users(QString);  // update nick count for option hide join/part when > 200
+    int get_users(QString);
     int get_nick_channels(QString);
 
 public slots:

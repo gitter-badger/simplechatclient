@@ -167,6 +167,10 @@
         <translation>Użytkownicy</translation>
     </message>
     <message>
+        <source>Users (%1)</source>
+        <translation>Użytkownicy (%1)</translation>
+    </message>
+    <message>
         <source>Welcome to the Simple Chat Client</source>
         <translation>Witaj w programie Simple Chat Client</translation>
     </message>

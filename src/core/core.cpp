@@ -306,6 +306,9 @@ void Core::current_tab_changed(int index)
     // set scroll
     bool bChangeScroll = pTabC->get_scroll(strChannel);
     inputLineDockWidget->change_scroll(bChangeScroll);
+
+    // update nick count
+    rightDockWidget->setWindowTitle(QString(tr("Users (%1)")).arg(pTabC->get_users(strChannel)));
 }
 
 void Core::create_nicklist(QString strChannel)
@@ -355,9 +358,9 @@ void Core::add_user(QString strChannel, QString strNick, QString strPrefix, QStr
         // update nick count for option hide join/part when > 200
         pTabC->add_user(strChannel);
 
-        /// REGRESSION
-        //iNickCount++;
-        //nickCount->setText(QString(tr("%1 User(s)")).arg(iNickCount));
+        // update nick count
+        if (inputLineDockWidget->get_active() == strChannel)
+            rightDockWidget->setWindowTitle(QString(tr("Users (%1)")).arg(pTabC->get_users(strChannel)));
     }
 }
 
@@ -374,9 +377,9 @@ void Core::del_user(QString strChannel, QString strNick)
         // update nick count for option hide join/part when > 200
         pTabC->del_user(strChannel);
 
-        /// REGRESSION
-        //iNickCount--;
-        //nickCount->setText(QString(tr("%1 User(s)")).arg(iNickCount));
+        // update nick count
+        if (inputLineDockWidget->get_active() == strChannel)
+            rightDockWidget->setWindowTitle(QString(tr("Users (%1)")).arg(pTabC->get_users(strChannel)));
     }
 }
 
@@ -404,6 +407,10 @@ void Core::quit_user(QString strNick, QString strDisplay)
 
             if (i+1 != pTabM->currentIndex())
                 pTabM->set_alert(i+1, QColor(0, 147, 0, 255)); // green
+
+            // update nick count
+            if (inputLineDockWidget->get_active() == strChannel)
+                rightDockWidget->setWindowTitle(QString(tr("Users (%1)")).arg(pTabC->get_users(strChannel)));
         }
     }
 }
@@ -499,10 +506,6 @@ void Core::change_flag(QString strNick, QString strFlag)
 
 void Core::clear_nicklist(QString strChannel)
 {
-    /// REGRESSION
-    //iNickCount = 0;
-    //nickCount->setText(QString(tr("%1 User(s)")).arg(iNickCount));
-
     // clear
     for (int i = 0; i < mChannelNickStatus.count(); i++)
     {
@@ -515,6 +518,10 @@ void Core::clear_nicklist(QString strChannel)
 
     // clear nick count for option hide join/part when > 200
     pTabC->clear_users(strChannel);
+
+    // update nick count
+    if (inputLineDockWidget->get_active() == strChannel)
+        rightDockWidget->setWindowTitle(QString(tr("Users (%1)")).arg(pTabC->get_users(strChannel)));
 }
 
 void Core::clear_all_nicklist()
@@ -531,6 +538,10 @@ void Core::clear_all_nicklist()
 
         // clear nick count for option hide join/part when > 200
         pTabC->clear_users(strlChannels.at(i));
+
+        // update nick count
+        if (inputLineDockWidget->get_active() == strlChannels.at(i))
+            rightDockWidget->setWindowTitle(QString(tr("Users (%1)")).arg(pTabC->get_users(strlChannels.at(i))));
     }
 }
 

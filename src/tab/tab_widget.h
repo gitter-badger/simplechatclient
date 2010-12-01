@@ -46,6 +46,7 @@ public:
     inline void add_user() { iNickCount++; } // update nick count for option hide join/part when > 200
     inline void del_user() { iNickCount--; } // update nick count for option hide join/part when > 200
     inline void clear_users() { iNickCount = 0; } // update nick count for option hide join/part when > 200
+    inline int get_users() { return iNickCount; }
     QString addslashes(QString);
     void display_msg(QString, QString, int);
     void display_msg(QString, int);

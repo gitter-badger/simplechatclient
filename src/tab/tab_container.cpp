@@ -396,6 +396,15 @@ void TabContainer::clear_users(QString strChannel)
         tw[i]->clear_users();
 }
 
+int TabContainer::get_users(QString strChannel)
+{
+    int i = get_index(strChannel);
+    if (i != -1)
+        return tw[i]->get_users();
+    else
+        return 0;
+}
+
 // for avatars (if nick not in any channels -> remove avatar)
 int TabContainer::get_nick_channels(QString strNick)
 {
