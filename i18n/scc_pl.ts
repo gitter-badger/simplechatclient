@@ -68,6 +68,10 @@
         <translation>/ban [[+|-]nick]</translation>
     </message>
     <message>
+        <source>/banip [[+|-]nick]</source>
+        <translation>/banip [[+|-]nick]</translation>
+    </message>
+    <message>
         <source>/sop [[+|-]nick]</source>
         <translation>/sop [[+|-]nick]</translation>
     </message>
@@ -2244,10 +2248,6 @@
     <message>
         <source>Channel website</source>
         <translation>Strona kanału</translation>
-    </message>
-    <message>
-        <source>%1 User(s)</source>
-        <translation>Liczba osób: %1</translation>
     </message>
 </context>
 <context>

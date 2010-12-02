@@ -55,6 +55,7 @@ private:
     QString cmd_invite();
     QString cmd_kick();
     QString cmd_ban();
+    QString cmd_banip();
     QString cmd_sop();
     QString cmd_op();
     QString cmd_moder();

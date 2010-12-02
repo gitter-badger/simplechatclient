@@ -70,6 +70,8 @@ QString Commands::execute()
                 strResult = cmd_kick();
             else if (strDataList[0].toLower() == "ban")
                 strResult = cmd_ban();
+            else if (strDataList[0].toLower() == "banip")
+                strResult = cmd_banip();
             else if (strDataList[0].toLower() == "sop")
                 strResult = cmd_sop();
             else if (strDataList[0].toLower() == "op")
@@ -208,6 +210,7 @@ QString Commands::cmd_help()
     strResult.append(tr("/logout or /quit or /q")+";");
     strResult.append(tr("/kick [nick] [reason] or /k [nick] [reason]")+";");
     strResult.append(tr("/ban [[+|-]nick]")+";");
+    strResult.append(tr("/banip [[+|-]nick]")+";");
     strResult.append(tr("/sop [[+|-]nick]")+";");
     strResult.append(tr("/op [[+|-]nick]")+";");
     strResult.append(tr("/moder [[+|-]nick] or /moderator [[+|-]nick]")+";");
@@ -316,6 +319,24 @@ QString Commands::cmd_ban()
         return QString("CS BAN %1 ADD %2").arg(strChannel).arg(strNick);
     else if (cPlusMinus == '-')
         return QString("CS BAN %1 DEL %2").arg(strChannel).arg(strNick);
+    else
+        return QString::null;
+}
+
+QString Commands::cmd_banip()
+{
+    if (strDataList.value(1).isEmpty() == true) return QString::null;
+
+    QString strChannel = strChan;
+
+    QString strNick = strDataList[1];
+    QChar cPlusMinus =  strNick[0];
+    strNick = strNick.right(strNick.length()-1);
+
+    if (cPlusMinus == '+')
+        return QString("CS BANIP %1 ADD %2").arg(strChannel).arg(strNick);
+    else if (cPlusMinus == '-')
+        return QString("CS BANIP %1 DEL %2").arg(strChannel).arg(strNick);
     else
         return QString::null;
 }
