@@ -375,6 +375,14 @@ void OnetKernel::kernel(QString param1)
                 raw_164n();
             else if (strDataList[3].toLower() == ":165")
                 raw_165n();
+            else if (strDataList[3].toLower() == ":170")
+                raw_170n();
+            else if (strDataList[3].toLower() == ":171")
+                raw_171n();
+            else if (strDataList[3].toLower() == ":175")
+                raw_175n();
+            else if (strDataList[3].toLower() == ":176")
+                raw_176n();
             else if (strDataList[3].toLower() == ":220")
                 raw_220n();
             else if (strDataList[3].toLower() == ":221")
@@ -411,6 +419,10 @@ void OnetKernel::kernel(QString param1)
                 raw_260n();
             else if (strDataList[3].toLower() == ":261")
                 raw_261n();
+            else if (strDataList[3].toLower() == ":262")
+                raw_262n();
+            else if (strDataList[3].toLower() == ":263")
+                raw_263n();
             else if (strDataList[3].toLower() == ":400")
                 raw_400n();
             else if (strDataList[3].toLower() == ":401")
@@ -429,6 +441,8 @@ void OnetKernel::kernel(QString param1)
                 raw_408n();
             else if (strDataList[3].toLower() == ":412")
                 raw_412n();
+            else if (strDataList[3].toLower() == ":416")
+                raw_416n();
             else if (strDataList[3].toLower() == ":420")
                 raw_420n();
             else if (strDataList[3].toLower() == ":421")
@@ -1497,7 +1511,7 @@ void OnetKernel::raw_151n()
     }
     else if (strNick == "NickServ")
     {
-        // ignore
+        // TODO
     }
 }
 
@@ -1686,6 +1700,35 @@ void OnetKernel::raw_165n()
         strDescription = strDescription.right(strDescription.length()-1);
 
     dlgchannel_settings->add_description(strChannel, strDescription);
+}
+
+// RS INFO Merovingian
+// :RankServ!service@service.onet NOTICE Merovingian :170 Merovingian :histActive=edgbcebbdccecbdbbccbcdcdccbabb histTotal=ijqkhhlfihiqlnqjlmmllomkohqfji idleTime=14020283 noise=101660 relationsFriend=91 relationsIgnored=0 sessionsTime=19023384 words=361679
+void OnetKernel::raw_170n()
+{
+// TODO
+}
+
+// RS INFO Merovingian
+// :RankServ!service@service.onet NOTICE Merovingian :171 Merovingian :end of user stats
+void OnetKernel::raw_171n()
+{
+// TODO
+}
+
+// RS INFO #scc
+// :RankServ!service@service.onet NOTICE Merovingian :175 #scc :histActiveTime=1d9a,6a4,b1b,12c3,157b,3c5a,981,8e9d,5b14,4ea4,1970,198c,2cbd,3505,5500,dc8a,a263,5635,3ab5,232a,2bad,2f51,359f,3b2a,100f,4a17,1c32,15c1,4290,2b06 histNoise=ba,14,4a,82,71,147,3b,3df,301,1d7,e5,99,109,f2,118,69f,432,21f,16d,c0,f0,110,110,144,51,18a,fb,75,1d9,e9 histRelationsFavourite=28,28,29,29,29,29,29,29,29,29,29,29,29,28,28,28,28,28,28,27,28,2a,2b,2a,2a,2b,2b,2b,2c,2c
+// :RankServ!service@service.onet NOTICE Merovingian :175 #scc :histSessionsTime=bf9e4,40439,b7be0,66e21,6273f,6e8ff,8af6e,7fdad,7a6ad,766a3,621d0,728be,718cc,83f03,b5c1f,9ae59,96d4e,82724,7c192,8f166,8fef5,6f35d,9384a,87f97,7e031,a3e97,64f00,c2a84,ad3b4,8999b histWebcamTime=aa4,162a,f4a,0,3afa,2c,edc,44a,fe7,1d9,fb0,3e1,1531,33d5,15dc,b5c,2d6d,5c0d,0,48f2,1f85,2111,7a2,2251,25e,fea,1ecb,1445,143c,2280
+// :RankServ!service@service.onet NOTICE Merovingian :175 #scc :histWords=247,4d,aa,1a3,130,3f3,a2,dfd,a21,5e8,245,185,379,2f0,41e,161d,1194,8a4,454,2ec,35f,30d,424,493,bc,426,33d,f7,705,307 noise=80619 relationsFavourite=40 visits=78 words=268782
+void OnetKernel::raw_175n()
+{
+// TODO
+}
+
+// :RankServ!service@service.onet NOTICE Merovingian :176 #scc :end of channel stats
+void OnetKernel::raw_176n()
+{
+// TODO
 }
 
 // NS FRIENDS ADD aaa
@@ -2065,23 +2108,50 @@ void OnetKernel::raw_260n()
 
 // CS DROP #czesctoja
 // :ChanServ!service@service.onet NOTICE scc_test :261 scc_test #czesctoja :has dropped this channel
+// NS LIST aaa
+// :NickServ!service@service.onet NOTICE Merovingian :261 aa_PrezesCiemnosci gaafa7 jaanka9 Naatasza23 zaak_333 Agaaaaaaaa ~Faajny25 kubaaa19 ~Amaadeusz_x misiaa_40
 void OnetKernel::raw_261n()
 {
     if (strDataList.value(4).isEmpty() == true) return;
     if (strDataList.value(5).isEmpty() == true) return;
 
-    QString strChannel = strDataList[5];
+    QString strNick = strDataList[0];
+    if (strNick[0] == ':')
+        strNick = strNick.right(strNick.length()-1);
+    strNick = strNick.left(strNick.indexOf('!'));
 
-    QMessageBox msgBox;
-    msgBox.setIcon(QMessageBox::Information);
-    msgBox.setWindowIcon(QIcon(":/images/logo_64.png"));
-    msgBox.setStandardButtons(QMessageBox::Ok);
-    msgBox.setText(QString(tr("Successfully removed channel %1")).arg(strChannel));
-    msgBox.exec();
+    if (strNick == "ChanServ")
+    {
+        QString strChannel = strDataList[5];
 
-    dlgchannel_homes->clear();
-    pNetwork->send("CS HOMES");
-    pNetwork->send(QString("PART %1").arg(strChannel));
+        QMessageBox msgBox;
+        msgBox.setIcon(QMessageBox::Information);
+        msgBox.setWindowIcon(QIcon(":/images/logo_64.png"));
+        msgBox.setStandardButtons(QMessageBox::Ok);
+        msgBox.setText(QString(tr("Successfully removed channel %1")).arg(strChannel));
+        msgBox.exec();
+
+        dlgchannel_homes->clear();
+        pNetwork->send("CS HOMES");
+        pNetwork->send(QString("PART %1").arg(strChannel));
+    }
+    else if (strNick == "NickServ")
+    {
+        // TODO
+    }
+}
+
+// :NickServ!service@service.onet NOTICE Merovingian :262 aa :end of list
+void OnetKernel::raw_262n()
+{
+// TODO
+}
+
+// NS LIST #scc
+// :NickServ!service@service.onet NOTICE Merovingian :263 #scc :no users found
+void OnetKernel::raw_263n()
+{
+// TODO
 }
 
 // LUSERS
@@ -2691,6 +2761,7 @@ void OnetKernel::raw_401()
 }
 
 // :ChanServ!service@service.onet NOTICE scc_test :401 aa :no such nick
+// :NickServ!service@service.onet NOTICE Merovingian :401 a :no such nick
 void OnetKernel::raw_401n()
 {
     if (strDataList.value(3).isEmpty() == true) return;
@@ -2749,15 +2820,29 @@ void OnetKernel::raw_403()
 
 // CS BANIP #scc ADD wilk
 // :ChanServ!service@service.onet NOTICE Merovingian :403 wilk :user is not on-line
+// NS OFFLINE MSG a a
+// :NickServ!service@service.onet NOTICE Merovingian :403 msg :user is not on-line
 void OnetKernel::raw_403n()
 {
     if (strDataList.value(3).isEmpty() == true) return;
 
-    QString strNick = strDataList[4];
+    QString strNick = strDataList[0];
+    if (strNick[0] == ':')
+        strNick = strNick.right(strNick.length()-1);
+    strNick = strNick.left(strNick.indexOf('!'));
 
-    QString strMessage = QString(tr("* %1 :User is not on-line")).arg(strNick);
-
-    pTabC->show_msg_active(strMessage, 7);
+    if (strNick == "ChanServ")
+    {
+        QString strNick = strDataList[4];
+        QString strMessage = QString(tr("* %1 :User is not on-line")).arg(strNick);
+        pTabC->show_msg_active(strMessage, 7);
+    }
+    else if (strNick == "NickServ")
+    {
+        QString strNick = strDataList[4];
+        QString strMessage = QString(tr("* %1 :User is not on-line")).arg(strNick);
+        pTabC->show_msg_active(strMessage, 7);
+    }
 }
 
 // :cf1f1.onet 404 scc_test #Quiz :Cannot send to channel (+m)
@@ -2838,6 +2923,7 @@ void OnetKernel::raw_407n()
 }
 
 // :ChanServ!service@service.onet NOTICE scc_test :408 dsfdsf :no such channel
+// :RankServ!service@service.onet NOTICE Merovingian :408 #aa :no such channel
 void OnetKernel::raw_408n()
 {
     if (strDataList.value(3).isEmpty() == true) return;
@@ -2857,6 +2943,13 @@ void OnetKernel::raw_408n()
 void OnetKernel::raw_412n()
 {
     // ignore
+}
+
+// RS INFO #a
+// :RankServ!service@service.onet NOTICE Merovingian :416 #a :permission denied
+void OnetKernel::raw_416n()
+{
+// TODO
 }
 
 // :NickServ!service@service.onet NOTICE scc_test :420 aleksa7 :is already on your friend list
@@ -3048,18 +3141,32 @@ void OnetKernel::raw_452n()
 }
 
 // :ChanServ!service@service.onet NOTICE scc_test :454 #aaaaaaaaaaaaaaaaaaaaaa :not enough unique channel name
+// NS OFFLINE GET
+// :NickServ!service@service.onet NOTICE Merovingian :454 a :no messages
 void OnetKernel::raw_454n()
 {
     if (strDataList.value(3).isEmpty() == true) return;
     if (strDataList.value(4).isEmpty() == true) return;
 
-    QString strChannel = strDataList[4];
+    QString strNick = strDataList[0];
+    if (strNick[0] == ':')
+        strNick = strNick.right(strNick.length()-1);
+    strNick = strNick.left(strNick.indexOf('!'));
 
-    QString strMessage = QString(tr("* %1 :Not enough unique channel name")).arg(strChannel);
-    pTabC->show_msg_active(strMessage, 7);
+    if (strNick == "ChanServ")
+    {
+        QString strChannel = strDataList[4];
 
-    dlgchannel_homes->clear();
-    pNetwork->send("CS HOMES");
+        QString strMessage = QString(tr("* %1 :Not enough unique channel name")).arg(strChannel);
+        pTabC->show_msg_active(strMessage, 7);
+
+        dlgchannel_homes->clear();
+        pNetwork->send("CS HOMES");
+    }
+    else if (strNick == "NickServ")
+    {
+        // TODO
+    }
 }
 
 // :ChanServ!service@service.onet NOTICE Merovingian :456 #test2 Merovingian :is already channel owner
