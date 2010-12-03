@@ -1915,6 +1915,10 @@
         <translation>Wiadomość dla użytkowników:</translation>
     </message>
     <message>
+        <source>* %1 is connecting from %2 %3</source>
+        <translation>* %1 jest połączony z %2 %3</translation>
+    </message>
+    <message>
         <source>* Date and time of the server %1: %2</source>
         <translation>* Data i czas serwera %1: %2</translation>
     </message>
@@ -2123,6 +2127,10 @@
         <translation>* %1 :Tylko Administratorzy mogą tworzyć nowe kanały</translation>
     </message>
     <message>
+        <source>* %1 :You are not permitted to send private messages to this user</source>
+        <translation>* %1 :Nie masz uprawnień do wysyłania prywatnych wiadomości do tego użytkownika</translation>
+    </message>
+    <message>
         <source>* Your friend %1 arrived online</source>
         <translation>* Twój przyjaciel %1 jest teraz on-line</translation>
     </message>
@@ -2229,6 +2237,10 @@
     <message>
         <source>* Channel %1 is not moderated</source>
         <translation>* Kanał %1 nie jest moderowany</translation>
+    </message>
+    <message>
+        <source>* Removed %1 from silence list</source>
+        <translation>* Usunięto %1 z listy ignorowanych</translation>
     </message>
     <message>
         <source>* Added %1 to silence list</source>

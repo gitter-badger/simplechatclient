@@ -111,6 +111,10 @@ void OnetKernel::kernel(QString param1)
         qDebug() << "<- " << strData;
 #endif
 
+    bool bUnknownRaw1 = false;
+    bool bUnknownRaw2 = false;
+    bool bUnknownRaw3 = false;
+
     if (strDataList.value(1).isEmpty() == false)
     {
         if (strDataList[0].toLower() == "ping")
@@ -145,6 +149,8 @@ void OnetKernel::kernel(QString param1)
             raw_modernotice();
         else if (strDataList[1].toLower() == "moderate")
             raw_moderate();
+        else
+            bUnknownRaw1 = true;
 
         if (strDataList[1].toLower() == "001")
             raw_001();
@@ -172,12 +178,16 @@ void OnetKernel::kernel(QString param1)
             raw_257();
         else if (strDataList[1].toLower() == "258")
             raw_258();
+        else if (strDataList[1].toLower() == "259")
+            raw_259();
         else if (strDataList[1].toLower() == "265")
             raw_265();
         else if (strDataList[1].toLower() == "266")
             raw_266();
-        else if (strDataList[1].toLower() == "259")
-            raw_259();
+        else if (strDataList[1].toLower() == "271")
+            raw_271();
+        else if (strDataList[1].toLower() == "272")
+            raw_272();
         else if (strDataList[1].toLower() == "301")
             raw_301();
         else if (strDataList[1].toLower() == "302")
@@ -212,10 +222,10 @@ void OnetKernel::kernel(QString param1)
             raw_319();
         else if (strDataList[1].toLower() == "332")
             raw_332();
-        else if (strDataList[1].toLower() == "341")
-            raw_341();
         else if (strDataList[1].toLower() == "333")
             raw_333();
+        else if (strDataList[1].toLower() == "341")
+            raw_341();
         else if (strDataList[1].toLower() == "352")
             raw_352();
         else if (strDataList[1].toLower() == "353")
@@ -236,6 +246,8 @@ void OnetKernel::kernel(QString param1)
             raw_375();
         else if (strDataList[1].toLower() == "376")
             raw_376();
+        else if (strDataList[1].toLower() == "378")
+            raw_378();
         else if (strDataList[1].toLower() == "391")
             raw_391();
         else if (strDataList[1].toLower() == "396")
@@ -260,6 +272,8 @@ void OnetKernel::kernel(QString param1)
             raw_443();
         else if (strDataList[1].toLower() == "445")
             raw_445();
+        else if (strDataList[1].toLower() == "446")
+            raw_446();
         else if (strDataList[1].toLower() == "451")
             raw_451();
         else if (strDataList[1].toLower() == "461")
@@ -286,6 +300,8 @@ void OnetKernel::kernel(QString param1)
             raw_491();
         else if (strDataList[1].toLower() == "530")
             raw_530();
+        else if (strDataList[1].toLower() == "531")
+            raw_531();
         else if (strDataList[1].toLower() == "600")
             raw_600();
         else if (strDataList[1].toLower() == "601")
@@ -296,6 +312,8 @@ void OnetKernel::kernel(QString param1)
             raw_604();
         else if (strDataList[1].toLower() == "605")
             raw_605();
+        else if (strDataList[1].toLower() == "607")
+            raw_607();
         else if (strDataList[1].toLower() == "666")
             raw_666();
         else if (strDataList[1].toLower() == "702")
@@ -330,10 +348,14 @@ void OnetKernel::kernel(QString param1)
             raw_820();
         else if (strDataList[1].toLower() == "821")
             raw_821();
+        else if (strDataList[1].toLower() == "950")
+            raw_950();
         else if (strDataList[1].toLower() == "951")
             raw_951();
         else if (strDataList[1].toLower() == "952")
             raw_952();
+        else
+            bUnknownRaw2 = true;
 
         if ((strDataList[1].toLower() == "notice") && (strDataList.value(3).isEmpty() == false))
         {
@@ -479,9 +501,27 @@ void OnetKernel::kernel(QString param1)
                 raw_469n();
             else if (strDataList[3].toLower() == ":472")
                 raw_472n();
-            else if (strDataList[1].toLower() == "notice")
+            else if ((strDataList[3].length() != 4) || (strDataList[3].toLower() == ":***"))
                 raw_notice();
+            else
+                bUnknownRaw3 = true;
         }
+        else
+            bUnknownRaw3 = true;
+    }
+    else
+    {
+        bUnknownRaw1 = true;
+        bUnknownRaw2 = true;
+        bUnknownRaw3 = true;
+    }
+
+    // detect unknown raw
+    if (bUnknownRaw1 == true && bUnknownRaw2 == true && bUnknownRaw3 == true)
+    {
+        Log *l = new Log();
+        l->save("unknown_raw", strData);
+        delete l;
     }
 }
 
@@ -1296,7 +1336,8 @@ void OnetKernel::raw_005()
     }
 }
 
-// Onet-Informuje!bot@service.onet NOTICE Merovingian :100 #gorący_pokój 1279807200 :Zapraszamy na spotkanie z Rafałem Głogowskim, ratownikiem krakowskiego WOPRU. Jak zachowywać się nad wodą? Na co zwracać uwagę?
+// :Onet-Informuje!bot@service.onet NOTICE Merovingian :100 #gorący_pokój 1279807200 :Zapraszamy na spotkanie z Rafałem Głogowskim, ratownikiem krakowskiego WOPRU. Jak zachowywać się nad wodą? Na co zwracać uwagę?
+// :Onet-Informuje!bot@service.onet NOTICE $* :100 #Podróże 1291377600 :Wolontariat w Afryce - czy warto spróbować?
 void OnetKernel::raw_100n()
 {
     if (strDataList.value(3).isEmpty() == true) return;
@@ -2168,6 +2209,20 @@ void OnetKernel::raw_266()
 // ignore
 }
 
+// SILENCE
+// :cf1f2.onet 271 Merovingian Merovingian Aldinach!*@* <privatemessages,channelmessages,invites>
+void OnetKernel::raw_271()
+{
+// TODO
+}
+
+// SILENCE
+// :cf1f2.onet 272 Merovingian :End of Silence List
+void OnetKernel::raw_272()
+{
+// ignore
+}
+
 // WHOIS Merovingian
 // :cf1f2.onet 301 scc_test Merovingian :nie ma
 void OnetKernel::raw_301()
@@ -2685,6 +2740,25 @@ void OnetKernel::raw_376()
 // ignore
 }
 
+// WHOIS
+// :cf1f1.onet 378 Merovingian Merovingian :is connecting from 26269559@46.113.153.49 46.113.153.49
+void OnetKernel::raw_378()
+{
+    if (strDataList.value(3).isEmpty() == true) return;
+    if (strDataList.value(4).isEmpty() == true) return;
+    if (strDataList.value(5).isEmpty() == true) return;
+    if (strDataList.value(6).isEmpty() == true) return;
+    if (strDataList.value(7).isEmpty() == true) return;
+    if (strDataList.value(8).isEmpty() == true) return;
+
+    QString strNick = strDataList[3];
+    QString strZuoIP = strDataList[7];
+    QString strIP = strDataList[8];
+
+    QString strMessage = QString(tr("* %1 is connecting from %2 %3")).arg(strNick).arg(strZuoIP).arg(strIP);
+    pTabC->show_msg_active(strMessage, 7);
+}
+
 // TIME
 // :cf1f2.onet 391 ~test cf1f2.onet :Tue Jul 13 18:33:05 2010
 void OnetKernel::raw_391()
@@ -3104,8 +3178,22 @@ void OnetKernel::raw_443()
     pTabC->show_msg_active(strMessage, 7);
 }
 
+// SUMMON
 // :cf1f3.onet 445 ~test :SUMMON has been disabled (depreciated command)
 void OnetKernel::raw_445()
+{
+    QString strMessage;
+    for (int i = 3; i < strDataList.size(); i++) { if (i != 3) strMessage += " "; strMessage += strDataList[i]; }
+    if (strMessage[0] == ':')
+        strMessage = strMessage.right(strMessage.length()-1);
+    strMessage = "* "+strMessage;
+
+    pTabC->show_msg_active(strMessage, 7);
+}
+
+// USERS
+// :cf1f2.onet 446 Merovingian :USERS has been disabled (depreciated command)
+void OnetKernel::raw_446()
 {
     QString strMessage;
     for (int i = 3; i < strDataList.size(); i++) { if (i != 3) strMessage += " "; strMessage += strDataList[i]; }
@@ -3443,6 +3531,18 @@ void OnetKernel::raw_530()
     pTabC->show_msg_active(strMessage, 7);
 }
 
+// PRIVMSG a
+// :cf1f2.onet 531 Merovingian chanky :You are not permitted to send private messages to this user
+void OnetKernel::raw_531()
+{
+    if (strDataList.value(3).isEmpty() == true) return;
+
+    QString strNick = strDataList[3];
+
+    QString strMessage = QString(tr("* %1 :You are not permitted to send private messages to this user").arg(strNick));
+    pTabC->show_msg_active(strMessage, 7);
+}
+
 // :cf1f4.onet 600 scc_test Radowsky 16172032 690A6F.A8219B.7F5EC1.35E57C 1267055769 :arrived online
 void OnetKernel::raw_600()
 {
@@ -3519,6 +3619,13 @@ void OnetKernel::raw_605()
 
     if (dlgfriends->isHidden() == false)
         dlgfriends->refresh();
+}
+
+// WATCH
+// :cf1f2.onet 607 Merovingian :End of WATCH list
+void OnetKernel::raw_607()
+{
+// ignore
 }
 
 // SERVER
@@ -3802,6 +3909,19 @@ void OnetKernel::raw_821()
 
     QString strMessage = QString(tr("* Channel %1 is not moderated")).arg(strChannel);
     pTabC->show_msg_active(strMessage, 7);
+}
+
+// NS IGNORE DEL nick
+// :cf1f2.onet 950 Merovingian Merovingian :Removed Succubi!*@* <privatemessages,channelmessages,invites> from silence list
+void OnetKernel::raw_950()
+{
+    if (strDataList.value(4).isEmpty() == true) return;
+    if (strDataList.value(5).isEmpty() == true) return;
+
+    QString strNick = strDataList[5];
+
+    QString strDisplay = QString(tr("* Removed %1 from silence list")).arg(strNick);
+    pTabC->show_msg_active(strDisplay, 7);
 }
 
 // NS IGNORE ADD nick

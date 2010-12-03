@@ -388,7 +388,7 @@ void NickListWidget::whois()
     if (this->selectedItems().count() == 0) return;
 
     QString strNick = this->selectedItems().at(0)->text(0);
-    pNetwork->send(QString("WHOIS %1 %1").arg(strNick));
+    pNetwork->send(QString("WHOIS %1 :%1").arg(strNick));
 }
 
 void NickListWidget::profile()

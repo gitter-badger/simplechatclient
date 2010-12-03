@@ -54,7 +54,7 @@ void MainWebView::priv()
 
 void MainWebView::whois()
 {
-    pNetwork->send(QString("WHOIS %1 %1").arg(strNick));
+    pNetwork->send(QString("WHOIS %1 :%1").arg(strNick));
 }
 
 void MainWebView::profile()
