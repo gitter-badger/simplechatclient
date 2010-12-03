@@ -86,8 +86,6 @@ Core::Core(QMainWindow *parent, QString param1, int param2, Notify *param3, QAct
     pTabC->show_msg("Status", "%Fi:courier%"+tr("Welcome to the Simple Chat Client")+" %Ihehe%", 0);
     pTabC->show_msg("Status", "%Fb:courier%%Cff6500%"+tr("Official website")+" SCC%C3030ce%: http://simplechatclien.sourceforge.net/ %Izaskoczony%", 0);
     pTabC->show_msg("Status", "%Fb:courier%%C008100%"+tr("Official Forum")+" SCC%C3030ce%: http://simplechatclien.sourceforge.net/forum/ %Ioczko%", 0);
-    pTabC->show_msg("Status", "%Fbi:courier%%Cff0000%"+tr("Known bugs")+"%C3030ce%: http://sourceforge.net/apps/trac/simplechatclien/report/6 %Iskwaszony%", 0);
-    pTabC->show_msg("Status", "%Fbi:courier%%C8800ab%"+tr("Bug reporting")+"%C3030ce%: http://sourceforge.net/apps/trac/simplechatclien/newticket %Ipanda%", 0);
 
     // toolbar
     toolBar->addSeparator();

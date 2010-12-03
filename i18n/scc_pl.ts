@@ -186,14 +186,6 @@
         <source>Official Forum</source>
         <translation>Oficjalne forum</translation>
     </message>
-    <message>
-        <source>Known bugs</source>
-        <translation>Lista błędów</translation>
-    </message>
-    <message>
-        <source>Bug reporting</source>
-        <translation>Zgłaszanie błędów</translation>
-    </message>
 </context>
 <context>
     <name>MainWindow</name>

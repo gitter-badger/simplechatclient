@@ -463,6 +463,8 @@ void OnetKernel::kernel(QString param1)
                 raw_408n();
             else if (strDataList[3].toLower() == ":412")
                 raw_412n();
+            else if (strDataList[3].toLower() == ":415")
+                raw_415n();
             else if (strDataList[3].toLower() == ":416")
                 raw_416n();
             else if (strDataList[3].toLower() == ":420")
@@ -1539,7 +1541,7 @@ void OnetKernel::raw_151n()
         strNick = strNick.right(strNick.length()-1);
     strNick = strNick.left(strNick.indexOf('!'));
 
-    if (strNick == "ChanServ")
+    if (strNick.toLower() == "chanserv")
     {
         for (int i = 4; i < strDataList.size(); i++)
         {
@@ -1550,7 +1552,7 @@ void OnetKernel::raw_151n()
             dlgchannel_homes->add_channel(strChannel);
         }
     }
-    else if (strNick == "NickServ")
+    else if (strNick.toLower() == "nickserv")
     {
         // TODO
     }
@@ -1858,22 +1860,36 @@ void OnetKernel::raw_241n()
 
 // CS REGISTER czesctoja
 // :ChanServ!service@service.onet NOTICE scc_test :250 #czesctoja :channel registered
+// NS OFFLINE MSG nick text
+// :NickServ!service@service.onet NOTICE Merovingian :250 scc_test :offline message sent
 void OnetKernel::raw_250n()
 {
     if (strDataList.value(4).isEmpty() == true) return;
 
-    QString strChannel = strDataList[4];
+    QString strNick = strDataList[0];
+    if (strNick[0] == ':')
+        strNick = strNick.right(strNick.length()-1);
+    strNick = strNick.left(strNick.indexOf('!'));
 
-    QMessageBox msgBox;
-    msgBox.setIcon(QMessageBox::Information);
-    msgBox.setWindowIcon(QIcon(":/images/logo_64.png"));
-    msgBox.setStandardButtons(QMessageBox::Ok);
-    msgBox.setText(QString(tr("Successfully created a channel %1")).arg(strChannel));
-    msgBox.exec();
+    if (strNick.toLower() == "chanserv")
+    {
+        QString strChannel = strDataList[4];
 
-    dlgchannel_homes->clear();
-    pNetwork->send("CS HOMES");
-    pNetwork->send(QString("JOIN %1").arg(strChannel));
+        QMessageBox msgBox;
+        msgBox.setIcon(QMessageBox::Information);
+        msgBox.setWindowIcon(QIcon(":/images/logo_64.png"));
+        msgBox.setStandardButtons(QMessageBox::Ok);
+        msgBox.setText(QString(tr("Successfully created a channel %1")).arg(strChannel));
+        msgBox.exec();
+
+        dlgchannel_homes->clear();
+        pNetwork->send("CS HOMES");
+        pNetwork->send(QString("JOIN %1").arg(strChannel));
+    }
+    else if (strNick.toLower() == "nickserv")
+    {
+        // TODO
+    }
 }
 
 // LUSERS
@@ -1885,14 +1901,28 @@ void OnetKernel::raw_251()
 
 // CS DROP czesctoja
 // :ChanServ!service@service.onet NOTICE scc_test :251 #czesctoja :has been dropped
+// NS OFFLINE GET scc_test
+// :NickServ!service@service.onet NOTICE Merovingian :251 scc_test 1291386193 msg :test message
 void OnetKernel::raw_251n()
 {
     if (strDataList.value(4).isEmpty() == true) return;
 
-    QString strChannel = strDataList[4];
+    QString strNick = strDataList[0];
+    if (strNick[0] == ':')
+        strNick = strNick.right(strNick.length()-1);
+    strNick = strNick.left(strNick.indexOf('!'));
 
-    QString strDisplay = QString(tr("* Channel %1 has been removed")).arg(strChannel);
-    pTabC->show_msg_active(strDisplay, 5);
+    if (strNick.toLower() == "chanserv")
+    {
+        QString strChannel = strDataList[4];
+
+        QString strDisplay = QString(tr("* Channel %1 has been removed")).arg(strChannel);
+        pTabC->show_msg_active(strDisplay, 5);
+    }
+    else if (strNick.toLower() == "nickserv")
+    {
+        // TODO
+    }
 }
 
 // LUSERS
@@ -1904,14 +1934,28 @@ void OnetKernel::raw_252()
 
 // CS DROP czesctoja
 // :ChanServ!service@service.onet NOTICE #testabc :252 scc_test :has dropped this channel
+// NS OFFLINE REJECT scc_test
+// :NickServ!service@service.onet NOTICE Merovingian :252 scc_test :offline messages rejected
 void OnetKernel::raw_252n()
 {
     if (strDataList.value(4).isEmpty() == true) return;
 
-    QString strChannel = strDataList[2];
+    QString strNick = strDataList[0];
+    if (strNick[0] == ':')
+        strNick = strNick.right(strNick.length()-1);
+    strNick = strNick.left(strNick.indexOf('!'));
 
-    QString strDisplay = QString(tr("* Confirmed the removal of the channel %1")).arg(strChannel);
-    pTabC->show_msg_active(strDisplay, 5);
+    if (strNick.toLower() == "chanserv")
+    {
+        QString strChannel = strDataList[2];
+
+        QString strDisplay = QString(tr("* Confirmed the removal of the channel %1")).arg(strChannel);
+        pTabC->show_msg_active(strDisplay, 5);
+    }
+    else if (strNick.toLower() == "nickserv")
+    {
+        // TODO
+    }
 }
 
 // LUSERS
@@ -2161,7 +2205,7 @@ void OnetKernel::raw_261n()
         strNick = strNick.right(strNick.length()-1);
     strNick = strNick.left(strNick.indexOf('!'));
 
-    if (strNick == "ChanServ")
+    if (strNick.toLower() == "chanserv")
     {
         QString strChannel = strDataList[5];
 
@@ -2176,7 +2220,7 @@ void OnetKernel::raw_261n()
         pNetwork->send("CS HOMES");
         pNetwork->send(QString("PART %1").arg(strChannel));
     }
-    else if (strNick == "NickServ")
+    else if (strNick.toLower() == "nickserv")
     {
         // TODO
     }
@@ -2905,13 +2949,13 @@ void OnetKernel::raw_403n()
         strNick = strNick.right(strNick.length()-1);
     strNick = strNick.left(strNick.indexOf('!'));
 
-    if (strNick == "ChanServ")
+    if (strNick.toLower() == "chanserv")
     {
         QString strNick = strDataList[4];
         QString strMessage = QString(tr("* %1 :User is not on-line")).arg(strNick);
         pTabC->show_msg_active(strMessage, 7);
     }
-    else if (strNick == "NickServ")
+    else if (strNick.toLower() == "nickserv")
     {
         QString strNick = strDataList[4];
         QString strMessage = QString(tr("* %1 :User is not on-line")).arg(strNick);
@@ -3016,7 +3060,14 @@ void OnetKernel::raw_408n()
 // :NickServ!service@service.onet NOTICE ~Merovingian :412 admi :user's data is not ready
 void OnetKernel::raw_412n()
 {
-    // ignore
+// ignore
+}
+
+// RS INFO succubi
+// :RankServ!service@service.onet NOTICE Merovingian :415 Succubi :permission denied
+void OnetKernel::raw_415n()
+{
+// TODO
 }
 
 // RS INFO #a
@@ -3241,7 +3292,7 @@ void OnetKernel::raw_454n()
         strNick = strNick.right(strNick.length()-1);
     strNick = strNick.left(strNick.indexOf('!'));
 
-    if (strNick == "ChanServ")
+    if (strNick.toLower() == "chanserv")
     {
         QString strChannel = strDataList[4];
 
@@ -3251,25 +3302,39 @@ void OnetKernel::raw_454n()
         dlgchannel_homes->clear();
         pNetwork->send("CS HOMES");
     }
-    else if (strNick == "NickServ")
+    else if (strNick.toLower() == "nickserv")
     {
         // TODO
     }
 }
 
 // :ChanServ!service@service.onet NOTICE Merovingian :456 #test2 Merovingian :is already channel owner
+// NS OFFLINE MSG exist_nick test
+// :NickServ!service@service.onet NOTICE Merovingian :456 Merovingian :is online
 void OnetKernel::raw_456n()
 {
     if (strDataList.value(3).isEmpty() == true) return;
     if (strDataList.value(4).isEmpty() == true) return;
     if (strDataList.value(5).isEmpty() == true) return;
 
-    QString strNick = strDataList[5];
+    QString strNick = strDataList[0];
+    if (strNick[0] == ':')
+        strNick = strNick.right(strNick.length()-1);
+    strNick = strNick.left(strNick.indexOf('!'));
 
-    QString strMessage = QString(tr("* %1 is already channel owner")).arg(strNick);
+    if (strNick.toLower() == "chanserv")
+    {
+        QString strNick = strDataList[5];
 
-    // display
-    pTabC->show_msg_active(strMessage, 7);
+        QString strMessage = QString(tr("* %1 is already channel owner")).arg(strNick);
+
+        // display
+        pTabC->show_msg_active(strMessage, 7);
+    }
+    else if (strNick.toLower() == "nickserv")
+    {
+        // TODO
+    }
 }
 
 // :ChanServ!service@service.onet NOTICE scc_test :458 #scc v scc :unable to remove non-existent privilege
