@@ -65,7 +65,7 @@ class NickListWidget : public QTreeWidget
 {
     Q_OBJECT
 public:
-    NickListWidget(QWidget *, Network *, QString, QMap <QString, QByteArray> *, QTcpSocket *, sChannelNickStatus *, DlgUserProfile *);
+    NickListWidget(QWidget *, Network *, QString, QMap <QString, QByteArray> *, QTcpSocket *, sChannelNickStatus *, DlgUserProfile *, DlgCam *);
     ~NickListWidget();
     void set_open_channels(QStringList);
     void add(QString, QString, QString, sChannelNickStatus *mChannelNickStatus);
@@ -85,6 +85,7 @@ private:
     QTcpSocket *camSocket;
     sChannelNickStatus *mChannelNickStatus;
     DlgUserProfile *pDlg_user_profile;
+    DlgCam *pDlg_cam;
     // other
     enum { maxOpenChannels = 50 };
     QAction *openChannelsActs[maxOpenChannels];

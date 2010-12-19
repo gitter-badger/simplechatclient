@@ -52,9 +52,10 @@ TabContainer::~TabContainer()
     }
 }
 
-void TabContainer::set_dlg(DlgUserProfile *param1)
+void TabContainer::set_dlg(DlgUserProfile *param1, DlgCam *param2)
 {
     pDlg_user_profile = param1;
+    pDlg_cam = param2;
 }
 
 int TabContainer::get_index(QString strName)
@@ -91,7 +92,7 @@ void TabContainer::add_tab(QString strChannel)
         emit create_nicklist(strChannel);
 
         // create tab
-        tw.append(new TabWidget(myparent, pNetwork, strChannel, pNotify, mChannelAvatar, camSocket, mChannelNickStatus, pDlg_user_profile));
+        tw.append(new TabWidget(myparent, pNetwork, strChannel, pNotify, mChannelAvatar, camSocket, mChannelNickStatus, pDlg_user_profile, pDlg_cam));
         pTabM->addTab(tw.at(tw.count()-1), strChannel);
         pTabM->setCurrentIndex(tw.count()-1);
 

@@ -20,7 +20,7 @@
 
 #include "dlg_cam.h"
 
-DlgCam::DlgCam(QWidget *parent, Network *param1, QString param2, QTcpSocket *param3) : QDialog(parent)
+DlgCam::DlgCam(QWidget *parent, Network *param1, QTcpSocket *param2) : QDialog(parent)
 {
     ui.setupUi(this);
     setAttribute(Qt::WA_DeleteOnClose);
@@ -28,8 +28,7 @@ DlgCam::DlgCam(QWidget *parent, Network *param1, QString param2, QTcpSocket *par
     setWindowTitle(tr("Webcams"));
 
     pNetwork = param1;
-    strNick = param2;
-    camSocket = param3;
+    camSocket = param2;
 
     ui.label_nick->setText("<p style=\"font-weight:bold;\">"+strNick+"</p>");
     ui.tabWidget->setTabText(0, tr("Viewing"));
@@ -67,10 +66,6 @@ DlgCam::DlgCam(QWidget *parent, Network *param1, QString param2, QTcpSocket *par
     //camSocket->setSocketOption(QAbstractSocket::LowDelayOption, 1);
     //camSocket->setSocketOption(QAbstractSocket::KeepAliveOption, 0);
 
-    // detect and set broadcasting
-    detect_broadcasting();
-    set_broadcasting();
-
     QObject::connect(ui.tableWidget_nick_rank_spectators, SIGNAL(cellDoubleClicked(int,int)), this, SLOT(change_user(int,int)));
     QObject::connect(ui.pushButton_broadcast, SIGNAL(clicked()), this, SLOT(broadcast_start_stop()));
     QObject::connect(ui.radioButton_broadcast_public, SIGNAL(clicked()), this, SLOT(broadcast_public()));
@@ -96,6 +91,12 @@ DlgCam::~DlgCam()
             bCreatedCaptureCv = false;
         }
     }
+}
+
+void DlgCam::set_nick(QString strN)
+{
+    strNick = strN;
+    ui.label_nick->setText("<p style=\"font-weight:bold;\">"+strNick+"</p>");
 }
 
 bool DlgCam::exist_video_device()
@@ -481,6 +482,8 @@ void DlgCam::text_kernel(QString strData)
     // 200 0 OK
     if (strDataList[0] == "200")
     {
+        if (lLastCommand.count() == 0) return; // empty lLastCommand
+
         QString strLastCommand = lLastCommand.takeFirst();
 
         if (strLastCommand == "UNSUBSCRIBE_BIG")
@@ -544,7 +547,7 @@ void DlgCam::text_kernel(QString strData)
     // 221 0 UDPUT_OK
     else if (strDataList[0] == "221")
     {
-        // nothing
+        // ignore
     }
     // 231 0 OK scc_test
     else if ((strDataList[0] == "231") && (strDataList.count() == 4))
@@ -565,12 +568,12 @@ void DlgCam::text_kernel(QString strData)
     // 232 0 CMODE 0
     else if ((strDataList[0] == "232") && (strDataList.count() == 4))
     {
-        // nothing
+        // ignore
     }
     // 233 0 QUALITY_FACTOR 1
     else if ((strDataList[0] == "233") && (strDataList.count() == 4))
     {
-        // nothing
+        // ignore
     }
     // 250 12519 OK
     else if (strDataList[0] == "250")
@@ -605,7 +608,7 @@ void DlgCam::text_kernel(QString strData)
     // 253 0 USER_VOTES Delikatna 38
     else if ((strDataList[0] == "253") && (strDataList.count() == 5))
     {
-        // nothing
+        // ignore
     }
     // 254 1489 USER_COUNT_UPDATE
     else if (strDataList[0] == "254")
@@ -627,7 +630,7 @@ void DlgCam::text_kernel(QString strData)
     // 264 0 CODE_ACCEPTED ffffffff 2147483647
     else if ((strDataList[0] == "264") && (strDataList.count() == 5))
     {
-        // nothing
+        // ignore
     }
     // 261 0 OK
     else if (strDataList[0] == "261")
@@ -644,7 +647,7 @@ void DlgCam::text_kernel(QString strData)
     // 267 0 SENDMODE=1
     else if (strDataList[0] == "267")
     {
-        // nothing
+        // ignore
     }
     // 268 0 OK
     else if (strDataList[0] == "268")
@@ -729,12 +732,12 @@ void DlgCam::text_kernel(QString strData)
     // 504 0 UNKNOWN_COMMAND PUT2
     else if ((strDataList[0] == "504") && (strDataList.count() == 4))
     {
-        // nothing
+        // ignore
     }
     // 508 0 SESSION_OVERRIDEN
     else if (strDataList[0] == "508")
     {
-        // nothing
+        // ignore
     }
     // 520 0 INVALID_UOKEY 1q3j0llVg40cu2784j9EVoz8sRdfNl3w
     else if ((strDataList[0] == "520") && (strDataList.count() == 4))
@@ -817,8 +820,8 @@ void DlgCam::change_user(int row, int column)
     }
     else
     {
-        network_send(QString("UNSUBSCRIBE_BIG %1").arg(strNick));
         lLastCommand.append("UNSUBSCRIBE_BIG");
+        network_send(QString("UNSUBSCRIBE_BIG %1").arg(strNick));
     }
 
     // set nick
@@ -874,17 +877,17 @@ void DlgCam::read_video()
 
         if (bFirstSend == false)
         {
-            network_sendb(bPackage);
             bFirstSend = true;
             bReadySend = false;
             lLastCommand.append("PUT2");
+            network_sendb(bPackage);
         }
 
         if ((bReadySend == true) && (iCurrentTime-iLastSend > 5)) // send -> 5 sec
         {
-            network_sendb(bPackage);
             bReadySend = false;
             lLastCommand.append("PUT2");
+            network_sendb(bPackage);
         }
     }
 
@@ -948,8 +951,8 @@ void DlgCam::hideEvent(QHideEvent *event)
 
     if (strNick.isEmpty() == false)
     {
-        network_send(QString("UNSUBSCRIBE_BIG %1").arg(strNick));
         lLastCommand.append("HIDE_EVENT");
+        network_send(QString("UNSUBSCRIBE_BIG %1").arg(strNick));
     }
 }
 

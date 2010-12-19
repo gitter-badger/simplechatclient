@@ -25,6 +25,7 @@
 #include <QSettings>
 #include "log.h"
 #include "network.h"
+#include "dlg_cam.h"
 #include "dlg_channel_settings.h"
 #include "dlg_moderation.h"
 #include "notify.h"
@@ -37,7 +38,7 @@ class TabContainer : public QObject
 public:
     TabContainer(QWidget *, Network *, TabManager *, Notify *, QMap <QString, QByteArray> *, QTcpSocket *, sChannelNickStatus *);
     ~TabContainer();
-    void set_dlg(DlgUserProfile *);
+    void set_dlg(DlgUserProfile *, DlgCam *);
     inline QString get_name(int i) { if ((i < 0) || (i > tw.count())) return QString::null; else return tw[i]->get_name(); }
     bool exist_tab(QString);
     void add_tab(QString);
@@ -83,6 +84,7 @@ private:
     QTcpSocket *camSocket;
     sChannelNickStatus *mChannelNickStatus;
     DlgUserProfile *pDlg_user_profile;
+    DlgCam *pDlg_cam;
     // other
     QList <TabWidget *> tw;
 

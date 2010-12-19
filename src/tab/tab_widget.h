@@ -30,6 +30,7 @@
 #include <QtWebKit/QWebFrame>
 #include <QtWebKit/QWebView>
 #include "convert.h"
+#include "dlg_cam.h"
 #include "log.h"
 #include "network.h"
 #include "mainwebview.h"
@@ -39,7 +40,7 @@ class TabWidget : public QWidget
 {
     Q_OBJECT
 public:
-    TabWidget(QWidget *, Network *, QString, Notify *, QMap <QString, QByteArray> *, QTcpSocket *, sChannelNickStatus *, DlgUserProfile *);
+    TabWidget(QWidget *, Network *, QString, Notify *, QMap <QString, QByteArray> *, QTcpSocket *, sChannelNickStatus *, DlgUserProfile *, DlgCam *);
     ~TabWidget();
     inline QString get_name() { return strName; }
     inline bool get_scroll() { return bScroll; }
@@ -71,6 +72,7 @@ private:
     QTcpSocket *camSocket;
     sChannelNickStatus *mChannelNickStatus;
     DlgUserProfile *pDlg_user_profile;
+    DlgCam *pDlg_cam;
 
     // other
     QString strContent;

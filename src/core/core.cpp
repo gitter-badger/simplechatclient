@@ -53,12 +53,12 @@ Core::Core(QMainWindow *parent, QString param1, int param2, Notify *param3, QAct
     pDlg_friends = new DlgFriends(myparent, pNetwork, &mNickAvatar);
     pDlg_ignore = new DlgIgnore(myparent, pNetwork, &mNickAvatar);
     pDlg_user_profile = new DlgUserProfile(myparent, pNetwork);
-    pDlg_cam = new DlgCam(myparent, pNetwork, "", camSocket);
+    pDlg_cam = new DlgCam(myparent, pNetwork, camSocket);
 
     pOnet_kernel = new OnetKernel(myparent, pNetwork, pTabC, pNotify, &mNickAvatar, &mChannelAvatar, pDlg_channel_settings, pDlg_channel_homes, pDlg_channel_list, pDlg_channel_favourites, pDlg_friends, pDlg_ignore, pDlg_moderation);
     pOnet_auth = new OnetAuth(pTabC);
 
-    pTabC->set_dlg(pDlg_user_profile);
+    pTabC->set_dlg(pDlg_user_profile, pDlg_cam);
 
     // inputlinewidget
     bottomDockWidget = new QDockWidget(tr("Typing messages"), myparent);
@@ -318,7 +318,7 @@ void Core::create_nicklist(QString strChannel)
 {
     if (mChannelNickListWidget.contains(strChannel) == false)
     {
-        NickListWidget *nicklist = new NickListWidget(myparent, pNetwork, strChannel, &mNickAvatar, camSocket, &mChannelNickStatus, pDlg_user_profile);
+        NickListWidget *nicklist = new NickListWidget(myparent, pNetwork, strChannel, &mNickAvatar, camSocket, &mChannelNickStatus, pDlg_user_profile, pDlg_cam);
         nicklist->setParent(nickListDockWidget);
         nicklist->setItemDelegate(new NickListDelegate(nicklist));
         nicklist->show();

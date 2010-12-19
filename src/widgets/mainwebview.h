@@ -41,7 +41,7 @@ class MainWebView : public QWebView
 {
     Q_OBJECT
 public:
-    MainWebView(QWidget *, Network *, QString, QTcpSocket *, sChannelNickStatus *, DlgUserProfile *);
+    MainWebView(QWidget *, Network *, QString, QTcpSocket *, sChannelNickStatus *, DlgUserProfile *, DlgCam *);
     ~MainWebView();
     void set_open_channels(QStringList);
     inline QString get_current_nick() { return strNick; }
@@ -54,6 +54,7 @@ private:
     QTcpSocket *camSocket;
     sChannelNickStatus *mChannelNickStatus;
     DlgUserProfile *pDlg_user_profile;
+    DlgCam *pDlg_cam;
     // other
     QString strNick;
     QStringList strOpenChannels;

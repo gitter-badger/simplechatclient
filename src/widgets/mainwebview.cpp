@@ -20,7 +20,7 @@
 
 #include "mainwebview.h"
 
-MainWebView::MainWebView(QWidget *parent, Network *param1, QString param2, QTcpSocket *param3, sChannelNickStatus *param4, DlgUserProfile *param5)
+MainWebView::MainWebView(QWidget *parent, Network *param1, QString param2, QTcpSocket *param3, sChannelNickStatus *param4, DlgUserProfile *param5, DlgCam *param6)
 {
     myparent = parent;
     pNetwork = param1;
@@ -28,6 +28,7 @@ MainWebView::MainWebView(QWidget *parent, Network *param1, QString param2, QTcpS
     camSocket = param3;
     mChannelNickStatus = param4;
     pDlg_user_profile = param5;
+    pDlg_cam = param6;
 
     strNick = QString::null;
 }
@@ -73,7 +74,8 @@ void MainWebView::cam()
     QString strUOKey = settings.value("uokey").toString();
     (new Kamerzysta(camSocket))->show(strNick, strUOKey);
 #else
-    (new DlgCam(myparent, pNetwork, strNick, camSocket))->show();
+    pDlg_cam->set_nick(strNick);
+    pDlg_cam->show();
 #endif
 }
 

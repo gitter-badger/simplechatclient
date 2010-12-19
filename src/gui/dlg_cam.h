@@ -43,8 +43,9 @@ class DlgCam : public QDialog
 {
     Q_OBJECT
 public:
-    DlgCam(QWidget *, Network *, QString, QTcpSocket *);
+    DlgCam(QWidget *, Network *, QTcpSocket *);
     ~DlgCam();
+    void set_nick(QString);
 
 private:
     Ui::uiCam ui;

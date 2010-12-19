@@ -20,7 +20,7 @@
 
 #include "nicklistwidget.h"
 
-NickListWidget::NickListWidget(QWidget *parent, Network *param1, QString param2, QMap <QString, QByteArray> *param3, QTcpSocket *param4, sChannelNickStatus *param5, DlgUserProfile *param6)
+NickListWidget::NickListWidget(QWidget *parent, Network *param1, QString param2, QMap <QString, QByteArray> *param3, QTcpSocket *param4, sChannelNickStatus *param5, DlgUserProfile *param6, DlgCam *param7)
 {
     myparent = parent;
     pNetwork = param1;
@@ -29,6 +29,7 @@ NickListWidget::NickListWidget(QWidget *parent, Network *param1, QString param2,
     camSocket = param4;
     mChannelNickStatus = param5;
     pDlg_user_profile = param6;
+    pDlg_cam = param7;
 
     setAnimated(true);
     header()->hide();
@@ -414,7 +415,8 @@ void NickListWidget::cam()
     QString strUOKey = settings.value("uokey").toString();
     (new Kamerzysta(camSocket))->show(strNick, strUOKey);
 #else
-    (new DlgCam(myparent, pNetwork, strNick, camSocket))->show();
+    pDlg_cam->set_nick(strNick);
+    pDlg_cam->show();
 #endif
 }
 
