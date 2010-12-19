@@ -36,8 +36,10 @@
 #include "network.h"
 #include "ui_cam.h"
 // opencv
+#ifndef Q_WS_WIN
 #include <opencv/highgui.h>
 #include <opencv/cv.h>
+#endif
 
 class DlgCam : public QDialog
 {
@@ -57,8 +59,10 @@ private:
     QByteArray bData;
     int iBytes_need;
     int iBytes_recv;
+#ifndef Q_WS_WIN
     CvCapture *captureCv; // camera
     bool bCreatedCaptureCv;
+#endif
     bool bBroadcasting;
     bool bBroadcasting_pubpriv; // false = public; true = private;
     QByteArray bPackage;
@@ -68,12 +72,14 @@ private:
     QList <QString> lLastCommand;
     qint64 iLastKeepAlive;
 
+#ifndef Q_WS_WIN
     IplImage *opencv_get_camera_image(); // get camera image
     QPixmap convert_cam2img(IplImage *); // convert camera image to pixmap
 
     bool exist_video_device();
     void detect_broadcasting();
     void set_broadcasting();
+#endif
     void show_img(QByteArray);
     void network_connect();
     void network_send(QString);

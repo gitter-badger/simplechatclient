@@ -55,8 +55,10 @@ DlgCam::DlgCam(QWidget *parent, Network *param1, QTcpSocket *param2) : QDialog(p
     bBroadcasting_pubpriv = false;
     bFirstSend = false;
     bReadySend = true;
-    bCreatedCaptureCv = false;
     iLastKeepAlive = 0;
+#ifndef Q_WS_WIN
+    bCreatedCaptureCv = false;
+#endif
 
     // set labels
     QStringList strlLabels;
@@ -71,10 +73,12 @@ DlgCam::DlgCam(QWidget *parent, Network *param1, QTcpSocket *param2) : QDialog(p
     QObject::connect(ui.radioButton_broadcast_public, SIGNAL(clicked()), this, SLOT(broadcast_public()));
     QObject::connect(ui.radioButton_broadcast_private, SIGNAL(clicked()), this, SLOT(broadcast_private()));
     QObject::connect(ui.buttonBox, SIGNAL(accepted()), this, SLOT(button_ok()));
+#ifndef Q_WS_WIN
     QObject::connect(camSocket, SIGNAL(connected()), this, SLOT(network_connected()));
     QObject::connect(camSocket, SIGNAL(disconnected()), this, SLOT(network_disconnected()));
     QObject::connect(camSocket, SIGNAL(error(QAbstractSocket::SocketError)), this, SLOT(network_error(QAbstractSocket::SocketError)));
     QObject::connect(camSocket, SIGNAL(readyRead()), this, SLOT(network_read()));
+#endif
 }
 
 DlgCam::~DlgCam()
@@ -82,6 +86,7 @@ DlgCam::~DlgCam()
     // network disconnect
     network_disconnect();
 
+#ifndef Q_WS_WIN
     // destroy capture
     if (ui.comboBox_device->isEnabled() == true)
     {
@@ -91,6 +96,7 @@ DlgCam::~DlgCam()
             bCreatedCaptureCv = false;
         }
     }
+#endif
 }
 
 void DlgCam::set_nick(QString strN)
@@ -99,6 +105,7 @@ void DlgCam::set_nick(QString strN)
     ui.label_nick->setText("<p style=\"font-weight:bold;\">"+strNick+"</p>");
 }
 
+#ifndef Q_WS_WIN
 bool DlgCam::exist_video_device()
 {
     // search video device
@@ -157,6 +164,7 @@ void DlgCam::set_broadcasting()
         }
     }
 }
+#endif
 
 void DlgCam::show_img(QByteArray bData)
 {
@@ -833,6 +841,7 @@ void DlgCam::change_user(int row, int column)
 
 void DlgCam::read_video()
 {
+#ifndef Q_WS_WIN
     // video device not exist any more
     if (exist_video_device() == false)
     {
@@ -893,8 +902,10 @@ void DlgCam::read_video()
 
     // read self video
     QTimer::singleShot(1000*1, this, SLOT(read_video())); // 1sec
+#endif
 }
 
+#ifndef Q_WS_WIN
 IplImage *DlgCam::opencv_get_camera_image()
 {
     IplImage *img;
@@ -924,6 +935,7 @@ QPixmap DlgCam::convert_cam2img(IplImage *img)
         return QPixmap();
     }
 }
+#endif
 
 void DlgCam::showEvent(QShowEvent *event)
 {
@@ -931,6 +943,7 @@ void DlgCam::showEvent(QShowEvent *event)
     // center screen
     move(QApplication::desktop()->screen()->rect().center() - rect().center());
 
+#ifndef Q_WS_WIN
     // connect or get img
     if (camSocket->state() == QAbstractSocket::ConnectedState)
     {
@@ -943,17 +956,20 @@ void DlgCam::showEvent(QShowEvent *event)
     // detect and set broadcasting
     detect_broadcasting();
     set_broadcasting();
+#endif
 }
 
 void DlgCam::hideEvent(QHideEvent *event)
 {
     event->accept();
 
+#ifndef Q_WS_WIN
     if (strNick.isEmpty() == false)
     {
         lLastCommand.append("HIDE_EVENT");
         network_send(QString("UNSUBSCRIBE_BIG %1").arg(strNick));
     }
+#endif
 }
 
 void DlgCam::closeEvent(QCloseEvent *event)
