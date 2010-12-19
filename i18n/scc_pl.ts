@@ -398,8 +398,8 @@
 <context>
     <name>DlgCam</name>
     <message>
-        <source>Webcam</source>
-        <translation>Kamerka</translation>
+        <source>Webcams</source>
+        <translation>Kamerki</translation>
     </message>
     <message>
         <source>Error: Failed to send data! [%1]</source>
@@ -416,6 +416,10 @@
     <message>
         <source>Setting mode for viewing only</source>
         <translation>Ustawienie trybu tylko do oglądania</translation>
+    </message>
+    <message>
+        <source>Select user</source>
+        <translation>Wybierz użytkownika</translation>
     </message>
     <message>
         <source>Downloading image</source>
@@ -460,6 +464,66 @@
     <message>
         <source>Starting the service webcams</source>
         <translation>Uruchamianie obsługi kamerek</translation>
+    </message>
+    <message>
+        <source>Viewing</source>
+        <translation>Oglądanie</translation>
+    </message>
+    <message>
+        <source>Broadcasting</source>
+        <translation>Nadawanie</translation>
+    </message>
+    <message>
+        <source>Settings</source>
+        <translation>Ustawienia</translation>
+    </message>
+    <message>
+        <source>Nick</source>
+        <translation>Nick</translation>
+    </message>
+    <message>
+        <source>Rank</source>
+        <translation>Ocena</translation>
+    </message>
+    <message>
+        <source>Spectators</source>
+        <translation>Widzów</translation>
+    </message>
+    <message>
+        <source>Bradcasting public</source>
+        <translation>Nadajesz publicznie</translation>
+    </message>
+    <message>
+        <source>Bradcasting private</source>
+        <translation>Nadajesz prywatne</translation>
+    </message>
+    <message>
+        <source>No bradcasting</source>
+        <translation>Nie nadajesz</translation>
+    </message>
+    <message>
+        <source>Start broadcast</source>
+        <translation>Rozpocznij nadawanie</translation>
+    </message>
+    <message>
+        <source>Stop broadcast</source>
+        <translation>Zakończ nadawanie</translation>
+    </message>
+    <message>
+        <source>Funs</source>
+        <translation>Oglądają mnie</translation>
+    </message>
+    <message>
+        <source>Public</source>
+        <translation>Publiczne</translation>
+    </message>
+    <message>
+        <source>Private</source>
+        <translation>Prywatne</translation>
+    </message>
+    <message>
+        <source>Device:</source>
+        <translation>Urządzenie nadające:</translation>
     </message>
 </context>
 <context>

@@ -73,7 +73,7 @@ void MainWebView::cam()
     QString strUOKey = settings.value("uokey").toString();
     (new Kamerzysta(camSocket))->show(strNick, strUOKey);
 #else
-    (new DlgCam(myparent, pNetwork, strNick))->show();
+    (new DlgCam(myparent, pNetwork, strNick, camSocket))->show();
 #endif
 }
 

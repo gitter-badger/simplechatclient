@@ -137,6 +137,11 @@ if (UNIX AND NOT APPLE)
 	set (CMAKE_CXX_FLAGS "-W -Wall -fno-strict-aliasing ${CMAKE_CXX_FLAGS}")
 endif (UNIX AND NOT APPLE)
 
+# opencv
+if (UNIX AND NOT APPLE)
+	find_package (OpenCV REQUIRED)
+endif (UNIX AND NOT APPLE)
+
 # qt
 find_package (Qt4 REQUIRED)
 
@@ -212,15 +217,16 @@ qt_wrap_cpp (scc MOC_FILES ${scc_MOC_HDRS})
 # link
 if (MSVC) # windows
 	add_executable (../scc WIN32 ${scc_SRCS} ${MOC_FILES} ${scc_HDRS} ${scc_QRC_SRCS} ${scc_UIS_H})
+	target_link_libraries (../scc ${QT_LIBRARIES} ${QT_QTNETWORK_LIBRARIES} ${QCA2_LIBRARIES})
 else (MSVC) # mingw or linux
 	if (MINGW) # mingw
 		add_executable (../scc ${scc_SRCS} ${MOC_FILES} ${scc_HDRS} ${scc_QRC_SRCS} ${scc_UIS_H})
 	else (MINGW) # linux
 		add_executable (../scc ${scc_SRCS} ${MOC_FILES} ${scc_HDRS} ${scc_QRC_SRCS} ${scc_UIS_H})
 	endif (MINGW)
-endif (MSVC)
 
-target_link_libraries (../scc ${QT_LIBRARIES} ${QT_QTNETWORK_LIBRARIES} ${QCA2_LIBRARIES})
+	target_link_libraries (../scc ${QT_LIBRARIES} ${QT_QTNETWORK_LIBRARIES} ${QCA2_LIBRARIES} ${OpenCV_LIBS})
+endif (MSVC)
 
 # i18n
 add_dependencies (../scc i18n)

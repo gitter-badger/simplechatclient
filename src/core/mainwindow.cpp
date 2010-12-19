@@ -42,9 +42,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     channel_favouritesAct = new QAction(QIcon(":/images/oxygen/16x16/emblem-favorite.png"), tr("Favorite channels"), this);
     friendsAct = new QAction(QIcon(":/images/oxygen/16x16/meeting-attending.png"), tr("Friends"), this);
     ignoreAct = new QAction(QIcon(":/images/oxygen/16x16/meeting-attending-tentative.png"), tr("Ignored"), this);
-#ifdef Q_WS_WIN
     camsAct = new QAction(QIcon(":/images/pubcam.png"),tr("Cams"), this);
-#endif
 
     // shortcut
     connectAct->setShortcuts(QKeySequence::New);
@@ -81,9 +79,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     chatMenu->addAction(channel_favouritesAct);
     chatMenu->addAction(friendsAct);
     chatMenu->addAction(ignoreAct);
-#ifdef Q_WS_WIN
     chatMenu->addAction(camsAct);
-#endif
 
     // help menu
     helpMenu = menuBar()->addMenu(tr("He&lp"));
@@ -101,9 +97,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     toolBar->addAction(channel_homesAct);
     toolBar->addAction(friendsAct);
     toolBar->addAction(channel_favouritesAct);
-#ifdef Q_WS_WIN
     toolBar->addAction(camsAct);
-#endif
 
     // notes
     toolBar->addAction(notesAct);
@@ -121,9 +115,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     QObject::connect(channel_favouritesAct, SIGNAL(triggered()), this, SLOT(open_channel_favourites()));
     QObject::connect(friendsAct, SIGNAL(triggered()), this, SLOT(open_friends()));
     QObject::connect(ignoreAct, SIGNAL(triggered()), this, SLOT(open_ignore()));
-#ifdef Q_WS_WIN
     QObject::connect(camsAct, SIGNAL(triggered()), this, SLOT(open_cams()));
-#endif
 
     // notes
     QObject::connect(notesAct, SIGNAL(triggered()), this, SLOT(open_notes()));
@@ -220,7 +212,7 @@ void MainWindow::create_settings()
     // default settings
     QSettings settings;
     settings.clear();
-    settings.setValue("version", "1.0.9.656");
+    settings.setValue("version", "1.0.10.658");
     settings.setValue("debug", "off");
     settings.setValue("logged", "off");
     settings.setValue("busy", "off");

@@ -70,9 +70,7 @@ private:
     QAction *channel_favouritesAct;
     QAction *friendsAct;
     QAction *ignoreAct;
-#ifdef Q_WS_WIN
     QAction *camsAct;
-#endif
 
     void create_settings();
 

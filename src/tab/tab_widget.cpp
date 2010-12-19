@@ -191,7 +191,7 @@ QString TabWidget::addslashes(QString strData)
 
 void TabWidget::display_msg(QString strTime, QString strData, int iLevel)
 {
-    QDateTime dt = QDateTime::fromTime_t(strTime.toInt());
+    QDateTime dt = QDateTime::fromTime_t(strTime.toUInt());
     QString strDT = dt.toString("[hh:mm:ss] ");
     strData = strDT+strData;
 

@@ -53,6 +53,7 @@ Core::Core(QMainWindow *parent, QString param1, int param2, Notify *param3, QAct
     pDlg_friends = new DlgFriends(myparent, pNetwork, &mNickAvatar);
     pDlg_ignore = new DlgIgnore(myparent, pNetwork, &mNickAvatar);
     pDlg_user_profile = new DlgUserProfile(myparent, pNetwork);
+    pDlg_cam = new DlgCam(myparent, pNetwork, "", camSocket);
 
     pOnet_kernel = new OnetKernel(myparent, pNetwork, pTabC, pNotify, &mNickAvatar, &mChannelAvatar, pDlg_channel_settings, pDlg_channel_homes, pDlg_channel_list, pDlg_channel_favourites, pDlg_friends, pDlg_ignore, pDlg_moderation);
     pOnet_auth = new OnetAuth(pTabC);
@@ -154,6 +155,7 @@ Core::~Core()
 
     delete pOnet_auth;
     delete pOnet_kernel;
+    delete pDlg_cam;
     delete pDlg_user_profile;
     delete pDlg_ignore;
     delete pDlg_friends;
@@ -167,7 +169,7 @@ Core::~Core()
     delete pTabM;
     delete bottomDockWidget;
     delete rightDockWidget;
-    delete camSocket;
+    camSocket->deleteLater();
 }
 
 void Core::network_connect()
@@ -248,6 +250,9 @@ void Core::open_cams()
         QString strUOKey = settings.value("uokey").toString();
         (new Kamerzysta(camSocket))->show(strMe, strUOKey);
     }
+#else
+    if ((pNetwork->is_connected() == true) && (pNetwork->is_writable() == true))
+        pDlg_cam->show();
 #endif
 }
 

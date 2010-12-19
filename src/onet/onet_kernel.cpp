@@ -1083,6 +1083,7 @@ void OnetKernel::raw_privmsg()
 }
 
 // :cf1f2.onet NOTICE scc_test :Your message has been filtered and opers notified: spam #2480
+// :Llanero!43347263@admin.onet NOTICE $* :458852 * * :%Fb%%C008100%Weź udział w Konkursie Mikołajkowym - skompletuj zaprzęg Świetego Mikołaja! Więcej info w Wieściach z Czata ! http://czat.onet.pl/1632594,wiesci.html
 void OnetKernel::raw_notice()
 {
     if (strDataList.value(2).isEmpty() == true) return;
@@ -3028,6 +3029,7 @@ void OnetKernel::raw_406n()
 }
 
 // :ChanServ!service@service.onet NOTICE scc_test :407 VOICE :not enough parameters
+// :NickServ!service@service.onet NOTICE Merovingian :407 OFFLINE GET :not enough parameters
 void OnetKernel::raw_407n()
 {
     if (strDataList.value(3).isEmpty() == true) return;
