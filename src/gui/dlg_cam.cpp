@@ -53,8 +53,9 @@ DlgCam::DlgCam(QWidget *parent, Network *param1, QTcpSocket *param2) : QDialog(p
     ui.listWidget_funs->clear();
     bBroadcasting = false;
     bBroadcasting_pubpriv = false;
-    bFirstSend = false;
-    bReadySend = true;
+    bFirstSendPUT = false;
+    bReadySendPUT = true;
+    iLastSendPUT = 0;
     iLastKeepAlive = 0;
 #ifndef Q_WS_WIN
     bCreatedCaptureCv = false;
@@ -103,6 +104,18 @@ void DlgCam::set_nick(QString strN)
 {
     strNick = strN;
     ui.label_nick->setText("<p style=\"font-weight:bold;\">"+strNick+"</p>");
+
+    // clear desc
+    ui.textEdit_desc->setText("");
+    ui.textEdit_desc->hide();
+}
+
+QString DlgCam::get_cauth()
+{
+    // aplet -> 1234567890123456
+    // kamerzysta -> 96 chars (?)
+
+    return "1234567890123456";
 }
 
 #ifndef Q_WS_WIN
@@ -224,7 +237,11 @@ void DlgCam::network_disconnect()
     if (camSocket->state() == QAbstractSocket::ConnectedState)
     {
         if (strNick.isEmpty() == false)
+        {
             network_send(QString("UNSUBSCRIBE_BIG %1").arg(strNick));
+            ui.textEdit_desc->setText("");
+            ui.textEdit_desc->hide();
+        }
         camSocket->disconnectFromHost();
     }
 }
@@ -267,7 +284,8 @@ void DlgCam::network_connected()
 {
     ui.label_img->setText(tr("Connected to server webcam."));
     ui.label_img->setText(ui.label_img->text()+"<br>"+tr("Please wait ..."));
-    network_send(QString("CAUTH %1 3.00.159").arg("1234567890123456"));
+    QString strCAUTH = get_cauth();
+    network_send(QString("CAUTH %1 3.00.159").arg(strCAUTH));
 }
 
 void DlgCam::network_disconnected()
@@ -278,6 +296,9 @@ void DlgCam::network_disconnected()
 
     network_send("STOP");
     ui.label_broadcast_status->setText(tr("<span style=\"color:#ff0000;font-weight:bold;\">""No bradcasting")+"</span>");
+
+    // reconnect
+    //network_connect();
 }
 
 void DlgCam::network_error(QAbstractSocket::SocketError err)
@@ -503,8 +524,8 @@ void DlgCam::text_kernel(QString strData)
             QDateTime dt = QDateTime::currentDateTime();
             qint64 iCurrentTime = (qint64)dt.toTime_t(); // seconds that have passed since 1970
 
-            bReadySend = true;
-            iLastSend = iCurrentTime;
+            bReadySendPUT = true;
+            iLastSendPUT = iCurrentTime;
         }
     }
     // 202 17244 IMAGE_UPDATE_BIG Ekscentryk
@@ -524,14 +545,13 @@ void DlgCam::text_kernel(QString strData)
             // re-send
             if (strUser == strNick)
             {
-                if (strNick.isEmpty() == false)
+                if ((strNick.isEmpty() == false) && (this->isHidden() == false))
                 {
-                    network_send(QString("KEEPALIVE_BIG %1").arg(strNick));
-
                     QDateTime dt = QDateTime::currentDateTime();
                     qint64 iCurrentTime = (qint64)dt.toTime_t(); // seconds that have passed since 1970
-
                     iLastKeepAlive = iCurrentTime;
+
+                    network_send(QString("KEEPALIVE_BIG %1").arg(strNick));
                 }
             }
         }
@@ -631,7 +651,7 @@ void DlgCam::text_kernel(QString strData)
 
         if (iCurrentTime - iLastKeepAlive > 30) // 30 sec
         {
-            if (strNick.isEmpty() == false)
+            if ((strNick.isEmpty() == false) && (this->isHidden() == false))
                 network_send(QString("KEEPALIVE_BIG %1").arg(strNick));
         }
     }
@@ -690,6 +710,7 @@ void DlgCam::text_kernel(QString strData)
         if (strUser == strNick)
         {
             ui.label_img->setText(tr("The specified user does not have a webcam enabled"));
+            strNick.clear();
         }
     }
     // 410 0 FAN_GONE Merovingian
@@ -818,6 +839,10 @@ void DlgCam::change_user(int row, int column)
     // clear img
     ui.label_img->clear();
 
+    // clear desc
+    ui.textEdit_desc->setText("");
+    ui.textEdit_desc->hide();
+
     // read nick
     QString strNewNick = ui.tableWidget_nick_rank_spectators->item(row, 0)->text();
 
@@ -855,7 +880,7 @@ void DlgCam::read_video()
 
     // set image
     QPixmap pixmap = convert_cam2img(opencv_get_camera_image());
-    ui.label_capture->setPixmap(pixmap);
+    ui.label_capture->setPixmap(pixmap.scaled(QSize(320,240)));
 
     // send image
     if (bBroadcasting == true)
@@ -874,9 +899,9 @@ void DlgCam::read_video()
         buffer2.open(QIODevice::WriteOnly);
         pixmap2.save(&buffer2, "JPG");
 
-        QByteArray bHeader = QString("PUT2 %1 %2\n").arg(bData1.length()).arg(bData2.length()).toAscii();
+        QByteArray bHeader = (QString("PUT2 %1 %2\n").arg(bData1.size()).arg(bData2.size())).toAscii();
 
-        //QByteArray bPackage;
+        QByteArray bPackage;
         bPackage.append(bHeader);
         bPackage.append(bData1);
         bPackage.append(bData2);
@@ -884,17 +909,17 @@ void DlgCam::read_video()
         QDateTime dt = QDateTime::currentDateTime();
         qint64 iCurrentTime = (qint64)dt.toTime_t(); // seconds that have passed since 1970
 
-        if (bFirstSend == false)
+        if (bFirstSendPUT == false)
         {
-            bFirstSend = true;
-            bReadySend = false;
+            bFirstSendPUT = true;
+            bReadySendPUT = false;
             lLastCommand.append("PUT2");
             network_sendb(bPackage);
         }
 
-        if ((bReadySend == true) && (iCurrentTime-iLastSend > 5)) // send -> 5 sec
+        if ((bReadySendPUT == true) && (iCurrentTime-iLastSendPUT > 5)) // send -> 5 sec
         {
-            bReadySend = false;
+            bReadySendPUT = false;
             lLastCommand.append("PUT2");
             network_sendb(bPackage);
         }
@@ -948,7 +973,17 @@ void DlgCam::showEvent(QShowEvent *event)
     if (camSocket->state() == QAbstractSocket::ConnectedState)
     {
         if (strNick.isEmpty() == false)
+        {
+            ui.textEdit_desc->setText("");
+            ui.textEdit_desc->hide();
+            ui.label_img->clear();
             network_send(QString("SUBSCRIBE_BIG * %1").arg(strNick));
+        }
+        else
+        {
+            ui.label_nick->setText("<p style=\"font-weight:bold;\">"+strNick+"</p>");
+            ui.label_img->setText(tr("Select user"));
+        }
     }
     else
         network_connect();
@@ -969,6 +1004,10 @@ void DlgCam::hideEvent(QHideEvent *event)
         lLastCommand.append("HIDE_EVENT");
         network_send(QString("UNSUBSCRIBE_BIG %1").arg(strNick));
     }
+
+    ui.textEdit_desc->setText("");
+    ui.textEdit_desc->hide();
+    ui.label_img->clear();
 #endif
 }
 

@@ -55,23 +55,23 @@ private:
     QString strNick;
     QTcpSocket *camSocket;
     bool bText;
-    int iCam_cmd;
     QByteArray bData;
     int iBytes_need;
     int iBytes_recv;
+    int iCam_cmd;
 #ifndef Q_WS_WIN
     CvCapture *captureCv; // camera
     bool bCreatedCaptureCv;
 #endif
     bool bBroadcasting;
     bool bBroadcasting_pubpriv; // false = public; true = private;
-    QByteArray bPackage;
-    bool bFirstSend;
-    bool bReadySend;
-    qint64 iLastSend;
+    bool bFirstSendPUT;
+    bool bReadySendPUT;
+    qint64 iLastSendPUT;
     QList <QString> lLastCommand;
     qint64 iLastKeepAlive;
 
+    QString get_cauth();
 #ifndef Q_WS_WIN
     IplImage *opencv_get_camera_image(); // get camera image
     QPixmap convert_cam2img(IplImage *); // convert camera image to pixmap
