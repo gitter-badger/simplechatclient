@@ -30,18 +30,23 @@ DlgCam::DlgCam(QWidget *parent, Network *param1, QTcpSocket *param2) : QDialog(p
     pNetwork = param1;
     camSocket = param2;
 
+    simpleRankWidget = new SimpleRankWidget(this);
+    ui.horizontalLayout->insertWidget(1, simpleRankWidget);
+
     ui.label_nick->setText("<p style=\"font-weight:bold;\">"+strNick+"</p>");
     ui.tabWidget->setTabText(0, tr("Viewing"));
     ui.tabWidget->setTabText(1, tr("Broadcasting"));
     ui.tabWidget->setTabText(2, tr("Settings"));
     ui.label_fun->setText(tr("Funs"));
-    ui.label_broadcast_status->setText("<span style=\"color:#ff0000;font-weight:bold;\">"+tr("No bradcasting")+"</span>");
+    ui.label_broadcast_status->setText("<span style=\"color:#ff0000;font-weight:bold;\">"+tr("No broadcasting")+"</span>");
     ui.pushButton_broadcast->setText(tr("Start broadcast"));
     ui.radioButton_broadcast_public->setText(tr("Public"));
     ui.radioButton_broadcast_private->setText(tr("Private"));
     ui.groupBox_settings->setTitle(tr("Settings"));
     ui.label_device->setText(tr("Device:"));
 
+    ui.toolButton_vote_minus->setIcon(QIcon(":/images/oxygen/16x16/list-remove.png"));
+    ui.toolButton_vote_plus->setIcon(QIcon(":/images/oxygen/16x16/list-add.png"));
     ui.buttonBox->button(QDialogButtonBox::Ok)->setIcon(QIcon(":/images/oxygen/16x16/dialog-ok.png"));
     ui.tableWidget_nick_rank_spectators->resizeColumnsToContents();
 
@@ -73,6 +78,8 @@ DlgCam::DlgCam(QWidget *parent, Network *param1, QTcpSocket *param2) : QDialog(p
     QObject::connect(ui.pushButton_broadcast, SIGNAL(clicked()), this, SLOT(broadcast_start_stop()));
     QObject::connect(ui.radioButton_broadcast_public, SIGNAL(clicked()), this, SLOT(broadcast_public()));
     QObject::connect(ui.radioButton_broadcast_private, SIGNAL(clicked()), this, SLOT(broadcast_private()));
+    QObject::connect(ui.toolButton_vote_minus, SIGNAL(clicked()), this, SLOT(vote_minus()));
+    QObject::connect(ui.toolButton_vote_plus, SIGNAL(clicked()), this, SLOT(vote_plus()));
     QObject::connect(ui.buttonBox, SIGNAL(accepted()), this, SLOT(button_ok()));
 #ifndef Q_WS_WIN
     QObject::connect(camSocket, SIGNAL(connected()), this, SLOT(network_connected()));
@@ -84,6 +91,8 @@ DlgCam::DlgCam(QWidget *parent, Network *param1, QTcpSocket *param2) : QDialog(p
 
 DlgCam::~DlgCam()
 {
+    delete simpleRankWidget;
+
     // network disconnect
     network_disconnect();
 
@@ -294,8 +303,10 @@ void DlgCam::network_disconnected()
     strText += "<br>"+tr("Disconnected from server webcams");
     ui.label_img->setText(strText);
 
+    bBroadcasting = false;
     network_send("STOP");
-    ui.label_broadcast_status->setText(tr("<span style=\"color:#ff0000;font-weight:bold;\">""No bradcasting")+"</span>");
+    ui.label_broadcast_status->setText("<span style=\"color:#ff0000;font-weight:bold;\">"+tr("No broadcasting")+"</span>");
+    ui.pushButton_broadcast->setText(tr("Start broadcast"));
 
     // reconnect
     //network_connect();
@@ -321,6 +332,7 @@ void DlgCam::data_kernel()
     // scc_test:1:2/0/#Quiz/0,2/0/#Relax/0,2/0/#Scrabble/0,4/0/#scc/0:0::0
     else if (iCam_cmd == 250)
     {
+        // init data
         QString strData(bData);
         QStringList strDataList = strData.split("\n");
 
@@ -394,7 +406,8 @@ void DlgCam::data_kernel()
                 QString strChannelsParams = strLineList[2];
                 QString strSpectators = strLineList[3];
                 QString strUdget = strLineList[4]; // udget (012345)
-                QString strRank = strLineList[5]; // -500 to 500
+                int iRank = strLineList[5].toInt(); // -500 to 500
+
                 if (strChannelsParams.isEmpty() == false)
                 {
                     QStringList strlChannelsParams = strChannelsParams.split(",");
@@ -410,6 +423,10 @@ void DlgCam::data_kernel()
                         }
                     }
                 }
+
+                // if current nick
+                if (strUser == strNick)
+                    simpleRankWidget->set_rank(iRank);
             }
             else
             {
@@ -469,6 +486,10 @@ void DlgCam::data_kernel()
                     ui.tableWidget_nick_rank_spectators->setItem(row, 0, new QTableWidgetItem(strUser));
                     ui.tableWidget_nick_rank_spectators->setItem(row, 1, new QTableWidgetItem(strRank));
                     ui.tableWidget_nick_rank_spectators->setItem(row, 2, new QTableWidgetItem(strUsers));
+
+                    // if current nick
+                    if (strUser == strNick)
+                        simpleRankWidget->set_rank(strRank.toInt());
                 }
                 row++;
             }
@@ -636,7 +657,11 @@ void DlgCam::text_kernel(QString strData)
     // 253 0 USER_VOTES Delikatna 38
     else if ((strDataList[0] == "253") && (strDataList.count() == 5))
     {
-        // ignore
+        QString strUser = strDataList[3];
+        int iRank = strDataList[4].toInt();
+
+        if (strUser == strNick) // current nick ?
+            simpleRankWidget->set_rank(iRank);
     }
     // 254 1489 USER_COUNT_UPDATE
     else if (strDataList[0] == "254")
@@ -668,8 +693,18 @@ void DlgCam::text_kernel(QString strData)
     // 262 0 NEW_FAN ~matka_wariatka
     else if ((strDataList[0] == "262") && (strDataList.count() == 4))
     {
+        // new fun
         QString strFunNick = strDataList[3];
         ui.listWidget_funs->addItem(strFunNick);
+    }
+    // 263 0 VOTE_OK alicja17 3
+    else if ((strDataList[0] == "263") && (strDataList.count() == 5))
+    {
+        // vote ok
+        ui.toolButton_vote_minus->setEnabled(false);
+        ui.toolButton_vote_plus->setEnabled(false);
+
+        QTimer::singleShot(1000*5, this, SLOT(enable_vote())); // 5 sec
     }
     // 267 0 SENDMODE=0
     // 267 0 SENDMODE=1
@@ -680,6 +715,7 @@ void DlgCam::text_kernel(QString strData)
     // 268 0 OK
     else if (strDataList[0] == "268")
     {
+        // CAUTH ok
         QSettings settings;
         QString strUOKey = settings.value("uokey").toString();
         network_send(QString("AUTH %1 3.00.159").arg(strUOKey));
@@ -727,6 +763,11 @@ void DlgCam::text_kernel(QString strData)
 
         if (row != -1)
             ui.listWidget_funs->takeItem(row);
+    }
+    // 411 0 VOTE_DENIED soneja
+    else if ((strDataList[0] == "412") && (strDataList.count() == 4))
+    {
+        // ignore
     }
     // 412 0 SUBSCRIBE_FAILED olgusia32
     else if ((strDataList[0] == "412") && (strDataList.count() == 4))
@@ -796,7 +837,7 @@ void DlgCam::broadcast_start_stop()
     {
         bBroadcasting = false;
         network_send("STOP");
-        ui.label_broadcast_status->setText("<span style=\"color:#ff0000;font-weight:bold;\">"+tr("No bradcasting")+"</span>");
+        ui.label_broadcast_status->setText("<span style=\"color:#ff0000;font-weight:bold;\">"+tr("No broadcasting")+"</span>");
         ui.pushButton_broadcast->setText(tr("Start broadcast"));
     }
 }
@@ -823,9 +864,27 @@ void DlgCam::broadcast_private()
     }
 }
 
+void DlgCam::vote_minus()
+{
+    if (strNick.isEmpty() == false)
+        network_send(QString("VOTE %1 -").arg(strNick));
+}
+
+void DlgCam::vote_plus()
+{
+    if (strNick.isEmpty() == false)
+        network_send(QString("VOTE %1 +").arg(strNick));
+}
+
 void DlgCam::button_ok()
 {
     this->hide();
+}
+
+void DlgCam::enable_vote()
+{
+    ui.toolButton_vote_minus->setEnabled(true);
+    ui.toolButton_vote_plus->setEnabled(true);
 }
 
 void DlgCam::change_user(int row, int column)
@@ -991,6 +1050,9 @@ void DlgCam::showEvent(QShowEvent *event)
     // detect and set broadcasting
     detect_broadcasting();
     set_broadcasting();
+
+    // switch to 1 tab
+    ui.tabWidget->setCurrentIndex(0);
 #endif
 }
 

@@ -35,6 +35,7 @@
 #include <QTimer>
 #include "network.h"
 #include "ui_cam.h"
+#include "simplerankwidget.h"
 // opencv
 #ifndef Q_WS_WIN
 #include <opencv/highgui.h>
@@ -54,6 +55,7 @@ private:
     Network *pNetwork;
     QString strNick;
     QTcpSocket *camSocket;
+    SimpleRankWidget *simpleRankWidget;
     bool bText;
     QByteArray bData;
     int iBytes_need;
@@ -92,7 +94,10 @@ private slots:
     void broadcast_start_stop();
     void broadcast_public();
     void broadcast_private();
+    void vote_minus();
+    void vote_plus();
     void button_ok();
+    void enable_vote();
     void change_user(int,int);
     void read_video();
     void network_read();

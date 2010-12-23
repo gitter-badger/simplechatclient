@@ -42,6 +42,7 @@ SOURCES += src/avatars/channel_avatar.cpp \
     src/gui/dlg_options.cpp \
     src/gui/dlg_register_nick.cpp \
     src/gui/dlg_update.cpp \
+    src/gui/dlg_user_avatar.cpp \
     src/gui/dlg_user_profile.cpp \
     src/notify/notify.cpp \
     src/onet/onet_auth.cpp \
@@ -49,15 +50,15 @@ SOURCES += src/avatars/channel_avatar.cpp \
     src/tab/tab_container.cpp \
     src/tab/tab_manager.cpp \
     src/tab/tab_widget.cpp \
+    src/widgets/inputwidget.cpp \
     src/widgets/inputlinewidget.cpp \
     src/widgets/inputlinedockwidget.cpp \
     src/widgets/mainwebview.cpp \
     src/widgets/nicklistdelegate.cpp \
     src/widgets/nicklistwidget.cpp \
     src/widgets/nicklistdockwidget.cpp \
-    src/widgets/toolwidget.cpp \
-    src/widgets/inputwidget.cpp \
-    src/gui/dlg_user_avatar.cpp
+    src/widgets/simplerankwidget.cpp \
+    src/widgets/toolwidget.cpp
 HEADERS += src/avatars/channel_avatar.h \
     src/avatars/nick_avatar.h \
     src/common/commands.h \
@@ -92,6 +93,7 @@ HEADERS += src/avatars/channel_avatar.h \
     src/gui/dlg_options.h \
     src/gui/dlg_register_nick.h \
     src/gui/dlg_update.h \
+    src/gui/dlg_user_avatar.h \
     src/gui/dlg_user_profile.h \
     src/notify/notify.h \
     src/onet/onet_auth.h \
@@ -99,15 +101,15 @@ HEADERS += src/avatars/channel_avatar.h \
     src/tab/tab_container.h \
     src/tab/tab_manager.h \
     src/tab/tab_widget.h \
+    src/widgets/inputwidget.h \
     src/widgets/inputlinewidget.h \
     src/widgets/inputlinedockwidget.h \
     src/widgets/mainwebview.h \
     src/widgets/nicklistdelegate.h \
     src/widgets/nicklistwidget.h \
     src/widgets/nicklistdockwidget.h \
-    src/widgets/toolwidget.h \
-    src/widgets/inputwidget.h \
-    src/gui/dlg_user_avatar.h
+    src/widgets/simplerankwidget.h \
+    src/widgets/toolwidget.h
 FORMS += ui/about.ui \
     ui/cam.ui \
     ui/channel_favourites.ui \

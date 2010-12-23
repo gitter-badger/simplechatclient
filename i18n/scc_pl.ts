@@ -498,7 +498,7 @@
         <translation>Nadajesz prywatne</translation>
     </message>
     <message>
-        <source>No bradcasting</source>
+        <source>No broadcasting</source>
         <translation>Nie nadajesz</translation>
     </message>
     <message>
