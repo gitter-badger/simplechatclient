@@ -490,6 +490,10 @@
         <translation>Widzów</translation>
     </message>
     <message>
+        <source>Is on channels:</source>
+        <translation>Jest na kanałach:</translation>
+    </message>
+    <message>
         <source>Bradcasting public</source>
         <translation>Nadajesz publicznie</translation>
     </message>
@@ -520,6 +524,14 @@
     <message>
         <source>Private</source>
         <translation>Prywatne</translation>
+    </message>
+    <message>
+        <source>My status:</source>
+        <translation>Mój opis:</translation>
+    </message>
+    <message>
+        <source>Apply</source>
+        <translation>Ustaw</translation>
     </message>
     <message>
         <source>Device:</source>

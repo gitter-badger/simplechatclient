@@ -72,6 +72,7 @@ private:
     qint64 iLastSendPUT;
     QList <QString> lLastCommand;
     qint64 iLastKeepAlive;
+    QMap <QString, QString> mNickChannels;
 
     QString get_cauth();
 #ifndef Q_WS_WIN
@@ -94,6 +95,7 @@ private slots:
     void broadcast_start_stop();
     void broadcast_public();
     void broadcast_private();
+    void set_status();
     void vote_minus();
     void vote_plus();
     void button_ok();
@@ -104,6 +106,7 @@ private slots:
     void network_connected();
     void network_disconnected();
     void network_error(QAbstractSocket::SocketError);
+    void slot_network_connect();
 
 protected:
     virtual void showEvent(QShowEvent *);
