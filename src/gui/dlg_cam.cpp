@@ -51,6 +51,7 @@ DlgCam::DlgCam(QWidget *parent, Network *param1, QTcpSocket *param2) : QDialog(p
     ui.groupBox_about_me->setTitle(tr("About me"));
     ui.pushButton_set_about_me->setText(tr("Apply"));
     ui.groupBox_my_homepage->setTitle(tr("My homepage"));
+    ui.groupBox_photos->setTitle(tr("My photos"));
     ui.pushButton_set_homepage->setText(tr("Apply"));
     ui.pushButton_add_img0->setText(tr("Add"));
     ui.pushButton_remove_img0->setText(tr("Remove"));

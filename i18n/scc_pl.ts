@@ -542,6 +542,10 @@
         <translation>Moja strona WWW</translation>
     </message>
     <message>
+        <source>My photos</source>
+        <translation>Moje obrazki</translation>
+    </message>
+    <message>
         <source>Add</source>
         <translation>Dodaj</translation>
     </message>
