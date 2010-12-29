@@ -25,6 +25,7 @@
 #include <QDesktopWidget>
 #include <QDialog>
 #include <QFile>
+#include <QFileDialog>
 #include <QHideEvent>
 #include <QPainter>
 #include <QPushButton>
@@ -33,8 +34,9 @@
 #include <QStringList>
 #include <QTcpSocket>
 #include <QTimer>
-#include "network.h"
 #include "ui_cam.h"
+#include "config.h"
+#include "network.h"
 #include "simplerankwidget.h"
 // opencv
 #ifndef Q_WS_WIN
@@ -90,12 +92,23 @@ private:
     void network_disconnect();
     void data_kernel();
     void text_kernel(QString);
+    void send_all_my_options();
 
 private slots:
     void broadcast_start_stop();
     void broadcast_public();
     void broadcast_private();
     void set_status();
+    void set_about_me();
+    void set_homepage();
+    void add_img0();
+    void remove_img0();
+    void add_img1();
+    void remove_img1();
+    void add_img2();
+    void remove_img2();
+    void add_img3();
+    void remove_img3();
     void vote_minus();
     void vote_plus();
     void button_ok();

@@ -142,6 +142,23 @@ endif (UNIX AND NOT APPLE)
 # opencv
 if (UNIX AND NOT APPLE)
 	find_package (OpenCV REQUIRED)
+
+	set (CMAKE_REQUIRED_FLAGS -lcv)
+	check_c_source_compiles ("
+					#include <opencv/highgui.h>
+					int main(){return 0;}"
+				HIGHGUI_H)
+	check_c_source_compiles ("
+					#include <opencv/cvaux.h>
+					int main(){return 0;}"
+				CVAUX_H)
+
+	if(NOT HIGHGUI_H)
+		message(FATAL_ERROR "libhighgui not found")
+	endif(NOT HIGHGUI_H)
+	if(NOT CVAUX_H)
+		message(FATAL_ERROR "libcvaux not found")
+	endif(NOT CVAUX_H)
 endif (UNIX AND NOT APPLE)
 
 # qt

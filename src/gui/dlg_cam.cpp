@@ -36,21 +36,45 @@ DlgCam::DlgCam(QWidget *parent, Network *param1, QTcpSocket *param2) : QDialog(p
     ui.horizontalLayout->insertWidget(1, simpleRankWidget);
 
     // default text
-    ui.label_nick->setText("<p style=\"font-weight:bold;\">"+strNick+"</p>");
+    ui.label_nick->setText(strNick);
     ui.tabWidget->setTabText(0, tr("Viewing"));
     ui.tabWidget->setTabText(1, tr("Broadcasting"));
-    ui.tabWidget->setTabText(2, tr("Settings"));
+    ui.tabWidget->setTabText(2, tr("About me"));
+    ui.tabWidget->setTabText(3, tr("Settings"));
     ui.label_fun->setText(tr("Funs"));
-    ui.label_broadcast_status->setText(QString("<span style=\"color:#ff0000;font-weight:bold;\">%1</span>").arg(tr("No broadcasting")));
+    ui.label_broadcast_status->setText(QString("<span style=\"color:#ff0000;\">%1</span>").arg(tr("No broadcasting")));
     ui.pushButton_broadcast->setText(tr("Start broadcast"));
     ui.radioButton_broadcast_public->setText(tr("Public"));
     ui.radioButton_broadcast_private->setText(tr("Private"));
     ui.label_status->setText(tr("My status:"));
     ui.pushButton_set_status->setText(tr("Apply"));
+    ui.groupBox_about_me->setTitle(tr("About me"));
+    ui.pushButton_set_about_me->setText(tr("Apply"));
+    ui.groupBox_my_homepage->setTitle(tr("My homepage"));
+    ui.pushButton_set_homepage->setText(tr("Apply"));
+    ui.pushButton_add_img0->setText(tr("Add"));
+    ui.pushButton_remove_img0->setText(tr("Remove"));
+    ui.pushButton_add_img1->setText(tr("Add"));
+    ui.pushButton_remove_img1->setText(tr("Remove"));
+    ui.pushButton_add_img2->setText(tr("Add"));
+    ui.pushButton_remove_img2->setText(tr("Remove"));
+    ui.pushButton_add_img3->setText(tr("Add"));
+    ui.pushButton_remove_img3->setText(tr("Remove"));
     ui.groupBox_settings->setTitle(tr("Settings"));
     ui.label_device->setText(tr("Device:"));
 
     // icons
+    ui.pushButton_set_about_me->setIcon(QIcon(":/images/oxygen/16x16/dialog-ok-apply.png"));
+    ui.pushButton_set_homepage->setIcon(QIcon(":/images/oxygen/16x16/dialog-ok-apply.png"));
+    ui.pushButton_add_img0->setIcon(QIcon(":/images/oxygen/16x16/insert-image.png"));
+    ui.pushButton_remove_img0->setIcon(QIcon(":/images/oxygen/16x16/list-remove.png"));
+    ui.pushButton_add_img1->setIcon(QIcon(":/images/oxygen/16x16/insert-image.png"));
+    ui.pushButton_remove_img1->setIcon(QIcon(":/images/oxygen/16x16/list-remove.png"));
+    ui.pushButton_add_img2->setIcon(QIcon(":/images/oxygen/16x16/insert-image.png"));
+    ui.pushButton_remove_img2->setIcon(QIcon(":/images/oxygen/16x16/list-remove.png"));
+    ui.pushButton_add_img3->setIcon(QIcon(":/images/oxygen/16x16/insert-image.png"));
+    ui.pushButton_remove_img3->setIcon(QIcon(":/images/oxygen/16x16/list-remove.png"));
+
     ui.pushButton_set_status->setIcon(QIcon(":/images/oxygen/16x16/dialog-ok-apply.png"));
     ui.toolButton_vote_minus->setIcon(QIcon(":/images/oxygen/16x16/list-remove.png"));
     ui.toolButton_vote_plus->setIcon(QIcon(":/images/oxygen/16x16/list-add.png"));
@@ -74,21 +98,81 @@ DlgCam::DlgCam(QWidget *parent, Network *param1, QTcpSocket *param2) : QDialog(p
     bCreatedCaptureCv = false;
 #endif
 
+    QSettings settings;
+
     // set labels
     QStringList strlLabels;
     strlLabels << tr("Nick") << tr("Rank") << tr("Spectators");
     ui.tableWidget_nick_rank_spectators->setHorizontalHeaderLabels(strlLabels);
 
+    // set about me
+    if (settings.value("cam_about_me").toString().isEmpty() == false)
+        ui.textEdit_about_me->setPlainText(settings.value("cam_about_me").toString());
+
+    // set homepage
+    if (settings.value("cam_homepage").toString().isEmpty() == false)
+        ui.lineEdit_homepage->setText(settings.value("cam_homepage").toString());
+
+    // set img0
+    if (settings.value("cam_img0").toString().isEmpty() == false)
+    {
+        QPixmap pixmap;
+        pixmap.load(settings.value("cam_img0").toString());
+        if ((pixmap.width() > 160) || (pixmap.height() > 120))
+            pixmap = pixmap.scaled(160,120);
+        ui.label_img0->setPixmap(pixmap);
+    }
+
+    // set img1
+    if (settings.value("cam_img1").toString().isEmpty() == false)
+    {
+        QPixmap pixmap;
+        pixmap.load(settings.value("cam_img1").toString());
+        if ((pixmap.width() > 160) || (pixmap.height() > 120))
+            pixmap = pixmap.scaled(160,120);
+        ui.label_img1->setPixmap(pixmap);
+    }
+
+    // set img2
+    if (settings.value("cam_img2").toString().isEmpty() == false)
+    {
+        QPixmap pixmap;
+        pixmap.load(settings.value("cam_img2").toString());
+        if ((pixmap.width() > 160) || (pixmap.height() > 120))
+            pixmap = pixmap.scaled(160,120);
+        ui.label_img2->setPixmap(pixmap);
+    }
+
+    // set img3
+    if (settings.value("cam_img3").toString().isEmpty() == false)
+    {
+        QPixmap pixmap;
+        pixmap.load(settings.value("cam_img3").toString());
+        if ((pixmap.width() > 160) || (pixmap.height() > 120))
+            pixmap = pixmap.scaled(160,120);
+        ui.label_img3->setPixmap(pixmap);
+    }
+
     //camSocket->setSocketOption(QAbstractSocket::LowDelayOption, 1);
     //camSocket->setSocketOption(QAbstractSocket::KeepAliveOption, 0);
 
     QObject::connect(ui.tableWidget_nick_rank_spectators, SIGNAL(cellDoubleClicked(int,int)), this, SLOT(change_user(int,int)));
+    QObject::connect(ui.toolButton_vote_minus, SIGNAL(clicked()), this, SLOT(vote_minus()));
+    QObject::connect(ui.toolButton_vote_plus, SIGNAL(clicked()), this, SLOT(vote_plus()));
     QObject::connect(ui.pushButton_broadcast, SIGNAL(clicked()), this, SLOT(broadcast_start_stop()));
     QObject::connect(ui.radioButton_broadcast_public, SIGNAL(clicked()), this, SLOT(broadcast_public()));
     QObject::connect(ui.radioButton_broadcast_private, SIGNAL(clicked()), this, SLOT(broadcast_private()));
     QObject::connect(ui.pushButton_set_status, SIGNAL(clicked()), this, SLOT(set_status()));
-    QObject::connect(ui.toolButton_vote_minus, SIGNAL(clicked()), this, SLOT(vote_minus()));
-    QObject::connect(ui.toolButton_vote_plus, SIGNAL(clicked()), this, SLOT(vote_plus()));
+    QObject::connect(ui.pushButton_add_img0, SIGNAL(clicked()), this, SLOT(add_img0()));
+    QObject::connect(ui.pushButton_remove_img0, SIGNAL(clicked()), this, SLOT(remove_img0()));
+    QObject::connect(ui.pushButton_add_img1, SIGNAL(clicked()), this, SLOT(add_img1()));
+    QObject::connect(ui.pushButton_remove_img1, SIGNAL(clicked()), this, SLOT(remove_img1()));
+    QObject::connect(ui.pushButton_add_img2, SIGNAL(clicked()), this, SLOT(add_img2()));
+    QObject::connect(ui.pushButton_remove_img2, SIGNAL(clicked()), this, SLOT(remove_img2()));
+    QObject::connect(ui.pushButton_add_img3, SIGNAL(clicked()), this, SLOT(add_img3()));
+    QObject::connect(ui.pushButton_remove_img3, SIGNAL(clicked()), this, SLOT(remove_img3()));
+    QObject::connect(ui.pushButton_set_about_me, SIGNAL(clicked()), this, SLOT(set_about_me()));
+    QObject::connect(ui.pushButton_set_homepage, SIGNAL(clicked()), this, SLOT(set_homepage()));
     QObject::connect(ui.buttonBox, SIGNAL(accepted()), this, SLOT(button_ok()));
 #ifndef Q_WS_WIN
     QObject::connect(camSocket, SIGNAL(connected()), this, SLOT(network_connected()));
@@ -121,17 +205,7 @@ DlgCam::~DlgCam()
 void DlgCam::set_nick(QString n)
 {
     strNick = n;
-    ui.label_nick->setText("<p style=\"font-weight:bold;\">"+strNick+"</p>");
-
-    // clear desc
-    ui.textEdit_desc->setText("");
-    ui.textEdit_desc->hide();
-
-    // clear img
-    ui.label_img->setText("");
-
-    // clear rank
-    simpleRankWidget->set_rank(0);
+    ui.label_nick->setText(strNick);
 }
 
 QString DlgCam::get_cauth()
@@ -158,6 +232,7 @@ void DlgCam::detect_broadcasting()
 {
     // disable broadcasting
     ui.tabWidget->setTabEnabled(1, false);
+    ui.tabWidget->setTabEnabled(2, false);
     ui.comboBox_device->setEnabled(false);
 
     // clear device combobox
@@ -170,8 +245,9 @@ void DlgCam::detect_broadcasting()
         {
             if (ui.comboBox_device->isEnabled() == false)
             {
-                ui.comboBox_device->setEnabled(true);
                 ui.tabWidget->setTabEnabled(1, true);
+                ui.tabWidget->setTabEnabled(2, true);
+                ui.comboBox_device->setEnabled(true);
             }
 
             // add video
@@ -313,21 +389,19 @@ void DlgCam::network_connected()
 
 void DlgCam::network_disconnected()
 {
-    QString strText = ui.label_img->text();
-    strText += "<br>"+tr("Disconnected from server webcams");
-    ui.label_img->setText(strText);
-
-    bBroadcasting = false;
-    network_send("STOP");
-    ui.label_broadcast_status->setText(QString("<span style=\"color:#ff0000;font-weight:bold;\">%1</span>").arg(tr("No broadcasting")));
-    ui.pushButton_broadcast->setText(tr("Start broadcast"));
-
     ui.tableWidget_nick_rank_spectators->clear();
+    ui.label_nick->setText(strNick);
     ui.textEdit_desc->setText("");
     ui.textEdit_desc->hide();
-    ui.label_nick->setText(QString("<p style=\"font-weight:bold;\">%1</p>").arg(strNick));
-    ui.label_fun->clear();
+    ui.label_img->setText(ui.label_img->text()+"<br>"+tr("Disconnected from server webcams"));
     simpleRankWidget->set_rank(0);
+    ui.textEdit_channels->clear();
+
+    ui.listWidget_funs->clear();
+    bBroadcasting = false;
+    network_send("STOP");
+    ui.label_broadcast_status->setText(QString("<span style=\"color:#ff0000;\">%1</span>").arg(tr("No broadcasting")));
+    ui.pushButton_broadcast->setText(tr("Start broadcast"));
 
     bFirstSendPUT = false;
     bReadySendPUT = true;
@@ -351,6 +425,11 @@ void DlgCam::network_error(QAbstractSocket::SocketError err)
 
     if (camSocket->state() == QAbstractSocket::ConnectedState)
         network_disconnect();
+    else if (camSocket->state() == QAbstractSocket::UnconnectedState)
+    {
+        // reconnect
+        QTimer::singleShot(1000*10, this, SLOT(slot_network_connect()));
+    }
 }
 
 void DlgCam::slot_network_connect()
@@ -365,6 +444,8 @@ void DlgCam::data_kernel()
     {
         show_img(bData);
     }
+    // osa1987:1:-2/-2/osa1987/1:0::0
+    // ToWiemTylkoJa:1:2/0/#Relax/0,-2/-2/ToWiemTylkoJa/1:2::13
     // scc_test:1:2/0/#Quiz/0,2/0/#Relax/0,2/0/#Scrabble/0,4/0/#scc/0:0::0
     else if (iCam_cmd == 250)
     {
@@ -410,11 +491,12 @@ void DlgCam::data_kernel()
                         if (strlChannelParams.count() == 4)
                         {
                             QString strChannelCategory = strlChannelParams[0];
-                            QString strUnknown1 = strlChannelParams[1]; // always 0 (?)
+                            QString strUnknown = strlChannelParams[1]; // always 0 (?)
                             QString strChannelName = strlChannelParams[2];
-                            QString strUnknown2 = strlChannelParams[3]; // always 0 (?)
+                            QString strCamPubPriv = strlChannelParams[3]; // 0 = public; 1 = private
 
-                            strAllChannels += strChannelName+" ";
+                            if ((strChannelName[0] == '#') || (strChannelName[0] == '^'))
+                                strAllChannels += strChannelName+" ";
                         }
                     }
 
@@ -435,6 +517,8 @@ void DlgCam::data_kernel()
         }
         ui.tableWidget_nick_rank_spectators->resizeColumnsToContents();
     }
+    // osa1987:1:-2/-2/osa1987/1:0::0
+    // ToWiemTylkoJa:1:2/0/#Relax/0,-2/-2/ToWiemTylkoJa/1:2::13
     // scc_test:1:2/0/#Quiz/0,2/0/#Relax/0,2/0/#Scrabble/0,4/0/#scc/0:0::0
     else if (iCam_cmd == 251)
     {
@@ -462,11 +546,12 @@ void DlgCam::data_kernel()
                         if (strlChannelParams.count() == 4)
                         {
                             QString strChannelCategory = strlChannelParams[0];
-                            QString strUnknown1 = strlChannelParams[1]; // always 0 (?)
+                            QString strUnknown = strlChannelParams[1]; // always 0 (?)
                             QString strChannelName = strlChannelParams[2];
-                            QString strUnknown2 = strlChannelParams[3]; // always 0 (?)
+                            QString strCamPubPriv = strlChannelParams[3]; // 0 = public; 1 = private
 
-                            strAllChannels += strChannelName+" ";
+                            if ((strChannelName[0] == '#') || (strChannelName[0] == '^'))
+                                strAllChannels += strChannelName+" ";
                         }
                     }
 
@@ -506,7 +591,7 @@ void DlgCam::data_kernel()
 #endif
             QString strStatus = strDesc.right(strDesc.length()-10);
             ui.textEdit_desc->show();
-            ui.textEdit_desc->setText(QString("<html><body style=\"background-color: #90b1c7;\">%1</body></html>").arg(strStatus));
+            ui.textEdit_desc->setText(strStatus);
         }
     }
     // scc_test 2 0
@@ -598,6 +683,7 @@ void DlgCam::text_kernel(QString strData)
 
         if (strLastCommand == "UNSUBSCRIBE_BIG")
         {
+            ui.label_img->setText(tr("Downloading image"));
             network_send(QString("SUBSCRIBE_BIG * %1").arg(strNick));
 
             // update channels
@@ -641,8 +727,11 @@ void DlgCam::text_kernel(QString strData)
         }
         else
         {
+            ui.textEdit_desc->setText("");
+            ui.textEdit_desc->hide();
             ui.label_img->setText(tr("This user does not send data"));
             simpleRankWidget->set_rank(0);
+            ui.textEdit_channels->clear();
         }
     }
     // 211 19995 Noemi_01@0
@@ -651,11 +740,14 @@ void DlgCam::text_kernel(QString strData)
     // 211 13584 Noemi_01@3
     // 211 29 my_dwoje@4
     // 211 17 myszka29brunetka@5
-    else if (strDataList[0] == "211")
+    else if ((strDataList[0] == "211") && (strDataList.count() == 3))
     {
-        bText = false;
-        iBytes_need = strDataList[1].toInt();
-        iCam_cmd = 211;
+        if (strDataList[1].toInt() > 0)
+        {
+            bText = false;
+            iBytes_need = strDataList[1].toInt();
+            iCam_cmd = 211;
+        }
     }
     // 221 0 UDPUT_OK
     else if (strDataList[0] == "221")
@@ -665,24 +757,7 @@ void DlgCam::text_kernel(QString strData)
     // 231 0 OK scc_test
     else if ((strDataList[0] == "231") && (strDataList.count() == 4))
     {
-        ui.label_img->setText(tr("Setting mode for viewing only"));
-        network_send("SENDMODE 0");
-        ui.radioButton_broadcast_public->setChecked(true);
-        bBroadcasting_pubpriv = false;
-
-        if (strNick.isEmpty() == false)
-        {
-            ui.label_img->setText(tr("Downloading image"));
-            network_send(QString("SUBSCRIBE_BIG * %1").arg(strNick));
-
-            // update channels
-            ui.textEdit_channels->setText(QString("<b>%1</b><br><font color=\"#0000ff\">%2</font>").arg(tr("Is on channels:")).arg(mNickChannels[strNick]));
-        }
-        else
-            ui.label_img->setText(tr("Select user"));
-
-        // set status
-        set_status();
+        // ignore
     }
     // 232 0 CMODE 0
     else if ((strDataList[0] == "232") && (strDataList.count() == 4))
@@ -730,7 +805,7 @@ void DlgCam::text_kernel(QString strData)
         QString strUser = strDataList[3];
         int iRank = strDataList[4].toInt();
 
-        if (strUser == strNick) // current nick ?
+        if (strUser == strNick) // is current nick
             simpleRankWidget->set_rank(iRank);
     }
     // 254 1489 USER_COUNT_UPDATE
@@ -750,10 +825,34 @@ void DlgCam::text_kernel(QString strData)
                 network_send(QString("KEEPALIVE_BIG %1").arg(strNick));
         }
     }
+    // successfully logged in
     // 264 0 CODE_ACCEPTED ffffffff 2147483647
     else if ((strDataList[0] == "264") && (strDataList.count() == 5))
     {
-        // ignore
+        ui.label_img->setText(tr("Setting mode for viewing only"));
+        network_send("SENDMODE 0");
+        ui.radioButton_broadcast_public->setChecked(true);
+        bBroadcasting_pubpriv = false;
+
+        if (strNick.isEmpty() == false)
+        {
+            ui.label_img->setText(tr("Downloading image"));
+            network_send(QString("SUBSCRIBE_BIG * %1").arg(strNick));
+
+            // update channels
+            ui.textEdit_channels->setText(QString("<b>%1</b><br><font color=\"#0000ff\">%2</font>").arg(tr("Is on channels:")).arg(mNickChannels[strNick]));
+        }
+        else
+        {
+            ui.textEdit_desc->setText("");
+            ui.textEdit_desc->hide();
+            ui.label_img->setText(tr("Select user"));
+            simpleRankWidget->set_rank(0);
+            ui.textEdit_channels->clear();
+        }
+
+        // send all options
+        send_all_my_options();
     }
     // 261 0 OK
     else if (strDataList[0] == "261")
@@ -805,10 +904,18 @@ void DlgCam::text_kernel(QString strData)
         QString strUser = strDataList[3];
         if (strUser == strNick)
         {
-            ui.label_img->setText(tr("The specified user has left the chat"));
             strNick.clear();
+            ui.textEdit_desc->setText("");
+            ui.textEdit_desc->hide();
+            ui.label_img->setText(tr("The specified user has left the chat"));
             simpleRankWidget->set_rank(0);
+            ui.textEdit_channels->clear();
         }
+    }
+    // 406 0 NO_SUCH_USER_UDGET 0@4
+    else if ((strDataList[0] == "406") && (strDataList.count() == 4))
+    {
+        // ignore
     }
     // 408 0 NO_SUCH_USER_SUBSCRIBE LOLexx
     else if ((strDataList[0] == "408") && (strDataList.count() == 4))
@@ -816,9 +923,12 @@ void DlgCam::text_kernel(QString strData)
         QString strUser = strDataList[3];
         if (strUser == strNick)
         {
-            ui.label_img->setText(tr("The specified user does not have a webcam enabled"));
             strNick.clear();
+            ui.textEdit_desc->setText("");
+            ui.textEdit_desc->hide();
+            ui.label_img->setText(tr("The specified user does not have a webcam enabled"));
             simpleRankWidget->set_rank(0);
+            ui.textEdit_channels->clear();
         }
     }
     // 410 0 FAN_GONE Merovingian
@@ -847,9 +957,12 @@ void DlgCam::text_kernel(QString strData)
         QString strUser = strDataList[3];
         if (strUser == strNick)
         {
-            ui.label_img->setText(tr("Failed to retrieve the image from the webcam"));
             strNick.clear();
+            ui.textEdit_desc->setText("");
+            ui.textEdit_desc->hide();
+            ui.label_img->setText(tr("Failed to retrieve the image from the webcam"));
             simpleRankWidget->set_rank(0);
+            ui.textEdit_channels->clear();
         }
     }
     // 413 0 SUBSCRIBE_DENIED aliina
@@ -858,9 +971,12 @@ void DlgCam::text_kernel(QString strData)
         QString strUser = strDataList[3];
         if (strUser == strNick)
         {
-            ui.label_img->setText(tr("Failed to retrieve the image from the webcam"));
             strNick.clear();
+            ui.textEdit_desc->setText("");
+            ui.textEdit_desc->hide();
+            ui.label_img->setText(tr("Failed to retrieve the image from the webcam"));
             simpleRankWidget->set_rank(0);
+            ui.textEdit_channels->clear();
         }
     }
     // 418 0 QUIT_CZAT
@@ -868,9 +984,16 @@ void DlgCam::text_kernel(QString strData)
     {
         network_disconnect();
     }
+    // udget with -1
+    // 501 0 INVALID_USER_DATA_NUM
+    else if (strDataList[0] == "501")
+    {
+        // ignore
+    }
     // 502 0 SESSION_TIMED_OUT
     else if (strDataList[0] == "502")
     {
+        strNick.clear();
         network_disconnect();
     }
     // 504 0 UNKNOWN_COMMAND PUT2
@@ -880,6 +1003,11 @@ void DlgCam::text_kernel(QString strData)
     }
     // 508 0 SESSION_OVERRIDEN
     else if (strDataList[0] == "508")
+    {
+        // ignore
+    }
+    // 515 0 USER_DATA_TOO_LARGE
+    else if (strDataList[0] == "515")
     {
         // ignore
     }
@@ -895,15 +1023,112 @@ void DlgCam::text_kernel(QString strData)
     }
 }
 
+void DlgCam::send_all_my_options()
+{
+    QSettings settings;
+
+    // about me
+    QString strAboutMe = settings.value("cam_about_me").toString();
+    if (strAboutMe.isEmpty() == false)
+    {
+        network_send(QString("UDPUT 4 %1").arg(strAboutMe.length()));
+        network_sendb(strAboutMe.toAscii());
+    }
+
+    // homepage
+    QString strHomePage = settings.value("cam_homepage").toString();
+    if (strHomePage.isEmpty() == false)
+    {
+        network_send(QString("UDPUT 5 %1").arg(strHomePage.length()));
+        network_sendb(strHomePage.toAscii());
+    }
+
+    // img0
+    QString strImg0 = settings.value("cam_img0").toString();
+    if (strImg0.isEmpty() == false)
+    {
+        // read and scale
+        QPixmap pixmap;
+        pixmap.load(strImg0);
+        if ((pixmap.width() > 320) || (pixmap.height() > 240))
+            pixmap = pixmap.scaled(320,240);
+        QByteArray bData;
+        QBuffer buffer(&bData);
+        buffer.open(QIODevice::WriteOnly);
+        pixmap.save(&buffer, "JPG");
+
+        // send
+        network_send(QString("UDPUT 0 %1").arg(bData.length()));
+        network_sendb(bData);
+    }
+
+    // img1
+    QString strImg1 = settings.value("cam_img1").toString();
+    if (strImg1.isEmpty() == false)
+    {
+        // read and scale
+        QPixmap pixmap;
+        pixmap.load(strImg1);
+        if ((pixmap.width() > 320) || (pixmap.height() > 240))
+            pixmap = pixmap.scaled(320,240);
+        QByteArray bData;
+        QBuffer buffer(&bData);
+        buffer.open(QIODevice::WriteOnly);
+        pixmap.save(&buffer, "JPG");
+
+        // send
+        network_send(QString("UDPUT 1 %1").arg(bData.length()));
+        network_sendb(bData);
+    }
+
+    // img2
+    QString strImg2 = settings.value("cam_img2").toString();
+    if (strImg2.isEmpty() == false)
+    {
+        // read and scale
+        QPixmap pixmap;
+        pixmap.load(strImg2);
+        if ((pixmap.width() > 320) || (pixmap.height() > 240))
+            pixmap = pixmap.scaled(320,240);
+        QByteArray bData;
+        QBuffer buffer(&bData);
+        buffer.open(QIODevice::WriteOnly);
+        pixmap.save(&buffer, "JPG");
+
+        // send
+        network_send(QString("UDPUT 2 %1").arg(bData.length()));
+        network_sendb(bData);
+    }
+
+    // img3
+    QString strImg3 = settings.value("cam_img3").toString();
+    if (strImg3.isEmpty() == false)
+    {
+        // read and scale
+        QPixmap pixmap;
+        pixmap.load(strImg3);
+        if ((pixmap.width() > 320) || (pixmap.height() > 240))
+            pixmap = pixmap.scaled(320,240);
+        QByteArray bData;
+        QBuffer buffer(&bData);
+        buffer.open(QIODevice::WriteOnly);
+        pixmap.save(&buffer, "JPG");
+
+        // send
+        network_send(QString("UDPUT 3 %1").arg(bData.length()));
+        network_sendb(bData);
+    }
+}
+
 void DlgCam::broadcast_start_stop()
 {
     if (bBroadcasting == false)
     {
         bBroadcasting = true;
         if (bBroadcasting_pubpriv == false)
-            ui.label_broadcast_status->setText(QString("<span style=\"color:#ffff00;font-weight:bold;\">%1</span>").arg(tr("Bradcasting public")));
+            ui.label_broadcast_status->setText(QString("<span style=\"color:#ffff00;\">%1</span>").arg(tr("Bradcasting public")));
         else
-            ui.label_broadcast_status->setText(QString("<span style=\"color:#0000ff;font-weight:bold;\">%1</span>").arg(tr("Bradcasting private")));
+            ui.label_broadcast_status->setText(QString("<span style=\"color:#0000ff;\">%1</span>").arg(tr("Bradcasting private")));
 
         ui.pushButton_broadcast->setText(tr("Stop broadcast"));
     }
@@ -913,7 +1138,7 @@ void DlgCam::broadcast_start_stop()
         bReadySendPUT = true;
         bBroadcasting = false;
         network_send("STOP");
-        ui.label_broadcast_status->setText(QString("<span style=\"color:#ff0000;font-weight:bold;\">%1</span>").arg(tr("No broadcasting")));
+        ui.label_broadcast_status->setText(QString("<span style=\"color:#ff0000;\">%1</span>").arg(tr("No broadcasting")));
         ui.pushButton_broadcast->setText(tr("Start broadcast"));
     }
 }
@@ -926,7 +1151,7 @@ void DlgCam::broadcast_public()
         bBroadcasting_pubpriv = false;
 
         if (bBroadcasting == true)
-            ui.label_broadcast_status->setText(QString("<span style=\"color:#ffff00;font-weight:bold;\">%1</span>").arg(tr("Bradcasting public")));
+            ui.label_broadcast_status->setText(QString("<span style=\"color:#ffff00;\">%1</span>").arg(tr("Bradcasting public")));
     }
 }
 
@@ -938,7 +1163,7 @@ void DlgCam::broadcast_private()
         bBroadcasting_pubpriv = true;
 
         if (bBroadcasting == true)
-            ui.label_broadcast_status->setText(QString("<span style=\"color:#0000ff;font-weight:bold;\">%1</span>").arg(tr("Bradcasting private")));
+            ui.label_broadcast_status->setText(QString("<span style=\"color:#0000ff;\">%1</span>").arg(tr("Bradcasting private")));
     }
 }
 
@@ -951,6 +1176,267 @@ void DlgCam::set_status()
         lLastCommand.append("SETSTATUS");
         network_send(QString("SETSTATUS %1").arg(strStatus));
     }
+}
+void DlgCam::set_about_me()
+{
+    QString strAboutMe = ui.textEdit_about_me->toPlainText();
+
+    if (strAboutMe.isEmpty() == false)
+    {
+        // save
+        QSettings settings;
+        Config *pConfig = new Config();
+        pConfig->set_value("cam_about_me", strAboutMe);
+        settings.setValue("cam_about_me", strAboutMe);
+        delete pConfig;
+
+        // send
+        network_send(QString("UDPUT 4 %1").arg(strAboutMe.length()));
+        network_sendb(strAboutMe.toAscii());
+    }
+}
+
+void DlgCam::set_homepage()
+{
+    QString strHomePage = ui.lineEdit_homepage->text();
+
+    if (strHomePage.isEmpty() == false)
+    {
+        // save
+        QSettings settings;
+        Config *pConfig = new Config();
+        pConfig->set_value("cam_homepage", strHomePage);
+        settings.setValue("cam_homepage", strHomePage);
+        delete pConfig;
+
+        // send
+        network_send(QString("UDPUT 5 %1").arg(strHomePage.length()));
+        network_sendb(strHomePage.toAscii());
+    }
+}
+
+void DlgCam::add_img0()
+{
+    QString selectedFilter;
+    QString strFileName = QFileDialog::getOpenFileName(this,
+                                     tr("Select Image File"),
+                                     "",
+                                     tr("JPEG Files (*.jpg);;Bitmap Files (*.bmp)"),
+                                     &selectedFilter,
+                                     0);
+
+    if (strFileName.isEmpty() == false)
+    {
+        // save
+        QSettings settings;
+        Config *pConfig = new Config();
+        pConfig->set_value("cam_img0", strFileName);
+        settings.setValue("cam_img0", strFileName);
+        delete pConfig;
+
+        // read and scale
+        QPixmap pixmap;
+        pixmap.load(strFileName);
+        if ((pixmap.width() > 320) || (pixmap.height() > 240))
+            pixmap = pixmap.scaled(320,240);
+        QByteArray bData;
+        QBuffer buffer(&bData);
+        buffer.open(QIODevice::WriteOnly);
+        pixmap.save(&buffer, "JPG");
+
+        // display
+        if ((pixmap.width() > 160) || (pixmap.height() > 120))
+            pixmap = pixmap.scaled(160,120);
+        ui.label_img0->setPixmap(pixmap);
+
+        // send
+        network_send(QString("UDPUT 0 %1").arg(bData.length()));
+        network_sendb(bData);
+    }
+}
+
+void DlgCam::remove_img0()
+{
+    // save
+    QSettings settings;
+    Config *pConfig = new Config();
+    pConfig->set_value("cam_img0", "");
+    settings.setValue("cam_img0", "");
+    delete pConfig;
+
+    // display
+    ui.label_img0->clear();
+
+    // send
+    network_send("UDPUT 0 0");
+}
+
+void DlgCam::add_img1()
+{
+    QString selectedFilter;
+    QString strFileName = QFileDialog::getOpenFileName(this,
+                                     tr("Select Image File"),
+                                     "",
+                                     tr("JPEG Files (*.jpg);;Bitmap Files (*.bmp)"),
+                                     &selectedFilter,
+                                     0);
+
+    if (strFileName.isEmpty() == false)
+    {
+        // save
+        QSettings settings;
+        Config *pConfig = new Config();
+        pConfig->set_value("cam_img1", strFileName);
+        settings.setValue("cam_img1", strFileName);
+        delete pConfig;
+
+        // read and scale
+        QPixmap pixmap;
+        pixmap.load(strFileName);
+        if ((pixmap.width() > 320) || (pixmap.height() > 240))
+            pixmap = pixmap.scaled(320,240);
+        QByteArray bData;
+        QBuffer buffer(&bData);
+        buffer.open(QIODevice::WriteOnly);
+        pixmap.save(&buffer, "JPG");
+
+        // display
+        if ((pixmap.width() > 160) || (pixmap.height() > 120))
+            pixmap = pixmap.scaled(160,120);
+        ui.label_img1->setPixmap(pixmap);
+
+        // send
+        network_send(QString("UDPUT 1 %1").arg(bData.length()));
+        network_sendb(bData);
+    }
+}
+
+void DlgCam::remove_img1()
+{
+    // save
+    QSettings settings;
+    Config *pConfig = new Config();
+    pConfig->set_value("cam_img1", "");
+    settings.setValue("cam_img1", "");
+    delete pConfig;
+
+    // display
+    ui.label_img1->clear();
+
+    // send
+    network_send("UDPUT 1 0");
+}
+
+void DlgCam::add_img2()
+{
+    QString selectedFilter;
+    QString strFileName = QFileDialog::getOpenFileName(this,
+                                     tr("Select Image File"),
+                                     "",
+                                     tr("JPEG Files (*.jpg);;Bitmap Files (*.bmp)"),
+                                     &selectedFilter,
+                                     0);
+
+    if (strFileName.isEmpty() == false)
+    {
+        // save
+        QSettings settings;
+        Config *pConfig = new Config();
+        pConfig->set_value("cam_img2", strFileName);
+        settings.setValue("cam_img2", strFileName);
+        delete pConfig;
+
+        // read and scale
+        QPixmap pixmap;
+        pixmap.load(strFileName);
+        if ((pixmap.width() > 320) || (pixmap.height() > 240))
+            pixmap = pixmap.scaled(320,240);
+        QByteArray bData;
+        QBuffer buffer(&bData);
+        buffer.open(QIODevice::WriteOnly);
+        pixmap.save(&buffer, "JPG");
+
+        // display
+        if ((pixmap.width() > 160) || (pixmap.height() > 120))
+            pixmap = pixmap.scaled(160,120);
+        ui.label_img2->setPixmap(pixmap);
+
+        // send
+        network_send(QString("UDPUT 2 %1").arg(bData.length()));
+        network_sendb(bData);
+    }
+}
+
+void DlgCam::remove_img2()
+{
+    // save
+    QSettings settings;
+    Config *pConfig = new Config();
+    pConfig->set_value("cam_img2", "");
+    settings.setValue("cam_img2", "");
+    delete pConfig;
+
+    // display
+    ui.label_img2->clear();
+
+    // send
+    network_send("UDPUT 2 0");
+}
+
+void DlgCam::add_img3()
+{
+    QString selectedFilter;
+    QString strFileName = QFileDialog::getOpenFileName(this,
+                                     tr("Select Image File"),
+                                     "",
+                                     tr("JPEG Files (*.jpg);;Bitmap Files (*.bmp)"),
+                                     &selectedFilter,
+                                     0);
+
+    if (strFileName.isEmpty() == false)
+    {
+        // save
+        QSettings settings;
+        Config *pConfig = new Config();
+        pConfig->set_value("cam_img3", strFileName);
+        settings.setValue("cam_img3", strFileName);
+        delete pConfig;
+
+        // read and scale
+        QPixmap pixmap;
+        pixmap.load(strFileName);
+        if ((pixmap.width() > 320) || (pixmap.height() > 240))
+            pixmap = pixmap.scaled(320,240);
+        QByteArray bData;
+        QBuffer buffer(&bData);
+        buffer.open(QIODevice::WriteOnly);
+        pixmap.save(&buffer, "JPG");
+
+        // display
+        if ((pixmap.width() > 160) || (pixmap.height() > 120))
+            pixmap = pixmap.scaled(160,120);
+        ui.label_img3->setPixmap(pixmap);
+
+        // send
+        network_send(QString("UDPUT 3 %1").arg(bData.length()));
+        network_sendb(bData);
+    }
+}
+
+void DlgCam::remove_img3()
+{
+    // save
+    QSettings settings;
+    Config *pConfig = new Config();
+    pConfig->set_value("cam_img3", "");
+    settings.setValue("cam_img3", "");
+    delete pConfig;
+
+    // display
+    ui.label_img3->clear();
+
+    // send
+    network_send("UDPUT 3 0");
 }
 
 void DlgCam::vote_minus()
@@ -980,8 +1466,8 @@ void DlgCam::change_user(int row, int column)
 {
     Q_UNUSED(column);
 
-    // clear img
-    ui.label_img->clear();
+    // img
+    ui.label_img->setText(tr("Downloading image"));
 
     // clear desc
     ui.textEdit_desc->setText("");
@@ -1008,7 +1494,7 @@ void DlgCam::change_user(int row, int column)
     strNick = strNewNick;
 
     // display nick
-    ui.label_nick->setText(QString("<p style=\"font-weight:bold;\">%1</p>").arg(strNick));
+    ui.label_nick->setText(strNick);
 
     // update channels
     ui.textEdit_channels->setText(QString("<b>%1</b><br><font color=\"#0000ff\">%2</font>").arg(tr("Is on channels:")).arg(mNickChannels[strNick]));
@@ -1126,20 +1612,20 @@ void DlgCam::showEvent(QShowEvent *event)
         {
             ui.textEdit_desc->setText("");
             ui.textEdit_desc->hide();
-            ui.label_img->clear();
+            ui.label_img->setText(tr("Downloading image"));
             simpleRankWidget->set_rank(0);
-            network_send(QString("SUBSCRIBE_BIG * %1").arg(strNick));
-
-            // update channels
             ui.textEdit_channels->setText(QString("<b>%1</b><br><font color=\"#0000ff\">%2</font>").arg(tr("Is on channels:")).arg(mNickChannels[strNick]));
+
+            network_send(QString("SUBSCRIBE_BIG * %1").arg(strNick));
         }
         else
         {
-            ui.label_nick->setText(QString("<p style=\"font-weight:bold;\">%1</p>").arg(strNick));
-            ui.label_img->setText(tr("Select user"));
+            ui.label_nick->setText(strNick);
             ui.textEdit_desc->setText("");
             ui.textEdit_desc->hide();
+            ui.label_img->setText(tr("Select user"));
             simpleRankWidget->set_rank(0);
+            ui.textEdit_channels->clear();
         }
     }
     else
@@ -1170,6 +1656,7 @@ void DlgCam::hideEvent(QHideEvent *event)
     ui.textEdit_desc->hide();
     ui.label_img->clear();
     simpleRankWidget->set_rank(0);
+    ui.textEdit_channels->clear();
 #endif
 }
 

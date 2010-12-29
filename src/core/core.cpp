@@ -164,12 +164,12 @@ Core::~Core()
     delete pDlg_channel_list;
     delete pDlg_moderation;
     delete pDlg_channel_settings;
-    delete pNetwork;
     delete pTabC;
     delete pTabM;
     delete bottomDockWidget;
     delete rightDockWidget;
     camSocket->deleteLater();
+    delete pNetwork;
 }
 
 void Core::network_connect()

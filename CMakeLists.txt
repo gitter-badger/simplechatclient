@@ -13,6 +13,7 @@ set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake/modules)
 # include
 
 include (FindPkgConfig)
+include (CheckCSourceCompiles)
 
 # sub dir
 

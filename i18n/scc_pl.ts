@@ -474,6 +474,10 @@
         <translation>Nadawanie</translation>
     </message>
     <message>
+        <source>About me</source>
+        <translation>O mnie</translation>
+    </message>
+    <message>
         <source>Settings</source>
         <translation>Ustawienia</translation>
     </message>
@@ -532,6 +536,18 @@
     <message>
         <source>Apply</source>
         <translation>Ustaw</translation>
+    </message>
+    <message>
+        <source>My homepage</source>
+        <translation>Moja strona WWW</translation>
+    </message>
+    <message>
+        <source>Add</source>
+        <translation>Dodaj</translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation>Usuń</translation>
     </message>
     <message>
         <source>Device:</source>
