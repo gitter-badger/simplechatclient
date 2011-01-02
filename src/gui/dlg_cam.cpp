@@ -115,40 +115,44 @@ DlgCam::DlgCam(QWidget *parent, Network *param1, QTcpSocket *param2) : QDialog(p
         ui.lineEdit_homepage->setText(settings.value("cam_homepage").toString());
 
     // set img0
-    if (settings.value("cam_img0").toString().isEmpty() == false)
+    QString strImg0 = settings.value("cam_img0").toString();
+    if ((strImg0.isEmpty() == false) && (QFile::exists(strImg0) == true))
     {
         QPixmap pixmap;
-        pixmap.load(settings.value("cam_img0").toString());
+        pixmap.load(strImg0);
         if ((pixmap.width() > 160) || (pixmap.height() > 120))
             pixmap = pixmap.scaled(160,120);
         ui.label_img0->setPixmap(pixmap);
     }
 
     // set img1
-    if (settings.value("cam_img1").toString().isEmpty() == false)
+    QString strImg1 = settings.value("cam_img1").toString();
+    if ((strImg1.isEmpty() == false) && (QFile::exists(strImg1) == true))
     {
         QPixmap pixmap;
-        pixmap.load(settings.value("cam_img1").toString());
+        pixmap.load(strImg1);
         if ((pixmap.width() > 160) || (pixmap.height() > 120))
             pixmap = pixmap.scaled(160,120);
         ui.label_img1->setPixmap(pixmap);
     }
 
     // set img2
-    if (settings.value("cam_img2").toString().isEmpty() == false)
+    QString strImg2 = settings.value("cam_img2").toString();
+    if ((strImg2.isEmpty() == false) && (QFile::exists(strImg2) == true))
     {
         QPixmap pixmap;
-        pixmap.load(settings.value("cam_img2").toString());
+        pixmap.load(strImg2);
         if ((pixmap.width() > 160) || (pixmap.height() > 120))
             pixmap = pixmap.scaled(160,120);
         ui.label_img2->setPixmap(pixmap);
     }
 
     // set img3
-    if (settings.value("cam_img3").toString().isEmpty() == false)
+    QString strImg3 = settings.value("cam_img3").toString();
+    if ((strImg3.isEmpty() == false) && (QFile::exists(strImg3) == true))
     {
         QPixmap pixmap;
-        pixmap.load(settings.value("cam_img3").toString());
+        pixmap.load(strImg3);
         if ((pixmap.width() > 160) || (pixmap.height() > 120))
             pixmap = pixmap.scaled(160,120);
         ui.label_img3->setPixmap(pixmap);
@@ -1046,7 +1050,7 @@ void DlgCam::send_all_my_options()
 
     // img0
     QString strImg0 = settings.value("cam_img0").toString();
-    if (strImg0.isEmpty() == false)
+    if ((strImg0.isEmpty() == false) && (QFile::exists(strImg0) == true))
     {
         // read and scale
         QPixmap pixmap;
@@ -1065,7 +1069,7 @@ void DlgCam::send_all_my_options()
 
     // img1
     QString strImg1 = settings.value("cam_img1").toString();
-    if (strImg1.isEmpty() == false)
+    if ((strImg1.isEmpty() == false) && (QFile::exists(strImg1) == true))
     {
         // read and scale
         QPixmap pixmap;
@@ -1084,7 +1088,7 @@ void DlgCam::send_all_my_options()
 
     // img2
     QString strImg2 = settings.value("cam_img2").toString();
-    if (strImg2.isEmpty() == false)
+    if ((strImg2.isEmpty() == false) && (QFile::exists(strImg2) == true))
     {
         // read and scale
         QPixmap pixmap;
@@ -1103,7 +1107,7 @@ void DlgCam::send_all_my_options()
 
     // img3
     QString strImg3 = settings.value("cam_img3").toString();
-    if (strImg3.isEmpty() == false)
+    if ((strImg3.isEmpty() == false) && (QFile::exists(strImg3) == true))
     {
         // read and scale
         QPixmap pixmap;
@@ -1141,6 +1145,7 @@ void DlgCam::broadcast_start_stop()
         network_send("STOP");
         ui.label_broadcast_status->setText(QString("<span style=\"color:#ff0000;\">%1</span>").arg(tr("No broadcasting")));
         ui.pushButton_broadcast->setText(tr("Start broadcast"));
+        ui.listWidget_funs->clear();
     }
 }
 
