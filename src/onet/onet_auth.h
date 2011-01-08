@@ -29,6 +29,9 @@
 #include <QUrl>
 #include "tab_container.h"
 
+/**
+ * Authorize class for onet
+ */
 class OnetAuth : public QObject
 {
     Q_OBJECT

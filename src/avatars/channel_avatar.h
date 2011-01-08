@@ -27,6 +27,12 @@
 #include <QThread>
 #include "tab_container.h"
 
+/**
+ * Thread for downloading channel avatar
+ * @param QString channel name
+ * @param QString url
+ * @param QMap map with channel avatar
+ */
 class ChannelAvatarThread : public QThread
 {
     Q_OBJECT
@@ -49,6 +55,13 @@ signals:
 
 };
 
+/**
+ * Class for downloading channel avatar
+ * @param TabContainer* for refresh image
+ * @param QString channel name
+ * @param QString url
+ * @param QMap map with channel avatar
+ */
 class ChannelAvatar : public QObject
 {
     Q_OBJECT

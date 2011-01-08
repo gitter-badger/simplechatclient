@@ -33,6 +33,10 @@
 #include <QSettings>
 #endif
 
+/**
+ * Class for config read/write
+ * @param bool create config
+ */
 class Config : public QObject
 {
     Q_OBJECT
@@ -40,8 +44,22 @@ public:
     Config(bool bCreate = true);
     ~Config();
 
+    /**
+     * Get config value
+     * @param QString key
+     * @return QString value
+     */
     QString get_value(QString);
+    /**
+     * Read config to QMap
+     * @return QMap all keys,values
+     */
     QMap <QString, QString> read_config();
+    /**
+     * Set config key value
+     * @param QString key
+     * @param QString value
+     */
     void set_value(QString, QString);
 
 private:

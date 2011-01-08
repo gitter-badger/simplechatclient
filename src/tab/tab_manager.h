@@ -24,6 +24,9 @@
 #include <QTabBar>
 #include <QTabWidget>
 
+/**
+ * TabBar with hilight support
+ */
 class TabManager : public QTabWidget
 {
     Q_OBJECT

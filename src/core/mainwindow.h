@@ -35,6 +35,9 @@
 #include "notify.h"
 #include "update.h"
 
+/**
+ * Main window
+ */
 class MainWindow : public QMainWindow
 {
     Q_OBJECT

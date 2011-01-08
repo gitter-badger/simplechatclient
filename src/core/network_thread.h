@@ -39,7 +39,9 @@ struct NickStatus
 };
 typedef QList<NickStatus> sChannelNickStatus;
 
-
+/**
+ * Network thread class
+ */
 class NetworkThread : public QThread
 {
     Q_OBJECT

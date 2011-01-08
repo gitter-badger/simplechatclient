@@ -26,6 +26,9 @@
 #include <QSettings>
 #include "network_thread.h"
 
+/**
+ * Network class
+ */
 class Network : public QObject
 {
     Q_OBJECT

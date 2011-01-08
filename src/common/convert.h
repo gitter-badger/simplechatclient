@@ -27,6 +27,10 @@
 #include <QSettings>
 #include <QStringListIterator>
 
+/**
+ * Convert text
+ * %Fbi%%C008100%%Ihehe%
+ */
 class Convert : public QObject
 {
     Q_OBJECT

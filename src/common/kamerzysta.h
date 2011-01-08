@@ -35,6 +35,9 @@
 #include "config.h"
 #include "log.h"
 
+/**
+ * Cams support using Kamerzysta (http://programy.onet.pl/72,34,10195,,,Kamerzysta_3.00.159,programy.html)
+ */
 class Kamerzysta : public QObject
 {
     Q_OBJECT

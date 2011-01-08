@@ -24,6 +24,9 @@
 #include <QObject>
 #include <QSettings>
 
+/**
+ * Replace emots like ;) to %Ihehe%
+ */
 class Replace : public QObject
 {
     Q_OBJECT

@@ -27,6 +27,9 @@
 #include <QObject>
 #include <QSettings>
 
+/**
+ * Notify using Phonon
+ */
 class Notify : public QObject
 {
     Q_OBJECT

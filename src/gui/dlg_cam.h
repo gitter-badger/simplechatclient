@@ -75,6 +75,8 @@ private:
     QList <QString> lLastCommand;
     qint64 iLastKeepAlive;
     QMap <QString, QString> mNickChannels;
+    QTimer *timerPingPong;
+    int iLastActive;
 
     QString get_cauth();
 #ifndef Q_WS_WIN
@@ -98,6 +100,7 @@ private slots:
     void broadcast_start_stop();
     void broadcast_public();
     void broadcast_private();
+    // my images
     void set_status();
     void set_about_me();
     void set_homepage();
@@ -109,17 +112,23 @@ private slots:
     void remove_img2();
     void add_img3();
     void remove_img3();
+    // standard buttons
     void vote_minus();
     void vote_plus();
     void button_ok();
+    // vote
     void enable_vote();
+    // change user
     void change_user(int,int);
+    // read video image
     void read_video();
+    // network
     void network_read();
     void network_connected();
     void network_disconnected();
     void network_error(QAbstractSocket::SocketError);
     void slot_network_connect();
+    void timeout_pingpong();
 
 protected:
     virtual void showEvent(QShowEvent *);

@@ -49,6 +49,9 @@
 #include "tab_container.h"
 #include "tab_manager.h"
 
+/**
+ * Core
+ */
 class Core : public QObject
 {
     Q_OBJECT

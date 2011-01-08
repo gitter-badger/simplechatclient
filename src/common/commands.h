@@ -27,6 +27,11 @@
 #include <QSettings>
 #include <QStringList>
 
+/**
+ * Class for irc commands
+ * @param QString channel name
+ * @param QString command
+ */
 class Commands : public QObject
 {
     Q_OBJECT

@@ -371,6 +371,8 @@ void OnetKernel::kernel(QString param1)
                 raw_121n();
             else if (strDataList[3].toLower() == ":122")
                 raw_122n();
+            else if (strDataList[3].toLower() == ":123")
+                raw_123n();
             else if (strDataList[3].toLower() == ":131")
                 raw_131n();
             else if (strDataList[3].toLower() == ":132")
@@ -1460,6 +1462,24 @@ void OnetKernel::raw_121n()
 void OnetKernel::raw_122n()
 {
 // ignore
+}
+
+// :NickServ!service@service.onet NOTICE Merovingian :123 mokka00 Viola_de_luxe :friend nick changed
+void OnetKernel::raw_123n()
+{
+    if (strDataList.value(4).isEmpty() == true) return;
+    if (strDataList.value(5).isEmpty() == true) return;
+
+    QString strOldNick = strDataList[4];
+    if (strOldNick[0] == ':')
+        strOldNick = strOldNick.right(strOldNick.length()-1);
+
+    QString strNewNick = strDataList[5];
+    if (strNewNick[0] == ':')
+        strNewNick = strNewNick.right(strNewNick.length()-1);
+
+    QString strDisplay = QString(tr("* %1 changed nickname to %2 from your friend list")).arg(strOldNick).arg(strNewNick);
+    pTabC->show_msg_active(strDisplay, 7);
 }
 
 // NS IGNORE

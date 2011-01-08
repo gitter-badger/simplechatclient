@@ -32,6 +32,9 @@
 #include "tab_manager.h"
 #include "tab_widget.h"
 
+/**
+ * Class for displaying messages in tabs or change main window settings
+ */
 class TabContainer : public QObject
 {
     Q_OBJECT

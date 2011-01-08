@@ -36,6 +36,9 @@
 #include "mainwebview.h"
 #include "notify.h"
 
+/**
+ * Main widget used for displaying all text messages from users
+ */
 class TabWidget : public QWidget
 {
     Q_OBJECT

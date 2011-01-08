@@ -33,11 +33,19 @@
 #include <QSettings>
 #endif
 
+/**
+ * Save log to file
+ */
 class Log : public QObject
 {
     Q_OBJECT
 public:
     Log();
+    /**
+     * Save text to file name
+     * @param QString file name
+     * @param QString data
+     */
     void save(QString, QString);
 
 private:

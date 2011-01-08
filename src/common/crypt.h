@@ -30,17 +30,35 @@
 //#include <QtCrypto/QtCrypto>
 #include "config.h"
 
+/**
+ * Crypt class
+ */
 class Crypt : public QObject
 {
     Q_OBJECT
 public:
     Crypt();
+    /**
+     * Encrypt
+     * @param QString key
+     * @param QString data
+     * @return QString encrypted data
+     */
     QString encrypt(QString, QString);
+    /**
+     * Decrypt
+     * @param QString key
+     * @param QString data
+     * @return QString decrypted data
+     */
     QString decrypt(QString, QString);
 
 private:
     QString strIv;
 
+    /**
+     * Generate iv
+     */
     void gen_iv();
 
 };

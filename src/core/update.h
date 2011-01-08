@@ -32,6 +32,9 @@
 #include <QSettings>
 #include "dlg_update.h"
 
+/**
+ * Update class. If there is update it show dialog from dlg_update.
+ */
 class Update : public QObject
 {
     Q_OBJECT

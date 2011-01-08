@@ -27,6 +27,12 @@
 #include <QThread>
 #include "tab_container.h"
 
+/**
+ * Thread for downloading nick avatar image
+ * @param QString nick
+ * @param QString url
+ * @param QMap map with nick avatar
+ */
 class NickAvatarThread : public QThread
 {
     Q_OBJECT
@@ -49,6 +55,13 @@ signals:
 
 };
 
+/**
+ * Class for downloading nick avatar
+ * @param TabContainer* for refresh image
+ * @param QString nick
+ * @param QString url
+ * @param QMap map with nick avatar
+ */
 class NickAvatar : public QObject
 {
     Q_OBJECT

@@ -95,11 +95,14 @@ DlgCam::DlgCam(QWidget *parent, Network *param1, QTcpSocket *param2) : QDialog(p
     bReadySendPUT = true;
     iLastSendPUT = 0;
     iLastKeepAlive = 0;
+    iLastActive = 0;
 #ifndef Q_WS_WIN
     bCreatedCaptureCv = false;
 #endif
 
     QSettings settings;
+    timerPingPong = new QTimer();
+    timerPingPong->setInterval(1*60*1000); // 1 min
 
     // set labels
     QStringList strlLabels;
@@ -185,6 +188,7 @@ DlgCam::DlgCam(QWidget *parent, Network *param1, QTcpSocket *param2) : QDialog(p
     QObject::connect(camSocket, SIGNAL(error(QAbstractSocket::SocketError)), this, SLOT(network_error(QAbstractSocket::SocketError)));
     QObject::connect(camSocket, SIGNAL(readyRead()), this, SLOT(network_read()));
 #endif
+    QObject::connect(timerPingPong, SIGNAL(timeout()), this, SLOT(timeout_pingpong()));
 }
 
 DlgCam::~DlgCam()
@@ -278,7 +282,7 @@ void DlgCam::set_broadcasting()
             ui.comboBox_device->setCurrentIndex(0);
 
             // read self video
-            QTimer::singleShot(1000*1, this, SLOT(read_video())); // 1sec
+            QTimer::singleShot(1000*1, this, SLOT(read_video())); // 1 sec
         }
     }
 }
@@ -301,6 +305,13 @@ void DlgCam::network_connect()
         iCam_cmd = 0;
         iBytes_need = 0;
         iBytes_recv = 0;
+
+        // set last active
+        QDateTime dt = QDateTime::currentDateTime();
+        iLastActive = (int)dt.toTime_t();
+
+        // timer
+        timerPingPong->start();
     }
 }
 
@@ -352,6 +363,10 @@ void DlgCam::network_disconnect()
 
 void DlgCam::network_read()
 {
+    // set last active
+    QDateTime dt = QDateTime::currentDateTime();
+    iLastActive = (int)dt.toTime_t();
+
     // read text
     if (bText == true)
     {
@@ -404,7 +419,7 @@ void DlgCam::network_disconnected()
 
     ui.listWidget_funs->clear();
     bBroadcasting = false;
-    network_send("STOP");
+    //network_send("STOP");
     ui.label_broadcast_status->setText(QString("<span style=\"color:#ff0000;\">%1</span>").arg(tr("No broadcasting")));
     ui.pushButton_broadcast->setText(tr("Start broadcast"));
 
@@ -418,8 +433,12 @@ void DlgCam::network_disconnected()
     strlLabels << tr("Nick") << tr("Rank") << tr("Spectators");
     ui.tableWidget_nick_rank_spectators->setHorizontalHeaderLabels(strlLabels);
 
+    // timer
+    if (timerPingPong->isActive() == true)
+        timerPingPong->stop();
+
     // reconnect
-    QTimer::singleShot(1000*10, this, SLOT(slot_network_connect()));
+    QTimer::singleShot(1000*10, this, SLOT(slot_network_connect())); // 10 sec
 }
 
 void DlgCam::network_error(QAbstractSocket::SocketError err)
@@ -432,14 +451,23 @@ void DlgCam::network_error(QAbstractSocket::SocketError err)
         network_disconnect();
     else if (camSocket->state() == QAbstractSocket::UnconnectedState)
     {
+        // timer
+        if (timerPingPong->isActive() == true)
+            timerPingPong->stop();
+
         // reconnect
-        QTimer::singleShot(1000*10, this, SLOT(slot_network_connect()));
+        QTimer::singleShot(1000*10, this, SLOT(slot_network_connect())); // 10 sec
     }
 }
 
 void DlgCam::slot_network_connect()
 {
-    network_connect();
+    if (pNetwork->is_connected() == true)
+        network_connect();
+    else
+    {
+        QTimer::singleShot(1000*60, this, SLOT(slot_network_connect())); // 60 sec
+    }
 }
 
 void DlgCam::data_kernel()
@@ -987,6 +1015,7 @@ void DlgCam::text_kernel(QString strData)
     // 418 0 QUIT_CZAT
     else if (strDataList[0] == "418")
     {
+        strNick.clear();
         network_disconnect();
     }
     // udget with -1
@@ -1183,6 +1212,7 @@ void DlgCam::set_status()
         network_send(QString("SETSTATUS %1").arg(strStatus));
     }
 }
+
 void DlgCam::set_about_me()
 {
     QString strAboutMe = ui.textEdit_about_me->toPlainText();
@@ -1568,7 +1598,7 @@ void DlgCam::read_video()
     }
 
     // read self video
-    QTimer::singleShot(1000*1, this, SLOT(read_video())); // 1sec
+    QTimer::singleShot(1000*1, this, SLOT(read_video())); // 1 sec
 #endif
 }
 
@@ -1603,6 +1633,18 @@ QPixmap DlgCam::convert_cam2img(IplImage *img)
     }
 }
 #endif
+
+void DlgCam::timeout_pingpong()
+{
+    QDateTime dt = QDateTime::currentDateTime();
+    int iCurrent = (int)dt.toTime_t();
+
+    if (iLastActive+301 < iCurrent)
+    {
+        network_disconnect();
+        iLastActive = iCurrent;
+    }
+}
 
 void DlgCam::showEvent(QShowEvent *event)
 {

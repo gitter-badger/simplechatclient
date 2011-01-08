@@ -38,6 +38,9 @@
 #include "onet_auth.h"
 #include "tab_container.h"
 
+/**
+ * Irc messages parser
+ */
 class OnetKernel : public QObject
 {
     Q_OBJECT
@@ -96,6 +99,7 @@ private:
     void raw_112n();
     void raw_121n();
     void raw_122n();
+    void raw_123n();
     void raw_131n();
     void raw_132n();
     void raw_133n();
