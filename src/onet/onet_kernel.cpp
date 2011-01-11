@@ -3535,6 +3535,13 @@ void OnetKernel::raw_473()
 
     QString strMessage = QString(tr("* Cannot join channel %1: Invite only")).arg(strChannel);
     pTabC->show_msg_active(strMessage, 7);
+
+    // close inactive priv
+    if (strChannel[0] == '^')
+    {
+        if (pTabC->exist_tab(strChannel) == true)
+            pTabC->remove_tab(strChannel);
+    }
 }
 
 // :cf1f3.onet 474 ~scc_test #Quiz :Cannot join channel (You're banned)

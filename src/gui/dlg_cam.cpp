@@ -538,9 +538,8 @@ void DlgCam::data_kernel()
                 }
 
                 // add to table
-                ui.tableWidget_nick_rank_spectators->setItem(row, 0, new QTableWidgetItem(strUser));
-                ui.tableWidget_nick_rank_spectators->setItem(row, 1, new QTableWidgetItem(strRank));
-                ui.tableWidget_nick_rank_spectators->setItem(row, 2, new QTableWidgetItem(strSpectators));
+                add_item(row, strUser, strRank, strSpectators);
+
                 row++;
             }
             else
@@ -603,7 +602,24 @@ void DlgCam::data_kernel()
 
                 // remove user if cam off
                 if (iCamOnOff == 0)
+                {
                     mNickChannels.remove(strUser);
+                    if (exist_item(strUser) == false)
+                        remove_item(strUser);
+                }
+                else
+                {
+                    if (exist_item(strUser) == false)
+                    {
+                        // add user
+                        add_item(strUser, QString::number(iRank), strSpectators);
+                    }
+                    else
+                    {
+                        // update stats
+                        update_item(strUser, QString::number(iRank), strSpectators);
+                    }
+                }
             }
             else
             {
@@ -657,13 +673,11 @@ void DlgCam::data_kernel()
                 if (strLineList.count() == 3) // is correct ?
                 {
                     QString strUser = strLineList[0];
-                    QString strUsers = strLineList[1];
+                    QString strSpectators = strLineList[1];
                     QString strRank = strLineList[2];
 
                     // add to table
-                    ui.tableWidget_nick_rank_spectators->setItem(row, 0, new QTableWidgetItem(strUser));
-                    ui.tableWidget_nick_rank_spectators->setItem(row, 1, new QTableWidgetItem(strRank));
-                    ui.tableWidget_nick_rank_spectators->setItem(row, 2, new QTableWidgetItem(strUsers));
+                    add_item(row, strUser, strRank, strSpectators);
 
                     // if current nick
                     if (strUser == strNick)
@@ -672,7 +686,6 @@ void DlgCam::data_kernel()
                 row++;
             }
         }
-        ui.tableWidget_nick_rank_spectators->resizeColumnsToContents();
     }
     else if (iCam_cmd == 403)
     {
@@ -1151,6 +1164,69 @@ void DlgCam::send_all_my_options()
         // send
         network_send(QString("UDPUT 3 %1").arg(bData.length()));
         network_sendb(bData);
+    }
+}
+
+void DlgCam::add_item(int iRow, QString strUser, QString strRank, QString strSpectators)
+{
+    // insert
+    ui.tableWidget_nick_rank_spectators->setItem(iRow, 0, new QTableWidgetItem(strUser));
+    ui.tableWidget_nick_rank_spectators->setItem(iRow, 1, new QTableWidgetItem(strRank));
+    ui.tableWidget_nick_rank_spectators->setItem(iRow, 2, new QTableWidgetItem(strSpectators));
+}
+
+void DlgCam::add_item(QString strUser, QString strRank, QString strSpectators)
+{
+    // row
+    int row = ui.tableWidget_nick_rank_spectators->rowCount();
+    ui.tableWidget_nick_rank_spectators->insertRow(row);
+
+    // insert
+    ui.tableWidget_nick_rank_spectators->setItem(row, 0, new QTableWidgetItem(strUser));
+    ui.tableWidget_nick_rank_spectators->setItem(row, 1, new QTableWidgetItem(strRank));
+    ui.tableWidget_nick_rank_spectators->setItem(row, 2, new QTableWidgetItem(strSpectators));
+
+    // sort
+    ui.tableWidget_nick_rank_spectators->sortByColumn(0, Qt::AscendingOrder);
+}
+
+bool DlgCam::exist_item(QString strUser)
+{
+    QList<QTableWidgetItem*> items = ui.tableWidget_nick_rank_spectators->findItems(strUser, Qt::MatchExactly);
+
+    if (items.isEmpty() == false)
+        return true;
+    else
+        return false;
+}
+
+void DlgCam::remove_item(QString strUser)
+{
+    int row = get_item(strUser);
+
+    if (row != -1)
+        ui.tableWidget_nick_rank_spectators->removeRow(row);
+}
+
+int DlgCam::get_item(QString strUser)
+{
+    for (int i = 0; i < ui.tableWidget_nick_rank_spectators->rowCount(); i++)
+    {
+        if (ui.tableWidget_nick_rank_spectators->item(i,0)->text() == strUser)
+            return i;
+    }
+    return -1;
+}
+
+void DlgCam::update_item(QString strUser, QString strRank, QString strSpectators)
+{
+    int row = get_item(strUser);
+
+    // update stats
+    if (row != -1)
+    {
+        ui.tableWidget_nick_rank_spectators->item(row,1)->setText(strRank);
+        ui.tableWidget_nick_rank_spectators->item(row,2)->setText(strSpectators);
     }
 }
 

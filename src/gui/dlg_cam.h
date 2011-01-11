@@ -95,6 +95,13 @@ private:
     void data_kernel();
     void text_kernel(QString);
     void send_all_my_options();
+    // items
+    void add_item(int, QString, QString, QString);
+    void add_item(QString, QString, QString);
+    bool exist_item(QString);
+    void remove_item(QString);
+    int get_item(QString);
+    void update_item(QString, QString, QString);
 
 private slots:
     void broadcast_start_stop();
