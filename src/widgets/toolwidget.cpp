@@ -493,6 +493,8 @@ void ToolWidget::color_clicked(int index)
 
     QSettings settings;
     settings.setValue("my_color", strCurrentColor);
+
+    pInputWidget->set_color(strCurrentColor);
 }
 
 // emoticons

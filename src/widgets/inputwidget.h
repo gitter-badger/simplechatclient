@@ -43,6 +43,7 @@ public:
     inline QString get_active() { return strChannel; }
     void insert_text(QString);
     void set_font(QFont);
+    void set_color(QString);
     void set_userslist(QTreeWidget *);
     void set_moderation(bool);
     void set_toolwidget_icon(bool);

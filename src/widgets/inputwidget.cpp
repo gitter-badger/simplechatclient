@@ -86,6 +86,11 @@ void InputWidget::set_font(QFont font)
     inputLine->setFont(font);
 }
 
+void InputWidget::set_color(QString color)
+{
+    inputLine->setStyleSheet(QString("color:%1").arg(color));
+}
+
 void InputWidget::set_userslist(QTreeWidget *treeWidget)
 {
     QList <QString> usersList;
