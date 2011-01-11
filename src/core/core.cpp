@@ -273,7 +273,8 @@ void Core::current_tab_changed(int index)
     myparent->setWindowTitle(QString("Simple Chat Client - [%1]").arg(strTabText));
 
     // change tab color
-    pTabM->set_color(index, QColor(0,0,0));
+    QSettings settings;
+    pTabM->set_color(index, QColor(settings.value("default_font_color").toString()));
 
     // set tab active
     inputLineDockWidget->set_active(strChannel);

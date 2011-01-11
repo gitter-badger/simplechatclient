@@ -349,8 +349,13 @@ void TabContainer::slot_set_scroll(QString strChannel, bool bSetScroll)
 
 void TabContainer::refresh_colors()
 {
+    QSettings settings;
     for (int i = 0; i < tw.count(); i++)
+    {
         tw[i]->refresh_colors();
+        // update tab name color
+        pTabM->set_color(i, QColor(settings.value("default_font_color").toString()));
+    }
 }
 
 QStringList TabContainer::get_open_channels()
