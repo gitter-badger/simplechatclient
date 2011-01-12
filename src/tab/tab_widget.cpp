@@ -20,7 +20,7 @@
 
 #include "tab_widget.h"
 
-TabWidget::TabWidget(QWidget *parent, Network *param1, QString param2, Notify *param3, QMap <QString, QByteArray> *param4, QTcpSocket *param5, sChannelNickStatus *param6, DlgUserProfile *param7, DlgCam *param8)
+TabWidget::TabWidget(QWidget *parent, Network *param1, QString param2, Notify *param3, QMap <QString, QByteArray> *param4, QTcpSocket *param5, sChannelNickStatus *param6, DlgUserProfile *param7, DlgCam *param8, QList<QString> *param9)
 {
     myparent = parent;
     pNetwork = param1;
@@ -31,6 +31,7 @@ TabWidget::TabWidget(QWidget *parent, Network *param1, QString param2, Notify *p
     mChannelNickStatus = param6;
     pDlg_user_profile = param7;
     pDlg_cam = param8;
+    lAwaylog = param9;
 
     QSettings settings;
     QString strDefaultFontColor = addslashes(settings.value("default_font_color").toString());
@@ -246,6 +247,31 @@ void TabWidget::display_message(QString strData, int iLevel)
 {
     QSettings settings;
 
+    // awaylog
+    if (iLevel == 8)
+    {
+        if (settings.value("away").toString() == "on")
+        {
+            QString strAwayData = strData;
+
+            // if /me remove time,action <>
+            if (strAwayData.indexOf(QString(QByteArray("\x01"))) != -1)
+            {
+                strAwayData = strAwayData.right(strAwayData.length() - 11);
+                if (strAwayData.indexOf("ACTION ") != -1) strAwayData = strAwayData.replace("ACTION ", QString::null);
+                if (strAwayData.indexOf("<") != -1) strAwayData = strAwayData.remove(strAwayData.indexOf("<"),4);
+                if (strAwayData.indexOf(">") != -1) strAwayData = strAwayData.remove(strAwayData.indexOf(">"),4);
+            }
+
+            // remove color, font, emots
+            strAwayData.replace(QRegExp("%C([a-zA-Z0-9_-:]+)%"),"");
+            strAwayData.replace(QRegExp("%F([a-zA-Z0-9_-:]+)%"),"");
+            strAwayData.replace(QRegExp("%I([a-zA-Z0-9_-:]+)%"),"<\\1>");
+
+            lAwaylog->append(QString("%1\n%2").arg(strName).arg(strAwayData));
+        }
+    }
+
     // fix max size
     if (strContent.count("</p>") > 150)
     {
@@ -321,6 +347,7 @@ void TabWidget::display_message(QString strData, int iLevel)
     {
         strTextDecoration = "underline";
 
+        // sound
         if (settings.value("disable_sounds").toString() == "off")
             pNotify->play("beep");
     }

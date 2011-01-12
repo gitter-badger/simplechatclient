@@ -1,6 +1,7 @@
 
 set (scc_UIS
 	../ui/about.ui
+	../ui/awaylog.ui
 	../ui/cam.ui
 	../ui/channel_favourites.ui
 	../ui/channel_homes.ui
@@ -39,6 +40,7 @@ set (scc_SRCS
 	core/network_thread.cpp
 	core/update.cpp
 	gui/dlg_about.cpp
+	gui/dlg_awaylog.cpp
 	gui/dlg_cam.cpp
 	gui/dlg_channel_favourites.cpp
 	gui/dlg_channel_homes.cpp
@@ -90,6 +92,7 @@ set (scc_MOC_HDRS
 	core/network_thread.h
 	core/update.h
 	gui/dlg_about.h
+	gui/dlg_awaylog.h
 	gui/dlg_cam.h
 	gui/dlg_channel_favourites.h
 	gui/dlg_channel_homes.h

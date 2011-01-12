@@ -330,18 +330,21 @@ void DlgCam::network_sendb(QByteArray qbaData)
 {
     if ((camSocket->state() == QAbstractSocket::ConnectedState) && (camSocket->isWritable() == true))
     {
-#ifdef Q_WS_X11
-        QSettings settings;
-        if (settings.value("debug").toString() == "on")
-            qDebug() << "CAM -> " << QString(qbaData);
-#endif
-
-        if (camSocket->write(qbaData) == -1)
+        qint64 ret = camSocket->write(qbaData);
+        if (ret == -1)
         {
             if (camSocket->state() == QAbstractSocket::ConnectedState)
                 ui.label_img->setText(QString(tr("Error: Failed to send data! [%1]")).arg(camSocket->errorString()));
             else if (camSocket->state() == QAbstractSocket::UnconnectedState)
                 ui.label_img->setText(tr("Error: Failed to send data! [Not connected]"));
+        }
+        else
+        {
+#ifdef Q_WS_X11
+            QSettings settings;
+            if (settings.value("debug").toString() == "on")
+                qDebug() << "CAM -> " << QString(qbaData);
+#endif
         }
     }
     else

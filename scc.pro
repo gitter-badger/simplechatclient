@@ -25,6 +25,7 @@ SOURCES += src/avatars/channel_avatar.cpp \
     src/core/network_thread.cpp \
     src/core/update.cpp \
     src/gui/dlg_about.cpp \
+    src/gui/dlg_awaylog.cpp \
     src/gui/dlg_cam.cpp \
     src/gui/dlg_channel_favourites.cpp \
     src/gui/dlg_channel_homes.cpp \
@@ -76,6 +77,7 @@ HEADERS += src/avatars/channel_avatar.h \
     src/core/network_thread.h \
     src/core/update.h \
     src/gui/dlg_about.h \
+    src/gui/dlg_awaylog.h \
     src/gui/dlg_cam.h \
     src/gui/dlg_channel_favourites.h \
     src/gui/dlg_channel_homes.h \
@@ -111,6 +113,7 @@ HEADERS += src/avatars/channel_avatar.h \
     src/widgets/simplerankwidget.h \
     src/widgets/toolwidget.h
 FORMS += ui/about.ui \
+    ui/awaylog.ui \
     ui/cam.ui \
     ui/channel_favourites.ui \
     ui/channel_homes.ui \
@@ -129,4 +132,4 @@ FORMS += ui/about.ui \
     ui/update.ui \
     ui/user_profile.ui \
     ui/notes.ui \
-    ui/user_avatar.ui
+    ui/user_avatar.ui \

@@ -43,7 +43,7 @@ class TabWidget : public QWidget
 {
     Q_OBJECT
 public:
-    TabWidget(QWidget *, Network *, QString, Notify *, QMap <QString, QByteArray> *, QTcpSocket *, sChannelNickStatus *, DlgUserProfile *, DlgCam *);
+    TabWidget(QWidget *, Network *, QString, Notify *, QMap <QString, QByteArray> *, QTcpSocket *, sChannelNickStatus *, DlgUserProfile *, DlgCam *, QList<QString> *);
     ~TabWidget();
     inline QString get_name() { return strName; }
     inline bool get_scroll() { return bScroll; }
@@ -76,6 +76,7 @@ private:
     sChannelNickStatus *mChannelNickStatus;
     DlgUserProfile *pDlg_user_profile;
     DlgCam *pDlg_cam;
+    QList<QString> *lAwaylog;
 
     // other
     QString strContent;

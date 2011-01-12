@@ -27,6 +27,7 @@
 #include <QObject>
 #include <QTabWidget>
 #include <QToolBar>
+#include "dlg_awaylog.h"
 #include "dlg_channel_favourites.h"
 #include "dlg_channel_homes.h"
 #include "dlg_channel_list.h"
@@ -71,6 +72,7 @@ public:
     void open_channel_favourites();
     void open_friends();
     void open_ignore();
+    void open_awaylog();
     void open_cams();
     // nicklist
     bool nicklist_exist(QString, QString);
@@ -128,6 +130,7 @@ private:
     // lag
     QAction *lagAct;
     DlgCam *pDlg_cam;
+    QList<QString> lAwaylog;
 
 private slots:
     void tab_close_requested(int);

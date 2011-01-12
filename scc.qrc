@@ -66,5 +66,6 @@
         <file>images/oxygen/16x16/text-frame-unlink.png</file>
         <file>images/oxygen/16x16/folder-txt.png</file>
         <file>images/oxygen/16x16/page-zoom.png</file>
+        <file>images/oxygen/16x16/document-revert.png</file>
     </qresource>
 </RCC>

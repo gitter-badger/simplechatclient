@@ -34,6 +34,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     closeAct = new QAction(QIcon(":/images/oxygen/16x16/application-exit.png"), tr("Close"), this);
     optionsAct = new QAction(QIcon(":/images/oxygen/16x16/preferences-system.png"), tr("Options"), this);
     aboutAct = new QAction(QIcon(":/images/logo_64.png"), tr("About SCC ..."), this);
+    awaylogAct = new QAction(QIcon(":/images/oxygen/16x16/view-pim-tasks.png"), tr("Awaylog"), this);
     notesAct = new QAction(QIcon(":/images/oxygen/16x16/story-editor.png"), tr("Notes"), this);
 
     // onet action
@@ -55,9 +56,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     channel_favouritesAct->setShortcut(tr("Ctrl+U"));
     friendsAct->setShortcut(tr("Ctrl+P"));
     ignoreAct->setShortcut(tr("Ctrl+I"));
-#ifdef Q_WS_WIN
     camsAct->setShortcut(tr("Ctrl+K"));
-#endif
 
     // main menu
     fileMenu = menuBar()->addMenu(tr("&File"));
@@ -97,8 +96,11 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     toolBar->addAction(channel_homesAct);
     toolBar->addAction(friendsAct);
     toolBar->addAction(channel_favouritesAct);
-    toolBar->addAction(camsAct);
 
+    // awaylog
+    toolBar->addAction(awaylogAct);
+    // onet cams
+    toolBar->addAction(camsAct);
     // notes
     toolBar->addAction(notesAct);
 
@@ -115,8 +117,11 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     QObject::connect(channel_favouritesAct, SIGNAL(triggered()), this, SLOT(open_channel_favourites()));
     QObject::connect(friendsAct, SIGNAL(triggered()), this, SLOT(open_friends()));
     QObject::connect(ignoreAct, SIGNAL(triggered()), this, SLOT(open_ignore()));
-    QObject::connect(camsAct, SIGNAL(triggered()), this, SLOT(open_cams()));
 
+    // awaylog
+    QObject::connect(awaylogAct, SIGNAL(triggered()), this, SLOT(open_awaylog()));
+    // onet cams
+    QObject::connect(camsAct, SIGNAL(triggered()), this, SLOT(open_cams()));
     // notes
     QObject::connect(notesAct, SIGNAL(triggered()), this, SLOT(open_notes()));
 
@@ -212,10 +217,11 @@ void MainWindow::create_settings()
     // default settings
     QSettings settings;
     settings.clear();
-    settings.setValue("version", "1.0.10.670");
+    settings.setValue("version", "1.0.10.671");
     settings.setValue("debug", "off");
     settings.setValue("logged", "off");
     settings.setValue("busy", "off");
+    settings.setValue("away", "off");
     settings.setValue("override", "off");
     settings.setValue("ignore_raw_141", "off");
     settings.setValue("uokey", "");
@@ -344,12 +350,21 @@ void MainWindow::open_ignore()
     coreServers.at(0)->open_ignore();
 }
 
+// awaylog
+void MainWindow::open_awaylog()
+{
+    coreServers.at(0)->open_awaylog();
+}
+
+// onet cams
 void MainWindow::open_cams()
 {
     coreServers.at(0)->open_cams();
 }
 
+// notes
 void MainWindow::open_notes()
 {
     (new DlgNotes(this))->show();
 }
+

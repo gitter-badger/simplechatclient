@@ -20,7 +20,7 @@
 
 #include "tab_container.h"
 
-TabContainer::TabContainer(QWidget *parent, Network *param1, TabManager *param2, Notify *param3, QMap <QString, QByteArray> *param4, QTcpSocket *param5, sChannelNickStatus *param6)
+TabContainer::TabContainer(QWidget *parent, Network *param1, TabManager *param2, Notify *param3, QMap <QString, QByteArray> *param4, QTcpSocket *param5, sChannelNickStatus *param6, QList<QString> *param7)
 {
     myparent = parent;
     pNetwork = param1;
@@ -29,6 +29,7 @@ TabContainer::TabContainer(QWidget *parent, Network *param1, TabManager *param2,
     mChannelAvatar = param4;
     camSocket = param5;
     mChannelNickStatus = param6;
+    lAwaylog = param7;
 }
 
 TabContainer::~TabContainer()
@@ -92,7 +93,7 @@ void TabContainer::add_tab(QString strChannel)
         emit create_nicklist(strChannel);
 
         // create tab
-        tw.append(new TabWidget(myparent, pNetwork, strChannel, pNotify, mChannelAvatar, camSocket, mChannelNickStatus, pDlg_user_profile, pDlg_cam));
+        tw.append(new TabWidget(myparent, pNetwork, strChannel, pNotify, mChannelAvatar, camSocket, mChannelNickStatus, pDlg_user_profile, pDlg_cam, lAwaylog));
         pTabM->addTab(tw.at(tw.count()-1), strChannel);
         pTabM->setCurrentIndex(tw.count()-1);
 

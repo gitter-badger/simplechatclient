@@ -226,6 +226,10 @@
         <translation>Ignorowani</translation>
     </message>
     <message>
+        <source>Awaylog</source>
+        <translation>Awaylog</translation>
+    </message>
+    <message>
         <source>Cams</source>
         <translation>Kamerki</translation>
     </message>

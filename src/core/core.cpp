@@ -43,7 +43,7 @@ Core::Core(QMainWindow *parent, QString param1, int param2, Notify *param3, QAct
     pNetwork = new Network(connectAct, lagAct, strServer, iPort);
 
     // classes
-    pTabC = new TabContainer(myparent, pNetwork, pTabM, pNotify, &mChannelAvatar, camSocket, &mChannelNickStatus);
+    pTabC = new TabContainer(myparent, pNetwork, pTabM, pNotify, &mChannelAvatar, camSocket, &mChannelNickStatus, &lAwaylog);
 
     pDlg_channel_settings = new DlgChannelSettings(myparent, pNetwork);
     pDlg_moderation = new DlgModeration(myparent);
@@ -238,6 +238,12 @@ void Core::open_ignore()
 {
     if ((pNetwork->is_connected() == true) && (pNetwork->is_writable() == true))
         pDlg_ignore->show();
+}
+
+void Core::open_awaylog()
+{
+    if ((pNetwork->is_connected() == true) && (pNetwork->is_writable() == true))
+        (new DlgAwaylog(myparent, &lAwaylog))->show();
 }
 
 void Core::open_cams()

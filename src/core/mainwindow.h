@@ -62,6 +62,7 @@ private:
     QAction *optionsAct;
     QAction *showAct;
     QAction *aboutAct;
+    QAction *awaylogAct;
     QAction *notesAct;
     QMenu *trayMenu;
     QSystemTrayIcon *trayIcon;
@@ -83,6 +84,7 @@ private slots:
     void button_close();
     void open_options();
     void open_about();
+    void open_awaylog();
     void open_notes();
     void button_show();
     void tray_icon(QSystemTrayIcon::ActivationReason);

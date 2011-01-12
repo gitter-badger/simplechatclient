@@ -1293,6 +1293,9 @@ void OnetKernel::raw_001()
     // busy
     settings.setValue("busy", "off");
 
+    // away
+    settings.setValue("away", "off");
+
     // clear friends
     dlgfriends->clear();
 
@@ -2351,6 +2354,9 @@ void OnetKernel::raw_304()
 // :cf1f3.onet 305 scc_test :You are no longer marked as being away
 void OnetKernel::raw_305()
 {
+    QSettings settings;
+    settings.setValue("away", "off");
+
     QString strDisplay = tr("You are no longer marked as being away");
     pTabC->show_msg_active(strDisplay, 7);
 }
@@ -2359,6 +2365,9 @@ void OnetKernel::raw_305()
 // :cf1f3.onet 306 scc_test :You have been marked as being away
 void OnetKernel::raw_306()
 {
+    QSettings settings;
+    settings.setValue("away", "on");
+
     QString strDisplay = tr("You have been marked as being away");
     pTabC->show_msg_active(strDisplay, 7);
 }

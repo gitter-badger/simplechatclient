@@ -39,7 +39,7 @@ class TabContainer : public QObject
 {
     Q_OBJECT
 public:
-    TabContainer(QWidget *, Network *, TabManager *, Notify *, QMap <QString, QByteArray> *, QTcpSocket *, sChannelNickStatus *);
+    TabContainer(QWidget *, Network *, TabManager *, Notify *, QMap <QString, QByteArray> *, QTcpSocket *, sChannelNickStatus *, QList<QString> *);
     ~TabContainer();
     void set_dlg(DlgUserProfile *, DlgCam *);
     inline QString get_name(int i) { if ((i < 0) || (i > tw.count())) return QString::null; else return tw[i]->get_name(); }
@@ -88,6 +88,7 @@ private:
     sChannelNickStatus *mChannelNickStatus;
     DlgUserProfile *pDlg_user_profile;
     DlgCam *pDlg_cam;
+    QList<QString> *lAwaylog;
     // other
     QList <TabWidget *> tw;
 
