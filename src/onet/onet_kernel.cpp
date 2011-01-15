@@ -1,7 +1,7 @@
 /****************************************************************************
  *                                                                          *
  *   This file is part of Simple Chat Client                                *
- *   Copyright (C) 2010 Piotr Łuczko <piotr.luczko@gmail.com>               *
+ *   Copyright (C) 2011 Piotr Łuczko <piotr.luczko@gmail.com>               *
  *                                                                          *
  *   This program is free software: you can redistribute it and/or modify   *
  *   it under the terms of the GNU General Public License as published by   *
@@ -39,42 +39,23 @@ OnetKernel::OnetKernel(QWidget *parent, Network *param1, TabContainer *param2, N
 
 OnetKernel::~OnetKernel()
 {
-    // kill channel avatar threads
-    while(caThreadList.isEmpty() == false)
+    // kill avatar threads
+    while(aThreadList.isEmpty() == false)
     {
-        caThreadList.first()->kill_thread();
-        caThreadList.removeFirst();;
-    }
-
-    // kill nick avatar threads
-    while(naThreadList.isEmpty() == false)
-    {
-        naThreadList.first()->kill_thread();
-        naThreadList.removeFirst();
+        aThreadList.first()->kill_thread();
+        aThreadList.removeFirst();;
     }
 }
 
-void OnetKernel::remove_cathread(ChannelAvatar *cathr)
+void OnetKernel::remove_athread(Avatar *athr)
 {
-    cathr->QObject::disconnect();
-    caThreadList.removeOne(cathr);
+    athr->QObject::disconnect();
+    aThreadList.removeOne(athr);
 
 #ifdef Q_WS_X11
     QSettings settings;
     if (settings.value("debug").toString() == "on")
-        qDebug() << "Channel avatar thread -1 (size: " << caThreadList.size() << ")";
-#endif
-}
-
-void OnetKernel::remove_nathread(NickAvatar *nathr)
-{
-    nathr->QObject::disconnect();
-    naThreadList.removeOne(nathr);
-
-#ifdef Q_WS_X11
-    QSettings settings;
-    if (settings.value("debug").toString() == "on")
-        qDebug() << "Nick avatar thread -1 (size: " << naThreadList.size() << ")";
+        qDebug() << "Avatar thread -1 (size: " << aThreadList.size() << ")";
 #endif
 }
 
@@ -1461,13 +1442,13 @@ void OnetKernel::raw_111n()
     {
         if (mNickAvatar->contains(strNick) == false)
         {
-            naThreadList.append(new NickAvatar(pTabC, strNick, strAvatarLink, mNickAvatar));
-            QObject::connect(naThreadList.at(naThreadList.size()-1), SIGNAL(sremove_nathread(NickAvatar*)), this, SLOT(remove_nathread(NickAvatar*)));
+            aThreadList.append(new Avatar(pTabC, strNick, strAvatarLink, "nick", mNickAvatar, mChannelAvatar));
+            QObject::connect(aThreadList.at(aThreadList.size()-1), SIGNAL(sremove_athread(Avatar*)), this, SLOT(remove_athread(Avatar*)));
 
 #ifdef Q_WS_X11
             QSettings settings;
             if (settings.value("debug").toString() == "on")
-                qDebug() << "Nick avatar thread +1 (size: " << naThreadList.size() << ")";
+                qDebug() << "Avatar thread +1 (size: " << aThreadList.size() << ")";
 #endif
         }
     }
@@ -1715,12 +1696,12 @@ void OnetKernel::raw_161n()
                 QSettings settings;
                 if (settings.value("style").toString() == "modern")
                 {
-                    caThreadList.append(new ChannelAvatar(pTabC, strChannel, strUrl, mChannelAvatar));
-                    QObject::connect(caThreadList.at(caThreadList.size()-1), SIGNAL(sremove_cathread(ChannelAvatar*)), this, SLOT(remove_cathread(ChannelAvatar*)));
+                    aThreadList.append(new Avatar(pTabC, strChannel, strUrl, "channel", mNickAvatar, mChannelAvatar));
+                    QObject::connect(aThreadList.at(aThreadList.size()-1), SIGNAL(sremove_athread(Avatar*)), this, SLOT(remove_athread(Avatar*)));
 
 #ifdef Q_WS_X11
                     if (settings.value("debug").toString() == "on")
-                        qDebug() << "Channel avatar thread +1 (size: " << caThreadList.size() << ")";
+                        qDebug() << "Avatar thread +1 (size: " << aThreadList.size() << ")";
 #endif
                 }
             }

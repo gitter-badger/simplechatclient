@@ -1,7 +1,7 @@
 /****************************************************************************
  *                                                                          *
  *   This file is part of Simple Chat Client                                *
- *   Copyright (C) 2010 Piotr Łuczko <piotr.luczko@gmail.com>               *
+ *   Copyright (C) 2011 Piotr Łuczko <piotr.luczko@gmail.com>               *
  *                                                                          *
  *   This program is free software: you can redistribute it and/or modify   *
  *   it under the terms of the GNU General Public License as published by   *
@@ -97,7 +97,7 @@ void NickListDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opti
     // avatar
     if ((nick[0] != '~') && (strDisableAvatars == "off"))
     {
-        if ((nick != tr("Dev(s)")) && (nick != tr("Admin(s)")) && (nick != tr("Owner(s)")) && (nick != tr("Op(s)")) && (nick != tr("HalfOp(s)")) && (nick != tr("Mod(s)")) && (nick != tr("Screener(s)")) && (nick != tr("Voice(s)")) && (nick != tr("Cam(s)")) && (nick != tr("User(s)")))
+        if ((nick != tr("Developer(s)")) && (nick != tr("Admin(s)")) && (nick != tr("Owner(s)")) && (nick != tr("Op(s)")) && (nick != tr("HalfOp(s)")) && (nick != tr("Mod(s)")) && (nick != tr("Screener(s)")) && (nick != tr("Voice(s)")) && (nick != tr("Cam(s)")) && (nick != tr("User(s)")))
         {
             r = option.rect.adjusted(imageSpace, 0, 10, 0);
             avatar.paint(painter, r, Qt::AlignVCenter|Qt::AlignLeft);

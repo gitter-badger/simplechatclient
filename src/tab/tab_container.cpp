@@ -1,7 +1,7 @@
 /****************************************************************************
  *                                                                          *
  *   This file is part of Simple Chat Client                                *
- *   Copyright (C) 2010 Piotr Łuczko <piotr.luczko@gmail.com>               *
+ *   Copyright (C) 2011 Piotr Łuczko <piotr.luczko@gmail.com>               *
  *                                                                          *
  *   This program is free software: you can redistribute it and/or modify   *
  *   it under the terms of the GNU General Public License as published by   *
@@ -294,16 +294,16 @@ void TabContainer::update_open_channels()
         tw[i]->set_open_channels(strOpenChannels);
 }
 
-void TabContainer::update_channel_avatar(QString strChannel)
+void TabContainer::slot_update_nick_avatar(QString strNick)
+{
+    emit update_nick_avatar(strNick);
+}
+
+void TabContainer::slot_update_channel_avatar(QString strChannel)
 {
     int i = get_index(strChannel);
     if (i != -1)
         tw[i]->update_channel_avatar();
-}
-
-void TabContainer::slot_update_nick_avatar(QString strNick)
-{
-    emit update_nick_avatar(strNick);
 }
 
 void TabContainer::slot_show_msg(QString strChannel, QString strData, int iLevel)

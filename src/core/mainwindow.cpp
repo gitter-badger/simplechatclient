@@ -1,7 +1,7 @@
 /****************************************************************************
  *                                                                          *
  *   This file is part of Simple Chat Client                                *
- *   Copyright (C) 2010 Piotr Łuczko <piotr.luczko@gmail.com>               *
+ *   Copyright (C) 2011 Piotr Łuczko <piotr.luczko@gmail.com>               *
  *                                                                          *
  *   This program is free software: you can redistribute it and/or modify   *
  *   it under the terms of the GNU General Public License as published by   *
@@ -217,7 +217,7 @@ void MainWindow::create_settings()
     // default settings
     QSettings settings;
     settings.clear();
-    settings.setValue("version", "1.0.10.672");
+    settings.setValue("version", "1.0.10.673");
     settings.setValue("debug", "off");
     settings.setValue("logged", "off");
     settings.setValue("busy", "off");

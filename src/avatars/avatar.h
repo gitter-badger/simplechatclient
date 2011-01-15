@@ -1,7 +1,7 @@
 /****************************************************************************
  *                                                                          *
  *   This file is part of Simple Chat Client                                *
- *   Copyright (C) 2010 Piotr Łuczko <piotr.luczko@gmail.com>               *
+ *   Copyright (C) 2011 Piotr Łuczko <piotr.luczko@gmail.com>               *
  *                                                                          *
  *   This program is free software: you can redistribute it and/or modify   *
  *   it under the terms of the GNU General Public License as published by   *
@@ -18,8 +18,8 @@
  *                                                                          *
  ****************************************************************************/
 
-#ifndef NICK_AVATAR_H
-#define NICK_AVATAR_H
+#ifndef AVATAR_H
+#define AVATAR_H
 
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
@@ -28,60 +28,64 @@
 #include "tab_container.h"
 
 /**
- * Thread for downloading nick avatar image
- * @param QString nick
+ * Thread for downloading avatar
+ * @param QString nick or channel name
  * @param QString url
- * @param QMap map with nick avatar
+ * @param QString category
  */
-class NickAvatarThread : public QThread
+class AvatarThread : public QThread
 {
     Q_OBJECT
 public:
-    NickAvatarThread(QString, QString, QMap <QString, QByteArray> *);
+    AvatarThread(QString, QString, QString);
     void run();
 
 private:
-    QString strNick;
+    QString strNickChannel;
     QString strUrl;
-    QMap <QString, QByteArray> *mNickAvatar;
+    QString strCategory;
 
 private slots:
     void thread_work();
 
 signals:
-    void set_avatar(QString);
-    void set_nick_avatar(QString, QByteArray);
+    void set_avatar(QString, QString, QByteArray);
     void stop_thread();
-
 };
 
 /**
- * Class for downloading nick avatar
+ * Class for downloading avatar
  * @param TabContainer* for refresh image
- * @param QString nick
+ * @param QString nick or channel name
  * @param QString url
+ * @param QString category
  * @param QMap map with nick avatar
+ * @param QMap map with channel avatar
  */
-class NickAvatar : public QObject
+class Avatar : public QObject
 {
     Q_OBJECT
 public:
-    NickAvatar(TabContainer *, QString, QString, QMap <QString, QByteArray> *);
+    Avatar(TabContainer *, QString, QString, QString, QMap <QString, QByteArray> *, QMap <QString, QByteArray> *);
     void kill_thread();
 
 private:
     TabContainer *tabc;
-    QString strNick;
+    QString strNickChannel;
     QString strUrl;
+    QString strCategory;
     QMap <QString, QByteArray> *mNickAvatar;
-    NickAvatarThread *nickAvatarThr;
+    QMap <QString, QByteArray> *mChannelAvatar;
+    AvatarThread *avatarThr;
 
 public slots:
-    void set_nick_avatar(QString, QByteArray);
+    void set_avatar(QString, QString, QByteArray);
     void stop_thread();
 
 signals:
-    void sremove_nathread(NickAvatar*);
-
+    void set_nick_avatar(QString);
+    void set_channel_avatar(QString);
+    void sremove_athread(Avatar*);
 };
-#endif // NICK_AVATAR_H
+
+#endif // AVATAR_H

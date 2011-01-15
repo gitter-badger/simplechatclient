@@ -23,8 +23,7 @@ set (scc_UIS
 )
 
 set (scc_SRCS
-	avatars/channel_avatar.cpp
-	avatars/nick_avatar.cpp
+	avatars/avatar.cpp
 	common/commands.cpp
 	common/config.cpp
 	common/convert.cpp
@@ -77,8 +76,7 @@ set (scc_SRCS
 )
 
 set (scc_MOC_HDRS
-	avatars/channel_avatar.h
-	avatars/nick_avatar.h
+	avatars/avatar.h
 	common/commands.h
 	common/config.h
 	common/convert.h

@@ -1,7 +1,7 @@
 /****************************************************************************
  *                                                                          *
  *   This file is part of Simple Chat Client                                *
- *   Copyright (C) 2010 Piotr Łuczko <piotr.luczko@gmail.com>               *
+ *   Copyright (C) 2011 Piotr Łuczko <piotr.luczko@gmail.com>               *
  *                                                                          *
  *   This program is free software: you can redistribute it and/or modify   *
  *   it under the terms of the GNU General Public License as published by   *
@@ -64,8 +64,8 @@ public:
     int get_nick_channels(QString);
 
 public slots:
-    void update_channel_avatar(QString);
     void slot_update_nick_avatar(QString);
+    void slot_update_channel_avatar(QString);
     void slot_show_msg(QString, QString, int);
     void slot_show_msg_active(QString, int);
     void slot_show_msg_all(QString, int);

@@ -1,7 +1,7 @@
 /****************************************************************************
  *                                                                          *
  *   This file is part of Simple Chat Client                                *
- *   Copyright (C) 2010 Piotr Łuczko <piotr.luczko@gmail.com>               *
+ *   Copyright (C) 2011 Piotr Łuczko <piotr.luczko@gmail.com>               *
  *                                                                          *
  *   This program is free software: you can redistribute it and/or modify   *
  *   it under the terms of the GNU General Public License as published by   *
@@ -23,7 +23,7 @@
 
 #include <QMessageBox>
 #include <QObject>
-#include "channel_avatar.h"
+#include "avatar.h"
 #include "dlg_channel_favourites.h"
 #include "dlg_channel_homes.h"
 #include "dlg_channel_key.h"
@@ -34,7 +34,6 @@
 #include "dlg_moderation.h"
 #include "dlg_invite.h"
 #include "network.h"
-#include "nick_avatar.h"
 #include "onet_auth.h"
 #include "tab_container.h"
 
@@ -67,8 +66,7 @@ private:
     DlgModeration *dlgmoderation;
     QString strData;
     QStringList strDataList;
-    QList <ChannelAvatar*> caThreadList;
-    QList <NickAvatar*> naThreadList;
+    QList <Avatar*> aThreadList;
     QMap <QString, QString> mOldNameNewName; // rename channels
 
     void raw_error();
@@ -265,8 +263,7 @@ private:
     void raw_952();
 
 private slots:
-    void remove_cathread(ChannelAvatar*);
-    void remove_nathread(NickAvatar*);
+    void remove_athread(Avatar*);
     void timer_rename_channel();
 
 signals:

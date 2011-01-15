@@ -8,8 +8,7 @@ QT += network \
 TARGET = scc
 TEMPLATE = app
 RESOURCES += scc.qrc
-SOURCES += src/avatars/channel_avatar.cpp \
-    src/avatars/nick_avatar.cpp \
+SOURCES += src/avatars/avatar.cpp \
     src/common/commands.cpp \
     src/common/config.cpp \
     src/common/convert.cpp \
@@ -60,8 +59,7 @@ SOURCES += src/avatars/channel_avatar.cpp \
     src/widgets/nicklistdockwidget.cpp \
     src/widgets/simplerankwidget.cpp \
     src/widgets/toolwidget.cpp
-HEADERS += src/avatars/channel_avatar.h \
-    src/avatars/nick_avatar.h \
+HEADERS += src/avatars/avatar.h \
     src/common/commands.h \
     src/common/config.h \
     src/common/convert.h \
