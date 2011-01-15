@@ -81,6 +81,7 @@ private slots:
     void connected();
     void disconnected();
     void error(QAbstractSocket::SocketError);
+    void state_changed(QAbstractSocket::SocketState);
     void timeout_pingpong();
     void timeout_lag();
     void timeout_queue();

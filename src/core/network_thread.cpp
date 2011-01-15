@@ -47,6 +47,7 @@ NetworkThread::NetworkThread(QAction *param1, QAction *param2, QString param3, i
     QObject::connect(socket, SIGNAL(connected()), this, SLOT(connected()));
     QObject::connect(socket, SIGNAL(disconnected()), this, SLOT(disconnected()));
     QObject::connect(socket, SIGNAL(error(QAbstractSocket::SocketError)), this, SLOT(error(QAbstractSocket::SocketError)));
+    QObject::connect(socket, SIGNAL(stateChanged(QAbstractSocket::SocketState)), this, SLOT(state_changed(QAbstractSocket::SocketState)));
 
     QObject::connect(timerPingPong, SIGNAL(timeout()), this, SLOT(timeout_pingpong()));
     QObject::connect(timerLag, SIGNAL(timeout()), this, SLOT(timeout_lag()));
@@ -349,6 +350,17 @@ void NetworkThread::error(QAbstractSocket::SocketError err)
         bReconnecting = true;
         QTimer::singleShot(30*1000, this, SLOT(reconnect()));
     }
+}
+
+/**
+ * Disable connect button if state not connected and not unconnected
+ */
+void NetworkThread::state_changed(QAbstractSocket::SocketState socketState)
+{
+    if ((socketState != QAbstractSocket::UnconnectedState) && (socketState != QAbstractSocket::ConnectedState))
+        connectAct->setEnabled(false);
+    else
+        connectAct->setEnabled(true);
 }
 
 void NetworkThread::timeout_pingpong()

@@ -149,6 +149,8 @@ void OnetKernel::kernel(QString param1)
             raw_modernotice();
         else if (strDataList[1].toLower() == "moderate")
             raw_moderate();
+        else if (strDataList[1].toLower() == "kill")
+            raw_kill();
         else
             bUnknownRaw1 = true;
 
@@ -1272,6 +1274,41 @@ void OnetKernel::raw_moderate()
         strMessage = strMessage.right(strMessage.length()-1);
 
     dlgmoderation->add_msg(strID, strChannel, strNick, strMessage);
+}
+
+// :cf1f4.onet KILL scc_test :cf1f4.onet (Killed (Nickname collision))
+// :Darom!12265854@devel.onet KILL Merovingian :cf1f4.onet!devel.onet!Darom (Killed (Darom (bo tak)))
+void OnetKernel::raw_kill()
+{
+    if (strDataList.value(2).isEmpty() == true) return;
+    if (strDataList.value(3).isEmpty() == true) return;
+
+    QString strNick = strDataList[2];
+    if (strNick[0] == ':')
+        strNick = strNick.right(strNick.length()-1);
+    strNick = strNick.left(strNick.indexOf('!'));
+
+    QString strWho = strDataList[3];
+    if (strWho[0] == ':')
+        strWho = strWho.right(strWho.length()-1);
+    QRegExp rx("(.*)!(.*)!(.*)");
+    if (rx.exactMatch(strWho))
+        strWho = strWho.replace(QRegExp("(.*)!(.*)!(.*)"), "\\3");
+
+    QString strReason;
+    for (int i = 4; i < strDataList.size(); i++) { if (i != 4) strReason += " "; strReason += strDataList[i]; }
+
+    QSettings settings;
+    QString strMe = settings.value("nick").toString();
+
+    QString strDisplay;
+    if (strNick == strMe)
+        strDisplay = QString(tr("* You were killed by %1 %2")).arg(strWho).arg(strReason);
+    else
+        strDisplay = QString(tr("* %1 were killed by %2 %3")).arg(strNick).arg(strWho).arg(strReason);
+
+    // display
+    pTabC->show_msg_all(strDisplay, 9);
 }
 
 // :cf1f4.onet 001 scc_test :Welcome to the OnetCzat IRC Network scc_test!51976824@83.28.35.219

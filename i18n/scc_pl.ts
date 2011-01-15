@@ -1887,6 +1887,14 @@
         <translation>* %1 zignorował/a Twoje zaproszenie do kanału %2</translation>
     </message>
     <message>
+        <source>* You were killed by %1 %2</source>
+        <translation>* Zostałeś rozłączony przez %1 %2</translation>
+    </message>
+    <message>
+        <source>* %1 were killed by %2 %3</source>
+        <translation>* %1 został rozłączony przez %2 %3</translation>
+    </message>
+    <message>
         <source>* %1 In progress on channel %2</source>
         <translation>* %1 Właśnie trwa na kanale %2</translation>
     </message>
