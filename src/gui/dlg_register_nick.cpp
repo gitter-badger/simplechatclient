@@ -18,6 +18,16 @@
  *                                                                          *
  ****************************************************************************/
 
+#include <QDesktopWidget>
+#include <QDomDocument>
+#include <QHideEvent>
+#include <QHostInfo>
+#include <QMessageBox>
+#include <QSettings>
+#include <QShowEvent>
+#include <QUrl>
+#include "config.h"
+#include "crypt.h"
 #include "dlg_register_nick.h"
 
 DlgRegisterNick::DlgRegisterNick(QWidget *parent, QWidget *param1) : QDialog(parent)

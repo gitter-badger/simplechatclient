@@ -21,14 +21,8 @@
 #ifndef CRYPT_H
 #define CRYPT_H
 
-#ifdef Q_WS_X11
-#include <QDebug>
-#endif
+class Config;
 #include <QObject>
-#include <QtCrypto>
-// in OpenSuSE 11 try this:
-//#include <QtCrypto/QtCrypto>
-#include "config.h"
 
 /**
  * Crypt class
@@ -60,7 +54,6 @@ private:
      * Generate iv
      */
     void gen_iv();
-
 };
 
 #endif // CRYPT_H

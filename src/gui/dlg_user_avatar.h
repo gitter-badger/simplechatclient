@@ -22,7 +22,6 @@
 #define DLG_USER_AVATAR_H
 
 #include <QDialog>
-#include <QDesktopWidget>
 #include "ui_user_avatar.h"
 
 class DlgUserAvatar : public QDialog
@@ -41,7 +40,6 @@ private slots:
     void slider_value_changed(int);
     void button_zoom_in();
     void button_ok();
-
 };
 
 #endif // DLG_USER_AVATAR_H

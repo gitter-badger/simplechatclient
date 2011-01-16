@@ -21,12 +21,7 @@
 #ifndef DLG_CHANNEL_LIST_H
 #define DLG_CHANNEL_LIST_H
 
-#include <QCloseEvent>
 #include <QDialog>
-#include <QDesktopWidget>
-#include <QKeyEvent>
-#include <QSettings>
-#include <QShowEvent>
 #include "ui_channel_list.h"
 
 class DlgChannelList : public QDialog
@@ -73,7 +68,6 @@ private slots:
 
 signals:
     void send(QString);
-
 };
 
 #endif // DLG_CHANNEL_LIST_H

@@ -21,18 +21,13 @@
 #ifndef INPUTWIDGET_H
 #define INPUTWIDGET_H
 
-#include <QComboBox>
+class InputLineWidget;
+class Network;
 #include <QHBoxLayout>
 #include <QLabel>
 #include <QPushButton>
-#include <QSettings>
+#include <QTreeWidget>
 #include <QWidget>
-#include "commands.h"
-#include "inputlinewidget.h"
-#include "log.h"
-#include "network.h"
-#include "replace.h"
-#include "replace.h"
 
 class InputWidget : public QWidget
 {
@@ -80,7 +75,6 @@ signals:
     void show_msg(QString, QString, int);
     void display_message(QString, QString, int);
     void show_hide_toolwidget();
-
 };
 
 #endif // INPUTWIDGET_H

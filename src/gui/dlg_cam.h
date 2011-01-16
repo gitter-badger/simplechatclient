@@ -21,23 +21,12 @@
 #ifndef DLG_CAM_H
 #define DLG_CAM_H
 
-#include <QBuffer>
-#include <QDesktopWidget>
+class Network;
+class SimpleRankWidget;
 #include <QDialog>
-#include <QFile>
-#include <QFileDialog>
-#include <QHideEvent>
-#include <QPainter>
-#include <QPushButton>
-#include <QSettings>
-#include <QShowEvent>
-#include <QStringList>
 #include <QTcpSocket>
-#include <QTimer>
 #include "ui_cam.h"
-#include "config.h"
-#include "network.h"
-#include "simplerankwidget.h"
+
 // opencv
 #ifndef Q_WS_WIN
 #include <opencv/highgui.h>
@@ -141,7 +130,6 @@ protected:
     virtual void showEvent(QShowEvent *);
     virtual void hideEvent(QHideEvent *);
     virtual void closeEvent(QCloseEvent *);
-
 };
 
 #endif // DLG_CAM_H

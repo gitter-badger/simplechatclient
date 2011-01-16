@@ -18,7 +18,32 @@
  *                                                                          *
  ****************************************************************************/
 
+#include <QSettings>
+#include "dlg_awaylog.h"
+#include "dlg_channel_favourites.h"
+#include "dlg_channel_homes.h"
+#include "dlg_channel_list.h"
+#include "dlg_channel_settings.h"
+#include "dlg_friends.h"
+#include "dlg_ignore.h"
+#include "dlg_moderation.h"
+#include "dlg_user_profile.h"
+#include "inputlinedockwidget.h"
+#include "network.h"
+#include "nicklistdelegate.h"
+#include "nicklistwidget.h"
+#include "nicklistdockwidget.h"
+#include "onet_auth.h"
+#include "onet_kernel.h"
+#include "tab_container.h"
+#include "tab_manager.h"
 #include "core.h"
+
+#ifdef Q_WS_WIN
+#include "kamerzysta.h"
+#else
+#include "dlg_cam.h"
+#endif
 
 Core::Core(QMainWindow *parent, QString param1, int param2, Notify *param3, QAction *param4, QToolBar *param5, QMenu *param6)
 {

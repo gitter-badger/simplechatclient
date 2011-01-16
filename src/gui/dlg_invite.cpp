@@ -18,6 +18,8 @@
  *                                                                          *
  ****************************************************************************/
 
+#include <QDesktopWidget>
+#include "network.h"
 #include "dlg_invite.h"
 
 DlgInvite::DlgInvite(QWidget *parent, Network *param1, QString param2, QString param3) : QDialog(parent)

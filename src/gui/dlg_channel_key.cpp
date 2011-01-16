@@ -18,6 +18,9 @@
  *                                                                          *
  ****************************************************************************/
 
+#include <QDesktopWidget>
+#include <QPushButton>
+#include "network.h"
 #include "dlg_channel_key.h"
 
 DlgChannelKey::DlgChannelKey(QWidget *parent, Network *param1, QString param2) : QDialog(parent)

@@ -21,16 +21,8 @@
 #ifndef UPDATE_H
 #define UPDATE_H
 
-#ifdef Q_WS_X11
-#include <QDebug>
-#endif
-#include <QDomDocument>
-#include <QHostInfo>
-#include <QNetworkAccessManager>
 #include <QNetworkReply>
 #include <QObject>
-#include <QSettings>
-#include "dlg_update.h"
 
 /**
  * Update class. If there is update it show dialog from dlg_update.
@@ -51,7 +43,6 @@ private:
 
 private slots:
     void update_finished();
-
 };
 
 #endif // UPDATE_H

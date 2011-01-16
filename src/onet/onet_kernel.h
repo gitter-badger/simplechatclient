@@ -21,21 +21,20 @@
 #ifndef ONET_KERNEL_H
 #define ONET_KERNEL_H
 
-#include <QMessageBox>
+class Avatar;
+class DlgChannelSettings;
+class DlgChannelHomes;
+class DlgChannelList;
+class DlgChannelFavourites;
+class DlgFriends;
+class DlgIgnore;
+class DlgModeration;
+class Network;
+class Notify;
+class TabContainer;
+#include <QMap>
 #include <QObject>
-#include "avatar.h"
-#include "dlg_channel_favourites.h"
-#include "dlg_channel_homes.h"
-#include "dlg_channel_key.h"
-#include "dlg_channel_list.h"
-#include "dlg_channel_settings.h"
-#include "dlg_friends.h"
-#include "dlg_ignore.h"
-#include "dlg_moderation.h"
-#include "dlg_invite.h"
-#include "network.h"
-#include "onet_auth.h"
-#include "tab_container.h"
+#include <QStringList>
 
 /**
  * Irc messages parser
@@ -278,7 +277,6 @@ signals:
     void clear_nicklist(QString);
     void set_user_info(QString,QString,QString);
     void clear_channel_all_nick_avatars(QString);
-
 };
 
 #endif // ONET_KERNEL_H

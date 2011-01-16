@@ -21,12 +21,8 @@
 #ifndef DLG_CHANNEL_FAVOURITES_H
 #define DLG_CHANNEL_FAVOURITES_H
 
-#include <QCloseEvent>
-#include <QDesktopWidget>
+class Network;
 #include <QDialog>
-#include <QInputDialog>
-#include <QShowEvent>
-#include "network.h"
 #include "ui_channel_favourites.h"
 
 class DlgChannelFavourites : public QDialog
@@ -53,7 +49,6 @@ private slots:
 protected:
     virtual void showEvent(QShowEvent *);
     virtual void closeEvent(QCloseEvent *);
-
 };
 
 #endif // DLG_CHANNEL_FAVOURITES_H

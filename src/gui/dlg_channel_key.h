@@ -21,10 +21,8 @@
 #ifndef DLG_CHANNEL_KEY_H
 #define DLG_CHANNEL_KEY_H
 
+class Network;
 #include <QDialog>
-#include <QDesktopWidget>
-#include <QPushButton>
-#include "network.h"
 #include "ui_channel_key.h"
 
 class DlgChannelKey : public QDialog
@@ -41,7 +39,6 @@ private:
 private slots:
     void button_ok();
     void button_cancel();
-
 };
 
 #endif // DLG_CHANNEL_KEY_H

@@ -21,16 +21,15 @@
 #ifndef TOOLWIDGET_H
 #define TOOLWIDGET_H
 
+class DlgChannelSettings;
+class DlgModeration;
+class InputWidget;
+class Network;
 #include <QComboBox>
 #include <QHBoxLayout>
 #include <QMenu>
 #include <QPushButton>
-#include <QSettings>
 #include <QWidget>
-#include "dlg_channel_settings.h"
-#include "dlg_emoticons.h"
-#include "dlg_moderation.h"
-
 
 class ToolWidget : public QWidget
 {
@@ -121,7 +120,6 @@ signals:
     void change_font_size(QString);
     void clear_content(QString);
     void set_scroll(QString, bool);
-
 };
 
 #endif // TOOLWIDGET_H

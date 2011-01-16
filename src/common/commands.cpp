@@ -18,6 +18,9 @@
  *                                                                          *
  ****************************************************************************/
 
+#include <QIcon>
+#include <QMessageBox>
+#include <QSettings>
 #include "commands.h"
 
 Commands::Commands(QString param1, QString param2)

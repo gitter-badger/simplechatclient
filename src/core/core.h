@@ -21,35 +21,31 @@
 #ifndef CORE_H
 #define CORE_H
 
+#include "defines.h"
+class DlgCam;
+class DlgChannelFavourites;
+class DlgChannelHomes;
+class DlgChannelList;
+class DlgChannelSettings;
+class DlgFriends;
+class DlgIgnore;
+class DlgModeration;
+class DlgUserProfile;
+class InputLineDockWidget;
+class Network;
+class NickListDockWidget;
+class NickListWidget;
+class Notify;
+class OnetAuth;
+class OnetKernel;
+class TabContainer;
+class TabManager;
 #include <QDockWidget>
 #include <QMainWindow>
 #include <QMenuBar>
 #include <QObject>
-#include <QTabWidget>
+#include <QTcpSocket>
 #include <QToolBar>
-#include "dlg_awaylog.h"
-#include "dlg_channel_favourites.h"
-#include "dlg_channel_homes.h"
-#include "dlg_channel_list.h"
-#include "dlg_channel_settings.h"
-#include "dlg_friends.h"
-#include "dlg_ignore.h"
-#include "dlg_moderation.h"
-#include "inputlinedockwidget.h"
-#ifdef Q_WS_WIN
-#include "kamerzysta.h"
-#else
-#include "dlg_cam.h"
-#endif
-#include "network.h"
-#include "nicklistdelegate.h"
-#include "nicklistwidget.h"
-#include "nicklistdockwidget.h"
-#include "onet_auth.h"
-#include "onet_kernel.h"
-#include "tab_container.h"
-#include "tab_manager.h"
-
 /**
  * Core
  */
@@ -139,7 +135,6 @@ private slots:
 signals:
     void skernel(QString);
     void srequest_uo(QString, QString, QString);
-
 };
 
 #endif // CORE_H

@@ -21,10 +21,7 @@
 #ifndef DLG_ABOUT_H
 #define DLG_ABOUT_H
 
-#include <QDesktopWidget>
 #include <QDialog>
-#include <QPushButton>
-#include <QSettings>
 #include "ui_about.h"
 
 class DlgAbout : public QDialog
@@ -38,7 +35,6 @@ private:
 
 private slots:
     void button_ok();
-
 };
 
 #endif // DLG_ABOUT_H

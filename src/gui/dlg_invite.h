@@ -21,9 +21,8 @@
 #ifndef DLG_PRIV_H
 #define DLG_PRIV_H
 
-#include <QDesktopWidget>
+class Network;
 #include <QDialog>
-#include "network.h"
 #include "ui_invite.h"
 
 class DlgInvite : public QDialog
@@ -43,7 +42,6 @@ private slots:
     void button_reject();
     void button_ignore();
     void button_accept();
-
 };
 
 #endif // DLG_PRIV_H

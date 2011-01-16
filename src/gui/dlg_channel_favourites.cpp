@@ -18,6 +18,11 @@
  *                                                                          *
  ****************************************************************************/
 
+#include <QCloseEvent>
+#include <QDesktopWidget>
+#include <QInputDialog>
+#include <QShowEvent>
+#include "network.h"
 #include "dlg_channel_favourites.h"
 
 DlgChannelFavourites::DlgChannelFavourites(QWidget *parent, Network *param1, QMap <QString, QByteArray> *param2) : QDialog(parent)

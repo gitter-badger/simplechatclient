@@ -18,6 +18,11 @@
  *                                                                          *
  ****************************************************************************/
 
+#include <QCloseEvent>
+#include <QDesktopWidget>
+#include <QKeyEvent>
+#include <QSettings>
+#include <QShowEvent>
 #include "dlg_channel_list.h"
 
 DlgChannelList::DlgChannelList(QWidget *parent) : QDialog(parent)

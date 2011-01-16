@@ -21,15 +21,7 @@
 #ifndef DLG_NOTES_H
 #define DLG_NOTES_H
 
-#include <QDesktopWidget>
-#ifdef Q_WS_X11
-#include <QDebug>
-#endif
 #include <QDialog>
-#include <QDir>
-#include <QFile>
-#include <QPushButton>
-#include <QSettings>
 #include "ui_notes.h"
 
 class DlgNotes : public QDialog
@@ -51,7 +43,6 @@ private:
 private slots:
     void button_ok();
     void button_cancel();
-
 };
 
 #endif // DLG_NOTES_H

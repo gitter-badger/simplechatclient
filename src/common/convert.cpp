@@ -18,6 +18,10 @@
  *                                                                          *
  ****************************************************************************/
 
+#include <QCoreApplication>
+#include <QFile>
+#include <QSettings>
+#include <QStringListIterator>
 #include "convert.h"
 
 Convert::Convert()

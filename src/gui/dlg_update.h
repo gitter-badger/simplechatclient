@@ -21,10 +21,7 @@
 #ifndef DLG_UPDATE_H
 #define DLG_UPDATE_H
 
-#include <QDesktopWidget>
 #include <QDialog>
-#include <QHideEvent>
-#include <QPushButton>
 #include "ui_update.h"
 
 class DlgUpdate : public QDialog
@@ -42,7 +39,6 @@ private slots:
 
 protected:
     virtual void hideEvent(QHideEvent *);
-
 };
 
 #endif // DLG_UPDATE_H

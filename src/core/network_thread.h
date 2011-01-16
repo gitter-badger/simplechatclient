@@ -22,22 +22,8 @@
 #define NETWORK_THREAD_H
 
 #include <QAction>
-#include <QHostInfo>
-#include <QObject>
-#include <QQueue>
-#include <QSettings>
 #include <QTcpSocket>
-#include <QTimer>
-#include "crypt.h"
-
-struct NickStatus
-{
-    QString channel;
-    QString nick;
-    QString prefix;
-    QString suffix;
-};
-typedef QList<NickStatus> sChannelNickStatus;
+#include <QThread>
 
 /**
  * Network thread class
@@ -94,7 +80,6 @@ signals:
     void update_nick(QString);
     void clear_nicklist(QString);
     void clear_all_nicklist();
-
 };
 
 #endif // NETWORK_THREAD_H

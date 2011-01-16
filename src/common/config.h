@@ -21,17 +21,10 @@
 #ifndef CONFIG_H
 #define CONFIG_H
 
-#include <QCoreApplication>
 #include <QDomDocument>
-#ifdef Q_WS_X11
-#include <QDebug>
-#endif
-#include <QDir>
 #include <QFile>
+#include <QMap>
 #include <QObject>
-#ifndef Q_WS_X11
-#include <QSettings>
-#endif
 
 /**
  * Class for config read/write
@@ -71,7 +64,6 @@ private:
     void create_new_config();
     void add_config_value(QDomDocument *, QDomElement *, QString, QString);
     void save();
-
 };
 
 #endif // CONFIG_H

@@ -18,6 +18,8 @@
  *                                                                          *
  ****************************************************************************/
 
+#include <QPainter>
+#include <QSettings>
 #include "nicklistdelegate.h"
 
 NickListDelegate::NickListDelegate(QObject *parent)

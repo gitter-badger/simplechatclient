@@ -18,6 +18,7 @@
  *                                                                          *
  ****************************************************************************/
 
+#include <QDesktopWidget>
 #include "dlg_user_avatar.h"
 
 DlgUserAvatar::DlgUserAvatar(QWidget *parent, QPixmap param1) : QDialog(parent)

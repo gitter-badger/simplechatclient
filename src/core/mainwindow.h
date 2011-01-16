@@ -21,19 +21,15 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#ifdef Q_WS_X11
-#include <QDebug>
-#endif
+class Core;
+class DlgAbout;
+class DlgNotes;
+class DlgOptions;
+class Notify;
+class Update;
+#include <QMainWindow>
 #include <QSystemTrayIcon>
-#include <QtGui/QMainWindow>
-#include "config.h"
-#include "core.h"
-#include "crypt.h"
-#include "dlg_about.h"
-#include "dlg_notes.h"
-#include "dlg_options.h"
-#include "notify.h"
-#include "update.h"
+#include <QToolBar>
 
 /**
  * Main window

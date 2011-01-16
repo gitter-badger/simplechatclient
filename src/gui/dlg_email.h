@@ -22,17 +22,9 @@
 #define DLG_EMAIL_H
 
 #include <QDialog>
-#include <QDesktopWidget>
-#include <QDomDocument>
-#include <QHideEvent>
-#include <QHostInfo>
-#include <QMessageBox>
 #include <QNetworkAccessManager>
 #include <QNetworkCookieJar>
 #include <QNetworkReply>
-#include <QSettings>
-#include <QShowEvent>
-#include <QUrl>
 #include "ui_email.h"
 
 class DlgEmail : public QDialog
@@ -62,7 +54,6 @@ private slots:
 protected:
     virtual void showEvent(QShowEvent *);
     virtual void hideEvent(QHideEvent *);
-
 };
 
 #endif // DLG_EMAIL_H

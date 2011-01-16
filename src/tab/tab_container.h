@@ -21,16 +21,18 @@
 #ifndef TAB_CONTAINER_H
 #define TAB_CONTAINER_H
 
+#include "defines.h"
+class DlgCam;
+class DlgChannelSettings;
+class DlgModeration;
+class DlgUserProfile;
+class Network;
+class Notify;
+class TabManager;
+class TabWidget;
+#include <QMap>
 #include <QObject>
-#include <QSettings>
-#include "log.h"
-#include "network.h"
-#include "dlg_cam.h"
-#include "dlg_channel_settings.h"
-#include "dlg_moderation.h"
-#include "notify.h"
-#include "tab_manager.h"
-#include "tab_widget.h"
+#include <QTcpSocket>
 
 /**
  * Class for displaying messages in tabs or change main window settings
@@ -42,7 +44,7 @@ public:
     TabContainer(QWidget *, Network *, TabManager *, Notify *, QMap <QString, QByteArray> *, QTcpSocket *, sChannelNickStatus *, QList<QString> *);
     ~TabContainer();
     void set_dlg(DlgUserProfile *, DlgCam *);
-    inline QString get_name(int i) { if ((i < 0) || (i > tw.count())) return QString::null; else return tw[i]->get_name(); }
+    QString get_name(int);
     bool exist_tab(QString);
     void add_tab(QString);
     void remove_tab(QString);
@@ -101,7 +103,6 @@ signals:
     void currentChanged(int);
     void update_nick_avatar(QString);
     void set_open_channels();
-
 };
 
 #endif // TAB_CONTAINER_H

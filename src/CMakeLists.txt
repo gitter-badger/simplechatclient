@@ -128,6 +128,7 @@ set (scc_MOC_HDRS
 
 set (scc_HDRS
 	core/debug.h
+	core/defines.h
 )
 
 # debug

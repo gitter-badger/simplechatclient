@@ -22,7 +22,6 @@
 #define REPLACE_H
 
 #include <QObject>
-#include <QSettings>
 
 /**
  * Replace emots like ;) to %Ihehe%
@@ -33,7 +32,6 @@ class Replace : public QObject
 public:
     Replace();
     QString replace_emots(QString);
-
 };
 
 #endif // REPLACE_H

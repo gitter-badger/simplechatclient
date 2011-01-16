@@ -21,20 +21,10 @@
 #ifndef DLG_REGISTER_NICK_H
 #define DLG_REGISTER_NICK_H
 
-#include <QDesktopWidget>
 #include <QDialog>
-#include <QDomDocument>
-#include <QHideEvent>
-#include <QHostInfo>
-#include <QMessageBox>
 #include <QNetworkAccessManager>
 #include <QNetworkCookieJar>
 #include <QNetworkReply>
-#include <QSettings>
-#include <QShowEvent>
-#include <QUrl>
-#include "config.h"
-#include "crypt.h"
 #include "ui_register_nick.h"
 
 class DlgRegisterNick : public QDialog
@@ -64,7 +54,6 @@ private slots:
 protected:
     virtual void showEvent(QShowEvent *);
     virtual void hideEvent(QHideEvent *);
-
 };
 
 #endif // DLG_REGISTER_NICK_H

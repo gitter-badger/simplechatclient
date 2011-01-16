@@ -18,6 +18,9 @@
  *                                                                          *
  ****************************************************************************/
 
+#include <QBrush>
+#include <QPainter>
+#include <QPen>
 #include "simplerankwidget.h"
 
 SimpleRankWidget::SimpleRankWidget(QWidget *parent, int param1, int param2, int param3) : QWidget(parent)

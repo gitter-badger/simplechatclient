@@ -21,11 +21,9 @@
 #ifndef DLG_CHANNEL_HOMES_H
 #define DLG_CHANNEL_HOMES_H
 
+class DlgChannelSettings;
+class Network;
 #include <QDialog>
-#include <QDesktopWidget>
-#include <QInputDialog>
-#include "dlg_channel_settings.h"
-#include "network.h"
 #include "ui_channel_homes.h"
 
 class DlgChannelHomes : public QDialog
@@ -55,7 +53,6 @@ private slots:
     void button_remove();
     void button_join();
     void button_close();
-
 };
 
 #endif // DLG_CHANNEL_HOMES_H

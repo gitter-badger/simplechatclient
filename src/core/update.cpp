@@ -18,6 +18,11 @@
  *                                                                          *
  ****************************************************************************/
 
+#include <QDomDocument>
+#include <QHostInfo>
+#include <QSettings>
+#include <QStringList>
+#include "dlg_update.h"
 #include "update.h"
 
 Update::Update(QWidget *parent)

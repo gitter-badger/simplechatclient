@@ -21,12 +21,8 @@
 #ifndef DLG_EMOTICONS_H
 #define DLG_EMOTICONS_H
 
-#include <QDesktopWidget>
+class InputWidget;
 #include <QDialog>
-#include <QDir>
-#include <QPixmap>
-#include <QShowEvent>
-#include "inputwidget.h"
 #include "ui_emoticons.h"
 
 class DlgEmoticons : public QDialog
@@ -53,7 +49,6 @@ private slots:
 
 protected:
     void showEvent(QShowEvent *);
-
 };
 
 #endif // DLG_EMOTICONS_H

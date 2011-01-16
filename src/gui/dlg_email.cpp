@@ -18,6 +18,14 @@
  *                                                                          *
  ****************************************************************************/
 
+#include <QDesktopWidget>
+#include <QDomDocument>
+#include <QHideEvent>
+#include <QHostInfo>
+#include <QMessageBox>
+#include <QSettings>
+#include <QShowEvent>
+#include <QUrl>
 #include "dlg_email.h"
 
 DlgEmail::DlgEmail(QWidget *parent, QString param1, QString param2) : QDialog(parent)

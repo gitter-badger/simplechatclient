@@ -21,12 +21,8 @@
 #ifndef DLG_FRIENDS_H
 #define DLG_FRIENDS_H
 
-#include <QCloseEvent>
-#include <QDesktopWidget>
+class Network;
 #include <QDialog>
-#include <QInputDialog>
-#include <QShowEvent>
-#include "network.h"
 #include "ui_friends.h"
 
 class DlgFriends : public QDialog
@@ -56,7 +52,6 @@ private slots:
 protected:
     virtual void showEvent(QShowEvent *);
     virtual void closeEvent(QCloseEvent *);
-
 };
 
 #endif // DLG_FRIENDS_H

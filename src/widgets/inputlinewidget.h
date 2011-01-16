@@ -21,10 +21,7 @@
 #ifndef INPUTLINEWIDGET_H
 #define INPUTLINEWIDGET_H
 
-#include <QEvent>
-#include <QKeyEvent>
 #include <QLineEdit>
-#include <QTreeWidget>
 
 class InputLineWidget : public QLineEdit
 {
@@ -46,7 +43,6 @@ private:
 
 protected:
     virtual bool event(QEvent *);
-
 };
 
 #endif // INPUTLINEWIDGET_H

@@ -21,17 +21,7 @@
 #ifndef LOG_H
 #define LOG_H
 
-#include <QCoreApplication>
-#include <QDir>
-#include <QFile>
 #include <QObject>
-#include <QTextStream>
-#ifdef Q_WS_X11
-#include <QDebug>
-#endif
-#ifndef Q_WS_X11
-#include <QSettings>
-#endif
 
 /**
  * Save log to file
@@ -50,7 +40,6 @@ public:
 
 private:
     QString convert(QString);
-
 };
 
 #endif // LOG_H

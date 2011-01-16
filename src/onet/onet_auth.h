@@ -21,13 +21,9 @@
 #ifndef ONET_AUTH_H
 #define ONET_AUTH_H
 
-#include <QHostInfo>
+class TabContainer;
 #include <QNetworkAccessManager>
-#include <QNetworkCookieJar>
-#include <QNetworkReply>
 #include <QObject>
-#include <QUrl>
-#include "tab_container.h"
 
 /**
  * Authorize class for onet
@@ -52,7 +48,6 @@ private:
 
 signals:
     void send(QString);
-
 };
 
 #endif // ONET_AUTH_H

@@ -18,6 +18,12 @@
  *                                                                          *
  ****************************************************************************/
 
+#include <QCloseEvent>
+#include <QDesktopWidget>
+#include <QInputDialog>
+#include <QSettings>
+#include <QShowEvent>
+#include "network.h"
 #include "dlg_ignore.h"
 
 DlgIgnore::DlgIgnore(QWidget *parent, Network *param1, QMap <QString, QByteArray> *param2) : QDialog(parent)

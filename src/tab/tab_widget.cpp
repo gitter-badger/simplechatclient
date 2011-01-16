@@ -18,6 +18,15 @@
  *                                                                          *
  ****************************************************************************/
 
+#include <QtWebKit/QWebFrame>
+#include <QDateTime>
+#include <QSettings>
+#include "convert.h"
+#include "dlg_cam.h"
+#include "log.h"
+#include "network.h"
+#include "mainwebview.h"
+#include "notify.h"
 #include "tab_widget.h"
 
 TabWidget::TabWidget(QWidget *parent, Network *param1, QString param2, Notify *param3, QMap <QString, QByteArray> *param4, QTcpSocket *param5, sChannelNickStatus *param6, DlgUserProfile *param7, DlgCam *param8, QList<QString> *param9)

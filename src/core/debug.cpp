@@ -18,7 +18,22 @@
  *                                                                          *
  ****************************************************************************/
 
+#include <QCoreApplication>
+#include <QDir>
+#include <QFile>
+#ifndef Q_WS_X11
+#include <QSettings>
+#endif
+#include <QTextStream>
+// for abort()
+#include <stdio.h>
+#include <stdlib.h>
+// debug
 #include "debug.h"
+
+#ifdef Q_WS_X11
+#include <QDebug>
+#endif
 
 void saveMessage(QString strFilename, QString strData)
 {

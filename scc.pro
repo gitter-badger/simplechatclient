@@ -69,6 +69,7 @@ HEADERS += src/avatars/avatar.h \
     src/common/replace.h \
     src/core/core.h \
     src/core/debug.h \
+    src/core/defines.h \
     src/core/main.h \
     src/core/mainwindow.h \
     src/core/network.h \

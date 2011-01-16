@@ -39,7 +39,6 @@ public:
 private:
     QWidget *myparent;
     QTabBar *tab;
-
 };
 
 #endif // TAB_MANAGER_H

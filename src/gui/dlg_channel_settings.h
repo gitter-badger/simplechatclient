@@ -21,15 +21,8 @@
 #ifndef DLG_CHANNEL_SETTINGS_H
 #define DLG_CHANNEL_SETTINGS_H
 
-#ifdef Q_WS_X11
-#include <QDebug>
-#endif
-#include <QDateTime>
-#include <QDesktopWidget>
+class Network;
 #include <QDialog>
-#include <QInputDialog>
-#include "dlg_email.h"
-#include "network.h"
 #include "ui_channel_settings.h"
 
 class DlgChannelSettings : public QDialog
@@ -99,7 +92,6 @@ private slots:
     void button_invite_del();
     void button_ok();
     void button_cancel();
-
 };
 
 #endif // DLG_CHANNEL_SETTINGS_H

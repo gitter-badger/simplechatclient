@@ -18,7 +18,17 @@
  *                                                                          *
  ****************************************************************************/
 
+#include <QDateTime>
+#include <QDesktopWidget>
+#include <QInputDialog>
+#include <QMessageBox>
+#include "dlg_email.h"
+#include "network.h"
 #include "dlg_channel_settings.h"
+
+#ifdef Q_WS_X11
+#include <QDebug>
+#endif
 
 DlgChannelSettings::DlgChannelSettings(QWidget *parent, Network *param1) : QDialog(parent)
 {

@@ -18,6 +18,12 @@
  *                                                                          *
  ****************************************************************************/
 
+#include <QDateTime>
+#include <QSettings>
+#include "log.h"
+#include "network.h"
+#include "tab_manager.h"
+#include "tab_widget.h"
 #include "tab_container.h"
 
 TabContainer::TabContainer(QWidget *parent, Network *param1, TabManager *param2, Notify *param3, QMap <QString, QByteArray> *param4, QTcpSocket *param5, sChannelNickStatus *param6, QList<QString> *param7)
@@ -57,6 +63,14 @@ void TabContainer::set_dlg(DlgUserProfile *param1, DlgCam *param2)
 {
     pDlg_user_profile = param1;
     pDlg_cam = param2;
+}
+
+QString TabContainer::get_name(int i)
+{
+    if ((i < 0) || (i > tw.count()))
+        return QString::null;
+    else
+        return tw[i]->get_name();
 }
 
 int TabContainer::get_index(QString strName)

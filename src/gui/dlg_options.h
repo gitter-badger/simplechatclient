@@ -21,20 +21,8 @@
 #ifndef DLG_OPTIONS_H
 #define DLG_OPTIONS_H
 
-#include <QCloseEvent>
-#include <QColorDialog>
-#include <QDesktopWidget>
+class Notify;
 #include <QDialog>
-#include <QFileDialog>
-#include <QMessageBox>
-#include <QProcess>
-#include <QSettings>
-#include <QShowEvent>
-#include <QStyleFactory>
-#include "config.h"
-#include "crypt.h"
-#include "notify.h"
-#include "dlg_register_nick.h"
 #include "ui_options.h"
 
 class DlgOptions : public QDialog
@@ -112,7 +100,6 @@ protected:
 
 signals:
     void refresh_colors();
-
 };
 
 #endif // DLG_OPTIONS_H

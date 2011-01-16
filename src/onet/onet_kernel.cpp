@@ -18,6 +18,26 @@
  *                                                                          *
  ****************************************************************************/
 
+#include <QDateTime>
+#include <QMessageBox>
+#include <QSettings>
+#include <QStringList>
+#include <QTimer>
+#include "avatar.h"
+#include "dlg_channel_favourites.h"
+#include "dlg_channel_homes.h"
+#include "dlg_channel_key.h"
+#include "dlg_channel_list.h"
+#include "dlg_channel_settings.h"
+#include "dlg_friends.h"
+#include "dlg_ignore.h"
+#include "dlg_invite.h"
+#include "dlg_moderation.h"
+#include "log.h"
+#include "network.h"
+#include "notify.h"
+#include "onet_auth.h"
+#include "tab_container.h"
 #include "onet_kernel.h"
 
 OnetKernel::OnetKernel(QWidget *parent, Network *param1, TabContainer *param2, Notify *param3, QMap <QString, QByteArray> *param4, QMap <QString, QByteArray> *param5, DlgChannelSettings *param6, DlgChannelHomes *param7, DlgChannelList *param8, DlgChannelFavourites *param9, DlgFriends *param10, DlgIgnore *param11, DlgModeration *param12)

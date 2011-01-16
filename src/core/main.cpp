@@ -18,8 +18,9 @@
  *                                                                          *
  ****************************************************************************/
 
-#include <QDesktopWidget>
 #include <QtGui/QApplication>
+#include <QDesktopWidget>
+#include <QDir>
 #include <QLocale>
 #include <QTextCodec>
 #include <QTranslator>
@@ -33,7 +34,10 @@
 #endif
 
 #ifdef Q_WS_X11
+#include <QDebug>
+#endif
 
+#ifdef Q_WS_X11
 void crashHandler()
 {
     QString path;

@@ -18,6 +18,9 @@
  *                                                                          *
  ****************************************************************************/
 
+#include <QDesktopWidget>
+#include <QHideEvent>
+#include <QPushButton>
 #include "dlg_update.h"
 
 DlgUpdate::DlgUpdate(QWidget *parent, QString param1) : QDialog(parent)

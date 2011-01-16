@@ -18,6 +18,19 @@
  *                                                                          *
  ****************************************************************************/
 
+#include <QCloseEvent>
+#include <QColorDialog>
+#include <QDesktopWidget>
+#include <QFileDialog>
+#include <QMessageBox>
+#include <QProcess>
+#include <QSettings>
+#include <QShowEvent>
+#include <QStyleFactory>
+#include "config.h"
+#include "crypt.h"
+#include "notify.h"
+#include "dlg_register_nick.h"
 #include "dlg_options.h"
 
 DlgOptions::DlgOptions(QWidget *parent, Notify *param1) : QDialog(parent)

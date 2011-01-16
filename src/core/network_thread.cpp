@@ -18,6 +18,12 @@
  *                                                                          *
  ****************************************************************************/
 
+#include <QDateTime>
+#include <QHostInfo>
+#include <QSettings>
+#include <QTimer>
+#include "config.h"
+#include "crypt.h"
 #include "network_thread.h"
 
 NetworkThread::NetworkThread(QAction *param1, QAction *param2, QString param3, int param4)
@@ -306,6 +312,9 @@ void NetworkThread::disconnected()
         timerLag->stop();
         timerQueue->stop();
 
+        // clear queue
+        msgSendQueue.clear();
+
         // reconnect
         if (bReconnecting == false)
         {
@@ -343,6 +352,9 @@ void NetworkThread::error(QAbstractSocket::SocketError err)
     timerPingPong->stop();
     timerLag->stop();
     timerQueue->stop();
+
+    // clear queue
+    msgSendQueue.clear();
 
     // reconnect
     if (bReconnecting == false)

@@ -18,6 +18,15 @@
  *                                                                          *
  ****************************************************************************/
 
+#include <QDomDocument>
+#include <QEventLoop>
+#include <QHostInfo>
+#include <QNetworkCookieJar>
+#include <QNetworkReply>
+#include <QNetworkRequest>
+#include <QSettings>
+#include <QUrl>
+#include "tab_container.h"
 #include "onet_auth.h"
 
 OnetAuth::OnetAuth(TabContainer *param1)

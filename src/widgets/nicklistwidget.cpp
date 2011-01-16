@@ -18,7 +18,22 @@
  *                                                                          *
  ****************************************************************************/
 
+#include <QContextMenuEvent>
+#include <QInputDialog>
+#include <QMenu>
+#include <QSettings>
+#include "dlg_cam.h"
+#include "dlg_user_profile.h"
+#include "network.h"
 #include "nicklistwidget.h"
+
+#ifdef Q_WS_WIN
+#include "kamerzysta.h"
+#endif
+
+#ifdef Q_WS_X11
+#include <QDebug>
+#endif
 
 NickListWidget::NickListWidget(QWidget *parent, Network *param1, QString param2, QMap <QString, QByteArray> *param3, QTcpSocket *param4, sChannelNickStatus *param5, DlgUserProfile *param6, DlgCam *param7)
 {

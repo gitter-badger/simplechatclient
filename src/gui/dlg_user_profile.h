@@ -21,14 +21,10 @@
 #ifndef DLG_USER_PROFILE_H
 #define DLG_USER_PROFILE_H
 
-#include <QDesktopWidget>
+class Network;
 #include <QDialog>
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
-#include <QPushButton>
-#include "convert.h"
-#include "dlg_user_avatar.h"
-#include "network.h"
 #include "ui_user_profile.h"
 
 class DlgUserProfile : public QDialog
@@ -69,7 +65,6 @@ private slots:
 protected:
     virtual void showEvent(QShowEvent *);
     virtual void closeEvent(QCloseEvent *);
-
 };
 
 #endif // DLG_USER_PROFILE_H

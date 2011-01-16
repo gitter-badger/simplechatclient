@@ -18,6 +18,10 @@
  *                                                                          *
  ****************************************************************************/
 
+#include <QDateTime>
+#include <QDesktopWidget>
+#include <QSettings>
+#include <QShowEvent>
 #include "dlg_moderation.h"
 
 DlgModeration::DlgModeration(QWidget *parent) : QDialog(parent)

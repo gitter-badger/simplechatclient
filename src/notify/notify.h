@@ -21,11 +21,8 @@
 #ifndef NOTIFY_H
 #define NOTIFY_H
 
-#include <Phonon/AudioOutput>
 #include <Phonon/MediaObject>
-#include <QCoreApplication>
 #include <QObject>
-#include <QSettings>
 
 /**
  * Notify using Phonon
@@ -42,7 +39,6 @@ private:
     QString apath;
     Phonon::MediaObject *music;
     QString strCurrent;
-
 };
 
 #endif // NOTIFY_H

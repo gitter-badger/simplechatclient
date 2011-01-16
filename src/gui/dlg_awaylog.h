@@ -21,9 +21,7 @@
 #ifndef DLG_AWAYLOG_H
 #define DLG_AWAYLOG_H
 
-#include <QDesktopWidget>
 #include <QDialog>
-#include <QPushButton>
 #include "ui_awaylog.h"
 
 class DlgAwaylog : public QDialog
@@ -41,7 +39,6 @@ private:
 
 private slots:
     void buttons(QAbstractButton*);
-
 };
 
 #endif // DLG_AWAYLOG_H

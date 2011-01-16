@@ -18,7 +18,16 @@
  *                                                                          *
  ****************************************************************************/
 
+#include <QDesktopWidget>
+#include <QDir>
+#include <QFile>
+#include <QPushButton>
+#include <QSettings>
 #include "dlg_notes.h"
+
+#ifdef Q_WS_X11
+#include <QDebug>
+#endif
 
 DlgNotes::DlgNotes(QWidget *parent) : QDialog(parent)
 {

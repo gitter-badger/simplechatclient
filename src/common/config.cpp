@@ -18,7 +18,16 @@
  *                                                                          *
  ****************************************************************************/
 
+#include <QCoreApplication>
+#include <QDir>
+#ifndef Q_WS_X11
+#include <QSettings>
+#endif
 #include "config.h"
+
+#ifdef Q_WS_X11
+#include <QDebug>
+#endif
 
 Config::Config(bool bCreate)
 {

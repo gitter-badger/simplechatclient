@@ -21,21 +21,12 @@
 #ifndef MAINWEBVIEW_H
 #define MAINWEBVIEW_H
 
-#include <QNetworkAccessManager>
-#include <QNetworkReply>
-#include "dlg_user_profile.h"
-
-#include <QContextMenuEvent>
-#include <QInputDialog>
-#include <QMenu>
-#include <QSettings>
-#include <QWebHitTestResult>
-#include <QWebView>
-#include "dlg_cam.h"
-#ifdef Q_WS_WIN
-#include "kamerzysta.h"
-#endif
-#include "network.h"
+#include "defines.h"
+class DlgCam;
+class DlgUserProfile;
+class Network;
+#include <QTcpSocket>
+#include <QtWebKit/QWebView>
 
 class MainWebView : public QWebView
 {
@@ -87,7 +78,6 @@ private slots:
 
 protected:
     void contextMenuEvent(QContextMenuEvent *);
-
 };
 
 #endif // MAINWEBVIEW_H

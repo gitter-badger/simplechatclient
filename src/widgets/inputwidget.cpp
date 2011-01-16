@@ -18,6 +18,18 @@
  *                                                                          *
  ****************************************************************************/
 
+#include <QComboBox>
+#include <QDateTime>
+#include <QHBoxLayout>
+#include <QKeyEvent>
+#include <QLabel>
+#include <QPushButton>
+#include <QSettings>
+#include "commands.h"
+#include "inputlinewidget.h"
+#include "log.h"
+#include "network.h"
+#include "replace.h"
 #include "inputwidget.h"
 
 InputWidget::InputWidget(QWidget *parent, Network *param1) : QWidget(parent)

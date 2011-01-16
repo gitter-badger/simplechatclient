@@ -18,6 +18,11 @@
  *                                                                          *
  ****************************************************************************/
 
+#include <QDesktopWidget>
+#include <QDir>
+#include <QPixmap>
+#include <QShowEvent>
+#include "inputwidget.h"
 #include "dlg_emoticons.h"
 
 DlgEmoticons::DlgEmoticons(QWidget *parent, InputWidget *param1) : QDialog(parent)

@@ -21,11 +21,7 @@
 #ifndef DLG_MODERATION_H
 #define DLG_MODERATION_H
 
-#include <QDateTime>
-#include <QDesktopWidget>
 #include <QDialog>
-#include <QSettings>
-#include <QShowEvent>
 #include "ui_moderation.h"
 
 class DlgModeration : public QDialog
@@ -64,7 +60,6 @@ protected:
 signals:
     void display_msg(QString, QString, int);
     void send(QString);
-
 };
 
 #endif // DLG_MODERATION_H

@@ -21,14 +21,13 @@
 #ifndef INPUTLINEDOCKWIDGET_H
 #define INPUTLINEDOCKWIDGET_H
 
-#include <QHBoxLayout>
-#include <QLabel>
-#include <QPushButton>
+class DlgChannelSettings;
+class DlgModeration;
+class InputWidget;
+class Network;
+class ToolWidget;
+#include <QTreeWidget>
 #include <QWidget>
-#include "inputwidget.h"
-#include "log.h"
-#include "network.h"
-#include "toolwidget.h"
 
 class InputLineDockWidget : public QWidget
 {
@@ -39,11 +38,11 @@ public:
     void disable_moderation();
     void hide_toolwidget();
     void show_toolwidget();
-    inline void hide_channel_settings() { pToolWidget->set_channel_settings(false); }
-    inline void show_channel_settings() { pToolWidget->set_channel_settings(true); }
-    inline void set_active(QString strChannel) {  pInputWidget->set_active(strChannel); }
-    inline QString get_active() { return pInputWidget->get_active(); }
-    inline void set_userslist(QTreeWidget *treeWidget) { pInputWidget->set_userslist(treeWidget); }
+    void hide_channel_settings();
+    void show_channel_settings();
+    void set_active(QString);
+    QString get_active();
+    void set_userslist(QTreeWidget *);
     void change_scroll(bool); // set scroll after change tab page
 
 public slots:
@@ -72,7 +71,6 @@ signals:
     void change_font_size(QString);
     void clear_content(QString);
     void set_scroll(QString, bool);
-
 };
 
 #endif // INPUTLINEDOCKWIDGET_H

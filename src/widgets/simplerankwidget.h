@@ -21,9 +21,6 @@
 #ifndef SIMPLERANKWIDGET_H
 #define SIMPLERANKWIDGET_H
 
-#include <QBrush>
-#include <QPainter>
-#include <QPen>
 #include <QWidget>
 
 class SimpleRankWidget : public QWidget

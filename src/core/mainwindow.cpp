@@ -18,7 +18,17 @@
  *                                                                          *
  ****************************************************************************/
 
-#include <QtGui>
+#include <QDir>
+#include <QFile>
+#include <QSettings>
+#include <QTimer>
+#include "config.h"
+#include "core.h"
+#include "dlg_about.h"
+#include "dlg_notes.h"
+#include "dlg_options.h"
+#include "notify.h"
+#include "update.h"
 #include "mainwindow.h"
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
@@ -78,6 +88,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     chatMenu->addAction(channel_favouritesAct);
     chatMenu->addAction(friendsAct);
     chatMenu->addAction(ignoreAct);
+    chatMenu->addAction(awaylogAct);
     chatMenu->addAction(camsAct);
 
     // help menu
@@ -217,7 +228,7 @@ void MainWindow::create_settings()
     // default settings
     QSettings settings;
     settings.clear();
-    settings.setValue("version", "1.0.10.673");
+    settings.setValue("version", "1.0.10.674");
     settings.setValue("debug", "off");
     settings.setValue("logged", "off");
     settings.setValue("busy", "off");

@@ -18,7 +18,18 @@
  *                                                                          *
  ****************************************************************************/
 
+#include <QCoreApplication>
+#include <QDir>
+#include <QFile>
+#ifndef Q_WS_X11
+#include <QSettings>
+#endif
+#include <QTextStream>
 #include "log.h"
+
+#ifdef Q_WS_X11
+#include <QDebug>
+#endif
 
 Log::Log()
 {

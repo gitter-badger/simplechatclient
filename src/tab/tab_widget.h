@@ -21,20 +21,18 @@
 #ifndef TAB_WIDGET_H
 #define TAB_WIDGET_H
 
-#include <QDateTime>
-#include <QHBoxLayout>
-#include <QIcon>
+#include "defines.h"
+class DlgCam;
+class DlgUserProfile;
+class MainWebView;
+class Network;
+class Notify;
+class TabManager;
 #include <QLabel>
-#include <QMap>
-#include <QWidget>
-#include <QtWebKit/QWebFrame>
+#include <QTcpSocket>
 #include <QtWebKit/QWebView>
-#include "convert.h"
-#include "dlg_cam.h"
-#include "log.h"
-#include "network.h"
-#include "mainwebview.h"
-#include "notify.h"
+#include <QVBoxLayout>
+#include <QWidget>
 
 /**
  * Main widget used for displaying all text messages from users
@@ -111,7 +109,6 @@ private:
 
 private slots:
     void change_scroll_position();
-
 };
 
 #endif // TAB_WIDGET_H

@@ -18,6 +18,7 @@
  *                                                                          *
  ****************************************************************************/
 
+#include "network_thread.h"
 #include "network.h"
 
 Network::Network(QAction *param1, QAction *param2, QString param3, int param4)

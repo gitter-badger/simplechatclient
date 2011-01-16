@@ -21,23 +21,12 @@
 #ifndef NICKLISTTREEWIDGET_H
 #define NICKLISTTREEWIDGET_H
 
-#include <QNetworkAccessManager>
-#include <QNetworkReply>
-#include "dlg_user_profile.h"
-
-#include <QContextMenuEvent>
-#ifdef Q_WS_X11
-#include <QDebug>
-#endif
-#include <QInputDialog>
-#include <QMenu>
-#include <QSettings>
+#include "defines.h"
+class DlgCam;
+class DlgUserProfile;
+class Network;
+#include <QTcpSocket>
 #include <QTreeWidget>
-#include "dlg_cam.h"
-#ifdef Q_WS_WIN
-#include "kamerzysta.h"
-#endif
-#include "network.h"
 
 class MyTreeWidgetItem : public QTreeWidgetItem
 {
@@ -127,7 +116,6 @@ private slots:
 protected:
     virtual void contextMenuEvent(QContextMenuEvent *);
     virtual void resizeEvent(QResizeEvent *);
-
 };
 
 #endif // NICKLISTTREEWIDGET_H

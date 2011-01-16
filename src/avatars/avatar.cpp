@@ -18,7 +18,12 @@
  *                                                                          *
  ****************************************************************************/
 
+#include <QEventLoop>
+#include <QNetworkAccessManager>
+#include <QNetworkReply>
+#include <QTimer>
 #include "avatar.h"
+#include "tab_container.h"
 
 AvatarThread::AvatarThread(QString param1, QString param2, QString param3)
 {

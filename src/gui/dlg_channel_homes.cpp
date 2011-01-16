@@ -18,6 +18,10 @@
  *                                                                          *
  ****************************************************************************/
 
+#include <QDesktopWidget>
+#include <QInputDialog>
+#include "dlg_channel_settings.h"
+#include "network.h"
 #include "dlg_channel_homes.h"
 
 DlgChannelHomes::DlgChannelHomes(QWidget *parent, Network *param1, QMap <QString, QByteArray> *param2, DlgChannelSettings *param3) : QDialog(parent)

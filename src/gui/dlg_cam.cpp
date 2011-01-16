@@ -18,6 +18,17 @@
  *                                                                          *
  ****************************************************************************/
 
+#include <QBuffer>
+#include <QDateTime>
+#include <QDesktopWidget>
+#include <QFileDialog>
+#include <QHideEvent>
+#include <QSettings>
+#include <QShowEvent>
+#include <QTimer>
+#include "config.h"
+#include "network.h"
+#include "simplerankwidget.h"
 #include "dlg_cam.h"
 
 DlgCam::DlgCam(QWidget *parent, Network *param1, QTcpSocket *param2) : QDialog(parent)

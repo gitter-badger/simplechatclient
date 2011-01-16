@@ -21,19 +21,10 @@
 #ifndef KAMERZYSTA_H
 #define KAMERZYSTA_H
 
-#include <QDir>
-#include <QFile>
-#include <QHostAddress>
-#include <QIcon>
-#include <QMessageBox>
+class Config;
+class Log;
 #include <QObject>
-#include <QProcess>
-#include <QSettings>
 #include <QTcpSocket>
-#include <QTimer>
-#include <QTextStream>
-#include "config.h"
-#include "log.h"
 
 /**
  * Cams support using Kamerzysta (http://programy.onet.pl/72,34,10195,,,Kamerzysta_3.00.159,programy.html)
@@ -68,7 +59,6 @@ private slots:
     void network_disconnect();
     void network_read();
     void error(QAbstractSocket::SocketError);
-
 };
 
 #endif // KAMERZYSTA_H

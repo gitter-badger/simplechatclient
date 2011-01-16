@@ -18,6 +18,13 @@
  *                                                                          *
  ****************************************************************************/
 
+#include <QHBoxLayout>
+#include <QLabel>
+#include <QPushButton>
+#include "inputwidget.h"
+#include "log.h"
+#include "network.h"
+#include "toolwidget.h"
 #include "inputlinedockwidget.h"
 
 InputLineDockWidget::InputLineDockWidget(QWidget *parent, Network *param1, DlgChannelSettings *param2, DlgModeration *param3) : QWidget(parent)
@@ -91,6 +98,31 @@ void InputLineDockWidget::hide_toolwidget()
     setMaximumHeight(iMinimumSize);
     // refresh icon
     pInputWidget->set_toolwidget_icon(false);
+}
+
+void InputLineDockWidget::hide_channel_settings()
+{
+    pToolWidget->set_channel_settings(false);
+}
+
+void InputLineDockWidget::show_channel_settings()
+{
+    pToolWidget->set_channel_settings(true);
+}
+
+void InputLineDockWidget::set_active(QString strChannel)
+{
+    pInputWidget->set_active(strChannel);
+}
+
+QString InputLineDockWidget::get_active()
+{
+    return pInputWidget->get_active();
+}
+
+void InputLineDockWidget::set_userslist(QTreeWidget *treeWidget)
+{
+    pInputWidget->set_userslist(treeWidget);
 }
 
 // input widget

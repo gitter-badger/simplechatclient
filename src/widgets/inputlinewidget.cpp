@@ -18,6 +18,9 @@
  *                                                                          *
  ****************************************************************************/
 
+#include <QEvent>
+#include <QKeyEvent>
+#include <QTreeWidget>
 #include "inputlinewidget.h"
 
 InputLineWidget::InputLineWidget(QWidget *parent) : QLineEdit(parent)

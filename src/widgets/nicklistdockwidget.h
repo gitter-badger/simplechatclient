@@ -31,7 +31,6 @@ public:
 
 private:
     QWidget *myparent;
-
 };
 
 #endif // NICKLISTDOCKWIDGET_H

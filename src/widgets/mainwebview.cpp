@@ -18,7 +18,19 @@
  *                                                                          *
  ****************************************************************************/
 
+#include <QContextMenuEvent>
+#include <QInputDialog>
+#include <QMenu>
+#include <QSettings>
+#include <QWebHitTestResult>
+#include "dlg_cam.h"
+#include "dlg_user_profile.h"
+#include "network.h"
 #include "mainwebview.h"
+
+#ifdef Q_WS_WIN
+#include "kamerzysta.h"
+#endif
 
 MainWebView::MainWebView(QWidget *parent, Network *param1, QString param2, QTcpSocket *param3, sChannelNickStatus *param4, DlgUserProfile *param5, DlgCam *param6)
 {

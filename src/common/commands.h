@@ -21,10 +21,7 @@
 #ifndef COMMANDS_H
 #define COMMANDS_H
 
-#include <QIcon>
-#include <QMessageBox>
 #include <QObject>
-#include <QSettings>
 #include <QStringList>
 
 /**
@@ -65,7 +62,6 @@ private:
     QString cmd_op();
     QString cmd_moder();
     QString cmd_vip();
-
 };
 
 #endif // COMMANDS_H

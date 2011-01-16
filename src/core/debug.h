@@ -21,20 +21,6 @@
 #ifndef DEBUG_H
 #define DEBUG_H
 
-#include <QCoreApplication>
-#include <QDir>
-#include <QFile>
-#include <QTextStream>
-#ifdef Q_WS_X11
-#include <QDebug>
-#endif
-#ifndef Q_WS_X11
-#include <QSettings>
-#endif
-// for abort()
-#include <stdio.h>
-#include <stdlib.h>
-
 void saveMessage(QString, QString);
 void messageHandler(QtMsgType, const char *);
 

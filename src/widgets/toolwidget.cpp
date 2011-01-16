@@ -18,6 +18,16 @@
  *                                                                          *
  ****************************************************************************/
 
+#include <QComboBox>
+#include <QHBoxLayout>
+#include <QMenu>
+#include <QPushButton>
+#include <QSettings>
+#include "dlg_channel_settings.h"
+#include "dlg_emoticons.h"
+#include "dlg_moderation.h"
+#include "inputwidget.h"
+#include "network.h"
 #include "toolwidget.h"
 
 ToolWidget::ToolWidget(QWidget *parent, Network *param1, InputWidget *param2, DlgChannelSettings *param3, DlgModeration *param4) : QWidget(parent)

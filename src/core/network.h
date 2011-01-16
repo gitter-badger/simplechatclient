@@ -21,10 +21,9 @@
 #ifndef NETWORK_H
 #define NETWORK_H
 
+class NetworkThread;
 #include <QAction>
 #include <QObject>
-#include <QSettings>
-#include "network_thread.h"
 
 /**
  * Network class
@@ -73,7 +72,6 @@ signals:
     void sclose();
     void ssend(QString);
     void sclear_queue();
-
 };
 
 #endif // NETWORK_H

@@ -21,11 +21,7 @@
 #ifndef CONVERT_H
 #define CONVERT_H
 
-#include <QCoreApplication>
-#include <QFile>
 #include <QObject>
-#include <QSettings>
-#include <QStringListIterator>
 
 /**
  * Convert text
@@ -37,7 +33,6 @@ class Convert : public QObject
 public:
     Convert();
     void convert_text(QString *, QString *);
-
 };
 
 #endif // CONVERT_H

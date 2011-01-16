@@ -21,11 +21,10 @@
 #ifndef AVATAR_H
 #define AVATAR_H
 
-#include <QNetworkAccessManager>
-#include <QNetworkReply>
+class TabContainer;
+#include <QMap>
 #include <QObject>
 #include <QThread>
-#include "tab_container.h"
 
 /**
  * Thread for downloading avatar

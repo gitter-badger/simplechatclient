@@ -18,6 +18,18 @@
  *                                                                          *
  ****************************************************************************/
 
+#include <QDir>
+#include <QFile>
+#include <QHostAddress>
+#include <QIcon>
+#include <QMessageBox>
+#include <QProcess>
+#include <QSettings>
+#include <QTcpSocket>
+#include <QTimer>
+#include <QTextStream>
+#include "config.h"
+#include "log.h"
 #include "kamerzysta.h"
 
 Kamerzysta::Kamerzysta(QTcpSocket *param1)

@@ -18,6 +18,12 @@
  *                                                                          *
  ****************************************************************************/
 
+#include <QDate>
+#include <QDesktopWidget>
+#include <QPushButton>
+#include "convert.h"
+#include "dlg_user_avatar.h"
+#include "network.h"
 #include "dlg_user_profile.h"
 
 DlgUserProfile::DlgUserProfile(QWidget *parent, Network *param1) : QDialog(parent)

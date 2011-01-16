@@ -18,6 +18,8 @@
  *                                                                          *
  ****************************************************************************/
 
+#include <QDesktopWidget>
+#include <QPushButton>
 #include "dlg_awaylog.h"
 
 DlgAwaylog::DlgAwaylog(QWidget *parent, QList<QString> *param1) : QDialog(parent)

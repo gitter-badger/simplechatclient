@@ -18,6 +18,9 @@
  *                                                                          *
  ****************************************************************************/
 
+#include <QDesktopWidget>
+#include <QPushButton>
+#include <QSettings>
 #include "dlg_about.h"
 
 DlgAbout::DlgAbout(QWidget *parent) : QDialog(parent)
