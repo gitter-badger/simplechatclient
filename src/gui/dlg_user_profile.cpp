@@ -81,6 +81,8 @@ void DlgUserProfile::set_user_info(QString strCheckNick, QString strKey, QString
     {
         if (strValue.isEmpty() == false)
             show_avatar(strValue);
+        else
+            ui.label_avatar->setText(tr("No photo available"));
     }
     else if (strKey == "birthdate")
     {

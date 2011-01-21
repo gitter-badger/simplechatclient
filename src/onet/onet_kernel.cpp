@@ -1456,6 +1456,12 @@ void OnetKernel::raw_111n()
         // set user info
         emit set_user_info(strNick, strInfo, strValue);
     }
+    else
+    {
+        // set empty avatar
+        if (strInfo == "avatar")
+            emit set_user_info(strNick, strInfo, strValue);
+    }
 
     // get avatar
     if (strAvatarLink.isEmpty() == false)

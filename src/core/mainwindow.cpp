@@ -66,6 +66,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     channel_favouritesAct->setShortcut(tr("Ctrl+U"));
     friendsAct->setShortcut(tr("Ctrl+P"));
     ignoreAct->setShortcut(tr("Ctrl+I"));
+    awaylogAct->setShortcut(tr("Ctrl+J"));
     camsAct->setShortcut(tr("Ctrl+K"));
 
     // main menu
@@ -228,7 +229,7 @@ void MainWindow::create_settings()
     // default settings
     QSettings settings;
     settings.clear();
-    settings.setValue("version", "1.0.10.675");
+    settings.setValue("version", "1.0.10.676");
     settings.setValue("debug", "off");
     settings.setValue("logged", "off");
     settings.setValue("busy", "off");

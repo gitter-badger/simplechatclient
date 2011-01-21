@@ -1524,6 +1524,10 @@
         <source>Less...</source>
         <translation>Mniej...</translation>
     </message>
+    <message>
+        <source>No photo available</source>
+        <translation>Brak zdjęcia</translation>
+    </message>
 </context>
 <context>
     <name>OnetAuth</name>
