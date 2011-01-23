@@ -32,13 +32,8 @@ Update::Update(QWidget *parent)
 
 void Update::check_update()
 {
-    bool bHost = true;
-
     QHostInfo test_host = QHostInfo::fromName("simplechatclien.sourceforge.net");
-    if (test_host.error() != QHostInfo::NoError)
-         bHost = false;
-
-    if (bHost == true)
+    if (test_host.error() == QHostInfo::NoError)
     {
         QSettings settings;
         QString strSendVersion = settings.value("version").toString();

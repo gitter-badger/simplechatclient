@@ -34,12 +34,12 @@ Notify::~Notify()
     delete music;
 }
 
-void Notify::play(QString strWhat)
+void Notify::play(QString strCategory)
 {
     music->stop();
 
     QSettings settings;
-    if (strWhat == "query")
+    if (strCategory == "query")
     {
         if (strCurrent != "query")
         {

@@ -424,6 +424,7 @@ void DlgCam::network_connected()
 void DlgCam::network_disconnected()
 {
     ui.tableWidget_nick_rank_spectators->clear();
+    ui.tableWidget_nick_rank_spectators->setRowCount(0);
     ui.label_nick->setText(strNick);
     ui.textEdit_desc->setText("");
     ui.textEdit_desc->hide();

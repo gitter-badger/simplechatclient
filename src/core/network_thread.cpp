@@ -38,10 +38,12 @@ NetworkThread::NetworkThread(QAction *param1, QAction *param2, QString param3, i
     bDefaultEnabledQueue = true;
     QSettings settings;
     settings.setValue("reconnect", "true");
-    timerPingPong = new QTimer();
-    timerPingPong->setInterval(1*60*1000); // 1 min
+    timerPong = new QTimer();
+    timerPong->setInterval(1*60*1000); // 1 min
+    timerPing = new QTimer();
+    timerPing->setInterval(30*1000); // 30 sec
     timerLag = new QTimer();
-    timerLag->setInterval(30*1000); // 30 sec
+    timerLag->setInterval(10*1000); // 10 sec
     timerQueue = new QTimer();
     timerQueue->setInterval(300); // 0.3 sec
 
@@ -55,7 +57,8 @@ NetworkThread::NetworkThread(QAction *param1, QAction *param2, QString param3, i
     QObject::connect(socket, SIGNAL(error(QAbstractSocket::SocketError)), this, SLOT(error(QAbstractSocket::SocketError)));
     QObject::connect(socket, SIGNAL(stateChanged(QAbstractSocket::SocketState)), this, SLOT(state_changed(QAbstractSocket::SocketState)));
 
-    QObject::connect(timerPingPong, SIGNAL(timeout()), this, SLOT(timeout_pingpong()));
+    QObject::connect(timerPong, SIGNAL(timeout()), this, SLOT(timeout_pong()));
+    QObject::connect(timerPing, SIGNAL(timeout()), this, SLOT(timeout_ping()));
     QObject::connect(timerLag, SIGNAL(timeout()), this, SLOT(timeout_lag()));
     QObject::connect(timerQueue, SIGNAL(timeout()), this, SLOT(timeout_queue()));
 }
@@ -127,7 +130,8 @@ void NetworkThread::connect()
         socket->connectToHost(hInfo.addresses().at(iRandom).toString(), iPort);
 
         // start timers
-        timerPingPong->start();
+        timerPong->start();
+        timerPing->start();
         timerLag->start();
         timerQueue->start();
     }
@@ -168,8 +172,10 @@ void NetworkThread::close()
     settings.setValue("logged", "off");
 
     // stop timers
-    if (timerPingPong->isActive() == true)
-        timerPingPong->stop();
+    if (timerPong->isActive() == true)
+        timerPong->stop();
+    if (timerPing->isActive() == true)
+        timerPing->stop();
     if (timerLag->isActive() == true)
         timerLag->stop();
     if (timerQueue->isActive() == true)
@@ -308,7 +314,8 @@ void NetworkThread::disconnected()
         settings.setValue("logged", "off");
 
         // timer
-        timerPingPong->stop();
+        timerPong->stop();
+        timerPing->stop();
         timerLag->stop();
         timerQueue->stop();
 
@@ -349,7 +356,8 @@ void NetworkThread::error(QAbstractSocket::SocketError err)
     settings.setValue("logged", "off");
 
     // timer
-    timerPingPong->stop();
+    timerPong->stop();
+    timerPing->stop();
     timerLag->stop();
     timerQueue->stop();
 
@@ -375,11 +383,22 @@ void NetworkThread::state_changed(QAbstractSocket::SocketState socketState)
         connectAct->setEnabled(true);
 }
 
-void NetworkThread::timeout_pingpong()
+void NetworkThread::timeout_lag()
 {
     QDateTime dt = QDateTime::currentDateTime();
     int iCurrent = (int)dt.toTime_t();
 
+    // update lag
+    if (iCurrent-iActive > 30+10)
+        lagAct->setText(QString("Lag: %1s").arg(iCurrent-iActive));
+}
+
+void NetworkThread::timeout_pong()
+{
+    QDateTime dt = QDateTime::currentDateTime();
+    int iCurrent = (int)dt.toTime_t();
+
+    // check timeout
     if (iActive+301 < iCurrent)
     {
         if (socket->state() == QAbstractSocket::ConnectedState)
@@ -389,7 +408,7 @@ void NetworkThread::timeout_pingpong()
     }
 }
 
-void NetworkThread::timeout_lag()
+void NetworkThread::timeout_ping()
 {
     QDateTime dta = QDateTime::currentDateTime();
     int i1 = (int)dta.toTime_t(); // seconds that have passed since 1970

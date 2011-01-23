@@ -51,7 +51,8 @@ private:
     QString strServer;
     int iPort;
     QTcpSocket *socket;
-    QTimer *timerPingPong;
+    QTimer *timerPong;
+    QTimer *timerPing;
     QTimer *timerLag;
     QTimer *timerQueue;
     int iActive;
@@ -68,7 +69,8 @@ private slots:
     void disconnected();
     void error(QAbstractSocket::SocketError);
     void state_changed(QAbstractSocket::SocketState);
-    void timeout_pingpong();
+    void timeout_pong();
+    void timeout_ping();
     void timeout_lag();
     void timeout_queue();
 
