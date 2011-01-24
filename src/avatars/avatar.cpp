@@ -85,8 +85,18 @@ void Avatar::set_avatar(QString strNickChannel, QString strCategory, QByteArray 
 {
     if (strCategory == "nick")
     {
+        // insert
         if (mNickAvatar->contains(strNickChannel) == false)
             mNickAvatar->insert(strNickChannel, bAvatar);
+        else
+        {
+            // update
+            if (mNickAvatar->value(strNickChannel) != bAvatar)
+            {
+                mNickAvatar->remove(strNickChannel);
+                mNickAvatar->insert(strNickChannel, bAvatar);
+            }
+        }
 
         emit set_nick_avatar(strNickChannel);
     }
