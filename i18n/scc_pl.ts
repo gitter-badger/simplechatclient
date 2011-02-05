@@ -2390,7 +2390,7 @@
     </message>
 </context>
 <context>
-    <name>MainWebView</name>
+    <name>MainTextEdit</name>
     <message>
         <source>Join channel</source>
         <translation>Wejdź do kanału</translation>

@@ -87,7 +87,7 @@ void Convert::convert_text(QString *strData, QString *strLastContent)
                         else if (strFontName == "courier") strFontFamily = "Courier New";
                         else strFontFamily = "Verdana";
 
-                        if (strFontWeight.isEmpty() == true)
+                        if ((strFontWeight.isEmpty() == true) || (strFontWeight == "i"))
                             strFontWeight = "normal";
 
                         QString strInsert = "<span style=\"font-weight:"+strFontWeight+";font-style:"+strFontStyle+";font-family:"+strFontFamily+";\">";
@@ -175,19 +175,11 @@ void Convert::convert_text(QString *strData, QString *strLastContent)
                     QFile f2(strEmoticonFull2);
                     if ((f1.exists() == true) && (settings.value("hide_formating").toString() == "off") && (settings.value("disable_emots").toString() == "off"))
                     {
-#ifdef Q_WS_X11
-                        strInsert = "<img src=\"file://"+strEmoticonFull1+"\" alt=\""+strEmoticon+"\" />";
-#else
                         strInsert = "<img src=\""+strEmoticonFull1+"\" alt=\""+strEmoticon+"\" />";
-#endif
                     }
                     else if ((f2.exists() == true) && (settings.value("hide_formating").toString() == "off") && (settings.value("disable_emots").toString() == "off"))
                     {
-#ifdef Q_WS_X11
-                        strInsert = "<img src=\"file://"+strEmoticonFull2+"\" alt=\""+strEmoticon+"\" />";
-#else
                         strInsert = "<img src=\""+strEmoticonFull2+"\" alt=\""+strEmoticon+"\" />";
-#endif
                     }
                     // emoticon not exist or hide formating or disabled emots
                     else

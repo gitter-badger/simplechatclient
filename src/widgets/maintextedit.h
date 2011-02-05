@@ -18,22 +18,22 @@
  *                                                                          *
  ****************************************************************************/
 
-#ifndef MAINWEBVIEW_H
-#define MAINWEBVIEW_H
+#ifndef MAINTEXTEDIT_H
+#define MAINTEXTEDIT_H
 
 #include "defines.h"
 class DlgCam;
 class DlgUserProfile;
 class Network;
 #include <QTcpSocket>
-#include <QtWebKit/QWebView>
+#include <QTextEdit>
 
-class MainWebView : public QWebView
+class MainTextEdit : public QTextEdit
 {
     Q_OBJECT
 public:
-    MainWebView(QWidget *, Network *, QString, QTcpSocket *, sChannelNickStatus *, DlgUserProfile *, DlgCam *);
-    ~MainWebView();
+    MainTextEdit(QWidget *, Network *, QString, QTcpSocket *, sChannelNickStatus *, DlgUserProfile *, DlgCam *);
+    ~MainTextEdit();
     void set_open_channels(QStringList);
     inline QString get_current_nick() { return strNick; }
 
@@ -77,7 +77,7 @@ private slots:
     void invite();
 
 protected:
-    void contextMenuEvent(QContextMenuEvent *);
+    virtual void mousePressEvent(QMouseEvent *);
 };
 
-#endif // MAINWEBVIEW_H
+#endif // MAINTEXTEDIT_H

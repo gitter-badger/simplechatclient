@@ -166,20 +166,6 @@ ToolWidget::ToolWidget(QWidget *parent, Network *param1, InputWidget *param2, Dl
     clear->setMaximumHeight(25);
     clear->show();
 
-    scroll = new QPushButton(QIcon(":/images/oxygen/16x16/arrow-down.png"), "", this);
-    scroll->setToolTip(tr("Scroll"));
-    scroll->setMaximumWidth(25);
-    scroll->setMaximumHeight(25);
-    scroll->setFlat(true);
-    scroll->setCheckable(true);
-    scroll->show();
-    bScroll = true;
-
-    //separator2 = new QFrame(this);
-    //separator2->setFrameShape(QFrame::VLine);
-    //separator2->setFrameShadow(QFrame::Sunken);
-    //separator2->show();
-
     toolLayout = new QHBoxLayout();
     toolLayout->setMargin(0);
     toolLayout->setAlignment(Qt::AlignLeft);
@@ -193,8 +179,6 @@ ToolWidget::ToolWidget(QWidget *parent, Network *param1, InputWidget *param2, Dl
     toolLayout->addWidget(channel_settings);
     toolLayout->addWidget(moderation);
     toolLayout->addWidget(clear);
-    toolLayout->addWidget(scroll);
-    //toolLayout->addWidget(separator2);
     setLayout(toolLayout);
 
     // set default
@@ -225,7 +209,6 @@ ToolWidget::ToolWidget(QWidget *parent, Network *param1, InputWidget *param2, Dl
     QObject::connect(channel_settings, SIGNAL(clicked()), this, SLOT(channel_settings_clicked()));
     QObject::connect(moderation, SIGNAL(clicked()), this, SLOT(moderation_clicked()));
     QObject::connect(clear, SIGNAL(clicked()), this, SLOT(clear_clicked()));
-    QObject::connect(scroll, SIGNAL(clicked()), this, SLOT(scroll_clicked()));
 }
 
 void ToolWidget::set_default()
@@ -294,11 +277,6 @@ void ToolWidget::set_default()
 
     color->setCurrentIndex(iMyColor);
 
-    // set default scroll
-    scroll->setChecked(true);
-    bScroll = true;
-    scroll->setIcon(QIcon(":/images/oxygen/16x16/arrow-down.png"));
-
     // moderation default hidden
     moderation->hide();
 }
@@ -317,23 +295,6 @@ void ToolWidget::set_channel_settings(bool bEnable)
         channel_settings->show();
     else
         channel_settings->hide();
-}
-
-// set scroll after change tab page
-void ToolWidget::change_scroll(bool bEnable)
-{
-    if (bEnable == true)
-    {
-        scroll->setChecked(true);
-        bScroll = true;
-        scroll->setIcon(QIcon(":/images/oxygen/16x16/arrow-down.png"));
-    }
-    else
-    {
-        scroll->setChecked(false);
-        bScroll = false;
-        scroll->setIcon(QIcon(":/images/oxygen/16x16/arrow-up.png"));
-    }
 }
 
 void ToolWidget::bold_clicked()
@@ -544,30 +505,4 @@ void ToolWidget::clear_clicked()
 {
     QString strChannel = pInputWidget->get_active();
     emit clear_content(strChannel);
-}
-
-// scroll
-
-void ToolWidget::scroll_clicked()
-{
-    QString strChannel = pInputWidget->get_active();
-
-    if (bScroll == true)
-    {
-        scroll->setChecked(false);
-        bScroll = false;
-        scroll->setIcon(QIcon(":/images/oxygen/16x16/arrow-up.png"));
-
-        emit set_scroll(strChannel, false);
-    }
-    else
-    {
-        scroll->setChecked(true);
-        bScroll = true;
-        scroll->setIcon(QIcon(":/images/oxygen/16x16/arrow-down.png"));
-
-        emit set_scroll(strChannel, true);
-    }
-
-    pInputWidget->setFocus();
 }

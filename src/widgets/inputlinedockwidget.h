@@ -43,7 +43,6 @@ public:
     void set_active(QString);
     QString get_active();
     void set_userslist(QTreeWidget *);
-    void change_scroll(bool); // set scroll after change tab page
 
 public slots:
     void slot_update_nick(QString);
@@ -52,7 +51,6 @@ public slots:
     void slot_show_hide_toolwidget();
     void slot_change_font_size(QString);
     void slot_clear_content(QString);
-    void slot_set_scroll(QString, bool);
 
 private:
     // params
@@ -70,7 +68,6 @@ signals:
     void show_msg(QString,QString,int);
     void change_font_size(QString);
     void clear_content(QString);
-    void set_scroll(QString, bool);
 };
 
 #endif // INPUTLINEDOCKWIDGET_H

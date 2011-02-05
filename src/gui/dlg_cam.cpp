@@ -1225,9 +1225,10 @@ void DlgCam::remove_item(QString strUser)
 
 int DlgCam::get_item(QString strUser)
 {
-    for (int i = 0; i < ui.tableWidget_nick_rank_spectators->rowCount(); i++)
+    QTableWidget *table = ui.tableWidget_nick_rank_spectators;
+    for (int i = 0; i < table->rowCount(); i++)
     {
-        if (ui.tableWidget_nick_rank_spectators->item(i,0)->text() == strUser)
+        if (table->item(i,0)->text() == strUser)
             return i;
     }
     return -1;

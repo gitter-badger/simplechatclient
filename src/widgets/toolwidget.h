@@ -38,7 +38,6 @@ public:
     ToolWidget(QWidget *, Network *, InputWidget *, DlgChannelSettings *, DlgModeration *);
     void set_moderation(bool);
     void set_channel_settings(bool);
-    void change_scroll(bool); // set scroll after change tab page
 
 private:
     // params
@@ -54,7 +53,6 @@ private:
     QString strMyFontStyle;
     QString strMyFontFamily;
     QString strCurrentColor;
-    bool bScroll;
 
     QHBoxLayout *toolLayout;
     QPushButton *bold;
@@ -66,8 +64,6 @@ private:
     QPushButton *channel_settings;
     QPushButton *moderation;
     QPushButton *clear;
-    QPushButton *scroll;
-    //QFrame *separator2;
 
     QMenu *fontMenu;
     QAction *arialAct;
@@ -114,12 +110,10 @@ private slots:
     void channel_settings_clicked();
     void moderation_clicked();
     void clear_clicked();
-    void scroll_clicked();
 
 signals:
     void change_font_size(QString);
     void clear_content(QString);
-    void set_scroll(QString, bool);
 };
 
 #endif // TOOLWIDGET_H

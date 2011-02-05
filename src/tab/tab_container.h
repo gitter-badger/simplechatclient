@@ -58,7 +58,6 @@ public:
     void author_topic(QString, QString);
     void set_link(QString, QString);
     QStringList get_open_channels();
-    bool get_scroll(QString);
     void add_user(QString); // update nick count for option hide join/part when > 200
     void del_user(QString); // update nick count for option hide join/part when > 200
     void clear_users(QString);  // update nick count for option hide join/part when > 200
@@ -74,7 +73,6 @@ public slots:
     void slot_display_message(QString, QString, int);
     void slot_change_font_size(QString);
     void slot_clear_content(QString);
-    void slot_set_scroll(QString, bool);
     void refresh_colors();
 
 private:

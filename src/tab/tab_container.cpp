@@ -355,13 +355,6 @@ void TabContainer::slot_clear_content(QString strChannel)
         tw[i]->clear_content();
 }
 
-void TabContainer::slot_set_scroll(QString strChannel, bool bSetScroll)
-{
-    int i = get_index(strChannel);
-    if (i != -1)
-        tw[i]->set_scroll(bSetScroll);
-}
-
 void TabContainer::refresh_colors()
 {
     QSettings settings;
@@ -382,15 +375,6 @@ QStringList TabContainer::get_open_channels()
             strlResult.append(tw[i]->get_name());
     }
     return strlResult;
-}
-
-bool TabContainer::get_scroll(QString strChannel)
-{
-    int i = get_index(strChannel);
-    if (i != -1)
-        return tw[i]->get_scroll();
-    else
-        return true;
 }
 
 // update nick count for option hide join/part when > 200

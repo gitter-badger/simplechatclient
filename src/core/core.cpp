@@ -133,7 +133,6 @@ Core::Core(QMainWindow *parent, QString param1, int param2, Notify *param3, QAct
     QObject::connect(inputLineDockWidget, SIGNAL(display_message(QString,QString,int)), pTabC, SLOT(slot_display_message(QString,QString,int)));
     QObject::connect(inputLineDockWidget, SIGNAL(change_font_size(QString)), pTabC, SLOT(slot_change_font_size(QString)));
     QObject::connect(inputLineDockWidget, SIGNAL(clear_content(QString)), pTabC, SLOT(slot_clear_content(QString)));
-    QObject::connect(inputLineDockWidget, SIGNAL(set_scroll(QString,bool)), pTabC, SLOT(slot_set_scroll(QString,bool)));
 
     // signals lag
     QObject::connect(pOnet_kernel, SIGNAL(set_lag(QString)), this, SLOT(set_lag(QString)));
@@ -336,10 +335,6 @@ void Core::current_tab_changed(int index)
 
     // set inputline users
     inputLineDockWidget->set_userslist(mChannelNickListWidget.value(strChannel));
-
-    // set scroll
-    bool bChangeScroll = pTabC->get_scroll(strChannel);
-    inputLineDockWidget->change_scroll(bChangeScroll);
 
     // update nick count
     rightDockWidget->setWindowTitle(QString(tr("Users (%1)")).arg(pTabC->get_users(strChannel)));

@@ -24,13 +24,13 @@
 #include "defines.h"
 class DlgCam;
 class DlgUserProfile;
-class MainWebView;
+class MainTextEdit;
 class Network;
 class Notify;
 class TabManager;
 #include <QLabel>
 #include <QTcpSocket>
-#include <QtWebKit/QWebView>
+#include <QTextEdit>
 #include <QVBoxLayout>
 #include <QWidget>
 
@@ -44,7 +44,6 @@ public:
     TabWidget(QWidget *, Network *, QString, Notify *, QMap <QString, QByteArray> *, QTcpSocket *, sChannelNickStatus *, DlgUserProfile *, DlgCam *, QList<QString> *);
     ~TabWidget();
     inline QString get_name() { return strName; }
-    inline bool get_scroll() { return bScroll; }
     inline void add_user() { iNickCount++; } // update nick count for option hide join/part when > 200
     inline void del_user() { iNickCount--; } // update nick count for option hide join/part when > 200
     inline void clear_users() { iNickCount = 0; } // update nick count for option hide join/part when > 200
@@ -58,9 +57,8 @@ public:
     void set_link(QString);
     void update_channel_avatar();
     void set_open_channels(QStringList);
-    void change_font_size(QString);
+    inline void change_font_size(QString f) { strFontSize = f; }
     void clear_content();
-    void set_scroll(bool);
     void refresh_colors();
 
 private:
@@ -77,9 +75,6 @@ private:
     QList<QString> *lAwaylog;
 
     // other
-    QString strContent;
-    QString strContentStart;
-    QString strContentEnd;
     QString strFontSize;
 
     QVBoxLayout *mainLayout;
@@ -93,22 +88,13 @@ private:
     QWidget *topWidget;
     QHBoxLayout *topLayout;
 
-    QWebView *topic;
+    QTextEdit *topic;
     QLabel *avatar;
     QLabel *topicDetails;
     QLabel *websiteLink;
-    MainWebView *mainWebView;
+    MainTextEdit *mainTextEdit;
 
-    QString strTopicContent;
-    bool bCursorPositionChanged;
-    int iScrollBarValue;
-    bool bScroll;
     int iNickCount;
-
-    void replace_color(QString, QString);
-
-private slots:
-    void change_scroll_position();
 };
 
 #endif // TAB_WIDGET_H

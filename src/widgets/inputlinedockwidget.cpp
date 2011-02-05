@@ -60,7 +60,6 @@ InputLineDockWidget::InputLineDockWidget(QWidget *parent, Network *param1, DlgCh
     QObject::connect(pInputWidget, SIGNAL(show_msg(QString,QString,int)), this, SLOT(slot_show_msg(QString,QString,int)));
     QObject::connect(pToolWidget, SIGNAL(change_font_size(QString)), this, SLOT(slot_change_font_size(QString)));
     QObject::connect(pToolWidget, SIGNAL(clear_content(QString)), this, SLOT(slot_clear_content(QString)));
-    QObject::connect(pToolWidget, SIGNAL(set_scroll(QString, bool)), this, SLOT(slot_set_scroll(QString, bool)));
     QObject::connect(pInputWidget, SIGNAL(show_hide_toolwidget()), this, SLOT(slot_show_hide_toolwidget()));
 }
 
@@ -160,15 +159,4 @@ void InputLineDockWidget::slot_change_font_size(QString strSize)
 void InputLineDockWidget::slot_clear_content(QString strChannel)
 {
     emit clear_content(strChannel);
-}
-
-void InputLineDockWidget::slot_set_scroll(QString strChannel, bool bSetScroll)
-{
-    emit set_scroll(strChannel, bSetScroll);
-}
-
-// set scroll after change tab page
-void InputLineDockWidget::change_scroll(bool bEnable)
-{
-    pToolWidget->change_scroll(bEnable);
 }

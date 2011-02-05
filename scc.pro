@@ -53,7 +53,7 @@ SOURCES += src/avatars/avatar.cpp \
     src/widgets/inputwidget.cpp \
     src/widgets/inputlinewidget.cpp \
     src/widgets/inputlinedockwidget.cpp \
-    src/widgets/mainwebview.cpp \
+    src/widgets/maintextedit.cpp \
     src/widgets/nicklistdelegate.cpp \
     src/widgets/nicklistwidget.cpp \
     src/widgets/nicklistdockwidget.cpp \
@@ -105,7 +105,7 @@ HEADERS += src/avatars/avatar.h \
     src/widgets/inputwidget.h \
     src/widgets/inputlinewidget.h \
     src/widgets/inputlinedockwidget.h \
-    src/widgets/mainwebview.h \
+    src/widgets/maintextedit.h \
     src/widgets/nicklistdelegate.h \
     src/widgets/nicklistwidget.h \
     src/widgets/nicklistdockwidget.h \

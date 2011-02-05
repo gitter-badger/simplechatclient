@@ -107,20 +107,23 @@ void DlgUserProfile::set_user_info(QString strCheckNick, QString strKey, QString
 
 void DlgUserProfile::avatar_finished()
 {
-    QByteArray bData = pReply->readAll();
+    if (pReply->canReadLine() == true)
+    {
+        QByteArray bData = pReply->readAll();
+
+        // show avatar
+        if (bData.isEmpty() == false)
+        {
+            // display
+            avatar.loadFromData(bData);
+            ui.label_avatar->setPixmap(avatar.scaled(QSize(50,50)));
+
+            // enable zoom
+            ui.toolButton_zoom->setEnabled(true);
+        }
+    }
     pReply->QObject::disconnect();
     pReply->deleteLater();
-
-    // show avatar
-    if (bData.isEmpty() == false)
-    {
-        // display
-        avatar.loadFromData(bData);
-        ui.label_avatar->setPixmap(avatar.scaled(QSize(50,50)));
-
-        // enable zoom
-        ui.toolButton_zoom->setEnabled(true);
-    }
 }
 
 void DlgUserProfile::button_zoom()

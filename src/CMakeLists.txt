@@ -67,7 +67,7 @@ set (scc_SRCS
 	widgets/inputlinewidget.cpp
 	widgets/inputlinedockwidget.cpp
 	widgets/inputwidget.cpp
-	widgets/mainwebview.cpp
+	widgets/maintextedit.cpp
 	widgets/nicklistdelegate.cpp
 	widgets/nicklistwidget.cpp
 	widgets/nicklistdockwidget.cpp
@@ -118,7 +118,7 @@ set (scc_MOC_HDRS
 	widgets/inputlinewidget.h
 	widgets/inputlinedockwidget.h
 	widgets/inputwidget.h
-	widgets/mainwebview.h
+	widgets/maintextedit.h
 	widgets/nicklistdelegate.h
 	widgets/nicklistwidget.h
 	widgets/nicklistdockwidget.h
@@ -170,7 +170,7 @@ find_package (Qt4 REQUIRED)
 set (QT_USE_QTXML TRUE)
 
 # webkit
-set (QT_USE_QTWEBKIT TRUE)
+#set (QT_USE_QTWEBKIT TRUE)
 
 # phonon
 set (QT_USE_PHONON TRUE)
