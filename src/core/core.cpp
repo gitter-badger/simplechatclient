@@ -226,6 +226,12 @@ void Core::refresh_colors()
     pTabC->refresh_colors();
 }
 
+// refresh background image
+void Core::refresh_background_image()
+{
+    pTabC->refresh_background_image();
+}
+
 // set lag
 void Core::set_lag(QString strValue)
 {

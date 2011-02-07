@@ -60,6 +60,7 @@ public:
     inline void change_font_size(QString f) { strFontSize = f; }
     void clear_content();
     void refresh_colors();
+    void refresh_background_image();
 
 private:
     // params

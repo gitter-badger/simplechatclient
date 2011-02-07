@@ -91,6 +91,8 @@ private slots:
     void disable_sounds();
     void open_logs_folder();
     void disable_logs();
+    void set_background_image();
+    void disable_background_image();
     void button_ok();
     void button_cancel();
 
@@ -100,6 +102,7 @@ protected:
 
 signals:
     void refresh_colors();
+    void refresh_background_image();
 };
 
 #endif // DLG_OPTIONS_H

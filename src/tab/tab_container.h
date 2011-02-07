@@ -74,6 +74,7 @@ public slots:
     void slot_change_font_size(QString);
     void slot_clear_content(QString);
     void refresh_colors();
+    void refresh_background_image();
 
 private:
     // params

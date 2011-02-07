@@ -1368,6 +1368,18 @@
         <source>Disable logs</source>
         <translation>Wyłącz logi</translation>
     </message>
+    <message>
+        <source>Background image</source>
+        <translation>Tapeta</translation>
+    </message>
+    <message>
+        <source>Default background image:</source>
+        <translation>Domyślna tapeta:</translation>
+    </message>
+    <message>
+        <source>Disable background image</source>
+        <translation>Wyłącz tapetę</translation>
+    </message>
 </context>
 <context>
     <name>DlgRegisterNick</name>

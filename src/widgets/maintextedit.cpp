@@ -42,6 +42,20 @@ MainTextEdit::MainTextEdit(QWidget *parent, Network *param1, QString param2, QTc
     pDlg_cam = param6;
 
     strNick = QString::null;
+
+    update_background_image();
+}
+
+void MainTextEdit::update_background_image()
+{
+    QSettings settings;
+    QString strBackgroundImage = settings.value("background_image").toString();
+    QString strDisableBackgroundImage = settings.value("disable_background_image").toString();
+
+    if (strDisableBackgroundImage == "off")
+        this->setStyleSheet("QTextEdit{background-image: url("+strBackgroundImage+"); background-attachment: fixed; background-position: center; background-repeat: no-repeat; background-color: #ffffff; }");
+    else
+        this->setStyleSheet("");
 }
 
 void MainTextEdit::join_channel()

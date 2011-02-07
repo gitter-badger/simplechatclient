@@ -366,6 +366,12 @@ void TabContainer::refresh_colors()
     }
 }
 
+void TabContainer::refresh_background_image()
+{
+    for (int i = 0; i < tw.count(); i++)
+        tw[i]->refresh_background_image();
+}
+
 QStringList TabContainer::get_open_channels()
 {
     QStringList strlResult;

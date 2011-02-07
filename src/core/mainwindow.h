@@ -76,6 +76,7 @@ private:
 
 private slots:
     void refresh_colors();
+    void refresh_background_image();
     void button_connect();
     void button_close();
     void open_options();

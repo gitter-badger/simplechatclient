@@ -34,6 +34,7 @@ class MainTextEdit : public QTextEdit
 public:
     MainTextEdit(QWidget *, Network *, QString, QTcpSocket *, sChannelNickStatus *, DlgUserProfile *, DlgCam *);
     ~MainTextEdit();
+    void update_background_image();
     void set_open_channels(QStringList);
     inline QString get_current_nick() { return strNick; }
 

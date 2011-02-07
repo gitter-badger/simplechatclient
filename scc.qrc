@@ -65,5 +65,6 @@
         <file>images/oxygen/16x16/folder-txt.png</file>
         <file>images/oxygen/16x16/page-zoom.png</file>
         <file>images/oxygen/16x16/document-revert.png</file>
+        <file>images/oxygen/16x16/games-config-background.png</file>
     </qresource>
 </RCC>

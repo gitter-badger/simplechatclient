@@ -471,3 +471,8 @@ void TabWidget::refresh_colors()
     topic->setTextColor(QColor(strDefaultFontColor));
     topic->setTextBackgroundColor(QColor(strBackgroundColor));
 }
+
+void TabWidget::refresh_background_image()
+{
+    mainTextEdit->update_background_image();
+}

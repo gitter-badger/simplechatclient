@@ -62,6 +62,7 @@ DlgOptions::DlgOptions(QWidget *parent, Notify *param1) : QDialog(parent)
     ui.pushButton_sound_beep_change->setIcon(QIcon(":/images/oxygen/16x16/document-edit.png"));
     ui.pushButton_sound_query_change->setIcon(QIcon(":/images/oxygen/16x16/document-edit.png"));
     ui.pushButton_logs_open_folder->setIcon(QIcon(":/images/oxygen/16x16/folder-txt.png"));
+    ui.pushButton_set_background_image->setIcon(QIcon(":/images/oxygen/16x16/insert-image.png"));
     ui.buttonBox->button(QDialogButtonBox::Ok)->setIcon(QIcon(":/images/oxygen/16x16/dialog-ok.png"));
     ui.buttonBox->button(QDialogButtonBox::Cancel)->setIcon(QIcon(":/images/oxygen/16x16/dialog-cancel.png"));
 
@@ -143,6 +144,12 @@ DlgOptions::DlgOptions(QWidget *parent, Notify *param1) : QDialog(parent)
     ui.pushButton_logs_open_folder->setText(tr("Open folder"));
     ui.checkBox_disable_logs->setText(tr("Disable logs"));
 
+    // background image
+    ui.groupBox_background_image->setTitle(tr("Background image"));
+    ui.label_background_image->setText(tr("Default background image:"));
+    ui.pushButton_set_background_image->setText(tr("Set"));
+    ui.checkBox_disable_background_image->setText(tr("Disable background image"));
+
     // options list
     QTreeWidgetItem *basic = new QTreeWidgetItem(ui.treeWidget_options);
     basic->setIcon(0, QIcon(":/images/oxygen/16x16/view-media-artist.png"));
@@ -178,6 +185,11 @@ DlgOptions::DlgOptions(QWidget *parent, Notify *param1) : QDialog(parent)
     logs->setIcon(0, QIcon(":/images/oxygen/16x16/text-field.png"));
     logs->setText(0, tr("Logs"));
     logs->setToolTip(0, tr("Logs"));
+
+    QTreeWidgetItem *background_image = new QTreeWidgetItem(ui.treeWidget_options);
+    background_image->setIcon(0, QIcon(":/images/oxygen/16x16/games-config-background.png"));
+    background_image->setText(0, tr("Background image"));
+    background_image->setToolTip(0, tr("Background image"));
 
     ui.treeWidget_options->setCurrentItem(ui.treeWidget_options->itemAt(0,0));
 
@@ -240,6 +252,9 @@ DlgOptions::DlgOptions(QWidget *parent, Notify *param1) : QDialog(parent)
     if (strOpenFolderCommand.isEmpty() == true)
         ui.pushButton_logs_open_folder->setEnabled(false);
 
+    // background image
+    ui.lineEdit_background_image->setText(mySettings.value("background_image").toString());
+
     // signals
     QObject::connect(ui.treeWidget_options, SIGNAL(currentItemChanged(QTreeWidgetItem*,QTreeWidgetItem*)), this, SLOT(change_page(QTreeWidgetItem*,QTreeWidgetItem*)));
     QObject::connect(ui.radioButton_unregistered_nick, SIGNAL(clicked()), this, SLOT(hide_pass()));
@@ -289,6 +304,8 @@ DlgOptions::DlgOptions(QWidget *parent, Notify *param1) : QDialog(parent)
     QObject::connect(ui.checkBox_disable_sounds, SIGNAL(clicked()), this, SLOT(disable_sounds()));
     QObject::connect(ui.pushButton_logs_open_folder, SIGNAL(clicked()), this, SLOT(open_logs_folder()));
     QObject::connect(ui.checkBox_disable_logs, SIGNAL(clicked()), this, SLOT(disable_logs()));
+    QObject::connect(ui.pushButton_set_background_image, SIGNAL(clicked()), this, SLOT(set_background_image()));
+    QObject::connect(ui.checkBox_disable_background_image, SIGNAL(clicked()), this, SLOT(disable_background_image()));
     QObject::connect(ui.buttonBox, SIGNAL(accepted()), this, SLOT(button_ok()));
     QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(button_cancel()));
 }
@@ -1309,6 +1326,51 @@ void DlgOptions::disable_logs()
     delete pConfig;
 }
 
+void DlgOptions::set_background_image()
+{
+    QString selectedFilter;
+    QString fileName = QFileDialog::getOpenFileName(this,
+                                     tr("Select Image File"),
+                                     ui.lineEdit_background_image->text(),
+                                     tr("All Files (*);;JPG Files (*.jpg);;PNG Files (*.png);;Bitmap Files (*.bmp)"),
+                                     &selectedFilter,
+                                     0);
+    if (fileName.isEmpty() == false)
+    {
+        QSettings settings;
+        Config *pConfig = new Config();
+
+        pConfig->set_value("background_image", fileName);
+        settings.setValue("background_image", fileName);
+
+        delete pConfig;
+        ui.lineEdit_background_image->setText(fileName);
+
+        // refresh
+        emit refresh_background_image();
+    }
+}
+
+void DlgOptions::disable_background_image()
+{
+    QSettings settings;
+    Config *pConfig = new Config();
+    if (ui.checkBox_disable_background_image->isChecked() == true)
+    {
+        pConfig->set_value("disable_background_image", "on");
+        settings.setValue("disable_background_image", "on");
+    }
+    else
+    {
+        pConfig->set_value("disable_background_image", "off");
+        settings.setValue("disable_background_image", "off");
+    }
+    delete pConfig;
+
+    // refresh
+    emit refresh_background_image();
+}
+
 void DlgOptions::button_cancel()
 {
     this->hide();
@@ -1502,6 +1564,8 @@ void DlgOptions::clear_settings()
 
     QString strDisableSounds = pConfig->get_value("disable_sounds");
 
+    QString strDisableBackgroundImage = pConfig->get_value("disable_background_image");
+
     delete pConfig;
 
     // decrypt pass
@@ -1679,6 +1743,12 @@ void DlgOptions::clear_settings()
         ui.checkBox_disable_sounds->setChecked(true);
     else
         ui.checkBox_disable_sounds->setChecked(false);
+
+    // disable background image
+    if (strDisableBackgroundImage == "on")
+        ui.checkBox_disable_background_image->setChecked(true);
+    else
+        ui.checkBox_disable_background_image->setChecked(false);
 
     // disable change nick if connected
     QSettings settings;
