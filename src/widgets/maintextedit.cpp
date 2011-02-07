@@ -22,6 +22,7 @@
 #include <QInputDialog>
 #include <QMenu>
 #include <QSettings>
+#include <QTextBlock>
 #include "dlg_cam.h"
 #include "dlg_user_profile.h"
 #include "network.h"
@@ -214,7 +215,7 @@ void MainTextEdit::mousePressEvent(QMouseEvent *event)
         if (!cursor.selectedText().isEmpty())
         {
             QString strText = cursor.selectedText();
-            int iPos = cursor.positionInBlock();
+            int iPos = cursor.position() - cursor.block().position(); // cursor.positionInBlock()
 
             cursor.select(QTextCursor::BlockUnderCursor);
             QString strBlock = cursor.selectedText().trimmed();
