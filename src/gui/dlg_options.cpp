@@ -357,7 +357,7 @@ void DlgOptions::set_modern_style_avatars()
     settings.setValue("disable_avatars", "off");
     delete pConfig;
 
-    this->close(); // fix stay on top
+    this->hide(); // fix stay on top
 
     QMessageBox msgBox;
     msgBox.setIcon(QMessageBox::Information);
@@ -381,7 +381,7 @@ void DlgOptions::set_modern_style_no_avatars()
     settings.setValue("disable_avatars", "on");
     delete pConfig;
 
-    this->close(); // fix stay on top
+    this->hide(); // fix stay on top
 
     QMessageBox msgBox;
     msgBox.setIcon(QMessageBox::Information);
@@ -405,7 +405,7 @@ void DlgOptions::set_classic_style()
     settings.setValue("disable_avatars", "on");
     delete pConfig;
 
-    this->close(); // fix stay on top
+    this->hide(); // fix stay on top
 
     QMessageBox msgBox;
     msgBox.setIcon(QMessageBox::Information);
