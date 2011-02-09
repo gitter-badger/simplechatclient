@@ -487,6 +487,12 @@ void DlgCam::slot_network_connect()
 
 void DlgCam::data_kernel()
 {
+#ifdef Q_WS_X11
+        QSettings settings;
+        if (settings.value("debug").toString() == "on")
+            qDebug() << "CAM byte <- " << bData;
+#endif
+
     // 202 14283 IMAGE_UPDATE_BIG psotnica2603
     if (iCam_cmd == 202)
     {
@@ -619,7 +625,7 @@ void DlgCam::data_kernel()
                 if (iCamOnOff == 0)
                 {
                     mNickChannels.remove(strUser);
-                    if (exist_item(strUser) == false)
+                    if (exist_item(strUser) == true)
                         remove_item(strUser);
                 }
                 else
@@ -723,13 +729,13 @@ void DlgCam::data_kernel()
 
 void DlgCam::text_kernel(QString strData)
 {
-    QStringList strDataList = strData.split(" ");
-
 #ifdef Q_WS_X11
     QSettings settings;
     if (settings.value("debug").toString() == "on")
         qDebug() << "CAM <- " << strData;
 #endif
+
+    QStringList strDataList = strData.split(" ");
 
     // check correct text
     if (strDataList.count() < 3)

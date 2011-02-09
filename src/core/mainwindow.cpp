@@ -231,7 +231,7 @@ void MainWindow::create_settings()
     // default settings
     QSettings settings;
     settings.clear();
-    settings.setValue("version", "1.0.10.682");
+    settings.setValue("version", "1.0.10.683");
     settings.setValue("debug", "off");
     settings.setValue("logged", "off");
     settings.setValue("busy", "off");
@@ -318,7 +318,8 @@ void MainWindow::button_close()
 
 void MainWindow::open_options()
 {
-    pOptions->show();
+    if (pOptions->isHidden())
+        pOptions->show();
 }
 
 void MainWindow::open_about()

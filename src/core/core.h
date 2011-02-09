@@ -124,7 +124,7 @@ private:
     QMap <QString, NickListWidget*> mChannelNickListWidget;
     sChannelNickStatus mChannelNickStatus;
 
-    // lag
+    // other
     QAction *lagAct;
     DlgCam *pDlg_cam;
     QList<QString> lAwaylog;
