@@ -18,23 +18,24 @@
  *                                                                          *
  ****************************************************************************/
 
-#include <QCloseEvent>
 #include <QDesktopWidget>
 #include <QInputDialog>
 #include <QSettings>
 #include <QShowEvent>
+#include <QTimer>
 #include "network.h"
 #include "dlg_friends.h"
 
-DlgFriends::DlgFriends(QWidget *parent, Network *param1, QMap <QString, QByteArray> *param2) : QDialog(parent)
+DlgFriends::DlgFriends(QWidget *parent, Network *param1, QMap <QString, QByteArray> *param2, QMap <QString, bool> *param3) : QDialog(parent)
 {
     ui.setupUi(this);
-    setAttribute(Qt::WA_DeleteOnClose);
+    //setAttribute(Qt::WA_DeleteOnClose);
     setWindowTitle(tr("Friends list"));
 
     myparent = parent;
     pNetwork = param1;
     mNickAvatar = param2;
+    mFriends = param3;
 
     ui.pushButton_add->setIcon(QIcon(":/images/oxygen/16x16/list-add-user.png"));
     ui.pushButton_remove->setIcon(QIcon(":/images/oxygen/16x16/list-remove-user.png"));
@@ -52,26 +53,13 @@ DlgFriends::DlgFriends(QWidget *parent, Network *param1, QMap <QString, QByteArr
     QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(button_close()));
 }
 
-void DlgFriends::set_friend(QString strNick, bool bStatus)
-{
-    if (friends.contains(strNick))
-        friends[strNick] = bStatus;
-    else
-        friends.insert(strNick, bStatus);
-}
-
-void DlgFriends::remove_friend(QString strNick)
-{
-    friends.remove(strNick);
-}
-
 void DlgFriends::refresh()
 {
     ui.listWidget_online->clear();
     ui.listWidget_offline->clear();
 
-    QMap<QString, bool>::const_iterator i = friends.constBegin();
-    while (i != friends.constEnd())
+    QMap<QString, bool>::const_iterator i = mFriends->constBegin();
+    while (i != mFriends->constEnd())
     {
         QListWidgetItem *item;
 
@@ -98,11 +86,6 @@ void DlgFriends::refresh()
     }
 }
 
-void DlgFriends::clear()
-{
-    friends.clear();
-}
-
 void DlgFriends::tab_changed(int index)
 {
     // online - show whois
@@ -119,7 +102,10 @@ void DlgFriends::button_add()
     QString strText = QInputDialog::getText(this, tr("Changing your friends list"), tr("Enter a nickname to be added:"), QLineEdit::Normal, QString::null, &ok);
 
     if ((ok == true) && (strText.isEmpty() == false))
+    {
         pNetwork->send(QString("NS FRIENDS ADD %1").arg(strText));
+        QTimer::singleShot(1000*2, this, SLOT(refresh())); // 2 sec
+    }
 }
 
 void DlgFriends::button_remove()
@@ -140,7 +126,10 @@ void DlgFriends::button_remove()
     QString strText = QInputDialog::getText(this, tr("Changing your friends list"), tr("Enter a nickname for removal:"), QLineEdit::Normal, strSelected, &ok);
 
     if ((ok == true) && (strText.isEmpty() == false))
+    {
         pNetwork->send(QString("NS FRIENDS DEL %1").arg(strText));
+        QTimer::singleShot(1000*2, this, SLOT(refresh())); // 2 sec
+    }
 }
 
 void DlgFriends::button_whois()
@@ -163,7 +152,7 @@ void DlgFriends::button_whois()
 
 void DlgFriends::button_close()
 {
-    this->hide();
+    this->close();
 }
 
 void DlgFriends::showEvent(QShowEvent *event)
@@ -173,10 +162,4 @@ void DlgFriends::showEvent(QShowEvent *event)
     move(QApplication::desktop()->screen()->rect().center() - rect().center());
 
     refresh();
-}
-
-void DlgFriends::closeEvent(QCloseEvent *event)
-{
-    event->ignore();
-    this->hide();
 }

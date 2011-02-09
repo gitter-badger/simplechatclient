@@ -18,23 +18,24 @@
  *                                                                          *
  ****************************************************************************/
 
-#include <QCloseEvent>
 #include <QDesktopWidget>
 #include <QInputDialog>
 #include <QSettings>
 #include <QShowEvent>
+#include <QTimer>
 #include "network.h"
 #include "dlg_ignore.h"
 
-DlgIgnore::DlgIgnore(QWidget *parent, Network *param1, QMap <QString, QByteArray> *param2) : QDialog(parent)
+DlgIgnore::DlgIgnore(QWidget *parent, Network *param1, QMap <QString, QByteArray> *param2, QList <QString> *param3) : QDialog(parent)
 {
     ui.setupUi(this);
-    setAttribute(Qt::WA_DeleteOnClose);
+    //setAttribute(Qt::WA_DeleteOnClose);
     setWindowTitle(tr("Ignore list"));
 
     myparent = parent;
     pNetwork = param1;
     mNickAvatar = param2;
+    lIgnore = param3;
 
     ui.pushButton_add->setIcon(QIcon(":/images/oxygen/16x16/list-add-user.png"));
     ui.pushButton_remove->setIcon(QIcon(":/images/oxygen/16x16/list-remove-user.png"));
@@ -48,39 +49,40 @@ DlgIgnore::DlgIgnore(QWidget *parent, Network *param1, QMap <QString, QByteArray
     QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(button_close()));
 }
 
-void DlgIgnore::add_ignore(QString strNick)
-{
-    if (mNickAvatar->contains(strNick) == true)
-    {
-        QPixmap pixmap;
-        pixmap.loadFromData(mNickAvatar->value(strNick));
-        ui.listWidget_nicks->addItem(new QListWidgetItem(QIcon(pixmap), strNick));
-    }
-    else
-    {
-        QSettings settings;
-        ui.listWidget_nicks->addItem(new QListWidgetItem(QIcon(":/images/oxygen/16x16/meeting-attending-tentative.png"), strNick));
-        if (settings.value("disable_avatars").toString() == "off") // with avatars
-            pNetwork->send(QString("NS INFO %1 s").arg(strNick));
-    }
-}
-
-void DlgIgnore::clear()
+void DlgIgnore::refresh()
 {
     ui.listWidget_nicks->clear();
+
+    for (int i = 0; i < lIgnore->size(); ++i)
+    {
+        QString strNick = lIgnore->at(i);
+
+        if (mNickAvatar->contains(strNick) == true)
+        {
+            QPixmap pixmap;
+            pixmap.loadFromData(mNickAvatar->value(strNick));
+            ui.listWidget_nicks->addItem(new QListWidgetItem(QIcon(pixmap), strNick));
+        }
+        else
+        {
+            QSettings settings;
+            ui.listWidget_nicks->addItem(new QListWidgetItem(QIcon(":/images/oxygen/16x16/meeting-attending-tentative.png"), strNick));
+            if (settings.value("disable_avatars").toString() == "off") // with avatars
+                pNetwork->send(QString("NS INFO %1 s").arg(strNick));
+        }
+    }
 }
 
 void DlgIgnore::button_add()
 {
-    ui.listWidget_nicks->clear();
-
     bool ok;
     QString strText = QInputDialog::getText(this, tr("Change your ignore list"), tr("Enter a nickname to be added:"), QLineEdit::Normal, QString::null, &ok);
 
     if ((ok == true) && (strText.isEmpty() == false))
+    {
         pNetwork->send(QString("NS IGNORE ADD %1").arg(strText));
-    else
-        pNetwork->send("NS IGNORE");
+        QTimer::singleShot(1000*2, this, SLOT(refresh())); // 2 sec
+    }
 }
 
 void DlgIgnore::button_remove()
@@ -89,21 +91,19 @@ void DlgIgnore::button_remove()
     if (ui.listWidget_nicks->selectedItems().count() != 0)
         strSelected = ui.listWidget_nicks->selectedItems().at(0)->text();
 
-    ui.listWidget_nicks->clear();
-
     bool ok;
     QString strText = QInputDialog::getText(this, tr("Change your ignore list"), tr("Enter a nickname for removal:"), QLineEdit::Normal, strSelected, &ok);
 
     if ((ok == true) && (strText.isEmpty() == false))
+    {
         pNetwork->send(QString("NS IGNORE DEL %1").arg(strText));
-    else
-        pNetwork->send("NS IGNORE");
+        QTimer::singleShot(1000*2, this, SLOT(refresh())); // 2 sec
+    }
 }
 
 void DlgIgnore::button_close()
 {
-    ui.listWidget_nicks->clear();
-    this->hide();
+    this->close();
 }
 
 void DlgIgnore::showEvent(QShowEvent *event)
@@ -112,12 +112,5 @@ void DlgIgnore::showEvent(QShowEvent *event)
     // center screen
     move(QApplication::desktop()->screen()->rect().center() - rect().center());
 
-    ui.listWidget_nicks->clear();
-    pNetwork->send("NS IGNORE");
-}
-
-void DlgIgnore::closeEvent(QCloseEvent *event)
-{
-    event->ignore();
-    this->hide();
+    refresh();
 }

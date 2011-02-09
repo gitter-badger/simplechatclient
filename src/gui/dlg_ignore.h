@@ -29,24 +29,23 @@ class DlgIgnore : public QDialog
 {
     Q_OBJECT
 public:
-    DlgIgnore(QWidget *, Network *, QMap <QString, QByteArray> *);
-    void add_ignore(QString);
-    void clear();
+    DlgIgnore(QWidget *, Network *, QMap <QString, QByteArray> *, QList<QString> *);
 
 private:
     Ui::uiIgnore ui;
     QWidget *myparent;
     Network *pNetwork;
     QMap <QString, QByteArray> *mNickAvatar;
+    QList<QString> *lIgnore;
 
 private slots:
+    void refresh();
     void button_add();
     void button_remove();
     void button_close();
 
 protected:
     virtual void showEvent(QShowEvent *);
-    virtual void closeEvent(QCloseEvent *);
 };
 
 #endif // DLG_IGNORE_H

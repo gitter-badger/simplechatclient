@@ -27,8 +27,6 @@ class DlgChannelFavourites;
 class DlgChannelHomes;
 class DlgChannelList;
 class DlgChannelSettings;
-class DlgFriends;
-class DlgIgnore;
 class DlgModeration;
 class DlgUserProfile;
 class InputLineDockWidget;
@@ -113,8 +111,6 @@ private:
     DlgChannelHomes *pDlg_channel_homes;
     DlgChannelList *pDlg_channel_list;
     DlgChannelSettings *pDlg_channel_settings;
-    DlgFriends *pDlg_friends;
-    DlgIgnore *pDlg_ignore;
     DlgUserProfile *pDlg_user_profile;
     DlgModeration *pDlg_moderation;
     QMap <QString, QByteArray> mNickAvatar;
@@ -128,6 +124,8 @@ private:
     QAction *lagAct;
     DlgCam *pDlg_cam;
     QList<QString> lAwaylog;
+    QMap<QString, bool> mFriends;
+    QList<QString> lIgnore;
 
 private slots:
     void tab_close_requested(int);

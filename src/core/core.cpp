@@ -74,12 +74,10 @@ Core::Core(QMainWindow *parent, QString param1, int param2, Notify *param3, QAct
     pDlg_channel_list = new DlgChannelList(myparent);
     pDlg_channel_homes = new DlgChannelHomes(myparent, pNetwork, &mChannelAvatar, pDlg_channel_settings);
     pDlg_channel_favourites = new DlgChannelFavourites(myparent, pNetwork, &mChannelAvatar);
-    pDlg_friends = new DlgFriends(myparent, pNetwork, &mNickAvatar);
-    pDlg_ignore = new DlgIgnore(myparent, pNetwork, &mNickAvatar);
     pDlg_user_profile = new DlgUserProfile(myparent, pNetwork);
     pDlg_cam = new DlgCam(myparent, pNetwork, camSocket);
 
-    pOnet_kernel = new OnetKernel(myparent, pNetwork, pTabC, pNotify, &mNickAvatar, &mChannelAvatar, pDlg_channel_settings, pDlg_channel_homes, pDlg_channel_list, pDlg_channel_favourites, pDlg_friends, pDlg_ignore, pDlg_moderation);
+    pOnet_kernel = new OnetKernel(myparent, pNetwork, pTabC, pNotify, &mNickAvatar, &mChannelAvatar, pDlg_channel_settings, pDlg_channel_homes, pDlg_channel_list, pDlg_channel_favourites, &mFriends, &lIgnore, pDlg_moderation);
     pOnet_auth = new OnetAuth(pTabC);
 
     pTabC->set_dlg(pDlg_user_profile, pDlg_cam);
@@ -180,8 +178,6 @@ Core::~Core()
     delete pOnet_kernel;
     delete pDlg_cam;
     delete pDlg_user_profile;
-    delete pDlg_ignore;
-    delete pDlg_friends;
     delete pDlg_channel_favourites;
     delete pDlg_channel_homes;
     delete pDlg_channel_list;
@@ -260,19 +256,19 @@ void Core::open_channel_favourites()
 void Core::open_friends()
 {
     if ((pNetwork->is_connected() == true) && (pNetwork->is_writable() == true))
-        pDlg_friends->show();
+        DlgFriends(myparent, pNetwork, &mNickAvatar, &mFriends).exec();
 }
 
 void Core::open_ignore()
 {
     if ((pNetwork->is_connected() == true) && (pNetwork->is_writable() == true))
-        pDlg_ignore->show();
+        DlgIgnore(myparent, pNetwork, &mNickAvatar, &lIgnore).exec();
 }
 
 void Core::open_awaylog()
 {
     if ((pNetwork->is_connected() == true) && (pNetwork->is_writable() == true))
-        (new DlgAwaylog(myparent, &lAwaylog))->show();
+        DlgAwaylog(myparent, &lAwaylog).exec();
 }
 
 void Core::open_cams()

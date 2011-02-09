@@ -162,7 +162,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 #endif
     QString strConfigFile = path+"/scc.conf";
     if (QFile::exists(strConfigFile) == false)
-        QTimer::singleShot(1000, this, SLOT(open_options()));
+        QTimer::singleShot(1000*1, this, SLOT(open_options())); // 1 sec
 
     // create settings
     create_settings();
@@ -231,7 +231,7 @@ void MainWindow::create_settings()
     // default settings
     QSettings settings;
     settings.clear();
-    settings.setValue("version", "1.0.10.683");
+    settings.setValue("version", "1.0.10.684");
     settings.setValue("debug", "off");
     settings.setValue("logged", "off");
     settings.setValue("busy", "off");
@@ -324,7 +324,7 @@ void MainWindow::open_options()
 
 void MainWindow::open_about()
 {
-    (new DlgAbout(this))->show();
+    DlgAbout(this).exec();
 }
 
 // tray button

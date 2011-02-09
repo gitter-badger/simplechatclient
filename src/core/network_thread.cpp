@@ -113,7 +113,7 @@ void NetworkThread::connect()
             if (bReconnecting == false)
             {
                 bReconnecting = true;
-                QTimer::singleShot(30*1000, this, SLOT(reconnect()));
+                QTimer::singleShot(1000*30, this, SLOT(reconnect())); // 30 sec
             }
 
             return;
@@ -326,7 +326,7 @@ void NetworkThread::disconnected()
         if (bReconnecting == false)
         {
             bReconnecting = true;
-            QTimer::singleShot(30*1000, this, SLOT(reconnect()));
+            QTimer::singleShot(1000*30, this, SLOT(reconnect())); // 30 sec
         }
     }
 }
@@ -368,7 +368,7 @@ void NetworkThread::error(QAbstractSocket::SocketError err)
     if (bReconnecting == false)
     {
         bReconnecting = true;
-        QTimer::singleShot(30*1000, this, SLOT(reconnect()));
+        QTimer::singleShot(1000*30, this, SLOT(reconnect())); // 30 sec
     }
 }
 

@@ -229,7 +229,7 @@ void Kamerzysta::get_port()
     else
     {
         if (iTryGetPort < 120)
-            QTimer::singleShot(1000*1, this, SLOT(get_port()));
+            QTimer::singleShot(1000*1, this, SLOT(get_port())); // 1 sec
     }
 }
 

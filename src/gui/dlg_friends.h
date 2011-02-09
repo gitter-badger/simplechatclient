@@ -29,20 +29,17 @@ class DlgFriends : public QDialog
 {
     Q_OBJECT
 public:
-    DlgFriends(QWidget *, Network *, QMap <QString, QByteArray> *);
-    void set_friend(QString, bool);
-    void remove_friend(QString);
-    void clear();
-    void refresh();
+    DlgFriends(QWidget *, Network *, QMap <QString, QByteArray> *, QMap <QString, bool> *);
 
 private:
     Ui::uiFriends ui;
     QWidget *myparent;
     Network *pNetwork;
     QMap <QString, QByteArray> *mNickAvatar;
-    QMap <QString, bool> friends;
+    QMap <QString, bool> *mFriends;
 
 private slots:
+    void refresh();
     void tab_changed(int);
     void button_add();
     void button_remove();
@@ -51,7 +48,6 @@ private slots:
 
 protected:
     virtual void showEvent(QShowEvent *);
-    virtual void closeEvent(QCloseEvent *);
 };
 
 #endif // DLG_FRIENDS_H

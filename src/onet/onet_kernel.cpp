@@ -29,8 +29,6 @@
 #include "dlg_channel_key.h"
 #include "dlg_channel_list.h"
 #include "dlg_channel_settings.h"
-#include "dlg_friends.h"
-#include "dlg_ignore.h"
 #include "dlg_invite.h"
 #include "dlg_moderation.h"
 #include "log.h"
@@ -40,7 +38,7 @@
 #include "tab_container.h"
 #include "onet_kernel.h"
 
-OnetKernel::OnetKernel(QWidget *parent, Network *param1, TabContainer *param2, Notify *param3, QMap <QString, QByteArray> *param4, QMap <QString, QByteArray> *param5, DlgChannelSettings *param6, DlgChannelHomes *param7, DlgChannelList *param8, DlgChannelFavourites *param9, DlgFriends *param10, DlgIgnore *param11, DlgModeration *param12)
+OnetKernel::OnetKernel(QWidget *parent, Network *param1, TabContainer *param2, Notify *param3, QMap <QString, QByteArray> *param4, QMap <QString, QByteArray> *param5, DlgChannelSettings *param6, DlgChannelHomes *param7, DlgChannelList *param8, DlgChannelFavourites *param9, QMap<QString, bool> *param10, QList<QString> *param11, DlgModeration *param12)
 {
     myparent = parent;
     pNetwork = param1;
@@ -52,8 +50,8 @@ OnetKernel::OnetKernel(QWidget *parent, Network *param1, TabContainer *param2, N
     dlgchannel_homes = param7;
     dlgchannel_list = param8;
     dlgchannel_favourites = param9;
-    dlgfriends = param10;
-    dlgignore = param11;
+    mFriends = param10;
+    lIgnore = param11;
     dlgmoderation = param12;
 }
 
@@ -92,10 +90,10 @@ void OnetKernel::timer_rename_channel()
             if (bRenamed == true)
                 mOldNameNewName.remove(strOldName);
             else
-                QTimer::singleShot(1000*5, this, SLOT(timer_rename_channel()));
+                QTimer::singleShot(1000*5, this, SLOT(timer_rename_channel())); // 5 sec
         }
         else
-            QTimer::singleShot(1000*5, this, SLOT(timer_rename_channel()));
+            QTimer::singleShot(1000*5, this, SLOT(timer_rename_channel())); // 5 sec
 
         ++i;
     }
@@ -1323,19 +1321,11 @@ void OnetKernel::raw_001()
     // protocol
     pNetwork->send("PROTOCTL ONETNAMESX");
 
-    // auto rejoin
-    QStringList strlOpenChannels = pTabC->get_open_channels();
-    for (int i = 0; i < strlOpenChannels.size(); i++)
-        pNetwork->send(QString("JOIN %1").arg(strlOpenChannels[i]));
-
     // busy
     settings.setValue("busy", "off");
 
     // away
     settings.setValue("away", "off");
-
-    // clear friends
-    dlgfriends->clear();
 
     // auto busy
     if (settings.value("auto_busy").toString() == "on")
@@ -1346,6 +1336,15 @@ void OnetKernel::raw_001()
 
     // override off
     settings.setValue("override", "off");
+
+    // clear friends and ignore
+    mFriends->clear();
+    lIgnore->clear();
+
+    // auto rejoin
+    QStringList strlOpenChannels = pTabC->get_open_channels();
+    for (int i = 0; i < strlOpenChannels.size(); i++)
+        pNetwork->send(QString("JOIN %1").arg(strlOpenChannels[i]));
 }
 
 // :cf1f4.onet 002 Merovingian :Your host is cf1f4.onet, running version InspIRCd-1.1
@@ -1497,10 +1496,7 @@ void OnetKernel::raw_121n()
         if (strNick[0] == ':')
             strNick = strNick.right(strNick.length()-1);
 
-        dlgfriends->set_friend(strNick, false);
-
-        if (dlgfriends->isHidden() == false)
-            dlgfriends->refresh();
+        // nothing
     }
 }
 
@@ -1539,7 +1535,8 @@ void OnetKernel::raw_131n()
         if (strNick[0] == ':')
             strNick = strNick.right(strNick.length()-1);
 
-        dlgignore->add_ignore(strNick);
+        if (lIgnore->contains(strNick) == false)
+            lIgnore->append(strNick);
     }
 }
 
@@ -1877,8 +1874,8 @@ void OnetKernel::raw_230n()
     QString strDisplay = QString(tr("* Added %1 to your ignore list")).arg(strNick);
     pTabC->show_msg_active(strDisplay, 7);
 
-    dlgignore->clear();
-    pNetwork->send("NS IGNORE");
+    if (lIgnore->contains(strNick) == false)
+        lIgnore->append(strNick);
 }
 
 // NS IGNORE DEL aaa
@@ -1892,8 +1889,8 @@ void OnetKernel::raw_231n()
     QString strDisplay = QString(tr("* Removed %1 from your ignore list")).arg(strNick);
     pTabC->show_msg_active(strDisplay, 7);
 
-    dlgignore->clear();
-    pNetwork->send("NS IGNORE");
+    if (lIgnore->contains(strNick) == true)
+        lIgnore->removeOne(strNick);
 }
 
 // NS FAVOURITES ADD scc
@@ -2689,7 +2686,7 @@ void OnetKernel::raw_341()
     if (strChannel[0] == '^')
     {
         mOldNameNewName.insert(strChannel, strNick);
-        QTimer::singleShot(1000*3, this, SLOT(timer_rename_channel()));
+        QTimer::singleShot(1000*3, this, SLOT(timer_rename_channel())); // 3 sec
     }
 }
 
@@ -2772,7 +2769,7 @@ void OnetKernel::raw_353()
                 if (strCleanNick != strMe)
                 {
                     mOldNameNewName.insert(strChannel, strCleanNick);
-                    QTimer::singleShot(1000*3, this, SLOT(timer_rename_channel()));
+                    QTimer::singleShot(1000*3, this, SLOT(timer_rename_channel())); // 3 sec
                 }
             }
 
@@ -3225,9 +3222,6 @@ void OnetKernel::raw_431n()
     QString strMessage = QString(tr("* %1 is not on your ignore list")).arg(strNick);
 
     pTabC->show_msg_active(strMessage, 7);
-
-    dlgignore->clear();
-    pNetwork->send("NS IGNORE");
 }
 
 // :cf1f4.onet 432 1501-unknown ~?o? :Erroneous Nickname
@@ -3700,10 +3694,10 @@ void OnetKernel::raw_600()
     QString strMessage = QString(tr("* Your friend %1 arrived online")).arg(strNick);
     pTabC->show_msg_active(strMessage, 7);
 
-    dlgfriends->set_friend(strNick, true);
-
-    if (dlgfriends->isHidden() == false)
-        dlgfriends->refresh();
+    if (mFriends->contains(strNick))
+        (*mFriends)[strNick] = true;
+    else
+        mFriends->insert(strNick, true);
 }
 
 // :cf1f4.onet 601 scc_test Radowsky 16172032 690A6F.A8219B.7F5EC1.35E57C 1267055692 :went offline
@@ -3716,10 +3710,10 @@ void OnetKernel::raw_601()
     QString strMessage = QString(tr("* Your friend %1 went offline")).arg(strNick);
     pTabC->show_msg_active(strMessage, 7);
 
-    dlgfriends->set_friend(strNick, false);
-
-    if (dlgfriends->isHidden() == false)
-        dlgfriends->refresh();
+    if (mFriends->contains(strNick))
+        (*mFriends)[strNick] = false;
+    else
+        mFriends->insert(strNick, false);
 }
 
 // NS FRIENDS DEL nick
@@ -3730,10 +3724,7 @@ void OnetKernel::raw_602()
 
     QString strNick = strDataList[3];
 
-    dlgfriends->remove_friend(strNick);
-
-    if (dlgfriends->isHidden() == false)
-        dlgfriends->refresh();
+    mFriends->remove(strNick);
 }
 
 //:cf1f1.onet 604 scc_test scc_test 51976824 3DE379.B7103A.6CF799.6902F4 1267054441 :is online
@@ -3746,10 +3737,10 @@ void OnetKernel::raw_604()
     QString strMessage = QString(tr("* Your friend %1 is now on-line")).arg(strNick);
     pTabC->show_msg_active(strMessage, 7);
 
-    dlgfriends->set_friend(strNick, true);
-
-    if (dlgfriends->isHidden() == false)
-        dlgfriends->refresh();
+    if (mFriends->contains(strNick))
+        (*mFriends)[strNick] = true;
+    else
+        mFriends->insert(strNick, true);
 }
 
 // :cf1f1.onet 605 scc_test Radowsky * * 0 :is offline
@@ -3762,10 +3753,10 @@ void OnetKernel::raw_605()
     QString strMessage = QString(tr("* Your friend %1 is now off-line")).arg(strNick);
     pTabC->show_msg_active(strMessage, 7);
 
-    dlgfriends->set_friend(strNick, false);
-
-    if (dlgfriends->isHidden() == false)
-        dlgfriends->refresh();
+    if (mFriends->contains(strNick))
+        (*mFriends)[strNick] = false;
+    else
+        mFriends->insert(strNick, false);
 }
 
 // WATCH

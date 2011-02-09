@@ -34,6 +34,7 @@ private:
     Ui::uiAwaylog ui;
     QList<QString> *lAwaylog;
 
+    void refresh();
     void button_reset();
     void button_close();
 

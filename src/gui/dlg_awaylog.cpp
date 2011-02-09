@@ -25,7 +25,7 @@
 DlgAwaylog::DlgAwaylog(QWidget *parent, QList<QString> *param1) : QDialog(parent)
 {
     ui.setupUi(this);
-    setAttribute(Qt::WA_DeleteOnClose);
+    //setAttribute(Qt::WA_DeleteOnClose);
     setWindowTitle(tr("Awaylog"));
     // center screen
     move(QApplication::desktop()->screen()->rect().center() - rect().center());
@@ -35,13 +35,15 @@ DlgAwaylog::DlgAwaylog(QWidget *parent, QList<QString> *param1) : QDialog(parent
     ui.buttonBox->button(QDialogButtonBox::Reset)->setIcon(QIcon(":/images/oxygen/16x16/document-revert.png"));
     ui.buttonBox->button(QDialogButtonBox::Close)->setIcon(QIcon(":/images/oxygen/16x16/dialog-close.png"));
 
-    // display
-    for (int i = 0; i < lAwaylog->count(); i++)
-    {
-        ui.listWidget->insertItem(ui.listWidget->count(),lAwaylog->at(i));
-    }
-
     QObject::connect(ui.buttonBox, SIGNAL(clicked(QAbstractButton*)), this, SLOT(buttons(QAbstractButton*)));
+
+    refresh();
+}
+
+void DlgAwaylog::refresh()
+{
+    for (int i = 0; i < lAwaylog->count(); i++)
+        ui.listWidget->insertItem(ui.listWidget->count(),lAwaylog->at(i));
 }
 
 void DlgAwaylog::buttons(QAbstractButton *button)
