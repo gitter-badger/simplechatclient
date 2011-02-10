@@ -23,12 +23,12 @@
 #include <QDir>
 #include <QLocale>
 #include <QMessageBox>
-#include <QSharedMemory>
 #include <QTextCodec>
 #include <QTranslator>
 #include "config.h"
 #include "debug.h"
 #include "mainwindow.h"
+#include "singleapplication.h"
 
 #ifdef Q_WS_X11
 #include <QProcess>
@@ -38,37 +38,6 @@
 #ifdef Q_WS_X11
 #include <QDebug>
 #endif
-
-class singleApplication : public QApplication
-{
-public:
-    singleApplication(int &argc, char *argv[], const QString uniqueKey) : QApplication(argc, argv), _uniqueKey(uniqueKey)
-    {
-        sharedMemory.setKey(_uniqueKey);
-        if (sharedMemory.attach())
-            _isRunning = true;
-        else
-        {
-            _isRunning = false;
-            // create shared memory.
-            if (!sharedMemory.create(1))
-            {
-                qDebug("Unable to create single instance.");
-                return;
-            }
-        }
-    }
-
-    bool isRunning()
-    {
-        return _isRunning;
-    }
-
-private:
-    bool _isRunning;
-    QString _uniqueKey;
-    QSharedMemory sharedMemory;
-};
 
 #ifdef Q_WS_X11
 void crashHandler()
@@ -239,7 +208,7 @@ int main(int argc, char *argv[])
 
 
     qInstallMsgHandler(messageHandler);
-    singleApplication app(argc, argv, "scc");
+    SingleApplication app(argc, argv, "scc");
 
     // detect already running
     if (app.isRunning())

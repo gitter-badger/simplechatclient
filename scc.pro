@@ -22,6 +22,7 @@ SOURCES += src/avatars/avatar.cpp \
     src/core/mainwindow.cpp \
     src/core/network.cpp \
     src/core/network_thread.cpp \
+    src/core/singleapplication.cpp \
     src/core/update.cpp \
     src/gui/dlg_about.cpp \
     src/gui/dlg_awaylog.cpp \
@@ -74,6 +75,7 @@ HEADERS += src/avatars/avatar.h \
     src/core/mainwindow.h \
     src/core/network.h \
     src/core/network_thread.h \
+    src/core/singleapplication.h \
     src/core/update.h \
     src/gui/dlg_about.h \
     src/gui/dlg_awaylog.h \
