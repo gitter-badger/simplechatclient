@@ -340,6 +340,9 @@ void MainTextEdit::mousePressEvent(QMouseEvent *event)
                 }
             }
         }
+        // move cursor to end
+        cursor.movePosition(QTextCursor::End);
+        this->setTextCursor(cursor);
     }
     else
         QTextEdit::mousePressEvent(event);

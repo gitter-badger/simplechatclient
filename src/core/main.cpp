@@ -22,6 +22,8 @@
 #include <QDesktopWidget>
 #include <QDir>
 #include <QLocale>
+#include <QMessageBox>
+#include <QSharedMemory>
 #include <QTextCodec>
 #include <QTranslator>
 #include "config.h"
@@ -36,6 +38,37 @@
 #ifdef Q_WS_X11
 #include <QDebug>
 #endif
+
+class singleApplication : public QApplication
+{
+public:
+    singleApplication(int &argc, char *argv[], const QString uniqueKey) : QApplication(argc, argv), _uniqueKey(uniqueKey)
+    {
+        sharedMemory.setKey(_uniqueKey);
+        if (sharedMemory.attach())
+            _isRunning = true;
+        else
+        {
+            _isRunning = false;
+            // create shared memory.
+            if (!sharedMemory.create(1))
+            {
+                qDebug("Unable to create single instance.");
+                return;
+            }
+        }
+    }
+
+    bool isRunning()
+    {
+        return _isRunning;
+    }
+
+private:
+    bool _isRunning;
+    QString _uniqueKey;
+    QSharedMemory sharedMemory;
+};
 
 #ifdef Q_WS_X11
 void crashHandler()
@@ -206,7 +239,14 @@ int main(int argc, char *argv[])
 
 
     qInstallMsgHandler(messageHandler);
-    QApplication app(argc, argv);
+    singleApplication app(argc, argv, "scc");
+
+    // detect already running
+    if (app.isRunning())
+    {
+        QMessageBox::critical(0, "Error", "Simple Chat Client is already running");
+        return 0;
+    }
 
     // set codec
     QTextCodec::setCodecForCStrings(QTextCodec::codecForName("ISO-8859-2"));
@@ -222,22 +262,6 @@ int main(int argc, char *argv[])
     QCoreApplication::setOrganizationName("scc");
     QCoreApplication::setOrganizationDomain("simplechatclien.sourceforge.net");
     QCoreApplication::setApplicationName("scc");
-
-    // detect already running
-    /*
-    QSettings settings;
-    if (settings.value("uokey").toString().isEmpty() == false)
-    {
-        QMessageBox msgBox;
-        msgBox.setIcon(QMessageBox::Critical);
-        msgBox.setWindowIcon(QIcon(":/images/logo_64.png"));
-        msgBox.setStandardButtons(QMessageBox::Ok);
-        msgBox.setText("Simple Chat Client is already running");
-        msgBox.exec();
-
-        exit(0);
-    }
-    */
 
     // get translate
     Config *pConfig = new Config(false);
