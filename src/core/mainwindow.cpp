@@ -175,9 +175,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     // refresh colors
     refresh_colors();
 
-    // update
-    pUpdate->check_update();
-
     // signal refresh colors
     QObject::connect(pOptions, SIGNAL(refresh_colors()), this, SLOT(refresh_colors()));
     // signal refresh background image
@@ -185,6 +182,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
     // create basic core
     coreServers.append(new Core(this, "czat-app.onet.pl", 5015, pNotify, connectAct, toolBar, viewMenu));
+
+    // update
+    pUpdate->check_update();
 }
 
 MainWindow::~MainWindow()
@@ -231,7 +231,7 @@ void MainWindow::create_settings()
     // default settings
     QSettings settings;
     settings.clear();
-    settings.setValue("version", "1.0.10.686");
+    settings.setValue("version", "1.0.10.687");
     settings.setValue("debug", "off");
     settings.setValue("logged", "off");
     settings.setValue("busy", "off");

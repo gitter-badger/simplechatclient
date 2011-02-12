@@ -39,6 +39,11 @@ public:
 private:
     QWidget *myparent;
     QTabBar *tab;
+
+    void hide_close_button(int);
+
+protected:
+    virtual void tabInserted(int);
 };
 
 #endif // TAB_MANAGER_H

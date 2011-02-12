@@ -43,3 +43,14 @@ void TabManager::set_color(int index, QColor color)
 {
     tab->setTabTextColor(index, color);
 }
+
+void TabManager::hide_close_button(int index)
+{
+    tab->setTabButton(index, QTabBar::RightSide, 0);
+}
+
+void TabManager::tabInserted(int index)
+{
+    if (index == 0) // hide close on status
+        hide_close_button(index);
+}
