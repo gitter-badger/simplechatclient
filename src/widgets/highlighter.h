@@ -18,65 +18,31 @@
  *                                                                          *
  ****************************************************************************/
 
-#ifndef INPUTWIDGET_H
-#define INPUTWIDGET_H
+#ifndef HIGHLIGHTER_H
+#define HIGHLIGHTER_H
 
-class Highlighter;
-class InputLineWidget;
-class Network;
-#include <QHBoxLayout>
-#include <QLabel>
-#include <QPushButton>
-#include <QTreeWidget>
-#include <QWidget>
+#include <QSyntaxHighlighter>
+#include <QList>
 
-class InputWidget : public QWidget
+class QTextDocument;
+
+class Highlighter : public QSyntaxHighlighter
 {
     Q_OBJECT
+
 public:
-    InputWidget(QWidget *, Network *);
-    void set_active(QString);
-    inline QString get_active() { return strChannel; }
-    void insert_text(QString);
-    void set_font(QFont);
-    void set_color(QString);
-    void set_userslist(QTreeWidget *);
-    void set_moderation(bool);
-    void set_toolwidget_icon(bool);
-    QString convert_emots(QString);
-    QString replace_emots(QString);
-    void send_message(bool);
+    Highlighter(QTextDocument *parent = 0);
 
 public slots:
-    void update_nick(QString);
-
-private:
-    // params
-    QWidget *myparent;
-    Network *pNetwork;
-    // inputline widget
-    QHBoxLayout *mainLayout;
-    QPushButton *showHideToolWidget;
-    QLabel *nickLabel;
-    InputLineWidget *inputLine;
-    QPushButton *sendButton;
-    QPushButton *moderSendButton;
-    QString strChannel;
-    QString strLast_msg;
-    Highlighter *highlighter;
-
-private slots:
-    void inputline_return_pressed();
-    void moder_button_clicked();
-    void show_hide_toolwidget_clicked();
+    void rehighlight();
 
 protected:
-    virtual void keyPressEvent(QKeyEvent *);
+    void highlightBlock(const QString &text);
 
-signals:
-    void show_msg(QString, QString, int);
-    void display_message(QString, QString, int);
-    void show_hide_toolwidget();
-};
+private:
+    QList<QString> lKeywords;
+    int iMax;
+    bool bSpacePressed;
+ };
 
-#endif // INPUTWIDGET_H
+#endif // HIGHLIGHTER_H

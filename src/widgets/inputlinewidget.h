@@ -21,9 +21,9 @@
 #ifndef INPUTLINEWIDGET_H
 #define INPUTLINEWIDGET_H
 
-#include <QLineEdit>
+#include <QPlainTextEdit>
 
-class InputLineWidget : public QLineEdit
+class InputLineWidget : public QPlainTextEdit
 {
     Q_OBJECT
 public:
@@ -43,6 +43,10 @@ private:
 
 protected:
     virtual bool event(QEvent *);
+
+signals:
+    void returnPressed();
+    void rehighlight();
 };
 
 #endif // INPUTLINEWIDGET_H

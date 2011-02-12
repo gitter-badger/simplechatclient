@@ -23,10 +23,14 @@
 #include <QTreeWidget>
 #include "inputlinewidget.h"
 
-InputLineWidget::InputLineWidget(QWidget *parent) : QLineEdit(parent)
+InputLineWidget::InputLineWidget(QWidget *parent) : QPlainTextEdit(parent)
 {
     index = 0;
     strLastWord = QString::null;
+    setMaximumHeight(32);
+    setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    setWordWrapMode(QTextOption::NoWrap);
 }
 
 InputLineWidget::~InputLineWidget()
@@ -43,29 +47,29 @@ void InputLineWidget::set_userslist(QList <QString> newUsersList)
 void InputLineWidget::insert_text(QString strText)
 {
     // pos
-    int iPos = this->cursorPosition();
+    int iPos = this->textCursor().position();
 
     // insert text
-    QString strLine = this->text();
+    QString strLine = this->toPlainText();
     strLine.insert(iPos, strText);
-    this->setText(strLine);
+    this->setPlainText(strLine);
 }
 
 QString InputLineWidget::get_word()
 {
-    QString strWord = this->text();
+    QString strWord = this->toPlainText();
     if (strWord.isEmpty() == false)
     {
         int iLength = 0;
         int iStart = 0;
 
         // if first word -1, if next -2
-        if (this->cursorPosition()-1 == 0)
-            iStart = strWord.lastIndexOf(' ', this->cursorPosition()-1)+1;
+        if (this->textCursor().position()-1 == 0)
+            iStart = strWord.lastIndexOf(' ', this->textCursor().position()-1)+1;
         else
-            iStart = strWord.lastIndexOf(' ', this->cursorPosition()-2)+1;
+            iStart = strWord.lastIndexOf(' ', this->textCursor().position()-2)+1;
 
-        iLength = this->cursorPosition()-iStart;
+        iLength = this->textCursor().position()-iStart;
         strWord = strWord.mid(iStart, iLength);
 
         strWord.replace(" ", "");
@@ -75,36 +79,38 @@ QString InputLineWidget::get_word()
 
 void InputLineWidget::set_word(QString strSetWord)
 {
-    QString strWord = this->text();
+    QString strWord = this->toPlainText();
     if (strWord.isEmpty() == false)
     {
         int iLength = 0;
         int iStart = 0;
 
         // if first word -1, if next -2
-        if (this->cursorPosition()-1 == 0)
-            iStart = strWord.lastIndexOf(' ', this->cursorPosition()-1)+1;
+        if (this->textCursor().position()-1 == 0)
+            iStart = strWord.lastIndexOf(' ', this->textCursor().position()-1)+1;
         else
-            iStart = strWord.lastIndexOf(' ', this->cursorPosition()-2)+1;
+            iStart = strWord.lastIndexOf(' ', this->textCursor().position()-2)+1;
 
-        iLength = this->cursorPosition()-iStart;
+        iLength = this->textCursor().position()-iStart;
         strWord = strWord.mid(iStart, iLength);
 
         strSetWord += " ";
 
-        QString strNewLine = this->text();
+        QString strNewLine = this->toPlainText();
         strNewLine = strNewLine.replace(iStart, iLength, strSetWord);
-        this->setText(strNewLine);
+        this->setPlainText(strNewLine);
 
         // set cursor
-        this->setCursorPosition(iStart+strSetWord.length());
+        QTextCursor cursor;
+        cursor.setPosition(iStart+strSetWord.length(), QTextCursor::MoveAnchor);
+        this->setTextCursor(cursor);
     }
 }
 
 bool InputLineWidget::event(QEvent *e)
 {
     if (e->type() != QEvent::KeyPress)
-        return QLineEdit::event(e);
+        return QPlainTextEdit::event(e);
 
     QKeyEvent *k = static_cast<QKeyEvent*>(e);
 
@@ -150,10 +156,20 @@ bool InputLineWidget::event(QEvent *e)
 
         return true;
     }
+    else if (k->key() == Qt::Key_Space)
+    {
+        emit rehighlight();
+        return QPlainTextEdit::event(e);
+    }
+    else if ((k->key() == Qt::Key_Enter) || (k->key() == Qt::Key_Return))
+    {
+        emit returnPressed();
+        return true;
+    }
     else
     {
         index = 0;
         strLastWord = QString::null;
-        return QLineEdit::event(e);
+        return QPlainTextEdit::event(e);
     }
 }

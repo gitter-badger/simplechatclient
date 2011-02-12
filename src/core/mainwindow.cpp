@@ -386,6 +386,6 @@ void MainWindow::open_cams()
 // notes
 void MainWindow::open_notes()
 {
-    (new DlgNotes(this))->show();
+    DlgNotes(this).exec();
 }
 

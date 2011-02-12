@@ -32,7 +32,7 @@
 DlgNotes::DlgNotes(QWidget *parent) : QDialog(parent)
 {
     ui.setupUi(this);
-    setAttribute(Qt::WA_DeleteOnClose);
+    //setAttribute(Qt::WA_DeleteOnClose);
     setWindowTitle(tr("Notes"));
     // center screen
     move(QApplication::desktop()->screen()->rect().center() - rect().center());
@@ -112,12 +112,10 @@ void DlgNotes::button_ok()
     save();
 
     // close
-    ui.buttonBox->QObject::disconnect();
     this->close();
 }
 
 void DlgNotes::button_cancel()
 {
-    ui.buttonBox->QObject::disconnect();
     this->close();
 }

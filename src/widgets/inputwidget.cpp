@@ -26,6 +26,7 @@
 #include <QPushButton>
 #include <QSettings>
 #include "commands.h"
+#include "highlighter.h"
 #include "inputlinewidget.h"
 #include "log.h"
 #include "network.h"
@@ -42,8 +43,8 @@ InputWidget::InputWidget(QWidget *parent, Network *param1) : QWidget(parent)
     nickLabel->show();
 
     inputLine = new InputLineWidget(myparent);
+    highlighter = new Highlighter(inputLine->document());
     inputLine->setMinimumWidth(350);
-    inputLine->setMaxLength(300);
     inputLine->setFont(QFont("Verdana", -1, -1, false));
     inputLine->show();
 
@@ -79,6 +80,7 @@ InputWidget::InputWidget(QWidget *parent, Network *param1) : QWidget(parent)
 
     QObject::connect(sendButton, SIGNAL(clicked()), this, SLOT(inputline_return_pressed()));
     QObject::connect(inputLine, SIGNAL(returnPressed()), this, SLOT(inputline_return_pressed()));
+    QObject::connect(inputLine, SIGNAL(rehighlight()), highlighter, SLOT(rehighlight()));
     QObject::connect(moderSendButton, SIGNAL(clicked()), this, SLOT(moder_button_clicked()));
     QObject::connect(showHideToolWidget, SIGNAL(clicked()), this, SLOT(show_hide_toolwidget_clicked()));
 }
@@ -158,7 +160,7 @@ QString InputWidget::replace_emots(QString strData)
 
 void InputWidget::send_message(bool bType)
 {
-    QString strTextO = inputLine->text();
+    QString strTextO = inputLine->toPlainText();
     QStringList strTextA = strTextO.split(QRegExp("(\n|\r)"));
 
     for (int i = 0; i < strTextA.count(); i++)
@@ -327,7 +329,7 @@ void InputWidget::keyPressEvent(QKeyEvent *e)
     if (e->key() == Qt::Key_Up)
     {
         inputLine->clear();
-        inputLine->setText(strLast_msg);
+        inputLine->setPlainText(strLast_msg);
         inputLine->setFocus();
     }
     else if (e->key() == Qt::Key_Down)
