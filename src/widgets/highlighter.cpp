@@ -22,16 +22,21 @@
 #include <QFile>
 #include "highlighter.h"
 
-Highlighter::Highlighter(QTextDocument *parent) : QSyntaxHighlighter(parent), bSpacePressed(false)
+Highlighter::Highlighter(QTextDocument *parent) : QSyntaxHighlighter(parent), bSpacePressed(false), iMax(0)
+{
+    read_dict("en_US");
+    read_dict("pl_PL");
+}
+
+void Highlighter::read_dict(QString strFileName)
 {
     QString strPath = QCoreApplication::applicationDirPath();
-    QString strDicFile = strPath+"/pl_PL.dic";
+    QString strDicFile = strPath+"/"+strFileName+".dic";
 
     QFile file(strDicFile);
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
         return;
 
-    iMax = 0;
     while (!file.atEnd())
     {
              QString strLine = file.readLine().trimmed();

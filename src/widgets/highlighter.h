@@ -43,6 +43,8 @@ private:
     QList<QString> lKeywords;
     int iMax;
     bool bSpacePressed;
- };
+
+    void read_dict(QString);
+};
 
 #endif // HIGHLIGHTER_H
