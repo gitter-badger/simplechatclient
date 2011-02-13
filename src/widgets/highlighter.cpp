@@ -56,7 +56,7 @@ void Highlighter::highlightBlock(const QString &text)
         for (int i = 0; i < strlWords.size(); ++i)
         {
             QString strWord = strlWords.at(i);
-            QString strWordUtf8 = strlWords.at(i).toLower().toUtf8();
+            QString strWordUtf8 = strlWords.at(i).toUtf8();
             int length = strWord.length();
 
             if ((strWord.length() > 2) && (strWord.length() < iMax))
