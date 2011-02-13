@@ -101,7 +101,7 @@ void InputLineWidget::set_word(QString strSetWord)
         this->setPlainText(strNewLine);
 
         // set cursor
-        QTextCursor cursor;
+        QTextCursor cursor = this->textCursor();
         cursor.setPosition(iStart+strSetWord.length(), QTextCursor::MoveAnchor);
         this->setTextCursor(cursor);
     }
