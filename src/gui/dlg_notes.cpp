@@ -32,7 +32,6 @@
 DlgNotes::DlgNotes(QWidget *parent) : QDialog(parent)
 {
     ui.setupUi(this);
-    //setAttribute(Qt::WA_DeleteOnClose);
     setWindowTitle(tr("Notes"));
     // center screen
     move(QApplication::desktop()->screen()->rect().center() - rect().center());

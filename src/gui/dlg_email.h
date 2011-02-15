@@ -24,7 +24,6 @@
 #include <QDialog>
 #include <QNetworkAccessManager>
 #include <QNetworkCookieJar>
-#include <QNetworkReply>
 #include "ui_email.h"
 
 class DlgEmail : public QDialog
@@ -32,16 +31,16 @@ class DlgEmail : public QDialog
     Q_OBJECT
 public:
     DlgEmail(QWidget *, QString, QString);
+    ~DlgEmail();
 
 private:
     Ui::uiEmail ui;
     QString strChannel;
     QString strEmail;
-    QNetworkReply *pReply;
     QNetworkAccessManager accessManager;
     QNetworkCookieJar *cookieJar;
 
-    void set_cookies();
+    void get_cookies();
     void get_img();
     void set_email();
     void parse_result(QString);
@@ -50,10 +49,6 @@ private slots:
     void button_ok();
     void button_refresh();
     void button_cancel();
-
-protected:
-    virtual void showEvent(QShowEvent *);
-    virtual void hideEvent(QHideEvent *);
 };
 
 #endif // DLG_EMAIL_H

@@ -29,8 +29,9 @@
 DlgFriends::DlgFriends(QWidget *parent, Network *param1, QMap <QString, QByteArray> *param2, QMap <QString, bool> *param3) : QDialog(parent)
 {
     ui.setupUi(this);
-    //setAttribute(Qt::WA_DeleteOnClose);
     setWindowTitle(tr("Friends list"));
+    // center screen
+    move(QApplication::desktop()->screen()->rect().center() - rect().center());
 
     myparent = parent;
     pNetwork = param1;
@@ -51,6 +52,8 @@ DlgFriends::DlgFriends(QWidget *parent, Network *param1, QMap <QString, QByteArr
     QObject::connect(ui.pushButton_remove, SIGNAL(clicked()), this, SLOT(button_remove()));
     QObject::connect(ui.pushButton_whois, SIGNAL(clicked()), this, SLOT(button_whois()));
     QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(button_close()));
+
+    refresh();
 }
 
 void DlgFriends::refresh()
@@ -153,13 +156,4 @@ void DlgFriends::button_whois()
 void DlgFriends::button_close()
 {
     this->close();
-}
-
-void DlgFriends::showEvent(QShowEvent *event)
-{
-    event->accept();
-    // center screen
-    move(QApplication::desktop()->screen()->rect().center() - rect().center());
-
-    refresh();
 }

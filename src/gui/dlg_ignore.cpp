@@ -21,7 +21,6 @@
 #include <QDesktopWidget>
 #include <QInputDialog>
 #include <QSettings>
-#include <QShowEvent>
 #include <QTimer>
 #include "network.h"
 #include "dlg_ignore.h"
@@ -29,8 +28,9 @@
 DlgIgnore::DlgIgnore(QWidget *parent, Network *param1, QMap <QString, QByteArray> *param2, QList <QString> *param3) : QDialog(parent)
 {
     ui.setupUi(this);
-    //setAttribute(Qt::WA_DeleteOnClose);
     setWindowTitle(tr("Ignore list"));
+    // center screen
+    move(QApplication::desktop()->screen()->rect().center() - rect().center());
 
     myparent = parent;
     pNetwork = param1;
@@ -47,6 +47,8 @@ DlgIgnore::DlgIgnore(QWidget *parent, Network *param1, QMap <QString, QByteArray
     QObject::connect(ui.pushButton_add, SIGNAL(clicked()), this, SLOT(button_add()));
     QObject::connect(ui.pushButton_remove, SIGNAL(clicked()), this, SLOT(button_remove()));
     QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(button_close()));
+
+    refresh();
 }
 
 void DlgIgnore::refresh()
@@ -104,13 +106,4 @@ void DlgIgnore::button_remove()
 void DlgIgnore::button_close()
 {
     this->close();
-}
-
-void DlgIgnore::showEvent(QShowEvent *event)
-{
-    event->accept();
-    // center screen
-    move(QApplication::desktop()->screen()->rect().center() - rect().center());
-
-    refresh();
 }

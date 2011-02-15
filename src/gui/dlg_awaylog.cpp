@@ -25,7 +25,6 @@
 DlgAwaylog::DlgAwaylog(QWidget *parent, QList<QString> *param1) : QDialog(parent)
 {
     ui.setupUi(this);
-    //setAttribute(Qt::WA_DeleteOnClose);
     setWindowTitle(tr("Awaylog"));
     // center screen
     move(QApplication::desktop()->screen()->rect().center() - rect().center());

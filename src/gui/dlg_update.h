@@ -36,9 +36,6 @@ private:
 
 private slots:
     void button_ok();
-
-protected:
-    virtual void hideEvent(QHideEvent *);
 };
 
 #endif // DLG_UPDATE_H

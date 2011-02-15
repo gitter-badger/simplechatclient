@@ -72,7 +72,7 @@ void Update::version(QString strAvailableVersion)
     if (iCurrentRev < iAvailableRev)
     {
         //tabc->show_msg("Status", tr("A new version is available."), 0);
-        (new DlgUpdate(myparent, strAvailableVersion))->show();
+        DlgUpdate(myparent, strAvailableVersion).exec();
     }
 }
 

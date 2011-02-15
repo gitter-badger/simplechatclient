@@ -472,7 +472,7 @@ void ToolWidget::color_clicked(int index)
 
 void ToolWidget::emoticons_clicked()
 {
-    (new DlgEmoticons(myparent, pInputWidget))->show();
+    DlgEmoticons(myparent, pInputWidget).exec();
 }
 
 // channel settings

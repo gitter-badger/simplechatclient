@@ -504,7 +504,7 @@ void DlgChannelSettings::remove_channel_clicked()
 
 void DlgChannelSettings::email_changed()
 {
-    (new DlgEmail(myparent, strChannel, ui.lineEdit_email->text()))->show();
+    DlgEmail(myparent, strChannel, ui.lineEdit_email->text()).exec();
 }
 
 void DlgChannelSettings::www_changed()

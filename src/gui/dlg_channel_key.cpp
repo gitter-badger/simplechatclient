@@ -26,7 +26,6 @@
 DlgChannelKey::DlgChannelKey(QWidget *parent, Network *param1, QString param2) : QDialog(parent)
 {
     ui.setupUi(this);
-    setAttribute(Qt::WA_DeleteOnClose);
     setWindowTitle(tr("Key required"));
     // center screen
     move(QApplication::desktop()->screen()->rect().center() - rect().center());

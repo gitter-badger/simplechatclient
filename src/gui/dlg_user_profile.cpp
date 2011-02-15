@@ -128,7 +128,7 @@ void DlgUserProfile::avatar_finished()
 
 void DlgUserProfile::button_zoom()
 {
-    (new DlgUserAvatar(myparent, avatar))->show();
+    DlgUserAvatar(myparent, avatar).exec();
 }
 
 void DlgUserProfile::button_more()

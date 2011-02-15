@@ -340,7 +340,7 @@ void DlgOptions::show_pass()
 
 void DlgOptions::button_register_nick()
 {
-    (new DlgRegisterNick(myparent, this))->show();
+    DlgRegisterNick(myparent, this).exec();
 }
 
 void DlgOptions::set_modern_style_avatars()

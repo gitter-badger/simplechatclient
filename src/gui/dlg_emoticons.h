@@ -46,9 +46,6 @@ private slots:
     void clicked_extended(QModelIndex);
     void button_insert();
     void button_close();
-
-protected:
-    void showEvent(QShowEvent *);
 };
 
 #endif // DLG_EMOTICONS_H

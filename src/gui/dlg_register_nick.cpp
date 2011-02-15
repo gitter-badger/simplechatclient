@@ -20,11 +20,10 @@
 
 #include <QDesktopWidget>
 #include <QDomDocument>
-#include <QHideEvent>
 #include <QHostInfo>
 #include <QMessageBox>
+#include <QNetworkReply>
 #include <QSettings>
-#include <QShowEvent>
 #include <QUrl>
 #include "config.h"
 #include "crypt.h"
@@ -33,8 +32,9 @@
 DlgRegisterNick::DlgRegisterNick(QWidget *parent, QWidget *param1) : QDialog(parent)
 {
     ui.setupUi(this);
-    setAttribute(Qt::WA_DeleteOnClose);
     setWindowTitle(tr("Register nick"));
+    // center screen
+    move(QApplication::desktop()->screen()->rect().center() - rect().center());
 
     options = param1;
 
@@ -51,23 +51,33 @@ DlgRegisterNick::DlgRegisterNick(QWidget *parent, QWidget *param1) : QDialog(par
     ui.label_code->setText(tr("Code:"));
     ui.pushButton_refresh->setText(tr("Refresh"));
 
+    QObject::connect(ui.pushButton_refresh, SIGNAL(clicked()), this, SLOT(button_refresh()));
+    QObject::connect(ui.buttonBox, SIGNAL(accepted()), this, SLOT(button_ok()));
+    QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(button_cancel()));
+
     cookieJar = new QNetworkCookieJar();
     accessManager.setCookieJar(cookieJar);
+
+    get_cookies();
+    get_img();
+}
+
+DlgRegisterNick::~DlgRegisterNick()
+{
+    delete cookieJar;
 }
 
 void DlgRegisterNick::get_cookies()
 {
-    QEventLoop eventLoop;
-
     bool bHost = true;
-
     QHostInfo hKropkaOnetPl = QHostInfo::fromName("kropka.onet.pl");
     if (hKropkaOnetPl.error() != QHostInfo::NoError)
          bHost = false;
 
     if (bHost == true)
     {
-        pReply = accessManager.get(QNetworkRequest(QUrl("http://kropka.onet.pl/_s/kropka/1?DV=czat%2Findex")));
+        QEventLoop eventLoop;
+        QNetworkReply *pReply = accessManager.get(QNetworkRequest(QUrl("http://kropka.onet.pl/_s/kropka/1?DV=czat%2Findex")));
         QObject::connect(pReply, SIGNAL(finished()), &eventLoop, SLOT(quit()));
         eventLoop.exec();
 
@@ -90,17 +100,15 @@ void DlgRegisterNick::get_img()
     // disable button
     ui.pushButton_refresh->setEnabled(false);
 
-    QEventLoop eventLoop;
-
     bool bHost = true;
-
     QHostInfo hCzatOnetPl = QHostInfo::fromName("czat.onet.pl");
     if (hCzatOnetPl.error() != QHostInfo::NoError)
          bHost = false;
 
     if (bHost == true)
     {
-        pReply = accessManager.get(QNetworkRequest(QUrl("http://czat.onet.pl/myimg.gif")));
+        QEventLoop eventLoop;
+        QNetworkReply *pReply = accessManager.get(QNetworkRequest(QUrl("http://czat.onet.pl/myimg.gif")));
         QObject::connect(pReply, SIGNAL(finished()), &eventLoop, SLOT(quit()));
         eventLoop.exec();
 
@@ -121,15 +129,10 @@ void DlgRegisterNick::get_img()
 
 void DlgRegisterNick::register_nick()
 {
-    QEventLoop eventLoop;
-
     bool bHost = true;
-
     QHostInfo hCzatOnetPl = QHostInfo::fromName("czat.onet.pl");
     if (hCzatOnetPl.error() != QHostInfo::NoError)
          bHost = false;
-
-    QString strData;
 
     if (bHost == true)
     {
@@ -160,13 +163,13 @@ void DlgRegisterNick::register_nick()
         accessManager.cookieJar()->setCookiesFromUrl(cookieList, QUrl("http://czat.onet.pl"));
 
         // request
-        strData = QString("api_function=registerNick&params=a:3:{s:4:\"nick\";s:%1:\"%2\";s:4:\"pass\";s:%3:\"%4\";s:4:\"code\";s:%5:\"%6\";}").arg(strNickLength).arg(strNick).arg(strPasswordLength).arg(strPassword).arg(strCodeLength).arg(strCode);
-        pReply = accessManager.post(QNetworkRequest(QUrl("http://czat.onet.pl/include/ajaxapi.xml.php3")), strData.toAscii());
+        QEventLoop eventLoop;
+        QString strData = QString("api_function=registerNick&params=a:3:{s:4:\"nick\";s:%1:\"%2\";s:4:\"pass\";s:%3:\"%4\";s:4:\"code\";s:%5:\"%6\";}").arg(strNickLength).arg(strNick).arg(strPasswordLength).arg(strPassword).arg(strCodeLength).arg(strCode);
+        QNetworkReply *pReply = accessManager.post(QNetworkRequest(QUrl("http://czat.onet.pl/include/ajaxapi.xml.php3")), strData.toAscii());
         QObject::connect(pReply, SIGNAL(finished()), &eventLoop, SLOT(quit()));
         eventLoop.exec();
 
         QString strResult = pReply->readAll();
-
         pReply->deleteLater();
 
         parse_result(strResult);
@@ -233,14 +236,7 @@ void DlgRegisterNick::parse_result(QString strResult)
         else
             strErrText = QString(tr("Unknown error: %1").arg(strErrCode));
 
-        QMessageBox msgBox;
-        msgBox.setIcon(QMessageBox::Critical);
-        msgBox.setWindowIcon(QIcon(":/images/logo_64.png"));
-        msgBox.setStandardButtons(QMessageBox::Ok);
-        msgBox.setWindowTitle(tr("Error"));
-        msgBox.setText(strErrText);
-        msgBox.exec();
-
+        QMessageBox::critical(0, tr("Error"), strErrText);
         get_img();
     }
 }
@@ -256,15 +252,8 @@ void DlgRegisterNick::button_ok()
         register_nick();
     else
     {
-        QMessageBox msgBox;
-        msgBox.setIcon(QMessageBox::Critical);
-        msgBox.setWindowIcon(QIcon(":/images/logo_64.png"));
-        msgBox.setStandardButtons(QMessageBox::Ok);
-        msgBox.setWindowTitle(tr("Error"));
-        msgBox.setText(tr("Given passwords are not identical."));
-        msgBox.exec();
-
         ui.lineEdit_code->clear();
+        QMessageBox::critical(0, tr("Error"), tr("Given passwords are not identical."));
         get_img();
     }
 }
@@ -278,27 +267,4 @@ void DlgRegisterNick::button_refresh()
 void DlgRegisterNick::button_cancel()
 {
     this->close();
-}
-
-void DlgRegisterNick::showEvent(QShowEvent *event)
-{
-    event->accept();
-    // center screen
-    move(QApplication::desktop()->screen()->rect().center() - rect().center());
-
-    QObject::connect(ui.pushButton_refresh, SIGNAL(clicked()), this, SLOT(button_refresh()));
-    QObject::connect(ui.buttonBox, SIGNAL(accepted()), this, SLOT(button_ok()));
-    QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(button_cancel()));
-
-    get_cookies();
-    get_img();
-}
-
-void DlgRegisterNick::hideEvent(QHideEvent *event)
-{
-    event->accept();
-
-    delete cookieJar;
-    ui.pushButton_refresh->QObject::disconnect();
-    ui.buttonBox->QObject::disconnect();
 }

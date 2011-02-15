@@ -1132,7 +1132,7 @@ void OnetKernel::raw_invite()
         strWhere = strWhere.right(strWhere.length()-1);
 
     pNotify->play("query");
-    (new DlgInvite(myparent, pNetwork, strWho, strWhere))->show();
+    DlgInvite(myparent, pNetwork, strWho, strWhere).exec();
 }
 
 // :cf1f3.onet TOPIC #scc :Simple Chat Client; current version: beta;
@@ -3612,7 +3612,7 @@ void OnetKernel::raw_475()
     QString strMessage = QString(tr("* Cannot join channel %1: Incorrect channel key")).arg(strChannel);
     pTabC->show_msg_active(strMessage, 7);
 
-    (new DlgChannelKey(myparent, pNetwork, strChannel))->show();
+    DlgChannelKey(myparent, pNetwork, strChannel).exec();
 }
 
 // :cf1f4.onet 481 Merovingian :Permission Denied - You do not have the required operator privileges

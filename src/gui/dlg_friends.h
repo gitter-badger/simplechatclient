@@ -45,9 +45,6 @@ private slots:
     void button_remove();
     void button_whois();
     void button_close();
-
-protected:
-    virtual void showEvent(QShowEvent *);
 };
 
 #endif // DLG_FRIENDS_H

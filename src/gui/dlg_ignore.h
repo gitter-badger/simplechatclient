@@ -43,9 +43,6 @@ private slots:
     void button_add();
     void button_remove();
     void button_close();
-
-protected:
-    virtual void showEvent(QShowEvent *);
 };
 
 #endif // DLG_IGNORE_H

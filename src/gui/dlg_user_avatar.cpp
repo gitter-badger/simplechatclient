@@ -24,7 +24,6 @@
 DlgUserAvatar::DlgUserAvatar(QWidget *parent, QPixmap param1) : QDialog(parent)
 {
     ui.setupUi(this);
-    setAttribute(Qt::WA_DeleteOnClose);
     setWindowTitle(tr("Avatar"));
     // center screen
     move(QApplication::desktop()->screen()->rect().center() - rect().center());
@@ -72,5 +71,5 @@ void DlgUserAvatar::button_zoom_in()
 
 void DlgUserAvatar::button_ok()
 {
-    close();
+    this->close();
 }

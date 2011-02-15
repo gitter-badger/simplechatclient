@@ -20,19 +20,19 @@
 
 #include <QDesktopWidget>
 #include <QDomDocument>
-#include <QHideEvent>
 #include <QHostInfo>
 #include <QMessageBox>
+#include <QNetworkReply>
 #include <QSettings>
-#include <QShowEvent>
 #include <QUrl>
 #include "dlg_email.h"
 
 DlgEmail::DlgEmail(QWidget *parent, QString param1, QString param2) : QDialog(parent)
 {
     ui.setupUi(this);
-    setAttribute(Qt::WA_DeleteOnClose);
     setWindowTitle(tr("Change email address"));
+    // center screen
+    move(QApplication::desktop()->screen()->rect().center() - rect().center());
 
     strChannel = param1;
     strEmail = param2;
@@ -48,13 +48,23 @@ DlgEmail::DlgEmail(QWidget *parent, QString param1, QString param2) : QDialog(pa
 
     strChannel = strChannel.right(strChannel.length()-1);
 
+    QObject::connect(ui.pushButton_ok, SIGNAL(clicked()), this, SLOT(button_ok()));
+    QObject::connect(ui.pushButton_refresh, SIGNAL(clicked()), this, SLOT(button_refresh()));
+    QObject::connect(ui.pushButton_cancel, SIGNAL(clicked()), this, SLOT(button_cancel()));
+
     cookieJar = new QNetworkCookieJar();
     accessManager.setCookieJar(cookieJar);
 
-    set_cookies();
+    get_cookies();
+    get_img();
 }
 
-void DlgEmail::set_cookies()
+DlgEmail::~DlgEmail()
+{
+    delete cookieJar;
+}
+
+void DlgEmail::get_cookies()
 {
     QList <QNetworkCookie> cookieList;
     QNetworkCookie cookie;
@@ -84,17 +94,15 @@ void DlgEmail::get_img()
     // disable button
     ui.pushButton_refresh->setEnabled(false);
 
-    QEventLoop eventLoop;
-
     bool bHost = true;
-
     QHostInfo hCzatOnetPl = QHostInfo::fromName("czat.onet.pl");
     if (hCzatOnetPl.error() != QHostInfo::NoError)
          bHost = false;
 
     if (bHost == true)
     {
-        pReply = accessManager.get(QNetworkRequest(QUrl("http://czat.onet.pl/myimg.gif")));
+        QEventLoop eventLoop;
+        QNetworkReply *pReply = accessManager.get(QNetworkRequest(QUrl("http://czat.onet.pl/myimg.gif")));
         QObject::connect(pReply, SIGNAL(finished()), &eventLoop, SLOT(quit()));
         eventLoop.exec();
 
@@ -114,15 +122,10 @@ void DlgEmail::get_img()
 
 void DlgEmail::set_email()
 {
-    QEventLoop eventLoop;
-
     bool bHost = true;
-
     QHostInfo hCzatOnetPl = QHostInfo::fromName("czat.onet.pl");
     if (hCzatOnetPl.error() != QHostInfo::NoError)
          bHost = false;
-
-    QString strData;
 
     if (bHost == true)
     {
@@ -131,13 +134,13 @@ void DlgEmail::set_email()
         QString strCodeLength = QString::number(ui.lineEdit_code->text().length());
         QString strCode = ui.lineEdit_code->text();
 
-        strData = QString("api_function=setChannelEmail&params=a:3:{s:4:\"name\";s:%1:\"%2\";s:5:\"email\";s:%3:\"%4\";s:4:\"code\";s:%5:\"%6\";}").arg(strChannelLength).arg(strChannel).arg(strEmailLength).arg(strEmail).arg(strCodeLength).arg(strCode);
-        pReply = accessManager.post(QNetworkRequest(QUrl("http://czat.onet.pl/include/ajaxapi.xml.php3")), strData.toAscii());
+        QEventLoop eventLoop;
+        QString strData = QString("api_function=setChannelEmail&params=a:3:{s:4:\"name\";s:%1:\"%2\";s:5:\"email\";s:%3:\"%4\";s:4:\"code\";s:%5:\"%6\";}").arg(strChannelLength).arg(strChannel).arg(strEmailLength).arg(strEmail).arg(strCodeLength).arg(strCode);
+        QNetworkReply *pReply = accessManager.post(QNetworkRequest(QUrl("http://czat.onet.pl/include/ajaxapi.xml.php3")), strData.toAscii());
         QObject::connect(pReply, SIGNAL(finished()), &eventLoop, SLOT(quit()));
         eventLoop.exec();
 
         QString strResult = pReply->readAll();
-
         pReply->deleteLater();
 
         parse_result(strResult);
@@ -167,15 +170,7 @@ void DlgEmail::parse_result(QString strResult)
     else
     {
         ui.lineEdit_code->clear();
-
-        QMessageBox msgBox;
-        msgBox.setIcon(QMessageBox::Critical);
-        msgBox.setWindowIcon(QIcon(":/images/logo_64.png"));
-        msgBox.setStandardButtons(QMessageBox::Ok);
-        msgBox.setWindowTitle("Error");
-        msgBox.setText(strErrText);
-        msgBox.exec();
-
+        QMessageBox::critical(0, tr("Error"), strErrText);
         get_img();
     }
 }
@@ -194,26 +189,4 @@ void DlgEmail::button_refresh()
 void DlgEmail::button_cancel()
 {
     this->close();
-}
-
-void DlgEmail::showEvent(QShowEvent *event)
-{
-    event->accept();
-    // center screen
-    move(QApplication::desktop()->screen()->rect().center() - rect().center());
-
-    QObject::connect(ui.pushButton_ok, SIGNAL(clicked()), this, SLOT(button_ok()));
-    QObject::connect(ui.pushButton_refresh, SIGNAL(clicked()), this, SLOT(button_refresh()));
-    QObject::connect(ui.pushButton_cancel, SIGNAL(clicked()), this, SLOT(button_cancel()));
-    get_img();
-}
-
-void DlgEmail::hideEvent(QHideEvent *event)
-{
-    event->accept();
-
-    delete cookieJar;
-    ui.pushButton_ok->QObject::disconnect();
-    ui.pushButton_refresh->QObject::disconnect();
-    ui.pushButton_cancel->QObject::disconnect();
 }

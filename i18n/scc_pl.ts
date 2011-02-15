@@ -959,6 +959,10 @@
         <source>Unable to download image</source>
         <translation>Nie można pobrać obrazka</translation>
     </message>
+    <message>
+        <source>Error</source>
+        <translation>Błąd</translation>
+    </message>
 </context>
 <context>
     <name>DlgEmoticons</name>

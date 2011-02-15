@@ -21,15 +21,15 @@
 #include <QDesktopWidget>
 #include <QDir>
 #include <QPixmap>
-#include <QShowEvent>
 #include "inputwidget.h"
 #include "dlg_emoticons.h"
 
 DlgEmoticons::DlgEmoticons(QWidget *parent, InputWidget *param1) : QDialog(parent)
 {
     ui.setupUi(this);
-    setAttribute(Qt::WA_DeleteOnClose);
     setWindowTitle(tr("Emoticons"));
+    // center screen
+    move(QApplication::desktop()->screen()->rect().center() - rect().center());
 
     inputwidget = param1;
 
@@ -39,6 +39,19 @@ DlgEmoticons::DlgEmoticons(QWidget *parent, InputWidget *param1) : QDialog(paren
     ui.tabWidget->setTabText(0, tr("Standard"));
     ui.tabWidget->setTabText(1, tr("Extended"));
     ui.pushButton_insert->setText(tr("Insert"));
+
+    ui.listWidget_standard->clear();
+    ui.listWidget_extended->clear();
+    bDoneStandard = false;
+    bDoneExtended = false;
+
+    QObject::connect(ui.tabWidget, SIGNAL(currentChanged(int)), this, SLOT(current_tab_changed(int)));
+    QObject::connect(ui.listWidget_standard, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(clicked_standard(QModelIndex)));
+    QObject::connect(ui.listWidget_extended, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(clicked_extended(QModelIndex)));
+    QObject::connect(ui.pushButton_insert, SIGNAL(clicked()), this, SLOT(button_insert()));
+    QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(button_close()));
+
+    get_emoticons_standard();
 }
 
 void DlgEmoticons::get_emoticons_standard()
@@ -162,23 +175,4 @@ void DlgEmoticons::button_insert()
 void DlgEmoticons::button_close()
 {
     this->close();
-}
-
-void DlgEmoticons::showEvent(QShowEvent *event)
-{
-    event->accept();
-    // center screen
-    move(QApplication::desktop()->screen()->rect().center() - rect().center());
-
-    ui.listWidget_standard->clear();
-    ui.listWidget_extended->clear();
-    bDoneStandard = false;
-    bDoneExtended = false;
-    get_emoticons_standard();
-
-    QObject::connect(ui.tabWidget, SIGNAL(currentChanged(int)), this, SLOT(current_tab_changed(int)));
-    QObject::connect(ui.listWidget_standard, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(clicked_standard(QModelIndex)));
-    QObject::connect(ui.listWidget_extended, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(clicked_extended(QModelIndex)));
-    QObject::connect(ui.pushButton_insert, SIGNAL(clicked()), this, SLOT(button_insert()));
-    QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(button_close()));
 }

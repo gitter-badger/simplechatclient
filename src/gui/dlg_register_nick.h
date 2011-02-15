@@ -24,7 +24,6 @@
 #include <QDialog>
 #include <QNetworkAccessManager>
 #include <QNetworkCookieJar>
-#include <QNetworkReply>
 #include "ui_register_nick.h"
 
 class DlgRegisterNick : public QDialog
@@ -32,11 +31,11 @@ class DlgRegisterNick : public QDialog
     Q_OBJECT
 public:
     DlgRegisterNick(QWidget *, QWidget *);
+    ~DlgRegisterNick();
 
 private:
     Ui::uiRegisterNick ui;
     QWidget *options;
-    QNetworkReply *pReply;
     QNetworkAccessManager accessManager;
     QNetworkCookieJar *cookieJar;
     QMap <QString, QString> mCookies;
@@ -50,10 +49,6 @@ private slots:
     void button_refresh();
     void button_ok();
     void button_cancel();
-
-protected:
-    virtual void showEvent(QShowEvent *);
-    virtual void hideEvent(QHideEvent *);
 };
 
 #endif // DLG_REGISTER_NICK_H

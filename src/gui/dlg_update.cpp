@@ -19,14 +19,12 @@
  ****************************************************************************/
 
 #include <QDesktopWidget>
-#include <QHideEvent>
 #include <QPushButton>
 #include "dlg_update.h"
 
 DlgUpdate::DlgUpdate(QWidget *parent, QString param1) : QDialog(parent)
 {
     ui.setupUi(this);
-    setAttribute(Qt::WA_DeleteOnClose);
     setWindowFlags(Qt::Dialog | Qt::WindowStaysOnTopHint);
     setWindowTitle(tr("Update"));
     // center screen
@@ -53,11 +51,4 @@ DlgUpdate::DlgUpdate(QWidget *parent, QString param1) : QDialog(parent)
 void DlgUpdate::button_ok()
 {
     this->close();
-}
-
-void DlgUpdate::hideEvent(QHideEvent *event)
-{
-    event->accept();
-
-    ui.buttonBox->QObject::disconnect();
 }
