@@ -24,7 +24,6 @@
 #include <QStringList>
 #include <QTimer>
 #include "avatar.h"
-#include "dlg_channel_favourites.h"
 #include "dlg_channel_homes.h"
 #include "dlg_channel_key.h"
 #include "dlg_channel_list.h"
@@ -38,7 +37,7 @@
 #include "tab_container.h"
 #include "onet_kernel.h"
 
-OnetKernel::OnetKernel(QWidget *parent, Network *param1, TabContainer *param2, Notify *param3, QMap <QString, QByteArray> *param4, QMap <QString, QByteArray> *param5, DlgChannelSettings *param6, DlgChannelHomes *param7, DlgChannelList *param8, DlgChannelFavourites *param9, QMap<QString, bool> *param10, QList<QString> *param11, DlgModeration *param12)
+OnetKernel::OnetKernel(QWidget *parent, Network *param1, TabContainer *param2, Notify *param3, QMap <QString, QByteArray> *param4, QMap <QString, QByteArray> *param5, DlgChannelSettings *param6, DlgChannelHomes *param7, DlgChannelList *param8, QList<QString> *param9, QMap<QString, bool> *param10, QList<QString> *param11, DlgModeration *param12)
 {
     myparent = parent;
     pNetwork = param1;
@@ -49,7 +48,7 @@ OnetKernel::OnetKernel(QWidget *parent, Network *param1, TabContainer *param2, N
     dlgchannel_settings = param6;
     dlgchannel_homes = param7;
     dlgchannel_list = param8;
-    dlgchannel_favourites = param9;
+    lChannelFavourites = param9;
     mFriends = param10;
     lIgnore = param11;
     dlgmoderation = param12;
@@ -1337,9 +1336,10 @@ void OnetKernel::raw_001()
     // override off
     settings.setValue("override", "off");
 
-    // clear friends and ignore
+    // clear friends, ignore, channel favourites
     mFriends->clear();
     lIgnore->clear();
+    lChannelFavourites->clear();
 
     // auto rejoin
     QStringList strlOpenChannels = pTabC->get_open_channels();
@@ -1577,7 +1577,8 @@ void OnetKernel::raw_141n()
         if (strChannel[0] == ':')
             strChannel = strChannel.right(strChannel.length()-1);
 
-        dlgchannel_favourites->add_channel(strChannel);
+        if (lChannelFavourites->contains(strChannel) == false)
+            lChannelFavourites->append(strChannel);
 
         if ((settings.value("ignore_raw_141").toString() == "off") && (settings.value("disable_autojoin_favourites").toString() == "off"))
             pNetwork->send(QString("JOIN %1").arg(strChannel));
@@ -1904,8 +1905,8 @@ void OnetKernel::raw_240n()
     QString strDisplay = QString(tr("* Added %1 channel to your favorites list")).arg(strChannel);
     pTabC->show_msg_active(strDisplay, 7);
 
-    dlgchannel_favourites->clear();
-    pNetwork->send("NS FAVOURITES");
+    if (lChannelFavourites->contains(strChannel) == false)
+        lChannelFavourites->append(strChannel);
 }
 
 // NS FAVOURITES DEL scc
@@ -1919,8 +1920,8 @@ void OnetKernel::raw_241n()
     QString strDisplay = QString(tr("* Removed channel %1 from your favorites list")).arg(strChannel);
     pTabC->show_msg_active(strDisplay, 7);
 
-    dlgchannel_favourites->clear();
-    pNetwork->send("NS FAVOURITES");
+    if (lChannelFavourites->contains(strChannel) == true)
+        lChannelFavourites->removeOne(strChannel);
 }
 
 // CS REGISTER czesctoja

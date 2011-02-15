@@ -25,15 +25,17 @@
 #include "network.h"
 #include "dlg_channel_favourites.h"
 
-DlgChannelFavourites::DlgChannelFavourites(QWidget *parent, Network *param1, QMap <QString, QByteArray> *param2) : QDialog(parent)
+DlgChannelFavourites::DlgChannelFavourites(QWidget *parent, Network *param1, QMap <QString, QByteArray> *param2, QList<QString> *param3) : QDialog(parent)
 {
     ui.setupUi(this);
-    setAttribute(Qt::WA_DeleteOnClose);
     setWindowTitle(tr("Favorite channels"));
+    // center screen
+    move(QApplication::desktop()->screen()->rect().center() - rect().center());
 
     myparent = parent;
     pNetwork = param1;
     mChannelAvatar = param2;
+    lChannelFavourites = param3;
 
     ui.pushButton_add->setIcon(QIcon(":/images/oxygen/16x16/irc-join-channel.png"));
     ui.pushButton_remove->setIcon(QIcon(":/images/oxygen/16x16/irc-close-channel.png"));
@@ -45,53 +47,42 @@ DlgChannelFavourites::DlgChannelFavourites(QWidget *parent, Network *param1, QMa
     QObject::connect(ui.pushButton_add, SIGNAL(clicked()), this, SLOT(button_add()));
     QObject::connect(ui.pushButton_remove, SIGNAL(clicked()), this, SLOT(button_remove()));
     QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(button_close()));
+
+    refresh();
 }
 
-void DlgChannelFavourites::add_channel(QString strChannel)
-{
-    if (exist_channel(strChannel) == true) return; // already exist in list
-
-    if (mChannelAvatar->contains(strChannel) == true)
-    {
-        QPixmap pixmap;
-        pixmap.loadFromData(mChannelAvatar->value(strChannel));
-        ui.listWidget_channels->addItem(new QListWidgetItem(QIcon(pixmap), strChannel));
-    }
-    else
-    {
-        ui.listWidget_channels->addItem(new QListWidgetItem(QIcon(":/images/channel_avatar.png"), strChannel));
-        pNetwork->send(QString("CS INFO %1 i").arg(strChannel));
-    }
-}
-
-bool DlgChannelFavourites::exist_channel(QString strChannel)
-{
-    for (int i = 0; i < ui.listWidget_channels->count(); i++)
-    {
-        if (ui.listWidget_channels->item(i)->text() == strChannel)
-            return true;
-    }
-    return false;
-}
-
-void DlgChannelFavourites::clear()
+void DlgChannelFavourites::refresh()
 {
     ui.listWidget_channels->clear();
+
+    for (int i = 0; i < lChannelFavourites->size(); ++i)
+    {
+        QString strChannel = lChannelFavourites->at(i);
+
+        if (mChannelAvatar->contains(strChannel) == true)
+        {
+            QPixmap pixmap;
+            pixmap.loadFromData(mChannelAvatar->value(strChannel));
+            ui.listWidget_channels->addItem(new QListWidgetItem(QIcon(pixmap), strChannel));
+        }
+        else
+        {
+            ui.listWidget_channels->addItem(new QListWidgetItem(QIcon(":/images/channel_avatar.png"), strChannel));
+            pNetwork->send(QString("CS INFO %1 i").arg(strChannel));
+        }
+    }
 }
 
 void DlgChannelFavourites::button_add()
 {
-    ui.listWidget_channels->clear();
-
-    clear();
-
     bool ok;
     QString strText = QInputDialog::getText(this, tr("Change your favorite channels"), tr("Enter the name of the new channel to add to favorites:"), QLineEdit::Normal, QString::null, &ok);
 
     if ((ok == true) && (strText.isEmpty() == false))
+    {
         pNetwork->send(QString("NS FAVOURITES ADD %1").arg(strText));
-
-    pNetwork->send("NS FAVOURITES");
+        QTimer::singleShot(1000*2, this, SLOT(refresh())); // 2 sec
+    }
 }
 
 void DlgChannelFavourites::button_remove()
@@ -100,35 +91,17 @@ void DlgChannelFavourites::button_remove()
     if (ui.listWidget_channels->selectedItems().count() != 0)
         strSelected = ui.listWidget_channels->selectedItems().at(0)->text();
 
-    clear();
-
     bool ok;
     QString strText = QInputDialog::getText(this, tr("Change your favorite channels"), tr("Enter the name of the channel to remove from the favorites:"), QLineEdit::Normal, strSelected, &ok);
 
     if ((ok == true) && (strText.isEmpty() == false))
+    {
         pNetwork->send(QString("NS FAVOURITES DEL %1").arg(strText));
-
-    pNetwork->send("NS FAVOURITES");
+        QTimer::singleShot(1000*2, this, SLOT(refresh())); // 2 sec
+    }
 }
 
 void DlgChannelFavourites::button_close()
 {
-    ui.listWidget_channels->clear();
-    this->hide();
-}
-
-void DlgChannelFavourites::showEvent(QShowEvent *event)
-{
-    event->accept();
-    // center screen
-    move(QApplication::desktop()->screen()->rect().center() - rect().center());
-
-    ui.listWidget_channels->clear();
-    pNetwork->send("NS FAVOURITES");
-}
-
-void DlgChannelFavourites::closeEvent(QCloseEvent *event)
-{
-    event->ignore();
-    this->hide();
+    this->close();
 }

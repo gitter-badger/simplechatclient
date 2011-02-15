@@ -29,26 +29,20 @@ class DlgChannelFavourites : public QDialog
 {
     Q_OBJECT
 public:
-    DlgChannelFavourites(QWidget *, Network *, QMap <QString, QByteArray> *);
-    void add_channel(QString);
-    void clear();
+    DlgChannelFavourites(QWidget *, Network *, QMap <QString, QByteArray> *, QList<QString> *);
 
 private:
     Ui::uiChannelFavourites ui;
     QWidget *myparent;
     Network *pNetwork;
     QMap <QString, QByteArray> *mChannelAvatar;
-
-    bool exist_channel(QString);
+    QList<QString> *lChannelFavourites;
 
 private slots:
+    void refresh();
     void button_add();
     void button_remove();
     void button_close();
-
-protected:
-    virtual void showEvent(QShowEvent *);
-    virtual void closeEvent(QCloseEvent *);
 };
 
 #endif // DLG_CHANNEL_FAVOURITES_H

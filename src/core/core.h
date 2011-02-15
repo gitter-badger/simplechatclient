@@ -128,6 +128,7 @@ private:
     QList<QString> lAwaylog;
     QMap<QString, bool> mFriends;
     QList<QString> lIgnore;
+    QList<QString> lChannelFavourites;
     QMap <QString, QByteArray> mNickAvatar;
     QMap <QString, QByteArray> mChannelAvatar;
 

@@ -21,8 +21,8 @@
 #ifndef HIGHLIGHTER_H
 #define HIGHLIGHTER_H
 
-#include <QSyntaxHighlighter>
 #include <QList>
+#include <QSyntaxHighlighter>
 
 class QTextDocument;
 

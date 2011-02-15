@@ -25,7 +25,6 @@ class Avatar;
 class DlgChannelSettings;
 class DlgChannelHomes;
 class DlgChannelList;
-class DlgChannelFavourites;
 class DlgFriends;
 class DlgIgnore;
 class DlgModeration;
@@ -43,7 +42,7 @@ class OnetKernel : public QObject
 {
     Q_OBJECT
 public:
-    OnetKernel(QWidget *, Network *, TabContainer *, Notify *, QMap <QString, QByteArray> *, QMap <QString, QByteArray> *, DlgChannelSettings *, DlgChannelHomes *, DlgChannelList *, DlgChannelFavourites *, QMap<QString, bool> *, QList<QString> *, DlgModeration *);
+    OnetKernel(QWidget *, Network *, TabContainer *, Notify *, QMap <QString, QByteArray> *, QMap <QString, QByteArray> *, DlgChannelSettings *, DlgChannelHomes *, DlgChannelList *, QList<QString> *, QMap<QString, bool> *, QList<QString> *, DlgModeration *);
     ~OnetKernel();
 
 public slots:
@@ -59,7 +58,7 @@ private:
     DlgChannelSettings *dlgchannel_settings;
     DlgChannelHomes *dlgchannel_homes;
     DlgChannelList *dlgchannel_list;
-    DlgChannelFavourites *dlgchannel_favourites;
+    QList<QString> *lChannelFavourites;
     QMap<QString, bool> *mFriends;
     QList<QString> *lIgnore;
     DlgModeration *dlgmoderation;
