@@ -20,12 +20,19 @@
 
 #include <QCoreApplication>
 #include <QFile>
+#include <QSettings>
 #include "highlighter.h"
 
-Highlighter::Highlighter(QTextDocument *parent) : QSyntaxHighlighter(parent), bSpacePressed(false), iMax(0)
+Highlighter::Highlighter(QTextDocument *parent) : QSyntaxHighlighter(parent)
 {
-    read_dict("en_US");
-    read_dict("pl_PL");
+    iMax = 0;
+    bSpacePressed = false;
+
+    QSettings settings;
+    if (settings.value("language").toString() == "pl")
+        read_dict("pl_PL");
+    else
+        read_dict("en_US");
 }
 
 void Highlighter::read_dict(QString strFileName)

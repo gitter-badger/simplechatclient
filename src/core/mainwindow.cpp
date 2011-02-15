@@ -232,7 +232,7 @@ void MainWindow::create_settings()
     // default settings
     QSettings settings;
     settings.clear();
-    settings.setValue("version", "1.0.10.698");
+    settings.setValue("version", "1.0.10.699");
     settings.setValue("debug", "off");
     settings.setValue("logged", "off");
     settings.setValue("busy", "off");
