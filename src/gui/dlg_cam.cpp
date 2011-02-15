@@ -502,6 +502,7 @@ void DlgCam::data_kernel()
     // osa1987:1:-2/-2/osa1987/1:0::0
     // ToWiemTylkoJa:1:2/0/#Relax/0,-2/-2/ToWiemTylkoJa/1:2::13
     // scc_test:1:2/0/#Quiz/0,2/0/#Relax/0,2/0/#Scrabble/0,4/0/#scc/0:0::0
+    // multiline
     else if (iCam_cmd == 250)
     {
         // init data
@@ -569,7 +570,11 @@ void DlgCam::data_kernel()
                 // wrong (?)
             }
         }
+        // resize
         ui.tableWidget_nick_rank_spectators->resizeColumnsToContents();
+
+        // sort
+        ui.tableWidget_nick_rank_spectators->sortByColumn(0, Qt::AscendingOrder);
     }
     // ja31:-
     // osa1987:1:-2/-2/osa1987/1:0::0
@@ -709,6 +714,9 @@ void DlgCam::data_kernel()
                 row++;
             }
         }
+
+        // sort
+        ui.tableWidget_nick_rank_spectators->sortByColumn(0, Qt::AscendingOrder);
     }
     else if (iCam_cmd == 403)
     {

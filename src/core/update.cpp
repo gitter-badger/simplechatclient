@@ -53,7 +53,6 @@ void Update::version(QString strAvailableVersion)
 
     if (strAvailableVersion == QString::null)
     {
-        /// REGRESSION
         //tabc->show_msg("Status", tr("Can not download the available version."), 0);
         return;
     }
@@ -66,14 +65,12 @@ void Update::version(QString strAvailableVersion)
             qDebug() << "Current rev: " << strCurrentRev << " Available rev: " << strAvailableRev;
 #endif
 
-    /// REGRESSION
     //if (iCurrentRev == iAvailableRev)
         //tabc->show_msg("Status", tr("You are using up-to-date version."), 0);
     //else if (iCurrentRev > iAvailableRev)
         //tabc->show_msg("Status", tr("You are using a test version."), 0);
     if (iCurrentRev < iAvailableRev)
     {
-        /// REGRESSION
         //tabc->show_msg("Status", tr("A new version is available."), 0);
         (new DlgUpdate(myparent, strAvailableVersion))->show();
     }
