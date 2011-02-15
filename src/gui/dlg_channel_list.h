@@ -21,6 +21,8 @@
 #ifndef DLG_CHANNEL_LIST_H
 #define DLG_CHANNEL_LIST_H
 
+#include "defines.h"
+class Network;
 #include <QDialog>
 #include "ui_channel_list.h"
 
@@ -28,14 +30,13 @@ class DlgChannelList : public QDialog
 {
     Q_OBJECT
 public:
-    DlgChannelList(QWidget *);
-    void clear();
-    void add_channel(QString, QString, QString, QString);
-    void create_list();
-    void sort();
+    DlgChannelList(QWidget *, Network *, sChannelList *);
 
 private:
     Ui::uiChannelList ui;
+    Network *pNetwork;
+    sChannelList *stlChannelList;
+
     QList < QList<QString> > list_all;
     QList < QList<QString> > list_teen;
     QList < QList<QString> > list_common;
@@ -43,14 +44,16 @@ private:
     QList < QList<QString> > list_thematic;
     QList < QList<QString> > list_regional;
 
+    void refresh();
+    void create_list();
+    void clear();
+    void sort();
     void quickSort(QList< QList<QString> > *, int, int);
     void show_all_channels();
     void apply_checkboxes();
 
 protected:
-    virtual void showEvent(QShowEvent *);
     virtual void resizeEvent(QResizeEvent *);
-    virtual void closeEvent(QCloseEvent *);
     virtual void keyPressEvent(QKeyEvent *);
 
 private slots:
@@ -65,9 +68,6 @@ private slots:
     void button_clear();
     void hide_empty_channels();
     void show_adv_options();
-
-signals:
-    void send(QString);
 };
 
 #endif // DLG_CHANNEL_LIST_H

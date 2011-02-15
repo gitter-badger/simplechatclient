@@ -72,16 +72,15 @@ void Core::init(QMainWindow *parent, QString param1, int param2, Notify *param3,
     pNetwork->start(QThread::InheritPriority);
 
     // classes
-    pTabC = new TabContainer(myparent, pNetwork, pTabM, pNotify, &mChannelAvatar, camSocket, &mChannelNickStatus, &lAwaylog);
+    pTabC = new TabContainer(myparent, pNetwork, pTabM, pNotify, &mChannelAvatar, camSocket, &stlChannelNickStatus, &lAwaylog);
 
     pDlg_channel_settings = new DlgChannelSettings(myparent, pNetwork);
     pDlg_moderation = new DlgModeration(myparent);
-    pDlg_channel_list = new DlgChannelList(myparent);
     pDlg_channel_homes = new DlgChannelHomes(myparent, pNetwork, &mChannelAvatar, pDlg_channel_settings);
     pDlg_user_profile = new DlgUserProfile(myparent, pNetwork);
     pDlg_cam = new DlgCam(myparent, pNetwork, camSocket);
 
-    pOnet_kernel = new OnetKernel(myparent, pNetwork, pTabC, pNotify, &mNickAvatar, &mChannelAvatar, pDlg_channel_settings, pDlg_channel_homes, pDlg_channel_list, &lChannelFavourites, &mFriends, &lIgnore, pDlg_moderation);
+    pOnet_kernel = new OnetKernel(myparent, pNetwork, pTabC, pNotify, &mNickAvatar, &mChannelAvatar, pDlg_channel_settings, pDlg_channel_homes, &stlChannelList, &lChannelFavourites, &mFriends, &lIgnore, pDlg_moderation);
     pOnet_auth = new OnetAuth(pTabC);
 
     pTabC->set_dlg(pDlg_user_profile, pDlg_cam);
@@ -153,7 +152,6 @@ void Core::init(QMainWindow *parent, QString param1, int param2, Notify *param3,
 
     // signals to network
     QObject::connect(pDlg_moderation, SIGNAL(send(QString)), pNetwork, SLOT(send(QString)));
-    QObject::connect(pDlg_channel_list, SIGNAL(send(QString)), pNetwork, SLOT(send(QString)));
     QObject::connect(pOnet_auth, SIGNAL(send(QString)), pNetwork, SLOT(send(QString)));
 
     // signals from network
@@ -187,7 +185,6 @@ Core::~Core()
     delete pDlg_cam;
     delete pDlg_user_profile;
     delete pDlg_channel_homes;
-    delete pDlg_channel_list;
     delete pDlg_moderation;
     delete pDlg_channel_settings;
 
@@ -270,7 +267,7 @@ void Core::set_lag(QString strValue)
 void Core::open_channel_list()
 {
     if ((pNetwork->is_connected() == true) && (pNetwork->is_writable() == true))
-        pDlg_channel_list->show();
+        DlgChannelList(myparent, pNetwork, &stlChannelList).exec();
 }
 
 void Core::open_channel_homes()
@@ -378,7 +375,7 @@ void Core::create_nicklist(QString strChannel)
 {
     if (mChannelNickListWidget.contains(strChannel) == false)
     {
-        NickListWidget *nicklist = new NickListWidget(myparent, pNetwork, strChannel, &mNickAvatar, camSocket, &mChannelNickStatus, pDlg_user_profile, pDlg_cam);
+        NickListWidget *nicklist = new NickListWidget(myparent, pNetwork, strChannel, &mNickAvatar, camSocket, &stlChannelNickStatus, pDlg_user_profile, pDlg_cam);
         nicklist->setParent(nickListDockWidget);
         nicklist->setItemDelegate(new NickListDelegate(nicklist));
         nicklist->show();
@@ -403,7 +400,7 @@ void Core::remove_nicklist(QString strChannel)
 bool Core::nicklist_exist(QString strChannel, QString strNick)
 {
     if (mChannelNickListWidget.contains(strChannel) == true)
-        return mChannelNickListWidget.value(strChannel)->exist(strNick, &mChannelNickStatus);
+        return mChannelNickListWidget.value(strChannel)->exist(strNick, &stlChannelNickStatus);
     else
         return false;
 }
@@ -412,7 +409,7 @@ void Core::add_user(QString strChannel, QString strNick, QString strPrefix, QStr
 {
     if ((nicklist_exist(strChannel, strNick) == false) && (mChannelNickListWidget.contains(strChannel) == true))
     {
-        mChannelNickListWidget.value(strChannel)->add(strNick, strPrefix, strSuffix, &mChannelNickStatus);
+        mChannelNickListWidget.value(strChannel)->add(strNick, strPrefix, strSuffix, &stlChannelNickStatus);
 
         // set inputline users
         if (inputLineDockWidget->get_active() == strChannel)
@@ -431,7 +428,7 @@ void Core::del_user(QString strChannel, QString strNick)
 {
     if ((nicklist_exist(strChannel, strNick) == true) && (mChannelNickListWidget.contains(strChannel) == true))
     {
-        mChannelNickListWidget.value(strChannel)->remove(strNick, &mChannelNickStatus);
+        mChannelNickListWidget.value(strChannel)->remove(strNick, &stlChannelNickStatus);
 
         // set inputline users
         if (inputLineDockWidget->get_active() == strChannel)
@@ -485,12 +482,12 @@ void Core::change_flag(QString strNick, QString strChannel, QString strNewFlag)
     QString strOldPrefix;
     QString strOldSuffix;
 
-    for (int i = 0; i < mChannelNickStatus.count(); i++)
+    for (int i = 0; i < stlChannelNickStatus.count(); i++)
     {
-        if ((mChannelNickStatus.at(i).nick == strNick) && (mChannelNickStatus.at(i).channel == strChannel))
+        if ((stlChannelNickStatus.at(i).nick == strNick) && (stlChannelNickStatus.at(i).channel == strChannel))
         {
-            strOldPrefix = mChannelNickStatus.at(i).prefix;
-            strOldSuffix = mChannelNickStatus.at(i).suffix;
+            strOldPrefix = stlChannelNickStatus.at(i).prefix;
+            strOldSuffix = stlChannelNickStatus.at(i).suffix;
             break;
         }
     }
@@ -570,11 +567,11 @@ void Core::change_flag(QString strNick, QString strFlag)
 void Core::clear_nicklist(QString strChannel)
 {
     // clear
-    for (int i = 0; i < mChannelNickStatus.count(); i++)
+    for (int i = 0; i < stlChannelNickStatus.count(); i++)
     {
-        if (mChannelNickStatus.at(i).channel == strChannel)
+        if (stlChannelNickStatus.at(i).channel == strChannel)
         {
-            mChannelNickStatus.removeAt(i);
+            stlChannelNickStatus.removeAt(i);
             i--;
         }
     }
@@ -589,7 +586,7 @@ void Core::clear_nicklist(QString strChannel)
 
 void Core::clear_all_nicklist()
 {
-    mChannelNickStatus.clear();
+    stlChannelNickStatus.clear();
     mNickAvatar.clear();
     mChannelAvatar.clear();
 
@@ -616,7 +613,7 @@ void Core::update_nick_avatar(QString strNick)
         QString strChannel = strlChannels.at(i);
 
         // nicklist
-        if (mChannelNickListWidget.value(strChannel)->exist(strNick, &mChannelNickStatus) == true)
+        if (mChannelNickListWidget.value(strChannel)->exist(strNick, &stlChannelNickStatus) == true)
             mChannelNickListWidget.value(strChannel)->refresh_avatars();
     }
 }
@@ -624,7 +621,7 @@ void Core::update_nick_avatar(QString strNick)
 // clear all channel avatars
 void Core::clear_channel_all_nick_avatars(QString strChannel)
 {
-    QStringList strlNicks = mChannelNickListWidget.value(strChannel)->get(&mChannelNickStatus);
+    QStringList strlNicks = mChannelNickListWidget.value(strChannel)->get(&stlChannelNickStatus);
 
     for (int i = 0; i < strlNicks.count(); i++)
     {

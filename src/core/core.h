@@ -25,7 +25,6 @@
 class DlgCam;
 class DlgChannelFavourites;
 class DlgChannelHomes;
-class DlgChannelList;
 class DlgChannelSettings;
 class DlgModeration;
 class DlgUserProfile;
@@ -109,7 +108,6 @@ private:
     OnetAuth *pOnet_auth;
     DlgChannelFavourites *pDlg_channel_favourites;
     DlgChannelHomes *pDlg_channel_homes;
-    DlgChannelList *pDlg_channel_list;
     DlgChannelSettings *pDlg_channel_settings;
     DlgUserProfile *pDlg_user_profile;
     DlgModeration *pDlg_moderation;
@@ -120,7 +118,7 @@ private:
     QDockWidget *bottomDockWidget;
     QDockWidget *rightDockWidget;
     QMap <QString, NickListWidget*> mChannelNickListWidget;
-    sChannelNickStatus mChannelNickStatus;
+    sChannelNickStatus stlChannelNickStatus;
 
     // other
     QAction *lagAct;
@@ -129,6 +127,7 @@ private:
     QMap<QString, bool> mFriends;
     QList<QString> lIgnore;
     QList<QString> lChannelFavourites;
+    sChannelList stlChannelList;
     QMap <QString, QByteArray> mNickAvatar;
     QMap <QString, QByteArray> mChannelAvatar;
 

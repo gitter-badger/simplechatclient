@@ -13,4 +13,13 @@ struct NickStatus
 };
 typedef QList<NickStatus> sChannelNickStatus;
 
+struct ChannelList
+{
+    QString name;
+    QString people;
+    QString cat;
+    QString type;
+};
+typedef QList<ChannelList> sChannelList;
+
 #endif // DEFINES_H

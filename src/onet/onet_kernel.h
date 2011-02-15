@@ -21,10 +21,10 @@
 #ifndef ONET_KERNEL_H
 #define ONET_KERNEL_H
 
+#include "defines.h"
 class Avatar;
 class DlgChannelSettings;
 class DlgChannelHomes;
-class DlgChannelList;
 class DlgFriends;
 class DlgIgnore;
 class DlgModeration;
@@ -42,7 +42,7 @@ class OnetKernel : public QObject
 {
     Q_OBJECT
 public:
-    OnetKernel(QWidget *, Network *, TabContainer *, Notify *, QMap <QString, QByteArray> *, QMap <QString, QByteArray> *, DlgChannelSettings *, DlgChannelHomes *, DlgChannelList *, QList<QString> *, QMap<QString, bool> *, QList<QString> *, DlgModeration *);
+    OnetKernel(QWidget *, Network *, TabContainer *, Notify *, QMap <QString, QByteArray> *, QMap <QString, QByteArray> *, DlgChannelSettings *, DlgChannelHomes *, sChannelList *, QList<QString> *, QMap<QString, bool> *, QList<QString> *, DlgModeration *);
     ~OnetKernel();
 
 public slots:
@@ -57,7 +57,7 @@ private:
     QMap <QString, QByteArray> *mChannelAvatar;
     DlgChannelSettings *dlgchannel_settings;
     DlgChannelHomes *dlgchannel_homes;
-    DlgChannelList *dlgchannel_list;
+    sChannelList *stlChannelList;
     QList<QString> *lChannelFavourites;
     QMap<QString, bool> *mFriends;
     QList<QString> *lIgnore;

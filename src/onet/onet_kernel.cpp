@@ -26,7 +26,6 @@
 #include "avatar.h"
 #include "dlg_channel_homes.h"
 #include "dlg_channel_key.h"
-#include "dlg_channel_list.h"
 #include "dlg_channel_settings.h"
 #include "dlg_invite.h"
 #include "dlg_moderation.h"
@@ -37,7 +36,7 @@
 #include "tab_container.h"
 #include "onet_kernel.h"
 
-OnetKernel::OnetKernel(QWidget *parent, Network *param1, TabContainer *param2, Notify *param3, QMap <QString, QByteArray> *param4, QMap <QString, QByteArray> *param5, DlgChannelSettings *param6, DlgChannelHomes *param7, DlgChannelList *param8, QList<QString> *param9, QMap<QString, bool> *param10, QList<QString> *param11, DlgModeration *param12)
+OnetKernel::OnetKernel(QWidget *parent, Network *param1, TabContainer *param2, Notify *param3, QMap <QString, QByteArray> *param4, QMap <QString, QByteArray> *param5, DlgChannelSettings *param6, DlgChannelHomes *param7, sChannelList *param8, QList<QString> *param9, QMap<QString, bool> *param10, QList<QString> *param11, DlgModeration *param12)
 {
     myparent = parent;
     pNetwork = param1;
@@ -47,7 +46,7 @@ OnetKernel::OnetKernel(QWidget *parent, Network *param1, TabContainer *param2, N
     mChannelAvatar = param5;
     dlgchannel_settings = param6;
     dlgchannel_homes = param7;
-    dlgchannel_list = param8;
+    stlChannelList = param8;
     lChannelFavourites = param9;
     mFriends = param10;
     lIgnore = param11;
@@ -1340,11 +1339,15 @@ void OnetKernel::raw_001()
     mFriends->clear();
     lIgnore->clear();
     lChannelFavourites->clear();
+    stlChannelList->clear();
 
     // auto rejoin
     QStringList strlOpenChannels = pTabC->get_open_channels();
     for (int i = 0; i < strlOpenChannels.size(); i++)
         pNetwork->send(QString("JOIN %1").arg(strlOpenChannels[i]));
+
+    // channel list
+    pNetwork->send("SLIST  R- 0 0 100 null");
 }
 
 // :cf1f4.onet 002 Merovingian :Your host is cf1f4.onet, running version InspIRCd-1.1
@@ -3945,7 +3948,7 @@ void OnetKernel::raw_817()
 // :cf1f3.onet 818 scc_test :Start of simple channels list.
 void OnetKernel::raw_818()
 {
-    dlgchannel_list->clear();
+    stlChannelList->clear();
 }
 
 // SLIST
@@ -4028,7 +4031,13 @@ void OnetKernel::raw_819()
                 break;
         }
 
-        dlgchannel_list->add_channel(strChannelName, strChannelPeople, strChannelCat, strChannelType);
+        ChannelList add;
+        add.name = strChannelName;
+        add.people = strChannelPeople;
+        add.cat = strChannelCat;
+        add.type = strChannelType;
+
+        stlChannelList->append(add);
     }
 }
 
@@ -4036,7 +4045,7 @@ void OnetKernel::raw_819()
 // :cf1f3.onet 820 scc_test :End of simple channel list.
 void OnetKernel::raw_820()
 {
-    dlgchannel_list->sort();
+    // ignore
 }
 
 // :cf1f3.onet 821 scc_test #scc :Channel is not moderated

@@ -197,15 +197,15 @@ MainWindow::~MainWindow()
         coreServers.removeFirst();
     }
 
-    // delete update
-    delete pUpdate;
-
     // hide tray
     trayIcon->hide();
 
+    // delete update
+    delete pUpdate;
+
     // delete objects
-    delete pNotify;
     delete pOptions;
+    delete pNotify;
 
     // delete teray
     delete trayIcon;
@@ -232,7 +232,7 @@ void MainWindow::create_settings()
     // default settings
     QSettings settings;
     settings.clear();
-    settings.setValue("version", "1.0.10.697");
+    settings.setValue("version", "1.0.10.698");
     settings.setValue("debug", "off");
     settings.setValue("logged", "off");
     settings.setValue("busy", "off");
