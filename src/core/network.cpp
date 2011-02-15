@@ -21,17 +21,14 @@
 #include <QDateTime>
 #include <QHostInfo>
 #include <QSettings>
-#include <QTimer>
 #include "config.h"
 #include "crypt.h"
 #include "network.h"
 
-Network::Network(QAction *param1, QAction *param2, QString param3, int param4)
+Network::Network(QString param1, int param2)
 {
-    connectAct = param1;
-    lagAct = param2;
-    strServer = param3;
-    iPort = param4;
+    strServer = param1;
+    iPort = param2;
 
     iActive = 0;
     bReconnecting = false;
@@ -102,10 +99,8 @@ void Network::connect()
 
         if (hInfo.error() != QHostInfo::NoError)
         {
-            connectAct->setText(tr("&Connect"));
-            connectAct->setIconText(tr("&Connect"));
-            connectAct->setIcon(QIcon(":/images/oxygen/16x16/network-connect.png"));
-            lagAct->setText("Lag: 0s");
+            emit set_disconnected();
+            emit set_lag("Lag: ?");
 
             emit show_msg_all(QString(tr("Error: Could not connect to the server [%1]")).arg(hInfo.errorString()), 9);
 
@@ -243,10 +238,8 @@ void Network::recv()
 
 void Network::connected()
 {
-    connectAct->setText(tr("&Disconnect"));
-    connectAct->setIconText(tr("&Disconnect"));
-    connectAct->setIcon(QIcon(":/images/oxygen/16x16/network-disconnect.png"));
-    lagAct->setText("Lag: 0s");
+    emit set_connected();
+    emit set_lag("Lag: ?");
 
     emit show_msg_all(tr("Connected to server"), 9);
 
@@ -293,10 +286,8 @@ void Network::disconnected()
 {
     if (socket->state() == QAbstractSocket::UnconnectedState)
     {
-        connectAct->setText(tr("&Connect"));
-        connectAct->setIconText(tr("&Connect"));
-        connectAct->setIcon(QIcon(":/images/oxygen/16x16/network-connect.png"));
-        lagAct->setText("Lag: 0s");
+        emit set_disconnected();
+        emit set_lag("Lag: ?");
 
         if (socket->error() != QAbstractSocket::UnknownSocketError)
             emit show_msg_all(QString(tr("Disconnected from server [%1]")).arg(socket->errorString()), 9);
@@ -335,10 +326,8 @@ void Network::error(QAbstractSocket::SocketError err)
 {
     Q_UNUSED (err);
 
-    connectAct->setText(tr("&Connect"));
-    connectAct->setIconText(tr("&Connect"));
-    connectAct->setIcon(QIcon(":/images/oxygen/16x16/network-connect.png"));
-    lagAct->setText("Lag: 0s");
+    emit set_disconnected();
+    emit set_lag("Lag: ?");
 
     if (socket->state() == QAbstractSocket::ConnectedState)
         emit close();
@@ -378,9 +367,9 @@ void Network::error(QAbstractSocket::SocketError err)
 void Network::state_changed(QAbstractSocket::SocketState socketState)
 {
     if ((socketState != QAbstractSocket::UnconnectedState) && (socketState != QAbstractSocket::ConnectedState))
-        connectAct->setEnabled(false);
+        emit set_connect_enabled(false);
     else
-        connectAct->setEnabled(true);
+        emit set_connect_enabled(true);
 }
 
 void Network::timeout_lag()
@@ -390,7 +379,7 @@ void Network::timeout_lag()
 
     // update lag
     if (iCurrent-iActive > 30+10)
-        lagAct->setText(QString("Lag: %1s").arg(iCurrent-iActive));
+        emit set_lag(QString("Lag: %1s").arg(iCurrent-iActive));
 }
 
 void Network::timeout_pong()

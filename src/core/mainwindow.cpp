@@ -40,7 +40,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
     // action
     showAct = new QAction(QIcon(":/images/logo_64.png"), tr("Show"), this);
-    connectAct = new QAction(QIcon(":/images/oxygen/16x16/network-connect.png"), tr("Connect"), this);
+    connectAct = new QAction(QIcon(":/images/oxygen/16x16/network-connect.png"), tr("&Connect"), this);
     closeAct = new QAction(QIcon(":/images/oxygen/16x16/application-exit.png"), tr("Close"), this);
     optionsAct = new QAction(QIcon(":/images/oxygen/16x16/preferences-system.png"), tr("Options"), this);
     aboutAct = new QAction(QIcon(":/images/logo_64.png"), tr("About SCC ..."), this);
@@ -232,7 +232,7 @@ void MainWindow::create_settings()
     // default settings
     QSettings settings;
     settings.clear();
-    settings.setValue("version", "1.0.10.694");
+    settings.setValue("version", "1.0.10.695");
     settings.setValue("debug", "off");
     settings.setValue("logged", "off");
     settings.setValue("busy", "off");

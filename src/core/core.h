@@ -103,8 +103,6 @@ private:
     // require
     QTcpSocket *camSocket;
     TabManager *pTabM;
-    InputLineDockWidget *inputLineDockWidget;
-    NickListDockWidget *nickListDockWidget;
     TabContainer *pTabC;
     Network *pNetwork;
     OnetKernel *pOnet_kernel;
@@ -115,8 +113,10 @@ private:
     DlgChannelSettings *pDlg_channel_settings;
     DlgUserProfile *pDlg_user_profile;
     DlgModeration *pDlg_moderation;
-    QMap <QString, QByteArray> mNickAvatar;
-    QMap <QString, QByteArray> mChannelAvatar;
+
+    // gui
+    InputLineDockWidget *inputLineDockWidget;
+    NickListDockWidget *nickListDockWidget;
     QDockWidget *bottomDockWidget;
     QDockWidget *rightDockWidget;
     QMap <QString, NickListWidget*> mChannelNickListWidget;
@@ -128,8 +128,13 @@ private:
     QList<QString> lAwaylog;
     QMap<QString, bool> mFriends;
     QList<QString> lIgnore;
+    QMap <QString, QByteArray> mNickAvatar;
+    QMap <QString, QByteArray> mChannelAvatar;
 
 private slots:
+    void set_connected();
+    void set_disconnected();
+    void set_connect_enabled(bool);
     void tab_close_requested(int);
     void current_tab_changed(int);
 

@@ -21,8 +21,8 @@
 #ifndef NETWORK_H
 #define NETWORK_H
 
-#include <QAction>
 #include <QTcpSocket>
+#include <QTimer>
 #include <QThread>
 
 /**
@@ -32,22 +32,20 @@ class Network : public QThread
 {
     Q_OBJECT
 public:
-    Network(QAction *, QAction *, QString, int);
+    Network(QString, int);
     ~Network();
     void run();
     void set_reconnect(bool);
     bool is_connected();
     bool is_writable();
+    void clear_queue();
 
 public slots:
     void connect();
     void close();
     void send(QString);
-    void clear_queue();
 
 private:
-    QAction *connectAct;
-    QAction *lagAct;
     QString strServer;
     int iPort;
     QTcpSocket *socket;
@@ -75,6 +73,10 @@ private slots:
     void timeout_queue();
 
 signals:
+    void set_connected();
+    void set_disconnected();
+    void set_lag(QString);
+    void set_connect_enabled(bool);
     void kernel(QString);
     void request_uo(QString, QString, QString);
     void show_msg_all(QString, int);

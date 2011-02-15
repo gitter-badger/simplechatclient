@@ -60,7 +60,7 @@ void Core::init(QMainWindow *parent, QString param1, int param2, Notify *param3,
     viewMenu = param6;
 
     // lag
-    lagAct = new QAction("Lag: 0s", myparent);
+    lagAct = new QAction("Lag: ?", myparent);
 
     // init all
     camSocket = new QTcpSocket();
@@ -68,7 +68,7 @@ void Core::init(QMainWindow *parent, QString param1, int param2, Notify *param3,
     pTabM = new TabManager(myparent);
     myparent->setCentralWidget(pTabM);
 
-    pNetwork = new Network(connectAct, lagAct, strServer, iPort);
+    pNetwork = new Network(strServer, iPort);
     pNetwork->start(QThread::InheritPriority);
 
     // classes
@@ -158,6 +158,10 @@ void Core::init(QMainWindow *parent, QString param1, int param2, Notify *param3,
     QObject::connect(pOnet_auth, SIGNAL(send(QString)), pNetwork, SLOT(send(QString)));
 
     // signals from network
+    QObject::connect(pNetwork, SIGNAL(set_connected()), this, SLOT(set_connected()));
+    QObject::connect(pNetwork, SIGNAL(set_disconnected()), this, SLOT(set_disconnected()));
+    QObject::connect(pNetwork, SIGNAL(set_lag(QString)), this, SLOT(set_lag(QString)));
+    QObject::connect(pNetwork, SIGNAL(set_connect_enabled(bool)), this, SLOT(set_connect_enabled(bool)));
     QObject::connect(pNetwork, SIGNAL(kernel(QString)), pOnet_kernel, SLOT(kernel(QString)));
     QObject::connect(pNetwork, SIGNAL(request_uo(QString,QString,QString)), pOnet_auth, SLOT(request_uo(QString,QString,QString)));
     QObject::connect(pNetwork, SIGNAL(show_msg_active(QString,int)), pTabC, SLOT(slot_show_msg_active(QString,int)));
@@ -237,6 +241,25 @@ void Core::refresh_colors()
 void Core::refresh_background_image()
 {
     pTabC->refresh_background_image();
+}
+
+void Core::set_connected()
+{
+    connectAct->setText(tr("&Disconnect"));
+    connectAct->setIconText(tr("&Disconnect"));
+    connectAct->setIcon(QIcon(":/images/oxygen/16x16/network-disconnect.png"));
+}
+
+void Core::set_disconnected()
+{
+    connectAct->setText(tr("&Connect"));
+    connectAct->setIconText(tr("&Connect"));
+    connectAct->setIcon(QIcon(":/images/oxygen/16x16/network-connect.png"));
+}
+
+void Core::set_connect_enabled(bool bSet)
+{
+    connectAct->setEnabled(bSet);
 }
 
 // set lag

@@ -186,16 +186,28 @@
         <source>Official Forum</source>
         <translation>Oficjalne forum</translation>
     </message>
+    <message>
+        <source>&amp;Connect</source>
+        <translation>&amp;Połącz</translation>
+    </message>
+    <message>
+        <source>&amp;Disconnect</source>
+        <translation>&amp;Rozłącz</translation>
+    </message>
 </context>
 <context>
     <name>MainWindow</name>
     <message>
-        <source>Show</source>
-        <translation>Pokaż</translation>
+        <source>&amp;Connect</source>
+        <translation>&amp;Połącz</translation>
     </message>
     <message>
-        <source>Connect</source>
-        <translation>Połącz</translation>
+        <source>&amp;Disconnect</source>
+        <translation>&amp;Rozłącz</translation>
+    </message>
+    <message>
+        <source>Show</source>
+        <translation>Pokaż</translation>
     </message>
     <message>
         <source>Close</source>
@@ -265,14 +277,6 @@
         <source>Navigation bar</source>
         <translation>Pasek nawigacji</translation>
     </message>
-    <message>
-        <source>&amp;Disconnect</source>
-        <translation>&amp;Rozłącz</translation>
-    </message>
-    <message>
-        <source>&amp;Connect</source>
-        <translation>&amp;Połącz</translation>
-    </message>
 </context>
 <context>
     <name>Network</name>
@@ -299,14 +303,6 @@
     <message>
         <source>Connected to server</source>
         <translation>Połączono z serwerem</translation>
-    </message>
-    <message>
-        <source>&amp;Disconnect</source>
-        <translation>&amp;Rozłącz</translation>
-    </message>
-    <message>
-        <source>&amp;Connect</source>
-        <translation>&amp;Połącz</translation>
     </message>
     <message>
         <source>Disconnected from server [%1]</source>
