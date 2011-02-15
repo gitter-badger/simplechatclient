@@ -275,7 +275,7 @@
     </message>
 </context>
 <context>
-    <name>NetworkThread</name>
+    <name>Network</name>
     <message>
         <source>Error: Could not connect to the server [%1]</source>
         <translation>Error: Nie można się połączyć z serwerem [%1]</translation>

@@ -498,6 +498,7 @@ void DlgCam::data_kernel()
     {
         show_img(bData);
     }
+    // ja31:-
     // osa1987:1:-2/-2/osa1987/1:0::0
     // ToWiemTylkoJa:1:2/0/#Relax/0,-2/-2/ToWiemTylkoJa/1:2::13
     // scc_test:1:2/0/#Quiz/0,2/0/#Relax/0,2/0/#Scrabble/0,4/0/#scc/0:0::0
@@ -570,6 +571,7 @@ void DlgCam::data_kernel()
         }
         ui.tableWidget_nick_rank_spectators->resizeColumnsToContents();
     }
+    // ja31:-
     // osa1987:1:-2/-2/osa1987/1:0::0
     // ToWiemTylkoJa:1:2/0/#Relax/0,-2/-2/ToWiemTylkoJa/1:2::13
     // scc_test:1:2/0/#Quiz/0,2/0/#Relax/0,2/0/#Scrabble/0,4/0/#scc/0:0::0

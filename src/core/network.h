@@ -21,57 +21,67 @@
 #ifndef NETWORK_H
 #define NETWORK_H
 
-class NetworkThread;
 #include <QAction>
-#include <QObject>
+#include <QTcpSocket>
+#include <QThread>
 
 /**
- * Network class
+ * Network thread class
  */
-class Network : public QObject
+class Network : public QThread
 {
     Q_OBJECT
 public:
     Network(QAction *, QAction *, QString, int);
     ~Network();
+    void run();
+    void set_reconnect(bool);
     bool is_connected();
     bool is_writable();
+
+public slots:
     void connect();
     void close();
     void send(QString);
     void clear_queue();
 
-public slots:
-    void slot_kernel(QString);
-    void slot_request_uo(QString, QString, QString);
-    void slot_show_msg_active(QString, int);
-    void slot_show_msg_all(QString, int);
-    void slot_update_nick(QString);
-    void slot_clear_nicklist(QString);
-    void slot_clear_all_nicklist();
-
-    void slot_send(QString);
-
 private:
-    NetworkThread *networkThr;
     QAction *connectAct;
     QAction *lagAct;
     QString strServer;
     int iPort;
+    QTcpSocket *socket;
+    QTimer *timerPong;
+    QTimer *timerPing;
+    QTimer *timerLag;
+    QTimer *timerQueue;
+    int iActive;
+    QList <QString> msgSendQueue;
+    bool bReconnecting;
+    bool bDefaultEnabledQueue;
+
+    void write(QString);
+
+private slots:
+    void reconnect();
+    void recv();
+    void connected();
+    void disconnected();
+    void error(QAbstractSocket::SocketError);
+    void state_changed(QAbstractSocket::SocketState);
+    void timeout_pong();
+    void timeout_ping();
+    void timeout_lag();
+    void timeout_queue();
 
 signals:
     void kernel(QString);
     void request_uo(QString, QString, QString);
-    void show_msg_active(QString, int);
     void show_msg_all(QString, int);
+    void show_msg_active(QString, int);
     void update_nick(QString);
     void clear_nicklist(QString);
     void clear_all_nicklist();
-
-    void sconnect();
-    void sclose();
-    void ssend(QString);
-    void sclear_queue();
 };
 
 #endif // NETWORK_H

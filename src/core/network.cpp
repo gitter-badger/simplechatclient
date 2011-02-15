@@ -18,7 +18,12 @@
  *                                                                          *
  ****************************************************************************/
 
-#include "network_thread.h"
+#include <QDateTime>
+#include <QHostInfo>
+#include <QSettings>
+#include <QTimer>
+#include "config.h"
+#include "crypt.h"
 #include "network.h"
 
 Network::Network(QAction *param1, QAction *param2, QString param3, int param4)
@@ -28,74 +33,400 @@ Network::Network(QAction *param1, QAction *param2, QString param3, int param4)
     strServer = param3;
     iPort = param4;
 
-    networkThr = new NetworkThread(connectAct, lagAct, strServer, iPort);
-    networkThr->start(QThread::InheritPriority);
+    iActive = 0;
+    bReconnecting = false;
+    bDefaultEnabledQueue = true;
+    QSettings settings;
+    settings.setValue("reconnect", "true");
+    timerPong = new QTimer();
+    timerPong->setInterval(1*60*1000); // 1 min
+    timerPing = new QTimer();
+    timerPing->setInterval(30*1000); // 30 sec
+    timerLag = new QTimer();
+    timerLag->setInterval(10*1000); // 10 sec
+    timerQueue = new QTimer();
+    timerQueue->setInterval(300); // 0.3 sec
 
-    QObject::connect(networkThr, SIGNAL(send_to_kernel(QString)), this, SLOT(slot_kernel(QString)));
-    QObject::connect(networkThr, SIGNAL(request_uo(QString, QString, QString)), this, SLOT(slot_request_uo(QString, QString, QString)));
-    QObject::connect(networkThr, SIGNAL(show_msg_active(QString, int)), this, SLOT(slot_show_msg_active(QString, int)));
-    QObject::connect(networkThr, SIGNAL(show_msg_all(QString, int)), this, SLOT(slot_show_msg_all(QString, int)));
-    QObject::connect(networkThr, SIGNAL(update_nick(QString)), this, SLOT(slot_update_nick(QString)));
-    QObject::connect(networkThr, SIGNAL(clear_nicklist(QString)), this, SLOT(slot_clear_nicklist(QString)));
-    QObject::connect(networkThr, SIGNAL(clear_all_nicklist()), this, SLOT(slot_clear_all_nicklist()));
+    socket = new QTcpSocket(this);
+    socket->setSocketOption(QAbstractSocket::LowDelayOption, 1);
+    socket->setSocketOption(QAbstractSocket::KeepAliveOption, 0);
 
-    QObject::connect(this, SIGNAL(sconnect()), networkThr, SLOT(connect()));
-    QObject::connect(this, SIGNAL(sclose()), networkThr, SLOT(close()));
-    QObject::connect(this, SIGNAL(ssend(QString)), networkThr, SLOT(send(QString)));
-    QObject::connect(this, SIGNAL(sclear_queue()), networkThr, SLOT(clear_queue()));
+    QObject::connect(socket, SIGNAL(readyRead()), this, SLOT(recv()));
+    QObject::connect(socket, SIGNAL(connected()), this, SLOT(connected()));
+    QObject::connect(socket, SIGNAL(disconnected()), this, SLOT(disconnected()));
+    QObject::connect(socket, SIGNAL(error(QAbstractSocket::SocketError)), this, SLOT(error(QAbstractSocket::SocketError)));
+    QObject::connect(socket, SIGNAL(stateChanged(QAbstractSocket::SocketState)), this, SLOT(state_changed(QAbstractSocket::SocketState)));
+
+    QObject::connect(timerPong, SIGNAL(timeout()), this, SLOT(timeout_pong()));
+    QObject::connect(timerPing, SIGNAL(timeout()), this, SLOT(timeout_ping()));
+    QObject::connect(timerLag, SIGNAL(timeout()), this, SLOT(timeout_lag()));
+    QObject::connect(timerQueue, SIGNAL(timeout()), this, SLOT(timeout_queue()));
 }
 
 Network::~Network()
 {
-    networkThr->quit();
-    networkThr->wait();
-    networkThr->deleteLater();
-    networkThr->QObject::disconnect();
-    delete networkThr;
+    close();
+
+    socket->deleteLater();
 }
 
-// from network
-void Network::slot_kernel(QString p1) { emit kernel(p1); }
-void Network::slot_request_uo(QString p1, QString p2, QString p3) { emit request_uo(p1, p2, p3); }
-void Network::slot_show_msg_active(QString p1, int p2) { emit show_msg_active(p1, p2); }
-void Network::slot_show_msg_all(QString p1, int p2) { emit show_msg_all(p1, p2); }
-void Network::slot_update_nick(QString p1) { emit update_nick(p1); }
-void Network::slot_clear_nicklist(QString p1) { emit clear_nicklist(p1); }
-void Network::slot_clear_all_nicklist() { emit clear_all_nicklist(); }
-
-// to network
+void Network::run()
+{
+    exec();
+}
 
 bool Network::is_connected()
 {
-    return networkThr->is_connected();
+    if (socket->state() == QAbstractSocket::ConnectedState)
+        return true;
+    else
+        return false;
 }
 
 bool Network::is_writable()
 {
-    return networkThr->is_writable();
-}
-
-void Network::connect()
-{
-    emit sconnect();
-}
-
-void Network::close()
-{
-    emit sclose();
-}
-
-void Network::send(QString strData)
-{
-    emit ssend(strData);
+    return socket->isWritable();
 }
 
 void Network::clear_queue()
 {
-    emit sclear_queue();
+    msgSendQueue.clear();
 }
 
-void Network::slot_send(QString strData)
+void Network::connect()
 {
-    emit ssend(strData);
+    if (socket->state() == QAbstractSocket::UnconnectedState)
+    {
+        // host
+        QHostInfo hInfo = QHostInfo::fromName(strServer);
+
+        if (hInfo.error() != QHostInfo::NoError)
+        {
+            connectAct->setText(tr("&Connect"));
+            connectAct->setIconText(tr("&Connect"));
+            connectAct->setIcon(QIcon(":/images/oxygen/16x16/network-connect.png"));
+            lagAct->setText("Lag: 0s");
+
+            emit show_msg_all(QString(tr("Error: Could not connect to the server [%1]")).arg(hInfo.errorString()), 9);
+
+            // reconnect
+            if (bReconnecting == false)
+            {
+                bReconnecting = true;
+                QTimer::singleShot(1000*30, this, SLOT(reconnect())); // 30 sec
+            }
+
+            return;
+        }
+
+        // random
+        int iRandom = qrand() % hInfo.addresses().count();
+
+        // set active
+        QDateTime dt = QDateTime::currentDateTime();
+        iActive = (int)dt.toTime_t();
+
+        // connect
+        socket->connectToHost(hInfo.addresses().at(iRandom).toString(), iPort);
+
+        // start timers
+        timerPong->start();
+        timerPing->start();
+        timerLag->start();
+        timerQueue->start();
+    }
+    else
+        emit show_msg_all(tr("Error: Could not connect to the server - connection already exists!"), 9);
+}
+
+void Network::reconnect()
+{
+    QSettings settings;
+    if (settings.value("reconnect").toString() == "true")
+    {
+        if ((this->is_connected() == false) && (settings.value("logged").toString() == "off"))
+        {
+            bReconnecting = false;
+
+            emit show_msg_all(tr("Reconnecting..."), 7);
+            emit connect();
+        }
+    }
+}
+
+void Network::close()
+{
+    // if queue is not empty - send all
+    if (msgSendQueue.isEmpty() == false)
+    {
+        while (msgSendQueue.size() != 0)
+            write(msgSendQueue.takeFirst());
+    }
+
+    // close
+    if (socket->state() == QAbstractSocket::ConnectedState)
+        socket->disconnectFromHost();
+
+    // state
+    QSettings settings;
+    settings.setValue("logged", "off");
+
+    // stop timers
+    if (timerPong->isActive() == true)
+        timerPong->stop();
+    if (timerPing->isActive() == true)
+        timerPing->stop();
+    if (timerLag->isActive() == true)
+        timerLag->stop();
+    if (timerQueue->isActive() == true)
+        timerQueue->stop();
+}
+
+void Network::write(QString strData)
+{
+    if ((socket->state() == QAbstractSocket::ConnectedState) && (socket->isWritable() == true))
+    {
+#ifdef Q_WS_X11
+        QSettings settings;
+        if (settings.value("debug").toString() == "on")
+            qDebug() << "-> " << strData;
+#endif
+        strData += "\r\n";
+        QByteArray qbaData;
+        for ( int i = 0; i < strData.size(); i++)
+            qbaData.insert(i, strData.at(i).toAscii());
+
+        if (socket->write(qbaData) == -1)
+        {
+            if (socket->state() == QAbstractSocket::ConnectedState)
+                emit show_msg_active(QString(tr("Error: Could not send data! [%1]")).arg(socket->errorString()), 9);
+            else if (socket->state() == QAbstractSocket::UnconnectedState)
+                emit show_msg_active(tr("Error: Could not send data! [Not connected]"), 9);
+        }
+    }
+    else
+        emit show_msg_active(tr("Error: Could not send data! [Not Connected]"), 9);
+}
+
+void Network::send(QString strData)
+{
+    // default enabled queue
+    if (bDefaultEnabledQueue == true)
+    {
+        msgSendQueue.append(strData);
+    }
+    else
+    {
+        QSettings settings;
+        if (settings.value("disable_avatars").toString() == "on") // without avatars
+            write(strData);
+        else // with avatars
+            msgSendQueue.append(strData);
+    }
+}
+
+void Network::recv()
+{
+    while(socket->canReadLine())
+    {
+        // read line
+        QByteArray data = socket->readLine().trimmed();
+
+        // set active
+        QDateTime dt = QDateTime::currentDateTime();
+        iActive = (int)dt.toTime_t();
+
+        // process to kernel
+        emit kernel(QString(data));
+    }
+}
+
+void Network::connected()
+{
+    connectAct->setText(tr("&Disconnect"));
+    connectAct->setIconText(tr("&Disconnect"));
+    connectAct->setIcon(QIcon(":/images/oxygen/16x16/network-disconnect.png"));
+    lagAct->setText("Lag: 0s");
+
+    emit show_msg_all(tr("Connected to server"), 9);
+
+    QSettings settings;
+    QString strNick = settings.value("nick").toString();
+    QString strPass = settings.value("pass").toString();
+
+    // nick & pass is null
+    if ((strNick.isEmpty() == true) && (strPass.isEmpty() == true))
+        strNick = "~test";
+
+    // decrypt pass
+    if (strPass.isEmpty() == false)
+    {
+        Crypt *pCrypt = new Crypt();
+        strPass = pCrypt->decrypt(strNick, strPass);
+        delete pCrypt;
+    }
+
+    // correct nick
+    if ((strPass.isEmpty() == true) && (strNick[0] != '~'))
+        strNick = "~"+strNick;
+    if ((strPass.isEmpty() == false) && (strNick[0] == '~'))
+        strNick = strNick.right(strNick.length()-1);
+
+    Config *pConfig = new Config();
+    settings.setValue("nick", strNick);
+    pConfig->set_value("nick", strNick);
+    delete pConfig;
+
+    // update nick
+    emit update_nick(strNick);
+
+    // set current nick
+    QString strCurrentNick = strNick;
+        if (strCurrentNick[0] == '~')
+    strCurrentNick = strNick.right(strNick.length()-1);
+
+    // request uo key
+    emit request_uo(strCurrentNick, strNick, strPass);
+}
+
+void Network::disconnected()
+{
+    if (socket->state() == QAbstractSocket::UnconnectedState)
+    {
+        connectAct->setText(tr("&Connect"));
+        connectAct->setIconText(tr("&Connect"));
+        connectAct->setIcon(QIcon(":/images/oxygen/16x16/network-connect.png"));
+        lagAct->setText("Lag: 0s");
+
+        if (socket->error() != QAbstractSocket::UnknownSocketError)
+            emit show_msg_all(QString(tr("Disconnected from server [%1]")).arg(socket->errorString()), 9);
+        else
+            emit show_msg_all(tr("Disconnected from server"), 9);
+
+        // update nick
+        emit update_nick(tr("(Unregistered)"));
+
+        // clear nicklist
+        emit clear_all_nicklist();
+
+        // state
+        QSettings settings;
+        settings.setValue("logged", "off");
+
+        // timer
+        timerPong->stop();
+        timerPing->stop();
+        timerLag->stop();
+        timerQueue->stop();
+
+        // clear queue
+        msgSendQueue.clear();
+
+        // reconnect
+        if (bReconnecting == false)
+        {
+            bReconnecting = true;
+            QTimer::singleShot(1000*30, this, SLOT(reconnect())); // 30 sec
+        }
+    }
+}
+
+void Network::error(QAbstractSocket::SocketError err)
+{
+    Q_UNUSED (err);
+
+    connectAct->setText(tr("&Connect"));
+    connectAct->setIconText(tr("&Connect"));
+    connectAct->setIcon(QIcon(":/images/oxygen/16x16/network-connect.png"));
+    lagAct->setText("Lag: 0s");
+
+    if (socket->state() == QAbstractSocket::ConnectedState)
+        emit close();
+    else
+        emit show_msg_all(QString(tr("Disconnected from server [%1]")).arg(socket->errorString()), 9);
+
+    // update nick
+    emit update_nick(tr("(Unregistered)"));
+
+    // clear nicklist
+    emit clear_all_nicklist();
+
+    // state
+    QSettings settings;
+    settings.setValue("logged", "off");
+
+    // timer
+    timerPong->stop();
+    timerPing->stop();
+    timerLag->stop();
+    timerQueue->stop();
+
+    // clear queue
+    msgSendQueue.clear();
+
+    // reconnect
+    if (bReconnecting == false)
+    {
+        bReconnecting = true;
+        QTimer::singleShot(1000*30, this, SLOT(reconnect())); // 30 sec
+    }
+}
+
+/**
+ * Disable connect button if state not connected and not unconnected
+ */
+void Network::state_changed(QAbstractSocket::SocketState socketState)
+{
+    if ((socketState != QAbstractSocket::UnconnectedState) && (socketState != QAbstractSocket::ConnectedState))
+        connectAct->setEnabled(false);
+    else
+        connectAct->setEnabled(true);
+}
+
+void Network::timeout_lag()
+{
+    QDateTime dt = QDateTime::currentDateTime();
+    int iCurrent = (int)dt.toTime_t();
+
+    // update lag
+    if (iCurrent-iActive > 30+10)
+        lagAct->setText(QString("Lag: %1s").arg(iCurrent-iActive));
+}
+
+void Network::timeout_pong()
+{
+    QDateTime dt = QDateTime::currentDateTime();
+    int iCurrent = (int)dt.toTime_t();
+
+    // check timeout
+    if (iActive+301 < iCurrent)
+    {
+        if (socket->state() == QAbstractSocket::ConnectedState)
+            emit show_msg_all(tr("No PONG reply from server in 301 seconds. Disconnecting..."), 9);
+        emit close();
+        iActive = iCurrent;
+    }
+}
+
+void Network::timeout_ping()
+{
+    QDateTime dta = QDateTime::currentDateTime();
+    int i1 = (int)dta.toTime_t(); // seconds that have passed since 1970
+    QString t2 = dta.toString("zzz"); // miliseconds
+
+    QSettings settings;
+    if ((is_connected() == true) && (is_writable() == true) && (settings.value("logged").toString() == "on"))
+        emit send(QString("PING :%1.%2").arg(i1).arg(t2));
+}
+
+void Network::timeout_queue()
+{
+    if (socket->state() != QAbstractSocket::ConnectedState)
+    {
+        msgSendQueue.clear();
+        return;
+    }
+
+    if (msgSendQueue.size() > 0)
+        write(msgSendQueue.takeFirst());
 }

@@ -181,7 +181,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     QObject::connect(pOptions, SIGNAL(refresh_background_image()), this, SLOT(refresh_background_image()));
 
     // create basic core
-    coreServers.append(new Core(this, "czat-app.onet.pl", 5015, pNotify, connectAct, toolBar, viewMenu));
+    coreServers.append(new Core());
+    coreServers.at(0)->init(this,"czat-app.onet.pl", 5015, pNotify, connectAct, toolBar, viewMenu);
 
     // update
     pUpdate->check_update();
@@ -231,7 +232,7 @@ void MainWindow::create_settings()
     // default settings
     QSettings settings;
     settings.clear();
-    settings.setValue("version", "1.0.10.692");
+    settings.setValue("version", "1.0.10.693");
     settings.setValue("debug", "off");
     settings.setValue("logged", "off");
     settings.setValue("busy", "off");

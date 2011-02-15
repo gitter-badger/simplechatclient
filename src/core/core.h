@@ -51,8 +51,10 @@ class Core : public QObject
 {
     Q_OBJECT
 public:
-    Core(QMainWindow *, QString, int, Notify *, QAction *, QToolBar *, QMenu *);
+    Core();
     ~Core();
+    void init(QMainWindow *, QString, int, Notify *, QAction *, QToolBar *, QMenu *);
+
     void refresh_colors();
     void refresh_background_image();
 

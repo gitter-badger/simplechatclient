@@ -36,7 +36,6 @@ set (scc_SRCS
 	core/main.cpp
 	core/mainwindow.cpp
 	core/network.cpp
-	core/network_thread.cpp
 	core/singleapplication.cpp
 	core/update.cpp
 	gui/dlg_about.cpp
@@ -89,7 +88,6 @@ set (scc_MOC_HDRS
 	core/core.h
 	core/mainwindow.h
 	core/network.h
-	core/network_thread.h
 	core/update.h
 	gui/dlg_about.h
 	gui/dlg_awaylog.h

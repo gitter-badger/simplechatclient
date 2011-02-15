@@ -44,7 +44,11 @@
 #include "kamerzysta.h"
 #endif
 
-Core::Core(QMainWindow *parent, QString param1, int param2, Notify *param3, QAction *param4, QToolBar *param5, QMenu *param6)
+Core::Core()
+{
+}
+
+void Core::init(QMainWindow *parent, QString param1, int param2, Notify *param3, QAction *param4, QToolBar *param5, QMenu *param6)
 {
     // params
     myparent = parent;
@@ -65,6 +69,7 @@ Core::Core(QMainWindow *parent, QString param1, int param2, Notify *param3, QAct
     myparent->setCentralWidget(pTabM);
 
     pNetwork = new Network(connectAct, lagAct, strServer, iPort);
+    pNetwork->start(QThread::InheritPriority);
 
     // classes
     pTabC = new TabContainer(myparent, pNetwork, pTabM, pNotify, &mChannelAvatar, camSocket, &mChannelNickStatus, &lAwaylog);
@@ -148,9 +153,9 @@ Core::Core(QMainWindow *parent, QString param1, int param2, Notify *param3, QAct
     QObject::connect(pOnet_kernel, SIGNAL(clear_channel_all_nick_avatars(QString)), this, SLOT(clear_channel_all_nick_avatars(QString)));
 
     // signals to network
-    QObject::connect(pDlg_moderation, SIGNAL(send(QString)), pNetwork, SLOT(slot_send(QString)));
-    QObject::connect(pDlg_channel_list, SIGNAL(send(QString)), pNetwork, SLOT(slot_send(QString)));
-    QObject::connect(pOnet_auth, SIGNAL(send(QString)), pNetwork, SLOT(slot_send(QString)));
+    QObject::connect(pDlg_moderation, SIGNAL(send(QString)), pNetwork, SLOT(send(QString)));
+    QObject::connect(pDlg_channel_list, SIGNAL(send(QString)), pNetwork, SLOT(send(QString)));
+    QObject::connect(pOnet_auth, SIGNAL(send(QString)), pNetwork, SLOT(send(QString)));
 
     // signals from network
     QObject::connect(pNetwork, SIGNAL(kernel(QString)), pOnet_kernel, SLOT(kernel(QString)));
@@ -183,7 +188,13 @@ Core::~Core()
     delete pDlg_channel_list;
     delete pDlg_moderation;
     delete pDlg_channel_settings;
+
+    pNetwork->quit();
+    pNetwork->wait();
+    pNetwork->deleteLater();
+    pNetwork->QObject::disconnect();
     delete pNetwork;
+
     delete pTabC;
     delete pTabM;
     delete bottomDockWidget;
