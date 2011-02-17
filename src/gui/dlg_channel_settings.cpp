@@ -304,11 +304,9 @@ void DlgChannelSettings::add_email(QString strCheckChannel, QString strEmail)
     ui.lineEdit_email->setText(strEmail);
 }
 
-void DlgChannelSettings::add_cat(QString strCheckChannel, int iCatMajor, int iCatMinor)
+void DlgChannelSettings::add_cat(QString strCheckChannel, int iCatMajor)
 {
     if (strCheckChannel != strChannel) return; // not this channel
-
-    Q_UNUSED (iCatMinor);
 
     if (iCatMajor == 1) // teen
         ui.comboBox_category->setCurrentIndex(0);

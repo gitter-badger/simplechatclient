@@ -1655,13 +1655,13 @@ void OnetKernel::raw_160n()
 
 // CS INFO #scc
 // :ChanServ!service@service.onet NOTICE scc_test :161 #scc :topicAuthor=Merovingian rank=0.9095 topicDate=1251579281 private=1 password= limit=0 type=0 createdDate=1247005186 vEmail=0 www=http://simplechatclien.sourceforge.net/ catMajor=4 catMinor=0 official=0 recommended=0 protected=0 moderated=0 avatar=http://foto0.m.onet.pl/_m/e7bd33787bb5cd96031db4034e5f1d54,1,19,0.jpg status=ok guardian=3 auditorium=0
+// :ChanServ!service@service.onet NOTICE Merovingian :161 #scc :topicAuthor=Merovingian rank=1.7068 topicDate=1297944969 private=0 type=1 createdDate=1247005186 vEmail=1 www=http://simplechatclien.sourceforge.net/ catMajor=4 moderated=0 avatar=http://foto3.m.onet.pl/_m/97198666362c2c72c6311640f9e791cb,1,19,0-5-53-53-0.jpg guardian=3 email=merovirgian@gmail.com auditorium=0
 void OnetKernel::raw_161n()
 {
     if (strDataList.value(4).isEmpty() == true) return;
 
     QString strChannel = strDataList[4];
     QString strTopicAuthor;
-    int iCatMajor = 0;
 
     for (int i = 5; i < strDataList.size(); i++)
     {
@@ -1705,9 +1705,7 @@ void OnetKernel::raw_161n()
                     dlgchannel_settings->add_pubpriv(strChannel, 1);
             }
             else if (strKey == "catMajor")
-                iCatMajor = strValue.toInt();
-            else if (strKey == "catMinor")
-                dlgchannel_settings->add_cat(strChannel, iCatMajor, strValue.toInt());
+                dlgchannel_settings->add_cat(strChannel, strValue.toInt());
             else if (strKey == "guardian")
                 dlgchannel_settings->add_guardian(strChannel, strValue.toInt());
             else if (strKey == "moderated")

@@ -345,8 +345,7 @@ void MainTextEdit::mousePressEvent(QMouseEvent *event)
                 }
             }
         }
-        QTextEdit::mousePressEvent(event);
     }
-    else
-        QTextEdit::mousePressEvent(event);
+
+    QTextEdit::mousePressEvent(event);
 }

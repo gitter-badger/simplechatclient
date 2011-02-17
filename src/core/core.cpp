@@ -117,6 +117,45 @@ void Core::init(QMainWindow *parent, QString param1, int param2, Notify *param3,
     toolBar->addSeparator();
     toolBar->addAction(lagAct);
 
+    // create signals
+    create_signals();
+}
+
+Core::~Core()
+{
+    // clear arrays
+    clear_all_nicklist();
+
+    // close network
+    QSettings settings;
+    settings.setValue("reconnect", "false");
+    pNetwork->clear_queue();
+    pNetwork->send("QUIT");
+    pNetwork->close();
+
+    delete pOnet_auth;
+    delete pOnet_kernel;
+    delete pDlg_cam;
+    delete pDlg_user_profile;
+    delete pDlg_channel_homes;
+    delete pDlg_moderation;
+    delete pDlg_channel_settings;
+
+    pNetwork->quit();
+    pNetwork->wait();
+    pNetwork->deleteLater();
+    pNetwork->QObject::disconnect();
+    delete pNetwork;
+
+    delete pTabC;
+    delete pTabM;
+    delete bottomDockWidget;
+    delete rightDockWidget;
+    camSocket->deleteLater();
+}
+
+void Core::create_signals()
+{
     // signals from tabc
     QObject::connect(pTabC, SIGNAL(create_nicklist(QString)), this, SLOT(create_nicklist(QString)));
     QObject::connect(pTabC, SIGNAL(remove_nicklist(QString)), this, SLOT(remove_nicklist(QString)));
@@ -166,39 +205,6 @@ void Core::init(QMainWindow *parent, QString param1, int param2, Notify *param3,
     QObject::connect(pNetwork, SIGNAL(update_nick(QString)), inputLineDockWidget, SLOT(slot_update_nick(QString)));
     QObject::connect(pNetwork, SIGNAL(clear_nicklist(QString)), this, SLOT(clear_nicklist(QString)));
     QObject::connect(pNetwork, SIGNAL(clear_all_nicklist()), this, SLOT(clear_all_nicklist()));
-}
-
-Core::~Core()
-{
-    // clear arrays
-    clear_all_nicklist();
-
-    // close network
-    QSettings settings;
-    settings.setValue("reconnect", "false");
-    pNetwork->clear_queue();
-    pNetwork->send("QUIT");
-    pNetwork->close();
-
-    delete pOnet_auth;
-    delete pOnet_kernel;
-    delete pDlg_cam;
-    delete pDlg_user_profile;
-    delete pDlg_channel_homes;
-    delete pDlg_moderation;
-    delete pDlg_channel_settings;
-
-    pNetwork->quit();
-    pNetwork->wait();
-    pNetwork->deleteLater();
-    pNetwork->QObject::disconnect();
-    delete pNetwork;
-
-    delete pTabC;
-    delete pTabM;
-    delete bottomDockWidget;
-    delete rightDockWidget;
-    camSocket->deleteLater();
 }
 
 void Core::network_connect()

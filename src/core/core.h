@@ -23,7 +23,6 @@
 
 #include "defines.h"
 class DlgCam;
-class DlgChannelFavourites;
 class DlgChannelHomes;
 class DlgChannelSettings;
 class DlgModeration;
@@ -106,7 +105,6 @@ private:
     Network *pNetwork;
     OnetKernel *pOnet_kernel;
     OnetAuth *pOnet_auth;
-    DlgChannelFavourites *pDlg_channel_favourites;
     DlgChannelHomes *pDlg_channel_homes;
     DlgChannelSettings *pDlg_channel_settings;
     DlgUserProfile *pDlg_user_profile;
@@ -130,6 +128,8 @@ private:
     sChannelList stlChannelList;
     QMap <QString, QByteArray> mNickAvatar;
     QMap <QString, QByteArray> mChannelAvatar;
+
+    void create_signals();
 
 private slots:
     void set_connected();

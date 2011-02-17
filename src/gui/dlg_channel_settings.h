@@ -35,7 +35,7 @@ public:
     void add_pubpriv(QString, int);
     void add_owner(QString, QString);
     void add_email(QString, QString);
-    void add_cat(QString, int, int);
+    void add_cat(QString, int);
     void add_guardian(QString, int);
     void add_moderated(QString, int);
     void add_www(QString, QString);
