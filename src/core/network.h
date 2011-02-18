@@ -38,11 +38,10 @@ public:
     void set_reconnect(bool);
     bool is_connected();
     bool is_writable();
-    void clear_queue();
 
 public slots:
     void connect();
-    void close();
+    void disconnect();
     void send(QString);
 
 private:
@@ -58,6 +57,7 @@ private:
     bool bReconnecting;
     bool bDefaultEnabledQueue;
 
+    void clear_all();
     void write(QString);
 
 private slots:

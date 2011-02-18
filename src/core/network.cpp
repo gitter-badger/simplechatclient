@@ -62,8 +62,6 @@ Network::Network(QString param1, int param2)
 
 Network::~Network()
 {
-    close();
-
     socket->deleteLater();
 }
 
@@ -85,8 +83,35 @@ bool Network::is_writable()
     return socket->isWritable();
 }
 
-void Network::clear_queue()
+void Network::clear_all()
 {
+    // set button
+    emit set_disconnected();
+
+    // set lag
+    emit set_lag("Lag: ?");
+
+    // update nick
+    emit update_nick(tr("(Unregistered)"));
+
+    // clear nicklist
+    emit clear_all_nicklist();
+
+    // state
+    QSettings settings;
+    settings.setValue("logged", "off");
+
+    // timer
+    if (timerPong->isActive() == true)
+        timerPong->stop();
+    if (timerPing->isActive() == true)
+        timerPing->stop();
+    if (timerLag->isActive() == true)
+        timerLag->stop();
+    if (timerQueue->isActive() == true)
+        timerQueue->stop();
+
+    // clear queue
     msgSendQueue.clear();
 }
 
@@ -99,10 +124,10 @@ void Network::connect()
 
         if (hInfo.error() != QHostInfo::NoError)
         {
-            emit set_disconnected();
-            emit set_lag("Lag: ?");
-
             emit show_msg_all(QString(tr("Error: Could not connect to the server [%1]")).arg(hInfo.errorString()), 9);
+
+            // clear all
+            clear_all();
 
             // reconnect
             if (bReconnecting == false)
@@ -149,32 +174,24 @@ void Network::reconnect()
     }
 }
 
-void Network::close()
+void Network::disconnect()
 {
-    // if queue is not empty - send all
-    if (msgSendQueue.isEmpty() == false)
+    // clear queue
+    msgSendQueue.clear();
+
+    // send quit
+    if (socket->state() == QAbstractSocket::ConnectedState)
     {
-        while (msgSendQueue.size() != 0)
-            write(msgSendQueue.takeFirst());
+        socket->write("QUIT\r\n");
+        socket->waitForBytesWritten();
     }
 
     // close
     if (socket->state() == QAbstractSocket::ConnectedState)
         socket->disconnectFromHost();
 
-    // state
-    QSettings settings;
-    settings.setValue("logged", "off");
-
-    // stop timers
-    if (timerPong->isActive() == true)
-        timerPong->stop();
-    if (timerPing->isActive() == true)
-        timerPing->stop();
-    if (timerLag->isActive() == true)
-        timerLag->stop();
-    if (timerQueue->isActive() == true)
-        timerQueue->stop();
+    // clear all
+    clear_all();
 }
 
 void Network::write(QString strData)
@@ -286,32 +303,13 @@ void Network::disconnected()
 {
     if (socket->state() == QAbstractSocket::UnconnectedState)
     {
-        emit set_disconnected();
-        emit set_lag("Lag: ?");
-
         if (socket->error() != QAbstractSocket::UnknownSocketError)
             emit show_msg_all(QString(tr("Disconnected from server [%1]")).arg(socket->errorString()), 9);
         else
             emit show_msg_all(tr("Disconnected from server"), 9);
 
-        // update nick
-        emit update_nick(tr("(Unregistered)"));
-
-        // clear nicklist
-        emit clear_all_nicklist();
-
-        // state
-        QSettings settings;
-        settings.setValue("logged", "off");
-
-        // timer
-        timerPong->stop();
-        timerPing->stop();
-        timerLag->stop();
-        timerQueue->stop();
-
-        // clear queue
-        msgSendQueue.clear();
+        // clear all
+        clear_all();
 
         // reconnect
         if (bReconnecting == false)
@@ -326,32 +324,15 @@ void Network::error(QAbstractSocket::SocketError err)
 {
     Q_UNUSED (err);
 
-    emit set_disconnected();
-    emit set_lag("Lag: ?");
-
     if (socket->state() == QAbstractSocket::ConnectedState)
-        emit close();
+        disconnect();
     else
+    {
         emit show_msg_all(QString(tr("Disconnected from server [%1]")).arg(socket->errorString()), 9);
 
-    // update nick
-    emit update_nick(tr("(Unregistered)"));
-
-    // clear nicklist
-    emit clear_all_nicklist();
-
-    // state
-    QSettings settings;
-    settings.setValue("logged", "off");
-
-    // timer
-    timerPong->stop();
-    timerPing->stop();
-    timerLag->stop();
-    timerQueue->stop();
-
-    // clear queue
-    msgSendQueue.clear();
+        // clear all
+        clear_all();
+    }
 
     // reconnect
     if (bReconnecting == false)
@@ -391,8 +372,12 @@ void Network::timeout_pong()
     if (iActive+301 < iCurrent)
     {
         if (socket->state() == QAbstractSocket::ConnectedState)
+        {
             emit show_msg_all(tr("No PONG reply from server in 301 seconds. Disconnecting..."), 9);
-        emit close();
+
+            // disconnect
+            disconnect();
+        }
         iActive = iCurrent;
     }
 }

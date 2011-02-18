@@ -232,7 +232,7 @@ void MainWindow::create_settings()
     // default settings
     QSettings settings;
     settings.clear();
-    settings.setValue("version", "1.0.10.701");
+    settings.setValue("version", "1.0.10.702");
     settings.setValue("debug", "off");
     settings.setValue("logged", "off");
     settings.setValue("busy", "off");
@@ -303,8 +303,6 @@ void MainWindow::button_connect()
     {
         settings.setValue("reconnect", "false");
         settings.setValue("logged", "off");
-        coreServers.at(0)->network_clear_queue();
-        coreServers.at(0)->network_send("QUIT");
         connectAct->setText(tr("&Connect"));
         connectAct->setIconText(tr("&Connect"));
         connectAct->setIcon(QIcon(":/images/oxygen/16x16/network-connect.png"));

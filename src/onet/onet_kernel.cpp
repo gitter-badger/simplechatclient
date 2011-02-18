@@ -3256,7 +3256,7 @@ void OnetKernel::raw_433()
     // reconnect
     if (strNick[0] != '~')
     {
-        pNetwork->close();
+        pNetwork->disconnect();
         pNetwork->connect();
     }
 }

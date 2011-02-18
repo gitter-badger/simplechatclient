@@ -129,9 +129,7 @@ Core::~Core()
     // close network
     QSettings settings;
     settings.setValue("reconnect", "false");
-    pNetwork->clear_queue();
-    pNetwork->send("QUIT");
-    pNetwork->close();
+    pNetwork->disconnect();
 
     delete pOnet_auth;
     delete pOnet_kernel;
@@ -214,7 +212,7 @@ void Core::network_connect()
 
 void Core::network_disconnect()
 {
-    pNetwork->close();
+    pNetwork->disconnect();
 }
 
 void Core::network_send(QString data)
@@ -225,11 +223,6 @@ void Core::network_send(QString data)
 bool Core::network_is_connected()
 {
     return pNetwork->is_connected();
-}
-
-void Core::network_clear_queue()
-{
-    pNetwork->clear_queue();
 }
 
 // refresh colors
