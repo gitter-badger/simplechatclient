@@ -181,7 +181,103 @@ void DlgChannelSettings::set_channel(QString param1)
     strChannel = param1;
 }
 
-void DlgChannelSettings::add_topic(QString strCheckChannel, QString strTopic)
+void DlgChannelSettings::set_data(QString strCheckChannel, QMap<QString, QString> mData)
+{
+    if (strCheckChannel != strChannel) return; // not this channel
+
+    QMapIterator<QString, QString> i(mData);
+    while (i.hasNext())
+    {
+        i.next();
+
+        QString strKey = i.key();
+        QString strValue = i.value();
+
+        if (strKey == "email")
+        {
+            ui.lineEdit_email->setText(strValue);
+        }
+        else if (strKey == "createdDate")
+        {
+            QDateTime dt = QDateTime::fromTime_t(strValue.toInt());
+            QString strDT = dt.toString("dd/MM/yyyy hh:mm:ss");
+            ui.label_datetime->setText(strDT);
+        }
+        else if (strKey == "private")
+        {
+            if (strValue.toInt() == 1)
+                ui.radioButton_status_priv->setChecked(true);
+            else if (strValue.toInt() == 0)
+                ui.radioButton_status_pub->setChecked(true);
+        }
+        else if (strKey == "catMajor")
+        {
+            if (strValue.toInt() == 1) // teen
+                ui.comboBox_category->setCurrentIndex(0);
+            else if (strValue.toInt() == 2) // towarzyskie
+                ui.comboBox_category->setCurrentIndex(1);
+            else if (strValue.toInt() == 3) // erotyczne
+                ui.comboBox_category->setCurrentIndex(2);
+            else if (strValue.toInt() == 4) // tematyczne
+                ui.comboBox_category->setCurrentIndex(3);
+            else if (strValue.toInt() == 5) // regionalne
+                ui.comboBox_category->setCurrentIndex(4);
+            else
+                ui.comboBox_category->setCurrentIndex(-1);
+        }
+        else if (strKey == "guardian")
+        {
+            if (strValue.toInt() == 0)
+            {
+                ui.radioButton_guardian_off->setChecked(true);
+                ui.comboBox_guardian_level->setCurrentIndex(-1);
+            }
+            else if (strValue.toInt() == 1)
+            {
+                ui.radioButton_guardian_on->setChecked(true);
+                ui.comboBox_guardian_level->setCurrentIndex(0);
+            }
+            else if (strValue.toInt() == 2)
+            {
+                ui.radioButton_guardian_on->setChecked(true);
+                ui.comboBox_guardian_level->setCurrentIndex(1);
+            }
+            else if (strValue.toInt() == 3)
+            {
+                ui.radioButton_guardian_on->setChecked(true);
+                ui.comboBox_guardian_level->setCurrentIndex(2);
+            }
+        }
+        else if (strKey == "moderated")
+        {
+            if (strValue.toInt() == 0)
+                ui.radioButton_moderation_off->setChecked(true);
+            else if (strValue.toInt() == 1)
+                ui.radioButton_moderation_on->setChecked(true);
+        }
+        else if (strKey == "www")
+        {
+            ui.lineEdit_website->setText(strValue);
+        }
+        else if (strKey == "password")
+        {
+            ui.lineEdit_password->setText(strValue);
+        }
+        else if (strKey == "limit")
+        {
+            ui.spinBox_limit->setValue(strValue.toInt());
+        }
+        else if (strKey == "auditorium")
+        {
+            if (strValue.toInt() == 0)
+                ui.radioButton_auditorium_off->setChecked(true);
+            else if (strValue.toInt() == 1)
+                ui.radioButton_auditorium_on->setChecked(true);
+        }
+    }
+}
+
+void DlgChannelSettings::set_topic(QString strCheckChannel, QString strTopic)
 {
     if (strCheckChannel != strChannel) return; // not this channel
     strTopic += " "; // fix convert algorithm
@@ -275,138 +371,24 @@ void DlgChannelSettings::add_topic(QString strCheckChannel, QString strTopic)
         ui.comboBox_font->setCurrentIndex(2);
 
     // set topic
-    ui.plainTextEdit_topic->clear();
-    ui.plainTextEdit_topic->insertPlainText(strTopic);
+    ui.plainTextEdit_topic->setPlainText(strTopic);
 }
 
-void DlgChannelSettings::add_pubpriv(QString strCheckChannel, int i)
+void DlgChannelSettings::set_owner(QString strCheckChannel, QString strNick)
 {
     if (strCheckChannel != strChannel) return; // not this channel
 
-    if (i == 1)
-        ui.radioButton_status_priv->setChecked(true);
-    else if (i == 0)
-        ui.radioButton_status_pub->setChecked(true);
-}
+    ui.label_owner->show();
+    ui.label_owner_nick->show();
 
-void DlgChannelSettings::add_owner(QString strCheckChannel, QString strNick)
-{
-    if (strCheckChannel != strChannel) return; // not this channel
-
-    ui.label_owner_nick->clear();
     ui.label_owner_nick->setText(strNick);
 }
 
-void DlgChannelSettings::add_email(QString strCheckChannel, QString strEmail)
+void DlgChannelSettings::set_description(QString strCheckChannel, QString strDescription)
 {
     if (strCheckChannel != strChannel) return; // not this channel
 
-    ui.lineEdit_email->setText(strEmail);
-}
-
-void DlgChannelSettings::add_cat(QString strCheckChannel, int iCatMajor)
-{
-    if (strCheckChannel != strChannel) return; // not this channel
-
-    if (iCatMajor == 1) // teen
-        ui.comboBox_category->setCurrentIndex(0);
-    else if (iCatMajor == 2) // towarzyskie
-        ui.comboBox_category->setCurrentIndex(1);
-    else if (iCatMajor == 3) // erotyczne
-        ui.comboBox_category->setCurrentIndex(2);
-    else if (iCatMajor == 4) // tematyczne
-        ui.comboBox_category->setCurrentIndex(3);
-    else if (iCatMajor == 5) // regionalne
-        ui.comboBox_category->setCurrentIndex(4);
-    else
-        ui.comboBox_category->setCurrentIndex(-1);
-}
-
-void DlgChannelSettings::add_guardian(QString strCheckChannel, int iGuardianLevel)
-{
-    if (strCheckChannel != strChannel) return; // not this channel
-
-    if (iGuardianLevel == 0)
-    {
-        ui.radioButton_guardian_off->setChecked(true);
-        ui.comboBox_guardian_level->setCurrentIndex(-1);
-    }
-    else if (iGuardianLevel == 1)
-    {
-        ui.radioButton_guardian_on->setChecked(true);
-        ui.comboBox_guardian_level->setCurrentIndex(0);
-    }
-    else if (iGuardianLevel == 2)
-    {
-        ui.radioButton_guardian_on->setChecked(true);
-        ui.comboBox_guardian_level->setCurrentIndex(1);
-    }
-    else if (iGuardianLevel == 3)
-    {
-        ui.radioButton_guardian_on->setChecked(true);
-        ui.comboBox_guardian_level->setCurrentIndex(2);
-    }
-}
-
-void DlgChannelSettings::add_moderated(QString strCheckChannel, int iModerated)
-{
-    if (strCheckChannel != strChannel) return; // not this channel
-
-    if (iModerated == 0)
-        ui.radioButton_moderation_off->setChecked(true);
-    else if (iModerated == 1)
-        ui.radioButton_moderation_on->setChecked(true);
-}
-
-void DlgChannelSettings::add_www(QString strCheckChannel, QString strLink)
-{
-    if (strCheckChannel != strChannel) return; // not this channel
-
-    ui.lineEdit_website->clear();
-    ui.lineEdit_website->setText(strLink);
-}
-
-void DlgChannelSettings::add_created(QString strCheckChannel, QString strTime)
-{
-    if (strCheckChannel != strChannel) return; // not this channel
-
-    QDateTime dt = QDateTime::fromTime_t(strTime.toInt());
-    QString strDT = dt.toString("dd/MM/yyyy hh:mm:ss");
-    ui.label_datetime->clear();
-    ui.label_datetime->setText(strDT);
-}
-
-void DlgChannelSettings::add_password(QString strCheckChannel, QString strPassword)
-{
-    if (strCheckChannel != strChannel) return; // not this channel
-
-    ui.lineEdit_password->clear();
-    ui.lineEdit_password->setText(strPassword);
-}
-
-void DlgChannelSettings::add_limit(QString strCheckChannel, int iLimit)
-{
-    if (strCheckChannel != strChannel) return; // not this channel
-
-    ui.spinBox_limit->setValue(iLimit);
-}
-
-void DlgChannelSettings::add_auditorium(QString strCheckChannel, int iAuditorium)
-{
-    if (strCheckChannel != strChannel) return; // not this channel
-
-    if (iAuditorium == 0)
-        ui.radioButton_auditorium_off->setChecked(true);
-    else if (iAuditorium == 1)
-        ui.radioButton_auditorium_on->setChecked(true);
-}
-
-void DlgChannelSettings::add_description(QString strCheckChannel, QString strDescription)
-{
-    if (strCheckChannel != strChannel) return; // not this channel
-
-    ui.plainTextEdit_desc->clear();
-    ui.plainTextEdit_desc->insertPlainText(strDescription);
+    ui.plainTextEdit_desc->setPlainText(strDescription);
 }
 
 void DlgChannelSettings::add_op(QString strCheckChannel, QString strNick)
@@ -893,6 +875,8 @@ void DlgChannelSettings::showEvent(QShowEvent *event)
     move(QApplication::desktop()->screen()->rect().center() - rect().center());
 
     clear();
+    ui.label_owner->hide();
+    ui.label_owner_nick->hide();
     ui.label_channel_name->setText(strChannel);
 
     pNetwork->send(QString("CS INFO %1").arg(strChannel));

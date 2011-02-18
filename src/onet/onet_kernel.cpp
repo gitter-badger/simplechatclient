@@ -1154,7 +1154,7 @@ void OnetKernel::raw_topic()
     QString strDisplay = QString(tr("* %1 changed the topic to: %2")).arg(strWho).arg(strTopic);
 
     pTabC->show_msg(strChannel, strDisplay, 5);
-    dlgchannel_settings->add_topic(strChannel, strTopic);
+    dlgchannel_settings->set_topic(strChannel, strTopic);
     pTabC->set_topic(strChannel, strTopic);
     pNetwork->send(QString("CS INFO %1 i").arg(strChannel));
 }
@@ -1650,7 +1650,7 @@ void OnetKernel::raw_160n()
     if (strTopic[0] == ':')
         strTopic = strTopic.right(strTopic.length()-1);
 
-    dlgchannel_settings->add_topic(strChannel, strTopic);
+    dlgchannel_settings->set_topic(strChannel, strTopic);
     pTabC->set_topic(strChannel, strTopic);
 }
 
@@ -1662,7 +1662,7 @@ void OnetKernel::raw_161n()
     if (strDataList.value(4).isEmpty() == true) return;
 
     QString strChannel = strDataList[4];
-    QString strTopicAuthor;
+    QMap <QString, QString> mKeyValue;
 
     for (int i = 5; i < strDataList.size(); i++)
     {
@@ -1671,66 +1671,42 @@ void OnetKernel::raw_161n()
         QString strKey = strLine.left(strLine.indexOf("="));
         QString strValue = strLine.right(strLine.length() - strLine.indexOf("=")-1);
 
-        if ((strKey.isEmpty() == false) && (strValue.isEmpty() == false))
-        {
-            if (strKey == "www")
-            {
-                dlgchannel_settings->add_www(strChannel, strValue);
-                if (strValue.isEmpty() == false)
-                    pTabC->set_link(strChannel, strValue);
-            }
-            else if (strKey == "createdDate")
-                dlgchannel_settings->add_created(strChannel, strValue);
-            else if (strKey == "password")
-                dlgchannel_settings->add_password(strChannel, strValue);
-            else if (strKey == "email")
-                dlgchannel_settings->add_email(strChannel, strValue);
-            else if (strKey == "topicAuthor")
-                strTopicAuthor = strValue;
-            else if (strKey == "topicDate")
-            {
-                if (strTopicAuthor.isEmpty() == false)
-                {
-                    QString strTime = strValue;
-                    QDateTime dt = QDateTime::fromTime_t(strTime.toInt());
-                    QString strDT = dt.toString("dd/MM/yy hh:mm:ss");
-                    QString strTopicDetails = QString("%1 (%2)").arg(strTopicAuthor).arg(strDT);
-                    pTabC->author_topic(strChannel, strTopicDetails);
-                }
-            }
-            else if (strKey == "private")
-            {
-                if (strValue == "0")
-                    dlgchannel_settings->add_pubpriv(strChannel, 0);
-                else if (strValue == "1")
-                    dlgchannel_settings->add_pubpriv(strChannel, 1);
-            }
-            else if (strKey == "catMajor")
-                dlgchannel_settings->add_cat(strChannel, strValue.toInt());
-            else if (strKey == "guardian")
-                dlgchannel_settings->add_guardian(strChannel, strValue.toInt());
-            else if (strKey == "moderated")
-                dlgchannel_settings->add_moderated(strChannel, strValue.toInt());
-            else if (strKey == "limit")
-                dlgchannel_settings->add_limit(strChannel, strValue.toInt());
-            else if (strKey == "auditorium")
-                dlgchannel_settings->add_auditorium(strChannel, strValue.toInt());
-            else if (strKey == "avatar")
-            {
-                QString strUrl = strValue;
+        mKeyValue.insert(strKey, strValue);
+    }
 
-                QSettings settings;
-                if (settings.value("style").toString() == "modern")
-                {
-                    aThreadList.append(new Avatar(pTabC, strChannel, strUrl, "channel", mNickAvatar, mChannelAvatar));
-                    QObject::connect(aThreadList.at(aThreadList.size()-1), SIGNAL(sremove_athread(Avatar*)), this, SLOT(remove_athread(Avatar*)));
+    // set data
+    dlgchannel_settings->set_data(strChannel, mKeyValue);
+
+    // update link
+    QString strLink = mKeyValue.value("www");
+    if (strLink.isEmpty() == false)
+        pTabC->set_link(strChannel, strLink);
+
+    // update topic author
+    QString strTopicAuthor = mKeyValue.value("topicAuthor");
+    QString strTopicDate = mKeyValue.value("topicDate");
+    if (strTopicAuthor.isEmpty() == false)
+    {
+        QDateTime dt = QDateTime::fromTime_t(strTopicDate.toInt());
+        QString strDT = dt.toString("dd/MM/yy hh:mm:ss");
+        QString strTopicDetails = QString("%1 (%2)").arg(strTopicAuthor).arg(strDT);
+        pTabC->author_topic(strChannel, strTopicDetails);
+    }
+
+    // avatar
+    QString strAvatarUrl = mKeyValue.value("avatar");
+    if (strAvatarUrl.isEmpty() == false)
+    {
+        QSettings settings;
+        if (settings.value("style").toString() == "modern")
+        {
+            aThreadList.append(new Avatar(pTabC, strChannel, strAvatarUrl, "channel", mNickAvatar, mChannelAvatar));
+            QObject::connect(aThreadList.at(aThreadList.size()-1), SIGNAL(sremove_athread(Avatar*)), this, SLOT(remove_athread(Avatar*)));
 
 #ifdef Q_WS_X11
-                    if (settings.value("debug").toString() == "on")
-                        qDebug() << "Avatar thread +1 (size: " << aThreadList.size() << ")";
+            if (settings.value("debug").toString() == "on")
+                qDebug() << "Avatar thread +1 (size: " << aThreadList.size() << ")";
 #endif
-                }
-            }
         }
     }
 }
@@ -1751,7 +1727,7 @@ void OnetKernel::raw_162n()
         if ((strKey.isEmpty() == false) && (strValue.isEmpty() == false))
         {
             if (strKey == "q")
-                dlgchannel_settings->add_owner(strChannel, strValue);
+                dlgchannel_settings->set_owner(strChannel, strValue);
             else if (strKey == "o")
                 dlgchannel_settings->add_op(strChannel, strValue);
             else if (strKey == "h")
@@ -1810,7 +1786,7 @@ void OnetKernel::raw_165n()
     if (strDescription[0] == ':')
         strDescription = strDescription.right(strDescription.length()-1);
 
-    dlgchannel_settings->add_description(strChannel, strDescription);
+    dlgchannel_settings->set_description(strChannel, strDescription);
 }
 
 // RS INFO Merovingian

@@ -31,19 +31,11 @@ class DlgChannelSettings : public QDialog
 public:
     DlgChannelSettings(QWidget *, Network *);
     void set_channel(QString);
-    void add_topic(QString, QString);
-    void add_pubpriv(QString, int);
-    void add_owner(QString, QString);
-    void add_email(QString, QString);
-    void add_cat(QString, int);
-    void add_guardian(QString, int);
-    void add_moderated(QString, int);
-    void add_www(QString, QString);
-    void add_created(QString, QString);
-    void add_password(QString, QString);
-    void add_limit(QString, int);
-    void add_auditorium(QString, int);
-    void add_description(QString, QString);
+    void set_data(QString, QMap<QString, QString>);
+
+    void set_topic(QString, QString);
+    void set_owner(QString, QString);
+    void set_description(QString, QString);
     void add_op(QString, QString);
     void add_halfop(QString, QString);
     void add_ban(QString, QString, QString, QString, QString);
