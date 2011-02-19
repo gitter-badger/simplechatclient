@@ -78,7 +78,7 @@ private slots:
     void invite();
 
 protected:
-    virtual void mousePressEvent(QMouseEvent *);
+    virtual void contextMenuEvent(QContextMenuEvent *);
 };
 
 #endif // MAINTEXTEDIT_H
