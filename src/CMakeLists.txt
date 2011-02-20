@@ -73,6 +73,7 @@ set (scc_SRCS
 	widgets/nicklistwidget.cpp
 	widgets/nicklistdockwidget.cpp
 	widgets/simplerankwidget.cpp
+	widgets/simplestatswidget.cpp
 	widgets/toolwidget.cpp
 )
 
@@ -124,6 +125,7 @@ set (scc_MOC_HDRS
 	widgets/nicklistwidget.h
 	widgets/nicklistdockwidget.h
 	widgets/simplerankwidget.h
+	widgets/simplestatswidget.h
 	widgets/toolwidget.h
 )
 

@@ -1809,7 +1809,22 @@ void OnetKernel::raw_171n()
 // :RankServ!service@service.onet NOTICE Merovingian :175 #scc :histWords=247,4d,aa,1a3,130,3f3,a2,dfd,a21,5e8,245,185,379,2f0,41e,161d,1194,8a4,454,2ec,35f,30d,424,493,bc,426,33d,f7,705,307 noise=80619 relationsFavourite=40 visits=78 words=268782
 void OnetKernel::raw_175n()
 {
-// TODO
+    if (strDataList.value(4).isEmpty() == true) return;
+
+    QString strChannel = strDataList[4];
+
+    QMap <QString, QString> mKeyValue;
+    for (int i = 5; i < strDataList.size(); i++)
+    {
+        QString strLine = strDataList[i];
+        if (i == 5) strLine = strLine.right(strLine.length()-1);
+        QString strKey = strLine.left(strLine.indexOf("="));
+        QString strValue = strLine.right(strLine.length() - strLine.indexOf("=")-1);
+
+        mKeyValue.insert(strKey, strValue);
+    }
+
+    dlgchannel_settings->set_stats_data(strChannel, mKeyValue);
 }
 
 // :RankServ!service@service.onet NOTICE Merovingian :176 #scc :end of channel stats

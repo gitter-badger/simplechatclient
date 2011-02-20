@@ -733,6 +733,10 @@
         <translation>Uprawnienia</translation>
     </message>
     <message>
+        <source>Statistics</source>
+        <translation>Statystyki</translation>
+    </message>
+    <message>
         <source>Channel:</source>
         <translation>Kanał:</translation>
     </message>
@@ -931,6 +935,14 @@
     <message>
         <source>IP Mask: %1</source>
         <translation>Maska IP: %1</translation>
+    </message>
+    <message>
+        <source>Channel added in favourites:</source>
+        <translation>Dodało kanał do ulubionych:</translation>
+    </message>
+    <message>
+        <source>Average per day spoken words:</source>
+        <translation>Średnio dziennie wypowiedzianych słów:</translation>
     </message>
 </context>
 <context>

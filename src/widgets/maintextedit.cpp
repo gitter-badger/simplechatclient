@@ -235,7 +235,9 @@ void MainTextEdit::contextMenuEvent(QContextMenuEvent *event)
                 menu->addAction(nameAct);
                 menu->addSeparator();
                 menu->addAction(tr("Join channel"), this, SLOT(join_channel()));
-                menu->popup(event->globalPos());
+                menu->exec(event->globalPos());
+
+                cursor.movePosition(QTextCursor::End, QTextCursor::MoveAnchor);
                 return;
             }
 
@@ -337,7 +339,8 @@ void MainTextEdit::contextMenuEvent(QContextMenuEvent *event)
                     menu->addSeparator();
                     menu->addMenu(privilege);
 
-                    menu->popup(event->globalPos());
+                    menu->exec(event->globalPos());
+                    cursor.movePosition(QTextCursor::End, QTextCursor::MoveAnchor);
                     return;
                 }
             }

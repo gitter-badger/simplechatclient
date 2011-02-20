@@ -25,6 +25,7 @@
 #include "dlg_email.h"
 #include "network.h"
 #include "dlg_channel_settings.h"
+#include "simplestatswidget.h"
 
 #ifdef Q_WS_X11
 #include <QDebug>
@@ -37,6 +38,10 @@ DlgChannelSettings::DlgChannelSettings(QWidget *parent, Network *param1) : QDial
 
     myparent = parent;
     pNetwork = param1;
+
+    simpleStatsWidget = new SimpleStatsWidget(this);
+    simpleStatsWidget->show();
+    ui.verticalLayout_stats->addWidget(simpleStatsWidget);
 
     ui.pushButton_transfer->setIcon(QIcon(":/images/oxygen/16x16/user-group-new.png"));
     ui.pushButton_remove_channel->setIcon(QIcon(":/images/oxygen/16x16/user-group-delete.png"));
@@ -61,6 +66,7 @@ DlgChannelSettings::DlgChannelSettings(QWidget *parent, Network *param1) : QDial
 
     ui.tabWidget->setTabText(0, tr("General"));
     ui.tabWidget->setTabText(1, tr("Permissions"));
+    ui.tabWidget->setTabText(2, tr("Statistics"));
     ui.toolBox->setItemText(0, tr("Operators"));
     ui.toolBox->setItemText(1, tr("Half-operators"));
     ui.toolBox->setItemText(2, tr("Banned"));
@@ -110,6 +116,9 @@ DlgChannelSettings::DlgChannelSettings(QWidget *parent, Network *param1) : QDial
     ui.pushButton_ban_del->setText(tr("Remove"));
     ui.pushButton_invite_add->setText(tr("Add"));
     ui.pushButton_invite_del->setText(tr("Remove"));
+    ui.groupBox_stats->setTitle(tr("Statistics"));
+    ui.label_stats_lwords->setText(tr("Average per day spoken words:"));
+    ui.label_stats_lfavourites->setText(tr("Channel added in favourites:"));
 
     // bold
     ui.pushButton_bold->setCheckable(true);
@@ -273,6 +282,50 @@ void DlgChannelSettings::set_data(QString strCheckChannel, QMap<QString, QString
                 ui.radioButton_auditorium_off->setChecked(true);
             else if (strValue.toInt() == 1)
                 ui.radioButton_auditorium_on->setChecked(true);
+        }
+    }
+}
+
+void DlgChannelSettings::set_stats_data(QString strCheckChannel, QMap<QString, QString> mData)
+{
+    if (strCheckChannel != strChannel) return; // not this channel
+
+    QMapIterator<QString, QString> i(mData);
+    while (i.hasNext())
+    {
+        i.next();
+
+        QString strKey = i.key();
+        QString strValue = i.value();
+
+        if (strKey == "histWords")
+        {
+            QStringList strlWords = strValue.split(",");
+            QList<int> lWords;
+
+            int iWords = 0;
+            for (int i = 0; i < strlWords.count(); i++)
+            {
+                bool ok;
+                int iWord = strlWords.at(i).toInt(&ok, 16);
+
+                // add to list
+                lWords.append(iWord);
+
+                // add to average words
+                iWords += iWord;
+            }
+
+            // average words
+            iWords /= strlWords.count();
+            ui.label_stats_words->setText(QString::number(iWords));
+
+            // simple stats widget
+            simpleStatsWidget->set_stats(lWords);
+        }
+        else if (strKey == "relationsFavourite")
+        {
+            ui.label_stats_favourites->setText(strValue);
         }
     }
 }
@@ -816,6 +869,10 @@ bool DlgChannelSettings::exist_item(QString strItem, QTableWidget *list)
 
 void DlgChannelSettings::clear()
 {
+    // switch tab
+    ui.tabWidget->setCurrentIndex(0);
+
+    // clear
     ui.tableWidget_op->clear();
     ui.tableWidget_halfop->clear();
     ui.tableWidget_ban->clear();
@@ -866,6 +923,8 @@ void DlgChannelSettings::clear()
     ui.radioButton_moderation_on->setChecked(false);
     ui.radioButton_auditorium_off->setChecked(false);
     ui.radioButton_auditorium_on->setChecked(false);
+    ui.label_stats_favourites->setText("-");
+    ui.label_stats_words->setText("-");
 }
 
 void DlgChannelSettings::showEvent(QShowEvent *event)
@@ -874,12 +933,16 @@ void DlgChannelSettings::showEvent(QShowEvent *event)
     // center screen
     move(QApplication::desktop()->screen()->rect().center() - rect().center());
 
+    // clear
     clear();
+    simpleStatsWidget->clear_stats();
     ui.label_owner->hide();
     ui.label_owner_nick->hide();
     ui.label_channel_name->setText(strChannel);
 
+    // get data
     pNetwork->send(QString("CS INFO %1").arg(strChannel));
+    pNetwork->send(QString("RS INFO %1").arg(strChannel));
 }
 
 void DlgChannelSettings::hideEvent(QHideEvent *event)
