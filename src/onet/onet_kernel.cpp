@@ -36,7 +36,7 @@
 #include "tab_container.h"
 #include "onet_kernel.h"
 
-OnetKernel::OnetKernel(QWidget *parent, Network *param1, TabContainer *param2, Notify *param3, QMap <QString, QByteArray> *param4, QMap <QString, QByteArray> *param5, DlgChannelSettings *param6, DlgChannelHomes *param7, sChannelList *param8, QList<QString> *param9, QMap<QString, bool> *param10, QList<QString> *param11, DlgModeration *param12)
+OnetKernel::OnetKernel(QWidget *parent, Network *param1, TabContainer *param2, Notify *param3, QMap <QString, QByteArray> *param4, QMap <QString, QByteArray> *param5, DlgChannelSettings *param6, DlgChannelHomes *param7, sChannelList *param8, QList<QString> *param9, QMap<QString, bool> *param10, QList<QString> *param11, DlgModeration *param12, QMap<QString, QString> *param13)
 {
     myparent = parent;
     pNetwork = param1;
@@ -51,6 +51,7 @@ OnetKernel::OnetKernel(QWidget *parent, Network *param1, TabContainer *param2, N
     mFriends = param10;
     lIgnore = param11;
     dlgmoderation = param12;
+    mMyStats = param13;
 }
 
 OnetKernel::~OnetKernel()
@@ -1349,6 +1350,12 @@ void OnetKernel::raw_001()
 
     // channel list
     pNetwork->send("SLIST  R- 0 0 100 null");
+
+    // my stats
+    pNetwork->send(QString("RS INFO %1").arg(settings.value("nick").toString()));
+
+    // homes
+    // CS HOMES
 }
 
 // :cf1f4.onet 002 Merovingian :Your host is cf1f4.onet, running version InspIRCd-1.1
@@ -1793,14 +1800,29 @@ void OnetKernel::raw_165n()
 // :RankServ!service@service.onet NOTICE Merovingian :170 Merovingian :histActive=edgbcebbdccecbdbbccbcdcdccbabb histTotal=ijqkhhlfihiqlnqjlmmllomkohqfji idleTime=14020283 noise=101660 relationsFriend=91 relationsIgnored=0 sessionsTime=19023384 words=361679
 void OnetKernel::raw_170n()
 {
-// TODO
+    if (strDataList.value(4).isEmpty() == true) return;
+
+    QString strNick = strDataList[4];
+
+    QSettings settings;
+    if (strNick != settings.value("nick").toString()) return; // not my nick
+
+    for (int i = 5; i < strDataList.size(); i++)
+    {
+        QString strLine = strDataList[i];
+        if (i == 5) strLine = strLine.right(strLine.length()-1);
+        QString strKey = strLine.left(strLine.indexOf("="));
+        QString strValue = strLine.right(strLine.length() - strLine.indexOf("=")-1);
+
+        mMyStats->insert(strKey, strValue);
+    }
 }
 
 // RS INFO Merovingian
 // :RankServ!service@service.onet NOTICE Merovingian :171 Merovingian :end of user stats
 void OnetKernel::raw_171n()
 {
-// TODO
+// ignore
 }
 
 // RS INFO #scc
@@ -1830,7 +1852,7 @@ void OnetKernel::raw_175n()
 // :RankServ!service@service.onet NOTICE Merovingian :176 #scc :end of channel stats
 void OnetKernel::raw_176n()
 {
-// TODO
+// ignore
 }
 
 // NS FRIENDS ADD aaa

@@ -18,83 +18,29 @@
  *                                                                          *
  ****************************************************************************/
 
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#ifndef DLG_MY_STATS_H
+#define DLG_MY_STATS_H
 
-class Core;
-class DlgAbout;
-class DlgNotes;
-class DlgOptions;
-class Notify;
-class Update;
-#include <QMainWindow>
-#include <QSystemTrayIcon>
-#include <QToolBar>
+class SimpleStatsWidget;
+#include <QDialog>
+#include "ui_my_stats.h"
 
-/**
- * Main window
- */
-class MainWindow : public QMainWindow
+class DlgMyStats : public QDialog
 {
     Q_OBJECT
 public:
-    MainWindow(QWidget *parent = 0);
-    ~MainWindow();
-    void set_debug(bool);
+    DlgMyStats(QWidget *, QMap<QString,QString> *);
 
 private:
-    QList <Core*> coreServers;
-    DlgOptions *pOptions;
-    Notify *pNotify;
-    Update *pUpdate;
+    Ui::uiMyStats ui;
+    QMap<QString,QString> *mMyStats;
+    SimpleStatsWidget *simpleStatsWidget;
 
-    QToolBar *toolBar;
-    QMenu *fileMenu;
-    QMenu *viewMenu;
-    QMenu *optionsMenu;
-    QMenu *helpMenu;
-    QAction *connectAct;
-    QAction *closeAct;
-    QAction *optionsAct;
-    QAction *showAct;
-    QAction *aboutAct;
-    QAction *awaylogAct;
-    QAction *notesAct;
-    QMenu *trayMenu;
-    QSystemTrayIcon *trayIcon;
-
-    // onet actions
-    QMenu *chatMenu;
-    QAction *channel_listAct;
-    QAction *channel_homesAct;
-    QAction *channel_favouritesAct;
-    QAction *friendsAct;
-    QAction *ignoreAct;
-    QAction *camsAct;
-    QAction *myStatsAct;
-
-    void create_settings();
+    int replace_value(QString);
+    void refresh();
 
 private slots:
-    void refresh_colors();
-    void refresh_background_image();
-    void button_connect();
     void button_close();
-    void open_options();
-    void open_about();
-    void open_awaylog();
-    void open_notes();
-    void button_show();
-    void tray_icon(QSystemTrayIcon::ActivationReason);
-
-    // onet dialogs
-    void open_channel_list();
-    void open_channel_homes();
-    void open_channel_favourites();
-    void open_friends();
-    void open_ignore();
-    void open_cams();
-    void open_my_stats();
 };
 
-#endif // MAINWINDOW_H
+#endif // DLG_MY_STATS_H

@@ -54,6 +54,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     friendsAct = new QAction(QIcon(":/images/oxygen/16x16/meeting-attending.png"), tr("Friends"), this);
     ignoreAct = new QAction(QIcon(":/images/oxygen/16x16/meeting-attending-tentative.png"), tr("Ignored"), this);
     camsAct = new QAction(QIcon(":/images/pubcam.png"),tr("Cams"), this);
+    myStatsAct = new QAction(QIcon(":/images/oxygen/16x16/office-chart-bar.png"),tr("My statistics"), this);
 
     // shortcut
     connectAct->setShortcuts(QKeySequence::New);
@@ -92,6 +93,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     chatMenu->addAction(awaylogAct);
     chatMenu->addAction(camsAct);
 
+    // onet my menu
+    chatMenu = menuBar()->addMenu(tr("&My"));
+    chatMenu->addAction(myStatsAct);
+
     // help menu
     helpMenu = menuBar()->addMenu(tr("He&lp"));
     helpMenu->addAction(aboutAct);
@@ -129,6 +134,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     QObject::connect(channel_favouritesAct, SIGNAL(triggered()), this, SLOT(open_channel_favourites()));
     QObject::connect(friendsAct, SIGNAL(triggered()), this, SLOT(open_friends()));
     QObject::connect(ignoreAct, SIGNAL(triggered()), this, SLOT(open_ignore()));
+    QObject::connect(myStatsAct, SIGNAL(triggered()), this, SLOT(open_my_stats()));
 
     // awaylog
     QObject::connect(awaylogAct, SIGNAL(triggered()), this, SLOT(open_awaylog()));
@@ -232,7 +238,7 @@ void MainWindow::create_settings()
     // default settings
     QSettings settings;
     settings.clear();
-    settings.setValue("version", "1.0.10.706");
+    settings.setValue("version", "1.0.10.707");
     settings.setValue("debug", "off");
     settings.setValue("logged", "off");
     settings.setValue("busy", "off");
@@ -388,3 +394,8 @@ void MainWindow::open_notes()
     DlgNotes(this).exec();
 }
 
+// onet my stats
+void MainWindow::open_my_stats()
+{
+    coreServers.at(0)->open_my_stats();
+}

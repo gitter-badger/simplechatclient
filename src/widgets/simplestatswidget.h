@@ -29,12 +29,14 @@ class SimpleStatsWidget : public QWidget
 public:
     SimpleStatsWidget(QWidget *parent = 0);
     void clear_stats();
+    void set_max(qreal);
     void set_stats(QList<int>);
 
     QSize sizeHint() const;
 
 private:
     QList<int> lStats;
+    qreal fForceMax;
 
 protected:
     void paintEvent(QPaintEvent *);

@@ -246,6 +246,10 @@
         <translation>Kamerki</translation>
     </message>
     <message>
+        <source>My statistics</source>
+        <translation>Moje statystyki</translation>
+    </message>
+    <message>
         <source>About SCC ...</source>
         <translation>O programie SCC...</translation>
     </message>
@@ -268,6 +272,10 @@
     <message>
         <source>&amp;Chat</source>
         <translation>&amp;Czat</translation>
+    </message>
+    <message>
+        <source>&amp;My</source>
+        <translation>&amp;Moje</translation>
     </message>
     <message>
         <source>He&amp;lp</source>
@@ -1101,6 +1109,29 @@
     <message>
         <source>Remove</source>
         <translation>Usuń</translation>
+    </message>
+</context>
+<context>
+    <name>DlgMyStats</name>
+    <message>
+        <source>My statistics</source>
+        <translation>Moje statystyki</translation>
+    </message>
+    <message>
+        <source>Statistics</source>
+        <translation>Statystyki</translation>
+    </message>
+    <message>
+        <source>Added you as a friend:</source>
+        <translation>Osoby które dodały Cie do przyjaciół:</translation>
+    </message>
+    <message>
+        <source>Added you to ignore:</source>
+        <translation>Osoby które dodały Cie do ignorowanych:</translation>
+    </message>
+    <message>
+        <source>Average time:</source>
+        <translation>Średnio spędzony czas na czacie:</translation>
     </message>
 </context>
 <context>

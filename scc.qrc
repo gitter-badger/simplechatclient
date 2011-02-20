@@ -66,5 +66,6 @@
         <file>images/oxygen/16x16/page-zoom.png</file>
         <file>images/oxygen/16x16/document-revert.png</file>
         <file>images/oxygen/16x16/games-config-background.png</file>
+        <file>images/oxygen/16x16/office-chart-bar.png</file>
     </qresource>
 </RCC>

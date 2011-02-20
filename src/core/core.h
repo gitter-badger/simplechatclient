@@ -68,6 +68,7 @@ public:
     void open_ignore();
     void open_awaylog();
     void open_cams();
+    void open_my_stats();
     // nicklist
     bool nicklist_exist(QString, QString);
 
@@ -127,6 +128,7 @@ private:
     sChannelList stlChannelList;
     QMap <QString, QByteArray> mNickAvatar;
     QMap <QString, QByteArray> mChannelAvatar;
+    QMap <QString, QString> mMyStats;
 
     void create_signals();
 

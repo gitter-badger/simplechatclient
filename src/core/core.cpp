@@ -28,6 +28,7 @@
 #include "dlg_friends.h"
 #include "dlg_ignore.h"
 #include "dlg_moderation.h"
+#include "dlg_my_stats.h"
 #include "dlg_user_profile.h"
 #include "inputlinedockwidget.h"
 #include "network.h"
@@ -80,7 +81,7 @@ void Core::init(QMainWindow *parent, QString param1, int param2, Notify *param3,
     pDlg_user_profile = new DlgUserProfile(myparent, pNetwork);
     pDlg_cam = new DlgCam(myparent, pNetwork, camSocket);
 
-    pOnet_kernel = new OnetKernel(myparent, pNetwork, pTabC, pNotify, &mNickAvatar, &mChannelAvatar, pDlg_channel_settings, pDlg_channel_homes, &stlChannelList, &lChannelFavourites, &mFriends, &lIgnore, pDlg_moderation);
+    pOnet_kernel = new OnetKernel(myparent, pNetwork, pTabC, pNotify, &mNickAvatar, &mChannelAvatar, pDlg_channel_settings, pDlg_channel_homes, &stlChannelList, &lChannelFavourites, &mFriends, &lIgnore, pDlg_moderation, &mMyStats);
     pOnet_auth = new OnetAuth(pTabC);
 
     pTabC->set_dlg(pDlg_user_profile, pDlg_cam);
@@ -313,6 +314,12 @@ void Core::open_cams()
     if ((pNetwork->is_connected() == true) && (pNetwork->is_writable() == true))
         pDlg_cam->show();
 #endif
+}
+
+void Core::open_my_stats()
+{
+    if ((pNetwork->is_connected() == true) && (pNetwork->is_writable() == true))
+        DlgMyStats(myparent, &mMyStats).exec();
 }
 
 // part tab

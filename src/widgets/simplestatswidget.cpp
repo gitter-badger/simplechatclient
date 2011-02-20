@@ -36,11 +36,17 @@ SimpleStatsWidget::SimpleStatsWidget(QWidget *parent) : QWidget(parent)
 
 void SimpleStatsWidget::clear_stats()
 {
+    fForceMax = 0;
     lStats.clear();
     for (int i = 0; i < 30; i++)
         lStats.append(0);
 
     update();
+}
+
+void SimpleStatsWidget::set_max(qreal f)
+{
+    fForceMax = f;
 }
 
 void SimpleStatsWidget::set_stats(QList<int> s)
@@ -72,6 +78,10 @@ void SimpleStatsWidget::paintEvent(QPaintEvent *e)
         if (lStats.at(i) > fMax)
             fMax = lStats.at(i);
     }
+
+    // force max
+    if (fForceMax != 0)
+        fMax = fForceMax;
 
     // get percentage
     qreal fPercentage = 100;
