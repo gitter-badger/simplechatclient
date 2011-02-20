@@ -93,7 +93,6 @@ void SimpleStatsWidget::paintEvent(QPaintEvent *e)
         // draw
         for (int i = 0; i < 30; i++)
         {
-            QPainter painter(this);
             QBrush brush(Qt::green);
 
             if (lStatsF.at(i) != 100)
@@ -106,7 +105,6 @@ void SimpleStatsWidget::paintEvent(QPaintEvent *e)
     // draw zero
     for (int i = 0; i < 30; i++)
     {
-        QPainter painter(this);
         QBrush brush(Qt::green);
 
         painter.fillRect(5+i*(400/30), 100-2, 10, 1, brush);

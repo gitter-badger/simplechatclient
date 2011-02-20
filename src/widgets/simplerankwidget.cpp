@@ -65,7 +65,6 @@ void SimpleRankWidget::paintEvent(QPaintEvent *e)
     {
         int x = qAbs(iRank)/4;
 
-        QPainter painter(this);
         painter.setBrush(Qt::red);
         painter.setPen(Qt::red);
         painter.drawRect(this->sizeHint().width()/2 - x, 0, x, this->sizeHint().height());
@@ -74,7 +73,6 @@ void SimpleRankWidget::paintEvent(QPaintEvent *e)
     {
         int x = iRank/4;
 
-        QPainter painter(this);
         painter.setBrush(Qt::green);
         painter.setPen(Qt::green);
         painter.drawRect(this->sizeHint().width()/2, 0, x, this->sizeHint().height());
