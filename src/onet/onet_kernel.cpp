@@ -1090,12 +1090,24 @@ void OnetKernel::raw_notice()
     strWho = strWho.left(strWho.indexOf('!'));
 
     QString strNick = strDataList[2];
-
     QString strMessage;
-    for (int i = 3; i < strDataList.size(); i++) { if (i != 3) strMessage += " "; strMessage += strDataList[i]; }
-    if (strMessage[0] == ':')
-        strMessage = strMessage.right(strMessage.length()-1);
 
+    // special notice
+    if ((strDataList.value(4).isEmpty() == false) && (strDataList[4] == "*") && (strDataList.value(5).isEmpty() == false) && (strDataList[5] == "*"))
+    {
+        for (int i = 6; i < strDataList.size(); i++) { if (i != 6) strMessage += " "; strMessage += strDataList[i]; }
+        if (strMessage[0] == ':')
+            strMessage = strMessage.right(strMessage.length()-1);
+    }
+    // standard notice
+    else
+    {
+        for (int i = 3; i < strDataList.size(); i++) { if (i != 3) strMessage += " "; strMessage += strDataList[i]; }
+        if (strMessage[0] == ':')
+            strMessage = strMessage.right(strMessage.length()-1);
+    }
+
+    // display
     QString strDisplay = QString("-%1- %2").arg(strWho).arg(strMessage);
     if (strNick[0] == '#')
         pTabC->show_msg(strNick, strDisplay, 6);
