@@ -25,14 +25,22 @@
 
 Highlighter::Highlighter(QTextDocument *parent) : QSyntaxHighlighter(parent)
 {
+    init();
+}
+
+void Highlighter::init()
+{
     iMax = 0;
     bSpacePressed = false;
 
     QSettings settings;
-    if (settings.value("language").toString() == "pl")
-        read_dict("pl_PL");
-    else
-        read_dict("en_US");
+    if (settings.value("spellchecker").toString() == "on")
+    {
+        if (settings.value("language").toString() == "pl")
+            read_dict("pl_PL");
+        else
+            read_dict("en_US");
+    }
 }
 
 void Highlighter::read_dict(QString strFileName)
@@ -57,6 +65,14 @@ void Highlighter::read_dict(QString strFileName)
 
 void Highlighter::highlightBlock(const QString &text)
 {
+    // is spellchecker active
+    QSettings settings;
+    if (settings.value("spellchecker").toString() == "off") return;
+
+    // is dict empty
+    if (lKeywords.count() == 0) init();
+
+    // spellchecker
     if (bSpacePressed == true)
     {
         QTextCharFormat format;

@@ -150,6 +150,11 @@ DlgOptions::DlgOptions(QWidget *parent, Notify *param1) : QDialog(parent)
     ui.pushButton_set_background_image->setText(tr("Set"));
     ui.checkBox_disable_background_image->setText(tr("Disable background image"));
 
+    // spell checker
+    ui.groupBox_spellchecker->setTitle(tr("Spellchecker"));
+    ui.radioButton_spellchecker_active->setText(tr("Active"));
+    ui.radioButton_spellchecker_inactive->setText(tr("Inactive"));
+
     // options list
     QTreeWidgetItem *basic = new QTreeWidgetItem(ui.treeWidget_options);
     basic->setIcon(0, QIcon(":/images/oxygen/16x16/view-media-artist.png"));
@@ -190,6 +195,11 @@ DlgOptions::DlgOptions(QWidget *parent, Notify *param1) : QDialog(parent)
     background_image->setIcon(0, QIcon(":/images/oxygen/16x16/games-config-background.png"));
     background_image->setText(0, tr("Background image"));
     background_image->setToolTip(0, tr("Background image"));
+
+    QTreeWidgetItem *spell_checker = new QTreeWidgetItem(ui.treeWidget_options);
+    spell_checker->setIcon(0, QIcon(":/images/oxygen/16x16/character-set.png"));
+    spell_checker->setText(0, tr("Spellchecker"));
+    spell_checker->setToolTip(0, tr("Spellchecker"));
 
     ui.treeWidget_options->setCurrentItem(ui.treeWidget_options->itemAt(0,0));
 
@@ -306,6 +316,8 @@ DlgOptions::DlgOptions(QWidget *parent, Notify *param1) : QDialog(parent)
     QObject::connect(ui.checkBox_disable_logs, SIGNAL(clicked()), this, SLOT(disable_logs()));
     QObject::connect(ui.pushButton_set_background_image, SIGNAL(clicked()), this, SLOT(set_background_image()));
     QObject::connect(ui.checkBox_disable_background_image, SIGNAL(clicked()), this, SLOT(disable_background_image()));
+    QObject::connect(ui.radioButton_spellchecker_active, SIGNAL(clicked()), this, SLOT(set_spellchecker()));
+    QObject::connect(ui.radioButton_spellchecker_inactive, SIGNAL(clicked()), this, SLOT(set_spellchecker()));
     QObject::connect(ui.buttonBox, SIGNAL(accepted()), this, SLOT(button_ok()));
     QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(button_cancel()));
 }
@@ -1356,6 +1368,23 @@ void DlgOptions::disable_background_image()
     emit refresh_background_image();
 }
 
+void DlgOptions::set_spellchecker()
+{
+    QSettings settings;
+    Config *pConfig = new Config();
+    if (ui.radioButton_spellchecker_active->isChecked() == true)
+    {
+        pConfig->set_value("spellchecker", "on");
+        settings.setValue("spellchecker", "on");
+    }
+    else
+    {
+        pConfig->set_value("spellchecker", "off");
+        settings.setValue("spellchecker", "off");
+    }
+    delete pConfig;
+}
+
 void DlgOptions::button_cancel()
 {
     this->hide();
@@ -1551,6 +1580,8 @@ void DlgOptions::clear_settings()
 
     QString strDisableBackgroundImage = pConfig->get_value("disable_background_image");
 
+    QString strSpellchecker = pConfig->get_value("spellchecker");
+
     delete pConfig;
 
     // decrypt pass
@@ -1734,6 +1765,18 @@ void DlgOptions::clear_settings()
         ui.checkBox_disable_background_image->setChecked(true);
     else
         ui.checkBox_disable_background_image->setChecked(false);
+
+    // spellchecker
+    if (strSpellchecker == "on")
+    {
+        ui.radioButton_spellchecker_active->setChecked(true);
+        ui.radioButton_spellchecker_inactive->setChecked(false);
+    }
+    else
+    {
+        ui.radioButton_spellchecker_active->setChecked(false);
+        ui.radioButton_spellchecker_inactive->setChecked(true);
+    }
 
     // disable change nick if connected
     QSettings settings;

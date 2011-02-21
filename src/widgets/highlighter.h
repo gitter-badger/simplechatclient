@@ -44,6 +44,7 @@ private:
     int iMax;
     bool bSpacePressed;
 
+    void init();
     void read_dict(QString);
 };
 

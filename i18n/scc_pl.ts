@@ -1423,6 +1423,18 @@
         <source>Disable background image</source>
         <translation>Wyłącz tapetę</translation>
     </message>
+    <message>
+        <source>Spellchecker</source>
+        <translation>Sprawdzanie pisowni</translation>
+    </message>
+    <message>
+        <source>Active</source>
+        <translation>Aktywne</translation>
+    </message>
+    <message>
+        <source>Inactive</source>
+        <translation>Nieaktywne</translation>
+    </message>
 </context>
 <context>
     <name>DlgRegisterNick</name>
