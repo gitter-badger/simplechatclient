@@ -842,12 +842,7 @@ void OnetKernel::raw_kick()
 
     if (strNick == strMe)
     {
-        QMessageBox msgBox;
-        msgBox.setIcon(QMessageBox::Information);
-        msgBox.setWindowIcon(QIcon(":/images/logo_64.png"));
-        msgBox.setStandardButtons(QMessageBox::Ok);
-        msgBox.setText(QString(tr("You have been kicked from %1 by %2")+"<br>"+tr("Reason: %3")).arg(strWho).arg(strChannel).arg(strReason));
-        msgBox.exec();
+        QMessageBox::information(0, "", QString(tr("You have been kicked from %1 by %2")+"<br>"+tr("Reason: %3")).arg(strWho).arg(strChannel).arg(strReason));
 
         pTabC->remove_tab(strChannel);
     }
@@ -1349,14 +1344,14 @@ void OnetKernel::raw_001()
     for (int i = 0; i < strlOpenChannels.size(); i++)
         pNetwork->send(QString("JOIN %1").arg(strlOpenChannels[i]));
 
-    // channel list
-    pNetwork->send("SLIST  R- 0 0 100 null");
-
     // my stats
     pNetwork->send(QString("RS INFO %1").arg(settings.value("nick").toString()));
 
     // channel homes
     pNetwork->send("CS HOMES");
+
+    // channel list
+    pNetwork->send("SLIST  R- 0 0 100 null");
 }
 
 // :cf1f4.onet 002 Merovingian :Your host is cf1f4.onet, running version InspIRCd-1.1
@@ -1382,6 +1377,8 @@ void OnetKernel::raw_004()
 // :cf1f4.onet 005 Merovingian WATCH=200 INVIGNORE=100 USERIP ESILENCE SILENCE=100 NAMESX :are supported by this server
 void OnetKernel::raw_005()
 {
+    QMap<QString,QString> mKeyValue;
+
     for (int i = 0; i < strDataList.size(); i++)
     {
         if (strDataList.at(i).indexOf("=") != -1)
@@ -1389,6 +1386,8 @@ void OnetKernel::raw_005()
             QString strData = strDataList.at(i);
             QString strKey = strData.mid(0, strData.indexOf('='));
             QString strValue = strData.mid(strData.indexOf('=')+1, strData.length() - strData.indexOf('='));
+
+            mKeyValue.insert(strKey, strValue);
         }
     }
 }
@@ -1958,12 +1957,7 @@ void OnetKernel::raw_250n()
     {
         QString strChannel = strDataList[4];
 
-        QMessageBox msgBox;
-        msgBox.setIcon(QMessageBox::Information);
-        msgBox.setWindowIcon(QIcon(":/images/logo_64.png"));
-        msgBox.setStandardButtons(QMessageBox::Ok);
-        msgBox.setText(QString(tr("Successfully created a channel %1")).arg(strChannel));
-        msgBox.exec();
+        QMessageBox::information(0, "", QString(tr("Successfully created a channel %1")).arg(strChannel));
 
         // add to list
         if (lChannelHomes->contains(strChannel) == false)
@@ -2295,12 +2289,7 @@ void OnetKernel::raw_261n()
     {
         QString strChannel = strDataList[5];
 
-        QMessageBox msgBox;
-        msgBox.setIcon(QMessageBox::Information);
-        msgBox.setWindowIcon(QIcon(":/images/logo_64.png"));
-        msgBox.setStandardButtons(QMessageBox::Ok);
-        msgBox.setText(QString(tr("Successfully removed channel %1")).arg(strChannel));
-        msgBox.exec();
+        QMessageBox::information(0, "", QString(tr("Successfully removed channel %1")).arg(strChannel));
 
         // remove from list
         if (lChannelHomes->contains(strChannel) == true)

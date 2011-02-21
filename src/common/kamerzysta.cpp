@@ -80,12 +80,7 @@ void Kamerzysta::get_path()
     }
     else
     {
-        QMessageBox msgBox;
-        msgBox.setIcon(QMessageBox::Critical);
-        msgBox.setWindowIcon(QIcon(":/images/logo_64.png"));
-        msgBox.setStandardButtons(QMessageBox::Ok);
-        msgBox.setText(QString(tr("Kamerzysta not found!")));
-        msgBox.exec();
+        QMessageBox::critical(0, "", tr("Kamerzysta not found!"));
         return;
     }
 
@@ -125,12 +120,7 @@ void Kamerzysta::kamerzysta_not_running()
 {
     if (QFile::exists(strAppPath+"\\installPath") == false)
     {
-        QMessageBox msgBox;
-        msgBox.setIcon(QMessageBox::Critical);
-        msgBox.setWindowIcon(QIcon(":/images/logo_64.png"));
-        msgBox.setStandardButtons(QMessageBox::Ok);
-        msgBox.setText(QString(tr("Kamerzysta is wrong installed!")));
-        msgBox.exec();
+        QMessageBox::critical(0, "", tr("Kamerzysta is wrong installed!"));
         return;
     }
     else

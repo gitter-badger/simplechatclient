@@ -359,12 +359,7 @@ void DlgOptions::set_modern_style_avatars()
 
     this->hide(); // fix stay on top
 
-    QMessageBox msgBox;
-    msgBox.setIcon(QMessageBox::Information);
-    msgBox.setWindowIcon(QIcon(":/images/logo_64.png"));
-    msgBox.setStandardButtons(QMessageBox::Ok);
-    msgBox.setText(QString(tr("Restart program to apply the changes.")));
-    msgBox.exec();
+    QMessageBox::information(0, "", tr("Restart program to apply the changes."));
 }
 
 void DlgOptions::set_modern_style_no_avatars()
@@ -383,12 +378,7 @@ void DlgOptions::set_modern_style_no_avatars()
 
     this->hide(); // fix stay on top
 
-    QMessageBox msgBox;
-    msgBox.setIcon(QMessageBox::Information);
-    msgBox.setWindowIcon(QIcon(":/images/logo_64.png"));
-    msgBox.setStandardButtons(QMessageBox::Ok);
-    msgBox.setText(QString(tr("Restart program to apply the changes.")));
-    msgBox.exec();
+    QMessageBox::information(0, "", tr("Restart program to apply the changes."));
 }
 
 void DlgOptions::set_classic_style()
@@ -407,12 +397,7 @@ void DlgOptions::set_classic_style()
 
     this->hide(); // fix stay on top
 
-    QMessageBox msgBox;
-    msgBox.setIcon(QMessageBox::Information);
-    msgBox.setWindowIcon(QIcon(":/images/logo_64.png"));
-    msgBox.setStandardButtons(QMessageBox::Ok);
-    msgBox.setText(QString(tr("Restart program to apply the changes.")));
-    msgBox.exec();
+    QMessageBox::information(0, "", tr("Restart program to apply the changes."));
 }
 
 void DlgOptions::language_changed(int index)
