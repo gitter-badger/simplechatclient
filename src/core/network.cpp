@@ -180,7 +180,7 @@ void Network::disconnect()
     msgSendQueue.clear();
 
     // send quit
-    if (socket->state() == QAbstractSocket::ConnectedState)
+    if ((socket->isValid()) && (socket->state() == QAbstractSocket::ConnectedState) && (socket->isWritable() == true))
     {
         socket->write("QUIT\r\n");
         socket->waitForBytesWritten();
@@ -196,7 +196,7 @@ void Network::disconnect()
 
 void Network::write(QString strData)
 {
-    if ((socket->state() == QAbstractSocket::ConnectedState) && (socket->isWritable() == true))
+    if ((socket->isValid()) && (socket->state() == QAbstractSocket::ConnectedState) && (socket->isWritable() == true))
     {
 #ifdef Q_WS_X11
         QSettings settings;

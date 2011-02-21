@@ -339,7 +339,7 @@ void DlgCam::network_send(QString strData)
 
 void DlgCam::network_sendb(QByteArray qbaData)
 {
-    if ((camSocket->state() == QAbstractSocket::ConnectedState) && (camSocket->isWritable() == true))
+    if ((camSocket->isValid()) && (camSocket->state() == QAbstractSocket::ConnectedState) && (camSocket->isWritable() == true))
     {
         qint64 ret = camSocket->write(qbaData);
         if (ret == -1)
