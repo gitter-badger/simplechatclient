@@ -24,7 +24,6 @@
 #include <QStringList>
 #include <QTimer>
 #include "avatar.h"
-#include "dlg_channel_homes.h"
 #include "dlg_channel_key.h"
 #include "dlg_channel_settings.h"
 #include "dlg_invite.h"
@@ -36,7 +35,7 @@
 #include "tab_container.h"
 #include "onet_kernel.h"
 
-OnetKernel::OnetKernel(QWidget *parent, Network *param1, TabContainer *param2, Notify *param3, QMap <QString, QByteArray> *param4, QMap <QString, QByteArray> *param5, DlgChannelSettings *param6, DlgChannelHomes *param7, sChannelList *param8, QList<QString> *param9, QMap<QString, bool> *param10, QList<QString> *param11, DlgModeration *param12, QMap<QString, QString> *param13)
+OnetKernel::OnetKernel(QWidget *parent, Network *param1, TabContainer *param2, Notify *param3, QMap <QString, QByteArray> *param4, QMap <QString, QByteArray> *param5, DlgChannelSettings *param6, QList<QString> *param7, sChannelList *param8, QList<QString> *param9, QMap<QString, bool> *param10, QList<QString> *param11, DlgModeration *param12, QMap<QString, QString> *param13)
 {
     myparent = parent;
     pNetwork = param1;
@@ -45,7 +44,7 @@ OnetKernel::OnetKernel(QWidget *parent, Network *param1, TabContainer *param2, N
     mNickAvatar = param4;
     mChannelAvatar = param5;
     dlgchannel_settings = param6;
-    dlgchannel_homes = param7;
+    lChannelHomes = param7;
     stlChannelList = param8;
     lChannelFavourites = param9;
     mFriends = param10;
@@ -1337,11 +1336,13 @@ void OnetKernel::raw_001()
     // override off
     settings.setValue("override", "off");
 
-    // clear friends, ignore, channel favourites
+    // clear
     mFriends->clear();
     lIgnore->clear();
     lChannelFavourites->clear();
     stlChannelList->clear();
+    mMyStats->clear();
+    lChannelHomes->clear();
 
     // auto rejoin
     QStringList strlOpenChannels = pTabC->get_open_channels();
@@ -1354,8 +1355,8 @@ void OnetKernel::raw_001()
     // my stats
     pNetwork->send(QString("RS INFO %1").arg(settings.value("nick").toString()));
 
-    // homes
-    // CS HOMES
+    // channel homes
+    pNetwork->send("CS HOMES");
 }
 
 // :cf1f4.onet 002 Merovingian :Your host is cf1f4.onet, running version InspIRCd-1.1
@@ -1626,7 +1627,8 @@ void OnetKernel::raw_151n()
             if (strChannel[0] == ':')
                 strChannel = strChannel.right(strChannel.length()-1);
 
-            dlgchannel_homes->add_channel(strChannel);
+            if (lChannelHomes->contains(strChannel) == false)
+                lChannelHomes->append(strChannel);
         }
     }
     else if (strNick.toLower() == "nickserv")
@@ -1963,8 +1965,11 @@ void OnetKernel::raw_250n()
         msgBox.setText(QString(tr("Successfully created a channel %1")).arg(strChannel));
         msgBox.exec();
 
-        dlgchannel_homes->clear();
-        pNetwork->send("CS HOMES");
+        // add to list
+        if (lChannelHomes->contains(strChannel) == false)
+            lChannelHomes->append(strChannel);
+
+        // join
         pNetwork->send(QString("JOIN %1").arg(strChannel));
     }
     else if (strNick.toLower() == "nickserv")
@@ -2297,9 +2302,13 @@ void OnetKernel::raw_261n()
         msgBox.setText(QString(tr("Successfully removed channel %1")).arg(strChannel));
         msgBox.exec();
 
-        dlgchannel_homes->clear();
-        pNetwork->send("CS HOMES");
-        pNetwork->send(QString("PART %1").arg(strChannel));
+        // remove from list
+        if (lChannelHomes->contains(strChannel) == true)
+            lChannelHomes->removeOne(strChannel);
+
+        // part
+        if (pTabC->exist_tab(strChannel) == true)
+            pNetwork->send(QString("PART %1").arg(strChannel));
     }
     else if (strNick.toLower() == "nickserv")
     {
@@ -3140,9 +3149,6 @@ void OnetKernel::raw_408n()
     QString strMessage = QString(tr("* %1 :No such channel")).arg(strChannel);
 
     pTabC->show_msg_active(strMessage, 7);
-
-    dlgchannel_homes->clear();
-    pNetwork->send("CS HOMES");
 }
 
 // :NickServ!service@service.onet NOTICE ~Merovingian :412 admi :user's data is not ready
@@ -3359,9 +3365,6 @@ void OnetKernel::raw_452n()
 
     QString strMessage = QString(tr("* %1 :Channel name already in use")).arg(strChannel);
     pTabC->show_msg_active(strMessage, 7);
-
-    dlgchannel_homes->clear();
-    pNetwork->send("CS HOMES");
 }
 
 // :ChanServ!service@service.onet NOTICE scc_test :454 #aaaaaaaaaaaaaaaaaaaaaa :not enough unique channel name
@@ -3383,9 +3386,6 @@ void OnetKernel::raw_454n()
 
         QString strMessage = QString(tr("* %1 :Not enough unique channel name")).arg(strChannel);
         pTabC->show_msg_active(strMessage, 7);
-
-        dlgchannel_homes->clear();
-        pNetwork->send("CS HOMES");
     }
     else if (strNick.toLower() == "nickserv")
     {
@@ -3527,9 +3527,6 @@ void OnetKernel::raw_467n()
 
     QString strMessage = QString(tr("* %1 :Permission denied, you are not a channel owner")).arg(strChannel);
     pTabC->show_msg_active(strMessage, 7);
-
-    dlgchannel_homes->clear();
-    pNetwork->send("CS HOMES");
 }
 
 // :ChanServ!service@service.onet NOTICE scc_test :468 #scc :permission denied, insufficient privileges

@@ -55,7 +55,7 @@ void DlgChannelFavourites::refresh()
 {
     ui.listWidget_channels->clear();
 
-    for (int i = 0; i < lChannelFavourites->size(); ++i)
+    for (int i = 0; i < lChannelFavourites->count(); i++)
     {
         QString strChannel = lChannelFavourites->at(i);
 

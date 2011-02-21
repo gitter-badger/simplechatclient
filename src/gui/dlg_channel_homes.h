@@ -30,24 +30,18 @@ class DlgChannelHomes : public QDialog
 {
     Q_OBJECT
 public:
-    DlgChannelHomes(QWidget *, Network *, QMap <QString, QByteArray> *, DlgChannelSettings *);
-    void add_channel(QString);
-    void clear();
+    DlgChannelHomes(QWidget *, Network *, QMap <QString, QByteArray> *, QList<QString> *, DlgChannelSettings *);
 
 private:
     Ui::uiChannelHomes ui;
     QWidget *myparent;
     Network *pNetwork;
     QMap <QString, QByteArray> *mChannelAvatar;
+    QList<QString> *lChannelHomes;
     DlgChannelSettings *dlgchannel_settings;
 
-    bool exist_channel(QString);
-
-protected:
-    virtual void showEvent(QShowEvent *);
-    virtual void closeEvent(QCloseEvent *);
-
 private slots:
+    void refresh();
     void list_clicked(QModelIndex);
     void button_create();
     void button_remove();

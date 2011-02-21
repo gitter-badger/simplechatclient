@@ -689,10 +689,3 @@ void NickListWidget::contextMenuEvent(QContextMenuEvent *e)
 
     menu->popup(e->globalPos());
 }
-
-void NickListWidget::resizeEvent(QResizeEvent *event)
-{
-    Q_UNUSED (event);
-
-    //setGeometry(QRect(0, 0, 180, this->height()));
-}
