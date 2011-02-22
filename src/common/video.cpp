@@ -18,8 +18,14 @@
  *                                                                          *
  ****************************************************************************/
 
+#include <fcntl.h>
+#include <sys/ioctl.h>
+#include <asm/types.h>          /* for videodev2.h */
+#include <linux/videodev2.h>
+
 #include <QFile>
 #include <QDebug>
+
 #include "video.h"
 
 Video::Video()
@@ -63,7 +69,7 @@ QPixmap Video::get_image()
 bool Video::exist_video_device()
 {
     // search video device
-    for (int i = 0; i < 99; i++)
+    for (int i = 0; i < 10; ++i)
     {
         if (QFile::exists("/dev/video"+QString::number(i)) == true)
             return true;
@@ -75,12 +81,31 @@ QList<QString> Video::get_video_devices()
 {
     QList<QString> lVideoDevices;
 
+    struct v4l2_capability cap;
+
     // get video devices
-    for (int i = 0; i < 99; i++)
+    for (int i = 0; i < 10; ++i)
     {
-        QString strDevice = "/dev/video"+QString::number(i);
-        if (QFile::exists(strDevice) == true)
-            lVideoDevices.append(strDevice);
+        QString strDevice;
+        strDevice.sprintf("/dev/video%d",i);
+        int fd = open(strDevice.toAscii(), O_RDWR | O_NONBLOCK, 0);
+
+        if (fd < 0 )
+            continue;
+
+        if (ioctl(fd, VIDIOC_QUERYCAP, &cap) == -1)
+        {
+            perror("VIDIOC_QUERYCAP");
+            qDebug() << strDevice << " doesn't appear to be a v4l2 device";
+            continue;
+        }
+
+        QString strName;
+        strName.sprintf("%s", cap.card);
+        close(fd);
+
+        // add name
+        lVideoDevices.append(strName);
     }
     return lVideoDevices;
 }
