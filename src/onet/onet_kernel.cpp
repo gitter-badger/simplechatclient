@@ -1343,6 +1343,9 @@ void OnetKernel::raw_001()
     // override off
     settings.setValue("override", "off");
 
+    // age check on
+    settings.setValue("age_check", "on");
+
     // clear
     mFriends->clear();
     lIgnore->clear();

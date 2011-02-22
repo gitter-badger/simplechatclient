@@ -44,6 +44,7 @@ private:
     QList < QList<QString> > list_thematic;
     QList < QList<QString> > list_regional;
 
+    bool is_erotic(QString);
     void refresh();
     void create_list();
     void clear();

@@ -20,6 +20,7 @@
 
 #include <QDesktopWidget>
 #include <QKeyEvent>
+#include <QMessageBox>
 #include <QSettings>
 #include "network.h"
 #include "dlg_channel_list.h"
@@ -89,6 +90,25 @@ DlgChannelList::DlgChannelList(QWidget *parent, Network *param1, sChannelList *p
     refresh();
     create_list();
     sort();
+}
+
+bool DlgChannelList::is_erotic(QString strChannel)
+{
+    for (int i = 0; i < stlChannelList->size(); i++)
+    {
+        ChannelList channel = stlChannelList->at(i);
+        QString strName = channel.name;
+        QString strType = channel.type;
+
+        if (strName == strChannel)
+        {
+            if (strType == tr("Erotic"))
+                return true;
+            else
+                return false;
+        }
+    }
+    return false;
 }
 
 void DlgChannelList::refresh()
@@ -788,7 +808,35 @@ void DlgChannelList::all_CellDoubleClicked(int row, int column)
     Q_UNUSED (column);
 
     QString strChannel = ui.tableWidget_all->item(row, 0)->text();
-    pNetwork->send(QString("JOIN %1").arg(strChannel));
+
+    if (is_erotic(strChannel) == true)
+    {
+        QSettings settings;
+        if (settings.value("age_check").toString() == "on")
+        {
+            QMessageBox msgBox;
+            msgBox.setStyleSheet("background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:0.557, stop:0 rgba(198, 0, 0, 255), stop:1 rgba(255, 0, 0, 255));");
+            msgBox.setIcon(QMessageBox::Warning);
+            msgBox.setWindowIcon(QIcon(":/images/logo_64.png"));
+            msgBox.setWindowTitle(tr("Warning"));
+            msgBox.setText(QString("%1\n%2").arg(tr("Erotic category may contain content intended only for adults.")).arg(tr("To enter you must be over 18 years.")));
+            QPushButton *exitButton = msgBox.addButton(tr("Exit"), QMessageBox::AcceptRole);
+            exitButton->setIcon(QIcon(":/images/oxygen/16x16/dialog-cancel.png"));
+            QPushButton *enterButton = msgBox.addButton(tr("Enter"), QMessageBox::RejectRole);
+            enterButton->setIcon(QIcon(":/images/oxygen/16x16/dialog-ok.png"));
+            msgBox.exec();
+
+            if (msgBox.clickedButton() == enterButton)
+            {
+                settings.setValue("age_check", "off");
+                pNetwork->send(QString("JOIN %1").arg(strChannel));
+            }
+        }
+        else
+            pNetwork->send(QString("JOIN %1").arg(strChannel));
+    }
+    else
+        pNetwork->send(QString("JOIN %1").arg(strChannel));
 }
 
 void DlgChannelList::teen_CellDoubleClicked(int row, int column)
@@ -812,7 +860,35 @@ void DlgChannelList::erotic_CellDoubleClicked(int row, int column)
     Q_UNUSED (column);
 
     QString strChannel = ui.tableWidget_erotic->item(row, 0)->text();
-    pNetwork->send(QString("JOIN %1").arg(strChannel));
+
+    if (is_erotic(strChannel) == true)
+    {
+        QSettings settings;
+        if (settings.value("age_check").toString() == "on")
+        {
+            QMessageBox msgBox;
+            msgBox.setStyleSheet("background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:0.557, stop:0 rgba(198, 0, 0, 255), stop:1 rgba(255, 0, 0, 255));");
+            msgBox.setIcon(QMessageBox::Warning);
+            msgBox.setWindowIcon(QIcon(":/images/logo_64.png"));
+            msgBox.setWindowTitle(tr("Warning"));
+            msgBox.setText(QString("%1\n%2").arg(tr("Erotic category may contain content intended only for adults.")).arg(tr("To enter you must be over 18 years.")));
+            QPushButton *exitButton = msgBox.addButton(tr("Exit"), QMessageBox::AcceptRole);
+            exitButton->setIcon(QIcon(":/images/oxygen/16x16/dialog-cancel.png"));
+            QPushButton *enterButton = msgBox.addButton(tr("Enter"), QMessageBox::RejectRole);
+            enterButton->setIcon(QIcon(":/images/oxygen/16x16/dialog-ok.png"));
+            msgBox.exec();
+
+            if (msgBox.clickedButton() == enterButton)
+            {
+                settings.setValue("age_check", "off");
+                pNetwork->send(QString("JOIN %1").arg(strChannel));
+            }
+        }
+        else
+            pNetwork->send(QString("JOIN %1").arg(strChannel));
+    }
+    else
+        pNetwork->send(QString("JOIN %1").arg(strChannel));
 }
 
 void DlgChannelList::thematic_CellDoubleClicked(int row, int column)

@@ -729,6 +729,26 @@
         <source>Regional</source>
         <translation>Regionalne</translation>
     </message>
+    <message>
+        <source>Warning</source>
+        <translation>Ostrzeżenie</translation>
+    </message>
+    <message>
+        <source>Erotic category may contain content intended only for adults.</source>
+        <translation>Kategoria erotyczna może zawierać treści przeznaczone tylko dla dorosłych.</translation>
+    </message>
+    <message>
+        <source>To enter you must be over 18 years.</source>
+        <translation>Aby wejść musisz mieć ukończone 18 lat.</translation>
+    </message>
+    <message>
+        <source>Exit</source>
+        <translation>Rezygnuję</translation>
+    </message>
+    <message>
+        <source>Enter</source>
+        <translation>Wchodzę</translation>
+    </message>
 </context>
 <context>
     <name>DlgChannelSettings</name>

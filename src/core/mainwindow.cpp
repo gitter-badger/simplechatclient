@@ -238,13 +238,14 @@ void MainWindow::create_settings()
     // default settings
     QSettings settings;
     settings.clear();
-    settings.setValue("version", "1.0.10.713");
+    settings.setValue("version", "1.0.10.714");
     settings.setValue("debug", "off");
     settings.setValue("logged", "off");
     settings.setValue("busy", "off");
     settings.setValue("away", "off");
     settings.setValue("override", "off");
     settings.setValue("ignore_raw_141", "off");
+    settings.setValue("age_check", "on");
     settings.setValue("uokey", "");
     settings.setValue("uo_nick", "");
     settings.setValue("onet_ubi", "");
