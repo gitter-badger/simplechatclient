@@ -1047,6 +1047,13 @@ void OnetKernel::raw_mode()
                 pTabC->show_msg("Status", strDisplay, 5);
 
             emit change_flag(strNickChannel, strFlag);
+
+            // get my stats
+            QSettings settings;
+            if ((strNickChannel == settings.value("nick").toString()) && (strFlag == "+r"))
+            {
+                pNetwork->send(QString("RS INFO %1").arg(settings.value("nick").toString()));
+            }
         }
     }
 }
@@ -1327,6 +1334,14 @@ void OnetKernel::raw_001()
     // protocol
     pNetwork->send("PROTOCTL ONETNAMESX");
 
+    // clear
+    mFriends->clear();
+    lIgnore->clear();
+    lChannelFavourites->clear();
+    stlChannelList->clear();
+    mMyStats->clear();
+    lChannelHomes->clear();
+
     // busy
     settings.setValue("busy", "off");
 
@@ -1346,21 +1361,10 @@ void OnetKernel::raw_001()
     // age check on
     settings.setValue("age_check", "on");
 
-    // clear
-    mFriends->clear();
-    lIgnore->clear();
-    lChannelFavourites->clear();
-    stlChannelList->clear();
-    mMyStats->clear();
-    lChannelHomes->clear();
-
     // auto rejoin
     QStringList strlOpenChannels = pTabC->get_open_channels();
     for (int i = 0; i < strlOpenChannels.size(); i++)
         pNetwork->send(QString("JOIN %1").arg(strlOpenChannels[i]));
-
-    // my stats
-    pNetwork->send(QString("RS INFO %1").arg(settings.value("nick").toString()));
 
     // channel homes
     pNetwork->send("CS HOMES");
