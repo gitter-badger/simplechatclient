@@ -21,17 +21,13 @@
 #ifndef DLG_CAM_H
 #define DLG_CAM_H
 
+class DlgCamNetwork;
 class Network;
 class SimpleRankWidget;
+class Video;
 #include <QDialog>
 #include <QTcpSocket>
 #include "ui_cam.h"
-
-// opencv
-#ifndef Q_WS_WIN
-#include <opencv/highgui.h>
-#include <opencv/cv.h>
-#endif
 
 class DlgCam : public QDialog
 {
@@ -45,44 +41,28 @@ private:
     Ui::uiCam ui;
     Network *pNetwork;
     QString strNick;
-    QTcpSocket *camSocket;
     SimpleRankWidget *simpleRankWidget;
-    bool bText;
-    QByteArray bData;
-    int iBytes_need;
-    int iBytes_recv;
     int iCam_cmd;
-#ifndef Q_WS_WIN
-    CvCapture *captureCv; // camera
-    bool bCreatedCaptureCv;
-#endif
+
+    DlgCamNetwork *camNetwork;
+
     bool bBroadcasting;
     bool bBroadcasting_pubpriv; // false = public; true = private;
+
     bool bFirstSendPUT;
     bool bReadySendPUT;
     qint64 iLastSendPUT;
     QList <QString> lLastCommand;
-    qint64 iLastKeepAlive;
     QMap <QString, QString> mNickChannels;
-    QTimer *timerPingPong;
-    int iLastActive;
 
     QString get_cauth();
-#ifndef Q_WS_WIN
-    IplImage *opencv_get_camera_image(); // get camera image
-    QPixmap convert_cam2img(IplImage *); // convert camera image to pixmap
+    Video *video;
 
     bool exist_video_device();
     void detect_broadcasting();
     void set_broadcasting();
-#endif
-    void show_img(QByteArray);
-    void network_connect();
-    void network_send(QString);
-    void network_sendb(QByteArray);
-    void network_disconnect();
-    void data_kernel();
-    void text_kernel(QString);
+
+    // options
     void send_all_my_options();
     // items
     void add_item(int, QString, QString, QString);
@@ -93,6 +73,14 @@ private:
     void update_item(QString, QString, QString);
 
 private slots:
+    // kernel
+    void data_kernel(QByteArray);
+    void text_kernel(QString);
+    // from network
+    void nconnected();
+    void ndisconnected();
+    void set_label(QString); // set label img text
+    // broadcast
     void broadcast_start_stop();
     void broadcast_public();
     void broadcast_private();
@@ -118,7 +106,43 @@ private slots:
     void change_user(int,int);
     // read video image
     void read_video();
-    // network
+
+protected:
+    virtual void showEvent(QShowEvent *);
+    virtual void hideEvent(QHideEvent *);
+    virtual void closeEvent(QCloseEvent *);
+};
+
+class DlgCamNetwork : public QObject
+{
+    Q_OBJECT
+public:
+    DlgCamNetwork(Network *, QTcpSocket *);
+    inline void set_bytes_need(int i) { iBytes_need = i; }
+    inline void set_btext(bool b) { bText = b; }
+    inline void set_last_keep_alive(qint64 i) { iLastKeepAlive = i; }
+    inline qint64 get_last_keep_alive() { return iLastKeepAlive; }
+
+    void clear_all();
+    bool is_connected();
+    void network_connect();
+    void network_send(QString);
+    void network_sendb(QByteArray);
+    void network_disconnect();
+
+private:
+    Network *pNetwork;
+    QTcpSocket *socket;
+    QString strData;
+    QByteArray bData;
+    int iBytes_need;
+    int iBytes_recv;
+    QTimer *timerPingPong;
+    int iLastActive;
+    qint64 iLastKeepAlive;
+    bool bText;
+
+private slots:
     void network_read();
     void network_connected();
     void network_disconnected();
@@ -126,10 +150,12 @@ private slots:
     void slot_network_connect();
     void timeout_pingpong();
 
-protected:
-    virtual void showEvent(QShowEvent *);
-    virtual void hideEvent(QHideEvent *);
-    virtual void closeEvent(QCloseEvent *);
+signals:
+    void data_kernel(QByteArray);
+    void text_kernel(QString);
+    void set_label(QString);
+    void nconnected();
+    void ndisconnected();
 };
 
 #endif // DLG_CAM_H

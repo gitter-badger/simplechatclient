@@ -29,6 +29,8 @@
 #include "config.h"
 #include "network.h"
 #include "simplerankwidget.h"
+#include "video.h"
+class DlgCamNetwork;
 #include "dlg_cam.h"
 
 DlgCam::DlgCam(QWidget *parent, Network *param1, QTcpSocket *param2) : QDialog(parent)
@@ -40,11 +42,17 @@ DlgCam::DlgCam(QWidget *parent, Network *param1, QTcpSocket *param2) : QDialog(p
 
     // params
     pNetwork = param1;
-    camSocket = param2;
+
+    // network
+    camNetwork = new DlgCamNetwork(pNetwork, param2);
 
     // init rank
     simpleRankWidget = new SimpleRankWidget(this);
+    simpleRankWidget->show();
     ui.horizontalLayout->insertWidget(1, simpleRankWidget);
+
+    // init video
+    video = new Video();
 
     // default text
     ui.label_nick->setText(strNick);
@@ -105,15 +113,8 @@ DlgCam::DlgCam(QWidget *parent, Network *param1, QTcpSocket *param2) : QDialog(p
     bFirstSendPUT = false;
     bReadySendPUT = true;
     iLastSendPUT = 0;
-    iLastKeepAlive = 0;
-    iLastActive = 0;
-#ifndef Q_WS_WIN
-    bCreatedCaptureCv = false;
-#endif
-
+    iCam_cmd = 0;
     QSettings settings;
-    timerPingPong = new QTimer();
-    timerPingPong->setInterval(1*60*1000); // 1 min
 
     // set labels
     QStringList strlLabels;
@@ -172,9 +173,6 @@ DlgCam::DlgCam(QWidget *parent, Network *param1, QTcpSocket *param2) : QDialog(p
         ui.label_img3->setPixmap(pixmap);
     }
 
-    //camSocket->setSocketOption(QAbstractSocket::LowDelayOption, 1);
-    //camSocket->setSocketOption(QAbstractSocket::KeepAliveOption, 0);
-
     QObject::connect(ui.tableWidget_nick_rank_spectators, SIGNAL(cellDoubleClicked(int,int)), this, SLOT(change_user(int,int)));
     QObject::connect(ui.toolButton_vote_minus, SIGNAL(clicked()), this, SLOT(vote_minus()));
     QObject::connect(ui.toolButton_vote_plus, SIGNAL(clicked()), this, SLOT(vote_plus()));
@@ -193,33 +191,19 @@ DlgCam::DlgCam(QWidget *parent, Network *param1, QTcpSocket *param2) : QDialog(p
     QObject::connect(ui.pushButton_set_about_me, SIGNAL(clicked()), this, SLOT(set_about_me()));
     QObject::connect(ui.pushButton_set_homepage, SIGNAL(clicked()), this, SLOT(set_homepage()));
     QObject::connect(ui.buttonBox, SIGNAL(accepted()), this, SLOT(button_ok()));
-#ifndef Q_WS_WIN
-    QObject::connect(camSocket, SIGNAL(connected()), this, SLOT(network_connected()));
-    QObject::connect(camSocket, SIGNAL(disconnected()), this, SLOT(network_disconnected()));
-    QObject::connect(camSocket, SIGNAL(error(QAbstractSocket::SocketError)), this, SLOT(network_error(QAbstractSocket::SocketError)));
-    QObject::connect(camSocket, SIGNAL(readyRead()), this, SLOT(network_read()));
-#endif
-    QObject::connect(timerPingPong, SIGNAL(timeout()), this, SLOT(timeout_pingpong()));
+
+    QObject::connect(camNetwork, SIGNAL(text_kernel(QString)), this, SLOT(text_kernel(QString)));
+    QObject::connect(camNetwork, SIGNAL(data_kernel(QByteArray)), this, SLOT(data_kernel(QByteArray)));
+    QObject::connect(camNetwork, SIGNAL(set_label(QString)), this, SLOT(set_label(QString)));
+    QObject::connect(camNetwork, SIGNAL(nconnected()), this, SLOT(nconnected()));
+    QObject::connect(camNetwork, SIGNAL(ndisconnected()), this, SLOT(ndisconnected()));
 }
 
 DlgCam::~DlgCam()
 {
+    delete video;
     delete simpleRankWidget;
-
-    // network disconnect
-    network_disconnect();
-
-#ifndef Q_WS_WIN
-    // destroy capture
-    if (ui.comboBox_device->isEnabled() == true)
-    {
-        if (bCreatedCaptureCv == true)
-        {
-            cvReleaseCapture(&captureCv);
-            bCreatedCaptureCv = false;
-        }
-    }
-#endif
+    delete camNetwork;
 }
 
 void DlgCam::set_nick(QString n)
@@ -236,192 +220,15 @@ QString DlgCam::get_cauth()
     return "1234567890123456";
 }
 
-#ifndef Q_WS_WIN
-bool DlgCam::exist_video_device()
-{
-    // search video device
-    for (int i = 0; i < 99; i++)
-    {
-        if (QFile::exists("/dev/video"+QString::number(i)) == true)
-            return true;
-    }
-    return false;
-}
-
-void DlgCam::detect_broadcasting()
-{
-    // disable broadcasting
-    ui.tabWidget->setTabEnabled(1, false);
-    ui.tabWidget->setTabEnabled(2, false);
-    ui.comboBox_device->setEnabled(false);
-
-    // clear device combobox
-    ui.comboBox_device->clear();
-
-    // search video device
-    for (int i = 0; i < 99; i++)
-    {
-        if (QFile::exists("/dev/video"+QString::number(i)) == true)
-        {
-            if (ui.comboBox_device->isEnabled() == false)
-            {
-                ui.tabWidget->setTabEnabled(1, true);
-                ui.tabWidget->setTabEnabled(2, true);
-                ui.comboBox_device->setEnabled(true);
-            }
-
-            // add video
-            ui.comboBox_device->addItem("/dev/video"+QString::number(i));
-        }
-    }
-}
-
-void DlgCam::set_broadcasting()
-{
-    if (ui.comboBox_device->isEnabled() == true)
-    {
-        if (bCreatedCaptureCv == false)
-        {
-            // create capture
-            captureCv = cvCreateCameraCapture(CV_CAP_ANY);
-            if (!captureCv)
-                qWarning() << "Error: cannot create camera capture!";
-            else
-                bCreatedCaptureCv = true;
-
-            // default selected video
-            ui.comboBox_device->setCurrentIndex(0);
-
-            // read self video
-            QTimer::singleShot(1000*1, this, SLOT(read_video())); // 1 sec
-        }
-    }
-}
-#endif
-
-void DlgCam::show_img(QByteArray bData)
-{
-    QPixmap pixmap;
-    pixmap.loadFromData(bData);
-    ui.label_img->setPixmap(pixmap);
-}
-
-void DlgCam::network_connect()
-{
-    if (camSocket->state() == QAbstractSocket::UnconnectedState)
-    {
-        camSocket->connectToHost("czat-s.onet.pl", 5008);
-
-        bText = true;
-        iCam_cmd = 0;
-        iBytes_need = 0;
-        iBytes_recv = 0;
-
-        // set last active
-        QDateTime dt = QDateTime::currentDateTime();
-        iLastActive = (int)dt.toTime_t();
-
-        // timer
-        timerPingPong->start();
-    }
-}
-
-void DlgCam::network_send(QString strData)
-{
-    strData += "\n";
-
-    QByteArray qbaData;
-    for (int i = 0; i < strData.size(); i++)
-        qbaData.insert(i, strData.at(i).toAscii());
-
-    network_sendb(qbaData);
-}
-
-void DlgCam::network_sendb(QByteArray qbaData)
-{
-    if ((camSocket->isValid()) && (camSocket->state() == QAbstractSocket::ConnectedState) && (camSocket->isWritable() == true))
-    {
-        qint64 ret = camSocket->write(qbaData);
-        if (ret == -1)
-        {
-            if (camSocket->state() == QAbstractSocket::ConnectedState)
-                ui.label_img->setText(QString(tr("Error: Failed to send data! [%1]")).arg(camSocket->errorString()));
-            else if (camSocket->state() == QAbstractSocket::UnconnectedState)
-                ui.label_img->setText(tr("Error: Failed to send data! [Not connected]"));
-        }
-        else
-        {
-#ifdef Q_WS_X11
-            QSettings settings;
-            if (settings.value("debug").toString() == "on")
-                qDebug() << "CAM -> " << QString(qbaData);
-#endif
-        }
-    }
-    else
-        ui.label_img->setText(tr("Error: Failed to send data! [Not connected]"));
-}
-
-void DlgCam::network_disconnect()
-{
-    if (camSocket->state() == QAbstractSocket::ConnectedState)
-    {
-        if (strNick.isEmpty() == false)
-        {
-            network_send(QString("UNSUBSCRIBE_BIG %1").arg(strNick));
-            strNick.clear();
-        }
-        camSocket->disconnectFromHost();
-    }
-}
-
-void DlgCam::network_read()
-{
-    // set last active
-    QDateTime dt = QDateTime::currentDateTime();
-    iLastActive = (int)dt.toTime_t();
-
-    // read text
-    if (bText == true)
-    {
-        if (camSocket->bytesAvailable() <= 0) return;
-
-        // read line
-        QByteArray data = camSocket->readLine().trimmed();
-        QString strData = QString(data);
-        text_kernel(strData);
-    }
-    // read data (image, description)
-    else
-    {
-        if (camSocket->bytesAvailable() <= 0) return;
-
-        for (int i = 0; i < camSocket->bytesAvailable(); i++)
-        {
-            if (iBytes_recv < iBytes_need)
-            {
-                bData += camSocket->read(1);
-                iBytes_recv++;
-            }
-        }
-
-        if (iBytes_recv == iBytes_need)
-            data_kernel();
-    }
-
-    // again
-    network_read();
-}
-
-void DlgCam::network_connected()
+void DlgCam::nconnected()
 {
     ui.label_img->setText(tr("Connected to server webcam."));
     ui.label_img->setText(ui.label_img->text()+"<br>"+tr("Please wait ..."));
     QString strCAUTH = get_cauth();
-    network_send(QString("CAUTH %1 3.00.159").arg(strCAUTH));
+    camNetwork->network_send(QString("CAUTH %1 3.00.159").arg(strCAUTH));
 }
 
-void DlgCam::network_disconnected()
+void DlgCam::ndisconnected()
 {
     ui.tableWidget_nick_rank_spectators->clear();
     ui.tableWidget_nick_rank_spectators->setRowCount(0);
@@ -434,7 +241,6 @@ void DlgCam::network_disconnected()
 
     ui.listWidget_funs->clear();
     bBroadcasting = false;
-    //network_send("STOP");
     ui.label_broadcast_status->setText(QString("<span style=\"color:#ff0000;\">%1</span>").arg(tr("No broadcasting")));
     ui.pushButton_broadcast->setText(tr("Start broadcast"));
 
@@ -447,45 +253,54 @@ void DlgCam::network_disconnected()
     QStringList strlLabels;
     strlLabels << tr("Nick") << tr("Rank") << tr("Spectators");
     ui.tableWidget_nick_rank_spectators->setHorizontalHeaderLabels(strlLabels);
-
-    // timer
-    if (timerPingPong->isActive() == true)
-        timerPingPong->stop();
-
-    // reconnect
-    QTimer::singleShot(1000*10, this, SLOT(slot_network_connect())); // 10 sec
 }
 
-void DlgCam::network_error(QAbstractSocket::SocketError err)
+void DlgCam::set_label(QString strData)
 {
-    Q_UNUSED (err);
+    ui.label_img->setText(strData);
+}
 
-    ui.label_img->setText(QString(tr("Disconnected from server [%1]")).arg(camSocket->errorString()));
+void DlgCam::detect_broadcasting()
+{
+    // disable broadcasting
+    ui.tabWidget->setTabEnabled(1, false);
+    ui.tabWidget->setTabEnabled(2, false);
+    ui.comboBox_device->setEnabled(false);
 
-    if (camSocket->state() == QAbstractSocket::ConnectedState)
-        network_disconnect();
-    else if (camSocket->state() == QAbstractSocket::UnconnectedState)
+    // clear device combobox
+    ui.comboBox_device->clear();
+
+    // exist video device
+    if (video->exist_video_device() == true)
     {
-        // timer
-        if (timerPingPong->isActive() == true)
-            timerPingPong->stop();
+        // enable
+        if (ui.comboBox_device->isEnabled() == false)
+        {
+            ui.tabWidget->setTabEnabled(1, true);
+            ui.tabWidget->setTabEnabled(2, true);
+            ui.comboBox_device->setEnabled(true);
+        }
 
-        // reconnect
-        QTimer::singleShot(1000*10, this, SLOT(slot_network_connect())); // 10 sec
+        // add video
+        QList<QString> lVideoDevices = video->get_video_devices();
+        for (int i = 0; i < lVideoDevices.count(); i++)
+            ui.comboBox_device->addItem(lVideoDevices.at(i));
     }
 }
 
-void DlgCam::slot_network_connect()
+void DlgCam::set_broadcasting()
 {
-    if (pNetwork->is_connected() == true)
-        network_connect();
-    else
+    if (video->exist_video_device() == true)
     {
-        QTimer::singleShot(1000*60, this, SLOT(slot_network_connect())); // 60 sec
+        // create
+        video->create();
+
+        // read self video
+        QTimer::singleShot(1000*1, this, SLOT(read_video())); // 1 sec
     }
 }
 
-void DlgCam::data_kernel()
+void DlgCam::data_kernel(QByteArray bData)
 {
 #ifdef Q_WS_X11
         QSettings settings;
@@ -496,7 +311,9 @@ void DlgCam::data_kernel()
     // 202 14283 IMAGE_UPDATE_BIG psotnica2603
     if (iCam_cmd == 202)
     {
-        show_img(bData);
+        QPixmap pixmap;
+        pixmap.loadFromData(bData);
+        ui.label_img->setPixmap(pixmap);
     }
     // ja31:-
     // osa1987:1:-2/-2/osa1987/1:0::0
@@ -730,11 +547,7 @@ void DlgCam::data_kernel()
         ui.label_img->setText(strImg);
     }
 
-    bData.clear();
     iCam_cmd = 0;
-    bText = true;
-    iBytes_need = 0;
-    iBytes_recv = 0;
 }
 
 void DlgCam::text_kernel(QString strData)
@@ -761,7 +574,7 @@ void DlgCam::text_kernel(QString strData)
         if (strLastCommand == "UNSUBSCRIBE_BIG")
         {
             ui.label_img->setText(tr("Downloading image"));
-            network_send(QString("SUBSCRIBE_BIG * %1").arg(strNick));
+            camNetwork->network_send(QString("SUBSCRIBE_BIG * %1").arg(strNick));
 
             // update channels
             ui.textEdit_channels->setText(QString("<b>%1</b><br><font color=\"#0000ff\">%2</font>").arg(tr("Is on channels:")).arg(mNickChannels[strNick]));
@@ -778,10 +591,10 @@ void DlgCam::text_kernel(QString strData)
     // 202 17244 IMAGE_UPDATE_BIG Ekscentryk
     else if ((strDataList[0] == "202") && (strDataList.count() == 4))
     {
-        iBytes_need = strDataList[1].toInt();
-        if (iBytes_need != 0)
+        camNetwork->set_bytes_need(strDataList[1].toInt());
+        if (strDataList[1].toInt() != 0)
         {
-            bText = false;
+            camNetwork->set_btext(false);
 
             QString strUser = strDataList[3];
             if (strUser == strNick)
@@ -796,9 +609,9 @@ void DlgCam::text_kernel(QString strData)
                 {
                     QDateTime dt = QDateTime::currentDateTime();
                     qint64 iCurrentTime = (qint64)dt.toTime_t(); // seconds that have passed since 1970
-                    iLastKeepAlive = iCurrentTime;
+                    camNetwork->set_last_keep_alive(iCurrentTime);
 
-                    network_send(QString("KEEPALIVE_BIG %1").arg(strNick));
+                    camNetwork->network_send(QString("KEEPALIVE_BIG %1").arg(strNick));
                 }
             }
         }
@@ -821,8 +634,8 @@ void DlgCam::text_kernel(QString strData)
     {
         if (strDataList[1].toInt() > 0)
         {
-            bText = false;
-            iBytes_need = strDataList[1].toInt();
+            camNetwork->set_btext(false);
+            camNetwork->set_bytes_need(strDataList[1].toInt());
             iCam_cmd = 211;
         }
     }
@@ -850,15 +663,15 @@ void DlgCam::text_kernel(QString strData)
     else if (strDataList[0] == "250")
     {
         // initial read users status
-        bText = false;
-        iBytes_need = strDataList[1].toInt();
+        camNetwork->set_btext(false);
+        camNetwork->set_bytes_need(strDataList[1].toInt());
         iCam_cmd = 250;
     }
     // 251 52 UPDATE
     else if (strDataList[0] == "251")
     {
-        bText = false;
-        iBytes_need = strDataList[1].toInt();
+        camNetwork->set_btext(false);
+        camNetwork->set_bytes_need(strDataList[1].toInt());
         iCam_cmd = 251;
     }
     // 252 41 USER_STATUS pati28ash
@@ -866,8 +679,8 @@ void DlgCam::text_kernel(QString strData)
     {
         if (strDataList[1].toInt() > 0)
         {
-            iBytes_need = strDataList[1].toInt();
-            bText = false;
+            camNetwork->set_bytes_need(strDataList[1].toInt());
+            camNetwork->set_btext(false);
 
             QString strUser = strDataList[3];
             if (strUser == strNick)
@@ -888,18 +701,18 @@ void DlgCam::text_kernel(QString strData)
     // 254 1489 USER_COUNT_UPDATE
     else if (strDataList[0] == "254")
     {
-        bText = false;
-        iBytes_need = strDataList[1].toInt();
+        camNetwork->set_btext(false);
+        camNetwork->set_bytes_need(strDataList[1].toInt());
         iCam_cmd = 254;
 
         // check keepalive
         QDateTime dt = QDateTime::currentDateTime();
         qint64 iCurrentTime = (qint64)dt.toTime_t(); // seconds that have passed since 1970
 
-        if (iCurrentTime - iLastKeepAlive > 30) // 30 sec
+        if (iCurrentTime - camNetwork->get_last_keep_alive() > 30) // 30 sec
         {
             if ((strNick.isEmpty() == false) && (this->isHidden() == false))
-                network_send(QString("KEEPALIVE_BIG %1").arg(strNick));
+                camNetwork->network_send(QString("KEEPALIVE_BIG %1").arg(strNick));
         }
     }
     // successfully logged in
@@ -907,14 +720,14 @@ void DlgCam::text_kernel(QString strData)
     else if ((strDataList[0] == "264") && (strDataList.count() == 5))
     {
         ui.label_img->setText(tr("Setting mode for viewing only"));
-        network_send("SENDMODE 0");
+        camNetwork->network_send("SENDMODE 0");
         ui.radioButton_broadcast_public->setChecked(true);
         bBroadcasting_pubpriv = false;
 
         if (strNick.isEmpty() == false)
         {
             ui.label_img->setText(tr("Downloading image"));
-            network_send(QString("SUBSCRIBE_BIG * %1").arg(strNick));
+            camNetwork->network_send(QString("SUBSCRIBE_BIG * %1").arg(strNick));
 
             // update channels
             ui.textEdit_channels->setText(QString("<b>%1</b><br><font color=\"#0000ff\">%2</font>").arg(tr("Is on channels:")).arg(mNickChannels[strNick]));
@@ -964,15 +777,15 @@ void DlgCam::text_kernel(QString strData)
         // CAUTH ok
         QSettings settings;
         QString strUOKey = settings.value("uokey").toString();
-        network_send(QString("AUTH %1 3.00.159").arg(strUOKey));
+        camNetwork->network_send(QString("AUTH %1 3.00.159").arg(strUOKey));
     }
     // 403 11 ACCESS_DENIED
     // Invalid key
     else if (strDataList[0] == "403")
     {
         ui.label_img->setText(tr("Authorization failed"));
-        bText = false;
-        iBytes_need = strDataList[1].toInt();
+        camNetwork->set_btext(false);
+        camNetwork->set_bytes_need(strDataList[1].toInt());
         iCam_cmd = 403;
     }
     // 405 0 USER_GONE Restonka
@@ -1060,7 +873,7 @@ void DlgCam::text_kernel(QString strData)
     else if (strDataList[0] == "418")
     {
         strNick.clear();
-        network_disconnect();
+        camNetwork->network_disconnect();
     }
     // udget with -1
     // 501 0 INVALID_USER_DATA_NUM
@@ -1072,7 +885,7 @@ void DlgCam::text_kernel(QString strData)
     else if (strDataList[0] == "502")
     {
         strNick.clear();
-        network_disconnect();
+        camNetwork->network_disconnect();
     }
     // 504 0 UNKNOWN_COMMAND PUT2
     else if ((strDataList[0] == "504") && (strDataList.count() == 4))
@@ -1093,7 +906,7 @@ void DlgCam::text_kernel(QString strData)
     else if ((strDataList[0] == "520") && (strDataList.count() == 4))
     {
         ui.label_img->setText(tr("Invalid authorization key"));
-        network_disconnect();
+        camNetwork->network_disconnect();
     }
     else
     {
@@ -1109,16 +922,16 @@ void DlgCam::send_all_my_options()
     QString strAboutMe = settings.value("cam_about_me").toString();
     if (strAboutMe.isEmpty() == false)
     {
-        network_send(QString("UDPUT 4 %1").arg(strAboutMe.length()));
-        network_sendb(strAboutMe.toAscii());
+        camNetwork->network_send(QString("UDPUT 4 %1").arg(strAboutMe.length()));
+        camNetwork->network_sendb(strAboutMe.toAscii());
     }
 
     // homepage
     QString strHomePage = settings.value("cam_homepage").toString();
     if (strHomePage.isEmpty() == false)
     {
-        network_send(QString("UDPUT 5 %1").arg(strHomePage.length()));
-        network_sendb(strHomePage.toAscii());
+        camNetwork->network_send(QString("UDPUT 5 %1").arg(strHomePage.length()));
+        camNetwork->network_sendb(strHomePage.toAscii());
     }
 
     // img0
@@ -1136,8 +949,8 @@ void DlgCam::send_all_my_options()
         pixmap.save(&buffer, "JPG");
 
         // send
-        network_send(QString("UDPUT 0 %1").arg(bData.length()));
-        network_sendb(bData);
+        camNetwork->network_send(QString("UDPUT 0 %1").arg(bData.length()));
+        camNetwork->network_sendb(bData);
     }
 
     // img1
@@ -1155,8 +968,8 @@ void DlgCam::send_all_my_options()
         pixmap.save(&buffer, "JPG");
 
         // send
-        network_send(QString("UDPUT 1 %1").arg(bData.length()));
-        network_sendb(bData);
+        camNetwork->network_send(QString("UDPUT 1 %1").arg(bData.length()));
+        camNetwork->network_sendb(bData);
     }
 
     // img2
@@ -1174,8 +987,8 @@ void DlgCam::send_all_my_options()
         pixmap.save(&buffer, "JPG");
 
         // send
-        network_send(QString("UDPUT 2 %1").arg(bData.length()));
-        network_sendb(bData);
+        camNetwork->network_send(QString("UDPUT 2 %1").arg(bData.length()));
+        camNetwork->network_sendb(bData);
     }
 
     // img3
@@ -1193,8 +1006,8 @@ void DlgCam::send_all_my_options()
         pixmap.save(&buffer, "JPG");
 
         // send
-        network_send(QString("UDPUT 3 %1").arg(bData.length()));
-        network_sendb(bData);
+        camNetwork->network_send(QString("UDPUT 3 %1").arg(bData.length()));
+        camNetwork->network_sendb(bData);
     }
 }
 
@@ -1279,7 +1092,7 @@ void DlgCam::broadcast_start_stop()
         bFirstSendPUT = false;
         bReadySendPUT = true;
         bBroadcasting = false;
-        network_send("STOP");
+        camNetwork->network_send("STOP");
         ui.label_broadcast_status->setText(QString("<span style=\"color:#ff0000;\">%1</span>").arg(tr("No broadcasting")));
         ui.pushButton_broadcast->setText(tr("Start broadcast"));
         ui.listWidget_funs->clear();
@@ -1290,7 +1103,7 @@ void DlgCam::broadcast_public()
 {
     if (bBroadcasting_pubpriv == true)
     {
-        network_send("SENDMODE 0");
+        camNetwork->network_send("SENDMODE 0");
         bBroadcasting_pubpriv = false;
 
         if (bBroadcasting == true)
@@ -1302,7 +1115,7 @@ void DlgCam::broadcast_private()
 {
     if (bBroadcasting_pubpriv == false)
     {
-        network_send("SENDMODE 1");
+        camNetwork->network_send("SENDMODE 1");
         bBroadcasting_pubpriv = true;
 
         if (bBroadcasting == true)
@@ -1317,7 +1130,7 @@ void DlgCam::set_status()
     if (strStatus.isEmpty() == false)
     {
         lLastCommand.append("SETSTATUS");
-        network_send(QString("SETSTATUS %1").arg(strStatus));
+        camNetwork->network_send(QString("SETSTATUS %1").arg(strStatus));
     }
 }
 
@@ -1335,8 +1148,8 @@ void DlgCam::set_about_me()
         delete pConfig;
 
         // send
-        network_send(QString("UDPUT 4 %1").arg(strAboutMe.length()));
-        network_sendb(strAboutMe.toAscii());
+        camNetwork->network_send(QString("UDPUT 4 %1").arg(strAboutMe.length()));
+        camNetwork->network_sendb(strAboutMe.toAscii());
     }
 }
 
@@ -1354,8 +1167,8 @@ void DlgCam::set_homepage()
         delete pConfig;
 
         // send
-        network_send(QString("UDPUT 5 %1").arg(strHomePage.length()));
-        network_sendb(strHomePage.toAscii());
+        camNetwork->network_send(QString("UDPUT 5 %1").arg(strHomePage.length()));
+        camNetwork->network_sendb(strHomePage.toAscii());
     }
 }
 
@@ -1394,8 +1207,8 @@ void DlgCam::add_img0()
         ui.label_img0->setPixmap(pixmap);
 
         // send
-        network_send(QString("UDPUT 0 %1").arg(bData.length()));
-        network_sendb(bData);
+        camNetwork->network_send(QString("UDPUT 0 %1").arg(bData.length()));
+        camNetwork->network_sendb(bData);
     }
 }
 
@@ -1412,7 +1225,7 @@ void DlgCam::remove_img0()
     ui.label_img0->clear();
 
     // send
-    network_send("UDPUT 0 0");
+    camNetwork->network_send("UDPUT 0 0");
 }
 
 void DlgCam::add_img1()
@@ -1450,8 +1263,8 @@ void DlgCam::add_img1()
         ui.label_img1->setPixmap(pixmap);
 
         // send
-        network_send(QString("UDPUT 1 %1").arg(bData.length()));
-        network_sendb(bData);
+        camNetwork->network_send(QString("UDPUT 1 %1").arg(bData.length()));
+        camNetwork->network_sendb(bData);
     }
 }
 
@@ -1468,7 +1281,7 @@ void DlgCam::remove_img1()
     ui.label_img1->clear();
 
     // send
-    network_send("UDPUT 1 0");
+    camNetwork->network_send("UDPUT 1 0");
 }
 
 void DlgCam::add_img2()
@@ -1506,8 +1319,8 @@ void DlgCam::add_img2()
         ui.label_img2->setPixmap(pixmap);
 
         // send
-        network_send(QString("UDPUT 2 %1").arg(bData.length()));
-        network_sendb(bData);
+        camNetwork->network_send(QString("UDPUT 2 %1").arg(bData.length()));
+        camNetwork->network_sendb(bData);
     }
 }
 
@@ -1524,7 +1337,7 @@ void DlgCam::remove_img2()
     ui.label_img2->clear();
 
     // send
-    network_send("UDPUT 2 0");
+    camNetwork->network_send("UDPUT 2 0");
 }
 
 void DlgCam::add_img3()
@@ -1562,8 +1375,8 @@ void DlgCam::add_img3()
         ui.label_img3->setPixmap(pixmap);
 
         // send
-        network_send(QString("UDPUT 3 %1").arg(bData.length()));
-        network_sendb(bData);
+        camNetwork->network_send(QString("UDPUT 3 %1").arg(bData.length()));
+        camNetwork->network_sendb(bData);
     }
 }
 
@@ -1580,19 +1393,19 @@ void DlgCam::remove_img3()
     ui.label_img3->clear();
 
     // send
-    network_send("UDPUT 3 0");
+    camNetwork->network_send("UDPUT 3 0");
 }
 
 void DlgCam::vote_minus()
 {
     if (strNick.isEmpty() == false)
-        network_send(QString("VOTE %1 -").arg(strNick));
+        camNetwork->network_send(QString("VOTE %1 -").arg(strNick));
 }
 
 void DlgCam::vote_plus()
 {
     if (strNick.isEmpty() == false)
-        network_send(QString("VOTE %1 +").arg(strNick));
+        camNetwork->network_send(QString("VOTE %1 +").arg(strNick));
 }
 
 void DlgCam::button_ok()
@@ -1626,12 +1439,12 @@ void DlgCam::change_user(int row, int column)
     // change user
     if (strNick.isEmpty() == true)
     {
-        network_send(QString("SUBSCRIBE_BIG * %1").arg(strNewNick));
+        camNetwork->network_send(QString("SUBSCRIBE_BIG * %1").arg(strNewNick));
     }
     else
     {
         lLastCommand.append("UNSUBSCRIBE_BIG");
-        network_send(QString("UNSUBSCRIBE_BIG %1").arg(strNick));
+        camNetwork->network_send(QString("UNSUBSCRIBE_BIG %1").arg(strNick));
     }
 
     // set nick
@@ -1646,20 +1459,16 @@ void DlgCam::change_user(int row, int column)
 
 void DlgCam::read_video()
 {
-#ifndef Q_WS_WIN
     // video device not exist any more
-    if (exist_video_device() == false)
+    if (video->exist_video_device() == false)
     {
-        if (bCreatedCaptureCv == true)
-        {
-            cvReleaseCapture(&captureCv);
-            bCreatedCaptureCv = false;
-        }
+        video->destroy();
         return;
     }
 
+    // get image
+    QPixmap pixmap = video->get_image();
     // set image
-    QPixmap pixmap = convert_cam2img(opencv_get_camera_image());
     ui.label_capture->setPixmap(pixmap.scaled(QSize(320,240)));
 
     // send image
@@ -1694,64 +1503,19 @@ void DlgCam::read_video()
             bFirstSendPUT = true;
             bReadySendPUT = false;
             lLastCommand.append("PUT2");
-            network_sendb(bPackage);
+            camNetwork->network_sendb(bPackage);
         }
 
         if ((bReadySendPUT == true) && (iCurrentTime-iLastSendPUT > 5)) // send -> 5 sec
         {
             bReadySendPUT = false;
             lLastCommand.append("PUT2");
-            network_sendb(bPackage);
+            camNetwork->network_sendb(bPackage);
         }
     }
 
     // read self video
     QTimer::singleShot(1000*1, this, SLOT(read_video())); // 1 sec
-#endif
-}
-
-#ifndef Q_WS_WIN
-IplImage *DlgCam::opencv_get_camera_image()
-{
-    IplImage *img;
-
-    if (bCreatedCaptureCv == true)
-        img = cvQueryFrame(captureCv);
-
-    return img;
-}
-
-QPixmap DlgCam::convert_cam2img(IplImage *img)
-{
-    if (bCreatedCaptureCv == false) return QPixmap(); // error?
-
-    int height = img->height;
-    int width = img->width;
-
-    if (img->depth == IPL_DEPTH_8U && img->nChannels == 3)
-    {
-        const uchar *qImageBuffer = (const uchar*)img->imageData;
-        QImage img(qImageBuffer, width, height, QImage::Format_RGB888);
-        return QPixmap::fromImage(img.rgbSwapped());
-    }
-    else
-    {
-        qWarning() << "Camera image cannot be converted.";
-        return QPixmap();
-    }
-}
-#endif
-
-void DlgCam::timeout_pingpong()
-{
-    QDateTime dt = QDateTime::currentDateTime();
-    int iCurrent = (int)dt.toTime_t();
-
-    if (iLastActive+301 < iCurrent)
-    {
-        network_disconnect();
-        iLastActive = iCurrent;
-    }
 }
 
 void DlgCam::showEvent(QShowEvent *event)
@@ -1762,7 +1526,7 @@ void DlgCam::showEvent(QShowEvent *event)
 
 #ifndef Q_WS_WIN
     // connect or get img
-    if (camSocket->state() == QAbstractSocket::ConnectedState)
+    if (camNetwork->is_connected() == true)
     {
         if (strNick.isEmpty() == false)
         {
@@ -1772,7 +1536,7 @@ void DlgCam::showEvent(QShowEvent *event)
             simpleRankWidget->set_rank(0);
             ui.textEdit_channels->setText(QString("<b>%1</b><br><font color=\"#0000ff\">%2</font>").arg(tr("Is on channels:")).arg(mNickChannels[strNick]));
 
-            network_send(QString("SUBSCRIBE_BIG * %1").arg(strNick));
+            camNetwork->network_send(QString("SUBSCRIBE_BIG * %1").arg(strNick));
         }
         else
         {
@@ -1785,7 +1549,7 @@ void DlgCam::showEvent(QShowEvent *event)
         }
     }
     else
-        network_connect();
+        camNetwork->network_connect();
 
     // detect and set broadcasting
     detect_broadcasting();
@@ -1804,7 +1568,7 @@ void DlgCam::hideEvent(QHideEvent *event)
     if (strNick.isEmpty() == false)
     {
         lLastCommand.append("HIDE_EVENT");
-        network_send(QString("UNSUBSCRIBE_BIG %1").arg(strNick));
+        camNetwork->network_send(QString("UNSUBSCRIBE_BIG %1").arg(strNick));
     }
 
     // clear
@@ -1821,4 +1585,202 @@ void DlgCam::closeEvent(QCloseEvent *event)
     event->ignore();
     // hide
     this->hide();
+}
+
+DlgCamNetwork::DlgCamNetwork(Network *param1, QTcpSocket *param2)
+{
+    pNetwork = param1;
+    socket = param2;
+
+    iLastKeepAlive = 0;
+    iLastActive = 0;
+
+    QSettings settings;
+    timerPingPong = new QTimer();
+    timerPingPong->setInterval(1*60*1000); // 1 min
+
+    //socket->setSocketOption(QAbstractSocket::LowDelayOption, 1);
+    //socket->setSocketOption(QAbstractSocket::KeepAliveOption, 0);
+
+    QObject::connect(socket, SIGNAL(connected()), this, SLOT(network_connected()));
+    QObject::connect(socket, SIGNAL(disconnected()), this, SLOT(network_disconnected()));
+    QObject::connect(socket, SIGNAL(error(QAbstractSocket::SocketError)), this, SLOT(network_error(QAbstractSocket::SocketError)));
+    QObject::connect(socket, SIGNAL(readyRead()), this, SLOT(network_read()));
+    QObject::connect(timerPingPong, SIGNAL(timeout()), this, SLOT(timeout_pingpong()));
+}
+
+bool DlgCamNetwork::is_connected()
+{
+    if (socket->state() == QAbstractSocket::ConnectedState)
+        return true;
+    else
+        return false;
+}
+
+void DlgCamNetwork::clear_all()
+{
+    bText = true;
+    iBytes_need = 0;
+    iBytes_recv = 0;
+
+    // timer
+    if (timerPingPong->isActive() == true)
+        timerPingPong->stop();
+}
+
+void DlgCamNetwork::network_connect()
+{
+    if (socket->state() == QAbstractSocket::UnconnectedState)
+    {
+        // clear all
+        clear_all();
+
+        // set last active
+        QDateTime dt = QDateTime::currentDateTime();
+        iLastActive = (int)dt.toTime_t();
+
+        // connect
+        socket->connectToHost("czat-s.onet.pl", 5008);
+
+        // timer
+        timerPingPong->start();
+    }
+}
+
+void DlgCamNetwork::network_disconnect()
+{
+    if (socket->state() == QAbstractSocket::ConnectedState)
+        socket->disconnectFromHost();
+}
+
+void DlgCamNetwork::network_send(QString strData)
+{
+    strData += "\n";
+    QByteArray qbaData = strData.toAscii();
+
+    network_sendb(qbaData);
+}
+
+void DlgCamNetwork::network_sendb(QByteArray qbaData)
+{
+    if ((socket->isValid()) && (socket->state() == QAbstractSocket::ConnectedState) && (socket->isWritable() == true))
+    {
+        qint64 ret = socket->write(qbaData);
+        if (ret == -1)
+        {
+            if (socket->state() == QAbstractSocket::ConnectedState)
+                emit set_label(QString(tr("Error: Failed to send data! [%1]")).arg(socket->errorString()));
+            else if (socket->state() == QAbstractSocket::UnconnectedState)
+                emit set_label(tr("Error: Failed to send data! [Not connected]"));
+        }
+        else
+        {
+#ifdef Q_WS_X11
+            QSettings settings;
+            if (settings.value("debug").toString() == "on")
+                qDebug() << "CAM -> " << QString(qbaData);
+#endif
+        }
+    }
+    else
+        emit set_label(tr("Error: Failed to send data! [Not connected]"));
+}
+
+void DlgCamNetwork::network_read()
+{
+    // set last active
+    QDateTime dt = QDateTime::currentDateTime();
+    iLastActive = (int)dt.toTime_t();
+
+    // read text
+    if (bText == true)
+    {
+        // read line
+        QByteArray data = socket->readLine().trimmed();
+        QString strData = QString(data);
+        emit text_kernel(strData);
+    }
+    // read data (image, description)
+    else
+    {
+        for (int i = 0; i < socket->bytesAvailable(); i++)
+        {
+            if (iBytes_recv < iBytes_need)
+            {
+                bData += socket->read(1);
+                iBytes_recv++;
+            }
+        }
+
+        if (iBytes_recv == iBytes_need)
+        {
+            emit data_kernel(bData);
+
+            // clear bdata
+            bData.clear();
+            bText = true;
+            iBytes_recv = 0;
+            iBytes_need = 0;
+        }
+    }
+
+    // again
+    if (socket->bytesAvailable() != 0)
+        network_read();
+}
+
+void DlgCamNetwork::network_connected()
+{
+    emit nconnected();
+}
+
+void DlgCamNetwork::network_disconnected()
+{
+    emit ndisconnected();
+
+    // clear all
+    clear_all();
+
+    // reconnect
+    QTimer::singleShot(1000*10, this, SLOT(slot_network_connect())); // 10 sec
+}
+
+void DlgCamNetwork::network_error(QAbstractSocket::SocketError err)
+{
+    Q_UNUSED (err);
+
+    emit set_label(QString(tr("Disconnected from server [%1]")).arg(socket->errorString()));
+
+    if (socket->state() == QAbstractSocket::ConnectedState)
+        network_disconnect();
+    else if (socket->state() == QAbstractSocket::UnconnectedState)
+    {
+        // clear all
+        clear_all();
+
+        // reconnect
+        QTimer::singleShot(1000*10, this, SLOT(slot_network_connect())); // 10 sec
+    }
+}
+
+void DlgCamNetwork::slot_network_connect()
+{
+    if (pNetwork->is_connected() == true)
+        network_connect();
+    else
+    {
+        QTimer::singleShot(1000*60, this, SLOT(slot_network_connect())); // 60 sec
+    }
+}
+
+void DlgCamNetwork::timeout_pingpong()
+{
+    QDateTime dt = QDateTime::currentDateTime();
+    int iCurrent = (int)dt.toTime_t();
+
+    if (iLastActive+301 < iCurrent)
+    {
+        network_disconnect();
+        iLastActive = iCurrent;
+    }
 }
