@@ -1551,9 +1551,12 @@ void DlgCam::showEvent(QShowEvent *event)
     else
         camNetwork->network_connect();
 
-    // detect and set broadcasting
+    // detect video devices
     detect_broadcasting();
-    set_broadcasting();
+
+    // create
+    if (video->is_created() == false)
+        set_broadcasting();
 
     // switch to first tab
     ui.tabWidget->setCurrentIndex(0);

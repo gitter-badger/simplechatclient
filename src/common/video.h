@@ -36,6 +36,7 @@ class Video : public QObject
 public:
     Video();
     ~Video();
+    inline bool is_created() { return bCreatedCaptureCv; }
     void create();
     void destroy();
     QPixmap get_image();
