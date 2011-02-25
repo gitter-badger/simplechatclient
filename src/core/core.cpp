@@ -20,7 +20,6 @@
 
 #include <QSettings>
 #include "dlg_awaylog.h"
-#include "dlg_cam.h"
 #include "dlg_channel_favourites.h"
 #include "dlg_channel_homes.h"
 #include "dlg_channel_list.h"
@@ -42,7 +41,9 @@
 #include "core.h"
 
 #ifdef Q_WS_WIN
-#include "kamerzysta.h"
+    #include "kamerzysta.h"
+#else
+    #include "dlg_cam.h"
 #endif
 
 Core::Core()
@@ -78,12 +79,18 @@ void Core::init(QMainWindow *parent, QString param1, int param2, Notify *param3,
     pDlg_channel_settings = new DlgChannelSettings(myparent, pNetwork);
     pDlg_moderation = new DlgModeration(myparent);
     pDlg_user_profile = new DlgUserProfile(myparent, pNetwork);
+
+#ifndef Q_WS_WIN
     pDlg_cam = new DlgCam(myparent, pNetwork, camSocket);
+#endif
 
     pOnet_kernel = new OnetKernel(myparent, pNetwork, pTabC, pNotify, &mNickAvatar, &mChannelAvatar, pDlg_channel_settings, &lChannelHomes, &stlChannelList, &lChannelFavourites, &mFriends, &lIgnore, pDlg_moderation, &mMyStats);
     pOnet_auth = new OnetAuth(pTabC);
 
-    pTabC->set_dlg(pDlg_user_profile, pDlg_cam);
+    pTabC->set_dlg(pDlg_user_profile);
+#ifndef Q_WS_WIN
+    pTabC->set_dlg_cam(pDlg_cam);
+#endif
 
     // inputlinewidget
     bottomDockWidget = new QDockWidget(tr("Typing messages"), myparent);
@@ -133,7 +140,9 @@ Core::~Core()
 
     delete pOnet_auth;
     delete pOnet_kernel;
+#ifndef Q_WS_WIN
     delete pDlg_cam;
+#endif
     delete pDlg_user_profile;
     delete pDlg_moderation;
     delete pDlg_channel_settings;
@@ -379,7 +388,10 @@ void Core::create_nicklist(QString strChannel)
 {
     if (mChannelNickListWidget.contains(strChannel) == false)
     {
-        NickListWidget *nicklist = new NickListWidget(myparent, pNetwork, strChannel, &mNickAvatar, camSocket, &stlChannelNickStatus, pDlg_user_profile, pDlg_cam);
+        NickListWidget *nicklist = new NickListWidget(myparent, pNetwork, strChannel, &mNickAvatar, camSocket, &stlChannelNickStatus, pDlg_user_profile);
+#ifndef Q_WS_WIN
+        nicklist->set_dlg_cam(pDlgCam);
+#endif
         nicklist->setParent(nickListDockWidget);
         nicklist->setItemDelegate(new NickListDelegate(nicklist));
         nicklist->show();

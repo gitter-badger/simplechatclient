@@ -22,7 +22,9 @@
 #define MAINTEXTEDIT_H
 
 #include "defines.h"
-class DlgCam;
+#ifndef Q_WS_WIN
+    class DlgCam;
+#endif
 class DlgUserProfile;
 class Network;
 #include <QTcpSocket>
@@ -32,8 +34,11 @@ class MainTextEdit : public QTextEdit
 {
     Q_OBJECT
 public:
-    MainTextEdit(QWidget *, Network *, QString, QTcpSocket *, sChannelNickStatus *, DlgUserProfile *, DlgCam *);
+    MainTextEdit(QWidget *, Network *, QString, QTcpSocket *, sChannelNickStatus *, DlgUserProfile *);
     ~MainTextEdit();
+#ifndef Q_WS_WIN
+    void set_dlg_cam(DlgCam *);
+#endif
     void update_background_image();
     void set_open_channels(QStringList);
     inline QString get_current_nick() { return strNick; }
@@ -46,7 +51,9 @@ private:
     QTcpSocket *camSocket;
     sChannelNickStatus *mChannelNickStatus;
     DlgUserProfile *pDlg_user_profile;
+#ifndef Q_WS_WIN
     DlgCam *pDlg_cam;
+#endif
     // other
     QString strNick;
     QStringList strOpenChannels;

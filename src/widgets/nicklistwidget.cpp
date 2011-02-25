@@ -22,20 +22,21 @@
 #include <QInputDialog>
 #include <QMenu>
 #include <QSettings>
-#include "dlg_cam.h"
 #include "dlg_user_profile.h"
 #include "network.h"
 #include "nicklistwidget.h"
 
 #ifdef Q_WS_WIN
-#include "kamerzysta.h"
+    #include "kamerzysta.h"
+#else
+    #include "dlg_cam.h"
 #endif
 
 #ifdef Q_WS_X11
 #include <QDebug>
 #endif
 
-NickListWidget::NickListWidget(QWidget *parent, Network *param1, QString param2, QMap <QString, QByteArray> *param3, QTcpSocket *param4, sChannelNickStatus *param5, DlgUserProfile *param6, DlgCam *param7)
+NickListWidget::NickListWidget(QWidget *parent, Network *param1, QString param2, QMap <QString, QByteArray> *param3, QTcpSocket *param4, sChannelNickStatus *param5, DlgUserProfile *param6)
 {
     myparent = parent;
     pNetwork = param1;
@@ -44,7 +45,6 @@ NickListWidget::NickListWidget(QWidget *parent, Network *param1, QString param2,
     camSocket = param4;
     mChannelNickStatus = param5;
     pDlg_user_profile = param6;
-    pDlg_cam = param7;
 
     setAnimated(true);
     header()->hide();
@@ -65,6 +65,13 @@ NickListWidget::~NickListWidget()
         }
     }
 }
+
+#ifndef Q_WS_WIN
+void NickListWIdget::set_dlg_cam(DlgCam *param1)
+{
+    pDlg_cam = param1;
+}
+#endif
 
 void NickListWidget::set_open_channels(QStringList param1)
 {

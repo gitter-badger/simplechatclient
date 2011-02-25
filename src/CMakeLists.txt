@@ -2,7 +2,6 @@
 set (scc_UIS
 	../ui/about.ui
 	../ui/awaylog.ui
-	../ui/cam.ui
 	../ui/channel_favourites.ui
 	../ui/channel_homes.ui
 	../ui/channel_key.ui
@@ -29,10 +28,8 @@ set (scc_SRCS
 	common/config.cpp
 	common/convert.cpp
 	common/crypt.cpp
-	common/kamerzysta.cpp
 	common/log.cpp
 	common/replace.cpp
-	common/video.cpp
 	core/core.cpp
 	core/debug.cpp
 	core/main.cpp
@@ -42,7 +39,6 @@ set (scc_SRCS
 	core/update.cpp
 	gui/dlg_about.cpp
 	gui/dlg_awaylog.cpp
-	gui/dlg_cam.cpp
 	gui/dlg_channel_favourites.cpp
 	gui/dlg_channel_homes.cpp
 	gui/dlg_channel_key.cpp
@@ -86,17 +82,14 @@ set (scc_MOC_HDRS
 	common/config.h
 	common/convert.h
 	common/crypt.h
-	common/kamerzysta.h
 	common/log.h
 	common/replace.h
-	common/video.h
 	core/core.h
 	core/mainwindow.h
 	core/network.h
 	core/update.h
 	gui/dlg_about.h
 	gui/dlg_awaylog.h
-	gui/dlg_cam.h
 	gui/dlg_channel_favourites.h
 	gui/dlg_channel_homes.h
 	gui/dlg_channel_key.h
@@ -161,6 +154,28 @@ if (UNIX)
 		message (FATAL_ERROR "Video4Linux2 not found")
 	endif (NOT V4L2_FOUND)
 endif (UNIX)
+
+# kamerzysta/video
+if (WIN32)
+	LIST (APPEND scc_SRCS
+		common/kamerzysta.cpp
+	)
+	LIST (APPEND scc_MOC_HDRS
+		common/kamerzysta.h
+	)
+else (WIN32)
+	LIST (APPEND scc_UIS
+		../ui/cam.ui
+	)
+	LIST (APPEND scc_SRCS
+		common/video.cpp
+		gui/dlg_cam.cpp
+	)
+	LIST (APPEND scc_MOC_HDRS
+		common/video.h
+		gui/dlg_cam.h
+	)
+endif (WIN32)
 
 # xml
 set (QT_USE_QTXML TRUE)

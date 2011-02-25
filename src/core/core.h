@@ -22,7 +22,9 @@
 #define CORE_H
 
 #include "defines.h"
-class DlgCam;
+#ifndef Q_WS_WIN
+    class DlgCam;
+#endif
 class DlgChannelSettings;
 class DlgModeration;
 class DlgUserProfile;
@@ -117,8 +119,10 @@ private:
     sChannelNickStatus stlChannelNickStatus;
 
     // other
-    QAction *lagAct;
+#ifndef Q_WS_WIN
     DlgCam *pDlg_cam;
+#endif
+    QAction *lagAct;
     QList<QString> lAwaylog;
     QMap<QString, bool> mFriends;
     QList<QString> lIgnore;

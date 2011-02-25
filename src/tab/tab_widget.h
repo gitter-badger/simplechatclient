@@ -22,7 +22,9 @@
 #define TAB_WIDGET_H
 
 #include "defines.h"
-class DlgCam;
+#ifndef Q_WS_WIN
+    class DlgCam;
+#endif
 class DlgUserProfile;
 class MainTextEdit;
 class Network;
@@ -41,8 +43,11 @@ class TabWidget : public QWidget
 {
     Q_OBJECT
 public:
-    TabWidget(QWidget *, Network *, QString, Notify *, QMap <QString, QByteArray> *, QTcpSocket *, sChannelNickStatus *, DlgUserProfile *, DlgCam *, QList<QString> *);
+    TabWidget(QWidget *, Network *, QString, Notify *, QMap <QString, QByteArray> *, QTcpSocket *, sChannelNickStatus *, DlgUserProfile *, QList<QString> *);
     ~TabWidget();
+#ifndef Q_WS_WIN
+    void set_dlg_cam(DlgCam *);
+#endif
     inline QString get_name() { return strName; }
     inline void add_user() { iNickCount++; } // update nick count for option hide join/part when > 200
     inline void del_user() { iNickCount--; } // update nick count for option hide join/part when > 200
@@ -72,7 +77,9 @@ private:
     QTcpSocket *camSocket;
     sChannelNickStatus *mChannelNickStatus;
     DlgUserProfile *pDlg_user_profile;
+#ifndef Q_WS_WIN
     DlgCam *pDlg_cam;
+#endif
     QList<QString> *lAwaylog;
 
     // other

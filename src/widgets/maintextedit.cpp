@@ -23,16 +23,17 @@
 #include <QMenu>
 #include <QSettings>
 #include <QTextBlock>
-#include "dlg_cam.h"
 #include "dlg_user_profile.h"
 #include "network.h"
 #include "maintextedit.h"
 
 #ifdef Q_WS_WIN
-#include "kamerzysta.h"
+    #include "kamerzysta.h"
+#else
+    #include "dlg_cam.h"
 #endif
 
-MainTextEdit::MainTextEdit(QWidget *parent, Network *param1, QString param2, QTcpSocket *param3, sChannelNickStatus *param4, DlgUserProfile *param5, DlgCam *param6)
+MainTextEdit::MainTextEdit(QWidget *parent, Network *param1, QString param2, QTcpSocket *param3, sChannelNickStatus *param4, DlgUserProfile *param5)
 {
     myparent = parent;
     pNetwork = param1;
@@ -40,12 +41,18 @@ MainTextEdit::MainTextEdit(QWidget *parent, Network *param1, QString param2, QTc
     camSocket = param3;
     mChannelNickStatus = param4;
     pDlg_user_profile = param5;
-    pDlg_cam = param6;
 
     strNick = QString::null;
 
     update_background_image();
 }
+
+#ifndef Q_WS_WIN
+void MainTextEdit::set_dlg_cam(DlgCam *param1)
+{
+    pDlg_cam = param1;
+}
+#endif
 
 void MainTextEdit::update_background_image()
 {

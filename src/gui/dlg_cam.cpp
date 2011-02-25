@@ -1541,7 +1541,6 @@ void DlgCam::showEvent(QShowEvent *event)
     // center screen
     move(QApplication::desktop()->screen()->rect().center() - rect().center());
 
-#ifndef Q_WS_WIN
     // connect or get img
     if (camNetwork->is_connected() == true)
     {
@@ -1577,14 +1576,12 @@ void DlgCam::showEvent(QShowEvent *event)
 
     // switch to first tab
     ui.tabWidget->setCurrentIndex(0);
-#endif
 }
 
 void DlgCam::hideEvent(QHideEvent *event)
 {
     event->accept();
 
-#ifndef Q_WS_WIN
     if (strNick.isEmpty() == false)
     {
         lLastCommand.append("HIDE_EVENT");
@@ -1597,7 +1594,6 @@ void DlgCam::hideEvent(QHideEvent *event)
     ui.label_img->clear();
     simpleRankWidget->set_rank(0);
     ui.textEdit_channels->clear();
-#endif
 }
 
 void DlgCam::closeEvent(QCloseEvent *event)

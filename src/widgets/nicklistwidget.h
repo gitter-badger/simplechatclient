@@ -22,7 +22,9 @@
 #define NICKLISTTREEWIDGET_H
 
 #include "defines.h"
-class DlgCam;
+#ifndef Q_WS_WIN
+    class DlgCam;
+#endif
 class DlgUserProfile;
 class Network;
 #include <QTcpSocket>
@@ -54,8 +56,11 @@ class NickListWidget : public QTreeWidget
 {
     Q_OBJECT
 public:
-    NickListWidget(QWidget *, Network *, QString, QMap <QString, QByteArray> *, QTcpSocket *, sChannelNickStatus *, DlgUserProfile *, DlgCam *);
+    NickListWidget(QWidget *, Network *, QString, QMap <QString, QByteArray> *, QTcpSocket *, sChannelNickStatus *, DlgUserProfile *);
     ~NickListWidget();
+#ifndef Q_WS_WIN
+    void set_dlg_cam(DlgCam *);
+#endif
     void set_open_channels(QStringList);
     void add(QString, QString, QString, sChannelNickStatus *mChannelNickStatus);
     void remove(QString, sChannelNickStatus *mChannelNickStatus);
@@ -74,7 +79,9 @@ private:
     QTcpSocket *camSocket;
     sChannelNickStatus *mChannelNickStatus;
     DlgUserProfile *pDlg_user_profile;
+#ifndef Q_WS_WIN
     DlgCam *pDlg_cam;
+#endif
     // other
     enum { maxOpenChannels = 50 };
     QAction *openChannelsActs[maxOpenChannels];
