@@ -464,6 +464,8 @@ void OnetKernel::kernel(QString param1)
                 raw_408n();
             else if (strDataList[3].toLower() == ":412")
                 raw_412n();
+            else if (strDataList[3].toLower() == ":414")
+                raw_414n();
             else if (strDataList[3].toLower() == ":415")
                 raw_415n();
             else if (strDataList[3].toLower() == ":416")
@@ -3165,11 +3167,18 @@ void OnetKernel::raw_412n()
 // ignore
 }
 
+// RS INFO #testa
+// :RankServ!service@service.onet NOTICE Merovingian :414 #testa :channel has no stats
+void OnetKernel::raw_414n()
+{
+// ignore
+}
+
 // RS INFO succubi
 // :RankServ!service@service.onet NOTICE Merovingian :415 Succubi :permission denied
 void OnetKernel::raw_415n()
 {
-// TODO
+// ignore
 }
 
 // RS INFO #a
