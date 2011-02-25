@@ -61,6 +61,8 @@ private:
     QFile *file;
     QDomDocument doc;
 
+    QMap<QString,QString> get_default_values();
+    void fix_config();
     void create_new_config();
     void add_config_value(QDomDocument *, QDomElement *, QString, QString);
     void save();

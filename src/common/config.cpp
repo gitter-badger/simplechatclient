@@ -90,6 +90,60 @@ Config::~Config()
     delete file;
 }
 
+QMap<QString,QString> Config::get_default_values()
+{
+    QString path = QCoreApplication::applicationDirPath();
+    QString strSoundBeep = path+"/3rdparty/sounds/beep.wav";
+    QString strSoundQuery = path+"/3rdparty/sounds/query.wav";
+    QString strBackgroundImage = path+"/images/wallpaper/default.jpg";
+
+    QMap<QString,QString> mDefaultValues;
+
+    mDefaultValues.insert("nick", "~test");
+    mDefaultValues.insert("pass", "");
+    mDefaultValues.insert("language", "pl");
+    mDefaultValues.insert("auto_busy", "off");
+    mDefaultValues.insert("disable_autojoin_favourites", "off");
+    mDefaultValues.insert("show_zuo", "off");
+    mDefaultValues.insert("hide_formating", "off");
+    mDefaultValues.insert("hide_join_part", "off");
+    mDefaultValues.insert("hide_join_part_200", "on");
+    mDefaultValues.insert("disable_avatars", "on");
+    mDefaultValues.insert("disable_emots", "off");
+    mDefaultValues.insert("disable_replaces", "off");
+    mDefaultValues.insert("style", "modern");
+    mDefaultValues.insert("background_color", "#ffffff");
+    mDefaultValues.insert("my_bold", "off");
+    mDefaultValues.insert("my_italic", "off");
+    mDefaultValues.insert("my_font", "Verdana");
+    mDefaultValues.insert("my_color", "#000000");
+    mDefaultValues.insert("font_size", "11px");
+    mDefaultValues.insert("default_font_color", "#000000");
+    mDefaultValues.insert("font_color_level_1", "#009300");
+    mDefaultValues.insert("font_color_level_2", "#4733FF");
+    mDefaultValues.insert("font_color_level_3", "#00007F");
+    mDefaultValues.insert("font_color_level_4", "#00007F");
+    mDefaultValues.insert("font_color_level_5", "#009300");
+    mDefaultValues.insert("font_color_level_6", "#0066FF");
+    mDefaultValues.insert("font_color_level_7", "#666666");
+    mDefaultValues.insert("font_color_level_9", "#ff0000");
+    mDefaultValues.insert("channel_font_color", "#0000ff");
+    mDefaultValues.insert("nicklist_nick_color", "#333333");
+    mDefaultValues.insert("nicklist_selected_nick_color", "#ffffff");
+    mDefaultValues.insert("nicklist_busy_nick_color", "#a0a0a4");
+    mDefaultValues.insert("nicklist_gradient_1_color", "#77d5f7");
+    mDefaultValues.insert("nicklist_gradient_2_color", "#1b86b7");
+    mDefaultValues.insert("disable_logs", "off");
+    mDefaultValues.insert("sound_beep", strSoundBeep);
+    mDefaultValues.insert("sound_query", strSoundQuery);
+    mDefaultValues.insert("disable_sounds", "off");
+    mDefaultValues.insert("background_image", strBackgroundImage);
+    mDefaultValues.insert("disable_background_image", "off");
+    mDefaultValues.insert("spellchecker", "off");
+
+    return mDefaultValues;
+}
+
 QString Config::get_value(QString strKey)
 {
     // if config file was opened successfully
@@ -116,21 +170,18 @@ QString Config::get_value(QString strKey)
 
     // not exist value - save default, return default
 
-    QString path = QCoreApplication::applicationDirPath();
-    QString strSoundBeep = path+"/3rdparty/sounds/beep.wav";
-    QString strSoundQuery = path+"/3rdparty/sounds/query.wav";
-
-    QStringList strlKeys;
-    strlKeys << "nick" << "pass" << "language" << "auto_busy" << "disable_autojoin_favourites" << "show_zuo" << "hide_formating" << "hide_join_part" << "hide_join_part_200" << "disable_avatars" << "disable_emots" << "disable_replaces" << "style" << "background_color" << "my_bold" << "my_italic" << "my_font" << "my_color" << "font_size" << "default_font_color" << "font_color_level_1" << "font_color_level_2" << "font_color_level_3" << "font_color_level_4" << "font_color_level_5" << "font_color_level_6" << "font_color_level_7" << "font_color_level_9" << "channel_font_color" << "nicklist_nick_color" << "nicklist_selected_nick_color" << "nicklist_busy_nick_color" << "nicklist_gradient_1_color" << "nicklist_gradient_2_color" << "disable_logs" << "sound_beep" << "sound_query" << "disable_sounds" << "background_image" << "disable_background_image" << "spellchecker";
-    QStringList strlValues;
-    strlValues << "~test" << "" << "pl" << "off" << "off" << "off" << "off" << "off" << "on" << "on" << "off" << "off" << "modern" << "#ffffff" << "off" << "off" << "Verdana" << "#000000" << "11px" << "#000000" << "#009300" << "#4733FF" << "#00007F" << "#00007F" << "#009300" << "#0066FF" << "#666666" << "#ff0000" << "#0000ff" << "#333333" << "#ffffff" << "#a0a0a4" << "#77d5f7" << "#1b86b7" << "off" << strSoundBeep << strSoundQuery << "off" << path+"/images/wallpaper/default.jpg" << "off" << "off";
-
-    for (int i = 0; i < strlKeys.count(); i++)
+    QMap<QString,QString> mDefaultValues = get_default_values();
+    QMapIterator<QString, QString> i(mDefaultValues);
+    while (i.hasNext())
     {
-        if (strKey == strlKeys.at(i))
+        i.next();
+        QString strDefaultKey = i.key();
+        QString strDefaultValue = i.value();
+
+        if (strKey == strDefaultKey)
         {
-            set_value(strlKeys.at(i), strlValues.at(i));
-            return strlValues.at(i);
+            set_value(strDefaultKey, strDefaultValue);
+            return strDefaultValue;
         }
     }
 
@@ -145,6 +196,9 @@ QString Config::get_value(QString strKey)
 
 QMap <QString, QString> Config::read_config()
 {
+    // fix config
+    fix_config();
+
     QMap <QString, QString> mResult;
 
     if ((doc.isNull() == false) && (file->isOpen() == true))
@@ -202,23 +256,36 @@ void Config::set_value(QString strKey, QString strValue)
     save();
 }
 
+void Config::fix_config()
+{
+    QMap<QString,QString> mDefaultValues = get_default_values();
+    QMapIterator<QString, QString> i(mDefaultValues);
+    while (i.hasNext())
+    {
+        i.next();
+        QString strDefaultKey = i.key();
+
+        // get all values - if not exist create default value
+        get_value(strDefaultKey);
+    }
+}
+
 void Config::create_new_config()
 {
     doc.clear();
     QDomElement root = doc.createElement("config");
     doc.appendChild(root);
 
-    QString path = QCoreApplication::applicationDirPath();
-    QString strSoundBeep = path+"/3rdparty/sounds/beep.wav";
-    QString strSoundQuery = path+"/3rdparty/sounds/query.wav";
+    QMap<QString,QString> mDefaultValues = get_default_values();
+    QMapIterator<QString, QString> i(mDefaultValues);
+    while (i.hasNext())
+    {
+        i.next();
+        QString strDefaultKey = i.key();
+        QString strDefaultValue = i.value();
 
-    QStringList strlKeys;
-    strlKeys << "nick" << "pass" << "language" << "auto_busy" << "disable_autojoin_favourites" << "show_zuo" << "hide_formating" << "hide_join_part" << "hide_join_part_200" << "disable_avatars" << "disable_emots" << "disable_replaces" << "style" << "background_color" << "my_bold" << "my_italic" << "my_font" << "my_color" << "font_size" << "default_font_color" << "font_color_level_1" << "font_color_level_2" << "font_color_level_3" << "font_color_level_4" << "font_color_level_5" << "font_color_level_6" << "font_color_level_7" << "font_color_level_9" << "channel_font_color" << "nicklist_nick_color" << "nicklist_selected_nick_color" << "nicklist_busy_nick_color" << "nicklist_gradient_1_color" << "nicklist_gradient_2_color" << "disable_logs" << "sound_beep" << "sound_query" << "disable_sounds" << "background_image" << "disable_background_image" << "spellchecker";
-    QStringList strlValues;
-    strlValues << "~test" << "" << "pl" << "off" << "off" << "off" << "off" << "off" << "on" << "on" << "off" << "off" << "modern" << "#ffffff" << "off" << "off" << "Verdana" << "#000000" << "11px" << "#000000" << "#009300" << "#4733FF" << "#00007F" << "#00007F" << "#009300" << "#0066FF" << "#666666" << "#ff0000" << "#0000ff" << "#333333" << "#ffffff" << "#a0a0a4" << "#77d5f7" << "#1b86b7" << "off" << strSoundBeep << strSoundQuery << "off" << path+"/images/wallpaper/default.jpg" << "off" << "off";
-
-    for (int i = 0; i < strlKeys.count(); i++)
-        add_config_value(&doc, &root, strlKeys.at(i), strlValues.at(i));
+        add_config_value(&doc, &root, strDefaultKey, strDefaultValue);
+    }
 
     save();
 }
