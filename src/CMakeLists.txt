@@ -150,30 +150,17 @@ if (UNIX AND NOT APPLE)
 	set (CMAKE_CXX_FLAGS "-W -Wall -fno-strict-aliasing ${CMAKE_CXX_FLAGS}")
 endif (UNIX AND NOT APPLE)
 
-# opencv
-if (UNIX AND NOT APPLE)
-	find_package (OpenCV REQUIRED)
-
-	set (CMAKE_REQUIRED_FLAGS -lcv)
-	check_c_source_compiles ("
-					#include <opencv/highgui.h>
-					int main(){return 0;}"
-				HIGHGUI_H)
-	check_c_source_compiles ("
-					#include <opencv/cvaux.h>
-					int main(){return 0;}"
-				CVAUX_H)
-
-	if(NOT HIGHGUI_H)
-		message(FATAL_ERROR "libhighgui not found")
-	endif(NOT HIGHGUI_H)
-	if(NOT CVAUX_H)
-		message(FATAL_ERROR "libcvaux not found")
-	endif(NOT CVAUX_H)
-endif (UNIX AND NOT APPLE)
-
 # qt
 find_package (Qt4 REQUIRED)
+
+# v4l2
+if (UNIX)
+	check_include_files(linux/videodev2.h V4L2_FOUND)
+
+	if (NOT V4L2_FOUND)
+		message (FATAL_ERROR "Video4Linux2 not found")
+	endif (NOT V4L2_FOUND)
+endif (UNIX)
 
 # xml
 set (QT_USE_QTXML TRUE)
@@ -236,7 +223,7 @@ qt4_wrap_ui (scc_UIS_H ${scc_UIS})
 
 include_directories (${CMAKE_SOURCE_DIR}/ui)
 
-# disable console on windows
+# disable console on windows mingw
 if (MINGW)
 	SET (CMAKE_CXX_LINK_FLAGS "${CMAKE_CXX_LINK_FLAGS} -mwindows")
 endif (MINGW)
@@ -255,7 +242,7 @@ else (MSVC) # mingw or linux
 		add_executable (../scc ${scc_SRCS} ${MOC_FILES} ${scc_HDRS} ${scc_QRC_SRCS} ${scc_UIS_H})
 	endif (MINGW)
 
-	target_link_libraries (../scc ${QT_LIBRARIES} ${QT_QTNETWORK_LIBRARIES} ${QCA2_LIBRARIES} ${OpenCV_LIBS})
+	target_link_libraries (../scc ${QT_LIBRARIES} ${QT_QTNETWORK_LIBRARIES} ${QCA2_LIBRARIES})
 endif (MSVC)
 
 # i18n

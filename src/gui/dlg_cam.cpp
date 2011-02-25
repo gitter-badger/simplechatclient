@@ -54,6 +54,10 @@ DlgCam::DlgCam(QWidget *parent, Network *param1, QTcpSocket *param2) : QDialog(p
     // init video
     video = new Video();
 
+    // video frame timer
+    video_frame_timer = new QTimer();
+    video_frame_timer->setInterval(100);
+
     // default text
     ui.label_nick->setText(strNick);
     ui.tabWidget->setTabText(0, tr("Viewing"));
@@ -197,10 +201,13 @@ DlgCam::DlgCam(QWidget *parent, Network *param1, QTcpSocket *param2) : QDialog(p
     QObject::connect(camNetwork, SIGNAL(set_label(QString)), this, SLOT(set_label(QString)));
     QObject::connect(camNetwork, SIGNAL(nconnected()), this, SLOT(nconnected()));
     QObject::connect(camNetwork, SIGNAL(ndisconnected()), this, SLOT(ndisconnected()));
+
+    QObject::connect(video_frame_timer, SIGNAL(timeout()), this, SLOT(get_frame()));
 }
 
 DlgCam::~DlgCam()
 {
+    delete video_frame_timer;
     delete video;
     delete simpleRankWidget;
     delete camNetwork;
@@ -294,10 +301,26 @@ void DlgCam::set_broadcasting()
     {
         // create
         video->create();
+        video_frame_timer->start();
 
         // read self video
         QTimer::singleShot(1000*1, this, SLOT(read_video())); // 1 sec
     }
+}
+
+void DlgCam::get_frame()
+{
+    // video device not exist any more
+    if (video->exist_video_device() == false)
+    {
+        video->destroy();
+        video_frame_timer->stop();
+        return;
+    }
+
+    // get image
+    if ((bBroadcasting == true) || (ui.tabWidget->currentIndex() == 1) || (captured_frame.isNull() == true))
+        video->get_image(&captured_frame);
 }
 
 void DlgCam::data_kernel(QByteArray bData)
@@ -1459,15 +1482,9 @@ void DlgCam::change_user(int row, int column)
 
 void DlgCam::read_video()
 {
-    // video device not exist any more
-    if (video->exist_video_device() == false)
-    {
-        video->destroy();
-        return;
-    }
-
     // get image
-    QPixmap pixmap = video->get_image();
+    QPixmap pixmap = QPixmap::fromImage(captured_frame);
+
     // set image
     ui.label_capture->setPixmap(pixmap.scaled(QSize(320,240)));
 

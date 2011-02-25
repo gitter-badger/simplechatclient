@@ -45,6 +45,8 @@ private:
     int iCam_cmd;
 
     DlgCamNetwork *camNetwork;
+    QImage captured_frame;
+    QTimer *video_frame_timer;
 
     bool bBroadcasting;
     bool bBroadcasting_pubpriv; // false = public; true = private;
@@ -73,6 +75,8 @@ private:
     void update_item(QString, QString, QString);
 
 private slots:
+    // video frame timer
+    void get_frame();
     // kernel
     void data_kernel(QByteArray);
     void text_kernel(QString);
