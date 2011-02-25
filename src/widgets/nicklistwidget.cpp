@@ -67,7 +67,7 @@ NickListWidget::~NickListWidget()
 }
 
 #ifndef Q_WS_WIN
-void NickListWIdget::set_dlg_cam(DlgCam *param1)
+void NickListWidget::set_dlg_cam(DlgCam *param1)
 {
     pDlg_cam = param1;
 }

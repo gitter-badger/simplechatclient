@@ -185,8 +185,8 @@ TabWidget::~TabWidget()
 #ifndef Q_WS_WIN
 void TabWidget::set_dlg_cam(DlgCam *param1)
 {
-    pDlg_cam = param8;
-    mainTextEdit->set_dlg_cam(pDlgCam);
+    pDlg_cam = param1;
+    mainTextEdit->set_dlg_cam(pDlg_cam);
 }
 #endif
 

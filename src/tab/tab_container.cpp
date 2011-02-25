@@ -115,7 +115,7 @@ void TabContainer::add_tab(QString strChannel)
         // create tab
         tw.append(new TabWidget(myparent, pNetwork, strChannel, pNotify, mChannelAvatar, camSocket, mChannelNickStatus, pDlg_user_profile, lAwaylog));
 #ifndef Q_WS_WIN
-        tw.at(tw.count()-1)->set_dlg_cam(pDlgCam);
+        tw.at(tw.count()-1)->set_dlg_cam(pDlg_cam);
 #endif
         pTabM->addTab(tw.at(tw.count()-1), strChannel);
         pTabM->setCurrentIndex(tw.count()-1);

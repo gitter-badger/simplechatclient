@@ -390,7 +390,7 @@ void Core::create_nicklist(QString strChannel)
     {
         NickListWidget *nicklist = new NickListWidget(myparent, pNetwork, strChannel, &mNickAvatar, camSocket, &stlChannelNickStatus, pDlg_user_profile);
 #ifndef Q_WS_WIN
-        nicklist->set_dlg_cam(pDlgCam);
+        nicklist->set_dlg_cam(pDlg_cam);
 #endif
         nicklist->setParent(nickListDockWidget);
         nicklist->setItemDelegate(new NickListDelegate(nicklist));
