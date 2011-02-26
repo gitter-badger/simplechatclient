@@ -213,11 +213,142 @@ void MainTextEdit::invite()
     }
 }
 
+void MainTextEdit::menu_channel(QString strChannel, QContextMenuEvent *event)
+{
+    QMenu menu(this);
+
+    QAction *nameAct = new QAction(strChannel, &menu);
+    nameAct->setDisabled(true);
+
+    menu.addAction(nameAct);
+    menu.addSeparator();
+    menu.addAction(tr("Join channel"), this, SLOT(join_channel()));
+    menu.exec(event->globalPos());
+}
+
+void MainTextEdit::menu_nick(QString strNick, QContextMenuEvent *event)
+{
+    QString strPrefix;
+    QString strSuffix;
+
+    for (int i = 0; i < mChannelNickStatus->count(); i++)
+    {
+        if ((mChannelNickStatus->at(i).nick == strNick) && (mChannelNickStatus->at(i).channel == strChannel))
+        {
+            strPrefix = mChannelNickStatus->at(i).prefix;
+            strSuffix = mChannelNickStatus->at(i).suffix;
+            break;
+        }
+    }
+
+    QMenu *minvite = new QMenu(tr("Invite"));
+
+    for (int i = 0; i < maxOpenChannels; ++i)
+    {
+        openChannelsActs[i] = new QAction(this);
+        openChannelsActs[i]->setVisible(false);
+        connect(openChannelsActs[i], SIGNAL(triggered()), this, SLOT(invite()));
+     }
+
+    for (int i = 0; i < maxOpenChannels; ++i)
+        minvite->addAction(openChannelsActs[i]);
+
+    for (int i = 0; i < strOpenChannels.count(); ++i)
+    {
+        openChannelsActs[i]->setText(strOpenChannels[i]);
+        openChannelsActs[i]->setData(strOpenChannels[i]);
+        openChannelsActs[i]->setVisible(true);
+    }
+    for (int j = strOpenChannels.count(); j < maxOpenChannels; ++j)
+        openChannelsActs[j]->setVisible(false);
+
+    QMenu *friends = new QMenu(tr("Friends list"));
+    friends->addAction(tr("Add to friends"), this, SLOT(friends_add()));
+    friends->addAction(tr("Remove from friends"), this, SLOT(friends_del()));
+
+    QMenu *ignore = new QMenu(tr("Ignore list"));
+    ignore->addAction(tr("Add to Ignore list"), this, SLOT(ignore_add()));
+    ignore->addAction(tr("Remove from Ignore list"), this, SLOT(ignore_del()));
+
+    QMenu *privilege = new QMenu(tr("Actions"));
+
+    if (strPrefix.indexOf("@") == -1)
+        privilege->addAction(tr("Give super operator status"), this, SLOT(op_add()));
+    else
+        privilege->addAction(tr("Take super operator status"), this, SLOT(op_del()));
+
+    if (strPrefix.indexOf("%") == -1)
+        privilege->addAction(tr("Give operator status"), this, SLOT(halfop_add()));
+    else
+        privilege->addAction(tr("Take operator status"), this, SLOT(halfop_del()));
+
+    if (strPrefix.indexOf("!") == -1)
+        privilege->addAction(tr("Give moderator status"), this, SLOT(moderator_add()));
+    else
+        privilege->addAction(tr("Take moderator status"), this, SLOT(moderator_del()));
+
+    if (strPrefix.indexOf("+") == -1)
+        privilege->addAction(tr("Give guest status"), this, SLOT(voice_add()));
+    else
+        privilege->addAction(tr("Take guest status"), this, SLOT(voice_del()));
+
+    QAction *nameAct = new QAction(strNick, this);
+    nameAct->setDisabled(true);
+
+    QMenu menu(this);
+    menu.addAction(nameAct);
+    menu.addSeparator();
+    menu.addAction(tr("Priv"), this, SLOT(priv()));
+    menu.addAction(tr("Whois"), this, SLOT(whois()));
+    if (strNick[0] != '~')
+    {
+        menu.addAction(tr("Profile"), this, SLOT(profile()));
+        menu.addAction(tr("Webcam"), this, SLOT(cam()));
+    }
+    menu.addMenu(minvite);
+    menu.addMenu(friends);
+    menu.addMenu(ignore);
+    menu.addSeparator();
+    menu.addAction(tr("Kick From Channel"), this, SLOT(kick()));
+    menu.addAction(tr("Ban From Channel"), this, SLOT(ban()));
+    menu.addAction(tr("Kick & Ban"), this, SLOT(kban()));
+    menu.addAction(tr("IP Ban"), this, SLOT(ipban()));
+    menu.addSeparator();
+    menu.addMenu(privilege);
+
+    menu.exec(event->globalPos());
+}
+
+void MainTextEdit::menu_standard(QContextMenuEvent *event)
+{
+    QMenu menu(this);
+
+    QAction *copy = new QAction(QIcon(":/images/oxygen/16x16/edit-copy.png"), tr("Copy"), &menu);
+    if (this->textCursor().selectedText().isEmpty() == true)
+        copy->setEnabled(false);
+    copy->setShortcut(QKeySequence::Copy);
+    connect(copy, SIGNAL(triggered()), this, SLOT(copy()));
+    menu.addAction(copy);
+
+    QAction *clear = new QAction(QIcon(":/images/oxygen/16x16/draw-eraser.png"), tr("Clear"), &menu);
+    connect(clear, SIGNAL(triggered()), this, SLOT(clear()));
+    menu.addAction(clear);
+
+    menu.addSeparator();
+
+    QAction *all = new QAction(QIcon(":/images/oxygen/16x16/edit-select-all.png"), tr("Select All"), &menu);
+    all->setShortcut(QKeySequence::SelectAll);
+    connect(all, SIGNAL(triggered()), this, SLOT(selectAll()));
+    menu.addAction(all);
+
+    menu.exec(event->globalPos());
+}
+
 void MainTextEdit::contextMenuEvent(QContextMenuEvent *event)
 {
     if (this->textCursor().selectedText().isEmpty() == true) // if nothing selected
     {
-        QTextCursor cursor = cursorForPosition(event->pos());
+        QTextCursor cursor = QTextEdit::cursorForPosition(event->pos());
         cursor.select(QTextCursor::WordUnderCursor);
         if (!cursor.selectedText().isEmpty())
         {
@@ -234,17 +365,7 @@ void MainTextEdit::contextMenuEvent(QContextMenuEvent *event)
             if (strText.at(0) == '#')
             {
                 strChannel = strText;
-
-                QAction *nameAct = new QAction(strChannel, this);
-                nameAct->setDisabled(true);
-
-                QMenu *menu = new QMenu(strChannel);
-                menu->addAction(nameAct);
-                menu->addSeparator();
-                menu->addAction(tr("Join channel"), this, SLOT(join_channel()));
-                menu->exec(event->globalPos());
-
-                cursor.movePosition(QTextCursor::End, QTextCursor::MoveAnchor);
+                menu_channel(strChannel, event);
                 return;
             }
 
@@ -257,102 +378,12 @@ void MainTextEdit::contextMenuEvent(QContextMenuEvent *event)
                     if (strText != strCheckNick) strText = "~"+strText; // correct nick
 
                     strNick = strText;
-
-                    QString strPrefix;
-                    QString strSuffix;
-
-                    for (int i = 0; i < mChannelNickStatus->count(); i++)
-                    {
-                        if ((mChannelNickStatus->at(i).nick == strNick) && (mChannelNickStatus->at(i).channel == strChannel))
-                        {
-                            strPrefix = mChannelNickStatus->at(i).prefix;
-                            strSuffix = mChannelNickStatus->at(i).suffix;
-                            break;
-                        }
-                    }
-
-                    QMenu *minvite = new QMenu(tr("Invite"));
-
-                    for (int i = 0; i < maxOpenChannels; ++i)
-                    {
-                        openChannelsActs[i] = new QAction(this);
-                        openChannelsActs[i]->setVisible(false);
-                        connect(openChannelsActs[i], SIGNAL(triggered()), this, SLOT(invite()));
-                     }
-
-                    for (int i = 0; i < maxOpenChannels; ++i)
-                        minvite->addAction(openChannelsActs[i]);
-
-                    for (int i = 0; i < strOpenChannels.count(); ++i)
-                    {
-                        openChannelsActs[i]->setText(strOpenChannels[i]);
-                        openChannelsActs[i]->setData(strOpenChannels[i]);
-                        openChannelsActs[i]->setVisible(true);
-                    }
-                    for (int j = strOpenChannels.count(); j < maxOpenChannels; ++j)
-                        openChannelsActs[j]->setVisible(false);
-
-                    QMenu *friends = new QMenu(tr("Friends list"));
-                    friends->addAction(tr("Add to friends"), this, SLOT(friends_add()));
-                    friends->addAction(tr("Remove from friends"), this, SLOT(friends_del()));
-
-                    QMenu *ignore = new QMenu(tr("Ignore list"));
-                    ignore->addAction(tr("Add to Ignore list"), this, SLOT(ignore_add()));
-                    ignore->addAction(tr("Remove from Ignore list"), this, SLOT(ignore_del()));
-
-                    QMenu *privilege = new QMenu(tr("Actions"));
-
-                    if (strPrefix.indexOf("@") == -1)
-                        privilege->addAction(tr("Give super operator status"), this, SLOT(op_add()));
-                    else
-                        privilege->addAction(tr("Take super operator status"), this, SLOT(op_del()));
-
-                    if (strPrefix.indexOf("%") == -1)
-                        privilege->addAction(tr("Give operator status"), this, SLOT(halfop_add()));
-                    else
-                        privilege->addAction(tr("Take operator status"), this, SLOT(halfop_del()));
-
-                    if (strPrefix.indexOf("!") == -1)
-                        privilege->addAction(tr("Give moderator status"), this, SLOT(moderator_add()));
-                    else
-                        privilege->addAction(tr("Take moderator status"), this, SLOT(moderator_del()));
-
-                    if (strPrefix.indexOf("+") == -1)
-                        privilege->addAction(tr("Give guest status"), this, SLOT(voice_add()));
-                    else
-                        privilege->addAction(tr("Take guest status"), this, SLOT(voice_del()));
-
-                    QAction *nameAct = new QAction(strNick, this);
-                    nameAct->setDisabled(true);
-
-                    QMenu *menu = new QMenu(strNick);
-                    menu->addAction(nameAct);
-                    menu->addSeparator();
-                    menu->addAction(tr("Priv"), this, SLOT(priv()));
-                    menu->addAction(tr("Whois"), this, SLOT(whois()));
-                    if (strNick[0] != '~')
-                    {
-                        menu->addAction(tr("Profile"), this, SLOT(profile()));
-                        menu->addAction(tr("Webcam"), this, SLOT(cam()));
-                    }
-                    menu->addMenu(minvite);
-                    menu->addMenu(friends);
-                    menu->addMenu(ignore);
-                    menu->addSeparator();
-                    menu->addAction(tr("Kick From Channel"), this, SLOT(kick()));
-                    menu->addAction(tr("Ban From Channel"), this, SLOT(ban()));
-                    menu->addAction(tr("Kick & Ban"), this, SLOT(kban()));
-                    menu->addAction(tr("IP Ban"), this, SLOT(ipban()));
-                    menu->addSeparator();
-                    menu->addMenu(privilege);
-
-                    menu->exec(event->globalPos());
-                    cursor.movePosition(QTextCursor::End, QTextCursor::MoveAnchor);
+                    menu_nick(strNick, event);
                     return;
                 }
             }
         }
     }
 
-    QTextEdit::contextMenuEvent(event);
+    menu_standard(event);
 }

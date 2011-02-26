@@ -68,5 +68,7 @@
         <file>images/oxygen/16x16/games-config-background.png</file>
         <file>images/oxygen/16x16/office-chart-bar.png</file>
         <file>images/oxygen/16x16/character-set.png</file>
+        <file>images/oxygen/16x16/edit-copy.png</file>
+        <file>images/oxygen/16x16/edit-select-all.png</file>
     </qresource>
 </RCC>

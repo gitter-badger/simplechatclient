@@ -60,6 +60,10 @@ private:
     enum { maxOpenChannels = 50 };
     QAction *openChannelsActs[maxOpenChannels];
 
+    void menu_nick(QString, QContextMenuEvent *);
+    void menu_channel(QString, QContextMenuEvent *);
+    void menu_standard(QContextMenuEvent *);
+
 private slots:
     void join_channel();
     void priv();

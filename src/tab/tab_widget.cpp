@@ -373,6 +373,10 @@ void TabWidget::display_message(QString strData, int iLevel)
     // text
     mainTextEdit->append(strContent);
 
+    // move cursor if there is no selected text
+    if (mainTextEdit->textCursor().selectedText().isEmpty() == true)
+        mainTextEdit->moveCursor(QTextCursor::End, QTextCursor::MoveAnchor);
+
     // align
     if (strAlign == "center")
         mainTextEdit->setAlignment(Qt::AlignCenter);

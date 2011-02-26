@@ -2586,6 +2586,18 @@
         <source>Reason for kicking:</source>
         <translation>Podaj powód wyrzucenia:</translation>
     </message>
+    <message>
+        <source>Copy</source>
+        <translation>Kopiuj</translation>
+    </message>
+    <message>
+        <source>Clear</source>
+        <translation>Wyczyść</translation>
+    </message>
+    <message>
+        <source>Select All</source>
+        <translation>Zaznacz wszystko</translation>
+    </message>
 </context>
 <context>
     <name>NickListDelegate</name>
