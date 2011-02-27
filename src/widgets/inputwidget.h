@@ -62,16 +62,12 @@ private:
     QPushButton *sendButton;
     QPushButton *moderSendButton;
     QString strChannel;
-    QString strLast_msg;
     Highlighter *highlighter;
 
 private slots:
     void inputline_return_pressed();
     void moder_button_clicked();
     void show_hide_toolwidget_clicked();
-
-protected:
-    virtual void keyPressEvent(QKeyEvent *);
 
 signals:
     void show_msg(QString, QString, int);

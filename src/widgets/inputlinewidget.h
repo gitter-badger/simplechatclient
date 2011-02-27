@@ -37,6 +37,7 @@ private:
     QString strLastWord;
     QList <QString> usersList;
     QList <QString> find;
+    QString strLastMsg;
 
     QString get_word();
     void set_word(QString);

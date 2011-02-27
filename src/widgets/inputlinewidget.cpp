@@ -163,7 +163,18 @@ bool InputLineWidget::event(QEvent *e)
     }
     else if ((k->key() == Qt::Key_Enter) || (k->key() == Qt::Key_Return))
     {
+        strLastMsg = this->toPlainText();
         emit returnPressed();
+        return true;
+    }
+    else if (k->key() == Qt::Key_Up)
+    {
+        setPlainText(strLastMsg);
+        return true;
+    }
+    else if (k->key() == Qt::Key_Down)
+    {
+        clear();
         return true;
     }
     else

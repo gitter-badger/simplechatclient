@@ -167,7 +167,6 @@ void InputWidget::send_message(bool bType)
     {
         QString strText = strTextA[i];
         QString strTextOriginal = strText;
-        strLast_msg = strText;
 
         QSettings settings;
         QString strMe = settings.value("nick").toString();
@@ -322,21 +321,4 @@ void InputWidget::moder_button_clicked()
 void InputWidget::show_hide_toolwidget_clicked()
 {
     emit show_hide_toolwidget();
-}
-
-void InputWidget::keyPressEvent(QKeyEvent *e)
-{
-    if (e->key() == Qt::Key_Up)
-    {
-        inputLine->clear();
-        inputLine->setPlainText(strLast_msg);
-        inputLine->setFocus();
-    }
-    else if (e->key() == Qt::Key_Down)
-    {
-        inputLine->clear();
-        inputLine->setFocus();
-    }
-
-    QWidget::keyPressEvent(e);
 }
