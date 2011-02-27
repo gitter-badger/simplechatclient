@@ -27,10 +27,11 @@ InputLineWidget::InputLineWidget(QWidget *parent) : QPlainTextEdit(parent)
 {
     index = 0;
     strLastWord = QString::null;
-    setMaximumHeight(32);
+    setMaximumHeight(26);
     setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setWordWrapMode(QTextOption::NoWrap);
+    setStyleSheet("margin:0;padding:0;font-size:11px;");
 }
 
 InputLineWidget::~InputLineWidget()
