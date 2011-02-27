@@ -410,11 +410,29 @@ void DlgCam::data_kernel(QByteArray bData)
                 // wrong (?)
             }
         }
-        // resize
+        // resize table
         ui.tableWidget_nick_rank_spectators->resizeColumnsToContents();
 
-        // sort
+        // sort table
         ui.tableWidget_nick_rank_spectators->sortByColumn(0, Qt::AscendingOrder);
+
+        // select nick
+        if (strNick.isEmpty() == false)
+        {
+            ui.label_img->setText(tr("Downloading image"));
+            camNetwork->network_send(QString("SUBSCRIBE_BIG * %1").arg(strNick));
+
+            // update channels
+            ui.textEdit_channels->setText(QString("<b>%1</b><br><font color=\"#0000ff\">%2</font>").arg(tr("Is on channels:")).arg(mNickChannels[strNick]));
+        }
+        else
+        {
+            ui.textEdit_desc->setText("");
+            ui.textEdit_desc->hide();
+            ui.label_img->setText(tr("Select user"));
+            simpleRankWidget->set_rank(0);
+            ui.textEdit_channels->clear();
+        }
     }
     // ja31:-
     // osa1987:1:-2/-2/osa1987/1:0::0
@@ -746,23 +764,6 @@ void DlgCam::text_kernel(QString strData)
         camNetwork->network_send("SENDMODE 0");
         ui.radioButton_broadcast_public->setChecked(true);
         bBroadcasting_pubpriv = false;
-
-        if (strNick.isEmpty() == false)
-        {
-            ui.label_img->setText(tr("Downloading image"));
-            camNetwork->network_send(QString("SUBSCRIBE_BIG * %1").arg(strNick));
-
-            // update channels
-            ui.textEdit_channels->setText(QString("<b>%1</b><br><font color=\"#0000ff\">%2</font>").arg(tr("Is on channels:")).arg(mNickChannels[strNick]));
-        }
-        else
-        {
-            ui.textEdit_desc->setText("");
-            ui.textEdit_desc->hide();
-            ui.label_img->setText(tr("Select user"));
-            simpleRankWidget->set_rank(0);
-            ui.textEdit_channels->clear();
-        }
 
         // send all options
         send_all_my_options();
