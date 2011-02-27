@@ -49,12 +49,13 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
     // onet action
     channel_listAct = new QAction(QIcon(":/images/oxygen/16x16/documentation.png"), tr("Channel list"), this);
-    channel_homesAct = new QAction(QIcon(":/images/oxygen/16x16/configure.png"), tr("Channel settings"), this);
+    channel_homesAct = new QAction(QIcon(":/images/oxygen/16x16/configure.png"), tr("Your channels"), this);
     channel_favouritesAct = new QAction(QIcon(":/images/oxygen/16x16/emblem-favorite.png"), tr("Favorite channels"), this);
     friendsAct = new QAction(QIcon(":/images/oxygen/16x16/meeting-attending.png"), tr("Friends"), this);
     ignoreAct = new QAction(QIcon(":/images/oxygen/16x16/meeting-attending-tentative.png"), tr("Ignored"), this);
     camsAct = new QAction(QIcon(":/images/pubcam.png"),tr("Cams"), this);
     myStatsAct = new QAction(QIcon(":/images/oxygen/16x16/office-chart-bar.png"),tr("My statistics"), this);
+    myProfileAct = new QAction(QIcon(":/images/oxygen/16x16/view-pim-contacts.png"),tr("My profile"), this);
 
     // shortcut
     connectAct->setShortcuts(QKeySequence::New);
@@ -96,6 +97,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     // onet my menu
     chatMenu = menuBar()->addMenu(tr("&My"));
     chatMenu->addAction(myStatsAct);
+    chatMenu->addAction(myProfileAct);
 
     // help menu
     helpMenu = menuBar()->addMenu(tr("He&lp"));
@@ -135,6 +137,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     QObject::connect(friendsAct, SIGNAL(triggered()), this, SLOT(open_friends()));
     QObject::connect(ignoreAct, SIGNAL(triggered()), this, SLOT(open_ignore()));
     QObject::connect(myStatsAct, SIGNAL(triggered()), this, SLOT(open_my_stats()));
+    QObject::connect(myProfileAct, SIGNAL(triggered()), this, SLOT(open_my_profile()));
 
     // awaylog
     QObject::connect(awaylogAct, SIGNAL(triggered()), this, SLOT(open_awaylog()));
@@ -188,7 +191,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
     // create basic core
     coreServers.append(new Core());
-    coreServers.at(0)->init(this,"czat-app.onet.pl", 5015, pNotify, toolBar, viewMenu, connectAct, channel_homesAct, channel_favouritesAct, friendsAct, ignoreAct, myStatsAct);
+    coreServers.at(0)->init(this,"czat-app.onet.pl", 5015, pNotify, toolBar, viewMenu, connectAct, channel_homesAct, channel_favouritesAct, friendsAct, ignoreAct, myStatsAct, myProfileAct);
 
     // update
     pUpdate->check_update();
@@ -238,7 +241,7 @@ void MainWindow::create_settings()
     // default settings
     QSettings settings;
     settings.clear();
-    settings.setValue("version", "1.0.10.731");
+    settings.setValue("version", "1.0.10.732");
     settings.setValue("debug", "off");
     settings.setValue("logged", "off");
     settings.setValue("busy", "off");
@@ -398,4 +401,10 @@ void MainWindow::open_notes()
 void MainWindow::open_my_stats()
 {
     coreServers.at(0)->open_my_stats();
+}
+
+// onet my profile
+void MainWindow::open_my_profile()
+{
+    coreServers.at(0)->open_my_profile();
 }

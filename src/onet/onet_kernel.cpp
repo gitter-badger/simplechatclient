@@ -35,7 +35,7 @@
 #include "tab_container.h"
 #include "onet_kernel.h"
 
-OnetKernel::OnetKernel(QWidget *parent, Network *param1, TabContainer *param2, Notify *param3, QMap <QString, QByteArray> *param4, QMap <QString, QByteArray> *param5, DlgChannelSettings *param6, QList<QString> *param7, sChannelList *param8, QList<QString> *param9, QMap<QString, bool> *param10, QList<QString> *param11, DlgModeration *param12, QMap<QString, QString> *param13)
+OnetKernel::OnetKernel(QWidget *parent, Network *param1, TabContainer *param2, Notify *param3, QMap <QString, QByteArray> *param4, QMap <QString, QByteArray> *param5, DlgChannelSettings *param6, QList<QString> *param7, sChannelList *param8, QList<QString> *param9, QMap<QString, bool> *param10, QList<QString> *param11, DlgModeration *param12, QMap<QString, QString> *param13, QMap<QString, QString> *param14)
 {
     myparent = parent;
     pNetwork = param1;
@@ -51,6 +51,7 @@ OnetKernel::OnetKernel(QWidget *parent, Network *param1, TabContainer *param2, N
     lIgnore = param11;
     dlgmoderation = param12;
     mMyStats = param13;
+    mMyProfile = param14;
 }
 
 OnetKernel::~OnetKernel()
@@ -406,6 +407,10 @@ void OnetKernel::kernel(QString param1)
                 raw_175n();
             else if (strDataList[3].toLower() == ":176")
                 raw_176n();
+            else if (strDataList[3].toLower() == ":210")
+                raw_210n();
+            else if (strDataList[3].toLower() == ":211")
+                raw_211n();
             else if (strDataList[3].toLower() == ":220")
                 raw_220n();
             else if (strDataList[3].toLower() == ":221")
@@ -1346,6 +1351,7 @@ void OnetKernel::raw_001()
     lChannelFavourites->clear();
     stlChannelList->clear();
     mMyStats->clear();
+    mMyProfile->clear();
     lChannelHomes->clear();
 
     // busy
@@ -1470,29 +1476,31 @@ void OnetKernel::raw_109n()
 void OnetKernel::raw_111n()
 {
     QString strNick = strDataList[4];
-    QString strInfo = strDataList[5];
+    QString strKey = strDataList[5];
 
     QString strValue;
     for (int i = 6; i < strDataList.size(); i++) { if (i != 6) strValue += " "; strValue += strDataList[i]; }
     if (strValue[0] == ':')
         strValue = strValue.right(strValue.length()-1);
 
+    QSettings settings;
+    QString strMe = settings.value("nick").toString();
+
+    // avatar
     QString strAvatarLink;
+    if (strKey == "avatar")
+        strAvatarLink = strValue;
 
-    // process info
-    if (strValue.isEmpty() == false)
-    {
-        if (strInfo == "avatar")
-            strAvatarLink = strValue;
+    // set user info
+    emit set_user_info(strNick, strKey, strValue);
 
-        // set user info
-        emit set_user_info(strNick, strInfo, strValue);
-    }
-    else
+    // set my profile
+    if (strNick == strMe)
     {
-        // set empty avatar
-        if (strInfo == "avatar")
-            emit set_user_info(strNick, strInfo, strValue);
+        if (mMyProfile->contains(strKey) == true)
+            (*mMyProfile)[strKey] = strValue;
+        else
+            mMyProfile->insert(strKey, strValue);
     }
 
     // get avatar
@@ -1876,6 +1884,37 @@ void OnetKernel::raw_175n()
 void OnetKernel::raw_176n()
 {
 // ignore
+}
+
+// NS SET city
+// :NickServ!service@service.onet NOTICE Merovingian :210 :nothing changed
+void OnetKernel::raw_210n()
+{
+// ignore
+}
+
+// NS SET city
+// :NickServ!service@service.onet NOTICE scc_test :211 city :value unset
+void OnetKernel::raw_211n()
+{
+    if (strDataList.value(4).isEmpty() == true) return;
+
+    QString strNick = strDataList[2];
+    QString strKey = strDataList[4];
+
+    QSettings settings;
+    QString strMe = settings.value("nick").toString();
+
+    // set my profile
+    if (strNick == strMe)
+    {
+        if (mMyProfile->contains(strKey) == true)
+            (*mMyProfile)[strKey] = "";
+        else
+            mMyProfile->insert(strKey, "");
+    }
+
+
 }
 
 // NS FRIENDS ADD aaa

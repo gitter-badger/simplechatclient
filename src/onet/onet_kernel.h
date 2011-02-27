@@ -39,7 +39,7 @@ class OnetKernel : public QObject
 {
     Q_OBJECT
 public:
-    OnetKernel(QWidget *, Network *, TabContainer *, Notify *, QMap <QString, QByteArray> *, QMap <QString, QByteArray> *, DlgChannelSettings *, QList<QString> *, sChannelList *, QList<QString> *, QMap<QString, bool> *, QList<QString> *, DlgModeration *, QMap<QString,QString> *);
+    OnetKernel(QWidget *, Network *, TabContainer *, Notify *, QMap <QString, QByteArray> *, QMap <QString, QByteArray> *, DlgChannelSettings *, QList<QString> *, sChannelList *, QList<QString> *, QMap<QString, bool> *, QList<QString> *, DlgModeration *, QMap<QString,QString> *, QMap<QString,QString> *);
     ~OnetKernel();
 
 public slots:
@@ -60,6 +60,7 @@ private:
     QList<QString> *lIgnore;
     DlgModeration *dlgmoderation;
     QMap<QString, QString> *mMyStats;
+    QMap<QString, QString> *mMyProfile;
 
     QString strData;
     QStringList strDataList;
@@ -113,6 +114,8 @@ private:
     void raw_171n();
     void raw_175n();
     void raw_176n();
+    void raw_210n();
+    void raw_211n();
     void raw_220n();
     void raw_221n();
     void raw_230n();

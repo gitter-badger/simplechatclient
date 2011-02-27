@@ -52,7 +52,7 @@ class Core : public QObject
 public:
     Core();
     ~Core();
-    void init(QMainWindow *, QString, int, Notify *, QToolBar *, QMenu *, QAction *, QAction *, QAction *, QAction *, QAction *, QAction *);
+    void init(QMainWindow *, QString, int, Notify *, QToolBar *, QMenu *, QAction *, QAction *, QAction *, QAction *, QAction *, QAction *, QAction *);
 
     void refresh_colors();
     void refresh_background_image();
@@ -70,6 +70,7 @@ public:
     void open_awaylog();
     void open_cams();
     void open_my_stats();
+    void open_my_profile();
     // nicklist
     bool nicklist_exist(QString, QString);
 
@@ -103,6 +104,7 @@ private:
     QAction *friendsAct;
     QAction *ignoreAct;
     QAction *myStatsAct;
+    QAction *myProfileAct;
 
     // require
     QTcpSocket *camSocket;
@@ -136,6 +138,7 @@ private:
     QMap <QString, QByteArray> mNickAvatar;
     QMap <QString, QByteArray> mChannelAvatar;
     QMap <QString, QString> mMyStats;
+    QMap <QString, QString> mMyProfile;
     QList<QString> lChannelHomes;
 
     void create_signals();

@@ -92,7 +92,7 @@ void DlgUserProfile::set_user_info(QString strCheckNick, QString strKey, QString
     else if (strKey == "city")
         ui.lineEdit_city->setText(strValue);
     else if (strKey == "country")
-        ui.lineEdit_country->setText(convert_country(strValue));
+        ui.lineEdit_country->setText(convert_code_to_country(strValue));
     else if (strKey == "longDesc")
         ui.plainTextEdit_hobby->setPlainText(strValue);
     else if (strKey == "sex")
@@ -227,7 +227,7 @@ QString DlgUserProfile::convert_age(QString strDate)
     return QString::number(iAge);
 }
 
-QString DlgUserProfile::convert_country(QString strCountry)
+QString DlgUserProfile::convert_code_to_country(QString strCountryCode)
 {
     QStringList strlCodes =  (QStringList() <<
        "AF" << "AL" << "DZ" << "AD" << "AO" << "AI" << "AQ" << "AG" << "AN" <<
@@ -261,14 +261,14 @@ QString DlgUserProfile::convert_country(QString strCountry)
     // replace if found
     for (int i = 0; i < strlCodes.count(); i++)
     {
-        if (strCountry == strlCodes.at(i))
+        if (strCountryCode == strlCodes.at(i))
         {
-            strCountry = strlCountries.at(i);
+            QString strCountry = strlCountries.at(i);
             return strCountry;
         }
     }
 
-    return strCountry;
+    return "";
 }
 
 QString DlgUserProfile::convert_type(QString strType)

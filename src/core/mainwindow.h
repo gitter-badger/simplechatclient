@@ -72,6 +72,7 @@ private:
     QAction *ignoreAct;
     QAction *camsAct;
     QAction *myStatsAct;
+    QAction *myProfileAct;
 
     void create_settings();
 
@@ -95,6 +96,7 @@ private slots:
     void open_ignore();
     void open_cams();
     void open_my_stats();
+    void open_my_profile();
 };
 
 #endif // MAINWINDOW_H

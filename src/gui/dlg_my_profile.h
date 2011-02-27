@@ -18,53 +18,37 @@
  *                                                                          *
  ****************************************************************************/
 
-#ifndef DLG_USER_PROFILE_H
-#define DLG_USER_PROFILE_H
+#ifndef DLG_MY_PROFILE_H
+#define DLG_MY_PROFILE_H
 
 class Network;
 #include <QDialog>
-#include <QNetworkAccessManager>
-#include <QNetworkReply>
-#include "ui_user_profile.h"
+#include "ui_my_profile.h"
 
-class DlgUserProfile : public QDialog
+class DlgMyProfile : public QDialog
 {
     Q_OBJECT
 public:
-    DlgUserProfile(QWidget *, Network *);
-    void set_nick(QString);
-
-public slots:
-    void set_user_info(QString, QString, QString);
+    DlgMyProfile(QWidget *, Network *, QMap <QString, QByteArray> *, QMap<QString,QString> *);
 
 private:
-    Ui::uiUserProfile ui;
+    Ui::uiMyProfile ui;
     QWidget *myparent;
     Network *pNetwork;
-    int iWidth; // widget width
-    QPixmap avatar;
-    QNetworkAccessManager accessManager;
-    QNetworkReply *pReply;
-    QString strNick;
+    QMap <QString, QByteArray> *mNickAvatar;
+    QMap<QString,QString> *mMyProfile;
 
-    void clear_info();
-    void show_info();
+    void refresh();
+    int get_index(QComboBox *, QString);
     QString convert_desc(QString);
-    QString convert_sex(QString);
-    QString convert_age(QString);
     QString convert_code_to_country(QString);
-    QString convert_type(QString);
-    void show_avatar(QString);
+    QString convert_country_to_code(QString);
+    QString convert_int_to_month(QString);
+    QString convert_month_to_int(QString);
 
 private slots:
-    void avatar_finished();
-    void button_zoom();
-    void button_more();
+    void button_ok();
     void button_close();
-
-protected:
-    virtual void showEvent(QShowEvent *);
-    virtual void closeEvent(QCloseEvent *);
 };
 
-#endif // DLG_USER_PROFILE_H
+#endif // DLG_MY_PROFILE_H

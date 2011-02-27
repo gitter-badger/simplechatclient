@@ -27,6 +27,7 @@
 #include "dlg_friends.h"
 #include "dlg_ignore.h"
 #include "dlg_moderation.h"
+#include "dlg_my_profile.h"
 #include "dlg_my_stats.h"
 #include "dlg_user_profile.h"
 #include "inputlinedockwidget.h"
@@ -50,7 +51,7 @@ Core::Core()
 {
 }
 
-void Core::init(QMainWindow *parent, QString param1, int param2, Notify *param3, QToolBar *param4, QMenu *param5, QAction *param6, QAction *param7, QAction *param8, QAction *param9, QAction *param10, QAction *param11)
+void Core::init(QMainWindow *parent, QString param1, int param2, Notify *param3, QToolBar *param4, QMenu *param5, QAction *param6, QAction *param7, QAction *param8, QAction *param9, QAction *param10, QAction *param11, QAction *param12)
 {
     // params
     myparent = parent;
@@ -65,6 +66,7 @@ void Core::init(QMainWindow *parent, QString param1, int param2, Notify *param3,
     friendsAct = param9;
     ignoreAct = param10;
     myStatsAct = param11;
+    myProfileAct = param12;
 
     // lag
     lagAct = new QAction("Lag: ?", myparent);
@@ -89,7 +91,7 @@ void Core::init(QMainWindow *parent, QString param1, int param2, Notify *param3,
     pDlg_cam = new DlgCam(myparent, pNetwork, camSocket);
 #endif
 
-    pOnet_kernel = new OnetKernel(myparent, pNetwork, pTabC, pNotify, &mNickAvatar, &mChannelAvatar, pDlg_channel_settings, &lChannelHomes, &stlChannelList, &lChannelFavourites, &mFriends, &lIgnore, pDlg_moderation, &mMyStats);
+    pOnet_kernel = new OnetKernel(myparent, pNetwork, pTabC, pNotify, &mNickAvatar, &mChannelAvatar, pDlg_channel_settings, &lChannelHomes, &stlChannelList, &lChannelFavourites, &mFriends, &lIgnore, pDlg_moderation, &mMyStats, &mMyProfile);
     pOnet_auth = new OnetAuth(pTabC);
 
     pTabC->set_dlg(pDlg_user_profile);
@@ -286,6 +288,7 @@ void Core::update_actions()
         friendsAct->setEnabled(true);
         ignoreAct->setEnabled(true);
         myStatsAct->setEnabled(true);
+        myProfileAct->setEnabled(true);
     }
     else
     {
@@ -294,6 +297,7 @@ void Core::update_actions()
         friendsAct->setEnabled(false);
         ignoreAct->setEnabled(false);
         myStatsAct->setEnabled(false);
+        myProfileAct->setEnabled(false);
     }
 }
 
@@ -360,6 +364,12 @@ void Core::open_my_stats()
 {
     if ((pNetwork->is_connected() == true) && (pNetwork->is_writable() == true))
         DlgMyStats(myparent, &mMyStats).exec();
+}
+
+void Core::open_my_profile()
+{
+    if ((pNetwork->is_connected() == true) && (pNetwork->is_writable() == true))
+        DlgMyProfile(myparent, pNetwork, &mNickAvatar, &mMyProfile).exec();
 }
 
 // part tab
