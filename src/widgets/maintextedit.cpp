@@ -218,11 +218,12 @@ void MainTextEdit::menu_channel(QString strChannel, QContextMenuEvent *event)
     QMenu menu(this);
 
     QAction *nameAct = new QAction(strChannel, &menu);
+    nameAct->setIcon(QIcon(":/images/oxygen/16x16/irc-join-channel.png"));
     nameAct->setDisabled(true);
 
     menu.addAction(nameAct);
     menu.addSeparator();
-    menu.addAction(tr("Join channel"), this, SLOT(join_channel()));
+    menu.addAction(QIcon(":/images/oxygen/16x16/legalmoves.png"), tr("Join channel"), this, SLOT(join_channel()));
     menu.exec(event->globalPos());
 }
 

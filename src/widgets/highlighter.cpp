@@ -65,9 +65,15 @@ void Highlighter::read_dict(QString strFileName)
 
 void Highlighter::highlightBlock(const QString &text)
 {
-    // is spellchecker active
+    // check is spellchecker active
     QSettings settings;
-    if (settings.value("spellchecker").toString() == "off") return;
+    if (settings.value("spellchecker").toString() == "off")
+    {
+        // clear if not active
+        if (lKeywords.count() != 0)
+            lKeywords.clear();
+        return;
+    }
 
     // is dict empty
     if (lKeywords.count() == 0) init();
