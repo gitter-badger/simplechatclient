@@ -70,5 +70,12 @@
         <file>images/oxygen/16x16/character-set.png</file>
         <file>images/oxygen/16x16/edit-copy.png</file>
         <file>images/oxygen/16x16/edit-select-all.png</file>
+        <file>images/oxygen/16x16/view-pim-contacts.png</file>
+        <file>images/oxygen/16x16/im-ban-kick-user.png</file>
+        <file>images/oxygen/16x16/im-ban-user.png</file>
+        <file>images/oxygen/16x16/im-kick-user.png</file>
+        <file>images/oxygen/16x16/irc-operator.png</file>
+        <file>images/oxygen/16x16/im-user-busy.png</file>
+        <file>images/oxygen/16x16/user-identity.png</file>
     </qresource>
 </RCC>

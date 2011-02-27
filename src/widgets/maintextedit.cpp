@@ -242,10 +242,12 @@ void MainTextEdit::menu_nick(QString strNick, QContextMenuEvent *event)
     }
 
     QMenu *minvite = new QMenu(tr("Invite"));
+    minvite->setIcon(QIcon(":/images/oxygen/16x16/legalmoves.png"));
 
     for (int i = 0; i < maxOpenChannels; ++i)
     {
         openChannelsActs[i] = new QAction(this);
+        openChannelsActs[i]->setIcon(QIcon(":/images/oxygen/16x16/irc-join-channel.png"));
         openChannelsActs[i]->setVisible(false);
         connect(openChannelsActs[i], SIGNAL(triggered()), this, SLOT(invite()));
      }
@@ -263,56 +265,60 @@ void MainTextEdit::menu_nick(QString strNick, QContextMenuEvent *event)
         openChannelsActs[j]->setVisible(false);
 
     QMenu *friends = new QMenu(tr("Friends list"));
-    friends->addAction(tr("Add to friends"), this, SLOT(friends_add()));
-    friends->addAction(tr("Remove from friends"), this, SLOT(friends_del()));
+    friends->setIcon(QIcon(":/images/oxygen/16x16/meeting-attending.png"));
+    friends->addAction(QIcon(":/images/oxygen/16x16/list-add.png"), tr("Add to friends"), this, SLOT(friends_add()));
+    friends->addAction(QIcon(":/images/oxygen/16x16/list-remove.png"), tr("Remove from friends"), this, SLOT(friends_del()));
 
     QMenu *ignore = new QMenu(tr("Ignore list"));
-    ignore->addAction(tr("Add to Ignore list"), this, SLOT(ignore_add()));
-    ignore->addAction(tr("Remove from Ignore list"), this, SLOT(ignore_del()));
+    ignore->setIcon(QIcon(":/images/oxygen/16x16/meeting-attending-tentative.png"));
+    ignore->addAction(QIcon(":/images/oxygen/16x16/list-add.png"), tr("Add to Ignore list"), this, SLOT(ignore_add()));
+    ignore->addAction(QIcon(":/images/oxygen/16x16/list-remove.png"), tr("Remove from Ignore list"), this, SLOT(ignore_del()));
 
     QMenu *privilege = new QMenu(tr("Actions"));
+    privilege->setIcon(QIcon(":/images/oxygen/16x16/irc-operator.png"));
 
     if (strPrefix.indexOf("@") == -1)
-        privilege->addAction(tr("Give super operator status"), this, SLOT(op_add()));
+        privilege->addAction(QIcon(":/images/op.png"), tr("Give super operator status"), this, SLOT(op_add()));
     else
-        privilege->addAction(tr("Take super operator status"), this, SLOT(op_del()));
+        privilege->addAction(QIcon(":/images/op.png"), tr("Take super operator status"), this, SLOT(op_del()));
 
     if (strPrefix.indexOf("%") == -1)
-        privilege->addAction(tr("Give operator status"), this, SLOT(halfop_add()));
+        privilege->addAction(QIcon(":/images/halfop.png"), tr("Give operator status"), this, SLOT(halfop_add()));
     else
-        privilege->addAction(tr("Take operator status"), this, SLOT(halfop_del()));
+        privilege->addAction(QIcon(":/images/halfop.png"), tr("Take operator status"), this, SLOT(halfop_del()));
 
     if (strPrefix.indexOf("!") == -1)
-        privilege->addAction(tr("Give moderator status"), this, SLOT(moderator_add()));
+        privilege->addAction(QIcon(":/images/mod.png"), tr("Give moderator status"), this, SLOT(moderator_add()));
     else
-        privilege->addAction(tr("Take moderator status"), this, SLOT(moderator_del()));
+        privilege->addAction(QIcon(":/images/mod.png"), tr("Take moderator status"), this, SLOT(moderator_del()));
 
     if (strPrefix.indexOf("+") == -1)
-        privilege->addAction(tr("Give guest status"), this, SLOT(voice_add()));
+        privilege->addAction(QIcon(":/images/voice.png"), tr("Give guest status"), this, SLOT(voice_add()));
     else
-        privilege->addAction(tr("Take guest status"), this, SLOT(voice_del()));
+        privilege->addAction(QIcon(":/images/voice.png"), tr("Take guest status"), this, SLOT(voice_del()));
 
-    QAction *nameAct = new QAction(strNick, this);
-    nameAct->setDisabled(true);
+    QAction *nickAct = new QAction(strNick, this);
+    nickAct->setIcon(QIcon(":/images/oxygen/16x16/user-identity.png"));
+    nickAct->setDisabled(true);
 
     QMenu menu(this);
-    menu.addAction(nameAct);
+    menu.addAction(nickAct);
     menu.addSeparator();
-    menu.addAction(tr("Priv"), this, SLOT(priv()));
-    menu.addAction(tr("Whois"), this, SLOT(whois()));
+    menu.addAction(QIcon(":/images/oxygen/16x16/list-add-user.png"), tr("Priv"), this, SLOT(priv()));
+    menu.addAction(QIcon(":/images/oxygen/16x16/text-field.png"), tr("Whois"), this, SLOT(whois()));
     if (strNick[0] != '~')
     {
-        menu.addAction(tr("Profile"), this, SLOT(profile()));
-        menu.addAction(tr("Webcam"), this, SLOT(cam()));
+        menu.addAction(QIcon(":/images/oxygen/16x16/view-pim-contacts.png"), tr("Profile"), this, SLOT(profile()));
+        menu.addAction(QIcon(":/images/pubcam.png"), tr("Webcam"), this, SLOT(cam()));
     }
     menu.addMenu(minvite);
     menu.addMenu(friends);
     menu.addMenu(ignore);
     menu.addSeparator();
-    menu.addAction(tr("Kick From Channel"), this, SLOT(kick()));
-    menu.addAction(tr("Ban From Channel"), this, SLOT(ban()));
-    menu.addAction(tr("Kick & Ban"), this, SLOT(kban()));
-    menu.addAction(tr("IP Ban"), this, SLOT(ipban()));
+    menu.addAction(QIcon(":/images/oxygen/16x16/im-kick-user.png"), tr("Kick From Channel"), this, SLOT(kick()));
+    menu.addAction(QIcon(":/images/oxygen/16x16/im-ban-user.png"), tr("Ban From Channel"), this, SLOT(ban()));
+    menu.addAction(QIcon(":/images/oxygen/16x16/im-ban-kick-user.png"), tr("Kick & Ban"), this, SLOT(kban()));
+    menu.addAction(QIcon(":/images/oxygen/16x16/im-user-busy.png"), tr("IP Ban"), this, SLOT(ipban()));
     menu.addSeparator();
     menu.addMenu(privilege);
 
