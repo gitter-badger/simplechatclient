@@ -972,6 +972,10 @@
         <source>Average per day spoken words:</source>
         <translation>Średnio dziennie wypowiedzianych słów:</translation>
     </message>
+    <message>
+        <source>Channel exists days:</source>
+        <translation>Kanał istnieje dni:</translation>
+    </message>
 </context>
 <context>
     <name>DlgEmail</name>

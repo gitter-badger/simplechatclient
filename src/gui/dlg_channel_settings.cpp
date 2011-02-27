@@ -119,6 +119,7 @@ DlgChannelSettings::DlgChannelSettings(QWidget *parent, Network *param1) : QDial
     ui.groupBox_stats->setTitle(tr("Statistics"));
     ui.label_stats_lwords->setText(tr("Average per day spoken words:"));
     ui.label_stats_lfavourites->setText(tr("Channel added in favourites:"));
+    ui.label_stats_lexists_days->setText(tr("Channel exists days:"));
 
     // bold
     ui.pushButton_bold->setCheckable(true);
@@ -208,9 +209,23 @@ void DlgChannelSettings::set_data(QString strCheckChannel, QMap<QString, QString
         }
         else if (strKey == "createdDate")
         {
+            // label created date/time
             QDateTime dt = QDateTime::fromTime_t(strValue.toInt());
             QString strDT = dt.toString("dd/MM/yyyy hh:mm:ss");
             ui.label_datetime->setText(strDT);
+
+            // stats
+            int iCreatedDate = strValue.toInt();
+
+            QDateTime cdt = QDateTime::currentDateTime();
+            int iCurrentDate = (int)cdt.toTime_t(); // seconds that have passed since 1970
+
+            int iSeconds = iCurrentDate - iCreatedDate;
+            int iMinutes = iSeconds / 60;
+            int iHours = iMinutes / 60;
+            int iDays = iHours / 24;
+
+            ui.label_stats_exists_days->setText(QString::number(iDays));
         }
         else if (strKey == "private")
         {
@@ -925,6 +940,7 @@ void DlgChannelSettings::clear()
     ui.radioButton_auditorium_on->setChecked(false);
     ui.label_stats_favourites->setText("-");
     ui.label_stats_words->setText("-");
+    ui.label_stats_exists_days->setText("-");
 }
 
 void DlgChannelSettings::showEvent(QShowEvent *event)
