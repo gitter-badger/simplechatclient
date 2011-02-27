@@ -52,7 +52,7 @@ class Core : public QObject
 public:
     Core();
     ~Core();
-    void init(QMainWindow *, QString, int, Notify *, QAction *, QToolBar *, QMenu *);
+    void init(QMainWindow *, QString, int, Notify *, QToolBar *, QMenu *, QAction *, QAction *, QAction *, QAction *, QAction *, QAction *);
 
     void refresh_colors();
     void refresh_background_image();
@@ -95,9 +95,14 @@ private:
     QString strServer;
     int iPort;
     Notify *pNotify;
-    QAction *connectAct;
     QToolBar *toolBar;
     QMenu *viewMenu;
+    QAction *connectAct;
+    QAction *channel_homesAct;
+    QAction *channel_favouritesAct;
+    QAction *friendsAct;
+    QAction *ignoreAct;
+    QAction *myStatsAct;
 
     // require
     QTcpSocket *camSocket;
@@ -138,6 +143,7 @@ private:
 private slots:
     void set_connected();
     void set_disconnected();
+    void update_actions();
     void set_connect_enabled(bool);
     void tab_close_requested(int);
     void current_tab_changed(int);

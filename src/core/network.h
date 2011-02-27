@@ -82,6 +82,7 @@ signals:
     void show_msg_all(QString, int);
     void show_msg_active(QString, int);
     void update_nick(QString);
+    void update_actions();
     void clear_nicklist(QString);
     void clear_all_nicklist();
 };

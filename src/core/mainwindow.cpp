@@ -188,7 +188,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
     // create basic core
     coreServers.append(new Core());
-    coreServers.at(0)->init(this,"czat-app.onet.pl", 5015, pNotify, connectAct, toolBar, viewMenu);
+    coreServers.at(0)->init(this,"czat-app.onet.pl", 5015, pNotify, toolBar, viewMenu, connectAct, channel_homesAct, channel_favouritesAct, friendsAct, ignoreAct, myStatsAct);
 
     // update
     pUpdate->check_update();
@@ -238,7 +238,7 @@ void MainWindow::create_settings()
     // default settings
     QSettings settings;
     settings.clear();
-    settings.setValue("version", "1.0.10.730");
+    settings.setValue("version", "1.0.10.731");
     settings.setValue("debug", "off");
     settings.setValue("logged", "off");
     settings.setValue("busy", "off");
@@ -304,7 +304,6 @@ void MainWindow::button_connect()
         connectAct->setIcon(QIcon(":/images/oxygen/16x16/network-disconnect.png"));
         settings.setValue("reconnect", "true");
         coreServers.at(0)->network_connect();
-
     }
     else
     {

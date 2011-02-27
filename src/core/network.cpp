@@ -289,6 +289,8 @@ void Network::connected()
 
     // update nick
     emit update_nick(strNick);
+    // update actions
+    emit update_actions();
 
     // set current nick
     QString strCurrentNick = strNick;

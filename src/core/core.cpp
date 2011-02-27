@@ -50,16 +50,21 @@ Core::Core()
 {
 }
 
-void Core::init(QMainWindow *parent, QString param1, int param2, Notify *param3, QAction *param4, QToolBar *param5, QMenu *param6)
+void Core::init(QMainWindow *parent, QString param1, int param2, Notify *param3, QToolBar *param4, QMenu *param5, QAction *param6, QAction *param7, QAction *param8, QAction *param9, QAction *param10, QAction *param11)
 {
     // params
     myparent = parent;
     strServer = param1;
     iPort = param2;
     pNotify = param3;
-    connectAct = param4;
-    toolBar = param5;
-    viewMenu = param6;
+    toolBar = param4;
+    viewMenu = param5;
+    connectAct = param6;
+    channel_homesAct = param7;
+    channel_favouritesAct = param8;
+    friendsAct = param9;
+    ignoreAct = param10;
+    myStatsAct = param11;
 
     // lag
     lagAct = new QAction("Lag: ?", myparent);
@@ -211,6 +216,7 @@ void Core::create_signals()
     QObject::connect(pNetwork, SIGNAL(update_nick(QString)), inputLineDockWidget, SLOT(slot_update_nick(QString)));
     QObject::connect(pNetwork, SIGNAL(clear_nicklist(QString)), this, SLOT(clear_nicklist(QString)));
     QObject::connect(pNetwork, SIGNAL(clear_all_nicklist()), this, SLOT(clear_all_nicklist()));
+    QObject::connect(pNetwork, SIGNAL(update_actions()), this, SLOT(update_actions()));
 }
 
 void Core::network_connect()
@@ -262,6 +268,33 @@ void Core::set_disconnected()
 void Core::set_connect_enabled(bool bSet)
 {
     connectAct->setEnabled(bSet);
+}
+
+void Core::update_actions()
+{
+    QSettings settings;
+    QString strNick = settings.value("nick").toString();
+
+    bool bRegistered = false;
+    if (strNick[0] != '~')
+        bRegistered = true;
+
+    if (bRegistered == true)
+    {
+        channel_homesAct->setEnabled(true);
+        channel_favouritesAct->setEnabled(true);
+        friendsAct->setEnabled(true);
+        ignoreAct->setEnabled(true);
+        myStatsAct->setEnabled(true);
+    }
+    else
+    {
+        channel_homesAct->setEnabled(false);
+        channel_favouritesAct->setEnabled(false);
+        friendsAct->setEnabled(false);
+        ignoreAct->setEnabled(false);
+        myStatsAct->setEnabled(false);
+    }
 }
 
 // set lag

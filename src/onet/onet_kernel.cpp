@@ -1050,11 +1050,15 @@ void OnetKernel::raw_mode()
 
             emit change_flag(strNickChannel, strFlag);
 
-            // get my stats
+            // registered nick
             QSettings settings;
             if ((strNickChannel == settings.value("nick").toString()) && (strFlag == "+r"))
             {
+                // get my stats
                 pNetwork->send(QString("RS INFO %1").arg(settings.value("nick").toString()));
+
+                // channel homes
+                pNetwork->send("CS HOMES");
             }
         }
     }
@@ -1367,9 +1371,6 @@ void OnetKernel::raw_001()
     QStringList strlOpenChannels = pTabC->get_open_channels();
     for (int i = 0; i < strlOpenChannels.size(); i++)
         pNetwork->send(QString("JOIN %1").arg(strlOpenChannels[i]));
-
-    // channel homes
-    pNetwork->send("CS HOMES");
 
     // channel list
     pNetwork->send("SLIST  R- 0 0 100 null");
