@@ -103,6 +103,7 @@ private slots:
     // standard buttons
     void vote_minus();
     void vote_plus();
+    void button_connect();
     void button_ok();
     // vote
     void enable_vote();
@@ -126,6 +127,7 @@ public:
     inline void set_btext(bool b) { bText = b; }
     inline void set_last_keep_alive(qint64 i) { iLastKeepAlive = i; }
     inline qint64 get_last_keep_alive() { return iLastKeepAlive; }
+    inline void set_reconnect(bool b) { bReconnecting = b; }
 
     void clear_all();
     bool is_connected();
@@ -145,6 +147,7 @@ private:
     int iLastActive;
     qint64 iLastKeepAlive;
     bool bText;
+    bool bReconnecting;
 
 private slots:
     void network_read();

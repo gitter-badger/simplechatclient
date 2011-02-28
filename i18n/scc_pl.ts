@@ -569,6 +569,14 @@
         <source>Device:</source>
         <translation>Urządzenie nadające:</translation>
     </message>
+    <message>
+        <source>&amp;Connect</source>
+        <translation>&amp;Połącz</translation>
+    </message>
+    <message>
+        <source>&amp;Disconnect</source>
+        <translation>&amp;Rozłącz</translation>
+    </message>
 </context>
 <context>
     <name>DlgChannelFavourites</name>

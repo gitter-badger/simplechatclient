@@ -194,6 +194,7 @@ DlgCam::DlgCam(QWidget *parent, Network *param1, QTcpSocket *param2) : QDialog(p
     QObject::connect(ui.pushButton_remove_img3, SIGNAL(clicked()), this, SLOT(remove_img3()));
     QObject::connect(ui.pushButton_set_about_me, SIGNAL(clicked()), this, SLOT(set_about_me()));
     QObject::connect(ui.pushButton_set_homepage, SIGNAL(clicked()), this, SLOT(set_homepage()));
+    QObject::connect(ui.toolButton_connect, SIGNAL(clicked()), this, SLOT(button_connect()));
     QObject::connect(ui.buttonBox, SIGNAL(accepted()), this, SLOT(button_ok()));
 
     QObject::connect(camNetwork, SIGNAL(text_kernel(QString)), this, SLOT(text_kernel(QString)));
@@ -229,6 +230,11 @@ QString DlgCam::get_cauth()
 
 void DlgCam::nconnected()
 {
+    // button
+    ui.toolButton_connect->setToolTip(tr("&Disconnect"));
+    ui.toolButton_connect->setIcon(QIcon(":/images/oxygen/16x16/network-disconnect.png"));
+
+    // other
     ui.label_img->setText(tr("Connected to server webcam."));
     ui.label_img->setText(ui.label_img->text()+"<br>"+tr("Please wait ..."));
     QString strCAUTH = get_cauth();
@@ -237,6 +243,11 @@ void DlgCam::nconnected()
 
 void DlgCam::ndisconnected()
 {
+    // button
+    ui.toolButton_connect->setToolTip(tr("&Connect"));
+    ui.toolButton_connect->setIcon(QIcon(":/images/oxygen/16x16/network-connect.png"));
+
+    // other
     ui.tableWidget_nick_rank_spectators->clear();
     ui.tableWidget_nick_rank_spectators->setRowCount(0);
     ui.label_nick->setText(strNick);
@@ -1432,6 +1443,15 @@ void DlgCam::vote_plus()
         camNetwork->network_send(QString("VOTE %1 +").arg(strNick));
 }
 
+void DlgCam::button_connect()
+{
+    camNetwork->set_reconnect(false);
+    if (camNetwork->is_connected() == true)
+        camNetwork->network_disconnect();
+    else
+        camNetwork->network_connect();
+}
+
 void DlgCam::button_ok()
 {
     this->hide();
@@ -1611,8 +1631,8 @@ DlgCamNetwork::DlgCamNetwork(Network *param1, QTcpSocket *param2)
 
     iLastKeepAlive = 0;
     iLastActive = 0;
+    bReconnecting = true;
 
-    QSettings settings;
     timerPingPong = new QTimer();
     timerPingPong->setInterval(1*60*1000); // 1 min
 
@@ -1651,6 +1671,9 @@ void DlgCamNetwork::network_connect()
     {
         // clear all
         clear_all();
+
+        // reconnect
+        bReconnecting = true;
 
         // set last active
         QDateTime dt = QDateTime::currentDateTime();
@@ -1759,7 +1782,8 @@ void DlgCamNetwork::network_disconnected()
     clear_all();
 
     // reconnect
-    QTimer::singleShot(1000*10, this, SLOT(slot_network_connect())); // 10 sec
+    if (bReconnecting == true)
+        QTimer::singleShot(1000*10, this, SLOT(slot_network_connect())); // 10 sec
 }
 
 void DlgCamNetwork::network_error(QAbstractSocket::SocketError err)
@@ -1776,7 +1800,8 @@ void DlgCamNetwork::network_error(QAbstractSocket::SocketError err)
         clear_all();
 
         // reconnect
-        QTimer::singleShot(1000*10, this, SLOT(slot_network_connect())); // 10 sec
+        if (bReconnecting == true)
+            QTimer::singleShot(1000*10, this, SLOT(slot_network_connect())); // 10 sec
     }
 }
 
@@ -1786,7 +1811,8 @@ void DlgCamNetwork::slot_network_connect()
         network_connect();
     else
     {
-        QTimer::singleShot(1000*60, this, SLOT(slot_network_connect())); // 60 sec
+        if (bReconnecting == true)
+            QTimer::singleShot(1000*60, this, SLOT(slot_network_connect())); // 60 sec
     }
 }
 
