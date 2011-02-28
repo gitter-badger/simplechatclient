@@ -104,8 +104,6 @@ void DlgMyProfile::refresh()
         QString strKey = i.key();
         QString strValue = i.value();
 
-        qDebug() << "key:" << strKey << " value:" << strValue;
-
         if (strKey == "avatar")
         {
             if ((strValue.isEmpty() == false) && (mNickAvatar->contains(strMe)))
