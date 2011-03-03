@@ -174,8 +174,6 @@ void DlgMyProfile::refresh()
                 ui.comboBox_year->setCurrentIndex(0);
             }
         }
-        else if (strKey == "shortDesc")
-            ui.plainTextEdit_desc->setPlainText(convert_text_to_desc(strValue));
         else if (strKey == "city")
             ui.lineEdit_city->setText(strValue);
         else if (strKey == "country")
@@ -195,6 +193,8 @@ void DlgMyProfile::refresh()
             else if (strSex == "F")
                 ui.comboBox_sex->setCurrentIndex(2);
         }
+        else if (strKey == "shortDesc")
+            ui.plainTextEdit_desc->setPlainText(convert_text_to_desc(strValue));
         else if (strKey == "www")
             ui.lineEdit_www->setText(strValue);
 

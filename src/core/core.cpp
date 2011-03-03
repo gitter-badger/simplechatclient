@@ -141,11 +141,6 @@ Core::~Core()
     // clear arrays
     clear_all_nicklist();
 
-    // close network
-    QSettings settings;
-    settings.setValue("reconnect", "false");
-    pNetwork->disconnect();
-
     delete pOnet_auth;
     delete pOnet_kernel;
 #ifndef Q_WS_WIN
@@ -155,6 +150,10 @@ Core::~Core()
     delete pDlg_moderation;
     delete pDlg_channel_settings;
 
+    // close network
+    QSettings settings;
+    settings.setValue("reconnect", "false");
+    pNetwork->disconnect();
     pNetwork->quit();
     pNetwork->wait();
     pNetwork->deleteLater();

@@ -43,6 +43,7 @@ class TabManager;
 #include <QObject>
 #include <QTcpSocket>
 #include <QToolBar>
+
 /**
  * Core
  */
