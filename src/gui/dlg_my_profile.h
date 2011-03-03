@@ -40,7 +40,8 @@ private:
 
     void refresh();
     int get_index(QComboBox *, QString);
-    QString convert_desc(QString);
+    QString convert_text_to_desc(QString);
+    QString convert_desc_to_text(QString);
     QString convert_code_to_country(QString);
     QString convert_country_to_code(QString);
     QString convert_int_to_month(QString);

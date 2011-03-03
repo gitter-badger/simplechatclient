@@ -38,15 +38,52 @@ DlgMyProfile::DlgMyProfile(QWidget *parent, Network *param1, QMap <QString, QByt
     mNickAvatar = param2;
     mMyProfile = param3;
 
+    ui.pushButton_bold->setIcon(QIcon(":/images/oxygen/16x16/format-text-bold.png"));
+    ui.pushButton_italic->setIcon(QIcon(":/images/oxygen/16x16/format-text-italic.png"));
     ui.buttonBox->button(QDialogButtonBox::Ok)->setIcon(QIcon(":/images/oxygen/16x16/dialog-ok.png"));
     ui.buttonBox->button(QDialogButtonBox::Cancel)->setIcon(QIcon(":/images/oxygen/16x16/dialog-cancel.png"));
 
+    ui.pushButton_bold->setText("");
+    ui.pushButton_italic->setText("");
     ui.label_sex->setText(tr("Sex:"));
     ui.label_birthdate->setText(tr("Birthdate:"));
     ui.label_city->setText(tr("City:"));
     ui.label_country->setText(tr("Country:"));
     ui.label_hobby->setText(tr("Hobby:"));
     ui.label_www->setText(tr("Website:"));
+
+    // bold
+    ui.pushButton_bold->setCheckable(true);
+
+    // italic
+    ui.pushButton_italic->setCheckable(true);
+
+    // font
+    QStringList comboBoxFont;
+    comboBoxFont << "Arial" << "Times" << "Verdana" << "Tahoma" << "Courier";
+
+    int iComboBoxFont = 0;
+    foreach (QString strFont, comboBoxFont)
+    {
+        ui.comboBox_font->insertItem(iComboBoxFont, strFont);
+        iComboBoxFont++;
+    }
+
+    // color
+    ui.comboBox_color->setToolTip(tr("Font color"));
+    ui.comboBox_color->setIconSize(QSize(50,10));
+
+    QStringList comboBoxColors;
+    comboBoxColors << "#000000" << "#623c00" << "#c86c00" << "#ff6500" << "#ff0000" << "#e40f0f" << "#990033" << "#8800ab" << "#ce00ff" << "#0f2ab1" << "#3030ce" << "#006699" << "#1a866e" << "#008100" << "#959595";
+
+    int iComboBoxColors = 0;
+    foreach (QString strColor, comboBoxColors)
+    {
+        QPixmap pixmap(50,10);
+        pixmap.fill(QColor(strColor));
+        ui.comboBox_color->insertItem(iComboBoxColors, pixmap, "");
+        iComboBoxColors++;
+    }
 
     // sex
     QStringList strlSex;
@@ -138,7 +175,7 @@ void DlgMyProfile::refresh()
             }
         }
         else if (strKey == "shortDesc")
-            ui.textEdit_desc->setHtml(convert_desc(strValue));
+            ui.plainTextEdit_desc->setPlainText(convert_text_to_desc(strValue));
         else if (strKey == "city")
             ui.lineEdit_city->setText(strValue);
         else if (strKey == "country")
@@ -175,29 +212,144 @@ int DlgMyProfile::get_index(QComboBox *comboBox, QString strCheck)
     return 0;
 }
 
-QString DlgMyProfile::convert_desc(QString strContent)
+QString DlgMyProfile::convert_text_to_desc(QString strContent)
 {
-    QString strContentStart = "<html><body style=\"background-color:white;font-size:12px;font-family:Verdana;\">";
-    QString strContentEnd = "</body></html>";
-    QString strContentLast;
+    strContent += " "; // fix convert algorithm
 
-    // replace
-    strContent.replace("&", "&amp;");
-    strContent.replace("<", "&lt;");
-    strContent.replace(">", "&gt;");
+    // convert emoticons
+    strContent.replace(QRegExp("%I([a-zA-Z0-9_-]+)%"), "//\\1");
 
-    // convert
-    Convert *convertText = new Convert();
-    convertText->convert_text(&strContent, &strContentLast);
-    delete convertText;
+    // convert font
+    while (strContent.indexOf("%F") != -1)
+    {
+        int iStartPos = strContent.indexOf("%F");
+        int iEndPos = strContent.indexOf("%", iStartPos+1);
+        int iSpacePos = strContent.indexOf(" ", iStartPos);
 
-#ifdef Q_WS_X11
-    strContent.replace("file://", "");
-#endif
+        if (iEndPos != -1)
+        {
+            if ((iEndPos < iSpacePos) || (iSpacePos == -1))
+            {
+                iEndPos++;
+                QString strFontFull = strContent.mid(iStartPos, iEndPos-iStartPos);
+                QString strFont = strFontFull.mid(2,strFontFull.length()-3);
+                strFont = strFont.toLower();
 
-    // return
-    strContent = strContent+strContentLast;
-    return (strContentStart+strContent+strContentEnd);
+                QString strFontWeight;
+                QString strFontName;
+
+                if (strFont.indexOf(":") != -1)
+                {
+                    strFontWeight = strFont.left(strFont.indexOf(":"));
+                    strFontName = strFont.right(strFont.length()-strFont.indexOf(":")-1);
+                }
+                else
+                {
+                    QRegExp rx("((b|i)?)((b|i)?)");
+                    if (rx.exactMatch(strFont) == true)
+                        strFontWeight = strFont;
+                }
+
+                if (strFontWeight.isEmpty() == false)
+                {
+                    for (int fw = 0; fw < strFontWeight.length(); fw++)
+                    {
+                        if (strFontWeight[fw] == 'b') ui.pushButton_bold->setChecked(true);
+                        else if (strFontWeight[fw] == 'i') ui.pushButton_italic->setChecked(true);
+                    }
+                }
+
+                if ((strFontName.isEmpty() == false) || (strFontWeight.isEmpty() == false))
+                {
+                    if (strFontName == "arial") ui.comboBox_font->setCurrentIndex(0);
+                    else if (strFontName == "times") ui.comboBox_font->setCurrentIndex(1);
+                    else if (strFontName == "verdana") ui.comboBox_font->setCurrentIndex(2);
+                    else if (strFontName == "tahoma") ui.comboBox_font->setCurrentIndex(3);
+                    else if (strFontName == "courier") ui.comboBox_font->setCurrentIndex(4);
+                    else ui.comboBox_font->setCurrentIndex(2);
+
+                    strContent.replace(strFontFull, "");
+                }
+                else
+                    strContent.insert(iStartPos+1, " "); // fix wrong %F
+            }
+            else
+                strContent.insert(iStartPos+1, " "); // fix wrong %F
+        }
+        else
+            break;
+    }
+
+    // convert color
+    QStringList strlFontColors;
+    strlFontColors << "#000000" << "#623c00" << "#c86c00" << "#ff6500" << "#ff0000" << "#e40f0f" << "#990033" << "#8800ab" << "#ce00ff" << "#0f2ab1" << "#3030ce" << "#006699" << "#1a866e" << "#008100" << "#959595";
+
+    int iFontColor = 0;
+    foreach (QString strFontColor, strlFontColors)
+    {
+        strFontColor = "%C"+strFontColor.right(6)+"%";
+
+        if (strContent.contains(strFontColor) == true)
+            ui.comboBox_color->setCurrentIndex(iFontColor);
+
+        strContent.replace(strFontColor, "");
+        iFontColor++;
+    }
+
+    // default #000000
+    if (ui.comboBox_color->currentIndex() == -1)
+        ui.comboBox_color->setCurrentIndex(0);
+
+    // default verdana
+    if (ui.comboBox_font->currentIndex() == -1)
+        ui.comboBox_font->setCurrentIndex(2);
+
+    return strContent;
+}
+
+QString DlgMyProfile::convert_desc_to_text(QString strContent)
+{
+    strContent.replace(QRegExp("(\r|\n)"), "");
+    strContent.replace(QRegExp("(http:|https:)//"), "\\1\\\\"); // fix http https
+    strContent.replace(QRegExp("//([a-zA-Z0-9_-]+)\\b"), "%I\\1%");
+    strContent.replace(QRegExp("(http:|https:)\\\\\\\\"), "\\1//"); // fix http https
+
+    bool bBold = false;
+    bool bItalic = false;
+    QString strFontName;
+    QString strFontColor;
+    QString strFontWeight;
+
+    // bold
+    if (ui.pushButton_bold->isChecked() == true) bBold = true;
+
+    // italic
+    if (ui.pushButton_italic->isChecked() == true) bItalic = true;
+
+    // font name
+    strFontName = ui.comboBox_font->currentText().toLower();
+
+    // font color
+    QStringList strlFontColors;
+    strlFontColors << "#000000" << "#623c00" << "#c86c00" << "#ff6500" << "#ff0000" << "#e40f0f" << "#990033" << "#8800ab" << "#ce00ff" << "#0f2ab1" << "#3030ce" << "#006699" << "#1a866e" << "#008100" << "#959595";
+
+    if (ui.comboBox_color->currentIndex() != -1)
+        strFontColor = strlFontColors.at(ui.comboBox_color->currentIndex());
+
+    // set topic
+    if (bBold == true) strFontWeight += "b";
+    if (bItalic == true) strFontWeight += "i";
+
+    if (strFontName == "verdana")
+        strFontName = "";
+    if ((strFontColor != "#000000") && (strFontColor.isEmpty() == false))
+        strContent = "%C"+strFontColor.right(6)+"%"+strContent;
+    if (strFontName.isEmpty() == false)
+        strFontName = ":"+strFontName;
+    if ((strFontWeight.isEmpty() == false) || (strFontName.isEmpty() == false))
+        strContent = "%F"+strFontWeight+strFontName+"%"+strContent;
+
+    return strContent;
 }
 
 QString DlgMyProfile::convert_code_to_country(QString strCountryCode)
@@ -319,6 +471,11 @@ QString DlgMyProfile::convert_month_to_int(QString strMonth)
 
 void DlgMyProfile::button_ok()
 {
+    // set desc - shortDesc
+    QString strDesc = convert_desc_to_text(ui.plainTextEdit_desc->toPlainText());
+    if (strDesc != mMyProfile->value("shortDesc"))
+        pNetwork->send(QString("NS SET shortDesc %1").arg(strDesc));
+
     // set sex
     int iSex = ui.comboBox_sex->currentIndex();
     QString strSexChar;
