@@ -79,7 +79,7 @@ void Video::destroy()
     }
 }
 
-void Video::get_frame()
+int Video::get_frame()
 {
     struct v4l2_buffer v4l2buffer;
 
@@ -93,11 +93,12 @@ void Video::get_frame()
             case EAGAIN:
             {
                 //qDebug() << "Video: No new frame available.";
-                return;
+                return EXIT_FAILURE;
             }
             case EIO: /* Could ignore EIO, see spec. fall through */
             default:
                 errnoReturn ("VIDIOC_DQBUF");
+                return EXIT_FAILURE;
         }
     }
 
@@ -106,12 +107,18 @@ void Video::get_frame()
 
     memcpy(&m_currentbuffer.data[0], m_rawbuffers[v4l2buffer.index].start, m_currentbuffer.data.size());
     if (-1 == xioctl (VIDIOC_QBUF, &v4l2buffer))
+    {
         errnoReturn ("VIDIOC_QBUF");
+        return EXIT_FAILURE;
+    }
+
+    return EXIT_SUCCESS;
 }
 
 void Video::get_image(QImage *qimage)
 {
-    get_frame();
+    int g = get_frame();
+    if (g == EXIT_FAILURE) return; // no new image; prevent crash
 
 // do NOT delete qimage here, as it is received as a parameter
     if (qimage->width() != width || qimage->height() != height)

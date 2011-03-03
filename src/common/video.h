@@ -126,7 +126,7 @@ private:
     void init_device();
     void init_mmap();
     void start_capturing();
-    void get_frame();
+    int get_frame();
     void stop_capturing();
     void uninit_device();
     void close_device();
