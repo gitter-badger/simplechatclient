@@ -51,7 +51,7 @@ Core::Core()
 {
 }
 
-void Core::init(QMainWindow *parent, QString param1, int param2, Notify *param3, QToolBar *param4, QMenu *param5, QAction *param6, QAction *param7, QAction *param8, QAction *param9, QAction *param10, QAction *param11, QAction *param12)
+void Core::init(QMainWindow *parent, QString param1, int param2, Notify *param3, QToolBar *param4, QMenu *param5, QAction *param6, QAction *param7, QAction *param8, QAction *param9, QAction *param10, QAction *param11, QAction *param12, QAction *param13)
 {
     // params
     myparent = parent;
@@ -67,6 +67,7 @@ void Core::init(QMainWindow *parent, QString param1, int param2, Notify *param3,
     ignoreAct = param10;
     myStatsAct = param11;
     myProfileAct = param12;
+    awaylogAct = param13;
 
     // lag
     lagAct = new QAction("Lag: ?", myparent);
@@ -175,6 +176,7 @@ void Core::create_signals()
     QObject::connect(pTabC, SIGNAL(currentChanged(int)), this, SLOT(current_tab_changed(int)));
     QObject::connect(pTabC, SIGNAL(update_nick_avatar(QString)), this, SLOT(update_nick_avatar(QString)));
     QObject::connect(pTabC, SIGNAL(set_open_channels()), this, SLOT(set_open_channels()));
+    QObject::connect(pTabC, SIGNAL(update_awaylog_status()), this, SLOT(update_awaylog_status()));
 
     // signals tab
     QObject::connect(pTabM, SIGNAL(tabCloseRequested(int)), this, SLOT(tab_close_requested(int)));
@@ -301,6 +303,20 @@ void Core::update_actions()
     }
 }
 
+void Core::update_awaylog_status()
+{
+    if (lAwaylog.count() == 0)
+    {
+        if (awaylogAct->isVisible() == true)
+            awaylogAct->setVisible(false);
+    }
+    else
+    {
+        if (awaylogAct->isVisible() == false)
+            awaylogAct->setVisible(true);
+    }
+}
+
 // set lag
 void Core::set_lag(QString strValue)
 {
@@ -341,7 +357,7 @@ void Core::open_ignore()
 void Core::open_awaylog()
 {
     if ((pNetwork->is_connected() == true) && (pNetwork->is_writable() == true))
-        DlgAwaylog(myparent, &lAwaylog).exec();
+        DlgAwaylog(myparent, &lAwaylog, awaylogAct).exec();
 }
 
 void Core::open_cams()

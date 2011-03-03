@@ -22,7 +22,7 @@
 #include <QPushButton>
 #include "dlg_awaylog.h"
 
-DlgAwaylog::DlgAwaylog(QWidget *parent, QList<QString> *param1) : QDialog(parent)
+DlgAwaylog::DlgAwaylog(QWidget *parent, QList<QString> *param1, QAction *param2) : QDialog(parent)
 {
     ui.setupUi(this);
     setWindowTitle(tr("Awaylog"));
@@ -30,6 +30,7 @@ DlgAwaylog::DlgAwaylog(QWidget *parent, QList<QString> *param1) : QDialog(parent
     move(QApplication::desktop()->screen()->rect().center() - rect().center());
 
     lAwaylog = param1;
+    awaylogAct = param2;
 
     ui.buttonBox->button(QDialogButtonBox::Reset)->setIcon(QIcon(":/images/oxygen/16x16/document-revert.png"));
     ui.buttonBox->button(QDialogButtonBox::Close)->setIcon(QIcon(":/images/oxygen/16x16/dialog-close.png"));
@@ -57,6 +58,10 @@ void DlgAwaylog::button_reset()
 {
     lAwaylog->clear();
     ui.listWidget->clear();
+
+    // hide
+    if (awaylogAct->isVisible() == true)
+        awaylogAct->setVisible(false);
 }
 
 void DlgAwaylog::button_close()

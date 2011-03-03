@@ -208,6 +208,9 @@ void TabContainer::show_msg(QString strTime, QString strChannel, QString strData
                 if (i != pTabM->currentIndex())
                     pTabM->set_alert(i, QColor(0, 147, 0, 255)); // green
             }
+
+            // update awaylog status
+            emit update_awaylog_status();
         }
         else
         {
@@ -246,6 +249,9 @@ void TabContainer::show_msg(QString strChannel, QString strData, int iLevel)
                 if (i != pTabM->currentIndex())
                     pTabM->set_alert(i, QColor(0, 147, 0, 255)); // green
             }
+
+            // update awaylog status
+            emit update_awaylog_status();
         }
         else
         {

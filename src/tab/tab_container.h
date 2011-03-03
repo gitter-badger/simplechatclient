@@ -109,6 +109,7 @@ signals:
     void currentChanged(int);
     void update_nick_avatar(QString);
     void set_open_channels();
+    void update_awaylog_status();
 };
 
 #endif // TAB_CONTAINER_H

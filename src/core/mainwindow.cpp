@@ -184,6 +184,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     // refresh colors
     refresh_colors();
 
+    // hide awaylog
+    awaylogAct->setVisible(false);
+
     // signal refresh colors
     QObject::connect(pOptions, SIGNAL(refresh_colors()), this, SLOT(refresh_colors()));
     // signal refresh background image
@@ -191,7 +194,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
     // create basic core
     coreServers.append(new Core());
-    coreServers.at(0)->init(this,"czat-app.onet.pl", 5015, pNotify, toolBar, viewMenu, connectAct, channel_homesAct, channel_favouritesAct, friendsAct, ignoreAct, myStatsAct, myProfileAct);
+    coreServers.at(0)->init(this,"czat-app.onet.pl", 5015, pNotify, toolBar, viewMenu, connectAct, channel_homesAct, channel_favouritesAct, friendsAct, ignoreAct, myStatsAct, myProfileAct, awaylogAct);
 
     // update
     pUpdate->check_update();
@@ -241,7 +244,7 @@ void MainWindow::create_settings()
     // default settings
     QSettings settings;
     settings.clear();
-    settings.setValue("version", "1.0.10.735");
+    settings.setValue("version", "1.0.10.736");
     settings.setValue("debug", "off");
     settings.setValue("logged", "off");
     settings.setValue("busy", "off");

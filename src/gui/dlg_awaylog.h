@@ -28,11 +28,12 @@ class DlgAwaylog : public QDialog
 {
     Q_OBJECT
 public:
-    DlgAwaylog(QWidget *, QList<QString> *);
+    DlgAwaylog(QWidget *, QList<QString> *, QAction *);
 
 private:
     Ui::uiAwaylog ui;
     QList<QString> *lAwaylog;
+    QAction *awaylogAct;
 
     void refresh();
     void button_reset();

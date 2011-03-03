@@ -52,7 +52,7 @@ class Core : public QObject
 public:
     Core();
     ~Core();
-    void init(QMainWindow *, QString, int, Notify *, QToolBar *, QMenu *, QAction *, QAction *, QAction *, QAction *, QAction *, QAction *, QAction *);
+    void init(QMainWindow *, QString, int, Notify *, QToolBar *, QMenu *, QAction *, QAction *, QAction *, QAction *, QAction *, QAction *, QAction *, QAction *);
 
     void refresh_colors();
     void refresh_background_image();
@@ -105,6 +105,7 @@ private:
     QAction *ignoreAct;
     QAction *myStatsAct;
     QAction *myProfileAct;
+    QAction *awaylogAct;
 
     // require
     QTcpSocket *camSocket;
@@ -147,6 +148,7 @@ private slots:
     void set_connected();
     void set_disconnected();
     void update_actions();
+    void update_awaylog_status();
     void set_connect_enabled(bool);
     void tab_close_requested(int);
     void current_tab_changed(int);
