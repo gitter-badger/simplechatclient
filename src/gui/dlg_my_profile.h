@@ -46,6 +46,7 @@ private:
     QString convert_country_to_code(QString);
     QString convert_int_to_month(QString);
     QString convert_month_to_int(QString);
+    QString convert_type(QString);
 
 private slots:
     void button_ok();

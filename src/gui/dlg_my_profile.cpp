@@ -45,6 +45,7 @@ DlgMyProfile::DlgMyProfile(QWidget *parent, Network *param1, QMap <QString, QByt
 
     ui.pushButton_bold->setText("");
     ui.pushButton_italic->setText("");
+    ui.label_ltype->setText(tr("Type:"));
     ui.label_sex->setText(tr("Sex:"));
     ui.label_birthdate->setText(tr("Birthdate:"));
     ui.label_city->setText(tr("City:"));
@@ -195,6 +196,8 @@ void DlgMyProfile::refresh()
         }
         else if (strKey == "shortDesc")
             ui.plainTextEdit_desc->setPlainText(convert_text_to_desc(strValue));
+        else if (strKey == "type")
+            ui.label_type->setText(convert_type(strValue));
         else if (strKey == "www")
             ui.lineEdit_www->setText(strValue);
 
@@ -467,6 +470,20 @@ QString DlgMyProfile::convert_month_to_int(QString strMonth)
     }
 
     return "";
+}
+
+QString DlgMyProfile::convert_type(QString strType)
+{
+    if (strType == "0")
+        strType = tr("Novice");
+    else if (strType == "1")
+        strType = tr("Beginner");
+    else if (strType == "2")
+        strType = tr("Master");
+    else if (strType == "3")
+        strType = tr("Guru");
+
+    return strType;
 }
 
 void DlgMyProfile::button_ok()

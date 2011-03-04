@@ -1154,6 +1154,26 @@
         <translation>Moja wizytówka</translation>
     </message>
     <message>
+        <source>Type:</source>
+        <translation>Ranga:</translation>
+    </message>
+    <message>
+        <source>Novice</source>
+        <translation>Nowicjusz</translation>
+    </message>
+    <message>
+        <source>Beginner</source>
+        <translation>Bywalec</translation>
+    </message>
+    <message>
+        <source>Master</source>
+        <translation>Wyjadacz</translation>
+    </message>
+    <message>
+        <source>Guru</source>
+        <translation>Guru</translation>
+    </message>
+    <message>
         <source>Sex:</source>
         <translation>Płeć:</translation>
     </message>
