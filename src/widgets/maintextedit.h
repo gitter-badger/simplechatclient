@@ -64,6 +64,11 @@ private:
     void menu_channel(QString, QContextMenuEvent *);
     void menu_standard(QContextMenuEvent *);
 
+    int get_word_index(QString, int);
+    QString get_word(QTextCursor);
+    QString get_first_word(QTextCursor);
+
+
 private slots:
     void join_channel();
     void priv();

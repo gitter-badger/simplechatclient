@@ -351,6 +351,49 @@ void MainTextEdit::menu_standard(QContextMenuEvent *event)
     menu.exec(event->globalPos());
 }
 
+int MainTextEdit::get_word_index(QString strLine, int iPos)
+{
+    strLine +=" ";
+    int iCount = strLine.count(" ");
+    int iLast = 0;
+    for (int i = 0; i < iCount; i++)
+    {
+        int iCurrentPos = strLine.indexOf(" ", iLast);
+
+        if (iCurrentPos >= iPos)
+            return i;
+
+        iLast = iCurrentPos+1;
+    }
+    return -1;
+}
+
+QString MainTextEdit::get_word(QTextCursor cursor)
+{
+    // get pos
+    int iPos = cursor.position() - cursor.block().position(); // cursor.positionInBlock()
+    // get line
+    cursor.select(QTextCursor::LineUnderCursor);
+    QString strLine = cursor.selectedText().trimmed();
+    QStringList strlLine = strLine.split(" ");
+
+    int index = get_word_index(strLine, iPos);
+    if (index != -1)
+        return strlLine.at(index);
+    else
+        return "";
+}
+
+QString MainTextEdit::get_first_word(QTextCursor cursor)
+{
+    // get line
+    cursor.select(QTextCursor::LineUnderCursor);
+    QString strLine = cursor.selectedText().trimmed();
+    QStringList strlLine = strLine.split(" ");
+
+    return strlLine.at(1);
+}
+
 void MainTextEdit::contextMenuEvent(QContextMenuEvent *event)
 {
     if (this->textCursor().selectedText().isEmpty() == true) // if nothing selected
@@ -359,34 +402,32 @@ void MainTextEdit::contextMenuEvent(QContextMenuEvent *event)
         cursor.select(QTextCursor::WordUnderCursor);
         if (!cursor.selectedText().isEmpty())
         {
-            QString strText = cursor.selectedText();
             int iPos = cursor.position() - cursor.block().position(); // cursor.positionInBlock()
+            QString strFirstWord = get_first_word(cursor);
+            QString strWord = get_word(cursor);
 
-            cursor.select(QTextCursor::BlockUnderCursor);
-            QString strBlock = cursor.selectedText().trimmed();
-            QStringList strlBlock = strBlock.split(" ");
-
-            QString strWord = strlBlock[1];
-
-            // channel
-            if (strText.at(0) == '#')
+            if ((strFirstWord.isEmpty() == false) && (strWord.isEmpty() == false))
             {
-                strChannel = strText;
-                menu_channel(strChannel, event);
-                return;
-            }
-
-            // nick
-            if ((iPos > 11) && (iPos < 11+2+strWord.length()))
-            {
-                QString strCheckNick = strWord.mid(1,strWord.length()-2);
-                if ((strText == strCheckNick) || ("~"+strText == strCheckNick))
+                // channel
+                if (strWord.at(0) == '#')
                 {
-                    if (strText != strCheckNick) strText = "~"+strText; // correct nick
-
-                    strNick = strText;
-                    menu_nick(strNick, event);
+                    strChannel = strWord;
+                    menu_channel(strChannel, event);
                     return;
+                }
+
+                // nick
+                if ((iPos > 11) && (iPos < 11+strFirstWord.length()))
+                {
+                    QString strFixedWord = strWord.mid(1,strWord.length()-2);
+                    QString strFixedFirstWord = strFirstWord.mid(1,strFirstWord.length()-2);
+
+                    if (strFixedWord == strFixedFirstWord)
+                    {
+                        strNick = strFixedWord;
+                        menu_nick(strNick, event);
+                        return;
+                    }
                 }
             }
         }
