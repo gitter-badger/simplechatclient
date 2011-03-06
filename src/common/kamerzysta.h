@@ -25,6 +25,7 @@ class Config;
 class Log;
 #include <QObject>
 #include <QTcpSocket>
+#include <QTimer>
 
 /**
  * Cams support using Kamerzysta (http://programy.onet.pl/72,34,10195,,,Kamerzysta_3.00.159,programy.html)
@@ -34,29 +35,31 @@ class Kamerzysta : public QObject
     Q_OBJECT
 public:
     Kamerzysta(QTcpSocket *);
-    ~Kamerzysta();
-    void show(QString, QString);
+    void show(QString);
+    void close();
 
 private:
     QString strNick;
-    QString strUOKey;
     QString strAppPath;
     QString strKamerzystaFile;
     int iPort;
     QTcpSocket *socket;
     int iTryGetPort;
+    QTimer *timerGetPort;
 
+    void log(QString);
     void get_path();
+    void authorize();
     void kamerzysta_not_running();
     void kamerzysta_running();
-    void network_connect();
 
 private slots:
-    void network_connected();
-    void network_disconnected();
     void get_port();
-    void network_send(QString);
+    void network_connect();
+    void network_connected();
     void network_disconnect();
+    void network_disconnected();
+    void network_send(QString);
     void network_read();
     void error(QAbstractSocket::SocketError);
 };

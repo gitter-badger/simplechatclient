@@ -34,36 +34,55 @@
 
 Kamerzysta::Kamerzysta(QTcpSocket *param1)
 {
+    log("Like constructor");
+
     socket = param1;
-    socket->setSocketOption(QAbstractSocket::LowDelayOption, 1);
-    socket->setSocketOption(QAbstractSocket::KeepAliveOption, 0);
+
+    timerGetPort = new QTimer();
+    timerGetPort->setInterval(500);
 
     QObject::connect(socket, SIGNAL(connected()), this, SLOT(network_connected()));
     QObject::connect(socket, SIGNAL(disconnected()), this, SLOT(network_disconnected()));
     QObject::connect(socket, SIGNAL(error(QAbstractSocket::SocketError)), this, SLOT(error(QAbstractSocket::SocketError)));
     QObject::connect(socket, SIGNAL(readyRead()), this, SLOT(network_read()));
+    QObject::connect(timerGetPort, SIGNAL(timeout()), this, SLOT(get_port()));
 }
 
-Kamerzysta::~Kamerzysta()
+void Kamerzysta::close()
 {
-    network_disconnect();
+    log("Like destructor");
+
+    QObject::disconnect(timerGetPort, SIGNAL(timeout()), this, SLOT(get_port()));
+    QObject::disconnect(socket, SIGNAL(readyRead()), this, SLOT(network_read()));
+    QObject::disconnect(socket, SIGNAL(error(QAbstractSocket::SocketError)), this, SLOT(error(QAbstractSocket::SocketError)));
+    QObject::disconnect(socket, SIGNAL(disconnected()), this, SLOT(network_disconnected()));
+    QObject::disconnect(socket, SIGNAL(connected()), this, SLOT(network_connected()));
+
+    delete timerGetPort;
 }
 
-void Kamerzysta::show(QString param1, QString param2)
+void Kamerzysta::show(QString n)
 {
-    strNick = param1;
-    strUOKey = param2;
+    strNick = n;
 
+    QSettings settings;
+    QString strUOKey = settings.value("uokey").toString();
+
+    log("Nick:"+strNick);
+    log("UO:"+strUOKey);
+
+    get_path();
+}
+
+void Kamerzysta::log(QString strData)
+{
     QSettings settings;
     if (settings.value("debug").toString() == "on")
     {
         Log *l = new Log();
-        l->save("kamerzysta", "Nick:"+strNick);
-        l->save("kamerzysta", "UO:"+strUOKey);
+        l->save("kamerzysta", strData);
         delete l;
     }
-
-    get_path();
 }
 
 void Kamerzysta::get_path()
@@ -80,67 +99,51 @@ void Kamerzysta::get_path()
     }
     else
     {
-        QMessageBox::critical(0, "", tr("Kamerzysta not found!"));
+        QMessageBox::critical(0, tr("Error"), tr("Kamerzysta not found!"));
+        close();
         return;
     }
 
-    QSettings mySettings;
-    if (mySettings.value("debug").toString() == "on")
-    {
-        Log *l = new Log();
-        l->save("kamerzysta", "App path:"+strAppPath);
-        delete l;
-    }
+    log("App path:"+strAppPath);
 
     if (QFile::exists(strAppPath+"\\port") == true)
     {
-        if (mySettings.value("debug").toString() == "on")
-        {
-            Log *l = new Log();
-            l->save("kamerzysta", "Port:exist");
-            delete l;
-        }
-
+        log("Port:exist");
         kamerzysta_running();
     }
     else
     {
-        if (mySettings.value("debug").toString() == "on")
-        {
-            Log *l = new Log();
-            l->save("kamerzysta", "Port:not exist");
-            delete l;
-        }
-
+        log("Port:not exist");
         kamerzysta_not_running();
     }
 }
 
 void Kamerzysta::kamerzysta_not_running()
 {
+    log("Kamerzysta not running");
+
     if (QFile::exists(strAppPath+"\\installPath") == false)
     {
-        QMessageBox::critical(0, "", tr("Kamerzysta is wrong installed!"));
+        QMessageBox::critical(0, tr("Error"), tr("Kamerzysta is wrong installed!"));
+        close();
         return;
     }
     else
     {
         QFile file(strAppPath+"\\installPath");
         if (file.open(QIODevice::ReadOnly | QIODevice::Text) == false)
+        {
+            QMessageBox::critical(0, tr("Error"), tr("Kamerzysta is wrong installed!"));
+            close();
             return;
+        }
 
         QTextStream in(&file);
         strKamerzystaFile = in.readLine();
         file.close();
     }
 
-    QSettings settings;
-    if (settings.value("debug").toString() == "on")
-    {
-        Log *l = new Log();
-        l->save("kamerzysta", "Install path:"+strKamerzystaFile);
-        delete l;
-    }
+    log("Install path:"+strKamerzystaFile);
 
     if ((strKamerzystaFile.isEmpty() == false) && (QFile::exists(strKamerzystaFile) == true))
     {
@@ -161,35 +164,27 @@ void Kamerzysta::kamerzysta_not_running()
 
         // network
         iTryGetPort = 0;
-        QTimer::singleShot(1, this, SLOT(get_port()));
+
+        // get port
+        timerGetPort->start();
+    }
+    else
+    {
+        QMessageBox::critical(0, tr("Error"), tr("Kamerzysta is wrong installed!"));
+        close();
+        return;
     }
 }
 
 void Kamerzysta::kamerzysta_running()
 {
+    log("Kamerzysta running");
+
+    // send
     network_send(QString("e%1").arg(strNick));
-}
 
-void Kamerzysta::network_connected()
-{
-    QSettings settings;
-    if (settings.value("debug").toString() == "on")
-    {
-        Log *l = new Log();
-        l->save("kamerzysta", "Connected");
-        delete l;
-    }
-}
-
-void Kamerzysta::network_disconnected()
-{
-    QSettings settings;
-    if (settings.value("debug").toString() == "on")
-    {
-        Log *l = new Log();
-        l->save("kamerzysta", "Disconnected");
-        delete l;
-    }
+    // close
+    close();
 }
 
 void Kamerzysta::get_port()
@@ -205,36 +200,69 @@ void Kamerzysta::get_port()
         file.close();
     }
 
-    QSettings settings;
-    if (settings.value("debug").toString() == "on")
-    {
-        Log *l = new Log();
-        l->save("kamerzysta", "Port:"+strPort);
-        delete l;
-    }
+    log("Port:"+strPort);
 
-    iTryGetPort++;
     if (strPort.isEmpty() == false)
+    {
+        timerGetPort->stop();
         network_connect();
+    }
     else
     {
-        if (iTryGetPort < 120)
-            QTimer::singleShot(1000*1, this, SLOT(get_port())); // 1 sec
+        iTryGetPort++;
     }
+}
+
+void Kamerzysta::authorize()
+{
+    QSettings settings;
+    QString strMe = settings.value("nick").toString();
+    QString strUOKey = settings.value("uokey").toString();
+
+    network_send(QString("d%1|%2").arg(strMe).arg(strUOKey));
+
+    if (strNick.isEmpty())
+        log("Nick empty!");
+
+    if ((strNick != strMe) && (strNick.isEmpty() == false))
+        network_send(QString("e%1").arg(strNick).arg(strUOKey));
 }
 
 void Kamerzysta::network_connect()
 {
-    QSettings settings;
-    if (settings.value("debug").toString() == "on")
-    {
-        Log *l = new Log();
-        l->save("kamerzysta", "Connecting...");
-        delete l;
-    }
-
     if (socket->state() == QAbstractSocket::UnconnectedState)
+    {
+        log("Connecting...");
         socket->connectToHost(QHostAddress::LocalHost, iPort);
+    }
+}
+
+void Kamerzysta::network_connected()
+{
+    log("Connected");
+}
+
+void Kamerzysta::network_disconnect()
+{
+    log("Disconnecting...");
+
+    if (socket->state() == QAbstractSocket::ConnectedState)
+        socket->disconnectFromHost();
+}
+
+void Kamerzysta::network_disconnected()
+{
+    log("Disconnected");
+
+    // clear nick
+    strNick = "";
+
+    // stop timer
+    if (timerGetPort->isActive() == true)
+        timerGetPort->stop();
+
+    // like destructor
+    close();
 }
 
 void Kamerzysta::network_send(QString strData)
@@ -246,59 +274,28 @@ void Kamerzysta::network_send(QString strData)
         for ( int i = 0; i < strData.size(); i++)
             qbaData.insert(i, strData.at(i).toAscii());
 
-        QSettings settings;
-        if (settings.value("debug").toString() == "on")
-        {
-            Log *l = new Log();
-            l->save("kamerzysta", "Send:"+QString(qbaData));
-            delete l;
-        }
+        log("Send:"+QString(qbaData));
 
         socket->write(qbaData);
     }
 }
 
-void Kamerzysta::network_disconnect()
-{
-    QSettings settings;
-    if (settings.value("debug").toString() == "on")
-    {
-        Log *l = new Log();
-        l->save("kamerzysta", "Disconnecting...");
-        delete l;
-    }
-
-    if (socket->state() == QAbstractSocket::ConnectedState)
-        socket->disconnectFromHost();
-}
-
 void Kamerzysta::network_read()
 {
+    log("Ready read");
+
     while(socket->canReadLine())
     {
         // read line
         QByteArray data = socket->readLine().trimmed();
         QString strDataRecv = QString(data);
 
+        // log
+        log("Recv:"+strDataRecv);
+
         // data
         if (strDataRecv == "d")
-        {
-            Config *pConfig = new Config();
-            QString strMe = pConfig->get_value("nick");
-            delete pConfig;
-
-            network_send(QString("d%1|%2").arg(strMe).arg(strUOKey));
-            if (strNick != strMe)
-                network_send(QString("e%1").arg(strNick).arg(strUOKey));
-        }
-
-        QSettings settings;
-        if (settings.value("debug").toString() == "on")
-        {
-            Log *l = new Log();
-            l->save("kamerzysta", "Recv:"+strDataRecv);
-            delete l;
-        }
+            authorize();
     }
 }
 
@@ -306,14 +303,20 @@ void Kamerzysta::error(QAbstractSocket::SocketError err)
 {
     Q_UNUSED (err);
 
-    QSettings settings;
-    if (settings.value("debug").toString() == "on")
-    {
-        Log *l = new Log();
-        l->save("kamerzysta", "Error:"+socket->errorString());
-        delete l;
-    }
+    log("Error:"+socket->errorString());
 
     if (socket->state() == QAbstractSocket::ConnectedState)
         network_disconnect();
+    else
+    {
+        // clear nick
+        strNick = "";
+
+        // stop timer
+        if (timerGetPort->isActive() == true)
+            timerGetPort->stop();
+
+        // like destructor
+        close();
+    }
 }

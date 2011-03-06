@@ -74,6 +74,8 @@ void Core::init(QMainWindow *parent, QString param1, int param2, Notify *param3,
 
     // init all
     camSocket = new QTcpSocket();
+    camSocket->setSocketOption(QAbstractSocket::LowDelayOption, 1);
+    camSocket->setSocketOption(QAbstractSocket::KeepAliveOption, 0);
 
     pTabM = new TabManager(myparent);
     myparent->setCentralWidget(pTabM);
@@ -220,6 +222,7 @@ void Core::create_signals()
     QObject::connect(pNetwork, SIGNAL(clear_nicklist(QString)), this, SLOT(clear_nicklist(QString)));
     QObject::connect(pNetwork, SIGNAL(clear_all_nicklist()), this, SLOT(clear_all_nicklist()));
     QObject::connect(pNetwork, SIGNAL(update_actions()), this, SLOT(update_actions()));
+    QObject::connect(pNetwork, SIGNAL(close_cam_socket()), this, SLOT(close_cam_socket()));
 }
 
 void Core::network_connect()
@@ -302,6 +305,12 @@ void Core::update_actions()
     }
 }
 
+void Core::close_cam_socket()
+{
+    if (camSocket->state() == QAbstractSocket::ConnectedState)
+        camSocket->disconnectFromHost();
+}
+
 void Core::update_awaylog_status()
 {
     if (lAwaylog.count() == 0)
@@ -366,8 +375,7 @@ void Core::open_cams()
     {
         QSettings settings;
         QString strMe = settings.value("nick").toString();
-        QString strUOKey = settings.value("uokey").toString();
-        (new Kamerzysta(camSocket))->show(strMe, strUOKey);
+        (new Kamerzysta(camSocket))->show(strMe);
     }
 #else
     if ((pNetwork->is_connected() == true) && (pNetwork->is_writable() == true))

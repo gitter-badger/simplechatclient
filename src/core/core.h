@@ -149,6 +149,7 @@ private slots:
     void set_connected();
     void set_disconnected();
     void update_actions();
+    void close_cam_socket();
     void update_awaylog_status();
     void set_connect_enabled(bool);
     void tab_close_requested(int);

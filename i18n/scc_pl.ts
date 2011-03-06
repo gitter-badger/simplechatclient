@@ -145,6 +145,10 @@
 <context>
     <name>Kamerzysta</name>
     <message>
+        <source>Error</source>
+        <translation>Błąd</translation>
+    </message>
+    <message>
         <source>Kamerzysta not found!</source>
         <translation>Nie znaleziono Kamerzysty!</translation>
     </message>

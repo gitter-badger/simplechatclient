@@ -433,9 +433,7 @@ void NickListWidget::cam()
 
     QString strNick = this->selectedItems().at(0)->text(0);
 #ifdef Q_WS_WIN
-    QSettings settings;
-    QString strUOKey = settings.value("uokey").toString();
-    (new Kamerzysta(camSocket))->show(strNick, strUOKey);
+    (new Kamerzysta(camSocket))->show(strNick);
 #else
     pDlg_cam->set_nick(strNick);
     pDlg_cam->show();

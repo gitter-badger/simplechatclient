@@ -85,6 +85,9 @@ bool Network::is_writable()
 
 void Network::clear_all()
 {
+    // close cam socket
+    emit close_cam_socket();
+
     // set button
     emit set_disconnected();
 
