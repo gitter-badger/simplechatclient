@@ -36,7 +36,7 @@ public:
     QString transform_key(QString);
 
 public slots:
-    void request_uo(QString, QString, QString);
+    void authorize(QString, QString, QString);
 
 private:
     TabContainer *tabc;

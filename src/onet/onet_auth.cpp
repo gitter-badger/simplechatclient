@@ -59,20 +59,23 @@ QString OnetAuth::network_request(QNetworkAccessManager *accessManager, QString 
     return strData;
 }
 
-void OnetAuth::request_uo(QString param1, QString param2, QString param3)
+void OnetAuth::authorize(QString param1, QString param2, QString param3)
 {
+    QSettings settings;
+    if (settings.value("logged") == "on") return; // already logged
+
     QString strNick = param1;
     QString strNickAuth = param2;
     QString strPass = param3;
     QString strVersion;
     bool bOverride;
     QString strData;
+    QString strGetUo;
 
     QNetworkAccessManager accessManager;
     QNetworkCookieJar *cookieJar = new QNetworkCookieJar();
     accessManager.setCookieJar(cookieJar);
 
-    QSettings settings;
     QString strOverride = settings.value("override").toString();
 
     if (strOverride == "on")
@@ -164,37 +167,41 @@ void OnetAuth::request_uo(QString param1, QString param2, QString param3)
 
             // getuo
             strData = QString("api_function=getUoKey&params=a:3:{s:4:\"nick\";s:%1:\"%2\";s:8:\"tempNick\";i:0;s:7:\"version\";s:%3:\"%4\";}").arg(strNickLen).arg(strNick).arg(strVersionLen).arg(strVersion);
-            QString strGetUo = network_request(&accessManager, "http://czat.onet.pl/include/ajaxapi.xml.php3", strData);
-
-            request_finished(strNickAuth, strGetUo);
+            strGetUo = network_request(&accessManager, "http://czat.onet.pl/include/ajaxapi.xml.php3", strData);
         }
         // unregistered nick
         else
         {
             strData = QString("api_function=getUoKey&params=a:3:{s:4:\"nick\";s:%1:\"%2\";s:8:\"tempNick\";i:1;s:7:\"version\";s:%3:\"%4\";}").arg(strNickLen).arg(strNick).arg(strVersionLen).arg(strVersion);
-            QString strGetUo = network_request(&accessManager, "http://czat.onet.pl/include/ajaxapi.xml.php3", strData);
-
-            request_finished(strNickAuth, strGetUo);
+            strGetUo = network_request(&accessManager, "http://czat.onet.pl/include/ajaxapi.xml.php3", strData);
         }
     }
     else
-        tabc->show_msg("Status", tr("Error: Authentication error [onet.pl servers are not available]"), 9);
-
-    // save cookies
-    QList <QNetworkCookie> cookies = accessManager.cookieJar()->cookiesForUrl(QUrl("http://czat.onet.pl"));
-    for (QList <QNetworkCookie>::iterator i = cookies.begin(); i != cookies.end(); ++i)
     {
-        QString strKey = i->name();
-        QString strValue = i->value();
+        tabc->show_msg("Status", tr("Error: Authentication error [onet.pl servers are not available]"), 9);
+    }
 
-        if (strKey == "onet_ubi")
-            settings.setValue("onet_ubi", strValue);
-        else if (strKey == "onet_cid")
-            settings.setValue("onet_cid", strValue);
-        else if (strKey == "onet_sid")
-            settings.setValue("onet_sid", strValue);
-        else if (strKey == "onet_uid")
-            settings.setValue("onet_uid", strValue);
+    // not empty key; not logged
+    if ((strGetUo.isEmpty() == false) && (settings.value("logged") == "off"))
+    {
+        request_finished(strNickAuth, strGetUo);
+
+        // save cookies
+        QList <QNetworkCookie> cookies = accessManager.cookieJar()->cookiesForUrl(QUrl("http://czat.onet.pl"));
+        for (QList <QNetworkCookie>::iterator i = cookies.begin(); i != cookies.end(); ++i)
+        {
+            QString strKey = i->name();
+            QString strValue = i->value();
+
+            if (strKey == "onet_ubi")
+                settings.setValue("onet_ubi", strValue);
+            else if (strKey == "onet_cid")
+                settings.setValue("onet_cid", strValue);
+            else if (strKey == "onet_sid")
+                settings.setValue("onet_sid", strValue);
+            else if (strKey == "onet_uid")
+                settings.setValue("onet_uid", strValue);
+        }
     }
 
     delete cookieJar;
@@ -347,13 +354,10 @@ void OnetAuth::request_finished(QString strNickAuth, QString strData)
                 // send auth
                 emit send(QString("NICK %1").arg(strNickAuth));
                 emit send("AUTHKEY");
-
-                return;
             }
             else
             {
                 tabc->show_msg("Status", tr("Error: Authorization Failed."), 9);
-                return;
             }
         }
         // <?xml version="1.0" encoding="ISO-8859-2"?><root><error err_code="-2"  err_text="U.ytkownik nie zalogowany" ></error></root>
@@ -370,13 +374,10 @@ void OnetAuth::request_finished(QString strNickAuth, QString strData)
 
                 tabc->show_msg("Status", QString(tr("Error: Authentication error [%1]")).arg(strErrorText), 9);
             }
-
-            return;
         }
     }
     else
     {
         tabc->show_msg("Status", tr("Error: Authorization Failed."), 9);
-        return;
     }
 }

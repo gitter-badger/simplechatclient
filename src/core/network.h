@@ -54,17 +54,19 @@ private:
     QTimer *timerQueue;
     int iActive;
     QList <QString> msgSendQueue;
-    bool bReconnecting;
     bool bDefaultEnabledQueue;
+    bool bAuthorized;
+    QTimer *timerReconnect;
 
+    void authorize();
     void clear_all();
     void write(QString);
 
 private slots:
-    void reconnect();
-    void recv();
     void connected();
     void disconnected();
+    void reconnect();
+    void recv();
     void error(QAbstractSocket::SocketError);
     void state_changed(QAbstractSocket::SocketState);
     void timeout_pong();
@@ -78,7 +80,7 @@ signals:
     void set_lag(QString);
     void set_connect_enabled(bool);
     void kernel(QString);
-    void request_uo(QString, QString, QString);
+    void authorize(QString, QString, QString);
     void show_msg_all(QString, int);
     void show_msg_active(QString, int);
     void update_nick(QString);

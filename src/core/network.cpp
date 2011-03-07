@@ -31,16 +31,18 @@ Network::Network(QString param1, int param2)
     iPort = param2;
 
     iActive = 0;
-    bReconnecting = false;
     bDefaultEnabledQueue = true;
+    bAuthorized = false;
+    timerReconnect = new QTimer();
+    timerReconnect->setInterval(1000*30); // 30 sec
     QSettings settings;
     settings.setValue("reconnect", "true");
     timerPong = new QTimer();
-    timerPong->setInterval(1*60*1000); // 1 min
+    timerPong->setInterval(1000*60*1); // 1 min
     timerPing = new QTimer();
-    timerPing->setInterval(30*1000); // 30 sec
+    timerPing->setInterval(1000*30); // 30 sec
     timerLag = new QTimer();
-    timerLag->setInterval(10*1000); // 10 sec
+    timerLag->setInterval(1000*10); // 10 sec
     timerQueue = new QTimer();
     timerQueue->setInterval(300); // 0.3 sec
 
@@ -58,6 +60,8 @@ Network::Network(QString param1, int param2)
     QObject::connect(timerPing, SIGNAL(timeout()), this, SLOT(timeout_ping()));
     QObject::connect(timerLag, SIGNAL(timeout()), this, SLOT(timeout_lag()));
     QObject::connect(timerQueue, SIGNAL(timeout()), this, SLOT(timeout_queue()));
+
+    QObject::connect(timerReconnect, SIGNAL(timeout()), this, SLOT(reconnect()));
 }
 
 Network::~Network()
@@ -114,8 +118,62 @@ void Network::clear_all()
     if (timerQueue->isActive() == true)
         timerQueue->stop();
 
+    // reconnect
+    if (timerReconnect->isActive() == true)
+        timerReconnect->stop();
+
     // clear queue
     msgSendQueue.clear();
+
+    // authorized
+    bAuthorized = false;
+}
+
+void Network::authorize()
+{
+    // authorized
+    bAuthorized = true;
+
+    // get nick
+    QSettings settings;
+    QString strNick = settings.value("nick").toString();
+    QString strPass = settings.value("pass").toString();
+
+    // nick & pass is null
+    if ((strNick.isEmpty() == true) && (strPass.isEmpty() == true))
+        strNick = "~test";
+
+    // decrypt pass
+    if (strPass.isEmpty() == false)
+    {
+        Crypt *pCrypt = new Crypt();
+        strPass = pCrypt->decrypt(strNick, strPass);
+        delete pCrypt;
+    }
+
+    // correct nick
+    if ((strPass.isEmpty() == true) && (strNick[0] != '~'))
+        strNick = "~"+strNick;
+    if ((strPass.isEmpty() == false) && (strNick[0] == '~'))
+        strNick = strNick.right(strNick.length()-1);
+
+    Config *pConfig = new Config();
+    settings.setValue("nick", strNick);
+    pConfig->set_value("nick", strNick);
+    delete pConfig;
+
+    // update nick
+    emit update_nick(strNick);
+    // update actions
+    emit update_actions();
+
+    // set current nick
+    QString strCurrentNick = strNick;
+        if (strCurrentNick[0] == '~')
+    strCurrentNick = strNick.right(strNick.length()-1);
+
+    // request uo key
+    emit authorize(strCurrentNick, strNick, strPass);
 }
 
 void Network::connect()
@@ -133,14 +191,14 @@ void Network::connect()
             clear_all();
 
             // reconnect
-            if (bReconnecting == false)
-            {
-                bReconnecting = true;
-                QTimer::singleShot(1000*30, this, SLOT(reconnect())); // 30 sec
-            }
+            if ((timerReconnect->isActive() == false) && (bAuthorized == false))
+                timerReconnect->start();
 
             return;
         }
+
+        // clear all
+        clear_all();
 
         // random
         int iRandom = qrand() % hInfo.addresses().count();
@@ -162,19 +220,16 @@ void Network::connect()
         emit show_msg_all(tr("Error: Could not connect to the server - connection already exists!"), 9);
 }
 
-void Network::reconnect()
+void Network::connected()
 {
-    QSettings settings;
-    if (settings.value("reconnect").toString() == "true")
-    {
-        if ((this->is_connected() == false) && (settings.value("logged").toString() == "off"))
-        {
-            bReconnecting = false;
+    emit set_connected();
+    emit set_lag("Lag: ?");
 
-            emit show_msg_all(tr("Reconnecting..."), 7);
-            emit connect();
-        }
-    }
+    emit show_msg_all(tr("Connected to server"), 9);
+
+    // authorize
+    if (bAuthorized == false)
+        authorize();
 }
 
 void Network::disconnect()
@@ -195,6 +250,37 @@ void Network::disconnect()
 
     // clear all
     clear_all();
+}
+
+void Network::disconnected()
+{
+    if (socket->error() != QAbstractSocket::UnknownSocketError)
+        emit show_msg_all(QString(tr("Disconnected from server [%1]")).arg(socket->errorString()), 9);
+    else
+        emit show_msg_all(tr("Disconnected from server"), 9);
+
+    // clear all
+    clear_all();
+
+    // reconnect
+    if ((timerReconnect->isActive() == false) && (bAuthorized == false))
+        timerReconnect->start();
+}
+
+void Network::reconnect()
+{
+    if (timerReconnect->isActive() == true)
+        timerReconnect->stop();
+
+    QSettings settings;
+    if (settings.value("reconnect").toString() == "true")
+    {
+        if ((this->is_connected() == false) && (settings.value("logged").toString() == "off"))
+        {
+            emit show_msg_all(tr("Reconnecting..."), 7);
+            emit connect();
+        }
+    }
 }
 
 void Network::write(QString strData)
@@ -256,95 +342,18 @@ void Network::recv()
     }
 }
 
-void Network::connected()
+void Network::error(QAbstractSocket::SocketError error)
 {
-    emit set_connected();
-    emit set_lag("Lag: ?");
+    if (error == QAbstractSocket::RemoteHostClosedError) return; // supported by disconnected
 
-    emit show_msg_all(tr("Connected to server"), 9);
+    emit show_msg_all(QString(tr("Disconnected from server [%1]")).arg(socket->errorString()), 9);
 
-    QSettings settings;
-    QString strNick = settings.value("nick").toString();
-    QString strPass = settings.value("pass").toString();
-
-    // nick & pass is null
-    if ((strNick.isEmpty() == true) && (strPass.isEmpty() == true))
-        strNick = "~test";
-
-    // decrypt pass
-    if (strPass.isEmpty() == false)
-    {
-        Crypt *pCrypt = new Crypt();
-        strPass = pCrypt->decrypt(strNick, strPass);
-        delete pCrypt;
-    }
-
-    // correct nick
-    if ((strPass.isEmpty() == true) && (strNick[0] != '~'))
-        strNick = "~"+strNick;
-    if ((strPass.isEmpty() == false) && (strNick[0] == '~'))
-        strNick = strNick.right(strNick.length()-1);
-
-    Config *pConfig = new Config();
-    settings.setValue("nick", strNick);
-    pConfig->set_value("nick", strNick);
-    delete pConfig;
-
-    // update nick
-    emit update_nick(strNick);
-    // update actions
-    emit update_actions();
-
-    // set current nick
-    QString strCurrentNick = strNick;
-        if (strCurrentNick[0] == '~')
-    strCurrentNick = strNick.right(strNick.length()-1);
-
-    // request uo key
-    emit request_uo(strCurrentNick, strNick, strPass);
-}
-
-void Network::disconnected()
-{
-    if (socket->state() == QAbstractSocket::UnconnectedState)
-    {
-        if (socket->error() != QAbstractSocket::UnknownSocketError)
-            emit show_msg_all(QString(tr("Disconnected from server [%1]")).arg(socket->errorString()), 9);
-        else
-            emit show_msg_all(tr("Disconnected from server"), 9);
-
-        // clear all
-        clear_all();
-
-        // reconnect
-        if (bReconnecting == false)
-        {
-            bReconnecting = true;
-            QTimer::singleShot(1000*30, this, SLOT(reconnect())); // 30 sec
-        }
-    }
-}
-
-void Network::error(QAbstractSocket::SocketError err)
-{
-    Q_UNUSED (err);
-
-    if (socket->state() == QAbstractSocket::ConnectedState)
-        disconnect();
-    else
-    {
-        emit show_msg_all(QString(tr("Disconnected from server [%1]")).arg(socket->errorString()), 9);
-
-        // clear all
-        clear_all();
-    }
+    // clear all
+    clear_all();
 
     // reconnect
-    if (bReconnecting == false)
-    {
-        bReconnecting = true;
-        QTimer::singleShot(1000*30, this, SLOT(reconnect())); // 30 sec
-    }
+    if ((timerReconnect->isActive() == false) && (bAuthorized == false))
+        timerReconnect->start();
 }
 
 /**

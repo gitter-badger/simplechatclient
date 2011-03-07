@@ -1634,7 +1634,7 @@ DlgCamNetwork::DlgCamNetwork(Network *param1, QTcpSocket *param2)
     bReconnecting = true;
 
     timerPingPong = new QTimer();
-    timerPingPong->setInterval(1*60*1000); // 1 min
+    timerPingPong->setInterval(1000*60*1); // 1 min
 
     //socket->setSocketOption(QAbstractSocket::LowDelayOption, 1);
     //socket->setSocketOption(QAbstractSocket::KeepAliveOption, 0);

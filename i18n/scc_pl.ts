@@ -1704,7 +1704,7 @@
     </message>
     <message>
         <source>Type:</source>
-        <translation>Status:</translation>
+        <translation>Ranga:</translation>
     </message>
     <message>
         <source>Female</source>

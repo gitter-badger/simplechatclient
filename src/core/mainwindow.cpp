@@ -98,6 +98,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     chatMenu = menuBar()->addMenu(tr("&My"));
     chatMenu->addAction(myStatsAct);
     chatMenu->addAction(myProfileAct);
+    chatMenu->addAction(notesAct);
 
     // help menu
     helpMenu = menuBar()->addMenu(tr("He&lp"));
@@ -244,7 +245,7 @@ void MainWindow::create_settings()
     // default settings
     QSettings settings;
     settings.clear();
-    settings.setValue("version", "1.0.10.741");
+    settings.setValue("version", "1.0.10.742");
     settings.setValue("debug", "off");
     settings.setValue("logged", "off");
     settings.setValue("busy", "off");
