@@ -18,37 +18,47 @@
  *                                                                          *
  ****************************************************************************/
 
-#ifndef DLG_REGISTER_NICK_H
-#define DLG_REGISTER_NICK_H
+#ifndef DLG_MY_AVATAR_H
+#define DLG_MY_AVATAR_H
 
+class Network;
 #include <QDialog>
 #include <QNetworkAccessManager>
 #include <QNetworkCookieJar>
-#include "ui_register_nick.h"
+#include "ui_my_avatar.h"
 
-class DlgRegisterNick : public QDialog
+class DlgMyAvatar : public QDialog
 {
     Q_OBJECT
 public:
-    DlgRegisterNick(QWidget *, QWidget *);
-    ~DlgRegisterNick();
+    DlgMyAvatar(QWidget *, Network *, QMap <QString, QByteArray> *);
+    ~DlgMyAvatar();
 
 private:
-    Ui::uiRegisterNick ui;
-    QWidget *options;
+    Ui::uiMyAvatar ui;
+    QWidget *myparent;
+    Network *pNetwork;
+    QMap <QString, QByteArray> *mNickAvatar;
     QNetworkAccessManager *accessManager;
     QNetworkCookieJar *cookieJar;
-    QMap <QString, QString> mCookies;
+    bool bReadedCollections;
+    QMap<QString, int> mCollections;
+    QMap< int, QMap<QString, QByteArray> > mCollectionAvatars;
 
     void get_cookies();
-    void get_img();
-    void register_nick();
-    void parse_result(QString);
+    QString network_request(QString, QString);
+    QByteArray get_avatar(QString);
+    void get_collections();
+    void draw_collections();
+    void get_avatars_from_collect(int);
+    void draw_avatars_from_collect(int);
 
 private slots:
-    void button_refresh();
-    void button_ok();
-    void button_cancel();
+    void refresh_avatar();
+    void tab_changed(int);
+    void collection_changed(QString);
+    void button_apply_collection_avatar();
+    void button_close();
 };
 
-#endif // DLG_REGISTER_NICK_H
+#endif // DLG_MY_AVATAR_H

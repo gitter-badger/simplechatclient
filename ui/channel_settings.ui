@@ -150,35 +150,6 @@
         </item>
        </layout>
       </item>
-      <item row="8" column="1">
-       <widget class="QComboBox" name="comboBox_category">
-        <item>
-         <property name="text">
-          <string>Teen</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Towarzyskie</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Erotyczne</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Tematyczne</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Regionalne</string>
-         </property>
-        </item>
-       </widget>
-      </item>
       <item row="10" column="1">
        <layout class="QHBoxLayout" name="horizontalLayout_4">
         <item>
@@ -710,6 +681,55 @@
            <string>Apply</string>
           </property>
          </widget>
+        </item>
+       </layout>
+      </item>
+      <item row="8" column="1">
+       <layout class="QHBoxLayout" name="horizontalLayout_22">
+        <item>
+         <widget class="QComboBox" name="comboBox_category">
+          <item>
+           <property name="text">
+            <string>Teen</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Towarzyskie</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Erotyczne</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Tematyczne</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Regionalne</string>
+           </property>
+          </item>
+         </widget>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer_6">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeType">
+           <enum>QSizePolicy::MinimumExpanding</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>75</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
         </item>
        </layout>
       </item>

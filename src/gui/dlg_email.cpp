@@ -53,7 +53,8 @@ DlgEmail::DlgEmail(QWidget *parent, QString param1, QString param2) : QDialog(pa
     QObject::connect(ui.pushButton_cancel, SIGNAL(clicked()), this, SLOT(button_cancel()));
 
     cookieJar = new QNetworkCookieJar();
-    accessManager.setCookieJar(cookieJar);
+    accessManager = new QNetworkAccessManager;
+    accessManager->setCookieJar(cookieJar);
 
     get_cookies();
     get_img();
@@ -62,6 +63,7 @@ DlgEmail::DlgEmail(QWidget *parent, QString param1, QString param2) : QDialog(pa
 DlgEmail::~DlgEmail()
 {
     delete cookieJar;
+    accessManager->deleteLater();
 }
 
 void DlgEmail::get_cookies()
@@ -86,7 +88,7 @@ void DlgEmail::get_cookies()
     cookie.setValue(settings.value("onet_uid").toByteArray());
     cookieList.append(cookie);
 
-    accessManager.cookieJar()->setCookiesFromUrl(cookieList, QUrl("http://czat.onet.pl"));
+    accessManager->cookieJar()->setCookiesFromUrl(cookieList, QUrl("http://czat.onet.pl"));
 }
 
 void DlgEmail::get_img()
@@ -94,24 +96,27 @@ void DlgEmail::get_img()
     // disable button
     ui.pushButton_refresh->setEnabled(false);
 
-    bool bHost = true;
     QHostInfo hCzatOnetPl = QHostInfo::fromName("czat.onet.pl");
-    if (hCzatOnetPl.error() != QHostInfo::NoError)
-         bHost = false;
-
-    if (bHost == true)
+    if (hCzatOnetPl.error() == QHostInfo::NoError)
     {
         QEventLoop eventLoop;
-        QNetworkReply *pReply = accessManager.get(QNetworkRequest(QUrl("http://czat.onet.pl/myimg.gif")));
+        QNetworkReply *pReply = accessManager->get(QNetworkRequest(QUrl("http://czat.onet.pl/myimg.gif")));
         QObject::connect(pReply, SIGNAL(finished()), &eventLoop, SLOT(quit()));
         eventLoop.exec();
 
-        QByteArray bData = pReply->readAll();
-        QPixmap pixmap;
-        pixmap.loadFromData(bData);
-        ui.label_img->setPixmap(pixmap);
-
         pReply->deleteLater();
+
+        if (pReply->error())
+            return;
+
+        QByteArray bData = pReply->readAll();
+
+        if (bData.isEmpty() == false)
+        {
+            QPixmap pixmap;
+            pixmap.loadFromData(bData);
+            ui.label_img->setPixmap(pixmap);
+        }
     }
     else
         ui.label_img->setText(tr("Unable to download image"));
@@ -122,12 +127,8 @@ void DlgEmail::get_img()
 
 void DlgEmail::set_email()
 {
-    bool bHost = true;
     QHostInfo hCzatOnetPl = QHostInfo::fromName("czat.onet.pl");
-    if (hCzatOnetPl.error() != QHostInfo::NoError)
-         bHost = false;
-
-    if (bHost == true)
+    if (hCzatOnetPl.error() == QHostInfo::NoError)
     {
         QString strChannelLength = QString::number(strChannel.length());
         QString strEmailLength = QString::number(strEmail.length());
@@ -136,14 +137,19 @@ void DlgEmail::set_email()
 
         QEventLoop eventLoop;
         QString strData = QString("api_function=setChannelEmail&params=a:3:{s:4:\"name\";s:%1:\"%2\";s:5:\"email\";s:%3:\"%4\";s:4:\"code\";s:%5:\"%6\";}").arg(strChannelLength).arg(strChannel).arg(strEmailLength).arg(strEmail).arg(strCodeLength).arg(strCode);
-        QNetworkReply *pReply = accessManager.post(QNetworkRequest(QUrl("http://czat.onet.pl/include/ajaxapi.xml.php3")), strData.toAscii());
+        QNetworkReply *pReply = accessManager->post(QNetworkRequest(QUrl("http://czat.onet.pl/include/ajaxapi.xml.php3")), strData.toAscii());
         QObject::connect(pReply, SIGNAL(finished()), &eventLoop, SLOT(quit()));
         eventLoop.exec();
 
-        QString strResult = pReply->readAll();
         pReply->deleteLater();
 
-        parse_result(strResult);
+        if (pReply->error())
+            return;
+
+        QString strResult = pReply->readAll();
+
+        if (strResult.isEmpty() == false)
+            parse_result(strResult);
     }
     else
     {

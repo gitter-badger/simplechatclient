@@ -1506,17 +1506,14 @@ void OnetKernel::raw_111n()
     // get avatar
     if (strAvatarLink.isEmpty() == false)
     {
-        if (mNickAvatar->contains(strNick) == false)
-        {
-            aThreadList.append(new Avatar(pTabC, strNick, strAvatarLink, "nick", mNickAvatar, mChannelAvatar));
-            QObject::connect(aThreadList.at(aThreadList.size()-1), SIGNAL(sremove_athread(Avatar*)), this, SLOT(remove_athread(Avatar*)));
+        aThreadList.append(new Avatar(pTabC, strNick, strAvatarLink, "nick", mNickAvatar, mChannelAvatar));
+        QObject::connect(aThreadList.at(aThreadList.size()-1), SIGNAL(sremove_athread(Avatar*)), this, SLOT(remove_athread(Avatar*)));
 
 #ifdef Q_WS_X11
-            QSettings settings;
-            if (settings.value("debug").toString() == "on")
-                qDebug() << "Avatar thread +1 (size: " << aThreadList.size() << ")";
+        QSettings settings;
+        if (settings.value("debug").toString() == "on")
+            qDebug() << "Avatar thread +1 (size: " << aThreadList.size() << ")";
 #endif
-        }
     }
 }
 
@@ -1908,10 +1905,18 @@ void OnetKernel::raw_211n()
     // set my profile
     if (strNick == strMe)
     {
+        // my profile
         if (mMyProfile->contains(strKey) == true)
             (*mMyProfile)[strKey] = "";
         else
             mMyProfile->insert(strKey, "");
+
+        // my avatar
+        if (strKey == "avatar")
+        {
+            if (mNickAvatar->contains(strMe) == true)
+                mNickAvatar->remove(strMe);
+        }
     }
 
 

@@ -21,7 +21,6 @@
 #include <QEventLoop>
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
-#include <QTimer>
 #include "avatar.h"
 #include "tab_container.h"
 
@@ -34,24 +33,33 @@ AvatarThread::AvatarThread(QString param1, QString param2, QString param3)
 
 void AvatarThread::run()
 {
-    QTimer::singleShot(0, this, SLOT(thread_work()));
+    thread_work();
 
     exec();
 }
 
 void AvatarThread::thread_work()
 {
-    QNetworkAccessManager accessManager;
-    QNetworkReply *pReply;
     QEventLoop eventLoop;
-    pReply = accessManager.get(QNetworkRequest(QUrl(strUrl)));
+    QNetworkAccessManager *accessManager = new QNetworkAccessManager;
+    QNetworkReply *pReply = accessManager->get(QNetworkRequest(QUrl(strUrl)));
     QObject::connect(pReply, SIGNAL(finished()), &eventLoop, SLOT(quit()));
     eventLoop.exec();
 
-    QByteArray bData = pReply->readAll();
+    accessManager->deleteLater();
     pReply->deleteLater();
 
-    emit set_avatar(strNickChannel, strCategory, bData);
+    if (pReply->error())
+    {
+        emit stop_thread();
+        return;
+    }
+
+    QByteArray bData = pReply->readAll();
+
+    if (bData.isEmpty() == false)
+        emit set_avatar(strNickChannel, strCategory, bData);
+
     emit stop_thread();
 }
 

@@ -56,6 +56,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     camsAct = new QAction(QIcon(":/images/pubcam.png"),tr("Cams"), this);
     myStatsAct = new QAction(QIcon(":/images/oxygen/16x16/office-chart-bar.png"),tr("My statistics"), this);
     myProfileAct = new QAction(QIcon(":/images/oxygen/16x16/view-pim-contacts.png"),tr("My profile"), this);
+    myAvatarAct = new QAction(QIcon(":/images/oxygen/16x16/preferences-desktop-user.png"),tr("My avatar"), this);
 
     // shortcut
     connectAct->setShortcuts(QKeySequence::New);
@@ -98,6 +99,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     chatMenu = menuBar()->addMenu(tr("&My"));
     chatMenu->addAction(myStatsAct);
     chatMenu->addAction(myProfileAct);
+    chatMenu->addAction(myAvatarAct);
     chatMenu->addAction(notesAct);
 
     // help menu
@@ -139,6 +141,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     QObject::connect(ignoreAct, SIGNAL(triggered()), this, SLOT(open_ignore()));
     QObject::connect(myStatsAct, SIGNAL(triggered()), this, SLOT(open_my_stats()));
     QObject::connect(myProfileAct, SIGNAL(triggered()), this, SLOT(open_my_profile()));
+    QObject::connect(myAvatarAct, SIGNAL(triggered()), this, SLOT(open_my_avatar()));
 
     // awaylog
     QObject::connect(awaylogAct, SIGNAL(triggered()), this, SLOT(open_awaylog()));
@@ -195,7 +198,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
     // create basic core
     coreServers.append(new Core());
-    coreServers.at(0)->init(this,"czat-app.onet.pl", 5015, pNotify, toolBar, viewMenu, connectAct, channel_homesAct, channel_favouritesAct, friendsAct, ignoreAct, myStatsAct, myProfileAct, awaylogAct);
+    coreServers.at(0)->init(this,"czat-app.onet.pl", 5015, pNotify, toolBar, viewMenu, connectAct, channel_homesAct, channel_favouritesAct, friendsAct, ignoreAct, myStatsAct, myProfileAct, myAvatarAct, awaylogAct);
 
     // update
     pUpdate->check_update();
@@ -245,7 +248,7 @@ void MainWindow::create_settings()
     // default settings
     QSettings settings;
     settings.clear();
-    settings.setValue("version", "1.0.10.742");
+    settings.setValue("version", "1.0.10.743");
     settings.setValue("debug", "off");
     settings.setValue("logged", "off");
     settings.setValue("busy", "off");
@@ -411,4 +414,10 @@ void MainWindow::open_my_stats()
 void MainWindow::open_my_profile()
 {
     coreServers.at(0)->open_my_profile();
+}
+
+// onet my avatar
+void MainWindow::open_my_avatar()
+{
+    coreServers.at(0)->open_my_avatar();
 }

@@ -43,7 +43,7 @@ private:
     Network *pNetwork;
     int iWidth; // widget width
     QPixmap avatar;
-    QNetworkAccessManager accessManager;
+    QNetworkAccessManager *accessManager;
     QNetworkReply *pReply;
     QString strNick;
 

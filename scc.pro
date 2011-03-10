@@ -63,7 +63,8 @@ SOURCES += src/avatars/avatar.cpp \
     src/widgets/simplestatswidget.cpp \
     src/gui/dlg_my_stats.cpp \
     src/common/video.cpp \
-    src/gui/dlg_my_profile.cpp
+    src/gui/dlg_my_profile.cpp \
+    src/gui/dlg_my_avatar.cpp
 HEADERS += src/avatars/avatar.h \
     src/common/commands.h \
     src/common/config.h \
@@ -120,7 +121,8 @@ HEADERS += src/avatars/avatar.h \
     src/widgets/simplestatswidget.h \
     src/gui/dlg_my_stats.h \
     src/common/video.h \
-    src/gui/dlg_my_profile.h
+    src/gui/dlg_my_profile.h \
+    src/gui/dlg_my_avatar.h
 FORMS += ui/about.ui \
     ui/awaylog.ui \
     ui/cam.ui \
@@ -143,4 +145,5 @@ FORMS += ui/about.ui \
     ui/notes.ui \
     ui/user_avatar.ui \
     ui/my_stats.ui \
-    ui/my_profile.ui
+    ui/my_profile.ui \
+    ui/my_avatar.ui

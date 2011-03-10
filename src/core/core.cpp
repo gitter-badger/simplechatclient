@@ -27,6 +27,7 @@
 #include "dlg_friends.h"
 #include "dlg_ignore.h"
 #include "dlg_moderation.h"
+#include "dlg_my_avatar.h"
 #include "dlg_my_profile.h"
 #include "dlg_my_stats.h"
 #include "dlg_user_profile.h"
@@ -51,7 +52,7 @@ Core::Core()
 {
 }
 
-void Core::init(QMainWindow *parent, QString param1, int param2, Notify *param3, QToolBar *param4, QMenu *param5, QAction *param6, QAction *param7, QAction *param8, QAction *param9, QAction *param10, QAction *param11, QAction *param12, QAction *param13)
+void Core::init(QMainWindow *parent, QString param1, int param2, Notify *param3, QToolBar *param4, QMenu *param5, QAction *param6, QAction *param7, QAction *param8, QAction *param9, QAction *param10, QAction *param11, QAction *param12, QAction *param13, QAction *param14)
 {
     // params
     myparent = parent;
@@ -67,7 +68,8 @@ void Core::init(QMainWindow *parent, QString param1, int param2, Notify *param3,
     ignoreAct = param10;
     myStatsAct = param11;
     myProfileAct = param12;
-    awaylogAct = param13;
+    myAvatarAct = param13;
+    awaylogAct = param14;
 
     // lag
     lagAct = new QAction("Lag: ?", myparent);
@@ -293,6 +295,7 @@ void Core::update_actions()
         ignoreAct->setEnabled(true);
         myStatsAct->setEnabled(true);
         myProfileAct->setEnabled(true);
+        myAvatarAct->setEnabled(true);
     }
     else
     {
@@ -302,6 +305,7 @@ void Core::update_actions()
         ignoreAct->setEnabled(false);
         myStatsAct->setEnabled(false);
         myProfileAct->setEnabled(false);
+        myAvatarAct->setEnabled(false);
     }
 }
 
@@ -393,6 +397,12 @@ void Core::open_my_profile()
 {
     if ((pNetwork->is_connected() == true) && (pNetwork->is_writable() == true))
         DlgMyProfile(myparent, pNetwork, &mNickAvatar, &mMyProfile).exec();
+}
+
+void Core::open_my_avatar()
+{
+    if ((pNetwork->is_connected() == true) && (pNetwork->is_writable() == true))
+        DlgMyAvatar(myparent, pNetwork, &mNickAvatar).exec();
 }
 
 // part tab

@@ -120,10 +120,8 @@ void DlgEmoticons::current_tab_changed(int index)
 
 void DlgEmoticons::clicked_standard(QModelIndex index)
 {
-    QString strEmoticon;
-
     // get emoticon
-    strEmoticon = ui.listWidget_standard->item(index.row())->data(Qt::UserRole).toString();
+    QString strEmoticon = ui.listWidget_standard->item(index.row())->data(Qt::UserRole).toString();
 
     // insert emots
     if (strEmoticon.isEmpty() == false)

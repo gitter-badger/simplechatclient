@@ -37,7 +37,7 @@ private:
     Ui::uiEmail ui;
     QString strChannel;
     QString strEmail;
-    QNetworkAccessManager accessManager;
+    QNetworkAccessManager *accessManager;
     QNetworkCookieJar *cookieJar;
 
     void get_cookies();

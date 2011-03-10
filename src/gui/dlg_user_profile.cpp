@@ -107,23 +107,25 @@ void DlgUserProfile::set_user_info(QString strCheckNick, QString strKey, QString
 
 void DlgUserProfile::avatar_finished()
 {
-    if (pReply->canReadLine() == true)
-    {
-        QByteArray bData = pReply->readAll();
-
-        // show avatar
-        if (bData.isEmpty() == false)
-        {
-            // display
-            avatar.loadFromData(bData);
-            ui.label_avatar->setPixmap(avatar.scaled(QSize(50,50)));
-
-            // enable zoom
-            ui.toolButton_zoom->setEnabled(true);
-        }
-    }
-    pReply->QObject::disconnect();
+    accessManager->deleteLater();
     pReply->deleteLater();
+
+    // if errors
+    if (pReply->error())
+        return;
+
+    QByteArray bData = pReply->readAll();
+
+    // show avatar
+    if (bData.isEmpty() == false)
+    {
+        // display
+        avatar.loadFromData(bData);
+        ui.label_avatar->setPixmap(avatar.scaled(QSize(50,50)));
+
+        // enable zoom
+        ui.toolButton_zoom->setEnabled(true);
+    }
 }
 
 void DlgUserProfile::button_zoom()
@@ -192,10 +194,6 @@ QString DlgUserProfile::convert_desc(QString strContent)
     Convert *convertText = new Convert();
     convertText->convert_text(&strContent, &strContentLast);
     delete convertText;
-
-#ifdef Q_WS_X11
-    strContent.replace("file://", "");
-#endif
 
     // return
     strContent = strContent+strContentLast;
@@ -295,7 +293,8 @@ void DlgUserProfile::show_avatar(QString strUrl)
     strUrl = lUrl.join(",");
 
     // get url
-    pReply = accessManager.get(QNetworkRequest(QUrl(strUrl)));
+    accessManager = new QNetworkAccessManager;
+    pReply = accessManager->get(QNetworkRequest(QUrl(strUrl)));
     QObject::connect(pReply, SIGNAL(finished()), this, SLOT(avatar_finished()));
 }
 

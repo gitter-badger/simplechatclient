@@ -37,7 +37,7 @@ public:
 private:
     QWidget *myparent;
     QNetworkReply *pReply;
-    QNetworkAccessManager accessManager;
+    QNetworkAccessManager *accessManager;
 
     void version(QString);
 

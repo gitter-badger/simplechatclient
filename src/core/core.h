@@ -53,7 +53,7 @@ class Core : public QObject
 public:
     Core();
     ~Core();
-    void init(QMainWindow *, QString, int, Notify *, QToolBar *, QMenu *, QAction *, QAction *, QAction *, QAction *, QAction *, QAction *, QAction *, QAction *);
+    void init(QMainWindow *, QString, int, Notify *, QToolBar *, QMenu *, QAction *, QAction *, QAction *, QAction *, QAction *, QAction *, QAction *, QAction *, QAction *);
 
     void refresh_colors();
     void refresh_background_image();
@@ -72,6 +72,7 @@ public:
     void open_cams();
     void open_my_stats();
     void open_my_profile();
+    void open_my_avatar();
     // nicklist
     bool nicklist_exist(QString, QString);
 
@@ -106,6 +107,7 @@ private:
     QAction *ignoreAct;
     QAction *myStatsAct;
     QAction *myProfileAct;
+    QAction *myAvatarAct;
     QAction *awaylogAct;
 
     // require

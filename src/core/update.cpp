@@ -37,8 +37,10 @@ void Update::check_update()
     {
         QSettings settings;
         QString strSendVersion = settings.value("version").toString();
+        QUrl url = QUrl(QString("http://simplechatclien.sourceforge.net/update.php?version=%1").arg(strSendVersion));
 
-        pReply = accessManager.get(QNetworkRequest(QUrl(QString("http://simplechatclien.sourceforge.net/update.php?version=%1").arg(strSendVersion))));
+        accessManager = new QNetworkAccessManager;
+        pReply = accessManager->get(QNetworkRequest(url));
         QObject::connect(pReply, SIGNAL(finished()), this, SLOT(update_finished()));
     }
 }
@@ -78,9 +80,14 @@ void Update::version(QString strAvailableVersion)
 
 void Update::update_finished()
 {
-    QString strSite = pReply->readAll();
-    pReply->QObject::disconnect();
+    accessManager->deleteLater();
     pReply->deleteLater();
+
+    // if errors
+    if (pReply->error())
+        return;
+
+    QString strSite = pReply->readAll();
 
     if (strSite.isEmpty() == false)
     {
