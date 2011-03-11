@@ -289,7 +289,8 @@ void DlgUserProfile::show_avatar(QString strUrl)
 
     // change url
     QStringList lUrl = strUrl.split(",");
-    lUrl[1] = "10";
+    lUrl[1] = "10"; // zoom ;-)
+    //lUrl[3] = "0.jpg"; // get real image ;-)
     strUrl = lUrl.join(",");
 
     // get url

@@ -39,31 +39,35 @@ private:
     QWidget *myparent;
     Network *pNetwork;
     QMap <QString, QByteArray> *mNickAvatar;
-    QNetworkAccessManager *accessManager;
+    // network
+    QNetworkAccessManager *networkAccessManager;
     QNetworkCookieJar *cookieJar;
+    QNetworkAccessManager *avatarAccessManager;
+    // collections names
+    bool bReadedCollectionNames;
+    QList<QString> lNameCollections; // list of name collections
+    QMap<QString, int> mCollectionId; // name, id
     // collections
-    bool bReadedCollections;
-    QMap<QString, int> mCollections; // name, id
-    QMap< int, QMap<QString, QByteArray> > mCollectionAvatars; // id, map <link, avatar data>
+    QList<QString> lCollections; // list of collections
     // my avatars
-    QMap<QString, QString> mMyAvatarsID; // link, id
-    QMap<QString, QByteArray> mMyAvatars; // link, avatar data
+    QList<QString> lMyAvatars; // list of my avatars
+    QMap<QString, QString> mMyAvatarsID; // url, id
 
     void get_cookies();
     QString network_request(QString, QString);
-    QByteArray get_avatar(QString);
+    void get_avatar(QString);
     // my avatars
-    void display_my_avatars();
     void load_my_avatars();
-    void draw_my_avatars();
+    void draw_my_avatar(QString, QByteArray);
     // collections
     void get_collections();
     void draw_collections();
     // avatars from collect
     void get_avatars_from_collect(int);
-    void draw_avatars_from_collect(int);
+    void draw_avatar_from_collect(QString, QByteArray);
 
 private slots:
+    void avatar_finished(QNetworkReply*);
     void refresh_avatar();
     void tab_changed(int);
     void collection_changed(QString);

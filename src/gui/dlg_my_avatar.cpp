@@ -38,7 +38,7 @@ DlgMyAvatar::DlgMyAvatar(QWidget *parent, Network *param1, QMap <QString, QByteA
     myparent = parent;
     pNetwork = param1;
     mNickAvatar = param2;
-    bReadedCollections = false;
+    bReadedCollectionNames = false;
 
     ui.pushButton_add_avatar->setIcon(QIcon(":/images/oxygen/16x16/list-add.png"));
     ui.pushButton_remove_avatar->setIcon(QIcon(":/images/oxygen/16x16/list-remove.png"));
@@ -77,20 +77,24 @@ DlgMyAvatar::DlgMyAvatar(QWidget *parent, Network *param1, QMap <QString, QByteA
     QObject::connect(ui.listWidget_list_collections, SIGNAL(currentTextChanged(QString)), this, SLOT(collection_changed(QString)));
     QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(button_close()));
 
+    avatarAccessManager = new QNetworkAccessManager;
+    QObject::connect(avatarAccessManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(avatar_finished(QNetworkReply*)));
+
     cookieJar = new QNetworkCookieJar();
-    accessManager = new QNetworkAccessManager;
-    accessManager->setCookieJar(cookieJar);
+    networkAccessManager = new QNetworkAccessManager;
+    networkAccessManager->setCookieJar(cookieJar);
 
     get_cookies();
 
-    // display my avatars
-    display_my_avatars();
+    // load my avatars
+    load_my_avatars();
 }
 
 DlgMyAvatar::~DlgMyAvatar()
 {
     delete cookieJar;
-    accessManager->deleteLater();
+    networkAccessManager->deleteLater();
+    avatarAccessManager->deleteLater();
 }
 
 void DlgMyAvatar::get_cookies()
@@ -115,7 +119,7 @@ void DlgMyAvatar::get_cookies()
     cookie.setValue(settings.value("onet_uid").toByteArray());
     cookieList.append(cookie);
 
-    accessManager->cookieJar()->setCookiesFromUrl(cookieList, QUrl("http://czat.onet.pl"));
+    networkAccessManager->cookieJar()->setCookiesFromUrl(cookieList, QUrl("http://czat.onet.pl"));
 }
 
 QString DlgMyAvatar::network_request(QString strLink, QString strContent)
@@ -124,9 +128,9 @@ QString DlgMyAvatar::network_request(QString strLink, QString strContent)
     QNetworkReply *pReply;
 
     if (strContent.isEmpty())
-        pReply = accessManager->get(QNetworkRequest(QUrl(strLink)));
+        pReply = networkAccessManager->get(QNetworkRequest(QUrl(strLink)));
     else
-        pReply = accessManager->post(QNetworkRequest(QUrl(strLink)), strContent.toAscii());
+        pReply = networkAccessManager->post(QNetworkRequest(QUrl(strLink)), strContent.toAscii());
 
     pReply->ignoreSslErrors();
     QObject::connect(pReply, SIGNAL(finished()), &eventLoop, SLOT(quit()));
@@ -146,26 +150,28 @@ QString DlgMyAvatar::network_request(QString strLink, QString strContent)
     return strData;
 }
 
-QByteArray DlgMyAvatar::get_avatar(QString strUrl)
+void DlgMyAvatar::get_avatar(QString strUrl)
 {
-    QEventLoop eventLoop;
-    QNetworkAccessManager *accessManager = new QNetworkAccessManager;
-    QNetworkReply *pReply = accessManager->get(QNetworkRequest(QUrl(strUrl)));
-    QObject::connect(pReply, SIGNAL(finished()), &eventLoop, SLOT(quit()));
-    eventLoop.exec();
+    avatarAccessManager->get(QNetworkRequest(QUrl(strUrl)));
+}
 
-    accessManager->deleteLater();
-    pReply->deleteLater();
+void DlgMyAvatar::avatar_finished(QNetworkReply *reply)
+{
+    reply->deleteLater();
 
-    if (pReply->error())
-        return QByteArray();
+    if (reply->error())
+        return;
 
-    QByteArray bData = pReply->readAll();
+    QString strUrl = reply->url().toString();
+    QByteArray bData = reply->readAll();
 
-    if (bData.isEmpty() == false)
-        return bData;
-
-    return QByteArray();
+    if ((strUrl.isEmpty() == false) && (bData.isEmpty() == false))
+    {
+        if (lMyAvatars.contains(strUrl))
+            draw_my_avatar(strUrl, bData);
+        else if (lCollections.contains(strUrl))
+            draw_avatar_from_collect(strUrl, bData);
+    }
 }
 
 void DlgMyAvatar::refresh_avatar()
@@ -186,32 +192,26 @@ void DlgMyAvatar::refresh_avatar()
     }
 }
 
-void DlgMyAvatar::display_my_avatars()
-{
-    load_my_avatars();
-    draw_my_avatars();
-}
-
 // <root><error><code>0</code><text><![CDATA[OK]]></text></error><data><count>1</count><images><angle>0</angle><crop><![CDATA[0-0-675-675]]></crop><height>677</height><img><![CDATA[9250d9265e492780cc1bb46e955ed21d]]></img><imgId>44231885</imgId><width>1016</width><desc><![CDATA[100_3893.jpg]]></desc><mApp>19</mApp><mSrv><![CDATA[http://foto1.m.onet.pl/_m/]]></mSrv></images></data><reqId><![CDATA[3722766d-737e-41e8-9c26-5fff7b0e5e3b]]></reqId></root>
 void DlgMyAvatar::load_my_avatars()
 {
     // load avatars
     QString strUuid = QUuid::createUuid().toString();
     QString strContent = QString("fnc=loadFAvatars&rdr=xml&rid=%1").arg(strUuid);
-    QString strCollections = network_request("http://czat.onet.pl/_x/ludzie/avatars/api.php3", strContent);
-
-    // clear
-    mMyAvatarsID.clear();
-    mMyAvatars.clear();
-    ui.listWidget_my_avatars->clear();
+    QString strResult = network_request("http://czat.onet.pl/_x/ludzie/avatars/api.php3", strContent);
 
     // if empty
-    if (strCollections.isEmpty() == true)
+    if (strResult.isEmpty() == true)
         return;
+
+    // clear
+    lMyAvatars.clear();
+    mMyAvatarsID.clear();
+    ui.listWidget_my_avatars->clear();
 
     // set avatars
     QDomDocument doc;
-    doc.setContent(strCollections);
+    doc.setContent(strResult);
     QDomElement docElem = doc.documentElement();
 
     // error
@@ -221,9 +221,6 @@ void DlgMyAvatar::load_my_avatars()
 
     if (code != "0")
         return;
-
-    // avatar list
-    QList<QString> lAvatars;
 
     // data
     QDomNodeList avatarsNodeList = docElem.elementsByTagName("data");
@@ -273,47 +270,29 @@ tag: "desc"  value: "logo1.jpg"
 
             if ((mSrv.isEmpty() == false) && (img.isEmpty() == false) && (mApp.isEmpty() == false) && (crop.isEmpty() == false) && (angle.isEmpty() == false) && (imgId.isEmpty() == false))
             {
-                QString strLink = QString("%1%2,%3,%4,%5-%6.jpg").arg(mSrv).arg(img).arg(zoom).arg(mApp).arg(crop).arg(angle);
-                mMyAvatarsID.insert(strLink, imgId);
-                lAvatars.append(strLink);
+                QString strUrl = QString("%1%2,%3,%4,%5-%6.jpg").arg(mSrv).arg(img).arg(zoom).arg(mApp).arg(crop).arg(angle);
+                lMyAvatars.append(strUrl);
+                mMyAvatarsID.insert(strUrl, imgId);
+
+                get_avatar(strUrl);
             }
         }
     }
-
-    // set avatars
-    for (int i = 0; i < lAvatars.count(); i++)
-    {
-        QByteArray bAvatar = get_avatar(lAvatars.at(i));
-
-        if (bAvatar.isEmpty() == false)
-            mMyAvatars.insert(lAvatars.at(i), bAvatar);
-    }
 }
 
-void DlgMyAvatar::draw_my_avatars()
+void DlgMyAvatar::draw_my_avatar(QString strUrl, QByteArray bData)
 {
-    int i = 0;
-    QMapIterator<QString, QByteArray> iter(mMyAvatars);
-    while (iter.hasNext())
-    {
-        iter.next();
+    QString strID = mMyAvatarsID[strUrl];
 
-        QString strLink = iter.key();
-        QByteArray bAvatar = iter.value();
-        QString strID = mMyAvatarsID[strLink];
+    QPixmap pixmap;
+    pixmap.loadFromData(bData);
 
-        QPixmap pixmap;
-        pixmap.loadFromData(bAvatar);
+    QListWidgetItem *item = new QListWidgetItem();
+    item->setIcon(QIcon(pixmap));
+    item->setData(Qt::UserRole, strUrl);
+    item->setData(Qt::UserRole+1, strID);
 
-        QListWidgetItem *item = new QListWidgetItem();
-        item->setIcon(QIcon(pixmap));
-        item->setData(Qt::UserRole, strLink);
-        item->setData(Qt::UserRole+1, strID);
-
-        ui.listWidget_my_avatars->insertItem(i, item);
-
-        i++;
-    }
+    ui.listWidget_my_avatars->insertItem(ui.listWidget_my_avatars->count(), item);
 }
 
 // <root><error><code>1</code><text><![CDATA[Not logged]]></text></error><reqId><![CDATA[{d1f76dc3-d939-4389-aa5c-4bb428a62363}]]></reqId></root>
@@ -323,19 +302,20 @@ void DlgMyAvatar::get_collections()
     // get collections
     QString strUuid = QUuid::createUuid().toString();
     QString strContent = QString("fnc=getCollections&rdr=xml&rid=%1").arg(strUuid);
-    QString strCollections = network_request("http://czat.onet.pl/_x/ludzie/avatars/api.php3", strContent);
-
-    // clear
-    mCollections.clear();
-    ui.listWidget_list_collections->clear();
+    QString strResult = network_request("http://czat.onet.pl/_x/ludzie/avatars/api.php3", strContent);
 
     // if empty
-    if (strCollections.isEmpty() == true)
+    if (strResult.isEmpty() == true)
         return;
+
+    // clear
+    lNameCollections.clear();
+    mCollectionId.clear();
+    ui.listWidget_list_collections->clear();
 
     // set collections
     QDomDocument doc;
-    doc.setContent(strCollections);
+    doc.setContent(strResult);
     QDomElement docElem = doc.documentElement();
 
     // error
@@ -368,25 +348,18 @@ void DlgMyAvatar::get_collections()
 
             pEntries = pEntries.nextSibling();
         }
-        mCollections.insert(name, id);
+        lNameCollections.append(name);
+        mCollectionId.insert(name, id);
     }
 }
 
 void DlgMyAvatar::draw_collections()
 {
-    int i = 0;
-    QMapIterator<QString, int> iter(mCollections);
-    while (iter.hasNext())
-    {
-        iter.next();
-
-        ui.listWidget_list_collections->insertItem(i, iter.key());
-
-        i++;
-    }
+    for (int i = 0; i < lNameCollections.count(); i++)
+        ui.listWidget_list_collections->insertItem(i, lNameCollections.at(i));
 }
 
-// "<root><error><code>-1</code><text><![CDATA[getAvatarsFromCollect: -2|Nie istnieje kolekcja o Id: 1]]></text></error><data><![CDATA[]]></data><reqId><![CDATA[{52bb1aab-c1b0-4e5a-9b06-e46285374251}]]></reqId></root>
+// <root><error><code>-1</code><text><![CDATA[getAvatarsFromCollect: -2|Nie istnieje kolekcja o Id: 1]]></text></error><data><![CDATA[]]></data><reqId><![CDATA[{52bb1aab-c1b0-4e5a-9b06-e46285374251}]]></reqId></root>
 // <root><error><code>0</code><text><![CDATA[OK]]></text></error><data><avatars><avatarId>110</avatarId><collectId>5</collectId><fileName><![CDATA[9f78f599c34c97336ae3a501fe29395e]]></fileName><avType>4</avType><server><![CDATA[http://foto2.m.onet.pl/_m/]]></server><img><![CDATA[9f78f599c34c97336ae3a501fe29395e]]></img><crop><![CDATA[]]></crop><angle>0</angle><bbox>0</bbox><mApp>27</mApp><ext><![CDATA[jpg]]></ext></avatars><avatarsCnt>27</avatarsCnt><collectId>5</collectId></data><reqId><![CDATA[eae58d2a-f090-4439-9f97-a109a5e2e6f4]]></reqId></root>
 void DlgMyAvatar::get_avatars_from_collect(int index)
 {
@@ -394,15 +367,19 @@ void DlgMyAvatar::get_avatars_from_collect(int index)
     QString strUuid = QUuid::createUuid().toString();
     QString strContent = QString("fnc=getAvatarsFromCollect&rdr=xml&rid=%1").arg(strUuid);
     strContent += QString("&envelope=a:1:{s:10:\"collectIds\";i:%1;}").arg(index);
-    QString strAvatarsFromCollect = network_request("http://czat.onet.pl/_x/ludzie/avatars/api.php3", strContent);
+    QString strResult = network_request("http://czat.onet.pl/_x/ludzie/avatars/api.php3", strContent);
 
     // if empty
-    if (strAvatarsFromCollect.isEmpty() == true)
+    if (strResult.isEmpty() == true)
         return;
+
+    // clear
+    lCollections.clear();
+    ui.listWidget_collections->clear();
 
     // set avatars
     QDomDocument doc;
-    doc.setContent(strAvatarsFromCollect);
+    doc.setContent(strResult);
     QDomElement docElem = doc.documentElement();
 
     // error
@@ -412,9 +389,6 @@ void DlgMyAvatar::get_avatars_from_collect(int index)
 
     if (code != "0")
         return;
-
-    // avatar list
-    QList<QString> lAvatars;
 
     // data
     QDomNodeList avatarsNodeList = docElem.elementsByTagName("data");
@@ -453,56 +427,33 @@ void DlgMyAvatar::get_avatars_from_collect(int index)
             }
 
             if ((server.isEmpty() == false) && (img.isEmpty() == false) && (ext.isEmpty() == false))
-                lAvatars.append(QString("%1%2,%3,%4,%5.%6").arg(server).arg(img).arg(zoom).arg(mApp).arg(angle).arg(ext));
+            {
+                QString strUrl = QString("%1%2,%3,%4,%5.%6").arg(server).arg(img).arg(zoom).arg(mApp).arg(angle).arg(ext);
+                lCollections.append(strUrl);
+
+                get_avatar(strUrl);
+            }
         }
     }
-
-    // set avatars
-    QMap<QString, QByteArray> mbAvatars;
-    for (int i = 0; i < lAvatars.count(); i++)
-    {
-        QByteArray bAvatar = get_avatar(lAvatars.at(i));
-
-        if (bAvatar.isEmpty() == false)
-            mbAvatars.insert(lAvatars.at(i), bAvatar);
-    }
-
-    // set collection
-    mCollectionAvatars.insert(index, mbAvatars);
 }
 
-void DlgMyAvatar::draw_avatars_from_collect(int index)
+void DlgMyAvatar::draw_avatar_from_collect(QString strUrl, QByteArray bData)
 {
-    // refresh avatars
-    QMap <QString, QByteArray> mbAvatars = mCollectionAvatars.value(index);
+    QPixmap pixmap;
+    pixmap.loadFromData(bData);
 
-    int i = 0;
-    QMapIterator<QString, QByteArray> iter(mbAvatars);
-    while (iter.hasNext())
-    {
-        iter.next();
+    QListWidgetItem *item = new QListWidgetItem();
+    item->setIcon(QIcon(pixmap));
+    item->setData(Qt::UserRole, strUrl);
 
-        QString strLink = iter.key();
-        QByteArray bAvatar = iter.value();
-
-        QPixmap pixmap;
-        pixmap.loadFromData(bAvatar);
-
-        QListWidgetItem *item = new QListWidgetItem();
-        item->setIcon(QIcon(pixmap));
-        item->setData(Qt::UserRole, strLink);
-
-        ui.listWidget_collections->insertItem(i, item);
-
-        i++;
-    }
+    ui.listWidget_collections->insertItem(ui.listWidget_collections->count(), item);
 }
 
 void DlgMyAvatar::tab_changed(int index)
 {
     if (index == 1)
     {
-        if (bReadedCollections == false)
+        if (bReadedCollectionNames == false)
         {
             // get
             get_collections();
@@ -510,44 +461,20 @@ void DlgMyAvatar::tab_changed(int index)
             // draw
             draw_collections();
 
-            bReadedCollections = true;
+            bReadedCollectionNames = true;
         }
     }
 }
 
 void DlgMyAvatar::collection_changed(QString strName)
 {
-    // clear
-    ui.listWidget_collections->clear();
-
-    int index = -1;
-
-    // get index
-    for (int i = 0; i < ui.listWidget_list_collections->count(); i++)
+    if (mCollectionId.contains(strName) == true)
     {
-        QString strItemName = ui.listWidget_list_collections->item(i)->text();
+        int index = mCollectionId[strName];
 
-        if (strItemName == strName)
-        {
-            QList<int> strlValues = mCollections.values();
-            int iItemID = strlValues.at(i);
-
-            index = iItemID;
-            break;
-        }
-    }
-
-    // wrong id
-    if (index == -1)
-        return;
-
-    // read collect
-    if (mCollectionAvatars.contains(index) == false)
+        // get collect
         get_avatars_from_collect(index);
-
-    // draw
-    if (mCollectionAvatars.contains(index) == true)
-        draw_avatars_from_collect(index);
+    }
 }
 
 void DlgMyAvatar::button_apply_avatar()
