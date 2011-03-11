@@ -41,15 +41,25 @@ private:
     QMap <QString, QByteArray> *mNickAvatar;
     QNetworkAccessManager *accessManager;
     QNetworkCookieJar *cookieJar;
+    // collections
     bool bReadedCollections;
-    QMap<QString, int> mCollections;
-    QMap< int, QMap<QString, QByteArray> > mCollectionAvatars;
+    QMap<QString, int> mCollections; // name, id
+    QMap< int, QMap<QString, QByteArray> > mCollectionAvatars; // id, map <link, avatar data>
+    // my avatars
+    QMap<QString, QString> mMyAvatarsID; // link, id
+    QMap<QString, QByteArray> mMyAvatars; // link, avatar data
 
     void get_cookies();
     QString network_request(QString, QString);
     QByteArray get_avatar(QString);
+    // my avatars
+    void display_my_avatars();
+    void load_my_avatars();
+    void draw_my_avatars();
+    // collections
     void get_collections();
     void draw_collections();
+    // avatars from collect
     void get_avatars_from_collect(int);
     void draw_avatars_from_collect(int);
 
@@ -57,6 +67,9 @@ private slots:
     void refresh_avatar();
     void tab_changed(int);
     void collection_changed(QString);
+    void button_apply_avatar();
+    void button_remove_avatar();
+    void button_set_empty_avatar();
     void button_apply_collection_avatar();
     void button_close();
 };

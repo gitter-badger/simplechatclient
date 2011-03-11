@@ -40,11 +40,21 @@ DlgMyAvatar::DlgMyAvatar(QWidget *parent, Network *param1, QMap <QString, QByteA
     mNickAvatar = param2;
     bReadedCollections = false;
 
+    ui.pushButton_add_avatar->setIcon(QIcon(":/images/oxygen/16x16/list-add.png"));
+    ui.pushButton_remove_avatar->setIcon(QIcon(":/images/oxygen/16x16/list-remove.png"));
+    ui.pushButton_set_empty_avatar1->setIcon(QIcon(":/images/oxygen/16x16/image-missing.png"));
+    ui.pushButton_apply_avatar->setIcon(QIcon(":/images/oxygen/16x16/dialog-ok-apply.png"));
+    ui.pushButton_set_empty_avatar2->setIcon(QIcon(":/images/oxygen/16x16/image-missing.png"));
     ui.pushButton_apply_collection_avatar->setIcon(QIcon(":/images/oxygen/16x16/dialog-ok-apply.png"));
     ui.buttonBox->button(QDialogButtonBox::Close)->setIcon(QIcon(":/images/oxygen/16x16/dialog-close.png"));
 
     ui.tabWidget->setTabText(0, tr("My avatars"));
     ui.tabWidget->setTabText(1, tr("Collection of avatars"));
+    ui.pushButton_add_avatar->setText(tr("Add"));
+    ui.pushButton_remove_avatar->setText(tr("Remove"));
+    ui.pushButton_set_empty_avatar1->setText(tr("Apply empty"));
+    ui.pushButton_apply_avatar->setText(tr("Apply avatar"));
+    ui.pushButton_set_empty_avatar2->setText(tr("Apply empty"));
     ui.pushButton_apply_collection_avatar->setText(tr("Apply avatar"));
 
     // nick
@@ -55,9 +65,16 @@ DlgMyAvatar::DlgMyAvatar(QWidget *parent, Network *param1, QMap <QString, QByteA
     // avatar
     refresh_avatar();
 
+    // temporarily disabled
+    ui.pushButton_add_avatar->setEnabled(false);
+
+    QObject::connect(ui.pushButton_apply_collection_avatar, SIGNAL(clicked()), this, SLOT(button_apply_collection_avatar()));
+    QObject::connect(ui.pushButton_apply_avatar, SIGNAL(clicked()), this, SLOT(button_apply_avatar()));
+    QObject::connect(ui.pushButton_remove_avatar, SIGNAL(clicked()), this, SLOT(button_remove_avatar()));
+    QObject::connect(ui.pushButton_set_empty_avatar1, SIGNAL(clicked()), this, SLOT(button_set_empty_avatar()));
+    QObject::connect(ui.pushButton_set_empty_avatar2, SIGNAL(clicked()), this, SLOT(button_set_empty_avatar()));
     QObject::connect(ui.tabWidget, SIGNAL(currentChanged(int)), this, SLOT(tab_changed(int)));
     QObject::connect(ui.listWidget_list_collections, SIGNAL(currentTextChanged(QString)), this, SLOT(collection_changed(QString)));
-    QObject::connect(ui.pushButton_apply_collection_avatar, SIGNAL(clicked()), this, SLOT(button_apply_collection_avatar()));
     QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(button_close()));
 
     cookieJar = new QNetworkCookieJar();
@@ -65,6 +82,9 @@ DlgMyAvatar::DlgMyAvatar(QWidget *parent, Network *param1, QMap <QString, QByteA
     accessManager->setCookieJar(cookieJar);
 
     get_cookies();
+
+    // display my avatars
+    display_my_avatars();
 }
 
 DlgMyAvatar::~DlgMyAvatar()
@@ -163,6 +183,136 @@ void DlgMyAvatar::refresh_avatar()
     else
     {
         ui.label_my_avatar->setText(tr("No photo available"));
+    }
+}
+
+void DlgMyAvatar::display_my_avatars()
+{
+    load_my_avatars();
+    draw_my_avatars();
+}
+
+// <root><error><code>0</code><text><![CDATA[OK]]></text></error><data><count>1</count><images><angle>0</angle><crop><![CDATA[0-0-675-675]]></crop><height>677</height><img><![CDATA[9250d9265e492780cc1bb46e955ed21d]]></img><imgId>44231885</imgId><width>1016</width><desc><![CDATA[100_3893.jpg]]></desc><mApp>19</mApp><mSrv><![CDATA[http://foto1.m.onet.pl/_m/]]></mSrv></images></data><reqId><![CDATA[3722766d-737e-41e8-9c26-5fff7b0e5e3b]]></reqId></root>
+void DlgMyAvatar::load_my_avatars()
+{
+    // load avatars
+    QString strUuid = QUuid::createUuid().toString();
+    QString strContent = QString("fnc=loadFAvatars&rdr=xml&rid=%1").arg(strUuid);
+    QString strCollections = network_request("http://czat.onet.pl/_x/ludzie/avatars/api.php3", strContent);
+
+    // clear
+    mMyAvatarsID.clear();
+    mMyAvatars.clear();
+    ui.listWidget_my_avatars->clear();
+
+    // if empty
+    if (strCollections.isEmpty() == true)
+        return;
+
+    // set avatars
+    QDomDocument doc;
+    doc.setContent(strCollections);
+    QDomElement docElem = doc.documentElement();
+
+    // error
+    QDomNodeList error = docElem.elementsByTagName("error");
+    QString code = error.at(0).firstChildElement("code").text();
+    //QString text = error.at(0).firstChildElement("text").text();
+
+    if (code != "0")
+        return;
+
+    // avatar list
+    QList<QString> lAvatars;
+
+    // data
+    QDomNodeList avatarsNodeList = docElem.elementsByTagName("data");
+
+    for (int i = 0; i < avatarsNodeList.count(); i++)
+    {
+        QDomNodeList nodeList = avatarsNodeList.at(i).childNodes();
+
+        for (int i = 0; i < nodeList.count(); i++)
+        {
+            QDomElement el = nodeList.at(i).toElement();
+            QDomNode pEntries = el.firstChild();
+
+/*
+tag: "height"  value: "148"
+tag: "imgId"  value: "44009292"
+tag: "width"  value: "170"
+tag: "desc"  value: "logo1.jpg"
+*/
+            QString mSrv;
+            QString img;
+            QString zoom = "1";
+            QString mApp;
+            QString crop;
+            QString angle;
+
+            QString imgId;
+            while (!pEntries.isNull())
+            {
+                QString tagName = pEntries.toElement().tagName();
+
+                if (tagName == "mSrv")
+                    mSrv = pEntries.toElement().text();
+                else if (tagName == "img")
+                    img = pEntries.toElement().text();
+                else if (tagName == "mApp")
+                    mApp = pEntries.toElement().text();
+                else if (tagName == "crop")
+                    crop = pEntries.toElement().text();
+                else if (tagName == "angle")
+                    angle = pEntries.toElement().text();
+                else if (tagName == "imgId")
+                    imgId = pEntries.toElement().text();
+
+                pEntries = pEntries.nextSibling();
+            }
+
+            if ((mSrv.isEmpty() == false) && (img.isEmpty() == false) && (mApp.isEmpty() == false) && (crop.isEmpty() == false) && (angle.isEmpty() == false) && (imgId.isEmpty() == false))
+            {
+                QString strLink = QString("%1%2,%3,%4,%5-%6.jpg").arg(mSrv).arg(img).arg(zoom).arg(mApp).arg(crop).arg(angle);
+                mMyAvatarsID.insert(strLink, imgId);
+                lAvatars.append(strLink);
+            }
+        }
+    }
+
+    // set avatars
+    for (int i = 0; i < lAvatars.count(); i++)
+    {
+        QByteArray bAvatar = get_avatar(lAvatars.at(i));
+
+        if (bAvatar.isEmpty() == false)
+            mMyAvatars.insert(lAvatars.at(i), bAvatar);
+    }
+}
+
+void DlgMyAvatar::draw_my_avatars()
+{
+    int i = 0;
+    QMapIterator<QString, QByteArray> iter(mMyAvatars);
+    while (iter.hasNext())
+    {
+        iter.next();
+
+        QString strLink = iter.key();
+        QByteArray bAvatar = iter.value();
+        QString strID = mMyAvatarsID[strLink];
+
+        QPixmap pixmap;
+        pixmap.loadFromData(bAvatar);
+
+        QListWidgetItem *item = new QListWidgetItem();
+        item->setIcon(QIcon(pixmap));
+        item->setData(Qt::UserRole, strLink);
+        item->setData(Qt::UserRole+1, strID);
+
+        ui.listWidget_my_avatars->insertItem(i, item);
+
+        i++;
     }
 }
 
@@ -400,6 +550,62 @@ void DlgMyAvatar::collection_changed(QString strName)
         draw_avatars_from_collect(index);
 }
 
+void DlgMyAvatar::button_apply_avatar()
+{
+    if (ui.listWidget_my_avatars->selectedItems().isEmpty() == false)
+    {
+        QString strLink = ui.listWidget_my_avatars->selectedItems().at(0)->data(Qt::UserRole).toString();
+
+        if (strLink.isEmpty() == false)
+        {
+            pNetwork->send(QString("NS SET avatar %1").arg(strLink));
+            QTimer::singleShot(1000*5, this, SLOT(refresh_avatar())); // 5 sec
+        }
+    }
+}
+
+// <root><error><code>0</code><text><![CDATA[OK]]></text></error><data><![CDATA[]]></data><reqId><![CDATA[3dba2705-f507-43d7-ae75-a677457f027f]]></reqId></root>
+void DlgMyAvatar::button_remove_avatar()
+{
+    if (ui.listWidget_my_avatars->selectedItems().isEmpty() == false)
+    {
+        QString strImgId = ui.listWidget_my_avatars->selectedItems().at(0)->data(Qt::UserRole+1).toString();
+
+        if (strImgId.isEmpty() == false)
+        {
+            // delete avatar
+            QString strUuid = QUuid::createUuid().toString();
+            QString strContent = QString("fnc=deletePhoto&rdr=xml&rid=%1").arg(strUuid);
+            strContent += QString("&envelope=a:1:{s:5:\"imgId\";i:%1;}").arg(strImgId);
+            QString strResult = network_request("http://czat.onet.pl/_x/ludzie/avatars/api.php3", strContent);
+
+            // if empty
+            if (strResult.isEmpty() == true)
+                return;
+
+            // set result
+            QDomDocument doc;
+            doc.setContent(strResult);
+            QDomElement docElem = doc.documentElement();
+
+            // error
+            QDomNodeList error = docElem.elementsByTagName("error");
+            QString code = error.at(0).firstChildElement("code").text();
+            //QString text = error.at(0).firstChildElement("text").text();
+
+            if (code != "0")
+                return;
+
+            QTimer::singleShot(1000*5, this, SLOT(refresh_avatar())); // 5 sec
+        }
+    }
+}
+
+void DlgMyAvatar::button_set_empty_avatar()
+{
+    pNetwork->send(QString("NS SET avatar"));
+}
+
 void DlgMyAvatar::button_apply_collection_avatar()
 {
     if (ui.listWidget_collections->selectedItems().isEmpty() == false)
@@ -409,7 +615,7 @@ void DlgMyAvatar::button_apply_collection_avatar()
         if (strLink.isEmpty() == false)
         {
             pNetwork->send(QString("NS SET avatar %1").arg(strLink));
-            QTimer::singleShot(1000*2, this, SLOT(refresh_avatar())); // 2 sec
+            QTimer::singleShot(1000*5, this, SLOT(refresh_avatar())); // 5 sec
         }
     }
 }

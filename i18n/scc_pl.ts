@@ -1170,6 +1170,18 @@
         <translation>Kolekcje awatarów</translation>
     </message>
     <message>
+        <source>Add</source>
+        <translation>Dodaj</translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation>Usuń</translation>
+    </message>
+    <message>
+        <source>Apply empty</source>
+        <translation>Ustaw pusty</translation>
+    </message>
+    <message>
         <source>Apply avatar</source>
         <translation>Ustaw awatar</translation>
     </message>
