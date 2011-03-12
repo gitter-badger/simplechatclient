@@ -23,41 +23,12 @@
 
 class TabContainer;
 #include <QMap>
+#include <QNetworkReply>
 #include <QObject>
-#include <QThread>
-
-/**
- * Thread for downloading avatar
- * @param QString nick or channel name
- * @param QString url
- * @param QString category
- */
-class AvatarThread : public QThread
-{
-    Q_OBJECT
-public:
-    AvatarThread(QString, QString, QString);
-    void run();
-
-private:
-    QString strNickChannel;
-    QString strUrl;
-    QString strCategory;
-
-private slots:
-    void thread_work();
-
-signals:
-    void set_avatar(QString, QString, QByteArray);
-    void stop_thread();
-};
 
 /**
  * Class for downloading avatar
  * @param TabContainer* for refresh image
- * @param QString nick or channel name
- * @param QString url
- * @param QString category
  * @param QMap map with nick avatar
  * @param QMap map with channel avatar
  */
@@ -65,26 +36,23 @@ class Avatar : public QObject
 {
     Q_OBJECT
 public:
-    Avatar(TabContainer *, QString, QString, QString, QMap <QString, QByteArray> *, QMap <QString, QByteArray> *);
-    void kill_thread();
+    Avatar(TabContainer *, QMap <QString, QByteArray> *, QMap <QString, QByteArray> *);
+    ~Avatar();
+    void get_avatar(QString, QString, QString);
 
 private:
     TabContainer *tabc;
-    QString strNickChannel;
-    QString strUrl;
-    QString strCategory;
     QMap <QString, QByteArray> *mNickAvatar;
     QMap <QString, QByteArray> *mChannelAvatar;
-    AvatarThread *avatarThr;
+    QNetworkAccessManager *accessManager;
 
 public slots:
+    void avatar_finished(QNetworkReply*);
     void set_avatar(QString, QString, QByteArray);
-    void stop_thread();
 
 signals:
     void set_nick_avatar(QString);
     void set_channel_avatar(QString);
-    void sremove_athread(Avatar*);
 };
 
 #endif // AVATAR_H

@@ -163,7 +163,7 @@ void InputWidget::send_message(bool bType)
     QString strTextO = inputLine->toPlainText();
     QStringList strTextA = strTextO.split(QRegExp("(\n|\r)"));
 
-    for (int i = 0; i < strTextA.count(); i++)
+    for (int i = 0; i < strTextA.size(); i++)
     {
         QString strText = strTextA[i];
         QString strTextOriginal = strText;
@@ -189,7 +189,7 @@ void InputWidget::send_message(bool bType)
             if ((strTextList[0] == "help") || (strTextList[0] == "pomoc"))
             {
                 QStringList strlHelp = strText.split(";");
-                for (int i = 0; i < strlHelp.count(); i++)
+                for (int i = 0; i < strlHelp.size(); i++)
                     emit show_msg(strChannel, strlHelp.at(i), 7);
             }
             else if (strTextList[0] == "me")

@@ -42,7 +42,7 @@ DlgAwaylog::DlgAwaylog(QWidget *parent, QList<QString> *param1, QAction *param2)
 
 void DlgAwaylog::refresh()
 {
-    for (int i = 0; i < lAwaylog->count(); i++)
+    for (int i = 0; i < lAwaylog->size(); i++)
         ui.listWidget->insertItem(ui.listWidget->count(),lAwaylog->at(i));
 }
 

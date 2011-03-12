@@ -21,7 +21,7 @@
 #ifndef UPDATE_H
 #define UPDATE_H
 
-#include <QNetworkReply>
+#include <QNetworkAccessManager>
 #include <QObject>
 
 /**
@@ -32,17 +32,17 @@ class Update : public QObject
     Q_OBJECT
 public:
     Update(QWidget *);
+    ~Update();
     void check_update();
 
 private:
     QWidget *myparent;
-    QNetworkReply *pReply;
     QNetworkAccessManager *accessManager;
 
     void version(QString);
 
 private slots:
-    void update_finished();
+    void update_finished(QNetworkReply*);
 };
 
 #endif // UPDATE_H

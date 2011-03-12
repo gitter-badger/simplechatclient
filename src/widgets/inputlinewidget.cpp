@@ -117,7 +117,7 @@ bool InputLineWidget::event(QEvent *e)
 
     if (k->key() == Qt::Key_Tab)
     {
-        if (usersList.count() == 0)
+        if (usersList.size() == 0)
             return true;
 
         QString strWord = get_word();
@@ -128,7 +128,7 @@ bool InputLineWidget::event(QEvent *e)
         if (strLastWord.isEmpty() == true)
         {
             find.clear();
-            for (int i = 0; i < usersList.count(); i++)
+            for (int i = 0; i < usersList.size(); i++)
             {
                 if (usersList.at(i).startsWith(strWord, Qt::CaseInsensitive) == true)
                     find.append(usersList.at(i));
@@ -141,7 +141,7 @@ bool InputLineWidget::event(QEvent *e)
 
         if (find.isEmpty() == false)
         {
-            if (index > find.count())
+            if (index > find.size())
                 index = 0;
 
             if (find.isEmpty() == false)
@@ -151,7 +151,7 @@ bool InputLineWidget::event(QEvent *e)
             }
 
             index++;
-            if (index >= find.count())
+            if (index >= find.size())
                 index = 0;
         }
 

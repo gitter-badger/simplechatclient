@@ -116,12 +116,12 @@ void DlgFriends::button_remove()
     QString strSelected;
     if (ui.tabWidget->currentIndex() == 0)
     {
-        if (ui.listWidget_online->selectedItems().count() != 0)
+        if (ui.listWidget_online->selectedItems().size() != 0)
             strSelected = ui.listWidget_online->selectedItems().at(0)->text();
     }
     else if (ui.tabWidget->currentIndex() == 1)
     {
-        if (ui.listWidget_offline->selectedItems().count() != 0)
+        if (ui.listWidget_offline->selectedItems().size() != 0)
             strSelected = ui.listWidget_offline->selectedItems().at(0)->text();
     }
 
@@ -140,12 +140,12 @@ void DlgFriends::button_whois()
     QString strSelected;
     if (ui.tabWidget->currentIndex() == 0)
     {
-        if (ui.listWidget_online->selectedItems().count() != 0)
+        if (ui.listWidget_online->selectedItems().size() != 0)
             strSelected = ui.listWidget_online->selectedItems().at(0)->text();
     }
     else if (ui.tabWidget->currentIndex() == 1)
     {
-        if (ui.listWidget_offline->selectedItems().count() != 0)
+        if (ui.listWidget_offline->selectedItems().size() != 0)
             strSelected = ui.listWidget_offline->selectedItems().at(0)->text();
     }
 

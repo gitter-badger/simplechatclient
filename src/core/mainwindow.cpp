@@ -248,7 +248,7 @@ void MainWindow::create_settings()
     // default settings
     QSettings settings;
     settings.clear();
-    settings.setValue("version", "1.0.10.746");
+    settings.setValue("version", "1.0.10.747");
     settings.setValue("debug", "off");
     settings.setValue("logged", "off");
     settings.setValue("busy", "off");
@@ -293,13 +293,13 @@ void MainWindow::refresh_colors()
     else
         this->setStyleSheet(QString::null);
 
-    for (int i = 0; i < coreServers.count(); i++)
+    for (int i = 0; i < coreServers.size(); i++)
         coreServers.at(i)->refresh_colors();
 }
 
 void MainWindow::refresh_background_image()
 {
-    for (int i = 0; i < coreServers.count(); i++)
+    for (int i = 0; i < coreServers.size(); i++)
         coreServers.at(i)->refresh_background_image();
 }
 

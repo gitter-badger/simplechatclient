@@ -89,7 +89,7 @@ void DlgModeration::del_msg(QString strChannel, QString strData)
     for (int i = 1; i < strDataList.size(); i++) { if (i != 1) strCheckMessage += " "; strCheckMessage += strDataList[i]; }
 
     QList <QString> strIDs = channel_id.values(strChannel);
-    for (int i = 0; i < strIDs.count(); i++)
+    for (int i = 0; i < strIDs.size(); i++)
     {
         QString strID = strIDs.at(i);
         QString strNick = id_nick.value(strID);
@@ -130,7 +130,7 @@ bool DlgModeration::exist_in_list(QString strChannel, QString strMsg)
     strMsg = strMsg.right(strMsg.length()-11); // minus date
 
     QList <QString> strIDs = channel_id.values(strChannel);
-    for (int i = 0; i < strIDs.count(); i++)
+    for (int i = 0; i < strIDs.size(); i++)
     {
         QString strID = strIDs.at(i);
         QString strNick = id_nick.value(strID);
@@ -170,7 +170,7 @@ void DlgModeration::combo_changed(int index)
     QString strChannel = ui.comboBox_channels->itemText(index);
 
     QList <QString> strIDs = channel_id.values(strChannel);
-    for (int i = 0; i < strIDs.count(); i++)
+    for (int i = 0; i < strIDs.size(); i++)
     {
         QString strID = strIDs.at(i);
         QString strNick = id_nick.value(strID);
@@ -190,7 +190,7 @@ void DlgModeration::combo_changed(int index)
 
 void DlgModeration::button_accept()
 {
-    if (ui.listWidget_msg->selectedItems().count() == 0)
+    if (ui.listWidget_msg->selectedItems().size() == 0)
         return;
 
     QString strChannel = ui.comboBox_channels->currentText();
@@ -215,7 +215,7 @@ void DlgModeration::button_accept()
 
 void DlgModeration::button_remove()
 {
-    if (ui.listWidget_msg->selectedItems().count() == 0)
+    if (ui.listWidget_msg->selectedItems().size() == 0)
         return;
 
     QString strChannel = ui.comboBox_channels->currentText();

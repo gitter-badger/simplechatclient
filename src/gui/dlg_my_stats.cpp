@@ -85,7 +85,7 @@ void DlgMyStats::refresh()
             QList<int> lStats;
 
             qreal fAverageTime = 0;
-            for (int i = 0; i < strValue.count(); i++)
+            for (int i = 0; i < strValue.size(); i++)
             {
                 int iTime = replace_value(strValue.at(i));
 
@@ -97,7 +97,7 @@ void DlgMyStats::refresh()
             }
 
             // average time
-            fAverageTime /= strValue.count();
+            fAverageTime /= strValue.size();
             qreal fAverageTime24 = (fAverageTime/100)*24;
             ui.label_stats_average_time->setText(QString::number(fAverageTime24,'g',3)+" h");
 

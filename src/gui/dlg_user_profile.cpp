@@ -257,7 +257,7 @@ QString DlgUserProfile::convert_code_to_country(QString strCountryCode)
     QStringList strlCountries = strCountries.split(",");
 
     // replace if found
-    for (int i = 0; i < strlCodes.count(); i++)
+    for (int i = 0; i < strlCodes.size(); i++)
     {
         if (strCountryCode == strlCodes.at(i))
         {
@@ -289,8 +289,8 @@ void DlgUserProfile::show_avatar(QString strUrl)
 
     // change url
     QStringList lUrl = strUrl.split(",");
-    lUrl[1] = "10"; // zoom ;-)
-    //lUrl[3] = "0.jpg"; // get real image ;-)
+    lUrl[1] = "10"; // 10 = zoom; 0 = get real image
+    //lUrl[3] = "0.jpg"; // 0 = get real image
     strUrl = lUrl.join(",");
 
     // get url

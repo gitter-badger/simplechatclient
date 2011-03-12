@@ -59,7 +59,7 @@ void DlgChannelHomes::refresh()
 {
     ui.listWidget_channels->clear();
 
-    for (int i = 0; i < lChannelHomes->count(); i++)
+    for (int i = 0; i < lChannelHomes->size(); i++)
     {
         QString strChannel = lChannelHomes->at(i);
         strChannel = strChannel.right(strChannel.length()-1); // remove status
@@ -115,7 +115,7 @@ void DlgChannelHomes::button_remove()
 
 void DlgChannelHomes::button_join()
 {
-    if (ui.listWidget_channels->selectedItems().count() != 0)
+    if (ui.listWidget_channels->selectedItems().size() != 0)
     {
         QString strChannel = ui.listWidget_channels->selectedItems().at(0)->text();
         pNetwork->send(QString("JOIN %1").arg(strChannel));

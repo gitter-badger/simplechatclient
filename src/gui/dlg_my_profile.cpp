@@ -90,7 +90,7 @@ DlgMyProfile::DlgMyProfile(QWidget *parent, Network *param1, QMap <QString, QByt
     QStringList strlSex;
     strlSex << "" << tr("Male") << tr("Female");
 
-    for (int i = 0; i < strlSex.count(); i++)
+    for (int i = 0; i < strlSex.size(); i++)
         ui.comboBox_sex->insertItem(i, strlSex.at(i));
 
     // days
@@ -99,13 +99,13 @@ DlgMyProfile::DlgMyProfile(QWidget *parent, Network *param1, QMap <QString, QByt
     for (int i = 1; i <= 31; i++)
         strlDays << (i < 10 ? "0"+QString::number(i) : QString::number(i));
 
-    for (int i = 0; i < strlDays.count(); i++)
+    for (int i = 0; i < strlDays.size(); i++)
         ui.comboBox_day->insertItem(i, strlDays.at(i));
 
     // months
     QStringList strlMonths;
     strlMonths << "" << tr("January") << tr("February") << tr("March") << tr("April") << tr("May") << tr("June") << tr("July") << tr("August") << tr("September") << tr("October") << tr("November") << tr("December");
-    for (int i = 0; i < strlMonths.count(); i++)
+    for (int i = 0; i < strlMonths.size(); i++)
         ui.comboBox_month->insertItem(i, strlMonths.at(i));
 
     // years
@@ -114,14 +114,14 @@ DlgMyProfile::DlgMyProfile(QWidget *parent, Network *param1, QMap <QString, QByt
     for (int i = 1900; i <= QDate::currentDate().year()-5; i++)
         strlYears << QString::number(i);
 
-    for (int i = 0; i < strlYears.count(); i++)
+    for (int i = 0; i < strlYears.size(); i++)
         ui.comboBox_year->insertItem(i, strlYears.at(i));
 
     // country
     QString strCountries = tr("Afghanistan,Albania,Algeria,Andorra,Angola,Anguilla,Antarctica,Antigua and Barbuda,Netherlands Antilles,Saudi Arabia,Argentina,Armenia,Aruba,Australia,Austria,Azerbaijan,Bahamas,Bahrain,Bangladesh,Barbados,Belgium,Belize,Benin,Bermuda,Bhutan,Belarus,Bolivia,Bosnia and Herzegovina,Botswana,Brazil,Brunei,British Indian Ocean Territory,British Virgin Islands,Bulgaria,Burkina Faso,Burundi,Chile,China,Croatia,Cyprus,Chad,Czech Republic,Denmark,Dominica,Dominican Republic,Djibouti,Egypt,Ecuador,Eritrea,Estonia,Ethiopia,Falkland Islands,Russian Federation,Fiji,Philippines,Finland,France,Gambia,Gaon,South Georgia and South Sandwich Islands,Ghana,Gibraltar,Greece,Grenada,Greenland,Georgia,Guam,Guyana,French Guiana,Guadeloupe,Guatemala,Guinea,Guinea Bissau,Equatorial Guinea,Haiti,Heard,Spain,Holland,Honduras,Hong Kong,India,Indonesia,Iraq,Iran,Ireland,Iceland,Israel,Jamaica,Japan,Yemen,Jordan,Yugoslavia,Cayman Islands,Cambodia,Cameroon,Canada,Qatar,Kazakhstan,Kenya,Kyrgyzstan,Kiribati,Colombia,Comoros,Congo,South Korea,North Korea,Costa Rica,Cuba,Kuwait,Laos,Lesotho,Lebanon,Liberia,Libya,Liechtenstein,Lithuania,Latvia,Luxembourg,Macedonia,Madagascar,Mayotte,Macau,Malawi,Maldives,Malaysia,Mali,Malta,Marshall Islands,Morocco,Martinique,Mauritania,Mauritius,Mexico,Micronesia,Moldova,Monaco,Mongolia,Montserrat,Mozambique,Myanmar,Namibia,Nauru,Nepal,Germany,Niger,Nigeria,Nicaragua,Niue,Norway,New Caledonia,New Zealand,Oman,Pakistan,Palau,Panama,Papua New Guinea,Paraguay,Peru,Pitcairn,French Polynesia,Poland,Puerto Rico,Portugal,South Africa,Cape Verde,Reunion,Rwanda,Romania,Western Sahara,Saint Christopher and Nevis,Saint Lucia,Saint Vincent and the Grenadines,Saint-Perr and Miquelon,Salvador,Samoa,American Samoa,San Marino,Senegal,Seychelles,Sierra Leone,Singapore,Slovakia,Slovenia,Somalia,Sri Lanka,United States,Swaziland,Sudan,Suriname,Svalbard and Jan Mayen island,Syria,Switzerland,Sweden,Tajikistan,Thailand,Taiwan,Tanzania,Timor-Leste,Togo,Tokelau,Tonga,Trinidad and Tobago,Tunisia,Turkey,Turkmenistan,Turks and Caicos Islands,Tuvalu,Uganda,Ukraine,Uruguay,Uzbekistan,Vanuatu,Wallis and Futuna Islands,Vatican City,Venezuela,Hungary,Great Britain,United Kingdom,Vietnam,Italy,Ivory Coast,Bouvet Island,Christmas Island,Norfolk Island,Saint Helena,Cook Islands,U.S. Virgin Islands,Cocos Islands,Marshall Islands,Faroe Islands,Solomon Islands,Sao Tome and Principe,Zaire,Zambia,Zimbabwe,United Arab Emirates");
     QStringList strlCountries = strCountries.split(",");
     strlCountries.insert(0, "");
-    for (int i = 0; i < strlCountries.count(); i++)
+    for (int i = 0; i < strlCountries.size(); i++)
         ui.comboBox_country->insertItem(i, strlCountries.at(i));
 
     // signals
@@ -387,7 +387,7 @@ QString DlgMyProfile::convert_code_to_country(QString strCountryCode)
     QStringList strlCountries = strCountries.split(",");
 
     // replace if found
-    for (int i = 0; i < strlCodes.count(); i++)
+    for (int i = 0; i < strlCodes.size(); i++)
     {
         if (strCountryCode == strlCodes.at(i))
         {
@@ -431,7 +431,7 @@ QString DlgMyProfile::convert_country_to_code(QString strCountry)
     QStringList strlCountries = strCountries.split(",");
 
     // replace if found
-    for (int i = 0; i < strlCountries.count(); i++)
+    for (int i = 0; i < strlCountries.size(); i++)
     {
         if (strCountry == strlCountries.at(i))
         {
@@ -447,7 +447,7 @@ QString DlgMyProfile::convert_int_to_month(QString strCheckMonth)
 {
     QStringList strlMonths;
     strlMonths << "" << tr("January") << tr("February") << tr("March") << tr("April") << tr("May") << tr("June") << tr("July") << tr("August") << tr("September") << tr("October") << tr("November") << tr("December");
-    for (int i = 0; i < strlMonths.count(); i++)
+    for (int i = 0; i < strlMonths.size(); i++)
     {
         QString strMonth = (i < 10 ? "0"+QString::number(i) : QString::number(i));
         if (strMonth == strCheckMonth)
@@ -461,7 +461,7 @@ QString DlgMyProfile::convert_month_to_int(QString strMonth)
 {
     QStringList strlMonths;
     strlMonths << "" << tr("January") << tr("February") << tr("March") << tr("April") << tr("May") << tr("June") << tr("July") << tr("August") << tr("September") << tr("October") << tr("November") << tr("December");
-    for (int i = 0; i < strlMonths.count(); i++)
+    for (int i = 0; i < strlMonths.size(); i++)
     {
         QString strInt = (i < 10 ? "0"+QString::number(i) : QString::number(i));
         if (strInt == "00") strInt = ""; // fix 0 month

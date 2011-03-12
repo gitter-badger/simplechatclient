@@ -70,13 +70,13 @@ void Highlighter::highlightBlock(const QString &text)
     if (settings.value("spellchecker").toString() == "off")
     {
         // clear if not active
-        if (lKeywords.count() != 0)
+        if (lKeywords.size() != 0)
             lKeywords.clear();
         return;
     }
 
     // is dict empty
-    if (lKeywords.count() == 0) init();
+    if (lKeywords.size() == 0) init();
 
     // spellchecker
     if (bSpacePressed == true)

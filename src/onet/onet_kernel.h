@@ -61,10 +61,10 @@ private:
     DlgModeration *dlgmoderation;
     QMap<QString, QString> *mMyStats;
     QMap<QString, QString> *mMyProfile;
+    Avatar *avatar;
 
     QString strData;
     QStringList strDataList;
-    QList <Avatar*> aThreadList;
     QMap <QString, QString> mOldNameNewName; // rename channels
 
     void raw_error();
@@ -194,6 +194,7 @@ private:
     void raw_407n();
     void raw_408n();
     void raw_412n();
+    void raw_413n();
     void raw_414n();
     void raw_415n();
     void raw_416n();
@@ -264,7 +265,6 @@ private:
     void raw_952();
 
 private slots:
-    void remove_athread(Avatar*);
     void timer_rename_channel();
 
 signals:

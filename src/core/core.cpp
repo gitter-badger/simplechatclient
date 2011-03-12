@@ -317,7 +317,7 @@ void Core::close_cam_socket()
 
 void Core::update_awaylog_status()
 {
-    if (lAwaylog.count() == 0)
+    if (lAwaylog.size() == 0)
     {
         if (awaylogAct->isVisible() == true)
             awaylogAct->setVisible(false);
@@ -548,7 +548,7 @@ void Core::nicklist_refresh(QString strChannel)
 void Core::quit_user(QString strNick, QString strDisplay)
 {
     QStringList strlChannels = pTabC->get_open_channels();
-    for (int i = 0; i < strlChannels.count(); i++)
+    for (int i = 0; i < strlChannels.size(); i++)
     {
         QString strChannel = strlChannels.at(i);
         if (nicklist_exist(strChannel, strNick) == true)
@@ -574,7 +574,7 @@ void Core::change_flag(QString strNick, QString strChannel, QString strNewFlag)
     QString strOldPrefix;
     QString strOldSuffix;
 
-    for (int i = 0; i < stlChannelNickStatus.count(); i++)
+    for (int i = 0; i < stlChannelNickStatus.size(); i++)
     {
         if ((stlChannelNickStatus.at(i).nick == strNick) && (stlChannelNickStatus.at(i).channel == strChannel))
         {
@@ -591,7 +591,7 @@ void Core::change_flag(QString strNick, QString strChannel, QString strNewFlag)
     QString strPrefix1 = "qaohXYv";
     QString strPrefix2 = "`&@%!=+";
 
-    for (int i = 0; i < strPrefix1.count(); i++)
+    for (int i = 0; i < strPrefix1.size(); i++)
     {
         QString plusminus = strNewFlag.at(0);
         QString strFlag = strNewFlag.at(1);
@@ -612,7 +612,7 @@ void Core::change_flag(QString strNick, QString strChannel, QString strNewFlag)
     QString strSuffix1 = "ObrWVx";
     QString strSuffix2 = "ObrWVx";
 
-    for (int i = 0; i < strSuffix1.count(); i++)
+    for (int i = 0; i < strSuffix1.size(); i++)
     {
         QString plusminus = strNewFlag.at(0);
         QString strFlag = strNewFlag.at(1);
@@ -647,7 +647,7 @@ void Core::change_flag(QString strNick, QString strChannel, QString strNewFlag)
 void Core::change_flag(QString strNick, QString strFlag)
 {
     QStringList strlChannels = pTabC->get_open_channels();
-    for (int i = 0; i < strlChannels.count(); i++)
+    for (int i = 0; i < strlChannels.size(); i++)
     {
         QString strChannel = strlChannels.at(i);
 
@@ -659,7 +659,7 @@ void Core::change_flag(QString strNick, QString strFlag)
 void Core::clear_nicklist(QString strChannel)
 {
     // clear
-    for (int i = 0; i < stlChannelNickStatus.count(); i++)
+    for (int i = 0; i < stlChannelNickStatus.size(); i++)
     {
         if (stlChannelNickStatus.at(i).channel == strChannel)
         {
@@ -684,7 +684,7 @@ void Core::clear_all_nicklist()
 
     QStringList strlChannels = pTabC->get_open_channels();
 
-    for (int i = 0; i < strlChannels.count(); i++)
+    for (int i = 0; i < strlChannels.size(); i++)
     {
         mChannelNickListWidget.value(strlChannels.at(i))->clear();
 
@@ -700,7 +700,7 @@ void Core::clear_all_nicklist()
 void Core::update_nick_avatar(QString strNick)
 {
     QStringList strlChannels = pTabC->get_open_channels();
-    for (int i = 0; i < strlChannels.count(); i++)
+    for (int i = 0; i < strlChannels.size(); i++)
     {
         QString strChannel = strlChannels.at(i);
 
@@ -715,7 +715,7 @@ void Core::clear_channel_all_nick_avatars(QString strChannel)
 {
     QStringList strlNicks = mChannelNickListWidget.value(strChannel)->get(&stlChannelNickStatus);
 
-    for (int i = 0; i < strlNicks.count(); i++)
+    for (int i = 0; i < strlNicks.size(); i++)
     {
         QString strNick = strlNicks.at(i);
 
@@ -728,7 +728,7 @@ void Core::clear_channel_all_nick_avatars(QString strChannel)
 void Core::set_open_channels()
 {
     QStringList strlChannels = pTabC->get_open_channels();
-    for (int i = 0; i < strlChannels.count(); i++)
+    for (int i = 0; i < strlChannels.size(); i++)
     {
         QString strChannel = strlChannels.at(i);
 

@@ -40,7 +40,7 @@ TabContainer::TabContainer(QWidget *parent, Network *param1, TabManager *param2,
 
 TabContainer::~TabContainer()
 {
-    for (int i = 0; i < tw.count(); i++)
+    for (int i = 0; i < tw.size(); i++)
     {
         QString strChannel = tw[i]->get_name();
 
@@ -73,7 +73,7 @@ void TabContainer::set_dlg_cam(DlgCam *param1)
 
 QString TabContainer::get_name(int i)
 {
-    if ((i < 0) || (i > tw.count()))
+    if ((i < 0) || (i > tw.size()))
         return QString::null;
     else
         return tw[i]->get_name();
@@ -81,7 +81,7 @@ QString TabContainer::get_name(int i)
 
 int TabContainer::get_index(QString strName)
 {
-    for (int i = 0; i < tw.count(); i++)
+    for (int i = 0; i < tw.size(); i++)
     {
         if (tw[i]->get_name() == strName)
             return i;
@@ -91,7 +91,7 @@ int TabContainer::get_index(QString strName)
 
 bool TabContainer::exist_tab(QString strChannel)
 {
-    for (int i = 0; i < tw.count(); i++)
+    for (int i = 0; i < tw.size(); i++)
     {
         if (tw[i]->get_name() == strChannel)
             return true;
@@ -115,10 +115,10 @@ void TabContainer::add_tab(QString strChannel)
         // create tab
         tw.append(new TabWidget(myparent, pNetwork, strChannel, pNotify, mChannelAvatar, camSocket, mChannelNickStatus, pDlg_user_profile, lAwaylog));
 #ifndef Q_WS_WIN
-        tw.at(tw.count()-1)->set_dlg_cam(pDlg_cam);
+        tw.at(tw.size()-1)->set_dlg_cam(pDlg_cam);
 #endif
-        pTabM->addTab(tw.at(tw.count()-1), strChannel);
-        pTabM->setCurrentIndex(tw.count()-1);
+        pTabM->addTab(tw.at(tw.size()-1), strChannel);
+        pTabM->setCurrentIndex(tw.size()-1);
 
         // update
         update_open_channels();
@@ -269,7 +269,7 @@ void TabContainer::show_msg(QString strChannel, QString strData, int iLevel)
 
 void TabContainer::show_msg_all(QString strData, int iLevel)
 {
-    for (int i = 0; i < tw.count(); i++)
+    for (int i = 0; i < tw.size(); i++)
     {
         tw[i]->display_msg(strData, iLevel);
         if (i != pTabM->currentIndex())
@@ -284,7 +284,7 @@ void TabContainer::show_msg_all(QString strData, int iLevel)
 
 void TabContainer::show_msg_active(QString strData, int iLevel)
 {
-    for (int i = 0; i < tw.count(); i++)
+    for (int i = 0; i < tw.size(); i++)
     {
         if (i == pTabM->currentIndex())
         {
@@ -319,7 +319,7 @@ void TabContainer::update_open_channels()
 {
     QStringList strOpenChannels = get_open_channels();
 
-    for (int i = 0; i < tw.count(); i++)
+    for (int i = 0; i < tw.size(); i++)
         tw[i]->set_open_channels(strOpenChannels);
 }
 
@@ -359,7 +359,7 @@ void TabContainer::slot_display_message(QString strChannel, QString strData, int
 
 void TabContainer::slot_change_font_size(QString strSize)
 {
-    for (int i = 0; i < tw.count(); i++)
+    for (int i = 0; i < tw.size(); i++)
         tw[i]->change_font_size(strSize);
 }
 
@@ -373,7 +373,7 @@ void TabContainer::slot_clear_content(QString strChannel)
 void TabContainer::refresh_colors()
 {
     QSettings settings;
-    for (int i = 0; i < tw.count(); i++)
+    for (int i = 0; i < tw.size(); i++)
     {
         tw[i]->refresh_colors();
         // update tab name color
@@ -383,14 +383,14 @@ void TabContainer::refresh_colors()
 
 void TabContainer::refresh_background_image()
 {
-    for (int i = 0; i < tw.count(); i++)
+    for (int i = 0; i < tw.size(); i++)
         tw[i]->refresh_background_image();
 }
 
 QStringList TabContainer::get_open_channels()
 {
     QStringList strlResult;
-    for (int i = 0; i < tw.count(); i++)
+    for (int i = 0; i < tw.size(); i++)
     {
         if (tw[i]->get_name() != "Status")
             strlResult.append(tw[i]->get_name());
@@ -436,7 +436,7 @@ int TabContainer::get_nick_channels(QString strNick)
 {
     int iResult = 0;
 
-    for (int i = 0; i < mChannelNickStatus->count(); i++)
+    for (int i = 0; i < mChannelNickStatus->size(); i++)
     {
         if (mChannelNickStatus->at(i).nick == strNick)
             iResult++;

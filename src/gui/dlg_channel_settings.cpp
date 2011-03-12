@@ -319,7 +319,7 @@ void DlgChannelSettings::set_stats_data(QString strCheckChannel, QMap<QString, Q
             QList<int> lWords;
 
             int iWords = 0;
-            for (int i = 0; i < strlWords.count(); i++)
+            for (int i = 0; i < strlWords.size(); i++)
             {
                 bool ok;
                 int iWord = strlWords.at(i).toInt(&ok, 16);
@@ -332,7 +332,7 @@ void DlgChannelSettings::set_stats_data(QString strCheckChannel, QMap<QString, Q
             }
 
             // average words
-            iWords /= strlWords.count();
+            iWords /= strlWords.size();
             ui.label_stats_words->setText(QString::number(iWords));
 
             // simple stats widget

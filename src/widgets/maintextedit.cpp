@@ -230,7 +230,7 @@ void MainTextEdit::menu_nick(QString strNick, QContextMenuEvent *event)
     QString strPrefix;
     QString strSuffix;
 
-    for (int i = 0; i < mChannelNickStatus->count(); i++)
+    for (int i = 0; i < mChannelNickStatus->size(); i++)
     {
         if ((mChannelNickStatus->at(i).nick == strNick) && (mChannelNickStatus->at(i).channel == strChannel))
         {
@@ -254,13 +254,13 @@ void MainTextEdit::menu_nick(QString strNick, QContextMenuEvent *event)
     for (int i = 0; i < maxOpenChannels; ++i)
         minvite->addAction(openChannelsActs[i]);
 
-    for (int i = 0; i < strOpenChannels.count(); ++i)
+    for (int i = 0; i < strOpenChannels.size(); ++i)
     {
         openChannelsActs[i]->setText(strOpenChannels[i]);
         openChannelsActs[i]->setData(strOpenChannels[i]);
         openChannelsActs[i]->setVisible(true);
     }
-    for (int j = strOpenChannels.count(); j < maxOpenChannels; ++j)
+    for (int j = strOpenChannels.size(); j < maxOpenChannels; ++j)
         openChannelsActs[j]->setVisible(false);
 
     QMenu *friends = new QMenu(tr("Friends list"));

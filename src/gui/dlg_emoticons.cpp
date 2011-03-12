@@ -62,7 +62,7 @@ void DlgEmoticons::get_emoticons_standard()
     QDir dStandardEmoticons = path+"/3rdparty/emoticons";
     QStringList slFiles = dStandardEmoticons.entryList(QStringList("*.gif"), QDir::Files | QDir::NoSymLinks);
 
-    for (int i = 0; i < slFiles.count(); i++)
+    for (int i = 0; i < slFiles.size(); i++)
     {
         QString strFileName = slFiles.at(i);
         QString strEmoticon = strFileName;
@@ -90,7 +90,7 @@ void DlgEmoticons::get_emoticons_extended()
     QDir dExtendedEmoticons = path+"/3rdparty/emoticons_other";
     QStringList slFiles = dExtendedEmoticons.entryList(QStringList("*.gif"), QDir::Files | QDir::NoSymLinks);
 
-    for (int i = 0; i < slFiles.count(); i++)
+    for (int i = 0; i < slFiles.size(); i++)
     {
         QString strFileName = slFiles.at(i);
         QString strEmoticon = strFileName;
@@ -153,12 +153,12 @@ void DlgEmoticons::button_insert()
     // get selected
     if (ui.tabWidget->currentIndex() == 0)
     {
-        if (ui.listWidget_standard->selectedItems().count() != 0)
+        if (ui.listWidget_standard->selectedItems().size() != 0)
             strSelected = ui.listWidget_standard->selectedItems().at(0)->data(Qt::UserRole).toString();
     }
     else if (ui.tabWidget->currentIndex() == 1)
     {
-        if (ui.listWidget_extended->selectedItems().count() != 0)
+        if (ui.listWidget_extended->selectedItems().size() != 0)
             strSelected = ui.listWidget_extended->selectedItems().at(0)->data(Qt::UserRole).toString();
     }
 

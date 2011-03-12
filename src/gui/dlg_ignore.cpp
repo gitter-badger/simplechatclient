@@ -90,7 +90,7 @@ void DlgIgnore::button_add()
 void DlgIgnore::button_remove()
 {
     QString strSelected;
-    if (ui.listWidget_nicks->selectedItems().count() != 0)
+    if (ui.listWidget_nicks->selectedItems().size() != 0)
         strSelected = ui.listWidget_nicks->selectedItems().at(0)->text();
 
     bool ok;

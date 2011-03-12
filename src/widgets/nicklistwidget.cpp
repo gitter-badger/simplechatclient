@@ -56,7 +56,7 @@ NickListWidget::~NickListWidget()
 {
     strOpenChannels.clear();
 
-    for (int i = 0; i < mChannelNickStatus->count(); i++)
+    for (int i = 0; i < mChannelNickStatus->size(); i++)
     {
         if (mChannelNickStatus->at(i).channel == strChannel)
         {
@@ -179,7 +179,7 @@ void NickListWidget::add(QString strNick, QString strPrefix, QString strSuffix, 
 void NickListWidget::remove(QString strNick, sChannelNickStatus *mChannelNickStatus)
 {
     // remove from nick list
-    for (int i = 0; i < mChannelNickStatus->count(); i++)
+    for (int i = 0; i < mChannelNickStatus->size(); i++)
     {
         if ((mChannelNickStatus->at(i).nick == strNick) && (mChannelNickStatus->at(i).channel == strChannel))
         {
@@ -194,7 +194,7 @@ void NickListWidget::remove(QString strNick, sChannelNickStatus *mChannelNickSta
 
 bool NickListWidget::exist(QString strNick, sChannelNickStatus *mChannelNickStatus)
 {
-    for (int i = 0; i < mChannelNickStatus->count(); i++)
+    for (int i = 0; i < mChannelNickStatus->size(); i++)
     {
         if ((mChannelNickStatus->at(i).nick == strNick) && (mChannelNickStatus->at(i).channel == strChannel))
             return true;
@@ -206,7 +206,7 @@ QStringList NickListWidget::get(sChannelNickStatus *mChannelNickStatus)
 {
     QStringList strlResult;
 
-    for (int i = 0; i < mChannelNickStatus->count(); i++)
+    for (int i = 0; i < mChannelNickStatus->size(); i++)
     {
         if (mChannelNickStatus->at(i).channel == strChannel)
         {
@@ -400,7 +400,7 @@ MyTreeWidgetItem* NickListWidget::create_child(QString strNick, QString strSuffi
 
 void NickListWidget::priv()
 {
-    if (this->selectedItems().count() == 0) return;
+    if (this->selectedItems().size() == 0) return;
 
     QString strNick = this->selectedItems().at(0)->text(0);
     pNetwork->send(QString("PRIV %1").arg(strNick));
@@ -408,7 +408,7 @@ void NickListWidget::priv()
 
 void NickListWidget::whois()
 {
-    if (this->selectedItems().count() == 0) return;
+    if (this->selectedItems().size() == 0) return;
 
     QString strNick = this->selectedItems().at(0)->text(0);
     pNetwork->send(QString("WHOIS %1 :%1").arg(strNick));
@@ -416,7 +416,7 @@ void NickListWidget::whois()
 
 void NickListWidget::profile()
 {
-    if (this->selectedItems().count() == 0) return;
+    if (this->selectedItems().size() == 0) return;
 
     QString strNick = this->selectedItems().at(0)->text(0);
 
@@ -429,7 +429,7 @@ void NickListWidget::profile()
 
 void NickListWidget::cam()
 {
-    if (this->selectedItems().count() == 0) return;
+    if (this->selectedItems().size() == 0) return;
 
     QString strNick = this->selectedItems().at(0)->text(0);
 #ifdef Q_WS_WIN
@@ -442,7 +442,7 @@ void NickListWidget::cam()
 
 void NickListWidget::friends_add()
 {
-    if (this->selectedItems().count() == 0) return;
+    if (this->selectedItems().size() == 0) return;
 
     QString strNick = this->selectedItems().at(0)->text(0);
     pNetwork->send(QString("NS FRIENDS ADD %1").arg(strNick));
@@ -450,7 +450,7 @@ void NickListWidget::friends_add()
 
 void NickListWidget::friends_del()
 {
-    if (this->selectedItems().count() == 0) return;
+    if (this->selectedItems().size() == 0) return;
 
     QString strNick = this->selectedItems().at(0)->text(0);
     pNetwork->send(QString("NS FRIENDS DEL %1").arg(strNick));
@@ -458,7 +458,7 @@ void NickListWidget::friends_del()
 
 void NickListWidget::ignore_add()
 {
-    if (this->selectedItems().count() == 0) return;
+    if (this->selectedItems().size() == 0) return;
 
     QString strNick = this->selectedItems().at(0)->text(0);
     pNetwork->send(QString("NS IGNORE ADD %1").arg(strNick));
@@ -466,7 +466,7 @@ void NickListWidget::ignore_add()
 
 void NickListWidget::ignore_del()
 {
-    if (this->selectedItems().count() == 0) return;
+    if (this->selectedItems().size() == 0) return;
 
     QString strNick = this->selectedItems().at(0)->text(0);
     pNetwork->send(QString("NS IGNORE DEL %1").arg(strNick));
@@ -474,7 +474,7 @@ void NickListWidget::ignore_del()
 
 void NickListWidget::kick()
 {
-    if (this->selectedItems().count() == 0) return;
+    if (this->selectedItems().size() == 0) return;
 
     QString strNick = this->selectedItems().at(0)->text(0);
 
@@ -487,7 +487,7 @@ void NickListWidget::kick()
 
 void NickListWidget::ban()
 {
-    if (this->selectedItems().count() == 0) return;
+    if (this->selectedItems().size() == 0) return;
 
     QString strNick = this->selectedItems().at(0)->text(0);
     pNetwork->send(QString("CS BAN %1 ADD %2").arg(strChannel).arg(strNick));
@@ -495,7 +495,7 @@ void NickListWidget::ban()
 
 void NickListWidget::kban()
 {
-    if (this->selectedItems().count() == 0) return;
+    if (this->selectedItems().size() == 0) return;
 
     QString strNick = this->selectedItems().at(0)->text(0);
 
@@ -511,7 +511,7 @@ void NickListWidget::kban()
 
 void NickListWidget::ipban()
 {
-    if (this->selectedItems().count() == 0) return;
+    if (this->selectedItems().size() == 0) return;
 
     QString strNick = this->selectedItems().at(0)->text(0);
     pNetwork->send(QString("CS BANIP %1 ADD %2").arg(strChannel).arg(strNick));
@@ -519,7 +519,7 @@ void NickListWidget::ipban()
 
 void NickListWidget::op_add()
 {
-    if (this->selectedItems().count() == 0) return;
+    if (this->selectedItems().size() == 0) return;
 
     QString strNick = this->selectedItems().at(0)->text(0);
     pNetwork->send(QString("CS OP %1 ADD %2").arg(strChannel).arg(strNick));
@@ -527,7 +527,7 @@ void NickListWidget::op_add()
 
 void NickListWidget::op_del()
 {
-    if (this->selectedItems().count() == 0) return;
+    if (this->selectedItems().size() == 0) return;
 
     QString strNick = this->selectedItems().at(0)->text(0);
     pNetwork->send(QString("CS OP %1 DEL %2").arg(strChannel).arg(strNick));
@@ -535,7 +535,7 @@ void NickListWidget::op_del()
 
 void NickListWidget::halfop_add()
 {
-    if (this->selectedItems().count() == 0) return;
+    if (this->selectedItems().size() == 0) return;
 
     QString strNick = this->selectedItems().at(0)->text(0);
     pNetwork->send(QString("CS HALFOP %1 ADD %2").arg(strChannel).arg(strNick));
@@ -543,7 +543,7 @@ void NickListWidget::halfop_add()
 
 void NickListWidget::halfop_del()
 {
-    if (this->selectedItems().count() == 0) return;
+    if (this->selectedItems().size() == 0) return;
 
     QString strNick = this->selectedItems().at(0)->text(0);
     pNetwork->send(QString("CS HALFOP %1 DEL %2").arg(strChannel).arg(strNick));
@@ -551,7 +551,7 @@ void NickListWidget::halfop_del()
 
 void NickListWidget::moderator_add()
 {
-    if (this->selectedItems().count() == 0) return;
+    if (this->selectedItems().size() == 0) return;
 
     QString strNick = this->selectedItems().at(0)->text(0);
     pNetwork->send(QString("CS MODERATOR %1 ADD %2").arg(strChannel).arg(strNick));
@@ -559,7 +559,7 @@ void NickListWidget::moderator_add()
 
 void NickListWidget::moderator_del()
 {
-    if (this->selectedItems().count() == 0) return;
+    if (this->selectedItems().size() == 0) return;
 
     QString strNick = this->selectedItems().at(0)->text(0);
     pNetwork->send(QString("CS MODERATOR %1 DEL %2").arg(strChannel).arg(strNick));
@@ -567,7 +567,7 @@ void NickListWidget::moderator_del()
 
 void NickListWidget::voice_add()
 {
-    if (this->selectedItems().count() == 0) return;
+    if (this->selectedItems().size() == 0) return;
 
     QString strNick = this->selectedItems().at(0)->text(0);
     pNetwork->send(QString("CS VOICE %1 ADD %2").arg(strChannel).arg(strNick));
@@ -575,7 +575,7 @@ void NickListWidget::voice_add()
 
 void NickListWidget::voice_del()
 {
-    if (this->selectedItems().count() == 0) return;
+    if (this->selectedItems().size() == 0) return;
 
     QString strNick = this->selectedItems().at(0)->text(0);
     pNetwork->send(QString("CS VOICE %1 DEL %2").arg(strChannel).arg(strNick));
@@ -583,7 +583,7 @@ void NickListWidget::voice_del()
 
 void NickListWidget::invite()
 {
-    if (this->selectedItems().count() == 0) return;
+    if (this->selectedItems().size() == 0) return;
 
     QAction *action = qobject_cast<QAction *>(sender());
     if (action)
@@ -596,7 +596,7 @@ void NickListWidget::invite()
 
 void NickListWidget::contextMenuEvent(QContextMenuEvent *e)
 {
-    if (this->selectedItems().count() == 0) return;
+    if (this->selectedItems().size() == 0) return;
 
     QString strNick = this->selectedItems().at(0)->text(0);
 
@@ -607,7 +607,7 @@ void NickListWidget::contextMenuEvent(QContextMenuEvent *e)
     QString strPrefix;
     QString strSuffix;
 
-    for (int i = 0; i < mChannelNickStatus->count(); i++)
+    for (int i = 0; i < mChannelNickStatus->size(); i++)
     {
         if ((mChannelNickStatus->at(i).nick == strNick) && (mChannelNickStatus->at(i).channel == strChannel))
         {
@@ -631,13 +631,13 @@ void NickListWidget::contextMenuEvent(QContextMenuEvent *e)
     for (int i = 0; i < maxOpenChannels; ++i)
         minvite->addAction(openChannelsActs[i]);
 
-    for (int i = 0; i < strOpenChannels.count(); ++i)
+    for (int i = 0; i < strOpenChannels.size(); ++i)
     {
         openChannelsActs[i]->setText(strOpenChannels[i]);
         openChannelsActs[i]->setData(strOpenChannels[i]);
         openChannelsActs[i]->setVisible(true);
     }
-    for (int j = strOpenChannels.count(); j < maxOpenChannels; ++j)
+    for (int j = strOpenChannels.size(); j < maxOpenChannels; ++j)
         openChannelsActs[j]->setVisible(false);
 
     QMenu *friends = new QMenu(tr("Friends list"));

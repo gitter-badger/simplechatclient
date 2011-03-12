@@ -225,11 +225,11 @@ void DlgMyAvatar::load_my_avatars()
     // data
     QDomNodeList avatarsNodeList = docElem.elementsByTagName("data");
 
-    for (int i = 0; i < avatarsNodeList.count(); i++)
+    for (int i = 0; i < avatarsNodeList.size(); i++)
     {
         QDomNodeList nodeList = avatarsNodeList.at(i).childNodes();
 
-        for (int i = 0; i < nodeList.count(); i++)
+        for (int i = 0; i < nodeList.size(); i++)
         {
             QDomElement el = nodeList.at(i).toElement();
             QDomNode pEntries = el.firstChild();
@@ -329,7 +329,7 @@ void DlgMyAvatar::get_collections()
     // data
     QDomNodeList nodeList = docElem.elementsByTagName("data");
 
-    for (int i = 0; i < nodeList.count(); i++)
+    for (int i = 0; i < nodeList.size(); i++)
     {
         QDomElement el = nodeList.at(i).toElement();
         QDomNode pEntries = el.firstChild();
@@ -355,7 +355,7 @@ void DlgMyAvatar::get_collections()
 
 void DlgMyAvatar::draw_collections()
 {
-    for (int i = 0; i < lNameCollections.count(); i++)
+    for (int i = 0; i < lNameCollections.size(); i++)
         ui.listWidget_list_collections->insertItem(i, lNameCollections.at(i));
 }
 
@@ -393,11 +393,11 @@ void DlgMyAvatar::get_avatars_from_collect(int index)
     // data
     QDomNodeList avatarsNodeList = docElem.elementsByTagName("data");
 
-    for (int i = 0; i < avatarsNodeList.count(); i++)
+    for (int i = 0; i < avatarsNodeList.size(); i++)
     {
         QDomNodeList nodeList = avatarsNodeList.at(i).childNodes();
 
-        for (int i = 0; i < nodeList.count(); i++)
+        for (int i = 0; i < nodeList.size(); i++)
         {
             QDomElement el = nodeList.at(i).toElement();
             QDomNode pEntries = el.firstChild();

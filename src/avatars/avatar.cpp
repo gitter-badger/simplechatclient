@@ -18,117 +18,86 @@
  *                                                                          *
  ****************************************************************************/
 
-#include <QEventLoop>
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
+#include <QStringList>
 #include "avatar.h"
 #include "tab_container.h"
 
-AvatarThread::AvatarThread(QString param1, QString param2, QString param3)
-{
-    strNickChannel = param1;
-    strUrl = param2;
-    strCategory = param3;
-}
-
-void AvatarThread::run()
-{
-    thread_work();
-
-    exec();
-}
-
-void AvatarThread::thread_work()
-{
-    QEventLoop eventLoop;
-    QNetworkAccessManager *accessManager = new QNetworkAccessManager;
-    QNetworkReply *pReply = accessManager->get(QNetworkRequest(QUrl(strUrl)));
-    QObject::connect(pReply, SIGNAL(finished()), &eventLoop, SLOT(quit()));
-    eventLoop.exec();
-
-    accessManager->deleteLater();
-    pReply->deleteLater();
-
-    if (pReply->error())
-    {
-        emit stop_thread();
-        return;
-    }
-
-    QByteArray bData = pReply->readAll();
-
-    if (bData.isEmpty() == false)
-        emit set_avatar(strNickChannel, strCategory, bData);
-
-    emit stop_thread();
-}
-
-Avatar::Avatar(TabContainer *param1, QString param2, QString param3, QString param4, QMap <QString, QByteArray> *param5, QMap <QString, QByteArray> *param6)
+Avatar::Avatar(TabContainer *param1, QMap <QString, QByteArray> *param2, QMap <QString, QByteArray> *param3)
 {
     tabc = param1;
-    strNickChannel = param2;
-    strUrl = param3;
-    strCategory = param4;
-    mNickAvatar = param5;
-    mChannelAvatar = param6;
+    mNickAvatar = param2;
+    mChannelAvatar = param3;
 
-    avatarThr = new AvatarThread(strNickChannel, strUrl, strCategory);
     QObject::connect(this, SIGNAL(set_nick_avatar(QString)), tabc, SLOT(slot_update_nick_avatar(QString)));
     QObject::connect(this, SIGNAL(set_channel_avatar(QString)), tabc, SLOT(slot_update_channel_avatar(QString)));
-    QObject::connect(avatarThr, SIGNAL(set_avatar(QString, QString, QByteArray)), this, SLOT(set_avatar(QString, QString, QByteArray)));
-    QObject::connect(avatarThr, SIGNAL(stop_thread()), this, SLOT(stop_thread()));
-    avatarThr->start(QThread::InheritPriority);
+
+    accessManager = new QNetworkAccessManager;
+    QObject::connect(accessManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(avatar_finished(QNetworkReply*)));
 }
 
-void Avatar::kill_thread()
+Avatar::~Avatar()
 {
-    avatarThr->quit();
-    avatarThr->wait();
-    avatarThr->QObject::disconnect();
-    avatarThr->deleteLater();
-    delete avatarThr;
+    accessManager->deleteLater();
 }
 
-void Avatar::set_avatar(QString strNickChannel, QString strCategory, QByteArray bAvatar)
+void Avatar::get_avatar(QString strNickOrChannel, QString strCategory, QString strUrl)
+{
+    QNetworkReply *reply = accessManager->get(QNetworkRequest(strUrl));
+    reply->setProperty("nickorchannel", strNickOrChannel);
+    reply->setProperty("category", strCategory);
+}
+
+void Avatar::avatar_finished(QNetworkReply *reply)
+{
+    reply->deleteLater();
+
+    if (reply->error())
+        return;
+
+    QString strNickOrChannel = reply->property("nickorchannel").toString();
+    QString strCategory = reply->property("category").toString();
+    QByteArray bData = reply->readAll();
+
+    if (bData.isEmpty() == false)
+        set_avatar(strNickOrChannel, strCategory, bData);
+}
+
+void Avatar::set_avatar(QString strNickOrChannel, QString strCategory, QByteArray bAvatar)
 {
     if (strCategory == "nick")
     {
         // insert
-        if (mNickAvatar->contains(strNickChannel) == false)
-            mNickAvatar->insert(strNickChannel, bAvatar);
+        if (mNickAvatar->contains(strNickOrChannel) == false)
+            mNickAvatar->insert(strNickOrChannel, bAvatar);
         else
         {
             // update
-            if (mNickAvatar->value(strNickChannel) != bAvatar)
+            if (mNickAvatar->value(strNickOrChannel) != bAvatar)
             {
-                mNickAvatar->remove(strNickChannel);
-                mNickAvatar->insert(strNickChannel, bAvatar);
+                mNickAvatar->remove(strNickOrChannel);
+                mNickAvatar->insert(strNickOrChannel, bAvatar);
             }
         }
 
-        emit set_nick_avatar(strNickChannel);
+        emit set_nick_avatar(strNickOrChannel);
     }
     else if (strCategory == "channel")
     {
         // insert
-        if (mChannelAvatar->contains(strNickChannel) == false)
-            mChannelAvatar->insert(strNickChannel, bAvatar);
+        if (mChannelAvatar->contains(strNickOrChannel) == false)
+            mChannelAvatar->insert(strNickOrChannel, bAvatar);
         else
         {
             // update
-            if (mChannelAvatar->value(strNickChannel) != bAvatar)
+            if (mChannelAvatar->value(strNickOrChannel) != bAvatar)
             {
-                mChannelAvatar->remove(strNickChannel);
-                mChannelAvatar->insert(strNickChannel, bAvatar);
+                mChannelAvatar->remove(strNickOrChannel);
+                mChannelAvatar->insert(strNickOrChannel, bAvatar);
             }
         }
 
-        emit set_channel_avatar(strNickChannel);
+        emit set_channel_avatar(strNickOrChannel);
     }
-}
-
-void Avatar::stop_thread()
-{
-    kill_thread();
-    emit sremove_athread(this);
 }

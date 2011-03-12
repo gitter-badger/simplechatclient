@@ -73,7 +73,7 @@ void SimpleStatsWidget::paintEvent(QPaintEvent *e)
 
     // get max
     qreal fMax = 0;
-    for (int i = 0; i < lStats.count(); i++)
+    for (int i = 0; i < lStats.size(); i++)
     {
         if (lStats.at(i) > fMax)
             fMax = lStats.at(i);
@@ -92,7 +92,7 @@ void SimpleStatsWidget::paintEvent(QPaintEvent *e)
     {
         QList<qreal> lStatsF;
         // fix values to max 100
-        for (int i = 0; i < lStats.count(); i++)
+        for (int i = 0; i < lStats.size(); i++)
         {
             if (lStats.at(i) != fMax)
                 lStatsF.append(lStats.at(i) * (fPercentage/100));

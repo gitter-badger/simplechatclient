@@ -55,7 +55,7 @@ void DlgChannelFavourites::refresh()
 {
     ui.listWidget_channels->clear();
 
-    for (int i = 0; i < lChannelFavourites->count(); i++)
+    for (int i = 0; i < lChannelFavourites->size(); i++)
     {
         QString strChannel = lChannelFavourites->at(i);
 
@@ -88,7 +88,7 @@ void DlgChannelFavourites::button_add()
 void DlgChannelFavourites::button_remove()
 {
     QString strSelected;
-    if (ui.listWidget_channels->selectedItems().count() != 0)
+    if (ui.listWidget_channels->selectedItems().size() != 0)
         strSelected = ui.listWidget_channels->selectedItems().at(0)->text();
 
     bool ok;

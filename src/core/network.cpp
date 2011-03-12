@@ -201,7 +201,7 @@ void Network::connect()
         clear_all();
 
         // random
-        int iRandom = qrand() % hInfo.addresses().count();
+        int iRandom = qrand() % hInfo.addresses().size();
 
         // set active
         QDateTime dt = QDateTime::currentDateTime();

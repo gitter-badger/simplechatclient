@@ -52,28 +52,13 @@ OnetKernel::OnetKernel(QWidget *parent, Network *param1, TabContainer *param2, N
     dlgmoderation = param12;
     mMyStats = param13;
     mMyProfile = param14;
+
+    avatar = new Avatar(pTabC, mNickAvatar, mChannelAvatar);
 }
 
 OnetKernel::~OnetKernel()
 {
-    // kill avatar threads
-    while(aThreadList.isEmpty() == false)
-    {
-        aThreadList.first()->kill_thread();
-        aThreadList.removeFirst();;
-    }
-}
-
-void OnetKernel::remove_athread(Avatar *athr)
-{
-    athr->QObject::disconnect();
-    aThreadList.removeOne(athr);
-
-#ifdef Q_WS_X11
-    QSettings settings;
-    if (settings.value("debug").toString() == "on")
-        qDebug() << "Avatar thread -1 (size: " << aThreadList.size() << ")";
-#endif
+    delete avatar;
 }
 
 void OnetKernel::timer_rename_channel()
@@ -469,6 +454,8 @@ void OnetKernel::kernel(QString param1)
                 raw_408n();
             else if (strDataList[3].toLower() == ":412")
                 raw_412n();
+            else if (strDataList[3].toLower() == ":413")
+                raw_413n();
             else if (strDataList[3].toLower() == ":414")
                 raw_414n();
             else if (strDataList[3].toLower() == ":415")
@@ -1027,7 +1014,7 @@ void OnetKernel::raw_mode()
 
         // create flags list
         QStringList strlFlags;
-        for (int i = 0; i < strFlag.count(); i++)
+        for (int i = 0; i < strFlag.size(); i++)
             strlFlags << strFlag.at(i);
 
         foreach (strFlag, strlFlags)
@@ -1321,14 +1308,7 @@ void OnetKernel::raw_kill()
     QString strReason;
     for (int i = 4; i < strDataList.size(); i++) { if (i != 4) strReason += " "; strReason += strDataList[i]; }
 
-    QSettings settings;
-    QString strMe = settings.value("nick").toString();
-
-    QString strDisplay;
-    if (strNick == strMe)
-        strDisplay = QString(tr("* You were killed by %1 %2")).arg(strWho).arg(strReason);
-    else
-        strDisplay = QString(tr("* %1 were killed by %2 %3")).arg(strNick).arg(strWho).arg(strReason);
+    QString strDisplay = QString(tr("* You were killed by %1 %2")).arg(strWho).arg(strReason);
 
     // display
     pTabC->show_msg_all(strDisplay, 9);
@@ -1505,16 +1485,7 @@ void OnetKernel::raw_111n()
 
     // get avatar
     if (strAvatarLink.isEmpty() == false)
-    {
-        aThreadList.append(new Avatar(pTabC, strNick, strAvatarLink, "nick", mNickAvatar, mChannelAvatar));
-        QObject::connect(aThreadList.at(aThreadList.size()-1), SIGNAL(sremove_athread(Avatar*)), this, SLOT(remove_athread(Avatar*)));
-
-#ifdef Q_WS_X11
-        QSettings settings;
-        if (settings.value("debug").toString() == "on")
-            qDebug() << "Avatar thread +1 (size: " << aThreadList.size() << ")";
-#endif
-    }
+        avatar->get_avatar(strNick, "nick", strAvatarLink);
 }
 
 // NS INFO aleksa7
@@ -1734,15 +1705,7 @@ void OnetKernel::raw_161n()
     {
         QSettings settings;
         if (settings.value("style").toString() == "modern")
-        {
-            aThreadList.append(new Avatar(pTabC, strChannel, strAvatarUrl, "channel", mNickAvatar, mChannelAvatar));
-            QObject::connect(aThreadList.at(aThreadList.size()-1), SIGNAL(sremove_athread(Avatar*)), this, SLOT(remove_athread(Avatar*)));
-
-#ifdef Q_WS_X11
-            if (settings.value("debug").toString() == "on")
-                qDebug() << "Avatar thread +1 (size: " << aThreadList.size() << ")";
-#endif
-        }
+            avatar->get_avatar(strChannel, "channel", strAvatarUrl);
     }
 }
 
@@ -3212,6 +3175,13 @@ void OnetKernel::raw_412n()
 // ignore
 }
 
+// RS INFO istota_bezduszna
+// :RankServ!service@service.onet NOTICE istota_bezduszna :413 istota_bezduszna :user has no stats
+void OnetKernel::raw_413n()
+{
+// ignore
+}
+
 // RS INFO #testa
 // :RankServ!service@service.onet NOTICE Merovingian :414 #testa :channel has no stats
 void OnetKernel::raw_414n()
@@ -4032,7 +4002,7 @@ void OnetKernel::raw_819()
         strChannelsString = strChannelsString.right(strChannelsString.length()-1);
 
     QStringList strChannelsList = strChannelsString.split(",");
-    for (int i = 0; i < strChannelsList.count(); i++)
+    for (int i = 0; i < strChannelsList.size(); i++)
     {
         QStringList strChannelParameters = strChannelsList[i].split(":");
         QString strChannelName = strChannelParameters[0];

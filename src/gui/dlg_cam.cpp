@@ -301,7 +301,7 @@ void DlgCam::detect_broadcasting()
 
         // add video
         QList<QString> lVideoDevices = video->get_video_devices();
-        for (int i = 0; i < lVideoDevices.count(); i++)
+        for (int i = 0; i < lVideoDevices.size(); i++)
             ui.comboBox_device->addItem(lVideoDevices.at(i));
     }
 }
@@ -371,14 +371,14 @@ void DlgCam::data_kernel(QByteArray bData)
         ui.tableWidget_nick_rank_spectators->setHorizontalHeaderLabels(strlLabels);
 
         // set rows
-        int rows = strDataList.count()-1;
+        int rows = strDataList.size()-1;
         ui.tableWidget_nick_rank_spectators->setRowCount(rows);
 
         int row = 0;
         foreach (QString strLine, strDataList)
         {
             QStringList strLineList = strLine.split(":");
-            if (strLineList.count() == 6)
+            if (strLineList.size() == 6)
             {
                 QString strUser = strLineList[0];
                 QString strCamOnOff = strLineList[1]; // 1 = on; 2 = off
@@ -395,7 +395,7 @@ void DlgCam::data_kernel(QByteArray bData)
                     foreach (QString strChannelParams, strlChannelsParams)
                     {
                         QStringList strlChannelParams = strChannelParams.split("/");
-                        if (strlChannelParams.count() == 4)
+                        if (strlChannelParams.size() == 4)
                         {
                             QString strChannelCategory = strlChannelParams[0];
                             QString strUnknown = strlChannelParams[1]; // always 0 (?)
@@ -455,7 +455,7 @@ void DlgCam::data_kernel(QByteArray bData)
         if (strLine.isEmpty() == false)
         {
             QStringList strLineList = strLine.split(":");
-            if (strLineList.count() == 6)
+            if (strLineList.size() == 6)
             {
                 QString strUser = strLineList[0];
                 int iCamOnOff = strLineList[1].toInt(); // 1 = on; 2 = off
@@ -472,7 +472,7 @@ void DlgCam::data_kernel(QByteArray bData)
                     foreach (QString strChannelParams, strlChannelsParams)
                     {
                         QStringList strlChannelParams = strChannelParams.split("/");
-                        if (strlChannelParams.count() == 4)
+                        if (strlChannelParams.size() == 4)
                         {
                             QString strChannelCategory = strlChannelParams[0];
                             QString strUnknown = strlChannelParams[1]; // always 0 (?)
@@ -558,7 +558,7 @@ void DlgCam::data_kernel(QByteArray bData)
         ui.tableWidget_nick_rank_spectators->setHorizontalHeaderLabels(strlLabels);
 
         // set rows
-        int rows = strDataList.count()-1;
+        int rows = strDataList.size()-1;
         ui.tableWidget_nick_rank_spectators->setRowCount(rows);
 
         int row = 0;
@@ -567,7 +567,7 @@ void DlgCam::data_kernel(QByteArray bData)
             if (strLine.isEmpty() == false)
             {
                 QStringList strLineList = strLine.split(" ");
-                if (strLineList.count() == 3) // is correct ?
+                if (strLineList.size() == 3) // is correct ?
                 {
                     QString strUser = strLineList[0];
                     QString strSpectators = strLineList[1];
@@ -613,13 +613,13 @@ void DlgCam::text_kernel(QString strData)
     QStringList strDataList = strData.split(" ");
 
     // check correct text
-    if (strDataList.count() < 3)
+    if (strDataList.size() < 3)
         return;
 
     // 200 0 OK
     if (strDataList[0] == "200")
     {
-        if (lLastCommand.count() == 0) return; // empty lLastCommand
+        if (lLastCommand.size() == 0) return; // empty lLastCommand
 
         QString strLastCommand = lLastCommand.takeFirst();
 
@@ -641,7 +641,7 @@ void DlgCam::text_kernel(QString strData)
         }
     }
     // 202 17244 IMAGE_UPDATE_BIG Ekscentryk
-    else if ((strDataList[0] == "202") && (strDataList.count() == 4))
+    else if ((strDataList[0] == "202") && (strDataList.size() == 4))
     {
         camNetwork->set_bytes_need(strDataList[1].toInt());
         if (strDataList[1].toInt() != 0)
@@ -682,7 +682,7 @@ void DlgCam::text_kernel(QString strData)
     // 211 13584 Noemi_01@3
     // 211 29 my_dwoje@4
     // 211 17 myszka29brunetka@5
-    else if ((strDataList[0] == "211") && (strDataList.count() == 3))
+    else if ((strDataList[0] == "211") && (strDataList.size() == 3))
     {
         if (strDataList[1].toInt() > 0)
         {
@@ -697,17 +697,17 @@ void DlgCam::text_kernel(QString strData)
         // ignore
     }
     // 231 0 OK scc_test
-    else if ((strDataList[0] == "231") && (strDataList.count() == 4))
+    else if ((strDataList[0] == "231") && (strDataList.size() == 4))
     {
         // ignore
     }
     // 232 0 CMODE 0
-    else if ((strDataList[0] == "232") && (strDataList.count() == 4))
+    else if ((strDataList[0] == "232") && (strDataList.size() == 4))
     {
         // ignore
     }
     // 233 0 QUALITY_FACTOR 1
-    else if ((strDataList[0] == "233") && (strDataList.count() == 4))
+    else if ((strDataList[0] == "233") && (strDataList.size() == 4))
     {
         // ignore
     }
@@ -727,7 +727,7 @@ void DlgCam::text_kernel(QString strData)
         iCam_cmd = 251;
     }
     // 252 41 USER_STATUS pati28ash
-    else if ((strDataList[0] == "252") && (strDataList.count() == 4))
+    else if ((strDataList[0] == "252") && (strDataList.size() == 4))
     {
         if (strDataList[1].toInt() > 0)
         {
@@ -742,7 +742,7 @@ void DlgCam::text_kernel(QString strData)
         }
     }
     // 253 0 USER_VOTES Delikatna 38
-    else if ((strDataList[0] == "253") && (strDataList.count() == 5))
+    else if ((strDataList[0] == "253") && (strDataList.size() == 5))
     {
         QString strUser = strDataList[3];
         int iRank = strDataList[4].toInt();
@@ -769,7 +769,7 @@ void DlgCam::text_kernel(QString strData)
     }
     // successfully logged in
     // 264 0 CODE_ACCEPTED ffffffff 2147483647
-    else if ((strDataList[0] == "264") && (strDataList.count() == 5))
+    else if ((strDataList[0] == "264") && (strDataList.size() == 5))
     {
         ui.label_img->setText(tr("Setting mode for viewing only"));
         camNetwork->network_send("SENDMODE 0");
@@ -785,14 +785,14 @@ void DlgCam::text_kernel(QString strData)
         // stopped
     }
     // 262 0 NEW_FAN ~matka_wariatka
-    else if ((strDataList[0] == "262") && (strDataList.count() == 4))
+    else if ((strDataList[0] == "262") && (strDataList.size() == 4))
     {
         // new fun
         QString strFunNick = strDataList[3];
         ui.listWidget_funs->addItem(strFunNick);
     }
     // 263 0 VOTE_OK alicja17 3
-    else if ((strDataList[0] == "263") && (strDataList.count() == 5))
+    else if ((strDataList[0] == "263") && (strDataList.size() == 5))
     {
         // vote ok
         ui.toolButton_vote_minus->setEnabled(false);
@@ -824,7 +824,7 @@ void DlgCam::text_kernel(QString strData)
         iCam_cmd = 403;
     }
     // 405 0 USER_GONE Restonka
-    else if ((strDataList[0] == "405") && (strDataList.count() == 4))
+    else if ((strDataList[0] == "405") && (strDataList.size() == 4))
     {
         QString strUser = strDataList[3];
         if (strUser == strNick)
@@ -838,12 +838,12 @@ void DlgCam::text_kernel(QString strData)
         }
     }
     // 406 0 NO_SUCH_USER_UDGET 0@4
-    else if ((strDataList[0] == "406") && (strDataList.count() == 4))
+    else if ((strDataList[0] == "406") && (strDataList.size() == 4))
     {
         // ignore
     }
     // 408 0 NO_SUCH_USER_SUBSCRIBE LOLexx
-    else if ((strDataList[0] == "408") && (strDataList.count() == 4))
+    else if ((strDataList[0] == "408") && (strDataList.size() == 4))
     {
         QString strUser = strDataList[3];
         if (strUser == strNick)
@@ -857,7 +857,7 @@ void DlgCam::text_kernel(QString strData)
         }
     }
     // 410 0 FAN_GONE Merovingian
-    else if ((strDataList[0] == "410") && (strDataList.count() == 4))
+    else if ((strDataList[0] == "410") && (strDataList.size() == 4))
     {
         QString strFunNick = strDataList[3];
 
@@ -872,12 +872,12 @@ void DlgCam::text_kernel(QString strData)
             ui.listWidget_funs->takeItem(row);
     }
     // 411 0 VOTE_DENIED soneja
-    else if ((strDataList[0] == "412") && (strDataList.count() == 4))
+    else if ((strDataList[0] == "412") && (strDataList.size() == 4))
     {
         // ignore
     }
     // 412 0 SUBSCRIBE_FAILED olgusia32
-    else if ((strDataList[0] == "412") && (strDataList.count() == 4))
+    else if ((strDataList[0] == "412") && (strDataList.size() == 4))
     {
         QString strUser = strDataList[3];
         if (strUser == strNick)
@@ -891,7 +891,7 @@ void DlgCam::text_kernel(QString strData)
         }
     }
     // 413 0 SUBSCRIBE_DENIED aliina
-    else if ((strDataList[0] == "413") && (strDataList.count() == 4))
+    else if ((strDataList[0] == "413") && (strDataList.size() == 4))
     {
         QString strUser = strDataList[3];
         if (strUser == strNick)
@@ -923,7 +923,7 @@ void DlgCam::text_kernel(QString strData)
         camNetwork->network_disconnect();
     }
     // 504 0 UNKNOWN_COMMAND PUT2
-    else if ((strDataList[0] == "504") && (strDataList.count() == 4))
+    else if ((strDataList[0] == "504") && (strDataList.size() == 4))
     {
         // ignore
     }
@@ -938,7 +938,7 @@ void DlgCam::text_kernel(QString strData)
         // ignore
     }
     // 520 0 INVALID_UOKEY 1q3j0llVg40cu2784j9EVoz8sRdfNl3w
-    else if ((strDataList[0] == "520") && (strDataList.count() == 4))
+    else if ((strDataList[0] == "520") && (strDataList.size() == 4))
     {
         ui.label_img->setText(tr("Invalid authorization key"));
         camNetwork->network_disconnect();

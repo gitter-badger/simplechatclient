@@ -20,6 +20,7 @@
 
 #include <QDomDocument>
 #include <QHostInfo>
+#include <QNetworkReply>
 #include <QSettings>
 #include <QStringList>
 #include "dlg_update.h"
@@ -28,6 +29,13 @@
 Update::Update(QWidget *parent)
 {
     myparent = parent;
+    accessManager = new QNetworkAccessManager;
+    QObject::connect(accessManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(update_finished(QNetworkReply*)));
+}
+
+Update::~Update()
+{
+    accessManager->deleteLater();
 }
 
 void Update::check_update()
@@ -39,9 +47,7 @@ void Update::check_update()
         QString strSendVersion = settings.value("version").toString();
         QUrl url = QUrl(QString("http://simplechatclien.sourceforge.net/update.php?version=%1").arg(strSendVersion));
 
-        accessManager = new QNetworkAccessManager;
-        pReply = accessManager->get(QNetworkRequest(url));
-        QObject::connect(pReply, SIGNAL(finished()), this, SLOT(update_finished()));
+        accessManager->get(QNetworkRequest(url));
     }
 }
 
@@ -78,16 +84,15 @@ void Update::version(QString strAvailableVersion)
     }
 }
 
-void Update::update_finished()
+void Update::update_finished(QNetworkReply *reply)
 {
-    accessManager->deleteLater();
-    pReply->deleteLater();
+    reply->deleteLater();
 
     // if errors
-    if (pReply->error())
+    if (reply->error())
         return;
 
-    QString strSite = pReply->readAll();
+    QString strSite = reply->readAll();
 
     if (strSite.isEmpty() == false)
     {
