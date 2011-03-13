@@ -53,24 +53,18 @@ DlgChannelSettings::DlgChannelSettings(QWidget *parent, Network *param1) : QDial
     ui.pushButton_set_desc->setIcon(QIcon(":/images/oxygen/16x16/dialog-ok-apply.png"));
     ui.pushButton_set_password->setIcon(QIcon(":/images/oxygen/16x16/dialog-ok-apply.png"));
     ui.pushButton_set_limit->setIcon(QIcon(":/images/oxygen/16x16/dialog-ok-apply.png"));
-    ui.pushButton_op_add->setIcon(QIcon(":/images/oxygen/16x16/list-add.png"));
-    ui.pushButton_op_del->setIcon(QIcon(":/images/oxygen/16x16/list-remove.png"));
-    ui.pushButton_halfop_add->setIcon(QIcon(":/images/oxygen/16x16/list-add.png"));
-    ui.pushButton_halfop_del->setIcon(QIcon(":/images/oxygen/16x16/list-remove.png"));
-    ui.pushButton_ban_add->setIcon(QIcon(":/images/oxygen/16x16/list-add.png"));
-    ui.pushButton_ban_del->setIcon(QIcon(":/images/oxygen/16x16/list-remove.png"));
-    ui.pushButton_invite_add->setIcon(QIcon(":/images/oxygen/16x16/list-add.png"));
-    ui.pushButton_invite_del->setIcon(QIcon(":/images/oxygen/16x16/list-remove.png"));
+    ui.pushButton_permission_add->setIcon(QIcon(":/images/oxygen/16x16/list-add.png"));
+    ui.pushButton_permission_remove->setIcon(QIcon(":/images/oxygen/16x16/list-remove.png"));
     ui.buttonBox->button(QDialogButtonBox::Ok)->setIcon(QIcon(":/images/oxygen/16x16/dialog-ok.png"));
     ui.buttonBox->button(QDialogButtonBox::Cancel)->setIcon(QIcon(":/images/oxygen/16x16/dialog-cancel.png"));
 
     ui.tabWidget->setTabText(0, tr("General"));
     ui.tabWidget->setTabText(1, tr("Permissions"));
     ui.tabWidget->setTabText(2, tr("Statistics"));
-    ui.toolBox->setItemText(0, tr("Operators"));
-    ui.toolBox->setItemText(1, tr("Half-operators"));
-    ui.toolBox->setItemText(2, tr("Banned"));
-    ui.toolBox->setItemText(3, tr("Invited"));
+    ui.listWidget_permissions->insertItem(0, tr("Operators"));
+    ui.listWidget_permissions->insertItem(1, tr("Half-operators"));
+    ui.listWidget_permissions->insertItem(2, tr("Banned"));
+    ui.listWidget_permissions->insertItem(3, tr("Invited"));
 
     ui.label_channel->setText(tr("Channel:"));
     ui.label_owner->setText(tr("Owner:"));
@@ -108,14 +102,12 @@ DlgChannelSettings::DlgChannelSettings(QWidget *parent, Network *param1) : QDial
     ui.label_auditorium->setText(tr("Auditorium:"));
     ui.radioButton_auditorium_off->setText(tr("Off"));
     ui.radioButton_auditorium_on->setText(tr("On"));
-    ui.pushButton_op_add->setText(tr("Add"));
-    ui.pushButton_op_del->setText(tr("Remove"));
-    ui.pushButton_halfop_add->setText(tr("Add"));
-    ui.pushButton_halfop_del->setText(tr("Remove"));
-    ui.pushButton_ban_add->setText(tr("Add"));
-    ui.pushButton_ban_del->setText(tr("Remove"));
-    ui.pushButton_invite_add->setText(tr("Add"));
-    ui.pushButton_invite_del->setText(tr("Remove"));
+    ui.label_permission_op->setText(tr("Operators"));
+    ui.label_permission_halfop->setText(tr("Half-operators"));
+    ui.label_permission_ban->setText(tr("Banned"));
+    ui.label_permission_invite->setText(tr("Invited"));
+    ui.pushButton_permission_add->setText(tr("Add"));
+    ui.pushButton_permission_remove->setText(tr("Remove"));
     ui.groupBox_stats->setTitle(tr("Statistics"));
     ui.label_stats_lwords->setText(tr("Average per day spoken words:"));
     ui.label_stats_lfavourites->setText(tr("Channel added in favourites:"));
@@ -173,14 +165,9 @@ DlgChannelSettings::DlgChannelSettings(QWidget *parent, Network *param1) : QDial
     QObject::connect(ui.radioButton_auditorium_off, SIGNAL(clicked()), this, SLOT(auditorium_inactive()));
     QObject::connect(ui.radioButton_auditorium_on, SIGNAL(clicked()), this, SLOT(auditorium_active()));
 
-    QObject::connect(ui.pushButton_op_add, SIGNAL(clicked()), this, SLOT(button_op_add()));
-    QObject::connect(ui.pushButton_op_del, SIGNAL(clicked()), this, SLOT(button_op_del()));
-    QObject::connect(ui.pushButton_halfop_add, SIGNAL(clicked()), this, SLOT(button_halfop_add()));
-    QObject::connect(ui.pushButton_halfop_del, SIGNAL(clicked()), this, SLOT(button_halfop_del()));
-    QObject::connect(ui.pushButton_ban_add, SIGNAL(clicked()), this, SLOT(button_ban_add()));
-    QObject::connect(ui.pushButton_ban_del, SIGNAL(clicked()), this, SLOT(button_ban_del()));
-    QObject::connect(ui.pushButton_invite_add, SIGNAL(clicked()), this, SLOT(button_invite_add()));
-    QObject::connect(ui.pushButton_invite_del, SIGNAL(clicked()), this, SLOT(button_invite_del()));
+    QObject::connect(ui.pushButton_permission_add, SIGNAL(clicked()), this, SLOT(button_permission_add()));
+    QObject::connect(ui.pushButton_permission_remove, SIGNAL(clicked()), this, SLOT(button_permission_remove()));
+    QObject::connect(ui.listWidget_permissions, SIGNAL(clicked(QModelIndex)), this, SLOT(change_permission_list(QModelIndex)));
 
     QObject::connect(ui.buttonBox, SIGNAL(accepted()), this, SLOT(button_ok()));
     QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(button_cancel()));
@@ -463,49 +450,38 @@ void DlgChannelSettings::add_op(QString strCheckChannel, QString strNick)
 {
     if (strCheckChannel != strChannel) return; // not this channel
 
-    if (exist_item(strNick, ui.tableWidget_op) == false)
-    {
-        ui.tableWidget_op->insertRow(ui.tableWidget_op->rowCount());
-        ui.tableWidget_op->setItem(ui.tableWidget_op->rowCount()-1, 0, new QTableWidgetItem(strNick));
-    }
+    if (exist_item(strNick, ui.listWidget_op) == false)
+        ui.listWidget_op->insertItem(ui.listWidget_op->count(), strNick);
 }
 
 void DlgChannelSettings::add_halfop(QString strCheckChannel, QString strNick)
 {
     if (strCheckChannel != strChannel) return; // not this channel
 
-    if (exist_item(strNick, ui.tableWidget_halfop) == false)
-    {
-        ui.tableWidget_halfop->insertRow(ui.tableWidget_halfop->rowCount());
-        ui.tableWidget_halfop->setItem(ui.tableWidget_halfop->rowCount()-1, 0, new QTableWidgetItem(strNick));
-    }
+    if (exist_item(strNick, ui.listWidget_halfop) == false)
+        ui.listWidget_halfop->insertItem(ui.listWidget_halfop->count(), strNick);
 }
 
 void DlgChannelSettings::add_ban(QString strCheckChannel, QString strNick, QString strWho, QString strDT, QString strIPNick)
 {
     if (strCheckChannel != strChannel) return; // not this channel
 
-    if (exist_item(strNick, ui.tableWidget_ban) == false)
+    if (exist_item(strNick, ui.listWidget_ban) == false)
     {
-        ui.tableWidget_ban->insertRow(ui.tableWidget_ban->rowCount());
-        ui.tableWidget_ban->setItem(ui.tableWidget_ban->rowCount()-1, 0, new QTableWidgetItem(strNick));
-        ui.tableWidget_ban->setItem(ui.tableWidget_ban->rowCount()-1, 1, new QTableWidgetItem(strWho));
-        ui.tableWidget_ban->setItem(ui.tableWidget_ban->rowCount()-1, 2, new QTableWidgetItem(strDT));
-
+        QListWidgetItem *item = new QListWidgetItem();
         if (strIPNick.isEmpty() == true)
         {
-            ui.tableWidget_ban->setItem(ui.tableWidget_ban->rowCount()-1, 0, new QTableWidgetItem(strNick));
-            ui.tableWidget_ban->setItem(ui.tableWidget_ban->rowCount()-1, 3, new QTableWidgetItem(strIPNick));
+            item->setText(strNick);
+            item->setToolTip(QString("%1: %2 (%4)").arg(tr("Created by")).arg(strWho).arg(strDT));
         }
         else
         {
-            QTableWidgetItem *iIPNick = new QTableWidgetItem(strIPNick);
-            iIPNick->setTextColor(QColor("#ff0000")); // set color
-            iIPNick->setData(Qt::UserRole, strNick); // set original ban mask
-            iIPNick->setToolTip(QString(tr("IP Mask: %1").arg(strNick.remove("*!*@")))); // set tooltip
-
-            ui.tableWidget_ban->setItem(ui.tableWidget_ban->rowCount()-1, 0, iIPNick);
+            item->setText(strIPNick);
+            item->setTextColor(QColor("#ff0000")); // set color
+            item->setData(Qt::UserRole, strNick); // set original ban mask
+            item->setToolTip(QString("%1: %2 (%3) [%4]").arg(tr("Created by")).arg(strWho).arg(strDT).arg(tr("IP Mask: %1")).arg(strNick.remove("*!*@")));
         }
+        ui.listWidget_ban->insertItem(ui.listWidget_ban->count(), item);
     }
 }
 
@@ -513,12 +489,13 @@ void DlgChannelSettings::add_invite(QString strCheckChannel, QString strNick, QS
 {
     if (strCheckChannel != strChannel) return; // not this channel
 
-    if (exist_item(strNick, ui.tableWidget_invite) == false)
+    if (exist_item(strNick, ui.listWidget_invite) == false)
     {
-        ui.tableWidget_invite->insertRow(ui.tableWidget_invite->rowCount());
-        ui.tableWidget_invite->setItem(ui.tableWidget_invite->rowCount()-1, 0, new QTableWidgetItem(strNick));
-        ui.tableWidget_invite->setItem(ui.tableWidget_invite->rowCount()-1, 1, new QTableWidgetItem(strWho));
-        ui.tableWidget_invite->setItem(ui.tableWidget_invite->rowCount()-1, 2, new QTableWidgetItem(strDT));
+        QListWidgetItem *item = new QListWidgetItem();
+        item->setText(strNick);
+        item->setToolTip(QString("%1: %2 (%3)").arg(tr("Created by")).arg(strWho).arg(strDT));
+
+        ui.listWidget_invite->insertItem(ui.listWidget_invite->count(), item);
     }
 }
 
@@ -691,86 +668,27 @@ void DlgChannelSettings::auditorium_active()
     pNetwork->send(QString("CS INFO %1").arg(strChannel));
 }
 
-void DlgChannelSettings::button_op_add()
+void DlgChannelSettings::button_permission_add()
 {
+    int tab = ui.stackedWidget->currentIndex();
+    QString strNick;
+
+    QString strLabel;
+    if (tab == 0)
+        strLabel = tr("Add the super-operator:");
+    else if (tab == 1)
+        strLabel = tr("Add operator:");
+    else if (tab == 2)
+        strLabel = tr("Add ban:");
+    else if (tab == 3)
+        strLabel = tr("Add invitation:");
+
     bool ok;
-    QString strNick = QInputDialog::getText(this, tr("Changing privileges"), tr("Add super-operator:"), QLineEdit::Normal, QString::null, &ok);
+    QString strResult = QInputDialog::getText(this, tr("Changing privileges"), strLabel, QLineEdit::Normal, QString::null, &ok);
 
-    if ((ok == true) && (strNick.isEmpty() == false))
-        pNetwork->send(QString("CS OP %1 ADD %2").arg(strChannel).arg(strNick));
-
-    clear();
-    ui.label_channel_name->setText(strChannel);
-    pNetwork->send(QString("CS INFO %1").arg(strChannel));
-}
-
-void DlgChannelSettings::button_op_del()
-{
-    if (ui.tableWidget_op->selectedItems().isEmpty() == false)
+    if ((ok == true) && (strResult.isEmpty() == false))
     {
-        QString strRemoveNick = ui.tableWidget_op->selectedItems().at(0)->text();
-        pNetwork->send(QString("CS OP %1 DEL %2").arg(strChannel).arg(strRemoveNick));
-        pNetwork->send(QString("CS INFO %1").arg(strChannel));
-        clear();
-    }
-    else
-    {
-        bool ok;
-        QString strNick = QInputDialog::getText(this, tr("Changing privileges"), tr("Remove the super-operator:"), QLineEdit::Normal, QString::null, &ok);
-
-        if ((ok == true) && (strNick.isEmpty() == false))
-            pNetwork->send(QString("CS OP %1 DEL %2").arg(strChannel).arg(strNick));
-
-        clear();
-        ui.label_channel_name->setText(strChannel);
-        pNetwork->send(QString("CS INFO %1").arg(strChannel));
-    }
-}
-
-void DlgChannelSettings::button_halfop_add()
-{
-    bool ok;
-    QString strNick = QInputDialog::getText(this, tr("Changing privileges"), tr("Add operator:"), QLineEdit::Normal, QString::null, &ok);
-
-    if ((ok == true) && (strNick.isEmpty() == false))
-        pNetwork->send(QString("CS HALFOP %1 ADD %2").arg(strChannel).arg(strNick));
-
-    clear();
-    ui.label_channel_name->setText(strChannel);
-    pNetwork->send(QString("CS INFO %1").arg(strChannel));
-}
-
-void DlgChannelSettings::button_halfop_del()
-{
-    if (ui.tableWidget_halfop->selectedItems().isEmpty() == false)
-    {
-        QString strRemoveNick = ui.tableWidget_halfop->selectedItems().at(0)->text();
-        pNetwork->send(QString("CS HALFOP %1 DEL %2").arg(strChannel).arg(strRemoveNick));
-        pNetwork->send(QString("CS INFO %1").arg(strChannel));
-        clear();
-    }
-    else
-    {
-        bool ok;
-        QString strNick = QInputDialog::getText(this, tr("Changing privileges"), tr("Remove operator:"), QLineEdit::Normal, QString::null, &ok);
-
-        if ((ok == true) && (strNick.isEmpty() == false))
-            pNetwork->send(QString("CS HALFOP %1 DEL %2").arg(strChannel).arg(strNick));
-
-        clear();
-        ui.label_channel_name->setText(strChannel);
-        pNetwork->send(QString("CS INFO %1").arg(strChannel));
-    }
-}
-
-void DlgChannelSettings::button_ban_add()
-{
-    bool ok;
-    QString strNick = QInputDialog::getText(this, tr("Changing privileges"), tr("Add ban:"), QLineEdit::Normal, QString::null, &ok);
-
-    if ((ok == true) && (strNick.isEmpty() == false))
-    {
-        if (strNick.contains("*") == true)
+        if ((tab == 2) && (strResult.contains("*") == true))
         {
             QMessageBox msgBox;
             msgBox.setIcon(QMessageBox::Warning);
@@ -781,82 +699,119 @@ void DlgChannelSettings::button_ban_add()
             int iResult = msgBox.exec();
 
             if (iResult == QMessageBox::Ok)
-                pNetwork->send(QString("CS BAN %1 ADD %2").arg(strChannel).arg(strNick));
+                strNick = strResult;
         }
         else
-            pNetwork->send(QString("CS BAN %1 ADD %2").arg(strChannel).arg(strNick));
+            strNick = strResult;
     }
 
-    clear();
-    ui.label_channel_name->setText(strChannel);
-    pNetwork->send(QString("CS INFO %1").arg(strChannel));
-}
+    // if empty
+    if (strNick.isEmpty() == true)
+        return;
 
-void DlgChannelSettings::button_ban_del()
-{
-    if (ui.tableWidget_ban->selectedItems().isEmpty() == false)
-    {
-        bool bIPBan = false;
-        if (ui.tableWidget_ban->selectedItems().at(0)->data(Qt::UserRole).isNull() == false)
-            bIPBan = true;
-
-        QString strRemoveNick = ui.tableWidget_ban->selectedItems().at(0)->text();
-        if (bIPBan == true)
-            pNetwork->send(QString("CS BANIP %1 DEL %2").arg(strChannel).arg(strRemoveNick));
-        else
-            pNetwork->send(QString("CS BAN %1 DEL %2").arg(strChannel).arg(strRemoveNick));
-
-        pNetwork->send(QString("CS INFO %1").arg(strChannel));
-        clear();
-    }
-    else
-    {
-        bool ok;
-        QString strNick = QInputDialog::getText(this, tr("Changing privileges"), tr("Remove ban:"), QLineEdit::Normal, QString::null, &ok);
-
-        if ((ok == true) && (strNick.isEmpty() == false))
-            pNetwork->send(QString("CS BAN %1 DEL %2").arg(strChannel).arg(strNick));
-
-        clear();
-        ui.label_channel_name->setText(strChannel);
-        pNetwork->send(QString("CS INFO %1").arg(strChannel));
-    }
-}
-
-void DlgChannelSettings::button_invite_add()
-{
-    bool ok;
-    QString strNick = QInputDialog::getText(this, tr("Changing privileges"), tr("Add invitation:"), QLineEdit::Normal, QString::null, &ok);
-
-    if ((ok == true) && (strNick.isEmpty() == false))
+    // add permission
+    if (tab == 0)
+        pNetwork->send(QString("CS OP %1 ADD %2").arg(strChannel).arg(strNick));
+    else if (tab == 1)
+        pNetwork->send(QString("CS HALFOP %1 ADD %2").arg(strChannel).arg(strNick));
+    else if (tab == 2)
+        pNetwork->send(QString("CS BAN %1 ADD %2").arg(strChannel).arg(strNick));
+    else if (tab == 3)
         pNetwork->send(QString("CS INVITE %1 ADD %2").arg(strChannel).arg(strNick));
 
+    // clear
     clear();
     ui.label_channel_name->setText(strChannel);
     pNetwork->send(QString("CS INFO %1").arg(strChannel));
 }
 
-void DlgChannelSettings::button_invite_del()
+void DlgChannelSettings::button_permission_remove()
 {
-    if (ui.tableWidget_invite->selectedItems().isEmpty() == false)
+    int tab = ui.stackedWidget->currentIndex();
+    QList<QListWidgetItem*> lRemoveNicks;
+
+    if (tab == 0)
     {
-        QString strRemoveNick = ui.tableWidget_invite->selectedItems().at(0)->text();
-        pNetwork->send(QString("CS INVITE %1 DEL %2").arg(strChannel).arg(strRemoveNick));
-        pNetwork->send(QString("CS INFO %1").arg(strChannel));
-        clear();
+        if (ui.listWidget_op->selectedItems().isEmpty() == false)
+            lRemoveNicks = ui.listWidget_op->selectedItems();
     }
-    else
+    else if (tab == 1)
     {
+        if (ui.listWidget_halfop->selectedItems().isEmpty() == false)
+            lRemoveNicks = ui.listWidget_halfop->selectedItems();
+    }
+    else if (tab == 2)
+    {
+        if (ui.listWidget_ban->selectedItems().isEmpty() == false)
+            lRemoveNicks = ui.listWidget_ban->selectedItems();
+    }
+    else if (tab == 3)
+    {
+        if (ui.listWidget_invite->selectedItems().isEmpty() == false)
+            lRemoveNicks = ui.listWidget_invite->selectedItems();
+    }
+
+    // get nick if empty
+    if (lRemoveNicks.size() == 0)
+    {
+        QString strLabel;
+        if (tab == 0)
+            strLabel = tr("Remove the super-operator:");
+        else if (tab == 1)
+            strLabel = tr("Remove operator:");
+        else if (tab == 2)
+            strLabel = tr("Remove ban:");
+        else if (tab == 3)
+            strLabel = tr("Delete invitation:");
+
         bool ok;
-        QString strNick = QInputDialog::getText(this, tr("Changing privileges"), tr("Delete invitation:"), QLineEdit::Normal, QString::null, &ok);
+        QString strNick = QInputDialog::getText(this, tr("Changing privileges"), strLabel, QLineEdit::Normal, QString::null, &ok);
 
         if ((ok == true) && (strNick.isEmpty() == false))
-            pNetwork->send(QString("CS INVITE %1 DEL %2").arg(strChannel).arg(strNick));
-
-        clear();
-        ui.label_channel_name->setText(strChannel);
-        pNetwork->send(QString("CS INFO %1").arg(strChannel));
+            lRemoveNicks.append(new QListWidgetItem(strNick));
     }
+
+    // if empty
+    if (lRemoveNicks.size() == 0)
+        return;
+
+    // remove permission
+    if (tab == 0)
+    {
+        for (int i = 0; i < lRemoveNicks.size(); i++)
+            pNetwork->send(QString("CS OP %1 DEL %2").arg(strChannel).arg(lRemoveNicks.at(i)->text()));
+    }
+    else if (tab == 1)
+    {
+        for (int i = 0; i < lRemoveNicks.size(); i++)
+            pNetwork->send(QString("CS HALFOP %1 DEL %2").arg(strChannel).arg(lRemoveNicks.at(i)->text()));
+    }
+    else if (tab == 2)
+    {
+        for (int i = 0; i < lRemoveNicks.size(); i++)
+        {
+            if (lRemoveNicks.at(i)->data(Qt::UserRole).isNull() == false)
+                pNetwork->send(QString("CS BANIP %1 DEL %2").arg(strChannel).arg(lRemoveNicks.at(i)->text()));
+            else
+                pNetwork->send(QString("CS BAN %1 DEL %2").arg(strChannel).arg(lRemoveNicks.at(i)->text()));
+        }
+    }
+    else if (tab == 3)
+    {
+        for (int i = 0; i < lRemoveNicks.size(); i++)
+            pNetwork->send(QString("CS INVITE %1 DEL %2").arg(strChannel).arg(lRemoveNicks.at(i)->text()));
+    }
+
+    // clear
+    clear();
+    ui.label_channel_name->setText(strChannel);
+    pNetwork->send(QString("CS INFO %1").arg(strChannel));
+}
+
+void DlgChannelSettings::change_permission_list(QModelIndex index)
+{
+    int row = index.row();
+    ui.stackedWidget->setCurrentIndex(row);
 }
 
 void DlgChannelSettings::button_ok()
@@ -873,48 +828,22 @@ void DlgChannelSettings::button_cancel()
     this->hide();
 }
 
-bool DlgChannelSettings::exist_item(QString strItem, QTableWidget *list)
+bool DlgChannelSettings::exist_item(QString find, QListWidget *list)
 {
-    for (int i = 0; i < list->rowCount(); i++)
-    {
-        if (list->item(0, i)->text() == strItem)
-            return true;
-    }
-    return false;
+    QList<QListWidgetItem *> items = list->findItems(find, Qt::MatchExactly);
+    if (items.size() != 0)
+        return true;
+    else
+        return false;
 }
 
 void DlgChannelSettings::clear()
 {
-    // switch tab
-    ui.tabWidget->setCurrentIndex(0);
-
     // clear
-    ui.tableWidget_op->clear();
-    ui.tableWidget_halfop->clear();
-    ui.tableWidget_ban->clear();
-    ui.tableWidget_invite->clear();
-
-    ui.tableWidget_op->setRowCount(0);
-    ui.tableWidget_halfop->setRowCount(0);
-    ui.tableWidget_ban->setRowCount(0);
-    ui.tableWidget_invite->setRowCount(0);
-
-    QStringList strlLabels;
-    strlLabels << tr("Nick");
-
-    QStringList strlLabels2;
-    strlLabels2 << tr("Nick") << tr("Created by") << tr("Date/Time");
-
-    ui.tableWidget_op->setHorizontalHeaderLabels(strlLabels);
-    ui.tableWidget_halfop->setHorizontalHeaderLabels(strlLabels);
-    ui.tableWidget_ban->setHorizontalHeaderLabels(strlLabels2);
-    ui.tableWidget_invite->setHorizontalHeaderLabels(strlLabels2);
-
-    // prevents crash!
-    ui.tableWidget_op->setSortingEnabled(false);
-    ui.tableWidget_halfop->setSortingEnabled(false);
-    ui.tableWidget_ban->setSortingEnabled(false);
-    ui.tableWidget_invite->setSortingEnabled(false);
+    ui.listWidget_op->clear();
+    ui.listWidget_halfop->clear();
+    ui.listWidget_ban->clear();
+    ui.listWidget_invite->clear();
 
     ui.lineEdit_email->clear();
     ui.lineEdit_website->clear();
@@ -949,6 +878,10 @@ void DlgChannelSettings::showEvent(QShowEvent *event)
     event->accept();
     // center screen
     move(QApplication::desktop()->screen()->rect().center() - rect().center());
+
+    // switch tab
+    ui.tabWidget->setCurrentIndex(0);
+    ui.stackedWidget->setCurrentIndex(0);
 
     // clear
     clear();

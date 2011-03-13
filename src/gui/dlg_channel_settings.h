@@ -50,7 +50,7 @@ private:
     QString strChannel;
     SimpleStatsWidget *simpleStatsWidget;
 
-    bool exist_item(QString, QTableWidget *);
+    bool exist_item(QString, QListWidget *); // for permissions
     void clear();
 
 protected:
@@ -77,14 +77,11 @@ private slots:
     void moderated_active();
     void auditorium_inactive();
     void auditorium_active();
-    void button_op_add();
-    void button_op_del();
-    void button_halfop_add();
-    void button_halfop_del();
-    void button_ban_add();
-    void button_ban_del();
-    void button_invite_add();
-    void button_invite_del();
+
+    void button_permission_add();
+    void button_permission_remove();
+    void change_permission_list(QModelIndex);
+
     void button_ok();
     void button_cancel();
 };

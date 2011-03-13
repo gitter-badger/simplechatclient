@@ -117,7 +117,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     toolBar->addAction(channel_listAct);
     toolBar->addAction(channel_homesAct);
     toolBar->addAction(friendsAct);
-    toolBar->addAction(channel_favouritesAct);
 
     // awaylog
     toolBar->addAction(awaylogAct);
@@ -248,7 +247,7 @@ void MainWindow::create_settings()
     // default settings
     QSettings settings;
     settings.clear();
-    settings.setValue("version", "1.0.10.749");
+    settings.setValue("version", "1.0.10.750");
     settings.setValue("debug", "off");
     settings.setValue("logged", "off");
     settings.setValue("busy", "off");

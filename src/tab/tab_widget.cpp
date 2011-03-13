@@ -132,6 +132,8 @@ TabWidget::TabWidget(QWidget *parent, Network *param1, QString param2, Notify *p
             topLeftWidget->hide();
             topWidget->hide();
         }
+        else
+            mainLayout->addWidget(topWidget);
 
         mainLayout->addWidget(mainTextEdit);
         mainWidget->setLayout(mainLayout);
