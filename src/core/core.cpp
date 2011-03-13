@@ -123,6 +123,18 @@ void Core::init(QMainWindow *parent, QString param1, int param2, Notify *param3,
     myparent->addDockWidget(Qt::RightDockWidgetArea, rightDockWidget);
     viewMenu->addAction(rightDockWidget->toggleViewAction());
 
+    // toolbar
+    toolBar->addSeparator();
+    toolBar->addAction(lagAct);
+
+    // hide on classic
+    QSettings settings;
+    if (settings.value("style") == "classic")
+    {
+        toolBar->hide();
+        inputLineDockWidget->hide_toolwidget();
+    }
+
     // hide nicklist and toolwidget on status
     rightDockWidget->hide();
 
@@ -131,10 +143,6 @@ void Core::init(QMainWindow *parent, QString param1, int param2, Notify *param3,
     pTabC->show_msg("Status", "%Fi:courier%"+tr("Welcome to the Simple Chat Client")+" %Ihehe%", 0);
     pTabC->show_msg("Status", "%Fb:courier%%Cff6500%"+tr("Official website")+" SCC%C3030ce%: http://simplechatclien.sourceforge.net/ %Izaskoczony%", 0);
     pTabC->show_msg("Status", "%Fb:courier%%C008100%"+tr("Official Forum")+" SCC%C3030ce%: http://simplechatclien.sourceforge.net/forum/ %Ioczko%", 0);
-
-    // toolbar
-    toolBar->addSeparator();
-    toolBar->addAction(lagAct);
 
     // create signals
     create_signals();
@@ -433,6 +441,10 @@ void Core::current_tab_changed(int index)
         rightDockWidget->hide();
     else
         rightDockWidget->show();
+
+    // hide on classic
+    if (settings.value("style") == "classic")
+        rightDockWidget->hide();
 
     // hide/show settings on priv
     if (strChannel[0] == '^')

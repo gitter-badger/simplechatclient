@@ -123,11 +123,16 @@ TabWidget::TabWidget(QWidget *parent, Network *param1, QString param2, Notify *p
     {
         if (settings.value("style") == "classic")
         {
+            avatar->hide();
+            topic->hide();
+            topicDetails->hide();
+            websiteLink->hide();
             detailsWidget->hide();
+            topRightWidget->hide();
             topLeftWidget->hide();
+            topWidget->hide();
         }
 
-        mainLayout->addWidget(topWidget);
         mainLayout->addWidget(mainTextEdit);
         mainWidget->setLayout(mainLayout);
     }
