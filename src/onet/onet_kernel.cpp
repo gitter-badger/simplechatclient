@@ -555,35 +555,29 @@ void OnetKernel::raw_pong()
 
     // get current time
     QDateTime dt = QDateTime::currentDateTime();
-    qint64 iCurrentTime1 = (qint64)dt.toTime_t(); // seconds that have passed since 1970
-    qint64 iCurrentTime2 = (dt.toString("zzz")).toLongLong(); // miliseconds
+    int iCurrent1 = (int)dt.toTime_t(); // seconds that have passed since 1970
+    int iCurrent2 = (dt.toString("zzz")).toInt(); // miliseconds
 
-    QString strTime = QString::number(iTime1)+QString::number(iTime2);
-    qint64 iTime = strTime.toLongLong();
-
-    QString strCurrent = QString::number(iCurrentTime1)+QString::number(iCurrentTime2);
-    qint64 iCurrent = strCurrent.toLongLong();
-
-    // calculate lag
-    qint64 iLag = iCurrent-iTime;
+    // calculate
+    int iCTime1 = iCurrent1-iTime1;
+    int iCTime2 = iCurrent2-iTime2;
 
     // if not correct
-    if ((iLag < 0) || (iLag > 10000000))
+    if (((iCTime1 < 0) || (iCTime1 > 301)) || ((iCTime2 < 0) || (iCTime1 > 1001)))
         return;
 
-    QString strLag;
-    strLag = QString::number(iLag);
+    QString sec = QString::number(iCTime1);
+    QString msec = QString::number(iCTime2);
 
     // display lag
-    if (strLag.length() > 3)
-        strLag = strLag.mid(0,strLag.length()-3)+"."+strLag.right(3);
-    else if (strLag.length() == 3)
-        strLag = "0."+strLag;
-    else if (strLag.length() == 2)
-        strLag = "0.0"+strLag;
-    else if (strLag.length() == 1)
-        strLag = "0.00"+strLag;
+    if (msec.size() > 3)
+        msec = msec.left(3);
+    else if (msec.size() == 2)
+        msec = "0"+msec;
+    else if (msec.size() == 1)
+        msec = "00"+msec;
 
+    QString strLag = sec+"."+msec;
     strLag = "Lag: "+strLag+"s";
     emit set_lag(strLag);
 }
@@ -1413,9 +1407,9 @@ void OnetKernel::raw_100n()
     QDateTime dt = QDateTime::fromTime_t(strTime.toInt());
     QString strDateTime = dt.toString("hh:mm");
 
-    qint64 iTime = strTime.toLongLong();
+    int iTime = strTime.toInt();
     QDateTime dta = QDateTime::currentDateTime();
-    qint64 iCurrentTime = (qint64)dta.toTime_t();
+    int iCurrentTime = (int)dta.toTime_t();
 
     QString strMessage;
     for (int i = 6; i < strDataList.size(); i++) { if (i != 6) strMessage += " "; strMessage += strDataList[i]; }

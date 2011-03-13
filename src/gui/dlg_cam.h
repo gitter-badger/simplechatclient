@@ -53,7 +53,7 @@ private:
 
     bool bFirstSendPUT;
     bool bReadySendPUT;
-    qint64 iLastSendPUT;
+    int iLastSendPUT;
     QList <QString> lLastCommand;
     QMap <QString, QString> mNickChannels;
 
@@ -125,8 +125,8 @@ public:
     DlgCamNetwork(Network *, QTcpSocket *);
     inline void set_bytes_need(int i) { iBytes_need = i; }
     inline void set_btext(bool b) { bText = b; }
-    inline void set_last_keep_alive(qint64 i) { iLastKeepAlive = i; }
-    inline qint64 get_last_keep_alive() { return iLastKeepAlive; }
+    inline void set_last_keep_alive(int i) { iLastKeepAlive = i; }
+    inline int get_last_keep_alive() { return iLastKeepAlive; }
     inline void set_reconnect(bool b) { bReconnecting = b; }
 
     void clear_all();
@@ -145,7 +145,7 @@ private:
     int iBytes_recv;
     QTimer *timerPingPong;
     int iLastActive;
-    qint64 iLastKeepAlive;
+    int iLastKeepAlive;
     bool bText;
     bool bReconnecting;
 

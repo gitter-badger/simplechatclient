@@ -634,7 +634,7 @@ void DlgCam::text_kernel(QString strData)
         else if (strLastCommand == "PUT2")
         {
             QDateTime dt = QDateTime::currentDateTime();
-            qint64 iCurrentTime = (qint64)dt.toTime_t(); // seconds that have passed since 1970
+            int iCurrentTime = (int)dt.toTime_t(); // seconds that have passed since 1970
 
             bReadySendPUT = true;
             iLastSendPUT = iCurrentTime;
@@ -660,7 +660,7 @@ void DlgCam::text_kernel(QString strData)
                 if ((strNick.isEmpty() == false) && (this->isHidden() == false))
                 {
                     QDateTime dt = QDateTime::currentDateTime();
-                    qint64 iCurrentTime = (qint64)dt.toTime_t(); // seconds that have passed since 1970
+                    int iCurrentTime = (int)dt.toTime_t(); // seconds that have passed since 1970
                     camNetwork->set_last_keep_alive(iCurrentTime);
 
                     camNetwork->network_send(QString("KEEPALIVE_BIG %1").arg(strNick));
@@ -759,7 +759,7 @@ void DlgCam::text_kernel(QString strData)
 
         // check keepalive
         QDateTime dt = QDateTime::currentDateTime();
-        qint64 iCurrentTime = (qint64)dt.toTime_t(); // seconds that have passed since 1970
+        int iCurrentTime = (int)dt.toTime_t(); // seconds that have passed since 1970
 
         if (iCurrentTime - camNetwork->get_last_keep_alive() > 30) // 30 sec
         {
@@ -1534,7 +1534,7 @@ void DlgCam::read_video()
         bPackage.append(bData2);
 
         QDateTime dt = QDateTime::currentDateTime();
-        qint64 iCurrentTime = (qint64)dt.toTime_t(); // seconds that have passed since 1970
+        int iCurrentTime = (int)dt.toTime_t(); // seconds that have passed since 1970
 
         if (bFirstSendPUT == false)
         {
@@ -1705,7 +1705,7 @@ void DlgCamNetwork::network_sendb(QByteArray qbaData)
 {
     if ((socket->isValid()) && (socket->state() == QAbstractSocket::ConnectedState) && (socket->isWritable() == true))
     {
-        qint64 ret = socket->write(qbaData);
+        int ret = socket->write(qbaData);
         if (ret == -1)
         {
             if (socket->state() == QAbstractSocket::ConnectedState)
