@@ -22,6 +22,7 @@
 #include <QDesktopWidget>
 #include <QInputDialog>
 #include <QMessageBox>
+#include <QSettings>
 #include "dlg_email.h"
 #include "network.h"
 #include "dlg_channel_settings.h"
@@ -59,21 +60,27 @@ DlgChannelSettings::DlgChannelSettings(QWidget *parent, Network *param1) : QDial
     ui.buttonBox->button(QDialogButtonBox::Cancel)->setIcon(QIcon(":/images/oxygen/16x16/dialog-cancel.png"));
 
     ui.tabWidget->setTabText(0, tr("General"));
-    ui.tabWidget->setTabText(1, tr("Permissions"));
-    ui.tabWidget->setTabText(2, tr("Statistics"));
+    ui.tabWidget->setTabText(1, tr("Basic"));
+    ui.tabWidget->setTabText(2, tr("Advanced"));
+    ui.tabWidget->setTabText(3, tr("Permissions"));
+    ui.tabWidget->setTabText(4, tr("Statistics"));
     ui.listWidget_permissions->insertItem(0, tr("Operators"));
     ui.listWidget_permissions->insertItem(1, tr("Half-operators"));
     ui.listWidget_permissions->insertItem(2, tr("Banned"));
     ui.listWidget_permissions->insertItem(3, tr("Invited"));
 
-    ui.label_channel->setText(tr("Channel:"));
+    // general
+    ui.label_created1->setText(tr("Created:"));
+    ui.label_website1->setText(tr("Website:"));
+    ui.label_topic1->setText(tr("Topic:"));
+    ui.label_description1->setText(tr("Description:"));
+    ui.label_status1->setText(tr("Status:"));
+    ui.label_category1->setText(tr("Category:"));
+    ui.label_guardian1->setText(tr("Guardian:"));
+    ui.label_moderation1->setText(tr("Moderation:"));
+
+    // basic
     ui.label_owner->setText(tr("Owner:"));
-    ui.pushButton_transfer->setText(tr("Transfer"));
-    ui.pushButton_remove_channel->setText(tr("Destroy"));
-    ui.label_email->setText(tr("Email:"));
-    ui.pushButton_set_email->setText(tr("Apply"));
-    ui.label_created->setText(tr("Created:"));
-    ui.label_datetime->setText(tr("Date/Time"));
     ui.label_website->setText(tr("Website:"));
     ui.pushButton_set_website->setText(tr("Apply"));
     ui.label_topic->setText(tr("Topic:"));
@@ -86,28 +93,44 @@ DlgChannelSettings::DlgChannelSettings(QWidget *parent, Network *param1) : QDial
     ui.radioButton_status_pub->setText(tr("Public"));
     ui.radioButton_status_priv->setText(tr("Private"));
     ui.label_category->setText(tr("Category:"));
+    ui.comboBox_category->setItemText(0, tr("Teen"));
+    ui.comboBox_category->setItemText(1, tr("Common"));
+    ui.comboBox_category->setItemText(2, tr("Erotic"));
+    ui.comboBox_category->setItemText(3, tr("Thematic"));
+    ui.comboBox_category->setItemText(4, tr("Regional"));
     ui.label_guardian->setText(tr("Guardian:"));
     ui.radioButton_guardian_off->setText(tr("Inactive"));
     ui.radioButton_guardian_on->setText(tr("Active"));
     ui.comboBox_guardian_level->setItemText(0, tr("Level 1"));
     ui.comboBox_guardian_level->setItemText(1, tr("Level 2"));
     ui.comboBox_guardian_level->setItemText(2, tr("Level 3"));
+    ui.label_moderation->setText(tr("Moderation:"));
+    ui.radioButton_moderation_off->setText(tr("Off"));
+    ui.radioButton_moderation_on->setText(tr("On"));
+
+    // advanced
+    ui.label_channel->setText(tr("Channel:"));
+    ui.pushButton_transfer->setText(tr("Transfer"));
+    ui.pushButton_remove_channel->setText(tr("Destroy"));
+    ui.label_email->setText(tr("Email:"));
+    ui.pushButton_set_email->setText(tr("Apply"));
     ui.label_password->setText(tr("Password:"));
     ui.pushButton_set_password->setText(tr("Apply"));
     ui.label_limit->setText(tr("Limit:"));
     ui.pushButton_set_limit->setText(tr("Apply"));
-    ui.label_moderation->setText(tr("Moderation:"));
-    ui.radioButton_moderation_off->setText(tr("Off"));
-    ui.radioButton_moderation_on->setText(tr("On"));
     ui.label_auditorium->setText(tr("Auditorium:"));
     ui.radioButton_auditorium_off->setText(tr("Off"));
     ui.radioButton_auditorium_on->setText(tr("On"));
+
+    // permissions
     ui.label_permission_op->setText(tr("Operators"));
     ui.label_permission_halfop->setText(tr("Half-operators"));
     ui.label_permission_ban->setText(tr("Banned"));
     ui.label_permission_invite->setText(tr("Invited"));
     ui.pushButton_permission_add->setText(tr("Add"));
     ui.pushButton_permission_remove->setText(tr("Remove"));
+
+    // statistics
     ui.groupBox_stats->setTitle(tr("Statistics"));
     ui.label_stats_lwords->setText(tr("Average per day spoken words:"));
     ui.label_stats_lfavourites->setText(tr("Channel added in favourites:"));
@@ -199,7 +222,7 @@ void DlgChannelSettings::set_data(QString strCheckChannel, QMap<QString, QString
             // label created date/time
             QDateTime dt = QDateTime::fromTime_t(strValue.toInt());
             QString strDT = dt.toString("dd/MM/yyyy hh:mm:ss");
-            ui.label_datetime->setText(strDT);
+            ui.label_general_datetime->setText(strDT);
 
             // stats
             int iCreatedDate = strValue.toInt();
@@ -217,22 +240,43 @@ void DlgChannelSettings::set_data(QString strCheckChannel, QMap<QString, QString
         else if (strKey == "private")
         {
             if (strValue.toInt() == 1)
+            {
+                ui.label_general_status->setText(tr("Private"));
                 ui.radioButton_status_priv->setChecked(true);
+            }
             else if (strValue.toInt() == 0)
+            {
+                ui.label_general_status->setText(tr("Public"));
                 ui.radioButton_status_pub->setChecked(true);
+            }
         }
         else if (strKey == "catMajor")
         {
             if (strValue.toInt() == 1) // teen
+            {
+                ui.label_general_category->setText(tr("Teen"));
                 ui.comboBox_category->setCurrentIndex(0);
+            }
             else if (strValue.toInt() == 2) // towarzyskie
+            {
+                ui.label_general_category->setText(tr("Common"));
                 ui.comboBox_category->setCurrentIndex(1);
+            }
             else if (strValue.toInt() == 3) // erotyczne
+            {
+                ui.label_general_category->setText(tr("Erotic"));
                 ui.comboBox_category->setCurrentIndex(2);
+            }
             else if (strValue.toInt() == 4) // tematyczne
+            {
+                ui.label_general_category->setText(tr("Thematic"));
                 ui.comboBox_category->setCurrentIndex(3);
+            }
             else if (strValue.toInt() == 5) // regionalne
+            {
+                ui.label_general_category->setText(tr("Regional"));
                 ui.comboBox_category->setCurrentIndex(4);
+            }
             else
                 ui.comboBox_category->setCurrentIndex(-1);
         }
@@ -240,21 +284,25 @@ void DlgChannelSettings::set_data(QString strCheckChannel, QMap<QString, QString
         {
             if (strValue.toInt() == 0)
             {
+                ui.label_general_guardian->setText(tr("Inactive"));
                 ui.radioButton_guardian_off->setChecked(true);
                 ui.comboBox_guardian_level->setCurrentIndex(-1);
             }
             else if (strValue.toInt() == 1)
             {
+                ui.label_general_guardian->setText(QString("%1, %2").arg(tr("Active")).arg(tr("Level 1")));
                 ui.radioButton_guardian_on->setChecked(true);
                 ui.comboBox_guardian_level->setCurrentIndex(0);
             }
             else if (strValue.toInt() == 2)
             {
+                ui.label_general_guardian->setText(QString("%1, %2").arg(tr("Active")).arg(tr("Level 2")));
                 ui.radioButton_guardian_on->setChecked(true);
                 ui.comboBox_guardian_level->setCurrentIndex(1);
             }
             else if (strValue.toInt() == 3)
             {
+                ui.label_general_guardian->setText(QString("%1, %2").arg(tr("Active")).arg(tr("Level 3")));
                 ui.radioButton_guardian_on->setChecked(true);
                 ui.comboBox_guardian_level->setCurrentIndex(2);
             }
@@ -262,12 +310,20 @@ void DlgChannelSettings::set_data(QString strCheckChannel, QMap<QString, QString
         else if (strKey == "moderated")
         {
             if (strValue.toInt() == 0)
+            {
+                ui.label_general_moderation->setText(tr("Off"));
                 ui.radioButton_moderation_off->setChecked(true);
+            }
             else if (strValue.toInt() == 1)
+            {
+                ui.label_general_moderation->setText(tr("On"));
                 ui.radioButton_moderation_on->setChecked(true);
+            }
         }
         else if (strKey == "www")
         {
+            if (strValue.isEmpty() == false)
+                ui.label_general_website->setText(QString("<a href=\"%1\">%1</a>").arg(strValue));
             ui.lineEdit_website->setText(strValue);
         }
         else if (strKey == "password")
@@ -330,6 +386,13 @@ void DlgChannelSettings::set_stats_data(QString strCheckChannel, QMap<QString, Q
             ui.label_stats_favourites->setText(strValue);
         }
     }
+}
+
+void DlgChannelSettings::enable_tabs()
+{
+    ui.tabWidget->setTabEnabled(1, true);
+    ui.tabWidget->setTabEnabled(2, true);
+    ui.tabWidget->setTabEnabled(3, true);
 }
 
 void DlgChannelSettings::set_topic(QString strCheckChannel, QString strTopic)
@@ -425,6 +488,14 @@ void DlgChannelSettings::set_topic(QString strCheckChannel, QString strTopic)
     if (ui.comboBox_font->currentIndex() == -1)
         ui.comboBox_font->setCurrentIndex(2);
 
+    // set general topic
+    if (strTopic.isEmpty() == false)
+    {
+        ui.lineEdit_general_topic->setText(strTopic);
+        ui.lineEdit_general_topic->setCursorPosition(0);
+        ui.lineEdit_general_topic->setToolTip(strTopic);
+    }
+
     // set topic
     ui.plainTextEdit_topic->setPlainText(strTopic);
 }
@@ -437,12 +508,32 @@ void DlgChannelSettings::set_owner(QString strCheckChannel, QString strNick)
     ui.label_owner_nick->show();
 
     ui.label_owner_nick->setText(strNick);
+
+    // enable tabs
+    QSettings settings;
+    QString strMe = settings.value("nick").toString();
+    if (strNick == strMe)
+        enable_tabs();
 }
 
 void DlgChannelSettings::set_description(QString strCheckChannel, QString strDescription)
 {
     if (strCheckChannel != strChannel) return; // not this channel
 
+    // set general description
+    if (strDescription.isEmpty() == false)
+    {
+        QString strDescriptionText = strDescription;
+        strDescriptionText.replace(QRegExp("%C([a-zA-Z0-9]+)%"),"");
+        strDescriptionText.replace(QRegExp("%F([a-zA-Z0-9:]+)%"),"");
+        strDescriptionText.replace(QRegExp("%I([a-zA-Z0-9_-]+)%"),"//\\1");
+
+        ui.lineEdit_general_description->setText(strDescriptionText);
+        ui.lineEdit_general_description->setCursorPosition(0);
+        ui.lineEdit_general_description->setToolTip(strDescriptionText);
+    }
+
+    // set description
     ui.plainTextEdit_desc->setPlainText(strDescription);
 }
 
@@ -452,6 +543,12 @@ void DlgChannelSettings::add_op(QString strCheckChannel, QString strNick)
 
     if (exist_item(strNick, ui.listWidget_op) == false)
         ui.listWidget_op->insertItem(ui.listWidget_op->count(), strNick);
+
+    // enable tabs
+    QSettings settings;
+    QString strMe = settings.value("nick").toString();
+    if (strNick == strMe)
+        enable_tabs();
 }
 
 void DlgChannelSettings::add_halfop(QString strCheckChannel, QString strNick)
@@ -460,6 +557,12 @@ void DlgChannelSettings::add_halfop(QString strCheckChannel, QString strNick)
 
     if (exist_item(strNick, ui.listWidget_halfop) == false)
         ui.listWidget_halfop->insertItem(ui.listWidget_halfop->count(), strNick);
+
+    // enable tabs
+    QSettings settings;
+    QString strMe = settings.value("nick").toString();
+    if (strNick == strMe)
+        enable_tabs();
 }
 
 void DlgChannelSettings::add_ban(QString strCheckChannel, QString strNick, QString strWho, QString strDT, QString strIPNick)
@@ -839,35 +942,50 @@ bool DlgChannelSettings::exist_item(QString find, QListWidget *list)
 
 void DlgChannelSettings::clear()
 {
-    // clear
-    ui.listWidget_op->clear();
-    ui.listWidget_halfop->clear();
-    ui.listWidget_ban->clear();
-    ui.listWidget_invite->clear();
+    ui.label_channel_name->clear();
 
-    ui.lineEdit_email->clear();
+    // general
+    ui.label_general_datetime->setText("-");
+    ui.label_general_website->setText("-");
+    ui.lineEdit_general_topic->setText("-");
+    ui.lineEdit_general_description->setText("-");
+    ui.label_general_status->setText("-");
+    ui.label_general_category->setText("-");
+    ui.label_general_guardian->setText("-");
+    ui.label_general_moderation->setText("-");
+
+    // basic
+    ui.label_owner_nick->clear();
     ui.lineEdit_website->clear();
-    ui.lineEdit_password->clear();
     ui.plainTextEdit_topic->clear();
     ui.pushButton_bold->setChecked(false);
     ui.pushButton_italic->setChecked(false);
     ui.comboBox_font->setCurrentIndex(-1);
     ui.comboBox_color->setCurrentIndex(-1);
     ui.plainTextEdit_desc->clear();
-    ui.label_channel_name->clear();
-    ui.label_owner_nick->clear();
-    ui.label_datetime->clear();
-    ui.spinBox_limit->setValue(0);
-    ui.comboBox_category->setCurrentIndex(-1);
-    ui.comboBox_guardian_level->setCurrentIndex(-1);
     ui.radioButton_status_pub->setChecked(false);
     ui.radioButton_status_priv->setChecked(false);
+    ui.comboBox_category->setCurrentIndex(-1);
+    ui.comboBox_guardian_level->setCurrentIndex(-1);
     ui.radioButton_guardian_off->setChecked(false);
     ui.radioButton_guardian_on->setChecked(false);
     ui.radioButton_moderation_off->setChecked(false);
     ui.radioButton_moderation_on->setChecked(false);
+
+    // advanced
+    ui.lineEdit_email->clear();
+    ui.lineEdit_password->clear();
+    ui.spinBox_limit->setValue(0);
     ui.radioButton_auditorium_off->setChecked(false);
     ui.radioButton_auditorium_on->setChecked(false);
+
+    // permissions
+    ui.listWidget_op->clear();
+    ui.listWidget_halfop->clear();
+    ui.listWidget_ban->clear();
+    ui.listWidget_invite->clear();
+
+    // statistics
     ui.label_stats_favourites->setText("-");
     ui.label_stats_words->setText("-");
     ui.label_stats_exists_days->setText("-");
@@ -889,6 +1007,11 @@ void DlgChannelSettings::showEvent(QShowEvent *event)
     ui.label_owner->hide();
     ui.label_owner_nick->hide();
     ui.label_channel_name->setText(strChannel);
+
+    // disabled
+    ui.tabWidget->setTabEnabled(1, false);
+    ui.tabWidget->setTabEnabled(2, false);
+    ui.tabWidget->setTabEnabled(3, false);
 
     // get data
     pNetwork->send(QString("CS INFO %1").arg(strChannel));

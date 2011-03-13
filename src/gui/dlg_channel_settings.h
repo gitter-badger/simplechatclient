@@ -50,6 +50,7 @@ private:
     QString strChannel;
     SimpleStatsWidget *simpleStatsWidget;
 
+    void enable_tabs();
     bool exist_item(QString, QListWidget *); // for permissions
     void clear();
 

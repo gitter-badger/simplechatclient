@@ -777,16 +777,20 @@
         <translation>Ogólne</translation>
     </message>
     <message>
+        <source>Basic</source>
+        <translation>Podstawowe</translation>
+    </message>
+    <message>
+        <source>Advanced</source>
+        <translation>Zaawansowane</translation>
+    </message>
+    <message>
         <source>Permissions</source>
         <translation>Uprawnienia</translation>
     </message>
     <message>
         <source>Statistics</source>
         <translation>Statystyki</translation>
-    </message>
-    <message>
-        <source>Channel:</source>
-        <translation>Kanał:</translation>
     </message>
     <message>
         <source>Apply</source>
@@ -809,28 +813,12 @@
         <translation>Wyłączone</translation>
     </message>
     <message>
-        <source>Owner:</source>
-        <translation>Właściciel:</translation>
-    </message>
-    <message>
-        <source>Transfer</source>
-        <translation>Przekaż</translation>
-    </message>
-    <message>
-        <source>Destroy</source>
-        <translation>Usuń</translation>
-    </message>
-    <message>
-        <source>Email:</source>
-        <translation>Email:</translation>
-    </message>
-    <message>
         <source>Created:</source>
         <translation>Utworzono:</translation>
     </message>
     <message>
-        <source>Date/Time</source>
-        <translation>Data/Czas</translation>
+        <source>Owner:</source>
+        <translation>Właściciel:</translation>
     </message>
     <message>
         <source>Website:</source>
@@ -861,6 +849,26 @@
         <translation>Kategoria:</translation>
     </message>
     <message>
+        <source>Teen</source>
+        <translation>Teen</translation>
+    </message>
+    <message>
+        <source>Common</source>
+        <translation>Towarzyskie</translation>
+    </message>
+    <message>
+        <source>Erotic</source>
+        <translation>Erotyczne</translation>
+    </message>
+    <message>
+        <source>Thematic</source>
+        <translation>Tematyczne</translation>
+    </message>
+    <message>
+        <source>Regional</source>
+        <translation>Regionalne</translation>
+    </message>
+    <message>
         <source>Guardian:</source>
         <translation>Anioł stróż:</translation>
     </message>
@@ -877,6 +885,26 @@
         <translation>Poziom 3</translation>
     </message>
     <message>
+        <source>Moderation:</source>
+        <translation>Moderacja:</translation>
+    </message>
+    <message>
+        <source>Channel:</source>
+        <translation>Kanał:</translation>
+    </message>
+    <message>
+        <source>Transfer</source>
+        <translation>Przekaż</translation>
+    </message>
+    <message>
+        <source>Destroy</source>
+        <translation>Usuń</translation>
+    </message>
+    <message>
+        <source>Email:</source>
+        <translation>Email:</translation>
+    </message>
+    <message>
         <source>Password:</source>
         <translation>Hasło:</translation>
     </message>
@@ -885,16 +913,8 @@
         <translation>Limit nicków:</translation>
     </message>
     <message>
-        <source>Moderation:</source>
-        <translation>Moderacja:</translation>
-    </message>
-    <message>
         <source>Auditorium:</source>
         <translation>Audytorium:</translation>
-    </message>
-    <message>
-        <source>Nick</source>
-        <translation>Nick</translation>
     </message>
     <message>
         <source>Created by</source>
