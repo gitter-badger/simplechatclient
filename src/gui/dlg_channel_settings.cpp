@@ -490,11 +490,7 @@ void DlgChannelSettings::set_topic(QString strCheckChannel, QString strTopic)
 
     // set general topic
     if (strTopic.isEmpty() == false)
-    {
-        ui.lineEdit_general_topic->setText(strTopic);
-        ui.lineEdit_general_topic->setCursorPosition(0);
-        ui.lineEdit_general_topic->setToolTip(strTopic);
-    }
+        ui.plainTextEdit_general_topic->setPlainText(strTopic);
 
     // set topic
     ui.plainTextEdit_topic->setPlainText(strTopic);
@@ -528,9 +524,7 @@ void DlgChannelSettings::set_description(QString strCheckChannel, QString strDes
         strDescriptionText.replace(QRegExp("%F([a-zA-Z0-9:]+)%"),"");
         strDescriptionText.replace(QRegExp("%I([a-zA-Z0-9_-]+)%"),"//\\1");
 
-        ui.lineEdit_general_description->setText(strDescriptionText);
-        ui.lineEdit_general_description->setCursorPosition(0);
-        ui.lineEdit_general_description->setToolTip(strDescriptionText);
+        ui.plainTextEdit_general_desc->setPlainText(strDescriptionText);
     }
 
     // set description
@@ -947,8 +941,8 @@ void DlgChannelSettings::clear()
     // general
     ui.label_general_datetime->setText("-");
     ui.label_general_website->setText("-");
-    ui.lineEdit_general_topic->setText("-");
-    ui.lineEdit_general_description->setText("-");
+    ui.plainTextEdit_general_topic->setPlainText("-");
+    ui.plainTextEdit_general_desc->setPlainText("-");
     ui.label_general_status->setText("-");
     ui.label_general_category->setText("-");
     ui.label_general_guardian->setText("-");
@@ -980,6 +974,7 @@ void DlgChannelSettings::clear()
     ui.radioButton_auditorium_on->setChecked(false);
 
     // permissions
+    ui.listWidget_permissions->setCurrentRow(0);
     ui.listWidget_op->clear();
     ui.listWidget_halfop->clear();
     ui.listWidget_ban->clear();

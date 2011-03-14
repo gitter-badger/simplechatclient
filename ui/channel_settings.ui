@@ -194,34 +194,40 @@
           </widget>
          </item>
          <item row="2" column="1">
-          <widget class="QLineEdit" name="lineEdit_general_topic">
+          <widget class="QPlainTextEdit" name="plainTextEdit_general_topic">
+           <property name="maximumSize">
+            <size>
+             <width>16777215</width>
+             <height>50</height>
+            </size>
+           </property>
            <property name="styleSheet">
             <string notr="true">background-color: rgba(0, 0, 0, 0);</string>
            </property>
-           <property name="text">
-            <string>-</string>
-           </property>
-           <property name="frame">
-            <bool>false</bool>
-           </property>
            <property name="readOnly">
             <bool>true</bool>
+           </property>
+           <property name="plainText">
+            <string>-</string>
            </property>
           </widget>
          </item>
          <item row="3" column="1">
-          <widget class="QLineEdit" name="lineEdit_general_description">
+          <widget class="QPlainTextEdit" name="plainTextEdit_general_desc">
+           <property name="maximumSize">
+            <size>
+             <width>16777215</width>
+             <height>50</height>
+            </size>
+           </property>
            <property name="styleSheet">
             <string notr="true">background-color: rgba(0, 0, 0, 0);</string>
            </property>
-           <property name="text">
-            <string>-</string>
-           </property>
-           <property name="frame">
-            <bool>false</bool>
-           </property>
            <property name="readOnly">
             <bool>true</bool>
+           </property>
+           <property name="plainText">
+            <string>-</string>
            </property>
           </widget>
          </item>

@@ -234,12 +234,6 @@ void DlgMyAvatar::load_my_avatars()
             QDomElement el = nodeList.at(i).toElement();
             QDomNode pEntries = el.firstChild();
 
-/*
-tag: "height"  value: "148"
-tag: "imgId"  value: "44009292"
-tag: "width"  value: "170"
-tag: "desc"  value: "logo1.jpg"
-*/
             QString mSrv;
             QString img;
             QString zoom = "1";
