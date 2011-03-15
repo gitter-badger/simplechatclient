@@ -41,11 +41,14 @@ private:
     QMap <QString, QString> mCookies;
 
     void get_cookies();
+    void got_cookies();
     void get_img();
+    void got_img(QByteArray);
     void register_nick();
     void parse_result(QString);
 
 private slots:
+    void network_finished(QNetworkReply*);
     void button_refresh();
     void button_ok();
     void button_cancel();

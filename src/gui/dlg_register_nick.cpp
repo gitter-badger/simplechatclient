@@ -20,7 +20,6 @@
 
 #include <QDesktopWidget>
 #include <QDomDocument>
-#include <QHostInfo>
 #include <QMessageBox>
 #include <QNetworkReply>
 #include <QSettings>
@@ -39,7 +38,7 @@ DlgRegisterNick::DlgRegisterNick(QWidget *parent, QWidget *param1) : QDialog(par
     options = param1;
 
     // close options
-    options->close();
+    options->hide();
 
     ui.buttonBox->button(QDialogButtonBox::Ok)->setIcon(QIcon(":/images/oxygen/16x16/dialog-ok.png"));
     ui.buttonBox->button(QDialogButtonBox::Cancel)->setIcon(QIcon(":/images/oxygen/16x16/dialog-cancel.png"));
@@ -58,6 +57,7 @@ DlgRegisterNick::DlgRegisterNick(QWidget *parent, QWidget *param1) : QDialog(par
     accessManager = new QNetworkAccessManager;
     cookieJar = new QNetworkCookieJar();
     accessManager->setCookieJar(cookieJar);
+    QObject::connect(accessManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(network_finished(QNetworkReply*)));
 
     get_cookies();
     get_img();
@@ -71,29 +71,20 @@ DlgRegisterNick::~DlgRegisterNick()
 
 void DlgRegisterNick::get_cookies()
 {
-    QHostInfo hKropkaOnetPl = QHostInfo::fromName("kropka.onet.pl");
-    if (hKropkaOnetPl.error() == QHostInfo::NoError)
+    QNetworkReply *pReply = accessManager->get(QNetworkRequest(QUrl("http://kropka.onet.pl/_s/kropka/1?DV=czat%2Findex")));
+    pReply->setProperty("category", "get_cookies");
+}
+
+void DlgRegisterNick::got_cookies()
+{
+    // save cookies
+    QList <QNetworkCookie> cookies = accessManager->cookieJar()->cookiesForUrl(QUrl("http://czat.onet.pl"));
+    for (QList <QNetworkCookie>::iterator i = cookies.begin(); i != cookies.end(); ++i)
     {
-        QEventLoop eventLoop;
-        QNetworkReply *pReply = accessManager->get(QNetworkRequest(QUrl("http://kropka.onet.pl/_s/kropka/1?DV=czat%2Findex")));
-        QObject::connect(pReply, SIGNAL(finished()), &eventLoop, SLOT(quit()));
-        eventLoop.exec();
+        QString strKey = i->name();
+        QString strValue = i->value();
 
-        pReply->deleteLater();
-
-        if (pReply->error())
-            return;
-
-        // save cookies
-        QList <QNetworkCookie> cookies = accessManager->cookieJar()->cookiesForUrl(QUrl("http://czat.onet.pl"));
-        for (QList <QNetworkCookie>::iterator i = cookies.begin(); i != cookies.end(); ++i)
-        {
-            QString strKey = i->name();
-            QString strValue = i->value();
-
-            mCookies.insert(strKey, strValue);
-        }
-
+        mCookies.insert(strKey, strValue);
     }
 }
 
@@ -102,31 +93,20 @@ void DlgRegisterNick::get_img()
     // disable button
     ui.pushButton_refresh->setEnabled(false);
 
-    QHostInfo hCzatOnetPl = QHostInfo::fromName("czat.onet.pl");
-    if (hCzatOnetPl.error() == QHostInfo::NoError)
-    {
-        QEventLoop eventLoop;
-        QNetworkReply *pReply = accessManager->get(QNetworkRequest(QUrl("http://czat.onet.pl/myimg.gif")));
-        QObject::connect(pReply, SIGNAL(finished()), &eventLoop, SLOT(quit()));
-        eventLoop.exec();
+    // clear
+    ui.label_img->setText(tr("Loading..."));
 
-        pReply->deleteLater();
+    // request
+    QNetworkReply *pReply = accessManager->get(QNetworkRequest(QUrl("http://czat.onet.pl/myimg.gif")));
+    pReply->setProperty("category", "get_img");
+}
 
-        if (pReply->error())
-            return;
-
-        QByteArray bData = pReply->readAll();
-
-        // show img
-        if (bData.isEmpty() == false)
-        {
-            QPixmap pixmap;
-            pixmap.loadFromData(bData);
-            ui.label_img->setPixmap(pixmap);
-        }
-    }
-    else
-        ui.label_img->setText(tr("Unable to download image"));
+void DlgRegisterNick::got_img(QByteArray bData)
+{
+    // show img
+    QPixmap pixmap;
+    pixmap.loadFromData(bData);
+    ui.label_img->setPixmap(pixmap);
 
     // enable button
     ui.pushButton_refresh->setEnabled(true);
@@ -134,57 +114,60 @@ void DlgRegisterNick::get_img()
 
 void DlgRegisterNick::register_nick()
 {
-    QHostInfo hCzatOnetPl = QHostInfo::fromName("czat.onet.pl");
-    if (hCzatOnetPl.error() == QHostInfo::NoError)
+    QString strNick = ui.lineEdit_nick->text();
+    QString strNickLength = QString::number(strNick.length());
+    QString strPassword = ui.lineEdit_password->text();
+    QString strPasswordLength = QString::number(strPassword.length());
+    QString strCode = ui.lineEdit_code->text();
+    QString strCodeLength = QString::number(strCode.length());
+
+    if ((strNick.isEmpty() == true) || (strPassword.isEmpty() == true) || (strCode.isEmpty() == true))
+        return;
+
+    // set cookies
+    QList <QNetworkCookie> cookieList;
+    QNetworkCookie cookie;
+
+    QMapIterator <QString, QString> i(mCookies);
+    while (i.hasNext())
     {
-        QString strNick = ui.lineEdit_nick->text();
-        QString strNickLength = QString::number(strNick.length());
-        QString strPassword = ui.lineEdit_password->text();
-        QString strPasswordLength = QString::number(strPassword.length());
-        QString strCode = ui.lineEdit_code->text();
-        QString strCodeLength = QString::number(strCode.length());
+         i.next();
 
-        // set cookies
-        QList <QNetworkCookie> cookieList;
-        QNetworkCookie cookie;
+         QString strKey = i.key();
+         QString strValue = i.value();
 
-        QMapIterator <QString, QString> i(mCookies);
-        while (i.hasNext())
-        {
-             i.next();
+         cookie.setName(strKey.toAscii());
+         cookie.setValue(strValue.toAscii());
+         cookieList.append(cookie);
+     }
 
-             QString strKey = i.key();
-             QString strValue = i.value();
+    accessManager->cookieJar()->setCookiesFromUrl(cookieList, QUrl("http://czat.onet.pl"));
 
-             cookie.setName(strKey.toAscii());
-             cookie.setValue(strValue.toAscii());
-             cookieList.append(cookie);
-         }
+    // request
+    QString strData = QString("api_function=registerNick&params=a:3:{s:4:\"nick\";s:%1:\"%2\";s:4:\"pass\";s:%3:\"%4\";s:4:\"code\";s:%5:\"%6\";}").arg(strNickLength).arg(strNick).arg(strPasswordLength).arg(strPassword).arg(strCodeLength).arg(strCode);
+    QNetworkReply *pReply = accessManager->post(QNetworkRequest(QUrl("http://czat.onet.pl/include/ajaxapi.xml.php3")), strData.toAscii());
+    pReply->setProperty("category", "register_nick");
+}
 
-        accessManager->cookieJar()->setCookiesFromUrl(cookieList, QUrl("http://czat.onet.pl"));
+void DlgRegisterNick::network_finished(QNetworkReply *reply)
+{
+    reply->deleteLater();
 
-        // request
-        QEventLoop eventLoop;
-        QString strData = QString("api_function=registerNick&params=a:3:{s:4:\"nick\";s:%1:\"%2\";s:4:\"pass\";s:%3:\"%4\";s:4:\"code\";s:%5:\"%6\";}").arg(strNickLength).arg(strNick).arg(strPasswordLength).arg(strPassword).arg(strCodeLength).arg(strCode);
-        QNetworkReply *pReply = accessManager->post(QNetworkRequest(QUrl("http://czat.onet.pl/include/ajaxapi.xml.php3")), strData.toAscii());
-        QObject::connect(pReply, SIGNAL(finished()), &eventLoop, SLOT(quit()));
-        eventLoop.exec();
+    if (reply->error())
+        return;
 
-        pReply->deleteLater();
+    QString strCategory = reply->property("category").toString();
+    QByteArray bData = reply->readAll();
 
-        if (pReply->error())
-            return;
+    if (bData.isEmpty() == true)
+        return;
 
-        QString strResult = pReply->readAll();
-
-        if (strResult.isEmpty() == false)
-            parse_result(strResult);
-    }
-    else
-    {
-        ui.lineEdit_code->clear();
-        get_img();
-    }
+    if (strCategory == "get_img")
+        got_img(bData);
+    else if (strCategory == "get_cookies")
+        got_cookies();
+    else if (strCategory == "register_nick")
+        parse_result(QString(bData));
 }
 
 // <?xml version="1.0" encoding="ISO-8859-2"?><root><status>-104</status><error err_code="0"  err_text="OK" ></error></root>
@@ -249,12 +232,12 @@ void DlgRegisterNick::parse_result(QString strResult)
 
 void DlgRegisterNick::button_ok()
 {
-    bool bPasswords = false;
+    bool identical = false;
 
     if (ui.lineEdit_password->text() == ui.lineEdit_confirm_password->text())
-        bPasswords = true;
+        identical = true;
 
-    if (bPasswords == true)
+    if (identical == true)
         register_nick();
     else
     {

@@ -1677,8 +1677,8 @@
         <translation>Odśwież</translation>
     </message>
     <message>
-        <source>Unable to download image</source>
-        <translation>Nie można pobrać obrazka</translation>
+        <source>Loading...</source>
+        <translation>Wczytywanie...</translation>
     </message>
     <message>
         <source>Invalid password. Password must be at least 6 characters including at least one number.</source>
