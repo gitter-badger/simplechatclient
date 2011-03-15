@@ -20,7 +20,6 @@
 
 #include <QDesktopWidget>
 #include <QDomDocument>
-#include <QHostInfo>
 #include <QMessageBox>
 #include <QNetworkReply>
 #include <QSettings>
@@ -55,6 +54,7 @@ DlgEmail::DlgEmail(QWidget *parent, QString param1, QString param2) : QDialog(pa
     cookieJar = new QNetworkCookieJar();
     accessManager = new QNetworkAccessManager;
     accessManager->setCookieJar(cookieJar);
+    QObject::connect(accessManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(network_finished(QNetworkReply*)));
 
     get_cookies();
     get_img();
@@ -96,30 +96,20 @@ void DlgEmail::get_img()
     // disable button
     ui.pushButton_refresh->setEnabled(false);
 
-    QHostInfo hCzatOnetPl = QHostInfo::fromName("czat.onet.pl");
-    if (hCzatOnetPl.error() == QHostInfo::NoError)
-    {
-        QEventLoop eventLoop;
-        QNetworkReply *pReply = accessManager->get(QNetworkRequest(QUrl("http://czat.onet.pl/myimg.gif")));
-        QObject::connect(pReply, SIGNAL(finished()), &eventLoop, SLOT(quit()));
-        eventLoop.exec();
+    // clear
+    ui.label_img->setText(tr("Loading..."));
 
-        pReply->deleteLater();
+    // request
+    QNetworkReply *pReply = accessManager->get(QNetworkRequest(QUrl("http://czat.onet.pl/myimg.gif")));
+    pReply->setProperty("category", "get_img");
+}
 
-        if (pReply->error())
-            return;
-
-        QByteArray bData = pReply->readAll();
-
-        if (bData.isEmpty() == false)
-        {
-            QPixmap pixmap;
-            pixmap.loadFromData(bData);
-            ui.label_img->setPixmap(pixmap);
-        }
-    }
-    else
-        ui.label_img->setText(tr("Unable to download image"));
+void DlgEmail::got_img(QByteArray bData)
+{
+    // show img
+    QPixmap pixmap;
+    pixmap.loadFromData(bData);
+    ui.label_img->setPixmap(pixmap);
 
     // enable button
     ui.pushButton_refresh->setEnabled(true);
@@ -127,35 +117,17 @@ void DlgEmail::get_img()
 
 void DlgEmail::set_email()
 {
-    QHostInfo hCzatOnetPl = QHostInfo::fromName("czat.onet.pl");
-    if (hCzatOnetPl.error() == QHostInfo::NoError)
-    {
-        QString strChannelLength = QString::number(strChannel.length());
-        QString strEmailLength = QString::number(strEmail.length());
-        QString strCodeLength = QString::number(ui.lineEdit_code->text().length());
-        QString strCode = ui.lineEdit_code->text();
+    QString strChannelLength = QString::number(strChannel.length());
+    QString strEmailLength = QString::number(strEmail.length());
+    QString strCodeLength = QString::number(ui.lineEdit_code->text().length());
+    QString strCode = ui.lineEdit_code->text();
 
-        QEventLoop eventLoop;
-        QString strData = QString("api_function=setChannelEmail&params=a:3:{s:4:\"name\";s:%1:\"%2\";s:5:\"email\";s:%3:\"%4\";s:4:\"code\";s:%5:\"%6\";}").arg(strChannelLength).arg(strChannel).arg(strEmailLength).arg(strEmail).arg(strCodeLength).arg(strCode);
-        QNetworkReply *pReply = accessManager->post(QNetworkRequest(QUrl("http://czat.onet.pl/include/ajaxapi.xml.php3")), strData.toAscii());
-        QObject::connect(pReply, SIGNAL(finished()), &eventLoop, SLOT(quit()));
-        eventLoop.exec();
+    if (strCode.isEmpty() == true)
+        return;
 
-        pReply->deleteLater();
-
-        if (pReply->error())
-            return;
-
-        QString strResult = pReply->readAll();
-
-        if (strResult.isEmpty() == false)
-            parse_result(strResult);
-    }
-    else
-    {
-        ui.lineEdit_code->clear();
-        get_img();
-    }
+    QString strData = QString("api_function=setChannelEmail&params=a:3:{s:4:\"name\";s:%1:\"%2\";s:5:\"email\";s:%3:\"%4\";s:4:\"code\";s:%5:\"%6\";}").arg(strChannelLength).arg(strChannel).arg(strEmailLength).arg(strEmail).arg(strCodeLength).arg(strCode);
+    QNetworkReply *pReply = accessManager->post(QNetworkRequest(QUrl("http://czat.onet.pl/include/ajaxapi.xml.php3")), strData.toAscii());
+    pReply->setProperty("category", "set_email");
 }
 
 // <?xml version="1.0" encoding="ISO-8859-2"?><root><status>0</status><error err_code="0"  err_text="OK" ></error></root>
@@ -179,6 +151,25 @@ void DlgEmail::parse_result(QString strResult)
         QMessageBox::critical(0, tr("Error"), strErrText);
         get_img();
     }
+}
+
+void DlgEmail::network_finished(QNetworkReply *reply)
+{
+    reply->deleteLater();
+
+    if (reply->error())
+        return;
+
+    QString strCategory = reply->property("category").toString();
+    QByteArray bData = reply->readAll();
+
+    if (bData.isEmpty() == true)
+        return;
+
+    if (strCategory == "get_img")
+        got_img(bData);
+    else if (strCategory == "set_email")
+        parse_result(QString(bData));
 }
 
 void DlgEmail::button_ok()

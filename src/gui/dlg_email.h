@@ -42,10 +42,12 @@ private:
 
     void get_cookies();
     void get_img();
+    void got_img(QByteArray);
     void set_email();
     void parse_result(QString);
 
 private slots:
+    void network_finished(QNetworkReply*);
     void button_ok();
     void button_refresh();
     void button_cancel();

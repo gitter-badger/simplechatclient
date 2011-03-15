@@ -1040,8 +1040,8 @@
         <translation>Anuluj</translation>
     </message>
     <message>
-        <source>Unable to download image</source>
-        <translation>Nie można pobrać obrazka</translation>
+        <source>Loading...</source>
+        <translation>Wczytywanie...</translation>
     </message>
     <message>
         <source>Error</source>

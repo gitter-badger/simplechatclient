@@ -149,27 +149,6 @@ void DlgRegisterNick::register_nick()
     pReply->setProperty("category", "register_nick");
 }
 
-void DlgRegisterNick::network_finished(QNetworkReply *reply)
-{
-    reply->deleteLater();
-
-    if (reply->error())
-        return;
-
-    QString strCategory = reply->property("category").toString();
-    QByteArray bData = reply->readAll();
-
-    if (bData.isEmpty() == true)
-        return;
-
-    if (strCategory == "get_img")
-        got_img(bData);
-    else if (strCategory == "get_cookies")
-        got_cookies();
-    else if (strCategory == "register_nick")
-        parse_result(QString(bData));
-}
-
 // <?xml version="1.0" encoding="ISO-8859-2"?><root><status>-104</status><error err_code="0"  err_text="OK" ></error></root>
 // <?xml version="1.0" encoding="ISO-8859-2"?><root><status>-3</status><error err_code="0"  err_text="OK" ></error></root>
 // <?xml version="1.0" encoding="ISO-8859-2"?><root><status>-2</status><error err_code="0"  err_text="OK" ></error></root>
@@ -228,6 +207,27 @@ void DlgRegisterNick::parse_result(QString strResult)
         QMessageBox::critical(0, tr("Error"), strErrText);
         get_img();
     }
+}
+
+void DlgRegisterNick::network_finished(QNetworkReply *reply)
+{
+    reply->deleteLater();
+
+    if (reply->error())
+        return;
+
+    QString strCategory = reply->property("category").toString();
+    QByteArray bData = reply->readAll();
+
+    if (bData.isEmpty() == true)
+        return;
+
+    if (strCategory == "get_img")
+        got_img(bData);
+    else if (strCategory == "get_cookies")
+        got_cookies();
+    else if (strCategory == "register_nick")
+        parse_result(QString(bData));
 }
 
 void DlgRegisterNick::button_ok()
