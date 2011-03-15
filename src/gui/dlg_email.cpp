@@ -51,8 +51,8 @@ DlgEmail::DlgEmail(QWidget *parent, QString param1, QString param2) : QDialog(pa
     QObject::connect(ui.pushButton_refresh, SIGNAL(clicked()), this, SLOT(button_refresh()));
     QObject::connect(ui.pushButton_cancel, SIGNAL(clicked()), this, SLOT(button_cancel()));
 
-    cookieJar = new QNetworkCookieJar();
     accessManager = new QNetworkAccessManager;
+    cookieJar = new QNetworkCookieJar();
     accessManager->setCookieJar(cookieJar);
     QObject::connect(accessManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(network_finished(QNetworkReply*)));
 

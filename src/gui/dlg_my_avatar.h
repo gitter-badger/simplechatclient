@@ -42,7 +42,6 @@ private:
     // network
     QNetworkAccessManager *networkAccessManager;
     QNetworkCookieJar *cookieJar;
-    QNetworkAccessManager *avatarAccessManager;
     // collections names
     bool bReadedCollectionNames;
     QList<QString> lNameCollections; // list of name collections
@@ -54,20 +53,25 @@ private:
     QMap<QString, QString> mMyAvatarsID; // url, id
 
     void get_cookies();
-    QString network_request(QString, QString);
     void get_avatar(QString);
+    void got_avatar(QString, QByteArray);
     // my avatars
     void load_my_avatars();
+    void got_my_avatars(QString);
     void draw_my_avatar(QString, QByteArray);
     // collections
     void get_collections();
+    void got_collections(QString);
     void draw_collections();
     // avatars from collect
     void get_avatars_from_collect(int);
+    void got_avatars_from_collect(QString);
     void draw_avatar_from_collect(QString, QByteArray);
+    // remove avatar
+    void got_remove_avatar(QString);
 
 private slots:
-    void avatar_finished(QNetworkReply*);
+    void network_finished(QNetworkReply*);
     void refresh_avatar();
     void tab_changed(int);
     void collection_changed(QString);

@@ -1320,9 +1320,6 @@ void OnetKernel::raw_001()
     // logged
     settings.setValue("logged", "on");
 
-    // protocol
-    pNetwork->send("PROTOCTL ONETNAMESX");
-
     // clear
     mFriends->clear();
     lIgnore->clear();
@@ -1331,6 +1328,9 @@ void OnetKernel::raw_001()
     mMyStats->clear();
     mMyProfile->clear();
     lChannelHomes->clear();
+
+    // protocol
+    pNetwork->send("PROTOCTL ONETNAMESX");
 
     // busy
     settings.setValue("busy", "off");
