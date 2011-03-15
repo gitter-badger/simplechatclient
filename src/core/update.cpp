@@ -53,17 +53,19 @@ void Update::check_update()
 
 void Update::version(QString strAvailableVersion)
 {
-    QSettings settings;
-    QString strCurrentVersion = settings.value("version").toString();
-    QStringList lCurrentVersion = strCurrentVersion.split(".");
-    QString strCurrentRev = lCurrentVersion.last();
-    int iCurrentRev = strCurrentRev.toInt();
-
     if (strAvailableVersion == QString::null)
     {
         //tabc->show_msg("Status", tr("Can not download the available version."), 0);
         return;
     }
+
+    QSettings settings;
+
+    QString strCurrentVersion = settings.value("version").toString();
+    QStringList lCurrentVersion = strCurrentVersion.split(".");
+    QString strCurrentRev = lCurrentVersion.last();
+    int iCurrentRev = strCurrentRev.toInt();
+
     QStringList lAvailableVersion = strAvailableVersion.split(".");
     QString strAvailableRev = lAvailableVersion.last();
     int iAvailableRev = strAvailableRev.toInt();

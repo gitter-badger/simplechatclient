@@ -59,8 +59,8 @@ DlgChannelSettings::DlgChannelSettings(QWidget *parent, Network *param1) : QDial
     ui.buttonBox->button(QDialogButtonBox::Ok)->setIcon(QIcon(":/images/oxygen/16x16/dialog-ok.png"));
     ui.buttonBox->button(QDialogButtonBox::Cancel)->setIcon(QIcon(":/images/oxygen/16x16/dialog-cancel.png"));
 
-    ui.tabWidget->setTabText(0, tr("General"));
-    ui.tabWidget->setTabText(1, tr("Basic"));
+    ui.tabWidget->setTabText(0, tr("Summary"));
+    ui.tabWidget->setTabText(1, tr("General"));
     ui.tabWidget->setTabText(2, tr("Advanced"));
     ui.tabWidget->setTabText(3, tr("Permissions"));
     ui.tabWidget->setTabText(4, tr("Statistics"));
@@ -69,7 +69,7 @@ DlgChannelSettings::DlgChannelSettings(QWidget *parent, Network *param1) : QDial
     ui.listWidget_permissions->insertItem(2, tr("Banned"));
     ui.listWidget_permissions->insertItem(3, tr("Invited"));
 
-    // general
+    // summary
     ui.label_created1->setText(tr("Created:"));
     ui.label_website1->setText(tr("Website:"));
     ui.label_topic1->setText(tr("Topic:"));
@@ -79,7 +79,7 @@ DlgChannelSettings::DlgChannelSettings(QWidget *parent, Network *param1) : QDial
     ui.label_guardian1->setText(tr("Guardian:"));
     ui.label_moderation1->setText(tr("Moderation:"));
 
-    // basic
+    // general
     ui.label_owner->setText(tr("Owner:"));
     ui.label_website->setText(tr("Website:"));
     ui.pushButton_set_website->setText(tr("Apply"));
@@ -222,7 +222,7 @@ void DlgChannelSettings::set_data(QString strCheckChannel, QMap<QString, QString
             // label created date/time
             QDateTime dt = QDateTime::fromTime_t(strValue.toInt());
             QString strDT = dt.toString("dd/MM/yyyy hh:mm:ss");
-            ui.label_general_datetime->setText(strDT);
+            ui.label_summary_datetime->setText(strDT);
 
             // stats
             int iCreatedDate = strValue.toInt();
@@ -241,12 +241,12 @@ void DlgChannelSettings::set_data(QString strCheckChannel, QMap<QString, QString
         {
             if (strValue.toInt() == 1)
             {
-                ui.label_general_status->setText(tr("Private"));
+                ui.label_summary_status->setText(tr("Private"));
                 ui.radioButton_status_priv->setChecked(true);
             }
             else if (strValue.toInt() == 0)
             {
-                ui.label_general_status->setText(tr("Public"));
+                ui.label_summary_status->setText(tr("Public"));
                 ui.radioButton_status_pub->setChecked(true);
             }
         }
@@ -254,27 +254,27 @@ void DlgChannelSettings::set_data(QString strCheckChannel, QMap<QString, QString
         {
             if (strValue.toInt() == 1) // teen
             {
-                ui.label_general_category->setText(tr("Teen"));
+                ui.label_summary_category->setText(tr("Teen"));
                 ui.comboBox_category->setCurrentIndex(0);
             }
             else if (strValue.toInt() == 2) // towarzyskie
             {
-                ui.label_general_category->setText(tr("Common"));
+                ui.label_summary_category->setText(tr("Common"));
                 ui.comboBox_category->setCurrentIndex(1);
             }
             else if (strValue.toInt() == 3) // erotyczne
             {
-                ui.label_general_category->setText(tr("Erotic"));
+                ui.label_summary_category->setText(tr("Erotic"));
                 ui.comboBox_category->setCurrentIndex(2);
             }
             else if (strValue.toInt() == 4) // tematyczne
             {
-                ui.label_general_category->setText(tr("Thematic"));
+                ui.label_summary_category->setText(tr("Thematic"));
                 ui.comboBox_category->setCurrentIndex(3);
             }
             else if (strValue.toInt() == 5) // regionalne
             {
-                ui.label_general_category->setText(tr("Regional"));
+                ui.label_summary_category->setText(tr("Regional"));
                 ui.comboBox_category->setCurrentIndex(4);
             }
             else
@@ -284,25 +284,25 @@ void DlgChannelSettings::set_data(QString strCheckChannel, QMap<QString, QString
         {
             if (strValue.toInt() == 0)
             {
-                ui.label_general_guardian->setText(tr("Inactive"));
+                ui.label_summary_guardian->setText(tr("Inactive"));
                 ui.radioButton_guardian_off->setChecked(true);
                 ui.comboBox_guardian_level->setCurrentIndex(-1);
             }
             else if (strValue.toInt() == 1)
             {
-                ui.label_general_guardian->setText(QString("%1, %2").arg(tr("Active")).arg(tr("Level 1")));
+                ui.label_summary_guardian->setText(QString("%1, %2").arg(tr("Active")).arg(tr("Level 1")));
                 ui.radioButton_guardian_on->setChecked(true);
                 ui.comboBox_guardian_level->setCurrentIndex(0);
             }
             else if (strValue.toInt() == 2)
             {
-                ui.label_general_guardian->setText(QString("%1, %2").arg(tr("Active")).arg(tr("Level 2")));
+                ui.label_summary_guardian->setText(QString("%1, %2").arg(tr("Active")).arg(tr("Level 2")));
                 ui.radioButton_guardian_on->setChecked(true);
                 ui.comboBox_guardian_level->setCurrentIndex(1);
             }
             else if (strValue.toInt() == 3)
             {
-                ui.label_general_guardian->setText(QString("%1, %2").arg(tr("Active")).arg(tr("Level 3")));
+                ui.label_summary_guardian->setText(QString("%1, %2").arg(tr("Active")).arg(tr("Level 3")));
                 ui.radioButton_guardian_on->setChecked(true);
                 ui.comboBox_guardian_level->setCurrentIndex(2);
             }
@@ -311,19 +311,19 @@ void DlgChannelSettings::set_data(QString strCheckChannel, QMap<QString, QString
         {
             if (strValue.toInt() == 0)
             {
-                ui.label_general_moderation->setText(tr("Off"));
+                ui.label_summary_moderation->setText(tr("Off"));
                 ui.radioButton_moderation_off->setChecked(true);
             }
             else if (strValue.toInt() == 1)
             {
-                ui.label_general_moderation->setText(tr("On"));
+                ui.label_summary_moderation->setText(tr("On"));
                 ui.radioButton_moderation_on->setChecked(true);
             }
         }
         else if (strKey == "www")
         {
             if (strValue.isEmpty() == false)
-                ui.label_general_website->setText(QString("<a href=\"%1\">%1</a>").arg(strValue));
+                ui.label_summary_website->setText(QString("<a href=\"%1\">%1</a>").arg(strValue));
             ui.lineEdit_website->setText(strValue);
         }
         else if (strKey == "password")
@@ -488,9 +488,9 @@ void DlgChannelSettings::set_topic(QString strCheckChannel, QString strTopic)
     if (ui.comboBox_font->currentIndex() == -1)
         ui.comboBox_font->setCurrentIndex(2);
 
-    // set general topic
+    // set summary topic
     if (strTopic.isEmpty() == false)
-        ui.plainTextEdit_general_topic->setPlainText(strTopic);
+        ui.plainTextEdit_summary_topic->setPlainText(strTopic);
 
     // set topic
     ui.plainTextEdit_topic->setPlainText(strTopic);
@@ -516,7 +516,7 @@ void DlgChannelSettings::set_description(QString strCheckChannel, QString strDes
 {
     if (strCheckChannel != strChannel) return; // not this channel
 
-    // set general description
+    // set summary description
     if (strDescription.isEmpty() == false)
     {
         QString strDescriptionText = strDescription;
@@ -524,7 +524,7 @@ void DlgChannelSettings::set_description(QString strCheckChannel, QString strDes
         strDescriptionText.replace(QRegExp("%F([a-zA-Z0-9:]+)%"),"");
         strDescriptionText.replace(QRegExp("%I([a-zA-Z0-9_-]+)%"),"//\\1");
 
-        ui.plainTextEdit_general_desc->setPlainText(strDescriptionText);
+        ui.plainTextEdit_summary_desc->setPlainText(strDescriptionText);
     }
 
     // set description
@@ -938,17 +938,17 @@ void DlgChannelSettings::clear()
 {
     ui.label_channel_name->clear();
 
-    // general
-    ui.label_general_datetime->setText("-");
-    ui.label_general_website->setText("-");
-    ui.plainTextEdit_general_topic->setPlainText("-");
-    ui.plainTextEdit_general_desc->setPlainText("-");
-    ui.label_general_status->setText("-");
-    ui.label_general_category->setText("-");
-    ui.label_general_guardian->setText("-");
-    ui.label_general_moderation->setText("-");
+    // summary
+    ui.label_summary_datetime->setText("-");
+    ui.label_summary_website->setText("-");
+    ui.plainTextEdit_summary_topic->setPlainText("-");
+    ui.plainTextEdit_summary_desc->setPlainText("-");
+    ui.label_summary_status->setText("-");
+    ui.label_summary_category->setText("-");
+    ui.label_summary_guardian->setText("-");
+    ui.label_summary_moderation->setText("-");
 
-    // basic
+    // general
     ui.label_owner_nick->clear();
     ui.lineEdit_website->clear();
     ui.plainTextEdit_topic->clear();

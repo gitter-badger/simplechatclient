@@ -38,92 +38,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     setWindowTitle("Simple Chat Client");
     setWindowIcon(QIcon(":/images/logo_64.png"));
 
-    // action
-    showAct = new QAction(QIcon(":/images/logo_64.png"), tr("Show"), this);
-    connectAct = new QAction(QIcon(":/images/oxygen/16x16/network-connect.png"), tr("&Connect"), this);
-    closeAct = new QAction(QIcon(":/images/oxygen/16x16/application-exit.png"), tr("Close"), this);
-    optionsAct = new QAction(QIcon(":/images/oxygen/16x16/preferences-system.png"), tr("Options"), this);
-    aboutAct = new QAction(QIcon(":/images/logo_64.png"), tr("About SCC ..."), this);
-    awaylogAct = new QAction(QIcon(":/images/oxygen/16x16/view-pim-tasks.png"), tr("Awaylog"), this);
-    notesAct = new QAction(QIcon(":/images/oxygen/16x16/story-editor.png"), tr("Notes"), this);
-
-    // onet action
-    channel_listAct = new QAction(QIcon(":/images/oxygen/16x16/documentation.png"), tr("Channel list"), this);
-    channel_homesAct = new QAction(QIcon(":/images/oxygen/16x16/configure.png"), tr("Your channels"), this);
-    channel_favouritesAct = new QAction(QIcon(":/images/oxygen/16x16/emblem-favorite.png"), tr("Favorite channels"), this);
-    friendsAct = new QAction(QIcon(":/images/oxygen/16x16/meeting-attending.png"), tr("Friends"), this);
-    ignoreAct = new QAction(QIcon(":/images/oxygen/16x16/meeting-attending-tentative.png"), tr("Ignored"), this);
-    camsAct = new QAction(QIcon(":/images/oxygen/16x16/camera-web.png"),tr("Cams"), this);
-    myStatsAct = new QAction(QIcon(":/images/oxygen/16x16/office-chart-bar.png"),tr("My statistics"), this);
-    myProfileAct = new QAction(QIcon(":/images/oxygen/16x16/view-pim-contacts.png"),tr("My profile"), this);
-    myAvatarAct = new QAction(QIcon(":/images/oxygen/16x16/preferences-desktop-user.png"),tr("My avatar"), this);
-
-    // shortcut
-    connectAct->setShortcuts(QKeySequence::New);
-    closeAct->setShortcut(tr("Ctrl+E"));
-    optionsAct->setShortcut(tr("Ctrl+O"));
-
-    // onet shortcut
-    channel_listAct->setShortcut(tr("Ctrl+L"));
-    channel_homesAct->setShortcut(tr("Ctrl+M"));
-    channel_favouritesAct->setShortcut(tr("Ctrl+U"));
-    friendsAct->setShortcut(tr("Ctrl+P"));
-    ignoreAct->setShortcut(tr("Ctrl+I"));
-    awaylogAct->setShortcut(tr("Ctrl+J"));
-    camsAct->setShortcut(tr("Ctrl+K"));
-
-    // main menu
-    fileMenu = menuBar()->addMenu(tr("&File"));
-    fileMenu->addAction(connectAct);
-    fileMenu->addSeparator();
-    fileMenu->addAction(closeAct);
-
-    // view menu
-    viewMenu = menuBar()->addMenu(tr("&View"));
-
-    // options menu
-    optionsMenu = menuBar()->addMenu(tr("&Settings"));
-    optionsMenu->addAction(optionsAct);
-
-    // onet menu
-    chatMenu = menuBar()->addMenu(tr("&Chat"));
-    chatMenu->addAction(channel_listAct);
-    chatMenu->addAction(channel_homesAct);
-    chatMenu->addAction(channel_favouritesAct);
-    chatMenu->addAction(friendsAct);
-    chatMenu->addAction(ignoreAct);
-    chatMenu->addAction(awaylogAct);
-    chatMenu->addAction(camsAct);
-
-    // onet my menu
-    chatMenu = menuBar()->addMenu(tr("&My"));
-    chatMenu->addAction(myStatsAct);
-    chatMenu->addAction(myProfileAct);
-    chatMenu->addAction(myAvatarAct);
-    chatMenu->addAction(notesAct);
-
-    // help menu
-    helpMenu = menuBar()->addMenu(tr("He&lp"));
-    helpMenu->addAction(aboutAct);
-
-    // toolbar
-    toolBar = addToolBar(tr("Navigation bar"));
-    toolBar->setIconSize(QSize(16,16));
-    toolBar->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
-    toolBar->addAction(connectAct);
-    toolBar->addAction(optionsAct);
-
-    // onet toolbar
-    toolBar->addAction(channel_listAct);
-    toolBar->addAction(channel_homesAct);
-    toolBar->addAction(friendsAct);
-
-    // awaylog
-    toolBar->addAction(awaylogAct);
-    // onet cams
-    toolBar->addAction(camsAct);
-    // notes
-    toolBar->addAction(notesAct);
+    create_actions();
+    create_menus();
 
     // signals buttons
     QObject::connect(connectAct, SIGNAL(triggered()), this, SLOT(button_connect()));
@@ -148,16 +64,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     QObject::connect(camsAct, SIGNAL(triggered()), this, SLOT(open_cams()));
     // notes
     QObject::connect(notesAct, SIGNAL(triggered()), this, SLOT(open_notes()));
-
-    // tray
-    trayMenu = new QMenu();
-    trayMenu->addAction(showAct);
-    trayMenu->addAction(closeAct);
-
-    trayIcon = new QSystemTrayIcon(this);
-    trayIcon->setIcon(QIcon(":/images/logo_64.png"));
-    trayIcon->setContextMenu(trayMenu);
-    trayIcon->show();
 
     // tray connect
     QObject::connect(trayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)), this, SLOT(tray_icon(QSystemTrayIcon::ActivationReason)));
@@ -241,13 +147,116 @@ void MainWindow::set_debug(bool param1)
         settings.setValue("debug", "off");
 }
 
+void MainWindow::create_actions()
+{
+    // action
+    showAct = new QAction(QIcon(":/images/logo_64.png"), tr("Show"), this);
+    connectAct = new QAction(QIcon(":/images/oxygen/16x16/network-connect.png"), tr("&Connect"), this);
+    closeAct = new QAction(QIcon(":/images/oxygen/16x16/application-exit.png"), tr("Close"), this);
+    optionsAct = new QAction(QIcon(":/images/oxygen/16x16/preferences-system.png"), tr("Options"), this);
+    aboutAct = new QAction(QIcon(":/images/logo_64.png"), tr("About SCC ..."), this);
+    awaylogAct = new QAction(QIcon(":/images/oxygen/16x16/view-pim-tasks.png"), tr("Awaylog"), this);
+    notesAct = new QAction(QIcon(":/images/oxygen/16x16/story-editor.png"), tr("Notes"), this);
+
+    // onet action
+    channel_listAct = new QAction(QIcon(":/images/oxygen/16x16/documentation.png"), tr("Channel list"), this);
+    channel_homesAct = new QAction(QIcon(":/images/oxygen/16x16/configure.png"), tr("Your channels"), this);
+    channel_favouritesAct = new QAction(QIcon(":/images/oxygen/16x16/emblem-favorite.png"), tr("Favorite channels"), this);
+    friendsAct = new QAction(QIcon(":/images/oxygen/16x16/meeting-attending.png"), tr("Friends"), this);
+    ignoreAct = new QAction(QIcon(":/images/oxygen/16x16/meeting-attending-tentative.png"), tr("Ignored"), this);
+    camsAct = new QAction(QIcon(":/images/oxygen/16x16/camera-web.png"),tr("Cams"), this);
+    myStatsAct = new QAction(QIcon(":/images/oxygen/16x16/office-chart-bar.png"),tr("My statistics"), this);
+    myProfileAct = new QAction(QIcon(":/images/oxygen/16x16/view-pim-contacts.png"),tr("My profile"), this);
+    myAvatarAct = new QAction(QIcon(":/images/oxygen/16x16/preferences-desktop-user.png"),tr("My avatar"), this);
+
+    // shortcut
+    connectAct->setShortcuts(QKeySequence::New);
+    closeAct->setShortcut(tr("Ctrl+E"));
+    optionsAct->setShortcut(tr("Ctrl+O"));
+
+    // onet shortcut
+    channel_listAct->setShortcut(tr("Ctrl+L"));
+    channel_homesAct->setShortcut(tr("Ctrl+M"));
+    channel_favouritesAct->setShortcut(tr("Ctrl+U"));
+    friendsAct->setShortcut(tr("Ctrl+P"));
+    ignoreAct->setShortcut(tr("Ctrl+I"));
+    awaylogAct->setShortcut(tr("Ctrl+J"));
+    camsAct->setShortcut(tr("Ctrl+K"));
+}
+
+void MainWindow::create_menus()
+{
+    // main menu
+    fileMenu = menuBar()->addMenu(tr("&File"));
+    fileMenu->addAction(connectAct);
+    fileMenu->addSeparator();
+    fileMenu->addAction(closeAct);
+
+    // view menu
+    viewMenu = menuBar()->addMenu(tr("&View"));
+
+    // options menu
+    optionsMenu = menuBar()->addMenu(tr("&Settings"));
+    optionsMenu->addAction(optionsAct);
+
+    // onet menu
+    chatMenu = menuBar()->addMenu(tr("&Chat"));
+    chatMenu->addAction(channel_listAct);
+    chatMenu->addAction(channel_homesAct);
+    chatMenu->addAction(channel_favouritesAct);
+    chatMenu->addAction(friendsAct);
+    chatMenu->addAction(ignoreAct);
+    chatMenu->addAction(awaylogAct);
+    chatMenu->addAction(camsAct);
+
+    // onet my menu
+    chatMenu = menuBar()->addMenu(tr("&My"));
+    chatMenu->addAction(myStatsAct);
+    chatMenu->addAction(myProfileAct);
+    chatMenu->addAction(myAvatarAct);
+    chatMenu->addAction(notesAct);
+
+    // help menu
+    helpMenu = menuBar()->addMenu(tr("He&lp"));
+    helpMenu->addAction(aboutAct);
+
+    // toolbar
+    toolBar = addToolBar(tr("Navigation bar"));
+    toolBar->setIconSize(QSize(16,16));
+    toolBar->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
+    toolBar->addAction(connectAct);
+    toolBar->addAction(optionsAct);
+
+    // onet toolbar
+    toolBar->addAction(channel_listAct);
+    toolBar->addAction(channel_homesAct);
+    toolBar->addAction(friendsAct);
+
+    // awaylog
+    toolBar->addAction(awaylogAct);
+    // onet cams
+    toolBar->addAction(camsAct);
+    // notes
+    toolBar->addAction(notesAct);
+
+    // tray
+    trayMenu = new QMenu();
+    trayMenu->addAction(showAct);
+    trayMenu->addAction(closeAct);
+
+    trayIcon = new QSystemTrayIcon(this);
+    trayIcon->setIcon(QIcon(":/images/logo_64.png"));
+    trayIcon->setContextMenu(trayMenu);
+    trayIcon->show();
+}
+
 // create settings
 void MainWindow::create_settings()
 {
     // default settings
     QSettings settings;
     settings.clear();
-    settings.setValue("version", "1.0.10.752");
+    settings.setValue("version", "1.0.10.753");
     settings.setValue("debug", "off");
     settings.setValue("logged", "off");
     settings.setValue("busy", "off");

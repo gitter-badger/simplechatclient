@@ -773,12 +773,12 @@
 <context>
     <name>DlgChannelSettings</name>
     <message>
-        <source>General</source>
-        <translation>Ogólne</translation>
+        <source>Summary</source>
+        <translation>Podsumowanie</translation>
     </message>
     <message>
-        <source>Basic</source>
-        <translation>Podstawowe</translation>
+        <source>General</source>
+        <translation>Ogólne</translation>
     </message>
     <message>
         <source>Advanced</source>

@@ -75,6 +75,8 @@ private:
     QAction *myProfileAct;
     QAction *myAvatarAct;
 
+    void create_actions();
+    void create_menus();
     void create_settings();
 
 private slots:

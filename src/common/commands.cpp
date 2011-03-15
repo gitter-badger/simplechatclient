@@ -36,52 +36,54 @@ QString Commands::execute()
 
     if (strDataList.value(0).isEmpty() == false)
     {
-        if ((strDataList[0].toLower() == "join") || (strDataList[0].toLower() == "j"))
+        QString strCmd = strDataList[0].toLower();
+
+        if ((strCmd == "join") || (strCmd == "j"))
             strResult = cmd_join();
-        else if (strDataList[0].toLower() == "priv")
+        else if (strCmd == "priv")
             strResult = cmd_priv();
-        else if (strDataList[0].toLower() == "ignore")
+        else if (strCmd == "ignore")
             strResult = cmd_ignore();
-        else if (strDataList[0].toLower() == "friend")
+        else if (strCmd == "friend")
             strResult = cmd_friend();
-        else if ((strDataList[0].toLower() == "whereis") || (strDataList[0].toLower() == "whois")  || (strDataList[0].toLower() == "wi")  || (strDataList[0].toLower() == "wii"))
+        else if ((strCmd == "whereis") || (strCmd == "whois")  || (strCmd == "wi")  || (strCmd == "wii"))
             strResult = cmd_whereis();
-        else if (strDataList[0].toLower() == "busy")
+        else if (strCmd == "busy")
             strResult = cmd_busy();
-        else if (strDataList[0].toLower() == "away")
+        else if (strCmd == "away")
             strResult = cmd_away();
-        else if ((strDataList[0].toLower() == "logout") || (strDataList[0].toLower() == "quit") || (strDataList[0].toLower() == "q"))
+        else if ((strCmd == "logout") || (strCmd == "quit") || (strCmd == "q"))
             strResult = cmd_quit();
-        else if ((strDataList[0].toLower() == "help") || (strDataList[0].toLower() == "pomoc"))
+        else if ((strCmd == "help") || (strCmd == "pomoc"))
             strResult = cmd_help();
         else
             strResult = strData;
 
         if ((strChan != "Status") && (strResult == strData))
         {
-            if ((strDataList[0].toLower() == "cycle") || (strDataList[0].toLower() == "hop"))
+            if ((strCmd == "cycle") || (strCmd == "hop"))
                 strResult = cmd_cycle();
-            else if (strDataList[0].toLower() == "me")
+            else if (strCmd == "me")
                 strResult = cmd_me();
-            else if (strDataList[0].toLower() == "topic")
+            else if (strCmd == "topic")
                 strResult = cmd_topic();
-            else if ((strDataList[0].toLower() == "part") || (strDataList[0].toLower() == "p"))
+            else if ((strCmd == "part") || (strCmd == "p"))
                 strResult = cmd_part();
-            else if (strDataList[0].toLower() == "invite")
+            else if (strCmd == "invite")
                 strResult = cmd_invite();
-            else if ((strDataList[0].toLower() == "kick") || (strDataList[0].toLower() == "k"))
+            else if ((strCmd == "kick") || (strCmd == "k"))
                 strResult = cmd_kick();
-            else if (strDataList[0].toLower() == "ban")
+            else if (strCmd == "ban")
                 strResult = cmd_ban();
-            else if (strDataList[0].toLower() == "banip")
+            else if (strCmd == "banip")
                 strResult = cmd_banip();
-            else if (strDataList[0].toLower() == "sop")
+            else if (strCmd == "sop")
                 strResult = cmd_sop();
-            else if (strDataList[0].toLower() == "op")
+            else if (strCmd == "op")
                 strResult = cmd_op();
-            else if ((strDataList[0].toLower() == "moder") || (strDataList[0].toLower() == "moderator"))
+            else if ((strCmd == "moder") || (strCmd == "moderator"))
                 strResult = cmd_moder();
-            else if (strDataList[0].toLower() == "vip")
+            else if (strCmd == "vip")
                 strResult = cmd_vip();
             else
                 strResult = strData;

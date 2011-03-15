@@ -562,8 +562,12 @@ void OnetKernel::raw_pong()
     int iCTime1 = iCurrent1-iTime1;
     int iCTime2 = iCurrent2-iTime2;
 
+    // correct miliseconds
+    if (iCTime2 < 0)
+        iCTime2 += 1000;
+
     // if not correct
-    if (((iCTime1 < 0) || (iCTime1 > 301)) || ((iCTime2 < 0) || (iCTime1 > 1001)))
+    if (((iCTime1 < 0) || (iCTime1 > 301)) || ((iCTime2 < 0) || (iCTime2 > 1001)))
         return;
 
     QString sec = QString::number(iCTime1);

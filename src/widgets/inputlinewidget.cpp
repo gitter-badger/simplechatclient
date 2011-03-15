@@ -164,13 +164,20 @@ bool InputLineWidget::event(QEvent *e)
     }
     else if ((k->key() == Qt::Key_Enter) || (k->key() == Qt::Key_Return))
     {
-        strLastMsg = this->toPlainText();
+        strLastMsg = this->toPlainText().simplified();
         emit returnPressed();
         return true;
     }
     else if (k->key() == Qt::Key_Up)
     {
+        // text
         setPlainText(strLastMsg);
+
+        // cursor
+        QTextCursor cursor = this->textCursor();
+        cursor.setPosition(strLastMsg.size(), QTextCursor::MoveAnchor);
+        this->setTextCursor(cursor);
+
         return true;
     }
     else if (k->key() == Qt::Key_Down)
