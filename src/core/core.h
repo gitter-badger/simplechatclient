@@ -115,11 +115,11 @@ private:
     TabManager *pTabM;
     TabContainer *pTabC;
     Network *pNetwork;
-    OnetKernel *pOnet_kernel;
-    OnetAuth *pOnet_auth;
-    DlgChannelSettings *pDlg_channel_settings;
-    DlgUserProfile *pDlg_user_profile;
-    DlgModeration *pDlg_moderation;
+    OnetKernel *pOnetKernel;
+    OnetAuth *pOnetAuth;
+    DlgChannelSettings *pDlgChannelSettings;
+    DlgUserProfile *pDlgUserProfile;
+    DlgModeration *pDlgModeration;
 
     // gui
     InputLineDockWidget *inputLineDockWidget;

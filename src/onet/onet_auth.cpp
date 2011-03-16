@@ -32,6 +32,7 @@
 OnetAuth::OnetAuth(TabContainer *param1)
 {
     tabc = param1;
+    bAuthorizing = false;
 }
 
 QString OnetAuth::network_request(QNetworkAccessManager *accessManager, QString strLink, QString strContent)
@@ -67,6 +68,8 @@ void OnetAuth::authorize(QString param1, QString param2, QString param3)
     QSettings settings;
     if (settings.value("logged") == "on") return; // already logged
 
+    if (bAuthorizing == true) return; // already authorizing
+
     QString strNick = param1;
     QString strNickAuth = param2;
     QString strPass = param3;
@@ -74,6 +77,7 @@ void OnetAuth::authorize(QString param1, QString param2, QString param3)
     bool bOverride;
     QString strData;
     QString strGetUo;
+    bAuthorizing = true;
 
     QNetworkAccessManager *accessManager = new QNetworkAccessManager;
     QNetworkCookieJar *cookieJar = new QNetworkCookieJar();
@@ -195,6 +199,7 @@ void OnetAuth::authorize(QString param1, QString param2, QString param3)
         }
     }
 
+    bAuthorizing = false;
     delete cookieJar;
     accessManager->deleteLater();
 }

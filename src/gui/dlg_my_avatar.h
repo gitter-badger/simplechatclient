@@ -67,6 +67,8 @@ private:
     void get_avatars_from_collect(int);
     void got_avatars_from_collect(QString);
     void draw_avatar_from_collect(QString, QByteArray);
+    // add avatar
+    void got_add_avatar(QString);
     // remove avatar
     void got_remove_avatar(QString);
 
@@ -75,6 +77,7 @@ private slots:
     void refresh_avatar();
     void tab_changed(int);
     void collection_changed(QString);
+    void button_add_avatar();
     void button_apply_avatar();
     void button_remove_avatar();
     void button_set_empty_avatar();

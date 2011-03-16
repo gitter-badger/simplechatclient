@@ -40,6 +40,7 @@ public slots:
 
 private:
     TabContainer *tabc;
+    bool bAuthorizing;
 
     QString network_request(QNetworkAccessManager *, QString, QString);
     QString get_version(QString);

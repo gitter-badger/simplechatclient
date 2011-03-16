@@ -278,7 +278,7 @@ void Network::reconnect()
         if ((this->is_connected() == false) && (settings.value("logged").toString() == "off"))
         {
             emit show_msg_all(tr("Reconnecting..."), 7);
-            emit connect();
+            connect();
         }
     }
 }
@@ -328,7 +328,7 @@ void Network::send(QString strData)
 
 void Network::recv()
 {
-    while(socket->canReadLine())
+    while (socket->canReadLine())
     {
         // read line
         QByteArray data = socket->readLine().trimmed();

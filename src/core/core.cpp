@@ -88,18 +88,18 @@ void Core::init(QMainWindow *parent, QString param1, int param2, Notify *param3,
     // classes
     pTabC = new TabContainer(myparent, pNetwork, pTabM, pNotify, &mChannelAvatar, camSocket, &stlChannelNickStatus, &lAwaylog);
 
-    pDlg_channel_settings = new DlgChannelSettings(myparent, pNetwork);
-    pDlg_moderation = new DlgModeration(myparent);
-    pDlg_user_profile = new DlgUserProfile(myparent, pNetwork);
+    pDlgChannelSettings = new DlgChannelSettings(myparent, pNetwork);
+    pDlgModeration = new DlgModeration(myparent);
+    pDlgUserProfile = new DlgUserProfile(myparent, pNetwork);
 
 #ifndef Q_WS_WIN
     pDlg_cam = new DlgCam(myparent, pNetwork, camSocket);
 #endif
 
-    pOnet_kernel = new OnetKernel(myparent, pNetwork, pTabC, pNotify, &mNickAvatar, &mChannelAvatar, pDlg_channel_settings, &lChannelHomes, &stlChannelList, &lChannelFavourites, &mFriends, &lIgnore, pDlg_moderation, &mMyStats, &mMyProfile);
-    pOnet_auth = new OnetAuth(pTabC);
+    pOnetKernel = new OnetKernel(myparent, pNetwork, pTabC, pNotify, &mNickAvatar, &mChannelAvatar, pDlgChannelSettings, &lChannelHomes, &stlChannelList, &lChannelFavourites, &mFriends, &lIgnore, pDlgModeration, &mMyStats, &mMyProfile);
+    pOnetAuth = new OnetAuth(pTabC);
 
-    pTabC->set_dlg(pDlg_user_profile);
+    pTabC->set_dlg(pDlgUserProfile);
 #ifndef Q_WS_WIN
     pTabC->set_dlg_cam(pDlg_cam);
 #endif
@@ -109,7 +109,7 @@ void Core::init(QMainWindow *parent, QString param1, int param2, Notify *param3,
     bottomDockWidget->setFeatures(QDockWidget::DockWidgetMovable | QDockWidget::DockWidgetClosable | QDockWidget::DockWidgetFloatable);
     bottomDockWidget->setFocus();
     bottomDockWidget->setAllowedAreas(Qt::TopDockWidgetArea | Qt::BottomDockWidgetArea); // top and bottom
-    inputLineDockWidget = new InputLineDockWidget(bottomDockWidget, pNetwork, pDlg_channel_settings, pDlg_moderation);
+    inputLineDockWidget = new InputLineDockWidget(bottomDockWidget, pNetwork, pDlgChannelSettings, pDlgModeration);
     bottomDockWidget->setWidget(inputLineDockWidget);
     myparent->addDockWidget(Qt::BottomDockWidgetArea, bottomDockWidget);
     viewMenu->addAction(bottomDockWidget->toggleViewAction());
@@ -153,14 +153,14 @@ Core::~Core()
     // clear arrays
     clear_all_nicklist();
 
-    delete pOnet_auth;
-    delete pOnet_kernel;
+    delete pOnetAuth;
+    delete pOnetKernel;
 #ifndef Q_WS_WIN
     delete pDlg_cam;
 #endif
-    delete pDlg_user_profile;
-    delete pDlg_moderation;
-    delete pDlg_channel_settings;
+    delete pDlgUserProfile;
+    delete pDlgModeration;
+    delete pDlgChannelSettings;
 
     // close network
     QSettings settings;
@@ -192,7 +192,7 @@ void Core::create_signals()
     // signals tab
     QObject::connect(pTabM, SIGNAL(tabCloseRequested(int)), this, SLOT(tab_close_requested(int)));
     QObject::connect(pTabM, SIGNAL(currentChanged(int)), this, SLOT(current_tab_changed(int)));
-    QObject::connect(pDlg_moderation, SIGNAL(display_msg(QString,QString,int)), pTabC, SLOT(slot_show_msg(QString,QString,int)));
+    QObject::connect(pDlgModeration, SIGNAL(display_msg(QString,QString,int)), pTabC, SLOT(slot_show_msg(QString,QString,int)));
 
     // signals inputLineWidget
     QObject::connect(inputLineDockWidget, SIGNAL(show_msg(QString,QString,int)), pTabC, SLOT(slot_show_msg(QString,QString,int)));
@@ -201,31 +201,31 @@ void Core::create_signals()
     QObject::connect(inputLineDockWidget, SIGNAL(clear_content(QString)), pTabC, SLOT(slot_clear_content(QString)));
 
     // signals lag
-    QObject::connect(pOnet_kernel, SIGNAL(set_lag(QString)), this, SLOT(set_lag(QString)));
-    QObject::connect(pOnet_kernel, SIGNAL(update_nick(QString)), inputLineDockWidget, SLOT(slot_update_nick(QString)));
-    QObject::connect(pOnet_kernel, SIGNAL(clear_nicklist(QString)), this, SLOT(clear_nicklist(QString)));
+    QObject::connect(pOnetKernel, SIGNAL(set_lag(QString)), this, SLOT(set_lag(QString)));
+    QObject::connect(pOnetKernel, SIGNAL(update_nick(QString)), inputLineDockWidget, SLOT(slot_update_nick(QString)));
+    QObject::connect(pOnetKernel, SIGNAL(clear_nicklist(QString)), this, SLOT(clear_nicklist(QString)));
 
     // signals from kernel to nicklist
-    QObject::connect(pOnet_kernel, SIGNAL(add_user(QString,QString,QString,QString)), this, SLOT(add_user(QString,QString,QString,QString)));
-    QObject::connect(pOnet_kernel, SIGNAL(del_user(QString,QString)), this, SLOT(del_user(QString,QString)));
-    QObject::connect(pOnet_kernel, SIGNAL(nicklist_refresh(QString)), this, SLOT(nicklist_refresh(QString)));
-    QObject::connect(pOnet_kernel, SIGNAL(quit_user(QString,QString)), this, SLOT(quit_user(QString,QString)));
-    QObject::connect(pOnet_kernel, SIGNAL(change_flag(QString,QString,QString)), this, SLOT(change_flag(QString,QString,QString)));
-    QObject::connect(pOnet_kernel, SIGNAL(change_flag(QString,QString)), this, SLOT(change_flag(QString,QString)));
-    QObject::connect(pOnet_kernel, SIGNAL(set_user_info(QString,QString,QString)), pDlg_user_profile, SLOT(set_user_info(QString,QString,QString)));
-    QObject::connect(pOnet_kernel, SIGNAL(clear_channel_all_nick_avatars(QString)), this, SLOT(clear_channel_all_nick_avatars(QString)));
+    QObject::connect(pOnetKernel, SIGNAL(add_user(QString,QString,QString,QString)), this, SLOT(add_user(QString,QString,QString,QString)));
+    QObject::connect(pOnetKernel, SIGNAL(del_user(QString,QString)), this, SLOT(del_user(QString,QString)));
+    QObject::connect(pOnetKernel, SIGNAL(nicklist_refresh(QString)), this, SLOT(nicklist_refresh(QString)));
+    QObject::connect(pOnetKernel, SIGNAL(quit_user(QString,QString)), this, SLOT(quit_user(QString,QString)));
+    QObject::connect(pOnetKernel, SIGNAL(change_flag(QString,QString,QString)), this, SLOT(change_flag(QString,QString,QString)));
+    QObject::connect(pOnetKernel, SIGNAL(change_flag(QString,QString)), this, SLOT(change_flag(QString,QString)));
+    QObject::connect(pOnetKernel, SIGNAL(set_user_info(QString,QString,QString)), pDlgUserProfile, SLOT(set_user_info(QString,QString,QString)));
+    QObject::connect(pOnetKernel, SIGNAL(clear_channel_all_nick_avatars(QString)), this, SLOT(clear_channel_all_nick_avatars(QString)));
 
     // signals to network
-    QObject::connect(pDlg_moderation, SIGNAL(send(QString)), pNetwork, SLOT(send(QString)));
-    QObject::connect(pOnet_auth, SIGNAL(send(QString)), pNetwork, SLOT(send(QString)));
+    QObject::connect(pDlgModeration, SIGNAL(send(QString)), pNetwork, SLOT(send(QString)));
+    QObject::connect(pOnetAuth, SIGNAL(send(QString)), pNetwork, SLOT(send(QString)));
 
     // signals from network
     QObject::connect(pNetwork, SIGNAL(set_connected()), this, SLOT(set_connected()));
     QObject::connect(pNetwork, SIGNAL(set_disconnected()), this, SLOT(set_disconnected()));
     QObject::connect(pNetwork, SIGNAL(set_lag(QString)), this, SLOT(set_lag(QString)));
     QObject::connect(pNetwork, SIGNAL(set_connect_enabled(bool)), this, SLOT(set_connect_enabled(bool)));
-    QObject::connect(pNetwork, SIGNAL(kernel(QString)), pOnet_kernel, SLOT(kernel(QString)));
-    QObject::connect(pNetwork, SIGNAL(authorize(QString,QString,QString)), pOnet_auth, SLOT(authorize(QString,QString,QString)));
+    QObject::connect(pNetwork, SIGNAL(kernel(QString)), pOnetKernel, SLOT(kernel(QString)));
+    QObject::connect(pNetwork, SIGNAL(authorize(QString,QString,QString)), pOnetAuth, SLOT(authorize(QString,QString,QString)));
     QObject::connect(pNetwork, SIGNAL(show_msg_active(QString,int)), pTabC, SLOT(slot_show_msg_active(QString,int)));
     QObject::connect(pNetwork, SIGNAL(show_msg_all(QString,int)), pTabC, SLOT(slot_show_msg_all(QString,int)));
     QObject::connect(pNetwork, SIGNAL(update_nick(QString)), inputLineDockWidget, SLOT(slot_update_nick(QString)));
@@ -353,7 +353,7 @@ void Core::open_channel_list()
 void Core::open_channel_homes()
 {
     if ((pNetwork->is_connected() == true) && (pNetwork->is_writable() == true))
-        DlgChannelHomes(myparent, pNetwork, &mChannelAvatar, &lChannelHomes, pDlg_channel_settings).exec();
+        DlgChannelHomes(myparent, pNetwork, &mChannelAvatar, &lChannelHomes, pDlgChannelSettings).exec();
 }
 
 void Core::open_channel_favourites()
@@ -476,7 +476,7 @@ void Core::create_nicklist(QString strChannel)
 {
     if (mChannelNickListWidget.contains(strChannel) == false)
     {
-        NickListWidget *nicklist = new NickListWidget(myparent, pNetwork, strChannel, &mNickAvatar, camSocket, &stlChannelNickStatus, pDlg_user_profile);
+        NickListWidget *nicklist = new NickListWidget(myparent, pNetwork, strChannel, &mNickAvatar, camSocket, &stlChannelNickStatus, pDlgUserProfile);
 #ifndef Q_WS_WIN
         nicklist->set_dlg_cam(pDlg_cam);
 #endif

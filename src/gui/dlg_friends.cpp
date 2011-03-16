@@ -107,7 +107,7 @@ void DlgFriends::button_add()
     if ((ok == true) && (strText.isEmpty() == false))
     {
         pNetwork->send(QString("NS FRIENDS ADD %1").arg(strText));
-        QTimer::singleShot(1000*2, this, SLOT(refresh())); // 2 sec
+        QTimer::singleShot(1000*4, this, SLOT(refresh())); // 4 sec
     }
 }
 
@@ -131,7 +131,7 @@ void DlgFriends::button_remove()
     if ((ok == true) && (strText.isEmpty() == false))
     {
         pNetwork->send(QString("NS FRIENDS DEL %1").arg(strText));
-        QTimer::singleShot(1000*2, this, SLOT(refresh())); // 2 sec
+        QTimer::singleShot(1000*4, this, SLOT(refresh())); // 4 sec
     }
 }
 

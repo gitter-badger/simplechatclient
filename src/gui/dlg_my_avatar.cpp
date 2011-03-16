@@ -18,8 +18,10 @@
  *                                                                          *
  ****************************************************************************/
 
+#include <QDateTime>
 #include <QDesktopWidget>
 #include <QDomDocument>
+#include <QFileDialog>
 #include <QNetworkReply>
 #include <QPushButton>
 #include <QSettings>
@@ -67,6 +69,7 @@ DlgMyAvatar::DlgMyAvatar(QWidget *parent, Network *param1, QMap <QString, QByteA
     // temporarily disabled
     ui.pushButton_add_avatar->setEnabled(false);
 
+    QObject::connect(ui.pushButton_add_avatar, SIGNAL(clicked()), this, SLOT(button_add_avatar()));
     QObject::connect(ui.pushButton_apply_collection_avatar, SIGNAL(clicked()), this, SLOT(button_apply_collection_avatar()));
     QObject::connect(ui.pushButton_apply_avatar, SIGNAL(clicked()), this, SLOT(button_apply_avatar()));
     QObject::connect(ui.pushButton_remove_avatar, SIGNAL(clicked()), this, SLOT(button_remove_avatar()));
@@ -435,6 +438,69 @@ void DlgMyAvatar::collection_changed(QString strName)
     }
 }
 
+void DlgMyAvatar::button_add_avatar()
+{
+    QString strSelectedFilter;
+    QString strFileName = QFileDialog::getOpenFileName(this,
+                                     tr("Select Image File"),
+                                     "",
+                                     tr("JPG Files (*.jpg)"),
+                                     &strSelectedFilter,
+                                     0);
+    if (strFileName.isEmpty() == false)
+    {
+        QByteArray bFileContent;
+
+        // read file
+        QFile f(strFileName);
+        if (!f.open(QIODevice::ReadOnly))
+            return;
+        bFileContent = f.readAll();
+        f.close();
+
+        // header
+        qsrand(QDateTime::currentDateTime().toTime_t());
+        QString strRand = QVariant(qrand()).toString()+QVariant(qrand()).toString()+QVariant(qrand()).toString();
+        QString strBoundary = QString("---------------------------%1").arg(strRand);
+        QString strEndBoundary= QString("\r\n--%1--\r\n").arg(strBoundary);
+        QString strContentType = QString("multipart/form-data; boundary=%1").arg(strBoundary);
+
+        // send
+        QByteArray send;
+        QString strRid = QUuid::createUuid().toString();
+        strRid.remove("{"); strRid.remove("}");
+        QString strUuid = QUuid::createUuid().toString();
+        strUuid.remove("{"); strUuid.remove("}");
+        QString strEnvelope = QString("a:1:{s:14:\"imageInputName\";s:%1:\"%2\";}").arg(strUuid.size()).arg(strUuid);
+
+        send += QString("--%1\r\nContent-Disposition: form-data; name=\"%2\"\r\n\r\n%3\r\n").arg(strBoundary).arg("fnc").arg("uploadImage");
+        send += QString("--%1\r\nContent-Disposition: form-data; name=\"%2\"\r\n\r\n%3\r\n").arg(strBoundary).arg("rdr").arg("xml");
+        send += QString("--%1\r\nContent-Disposition: form-data; name=\"%2\"\r\n\r\n%3\r\n").arg(strBoundary).arg("rid").arg(strRid);
+        send += QString("--%1\r\nContent-Disposition: form-data; name=\"%2\"\r\n\r\n%3\r\n").arg(strBoundary).arg("envelope").arg(strEnvelope);
+        send += QString("--%1\r\nContent-Disposition: form-data; name=\"%2\"; filename=\"%3\"\r\n").arg(strBoundary).arg(strUuid).arg(strFileName);
+        send += QString("Content-Type: image/jpeg\r\n\r\n");
+        send += bFileContent;
+        send += strEndBoundary;
+
+        // request
+        QNetworkRequest request;
+        QString strUrl = "http://czat.onet.pl/_x/ludzie/avatars/api.php3";
+        request.setUrl(QUrl(strUrl));
+        request.setHeader(QNetworkRequest::ContentTypeHeader, strContentType.toAscii());
+        request.setHeader(QNetworkRequest::ContentLengthHeader, QVariant(send.size()).toString());
+
+        // reply
+        QNetworkReply *pReply = networkAccessManager->post(request, send);
+        pReply->setProperty("category", "add_avatar");
+    }
+}
+
+// a:2:{s:5:"error";a:2:{s:4:"code";i:-500;s:4:"text";s:10:"Bad params";}s:5:"reqId";i:0;}
+// <root><data><mHash><![CDATA[7bec84066455a12e87e7bea1decc58a1]]></mHash><width>200</width><height>200</height><exif><![CDATA[]]></exif><fotoSrv><![CDATA[http://foto1.m.onet.pl/_m/]]></fotoSrv><mApp>19</mApp></data><reqId><![CDATA[37bebcec-da81-4a17-85aa-8b1205e4b0d9]]></reqId></root>
+void DlgMyAvatar::got_add_avatar(QString strResult)
+{
+}
+
 void DlgMyAvatar::button_apply_avatar()
 {
     if (ui.listWidget_my_avatars->selectedItems().isEmpty() == false)
@@ -530,6 +596,8 @@ void DlgMyAvatar::network_finished(QNetworkReply *reply)
         got_collections(QString(bData));
     else if (strCategory == "get_avatars_from_collect")
         got_avatars_from_collect(QString(bData));
+    else if (strCategory == "add_avatar")
+        got_add_avatar(QString(bData));
     else if (strCategory == "remove_avatar")
         got_remove_avatar(QString(bData));
 }

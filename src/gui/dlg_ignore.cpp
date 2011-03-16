@@ -83,7 +83,7 @@ void DlgIgnore::button_add()
     if ((ok == true) && (strText.isEmpty() == false))
     {
         pNetwork->send(QString("NS IGNORE ADD %1").arg(strText));
-        QTimer::singleShot(1000*2, this, SLOT(refresh())); // 2 sec
+        QTimer::singleShot(1000*4, this, SLOT(refresh())); // 4 sec
     }
 }
 
@@ -99,7 +99,7 @@ void DlgIgnore::button_remove()
     if ((ok == true) && (strText.isEmpty() == false))
     {
         pNetwork->send(QString("NS IGNORE DEL %1").arg(strText));
-        QTimer::singleShot(1000*2, this, SLOT(refresh())); // 2 sec
+        QTimer::singleShot(1000*4, this, SLOT(refresh())); // 4 sec
     }
 }
 
