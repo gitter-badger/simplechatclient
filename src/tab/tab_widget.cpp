@@ -286,9 +286,9 @@ void TabWidget::display_message(QString strData, int iLevel)
             }
 
             // remove color, font, emots
-            strAwayData.replace(QRegExp("%C([a-zA-Z0-9_-:]+)%"),"");
-            strAwayData.replace(QRegExp("%F([a-zA-Z0-9_-:]+)%"),"");
-            strAwayData.replace(QRegExp("%I([a-zA-Z0-9_-:]+)%"),"<\\1>");
+            strAwayData.replace(QRegExp("%C([a-zA-Z0-9]+)%"),"");
+            strAwayData.replace(QRegExp("%F([a-zA-Z0-9:]+)%"),"");
+            strAwayData.replace(QRegExp("%I([a-zA-Z0-9_-]+)%"),"<\\1>");
 
             lAwaylog->append(QString("%1\n%2").arg(strName).arg(strAwayData));
         }

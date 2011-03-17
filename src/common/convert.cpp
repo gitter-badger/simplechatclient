@@ -49,35 +49,36 @@ void Convert::convert_text(QString *strData, QString *strLastContent)
                 {
                     iEndPos++;
                     QString strFontFull = strData->mid(iStartPos, iEndPos-iStartPos);
-                    QString strFont = strFontFull.mid(2,strFontFull.length()-3);
+                    QString strFont = strFontFull.mid(2,strFontFull.size()-3);
                     strFont = strFont.toLower();
 
-                    QString strFontStyle = "normal";
-                    QString strFontWeight;
+                    QString strFontStyle;
                     QString strFontName;
+                    QString strFontWeight;
+                    QString strShortFontWeight;
 
                     if (strFont.indexOf(":") != -1)
                     {
-                        strFontWeight = strFont.left(strFont.indexOf(":"));
-                        strFontName = strFont.right(strFont.length()-strFont.indexOf(":")-1);
+                        strShortFontWeight = strFont.left(strFont.indexOf(":"));
+                        strFontName = strFont.right(strFont.size()-strFont.indexOf(":")-1);
                     }
                     else
                     {
                         QRegExp rx("((b|i)?)((b|i)?)");
                         if (rx.exactMatch(strFont) == true)
-                            strFontWeight = strFont;
+                            strShortFontWeight = strFont;
                     }
 
-                    if (strFontWeight.isEmpty() == false)
+                    if (strShortFontWeight.isEmpty() == false)
                     {
-                        for (int fw = 0; fw < strFontWeight.length(); fw++)
+                        for (int fw = 0; fw < strShortFontWeight.size(); fw++)
                         {
-                            if (strFontWeight[fw] == 'b') strFontWeight = "bold";
-                            else if (strFontWeight[fw] == 'i') strFontStyle = "italic";
+                            if (strShortFontWeight[fw] == 'b') strFontWeight = "bold";
+                            else if (strShortFontWeight[fw] == 'i') strFontStyle = "italic";
                         }
                     }
 
-                    if ((strFontName.isEmpty() == false) || (strFontWeight.isEmpty() == false))
+                    if ((strFontName.isEmpty() == false) || (strFontWeight.isEmpty() == false) || (strFontStyle.isEmpty() == false))
                     {
                         QString strFontFamily;
                         if (strFontName == "arial") strFontFamily = "Arial";
@@ -87,8 +88,10 @@ void Convert::convert_text(QString *strData, QString *strLastContent)
                         else if (strFontName == "courier") strFontFamily = "Courier New";
                         else strFontFamily = "Verdana";
 
-                        if ((strFontWeight.isEmpty() == true) || (strFontWeight == "i"))
+                        if (strFontWeight.isEmpty() == true)
                             strFontWeight = "normal";
+                        if (strFontStyle.isEmpty() == true)
+                            strFontStyle = "normal";
 
                         QString strInsert = "<span style=\"font-weight:"+strFontWeight+";font-style:"+strFontStyle+";font-family:"+strFontFamily+";\">";
                         strData->replace(strFontFull, strInsert);
@@ -166,7 +169,7 @@ void Convert::convert_text(QString *strData, QString *strLastContent)
                 {
                     iEndPos++;
                     QString strEmoticonFull = strData->mid(iStartPos, iEndPos-iStartPos);
-                    QString strEmoticon = strEmoticonFull.mid(2,strEmoticonFull.length()-3);
+                    QString strEmoticon = strEmoticonFull.mid(2,strEmoticonFull.size()-3);
                     QString strInsert;
 
                     QString strEmoticonFull1 = strPath+"/3rdparty/emoticons/"+strEmoticon+".gif";

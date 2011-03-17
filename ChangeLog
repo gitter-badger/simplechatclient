@@ -1,0 +1,25 @@
+ChangeLog for Simple Chat Client
+========================= 
+
+Version 1.0.10 (unknown date)
+================================
+
+* Fixed lag
+* Fixed classic style
+* Added my avatars
+* Fixed network reconnect
+* Added my profile
+* Fixed config
+* Added linux reading cam frame using v4l2
+* Added age check for Erotic channels
+* Fixed options layout
+* Fixed kamerzysta support
+* Added user stats 
+* Added channel stats 
+* Fixed network quit
+* Added basic syntax highlighter
+* Added detect already running scc
+* Added background image
+* Added awaylog
+* Added basic cam support for linux
+* Many bugfixes

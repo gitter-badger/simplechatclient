@@ -171,7 +171,7 @@ void MainWindow::create_actions()
 
     // shortcut
     connectAct->setShortcuts(QKeySequence::New);
-    closeAct->setShortcut(tr("Ctrl+E"));
+    closeAct->setShortcut(tr("Ctrl+Q"));
     optionsAct->setShortcut(tr("Ctrl+O"));
 
     // onet shortcut
@@ -256,7 +256,7 @@ void MainWindow::create_settings()
     // default settings
     QSettings settings;
     settings.clear();
-    settings.setValue("version", "1.0.10.757");
+    settings.setValue("version", "1.0.10.758");
     settings.setValue("debug", "off");
     settings.setValue("logged", "off");
     settings.setValue("busy", "off");
