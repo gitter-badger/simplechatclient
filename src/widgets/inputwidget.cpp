@@ -143,9 +143,9 @@ void InputWidget::set_toolwidget_icon(bool bShowHide)
 
 QString InputWidget::convert_emots(QString strData)
 {
-    strData.replace(QRegExp("(http:|https:)//"), "\\1\\\\"); // fix http https
+    strData.replace(QRegExp("(http:|https:)//"), "\\1\\\\"); // fix http/s
     strData.replace(QRegExp("//([a-zA-Z0-9_-]+)\\b"), "%I\\1%");
-    strData.replace(QRegExp("(http:|https:)\\\\\\\\"), "\\1//"); // fix http https
+    strData.replace(QRegExp("(http:|https:)\\\\\\\\"), "\\1//"); // fix http/s
     return strData;
 }
 
@@ -160,93 +160,43 @@ QString InputWidget::replace_emots(QString strData)
 
 void InputWidget::send_message(bool bType)
 {
-    QString strTextO = inputLine->toPlainText();
-    QStringList strTextA = strTextO.split(QRegExp("(\n|\r)"));
+    QString strText = inputLine->toPlainText().trimmed();
+    QString strTextOriginal = strText;
 
-    for (int i = 0; i < strTextA.size(); i++)
+    QSettings settings;
+    QString strMe = settings.value("nick").toString();
+    QString strCurrentColor = settings.value("my_color").toString();
+    QString strFontFamily = settings.value("my_font").toString();
+    bool bMyBold = settings.value("my_bold").toString() == "on" ? true : false;
+    bool bMyItalic = settings.value("my_italic").toString() == "on" ? true : false;
+
+    // if command
+    if ((strText[0] == '/') && (strText[1] != '/'))
     {
-        QString strText = strTextA[i];
-        QString strTextOriginal = strText;
+        if (strText[0] == '/')
+            strText = strText.right(strText.length()-1);
+        strTextOriginal = strText;
+        QStringList strTextList = strText.split(" ");
 
-        QSettings settings;
-        QString strMe = settings.value("nick").toString();
-        QString strCurrentColor = settings.value("my_color").toString();
-        QString strFontFamily = settings.value("my_font").toString();
-        bool bMyBold = settings.value("my_bold").toString() == "on" ? true : false;
-        bool bMyItalic = settings.value("my_italic").toString() == "on" ? true : false;
+        Commands *pCommands = new Commands(strChannel, strText);
+        strText = pCommands->execute();
+        delete pCommands;
 
-        if ((strText[0] == '/') && (strText[1] != '/'))
+        // help
+        if ((strTextList[0] == "help") || (strTextList[0] == "pomoc"))
         {
-            if (strText[0] == '/')
-                strText = strText.right(strText.length()-1);
-            strTextOriginal = strText;
-            QStringList strTextList = strText.split(" ");
-
-            Commands *pCommands = new Commands(strChannel, strText);
-            strText = pCommands->execute();
-            delete pCommands;
-
-            if ((strTextList[0] == "help") || (strTextList[0] == "pomoc"))
-            {
-                QStringList strlHelp = strText.split(";");
-                for (int i = 0; i < strlHelp.size(); i++)
-                    emit show_msg(strChannel, strlHelp.at(i), 7);
-            }
-            else if (strTextList[0] == "me")
-            {
-                if (strTextOriginal.length() > 3)
-                {
-                    QString strTextSend = strText;
-                    QString strTextDisplay = strTextOriginal.right(strTextOriginal.length()-3);
-
-                    QString weight;
-                    QString font = strFontFamily.toLower();
-
-                    if (bMyBold == true) weight += "b";
-                    if (bMyItalic == true) weight += "i";
-
-                    if (font == "verdana")
-                        font = "";
-                    if ((strCurrentColor != "#000000") && (strCurrentColor.isEmpty() == false))
-                        strTextDisplay = "%C"+strCurrentColor.right(6)+"%"+strTextDisplay;
-                    if (font.isEmpty() == false)
-                        font = ":"+font;
-                    if ((weight.isEmpty() == false) || (font.isEmpty() == false))
-                        strTextDisplay = "%F"+weight+font+"%"+strTextDisplay;
-
-                    strTextSend = convert_emots(strTextSend);
-                    strTextSend = replace_emots(strTextSend);
-                    strTextDisplay = convert_emots(strTextDisplay);
-                    strTextDisplay = replace_emots(strTextDisplay);
-
-                    QDateTime dt = QDateTime::currentDateTime();
-                    QString strDT = dt.toString("[hh:mm:ss] ");
-
-                    QSettings settings;
-                    if (settings.value("disable_logs").toString() == "off")
-                    {
-                        Log *l = new Log();
-                        l->save(strChannel, QString("%1<%2> %3").arg(strDT).arg(strMe).arg(strTextDisplay));
-                        delete l;
-                    }
-
-                    emit display_message(strChannel, QString("%1<%2> %3ACTION %4%5").arg(strDT).arg(strMe).arg(QString(QByteArray("\x01"))).arg(strTextDisplay).arg(QString(QByteArray("\x01"))), 0);
-                    if (pNetwork->is_connected() == true)
-                        pNetwork->send(strTextSend);
-                }
-            }
-            else
-            {
-                if ((pNetwork->is_connected() == true) && (strText.length() > 0))
-                    pNetwork->send(strText);
-            }
-
-            inputLine->clear();
+            QStringList strlHelp = strText.split(";");
+            for (int i = 0; i < strlHelp.size(); i++)
+                emit show_msg(strChannel, strlHelp.at(i), 7);
         }
-        else if (strChannel != "Status")
+        // me
+        else if (strTextList[0] == "me")
         {
-            if ((pNetwork->is_connected() == true) && (strText.length() > 0))
+            if (strTextOriginal.length() > 3)
             {
+                QString strTextSend = strText;
+                QString strTextDisplay = strTextOriginal.right(strTextOriginal.length()-3);
+
                 QString weight;
                 QString font = strFontFamily.toLower();
 
@@ -256,51 +206,93 @@ void InputWidget::send_message(bool bType)
                 if (font == "verdana")
                     font = "";
                 if ((strCurrentColor != "#000000") && (strCurrentColor.isEmpty() == false))
-                    strText = "%C"+strCurrentColor.right(6)+"%"+strText;
+                    strTextDisplay = "%C"+strCurrentColor.right(6)+"%"+strTextDisplay;
                 if (font.isEmpty() == false)
                     font = ":"+font;
                 if ((weight.isEmpty() == false) || (font.isEmpty() == false))
-                    strText = "%F"+weight+font+"%"+strText;
+                    strTextDisplay = "%F"+weight+font+"%"+strTextDisplay;
 
-                strText = convert_emots(strText);
-                strText = replace_emots(strText);
+                strTextSend = convert_emots(strTextSend);
+                strTextSend = replace_emots(strTextSend);
+                strTextDisplay = convert_emots(strTextDisplay);
+                strTextDisplay = replace_emots(strTextDisplay);
 
                 QDateTime dt = QDateTime::currentDateTime();
                 QString strDT = dt.toString("[hh:mm:ss] ");
 
-                if (bType == true)
+                QSettings settings;
+                if (settings.value("disable_logs").toString() == "off")
                 {
-                    QSettings settings;
-                    if (settings.value("disable_logs").toString() == "off")
-                    {
-                        Log *l = new Log();
-                        l->save(strChannel, QString("%1<%2> %3").arg(strDT).arg(strMe).arg(strText));
-                        delete l;
-                    }
-
-                    strText = QString("PRIVMSG %1 :%2").arg(strChannel).arg(strText);
-                    pNetwork->send(strText);
-                    emit display_message(strChannel, QString("%1<%2> %3").arg(strDT).arg(strMe).arg(strText.right(strText.length()-10-strChannel.length())), 0);
-                }
-                else
-                {
-                    QSettings settings;
-                    if (settings.value("disable_logs").toString() == "off")
-                    {
-                        Log *l = new Log();
-                        l->save(strChannel, QString("%1 *<%2> %3").arg(strDT).arg(strMe).arg(strText));
-                        delete l;
-                    }
-
-                    strText = QString("MODERNOTICE %1 :%2").arg(strChannel).arg(strText);
-                    pNetwork->send(strText);
-                    emit display_message(strChannel, QString("%1 *<%2> %3").arg(strDT).arg(strMe).arg(strText.right(strText.length()-14-strChannel.length())), 6);
+                    Log *l = new Log();
+                    l->save(strChannel, QString("%1<%2> %3").arg(strDT).arg(strMe).arg(strTextDisplay));
+                    delete l;
                 }
 
-                inputLine->clear();
+                pNetwork->send(strTextSend);
+                emit display_message(strChannel, QString("%1<%2> %3ACTION %4%5").arg(strDT).arg(strMe).arg(QString(QByteArray("\x01"))).arg(strTextDisplay).arg(QString(QByteArray("\x01"))), 0);
             }
         }
+        // other command
+        else
+        {
+            if (strText.length() > 0)
+                pNetwork->send(strText);
+        }
     }
+    else
+    {
+        QString weight;
+        QString font = strFontFamily.toLower();
+
+        if (bMyBold == true) weight += "b";
+        if (bMyItalic == true) weight += "i";
+
+        if (font == "verdana")
+            font = "";
+        if ((strCurrentColor != "#000000") && (strCurrentColor.isEmpty() == false))
+            strText = "%C"+strCurrentColor.right(6)+"%"+strText;
+        if (font.isEmpty() == false)
+            font = ":"+font;
+        if ((weight.isEmpty() == false) || (font.isEmpty() == false))
+            strText = "%F"+weight+font+"%"+strText;
+
+        strText = convert_emots(strText);
+        strText = replace_emots(strText);
+
+        QDateTime dt = QDateTime::currentDateTime();
+        QString strDT = dt.toString("[hh:mm:ss] ");
+
+        // standard text
+        if (bType == true)
+        {
+            if (settings.value("disable_logs").toString() == "off")
+            {
+                Log *l = new Log();
+                l->save(strChannel, QString("%1<%2> %3").arg(strDT).arg(strMe).arg(strText));
+                delete l;
+            }
+
+            strText = QString("PRIVMSG %1 :%2").arg(strChannel).arg(strText);
+            pNetwork->send(strText);
+            emit display_message(strChannel, QString("%1<%2> %3").arg(strDT).arg(strMe).arg(strText.right(strText.length()-10-strChannel.length())), 0);
+        }
+        // moder notice
+        else
+        {
+            if (settings.value("disable_logs").toString() == "off")
+            {
+                Log *l = new Log();
+                l->save(strChannel, QString("%1 *<%2> %3").arg(strDT).arg(strMe).arg(strText));
+                delete l;
+            }
+
+            strText = QString("MODERNOTICE %1 :%2").arg(strChannel).arg(strText);
+            pNetwork->send(strText);
+            emit display_message(strChannel, QString("%1 *<%2> %3").arg(strDT).arg(strMe).arg(strText.right(strText.length()-14-strChannel.length())), 6);
+        }
+    }
+
+    inputLine->clear();
 }
 
 void InputWidget::update_nick(QString strNick)
