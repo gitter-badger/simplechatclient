@@ -53,6 +53,7 @@ private:
     QMap<QString, QString> mMyAvatarsID; // url, id
 
     void get_cookies();
+    // avatar
     void get_avatar(QString);
     void got_avatar(QString, QByteArray);
     // my avatars

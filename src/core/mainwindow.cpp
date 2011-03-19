@@ -256,7 +256,7 @@ void MainWindow::create_settings()
     // default settings
     QSettings settings;
     settings.clear();
-    settings.setValue("version", "1.0.10.758");
+    settings.setValue("version", "1.0.10.759");
     settings.setValue("debug", "off");
     settings.setValue("logged", "off");
     settings.setValue("busy", "off");
@@ -270,6 +270,7 @@ void MainWindow::create_settings()
     settings.setValue("onet_cid", "");
     settings.setValue("onet_sid", "");
     settings.setValue("onet_uid", "");
+    settings.setValue("onetzuo_ticket", "");
 
     // config values
     Config *pConfig = new Config();

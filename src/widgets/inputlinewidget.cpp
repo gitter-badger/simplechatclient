@@ -192,3 +192,9 @@ bool InputLineWidget::event(QEvent *e)
         return QPlainTextEdit::event(e);
     }
 }
+
+// fixed pasting multi-line
+void InputLineWidget::insertFromMimeData(const QMimeData *source)
+{
+    this->setPlainText(source->text().simplified());
+}

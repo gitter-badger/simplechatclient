@@ -88,6 +88,10 @@ void DlgEmail::get_cookies()
     cookie.setValue(settings.value("onet_uid").toByteArray());
     cookieList.append(cookie);
 
+    cookie.setName("onetzuo_ticket");
+    cookie.setValue(settings.value("onetzuo_ticket").toByteArray());
+    cookieList.append(cookie);
+
     accessManager->cookieJar()->setCookiesFromUrl(cookieList, QUrl("http://czat.onet.pl"));
 }
 

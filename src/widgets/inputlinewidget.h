@@ -44,6 +44,7 @@ private:
 
 protected:
     virtual bool event(QEvent *);
+    virtual void insertFromMimeData(const QMimeData *);
 
 signals:
     void returnPressed();

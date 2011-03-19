@@ -19,6 +19,7 @@
  ****************************************************************************/
 
 #include <QDateTime>
+#include <QDebug>
 #include <QDesktopWidget>
 #include <QDomDocument>
 #include <QFileDialog>
@@ -118,6 +119,10 @@ void DlgMyAvatar::get_cookies()
     cookie.setValue(settings.value("onet_uid").toByteArray());
     cookieList.append(cookie);
 
+    cookie.setName("onetzuo_ticket");
+    cookie.setValue(settings.value("onetzuo_ticket").toByteArray());
+    cookieList.append(cookie);
+
     networkAccessManager->cookieJar()->setCookiesFromUrl(cookieList, QUrl("http://czat.onet.pl"));
 }
 
@@ -157,6 +162,7 @@ void DlgMyAvatar::load_my_avatars()
 {
     // load avatars
     QString strUuid = QUuid::createUuid().toString();
+    strUuid.remove("{"); strUuid.remove("}");
     QString strContent = QString("fnc=loadFAvatars&rdr=xml&rid=%1").arg(strUuid);
     QString strUrl = "http://czat.onet.pl/_x/ludzie/avatars/api.php3";
 
@@ -180,10 +186,13 @@ void DlgMyAvatar::got_my_avatars(QString strResult)
     // error
     QDomNodeList error = docElem.elementsByTagName("error");
     QString code = error.at(0).firstChildElement("code").text();
-    //QString text = error.at(0).firstChildElement("text").text();
+    QString text = error.at(0).firstChildElement("text").text();
 
     if (code != "0")
+    {
+        qDebug() << "Error loadFAvatars: " << text;
         return;
+    }
 
     // data
     QDomNodeList avatarsNodeList = docElem.elementsByTagName("data");
@@ -256,6 +265,7 @@ void DlgMyAvatar::get_collections()
 {
     // get collections
     QString strUuid = QUuid::createUuid().toString();
+    strUuid.remove("{"); strUuid.remove("}");
     QString strContent = QString("fnc=getCollections&rdr=xml&rid=%1").arg(strUuid);
     QString strUrl = "http://czat.onet.pl/_x/ludzie/avatars/api.php3";
 
@@ -280,10 +290,13 @@ void DlgMyAvatar::got_collections(QString strResult)
     // error
     QDomNodeList error = docElem.elementsByTagName("error");
     QString code = error.at(0).firstChildElement("code").text();
-    //QString text = error.at(0).firstChildElement("text").text();
+    QString text = error.at(0).firstChildElement("text").text();
 
     if (code != "0")
+    {
+        qDebug() << "Error getCollections: " << text;
         return;
+    }
 
     // data
     QDomNodeList nodeList = docElem.elementsByTagName("data");
@@ -325,6 +338,7 @@ void DlgMyAvatar::get_avatars_from_collect(int index)
 {
     // get avatars from collect
     QString strUuid = QUuid::createUuid().toString();
+    strUuid.remove("{"); strUuid.remove("}");
     QString strContent = QString("fnc=getAvatarsFromCollect&rdr=xml&rid=%1").arg(strUuid);
     strContent += QString("&envelope=a:1:{s:10:\"collectIds\";i:%1;}").arg(index);
     QString strUrl = "http://czat.onet.pl/_x/ludzie/avatars/api.php3";
@@ -349,10 +363,13 @@ void DlgMyAvatar::got_avatars_from_collect(QString strResult)
     // error
     QDomNodeList error = docElem.elementsByTagName("error");
     QString code = error.at(0).firstChildElement("code").text();
-    //QString text = error.at(0).firstChildElement("text").text();
+    QString text = error.at(0).firstChildElement("text").text();
 
     if (code != "0")
+    {
+        qDebug() << "Error getAvatarsFromCollect: " << text;
         return;
+    }
 
     // data
     QDomNodeList avatarsNodeList = docElem.elementsByTagName("data");
@@ -525,6 +542,7 @@ void DlgMyAvatar::button_remove_avatar()
         {
             // delete avatar
             QString strUuid = QUuid::createUuid().toString();
+            strUuid.remove("{"); strUuid.remove("}");
             QString strContent = QString("fnc=deletePhoto&rdr=xml&rid=%1").arg(strUuid);
             strContent += QString("&envelope=a:1:{s:5:\"imgId\";i:%1;}").arg(strImgId);
             QString strUrl = "http://czat.onet.pl/_x/ludzie/avatars/api.php3";
@@ -546,10 +564,13 @@ void DlgMyAvatar::got_remove_avatar(QString strResult)
     // error
     QDomNodeList error = docElem.elementsByTagName("error");
     QString code = error.at(0).firstChildElement("code").text();
-    //QString text = error.at(0).firstChildElement("text").text();
+    QString text = error.at(0).firstChildElement("text").text();
 
     if (code != "0")
+    {
+        qDebug() << "Error deletePhoto: " << text;
         return;
+    }
 
     QTimer::singleShot(1000*5, this, SLOT(refresh_avatar())); // 5 sec
 }

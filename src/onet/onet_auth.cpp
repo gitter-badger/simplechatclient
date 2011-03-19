@@ -181,27 +181,36 @@ void OnetAuth::authorize(QString param1, QString param2, QString param3)
     {
         request_finished(strNickAuth, strGetUo);
 
-        // save cookies
-        QList <QNetworkCookie> cookies = accessManager->cookieJar()->cookiesForUrl(QUrl("http://czat.onet.pl"));
-        for (QList <QNetworkCookie>::iterator i = cookies.begin(); i != cookies.end(); ++i)
-        {
-            QString strKey = i->name();
-            QString strValue = i->value();
-
-            if (strKey == "onet_ubi")
-                settings.setValue("onet_ubi", strValue);
-            else if (strKey == "onet_cid")
-                settings.setValue("onet_cid", strValue);
-            else if (strKey == "onet_sid")
-                settings.setValue("onet_sid", strValue);
-            else if (strKey == "onet_uid")
-                settings.setValue("onet_uid", strValue);
-        }
+        save_cookies(accessManager);
     }
 
     bAuthorizing = false;
     delete cookieJar;
     accessManager->deleteLater();
+}
+
+void OnetAuth::save_cookies(QNetworkAccessManager *accessManager)
+{
+    QSettings settings;
+
+    // save cookies
+    QList <QNetworkCookie> cookies = accessManager->cookieJar()->cookiesForUrl(QUrl("http://czat.onet.pl"));
+    for (QList <QNetworkCookie>::iterator i = cookies.begin(); i != cookies.end(); ++i)
+    {
+        QString strKey = i->name();
+        QString strValue = i->value();
+
+        if (strKey == "onet_ubi")
+            settings.setValue("onet_ubi", strValue);
+        else if (strKey == "onet_cid")
+            settings.setValue("onet_cid", strValue);
+        else if (strKey == "onet_sid")
+            settings.setValue("onet_sid", strValue);
+        else if (strKey == "onet_uid")
+            settings.setValue("onet_uid", strValue);
+        else if (strKey == "onetzuo_ticket")
+            settings.setValue("onetzuo_ticket", strValue);
+    }
 }
 
 QString OnetAuth::transform_key(QString s)
