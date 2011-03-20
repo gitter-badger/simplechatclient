@@ -32,7 +32,7 @@ class Update : public QObject
     Q_OBJECT
 public:
     Update(QWidget *);
-    ~Update();
+    virtual ~Update();
     void check_update();
 
 private:

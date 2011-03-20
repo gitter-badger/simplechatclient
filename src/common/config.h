@@ -35,7 +35,7 @@ class Config : public QObject
     Q_OBJECT
 public:
     Config(bool bCreate = true);
-    ~Config();
+    virtual ~Config();
 
     /**
      * Get config value

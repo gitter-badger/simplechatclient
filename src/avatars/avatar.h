@@ -37,7 +37,7 @@ class Avatar : public QObject
     Q_OBJECT
 public:
     Avatar(TabContainer *, QMap <QString, QByteArray> *, QMap <QString, QByteArray> *);
-    ~Avatar();
+    virtual ~Avatar();
     void get_avatar(QString, QString, QString);
 
 private:

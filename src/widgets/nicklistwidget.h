@@ -57,7 +57,7 @@ class NickListWidget : public QTreeWidget
     Q_OBJECT
 public:
     NickListWidget(QWidget *, Network *, QString, QMap <QString, QByteArray> *, QTcpSocket *, sChannelNickStatus *, DlgUserProfile *);
-    ~NickListWidget();
+    virtual ~NickListWidget();
 #ifndef Q_WS_WIN
     void set_dlg_cam(DlgCam *);
 #endif

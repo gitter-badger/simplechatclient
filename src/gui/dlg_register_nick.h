@@ -31,7 +31,7 @@ class DlgRegisterNick : public QDialog
     Q_OBJECT
 public:
     DlgRegisterNick(QWidget *, QWidget *);
-    ~DlgRegisterNick();
+    virtual ~DlgRegisterNick();
 
 private:
     Ui::uiRegisterNick ui;

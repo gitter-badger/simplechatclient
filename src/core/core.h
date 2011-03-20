@@ -52,7 +52,7 @@ class Core : public QObject
     Q_OBJECT
 public:
     Core();
-    ~Core();
+    virtual ~Core();
     void init(QMainWindow *, QString, int, Notify *, QToolBar *, QMenu *, QAction *, QAction *, QAction *, QAction *, QAction *, QAction *, QAction *, QAction *, QAction *);
 
     void refresh_colors();

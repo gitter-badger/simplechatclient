@@ -154,11 +154,19 @@ find_package (Qt4 REQUIRED)
 
 # v4l2
 if (UNIX)
-	check_include_files(linux/videodev2.h V4L2_FOUND)
+	find_package(LibV4L2)
 
-	if (NOT V4L2_FOUND)
-		message (FATAL_ERROR "Video4Linux2 not found")
-	endif (NOT V4L2_FOUND)
+	IF (LIBV4L2_FOUND)
+		SET (HAVE_LIBV4L2 1)
+		SET (V4L2_CAP_VIDEO_CAPTURE 1)
+		message (STATUS "Lib Video4Linux2 found")
+	ELSE (LIBV4L2_FOUND)
+		check_include_files(linux/videodev2.h V4L2_FOUND)
+
+		if (NOT V4L2_FOUND)
+			message (FATAL_ERROR "Video4Linux2 not found")
+		endif (NOT V4L2_FOUND)
+	endif (LIBV4L2_FOUND)
 endif (UNIX)
 
 # kamerzysta/video

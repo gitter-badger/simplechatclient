@@ -29,6 +29,10 @@
 #include <QImage>
 #include <QObject>
 
+#ifdef HAVE_LIBV4L2
+#include <libv4l2.h>
+#endif // HAVE_V4L2
+
 typedef enum
 {
     // Packed RGB formats
@@ -93,15 +97,15 @@ class Video : public QObject
     Q_OBJECT
 public:
     Video();
-    ~Video();
-    inline bool is_created() { return bCreatedCapture; }
+    virtual ~Video();
+    inline bool isCreated() { return bCreatedCapture; }
 
     void create();
     void destroy();
-    void get_image(QImage *);
+    void getImage(QImage *);
 
-    bool exist_video_device();
-    QList<QString> get_video_devices();
+    bool existVideoDevice();
+    QList<QString> getVideoDevices();
 
 private:
     bool bCreatedCapture;
@@ -114,22 +118,21 @@ private:
     int descriptor;
     struct v4l2_capability V4L2_capabilities;
     struct v4l2_format fmt;
-    struct v4l2_cropcap cropcap;
-    struct v4l2_crop crop;
     int width;
     int height;
 
     int errnoReturn(const char* s);
     int xioctl(int request, void *arg);
 
-    void open_device();
-    void init_device();
-    void init_mmap();
-    void start_capturing();
-    int get_frame();
-    void stop_capturing();
-    void uninit_device();
-    void close_device();
+    int openDevice();
+    virtual bool isOpen();
+    void initDevice();
+    int initMmap();
+    int startCapturing();
+    int getFrame();
+    int stopCapturing();
+    void uninitDevice();
+    void closeDevice();
 };
 
 #endif // VIDEO_H

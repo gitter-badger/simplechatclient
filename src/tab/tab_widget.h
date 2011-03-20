@@ -44,7 +44,7 @@ class TabWidget : public QWidget
     Q_OBJECT
 public:
     TabWidget(QWidget *, Network *, QString, Notify *, QMap <QString, QByteArray> *, QTcpSocket *, sChannelNickStatus *, DlgUserProfile *, QList<QString> *);
-    ~TabWidget();
+    virtual ~TabWidget();
 #ifndef Q_WS_WIN
     void set_dlg_cam(DlgCam *);
 #endif

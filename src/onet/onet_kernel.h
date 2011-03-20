@@ -40,7 +40,7 @@ class OnetKernel : public QObject
     Q_OBJECT
 public:
     OnetKernel(QWidget *, Network *, TabContainer *, Notify *, QMap <QString, QByteArray> *, QMap <QString, QByteArray> *, DlgChannelSettings *, QList<QString> *, sChannelList *, QList<QString> *, QMap<QString, bool> *, QList<QString> *, DlgModeration *, QMap<QString,QString> *, QMap<QString,QString> *);
-    ~OnetKernel();
+    virtual ~OnetKernel();
 
 public slots:
     void kernel(QString);

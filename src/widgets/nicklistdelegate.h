@@ -28,7 +28,7 @@ class NickListDelegate : public QAbstractItemDelegate
     Q_OBJECT
 public:
     NickListDelegate(QObject *parent = 0);
-    ~NickListDelegate();
+    virtual ~NickListDelegate();
 
     void paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const;
     QSize sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const;

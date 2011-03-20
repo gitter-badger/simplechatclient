@@ -48,7 +48,11 @@ int Video::xioctl(int request, void *arg)
 {
     int r;
 
+#ifdef HAVE_LIBV4L2
+    do r = v4l2_ioctl (descriptor, request, arg);
+#else
     do r = ioctl (descriptor, request, arg);
+#endif
     while (-1 == r && EINTR == errno);
 
     return r;
@@ -58,10 +62,10 @@ void Video::create()
 {
     if (bCreatedCapture == false)
     {
-        open_device();
-        init_device();
-        init_mmap();
-        start_capturing();
+        openDevice();
+        initDevice();
+        initMmap();
+        startCapturing();
 
         bCreatedCapture = true;
     }
@@ -72,14 +76,14 @@ void Video::destroy()
     // destroy capture
     if (bCreatedCapture == true)
     {
-        stop_capturing();
-        close_device();
+        stopCapturing();
+        closeDevice();
 
         bCreatedCapture = false;
     }
 }
 
-int Video::get_frame()
+int Video::getFrame()
 {
     struct v4l2_buffer v4l2buffer;
 
@@ -88,57 +92,76 @@ int Video::get_frame()
     v4l2buffer.memory = V4L2_MEMORY_MMAP;
     if (-1 == xioctl (VIDIOC_DQBUF, &v4l2buffer))
     {
-        switch (errno)
+        if (errno == EAGAIN)
         {
-            case EAGAIN:
-            {
-                //qDebug() << "Video: No new frame available.";
-                return EXIT_FAILURE;
-            }
-            case EIO: /* Could ignore EIO, see spec. fall through */
-            default:
-                errnoReturn ("VIDIOC_DQBUF");
-                return EXIT_FAILURE;
+            //qDebug() << "Video: No new frame available.";
+            return EXIT_FAILURE;
         }
+        else
+            return errnoReturn ("VIDIOC_DQBUF");
     }
 
-    //if (v4l2buffer.index < m_streambuffers)
-    //return EXIT_FAILURE; //it was an assert()
+    if (m_currentbuffer.data.isEmpty() ||
+        // v4l2buffer.index < 0 || // is always false: v4l2buffer.index is unsigned
+        (uint) m_rawbuffers.size() <= v4l2buffer.index)
+        return EXIT_FAILURE;
+
+    if (m_rawbuffers[v4l2buffer.index].length < (uint)m_currentbuffer.data.size())
+    {
+        qDebug() << "Buffer size mismatch: expecting raw buffer length to be" << m_currentbuffer.data.size() << "but it was" << m_rawbuffers[v4l2buffer.index].length;
+        return EXIT_FAILURE;
+    }
 
     memcpy(&m_currentbuffer.data[0], m_rawbuffers[v4l2buffer.index].start, m_currentbuffer.data.size());
     if (-1 == xioctl (VIDIOC_QBUF, &v4l2buffer))
-    {
-        errnoReturn ("VIDIOC_QBUF");
-        return EXIT_FAILURE;
-    }
+        return errnoReturn ("VIDIOC_QBUF");
 
     return EXIT_SUCCESS;
 }
 
-void Video::get_image(QImage *qimage)
+void Video::getImage(QImage *qimage)
 {
-    int g = get_frame();
+    int g = getFrame();
     if (g == EXIT_FAILURE) return; // no new image; prevent crash
 
 // do NOT delete qimage here, as it is received as a parameter
     if (qimage->width() != width || qimage->height() != height)
         *qimage = QImage(width, height, QImage::Format_RGB32);
 
-    uchar *bits=qimage->bits();
+    if (!m_currentbuffer.data.size())
+        return; // EXIT_FAILURE
 
     uchar *yptr, *cbptr, *crptr;
     bool halfheight=false;
     bool packed=false;
     // Adjust algorythm to specific YUV data arrangements.
-    yptr = &m_currentbuffer.data[0];
-    cbptr = yptr + 1;
-    crptr = yptr + 3;
-    packed=true;
-
-    for (int y=0; y<height; y++)
+    if (m_currentbuffer.pixelformat == PIXELFORMAT_YUV420P)
+        halfheight=true;
+    if (m_currentbuffer.pixelformat == PIXELFORMAT_YUYV)
     {
-        // Decode scanline
-        for (int x=0; x<width; x++)
+        yptr = &m_currentbuffer.data[0];
+        cbptr = yptr + 1;
+        crptr = yptr + 3;
+        packed=true;
+    }
+    else if (m_currentbuffer.pixelformat == PIXELFORMAT_UYVY)
+    {
+        cbptr = &m_currentbuffer.data[0];
+        yptr = cbptr + 1;
+        crptr = cbptr + 2;
+        packed=true;
+    }
+    else
+    {
+        yptr = &m_currentbuffer.data[0];
+        cbptr = yptr + (width*height);
+        crptr = cbptr + (width*height/(halfheight ? 4:2));
+    }
+
+    for(int y=0; y<height; y++)
+    {
+    // Decode scanline
+        for(int x=0; x<width; x++)
         {
             int c,d,e;
 
@@ -165,7 +188,6 @@ void Video::get_image(QImage *qimage)
 
             uint *p = (uint*)qimage->scanLine(y)+x;
             *p = qRgba(r,g,b,255);
-
         }
         // Jump to next line
         if (packed)
@@ -184,78 +206,62 @@ void Video::get_image(QImage *qimage)
             }
         }
     }
-
-    // Proccesses image for automatic Brightness/Contrast/Color correction
-    //if (getAutoBrightnessContrast()||getAutoColorCorrection())
-    //{
-    unsigned long long R=0, G=0, B=0, global=0;
-    int Rmax=0, Gmax=0, Bmax=0, globalmax=0;
-    int Rmin=255, Gmin=255, Bmin=255, globalmin=255;
-    int Rrange=255, Grange=255, Brange=255;
-
-    // Finds minimum and maximum intensity for each color component
-    for(int loop=0;loop < qimage->numBytes();loop+=4)
-    {
-        R+=bits[loop];
-        G+=bits[loop+1];
-        B+=bits[loop+2];
-        // A+=bits[loop+3];
-        if (bits[loop] < Rmin) Rmin = bits[loop];
-        if (bits[loop+1] < Gmin) Gmin = bits[loop+1];
-        if (bits[loop+2] < Bmin) Bmin = bits[loop+2];
-        // if (bits[loop+3] < Amin) Amin = bits[loop+3];
-        if (bits[loop] > Rmax) Rmax = bits[loop];
-        if (bits[loop+1] > Gmax) Gmax = bits[loop+1];
-        if (bits[loop+2] > Bmax) Bmax = bits[loop+2];
-        // if (bits[loop+3] > Amax) Amax = bits[loop+3];
-    }
-    global = R + G + B;
-    // Finds overall minimum and maximum intensity
-    if (Rmin > Gmin) globalmin = Gmin; else globalmin = Rmin; if (Bmin < globalmin) globalmin = Bmin;
-    if (Rmax > Gmax) globalmax = Rmax; else globalmax = Gmax; if (Bmax > globalmax) globalmax = Bmax;
-    // If no color correction should be performed, simply level all the intensities so they're just the same.
-    // In fact color correction should use the R, G and B variables to detect color deviation and "bump up" the saturation,
-    // but it's computationally more expensive and the current way returns better results to the user.
-
-    //if(!getAutoColorCorrection())
-    //{
-    Rmin = globalmin ; Rmax = globalmax;
-    Gmin = globalmin ; Gmax = globalmax;
-    Bmin = globalmin ; Bmax = globalmax;
-    // Amin = globalmin ; Amax = globalmax;
-    //}
-    // Calculates ranges and prevent a division by zero later on.
-    Rrange = Rmax - Rmin; if (Rrange == 0) Rrange = 255;
-    Grange = Gmax - Gmin; if (Grange == 0) Grange = 255;
-    Brange = Bmax - Bmin; if (Brange == 0) Brange = 255;
-    // Arange = Amax - Amin; if (Arange == 0) Arange = 255;
-
-    for(int loop=0;loop < qimage->numBytes();loop+=4)
-    {
-        bits[loop] = (bits[loop] - Rmin) * 255 / (Rrange);
-        bits[loop+1] = (bits[loop+1] - Gmin) * 255 / (Grange);
-        bits[loop+2] = (bits[loop+2] - Bmin) * 255 / (Brange);
-        // bits[loop+3] = (bits[loop+3] - Amin) * 255 / (Arange);
-    }
-    //}
-
 }
 
-void Video::open_device()
+int Video::openDevice()
 {
     if(-1 != descriptor)
     {
         qDebug() << "Video Error: Device is already open";
-        return;
+        return EXIT_FAILURE;
     }
-    descriptor = ::open (QFile::encodeName(full_filename), O_RDWR | O_NONBLOCK, 0);
 
-    if (-1 == descriptor)
-        qDebug() << "Video Error: Cannot open file " << full_filename;
+#ifdef HAVE_LIBV4L2
+    descriptor = ::v4l2_open (QFile::encodeName(full_filename), O_RDWR | O_NONBLOCK, 0);
+#else
+    descriptor = ::open (QFile::encodeName(full_filename), O_RDWR | O_NONBLOCK, 0);
+#endif
+
+    if(isOpen())
+    {
+        qDebug() << "File " << full_filename << " was opened successfuly";
+/*
+        if(EXIT_FAILURE==checkDevice())
+        {
+            qDebug() << "File " << full_filename << " could not be opened";
+            closeDevice();
+            return EXIT_FAILURE;
+        }
+*/
+    }
+    else
+    {
+        qDebug() << "Unable to open file " << full_filename << "Err: "<< errno;
+        return EXIT_FAILURE;
+    }
+
+    return EXIT_SUCCESS;
 }
 
-void Video::init_device()
+bool Video::isOpen()
 {
+    if(-1 == descriptor)
+    {
+        // qDebug() << "VideoDevice::isOpen() File is not open";
+        return false;
+    }
+
+    // qDebug() << "VideoDevice::isOpen() File is open";
+    return true;
+}
+
+void Video::initDevice()
+{
+    struct v4l2_cropcap cropcap;
+    struct v4l2_crop crop;
+    CLEAR (cropcap);
+    CLEAR (crop);
+
     cropcap.type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
     if (-1 == xioctl (VIDIOC_CROPCAP, &cropcap))
     {
@@ -268,9 +274,11 @@ void Video::init_device()
         switch (errno)
         {
             case EINVAL: break; // Cropping not supported.
-            default: break; // Errors ignored.
+            default:     break; // Errors ignored.
         }
     }
+
+    // setSize()
 
     //default V4L2_PIX_FMT_YUYV
     fmt.fmt.pix.pixelformat = V4L2_PIX_FMT_YUYV;
@@ -282,11 +290,11 @@ void Video::init_device()
         // ignore
         //qDebug() << "Video: VIDIOC_G_FMT failed (" << errno << ").Returned width: " << fmt.fmt.pix.width << "x" << fmt.fmt.pix.height;
     }
+
     fmt.type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
     fmt.fmt.pix.width = width;
     fmt.fmt.pix.height = height;
-
-    fmt.fmt.pix.field = V4L2_FIELD_INTERLACED;//V4L2_FIELD_ANY;
+    fmt.fmt.pix.field = V4L2_FIELD_ANY;
     if (-1 == xioctl (VIDIOC_S_FMT, &fmt))
     {
         // ignore
@@ -307,15 +315,17 @@ void Video::init_device()
 
     m_buffer_size = width * height * 16 / 8;
 
+    m_currentbuffer.width=320;
+    m_currentbuffer.height=240;
     m_currentbuffer.pixelformat=m_pixelformat;
     m_currentbuffer.data.resize(m_buffer_size);
 }
 
-void Video::init_mmap()
+int Video::initMmap()
 {
-    struct v4l2_requestbuffers req;
-
     #define BUFFERS 2
+
+    struct v4l2_requestbuffers req;
     CLEAR (req);
 
     req.count = BUFFERS;
@@ -327,18 +337,18 @@ void Video::init_mmap()
         if (EINVAL == errno)
         {
             qDebug() << "Video Error: " << full_filename << " does not support memory mapping";
-            return;
+            return EXIT_FAILURE;
         }
         else
         {
-            errnoReturn ("VIDIOC_REQBUFS");
+            return errnoReturn ("VIDIOC_REQBUFS");
         }
     }
 
     if (req.count < BUFFERS)
     {
         qDebug() << "Video Error: Insufficient buffer memory on " << full_filename;
-        return;
+        return EXIT_FAILURE;
     }
 
     m_rawbuffers.resize(req.count);
@@ -346,7 +356,7 @@ void Video::init_mmap()
     if (m_rawbuffers.size()==0)
     {
         qDebug() << "Video Error: Out of memory";
-        return;
+        return EXIT_FAILURE;
     }
 
     for (m_streambuffers = 0; m_streambuffers < req.count; ++m_streambuffers)
@@ -363,16 +373,22 @@ void Video::init_mmap()
             errnoReturn ("VIDIOC_QUERYBUF");
 
         m_rawbuffers[m_streambuffers].length = v4l2buffer.length;
+#ifdef HAVE_LIBV4L2
+        m_rawbuffers[m_streambuffers].start = (uchar *) v4l2_mmap (NULL /* start anywhere */, v4l2buffer.length, PROT_READ | PROT_WRITE /* required */, MAP_SHARED /* recommended */, descriptor, v4l2buffer.m.offset);
+#else
         m_rawbuffers[m_streambuffers].start = (uchar *) mmap (NULL /* start anywhere */, v4l2buffer.length, PROT_READ | PROT_WRITE /* required */, MAP_SHARED /* recommended */, descriptor, v4l2buffer.m.offset);
+#endif
 
         if (MAP_FAILED == m_rawbuffers[m_streambuffers].start)
-            errnoReturn ("mmap");
+            return errnoReturn ("mmap");
     }
 
     m_currentbuffer.data.resize(m_rawbuffers[0].length); // Makes the imagesize.data buffer size equal to the rawbuffer size
+
+    return EXIT_SUCCESS;
 }
 
-void Video::start_capturing()
+int Video::startCapturing()
 {
     unsigned int loop;
     for (loop = 0; loop < m_streambuffers; ++loop)
@@ -383,36 +399,45 @@ void Video::start_capturing()
         buf.memory = V4L2_MEMORY_MMAP;
         buf.index = loop;
         if (-1 == xioctl (VIDIOC_QBUF, &buf))
-            errnoReturn ("VIDIOC_QBUF");
+            return errnoReturn ("VIDIOC_QBUF");
     }
+
     enum v4l2_buf_type type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
     if (-1 == xioctl (VIDIOC_STREAMON, &type))
-        errnoReturn ("VIDIOC_STREAMON");
+        return errnoReturn ("VIDIOC_STREAMON");
+
+    return EXIT_SUCCESS;
 }
 
-void Video::stop_capturing()
+int Video::stopCapturing()
 {
     enum v4l2_buf_type type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
     if (-1 == xioctl (VIDIOC_STREAMOFF, &type))
-        errnoReturn ("VIDIOC_STREAMOFF");
+        return errnoReturn ("VIDIOC_STREAMOFF");
 
     unsigned int loop;
     for (loop = 0; loop < m_streambuffers; ++loop)
     {
+#ifdef HAVE_LIBV4L2
+        if (v4l2_munmap(m_rawbuffers[loop].start,m_rawbuffers[loop].length) != 0)
+#else
         if (munmap(m_rawbuffers[loop].start,m_rawbuffers[loop].length) != 0)
+#endif
         {
             qDebug() << "Video Error: unable to munmap.";
         }
     }
+
+    return EXIT_SUCCESS;
 }
 
-void Video::close_device()
+void Video::closeDevice()
 {
-    stop_capturing();
+    stopCapturing();
     descriptor = -1;
 }
 
-bool Video::exist_video_device()
+bool Video::existVideoDevice()
 {
     // search video device
     for (int i = 0; i < 10; ++i)
@@ -423,7 +448,7 @@ bool Video::exist_video_device()
     return false;
 }
 
-QList<QString> Video::get_video_devices()
+QList<QString> Video::getVideoDevices()
 {
     QList<QString> lVideoDevices;
 

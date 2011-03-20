@@ -31,7 +31,7 @@ class DlgEmail : public QDialog
     Q_OBJECT
 public:
     DlgEmail(QWidget *, QString, QString);
-    ~DlgEmail();
+    virtual ~DlgEmail();
 
 private:
     Ui::uiEmail ui;

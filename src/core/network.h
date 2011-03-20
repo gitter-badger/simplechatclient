@@ -33,7 +33,7 @@ class Network : public QThread
     Q_OBJECT
 public:
     Network(QString, int);
-    ~Network();
+    virtual ~Network();
     void run();
     void set_reconnect(bool);
     bool is_connected();

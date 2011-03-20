@@ -289,7 +289,7 @@ void DlgCam::detect_broadcasting()
     ui.comboBox_device->clear();
 
     // exist video device
-    if (video->exist_video_device() == true)
+    if (video->existVideoDevice() == true)
     {
         // enable
         if (ui.comboBox_device->isEnabled() == false)
@@ -300,7 +300,7 @@ void DlgCam::detect_broadcasting()
         }
 
         // add video
-        QList<QString> lVideoDevices = video->get_video_devices();
+        QList<QString> lVideoDevices = video->getVideoDevices();
         for (int i = 0; i < lVideoDevices.size(); i++)
             ui.comboBox_device->addItem(lVideoDevices.at(i));
     }
@@ -308,7 +308,7 @@ void DlgCam::detect_broadcasting()
 
 void DlgCam::set_broadcasting()
 {
-    if (video->exist_video_device() == true)
+    if (video->existVideoDevice() == true)
     {
         // create
         video->create();
@@ -322,7 +322,7 @@ void DlgCam::set_broadcasting()
 void DlgCam::get_frame()
 {
     // video device not exist any more
-    if (video->exist_video_device() == false)
+    if (video->existVideoDevice() == false)
     {
         video->destroy();
         video_frame_timer->stop();
@@ -331,7 +331,7 @@ void DlgCam::get_frame()
 
     // get image
     if ((bBroadcasting == true) || (ui.tabWidget->currentIndex() == 1) || (captured_frame.isNull() == true))
-        video->get_image(&captured_frame);
+        video->getImage(&captured_frame);
 }
 
 void DlgCam::data_kernel(QByteArray bData)
@@ -1592,7 +1592,7 @@ void DlgCam::showEvent(QShowEvent *event)
     detect_broadcasting();
 
     // create
-    if (video->is_created() == false)
+    if (video->isCreated() == false)
         set_broadcasting();
 
     // switch to first tab

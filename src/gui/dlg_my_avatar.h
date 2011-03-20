@@ -32,7 +32,7 @@ class DlgMyAvatar : public QDialog
     Q_OBJECT
 public:
     DlgMyAvatar(QWidget *, Network *, QMap <QString, QByteArray> *);
-    ~DlgMyAvatar();
+    virtual ~DlgMyAvatar();
 
 private:
     Ui::uiMyAvatar ui;

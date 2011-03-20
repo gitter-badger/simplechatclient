@@ -44,7 +44,7 @@ class TabContainer : public QObject
     Q_OBJECT
 public:
     TabContainer(QWidget *, Network *, TabManager *, Notify *, QMap <QString, QByteArray> *, QTcpSocket *, sChannelNickStatus *, QList<QString> *);
-    ~TabContainer();
+    virtual ~TabContainer();
     void set_dlg(DlgUserProfile *);
 #ifndef Q_WS_WIN
     void set_dlg_cam(DlgCam *);

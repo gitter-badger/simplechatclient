@@ -28,7 +28,7 @@ class InputLineWidget : public QPlainTextEdit
     Q_OBJECT
 public:
     InputLineWidget(QWidget*);
-    ~InputLineWidget();
+    virtual ~InputLineWidget();
     void set_userslist(QList <QString>);
     void insert_text(QString);
 

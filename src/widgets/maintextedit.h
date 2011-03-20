@@ -35,7 +35,7 @@ class MainTextEdit : public QTextEdit
     Q_OBJECT
 public:
     MainTextEdit(QWidget *, Network *, QString, QTcpSocket *, sChannelNickStatus *, DlgUserProfile *);
-    ~MainTextEdit();
+    virtual ~MainTextEdit();
 #ifndef Q_WS_WIN
     void set_dlg_cam(DlgCam *);
 #endif
