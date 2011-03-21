@@ -2172,6 +2172,10 @@
         <translation>* %1 zignorował/a Twoje zaproszenie do kanału %2</translation>
     </message>
     <message>
+        <source>Moderated by</source>
+        <translation>Zmoderowany przez</translation>
+    </message>
+    <message>
         <source>* You were killed by %1 %2</source>
         <translation>* Zostałeś rozłączony przez %1 %2</translation>
     </message>

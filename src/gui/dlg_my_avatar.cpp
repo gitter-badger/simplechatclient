@@ -19,10 +19,10 @@
  ****************************************************************************/
 
 #include <QDateTime>
-#include <QDebug>
 #include <QDesktopWidget>
 #include <QDomDocument>
 #include <QFileDialog>
+#include <QMessageBox>
 #include <QNetworkReply>
 #include <QPushButton>
 #include <QSettings>
@@ -190,7 +190,7 @@ void DlgMyAvatar::got_my_avatars(QString strResult)
 
     if (code != "0")
     {
-        qDebug() << "Error loadFAvatars: " << text;
+        QMessageBox::critical(0, tr("Error loadFAvatars"), text);
         return;
     }
 
@@ -294,7 +294,7 @@ void DlgMyAvatar::got_collections(QString strResult)
 
     if (code != "0")
     {
-        qDebug() << "Error getCollections: " << text;
+        QMessageBox::critical(0, tr("Error getCollections"), text);
         return;
     }
 
@@ -367,7 +367,7 @@ void DlgMyAvatar::got_avatars_from_collect(QString strResult)
 
     if (code != "0")
     {
-        qDebug() << "Error getAvatarsFromCollect: " << text;
+        QMessageBox::critical(0, tr("Error getAvatarsFromCollect"), text);
         return;
     }
 
@@ -568,7 +568,7 @@ void DlgMyAvatar::got_remove_avatar(QString strResult)
 
     if (code != "0")
     {
-        qDebug() << "Error deletePhoto: " << text;
+        QMessageBox::critical(0, tr("Error deletePhoto"), text);
         return;
     }
 

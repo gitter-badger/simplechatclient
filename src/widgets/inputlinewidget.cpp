@@ -197,7 +197,6 @@ bool InputLineWidget::event(QEvent *e)
 void InputLineWidget::insertFromMimeData(const QMimeData *source)
 {
     QStringList list = source->text().split(QRegExp("(\n|\r)"));
-    this->clear();
     int len = 400;
 
     for (int i = 0; i < list.size(); i++)
@@ -209,7 +208,8 @@ void InputLineWidget::insertFromMimeData(const QMimeData *source)
             {
                 QString short_line = line.left(len);
 
-                this->setPlainText(short_line);
+                QString old_text = this->toPlainText();
+                this->setPlainText(old_text+short_line);
                 emit returnPressed();
 
                 line.remove(0, len);
@@ -217,8 +217,19 @@ void InputLineWidget::insertFromMimeData(const QMimeData *source)
         }
         if ((line.size() < len) && (line.size() != 0))
         {
-            this->setPlainText(line);
-            emit returnPressed();
+            QString old_text = this->toPlainText();
+            this->setPlainText(old_text+line);
+
+            // if not last text - send
+            if (i != list.size()-1)
+                emit returnPressed();
+            else
+            {
+                // move cursor
+                QTextCursor cursor = this->textCursor();
+                cursor.setPosition(this->toPlainText().size(), QTextCursor::MoveAnchor);
+                this->setTextCursor(cursor);
+            }
         }
     }
 }

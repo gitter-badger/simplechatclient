@@ -1226,8 +1226,12 @@ void OnetKernel::raw_modermsg()
     if (strDataList.value(3).isEmpty() == true) return;
     if (strDataList.value(4).isEmpty() == true) return;
 
-    QString strNick = strDataList[2];
+    QString strModerator = strDataList[0];
+    if (strModerator[0] == ':')
+        strModerator = strModerator.right(strModerator.length()-1);
+    strModerator = strModerator.left(strModerator.indexOf('!'));
 
+    QString strNick = strDataList[2];
     QString strChannel = strDataList[4];
 
     QString strMessage;
@@ -1235,7 +1239,7 @@ void OnetKernel::raw_modermsg()
     if (strMessage[0] == ':')
         strMessage = strMessage.right(strMessage.length()-1);
 
-    QString strDisplay = "<"+strNick+"> "+strMessage;
+    QString strDisplay = QString("<%1> %2 [%3: %4]").arg(strNick).arg(strMessage).arg(tr("Moderated by")).arg(strModerator);
 
     // display
     pTabC->show_msg(strChannel, strDisplay, 0);
