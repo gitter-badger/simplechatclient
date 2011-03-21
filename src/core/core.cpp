@@ -470,6 +470,20 @@ void Core::current_tab_changed(int index)
 
     // update nick count
     rightDockWidget->setWindowTitle(QString(tr("Users (%1)")).arg(pTabC->get_users(strChannel)));
+
+    // moderation
+    QString strMe = settings.value("nick").toString();
+    QString strPrefix;
+    for (int i = 0; i < stlChannelNickStatus.size(); i++)
+    {
+        if ((stlChannelNickStatus.at(i).nick == strMe) && (stlChannelNickStatus.at(i).channel == strChannel))
+        {
+            strPrefix = stlChannelNickStatus.at(i).prefix;
+            break;
+        }
+    }
+    if (strPrefix.contains("!")) inputLineDockWidget->enable_moderation();
+    else inputLineDockWidget->disable_moderation();
 }
 
 void Core::create_nicklist(QString strChannel)

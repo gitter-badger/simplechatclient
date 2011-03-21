@@ -1239,7 +1239,7 @@ void OnetKernel::raw_modermsg()
     if (strMessage[0] == ':')
         strMessage = strMessage.right(strMessage.length()-1);
 
-    QString strDisplay = QString("<%1> %2 [%3: %4]").arg(strNick).arg(strMessage).arg(tr("Moderated by")).arg(strModerator);
+    QString strDisplay = QString("<%1> %2 [%3 %4]").arg(strNick).arg(strMessage).arg(tr("Moderated by")).arg(strModerator);
 
     // display
     pTabC->show_msg(strChannel, strDisplay, 0);
