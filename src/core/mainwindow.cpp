@@ -403,18 +403,18 @@ void MainWindow::create_signals()
 
 void MainWindow::show_options()
 {
-    QString path;
-#ifdef Q_WS_X11
-    path = QDir::homePath()+"/.scc";
-#else
-    QSettings settings(QSettings::UserScope, "Microsoft", "Windows");
-    settings.beginGroup("CurrentVersion/Explorer/Shell Folders");
-    path = settings.value("Personal").toString();
-    path += "/scc";
-#endif
-    QString strConfigFile = path+"/scc.conf";
-    if (QFile::exists(strConfigFile) == false)
+    QSettings settings;
+    QString strFirstRun = settings.value("first_run").toString();
+
+    if (strFirstRun == "true")
+    {
+        Config *pConfig = new Config();
+        pConfig->set_value("first_run", "false");
+        settings.setValue("first_run", "false");
+        delete pConfig;
+
         QTimer::singleShot(1000*1, this, SLOT(open_options())); // 1 sec
+    }
 }
 
 // refresh colors

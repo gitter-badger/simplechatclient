@@ -220,6 +220,7 @@ QMap<QString,QString> Config::get_default_values()
 
     QMap<QString,QString> mDefaultValues;
 
+    mDefaultValues.insert("first_run", "true");
     mDefaultValues.insert("nick", "~test");
     mDefaultValues.insert("pass", "");
     mDefaultValues.insert("language", "pl");
