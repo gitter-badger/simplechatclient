@@ -46,6 +46,10 @@ private:
     QNetworkReply *pReply;
     QString strNick;
 
+    void create_gui();
+    void set_default_values();
+    void create_signals();
+
     void clear_info();
     void show_info();
     QString convert_desc(QString);

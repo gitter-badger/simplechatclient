@@ -30,18 +30,8 @@ DlgModeration::DlgModeration(QWidget *parent) : QDialog(parent)
     setAttribute(Qt::WA_DeleteOnClose);
     setWindowTitle(tr("Moderation"));
 
-    ui.pushButton_accept->setIcon(QIcon(":/images/oxygen/16x16/list-add.png"));
-    ui.pushButton_remove->setIcon(QIcon(":/images/oxygen/16x16/list-remove.png"));
-    ui.buttonBox->button(QDialogButtonBox::Close)->setIcon(QIcon(":/images/oxygen/16x16/dialog-close.png"));
-
-    ui.label_channel->setText(tr("Channel: "));
-    ui.pushButton_accept->setText(tr("Accept"));
-    ui.pushButton_remove->setText(tr("Remove"));
-
-    QObject::connect(ui.pushButton_accept, SIGNAL(clicked()), this, SLOT(button_accept()));
-    QObject::connect(ui.pushButton_remove, SIGNAL(clicked()), this, SLOT(button_remove()));
-    QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(button_close()));
-    QObject::connect(ui.comboBox_channels, SIGNAL(currentIndexChanged(int)), this, SLOT(combo_changed(int)));
+    create_gui();
+    create_signals();
 }
 
 DlgModeration::~DlgModeration()
@@ -49,6 +39,25 @@ DlgModeration::~DlgModeration()
     channel_id.clear();
     id_nick.clear();
     id_message.clear();
+}
+
+void DlgModeration::create_gui()
+{
+    ui.pushButton_accept->setIcon(QIcon(":/images/oxygen/16x16/list-add.png"));
+    ui.pushButton_remove->setIcon(QIcon(":/images/oxygen/16x16/list-remove.png"));
+    ui.buttonBox->button(QDialogButtonBox::Close)->setIcon(QIcon(":/images/oxygen/16x16/dialog-close.png"));
+
+    ui.label_channel->setText(tr("Channel: "));
+    ui.pushButton_accept->setText(tr("Accept"));
+    ui.pushButton_remove->setText(tr("Remove"));
+}
+
+void DlgModeration::create_signals()
+{
+    QObject::connect(ui.pushButton_accept, SIGNAL(clicked()), this, SLOT(button_accept()));
+    QObject::connect(ui.pushButton_remove, SIGNAL(clicked()), this, SLOT(button_remove()));
+    QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(button_close()));
+    QObject::connect(ui.comboBox_channels, SIGNAL(currentIndexChanged(int)), this, SLOT(combo_changed(int)));
 }
 
 void DlgModeration::set_active_channel(QString param1)

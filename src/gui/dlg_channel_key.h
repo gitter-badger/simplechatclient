@@ -37,6 +37,9 @@ private:
     Network *pNetwork;
     QString strChannel;
 
+    void create_gui();
+    void create_signals();
+
 private slots:
     void button_ok();
     void button_cancel();

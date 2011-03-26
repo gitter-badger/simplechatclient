@@ -41,6 +41,9 @@ private:
     QMultiHash <QString, QString> id_nick;
     QMultiHash <QString, QString> id_message;
 
+    void create_gui();
+    void create_signals();
+
     bool exist_in_widget(QString);
     bool exist_in_list(QString, QString);
     void del_msg(QString, QString);

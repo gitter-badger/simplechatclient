@@ -57,6 +57,10 @@ private:
     QList <QString> lLastCommand;
     QMap <QString, QString> mNickChannels;
 
+    void create_gui();
+    void set_default_values();
+    void create_signals();
+
     QString get_cauth();
     Video *video;
 

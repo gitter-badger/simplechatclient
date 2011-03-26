@@ -34,25 +34,38 @@ DlgEmoticons::DlgEmoticons(MainWindow *parent, InputWidget *param1) : QDialog(pa
 
     inputwidget = param1;
 
+    create_gui();
+    set_default_values();
+    create_signals();
+
+    get_emoticons_standard();
+}
+
+void DlgEmoticons::create_gui()
+{
     ui.pushButton_insert->setIcon(QIcon(":/images/oxygen/16x16/insert-image.png"));
     ui.buttonBox->button(QDialogButtonBox::Close)->setIcon(QIcon(":/images/oxygen/16x16/dialog-close.png"));
 
     ui.tabWidget->setTabText(0, tr("Standard"));
     ui.tabWidget->setTabText(1, tr("Extended"));
     ui.pushButton_insert->setText(tr("Insert"));
+}
 
+void DlgEmoticons::set_default_values()
+{
     ui.listWidget_standard->clear();
     ui.listWidget_extended->clear();
     bDoneStandard = false;
     bDoneExtended = false;
+}
 
+void DlgEmoticons::create_signals()
+{
     QObject::connect(ui.tabWidget, SIGNAL(currentChanged(int)), this, SLOT(current_tab_changed(int)));
     QObject::connect(ui.listWidget_standard, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(clicked_standard(QModelIndex)));
     QObject::connect(ui.listWidget_extended, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(clicked_extended(QModelIndex)));
     QObject::connect(ui.pushButton_insert, SIGNAL(clicked()), this, SLOT(button_insert()));
     QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(button_close()));
-
-    get_emoticons_standard();
 }
 
 void DlgEmoticons::get_emoticons_standard()

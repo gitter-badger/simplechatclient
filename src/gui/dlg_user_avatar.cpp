@@ -31,12 +31,25 @@ DlgUserAvatar::DlgUserAvatar(MainWindow *parent, QPixmap param1) : QDialog(paren
 
     avatar = param1;
 
+    create_gui();
+    set_default_values();
+    create_signals();
+}
+
+void DlgUserAvatar::create_gui()
+{
     ui.toolButton_zoom_out->setIcon(QIcon(":/images/oxygen/16x16/list-remove.png"));
     ui.toolButton_zoom_in->setIcon(QIcon(":/images/oxygen/16x16/list-add.png"));
+}
 
+void DlgUserAvatar::set_default_values()
+{
     // slider value 5
     ui.label_avatar->setPixmap(avatar.scaled(QSize(250,250)));
+}
 
+void DlgUserAvatar::create_signals()
+{
     QObject::connect(ui.toolButton_zoom_out, SIGNAL(clicked()), this, SLOT(button_zoom_out()));
     QObject::connect(ui.horizontalSlider, SIGNAL(valueChanged(int)), this, SLOT(slider_value_changed(int)));
     QObject::connect(ui.toolButton_zoom_in, SIGNAL(clicked()), this, SLOT(button_zoom_in()));

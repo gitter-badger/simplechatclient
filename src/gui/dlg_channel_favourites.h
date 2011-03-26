@@ -37,6 +37,9 @@ private:
     QMap <QString, QByteArray> *mChannelAvatar;
     QList<QString> *lChannelFavourites;
 
+    void create_gui();
+    void create_signals();
+
 private slots:
     void refresh();
     void button_add();

@@ -37,6 +37,15 @@ DlgMyProfile::DlgMyProfile(QWidget *parent, Network *param1, QMap <QString, QByt
     mNickAvatar = param2;
     mMyProfile = param3;
 
+    create_gui();
+    set_default_values();
+    create_signals();
+
+    refresh();
+}
+
+void DlgMyProfile::create_gui()
+{
     ui.pushButton_bold->setIcon(QIcon(":/images/oxygen/16x16/format-text-bold.png"));
     ui.pushButton_italic->setIcon(QIcon(":/images/oxygen/16x16/format-text-italic.png"));
     ui.buttonBox->button(QDialogButtonBox::Ok)->setIcon(QIcon(":/images/oxygen/16x16/dialog-ok.png"));
@@ -57,7 +66,10 @@ DlgMyProfile::DlgMyProfile(QWidget *parent, Network *param1, QMap <QString, QByt
 
     // italic
     ui.pushButton_italic->setCheckable(true);
+}
 
+void DlgMyProfile::set_default_values()
+{
     // font
     QStringList comboBoxFont;
     comboBoxFont << "Arial" << "Times" << "Verdana" << "Tahoma" << "Courier";
@@ -122,12 +134,12 @@ DlgMyProfile::DlgMyProfile(QWidget *parent, Network *param1, QMap <QString, QByt
     strlCountries.insert(0, "");
     for (int i = 0; i < strlCountries.size(); i++)
         ui.comboBox_country->insertItem(i, strlCountries.at(i));
+}
 
-    // signals
+void DlgMyProfile::create_signals()
+{
     QObject::connect(ui.buttonBox, SIGNAL(accepted()), this, SLOT(button_ok()));
     QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(button_close()));
-
-    refresh();
 }
 
 void DlgMyProfile::refresh()

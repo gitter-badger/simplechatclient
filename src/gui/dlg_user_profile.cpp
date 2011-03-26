@@ -37,9 +37,13 @@ DlgUserProfile::DlgUserProfile(QWidget *parent, Network *param1) : QDialog(paren
 
     pNetwork = param1;
 
-    // set width
-    iWidth = ui.verticalLayout->sizeHint().width();
+    create_gui();
+    set_default_values();
+    create_signals();
+}
 
+void DlgUserProfile::create_gui()
+{
     ui.toolButton_zoom->setIcon(QIcon(":/images/oxygen/16x16/page-zoom.png"));
     ui.pushButton_more->setIcon(QIcon(":/images/oxygen/16x16/list-add.png"));
     ui.buttonBox->button(QDialogButtonBox::Close)->setIcon(QIcon(":/images/oxygen/16x16/dialog-close.png"));
@@ -53,7 +57,16 @@ DlgUserProfile::DlgUserProfile(QWidget *parent, Network *param1) : QDialog(paren
     ui.label_type->setText(tr("Type:"));
     ui.label_www->setText(tr("Website:"));
     ui.pushButton_more->setText(tr("More..."));
+}
 
+void DlgUserProfile::set_default_values()
+{
+    // set width
+    iWidth = ui.verticalLayout->sizeHint().width();
+}
+
+void DlgUserProfile::create_signals()
+{
     QObject::connect(ui.toolButton_zoom, SIGNAL(clicked()), this, SLOT(button_zoom()));
     QObject::connect(ui.pushButton_more, SIGNAL(clicked()), this, SLOT(button_more()));
     QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(button_close()));

@@ -38,6 +38,10 @@ private:
     bool bDoneStandard;
     bool bDoneExtended;
 
+    void create_gui();
+    void set_default_values();
+    void create_signals();
+
     void get_emoticons_standard();
     void get_emoticons_extended();
 

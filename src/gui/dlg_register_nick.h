@@ -41,6 +41,9 @@ private:
     QNetworkCookieJar *cookieJar;
     QMap <QString, QString> mCookies;
 
+    void create_gui();
+    void create_signals();
+
     void get_cookies();
     void got_cookies();
     void get_img();

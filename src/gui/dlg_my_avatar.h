@@ -51,6 +51,10 @@ private:
     QList<QString> lMyAvatars; // list of my avatars
     QMap<QString, QString> mMyAvatarsID; // url, id
 
+    void create_gui();
+    void set_default_values();
+    void create_signals();
+
     void get_cookies();
     // avatar
     void get_avatar(QString);

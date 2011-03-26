@@ -44,6 +44,13 @@ DlgChannelSettings::DlgChannelSettings(QWidget *parent, Network *param1) : QDial
     simpleStatsWidget->show();
     ui.verticalLayout_stats->addWidget(simpleStatsWidget);
 
+    create_gui();
+    set_default_values();
+    create_signals();
+}
+
+void DlgChannelSettings::create_gui()
+{
     ui.pushButton_transfer->setIcon(QIcon(":/images/oxygen/16x16/user-group-new.png"));
     ui.pushButton_remove_channel->setIcon(QIcon(":/images/oxygen/16x16/user-group-delete.png"));
     ui.pushButton_set_email->setIcon(QIcon(":/images/oxygen/16x16/dialog-ok-apply.png"));
@@ -141,7 +148,10 @@ DlgChannelSettings::DlgChannelSettings(QWidget *parent, Network *param1) : QDial
 
     // italic
     ui.pushButton_italic->setCheckable(true);
+}
 
+void DlgChannelSettings::set_default_values()
+{
     // font
     QStringList comboBoxFont;
     comboBoxFont << "Arial" << "Times" << "Verdana" << "Tahoma" << "Courier";
@@ -168,7 +178,10 @@ DlgChannelSettings::DlgChannelSettings(QWidget *parent, Network *param1) : QDial
         ui.comboBox_color->insertItem(iComboBoxColors, pixmap, "");
         iComboBoxColors++;
     }
+}
 
+void DlgChannelSettings::create_signals()
+{
     QObject::connect(ui.pushButton_transfer, SIGNAL(clicked()), this, SLOT(owner_changed()));
     QObject::connect(ui.pushButton_remove_channel, SIGNAL(clicked()), this, SLOT(remove_channel_clicked()));
     QObject::connect(ui.pushButton_set_email, SIGNAL(clicked()), this, SLOT(email_changed()));

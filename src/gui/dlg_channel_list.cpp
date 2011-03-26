@@ -35,6 +35,17 @@ DlgChannelList::DlgChannelList(QWidget *parent, Network *param1, sChannelList *p
     pNetwork = param1;
     stlChannelList = param2;
 
+    create_gui();
+    set_default_values();
+    create_signals();
+
+    refresh();
+    create_list();
+    sort();
+}
+
+void DlgChannelList::create_gui()
+{
     ui.pushButton_search->setIcon(QIcon(":/images/oxygen/16x16/edit-find.png"));
     ui.pushButton_clear->setIcon(QIcon(":/images/oxygen/16x16/draw-eraser.png"));
     ui.buttonBox->button(QDialogButtonBox::Close)->setIcon(QIcon(":/images/oxygen/16x16/dialog-close.png"));
@@ -68,11 +79,17 @@ DlgChannelList::DlgChannelList(QWidget *parent, Network *param1, sChannelList *p
     ui.tabWidget->setTabText(3, tr("Erotic"));
     ui.tabWidget->setTabText(4, tr("Thematic"));
     ui.tabWidget->setTabText(5, tr("Regional"));
+}
 
+void DlgChannelList::set_default_values()
+{
     // hide adv options
     ui.groupBox_type->hide();
     ui.groupBox_category->hide();
+}
 
+void DlgChannelList::create_signals()
+{
     QObject::connect(ui.tableWidget_all, SIGNAL(cellDoubleClicked(int,int)), this, SLOT(all_CellDoubleClicked(int,int)));
     QObject::connect(ui.tableWidget_teen, SIGNAL(cellDoubleClicked(int,int)), this, SLOT(teen_CellDoubleClicked(int,int)));
     QObject::connect(ui.tableWidget_common, SIGNAL(cellDoubleClicked(int,int)), this, SLOT(common_CellDoubleClicked(int,int)));
@@ -86,10 +103,6 @@ DlgChannelList::DlgChannelList(QWidget *parent, Network *param1, sChannelList *p
     QObject::connect(ui.pushButton_clear, SIGNAL(clicked()), this, SLOT(button_clear()));
     QObject::connect(ui.checkBox_hide_empty_channels, SIGNAL(clicked()), this, SLOT(hide_empty_channels()));
     QObject::connect(ui.checkBox_show_adv_options, SIGNAL(clicked()), this, SLOT(show_adv_options()));
-
-    refresh();
-    create_list();
-    sort();
 }
 
 bool DlgChannelList::is_erotic(QString strChannel)

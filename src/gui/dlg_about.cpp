@@ -30,11 +30,21 @@ DlgAbout::DlgAbout(QWidget *parent) : QDialog(parent)
     // center screen
     move(QApplication::desktop()->screen()->rect().center() - rect().center());
 
+    create_gui();
+    set_default_values();
+    create_signals();
+}
+
+void DlgAbout::create_gui()
+{
     ui.buttonBox->button(QDialogButtonBox::Ok)->setIcon(QIcon(":/images/oxygen/16x16/dialog-ok.png"));
     ui.tabWidget->setTabText(0, tr("&About"));
     ui.tabWidget->setTabText(1, tr("A&uthors"));
     ui.tabWidget->setTabText(2, tr("T&hanks to"));
+}
 
+void DlgAbout::set_default_values()
+{
     QSettings settings;
     QString version = settings.value("version").toString();
 
@@ -59,7 +69,10 @@ DlgAbout::DlgAbout(QWidget *parent) : QDialog(parent)
     ui.label_about->setText(strAbout);
     ui.label_authors->setText(strAuthors);
     ui.label_thanks_to->setText(strThanksTo);
+}
 
+void DlgAbout::create_signals()
+{
     QObject::connect(ui.buttonBox, SIGNAL(accepted()), this, SLOT(button_ok()));
 }
 

@@ -37,6 +37,9 @@ private:
     QMap <QString, QByteArray> *mNickAvatar;
     QMap <QString, bool> *mFriends;
 
+    void create_gui();
+    void create_signals();
+
 private slots:
     void refresh();
     void tab_changed(int);

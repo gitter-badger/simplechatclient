@@ -37,6 +37,14 @@ DlgFriends::DlgFriends(QWidget *parent, Network *param1, QMap <QString, QByteArr
     mNickAvatar = param2;
     mFriends = param3;
 
+    create_gui();
+    create_signals();
+
+    refresh();
+}
+
+void DlgFriends::create_gui()
+{
     ui.pushButton_add->setIcon(QIcon(":/images/oxygen/16x16/list-add-user.png"));
     ui.pushButton_remove->setIcon(QIcon(":/images/oxygen/16x16/list-remove-user.png"));
     ui.pushButton_whois->setIcon(QIcon(":/images/oxygen/16x16/user-properties.png"));
@@ -45,14 +53,15 @@ DlgFriends::DlgFriends(QWidget *parent, Network *param1, QMap <QString, QByteArr
     ui.pushButton_add->setText(tr("Add"));
     ui.pushButton_remove->setText(tr("Remove"));
     ui.pushButton_whois->setText(tr("Whois"));
+}
 
+void DlgFriends::create_signals()
+{
     QObject::connect(ui.tabWidget, SIGNAL(currentChanged(int)), this, SLOT(tab_changed(int)));
     QObject::connect(ui.pushButton_add, SIGNAL(clicked()), this, SLOT(button_add()));
     QObject::connect(ui.pushButton_remove, SIGNAL(clicked()), this, SLOT(button_remove()));
     QObject::connect(ui.pushButton_whois, SIGNAL(clicked()), this, SLOT(button_whois()));
     QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(button_close()));
-
-    refresh();
 }
 
 void DlgFriends::refresh()

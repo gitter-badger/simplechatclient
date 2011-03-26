@@ -49,6 +49,10 @@ private:
     QString strChannel;
     SimpleStatsWidget *simpleStatsWidget;
 
+    void create_gui();
+    void set_default_values();
+    void create_signals();
+
     void enable_tabs();
     bool exist_item(QString, QListWidget *); // for permissions
     void clear();

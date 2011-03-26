@@ -36,14 +36,24 @@ DlgNotes::DlgNotes(QWidget *parent) : QDialog(parent)
     // center screen
     move(QApplication::desktop()->screen()->rect().center() - rect().center());
 
-    ui.buttonBox->button(QDialogButtonBox::Ok)->setIcon(QIcon(":/images/oxygen/16x16/dialog-ok.png"));
-    ui.buttonBox->button(QDialogButtonBox::Cancel)->setIcon(QIcon(":/images/oxygen/16x16/dialog-cancel.png"));
+    create_gui();
 
     // read path
     read_path();
     // read notes
     read();
 
+    create_signals();
+}
+
+void DlgNotes::create_gui()
+{
+    ui.buttonBox->button(QDialogButtonBox::Ok)->setIcon(QIcon(":/images/oxygen/16x16/dialog-ok.png"));
+    ui.buttonBox->button(QDialogButtonBox::Cancel)->setIcon(QIcon(":/images/oxygen/16x16/dialog-cancel.png"));
+}
+
+void DlgNotes::create_signals()
+{
     QObject::connect(ui.buttonBox, SIGNAL(accepted()), this, SLOT(button_ok()));
     QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(button_cancel()));
 }

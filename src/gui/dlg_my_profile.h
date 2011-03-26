@@ -37,6 +37,10 @@ private:
     QMap <QString, QByteArray> *mNickAvatar;
     QMap<QString,QString> *mMyProfile;
 
+    void create_gui();
+    void set_default_values();
+    void create_signals();
+
     void refresh();
     int get_index(QComboBox *, QString);
     QString convert_text_to_desc(QString);

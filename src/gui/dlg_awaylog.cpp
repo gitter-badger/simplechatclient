@@ -32,12 +32,21 @@ DlgAwaylog::DlgAwaylog(QWidget *parent, QList<QString> *param1, QAction *param2)
     lAwaylog = param1;
     awaylogAct = param2;
 
-    ui.buttonBox->button(QDialogButtonBox::Reset)->setIcon(QIcon(":/images/oxygen/16x16/document-revert.png"));
-    ui.buttonBox->button(QDialogButtonBox::Close)->setIcon(QIcon(":/images/oxygen/16x16/dialog-close.png"));
-
-    QObject::connect(ui.buttonBox, SIGNAL(clicked(QAbstractButton*)), this, SLOT(buttons(QAbstractButton*)));
+    create_gui();
+    create_signals();
 
     refresh();
+}
+
+void DlgAwaylog::create_gui()
+{
+    ui.buttonBox->button(QDialogButtonBox::Reset)->setIcon(QIcon(":/images/oxygen/16x16/document-revert.png"));
+    ui.buttonBox->button(QDialogButtonBox::Close)->setIcon(QIcon(":/images/oxygen/16x16/dialog-close.png"));
+}
+
+void DlgAwaylog::create_signals()
+{
+    QObject::connect(ui.buttonBox, SIGNAL(clicked(QAbstractButton*)), this, SLOT(buttons(QAbstractButton*)));
 }
 
 void DlgAwaylog::refresh()

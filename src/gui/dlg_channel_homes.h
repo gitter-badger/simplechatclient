@@ -39,6 +39,9 @@ private:
     QList<QString> *lChannelHomes;
     DlgChannelSettings *dlgchannel_settings;
 
+    void create_gui();
+    void create_signals();
+
 private slots:
     void refresh();
     void list_clicked(QModelIndex);

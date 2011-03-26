@@ -36,18 +36,27 @@ DlgIgnore::DlgIgnore(QWidget *parent, Network *param1, QMap <QString, QByteArray
     mNickAvatar = param2;
     lIgnore = param3;
 
+    create_gui();
+    create_signals();
+
+    refresh();
+}
+
+void DlgIgnore::create_gui()
+{
     ui.pushButton_add->setIcon(QIcon(":/images/oxygen/16x16/list-add-user.png"));
     ui.pushButton_remove->setIcon(QIcon(":/images/oxygen/16x16/list-remove-user.png"));
     ui.buttonBox->button(QDialogButtonBox::Close)->setIcon(QIcon(":/images/oxygen/16x16/dialog-close.png"));
 
     ui.pushButton_add->setText(tr("Add"));
     ui.pushButton_remove->setText(tr("Remove"));
+}
 
+void DlgIgnore::create_signals()
+{
     QObject::connect(ui.pushButton_add, SIGNAL(clicked()), this, SLOT(button_add()));
     QObject::connect(ui.pushButton_remove, SIGNAL(clicked()), this, SLOT(button_remove()));
     QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(button_close()));
-
-    refresh();
 }
 
 void DlgIgnore::refresh()

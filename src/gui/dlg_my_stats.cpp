@@ -37,16 +37,25 @@ DlgMyStats::DlgMyStats(QWidget *parent, QMap<QString,QString> *param1) : QDialog
     simpleStatsWidget->show();
     ui.verticalLayout_stats->addWidget(simpleStatsWidget);
 
+    create_gui();
+    create_signals();
+
+    refresh();
+}
+
+void DlgMyStats::create_gui()
+{
     ui.buttonBox->button(QDialogButtonBox::Close)->setIcon(QIcon(":/images/oxygen/16x16/dialog-close.png"));
 
     ui.groupBox_stats->setTitle(tr("Statistics"));
     ui.label_friends->setText(tr("Added you as a friend:"));
     ui.label_ignored->setText(tr("Added you to ignore:"));
     ui.label_average_time->setText(tr("Average time:"));
+}
 
+void DlgMyStats::create_signals()
+{
     QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(button_close()));
-
-    refresh();
 }
 
 int DlgMyStats::replace_value(QString strValue)

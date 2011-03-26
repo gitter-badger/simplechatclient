@@ -35,6 +35,9 @@ private:
     QList<QString> *lAwaylog;
     QAction *awaylogAct;
 
+    void create_gui();
+    void create_signals();
+
     void refresh();
     void button_reset();
     void button_close();

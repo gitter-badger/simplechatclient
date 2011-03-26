@@ -41,19 +41,8 @@ DlgRegisterNick::DlgRegisterNick(MainWindow *parent, QWidget *param1) : QDialog(
     // close options
     options->hide();
 
-    ui.buttonBox->button(QDialogButtonBox::Ok)->setIcon(QIcon(":/images/oxygen/16x16/dialog-ok.png"));
-    ui.buttonBox->button(QDialogButtonBox::Cancel)->setIcon(QIcon(":/images/oxygen/16x16/dialog-cancel.png"));
-    ui.pushButton_refresh->setIcon(QIcon(":/images/oxygen/16x16/view-refresh.png"));
-
-    ui.label_nick->setText(tr("Nick:"));
-    ui.label_password->setText(tr("Password:"));
-    ui.label_confirm_password->setText(tr("Confirm password:"));
-    ui.label_code->setText(tr("Code:"));
-    ui.pushButton_refresh->setText(tr("Refresh"));
-
-    QObject::connect(ui.pushButton_refresh, SIGNAL(clicked()), this, SLOT(button_refresh()));
-    QObject::connect(ui.buttonBox, SIGNAL(accepted()), this, SLOT(button_ok()));
-    QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(button_cancel()));
+    create_gui();
+    create_signals();
 
     accessManager = new QNetworkAccessManager;
     cookieJar = new QNetworkCookieJar();
@@ -68,6 +57,26 @@ DlgRegisterNick::~DlgRegisterNick()
 {
     delete cookieJar;
     accessManager->deleteLater();
+}
+
+void DlgRegisterNick::create_gui()
+{
+    ui.buttonBox->button(QDialogButtonBox::Ok)->setIcon(QIcon(":/images/oxygen/16x16/dialog-ok.png"));
+    ui.buttonBox->button(QDialogButtonBox::Cancel)->setIcon(QIcon(":/images/oxygen/16x16/dialog-cancel.png"));
+    ui.pushButton_refresh->setIcon(QIcon(":/images/oxygen/16x16/view-refresh.png"));
+
+    ui.label_nick->setText(tr("Nick:"));
+    ui.label_password->setText(tr("Password:"));
+    ui.label_confirm_password->setText(tr("Confirm password:"));
+    ui.label_code->setText(tr("Code:"));
+    ui.pushButton_refresh->setText(tr("Refresh"));
+}
+
+void DlgRegisterNick::create_signals()
+{
+    QObject::connect(ui.pushButton_refresh, SIGNAL(clicked()), this, SLOT(button_refresh()));
+    QObject::connect(ui.buttonBox, SIGNAL(accepted()), this, SLOT(button_ok()));
+    QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(button_cancel()));
 }
 
 void DlgRegisterNick::get_cookies()

@@ -58,6 +58,26 @@ DlgCam::DlgCam(QWidget *parent, Network *param1, QTcpSocket *param2) : QDialog(p
     video_frame_timer = new QTimer();
     video_frame_timer->setInterval(100);
 
+    create_gui();
+
+    // resize
+    ui.tableWidget_nick_rank_spectators->resizeColumnsToContents();
+
+    set_default_values();
+
+    create_signals();
+}
+
+DlgCam::~DlgCam()
+{
+    delete video_frame_timer;
+    delete video;
+    delete simpleRankWidget;
+    delete camNetwork;
+}
+
+void DlgCam::create_gui()
+{
     // default text
     ui.label_nick->setText(strNick);
     ui.tabWidget->setTabText(0, tr("Viewing"));
@@ -103,8 +123,10 @@ DlgCam::DlgCam(QWidget *parent, Network *param1, QTcpSocket *param2) : QDialog(p
     ui.toolButton_vote_minus->setIcon(QIcon(":/images/oxygen/16x16/list-remove.png"));
     ui.toolButton_vote_plus->setIcon(QIcon(":/images/oxygen/16x16/list-add.png"));
     ui.buttonBox->button(QDialogButtonBox::Ok)->setIcon(QIcon(":/images/oxygen/16x16/dialog-ok.png"));
-    ui.tableWidget_nick_rank_spectators->resizeColumnsToContents();
+}
 
+void DlgCam::set_default_values()
+{
     // clear
     ui.label_img->setText(tr("Starting the service webcams"));
     ui.textEdit_desc->setText("");
@@ -176,7 +198,10 @@ DlgCam::DlgCam(QWidget *parent, Network *param1, QTcpSocket *param2) : QDialog(p
             pixmap = pixmap.scaled(160,120);
         ui.label_img3->setPixmap(pixmap);
     }
+}
 
+void DlgCam::create_signals()
+{
     QObject::connect(ui.tableWidget_nick_rank_spectators, SIGNAL(cellDoubleClicked(int,int)), this, SLOT(change_user(int,int)));
     QObject::connect(ui.toolButton_vote_minus, SIGNAL(clicked()), this, SLOT(vote_minus()));
     QObject::connect(ui.toolButton_vote_plus, SIGNAL(clicked()), this, SLOT(vote_plus()));
@@ -204,14 +229,6 @@ DlgCam::DlgCam(QWidget *parent, Network *param1, QTcpSocket *param2) : QDialog(p
     QObject::connect(camNetwork, SIGNAL(ndisconnected()), this, SLOT(ndisconnected()));
 
     QObject::connect(video_frame_timer, SIGNAL(timeout()), this, SLOT(get_frame()));
-}
-
-DlgCam::~DlgCam()
-{
-    delete video_frame_timer;
-    delete video;
-    delete simpleRankWidget;
-    delete camNetwork;
 }
 
 void DlgCam::set_nick(QString n)

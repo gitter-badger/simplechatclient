@@ -34,6 +34,10 @@ private:
     Ui::uiOptions ui;
     QString strOpenFolderCommand;
 
+    void create_gui();
+    void set_default_values();
+    void create_signals();
+
     void set_mainwindow_colors();
     void set_nicklist_colors();
     void save_settings();

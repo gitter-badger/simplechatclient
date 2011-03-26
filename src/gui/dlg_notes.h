@@ -35,6 +35,9 @@ private:
     QString path;
     QString strNotesFile;
 
+    void create_gui();
+    void create_signals();
+
     void read_path();
     void read();
     void save();

@@ -36,18 +36,27 @@ DlgChannelFavourites::DlgChannelFavourites(QWidget *parent, Network *param1, QMa
     mChannelAvatar = param2;
     lChannelFavourites = param3;
 
+    create_gui();
+    create_signals();
+
+    refresh();
+}
+
+void DlgChannelFavourites::create_gui()
+{
     ui.pushButton_add->setIcon(QIcon(":/images/oxygen/16x16/irc-join-channel.png"));
     ui.pushButton_remove->setIcon(QIcon(":/images/oxygen/16x16/irc-close-channel.png"));
     ui.buttonBox->button(QDialogButtonBox::Close)->setIcon(QIcon(":/images/oxygen/16x16/dialog-close.png"));
 
     ui.pushButton_add->setText(tr("Add"));
     ui.pushButton_remove->setText(tr("Remove"));
+}
 
+void DlgChannelFavourites::create_signals()
+{
     QObject::connect(ui.pushButton_add, SIGNAL(clicked()), this, SLOT(button_add()));
     QObject::connect(ui.pushButton_remove, SIGNAL(clicked()), this, SLOT(button_remove()));
     QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(button_close()));
-
-    refresh();
 }
 
 void DlgChannelFavourites::refresh()

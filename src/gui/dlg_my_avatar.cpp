@@ -41,43 +41,9 @@ DlgMyAvatar::DlgMyAvatar(QWidget *parent, Network *param1, QMap <QString, QByteA
     mNickAvatar = param2;
     bReadedCollectionNames = false;
 
-    ui.pushButton_add_avatar->setIcon(QIcon(":/images/oxygen/16x16/list-add.png"));
-    ui.pushButton_remove_avatar->setIcon(QIcon(":/images/oxygen/16x16/list-remove.png"));
-    ui.pushButton_set_empty_avatar1->setIcon(QIcon(":/images/oxygen/16x16/image-missing.png"));
-    ui.pushButton_apply_avatar->setIcon(QIcon(":/images/oxygen/16x16/dialog-ok-apply.png"));
-    ui.pushButton_set_empty_avatar2->setIcon(QIcon(":/images/oxygen/16x16/image-missing.png"));
-    ui.pushButton_apply_collection_avatar->setIcon(QIcon(":/images/oxygen/16x16/dialog-ok-apply.png"));
-    ui.buttonBox->button(QDialogButtonBox::Close)->setIcon(QIcon(":/images/oxygen/16x16/dialog-close.png"));
-
-    ui.tabWidget->setTabText(0, tr("My avatars"));
-    ui.tabWidget->setTabText(1, tr("Collection of avatars"));
-    ui.pushButton_add_avatar->setText(tr("Add"));
-    ui.pushButton_remove_avatar->setText(tr("Remove"));
-    ui.pushButton_set_empty_avatar1->setText(tr("Apply empty"));
-    ui.pushButton_apply_avatar->setText(tr("Apply avatar"));
-    ui.pushButton_set_empty_avatar2->setText(tr("Apply empty"));
-    ui.pushButton_apply_collection_avatar->setText(tr("Apply avatar"));
-
-    // nick
-    QSettings settings;
-    QString strMe = settings.value("nick").toString();
-    ui.label_my_nick->setText(strMe);
-
-    // avatar
-    refresh_avatar();
-
-    // temporarily disabled
-    ui.pushButton_add_avatar->setEnabled(false);
-
-    QObject::connect(ui.pushButton_add_avatar, SIGNAL(clicked()), this, SLOT(button_add_avatar()));
-    QObject::connect(ui.pushButton_apply_collection_avatar, SIGNAL(clicked()), this, SLOT(button_apply_collection_avatar()));
-    QObject::connect(ui.pushButton_apply_avatar, SIGNAL(clicked()), this, SLOT(button_apply_avatar()));
-    QObject::connect(ui.pushButton_remove_avatar, SIGNAL(clicked()), this, SLOT(button_remove_avatar()));
-    QObject::connect(ui.pushButton_set_empty_avatar1, SIGNAL(clicked()), this, SLOT(button_set_empty_avatar()));
-    QObject::connect(ui.pushButton_set_empty_avatar2, SIGNAL(clicked()), this, SLOT(button_set_empty_avatar()));
-    QObject::connect(ui.tabWidget, SIGNAL(currentChanged(int)), this, SLOT(tab_changed(int)));
-    QObject::connect(ui.listWidget_list_collections, SIGNAL(currentTextChanged(QString)), this, SLOT(collection_changed(QString)));
-    QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(button_close()));
+    create_gui();
+    set_default_values();
+    create_signals();
 
     networkAccessManager = new QNetworkAccessManager;
     cookieJar = new QNetworkCookieJar();
@@ -94,6 +60,53 @@ DlgMyAvatar::~DlgMyAvatar()
 {
     delete cookieJar;
     networkAccessManager->deleteLater();
+}
+
+void DlgMyAvatar::create_gui()
+{
+    ui.pushButton_add_avatar->setIcon(QIcon(":/images/oxygen/16x16/list-add.png"));
+    ui.pushButton_remove_avatar->setIcon(QIcon(":/images/oxygen/16x16/list-remove.png"));
+    ui.pushButton_set_empty_avatar1->setIcon(QIcon(":/images/oxygen/16x16/image-missing.png"));
+    ui.pushButton_apply_avatar->setIcon(QIcon(":/images/oxygen/16x16/dialog-ok-apply.png"));
+    ui.pushButton_set_empty_avatar2->setIcon(QIcon(":/images/oxygen/16x16/image-missing.png"));
+    ui.pushButton_apply_collection_avatar->setIcon(QIcon(":/images/oxygen/16x16/dialog-ok-apply.png"));
+    ui.buttonBox->button(QDialogButtonBox::Close)->setIcon(QIcon(":/images/oxygen/16x16/dialog-close.png"));
+
+    ui.tabWidget->setTabText(0, tr("My avatars"));
+    ui.tabWidget->setTabText(1, tr("Collection of avatars"));
+    ui.pushButton_add_avatar->setText(tr("Add"));
+    ui.pushButton_remove_avatar->setText(tr("Remove"));
+    ui.pushButton_set_empty_avatar1->setText(tr("Apply empty"));
+    ui.pushButton_apply_avatar->setText(tr("Apply avatar"));
+    ui.pushButton_set_empty_avatar2->setText(tr("Apply empty"));
+    ui.pushButton_apply_collection_avatar->setText(tr("Apply avatar"));
+}
+
+void DlgMyAvatar::set_default_values()
+{
+    // nick
+    QSettings settings;
+    QString strMe = settings.value("nick").toString();
+    ui.label_my_nick->setText(strMe);
+
+    // avatar
+    refresh_avatar();
+
+    // temporarily disabled
+    ui.pushButton_add_avatar->setEnabled(false);
+}
+
+void DlgMyAvatar::create_signals()
+{
+    QObject::connect(ui.pushButton_add_avatar, SIGNAL(clicked()), this, SLOT(button_add_avatar()));
+    QObject::connect(ui.pushButton_apply_collection_avatar, SIGNAL(clicked()), this, SLOT(button_apply_collection_avatar()));
+    QObject::connect(ui.pushButton_apply_avatar, SIGNAL(clicked()), this, SLOT(button_apply_avatar()));
+    QObject::connect(ui.pushButton_remove_avatar, SIGNAL(clicked()), this, SLOT(button_remove_avatar()));
+    QObject::connect(ui.pushButton_set_empty_avatar1, SIGNAL(clicked()), this, SLOT(button_set_empty_avatar()));
+    QObject::connect(ui.pushButton_set_empty_avatar2, SIGNAL(clicked()), this, SLOT(button_set_empty_avatar()));
+    QObject::connect(ui.tabWidget, SIGNAL(currentChanged(int)), this, SLOT(tab_changed(int)));
+    QObject::connect(ui.listWidget_list_collections, SIGNAL(currentTextChanged(QString)), this, SLOT(collection_changed(QString)));
+    QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(button_close()));
 }
 
 void DlgMyAvatar::get_cookies()

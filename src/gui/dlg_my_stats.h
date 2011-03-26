@@ -36,6 +36,9 @@ private:
     QMap<QString,QString> *mMyStats;
     SimpleStatsWidget *simpleStatsWidget;
 
+    void create_gui();
+    void create_signals();
+
     int replace_value(QString);
     void refresh();
 

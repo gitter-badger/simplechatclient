@@ -41,6 +41,9 @@ private:
     QNetworkAccessManager *accessManager;
     QNetworkCookieJar *cookieJar;
 
+    void create_gui();
+    void create_signals();
+
     void get_cookies();
     void get_img();
     void got_img(QByteArray);

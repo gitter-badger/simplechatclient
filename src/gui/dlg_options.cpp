@@ -41,16 +41,13 @@ DlgOptions::DlgOptions(QWidget *parent) : QDialog(parent)
     setWindowFlags(Qt::Dialog | Qt::WindowStaysOnTopHint);
     setWindowTitle(tr("Options"));
 
-    // open folder command
-#ifdef Q_WS_X11
-    if (QFile::exists("/usr/bin/nautilus") == true)
-        strOpenFolderCommand = "nautilus";
-    else if (QFile::exists("/usr/bin/dolphin") == true)
-        strOpenFolderCommand = "dolphin";
-#else
-    strOpenFolderCommand = "explorer.exe";
-#endif
+    create_gui();
+    set_default_values();
+    create_signals();
+}
 
+void DlgOptions::create_gui()
+{
     ui.pushButton_register_nick->setIcon(QIcon(":/images/oxygen/16x16/list-add-user.png"));
     ui.pushButton_mainwindow_restore_default->setIcon(QIcon(":/images/oxygen/16x16/edit-undo.png"));
     ui.pushButton_nicklist_restore_default->setIcon(QIcon(":/images/oxygen/16x16/edit-undo.png"));
@@ -198,7 +195,21 @@ DlgOptions::DlgOptions(QWidget *parent) : QDialog(parent)
     spell_checker->setIcon(0, QIcon(":/images/oxygen/16x16/character-set.png"));
     spell_checker->setText(0, tr("Spellchecker"));
     spell_checker->setToolTip(0, tr("Spellchecker"));
+}
 
+void DlgOptions::set_default_values()
+{
+    // open folder command
+#ifdef Q_WS_X11
+    if (QFile::exists("/usr/bin/nautilus") == true)
+        strOpenFolderCommand = "nautilus";
+    else if (QFile::exists("/usr/bin/dolphin") == true)
+        strOpenFolderCommand = "dolphin";
+#else
+    strOpenFolderCommand = "explorer.exe";
+#endif
+
+    // current option
     ui.treeWidget_options->setCurrentItem(ui.treeWidget_options->itemAt(0,0));
 
     // language
@@ -262,8 +273,10 @@ DlgOptions::DlgOptions(QWidget *parent) : QDialog(parent)
 
     // background image
     ui.lineEdit_background_image->setText(mySettings.value("background_image").toString());
+}
 
-    // signals
+void DlgOptions::create_signals()
+{
     QObject::connect(ui.treeWidget_options, SIGNAL(currentItemChanged(QTreeWidgetItem*,QTreeWidgetItem*)), this, SLOT(change_page(QTreeWidgetItem*,QTreeWidgetItem*)));
     QObject::connect(ui.radioButton_unregistered_nick, SIGNAL(clicked()), this, SLOT(hide_pass()));
     QObject::connect(ui.radioButton_registered_nick, SIGNAL(clicked()), this, SLOT(show_pass()));

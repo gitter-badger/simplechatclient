@@ -35,22 +35,11 @@ DlgEmail::DlgEmail(MainWindow *parent, QString param1, QString param2) : QDialog
     move(QApplication::desktop()->screen()->rect().center() - rect().center());
 
     strChannel = param1;
+    strChannel = strChannel.right(strChannel.length()-1);
     strEmail = param2;
 
-    ui.pushButton_ok->setIcon(QIcon(":/images/oxygen/16x16/dialog-ok.png"));
-    ui.pushButton_refresh->setIcon(QIcon(":/images/oxygen/16x16/view-refresh.png"));
-    ui.pushButton_cancel->setIcon(QIcon(":/images/oxygen/16x16/dialog-cancel.png"));
-
-    ui.label_msg->setText(tr("Enter the characters you see:"));
-    ui.pushButton_ok->setText(tr("OK"));
-    ui.pushButton_refresh->setText(tr("Refresh"));
-    ui.pushButton_cancel->setText(tr("Cancel"));
-
-    strChannel = strChannel.right(strChannel.length()-1);
-
-    QObject::connect(ui.pushButton_ok, SIGNAL(clicked()), this, SLOT(button_ok()));
-    QObject::connect(ui.pushButton_refresh, SIGNAL(clicked()), this, SLOT(button_refresh()));
-    QObject::connect(ui.pushButton_cancel, SIGNAL(clicked()), this, SLOT(button_cancel()));
+    create_gui();
+    create_signals();
 
     accessManager = new QNetworkAccessManager;
     cookieJar = new QNetworkCookieJar();
@@ -65,6 +54,25 @@ DlgEmail::~DlgEmail()
 {
     delete cookieJar;
     accessManager->deleteLater();
+}
+
+void DlgEmail::create_gui()
+{
+    ui.pushButton_ok->setIcon(QIcon(":/images/oxygen/16x16/dialog-ok.png"));
+    ui.pushButton_refresh->setIcon(QIcon(":/images/oxygen/16x16/view-refresh.png"));
+    ui.pushButton_cancel->setIcon(QIcon(":/images/oxygen/16x16/dialog-cancel.png"));
+
+    ui.label_msg->setText(tr("Enter the characters you see:"));
+    ui.pushButton_ok->setText(tr("OK"));
+    ui.pushButton_refresh->setText(tr("Refresh"));
+    ui.pushButton_cancel->setText(tr("Cancel"));
+}
+
+void DlgEmail::create_signals()
+{
+    QObject::connect(ui.pushButton_ok, SIGNAL(clicked()), this, SLOT(button_ok()));
+    QObject::connect(ui.pushButton_refresh, SIGNAL(clicked()), this, SLOT(button_refresh()));
+    QObject::connect(ui.pushButton_cancel, SIGNAL(clicked()), this, SLOT(button_cancel()));
 }
 
 void DlgEmail::get_cookies()
