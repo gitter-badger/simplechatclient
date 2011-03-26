@@ -741,7 +741,7 @@ void MainWindow::create_nicklist(QString strChannel)
 {
     if (mChannelNickListWidget.contains(strChannel) == false)
     {
-        NickListWidget *nicklist = new NickListWidget(this, pNetwork, strChannel, &mNickAvatar, camSocket, &stlChannelNickStatus, pDlgUserProfile);
+        NickListWidget *nicklist = new NickListWidget(pNetwork, strChannel, &mNickAvatar, camSocket, &stlChannelNickStatus, pDlgUserProfile);
 #ifndef Q_WS_WIN
         nicklist->set_dlg_cam(pDlg_cam);
 #endif

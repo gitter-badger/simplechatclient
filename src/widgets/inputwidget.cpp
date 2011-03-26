@@ -160,6 +160,9 @@ QString InputWidget::replace_emots(QString strData)
 void InputWidget::send_message(bool bType)
 {
     QString strText = inputLine->toPlainText().trimmed();
+
+    if (strText.isEmpty() == true) return; // empty!
+
     QString strTextOriginal = strText;
 
     QSettings settings;
