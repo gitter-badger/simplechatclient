@@ -19,10 +19,11 @@
  ****************************************************************************/
 
 #include <QDesktopWidget>
+#include "mainwindow.h"
 #include "network.h"
 #include "dlg_invite.h"
 
-DlgInvite::DlgInvite(QWidget *parent, Network *param1, QString param2, QString param3) : QDialog(parent)
+DlgInvite::DlgInvite(MainWindow *parent, Network *param1, QString param2, QString param3) : QDialog(parent)
 {
     ui.setupUi(this);
     setAttribute(Qt::WA_DeleteOnClose);

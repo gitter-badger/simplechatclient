@@ -37,7 +37,6 @@ DlgMyAvatar::DlgMyAvatar(QWidget *parent, Network *param1, QMap <QString, QByteA
     // center screen
     move(QApplication::desktop()->screen()->rect().center() - rect().center());
 
-    myparent = parent;
     pNetwork = param1;
     mNickAvatar = param2;
     bReadedCollectionNames = false;

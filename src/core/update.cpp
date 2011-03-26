@@ -23,12 +23,12 @@
 #include <QNetworkReply>
 #include <QSettings>
 #include <QStringList>
+#include "core.h"
 #include "dlg_update.h"
 #include "update.h"
 
-Update::Update(QWidget *parent)
+Update::Update()
 {
-    myparent = parent;
     accessManager = new QNetworkAccessManager;
     QObject::connect(accessManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(update_finished(QNetworkReply*)));
 }
@@ -82,7 +82,7 @@ void Update::version(QString strAvailableVersion)
     if (iCurrentRev < iAvailableRev)
     {
         //tabc->show_msg("Status", tr("A new version is available."), 0);
-        DlgUpdate(myparent, strAvailableVersion).exec();
+        DlgUpdate(Core::instance()->sccWindow(), strAvailableVersion).exec();
     }
 }
 

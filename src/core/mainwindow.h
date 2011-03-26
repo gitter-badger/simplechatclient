@@ -21,14 +21,31 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-class Core;
+#include "defines.h"
+#ifndef Q_WS_WIN
+    class DlgCam;
+#endif
 class DlgAbout;
+class DlgChannelSettings;
+class DlgModeration;
 class DlgNotes;
 class DlgOptions;
+class DlgUserProfile;
+class InputLineDockWidget;
+class Network;
+class NickListDockWidget;
+class NickListWidget;
 class Notify;
-class Update;
+class OnetAuth;
+class OnetKernel;
+class TabContainer;
+class TabManager;
+#include <QDockWidget>
 #include <QMainWindow>
+#include <QMenuBar>
+#include <QObject>
 #include <QSystemTrayIcon>
+#include <QTcpSocket>
 #include <QToolBar>
 
 /**
@@ -40,14 +57,16 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = 0);
     virtual ~MainWindow();
-    void set_debug(bool);
+    void createGui();
+
+    void network_connect();
+    void network_disconnect();
+    void network_send(QString);
+    bool network_is_connected();
+    // nicklist
+    bool nicklist_exist(QString, QString);
 
 private:
-    QList <Core*> coreServers;
-    DlgOptions *pOptions;
-    Notify *pNotify;
-    Update *pUpdate;
-
     QToolBar *toolBar;
     QMenu *fileMenu;
     QMenu *viewMenu;
@@ -75,9 +94,46 @@ private:
     QAction *myProfileAct;
     QAction *myAvatarAct;
 
+    DlgOptions *pOptions;
+    QTcpSocket *camSocket;
+    TabManager *pTabM;
+    TabContainer *pTabC;
+    Network *pNetwork;
+    OnetKernel *pOnetKernel;
+    OnetAuth *pOnetAuth;
+    DlgChannelSettings *pDlgChannelSettings;
+    DlgUserProfile *pDlgUserProfile;
+    DlgModeration *pDlgModeration;
+
+    // gui
+    InputLineDockWidget *inputLineDockWidget;
+    NickListDockWidget *nickListDockWidget;
+    QDockWidget *bottomDockWidget;
+    QDockWidget *rightDockWidget;
+    QMap <QString, NickListWidget*> mChannelNickListWidget;
+    sChannelNickStatus stlChannelNickStatus;
+
+    // other
+#ifndef Q_WS_WIN
+    DlgCam *pDlg_cam;
+#endif
+    QAction *lagAct;
+    QList<QString> lAwaylog;
+    QMap<QString, bool> mFriends;
+    QList<QString> lIgnore;
+    QList<QString> lChannelFavourites;
+    sChannelList stlChannelList;
+    QMap <QString, QByteArray> mNickAvatar;
+    QMap <QString, QByteArray> mChannelAvatar;
+    QMap <QString, QString> mMyStats;
+    QMap <QString, QString> mMyProfile;
+    QList<QString> lChannelHomes;
+
+    void set_geometry();
     void create_actions();
     void create_menus();
-    void create_settings();
+    void create_signals();
+    void show_options();
 
 private slots:
     void refresh_colors();
@@ -85,9 +141,9 @@ private slots:
     void button_connect();
     void button_close();
     void open_options();
-    void open_about();
     void open_awaylog();
     void open_notes();
+    void open_about();
     void button_show();
     void tray_icon(QSystemTrayIcon::ActivationReason);
 
@@ -101,6 +157,36 @@ private slots:
     void open_my_stats();
     void open_my_profile();
     void open_my_avatar();
+
+public slots:
+    void set_lag(QString);
+    void create_nicklist(QString);
+    void remove_nicklist(QString);
+    void add_user(QString, QString, QString, QString);
+    void del_user(QString, QString);
+    void nicklist_refresh(QString);
+    void quit_user(QString, QString);
+    void change_flag(QString, QString, QString);
+    void change_flag(QString, QString);
+    void clear_nicklist(QString);
+    void clear_all_nicklist();
+    void update_nick_avatar(QString);
+    void clear_channel_all_nick_avatars(QString);
+    void set_open_channels();
+
+private slots:
+    void set_connected();
+    void set_disconnected();
+    void update_actions();
+    void close_cam_socket();
+    void update_awaylog_status();
+    void set_connect_enabled(bool);
+    void tab_close_requested(int);
+    void current_tab_changed(int);
+
+signals:
+    void skernel(QString);
+    void srequest_uo(QString, QString, QString);
 };
 
 #endif // MAINWINDOW_H

@@ -41,7 +41,6 @@ public:
 
 private:
     // params
-    QWidget *myparent;
     Network *pNetwork;
     InputWidget *pInputWidget;
     DlgChannelSettings *dlgchannel_settings;

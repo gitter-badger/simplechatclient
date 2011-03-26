@@ -33,7 +33,6 @@ DlgMyProfile::DlgMyProfile(QWidget *parent, Network *param1, QMap <QString, QByt
     // center screen
     move(QApplication::desktop()->screen()->rect().center() - rect().center());
 
-    myparent = parent;
     pNetwork = param1;
     mNickAvatar = param2;
     mMyProfile = param3;

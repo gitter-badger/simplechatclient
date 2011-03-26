@@ -34,7 +34,6 @@ public:
 
 private:
     Ui::uiChannelHomes ui;
-    QWidget *myparent;
     Network *pNetwork;
     QMap <QString, QByteArray> *mChannelAvatar;
     QList<QString> *lChannelHomes;

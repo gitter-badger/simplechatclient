@@ -33,7 +33,6 @@ public:
 
 private:
     Ui::uiChannelFavourites ui;
-    QWidget *myparent;
     Network *pNetwork;
     QMap <QString, QByteArray> *mChannelAvatar;
     QList<QString> *lChannelFavourites;

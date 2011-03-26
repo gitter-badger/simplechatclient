@@ -36,7 +36,6 @@ public:
 
 private:
     Ui::uiMyAvatar ui;
-    QWidget *myparent;
     Network *pNetwork;
     QMap <QString, QByteArray> *mNickAvatar;
     // network

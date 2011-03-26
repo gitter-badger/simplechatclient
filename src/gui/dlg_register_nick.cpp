@@ -26,9 +26,10 @@
 #include <QUrl>
 #include "config.h"
 #include "crypt.h"
+#include "mainwindow.h"
 #include "dlg_register_nick.h"
 
-DlgRegisterNick::DlgRegisterNick(QWidget *parent, QWidget *param1) : QDialog(parent)
+DlgRegisterNick::DlgRegisterNick(MainWindow *parent, QWidget *param1) : QDialog(parent)
 {
     ui.setupUi(this);
     setWindowTitle(tr("Register nick"));

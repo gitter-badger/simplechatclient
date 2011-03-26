@@ -29,12 +29,9 @@
 #include <QDebug>
 #endif
 
-Config::Config(bool bCreate)
+Config::Config()
 {
-    bCreateConfig = bCreate;
-
     QString path;
-
 #ifdef Q_WS_X11
     path = QDir::homePath()+"/.scc";
 #else
@@ -53,7 +50,7 @@ Config::Config(bool bCreate)
     file = new QFile(strConfigFile);
 
     // if not exist - create new
-    if ((file->exists() == false) && (bCreateConfig == true))
+    if (file->exists() == false)
         create_new_config();
 
     // try read
@@ -73,12 +70,13 @@ Config::Config(bool bCreate)
 #endif
             return;
         }
+        // fix config
+        fix_config();
     }
     else
     {
 #ifdef Q_WS_X11
-        if (bCreateConfig == true)
-            qDebug() << tr("Error: config: Cannot open config file!");
+        qDebug() << tr("Error: config: Cannot open config file!");
 #endif
         return;
     }
@@ -88,6 +86,129 @@ Config::~Config()
 {
     file->close();
     delete file;
+}
+
+QString Config::get_value(QString strKey)
+{
+    if ((doc.isNull() == true) || (file->isOpen() == false))
+    {
+#ifdef Q_WS_X11
+        qDebug() << tr("Error: config: Cannot get value: ") << strKey;
+#endif
+        return QString::null;
+    }
+
+    QDomElement docElem = doc.documentElement();
+    QDomNode n = docElem.firstChild();
+
+    while (n.isNull() == false)
+    {
+        QDomElement e = n.toElement();
+        if (e.isNull() == false)
+        {
+            if (e.tagName() == strKey)
+                return e.text();
+        }
+        n = n.nextSibling();
+    }
+
+    return QString::null;
+}
+
+void Config::set_value(QString strKey, QString strValue)
+{
+    if ((doc.isNull() == true) || (file->isOpen() == false))
+    {
+#ifdef Q_WS_X11
+        qDebug() << tr("Error: config: Cannot set value: ") << strKey;
+#endif
+        return;
+    }
+
+    // remove
+    remove_value(strKey);
+
+    // add value
+    QDomElement docElem = doc.documentElement();
+    QDomElement eSetKey = doc.createElement(strKey);
+    docElem.appendChild(eSetKey);
+    QDomText tSetValue = doc.createTextNode(strValue);
+    eSetKey.appendChild(tSetValue);
+
+    // save
+    save();
+}
+
+void Config::remove_value(QString strKey)
+{
+    if ((doc.isNull() == true) || (file->isOpen() == false))
+    {
+#ifdef Q_WS_X11
+        qDebug() << tr("Error: config: Cannot remove value: ") << strKey;
+#endif
+        return;
+    }
+
+    QDomElement docElem = doc.documentElement();
+    QDomNode n = docElem.firstChild();
+
+    // remove if exist
+    while (n.isNull() == false)
+    {
+        QDomElement e = n.toElement();
+        if (e.isNull() == false)
+        {
+            if (e.tagName() == strKey)
+            {
+                docElem.removeChild(e);
+                docElem.removeChild(e);
+            }
+        }
+        n = n.nextSibling();
+    }
+
+    // save
+    save();
+}
+
+void Config::fix_config()
+{
+    QMap<QString,QString> mDefaultValues = get_default_values();
+    QMapIterator<QString, QString> i(mDefaultValues);
+    while (i.hasNext())
+    {
+        i.next();
+        QString strDefaultKey = i.key();
+        QString strDefaultValue = i.value();
+
+        QString strValue = get_value(strDefaultKey);
+        if (strValue.isEmpty() == true)
+        {
+            if (strDefaultKey != "pass") // ignore pass
+                set_value(strDefaultKey, strDefaultValue);
+        }
+    }
+}
+
+void Config::create_new_config()
+{
+    doc.clear();
+    QDomElement root = doc.createElement("config");
+    doc.appendChild(root);
+
+    QMap<QString,QString> mDefaultValues = get_default_values();
+    QMapIterator<QString, QString> i(mDefaultValues);
+    while (i.hasNext())
+    {
+        i.next();
+        QString strDefaultKey = i.key();
+        QString strDefaultValue = i.value();
+
+        add_config_value(&doc, &root, strDefaultKey, strDefaultValue);
+    }
+
+    // save
+    save();
 }
 
 QMap<QString,QString> Config::get_default_values()
@@ -144,61 +265,8 @@ QMap<QString,QString> Config::get_default_values()
     return mDefaultValues;
 }
 
-QString Config::get_value(QString strKey)
-{
-    // if config file was opened successfully
-    if ((doc.isNull() == false) && (file->isOpen() == true))
-    {
-        QDomElement docElem = doc.documentElement();
-        QDomNode n = docElem.firstChild();
-
-        while (n.isNull() == false)
-        {
-            QDomElement e = n.toElement();
-            if (e.isNull() == false)
-            {
-                if (e.tagName() == strKey)
-                    return e.text();
-            }
-            n = n.nextSibling();
-        }
-    }
-
-    // do not create config
-    if (bCreateConfig == false)
-        return QString::null;
-
-    // not exist value - save default, return default
-
-    QMap<QString,QString> mDefaultValues = get_default_values();
-    QMapIterator<QString, QString> i(mDefaultValues);
-    while (i.hasNext())
-    {
-        i.next();
-        QString strDefaultKey = i.key();
-        QString strDefaultValue = i.value();
-
-        if (strKey == strDefaultKey)
-        {
-            set_value(strDefaultKey, strDefaultValue);
-            return strDefaultValue;
-        }
-    }
-
-#ifdef Q_WS_X11
-    // exception: iv
-    if ((bCreateConfig == true) && (strKey != "iv"))
-        qDebug() << tr("Error: config: Cannot get value: ") << strKey;
-#endif
-
-    return QString::null;
-}
-
 QMap <QString, QString> Config::read_config()
 {
-    // fix config
-    fix_config();
-
     QMap <QString, QString> mResult;
 
     if ((doc.isNull() == false) && (file->isOpen() == true))
@@ -219,75 +287,6 @@ QMap <QString, QString> Config::read_config()
     }
 
     return mResult;
-}
-
-void Config::set_value(QString strKey, QString strValue)
-{
-    if ((doc.isNull() == true) || (file->isOpen() == false))
-    {
-#ifdef Q_WS_X11
-        qDebug() << tr("Error: config: Cannot set value: ") << strKey;
-#endif
-        return;
-    }
-
-    QDomElement docElem = doc.documentElement();
-    QDomNode n = docElem.firstChild();
-
-    while (n.isNull() == false)
-    {
-        QDomElement e = n.toElement();
-        if (e.isNull() == false)
-        {
-            if (e.tagName() == strKey)
-            {
-                docElem.removeChild(e);
-                docElem.removeChild(e);
-            }
-        }
-        n = n.nextSibling();
-    }
-
-    QDomElement eSetKey = doc.createElement(strKey);
-    docElem.appendChild(eSetKey);
-    QDomText tSetValue = doc.createTextNode(strValue);
-    eSetKey.appendChild(tSetValue);
-
-    save();
-}
-
-void Config::fix_config()
-{
-    QMap<QString,QString> mDefaultValues = get_default_values();
-    QMapIterator<QString, QString> i(mDefaultValues);
-    while (i.hasNext())
-    {
-        i.next();
-        QString strDefaultKey = i.key();
-
-        // get all values - if not exist create default value
-        get_value(strDefaultKey);
-    }
-}
-
-void Config::create_new_config()
-{
-    doc.clear();
-    QDomElement root = doc.createElement("config");
-    doc.appendChild(root);
-
-    QMap<QString,QString> mDefaultValues = get_default_values();
-    QMapIterator<QString, QString> i(mDefaultValues);
-    while (i.hasNext())
-    {
-        i.next();
-        QString strDefaultKey = i.key();
-        QString strDefaultValue = i.value();
-
-        add_config_value(&doc, &root, strDefaultKey, strDefaultValue);
-    }
-
-    save();
 }
 
 void Config::add_config_value(QDomDocument *doc, QDomElement *root, QString strKey, QString strValue)

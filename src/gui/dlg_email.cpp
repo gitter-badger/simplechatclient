@@ -24,9 +24,10 @@
 #include <QNetworkReply>
 #include <QSettings>
 #include <QUrl>
+#include "mainwindow.h"
 #include "dlg_email.h"
 
-DlgEmail::DlgEmail(QWidget *parent, QString param1, QString param2) : QDialog(parent)
+DlgEmail::DlgEmail(MainWindow *parent, QString param1, QString param2) : QDialog(parent)
 {
     ui.setupUi(this);
     setWindowTitle(tr("Change email address"));

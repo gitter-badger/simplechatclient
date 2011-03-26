@@ -33,7 +33,6 @@ public:
 
 private:
     Ui::uiFriends ui;
-    QWidget *myparent;
     Network *pNetwork;
     QMap <QString, QByteArray> *mNickAvatar;
     QMap <QString, bool> *mFriends;

@@ -32,7 +32,6 @@ public:
 
 private:
     Ui::uiNotes ui;
-    QWidget *myparent;
     QString path;
     QString strNotesFile;
 

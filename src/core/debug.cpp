@@ -32,6 +32,8 @@
 #include "debug.h"
 
 #ifdef Q_WS_X11
+#include <QProcess>
+#include <signal.h>
 #include <QDebug>
 #endif
 
@@ -94,3 +96,140 @@ void messageHandler(QtMsgType type, const char *msg)
             abort();
     }
 }
+
+#ifdef Q_WS_X11
+void crashHandler()
+{
+    QString path = QDir::homePath()+"/.scc";
+
+    // create dir if not exist
+    QDir d(path);
+    if (d.exists(path) == false)
+        d.mkdir(path);
+
+    QDir d1(path);
+    if (d1.exists(path+"/log") == false)
+        d1.mkdir(path+"/log");
+
+    QProcess pProcess;
+
+    int pid = QCoreApplication::applicationPid();
+    QString strPid = QString::number(pid);
+    QString strRandom;
+
+    while(strRandom.length() < 6)
+    {
+        int cat = qrand() % 3;
+
+        // 0-9
+        if (cat == 0)
+        {
+            int i = qrand() % 9;
+            QChar c = i+=48;
+            strRandom += c.toAscii();
+        }
+        // A-Z
+        else if (cat == 1)
+        {
+            int i = qrand() % 25;
+            QChar c = i+=65;
+            strRandom += c.toAscii();
+        }
+        // a-z
+        else if (cat == 2)
+        {
+            int i = qrand() % 25;
+            QChar c = i+=97;
+            strRandom += c.toAscii();
+        }
+    }
+
+    QString strCommand = "gdb --pid "+ strPid +" -ex \"set logging overwrite on\" -ex \"set logging file "+ path +"/log/crash-"+ strRandom +".txt\" -ex \"set logging on\" -ex \"backtrace\" -ex \"info registers\" -ex \"x/16i $pc\" -ex \"thread apply all backtrace\" -ex \"up\" -ex \"list\" -ex \"quit\"";
+
+    pProcess.start(strCommand);
+    pProcess.waitForFinished();
+
+    exit(1);
+}
+
+void got_bus(int z)
+{
+    Q_UNUSED (z);
+    saveMessage("debug", "error: SIGBUS: BUS ERROR -- CRASHING!");
+    crashHandler();
+}
+
+void got_segv(int z)
+{
+    Q_UNUSED (z);
+    saveMessage("debug", "error: SIGSEGV: SEGMENT VIOLATION -- CRASHING!");
+    crashHandler();
+}
+
+void got_fpe(int z)
+{
+    Q_UNUSED (z);
+    saveMessage("debug", "error: SIGFPE: FLOATING POINT ERROR -- CRASHING!");
+    crashHandler();
+}
+
+void got_term(int z)
+{
+    Q_UNUSED (z);
+    saveMessage("debug", "error: SIGTERM: TERMINATE SIGNAL -- SIGNING OFF!");
+    crashHandler();
+}
+
+void got_hup(int z)
+{
+    Q_UNUSED (z);
+    saveMessage("debug", "error: SIGHUP: HANGUP SIGNAL -- SIGNING OFF!");
+    crashHandler();
+}
+
+void got_ill(int z)
+{
+    Q_UNUSED (z);
+    saveMessage("debug", "error: SIGILL: ILL SIGNAL -- SIGNING OFF!");
+    crashHandler();
+}
+
+void got_abrt(int z)
+{
+    Q_UNUSED (z);
+    saveMessage("debug", "error: SIGABRT: ABRT SIGNAL -- SIGNING OFF!");
+    crashHandler();
+}
+
+void linux_crash_handler()
+{
+    struct sigaction sv;
+
+    // sigbus
+    sv.sa_handler = got_bus;
+    sigemptyset(&sv.sa_mask);
+    sv.sa_flags = 0;
+    sigaction(SIGBUS, &sv, NULL);
+    // sigsegv
+    sv.sa_handler = got_segv;
+    sigaction(SIGSEGV, &sv, NULL);
+    // sigfpe
+    sv.sa_handler = got_fpe;
+    sigaction(SIGFPE, &sv, NULL);
+    // sigterm
+    sv.sa_handler = got_term;
+    sigaction(SIGTERM, &sv, NULL);
+    // sighup
+    sv.sa_handler = got_hup;
+    sigaction(SIGHUP, &sv, NULL);
+    // sigpipe
+    sv.sa_handler = SIG_IGN;
+    sigaction(SIGPIPE, &sv, NULL);
+    // sigill
+    sv.sa_handler = got_ill;
+    sigaction(SIGILL, &sv, NULL);
+    // sigabrt
+    sv.sa_handler = got_abrt;
+    sigaction(SIGABRT, &sv, NULL);
+}
+#endif

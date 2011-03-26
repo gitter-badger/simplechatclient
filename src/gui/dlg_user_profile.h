@@ -39,7 +39,6 @@ public slots:
 
 private:
     Ui::uiUserProfile ui;
-    QWidget *myparent;
     Network *pNetwork;
     int iWidth; // widget width
     QPixmap avatar;

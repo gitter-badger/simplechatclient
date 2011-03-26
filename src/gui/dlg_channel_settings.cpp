@@ -23,6 +23,7 @@
 #include <QInputDialog>
 #include <QMessageBox>
 #include <QSettings>
+#include "core.h"
 #include "dlg_email.h"
 #include "network.h"
 #include "dlg_channel_settings.h"
@@ -37,7 +38,6 @@ DlgChannelSettings::DlgChannelSettings(QWidget *parent, Network *param1) : QDial
     ui.setupUi(this);
     setAttribute(Qt::WA_DeleteOnClose);
 
-    myparent = parent;
     pNetwork = param1;
 
     simpleStatsWidget = new SimpleStatsWidget(this);
@@ -627,7 +627,7 @@ void DlgChannelSettings::remove_channel_clicked()
 void DlgChannelSettings::email_changed()
 {
     if (ui.lineEdit_email->text().isEmpty() == false)
-        DlgEmail(myparent, strChannel, ui.lineEdit_email->text()).exec();
+        DlgEmail(Core::instance()->sccWindow(), strChannel, ui.lineEdit_email->text()).exec();
 }
 
 void DlgChannelSettings::www_changed()

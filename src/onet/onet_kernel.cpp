@@ -24,6 +24,7 @@
 #include <QStringList>
 #include <QTimer>
 #include "avatar.h"
+#include "core.h"
 #include "dlg_channel_key.h"
 #include "dlg_channel_settings.h"
 #include "dlg_invite.h"
@@ -35,23 +36,21 @@
 #include "tab_container.h"
 #include "onet_kernel.h"
 
-OnetKernel::OnetKernel(QWidget *parent, Network *param1, TabContainer *param2, Notify *param3, QMap <QString, QByteArray> *param4, QMap <QString, QByteArray> *param5, DlgChannelSettings *param6, QList<QString> *param7, sChannelList *param8, QList<QString> *param9, QMap<QString, bool> *param10, QList<QString> *param11, DlgModeration *param12, QMap<QString, QString> *param13, QMap<QString, QString> *param14)
+OnetKernel::OnetKernel(Network *param1, TabContainer *param2, QMap <QString, QByteArray> *param3, QMap <QString, QByteArray> *param4, DlgChannelSettings *param5, QList<QString> *param6, sChannelList *param7, QList<QString> *param8, QMap<QString, bool> *param9, QList<QString> *param10, DlgModeration *param11, QMap<QString, QString> *param12, QMap<QString, QString> *param13)
 {
-    myparent = parent;
     pNetwork = param1;
     pTabC = param2;
-    pNotify = param3;
-    mNickAvatar = param4;
-    mChannelAvatar = param5;
-    dlgchannel_settings = param6;
-    lChannelHomes = param7;
-    stlChannelList = param8;
-    lChannelFavourites = param9;
-    mFriends = param10;
-    lIgnore = param11;
-    dlgmoderation = param12;
-    mMyStats = param13;
-    mMyProfile = param14;
+    mNickAvatar = param3;
+    mChannelAvatar = param4;
+    dlgchannel_settings = param5;
+    lChannelHomes = param6;
+    stlChannelList = param7;
+    lChannelFavourites = param8;
+    mFriends = param9;
+    lIgnore = param10;
+    dlgmoderation = param11;
+    mMyStats = param12;
+    mMyProfile = param13;
 
     avatar = new Avatar(pTabC, mNickAvatar, mChannelAvatar);
 }
@@ -1139,9 +1138,9 @@ void OnetKernel::raw_invite()
     if (strWhere[0] == ':')
         strWhere = strWhere.right(strWhere.length()-1);
 
-    pNotify->play("query");
+    Notify::instance()->play("query");
 
-    (new DlgInvite(myparent, pNetwork, strWho, strWhere))->show(); // should be show - prevent hangup!
+    (new DlgInvite(Core::instance()->sccWindow(), pNetwork, strWho, strWhere))->show(); // should be show - prevent hangup!
 }
 
 // :cf1f3.onet TOPIC #scc :Simple Chat Client; current version: beta;
@@ -3659,7 +3658,7 @@ void OnetKernel::raw_475()
     QString strMessage = QString(tr("* Cannot join channel %1: Incorrect channel key")).arg(strChannel);
     pTabC->show_msg_active(strMessage, 7);
 
-    (new DlgChannelKey(myparent, pNetwork, strChannel))->show(); // should be show - prevent hangup!
+    (new DlgChannelKey(Core::instance()->sccWindow(), pNetwork, strChannel))->show(); // should be show - prevent hangup!
 }
 
 // :cf1f4.onet 481 Merovingian :Permission Denied - You do not have the required operator privileges

@@ -52,7 +52,6 @@ public slots:
 
 private:
     // params
-    QWidget *myparent;
     Network *pNetwork;
     // inputline widget
     QHBoxLayout *mainLayout;

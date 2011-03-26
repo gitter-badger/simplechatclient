@@ -33,9 +33,8 @@
     #include "dlg_cam.h"
 #endif
 
-MainTextEdit::MainTextEdit(QWidget *parent, Network *param1, QString param2, QTcpSocket *param3, sChannelNickStatus *param4, DlgUserProfile *param5)
+MainTextEdit::MainTextEdit(Network *param1, QString param2, QTcpSocket *param3, sChannelNickStatus *param4, DlgUserProfile *param5)
 {
-    myparent = parent;
     pNetwork = param1;
     strChannel = param2;
     camSocket = param3;

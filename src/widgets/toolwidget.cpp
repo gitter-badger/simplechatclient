@@ -23,6 +23,7 @@
 #include <QMenu>
 #include <QPushButton>
 #include <QSettings>
+#include "core.h"
 #include "dlg_channel_settings.h"
 #include "dlg_emoticons.h"
 #include "dlg_moderation.h"
@@ -32,7 +33,6 @@
 
 ToolWidget::ToolWidget(QWidget *parent, Network *param1, InputWidget *param2, DlgChannelSettings *param3, DlgModeration *param4) : QWidget(parent)
 {
-    myparent = parent;
     pNetwork = param1;
     pInputWidget = param2;
     dlgchannel_settings = param3;
@@ -472,7 +472,7 @@ void ToolWidget::color_clicked(int index)
 
 void ToolWidget::emoticons_clicked()
 {
-    DlgEmoticons(myparent, pInputWidget).exec();
+    DlgEmoticons(Core::instance()->sccWindow(), pInputWidget).exec();
 }
 
 // channel settings

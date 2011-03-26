@@ -29,7 +29,6 @@ class DlgChannelSettings;
 class DlgModeration;
 class DlgUserProfile;
 class Network;
-class Notify;
 class TabManager;
 class TabWidget;
 #include <QMap>
@@ -43,7 +42,7 @@ class TabContainer : public QObject
 {
     Q_OBJECT
 public:
-    TabContainer(QWidget *, Network *, TabManager *, Notify *, QMap <QString, QByteArray> *, QTcpSocket *, sChannelNickStatus *, QList<QString> *);
+    TabContainer(Network *, TabManager *, QMap <QString, QByteArray> *, QTcpSocket *, sChannelNickStatus *, QList<QString> *);
     virtual ~TabContainer();
     void set_dlg(DlgUserProfile *);
 #ifndef Q_WS_WIN
@@ -83,10 +82,8 @@ public slots:
 
 private:
     // params
-    QWidget *myparent;
     Network *pNetwork;
     TabManager *pTabM;
-    Notify *pNotify;
     QMap <QString, QByteArray> *mChannelAvatar;
     DlgChannelSettings *dlgchannel_settings;
     DlgModeration *dlgmoderation;

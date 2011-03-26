@@ -21,6 +21,7 @@
 #ifndef DLG_USER_AVATAR_H
 #define DLG_USER_AVATAR_H
 
+class MainWindow;
 #include <QDialog>
 #include "ui_user_avatar.h"
 
@@ -28,11 +29,10 @@ class DlgUserAvatar : public QDialog
 {
     Q_OBJECT
 public:
-    DlgUserAvatar(QWidget *, QPixmap);
+    DlgUserAvatar(MainWindow *, QPixmap);
 
 private:
     Ui::uiUserAvatar ui;
-    QWidget *myparent;
     QPixmap avatar;
 
 private slots:

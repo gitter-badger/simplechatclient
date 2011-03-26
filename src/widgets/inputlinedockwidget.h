@@ -54,7 +54,6 @@ public slots:
 
 private:
     // params
-    QWidget *myparent;
     Network *pNetwork;
     DlgChannelSettings *dlgchannel_settings;
     DlgModeration *dlgmoderation;

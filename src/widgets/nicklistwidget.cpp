@@ -38,7 +38,6 @@
 
 NickListWidget::NickListWidget(QWidget *parent, Network *param1, QString param2, QMap <QString, QByteArray> *param3, QTcpSocket *param4, sChannelNickStatus *param5, DlgUserProfile *param6)
 {
-    myparent = parent;
     pNetwork = param1;
     strChannel = param2;
     mNickAvatar = param3;

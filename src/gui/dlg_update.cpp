@@ -20,9 +20,10 @@
 
 #include <QDesktopWidget>
 #include <QPushButton>
+#include "mainwindow.h"
 #include "dlg_update.h"
 
-DlgUpdate::DlgUpdate(QWidget *parent, QString param1) : QDialog(parent)
+DlgUpdate::DlgUpdate(MainWindow *parent, QString param1) : QDialog(parent)
 {
     ui.setupUi(this);
     setWindowFlags(Qt::Dialog | Qt::WindowStaysOnTopHint);

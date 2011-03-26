@@ -19,231 +19,84 @@
  ****************************************************************************/
 
 #include <QtGui/QApplication>
-#include <QDesktopWidget>
-#include <QDir>
-#include <QLocale>
 #include <QMessageBox>
+#include <QSettings>
 #include <QTextCodec>
 #include <QTranslator>
 #include "config.h"
 #include "debug.h"
-#include "mainwindow.h"
+#include "core.h"
 #include "singleapplication.h"
 
-#ifdef Q_WS_X11
-#include <QProcess>
-#include <signal.h>
-#endif
-
-#ifdef Q_WS_X11
-#include <QDebug>
-#endif
-
-#ifdef Q_WS_X11
-void crashHandler()
+void displayVersion()
 {
-    QString path;
-#ifdef Q_WS_X11
-    path = QDir::homePath()+"/.scc";
-#else
-    QSettings settings(QSettings::UserScope, "Microsoft", "Windows");
-    settings.beginGroup("CurrentVersion/Explorer/Shell Folders");
-    path = settings.value("Personal").toString();
-    path += "/scc";
-#endif
-
-    // create dir if not exist
-    QDir d(path);
-    if (d.exists(path) == false)
-        d.mkdir(path);
-
-    QDir d1(path);
-    if (d1.exists(path+"/log") == false)
-        d1.mkdir(path+"/log");
-
-    QProcess pProcess;
-
-    int pid = QCoreApplication::applicationPid();
-    QString strPid = QString::number(pid);
-    QString strRandom;
-
-    while(strRandom.length() < 6)
-    {
-        int cat = qrand() % 3;
-
-        // 0-9
-        if (cat == 0)
-        {
-            int i = qrand() % 9;
-            QChar c = i+=48;
-            strRandom += c.toAscii();
-        }
-        // A-Z
-        else if (cat == 1)
-        {
-            int i = qrand() % 25;
-            QChar c = i+=65;
-            strRandom += c.toAscii();
-        }
-        // a-z
-        else if (cat == 2)
-        {
-            int i = qrand() % 25;
-            QChar c = i+=97;
-            strRandom += c.toAscii();
-        }
-    }
-
-    QString strCommand = "gdb --pid "+ strPid +" -ex \"set logging overwrite on\" -ex \"set logging file "+ path +"/log/crash-"+ strRandom +".txt\" -ex \"set logging on\" -ex \"backtrace\" -ex \"info registers\" -ex \"x/16i $pc\" -ex \"thread apply all backtrace\" -ex \"up\" -ex \"list\" -ex \"quit\"";
-
-    pProcess.start(strCommand);
-    pProcess.waitForFinished();
-
-    exit(1);
+    printf("Simple Chat Client %s\n\n"
+           "Copyright (C) 2011 Piotr Łuczko <piotr.luczko@gmail.com>\n"
+           "License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>\n"
+           "This is free software: you are free to change and redistribute it.\n\n",
+           qPrintable(Core::version()));
 }
 
-static void got_bus(int z)
+void displayOptions()
 {
-    Q_UNUSED (z);
-    saveMessage("debug", "error: SIGBUS: BUS ERROR -- CRASHING!");
-    crashHandler();
+    printf("Options:\n"
+           "  --help                     Display this information\n"
+           "  --version                  Display version information\n"
+           "  --debug                    Enable debug output\n\n");
 }
 
-static void got_segv(int z)
+// clear settings without debug
+void clearSettings()
 {
-    Q_UNUSED (z);
-    saveMessage("debug", "error: SIGSEGV: SEGMENT VIOLATION -- CRASHING!");
-    crashHandler();
-}
+    QSettings settings;
 
-static void got_fpe(int z)
-{
-    Q_UNUSED (z);
-    saveMessage("debug", "error: SIGFPE: FLOATING POINT ERROR -- CRASHING!");
-    crashHandler();
-}
+    // read debug
+    QString strOldDebug = settings.value("debug").toString();
 
-static void got_term(int z)
-{
-    Q_UNUSED (z);
-    saveMessage("debug", "error: SIGTERM: TERMINATE SIGNAL -- SIGNING OFF!");
-    crashHandler();
-}
+    // clear
+    settings.clear();
 
-static void got_hup(int z)
-{
-    Q_UNUSED (z);
-    saveMessage("debug", "error: SIGHUP: HANGUP SIGNAL -- SIGNING OFF!");
-    crashHandler();
+    // restore debug
+    settings.setValue("debug", strOldDebug);
 }
-
-static void got_ill(int z)
-{
-    Q_UNUSED (z);
-    saveMessage("debug", "error: SIGILL: ILL SIGNAL -- SIGNING OFF!");
-    crashHandler();
-}
-
-static void got_abrt(int z)
-{
-    Q_UNUSED (z);
-    saveMessage("debug", "error: SIGABRT: ABRT SIGNAL -- SIGNING OFF!");
-    crashHandler();
-}
-
-#endif
 
 int main(int argc, char *argv[])
 {
-    bool bDebug = false;
-
-    if (argc > 1)
-    {
-        for (int i = 0; i < argc; i++)
-        {
-            // debug
-            if (strcmp(argv[i], "-debug") == 0)
-            {
-#ifdef Q_WS_X11
-                qDebug() << "Debug: on";
-#endif
-                bDebug = true;
-            }
-        }
-    }
-
     Q_INIT_RESOURCE(scc);
 
     // linux crash handler
 #ifdef Q_WS_X11
-    struct sigaction sv;
-
-    // sigbus
-    sv.sa_handler = got_bus;
-    sigemptyset(&sv.sa_mask);
-    sv.sa_flags = 0;
-    sigaction(SIGBUS, &sv, NULL);
-    // sigsegv
-    sv.sa_handler = got_segv;
-    sigaction(SIGSEGV, &sv, NULL);
-    // sigfpe
-    sv.sa_handler = got_fpe;
-    sigaction(SIGFPE, &sv, NULL);
-    // sigterm
-    sv.sa_handler = got_term;
-    sigaction(SIGTERM, &sv, NULL);
-    // sighup
-    sv.sa_handler = got_hup;
-    sigaction(SIGHUP, &sv, NULL);
-    // sigpipe
-    sv.sa_handler = SIG_IGN;
-    sigaction(SIGPIPE, &sv, NULL);
-    // sigill
-    sv.sa_handler = got_ill;
-    sigaction(SIGILL, &sv, NULL);
-    // sigabrt
-    sv.sa_handler = got_abrt;
-    sigaction(SIGABRT, &sv, NULL);
+    linux_crash_handler();
 #endif
 
-
+    // message handler
     qInstallMsgHandler(messageHandler);
-    SingleApplication app(argc, argv, "scc");
 
-    // detect already running
-    if (app.isRunning())
-    {
-        QMessageBox::critical(0, "Error", "Simple Chat Client is already running");
-        return 0;
-    }
+    // single app
+    SingleApplication app(argc, argv, "scc");
 
     // set codec
     QTextCodec::setCodecForCStrings(QTextCodec::codecForName("ISO-8859-2"));
     QTextCodec::setCodecForTr(QTextCodec::codecForName("UTF-8"));
-
-    // set geometry
-    const int x = QApplication::desktop()->availableGeometry().width();
-    const int y = QApplication::desktop()->availableGeometry().height();
-    const int xo = 800;
-    const int yo = 600;
 
     // set organization
     QCoreApplication::setOrganizationName("scc");
     QCoreApplication::setOrganizationDomain("simplechatclien.sourceforge.net");
     QCoreApplication::setApplicationName("scc");
 
+    // debug off
+    QSettings settings;
+    settings.setValue("debug", "off");
+
     // get translate
-    Config *pConfig = new Config(false);
+    Config *pConfig = new Config();
     QString strLanguage = pConfig->get_value("language");
     delete pConfig;
-
-    // set system locale if not found config language
-    if (strLanguage.isEmpty() == true)
-        strLanguage = QLocale::system().name();
 
     // set translate
     QString strPath = QCoreApplication::applicationDirPath();
 
+    // load translate
     QTranslator qtTranslator;
     qtTranslator.load(QString("%1/i18n/qt_%2").arg(strPath).arg(strLanguage));
     app.installTranslator(&qtTranslator);
@@ -252,15 +105,43 @@ int main(int argc, char *argv[])
     sccTranslator.load(QString("%1/i18n/scc_%2").arg(strPath).arg(strLanguage));
     app.installTranslator(&sccTranslator);
 
-    // set locale
-    //QLocale::setDefault(QLocale::system());
+    // args
+    for (int i = 1; i < app.argc(); i++)
+    {
+        QString param = app.argv()[i];
+        if (param == "--debug")
+        {
+            printf("Debug enabled\n\n");
+            Core::enableDebug();
+        }
+        else if (param == "--version")
+        {
+            displayVersion();
+            app.deleteLater();
+            return 0;
+        }
+        else if (param == "--help")
+        {
+            displayVersion();
+            displayOptions();
+            app.deleteLater();
+            return 0;
+        }
+    }
 
-    // main window
-    MainWindow mainWin;
-    mainWin.set_debug(bDebug);
-    mainWin.resize(xo,yo);
-    mainWin.setGeometry((x-xo)/2,(y-yo)/2,xo,yo);
-    mainWin.show();
+    // detect already running
+    if (app.isRunning())
+    {
+        QMessageBox::critical(0, app.translate("@default", "Error"), app.translate("@default", "Simple Chat Client is already running"));
+        return 0;
+    }
+
+    // clear settings;
+    clearSettings();
+
+    // core
+    Core::instance()->createGui();
+    Core::instance()->showSccWindow();
 
     return app.exec();
 }

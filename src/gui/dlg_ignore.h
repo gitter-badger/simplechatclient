@@ -33,7 +33,6 @@ public:
 
 private:
     Ui::uiIgnore ui;
-    QWidget *myparent;
     Network *pNetwork;
     QMap <QString, QByteArray> *mNickAvatar;
     QList<QString> *lIgnore;

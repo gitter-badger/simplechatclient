@@ -22,26 +22,26 @@
 #include <QFile>
 #include <QSettings>
 #include "convert.h"
-#ifndef Q_WS_WIN
-    #include "dlg_cam.h"
-#endif
+#include "core.h"
 #include "log.h"
 #include "network.h"
 #include "maintextedit.h"
 #include "notify.h"
 #include "tab_widget.h"
 
-TabWidget::TabWidget(QWidget *parent, Network *param1, QString param2, Notify *param3, QMap <QString, QByteArray> *param4, QTcpSocket *param5, sChannelNickStatus *param6, DlgUserProfile *param7, QList<QString> *param8)
+#ifndef Q_WS_WIN
+    #include "dlg_cam.h"
+#endif
+
+TabWidget::TabWidget(Network *param1, QString param2, QMap <QString, QByteArray> *param3, QTcpSocket *param4, sChannelNickStatus *param5, DlgUserProfile *param6, QList<QString> *param7)
 {
-    myparent = parent;
     pNetwork = param1;
     strName = param2;
-    pNotify = param3;
-    mChannelAvatar = param4;
-    camSocket = param5;
-    mChannelNickStatus = param6;
-    pDlg_user_profile = param7;
-    lAwaylog = param8;
+    mChannelAvatar = param3;
+    camSocket = param4;
+    mChannelNickStatus = param5;
+    pDlg_user_profile = param6;
+    lAwaylog = param7;
 
     QSettings settings;
     QString strDefaultFontColor = addslashes(settings.value("default_font_color").toString());
@@ -112,7 +112,7 @@ TabWidget::TabWidget(QWidget *parent, Network *param1, QString param2, Notify *p
     topLayout->addWidget(topRightWidget);
     topWidget->setLayout(topLayout);
 
-    mainTextEdit = new MainTextEdit(myparent, pNetwork, strName, camSocket, mChannelNickStatus, pDlg_user_profile);
+    mainTextEdit = new MainTextEdit(pNetwork, strName, camSocket, mChannelNickStatus, pDlg_user_profile);
     mainTextEdit->document()->setMaximumBlockCount(1000);
     mainTextEdit->setReadOnly(true);
     mainTextEdit->setAcceptRichText(false);
@@ -178,7 +178,7 @@ TabWidget::TabWidget(QWidget *parent, Network *param1, QString param2, Notify *p
     this->setLayout(mainLayout);
 
     // set colors
-    if (strBackgroundColor.toLower() != "#ffffff")
+    if ((strBackgroundColor.toLower() != "#ffffff") && (strBackgroundColor.isEmpty() == false))
         this->setStyleSheet(QString("color:%1;background-color:%2;").arg(strDefaultFontColor).arg(strBackgroundColor));
     else
         this->setStyleSheet(QString::null);
@@ -207,10 +207,7 @@ QString TabWidget::addslashes(QString strData)
     strData.replace(";", "");
     strData.replace("%", "");
 
-    if (strData.isEmpty() == true)
-        return "#000000";
-    else
-        return strData;
+    return strData;
 }
 
 void TabWidget::display_msg(QString strTime, QString strData, int iLevel)
@@ -359,7 +356,7 @@ void TabWidget::display_message(QString strData, int iLevel)
 
         // sound
         if (settings.value("disable_sounds").toString() == "off")
-            pNotify->play("beep");
+            Notify::instance()->play("beep");
     }
 
     // /me

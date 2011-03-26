@@ -26,7 +26,6 @@ class Avatar;
 class DlgChannelSettings;
 class DlgModeration;
 class Network;
-class Notify;
 class TabContainer;
 #include <QMap>
 #include <QObject>
@@ -39,17 +38,15 @@ class OnetKernel : public QObject
 {
     Q_OBJECT
 public:
-    OnetKernel(QWidget *, Network *, TabContainer *, Notify *, QMap <QString, QByteArray> *, QMap <QString, QByteArray> *, DlgChannelSettings *, QList<QString> *, sChannelList *, QList<QString> *, QMap<QString, bool> *, QList<QString> *, DlgModeration *, QMap<QString,QString> *, QMap<QString,QString> *);
+    OnetKernel(Network *, TabContainer *, QMap <QString, QByteArray> *, QMap <QString, QByteArray> *, DlgChannelSettings *, QList<QString> *, sChannelList *, QList<QString> *, QMap<QString, bool> *, QList<QString> *, DlgModeration *, QMap<QString,QString> *, QMap<QString,QString> *);
     virtual ~OnetKernel();
 
 public slots:
     void kernel(QString);
 
 private:
-    QWidget *myparent;
     Network *pNetwork;
     TabContainer *pTabC;
-    Notify *pNotify;
     QMap <QString, QByteArray> *mNickAvatar;
     QMap <QString, QByteArray> *mChannelAvatar;
     DlgChannelSettings *dlgchannel_settings;

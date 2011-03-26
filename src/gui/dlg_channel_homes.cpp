@@ -31,7 +31,6 @@ DlgChannelHomes::DlgChannelHomes(QWidget *parent, Network *param1, QMap <QString
     // center screen
     move(QApplication::desktop()->screen()->rect().center() - rect().center());
 
-    myparent = parent;
     pNetwork = param1;
     mChannelAvatar = param2;
     lChannelHomes = param3;

@@ -30,7 +30,11 @@
 class Notify : public QObject
 {
     Q_OBJECT
+    static Notify *Instance;
+
 public:
+    static Notify *instance();
+
     Notify();
     virtual ~Notify();
     void play(QString);
@@ -39,6 +43,8 @@ private:
     QString apath;
     Phonon::MediaObject *music;
     QString strCurrent;
+
+    void init();
 };
 
 #endif // NOTIFY_H

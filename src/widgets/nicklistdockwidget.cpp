@@ -22,6 +22,5 @@
 
 NickListDockWidget::NickListDockWidget(QWidget *parent) : QStackedWidget(parent)
 {
-    myparent = parent;
     setMinimumWidth(180);
 }

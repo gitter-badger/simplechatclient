@@ -29,8 +29,6 @@
 
 InputLineDockWidget::InputLineDockWidget(QWidget *parent, Network *param1, DlgChannelSettings *param2, DlgModeration *param3) : QWidget(parent)
 {
-    myparent = parent;
-
     // params
     pNetwork = param1;
     dlgchannel_settings = param2;
@@ -39,10 +37,10 @@ InputLineDockWidget::InputLineDockWidget(QWidget *parent, Network *param1, DlgCh
     // layout
     QVBoxLayout *mainLayout = new QVBoxLayout();
 
-    pInputWidget = new InputWidget(myparent, pNetwork);
+    pInputWidget = new InputWidget(this, pNetwork);
     pInputWidget->show();
 
-    pToolWidget = new ToolWidget(myparent, pNetwork, pInputWidget, dlgchannel_settings, dlgmoderation);
+    pToolWidget = new ToolWidget(this, pNetwork, pInputWidget, dlgchannel_settings, dlgmoderation);
     pToolWidget->show();
 
     mainLayout->addWidget(pToolWidget);

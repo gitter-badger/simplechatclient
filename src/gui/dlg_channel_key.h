@@ -21,6 +21,7 @@
 #ifndef DLG_CHANNEL_KEY_H
 #define DLG_CHANNEL_KEY_H
 
+class MainWindow;
 class Network;
 #include <QDialog>
 #include "ui_channel_key.h"
@@ -29,7 +30,7 @@ class DlgChannelKey : public QDialog
 {
     Q_OBJECT
 public:
-    DlgChannelKey(QWidget *, Network *, QString);
+    DlgChannelKey(MainWindow *, Network *, QString);
 
 private:
     Ui::uiChannelKey ui;

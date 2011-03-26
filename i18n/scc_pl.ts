@@ -2,6 +2,17 @@
 <!DOCTYPE TS>
 <TS version="2.0" language="pl">
 <context>
+    <name>@default</name>
+    <message>
+        <source>Error</source>
+        <translation>Błąd</translation>
+    </message>
+    <message>
+        <source>Simple Chat Client is already running</source>
+        <translation>Simple Chat Client jest już uruchomiony</translation>
+    </message>
+</context>
+<context>
     <name>Commands</name>
     <message>
         <source>* Available commands:</source>
@@ -165,7 +176,11 @@
     </message>
 </context>
 <context>
-    <name>Core</name>
+    <name>MainWindow</name>
+    <message>
+        <source>Navigation bar</source>
+        <translation>Pasek nawigacji</translation>
+    </message>
     <message>
         <source>Typing messages</source>
         <translation>Wpisywanie wiadomości</translation>
@@ -178,29 +193,6 @@
         <source>Users (%1)</source>
         <translation>Użytkownicy (%1)</translation>
     </message>
-    <message>
-        <source>Welcome to the Simple Chat Client</source>
-        <translation>Witaj w programie Simple Chat Client</translation>
-    </message>
-    <message>
-        <source>Official website</source>
-        <translation>Oficjalna strona</translation>
-    </message>
-    <message>
-        <source>Official Forum</source>
-        <translation>Oficjalne forum</translation>
-    </message>
-    <message>
-        <source>&amp;Connect</source>
-        <translation>&amp;Połącz</translation>
-    </message>
-    <message>
-        <source>&amp;Disconnect</source>
-        <translation>&amp;Rozłącz</translation>
-    </message>
-</context>
-<context>
-    <name>MainWindow</name>
     <message>
         <source>&amp;Connect</source>
         <translation>&amp;Połącz</translation>
@@ -294,8 +286,16 @@
         <translation>Pomo&amp;c</translation>
     </message>
     <message>
-        <source>Navigation bar</source>
-        <translation>Pasek nawigacji</translation>
+        <source>Welcome to the Simple Chat Client</source>
+        <translation>Witaj w programie Simple Chat Client</translation>
+    </message>
+    <message>
+        <source>Official website</source>
+        <translation>Oficjalna strona</translation>
+    </message>
+    <message>
+        <source>Official Forum</source>
+        <translation>Oficjalne forum</translation>
     </message>
 </context>
 <context>

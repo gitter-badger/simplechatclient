@@ -20,10 +20,11 @@
 
 #include <QDesktopWidget>
 #include <QPushButton>
+#include "mainwindow.h"
 #include "network.h"
 #include "dlg_channel_key.h"
 
-DlgChannelKey::DlgChannelKey(QWidget *parent, Network *param1, QString param2) : QDialog(parent)
+DlgChannelKey::DlgChannelKey(MainWindow *parent, Network *param1, QString param2) : QDialog(parent)
 {
     ui.setupUi(this);
     setAttribute(Qt::WA_DeleteOnClose);

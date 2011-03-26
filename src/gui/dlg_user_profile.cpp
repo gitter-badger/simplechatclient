@@ -22,6 +22,7 @@
 #include <QDesktopWidget>
 #include <QPushButton>
 #include "convert.h"
+#include "core.h"
 #include "dlg_user_avatar.h"
 #include "network.h"
 #include "dlg_user_profile.h"
@@ -34,7 +35,6 @@ DlgUserProfile::DlgUserProfile(QWidget *parent, Network *param1) : QDialog(paren
     // center screen
     move(QApplication::desktop()->screen()->rect().center() - rect().center());
 
-    myparent = parent;
     pNetwork = param1;
 
     // set width
@@ -130,7 +130,7 @@ void DlgUserProfile::avatar_finished()
 
 void DlgUserProfile::button_zoom()
 {
-    DlgUserAvatar(myparent, avatar).exec();
+    DlgUserAvatar(Core::instance()->sccWindow(), avatar).exec();
 }
 
 void DlgUserProfile::button_more()

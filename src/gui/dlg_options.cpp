@@ -28,20 +28,18 @@
 #include <QShowEvent>
 #include <QStyleFactory>
 #include "config.h"
+#include "core.h"
 #include "crypt.h"
-#include "notify.h"
 #include "dlg_register_nick.h"
+#include "notify.h"
 #include "dlg_options.h"
 
-DlgOptions::DlgOptions(QWidget *parent, Notify *param1) : QDialog(parent)
+DlgOptions::DlgOptions(QWidget *parent) : QDialog(parent)
 {
     ui.setupUi(this);
     setAttribute(Qt::WA_DeleteOnClose);
     setWindowFlags(Qt::Dialog | Qt::WindowStaysOnTopHint);
     setWindowTitle(tr("Options"));
-
-    myparent = parent;
-    pNotify = param1;
 
     // open folder command
 #ifdef Q_WS_X11
@@ -352,7 +350,7 @@ void DlgOptions::show_pass()
 
 void DlgOptions::button_register_nick()
 {
-    DlgRegisterNick(myparent, this).exec();
+    DlgRegisterNick(Core::instance()->sccWindow(), this).exec();
 }
 
 void DlgOptions::set_modern_style_avatars()
@@ -1229,12 +1227,12 @@ void DlgOptions::set_embedded_style()
 
 void DlgOptions::try_play_beep()
 {
-    pNotify->play("beep");
+    Notify::instance()->play("beep");
 }
 
 void DlgOptions::try_play_query()
 {
-    pNotify->play("query");
+    Notify::instance()->play("query");
 }
 
 void DlgOptions::set_sound_beep()

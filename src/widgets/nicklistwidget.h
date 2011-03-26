@@ -71,7 +71,6 @@ public:
 
 private:
     // params
-    QWidget *myparent;
     Network *pNetwork;
     QString strChannel;
     QStringList strOpenChannels;

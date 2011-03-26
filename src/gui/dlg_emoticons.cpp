@@ -21,10 +21,11 @@
 #include <QDesktopWidget>
 #include <QDir>
 #include <QPixmap>
+#include "mainwindow.h"
 #include "inputwidget.h"
 #include "dlg_emoticons.h"
 
-DlgEmoticons::DlgEmoticons(QWidget *parent, InputWidget *param1) : QDialog(parent)
+DlgEmoticons::DlgEmoticons(MainWindow *parent, InputWidget *param1) : QDialog(parent)
 {
     ui.setupUi(this);
     setWindowTitle(tr("Emoticons"));

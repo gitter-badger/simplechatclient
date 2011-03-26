@@ -22,7 +22,6 @@
 
 TabManager::TabManager(QWidget *parent) : QTabWidget(parent)
 {
-    myparent = parent;
     tab = tabBar();
     setTabsClosable(true);
 }

@@ -28,13 +28,12 @@
 
 /**
  * Class for config read/write
- * @param bool create config
  */
 class Config : public QObject
 {
     Q_OBJECT
 public:
-    Config(bool bCreate = true);
+    Config();
     virtual ~Config();
 
     /**
@@ -44,26 +43,26 @@ public:
      */
     QString get_value(QString);
     /**
-     * Read config to QMap
-     * @return QMap all keys,values
-     */
-    QMap <QString, QString> read_config();
-    /**
      * Set config key value
      * @param QString key
      * @param QString value
      */
     void set_value(QString, QString);
+    /**
+     * Read config to QMap
+     * @return QMap all keys,values
+     */
+    QMap <QString, QString> read_config();
 
 private:
-    bool bCreateConfig;
     QString strConfigFile;
     QFile *file;
     QDomDocument doc;
 
-    QMap<QString,QString> get_default_values();
+    void remove_value(QString);
     void fix_config();
     void create_new_config();
+    QMap<QString,QString> get_default_values();
     void add_config_value(QDomDocument *, QDomElement *, QString, QString);
     void save();
 };

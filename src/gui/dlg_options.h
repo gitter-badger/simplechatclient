@@ -21,7 +21,6 @@
 #ifndef DLG_OPTIONS_H
 #define DLG_OPTIONS_H
 
-class Notify;
 #include <QDialog>
 #include "ui_options.h"
 
@@ -29,12 +28,10 @@ class DlgOptions : public QDialog
 {
     Q_OBJECT
 public:
-    DlgOptions(QWidget *, Notify *);
+    DlgOptions(QWidget *);
 
 private:
     Ui::uiOptions ui;
-    QWidget *myparent;
-    Notify *pNotify;
     QString strOpenFolderCommand;
 
     void set_mainwindow_colors();

@@ -37,7 +37,6 @@ public:
     void set_color(int, QColor);
 
 private:
-    QWidget *myparent;
     QTabBar *tab;
 
     void hide_close_button(int);

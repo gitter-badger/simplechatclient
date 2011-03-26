@@ -26,16 +26,14 @@
 #include "tab_widget.h"
 #include "tab_container.h"
 
-TabContainer::TabContainer(QWidget *parent, Network *param1, TabManager *param2, Notify *param3, QMap <QString, QByteArray> *param4, QTcpSocket *param5, sChannelNickStatus *param6, QList<QString> *param7)
+TabContainer::TabContainer(Network *param1, TabManager *param2, QMap <QString, QByteArray> *param3, QTcpSocket *param4, sChannelNickStatus *param5, QList<QString> *param6)
 {
-    myparent = parent;
     pNetwork = param1;
     pTabM = param2;
-    pNotify = param3;
-    mChannelAvatar = param4;
-    camSocket = param5;
-    mChannelNickStatus = param6;
-    lAwaylog = param7;
+    mChannelAvatar = param3;
+    camSocket = param4;
+    mChannelNickStatus = param5;
+    lAwaylog = param6;
 }
 
 TabContainer::~TabContainer()
@@ -113,7 +111,7 @@ void TabContainer::add_tab(QString strChannel)
         emit create_nicklist(strChannel);
 
         // create tab
-        tw.append(new TabWidget(myparent, pNetwork, strChannel, pNotify, mChannelAvatar, camSocket, mChannelNickStatus, pDlg_user_profile, lAwaylog));
+        tw.append(new TabWidget(pNetwork, strChannel, mChannelAvatar, camSocket, mChannelNickStatus, pDlg_user_profile, lAwaylog));
 #ifndef Q_WS_WIN
         tw.at(tw.size()-1)->set_dlg_cam(pDlg_cam);
 #endif

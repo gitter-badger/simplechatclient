@@ -35,31 +35,30 @@
 
 InputWidget::InputWidget(QWidget *parent, Network *param1) : QWidget(parent)
 {
-    myparent = parent;
     pNetwork = param1;
 
-    nickLabel = new QLabel(myparent);
+    nickLabel = new QLabel(parent);
     nickLabel->setText(QString("<p style=\"font-weight:bold;\"> %1</p>").arg(tr("(Unregistered)")));
     nickLabel->show();
 
-    inputLine = new InputLineWidget(myparent);
+    inputLine = new InputLineWidget(parent);
     highlighter = new Highlighter(inputLine->document());
     inputLine->setMinimumWidth(350);
     inputLine->setFont(QFont("Verdana", -1, -1, false));
     inputLine->show();
 
-    sendButton = new QPushButton(QIcon(":/images/oxygen/16x16/go-next.png"), tr("Send"), myparent);
+    sendButton = new QPushButton(QIcon(":/images/oxygen/16x16/go-next.png"), tr("Send"), parent);
     sendButton->setToolTip(tr("Send"));
     sendButton->setMaximumWidth(85);
     sendButton->setMaximumHeight(25);
     sendButton->show();
 
-    moderSendButton = new QPushButton(QIcon(":/images/oxygen/16x16/view-pim-tasks.png"), tr("Send to moderators"), myparent);
+    moderSendButton = new QPushButton(QIcon(":/images/oxygen/16x16/view-pim-tasks.png"), tr("Send to moderators"), parent);
     moderSendButton->setToolTip(tr("Send to moderators"));
     moderSendButton->setMaximumHeight(25);
     moderSendButton->show();
 
-    showHideToolWidget = new QPushButton(QIcon(":/images/oxygen/16x16/text-frame-unlink.png"), "", myparent);
+    showHideToolWidget = new QPushButton(QIcon(":/images/oxygen/16x16/text-frame-unlink.png"), "", parent);
     showHideToolWidget->setToolTip(tr("Show/Hide tool widget"));
     showHideToolWidget->setMaximumWidth(25);
     showHideToolWidget->setMaximumHeight(25);

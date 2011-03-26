@@ -45,7 +45,6 @@ public:
 
 private:
     Ui::uiChannelSettings ui;
-    QWidget *myparent;
     Network *pNetwork;
     QString strChannel;
     SimpleStatsWidget *simpleStatsWidget;

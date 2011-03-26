@@ -19,16 +19,16 @@
  ****************************************************************************/
 
 #include <QDesktopWidget>
+#include "mainwindow.h"
 #include "dlg_user_avatar.h"
 
-DlgUserAvatar::DlgUserAvatar(QWidget *parent, QPixmap param1) : QDialog(parent)
+DlgUserAvatar::DlgUserAvatar(MainWindow *parent, QPixmap param1) : QDialog(parent)
 {
     ui.setupUi(this);
     setWindowTitle(tr("Avatar"));
     // center screen
     move(QApplication::desktop()->screen()->rect().center() - rect().center());
 
-    myparent = parent;
     avatar = param1;
 
     ui.toolButton_zoom_out->setIcon(QIcon(":/images/oxygen/16x16/list-remove.png"));

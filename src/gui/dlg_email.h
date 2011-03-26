@@ -21,6 +21,7 @@
 #ifndef DLG_EMAIL_H
 #define DLG_EMAIL_H
 
+class MainWindow;
 #include <QDialog>
 #include <QNetworkAccessManager>
 #include <QNetworkCookieJar>
@@ -30,7 +31,7 @@ class DlgEmail : public QDialog
 {
     Q_OBJECT
 public:
-    DlgEmail(QWidget *, QString, QString);
+    DlgEmail(MainWindow *, QString, QString);
     virtual ~DlgEmail();
 
 private:

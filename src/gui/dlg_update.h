@@ -21,6 +21,7 @@
 #ifndef DLG_UPDATE_H
 #define DLG_UPDATE_H
 
+class MainWindow;
 #include <QDialog>
 #include "ui_update.h"
 
@@ -28,7 +29,7 @@ class DlgUpdate : public QDialog
 {
     Q_OBJECT
 public:
-    DlgUpdate(QWidget *, QString);
+    DlgUpdate(MainWindow *, QString);
 
 private:
     Ui::uiUpdate ui;

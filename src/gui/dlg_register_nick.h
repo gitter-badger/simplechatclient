@@ -21,6 +21,7 @@
 #ifndef DLG_REGISTER_NICK_H
 #define DLG_REGISTER_NICK_H
 
+class MainWindow;
 #include <QDialog>
 #include <QNetworkAccessManager>
 #include <QNetworkCookieJar>
@@ -30,7 +31,7 @@ class DlgRegisterNick : public QDialog
 {
     Q_OBJECT
 public:
-    DlgRegisterNick(QWidget *, QWidget *);
+    DlgRegisterNick(MainWindow *, QWidget *);
     virtual ~DlgRegisterNick();
 
 private:

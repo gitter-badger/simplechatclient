@@ -32,7 +32,6 @@ DlgChannelFavourites::DlgChannelFavourites(QWidget *parent, Network *param1, QMa
     // center screen
     move(QApplication::desktop()->screen()->rect().center() - rect().center());
 
-    myparent = parent;
     pNetwork = param1;
     mChannelAvatar = param2;
     lChannelFavourites = param3;

@@ -28,9 +28,6 @@ class NickListDockWidget : public QStackedWidget
     Q_OBJECT
 public:
     NickListDockWidget(QWidget *);
-
-private:
-    QWidget *myparent;
 };
 
 #endif // NICKLISTDOCKWIDGET_H

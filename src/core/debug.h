@@ -23,5 +23,18 @@
 
 void saveMessage(QString, QString);
 void messageHandler(QtMsgType, const char *);
+#ifdef Q_WS_X11
+void crashHandler();
+
+void got_bus(int);
+void got_segv(int);
+void got_fpe(int);
+void got_term(int);
+void got_hup(int);
+void got_ill(int);
+void got_abrt(int);
+
+void linux_crash_handler();
+#endif
 
 #endif // DEBUG_H

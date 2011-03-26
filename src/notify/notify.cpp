@@ -21,17 +21,34 @@
 #include <QSettings>
 #include "notify.h"
 
+Notify * Notify::Instance = 0;
+
+Notify * Notify::instance()
+{
+    if (!Instance)
+    {
+        Instance = new Notify();
+        Instance->init();
+    }
+
+    return Instance;
+}
+
 Notify::Notify()
 {
-    QSettings settings;
-    QString strSoundBeep = settings.value("sound_beep").toString();
-    music = Phonon::createPlayer(Phonon::NotificationCategory, Phonon::MediaSource(strSoundBeep));
     strCurrent = "beep";
 }
 
 Notify::~Notify()
 {
     delete music;
+}
+
+void Notify::init()
+{
+    QSettings settings;
+    QString strSoundBeep = settings.value("sound_beep").toString();
+    music = Phonon::createPlayer(Phonon::NotificationCategory, Phonon::MediaSource(strSoundBeep));
 }
 
 void Notify::play(QString strCategory)

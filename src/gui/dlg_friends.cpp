@@ -33,7 +33,6 @@ DlgFriends::DlgFriends(QWidget *parent, Network *param1, QMap <QString, QByteArr
     // center screen
     move(QApplication::desktop()->screen()->rect().center() - rect().center());
 
-    myparent = parent;
     pNetwork = param1;
     mNickAvatar = param2;
     mFriends = param3;

@@ -32,7 +32,6 @@ DlgIgnore::DlgIgnore(QWidget *parent, Network *param1, QMap <QString, QByteArray
     // center screen
     move(QApplication::desktop()->screen()->rect().center() - rect().center());
 
-    myparent = parent;
     pNetwork = param1;
     mNickAvatar = param2;
     lIgnore = param3;

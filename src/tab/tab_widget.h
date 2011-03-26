@@ -27,8 +27,8 @@
 #endif
 class DlgUserProfile;
 class MainTextEdit;
+class MainWindow;
 class Network;
-class Notify;
 class TabManager;
 #include <QLabel>
 #include <QTcpSocket>
@@ -43,7 +43,7 @@ class TabWidget : public QWidget
 {
     Q_OBJECT
 public:
-    TabWidget(QWidget *, Network *, QString, Notify *, QMap <QString, QByteArray> *, QTcpSocket *, sChannelNickStatus *, DlgUserProfile *, QList<QString> *);
+    TabWidget(Network *, QString, QMap <QString, QByteArray> *, QTcpSocket *, sChannelNickStatus *, DlgUserProfile *, QList<QString> *);
     virtual ~TabWidget();
 #ifndef Q_WS_WIN
     void set_dlg_cam(DlgCam *);
@@ -69,10 +69,8 @@ public:
 
 private:
     // params
-    QWidget *myparent;
     Network *pNetwork;
     QString strName;
-    Notify *pNotify;
     QMap <QString, QByteArray> *mChannelAvatar;
     QTcpSocket *camSocket;
     sChannelNickStatus *mChannelNickStatus;

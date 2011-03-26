@@ -22,6 +22,7 @@
 #define DLG_EMOTICONS_H
 
 class InputWidget;
+class MainWindow;
 #include <QDialog>
 #include "ui_emoticons.h"
 
@@ -29,7 +30,7 @@ class DlgEmoticons : public QDialog
 {
     Q_OBJECT
 public:
-    DlgEmoticons(QWidget *, InputWidget *);
+    DlgEmoticons(MainWindow *, InputWidget *);
 
 private:
     Ui::uiEmoticons ui;
