@@ -50,7 +50,9 @@
 #include "tab_manager.h"
 #include "mainwindow.h"
 
-#ifndef Q_WS_WIN
+#ifdef Q_WS_WIN
+    #include "kamerzysta.h"
+#else
     #include "dlg_cam.h"
 #endif
 
