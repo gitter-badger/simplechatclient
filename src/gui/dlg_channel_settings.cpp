@@ -83,6 +83,7 @@ void DlgChannelSettings::create_gui()
     ui.label_description1->setText(tr("Description:"));
     ui.label_status1->setText(tr("Status:"));
     ui.label_category1->setText(tr("Category:"));
+    ui.label_type1->setText(tr("Type:"));
     ui.label_guardian1->setText(tr("Guardian:"));
     ui.label_moderation1->setText(tr("Moderation:"));
 
@@ -226,44 +227,14 @@ void DlgChannelSettings::set_data(QString strCheckChannel, QMap<QString, QString
         QString strKey = i.key();
         QString strValue = i.value();
 
-        if (strKey == "email")
+        if (strKey == "auditorium")
         {
-            ui.lineEdit_email->setText(strValue);
+            if (strValue.toInt() == 0)
+                ui.radioButton_auditorium_off->setChecked(true);
+            else if (strValue.toInt() == 1)
+                ui.radioButton_auditorium_on->setChecked(true);
         }
-        else if (strKey == "createdDate")
-        {
-            // label created date/time
-            QDateTime dt = QDateTime::fromTime_t(strValue.toInt());
-            QString strDT = dt.toString("dd/MM/yyyy hh:mm:ss");
-            ui.label_summary_datetime->setText(strDT);
-
-            // stats
-            int iCreatedDate = strValue.toInt();
-
-            QDateTime cdt = QDateTime::currentDateTime();
-            int iCurrentDate = (int)cdt.toTime_t(); // seconds that have passed since 1970
-
-            int iSeconds = iCurrentDate - iCreatedDate;
-            int iMinutes = iSeconds / 60;
-            int iHours = iMinutes / 60;
-            int iDays = iHours / 24;
-
-            ui.label_stats_exists_days->setText(QString::number(iDays));
-        }
-        else if (strKey == "private")
-        {
-            if (strValue.toInt() == 1)
-            {
-                ui.label_summary_status->setText(tr("Private"));
-                ui.radioButton_status_priv->setChecked(true);
-            }
-            else if (strValue.toInt() == 0)
-            {
-                ui.label_summary_status->setText(tr("Public"));
-                ui.radioButton_status_pub->setChecked(true);
-            }
-        }
-        else if (strKey == "catMajor")
+        if (strKey == "catMajor")
         {
             if (strValue.toInt() == 1) // teen
             {
@@ -293,6 +264,30 @@ void DlgChannelSettings::set_data(QString strCheckChannel, QMap<QString, QString
             else
                 ui.comboBox_category->setCurrentIndex(-1);
         }
+        else if (strKey == "createdDate")
+        {
+            // label created date/time
+            QDateTime dt = QDateTime::fromTime_t(strValue.toInt());
+            QString strDT = dt.toString("dd/MM/yyyy hh:mm:ss");
+            ui.label_summary_datetime->setText(strDT);
+
+            // stats
+            int iCreatedDate = strValue.toInt();
+
+            QDateTime cdt = QDateTime::currentDateTime();
+            int iCurrentDate = (int)cdt.toTime_t(); // seconds that have passed since 1970
+
+            int iSeconds = iCurrentDate - iCreatedDate;
+            int iMinutes = iSeconds / 60;
+            int iHours = iMinutes / 60;
+            int iDays = iHours / 24;
+
+            ui.label_stats_exists_days->setText(QString::number(iDays));
+        }
+        else if (strKey == "email")
+        {
+            ui.lineEdit_email->setText(strValue);
+        }
         else if (strKey == "guardian")
         {
             if (strValue.toInt() == 0)
@@ -320,6 +315,10 @@ void DlgChannelSettings::set_data(QString strCheckChannel, QMap<QString, QString
                 ui.comboBox_guardian_level->setCurrentIndex(2);
             }
         }
+        else if (strKey == "limit")
+        {
+            ui.spinBox_limit->setValue(strValue.toInt());
+        }
         else if (strKey == "moderated")
         {
             if (strValue.toInt() == 0)
@@ -333,26 +332,39 @@ void DlgChannelSettings::set_data(QString strCheckChannel, QMap<QString, QString
                 ui.radioButton_moderation_on->setChecked(true);
             }
         }
+        else if (strKey == "password")
+        {
+            ui.lineEdit_password->setText(strValue);
+        }
+        else if (strKey == "private")
+        {
+            if (strValue.toInt() == 1)
+            {
+                ui.label_summary_status->setText(tr("Private"));
+                ui.radioButton_status_priv->setChecked(true);
+            }
+            else if (strValue.toInt() == 0)
+            {
+                ui.label_summary_status->setText(tr("Public"));
+                ui.radioButton_status_pub->setChecked(true);
+            }
+        }
+        else if (strKey == "type")
+        {
+            if (strValue.toInt() == 0)
+                ui.label_summary_type->setText(tr("Wild"));
+            else if (strValue.toInt() == 1)
+                ui.label_summary_type->setText(tr("Tame"));
+            else if (strValue.toInt() == 2)
+                ui.label_summary_type->setText(tr("With class"));
+            else if (strValue.toInt() == 3)
+                ui.label_summary_type->setText(tr("Cult"));
+        }
         else if (strKey == "www")
         {
             if (strValue.isEmpty() == false)
                 ui.label_summary_website->setText(QString("<a href=\"%1\">%1</a>").arg(strValue));
             ui.lineEdit_website->setText(strValue);
-        }
-        else if (strKey == "password")
-        {
-            ui.lineEdit_password->setText(strValue);
-        }
-        else if (strKey == "limit")
-        {
-            ui.spinBox_limit->setValue(strValue.toInt());
-        }
-        else if (strKey == "auditorium")
-        {
-            if (strValue.toInt() == 0)
-                ui.radioButton_auditorium_off->setChecked(true);
-            else if (strValue.toInt() == 1)
-                ui.radioButton_auditorium_on->setChecked(true);
         }
     }
 }
@@ -958,6 +970,7 @@ void DlgChannelSettings::clear()
     ui.plainTextEdit_summary_desc->setPlainText("-");
     ui.label_summary_status->setText("-");
     ui.label_summary_category->setText("-");
+    ui.label_summary_type->setText("-");
     ui.label_summary_guardian->setText("-");
     ui.label_summary_moderation->setText("-");
 
@@ -1036,5 +1049,6 @@ void DlgChannelSettings::hideEvent(QHideEvent *event)
 void DlgChannelSettings::closeEvent(QCloseEvent *event)
 {
     event->ignore();
+    clear();
     this->hide();
 }

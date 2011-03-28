@@ -861,6 +861,26 @@
         <translation>Regionalne</translation>
     </message>
     <message>
+        <source>Type:</source>
+        <translation>Ranga:</translation>
+    </message>
+    <message>
+        <source>Wild</source>
+        <translation>Dziki</translation>
+    </message>
+    <message>
+        <source>Tame</source>
+        <translation>Oswojony</translation>
+    </message>
+    <message>
+        <source>With class</source>
+        <translation>Z klasą</translation>
+    </message>
+    <message>
+        <source>Cult</source>
+        <translation>Kultowy</translation>
+    </message>
+    <message>
         <source>Guardian:</source>
         <translation>Anioł stróż:</translation>
     </message>
