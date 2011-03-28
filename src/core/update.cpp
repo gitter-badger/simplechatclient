@@ -53,15 +53,9 @@ void Update::check_update()
 
 void Update::version(QString strAvailableVersion)
 {
-    if (strAvailableVersion == QString::null)
-    {
-        //tabc->show_msg("Status", tr("Can not download the available version."), 0);
-        return;
-    }
-
     QSettings settings;
-
     QString strCurrentVersion = settings.value("version").toString();
+
     QStringList lCurrentVersion = strCurrentVersion.split(".");
     QString strCurrentRev = lCurrentVersion.last();
     int iCurrentRev = strCurrentRev.toInt();
@@ -102,6 +96,8 @@ void Update::update_finished(QNetworkReply *reply)
         doc.setContent(strSite);
 
         QString strVersion = doc.elementsByTagName("currentVersion").item(0).toElement().text();
-        version(strVersion);
+
+        if (strVersion.isEmpty() == false)
+            version(strVersion);
     }
 }

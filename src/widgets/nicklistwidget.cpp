@@ -237,7 +237,7 @@ void NickListWidget::refresh_avatars()
 
 void NickListWidget::add_parent(QString strName, QPixmap px)
 {
-    MyTreeWidgetItem *item = new MyTreeWidgetItem(this);
+    SortedTreeWidgetItem *item = new SortedTreeWidgetItem(this);
     item->setText(0, strName);
     item->setData(0, Qt::UserRole, px);
 
@@ -308,7 +308,7 @@ void NickListWidget::sort_parent()
     }
 }
 
-void NickListWidget::add_child(QString strParentName, MyTreeWidgetItem *item)
+void NickListWidget::add_child(QString strParentName, SortedTreeWidgetItem *item)
 {
     for (int i = 0; i < this->topLevelItemCount(); i++)
     {
@@ -377,9 +377,9 @@ void NickListWidget::remove_child(QString strName)
         remove_parent(strliRemoveParent.next());
 }
 
-MyTreeWidgetItem* NickListWidget::create_child(QString strNick, QString strSuffix, QPixmap icon)
+SortedTreeWidgetItem* NickListWidget::create_child(QString strNick, QString strSuffix, QPixmap icon)
 {
-    MyTreeWidgetItem *item = new MyTreeWidgetItem();
+    SortedTreeWidgetItem *item = new SortedTreeWidgetItem();
     item->setData(0, Qt::UserRole, icon);
     item->setText(0, strNick);
     item->setData(0, Qt::DisplayRole, strNick);

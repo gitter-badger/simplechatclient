@@ -344,10 +344,6 @@
 <context>
     <name>Update</name>
     <message>
-        <source>Can not download the available version.</source>
-        <translation>Nie można pobrać dostępnej wersji programu.</translation>
-    </message>
-    <message>
         <source>You are using up-to-date version.</source>
         <translation>Używasz aktualnej wersji programu.</translation>
     </message>
@@ -358,10 +354,6 @@
     <message>
         <source>A new version is available.</source>
         <translation>Nowa wersja programu jest dostępna.</translation>
-    </message>
-    <message>
-        <source>Can not connect to update server.</source>
-        <translation>Nie można połączyć się z serwerem aktualizacji.</translation>
     </message>
 </context>
 <context>

@@ -22,6 +22,7 @@
 #include <QInputDialog>
 #include <QSettings>
 #include <QTimer>
+#include "defines.h"
 #include "network.h"
 #include "dlg_ignore.h"
 
@@ -71,12 +72,22 @@ void DlgIgnore::refresh()
         {
             QPixmap pixmap;
             pixmap.loadFromData(mNickAvatar->value(strNick));
-            ui.listWidget_nicks->addItem(new QListWidgetItem(QIcon(pixmap), strNick));
+
+            SortedListWidgetItem *item = new SortedListWidgetItem();
+            item->setText(strNick);
+            item->setIcon(QIcon(pixmap));
+
+            ui.listWidget_nicks->addItem(item);
         }
         else
         {
+            SortedListWidgetItem *item = new SortedListWidgetItem();
+            item->setText(strNick);
+            item->setIcon(QIcon(":/images/oxygen/16x16/meeting-attending-tentative.png"));
+
+            ui.listWidget_nicks->addItem(item);
+
             QSettings settings;
-            ui.listWidget_nicks->addItem(new QListWidgetItem(QIcon(":/images/oxygen/16x16/meeting-attending-tentative.png"), strNick));
             if (settings.value("disable_avatars").toString() == "off") // with avatars
                 pNetwork->send(QString("NS INFO %1 s").arg(strNick));
         }

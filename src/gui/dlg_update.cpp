@@ -50,7 +50,7 @@ void DlgUpdate::set_default_values()
     strLink += QString("<a href=\"http://sourceforge.net/projects/simplechatclien/files/scc-"+strVersion+".exe/download\">%1</a>").arg(tr("download"));
 #endif
 #ifdef Q_WS_X11
-    strLink += QString("<a href=\"http://simplechatclien.sourceforge.net/index.php?id=download\">%1</a>").arg(tr("download"));
+    strLink += QString("<a href=\"http://simplechatclien.sourceforge.net/download/\">%1</a>").arg(tr("download"));
 #endif
 
     QString strDisplay = QString(tr("A new version %1 is available. Please %2 an installer and upgrade.").arg(strVersion).arg(strLink));

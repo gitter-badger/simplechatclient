@@ -23,6 +23,7 @@
 #include <QSettings>
 #include <QShowEvent>
 #include <QTimer>
+#include "defines.h"
 #include "network.h"
 #include "dlg_friends.h"
 
@@ -72,18 +73,22 @@ void DlgFriends::refresh()
     QMap<QString, bool>::const_iterator i = mFriends->constBegin();
     while (i != mFriends->constEnd())
     {
-        QListWidgetItem *item;
+        SortedListWidgetItem *item = new SortedListWidgetItem();
 
         if (mNickAvatar->contains(i.key()) == true)
         {
             QPixmap pixmap;
             pixmap.loadFromData(mNickAvatar->value(i.key()));
-            item = new QListWidgetItem(QIcon(pixmap), i.key());
+
+            item->setText(i.key());
+            item->setIcon(QIcon(pixmap));
         }
         else
         {
+            item->setText(i.key());
+            item->setIcon(QIcon(":/images/oxygen/16x16/meeting-attending.png"));
+
             QSettings settings;
-            item = new QListWidgetItem(QIcon(":/images/oxygen/16x16/meeting-attending.png"), i.key());
             if (settings.value("disable_avatars").toString() == "off") // with avatars
                 pNetwork->send(QString("NS INFO %1 s").arg(i.key()));
         }
