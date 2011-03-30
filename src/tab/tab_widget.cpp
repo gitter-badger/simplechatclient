@@ -374,14 +374,20 @@ void TabWidget::display_message(QString strData, int iLevel)
     QString strContent = "<span style=\"color:"+addslashes(settings.value("default_font_color").toString())+";font-size:"+strFontSize+";text-decoration:"+strTextDecoration+";\">";
     strContent = strContent+strData+strContentLast+"</span>";
 
-    // text
-    mainTextEdit->append(strContent);
+    // move cursor - fix align bug
+    QTextCursor cursor(mainTextEdit->document());
+    cursor.movePosition(QTextCursor::End);
 
-    // align
+    // text align
+    QTextBlockFormat format;
     if (strAlign == "center")
-        mainTextEdit->setAlignment(Qt::AlignCenter);
+        format.setAlignment(Qt::AlignCenter);
     else
-        mainTextEdit->setAlignment(Qt::AlignLeft);
+        format.setAlignment(Qt::AlignLeft);
+
+    // insert text
+    cursor.insertBlock(format);
+    cursor.insertHtml(strContent);
 
     // move cursor
     if (mainTextEdit->textCursor().selectedText().isEmpty() == true)
