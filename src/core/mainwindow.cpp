@@ -90,7 +90,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     pDlg_cam = new DlgCam(this, pNetwork, camSocket);
 #endif
 
-    pOnetKernel = new OnetKernel(pNetwork, pTabC, &mNickAvatar, &mChannelAvatar, pDlgChannelSettings, &lChannelHomes, &stlChannelList, &lChannelFavourites, &mFriends, &lIgnore, pDlgModeration, &mMyStats, &mMyProfile);
+    pOnetKernel = new OnetKernel(pNetwork, pTabC, &mNickAvatar, &mChannelAvatar, pDlgChannelSettings, &lChannelHomes, &stlChannelList, &lChannelFavourites, &mFriends, &lIgnore, pDlgModeration, &mMyStats, &mMyProfile, pDlgUserProfile);
     pOnetAuth = new OnetAuth(pTabC);
 
     pTabC->set_dlg(pDlgUserProfile);
@@ -378,7 +378,6 @@ void MainWindow::create_signals()
     QObject::connect(pOnetKernel, SIGNAL(quit_user(QString,QString)), this, SLOT(quit_user(QString,QString)));
     QObject::connect(pOnetKernel, SIGNAL(change_flag(QString,QString,QString)), this, SLOT(change_flag(QString,QString,QString)));
     QObject::connect(pOnetKernel, SIGNAL(change_flag(QString,QString)), this, SLOT(change_flag(QString,QString)));
-    QObject::connect(pOnetKernel, SIGNAL(set_user_info(QString,QString,QString)), pDlgUserProfile, SLOT(set_user_info(QString,QString,QString)));
     QObject::connect(pOnetKernel, SIGNAL(clear_channel_all_nick_avatars(QString)), this, SLOT(clear_channel_all_nick_avatars(QString)));
 
     // signals to network

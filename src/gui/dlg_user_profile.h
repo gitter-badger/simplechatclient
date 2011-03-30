@@ -33,9 +33,10 @@ class DlgUserProfile : public QDialog
 public:
     DlgUserProfile(QWidget *, Network *);
     void set_nick(QString);
+    inline QString get_nick() { return strNick; }
 
 public slots:
-    void set_user_info(QString, QString, QString);
+    void set_user_info(QString, QString);
 
 private:
     Ui::uiUserProfile ui;

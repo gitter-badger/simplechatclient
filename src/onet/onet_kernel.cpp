@@ -29,6 +29,7 @@
 #include "dlg_channel_settings.h"
 #include "dlg_invite.h"
 #include "dlg_moderation.h"
+#include "dlg_user_profile.h"
 #include "log.h"
 #include "network.h"
 #include "notify.h"
@@ -36,21 +37,22 @@
 #include "tab_container.h"
 #include "onet_kernel.h"
 
-OnetKernel::OnetKernel(Network *param1, TabContainer *param2, QMap <QString, QByteArray> *param3, QMap <QString, QByteArray> *param4, DlgChannelSettings *param5, QList<QString> *param6, sChannelList *param7, QList<QString> *param8, QMap<QString, bool> *param9, QList<QString> *param10, DlgModeration *param11, QMap<QString, QString> *param12, QMap<QString, QString> *param13)
+OnetKernel::OnetKernel(Network *param1, TabContainer *param2, QMap <QString, QByteArray> *param3, QMap <QString, QByteArray> *param4, DlgChannelSettings *param5, QList<QString> *param6, sChannelList *param7, QList<QString> *param8, QMap<QString, bool> *param9, QList<QString> *param10, DlgModeration *param11, QMap<QString, QString> *param12, QMap<QString, QString> *param13, DlgUserProfile *param14)
 {
     pNetwork = param1;
     pTabC = param2;
     mNickAvatar = param3;
     mChannelAvatar = param4;
-    dlgchannel_settings = param5;
+    dlgChannelSettings = param5;
     lChannelHomes = param6;
     stlChannelList = param7;
     lChannelFavourites = param8;
     mFriends = param9;
     lIgnore = param10;
-    dlgmoderation = param11;
+    dlgModeration = param11;
     mMyStats = param12;
     mMyProfile = param13;
+    dlgUserProfile = param14;
 
     avatar = new Avatar(pTabC, mNickAvatar, mChannelAvatar);
 }
@@ -1162,9 +1164,17 @@ void OnetKernel::raw_topic()
 
     QString strDisplay = QString(tr("* %1 changed the topic to: %2")).arg(strWho).arg(strTopic);
 
+    // show msg
     pTabC->show_msg(strChannel, strDisplay, 5);
-    dlgchannel_settings->set_topic(strChannel, strTopic);
+
+    // set topic in channel settings
+    if (dlgChannelSettings->get_channel() == strChannel)
+        dlgChannelSettings->set_topic(strTopic);
+
+    // set topic in widget
     pTabC->set_topic(strChannel, strTopic);
+
+    // get info
     pNetwork->send(QString("CS INFO %1 i").arg(strChannel));
 }
 
@@ -1284,7 +1294,7 @@ void OnetKernel::raw_moderate()
     if (strMessage[0] == ':')
         strMessage = strMessage.right(strMessage.length()-1);
 
-    dlgmoderation->add_msg(strID, strChannel, strNick, strMessage);
+    dlgModeration->add_msg(strID, strChannel, strNick, strMessage);
 }
 
 // :cf1f4.onet KILL scc_test :cf1f4.onet (Killed (Nickname collision))
@@ -1473,7 +1483,8 @@ void OnetKernel::raw_111n()
         strAvatarLink = strValue;
 
     // set user info
-    emit set_user_info(strNick, strKey, strValue);
+    if (dlgUserProfile->get_nick() == strNick)
+        dlgUserProfile->set_user_info(strKey, strValue);
 
     // set my profile
     if (strNick == strMe)
@@ -1657,7 +1668,11 @@ void OnetKernel::raw_160n()
     if (strTopic[0] == ':')
         strTopic = strTopic.right(strTopic.length()-1);
 
-    dlgchannel_settings->set_topic(strChannel, strTopic);
+    // set topic in channel settings
+    if (dlgChannelSettings->get_channel() == strChannel)
+        dlgChannelSettings->set_topic(strTopic);
+
+    // set topic in widget
     pTabC->set_topic(strChannel, strTopic);
 }
 
@@ -1682,7 +1697,8 @@ void OnetKernel::raw_161n()
     }
 
     // set data
-    dlgchannel_settings->set_data(strChannel, mKeyValue);
+    if (dlgChannelSettings->get_channel() == strChannel)
+        dlgChannelSettings->set_data(mKeyValue);
 
     // update link
     QString strLink = mKeyValue.value("www");
@@ -1725,12 +1741,15 @@ void OnetKernel::raw_162n()
 
         if ((strKey.isEmpty() == false) && (strValue.isEmpty() == false))
         {
-            if (strKey == "q")
-                dlgchannel_settings->set_owner(strChannel, strValue);
-            else if (strKey == "o")
-                dlgchannel_settings->add_op(strChannel, strValue);
-            else if (strKey == "h")
-                dlgchannel_settings->add_halfop(strChannel, strValue);
+            if (dlgChannelSettings->get_channel() == strChannel)
+            {
+                if (strKey == "q")
+                    dlgChannelSettings->set_owner(strValue);
+                else if (strKey == "o")
+                    dlgChannelSettings->add_op(strValue);
+                else if (strKey == "h")
+                    dlgChannelSettings->add_halfop(strValue);
+            }
         }
     }
 }
@@ -1759,10 +1778,13 @@ void OnetKernel::raw_163n()
     QDateTime dt = QDateTime::fromTime_t(strDT.toInt());
     strDT = dt.toString("dd/MM/yyyy hh:mm:ss");
 
-    if (strFlag == "b")
-        dlgchannel_settings->add_ban(strChannel, strNick, strWho, strDT, strIPNick);
-    else if (strFlag == "I")
-        dlgchannel_settings->add_invite(strChannel, strNick, strWho, strDT);
+    if (dlgChannelSettings->get_channel() == strChannel)
+    {
+        if (strFlag == "b")
+            dlgChannelSettings->add_ban(strNick, strWho, strDT, strIPNick);
+        else if (strFlag == "I")
+            dlgChannelSettings->add_invite(strNick, strWho, strDT);
+    }
 }
 
 // CS INFO #scc
@@ -1785,7 +1807,8 @@ void OnetKernel::raw_165n()
     if (strDescription[0] == ':')
         strDescription = strDescription.right(strDescription.length()-1);
 
-    dlgchannel_settings->set_description(strChannel, strDescription);
+    if (dlgChannelSettings->get_channel() == strChannel)
+        dlgChannelSettings->set_description(strDescription);
 }
 
 // RS INFO Merovingian
@@ -1838,7 +1861,8 @@ void OnetKernel::raw_175n()
         mKeyValue.insert(strKey, strValue);
     }
 
-    dlgchannel_settings->set_stats_data(strChannel, mKeyValue);
+    if (dlgChannelSettings->get_channel() == strChannel)
+        dlgChannelSettings->set_stats_data(mKeyValue);
 }
 
 // :RankServ!service@service.onet NOTICE Merovingian :176 #scc :end of channel stats

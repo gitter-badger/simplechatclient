@@ -86,10 +86,8 @@ void DlgUserProfile::set_nick(QString n)
     pNetwork->send(QString("NS INFO %1").arg(strNick));
 }
 
-void DlgUserProfile::set_user_info(QString strCheckNick, QString strKey, QString strValue)
+void DlgUserProfile::set_user_info(QString strKey, QString strValue)
 {
-    if (strCheckNick != strNick) return; // incorrect nick
-
     if (strKey == "avatar")
     {
         if (strValue.isEmpty() == false)

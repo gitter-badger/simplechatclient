@@ -215,10 +215,8 @@ void DlgChannelSettings::set_channel(QString param1)
     strChannel = param1;
 }
 
-void DlgChannelSettings::set_data(QString strCheckChannel, QMap<QString, QString> mData)
+void DlgChannelSettings::set_data(QMap<QString, QString> mData)
 {
-    if (strCheckChannel != strChannel) return; // not this channel
-
     QMapIterator<QString, QString> i(mData);
     while (i.hasNext())
     {
@@ -369,10 +367,8 @@ void DlgChannelSettings::set_data(QString strCheckChannel, QMap<QString, QString
     }
 }
 
-void DlgChannelSettings::set_stats_data(QString strCheckChannel, QMap<QString, QString> mData)
+void DlgChannelSettings::set_stats_data(QMap<QString, QString> mData)
 {
-    if (strCheckChannel != strChannel) return; // not this channel
-
     QMapIterator<QString, QString> i(mData);
     while (i.hasNext())
     {
@@ -420,9 +416,8 @@ void DlgChannelSettings::enable_tabs()
     ui.tabWidget->setTabEnabled(3, true);
 }
 
-void DlgChannelSettings::set_topic(QString strCheckChannel, QString strTopic)
+void DlgChannelSettings::set_topic(QString strTopic)
 {
-    if (strCheckChannel != strChannel) return; // not this channel
     strTopic += " "; // fix convert algorithm
 
     // convert emoticons
@@ -521,10 +516,8 @@ void DlgChannelSettings::set_topic(QString strCheckChannel, QString strTopic)
     ui.plainTextEdit_topic->setPlainText(strTopic);
 }
 
-void DlgChannelSettings::set_owner(QString strCheckChannel, QString strNick)
+void DlgChannelSettings::set_owner(QString strNick)
 {
-    if (strCheckChannel != strChannel) return; // not this channel
-
     ui.label_owner->show();
     ui.label_owner_nick->show();
 
@@ -537,10 +530,8 @@ void DlgChannelSettings::set_owner(QString strCheckChannel, QString strNick)
         enable_tabs();
 }
 
-void DlgChannelSettings::set_description(QString strCheckChannel, QString strDescription)
+void DlgChannelSettings::set_description(QString strDescription)
 {
-    if (strCheckChannel != strChannel) return; // not this channel
-
     // set summary description
     if (strDescription.isEmpty() == false)
     {
@@ -556,10 +547,8 @@ void DlgChannelSettings::set_description(QString strCheckChannel, QString strDes
     ui.plainTextEdit_desc->setPlainText(strDescription);
 }
 
-void DlgChannelSettings::add_op(QString strCheckChannel, QString strNick)
+void DlgChannelSettings::add_op(QString strNick)
 {
-    if (strCheckChannel != strChannel) return; // not this channel
-
     if (exist_item(strNick, ui.listWidget_op) == false)
         ui.listWidget_op->insertItem(ui.listWidget_op->count(), strNick);
 
@@ -570,10 +559,8 @@ void DlgChannelSettings::add_op(QString strCheckChannel, QString strNick)
         enable_tabs();
 }
 
-void DlgChannelSettings::add_halfop(QString strCheckChannel, QString strNick)
+void DlgChannelSettings::add_halfop(QString strNick)
 {
-    if (strCheckChannel != strChannel) return; // not this channel
-
     if (exist_item(strNick, ui.listWidget_halfop) == false)
         ui.listWidget_halfop->insertItem(ui.listWidget_halfop->count(), strNick);
 
@@ -584,10 +571,8 @@ void DlgChannelSettings::add_halfop(QString strCheckChannel, QString strNick)
         enable_tabs();
 }
 
-void DlgChannelSettings::add_ban(QString strCheckChannel, QString strNick, QString strWho, QString strDT, QString strIPNick)
+void DlgChannelSettings::add_ban(QString strNick, QString strWho, QString strDT, QString strIPNick)
 {
-    if (strCheckChannel != strChannel) return; // not this channel
-
     if (exist_item(strNick, ui.listWidget_ban) == false)
     {
         QListWidgetItem *item = new QListWidgetItem();
@@ -607,10 +592,8 @@ void DlgChannelSettings::add_ban(QString strCheckChannel, QString strNick, QStri
     }
 }
 
-void DlgChannelSettings::add_invite(QString strCheckChannel, QString strNick, QString strWho, QString strDT)
+void DlgChannelSettings::add_invite(QString strNick, QString strWho, QString strDT)
 {
-    if (strCheckChannel != strChannel) return; // not this channel
-
     if (exist_item(strNick, ui.listWidget_invite) == false)
     {
         QListWidgetItem *item = new QListWidgetItem();
@@ -1043,12 +1026,16 @@ void DlgChannelSettings::hideEvent(QHideEvent *event)
 {
     event->accept();
 
+    strChannel.clear();
     clear();
 }
 
 void DlgChannelSettings::closeEvent(QCloseEvent *event)
 {
     event->ignore();
+
+    strChannel.clear();
     clear();
+
     this->hide();
 }

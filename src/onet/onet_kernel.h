@@ -25,6 +25,7 @@
 class Avatar;
 class DlgChannelSettings;
 class DlgModeration;
+class DlgUserProfile;
 class Network;
 class TabContainer;
 #include <QMap>
@@ -38,7 +39,7 @@ class OnetKernel : public QObject
 {
     Q_OBJECT
 public:
-    OnetKernel(Network *, TabContainer *, QMap <QString, QByteArray> *, QMap <QString, QByteArray> *, DlgChannelSettings *, QList<QString> *, sChannelList *, QList<QString> *, QMap<QString, bool> *, QList<QString> *, DlgModeration *, QMap<QString,QString> *, QMap<QString,QString> *);
+    OnetKernel(Network *, TabContainer *, QMap <QString, QByteArray> *, QMap <QString, QByteArray> *, DlgChannelSettings *, QList<QString> *, sChannelList *, QList<QString> *, QMap<QString, bool> *, QList<QString> *, DlgModeration *, QMap<QString,QString> *, QMap<QString,QString> *, DlgUserProfile *);
     virtual ~OnetKernel();
 
 public slots:
@@ -49,17 +50,18 @@ private:
     TabContainer *pTabC;
     QMap <QString, QByteArray> *mNickAvatar;
     QMap <QString, QByteArray> *mChannelAvatar;
-    DlgChannelSettings *dlgchannel_settings;
+    DlgChannelSettings *dlgChannelSettings;
     QList<QString> *lChannelHomes;
     sChannelList *stlChannelList;
     QList<QString> *lChannelFavourites;
     QMap<QString, bool> *mFriends;
     QList<QString> *lIgnore;
-    DlgModeration *dlgmoderation;
+    DlgModeration *dlgModeration;
     QMap<QString, QString> *mMyStats;
     QMap<QString, QString> *mMyProfile;
-    Avatar *avatar;
+    DlgUserProfile *dlgUserProfile;
 
+    Avatar *avatar;
     QString strData;
     QStringList strDataList;
     QMap <QString, QString> mOldNameNewName; // rename channels
@@ -274,7 +276,6 @@ signals:
     void change_flag(QString,QString,QString);
     void change_flag(QString,QString);
     void clear_nicklist(QString);
-    void set_user_info(QString,QString,QString);
     void clear_channel_all_nick_avatars(QString);
 };
 

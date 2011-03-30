@@ -32,16 +32,17 @@ class DlgChannelSettings : public QDialog
 public:
     DlgChannelSettings(QWidget *, Network *);
     void set_channel(QString);
-    void set_data(QString, QMap<QString, QString>);
-    void set_stats_data(QString, QMap<QString, QString>);
+    inline QString get_channel() { return strChannel; }
+    void set_data(QMap<QString, QString>);
+    void set_stats_data(QMap<QString, QString>);
 
-    void set_topic(QString, QString);
-    void set_owner(QString, QString);
-    void set_description(QString, QString);
-    void add_op(QString, QString);
-    void add_halfop(QString, QString);
-    void add_ban(QString, QString, QString, QString, QString);
-    void add_invite(QString, QString, QString, QString);
+    void set_topic(QString);
+    void set_owner(QString);
+    void set_description(QString);
+    void add_op(QString);
+    void add_halfop(QString);
+    void add_ban(QString, QString, QString, QString);
+    void add_invite(QString, QString, QString);
 
 private:
     Ui::uiChannelSettings ui;
