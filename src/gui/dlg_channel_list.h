@@ -37,13 +37,6 @@ private:
     Network *pNetwork;
     sChannelList *stlChannelList;
 
-    QList < QList<QString> > list_all;
-    QList < QList<QString> > list_teen;
-    QList < QList<QString> > list_common;
-    QList < QList<QString> > list_erotic;
-    QList < QList<QString> > list_thematic;
-    QList < QList<QString> > list_regional;
-
     void create_gui();
     void set_default_values();
     void create_signals();
