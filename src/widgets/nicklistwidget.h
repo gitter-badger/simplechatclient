@@ -55,12 +55,12 @@ private:
     QMap <QString, QByteArray> *mNickAvatar;
     QTcpSocket *camSocket;
     sChannelNickStatus *mChannelNickStatus;
-    DlgUserProfile *pDlg_user_profile;
+    DlgUserProfile *pDlgUserProfile;
 #ifndef Q_WS_WIN
-    DlgCam *pDlg_cam;
+    DlgCam *pDlgCam;
 #endif
     // other
-    enum { maxOpenChannels = 50 };
+    enum { maxOpenChannels = 30 };
     QAction *openChannelsActs[maxOpenChannels];
 
     void add_parent(QString, QPixmap);

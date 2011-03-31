@@ -43,7 +43,7 @@ NickListWidget::NickListWidget(Network *param1, QString param2, QMap <QString, Q
     mNickAvatar = param3;
     camSocket = param4;
     mChannelNickStatus = param5;
-    pDlg_user_profile = param6;
+    pDlgUserProfile = param6;
 
     setAnimated(true);
     header()->hide();
@@ -68,7 +68,7 @@ NickListWidget::~NickListWidget()
 #ifndef Q_WS_WIN
 void NickListWidget::set_dlg_cam(DlgCam *param1)
 {
-    pDlg_cam = param1;
+    pDlgCam = param1;
 }
 #endif
 
@@ -421,8 +421,8 @@ void NickListWidget::profile()
 
     if (strNick[0] != '~')
     {
-        pDlg_user_profile->set_nick(strNick);
-        pDlg_user_profile->show();
+        pDlgUserProfile->set_nick(strNick);
+        pDlgUserProfile->show();
     }
 }
 
@@ -434,8 +434,8 @@ void NickListWidget::cam()
 #ifdef Q_WS_WIN
     (new Kamerzysta(camSocket))->show(strNick);
 #else
-    pDlg_cam->set_nick(strNick);
-    pDlg_cam->show();
+    pDlgCam->set_nick(strNick);
+    pDlgCam->show();
 #endif
 }
 

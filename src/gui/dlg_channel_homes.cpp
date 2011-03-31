@@ -34,7 +34,7 @@ DlgChannelHomes::DlgChannelHomes(QWidget *parent, Network *param1, QMap <QString
     pNetwork = param1;
     mChannelAvatar = param2;
     lChannelHomes = param3;
-    dlgchannel_settings = param4;
+    pDlgChannelSettings = param4;
 
     create_gui();
     create_signals();
@@ -91,8 +91,8 @@ void DlgChannelHomes::list_clicked(QModelIndex index)
     int i = index.row();
     QString strChannel = ui.listWidget_channels->item(i)->text();
 
-    dlgchannel_settings->set_channel(strChannel);
-    dlgchannel_settings->show();
+    pDlgChannelSettings->set_channel(strChannel);
+    pDlgChannelSettings->show();
 
     this->close();
 }

@@ -39,7 +39,7 @@ MainTextEdit::MainTextEdit(Network *param1, QString param2, QTcpSocket *param3, 
     strChannel = param2;
     camSocket = param3;
     mChannelNickStatus = param4;
-    pDlg_user_profile = param5;
+    pDlgUserProfile = param5;
 
     strNick = QString::null;
 
@@ -49,7 +49,7 @@ MainTextEdit::MainTextEdit(Network *param1, QString param2, QTcpSocket *param3, 
 #ifndef Q_WS_WIN
 void MainTextEdit::set_dlg_cam(DlgCam *param1)
 {
-    pDlg_cam = param1;
+    pDlgCam = param1;
 }
 #endif
 
@@ -94,8 +94,8 @@ void MainTextEdit::profile()
 {
     if (strNick[0] != '~')
     {
-        pDlg_user_profile->set_nick(strNick);
-        pDlg_user_profile->show();
+        pDlgUserProfile->set_nick(strNick);
+        pDlgUserProfile->show();
     }
 }
 
@@ -104,8 +104,8 @@ void MainTextEdit::cam()
 #ifdef Q_WS_WIN
     (new Kamerzysta(camSocket))->show(strNick);
 #else
-    pDlg_cam->set_nick(strNick);
-    pDlg_cam->show();
+    pDlgCam->set_nick(strNick);
+    pDlgCam->show();
 #endif
 }
 

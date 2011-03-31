@@ -57,11 +57,11 @@ private:
     QHBoxLayout *mainLayout;
     QPushButton *showHideToolWidget;
     QLabel *nickLabel;
-    InputLineWidget *inputLine;
+    InputLineWidget *pInputLine;
     QPushButton *sendButton;
     QPushButton *moderSendButton;
     QString strChannel;
-    Highlighter *highlighter;
+    Highlighter *pHighlighter;
 
 private slots:
     void inputline_return_pressed();

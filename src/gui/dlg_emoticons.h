@@ -34,7 +34,7 @@ public:
 
 private:
     Ui::uiEmoticons ui;
-    InputWidget *inputwidget;
+    InputWidget *pInputWidget;
     bool bDoneStandard;
     bool bDoneExtended;
 

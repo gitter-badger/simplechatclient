@@ -40,7 +40,7 @@ TabWidget::TabWidget(Network *param1, QString param2, QMap <QString, QByteArray>
     mChannelAvatar = param3;
     camSocket = param4;
     mChannelNickStatus = param5;
-    pDlg_user_profile = param6;
+    pDlgUserProfile = param6;
     lAwaylog = param7;
 
     QSettings settings;
@@ -112,12 +112,12 @@ TabWidget::TabWidget(Network *param1, QString param2, QMap <QString, QByteArray>
     topLayout->addWidget(topRightWidget);
     topWidget->setLayout(topLayout);
 
-    mainTextEdit = new MainTextEdit(pNetwork, strName, camSocket, mChannelNickStatus, pDlg_user_profile);
-    mainTextEdit->document()->setMaximumBlockCount(1000);
-    mainTextEdit->setReadOnly(true);
-    mainTextEdit->setAcceptRichText(false);
-    mainTextEdit->setParent(this);
-    mainTextEdit->show();
+    pMainTextEdit = new MainTextEdit(pNetwork, strName, camSocket, mChannelNickStatus, pDlgUserProfile);
+    pMainTextEdit->document()->setMaximumBlockCount(1000);
+    pMainTextEdit->setReadOnly(true);
+    pMainTextEdit->setAcceptRichText(false);
+    pMainTextEdit->setParent(this);
+    pMainTextEdit->show();
 
     if (strName[0] == '#')
     {
@@ -135,7 +135,7 @@ TabWidget::TabWidget(Network *param1, QString param2, QMap <QString, QByteArray>
         else
             mainLayout->addWidget(topWidget);
 
-        mainLayout->addWidget(mainTextEdit);
+        mainLayout->addWidget(pMainTextEdit);
         mainWidget->setLayout(mainLayout);
     }
     else if (strName[0] == '^')
@@ -149,7 +149,7 @@ TabWidget::TabWidget(Network *param1, QString param2, QMap <QString, QByteArray>
         topLeftWidget->hide();
         topWidget->hide();
 
-        mainLayout->addWidget(mainTextEdit);
+        mainLayout->addWidget(pMainTextEdit);
         mainWidget->setLayout(mainLayout);
     }
     else
@@ -163,7 +163,7 @@ TabWidget::TabWidget(Network *param1, QString param2, QMap <QString, QByteArray>
         topLeftWidget->hide();
         topWidget->hide();
 
-        mainLayout->addWidget(mainTextEdit);
+        mainLayout->addWidget(pMainTextEdit);
         mainWidget->setLayout(mainLayout);
     }
 
@@ -186,14 +186,14 @@ TabWidget::TabWidget(Network *param1, QString param2, QMap <QString, QByteArray>
 
 TabWidget::~TabWidget()
 {
-    mainTextEdit->clear();
+    pMainTextEdit->clear();
 }
 
 #ifndef Q_WS_WIN
 void TabWidget::set_dlg_cam(DlgCam *param1)
 {
-    pDlg_cam = param1;
-    mainTextEdit->set_dlg_cam(pDlg_cam);
+    pDlgCam = param1;
+    pMainTextEdit->set_dlg_cam(pDlgCam);
 }
 #endif
 
@@ -375,7 +375,7 @@ void TabWidget::display_message(QString strData, int iLevel)
     strContent = strContent+strData+strContentLast+"</span>";
 
     // move cursor - fix align bug
-    QTextCursor cursor(mainTextEdit->document());
+    QTextCursor cursor(pMainTextEdit->document());
     cursor.movePosition(QTextCursor::End);
 
     // text align
@@ -390,8 +390,8 @@ void TabWidget::display_message(QString strData, int iLevel)
     cursor.insertHtml(strContent);
 
     // move cursor
-    if (mainTextEdit->textCursor().selectedText().isEmpty() == true)
-        mainTextEdit->moveCursor(QTextCursor::End, QTextCursor::MoveAnchor);
+    if (pMainTextEdit->textCursor().selectedText().isEmpty() == true)
+        pMainTextEdit->moveCursor(QTextCursor::End, QTextCursor::MoveAnchor);
 }
 
 // window options
@@ -466,12 +466,12 @@ void TabWidget::update_channel_avatar()
 
 void TabWidget::set_open_channels(QStringList strOpenChannels)
 {
-    mainTextEdit->set_open_channels(strOpenChannels);
+    pMainTextEdit->set_open_channels(strOpenChannels);
 }
 
 void TabWidget::clear_content()
 {
-    mainTextEdit->clear();
+    pMainTextEdit->clear();
 }
 
 void TabWidget::refresh_colors()
@@ -488,7 +488,7 @@ void TabWidget::refresh_colors()
         this->setStyleSheet(QString::null);
 
     // mainTextEdit
-    mainTextEdit->setTextBackgroundColor(QColor(strBackgroundColor));
+    pMainTextEdit->setTextBackgroundColor(QColor(strBackgroundColor));
 
     // topic
     topic->setTextColor(QColor(strDefaultFontColor));
@@ -497,5 +497,5 @@ void TabWidget::refresh_colors()
 
 void TabWidget::refresh_background_image()
 {
-    mainTextEdit->update_background_image();
+    pMainTextEdit->update_background_image();
 }

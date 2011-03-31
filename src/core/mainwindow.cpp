@@ -87,7 +87,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     pDlgUserProfile = new DlgUserProfile(this, pNetwork);
 
 #ifndef Q_WS_WIN
-    pDlg_cam = new DlgCam(this, pNetwork, camSocket);
+    pDlgCam = new DlgCam(this, pNetwork, camSocket);
 #endif
 
     pOnetKernel = new OnetKernel(pNetwork, pTabC, &mNickAvatar, &mChannelAvatar, pDlgChannelSettings, &lChannelHomes, &stlChannelList, &lChannelFavourites, &mFriends, &lIgnore, pDlgModeration, &mMyStats, &mMyProfile, pDlgUserProfile);
@@ -95,7 +95,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
     pTabC->set_dlg(pDlgUserProfile);
 #ifndef Q_WS_WIN
-    pTabC->set_dlg_cam(pDlg_cam);
+    pTabC->set_dlg_cam(pDlgCam);
 #endif
 
     // gui
@@ -128,7 +128,7 @@ MainWindow::~MainWindow()
     delete pOnetAuth;
     delete pOnetKernel;
 #ifndef Q_WS_WIN
-    delete pDlg_cam;
+    delete pDlgCam;
 #endif
     delete pDlgUserProfile;
     delete pDlgModeration;
@@ -176,19 +176,19 @@ void MainWindow::createGui()
 {
     // inputlinewidget
     bottomDockWidget = new QDockWidget(tr("Typing messages"), this);
-    inputLineDockWidget = new InputLineDockWidget(bottomDockWidget, pNetwork, pDlgChannelSettings, pDlgModeration);
+    pInputLineDockWidget = new InputLineDockWidget(bottomDockWidget, pNetwork, pDlgChannelSettings, pDlgModeration);
     bottomDockWidget->setFeatures(QDockWidget::DockWidgetMovable | QDockWidget::DockWidgetClosable | QDockWidget::DockWidgetFloatable);
     bottomDockWidget->setAllowedAreas(Qt::TopDockWidgetArea | Qt::BottomDockWidgetArea); // top and bottom
-    bottomDockWidget->setWidget(inputLineDockWidget);
+    bottomDockWidget->setWidget(pInputLineDockWidget);
     this->addDockWidget(Qt::BottomDockWidgetArea, bottomDockWidget);
     viewMenu->addAction(bottomDockWidget->toggleViewAction());
 
     // nicklistwidget
     rightDockWidget = new QDockWidget(tr("Users"), this);
-    nickListDockWidget = new NickListDockWidget(rightDockWidget);
+    pNickListDockWidget = new NickListDockWidget(rightDockWidget);
     rightDockWidget->setFeatures(QDockWidget::DockWidgetMovable | QDockWidget::DockWidgetClosable | QDockWidget::DockWidgetFloatable);
     rightDockWidget->setAllowedAreas(Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea); // left and right
-    rightDockWidget->setWidget(nickListDockWidget);
+    rightDockWidget->setWidget(pNickListDockWidget);
     this->addDockWidget(Qt::RightDockWidgetArea, rightDockWidget);
     viewMenu->addAction(rightDockWidget->toggleViewAction());
 
@@ -197,7 +197,7 @@ void MainWindow::createGui()
     if (settings.value("style") == "classic")
     {
         toolBar->hide();
-        inputLineDockWidget->hide_toolwidget();
+        pInputLineDockWidget->hide_toolwidget();
     }
 
     // hide nicklist and toolwidget on status
@@ -216,9 +216,9 @@ void MainWindow::create_actions()
     notesAct = new QAction(QIcon(":/images/oxygen/16x16/story-editor.png"), tr("Notes"), this);
 
     // onet action
-    channel_listAct = new QAction(QIcon(":/images/oxygen/16x16/documentation.png"), tr("Channel list"), this);
-    channel_homesAct = new QAction(QIcon(":/images/oxygen/16x16/configure.png"), tr("Your channels"), this);
-    channel_favouritesAct = new QAction(QIcon(":/images/oxygen/16x16/emblem-favorite.png"), tr("Favorite channels"), this);
+    channelListAct = new QAction(QIcon(":/images/oxygen/16x16/documentation.png"), tr("Channel list"), this);
+    channelHomesAct = new QAction(QIcon(":/images/oxygen/16x16/configure.png"), tr("Your channels"), this);
+    channelFavouritesAct = new QAction(QIcon(":/images/oxygen/16x16/emblem-favorite.png"), tr("Favorite channels"), this);
     friendsAct = new QAction(QIcon(":/images/oxygen/16x16/meeting-attending.png"), tr("Friends"), this);
     ignoreAct = new QAction(QIcon(":/images/oxygen/16x16/meeting-attending-tentative.png"), tr("Ignored"), this);
     camsAct = new QAction(QIcon(":/images/oxygen/16x16/camera-web.png"),tr("Cams"), this);
@@ -232,9 +232,9 @@ void MainWindow::create_actions()
     optionsAct->setShortcut(tr("Ctrl+O"));
 
     // onet shortcut
-    channel_listAct->setShortcut(tr("Ctrl+L"));
-    channel_homesAct->setShortcut(tr("Ctrl+M"));
-    channel_favouritesAct->setShortcut(tr("Ctrl+U"));
+    channelListAct->setShortcut(tr("Ctrl+L"));
+    channelHomesAct->setShortcut(tr("Ctrl+M"));
+    channelFavouritesAct->setShortcut(tr("Ctrl+U"));
     friendsAct->setShortcut(tr("Ctrl+P"));
     ignoreAct->setShortcut(tr("Ctrl+I"));
     awaylogAct->setShortcut(tr("Ctrl+J"));
@@ -261,9 +261,9 @@ void MainWindow::create_menus()
 
     // onet menu
     chatMenu = menuBar()->addMenu(tr("&Chat"));
-    chatMenu->addAction(channel_listAct);
-    chatMenu->addAction(channel_homesAct);
-    chatMenu->addAction(channel_favouritesAct);
+    chatMenu->addAction(channelListAct);
+    chatMenu->addAction(channelHomesAct);
+    chatMenu->addAction(channelFavouritesAct);
     chatMenu->addAction(friendsAct);
     chatMenu->addAction(ignoreAct);
     chatMenu->addAction(awaylogAct);
@@ -289,8 +289,8 @@ void MainWindow::create_menus()
     toolBar->addAction(optionsAct);
 
     // onet toolbar
-    toolBar->addAction(channel_listAct);
-    toolBar->addAction(channel_homesAct);
+    toolBar->addAction(channelListAct);
+    toolBar->addAction(channelHomesAct);
     toolBar->addAction(friendsAct);
 
     // awaylog
@@ -329,9 +329,9 @@ void MainWindow::create_signals()
     QObject::connect(showAct, SIGNAL(triggered()), this, SLOT(button_show()));
 
     // signals onet dialogs
-    QObject::connect(channel_listAct, SIGNAL(triggered()), this, SLOT(open_channel_list()));
-    QObject::connect(channel_homesAct, SIGNAL(triggered()), this, SLOT(open_channel_homes()));
-    QObject::connect(channel_favouritesAct, SIGNAL(triggered()), this, SLOT(open_channel_favourites()));
+    QObject::connect(channelListAct, SIGNAL(triggered()), this, SLOT(open_channel_list()));
+    QObject::connect(channelHomesAct, SIGNAL(triggered()), this, SLOT(open_channel_homes()));
+    QObject::connect(channelFavouritesAct, SIGNAL(triggered()), this, SLOT(open_channel_favourites()));
     QObject::connect(friendsAct, SIGNAL(triggered()), this, SLOT(open_friends()));
     QObject::connect(ignoreAct, SIGNAL(triggered()), this, SLOT(open_ignore()));
     QObject::connect(myStatsAct, SIGNAL(triggered()), this, SLOT(open_my_stats()));
@@ -361,14 +361,14 @@ void MainWindow::create_signals()
     QObject::connect(pDlgModeration, SIGNAL(display_msg(QString,QString,int)), pTabC, SLOT(slot_show_msg(QString,QString,int)));
 
     // signals inputLineWidget
-    QObject::connect(inputLineDockWidget, SIGNAL(show_msg(QString,QString,int)), pTabC, SLOT(slot_show_msg(QString,QString,int)));
-    QObject::connect(inputLineDockWidget, SIGNAL(display_message(QString,QString,int)), pTabC, SLOT(slot_display_message(QString,QString,int)));
-    QObject::connect(inputLineDockWidget, SIGNAL(change_font_size(QString)), pTabC, SLOT(slot_change_font_size(QString)));
-    QObject::connect(inputLineDockWidget, SIGNAL(clear_content(QString)), pTabC, SLOT(slot_clear_content(QString)));
+    QObject::connect(pInputLineDockWidget, SIGNAL(show_msg(QString,QString,int)), pTabC, SLOT(slot_show_msg(QString,QString,int)));
+    QObject::connect(pInputLineDockWidget, SIGNAL(display_message(QString,QString,int)), pTabC, SLOT(slot_display_message(QString,QString,int)));
+    QObject::connect(pInputLineDockWidget, SIGNAL(change_font_size(QString)), pTabC, SLOT(slot_change_font_size(QString)));
+    QObject::connect(pInputLineDockWidget, SIGNAL(clear_content(QString)), pTabC, SLOT(slot_clear_content(QString)));
 
     // signals lag
     QObject::connect(pOnetKernel, SIGNAL(set_lag(QString)), this, SLOT(set_lag(QString)));
-    QObject::connect(pOnetKernel, SIGNAL(update_nick(QString)), inputLineDockWidget, SLOT(slot_update_nick(QString)));
+    QObject::connect(pOnetKernel, SIGNAL(update_nick(QString)), pInputLineDockWidget, SLOT(slot_update_nick(QString)));
     QObject::connect(pOnetKernel, SIGNAL(clear_nicklist(QString)), this, SLOT(clear_nicklist(QString)));
 
     // signals from kernel to nicklist
@@ -393,7 +393,7 @@ void MainWindow::create_signals()
     QObject::connect(pNetwork, SIGNAL(authorize(QString,QString,QString)), pOnetAuth, SLOT(authorize(QString,QString,QString)));
     QObject::connect(pNetwork, SIGNAL(show_msg_active(QString,int)), pTabC, SLOT(slot_show_msg_active(QString,int)));
     QObject::connect(pNetwork, SIGNAL(show_msg_all(QString,int)), pTabC, SLOT(slot_show_msg_all(QString,int)));
-    QObject::connect(pNetwork, SIGNAL(update_nick(QString)), inputLineDockWidget, SLOT(slot_update_nick(QString)));
+    QObject::connect(pNetwork, SIGNAL(update_nick(QString)), pInputLineDockWidget, SLOT(slot_update_nick(QString)));
     QObject::connect(pNetwork, SIGNAL(clear_nicklist(QString)), this, SLOT(clear_nicklist(QString)));
     QObject::connect(pNetwork, SIGNAL(clear_all_nicklist()), this, SLOT(clear_all_nicklist()));
     QObject::connect(pNetwork, SIGNAL(update_actions()), this, SLOT(update_actions()));
@@ -510,8 +510,8 @@ void MainWindow::update_actions()
 
     if (bRegistered == true)
     {
-        channel_homesAct->setEnabled(true);
-        channel_favouritesAct->setEnabled(true);
+        channelHomesAct->setEnabled(true);
+        channelFavouritesAct->setEnabled(true);
         friendsAct->setEnabled(true);
         ignoreAct->setEnabled(true);
         myStatsAct->setEnabled(true);
@@ -520,8 +520,8 @@ void MainWindow::update_actions()
     }
     else
     {
-        channel_homesAct->setEnabled(false);
-        channel_favouritesAct->setEnabled(false);
+        channelHomesAct->setEnabled(false);
+        channelFavouritesAct->setEnabled(false);
         friendsAct->setEnabled(false);
         ignoreAct->setEnabled(false);
         myStatsAct->setEnabled(false);
@@ -610,7 +610,7 @@ void MainWindow::open_cams()
     }
 #else
     if ((pNetwork->is_connected() == true) && (pNetwork->is_writable() == true))
-        pDlg_cam->show();
+        pDlgCam->show();
 #endif
 }
 
@@ -686,7 +686,7 @@ void MainWindow::current_tab_changed(int index)
     pTabM->set_color(index, QColor(settings.value("default_font_color").toString()));
 
     // set tab active
-    inputLineDockWidget->set_active(strChannel);
+    pInputLineDockWidget->set_active(strChannel);
 
     // hide/show Status nicklist
     if (index == 0)
@@ -700,16 +700,16 @@ void MainWindow::current_tab_changed(int index)
 
     // hide/show settings on priv
     if (strChannel[0] == '^')
-        inputLineDockWidget->hide_channel_settings();
+        pInputLineDockWidget->hide_channel_settings();
     else
-        inputLineDockWidget->show_channel_settings();
+        pInputLineDockWidget->show_channel_settings();
 
     // nicklist
     if (mChannelNickListWidget.contains(strChannel))
     {
         // switch
         NickListWidget *nlw = mChannelNickListWidget.value(strChannel);
-        nickListDockWidget->setCurrentWidget(nlw);
+        pNickListDockWidget->setCurrentWidget(nlw);
     }
     else
     {
@@ -718,7 +718,7 @@ void MainWindow::current_tab_changed(int index)
     }
 
     // set inputline users
-    inputLineDockWidget->set_userslist(mChannelNickListWidget.value(strChannel));
+    pInputLineDockWidget->set_userslist(mChannelNickListWidget.value(strChannel));
 
     // update nick count
     rightDockWidget->setWindowTitle(QString(tr("Users (%1)")).arg(pTabC->get_users(strChannel)));
@@ -734,8 +734,8 @@ void MainWindow::current_tab_changed(int index)
             break;
         }
     }
-    if (strPrefix.contains("!")) inputLineDockWidget->enable_moderation();
-    else inputLineDockWidget->disable_moderation();
+    if (strPrefix.contains("!")) pInputLineDockWidget->enable_moderation();
+    else pInputLineDockWidget->disable_moderation();
 }
 
 void MainWindow::create_nicklist(QString strChannel)
@@ -744,14 +744,14 @@ void MainWindow::create_nicklist(QString strChannel)
     {
         NickListWidget *nicklist = new NickListWidget(pNetwork, strChannel, &mNickAvatar, camSocket, &stlChannelNickStatus, pDlgUserProfile);
 #ifndef Q_WS_WIN
-        nicklist->set_dlg_cam(pDlg_cam);
+        nicklist->set_dlg_cam(pDlgCam);
 #endif
-        nicklist->setParent(nickListDockWidget);
+        nicklist->setParent(pNickListDockWidget);
         nicklist->setItemDelegate(new NickListDelegate(nicklist));
         nicklist->show();
 
         mChannelNickListWidget.insert(strChannel, nicklist);
-        nickListDockWidget->addWidget(nicklist);
+        pNickListDockWidget->addWidget(nicklist);
     }
 }
 
@@ -759,7 +759,7 @@ void MainWindow::remove_nicklist(QString strChannel)
 {
     if (mChannelNickListWidget.contains(strChannel) == true)
     {
-        nickListDockWidget->removeWidget(mChannelNickListWidget.value(strChannel));
+        pNickListDockWidget->removeWidget(mChannelNickListWidget.value(strChannel));
         delete mChannelNickListWidget.value(strChannel);
         mChannelNickListWidget.remove(strChannel);
     }
@@ -782,14 +782,14 @@ void MainWindow::add_user(QString strChannel, QString strNick, QString strPrefix
         mChannelNickListWidget.value(strChannel)->add(strNick, strPrefix, strSuffix, &stlChannelNickStatus);
 
         // set inputline users
-        if (inputLineDockWidget->get_active() == strChannel)
-            inputLineDockWidget->set_userslist(mChannelNickListWidget.value(strChannel));
+        if (pInputLineDockWidget->get_active() == strChannel)
+            pInputLineDockWidget->set_userslist(mChannelNickListWidget.value(strChannel));
 
         // update nick count for option hide join/part when > 200
         pTabC->add_user(strChannel);
 
         // update nick count
-        if (inputLineDockWidget->get_active() == strChannel)
+        if (pInputLineDockWidget->get_active() == strChannel)
             rightDockWidget->setWindowTitle(QString(tr("Users (%1)")).arg(pTabC->get_users(strChannel)));
     }
 }
@@ -801,14 +801,14 @@ void MainWindow::del_user(QString strChannel, QString strNick)
         mChannelNickListWidget.value(strChannel)->remove(strNick, &stlChannelNickStatus);
 
         // set inputline users
-        if (inputLineDockWidget->get_active() == strChannel)
-            inputLineDockWidget->set_userslist(mChannelNickListWidget.value(strChannel));
+        if (pInputLineDockWidget->get_active() == strChannel)
+            pInputLineDockWidget->set_userslist(mChannelNickListWidget.value(strChannel));
 
         // update nick count for option hide join/part when > 200
         pTabC->del_user(strChannel);
 
         // update nick count
-        if (inputLineDockWidget->get_active() == strChannel)
+        if (pInputLineDockWidget->get_active() == strChannel)
             rightDockWidget->setWindowTitle(QString(tr("Users (%1)")).arg(pTabC->get_users(strChannel)));
     }
 }
@@ -819,7 +819,7 @@ void MainWindow::nicklist_refresh(QString strChannel)
     if (mChannelNickListWidget.contains(strChannel) == true)
     {
         mChannelNickListWidget.value(strChannel)->expandAll();
-        inputLineDockWidget->set_userslist(mChannelNickListWidget.value(strChannel));
+        pInputLineDockWidget->set_userslist(mChannelNickListWidget.value(strChannel));
     }
 }
 
@@ -839,7 +839,7 @@ void MainWindow::quit_user(QString strNick, QString strDisplay)
                 pTabM->set_alert(i+1, QColor(0, 147, 0, 255)); // green
 
             // update nick count
-            if (inputLineDockWidget->get_active() == strChannel)
+            if (pInputLineDockWidget->get_active() == strChannel)
                 rightDockWidget->setWindowTitle(QString(tr("Users (%1)")).arg(pTabC->get_users(strChannel)));
         }
     }
@@ -917,8 +917,8 @@ void MainWindow::change_flag(QString strNick, QString strChannel, QString strNew
 
     if (strNick == strMe)
     {
-        if (strNewFlag == "+X") inputLineDockWidget->enable_moderation();
-        else if (strNewFlag == "-X") inputLineDockWidget->disable_moderation();
+        if (strNewFlag == "+X") pInputLineDockWidget->enable_moderation();
+        else if (strNewFlag == "-X") pInputLineDockWidget->disable_moderation();
     }
 }
 
@@ -950,7 +950,7 @@ void MainWindow::clear_nicklist(QString strChannel)
     pTabC->clear_users(strChannel);
 
     // update nick count
-    if (inputLineDockWidget->get_active() == strChannel)
+    if (pInputLineDockWidget->get_active() == strChannel)
         rightDockWidget->setWindowTitle(QString(tr("Users (%1)")).arg(pTabC->get_users(strChannel)));
 }
 
@@ -970,7 +970,7 @@ void MainWindow::clear_all_nicklist()
         pTabC->clear_users(strlChannels.at(i));
 
         // update nick count
-        if (inputLineDockWidget->get_active() == strlChannels.at(i))
+        if (pInputLineDockWidget->get_active() == strlChannels.at(i))
             rightDockWidget->setWindowTitle(QString(tr("Users (%1)")).arg(pTabC->get_users(strlChannels.at(i))));
     }
 }

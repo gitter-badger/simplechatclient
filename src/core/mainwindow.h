@@ -84,9 +84,9 @@ private:
 
     // onet actions
     QMenu *chatMenu;
-    QAction *channel_listAct;
-    QAction *channel_homesAct;
-    QAction *channel_favouritesAct;
+    QAction *channelListAct;
+    QAction *channelHomesAct;
+    QAction *channelFavouritesAct;
     QAction *friendsAct;
     QAction *ignoreAct;
     QAction *camsAct;
@@ -106,8 +106,8 @@ private:
     DlgModeration *pDlgModeration;
 
     // gui
-    InputLineDockWidget *inputLineDockWidget;
-    NickListDockWidget *nickListDockWidget;
+    InputLineDockWidget *pInputLineDockWidget;
+    NickListDockWidget *pNickListDockWidget;
     QDockWidget *bottomDockWidget;
     QDockWidget *rightDockWidget;
     QMap <QString, NickListWidget*> mChannelNickListWidget;
@@ -115,7 +115,7 @@ private:
 
     // other
 #ifndef Q_WS_WIN
-    DlgCam *pDlg_cam;
+    DlgCam *pDlgCam;
 #endif
     QAction *lagAct;
     QList<QString> lAwaylog;

@@ -35,8 +35,8 @@ ToolWidget::ToolWidget(QWidget *parent, Network *param1, InputWidget *param2, Dl
 {
     pNetwork = param1;
     pInputWidget = param2;
-    dlgchannel_settings = param3;
-    dlgmoderation = param4;
+    pDlgChannelSettings = param3;
+    pDlgModeration = param4;
 
     strCurrentColor = "#000000";
 
@@ -484,8 +484,8 @@ void ToolWidget::channel_settings_clicked()
         QString strChannel = pInputWidget->get_active();
         if (strChannel != "Status")
         {
-            dlgchannel_settings->set_channel(strChannel);
-            dlgchannel_settings->show();
+            pDlgChannelSettings->set_channel(strChannel);
+            pDlgChannelSettings->show();
         }
     }
 }
@@ -495,8 +495,8 @@ void ToolWidget::channel_settings_clicked()
 void ToolWidget::moderation_clicked()
 {
     QString strChannel = pInputWidget->get_active();
-    dlgmoderation->set_active_channel(strChannel);
-    dlgmoderation->show();
+    pDlgModeration->set_active_channel(strChannel);
+    pDlgModeration->show();
 }
 
 // clear

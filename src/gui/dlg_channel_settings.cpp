@@ -40,9 +40,9 @@ DlgChannelSettings::DlgChannelSettings(QWidget *parent, Network *param1) : QDial
 
     pNetwork = param1;
 
-    simpleStatsWidget = new SimpleStatsWidget(this);
-    simpleStatsWidget->show();
-    ui.verticalLayout_stats->addWidget(simpleStatsWidget);
+    pSimpleStatsWidget = new SimpleStatsWidget(this);
+    pSimpleStatsWidget->show();
+    ui.verticalLayout_stats->addWidget(pSimpleStatsWidget);
 
     create_gui();
     set_default_values();
@@ -400,7 +400,7 @@ void DlgChannelSettings::set_stats_data(QMap<QString, QString> mData)
             ui.label_stats_words->setText(QString::number(iWords));
 
             // simple stats widget
-            simpleStatsWidget->set_stats(lWords);
+            pSimpleStatsWidget->set_stats(lWords);
         }
         else if (strKey == "relationsFavourite")
         {
@@ -1007,7 +1007,7 @@ void DlgChannelSettings::showEvent(QShowEvent *event)
 
     // clear
     clear();
-    simpleStatsWidget->clear_stats();
+    pSimpleStatsWidget->clear_stats();
     ui.label_owner->hide();
     ui.label_owner_nick->hide();
     ui.label_channel_name->setText(strChannel);

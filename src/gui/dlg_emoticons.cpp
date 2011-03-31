@@ -32,7 +32,7 @@ DlgEmoticons::DlgEmoticons(MainWindow *parent, InputWidget *param1) : QDialog(pa
     // center screen
     move(QApplication::desktop()->screen()->rect().center() - rect().center());
 
-    inputwidget = param1;
+    pInputWidget = param1;
 
     create_gui();
     set_default_values();
@@ -139,7 +139,7 @@ void DlgEmoticons::clicked_standard(QModelIndex index)
 
     // insert emots
     if (strEmoticon.isEmpty() == false)
-        inputwidget->insert_text("//"+strEmoticon);
+        pInputWidget->insert_text("//"+strEmoticon);
 
     // close
     this->close();
@@ -154,7 +154,7 @@ void DlgEmoticons::clicked_extended(QModelIndex index)
 
     // insert emots
     if (strEmoticon.isEmpty() == false)
-        inputwidget->insert_text("//"+strEmoticon);
+        pInputWidget->insert_text("//"+strEmoticon);
 
     // close
     this->close();
@@ -178,7 +178,7 @@ void DlgEmoticons::button_insert()
 
     // insert emots
     if (strSelected.isEmpty() == false)
-        inputwidget->insert_text("//"+strSelected);
+        pInputWidget->insert_text("//"+strSelected);
 
     // close
     this->close();

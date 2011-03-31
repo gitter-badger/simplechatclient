@@ -161,10 +161,10 @@ void DlgOptions::create_gui()
     adv->setText(0, tr("Advanced"));
     adv->setToolTip(0, tr("Advanced"));
 
-    QTreeWidgetItem *defaultfont = new QTreeWidgetItem(ui.treeWidget_options);
-    defaultfont->setIcon(0, QIcon(":/images/oxygen/16x16/format-text-color.png"));
-    defaultfont->setText(0, tr("Default font"));
-    defaultfont->setToolTip(0, tr("Default font"));
+    QTreeWidgetItem *default_font = new QTreeWidgetItem(ui.treeWidget_options);
+    default_font->setIcon(0, QIcon(":/images/oxygen/16x16/format-text-color.png"));
+    default_font->setText(0, tr("Default font"));
+    default_font->setToolTip(0, tr("Default font"));
 
     QTreeWidgetItem *colors = new QTreeWidgetItem(ui.treeWidget_options);
     colors->setIcon(0, QIcon(":/images/oxygen/16x16/view-media-visualization.png"));

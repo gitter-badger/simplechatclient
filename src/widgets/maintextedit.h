@@ -49,14 +49,14 @@ private:
     QString strChannel;
     QTcpSocket *camSocket;
     sChannelNickStatus *mChannelNickStatus;
-    DlgUserProfile *pDlg_user_profile;
+    DlgUserProfile *pDlgUserProfile;
 #ifndef Q_WS_WIN
-    DlgCam *pDlg_cam;
+    DlgCam *pDlgCam;
 #endif
     // other
     QString strNick;
     QStringList strOpenChannels;
-    enum { maxOpenChannels = 50 };
+    enum { maxOpenChannels = 30 };
     QAction *openChannelsActs[maxOpenChannels];
 
     void menu_nick(QString, QContextMenuEvent *);

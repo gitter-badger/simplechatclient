@@ -34,7 +34,7 @@ public:
 private:
     Ui::uiMyStats ui;
     QMap<QString,QString> *mMyStats;
-    SimpleStatsWidget *simpleStatsWidget;
+    SimpleStatsWidget *pSimpleStatsWidget;
 
     void create_gui();
     void create_signals();

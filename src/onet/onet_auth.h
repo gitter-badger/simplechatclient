@@ -39,7 +39,7 @@ public slots:
     void authorize(QString, QString, QString);
 
 private:
-    TabContainer *tabc;
+    TabContainer *pTabC;
     bool bAuthorizing;
 
     QString network_request(QNetworkAccessManager *, QString, QString);

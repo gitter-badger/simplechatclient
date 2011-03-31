@@ -31,7 +31,7 @@
 
 OnetAuth::OnetAuth(TabContainer *param1)
 {
-    tabc = param1;
+    pTabC = param1;
     bAuthorizing = false;
 }
 
@@ -173,7 +173,7 @@ void OnetAuth::authorize(QString param1, QString param2, QString param3)
     }
     else
     {
-        tabc->show_msg("Status", tr("Error: Authentication error [onet.pl servers are not available]"), 9);
+        pTabC->show_msg("Status", tr("Error: Authentication error [onet.pl servers are not available]"), 9);
     }
 
     // not empty key; not logged
@@ -363,7 +363,7 @@ void OnetAuth::request_finished(QString strNickAuth, QString strData)
             }
             else
             {
-                tabc->show_msg("Status", tr("Error: Authorization Failed."), 9);
+                pTabC->show_msg("Status", tr("Error: Authorization Failed."), 9);
             }
         }
         // <?xml version="1.0" encoding="ISO-8859-2"?><root><error err_code="-2"  err_text="U.ytkownik nie zalogowany" ></error></root>
@@ -371,19 +371,19 @@ void OnetAuth::request_finished(QString strNickAuth, QString strData)
         {
             if (strData.indexOf("err_code=\"TRUE\"") != -1)
             {
-                tabc->show_msg("Status", tr("Error: Authentication error [Nick is already logged into the chat]"), 9);
+                pTabC->show_msg("Status", tr("Error: Authentication error [Nick is already logged into the chat]"), 9);
             }
             else
             {
                 QDomNode dError = doc.elementsByTagName("error").item(0);
                 QString strErrorText = dError.attributes().namedItem("err_text").nodeValue();
 
-                tabc->show_msg("Status", QString(tr("Error: Authentication error [%1]")).arg(strErrorText), 9);
+                pTabC->show_msg("Status", QString(tr("Error: Authentication error [%1]")).arg(strErrorText), 9);
             }
         }
     }
     else
     {
-        tabc->show_msg("Status", tr("Error: Authorization Failed."), 9);
+        pTabC->show_msg("Status", tr("Error: Authorization Failed."), 9);
     }
 }

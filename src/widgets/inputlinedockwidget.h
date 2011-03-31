@@ -55,8 +55,8 @@ public slots:
 private:
     // params
     Network *pNetwork;
-    DlgChannelSettings *dlgchannel_settings;
-    DlgModeration *dlgmoderation;
+    DlgChannelSettings *pDlgChannelSettings;
+    DlgModeration *pDlgModeration;
     // other
     InputWidget *pInputWidget;
     ToolWidget *pToolWidget;

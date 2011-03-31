@@ -47,16 +47,16 @@ DlgCam::DlgCam(QWidget *parent, Network *param1, QTcpSocket *param2) : QDialog(p
     camNetwork = new DlgCamNetwork(pNetwork, param2);
 
     // init rank
-    simpleRankWidget = new SimpleRankWidget(this);
-    simpleRankWidget->show();
-    ui.horizontalLayout->insertWidget(1, simpleRankWidget);
+    pSimpleRankWidget = new SimpleRankWidget(this);
+    pSimpleRankWidget->show();
+    ui.horizontalLayout->insertWidget(1, pSimpleRankWidget);
 
     // init video
     video = new Video();
 
     // video frame timer
-    video_frame_timer = new QTimer();
-    video_frame_timer->setInterval(100);
+    videoFrameTimer = new QTimer();
+    videoFrameTimer->setInterval(100);
 
     create_gui();
 
@@ -70,9 +70,9 @@ DlgCam::DlgCam(QWidget *parent, Network *param1, QTcpSocket *param2) : QDialog(p
 
 DlgCam::~DlgCam()
 {
-    delete video_frame_timer;
+    delete videoFrameTimer;
     delete video;
-    delete simpleRankWidget;
+    delete pSimpleRankWidget;
     delete camNetwork;
 }
 
@@ -139,7 +139,7 @@ void DlgCam::set_default_values()
     bFirstSendPUT = false;
     bReadySendPUT = true;
     iLastSendPUT = 0;
-    iCam_cmd = 0;
+    iCamCmd = 0;
     QSettings settings;
 
     // set labels
@@ -228,7 +228,7 @@ void DlgCam::create_signals()
     QObject::connect(camNetwork, SIGNAL(nconnected()), this, SLOT(nconnected()));
     QObject::connect(camNetwork, SIGNAL(ndisconnected()), this, SLOT(ndisconnected()));
 
-    QObject::connect(video_frame_timer, SIGNAL(timeout()), this, SLOT(get_frame()));
+    QObject::connect(videoFrameTimer, SIGNAL(timeout()), this, SLOT(get_frame()));
 }
 
 void DlgCam::set_nick(QString n)
@@ -271,7 +271,7 @@ void DlgCam::ndisconnected()
     ui.textEdit_desc->setText("");
     ui.textEdit_desc->hide();
     ui.label_img->setText(ui.label_img->text()+"<br>"+tr("Disconnected from server webcams"));
-    simpleRankWidget->set_rank(0);
+    pSimpleRankWidget->set_rank(0);
     ui.textEdit_channels->clear();
 
     ui.listWidget_funs->clear();
@@ -329,7 +329,7 @@ void DlgCam::set_broadcasting()
     {
         // create
         video->create();
-        video_frame_timer->start();
+        videoFrameTimer->start();
 
         // read self video
         QTimer::singleShot(1000*1, this, SLOT(read_video())); // 1 sec
@@ -342,13 +342,13 @@ void DlgCam::get_frame()
     if (video->existVideoDevice() == false)
     {
         video->destroy();
-        video_frame_timer->stop();
+        videoFrameTimer->stop();
         return;
     }
 
     // get image
-    if ((bBroadcasting == true) || (ui.tabWidget->currentIndex() == 1) || (captured_frame.isNull() == true))
-        video->getImage(&captured_frame);
+    if ((bBroadcasting == true) || (ui.tabWidget->currentIndex() == 1) || (imCapturedFrame.isNull() == true))
+        video->getImage(&imCapturedFrame);
 }
 
 void DlgCam::data_kernel(QByteArray bData)
@@ -360,7 +360,7 @@ void DlgCam::data_kernel(QByteArray bData)
 #endif
 
     // 202 14283 IMAGE_UPDATE_BIG psotnica2603
-    if (iCam_cmd == 202)
+    if (iCamCmd == 202)
     {
         QPixmap pixmap;
         pixmap.loadFromData(bData);
@@ -371,7 +371,7 @@ void DlgCam::data_kernel(QByteArray bData)
     // ToWiemTylkoJa:1:2/0/#Relax/0,-2/-2/ToWiemTylkoJa/1:2::13
     // scc_test:1:2/0/#Quiz/0,2/0/#Relax/0,2/0/#Scrabble/0,4/0/#scc/0:0::0
     // multiline
-    else if (iCam_cmd == 250)
+    else if (iCamCmd == 250)
     {
         // init data
         QString strData(bData);
@@ -458,7 +458,7 @@ void DlgCam::data_kernel(QByteArray bData)
             ui.textEdit_desc->setText("");
             ui.textEdit_desc->hide();
             ui.label_img->setText(tr("Select user"));
-            simpleRankWidget->set_rank(0);
+            pSimpleRankWidget->set_rank(0);
             ui.textEdit_channels->clear();
         }
     }
@@ -466,7 +466,7 @@ void DlgCam::data_kernel(QByteArray bData)
     // osa1987:1:-2/-2/osa1987/1:0::0
     // ToWiemTylkoJa:1:2/0/#Relax/0,-2/-2/ToWiemTylkoJa/1:2::13
     // scc_test:1:2/0/#Quiz/0,2/0/#Relax/0,2/0/#Scrabble/0,4/0/#scc/0:0::0
-    else if (iCam_cmd == 251)
+    else if (iCamCmd == 251)
     {
         QString strLine(bData);
         if (strLine.isEmpty() == false)
@@ -509,7 +509,7 @@ void DlgCam::data_kernel(QByteArray bData)
                 if (strUser == strNick)
                 {
                     // update rank
-                    simpleRankWidget->set_rank(iRank);
+                    pSimpleRankWidget->set_rank(iRank);
                     // update channels
                     ui.textEdit_channels->setText(QString("<b>%1</b><br><font color=\"#0000ff\">%2</font>").arg(tr("Is on channels:")).arg(mNickChannels[strUser]));
                 }
@@ -542,7 +542,7 @@ void DlgCam::data_kernel(QByteArray bData)
         }
     }
     // SETSTATUS //panda
-    else if (iCam_cmd == 252)
+    else if (iCamCmd == 252)
     {
         QString strDesc = bData;
         if (strDesc.left(9) == "SETSTATUS")
@@ -559,7 +559,7 @@ void DlgCam::data_kernel(QByteArray bData)
     }
     // scc_test 2 0
     // multi-line
-    else if (iCam_cmd == 254)
+    else if (iCamCmd == 254)
     {
         QString strData(bData);
         QStringList strDataList = strData.split("\n");
@@ -595,7 +595,7 @@ void DlgCam::data_kernel(QByteArray bData)
 
                     // if current nick
                     if (strUser == strNick)
-                        simpleRankWidget->set_rank(strRank.toInt());
+                        pSimpleRankWidget->set_rank(strRank.toInt());
                 }
                 row++;
             }
@@ -604,7 +604,7 @@ void DlgCam::data_kernel(QByteArray bData)
         // sort
         ui.tableWidget_nick_rank_spectators->sortByColumn(0, Qt::AscendingOrder);
     }
-    else if (iCam_cmd == 403)
+    else if (iCamCmd == 403)
     {
         QString strError = bData;
 #ifdef Q_WS_X11
@@ -616,7 +616,7 @@ void DlgCam::data_kernel(QByteArray bData)
         ui.label_img->setText(strImg);
     }
 
-    iCam_cmd = 0;
+    iCamCmd = 0;
 }
 
 void DlgCam::text_kernel(QString strData)
@@ -667,9 +667,9 @@ void DlgCam::text_kernel(QString strData)
 
             QString strUser = strDataList[3];
             if (strUser == strNick)
-                iCam_cmd = 202;
+                iCamCmd = 202;
             else
-                iCam_cmd = 0;
+                iCamCmd = 0;
 
             // re-send
             if (strUser == strNick)
@@ -689,7 +689,7 @@ void DlgCam::text_kernel(QString strData)
             ui.textEdit_desc->setText("");
             ui.textEdit_desc->hide();
             ui.label_img->setText(tr("This user does not send data"));
-            simpleRankWidget->set_rank(0);
+            pSimpleRankWidget->set_rank(0);
             ui.textEdit_channels->clear();
         }
     }
@@ -705,7 +705,7 @@ void DlgCam::text_kernel(QString strData)
         {
             camNetwork->set_btext(false);
             camNetwork->set_bytes_need(strDataList[1].toInt());
-            iCam_cmd = 211;
+            iCamCmd = 211;
         }
     }
     // 221 0 UDPUT_OK
@@ -734,14 +734,14 @@ void DlgCam::text_kernel(QString strData)
         // initial read users status
         camNetwork->set_btext(false);
         camNetwork->set_bytes_need(strDataList[1].toInt());
-        iCam_cmd = 250;
+        iCamCmd = 250;
     }
     // 251 52 UPDATE
     else if (strDataList[0] == "251")
     {
         camNetwork->set_btext(false);
         camNetwork->set_bytes_need(strDataList[1].toInt());
-        iCam_cmd = 251;
+        iCamCmd = 251;
     }
     // 252 41 USER_STATUS pati28ash
     else if ((strDataList[0] == "252") && (strDataList.size() == 4))
@@ -753,9 +753,9 @@ void DlgCam::text_kernel(QString strData)
 
             QString strUser = strDataList[3];
             if (strUser == strNick)
-                iCam_cmd = 252;
+                iCamCmd = 252;
             else
-                iCam_cmd = 0;
+                iCamCmd = 0;
         }
     }
     // 253 0 USER_VOTES Delikatna 38
@@ -765,14 +765,14 @@ void DlgCam::text_kernel(QString strData)
         int iRank = strDataList[4].toInt();
 
         if (strUser == strNick) // is current nick
-            simpleRankWidget->set_rank(iRank);
+            pSimpleRankWidget->set_rank(iRank);
     }
     // 254 1489 USER_COUNT_UPDATE
     else if (strDataList[0] == "254")
     {
         camNetwork->set_btext(false);
         camNetwork->set_bytes_need(strDataList[1].toInt());
-        iCam_cmd = 254;
+        iCamCmd = 254;
 
         // check keepalive
         QDateTime dt = QDateTime::currentDateTime();
@@ -838,7 +838,7 @@ void DlgCam::text_kernel(QString strData)
         ui.label_img->setText(tr("Authorization failed"));
         camNetwork->set_btext(false);
         camNetwork->set_bytes_need(strDataList[1].toInt());
-        iCam_cmd = 403;
+        iCamCmd = 403;
     }
     // 405 0 USER_GONE Restonka
     else if ((strDataList[0] == "405") && (strDataList.size() == 4))
@@ -850,7 +850,7 @@ void DlgCam::text_kernel(QString strData)
             ui.textEdit_desc->setText("");
             ui.textEdit_desc->hide();
             ui.label_img->setText(tr("The specified user has left the chat"));
-            simpleRankWidget->set_rank(0);
+            pSimpleRankWidget->set_rank(0);
             ui.textEdit_channels->clear();
         }
     }
@@ -869,7 +869,7 @@ void DlgCam::text_kernel(QString strData)
             ui.textEdit_desc->setText("");
             ui.textEdit_desc->hide();
             ui.label_img->setText(tr("The specified user does not have a webcam enabled"));
-            simpleRankWidget->set_rank(0);
+            pSimpleRankWidget->set_rank(0);
             ui.textEdit_channels->clear();
         }
     }
@@ -903,7 +903,7 @@ void DlgCam::text_kernel(QString strData)
             ui.textEdit_desc->setText("");
             ui.textEdit_desc->hide();
             ui.label_img->setText(tr("Failed to retrieve the image from the webcam"));
-            simpleRankWidget->set_rank(0);
+            pSimpleRankWidget->set_rank(0);
             ui.textEdit_channels->clear();
         }
     }
@@ -917,7 +917,7 @@ void DlgCam::text_kernel(QString strData)
             ui.textEdit_desc->setText("");
             ui.textEdit_desc->hide();
             ui.label_img->setText(tr("Failed to retrieve the image from the webcam"));
-            simpleRankWidget->set_rank(0);
+            pSimpleRankWidget->set_rank(0);
             ui.textEdit_channels->clear();
         }
     }
@@ -1492,7 +1492,7 @@ void DlgCam::change_user(int row, int column)
     ui.textEdit_desc->hide();
 
     // clear rank
-    simpleRankWidget->set_rank(0);
+    pSimpleRankWidget->set_rank(0);
 
     // read nick
     QString strNewNick = ui.tableWidget_nick_rank_spectators->item(row, 0)->text();
@@ -1521,7 +1521,7 @@ void DlgCam::change_user(int row, int column)
 void DlgCam::read_video()
 {
     // get image
-    QPixmap pixmap = QPixmap::fromImage(captured_frame);
+    QPixmap pixmap = QPixmap::fromImage(imCapturedFrame);
 
     // set image
     ui.label_capture->setPixmap(pixmap.scaled(QSize(320,240)));
@@ -1587,7 +1587,7 @@ void DlgCam::showEvent(QShowEvent *event)
             ui.textEdit_desc->setText("");
             ui.textEdit_desc->hide();
             ui.label_img->setText(tr("Downloading image"));
-            simpleRankWidget->set_rank(0);
+            pSimpleRankWidget->set_rank(0);
             ui.textEdit_channels->setText(QString("<b>%1</b><br><font color=\"#0000ff\">%2</font>").arg(tr("Is on channels:")).arg(mNickChannels[strNick]));
 
             camNetwork->network_send(QString("SUBSCRIBE_BIG * %1").arg(strNick));
@@ -1598,7 +1598,7 @@ void DlgCam::showEvent(QShowEvent *event)
             ui.textEdit_desc->setText("");
             ui.textEdit_desc->hide();
             ui.label_img->setText(tr("Select user"));
-            simpleRankWidget->set_rank(0);
+            pSimpleRankWidget->set_rank(0);
             ui.textEdit_channels->clear();
         }
     }
@@ -1630,7 +1630,7 @@ void DlgCam::hideEvent(QHideEvent *event)
     ui.textEdit_desc->setText("");
     ui.textEdit_desc->hide();
     ui.label_img->clear();
-    simpleRankWidget->set_rank(0);
+    pSimpleRankWidget->set_rank(0);
     ui.textEdit_channels->clear();
 }
 

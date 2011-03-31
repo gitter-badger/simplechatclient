@@ -48,7 +48,7 @@ private:
     Ui::uiChannelSettings ui;
     Network *pNetwork;
     QString strChannel;
-    SimpleStatsWidget *simpleStatsWidget;
+    SimpleStatsWidget *pSimpleStatsWidget;
 
     void create_gui();
     void set_default_values();

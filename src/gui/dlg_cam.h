@@ -41,12 +41,12 @@ private:
     Ui::uiCam ui;
     Network *pNetwork;
     QString strNick;
-    SimpleRankWidget *simpleRankWidget;
-    int iCam_cmd;
+    SimpleRankWidget *pSimpleRankWidget;
+    int iCamCmd;
 
     DlgCamNetwork *camNetwork;
-    QImage captured_frame;
-    QTimer *video_frame_timer;
+    QImage imCapturedFrame;
+    QTimer *videoFrameTimer;
 
     bool bBroadcasting;
     bool bBroadcasting_pubpriv; // false = public; true = private;

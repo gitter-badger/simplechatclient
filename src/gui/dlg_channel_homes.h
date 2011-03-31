@@ -37,7 +37,7 @@ private:
     Network *pNetwork;
     QMap <QString, QByteArray> *mChannelAvatar;
     QList<QString> *lChannelHomes;
-    DlgChannelSettings *dlgchannel_settings;
+    DlgChannelSettings *pDlgChannelSettings;
 
     void create_gui();
     void create_signals();

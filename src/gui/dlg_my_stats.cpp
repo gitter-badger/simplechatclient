@@ -33,9 +33,9 @@ DlgMyStats::DlgMyStats(QWidget *parent, QMap<QString,QString> *param1) : QDialog
 
     mMyStats = param1;
 
-    simpleStatsWidget = new SimpleStatsWidget(this);
-    simpleStatsWidget->show();
-    ui.verticalLayout_stats->addWidget(simpleStatsWidget);
+    pSimpleStatsWidget = new SimpleStatsWidget(this);
+    pSimpleStatsWidget->show();
+    ui.verticalLayout_stats->addWidget(pSimpleStatsWidget);
 
     create_gui();
     create_signals();
@@ -111,8 +111,8 @@ void DlgMyStats::refresh()
             ui.label_stats_average_time->setText(QString::number(fAverageTime24,'g',3)+" h");
 
             // simple stats widget
-            simpleStatsWidget->set_max(100);
-            simpleStatsWidget->set_stats(lStats);
+            pSimpleStatsWidget->set_max(100);
+            pSimpleStatsWidget->set_stats(lStats);
         }
         else if (strKey == "relationsFriend")
         {

@@ -50,16 +50,16 @@ private:
     TabContainer *pTabC;
     QMap <QString, QByteArray> *mNickAvatar;
     QMap <QString, QByteArray> *mChannelAvatar;
-    DlgChannelSettings *dlgChannelSettings;
+    DlgChannelSettings *pDlgChannelSettings;
     QList<QString> *lChannelHomes;
     sChannelList *stlChannelList;
     QList<QString> *lChannelFavourites;
     QMap<QString, bool> *mFriends;
     QList<QString> *lIgnore;
-    DlgModeration *dlgModeration;
+    DlgModeration *pDlgModeration;
     QMap<QString, QString> *mMyStats;
     QMap<QString, QString> *mMyProfile;
-    DlgUserProfile *dlgUserProfile;
+    DlgUserProfile *pDlgUserProfile;
 
     Avatar *avatar;
     QString strData;

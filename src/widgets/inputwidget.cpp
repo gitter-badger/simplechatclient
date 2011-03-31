@@ -41,11 +41,10 @@ InputWidget::InputWidget(QWidget *parent, Network *param1) : QWidget(parent)
     nickLabel->setText(QString("<p style=\"font-weight:bold;\"> %1</p>").arg(tr("(Unregistered)")));
     nickLabel->show();
 
-    inputLine = new InputLineWidget(parent);
-    highlighter = new Highlighter(inputLine->document());
-    inputLine->setMinimumWidth(350);
-    inputLine->setFont(QFont("Verdana", -1, -1, false));
-    inputLine->show();
+    pInputLine = new InputLineWidget(parent);
+    pInputLine->setMinimumWidth(350);
+    pInputLine->setFont(QFont("Verdana", -1, -1, false));
+    pInputLine->show();
 
     sendButton = new QPushButton(QIcon(":/images/oxygen/16x16/go-next.png"), tr("Send"), parent);
     sendButton->setToolTip(tr("Send"));
@@ -68,7 +67,7 @@ InputWidget::InputWidget(QWidget *parent, Network *param1) : QWidget(parent)
     mainLayout->setMargin(0);
     mainLayout->setAlignment(Qt::AlignLeft);
     mainLayout->addWidget(nickLabel);
-    mainLayout->addWidget(inputLine);
+    mainLayout->addWidget(pInputLine);
     mainLayout->addWidget(sendButton);
     mainLayout->addWidget(moderSendButton);
     mainLayout->addWidget(showHideToolWidget);
@@ -77,9 +76,12 @@ InputWidget::InputWidget(QWidget *parent, Network *param1) : QWidget(parent)
     // default hidden
     moderSendButton->hide();
 
+    // highlighter
+    pHighlighter = new Highlighter(pInputLine->document());
+
     QObject::connect(sendButton, SIGNAL(clicked()), this, SLOT(inputline_return_pressed()));
-    QObject::connect(inputLine, SIGNAL(returnPressed()), this, SLOT(inputline_return_pressed()));
-    QObject::connect(inputLine, SIGNAL(rehighlight()), highlighter, SLOT(rehighlight()));
+    QObject::connect(pInputLine, SIGNAL(returnPressed()), this, SLOT(inputline_return_pressed()));
+    QObject::connect(pInputLine, SIGNAL(rehighlight()), pHighlighter, SLOT(rehighlight()));
     QObject::connect(moderSendButton, SIGNAL(clicked()), this, SLOT(moder_button_clicked()));
     QObject::connect(showHideToolWidget, SIGNAL(clicked()), this, SLOT(show_hide_toolwidget_clicked()));
 }
@@ -91,17 +93,17 @@ void InputWidget::set_active(QString strName)
 
 void InputWidget::insert_text(QString strText)
 {
-    inputLine->insert_text(strText);
+    pInputLine->insert_text(strText);
 }
 
 void InputWidget::set_font(QFont font)
 {
-    inputLine->setFont(font);
+    pInputLine->setFont(font);
 }
 
 void InputWidget::set_color(QString color)
 {
-    inputLine->setStyleSheet(QString("color:%1").arg(color));
+    pInputLine->setStyleSheet(QString("color:%1").arg(color));
 }
 
 void InputWidget::set_userslist(QTreeWidget *treeWidget)
@@ -121,7 +123,7 @@ void InputWidget::set_userslist(QTreeWidget *treeWidget)
         }
     }
 
-    inputLine->set_userslist(usersList);
+    pInputLine->set_userslist(usersList);
 }
 
 void InputWidget::set_moderation(bool m)
@@ -159,7 +161,7 @@ QString InputWidget::replace_emots(QString strData)
 
 void InputWidget::send_message(bool bType)
 {
-    QString strText = inputLine->toPlainText().trimmed();
+    QString strText = pInputLine->toPlainText().trimmed();
 
     if (strText.isEmpty() == true) return; // empty!
 
@@ -294,7 +296,7 @@ void InputWidget::send_message(bool bType)
         }
     }
 
-    inputLine->clear();
+    pInputLine->clear();
 }
 
 void InputWidget::update_nick(QString strNick)

@@ -43,16 +43,16 @@ OnetKernel::OnetKernel(Network *param1, TabContainer *param2, QMap <QString, QBy
     pTabC = param2;
     mNickAvatar = param3;
     mChannelAvatar = param4;
-    dlgChannelSettings = param5;
+    pDlgChannelSettings = param5;
     lChannelHomes = param6;
     stlChannelList = param7;
     lChannelFavourites = param8;
     mFriends = param9;
     lIgnore = param10;
-    dlgModeration = param11;
+    pDlgModeration = param11;
     mMyStats = param12;
     mMyProfile = param13;
-    dlgUserProfile = param14;
+    pDlgUserProfile = param14;
 
     avatar = new Avatar(pTabC, mNickAvatar, mChannelAvatar);
 }
@@ -1168,8 +1168,8 @@ void OnetKernel::raw_topic()
     pTabC->show_msg(strChannel, strDisplay, 5);
 
     // set topic in channel settings
-    if (dlgChannelSettings->get_channel() == strChannel)
-        dlgChannelSettings->set_topic(strTopic);
+    if (pDlgChannelSettings->get_channel() == strChannel)
+        pDlgChannelSettings->set_topic(strTopic);
 
     // set topic in widget
     pTabC->set_topic(strChannel, strTopic);
@@ -1294,7 +1294,7 @@ void OnetKernel::raw_moderate()
     if (strMessage[0] == ':')
         strMessage = strMessage.right(strMessage.length()-1);
 
-    dlgModeration->add_msg(strID, strChannel, strNick, strMessage);
+    pDlgModeration->add_msg(strID, strChannel, strNick, strMessage);
 }
 
 // :cf1f4.onet KILL scc_test :cf1f4.onet (Killed (Nickname collision))
@@ -1483,8 +1483,8 @@ void OnetKernel::raw_111n()
         strAvatarLink = strValue;
 
     // set user info
-    if (dlgUserProfile->get_nick() == strNick)
-        dlgUserProfile->set_user_info(strKey, strValue);
+    if (pDlgUserProfile->get_nick() == strNick)
+        pDlgUserProfile->set_user_info(strKey, strValue);
 
     // set my profile
     if (strNick == strMe)
@@ -1669,8 +1669,8 @@ void OnetKernel::raw_160n()
         strTopic = strTopic.right(strTopic.length()-1);
 
     // set topic in channel settings
-    if (dlgChannelSettings->get_channel() == strChannel)
-        dlgChannelSettings->set_topic(strTopic);
+    if (pDlgChannelSettings->get_channel() == strChannel)
+        pDlgChannelSettings->set_topic(strTopic);
 
     // set topic in widget
     pTabC->set_topic(strChannel, strTopic);
@@ -1697,8 +1697,8 @@ void OnetKernel::raw_161n()
     }
 
     // set data
-    if (dlgChannelSettings->get_channel() == strChannel)
-        dlgChannelSettings->set_data(mKeyValue);
+    if (pDlgChannelSettings->get_channel() == strChannel)
+        pDlgChannelSettings->set_data(mKeyValue);
 
     // update link
     QString strLink = mKeyValue.value("www");
@@ -1741,14 +1741,14 @@ void OnetKernel::raw_162n()
 
         if ((strKey.isEmpty() == false) && (strValue.isEmpty() == false))
         {
-            if (dlgChannelSettings->get_channel() == strChannel)
+            if (pDlgChannelSettings->get_channel() == strChannel)
             {
                 if (strKey == "q")
-                    dlgChannelSettings->set_owner(strValue);
+                    pDlgChannelSettings->set_owner(strValue);
                 else if (strKey == "o")
-                    dlgChannelSettings->add_op(strValue);
+                    pDlgChannelSettings->add_op(strValue);
                 else if (strKey == "h")
-                    dlgChannelSettings->add_halfop(strValue);
+                    pDlgChannelSettings->add_halfop(strValue);
             }
         }
     }
@@ -1778,12 +1778,12 @@ void OnetKernel::raw_163n()
     QDateTime dt = QDateTime::fromTime_t(strDT.toInt());
     strDT = dt.toString("dd/MM/yyyy hh:mm:ss");
 
-    if (dlgChannelSettings->get_channel() == strChannel)
+    if (pDlgChannelSettings->get_channel() == strChannel)
     {
         if (strFlag == "b")
-            dlgChannelSettings->add_ban(strNick, strWho, strDT, strIPNick);
+            pDlgChannelSettings->add_ban(strNick, strWho, strDT, strIPNick);
         else if (strFlag == "I")
-            dlgChannelSettings->add_invite(strNick, strWho, strDT);
+            pDlgChannelSettings->add_invite(strNick, strWho, strDT);
     }
 }
 
@@ -1807,8 +1807,8 @@ void OnetKernel::raw_165n()
     if (strDescription[0] == ':')
         strDescription = strDescription.right(strDescription.length()-1);
 
-    if (dlgChannelSettings->get_channel() == strChannel)
-        dlgChannelSettings->set_description(strDescription);
+    if (pDlgChannelSettings->get_channel() == strChannel)
+        pDlgChannelSettings->set_description(strDescription);
 }
 
 // RS INFO Merovingian
@@ -1861,8 +1861,8 @@ void OnetKernel::raw_175n()
         mKeyValue.insert(strKey, strValue);
     }
 
-    if (dlgChannelSettings->get_channel() == strChannel)
-        dlgChannelSettings->set_stats_data(mKeyValue);
+    if (pDlgChannelSettings->get_channel() == strChannel)
+        pDlgChannelSettings->set_stats_data(mKeyValue);
 }
 
 // :RankServ!service@service.onet NOTICE Merovingian :176 #scc :end of channel stats

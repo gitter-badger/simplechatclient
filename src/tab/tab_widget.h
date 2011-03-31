@@ -74,9 +74,9 @@ private:
     QMap <QString, QByteArray> *mChannelAvatar;
     QTcpSocket *camSocket;
     sChannelNickStatus *mChannelNickStatus;
-    DlgUserProfile *pDlg_user_profile;
+    DlgUserProfile *pDlgUserProfile;
 #ifndef Q_WS_WIN
-    DlgCam *pDlg_cam;
+    DlgCam *pDlgCam;
 #endif
     QList<QString> *lAwaylog;
 
@@ -98,7 +98,7 @@ private:
     QLabel *avatar;
     QLabel *topicDetails;
     QLabel *websiteLink;
-    MainTextEdit *mainTextEdit;
+    MainTextEdit *pMainTextEdit;
 
     int iNickCount;
 };

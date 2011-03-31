@@ -85,13 +85,13 @@ private:
     Network *pNetwork;
     TabManager *pTabM;
     QMap <QString, QByteArray> *mChannelAvatar;
-    DlgChannelSettings *dlgchannel_settings;
-    DlgModeration *dlgmoderation;
+    DlgChannelSettings *pDlgChannelSettings;
+    DlgModeration *pDlgModeration;
     QTcpSocket *camSocket;
     sChannelNickStatus *mChannelNickStatus;
-    DlgUserProfile *pDlg_user_profile;
+    DlgUserProfile *pDlgUserProfile;
 #ifndef Q_WS_WIN
-    DlgCam *pDlg_cam;
+    DlgCam *pDlgCam;
 #endif
     QList<QString> *lAwaylog;
     // other

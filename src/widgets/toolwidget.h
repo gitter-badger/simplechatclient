@@ -43,8 +43,8 @@ private:
     // params
     Network *pNetwork;
     InputWidget *pInputWidget;
-    DlgChannelSettings *dlgchannel_settings;
-    DlgModeration *dlgmoderation;
+    DlgChannelSettings *pDlgChannelSettings;
+    DlgModeration *pDlgModeration;
     // other
     bool bMyBold;
     bool bMyItalic;
