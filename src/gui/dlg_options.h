@@ -97,14 +97,6 @@ private slots:
     void set_spellchecker();
     void button_ok();
     void button_cancel();
-
-protected:
-    virtual void showEvent(QShowEvent *);
-    virtual void closeEvent(QCloseEvent *);
-
-signals:
-    void refresh_colors();
-    void refresh_background_image();
 };
 
 #endif // DLG_OPTIONS_H

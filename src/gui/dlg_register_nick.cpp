@@ -39,7 +39,7 @@ DlgRegisterNick::DlgRegisterNick(MainWindow *parent, QWidget *param1) : QDialog(
     options = param1;
 
     // close options
-    options->hide();
+    options->close();
 
     create_gui();
     create_signals();

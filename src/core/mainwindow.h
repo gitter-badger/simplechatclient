@@ -29,7 +29,6 @@ class DlgAbout;
 class DlgChannelSettings;
 class DlgModeration;
 class DlgNotes;
-class DlgOptions;
 class DlgUserProfile;
 class InputLineDockWidget;
 class Network;
@@ -65,6 +64,9 @@ public:
     bool network_is_connected();
     // nicklist
     bool nicklist_exist(QString, QString);
+    // options
+    void refresh_colors();
+    void refresh_background_image();
 
 private:
     QToolBar *toolBar;
@@ -94,7 +96,6 @@ private:
     QAction *myProfileAct;
     QAction *myAvatarAct;
 
-    DlgOptions *pOptions;
     QTcpSocket *camSocket;
     TabManager *pTabM;
     TabContainer *pTabC;
@@ -136,8 +137,6 @@ private:
     void show_options();
 
 private slots:
-    void refresh_colors();
-    void refresh_background_image();
     void button_connect();
     void button_close();
     void open_options();

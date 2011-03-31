@@ -37,13 +37,15 @@
 DlgOptions::DlgOptions(QWidget *parent) : QDialog(parent)
 {
     ui.setupUi(this);
-    setAttribute(Qt::WA_DeleteOnClose);
-    setWindowFlags(Qt::Dialog | Qt::WindowStaysOnTopHint);
     setWindowTitle(tr("Options"));
+    // center screen
+    move(QApplication::desktop()->screen()->rect().center() - rect().center());
 
     create_gui();
     set_default_values();
     create_signals();
+
+    clear_settings();
 }
 
 void DlgOptions::create_gui()
@@ -380,8 +382,6 @@ void DlgOptions::set_modern_style_avatars()
     settings.setValue("disable_avatars", "off");
     delete pConfig;
 
-    this->hide(); // fix stay on top
-
     QMessageBox::information(0, "", tr("Restart program to apply the changes."));
 }
 
@@ -399,8 +399,6 @@ void DlgOptions::set_modern_style_no_avatars()
     settings.setValue("disable_avatars", "on");
     delete pConfig;
 
-    this->hide(); // fix stay on top
-
     QMessageBox::information(0, "", tr("Restart program to apply the changes."));
 }
 
@@ -417,8 +415,6 @@ void DlgOptions::set_classic_style()
     pConfig->set_value("disable_avatars", "on");
     settings.setValue("disable_avatars", "on");
     delete pConfig;
-
-    this->hide(); // fix stay on top
 
     QMessageBox::information(0, "", tr("Restart program to apply the changes."));
 }
@@ -705,7 +701,7 @@ void DlgOptions::set_background_color()
         delete pConfig1;
 
         // refresh tabs
-        emit refresh_colors();
+        Core::instance()->refresh_colors();
     }
 }
 
@@ -736,7 +732,7 @@ void DlgOptions::set_default_font_color()
         delete pConfig1;
 
         // refresh tabs
-        emit refresh_colors();
+        Core::instance()->refresh_colors();
     }
 }
 
@@ -767,7 +763,7 @@ void DlgOptions::set_join_font_color()
         delete pConfig1;
 
         // refresh tabs
-        emit refresh_colors();
+        Core::instance()->refresh_colors();
     }
 }
 
@@ -798,7 +794,7 @@ void DlgOptions::set_part_font_color()
         delete pConfig1;
 
         // refresh tabs
-        emit refresh_colors();
+        Core::instance()->refresh_colors();
     }
 }
 
@@ -829,7 +825,7 @@ void DlgOptions::set_quit_font_color()
         delete pConfig1;
 
         // refresh tabs
-        emit refresh_colors();
+        Core::instance()->refresh_colors();
     }
 }
 
@@ -860,7 +856,7 @@ void DlgOptions::set_kick_font_color()
         delete pConfig1;
 
         // refresh tabs
-        emit refresh_colors();
+        Core::instance()->refresh_colors();
     }
 }
 
@@ -891,7 +887,7 @@ void DlgOptions::set_mode_font_color()
         delete pConfig1;
 
         // refresh tabs
-        emit refresh_colors();
+        Core::instance()->refresh_colors();
     }
 }
 
@@ -922,7 +918,7 @@ void DlgOptions::set_notice_font_color()
         delete pConfig1;
 
         // refresh tabs
-        emit refresh_colors();
+        Core::instance()->refresh_colors();
     }
 }
 
@@ -953,7 +949,7 @@ void DlgOptions::set_info_font_color()
         delete pConfig1;
 
         // refresh tabs
-        emit refresh_colors();
+        Core::instance()->refresh_colors();
     }
 }
 
@@ -984,7 +980,7 @@ void DlgOptions::set_error_font_color()
         delete pConfig1;
 
         // refresh tabs
-        emit refresh_colors();
+        Core::instance()->refresh_colors();
     }
 }
 
@@ -1015,7 +1011,7 @@ void DlgOptions::set_channel_font_color()
         delete pConfig1;
 
         // refresh tabs
-        emit refresh_colors();
+        Core::instance()->refresh_colors();
     }
 }
 
@@ -1063,7 +1059,7 @@ void DlgOptions::mainwindow_restore_default()
     set_mainwindow_colors();
 
     // refresh tabs
-    emit refresh_colors();
+    Core::instance()->refresh_colors();
 }
 
 void DlgOptions::set_nicklist_nick_color()
@@ -1355,7 +1351,7 @@ void DlgOptions::set_background_image()
         ui.lineEdit_background_image->setText(fileName);
 
         // refresh
-        emit refresh_background_image();
+        Core::instance()->refresh_background_image();
     }
 }
 
@@ -1376,7 +1372,7 @@ void DlgOptions::disable_background_image()
     delete pConfig;
 
     // refresh
-    emit refresh_background_image();
+    Core::instance()->refresh_background_image();
 }
 
 void DlgOptions::set_spellchecker()
@@ -1398,7 +1394,7 @@ void DlgOptions::set_spellchecker()
 
 void DlgOptions::button_cancel()
 {
-    this->hide();
+    this->close();
 }
 
 void DlgOptions::button_ok()
@@ -1406,7 +1402,7 @@ void DlgOptions::button_ok()
     // save
     save_settings();
 
-    this->hide();
+    this->close();
 }
 
 void DlgOptions::set_mainwindow_colors()
@@ -1813,19 +1809,4 @@ void DlgOptions::clear_settings()
         ui.radioButton_modern_no_avatars->setDisabled(false);
         ui.radioButton_classic->setDisabled(false);
     }
-}
-
-void DlgOptions::showEvent(QShowEvent *event)
-{
-    event->accept();
-    // center screen
-    move(QApplication::desktop()->screen()->rect().center() - rect().center());
-
-    clear_settings();
-}
-
-void DlgOptions::closeEvent(QCloseEvent *event)
-{
-    event->ignore();
-    this->hide();
 }

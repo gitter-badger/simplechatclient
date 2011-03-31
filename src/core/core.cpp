@@ -64,7 +64,7 @@ void Core::createSettings()
 {
     // default settings
     QSettings settings;
-    settings.setValue("version", "1.0.10.773");
+    settings.setValue("version", "1.0.10.774");
     settings.setValue("logged", "off");
     settings.setValue("busy", "off");
     settings.setValue("away", "off");
@@ -118,4 +118,16 @@ void Core::showSccWindow()
 MainWindow *Core::sccWindow()
 {
     return window;
+}
+
+// from options
+void Core::refresh_colors()
+{
+    window->refresh_colors();
+}
+
+// from options
+void Core::refresh_background_image()
+{
+    window->refresh_background_image();
 }

@@ -42,6 +42,9 @@ public:
     static void enableDebug();
     void showSccWindow();
     MainWindow *sccWindow();
+    // from options
+    void refresh_colors();
+    void refresh_background_image();
 
 private:
     MainWindow *window;

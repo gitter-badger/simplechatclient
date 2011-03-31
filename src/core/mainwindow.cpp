@@ -66,8 +66,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     create_actions();
     create_menus();
 
-    pOptions = new DlgOptions(this);
-
     // init all
     camSocket = new QTcpSocket();
     camSocket->setSocketOption(QAbstractSocket::LowDelayOption, 1);
@@ -104,8 +102,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     // welcome
     pTabC->add_tab("Status");
     pTabC->show_msg("Status", "%Fi:courier%"+tr("Welcome to the Simple Chat Client")+" %Ihehe%", 0);
-    pTabC->show_msg("Status", "%Fb:courier%%Cff6500%"+tr("Official website")+" SCC%C3030ce%: http://simplechatclien.sourceforge.net/ %Izaskoczony%", 0);
-    pTabC->show_msg("Status", "%Fb:courier%%C008100%"+tr("Official Forum")+" SCC%C3030ce%: http://simplechatclien.sourceforge.net/forum/ %Ioczko%", 0);
+    pTabC->show_msg("Status", "%Fb:courier%%C008100%"+tr("Official website")+" SCC%C3030ce%: http://simplechatclien.sf.net/ %Izaskoczony%", 0);
 
     // hide awaylog
     awaylogAct->setVisible(false);
@@ -152,9 +149,6 @@ MainWindow::~MainWindow()
 
     // hide tray
     trayIcon->hide();
-
-    // delete objects
-    delete pOptions;
 
     // delete teray
     delete trayIcon;
@@ -316,11 +310,6 @@ void MainWindow::create_menus()
 
 void MainWindow::create_signals()
 {
-    // signal refresh colors
-    QObject::connect(pOptions, SIGNAL(refresh_colors()), this, SLOT(refresh_colors()));
-    // signal refresh background image
-    QObject::connect(pOptions, SIGNAL(refresh_background_image()), this, SLOT(refresh_background_image()));
-
     // signals buttons
     QObject::connect(connectAct, SIGNAL(triggered()), this, SLOT(button_connect()));
     QObject::connect(closeAct, SIGNAL(triggered()), this, SLOT(button_close()));
@@ -558,8 +547,7 @@ void MainWindow::set_lag(QString strValue)
 
 void MainWindow::open_options()
 {
-    if (pOptions->isHidden())
-        pOptions->show();
+    DlgOptions(this).exec();
 }
 
 // onet dialogs

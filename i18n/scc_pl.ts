@@ -293,10 +293,6 @@
         <source>Official website</source>
         <translation>Oficjalna strona</translation>
     </message>
-    <message>
-        <source>Official Forum</source>
-        <translation>Oficjalne forum</translation>
-    </message>
 </context>
 <context>
     <name>Network</name>
