@@ -123,33 +123,6 @@ bool DlgChannelList::is_erotic(QString strChannel)
     return false;
 }
 
-void DlgChannelList::clear()
-{
-    ui.tableWidget_all->clear();
-    ui.tableWidget_teen->clear();
-    ui.tableWidget_common->clear();
-    ui.tableWidget_erotic->clear();
-    ui.tableWidget_thematic->clear();
-    ui.tableWidget_regional->clear();
-
-    ui.tableWidget_all->setRowCount(0);
-    ui.tableWidget_teen->setRowCount(0);
-    ui.tableWidget_common->setRowCount(0);
-    ui.tableWidget_erotic->setRowCount(0);
-    ui.tableWidget_thematic->setRowCount(0);
-    ui.tableWidget_regional->setRowCount(0);
-
-    QStringList strlLabels;
-    strlLabels << tr("Channel name") << tr("Number of persons") << tr("Category") << tr("Type");
-
-    ui.tableWidget_all->setHorizontalHeaderLabels(strlLabels);
-    ui.tableWidget_teen->setHorizontalHeaderLabels(strlLabels);
-    ui.tableWidget_common->setHorizontalHeaderLabels(strlLabels);
-    ui.tableWidget_erotic->setHorizontalHeaderLabels(strlLabels);
-    ui.tableWidget_thematic->setHorizontalHeaderLabels(strlLabels);
-    ui.tableWidget_regional->setHorizontalHeaderLabels(strlLabels);
-}
-
 void DlgChannelList::create_list()
 {
     // count rows

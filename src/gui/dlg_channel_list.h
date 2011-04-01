@@ -42,11 +42,7 @@ private:
     void create_signals();
 
     bool is_erotic(QString);
-    void refresh();
     void create_list();
-    void clear();
-    void sort();
-    void quickSort(QList< QList<QString> > *, int, int);
     void show_all_channels();
     void apply_checkboxes();
 
