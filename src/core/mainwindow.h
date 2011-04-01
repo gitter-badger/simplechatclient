@@ -183,6 +183,9 @@ private slots:
     void tab_close_requested(int);
     void current_tab_changed(int);
 
+protected:
+    virtual void closeEvent(QCloseEvent *);
+
 signals:
     void skernel(QString);
     void srequest_uo(QString, QString, QString);

@@ -53,15 +53,6 @@ void DlgModeration::create_signals()
     QObject::connect(ui.comboBox_channels, SIGNAL(currentIndexChanged(QString)), this, SLOT(combo_changed(QString)));
 }
 
-void DlgModeration::clear()
-{
-    ui.comboBox_channels->setCurrentIndex(-1);
-    ui.listWidget_msg->clear();
-    strCurrentChannel.clear();
-
-    mModerateMessages.clear();
-}
-
 void DlgModeration::refresh()
 {
     for (int i = 0; i < mModerateMessages.size(); i++)

@@ -32,7 +32,6 @@ public:
     DlgModeration(QWidget *);
     void set_current_channel(QString);
     void add_msg(QString, QString, QString, QString);
-    void clear();
 
 private:
     Ui::uiModeration ui;

@@ -24,6 +24,7 @@
 #include <QSettings>
 #include <QTimer>
 #include "config.h"
+#include "core.h"
 #include "dlg_about.h"
 #include "dlg_awaylog.h"
 #include "dlg_channel_favourites.h"
@@ -387,6 +388,12 @@ void MainWindow::create_signals()
     QObject::connect(pNetwork, SIGNAL(clear_all_nicklist()), this, SLOT(clear_all_nicklist()));
     QObject::connect(pNetwork, SIGNAL(update_actions()), this, SLOT(update_actions()));
     QObject::connect(pNetwork, SIGNAL(close_cam_socket()), this, SLOT(close_cam_socket()));
+}
+
+void MainWindow::closeEvent(QCloseEvent *event)
+{
+    QMainWindow::closeEvent(event);
+    Core::instance()->quit();
 }
 
 void MainWindow::show_options()

@@ -46,6 +46,9 @@ public:
     void refresh_colors();
     void refresh_background_image();
 
+public slots:
+    void quit();
+
 private:
     MainWindow *window;
 //    Update *pUpdate;

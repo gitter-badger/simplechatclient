@@ -21,6 +21,7 @@
 #include <QSettings>
 #include "config.h"
 #include "mainwindow.h"
+#include "notify.h"
 #include "update.h"
 #include "core.h"
 
@@ -46,6 +47,7 @@ Core::~Core()
 {
     //delete pUpdate();
     delete window;
+    window = 0;
 }
 
 void Core::init()
@@ -64,7 +66,7 @@ void Core::createSettings()
 {
     // default settings
     QSettings settings;
-    settings.setValue("version", "1.0.10.776");
+    settings.setValue("version", "1.0.10.777");
     settings.setValue("logged", "off");
     settings.setValue("busy", "off");
     settings.setValue("away", "off");
@@ -118,6 +120,15 @@ void Core::showSccWindow()
 MainWindow *Core::sccWindow()
 {
     return window;
+}
+
+void Core::quit()
+{
+    if (!Instance)
+        return;
+
+    delete Instance;
+    Instance = 0;
 }
 
 // from options

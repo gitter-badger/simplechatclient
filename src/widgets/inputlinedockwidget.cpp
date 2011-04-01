@@ -72,7 +72,6 @@ void InputLineDockWidget::disable_moderation()
 {
     pToolWidget->set_moderation(false);
     pInputWidget->set_moderation(false);
-    pDlgModeration->clear();
 }
 
 void InputLineDockWidget::show_toolwidget()

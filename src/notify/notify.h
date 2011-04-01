@@ -39,6 +39,9 @@ public:
     virtual ~Notify();
     void play(QString);
 
+public slots:
+    void quit();
+
 private:
     QString apath;
     Phonon::MediaObject *music;

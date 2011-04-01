@@ -77,3 +77,12 @@ void Notify::play(QString strCategory)
 
     music->play();
 }
+
+void Notify::quit()
+{
+    if (!Instance)
+        return;
+
+    delete Instance;
+    Instance = 0;
+}
