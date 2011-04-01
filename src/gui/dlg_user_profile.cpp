@@ -339,8 +339,16 @@ void DlgUserProfile::showEvent(QShowEvent *event)
     }
 }
 
+void DlgUserProfile::hideEvent(QHideEvent *event)
+{
+    event->accept();
+
+    clear_info();
+}
+
 void DlgUserProfile::closeEvent(QCloseEvent *event)
 {
     event->ignore();
+
     this->hide();
 }

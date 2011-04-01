@@ -21,6 +21,7 @@
 #include <QHBoxLayout>
 #include <QLabel>
 #include <QPushButton>
+#include "dlg_moderation.h"
 #include "inputwidget.h"
 #include "log.h"
 #include "network.h"
@@ -71,6 +72,7 @@ void InputLineDockWidget::disable_moderation()
 {
     pToolWidget->set_moderation(false);
     pInputWidget->set_moderation(false);
+    pDlgModeration->clear();
 }
 
 void InputLineDockWidget::show_toolwidget()

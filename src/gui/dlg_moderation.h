@@ -22,6 +22,7 @@
 #define DLG_MODERATION_H
 
 #include <QDialog>
+#include "defines.h"
 #include "ui_moderation.h"
 
 class DlgModeration : public QDialog
@@ -29,35 +30,29 @@ class DlgModeration : public QDialog
     Q_OBJECT
 public:
     DlgModeration(QWidget *);
-    virtual ~DlgModeration();
-    void set_active_channel(QString);
+    void set_current_channel(QString);
     void add_msg(QString, QString, QString, QString);
     void clear();
 
 private:
     Ui::uiModeration ui;
-    QString strActiveChannel;
-    QMultiHash <QString, QString> channel_id;
-    QMultiHash <QString, QString> id_nick;
-    QMultiHash <QString, QString> id_message;
+    QString strCurrentChannel;
+    sModerateMsg mModerateMessages;
 
     void create_gui();
     void create_signals();
-
-    bool exist_in_widget(QString);
-    bool exist_in_list(QString, QString);
-    void del_msg(QString, QString);
-    int combo_id(QString);
-    bool combo_exist(QString);
+    void refresh();
+    void remove_selected();
 
 private slots:
-    void combo_changed(int);
+    void combo_changed(QString);
     void button_accept();
     void button_remove();
     void button_close();
 
 protected:
     virtual void showEvent(QShowEvent *);
+    virtual void hideEvent(QHideEvent *);
     virtual void closeEvent(QCloseEvent *);
 
 signals:

@@ -921,15 +921,11 @@ void DlgChannelSettings::change_permission_list(QModelIndex index)
 
 void DlgChannelSettings::button_ok()
 {
-    strChannel.clear();
-    clear();
     this->hide();
 }
 
 void DlgChannelSettings::button_cancel()
 {
-    strChannel.clear();
-    clear();
     this->hide();
 }
 
@@ -1033,9 +1029,6 @@ void DlgChannelSettings::hideEvent(QHideEvent *event)
 void DlgChannelSettings::closeEvent(QCloseEvent *event)
 {
     event->ignore();
-
-    strChannel.clear();
-    clear();
 
     this->hide();
 }

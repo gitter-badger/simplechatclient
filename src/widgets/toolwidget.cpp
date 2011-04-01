@@ -495,7 +495,7 @@ void ToolWidget::channel_settings_clicked()
 void ToolWidget::moderation_clicked()
 {
     QString strChannel = pInputWidget->get_active();
-    pDlgModeration->set_active_channel(strChannel);
+    pDlgModeration->set_current_channel(strChannel);
     pDlgModeration->show();
 }
 

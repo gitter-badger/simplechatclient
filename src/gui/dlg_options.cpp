@@ -18,7 +18,6 @@
  *                                                                          *
  ****************************************************************************/
 
-#include <QCloseEvent>
 #include <QColorDialog>
 #include <QDesktopWidget>
 #include <QFileDialog>

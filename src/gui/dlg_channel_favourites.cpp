@@ -18,7 +18,6 @@
  *                                                                          *
  ****************************************************************************/
 
-#include <QCloseEvent>
 #include <QDesktopWidget>
 #include <QInputDialog>
 #include <QShowEvent>

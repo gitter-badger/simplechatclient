@@ -25,6 +25,16 @@ struct ChannelList
 };
 typedef QList<ChannelList> sChannelList;
 
+struct ModerateMsg
+{
+    QString datetime;
+    QString id;
+    QString channel;
+    QString nick;
+    QString message;
+};
+typedef QList<ModerateMsg> sModerateMsg;
+
 class SortedTreeWidgetItem : public QTreeWidgetItem
 {
 public:
