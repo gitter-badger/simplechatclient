@@ -24,7 +24,34 @@
 class InputWidget;
 class MainWindow;
 #include <QDialog>
+#include <QThread>
 #include "ui_emoticons.h"
+
+class ThreadEmoticonsStandard : public QThread
+{
+    Q_OBJECT
+public:
+    ThreadEmoticonsStandard();
+
+protected:
+    void run();
+
+signals:
+    void insert_emoticons_standard(QString, QByteArray);
+};
+
+class ThreadEmoticonsExtended : public QThread
+{
+    Q_OBJECT
+public:
+    ThreadEmoticonsExtended();
+
+protected:
+    void run();
+
+signals:
+    void insert_emoticons_extended(QString, QByteArray);
+};
 
 class DlgEmoticons : public QDialog
 {
@@ -35,6 +62,8 @@ public:
 private:
     Ui::uiEmoticons ui;
     InputWidget *pInputWidget;
+    ThreadEmoticonsStandard pThreadEmoticonsStandard;
+    ThreadEmoticonsExtended pThreadEmoticonsExtended;
     bool bDoneStandard;
     bool bDoneExtended;
 
@@ -46,6 +75,8 @@ private:
     void get_emoticons_extended();
 
 private slots:
+    void insert_emoticons_standard(QString, QByteArray);
+    void insert_emoticons_extended(QString, QByteArray);
     void current_tab_changed(int);
     void clicked_standard(QModelIndex);
     void clicked_extended(QModelIndex);

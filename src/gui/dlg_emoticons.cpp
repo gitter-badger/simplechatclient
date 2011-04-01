@@ -25,6 +25,58 @@
 #include "inputwidget.h"
 #include "dlg_emoticons.h"
 
+ThreadEmoticonsStandard::ThreadEmoticonsStandard() {}
+
+void ThreadEmoticonsStandard::run()
+{
+    QString path = QCoreApplication::applicationDirPath();
+
+    // standard
+    QDir dStandardEmoticons = path+"/3rdparty/emoticons";
+    QStringList slFiles = dStandardEmoticons.entryList(QStringList("*.gif"), QDir::Files | QDir::NoSymLinks);
+
+    for (int i = 0; i < slFiles.size(); i++)
+    {
+        QString strFileName = slFiles.at(i);
+        QString strEmoticon = strFileName;
+        strEmoticon.remove(".gif");
+
+        QFile f(path+"/3rdparty/emoticons/"+strFileName);
+        if (!f.open(QIODevice::ReadOnly))
+            break;
+        QByteArray bData = f.readAll();
+        f.close();
+
+        emit insert_emoticons_standard(strEmoticon, bData);
+    }
+}
+
+ThreadEmoticonsExtended::ThreadEmoticonsExtended() {}
+
+void ThreadEmoticonsExtended::run()
+{
+    QString path = QCoreApplication::applicationDirPath();
+
+    // extended
+    QDir dStandardEmoticons = path+"/3rdparty/emoticons_other";
+    QStringList slFiles = dStandardEmoticons.entryList(QStringList("*.gif"), QDir::Files | QDir::NoSymLinks);
+
+    for (int i = 0; i < slFiles.size(); i++)
+    {
+        QString strFileName = slFiles.at(i);
+        QString strEmoticon = strFileName;
+        strEmoticon.remove(".gif");
+
+        QFile f(path+"/3rdparty/emoticons_other/"+strFileName);
+        if (!f.open(QIODevice::ReadOnly))
+            break;
+        QByteArray bData = f.readAll();
+        f.close();
+
+        emit insert_emoticons_extended(strEmoticon, bData);
+    }
+}
+
 DlgEmoticons::DlgEmoticons(MainWindow *parent, InputWidget *param1) : QDialog(parent)
 {
     ui.setupUi(this);
@@ -66,62 +118,51 @@ void DlgEmoticons::create_signals()
     QObject::connect(ui.listWidget_extended, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(clicked_extended(QModelIndex)));
     QObject::connect(ui.pushButton_insert, SIGNAL(clicked()), this, SLOT(button_insert()));
     QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(button_close()));
+
+    QObject::connect(&pThreadEmoticonsStandard, SIGNAL(insert_emoticons_standard(QString, QByteArray)), this, SLOT(insert_emoticons_standard(QString, QByteArray)));
+    QObject::connect(&pThreadEmoticonsExtended, SIGNAL(insert_emoticons_extended(QString, QByteArray)), this, SLOT(insert_emoticons_extended(QString, QByteArray)));
 }
 
 void DlgEmoticons::get_emoticons_standard()
 {
-    QString path = QCoreApplication::applicationDirPath();
-
-    // standard
-    QDir dStandardEmoticons = path+"/3rdparty/emoticons";
-    QStringList slFiles = dStandardEmoticons.entryList(QStringList("*.gif"), QDir::Files | QDir::NoSymLinks);
-
-    for (int i = 0; i < slFiles.size(); i++)
-    {
-        QString strFileName = slFiles.at(i);
-        QString strEmoticon = strFileName;
-        strEmoticon.remove(".gif");
-
-        QPixmap pix = QPixmap(path+"/3rdparty/emoticons/"+strFileName);
-        pix.scaled(30,30);
-
-        QListWidgetItem *item = new QListWidgetItem();
-        item->setIcon(QIcon(pix));
-        item->setData(Qt::UserRole, strEmoticon);
-        item->setToolTip(strEmoticon);
-
-        ui.listWidget_standard->addItem(item);
-    }
+    pThreadEmoticonsStandard.start();
 
     bDoneStandard = true;
 }
 
+void DlgEmoticons::insert_emoticons_standard(QString strEmoticon, QByteArray bData)
+{
+    QPixmap pix;
+    pix.loadFromData(bData);
+    pix.scaled(30,30);
+
+    QListWidgetItem *item = new QListWidgetItem();
+    item->setIcon(QIcon(pix));
+    item->setData(Qt::UserRole, strEmoticon);
+    item->setToolTip(strEmoticon);
+
+    ui.listWidget_standard->addItem(item);
+}
+
 void DlgEmoticons::get_emoticons_extended()
 {
-    QString path = QCoreApplication::applicationDirPath();
-
-    // extended
-    QDir dExtendedEmoticons = path+"/3rdparty/emoticons_other";
-    QStringList slFiles = dExtendedEmoticons.entryList(QStringList("*.gif"), QDir::Files | QDir::NoSymLinks);
-
-    for (int i = 0; i < slFiles.size(); i++)
-    {
-        QString strFileName = slFiles.at(i);
-        QString strEmoticon = strFileName;
-        strEmoticon.remove(".gif");
-
-        QPixmap pix = QPixmap(path+"/3rdparty/emoticons_other/"+strFileName);
-        pix.scaled(30,30);
-
-        QListWidgetItem *item = new QListWidgetItem();
-        item->setIcon(QIcon(pix));
-        item->setData(Qt::UserRole, strEmoticon);
-        item->setToolTip(strEmoticon);
-
-        ui.listWidget_extended->addItem(item);
-    }
+    pThreadEmoticonsExtended.start();
 
     bDoneExtended = true;
+}
+
+void DlgEmoticons::insert_emoticons_extended(QString strEmoticon, QByteArray bData)
+{
+    QPixmap pix;
+    pix.loadFromData(bData);
+    pix.scaled(30,30);
+
+    QListWidgetItem *item = new QListWidgetItem();
+    item->setIcon(QIcon(pix));
+    item->setData(Qt::UserRole, strEmoticon);
+    item->setToolTip(strEmoticon);
+
+    ui.listWidget_extended->addItem(item);
 }
 
 void DlgEmoticons::current_tab_changed(int index)
@@ -137,12 +178,14 @@ void DlgEmoticons::clicked_standard(QModelIndex index)
     // get emoticon
     QString strEmoticon = ui.listWidget_standard->item(index.row())->data(Qt::UserRole).toString();
 
-    // insert emots
     if (strEmoticon.isEmpty() == false)
+    {
+        // insert emots
         pInputWidget->insert_text("//"+strEmoticon);
 
-    // close
-    this->close();
+        // close
+        this->close();
+    }
 }
 
 void DlgEmoticons::clicked_extended(QModelIndex index)
@@ -152,12 +195,14 @@ void DlgEmoticons::clicked_extended(QModelIndex index)
     // get emoticon
     strEmoticon = ui.listWidget_extended->item(index.row())->data(Qt::UserRole).toString();
 
-    // insert emots
     if (strEmoticon.isEmpty() == false)
+    {
+        // insert emots
         pInputWidget->insert_text("//"+strEmoticon);
 
-    // close
-    this->close();
+        // close
+        this->close();
+    }
 }
 
 void DlgEmoticons::button_insert()
@@ -176,12 +221,14 @@ void DlgEmoticons::button_insert()
             strSelected = ui.listWidget_extended->selectedItems().at(0)->data(Qt::UserRole).toString();
     }
 
-    // insert emots
     if (strSelected.isEmpty() == false)
+    {
+        // insert emots
         pInputWidget->insert_text("//"+strSelected);
 
-    // close
-    this->close();
+        // close
+        this->close();
+    }
 }
 
 void DlgEmoticons::button_close()
