@@ -21,7 +21,6 @@
 #include <QSettings>
 #include "config.h"
 #include "mainwindow.h"
-#include "notify.h"
 #include "update.h"
 #include "core.h"
 
@@ -66,7 +65,7 @@ void Core::createSettings()
 {
     // default settings
     QSettings settings;
-    settings.setValue("version", "1.0.10.779");
+    settings.setValue("version", "1.0.10.780");
     settings.setValue("logged", "off");
     settings.setValue("busy", "off");
     settings.setValue("away", "off");

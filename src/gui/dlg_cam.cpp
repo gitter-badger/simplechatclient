@@ -1090,7 +1090,7 @@ bool DlgCam::exist_item(QString strUser)
 {
     QList<QTableWidgetItem*> items = ui.tableWidget_nick_rank_spectators->findItems(strUser, Qt::MatchExactly);
 
-    if (items.isEmpty() == false)
+    if (items.size() != 0)
         return true;
     else
         return false;

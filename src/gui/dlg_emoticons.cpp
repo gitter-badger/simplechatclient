@@ -58,8 +58,8 @@ void ThreadEmoticonsExtended::run()
     QString path = QCoreApplication::applicationDirPath();
 
     // extended
-    QDir dStandardEmoticons = path+"/3rdparty/emoticons_other";
-    QStringList slFiles = dStandardEmoticons.entryList(QStringList("*.gif"), QDir::Files | QDir::NoSymLinks);
+    QDir dExtendedEmoticons = path+"/3rdparty/emoticons_other";
+    QStringList slFiles = dExtendedEmoticons.entryList(QStringList("*.gif"), QDir::Files | QDir::NoSymLinks);
 
     for (int i = 0; i < slFiles.size(); i++)
     {

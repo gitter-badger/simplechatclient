@@ -24,14 +24,11 @@
 #include <QMessageBox>
 #include <QSettings>
 #include "core.h"
+#include "defines.h"
 #include "dlg_email.h"
 #include "network.h"
 #include "dlg_channel_settings.h"
 #include "simplestatswidget.h"
-
-#ifdef Q_WS_X11
-#include <QDebug>
-#endif
 
 DlgChannelSettings::DlgChannelSettings(QWidget *parent, Network *param1) : QDialog(parent)
 {
@@ -550,7 +547,11 @@ void DlgChannelSettings::set_description(QString strDescription)
 void DlgChannelSettings::add_op(QString strNick)
 {
     if (exist_item(strNick, ui.listWidget_op) == false)
-        ui.listWidget_op->insertItem(ui.listWidget_op->count(), strNick);
+    {
+        SortedListWidgetItem *item = new SortedListWidgetItem();
+        item->setText(strNick);
+        ui.listWidget_op->insertItem(ui.listWidget_op->count(), item);
+    }
 
     // enable tabs
     QSettings settings;
@@ -562,7 +563,11 @@ void DlgChannelSettings::add_op(QString strNick)
 void DlgChannelSettings::add_halfop(QString strNick)
 {
     if (exist_item(strNick, ui.listWidget_halfop) == false)
-        ui.listWidget_halfop->insertItem(ui.listWidget_halfop->count(), strNick);
+    {
+        SortedListWidgetItem *item = new SortedListWidgetItem();
+        item->setText(strNick);
+        ui.listWidget_halfop->insertItem(ui.listWidget_halfop->count(), item);
+    }
 
     // enable tabs
     QSettings settings;
@@ -575,7 +580,7 @@ void DlgChannelSettings::add_ban(QString strNick, QString strWho, QString strDT,
 {
     if (exist_item(strNick, ui.listWidget_ban) == false)
     {
-        QListWidgetItem *item = new QListWidgetItem();
+        SortedListWidgetItem *item = new SortedListWidgetItem();
         if (strIPNick.isEmpty() == true)
         {
             item->setText(strNick);
@@ -596,7 +601,7 @@ void DlgChannelSettings::add_invite(QString strNick, QString strWho, QString str
 {
     if (exist_item(strNick, ui.listWidget_invite) == false)
     {
-        QListWidgetItem *item = new QListWidgetItem();
+        SortedListWidgetItem *item = new SortedListWidgetItem();
         item->setText(strNick);
         item->setToolTip(QString("%1: %2 (%3)").arg(tr("Created by")).arg(strWho).arg(strDT));
 
@@ -997,21 +1002,7 @@ void DlgChannelSettings::showEvent(QShowEvent *event)
     // center screen
     move(QApplication::desktop()->screen()->rect().center() - rect().center());
 
-    // switch tab
-    ui.tabWidget->setCurrentIndex(0);
-    ui.stackedWidget->setCurrentIndex(0);
-
-    // clear
-    clear();
-    pSimpleStatsWidget->clear_stats();
-    ui.label_owner->hide();
-    ui.label_owner_nick->hide();
     ui.label_channel_name->setText(strChannel);
-
-    // disabled
-    ui.tabWidget->setTabEnabled(1, false);
-    ui.tabWidget->setTabEnabled(2, false);
-    ui.tabWidget->setTabEnabled(3, false);
 
     // get data
     pNetwork->send(QString("CS INFO %1").arg(strChannel));
@@ -1022,8 +1013,21 @@ void DlgChannelSettings::hideEvent(QHideEvent *event)
 {
     event->accept();
 
+    // clear
     strChannel.clear();
     clear();
+    pSimpleStatsWidget->clear_stats();
+    ui.label_owner->hide();
+    ui.label_owner_nick->hide();
+
+    // disabled
+    ui.tabWidget->setTabEnabled(1, false);
+    ui.tabWidget->setTabEnabled(2, false);
+    ui.tabWidget->setTabEnabled(3, false);
+
+    // switch tab
+    ui.tabWidget->setCurrentIndex(0);
+    ui.stackedWidget->setCurrentIndex(0);
 }
 
 void DlgChannelSettings::closeEvent(QCloseEvent *event)

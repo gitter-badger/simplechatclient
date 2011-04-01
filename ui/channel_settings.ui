@@ -990,6 +990,9 @@
                   <property name="selectionMode">
                    <enum>QAbstractItemView::ExtendedSelection</enum>
                   </property>
+                  <property name="sortingEnabled">
+                   <bool>true</bool>
+                  </property>
                  </widget>
                 </item>
                </layout>
@@ -1026,6 +1029,9 @@
                   </property>
                   <property name="selectionMode">
                    <enum>QAbstractItemView::ExtendedSelection</enum>
+                  </property>
+                  <property name="sortingEnabled">
+                   <bool>true</bool>
                   </property>
                  </widget>
                 </item>
@@ -1064,6 +1070,9 @@
                   <property name="selectionMode">
                    <enum>QAbstractItemView::ExtendedSelection</enum>
                   </property>
+                  <property name="sortingEnabled">
+                   <bool>true</bool>
+                  </property>
                  </widget>
                 </item>
                </layout>
@@ -1100,6 +1109,9 @@
                   </property>
                   <property name="selectionMode">
                    <enum>QAbstractItemView::ExtendedSelection</enum>
+                  </property>
+                  <property name="sortingEnabled">
+                   <bool>true</bool>
                   </property>
                  </widget>
                 </item>
