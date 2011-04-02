@@ -92,6 +92,22 @@ void DlgChannelList::create_gui()
 
 void DlgChannelList::set_default_values()
 {
+    // set checked
+    ui.checkBox_teen->setChecked(true);
+    ui.checkBox_common->setChecked(true);
+    ui.checkBox_erotic->setChecked(true);
+    ui.checkBox_thematic->setChecked(true);
+    ui.checkBox_regional->setChecked(true);
+
+    ui.checkBox_wild->setChecked(true);
+    ui.checkBox_tame->setChecked(true);
+    ui.checkBox_with_class->setChecked(true);
+    ui.checkBox_cult->setChecked(true);
+    ui.checkBox_moderated->setChecked(true);
+    ui.checkBox_recommended->setChecked(true);
+
+    ui.checkBox_hide_empty_channels->setChecked(false);
+
     // hide adv options
     ui.groupBox_type->hide();
     ui.groupBox_category->hide();
