@@ -78,6 +78,16 @@ void DlgChannelList::create_gui()
     ui.tabWidget->setTabText(3, tr("Erotic"));
     ui.tabWidget->setTabText(4, tr("Thematic"));
     ui.tabWidget->setTabText(5, tr("Regional"));
+
+    QStringList strlLabels;
+    strlLabels << tr("Channel name") << tr("Number of persons") << tr("Category") << tr("Type");
+
+    ui.tableWidget_all->setHorizontalHeaderLabels(strlLabels);
+    ui.tableWidget_teen->setHorizontalHeaderLabels(strlLabels);
+    ui.tableWidget_common->setHorizontalHeaderLabels(strlLabels);
+    ui.tableWidget_erotic->setHorizontalHeaderLabels(strlLabels);
+    ui.tableWidget_thematic->setHorizontalHeaderLabels(strlLabels);
+    ui.tableWidget_regional->setHorizontalHeaderLabels(strlLabels);
 }
 
 void DlgChannelList::set_default_values()
