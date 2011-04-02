@@ -41,6 +41,7 @@ private:
 
     QString get_word();
     void set_word(QString);
+    void paste_multi_line(QString);
 
 protected:
     virtual bool event(QEvent *);

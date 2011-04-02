@@ -193,10 +193,9 @@ bool InputLineWidget::event(QEvent *e)
     }
 }
 
-// fixed pasting multi-line
-void InputLineWidget::insertFromMimeData(const QMimeData *source)
+void InputLineWidget::paste_multi_line(QString strText)
 {
-    QStringList list = source->text().split(QRegExp("(\n|\r)"));
+    QStringList list = strText.split(QRegExp("(\n|\r)"));
     int len = 400;
 
     for (int i = 0; i < list.size(); i++)
@@ -232,4 +231,10 @@ void InputLineWidget::insertFromMimeData(const QMimeData *source)
             }
         }
     }
+}
+
+// fixed pasting multi-line
+void InputLineWidget::insertFromMimeData(const QMimeData *source)
+{
+    paste_multi_line(source->text());
 }

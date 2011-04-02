@@ -159,10 +159,30 @@ QString InputWidget::replace_emots(QString strData)
     return strData;
 }
 
-void InputWidget::send_message(bool bType)
+void InputWidget::paste_multi_line(QString strText, bool bModeration)
 {
-    QString strText = pInputLine->toPlainText().trimmed();
+    QStringList list = strText.split(QRegExp("(\n|\r)"));
+    int len = 400;
 
+    for (int i = 0; i < list.size(); i++)
+    {
+        QString line = list.at(i);
+        if (line.size() > len)
+        {
+            while (line.size() > len)
+            {
+                QString short_line = line.left(len);
+                send_message(short_line, bModeration);
+                line.remove(0, len);
+            }
+        }
+        if ((line.size() < len) && (line.size() != 0))
+            send_message(line, bModeration);
+    }
+}
+
+void InputWidget::send_message(QString strText, bool bModeration)
+{
     if (strText.isEmpty() == true) return; // empty!
 
     QString strTextOriginal = strText;
@@ -267,7 +287,7 @@ void InputWidget::send_message(bool bType)
         QString strDT = dt.toString("[hh:mm:ss] ");
 
         // standard text
-        if (bType == true)
+        if (bModeration == false)
         {
             if (settings.value("disable_logs").toString() == "off")
             {
@@ -281,7 +301,7 @@ void InputWidget::send_message(bool bType)
             emit display_message(strChannel, QString("%1<%2> %3").arg(strDT).arg(strMe).arg(strText.right(strText.length()-10-strChannel.length())), 0);
         }
         // moder notice
-        else
+        else if (bModeration == true)
         {
             if (settings.value("disable_logs").toString() == "off")
             {
@@ -295,8 +315,6 @@ void InputWidget::send_message(bool bType)
             emit display_message(strChannel, QString("%1 *<%2> %3").arg(strDT).arg(strMe).arg(strText.right(strText.length()-14-strChannel.length())), 6);
         }
     }
-
-    pInputLine->clear();
 }
 
 void InputWidget::update_nick(QString strNick)
@@ -306,12 +324,16 @@ void InputWidget::update_nick(QString strNick)
 
 void InputWidget::inputline_return_pressed()
 {
-    send_message(true);
+    QString strText = pInputLine->toPlainText().trimmed();
+    paste_multi_line(strText, false);
+    pInputLine->clear();
 }
 
 void InputWidget::moder_button_clicked()
 {
-    send_message(false);
+    QString strText = pInputLine->toPlainText().trimmed();
+    paste_multi_line(strText, true);
+    pInputLine->clear();
 }
 
 void InputWidget::show_hide_toolwidget_clicked()

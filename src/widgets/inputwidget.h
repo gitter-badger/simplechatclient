@@ -45,7 +45,8 @@ public:
     void set_toolwidget_icon(bool);
     QString convert_emots(QString);
     QString replace_emots(QString);
-    void send_message(bool);
+    void paste_multi_line(QString, bool);
+    void send_message(QString, bool);
 
 public slots:
     void update_nick(QString);
