@@ -27,6 +27,7 @@
 #include <QShowEvent>
 #include <QTimer>
 #include "config.h"
+#include "defines.h"
 #include "network.h"
 #include "simplerankwidget.h"
 #include "video.h"
@@ -441,9 +442,6 @@ void DlgCam::data_kernel(QByteArray bData)
         // resize table
         ui.tableWidget_nick_rank_spectators->resizeColumnsToContents();
 
-        // sort table
-        ui.tableWidget_nick_rank_spectators->sortByColumn(0, Qt::AscendingOrder);
-
         // select nick
         if (strNick.isEmpty() == false)
         {
@@ -600,9 +598,6 @@ void DlgCam::data_kernel(QByteArray bData)
                 row++;
             }
         }
-
-        // sort
-        ui.tableWidget_nick_rank_spectators->sortByColumn(0, Qt::AscendingOrder);
     }
     else if (iCamCmd == 403)
     {
@@ -1066,9 +1061,9 @@ void DlgCam::send_all_my_options()
 void DlgCam::add_item(int iRow, QString strUser, QString strRank, QString strSpectators)
 {
     // insert
-    ui.tableWidget_nick_rank_spectators->setItem(iRow, 0, new QTableWidgetItem(strUser));
-    ui.tableWidget_nick_rank_spectators->setItem(iRow, 1, new QTableWidgetItem(strRank));
-    ui.tableWidget_nick_rank_spectators->setItem(iRow, 2, new QTableWidgetItem(strSpectators));
+    ui.tableWidget_nick_rank_spectators->setItem(iRow, 0, new SortedTableWidgetItem(strUser));
+    ui.tableWidget_nick_rank_spectators->setItem(iRow, 1, new SortedTableWidgetItem(strRank));
+    ui.tableWidget_nick_rank_spectators->setItem(iRow, 2, new SortedTableWidgetItem(strSpectators));
 }
 
 void DlgCam::add_item(QString strUser, QString strRank, QString strSpectators)
@@ -1078,9 +1073,9 @@ void DlgCam::add_item(QString strUser, QString strRank, QString strSpectators)
     ui.tableWidget_nick_rank_spectators->insertRow(row);
 
     // insert
-    ui.tableWidget_nick_rank_spectators->setItem(row, 0, new QTableWidgetItem(strUser));
-    ui.tableWidget_nick_rank_spectators->setItem(row, 1, new QTableWidgetItem(strRank));
-    ui.tableWidget_nick_rank_spectators->setItem(row, 2, new QTableWidgetItem(strSpectators));
+    ui.tableWidget_nick_rank_spectators->setItem(row, 0, new SortedTableWidgetItem(strUser));
+    ui.tableWidget_nick_rank_spectators->setItem(row, 1, new SortedTableWidgetItem(strRank));
+    ui.tableWidget_nick_rank_spectators->setItem(row, 2, new SortedTableWidgetItem(strSpectators));
 
     // sort
     ui.tableWidget_nick_rank_spectators->sortByColumn(0, Qt::AscendingOrder);
@@ -1106,13 +1101,12 @@ void DlgCam::remove_item(QString strUser)
 
 int DlgCam::get_item(QString strUser)
 {
-    QTableWidget *table = ui.tableWidget_nick_rank_spectators;
-    for (int i = 0; i < table->rowCount(); i++)
-    {
-        if (table->item(i,0)->text() == strUser)
-            return i;
-    }
-    return -1;
+    QList<QTableWidgetItem*> items = ui.tableWidget_nick_rank_spectators->findItems(strUser, Qt::MatchExactly);
+
+    if (items.size() != 0)
+        return items.at(0)->row();
+    else
+        return -1;
 }
 
 void DlgCam::update_item(QString strUser, QString strRank, QString strSpectators)

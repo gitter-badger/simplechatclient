@@ -200,51 +200,51 @@ void DlgChannelList::create_list()
         QString strCat = channel.cat;
         QString strType = channel.type;
 
-        ui.tableWidget_all->setItem(iAllRow, 0, new SortedTableWidgetItem(strName));
-        ui.tableWidget_all->setItem(iAllRow, 1, new SortedTableWidgetItem(strPeople));
-        ui.tableWidget_all->setItem(iAllRow, 2, new SortedTableWidgetItem(strCat));
-        ui.tableWidget_all->setItem(iAllRow, 3, new SortedTableWidgetItem(strType));
+        ui.tableWidget_all->setItem(iAllRow, 0, new SortedChannelListTableWidgetItem(strName));
+        ui.tableWidget_all->setItem(iAllRow, 1, new SortedChannelListTableWidgetItem(strPeople));
+        ui.tableWidget_all->setItem(iAllRow, 2, new SortedChannelListTableWidgetItem(strCat));
+        ui.tableWidget_all->setItem(iAllRow, 3, new SortedChannelListTableWidgetItem(strType));
 
         iAllRow++;
 
         if (strType == tr("Teen"))
         {
-            ui.tableWidget_teen->setItem(iTeenRow, 0, new SortedTableWidgetItem(strName));
-            ui.tableWidget_teen->setItem(iTeenRow, 1, new SortedTableWidgetItem(strPeople));
-            ui.tableWidget_teen->setItem(iTeenRow, 2, new SortedTableWidgetItem(strCat));
-            ui.tableWidget_teen->setItem(iTeenRow, 3, new SortedTableWidgetItem(strType));
+            ui.tableWidget_teen->setItem(iTeenRow, 0, new SortedChannelListTableWidgetItem(strName));
+            ui.tableWidget_teen->setItem(iTeenRow, 1, new SortedChannelListTableWidgetItem(strPeople));
+            ui.tableWidget_teen->setItem(iTeenRow, 2, new SortedChannelListTableWidgetItem(strCat));
+            ui.tableWidget_teen->setItem(iTeenRow, 3, new SortedChannelListTableWidgetItem(strType));
             iTeenRow++;
         }
         else if (strType == tr("Common"))
         {
-            ui.tableWidget_common->setItem(iCommonRow, 0, new SortedTableWidgetItem(strName));
-            ui.tableWidget_common->setItem(iCommonRow, 1, new SortedTableWidgetItem(strPeople));
-            ui.tableWidget_common->setItem(iCommonRow, 2, new SortedTableWidgetItem(strCat));
-            ui.tableWidget_common->setItem(iCommonRow, 3, new SortedTableWidgetItem(strType));
+            ui.tableWidget_common->setItem(iCommonRow, 0, new SortedChannelListTableWidgetItem(strName));
+            ui.tableWidget_common->setItem(iCommonRow, 1, new SortedChannelListTableWidgetItem(strPeople));
+            ui.tableWidget_common->setItem(iCommonRow, 2, new SortedChannelListTableWidgetItem(strCat));
+            ui.tableWidget_common->setItem(iCommonRow, 3, new SortedChannelListTableWidgetItem(strType));
             iCommonRow++;
         }
         else if (strType == tr("Erotic"))
         {
-            ui.tableWidget_erotic->setItem(iEroticRow, 0, new SortedTableWidgetItem(strName));
-            ui.tableWidget_erotic->setItem(iEroticRow, 1, new SortedTableWidgetItem(strPeople));
-            ui.tableWidget_erotic->setItem(iEroticRow, 2, new SortedTableWidgetItem(strCat));
-            ui.tableWidget_erotic->setItem(iEroticRow, 3, new SortedTableWidgetItem(strType));
+            ui.tableWidget_erotic->setItem(iEroticRow, 0, new SortedChannelListTableWidgetItem(strName));
+            ui.tableWidget_erotic->setItem(iEroticRow, 1, new SortedChannelListTableWidgetItem(strPeople));
+            ui.tableWidget_erotic->setItem(iEroticRow, 2, new SortedChannelListTableWidgetItem(strCat));
+            ui.tableWidget_erotic->setItem(iEroticRow, 3, new SortedChannelListTableWidgetItem(strType));
             iEroticRow++;
         }
         else if (strType == tr("Thematic"))
         {
-            ui.tableWidget_thematic->setItem(iThematicRow, 0, new SortedTableWidgetItem(strName));
-            ui.tableWidget_thematic->setItem(iThematicRow, 1, new SortedTableWidgetItem(strPeople));
-            ui.tableWidget_thematic->setItem(iThematicRow, 2, new SortedTableWidgetItem(strCat));
-            ui.tableWidget_thematic->setItem(iThematicRow, 3, new SortedTableWidgetItem(strType));
+            ui.tableWidget_thematic->setItem(iThematicRow, 0, new SortedChannelListTableWidgetItem(strName));
+            ui.tableWidget_thematic->setItem(iThematicRow, 1, new SortedChannelListTableWidgetItem(strPeople));
+            ui.tableWidget_thematic->setItem(iThematicRow, 2, new SortedChannelListTableWidgetItem(strCat));
+            ui.tableWidget_thematic->setItem(iThematicRow, 3, new SortedChannelListTableWidgetItem(strType));
             iThematicRow++;
         }
         else if (strType == tr("Regional"))
         {
-            ui.tableWidget_regional->setItem(iRegionalRow, 0, new SortedTableWidgetItem(strName));
-            ui.tableWidget_regional->setItem(iRegionalRow, 1, new SortedTableWidgetItem(strPeople));
-            ui.tableWidget_regional->setItem(iRegionalRow, 2, new SortedTableWidgetItem(strCat));
-            ui.tableWidget_regional->setItem(iRegionalRow, 3, new SortedTableWidgetItem(strType));
+            ui.tableWidget_regional->setItem(iRegionalRow, 0, new SortedChannelListTableWidgetItem(strName));
+            ui.tableWidget_regional->setItem(iRegionalRow, 1, new SortedChannelListTableWidgetItem(strPeople));
+            ui.tableWidget_regional->setItem(iRegionalRow, 2, new SortedChannelListTableWidgetItem(strCat));
+            ui.tableWidget_regional->setItem(iRegionalRow, 3, new SortedChannelListTableWidgetItem(strType));
             iRegionalRow++;
         }
     }

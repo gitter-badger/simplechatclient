@@ -89,6 +89,26 @@ public:
             return QTableWidgetItem::operator< (o);
 
         if (QVariant::String == my.type())
+            return my.toString().toLower() < other.toString().toLower();
+        else
+            return QTableWidgetItem::operator< (o);
+    }
+};
+
+class SortedChannelListTableWidgetItem : public QTableWidgetItem
+{
+public:
+    SortedChannelListTableWidgetItem() {}
+    SortedChannelListTableWidgetItem(QString name) : QTableWidgetItem(name) {}
+
+    virtual bool operator< ( const QTableWidgetItem & o ) const
+    {
+        QVariant my = data(Qt::DisplayRole);
+        QVariant other = o.data(Qt::DisplayRole);
+        if (!my.isValid() || !other.isValid() || my.type() != other.type())
+            return QTableWidgetItem::operator< (o);
+
+        if (QVariant::String == my.type())
             return my.toString().toInt() < other.toString().toInt();
         else
             return QTableWidgetItem::operator< (o);

@@ -246,6 +246,9 @@ font: 11pt &quot;Times New Roman&quot;;</string>
         <property name="showGrid">
          <bool>false</bool>
         </property>
+        <property name="wordWrap">
+         <bool>false</bool>
+        </property>
         <property name="columnCount">
          <number>3</number>
         </property>
