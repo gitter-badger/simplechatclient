@@ -590,8 +590,7 @@ void MainWindow::open_ignore()
 
 void MainWindow::open_awaylog()
 {
-    if ((pNetwork->is_connected() == true) && (pNetwork->is_writable() == true))
-        DlgAwaylog(this, &lAwaylog, awaylogAct).exec();
+    DlgAwaylog(this, &lAwaylog, awaylogAct).exec();
 }
 
 void MainWindow::open_cams()
