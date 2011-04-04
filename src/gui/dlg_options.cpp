@@ -1235,12 +1235,12 @@ void DlgOptions::set_embedded_style()
 
 void DlgOptions::try_play_beep()
 {
-    Notify::instance()->play("beep");
+    Notify::instance()->play(Beep);
 }
 
 void DlgOptions::try_play_query()
 {
-    Notify::instance()->play("query");
+    Notify::instance()->play(Query);
 }
 
 void DlgOptions::set_sound_beep()

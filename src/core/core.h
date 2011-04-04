@@ -31,6 +31,7 @@ class Update;
 class Core: public QObject
 {
     Q_OBJECT
+    Q_DISABLE_COPY(Core);
     static Core *Instance;
 public:
     static Core *instance();

@@ -24,12 +24,15 @@
 #include <Phonon/MediaObject>
 #include <QObject>
 
+enum NotifyCategory {Beep, Query};
+
 /**
  * Notify using Phonon
  */
 class Notify : public QObject
 {
     Q_OBJECT
+    Q_DISABLE_COPY(Notify)
     static Notify *Instance;
 
 public:
@@ -37,7 +40,7 @@ public:
 
     Notify();
     virtual ~Notify();
-    void play(QString);
+    void play(NotifyCategory);
 
 public slots:
     void quit();
@@ -45,7 +48,7 @@ public slots:
 private:
     QString apath;
     Phonon::MediaObject *music;
-    QString strCurrent;
+    NotifyCategory eCurrentCategory;
 
     void init();
 };

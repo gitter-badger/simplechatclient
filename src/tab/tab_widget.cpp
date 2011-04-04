@@ -356,7 +356,7 @@ void TabWidget::display_message(QString strData, int iLevel)
 
         // sound
         if (settings.value("disable_sounds").toString() == "off")
-            Notify::instance()->play("beep");
+            Notify::instance()->play(Beep);
     }
 
     // /me

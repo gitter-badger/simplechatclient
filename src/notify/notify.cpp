@@ -36,7 +36,7 @@ Notify * Notify::instance()
 
 Notify::Notify()
 {
-    strCurrent = "beep";
+    eCurrentCategory = Beep;
 }
 
 Notify::~Notify()
@@ -51,27 +51,27 @@ void Notify::init()
     music = Phonon::createPlayer(Phonon::NotificationCategory, Phonon::MediaSource(strSoundBeep));
 }
 
-void Notify::play(QString strCategory)
+void Notify::play(NotifyCategory eCategory)
 {
     music->stop();
 
     QSettings settings;
-    if (strCategory == "query")
+    if (eCategory == Query)
     {
-        if (strCurrent != "query")
+        if (eCurrentCategory != Query)
         {
             QString strSoundQuery = settings.value("sound_query").toString();
             music->setCurrentSource(strSoundQuery);
-            strCurrent = "query";
+            eCurrentCategory = Query;
         }
     }
     else
     {
-        if (strCurrent != "beep")
+        if (eCurrentCategory != Beep)
         {
             QString strSoundBeep = settings.value("sound_beep").toString();
             music->setCurrentSource(strSoundBeep);
-            strCurrent = "beep";
+            eCurrentCategory = Beep;
         }
     }
 

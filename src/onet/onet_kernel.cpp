@@ -1140,7 +1140,7 @@ void OnetKernel::raw_invite()
     if (strWhere[0] == ':')
         strWhere = strWhere.right(strWhere.length()-1);
 
-    Notify::instance()->play("query");
+    Notify::instance()->play(Query);
 
     (new DlgInvite(Core::instance()->sccWindow(), pNetwork, strWho, strWhere))->show(); // should be show - prevent hangup!
 }
