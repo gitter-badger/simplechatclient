@@ -142,6 +142,7 @@ int main(int argc, char *argv[])
     // core
     Core::instance()->createGui();
     Core::instance()->showSccWindow();
+    Core::instance()->check_update();
 
     return app.exec();
 }

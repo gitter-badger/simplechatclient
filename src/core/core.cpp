@@ -39,12 +39,12 @@ Core * Core::instance()
 
 Core::Core() : window(0)
 {
-    //pUpdate = new Update();
+    pUpdate = new Update();
 }
 
 Core::~Core()
 {
-    //delete pUpdate();
+    delete pUpdate;
     delete window;
     window = 0;
 }
@@ -52,8 +52,6 @@ Core::~Core()
 void Core::init()
 {
     createSettings();
-
-    //pUpdate->check_update();
 }
 
 void Core::createGui()
@@ -65,7 +63,7 @@ void Core::createSettings()
 {
     // default settings
     QSettings settings;
-    settings.setValue("version", "1.0.10.788");
+    settings.setValue("version", "1.0.10.789");
     settings.setValue("logged", "off");
     settings.setValue("busy", "off");
     settings.setValue("away", "off");
@@ -140,4 +138,9 @@ void Core::refresh_colors()
 void Core::refresh_background_image()
 {
     window->refresh_background_image();
+}
+
+void Core::check_update()
+{
+    pUpdate->check_update();
 }

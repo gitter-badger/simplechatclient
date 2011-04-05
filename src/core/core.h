@@ -46,13 +46,15 @@ public:
     // from options
     void refresh_colors();
     void refresh_background_image();
+    // update
+    void check_update();
 
 public slots:
     void quit();
 
 private:
     MainWindow *window;
-//    Update *pUpdate;
+    Update *pUpdate;
 
     void init();
     void createSettings();
