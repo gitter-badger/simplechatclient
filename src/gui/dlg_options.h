@@ -38,10 +38,10 @@ private:
     void set_default_values();
     void create_signals();
 
+    void save_settings();
+    void set_color(QString);
     void set_mainwindow_colors();
     void set_nicklist_colors();
-    void save_settings();
-    void clear_settings();
 
 private slots:
     void change_page(QTreeWidgetItem *, QTreeWidgetItem *);
@@ -52,15 +52,15 @@ private slots:
     void set_modern_style_no_avatars();
     void set_classic_style();
     void language_changed(int);
-    void auto_busy();
-    void disable_autojoin_favourites();
-    void show_zuo();
-    void hide_formating();
-    void hide_join_part();
-    void hide_join_part_200();
-    void disable_avatars();
-    void disable_emots();
-    void disable_replaces();
+    void auto_busy(bool);
+    void disable_autojoin_favourites(bool);
+    void show_zuo(bool);
+    void hide_formating(bool);
+    void hide_join_part(bool);
+    void hide_join_part_200(bool);
+    void disable_avatars(bool);
+    void disable_emots(bool);
+    void disable_replaces(bool);
     void set_my_bold(int);
     void set_my_italic(int);
     void set_my_font(QString);
@@ -89,11 +89,11 @@ private slots:
     void try_play_query();
     void set_sound_beep();
     void set_sound_query();
-    void disable_sounds();
+    void disable_sounds(bool);
     void open_logs_folder();
-    void disable_logs();
+    void disable_logs(bool);
     void set_background_image();
-    void disable_background_image();
+    void disable_background_image(bool);
     void set_spellchecker();
     void button_ok();
     void button_cancel();

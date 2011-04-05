@@ -43,8 +43,6 @@ DlgOptions::DlgOptions(QWidget *parent) : QDialog(parent)
     create_gui();
     set_default_values();
     create_signals();
-
-    clear_settings();
 }
 
 void DlgOptions::create_gui()
@@ -274,1290 +272,8 @@ void DlgOptions::set_default_values()
 
     // background image
     ui.lineEdit_background_image->setText(mySettings.value("background_image").toString());
-}
 
-void DlgOptions::create_signals()
-{
-    QObject::connect(ui.treeWidget_options, SIGNAL(currentItemChanged(QTreeWidgetItem*,QTreeWidgetItem*)), this, SLOT(change_page(QTreeWidgetItem*,QTreeWidgetItem*)));
-    QObject::connect(ui.radioButton_unregistered_nick, SIGNAL(clicked()), this, SLOT(hide_pass()));
-    QObject::connect(ui.radioButton_registered_nick, SIGNAL(clicked()), this, SLOT(show_pass()));
-    QObject::connect(ui.pushButton_register_nick, SIGNAL(clicked()), this, SLOT(button_register_nick()));
-    QObject::connect(ui.radioButton_modern_avatars, SIGNAL(clicked()), this, SLOT(set_modern_style_avatars()));
-    QObject::connect(ui.radioButton_modern_no_avatars, SIGNAL(clicked()), this, SLOT(set_modern_style_no_avatars()));
-    QObject::connect(ui.radioButton_classic, SIGNAL(clicked()), this, SLOT(set_classic_style()));
-    QObject::connect(ui.comboBox_language, SIGNAL(currentIndexChanged(int)), this, SLOT(language_changed(int)));
-    QObject::connect(ui.checkBox_auto_busy, SIGNAL(clicked()), this, SLOT(auto_busy()));
-    QObject::connect(ui.checkBox_disable_autojoin_favourites, SIGNAL(clicked()), this, SLOT(disable_autojoin_favourites()));
-    QObject::connect(ui.checkBox_show_zuo, SIGNAL(clicked()), this, SLOT(show_zuo()));
-    QObject::connect(ui.checkBox_hide_formating, SIGNAL(clicked()), this, SLOT(hide_formating()));
-    QObject::connect(ui.checkBox_hide_join_part, SIGNAL(clicked()), this, SLOT(hide_join_part()));
-    QObject::connect(ui.checkBox_hide_join_part_200, SIGNAL(clicked()), this, SLOT(hide_join_part_200()));
-    QObject::connect(ui.checkBox_disable_avatars, SIGNAL(clicked()), this, SLOT(disable_avatars()));
-    QObject::connect(ui.checkBox_disable_emots, SIGNAL(clicked()), this, SLOT(disable_emots()));
-    QObject::connect(ui.checkBox_disable_replaces, SIGNAL(clicked()), this, SLOT(disable_replaces()));
-    QObject::connect(ui.comboBox_my_bold, SIGNAL(currentIndexChanged(int)), this, SLOT(set_my_bold(int)));
-    QObject::connect(ui.comboBox_my_italic, SIGNAL(currentIndexChanged(int)), this, SLOT(set_my_italic(int)));
-    QObject::connect(ui.comboBox_my_font, SIGNAL(currentIndexChanged(QString)), this, SLOT(set_my_font(QString)));
-    QObject::connect(ui.comboBox_my_color, SIGNAL(currentIndexChanged(int)), this, SLOT(set_my_color(int)));
-    QObject::connect(ui.comboBox_font_size, SIGNAL(currentIndexChanged(QString)), this, SLOT(set_font_size(QString)));
-    QObject::connect(ui.pushButton_background_color, SIGNAL(clicked()), this, SLOT(set_background_color()));
-    QObject::connect(ui.pushButton_default_font_color, SIGNAL(clicked()), this, SLOT(set_default_font_color()));
-    QObject::connect(ui.pushButton_join_font_color, SIGNAL(clicked()), this, SLOT(set_join_font_color()));
-    QObject::connect(ui.pushButton_part_font_color, SIGNAL(clicked()), this, SLOT(set_part_font_color()));
-    QObject::connect(ui.pushButton_quit_font_color, SIGNAL(clicked()), this, SLOT(set_quit_font_color()));
-    QObject::connect(ui.pushButton_kick_font_color, SIGNAL(clicked()), this, SLOT(set_kick_font_color()));
-    QObject::connect(ui.pushButton_mode_font_color, SIGNAL(clicked()), this, SLOT(set_mode_font_color()));
-    QObject::connect(ui.pushButton_notice_font_color, SIGNAL(clicked()), this, SLOT(set_notice_font_color()));
-    QObject::connect(ui.pushButton_info_font_color, SIGNAL(clicked()), this, SLOT(set_info_font_color()));
-    QObject::connect(ui.pushButton_error_font_color, SIGNAL(clicked()), this, SLOT(set_error_font_color()));
-    QObject::connect(ui.pushButton_channel_font_color, SIGNAL(clicked()), this, SLOT(set_channel_font_color()));
-    QObject::connect(ui.pushButton_mainwindow_restore_default, SIGNAL(clicked()), this, SLOT(mainwindow_restore_default()));
-    QObject::connect(ui.pushButton_nicklist_nick_color, SIGNAL(clicked()), this, SLOT(set_nicklist_nick_color()));
-    QObject::connect(ui.pushButton_nicklist_selected_nick_color, SIGNAL(clicked()), this, SLOT(set_nicklist_selected_nick_color()));
-    QObject::connect(ui.pushButton_nicklist_busy_nick_color, SIGNAL(clicked()), this, SLOT(set_nicklist_busy_nick_color()));
-    QObject::connect(ui.pushButton_nicklist_gradient_1_color, SIGNAL(clicked()), this, SLOT(set_nicklist_gradient_1_color()));
-    QObject::connect(ui.pushButton_nicklist_gradient_2_color, SIGNAL(clicked()), this, SLOT(set_nicklist_gradient_2_color()));
-    QObject::connect(ui.pushButton_nicklist_restore_default, SIGNAL(clicked()), this, SLOT(nicklist_restore_default()));
-    QObject::connect(ui.pushButton_set_embedded_style, SIGNAL(clicked()), this, SLOT(set_embedded_style()));
-    QObject::connect(ui.pushButton_play_beep, SIGNAL(clicked()), this, SLOT(try_play_beep()));
-    QObject::connect(ui.pushButton_play_query, SIGNAL(clicked()), this, SLOT(try_play_query()));
-    QObject::connect(ui.pushButton_sound_beep_change, SIGNAL(clicked()), this, SLOT(set_sound_beep()));
-    QObject::connect(ui.pushButton_sound_query_change, SIGNAL(clicked()), this, SLOT(set_sound_query()));
-    QObject::connect(ui.checkBox_disable_sounds, SIGNAL(clicked()), this, SLOT(disable_sounds()));
-    QObject::connect(ui.pushButton_logs_open_folder, SIGNAL(clicked()), this, SLOT(open_logs_folder()));
-    QObject::connect(ui.checkBox_disable_logs, SIGNAL(clicked()), this, SLOT(disable_logs()));
-    QObject::connect(ui.pushButton_set_background_image, SIGNAL(clicked()), this, SLOT(set_background_image()));
-    QObject::connect(ui.checkBox_disable_background_image, SIGNAL(clicked()), this, SLOT(disable_background_image()));
-    QObject::connect(ui.radioButton_spellchecker_active, SIGNAL(clicked()), this, SLOT(set_spellchecker()));
-    QObject::connect(ui.radioButton_spellchecker_inactive, SIGNAL(clicked()), this, SLOT(set_spellchecker()));
-    QObject::connect(ui.buttonBox, SIGNAL(accepted()), this, SLOT(button_ok()));
-    QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(button_cancel()));
-}
-
-void DlgOptions::change_page(QTreeWidgetItem *current, QTreeWidgetItem *previous)
-{
-    if (!current)
-        current = previous;
-
-    ui.stackedWidget->setCurrentIndex(ui.treeWidget_options->currentIndex().row());
-}
-
-void DlgOptions::hide_pass()
-{
-    ui.label_password->hide();
-    ui.lineEdit_password->hide();
-
-    // fix nick
-    if (ui.lineEdit_nick->text()[0] != '~')
-        ui.lineEdit_nick->setText("~"+ui.lineEdit_nick->text());
-}
-
-void DlgOptions::show_pass()
-{
-    ui.label_password->show();
-    ui.lineEdit_password->show();
-
-    // fix nick
-    if (ui.lineEdit_nick->text()[0] == '~')
-        ui.lineEdit_nick->setText(ui.lineEdit_nick->text().right(ui.lineEdit_nick->text().length()-1));
-}
-
-void DlgOptions::button_register_nick()
-{
-    DlgRegisterNick(Core::instance()->sccWindow(), this).exec();
-}
-
-void DlgOptions::set_modern_style_avatars()
-{
-    // save settings
-    save_settings();
-
-    // save style
-    QSettings settings;
-    Config *pConfig = new Config();
-    pConfig->set_value("style", "modern");
-    settings.setValue("style", "modern");
-    pConfig->set_value("disable_avatars", "off");
-    settings.setValue("disable_avatars", "off");
-    delete pConfig;
-
-    QMessageBox::information(0, "", tr("Restart program to apply the changes."));
-}
-
-void DlgOptions::set_modern_style_no_avatars()
-{
-    // save settings
-    save_settings();
-
-    // save style
-    QSettings settings;
-    Config *pConfig = new Config();
-    pConfig->set_value("style", "modern");
-    settings.setValue("style", "modern");
-    pConfig->set_value("disable_avatars", "on");
-    settings.setValue("disable_avatars", "on");
-    delete pConfig;
-
-    QMessageBox::information(0, "", tr("Restart program to apply the changes."));
-}
-
-void DlgOptions::set_classic_style()
-{
-    // save settings
-    save_settings();
-
-    // save style
-    QSettings settings;
-    Config *pConfig = new Config();
-    pConfig->set_value("style", "classic");
-    settings.setValue("style", "classic");
-    pConfig->set_value("disable_avatars", "on");
-    settings.setValue("disable_avatars", "on");
-    delete pConfig;
-
-    QMessageBox::information(0, "", tr("Restart program to apply the changes."));
-}
-
-void DlgOptions::language_changed(int index)
-{
-    QSettings settings;
-    Config *pConfig = new Config();
-    if (index == 0) // english
-    {
-        pConfig->set_value("language", "en");
-        settings.setValue("language", "en");
-    }
-    else if (index == 1) // polish
-    {
-        pConfig->set_value("language", "pl");
-        settings.setValue("language", "pl");
-    }
-    else // polish
-    {
-        pConfig->set_value("language", "pl");
-        settings.setValue("language", "pl");
-    }
-    delete pConfig;
-}
-
-void DlgOptions::auto_busy()
-{
-    QSettings settings;
-    Config *pConfig = new Config();
-    if (ui.checkBox_auto_busy->isChecked() == true)
-    {
-        pConfig->set_value("auto_busy", "on");
-        settings.setValue("auto_busy", "on");
-    }
-    else
-    {
-        pConfig->set_value("auto_busy", "off");
-        settings.setValue("auto_busy", "off");
-    }
-    delete pConfig;
-}
-
-void DlgOptions::disable_autojoin_favourites()
-{
-    QSettings settings;
-    Config *pConfig = new Config();
-    if (ui.checkBox_disable_autojoin_favourites->isChecked() == true)
-    {
-        pConfig->set_value("disable_autojoin_favourites", "on");
-        settings.setValue("disable_autojoin_favourites", "on");
-    }
-    else
-    {
-        pConfig->set_value("disable_autojoin_favourites", "off");
-        settings.setValue("disable_autojoin_favourites", "off");
-    }
-    delete pConfig;
-}
-
-void DlgOptions::show_zuo()
-{
-    QSettings settings;
-    Config *pConfig = new Config();
-    if (ui.checkBox_show_zuo->isChecked() == true)
-    {
-        pConfig->set_value("show_zuo", "on");
-        settings.setValue("show_zuo", "on");
-    }
-    else
-    {
-        pConfig->set_value("show_zuo", "off");
-        settings.setValue("show_zuo", "off");
-    }
-    delete pConfig;
-}
-
-void DlgOptions::hide_formating()
-{
-    QSettings settings;
-    Config *pConfig = new Config();
-    if (ui.checkBox_hide_formating->isChecked() == true)
-    {
-        pConfig->set_value("hide_formating", "on");
-        settings.setValue("hide_formating", "on");
-    }
-    else
-    {
-        pConfig->set_value("hide_formating", "off");
-        settings.setValue("hide_formating", "off");
-    }
-    delete pConfig;
-}
-
-void DlgOptions::hide_join_part()
-{
-    QSettings settings;
-    Config *pConfig = new Config();
-    if (ui.checkBox_hide_join_part->isChecked() == true)
-    {
-        pConfig->set_value("hide_join_part", "on");
-        settings.setValue("hide_join_part", "on");
-    }
-    else
-    {
-        pConfig->set_value("hide_join_part", "off");
-        settings.setValue("hide_join_part", "off");
-    }
-    delete pConfig;
-}
-
-void DlgOptions::hide_join_part_200()
-{
-    QSettings settings;
-    Config *pConfig = new Config();
-    if (ui.checkBox_hide_join_part_200->isChecked() == true)
-    {
-        pConfig->set_value("hide_join_part_200", "on");
-        settings.setValue("hide_join_part_200", "on");
-    }
-    else
-    {
-        pConfig->set_value("hide_join_part_200", "off");
-        settings.setValue("hide_join_part_200", "off");
-    }
-    delete pConfig;
-}
-
-void DlgOptions::disable_avatars()
-{
-    QSettings settings;
-    Config *pConfig = new Config();
-    if (ui.checkBox_disable_avatars->isChecked() == true)
-    {
-        pConfig->set_value("disable_avatars", "on");
-        settings.setValue("disable_avatars", "on");
-    }
-    else
-    {
-        pConfig->set_value("disable_avatars", "off");
-        settings.setValue("disable_avatars", "off");
-    }
-    delete pConfig;
-}
-
-void DlgOptions::disable_emots()
-{
-    QSettings settings;
-    Config *pConfig = new Config();
-    if (ui.checkBox_disable_emots->isChecked() == true)
-    {
-        pConfig->set_value("disable_emots", "on");
-        settings.setValue("disable_emots", "on");
-    }
-    else
-    {
-        pConfig->set_value("disable_emots", "off");
-        settings.setValue("disable_emots", "off");
-    }
-    delete pConfig;
-}
-
-void DlgOptions::disable_replaces()
-{
-    QSettings settings;
-    Config *pConfig = new Config();
-    if (ui.checkBox_disable_replaces->isChecked() == true)
-    {
-        pConfig->set_value("disable_replaces", "on");
-        settings.setValue("disable_replaces", "on");
-    }
-    else
-    {
-        pConfig->set_value("disable_replaces", "off");
-        settings.setValue("disable_replaces", "off");
-    }
-    delete pConfig;
-}
-
-void DlgOptions::set_my_bold(int index)
-{
-    QSettings settings;
-    Config *pConfig = new Config();
-    if (index == 0)
-    {
-        pConfig->set_value("my_bold", "off");
-        settings.setValue("my_bold", "off");
-    }
-    else
-    {
-        pConfig->set_value("my_bold", "on");
-        settings.setValue("my_bold", "on");
-    }
-    delete pConfig;
-}
-
-void DlgOptions::set_my_italic(int index)
-{
-    QSettings settings;
-    Config *pConfig = new Config();
-    if (index == 0)
-    {
-        pConfig->set_value("my_italic", "off");
-        settings.setValue("my_italic", "off");
-    }
-    else
-    {
-        pConfig->set_value("my_italic", "on");
-        settings.setValue("my_italic", "on");
-    }
-    delete pConfig;
-}
-
-void DlgOptions::set_my_font(QString strFont)
-{
-    QSettings settings;
-    Config *pConfig = new Config();
-    pConfig->set_value("my_font", strFont);
-    settings.setValue("my_font", strFont);
-    delete pConfig;
-}
-
-void DlgOptions::set_my_color(int index)
-{
-    QString strMyColor;
-
-    if (index == 0) strMyColor = "#000000";
-    else if (index == 1) strMyColor = "#623c00";
-    else if (index == 2) strMyColor = "#c86c00";
-    else if (index == 3) strMyColor = "#ff6500";
-    else if (index == 4) strMyColor = "#ff0000";
-    else if (index == 5) strMyColor = "#e40f0f";
-    else if (index == 6) strMyColor = "#990033";
-    else if (index == 7) strMyColor = "#8800ab";
-    else if (index == 8) strMyColor = "#ce00ff";
-    else if (index == 9) strMyColor = "#0f2ab1";
-    else if (index == 10) strMyColor = "#3030ce";
-    else if (index == 11) strMyColor = "#006699";
-    else if (index == 12) strMyColor = "#1a866e";
-    else if (index == 13) strMyColor = "#008100";
-    else if (index == 14) strMyColor = "#959595";
-    else strMyColor = "#000000";
-
-    QSettings settings;
-    Config *pConfig = new Config();
-    pConfig->set_value("my_color", strMyColor);
-    settings.setValue("my_color", strMyColor);
-    delete pConfig;
-}
-
-void DlgOptions::set_font_size(QString strFontSize)
-{
-    QSettings settings;
-    Config *pConfig = new Config();
-    pConfig->set_value("font_size", strFontSize+"px");
-    settings.setValue("font_size", strFontSize+"px");
-    delete pConfig;
-}
-
-void DlgOptions::set_background_color()
-{
-    // get value
-    Config *pConfig0 = new Config();
-    QString strDefaultColor = pConfig0->get_value("background_color");
-    delete pConfig0;
-
-    // color dialog
-    QColor cColor = QColorDialog::getColor(QColor(strDefaultColor), this);
-
-    if (cColor.isValid() == true)
-    {
-        QString strColor = cColor.name();
-
-        // save to pushbutton
-        QPixmap color(50,15);
-        color.fill(QColor(cColor));
-        ui.pushButton_background_color->setIcon(QIcon(color));
-
-        // save
-        QSettings settings;
-        Config *pConfig1 = new Config();
-        pConfig1->set_value("background_color", strColor);
-        settings.setValue("background_color", strColor);
-        delete pConfig1;
-
-        // refresh tabs
-        Core::instance()->refresh_colors();
-    }
-}
-
-void DlgOptions::set_default_font_color()
-{
-    // get value
-    Config *pConfig0 = new Config();
-    QString strDefaultColor = pConfig0->get_value("default_font_color");
-    delete pConfig0;
-
-    // color dialog
-    QColor cColor = QColorDialog::getColor(QColor(strDefaultColor), this);
-
-    if (cColor.isValid() == true)
-    {
-        QString strColor = cColor.name();
-
-        // save to pushbutton
-        QPixmap color(50,15);
-        color.fill(QColor(cColor));
-        ui.pushButton_default_font_color->setIcon(QIcon(color));
-
-        // save
-        QSettings settings;
-        Config *pConfig1 = new Config();
-        pConfig1->set_value("default_font_color", strColor);
-        settings.setValue("default_font_color", strColor);
-        delete pConfig1;
-
-        // refresh tabs
-        Core::instance()->refresh_colors();
-    }
-}
-
-void DlgOptions::set_join_font_color()
-{
-    // get value
-    Config *pConfig0 = new Config();
-    QString strDefaultColor = pConfig0->get_value("font_color_level_1");
-    delete pConfig0;
-
-    // color dialog
-    QColor cColor = QColorDialog::getColor(QColor(strDefaultColor), this);
-
-    if (cColor.isValid() == true)
-    {
-        QString strColor = cColor.name();
-
-        // save to pushbutton
-        QPixmap color(50,15);
-        color.fill(QColor(cColor));
-        ui.pushButton_join_font_color->setIcon(QIcon(color));
-
-        // save
-        QSettings settings;
-        Config *pConfig1 = new Config();
-        pConfig1->set_value("font_color_level_1", strColor);
-        settings.setValue("font_color_level_1", strColor);
-        delete pConfig1;
-
-        // refresh tabs
-        Core::instance()->refresh_colors();
-    }
-}
-
-void DlgOptions::set_part_font_color()
-{
-    // get value
-    Config *pConfig0 = new Config();
-    QString strDefaultColor = pConfig0->get_value("font_color_level_2");
-    delete pConfig0;
-
-    // color dialog
-    QColor cColor = QColorDialog::getColor(QColor(strDefaultColor), this);
-
-    if (cColor.isValid() == true)
-    {
-        QString strColor = cColor.name();
-
-        // save to pushbutton
-        QPixmap color(50,15);
-        color.fill(QColor(cColor));
-        ui.pushButton_part_font_color->setIcon(QIcon(color));
-
-        // save
-        QSettings settings;
-        Config *pConfig1 = new Config();
-        pConfig1->set_value("font_color_level_2", strColor);
-        settings.setValue("font_color_level_2", strColor);
-        delete pConfig1;
-
-        // refresh tabs
-        Core::instance()->refresh_colors();
-    }
-}
-
-void DlgOptions::set_quit_font_color()
-{
-    // get value
-    Config *pConfig0 = new Config();
-    QString strDefaultColor = pConfig0->get_value("font_color_level_3");
-    delete pConfig0;
-
-    // color dialog
-    QColor cColor = QColorDialog::getColor(QColor(strDefaultColor), this);
-
-    if (cColor.isValid() == true)
-    {
-        QString strColor = cColor.name();
-
-        // save to pushbutton
-        QPixmap color(50,15);
-        color.fill(QColor(cColor));
-        ui.pushButton_quit_font_color->setIcon(QIcon(color));
-
-        // save
-        QSettings settings;
-        Config *pConfig1 = new Config();
-        pConfig1->set_value("font_color_level_3", strColor);
-        settings.setValue("font_color_level_3", strColor);
-        delete pConfig1;
-
-        // refresh tabs
-        Core::instance()->refresh_colors();
-    }
-}
-
-void DlgOptions::set_kick_font_color()
-{
-    // get value
-    Config *pConfig0 = new Config();
-    QString strDefaultColor = pConfig0->get_value("font_color_level_4");
-    delete pConfig0;
-
-    // color dialog
-    QColor cColor = QColorDialog::getColor(QColor(strDefaultColor), this);
-
-    if (cColor.isValid() == true)
-    {
-        QString strColor = cColor.name();
-
-        // save to pushbutton
-        QPixmap color(50,15);
-        color.fill(QColor(cColor));
-        ui.pushButton_kick_font_color->setIcon(QIcon(color));
-
-        // save
-        QSettings settings;
-        Config *pConfig1 = new Config();
-        pConfig1->set_value("font_color_level_4", strColor);
-        settings.setValue("font_color_level_4", strColor);
-        delete pConfig1;
-
-        // refresh tabs
-        Core::instance()->refresh_colors();
-    }
-}
-
-void DlgOptions::set_mode_font_color()
-{
-    // get value
-    Config *pConfig0 = new Config();
-    QString strDefaultColor = pConfig0->get_value("font_color_level_5");
-    delete pConfig0;
-
-    // color dialog
-    QColor cColor = QColorDialog::getColor(QColor(strDefaultColor), this);
-
-    if (cColor.isValid() == true)
-    {
-        QString strColor = cColor.name();
-
-        // save to pushbutton
-        QPixmap color(50,15);
-        color.fill(QColor(cColor));
-        ui.pushButton_mode_font_color->setIcon(QIcon(color));
-
-        // save
-        QSettings settings;
-        Config *pConfig1 = new Config();
-        pConfig1->set_value("font_color_level_5", strColor);
-        settings.setValue("font_color_level_5", strColor);
-        delete pConfig1;
-
-        // refresh tabs
-        Core::instance()->refresh_colors();
-    }
-}
-
-void DlgOptions::set_notice_font_color()
-{
-    // get value
-    Config *pConfig0 = new Config();
-    QString strDefaultColor = pConfig0->get_value("font_color_level_6");
-    delete pConfig0;
-
-    // color dialog
-    QColor cColor = QColorDialog::getColor(QColor(strDefaultColor), this);
-
-    if (cColor.isValid() == true)
-    {
-        QString strColor = cColor.name();
-
-        // save to pushbutton
-        QPixmap color(50,15);
-        color.fill(QColor(cColor));
-        ui.pushButton_notice_font_color->setIcon(QIcon(color));
-
-        // save
-        QSettings settings;
-        Config *pConfig1 = new Config();
-        pConfig1->set_value("font_color_level_6", strColor);
-        settings.setValue("font_color_level_6", strColor);
-        delete pConfig1;
-
-        // refresh tabs
-        Core::instance()->refresh_colors();
-    }
-}
-
-void DlgOptions::set_info_font_color()
-{
-    // get value
-    Config *pConfig0 = new Config();
-    QString strDefaultColor = pConfig0->get_value("font_color_level_7");
-    delete pConfig0;
-
-    // color dialog
-    QColor cColor = QColorDialog::getColor(QColor(strDefaultColor), this);
-
-    if (cColor.isValid() == true)
-    {
-        QString strColor = cColor.name();
-
-        // save to pushbutton
-        QPixmap color(50,15);
-        color.fill(QColor(cColor));
-        ui.pushButton_info_font_color->setIcon(QIcon(color));
-
-        // save
-        QSettings settings;
-        Config *pConfig1 = new Config();
-        pConfig1->set_value("font_color_level_7", strColor);
-        settings.setValue("font_color_level_7", strColor);
-        delete pConfig1;
-
-        // refresh tabs
-        Core::instance()->refresh_colors();
-    }
-}
-
-void DlgOptions::set_error_font_color()
-{
-    // get value
-    Config *pConfig0 = new Config();
-    QString strDefaultColor = pConfig0->get_value("font_color_level_9");
-    delete pConfig0;
-
-    // color dialog
-    QColor cColor = QColorDialog::getColor(QColor(strDefaultColor), this);
-
-    if (cColor.isValid() == true)
-    {
-        QString strColor = cColor.name();
-
-        // save to pushbutton
-        QPixmap color(50,15);
-        color.fill(QColor(cColor));
-        ui.pushButton_error_font_color->setIcon(QIcon(color));
-
-        // save
-        QSettings settings;
-        Config *pConfig1 = new Config();
-        pConfig1->set_value("font_color_level_9", strColor);
-        settings.setValue("font_color_level_9", strColor);
-        delete pConfig1;
-
-        // refresh tabs
-        Core::instance()->refresh_colors();
-    }
-}
-
-void DlgOptions::set_channel_font_color()
-{
-    // get value
-    Config *pConfig0 = new Config();
-    QString strDefaultColor = pConfig0->get_value("channel_font_color");
-    delete pConfig0;
-
-    // color dialog
-    QColor cColor = QColorDialog::getColor(QColor(strDefaultColor), this);
-
-    if (cColor.isValid() == true)
-    {
-        QString strColor = cColor.name();
-
-        // save to pushbutton
-        QPixmap color(50,15);
-        color.fill(QColor(cColor));
-        ui.pushButton_channel_font_color->setIcon(QIcon(color));
-
-        // save
-        QSettings settings;
-        Config *pConfig1 = new Config();
-        pConfig1->set_value("channel_font_color", strColor);
-        settings.setValue("channel_font_color", strColor);
-        delete pConfig1;
-
-        // refresh tabs
-        Core::instance()->refresh_colors();
-    }
-}
-
-void DlgOptions::mainwindow_restore_default()
-{
-    QSettings settings;
-    Config *pConfig = new Config();
-
-    pConfig->set_value("background_color", "#ffffff");
-    settings.setValue("background_color", "#ffffff");
-
-    pConfig->set_value("default_font_color", "#000000");
-    settings.setValue("default_font_color", "#000000");
-
-    pConfig->set_value("font_color_level_1", "#009300");
-    settings.setValue("font_color_level_1", "#009300");
-
-    pConfig->set_value("font_color_level_2", "#4733FF");
-    settings.setValue("font_color_level_2", "#4733FF");
-
-    pConfig->set_value("font_color_level_3", "#00007F");
-    settings.setValue("font_color_level_3", "#00007F");
-
-    pConfig->set_value("font_color_level_4", "#00007F");
-    settings.setValue("font_color_level_4", "#00007F");
-
-    pConfig->set_value("font_color_level_5", "#009300");
-    settings.setValue("font_color_level_5", "#009300");
-
-    pConfig->set_value("font_color_level_6", "#0066FF");
-    settings.setValue("font_color_level_6", "#0066FF");
-
-    pConfig->set_value("font_color_level_7", "#666666");
-    settings.setValue("font_color_level_7", "#666666");
-
-    pConfig->set_value("font_color_level_9", "#ff0000");
-    settings.setValue("font_color_level_9", "#ff0000");
-
-    pConfig->set_value("channel_font_color", "#0000ff");
-    settings.setValue("channel_font_color", "#0000ff");
-
-    delete pConfig;
-
-    // set
-    set_mainwindow_colors();
-
-    // refresh tabs
-    Core::instance()->refresh_colors();
-}
-
-void DlgOptions::set_nicklist_nick_color()
-{
-    // get value
-    Config *pConfig0 = new Config();
-    QString strDefaultColor = pConfig0->get_value("nicklist_nick_color");
-    delete pConfig0;
-
-    // color dialog
-    QColor cColor = QColorDialog::getColor(QColor(strDefaultColor), this);
-
-    if (cColor.isValid() == true)
-    {
-        QString strColor = cColor.name();
-
-        // save to pushbutton
-        QPixmap color(50,15);
-        color.fill(QColor(cColor));
-        ui.pushButton_nicklist_nick_color->setIcon(QIcon(color));
-
-        // save
-        QSettings settings;
-        Config *pConfig1 = new Config();
-        pConfig1->set_value("nicklist_nick_color", strColor);
-        settings.setValue("nicklist_nick_color", strColor);
-        delete pConfig1;
-    }
-}
-
-void DlgOptions::set_nicklist_selected_nick_color()
-{
-    // get value
-    Config *pConfig0 = new Config();
-    QString strDefaultColor = pConfig0->get_value("nicklist_selected_nick_color");
-    delete pConfig0;
-
-    // color dialog
-    QColor cColor = QColorDialog::getColor(QColor(strDefaultColor), this);
-
-    if (cColor.isValid() == true)
-    {
-        QString strColor = cColor.name();
-
-        // save to pushbutton
-        QPixmap color(50,15);
-        color.fill(QColor(cColor));
-        ui.pushButton_nicklist_selected_nick_color->setIcon(QIcon(color));
-
-        // save
-        QSettings settings;
-        Config *pConfig1 = new Config();
-        pConfig1->set_value("nicklist_selected_nick_color", strColor);
-        settings.setValue("nicklist_selected_nick_color", strColor);
-        delete pConfig1;
-    }
-}
-
-void DlgOptions::set_nicklist_busy_nick_color()
-{
-    // get value
-    Config *pConfig0 = new Config();
-    QString strDefaultColor = pConfig0->get_value("nicklist_busy_nick_color");
-    delete pConfig0;
-
-    // color dialog
-    QColor cColor = QColorDialog::getColor(QColor(strDefaultColor), this);
-
-    if (cColor.isValid() == true)
-    {
-        QString strColor = cColor.name();
-
-        // save to pushbutton
-        QPixmap color(50,15);
-        color.fill(QColor(cColor));
-        ui.pushButton_nicklist_busy_nick_color->setIcon(QIcon(color));
-
-        // save
-        QSettings settings;
-        Config *pConfig1 = new Config();
-        pConfig1->set_value("nicklist_busy_nick_color", strColor);
-        settings.setValue("nicklist_busy_nick_color", strColor);
-        delete pConfig1;
-    }
-}
-
-void DlgOptions::set_nicklist_gradient_1_color()
-{
-    // get value
-    Config *pConfig0 = new Config();
-    QString strDefaultColor = pConfig0->get_value("nicklist_gradient_1_color");
-    delete pConfig0;
-
-    // color dialog
-    QColor cColor = QColorDialog::getColor(QColor(strDefaultColor), this);
-
-    if (cColor.isValid() == true)
-    {
-        QString strColor = cColor.name();
-
-        // save to pushbutton
-        QPixmap color(50,15);
-        color.fill(QColor(cColor));
-        ui.pushButton_nicklist_gradient_1_color->setIcon(QIcon(color));
-
-        // save
-        QSettings settings;
-        Config *pConfig1 = new Config();
-        pConfig1->set_value("nicklist_gradient_1_color", strColor);
-        settings.setValue("nicklist_gradient_1_color", strColor);
-        delete pConfig1;
-    }
-}
-
-void DlgOptions::set_nicklist_gradient_2_color()
-{
-    // get value
-    Config *pConfig0 = new Config();
-    QString strDefaultColor = pConfig0->get_value("nicklist_gradient_2_color");
-    delete pConfig0;
-
-    // color dialog
-    QColor cColor = QColorDialog::getColor(QColor(strDefaultColor), this);
-
-    if (cColor.isValid() == true)
-    {
-        QString strColor = cColor.name();
-
-        // save to pushbutton
-        QPixmap color(50,15);
-        color.fill(QColor(cColor));
-        ui.pushButton_nicklist_gradient_2_color->setIcon(QIcon(color));
-
-        // save
-        QSettings settings;
-        Config *pConfig1 = new Config();
-        pConfig1->set_value("nicklist_gradient_2_color", strColor);
-        settings.setValue("nicklist_gradient_2_color", strColor);
-        delete pConfig1;
-    }
-}
-
-void DlgOptions::nicklist_restore_default()
-{
-    QSettings settings;
-    Config *pConfig = new Config();
-
-    pConfig->set_value("nicklist_nick_color", "#333333");
-    settings.setValue("nicklist_nick_color", "#333333");
-
-    pConfig->set_value("nicklist_selected_nick_color", "#ffffff");
-    settings.setValue("nicklist_selected_nick_color", "#ffffff");
-
-    pConfig->set_value("nicklist_busy_nick_color", "#a0a0a4");
-    settings.setValue("nicklist_busy_nick_color", "#a0a0a4");
-
-    pConfig->set_value("nicklist_gradient_1_color", "#77d5f7");
-    settings.setValue("nicklist_gradient_1_color", "#77d5f7");
-
-    pConfig->set_value("nicklist_gradient_2_color", "#1b86b7");
-    settings.setValue("nicklist_gradient_2_color", "#1b86b7");
-
-    delete pConfig;
-
-    // set
-    set_nicklist_colors();
-}
-
-void DlgOptions::set_embedded_style()
-{
-    QStyle *style = QStyleFactory::create(ui.comboBox_embedded_styles->currentText());
-    QApplication::setStyle(style);
-}
-
-void DlgOptions::try_play_beep()
-{
-    Notify::instance()->play(Beep);
-}
-
-void DlgOptions::try_play_query()
-{
-    Notify::instance()->play(Query);
-}
-
-void DlgOptions::set_sound_beep()
-{
-    QString selectedFilter;
-    QString fileName = QFileDialog::getOpenFileName(this,
-                                     tr("Select Audio File"),
-                                     ui.lineEdit_sound_beep->text(),
-                                     tr("All Files (*);;Mp3 Files (*.mp3);;Wave Files (*.wav)"),
-                                     &selectedFilter,
-                                     0);
-    if (fileName.isEmpty() == false)
-    {
-        QSettings settings;
-        Config *pConfig = new Config();
-
-        pConfig->set_value("sound_beep", fileName);
-        settings.setValue("sound_beep", fileName);
-
-        delete pConfig;
-        ui.lineEdit_sound_beep->setText(fileName);
-    }
-}
-
-void DlgOptions::set_sound_query()
-{
-    QString selectedFilter;
-    QString fileName = QFileDialog::getOpenFileName(this,
-                                     tr("Select Audio File"),
-                                     ui.lineEdit_sound_query->text(),
-                                     tr("All Files (*);;Mp3 Files (*.mp3);;Wave Files (*.wav)"),
-                                     &selectedFilter,
-                                     0);
-    if (fileName.isEmpty() == false)
-    {
-        QSettings settings;
-        Config *pConfig = new Config();
-
-        pConfig->set_value("sound_query", fileName);
-        settings.setValue("sound_query", fileName);
-
-        delete pConfig;
-        ui.lineEdit_sound_query->setText(fileName);
-    }
-}
-
-void DlgOptions::disable_sounds()
-{
-    QSettings settings;
-    Config *pConfig = new Config();
-    if (ui.checkBox_disable_sounds->isChecked() == true)
-    {
-        pConfig->set_value("disable_sounds", "on");
-        settings.setValue("disable_sounds", "on");
-    }
-    else
-    {
-        pConfig->set_value("disable_sounds", "off");
-        settings.setValue("disable_sounds", "off");
-    }
-    delete pConfig;
-}
-
-void DlgOptions::open_logs_folder()
-{
-    QString strLogsPath = ui.lineEdit_logs_folder->text();
-
-    QProcess pProcess;
-    pProcess.execute(strOpenFolderCommand+" "+strLogsPath);
-}
-
-void DlgOptions::disable_logs()
-{
-    QSettings settings;
-    Config *pConfig = new Config();
-    if (ui.checkBox_disable_logs->isChecked() == true)
-    {
-        pConfig->set_value("disable_logs", "on");
-        settings.setValue("disable_logs", "on");
-    }
-    else
-    {
-        pConfig->set_value("disable_logs", "off");
-        settings.setValue("disable_logs", "off");
-    }
-    delete pConfig;
-}
-
-void DlgOptions::set_background_image()
-{
-    QString selectedFilter;
-    QString fileName = QFileDialog::getOpenFileName(this,
-                                     tr("Select Image File"),
-                                     ui.lineEdit_background_image->text(),
-                                     tr("All Files (*);;JPG Files (*.jpg);;PNG Files (*.png);;Bitmap Files (*.bmp)"),
-                                     &selectedFilter,
-                                     0);
-    if (fileName.isEmpty() == false)
-    {
-        QSettings settings;
-        Config *pConfig = new Config();
-
-        pConfig->set_value("background_image", fileName);
-        settings.setValue("background_image", fileName);
-
-        delete pConfig;
-        ui.lineEdit_background_image->setText(fileName);
-
-        // refresh
-        Core::instance()->refresh_background_image();
-    }
-}
-
-void DlgOptions::disable_background_image()
-{
-    QSettings settings;
-    Config *pConfig = new Config();
-    if (ui.checkBox_disable_background_image->isChecked() == true)
-    {
-        pConfig->set_value("disable_background_image", "on");
-        settings.setValue("disable_background_image", "on");
-    }
-    else
-    {
-        pConfig->set_value("disable_background_image", "off");
-        settings.setValue("disable_background_image", "off");
-    }
-    delete pConfig;
-
-    // refresh
-    Core::instance()->refresh_background_image();
-}
-
-void DlgOptions::set_spellchecker()
-{
-    QSettings settings;
-    Config *pConfig = new Config();
-    if (ui.radioButton_spellchecker_active->isChecked() == true)
-    {
-        pConfig->set_value("spellchecker", "on");
-        settings.setValue("spellchecker", "on");
-    }
-    else
-    {
-        pConfig->set_value("spellchecker", "off");
-        settings.setValue("spellchecker", "off");
-    }
-    delete pConfig;
-}
-
-void DlgOptions::button_cancel()
-{
-    this->close();
-}
-
-void DlgOptions::button_ok()
-{
-    // save
-    save_settings();
-
-    this->close();
-}
-
-void DlgOptions::set_mainwindow_colors()
-{
-    Config *pConfig = new Config();
-    QString strBackgroundColor = pConfig->get_value("background_color");
-    QString strDefaultFontColor = pConfig->get_value("default_font_color");
-    QString strJoinFontColor = pConfig->get_value("font_color_level_1");
-    QString strPartFontColor = pConfig->get_value("font_color_level_2");
-    QString strQuitFontColor = pConfig->get_value("font_color_level_3");
-    QString strKickFontColor = pConfig->get_value("font_color_level_4");
-    QString strModeFontColor = pConfig->get_value("font_color_level_5");
-    QString strNoticeFontColor = pConfig->get_value("font_color_level_6");
-    QString strInfoFontColor = pConfig->get_value("font_color_level_7");
-    QString strErrorFontColor = pConfig->get_value("font_color_level_9");
-    QString strChannelFontColor = pConfig->get_value("channel_font_color");
-    delete pConfig;
-
-    // set background color
-    QPixmap bcolor(50,15);
-    bcolor.fill(QColor(strBackgroundColor));
-    ui.pushButton_background_color->setIcon(QIcon(bcolor));
-
-    // set default font color
-    QPixmap dfcolor(50,15);
-    dfcolor.fill(QColor(strDefaultFontColor));
-    ui.pushButton_default_font_color->setIcon(QIcon(dfcolor));
-
-    // set join font color
-    QPixmap jfcolor(50,15);
-    jfcolor.fill(QColor(strJoinFontColor));
-    ui.pushButton_join_font_color->setIcon(QIcon(jfcolor));
-
-    // set part font color
-    QPixmap pfcolor(50,15);
-    pfcolor.fill(QColor(strPartFontColor));
-    ui.pushButton_part_font_color->setIcon(QIcon(pfcolor));
-
-    // set quit font color
-    QPixmap qfcolor(50,15);
-    qfcolor.fill(QColor(strQuitFontColor));
-    ui.pushButton_quit_font_color->setIcon(QIcon(qfcolor));
-
-    // set kick font color
-    QPixmap kfcolor(50,15);
-    kfcolor.fill(QColor(strKickFontColor));
-    ui.pushButton_kick_font_color->setIcon(QIcon(kfcolor));
-
-    // set mode font color
-    QPixmap mfcolor(50,15);
-    mfcolor.fill(QColor(strModeFontColor));
-    ui.pushButton_mode_font_color->setIcon(QIcon(mfcolor));
-
-    // set notice font color
-    QPixmap nfcolor(50,15);
-    nfcolor.fill(QColor(strNoticeFontColor));
-    ui.pushButton_notice_font_color->setIcon(QIcon(nfcolor));
-
-    // set info font color
-    QPixmap ifcolor(50,15);
-    ifcolor.fill(QColor(strInfoFontColor));
-    ui.pushButton_info_font_color->setIcon(QIcon(ifcolor));
-
-    // set error font color
-    QPixmap efcolor(50,15);
-    efcolor.fill(QColor(strErrorFontColor));
-    ui.pushButton_error_font_color->setIcon(QIcon(efcolor));
-
-    // set channel font color
-    QPixmap cfcolor(50,15);
-    cfcolor.fill(QColor(strChannelFontColor));
-    ui.pushButton_channel_font_color->setIcon(QIcon(cfcolor));
-}
-
-void DlgOptions::set_nicklist_colors()
-{
-    Config *pConfig = new Config();
-    QString strNicklistNickColor = pConfig->get_value("nicklist_nick_color");
-    QString strNicklistSelectedNickColor = pConfig->get_value("nicklist_selected_nick_color");
-    QString strNicklistBusyNickColor = pConfig->get_value("nicklist_busy_nick_color");
-    QString strNicklistGradient1Color = pConfig->get_value("nicklist_gradient_1_color");
-    QString strNicklistGradient2Color = pConfig->get_value("nicklist_gradient_2_color");
-    delete pConfig;
-
-    // set nicklist nick color
-    QPixmap nncolor(50,15);
-    nncolor.fill(QColor(strNicklistNickColor));
-    ui.pushButton_nicklist_nick_color->setIcon(QIcon(nncolor));
-
-    // set nicklist selected nick color
-    QPixmap nsncolor(50,15);
-    nsncolor.fill(QColor(strNicklistSelectedNickColor));
-    ui.pushButton_nicklist_selected_nick_color->setIcon(QIcon(nsncolor));
-
-    // set nicklist busy nick color
-    QPixmap nbncolor(50,15);
-    nbncolor.fill(QColor(strNicklistBusyNickColor));
-    ui.pushButton_nicklist_busy_nick_color->setIcon(QIcon(nbncolor));
-
-    // set nicklist gradient 1 color
-    QPixmap ng1color(50,15);
-    ng1color.fill(QColor(strNicklistGradient1Color));
-    ui.pushButton_nicklist_gradient_1_color->setIcon(QIcon(ng1color));
-
-    // set nicklist gradient 2 color
-    QPixmap ng2color(50,15);
-    ng2color.fill(QColor(strNicklistGradient2Color));
-    ui.pushButton_nicklist_gradient_2_color->setIcon(QIcon(ng2color));
-}
-
-void DlgOptions::save_settings()
-{
-    // get values
-    QString strNick = ui.lineEdit_nick->text();
-
-    // check nick
-    QString strPass;
-    if (ui.radioButton_unregistered_nick->isChecked() == true)
-    {
-        // fix nick
-        if (strNick[0] != '~')
-            strNick = "~"+strNick;
-
-        strPass = "";
-    }
-    else if (ui.radioButton_registered_nick->isChecked() == true)
-    {
-        // fix nick
-        if (strNick[0] == '~')
-            strNick = strNick.right(strNick.length()-1);
-
-        strPass = ui.lineEdit_password->text();
-    }
-
-    // encrypt pass
-    if (strPass.isEmpty() == false)
-    {
-        Crypt *pCrypt = new Crypt();
-        strPass = pCrypt->encrypt(strNick, strPass);
-        delete pCrypt;
-    }
-
-    // save values
-    QSettings settings;
-    settings.setValue("nick", strNick);
-    settings.setValue("pass", strPass);
-
-    Config *pConfig = new Config();
-    pConfig->set_value("nick", strNick);
-    pConfig->set_value("pass", strPass);
-    delete pConfig;
-}
-
-void DlgOptions::clear_settings()
-{
-    // config
+    // default values
     Config *pConfig = new Config();
     QString strNick = pConfig->get_value("nick");
     QString strPass = pConfig->get_value("pass");
@@ -1748,12 +464,6 @@ void DlgOptions::clear_settings()
 
     ui.comboBox_font_size->setCurrentIndex(iFontSize);
 
-    // set mainwindow colors
-    set_mainwindow_colors();
-
-    // set nicklist colors
-    set_nicklist_colors();
-
     // disable logs
     if (strDisableLogs == "on")
         ui.checkBox_disable_logs->setChecked(true);
@@ -1784,6 +494,12 @@ void DlgOptions::clear_settings()
         ui.radioButton_spellchecker_inactive->setChecked(true);
     }
 
+    // set mainwindow colors
+    set_mainwindow_colors();
+
+    // set nicklist colors
+    set_nicklist_colors();
+
     // disable change nick if connected
     QSettings settings;
     if (settings.value("logged").toString() == "on")
@@ -1808,4 +524,857 @@ void DlgOptions::clear_settings()
         ui.radioButton_modern_no_avatars->setDisabled(false);
         ui.radioButton_classic->setDisabled(false);
     }
+}
+
+void DlgOptions::create_signals()
+{
+    QObject::connect(ui.treeWidget_options, SIGNAL(currentItemChanged(QTreeWidgetItem*,QTreeWidgetItem*)), this, SLOT(change_page(QTreeWidgetItem*,QTreeWidgetItem*)));
+    QObject::connect(ui.radioButton_unregistered_nick, SIGNAL(clicked()), this, SLOT(hide_pass()));
+    QObject::connect(ui.radioButton_registered_nick, SIGNAL(clicked()), this, SLOT(show_pass()));
+    QObject::connect(ui.pushButton_register_nick, SIGNAL(clicked()), this, SLOT(button_register_nick()));
+    QObject::connect(ui.radioButton_modern_avatars, SIGNAL(clicked()), this, SLOT(set_modern_style_avatars()));
+    QObject::connect(ui.radioButton_modern_no_avatars, SIGNAL(clicked()), this, SLOT(set_modern_style_no_avatars()));
+    QObject::connect(ui.radioButton_classic, SIGNAL(clicked()), this, SLOT(set_classic_style()));
+    QObject::connect(ui.comboBox_language, SIGNAL(currentIndexChanged(int)), this, SLOT(language_changed(int)));
+    QObject::connect(ui.checkBox_auto_busy, SIGNAL(clicked(bool)), this, SLOT(auto_busy(bool)));
+    QObject::connect(ui.checkBox_disable_autojoin_favourites, SIGNAL(clicked(bool)), this, SLOT(disable_autojoin_favourites(bool)));
+    QObject::connect(ui.checkBox_show_zuo, SIGNAL(clicked(bool)), this, SLOT(show_zuo(bool)));
+    QObject::connect(ui.checkBox_hide_formating, SIGNAL(clicked(bool)), this, SLOT(hide_formating(bool)));
+    QObject::connect(ui.checkBox_hide_join_part, SIGNAL(clicked(bool)), this, SLOT(hide_join_part(bool)));
+    QObject::connect(ui.checkBox_hide_join_part_200, SIGNAL(clicked(bool)), this, SLOT(hide_join_part_200(bool)));
+    QObject::connect(ui.checkBox_disable_avatars, SIGNAL(clicked(bool)), this, SLOT(disable_avatars(bool)));
+    QObject::connect(ui.checkBox_disable_emots, SIGNAL(clicked(bool)), this, SLOT(disable_emots(bool)));
+    QObject::connect(ui.checkBox_disable_replaces, SIGNAL(clicked(bool)), this, SLOT(disable_replaces(bool)));
+    QObject::connect(ui.comboBox_my_bold, SIGNAL(currentIndexChanged(int)), this, SLOT(set_my_bold(int)));
+    QObject::connect(ui.comboBox_my_italic, SIGNAL(currentIndexChanged(int)), this, SLOT(set_my_italic(int)));
+    QObject::connect(ui.comboBox_my_font, SIGNAL(currentIndexChanged(QString)), this, SLOT(set_my_font(QString)));
+    QObject::connect(ui.comboBox_my_color, SIGNAL(currentIndexChanged(int)), this, SLOT(set_my_color(int)));
+    QObject::connect(ui.comboBox_font_size, SIGNAL(currentIndexChanged(QString)), this, SLOT(set_font_size(QString)));
+    QObject::connect(ui.pushButton_background_color, SIGNAL(clicked()), this, SLOT(set_background_color()));
+    QObject::connect(ui.pushButton_default_font_color, SIGNAL(clicked()), this, SLOT(set_default_font_color()));
+    QObject::connect(ui.pushButton_join_font_color, SIGNAL(clicked()), this, SLOT(set_join_font_color()));
+    QObject::connect(ui.pushButton_part_font_color, SIGNAL(clicked()), this, SLOT(set_part_font_color()));
+    QObject::connect(ui.pushButton_quit_font_color, SIGNAL(clicked()), this, SLOT(set_quit_font_color()));
+    QObject::connect(ui.pushButton_kick_font_color, SIGNAL(clicked()), this, SLOT(set_kick_font_color()));
+    QObject::connect(ui.pushButton_mode_font_color, SIGNAL(clicked()), this, SLOT(set_mode_font_color()));
+    QObject::connect(ui.pushButton_notice_font_color, SIGNAL(clicked()), this, SLOT(set_notice_font_color()));
+    QObject::connect(ui.pushButton_info_font_color, SIGNAL(clicked()), this, SLOT(set_info_font_color()));
+    QObject::connect(ui.pushButton_error_font_color, SIGNAL(clicked()), this, SLOT(set_error_font_color()));
+    QObject::connect(ui.pushButton_channel_font_color, SIGNAL(clicked()), this, SLOT(set_channel_font_color()));
+    QObject::connect(ui.pushButton_mainwindow_restore_default, SIGNAL(clicked()), this, SLOT(mainwindow_restore_default()));
+    QObject::connect(ui.pushButton_nicklist_nick_color, SIGNAL(clicked()), this, SLOT(set_nicklist_nick_color()));
+    QObject::connect(ui.pushButton_nicklist_selected_nick_color, SIGNAL(clicked()), this, SLOT(set_nicklist_selected_nick_color()));
+    QObject::connect(ui.pushButton_nicklist_busy_nick_color, SIGNAL(clicked()), this, SLOT(set_nicklist_busy_nick_color()));
+    QObject::connect(ui.pushButton_nicklist_gradient_1_color, SIGNAL(clicked()), this, SLOT(set_nicklist_gradient_1_color()));
+    QObject::connect(ui.pushButton_nicklist_gradient_2_color, SIGNAL(clicked()), this, SLOT(set_nicklist_gradient_2_color()));
+    QObject::connect(ui.pushButton_nicklist_restore_default, SIGNAL(clicked()), this, SLOT(nicklist_restore_default()));
+    QObject::connect(ui.pushButton_set_embedded_style, SIGNAL(clicked()), this, SLOT(set_embedded_style()));
+    QObject::connect(ui.pushButton_play_beep, SIGNAL(clicked()), this, SLOT(try_play_beep()));
+    QObject::connect(ui.pushButton_play_query, SIGNAL(clicked()), this, SLOT(try_play_query()));
+    QObject::connect(ui.pushButton_sound_beep_change, SIGNAL(clicked()), this, SLOT(set_sound_beep()));
+    QObject::connect(ui.pushButton_sound_query_change, SIGNAL(clicked()), this, SLOT(set_sound_query()));
+    QObject::connect(ui.checkBox_disable_sounds, SIGNAL(clicked(bool)), this, SLOT(disable_sounds(bool)));
+    QObject::connect(ui.pushButton_logs_open_folder, SIGNAL(clicked()), this, SLOT(open_logs_folder()));
+    QObject::connect(ui.checkBox_disable_logs, SIGNAL(clicked(bool)), this, SLOT(disable_logs(bool)));
+    QObject::connect(ui.pushButton_set_background_image, SIGNAL(clicked()), this, SLOT(set_background_image()));
+    QObject::connect(ui.checkBox_disable_background_image, SIGNAL(clicked(bool)), this, SLOT(disable_background_image(bool)));
+    QObject::connect(ui.radioButton_spellchecker_active, SIGNAL(clicked()), this, SLOT(set_spellchecker()));
+    QObject::connect(ui.radioButton_spellchecker_inactive, SIGNAL(clicked()), this, SLOT(set_spellchecker()));
+    QObject::connect(ui.buttonBox, SIGNAL(accepted()), this, SLOT(button_ok()));
+    QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(button_cancel()));
+}
+
+void DlgOptions::change_page(QTreeWidgetItem *current, QTreeWidgetItem *previous)
+{
+    if (!current)
+        current = previous;
+
+    ui.stackedWidget->setCurrentIndex(ui.treeWidget_options->currentIndex().row());
+}
+
+void DlgOptions::hide_pass()
+{
+    ui.label_password->hide();
+    ui.lineEdit_password->hide();
+
+    // fix nick
+    if (ui.lineEdit_nick->text()[0] != '~')
+        ui.lineEdit_nick->setText("~"+ui.lineEdit_nick->text());
+}
+
+void DlgOptions::show_pass()
+{
+    ui.label_password->show();
+    ui.lineEdit_password->show();
+
+    // fix nick
+    if (ui.lineEdit_nick->text()[0] == '~')
+        ui.lineEdit_nick->setText(ui.lineEdit_nick->text().right(ui.lineEdit_nick->text().length()-1));
+}
+
+void DlgOptions::button_register_nick()
+{
+    DlgRegisterNick(Core::instance()->sccWindow(), this).exec();
+}
+
+void DlgOptions::set_modern_style_avatars()
+{
+    // save settings
+    save_settings();
+
+    // save style
+    QSettings settings;
+    Config *pConfig = new Config();
+    pConfig->set_value("style", "modern");
+    settings.setValue("style", "modern");
+    pConfig->set_value("disable_avatars", "off");
+    settings.setValue("disable_avatars", "off");
+    delete pConfig;
+
+    QMessageBox::information(0, "", tr("Restart program to apply the changes."));
+}
+
+void DlgOptions::set_modern_style_no_avatars()
+{
+    // save settings
+    save_settings();
+
+    // save style
+    QSettings settings;
+    Config *pConfig = new Config();
+    pConfig->set_value("style", "modern");
+    settings.setValue("style", "modern");
+    pConfig->set_value("disable_avatars", "on");
+    settings.setValue("disable_avatars", "on");
+    delete pConfig;
+
+    QMessageBox::information(0, "", tr("Restart program to apply the changes."));
+}
+
+void DlgOptions::set_classic_style()
+{
+    // save settings
+    save_settings();
+
+    // save style
+    QSettings settings;
+    Config *pConfig = new Config();
+    pConfig->set_value("style", "classic");
+    settings.setValue("style", "classic");
+    pConfig->set_value("disable_avatars", "on");
+    settings.setValue("disable_avatars", "on");
+    delete pConfig;
+
+    QMessageBox::information(0, "", tr("Restart program to apply the changes."));
+}
+
+void DlgOptions::language_changed(int index)
+{
+    QSettings settings;
+    Config *pConfig = new Config();
+    if (index == 0) // english
+    {
+        pConfig->set_value("language", "en");
+        settings.setValue("language", "en");
+    }
+    else if (index == 1) // polish
+    {
+        pConfig->set_value("language", "pl");
+        settings.setValue("language", "pl");
+    }
+    else // polish
+    {
+        pConfig->set_value("language", "pl");
+        settings.setValue("language", "pl");
+    }
+    delete pConfig;
+
+    QMessageBox::information(0, "", tr("Restart program to apply the changes."));
+}
+
+void DlgOptions::auto_busy(bool bValue)
+{
+    QString strValue = (bValue == true ? "on" : "off");
+
+    QSettings settings;
+    Config *pConfig = new Config();
+    pConfig->set_value("auto_busy", strValue);
+    settings.setValue("auto_busy", strValue);
+    delete pConfig;
+}
+
+void DlgOptions::disable_autojoin_favourites(bool bValue)
+{
+    QString strValue = (bValue == true ? "on" : "off");
+
+    QSettings settings;
+    Config *pConfig = new Config();
+    pConfig->set_value("disable_autojoin_favourites", strValue);
+    settings.setValue("disable_autojoin_favourites", strValue);
+    delete pConfig;
+}
+
+void DlgOptions::show_zuo(bool bValue)
+{
+    QString strValue = (bValue == true ? "on" : "off");
+
+    QSettings settings;
+    Config *pConfig = new Config();
+    pConfig->set_value("show_zuo", strValue);
+    settings.setValue("show_zuo", strValue);
+    delete pConfig;
+}
+
+void DlgOptions::hide_formating(bool bValue)
+{
+    QString strValue = (bValue == true ? "on" : "off");
+
+    QSettings settings;
+    Config *pConfig = new Config();
+    pConfig->set_value("hide_formating", strValue);
+    settings.setValue("hide_formating", strValue);
+    delete pConfig;
+}
+
+void DlgOptions::hide_join_part(bool bValue)
+{
+    QString strValue = (bValue == true ? "on" : "off");
+
+    QSettings settings;
+    Config *pConfig = new Config();
+    pConfig->set_value("hide_join_part", strValue);
+    settings.setValue("hide_join_part", strValue);
+    delete pConfig;
+}
+
+void DlgOptions::hide_join_part_200(bool bValue)
+{
+    QString strValue = (bValue == true ? "on" : "off");
+
+    QSettings settings;
+    Config *pConfig = new Config();
+    pConfig->set_value("hide_join_part_200", strValue);
+    settings.setValue("hide_join_part_200", strValue);
+    delete pConfig;
+}
+
+void DlgOptions::disable_avatars(bool bValue)
+{
+    QString strValue = (bValue == true ? "on" : "off");
+
+    QSettings settings;
+    Config *pConfig = new Config();
+    pConfig->set_value("disable_avatars", strValue);
+    settings.setValue("disable_avatars", strValue);
+    delete pConfig;
+}
+
+void DlgOptions::disable_emots(bool bValue)
+{
+    QString strValue = (bValue == true ? "on" : "off");
+
+    QSettings settings;
+    Config *pConfig = new Config();
+    pConfig->set_value("disable_emots", strValue);
+    settings.setValue("disable_emots", strValue);
+    delete pConfig;
+}
+
+void DlgOptions::disable_replaces(bool bValue)
+{
+    QString strValue = (bValue == true ? "on" : "off");
+
+    QSettings settings;
+    Config *pConfig = new Config();
+    pConfig->set_value("disable_replaces", strValue);
+    settings.setValue("disable_replaces", strValue);
+    delete pConfig;
+}
+
+void DlgOptions::set_my_bold(int index)
+{
+    QString strValue = (index == 0 ? "off" : "on");
+
+    QSettings settings;
+    Config *pConfig = new Config();
+    pConfig->set_value("my_bold", strValue);
+    settings.setValue("my_bold", strValue);
+    delete pConfig;
+}
+
+void DlgOptions::set_my_italic(int index)
+{
+    QString strValue = (index == 0 ? "off" : "on");
+
+    QSettings settings;
+    Config *pConfig = new Config();
+    pConfig->set_value("my_italic", strValue);
+    settings.setValue("my_italic", strValue);
+    delete pConfig;
+}
+
+void DlgOptions::set_my_font(QString strFont)
+{
+    QSettings settings;
+    Config *pConfig = new Config();
+    pConfig->set_value("my_font", strFont);
+    settings.setValue("my_font", strFont);
+    delete pConfig;
+}
+
+void DlgOptions::set_my_color(int index)
+{
+    QString strMyColor;
+    if (index == 0) strMyColor = "#000000";
+    else if (index == 1) strMyColor = "#623c00";
+    else if (index == 2) strMyColor = "#c86c00";
+    else if (index == 3) strMyColor = "#ff6500";
+    else if (index == 4) strMyColor = "#ff0000";
+    else if (index == 5) strMyColor = "#e40f0f";
+    else if (index == 6) strMyColor = "#990033";
+    else if (index == 7) strMyColor = "#8800ab";
+    else if (index == 8) strMyColor = "#ce00ff";
+    else if (index == 9) strMyColor = "#0f2ab1";
+    else if (index == 10) strMyColor = "#3030ce";
+    else if (index == 11) strMyColor = "#006699";
+    else if (index == 12) strMyColor = "#1a866e";
+    else if (index == 13) strMyColor = "#008100";
+    else if (index == 14) strMyColor = "#959595";
+    else strMyColor = "#000000";
+
+    QSettings settings;
+    Config *pConfig = new Config();
+    pConfig->set_value("my_color", strMyColor);
+    settings.setValue("my_color", strMyColor);
+    delete pConfig;
+}
+
+void DlgOptions::set_font_size(QString strFontSize)
+{
+    QSettings settings;
+    Config *pConfig = new Config();
+    pConfig->set_value("font_size", strFontSize+"px");
+    settings.setValue("font_size", strFontSize+"px");
+    delete pConfig;
+}
+
+void DlgOptions::set_background_color()
+{
+    set_color("background_color");
+}
+
+void DlgOptions::set_default_font_color()
+{
+    set_color("default_font_color");
+}
+
+void DlgOptions::set_join_font_color()
+{
+    set_color("font_color_level_1");
+}
+
+void DlgOptions::set_part_font_color()
+{
+    set_color("font_color_level_2");
+}
+
+void DlgOptions::set_quit_font_color()
+{
+    set_color("font_color_level_3");
+}
+
+void DlgOptions::set_kick_font_color()
+{
+    set_color("font_color_level_4");
+}
+
+void DlgOptions::set_mode_font_color()
+{
+    set_color("font_color_level_5");
+}
+
+void DlgOptions::set_notice_font_color()
+{
+    set_color("font_color_level_6");
+}
+
+void DlgOptions::set_info_font_color()
+{
+    set_color("font_color_level_7");
+}
+
+void DlgOptions::set_error_font_color()
+{
+    set_color("font_color_level_9");
+}
+
+void DlgOptions::set_channel_font_color()
+{
+    set_color("channel_font_color");
+}
+
+void DlgOptions::mainwindow_restore_default()
+{
+    QSettings settings;
+    Config *pConfig = new Config();
+
+    pConfig->set_value("background_color", "#ffffff");
+    settings.setValue("background_color", "#ffffff");
+
+    pConfig->set_value("default_font_color", "#000000");
+    settings.setValue("default_font_color", "#000000");
+
+    pConfig->set_value("font_color_level_1", "#009300");
+    settings.setValue("font_color_level_1", "#009300");
+
+    pConfig->set_value("font_color_level_2", "#4733FF");
+    settings.setValue("font_color_level_2", "#4733FF");
+
+    pConfig->set_value("font_color_level_3", "#00007F");
+    settings.setValue("font_color_level_3", "#00007F");
+
+    pConfig->set_value("font_color_level_4", "#00007F");
+    settings.setValue("font_color_level_4", "#00007F");
+
+    pConfig->set_value("font_color_level_5", "#009300");
+    settings.setValue("font_color_level_5", "#009300");
+
+    pConfig->set_value("font_color_level_6", "#0066FF");
+    settings.setValue("font_color_level_6", "#0066FF");
+
+    pConfig->set_value("font_color_level_7", "#666666");
+    settings.setValue("font_color_level_7", "#666666");
+
+    pConfig->set_value("font_color_level_9", "#ff0000");
+    settings.setValue("font_color_level_9", "#ff0000");
+
+    pConfig->set_value("channel_font_color", "#0000ff");
+    settings.setValue("channel_font_color", "#0000ff");
+
+    delete pConfig;
+
+    // set
+    set_mainwindow_colors();
+
+    // refresh tabs
+    Core::instance()->refresh_colors();
+}
+
+void DlgOptions::set_nicklist_nick_color()
+{
+    set_color("nicklist_nick_color");
+}
+
+void DlgOptions::set_nicklist_selected_nick_color()
+{
+    set_color("nicklist_selected_nick_color");
+}
+
+void DlgOptions::set_nicklist_busy_nick_color()
+{
+    set_color("nicklist_busy_nick_color");
+}
+
+void DlgOptions::set_nicklist_gradient_1_color()
+{
+    set_color("nicklist_gradient_1_color");
+}
+
+void DlgOptions::set_nicklist_gradient_2_color()
+{
+    set_color("nicklist_gradient_2_color");
+}
+
+void DlgOptions::nicklist_restore_default()
+{
+    QSettings settings;
+    Config *pConfig = new Config();
+
+    pConfig->set_value("nicklist_nick_color", "#333333");
+    settings.setValue("nicklist_nick_color", "#333333");
+
+    pConfig->set_value("nicklist_selected_nick_color", "#ffffff");
+    settings.setValue("nicklist_selected_nick_color", "#ffffff");
+
+    pConfig->set_value("nicklist_busy_nick_color", "#a0a0a4");
+    settings.setValue("nicklist_busy_nick_color", "#a0a0a4");
+
+    pConfig->set_value("nicklist_gradient_1_color", "#77d5f7");
+    settings.setValue("nicklist_gradient_1_color", "#77d5f7");
+
+    pConfig->set_value("nicklist_gradient_2_color", "#1b86b7");
+    settings.setValue("nicklist_gradient_2_color", "#1b86b7");
+
+    delete pConfig;
+
+    // set
+    set_nicklist_colors();
+}
+
+void DlgOptions::set_embedded_style()
+{
+    QStyle *style = QStyleFactory::create(ui.comboBox_embedded_styles->currentText());
+    QApplication::setStyle(style);
+}
+
+void DlgOptions::try_play_beep()
+{
+    Notify::instance()->play(Beep);
+}
+
+void DlgOptions::try_play_query()
+{
+    Notify::instance()->play(Query);
+}
+
+void DlgOptions::set_sound_beep()
+{
+    QString selectedFilter;
+    QString fileName = QFileDialog::getOpenFileName(this,
+                                     tr("Select Audio File"),
+                                     ui.lineEdit_sound_beep->text(),
+                                     tr("All Files (*);;Mp3 Files (*.mp3);;Wave Files (*.wav)"),
+                                     &selectedFilter,
+                                     0);
+    if (fileName.isEmpty() == false)
+    {
+        QSettings settings;
+        Config *pConfig = new Config();
+
+        pConfig->set_value("sound_beep", fileName);
+        settings.setValue("sound_beep", fileName);
+
+        delete pConfig;
+        ui.lineEdit_sound_beep->setText(fileName);
+    }
+}
+
+void DlgOptions::set_sound_query()
+{
+    QString selectedFilter;
+    QString fileName = QFileDialog::getOpenFileName(this,
+                                     tr("Select Audio File"),
+                                     ui.lineEdit_sound_query->text(),
+                                     tr("All Files (*);;Mp3 Files (*.mp3);;Wave Files (*.wav)"),
+                                     &selectedFilter,
+                                     0);
+    if (fileName.isEmpty() == false)
+    {
+        QSettings settings;
+        Config *pConfig = new Config();
+
+        pConfig->set_value("sound_query", fileName);
+        settings.setValue("sound_query", fileName);
+
+        delete pConfig;
+        ui.lineEdit_sound_query->setText(fileName);
+    }
+}
+
+void DlgOptions::disable_sounds(bool bValue)
+{
+    QString strValue = (bValue == true ? "on" : "off");
+
+    QSettings settings;
+    Config *pConfig = new Config();
+    pConfig->set_value("disable_sounds", strValue);
+    settings.setValue("disable_sounds", strValue);
+    delete pConfig;
+}
+
+void DlgOptions::open_logs_folder()
+{
+    QString strLogsPath = ui.lineEdit_logs_folder->text();
+
+    QProcess pProcess;
+    pProcess.execute(strOpenFolderCommand+" "+strLogsPath);
+}
+
+void DlgOptions::disable_logs(bool bValue)
+{
+    QString strValue = (bValue == true ? "on" : "off");
+
+    QSettings settings;
+    Config *pConfig = new Config();
+    pConfig->set_value("disable_logs", strValue);
+    settings.setValue("disable_logs", strValue);
+    delete pConfig;
+}
+
+void DlgOptions::set_background_image()
+{
+    QString selectedFilter;
+    QString fileName = QFileDialog::getOpenFileName(this,
+                                     tr("Select Image File"),
+                                     ui.lineEdit_background_image->text(),
+                                     tr("All Files (*);;JPG Files (*.jpg);;PNG Files (*.png);;Bitmap Files (*.bmp)"),
+                                     &selectedFilter,
+                                     0);
+    if (fileName.isEmpty() == false)
+    {
+        QSettings settings;
+        Config *pConfig = new Config();
+
+        pConfig->set_value("background_image", fileName);
+        settings.setValue("background_image", fileName);
+
+        delete pConfig;
+        ui.lineEdit_background_image->setText(fileName);
+
+        // refresh
+        Core::instance()->refresh_background_image();
+    }
+}
+
+void DlgOptions::disable_background_image(bool bValue)
+{
+    QString strValue = (bValue == true ? "on" : "off");
+
+    QSettings settings;
+    Config *pConfig = new Config();
+    pConfig->set_value("disable_background_image", strValue);
+    settings.setValue("disable_background_image", strValue);
+    delete pConfig;
+
+    // refresh
+    Core::instance()->refresh_background_image();
+}
+
+void DlgOptions::set_spellchecker()
+{
+    QString strValue = (ui.radioButton_spellchecker_active->isChecked() == true ? "on" : "off");
+
+    QSettings settings;
+    Config *pConfig = new Config();
+    pConfig->set_value("spellchecker", strValue);
+    settings.setValue("spellchecker", strValue);
+    delete pConfig;
+}
+
+void DlgOptions::button_cancel()
+{
+    this->close();
+}
+
+void DlgOptions::button_ok()
+{
+    // save
+    save_settings();
+
+    this->close();
+}
+
+void DlgOptions::save_settings()
+{
+    // get values
+    QString strNick = ui.lineEdit_nick->text();
+
+    // check nick
+    QString strPass;
+    if (ui.radioButton_unregistered_nick->isChecked() == true)
+    {
+        // fix nick
+        if (strNick[0] != '~')
+            strNick = "~"+strNick;
+
+        strPass = "";
+    }
+    else if (ui.radioButton_registered_nick->isChecked() == true)
+    {
+        // fix nick
+        if (strNick[0] == '~')
+            strNick = strNick.right(strNick.length()-1);
+
+        strPass = ui.lineEdit_password->text();
+    }
+
+    // encrypt pass
+    if (strPass.isEmpty() == false)
+    {
+        Crypt *pCrypt = new Crypt();
+        strPass = pCrypt->encrypt(strNick, strPass);
+        delete pCrypt;
+    }
+
+    // save values
+    QSettings settings;
+    settings.setValue("nick", strNick);
+    settings.setValue("pass", strPass);
+
+    Config *pConfig = new Config();
+    pConfig->set_value("nick", strNick);
+    pConfig->set_value("pass", strPass);
+    delete pConfig;
+}
+
+void DlgOptions::set_color(QString strKey)
+{
+    // get current value
+    QSettings settings;
+    QString strDefaultColor = settings.value(strKey).toString();
+
+    // color dialog
+    QColor cColor = QColorDialog::getColor(QColor(strDefaultColor), this);
+
+    if (cColor.isValid() == true)
+    {
+        // color to name
+        QString strColor = cColor.name();
+
+        // save
+        Config *pConfig = new Config();
+        pConfig->set_value(strKey, strColor);
+        settings.setValue(strKey, strColor);
+        delete pConfig;
+
+        // save to pushbutton
+        QPixmap color(50,15);
+        color.fill(QColor(cColor));
+
+        if (strKey == "background_color")
+            ui.pushButton_background_color->setIcon(QIcon(color));
+        else if (strKey == "background_color")
+            ui.pushButton_background_color->setIcon(QIcon(color));
+        else if (strKey == "default_font_color")
+            ui.pushButton_default_font_color->setIcon(QIcon(color));
+        else if (strKey == "font_color_level_1")
+            ui.pushButton_join_font_color->setIcon(QIcon(color));
+        else if (strKey == "font_color_level_2")
+            ui.pushButton_part_font_color->setIcon(QIcon(color));
+        else if (strKey == "font_color_level_3")
+            ui.pushButton_quit_font_color->setIcon(QIcon(color));
+        else if (strKey == "font_color_level_4")
+            ui.pushButton_kick_font_color->setIcon(QIcon(color));
+        else if (strKey == "font_color_level_5")
+            ui.pushButton_mode_font_color->setIcon(QIcon(color));
+        else if (strKey == "font_color_level_6")
+            ui.pushButton_notice_font_color->setIcon(QIcon(color));
+        else if (strKey == "font_color_level_7")
+            ui.pushButton_info_font_color->setIcon(QIcon(color));
+        else if (strKey == "font_color_level_9")
+            ui.pushButton_error_font_color->setIcon(QIcon(color));
+        else if (strKey == "channel_font_color")
+            ui.pushButton_channel_font_color->setIcon(QIcon(color));
+        else if (strKey == "nicklist_nick_color")
+            ui.pushButton_nicklist_nick_color->setIcon(QIcon(color));
+        else if (strKey == "nicklist_selected_nick_color")
+            ui.pushButton_nicklist_selected_nick_color->setIcon(QIcon(color));
+        else if (strKey == "nicklist_busy_nick_color")
+            ui.pushButton_nicklist_busy_nick_color->setIcon(QIcon(color));
+        else if (strKey == "nicklist_gradient_1_color")
+            ui.pushButton_nicklist_gradient_1_color->setIcon(QIcon(color));
+        else if (strKey == "nicklist_gradient_2_color")
+            ui.pushButton_nicklist_gradient_2_color->setIcon(QIcon(color));
+
+        // refresh
+        Core::instance()->refresh_colors();
+    }
+}
+
+void DlgOptions::set_mainwindow_colors()
+{
+    Config *pConfig = new Config();
+    QString strBackgroundColor = pConfig->get_value("background_color");
+    QString strDefaultFontColor = pConfig->get_value("default_font_color");
+    QString strJoinFontColor = pConfig->get_value("font_color_level_1");
+    QString strPartFontColor = pConfig->get_value("font_color_level_2");
+    QString strQuitFontColor = pConfig->get_value("font_color_level_3");
+    QString strKickFontColor = pConfig->get_value("font_color_level_4");
+    QString strModeFontColor = pConfig->get_value("font_color_level_5");
+    QString strNoticeFontColor = pConfig->get_value("font_color_level_6");
+    QString strInfoFontColor = pConfig->get_value("font_color_level_7");
+    QString strErrorFontColor = pConfig->get_value("font_color_level_9");
+    QString strChannelFontColor = pConfig->get_value("channel_font_color");
+    delete pConfig;
+
+    // set background color
+    QPixmap bcolor(50,15);
+    bcolor.fill(QColor(strBackgroundColor));
+    ui.pushButton_background_color->setIcon(QIcon(bcolor));
+
+    // set default font color
+    QPixmap dfcolor(50,15);
+    dfcolor.fill(QColor(strDefaultFontColor));
+    ui.pushButton_default_font_color->setIcon(QIcon(dfcolor));
+
+    // set join font color
+    QPixmap jfcolor(50,15);
+    jfcolor.fill(QColor(strJoinFontColor));
+    ui.pushButton_join_font_color->setIcon(QIcon(jfcolor));
+
+    // set part font color
+    QPixmap pfcolor(50,15);
+    pfcolor.fill(QColor(strPartFontColor));
+    ui.pushButton_part_font_color->setIcon(QIcon(pfcolor));
+
+    // set quit font color
+    QPixmap qfcolor(50,15);
+    qfcolor.fill(QColor(strQuitFontColor));
+    ui.pushButton_quit_font_color->setIcon(QIcon(qfcolor));
+
+    // set kick font color
+    QPixmap kfcolor(50,15);
+    kfcolor.fill(QColor(strKickFontColor));
+    ui.pushButton_kick_font_color->setIcon(QIcon(kfcolor));
+
+    // set mode font color
+    QPixmap mfcolor(50,15);
+    mfcolor.fill(QColor(strModeFontColor));
+    ui.pushButton_mode_font_color->setIcon(QIcon(mfcolor));
+
+    // set notice font color
+    QPixmap nfcolor(50,15);
+    nfcolor.fill(QColor(strNoticeFontColor));
+    ui.pushButton_notice_font_color->setIcon(QIcon(nfcolor));
+
+    // set info font color
+    QPixmap ifcolor(50,15);
+    ifcolor.fill(QColor(strInfoFontColor));
+    ui.pushButton_info_font_color->setIcon(QIcon(ifcolor));
+
+    // set error font color
+    QPixmap efcolor(50,15);
+    efcolor.fill(QColor(strErrorFontColor));
+    ui.pushButton_error_font_color->setIcon(QIcon(efcolor));
+
+    // set channel font color
+    QPixmap cfcolor(50,15);
+    cfcolor.fill(QColor(strChannelFontColor));
+    ui.pushButton_channel_font_color->setIcon(QIcon(cfcolor));
+}
+
+void DlgOptions::set_nicklist_colors()
+{
+    Config *pConfig = new Config();
+    QString strNicklistNickColor = pConfig->get_value("nicklist_nick_color");
+    QString strNicklistSelectedNickColor = pConfig->get_value("nicklist_selected_nick_color");
+    QString strNicklistBusyNickColor = pConfig->get_value("nicklist_busy_nick_color");
+    QString strNicklistGradient1Color = pConfig->get_value("nicklist_gradient_1_color");
+    QString strNicklistGradient2Color = pConfig->get_value("nicklist_gradient_2_color");
+    delete pConfig;
+
+    // set nicklist nick color
+    QPixmap nncolor(50,15);
+    nncolor.fill(QColor(strNicklistNickColor));
+    ui.pushButton_nicklist_nick_color->setIcon(QIcon(nncolor));
+
+    // set nicklist selected nick color
+    QPixmap nsncolor(50,15);
+    nsncolor.fill(QColor(strNicklistSelectedNickColor));
+    ui.pushButton_nicklist_selected_nick_color->setIcon(QIcon(nsncolor));
+
+    // set nicklist busy nick color
+    QPixmap nbncolor(50,15);
+    nbncolor.fill(QColor(strNicklistBusyNickColor));
+    ui.pushButton_nicklist_busy_nick_color->setIcon(QIcon(nbncolor));
+
+    // set nicklist gradient 1 color
+    QPixmap ng1color(50,15);
+    ng1color.fill(QColor(strNicklistGradient1Color));
+    ui.pushButton_nicklist_gradient_1_color->setIcon(QIcon(ng1color));
+
+    // set nicklist gradient 2 color
+    QPixmap ng2color(50,15);
+    ng2color.fill(QColor(strNicklistGradient2Color));
+    ui.pushButton_nicklist_gradient_2_color->setIcon(QIcon(ng2color));
 }
