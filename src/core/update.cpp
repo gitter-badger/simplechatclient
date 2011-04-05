@@ -69,15 +69,8 @@ void Update::version(QString strAvailableVersion)
             qDebug() << "Current rev: " << strCurrentRev << " Available rev: " << strAvailableRev;
 #endif
 
-    //if (iCurrentRev == iAvailableRev)
-        //tabc->show_msg("Status", tr("You are using up-to-date version."), 0);
-    //else if (iCurrentRev > iAvailableRev)
-        //tabc->show_msg("Status", tr("You are using a test version."), 0);
     if (iCurrentRev < iAvailableRev)
-    {
-        //tabc->show_msg("Status", tr("A new version is available."), 0);
         DlgUpdate(Core::instance()->sccWindow(), strAvailableVersion).exec();
-    }
 }
 
 void Update::update_finished(QNetworkReply *reply)

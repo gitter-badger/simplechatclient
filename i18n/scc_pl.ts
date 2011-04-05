@@ -358,21 +358,6 @@
     </message>
 </context>
 <context>
-    <name>Update</name>
-    <message>
-        <source>You are using up-to-date version.</source>
-        <translation>Używasz aktualnej wersji programu.</translation>
-    </message>
-    <message>
-        <source>You are using a test version.</source>
-        <translation>Używasz testowej wersji programu.</translation>
-    </message>
-    <message>
-        <source>A new version is available.</source>
-        <translation>Nowa wersja programu jest dostępna.</translation>
-    </message>
-</context>
-<context>
     <name>DlgAbout</name>
     <message>
         <source>About...</source>
