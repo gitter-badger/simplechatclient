@@ -370,13 +370,13 @@ QString MainTextEdit::get_word(QTextCursor cursor)
     // get pos
     int iPos = cursor.position() - cursor.block().position(); // cursor.positionInBlock()
     // get line
-    cursor.select(QTextCursor::LineUnderCursor);
-    QString strLine = cursor.selectedText().trimmed();
-    QStringList strlLine = strLine.split(" ");
+    cursor.select(QTextCursor::BlockUnderCursor);
+    QString strBlock = cursor.selectedText().trimmed();
+    QStringList strlBlock = strBlock.split(" ");
 
-    int index = get_word_index(strLine, iPos);
+    int index = get_word_index(strBlock, iPos);
     if (index != -1)
-        return strlLine.at(index);
+        return strlBlock.at(index);
     else
         return "";
 }
@@ -384,11 +384,11 @@ QString MainTextEdit::get_word(QTextCursor cursor)
 QString MainTextEdit::get_first_word(QTextCursor cursor)
 {
     // get line
-    cursor.select(QTextCursor::LineUnderCursor);
-    QString strLine = cursor.selectedText().trimmed();
-    QStringList strlLine = strLine.split(" ");
+    cursor.select(QTextCursor::BlockUnderCursor);
+    QString strBlock = cursor.selectedText().trimmed();
+    QStringList strlBlock = strBlock.split(" ");
 
-    return strlLine.at(1);
+    return strlBlock.at(1);
 }
 
 void MainTextEdit::contextMenuEvent(QContextMenuEvent *event)
