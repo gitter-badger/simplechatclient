@@ -528,6 +528,7 @@ void DlgMyAvatar::button_add_avatar()
 // <root><data><mHash><![CDATA[7bec84066455a12e87e7bea1decc58a1]]></mHash><width>200</width><height>200</height><exif><![CDATA[]]></exif><fotoSrv><![CDATA[http://foto1.m.onet.pl/_m/]]></fotoSrv><mApp>19</mApp></data><reqId><![CDATA[37bebcec-da81-4a17-85aa-8b1205e4b0d9]]></reqId></root>
 void DlgMyAvatar::got_add_avatar(QString strResult)
 {
+    Q_UNUSED (strResult);
 }
 
 void DlgMyAvatar::button_apply_avatar()

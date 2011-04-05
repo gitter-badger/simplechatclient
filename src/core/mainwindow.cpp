@@ -171,7 +171,7 @@ void MainWindow::createGui()
 {
     // inputlinewidget
     bottomDockWidget = new QDockWidget(tr("Typing messages"), this);
-    pInputLineDockWidget = new InputLineDockWidget(bottomDockWidget, pNetwork, pDlgChannelSettings, pDlgModeration);
+    pInputLineDockWidget = new InputLineDockWidget(bottomDockWidget, pNetwork, pDlgChannelSettings, pDlgModeration, &stlChannelList);
     bottomDockWidget->setFeatures(QDockWidget::DockWidgetMovable | QDockWidget::DockWidgetClosable | QDockWidget::DockWidgetFloatable);
     bottomDockWidget->setAllowedAreas(Qt::TopDockWidgetArea | Qt::BottomDockWidgetArea); // top and bottom
     bottomDockWidget->setWidget(pInputLineDockWidget);

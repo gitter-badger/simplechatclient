@@ -754,16 +754,12 @@ void DlgChannelList::all_CellDoubleClicked(int row, int column)
             msgBox.exec();
 
             if (msgBox.clickedButton() == enterButton)
-            {
                 settings.setValue("age_check", "off");
-                pNetwork->send(QString("JOIN %1").arg(strChannel));
-            }
+            else
+                return;
         }
-        else
-            pNetwork->send(QString("JOIN %1").arg(strChannel));
     }
-    else
-        pNetwork->send(QString("JOIN %1").arg(strChannel));
+    pNetwork->send(QString("JOIN %1").arg(strChannel));
 }
 
 void DlgChannelList::teen_CellDoubleClicked(int row, int column)

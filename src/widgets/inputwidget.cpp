@@ -33,9 +33,10 @@
 #include "replace.h"
 #include "inputwidget.h"
 
-InputWidget::InputWidget(QWidget *parent, Network *param1) : QWidget(parent)
+InputWidget::InputWidget(QWidget *parent, Network *param1, sChannelList *param2) : QWidget(parent)
 {
     pNetwork = param1;
+    stlChannelList = param2;
 
     nickLabel = new QLabel(parent);
     nickLabel->setText(QString("<p style=\"font-weight:bold;\"> %1</p>").arg(tr("(Unregistered)")));
@@ -202,7 +203,7 @@ void InputWidget::send_message(QString strText, bool bModeration)
         strTextOriginal = strText;
         QStringList strTextList = strText.split(" ");
 
-        Commands *pCommands = new Commands(strChannel, strText);
+        Commands *pCommands = new Commands(stlChannelList, strChannel, strText);
         strText = pCommands->execute();
         delete pCommands;
 

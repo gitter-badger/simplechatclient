@@ -20,13 +20,15 @@
 
 #include <QIcon>
 #include <QMessageBox>
+#include <QPushButton>
 #include <QSettings>
 #include "commands.h"
 
-Commands::Commands(QString param1, QString param2)
+Commands::Commands(sChannelList *param1, QString param2, QString param3)
 {
-    strChan = param1;
-    strData = param2;
+    stlChannelList = param1;
+    strChan = param2;
+    strData = param3;
     strDataList = strData.split(" ");
 }
 
@@ -93,6 +95,25 @@ QString Commands::execute()
     return strResult;
 }
 
+bool Commands::is_erotic(QString strChannel)
+{
+    for (int i = 0; i < stlChannelList->size(); i++)
+    {
+        ChannelList channel = stlChannelList->at(i);
+        QString strName = channel.name;
+        QString strType = channel.type;
+
+        if (strName.toLower() == strChannel.toLower())
+        {
+            if (strType == tr("Erotic"))
+                return true;
+            else
+                return false;
+        }
+    }
+    return false;
+}
+
 QString Commands::cmd_join()
 {
     if (strDataList.value(1).isEmpty() == true) return QString::null;
@@ -103,6 +124,30 @@ QString Commands::cmd_join()
 
     QString strKey;
     for (int i = 2; i < strDataList.size(); i++) { if (i != 2) strKey += " "; strKey += strDataList[i]; }
+
+    if (is_erotic(strChannel) == true)
+    {
+        QSettings settings;
+        if (settings.value("age_check").toString() == "on")
+        {
+            QMessageBox msgBox;
+            msgBox.setStyleSheet("background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:0.557, stop:0 rgba(198, 0, 0, 255), stop:1 rgba(255, 0, 0, 255));");
+            msgBox.setIcon(QMessageBox::Warning);
+            msgBox.setWindowIcon(QIcon(":/images/logo_64.png"));
+            msgBox.setWindowTitle(tr("Warning"));
+            msgBox.setText(QString("%1\n%2").arg(tr("Erotic category may contain content intended only for adults.")).arg(tr("To enter you must be over 18 years.")));
+            QPushButton *exitButton = msgBox.addButton(tr("Exit"), QMessageBox::AcceptRole);
+            exitButton->setIcon(QIcon(":/images/oxygen/16x16/dialog-cancel.png"));
+            QPushButton *enterButton = msgBox.addButton(tr("Enter"), QMessageBox::RejectRole);
+            enterButton->setIcon(QIcon(":/images/oxygen/16x16/dialog-ok.png"));
+            msgBox.exec();
+
+            if (msgBox.clickedButton() == enterButton)
+                settings.setValue("age_check", "off");
+            else
+                return QString::null;
+        }
+    }
 
     if (strKey.isEmpty() == false)
         return QString("JOIN %1 %2").arg(strChannel).arg(strKey);

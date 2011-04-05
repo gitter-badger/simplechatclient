@@ -21,6 +21,7 @@
 #ifndef COMMANDS_H
 #define COMMANDS_H
 
+#include "defines.h"
 #include <QObject>
 #include <QStringList>
 
@@ -33,13 +34,16 @@ class Commands : public QObject
 {
     Q_OBJECT
 public:
-    Commands(QString, QString);
+    Commands(sChannelList *, QString, QString);
     QString execute();
 
 private:
+    sChannelList *stlChannelList;
     QString strChan;
     QString strData;
     QStringList strDataList;
+
+    bool is_erotic(QString);
 
     QString cmd_join();
     QString cmd_priv();

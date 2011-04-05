@@ -21,6 +21,7 @@
 #ifndef INPUTLINEDOCKWIDGET_H
 #define INPUTLINEDOCKWIDGET_H
 
+#include "defines.h"
 class DlgChannelSettings;
 class DlgModeration;
 class InputWidget;
@@ -33,7 +34,7 @@ class InputLineDockWidget : public QWidget
 {
     Q_OBJECT
 public:
-    InputLineDockWidget(QWidget *, Network *, DlgChannelSettings *, DlgModeration *);
+    InputLineDockWidget(QWidget *, Network *, DlgChannelSettings *, DlgModeration *, sChannelList *);
     void enable_moderation();
     void disable_moderation();
     void hide_toolwidget();
@@ -57,6 +58,7 @@ private:
     Network *pNetwork;
     DlgChannelSettings *pDlgChannelSettings;
     DlgModeration *pDlgModeration;
+    sChannelList *stlChannelList;
     // other
     InputWidget *pInputWidget;
     ToolWidget *pToolWidget;

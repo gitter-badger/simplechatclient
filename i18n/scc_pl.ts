@@ -114,6 +114,26 @@
         <source>This ban will ban large numbers of people. Are you sure you want to use this ban?</source>
         <translation>Ten ban spowoduje zablokowanie dużej ilości osób. Czy na pewno chcesz użyć taki ban?</translation>
     </message>
+    <message>
+        <source>Erotic</source>
+        <translation>Erotyczne</translation>
+    </message>
+    <message>
+        <source>Erotic category may contain content intended only for adults.</source>
+        <translation>Kategoria erotyczna może zawierać treści przeznaczone tylko dla dorosłych.</translation>
+    </message>
+    <message>
+        <source>To enter you must be over 18 years.</source>
+        <translation>Aby wejść musisz mieć ukończone 18 lat.</translation>
+    </message>
+    <message>
+        <source>Exit</source>
+        <translation>Rezygnuję</translation>
+    </message>
+    <message>
+        <source>Enter</source>
+        <translation>Wchodzę</translation>
+    </message>
 </context>
 <context>
     <name>Config</name>
