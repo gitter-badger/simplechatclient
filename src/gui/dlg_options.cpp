@@ -198,6 +198,8 @@ void DlgOptions::create_gui()
 
 void DlgOptions::set_default_values()
 {
+    QSettings settings;
+
     // open folder command
 #ifdef Q_WS_X11
     if (QFile::exists("/usr/bin/nautilus") == true)
@@ -248,18 +250,17 @@ void DlgOptions::set_default_values()
         ui.comboBox_embedded_styles->addItem(strStyleName);
 
     // sound beep
-    QSettings mySettings;
-    ui.lineEdit_sound_beep->setText(mySettings.value("sound_beep").toString());
-    ui.lineEdit_sound_query->setText(mySettings.value("sound_query").toString());
+    ui.lineEdit_sound_beep->setText(settings.value("sound_beep").toString());
+    ui.lineEdit_sound_query->setText(settings.value("sound_query").toString());
 
     // logs
     QString strLogsPath;
 #ifdef Q_WS_X11
     strLogsPath = QDir::homePath()+"/.scc/log";
 #else
-    QSettings settings(QSettings::UserScope, "Microsoft", "Windows");
-    settings.beginGroup("CurrentVersion/Explorer/Shell Folders");
-    QString path = settings.value("Personal").toString();
+    QSettings mySettings(QSettings::UserScope, "Microsoft", "Windows");
+    mySettings.beginGroup("CurrentVersion/Explorer/Shell Folders");
+    QString path = mySettings.value("Personal").toString();
     path += "/scc";
 
     strLogsPath = path+"/log";
@@ -271,7 +272,7 @@ void DlgOptions::set_default_values()
         ui.pushButton_logs_open_folder->setEnabled(false);
 
     // background image
-    ui.lineEdit_background_image->setText(mySettings.value("background_image").toString());
+    ui.lineEdit_background_image->setText(settings.value("background_image").toString());
 
     // default values
     Config *pConfig = new Config();
@@ -501,7 +502,6 @@ void DlgOptions::set_default_values()
     set_nicklist_colors();
 
     // disable change nick if connected
-    QSettings settings;
     if (settings.value("logged").toString() == "on")
     {
         ui.radioButton_registered_nick->setDisabled(true);
