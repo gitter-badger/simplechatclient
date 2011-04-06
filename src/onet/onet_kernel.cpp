@@ -1359,7 +1359,10 @@ void OnetKernel::raw_001()
     // auto rejoin
     QStringList strlOpenChannels = pTabC->get_open_channels();
     for (int i = 0; i < strlOpenChannels.size(); i++)
+    {
+        pTabC->remove_tab(strlOpenChannels[i]);
         pNetwork->send(QString("JOIN %1").arg(strlOpenChannels[i]));
+    }
 
     // channel list
     pNetwork->send("SLIST  R- 0 0 100 null");
