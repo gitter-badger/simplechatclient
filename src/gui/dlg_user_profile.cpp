@@ -224,14 +224,21 @@ QString DlgUserProfile::convert_sex(QString strSex)
 QString DlgUserProfile::convert_age(QString strDate)
 {
     if (strDate.isEmpty() == true) return QString::null; // empty date
+    QStringList strlDate = strDate.split("-");
 
-    strDate.replace(QRegExp("(\\d+)-(\\d+)-(\\d+)"), "\\1");
+    QString strYear = strlDate.at(0);
+    QString strMonth = strlDate.at(1);
+    QString strDay = strlDate.at(2);
+
     QDate dDate = QDate::currentDate();
     QString strCurrentYear = QString::number(dDate.year());
+    QString strCurrentMonth = QString::number(dDate.month());
+    QString strCurrentDay = QString::number(dDate.day());
 
-    int iYear = strDate.toInt();
-    int iCurrentYear = strCurrentYear.toInt();
-    int iAge = iCurrentYear - iYear;
+    int iAge = strCurrentYear.toInt() - strYear.toInt();
+
+    if ((strCurrentMonth.toInt() <= strMonth.toInt()) && (strCurrentDay.toInt() < strDay.toInt()))
+        iAge--;
 
     return QString::number(iAge);
 }
