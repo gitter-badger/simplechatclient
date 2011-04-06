@@ -23,6 +23,7 @@
 #include <QMenu>
 #include <QSettings>
 #include <QTextBlock>
+#include "core.h"
 #include "dlg_user_profile.h"
 #include "network.h"
 #include "maintextedit.h"
@@ -33,13 +34,12 @@
     #include "dlg_cam.h"
 #endif
 
-MainTextEdit::MainTextEdit(Network *param1, QString param2, QTcpSocket *param3, sChannelNickStatus *param4, DlgUserProfile *param5)
+MainTextEdit::MainTextEdit(Network *param1, QString param2, QTcpSocket *param3, DlgUserProfile *param4)
 {
     pNetwork = param1;
     strChannel = param2;
     camSocket = param3;
-    mChannelNickStatus = param4;
-    pDlgUserProfile = param5;
+    pDlgUserProfile = param4;
 
     strNick = QString::null;
 
@@ -229,12 +229,12 @@ void MainTextEdit::menu_nick(QString strNick, QContextMenuEvent *event)
     QString strPrefix;
     QString strSuffix;
 
-    for (int i = 0; i < mChannelNickStatus->size(); i++)
+    for (int i = 0; i < Core::instance()->stlChannelNickStatus.size(); i++)
     {
-        if ((mChannelNickStatus->at(i).nick == strNick) && (mChannelNickStatus->at(i).channel == strChannel))
+        if ((Core::instance()->stlChannelNickStatus.at(i).nick == strNick) && (Core::instance()->stlChannelNickStatus.at(i).channel == strChannel))
         {
-            strPrefix = mChannelNickStatus->at(i).prefix;
-            strSuffix = mChannelNickStatus->at(i).suffix;
+            strPrefix = Core::instance()->stlChannelNickStatus.at(i).prefix;
+            strSuffix = Core::instance()->stlChannelNickStatus.at(i).suffix;
             break;
         }
     }

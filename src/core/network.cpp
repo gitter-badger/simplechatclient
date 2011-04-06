@@ -22,6 +22,7 @@
 #include <QHostInfo>
 #include <QSettings>
 #include "config.h"
+#include "core.h"
 #include "crypt.h"
 #include "network.h"
 
@@ -96,7 +97,7 @@ void Network::clear_all()
     emit set_disconnected();
 
     // set lag
-    emit set_lag("Lag: ?");
+    Core::instance()->lagAct->setText("Lag: ?");
 
     // update nick
     emit update_nick(tr("(Unregistered)"));
@@ -223,7 +224,7 @@ void Network::connect()
 void Network::connected()
 {
     emit set_connected();
-    emit set_lag("Lag: ?");
+    Core::instance()->lagAct->setText("Lag: ?");
 
     emit show_msg_all(tr("Connected to server"), 9);
 
@@ -374,7 +375,7 @@ void Network::timeout_lag()
 
     // update lag
     if (iCurrent-iActive > 30+10)
-        emit set_lag(QString("Lag: %1s").arg(iCurrent-iActive));
+        Core::instance()->lagAct->setText(QString("Lag: %1s").arg(iCurrent-iActive));
 }
 
 void Network::timeout_pong()

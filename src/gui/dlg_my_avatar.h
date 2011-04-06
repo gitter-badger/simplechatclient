@@ -31,13 +31,12 @@ class DlgMyAvatar : public QDialog
 {
     Q_OBJECT
 public:
-    DlgMyAvatar(QWidget *, Network *, QMap <QString, QByteArray> *);
+    DlgMyAvatar(QWidget *, Network *);
     virtual ~DlgMyAvatar();
 
 private:
     Ui::uiMyAvatar ui;
     Network *pNetwork;
-    QMap <QString, QByteArray> *mNickAvatar;
     // network
     QNetworkAccessManager *networkAccessManager;
     QNetworkCookieJar *cookieJar;

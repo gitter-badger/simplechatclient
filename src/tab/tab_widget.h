@@ -21,7 +21,6 @@
 #ifndef TAB_WIDGET_H
 #define TAB_WIDGET_H
 
-#include "defines.h"
 #ifndef Q_WS_WIN
     class DlgCam;
 #endif
@@ -43,7 +42,7 @@ class TabWidget : public QWidget
 {
     Q_OBJECT
 public:
-    TabWidget(Network *, QString, QMap <QString, QByteArray> *, QTcpSocket *, sChannelNickStatus *, DlgUserProfile *, QList<QString> *);
+    TabWidget(Network *, QString, QTcpSocket *, DlgUserProfile *);
     virtual ~TabWidget();
 #ifndef Q_WS_WIN
     void set_dlg_cam(DlgCam *);
@@ -71,14 +70,11 @@ private:
     // params
     Network *pNetwork;
     QString strName;
-    QMap <QString, QByteArray> *mChannelAvatar;
     QTcpSocket *camSocket;
-    sChannelNickStatus *mChannelNickStatus;
     DlgUserProfile *pDlgUserProfile;
 #ifndef Q_WS_WIN
     DlgCam *pDlgCam;
 #endif
-    QList<QString> *lAwaylog;
 
     // other
     QString strFontSize;

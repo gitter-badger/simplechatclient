@@ -30,13 +30,11 @@ class DlgChannelHomes : public QDialog
 {
     Q_OBJECT
 public:
-    DlgChannelHomes(QWidget *, Network *, QMap <QString, QByteArray> *, QList<QString> *, DlgChannelSettings *);
+    DlgChannelHomes(QWidget *, Network *, DlgChannelSettings *);
 
 private:
     Ui::uiChannelHomes ui;
     Network *pNetwork;
-    QMap <QString, QByteArray> *mChannelAvatar;
-    QList<QString> *lChannelHomes;
     DlgChannelSettings *pDlgChannelSettings;
 
     void create_gui();

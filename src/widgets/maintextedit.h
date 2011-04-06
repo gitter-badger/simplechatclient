@@ -21,7 +21,6 @@
 #ifndef MAINTEXTEDIT_H
 #define MAINTEXTEDIT_H
 
-#include "defines.h"
 #ifndef Q_WS_WIN
     class DlgCam;
 #endif
@@ -34,7 +33,7 @@ class MainTextEdit : public QTextEdit
 {
     Q_OBJECT
 public:
-    MainTextEdit(Network *, QString, QTcpSocket *, sChannelNickStatus *, DlgUserProfile *);
+    MainTextEdit(Network *, QString, QTcpSocket *, DlgUserProfile *);
     virtual ~MainTextEdit();
 #ifndef Q_WS_WIN
     void set_dlg_cam(DlgCam *);
@@ -48,7 +47,6 @@ private:
     Network *pNetwork;
     QString strChannel;
     QTcpSocket *camSocket;
-    sChannelNickStatus *mChannelNickStatus;
     DlgUserProfile *pDlgUserProfile;
 #ifndef Q_WS_WIN
     DlgCam *pDlgCam;

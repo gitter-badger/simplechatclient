@@ -21,17 +21,16 @@
 #include <QDesktopWidget>
 #include <QPushButton>
 #include <QSettings>
+#include "core.h"
 #include "simplestatswidget.h"
 #include "dlg_my_stats.h"
 
-DlgMyStats::DlgMyStats(QWidget *parent, QMap<QString,QString> *param1) : QDialog(parent)
+DlgMyStats::DlgMyStats(QWidget *parent) : QDialog(parent)
 {
     ui.setupUi(this);
     setWindowTitle(tr("My statistics"));
     // center screen
     move(QApplication::desktop()->screen()->rect().center() - rect().center());
-
-    mMyStats = param1;
 
     pSimpleStatsWidget = new SimpleStatsWidget(this);
     pSimpleStatsWidget->show();
@@ -83,8 +82,8 @@ int DlgMyStats::replace_value(QString strValue)
 
 void DlgMyStats::refresh()
 {
-    QMap<QString, QString>::const_iterator i = mMyStats->constBegin();
-    while (i != mMyStats->constEnd())
+    QMap<QString, QString>::const_iterator i = Core::instance()->mMyStats.constBegin();
+    while (i != Core::instance()->mMyStats.constEnd())
     {
         QString strKey = i.key();
         QString strValue = i.value();

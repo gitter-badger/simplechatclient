@@ -29,13 +29,11 @@ class DlgFriends : public QDialog
 {
     Q_OBJECT
 public:
-    DlgFriends(QWidget *, Network *, QMap <QString, QByteArray> *, QMap <QString, bool> *);
+    DlgFriends(QWidget *, Network *);
 
 private:
     Ui::uiFriends ui;
     Network *pNetwork;
-    QMap <QString, QByteArray> *mNickAvatar;
-    QMap <QString, bool> *mFriends;
 
     void create_gui();
     void create_signals();

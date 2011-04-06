@@ -21,7 +21,6 @@
 #ifndef ONET_KERNEL_H
 #define ONET_KERNEL_H
 
-#include "defines.h"
 class Avatar;
 class DlgChannelSettings;
 class DlgModeration;
@@ -39,7 +38,7 @@ class OnetKernel : public QObject
 {
     Q_OBJECT
 public:
-    OnetKernel(Network *, TabContainer *, QMap <QString, QByteArray> *, QMap <QString, QByteArray> *, DlgChannelSettings *, QList<QString> *, sChannelList *, QList<QString> *, QMap<QString, bool> *, QList<QString> *, DlgModeration *, QMap<QString,QString> *, QMap<QString,QString> *, DlgUserProfile *);
+    OnetKernel(Network *, TabContainer *, DlgChannelSettings *, DlgModeration *, DlgUserProfile *);
     virtual ~OnetKernel();
 
 public slots:
@@ -48,17 +47,8 @@ public slots:
 private:
     Network *pNetwork;
     TabContainer *pTabC;
-    QMap <QString, QByteArray> *mNickAvatar;
-    QMap <QString, QByteArray> *mChannelAvatar;
     DlgChannelSettings *pDlgChannelSettings;
-    QList<QString> *lChannelHomes;
-    sChannelList *stlChannelList;
-    QList<QString> *lChannelFavourites;
-    QMap<QString, bool> *mFriends;
-    QList<QString> *lIgnore;
     DlgModeration *pDlgModeration;
-    QMap<QString, QString> *mMyStats;
-    QMap<QString, QString> *mMyProfile;
     DlgUserProfile *pDlgUserProfile;
 
     Avatar *avatar;
@@ -267,7 +257,6 @@ private slots:
     void timer_rename_channel();
 
 signals:
-    void set_lag(QString);
     void update_nick(QString);
     void add_user(QString,QString,QString,QString);
     void del_user(QString,QString);

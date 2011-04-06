@@ -29,13 +29,11 @@ class DlgMyProfile : public QDialog
 {
     Q_OBJECT
 public:
-    DlgMyProfile(QWidget *, Network *, QMap <QString, QByteArray> *, QMap<QString,QString> *);
+    DlgMyProfile(QWidget *, Network *);
 
 private:
     Ui::uiMyProfile ui;
     Network *pNetwork;
-    QMap <QString, QByteArray> *mNickAvatar;
-    QMap<QString,QString> *mMyProfile;
 
     void create_gui();
     void set_default_values();

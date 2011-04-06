@@ -29,13 +29,11 @@ class DlgIgnore : public QDialog
 {
     Q_OBJECT
 public:
-    DlgIgnore(QWidget *, Network *, QMap <QString, QByteArray> *, QList<QString> *);
+    DlgIgnore(QWidget *, Network *);
 
 private:
     Ui::uiIgnore ui;
     Network *pNetwork;
-    QMap <QString, QByteArray> *mNickAvatar;
-    QList<QString> *lIgnore;
 
     void create_gui();
     void create_signals();

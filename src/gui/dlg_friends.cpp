@@ -23,11 +23,11 @@
 #include <QSettings>
 #include <QShowEvent>
 #include <QTimer>
-#include "defines.h"
+#include "core.h"
 #include "network.h"
 #include "dlg_friends.h"
 
-DlgFriends::DlgFriends(QWidget *parent, Network *param1, QMap <QString, QByteArray> *param2, QMap <QString, bool> *param3) : QDialog(parent)
+DlgFriends::DlgFriends(QWidget *parent, Network *param1) : QDialog(parent)
 {
     ui.setupUi(this);
     setWindowTitle(tr("Friends list"));
@@ -35,8 +35,6 @@ DlgFriends::DlgFriends(QWidget *parent, Network *param1, QMap <QString, QByteArr
     move(QApplication::desktop()->screen()->rect().center() - rect().center());
 
     pNetwork = param1;
-    mNickAvatar = param2;
-    mFriends = param3;
 
     create_gui();
     create_signals();
@@ -70,15 +68,15 @@ void DlgFriends::refresh()
     ui.listWidget_online->clear();
     ui.listWidget_offline->clear();
 
-    QMap<QString, bool>::const_iterator i = mFriends->constBegin();
-    while (i != mFriends->constEnd())
+    QMap<QString, bool>::const_iterator i = Core::instance()->mFriends.constBegin();
+    while (i != Core::instance()->mFriends.constEnd())
     {
         SortedListWidgetItem *item = new SortedListWidgetItem();
 
-        if (mNickAvatar->contains(i.key()) == true)
+        if (Core::instance()->mNickAvatar.contains(i.key()) == true)
         {
             QPixmap pixmap;
-            pixmap.loadFromData(mNickAvatar->value(i.key()));
+            pixmap.loadFromData(Core::instance()->mNickAvatar.value(i.key()));
 
             item->setText(i.key());
             item->setIcon(QIcon(pixmap));

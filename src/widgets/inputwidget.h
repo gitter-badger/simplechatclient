@@ -21,7 +21,6 @@
 #ifndef INPUTWIDGET_H
 #define INPUTWIDGET_H
 
-#include "defines.h"
 class Highlighter;
 class InputLineWidget;
 class Network;
@@ -35,7 +34,7 @@ class InputWidget : public QWidget
 {
     Q_OBJECT
 public:
-    InputWidget(QWidget *, Network *, sChannelList *);
+    InputWidget(QWidget *, Network *);
     void set_active(QString);
     inline QString get_active() { return strChannel; }
     void insert_text(QString);
@@ -55,7 +54,6 @@ public slots:
 private:
     // params
     Network *pNetwork;
-    sChannelList *stlChannelList;
     // inputline widget
     QHBoxLayout *mainLayout;
     QPushButton *showHideToolWidget;

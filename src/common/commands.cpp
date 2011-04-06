@@ -22,13 +22,13 @@
 #include <QMessageBox>
 #include <QPushButton>
 #include <QSettings>
+#include "core.h"
 #include "commands.h"
 
-Commands::Commands(sChannelList *param1, QString param2, QString param3)
+Commands::Commands(QString param1, QString param2)
 {
-    stlChannelList = param1;
-    strChan = param2;
-    strData = param3;
+    strChan = param1;
+    strData = param2;
     strDataList = strData.split(" ");
 }
 
@@ -97,9 +97,9 @@ QString Commands::execute()
 
 bool Commands::is_erotic(QString strChannel)
 {
-    for (int i = 0; i < stlChannelList->size(); i++)
+    for (int i = 0; i < Core::instance()->stlChannelList.size(); i++)
     {
-        ChannelList channel = stlChannelList->at(i);
+        ChannelList channel = Core::instance()->stlChannelList.at(i);
         QString strName = channel.name;
         QString strType = channel.type;
 

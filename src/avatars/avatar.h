@@ -36,14 +36,12 @@ class Avatar : public QObject
 {
     Q_OBJECT
 public:
-    Avatar(TabContainer *, QMap <QString, QByteArray> *, QMap <QString, QByteArray> *);
+    Avatar(TabContainer *);
     virtual ~Avatar();
     void get_avatar(QString, QString, QString);
 
 private:
     TabContainer *tabc;
-    QMap <QString, QByteArray> *mNickAvatar;
-    QMap <QString, QByteArray> *mChannelAvatar;
     QNetworkAccessManager *accessManager;
 
 public slots:

@@ -20,11 +20,12 @@
 
 #include <QDesktopWidget>
 #include <QInputDialog>
+#include "core.h"
 #include "dlg_channel_settings.h"
 #include "network.h"
 #include "dlg_channel_homes.h"
 
-DlgChannelHomes::DlgChannelHomes(QWidget *parent, Network *param1, QMap <QString, QByteArray> *param2, QList<QString> *param3, DlgChannelSettings *param4) : QDialog(parent)
+DlgChannelHomes::DlgChannelHomes(QWidget *parent, Network *param1, DlgChannelSettings *param2) : QDialog(parent)
 {
     ui.setupUi(this);
     setWindowTitle(tr("Your channels"));
@@ -32,9 +33,7 @@ DlgChannelHomes::DlgChannelHomes(QWidget *parent, Network *param1, QMap <QString
     move(QApplication::desktop()->screen()->rect().center() - rect().center());
 
     pNetwork = param1;
-    mChannelAvatar = param2;
-    lChannelHomes = param3;
-    pDlgChannelSettings = param4;
+    pDlgChannelSettings = param2;
 
     create_gui();
     create_signals();
@@ -67,15 +66,15 @@ void DlgChannelHomes::refresh()
 {
     ui.listWidget_channels->clear();
 
-    for (int i = 0; i < lChannelHomes->size(); i++)
+    for (int i = 0; i < Core::instance()->lChannelHomes.size(); i++)
     {
-        QString strChannel = lChannelHomes->at(i);
+        QString strChannel = Core::instance()->lChannelHomes.at(i);
         strChannel = strChannel.right(strChannel.length()-1); // remove status
 
-        if (mChannelAvatar->contains(strChannel) == true)
+        if (Core::instance()->mChannelAvatar.contains(strChannel) == true)
         {
             QPixmap pixmap;
-            pixmap.loadFromData(mChannelAvatar->value(strChannel));
+            pixmap.loadFromData(Core::instance()->mChannelAvatar.value(strChannel));
             ui.listWidget_channels->addItem(new QListWidgetItem(QIcon(pixmap), strChannel));
         }
         else

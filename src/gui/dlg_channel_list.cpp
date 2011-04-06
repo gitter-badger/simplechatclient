@@ -22,11 +22,11 @@
 #include <QKeyEvent>
 #include <QMessageBox>
 #include <QSettings>
-#include "defines.h"
+#include "core.h"
 #include "network.h"
 #include "dlg_channel_list.h"
 
-DlgChannelList::DlgChannelList(QWidget *parent, Network *param1, sChannelList *param2) : QDialog(parent)
+DlgChannelList::DlgChannelList(QWidget *parent, Network *param1) : QDialog(parent)
 {
     ui.setupUi(this);
     setWindowTitle(tr("Channel list"));
@@ -34,7 +34,6 @@ DlgChannelList::DlgChannelList(QWidget *parent, Network *param1, sChannelList *p
     move(QApplication::desktop()->screen()->rect().center() - rect().center());
 
     pNetwork = param1;
-    stlChannelList = param2;
 
     create_gui();
     set_default_values();
@@ -132,9 +131,9 @@ void DlgChannelList::create_signals()
 
 bool DlgChannelList::is_erotic(QString strChannel)
 {
-    for (int i = 0; i < stlChannelList->size(); i++)
+    for (int i = 0; i < Core::instance()->stlChannelList.size(); i++)
     {
-        ChannelList channel = stlChannelList->at(i);
+        ChannelList channel = Core::instance()->stlChannelList.at(i);
         QString strName = channel.name;
         QString strType = channel.type;
 
@@ -159,9 +158,9 @@ void DlgChannelList::create_list()
     int iThematicCount = 0;
     int iRegionalCount = 0;
 
-    for (int i = 0; i < stlChannelList->size(); i++)
+    for (int i = 0; i < Core::instance()->stlChannelList.size(); i++)
     {
-        ChannelList channel = stlChannelList->at(i);
+        ChannelList channel = Core::instance()->stlChannelList.at(i);
         QString strType = channel.type;
 
         iAllCount++;
@@ -192,9 +191,9 @@ void DlgChannelList::create_list()
     int iThematicRow = 0;
     int iRegionalRow = 0;
 
-    for (int i = 0; i < stlChannelList->size(); i++)
+    for (int i = 0; i < Core::instance()->stlChannelList.size(); i++)
     {
-        ChannelList channel = stlChannelList->at(i);
+        ChannelList channel = Core::instance()->stlChannelList.at(i);
         QString strName = channel.name;
         QString strPeople = channel.people;
         QString strCat = channel.cat;

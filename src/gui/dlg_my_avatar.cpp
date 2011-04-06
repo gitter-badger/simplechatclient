@@ -27,10 +27,11 @@
 #include <QPushButton>
 #include <QSettings>
 #include <QUuid>
+#include "core.h"
 #include "network.h"
 #include "dlg_my_avatar.h"
 
-DlgMyAvatar::DlgMyAvatar(QWidget *parent, Network *param1, QMap <QString, QByteArray> *param2) : QDialog(parent)
+DlgMyAvatar::DlgMyAvatar(QWidget *parent, Network *param1) : QDialog(parent)
 {
     ui.setupUi(this);
     setWindowTitle(tr("My avatar"));
@@ -38,7 +39,6 @@ DlgMyAvatar::DlgMyAvatar(QWidget *parent, Network *param1, QMap <QString, QByteA
     move(QApplication::desktop()->screen()->rect().center() - rect().center());
 
     pNetwork = param1;
-    mNickAvatar = param2;
     bReadedCollectionNames = false;
 
     create_gui();
@@ -157,9 +157,9 @@ void DlgMyAvatar::refresh_avatar()
     QSettings settings;
     QString strMe = settings.value("nick").toString();
 
-    if (mNickAvatar->contains(strMe) == true)
+    if (Core::instance()->mNickAvatar.contains(strMe) == true)
     {
-        QByteArray bAvatar = mNickAvatar->value(strMe);
+        QByteArray bAvatar = Core::instance()->mNickAvatar.value(strMe);
         QPixmap pixmap;
         pixmap.loadFromData(bAvatar);
         ui.label_my_avatar->setPixmap(pixmap);

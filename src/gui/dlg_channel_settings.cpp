@@ -24,7 +24,6 @@
 #include <QMessageBox>
 #include <QSettings>
 #include "core.h"
-#include "defines.h"
 #include "dlg_email.h"
 #include "network.h"
 #include "dlg_channel_settings.h"

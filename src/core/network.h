@@ -77,7 +77,6 @@ private slots:
 signals:
     void set_connected();
     void set_disconnected();
-    void set_lag(QString);
     void set_connect_enabled(bool);
     void kernel(QString);
     void authorize(QString, QString, QString);

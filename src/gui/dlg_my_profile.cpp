@@ -22,11 +22,12 @@
 #include <QDesktopWidget>
 #include <QPushButton>
 #include <QSettings>
+#include "core.h"
 #include "convert.h"
 #include "network.h"
 #include "dlg_my_profile.h"
 
-DlgMyProfile::DlgMyProfile(QWidget *parent, Network *param1, QMap <QString, QByteArray> *param2, QMap <QString, QString> *param3) : QDialog(parent)
+DlgMyProfile::DlgMyProfile(QWidget *parent, Network *param1) : QDialog(parent)
 {
     ui.setupUi(this);
     setWindowTitle(tr("My profile"));
@@ -34,8 +35,6 @@ DlgMyProfile::DlgMyProfile(QWidget *parent, Network *param1, QMap <QString, QByt
     move(QApplication::desktop()->screen()->rect().center() - rect().center());
 
     pNetwork = param1;
-    mNickAvatar = param2;
-    mMyProfile = param3;
 
     create_gui();
     set_default_values();
@@ -147,18 +146,18 @@ void DlgMyProfile::refresh()
     QSettings settings;
     QString strMe = settings.value("nick").toString();
 
-    QMap<QString, QString>::const_iterator i = mMyProfile->constBegin();
-    while (i != mMyProfile->constEnd())
+    QMap<QString, QString>::const_iterator i = Core::instance()->mMyProfile.constBegin();
+    while (i != Core::instance()->mMyProfile.constEnd())
     {
         QString strKey = i.key();
         QString strValue = i.value();
 
         if (strKey == "avatar")
         {
-            if ((strValue.isEmpty() == false) && (mNickAvatar->contains(strMe)))
+            if ((strValue.isEmpty() == false) && (Core::instance()->mNickAvatar.contains(strMe)))
             {
                 QPixmap avatar;
-                avatar.loadFromData(mNickAvatar->value(strMe));
+                avatar.loadFromData(Core::instance()->mNickAvatar.value(strMe));
                 ui.label_avatar->setPixmap(avatar.scaled(QSize(50,50)));
             }
             else
@@ -501,7 +500,7 @@ void DlgMyProfile::button_ok()
 {
     // set desc - shortDesc
     QString strDesc = convert_desc_to_text(ui.plainTextEdit_desc->toPlainText());
-    if (strDesc != mMyProfile->value("shortDesc"))
+    if (strDesc != Core::instance()->mMyProfile.value("shortDesc"))
         pNetwork->send(QString("NS SET shortDesc %1").arg(strDesc));
 
     // set sex
@@ -509,7 +508,7 @@ void DlgMyProfile::button_ok()
     QString strSexChar;
     if (iSex == 1) strSexChar = "M";
     else if (iSex == 2) strSexChar = "F";
-    if (strSexChar != mMyProfile->value("sex"))
+    if (strSexChar != Core::instance()->mMyProfile.value("sex"))
         pNetwork->send(QString("NS SET sex %1").arg(strSexChar));
 
     // set birthdate
@@ -519,28 +518,28 @@ void DlgMyProfile::button_ok()
     QString strBirthdate;
     if ((strDay.isEmpty() == false) && (strMonth.isEmpty() == false) && (strYear.isEmpty() == false))
         strBirthdate = QString("%1-%2-%3").arg(strYear).arg(strMonth).arg(strDay);
-    if (strBirthdate != mMyProfile->value("birthdate"))
+    if (strBirthdate != Core::instance()->mMyProfile.value("birthdate"))
         pNetwork->send(QString("NS SET birthdate %1").arg(strBirthdate));
 
     // set city
     QString strCity = ui.lineEdit_city->text();
-    if (strCity != mMyProfile->value("city"))
+    if (strCity != Core::instance()->mMyProfile.value("city"))
         pNetwork->send(QString("NS SET city %1").arg(strCity));
 
     // set country
     QString strCountry = ui.comboBox_country->currentText();
     QString strCountryCode = convert_country_to_code(strCountry);
-    if (strCountryCode != mMyProfile->value("country"))
+    if (strCountryCode != Core::instance()->mMyProfile.value("country"))
         pNetwork->send(QString("NS SET country %1").arg(strCountryCode));
 
     // set hobby - longDesc
     QString strHobby = ui.plainTextEdit_hobby->toPlainText();
-    if (strHobby != mMyProfile->value("longDesc"))
+    if (strHobby != Core::instance()->mMyProfile.value("longDesc"))
         pNetwork->send(QString("NS SET longDesc %1").arg(strHobby));
 
     // set www
     QString strWWW = ui.lineEdit_www->text();
-    if (strWWW != mMyProfile->value("www"))
+    if (strWWW != Core::instance()->mMyProfile.value("www"))
         pNetwork->send(QString("NS SET www %1").arg(strWWW));
 
     // close

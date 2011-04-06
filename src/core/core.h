@@ -21,8 +21,10 @@
 #ifndef CORE_H
 #define CORE_H
 
+#include "defines.h"
 class MainWindow;
 class Update;
+#include <QAction>
 #include <QObject>
 
 /**
@@ -39,8 +41,10 @@ public:
     Core();
     virtual ~Core();
     void createGui();
+    // from main
     static QString version();
     static void enableDebug();
+    // window
     void showSccWindow();
     MainWindow *sccWindow();
     // from options
@@ -48,6 +52,19 @@ public:
     void refresh_background_image();
     // update
     void check_update();
+
+    QAction *lagAct;
+    QList<QString> lAwaylog;
+    QMap<QString, bool> mFriends;
+    QList<QString> lIgnore;
+    QList<QString> lChannelFavourites;
+    sChannelList stlChannelList;
+    QMap<QString, QByteArray> mNickAvatar;
+    QMap<QString, QByteArray> mChannelAvatar;
+    QMap<QString, QString> mMyStats;
+    QMap<QString, QString> mMyProfile;
+    QList<QString> lChannelHomes;
+    sChannelNickStatus stlChannelNickStatus;
 
 public slots:
     void quit();

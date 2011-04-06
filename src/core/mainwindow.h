@@ -96,7 +96,6 @@ private:
     QAction *myProfileAct;
     QAction *myAvatarAct;
 
-    QTcpSocket *camSocket;
     TabManager *pTabM;
     TabContainer *pTabC;
     Network *pNetwork;
@@ -112,23 +111,12 @@ private:
     QDockWidget *bottomDockWidget;
     QDockWidget *rightDockWidget;
     QMap <QString, NickListWidget*> mChannelNickListWidget;
-    sChannelNickStatus stlChannelNickStatus;
 
     // other
 #ifndef Q_WS_WIN
     DlgCam *pDlgCam;
 #endif
-    QAction *lagAct;
-    QList<QString> lAwaylog;
-    QMap<QString, bool> mFriends;
-    QList<QString> lIgnore;
-    QList<QString> lChannelFavourites;
-    sChannelList stlChannelList;
-    QMap <QString, QByteArray> mNickAvatar;
-    QMap <QString, QByteArray> mChannelAvatar;
-    QMap <QString, QString> mMyStats;
-    QMap <QString, QString> mMyProfile;
-    QList<QString> lChannelHomes;
+    QTcpSocket *camSocket;
 
     void set_geometry();
     void create_actions();
@@ -158,7 +146,6 @@ private slots:
     void open_my_avatar();
 
 public slots:
-    void set_lag(QString);
     void create_nicklist(QString);
     void remove_nicklist(QString);
     void add_user(QString, QString, QString, QString);

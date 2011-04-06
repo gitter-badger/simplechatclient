@@ -79,7 +79,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     pNetwork->start(QThread::InheritPriority);
 
     // classes
-    pTabC = new TabContainer(pNetwork, pTabM, &mChannelAvatar, camSocket, &stlChannelNickStatus, &lAwaylog);
+    pTabC = new TabContainer(pNetwork, pTabM, camSocket);
 
     pDlgChannelSettings = new DlgChannelSettings(this, pNetwork);
     pDlgModeration = new DlgModeration(this);
@@ -89,7 +89,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     pDlgCam = new DlgCam(this, pNetwork, camSocket);
 #endif
 
-    pOnetKernel = new OnetKernel(pNetwork, pTabC, &mNickAvatar, &mChannelAvatar, pDlgChannelSettings, &lChannelHomes, &stlChannelList, &lChannelFavourites, &mFriends, &lIgnore, pDlgModeration, &mMyStats, &mMyProfile, pDlgUserProfile);
+    pOnetKernel = new OnetKernel(pNetwork, pTabC, pDlgChannelSettings, pDlgModeration, pDlgUserProfile);
     pOnetAuth = new OnetAuth(pTabC);
 
     pTabC->set_dlg(pDlgUserProfile);
@@ -171,7 +171,7 @@ void MainWindow::createGui()
 {
     // inputlinewidget
     bottomDockWidget = new QDockWidget(tr("Typing messages"), this);
-    pInputLineDockWidget = new InputLineDockWidget(bottomDockWidget, pNetwork, pDlgChannelSettings, pDlgModeration, &stlChannelList);
+    pInputLineDockWidget = new InputLineDockWidget(bottomDockWidget, pNetwork, pDlgChannelSettings, pDlgModeration);
     bottomDockWidget->setFeatures(QDockWidget::DockWidgetMovable | QDockWidget::DockWidgetClosable | QDockWidget::DockWidgetFloatable);
     bottomDockWidget->setAllowedAreas(Qt::TopDockWidgetArea | Qt::BottomDockWidgetArea); // top and bottom
     bottomDockWidget->setWidget(pInputLineDockWidget);
@@ -234,9 +234,6 @@ void MainWindow::create_actions()
     ignoreAct->setShortcut(tr("Ctrl+I"));
     awaylogAct->setShortcut(tr("Ctrl+J"));
     camsAct->setShortcut(tr("Ctrl+K"));
-
-    // lag
-    lagAct = new QAction("Lag: ?", this);
 }
 
 void MainWindow::create_menus()
@@ -296,7 +293,7 @@ void MainWindow::create_menus()
     toolBar->addAction(notesAct);
     // lag
     toolBar->addSeparator();
-    toolBar->addAction(lagAct);
+    toolBar->addAction(Core::instance()->lagAct);
 
     // tray
     trayMenu = new QMenu();
@@ -357,7 +354,6 @@ void MainWindow::create_signals()
     QObject::connect(pInputLineDockWidget, SIGNAL(clear_content(QString)), pTabC, SLOT(slot_clear_content(QString)));
 
     // signals lag
-    QObject::connect(pOnetKernel, SIGNAL(set_lag(QString)), this, SLOT(set_lag(QString)));
     QObject::connect(pOnetKernel, SIGNAL(update_nick(QString)), pInputLineDockWidget, SLOT(slot_update_nick(QString)));
     QObject::connect(pOnetKernel, SIGNAL(clear_nicklist(QString)), this, SLOT(clear_nicklist(QString)));
 
@@ -377,7 +373,6 @@ void MainWindow::create_signals()
     // signals from network
     QObject::connect(pNetwork, SIGNAL(set_connected()), this, SLOT(set_connected()));
     QObject::connect(pNetwork, SIGNAL(set_disconnected()), this, SLOT(set_disconnected()));
-    QObject::connect(pNetwork, SIGNAL(set_lag(QString)), this, SLOT(set_lag(QString)));
     QObject::connect(pNetwork, SIGNAL(set_connect_enabled(bool)), this, SLOT(set_connect_enabled(bool)));
     QObject::connect(pNetwork, SIGNAL(kernel(QString)), pOnetKernel, SLOT(kernel(QString)));
     QObject::connect(pNetwork, SIGNAL(authorize(QString,QString,QString)), pOnetAuth, SLOT(authorize(QString,QString,QString)));
@@ -534,7 +529,7 @@ void MainWindow::close_cam_socket()
 
 void MainWindow::update_awaylog_status()
 {
-    if (lAwaylog.size() == 0)
+    if (Core::instance()->lAwaylog.size() == 0)
     {
         if (awaylogAct->isVisible() == true)
             awaylogAct->setVisible(false);
@@ -546,12 +541,6 @@ void MainWindow::update_awaylog_status()
     }
 }
 
-// set lag
-void MainWindow::set_lag(QString strValue)
-{
-    lagAct->setText(strValue);
-}
-
 void MainWindow::open_options()
 {
     DlgOptions(this).exec();
@@ -561,36 +550,36 @@ void MainWindow::open_options()
 void MainWindow::open_channel_list()
 {
     if ((pNetwork->is_connected() == true) && (pNetwork->is_writable() == true))
-        DlgChannelList(this, pNetwork, &stlChannelList).exec();
+        DlgChannelList(this, pNetwork).exec();
 }
 
 void MainWindow::open_channel_homes()
 {
     if ((pNetwork->is_connected() == true) && (pNetwork->is_writable() == true))
-        DlgChannelHomes(this, pNetwork, &mChannelAvatar, &lChannelHomes, pDlgChannelSettings).exec();
+        DlgChannelHomes(this, pNetwork, pDlgChannelSettings).exec();
 }
 
 void MainWindow::open_channel_favourites()
 {
     if ((pNetwork->is_connected() == true) && (pNetwork->is_writable() == true))
-        DlgChannelFavourites(this, pNetwork, &mChannelAvatar, &lChannelFavourites).exec();
+        DlgChannelFavourites(this, pNetwork).exec();
 }
 
 void MainWindow::open_friends()
 {
     if ((pNetwork->is_connected() == true) && (pNetwork->is_writable() == true))
-        DlgFriends(this, pNetwork, &mNickAvatar, &mFriends).exec();
+        DlgFriends(this, pNetwork).exec();
 }
 
 void MainWindow::open_ignore()
 {
     if ((pNetwork->is_connected() == true) && (pNetwork->is_writable() == true))
-        DlgIgnore(this, pNetwork, &mNickAvatar, &lIgnore).exec();
+        DlgIgnore(this, pNetwork).exec();
 }
 
 void MainWindow::open_awaylog()
 {
-    DlgAwaylog(this, &lAwaylog, awaylogAct).exec();
+    DlgAwaylog(this, awaylogAct).exec();
 }
 
 void MainWindow::open_cams()
@@ -611,19 +600,19 @@ void MainWindow::open_cams()
 void MainWindow::open_my_stats()
 {
     if ((pNetwork->is_connected() == true) && (pNetwork->is_writable() == true))
-        DlgMyStats(this, &mMyStats).exec();
+        DlgMyStats(this).exec();
 }
 
 void MainWindow::open_my_profile()
 {
     if ((pNetwork->is_connected() == true) && (pNetwork->is_writable() == true))
-        DlgMyProfile(this, pNetwork, &mNickAvatar, &mMyProfile).exec();
+        DlgMyProfile(this, pNetwork).exec();
 }
 
 void MainWindow::open_my_avatar()
 {
     if ((pNetwork->is_connected() == true) && (pNetwork->is_writable() == true))
-        DlgMyAvatar(this, pNetwork, &mNickAvatar).exec();
+        DlgMyAvatar(this, pNetwork).exec();
 }
 
 void MainWindow::open_notes()
@@ -720,11 +709,11 @@ void MainWindow::current_tab_changed(int index)
     // moderation
     QString strMe = settings.value("nick").toString();
     QString strPrefix;
-    for (int i = 0; i < stlChannelNickStatus.size(); i++)
+    for (int i = 0; i < Core::instance()->stlChannelNickStatus.size(); i++)
     {
-        if ((stlChannelNickStatus.at(i).nick == strMe) && (stlChannelNickStatus.at(i).channel == strChannel))
+        if ((Core::instance()->stlChannelNickStatus.at(i).nick == strMe) && (Core::instance()->stlChannelNickStatus.at(i).channel == strChannel))
         {
-            strPrefix = stlChannelNickStatus.at(i).prefix;
+            strPrefix = Core::instance()->stlChannelNickStatus.at(i).prefix;
             break;
         }
     }
@@ -736,7 +725,7 @@ void MainWindow::create_nicklist(QString strChannel)
 {
     if (mChannelNickListWidget.contains(strChannel) == false)
     {
-        NickListWidget *nicklist = new NickListWidget(pNetwork, strChannel, &mNickAvatar, camSocket, &stlChannelNickStatus, pDlgUserProfile);
+        NickListWidget *nicklist = new NickListWidget(pNetwork, strChannel, camSocket, pDlgUserProfile);
 #ifndef Q_WS_WIN
         nicklist->set_dlg_cam(pDlgCam);
 #endif
@@ -764,7 +753,7 @@ void MainWindow::remove_nicklist(QString strChannel)
 bool MainWindow::nicklist_exist(QString strChannel, QString strNick)
 {
     if (mChannelNickListWidget.contains(strChannel) == true)
-        return mChannelNickListWidget.value(strChannel)->exist(strNick, &stlChannelNickStatus);
+        return mChannelNickListWidget.value(strChannel)->exist(strNick);
     else
         return false;
 }
@@ -773,7 +762,7 @@ void MainWindow::add_user(QString strChannel, QString strNick, QString strPrefix
 {
     if ((nicklist_exist(strChannel, strNick) == false) && (mChannelNickListWidget.contains(strChannel) == true))
     {
-        mChannelNickListWidget.value(strChannel)->add(strNick, strPrefix, strSuffix, &stlChannelNickStatus);
+        mChannelNickListWidget.value(strChannel)->add(strNick, strPrefix, strSuffix);
 
         // set inputline users
         if (pInputLineDockWidget->get_active() == strChannel)
@@ -792,7 +781,7 @@ void MainWindow::del_user(QString strChannel, QString strNick)
 {
     if ((nicklist_exist(strChannel, strNick) == true) && (mChannelNickListWidget.contains(strChannel) == true))
     {
-        mChannelNickListWidget.value(strChannel)->remove(strNick, &stlChannelNickStatus);
+        mChannelNickListWidget.value(strChannel)->remove(strNick);
 
         // set inputline users
         if (pInputLineDockWidget->get_active() == strChannel)
@@ -846,12 +835,12 @@ void MainWindow::change_flag(QString strNick, QString strChannel, QString strNew
     QString strOldPrefix;
     QString strOldSuffix;
 
-    for (int i = 0; i < stlChannelNickStatus.size(); i++)
+    for (int i = 0; i < Core::instance()->stlChannelNickStatus.size(); i++)
     {
-        if ((stlChannelNickStatus.at(i).nick == strNick) && (stlChannelNickStatus.at(i).channel == strChannel))
+        if ((Core::instance()->stlChannelNickStatus.at(i).nick == strNick) && (Core::instance()->stlChannelNickStatus.at(i).channel == strChannel))
         {
-            strOldPrefix = stlChannelNickStatus.at(i).prefix;
-            strOldSuffix = stlChannelNickStatus.at(i).suffix;
+            strOldPrefix = Core::instance()->stlChannelNickStatus.at(i).prefix;
+            strOldSuffix = Core::instance()->stlChannelNickStatus.at(i).suffix;
             break;
         }
     }
@@ -931,11 +920,11 @@ void MainWindow::change_flag(QString strNick, QString strFlag)
 void MainWindow::clear_nicklist(QString strChannel)
 {
     // clear
-    for (int i = 0; i < stlChannelNickStatus.size(); i++)
+    for (int i = 0; i < Core::instance()->stlChannelNickStatus.size(); i++)
     {
-        if (stlChannelNickStatus.at(i).channel == strChannel)
+        if (Core::instance()->stlChannelNickStatus.at(i).channel == strChannel)
         {
-            stlChannelNickStatus.removeAt(i);
+            Core::instance()->stlChannelNickStatus.removeAt(i);
             i--;
         }
     }
@@ -950,9 +939,9 @@ void MainWindow::clear_nicklist(QString strChannel)
 
 void MainWindow::clear_all_nicklist()
 {
-    stlChannelNickStatus.clear();
-    mNickAvatar.clear();
-    mChannelAvatar.clear();
+    Core::instance()->stlChannelNickStatus.clear();
+    Core::instance()->mNickAvatar.clear();
+    Core::instance()->mChannelAvatar.clear();
 
     QStringList strlChannels = pTabC->get_open_channels();
 
@@ -977,7 +966,7 @@ void MainWindow::update_nick_avatar(QString strNick)
         QString strChannel = strlChannels.at(i);
 
         // nicklist
-        if (mChannelNickListWidget.value(strChannel)->exist(strNick, &stlChannelNickStatus) == true)
+        if (mChannelNickListWidget.value(strChannel)->exist(strNick) == true)
             mChannelNickListWidget.value(strChannel)->refresh_avatars();
     }
 }
@@ -985,15 +974,15 @@ void MainWindow::update_nick_avatar(QString strNick)
 // clear all channel avatars
 void MainWindow::clear_channel_all_nick_avatars(QString strChannel)
 {
-    QStringList strlNicks = mChannelNickListWidget.value(strChannel)->get(&stlChannelNickStatus);
+    QStringList strlNicks = mChannelNickListWidget.value(strChannel)->get();
 
     for (int i = 0; i < strlNicks.size(); i++)
     {
         QString strNick = strlNicks.at(i);
 
         // remove nick avatar if nick is only in current channel; must be 1 (current channel)
-        if ((mNickAvatar.contains(strNick) == true) && (pTabC->get_nick_channels(strNick) == 1))
-            mNickAvatar.remove(strNick);
+        if ((Core::instance()->mNickAvatar.contains(strNick) == true) && (pTabC->get_nick_channels(strNick) == 1))
+            Core::instance()->mNickAvatar.remove(strNick);
     }
 }
 

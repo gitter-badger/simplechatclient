@@ -33,15 +33,12 @@
     #include "dlg_cam.h"
 #endif
 
-TabWidget::TabWidget(Network *param1, QString param2, QMap <QString, QByteArray> *param3, QTcpSocket *param4, sChannelNickStatus *param5, DlgUserProfile *param6, QList<QString> *param7)
+TabWidget::TabWidget(Network *param1, QString param2, QTcpSocket *param3, DlgUserProfile *param4)
 {
     pNetwork = param1;
     strName = param2;
-    mChannelAvatar = param3;
-    camSocket = param4;
-    mChannelNickStatus = param5;
-    pDlgUserProfile = param6;
-    lAwaylog = param7;
+    camSocket = param3;
+    pDlgUserProfile = param4;
 
     QSettings settings;
     QString strDefaultFontColor = addslashes(settings.value("default_font_color").toString());
@@ -112,7 +109,7 @@ TabWidget::TabWidget(Network *param1, QString param2, QMap <QString, QByteArray>
     topLayout->addWidget(topRightWidget);
     topWidget->setLayout(topLayout);
 
-    pMainTextEdit = new MainTextEdit(pNetwork, strName, camSocket, mChannelNickStatus, pDlgUserProfile);
+    pMainTextEdit = new MainTextEdit(pNetwork, strName, camSocket, pDlgUserProfile);
     pMainTextEdit->document()->setMaximumBlockCount(1000);
     pMainTextEdit->setReadOnly(true);
     pMainTextEdit->setAcceptRichText(false);
@@ -287,7 +284,7 @@ void TabWidget::display_message(QString strData, int iLevel)
             strAwayData.replace(QRegExp("%F([a-zA-Z0-9:]+)%"),"");
             strAwayData.replace(QRegExp("%I([a-zA-Z0-9_-]+)%"),"<\\1>");
 
-            lAwaylog->append(QString("%1\n%2").arg(strName).arg(strAwayData));
+            Core::instance()->lAwaylog.append(QString("%1\n%2").arg(strName).arg(strAwayData));
         }
     }
 
@@ -452,14 +449,14 @@ void TabWidget::set_link(QString strUrl)
 
 void TabWidget::update_channel_avatar()
 {
-    if (mChannelAvatar->contains(strName) == true)
+    if (Core::instance()->mChannelAvatar.contains(strName) == true)
     {
         // show widget
         topLeftWidget->show();
 
         // display avatar
         QPixmap pixmap;
-        pixmap.loadFromData(mChannelAvatar->value(strName));
+        pixmap.loadFromData(Core::instance()->mChannelAvatar.value(strName));
         avatar->setPixmap(pixmap);
     }
 }

@@ -20,20 +20,18 @@
 
 #include <QDateTime>
 #include <QSettings>
+#include "core.h"
 #include "log.h"
 #include "network.h"
 #include "tab_manager.h"
 #include "tab_widget.h"
 #include "tab_container.h"
 
-TabContainer::TabContainer(Network *param1, TabManager *param2, QMap <QString, QByteArray> *param3, QTcpSocket *param4, sChannelNickStatus *param5, QList<QString> *param6)
+TabContainer::TabContainer(Network *param1, TabManager *param2, QTcpSocket *param3)
 {
     pNetwork = param1;
     pTabM = param2;
-    mChannelAvatar = param3;
-    camSocket = param4;
-    mChannelNickStatus = param5;
-    lAwaylog = param6;
+    camSocket = param3;
 }
 
 TabContainer::~TabContainer()
@@ -111,7 +109,7 @@ void TabContainer::add_tab(QString strChannel)
         emit create_nicklist(strChannel);
 
         // create tab
-        tw.append(new TabWidget(pNetwork, strChannel, mChannelAvatar, camSocket, mChannelNickStatus, pDlgUserProfile, lAwaylog));
+        tw.append(new TabWidget(pNetwork, strChannel, camSocket, pDlgUserProfile));
 #ifndef Q_WS_WIN
         tw.at(tw.size()-1)->set_dlg_cam(pDlgCam);
 #endif
@@ -434,9 +432,9 @@ int TabContainer::get_nick_channels(QString strNick)
 {
     int iResult = 0;
 
-    for (int i = 0; i < mChannelNickStatus->size(); i++)
+    for (int i = 0; i < Core::instance()->stlChannelNickStatus.size(); i++)
     {
-        if (mChannelNickStatus->at(i).nick == strNick)
+        if (Core::instance()->stlChannelNickStatus.at(i).nick == strNick)
             iResult++;
     }
 

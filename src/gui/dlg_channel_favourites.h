@@ -29,13 +29,11 @@ class DlgChannelFavourites : public QDialog
 {
     Q_OBJECT
 public:
-    DlgChannelFavourites(QWidget *, Network *, QMap <QString, QByteArray> *, QList<QString> *);
+    DlgChannelFavourites(QWidget *, Network *);
 
 private:
     Ui::uiChannelFavourites ui;
     Network *pNetwork;
-    QMap <QString, QByteArray> *mChannelAvatar;
-    QList<QString> *lChannelFavourites;
 
     void create_gui();
     void create_signals();

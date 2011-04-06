@@ -28,18 +28,17 @@
 #include "toolwidget.h"
 #include "inputlinedockwidget.h"
 
-InputLineDockWidget::InputLineDockWidget(QWidget *parent, Network *param1, DlgChannelSettings *param2, DlgModeration *param3, sChannelList *param4) : QWidget(parent)
+InputLineDockWidget::InputLineDockWidget(QWidget *parent, Network *param1, DlgChannelSettings *param2, DlgModeration *param3) : QWidget(parent)
 {
     // params
     pNetwork = param1;
     pDlgChannelSettings = param2;
     pDlgModeration = param3;
-    stlChannelList = param4;
 
     // layout
     QVBoxLayout *mainLayout = new QVBoxLayout();
 
-    pInputWidget = new InputWidget(this, pNetwork, stlChannelList);
+    pInputWidget = new InputWidget(this, pNetwork);
     pInputWidget->show();
 
     pToolWidget = new ToolWidget(this, pNetwork, pInputWidget, pDlgChannelSettings, pDlgModeration);

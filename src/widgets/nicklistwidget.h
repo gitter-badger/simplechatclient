@@ -34,16 +34,16 @@ class NickListWidget : public QTreeWidget
 {
     Q_OBJECT
 public:
-    NickListWidget(Network *, QString, QMap <QString, QByteArray> *, QTcpSocket *, sChannelNickStatus *, DlgUserProfile *);
+    NickListWidget(Network *, QString, QTcpSocket *, DlgUserProfile *);
     virtual ~NickListWidget();
 #ifndef Q_WS_WIN
     void set_dlg_cam(DlgCam *);
 #endif
     void set_open_channels(QStringList);
-    void add(QString, QString, QString, sChannelNickStatus *mChannelNickStatus);
-    void remove(QString, sChannelNickStatus *mChannelNickStatus);
-    bool exist(QString, sChannelNickStatus *mChannelNickStatus);
-    QStringList get(sChannelNickStatus *mChannelNickStatus);
+    void add(QString, QString, QString);
+    void remove(QString);
+    bool exist(QString);
+    QStringList get();
     void refresh_avatars();
     void update_avatar(QString, QByteArray);
 
@@ -52,9 +52,7 @@ private:
     Network *pNetwork;
     QString strChannel;
     QStringList strOpenChannels;
-    QMap <QString, QByteArray> *mNickAvatar;
     QTcpSocket *camSocket;
-    sChannelNickStatus *mChannelNickStatus;
     DlgUserProfile *pDlgUserProfile;
 #ifndef Q_WS_WIN
     DlgCam *pDlgCam;

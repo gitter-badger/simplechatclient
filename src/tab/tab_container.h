@@ -21,7 +21,6 @@
 #ifndef TAB_CONTAINER_H
 #define TAB_CONTAINER_H
 
-#include "defines.h"
 #ifndef Q_WS_WIN
     class DlgCam;
 #endif
@@ -42,7 +41,7 @@ class TabContainer : public QObject
 {
     Q_OBJECT
 public:
-    TabContainer(Network *, TabManager *, QMap <QString, QByteArray> *, QTcpSocket *, sChannelNickStatus *, QList<QString> *);
+    TabContainer(Network *, TabManager *, QTcpSocket *);
     virtual ~TabContainer();
     void set_dlg(DlgUserProfile *);
 #ifndef Q_WS_WIN
@@ -84,21 +83,18 @@ private:
     // params
     Network *pNetwork;
     TabManager *pTabM;
-    QMap <QString, QByteArray> *mChannelAvatar;
     DlgChannelSettings *pDlgChannelSettings;
     DlgModeration *pDlgModeration;
     QTcpSocket *camSocket;
-    sChannelNickStatus *mChannelNickStatus;
     DlgUserProfile *pDlgUserProfile;
 #ifndef Q_WS_WIN
     DlgCam *pDlgCam;
 #endif
-    QList<QString> *lAwaylog;
     // other
     QList <TabWidget *> tw;
 
-    void update_open_channels();
     int get_index(QString);
+    void update_open_channels();
 
 signals:
     void create_nicklist(QString);

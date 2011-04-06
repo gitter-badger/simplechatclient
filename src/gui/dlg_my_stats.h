@@ -29,11 +29,10 @@ class DlgMyStats : public QDialog
 {
     Q_OBJECT
 public:
-    DlgMyStats(QWidget *, QMap<QString,QString> *);
+    DlgMyStats(QWidget *);
 
 private:
     Ui::uiMyStats ui;
-    QMap<QString,QString> *mMyStats;
     SimpleStatsWidget *pSimpleStatsWidget;
 
     void create_gui();

@@ -22,11 +22,11 @@
 #include <QInputDialog>
 #include <QSettings>
 #include <QTimer>
-#include "defines.h"
+#include "core.h"
 #include "network.h"
 #include "dlg_ignore.h"
 
-DlgIgnore::DlgIgnore(QWidget *parent, Network *param1, QMap <QString, QByteArray> *param2, QList <QString> *param3) : QDialog(parent)
+DlgIgnore::DlgIgnore(QWidget *parent, Network *param1) : QDialog(parent)
 {
     ui.setupUi(this);
     setWindowTitle(tr("Ignore list"));
@@ -34,8 +34,6 @@ DlgIgnore::DlgIgnore(QWidget *parent, Network *param1, QMap <QString, QByteArray
     move(QApplication::desktop()->screen()->rect().center() - rect().center());
 
     pNetwork = param1;
-    mNickAvatar = param2;
-    lIgnore = param3;
 
     create_gui();
     create_signals();
@@ -64,14 +62,14 @@ void DlgIgnore::refresh()
 {
     ui.listWidget_nicks->clear();
 
-    for (int i = 0; i < lIgnore->size(); ++i)
+    for (int i = 0; i < Core::instance()->lIgnore.size(); ++i)
     {
-        QString strNick = lIgnore->at(i);
+        QString strNick = Core::instance()->lIgnore.at(i);
 
-        if (mNickAvatar->contains(strNick) == true)
+        if (Core::instance()->mNickAvatar.contains(strNick) == true)
         {
             QPixmap pixmap;
-            pixmap.loadFromData(mNickAvatar->value(strNick));
+            pixmap.loadFromData(Core::instance()->mNickAvatar.value(strNick));
 
             SortedListWidgetItem *item = new SortedListWidgetItem();
             item->setText(strNick);

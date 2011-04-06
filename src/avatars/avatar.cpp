@@ -22,13 +22,12 @@
 #include <QNetworkReply>
 #include <QStringList>
 #include "avatar.h"
+#include "core.h"
 #include "tab_container.h"
 
-Avatar::Avatar(TabContainer *param1, QMap <QString, QByteArray> *param2, QMap <QString, QByteArray> *param3)
+Avatar::Avatar(TabContainer *param1)
 {
     tabc = param1;
-    mNickAvatar = param2;
-    mChannelAvatar = param3;
 
     QObject::connect(this, SIGNAL(set_nick_avatar(QString)), tabc, SLOT(slot_update_nick_avatar(QString)));
     QObject::connect(this, SIGNAL(set_channel_avatar(QString)), tabc, SLOT(slot_update_channel_avatar(QString)));
@@ -69,15 +68,15 @@ void Avatar::set_avatar(QString strNickOrChannel, QString strCategory, QByteArra
     if (strCategory == "nick")
     {
         // insert
-        if (mNickAvatar->contains(strNickOrChannel) == false)
-            mNickAvatar->insert(strNickOrChannel, bAvatar);
+        if (Core::instance()->mNickAvatar.contains(strNickOrChannel) == false)
+            Core::instance()->mNickAvatar.insert(strNickOrChannel, bAvatar);
         else
         {
             // update
-            if (mNickAvatar->value(strNickOrChannel) != bAvatar)
+            if (Core::instance()->mNickAvatar.value(strNickOrChannel) != bAvatar)
             {
-                mNickAvatar->remove(strNickOrChannel);
-                mNickAvatar->insert(strNickOrChannel, bAvatar);
+                Core::instance()->mNickAvatar.remove(strNickOrChannel);
+                Core::instance()->mNickAvatar.insert(strNickOrChannel, bAvatar);
             }
         }
 
@@ -86,15 +85,15 @@ void Avatar::set_avatar(QString strNickOrChannel, QString strCategory, QByteArra
     else if (strCategory == "channel")
     {
         // insert
-        if (mChannelAvatar->contains(strNickOrChannel) == false)
-            mChannelAvatar->insert(strNickOrChannel, bAvatar);
+        if (Core::instance()->mChannelAvatar.contains(strNickOrChannel) == false)
+            Core::instance()->mChannelAvatar.insert(strNickOrChannel, bAvatar);
         else
         {
             // update
-            if (mChannelAvatar->value(strNickOrChannel) != bAvatar)
+            if (Core::instance()->mChannelAvatar.value(strNickOrChannel) != bAvatar)
             {
-                mChannelAvatar->remove(strNickOrChannel);
-                mChannelAvatar->insert(strNickOrChannel, bAvatar);
+                Core::instance()->mChannelAvatar.remove(strNickOrChannel);
+                Core::instance()->mChannelAvatar.insert(strNickOrChannel, bAvatar);
             }
         }
 

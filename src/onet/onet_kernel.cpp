@@ -37,24 +37,15 @@
 #include "tab_container.h"
 #include "onet_kernel.h"
 
-OnetKernel::OnetKernel(Network *param1, TabContainer *param2, QMap <QString, QByteArray> *param3, QMap <QString, QByteArray> *param4, DlgChannelSettings *param5, QList<QString> *param6, sChannelList *param7, QList<QString> *param8, QMap<QString, bool> *param9, QList<QString> *param10, DlgModeration *param11, QMap<QString, QString> *param12, QMap<QString, QString> *param13, DlgUserProfile *param14)
+OnetKernel::OnetKernel(Network *param1, TabContainer *param2, DlgChannelSettings *param3, DlgModeration *param4,  DlgUserProfile *param5)
 {
     pNetwork = param1;
     pTabC = param2;
-    mNickAvatar = param3;
-    mChannelAvatar = param4;
-    pDlgChannelSettings = param5;
-    lChannelHomes = param6;
-    stlChannelList = param7;
-    lChannelFavourites = param8;
-    mFriends = param9;
-    lIgnore = param10;
-    pDlgModeration = param11;
-    mMyStats = param12;
-    mMyProfile = param13;
-    pDlgUserProfile = param14;
+    pDlgChannelSettings = param3;
+    pDlgModeration = param4;
+    pDlgUserProfile = param5;
 
-    avatar = new Avatar(pTabC, mNickAvatar, mChannelAvatar);
+    avatar = new Avatar(pTabC);
 }
 
 OnetKernel::~OnetKernel()
@@ -584,7 +575,8 @@ void OnetKernel::raw_pong()
 
     QString strLag = sec+"."+msec;
     strLag = "Lag: "+strLag+"s";
-    emit set_lag(strLag);
+
+    Core::instance()->lagAct->setText(strLag);
 }
 
 // ERROR :Closing link (unknown@95.48.183.154) [Registration timeout]
@@ -663,7 +655,7 @@ void OnetKernel::raw_join()
         pNetwork->send(QString("CS INFO %1 i").arg(strChannel));
 
     // nick avatar
-    if ((strNick[0] != '~') && (mNickAvatar->contains(strNick) == false))
+    if ((strNick[0] != '~') && (Core::instance()->mNickAvatar.contains(strNick) == false))
     {
         if (settings.value("disable_avatars").toString() == "off") // with avatars
             pNetwork->send(QString("NS INFO %1 s").arg(strNick));
@@ -732,8 +724,8 @@ void OnetKernel::raw_part()
     emit del_user(strChannel, strNick);
 
     // remove nick avatar if not exist on any channel
-    if ((mNickAvatar->contains(strNick) == true) && (pTabC->get_nick_channels(strNick) == 0))
-        mNickAvatar->remove(strNick);
+    if ((Core::instance()->mNickAvatar.contains(strNick) == true) && (pTabC->get_nick_channels(strNick) == 0))
+        Core::instance()->mNickAvatar.remove(strNick);
 
     // if self part
 
@@ -781,8 +773,8 @@ void OnetKernel::raw_quit()
         strDisplay = QString(tr("* %1 [%2] has quit [%3]")).arg(strNick).arg(strIP).arg(strReason);
 
     // remove nick from avatars
-    if (mNickAvatar->contains(strNick) == true)
-        mNickAvatar->remove(strNick);
+    if (Core::instance()->mNickAvatar.contains(strNick) == true)
+        Core::instance()->mNickAvatar.remove(strNick);
 
     emit quit_user(strNick, strDisplay);
 }
@@ -827,8 +819,8 @@ void OnetKernel::raw_kick()
     emit del_user(strChannel, strNick);
 
     // remove nick from avatars if not exist on open channels
-    if ((mNickAvatar->contains(strNick) == true) && (pTabC->get_nick_channels(strNick) == 0))
-        mNickAvatar->remove(strNick);
+    if ((Core::instance()->mNickAvatar.contains(strNick) == true) && (pTabC->get_nick_channels(strNick) == 0))
+        Core::instance()->mNickAvatar.remove(strNick);
 
     QSettings settings;
     QString strMe = settings.value("nick").toString();
@@ -1334,13 +1326,13 @@ void OnetKernel::raw_001()
     settings.setValue("logged", "on");
 
     // clear
-    mFriends->clear();
-    lIgnore->clear();
-    lChannelFavourites->clear();
-    stlChannelList->clear();
-    mMyStats->clear();
-    mMyProfile->clear();
-    lChannelHomes->clear();
+    Core::instance()->mFriends.clear();
+    Core::instance()->lIgnore.clear();
+    Core::instance()->lChannelFavourites.clear();
+    Core::instance()->stlChannelList.clear();
+    Core::instance()->mMyStats.clear();
+    Core::instance()->mMyProfile.clear();
+    Core::instance()->lChannelHomes.clear();
 
     // protocol
     pNetwork->send("PROTOCTL ONETNAMESX");
@@ -1489,10 +1481,10 @@ void OnetKernel::raw_111n()
     // set my profile
     if (strNick == strMe)
     {
-        if (mMyProfile->contains(strKey) == true)
-            (*mMyProfile)[strKey] = strValue;
+        if (Core::instance()->mMyProfile.contains(strKey) == true)
+            Core::instance()->mMyProfile[strKey] = strValue;
         else
-            mMyProfile->insert(strKey, strValue);
+            Core::instance()->mMyProfile.insert(strKey, strValue);
     }
 
     // get avatar
@@ -1556,8 +1548,8 @@ void OnetKernel::raw_131n()
         if (strNick[0] == ':')
             strNick = strNick.right(strNick.length()-1);
 
-        if (lIgnore->contains(strNick) == false)
-            lIgnore->append(strNick);
+        if (Core::instance()->lIgnore.contains(strNick) == false)
+            Core::instance()->lIgnore.append(strNick);
     }
 }
 
@@ -1598,8 +1590,8 @@ void OnetKernel::raw_141n()
         if (strChannel[0] == ':')
             strChannel = strChannel.right(strChannel.length()-1);
 
-        if (lChannelFavourites->contains(strChannel) == false)
-            lChannelFavourites->append(strChannel);
+        if (Core::instance()->lChannelFavourites.contains(strChannel) == false)
+            Core::instance()->lChannelFavourites.append(strChannel);
 
         if ((settings.value("ignore_raw_141").toString() == "off") && (settings.value("disable_autojoin_favourites").toString() == "off"))
             pNetwork->send(QString("JOIN %1").arg(strChannel));
@@ -1636,8 +1628,8 @@ void OnetKernel::raw_151n()
             if (strChannel[0] == ':')
                 strChannel = strChannel.right(strChannel.length()-1);
 
-            if (lChannelHomes->contains(strChannel) == false)
-                lChannelHomes->append(strChannel);
+            if (Core::instance()->lChannelHomes.contains(strChannel) == false)
+                Core::instance()->lChannelHomes.append(strChannel);
         }
     }
     else if (strNick.toLower() == "nickserv")
@@ -1829,7 +1821,7 @@ void OnetKernel::raw_170n()
         QString strKey = strLine.left(strLine.indexOf("="));
         QString strValue = strLine.right(strLine.length() - strLine.indexOf("=")-1);
 
-        mMyStats->insert(strKey, strValue);
+        Core::instance()->mMyStats.insert(strKey, strValue);
     }
 }
 
@@ -1894,16 +1886,16 @@ void OnetKernel::raw_211n()
     if (strNick == strMe)
     {
         // my profile
-        if (mMyProfile->contains(strKey) == true)
-            (*mMyProfile)[strKey] = "";
+        if (Core::instance()->mMyProfile.contains(strKey) == true)
+            Core::instance()->mMyProfile[strKey] = "";
         else
-            mMyProfile->insert(strKey, "");
+            Core::instance()->mMyProfile.insert(strKey, "");
 
         // my avatar
         if (strKey == "avatar")
         {
-            if (mNickAvatar->contains(strMe) == true)
-                mNickAvatar->remove(strMe);
+            if (Core::instance()->mNickAvatar.contains(strMe) == true)
+                Core::instance()->mNickAvatar.remove(strMe);
         }
     }
 
@@ -1945,8 +1937,8 @@ void OnetKernel::raw_230n()
     QString strDisplay = QString(tr("* Added %1 to your ignore list")).arg(strNick);
     pTabC->show_msg_active(strDisplay, 7);
 
-    if (lIgnore->contains(strNick) == false)
-        lIgnore->append(strNick);
+    if (Core::instance()->lIgnore.contains(strNick) == false)
+        Core::instance()->lIgnore.append(strNick);
 }
 
 // NS IGNORE DEL aaa
@@ -1960,8 +1952,8 @@ void OnetKernel::raw_231n()
     QString strDisplay = QString(tr("* Removed %1 from your ignore list")).arg(strNick);
     pTabC->show_msg_active(strDisplay, 7);
 
-    if (lIgnore->contains(strNick) == true)
-        lIgnore->removeOne(strNick);
+    if (Core::instance()->lIgnore.contains(strNick) == true)
+        Core::instance()->lIgnore.removeOne(strNick);
 }
 
 // NS FAVOURITES ADD scc
@@ -1975,8 +1967,8 @@ void OnetKernel::raw_240n()
     QString strDisplay = QString(tr("* Added %1 channel to your favorites list")).arg(strChannel);
     pTabC->show_msg_active(strDisplay, 7);
 
-    if (lChannelFavourites->contains(strChannel) == false)
-        lChannelFavourites->append(strChannel);
+    if (Core::instance()->lChannelFavourites.contains(strChannel) == false)
+        Core::instance()->lChannelFavourites.append(strChannel);
 }
 
 // NS FAVOURITES DEL scc
@@ -1990,8 +1982,8 @@ void OnetKernel::raw_241n()
     QString strDisplay = QString(tr("* Removed channel %1 from your favorites list")).arg(strChannel);
     pTabC->show_msg_active(strDisplay, 7);
 
-    if (lChannelFavourites->contains(strChannel) == true)
-        lChannelFavourites->removeOne(strChannel);
+    if (Core::instance()->lChannelFavourites.contains(strChannel) == true)
+        Core::instance()->lChannelFavourites.removeOne(strChannel);
 }
 
 // CS REGISTER czesctoja
@@ -2014,8 +2006,8 @@ void OnetKernel::raw_250n()
         QMessageBox::information(0, "", QString(tr("Successfully created a channel %1")).arg(strChannel));
 
         // add to list
-        if (lChannelHomes->contains(strChannel) == false)
-            lChannelHomes->append(strChannel);
+        if (Core::instance()->lChannelHomes.contains(strChannel) == false)
+            Core::instance()->lChannelHomes.append(strChannel);
 
         // join
         pNetwork->send(QString("JOIN %1").arg(strChannel));
@@ -2346,8 +2338,8 @@ void OnetKernel::raw_261n()
         QMessageBox::information(0, "", QString(tr("Successfully removed channel %1")).arg(strChannel));
 
         // remove from list
-        if (lChannelHomes->contains(strChannel) == true)
-            lChannelHomes->removeOne(strChannel);
+        if (Core::instance()->lChannelHomes.contains(strChannel) == true)
+            Core::instance()->lChannelHomes.removeOne(strChannel);
 
         // part
         if (pTabC->exist_tab(strChannel) == true)
@@ -2842,7 +2834,7 @@ void OnetKernel::raw_353()
             }
 
             // nick avatar
-            if ((strCleanNick[0] != '~') && (mNickAvatar->contains(strCleanNick) == false))
+            if ((strCleanNick[0] != '~') && (Core::instance()->mNickAvatar.contains(strCleanNick) == false))
             {
                 QSettings settings;
                 if (settings.value("disable_avatars").toString() == "off") // with avatars
@@ -3764,10 +3756,10 @@ void OnetKernel::raw_600()
     QString strMessage = QString(tr("* Your friend %1 arrived online")).arg(strNick);
     pTabC->show_msg_active(strMessage, 7);
 
-    if (mFriends->contains(strNick))
-        (*mFriends)[strNick] = true;
+    if (Core::instance()->mFriends.contains(strNick))
+        Core::instance()->mFriends[strNick] = true;
     else
-        mFriends->insert(strNick, true);
+        Core::instance()->mFriends.insert(strNick, true);
 }
 
 // :cf1f4.onet 601 scc_test Radowsky 16172032 690A6F.A8219B.7F5EC1.35E57C 1267055692 :went offline
@@ -3780,10 +3772,10 @@ void OnetKernel::raw_601()
     QString strMessage = QString(tr("* Your friend %1 went offline")).arg(strNick);
     pTabC->show_msg_active(strMessage, 7);
 
-    if (mFriends->contains(strNick))
-        (*mFriends)[strNick] = false;
+    if (Core::instance()->mFriends.contains(strNick))
+        Core::instance()->mFriends[strNick] = false;
     else
-        mFriends->insert(strNick, false);
+        Core::instance()->mFriends.insert(strNick, false);
 }
 
 // NS FRIENDS DEL nick
@@ -3794,7 +3786,7 @@ void OnetKernel::raw_602()
 
     QString strNick = strDataList[3];
 
-    mFriends->remove(strNick);
+    Core::instance()->mFriends.remove(strNick);
 }
 
 //:cf1f1.onet 604 scc_test scc_test 51976824 3DE379.B7103A.6CF799.6902F4 1267054441 :is online
@@ -3807,10 +3799,10 @@ void OnetKernel::raw_604()
     QString strMessage = QString(tr("* Your friend %1 is now on-line")).arg(strNick);
     pTabC->show_msg_active(strMessage, 7);
 
-    if (mFriends->contains(strNick))
-        (*mFriends)[strNick] = true;
+    if (Core::instance()->mFriends.contains(strNick))
+        Core::instance()->mFriends[strNick] = true;
     else
-        mFriends->insert(strNick, true);
+        Core::instance()->mFriends.insert(strNick, true);
 }
 
 // :cf1f1.onet 605 scc_test Radowsky * * 0 :is offline
@@ -3823,10 +3815,10 @@ void OnetKernel::raw_605()
     QString strMessage = QString(tr("* Your friend %1 is now off-line")).arg(strNick);
     pTabC->show_msg_active(strMessage, 7);
 
-    if (mFriends->contains(strNick))
-        (*mFriends)[strNick] = false;
+    if (Core::instance()->mFriends.contains(strNick))
+        Core::instance()->mFriends[strNick] = false;
     else
-        mFriends->insert(strNick, false);
+        Core::instance()->mFriends.insert(strNick, false);
 }
 
 // WATCH
@@ -4014,7 +4006,7 @@ void OnetKernel::raw_817()
 // :cf1f3.onet 818 scc_test :Start of simple channels list.
 void OnetKernel::raw_818()
 {
-    stlChannelList->clear();
+    Core::instance()->stlChannelList.clear();
 }
 
 // SLIST
@@ -4103,7 +4095,7 @@ void OnetKernel::raw_819()
         add.cat = strChannelCat;
         add.type = strChannelType;
 
-        stlChannelList->append(add);
+        Core::instance()->stlChannelList.append(add);
     }
 }
 

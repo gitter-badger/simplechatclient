@@ -20,17 +20,17 @@
 
 #include <QDesktopWidget>
 #include <QPushButton>
+#include "core.h"
 #include "dlg_awaylog.h"
 
-DlgAwaylog::DlgAwaylog(QWidget *parent, QList<QString> *param1, QAction *param2) : QDialog(parent)
+DlgAwaylog::DlgAwaylog(QWidget *parent, QAction *param1) : QDialog(parent)
 {
     ui.setupUi(this);
     setWindowTitle(tr("Awaylog"));
     // center screen
     move(QApplication::desktop()->screen()->rect().center() - rect().center());
 
-    lAwaylog = param1;
-    awaylogAct = param2;
+    awaylogAct = param1;
 
     create_gui();
     create_signals();
@@ -51,8 +51,8 @@ void DlgAwaylog::create_signals()
 
 void DlgAwaylog::refresh()
 {
-    for (int i = 0; i < lAwaylog->size(); i++)
-        ui.listWidget->insertItem(ui.listWidget->count(),lAwaylog->at(i));
+    for (int i = 0; i < Core::instance()->lAwaylog.size(); i++)
+        ui.listWidget->insertItem(ui.listWidget->count(),Core::instance()->lAwaylog.at(i));
 }
 
 void DlgAwaylog::buttons(QAbstractButton *button)
@@ -65,7 +65,7 @@ void DlgAwaylog::buttons(QAbstractButton *button)
 
 void DlgAwaylog::button_reset()
 {
-    lAwaylog->clear();
+    Core::instance()->lAwaylog.clear();
     ui.listWidget->clear();
 
     // hide

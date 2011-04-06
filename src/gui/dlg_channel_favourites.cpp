@@ -21,10 +21,11 @@
 #include <QDesktopWidget>
 #include <QInputDialog>
 #include <QShowEvent>
+#include "core.h"
 #include "network.h"
 #include "dlg_channel_favourites.h"
 
-DlgChannelFavourites::DlgChannelFavourites(QWidget *parent, Network *param1, QMap <QString, QByteArray> *param2, QList<QString> *param3) : QDialog(parent)
+DlgChannelFavourites::DlgChannelFavourites(QWidget *parent, Network *param1) : QDialog(parent)
 {
     ui.setupUi(this);
     setWindowTitle(tr("Favorite channels"));
@@ -32,8 +33,6 @@ DlgChannelFavourites::DlgChannelFavourites(QWidget *parent, Network *param1, QMa
     move(QApplication::desktop()->screen()->rect().center() - rect().center());
 
     pNetwork = param1;
-    mChannelAvatar = param2;
-    lChannelFavourites = param3;
 
     create_gui();
     create_signals();
@@ -62,14 +61,14 @@ void DlgChannelFavourites::refresh()
 {
     ui.listWidget_channels->clear();
 
-    for (int i = 0; i < lChannelFavourites->size(); i++)
+    for (int i = 0; i < Core::instance()->lChannelFavourites.size(); i++)
     {
-        QString strChannel = lChannelFavourites->at(i);
+        QString strChannel = Core::instance()->lChannelFavourites.at(i);
 
-        if (mChannelAvatar->contains(strChannel) == true)
+        if (Core::instance()->mChannelAvatar.contains(strChannel) == true)
         {
             QPixmap pixmap;
-            pixmap.loadFromData(mChannelAvatar->value(strChannel));
+            pixmap.loadFromData(Core::instance()->mChannelAvatar.value(strChannel));
             ui.listWidget_channels->addItem(new QListWidgetItem(QIcon(pixmap), strChannel));
         }
         else

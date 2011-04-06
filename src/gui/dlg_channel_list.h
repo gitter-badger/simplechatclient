@@ -21,7 +21,6 @@
 #ifndef DLG_CHANNEL_LIST_H
 #define DLG_CHANNEL_LIST_H
 
-#include "defines.h"
 class Network;
 #include <QDialog>
 #include "ui_channel_list.h"
@@ -30,12 +29,11 @@ class DlgChannelList : public QDialog
 {
     Q_OBJECT
 public:
-    DlgChannelList(QWidget *, Network *, sChannelList *);
+    DlgChannelList(QWidget *, Network *);
 
 private:
     Ui::uiChannelList ui;
     Network *pNetwork;
-    sChannelList *stlChannelList;
 
     void create_gui();
     void set_default_values();
