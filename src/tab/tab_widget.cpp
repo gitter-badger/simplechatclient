@@ -419,9 +419,9 @@ void TabWidget::set_topic(QString strTopic)
     topic->setHtml(strContent+strLastContent);
 
     // tooltip
-    strTopic.replace(QRegExp("%C(\\S+)%"),"");
-    strTopic.replace(QRegExp("%F(\\S+)%"),"");
-    strTopic.replace(QRegExp("%I(\\S+)%"),"<\\1>");
+    strTopic.replace(QRegExp("%C([a-zA-Z0-9]+)%"),"");
+    strTopic.replace(QRegExp("%F([a-zA-Z0-9:]+)%"),"");
+    strTopic.replace(QRegExp("%I([a-zA-Z0-9_-]+)%"),"<\\1>");
 
     if (settings.value("style") == "modern")
         topic->setToolTip(strTopic);
