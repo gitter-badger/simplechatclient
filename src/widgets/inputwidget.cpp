@@ -183,7 +183,8 @@ void InputWidget::paste_multi_line(QString strText, bool bModeration)
 
 void InputWidget::send_message(QString strText, bool bModeration)
 {
-    if (strText.isEmpty() == true) return; // empty!
+    if (strText.isEmpty() == true) return; // empty text!
+    if (strChannel.isEmpty() == true) return; // empty channel!
 
     QString strTextOriginal = strText;
 
@@ -216,6 +217,8 @@ void InputWidget::send_message(QString strText, bool bModeration)
         // me
         else if (strTextList[0] == "me")
         {
+            if (strChannel == "Status") return; // return if status
+
             if (strTextOriginal.length() > 3)
             {
                 QString strTextSend = strText;
@@ -265,6 +268,8 @@ void InputWidget::send_message(QString strText, bool bModeration)
     }
     else
     {
+        if (strChannel == "Status") return; // return if status
+
         QString weight;
         QString font = strFontFamily.toLower();
 
