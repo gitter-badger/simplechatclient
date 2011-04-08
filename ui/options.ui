@@ -27,7 +27,7 @@
   </property>
   <property name="windowIcon">
    <iconset resource="../scc.qrc">
-    <normaloff>:/images/logo_64.png</normaloff>:/images/logo_64.png</iconset>
+    <normaloff>:/images/logo.png</normaloff>:/images/logo.png</iconset>
   </property>
   <widget class="QDialogButtonBox" name="buttonBox">
    <property name="geometry">

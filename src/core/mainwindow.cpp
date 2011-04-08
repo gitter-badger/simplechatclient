@@ -61,7 +61,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 {
     // init
     setWindowTitle("Simple Chat Client");
-    setWindowIcon(QIcon(":/images/logo_64.png"));
+    setWindowIcon(QIcon(":/images/logo.png"));
 
     set_geometry();
     create_actions();
@@ -202,11 +202,11 @@ void MainWindow::createGui()
 void MainWindow::create_actions()
 {
     // action
-    showAct = new QAction(QIcon(":/images/logo_64.png"), tr("Show"), this);
+    showAct = new QAction(QIcon(":/images/logo.png"), tr("Show"), this);
     connectAct = new QAction(QIcon(":/images/oxygen/16x16/network-connect.png"), tr("&Connect"), this);
     closeAct = new QAction(QIcon(":/images/oxygen/16x16/application-exit.png"), tr("Close"), this);
     optionsAct = new QAction(QIcon(":/images/oxygen/16x16/preferences-system.png"), tr("Options"), this);
-    aboutAct = new QAction(QIcon(":/images/logo_64.png"), tr("About SCC ..."), this);
+    aboutAct = new QAction(QIcon(":/images/logo.png"), tr("About SCC ..."), this);
     awaylogAct = new QAction(QIcon(":/images/oxygen/16x16/view-pim-tasks.png"), tr("Awaylog"), this);
     notesAct = new QAction(QIcon(":/images/oxygen/16x16/story-editor.png"), tr("Notes"), this);
 
@@ -301,7 +301,7 @@ void MainWindow::create_menus()
     trayMenu->addAction(closeAct);
 
     trayIcon = new QSystemTrayIcon(this);
-    trayIcon->setIcon(QIcon(":/images/logo_64.png"));
+    trayIcon->setIcon(QIcon(":/images/logo.png"));
     trayIcon->setContextMenu(trayMenu);
     trayIcon->show();
 }

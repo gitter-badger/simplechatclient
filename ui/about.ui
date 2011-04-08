@@ -33,7 +33,7 @@
   </property>
   <property name="windowIcon">
    <iconset resource="../scc.qrc">
-    <normaloff>:/images/logo_64.png</normaloff>:/images/logo_64.png</iconset>
+    <normaloff>:/images/logo.png</normaloff>:/images/logo.png</iconset>
   </property>
   <widget class="QWidget" name="verticalLayoutWidget">
    <property name="geometry">
@@ -51,18 +51,21 @@
        <widget class="QLabel" name="label_logo">
         <property name="minimumSize">
          <size>
-          <width>53</width>
+          <width>64</width>
           <height>64</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
-          <width>53</width>
+          <width>64</width>
           <height>64</height>
          </size>
         </property>
         <property name="text">
          <string>Logo</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
         </property>
        </widget>
       </item>

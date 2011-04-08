@@ -1,6 +1,5 @@
 <RCC>
     <qresource prefix="/">
-        <file>images/logo_64.png</file>
         <file>images/owner.png</file>
         <file>images/op.png</file>
         <file>images/halfop.png</file>
@@ -80,5 +79,6 @@
         <file>images/oxygen/16x16/user-properties.png</file>
         <file>images/oxygen/16x16/image-missing.png</file>
         <file>images/oxygen/16x16/camera-web.png</file>
+        <file>images/logo.png</file>
     </qresource>
 </RCC>
