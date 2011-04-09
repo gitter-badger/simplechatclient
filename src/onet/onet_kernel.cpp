@@ -470,6 +470,8 @@ void OnetKernel::kernel(QString param1)
                 raw_452n();
             else if (strDataList[3].toLower() == ":454")
                 raw_454n();
+            else if (strDataList[3].toLower() == ":455")
+                raw_455n();
             else if (strDataList[3].toLower() == ":456")
                 raw_456n();
             else if (strDataList[3].toLower() == ":458")
@@ -2017,7 +2019,10 @@ void OnetKernel::raw_250n()
     }
     else if (strNick.toLower() == "nickserv")
     {
-        // TODO
+        QString strNick = strDataList[4];
+
+        QString strDisplay = QString(tr("* Offline message sent to %1")).arg(strNick);
+        pTabC->show_msg_active(strDisplay, 7);
     }
 }
 
@@ -3445,6 +3450,18 @@ void OnetKernel::raw_454n()
     }
 }
 
+// :NickServ!service@service.onet NOTICE Merovingian :455 scc_test5 :ignores offline messages from you
+void OnetKernel::raw_455n()
+{
+    if (strDataList.value(3).isEmpty() == true) return;
+    if (strDataList.value(4).isEmpty() == true) return;
+
+    QString strNick = strDataList[4];
+
+    QString strDisplay = QString(tr("* Offline message cannot be sent. %1 ignores offline messages from you")).arg(strNick);
+    pTabC->show_msg_active(strDisplay, 7);
+}
+
 // :ChanServ!service@service.onet NOTICE Merovingian :456 #test2 Merovingian :is already channel owner
 // NS OFFLINE MSG exist_nick test
 // :NickServ!service@service.onet NOTICE Merovingian :456 Merovingian :is online
@@ -3470,7 +3487,10 @@ void OnetKernel::raw_456n()
     }
     else if (strNick.toLower() == "nickserv")
     {
-        // TODO
+        QString strNick = strDataList[4];
+
+        QString strDisplay = QString(tr("* Offline message cannot be sent. %1 is online")).arg(strNick);
+        pTabC->show_msg_active(strDisplay, 7);
     }
 }
 

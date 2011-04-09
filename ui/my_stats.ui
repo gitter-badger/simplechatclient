@@ -23,7 +23,7 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>My stats</string>
+   <string>My statistics</string>
   </property>
   <property name="windowIcon">
    <iconset resource="../scc.qrc">
@@ -193,7 +193,9 @@
    </layout>
   </widget>
  </widget>
- <resources/>
+ <resources>
+  <include location="../scc.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>buttonBox</sender>

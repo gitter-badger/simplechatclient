@@ -67,6 +67,10 @@
         <translation>/invite [nick]</translation>
     </message>
     <message>
+        <source>/offmsg [nick] [text]</source>
+        <translation>/offmsg [nick] [tekst]</translation>
+    </message>
+    <message>
         <source>/logout or /quit or /q</source>
         <translation>/logout lub /quit lub /q</translation>
     </message>
@@ -2237,6 +2241,10 @@
         <translation>Pomyślnie utworzono kanał %1</translation>
     </message>
     <message>
+        <source>* Offline message sent to %1</source>
+        <translation>* Wysłano wiadomość offline do %1</translation>
+    </message>
+    <message>
         <source>* Channel %1 has been removed</source>
         <translation>* Usunięto kanał %1</translation>
     </message>
@@ -2449,8 +2457,16 @@
         <translation>* %1 :Nazwa kanału nie jest unikalna</translation>
     </message>
     <message>
+        <source>* Offline message cannot be sent. %1 ignores offline messages from you</source>
+        <translation>* Nie można wysłać wiadomości offline. %1 ignoruje wiadomości offline od Ciebie</translation>
+    </message>
+    <message>
         <source>* %1 is already channel owner</source>
         <translation>* %1 jest już właścicielem kanału</translation>
+    </message>
+    <message>
+        <source>* Offline message cannot be sent. %1 is online</source>
+        <translation>* Nie można wysłać wiadomości offline. %1 jest zalogowany</translation>
     </message>
     <message>
         <source>* %1 :Unable to remove non-existent privilege</source>

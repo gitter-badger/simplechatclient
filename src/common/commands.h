@@ -50,6 +50,7 @@ private:
     QString cmd_whereis();
     QString cmd_busy();
     QString cmd_away();
+    QString cmd_offmsg();
     QString cmd_quit();
     QString cmd_help();
     QString cmd_cycle();

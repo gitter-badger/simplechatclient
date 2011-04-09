@@ -54,6 +54,8 @@ QString Commands::execute()
             strResult = cmd_busy();
         else if (strCmd == "away")
             strResult = cmd_away();
+        else if (strCmd == "offmsg")
+            strResult = cmd_offmsg();
         else if ((strCmd == "logout") || (strCmd == "quit") || (strCmd == "q"))
             strResult = cmd_quit();
         else if ((strCmd == "help") || (strCmd == "pomoc"))
@@ -226,6 +228,19 @@ QString Commands::cmd_away()
     return QString("AWAY :%1").arg(strMessage);
 }
 
+QString Commands::cmd_offmsg()
+{
+    if (strDataList.value(1).isEmpty() == true) return QString::null;
+    if (strDataList.value(2).isEmpty() == true) return QString::null;
+
+    QString strNick = strDataList[1];
+
+    QString strMessage;
+    for (int i = 2; i < strDataList.size(); i++) { if (i != 2) strMessage += " "; strMessage += strDataList[i]; }
+
+    return QString("NS OFFLINE MSG %1 %2").arg(strNick).arg(strMessage);
+}
+
 QString Commands::cmd_quit()
 {
     QString strReason;
@@ -257,6 +272,7 @@ QString Commands::cmd_help()
     strResult.append(tr("/busy")+";");
     strResult.append(tr("/away [text]")+";");
     strResult.append(tr("/invite [nick]")+";");
+    strResult.append(tr("/offmsg [nick] [text]")+";");
     strResult.append(tr("/logout or /quit or /q")+";");
     strResult.append(tr("/kick [nick] [reason] or /k [nick] [reason]")+";");
     strResult.append(tr("/ban [[+|-]nick]")+";");
