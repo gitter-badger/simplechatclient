@@ -134,7 +134,6 @@ void DlgEmoticons::insert_emoticons_standard(QString strEmoticon, QByteArray bDa
 {
     QPixmap pix;
     pix.loadFromData(bData);
-    pix.scaled(30,30);
 
     QListWidgetItem *item = new QListWidgetItem();
     item->setIcon(QIcon(pix));
@@ -155,7 +154,6 @@ void DlgEmoticons::insert_emoticons_extended(QString strEmoticon, QByteArray bDa
 {
     QPixmap pix;
     pix.loadFromData(bData);
-    pix.scaled(30,30);
 
     QListWidgetItem *item = new QListWidgetItem();
     item->setIcon(QIcon(pix));

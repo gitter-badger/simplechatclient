@@ -57,9 +57,11 @@ void AnimatedEmoticonWidget::start_emoticon(QString strEmoticon, int x, int y)
             QImage im(strCurrentEmoticon);
             int w = im.width();
             int h = im.height();
-            this->move(x-w-2, y-h-2);
+            this->move(x-w, y-h);
+
             // fix size
             this->adjustSize();
+
             // show widget
             this->show();
         }
