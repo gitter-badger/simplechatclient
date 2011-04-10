@@ -93,6 +93,23 @@ DlgEmoticons::DlgEmoticons(MainWindow *parent, InputWidget *param1) : QDialog(pa
     get_emoticons_standard();
 }
 
+DlgEmoticons::~DlgEmoticons()
+{
+    if (pThreadEmoticonsStandard.isRunning() == true)
+    {
+        pThreadEmoticonsStandard.quit();
+        pThreadEmoticonsStandard.wait();
+        pThreadEmoticonsStandard.deleteLater();
+    }
+
+    if (pThreadEmoticonsExtended.isRunning() == true)
+    {
+        pThreadEmoticonsExtended.quit();
+        pThreadEmoticonsExtended.wait();
+        pThreadEmoticonsExtended.deleteLater();
+    }
+}
+
 void DlgEmoticons::create_gui()
 {
     ui.pushButton_insert->setIcon(QIcon(":/images/oxygen/16x16/insert-image.png"));

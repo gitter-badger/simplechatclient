@@ -439,7 +439,8 @@ void MainTextEdit::contextMenuEvent(QContextMenuEvent *event)
 
 void MainTextEdit::mouseMoveEvent(QMouseEvent *event)
 {
-    QTextCursor cursor = cursorForPosition(event->pos());
+    QPoint pos = event->pos();
+    QTextCursor cursor = cursorForPosition(pos);
     QTextFormat format = cursor.charFormat();
 
     if (!format.isImageFormat())
@@ -450,8 +451,8 @@ void MainTextEdit::mouseMoveEvent(QMouseEvent *event)
     else
     {
         QString strName = format.toImageFormat().name();
-        int x = event->pos().x();
-        int y = event->pos().y();
+        int x = pos.x();
+        int y = pos.y();
         pAnimatedEmoticonWidget->start_emoticon(strName, x, y);
     }
 

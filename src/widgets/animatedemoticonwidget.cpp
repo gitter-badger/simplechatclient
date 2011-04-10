@@ -52,12 +52,13 @@ void AnimatedEmoticonWidget::start_emoticon(QString strEmoticon, int x, int y)
             movie->start();
 
             // move widget
-            x = get_correct_x(x, y);
-            y = get_correct_y(x, y);
+            int new_x = get_correct_x(x, y);
+            int new_y = get_correct_y(x, y);
             QImage im(strCurrentEmoticon);
             int w = im.width();
             int h = im.height();
-            this->move(x-w, y-h);
+            // move
+            this->move(new_x-w, new_y-h);
 
             // fix size
             this->adjustSize();
@@ -90,6 +91,7 @@ int AnimatedEmoticonWidget::get_correct_x(int x, int y)
         if (!format.isImageFormat())
         {
             bIsXImage = false;
+            // fix x
             x--;
         }
     }
@@ -108,6 +110,7 @@ int AnimatedEmoticonWidget::get_correct_y(int x, int y)
         if (!format.isImageFormat())
         {
             bIsYImage = false;
+            // fix y
             y--;
         }
     }

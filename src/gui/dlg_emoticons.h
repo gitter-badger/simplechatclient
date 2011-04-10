@@ -58,6 +58,7 @@ class DlgEmoticons : public QDialog
     Q_OBJECT
 public:
     DlgEmoticons(MainWindow *, InputWidget *);
+    ~DlgEmoticons();
 
 private:
     Ui::uiEmoticons ui;
