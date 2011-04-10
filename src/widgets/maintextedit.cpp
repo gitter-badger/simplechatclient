@@ -23,6 +23,7 @@
 #include <QMenu>
 #include <QSettings>
 #include <QTextBlock>
+#include "animatedemoticonwidget.h"
 #include "core.h"
 #include "dlg_user_profile.h"
 #include "network.h"
@@ -44,6 +45,9 @@ MainTextEdit::MainTextEdit(Network *param1, QString param2, QTcpSocket *param3, 
     strNick = QString::null;
 
     update_background_image();
+
+    setMouseTracking(true);
+    pAnimatedEmoticonWidget = new AnimatedEmoticonWidget(this);
 }
 
 #ifndef Q_WS_WIN
@@ -431,4 +435,25 @@ void MainTextEdit::contextMenuEvent(QContextMenuEvent *event)
     }
 
     menu_standard(event);
+}
+
+void MainTextEdit::mouseMoveEvent(QMouseEvent *event)
+{
+    QTextCursor cursor = cursorForPosition(event->pos());
+    QTextFormat format = cursor.charFormat();
+
+    if (!format.isImageFormat())
+    {
+        pAnimatedEmoticonWidget->stop_emoticon();
+        QTextEdit::mouseMoveEvent(event);
+    }
+    else
+    {
+        QString strName = format.toImageFormat().name();
+        int x = event->pos().x();
+        int y = event->pos().y();
+        pAnimatedEmoticonWidget->start_emoticon(strName, x, y);
+    }
+
+    QTextEdit::mouseMoveEvent(event);
 }

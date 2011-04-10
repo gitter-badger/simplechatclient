@@ -24,6 +24,7 @@
 #ifndef Q_WS_WIN
     class DlgCam;
 #endif
+class AnimatedEmoticonWidget;
 class DlgUserProfile;
 class Network;
 #include <QTcpSocket>
@@ -56,6 +57,7 @@ private:
     QStringList strOpenChannels;
     enum { maxOpenChannels = 30 };
     QAction *openChannelsActs[maxOpenChannels];
+    AnimatedEmoticonWidget *pAnimatedEmoticonWidget;
 
     void menu_nick(QString, QContextMenuEvent *);
     void menu_channel(QString, QContextMenuEvent *);
@@ -92,6 +94,7 @@ private slots:
 
 protected:
     virtual void contextMenuEvent(QContextMenuEvent *);
+    virtual void mouseMoveEvent(QMouseEvent *);
 };
 
 #endif // MAINTEXTEDIT_H

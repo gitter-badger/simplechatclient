@@ -4,9 +4,9 @@ ChangeLog for Simple Chat Client
 Version 1.0.10 (unknown date)
 ================================
 
+* Fixed pasting milti-line
 * Fixed lag
 * Fixed classic style
-* Added my avatars
 * Fixed network reconnect
 * Added my profile
 * Fixed config
