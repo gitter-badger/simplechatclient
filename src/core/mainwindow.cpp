@@ -114,6 +114,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     // create signals
     create_signals();
 
+    // temporarily disabled
+    myAvatarAct->setVisible(false);
+
     // show options if config not exist
     show_options();
 }
