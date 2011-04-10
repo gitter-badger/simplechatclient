@@ -1003,6 +1003,11 @@ void DlgChannelSettings::showEvent(QShowEvent *event)
 
     ui.label_channel_name->setText(strChannel);
 
+    // disabled
+    ui.tabWidget->setTabEnabled(1, false);
+    ui.tabWidget->setTabEnabled(2, false);
+    ui.tabWidget->setTabEnabled(3, false);
+
     // get data
     pNetwork->send(QString("CS INFO %1").arg(strChannel));
     pNetwork->send(QString("RS INFO %1").arg(strChannel));
@@ -1018,11 +1023,6 @@ void DlgChannelSettings::hideEvent(QHideEvent *event)
     pSimpleStatsWidget->clear_stats();
     ui.label_owner->hide();
     ui.label_owner_nick->hide();
-
-    // disabled
-    ui.tabWidget->setTabEnabled(1, false);
-    ui.tabWidget->setTabEnabled(2, false);
-    ui.tabWidget->setTabEnabled(3, false);
 
     // switch tab
     ui.tabWidget->setCurrentIndex(0);
