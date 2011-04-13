@@ -43,25 +43,41 @@ void AnimatedEmoticonWidget::start_emoticon(QString strEmoticon, int x, int y)
         QMovie isAnimated(strEmoticon);
         if (isAnimated.frameCount() > 1)
         {
+            // set current emoticon
             strCurrentEmoticon = strEmoticon;
+
+            // stop movie
             if (movie->state() == QMovie::Running)
                 movie->stop();
+
+            // set width, height
+            QImage im(strCurrentEmoticon);
+            int w = im.width();
+            int h = im.height();
+            this->label->setMinimumSize(w,h);
+            this->label->setMaximumSize(w,h);
+            // set width, height
+            this->adjustSize(); // fix bug
+
+            // movie
             label->clear();
             movie->setFileName(strCurrentEmoticon);
             label->setMovie(movie);
             movie->start();
 
             // move widget
-            int new_x = get_correct_x(x, y);
-            int new_y = get_correct_y(x, y);
-            QImage im(strCurrentEmoticon);
-            int w = im.width();
-            int h = im.height();
-            // move
-            this->move(new_x-w, new_y-h);
+            int img_begin_x = get_correct_x(x, y);
+            int img_begin_y = get_correct_y(x, y);
 
-            // fix size
-            this->adjustSize();
+            int fix_x = (this->frameGeometry().width() - w)/2;
+            int fix_y = (this->frameGeometry().height() - h)/2;
+
+#ifdef Q_WS_WIN
+            fix_y--;
+#endif
+
+            // move
+            this->move(img_begin_x-w-fix_x, img_begin_y-h-fix_y);
 
             // show widget
             this->show();
