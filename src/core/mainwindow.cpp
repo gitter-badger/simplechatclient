@@ -100,6 +100,12 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     // gui
     createGui();
 
+    // refresh colors
+    refresh_colors();
+
+    // create signals
+    create_signals();
+
     // welcome
     pTabC->add_tab("Status");
     pTabC->show_msg("Status", "%Fi:courier%"+tr("Welcome to the Simple Chat Client")+" %Ihehe%", 0);
@@ -107,12 +113,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
     // hide awaylog
     awaylogAct->setVisible(false);
-
-    // refresh colors
-    refresh_colors();
-
-    // create signals
-    create_signals();
 
     // temporarily disabled
     myAvatarAct->setVisible(false);
@@ -197,9 +197,6 @@ void MainWindow::createGui()
         toolBar->hide();
         pInputLineDockWidget->hide_toolwidget();
     }
-
-    // hide nicklist and toolwidget on status
-    rightDockWidget->hide();
 }
 
 void MainWindow::create_actions()
@@ -684,8 +681,8 @@ void MainWindow::current_tab_changed(int index)
     if (settings.value("style") == "classic")
         rightDockWidget->hide();
 
-    // hide/show settings on priv
-    if (strChannel[0] == '^')
+    // hide/show settings on non channel
+    if (strChannel[0] != '#')
         pInputLineDockWidget->hide_channel_settings();
     else
         pInputLineDockWidget->show_channel_settings();
