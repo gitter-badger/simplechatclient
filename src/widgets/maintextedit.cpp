@@ -48,6 +48,7 @@ MainTextEdit::MainTextEdit(Network *param1, QString param2, QTcpSocket *param3, 
 
     setMouseTracking(true);
     pAnimatedEmoticonWidget = new AnimatedEmoticonWidget(this);
+    QObject::connect(this, SIGNAL(textChanged()), this, SLOT(text_changed()));
 }
 
 #ifndef Q_WS_WIN
@@ -457,4 +458,9 @@ void MainTextEdit::mouseMoveEvent(QMouseEvent *event)
     }
 
     QTextEdit::mouseMoveEvent(event);
+}
+
+void MainTextEdit::text_changed()
+{
+    pAnimatedEmoticonWidget->stop_emoticon();
 }

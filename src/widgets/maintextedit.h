@@ -91,6 +91,7 @@ private slots:
     void voice_add();
     void voice_del();
     void invite();
+    void text_changed();
 
 protected:
     virtual void contextMenuEvent(QContextMenuEvent *);
