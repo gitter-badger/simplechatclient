@@ -82,6 +82,7 @@ private:
     QAction *size16Act;
     QAction *size18Act;
     QAction *size20Act;
+    QAction *size24Act;
 
     void set_default();
 
@@ -103,6 +104,7 @@ private slots:
     void size16_triggered();
     void size18_triggered();
     void size20_triggered();
+    void size24_triggered();
 
     void color_clicked(int);
     void emoticons_clicked();

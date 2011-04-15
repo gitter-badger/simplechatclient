@@ -120,6 +120,8 @@ ToolWidget::ToolWidget(QWidget *parent, Network *param1, InputWidget *param2, Dl
     size18Act->setFont(QFont("Verdana", 18, -1, false));
     size20Act = new QAction("20", this);
     size20Act->setFont(QFont("Verdana", 20, -1, false));
+    size24Act = new QAction("24", this);
+    size24Act->setFont(QFont("Verdana", 24, -1, false));
 
     sizeMenu = new QMenu(this);
     sizeMenu->addAction(size8Act);
@@ -131,6 +133,7 @@ ToolWidget::ToolWidget(QWidget *parent, Network *param1, InputWidget *param2, Dl
     sizeMenu->addAction(size16Act);
     sizeMenu->addAction(size18Act);
     sizeMenu->addAction(size20Act);
+    sizeMenu->addAction(size24Act);
 
     size = new QPushButton(QIcon(":/images/oxygen/16x16/format-font-size-more.png"), "", this);
     size->setToolTip(tr("Font size"));
@@ -203,6 +206,7 @@ ToolWidget::ToolWidget(QWidget *parent, Network *param1, InputWidget *param2, Dl
     QObject::connect(size16Act, SIGNAL(triggered()), this, SLOT(size16_triggered()));
     QObject::connect(size18Act, SIGNAL(triggered()), this, SLOT(size18_triggered()));
     QObject::connect(size20Act, SIGNAL(triggered()), this, SLOT(size20_triggered()));
+    QObject::connect(size24Act, SIGNAL(triggered()), this, SLOT(size24_triggered()));
 
     QObject::connect(color, SIGNAL(currentIndexChanged(int)), this, SLOT(color_clicked(int)));
     QObject::connect(emoticons, SIGNAL(clicked()), this, SLOT(emoticons_clicked()));
@@ -439,6 +443,11 @@ void ToolWidget::size18_triggered()
 void ToolWidget::size20_triggered()
 {
     emit change_font_size("20px");
+}
+
+void ToolWidget::size24_triggered()
+{
+    emit change_font_size("24px");
 }
 
 // color

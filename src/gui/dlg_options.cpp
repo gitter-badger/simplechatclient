@@ -240,7 +240,7 @@ void DlgOptions::set_default_values()
 
     // font size
     QStringList comboBoxFontSize;
-    comboBoxFontSize << "8" << "9" << "10" << "11" << "12" << "14" << "16" << "18" << "20";
+    comboBoxFontSize << "8" << "9" << "10" << "11" << "12" << "14" << "16" << "18" << "20" << "24";
 
     foreach (QString strFontSize, comboBoxFontSize)
         ui.comboBox_font_size->addItem(strFontSize);
@@ -460,6 +460,7 @@ void DlgOptions::set_default_values()
     else if (strFontSize == "16px") iFontSize = 6;
     else if (strFontSize == "18px") iFontSize = 7;
     else if (strFontSize == "20px") iFontSize = 8;
+    else if (strFontSize == "24px") iFontSize = 9;
     else
         iFontSize = 0;
 
