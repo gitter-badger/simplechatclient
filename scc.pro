@@ -65,7 +65,8 @@ SOURCES += src/avatars/avatar.cpp \
     src/common/video.cpp \
     src/gui/dlg_my_profile.cpp \
     src/gui/dlg_my_avatar.cpp \
-    src/widgets/animatedemoticonwidget.cpp
+    src/widgets/animatedemoticonwidget.cpp \
+    src/gui/dlg_offlinemsg.cpp
 HEADERS += src/avatars/avatar.h \
     src/common/commands.h \
     src/common/config.h \
@@ -124,7 +125,8 @@ HEADERS += src/avatars/avatar.h \
     src/common/video.h \
     src/gui/dlg_my_profile.h \
     src/gui/dlg_my_avatar.h \
-    src/widgets/animatedemoticonwidget.h
+    src/widgets/animatedemoticonwidget.h \
+    src/gui/dlg_offlinemsg.h
 FORMS += ui/about.ui \
     ui/awaylog.ui \
     ui/cam.ui \
@@ -148,4 +150,5 @@ FORMS += ui/about.ui \
     ui/user_avatar.ui \
     ui/my_stats.ui \
     ui/my_profile.ui \
-    ui/my_avatar.ui
+    ui/my_avatar.ui \
+    ui/offlinemsg.ui

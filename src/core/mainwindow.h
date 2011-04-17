@@ -144,6 +144,7 @@ private slots:
     void open_my_stats();
     void open_my_profile();
     void open_my_avatar();
+    void open_offlinemsg();
 
 public slots:
     void create_nicklist(QString);

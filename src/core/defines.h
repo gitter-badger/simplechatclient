@@ -35,6 +35,14 @@ struct ModerateMsg
 };
 typedef QList<ModerateMsg> sModerateMsg;
 
+struct OfflineMsg
+{
+    QString datetime;
+    QString nick;
+    QString message;
+};
+typedef QList<OfflineMsg> sOfflineMsg;
+
 class SortedTreeWidgetItem : public QTreeWidgetItem
 {
 public:

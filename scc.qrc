@@ -80,5 +80,9 @@
         <file>images/oxygen/16x16/image-missing.png</file>
         <file>images/oxygen/16x16/camera-web.png</file>
         <file>images/logo.png</file>
+        <file>images/oxygen/16x16/mail-mark-junk.png</file>
+        <file>images/oxygen/16x16/mail-mark-read.png</file>
+        <file>images/oxygen/16x16/mail-mark-unread.png</file>
+        <file>images/oxygen/16x16/mail-send.png</file>
     </qresource>
 </RCC>

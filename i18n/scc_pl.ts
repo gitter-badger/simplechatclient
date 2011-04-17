@@ -258,6 +258,10 @@
         <translation>Ignorowani</translation>
     </message>
     <message>
+        <source>Offline messages</source>
+        <translation>Wiadomości offline</translation>
+    </message>
+    <message>
         <source>Awaylog</source>
         <translation>Awaylog</translation>
     </message>
@@ -1377,6 +1381,29 @@
     </message>
 </context>
 <context>
+    <name>DlgOfflineMsg</name>
+    <message>
+        <source>Offline messages</source>
+        <translation>Wiadomości offline</translation>
+    </message>
+    <message>
+        <source>Offline messages from %1</source>
+        <translation>Wiadomości offline od %1</translation>
+    </message>
+    <message>
+        <source>Read</source>
+        <translation>Odczytaj</translation>
+    </message>
+    <message>
+        <source>Reject</source>
+        <translation>Odrzuć</translation>
+    </message>
+    <message>
+        <source>Reply</source>
+        <translation>Odpowiedz</translation>
+    </message>
+</context>
+<context>
     <name>DlgOptions</name>
     <message>
         <source>Options</source>
@@ -2253,6 +2280,10 @@
         <translation>* Potwierdzam usunięcie kanału %1</translation>
     </message>
     <message>
+        <source>* Offline messages rejected from %1</source>
+        <translation>* Odrzucono wiadomości offline od %1</translation>
+    </message>
+    <message>
         <source>* Changing privileges confirmed for %1 at %2</source>
         <translation>* Potwierdzam zmianę uprawnień dla %1 w %2</translation>
     </message>
@@ -2455,6 +2486,10 @@
     <message>
         <source>* %1 :Not enough unique channel name</source>
         <translation>* %1 :Nazwa kanału nie jest unikalna</translation>
+    </message>
+    <message>
+        <source>* No offline messages from %1</source>
+        <translation>* Brak wiadomości offline od %1</translation>
     </message>
     <message>
         <source>* Offline message cannot be sent. %1 ignores offline messages from you</source>

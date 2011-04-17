@@ -18,67 +18,35 @@
  *                                                                          *
  ****************************************************************************/
 
-#ifndef CORE_H
-#define CORE_H
+#ifndef DLG_OFFLINEMSG_H
+#define DLG_OFFLINEMSG_H
 
-#include "defines.h"
-class MainWindow;
-class Update;
-#include <QAction>
-#include <QObject>
+class Network;
+#include <QDialog>
+#include "ui_offlinemsg.h"
 
-/**
- * Core
- */
-class Core: public QObject
+class DlgOfflineMsg : public QDialog
 {
     Q_OBJECT
-    Q_DISABLE_COPY(Core);
-    static Core *Instance;
 public:
-    static Core *instance();
-
-    Core();
-    virtual ~Core();
-    void createGui();
-    // from main
-    static QString version();
-    static void enableDebug();
-    // window
-    void showSccWindow();
-    MainWindow *sccWindow();
-    // from options
-    void refresh_colors();
-    void refresh_background_image();
-    // update
-    void check_update();
-
-    QAction *lagAct;
-    QList<QString> lAwaylog;
-    QMap<QString, bool> mFriends;
-    QList<QString> lIgnore;
-    QList<QString> lChannelFavourites;
-    sChannelList stlChannelList;
-    QMap<QString, QByteArray> mNickAvatar;
-    QMap<QString, QByteArray> mChannelAvatar;
-    QMap<QString, QString> mMyStats;
-    QMap<QString, QString> mMyProfile;
-    QList<QString> lChannelHomes;
-    sChannelNickStatus stlChannelNickStatus;
-    // offline
-    QAction *offlineMsgAct;
-    sOfflineMsg stlOfflineMsg;
-    QList<QString> lOfflineNicks;
-
-public slots:
-    void quit();
+    DlgOfflineMsg(QWidget *, Network *);
 
 private:
-    MainWindow *window;
-    Update *pUpdate;
+    Ui::uiOfflineMsg ui;
+    Network *pNetwork;
+    QString strCurrentNick;
 
-    void init();
-    void createSettings();
+    void create_gui();
+    void create_signals();
+    void refresh();
+    void remove_nick(QString);
+
+private slots:
+    void refresh_msg();
+    void button_read();
+    void button_reject();
+    void button_reply();
+    void button_close();
 };
 
-#endif // CORE_H
+#endif // DLG_OFFLINEMSG_H

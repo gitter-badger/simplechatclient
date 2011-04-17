@@ -38,6 +38,7 @@
 #include "dlg_my_profile.h"
 #include "dlg_my_stats.h"
 #include "dlg_notes.h"
+#include "dlg_offlinemsg.h"
 #include "dlg_options.h"
 #include "dlg_user_profile.h"
 #include "inputlinedockwidget.h"
@@ -110,6 +111,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     pTabC->add_tab("Status");
     pTabC->show_msg("Status", "%Fi:courier%"+tr("Welcome to the Simple Chat Client")+" %Ihehe%", 0);
     pTabC->show_msg("Status", "%Fb:courier%%C008100%"+tr("Official website")+" SCC%C3030ce%: http://simplechatclien.sf.net/ %Izaskoczony%", 0);
+
+    // hide offline messages
+    Core::instance()->offlineMsgAct->setVisible(false);
 
     // hide awaylog
     awaylogAct->setVisible(false);
@@ -213,6 +217,7 @@ void MainWindow::create_actions()
     channelFavouritesAct = new QAction(QIcon(":/images/oxygen/16x16/emblem-favorite.png"), tr("Favorite channels"), this);
     friendsAct = new QAction(QIcon(":/images/oxygen/16x16/meeting-attending.png"), tr("Friends"), this);
     ignoreAct = new QAction(QIcon(":/images/oxygen/16x16/meeting-attending-tentative.png"), tr("Ignored"), this);
+    Core::instance()->offlineMsgAct = new QAction(QIcon(":/images/oxygen/16x16/mail-mark-unread.png") , tr("Offline messages"), this);
     camsAct = new QAction(QIcon(":/images/oxygen/16x16/camera-web.png"),tr("Cams"), this);
     myStatsAct = new QAction(QIcon(":/images/oxygen/16x16/office-chart-bar.png"),tr("My statistics"), this);
     myProfileAct = new QAction(QIcon(":/images/oxygen/16x16/view-pim-contacts.png"),tr("My profile"), this);
@@ -229,6 +234,7 @@ void MainWindow::create_actions()
     channelFavouritesAct->setShortcut(tr("Ctrl+U"));
     friendsAct->setShortcut(tr("Ctrl+P"));
     ignoreAct->setShortcut(tr("Ctrl+I"));
+    Core::instance()->offlineMsgAct->setShortcut(tr("Ctrl+M"));
     awaylogAct->setShortcut(tr("Ctrl+J"));
     camsAct->setShortcut(tr("Ctrl+K"));
 }
@@ -255,6 +261,7 @@ void MainWindow::create_menus()
     chatMenu->addAction(channelFavouritesAct);
     chatMenu->addAction(friendsAct);
     chatMenu->addAction(ignoreAct);
+    chatMenu->addAction(Core::instance()->offlineMsgAct);
     chatMenu->addAction(awaylogAct);
     chatMenu->addAction(camsAct);
 
@@ -282,6 +289,8 @@ void MainWindow::create_menus()
     toolBar->addAction(channelHomesAct);
     toolBar->addAction(friendsAct);
 
+    // offline messages
+    toolBar->addAction(Core::instance()->offlineMsgAct);
     // awaylog
     toolBar->addAction(awaylogAct);
     // onet cams
@@ -322,6 +331,8 @@ void MainWindow::create_signals()
     QObject::connect(myProfileAct, SIGNAL(triggered()), this, SLOT(open_my_profile()));
     QObject::connect(myAvatarAct, SIGNAL(triggered()), this, SLOT(open_my_avatar()));
 
+    // offlinemsg
+    QObject::connect(Core::instance()->offlineMsgAct, SIGNAL(triggered()), this, SLOT(open_offlinemsg()));
     // awaylog
     QObject::connect(awaylogAct, SIGNAL(triggered()), this, SLOT(open_awaylog()));
     // onet cams
@@ -572,6 +583,11 @@ void MainWindow::open_ignore()
 {
     if ((pNetwork->is_connected() == true) && (pNetwork->is_writable() == true))
         DlgIgnore(this, pNetwork).exec();
+}
+
+void MainWindow::open_offlinemsg()
+{
+    DlgOfflineMsg(this, pNetwork).exec();
 }
 
 void MainWindow::open_awaylog()

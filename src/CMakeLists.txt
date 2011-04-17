@@ -17,6 +17,7 @@ set (scc_UIS
 	../ui/my_profile.ui
 	../ui/my_stats.ui
 	../ui/notes.ui
+	../ui/offlinemsg.ui
 	../ui/options.ui
 	../ui/register_nick.ui
 	../ui/update.ui
@@ -56,6 +57,7 @@ set (scc_SRCS
 	gui/dlg_my_profile.cpp
 	gui/dlg_my_stats.cpp
 	gui/dlg_notes.cpp
+	gui/dlg_offlinemsg.cpp
 	gui/dlg_options.cpp
 	gui/dlg_register_nick.cpp
 	gui/dlg_update.cpp
@@ -110,6 +112,7 @@ set (scc_MOC_HDRS
 	gui/dlg_my_profile.h
 	gui/dlg_my_stats.h
 	gui/dlg_notes.h
+	gui/dlg_offlinemsg.h
 	gui/dlg_options.h
 	gui/dlg_register_nick.h
 	gui/dlg_update.h

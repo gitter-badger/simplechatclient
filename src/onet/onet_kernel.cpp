@@ -1614,10 +1614,10 @@ void OnetKernel::raw_142n()
 // ignore
 }
 
-// NS OFFLINE
-// :NickServ!service@service.onet NOTICE Merovingian :151 :jubee_blue
 // CS HOMES
 // :ChanServ!service@service.onet NOTICE scc_test :151 :h#scc
+// NS OFFLINE
+// :NickServ!service@service.onet NOTICE Merovingian :151 :jubee_blue
 void OnetKernel::raw_151n()
 {
     QString strNick = strDataList[0];
@@ -1639,7 +1639,20 @@ void OnetKernel::raw_151n()
     }
     else if (strNick.toLower() == "nickserv")
     {
-        // TODO
+        // visible
+        if (Core::instance()->offlineMsgAct->isVisible() == false)
+            Core::instance()->offlineMsgAct->setVisible(true);
+
+        // nicks
+        for (int i = 4; i < strDataList.size(); i++)
+        {
+            QString strNick = strDataList[i];
+            if (strNick[0] == ':')
+                strNick = strNick.right(strNick.length()-1);
+
+            if (Core::instance()->lOfflineNicks.contains(strNick) == false)
+                Core::instance()->lOfflineNicks.append(strNick);
+        }
     }
 }
 
@@ -2055,7 +2068,22 @@ void OnetKernel::raw_251n()
     }
     else if (strNick.toLower() == "nickserv")
     {
-        // TODO
+        QString strNick = strDataList[4];
+        QString strDT = strDataList[5];
+        QString strMsgReply = strDataList[6];
+        Q_UNUSED (strMsgReply);
+
+        QString strMessage;
+        for (int i = 7; i < strDataList.size(); i++) { if (i != 7) strMessage += " "; strMessage += strDataList[i]; }
+        if (strMessage[0] == ':')
+            strMessage = strMessage.right(strMessage.length()-1);
+
+        OfflineMsg add;
+        add.datetime = strDT;
+        add.nick = strNick;
+        add.message = strMessage;
+
+        Core::instance()->stlOfflineMsg.append(add);
     }
 }
 
@@ -2088,7 +2116,10 @@ void OnetKernel::raw_252n()
     }
     else if (strNick.toLower() == "nickserv")
     {
-        // TODO
+        QString strNick = strDataList[4];
+
+        QString strDisplay = QString(tr("* Offline messages rejected from %1")).arg(strNick);
+        pTabC->show_msg_active(strDisplay, 7);
     }
 }
 
@@ -3225,7 +3256,7 @@ void OnetKernel::raw_415n()
 // :RankServ!service@service.onet NOTICE Merovingian :416 #a :permission denied
 void OnetKernel::raw_416n()
 {
-// TODO
+// ignore
 }
 
 // :NickServ!service@service.onet NOTICE scc_test :420 aleksa7 :is already on your friend list
@@ -3446,7 +3477,10 @@ void OnetKernel::raw_454n()
     }
     else if (strNick.toLower() == "nickserv")
     {
-        // TODO
+        QString strNick = strDataList[4];
+
+        QString strDisplay = QString(tr("* No offline messages from %1")).arg(strNick);
+        pTabC->show_msg_active(strDisplay, 7);
     }
 }
 
