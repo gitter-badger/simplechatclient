@@ -43,7 +43,7 @@ private slots:
     void button_zoom_out();
     void slider_value_changed(int);
     void button_zoom_in();
-    void button_ok();
+    void button_close();
 };
 
 #endif // DLG_USER_AVATAR_H
