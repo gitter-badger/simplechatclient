@@ -234,12 +234,12 @@ void MainTextEdit::menu_nick(QString strNick, QContextMenuEvent *event)
     QString strPrefix;
     QString strSuffix;
 
-    for (int i = 0; i < Core::instance()->stlChannelNickStatus.size(); i++)
+    for (int i = 0; i < Core::instance()->lChannelNickStatus.size(); i++)
     {
-        if ((Core::instance()->stlChannelNickStatus.at(i).nick == strNick) && (Core::instance()->stlChannelNickStatus.at(i).channel == strChannel))
+        if ((Core::instance()->lChannelNickStatus.at(i).nick == strNick) && (Core::instance()->lChannelNickStatus.at(i).channel == strChannel))
         {
-            strPrefix = Core::instance()->stlChannelNickStatus.at(i).prefix;
-            strSuffix = Core::instance()->stlChannelNickStatus.at(i).suffix;
+            strPrefix = Core::instance()->lChannelNickStatus.at(i).prefix;
+            strSuffix = Core::instance()->lChannelNickStatus.at(i).suffix;
             break;
         }
     }

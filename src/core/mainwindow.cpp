@@ -722,11 +722,11 @@ void MainWindow::current_tab_changed(int index)
     // moderation
     QString strMe = settings.value("nick").toString();
     QString strPrefix;
-    for (int i = 0; i < Core::instance()->stlChannelNickStatus.size(); i++)
+    for (int i = 0; i < Core::instance()->lChannelNickStatus.size(); i++)
     {
-        if ((Core::instance()->stlChannelNickStatus.at(i).nick == strMe) && (Core::instance()->stlChannelNickStatus.at(i).channel == strChannel))
+        if ((Core::instance()->lChannelNickStatus.at(i).nick == strMe) && (Core::instance()->lChannelNickStatus.at(i).channel == strChannel))
         {
-            strPrefix = Core::instance()->stlChannelNickStatus.at(i).prefix;
+            strPrefix = Core::instance()->lChannelNickStatus.at(i).prefix;
             break;
         }
     }
@@ -848,12 +848,12 @@ void MainWindow::change_flag(QString strNick, QString strChannel, QString strNew
     QString strOldPrefix;
     QString strOldSuffix;
 
-    for (int i = 0; i < Core::instance()->stlChannelNickStatus.size(); i++)
+    for (int i = 0; i < Core::instance()->lChannelNickStatus.size(); i++)
     {
-        if ((Core::instance()->stlChannelNickStatus.at(i).nick == strNick) && (Core::instance()->stlChannelNickStatus.at(i).channel == strChannel))
+        if ((Core::instance()->lChannelNickStatus.at(i).nick == strNick) && (Core::instance()->lChannelNickStatus.at(i).channel == strChannel))
         {
-            strOldPrefix = Core::instance()->stlChannelNickStatus.at(i).prefix;
-            strOldSuffix = Core::instance()->stlChannelNickStatus.at(i).suffix;
+            strOldPrefix = Core::instance()->lChannelNickStatus.at(i).prefix;
+            strOldSuffix = Core::instance()->lChannelNickStatus.at(i).suffix;
             break;
         }
     }
@@ -933,11 +933,11 @@ void MainWindow::change_flag(QString strNick, QString strFlag)
 void MainWindow::clear_nicklist(QString strChannel)
 {
     // clear
-    for (int i = 0; i < Core::instance()->stlChannelNickStatus.size(); i++)
+    for (int i = 0; i < Core::instance()->lChannelNickStatus.size(); i++)
     {
-        if (Core::instance()->stlChannelNickStatus.at(i).channel == strChannel)
+        if (Core::instance()->lChannelNickStatus.at(i).channel == strChannel)
         {
-            Core::instance()->stlChannelNickStatus.removeAt(i);
+            Core::instance()->lChannelNickStatus.removeAt(i);
             i--;
         }
     }
@@ -952,7 +952,7 @@ void MainWindow::clear_nicklist(QString strChannel)
 
 void MainWindow::clear_all_nicklist()
 {
-    Core::instance()->stlChannelNickStatus.clear();
+    Core::instance()->lChannelNickStatus.clear();
     Core::instance()->mNickAvatar.clear();
     Core::instance()->mChannelAvatar.clear();
 

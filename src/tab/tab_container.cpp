@@ -432,9 +432,9 @@ int TabContainer::get_nick_channels(QString strNick)
 {
     int iResult = 0;
 
-    for (int i = 0; i < Core::instance()->stlChannelNickStatus.size(); i++)
+    for (int i = 0; i < Core::instance()->lChannelNickStatus.size(); i++)
     {
-        if (Core::instance()->stlChannelNickStatus.at(i).nick == strNick)
+        if (Core::instance()->lChannelNickStatus.at(i).nick == strNick)
             iResult++;
     }
 

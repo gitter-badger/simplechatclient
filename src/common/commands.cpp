@@ -99,9 +99,9 @@ QString Commands::execute()
 
 bool Commands::is_erotic(QString strChannel)
 {
-    for (int i = 0; i < Core::instance()->stlChannelList.size(); i++)
+    for (int i = 0; i < Core::instance()->lChannelList.size(); i++)
     {
-        ChannelList channel = Core::instance()->stlChannelList.at(i);
+        ChannelList channel = Core::instance()->lChannelList.at(i);
         QString strName = channel.name;
         QString strType = channel.type;
 

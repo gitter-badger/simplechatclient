@@ -1331,7 +1331,7 @@ void OnetKernel::raw_001()
     Core::instance()->mFriends.clear();
     Core::instance()->lIgnore.clear();
     Core::instance()->lChannelFavourites.clear();
-    Core::instance()->stlChannelList.clear();
+    Core::instance()->lChannelList.clear();
     Core::instance()->mMyStats.clear();
     Core::instance()->mMyProfile.clear();
     Core::instance()->lChannelHomes.clear();
@@ -2083,7 +2083,7 @@ void OnetKernel::raw_251n()
         add.nick = strNick;
         add.message = strMessage;
 
-        Core::instance()->stlOfflineMsg.append(add);
+        Core::instance()->lOfflineMsg.append(add);
     }
 }
 
@@ -4063,7 +4063,7 @@ void OnetKernel::raw_817()
 // :cf1f3.onet 818 scc_test :Start of simple channels list.
 void OnetKernel::raw_818()
 {
-    Core::instance()->stlChannelList.clear();
+    Core::instance()->lChannelList.clear();
 }
 
 // SLIST
@@ -4152,7 +4152,7 @@ void OnetKernel::raw_819()
         add.cat = strChannelCat;
         add.type = strChannelType;
 
-        Core::instance()->stlChannelList.append(add);
+        Core::instance()->lChannelList.append(add);
     }
 }
 

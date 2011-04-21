@@ -54,11 +54,11 @@ NickListWidget::~NickListWidget()
 {
     strOpenChannels.clear();
 
-    for (int i = 0; i < Core::instance()->stlChannelNickStatus.size(); i++)
+    for (int i = 0; i < Core::instance()->lChannelNickStatus.size(); i++)
     {
-        if (Core::instance()->stlChannelNickStatus.at(i).channel == strChannel)
+        if (Core::instance()->lChannelNickStatus.at(i).channel == strChannel)
         {
-            Core::instance()->stlChannelNickStatus.removeAt(i);
+            Core::instance()->lChannelNickStatus.removeAt(i);
             i--;
         }
     }
@@ -104,7 +104,7 @@ void NickListWidget::add(QString strNick, QString strPrefix, QString strSuffix)
     add.suffix = strSuffix;
 
     // add to nick list
-    Core::instance()->stlChannelNickStatus.append(add);
+    Core::instance()->lChannelNickStatus.append(add);
 
     // add child to widget
     add_child(strNick, strPrefix, strSuffix);
@@ -113,11 +113,11 @@ void NickListWidget::add(QString strNick, QString strPrefix, QString strSuffix)
 void NickListWidget::remove(QString strNick)
 {
     // remove from nick list
-    for (int i = 0; i < Core::instance()->stlChannelNickStatus.size(); i++)
+    for (int i = 0; i < Core::instance()->lChannelNickStatus.size(); i++)
     {
-        if ((Core::instance()->stlChannelNickStatus.at(i).nick == strNick) && (Core::instance()->stlChannelNickStatus.at(i).channel == strChannel))
+        if ((Core::instance()->lChannelNickStatus.at(i).nick == strNick) && (Core::instance()->lChannelNickStatus.at(i).channel == strChannel))
         {
-            Core::instance()->stlChannelNickStatus.removeAt(i);
+            Core::instance()->lChannelNickStatus.removeAt(i);
             i--;
         }
     }
@@ -128,9 +128,9 @@ void NickListWidget::remove(QString strNick)
 
 bool NickListWidget::exist(QString strNick)
 {
-    for (int i = 0; i < Core::instance()->stlChannelNickStatus.size(); i++)
+    for (int i = 0; i < Core::instance()->lChannelNickStatus.size(); i++)
     {
-        if ((Core::instance()->stlChannelNickStatus.at(i).nick == strNick) && (Core::instance()->stlChannelNickStatus.at(i).channel == strChannel))
+        if ((Core::instance()->lChannelNickStatus.at(i).nick == strNick) && (Core::instance()->lChannelNickStatus.at(i).channel == strChannel))
             return true;
     }
     return false;
@@ -140,11 +140,11 @@ QStringList NickListWidget::get()
 {
     QStringList strlResult;
 
-    for (int i = 0; i < Core::instance()->stlChannelNickStatus.size(); i++)
+    for (int i = 0; i < Core::instance()->lChannelNickStatus.size(); i++)
     {
-        if (Core::instance()->stlChannelNickStatus.at(i).channel == strChannel)
+        if (Core::instance()->lChannelNickStatus.at(i).channel == strChannel)
         {
-            QString strKey = Core::instance()->stlChannelNickStatus.at(i).nick;
+            QString strKey = Core::instance()->lChannelNickStatus.at(i).nick;
             strlResult.append(strKey);
         }
     }
@@ -612,12 +612,12 @@ void NickListWidget::contextMenuEvent(QContextMenuEvent *e)
     QString strPrefix;
     QString strSuffix;
 
-    for (int i = 0; i < Core::instance()->stlChannelNickStatus.size(); i++)
+    for (int i = 0; i < Core::instance()->lChannelNickStatus.size(); i++)
     {
-        if ((Core::instance()->stlChannelNickStatus.at(i).nick == strNick) && (Core::instance()->stlChannelNickStatus.at(i).channel == strChannel))
+        if ((Core::instance()->lChannelNickStatus.at(i).nick == strNick) && (Core::instance()->lChannelNickStatus.at(i).channel == strChannel))
         {
-            strPrefix = Core::instance()->stlChannelNickStatus.at(i).prefix;
-            strSuffix = Core::instance()->stlChannelNickStatus.at(i).suffix;
+            strPrefix = Core::instance()->lChannelNickStatus.at(i).prefix;
+            strSuffix = Core::instance()->lChannelNickStatus.at(i).suffix;
             break;
         }
     }

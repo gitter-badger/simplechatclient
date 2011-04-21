@@ -131,9 +131,9 @@ void DlgChannelList::create_signals()
 
 bool DlgChannelList::is_erotic(QString strChannel)
 {
-    for (int i = 0; i < Core::instance()->stlChannelList.size(); i++)
+    for (int i = 0; i < Core::instance()->lChannelList.size(); i++)
     {
-        ChannelList channel = Core::instance()->stlChannelList.at(i);
+        ChannelList channel = Core::instance()->lChannelList.at(i);
         QString strName = channel.name;
         QString strType = channel.type;
 
@@ -158,9 +158,9 @@ void DlgChannelList::create_list()
     int iThematicCount = 0;
     int iRegionalCount = 0;
 
-    for (int i = 0; i < Core::instance()->stlChannelList.size(); i++)
+    for (int i = 0; i < Core::instance()->lChannelList.size(); i++)
     {
-        ChannelList channel = Core::instance()->stlChannelList.at(i);
+        ChannelList channel = Core::instance()->lChannelList.at(i);
         QString strType = channel.type;
 
         iAllCount++;
@@ -191,9 +191,9 @@ void DlgChannelList::create_list()
     int iThematicRow = 0;
     int iRegionalRow = 0;
 
-    for (int i = 0; i < Core::instance()->stlChannelList.size(); i++)
+    for (int i = 0; i < Core::instance()->lChannelList.size(); i++)
     {
-        ChannelList channel = Core::instance()->stlChannelList.at(i);
+        ChannelList channel = Core::instance()->lChannelList.at(i);
         QString strName = channel.name;
         QString strPeople = channel.people;
         QString strCat = channel.cat;

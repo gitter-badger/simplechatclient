@@ -82,11 +82,11 @@ void DlgOfflineMsg::remove_nick(QString strRemoveNick)
     }
 
     // remove from core
-    for (int i = 0; i < Core::instance()->stlOfflineMsg.size(); i++)
+    for (int i = 0; i < Core::instance()->lOfflineMsg.size(); i++)
     {
-        OfflineMsg msg = Core::instance()->stlOfflineMsg.at(i);
+        OfflineMsg msg = Core::instance()->lOfflineMsg.at(i);
         if (msg.nick == strRemoveNick)
-            Core::instance()->stlOfflineMsg.takeAt(i);
+            Core::instance()->lOfflineMsg.takeAt(i);
     }
 }
 
@@ -104,9 +104,9 @@ void DlgOfflineMsg::refresh_msg()
     ui.lineEdit_reply->setEnabled(true);
     ui.pushButton_reply->setEnabled(true);
 
-    for (int i = 0; i < Core::instance()->stlOfflineMsg.size(); i++)
+    for (int i = 0; i < Core::instance()->lOfflineMsg.size(); i++)
     {
-        OfflineMsg msg = Core::instance()->stlOfflineMsg.at(i);
+        OfflineMsg msg = Core::instance()->lOfflineMsg.at(i);
         QString strTime = msg.datetime;
         QString strNick = msg.nick;
         QString strMessage = msg.message;

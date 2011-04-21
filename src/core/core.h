@@ -58,16 +58,16 @@ public:
     QMap<QString, bool> mFriends;
     QList<QString> lIgnore;
     QList<QString> lChannelFavourites;
-    sChannelList stlChannelList;
+    sChannelList lChannelList;
     QMap<QString, QByteArray> mNickAvatar;
     QMap<QString, QByteArray> mChannelAvatar;
     QMap<QString, QString> mMyStats;
     QMap<QString, QString> mMyProfile;
     QList<QString> lChannelHomes;
-    sChannelNickStatus stlChannelNickStatus;
+    sChannelNickStatus lChannelNickStatus;
     // offline
     QAction *offlineMsgAct;
-    sOfflineMsg stlOfflineMsg;
+    sOfflineMsg lOfflineMsg;
     QList<QString> lOfflineNicks;
 
 public slots:
