@@ -716,7 +716,7 @@ void MainWindow::current_tab_changed(int index)
     pInputLineDockWidget->set_userslist(mChannelNickListWidget.value(strChannel));
 
     // update nick count
-    rightDockWidget->setWindowTitle(QString(tr("Users (%1)")).arg(pTabC->get_users(strChannel)));
+    rightDockWidget->setWindowTitle(QString(tr("Users (%1)")).arg(Core::instance()->mChannelNicks[strChannel]));
 
     // moderation
     QString strMe = settings.value("nick").toString();
@@ -781,11 +781,11 @@ void MainWindow::add_user(QString strChannel, QString strNick, QString strPrefix
             pInputLineDockWidget->set_userslist(mChannelNickListWidget.value(strChannel));
 
         // update nick count for option hide join/part when > 200
-        pTabC->add_user(strChannel);
+        Core::instance()->mChannelNicks[strChannel] = Core::instance()->mChannelNicks[strChannel]++;
 
         // update nick count
         if (pInputLineDockWidget->get_active() == strChannel)
-            rightDockWidget->setWindowTitle(QString(tr("Users (%1)")).arg(pTabC->get_users(strChannel)));
+            rightDockWidget->setWindowTitle(QString(tr("Users (%1)")).arg(Core::instance()->mChannelNicks[strChannel]));
     }
 }
 
@@ -800,11 +800,11 @@ void MainWindow::del_user(QString strChannel, QString strNick)
             pInputLineDockWidget->set_userslist(mChannelNickListWidget.value(strChannel));
 
         // update nick count for option hide join/part when > 200
-        pTabC->del_user(strChannel);
+        Core::instance()->mChannelNicks[strChannel] = Core::instance()->mChannelNicks[strChannel]--;
 
         // update nick count
         if (pInputLineDockWidget->get_active() == strChannel)
-            rightDockWidget->setWindowTitle(QString(tr("Users (%1)")).arg(pTabC->get_users(strChannel)));
+            rightDockWidget->setWindowTitle(QString(tr("Users (%1)")).arg(Core::instance()->mChannelNicks[strChannel]));
     }
 }
 
@@ -835,7 +835,7 @@ void MainWindow::quit_user(QString strNick, QString strDisplay)
 
             // update nick count
             if (pInputLineDockWidget->get_active() == strChannel)
-                rightDockWidget->setWindowTitle(QString(tr("Users (%1)")).arg(pTabC->get_users(strChannel)));
+                rightDockWidget->setWindowTitle(QString(tr("Users (%1)")).arg(Core::instance()->mChannelNicks[strChannel]));
         }
     }
 }
@@ -942,11 +942,11 @@ void MainWindow::clear_nicklist(QString strChannel)
     }
 
     // clear nick count for option hide join/part when > 200
-    pTabC->clear_users(strChannel);
+    Core::instance()->mChannelNicks[strChannel] = 0;
 
     // update nick count
     if (pInputLineDockWidget->get_active() == strChannel)
-        rightDockWidget->setWindowTitle(QString(tr("Users (%1)")).arg(pTabC->get_users(strChannel)));
+        rightDockWidget->setWindowTitle(QString(tr("Users (%1)")).arg(Core::instance()->mChannelNicks[strChannel]));
 }
 
 void MainWindow::clear_all_nicklist()
@@ -962,11 +962,11 @@ void MainWindow::clear_all_nicklist()
         mChannelNickListWidget.value(strChannel)->clear();
 
         // clear nick count for option hide join/part when > 200
-        pTabC->clear_users(strChannel);
+        Core::instance()->mChannelNicks[strChannel] = 0;
 
         // update nick count
         if (pInputLineDockWidget->get_active() == strChannel)
-            rightDockWidget->setWindowTitle(QString(tr("Users (%1)")).arg(pTabC->get_users(strChannel)));
+            rightDockWidget->setWindowTitle(QString(tr("Users (%1)")).arg(Core::instance()->mChannelNicks[strChannel]));
     }
 }
 
@@ -993,7 +993,7 @@ void MainWindow::clear_channel_all_nick_avatars(QString strChannel)
         QString strNick = strlNicks.at(i);
 
         // remove nick avatar if nick is only in current channel; must be 1 (current channel)
-        if ((Core::instance()->mNickAvatar.contains(strNick) == true) && (pTabC->get_nick_channels(strNick) == 1))
+        if ((Core::instance()->mNickAvatar.contains(strNick) == true) && (Core::instance()->get_nick_channels(strNick) == 1))
             Core::instance()->mNickAvatar.remove(strNick);
     }
 }

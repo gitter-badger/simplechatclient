@@ -50,6 +50,9 @@ TabContainer::~TabContainer()
         // remove from open channels
         Core::instance()->lOpenChannels.removeAll(strChannel);
 
+        // remove from nick count
+        Core::instance()->mChannelNicks.remove(strChannel);
+
         // log
         QString strData = "--- Log closed "+QDateTime::currentDateTime().toString(Qt::TextDate);
         Log *l = new Log();
@@ -122,6 +125,9 @@ void TabContainer::add_tab(QString strChannel)
         // update open channels
         if (strChannel != "Status")
             Core::instance()->lOpenChannels.append(strChannel);
+
+        // update nick count
+        Core::instance()->mChannelNicks.insert(strChannel, 0);
     }
 }
 
@@ -141,6 +147,9 @@ void TabContainer::remove_tab(QString strChannel)
 
         // remove from open channels
         Core::instance()->lOpenChannels.removeAll(strChannel);
+
+        // remove from nick count
+        Core::instance()->mChannelNicks.remove(strChannel);
 
         // log
         QString strData = "--- Log closed "+QDateTime::currentDateTime().toString(Qt::TextDate);
@@ -372,51 +381,4 @@ void TabContainer::refresh_background_image()
 {
     for (int i = 0; i < tw.size(); i++)
         tw[i]->refresh_background_image();
-}
-
-// update nick count for option hide join/part when > 200
-void TabContainer::add_user(QString strChannel)
-{
-    int i = get_index(strChannel);
-    if (i != -1)
-        tw[i]->add_user();
-}
-
-// update nick count for option hide join/part when > 200
-void TabContainer::del_user(QString strChannel)
-{
-    int i = get_index(strChannel);
-    if (i != -1)
-        tw[i]->del_user();
-}
-
-// update nick count for option hide join/part when > 200
-void TabContainer::clear_users(QString strChannel)
-{
-    int i = get_index(strChannel);
-    if (i != -1)
-        tw[i]->clear_users();
-}
-
-int TabContainer::get_users(QString strChannel)
-{
-    int i = get_index(strChannel);
-    if (i != -1)
-        return tw[i]->get_users();
-    else
-        return 0;
-}
-
-// for avatars (if nick not in any channels -> remove avatar)
-int TabContainer::get_nick_channels(QString strNick)
-{
-    int iResult = 0;
-
-    for (int i = 0; i < Core::instance()->lChannelNickStatus.size(); i++)
-    {
-        if (Core::instance()->lChannelNickStatus.at(i).nick == strNick)
-            iResult++;
-    }
-
-    return iResult;
 }

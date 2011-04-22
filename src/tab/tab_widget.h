@@ -48,10 +48,6 @@ public:
     void set_dlg_cam(DlgCam *);
 #endif
     inline QString get_name() { return strName; }
-    inline void add_user() { iNickCount++; } // update nick count for option hide join/part when > 200
-    inline void del_user() { iNickCount--; } // update nick count for option hide join/part when > 200
-    inline void clear_users() { iNickCount = 0; } // update nick count for option hide join/part when > 200
-    inline int get_users() { return iNickCount; }
     QString addslashes(QString);
     void display_msg(QString, QString, int);
     void display_msg(QString, int);
@@ -94,8 +90,6 @@ private:
     QLabel *topicDetails;
     QLabel *websiteLink;
     MainTextEdit *pMainTextEdit;
-
-    int iNickCount;
 };
 
 #endif // TAB_WIDGET_H

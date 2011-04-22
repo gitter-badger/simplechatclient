@@ -52,6 +52,8 @@ public:
     void refresh_background_image();
     // update
     void check_update();
+    // for avatars
+    int get_nick_channels(QString);
 
     QAction *lagAct;
     QList<QString> lAwaylog;
@@ -67,6 +69,7 @@ public:
     sChannelNickStatus lChannelNickStatus;
     // channels
     QList<QString> lOpenChannels;
+    QMap<QString, int> mChannelNicks;
     // offline
     QAction *offlineMsgAct;
     sOfflineMsg lOfflineMsg;

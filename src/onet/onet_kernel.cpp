@@ -726,7 +726,7 @@ void OnetKernel::raw_part()
     emit del_user(strChannel, strNick);
 
     // remove nick avatar if not exist on any channel
-    if ((Core::instance()->mNickAvatar.contains(strNick) == true) && (pTabC->get_nick_channels(strNick) == 0))
+    if ((Core::instance()->mNickAvatar.contains(strNick) == true) && (Core::instance()->get_nick_channels(strNick) == 0))
         Core::instance()->mNickAvatar.remove(strNick);
 
     // if self part
@@ -821,7 +821,7 @@ void OnetKernel::raw_kick()
     emit del_user(strChannel, strNick);
 
     // remove nick from avatars if not exist on open channels
-    if ((Core::instance()->mNickAvatar.contains(strNick) == true) && (pTabC->get_nick_channels(strNick) == 0))
+    if ((Core::instance()->mNickAvatar.contains(strNick) == true) && (Core::instance()->get_nick_channels(strNick) == 0))
         Core::instance()->mNickAvatar.remove(strNick);
 
     QSettings settings;

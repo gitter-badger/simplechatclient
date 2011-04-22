@@ -60,11 +60,6 @@ public:
     void set_topic(QString, QString);
     void author_topic(QString, QString);
     void set_link(QString, QString);
-    void add_user(QString); // update nick count for option hide join/part when > 200
-    void del_user(QString); // update nick count for option hide join/part when > 200
-    void clear_users(QString);  // update nick count for option hide join/part when > 200
-    int get_users(QString);
-    int get_nick_channels(QString);
 
 public slots:
     void slot_update_nick_avatar(QString);

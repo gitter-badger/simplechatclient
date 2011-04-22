@@ -45,8 +45,6 @@ TabWidget::TabWidget(Network *param1, QString param2, QTcpSocket *param3, DlgUse
     QString strBackgroundColor = addslashes(settings.value("background_color").toString());
     strFontSize = settings.value("font_size").toString();
 
-    iNickCount = 0;
-
     mainLayout = new QVBoxLayout();
     mainLayout->setMargin(0);
     mainWidget = new QWidget(this);
@@ -226,6 +224,7 @@ void TabWidget::display_msg(QString strTime, QString strData, int iLevel)
         if (settings.value("hide_join_part").toString() == "on")
             return;
 
+        int iNickCount = Core::instance()->mChannelNicks[strName];
         if ((settings.value("hide_join_part_200").toString() == "on") && (iNickCount > 200))
             return;
     }
@@ -252,6 +251,7 @@ void TabWidget::display_msg(QString strData, int iLevel)
         if (settings.value("hide_join_part").toString() == "on")
             return;
 
+        int iNickCount = Core::instance()->mChannelNicks[strName];
         if ((settings.value("hide_join_part_200").toString() == "on") && (iNickCount > 200))
             return;
     }
