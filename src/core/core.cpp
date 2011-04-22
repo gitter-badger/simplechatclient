@@ -66,7 +66,7 @@ void Core::createSettings()
 {
     // default settings
     QSettings settings;
-    settings.setValue("version", "1.0.11.817");
+    settings.setValue("version", "1.0.11.818");
     settings.setValue("logged", "off");
     settings.setValue("busy", "off");
     settings.setValue("away", "off");
@@ -154,9 +154,9 @@ int Core::get_nick_channels(QString strNick)
 {
     int iResult = 0;
 
-    for (int i = 0; i < lChannelNickStatus.size(); i++)
+    for (int i = 0; i < lUsers.size(); i++)
     {
-        if (lChannelNickStatus.at(i).nick == strNick)
+        if (lUsers.at(i).nick == strNick)
             iResult++;
     }
 

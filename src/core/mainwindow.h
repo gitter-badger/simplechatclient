@@ -149,7 +149,7 @@ private slots:
 public slots:
     void create_nicklist(QString);
     void remove_nicklist(QString);
-    void add_user(QString, QString, QString, QString);
+    void add_user(QString, QString, QString);
     void del_user(QString, QString);
     void nicklist_refresh(QString);
     void quit_user(QString, QString);

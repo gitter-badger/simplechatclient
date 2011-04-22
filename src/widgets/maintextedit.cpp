@@ -225,15 +225,12 @@ void MainTextEdit::menu_channel(QString strChannel, QContextMenuEvent *event)
 
 void MainTextEdit::menu_nick(QString strNick, QContextMenuEvent *event)
 {
-    QString strPrefix;
-    QString strSuffix;
-
-    for (int i = 0; i < Core::instance()->lChannelNickStatus.size(); i++)
+    QString strModes;
+    for (int i = 0; i < Core::instance()->lUsers.size(); i++)
     {
-        if ((Core::instance()->lChannelNickStatus.at(i).nick == strNick) && (Core::instance()->lChannelNickStatus.at(i).channel == strChannel))
+        if ((Core::instance()->lUsers.at(i).nick == strNick) && (Core::instance()->lUsers.at(i).channel == strChannel))
         {
-            strPrefix = Core::instance()->lChannelNickStatus.at(i).prefix;
-            strSuffix = Core::instance()->lChannelNickStatus.at(i).suffix;
+            strModes = Core::instance()->lUsers.at(i).modes;
             break;
         }
     }
@@ -275,22 +272,22 @@ void MainTextEdit::menu_nick(QString strNick, QContextMenuEvent *event)
     QMenu *privilege = new QMenu(tr("Actions"));
     privilege->setIcon(QIcon(":/images/oxygen/16x16/irc-operator.png"));
 
-    if (strPrefix.indexOf("@") == -1)
+    if (strModes.indexOf("@") == -1)
         privilege->addAction(QIcon(":/images/op.png"), tr("Give super operator status"), this, SLOT(op_add()));
     else
         privilege->addAction(QIcon(":/images/op.png"), tr("Take super operator status"), this, SLOT(op_del()));
 
-    if (strPrefix.indexOf("%") == -1)
+    if (strModes.indexOf("%") == -1)
         privilege->addAction(QIcon(":/images/halfop.png"), tr("Give operator status"), this, SLOT(halfop_add()));
     else
         privilege->addAction(QIcon(":/images/halfop.png"), tr("Take operator status"), this, SLOT(halfop_del()));
 
-    if (strPrefix.indexOf("!") == -1)
+    if (strModes.indexOf("!") == -1)
         privilege->addAction(QIcon(":/images/mod.png"), tr("Give moderator status"), this, SLOT(moderator_add()));
     else
         privilege->addAction(QIcon(":/images/mod.png"), tr("Take moderator status"), this, SLOT(moderator_del()));
 
-    if (strPrefix.indexOf("+") == -1)
+    if (strModes.indexOf("+") == -1)
         privilege->addAction(QIcon(":/images/voice.png"), tr("Give guest status"), this, SLOT(voice_add()));
     else
         privilege->addAction(QIcon(":/images/voice.png"), tr("Take guest status"), this, SLOT(voice_del()));

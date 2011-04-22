@@ -365,7 +365,7 @@ void MainWindow::create_signals()
     QObject::connect(pOnetKernel, SIGNAL(clear_nicklist(QString)), this, SLOT(clear_nicklist(QString)));
 
     // signals from kernel to nicklist
-    QObject::connect(pOnetKernel, SIGNAL(add_user(QString,QString,QString,QString)), this, SLOT(add_user(QString,QString,QString,QString)));
+    QObject::connect(pOnetKernel, SIGNAL(add_user(QString,QString,QString)), this, SLOT(add_user(QString,QString,QString)));
     QObject::connect(pOnetKernel, SIGNAL(del_user(QString,QString)), this, SLOT(del_user(QString,QString)));
     QObject::connect(pOnetKernel, SIGNAL(nicklist_refresh(QString)), this, SLOT(nicklist_refresh(QString)));
     QObject::connect(pOnetKernel, SIGNAL(quit_user(QString,QString)), this, SLOT(quit_user(QString,QString)));
@@ -720,16 +720,16 @@ void MainWindow::current_tab_changed(int index)
 
     // moderation
     QString strMe = settings.value("nick").toString();
-    QString strPrefix;
-    for (int i = 0; i < Core::instance()->lChannelNickStatus.size(); i++)
+    QString strModes;
+    for (int i = 0; i < Core::instance()->lUsers.size(); i++)
     {
-        if ((Core::instance()->lChannelNickStatus.at(i).nick == strMe) && (Core::instance()->lChannelNickStatus.at(i).channel == strChannel))
+        if ((Core::instance()->lUsers.at(i).nick == strMe) && (Core::instance()->lUsers.at(i).channel == strChannel))
         {
-            strPrefix = Core::instance()->lChannelNickStatus.at(i).prefix;
+            strModes = Core::instance()->lUsers.at(i).modes;
             break;
         }
     }
-    if (strPrefix.contains("!")) pInputLineDockWidget->enable_moderation();
+    if (strModes.contains("!")) pInputLineDockWidget->enable_moderation();
     else pInputLineDockWidget->disable_moderation();
 }
 
@@ -770,11 +770,11 @@ bool MainWindow::nicklist_exist(QString strChannel, QString strNick)
         return false;
 }
 
-void MainWindow::add_user(QString strChannel, QString strNick, QString strPrefix, QString strSuffix)
+void MainWindow::add_user(QString strChannel, QString strNick, QString strModes)
 {
     if ((nicklist_exist(strChannel, strNick) == false) && (mChannelNickListWidget.contains(strChannel) == true))
     {
-        mChannelNickListWidget.value(strChannel)->add(strNick, strPrefix, strSuffix);
+        mChannelNickListWidget.value(strChannel)->add(strNick, strModes);
 
         // set inputline users
         if (pInputLineDockWidget->get_active() == strChannel)
@@ -844,67 +844,39 @@ void MainWindow::change_flag(QString strNick, QString strChannel, QString strNew
 {
     if (nicklist_exist(strChannel, strNick) == false) return; // nick not exist
 
-    QString strOldPrefix;
-    QString strOldSuffix;
-
-    for (int i = 0; i < Core::instance()->lChannelNickStatus.size(); i++)
+    QString strModes;
+    for (int i = 0; i < Core::instance()->lUsers.size(); i++)
     {
-        if ((Core::instance()->lChannelNickStatus.at(i).nick == strNick) && (Core::instance()->lChannelNickStatus.at(i).channel == strChannel))
+        if ((Core::instance()->lUsers.at(i).nick == strNick) && (Core::instance()->lUsers.at(i).channel == strChannel))
         {
-            strOldPrefix = Core::instance()->lChannelNickStatus.at(i).prefix;
-            strOldSuffix = Core::instance()->lChannelNickStatus.at(i).suffix;
+            strModes = Core::instance()->lUsers.at(i).modes;
             break;
         }
     }
 
-    QString strPrefix = strOldPrefix;
-    QString strSuffix = strOldSuffix;
+    QString strConvertFrom = "qaohXYvObrWVx";
+    QString strConvertTo = "`&@%!=+ObrWVx";
 
-    // prefix
-    QString strPrefix1 = "qaohXYv";
-    QString strPrefix2 = "`&@%!=+";
-
-    for (int i = 0; i < strPrefix1.size(); i++)
+    for (int i = 0; i < strConvertFrom.size(); i++)
     {
         QString plusminus = strNewFlag.at(0);
         QString strFlag = strNewFlag.at(1);
 
         if (plusminus == "+")
         {
-            if ((strFlag == strPrefix1.at(i)) && (strPrefix.indexOf(strPrefix2.at(i)) == -1))
-                strPrefix.append(strPrefix2.at(i));
+            if ((strFlag == strConvertFrom.at(i)) && (strModes.indexOf(strConvertTo.at(i)) == -1))
+                strModes.append(strConvertTo.at(i));
         }
         else
         {
-            if ((strFlag == strPrefix1.at(i)) && (strPrefix.indexOf(strPrefix2.at(i)) != -1))
-                strPrefix.remove(strPrefix2.at(i));
-        }
-    }
-
-    // suffix
-    QString strSuffix1 = "ObrWVx";
-    QString strSuffix2 = "ObrWVx";
-
-    for (int i = 0; i < strSuffix1.size(); i++)
-    {
-        QString plusminus = strNewFlag.at(0);
-        QString strFlag = strNewFlag.at(1);
-
-        if (plusminus == "+")
-        {
-            if ((strFlag == strSuffix1.at(i)) && (strSuffix.indexOf(strSuffix2.at(i)) == -1))
-                strSuffix.append(strSuffix2.at(i));
-        }
-        else
-        {
-            if ((strFlag == strSuffix1.at(i)) && (strSuffix.indexOf(strSuffix2.at(i)) != -1))
-                strSuffix.remove(strSuffix2.at(i));
+            if ((strFlag == strConvertFrom.at(i)) && (strModes.indexOf(strConvertTo.at(i)) != -1))
+                strModes.remove(strConvertTo.at(i));
         }
     }
 
     // change flag
     del_user(strChannel, strNick);
-    add_user(strChannel, strNick, strPrefix, strSuffix);
+    add_user(strChannel, strNick, strModes);
 
     // me ?
     QSettings settings;
@@ -932,11 +904,11 @@ void MainWindow::change_flag(QString strNick, QString strFlag)
 void MainWindow::clear_nicklist(QString strChannel)
 {
     // clear
-    for (int i = 0; i < Core::instance()->lChannelNickStatus.size(); i++)
+    for (int i = 0; i < Core::instance()->lUsers.size(); i++)
     {
-        if (Core::instance()->lChannelNickStatus.at(i).channel == strChannel)
+        if (Core::instance()->lUsers.at(i).channel == strChannel)
         {
-            Core::instance()->lChannelNickStatus.removeAt(i);
+            Core::instance()->lUsers.removeAt(i);
             i--;
         }
     }
@@ -951,7 +923,7 @@ void MainWindow::clear_nicklist(QString strChannel)
 
 void MainWindow::clear_all_nicklist()
 {
-    Core::instance()->lChannelNickStatus.clear();
+    Core::instance()->lUsers.clear();
     Core::instance()->mNickAvatar.clear();
     Core::instance()->mChannelAvatar.clear();
 

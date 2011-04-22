@@ -39,7 +39,7 @@ public:
 #ifndef Q_WS_WIN
     void set_dlg_cam(DlgCam *);
 #endif
-    void add(QString, QString, QString);
+    void add(QString, QString);
     void remove(QString);
     bool exist(QString);
     QStringList get();
@@ -65,7 +65,7 @@ private:
     int index_parent(QString);
     void move_parent(int, int);
     void sort_parent();
-    void add_child(QString, QString, QString);
+    void add_child(QString, QString);
     void add_child(QString, SortedTreeWidgetItem *);
     bool exist_child(QString, QString);
     void remove_child(QString);

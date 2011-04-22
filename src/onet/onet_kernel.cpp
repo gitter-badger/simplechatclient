@@ -663,7 +663,7 @@ void OnetKernel::raw_join()
             pNetwork->send(QString("NS INFO %1 s").arg(strNick));
     }
 
-    emit add_user(strChannel, strNick, QString::null, strSuffix);
+    emit add_user(strChannel, strNick, strSuffix);
 }
 
 // :scc_test!51976824@3DE379.B7103A.6CF799.6902F4 PART #scc
@@ -2859,7 +2859,8 @@ void OnetKernel::raw_353()
             if (strCleanNick.indexOf("=") != -1) { strCleanNick.remove("="); strPrefix.append("="); }
             if (strCleanNick.indexOf("+") != -1) { strCleanNick.remove("+"); strPrefix.append("+"); }
 
-            emit add_user(strChannel, strCleanNick, strPrefix, strSuffix);
+            QString strModes = strPrefix+strSuffix;
+            emit add_user(strChannel, strCleanNick, strModes);
 
             // if ^ rename channel
             if (strChannel[0] == '^')

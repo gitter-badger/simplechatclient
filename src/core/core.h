@@ -66,7 +66,7 @@ public:
     QMap<QString, QString> mMyStats;
     QMap<QString, QString> mMyProfile;
     QList<QString> lChannelHomes;
-    sChannelNickStatus lChannelNickStatus;
+    sUsers lUsers;
     // channels
     QList<QString> lOpenChannels;
     QMap<QString, int> mChannelNicks;

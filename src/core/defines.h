@@ -27,14 +27,13 @@
 #include <QTableWidgetItem>
 #include <QTreeWidgetItem>
 
-struct NickStatus
+struct User
 {
-    QString channel;
     QString nick;
-    QString prefix;
-    QString suffix;
+    QString channel;
+    QString modes;
 };
-typedef QList<NickStatus> sChannelNickStatus;
+typedef QList<User> sUsers;
 
 struct ChannelList
 {

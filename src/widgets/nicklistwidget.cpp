@@ -52,11 +52,11 @@ NickListWidget::NickListWidget(Network *param1, QString param2, QTcpSocket *para
 
 NickListWidget::~NickListWidget()
 {
-    for (int i = 0; i < Core::instance()->lChannelNickStatus.size(); i++)
+    for (int i = 0; i < Core::instance()->lUsers.size(); i++)
     {
-        if (Core::instance()->lChannelNickStatus.at(i).channel == strChannel)
+        if (Core::instance()->lUsers.at(i).channel == strChannel)
         {
-            Core::instance()->lChannelNickStatus.removeAt(i);
+            Core::instance()->lUsers.removeAt(i);
             i--;
         }
     }
@@ -87,30 +87,29 @@ void NickListWidget::set_dlg_cam(DlgCam *param1)
 // admin      o
 // developer  O
 
-void NickListWidget::add(QString strNick, QString strPrefix, QString strSuffix)
+void NickListWidget::add(QString strNick, QString strModes)
 {
     // add
-    NickStatus add;
+    User add;
     add.channel = strChannel;
     add.nick = strNick;
-    add.prefix = strPrefix;
-    add.suffix = strSuffix;
+    add.modes = strModes;
 
     // add to nick list
-    Core::instance()->lChannelNickStatus.append(add);
+    Core::instance()->lUsers.append(add);
 
     // add child to widget
-    add_child(strNick, strPrefix, strSuffix);
+    add_child(strNick, strModes);
 }
 
 void NickListWidget::remove(QString strNick)
 {
     // remove from nick list
-    for (int i = 0; i < Core::instance()->lChannelNickStatus.size(); i++)
+    for (int i = 0; i < Core::instance()->lUsers.size(); i++)
     {
-        if ((Core::instance()->lChannelNickStatus.at(i).nick == strNick) && (Core::instance()->lChannelNickStatus.at(i).channel == strChannel))
+        if ((Core::instance()->lUsers.at(i).nick == strNick) && (Core::instance()->lUsers.at(i).channel == strChannel))
         {
-            Core::instance()->lChannelNickStatus.removeAt(i);
+            Core::instance()->lUsers.removeAt(i);
             i--;
         }
     }
@@ -121,9 +120,9 @@ void NickListWidget::remove(QString strNick)
 
 bool NickListWidget::exist(QString strNick)
 {
-    for (int i = 0; i < Core::instance()->lChannelNickStatus.size(); i++)
+    for (int i = 0; i < Core::instance()->lUsers.size(); i++)
     {
-        if ((Core::instance()->lChannelNickStatus.at(i).nick == strNick) && (Core::instance()->lChannelNickStatus.at(i).channel == strChannel))
+        if ((Core::instance()->lUsers.at(i).nick == strNick) && (Core::instance()->lUsers.at(i).channel == strChannel))
             return true;
     }
     return false;
@@ -133,11 +132,11 @@ QStringList NickListWidget::get()
 {
     QStringList strlResult;
 
-    for (int i = 0; i < Core::instance()->lChannelNickStatus.size(); i++)
+    for (int i = 0; i < Core::instance()->lUsers.size(); i++)
     {
-        if (Core::instance()->lChannelNickStatus.at(i).channel == strChannel)
+        if (Core::instance()->lUsers.at(i).channel == strChannel)
         {
-            QString strKey = Core::instance()->lChannelNickStatus.at(i).nick;
+            QString strKey = Core::instance()->lUsers.at(i).nick;
             strlResult.append(strKey);
         }
     }
@@ -237,73 +236,73 @@ void NickListWidget::sort_parent()
 
 }
 
-void NickListWidget::add_child(QString strNick, QString strPrefix, QString strSuffix)
+void NickListWidget::add_child(QString strNick, QString strModes)
 {
     // add to widget
-    if (strSuffix.contains("O") == true)
+    if (strModes.contains("O") == true)
     {
         QPixmap icon = QPixmap(":/images/dev.png");
         if (exist_parent(tr("Developer(s)")) == false) add_parent(tr("Developer(s)"), icon);
-        if (exist_child(strNick, tr("Developer(s)")) == false) add_child(tr("Developer(s)"), create_child(strNick, strSuffix, icon));
+        if (exist_child(strNick, tr("Developer(s)")) == false) add_child(tr("Developer(s)"), create_child(strNick, strModes, icon));
     }
-    if (strSuffix.contains("o") == true)
+    if (strModes.contains("o") == true)
     {
         QPixmap icon = QPixmap(":/images/admin.png");
         if (exist_parent(tr("Admin(s)")) == false) add_parent(tr("Admin(s)"), icon);
-        if (exist_child(strNick, tr("Admin(s)")) == false) add_child(tr("Admin(s)"), create_child(strNick, strSuffix, icon));
+        if (exist_child(strNick, tr("Admin(s)")) == false) add_child(tr("Admin(s)"), create_child(strNick, strModes, icon));
     }
-    if (strPrefix.contains("`") == true)
+    if (strModes.contains("`") == true)
     {
         QPixmap icon = QPixmap(":/images/owner.png");
         if (exist_parent(tr("Owner(s)")) == false) add_parent(tr("Owner(s)"), icon);
-        if (exist_child(strNick, tr("Owner(s)")) == false) add_child(tr("Owner(s)"), create_child(strNick, strSuffix, icon));
+        if (exist_child(strNick, tr("Owner(s)")) == false) add_child(tr("Owner(s)"), create_child(strNick, strModes, icon));
     }
-    if (strPrefix.contains("@") == true)
+    if (strModes.contains("@") == true)
     {
         QPixmap icon = QPixmap(":/images/op.png");
         if (exist_parent(tr("Op(s)")) == false) add_parent(tr("Op(s)"), icon);
-        if (exist_child(strNick, tr("Op(s)")) == false) add_child(tr("Op(s)"), create_child(strNick, strSuffix, icon));
+        if (exist_child(strNick, tr("Op(s)")) == false) add_child(tr("Op(s)"), create_child(strNick, strModes, icon));
     }
-    if (strPrefix.contains("%") == true)
+    if (strModes.contains("%") == true)
     {
         QPixmap icon = QPixmap(":/images/halfop.png");
         if (exist_parent(tr("HalfOp(s)")) == false) add_parent(tr("HalfOp(s)"), icon);
-        if (exist_child(strNick, tr("HalfOp(s)")) == false) add_child(tr("HalfOp(s)"), create_child(strNick, strSuffix, icon));
+        if (exist_child(strNick, tr("HalfOp(s)")) == false) add_child(tr("HalfOp(s)"), create_child(strNick, strModes, icon));
     }
-    if (strPrefix.contains("!") == true)
+    if (strModes.contains("!") == true)
     {
         QPixmap icon = QPixmap(":/images/mod.png");
         if (exist_parent(tr("Mod(s)")) == false) add_parent(tr("Mod(s)"), icon);
-        if (exist_child(strNick, tr("Mod(s)")) == false) add_child(tr("Mod(s)"), create_child(strNick, strSuffix, icon));
+        if (exist_child(strNick, tr("Mod(s)")) == false) add_child(tr("Mod(s)"), create_child(strNick, strModes, icon));
     }
-    if (strPrefix.contains("=") == true)
+    if (strModes.contains("=") == true)
     {
         QPixmap icon = QPixmap(":/images/screener.png");
         if (exist_parent(tr("Screener(s)")) == false) add_parent(tr("Screener(s)"), icon);
-        if (exist_child(strNick, tr("Screener(s)")) == false) add_child(tr("Screener(s)"), create_child(strNick, strSuffix, icon));
+        if (exist_child(strNick, tr("Screener(s)")) == false) add_child(tr("Screener(s)"), create_child(strNick, strModes, icon));
     }
-    if (strPrefix.contains("+") == true)
+    if (strModes.contains("+") == true)
     {
         QPixmap icon = QPixmap(":/images/voice.png");
         if (exist_parent(tr("Voice(s)")) == false) add_parent(tr("Voice(s)"), icon);
-        if (exist_child(strNick, tr("Voice(s)")) == false) add_child(tr("Voice(s)"), create_child(strNick, strSuffix, icon));
+        if (exist_child(strNick, tr("Voice(s)")) == false) add_child(tr("Voice(s)"), create_child(strNick, strModes, icon));
     }
-    if ((strSuffix.contains("W") == true) || (strSuffix.contains("V") == true))
+    if ((strModes.contains("W") == true) || (strModes.contains("V") == true))
     {
         QPixmap icon;
-        if (strSuffix.contains("W") == true)
+        if (strModes.contains("W") == true)
             icon = QPixmap(":/images/pubcam.png");
-        else if (strSuffix.contains("V") == true)
+        else if (strModes.contains("V") == true)
             icon = QPixmap(":/images/privcam.png");
 
         if (exist_parent(tr("Cam(s)")) == false) add_parent(tr("Cam(s)"), QPixmap(":/images/pubcam.png"));
-        if (exist_child(strNick, tr("Cam(s)")) == false) add_child(tr("Cam(s)"), create_child(strNick, strSuffix, icon));
+        if (exist_child(strNick, tr("Cam(s)")) == false) add_child(tr("Cam(s)"), create_child(strNick, strModes, icon));
     }
-    if ((strSuffix.contains("O") == false) && (strSuffix.contains("o") == false) && (strPrefix.contains("`") == false) && (strPrefix.contains("@") == false) && (strPrefix.contains("%") == false) && (strPrefix.contains("!") == false) && (strPrefix.contains("=") == false) && (strPrefix.contains("+") == false) && (strSuffix.contains("W") == false) && (strSuffix.contains("V") == false))
+    if ((strModes.contains("O") == false) && (strModes.contains("o") == false) && (strModes.contains("`") == false) && (strModes.contains("@") == false) && (strModes.contains("%") == false) && (strModes.contains("!") == false) && (strModes.contains("=") == false) && (strModes.contains("+") == false) && (strModes.contains("W") == false) && (strModes.contains("V") == false))
     {
         QPixmap icon = QPixmap(":/images/user.png");
         if (exist_parent(tr("User(s)")) == false) add_parent(tr("User(s)"), icon);
-        if (exist_child(strNick, tr("User(s)")) == false) add_child(tr("User(s)"), create_child(strNick, strSuffix, icon));
+        if (exist_child(strNick, tr("User(s)")) == false) add_child(tr("User(s)"), create_child(strNick, strModes, icon));
     }
 }
 
@@ -376,7 +375,7 @@ void NickListWidget::remove_child(QString strName)
         remove_parent(strliRemoveParent.next());
 }
 
-SortedTreeWidgetItem* NickListWidget::create_child(QString strNick, QString strSuffix, QPixmap icon)
+SortedTreeWidgetItem* NickListWidget::create_child(QString strNick, QString strModes, QPixmap icon)
 {
     SortedTreeWidgetItem *item = new SortedTreeWidgetItem();
     item->setData(0, Qt::UserRole, icon);
@@ -391,7 +390,7 @@ SortedTreeWidgetItem* NickListWidget::create_child(QString strNick, QString strS
         item->setData(0, Qt::UserRole+1, pixmap);
     }
 
-    item->setData(0, Qt::UserRole+10, strSuffix.indexOf("b") != -1 ? true : false);
+    item->setData(0, Qt::UserRole+10, strModes.indexOf("b") != -1 ? true : false);
 
     return item;
 }
@@ -602,15 +601,13 @@ void NickListWidget::contextMenuEvent(QContextMenuEvent *e)
     if ((strNick == tr("Dev(s)")) || (strNick == tr("Admin(s)")) || (strNick == tr("Owner(s)")) || (strNick == tr("Op(s)")) || (strNick == tr("HalfOp(s)")) || (strNick == tr("Mod(s)")) || (strNick == tr("Screener(s)")) || (strNick == tr("Voice(s)")) || (strNick == tr("Cam(s)")) || (strNick == tr("User(s)")))
         return;
 
-    QString strPrefix;
-    QString strSuffix;
+    QString strModes;
 
-    for (int i = 0; i < Core::instance()->lChannelNickStatus.size(); i++)
+    for (int i = 0; i < Core::instance()->lUsers.size(); i++)
     {
-        if ((Core::instance()->lChannelNickStatus.at(i).nick == strNick) && (Core::instance()->lChannelNickStatus.at(i).channel == strChannel))
+        if ((Core::instance()->lUsers.at(i).nick == strNick) && (Core::instance()->lUsers.at(i).channel == strChannel))
         {
-            strPrefix = Core::instance()->lChannelNickStatus.at(i).prefix;
-            strSuffix = Core::instance()->lChannelNickStatus.at(i).suffix;
+            strModes = Core::instance()->lUsers.at(i).modes;
             break;
         }
     }
@@ -652,22 +649,22 @@ void NickListWidget::contextMenuEvent(QContextMenuEvent *e)
     QMenu *privilege = new QMenu(tr("Actions"));
     privilege->setIcon(QIcon(":/images/oxygen/16x16/irc-operator.png"));
 
-    if (strPrefix.indexOf("@") == -1)
+    if (strModes.indexOf("@") == -1)
         privilege->addAction(QIcon(":/images/op.png"), tr("Give super operator status"), this, SLOT(op_add()));
     else
         privilege->addAction(QIcon(":/images/op.png"), tr("Take super operator status"), this, SLOT(op_del()));
 
-    if (strPrefix.indexOf("%") == -1)
+    if (strModes.indexOf("%") == -1)
         privilege->addAction(QIcon(":/images/halfop.png"), tr("Give operator status"), this, SLOT(halfop_add()));
     else
         privilege->addAction(QIcon(":/images/halfop.png"), tr("Take operator status"), this, SLOT(halfop_del()));
 
-    if (strPrefix.indexOf("!") == -1)
+    if (strModes.indexOf("!") == -1)
         privilege->addAction(QIcon(":/images/mod.png"), tr("Give moderator status"), this, SLOT(moderator_add()));
     else
         privilege->addAction(QIcon(":/images/mod.png"), tr("Take moderator status"), this, SLOT(moderator_del()));
 
-    if (strPrefix.indexOf("+") == -1)
+    if (strModes.indexOf("+") == -1)
         privilege->addAction(QIcon(":/images/voice.png"), tr("Give guest status"), this, SLOT(voice_add()));
     else
         privilege->addAction(QIcon(":/images/voice.png"), tr("Take guest status"), this, SLOT(voice_del()));
