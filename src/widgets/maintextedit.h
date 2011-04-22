@@ -40,7 +40,6 @@ public:
     void set_dlg_cam(DlgCam *);
 #endif
     void update_background_image();
-    void set_open_channels(QStringList);
     inline QString get_current_nick() { return strNick; }
 
 private:
@@ -54,7 +53,6 @@ private:
 #endif
     // other
     QString strNick;
-    QStringList strOpenChannels;
     enum { maxOpenChannels = 30 };
     QAction *openChannelsActs[maxOpenChannels];
     AnimatedEmoticonWidget *pAnimatedEmoticonWidget;

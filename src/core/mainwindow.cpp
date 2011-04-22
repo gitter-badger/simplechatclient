@@ -347,7 +347,6 @@ void MainWindow::create_signals()
     QObject::connect(pTabC, SIGNAL(remove_nicklist(QString)), this, SLOT(remove_nicklist(QString)));
     QObject::connect(pTabC, SIGNAL(currentChanged(int)), this, SLOT(current_tab_changed(int)));
     QObject::connect(pTabC, SIGNAL(update_nick_avatar(QString)), this, SLOT(update_nick_avatar(QString)));
-    QObject::connect(pTabC, SIGNAL(set_open_channels()), this, SLOT(set_open_channels()));
     QObject::connect(pTabC, SIGNAL(update_awaylog_status()), this, SLOT(update_awaylog_status()));
 
     // signals tab
@@ -821,10 +820,10 @@ void MainWindow::nicklist_refresh(QString strChannel)
 
 void MainWindow::quit_user(QString strNick, QString strDisplay)
 {
-    QStringList strlChannels = pTabC->get_open_channels();
-    for (int i = 0; i < strlChannels.size(); i++)
+    QList<QString> lOpenChannels = Core::instance()->lOpenChannels;
+    for (int i = 0; i < lOpenChannels.size(); i++)
     {
-        QString strChannel = strlChannels.at(i);
+        QString strChannel = lOpenChannels.at(i);
         if (nicklist_exist(strChannel, strNick) == true)
         {
             int iLevel = 3;
@@ -920,10 +919,10 @@ void MainWindow::change_flag(QString strNick, QString strChannel, QString strNew
 
 void MainWindow::change_flag(QString strNick, QString strFlag)
 {
-    QStringList strlChannels = pTabC->get_open_channels();
-    for (int i = 0; i < strlChannels.size(); i++)
+    QList<QString> lOpenChannels = Core::instance()->lOpenChannels;
+    for (int i = 0; i < lOpenChannels.size(); i++)
     {
-        QString strChannel = strlChannels.at(i);
+        QString strChannel = lOpenChannels.at(i);
 
         if (nicklist_exist(strChannel, strNick) == true)
             change_flag(strNick, strChannel, strFlag);
@@ -956,27 +955,27 @@ void MainWindow::clear_all_nicklist()
     Core::instance()->mNickAvatar.clear();
     Core::instance()->mChannelAvatar.clear();
 
-    QStringList strlChannels = pTabC->get_open_channels();
-
-    for (int i = 0; i < strlChannels.size(); i++)
+    QList<QString> lOpenChannels = Core::instance()->lOpenChannels;
+    for (int i = 0; i < lOpenChannels.size(); i++)
     {
-        mChannelNickListWidget.value(strlChannels.at(i))->clear();
+        QString strChannel = lOpenChannels.at(i);
+        mChannelNickListWidget.value(strChannel)->clear();
 
         // clear nick count for option hide join/part when > 200
-        pTabC->clear_users(strlChannels.at(i));
+        pTabC->clear_users(strChannel);
 
         // update nick count
-        if (pInputLineDockWidget->get_active() == strlChannels.at(i))
-            rightDockWidget->setWindowTitle(QString(tr("Users (%1)")).arg(pTabC->get_users(strlChannels.at(i))));
+        if (pInputLineDockWidget->get_active() == strChannel)
+            rightDockWidget->setWindowTitle(QString(tr("Users (%1)")).arg(pTabC->get_users(strChannel)));
     }
 }
 
 void MainWindow::update_nick_avatar(QString strNick)
 {
-    QStringList strlChannels = pTabC->get_open_channels();
-    for (int i = 0; i < strlChannels.size(); i++)
+    QList<QString> lOpenChannels = Core::instance()->lOpenChannels;
+    for (int i = 0; i < lOpenChannels.size(); i++)
     {
-        QString strChannel = strlChannels.at(i);
+        QString strChannel = lOpenChannels.at(i);
 
         // nicklist
         if (mChannelNickListWidget.value(strChannel)->exist(strNick) == true)
@@ -996,16 +995,5 @@ void MainWindow::clear_channel_all_nick_avatars(QString strChannel)
         // remove nick avatar if nick is only in current channel; must be 1 (current channel)
         if ((Core::instance()->mNickAvatar.contains(strNick) == true) && (pTabC->get_nick_channels(strNick) == 1))
             Core::instance()->mNickAvatar.remove(strNick);
-    }
-}
-
-void MainWindow::set_open_channels()
-{
-    QStringList strlChannels = pTabC->get_open_channels();
-    for (int i = 0; i < strlChannels.size(); i++)
-    {
-        QString strChannel = strlChannels.at(i);
-
-        mChannelNickListWidget.value(strChannel)->set_open_channels(strlChannels);
     }
 }

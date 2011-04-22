@@ -77,12 +77,6 @@ void MainTextEdit::join_channel()
 
 MainTextEdit::~MainTextEdit()
 {
-    strOpenChannels.clear();
-}
-
-void MainTextEdit::set_open_channels(QStringList param1)
-{
-    strOpenChannels = param1;
 }
 
 void MainTextEdit::priv()
@@ -258,13 +252,14 @@ void MainTextEdit::menu_nick(QString strNick, QContextMenuEvent *event)
     for (int i = 0; i < maxOpenChannels; ++i)
         minvite->addAction(openChannelsActs[i]);
 
-    for (int i = 0; i < strOpenChannels.size(); ++i)
+    QList<QString> lOpenChannels = Core::instance()->lOpenChannels;
+    for (int i = 0; i < lOpenChannels.size(); ++i)
     {
-        openChannelsActs[i]->setText(strOpenChannels[i]);
-        openChannelsActs[i]->setData(strOpenChannels[i]);
+        openChannelsActs[i]->setText(lOpenChannels[i]);
+        openChannelsActs[i]->setData(lOpenChannels[i]);
         openChannelsActs[i]->setVisible(true);
     }
-    for (int j = strOpenChannels.size(); j < maxOpenChannels; ++j)
+    for (int j = lOpenChannels.size(); j < maxOpenChannels; ++j)
         openChannelsActs[j]->setVisible(false);
 
     QMenu *friends = new QMenu(tr("Friends list"));

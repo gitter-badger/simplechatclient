@@ -47,6 +47,9 @@ TabContainer::~TabContainer()
         delete tw.at(i);
         tw.removeAt(i);
 
+        // remove from open channels
+        Core::instance()->lOpenChannels.removeAll(strChannel);
+
         // log
         QString strData = "--- Log closed "+QDateTime::currentDateTime().toString(Qt::TextDate);
         Log *l = new Log();
@@ -116,9 +119,9 @@ void TabContainer::add_tab(QString strChannel)
         pTabM->addTab(tw.at(tw.size()-1), strChannel);
         pTabM->setCurrentIndex(tw.size()-1);
 
-        // update
-        update_open_channels();
-        emit set_open_channels();
+        // update open channels
+        if (strChannel != "Status")
+            Core::instance()->lOpenChannels.append(strChannel);
     }
 }
 
@@ -136,9 +139,8 @@ void TabContainer::remove_tab(QString strChannel)
         delete tw.at(i);
         tw.removeAt(i);
 
-        // update
-        update_open_channels();
-        emit set_open_channels();
+        // remove from open channels
+        Core::instance()->lOpenChannels.removeAll(strChannel);
 
         // log
         QString strData = "--- Log closed "+QDateTime::currentDateTime().toString(Qt::TextDate);
@@ -161,9 +163,6 @@ bool TabContainer::rename_tab(QString strChannel, QString strNewName)
         if (pTabM->tabText(i)[0] == '^')
         {
             pTabM->setTabText(i, strNewName);
-
-            update_open_channels();
-            emit set_open_channels();
 
             return true;
         }
@@ -311,14 +310,6 @@ void TabContainer::set_link(QString strChannel, QString strLink)
         tw[i]->set_link(strLink);
 }
 
-void TabContainer::update_open_channels()
-{
-    QStringList strOpenChannels = get_open_channels();
-
-    for (int i = 0; i < tw.size(); i++)
-        tw[i]->set_open_channels(strOpenChannels);
-}
-
 void TabContainer::slot_update_nick_avatar(QString strNick)
 {
     emit update_nick_avatar(strNick);
@@ -381,17 +372,6 @@ void TabContainer::refresh_background_image()
 {
     for (int i = 0; i < tw.size(); i++)
         tw[i]->refresh_background_image();
-}
-
-QStringList TabContainer::get_open_channels()
-{
-    QStringList strlResult;
-    for (int i = 0; i < tw.size(); i++)
-    {
-        if (tw[i]->get_name() != "Status")
-            strlResult.append(tw[i]->get_name());
-    }
-    return strlResult;
 }
 
 // update nick count for option hide join/part when > 200

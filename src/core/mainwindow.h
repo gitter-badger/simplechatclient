@@ -159,7 +159,6 @@ public slots:
     void clear_all_nicklist();
     void update_nick_avatar(QString);
     void clear_channel_all_nick_avatars(QString);
-    void set_open_channels();
 
 private slots:
     void set_connected();

@@ -1359,11 +1359,13 @@ void OnetKernel::raw_001()
     settings.setValue("age_check", "on");
 
     // auto rejoin
-    QStringList strlOpenChannels = pTabC->get_open_channels();
-    for (int i = 0; i < strlOpenChannels.size(); i++)
+    QList<QString> lOpenChannels = Core::instance()->lOpenChannels;
+    for (int i = 0; i < lOpenChannels.size(); i++)
     {
-        pTabC->remove_tab(strlOpenChannels[i]);
-        pNetwork->send(QString("JOIN %1").arg(strlOpenChannels[i]));
+        QString strChannel = lOpenChannels.at(i);
+
+        pTabC->remove_tab(strChannel);
+        pNetwork->send(QString("JOIN %1").arg(strChannel));
     }
 
     // channel list

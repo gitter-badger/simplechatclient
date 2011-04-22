@@ -461,11 +461,6 @@ void TabWidget::update_channel_avatar()
     }
 }
 
-void TabWidget::set_open_channels(QStringList strOpenChannels)
-{
-    pMainTextEdit->set_open_channels(strOpenChannels);
-}
-
 void TabWidget::clear_content()
 {
     pMainTextEdit->clear();

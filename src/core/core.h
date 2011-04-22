@@ -65,6 +65,8 @@ public:
     QMap<QString, QString> mMyProfile;
     QList<QString> lChannelHomes;
     sChannelNickStatus lChannelNickStatus;
+    // channels
+    QList<QString> lOpenChannels;
     // offline
     QAction *offlineMsgAct;
     sOfflineMsg lOfflineMsg;

@@ -60,7 +60,6 @@ public:
     void author_topic(QString);
     void set_link(QString);
     void update_channel_avatar();
-    void set_open_channels(QStringList);
     inline void change_font_size(QString f) { strFontSize = f; }
     void clear_content();
     void refresh_colors();

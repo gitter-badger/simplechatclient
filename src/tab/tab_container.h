@@ -60,7 +60,6 @@ public:
     void set_topic(QString, QString);
     void author_topic(QString, QString);
     void set_link(QString, QString);
-    QStringList get_open_channels();
     void add_user(QString); // update nick count for option hide join/part when > 200
     void del_user(QString); // update nick count for option hide join/part when > 200
     void clear_users(QString);  // update nick count for option hide join/part when > 200
@@ -94,14 +93,12 @@ private:
     QList <TabWidget *> tw;
 
     int get_index(QString);
-    void update_open_channels();
 
 signals:
     void create_nicklist(QString);
     void remove_nicklist(QString);
     void currentChanged(int);
     void update_nick_avatar(QString);
-    void set_open_channels();
     void update_awaylog_status();
 };
 

@@ -52,8 +52,6 @@ NickListWidget::NickListWidget(Network *param1, QString param2, QTcpSocket *para
 
 NickListWidget::~NickListWidget()
 {
-    strOpenChannels.clear();
-
     for (int i = 0; i < Core::instance()->lChannelNickStatus.size(); i++)
     {
         if (Core::instance()->lChannelNickStatus.at(i).channel == strChannel)
@@ -70,11 +68,6 @@ void NickListWidget::set_dlg_cam(DlgCam *param1)
     pDlgCam = param1;
 }
 #endif
-
-void NickListWidget::set_open_channels(QStringList param1)
-{
-    strOpenChannels = param1;
-}
 
 // nicklist
 
@@ -636,13 +629,14 @@ void NickListWidget::contextMenuEvent(QContextMenuEvent *e)
     for (int i = 0; i < maxOpenChannels; ++i)
         minvite->addAction(openChannelsActs[i]);
 
-    for (int i = 0; i < strOpenChannels.size(); ++i)
+    QList<QString> lOpenChannels = Core::instance()->lOpenChannels;
+    for (int i = 0; i < lOpenChannels.size(); ++i)
     {
-        openChannelsActs[i]->setText(strOpenChannels[i]);
-        openChannelsActs[i]->setData(strOpenChannels[i]);
+        openChannelsActs[i]->setText(lOpenChannels[i]);
+        openChannelsActs[i]->setData(lOpenChannels[i]);
         openChannelsActs[i]->setVisible(true);
     }
-    for (int j = strOpenChannels.size(); j < maxOpenChannels; ++j)
+    for (int j = lOpenChannels.size(); j < maxOpenChannels; ++j)
         openChannelsActs[j]->setVisible(false);
 
     QMenu *friends = new QMenu(tr("Friends list"));

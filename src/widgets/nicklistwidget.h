@@ -39,7 +39,6 @@ public:
 #ifndef Q_WS_WIN
     void set_dlg_cam(DlgCam *);
 #endif
-    void set_open_channels(QStringList);
     void add(QString, QString, QString);
     void remove(QString);
     bool exist(QString);
@@ -51,7 +50,6 @@ private:
     // params
     Network *pNetwork;
     QString strChannel;
-    QStringList strOpenChannels;
     QTcpSocket *camSocket;
     DlgUserProfile *pDlgUserProfile;
 #ifndef Q_WS_WIN
