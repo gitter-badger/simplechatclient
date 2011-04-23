@@ -367,8 +367,7 @@ void MainWindow::create_signals()
     QObject::connect(pInputLineDockWidget, SIGNAL(change_font_size(QString)), pTabC, SLOT(slot_change_font_size(QString)));
     QObject::connect(pInputLineDockWidget, SIGNAL(clear_content(QString)), pTabC, SLOT(slot_clear_content(QString)));
 
-    // signals lag
-    QObject::connect(pOnetKernel, SIGNAL(update_nick(QString)), pInputLineDockWidget, SLOT(slot_update_nick(QString)));
+    // signals onet kernel
     QObject::connect(pOnetKernel, SIGNAL(clear_nicklist(QString)), this, SLOT(clear_nicklist(QString)));
 
     // signals from kernel to nicklist
