@@ -66,7 +66,7 @@ void Core::createSettings()
 {
     // default settings
     QSettings settings;
-    settings.setValue("version", "1.0.11.818");
+    settings.setValue("version", "1.0.11.819");
     settings.setValue("logged", "off");
     settings.setValue("busy", "off");
     settings.setValue("away", "off");
@@ -161,4 +161,18 @@ int Core::get_nick_channels(QString strNick)
     }
 
     return iResult;
+}
+
+QList<QString> Core::get_nicks_from_channel(QString strChannel)
+{
+    QList<QString> usersList;
+    for (int i = 0; i < lUsers.size(); i++)
+    {
+        if (lUsers.at(i).channel == strChannel)
+        {
+            QString strUser = lUsers.at(i).nick;
+            usersList.append(strUser);
+        }
+    }
+    return usersList;
 }

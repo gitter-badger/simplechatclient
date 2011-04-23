@@ -77,7 +77,6 @@ set (scc_SRCS
 	widgets/maintextedit.cpp
 	widgets/nicklistdelegate.cpp
 	widgets/nicklistwidget.cpp
-	widgets/nicklistdockwidget.cpp
 	widgets/simplerankwidget.cpp
 	widgets/simplestatswidget.cpp
 	widgets/toolwidget.cpp
@@ -132,7 +131,6 @@ set (scc_MOC_HDRS
 	widgets/maintextedit.h
 	widgets/nicklistdelegate.h
 	widgets/nicklistwidget.h
-	widgets/nicklistdockwidget.h
 	widgets/simplerankwidget.h
 	widgets/simplestatswidget.h
 	widgets/toolwidget.h

@@ -26,7 +26,6 @@ class DlgModeration;
 class InputWidget;
 class Network;
 class ToolWidget;
-#include <QTreeWidget>
 #include <QWidget>
 
 class InputLineDockWidget : public QWidget
@@ -42,7 +41,7 @@ public:
     void show_channel_settings();
     void set_active(QString);
     QString get_active();
-    void set_userslist(QTreeWidget *);
+    void update_nick_list();
 
 public slots:
     void slot_update_nick(QString);
@@ -62,7 +61,6 @@ private:
     ToolWidget *pToolWidget;
 
 signals:
-    void update_nick(QString);
     void display_message(QString,QString,int);
     void show_msg(QString,QString,int);
     void change_font_size(QString);

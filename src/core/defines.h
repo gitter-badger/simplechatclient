@@ -74,10 +74,17 @@ public:
 
         QVariant my = data(column, Qt::DisplayRole); // compare value 1
         QVariant other = o.data(column, Qt::DisplayRole); // compare value 2
+        QVariant childOrParent = data(column, Qt::UserRole+20);
         if (!my.isValid() || !other.isValid() || my.type() != other.type()) // valid compare
             return QTreeWidgetItem::operator< (o);
+        if (childOrParent.toString() == "parent")
+        {
+            QVariant myId = data(column, Qt::UserRole+21);
+            QVariant oId = o.data(column, Qt::UserRole+21);
+            return myId.toInt() > oId.toInt();
+        }
         if (my.canConvert(QVariant::String)) // my compare
-            return text(column).toLower() < o.text(column).toLower();
+            return text(column).toLower() > o.text(column).toLower();
         else
             return QTreeWidgetItem::operator< (o); // other compare
     }

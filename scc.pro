@@ -16,6 +16,7 @@ SOURCES += src/avatars/avatar.cpp \
     src/common/kamerzysta.cpp \
     src/common/log.cpp \
     src/common/replace.cpp \
+    src/common/video.cpp \
     src/core/core.cpp \
     src/core/debug.cpp \
     src/core/main.cpp \
@@ -38,7 +39,11 @@ SOURCES += src/avatars/avatar.cpp \
     src/gui/dlg_ignore_ad.cpp \
     src/gui/dlg_invite.cpp \
     src/gui/dlg_moderation.cpp \
+    src/gui/dlg_my_avatar.cpp \
+    src/gui/dlg_my_profile.cpp \
+    src/gui/dlg_my_stats.cpp \
     src/gui/dlg_notes.cpp \
+    src/gui/dlg_offlinemsg.cpp \
     src/gui/dlg_options.cpp \
     src/gui/dlg_register_nick.cpp \
     src/gui/dlg_update.cpp \
@@ -50,23 +55,17 @@ SOURCES += src/avatars/avatar.cpp \
     src/tab/tab_container.cpp \
     src/tab/tab_manager.cpp \
     src/tab/tab_widget.cpp \
+    src/widgets/animatedemoticonwidget.cpp \
+    src/widgets/highlighter.cpp \
     src/widgets/inputwidget.cpp \
     src/widgets/inputlinewidget.cpp \
     src/widgets/inputlinedockwidget.cpp \
     src/widgets/maintextedit.cpp \
     src/widgets/nicklistdelegate.cpp \
     src/widgets/nicklistwidget.cpp \
-    src/widgets/nicklistdockwidget.cpp \
     src/widgets/simplerankwidget.cpp \
-    src/widgets/toolwidget.cpp \
-    src/widgets/highlighter.cpp \
     src/widgets/simplestatswidget.cpp \
-    src/gui/dlg_my_stats.cpp \
-    src/common/video.cpp \
-    src/gui/dlg_my_profile.cpp \
-    src/gui/dlg_my_avatar.cpp \
-    src/widgets/animatedemoticonwidget.cpp \
-    src/gui/dlg_offlinemsg.cpp
+    src/widgets/toolwidget.cpp
 HEADERS += src/avatars/avatar.h \
     src/common/commands.h \
     src/common/config.h \
@@ -75,6 +74,7 @@ HEADERS += src/avatars/avatar.h \
     src/common/log.h \
     src/common/kamerzysta.h \
     src/common/replace.h \
+    src/common/video.h \
     src/core/core.h \
     src/core/debug.h \
     src/core/defines.h \
@@ -98,7 +98,11 @@ HEADERS += src/avatars/avatar.h \
     src/gui/dlg_ignore_ad.h \
     src/gui/dlg_invite.h \
     src/gui/dlg_moderation.h \
+    src/gui/dlg_my_avatar.h \
+    src/gui/dlg_my_profile.h \
+    src/gui/dlg_my_stats.h \
     src/gui/dlg_notes.h \
+    src/gui/dlg_offlinemsg.h \
     src/gui/dlg_options.h \
     src/gui/dlg_register_nick.h \
     src/gui/dlg_update.h \
@@ -110,23 +114,17 @@ HEADERS += src/avatars/avatar.h \
     src/tab/tab_container.h \
     src/tab/tab_manager.h \
     src/tab/tab_widget.h \
+    src/widgets/animatedemoticonwidget.h \
+    src/widgets/highlighter.h \
     src/widgets/inputwidget.h \
     src/widgets/inputlinewidget.h \
     src/widgets/inputlinedockwidget.h \
     src/widgets/maintextedit.h \
     src/widgets/nicklistdelegate.h \
     src/widgets/nicklistwidget.h \
-    src/widgets/nicklistdockwidget.h \
     src/widgets/simplerankwidget.h \
-    src/widgets/toolwidget.h \
-    src/widgets/highlighter.h \
     src/widgets/simplestatswidget.h \
-    src/gui/dlg_my_stats.h \
-    src/common/video.h \
-    src/gui/dlg_my_profile.h \
-    src/gui/dlg_my_avatar.h \
-    src/widgets/animatedemoticonwidget.h \
-    src/gui/dlg_offlinemsg.h
+    src/widgets/toolwidget.h
 FORMS += ui/about.ui \
     ui/awaylog.ui \
     ui/cam.ui \

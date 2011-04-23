@@ -40,8 +40,11 @@ TabContainer::~TabContainer()
     {
         QString strChannel = tw[i]->get_name();
 
-        // remove nicklist
-        emit remove_nicklist(strChannel);
+        // clear avatars
+        emit clear_channel_all_nick_avatars(strChannel);
+
+        // clear nicklist
+        emit clear_nicklist(strChannel);
 
         // remove tab
         delete tw.at(i);
@@ -111,9 +114,6 @@ void TabContainer::add_tab(QString strChannel)
         l->save(strChannel, strData);
         delete l;
 
-        // create nicklist
-        emit create_nicklist(strChannel);
-
         // create tab
         tw.append(new TabWidget(pNetwork, strChannel, camSocket, pDlgUserProfile));
 #ifndef Q_WS_WIN
@@ -138,8 +138,11 @@ void TabContainer::remove_tab(QString strChannel)
     int i = get_index(strChannel);
     if (i != -1)
     {
-        // remove nicklist
-        emit remove_nicklist(strChannel);
+        // clear avatars
+        emit clear_channel_all_nick_avatars(strChannel);
+
+        // clear nicklist
+        emit clear_nicklist(strChannel);
 
         // remove tab
         delete tw.at(i);
@@ -156,9 +159,6 @@ void TabContainer::remove_tab(QString strChannel)
         Log *l = new Log();
         l->save(strChannel, strData);
         delete l;
-
-        // change tab
-        emit currentChanged(pTabM->currentIndex());
 
         return;
     }

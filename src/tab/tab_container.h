@@ -90,9 +90,8 @@ private:
     int get_index(QString);
 
 signals:
-    void create_nicklist(QString);
-    void remove_nicklist(QString);
-    void currentChanged(int);
+    void clear_channel_all_nick_avatars(QString);
+    void clear_nicklist(QString);
     void update_nick_avatar(QString);
     void update_awaylog_status();
 };

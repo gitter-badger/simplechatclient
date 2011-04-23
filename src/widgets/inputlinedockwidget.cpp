@@ -54,7 +54,6 @@ InputLineDockWidget::InputLineDockWidget(QWidget *parent, Network *param1, DlgCh
     setMaximumHeight(iMinimumSize);
 
     // signals
-    QObject::connect(this, SIGNAL(update_nick(QString)), pInputWidget, SLOT(update_nick(QString)));
     QObject::connect(pInputWidget, SIGNAL(display_message(QString,QString,int)), this, SLOT(slot_display_message(QString,QString,int)));
     QObject::connect(pInputWidget, SIGNAL(show_msg(QString,QString,int)), this, SLOT(slot_show_msg(QString,QString,int)));
     QObject::connect(pToolWidget, SIGNAL(change_font_size(QString)), this, SLOT(slot_change_font_size(QString)));
@@ -118,16 +117,16 @@ QString InputLineDockWidget::get_active()
     return pInputWidget->get_active();
 }
 
-void InputLineDockWidget::set_userslist(QTreeWidget *treeWidget)
-{
-    pInputWidget->set_userslist(treeWidget);
-}
-
 // input widget
+
+void InputLineDockWidget::update_nick_list()
+{
+    pInputWidget->update_nicklist();
+}
 
 void InputLineDockWidget::slot_update_nick(QString strNick)
 {
-    emit update_nick(strNick);
+    pInputWidget->update_nick(strNick);
 }
 
 void InputLineDockWidget::slot_display_message(QString strChannel, QString strData, int iLevel)

@@ -258,8 +258,7 @@ private slots:
     void timer_rename_channel();
 
 signals:
-    void update_nick(QString);
-    void add_user(QString,QString,QString);
+    void add_user(QString,QString,QString,bool);
     void del_user(QString,QString);
     void nicklist_refresh(QString);
     void quit_user(QString,QString);

@@ -646,13 +646,6 @@ void OnetKernel::raw_join()
 
     QString strMe = settings.value("nick").toString();
 
-    if (strNick == strMe)
-    {
-        emit update_nick(strNick);
-
-        if (pTabC->exist_tab(strChannel))
-            emit clear_nicklist(strChannel);
-    }
     if ((strNick == strMe) && (strChannel[0] != '^'))
         pNetwork->send(QString("CS INFO %1 i").arg(strChannel));
 
@@ -663,7 +656,8 @@ void OnetKernel::raw_join()
             pNetwork->send(QString("NS INFO %1 s").arg(strNick));
     }
 
-    emit add_user(strChannel, strNick, strSuffix);
+    if (strNick != strMe)
+        emit add_user(strChannel, strNick, strSuffix, true);
 }
 
 // :scc_test!51976824@3DE379.B7103A.6CF799.6902F4 PART #scc
@@ -2860,7 +2854,7 @@ void OnetKernel::raw_353()
             if (strCleanNick.indexOf("+") != -1) { strCleanNick.remove("+"); strPrefix.append("+"); }
 
             QString strModes = strPrefix+strSuffix;
-            emit add_user(strChannel, strCleanNick, strModes);
+            emit add_user(strChannel, strCleanNick, strModes, false);
 
             // if ^ rename channel
             if (strChannel[0] == '^')

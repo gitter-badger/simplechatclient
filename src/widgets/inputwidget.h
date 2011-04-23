@@ -27,7 +27,6 @@ class Network;
 #include <QHBoxLayout>
 #include <QLabel>
 #include <QPushButton>
-#include <QTreeWidget>
 #include <QWidget>
 
 class InputWidget : public QWidget
@@ -37,18 +36,16 @@ public:
     InputWidget(QWidget *, Network *);
     void set_active(QString);
     inline QString get_active() { return strChannel; }
+    void update_nicklist();
     void insert_text(QString);
     void set_font(QFont);
     void set_color(QString);
-    void set_userslist(QTreeWidget *);
     void set_moderation(bool);
     void set_toolwidget_icon(bool);
     QString convert_emots(QString);
     QString replace_emots(QString);
     void paste_multi_line(QString, bool);
     void send_message(QString, bool);
-
-public slots:
     void update_nick(QString);
 
 private:

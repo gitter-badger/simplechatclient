@@ -26,6 +26,7 @@
 #include <QPushButton>
 #include <QSettings>
 #include "commands.h"
+#include "core.h"
 #include "highlighter.h"
 #include "inputlinewidget.h"
 #include "log.h"
@@ -89,6 +90,16 @@ InputWidget::InputWidget(QWidget *parent, Network *param1) : QWidget(parent)
 void InputWidget::set_active(QString strName)
 {
     strChannel = strName;
+
+    // update nicklist
+    QList<QString> usersList = Core::instance()->get_nicks_from_channel(strChannel);
+    pInputLine->set_userslist(usersList);
+}
+
+void InputWidget::update_nicklist()
+{
+    QList<QString> usersList = Core::instance()->get_nicks_from_channel(strChannel);
+    pInputLine->set_userslist(usersList);
 }
 
 void InputWidget::insert_text(QString strText)
@@ -104,26 +115,6 @@ void InputWidget::set_font(QFont font)
 void InputWidget::set_color(QString color)
 {
     pInputLine->setStyleSheet(QString("color:%1").arg(color));
-}
-
-void InputWidget::set_userslist(QTreeWidget *treeWidget)
-{
-    QList <QString> usersList;
-
-    for (int i = 0; i < treeWidget->topLevelItemCount(); i++)
-    {
-        QTreeWidgetItem *parent_item = treeWidget->topLevelItem(i);
-        for (int x = 0; x < parent_item->childCount(); x++)
-        {
-            QTreeWidgetItem *child_item = parent_item->child(x);
-            QString strChild = child_item->text(0);
-
-            if (usersList.contains(strChild) == false) // add if not exist
-                usersList.append(strChild);
-        }
-    }
-
-    pInputLine->set_userslist(usersList);
 }
 
 void InputWidget::set_moderation(bool m)

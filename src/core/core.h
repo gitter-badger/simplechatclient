@@ -54,6 +54,8 @@ public:
     void check_update();
     // for avatars
     int get_nick_channels(QString);
+    // get users per channel
+    QList<QString> get_nicks_from_channel(QString);
 
     QAction *lagAct;
     QList<QString> lAwaylog;

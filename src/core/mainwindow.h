@@ -32,7 +32,6 @@ class DlgNotes;
 class DlgUserProfile;
 class InputLineDockWidget;
 class Network;
-class NickListDockWidget;
 class NickListWidget;
 class Notify;
 class OnetAuth;
@@ -62,8 +61,6 @@ public:
     void network_disconnect();
     void network_send(QString);
     bool network_is_connected();
-    // nicklist
-    bool nicklist_exist(QString, QString);
     // options
     void refresh_colors();
     void refresh_background_image();
@@ -107,10 +104,9 @@ private:
 
     // gui
     InputLineDockWidget *pInputLineDockWidget;
-    NickListDockWidget *pNickListDockWidget;
+    NickListWidget *pNickListWidget;
     QDockWidget *bottomDockWidget;
     QDockWidget *rightDockWidget;
-    QMap <QString, NickListWidget*> mChannelNickListWidget;
 
     // other
 #ifndef Q_WS_WIN
@@ -123,6 +119,9 @@ private:
     void create_menus();
     void create_signals();
     void show_options();
+    // nicklist
+    void update_users_count();
+    bool nicklist_exist(QString, QString);
 
 private slots:
     void button_connect();
@@ -148,8 +147,7 @@ private slots:
 
 public slots:
     void create_nicklist(QString);
-    void remove_nicklist(QString);
-    void add_user(QString, QString, QString);
+    void add_user(QString, QString, QString, bool);
     void del_user(QString, QString);
     void nicklist_refresh(QString);
     void quit_user(QString, QString);
