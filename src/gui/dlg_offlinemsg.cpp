@@ -116,6 +116,10 @@ void DlgOfflineMsg::refresh_msg()
             QDateTime dt = QDateTime::fromTime_t(strTime.toUInt());
             QString strDT = dt.toString("[dd/MM/yyyy] [hh:mm:ss]");
 
+            strMessage.replace(QRegExp("%C([a-zA-Z0-9]+)%"),"");
+            strMessage.replace(QRegExp("%F([a-zA-Z0-9:]+)%"),"");
+            strMessage.replace(QRegExp("%I([a-zA-Z0-9_-]+)%"),"<\\1>");
+
             strMessage = QString("%1 <%2> %3").arg(strDT).arg(strNick).arg(strMessage);
             ui.listWidget_msg->addItem(strMessage);
         }
