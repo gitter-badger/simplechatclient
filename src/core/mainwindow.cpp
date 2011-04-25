@@ -996,7 +996,7 @@ void MainWindow::update_nick_avatar(QString strNick)
 {
     QString strChannel = pNickListWidget->get_channel();
     if (nicklist_exist(strChannel, strNick) == true)
-        pNickListWidget->refresh_avatars();
+        pNickListWidget->update_avatar(strNick);
 }
 
 // clear all channel avatars

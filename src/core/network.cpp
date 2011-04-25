@@ -32,7 +32,6 @@ Network::Network(QString param1, int param2)
     iPort = param2;
 
     iActive = 0;
-    bDefaultEnabledQueue = true;
     bAuthorized = false;
     timerReconnect = new QTimer();
     timerReconnect->setInterval(1000*30); // 30 sec
@@ -125,6 +124,7 @@ void Network::clear_all()
 
     // clear queue
     msgSendQueue.clear();
+    msgSendQueueNS.clear();
 
     // authorized
     bAuthorized = false;
@@ -237,6 +237,7 @@ void Network::disconnect()
 {
     // clear queue
     msgSendQueue.clear();
+    msgSendQueueNS.clear();
 
     // send quit
     if ((socket->isValid()) && (socket->state() == QAbstractSocket::ConnectedState) && (socket->isWritable() == true))
@@ -312,19 +313,10 @@ void Network::write(QString strData)
 
 void Network::send(QString strData)
 {
-    // default enabled queue
-    if (bDefaultEnabledQueue == true)
-    {
+    if (strData.startsWith("NS") == false)
         msgSendQueue.append(strData);
-    }
     else
-    {
-        QSettings settings;
-        if (settings.value("disable_avatars").toString() == "on") // without avatars
-            write(strData);
-        else // with avatars
-            msgSendQueue.append(strData);
-    }
+        msgSendQueueNS.append(strData);
 }
 
 void Network::recv()
@@ -413,9 +405,15 @@ void Network::timeout_queue()
     if (socket->state() != QAbstractSocket::ConnectedState)
     {
         msgSendQueue.clear();
+        msgSendQueueNS.clear();
         return;
     }
 
     if (msgSendQueue.size() > 0)
         write(msgSendQueue.takeFirst());
+    else
+    {
+        if (msgSendQueueNS.size() > 0)
+            write(msgSendQueueNS.takeFirst());
+    }
 }

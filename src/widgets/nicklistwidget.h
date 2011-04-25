@@ -43,8 +43,7 @@ public:
     QString get_channel() { return strChannel; }
     void add(QString, QString);
     void remove(QString);
-    void refresh_avatars();
-    void update_avatar(QString, QByteArray);
+    void update_avatar(QString);
 
 private:
     // params

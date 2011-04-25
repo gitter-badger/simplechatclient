@@ -54,7 +54,7 @@ private:
     QTimer *timerQueue;
     int iActive;
     QList <QString> msgSendQueue;
-    bool bDefaultEnabledQueue;
+    QList <QString> msgSendQueueNS;
     bool bAuthorized;
     QTimer *timerReconnect;
 

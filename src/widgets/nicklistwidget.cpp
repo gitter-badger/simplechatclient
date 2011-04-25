@@ -93,7 +93,7 @@ void NickListWidget::remove(QString strNick)
     remove_child(strNick);
 }
 
-void NickListWidget::refresh_avatars()
+void NickListWidget::update_avatar(QString strNick)
 {
     for (int i = 0; i < this->topLevelItemCount(); i++)
     {
@@ -101,7 +101,7 @@ void NickListWidget::refresh_avatars()
         {
             QString strChild = this->topLevelItem(i)->child(x)->text(0);
 
-            if ((strChild[0] != '~') && (this->topLevelItem(i)->child(x)->data(0, Qt::UserRole+1).isNull() == true) && (Core::instance()->mNickAvatar.contains(strChild) == true))
+            if ((strChild[0] != '~') && (strChild == strNick) && (Core::instance()->mNickAvatar.contains(strChild) == true))
             {
                 QPixmap pixmap;
                 pixmap.loadFromData(Core::instance()->mNickAvatar.value(strChild));
