@@ -772,7 +772,7 @@ void MainWindow::create_nicklist(QString strChannel)
 
 // nick list
 
-void MainWindow::add_user(QString strChannel, QString strNick, QString strModes, bool bSort)
+void MainWindow::add_user(QString strChannel, QString strNick, QString strModes, bool bFastAdd)
 {
     // add
     User add;
@@ -789,9 +789,15 @@ void MainWindow::add_user(QString strChannel, QString strNick, QString strModes,
         // add
         pNickListWidget->add(strNick, strModes);
 
-        // sort
-        if (bSort == true)
+        // fast add
+        if (bFastAdd == false)
+        {
+            // sort
             pNickListWidget->sortItems(0, Qt::DescendingOrder);
+
+            // expand
+            pNickListWidget->expandAll();
+        }
 
         // set inputline users
         if (pInputLineDockWidget->get_active() == strChannel)
@@ -917,7 +923,7 @@ void MainWindow::change_flag(QString strNick, QString strChannel, QString strNew
 
     // change flag
     del_user(strChannel, strNick);
-    add_user(strChannel, strNick, strModes, true);
+    add_user(strChannel, strNick, strModes, false);
 
     // me ?
     QSettings settings;
