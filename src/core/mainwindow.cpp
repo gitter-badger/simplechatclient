@@ -227,9 +227,17 @@ void MainWindow::create_actions()
     ignoreAct = new QAction(QIcon(":/images/oxygen/16x16/meeting-attending-tentative.png"), tr("Ignored"), this);
     Core::instance()->offlineMsgAct = new QAction(QIcon(":/images/oxygen/16x16/mail-mark-unread.png") , tr("Offline messages"), this);
     camsAct = new QAction(QIcon(":/images/oxygen/16x16/camera-web.png"),tr("Cams"), this);
+    Core::instance()->busyAct = new QAction(QIcon(":/images/oxygen/16x16/im-user-offline.png"), tr("Mark as busy"), this);
+    Core::instance()->awayAct = new QAction(QIcon(":/images/oxygen/16x16/im-user-away.png"), tr("Mark as away"), this);
     myStatsAct = new QAction(QIcon(":/images/oxygen/16x16/office-chart-bar.png"),tr("My statistics"), this);
     myProfileAct = new QAction(QIcon(":/images/oxygen/16x16/view-pim-contacts.png"),tr("My profile"), this);
     myAvatarAct = new QAction(QIcon(":/images/oxygen/16x16/preferences-desktop-user.png"),tr("My avatar"), this);
+
+    // checkable
+    Core::instance()->busyAct->setCheckable(true);
+    Core::instance()->awayAct->setCheckable(true);
+    Core::instance()->busyAct->setChecked(false);
+    Core::instance()->awayAct->setChecked(false);
 
     // shortcut
     connectAct->setShortcuts(QKeySequence::New);
@@ -272,6 +280,9 @@ void MainWindow::create_menus()
     chatMenu->addAction(Core::instance()->offlineMsgAct);
     chatMenu->addAction(awaylogAct);
     chatMenu->addAction(camsAct);
+    chatMenu->addSeparator();
+    chatMenu->addAction(Core::instance()->busyAct);
+    chatMenu->addAction(Core::instance()->awayAct);
 
     // onet my menu
     chatMenu = menuBar()->addMenu(tr("&My"));
@@ -335,6 +346,8 @@ void MainWindow::create_signals()
     QObject::connect(channelFavouritesAct, SIGNAL(triggered()), this, SLOT(open_channel_favourites()));
     QObject::connect(friendsAct, SIGNAL(triggered()), this, SLOT(open_friends()));
     QObject::connect(ignoreAct, SIGNAL(triggered()), this, SLOT(open_ignore()));
+    QObject::connect(Core::instance()->busyAct, SIGNAL(triggered()), this, SLOT(button_set_busy()));
+    QObject::connect(Core::instance()->awayAct, SIGNAL(triggered()), this, SLOT(button_set_away()));
     QObject::connect(myStatsAct, SIGNAL(triggered()), this, SLOT(open_my_stats()));
     QObject::connect(myProfileAct, SIGNAL(triggered()), this, SLOT(open_my_profile()));
     QObject::connect(myAvatarAct, SIGNAL(triggered()), this, SLOT(open_my_avatar()));
@@ -594,6 +607,41 @@ void MainWindow::open_ignore()
 {
     if ((pNetwork->is_connected() == true) && (pNetwork->is_writable() == true))
         DlgIgnore(this, pNetwork).exec();
+}
+
+void MainWindow::button_set_busy()
+{
+    Core::instance()->busyAct->setChecked(false);
+
+    if ((pNetwork->is_connected() == true) && (pNetwork->is_writable() == true))
+    {
+        QSettings settings;
+        bool bBusy = settings.value("busy").toString() == "on" ? true : false;
+
+        if (bBusy == true)
+            pNetwork->send("BUSY 0");
+        else
+            pNetwork->send("BUSY 1");
+    }
+}
+
+void MainWindow::button_set_away()
+{
+    Core::instance()->awayAct->setChecked(false);
+
+    if ((pNetwork->is_connected() == true) && (pNetwork->is_writable() == true))
+    {
+        QSettings settings;
+        bool bAway = settings.value("away").toString() == "on" ? true : false;
+
+        QString strReason;
+        if (bAway == true)
+            strReason = "";
+        else
+            strReason = tr("Not here right now");
+
+        pNetwork->send(QString("AWAY :%1").arg(strReason));
+    }
 }
 
 void MainWindow::open_offlinemsg()

@@ -249,7 +249,7 @@ QString DlgCam::get_cauth()
 void DlgCam::nconnected()
 {
     // button
-    ui.toolButton_connect->setToolTip(tr("&Disconnect"));
+    ui.toolButton_connect->setToolTip(tr("Disconnect"));
     ui.toolButton_connect->setIcon(QIcon(":/images/oxygen/16x16/network-disconnect.png"));
 
     // other
@@ -262,7 +262,7 @@ void DlgCam::nconnected()
 void DlgCam::ndisconnected()
 {
     // button
-    ui.toolButton_connect->setToolTip(tr("&Connect"));
+    ui.toolButton_connect->setToolTip(tr("Connect"));
     ui.toolButton_connect->setIcon(QIcon(":/images/oxygen/16x16/network-connect.png"));
 
     // other

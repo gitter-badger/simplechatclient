@@ -84,5 +84,7 @@
         <file>images/oxygen/16x16/mail-mark-read.png</file>
         <file>images/oxygen/16x16/mail-mark-unread.png</file>
         <file>images/oxygen/16x16/mail-send.png</file>
+        <file>images/oxygen/16x16/im-user-offline.png</file>
+        <file>images/oxygen/16x16/im-user-away.png</file>
     </qresource>
 </RCC>

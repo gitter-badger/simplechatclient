@@ -140,6 +140,8 @@ private slots:
     void open_friends();
     void open_ignore();
     void open_cams();
+    void button_set_busy();
+    void button_set_away();
     void open_my_stats();
     void open_my_profile();
     void open_my_avatar();

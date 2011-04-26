@@ -68,6 +68,9 @@ public:
     QMap<QString, QString> mMyStats;
     QMap<QString, QString> mMyProfile;
     QList<QString> lChannelHomes;
+    QAction *busyAct;
+    QAction *awayAct;
+    // users
     sUsers lUsers;
     // channels
     QList<QString> lOpenChannels;

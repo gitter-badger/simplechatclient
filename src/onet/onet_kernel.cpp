@@ -2492,6 +2492,7 @@ void OnetKernel::raw_305()
 {
     QSettings settings;
     settings.setValue("away", "off");
+    Core::instance()->awayAct->setChecked(false);
 
     QString strDisplay = tr("You are no longer marked as being away");
     pTabC->show_msg_active(strDisplay, 7);
@@ -2503,6 +2504,7 @@ void OnetKernel::raw_306()
 {
     QSettings settings;
     settings.setValue("away", "on");
+    Core::instance()->awayAct->setChecked(true);
 
     QString strDisplay = tr("You have been marked as being away");
     pTabC->show_msg_active(strDisplay, 7);
@@ -3959,6 +3961,7 @@ void OnetKernel::raw_807()
 {
     QSettings settings;
     settings.setValue("busy", "on");
+    Core::instance()->busyAct->setChecked(true);
 
     QString strDisplay = tr("* You are marked as busy");
     pTabC->show_msg_active(strDisplay, 7);
@@ -3970,6 +3973,7 @@ void OnetKernel::raw_808()
 {
     QSettings settings;
     settings.setValue("busy", "off");
+    Core::instance()->busyAct->setChecked(false);
 
     QString strDisplay = tr("You are no longer marked busy");
     pTabC->show_msg_active(strDisplay, 7);

@@ -258,6 +258,14 @@
         <translation>Ignorowani</translation>
     </message>
     <message>
+        <source>Mark as busy</source>
+        <translation>Oznacz jako zajęty</translation>
+    </message>
+    <message>
+        <source>Mark as away</source>
+        <translation>Oznacz jako nieobecny</translation>
+    </message>
+    <message>
         <source>Offline messages</source>
         <translation>Wiadomości offline</translation>
     </message>
@@ -320,6 +328,10 @@
     <message>
         <source>Official website</source>
         <translation>Oficjalna strona</translation>
+    </message>
+    <message>
+        <source>Not here right now</source>
+        <translation>Nie ma mnie</translation>
     </message>
 </context>
 <context>
@@ -579,12 +591,12 @@
         <translation>Urządzenie nadające:</translation>
     </message>
     <message>
-        <source>&amp;Connect</source>
-        <translation>&amp;Połącz</translation>
+        <source>Connect</source>
+        <translation>Połącz</translation>
     </message>
     <message>
-        <source>&amp;Disconnect</source>
-        <translation>&amp;Rozłącz</translation>
+        <source>Disconnect</source>
+        <translation>Rozłącz</translation>
     </message>
 </context>
 <context>
