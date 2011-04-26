@@ -212,7 +212,7 @@ void DlgRegisterNick::parse_result(QString strResult)
         else if (strErrCode == "-104")
             strErrText = tr("Invalid code");
         else
-            strErrText = QString(tr("Unknown error: %1").arg(strErrCode));
+            strErrText = QString(tr("Unknown error: %1")).arg(strErrCode);
 
         QMessageBox::critical(0, tr("Error"), strErrText);
         get_img();

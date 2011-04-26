@@ -196,7 +196,9 @@ private:
     void raw_432();
     void raw_433();
     void raw_440n();
+    void raw_441();
     void raw_441n();
+    void raw_442();
     void raw_443();
     void raw_445();
     void raw_446();

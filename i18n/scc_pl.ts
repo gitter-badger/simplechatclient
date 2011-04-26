@@ -2480,8 +2480,16 @@
         <translation>* Kanał %1 jest już na liście ulubionych</translation>
     </message>
     <message>
+        <source>* %1 is not on %2 channel</source>
+        <translation>* %1 nie jest na kanale %2</translation>
+    </message>
+    <message>
         <source>* Channel %1 is not on your favourite list</source>
         <translation>* Kanał %1 nie jest na liście ulubionych</translation>
+    </message>
+    <message>
+        <source>* You're not on %1 channel!</source>
+        <translation>* Nie jesteś na kanale %1!</translation>
     </message>
     <message>
         <source>* %1 is already on channel %2</source>

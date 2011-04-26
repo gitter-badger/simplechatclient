@@ -134,7 +134,7 @@ void DlgOfflineMsg::button_read()
     pNetwork->send(QString("NS OFFLINE GET %1").arg(strNick));
 
     strCurrentNick = strNick;
-    ui.label_nick->setText(QString(tr("Offline messages from %1").arg(strNick)));
+    ui.label_nick->setText(QString(tr("Offline messages from %1")).arg(strNick));
     // remove nick
     remove_nick(strNick);
     // clear

@@ -245,6 +245,10 @@ void OnetKernel::kernel(QString param1)
             raw_432();
         else if (strDataList[1].toLower() == "433")
             raw_433();
+        else if (strDataList[1].toLower() == "441")
+            raw_441();
+        else if (strDataList[1].toLower() == "442")
+            raw_442();
         else if (strDataList[1].toLower() == "443")
             raw_443();
         else if (strDataList[1].toLower() == "445")
@@ -3380,6 +3384,21 @@ void OnetKernel::raw_440n()
     pTabC->show_msg_active(strMessage, 7);
 }
 
+// KICK #kusicielki ~prawdziwa
+// :cf1f2.onet 441 Merovingian ~prawdziwa #kusicielki :They are not on that channel
+void OnetKernel::raw_441()
+{
+    if (strDataList.value(3).isEmpty() == true) return;
+    if (strDataList.value(4).isEmpty() == true) return;
+
+    QString strNick = strDataList[3];
+    QString strChannel = strDataList[4];
+
+    QString strMessage = QString(tr("* %1 is not on %2 channel")).arg(strNick).arg(strChannel);
+
+    pTabC->show_msg_active(strMessage, 7);
+}
+
 // :NickServ!service@service.onet NOTICE scc_test :441 #scc :is not on your favourite list
 void OnetKernel::raw_441n()
 {
@@ -3389,6 +3408,19 @@ void OnetKernel::raw_441n()
     QString strChannel = strDataList[4];
 
     QString strMessage = QString(tr("* Channel %1 is not on your favourite list")).arg(strChannel);
+
+    pTabC->show_msg_active(strMessage, 7);
+}
+
+// KICK #rozrywka ~test
+// :cf1f3.onet 442 Merovingian #Rozrywka :You're not on that channel!
+void OnetKernel::raw_442()
+{
+    if (strDataList.value(3).isEmpty() == true) return;
+
+    QString strChannel = strDataList[3];
+
+    QString strMessage = QString(tr("* You're not on %1 channel!")).arg(strChannel);
 
     pTabC->show_msg_active(strMessage, 7);
 }
@@ -3798,7 +3830,7 @@ void OnetKernel::raw_531()
 
     QString strNick = strDataList[3];
 
-    QString strMessage = QString(tr("* %1 :You are not permitted to send private messages to this user").arg(strNick));
+    QString strMessage = QString(tr("* %1 :You are not permitted to send private messages to this user")).arg(strNick);
     pTabC->show_msg_active(strMessage, 7);
 }
 
