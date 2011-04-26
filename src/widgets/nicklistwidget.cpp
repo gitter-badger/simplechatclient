@@ -164,50 +164,50 @@ void NickListWidget::add_child(QString strNick, QString strModes)
     if (strModes.contains("O") == true)
     {
         QPixmap icon = QPixmap(":/images/dev.png");
-        if (exist_parent(tr("Developer(s)")) == false) add_parent(tr("Developer(s)"), icon);
-        add_child(tr("Developer(s)"), create_child(strNick, strModes, icon));
+        QString strParent = tr("Developer(s)");
+        add_child(strNick, strModes, strParent, icon);
     }
     if (strModes.contains("o") == true)
     {
         QPixmap icon = QPixmap(":/images/admin.png");
-        if (exist_parent(tr("Admin(s)")) == false) add_parent(tr("Admin(s)"), icon);
-        add_child(tr("Admin(s)"), create_child(strNick, strModes, icon));
+        QString strParent = tr("Admin(s)");
+        add_child(strNick, strModes, strParent, icon);
     }
     if (strModes.contains("`") == true)
     {
         QPixmap icon = QPixmap(":/images/owner.png");
-        if (exist_parent(tr("Owner(s)")) == false) add_parent(tr("Owner(s)"), icon);
-        add_child(tr("Owner(s)"), create_child(strNick, strModes, icon));
+        QString strParent = tr("Owner(s)");
+        add_child(strNick, strModes, strParent, icon);
     }
     if (strModes.contains("@") == true)
     {
         QPixmap icon = QPixmap(":/images/op.png");
-        if (exist_parent(tr("Op(s)")) == false) add_parent(tr("Op(s)"), icon);
-        add_child(tr("Op(s)"), create_child(strNick, strModes, icon));
+        QString strParent = tr("Op(s)");
+        add_child(strNick, strModes, strParent, icon);
     }
     if (strModes.contains("%") == true)
     {
         QPixmap icon = QPixmap(":/images/halfop.png");
-        if (exist_parent(tr("HalfOp(s)")) == false) add_parent(tr("HalfOp(s)"), icon);
-        add_child(tr("HalfOp(s)"), create_child(strNick, strModes, icon));
+        QString strParent = tr("HalfOp(s)");
+        add_child(strNick, strModes, strParent, icon);
     }
     if (strModes.contains("!") == true)
     {
         QPixmap icon = QPixmap(":/images/mod.png");
-        if (exist_parent(tr("Mod(s)")) == false) add_parent(tr("Mod(s)"), icon);
-        add_child(tr("Mod(s)"), create_child(strNick, strModes, icon));
+        QString strParent = tr("Mod(s)");
+        add_child(strNick, strModes, strParent, icon);
     }
     if (strModes.contains("=") == true)
     {
         QPixmap icon = QPixmap(":/images/screener.png");
-        if (exist_parent(tr("Screener(s)")) == false) add_parent(tr("Screener(s)"), icon);
-        add_child(tr("Screener(s)"), create_child(strNick, strModes, icon));
+        QString strParent = tr("Screener(s)");
+        add_child(strNick, strModes, strParent, icon);
     }
     if (strModes.contains("+") == true)
     {
         QPixmap icon = QPixmap(":/images/voice.png");
-        if (exist_parent(tr("Voice(s)")) == false) add_parent(tr("Voice(s)"), icon);
-        add_child(tr("Voice(s)"), create_child(strNick, strModes, icon));
+        QString strParent = tr("Voice(s)");
+        add_child(strNick, strModes, strParent, icon);
     }
     if ((strModes.contains("W") == true) || (strModes.contains("V") == true))
     {
@@ -217,23 +217,34 @@ void NickListWidget::add_child(QString strNick, QString strModes)
         else if (strModes.contains("V") == true)
             icon = QPixmap(":/images/privcam.png");
 
-        if (exist_parent(tr("Cam(s)")) == false) add_parent(tr("Cam(s)"), QPixmap(":/images/pubcam.png"));
-        add_child(tr("Cam(s)"), create_child(strNick, strModes, icon));
+        QString strParent = tr("Cam(s)");
+        add_child(strNick, strModes, strParent, icon);
     }
     if ((strModes.contains("O") == false) && (strModes.contains("o") == false) && (strModes.contains("`") == false) && (strModes.contains("@") == false) && (strModes.contains("%") == false) && (strModes.contains("!") == false) && (strModes.contains("=") == false) && (strModes.contains("+") == false) && (strModes.contains("W") == false) && (strModes.contains("V") == false))
     {
         QPixmap icon = QPixmap(":/images/user.png");
-        if (exist_parent(tr("User(s)")) == false) add_parent(tr("User(s)"), icon);
-        add_child(tr("User(s)"), create_child(strNick, strModes, icon));
+        QString strParent = tr("User(s)");
+        add_child(strNick, strModes, strParent, icon);
     }
 }
 
-void NickListWidget::add_child(QString strParentName, SortedTreeWidgetItem *item)
+void NickListWidget::add_child(QString strNick, QString strModes, QString strParent, QPixmap icon)
 {
+    // exist parent
+    if (exist_parent(strParent) == false)
+    {
+        if (strModes.contains("V") == true) // fix for cam icon
+            add_parent(strParent, QPixmap(":/images/pubcam.png"));
+        else
+            add_parent(strParent, icon);
+    }
+
+    // add
+    SortedTreeWidgetItem *item = create_child(strNick, strModes, icon);
     for (int i = 0; i < this->topLevelItemCount(); i++)
     {
-        QString strParent = this->topLevelItem(i)->text(0);
-        if (strParent == strParentName)
+        QString strParentName = this->topLevelItem(i)->text(0);
+        if (strParentName == strParent)
             this->topLevelItem(i)->addChild(item);
     }
 }

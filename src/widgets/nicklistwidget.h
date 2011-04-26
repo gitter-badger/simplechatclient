@@ -62,7 +62,7 @@ private:
     bool exist_parent(QString);
     void remove_parent(QString);
     void add_child(QString, QString);
-    void add_child(QString, SortedTreeWidgetItem *);
+    void add_child(QString, QString, QString, QPixmap);
     void remove_child(QString);
     SortedTreeWidgetItem* create_child(QString, QString, QPixmap);
 
