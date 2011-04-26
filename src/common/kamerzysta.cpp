@@ -28,7 +28,6 @@
 #include <QTcpSocket>
 #include <QTimer>
 #include <QTextStream>
-#include "config.h"
 #include "log.h"
 #include "kamerzysta.h"
 

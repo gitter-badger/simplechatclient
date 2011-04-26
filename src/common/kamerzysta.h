@@ -21,7 +21,6 @@
 #ifndef KAMERZYSTA_H
 #define KAMERZYSTA_H
 
-class Config;
 class Log;
 #include <QObject>
 #include <QTcpSocket>

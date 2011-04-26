@@ -275,37 +275,31 @@ void DlgOptions::set_default_values()
     ui.lineEdit_background_image->setText(settings.value("background_image").toString());
 
     // default values
-    Config *pConfig = new Config();
-    QString strNick = pConfig->get_value("nick");
-    QString strPass = pConfig->get_value("pass");
-    QString strStyle = pConfig->get_value("style");
-    QString strLanguage = pConfig->get_value("language");
+    QString strNick = settings.value("nick").toString();
+    QString strPass = settings.value("pass").toString();
+    QString strStyle = settings.value("style").toString();
+    QString strLanguage = settings.value("language").toString();
 
-    QString strAutoBusy = pConfig->get_value("auto_busy");
-    QString strDisableAutojoinFavourites = pConfig->get_value("disable_autojoin_favourites");
-    QString strShowZuo = pConfig->get_value("show_zuo");
-    QString strHideFormating = pConfig->get_value("hide_formating");
-    QString strHideJoinPart = pConfig->get_value("hide_join_part");
-    QString strHideJoinPart200 = pConfig->get_value("hide_join_part_200");
-    QString strDisableAvatars = pConfig->get_value("disable_avatars");
-    QString strDisableEmots = pConfig->get_value("disable_emots");
-    QString strDisableReplaces = pConfig->get_value("disable_replaces");
+    QString strAutoBusy = settings.value("auto_busy").toString();
+    QString strDisableAutojoinFavourites = settings.value("disable_autojoin_favourites").toString();
+    QString strShowZuo = settings.value("show_zuo").toString();
+    QString strHideFormating = settings.value("hide_formating").toString();
+    QString strHideJoinPart = settings.value("hide_join_part").toString();
+    QString strHideJoinPart200 = settings.value("hide_join_part_200").toString();
+    QString strDisableAvatars = settings.value("disable_avatars").toString();
+    QString strDisableEmots = settings.value("disable_emots").toString();
+    QString strDisableReplaces = settings.value("disable_replaces").toString();
 
-    QString strMyBold = pConfig->get_value("my_bold");
-    QString strMyItalic = pConfig->get_value("my_italic");
-    QString strMyFont = pConfig->get_value("my_font");
-    QString strMyColor = pConfig->get_value("my_color");
-    QString strFontSize = pConfig->get_value("font_size");
+    QString strMyBold = settings.value("my_bold").toString();
+    QString strMyItalic = settings.value("my_italic").toString();
+    QString strMyFont = settings.value("my_font").toString();
+    QString strMyColor = settings.value("my_color").toString();
+    QString strFontSize = settings.value("font_size").toString();
 
-    QString strDisableLogs = pConfig->get_value("disable_logs");
-
-    QString strDisableSounds = pConfig->get_value("disable_sounds");
-
-    QString strDisableBackgroundImage = pConfig->get_value("disable_background_image");
-
-    QString strSpellchecker = pConfig->get_value("spellchecker");
-
-    delete pConfig;
+    QString strDisableLogs = settings.value("disable_logs").toString();
+    QString strDisableSounds = settings.value("disable_sounds").toString();
+    QString strDisableBackgroundImage = settings.value("disable_background_image").toString();
+    QString strSpellchecker = settings.value("spellchecker").toString();
 
     // decrypt pass
     if (strPass.isEmpty() == false)
@@ -1274,19 +1268,18 @@ void DlgOptions::set_color(QString strKey)
 
 void DlgOptions::set_mainwindow_colors()
 {
-    Config *pConfig = new Config();
-    QString strBackgroundColor = pConfig->get_value("background_color");
-    QString strDefaultFontColor = pConfig->get_value("default_font_color");
-    QString strJoinFontColor = pConfig->get_value("font_color_level_1");
-    QString strPartFontColor = pConfig->get_value("font_color_level_2");
-    QString strQuitFontColor = pConfig->get_value("font_color_level_3");
-    QString strKickFontColor = pConfig->get_value("font_color_level_4");
-    QString strModeFontColor = pConfig->get_value("font_color_level_5");
-    QString strNoticeFontColor = pConfig->get_value("font_color_level_6");
-    QString strInfoFontColor = pConfig->get_value("font_color_level_7");
-    QString strErrorFontColor = pConfig->get_value("font_color_level_9");
-    QString strChannelFontColor = pConfig->get_value("channel_font_color");
-    delete pConfig;
+    QSettings settings;
+    QString strBackgroundColor = settings.value("background_color").toString();
+    QString strDefaultFontColor = settings.value("default_font_color").toString();
+    QString strJoinFontColor = settings.value("font_color_level_1").toString();
+    QString strPartFontColor = settings.value("font_color_level_2").toString();
+    QString strQuitFontColor = settings.value("font_color_level_3").toString();
+    QString strKickFontColor = settings.value("font_color_level_4").toString();
+    QString strModeFontColor = settings.value("font_color_level_5").toString();
+    QString strNoticeFontColor = settings.value("font_color_level_6").toString();
+    QString strInfoFontColor = settings.value("font_color_level_7").toString();
+    QString strErrorFontColor = settings.value("font_color_level_9").toString();
+    QString strChannelFontColor = settings.value("channel_font_color").toString();
 
     // set background color
     QPixmap bcolor(50,15);
@@ -1346,13 +1339,12 @@ void DlgOptions::set_mainwindow_colors()
 
 void DlgOptions::set_nicklist_colors()
 {
-    Config *pConfig = new Config();
-    QString strNicklistNickColor = pConfig->get_value("nicklist_nick_color");
-    QString strNicklistSelectedNickColor = pConfig->get_value("nicklist_selected_nick_color");
-    QString strNicklistBusyNickColor = pConfig->get_value("nicklist_busy_nick_color");
-    QString strNicklistGradient1Color = pConfig->get_value("nicklist_gradient_1_color");
-    QString strNicklistGradient2Color = pConfig->get_value("nicklist_gradient_2_color");
-    delete pConfig;
+    QSettings settings;
+    QString strNicklistNickColor = settings.value("nicklist_nick_color").toString();
+    QString strNicklistSelectedNickColor = settings.value("nicklist_selected_nick_color").toString();
+    QString strNicklistBusyNickColor = settings.value("nicklist_busy_nick_color").toString();
+    QString strNicklistGradient1Color = settings.value("nicklist_gradient_1_color").toString();
+    QString strNicklistGradient2Color = settings.value("nicklist_gradient_2_color").toString();
 
     // set nicklist nick color
     QPixmap nncolor(50,15);
