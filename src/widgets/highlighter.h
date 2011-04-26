@@ -33,19 +33,17 @@ class Highlighter : public QSyntaxHighlighter
 public:
     Highlighter(QTextDocument *parent = 0);
 
-public slots:
-    void rehighlight();
-
 protected:
     void highlightBlock(const QString &text);
 
 private:
     QList<QString> lKeywords;
     int iMax;
-    bool bSpacePressed;
+    QTextCharFormat format;
 
     void init();
     void read_dict(QString);
+    bool correct_word(QString);
 };
 
 #endif // HIGHLIGHTER_H

@@ -25,13 +25,16 @@
 
 Highlighter::Highlighter(QTextDocument *parent) : QSyntaxHighlighter(parent)
 {
+    format.setFontUnderline(true);
+    format.setUnderlineColor(QColor("#ff0000"));
+    format.setUnderlineStyle(QTextCharFormat::SpellCheckUnderline);
+
     init();
 }
 
 void Highlighter::init()
 {
     iMax = 0;
-    bSpacePressed = false;
 
     QSettings settings;
     if (settings.value("spellchecker").toString() == "on")
@@ -63,6 +66,17 @@ void Highlighter::read_dict(QString strFileName)
     file.close();
 }
 
+bool Highlighter::correct_word(QString strWord)
+{
+    QListIterator<QString> i(lKeywords);
+    while (i.hasNext())
+    {
+        if (i.next() == strWord)
+            return true;
+    }
+    return false;
+}
+
 void Highlighter::highlightBlock(const QString &text)
 {
     // check is spellchecker active
@@ -79,44 +93,13 @@ void Highlighter::highlightBlock(const QString &text)
     if (lKeywords.size() == 0) init();
 
     // spellchecker
-    if (bSpacePressed == true)
+    QRegExp word("\\b\\w+\\b");
+
+    int index = 0;
+    while ((index = word.indexIn(text, index)) != -1)
     {
-        QTextCharFormat format;
-        format.setFontUnderline(true);
-        format.setUnderlineColor(QColor("#ff0000"));
-        format.setUnderlineStyle(QTextCharFormat::SpellCheckUnderline);
-
-        QStringList strlWords = text.split(QRegExp("\\W+"), QString::SkipEmptyParts);
-        for (int i = 0; i < strlWords.size(); ++i)
-        {
-            QString strWord = strlWords.at(i);
-            QString strWordUtf8 = strlWords.at(i).toUtf8();
-            int length = strWord.length();
-
-            if ((strWord.length() > 2) && (strWord.length() < iMax))
-            {
-                if (lKeywords.contains(strWordUtf8) == false)
-                {
-                    int count = text.count(strWord);
-                    int last = 0;
-                    for (int x = 0; x < count; x++)
-                    {
-                        int index = text.indexOf(strWord, last);
-                        setFormat(index, length, format);
-
-                        last = index+1;
-                    }
-                }
-            }
-        }
-
-        setCurrentBlockState(0);
-
-        bSpacePressed = false;
+        if (correct_word(word.cap().toUtf8()) == false)
+            setFormat(index, word.matchedLength(), format);
+        index += word.matchedLength();
     }
-}
-
-void Highlighter::rehighlight()
-{
-    bSpacePressed = true;
 }

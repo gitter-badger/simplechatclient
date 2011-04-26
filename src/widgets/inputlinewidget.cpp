@@ -157,11 +157,6 @@ bool InputLineWidget::event(QEvent *e)
 
         return true;
     }
-    else if (k->key() == Qt::Key_Space)
-    {
-        emit rehighlight();
-        return QPlainTextEdit::event(e);
-    }
     else if ((k->key() == Qt::Key_Enter) || (k->key() == Qt::Key_Return))
     {
         strLastMsg = this->toPlainText().simplified();

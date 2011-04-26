@@ -49,7 +49,6 @@ protected:
 
 signals:
     void returnPressed();
-    void rehighlight();
 };
 
 #endif // INPUTLINEWIDGET_H

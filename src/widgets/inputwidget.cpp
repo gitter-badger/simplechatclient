@@ -82,7 +82,6 @@ InputWidget::InputWidget(QWidget *parent, Network *param1) : QWidget(parent)
 
     QObject::connect(sendButton, SIGNAL(clicked()), this, SLOT(inputline_return_pressed()));
     QObject::connect(pInputLine, SIGNAL(returnPressed()), this, SLOT(inputline_return_pressed()));
-    QObject::connect(pInputLine, SIGNAL(rehighlight()), pHighlighter, SLOT(rehighlight()));
     QObject::connect(moderSendButton, SIGNAL(clicked()), this, SLOT(moder_button_clicked()));
     QObject::connect(showHideToolWidget, SIGNAL(clicked()), this, SLOT(show_hide_toolwidget_clicked()));
 }
