@@ -266,9 +266,9 @@ QMap<QString,QString> Config::get_default_values()
     return mDefaultValues;
 }
 
-QMap <QString, QString> Config::read_config()
+QMap<QString,QString> Config::read_config()
 {
-    QMap <QString, QString> mResult;
+    QMap<QString, QString> mResult;
 
     if ((doc.isNull() == false) && (file->isOpen() == true))
     {

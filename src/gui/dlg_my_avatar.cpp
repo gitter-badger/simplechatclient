@@ -111,7 +111,7 @@ void DlgMyAvatar::create_signals()
 
 void DlgMyAvatar::get_cookies()
 {
-    QList <QNetworkCookie> cookieList;
+    QList<QNetworkCookie> cookieList;
     QNetworkCookie cookie;
     QSettings settings;
 

@@ -86,5 +86,7 @@
         <file>images/oxygen/16x16/mail-send.png</file>
         <file>images/oxygen/16x16/im-user-offline.png</file>
         <file>images/oxygen/16x16/im-user-away.png</file>
+        <file>images/oxygen/16x16/applications-internet.png</file>
+        <file>images/oxygen/16x16/preferences-web-browser-shortcuts.png</file>
     </qresource>
 </RCC>

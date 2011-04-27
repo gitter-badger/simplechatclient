@@ -66,7 +66,7 @@ void Core::createSettings()
 {
     // default settings
     QSettings settings;
-    settings.setValue("version", "1.0.11.830");
+    settings.setValue("version", "1.0.11.831");
     settings.setValue("logged", "off");
     settings.setValue("busy", "off");
     settings.setValue("away", "off");
@@ -84,7 +84,7 @@ void Core::createSettings()
 
     // config values
     Config *pConfig = new Config();
-    QMap <QString, QString> mConfigValues = pConfig->read_config();
+    QMap<QString,QString> mConfigValues = pConfig->read_config();
     delete pConfig;
 
     // set settings

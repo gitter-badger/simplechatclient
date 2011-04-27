@@ -55,7 +55,7 @@ OnetKernel::~OnetKernel()
 
 void OnetKernel::timer_rename_channel()
 {
-    QMap <QString, QString>::const_iterator i = mOldNameNewName.begin();
+    QMap<QString,QString>::const_iterator i = mOldNameNewName.begin();
     while (i != mOldNameNewName.constEnd())
     {
         QString strOldName = i.key();
@@ -1696,7 +1696,7 @@ void OnetKernel::raw_161n()
     if (strDataList.value(4).isEmpty() == true) return;
 
     QString strChannel = strDataList[4];
-    QMap <QString, QString> mKeyValue;
+    QMap<QString,QString> mKeyValue;
 
     for (int i = 5; i < strDataList.size(); i++)
     {
@@ -1862,7 +1862,7 @@ void OnetKernel::raw_175n()
 
     QString strChannel = strDataList[4];
 
-    QMap <QString, QString> mKeyValue;
+    QMap<QString,QString> mKeyValue;
     for (int i = 5; i < strDataList.size(); i++)
     {
         QString strLine = strDataList[i];

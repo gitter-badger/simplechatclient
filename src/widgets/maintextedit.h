@@ -35,7 +35,6 @@ class MainTextEdit : public QTextEdit
     Q_OBJECT
 public:
     MainTextEdit(Network *, QString, QTcpSocket *, DlgUserProfile *);
-    virtual ~MainTextEdit();
 #ifndef Q_WS_WIN
     void set_dlg_cam(DlgCam *);
 #endif
@@ -45,20 +44,22 @@ public:
 private:
     // params
     Network *pNetwork;
-    QString strChannel;
     QTcpSocket *camSocket;
     DlgUserProfile *pDlgUserProfile;
 #ifndef Q_WS_WIN
     DlgCam *pDlgCam;
 #endif
     // other
+    QString strChannel;
     QString strNick;
+    QString strWebsite;
     enum { maxOpenChannels = 30 };
     QAction *openChannelsActs[maxOpenChannels];
     AnimatedEmoticonWidget *pAnimatedEmoticonWidget;
 
     void menu_nick(QString, QContextMenuEvent *);
     void menu_channel(QString, QContextMenuEvent *);
+    void menu_website(QContextMenuEvent *);
     void menu_standard(QContextMenuEvent *);
 
     int get_word_index(QString, int);
@@ -90,6 +91,7 @@ private slots:
     void voice_del();
     void invite();
     void text_changed();
+    void open_browser();
 
 protected:
     virtual void contextMenuEvent(QContextMenuEvent *);

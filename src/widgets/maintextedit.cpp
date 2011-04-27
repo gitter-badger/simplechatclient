@@ -19,6 +19,7 @@
  ****************************************************************************/
 
 #include <QContextMenuEvent>
+#include <QDesktopServices>
 #include <QInputDialog>
 #include <QMenu>
 #include <QSettings>
@@ -73,10 +74,6 @@ void MainTextEdit::update_background_image()
 void MainTextEdit::join_channel()
 {
     pNetwork->send(QString("JOIN %1").arg(strChannel));
-}
-
-MainTextEdit::~MainTextEdit()
-{
 }
 
 void MainTextEdit::priv()
@@ -209,6 +206,11 @@ void MainTextEdit::invite()
     }
 }
 
+void MainTextEdit::open_browser()
+{
+    QDesktopServices::openUrl(QUrl(strWebsite, QUrl::TolerantMode));
+}
+
 void MainTextEdit::menu_channel(QString strChannel, QContextMenuEvent *event)
 {
     QMenu menu(this);
@@ -320,6 +322,24 @@ void MainTextEdit::menu_nick(QString strNick, QContextMenuEvent *event)
     menu.exec(event->globalPos());
 }
 
+void MainTextEdit::menu_website(QContextMenuEvent *event)
+{
+    QString strShortLink = strWebsite;
+    if (strShortLink.size() > 35) strShortLink = strShortLink.left(35)+"...";
+
+    QMenu menu(this);
+
+    QAction *websiteLinkAct = new QAction(strShortLink, this);
+    websiteLinkAct->setIcon(QIcon(":/images/oxygen/16x16/preferences-web-browser-shortcuts.png"));
+    websiteLinkAct->setDisabled(true);
+
+    menu.addAction(websiteLinkAct);
+    menu.addSeparator();
+    menu.addAction(QIcon(":/images/oxygen/16x16/applications-internet.png"), tr("Open in browser"), this, SLOT(open_browser()));
+
+    menu.exec(event->globalPos());
+}
+
 void MainTextEdit::menu_standard(QContextMenuEvent *event)
 {
     QMenu menu(this);
@@ -422,6 +442,14 @@ void MainTextEdit::contextMenuEvent(QContextMenuEvent *event)
                         menu_nick(strNick, event);
                         return;
                     }
+                }
+
+                // website
+                if ((strWord.contains("http") == true) || (strWord.contains("www") == true))
+                {
+                    strWebsite = strWord;
+                    menu_website(event);
+                    return;
                 }
             }
         }

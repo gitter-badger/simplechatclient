@@ -194,8 +194,8 @@ void OnetAuth::save_cookies(QNetworkAccessManager *accessManager)
     QSettings settings;
 
     // save cookies
-    QList <QNetworkCookie> cookies = accessManager->cookieJar()->cookiesForUrl(QUrl("http://czat.onet.pl"));
-    for (QList <QNetworkCookie>::iterator i = cookies.begin(); i != cookies.end(); ++i)
+    QList<QNetworkCookie> cookies = accessManager->cookieJar()->cookiesForUrl(QUrl("http://czat.onet.pl"));
+    for (QList<QNetworkCookie>::iterator i = cookies.begin(); i != cookies.end(); ++i)
     {
         QString strKey = i->name();
         QString strValue = i->value();

@@ -251,7 +251,7 @@ void NickListWidget::add_child(QString strNick, QString strModes, QString strPar
 
 void NickListWidget::remove_child(QString strName)
 {
-    QMultiMap <int, QTreeWidgetItem*> mRemoveChild;
+    QMultiMap<int,QTreeWidgetItem*> mRemoveChild;
     QStringList strlRemoveParent;
 
     // remove all childs

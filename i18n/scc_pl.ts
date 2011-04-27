@@ -2876,6 +2876,10 @@
         <source>Select All</source>
         <translation>Zaznacz wszystko</translation>
     </message>
+    <message>
+        <source>Open in browser</source>
+        <translation>Otwórz w przeglądarce</translation>
+    </message>
 </context>
 <context>
     <name>NickListDelegate</name>

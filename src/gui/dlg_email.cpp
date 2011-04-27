@@ -77,7 +77,7 @@ void DlgEmail::create_signals()
 
 void DlgEmail::get_cookies()
 {
-    QList <QNetworkCookie> cookieList;
+    QList<QNetworkCookie> cookieList;
     QNetworkCookie cookie;
     QSettings settings;
 

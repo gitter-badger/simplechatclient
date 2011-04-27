@@ -88,8 +88,8 @@ void DlgRegisterNick::get_cookies()
 void DlgRegisterNick::got_cookies()
 {
     // save cookies
-    QList <QNetworkCookie> cookies = accessManager->cookieJar()->cookiesForUrl(QUrl("http://czat.onet.pl"));
-    for (QList <QNetworkCookie>::iterator i = cookies.begin(); i != cookies.end(); ++i)
+    QList<QNetworkCookie> cookies = accessManager->cookieJar()->cookiesForUrl(QUrl("http://czat.onet.pl"));
+    for (QList<QNetworkCookie>::iterator i = cookies.begin(); i != cookies.end(); ++i)
     {
         QString strKey = i->name();
         QString strValue = i->value();
@@ -135,7 +135,7 @@ void DlgRegisterNick::register_nick()
         return;
 
     // set cookies
-    QList <QNetworkCookie> cookieList;
+    QList<QNetworkCookie> cookieList;
     QNetworkCookie cookie;
 
     QMapIterator <QString, QString> i(mCookies);

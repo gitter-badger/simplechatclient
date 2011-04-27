@@ -52,7 +52,7 @@ public:
      * Read config to QMap
      * @return QMap all keys,values
      */
-    QMap <QString, QString> read_config();
+    QMap<QString,QString> read_config();
 
 private:
     QString strConfigFile;

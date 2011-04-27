@@ -54,8 +54,8 @@ private:
     bool bFirstSendPUT;
     bool bReadySendPUT;
     int iLastSendPUT;
-    QList <QString> lLastCommand;
-    QMap <QString, QString> mNickChannels;
+    QList<QString> lLastCommand;
+    QMap<QString,QString> mNickChannels;
 
     void create_gui();
     void set_default_values();

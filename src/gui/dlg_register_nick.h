@@ -39,7 +39,7 @@ private:
     QWidget *options;
     QNetworkAccessManager *accessManager;
     QNetworkCookieJar *cookieJar;
-    QMap <QString, QString> mCookies;
+    QMap<QString,QString> mCookies;
 
     void create_gui();
     void create_signals();

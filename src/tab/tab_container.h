@@ -85,7 +85,7 @@ private:
     DlgCam *pDlgCam;
 #endif
     // other
-    QList <TabWidget *> tw;
+    QList<TabWidget*> tw;
 
     int get_index(QString);
 

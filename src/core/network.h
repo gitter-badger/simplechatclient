@@ -53,8 +53,8 @@ private:
     QTimer *timerLag;
     QTimer *timerQueue;
     int iActive;
-    QList <QString> msgSendQueue;
-    QList <QString> msgSendQueueNS;
+    QList<QString> msgSendQueue;
+    QList<QString> msgSendQueueNS;
     bool bAuthorized;
     QTimer *timerReconnect;
 

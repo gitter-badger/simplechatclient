@@ -29,14 +29,14 @@ class InputLineWidget : public QPlainTextEdit
 public:
     InputLineWidget(QWidget*);
     virtual ~InputLineWidget();
-    void set_userslist(QList <QString>);
+    void set_userslist(QList<QString>);
     void insert_text(QString);
 
 private:
     int index;
     QString strLastWord;
-    QList <QString> usersList;
-    QList <QString> find;
+    QList<QString> usersList;
+    QList<QString> find;
     QString strLastMsg;
 
     QString get_word();

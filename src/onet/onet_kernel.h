@@ -54,7 +54,7 @@ private:
     Avatar *avatar;
     QString strData;
     QStringList strDataList;
-    QMap <QString, QString> mOldNameNewName; // rename channels
+    QMap<QString,QString> mOldNameNewName; // rename channels
 
     void raw_error();
     void raw_ping();

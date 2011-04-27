@@ -40,7 +40,7 @@ InputLineWidget::~InputLineWidget()
     usersList.clear();
 }
 
-void InputLineWidget::set_userslist(QList <QString> newUsersList)
+void InputLineWidget::set_userslist(QList<QString> newUsersList)
 {
     usersList = newUsersList;
 }
