@@ -2877,7 +2877,7 @@
         <translation>Zaznacz wszystko</translation>
     </message>
     <message>
-        <source>Open in browser</source>
+        <source>Open link</source>
         <translation>Otwórz w przeglądarce</translation>
     </message>
 </context>

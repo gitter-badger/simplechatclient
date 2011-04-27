@@ -4,6 +4,7 @@ ChangeLog for Simple Chat Client
 Version 1.0.11 (unknown date)
 ================================
 
+* Added menu "open link"
 * Added offline messages support
 * Many bugfixes
 

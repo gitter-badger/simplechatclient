@@ -206,7 +206,7 @@ void MainTextEdit::invite()
     }
 }
 
-void MainTextEdit::open_browser()
+void MainTextEdit::open_webbrowser()
 {
     QDesktopServices::openUrl(QUrl(strWebsite, QUrl::TolerantMode));
 }
@@ -335,7 +335,7 @@ void MainTextEdit::menu_website(QContextMenuEvent *event)
 
     menu.addAction(websiteLinkAct);
     menu.addSeparator();
-    menu.addAction(QIcon(":/images/oxygen/16x16/applications-internet.png"), tr("Open in browser"), this, SLOT(open_browser()));
+    menu.addAction(QIcon(":/images/oxygen/16x16/applications-internet.png"), tr("Open link"), this, SLOT(open_webbrowser()));
 
     menu.exec(event->globalPos());
 }

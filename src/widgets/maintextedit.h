@@ -66,7 +66,6 @@ private:
     QString get_word(QTextCursor);
     QString get_first_word(QTextCursor);
 
-
 private slots:
     void join_channel();
     void priv();
@@ -91,7 +90,7 @@ private slots:
     void voice_del();
     void invite();
     void text_changed();
-    void open_browser();
+    void open_webbrowser();
 
 protected:
     virtual void contextMenuEvent(QContextMenuEvent *);
