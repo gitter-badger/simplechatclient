@@ -759,7 +759,7 @@ void MainWindow::current_tab_changed(int index)
     // set current channel
     pNickListWidget->set_channel(strChannel);
 
-    // set users
+    // clear users
     Core::instance()->mChannelNicks[strChannel] = 0;
 
     // clear nicklist

@@ -448,6 +448,8 @@ void OnetKernel::kernel(QString param1)
                 raw_407n();
             else if (strDataList[3].toLower() == ":408")
                 raw_408n();
+            else if (strDataList[3].toLower() == ":409")
+                raw_409n();
             else if (strDataList[3].toLower() == ":412")
                 raw_412n();
             else if (strDataList[3].toLower() == ":413")
@@ -3228,6 +3230,18 @@ void OnetKernel::raw_408n()
     pTabC->show_msg_active(strMessage, 7);
 }
 
+// :NickServ!service@service.onet NOTICE Merovingian :409 WWW :invalid argument
+void OnetKernel::raw_409n()
+{
+    if (strDataList.value(3).isEmpty() == true) return;
+    if (strDataList.value(4).isEmpty() == true) return;
+
+    QString strCommand = strDataList[4];
+
+    QString strMessage = QString(tr("* %1 :Invalid argument")).arg(strCommand);
+    pTabC->show_msg_active(strMessage, 7);
+}
+
 // :NickServ!service@service.onet NOTICE ~Merovingian :412 admi :user's data is not ready
 void OnetKernel::raw_412n()
 {
@@ -3636,9 +3650,9 @@ void OnetKernel::raw_463n()
     if (strDataList.value(4).isEmpty() == true) return;
 
     QString strChannel = strDataList[4];
-    QString strWhat = strDataList[5];
+    QString strCommand = strDataList[5];
 
-    QString strMessage = QString(tr("* %1 :Permission denied, insufficient privileges in %2 channel")).arg(strWhat).arg(strChannel);
+    QString strMessage = QString(tr("* %1 :Permission denied, insufficient privileges in %2 channel")).arg(strCommand).arg(strChannel);
     pTabC->show_msg_active(strMessage, 7);
 }
 
@@ -3648,9 +3662,9 @@ void OnetKernel::raw_464n()
     if (strDataList.value(3).isEmpty() == true) return;
     if (strDataList.value(4).isEmpty() == true) return;
 
-    QString strWhat = strDataList[4];
+    QString strCommand = strDataList[4];
 
-    QString strMessage = QString(tr("* %1 :Invalid argument")).arg(strWhat);
+    QString strMessage = QString(tr("* %1 :Invalid argument")).arg(strCommand);
     pTabC->show_msg_active(strMessage, 7);
 }
 
