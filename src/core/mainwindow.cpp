@@ -727,10 +727,25 @@ void MainWindow::tab_close_requested(int index)
         pTabC->part_tab(index);
 }
 
+QString MainWindow::get_current_tab_name(int index)
+{
+    QList<QString> lOpenChannels = Core::instance()->lOpenChannels;
+    lOpenChannels.insert(0, "Status");
+
+    for (int i = 0; i < lOpenChannels.size(); i++)
+    {
+        QString strChannel = lOpenChannels.at(i);
+        if (index == i)
+            return strChannel;
+    }
+    return QString::null;
+}
+
 // tab changed
 void MainWindow::current_tab_changed(int index)
 {
-    QString strChannel = pTabC->get_name(index);
+    QString strChannel = get_current_tab_name(index);
+    if (strChannel.isEmpty() == true) return; // something wrong
 
     // change tab name
     QString strTabText = pTabM->tabText(index);

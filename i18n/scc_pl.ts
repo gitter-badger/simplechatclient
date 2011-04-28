@@ -1877,10 +1877,6 @@
         <translation>Error: Błąd autoryzacji.</translation>
     </message>
     <message>
-        <source>Error: Authentication error [Nick is already logged into the chat]</source>
-        <translation>Error: Błąd autoryzacji [Nick jest już zalogowany na czacie]</translation>
-    </message>
-    <message>
         <source>Error: Authentication error [%1]</source>
         <translation>Error: Błąd autoryzacji [%1]</translation>
     </message>

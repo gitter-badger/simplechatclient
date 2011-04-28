@@ -119,6 +119,7 @@ private:
     void create_menus();
     void create_signals();
     void show_options();
+    QString get_current_tab_name(int);
     // nicklist
     void update_users_count();
     bool nicklist_exist(QString, QString);

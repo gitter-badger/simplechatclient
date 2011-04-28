@@ -167,6 +167,12 @@ void OnetAuth::authorize(QString param1, QString param2, QString param3)
         // unregistered nick
         else
         {
+            // check code
+            //QString strCode = get_code(accessManager);
+            //strData = QString("api_function=checkCode&params=a:1:{s:4:\"code\";s:6:\"%1\";}").arg(strCode);
+            //strGetUo = network_request(accessManager, "http://czat.onet.pl/include/ajaxapi.xml.php3", strData);
+
+            // getuo
             strData = QString("api_function=getUoKey&params=a:3:{s:4:\"nick\";s:%1:\"%2\";s:8:\"tempNick\";i:1;s:7:\"version\";s:%3:\"%4\";}").arg(strNickLen).arg(strNick).arg(strVersionLen).arg(strVersion);
             strGetUo = network_request(accessManager, "http://czat.onet.pl/include/ajaxapi.xml.php3", strData);
         }
@@ -347,39 +353,28 @@ void OnetAuth::request_finished(QString strNickAuth, QString strData)
         doc.setContent(strData);
 
         // <?xml version="1.0" encoding="ISO-8859-2"?><root><uoKey>LY9j2sXwio0G_yo3PdpukDL8iZJGHXKs</uoKey><zuoUsername>~Succubi_test</zuoUsername><error err_code="TRUE"  err_text="wartość prawdziwa" ></error></root>
-        if (strData.indexOf("uoKey") != -1)
-        {
-            if (strData.indexOf("err_code=\"TRUE\"") != -1)
-            {
-                QString strUOKey = doc.elementsByTagName("uoKey").item(0).toElement().text();
-                QString strNick = doc.elementsByTagName("zuoUsername").item(0).toElement().text();
-                QSettings settings;
-                settings.setValue("uokey", strUOKey);
-                settings.setValue("uo_nick", strNick);
-
-                // send auth
-                emit send(QString("NICK %1").arg(strNickAuth));
-                emit send("AUTHKEY");
-            }
-            else
-            {
-                pTabC->show_msg("Status", tr("Error: Authorization Failed."), 9);
-            }
-        }
         // <?xml version="1.0" encoding="ISO-8859-2"?><root><error err_code="-2"  err_text="U.ytkownik nie zalogowany" ></error></root>
-        else if (strData.indexOf("error err_code=") != -1)
-        {
-            if (strData.indexOf("err_code=\"TRUE\"") != -1)
-            {
-                pTabC->show_msg("Status", tr("Error: Authentication error [Nick is already logged into the chat]"), 9);
-            }
-            else
-            {
-                QDomNode dError = doc.elementsByTagName("error").item(0);
-                QString strErrorText = dError.attributes().namedItem("err_text").nodeValue();
 
-                pTabC->show_msg("Status", QString(tr("Error: Authentication error [%1]")).arg(strErrorText), 9);
-            }
+        QDomNode dError = doc.elementsByTagName("error").item(0);
+        QString strErrorCode = dError.attributes().namedItem("err_code").nodeValue();
+        QString strErrorText = dError.attributes().namedItem("err_text").nodeValue();
+
+        if (strErrorCode == "TRUE")
+        {
+            QString strUOKey = doc.elementsByTagName("uoKey").item(0).toElement().text();
+            QString strNick = doc.elementsByTagName("zuoUsername").item(0).toElement().text();
+
+            QSettings settings;
+            settings.setValue("uokey", strUOKey);
+            settings.setValue("uo_nick", strNick);
+
+            // send auth
+            emit send(QString("NICK %1").arg(strNickAuth));
+            emit send("AUTHKEY");
+        }
+        else
+        {
+            pTabC->show_msg("Status", QString(tr("Error: Authentication error [%1]")).arg(strErrorText), 9);
         }
     }
     else

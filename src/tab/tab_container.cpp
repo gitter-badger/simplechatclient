@@ -46,15 +46,15 @@ TabContainer::~TabContainer()
         // clear nicklist
         emit clear_nicklist(strChannel);
 
-        // remove tab
-        delete tw.at(i);
-        tw.removeAt(i);
-
         // remove from open channels
         Core::instance()->lOpenChannels.removeAll(strChannel);
 
         // remove from nick count
         Core::instance()->mChannelNicks.remove(strChannel);
+
+        // remove tab
+        delete tw.at(i);
+        tw.removeAt(i);
 
         // log
         QString strData = "--- Log closed "+QDateTime::currentDateTime().toString(Qt::TextDate);
@@ -75,14 +75,6 @@ void TabContainer::set_dlg_cam(DlgCam *param1)
     pDlgCam = param1;
 }
 #endif
-
-QString TabContainer::get_name(int i)
-{
-    if ((i < 0) || (i > tw.size()))
-        return QString::null;
-    else
-        return tw[i]->get_name();
-}
 
 int TabContainer::get_index(QString strName)
 {
@@ -114,6 +106,13 @@ void TabContainer::add_tab(QString strChannel)
         l->save(strChannel, strData);
         delete l;
 
+        // update open channels
+        if (strChannel != "Status")
+            Core::instance()->lOpenChannels.append(strChannel);
+
+        // update nick count
+        Core::instance()->mChannelNicks.insert(strChannel, 0);
+
         // create tab
         tw.append(new TabWidget(pNetwork, strChannel, camSocket, pDlgUserProfile));
 #ifndef Q_WS_WIN
@@ -121,13 +120,6 @@ void TabContainer::add_tab(QString strChannel)
 #endif
         pTabM->addTab(tw.at(tw.size()-1), strChannel);
         pTabM->setCurrentIndex(tw.size()-1);
-
-        // update open channels
-        if (strChannel != "Status")
-            Core::instance()->lOpenChannels.append(strChannel);
-
-        // update nick count
-        Core::instance()->mChannelNicks.insert(strChannel, 0);
     }
 }
 
@@ -144,23 +136,21 @@ void TabContainer::remove_tab(QString strChannel)
         // clear nicklist
         emit clear_nicklist(strChannel);
 
-        // remove tab
-        delete tw.at(i);
-        tw.removeAt(i);
-
         // remove from open channels
         Core::instance()->lOpenChannels.removeAll(strChannel);
 
         // remove from nick count
         Core::instance()->mChannelNicks.remove(strChannel);
 
+        // remove tab
+        delete tw.at(i);
+        tw.removeAt(i);
+
         // log
         QString strData = "--- Log closed "+QDateTime::currentDateTime().toString(Qt::TextDate);
         Log *l = new Log();
         l->save(strChannel, strData);
         delete l;
-
-        return;
     }
 }
 

@@ -47,7 +47,6 @@ public:
 #ifndef Q_WS_WIN
     void set_dlg_cam(DlgCam *);
 #endif
-    QString get_name(int);
     bool exist_tab(QString);
     void add_tab(QString);
     void remove_tab(QString);
