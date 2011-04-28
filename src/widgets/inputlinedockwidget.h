@@ -33,6 +33,7 @@ class InputLineDockWidget : public QWidget
     Q_OBJECT
 public:
     InputLineDockWidget(QWidget *, Network *, DlgChannelSettings *, DlgModeration *);
+    virtual ~InputLineDockWidget();
     void enable_moderation();
     void disable_moderation();
     void hide_toolwidget();

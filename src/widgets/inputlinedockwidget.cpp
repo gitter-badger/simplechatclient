@@ -61,6 +61,12 @@ InputLineDockWidget::InputLineDockWidget(QWidget *parent, Network *param1, DlgCh
     QObject::connect(pInputWidget, SIGNAL(show_hide_toolwidget()), this, SLOT(slot_show_hide_toolwidget()));
 }
 
+InputLineDockWidget::~InputLineDockWidget()
+{
+    delete pToolWidget;
+    delete pInputWidget;
+}
+
 void InputLineDockWidget::enable_moderation()
 {
     pToolWidget->set_moderation(true);

@@ -35,69 +35,38 @@
 #include <QProcess>
 #include <signal.h>
 #include <QDebug>
-#endif
+#include <cstdio>
+#include <pwd.h>
+#include <stdlib.h>
+#include <execinfo.h>
 
-void saveMessage(QString strFilename, QString strData)
+void printBacktrace(const QString &header)
 {
-    QString path;
+    if (header.isEmpty())
+        fprintf(stderr, "\nbacktrace:\n");
+    else
+        fprintf(stderr, "\nbacktrace: ('%s')\n", qPrintable(header));
 
-#ifdef Q_WS_X11
-    path = QDir::homePath()+"/.scc";
-#else
-    QSettings settings(QSettings::UserScope, "Microsoft", "Windows");
-    settings.beginGroup("CurrentVersion/Explorer/Shell Folders");
-    path = settings.value("Personal").toString();
-    path += "/scc";
-#endif
-
-    // create dir if not exist
-    QDir d(path);
-    if (d.exists(path) == false)
-        d.mkdir(path);
-
-    QDir d1(path);
-    if (d1.exists(path+"/log") == false)
-        d1.mkdir(path+"/log");
-
-    QFile f(path+"/log/"+strFilename+".txt");
-    if (!f.open(QIODevice::Append))
-    {
-#ifdef Q_WS_X11
-        qDebug() << "Error: log: Cannot open file " << strFilename << ".txt";
-#endif
+    void *bt_array[100];
+    char **bt_strings;
+    int num_entries;
+    if ((num_entries = backtrace(bt_array, 100)) < 0) {
+        fprintf(stderr, "could not generate backtrace\n");
         return;
     }
-
-    QTextStream out(&f);
-    out << strData << "\r\n";
-
-    f.close();
-}
-
-void messageHandler(QtMsgType type, const char *msg)
-{
-    switch (type)
-    {
-        case QtDebugMsg:
-            fprintf(stderr, "Debug: %s\n", msg);
-            saveMessage("debug", QString("Debug: %1").arg(msg));
-            break;
-        case QtWarningMsg:
-            fprintf(stderr, "Warning: %s\n", msg);
-            saveMessage("debug", QString("Warning: %1").arg(msg));
-            break;
-        case QtCriticalMsg:
-            fprintf(stderr, "Critical: %s\n", msg);
-            saveMessage("debug", QString("Critical: %1").arg(msg));
-            break;
-        case QtFatalMsg:
-            fprintf(stderr, "Fatal: %s\n", msg);
-            saveMessage("debug", QString("Fatal: %1").arg(msg));
-            abort();
+    if ((bt_strings = backtrace_symbols(bt_array, num_entries)) == NULL) {
+        fprintf(stderr, "could not get symbol names for backtrace\n");
+        return;
     }
+    fprintf(stderr, "======= BEGIN OF BACKTRACE =====\n");
+    for (int i = 0; i < num_entries; ++i)
+        fprintf(stderr, "[%d] %s\n", i, bt_strings[i]);
+    fprintf(stderr, "======= END OF BACKTRACE  ======\n");
+    free(bt_strings);
+
+    fflush(stderr);
 }
 
-#ifdef Q_WS_X11
 void crashHandler()
 {
     QString path = QDir::homePath()+"/.scc";
@@ -233,3 +202,74 @@ void linux_crash_handler()
     sigaction(SIGABRT, &sv, NULL);
 }
 #endif
+
+void saveMessage(QString strFilename, QString strData)
+{
+    QString path;
+
+#ifdef Q_WS_X11
+    path = QDir::homePath()+"/.scc";
+#else
+    QSettings settings(QSettings::UserScope, "Microsoft", "Windows");
+    settings.beginGroup("CurrentVersion/Explorer/Shell Folders");
+    path = settings.value("Personal").toString();
+    path += "/scc";
+#endif
+
+    // create dir if not exist
+    QDir d(path);
+    if (d.exists(path) == false)
+        d.mkdir(path);
+
+    QDir d1(path);
+    if (d1.exists(path+"/log") == false)
+        d1.mkdir(path+"/log");
+
+    QFile f(path+"/log/"+strFilename+".txt");
+    if (!f.open(QIODevice::Append))
+    {
+#ifdef Q_WS_X11
+        qDebug() << "Error: log: Cannot open file " << strFilename << ".txt";
+#endif
+        return;
+    }
+
+    QTextStream out(&f);
+    out << strData << "\r\n";
+
+    f.close();
+}
+
+void messageHandler(QtMsgType type, const char *msg)
+{
+    switch (type)
+    {
+        case QtDebugMsg:
+            fprintf(stderr, "Debug: %s\n", msg);
+            saveMessage("debug", QString("Debug: %1").arg(msg));
+            break;
+        case QtWarningMsg:
+            fprintf(stderr, "Warning: %s\n", msg);
+            saveMessage("debug", QString("Warning: %1").arg(msg));
+#ifdef Q_WS_X11
+            printBacktrace("warning from Qt");
+#endif
+            break;
+        case QtCriticalMsg:
+            fprintf(stderr, "Critical: %s\n", msg);
+            saveMessage("debug", QString("Critical: %1").arg(msg));
+#ifdef Q_WS_X11
+            printBacktrace("critical error from Qt");
+#endif
+            abort();
+            break;
+        case QtFatalMsg:
+            fprintf(stderr, "Fatal: %s\n", msg);
+            saveMessage("debug", QString("Fatal: %1").arg(msg));
+#ifdef Q_WS_X11
+            printBacktrace("fatal error from Qt");
+#endif
+            abort();
+            break;
+    }
+}
