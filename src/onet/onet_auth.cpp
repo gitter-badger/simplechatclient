@@ -26,6 +26,7 @@
 #include <QNetworkRequest>
 #include <QSettings>
 #include <QUrl>
+#include "dlg_captcha.h"
 #include "tab_container.h"
 #include "onet_auth.h"
 
@@ -167,10 +168,13 @@ void OnetAuth::authorize(QString param1, QString param2, QString param3)
         // unregistered nick
         else
         {
+            // captcha dialog
+            QString strCaptcha;
+            DlgCaptcha(accessManager, &strCaptcha).exec();
+
             // check code
-            //QString strCode = get_code(accessManager);
-            //strData = QString("api_function=checkCode&params=a:1:{s:4:\"code\";s:6:\"%1\";}").arg(strCode);
-            //strGetUo = network_request(accessManager, "http://czat.onet.pl/include/ajaxapi.xml.php3", strData);
+            strData = QString("api_function=checkCode&params=a:1:{s:4:\"code\";s:%1:\"%2\";}").arg(strCaptcha.size()).arg(strCaptcha);
+            strGetUo = network_request(accessManager, "http://czat.onet.pl/include/ajaxapi.xml.php3", strData);
 
             // getuo
             strData = QString("api_function=getUoKey&params=a:3:{s:4:\"nick\";s:%1:\"%2\";s:8:\"tempNick\";i:1;s:7:\"version\";s:%3:\"%4\";}").arg(strNickLen).arg(strNick).arg(strVersionLen).arg(strVersion);

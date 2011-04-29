@@ -2,6 +2,7 @@
 set (scc_UIS
 	../ui/about.ui
 	../ui/awaylog.ui
+	../ui/captcha.ui
 	../ui/channel_favourites.ui
 	../ui/channel_homes.ui
 	../ui/channel_key.ui
@@ -64,6 +65,7 @@ set (scc_SRCS
 	gui/dlg_user_avatar.cpp
 	gui/dlg_user_profile.cpp
 	notify/notify.cpp
+	onet/dlg_captcha.cpp
 	onet/onet_auth.cpp
 	onet/onet_kernel.cpp
 	tab/tab_container.cpp
@@ -118,6 +120,7 @@ set (scc_MOC_HDRS
 	gui/dlg_user_avatar.h
 	gui/dlg_user_profile.h
 	notify/notify.h
+	onet/dlg_captcha.h
 	onet/onet_auth.h
 	onet/onet_kernel.h
 	tab/tab_container.h

@@ -50,6 +50,7 @@ SOURCES += src/avatars/avatar.cpp \
     src/gui/dlg_user_avatar.cpp \
     src/gui/dlg_user_profile.cpp \
     src/notify/notify.cpp \
+    src/onet/dlg_captcha.cpp \
     src/onet/onet_auth.cpp \
     src/onet/onet_kernel.cpp \
     src/tab/tab_container.cpp \
@@ -109,6 +110,7 @@ HEADERS += src/avatars/avatar.h \
     src/gui/dlg_user_avatar.h \
     src/gui/dlg_user_profile.h \
     src/notify/notify.h \
+    src/onet/dlg_captcha.h \
     src/onet/onet_auth.h \
     src/onet/onet_kernel.h \
     src/tab/tab_container.h \
@@ -128,6 +130,7 @@ HEADERS += src/avatars/avatar.h \
 FORMS += ui/about.ui \
     ui/awaylog.ui \
     ui/cam.ui \
+    ui/captcha.ui \
     ui/channel_favourites.ui \
     ui/channel_homes.ui \
     ui/channel_key.ui \
@@ -140,13 +143,13 @@ FORMS += ui/about.ui \
     ui/ignore_ad.ui \
     ui/invite.ui \
     ui/moderation.ui \
+    ui/my_avatar.ui \
+    ui/my_profile.ui \
+    ui/my_stats.ui \
+    ui/notes.ui \
+    ui/offlinemsg.ui \
     ui/options.ui \
     ui/register_nick.ui \
     ui/update.ui \
-    ui/user_profile.ui \
-    ui/notes.ui \
     ui/user_avatar.ui \
-    ui/my_stats.ui \
-    ui/my_profile.ui \
-    ui/my_avatar.ui \
-    ui/offlinemsg.ui
+    ui/user_profile.ui

@@ -98,6 +98,12 @@ void Network::clear_all()
     // set lag
     Core::instance()->lagAct->setText("Lag: ?");
 
+    // update busy button
+    Core::instance()->busyAct->setChecked(false);
+
+    // update away button
+    Core::instance()->awayAct->setChecked(false);
+
     // update nick
     emit update_nick(tr("(Unregistered)"));
 

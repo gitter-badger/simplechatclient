@@ -117,6 +117,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     // hide awaylog
     awaylogAct->setVisible(false);
 
+    // hide my avtar
+    myAvatarAct->setVisible(false);
+
     // show options if config not exist
     show_options();
 }
@@ -581,41 +584,50 @@ void MainWindow::update_users_count()
 // onet dialogs
 void MainWindow::open_channel_list()
 {
-    if ((pNetwork->is_connected() == true) && (pNetwork->is_writable() == true))
+    QSettings settings;
+    if ((pNetwork->is_connected() == true) && (pNetwork->is_writable() == true) && (settings.value("logged") == "on"))
         DlgChannelList(this, pNetwork).exec();
 }
 
 void MainWindow::open_channel_homes()
 {
-    if ((pNetwork->is_connected() == true) && (pNetwork->is_writable() == true))
+    QSettings settings;
+    if ((pNetwork->is_connected() == true) && (pNetwork->is_writable() == true) && (settings.value("logged") == "on"))
         DlgChannelHomes(this, pNetwork, pDlgChannelSettings).exec();
 }
 
 void MainWindow::open_channel_favourites()
 {
-    if ((pNetwork->is_connected() == true) && (pNetwork->is_writable() == true))
+    QSettings settings;
+    if ((pNetwork->is_connected() == true) && (pNetwork->is_writable() == true) && (settings.value("logged") == "on"))
         DlgChannelFavourites(this, pNetwork).exec();
 }
 
 void MainWindow::open_friends()
 {
-    if ((pNetwork->is_connected() == true) && (pNetwork->is_writable() == true))
+    QSettings settings;
+    if ((pNetwork->is_connected() == true) && (pNetwork->is_writable() == true) && (settings.value("logged") == "on"))
         DlgFriends(this, pNetwork).exec();
 }
 
 void MainWindow::open_ignore()
 {
-    if ((pNetwork->is_connected() == true) && (pNetwork->is_writable() == true))
+    QSettings settings;
+    if ((pNetwork->is_connected() == true) && (pNetwork->is_writable() == true) && (settings.value("logged") == "on"))
         DlgIgnore(this, pNetwork).exec();
 }
 
 void MainWindow::button_set_busy()
 {
-    Core::instance()->busyAct->setChecked(false);
+    // do not change status
+    if (Core::instance()->busyAct->isChecked() == true)
+        Core::instance()->busyAct->setChecked(false);
+    else
+        Core::instance()->busyAct->setChecked(true);
 
-    if ((pNetwork->is_connected() == true) && (pNetwork->is_writable() == true))
+    QSettings settings;
+    if ((pNetwork->is_connected() == true) && (pNetwork->is_writable() == true) && (settings.value("logged") == "on"))
     {
-        QSettings settings;
         bool bBusy = settings.value("busy").toString() == "on" ? true : false;
 
         if (bBusy == true)
@@ -627,11 +639,15 @@ void MainWindow::button_set_busy()
 
 void MainWindow::button_set_away()
 {
-    Core::instance()->awayAct->setChecked(false);
+    // do not change status
+    if (Core::instance()->awayAct->isChecked() == true)
+        Core::instance()->awayAct->setChecked(false);
+    else
+        Core::instance()->awayAct->setChecked(true);
 
-    if ((pNetwork->is_connected() == true) && (pNetwork->is_writable() == true))
+    QSettings settings;
+    if ((pNetwork->is_connected() == true) && (pNetwork->is_writable() == true) && (settings.value("logged") == "on"))
     {
-        QSettings settings;
         bool bAway = settings.value("away").toString() == "on" ? true : false;
 
         QString strReason;
@@ -646,7 +662,9 @@ void MainWindow::button_set_away()
 
 void MainWindow::open_offlinemsg()
 {
-    DlgOfflineMsg(this, pNetwork).exec();
+    QSettings settings;
+    if ((pNetwork->is_connected() == true) && (pNetwork->is_writable() == true) && (settings.value("logged") == "on"))
+        DlgOfflineMsg(this, pNetwork).exec();
 }
 
 void MainWindow::open_awaylog()
@@ -657,33 +675,38 @@ void MainWindow::open_awaylog()
 void MainWindow::open_cams()
 {
 #ifdef Q_WS_WIN
-    if ((pNetwork->is_connected() == true) && (pNetwork->is_writable() == true))
+    QSettings settings;
+    if ((pNetwork->is_connected() == true) && (pNetwork->is_writable() == true) && (settings.value("logged") == "on"))
     {
         QSettings settings;
         QString strMe = settings.value("nick").toString();
         (new Kamerzysta(camSocket))->show(strMe);
     }
 #else
-    if ((pNetwork->is_connected() == true) && (pNetwork->is_writable() == true))
+    QSettings settings;
+    if ((pNetwork->is_connected() == true) && (pNetwork->is_writable() == true) && (settings.value("logged") == "on"))
         pDlgCam->show();
 #endif
 }
 
 void MainWindow::open_my_stats()
 {
-    if ((pNetwork->is_connected() == true) && (pNetwork->is_writable() == true))
+    QSettings settings;
+    if ((pNetwork->is_connected() == true) && (pNetwork->is_writable() == true) && (settings.value("logged") == "on"))
         DlgMyStats(this).exec();
 }
 
 void MainWindow::open_my_profile()
 {
-    if ((pNetwork->is_connected() == true) && (pNetwork->is_writable() == true))
+    QSettings settings;
+    if ((pNetwork->is_connected() == true) && (pNetwork->is_writable() == true) && (settings.value("logged") == "on"))
         DlgMyProfile(this, pNetwork).exec();
 }
 
 void MainWindow::open_my_avatar()
 {
-    if ((pNetwork->is_connected() == true) && (pNetwork->is_writable() == true))
+    QSettings settings;
+    if ((pNetwork->is_connected() == true) && (pNetwork->is_writable() == true) && (settings.value("logged") == "on"))
         DlgMyAvatar(this, pNetwork).exec();
 }
 

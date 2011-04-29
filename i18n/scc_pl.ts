@@ -1867,6 +1867,21 @@
     </message>
 </context>
 <context>
+    <name>DlgCaptcha</name>
+    <message>
+        <source>Captcha</source>
+        <translation>Captcha</translation>
+    </message>
+    <message>
+        <source>Enter the characters you see:</source>
+        <translation>Przepisz kod z obrazka:</translation>
+    </message>
+    <message>
+        <source>Loading...</source>
+        <translation>Wczytywanie...</translation>
+    </message>
+</context>
+<context>
     <name>OnetAuth</name>
     <message>
         <source>Error: Authentication error [onet.pl servers are not available]</source>
