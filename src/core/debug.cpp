@@ -40,6 +40,7 @@
 #include <stdlib.h>
 #include <execinfo.h>
 
+// function printBacktrace is from Kadu project (kadu.net)
 void printBacktrace(const QString &header)
 {
     if (header.isEmpty())
@@ -261,7 +262,9 @@ void messageHandler(QtMsgType type, const char *msg)
 #ifdef Q_WS_X11
             printBacktrace("critical error from Qt");
 #endif
+#ifndef Q_WS_X11
             abort();
+#endif
             break;
         case QtFatalMsg:
             fprintf(stderr, "Fatal: %s\n", msg);
