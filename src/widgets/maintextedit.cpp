@@ -65,7 +65,7 @@ void MainTextEdit::update_background_image()
     QString strBackgroundImage = settings.value("background_image").toString();
     QString strDisableBackgroundImage = settings.value("disable_background_image").toString();
 
-    if (strDisableBackgroundImage == "off")
+    if ((strDisableBackgroundImage == "off") && (strBackgroundImage.isEmpty() == false))
         this->setStyleSheet("QTextEdit{background-image: url("+strBackgroundImage+"); background-attachment: fixed; background-position: center; background-repeat: no-repeat; background-color: #ffffff; }");
     else
         this->setStyleSheet("");

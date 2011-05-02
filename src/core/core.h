@@ -89,6 +89,7 @@ private:
 
     void init();
     void createSettings();
+    void check_settings();
 };
 
 #endif // CORE_H

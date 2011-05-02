@@ -66,7 +66,7 @@ void Core::createSettings()
 {
     // default settings
     QSettings settings;
-    settings.setValue("version", "1.0.12.841");
+    settings.setValue("version", "1.0.12.842");
     settings.setValue("logged", "off");
     settings.setValue("busy", "off");
     settings.setValue("away", "off");
@@ -98,6 +98,41 @@ void Core::createSettings()
     // fix config values
     if (settings.value("style").toString() == "classic")
         settings.setValue("disable_avatars", "on");
+
+    // check settings
+    check_settings();
+}
+
+void Core::check_settings()
+{
+    QSettings settings;
+    QString strSoundBeep = settings.value("sound_beep").toString();
+    QString strSoundQuery = settings.value("sound_query").toString();
+    QString strBackgroundImage = settings.value("background_image").toString();
+
+    Config *pConfig = new Config();
+
+    QFile fSoundBeep(strSoundBeep);
+    QFile fSoundQuery(strSoundQuery);
+    QFile fBackgroundImage(strBackgroundImage);
+
+    if (fSoundBeep.exists() == false)
+    {
+        pConfig->set_value("sound_beep", "");
+        settings.setValue("sound_beep", "");
+    }
+    if (fSoundQuery.exists() == false)
+    {
+        pConfig->set_value("sound_query", "");
+        settings.setValue("sound_query", "");
+    }
+    if (fBackgroundImage.exists() == false)
+    {
+        pConfig->set_value("background_image", "");
+        settings.setValue("background_image", "");
+    }
+
+    delete pConfig;
 }
 
 QString Core::version()
