@@ -54,7 +54,9 @@
 #ifdef Q_WS_WIN
     #include "kamerzysta.h"
 #else
+#ifdef HAVE_V4L2
     #include "dlg_cam.h"
+#endif
 #endif
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
@@ -86,7 +88,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     pDlgUserProfile = new DlgUserProfile(this, pNetwork);
 
 #ifndef Q_WS_WIN
+#ifdef HAVE_V4L2
     pDlgCam = new DlgCam(this, pNetwork, camSocket);
+#endif
 #endif
 
     pOnetKernel = new OnetKernel(pNetwork, pTabC, pDlgChannelSettings, pDlgModeration, pDlgUserProfile);
@@ -94,7 +98,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
     pTabC->set_dlg(pDlgUserProfile);
 #ifndef Q_WS_WIN
+#ifdef HAVE_V4L2
     pTabC->set_dlg_cam(pDlgCam);
+#endif
 #endif
 
     // gui
@@ -132,7 +138,9 @@ MainWindow::~MainWindow()
     delete pOnetAuth;
     delete pOnetKernel;
 #ifndef Q_WS_WIN
+#ifdef HAVE_V4L2
     delete pDlgCam;
+#endif
 #endif
     delete pDlgUserProfile;
     delete pDlgModeration;
@@ -196,7 +204,9 @@ void MainWindow::createGui()
     // nicklist
     pNickListWidget = new NickListWidget(pNetwork, camSocket, pDlgUserProfile);
 #ifndef Q_WS_WIN
+#ifdef HAVE_V4L2
     pNickListWidget->set_dlg_cam(pDlgCam);
+#endif
 #endif
     pNickListWidget->setParent(rightDockWidget);
     pNickListWidget->setItemDelegate(new NickListDelegate(pNickListWidget));
@@ -683,9 +693,11 @@ void MainWindow::open_cams()
         (new Kamerzysta(camSocket))->show(strMe);
     }
 #else
+#ifdef HAVE_V4L2
     QSettings settings;
     if ((pNetwork->is_connected() == true) && (pNetwork->is_writable() == true) && (settings.value("logged") == "on"))
         pDlgCam->show();
+#endif
 #endif
 }
 

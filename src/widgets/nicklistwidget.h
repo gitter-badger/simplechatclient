@@ -23,7 +23,9 @@
 
 #include "defines.h"
 #ifndef Q_WS_WIN
+#ifdef HAVE_V4L2
     class DlgCam;
+#endif
 #endif
 class DlgUserProfile;
 class Network;
@@ -37,7 +39,9 @@ public:
     NickListWidget(Network *, QTcpSocket *, DlgUserProfile *);
     virtual ~NickListWidget();
 #ifndef Q_WS_WIN
+#ifdef HAVE_V4L2
     void set_dlg_cam(DlgCam *);
+#endif
 #endif
     void set_channel(QString);
     QString get_channel() { return strChannel; }
@@ -51,7 +55,9 @@ private:
     QTcpSocket *camSocket;
     DlgUserProfile *pDlgUserProfile;
 #ifndef Q_WS_WIN
+#ifdef HAVE_V4L2
     DlgCam *pDlgCam;
+#endif
 #endif
     // other
     QString strChannel;

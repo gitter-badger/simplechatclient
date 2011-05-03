@@ -23,7 +23,9 @@
 
 #include "defines.h"
 #ifndef Q_WS_WIN
+#ifdef HAVE_V4L2
     class DlgCam;
+#endif
 #endif
 class DlgAbout;
 class DlgChannelSettings;
@@ -110,7 +112,9 @@ private:
 
     // other
 #ifndef Q_WS_WIN
+#ifdef HAVE_V4L2
     DlgCam *pDlgCam;
+#endif
 #endif
     QTcpSocket *camSocket;
 

@@ -30,7 +30,9 @@
 #include "tab_widget.h"
 
 #ifndef Q_WS_WIN
+#ifdef HAVE_V4L2
     #include "dlg_cam.h"
+#endif
 #endif
 
 TabWidget::TabWidget(Network *param1, QString param2, QTcpSocket *param3, DlgUserProfile *param4)
@@ -185,11 +187,13 @@ TabWidget::~TabWidget()
 }
 
 #ifndef Q_WS_WIN
+#ifdef HAVE_V4L2
 void TabWidget::set_dlg_cam(DlgCam *param1)
 {
     pDlgCam = param1;
     pMainTextEdit->set_dlg_cam(pDlgCam);
 }
+#endif
 #endif
 
 QString TabWidget::addslashes(QString strData)
