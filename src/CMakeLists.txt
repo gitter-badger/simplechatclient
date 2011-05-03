@@ -269,6 +269,9 @@ endif ()
 # moc
 qt_wrap_cpp (scc MOC_FILES ${scc_MOC_HDRS})
 
+# config
+configure_file (${CMAKE_SOURCE_DIR}/scc-config.h.cmake ${CMAKE_SOURCE_DIR}/src/scc-config.h)
+
 # link
 if (MSVC) # windows
 	add_executable (../scc WIN32 ${scc_SRCS} ${MOC_FILES} ${scc_HDRS} ${scc_QRC_SRCS} ${scc_UIS_H})

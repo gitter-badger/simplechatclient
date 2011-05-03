@@ -22,6 +22,7 @@
 #define CORE_H
 
 #include "defines.h"
+#include "scc-config.h"
 class MainWindow;
 class Update;
 #include <QAction>
