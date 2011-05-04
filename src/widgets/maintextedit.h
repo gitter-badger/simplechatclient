@@ -21,10 +21,8 @@
 #ifndef MAINTEXTEDIT_H
 #define MAINTEXTEDIT_H
 
-#ifndef Q_WS_WIN
 #ifdef HAVE_V4L2
     class DlgCam;
-#endif
 #endif
 class AnimatedEmoticonWidget;
 class DlgUserProfile;
@@ -37,10 +35,8 @@ class MainTextEdit : public QTextEdit
     Q_OBJECT
 public:
     MainTextEdit(Network *, QString, QTcpSocket *, DlgUserProfile *);
-#ifndef Q_WS_WIN
 #ifdef HAVE_V4L2
     void set_dlg_cam(DlgCam *);
-#endif
 #endif
     void update_background_image();
     inline QString get_current_nick() { return strNick; }
@@ -50,10 +46,8 @@ private:
     Network *pNetwork;
     QTcpSocket *camSocket;
     DlgUserProfile *pDlgUserProfile;
-#ifndef Q_WS_WIN
 #ifdef HAVE_V4L2
     DlgCam *pDlgCam;
-#endif
 #endif
     // other
     QString strChannel;
