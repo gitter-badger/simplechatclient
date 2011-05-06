@@ -29,7 +29,7 @@
 #include "notify.h"
 #include "tab_widget.h"
 
-#ifdef HAVE_V4L2
+#ifndef Q_WS_WIN
     #include "dlg_cam.h"
 #endif
 
@@ -184,7 +184,7 @@ TabWidget::~TabWidget()
     pMainTextEdit->clear();
 }
 
-#ifdef HAVE_V4L2
+#ifndef Q_WS_WIN
 void TabWidget::set_dlg_cam(DlgCam *param1)
 {
     pDlgCam = param1;

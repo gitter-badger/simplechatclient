@@ -21,7 +21,7 @@
 #ifndef MAINTEXTEDIT_H
 #define MAINTEXTEDIT_H
 
-#ifdef HAVE_V4L2
+#ifndef Q_WS_WIN
     class DlgCam;
 #endif
 class AnimatedEmoticonWidget;
@@ -35,7 +35,7 @@ class MainTextEdit : public QTextEdit
     Q_OBJECT
 public:
     MainTextEdit(Network *, QString, QTcpSocket *, DlgUserProfile *);
-#ifdef HAVE_V4L2
+#ifndef Q_WS_WIN
     void set_dlg_cam(DlgCam *);
 #endif
     void update_background_image();
@@ -46,7 +46,7 @@ private:
     Network *pNetwork;
     QTcpSocket *camSocket;
     DlgUserProfile *pDlgUserProfile;
-#ifdef HAVE_V4L2
+#ifndef Q_WS_WIN
     DlgCam *pDlgCam;
 #endif
     // other

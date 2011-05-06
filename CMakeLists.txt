@@ -46,11 +46,11 @@ if (UNIX AND NOT APPLE)
 	install (FILES ${scc_IMAGES_FILES} DESTINATION ${scc_SHARE_DIR}/scc/3rdparty/images)
 	install (FILES ${scc_SOUNDS_FILES} DESTINATION ${scc_SHARE_DIR}/scc/3rdparty/sounds)
 	install (FILES ${scc_3RDPARTY_LICENSE} DESTINATION ${scc_SHARE_DIR}/scc/3rdparty)
-endif ()
+endif (UNIX AND NOT APPLE)
 
 # uninstall
 
 if (UNIX AND NOT APPLE)
 	CONFIGURE_FILE ("${CMAKE_CURRENT_SOURCE_DIR}/cmake_uninstall.cmake.in" "${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake" IMMEDIATE @ONLY)
 	ADD_CUSTOM_TARGET (uninstall "${CMAKE_COMMAND}" -P "${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake")
-endif ()
+endif (UNIX AND NOT APPLE)

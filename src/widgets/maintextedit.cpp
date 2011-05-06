@@ -32,8 +32,7 @@
 
 #ifdef Q_WS_WIN
     #include "kamerzysta.h"
-#endif
-#ifdef HAVE_V4L2
+#else
     #include "dlg_cam.h"
 #endif
 
@@ -53,7 +52,7 @@ MainTextEdit::MainTextEdit(Network *param1, QString param2, QTcpSocket *param3, 
     QObject::connect(this, SIGNAL(textChanged()), this, SLOT(text_changed()));
 }
 
-#ifdef HAVE_V4L2
+#ifndef Q_WS_WIN
 void MainTextEdit::set_dlg_cam(DlgCam *param1)
 {
     pDlgCam = param1;
@@ -100,8 +99,7 @@ void MainTextEdit::cam()
 {
 #ifdef Q_WS_WIN
     (new Kamerzysta(camSocket))->show(strNick);
-#endif
-#ifdef HAVE_V4L2
+#else
     pDlgCam->set_nick(strNick);
     pDlgCam->show();
 #endif

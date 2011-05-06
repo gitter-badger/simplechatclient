@@ -21,7 +21,7 @@
 #ifndef TAB_WIDGET_H
 #define TAB_WIDGET_H
 
-#ifdef HAVE_V4L2
+#ifndef Q_WS_WIN
     class DlgCam;
 #endif
 class DlgUserProfile;
@@ -44,7 +44,7 @@ class TabWidget : public QWidget
 public:
     TabWidget(Network *, QString, QTcpSocket *, DlgUserProfile *);
     virtual ~TabWidget();
-#ifdef HAVE_V4L2
+#ifndef Q_WS_WIN
     void set_dlg_cam(DlgCam *);
 #endif
     inline QString get_name() { return strName; }
@@ -67,7 +67,7 @@ private:
     QString strName;
     QTcpSocket *camSocket;
     DlgUserProfile *pDlgUserProfile;
-#ifdef HAVE_V4L2
+#ifndef Q_WS_WIN
     DlgCam *pDlgCam;
 #endif
 

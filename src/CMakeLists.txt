@@ -148,12 +148,12 @@ set (scc_HDRS
 # debug
 if (UNIX)
 	set (CMAKE_CXX_FLAGS "-ggdb ${CMAKE_CXX_FLAGS}")
-endif ()
+endif (UNIX)
 
 if (UNIX AND NOT APPLE)
 	set (CMAKE_C_FLAGS "-W -Wall -fno-strict-aliasing ${CMAKE_C_FLAGS}")
 	set (CMAKE_CXX_FLAGS "-W -Wall -fno-strict-aliasing ${CMAKE_CXX_FLAGS}")
-endif ()
+endif (UNIX AND NOT APPLE)
 
 # qt
 find_package (Qt4 REQUIRED)
@@ -162,19 +162,18 @@ find_package (Qt4 REQUIRED)
 if (UNIX)
 	find_package(LibV4L2)
 
-	if (LIBV4L2_FOUND)
-		set (HAVE_V4L2 1)
-		set (HAVE_LIBV4L2 1)
-		set (V4L2_CAP_VIDEO_CAPTURE 1)
+	IF (LIBV4L2_FOUND)
+		SET (HAVE_LIBV4L2 1)
+		SET (V4L2_CAP_VIDEO_CAPTURE 1)
 		message (STATUS "Lib Video4Linux2 found")
-	endif ()
+	ELSE (LIBV4L2_FOUND)
+		check_include_files(linux/videodev2.h V4L2_FOUND)
 
-	check_include_files(linux/videodev2.h V4L2_FOUND)
-	if (V4L2_FOUND)
-		set (HAVE_V4L2 1)
-		message (STATUS "Video4Linux2 found")
-	endif ()
-endif ()
+		if (NOT V4L2_FOUND)
+			message (FATAL_ERROR "Video4Linux2 not found")
+		endif (NOT V4L2_FOUND)
+	endif (LIBV4L2_FOUND)
+endif (UNIX)
 
 # kamerzysta/video
 if (WIN32)
@@ -184,21 +183,19 @@ if (WIN32)
 	LIST (APPEND scc_MOC_HDRS
 		common/kamerzysta.h
 	)
-else ()
-	if (HAVE_V4L2)
-		LIST (APPEND scc_UIS
-			../ui/cam.ui
-		)
-		LIST (APPEND scc_SRCS
-			common/video.cpp
-			gui/dlg_cam.cpp
-		)
-		LIST (APPEND scc_MOC_HDRS
-			common/video.h
-			gui/dlg_cam.h
-		)
-	endif ()
-endif ()
+else (WIN32)
+	LIST (APPEND scc_UIS
+		../ui/cam.ui
+	)
+	LIST (APPEND scc_SRCS
+		common/video.cpp
+		gui/dlg_cam.cpp
+	)
+	LIST (APPEND scc_MOC_HDRS
+		common/video.h
+		gui/dlg_cam.h
+	)
+endif (WIN32)
 
 # xml
 set (QT_USE_QTXML TRUE)
@@ -233,20 +230,20 @@ if (WIN32)
 	set (QCA2_LIBRARY_DIRS ${WIN32_QCA2_DIR}/lib)
 	if (MINGW)
 		set (QCA2_LIBRARIES -lqca2)
-	else ()
+	else (MINGW)
 		set (QCA2_LIBRARIES ${WIN32_QCA2_DIR}/lib/qca2.lib)
-	endif ()
-else ()
+	endif (MINGW)
+else (WIN32)
 # check for qca2
 	find_package (QCA2)
 	if (QCA2_FOUND)
 		set (QCA2_INCLUDE_DIRS ${QT_INCLUDE_DIR}/../QtCrypto)
 		set (QCA2_LIBRARY_DIRS ${QT_LIBRARY_DIR})
 		set (QCA2_LIBRARIES -lqca)
-	endif ()
+	endif (QCA2_FOUND)
 # if not working try:
 # pkg_search_module (QCA2 REQUIRED qca2)
-endif ()
+endif (WIN32)
 
 include_directories (${QCA2_INCLUDE_DIRS})
 link_directories (${QCA2_LIBRARY_DIRS})
@@ -264,27 +261,24 @@ include_directories (${CMAKE_SOURCE_DIR}/ui)
 # disable console on windows mingw
 if (MINGW)
 	SET (CMAKE_CXX_LINK_FLAGS "${CMAKE_CXX_LINK_FLAGS} -mwindows")
-endif ()
+endif (MINGW)
 
 # moc
 qt_wrap_cpp (scc MOC_FILES ${scc_MOC_HDRS})
-
-# config
-configure_file (${CMAKE_SOURCE_DIR}/scc-config.h.cmake ${CMAKE_SOURCE_DIR}/src/scc-config.h)
 
 # link
 if (MSVC) # windows
 	add_executable (../scc WIN32 ${scc_SRCS} ${MOC_FILES} ${scc_HDRS} ${scc_QRC_SRCS} ${scc_UIS_H})
 	target_link_libraries (../scc ${QT_LIBRARIES} ${QT_QTNETWORK_LIBRARIES} ${QCA2_LIBRARIES})
-else () # mingw or linux
+else (MSVC) # mingw or linux
 	if (MINGW) # mingw
 		add_executable (../scc ${scc_SRCS} ${MOC_FILES} ${scc_HDRS} ${scc_QRC_SRCS} ${scc_UIS_H})
-	else () # linux
+	else (MINGW) # linux
 		add_executable (../scc ${scc_SRCS} ${MOC_FILES} ${scc_HDRS} ${scc_QRC_SRCS} ${scc_UIS_H})
-	endif ()
+	endif (MINGW)
 
 	target_link_libraries (../scc ${QT_LIBRARIES} ${QT_QTNETWORK_LIBRARIES} ${QCA2_LIBRARIES})
-endif ()
+endif (MSVC)
 
 # i18n
 add_dependencies (../scc i18n)

@@ -22,7 +22,7 @@
 #define MAINWINDOW_H
 
 #include "defines.h"
-#ifdef HAVE_V4L2
+#ifndef Q_WS_WIN
     class DlgCam;
 #endif
 class DlgAbout;
@@ -109,7 +109,7 @@ private:
     QDockWidget *rightDockWidget;
 
     // other
-#ifdef HAVE_V4L2
+#ifndef Q_WS_WIN
     DlgCam *pDlgCam;
 #endif
     QTcpSocket *camSocket;

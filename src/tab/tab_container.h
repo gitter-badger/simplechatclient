@@ -21,7 +21,7 @@
 #ifndef TAB_CONTAINER_H
 #define TAB_CONTAINER_H
 
-#ifdef HAVE_V4L2
+#ifndef Q_WS_WIN
     class DlgCam;
 #endif
 class DlgChannelSettings;
@@ -44,7 +44,7 @@ public:
     TabContainer(Network *, TabManager *, QTcpSocket *);
     virtual ~TabContainer();
     void set_dlg(DlgUserProfile *);
-#ifdef HAVE_V4L2
+#ifndef Q_WS_WIN
     void set_dlg_cam(DlgCam *);
 #endif
     bool exist_tab(QString);
@@ -80,7 +80,7 @@ private:
     DlgModeration *pDlgModeration;
     QTcpSocket *camSocket;
     DlgUserProfile *pDlgUserProfile;
-#ifdef HAVE_V4L2
+#ifndef Q_WS_WIN
     DlgCam *pDlgCam;
 #endif
     // other

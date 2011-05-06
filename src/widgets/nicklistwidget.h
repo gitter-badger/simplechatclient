@@ -22,7 +22,7 @@
 #define NICKLISTTREEWIDGET_H
 
 #include "defines.h"
-#ifdef HAVE_V4L2
+#ifndef Q_WS_WIN
     class DlgCam;
 #endif
 class DlgUserProfile;
@@ -36,7 +36,7 @@ class NickListWidget : public QTreeWidget
 public:
     NickListWidget(Network *, QTcpSocket *, DlgUserProfile *);
     virtual ~NickListWidget();
-#ifdef HAVE_V4L2
+#ifndef Q_WS_WIN
     void set_dlg_cam(DlgCam *);
 #endif
     void set_channel(QString);
@@ -50,7 +50,7 @@ private:
     Network *pNetwork;
     QTcpSocket *camSocket;
     DlgUserProfile *pDlgUserProfile;
-#ifdef HAVE_V4L2
+#ifndef Q_WS_WIN
     DlgCam *pDlgCam;
 #endif
     // other

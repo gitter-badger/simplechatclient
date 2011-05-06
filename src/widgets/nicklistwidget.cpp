@@ -29,9 +29,12 @@
 
 #ifdef Q_WS_WIN
     #include "kamerzysta.h"
-#endif
-#ifdef HAVE_V4L2
+#else
     #include "dlg_cam.h"
+#endif
+
+#ifdef Q_WS_X11
+#include <QDebug>
 #endif
 
 NickListWidget::NickListWidget(Network *param1, QTcpSocket *param2, DlgUserProfile *param3)
@@ -49,7 +52,7 @@ NickListWidget::~NickListWidget()
 {
 }
 
-#ifdef HAVE_V4L2
+#ifndef Q_WS_WIN
 void NickListWidget::set_dlg_cam(DlgCam *param1)
 {
     pDlgCam = param1;
@@ -345,8 +348,7 @@ void NickListWidget::cam()
     QString strNick = this->selectedItems().at(0)->text(0);
 #ifdef Q_WS_WIN
     (new Kamerzysta(camSocket))->show(strNick);
-#endif
-#ifdef HAVE_V4L2
+#else
     pDlgCam->set_nick(strNick);
     pDlgCam->show();
 #endif
