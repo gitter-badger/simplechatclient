@@ -44,7 +44,6 @@ private:
 
     QString network_request(QNetworkAccessManager *, QString, QString);
     QString get_version(QString);
-    QString get_kropka(QString);
     void save_cookies(QNetworkAccessManager*);
     void request_finished(QString, QString);
 

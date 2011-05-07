@@ -59,7 +59,16 @@ QString OnetAuth::network_request(QNetworkAccessManager *accessManager, QString 
     QString strRedir = pReply->attribute(QNetworkRequest::RedirectionTargetAttribute).toString();
 
     if (strRedir.isEmpty() == false)
+    {
+        if (strRedir.contains("http") == false)
+        {
+            strLink.remove("http://");
+            strLink = strLink.left(strLink.indexOf("/"));
+            strRedir = "http://"+strLink+strRedir;
+        }
+
         network_request(accessManager, strRedir, QString::null);
+    }
 
     return strData;
 }
@@ -105,11 +114,8 @@ void OnetAuth::authorize(QString param1, QString param2, QString param3)
 
     if ((test_host1.error() == QHostInfo::NoError) && (test_host2.error() == QHostInfo::NoError) && (test_host3.error() == QHostInfo::NoError))
     {
-        QString strKropka;
-
         // chat
-        strKropka = network_request(accessManager, "http://czat.onet.pl/chat.html", "ch=&n=&p=&category=0");
-        strKropka = get_kropka(strKropka);
+        network_request(accessManager, "http://czat.onet.pl/chat.html", "ch=&n=&p=&category=0");
 
         // deploy
         strVersion = network_request(accessManager, "http://czat.onet.pl/_s/deployOnetCzat.js", QString::null);
@@ -120,7 +126,7 @@ void OnetAuth::authorize(QString param1, QString param2, QString param3)
         QString strVersionLen = QString("%1").arg(strVersion.length());
 
         // kropka
-        strKropka += "&RI=&C1=&CL=std153&CS=1024x768&CW=1024x768&DU=http://czat.onet.pl/chat.html&DR=http://czat.onet.pl";
+        QString strKropka = "http://kropka.onet.pl/_s/kropka/1?DV=czat%2Fchat&SC=1&IP=&DG=id%3Dno-gemius&RI=&C1=&CL=std161&CS=1280x800x24&CW=1280x243&DU=http://czat.onet.pl/chat.html&DR=http://czat.onet.pl/";
         network_request(accessManager, strKropka, QString::null);
 
         // targetowanie behawioralne - rc
@@ -140,14 +146,11 @@ void OnetAuth::authorize(QString param1, QString param2, QString param3)
         // registered nick
         if (strPass.isEmpty() == false)
         {
-            QString strSecureKropka;
-
             // secure
-            strSecureKropka = network_request(accessManager, "http://secure.onet.pl/", QString::null);
-            strSecureKropka = get_kropka(strSecureKropka);
+            network_request(accessManager, "http://secure.onet.pl/", QString::null);
 
             // secure kropka
-            strSecureKropka += "&RI=&C1=&CL=std153&SX=secure.onet.pl&CS=&CW=&DU=http://secure.onet.pl/&DR=";
+            QString strSecureKropka = "http://kropka.onet.pl/_s/kropka/1?DV=secure&SC=1&CL=std161&CS=1280x800x24&CW=1280x243&DU=http://secure.onet.pl/&DR=";
             network_request(accessManager, strSecureKropka, QString::null);
 
             // secure login
@@ -332,21 +335,7 @@ QString OnetAuth::get_version(QString strData)
         }
     }
 
-    return "20101008-1609";
-}
-
-QString OnetAuth::get_kropka(QString strData)
-{
-    QString strResult;
-    if (strData.isEmpty() == false)
-    {
-        QString strFind1 = "onetKropka.src = '";
-        QString strFind2 = "'";
-        int iPos1 = strData.indexOf(strFind1)+strFind1.length();
-        int iPos2 = strData.indexOf(strFind2, iPos1);
-        strResult = strData.mid(iPos1, iPos2-iPos1);
-    }
-    return strResult;
+    return "20110425-2020";
 }
 
 void OnetAuth::request_finished(QString strNickAuth, QString strData)
