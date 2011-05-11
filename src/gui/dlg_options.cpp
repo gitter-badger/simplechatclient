@@ -136,6 +136,7 @@ void DlgOptions::create_gui()
     ui.groupBox_logs->setTitle(tr("Logs"));
     ui.label_logs->setText(tr("Default logs folder:"));
     ui.pushButton_logs_open_folder->setText(tr("Open folder"));
+    ui.checkBox_save_logs_by_date->setText(tr("Save logs by date"));
     ui.checkBox_disable_logs->setText(tr("Disable logs"));
 
     // background image
@@ -296,6 +297,7 @@ void DlgOptions::set_default_values()
     QString strMyColor = settings.value("my_color").toString();
     QString strFontSize = settings.value("font_size").toString();
 
+    QString strSaveLogsByDate = settings.value("save_logs_by_date").toString();
     QString strDisableLogs = settings.value("disable_logs").toString();
     QString strDisableSounds = settings.value("disable_sounds").toString();
     QString strDisableBackgroundImage = settings.value("disable_background_image").toString();
@@ -460,6 +462,12 @@ void DlgOptions::set_default_values()
 
     ui.comboBox_font_size->setCurrentIndex(iFontSize);
 
+    // save logs by date
+    if (strSaveLogsByDate == "on")
+        ui.checkBox_save_logs_by_date->setChecked(true);
+    else
+        ui.checkBox_save_logs_by_date->setChecked(false);
+
     // disable logs
     if (strDisableLogs == "on")
         ui.checkBox_disable_logs->setChecked(true);
@@ -570,6 +578,7 @@ void DlgOptions::create_signals()
     QObject::connect(ui.pushButton_sound_query_change, SIGNAL(clicked()), this, SLOT(set_sound_query()));
     QObject::connect(ui.checkBox_disable_sounds, SIGNAL(clicked(bool)), this, SLOT(disable_sounds(bool)));
     QObject::connect(ui.pushButton_logs_open_folder, SIGNAL(clicked()), this, SLOT(open_logs_folder()));
+    QObject::connect(ui.checkBox_save_logs_by_date, SIGNAL(clicked(bool)), this, SLOT(set_save_logs_by_date(bool)));
     QObject::connect(ui.checkBox_disable_logs, SIGNAL(clicked(bool)), this, SLOT(disable_logs(bool)));
     QObject::connect(ui.pushButton_set_background_image, SIGNAL(clicked()), this, SLOT(set_background_image()));
     QObject::connect(ui.checkBox_disable_background_image, SIGNAL(clicked(bool)), this, SLOT(disable_background_image(bool)));
@@ -1083,6 +1092,17 @@ void DlgOptions::open_logs_folder()
 
     QProcess pProcess;
     pProcess.execute(strOpenFolderCommand+" "+strLogsPath);
+}
+
+void DlgOptions::set_save_logs_by_date(bool bValue)
+{
+    QString strValue = (bValue == true ? "on" : "off");
+
+    QSettings settings;
+    Config *pConfig = new Config();
+    pConfig->set_value("save_logs_by_date", strValue);
+    settings.setValue("save_logs_by_date", strValue);
+    delete pConfig;
 }
 
 void DlgOptions::disable_logs(bool bValue)

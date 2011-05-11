@@ -255,6 +255,7 @@ QMap<QString,QString> Config::get_default_values()
     mDefaultValues.insert("nicklist_busy_nick_color", "#a0a0a4");
     mDefaultValues.insert("nicklist_gradient_1_color", "#77d5f7");
     mDefaultValues.insert("nicklist_gradient_2_color", "#1b86b7");
+    mDefaultValues.insert("save_logs_by_date", "on");
     mDefaultValues.insert("disable_logs", "off");
     mDefaultValues.insert("sound_beep", strSoundBeep);
     mDefaultValues.insert("sound_query", strSoundQuery);

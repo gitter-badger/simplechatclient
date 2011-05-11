@@ -19,11 +19,10 @@
  ****************************************************************************/
 
 #include <QCoreApplication>
+#include <QDate>
 #include <QDir>
 #include <QFile>
-#ifndef Q_WS_X11
 #include <QSettings>
-#endif
 #include <QTextStream>
 #include "log.h"
 
@@ -56,16 +55,30 @@ void Log::save(QString strChannel, QString strData)
     path += "/scc";
 #endif
 
-    // create dir if not exist
-    QDir d(path);
-    if (d.exists(path) == false)
-        d.mkdir(path);
+    // create scc dir if not exist
+    if (QDir().exists(path) == false)
+        QDir().mkdir(path);
 
-    QDir d1(path);
-    if (d1.exists(path+"/log") == false)
-        d1.mkdir(path+"/log");
+    // create logs dir if not exist
+    path += "/log";
+    if (QDir().exists(path) == false)
+        QDir().mkdir(path);
 
-    QFile f(path+"/log/"+strChannel+".txt");
+    // save logs by date
+    QSettings settings;
+    bool bSaveLogsByDate = settings.value("save_logs_by_date").toString() == "on" ? true : false;
+
+    if (bSaveLogsByDate == true)
+    {
+        QString strDate = QDate().currentDate().toString("yyyy-MM");
+
+        // create logs dir if not exist
+        path += "/"+strDate;
+        if (QDir().exists(path) == false)
+            QDir().mkdir(path);
+    }
+
+    QFile f(path+"/"+strChannel+".txt");
     if (!f.open(QIODevice::Append))
     {
 #ifdef Q_WS_X11

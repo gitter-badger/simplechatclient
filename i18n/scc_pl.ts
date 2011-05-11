@@ -1678,6 +1678,10 @@
         <translation>Otwórz folder</translation>
     </message>
     <message>
+        <source>Save logs by date</source>
+        <translation>Zapisuj logi wg dat</translation>
+    </message>
+    <message>
         <source>Disable logs</source>
         <translation>Wyłącz logi</translation>
     </message>

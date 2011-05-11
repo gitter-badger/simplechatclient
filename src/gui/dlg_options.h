@@ -89,6 +89,7 @@ private slots:
     void try_play_query();
     void set_sound_beep();
     void set_sound_query();
+    void set_save_logs_by_date(bool);
     void disable_sounds(bool);
     void open_logs_folder();
     void disable_logs(bool);
