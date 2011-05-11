@@ -45,6 +45,9 @@ private:
 private slots:
     void button_ok();
     void button_cancel();
+
+protected:
+    virtual void resizeEvent(QResizeEvent *);
 };
 
 #endif // DLG_NOTES_H

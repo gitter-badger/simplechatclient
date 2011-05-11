@@ -126,3 +126,13 @@ void DlgNotes::button_cancel()
 {
     this->close();
 }
+
+void DlgNotes::resizeEvent(QResizeEvent *e)
+{
+    Q_UNUSED (e);
+    int iWidth = this->width();
+    int iHeight = this->height();
+    ui.plainTextEdit->setMinimumSize(QSize(iWidth, iHeight-30));
+    ui.plainTextEdit->setMaximumSize(QSize(iWidth, iHeight-30));
+    ui.buttonBox->setGeometry(0, iHeight-30, iWidth, 30);
+}
