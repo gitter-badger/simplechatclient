@@ -118,7 +118,7 @@ void InputWidget::set_color(QString color)
 
 void InputWidget::set_moderation(bool m)
 {
-    if (m == true)
+    if (m)
         moderSendButton->show();
     else
         moderSendButton->hide();
@@ -126,7 +126,7 @@ void InputWidget::set_moderation(bool m)
 
 void InputWidget::set_toolwidget_icon(bool bShowHide)
 {
-    if (bShowHide == true)
+    if (bShowHide)
         showHideToolWidget->setIcon(QIcon(":/images/oxygen/16x16/text-frame-unlink.png"));
     else
         showHideToolWidget->setIcon(QIcon(":/images/oxygen/16x16/text-frame-link.png"));
@@ -173,8 +173,8 @@ void InputWidget::paste_multi_line(QString strText, bool bModeration)
 
 void InputWidget::send_message(QString strText, bool bModeration)
 {
-    if (strText.isEmpty() == true) return; // empty text!
-    if (strChannel.isEmpty() == true) return; // empty channel!
+    if (strText.isEmpty()) return; // empty text!
+    if (strChannel.isEmpty()) return; // empty channel!
 
     QString strTextOriginal = strText;
 
@@ -217,8 +217,8 @@ void InputWidget::send_message(QString strText, bool bModeration)
                 QString weight;
                 QString font = strFontFamily.toLower();
 
-                if (bMyBold == true) weight += "b";
-                if (bMyItalic == true) weight += "i";
+                if (bMyBold) weight += "b";
+                if (bMyItalic) weight += "i";
 
                 if (font == "verdana")
                     font = "";
@@ -263,8 +263,8 @@ void InputWidget::send_message(QString strText, bool bModeration)
         QString weight;
         QString font = strFontFamily.toLower();
 
-        if (bMyBold == true) weight += "b";
-        if (bMyItalic == true) weight += "i";
+        if (bMyBold) weight += "b";
+        if (bMyItalic) weight += "i";
 
         if (font == "verdana")
             font = "";
@@ -296,7 +296,7 @@ void InputWidget::send_message(QString strText, bool bModeration)
             emit display_message(strChannel, QString("%1<%2> %3").arg(strDT).arg(strMe).arg(strText.right(strText.length()-10-strChannel.length())), 0);
         }
         // moder notice
-        else if (bModeration == true)
+        else if (bModeration)
         {
             if (settings.value("disable_logs").toString() == "off")
             {

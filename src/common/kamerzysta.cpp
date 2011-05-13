@@ -91,7 +91,7 @@ void Kamerzysta::get_path()
     strAppPath = settings.value("AppData").toString();
 
     QDir dir;
-    if (dir.exists(strAppPath+"/Kamerzysta") == true)
+    if (dir.exists(strAppPath+"/Kamerzysta"))
     {
         strAppPath = strAppPath+"/Kamerzysta";
         strAppPath.replace("/", "\\");
@@ -105,7 +105,7 @@ void Kamerzysta::get_path()
 
     log("App path:"+strAppPath);
 
-    if (QFile::exists(strAppPath+"\\port") == true)
+    if (QFile::exists(strAppPath+"\\port"))
     {
         log("Port:exist");
         kamerzysta_running();
@@ -144,7 +144,7 @@ void Kamerzysta::kamerzysta_not_running()
 
     log("Install path:"+strKamerzystaFile);
 
-    if ((strKamerzystaFile.isEmpty() == false) && (QFile::exists(strKamerzystaFile) == true))
+    if ((strKamerzystaFile.isEmpty() == false) && (QFile::exists(strKamerzystaFile)))
     {
         int iPos = strKamerzystaFile.lastIndexOf("\\");
         QString strKamerzystaPath = strKamerzystaFile.left(iPos);
@@ -191,7 +191,7 @@ void Kamerzysta::get_port()
     QString strPort;
 
     QFile file(strAppPath+"\\port");
-    if (file.open(QIODevice::ReadOnly | QIODevice::Text) == true)
+    if (file.open(QIODevice::ReadOnly | QIODevice::Text))
     {
         QTextStream in(&file);
         strPort = in.readLine();
@@ -257,7 +257,7 @@ void Kamerzysta::network_disconnected()
     strNick = "";
 
     // stop timer
-    if (timerGetPort->isActive() == true)
+    if (timerGetPort->isActive())
         timerGetPort->stop();
 
     // like destructor
@@ -266,7 +266,7 @@ void Kamerzysta::network_disconnected()
 
 void Kamerzysta::network_send(QString strData)
 {
-    if ((socket->isValid()) && (socket->state() == QAbstractSocket::ConnectedState) && (socket->isWritable() == true))
+    if ((socket->isValid()) && (socket->state() == QAbstractSocket::ConnectedState) && (socket->isWritable()))
     {
         strData += "\r\n";
         QByteArray qbaData;
@@ -312,7 +312,7 @@ void Kamerzysta::error(QAbstractSocket::SocketError err)
         strNick = "";
 
         // stop timer
-        if (timerGetPort->isActive() == true)
+        if (timerGetPort->isActive())
             timerGetPort->stop();
 
         // like destructor

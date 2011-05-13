@@ -34,13 +34,13 @@ Crypt::Crypt()
     strIv = pConfig->get_value("iv");
     delete pConfig;
 
-    if (strIv.isEmpty() == true)
+    if (strIv.isEmpty())
         gen_iv();
 }
 
 QString Crypt::encrypt(QString strKey, QString strData)
 {
-    if ((strKey.isEmpty() == true) || (strData.isEmpty() == true))
+    if ((strKey.isEmpty()) || (strData.isEmpty()))
     {
 #ifdef Q_WS_X11
         qDebug() << tr("Error: crypt: Cannot encrypt - empty argument");
@@ -77,7 +77,7 @@ QString Crypt::encrypt(QString strKey, QString strData)
 
 QString Crypt::decrypt(QString strKey, QString strData)
 {
-    if ((strKey.isEmpty() == true) || (strData.isEmpty() == true))
+    if ((strKey.isEmpty()) || (strData.isEmpty()))
     {
 #ifdef Q_WS_X11
         qDebug() << tr("Error: crypt: Cannot decrypt - empty argument");

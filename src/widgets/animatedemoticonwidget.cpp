@@ -98,7 +98,7 @@ void AnimatedEmoticonWidget::stop_emoticon()
 int AnimatedEmoticonWidget::get_correct_x(int x, int y)
 {
     bool bIsXImage = true;
-    while(bIsXImage == true)
+    while(bIsXImage)
     {
         x++;
         QTextCursor cursor = parentWidget->cursorForPosition(QPoint(x,y));
@@ -117,7 +117,7 @@ int AnimatedEmoticonWidget::get_correct_x(int x, int y)
 int AnimatedEmoticonWidget::get_correct_y(int x, int y)
 {
     bool bIsYImage = true;
-    while(bIsYImage == true)
+    while(bIsYImage)
     {
         y++;
         QTextCursor cursor = parentWidget->cursorForPosition(QPoint(x,y));

@@ -131,7 +131,7 @@ void DlgRegisterNick::register_nick()
     QString strCode = ui.lineEdit_code->text();
     QString strCodeLength = QString::number(strCode.length());
 
-    if ((strNick.isEmpty() == true) || (strPassword.isEmpty() == true) || (strCode.isEmpty() == true))
+    if ((strNick.isEmpty()) || (strPassword.isEmpty()) || (strCode.isEmpty()))
         return;
 
     // set cookies
@@ -229,7 +229,7 @@ void DlgRegisterNick::network_finished(QNetworkReply *reply)
     QString strCategory = reply->property("category").toString();
     QByteArray bData = reply->readAll();
 
-    if (bData.isEmpty() == true)
+    if (bData.isEmpty())
         return;
 
     if (strCategory == "get_img")
@@ -247,7 +247,7 @@ void DlgRegisterNick::button_ok()
     if (ui.lineEdit_password->text() == ui.lineEdit_confirm_password->text())
         identical = true;
 
-    if (identical == true)
+    if (identical)
         register_nick();
     else
     {

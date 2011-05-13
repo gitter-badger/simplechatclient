@@ -158,7 +158,7 @@ void DlgCam::set_default_values()
 
     // set img0
     QString strImg0 = settings.value("cam_img0").toString();
-    if ((strImg0.isEmpty() == false) && (QFile::exists(strImg0) == true))
+    if ((strImg0.isEmpty() == false) && (QFile::exists(strImg0)))
     {
         QPixmap pixmap;
         pixmap.load(strImg0);
@@ -169,7 +169,7 @@ void DlgCam::set_default_values()
 
     // set img1
     QString strImg1 = settings.value("cam_img1").toString();
-    if ((strImg1.isEmpty() == false) && (QFile::exists(strImg1) == true))
+    if ((strImg1.isEmpty() == false) && (QFile::exists(strImg1)))
     {
         QPixmap pixmap;
         pixmap.load(strImg1);
@@ -180,7 +180,7 @@ void DlgCam::set_default_values()
 
     // set img2
     QString strImg2 = settings.value("cam_img2").toString();
-    if ((strImg2.isEmpty() == false) && (QFile::exists(strImg2) == true))
+    if ((strImg2.isEmpty() == false) && (QFile::exists(strImg2)))
     {
         QPixmap pixmap;
         pixmap.load(strImg2);
@@ -191,7 +191,7 @@ void DlgCam::set_default_values()
 
     // set img3
     QString strImg3 = settings.value("cam_img3").toString();
-    if ((strImg3.isEmpty() == false) && (QFile::exists(strImg3) == true))
+    if ((strImg3.isEmpty() == false) && (QFile::exists(strImg3)))
     {
         QPixmap pixmap;
         pixmap.load(strImg3);
@@ -307,7 +307,7 @@ void DlgCam::detect_broadcasting()
     ui.comboBox_device->clear();
 
     // exist video device
-    if (video->existVideoDevice() == true)
+    if (video->existVideoDevice())
     {
         // enable
         if (ui.comboBox_device->isEnabled() == false)
@@ -326,7 +326,7 @@ void DlgCam::detect_broadcasting()
 
 void DlgCam::set_broadcasting()
 {
-    if (video->existVideoDevice() == true)
+    if (video->existVideoDevice())
     {
         // create
         video->create();
@@ -348,7 +348,7 @@ void DlgCam::get_frame()
     }
 
     // get image
-    if ((bBroadcasting == true) || (ui.tabWidget->currentIndex() == 1) || (imCapturedFrame.isNull() == true))
+    if ((bBroadcasting) || (ui.tabWidget->currentIndex() == 1) || (imCapturedFrame.isNull()))
         video->getImage(&imCapturedFrame);
 }
 
@@ -516,7 +516,7 @@ void DlgCam::data_kernel(QByteArray bData)
                 if (iCamOnOff == 0)
                 {
                     mNickChannels.remove(strUser);
-                    if (exist_item(strUser) == true)
+                    if (exist_item(strUser))
                         remove_item(strUser);
                 }
                 else
@@ -983,7 +983,7 @@ void DlgCam::send_all_my_options()
 
     // img0
     QString strImg0 = settings.value("cam_img0").toString();
-    if ((strImg0.isEmpty() == false) && (QFile::exists(strImg0) == true))
+    if ((strImg0.isEmpty() == false) && (QFile::exists(strImg0)))
     {
         // read and scale
         QPixmap pixmap;
@@ -1002,7 +1002,7 @@ void DlgCam::send_all_my_options()
 
     // img1
     QString strImg1 = settings.value("cam_img1").toString();
-    if ((strImg1.isEmpty() == false) && (QFile::exists(strImg1) == true))
+    if ((strImg1.isEmpty() == false) && (QFile::exists(strImg1)))
     {
         // read and scale
         QPixmap pixmap;
@@ -1021,7 +1021,7 @@ void DlgCam::send_all_my_options()
 
     // img2
     QString strImg2 = settings.value("cam_img2").toString();
-    if ((strImg2.isEmpty() == false) && (QFile::exists(strImg2) == true))
+    if ((strImg2.isEmpty() == false) && (QFile::exists(strImg2)))
     {
         // read and scale
         QPixmap pixmap;
@@ -1040,7 +1040,7 @@ void DlgCam::send_all_my_options()
 
     // img3
     QString strImg3 = settings.value("cam_img3").toString();
-    if ((strImg3.isEmpty() == false) && (QFile::exists(strImg3) == true))
+    if ((strImg3.isEmpty() == false) && (QFile::exists(strImg3)))
     {
         // read and scale
         QPixmap pixmap;
@@ -1147,12 +1147,12 @@ void DlgCam::broadcast_start_stop()
 
 void DlgCam::broadcast_public()
 {
-    if (bBroadcasting_pubpriv == true)
+    if (bBroadcasting_pubpriv)
     {
         camNetwork->network_send("SENDMODE 0");
         bBroadcasting_pubpriv = false;
 
-        if (bBroadcasting == true)
+        if (bBroadcasting)
             ui.label_broadcast_status->setText(QString("<span style=\"color:#ffff00;\">%1</span>").arg(tr("Bradcasting public")));
     }
 }
@@ -1164,7 +1164,7 @@ void DlgCam::broadcast_private()
         camNetwork->network_send("SENDMODE 1");
         bBroadcasting_pubpriv = true;
 
-        if (bBroadcasting == true)
+        if (bBroadcasting)
             ui.label_broadcast_status->setText(QString("<span style=\"color:#0000ff;\">%1</span>").arg(tr("Bradcasting private")));
     }
 }
@@ -1457,7 +1457,7 @@ void DlgCam::vote_plus()
 void DlgCam::button_connect()
 {
     camNetwork->set_reconnect(false);
-    if (camNetwork->is_connected() == true)
+    if (camNetwork->is_connected())
         camNetwork->network_disconnect();
     else
         camNetwork->network_connect();
@@ -1492,7 +1492,7 @@ void DlgCam::change_user(int row, int column)
     QString strNewNick = ui.tableWidget_nick_rank_spectators->item(row, 0)->text();
 
     // change user
-    if (strNick.isEmpty() == true)
+    if (strNick.isEmpty())
     {
         camNetwork->network_send(QString("SUBSCRIBE_BIG * %1").arg(strNewNick));
     }
@@ -1521,7 +1521,7 @@ void DlgCam::read_video()
     ui.label_capture->setPixmap(pixmap.scaled(QSize(320,240)));
 
     // send image
-    if (bBroadcasting == true)
+    if (bBroadcasting)
     {
         // create data 1 (320x240)
         QPixmap pixmap1 = pixmap.scaled(QSize(320,240));
@@ -1555,7 +1555,7 @@ void DlgCam::read_video()
             camNetwork->network_sendb(bPackage);
         }
 
-        if ((bReadySendPUT == true) && (iCurrentTime-iLastSendPUT > 5)) // send -> 5 sec
+        if ((bReadySendPUT) && (iCurrentTime-iLastSendPUT > 5)) // send -> 5 sec
         {
             bReadySendPUT = false;
             lLastCommand.append("PUT2");
@@ -1574,7 +1574,7 @@ void DlgCam::showEvent(QShowEvent *event)
     move(QApplication::desktop()->screen()->rect().center() - rect().center());
 
     // connect or get img
-    if (camNetwork->is_connected() == true)
+    if (camNetwork->is_connected())
     {
         if (strNick.isEmpty() == false)
         {
@@ -1672,7 +1672,7 @@ void DlgCamNetwork::clear_all()
     iBytes_recv = 0;
 
     // timer
-    if (timerPingPong->isActive() == true)
+    if (timerPingPong->isActive())
         timerPingPong->stop();
 }
 
@@ -1714,7 +1714,7 @@ void DlgCamNetwork::network_send(QString strData)
 
 void DlgCamNetwork::network_sendb(QByteArray qbaData)
 {
-    if ((socket->isValid()) && (socket->state() == QAbstractSocket::ConnectedState) && (socket->isWritable() == true))
+    if ((socket->isValid()) && (socket->state() == QAbstractSocket::ConnectedState) && (socket->isWritable()))
     {
         int ret = socket->write(qbaData);
         if (ret == -1)
@@ -1744,7 +1744,7 @@ void DlgCamNetwork::network_read()
     iLastActive = (int)dt.toTime_t();
 
     // read text
-    if (bText == true)
+    if (bText)
     {
         // read line
         QByteArray data = socket->readLine().trimmed();
@@ -1793,7 +1793,7 @@ void DlgCamNetwork::network_disconnected()
     clear_all();
 
     // reconnect
-    if (bReconnecting == true)
+    if (bReconnecting)
         QTimer::singleShot(1000*10, this, SLOT(slot_network_connect())); // 10 sec
 }
 
@@ -1811,18 +1811,18 @@ void DlgCamNetwork::network_error(QAbstractSocket::SocketError err)
         clear_all();
 
         // reconnect
-        if (bReconnecting == true)
+        if (bReconnecting)
             QTimer::singleShot(1000*10, this, SLOT(slot_network_connect())); // 10 sec
     }
 }
 
 void DlgCamNetwork::slot_network_connect()
 {
-    if (pNetwork->is_connected() == true)
+    if (pNetwork->is_connected())
         network_connect();
     else
     {
-        if (bReconnecting == true)
+        if (bReconnecting)
             QTimer::singleShot(1000*60, this, SLOT(slot_network_connect())); // 60 sec
     }
 }

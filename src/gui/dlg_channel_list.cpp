@@ -299,67 +299,67 @@ void DlgChannelList::apply_checkboxes()
     bool bShowRecommended;
 
     // teen
-    if (ui.checkBox_teen->isChecked() == true)
+    if (ui.checkBox_teen->isChecked())
         bShowTeen = true;
     else
         bShowTeen = false;
 
     // common
-    if (ui.checkBox_common->isChecked() == true)
+    if (ui.checkBox_common->isChecked())
         bShowCommon = true;
     else
         bShowCommon = false;
 
     // erotic
-    if (ui.checkBox_erotic->isChecked() == true)
+    if (ui.checkBox_erotic->isChecked())
         bShowErotic = true;
     else
         bShowErotic = false;
 
     // thematic
-    if (ui.checkBox_thematic->isChecked() == true)
+    if (ui.checkBox_thematic->isChecked())
         bShowThematic = true;
     else
         bShowThematic = false;
 
     // regional
-    if (ui.checkBox_regional->isChecked() == true)
+    if (ui.checkBox_regional->isChecked())
         bShowRegional = true;
     else
         bShowRegional = false;
 
     // wild
-    if (ui.checkBox_wild->isChecked() == true)
+    if (ui.checkBox_wild->isChecked())
         bShowWild = true;
     else
         bShowWild = false;
 
     // tame
-    if (ui.checkBox_tame->isChecked() == true)
+    if (ui.checkBox_tame->isChecked())
         bShowTame = true;
     else
         bShowTame = false;
 
     // with class
-    if (ui.checkBox_with_class->isChecked() == true)
+    if (ui.checkBox_with_class->isChecked())
         bShowWithClass = true;
     else
         bShowWithClass = false;
 
     // cult
-    if (ui.checkBox_cult->isChecked() == true)
+    if (ui.checkBox_cult->isChecked())
         bShowCult = true;
     else
         bShowCult = false;
 
     // moderated
-    if (ui.checkBox_moderated->isChecked() == true)
+    if (ui.checkBox_moderated->isChecked())
         bShowModerated = true;
     else
         bShowModerated = false;
 
     // recommended
-    if (ui.checkBox_recommended->isChecked() == true)
+    if (ui.checkBox_recommended->isChecked())
         bShowRecommended = true;
     else
         bShowRecommended = false;
@@ -388,10 +388,10 @@ void DlgChannelList::apply_checkboxes()
         if ((bShowWild == false) && (strCat.indexOf(tr("Wild")) != -1))
         {
             // moderated
-            if ((ui.checkBox_moderated->isChecked() == true) && (strCat.indexOf(tr("Moderated")) != -1))
+            if ((ui.checkBox_moderated->isChecked()) && (strCat.indexOf(tr("Moderated")) != -1))
                 ui.tableWidget_all->showRow(i);
             // recommended
-            else if ((ui.checkBox_recommended->isChecked() == true) && (strCat.indexOf(tr("Recommended")) != -1))
+            else if ((ui.checkBox_recommended->isChecked()) && (strCat.indexOf(tr("Recommended")) != -1))
                 ui.tableWidget_all->showRow(i);
             // rest
             else
@@ -401,10 +401,10 @@ void DlgChannelList::apply_checkboxes()
         if ((bShowTame == false) && (strCat.indexOf(tr("Tame")) != -1))
         {
             // moderated
-            if ((ui.checkBox_moderated->isChecked() == true) && (strCat.indexOf(tr("Moderated")) != -1))
+            if ((ui.checkBox_moderated->isChecked()) && (strCat.indexOf(tr("Moderated")) != -1))
                 ui.tableWidget_all->showRow(i);
             // recommended
-            else if ((ui.checkBox_recommended->isChecked() == true) && (strCat.indexOf(tr("Recommended")) != -1))
+            else if ((ui.checkBox_recommended->isChecked()) && (strCat.indexOf(tr("Recommended")) != -1))
                 ui.tableWidget_all->showRow(i);
             // rest
             else
@@ -414,10 +414,10 @@ void DlgChannelList::apply_checkboxes()
         if ((bShowWithClass == false) && (strCat.indexOf(tr("With class")) != -1))
         {
             // moderated
-            if ((ui.checkBox_moderated->isChecked() == true) && (strCat.indexOf(tr("Moderated")) != -1))
+            if ((ui.checkBox_moderated->isChecked()) && (strCat.indexOf(tr("Moderated")) != -1))
                 ui.tableWidget_all->showRow(i);
             // recommended
-            else if ((ui.checkBox_recommended->isChecked() == true) && (strCat.indexOf(tr("Recommended")) != -1))
+            else if ((ui.checkBox_recommended->isChecked()) && (strCat.indexOf(tr("Recommended")) != -1))
                 ui.tableWidget_all->showRow(i);
             // rest
             else
@@ -427,10 +427,10 @@ void DlgChannelList::apply_checkboxes()
         if ((bShowCult == false) && (strCat.indexOf(tr("Cult")) != -1))
         {
             // moderated
-            if ((ui.checkBox_moderated->isChecked() == true) && (strCat.indexOf(tr("Moderated")) != -1))
+            if ((ui.checkBox_moderated->isChecked()) && (strCat.indexOf(tr("Moderated")) != -1))
                 ui.tableWidget_all->showRow(i);
             // recommended
-            else if ((ui.checkBox_recommended->isChecked() == true) && (strCat.indexOf(tr("Recommended")) != -1))
+            else if ((ui.checkBox_recommended->isChecked()) && (strCat.indexOf(tr("Recommended")) != -1))
                 ui.tableWidget_all->showRow(i);
             // rest
             else
@@ -446,10 +446,10 @@ void DlgChannelList::apply_checkboxes()
         if ((bShowWild == false) && (strCat.indexOf(tr("Wild")) != -1))
         {
             // moderated
-            if ((ui.checkBox_moderated->isChecked() == true) && (strCat.indexOf(tr("Moderated")) != -1))
+            if ((ui.checkBox_moderated->isChecked()) && (strCat.indexOf(tr("Moderated")) != -1))
                 ui.tableWidget_teen->showRow(i);
             // recommended
-            else if ((ui.checkBox_recommended->isChecked() == true) && (strCat.indexOf(tr("Recommended")) != -1))
+            else if ((ui.checkBox_recommended->isChecked()) && (strCat.indexOf(tr("Recommended")) != -1))
                 ui.tableWidget_teen->showRow(i);
             // rest
             else
@@ -459,10 +459,10 @@ void DlgChannelList::apply_checkboxes()
         if ((bShowTame == false) && (strCat.indexOf(tr("Tame")) != -1))
         {
             // moderated
-            if ((ui.checkBox_moderated->isChecked() == true) && (strCat.indexOf(tr("Moderated")) != -1))
+            if ((ui.checkBox_moderated->isChecked()) && (strCat.indexOf(tr("Moderated")) != -1))
                 ui.tableWidget_teen->showRow(i);
             // recommended
-            else if ((ui.checkBox_recommended->isChecked() == true) && (strCat.indexOf(tr("Recommended")) != -1))
+            else if ((ui.checkBox_recommended->isChecked()) && (strCat.indexOf(tr("Recommended")) != -1))
                 ui.tableWidget_teen->showRow(i);
             // rest
             else
@@ -472,10 +472,10 @@ void DlgChannelList::apply_checkboxes()
         if ((bShowWithClass == false) && (strCat.indexOf(tr("With class")) != -1))
         {
             // moderated
-            if ((ui.checkBox_moderated->isChecked() == true) && (strCat.indexOf(tr("Moderated")) != -1))
+            if ((ui.checkBox_moderated->isChecked()) && (strCat.indexOf(tr("Moderated")) != -1))
                 ui.tableWidget_teen->showRow(i);
             // recommended
-            else if ((ui.checkBox_recommended->isChecked() == true) && (strCat.indexOf(tr("Recommended")) != -1))
+            else if ((ui.checkBox_recommended->isChecked()) && (strCat.indexOf(tr("Recommended")) != -1))
                 ui.tableWidget_teen->showRow(i);
             // rest
             else
@@ -485,10 +485,10 @@ void DlgChannelList::apply_checkboxes()
         if ((bShowCult == false) && (strCat.indexOf(tr("Cult")) != -1))
         {
             // moderated
-            if ((ui.checkBox_moderated->isChecked() == true) && (strCat.indexOf(tr("Moderated")) != -1))
+            if ((ui.checkBox_moderated->isChecked()) && (strCat.indexOf(tr("Moderated")) != -1))
                 ui.tableWidget_teen->showRow(i);
             // recommended
-            else if ((ui.checkBox_recommended->isChecked() == true) && (strCat.indexOf(tr("Recommended")) != -1))
+            else if ((ui.checkBox_recommended->isChecked()) && (strCat.indexOf(tr("Recommended")) != -1))
                 ui.tableWidget_teen->showRow(i);
             // rest
             else
@@ -504,10 +504,10 @@ void DlgChannelList::apply_checkboxes()
         if ((bShowWild == false) && (strCat.indexOf(tr("Wild")) != -1))
         {
             // moderated
-            if ((ui.checkBox_moderated->isChecked() == true) && (strCat.indexOf(tr("Moderated")) != -1))
+            if ((ui.checkBox_moderated->isChecked()) && (strCat.indexOf(tr("Moderated")) != -1))
                 ui.tableWidget_common->showRow(i);
             // recommended
-            else if ((ui.checkBox_recommended->isChecked() == true) && (strCat.indexOf(tr("Recommended")) != -1))
+            else if ((ui.checkBox_recommended->isChecked()) && (strCat.indexOf(tr("Recommended")) != -1))
                 ui.tableWidget_common->showRow(i);
             // rest
             else
@@ -517,10 +517,10 @@ void DlgChannelList::apply_checkboxes()
         if ((bShowTame == false) && (strCat.indexOf(tr("Tame")) != -1))
         {
             // moderated
-            if ((ui.checkBox_moderated->isChecked() == true) && (strCat.indexOf(tr("Moderated")) != -1))
+            if ((ui.checkBox_moderated->isChecked()) && (strCat.indexOf(tr("Moderated")) != -1))
                 ui.tableWidget_common->showRow(i);
             // recommended
-            else if ((ui.checkBox_recommended->isChecked() == true) && (strCat.indexOf(tr("Recommended")) != -1))
+            else if ((ui.checkBox_recommended->isChecked()) && (strCat.indexOf(tr("Recommended")) != -1))
                 ui.tableWidget_common->showRow(i);
             // rest
             else
@@ -530,10 +530,10 @@ void DlgChannelList::apply_checkboxes()
         if ((bShowWithClass == false) && (strCat.indexOf(tr("With class")) != -1))
         {
             // moderated
-            if ((ui.checkBox_moderated->isChecked() == true) && (strCat.indexOf(tr("Moderated")) != -1))
+            if ((ui.checkBox_moderated->isChecked()) && (strCat.indexOf(tr("Moderated")) != -1))
                 ui.tableWidget_common->showRow(i);
             // recommended
-            else if ((ui.checkBox_recommended->isChecked() == true) && (strCat.indexOf(tr("Recommended")) != -1))
+            else if ((ui.checkBox_recommended->isChecked()) && (strCat.indexOf(tr("Recommended")) != -1))
                 ui.tableWidget_common->showRow(i);
             // rest
             else
@@ -543,10 +543,10 @@ void DlgChannelList::apply_checkboxes()
         if ((bShowCult == false) && (strCat.indexOf(tr("Cult")) != -1))
         {
             // moderated
-            if ((ui.checkBox_moderated->isChecked() == true) && (strCat.indexOf(tr("Moderated")) != -1))
+            if ((ui.checkBox_moderated->isChecked()) && (strCat.indexOf(tr("Moderated")) != -1))
                 ui.tableWidget_common->showRow(i);
             // recommended
-            else if ((ui.checkBox_recommended->isChecked() == true) && (strCat.indexOf(tr("Recommended")) != -1))
+            else if ((ui.checkBox_recommended->isChecked()) && (strCat.indexOf(tr("Recommended")) != -1))
                 ui.tableWidget_common->showRow(i);
             // rest
             else
@@ -562,10 +562,10 @@ void DlgChannelList::apply_checkboxes()
         if ((bShowWild == false) && (strCat.indexOf(tr("Wild")) != -1))
         {
             // moderated
-            if ((ui.checkBox_moderated->isChecked() == true) && (strCat.indexOf(tr("Moderated")) != -1))
+            if ((ui.checkBox_moderated->isChecked()) && (strCat.indexOf(tr("Moderated")) != -1))
                 ui.tableWidget_erotic->showRow(i);
             // recommended
-            else if ((ui.checkBox_recommended->isChecked() == true) && (strCat.indexOf(tr("Recommended")) != -1))
+            else if ((ui.checkBox_recommended->isChecked()) && (strCat.indexOf(tr("Recommended")) != -1))
                 ui.tableWidget_erotic->showRow(i);
             // rest
             else
@@ -575,10 +575,10 @@ void DlgChannelList::apply_checkboxes()
         if ((bShowTame == false) && (strCat.indexOf(tr("Tame")) != -1))
         {
             // moderated
-            if ((ui.checkBox_moderated->isChecked() == true) && (strCat.indexOf(tr("Moderated")) != -1))
+            if ((ui.checkBox_moderated->isChecked()) && (strCat.indexOf(tr("Moderated")) != -1))
                 ui.tableWidget_erotic->showRow(i);
             // recommended
-            else if ((ui.checkBox_recommended->isChecked() == true) && (strCat.indexOf(tr("Recommended")) != -1))
+            else if ((ui.checkBox_recommended->isChecked()) && (strCat.indexOf(tr("Recommended")) != -1))
                 ui.tableWidget_erotic->showRow(i);
             // rest
             else
@@ -588,10 +588,10 @@ void DlgChannelList::apply_checkboxes()
         if ((bShowWithClass == false) && (strCat.indexOf(tr("With class")) != -1))
         {
             // moderated
-            if ((ui.checkBox_moderated->isChecked() == true) && (strCat.indexOf(tr("Moderated")) != -1))
+            if ((ui.checkBox_moderated->isChecked()) && (strCat.indexOf(tr("Moderated")) != -1))
                 ui.tableWidget_erotic->showRow(i);
             // recommended
-            else if ((ui.checkBox_recommended->isChecked() == true) && (strCat.indexOf(tr("Recommended")) != -1))
+            else if ((ui.checkBox_recommended->isChecked()) && (strCat.indexOf(tr("Recommended")) != -1))
                 ui.tableWidget_erotic->showRow(i);
             // rest
             else
@@ -601,10 +601,10 @@ void DlgChannelList::apply_checkboxes()
         if ((bShowCult == false) && (strCat.indexOf(tr("Cult")) != -1))
         {
             // moderated
-            if ((ui.checkBox_moderated->isChecked() == true) && (strCat.indexOf(tr("Moderated")) != -1))
+            if ((ui.checkBox_moderated->isChecked()) && (strCat.indexOf(tr("Moderated")) != -1))
                 ui.tableWidget_erotic->showRow(i);
             // recommended
-            else if ((ui.checkBox_recommended->isChecked() == true) && (strCat.indexOf(tr("Recommended")) != -1))
+            else if ((ui.checkBox_recommended->isChecked()) && (strCat.indexOf(tr("Recommended")) != -1))
                 ui.tableWidget_erotic->showRow(i);
             // rest
             else
@@ -620,10 +620,10 @@ void DlgChannelList::apply_checkboxes()
         if ((bShowWild == false) && (strCat.indexOf(tr("Wild")) != -1))
         {
             // moderated
-            if ((ui.checkBox_moderated->isChecked() == true) && (strCat.indexOf(tr("Moderated")) != -1))
+            if ((ui.checkBox_moderated->isChecked()) && (strCat.indexOf(tr("Moderated")) != -1))
                 ui.tableWidget_thematic->showRow(i);
             // recommended
-            else if ((ui.checkBox_recommended->isChecked() == true) && (strCat.indexOf(tr("Recommended")) != -1))
+            else if ((ui.checkBox_recommended->isChecked()) && (strCat.indexOf(tr("Recommended")) != -1))
                 ui.tableWidget_thematic->showRow(i);
             // rest
             else
@@ -633,10 +633,10 @@ void DlgChannelList::apply_checkboxes()
         if ((bShowTame == false) && (strCat.indexOf(tr("Tame")) != -1))
         {
             // moderated
-            if ((ui.checkBox_moderated->isChecked() == true) && (strCat.indexOf(tr("Moderated")) != -1))
+            if ((ui.checkBox_moderated->isChecked()) && (strCat.indexOf(tr("Moderated")) != -1))
                 ui.tableWidget_thematic->showRow(i);
             // recommended
-            else if ((ui.checkBox_recommended->isChecked() == true) && (strCat.indexOf(tr("Recommended")) != -1))
+            else if ((ui.checkBox_recommended->isChecked()) && (strCat.indexOf(tr("Recommended")) != -1))
                 ui.tableWidget_thematic->showRow(i);
             // rest
             else
@@ -646,10 +646,10 @@ void DlgChannelList::apply_checkboxes()
         if ((bShowWithClass == false) && (strCat.indexOf(tr("With class")) != -1))
         {
             // moderated
-            if ((ui.checkBox_moderated->isChecked() == true) && (strCat.indexOf(tr("Moderated")) != -1))
+            if ((ui.checkBox_moderated->isChecked()) && (strCat.indexOf(tr("Moderated")) != -1))
                 ui.tableWidget_thematic->showRow(i);
             // recommended
-            else if ((ui.checkBox_recommended->isChecked() == true) && (strCat.indexOf(tr("Recommended")) != -1))
+            else if ((ui.checkBox_recommended->isChecked()) && (strCat.indexOf(tr("Recommended")) != -1))
                 ui.tableWidget_thematic->showRow(i);
             // rest
             else
@@ -659,10 +659,10 @@ void DlgChannelList::apply_checkboxes()
         if ((bShowCult == false) && (strCat.indexOf(tr("Cult")) != -1))
         {
             // moderated
-            if ((ui.checkBox_moderated->isChecked() == true) && (strCat.indexOf(tr("Moderated")) != -1))
+            if ((ui.checkBox_moderated->isChecked()) && (strCat.indexOf(tr("Moderated")) != -1))
                 ui.tableWidget_thematic->showRow(i);
             // recommended
-            else if ((ui.checkBox_recommended->isChecked() == true) && (strCat.indexOf(tr("Recommended")) != -1))
+            else if ((ui.checkBox_recommended->isChecked()) && (strCat.indexOf(tr("Recommended")) != -1))
                 ui.tableWidget_thematic->showRow(i);
             // rest
             else
@@ -678,10 +678,10 @@ void DlgChannelList::apply_checkboxes()
         if ((bShowWild == false) && (strCat.indexOf(tr("Wild")) != -1))
         {
             // moderated
-            if ((ui.checkBox_moderated->isChecked() == true) && (strCat.indexOf(tr("Moderated")) != -1))
+            if ((ui.checkBox_moderated->isChecked()) && (strCat.indexOf(tr("Moderated")) != -1))
                 ui.tableWidget_regional->showRow(i);
             // recommended
-            else if ((ui.checkBox_recommended->isChecked() == true) && (strCat.indexOf(tr("Recommended")) != -1))
+            else if ((ui.checkBox_recommended->isChecked()) && (strCat.indexOf(tr("Recommended")) != -1))
                 ui.tableWidget_regional->showRow(i);
             // rest
             else
@@ -691,10 +691,10 @@ void DlgChannelList::apply_checkboxes()
         if ((bShowTame == false) && (strCat.indexOf(tr("Tame")) != -1))
         {
             // moderated
-            if ((ui.checkBox_moderated->isChecked() == true) && (strCat.indexOf(tr("Moderated")) != -1))
+            if ((ui.checkBox_moderated->isChecked()) && (strCat.indexOf(tr("Moderated")) != -1))
                 ui.tableWidget_regional->showRow(i);
             // recommended
-            else if ((ui.checkBox_recommended->isChecked() == true) && (strCat.indexOf(tr("Recommended")) != -1))
+            else if ((ui.checkBox_recommended->isChecked()) && (strCat.indexOf(tr("Recommended")) != -1))
                 ui.tableWidget_regional->showRow(i);
             // rest
             else
@@ -704,10 +704,10 @@ void DlgChannelList::apply_checkboxes()
         if ((bShowWithClass == false) && (strCat.indexOf(tr("With class")) != -1))
         {
             // moderated
-            if ((ui.checkBox_moderated->isChecked() == true) && (strCat.indexOf(tr("Moderated")) != -1))
+            if ((ui.checkBox_moderated->isChecked()) && (strCat.indexOf(tr("Moderated")) != -1))
                 ui.tableWidget_regional->showRow(i);
             // recommended
-            else if ((ui.checkBox_recommended->isChecked() == true) && (strCat.indexOf(tr("Recommended")) != -1))
+            else if ((ui.checkBox_recommended->isChecked()) && (strCat.indexOf(tr("Recommended")) != -1))
                 ui.tableWidget_regional->showRow(i);
             // rest
             else
@@ -717,10 +717,10 @@ void DlgChannelList::apply_checkboxes()
         if ((bShowCult == false) && (strCat.indexOf(tr("Cult")) != -1))
         {
             // moderated
-            if ((ui.checkBox_moderated->isChecked() == true) && (strCat.indexOf(tr("Moderated")) != -1))
+            if ((ui.checkBox_moderated->isChecked()) && (strCat.indexOf(tr("Moderated")) != -1))
                 ui.tableWidget_regional->showRow(i);
             // recommended
-            else if ((ui.checkBox_recommended->isChecked() == true) && (strCat.indexOf(tr("Recommended")) != -1))
+            else if ((ui.checkBox_recommended->isChecked()) && (strCat.indexOf(tr("Recommended")) != -1))
                 ui.tableWidget_regional->showRow(i);
             // rest
             else
@@ -735,7 +735,7 @@ void DlgChannelList::all_CellDoubleClicked(int row, int column)
 
     QString strChannel = ui.tableWidget_all->item(row, 0)->text();
 
-    if (is_erotic(strChannel) == true)
+    if (is_erotic(strChannel))
     {
         QSettings settings;
         if (settings.value("age_check").toString() == "on")
@@ -783,7 +783,7 @@ void DlgChannelList::erotic_CellDoubleClicked(int row, int column)
 
     QString strChannel = ui.tableWidget_erotic->item(row, 0)->text();
 
-    if (is_erotic(strChannel) == true)
+    if (is_erotic(strChannel))
     {
         QSettings settings;
         if (settings.value("age_check").toString() == "on")
@@ -918,7 +918,7 @@ void DlgChannelList::hide_empty_channels()
 {
     bool bHide;
 
-    if (ui.checkBox_hide_empty_channels->isChecked() == true)
+    if (ui.checkBox_hide_empty_channels->isChecked())
         bHide = true;
     else
         bHide = false;
@@ -929,7 +929,7 @@ void DlgChannelList::hide_empty_channels()
         QString strPeople = ui.tableWidget_all->item(i, 1)->text();
         if (strPeople == "0")
         {
-            if (bHide == true)
+            if (bHide)
                 ui.tableWidget_all->hideRow(i);
             else
                 ui.tableWidget_all->showRow(i);
@@ -942,7 +942,7 @@ void DlgChannelList::hide_empty_channels()
         QString strPeople = ui.tableWidget_teen->item(i, 1)->text();
         if (strPeople == "0")
         {
-            if (bHide == true)
+            if (bHide)
                 ui.tableWidget_teen->hideRow(i);
             else
                 ui.tableWidget_teen->showRow(i);
@@ -955,7 +955,7 @@ void DlgChannelList::hide_empty_channels()
         QString strPeople = ui.tableWidget_common->item(i, 1)->text();
         if (strPeople == "0")
         {
-            if (bHide == true)
+            if (bHide)
                 ui.tableWidget_common->hideRow(i);
             else
                 ui.tableWidget_common->showRow(i);
@@ -968,7 +968,7 @@ void DlgChannelList::hide_empty_channels()
         QString strPeople = ui.tableWidget_erotic->item(i, 1)->text();
         if (strPeople == "0")
         {
-            if (bHide == true)
+            if (bHide)
                 ui.tableWidget_erotic->hideRow(i);
             else
                 ui.tableWidget_erotic->showRow(i);
@@ -981,7 +981,7 @@ void DlgChannelList::hide_empty_channels()
         QString strPeople = ui.tableWidget_thematic->item(i, 1)->text();
         if (strPeople == "0")
         {
-            if (bHide == true)
+            if (bHide)
                 ui.tableWidget_thematic->hideRow(i);
             else
                 ui.tableWidget_thematic->showRow(i);
@@ -994,7 +994,7 @@ void DlgChannelList::hide_empty_channels()
         QString strPeople = ui.tableWidget_regional->item(i, 1)->text();
         if (strPeople == "0")
         {
-            if (bHide == true)
+            if (bHide)
                 ui.tableWidget_regional->hideRow(i);
             else
                 ui.tableWidget_regional->showRow(i);
@@ -1004,7 +1004,7 @@ void DlgChannelList::hide_empty_channels()
 
 void DlgChannelList::show_adv_options()
 {
-    if (ui.checkBox_show_adv_options->isChecked() == true)
+    if (ui.checkBox_show_adv_options->isChecked())
     {
         ui.groupBox_type->show();
         ui.groupBox_category->show();

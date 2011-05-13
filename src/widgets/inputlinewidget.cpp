@@ -122,17 +122,17 @@ bool InputLineWidget::event(QEvent *e)
 
         QString strWord = get_word();
 
-        if (strWord.isEmpty() == true)
+        if (strWord.isEmpty())
             return true;
 
-        if (strLastWord.isEmpty() == true)
+        if (strLastWord.isEmpty())
         {
             find.clear();
             for (int i = 0; i < usersList.size(); i++)
             {
-                if (usersList.at(i).startsWith(strWord, Qt::CaseInsensitive) == true)
+                if (usersList.at(i).startsWith(strWord, Qt::CaseInsensitive))
                     find.append(usersList.at(i));
-                if (usersList.at(i).startsWith("~"+strWord, Qt::CaseInsensitive) == true)
+                if (usersList.at(i).startsWith("~"+strWord, Qt::CaseInsensitive))
                     find.append(usersList.at(i));
             }
 

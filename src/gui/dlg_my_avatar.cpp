@@ -157,7 +157,7 @@ void DlgMyAvatar::refresh_avatar()
     QSettings settings;
     QString strMe = settings.value("nick").toString();
 
-    if (Core::instance()->mNickAvatar.contains(strMe) == true)
+    if (Core::instance()->mNickAvatar.contains(strMe))
     {
         QByteArray bAvatar = Core::instance()->mNickAvatar.value(strMe);
         QPixmap pixmap;
@@ -458,7 +458,7 @@ void DlgMyAvatar::tab_changed(int index)
 
 void DlgMyAvatar::collection_changed(QString strName)
 {
-    if (mCollectionId.contains(strName) == true)
+    if (mCollectionId.contains(strName))
     {
         int index = mCollectionId[strName];
 
@@ -619,7 +619,7 @@ void DlgMyAvatar::network_finished(QNetworkReply *reply)
     QString strCategory = reply->property("category").toString();
     QByteArray bData = reply->readAll();
 
-    if (bData.isEmpty() == true)
+    if (bData.isEmpty())
         return;
 
     if (strCategory == "get_avatar")

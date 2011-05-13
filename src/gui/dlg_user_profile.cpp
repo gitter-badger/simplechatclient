@@ -146,7 +146,7 @@ void DlgUserProfile::button_zoom()
 
 void DlgUserProfile::button_more()
 {
-    if (ui.widget_more->isHidden() == true)
+    if (ui.widget_more->isHidden())
     {
         ui.widget_more->show();
         ui.pushButton_more->setIcon(QIcon(":/images/oxygen/16x16/list-remove.png"));
@@ -223,7 +223,7 @@ QString DlgUserProfile::convert_sex(QString strSex)
 
 QString DlgUserProfile::convert_age(QString strDate)
 {
-    if (strDate.isEmpty() == true) return QString::null; // empty date
+    if (strDate.isEmpty()) return QString::null; // empty date
     QStringList strlDate = strDate.split("-");
 
     QString strYear = strlDate.at(0);

@@ -387,7 +387,7 @@ void TabWidget::display_message(QString strData, int iLevel)
     cursor.insertHtml(strContent);
 
     // move cursor
-    if (pMainTextEdit->textCursor().selectedText().isEmpty() == true)
+    if (pMainTextEdit->textCursor().selectedText().isEmpty())
         pMainTextEdit->moveCursor(QTextCursor::End, QTextCursor::MoveAnchor);
 }
 
@@ -449,7 +449,7 @@ void TabWidget::set_link(QString strUrl)
 
 void TabWidget::update_channel_avatar()
 {
-    if (Core::instance()->mChannelAvatar.contains(strName) == true)
+    if (Core::instance()->mChannelAvatar.contains(strName))
     {
         // show widget
         topLeftWidget->show();

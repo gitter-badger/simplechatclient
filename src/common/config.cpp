@@ -54,7 +54,7 @@ Config::Config()
         create_new_config();
 
     // try read
-    if (file->exists() == true)
+    if (file->exists())
     {
         if (file->open(QIODevice::ReadWrite) == false)
         {
@@ -90,7 +90,7 @@ Config::~Config()
 
 QString Config::get_value(QString strKey)
 {
-    if ((doc.isNull() == true) || (file->isOpen() == false))
+    if ((doc.isNull()) || (file->isOpen() == false))
     {
 #ifdef Q_WS_X11
         qDebug() << tr("Error: config: Cannot get value: ") << strKey;
@@ -117,7 +117,7 @@ QString Config::get_value(QString strKey)
 
 void Config::set_value(QString strKey, QString strValue)
 {
-    if ((doc.isNull() == true) || (file->isOpen() == false))
+    if ((doc.isNull()) || (file->isOpen() == false))
     {
 #ifdef Q_WS_X11
         qDebug() << tr("Error: config: Cannot set value: ") << strKey;
@@ -141,7 +141,7 @@ void Config::set_value(QString strKey, QString strValue)
 
 void Config::remove_value(QString strKey)
 {
-    if ((doc.isNull() == true) || (file->isOpen() == false))
+    if ((doc.isNull()) || (file->isOpen() == false))
     {
 #ifdef Q_WS_X11
         qDebug() << tr("Error: config: Cannot remove value: ") << strKey;
@@ -182,7 +182,7 @@ void Config::fix_config()
         QString strDefaultValue = i.value();
 
         QString strValue = get_value(strDefaultKey);
-        if (strValue.isEmpty() == true)
+        if (strValue.isEmpty())
         {
             if (strDefaultKey != "pass") // ignore pass
                 set_value(strDefaultKey, strDefaultValue);
@@ -271,7 +271,7 @@ QMap<QString,QString> Config::read_config()
 {
     QMap<QString, QString> mResult;
 
-    if ((doc.isNull() == false) && (file->isOpen() == true))
+    if ((doc.isNull() == false) && (file->isOpen()))
     {
         QDomElement docElem = doc.documentElement();
         QDomNode n = docElem.firstChild();

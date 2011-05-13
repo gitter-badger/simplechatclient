@@ -248,7 +248,7 @@ void ToolWidget::set_default()
     }
 
     // refresh bold italic
-    int iWeight = (bMyBold == true ? 75 : 50);
+    int iWeight = (bMyBold ? 75 : 50);
     pInputWidget->set_font(QFont(strMyFontFamily, -1, iWeight, bMyItalic));
 
     // set default font
@@ -287,7 +287,7 @@ void ToolWidget::set_default()
 
 void ToolWidget::set_moderation(bool bEnable)
 {
-    if (bEnable == true)
+    if (bEnable)
         moderation->show();
     else
         moderation->hide();
@@ -295,7 +295,7 @@ void ToolWidget::set_moderation(bool bEnable)
 
 void ToolWidget::set_channel_settings(bool bEnable)
 {
-    if (bEnable == true)
+    if (bEnable)
         channel_settings->show();
     else
         channel_settings->hide();
@@ -304,7 +304,7 @@ void ToolWidget::set_channel_settings(bool bEnable)
 void ToolWidget::bold_clicked()
 {
     QSettings settings;
-    if (bMyBold == true)
+    if (bMyBold)
     {
         bold->setChecked(false);
         bMyBold = false;
@@ -319,14 +319,14 @@ void ToolWidget::bold_clicked()
         settings.setValue("my_bold", "on");
     }
 
-    int iWeight = (bMyBold == true ? 75 : 50);
+    int iWeight = (bMyBold ? 75 : 50);
     pInputWidget->set_font(QFont(strMyFontFamily, -1, iWeight, bMyItalic));
 }
 
 void ToolWidget::italic_clicked()
 {
     QSettings settings;
-    if (bMyItalic == true)
+    if (bMyItalic)
     {
         italic->setChecked(false);
         bMyItalic = false;
@@ -341,7 +341,7 @@ void ToolWidget::italic_clicked()
         settings.setValue("my_italic", "on");
     }
 
-    int iWeight = (bMyBold == true ? 75 : 50);
+    int iWeight = (bMyBold ? 75 : 50);
     pInputWidget->set_font(QFont(strMyFontFamily, -1, iWeight, bMyItalic));
 }
 
@@ -352,7 +352,7 @@ void ToolWidget::arial_triggered()
     QSettings settings;
     settings.setValue("my_font", strMyFontFamily);
 
-    int iWeight = (bMyBold == true ? 75 : 50);
+    int iWeight = (bMyBold ? 75 : 50);
     pInputWidget->set_font(QFont(strMyFontFamily, -1, iWeight, bMyItalic));
 }
 
@@ -363,7 +363,7 @@ void ToolWidget::times_triggered()
     QSettings settings;
     settings.setValue("my_font", strMyFontFamily);
 
-    int iWeight = (bMyBold == true ? 75 : 50);
+    int iWeight = (bMyBold ? 75 : 50);
     pInputWidget->set_font(QFont(strMyFontFamily, -1, iWeight, bMyItalic));
 }
 
@@ -374,7 +374,7 @@ void ToolWidget::verdana_triggered()
     QSettings settings;
     settings.setValue("my_font", strMyFontFamily);
 
-    int iWeight = (bMyBold == true ? 75 : 50);
+    int iWeight = (bMyBold ? 75 : 50);
     pInputWidget->set_font(QFont(strMyFontFamily, -1, iWeight, bMyItalic));
 }
 
@@ -385,7 +385,7 @@ void ToolWidget::tahoma_triggered()
     QSettings settings;
     settings.setValue("my_font", strMyFontFamily);
 
-    int iWeight = (bMyBold == true ? 75 : 50);
+    int iWeight = (bMyBold ? 75 : 50);
     pInputWidget->set_font(QFont(strMyFontFamily, -1, iWeight, bMyItalic));
 }
 
@@ -396,7 +396,7 @@ void ToolWidget::courier_triggered()
     QSettings settings;
     settings.setValue("my_font", strMyFontFamily);
 
-    int iWeight = (bMyBold == true ? 75 : 50);
+    int iWeight = (bMyBold ? 75 : 50);
     pInputWidget->set_font(QFont(strMyFontFamily, -1, iWeight, bMyItalic));
 }
 
@@ -488,7 +488,7 @@ void ToolWidget::emoticons_clicked()
 
 void ToolWidget::channel_settings_clicked()
 {
-    if (pNetwork->is_connected() == true)
+    if (pNetwork->is_connected())
     {
         QString strChannel = pInputWidget->get_active();
         if (strChannel != "Status")

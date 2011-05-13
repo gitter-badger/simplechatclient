@@ -135,7 +135,7 @@ void DlgEmail::set_email()
     QString strCodeLength = QString::number(ui.lineEdit_code->text().length());
     QString strCode = ui.lineEdit_code->text();
 
-    if (strCode.isEmpty() == true)
+    if (strCode.isEmpty())
         return;
 
     QString strData = QString("api_function=setChannelEmail&params=a:3:{s:4:\"name\";s:%1:\"%2\";s:5:\"email\";s:%3:\"%4\";s:4:\"code\";s:%5:\"%6\";}").arg(strChannelLength).arg(strChannel).arg(strEmailLength).arg(strEmail).arg(strCodeLength).arg(strCode);
@@ -176,7 +176,7 @@ void DlgEmail::network_finished(QNetworkReply *reply)
     QString strCategory = reply->property("category").toString();
     QByteArray bData = reply->readAll();
 
-    if (bData.isEmpty() == true)
+    if (bData.isEmpty())
         return;
 
     if (strCategory == "get_img")

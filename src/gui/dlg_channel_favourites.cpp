@@ -65,7 +65,7 @@ void DlgChannelFavourites::refresh()
     {
         QString strChannel = Core::instance()->lChannelFavourites.at(i);
 
-        if (Core::instance()->mChannelAvatar.contains(strChannel) == true)
+        if (Core::instance()->mChannelAvatar.contains(strChannel))
         {
             QPixmap pixmap;
             pixmap.loadFromData(Core::instance()->mChannelAvatar.value(strChannel));
@@ -84,7 +84,7 @@ void DlgChannelFavourites::button_add()
     bool ok;
     QString strText = QInputDialog::getText(this, tr("Change your favorite channels"), tr("Enter the name of the new channel to add to favorites:"), QLineEdit::Normal, QString::null, &ok);
 
-    if ((ok == true) && (strText.isEmpty() == false))
+    if ((ok) && (strText.isEmpty() == false))
     {
         pNetwork->send(QString("NS FAVOURITES ADD %1").arg(strText));
         QTimer::singleShot(1000*2, this, SLOT(refresh())); // 2 sec
@@ -100,7 +100,7 @@ void DlgChannelFavourites::button_remove()
     bool ok;
     QString strText = QInputDialog::getText(this, tr("Change your favorite channels"), tr("Enter the name of the channel to remove from the favorites:"), QLineEdit::Normal, strSelected, &ok);
 
-    if ((ok == true) && (strText.isEmpty() == false))
+    if ((ok) && (strText.isEmpty() == false))
     {
         pNetwork->send(QString("NS FAVOURITES DEL %1").arg(strText));
         QTimer::singleShot(1000*2, this, SLOT(refresh())); // 2 sec

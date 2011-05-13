@@ -446,7 +446,7 @@ void DlgChannelSettings::set_topic(QString strTopic)
                 else
                 {
                     QRegExp rx("((b|i)?)((b|i)?)");
-                    if (rx.exactMatch(strFont) == true)
+                    if (rx.exactMatch(strFont))
                         strFontWeight = strFont;
                 }
 
@@ -489,7 +489,7 @@ void DlgChannelSettings::set_topic(QString strTopic)
     {
         strFontColor = "%C"+strFontColor.right(6)+"%";
 
-        if (strTopic.contains(strFontColor) == true)
+        if (strTopic.contains(strFontColor))
             ui.comboBox_color->setCurrentIndex(iFontColor);
 
         strTopic.replace(strFontColor, "");
@@ -580,7 +580,7 @@ void DlgChannelSettings::add_ban(QString strNick, QString strWho, QString strDT,
     if (exist_item(strNick, ui.listWidget_ban) == false)
     {
         SortedListWidgetItem *item = new SortedListWidgetItem();
-        if (strIPNick.isEmpty() == true)
+        if (strIPNick.isEmpty())
         {
             item->setText(strNick);
             item->setToolTip(QString("%1: %2 (%4)").arg(tr("Created by")).arg(strWho).arg(strDT));
@@ -614,7 +614,7 @@ void DlgChannelSettings::owner_changed()
     bool ok;
     QString strNick = QInputDialog::getText(this, tr("Changing privileges"), strMsg, QLineEdit::Normal, QString::null, &ok);
 
-    if ((ok == true) && (strNick.isEmpty() == false))
+    if ((ok) && (strNick.isEmpty() == false))
         pNetwork->send(QString("CS TRANSFER %1 %2").arg(strChannel).arg(strNick));
 
     clear();
@@ -628,7 +628,7 @@ void DlgChannelSettings::remove_channel_clicked()
     bool ok;
     QString strText = QInputDialog::getText(this, tr("Changing privileges"), strMsg, QLineEdit::Normal, strChannel, &ok);
 
-    if ((ok == true) && (strText.isEmpty() == false))
+    if ((ok) && (strText.isEmpty() == false))
         pNetwork->send(QString("CS DROP %1").arg(strText));
 
     strChannel.clear();
@@ -663,10 +663,10 @@ void DlgChannelSettings::topic_changed()
     QString strFontWeight;
 
     // bold
-    if (ui.pushButton_bold->isChecked() == true) bBold = true;
+    if (ui.pushButton_bold->isChecked()) bBold = true;
 
     // italic
-    if (ui.pushButton_italic->isChecked() == true) bItalic = true;
+    if (ui.pushButton_italic->isChecked()) bItalic = true;
 
     // font name
     strFontName = ui.comboBox_font->currentText().toLower();
@@ -679,8 +679,8 @@ void DlgChannelSettings::topic_changed()
         strFontColor = strlFontColors.at(ui.comboBox_color->currentIndex());
 
     // set topic
-    if (bBold == true) strFontWeight += "b";
-    if (bItalic == true) strFontWeight += "i";
+    if (bBold) strFontWeight += "b";
+    if (bItalic) strFontWeight += "i";
 
     if (strFontName == "verdana")
         strFontName = "";
@@ -736,7 +736,7 @@ void DlgChannelSettings::guardian_active()
 
 void DlgChannelSettings::guardian_clicked(int iLevel)
 {
-    if (ui.radioButton_guardian_on->isChecked() == true)
+    if (ui.radioButton_guardian_on->isChecked())
         pNetwork->send(QString("CS SET %1 GUARDIAN %2").arg(strChannel).arg(iLevel+1));
     pNetwork->send(QString("CS INFO %1").arg(strChannel));
 }
@@ -795,9 +795,9 @@ void DlgChannelSettings::button_permission_add()
     bool ok;
     QString strResult = QInputDialog::getText(this, tr("Changing privileges"), strLabel, QLineEdit::Normal, QString::null, &ok);
 
-    if ((ok == true) && (strResult.isEmpty() == false))
+    if ((ok) && (strResult.isEmpty() == false))
     {
-        if ((tab == 2) && (strResult.contains("*") == true))
+        if ((tab == 2) && (strResult.contains("*")))
         {
             QMessageBox msgBox;
             msgBox.setIcon(QMessageBox::Warning);
@@ -815,7 +815,7 @@ void DlgChannelSettings::button_permission_add()
     }
 
     // if empty
-    if (strNick.isEmpty() == true)
+    if (strNick.isEmpty())
         return;
 
     // add permission
@@ -876,7 +876,7 @@ void DlgChannelSettings::button_permission_remove()
         bool ok;
         QString strNick = QInputDialog::getText(this, tr("Changing privileges"), strLabel, QLineEdit::Normal, QString::null, &ok);
 
-        if ((ok == true) && (strNick.isEmpty() == false))
+        if ((ok) && (strNick.isEmpty() == false))
             lRemoveNicks.append(new QListWidgetItem(strNick));
     }
 

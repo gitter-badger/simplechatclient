@@ -115,17 +115,17 @@ void Network::clear_all()
     settings.setValue("logged", "off");
 
     // timer
-    if (timerPong->isActive() == true)
+    if (timerPong->isActive())
         timerPong->stop();
-    if (timerPing->isActive() == true)
+    if (timerPing->isActive())
         timerPing->stop();
-    if (timerLag->isActive() == true)
+    if (timerLag->isActive())
         timerLag->stop();
-    if (timerQueue->isActive() == true)
+    if (timerQueue->isActive())
         timerQueue->stop();
 
     // reconnect
-    if (timerReconnect->isActive() == true)
+    if (timerReconnect->isActive())
         timerReconnect->stop();
 
     // clear queue
@@ -147,7 +147,7 @@ void Network::authorize()
     QString strPass = settings.value("pass").toString();
 
     // nick & pass is null
-    if ((strNick.isEmpty() == true) && (strPass.isEmpty() == true))
+    if ((strNick.isEmpty()) && (strPass.isEmpty()))
         strNick = "~test";
 
     // decrypt pass
@@ -159,7 +159,7 @@ void Network::authorize()
     }
 
     // correct nick
-    if ((strPass.isEmpty() == true) && (strNick[0] != '~'))
+    if ((strPass.isEmpty()) && (strNick[0] != '~'))
         strNick = "~"+strNick;
     if ((strPass.isEmpty() == false) && (strNick[0] == '~'))
         strNick = strNick.right(strNick.length()-1);
@@ -246,7 +246,7 @@ void Network::disconnect()
     msgSendQueueNS.clear();
 
     // send quit
-    if ((socket->isValid()) && (socket->state() == QAbstractSocket::ConnectedState) && (socket->isWritable() == true))
+    if ((socket->isValid()) && (socket->state() == QAbstractSocket::ConnectedState) && (socket->isWritable()))
     {
         socket->write("QUIT\r\n");
         socket->waitForBytesWritten();
@@ -277,7 +277,7 @@ void Network::disconnected()
 
 void Network::reconnect()
 {
-    if (timerReconnect->isActive() == true)
+    if (timerReconnect->isActive())
         timerReconnect->stop();
 
     QSettings settings;
@@ -293,7 +293,7 @@ void Network::reconnect()
 
 void Network::write(QString strData)
 {
-    if ((socket->isValid()) && (socket->state() == QAbstractSocket::ConnectedState) && (socket->isWritable() == true))
+    if ((socket->isValid()) && (socket->state() == QAbstractSocket::ConnectedState) && (socket->isWritable()))
     {
 #ifdef Q_WS_X11
         QSettings settings;
@@ -402,7 +402,7 @@ void Network::timeout_ping()
     QString t2 = dta.toString("zzz"); // miliseconds
 
     QSettings settings;
-    if ((is_connected() == true) && (is_writable() == true) && (settings.value("logged").toString() == "on"))
+    if ((is_connected()) && (is_writable()) && (settings.value("logged").toString() == "on"))
         emit send(QString("PING :%1.%2").arg(i1).arg(t2));
 }
 

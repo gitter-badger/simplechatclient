@@ -259,7 +259,7 @@ QString DlgMyProfile::convert_text_to_desc(QString strContent)
                 else
                 {
                     QRegExp rx("((b|i)?)((b|i)?)");
-                    if (rx.exactMatch(strFont) == true)
+                    if (rx.exactMatch(strFont))
                         strFontWeight = strFont;
                 }
 
@@ -302,7 +302,7 @@ QString DlgMyProfile::convert_text_to_desc(QString strContent)
     {
         strFontColor = "%C"+strFontColor.right(6)+"%";
 
-        if (strContent.contains(strFontColor) == true)
+        if (strContent.contains(strFontColor))
             ui.comboBox_color->setCurrentIndex(iFontColor);
 
         strContent.replace(strFontColor, "");
@@ -334,10 +334,10 @@ QString DlgMyProfile::convert_desc_to_text(QString strContent)
     QString strFontWeight;
 
     // bold
-    if (ui.pushButton_bold->isChecked() == true) bBold = true;
+    if (ui.pushButton_bold->isChecked()) bBold = true;
 
     // italic
-    if (ui.pushButton_italic->isChecked() == true) bItalic = true;
+    if (ui.pushButton_italic->isChecked()) bItalic = true;
 
     // font name
     strFontName = ui.comboBox_font->currentText().toLower();
@@ -350,8 +350,8 @@ QString DlgMyProfile::convert_desc_to_text(QString strContent)
         strFontColor = strlFontColors.at(ui.comboBox_color->currentIndex());
 
     // set topic
-    if (bBold == true) strFontWeight += "b";
-    if (bItalic == true) strFontWeight += "i";
+    if (bBold) strFontWeight += "b";
+    if (bItalic) strFontWeight += "i";
 
     if (strFontName == "verdana")
         strFontName = "";

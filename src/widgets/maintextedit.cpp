@@ -130,7 +130,7 @@ void MainTextEdit::kick()
     bool ok;
     QString strText = QInputDialog::getText(this, tr("Kick From Channel"), tr("Reason for kicking:"), QLineEdit::Normal, tr("No reason"), &ok);
 
-    if ((ok == true) && (strText.isEmpty() == false))
+    if ((ok) && (strText.isEmpty() == false))
         pNetwork->send(QString("KICK %1 %2 :%3").arg(strChannel).arg(strNick).arg(strText));
 }
 
@@ -144,7 +144,7 @@ void MainTextEdit::kban()
     bool ok;
     QString strText = QInputDialog::getText(this, tr("Kick & Ban"), tr("Reason for kicking:"), QLineEdit::Normal, tr("No reason"), &ok);
 
-    if ((ok == true) && (strText.isEmpty() == false))
+    if ((ok) && (strText.isEmpty() == false))
     {
         pNetwork->send(QString("CS BAN %1 ADD %2").arg(strChannel).arg(strNick));
         pNetwork->send(QString("KICK %1 %2 :%3").arg(strChannel).arg(strNick).arg(strText));
@@ -345,7 +345,7 @@ void MainTextEdit::menu_standard(QContextMenuEvent *event)
     QMenu menu(this);
 
     QAction *copy = new QAction(QIcon(":/images/oxygen/16x16/edit-copy.png"), tr("Copy"), &menu);
-    if (this->textCursor().selectedText().isEmpty() == true)
+    if (this->textCursor().selectedText().isEmpty())
         copy->setEnabled(false);
     copy->setShortcut(QKeySequence::Copy);
     connect(copy, SIGNAL(triggered()), this, SLOT(copy()));
@@ -410,7 +410,7 @@ QString MainTextEdit::get_first_word(QTextCursor cursor)
 
 void MainTextEdit::contextMenuEvent(QContextMenuEvent *event)
 {
-    if (this->textCursor().selectedText().isEmpty() == true) // if nothing selected
+    if (this->textCursor().selectedText().isEmpty()) // if nothing selected
     {
         QTextCursor cursor = QTextEdit::cursorForPosition(event->pos());
         cursor.select(QTextCursor::WordUnderCursor);
@@ -445,7 +445,7 @@ void MainTextEdit::contextMenuEvent(QContextMenuEvent *event)
                 }
 
                 // website
-                if ((strWord.contains("http") == true) || (strWord.contains("www") == true))
+                if ((strWord.contains("http")) || (strWord.contains("www")))
                 {
                     strWebsite = strWord;
                     menu_website(event);

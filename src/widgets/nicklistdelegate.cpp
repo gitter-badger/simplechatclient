@@ -115,16 +115,16 @@ void NickListDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opti
     {
         // with avatars
         r = option.rect.adjusted(imageSpace, -10, -10, -10);
-        if ((bBusy == true) && (!(option.state & QStyle::State_Selected))) painter->setPen(busyPen); // gray
-        painter->setFont(QFont(option.font.family(), option.font.pointSize(), bBusy == true ? QFont::Light : QFont::Normal, bBusy));
+        if ((bBusy) && (!(option.state & QStyle::State_Selected))) painter->setPen(busyPen); // gray
+        painter->setFont(QFont(option.font.family(), option.font.pointSize(), bBusy ? QFont::Light : QFont::Normal, bBusy));
         painter->drawText(r.left(), r.top(), r.width(), r.height(), Qt::AlignBottom|Qt::AlignLeft, nick, &r);
     }
     else
     {
         // without avatars
         r = option.rect.adjusted(imageSpace, 0, 0, 0);
-        if ((bBusy == true) && (!(option.state & QStyle::State_Selected))) painter->setPen(busyPen); // gray
-        painter->setFont(QFont(option.font.family(), option.font.pointSize(), bBusy == true ? QFont::Light : QFont::Normal, bBusy));
+        if ((bBusy) && (!(option.state & QStyle::State_Selected))) painter->setPen(busyPen); // gray
+        painter->setFont(QFont(option.font.family(), option.font.pointSize(), bBusy ? QFont::Light : QFont::Normal, bBusy));
         painter->drawText(r.left(), r.top(), r.width(), r.height(), Qt::AlignBottom|Qt::AlignLeft, nick, &r);
     }
 

@@ -118,7 +118,7 @@ bool Commands::is_erotic(QString strChannel)
 
 QString Commands::cmd_join()
 {
-    if (strDataList.value(1).isEmpty() == true) return QString::null;
+    if (strDataList.value(1).isEmpty()) return QString::null;
 
     QString strChannel = strDataList[1];
     if ((strChannel[0] != '#') && (strChannel[0] != '^'))
@@ -127,7 +127,7 @@ QString Commands::cmd_join()
     QString strKey;
     for (int i = 2; i < strDataList.size(); i++) { if (i != 2) strKey += " "; strKey += strDataList[i]; }
 
-    if (is_erotic(strChannel) == true)
+    if (is_erotic(strChannel))
     {
         QSettings settings;
         if (settings.value("age_check").toString() == "on")
@@ -159,7 +159,7 @@ QString Commands::cmd_join()
 
 QString Commands::cmd_priv()
 {
-    if (strDataList.value(1).isEmpty() == true) return QString::null;
+    if (strDataList.value(1).isEmpty()) return QString::null;
 
     QString strNick = strDataList[1];
 
@@ -168,7 +168,7 @@ QString Commands::cmd_priv()
 
 QString Commands::cmd_ignore()
 {
-    if (strDataList.value(1).isEmpty() == true) return QString::null;
+    if (strDataList.value(1).isEmpty()) return QString::null;
 
     QString strNick = strDataList[1];
     QChar cPlusMinus =  strNick[0];
@@ -184,7 +184,7 @@ QString Commands::cmd_ignore()
 
 QString Commands::cmd_friend()
 {
-    if (strDataList.value(1).isEmpty() == true) return QString::null;
+    if (strDataList.value(1).isEmpty()) return QString::null;
 
     QString strNick = strDataList[1];
     QChar cPlusMinus =  strNick[0];
@@ -200,7 +200,7 @@ QString Commands::cmd_friend()
 
 QString Commands::cmd_whereis()
 {
-    if (strDataList.value(1).isEmpty() == true) return QString::null;
+    if (strDataList.value(1).isEmpty()) return QString::null;
 
     QString strNick = strDataList[1];
 
@@ -230,8 +230,8 @@ QString Commands::cmd_away()
 
 QString Commands::cmd_offmsg()
 {
-    if (strDataList.value(1).isEmpty() == true) return QString::null;
-    if (strDataList.value(2).isEmpty() == true) return QString::null;
+    if (strDataList.value(1).isEmpty()) return QString::null;
+    if (strDataList.value(2).isEmpty()) return QString::null;
 
     QString strNick = strDataList[1];
 
@@ -319,7 +319,7 @@ QString Commands::cmd_topic()
 QString Commands::cmd_part()
 {
     QString strChannel;
-    if (strDataList.value(1).isEmpty() == true)
+    if (strDataList.value(1).isEmpty())
         strChannel = strChan;
     else
         strChannel = strDataList[1];
@@ -331,7 +331,7 @@ QString Commands::cmd_part()
 
 QString Commands::cmd_invite()
 {
-    if (strDataList.value(1).isEmpty() == true) return QString::null;
+    if (strDataList.value(1).isEmpty()) return QString::null;
 
     QString strNick = strDataList[1];
     QString strChannel = strChan;
@@ -341,7 +341,7 @@ QString Commands::cmd_invite()
 
 QString Commands::cmd_kick()
 {
-    if (strDataList.value(1).isEmpty() == true) return QString::null;
+    if (strDataList.value(1).isEmpty()) return QString::null;
 
     QString strChannel = strChan;
     QString strNick = strDataList[1];
@@ -349,7 +349,7 @@ QString Commands::cmd_kick()
     QString strReason;
     for (int i = 2; i < strDataList.size(); i++) { if (i != 2) strReason += " "; strReason += strDataList[i]; }
 
-    if (strReason.isEmpty() == true)
+    if (strReason.isEmpty())
         strReason = tr("No reason");
 
     return QString("KICK %1 %2 :%3").arg(strChannel).arg(strNick).arg(strReason);
@@ -357,7 +357,7 @@ QString Commands::cmd_kick()
 
 QString Commands::cmd_ban()
 {
-    if (strDataList.value(1).isEmpty() == true) return QString::null;
+    if (strDataList.value(1).isEmpty()) return QString::null;
 
     QString strChannel = strChan;
 
@@ -365,7 +365,7 @@ QString Commands::cmd_ban()
     QChar cPlusMinus =  strNick[0];
     strNick = strNick.right(strNick.length()-1);
 
-    if ((strNick.contains("*") == true) && (cPlusMinus == '+'))
+    if ((strNick.contains("*")) && (cPlusMinus == '+'))
     {
         QMessageBox msgBox;
         msgBox.setIcon(QMessageBox::Warning);
@@ -391,7 +391,7 @@ QString Commands::cmd_ban()
 
 QString Commands::cmd_banip()
 {
-    if (strDataList.value(1).isEmpty() == true) return QString::null;
+    if (strDataList.value(1).isEmpty()) return QString::null;
 
     QString strChannel = strChan;
 
@@ -409,7 +409,7 @@ QString Commands::cmd_banip()
 
 QString Commands::cmd_sop()
 {
-    if (strDataList.value(1).isEmpty() == true) return QString::null;
+    if (strDataList.value(1).isEmpty()) return QString::null;
 
     QString strChannel = strChan;
     QString strNick = strDataList[1];
@@ -426,7 +426,7 @@ QString Commands::cmd_sop()
 
 QString Commands::cmd_op()
 {
-    if (strDataList.value(1).isEmpty() == true) return QString::null;
+    if (strDataList.value(1).isEmpty()) return QString::null;
 
     QString strChannel = strChan;
     QString strNick = strDataList[1];
@@ -443,7 +443,7 @@ QString Commands::cmd_op()
 
 QString Commands::cmd_moder()
 {
-    if (strDataList.value(1).isEmpty() == true) return QString::null;
+    if (strDataList.value(1).isEmpty()) return QString::null;
 
     QString strChannel = strChan;
     QString strNick = strDataList[1];
@@ -460,7 +460,7 @@ QString Commands::cmd_moder()
 
 QString Commands::cmd_vip()
 {
-    if (strDataList.value(1).isEmpty() == true) return QString::null;
+    if (strDataList.value(1).isEmpty()) return QString::null;
 
     QString strChannel = strChan;
     QString strNick = strDataList[1];

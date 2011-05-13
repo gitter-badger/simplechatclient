@@ -73,7 +73,7 @@ void DlgFriends::refresh()
     {
         SortedListWidgetItem *item = new SortedListWidgetItem();
 
-        if (Core::instance()->mNickAvatar.contains(i.key()) == true)
+        if (Core::instance()->mNickAvatar.contains(i.key()))
         {
             QPixmap pixmap;
             pixmap.loadFromData(Core::instance()->mNickAvatar.value(i.key()));
@@ -91,7 +91,7 @@ void DlgFriends::refresh()
                 pNetwork->send(QString("NS INFO %1 s").arg(i.key()));
         }
 
-        if (i.value() == true)
+        if (i.value())
             ui.listWidget_online->addItem(item);
         else
             ui.listWidget_offline->addItem(item);
@@ -103,7 +103,7 @@ void DlgFriends::refresh()
 void DlgFriends::tab_changed(int index)
 {
     // online - show whois
-    if ((index == 0) && (ui.pushButton_whois->isHidden() == true))
+    if ((index == 0) && (ui.pushButton_whois->isHidden()))
         ui.pushButton_whois->setHidden(false);
     // offline - hide whois
     else if ((index == 1) && (ui.pushButton_whois->isHidden() == false))
@@ -115,7 +115,7 @@ void DlgFriends::button_add()
     bool ok;
     QString strText = QInputDialog::getText(this, tr("Changing your friends list"), tr("Enter a nickname to be added:"), QLineEdit::Normal, QString::null, &ok);
 
-    if ((ok == true) && (strText.isEmpty() == false))
+    if ((ok) && (strText.isEmpty() == false))
     {
         pNetwork->send(QString("NS FRIENDS ADD %1").arg(strText));
         QTimer::singleShot(1000*4, this, SLOT(refresh())); // 4 sec
@@ -139,7 +139,7 @@ void DlgFriends::button_remove()
     bool ok;
     QString strText = QInputDialog::getText(this, tr("Changing your friends list"), tr("Enter a nickname for removal:"), QLineEdit::Normal, strSelected, &ok);
 
-    if ((ok == true) && (strText.isEmpty() == false))
+    if ((ok) && (strText.isEmpty() == false))
     {
         pNetwork->send(QString("NS FRIENDS DEL %1").arg(strText));
         QTimer::singleShot(1000*4, this, SLOT(refresh())); // 4 sec

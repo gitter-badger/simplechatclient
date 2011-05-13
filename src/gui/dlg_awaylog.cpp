@@ -69,7 +69,7 @@ void DlgAwaylog::button_reset()
     ui.listWidget->clear();
 
     // hide
-    if (awaylogAct->isVisible() == true)
+    if (awaylogAct->isVisible())
         awaylogAct->setVisible(false);
 }
 

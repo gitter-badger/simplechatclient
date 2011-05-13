@@ -95,14 +95,14 @@ DlgEmoticons::DlgEmoticons(MainWindow *parent, InputWidget *param1) : QDialog(pa
 
 DlgEmoticons::~DlgEmoticons()
 {
-    if (pThreadEmoticonsStandard.isRunning() == true)
+    if (pThreadEmoticonsStandard.isRunning())
     {
         pThreadEmoticonsStandard.quit();
         pThreadEmoticonsStandard.wait();
         pThreadEmoticonsStandard.deleteLater();
     }
 
-    if (pThreadEmoticonsExtended.isRunning() == true)
+    if (pThreadEmoticonsExtended.isRunning())
     {
         pThreadEmoticonsExtended.quit();
         pThreadEmoticonsExtended.wait();

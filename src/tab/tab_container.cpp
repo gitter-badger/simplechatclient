@@ -173,7 +173,7 @@ void TabContainer::part_tab(int index)
 {
     QString strChannel = tw[index]->get_name();
 
-    if (pNetwork->is_connected() == true)
+    if (pNetwork->is_connected())
         pNetwork->send(QString("PART %1").arg(strChannel));
     else
         remove_tab(strChannel);

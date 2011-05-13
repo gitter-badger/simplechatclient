@@ -80,7 +80,7 @@ void DlgNotes::read_path()
 void DlgNotes::read()
 {
     QFile *file = new QFile(strNotesFile);
-    if (file->exists() == true)
+    if (file->exists())
     {
         if (file->open(QIODevice::ReadWrite) == false)
         {

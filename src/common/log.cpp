@@ -68,7 +68,7 @@ void Log::save(QString strChannel, QString strData)
     QSettings settings;
     bool bSaveLogsByDate = settings.value("save_logs_by_date").toString() == "on" ? true : false;
 
-    if (bSaveLogsByDate == true)
+    if (bSaveLogsByDate)
     {
         QString strDate = QDate().currentDate().toString("yyyy-MM");
 

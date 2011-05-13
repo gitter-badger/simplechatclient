@@ -60,10 +60,10 @@ void OnetKernel::timer_rename_channel()
     {
         QString strOldName = i.key();
         QString strNewName = i.value();
-        if (pTabC->exist_tab(strOldName) == true)
+        if (pTabC->exist_tab(strOldName))
         {
             bool bRenamed = pTabC->rename_tab(strOldName, strNewName);
-            if (bRenamed == true)
+            if (bRenamed)
                 mOldNameNewName.remove(strOldName);
             else
                 QTimer::singleShot(1000*5, this, SLOT(timer_rename_channel())); // 5 sec
@@ -514,7 +514,7 @@ void OnetKernel::kernel(QString param1)
     }
 
     // detect unknown raw
-    if (bUnknownRaw1 == true && bUnknownRaw2 == true && bUnknownRaw3 == true)
+    if (bUnknownRaw1 && bUnknownRaw2 && bUnknownRaw3)
     {
         Log *l = new Log();
         l->save("unknown_raw", strData);
@@ -525,7 +525,7 @@ void OnetKernel::kernel(QString param1)
 // PING :cf1f1.onet
 void OnetKernel::raw_ping()
 {
-    if (strDataList.value(1).isEmpty() == true) return;
+    if (strDataList.value(1).isEmpty()) return;
 
     QString strServer = strDataList[1];
 
@@ -536,9 +536,9 @@ void OnetKernel::raw_ping()
 // :cf1f4.onet PONG cf1f4.onet :1279652441.189
 void OnetKernel::raw_pong()
 {
-    if (strDataList.value(1).isEmpty() == true) return;
-    if (strDataList.value(2).isEmpty() == true) return;
-    if (strDataList.value(3).isEmpty() == true) return;
+    if (strDataList.value(1).isEmpty()) return;
+    if (strDataList.value(2).isEmpty()) return;
+    if (strDataList.value(3).isEmpty()) return;
 
     QString strServerTime = strDataList[3];
     if (strServerTime[0] == ':')
@@ -601,7 +601,7 @@ void OnetKernel::raw_error()
 // :scc_test!51976824@3DE379.B7103A.6CF799.6902F4 JOIN #Quiz :rx,0
 void OnetKernel::raw_join()
 {
-    if (strDataList.value(2).isEmpty() == true) return;
+    if (strDataList.value(2).isEmpty()) return;
 
     QString strNick = strDataList[0];
     if (strNick[0] == ':')
@@ -669,7 +669,7 @@ void OnetKernel::raw_join()
 // :scc_test!51976824@3DE379.B7103A.6CF799.6902F4 PART #scc
 void OnetKernel::raw_part()
 {
-    if (strDataList.value(2).isEmpty() == true) return;
+    if (strDataList.value(2).isEmpty()) return;
 
     QString strNick = strDataList[0];
     if (strNick[0] == ':')
@@ -726,7 +726,7 @@ void OnetKernel::raw_part()
     emit del_user(strChannel, strNick);
 
     // remove nick avatar if not exist on any channel
-    if ((Core::instance()->mNickAvatar.contains(strNick) == true) && (Core::instance()->get_nick_channels(strNick) == 0))
+    if ((Core::instance()->mNickAvatar.contains(strNick)) && (Core::instance()->get_nick_channels(strNick) == 0))
         Core::instance()->mNickAvatar.remove(strNick);
 
     // if self part
@@ -747,7 +747,7 @@ void OnetKernel::raw_part()
 // :Stark!38566204@A5F2F1.68FE5E.DE32AF.62ECB9 QUIT :Client exited
 void OnetKernel::raw_quit()
 {
-    if (strDataList.value(2).isEmpty() == true) return;
+    if (strDataList.value(2).isEmpty()) return;
 
     QString strNick = strDataList[0];
     if (strNick[0] == ':')
@@ -775,7 +775,7 @@ void OnetKernel::raw_quit()
         strDisplay = QString(tr("* %1 [%2] has quit [%3]")).arg(strNick).arg(strIP).arg(strReason);
 
     // remove nick from avatars
-    if (Core::instance()->mNickAvatar.contains(strNick) == true)
+    if (Core::instance()->mNickAvatar.contains(strNick))
         Core::instance()->mNickAvatar.remove(strNick);
 
     emit quit_user(strNick, strDisplay);
@@ -784,7 +784,7 @@ void OnetKernel::raw_quit()
 // :scc_test!51976824@3DE379.B7103A.6CF799.6902F4 KICK #scc Moment_w_atmosferze :sio
 void OnetKernel::raw_kick()
 {
-    if (strDataList.value(2).isEmpty() == true) return;
+    if (strDataList.value(2).isEmpty()) return;
 
     QString strWho = strDataList[0];
     if (strWho[0] == ':')
@@ -821,7 +821,7 @@ void OnetKernel::raw_kick()
     emit del_user(strChannel, strNick);
 
     // remove nick from avatars if not exist on open channels
-    if ((Core::instance()->mNickAvatar.contains(strNick) == true) && (Core::instance()->get_nick_channels(strNick) == 0))
+    if ((Core::instance()->mNickAvatar.contains(strNick)) && (Core::instance()->get_nick_channels(strNick) == 0))
         Core::instance()->mNickAvatar.remove(strNick);
 
     QSettings settings;
@@ -847,8 +847,8 @@ void OnetKernel::raw_kick()
 // :ChanServ!service@service.onet MODE #abc123 +il-e 1 *!51976824@*
 void OnetKernel::raw_mode()
 {
-    if (strDataList.value(2).isEmpty() == true) return;
-    if (strDataList.value(3).isEmpty() == true) return;
+    if (strDataList.value(2).isEmpty()) return;
+    if (strDataList.value(3).isEmpty()) return;
 
     QString strWho = strDataList[0];
     if (strWho[0] == ':')
@@ -980,7 +980,7 @@ void OnetKernel::raw_mode()
 
             else
             {
-                if (strNick.isEmpty() == true)
+                if (strNick.isEmpty())
                     strDisplay = QString(tr("* Channel %1 now has a flag %2 (set by %3)")).arg(strNickChannel).arg(strFlag).arg(strWho);
                 else
                     strDisplay = QString(tr("* %1 now has a flag %2 (set by %3)")).arg(strNick).arg(strFlag).arg(strWho);
@@ -1052,7 +1052,7 @@ void OnetKernel::raw_mode()
 // :Merovingian!26269559@2294E8.94913F.2EAEC9.11F26D PRIVMSG #scc :hello
 void OnetKernel::raw_privmsg()
 {
-    if (strDataList.value(2).isEmpty() == true) return;
+    if (strDataList.value(2).isEmpty()) return;
 
     QString strNick = strDataList[0];
     if (strNick[0] == ':')
@@ -1080,7 +1080,7 @@ void OnetKernel::raw_privmsg()
 // :Llanero!43347263@admin.onet NOTICE $* :458852 * * :%Fb%%C008100%Weź udział w Konkursie Mikołajkowym - skompletuj zaprzęg Świetego Mikołaja! Więcej info w Wieściach z Czata ! http://czat.onet.pl/1632594,wiesci.html
 void OnetKernel::raw_notice()
 {
-    if (strDataList.value(2).isEmpty() == true) return;
+    if (strDataList.value(2).isEmpty()) return;
 
     QString strWho = strDataList[0];
     if (strWho[0] == ':')
@@ -1117,8 +1117,8 @@ void OnetKernel::raw_notice()
 // :Merovingian!26269559@jest.piekny.i.uroczy.ma.przesliczne.oczy INVITE scc_test :#Komputery
 void OnetKernel::raw_invite()
 {
-    if (strDataList.value(2).isEmpty() == true) return;
-    if (strDataList.value(3).isEmpty() == true) return;
+    if (strDataList.value(2).isEmpty()) return;
+    if (strDataList.value(3).isEmpty()) return;
 
     QString strWho = strDataList[0];
     if (strWho[0] == ':')
@@ -1142,7 +1142,7 @@ void OnetKernel::raw_invite()
 // :cf1f3.onet TOPIC #scc :Simple Chat Client; current version: beta;
 void OnetKernel::raw_topic()
 {
-    if (strDataList.value(2).isEmpty() == true) return;
+    if (strDataList.value(2).isEmpty()) return;
 
     QString strWho = strDataList[0];
     if (strWho[0] == ':')
@@ -1176,8 +1176,8 @@ void OnetKernel::raw_topic()
 // :Merovingian!26269559@2294E8.94913F.2E3993.4AF50D INVREJECT scc_test ^cf1f41038619
 void OnetKernel::raw_invreject()
 {
-    if (strDataList.value(2).isEmpty() == true) return;
-    if (strDataList.value(3).isEmpty() == true) return;
+    if (strDataList.value(2).isEmpty()) return;
+    if (strDataList.value(3).isEmpty()) return;
 
     QString strWho = strDataList[0];
     if (strWho[0] == ':')
@@ -1199,8 +1199,8 @@ void OnetKernel::raw_invreject()
 // :Merovingian!26269559@2294E8.94913F.A00186.4A2B76 INVIGNORE scc_test ^cf1f31294352
 void OnetKernel::raw_invignore()
 {
-    if (strDataList.value(2).isEmpty() == true) return;
-    if (strDataList.value(3).isEmpty() == true) return;
+    if (strDataList.value(2).isEmpty()) return;
+    if (strDataList.value(3).isEmpty()) return;
 
     QString strWho = strDataList[0];
     if (strWho[0] == ':')
@@ -1225,9 +1225,9 @@ void OnetKernel::raw_invignore()
 // :~testa!anonymous@3DE379.B7103A.6CF799.6902F4 MODERMSG test1 - #Scrabble :%F:verdana%%Ihehe%
 void OnetKernel::raw_modermsg()
 {
-    if (strDataList.value(2).isEmpty() == true) return;
-    if (strDataList.value(3).isEmpty() == true) return;
-    if (strDataList.value(4).isEmpty() == true) return;
+    if (strDataList.value(2).isEmpty()) return;
+    if (strDataList.value(3).isEmpty()) return;
+    if (strDataList.value(4).isEmpty()) return;
 
     QString strModerator = strDataList[0];
     if (strModerator[0] == ':')
@@ -1251,7 +1251,7 @@ void OnetKernel::raw_modermsg()
 // :~testa!anonymous@3DE379.B7103A.6CF799.6902F4 MODERNOTICE #Scrabble :a
 void OnetKernel::raw_modernotice()
 {
-    if (strDataList.value(2).isEmpty() == true) return;
+    if (strDataList.value(2).isEmpty()) return;
 
     QString strNick = strDataList[0];
     if (strNick[0] == ':')
@@ -1274,10 +1274,10 @@ void OnetKernel::raw_modernotice()
 // :cf1f1.onet MODERATE ~testa opnick #channel cf1f44c3b4b870f8a :%F:verdana%ladnie to tak
 void OnetKernel::raw_moderate()
 {
-    if (strDataList.value(2).isEmpty() == true) return;
-    if (strDataList.value(3).isEmpty() == true) return;
-    if (strDataList.value(4).isEmpty() == true) return;
-    if (strDataList.value(5).isEmpty() == true) return;
+    if (strDataList.value(2).isEmpty()) return;
+    if (strDataList.value(3).isEmpty()) return;
+    if (strDataList.value(4).isEmpty()) return;
+    if (strDataList.value(5).isEmpty()) return;
 
     QString strNick = strDataList[3];
     QString strChannel = strDataList[4];
@@ -1295,8 +1295,8 @@ void OnetKernel::raw_moderate()
 // :Darom!12265854@devel.onet KILL Merovingian :cf1f4.onet!devel.onet!Darom (Killed (Darom (bo tak)))
 void OnetKernel::raw_kill()
 {
-    if (strDataList.value(2).isEmpty() == true) return;
-    if (strDataList.value(3).isEmpty() == true) return;
+    if (strDataList.value(2).isEmpty()) return;
+    if (strDataList.value(3).isEmpty()) return;
 
     QString strNick = strDataList[2];
     if (strNick[0] == ':')
@@ -1414,9 +1414,9 @@ void OnetKernel::raw_005()
 // :Onet-Informuje!bot@service.onet NOTICE $* :100 #Podróże 1291377600 :Wolontariat w Afryce - czy warto spróbować?
 void OnetKernel::raw_100n()
 {
-    if (strDataList.value(3).isEmpty() == true) return;
-    if (strDataList.value(4).isEmpty() == true) return;
-    if (strDataList.value(5).isEmpty() == true) return;
+    if (strDataList.value(3).isEmpty()) return;
+    if (strDataList.value(4).isEmpty()) return;
+    if (strDataList.value(5).isEmpty()) return;
 
     QString strChannel = strDataList[4];
     QString strTime = strDataList[5];
@@ -1444,8 +1444,8 @@ void OnetKernel::raw_100n()
 // :GuardServ!service@service.onet NOTICE scc_test :109 #scc :rzucanie mięsem nie będzie tolerowane
 void OnetKernel::raw_109n()
 {
-    if (strDataList.value(3).isEmpty() == true) return;
-    if (strDataList.value(4).isEmpty() == true) return;
+    if (strDataList.value(3).isEmpty()) return;
+    if (strDataList.value(4).isEmpty()) return;
 
     QString strChannel = strDataList[4];
 
@@ -1488,7 +1488,7 @@ void OnetKernel::raw_111n()
     // set my profile
     if (strNick == strMe)
     {
-        if (Core::instance()->mMyProfile.contains(strKey) == true)
+        if (Core::instance()->mMyProfile.contains(strKey))
             Core::instance()->mMyProfile[strKey] = strValue;
         else
             Core::instance()->mMyProfile.insert(strKey, strValue);
@@ -1530,8 +1530,8 @@ void OnetKernel::raw_122n()
 // :NickServ!service@service.onet NOTICE Merovingian :123 mokka00 Viola_de_luxe :friend nick changed
 void OnetKernel::raw_123n()
 {
-    if (strDataList.value(4).isEmpty() == true) return;
-    if (strDataList.value(5).isEmpty() == true) return;
+    if (strDataList.value(4).isEmpty()) return;
+    if (strDataList.value(5).isEmpty()) return;
 
     QString strOldNick = strDataList[4];
     if (strOldNick[0] == ':')
@@ -1570,8 +1570,8 @@ void OnetKernel::raw_132n()
 // :NickServ!service@service.onet NOTICE Merovingian :133 test_nick test_nick_nowy :ignored nick changed
 void OnetKernel::raw_133n()
 {
-    if (strDataList.value(4).isEmpty() == true) return;
-    if (strDataList.value(5).isEmpty() == true) return;
+    if (strDataList.value(4).isEmpty()) return;
+    if (strDataList.value(5).isEmpty()) return;
 
     QString strOldNick = strDataList[4];
     if (strOldNick[0] == ':')
@@ -1671,7 +1671,7 @@ void OnetKernel::raw_152n()
 // :ChanServ!service@service.onet NOTICE scc_test :160 #scc :Simple Chat Client;
 void OnetKernel::raw_160n()
 {
-    if (strDataList.value(4).isEmpty() == true) return;
+    if (strDataList.value(4).isEmpty()) return;
 
     QString strChannel = strDataList[4];
 
@@ -1693,7 +1693,7 @@ void OnetKernel::raw_160n()
 // :ChanServ!service@service.onet NOTICE Merovingian :161 #scc :topicAuthor=Merovingian rank=1.7068 topicDate=1297944969 private=0 type=1 createdDate=1247005186 vEmail=1 www=http://simplechatclien.sourceforge.net/ catMajor=4 moderated=0 avatar=http://foto3.m.onet.pl/_m/97198666362c2c72c6311640f9e791cb,1,19,0-5-53-53-0.jpg guardian=3 email=merovirgian@gmail.com auditorium=0
 void OnetKernel::raw_161n()
 {
-    if (strDataList.value(4).isEmpty() == true) return;
+    if (strDataList.value(4).isEmpty()) return;
 
     QString strChannel = strDataList[4];
     QMap<QString,QString> mKeyValue;
@@ -1772,11 +1772,11 @@ void OnetKernel::raw_162n()
 // :ChanServ!service@service.onet NOTICE Merovingian :163 #scc b *!*@haxgu3xx7ptcn4u72yrkbp4daq Merovingian 1289497781 :Tony_Montana
 void OnetKernel::raw_163n()
 {
-    if (strDataList.value(4).isEmpty() == true) return;
-    if (strDataList.value(5).isEmpty() == true) return;
-    if (strDataList.value(6).isEmpty() == true) return;
-    if (strDataList.value(7).isEmpty() == true) return;
-    if (strDataList.value(8).isEmpty() == true) return;
+    if (strDataList.value(4).isEmpty()) return;
+    if (strDataList.value(5).isEmpty()) return;
+    if (strDataList.value(6).isEmpty()) return;
+    if (strDataList.value(7).isEmpty()) return;
+    if (strDataList.value(8).isEmpty()) return;
 
     QString strChannel = strDataList[4];
     QString strFlag = strDataList[5];
@@ -1810,7 +1810,7 @@ void OnetKernel::raw_164n()
 // :ChanServ!service@service.onet NOTICE ~test :165 #Relax :Nie ważne, czy szukasz dobrej zabawy, ...
 void OnetKernel::raw_165n()
 {
-    if (strDataList.value(4).isEmpty() == true) return;
+    if (strDataList.value(4).isEmpty()) return;
 
     QString strChannel = strDataList[4];
 
@@ -1827,7 +1827,7 @@ void OnetKernel::raw_165n()
 // :RankServ!service@service.onet NOTICE Merovingian :170 Merovingian :histActive=edgbcebbdccecbdbbccbcdcdccbabb histTotal=ijqkhhlfihiqlnqjlmmllomkohqfji idleTime=14020283 noise=101660 relationsFriend=91 relationsIgnored=0 sessionsTime=19023384 words=361679
 void OnetKernel::raw_170n()
 {
-    if (strDataList.value(4).isEmpty() == true) return;
+    if (strDataList.value(4).isEmpty()) return;
 
     QString strNick = strDataList[4];
 
@@ -1858,7 +1858,7 @@ void OnetKernel::raw_171n()
 // :RankServ!service@service.onet NOTICE Merovingian :175 #scc :histWords=247,4d,aa,1a3,130,3f3,a2,dfd,a21,5e8,245,185,379,2f0,41e,161d,1194,8a4,454,2ec,35f,30d,424,493,bc,426,33d,f7,705,307 noise=80619 relationsFavourite=40 visits=78 words=268782
 void OnetKernel::raw_175n()
 {
-    if (strDataList.value(4).isEmpty() == true) return;
+    if (strDataList.value(4).isEmpty()) return;
 
     QString strChannel = strDataList[4];
 
@@ -1894,7 +1894,7 @@ void OnetKernel::raw_210n()
 // :NickServ!service@service.onet NOTICE scc_test :211 city :value unset
 void OnetKernel::raw_211n()
 {
-    if (strDataList.value(4).isEmpty() == true) return;
+    if (strDataList.value(4).isEmpty()) return;
 
     QString strNick = strDataList[2];
     QString strKey = strDataList[4];
@@ -1906,7 +1906,7 @@ void OnetKernel::raw_211n()
     if (strNick == strMe)
     {
         // my profile
-        if (Core::instance()->mMyProfile.contains(strKey) == true)
+        if (Core::instance()->mMyProfile.contains(strKey))
             Core::instance()->mMyProfile[strKey] = "";
         else
             Core::instance()->mMyProfile.insert(strKey, "");
@@ -1914,7 +1914,7 @@ void OnetKernel::raw_211n()
         // my avatar
         if (strKey == "avatar")
         {
-            if (Core::instance()->mNickAvatar.contains(strMe) == true)
+            if (Core::instance()->mNickAvatar.contains(strMe))
                 Core::instance()->mNickAvatar.remove(strMe);
         }
     }
@@ -1926,7 +1926,7 @@ void OnetKernel::raw_211n()
 // :NickServ!service@service.onet NOTICE scc_test :220 aaa :friend added to list
 void OnetKernel::raw_220n()
 {
-    if (strDataList.value(4).isEmpty() == true) return;
+    if (strDataList.value(4).isEmpty()) return;
 
     QString strNick = strDataList[4];
 
@@ -1938,7 +1938,7 @@ void OnetKernel::raw_220n()
 // :NickServ!service@service.onet NOTICE scc_test :221 scc_test :friend removed from list
 void OnetKernel::raw_221n()
 {
-    if (strDataList.value(4).isEmpty() == true) return;
+    if (strDataList.value(4).isEmpty()) return;
 
     QString strNick = strDataList[4];
 
@@ -1950,7 +1950,7 @@ void OnetKernel::raw_221n()
 // :NickServ!service@service.onet NOTICE scc_test :230 ~test :ignore added to list
 void OnetKernel::raw_230n()
 {
-    if (strDataList.value(4).isEmpty() == true) return;
+    if (strDataList.value(4).isEmpty()) return;
 
     QString strNick = strDataList[4];
 
@@ -1965,14 +1965,14 @@ void OnetKernel::raw_230n()
 // :NickServ!service@service.onet NOTICE scc_test :231 ~test :ignore removed from list
 void OnetKernel::raw_231n()
 {
-    if (strDataList.value(4).isEmpty() == true) return;
+    if (strDataList.value(4).isEmpty()) return;
 
     QString strNick = strDataList[4];
 
     QString strDisplay = QString(tr("* Removed %1 from your ignore list")).arg(strNick);
     pTabC->show_msg_active(strDisplay, 7);
 
-    if (Core::instance()->lIgnore.contains(strNick) == true)
+    if (Core::instance()->lIgnore.contains(strNick))
         Core::instance()->lIgnore.removeOne(strNick);
 }
 
@@ -1980,7 +1980,7 @@ void OnetKernel::raw_231n()
 // :NickServ!service@service.onet NOTICE scc_test :240 #scc :favourite added to list
 void OnetKernel::raw_240n()
 {
-    if (strDataList.value(4).isEmpty() == true) return;
+    if (strDataList.value(4).isEmpty()) return;
 
     QString strChannel = strDataList[4];
 
@@ -1995,14 +1995,14 @@ void OnetKernel::raw_240n()
 // :NickServ!service@service.onet NOTICE scc_test :241 #scc :favourite removed from list
 void OnetKernel::raw_241n()
 {
-    if (strDataList.value(4).isEmpty() == true) return;
+    if (strDataList.value(4).isEmpty()) return;
 
     QString strChannel = strDataList[4];
 
     QString strDisplay = QString(tr("* Removed channel %1 from your favorites list")).arg(strChannel);
     pTabC->show_msg_active(strDisplay, 7);
 
-    if (Core::instance()->lChannelFavourites.contains(strChannel) == true)
+    if (Core::instance()->lChannelFavourites.contains(strChannel))
         Core::instance()->lChannelFavourites.removeOne(strChannel);
 }
 
@@ -2012,7 +2012,7 @@ void OnetKernel::raw_241n()
 // :NickServ!service@service.onet NOTICE Merovingian :250 scc_test :offline message sent
 void OnetKernel::raw_250n()
 {
-    if (strDataList.value(4).isEmpty() == true) return;
+    if (strDataList.value(4).isEmpty()) return;
 
     QString strNick = strDataList[0];
     if (strNick[0] == ':')
@@ -2054,7 +2054,7 @@ void OnetKernel::raw_251()
 // :NickServ!service@service.onet NOTICE Merovingian :251 scc_test 1291386193 msg :test message
 void OnetKernel::raw_251n()
 {
-    if (strDataList.value(4).isEmpty() == true) return;
+    if (strDataList.value(4).isEmpty()) return;
 
     QString strNick = strDataList[0];
     if (strNick[0] == ':')
@@ -2102,7 +2102,7 @@ void OnetKernel::raw_252()
 // :NickServ!service@service.onet NOTICE Merovingian :252 scc_test :offline messages rejected
 void OnetKernel::raw_252n()
 {
-    if (strDataList.value(4).isEmpty() == true) return;
+    if (strDataList.value(4).isEmpty()) return;
 
     QString strNick = strDataList[0];
     if (strNick[0] == ':')
@@ -2136,8 +2136,8 @@ void OnetKernel::raw_253()
 void OnetKernel::raw_253n()
 {
     // copy raw 254
-    if (strDataList.value(4).isEmpty() == true) return;
-    if (strDataList.value(5).isEmpty() == true) return;
+    if (strDataList.value(4).isEmpty()) return;
+    if (strDataList.value(5).isEmpty()) return;
 
     QString strChannel = strDataList[4];
     QString strWho = strDataList[2];
@@ -2160,8 +2160,8 @@ void OnetKernel::raw_254()
 // :ChanServ!service@service.onet NOTICE #test_scc_moj :254 scc_test Merovingian :changed channel owner
 void OnetKernel::raw_254n()
 {
-    if (strDataList.value(4).isEmpty() == true) return;
-    if (strDataList.value(5).isEmpty() == true) return;
+    if (strDataList.value(4).isEmpty()) return;
+    if (strDataList.value(5).isEmpty()) return;
 
     QString strChannel = strDataList[2];
     QString strWho = strDataList[4];
@@ -2184,9 +2184,9 @@ void OnetKernel::raw_255()
 // :ChanServ!service@service.onet NOTICE scc_test :255 #scc +b cos :channel privilege changed
 void OnetKernel::raw_255n()
 {
-    if (strDataList.value(4).isEmpty() == true) return;
-    if (strDataList.value(5).isEmpty() == true) return;
-    if (strDataList.value(6).isEmpty() == true) return;
+    if (strDataList.value(4).isEmpty()) return;
+    if (strDataList.value(5).isEmpty()) return;
+    if (strDataList.value(6).isEmpty()) return;
 
     QString strChannel = strDataList[4];
     QString strNick = strDataList[6];
@@ -2211,9 +2211,9 @@ void OnetKernel::raw_256()
 // :ChanServ!service@service.onet NOTICE #scc :256 Merovingian +o scc_test :channel privilege changed
 void OnetKernel::raw_256n()
 {
-    if (strDataList.value(4).isEmpty() == true) return;
-    if (strDataList.value(5).isEmpty() == true) return;
-    if (strDataList.value(6).isEmpty() == true) return;
+    if (strDataList.value(4).isEmpty()) return;
+    if (strDataList.value(5).isEmpty()) return;
+    if (strDataList.value(6).isEmpty()) return;
 
     QString strChannel = strDataList[2];
     QString strWho = strDataList[4];
@@ -2260,7 +2260,7 @@ void OnetKernel::raw_257()
 // :ChanServ!service@service.onet NOTICE scc_test :257 #scc * :settings changed
 void OnetKernel::raw_257n()
 {
-    if (strDataList.value(4).isEmpty() == true) return;
+    if (strDataList.value(4).isEmpty()) return;
 
     QString strChannel = strDataList[4];
 
@@ -2284,7 +2284,7 @@ void OnetKernel::raw_258()
 // :ChanServ!service@service.onet NOTICE #scc :258 Merovingian * :channel settings changed
 void OnetKernel::raw_258n()
 {
-    if (strDataList.value(4).isEmpty() == true) return;
+    if (strDataList.value(4).isEmpty()) return;
 
     QString strChannel = strDataList[2];
     QString strNick = strDataList[4];
@@ -2313,7 +2313,7 @@ void OnetKernel::raw_259()
 // :ChanServ!service@service.onet NOTICE scc_test :259 #scc :nothing changed
 void OnetKernel::raw_259n()
 {
-    if (strDataList.value(4).isEmpty() == true) return;
+    if (strDataList.value(4).isEmpty()) return;
 
     QString strChannel = strDataList[4];
 
@@ -2325,9 +2325,9 @@ void OnetKernel::raw_259n()
 void OnetKernel::raw_260n()
 {
     // copy raw 256
-    if (strDataList.value(4).isEmpty() == true) return;
-    if (strDataList.value(5).isEmpty() == true) return;
-    if (strDataList.value(6).isEmpty() == true) return;
+    if (strDataList.value(4).isEmpty()) return;
+    if (strDataList.value(5).isEmpty()) return;
+    if (strDataList.value(6).isEmpty()) return;
 
     QString strChannel = strDataList[5];
     QString strWho = strDataList[4];
@@ -2364,8 +2364,8 @@ void OnetKernel::raw_260n()
 // :NickServ!service@service.onet NOTICE Merovingian :261 aa_PrezesCiemnosci gaafa7 jaanka9 Naatasza23 zaak_333 Agaaaaaaaa ~Faajny25 kubaaa19 ~Amaadeusz_x misiaa_40
 void OnetKernel::raw_261n()
 {
-    if (strDataList.value(4).isEmpty() == true) return;
-    if (strDataList.value(5).isEmpty() == true) return;
+    if (strDataList.value(4).isEmpty()) return;
+    if (strDataList.value(5).isEmpty()) return;
 
     QString strNick = strDataList[0];
     if (strNick[0] == ':')
@@ -2379,11 +2379,11 @@ void OnetKernel::raw_261n()
         QMessageBox::information(0, "", QString(tr("Successfully removed channel %1")).arg(strChannel));
 
         // remove from list
-        if (Core::instance()->lChannelHomes.contains(strChannel) == true)
+        if (Core::instance()->lChannelHomes.contains(strChannel))
             Core::instance()->lChannelHomes.removeOne(strChannel);
 
         // part
-        if (pTabC->exist_tab(strChannel) == true)
+        if (pTabC->exist_tab(strChannel))
             pNetwork->send(QString("PART %1").arg(strChannel));
     }
     else if (strNick.toLower() == "nickserv")
@@ -2437,7 +2437,7 @@ void OnetKernel::raw_272()
 // :cf1f2.onet 301 scc_test Merovingian :nie ma
 void OnetKernel::raw_301()
 {
-    if (strDataList.value(3).isEmpty() == true) return;
+    if (strDataList.value(3).isEmpty()) return;
 
     QString strNick = strDataList[3];
 
@@ -2469,7 +2469,7 @@ void OnetKernel::raw_302()
 // :cf1f1.onet 303 ~test :Darom
 void OnetKernel::raw_303()
 {
-    if (strDataList.value(3).isEmpty() == true) return;
+    if (strDataList.value(3).isEmpty()) return;
 
     QString strNick = strDataList[3];
     if (strNick[0] == ':')
@@ -2520,7 +2520,7 @@ void OnetKernel::raw_306()
 // :cf1f3.onet 307 scc_test Merovingian :is a registered nick
 void OnetKernel::raw_307()
 {
-    if (strDataList.value(3).isEmpty() == true) return;
+    if (strDataList.value(3).isEmpty()) return;
 
     QString strNick = strDataList[3];
 
@@ -2540,10 +2540,10 @@ void OnetKernel::raw_307()
 // :cf1f1.onet 311 scc_test Merovingian 26269559 2294E8.94913F.196694.9BAE58 * :Merovingian
 void OnetKernel::raw_311()
 {
-    if (strDataList.value(3).isEmpty() == true) return;
-    if (strDataList.value(4).isEmpty() == true) return;
-    if (strDataList.value(5).isEmpty() == true) return;
-    if (strDataList.value(7).isEmpty() == true) return;
+    if (strDataList.value(3).isEmpty()) return;
+    if (strDataList.value(4).isEmpty()) return;
+    if (strDataList.value(5).isEmpty()) return;
+    if (strDataList.value(7).isEmpty()) return;
 
     QString strNick = strDataList[3];
     QString strZUO = strDataList[4];
@@ -2567,7 +2567,7 @@ void OnetKernel::raw_311()
 // :cf1f2.onet 312 Merovingian merovingian *.onet :Wed Sep  1 18:37:42 2010
 void OnetKernel::raw_312()
 {
-    if (strDataList.value(3).isEmpty() == true) return;
+    if (strDataList.value(3).isEmpty()) return;
 
     QString strNick = strDataList[3];
 
@@ -2583,7 +2583,7 @@ void OnetKernel::raw_312()
 // :cf1f2.onet 313 Merovingian Darom :is a NetAdmin on OnetCzat
 void OnetKernel::raw_313()
 {
-    if (strDataList.value(3).isEmpty() == true) return;
+    if (strDataList.value(3).isEmpty()) return;
 
     QString strNick = strDataList[3];
 
@@ -2608,10 +2608,10 @@ void OnetKernel::raw_313()
 void OnetKernel::raw_314()
 {
     // copy of raw 311
-    if (strDataList.value(3).isEmpty() == true) return;
-    if (strDataList.value(4).isEmpty() == true) return;
-    if (strDataList.value(5).isEmpty() == true) return;
-    if (strDataList.value(7).isEmpty() == true) return;
+    if (strDataList.value(3).isEmpty()) return;
+    if (strDataList.value(4).isEmpty()) return;
+    if (strDataList.value(5).isEmpty()) return;
+    if (strDataList.value(7).isEmpty()) return;
 
     QString strNick = strDataList[3];
     QString strZUO = strDataList[4];
@@ -2634,7 +2634,7 @@ void OnetKernel::raw_314()
 // :cf1f4.onet 315 Merovingian #16_17_18_19_lat :Too many results
 void OnetKernel::raw_315()
 {
-    if (strDataList.value(3).isEmpty() == true) return;
+    if (strDataList.value(3).isEmpty()) return;
 
     QString strNickChannel = strDataList[3];
 
@@ -2657,10 +2657,10 @@ void OnetKernel::raw_315()
 void OnetKernel::raw_316()
 {
     // copy of raw 311
-    if (strDataList.value(3).isEmpty() == true) return;
-    if (strDataList.value(4).isEmpty() == true) return;
-    if (strDataList.value(5).isEmpty() == true) return;
-    if (strDataList.value(7).isEmpty() == true) return;
+    if (strDataList.value(3).isEmpty()) return;
+    if (strDataList.value(4).isEmpty()) return;
+    if (strDataList.value(5).isEmpty()) return;
+    if (strDataList.value(7).isEmpty()) return;
 
     QString strNick = strDataList[3];
     QString strZUO = strDataList[4];
@@ -2682,9 +2682,9 @@ void OnetKernel::raw_316()
 // :cf1f3.onet 317 scc_test Merovingian 7 1263650617 :seconds idle, signon time
 void OnetKernel::raw_317()
 {
-    if (strDataList.value(3).isEmpty() == true) return;
-    if (strDataList.value(4).isEmpty() == true) return;
-    if (strDataList.value(5).isEmpty() == true) return;
+    if (strDataList.value(3).isEmpty()) return;
+    if (strDataList.value(4).isEmpty()) return;
+    if (strDataList.value(5).isEmpty()) return;
 
     QString strNick = strDataList[3];
     QString strIdle = strDataList[4];
@@ -2732,7 +2732,7 @@ void OnetKernel::raw_318()
 // :cf1f4.onet 319 scc_test Merovingian :#testy %#Komputery `#scc `#Quiz `#Scrabble `#hack
 void OnetKernel::raw_319()
 {
-    if (strDataList.value(3).isEmpty() == true) return;
+    if (strDataList.value(3).isEmpty()) return;
 
     QString strNick = strDataList[3];
 
@@ -2755,8 +2755,8 @@ void OnetKernel::raw_319()
 // :cf1f4.onet 332 scc_test #scc :Simple Chat Client; current version: beta;
 void OnetKernel::raw_332()
 {
-    if (strDataList.value(3).isEmpty() == true) return;
-    if (strDataList.value(4).isEmpty() == true) return;
+    if (strDataList.value(3).isEmpty()) return;
+    if (strDataList.value(4).isEmpty()) return;
 
     QString strChannel = strDataList[3];
     if (strChannel[0] == ':')
@@ -2780,8 +2780,8 @@ void OnetKernel::raw_333()
 // :cf1f1.onet 341 scc_test Merovingian ^cf1f1162848
 void OnetKernel::raw_341()
 {
-    if (strDataList.value(3).isEmpty() == true) return;
-    if (strDataList.value(4).isEmpty() == true) return;
+    if (strDataList.value(3).isEmpty()) return;
+    if (strDataList.value(4).isEmpty()) return;
 
     QString strNick = strDataList[3];
     QString strChannel = strDataList[4];
@@ -2829,8 +2829,8 @@ void OnetKernel::raw_352()
 
 void OnetKernel::raw_353()
 {
-    if (strDataList.value(3).isEmpty() == true) return;
-    if (strDataList.value(4).isEmpty() == true) return;
+    if (strDataList.value(3).isEmpty()) return;
+    if (strDataList.value(4).isEmpty()) return;
 
     QString strChannel = strDataList[4];
 
@@ -2898,7 +2898,7 @@ void OnetKernel::raw_355()
 // :cf1f2.onet 366 scc_test #scc :End of /NAMES list.
 void OnetKernel::raw_366()
 {
-    if (strDataList.value(3).isEmpty() == true) return;
+    if (strDataList.value(3).isEmpty()) return;
 
     QString strChannel = strDataList[3];
 
@@ -2963,12 +2963,12 @@ void OnetKernel::raw_376()
 // :cf1f1.onet 378 Merovingian Merovingian :is connecting from 26269559@46.113.153.49 46.113.153.49
 void OnetKernel::raw_378()
 {
-    if (strDataList.value(3).isEmpty() == true) return;
-    if (strDataList.value(4).isEmpty() == true) return;
-    if (strDataList.value(5).isEmpty() == true) return;
-    if (strDataList.value(6).isEmpty() == true) return;
-    if (strDataList.value(7).isEmpty() == true) return;
-    if (strDataList.value(8).isEmpty() == true) return;
+    if (strDataList.value(3).isEmpty()) return;
+    if (strDataList.value(4).isEmpty()) return;
+    if (strDataList.value(5).isEmpty()) return;
+    if (strDataList.value(6).isEmpty()) return;
+    if (strDataList.value(7).isEmpty()) return;
+    if (strDataList.value(8).isEmpty()) return;
 
     QString strNick = strDataList[3];
     QString strZuoIP = strDataList[7];
@@ -2982,7 +2982,7 @@ void OnetKernel::raw_378()
 // :cf1f2.onet 391 ~test cf1f2.onet :Tue Jul 13 18:33:05 2010
 void OnetKernel::raw_391()
 {
-    if (strDataList.value(3).isEmpty() == true) return;
+    if (strDataList.value(3).isEmpty()) return;
 
     QString strServer = strDataList[3];
 
@@ -2999,7 +2999,7 @@ void OnetKernel::raw_391()
 // :cf1f2.onet 396 ~scc_test 3DE379.B7103A.6CF799.6902F4 :is now your displayed host
 void OnetKernel::raw_396()
 {
-    if (strDataList.value(3).isEmpty() == true) return;
+    if (strDataList.value(3).isEmpty()) return;
 
     QString strHost = strDataList[3];
 
@@ -3024,7 +3024,7 @@ void OnetKernel::raw_400n()
 // :cf1f4.onet 401 Merovingian ChanServ :is currently unavailable. Please try again later.
 void OnetKernel::raw_401()
 {
-    if (strDataList.value(3).isEmpty() == true) return;
+    if (strDataList.value(3).isEmpty()) return;
 
     QString strNickChannel = strDataList[3];
 
@@ -3048,7 +3048,7 @@ void OnetKernel::raw_401()
     // close inactive priv
     if (strNickChannel[0] == '^')
     {
-        if (pTabC->exist_tab(strNickChannel) == true)
+        if (pTabC->exist_tab(strNickChannel))
             pTabC->remove_tab(strNickChannel);
     }
 }
@@ -3057,8 +3057,8 @@ void OnetKernel::raw_401()
 // :NickServ!service@service.onet NOTICE Merovingian :401 a :no such nick
 void OnetKernel::raw_401n()
 {
-    if (strDataList.value(3).isEmpty() == true) return;
-    if (strDataList.value(4).isEmpty() == true) return;
+    if (strDataList.value(3).isEmpty()) return;
+    if (strDataList.value(4).isEmpty()) return;
 
     QString strNick = strDataList[4];
 
@@ -3070,7 +3070,7 @@ void OnetKernel::raw_401n()
 // :cf1f4.onet 402 Merovingian a :No such server
 void OnetKernel::raw_402()
 {
-    if (strDataList.value(3).isEmpty() == true) return;
+    if (strDataList.value(3).isEmpty()) return;
 
     QString strServer = strDataList[3];
 
@@ -3082,7 +3082,7 @@ void OnetKernel::raw_402()
 // :ChanServ!service@service.onet NOTICE Merovingian :402 !*@*aa :invalid mask
 void OnetKernel::raw_402n()
 {
-    if (strDataList.value(3).isEmpty() == true) return;
+    if (strDataList.value(3).isEmpty()) return;
 
     QString strMask = strDataList[4];
 
@@ -3094,7 +3094,7 @@ void OnetKernel::raw_402n()
 // :cf1f1.onet 403 ~testa #^cf1f41568 :Invalid channel name
 void OnetKernel::raw_403()
 {
-    if (strDataList.value(3).isEmpty() == true) return;
+    if (strDataList.value(3).isEmpty()) return;
 
     QString strChannel = strDataList[3];
 
@@ -3106,7 +3106,7 @@ void OnetKernel::raw_403()
     // close inactive priv
     if (strChannel[0] == '^')
     {
-        if (pTabC->exist_tab(strChannel) == true)
+        if (pTabC->exist_tab(strChannel))
             pTabC->remove_tab(strChannel);
     }
 }
@@ -3117,7 +3117,7 @@ void OnetKernel::raw_403()
 // :NickServ!service@service.onet NOTICE Merovingian :403 msg :user is not on-line
 void OnetKernel::raw_403n()
 {
-    if (strDataList.value(3).isEmpty() == true) return;
+    if (strDataList.value(3).isEmpty()) return;
 
     QString strNick = strDataList[0];
     if (strNick[0] == ':')
@@ -3142,7 +3142,7 @@ void OnetKernel::raw_403n()
 // :cf1f4.onet 404 ~scc_test #lunar :Cannot send to channel (no external messages)
 void OnetKernel::raw_404()
 {
-    if (strDataList.value(3).isEmpty() == true) return;
+    if (strDataList.value(3).isEmpty()) return;
 
     QString strChannel = strDataList[3];
 
@@ -3166,8 +3166,8 @@ void OnetKernel::raw_404()
 // :ChanServ!service@service.onet NOTICE scc_test :404 ~zwariowany_zdzich0 :user is not registred
 void OnetKernel::raw_404n()
 {
-    if (strDataList.value(3).isEmpty() == true) return;
-    if (strDataList.value(4).isEmpty() == true) return;
+    if (strDataList.value(3).isEmpty()) return;
+    if (strDataList.value(4).isEmpty()) return;
 
     QString strNick = strDataList[4];
 
@@ -3180,7 +3180,7 @@ void OnetKernel::raw_404n()
 //:cf1f2.onet 406 Merovingian a :There was no such nickname
 void OnetKernel::raw_406()
 {
-    if (strDataList.value(3).isEmpty() == true) return;
+    if (strDataList.value(3).isEmpty()) return;
 
     QString strNick = strDataList[3];
 
@@ -3192,8 +3192,8 @@ void OnetKernel::raw_406()
 // :ChanServ!service@service.onet NOTICE ~test :406 VHOST :unknown command
 void OnetKernel::raw_406n()
 {
-    if (strDataList.value(3).isEmpty() == true) return;
-    if (strDataList.value(4).isEmpty() == true) return;
+    if (strDataList.value(3).isEmpty()) return;
+    if (strDataList.value(4).isEmpty()) return;
 
     QString strCmd = strDataList[4];
 
@@ -3206,8 +3206,8 @@ void OnetKernel::raw_406n()
 // :NickServ!service@service.onet NOTICE Merovingian :407 OFFLINE GET :not enough parameters
 void OnetKernel::raw_407n()
 {
-    if (strDataList.value(3).isEmpty() == true) return;
-    if (strDataList.value(4).isEmpty() == true) return;
+    if (strDataList.value(3).isEmpty()) return;
+    if (strDataList.value(4).isEmpty()) return;
 
     QString strCmd = strDataList[4];
 
@@ -3220,8 +3220,8 @@ void OnetKernel::raw_407n()
 // :RankServ!service@service.onet NOTICE Merovingian :408 #aa :no such channel
 void OnetKernel::raw_408n()
 {
-    if (strDataList.value(3).isEmpty() == true) return;
-    if (strDataList.value(4).isEmpty() == true) return;
+    if (strDataList.value(3).isEmpty()) return;
+    if (strDataList.value(4).isEmpty()) return;
 
     QString strChannel = strDataList[4];
 
@@ -3233,8 +3233,8 @@ void OnetKernel::raw_408n()
 // :NickServ!service@service.onet NOTICE Merovingian :409 WWW :invalid argument
 void OnetKernel::raw_409n()
 {
-    if (strDataList.value(3).isEmpty() == true) return;
-    if (strDataList.value(4).isEmpty() == true) return;
+    if (strDataList.value(3).isEmpty()) return;
+    if (strDataList.value(4).isEmpty()) return;
 
     QString strCommand = strDataList[4];
 
@@ -3279,8 +3279,8 @@ void OnetKernel::raw_416n()
 // :NickServ!service@service.onet NOTICE scc_test :420 aleksa7 :is already on your friend list
 void OnetKernel::raw_420n()
 {
-    if (strDataList.value(3).isEmpty() == true) return;
-    if (strDataList.value(4).isEmpty() == true) return;
+    if (strDataList.value(3).isEmpty()) return;
+    if (strDataList.value(4).isEmpty()) return;
 
     QString strNick = strDataList[4];
 
@@ -3293,7 +3293,7 @@ void OnetKernel::raw_420n()
 // :cf1f4.onet 421 scc_test MOD :Unknown command
 void OnetKernel::raw_421()
 {
-    if (strDataList.value(3).isEmpty() == true) return;
+    if (strDataList.value(3).isEmpty()) return;
 
     QString strCmd = strDataList[3];
 
@@ -3315,8 +3315,8 @@ void OnetKernel::raw_421()
 // :NickServ!service@service.onet NOTICE scc_test :421 aaa :is not on your friend list
 void OnetKernel::raw_421n()
 {
-    if (strDataList.value(3).isEmpty() == true) return;
-    if (strDataList.value(4).isEmpty() == true) return;
+    if (strDataList.value(3).isEmpty()) return;
+    if (strDataList.value(4).isEmpty()) return;
 
     QString strNick = strDataList[4];
 
@@ -3328,8 +3328,8 @@ void OnetKernel::raw_421n()
 // :NickServ!service@service.onet NOTICE scc_test :430 wilk :is already on your ignore list
 void OnetKernel::raw_430n()
 {
-    if (strDataList.value(3).isEmpty() == true) return;
-    if (strDataList.value(4).isEmpty() == true) return;
+    if (strDataList.value(3).isEmpty()) return;
+    if (strDataList.value(4).isEmpty()) return;
 
     QString strNick = strDataList[4];
 
@@ -3341,8 +3341,8 @@ void OnetKernel::raw_430n()
 // :NickServ!service@service.onet NOTICE scc_test :431 a :is not on your ignore list
 void OnetKernel::raw_431n()
 {
-    if (strDataList.value(3).isEmpty() == true) return;
-    if (strDataList.value(4).isEmpty() == true) return;
+    if (strDataList.value(3).isEmpty()) return;
+    if (strDataList.value(4).isEmpty()) return;
 
     QString strNick = strDataList[4];
 
@@ -3354,7 +3354,7 @@ void OnetKernel::raw_431n()
 // :cf1f4.onet 432 1501-unknown ~?o? :Erroneous Nickname
 void OnetKernel::raw_432()
 {
-    if (strDataList.value(3).isEmpty() == true) return;
+    if (strDataList.value(3).isEmpty()) return;
 
     QString strNick = strDataList[3];
 
@@ -3366,7 +3366,7 @@ void OnetKernel::raw_432()
 // :cf1f1.onet 433 * scc_test :Nickname is already in use.
 void OnetKernel::raw_433()
 {
-    if (strDataList.value(3).isEmpty() == true) return;
+    if (strDataList.value(3).isEmpty()) return;
 
     QString strNick = strDataList[3];
 
@@ -3388,8 +3388,8 @@ void OnetKernel::raw_433()
 // :NickServ!service@service.onet NOTICE scc_test :440 #scc :is already on your favourite list
 void OnetKernel::raw_440n()
 {
-    if (strDataList.value(3).isEmpty() == true) return;
-    if (strDataList.value(4).isEmpty() == true) return;
+    if (strDataList.value(3).isEmpty()) return;
+    if (strDataList.value(4).isEmpty()) return;
 
     QString strChannel = strDataList[4];
 
@@ -3402,8 +3402,8 @@ void OnetKernel::raw_440n()
 // :cf1f2.onet 441 Merovingian ~prawdziwa #kusicielki :They are not on that channel
 void OnetKernel::raw_441()
 {
-    if (strDataList.value(3).isEmpty() == true) return;
-    if (strDataList.value(4).isEmpty() == true) return;
+    if (strDataList.value(3).isEmpty()) return;
+    if (strDataList.value(4).isEmpty()) return;
 
     QString strNick = strDataList[3];
     QString strChannel = strDataList[4];
@@ -3416,8 +3416,8 @@ void OnetKernel::raw_441()
 // :NickServ!service@service.onet NOTICE scc_test :441 #scc :is not on your favourite list
 void OnetKernel::raw_441n()
 {
-    if (strDataList.value(3).isEmpty() == true) return;
-    if (strDataList.value(4).isEmpty() == true) return;
+    if (strDataList.value(3).isEmpty()) return;
+    if (strDataList.value(4).isEmpty()) return;
 
     QString strChannel = strDataList[4];
 
@@ -3430,7 +3430,7 @@ void OnetKernel::raw_441n()
 // :cf1f3.onet 442 Merovingian #Rozrywka :You're not on that channel!
 void OnetKernel::raw_442()
 {
-    if (strDataList.value(3).isEmpty() == true) return;
+    if (strDataList.value(3).isEmpty()) return;
 
     QString strChannel = strDataList[3];
 
@@ -3442,8 +3442,8 @@ void OnetKernel::raw_442()
 // :cf1f4.onet 443 Merovingian scc #Scrabble :is already on channel
 void OnetKernel::raw_443()
 {
-    if (strDataList.value(3).isEmpty() == true) return;
-    if (strDataList.value(4).isEmpty() == true) return;
+    if (strDataList.value(3).isEmpty()) return;
+    if (strDataList.value(4).isEmpty()) return;
 
     QString strNick = strDataList[3];
     QString strChannel = strDataList[4];
@@ -3491,8 +3491,8 @@ void OnetKernel::raw_451()
 // :ChanServ!service@service.onet NOTICE scc_test :452 #aaa :channel name already in use
 void OnetKernel::raw_452n()
 {
-    if (strDataList.value(3).isEmpty() == true) return;
-    if (strDataList.value(4).isEmpty() == true) return;
+    if (strDataList.value(3).isEmpty()) return;
+    if (strDataList.value(4).isEmpty()) return;
 
     QString strChannel = strDataList[4];
 
@@ -3505,8 +3505,8 @@ void OnetKernel::raw_452n()
 // :NickServ!service@service.onet NOTICE Merovingian :454 a :no messages
 void OnetKernel::raw_454n()
 {
-    if (strDataList.value(3).isEmpty() == true) return;
-    if (strDataList.value(4).isEmpty() == true) return;
+    if (strDataList.value(3).isEmpty()) return;
+    if (strDataList.value(4).isEmpty()) return;
 
     QString strNick = strDataList[0];
     if (strNick[0] == ':')
@@ -3532,8 +3532,8 @@ void OnetKernel::raw_454n()
 // :NickServ!service@service.onet NOTICE Merovingian :455 scc_test5 :ignores offline messages from you
 void OnetKernel::raw_455n()
 {
-    if (strDataList.value(3).isEmpty() == true) return;
-    if (strDataList.value(4).isEmpty() == true) return;
+    if (strDataList.value(3).isEmpty()) return;
+    if (strDataList.value(4).isEmpty()) return;
 
     QString strNick = strDataList[4];
 
@@ -3546,9 +3546,9 @@ void OnetKernel::raw_455n()
 // :NickServ!service@service.onet NOTICE Merovingian :456 Merovingian :is online
 void OnetKernel::raw_456n()
 {
-    if (strDataList.value(3).isEmpty() == true) return;
-    if (strDataList.value(4).isEmpty() == true) return;
-    if (strDataList.value(5).isEmpty() == true) return;
+    if (strDataList.value(3).isEmpty()) return;
+    if (strDataList.value(4).isEmpty()) return;
+    if (strDataList.value(5).isEmpty()) return;
 
     QString strNick = strDataList[0];
     if (strNick[0] == ':')
@@ -3576,10 +3576,10 @@ void OnetKernel::raw_456n()
 // :ChanServ!service@service.onet NOTICE scc_test :458 #scc v scc :unable to remove non-existent privilege
 void OnetKernel::raw_458n()
 {
-    if (strDataList.value(3).isEmpty() == true) return;
-    if (strDataList.value(4).isEmpty() == true) return;
-    if (strDataList.value(5).isEmpty() == true) return;
-    if (strDataList.value(6).isEmpty() == true) return;
+    if (strDataList.value(3).isEmpty()) return;
+    if (strDataList.value(4).isEmpty()) return;
+    if (strDataList.value(5).isEmpty()) return;
+    if (strDataList.value(6).isEmpty()) return;
 
     QString strChannel = strDataList[4];
     QString strWho = strDataList[6];
@@ -3593,10 +3593,10 @@ void OnetKernel::raw_458n()
 // :ChanServ!service@service.onet NOTICE scc_test :459 #scc b test :channel privilege already given
 void OnetKernel::raw_459n()
 {
-    if (strDataList.value(3).isEmpty() == true) return;
-    if (strDataList.value(4).isEmpty() == true) return;
-    if (strDataList.value(5).isEmpty() == true) return;
-    if (strDataList.value(6).isEmpty() == true) return;
+    if (strDataList.value(3).isEmpty()) return;
+    if (strDataList.value(4).isEmpty()) return;
+    if (strDataList.value(5).isEmpty()) return;
+    if (strDataList.value(6).isEmpty()) return;
 
     QString strChannel = strDataList[4];
     QString strWho = strDataList[6];
@@ -3610,7 +3610,7 @@ void OnetKernel::raw_459n()
 // :cf1f2.onet 461 ~test OPER :Not enough parameters.
 void OnetKernel::raw_461()
 {
-    if (strDataList.value(3).isEmpty() == true) return;
+    if (strDataList.value(3).isEmpty()) return;
 
     QString strCmd = strDataList[3];
 
@@ -3622,9 +3622,9 @@ void OnetKernel::raw_461()
 // :ChanServ!service@service.onet NOTICE scc_test :461 #scc scc :channel operators cannot be banned
 void OnetKernel::raw_461n()
 {
-    if (strDataList.value(3).isEmpty() == true) return;
-    if (strDataList.value(4).isEmpty() == true) return;
-    if (strDataList.value(5).isEmpty() == true) return;
+    if (strDataList.value(3).isEmpty()) return;
+    if (strDataList.value(4).isEmpty()) return;
+    if (strDataList.value(5).isEmpty()) return;
 
     QString strChannel = strDataList[4];
     QString strWho = strDataList[5];
@@ -3646,8 +3646,8 @@ void OnetKernel::raw_462()
 // :ChanServ!service@service.onet NOTICE scc_test :463 #lunar AUDITORIUM :permission denied, insufficient privileges
 void OnetKernel::raw_463n()
 {
-    if (strDataList.value(3).isEmpty() == true) return;
-    if (strDataList.value(4).isEmpty() == true) return;
+    if (strDataList.value(3).isEmpty()) return;
+    if (strDataList.value(4).isEmpty()) return;
 
     QString strChannel = strDataList[4];
     QString strCommand = strDataList[5];
@@ -3659,8 +3659,8 @@ void OnetKernel::raw_463n()
 // :ChanServ!service@service.onet NOTICE Merovingian :464 TOPIC :invalid argument
 void OnetKernel::raw_464n()
 {
-    if (strDataList.value(3).isEmpty() == true) return;
-    if (strDataList.value(4).isEmpty() == true) return;
+    if (strDataList.value(3).isEmpty()) return;
+    if (strDataList.value(4).isEmpty()) return;
 
     QString strCommand = strDataList[4];
 
@@ -3671,8 +3671,8 @@ void OnetKernel::raw_464n()
 // :ChanServ!service@service.onet NOTICE scc_test :467 #scc :permission denied, you are not a channel owner
 void OnetKernel::raw_467n()
 {
-    if (strDataList.value(3).isEmpty() == true) return;
-    if (strDataList.value(4).isEmpty() == true) return;
+    if (strDataList.value(3).isEmpty()) return;
+    if (strDataList.value(4).isEmpty()) return;
 
     QString strChannel = strDataList[4];
 
@@ -3683,8 +3683,8 @@ void OnetKernel::raw_467n()
 // :ChanServ!service@service.onet NOTICE scc_test :468 #scc :permission denied, insufficient privileges
 void OnetKernel::raw_468n()
 {
-    if (strDataList.value(3).isEmpty() == true) return;
-    if (strDataList.value(4).isEmpty() == true) return;
+    if (strDataList.value(3).isEmpty()) return;
+    if (strDataList.value(4).isEmpty()) return;
 
     QString strChannel = strDataList[4];
 
@@ -3695,8 +3695,8 @@ void OnetKernel::raw_468n()
 // :ChanServ!service@service.onet NOTICE Merovingian :469 #Czat :channel is private
 void OnetKernel::raw_469n()
 {
-    if (strDataList.value(3).isEmpty() == true) return;
-    if (strDataList.value(4).isEmpty() == true) return;
+    if (strDataList.value(3).isEmpty()) return;
+    if (strDataList.value(4).isEmpty()) return;
 
     QString strChannel = strDataList[4];
 
@@ -3707,7 +3707,7 @@ void OnetKernel::raw_469n()
 // :cf1f3.onet 470 ~Merovingian :#testy has become full, so you are automatically being transferred to the linked channel #Awaria
 void OnetKernel::raw_470()
 {
-    if (strDataList.value(3).isEmpty() == true) return;
+    if (strDataList.value(3).isEmpty()) return;
 
     QString strChannel = strDataList[3];
     if (strChannel[0] == ':')
@@ -3722,7 +3722,7 @@ void OnetKernel::raw_470()
 // :cf1f2.onet 471 ~Merovingian #testy :Cannot join channel (Channel is full)
 void OnetKernel::raw_471()
 {
-    if (strDataList.value(3).isEmpty() == true) return;
+    if (strDataList.value(3).isEmpty()) return;
 
     QString strChannel = strDataList[3];
 
@@ -3740,7 +3740,7 @@ void OnetKernel::raw_472n()
 // :cf1f3.onet 473 ~scc_test #lunar :Cannot join channel (Invite only)
 void OnetKernel::raw_473()
 {
-    if (strDataList.value(3).isEmpty() == true) return;
+    if (strDataList.value(3).isEmpty()) return;
 
     QString strChannel = strDataList[3];
 
@@ -3750,7 +3750,7 @@ void OnetKernel::raw_473()
     // close inactive priv
     if (strChannel[0] == '^')
     {
-        if (pTabC->exist_tab(strChannel) == true)
+        if (pTabC->exist_tab(strChannel))
             pTabC->remove_tab(strChannel);
     }
 }
@@ -3758,7 +3758,7 @@ void OnetKernel::raw_473()
 // :cf1f3.onet 474 ~scc_test #Quiz :Cannot join channel (You're banned)
 void OnetKernel::raw_474()
 {
-    if (strDataList.value(3).isEmpty() == true) return;
+    if (strDataList.value(3).isEmpty()) return;
 
     QString strChannel = strDataList[3];
 
@@ -3769,7 +3769,7 @@ void OnetKernel::raw_474()
 // :cf1f4.onet 475 Merovingian #glupia_nazwa :Cannot join channel (Incorrect channel key)
 void OnetKernel::raw_475()
 {
-    if (strDataList.value(3).isEmpty() == true) return;
+    if (strDataList.value(3).isEmpty()) return;
 
     QString strChannel = strDataList[3];
 
@@ -3789,7 +3789,7 @@ void OnetKernel::raw_481()
 // :cf1f1.onet 482 Merovingian #Scrabble :Only a u-line may kick a u-line from a channel.
 void OnetKernel::raw_482()
 {
-    if (strDataList.value(3).isEmpty() == true) return;
+    if (strDataList.value(3).isEmpty()) return;
 
     QString strChannel = strDataList[3];
 
@@ -3802,9 +3802,9 @@ void OnetKernel::raw_482()
 // :cf1f4.onet 484 scc_test #scc :Can't kick scc as your spells are not good enough
 void OnetKernel::raw_484()
 {
-    if (strDataList.value(3).isEmpty() == true) return;
-    if (strDataList.value(4).isEmpty() == true) return;
-    if (strDataList.value(5).isEmpty() == true) return;
+    if (strDataList.value(3).isEmpty()) return;
+    if (strDataList.value(4).isEmpty()) return;
+    if (strDataList.value(5).isEmpty()) return;
 
     QString strChannel = strDataList[3];
 
@@ -3828,7 +3828,7 @@ void OnetKernel::raw_491()
 //:cf1f2.onet 530 Merovingian #f :Only IRC operators may create new channels
 void OnetKernel::raw_530()
 {
-    if (strDataList.value(3).isEmpty() == true) return;
+    if (strDataList.value(3).isEmpty()) return;
 
     QString strChannel = strDataList[3];
 
@@ -3840,7 +3840,7 @@ void OnetKernel::raw_530()
 // :cf1f2.onet 531 Merovingian chanky :You are not permitted to send private messages to this user
 void OnetKernel::raw_531()
 {
-    if (strDataList.value(3).isEmpty() == true) return;
+    if (strDataList.value(3).isEmpty()) return;
 
     QString strNick = strDataList[3];
 
@@ -3851,7 +3851,7 @@ void OnetKernel::raw_531()
 // :cf1f4.onet 600 scc_test Radowsky 16172032 690A6F.A8219B.7F5EC1.35E57C 1267055769 :arrived online
 void OnetKernel::raw_600()
 {
-    if (strDataList.value(3).isEmpty() == true) return;
+    if (strDataList.value(3).isEmpty()) return;
 
     QString strNick = strDataList[3];
 
@@ -3867,7 +3867,7 @@ void OnetKernel::raw_600()
 // :cf1f4.onet 601 scc_test Radowsky 16172032 690A6F.A8219B.7F5EC1.35E57C 1267055692 :went offline
 void OnetKernel::raw_601()
 {
-    if (strDataList.value(3).isEmpty() == true) return;
+    if (strDataList.value(3).isEmpty()) return;
 
     QString strNick = strDataList[3];
 
@@ -3884,7 +3884,7 @@ void OnetKernel::raw_601()
 // :cf1f3.onet 602 scc_test aaa * * 0 :stopped watching
 void OnetKernel::raw_602()
 {
-    if (strDataList.value(3).isEmpty() == true) return;
+    if (strDataList.value(3).isEmpty()) return;
 
     QString strNick = strDataList[3];
 
@@ -3894,7 +3894,7 @@ void OnetKernel::raw_602()
 //:cf1f1.onet 604 scc_test scc_test 51976824 3DE379.B7103A.6CF799.6902F4 1267054441 :is online
 void OnetKernel::raw_604()
 {
-    if (strDataList.value(3).isEmpty() == true) return;
+    if (strDataList.value(3).isEmpty()) return;
 
     QString strNick = strDataList[3];
 
@@ -3910,7 +3910,7 @@ void OnetKernel::raw_604()
 // :cf1f1.onet 605 scc_test Radowsky * * 0 :is offline
 void OnetKernel::raw_605()
 {
-    if (strDataList.value(3).isEmpty() == true) return;
+    if (strDataList.value(3).isEmpty()) return;
 
     QString strNick = strDataList[3];
 
@@ -3971,7 +3971,7 @@ void OnetKernel::raw_704()
 //:cf1f3.onet 801 scc_test :q5VMy1wl6hKL5ZUt
 void OnetKernel::raw_801()
 {
-    if (strDataList.value(3).isEmpty() == true) return;
+    if (strDataList.value(3).isEmpty()) return;
 
     QString strKey = strDataList[3];
     if (strKey[0] == ':')
@@ -4029,7 +4029,7 @@ void OnetKernel::raw_808()
 // :cf1f2.onet 809 scc_test Succubi :is busy
 void OnetKernel::raw_809()
 {
-    if (strDataList.value(3).isEmpty() == true) return;
+    if (strDataList.value(3).isEmpty()) return;
 
     QString strNick = strDataList[3];
 
@@ -4040,7 +4040,7 @@ void OnetKernel::raw_809()
 // :cf1f2.onet 811 scc_test Merovingian :Ignore invites
 void OnetKernel::raw_811()
 {
-    if (strDataList.value(3).isEmpty() == true) return;
+    if (strDataList.value(3).isEmpty()) return;
 
     QString strNick = strDataList[3];
 
@@ -4058,8 +4058,8 @@ void OnetKernel::raw_811()
 // :cf1f3.onet 812 Merovingian Vasquez_ #Kraina_Lagodności :Invite rejected
 void OnetKernel::raw_812()
 {
-    if (strDataList.value(3).isEmpty() == true) return;
-    if (strDataList.value(4).isEmpty() == true) return;
+    if (strDataList.value(3).isEmpty()) return;
+    if (strDataList.value(4).isEmpty()) return;
 
     QString strNick = strDataList[3];
     QString strChannel = strDataList[4];
@@ -4078,7 +4078,7 @@ void OnetKernel::raw_812()
 // :cf1f4.onet 815 ~test testnick :Public webcam
 void OnetKernel::raw_815()
 {
-    if (strDataList.value(3).isEmpty() == true) return;
+    if (strDataList.value(3).isEmpty()) return;
 
     QString strNick = strDataList[3];
 
@@ -4089,9 +4089,9 @@ void OnetKernel::raw_815()
 // :cf1f2.onet 817 scc_test #scc 1253216797 mikefear - :%Fb:arial%%Ce40f0f%re
 void OnetKernel::raw_817()
 {
-    if (strDataList.value(3).isEmpty() == true) return;
-    if (strDataList.value(4).isEmpty() == true) return;
-    if (strDataList.value(5).isEmpty() == true) return;
+    if (strDataList.value(3).isEmpty()) return;
+    if (strDataList.value(4).isEmpty()) return;
+    if (strDataList.value(5).isEmpty()) return;
 
     QString strChannel = strDataList[3];
     QString strTime = strDataList[4];
@@ -4172,9 +4172,9 @@ void OnetKernel::raw_819()
                 break;
         }
 
-        if (flag == true)
+        if (flag)
             strChannelCat += tr("Moderated")+" ";
-        if (flag1 == true)
+        if (flag1)
             strChannelCat += tr("Recommended")+" ";
 
         switch(k)
@@ -4213,7 +4213,7 @@ void OnetKernel::raw_820()
 // :cf1f3.onet 821 scc_test #scc :Channel is not moderated
 void OnetKernel::raw_821()
 {
-    if (strDataList.value(3).isEmpty() == true) return;
+    if (strDataList.value(3).isEmpty()) return;
 
     QString strChannel = strDataList[3];
 
@@ -4225,8 +4225,8 @@ void OnetKernel::raw_821()
 // :cf1f2.onet 950 Merovingian Merovingian :Removed Succubi!*@* <privatemessages,channelmessages,invites> from silence list
 void OnetKernel::raw_950()
 {
-    if (strDataList.value(4).isEmpty() == true) return;
-    if (strDataList.value(5).isEmpty() == true) return;
+    if (strDataList.value(4).isEmpty()) return;
+    if (strDataList.value(5).isEmpty()) return;
 
     QString strNick = strDataList[5];
 
@@ -4238,9 +4238,9 @@ void OnetKernel::raw_950()
 // :cf1f1.onet 951 scc_test scc_test :Added test!*@* <privatemessages,channelmessages,invites> to silence list
 void OnetKernel::raw_951()
 {
-    if (strDataList.value(3).isEmpty() == true) return;
-    if (strDataList.value(4).isEmpty() == true) return;
-    if (strDataList.value(5).isEmpty() == true) return;
+    if (strDataList.value(3).isEmpty()) return;
+    if (strDataList.value(4).isEmpty()) return;
+    if (strDataList.value(5).isEmpty()) return;
 
     QString strNick = strDataList[5];
 
@@ -4251,8 +4251,8 @@ void OnetKernel::raw_951()
 // :cf1f4.onet 952 Merovingian Merovingian :Succubi!*@* <privatemessages,channelmessages,invites> is already on your silence list
 void OnetKernel::raw_952()
 {
-    if (strDataList.value(3).isEmpty() == true) return;
-    if (strDataList.value(4).isEmpty() == true) return;
+    if (strDataList.value(3).isEmpty()) return;
+    if (strDataList.value(4).isEmpty()) return;
 
     QString strNick = strDataList[4];
     if (strNick[0] == ':')

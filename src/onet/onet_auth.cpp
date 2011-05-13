@@ -78,7 +78,7 @@ void OnetAuth::authorize(QString param1, QString param2, QString param3)
     QSettings settings;
     if (settings.value("logged") == "on") return; // already logged
 
-    if (bAuthorizing == true) return; // already authorizing
+    if (bAuthorizing) return; // already authorizing
 
     QString strNick = param1;
     QString strNickAuth = param2;
@@ -157,7 +157,7 @@ void OnetAuth::authorize(QString param1, QString param2, QString param3)
             strData = QString("r=&url=&login=%1&haslo=%2&app_id=20&ssl=1&ok=1").arg(strNick).arg(strPass);
             network_request(accessManager, "https://secure.onet.pl/mlogin.html", strData);
 
-            if (bOverride == true)
+            if (bOverride)
             {
                 // override
                 strData = QString("api_function=userOverride&params=a:1:{s:4:\"nick\";s:%1:\"%2\";}").arg(strNickLen).arg(strNick);

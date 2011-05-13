@@ -71,7 +71,7 @@ void DlgChannelHomes::refresh()
         QString strChannel = Core::instance()->lChannelHomes.at(i);
         strChannel = strChannel.right(strChannel.length()-1); // remove status
 
-        if (Core::instance()->mChannelAvatar.contains(strChannel) == true)
+        if (Core::instance()->mChannelAvatar.contains(strChannel))
         {
             QPixmap pixmap;
             pixmap.loadFromData(Core::instance()->mChannelAvatar.value(strChannel));
@@ -101,7 +101,7 @@ void DlgChannelHomes::button_create()
     bool ok;
     QString strText = QInputDialog::getText(this, tr("Changing channels"), tr("Enter the name of the new channel:"), QLineEdit::Normal, QString::null, &ok);
 
-    if ((ok == true) && (strText.isEmpty() == false))
+    if ((ok) && (strText.isEmpty() == false))
     {
         pNetwork->send(QString("CS REGISTER %1").arg(strText));
         QTimer::singleShot(1000*2, this, SLOT(refresh())); // 2 sec
@@ -113,7 +113,7 @@ void DlgChannelHomes::button_remove()
     bool ok;
     QString strText = QInputDialog::getText(this, tr("Changing channels"), "<p style=\"font-weight:bold;\">"+tr("The removal of the channel operation is irreversible!")+"</p><p>"+tr("Enter the name of the channel to remove:")+"</p>", QLineEdit::Normal, QString::null, &ok);
 
-    if ((ok == true) && (strText.isEmpty() == false))
+    if ((ok) && (strText.isEmpty() == false))
     {
         pNetwork->send(QString("CS DROP %1").arg(strText));
         QTimer::singleShot(1000*2, this, SLOT(refresh())); // 2 sec

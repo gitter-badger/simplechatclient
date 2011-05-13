@@ -203,9 +203,9 @@ void DlgOptions::set_default_values()
 
     // open folder command
 #ifdef Q_WS_X11
-    if (QFile::exists("/usr/bin/nautilus") == true)
+    if (QFile::exists("/usr/bin/nautilus"))
         strOpenFolderCommand = "nautilus";
-    else if (QFile::exists("/usr/bin/dolphin") == true)
+    else if (QFile::exists("/usr/bin/dolphin"))
         strOpenFolderCommand = "dolphin";
 #else
     strOpenFolderCommand = "explorer.exe";
@@ -269,7 +269,7 @@ void DlgOptions::set_default_values()
 #endif
     ui.lineEdit_logs_folder->setText(strLogsPath);
 
-    if (strOpenFolderCommand.isEmpty() == true)
+    if (strOpenFolderCommand.isEmpty())
         ui.pushButton_logs_open_folder->setEnabled(false);
 
     // background image
@@ -312,7 +312,7 @@ void DlgOptions::set_default_values()
     }
 
     // set nick staly/tyldowy
-    if (strPass.isEmpty() == true)
+    if (strPass.isEmpty())
     {
         ui.radioButton_unregistered_nick->setChecked(true);
         ui.radioButton_registered_nick->setChecked(false);
@@ -698,7 +698,7 @@ void DlgOptions::language_changed(int index)
 
 void DlgOptions::auto_busy(bool bValue)
 {
-    QString strValue = (bValue == true ? "on" : "off");
+    QString strValue = (bValue ? "on" : "off");
 
     QSettings settings;
     Config *pConfig = new Config();
@@ -709,7 +709,7 @@ void DlgOptions::auto_busy(bool bValue)
 
 void DlgOptions::disable_autojoin_favourites(bool bValue)
 {
-    QString strValue = (bValue == true ? "on" : "off");
+    QString strValue = (bValue ? "on" : "off");
 
     QSettings settings;
     Config *pConfig = new Config();
@@ -720,7 +720,7 @@ void DlgOptions::disable_autojoin_favourites(bool bValue)
 
 void DlgOptions::show_zuo(bool bValue)
 {
-    QString strValue = (bValue == true ? "on" : "off");
+    QString strValue = (bValue ? "on" : "off");
 
     QSettings settings;
     Config *pConfig = new Config();
@@ -731,7 +731,7 @@ void DlgOptions::show_zuo(bool bValue)
 
 void DlgOptions::hide_formating(bool bValue)
 {
-    QString strValue = (bValue == true ? "on" : "off");
+    QString strValue = (bValue ? "on" : "off");
 
     QSettings settings;
     Config *pConfig = new Config();
@@ -742,7 +742,7 @@ void DlgOptions::hide_formating(bool bValue)
 
 void DlgOptions::hide_join_part(bool bValue)
 {
-    QString strValue = (bValue == true ? "on" : "off");
+    QString strValue = (bValue ? "on" : "off");
 
     QSettings settings;
     Config *pConfig = new Config();
@@ -753,7 +753,7 @@ void DlgOptions::hide_join_part(bool bValue)
 
 void DlgOptions::hide_join_part_200(bool bValue)
 {
-    QString strValue = (bValue == true ? "on" : "off");
+    QString strValue = (bValue ? "on" : "off");
 
     QSettings settings;
     Config *pConfig = new Config();
@@ -764,7 +764,7 @@ void DlgOptions::hide_join_part_200(bool bValue)
 
 void DlgOptions::disable_avatars(bool bValue)
 {
-    QString strValue = (bValue == true ? "on" : "off");
+    QString strValue = (bValue ? "on" : "off");
 
     QSettings settings;
     Config *pConfig = new Config();
@@ -775,7 +775,7 @@ void DlgOptions::disable_avatars(bool bValue)
 
 void DlgOptions::disable_emots(bool bValue)
 {
-    QString strValue = (bValue == true ? "on" : "off");
+    QString strValue = (bValue ? "on" : "off");
 
     QSettings settings;
     Config *pConfig = new Config();
@@ -786,7 +786,7 @@ void DlgOptions::disable_emots(bool bValue)
 
 void DlgOptions::disable_replaces(bool bValue)
 {
-    QString strValue = (bValue == true ? "on" : "off");
+    QString strValue = (bValue ? "on" : "off");
 
     QSettings settings;
     Config *pConfig = new Config();
@@ -1077,7 +1077,7 @@ void DlgOptions::set_sound_query()
 
 void DlgOptions::disable_sounds(bool bValue)
 {
-    QString strValue = (bValue == true ? "on" : "off");
+    QString strValue = (bValue ? "on" : "off");
 
     QSettings settings;
     Config *pConfig = new Config();
@@ -1096,7 +1096,7 @@ void DlgOptions::open_logs_folder()
 
 void DlgOptions::set_save_logs_by_date(bool bValue)
 {
-    QString strValue = (bValue == true ? "on" : "off");
+    QString strValue = (bValue ? "on" : "off");
 
     QSettings settings;
     Config *pConfig = new Config();
@@ -1107,7 +1107,7 @@ void DlgOptions::set_save_logs_by_date(bool bValue)
 
 void DlgOptions::disable_logs(bool bValue)
 {
-    QString strValue = (bValue == true ? "on" : "off");
+    QString strValue = (bValue ? "on" : "off");
 
     QSettings settings;
     Config *pConfig = new Config();
@@ -1143,7 +1143,7 @@ void DlgOptions::set_background_image()
 
 void DlgOptions::disable_background_image(bool bValue)
 {
-    QString strValue = (bValue == true ? "on" : "off");
+    QString strValue = (bValue ? "on" : "off");
 
     QSettings settings;
     Config *pConfig = new Config();
@@ -1157,7 +1157,7 @@ void DlgOptions::disable_background_image(bool bValue)
 
 void DlgOptions::set_spellchecker()
 {
-    QString strValue = (ui.radioButton_spellchecker_active->isChecked() == true ? "on" : "off");
+    QString strValue = (ui.radioButton_spellchecker_active->isChecked() ? "on" : "off");
 
     QSettings settings;
     Config *pConfig = new Config();
@@ -1186,7 +1186,7 @@ void DlgOptions::save_settings()
 
     // check nick
     QString strPass;
-    if (ui.radioButton_unregistered_nick->isChecked() == true)
+    if (ui.radioButton_unregistered_nick->isChecked())
     {
         // fix nick
         if (strNick[0] != '~')
@@ -1194,7 +1194,7 @@ void DlgOptions::save_settings()
 
         strPass = "";
     }
-    else if (ui.radioButton_registered_nick->isChecked() == true)
+    else if (ui.radioButton_registered_nick->isChecked())
     {
         // fix nick
         if (strNick[0] == '~')
@@ -1231,7 +1231,7 @@ void DlgOptions::set_color(QString strKey)
     // color dialog
     QColor cColor = QColorDialog::getColor(QColor(strDefaultColor), this);
 
-    if (cColor.isValid() == true)
+    if (cColor.isValid())
     {
         // color to name
         QString strColor = cColor.name();

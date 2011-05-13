@@ -82,7 +82,7 @@ void DlgCaptcha::network_finished(QNetworkReply *reply)
     QString strCategory = reply->property("category").toString();
     QByteArray bData = reply->readAll();
 
-    if (bData.isEmpty() == true)
+    if (bData.isEmpty())
         return;
 
     if (strCategory == "get_captcha")

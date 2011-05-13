@@ -157,7 +157,7 @@ void DlgOfflineMsg::button_reject()
 
 void DlgOfflineMsg::button_reply()
 {
-    if (strCurrentNick.isEmpty() == true) return; // wrong nick
+    if (strCurrentNick.isEmpty()) return; // wrong nick
 
     QString strNick = strCurrentNick;
     QString strMessage = ui.lineEdit_reply->text();

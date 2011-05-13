@@ -65,7 +65,7 @@ void Convert::convert_text(QString *strData, QString *strLastContent)
                     else
                     {
                         QRegExp rx("((b|i)?)((b|i)?)");
-                        if (rx.exactMatch(strFont) == true)
+                        if (rx.exactMatch(strFont))
                             strShortFontWeight = strFont;
                     }
 
@@ -88,9 +88,9 @@ void Convert::convert_text(QString *strData, QString *strLastContent)
                         else if (strFontName == "courier") strFontFamily = "Courier New";
                         else strFontFamily = "Verdana";
 
-                        if (strFontWeight.isEmpty() == true)
+                        if (strFontWeight.isEmpty())
                             strFontWeight = "normal";
-                        if (strFontStyle.isEmpty() == true)
+                        if (strFontStyle.isEmpty())
                             strFontStyle = "normal";
 
                         QString strInsert = "<span style=\"font-weight:"+strFontWeight+";font-style:"+strFontStyle+";font-family:"+strFontFamily+";\">";
@@ -176,11 +176,11 @@ void Convert::convert_text(QString *strData, QString *strLastContent)
                     QString strEmoticonFull2 = strPath+"/3rdparty/emoticons_other/"+strEmoticon+".gif";
                     QFile f1(strEmoticonFull1);
                     QFile f2(strEmoticonFull2);
-                    if ((f1.exists() == true) && (settings.value("hide_formating").toString() == "off") && (settings.value("disable_emots").toString() == "off"))
+                    if ((f1.exists()) && (settings.value("hide_formating").toString() == "off") && (settings.value("disable_emots").toString() == "off"))
                     {
                         strInsert = "<img src=\""+strEmoticonFull1+"\" alt=\""+strEmoticon+"\" />";
                     }
-                    else if ((f2.exists() == true) && (settings.value("hide_formating").toString() == "off") && (settings.value("disable_emots").toString() == "off"))
+                    else if ((f2.exists()) && (settings.value("hide_formating").toString() == "off") && (settings.value("disable_emots").toString() == "off"))
                     {
                         strInsert = "<img src=\""+strEmoticonFull2+"\" alt=\""+strEmoticon+"\" />";
                     }

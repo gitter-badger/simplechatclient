@@ -74,7 +74,7 @@ void Video::create()
 void Video::destroy()
 {
     // destroy capture
-    if (bCreatedCapture == true)
+    if (bCreatedCapture)
     {
         stopCapturing();
         closeDevice();
@@ -442,7 +442,7 @@ bool Video::existVideoDevice()
     // search video device
     for (int i = 0; i < 10; ++i)
     {
-        if (QFile::exists("/dev/video"+QString::number(i)) == true)
+        if (QFile::exists("/dev/video"+QString::number(i)))
             return true;
     }
     return false;

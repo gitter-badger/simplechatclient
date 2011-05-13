@@ -101,7 +101,7 @@ void NickListWidget::update_avatar(QString strNick)
         {
             QString strChild = this->topLevelItem(i)->child(x)->text(0);
 
-            if ((strChild[0] != '~') && (strChild == strNick) && (Core::instance()->mNickAvatar.contains(strChild) == true))
+            if ((strChild[0] != '~') && (strChild == strNick) && (Core::instance()->mNickAvatar.contains(strChild)))
             {
                 QPixmap pixmap;
                 pixmap.loadFromData(Core::instance()->mNickAvatar.value(strChild));
@@ -161,60 +161,60 @@ void NickListWidget::remove_parent(QString strName)
 void NickListWidget::add_child(QString strNick, QString strModes)
 {
     // add to widget
-    if (strModes.contains("O") == true)
+    if (strModes.contains("O"))
     {
         QPixmap icon = QPixmap(":/images/dev.png");
         QString strParent = tr("Developer(s)");
         add_child(strNick, strModes, strParent, icon);
     }
-    if (strModes.contains("o") == true)
+    if (strModes.contains("o"))
     {
         QPixmap icon = QPixmap(":/images/admin.png");
         QString strParent = tr("Admin(s)");
         add_child(strNick, strModes, strParent, icon);
     }
-    if (strModes.contains("`") == true)
+    if (strModes.contains("`"))
     {
         QPixmap icon = QPixmap(":/images/owner.png");
         QString strParent = tr("Owner(s)");
         add_child(strNick, strModes, strParent, icon);
     }
-    if (strModes.contains("@") == true)
+    if (strModes.contains("@"))
     {
         QPixmap icon = QPixmap(":/images/op.png");
         QString strParent = tr("Op(s)");
         add_child(strNick, strModes, strParent, icon);
     }
-    if (strModes.contains("%") == true)
+    if (strModes.contains("%"))
     {
         QPixmap icon = QPixmap(":/images/halfop.png");
         QString strParent = tr("HalfOp(s)");
         add_child(strNick, strModes, strParent, icon);
     }
-    if (strModes.contains("!") == true)
+    if (strModes.contains("!"))
     {
         QPixmap icon = QPixmap(":/images/mod.png");
         QString strParent = tr("Mod(s)");
         add_child(strNick, strModes, strParent, icon);
     }
-    if (strModes.contains("=") == true)
+    if (strModes.contains("="))
     {
         QPixmap icon = QPixmap(":/images/screener.png");
         QString strParent = tr("Screener(s)");
         add_child(strNick, strModes, strParent, icon);
     }
-    if (strModes.contains("+") == true)
+    if (strModes.contains("+"))
     {
         QPixmap icon = QPixmap(":/images/voice.png");
         QString strParent = tr("Voice(s)");
         add_child(strNick, strModes, strParent, icon);
     }
-    if ((strModes.contains("W") == true) || (strModes.contains("V") == true))
+    if ((strModes.contains("W")) || (strModes.contains("V")))
     {
         QPixmap icon;
-        if (strModes.contains("W") == true)
+        if (strModes.contains("W"))
             icon = QPixmap(":/images/pubcam.png");
-        else if (strModes.contains("V") == true)
+        else if (strModes.contains("V"))
             icon = QPixmap(":/images/privcam.png");
 
         QString strParent = tr("Cam(s)");
@@ -233,7 +233,7 @@ void NickListWidget::add_child(QString strNick, QString strModes, QString strPar
     // exist parent
     if (exist_parent(strParent) == false)
     {
-        if (strModes.contains("V") == true) // fix for cam icon
+        if (strModes.contains("V")) // fix for cam icon
             add_parent(strParent, QPixmap(":/images/pubcam.png"));
         else
             add_parent(strParent, icon);
@@ -298,7 +298,7 @@ SortedTreeWidgetItem* NickListWidget::create_child(QString strNick, QString strM
     item->setData(0, Qt::UserRole, icon);
 
     // read from cache when refresh
-    if (Core::instance()->mNickAvatar.contains(strNick) == true)
+    if (Core::instance()->mNickAvatar.contains(strNick))
     {
         QPixmap pixmap;
         pixmap.loadFromData(Core::instance()->mNickAvatar.value(strNick));
@@ -395,7 +395,7 @@ void NickListWidget::kick()
     bool ok;
     QString strText = QInputDialog::getText(this, tr("Kick From Channel"), tr("Reason for kicking:"), QLineEdit::Normal, tr("No reason"), &ok);
 
-    if ((ok == true) && (strText.isEmpty() == false))
+    if ((ok) && (strText.isEmpty() == false))
         pNetwork->send(QString("KICK %1 %2 :%3").arg(strChannel).arg(strNick).arg(strText));
 }
 
@@ -416,7 +416,7 @@ void NickListWidget::kban()
     bool ok;
     QString strText = QInputDialog::getText(this, tr("Kick & Ban"), tr("Reason for kicking:"), QLineEdit::Normal, tr("No reason"), &ok);
 
-    if ((ok == true) && (strText.isEmpty() == false))
+    if ((ok) && (strText.isEmpty() == false))
     {
         pNetwork->send(QString("CS BAN %1 ADD %2").arg(strChannel).arg(strNick));
         pNetwork->send(QString("KICK %1 %2 :%3").arg(strChannel).arg(strNick).arg(strText));

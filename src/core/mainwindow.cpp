@@ -528,7 +528,7 @@ void MainWindow::update_actions()
     if (strNick[0] != '~')
         bRegistered = true;
 
-    if (bRegistered == true)
+    if (bRegistered)
     {
         channelHomesAct->setEnabled(true);
         channelFavouritesAct->setEnabled(true);
@@ -560,7 +560,7 @@ void MainWindow::update_awaylog_status()
 {
     if (Core::instance()->lAwaylog.size() == 0)
     {
-        if (awaylogAct->isVisible() == true)
+        if (awaylogAct->isVisible())
             awaylogAct->setVisible(false);
     }
     else
@@ -585,52 +585,52 @@ void MainWindow::update_users_count()
 void MainWindow::open_channel_list()
 {
     QSettings settings;
-    if ((pNetwork->is_connected() == true) && (pNetwork->is_writable() == true) && (settings.value("logged") == "on"))
+    if ((pNetwork->is_connected()) && (pNetwork->is_writable()) && (settings.value("logged") == "on"))
         DlgChannelList(this, pNetwork).exec();
 }
 
 void MainWindow::open_channel_homes()
 {
     QSettings settings;
-    if ((pNetwork->is_connected() == true) && (pNetwork->is_writable() == true) && (settings.value("logged") == "on"))
+    if ((pNetwork->is_connected()) && (pNetwork->is_writable()) && (settings.value("logged") == "on"))
         DlgChannelHomes(this, pNetwork, pDlgChannelSettings).exec();
 }
 
 void MainWindow::open_channel_favourites()
 {
     QSettings settings;
-    if ((pNetwork->is_connected() == true) && (pNetwork->is_writable() == true) && (settings.value("logged") == "on"))
+    if ((pNetwork->is_connected()) && (pNetwork->is_writable()) && (settings.value("logged") == "on"))
         DlgChannelFavourites(this, pNetwork).exec();
 }
 
 void MainWindow::open_friends()
 {
     QSettings settings;
-    if ((pNetwork->is_connected() == true) && (pNetwork->is_writable() == true) && (settings.value("logged") == "on"))
+    if ((pNetwork->is_connected()) && (pNetwork->is_writable()) && (settings.value("logged") == "on"))
         DlgFriends(this, pNetwork).exec();
 }
 
 void MainWindow::open_ignore()
 {
     QSettings settings;
-    if ((pNetwork->is_connected() == true) && (pNetwork->is_writable() == true) && (settings.value("logged") == "on"))
+    if ((pNetwork->is_connected()) && (pNetwork->is_writable()) && (settings.value("logged") == "on"))
         DlgIgnore(this, pNetwork).exec();
 }
 
 void MainWindow::button_set_busy()
 {
     // do not change status
-    if (Core::instance()->busyAct->isChecked() == true)
+    if (Core::instance()->busyAct->isChecked())
         Core::instance()->busyAct->setChecked(false);
     else
         Core::instance()->busyAct->setChecked(true);
 
     QSettings settings;
-    if ((pNetwork->is_connected() == true) && (pNetwork->is_writable() == true) && (settings.value("logged") == "on"))
+    if ((pNetwork->is_connected()) && (pNetwork->is_writable()) && (settings.value("logged") == "on"))
     {
         bool bBusy = settings.value("busy").toString() == "on" ? true : false;
 
-        if (bBusy == true)
+        if (bBusy)
             pNetwork->send("BUSY 0");
         else
             pNetwork->send("BUSY 1");
@@ -640,18 +640,18 @@ void MainWindow::button_set_busy()
 void MainWindow::button_set_away()
 {
     // do not change status
-    if (Core::instance()->awayAct->isChecked() == true)
+    if (Core::instance()->awayAct->isChecked())
         Core::instance()->awayAct->setChecked(false);
     else
         Core::instance()->awayAct->setChecked(true);
 
     QSettings settings;
-    if ((pNetwork->is_connected() == true) && (pNetwork->is_writable() == true) && (settings.value("logged") == "on"))
+    if ((pNetwork->is_connected()) && (pNetwork->is_writable()) && (settings.value("logged") == "on"))
     {
         bool bAway = settings.value("away").toString() == "on" ? true : false;
 
         QString strReason;
-        if (bAway == true)
+        if (bAway)
             strReason = "";
         else
             strReason = tr("Not here right now");
@@ -663,7 +663,7 @@ void MainWindow::button_set_away()
 void MainWindow::open_offlinemsg()
 {
     QSettings settings;
-    if ((pNetwork->is_connected() == true) && (pNetwork->is_writable() == true) && (settings.value("logged") == "on"))
+    if ((pNetwork->is_connected()) && (pNetwork->is_writable()) && (settings.value("logged") == "on"))
         DlgOfflineMsg(this, pNetwork).exec();
 }
 
@@ -676,7 +676,7 @@ void MainWindow::open_cams()
 {
 #ifdef Q_WS_WIN
     QSettings settings;
-    if ((pNetwork->is_connected() == true) && (pNetwork->is_writable() == true) && (settings.value("logged") == "on"))
+    if ((pNetwork->is_connected()) && (pNetwork->is_writable()) && (settings.value("logged") == "on"))
     {
         QSettings settings;
         QString strMe = settings.value("nick").toString();
@@ -684,7 +684,7 @@ void MainWindow::open_cams()
     }
 #else
     QSettings settings;
-    if ((pNetwork->is_connected() == true) && (pNetwork->is_writable() == true) && (settings.value("logged") == "on"))
+    if ((pNetwork->is_connected()) && (pNetwork->is_writable()) && (settings.value("logged") == "on"))
         pDlgCam->show();
 #endif
 }
@@ -692,21 +692,21 @@ void MainWindow::open_cams()
 void MainWindow::open_my_stats()
 {
     QSettings settings;
-    if ((pNetwork->is_connected() == true) && (pNetwork->is_writable() == true) && (settings.value("logged") == "on"))
+    if ((pNetwork->is_connected()) && (pNetwork->is_writable()) && (settings.value("logged") == "on"))
         DlgMyStats(this).exec();
 }
 
 void MainWindow::open_my_profile()
 {
     QSettings settings;
-    if ((pNetwork->is_connected() == true) && (pNetwork->is_writable() == true) && (settings.value("logged") == "on"))
+    if ((pNetwork->is_connected()) && (pNetwork->is_writable()) && (settings.value("logged") == "on"))
         DlgMyProfile(this, pNetwork).exec();
 }
 
 void MainWindow::open_my_avatar()
 {
     QSettings settings;
-    if ((pNetwork->is_connected() == true) && (pNetwork->is_writable() == true) && (settings.value("logged") == "on"))
+    if ((pNetwork->is_connected()) && (pNetwork->is_writable()) && (settings.value("logged") == "on"))
         DlgMyAvatar(this, pNetwork).exec();
 }
 
@@ -736,7 +736,7 @@ void MainWindow::tray_icon(QSystemTrayIcon::ActivationReason activationReason)
 {
     if (activationReason == QSystemTrayIcon::Trigger)
     {
-        if (this->isVisible() == true)
+        if (this->isVisible())
             this->hide();
         else
             this->showNormal();
@@ -768,7 +768,7 @@ QString MainWindow::get_current_tab_name(int index)
 void MainWindow::current_tab_changed(int index)
 {
     QString strChannel = get_current_tab_name(index);
-    if (strChannel.isEmpty() == true) return; // something wrong
+    if (strChannel.isEmpty()) return; // something wrong
 
     // change tab name
     QString strTabText = pTabM->tabText(index);
@@ -957,7 +957,7 @@ void MainWindow::quit_user(QString strNick, QString strDisplay)
     for (int i = 0; i < lOpenChannels.size(); i++)
     {
         QString strChannel = lOpenChannels.at(i);
-        if (nicklist_exist(strChannel, strNick) == true)
+        if (nicklist_exist(strChannel, strNick))
         {
             int iLevel = 3;
             pTabC->show_msg(strChannel, strDisplay, iLevel);
@@ -1029,7 +1029,7 @@ void MainWindow::change_flag(QString strNick, QString strFlag)
     {
         QString strChannel = lOpenChannels.at(i);
 
-        if (nicklist_exist(strChannel, strNick) == true)
+        if (nicklist_exist(strChannel, strNick))
             change_flag(strNick, strChannel, strFlag);
     }
 }
@@ -1081,7 +1081,7 @@ void MainWindow::clear_all_nicklist()
 void MainWindow::update_nick_avatar(QString strNick)
 {
     QString strChannel = pNickListWidget->get_channel();
-    if (nicklist_exist(strChannel, strNick) == true)
+    if (nicklist_exist(strChannel, strNick))
         pNickListWidget->update_avatar(strNick);
 }
 
@@ -1095,7 +1095,7 @@ void MainWindow::clear_channel_all_nick_avatars(QString strChannel)
         QString strNick = lNicks.at(i);
 
         // remove nick avatar if nick is only in current channel; must be 1 (current channel)
-        if ((Core::instance()->mNickAvatar.contains(strNick) == true) && (Core::instance()->get_nick_channels(strNick) == 1))
+        if ((Core::instance()->mNickAvatar.contains(strNick)) && (Core::instance()->get_nick_channels(strNick) == 1))
             Core::instance()->mNickAvatar.remove(strNick);
     }
 }

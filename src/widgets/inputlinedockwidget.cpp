@@ -147,7 +147,7 @@ void InputLineDockWidget::slot_show_msg(QString strChannel, QString strData, int
 
 void InputLineDockWidget::slot_show_hide_toolwidget()
 {
-    if (pToolWidget->isHidden() == true)
+    if (pToolWidget->isHidden())
         show_toolwidget();
     else
         hide_toolwidget();

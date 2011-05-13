@@ -66,7 +66,7 @@ void DlgIgnore::refresh()
     {
         QString strNick = Core::instance()->lIgnore.at(i);
 
-        if (Core::instance()->mNickAvatar.contains(strNick) == true)
+        if (Core::instance()->mNickAvatar.contains(strNick))
         {
             QPixmap pixmap;
             pixmap.loadFromData(Core::instance()->mNickAvatar.value(strNick));
@@ -97,7 +97,7 @@ void DlgIgnore::button_add()
     bool ok;
     QString strText = QInputDialog::getText(this, tr("Change your ignore list"), tr("Enter a nickname to be added:"), QLineEdit::Normal, QString::null, &ok);
 
-    if ((ok == true) && (strText.isEmpty() == false))
+    if ((ok) && (strText.isEmpty() == false))
     {
         pNetwork->send(QString("NS IGNORE ADD %1").arg(strText));
         QTimer::singleShot(1000*4, this, SLOT(refresh())); // 4 sec
@@ -113,7 +113,7 @@ void DlgIgnore::button_remove()
     bool ok;
     QString strText = QInputDialog::getText(this, tr("Change your ignore list"), tr("Enter a nickname for removal:"), QLineEdit::Normal, strSelected, &ok);
 
-    if ((ok == true) && (strText.isEmpty() == false))
+    if ((ok) && (strText.isEmpty() == false))
     {
         pNetwork->send(QString("NS IGNORE DEL %1").arg(strText));
         QTimer::singleShot(1000*4, this, SLOT(refresh())); // 4 sec
