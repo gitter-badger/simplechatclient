@@ -835,7 +835,7 @@ void MainWindow::create_nicklist(QString strChannel)
     }
 
     // sort
-    //pNickListWidget->sortItems(Qt::DescendingOrder);
+    pNickListWidget->sortItems(Qt::AscendingOrder);
 
     // update nick count
     update_users_count();
@@ -864,7 +864,7 @@ void MainWindow::add_user(QString strChannel, QString strNick, QString strModes,
         if (!bFastAdd)
         {
             // sort
-            //pNickListWidget->sortItems(Qt::DescendingOrder);
+            pNickListWidget->sortItems(Qt::AscendingOrder);
         }
 
         // set inputline users
@@ -916,7 +916,7 @@ void MainWindow::nicklist_refresh(QString strChannel)
     if (pNickListWidget->get_channel() == strChannel)
     {
         // sort
-        //pNickListWidget->sortItems(Qt::DescendingOrder);
+        pNickListWidget->sortItems(Qt::AscendingOrder);
     }
 }
 

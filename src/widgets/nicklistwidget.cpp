@@ -41,7 +41,7 @@ NickListWidget::NickListWidget(Network *param1, QTcpSocket *param2, DlgUserProfi
     camSocket = param2;
     pDlgUserProfile = param3;
 
-    setSortingEnabled(true);
+    setSortingEnabled(false);
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 }
 
