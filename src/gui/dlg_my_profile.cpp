@@ -154,7 +154,7 @@ void DlgMyProfile::refresh()
 
         if (strKey == "avatar")
         {
-            if ((strValue.isEmpty() == false) && (Core::instance()->mNickAvatar.contains(strMe)))
+            if ((!strValue.isEmpty()) && (Core::instance()->mNickAvatar.contains(strMe)))
             {
                 QPixmap avatar;
                 avatar.loadFromData(Core::instance()->mNickAvatar.value(strMe));
@@ -165,7 +165,7 @@ void DlgMyProfile::refresh()
         }
         else if (strKey == "birthdate")
         {
-            if (strValue.isEmpty() == false)
+            if (!strValue.isEmpty())
             {
                 QStringList strlDate = strValue.split("-");
                 QString strYear = strlDate.at(0);
@@ -263,7 +263,7 @@ QString DlgMyProfile::convert_text_to_desc(QString strContent)
                         strFontWeight = strFont;
                 }
 
-                if (strFontWeight.isEmpty() == false)
+                if (!strFontWeight.isEmpty())
                 {
                     for (int fw = 0; fw < strFontWeight.length(); fw++)
                     {
@@ -272,7 +272,7 @@ QString DlgMyProfile::convert_text_to_desc(QString strContent)
                     }
                 }
 
-                if ((strFontName.isEmpty() == false) || (strFontWeight.isEmpty() == false))
+                if ((!strFontName.isEmpty()) || (!strFontWeight.isEmpty()))
                 {
                     if (strFontName == "arial") ui.comboBox_font->setCurrentIndex(0);
                     else if (strFontName == "times") ui.comboBox_font->setCurrentIndex(1);
@@ -355,11 +355,11 @@ QString DlgMyProfile::convert_desc_to_text(QString strContent)
 
     if (strFontName == "verdana")
         strFontName = "";
-    if ((strFontColor != "#000000") && (strFontColor.isEmpty() == false))
+    if ((strFontColor != "#000000") && (!strFontColor.isEmpty()))
         strContent = "%C"+strFontColor.right(6)+"%"+strContent;
-    if (strFontName.isEmpty() == false)
+    if (!strFontName.isEmpty())
         strFontName = ":"+strFontName;
-    if ((strFontWeight.isEmpty() == false) || (strFontName.isEmpty() == false))
+    if ((!strFontWeight.isEmpty()) || (!strFontName.isEmpty()))
         strContent = "%F"+strFontWeight+strFontName+"%"+strContent;
 
     return strContent;
@@ -516,7 +516,7 @@ void DlgMyProfile::button_ok()
     QString strMonth = convert_month_to_int(ui.comboBox_month->currentText());
     QString strYear = ui.comboBox_year->currentText();
     QString strBirthdate;
-    if ((strDay.isEmpty() == false) && (strMonth.isEmpty() == false) && (strYear.isEmpty() == false))
+    if ((!strDay.isEmpty()) && (!strMonth.isEmpty()) && (!strYear.isEmpty()))
         strBirthdate = QString("%1-%2-%3").arg(strYear).arg(strMonth).arg(strDay);
     if (strBirthdate != Core::instance()->mMyProfile.value("birthdate"))
         pNetwork->send(QString("NS SET birthdate %1").arg(strBirthdate));

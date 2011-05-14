@@ -69,7 +69,7 @@ void Convert::convert_text(QString *strData, QString *strLastContent)
                             strShortFontWeight = strFont;
                     }
 
-                    if (strShortFontWeight.isEmpty() == false)
+                    if (!strShortFontWeight.isEmpty())
                     {
                         for (int fw = 0; fw < strShortFontWeight.size(); fw++)
                         {
@@ -78,7 +78,7 @@ void Convert::convert_text(QString *strData, QString *strLastContent)
                         }
                     }
 
-                    if ((strFontName.isEmpty() == false) || (strFontWeight.isEmpty() == false) || (strFontStyle.isEmpty() == false))
+                    if ((!strFontName.isEmpty()) || (!strFontWeight.isEmpty()) || (!strFontStyle.isEmpty()))
                     {
                         QString strFontFamily;
                         if (strFontName == "arial") strFontFamily = "Arial";

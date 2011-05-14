@@ -36,7 +36,7 @@ QString Commands::execute()
 {
     QString strResult = QString::null;
 
-    if (strDataList.value(0).isEmpty() == false)
+    if (!strDataList.value(0).isEmpty())
     {
         QString strCmd = strDataList[0].toLower();
 
@@ -151,7 +151,7 @@ QString Commands::cmd_join()
         }
     }
 
-    if (strKey.isEmpty() == false)
+    if (!strKey.isEmpty())
         return QString("JOIN %1 %2").arg(strChannel).arg(strKey);
     else
         return QString("JOIN %1").arg(strChannel);
@@ -249,7 +249,7 @@ QString Commands::cmd_quit()
     QSettings settings;
     settings.setValue("reconnect", "false");
 
-    if (strReason.isEmpty() == false)
+    if (!strReason.isEmpty())
         return QString("QUIT :%1").arg(strReason);
     else
         return "QUIT";

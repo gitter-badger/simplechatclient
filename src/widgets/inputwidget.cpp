@@ -222,11 +222,11 @@ void InputWidget::send_message(QString strText, bool bModeration)
 
                 if (font == "verdana")
                     font = "";
-                if ((strCurrentColor != "#000000") && (strCurrentColor.isEmpty() == false))
+                if ((strCurrentColor != "#000000") && (!strCurrentColor.isEmpty()))
                     strTextDisplay = "%C"+strCurrentColor.right(6)+"%"+strTextDisplay;
-                if (font.isEmpty() == false)
+                if (!font.isEmpty())
                     font = ":"+font;
-                if ((weight.isEmpty() == false) || (font.isEmpty() == false))
+                if ((!weight.isEmpty()) || (!font.isEmpty()))
                     strTextDisplay = "%F"+weight+font+"%"+strTextDisplay;
 
                 strTextSend = convert_emots(strTextSend);
@@ -268,11 +268,11 @@ void InputWidget::send_message(QString strText, bool bModeration)
 
         if (font == "verdana")
             font = "";
-        if ((strCurrentColor != "#000000") && (strCurrentColor.isEmpty() == false))
+        if ((strCurrentColor != "#000000") && (!strCurrentColor.isEmpty()))
             strText = "%C"+strCurrentColor.right(6)+"%"+strText;
-        if (font.isEmpty() == false)
+        if (!font.isEmpty())
             font = ":"+font;
-        if ((weight.isEmpty() == false) || (font.isEmpty() == false))
+        if ((!weight.isEmpty()) || (!font.isEmpty()))
             strText = "%F"+weight+font+"%"+strText;
 
         strText = convert_emots(strText);
@@ -282,7 +282,7 @@ void InputWidget::send_message(QString strText, bool bModeration)
         QString strDT = dt.toString("[hh:mm:ss] ");
 
         // standard text
-        if (bModeration == false)
+        if (!bModeration)
         {
             if (settings.value("disable_logs").toString() == "off")
             {

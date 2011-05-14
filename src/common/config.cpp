@@ -42,27 +42,27 @@ Config::Config()
 #endif
 
     // create dir if not exist
-    if (QDir().exists(path) == false)
+    if (!QDir().exists(path))
         QDir().mkdir(path);
 
     strConfigFile = path+"/scc.conf";
     file = new QFile(strConfigFile);
 
     // if not exist - create new
-    if (file->exists() == false)
+    if (!file->exists())
         create_new_config();
 
     // try read
     if (file->exists())
     {
-        if (file->open(QIODevice::ReadWrite) == false)
+        if (!file->open(QIODevice::ReadWrite))
         {
 #ifdef Q_WS_X11
             qDebug() << tr("Error: config: Cannot read config file!");
 #endif
             return;
         }
-        if (doc.setContent(file) == false)
+        if (!doc.setContent(file))
         {
 #ifdef Q_WS_X11
             qDebug() << tr("Error: config: Cannot set content from file!");
@@ -89,7 +89,7 @@ Config::~Config()
 
 QString Config::get_value(QString strKey)
 {
-    if ((doc.isNull()) || (file->isOpen() == false))
+    if ((doc.isNull()) || (!file->isOpen()))
     {
 #ifdef Q_WS_X11
         qDebug() << tr("Error: config: Cannot get value: ") << strKey;
@@ -100,10 +100,10 @@ QString Config::get_value(QString strKey)
     QDomElement docElem = doc.documentElement();
     QDomNode n = docElem.firstChild();
 
-    while (n.isNull() == false)
+    while (!n.isNull())
     {
         QDomElement e = n.toElement();
-        if (e.isNull() == false)
+        if (!e.isNull())
         {
             if (e.tagName() == strKey)
                 return e.text();
@@ -116,7 +116,7 @@ QString Config::get_value(QString strKey)
 
 void Config::set_value(QString strKey, QString strValue)
 {
-    if ((doc.isNull()) || (file->isOpen() == false))
+    if ((doc.isNull()) || (!file->isOpen()))
     {
 #ifdef Q_WS_X11
         qDebug() << tr("Error: config: Cannot set value: ") << strKey;
@@ -140,7 +140,7 @@ void Config::set_value(QString strKey, QString strValue)
 
 void Config::remove_value(QString strKey)
 {
-    if ((doc.isNull()) || (file->isOpen() == false))
+    if ((doc.isNull()) || (!file->isOpen()))
     {
 #ifdef Q_WS_X11
         qDebug() << tr("Error: config: Cannot remove value: ") << strKey;
@@ -152,10 +152,10 @@ void Config::remove_value(QString strKey)
     QDomNode n = docElem.firstChild();
 
     // remove if exist
-    while (n.isNull() == false)
+    while (!n.isNull())
     {
         QDomElement e = n.toElement();
-        if (e.isNull() == false)
+        if (!e.isNull())
         {
             if (e.tagName() == strKey)
             {
@@ -270,17 +270,17 @@ QMap<QString,QString> Config::read_config()
 {
     QMap<QString, QString> mResult;
 
-    if ((doc.isNull() == false) && (file->isOpen()))
+    if ((!doc.isNull()) && (file->isOpen()))
     {
         QDomElement docElem = doc.documentElement();
         QDomNode n = docElem.firstChild();
 
-        while (n.isNull() == false)
+        while (!n.isNull())
         {
             QDomElement e = n.toElement();
 
             // save to map
-            if (e.isNull() == false)
+            if (!e.isNull())
                 mResult.insert(e.tagName(), e.text());
 
             n = n.nextSibling();

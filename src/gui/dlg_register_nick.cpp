@@ -178,7 +178,7 @@ void DlgRegisterNick::parse_result(QString strResult)
         QString strNick = ui.lineEdit_nick->text();
         QString strPassword = ui.lineEdit_password->text();
 
-        if (strPassword.isEmpty() == false)
+        if (!strPassword.isEmpty())
         {
             Crypt *pCrypt = new Crypt();
             strPassword = pCrypt->encrypt(strNick, strPassword);

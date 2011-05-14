@@ -66,7 +66,7 @@ void Core::createSettings()
 {
     // default settings
     QSettings settings;
-    settings.setValue("version", "1.0.12.851");
+    settings.setValue("version", "1.0.12.852");
     settings.setValue("logged", "off");
     settings.setValue("busy", "off");
     settings.setValue("away", "off");
@@ -116,17 +116,17 @@ void Core::check_settings()
     QFile fSoundQuery(strSoundQuery);
     QFile fBackgroundImage(strBackgroundImage);
 
-    if (fSoundBeep.exists() == false)
+    if (!fSoundBeep.exists())
     {
         pConfig->set_value("sound_beep", "");
         settings.setValue("sound_beep", "");
     }
-    if (fSoundQuery.exists() == false)
+    if (!fSoundQuery.exists())
     {
         pConfig->set_value("sound_query", "");
         settings.setValue("sound_query", "");
     }
-    if (fBackgroundImage.exists() == false)
+    if (!fBackgroundImage.exists())
     {
         pConfig->set_value("background_image", "");
         settings.setValue("background_image", "");

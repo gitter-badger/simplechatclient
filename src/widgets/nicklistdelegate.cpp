@@ -78,7 +78,7 @@ void NickListDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opti
     int imageSpace = 0;
 
     // status
-    if (status.isNull() == false)
+    if (!status.isNull())
     {
         if (strDisableAvatars == "off")
         {

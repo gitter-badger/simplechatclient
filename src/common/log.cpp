@@ -56,12 +56,12 @@ void Log::save(QString strChannel, QString strData)
 #endif
 
     // create scc dir if not exist
-    if (QDir().exists(path) == false)
+    if (!QDir().exists(path))
         QDir().mkdir(path);
 
     // create logs dir if not exist
     path += "/log";
-    if (QDir().exists(path) == false)
+    if (!QDir().exists(path))
         QDir().mkdir(path);
 
     // save logs by date
@@ -74,7 +74,7 @@ void Log::save(QString strChannel, QString strData)
 
         // create logs dir if not exist
         path += "/"+strDate;
-        if (QDir().exists(path) == false)
+        if (!QDir().exists(path))
             QDir().mkdir(path);
     }
 

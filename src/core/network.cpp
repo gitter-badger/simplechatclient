@@ -151,7 +151,7 @@ void Network::authorize()
         strNick = "~test";
 
     // decrypt pass
-    if (strPass.isEmpty() == false)
+    if (!strPass.isEmpty())
     {
         Crypt *pCrypt = new Crypt();
         strPass = pCrypt->decrypt(strNick, strPass);
@@ -161,7 +161,7 @@ void Network::authorize()
     // correct nick
     if ((strPass.isEmpty()) && (strNick[0] != '~'))
         strNick = "~"+strNick;
-    if ((strPass.isEmpty() == false) && (strNick[0] == '~'))
+    if ((!strPass.isEmpty()) && (strNick[0] == '~'))
         strNick = strNick.right(strNick.length()-1);
 
     Config *pConfig = new Config();
@@ -198,7 +198,7 @@ void Network::connect()
             clear_all();
 
             // reconnect
-            if ((timerReconnect->isActive() == false) && (bAuthorized == false))
+            if ((!timerReconnect->isActive()) && (!bAuthorized))
                 timerReconnect->start();
 
             return;
@@ -235,7 +235,7 @@ void Network::connected()
     emit show_msg_all(tr("Connected to server"), 9);
 
     // authorize
-    if (bAuthorized == false)
+    if (!bAuthorized)
         authorize();
 }
 
@@ -271,7 +271,7 @@ void Network::disconnected()
     clear_all();
 
     // reconnect
-    if ((timerReconnect->isActive() == false) && (bAuthorized == false))
+    if ((!timerReconnect->isActive()) && (!bAuthorized))
         timerReconnect->start();
 }
 
@@ -283,7 +283,7 @@ void Network::reconnect()
     QSettings settings;
     if (settings.value("reconnect").toString() == "true")
     {
-        if ((this->is_connected() == false) && (settings.value("logged").toString() == "off"))
+        if ((!this->is_connected()) && (settings.value("logged").toString() == "off"))
         {
             emit show_msg_all(tr("Reconnecting..."), 7);
             connect();
@@ -319,7 +319,7 @@ void Network::write(QString strData)
 
 void Network::send(QString strData)
 {
-    if (strData.startsWith("NS") == false)
+    if (!strData.startsWith("NS"))
         msgSendQueue.append(strData);
     else
         msgSendQueueNS.append(strData);
@@ -351,7 +351,7 @@ void Network::error(QAbstractSocket::SocketError error)
     clear_all();
 
     // reconnect
-    if ((timerReconnect->isActive() == false) && (bAuthorized == false))
+    if ((!timerReconnect->isActive()) && (!bAuthorized))
         timerReconnect->start();
 }
 

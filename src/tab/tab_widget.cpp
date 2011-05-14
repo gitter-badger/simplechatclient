@@ -173,7 +173,7 @@ TabWidget::TabWidget(Network *param1, QString param2, QTcpSocket *param3, DlgUse
     this->setLayout(mainLayout);
 
     // set colors
-    if ((strBackgroundColor.toLower() != "#ffffff") && (strBackgroundColor.isEmpty() == false))
+    if ((strBackgroundColor.toLower() != "#ffffff") && (!strBackgroundColor.isEmpty()))
         this->setStyleSheet(QString("color:%1;background-color:%2;").arg(strDefaultFontColor).arg(strBackgroundColor));
     else
         this->setStyleSheet(QString::null);

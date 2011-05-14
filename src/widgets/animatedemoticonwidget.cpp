@@ -89,9 +89,9 @@ void AnimatedEmoticonWidget::stop_emoticon()
 {
     if (movie->state() == QMovie::Running)
         movie->stop();
-    if (this->isHidden() == false)
+    if (!this->isHidden())
         this->hide();
-    if (strCurrentEmoticon.isEmpty() == false)
+    if (!strCurrentEmoticon.isEmpty())
         strCurrentEmoticon.clear();
 }
 

@@ -472,7 +472,7 @@ bool MainWindow::network_is_connected()
 void MainWindow::button_connect()
 {
     QSettings settings;
-    if (network_is_connected() == false)
+    if (!network_is_connected())
     {
         connectAct->setText(tr("&Disconnect"));
         connectAct->setIconText(tr("&Disconnect"));
@@ -562,7 +562,7 @@ void MainWindow::update_awaylog_status()
     }
     else
     {
-        if (awaylogAct->isVisible() == false)
+        if (!awaylogAct->isVisible())
             awaylogAct->setVisible(true);
     }
 }
@@ -873,7 +873,7 @@ void MainWindow::add_user(QString strChannel, QString strNick, QString strModes,
         pNickListWidget->add(strNick, strModes);
 
         // fast add
-        if (bFastAdd == false)
+        if (!bFastAdd)
         {
             // sort
             pNickListWidget->sortItems(0, Qt::DescendingOrder);
@@ -972,7 +972,7 @@ void MainWindow::quit_user(QString strNick, QString strDisplay)
 
 void MainWindow::change_flag(QString strNick, QString strChannel, QString strNewFlag)
 {
-    if (nicklist_exist(strChannel, strNick) == false) return; // nick not exist
+    if (!nicklist_exist(strChannel, strNick)) return; // nick not exist
 
     QString strModes;
     for (int i = 0; i < Core::instance()->lUsers.size(); i++)

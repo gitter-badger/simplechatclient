@@ -98,7 +98,7 @@ void Highlighter::highlightBlock(const QString &text)
     int index = 0;
     while ((index = word.indexIn(text, index)) != -1)
     {
-        if (correct_word(word.cap().toUtf8()) == false)
+        if (!correct_word(word.cap().toUtf8()))
             setFormat(index, word.matchedLength(), format);
         index += word.matchedLength();
     }

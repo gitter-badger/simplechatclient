@@ -121,7 +121,7 @@ void Kamerzysta::kamerzysta_not_running()
 {
     log("Kamerzysta not running");
 
-    if (QFile::exists(strAppPath+"\\installPath") == false)
+    if (!QFile::exists(strAppPath+"\\installPath"))
     {
         QMessageBox::critical(0, tr("Error"), tr("Kamerzysta is wrong installed!"));
         close();
@@ -130,7 +130,7 @@ void Kamerzysta::kamerzysta_not_running()
     else
     {
         QFile file(strAppPath+"\\installPath");
-        if (file.open(QIODevice::ReadOnly | QIODevice::Text) == false)
+        if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
         {
             QMessageBox::critical(0, tr("Error"), tr("Kamerzysta is wrong installed!"));
             close();
@@ -144,7 +144,7 @@ void Kamerzysta::kamerzysta_not_running()
 
     log("Install path:"+strKamerzystaFile);
 
-    if ((strKamerzystaFile.isEmpty() == false) && (QFile::exists(strKamerzystaFile)))
+    if ((!strKamerzystaFile.isEmpty()) && (QFile::exists(strKamerzystaFile)))
     {
         int iPos = strKamerzystaFile.lastIndexOf("\\");
         QString strKamerzystaPath = strKamerzystaFile.left(iPos);
@@ -201,7 +201,7 @@ void Kamerzysta::get_port()
 
     log("Port:"+strPort);
 
-    if (strPort.isEmpty() == false)
+    if (!strPort.isEmpty())
     {
         timerGetPort->stop();
         network_connect();
@@ -223,7 +223,7 @@ void Kamerzysta::authorize()
     if (strNick.isEmpty())
         log("Nick empty!");
 
-    if ((strNick != strMe) && (strNick.isEmpty() == false))
+    if ((strNick != strMe) && (!strNick.isEmpty()))
         network_send(QString("e%1").arg(strNick).arg(strUOKey));
 }
 

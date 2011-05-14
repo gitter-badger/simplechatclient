@@ -356,7 +356,7 @@ void DlgChannelSettings::set_data(QMap<QString, QString> mData)
         }
         else if (strKey == "www")
         {
-            if (strValue.isEmpty() == false)
+            if (!strValue.isEmpty())
                 ui.label_summary_website->setText(QString("<a href=\"%1\">%1</a>").arg(strValue));
             ui.lineEdit_website->setText(strValue);
         }
@@ -450,7 +450,7 @@ void DlgChannelSettings::set_topic(QString strTopic)
                         strFontWeight = strFont;
                 }
 
-                if (strFontWeight.isEmpty() == false)
+                if (!strFontWeight.isEmpty())
                 {
                     for (int fw = 0; fw < strFontWeight.length(); fw++)
                     {
@@ -459,7 +459,7 @@ void DlgChannelSettings::set_topic(QString strTopic)
                     }
                 }
 
-                if ((strFontName.isEmpty() == false) || (strFontWeight.isEmpty() == false))
+                if ((!strFontName.isEmpty()) || (!strFontWeight.isEmpty()))
                 {
                     if (strFontName == "arial") ui.comboBox_font->setCurrentIndex(0);
                     else if (strFontName == "times") ui.comboBox_font->setCurrentIndex(1);
@@ -505,7 +505,7 @@ void DlgChannelSettings::set_topic(QString strTopic)
         ui.comboBox_font->setCurrentIndex(2);
 
     // set summary topic
-    if (strTopic.isEmpty() == false)
+    if (!strTopic.isEmpty())
         ui.plainTextEdit_summary_topic->setPlainText(strTopic);
 
     // set topic
@@ -529,7 +529,7 @@ void DlgChannelSettings::set_owner(QString strNick)
 void DlgChannelSettings::set_description(QString strDescription)
 {
     // set summary description
-    if (strDescription.isEmpty() == false)
+    if (!strDescription.isEmpty())
     {
         QString strDescriptionText = strDescription;
         strDescriptionText.replace(QRegExp("%C([a-zA-Z0-9]+)%"),"");
@@ -545,7 +545,7 @@ void DlgChannelSettings::set_description(QString strDescription)
 
 void DlgChannelSettings::add_op(QString strNick)
 {
-    if (exist_item(strNick, ui.listWidget_op) == false)
+    if (!exist_item(strNick, ui.listWidget_op))
     {
         SortedListWidgetItem *item = new SortedListWidgetItem();
         item->setText(strNick);
@@ -561,7 +561,7 @@ void DlgChannelSettings::add_op(QString strNick)
 
 void DlgChannelSettings::add_halfop(QString strNick)
 {
-    if (exist_item(strNick, ui.listWidget_halfop) == false)
+    if (!exist_item(strNick, ui.listWidget_halfop))
     {
         SortedListWidgetItem *item = new SortedListWidgetItem();
         item->setText(strNick);
@@ -577,7 +577,7 @@ void DlgChannelSettings::add_halfop(QString strNick)
 
 void DlgChannelSettings::add_ban(QString strNick, QString strWho, QString strDT, QString strIPNick)
 {
-    if (exist_item(strNick, ui.listWidget_ban) == false)
+    if (!exist_item(strNick, ui.listWidget_ban))
     {
         SortedListWidgetItem *item = new SortedListWidgetItem();
         if (strIPNick.isEmpty())
@@ -598,7 +598,7 @@ void DlgChannelSettings::add_ban(QString strNick, QString strWho, QString strDT,
 
 void DlgChannelSettings::add_invite(QString strNick, QString strWho, QString strDT)
 {
-    if (exist_item(strNick, ui.listWidget_invite) == false)
+    if (!exist_item(strNick, ui.listWidget_invite))
     {
         SortedListWidgetItem *item = new SortedListWidgetItem();
         item->setText(strNick);
@@ -614,7 +614,7 @@ void DlgChannelSettings::owner_changed()
     bool ok;
     QString strNick = QInputDialog::getText(this, tr("Changing privileges"), strMsg, QLineEdit::Normal, QString::null, &ok);
 
-    if ((ok) && (strNick.isEmpty() == false))
+    if ((ok) && (!strNick.isEmpty()))
         pNetwork->send(QString("CS TRANSFER %1 %2").arg(strChannel).arg(strNick));
 
     clear();
@@ -628,7 +628,7 @@ void DlgChannelSettings::remove_channel_clicked()
     bool ok;
     QString strText = QInputDialog::getText(this, tr("Changing privileges"), strMsg, QLineEdit::Normal, strChannel, &ok);
 
-    if ((ok) && (strText.isEmpty() == false))
+    if ((ok) && (!strText.isEmpty()))
         pNetwork->send(QString("CS DROP %1").arg(strText));
 
     strChannel.clear();
@@ -638,7 +638,7 @@ void DlgChannelSettings::remove_channel_clicked()
 
 void DlgChannelSettings::email_changed()
 {
-    if (ui.lineEdit_email->text().isEmpty() == false)
+    if (!ui.lineEdit_email->text().isEmpty())
         DlgEmail(Core::instance()->sccWindow(), strChannel, ui.lineEdit_email->text()).exec();
 }
 
@@ -684,11 +684,11 @@ void DlgChannelSettings::topic_changed()
 
     if (strFontName == "verdana")
         strFontName = "";
-    if ((strFontColor != "#000000") && (strFontColor.isEmpty() == false))
+    if ((strFontColor != "#000000") && (!strFontColor.isEmpty()))
         strTopic = "%C"+strFontColor.right(6)+"%"+strTopic;
-    if (strFontName.isEmpty() == false)
+    if (!strFontName.isEmpty())
         strFontName = ":"+strFontName;
-    if ((strFontWeight.isEmpty() == false) || (strFontName.isEmpty() == false))
+    if ((!strFontWeight.isEmpty()) || (!strFontName.isEmpty()))
         strTopic = "%F"+strFontWeight+strFontName+"%"+strTopic;
 
     pNetwork->send(QString("CS SET %1 TOPIC %2").arg(strChannel).arg(strTopic));
@@ -795,7 +795,7 @@ void DlgChannelSettings::button_permission_add()
     bool ok;
     QString strResult = QInputDialog::getText(this, tr("Changing privileges"), strLabel, QLineEdit::Normal, QString::null, &ok);
 
-    if ((ok) && (strResult.isEmpty() == false))
+    if ((ok) && (!strResult.isEmpty()))
     {
         if ((tab == 2) && (strResult.contains("*")))
         {
@@ -841,22 +841,22 @@ void DlgChannelSettings::button_permission_remove()
 
     if (tab == 0)
     {
-        if (ui.listWidget_op->selectedItems().isEmpty() == false)
+        if (!ui.listWidget_op->selectedItems().isEmpty())
             lRemoveNicks = ui.listWidget_op->selectedItems();
     }
     else if (tab == 1)
     {
-        if (ui.listWidget_halfop->selectedItems().isEmpty() == false)
+        if (!ui.listWidget_halfop->selectedItems().isEmpty())
             lRemoveNicks = ui.listWidget_halfop->selectedItems();
     }
     else if (tab == 2)
     {
-        if (ui.listWidget_ban->selectedItems().isEmpty() == false)
+        if (!ui.listWidget_ban->selectedItems().isEmpty())
             lRemoveNicks = ui.listWidget_ban->selectedItems();
     }
     else if (tab == 3)
     {
-        if (ui.listWidget_invite->selectedItems().isEmpty() == false)
+        if (!ui.listWidget_invite->selectedItems().isEmpty())
             lRemoveNicks = ui.listWidget_invite->selectedItems();
     }
 
@@ -876,7 +876,7 @@ void DlgChannelSettings::button_permission_remove()
         bool ok;
         QString strNick = QInputDialog::getText(this, tr("Changing privileges"), strLabel, QLineEdit::Normal, QString::null, &ok);
 
-        if ((ok) && (strNick.isEmpty() == false))
+        if ((ok) && (!strNick.isEmpty()))
             lRemoveNicks.append(new QListWidgetItem(strNick));
     }
 
@@ -899,7 +899,7 @@ void DlgChannelSettings::button_permission_remove()
     {
         for (int i = 0; i < lRemoveNicks.size(); i++)
         {
-            if (lRemoveNicks.at(i)->data(Qt::UserRole).isNull() == false)
+            if (!lRemoveNicks.at(i)->data(Qt::UserRole).isNull())
                 pNetwork->send(QString("CS BANIP %1 DEL %2").arg(strChannel).arg(lRemoveNicks.at(i)->text()));
             else
                 pNetwork->send(QString("CS BAN %1 DEL %2").arg(strChannel).arg(lRemoveNicks.at(i)->text()));

@@ -90,7 +90,7 @@ void DlgUserProfile::set_user_info(QString strKey, QString strValue)
 {
     if (strKey == "avatar")
     {
-        if (strValue.isEmpty() == false)
+        if (!strValue.isEmpty())
             show_avatar(strValue);
         else
             ui.label_avatar->setText(tr("No photo available"));
@@ -128,7 +128,7 @@ void DlgUserProfile::avatar_finished()
     QByteArray bData = pReply->readAll();
 
     // show avatar
-    if (bData.isEmpty() == false)
+    if (!bData.isEmpty())
     {
         // display
         avatar.loadFromData(bData);
@@ -329,7 +329,7 @@ void DlgUserProfile::showEvent(QShowEvent *event)
     move(QApplication::desktop()->screen()->rect().center() - rect().center());
 
     // is hidden?
-    if (ui.widget_more->isHidden() == false)
+    if (!ui.widget_more->isHidden())
     {
         // change text
         ui.widget_more->hide();

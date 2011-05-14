@@ -220,7 +220,7 @@ void NickListWidget::add_child(QString strNick, QString strModes)
         QString strParent = tr("Cam(s)");
         add_child(strNick, strModes, strParent, icon);
     }
-    if ((strModes.contains("O") == false) && (strModes.contains("o") == false) && (strModes.contains("`") == false) && (strModes.contains("@") == false) && (strModes.contains("%") == false) && (strModes.contains("!") == false) && (strModes.contains("=") == false) && (strModes.contains("+") == false) && (strModes.contains("W") == false) && (strModes.contains("V") == false))
+    if ((!strModes.contains("O")) && (!strModes.contains("o")) && (!strModes.contains("`")) && (!strModes.contains("@")) && (!strModes.contains("%")) && (!strModes.contains("!")) && (!strModes.contains("=")) && (!strModes.contains("+")) && (!strModes.contains("W")) && (!strModes.contains("V")))
     {
         QPixmap icon = QPixmap(":/images/user.png");
         QString strParent = tr("User(s)");
@@ -231,7 +231,7 @@ void NickListWidget::add_child(QString strNick, QString strModes)
 void NickListWidget::add_child(QString strNick, QString strModes, QString strParent, QPixmap icon)
 {
     // exist parent
-    if (exist_parent(strParent) == false)
+    if (!exist_parent(strParent))
     {
         if (strModes.contains("V")) // fix for cam icon
             add_parent(strParent, QPixmap(":/images/pubcam.png"));
@@ -395,7 +395,7 @@ void NickListWidget::kick()
     bool ok;
     QString strText = QInputDialog::getText(this, tr("Kick From Channel"), tr("Reason for kicking:"), QLineEdit::Normal, tr("No reason"), &ok);
 
-    if ((ok) && (strText.isEmpty() == false))
+    if ((ok) && (!strText.isEmpty()))
         pNetwork->send(QString("KICK %1 %2 :%3").arg(strChannel).arg(strNick).arg(strText));
 }
 
@@ -416,7 +416,7 @@ void NickListWidget::kban()
     bool ok;
     QString strText = QInputDialog::getText(this, tr("Kick & Ban"), tr("Reason for kicking:"), QLineEdit::Normal, tr("No reason"), &ok);
 
-    if ((ok) && (strText.isEmpty() == false))
+    if ((ok) && (!strText.isEmpty()))
     {
         pNetwork->send(QString("CS BAN %1 ADD %2").arg(strChannel).arg(strNick));
         pNetwork->send(QString("KICK %1 %2 :%3").arg(strChannel).arg(strNick).arg(strText));

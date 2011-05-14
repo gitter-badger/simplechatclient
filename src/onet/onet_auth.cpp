@@ -58,9 +58,9 @@ QString OnetAuth::network_request(QNetworkAccessManager *accessManager, QString 
     QString strData = pReply->readAll();
     QString strRedir = pReply->attribute(QNetworkRequest::RedirectionTargetAttribute).toString();
 
-    if (strRedir.isEmpty() == false)
+    if (!strRedir.isEmpty())
     {
-        if (strRedir.contains("http") == false)
+        if (!strRedir.contains("http"))
         {
             strLink.remove("http://");
             strLink = strLink.left(strLink.indexOf("/"));
@@ -144,7 +144,7 @@ void OnetAuth::authorize(QString param1, QString param2, QString param3)
         network_request(accessManager, "http://czat.onet.pl/sk.gif", QString::null);
 
         // registered nick
-        if (strPass.isEmpty() == false)
+        if (!strPass.isEmpty())
         {
             // secure
             network_request(accessManager, "http://secure.onet.pl/", QString::null);
@@ -190,7 +190,7 @@ void OnetAuth::authorize(QString param1, QString param2, QString param3)
     }
 
     // not empty key; not logged
-    if ((strGetUo.isEmpty() == false) && (settings.value("logged") == "off"))
+    if ((!strGetUo.isEmpty()) && (settings.value("logged") == "off"))
     {
         request_finished(strNickAuth, strGetUo);
 
@@ -320,7 +320,7 @@ QString OnetAuth::transform_key(QString s)
 
 QString OnetAuth::get_version(QString strData)
 {
-    if (strData.isEmpty() == false)
+    if (!strData.isEmpty())
     {
         if (strData.indexOf("OnetCzatLoader") != -1)
         {
@@ -330,7 +330,7 @@ QString OnetAuth::get_version(QString strData)
             int iPos2 = strData.indexOf(strFind2, iPos1);
             QString strVersion = strData.mid(iPos1, iPos2-iPos1);
 
-            if ((strVersion.isEmpty() == false) && (strVersion.length() > 0) && (strVersion.length() < 20))
+            if ((!strVersion.isEmpty()) && (strVersion.length() > 0) && (strVersion.length() < 20))
                 return strVersion;
         }
     }
@@ -340,7 +340,7 @@ QString OnetAuth::get_version(QString strData)
 
 void OnetAuth::request_finished(QString strNickAuth, QString strData)
 {
-    if (strData.isEmpty() == false)
+    if (!strData.isEmpty())
     {
         QDomDocument doc;
         doc.setContent(strData);

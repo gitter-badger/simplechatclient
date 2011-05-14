@@ -59,7 +59,7 @@ void InputLineWidget::insert_text(QString strText)
 QString InputLineWidget::get_word()
 {
     QString strWord = this->toPlainText();
-    if (strWord.isEmpty() == false)
+    if (!strWord.isEmpty())
     {
         int iLength = 0;
         int iStart = 0;
@@ -81,7 +81,7 @@ QString InputLineWidget::get_word()
 void InputLineWidget::set_word(QString strSetWord)
 {
     QString strWord = this->toPlainText();
-    if (strWord.isEmpty() == false)
+    if (!strWord.isEmpty())
     {
         int iLength = 0;
         int iStart = 0;
@@ -139,12 +139,12 @@ bool InputLineWidget::event(QEvent *e)
             strLastWord = strWord;
         }
 
-        if (find.isEmpty() == false)
+        if (!find.isEmpty())
         {
             if (index > find.size())
                 index = 0;
 
-            if (find.isEmpty() == false)
+            if (!find.isEmpty())
             {
                 QString strSetWord = find.at(index);
                 set_word(strSetWord);

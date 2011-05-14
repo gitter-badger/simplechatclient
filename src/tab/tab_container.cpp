@@ -98,7 +98,7 @@ bool TabContainer::exist_tab(QString strChannel)
 
 void TabContainer::add_tab(QString strChannel)
 {
-    if (exist_tab(strChannel) == false)
+    if (!exist_tab(strChannel))
     {
         // log
         QString strData = "--- Log opened "+QDateTime::currentDateTime().toString(Qt::TextDate);

@@ -149,16 +149,16 @@ void DlgCam::set_default_values()
     ui.tableWidget_nick_rank_spectators->setHorizontalHeaderLabels(strlLabels);
 
     // set about me
-    if (settings.value("cam_about_me").toString().isEmpty() == false)
+    if (!settings.value("cam_about_me").toString().isEmpty())
         ui.textEdit_about_me->setPlainText(settings.value("cam_about_me").toString());
 
     // set homepage
-    if (settings.value("cam_homepage").toString().isEmpty() == false)
+    if (!settings.value("cam_homepage").toString().isEmpty())
         ui.lineEdit_homepage->setText(settings.value("cam_homepage").toString());
 
     // set img0
     QString strImg0 = settings.value("cam_img0").toString();
-    if ((strImg0.isEmpty() == false) && (QFile::exists(strImg0)))
+    if ((!strImg0.isEmpty()) && (QFile::exists(strImg0)))
     {
         QPixmap pixmap;
         pixmap.load(strImg0);
@@ -169,7 +169,7 @@ void DlgCam::set_default_values()
 
     // set img1
     QString strImg1 = settings.value("cam_img1").toString();
-    if ((strImg1.isEmpty() == false) && (QFile::exists(strImg1)))
+    if ((!strImg1.isEmpty()) && (QFile::exists(strImg1)))
     {
         QPixmap pixmap;
         pixmap.load(strImg1);
@@ -180,7 +180,7 @@ void DlgCam::set_default_values()
 
     // set img2
     QString strImg2 = settings.value("cam_img2").toString();
-    if ((strImg2.isEmpty() == false) && (QFile::exists(strImg2)))
+    if ((!strImg2.isEmpty()) && (QFile::exists(strImg2)))
     {
         QPixmap pixmap;
         pixmap.load(strImg2);
@@ -191,7 +191,7 @@ void DlgCam::set_default_values()
 
     // set img3
     QString strImg3 = settings.value("cam_img3").toString();
-    if ((strImg3.isEmpty() == false) && (QFile::exists(strImg3)))
+    if ((!strImg3.isEmpty()) && (QFile::exists(strImg3)))
     {
         QPixmap pixmap;
         pixmap.load(strImg3);
@@ -310,7 +310,7 @@ void DlgCam::detect_broadcasting()
     if (video->existVideoDevice())
     {
         // enable
-        if (ui.comboBox_device->isEnabled() == false)
+        if (!ui.comboBox_device->isEnabled())
         {
             ui.tabWidget->setTabEnabled(1, true);
             ui.tabWidget->setTabEnabled(2, true);
@@ -340,7 +340,7 @@ void DlgCam::set_broadcasting()
 void DlgCam::get_frame()
 {
     // video device not exist any more
-    if (video->existVideoDevice() == false)
+    if (!video->existVideoDevice())
     {
         video->destroy();
         videoFrameTimer->stop();
@@ -405,7 +405,7 @@ void DlgCam::data_kernel(QByteArray bData)
                 QString strUdget = strLineList[4]; // udget (012345)
                 QString strRank = strLineList[5]; // -500 to 500
 
-                if (strChannelsParams.isEmpty() == false)
+                if (!strChannelsParams.isEmpty())
                 {
                     QString strAllChannels;
 
@@ -443,7 +443,7 @@ void DlgCam::data_kernel(QByteArray bData)
         ui.tableWidget_nick_rank_spectators->resizeColumnsToContents();
 
         // select nick
-        if (strNick.isEmpty() == false)
+        if (!strNick.isEmpty())
         {
             ui.label_img->setText(tr("Downloading image"));
             camNetwork->network_send(QString("SUBSCRIBE_BIG * %1").arg(strNick));
@@ -467,7 +467,7 @@ void DlgCam::data_kernel(QByteArray bData)
     else if (iCamCmd == 251)
     {
         QString strLine(bData);
-        if (strLine.isEmpty() == false)
+        if (!strLine.isEmpty())
         {
             QStringList strLineList = strLine.split(":");
             if (strLineList.size() == 6)
@@ -479,7 +479,7 @@ void DlgCam::data_kernel(QByteArray bData)
                 QString strUdget = strLineList[4]; // udget (012345)
                 int iRank = strLineList[5].toInt(); // -500 to 500
 
-                if (strChannelsParams.isEmpty() == false)
+                if (!strChannelsParams.isEmpty())
                 {
                     QString strAllChannels;
 
@@ -521,7 +521,7 @@ void DlgCam::data_kernel(QByteArray bData)
                 }
                 else
                 {
-                    if (exist_item(strUser) == false)
+                    if (!exist_item(strUser))
                     {
                         // add user
                         add_item(strUser, QString::number(iRank), strSpectators);
@@ -579,7 +579,7 @@ void DlgCam::data_kernel(QByteArray bData)
         int row = 0;
         foreach (QString strLine, strDataList)
         {
-            if (strLine.isEmpty() == false)
+            if (!strLine.isEmpty())
             {
                 QStringList strLineList = strLine.split(" ");
                 if (strLineList.size() == 3) // is correct ?
@@ -669,7 +669,7 @@ void DlgCam::text_kernel(QString strData)
             // re-send
             if (strUser == strNick)
             {
-                if ((strNick.isEmpty() == false) && (this->isHidden() == false))
+                if ((!strNick.isEmpty()) && (!this->isHidden()))
                 {
                     QDateTime dt = QDateTime::currentDateTime();
                     int iCurrentTime = (int)dt.toTime_t(); // seconds that have passed since 1970
@@ -775,7 +775,7 @@ void DlgCam::text_kernel(QString strData)
 
         if (iCurrentTime - camNetwork->get_last_keep_alive() > 30) // 30 sec
         {
-            if ((strNick.isEmpty() == false) && (this->isHidden() == false))
+            if ((!strNick.isEmpty()) && (!this->isHidden()))
                 camNetwork->network_send(QString("KEEPALIVE_BIG %1").arg(strNick));
         }
     }
@@ -967,7 +967,7 @@ void DlgCam::send_all_my_options()
 
     // about me
     QString strAboutMe = settings.value("cam_about_me").toString();
-    if (strAboutMe.isEmpty() == false)
+    if (!strAboutMe.isEmpty())
     {
         camNetwork->network_send(QString("UDPUT 4 %1").arg(strAboutMe.length()));
         camNetwork->network_sendb(strAboutMe.toAscii());
@@ -975,7 +975,7 @@ void DlgCam::send_all_my_options()
 
     // homepage
     QString strHomePage = settings.value("cam_homepage").toString();
-    if (strHomePage.isEmpty() == false)
+    if (!strHomePage.isEmpty())
     {
         camNetwork->network_send(QString("UDPUT 5 %1").arg(strHomePage.length()));
         camNetwork->network_sendb(strHomePage.toAscii());
@@ -983,7 +983,7 @@ void DlgCam::send_all_my_options()
 
     // img0
     QString strImg0 = settings.value("cam_img0").toString();
-    if ((strImg0.isEmpty() == false) && (QFile::exists(strImg0)))
+    if ((!strImg0.isEmpty()) && (QFile::exists(strImg0)))
     {
         // read and scale
         QPixmap pixmap;
@@ -1002,7 +1002,7 @@ void DlgCam::send_all_my_options()
 
     // img1
     QString strImg1 = settings.value("cam_img1").toString();
-    if ((strImg1.isEmpty() == false) && (QFile::exists(strImg1)))
+    if ((!strImg1.isEmpty()) && (QFile::exists(strImg1)))
     {
         // read and scale
         QPixmap pixmap;
@@ -1021,7 +1021,7 @@ void DlgCam::send_all_my_options()
 
     // img2
     QString strImg2 = settings.value("cam_img2").toString();
-    if ((strImg2.isEmpty() == false) && (QFile::exists(strImg2)))
+    if ((!strImg2.isEmpty()) && (QFile::exists(strImg2)))
     {
         // read and scale
         QPixmap pixmap;
@@ -1040,7 +1040,7 @@ void DlgCam::send_all_my_options()
 
     // img3
     QString strImg3 = settings.value("cam_img3").toString();
-    if ((strImg3.isEmpty() == false) && (QFile::exists(strImg3)))
+    if ((!strImg3.isEmpty()) && (QFile::exists(strImg3)))
     {
         // read and scale
         QPixmap pixmap;
@@ -1123,10 +1123,10 @@ void DlgCam::update_item(QString strUser, QString strRank, QString strSpectators
 
 void DlgCam::broadcast_start_stop()
 {
-    if (bBroadcasting == false)
+    if (!bBroadcasting)
     {
         bBroadcasting = true;
-        if (bBroadcasting_pubpriv == false)
+        if (!bBroadcasting_pubpriv)
             ui.label_broadcast_status->setText(QString("<span style=\"color:#ffff00;\">%1</span>").arg(tr("Bradcasting public")));
         else
             ui.label_broadcast_status->setText(QString("<span style=\"color:#0000ff;\">%1</span>").arg(tr("Bradcasting private")));
@@ -1159,7 +1159,7 @@ void DlgCam::broadcast_public()
 
 void DlgCam::broadcast_private()
 {
-    if (bBroadcasting_pubpriv == false)
+    if (!bBroadcasting_pubpriv)
     {
         camNetwork->network_send("SENDMODE 1");
         bBroadcasting_pubpriv = true;
@@ -1173,7 +1173,7 @@ void DlgCam::set_status()
 {
     QString strStatus = ui.lineEdit_status->text();
 
-    if (strStatus.isEmpty() == false)
+    if (!strStatus.isEmpty())
     {
         lLastCommand.append("SETSTATUS");
         camNetwork->network_send(QString("SETSTATUS %1").arg(strStatus));
@@ -1184,7 +1184,7 @@ void DlgCam::set_about_me()
 {
     QString strAboutMe = ui.textEdit_about_me->toPlainText();
 
-    if (strAboutMe.isEmpty() == false)
+    if (!strAboutMe.isEmpty())
     {
         // save
         QSettings settings;
@@ -1203,7 +1203,7 @@ void DlgCam::set_homepage()
 {
     QString strHomePage = ui.lineEdit_homepage->text();
 
-    if (strHomePage.isEmpty() == false)
+    if (!strHomePage.isEmpty())
     {
         // save
         QSettings settings;
@@ -1228,7 +1228,7 @@ void DlgCam::add_img0()
                                      &selectedFilter,
                                      0);
 
-    if (strFileName.isEmpty() == false)
+    if (!strFileName.isEmpty())
     {
         // save
         QSettings settings;
@@ -1284,7 +1284,7 @@ void DlgCam::add_img1()
                                      &selectedFilter,
                                      0);
 
-    if (strFileName.isEmpty() == false)
+    if (!strFileName.isEmpty())
     {
         // save
         QSettings settings;
@@ -1340,7 +1340,7 @@ void DlgCam::add_img2()
                                      &selectedFilter,
                                      0);
 
-    if (strFileName.isEmpty() == false)
+    if (!strFileName.isEmpty())
     {
         // save
         QSettings settings;
@@ -1396,7 +1396,7 @@ void DlgCam::add_img3()
                                      &selectedFilter,
                                      0);
 
-    if (strFileName.isEmpty() == false)
+    if (!strFileName.isEmpty())
     {
         // save
         QSettings settings;
@@ -1444,13 +1444,13 @@ void DlgCam::remove_img3()
 
 void DlgCam::vote_minus()
 {
-    if (strNick.isEmpty() == false)
+    if (!strNick.isEmpty())
         camNetwork->network_send(QString("VOTE %1 -").arg(strNick));
 }
 
 void DlgCam::vote_plus()
 {
-    if (strNick.isEmpty() == false)
+    if (!strNick.isEmpty())
         camNetwork->network_send(QString("VOTE %1 +").arg(strNick));
 }
 
@@ -1547,7 +1547,7 @@ void DlgCam::read_video()
         QDateTime dt = QDateTime::currentDateTime();
         int iCurrentTime = (int)dt.toTime_t(); // seconds that have passed since 1970
 
-        if (bFirstSendPUT == false)
+        if (!bFirstSendPUT)
         {
             bFirstSendPUT = true;
             bReadySendPUT = false;
@@ -1576,7 +1576,7 @@ void DlgCam::showEvent(QShowEvent *event)
     // connect or get img
     if (camNetwork->is_connected())
     {
-        if (strNick.isEmpty() == false)
+        if (!strNick.isEmpty())
         {
             ui.textEdit_desc->setText("");
             ui.textEdit_desc->hide();
@@ -1603,7 +1603,7 @@ void DlgCam::showEvent(QShowEvent *event)
     detect_broadcasting();
 
     // create
-    if (video->isCreated() == false)
+    if (!video->isCreated())
         set_broadcasting();
 
     // switch to first tab
@@ -1614,7 +1614,7 @@ void DlgCam::hideEvent(QHideEvent *event)
 {
     event->accept();
 
-    if (strNick.isEmpty() == false)
+    if (!strNick.isEmpty())
     {
         lLastCommand.append("HIDE_EVENT");
         camNetwork->network_send(QString("UNSUBSCRIBE_BIG %1").arg(strNick));

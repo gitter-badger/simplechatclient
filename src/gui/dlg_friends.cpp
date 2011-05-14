@@ -106,7 +106,7 @@ void DlgFriends::tab_changed(int index)
     if ((index == 0) && (ui.pushButton_whois->isHidden()))
         ui.pushButton_whois->setHidden(false);
     // offline - hide whois
-    else if ((index == 1) && (ui.pushButton_whois->isHidden() == false))
+    else if ((index == 1) && (!ui.pushButton_whois->isHidden()))
         ui.pushButton_whois->setHidden(true);
 }
 
@@ -115,7 +115,7 @@ void DlgFriends::button_add()
     bool ok;
     QString strText = QInputDialog::getText(this, tr("Changing your friends list"), tr("Enter a nickname to be added:"), QLineEdit::Normal, QString::null, &ok);
 
-    if ((ok) && (strText.isEmpty() == false))
+    if ((ok) && (!strText.isEmpty()))
     {
         pNetwork->send(QString("NS FRIENDS ADD %1").arg(strText));
         QTimer::singleShot(1000*4, this, SLOT(refresh())); // 4 sec
@@ -139,7 +139,7 @@ void DlgFriends::button_remove()
     bool ok;
     QString strText = QInputDialog::getText(this, tr("Changing your friends list"), tr("Enter a nickname for removal:"), QLineEdit::Normal, strSelected, &ok);
 
-    if ((ok) && (strText.isEmpty() == false))
+    if ((ok) && (!strText.isEmpty()))
     {
         pNetwork->send(QString("NS FRIENDS DEL %1").arg(strText));
         QTimer::singleShot(1000*4, this, SLOT(refresh())); // 4 sec
@@ -160,7 +160,7 @@ void DlgFriends::button_whois()
             strSelected = ui.listWidget_offline->selectedItems().at(0)->text();
     }
 
-    if (strSelected.isEmpty() == false)
+    if (!strSelected.isEmpty())
         pNetwork->send(QString("WHOIS %1 :%1").arg(strSelected));
 }
 

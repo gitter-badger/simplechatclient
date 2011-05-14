@@ -304,7 +304,7 @@ void DlgOptions::set_default_values()
     QString strSpellchecker = settings.value("spellchecker").toString();
 
     // decrypt pass
-    if (strPass.isEmpty() == false)
+    if (!strPass.isEmpty())
     {
         Crypt *pCrypt = new Crypt();
         strPass = pCrypt->decrypt(strNick, strPass);
@@ -1040,7 +1040,7 @@ void DlgOptions::set_sound_beep()
                                      tr("All Files (*);;Mp3 Files (*.mp3);;Wave Files (*.wav)"),
                                      &selectedFilter,
                                      0);
-    if (fileName.isEmpty() == false)
+    if (!fileName.isEmpty())
     {
         QSettings settings;
         Config *pConfig = new Config();
@@ -1062,7 +1062,7 @@ void DlgOptions::set_sound_query()
                                      tr("All Files (*);;Mp3 Files (*.mp3);;Wave Files (*.wav)"),
                                      &selectedFilter,
                                      0);
-    if (fileName.isEmpty() == false)
+    if (!fileName.isEmpty())
     {
         QSettings settings;
         Config *pConfig = new Config();
@@ -1125,7 +1125,7 @@ void DlgOptions::set_background_image()
                                      tr("All Files (*);;JPG Files (*.jpg);;PNG Files (*.png);;Bitmap Files (*.bmp)"),
                                      &selectedFilter,
                                      0);
-    if (fileName.isEmpty() == false)
+    if (!fileName.isEmpty())
     {
         QSettings settings;
         Config *pConfig = new Config();
@@ -1204,7 +1204,7 @@ void DlgOptions::save_settings()
     }
 
     // encrypt pass
-    if (strPass.isEmpty() == false)
+    if (!strPass.isEmpty())
     {
         Crypt *pCrypt = new Crypt();
         strPass = pCrypt->encrypt(strNick, strPass);

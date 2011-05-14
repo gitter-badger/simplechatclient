@@ -108,7 +108,7 @@ void DlgModeration::add_msg(QString strID, QString strChannel, QString strNick, 
     mModerateMessages.append(addItem);
 
     // active window - display
-    if (this->isHidden() == false)
+    if (!this->isHidden())
     {
         QString strData = QString("[%1] <%2> %3").arg(strDT).arg(strNick).arg(strMessage);
 

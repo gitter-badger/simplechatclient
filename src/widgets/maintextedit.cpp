@@ -65,7 +65,7 @@ void MainTextEdit::update_background_image()
     QString strBackgroundImage = settings.value("background_image").toString();
     QString strDisableBackgroundImage = settings.value("disable_background_image").toString();
 
-    if ((strDisableBackgroundImage == "off") && (strBackgroundImage.isEmpty() == false))
+    if ((strDisableBackgroundImage == "off") && (!strBackgroundImage.isEmpty()))
         this->setStyleSheet("QTextEdit{background-image: url("+strBackgroundImage+"); background-attachment: fixed; background-position: center; background-repeat: no-repeat; background-color: #ffffff; }");
     else
         this->setStyleSheet("");
@@ -130,7 +130,7 @@ void MainTextEdit::kick()
     bool ok;
     QString strText = QInputDialog::getText(this, tr("Kick From Channel"), tr("Reason for kicking:"), QLineEdit::Normal, tr("No reason"), &ok);
 
-    if ((ok) && (strText.isEmpty() == false))
+    if ((ok) && (!strText.isEmpty()))
         pNetwork->send(QString("KICK %1 %2 :%3").arg(strChannel).arg(strNick).arg(strText));
 }
 
@@ -144,7 +144,7 @@ void MainTextEdit::kban()
     bool ok;
     QString strText = QInputDialog::getText(this, tr("Kick & Ban"), tr("Reason for kicking:"), QLineEdit::Normal, tr("No reason"), &ok);
 
-    if ((ok) && (strText.isEmpty() == false))
+    if ((ok) && (!strText.isEmpty()))
     {
         pNetwork->send(QString("CS BAN %1 ADD %2").arg(strChannel).arg(strNick));
         pNetwork->send(QString("KICK %1 %2 :%3").arg(strChannel).arg(strNick).arg(strText));
@@ -420,7 +420,7 @@ void MainTextEdit::contextMenuEvent(QContextMenuEvent *event)
             QString strFirstWord = get_first_word(cursor);
             QString strWord = get_word(cursor);
 
-            if ((strFirstWord.isEmpty() == false) && (strWord.isEmpty() == false))
+            if ((!strFirstWord.isEmpty()) && (!strWord.isEmpty()))
             {
                 // channel
                 if (strWord.at(0) == '#')

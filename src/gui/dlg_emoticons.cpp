@@ -182,9 +182,9 @@ void DlgEmoticons::insert_emoticons_extended(QString strEmoticon, QByteArray bDa
 
 void DlgEmoticons::current_tab_changed(int index)
 {
-    if ((index == 0) && (bDoneStandard == false))
+    if ((index == 0) && (!bDoneStandard))
         get_emoticons_standard();
-    else if ((index == 1) && (bDoneExtended == false))
+    else if ((index == 1) && (!bDoneExtended))
         get_emoticons_extended();
 }
 
@@ -193,7 +193,7 @@ void DlgEmoticons::clicked_standard(QModelIndex index)
     // get emoticon
     QString strEmoticon = ui.listWidget_standard->item(index.row())->data(Qt::UserRole).toString();
 
-    if (strEmoticon.isEmpty() == false)
+    if (!strEmoticon.isEmpty())
     {
         // insert emots
         pInputWidget->insert_text("//"+strEmoticon);
@@ -210,7 +210,7 @@ void DlgEmoticons::clicked_extended(QModelIndex index)
     // get emoticon
     strEmoticon = ui.listWidget_extended->item(index.row())->data(Qt::UserRole).toString();
 
-    if (strEmoticon.isEmpty() == false)
+    if (!strEmoticon.isEmpty())
     {
         // insert emots
         pInputWidget->insert_text("//"+strEmoticon);
@@ -236,7 +236,7 @@ void DlgEmoticons::button_insert()
             strSelected = ui.listWidget_extended->selectedItems().at(0)->data(Qt::UserRole).toString();
     }
 
-    if (strSelected.isEmpty() == false)
+    if (!strSelected.isEmpty())
     {
         // insert emots
         pInputWidget->insert_text("//"+strSelected);

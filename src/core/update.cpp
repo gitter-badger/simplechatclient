@@ -83,14 +83,14 @@ void Update::update_finished(QNetworkReply *reply)
 
     QString strSite = reply->readAll();
 
-    if (strSite.isEmpty() == false)
+    if (!strSite.isEmpty())
     {
         QDomDocument doc;
         doc.setContent(strSite);
 
         QString strVersion = doc.elementsByTagName("currentVersion").item(0).toElement().text();
 
-        if (strVersion.isEmpty() == false)
+        if (!strVersion.isEmpty())
             version(strVersion);
     }
 }

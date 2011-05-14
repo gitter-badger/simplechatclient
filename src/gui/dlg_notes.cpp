@@ -70,7 +70,7 @@ void DlgNotes::read_path()
 #endif
 
     // create dir if not exist
-    if (QDir().exists(path) == false)
+    if (!QDir().exists(path))
         QDir().mkdir(path);
 
     strNotesFile = path+"/notes.txt";
@@ -81,7 +81,7 @@ void DlgNotes::read()
     QFile *file = new QFile(strNotesFile);
     if (file->exists())
     {
-        if (file->open(QIODevice::ReadWrite) == false)
+        if (!file->open(QIODevice::ReadWrite))
         {
 #ifdef Q_WS_X11
             qDebug() << tr("Error: notes: Cannot read notes file!");

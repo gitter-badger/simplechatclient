@@ -60,7 +60,7 @@ int Video::xioctl(int request, void *arg)
 
 void Video::create()
 {
-    if (bCreatedCapture == false)
+    if (!bCreatedCapture)
     {
         openDevice();
         initDevice();

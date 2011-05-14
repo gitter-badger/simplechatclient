@@ -59,7 +59,7 @@ void Avatar::avatar_finished(QNetworkReply *reply)
     QString strCategory = reply->property("category").toString();
     QByteArray bData = reply->readAll();
 
-    if (bData.isEmpty() == false)
+    if (!bData.isEmpty())
         set_avatar(strNickOrChannel, strCategory, bData);
 }
 
@@ -68,7 +68,7 @@ void Avatar::set_avatar(QString strNickOrChannel, QString strCategory, QByteArra
     if (strCategory == "nick")
     {
         // insert
-        if (Core::instance()->mNickAvatar.contains(strNickOrChannel) == false)
+        if (!Core::instance()->mNickAvatar.contains(strNickOrChannel))
             Core::instance()->mNickAvatar.insert(strNickOrChannel, bAvatar);
         else
         {
@@ -85,7 +85,7 @@ void Avatar::set_avatar(QString strNickOrChannel, QString strCategory, QByteArra
     else if (strCategory == "channel")
     {
         // insert
-        if (Core::instance()->mChannelAvatar.contains(strNickOrChannel) == false)
+        if (!Core::instance()->mChannelAvatar.contains(strNickOrChannel))
             Core::instance()->mChannelAvatar.insert(strNickOrChannel, bAvatar);
         else
         {

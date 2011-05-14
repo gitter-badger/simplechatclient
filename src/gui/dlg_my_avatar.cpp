@@ -246,7 +246,7 @@ void DlgMyAvatar::got_my_avatars(QString strResult)
                 pEntries = pEntries.nextSibling();
             }
 
-            if ((mSrv.isEmpty() == false) && (img.isEmpty() == false) && (mApp.isEmpty() == false) && (crop.isEmpty() == false) && (angle.isEmpty() == false) && (imgId.isEmpty() == false))
+            if ((!mSrv.isEmpty()) && (!img.isEmpty()) && (!mApp.isEmpty()) && (!crop.isEmpty()) && (!angle.isEmpty()) && (!imgId.isEmpty()))
             {
                 QString strUrl = QString("%1%2,%3,%4,%5-%6.jpg").arg(mSrv).arg(img).arg(zoom).arg(mApp).arg(crop).arg(angle);
                 lMyAvatars.append(strUrl);
@@ -419,7 +419,7 @@ void DlgMyAvatar::got_avatars_from_collect(QString strResult)
                 pEntries = pEntries.nextSibling();
             }
 
-            if ((server.isEmpty() == false) && (img.isEmpty() == false) && (ext.isEmpty() == false))
+            if ((!server.isEmpty()) && (!img.isEmpty()) && (!ext.isEmpty()))
             {
                 QString strUrl = QString("%1%2,%3,%4,%5.%6").arg(server).arg(img).arg(zoom).arg(mApp).arg(angle).arg(ext);
                 lCollections.append(strUrl);
@@ -446,7 +446,7 @@ void DlgMyAvatar::tab_changed(int index)
 {
     if (index == 1)
     {
-        if (bReadedCollectionNames == false)
+        if (!bReadedCollectionNames)
         {
             // get
             get_collections();
@@ -476,7 +476,7 @@ void DlgMyAvatar::button_add_avatar()
                                      tr("JPG Files (*.jpg)"),
                                      &strSelectedFilter,
                                      0);
-    if (strFileName.isEmpty() == false)
+    if (!strFileName.isEmpty())
     {
         QByteArray bFileContent;
 
@@ -533,11 +533,11 @@ void DlgMyAvatar::got_add_avatar(QString strResult)
 
 void DlgMyAvatar::button_apply_avatar()
 {
-    if (ui.listWidget_my_avatars->selectedItems().isEmpty() == false)
+    if (!ui.listWidget_my_avatars->selectedItems().isEmpty())
     {
         QString strLink = ui.listWidget_my_avatars->selectedItems().at(0)->data(Qt::UserRole).toString();
 
-        if (strLink.isEmpty() == false)
+        if (!strLink.isEmpty())
         {
             pNetwork->send(QString("NS SET avatar %1").arg(strLink));
             QTimer::singleShot(1000*5, this, SLOT(refresh_avatar())); // 5 sec
@@ -547,11 +547,11 @@ void DlgMyAvatar::button_apply_avatar()
 
 void DlgMyAvatar::button_remove_avatar()
 {
-    if (ui.listWidget_my_avatars->selectedItems().isEmpty() == false)
+    if (!ui.listWidget_my_avatars->selectedItems().isEmpty())
     {
         QString strImgId = ui.listWidget_my_avatars->selectedItems().at(0)->data(Qt::UserRole+1).toString();
 
-        if (strImgId.isEmpty() == false)
+        if (!strImgId.isEmpty())
         {
             // delete avatar
             QString strUuid = QUuid::createUuid().toString();
@@ -595,11 +595,11 @@ void DlgMyAvatar::button_set_empty_avatar()
 
 void DlgMyAvatar::button_apply_collection_avatar()
 {
-    if (ui.listWidget_collections->selectedItems().isEmpty() == false)
+    if (!ui.listWidget_collections->selectedItems().isEmpty())
     {
         QString strLink = ui.listWidget_collections->selectedItems().at(0)->data(Qt::UserRole).toString();
 
-        if (strLink.isEmpty() == false)
+        if (!strLink.isEmpty())
         {
             pNetwork->send(QString("NS SET avatar %1").arg(strLink));
             QTimer::singleShot(1000*5, this, SLOT(refresh_avatar())); // 5 sec

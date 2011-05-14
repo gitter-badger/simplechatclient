@@ -90,7 +90,7 @@ void OnetKernel::kernel(QString param1)
     bool bUnknownRaw2 = false;
     bool bUnknownRaw3 = false;
 
-    if (strDataList.value(1).isEmpty() == false)
+    if (!strDataList.value(1).isEmpty())
     {
         if (strDataList[0].toLower() == "ping")
             raw_ping();
@@ -338,7 +338,7 @@ void OnetKernel::kernel(QString param1)
         else
             bUnknownRaw2 = true;
 
-        if ((strDataList[1].toLower() == "notice") && (strDataList.value(3).isEmpty() == false))
+        if ((strDataList[1].toLower() == "notice") && (!strDataList.value(3).isEmpty()))
         {
             if (strDataList[3].toLower() == ":100")
                 raw_100n();
@@ -529,7 +529,7 @@ void OnetKernel::raw_ping()
 
     QString strServer = strDataList[1];
 
-    if (strServer.isEmpty() == false)
+    if (!strServer.isEmpty())
         pNetwork->send(QString("PONG %1").arg(strServer));
 }
 
@@ -543,7 +543,7 @@ void OnetKernel::raw_pong()
         strServerTime = strServerTime.right(strServerTime.length()-1);
 
     // check correct pong
-    if (strServerTime.contains(QRegExp("(\\d+)\\.(\\d+)")) == false)
+    if (!strServerTime.contains(QRegExp("(\\d+)\\.(\\d+)")))
         return; // incorrect
 
     // get time from pong
@@ -619,7 +619,7 @@ void OnetKernel::raw_join()
         strChannel = strChannel.right(strChannel.length()-1);
 
     QString strSuffix;
-    if (strDataList.value(3).isEmpty() == false)
+    if (!strDataList.value(3).isEmpty())
     {
         strSuffix= strDataList[3];
         if (strSuffix[0] == ':')
@@ -654,7 +654,7 @@ void OnetKernel::raw_join()
         pNetwork->send(QString("CS INFO %1 i").arg(strChannel));
 
     // nick avatar
-    if ((strNick[0] != '~') && (Core::instance()->mNickAvatar.contains(strNick) == false))
+    if ((strNick[0] != '~') && (!Core::instance()->mNickAvatar.contains(strNick)))
     {
         if (settings.value("disable_avatars").toString() == "off") // with avatars
             pNetwork->send(QString("NS INFO %1 s").arg(strNick));
@@ -696,7 +696,7 @@ void OnetKernel::raw_part()
 
     if (strChannel[0] != '^')
     {
-        if (strReason.isEmpty() == false)
+        if (!strReason.isEmpty())
         {
             if (settings.value("show_zuo").toString() == "on")
                 strDisplay = QString(tr("* %1 [%2@%3] has left %4 [%5]")).arg(strNick).arg(strZUO).arg(strIP).arg(strChannel).arg(strReason);
@@ -1088,7 +1088,7 @@ void OnetKernel::raw_notice()
     QString strMessage;
 
     // special notice
-    if ((strDataList.value(4).isEmpty() == false) && (strDataList[4] == "*") && (strDataList.value(5).isEmpty() == false) && (strDataList[5] == "*"))
+    if ((!strDataList.value(4).isEmpty()) && (strDataList[4] == "*") && (!strDataList.value(5).isEmpty()) && (strDataList[5] == "*"))
     {
         for (int i = 6; i < strDataList.size(); i++) { if (i != 6) strMessage += " "; strMessage += strDataList[i]; }
         if (strMessage[0] == ':')
@@ -1482,7 +1482,7 @@ void OnetKernel::raw_111n()
     }
 
     // get avatar
-    if (strAvatarLink.isEmpty() == false)
+    if (!strAvatarLink.isEmpty())
         avatar->get_avatar(strNick, "nick", strAvatarLink);
 }
 
@@ -1545,7 +1545,7 @@ void OnetKernel::raw_131n()
         if (strNick[0] == ':')
             strNick = strNick.right(strNick.length()-1);
 
-        if (Core::instance()->lIgnore.contains(strNick) == false)
+        if (!Core::instance()->lIgnore.contains(strNick))
             Core::instance()->lIgnore.append(strNick);
     }
 }
@@ -1587,7 +1587,7 @@ void OnetKernel::raw_141n()
         if (strChannel[0] == ':')
             strChannel = strChannel.right(strChannel.length()-1);
 
-        if (Core::instance()->lChannelFavourites.contains(strChannel) == false)
+        if (!Core::instance()->lChannelFavourites.contains(strChannel))
             Core::instance()->lChannelFavourites.append(strChannel);
 
         if ((settings.value("ignore_raw_141").toString() == "off") && (settings.value("disable_autojoin_favourites").toString() == "off"))
@@ -1627,14 +1627,14 @@ void OnetKernel::raw_151n()
             if (strChannel[0] == ':')
                 strChannel = strChannel.right(strChannel.length()-1);
 
-            if (Core::instance()->lChannelHomes.contains(strChannel) == false)
+            if (!Core::instance()->lChannelHomes.contains(strChannel))
                 Core::instance()->lChannelHomes.append(strChannel);
         }
     }
     else if (strNick.toLower() == "nickserv")
     {
         // visible
-        if (Core::instance()->offlineMsgAct->isVisible() == false)
+        if (!Core::instance()->offlineMsgAct->isVisible())
             Core::instance()->offlineMsgAct->setVisible(true);
 
         // nicks
@@ -1644,7 +1644,7 @@ void OnetKernel::raw_151n()
             if (strNick[0] == ':')
                 strNick = strNick.right(strNick.length()-1);
 
-            if (Core::instance()->lOfflineNicks.contains(strNick) == false)
+            if (!Core::instance()->lOfflineNicks.contains(strNick))
                 Core::instance()->lOfflineNicks.append(strNick);
         }
     }
@@ -1706,13 +1706,13 @@ void OnetKernel::raw_161n()
 
     // update link
     QString strLink = mKeyValue.value("www");
-    if (strLink.isEmpty() == false)
+    if (!strLink.isEmpty())
         pTabC->set_link(strChannel, strLink);
 
     // update topic author
     QString strTopicAuthor = mKeyValue.value("topicAuthor");
     QString strTopicDate = mKeyValue.value("topicDate");
-    if (strTopicAuthor.isEmpty() == false)
+    if (!strTopicAuthor.isEmpty())
     {
         QDateTime dt = QDateTime::fromTime_t(strTopicDate.toInt());
         QString strDT = dt.toString("dd/MM/yy hh:mm:ss");
@@ -1722,7 +1722,7 @@ void OnetKernel::raw_161n()
 
     // avatar
     QString strAvatarUrl = mKeyValue.value("avatar");
-    if (strAvatarUrl.isEmpty() == false)
+    if (!strAvatarUrl.isEmpty())
     {
         QSettings settings;
         if (settings.value("style").toString() == "modern")
@@ -1745,7 +1745,7 @@ void OnetKernel::raw_162n()
         QString strKey = strLine.left(strLine.indexOf(","));
         QString strValue = strLine.right(strLine.length() - strLine.indexOf(",")-1);
 
-        if ((strKey.isEmpty() == false) && (strValue.isEmpty() == false))
+        if ((!strKey.isEmpty()) && (!strValue.isEmpty()))
         {
             if (pDlgChannelSettings->get_channel() == strChannel)
             {
@@ -1947,7 +1947,7 @@ void OnetKernel::raw_230n()
     QString strDisplay = QString(tr("* Added %1 to your ignore list")).arg(strNick);
     pTabC->show_msg_active(strDisplay, 7);
 
-    if (Core::instance()->lIgnore.contains(strNick) == false)
+    if (!Core::instance()->lIgnore.contains(strNick))
         Core::instance()->lIgnore.append(strNick);
 }
 
@@ -1977,7 +1977,7 @@ void OnetKernel::raw_240n()
     QString strDisplay = QString(tr("* Added %1 channel to your favorites list")).arg(strChannel);
     pTabC->show_msg_active(strDisplay, 7);
 
-    if (Core::instance()->lChannelFavourites.contains(strChannel) == false)
+    if (!Core::instance()->lChannelFavourites.contains(strChannel))
         Core::instance()->lChannelFavourites.append(strChannel);
 }
 
@@ -2016,7 +2016,7 @@ void OnetKernel::raw_250n()
         QMessageBox::information(0, "", QString(tr("Successfully created a channel %1")).arg(strChannel));
 
         // add to list
-        if (Core::instance()->lChannelHomes.contains(strChannel) == false)
+        if (!Core::instance()->lChannelHomes.contains(strChannel))
             Core::instance()->lChannelHomes.append(strChannel);
 
         // join
@@ -2817,7 +2817,7 @@ void OnetKernel::raw_353()
 
     for (int i = 5; i < strDataList.size(); i++)
     {
-        if (strDataList[i].isEmpty() == false)
+        if (!strDataList[i].isEmpty())
         {
             QString strNick = strDataList[i];
             if (i == 5) strNick = strNick.right(strNick.length()-1); // remove :
@@ -2859,7 +2859,7 @@ void OnetKernel::raw_353()
             }
 
             // nick avatar
-            if ((strCleanNick[0] != '~') && (Core::instance()->mNickAvatar.contains(strCleanNick) == false))
+            if ((strCleanNick[0] != '~') && (!Core::instance()->mNickAvatar.contains(strCleanNick)))
             {
                 QSettings settings;
                 if (settings.value("disable_avatars").toString() == "off") // with avatars
@@ -3943,7 +3943,7 @@ void OnetKernel::raw_801()
         pNetwork->send(QString("AUTHKEY %1").arg(strAuth));
         QString strUOKey = settings.value("uokey").toString();
         QString strNickUo = settings.value("uo_nick").toString();
-        if ((strUOKey.isEmpty() == false) && (strNickUo.isEmpty() == false))
+        if ((!strUOKey.isEmpty()) && (!strNickUo.isEmpty()))
             pNetwork->send(QString("USER * %1 czat-app.onet.pl :%2").arg(strUOKey).arg(strNickUo));
     }
     else
@@ -4055,7 +4055,7 @@ void OnetKernel::raw_817()
     if (strMessage[0] == ':')
         strMessage = strMessage.right(strMessage.length()-1);
 
-    if (strMessage.isEmpty() == false)
+    if (!strMessage.isEmpty())
         pTabC->show_msg(strTime, strChannel, QString("<%1> %2").arg(strNick).arg(strMessage), 0);
 }
 
