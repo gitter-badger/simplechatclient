@@ -20,6 +20,7 @@
 
 #include <QPainter>
 #include <QSettings>
+#include "core.h"
 #include "nicklistdelegate.h"
 
 NickListDelegate::NickListDelegate(QObject *parent)
@@ -33,9 +34,8 @@ NickListDelegate::~NickListDelegate()
 
 void NickListDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
+    // save
     painter->save();
-
-    QRect r = option.rect;
 
     QSettings settings;
     QString strNicklistNickColor = settings.value("nicklist_nick_color").toString();
@@ -69,65 +69,78 @@ void NickListDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opti
     else
         painter->setPen(fontPen);
 
-    // get status, avatar, nick
-    QIcon status = QIcon(qvariant_cast<QPixmap>(index.data(Qt::UserRole)));
-    QIcon avatar = QIcon(qvariant_cast<QPixmap>(index.data(Qt::UserRole+1)));
     QString nick = index.data(Qt::DisplayRole).toString();
-    bool bBusy = index.data(Qt::UserRole+10).toBool();
+    QString channel = index.data(Qt::UserRole+10).toString();
 
-    int imageSpace = 0;
+    bool busy = false;
 
-    // status
-    if (!status.isNull())
+    QString modes;
+    for (int i = 0; i < Core::instance()->lUsers.size(); i++)
     {
-        if (strDisableAvatars == "off")
+        if ((Core::instance()->lUsers.at(i).nick == nick) && (Core::instance()->lUsers.at(i).channel == channel))
         {
-            // with avatars
-            r = option.rect.adjusted(imageSpace, -5, 5, 5);
-            status.paint(painter, r, Qt::AlignVCenter|Qt::AlignLeft);
-            imageSpace += 20;
-        }
-        else
-        {
-            // without avatars
-            r = option.rect.adjusted(imageSpace, -4, 0, 4);
-            status.paint(painter, r, Qt::AlignVCenter|Qt::AlignLeft);
-            imageSpace += 20;
+            modes = Core::instance()->lUsers.at(i).modes;
+            break;
         }
     }
+
+    QList<QIcon> icons;
+    if (modes.contains("b")) { busy = true; }
+    if (modes.contains("V")) { icons << QIcon(":/images/privcam.png"); }
+    if (modes.contains("W")) { icons << QIcon(":/images/pubcam.png"); }
+    if (modes.contains("+")) { icons << QIcon(":/images/voice.png"); }
+    if (modes.contains("=")) { icons << QIcon(":/images/screener.png"); }
+    if (modes.contains("!")) { icons << QIcon(":/images/mod.png"); }
+    if (modes.contains("%")) { icons << QIcon(":/images/halfop.png"); }
+    if (modes.contains("@")) { icons << QIcon(":/images/op.png"); }
+    if (modes.contains("`")) { icons << QIcon(":/images/owner.png"); }
+    if (modes.contains("o")) { icons << QIcon(":/images/admin.png"); }
+    if (modes.contains("O")) { icons << QIcon(":/images/dev.png"); }
 
     // avatar
     if ((nick[0] != '~') && (strDisableAvatars == "off"))
     {
-        if ((nick != tr("Developer(s)")) && (nick != tr("Admin(s)")) && (nick != tr("Owner(s)")) && (nick != tr("Op(s)")) && (nick != tr("HalfOp(s)")) && (nick != tr("Mod(s)")) && (nick != tr("Screener(s)")) && (nick != tr("Voice(s)")) && (nick != tr("Cam(s)")) && (nick != tr("User(s)")))
-        {
-            r = option.rect.adjusted(imageSpace, 0, 10, 0);
-            avatar.paint(painter, r, Qt::AlignVCenter|Qt::AlignLeft);
-            imageSpace += 35;
+        QPixmap pAvatar;
+        pAvatar.loadFromData(Core::instance()->mNickAvatar.value(nick));
+        QIcon avatar(pAvatar);
 
-            r = option.rect.adjusted(imageSpace, 0, 10, 10);
-            imageSpace += 10;
-        }
+        int x = option.rect.left();
+        int y = option.rect.top();
+        avatar.paint(painter, x, y, 35, 35);
     }
 
     // nick
     if (strDisableAvatars == "off")
     {
         // with avatars
-        r = option.rect.adjusted(imageSpace, -10, -10, -10);
-        if ((bBusy) && (!(option.state & QStyle::State_Selected))) painter->setPen(busyPen); // gray
-        painter->setFont(QFont(option.font.family(), option.font.pointSize(), bBusy ? QFont::Light : QFont::Normal, bBusy));
-        painter->drawText(r.left(), r.top(), r.width(), r.height(), Qt::AlignBottom|Qt::AlignLeft, nick, &r);
+        if ((busy) && (!(option.state & QStyle::State_Selected)) && (!(option.state & QStyle::State_MouseOver))) painter->setPen(busyPen); // gray
+        painter->setFont(QFont(option.font.family(), option.font.pointSize(), busy ? QFont::Light : QFont::Normal, busy));
+
+        int x = option.rect.left();
+        if (nick[0] != '~') x += 40;
+        int y = option.rect.top() + (option.rect.height() / 2) + (option.font.pointSize() / 2);
+        painter->drawText(x, y, nick);
     }
     else
     {
         // without avatars
-        r = option.rect.adjusted(imageSpace, 0, 0, 0);
-        if ((bBusy) && (!(option.state & QStyle::State_Selected))) painter->setPen(busyPen); // gray
-        painter->setFont(QFont(option.font.family(), option.font.pointSize(), bBusy ? QFont::Light : QFont::Normal, bBusy));
-        painter->drawText(r.left(), r.top(), r.width(), r.height(), Qt::AlignBottom|Qt::AlignLeft, nick, &r);
+        if ((busy) && (!(option.state & QStyle::State_Selected)) && (!(option.state & QStyle::State_MouseOver))) painter->setPen(busyPen); // gray
+        painter->setFont(QFont(option.font.family(), option.font.pointSize(), busy ? QFont::Light : QFont::Normal, busy));
+
+        painter->drawText(option.rect, nick);
     }
 
+    // status
+    int x = option.rect.right();
+    int y = option.rect.top() + (option.rect.height() - 16) / 2;
+
+    foreach (QIcon icon, icons)
+    {
+        x -= 16;
+        icon.paint(painter, x, y, 16, 16, Qt::AlignAbsolute, QIcon::Normal, QIcon::On);
+    }
+
+    // restore
     painter->restore();
 }
 
@@ -140,7 +153,7 @@ QSize NickListDelegate::sizeHint(const QStyleOptionViewItem &option, const QMode
     QString strDisableAvatars = settings.value("disable_avatars").toString();
 
     if (strDisableAvatars == "off") // with avatars
-        return QSize(180, 35);
+        return QSize(150, 35);
     else // without avatars
         return QSize(100, 16);
 }

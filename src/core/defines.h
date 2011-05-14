@@ -62,34 +62,6 @@ struct OfflineMsg
 };
 typedef QList<OfflineMsg> sOfflineMsg;
 
-class SortedTreeWidgetItem : public QTreeWidgetItem
-{
-public:
-    SortedTreeWidgetItem() {}
-    SortedTreeWidgetItem(QTreeWidget *parent) : QTreeWidgetItem(parent) {}
-
-    virtual bool operator< ( const QTreeWidgetItem & o ) const
-    {
-        int column =  treeWidget() ? treeWidget()->sortColumn() : 0; // column
-
-        QVariant my = data(column, Qt::DisplayRole); // compare value 1
-        QVariant other = o.data(column, Qt::DisplayRole); // compare value 2
-        QVariant childOrParent = data(column, Qt::UserRole+20);
-        if (!my.isValid() || !other.isValid() || my.type() != other.type()) // valid compare
-            return QTreeWidgetItem::operator< (o);
-        if (childOrParent.toString() == "parent")
-        {
-            QVariant myId = data(column, Qt::UserRole+21);
-            QVariant oId = o.data(column, Qt::UserRole+21);
-            return myId.toInt() > oId.toInt();
-        }
-        if (my.canConvert(QVariant::String)) // my compare
-            return text(column).toLower() > o.text(column).toLower();
-        else
-            return QTreeWidgetItem::operator< (o); // other compare
-    }
-};
-
 class SortedListWidgetItem : public QListWidgetItem
 {
 public:

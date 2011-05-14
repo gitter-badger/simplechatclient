@@ -27,10 +27,10 @@
 #endif
 class DlgUserProfile;
 class Network;
+#include <QListWidget>
 #include <QTcpSocket>
-#include <QTreeWidget>
 
-class NickListWidget : public QTreeWidget
+class NickListWidget : public QListWidget
 {
     Q_OBJECT
 public:
@@ -41,9 +41,8 @@ public:
 #endif
     void set_channel(QString);
     QString get_channel() { return strChannel; }
-    void add(QString, QString);
+    void add(QString);
     void remove(QString);
-    void update_avatar(QString);
 
 private:
     // params
@@ -57,14 +56,6 @@ private:
     QString strChannel;
     enum { maxOpenChannels = 30 };
     QAction *openChannelsActs[maxOpenChannels];
-
-    void add_parent(QString, QPixmap);
-    bool exist_parent(QString);
-    void remove_parent(QString);
-    void add_child(QString, QString);
-    void add_child(QString, QString, QString, QPixmap);
-    void remove_child(QString);
-    SortedTreeWidgetItem* create_child(QString, QString, QPixmap);
 
 private slots:
     void priv();

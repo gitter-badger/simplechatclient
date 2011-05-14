@@ -810,9 +810,6 @@ void MainWindow::current_tab_changed(int index)
     // set tab active
     pInputLineDockWidget->set_active(strChannel);
 
-    // expand
-    pNickListWidget->expandAll();
-
     // moderation
     QString strMe = settings.value("nick").toString();
     QString strModes;
@@ -836,10 +833,9 @@ void MainWindow::create_nicklist(QString strChannel)
         if (Core::instance()->lUsers.at(i).channel == strChannel)
         {
             QString strNick = Core::instance()->lUsers.at(i).nick;
-            QString strModes = Core::instance()->lUsers.at(i).modes;
 
             // add
-            pNickListWidget->add(strNick, strModes);
+            pNickListWidget->add(strNick);
 
             // update nick count for option hide join/part when > 200
             Core::instance()->mChannelNicks[strChannel] = Core::instance()->mChannelNicks[strChannel]++;
@@ -847,7 +843,7 @@ void MainWindow::create_nicklist(QString strChannel)
     }
 
     // sort
-    pNickListWidget->sortItems(0, Qt::DescendingOrder);
+    //pNickListWidget->sortItems(Qt::DescendingOrder);
 
     // update nick count
     update_users_count();
@@ -870,16 +866,13 @@ void MainWindow::add_user(QString strChannel, QString strNick, QString strModes,
     if (pNickListWidget->get_channel() == strChannel)
     {
         // add
-        pNickListWidget->add(strNick, strModes);
+        pNickListWidget->add(strNick);
 
         // fast add
         if (!bFastAdd)
         {
             // sort
-            pNickListWidget->sortItems(0, Qt::DescendingOrder);
-
-            // expand
-            pNickListWidget->expandAll();
+            //pNickListWidget->sortItems(Qt::DescendingOrder);
         }
 
         // set inputline users
@@ -931,10 +924,7 @@ void MainWindow::nicklist_refresh(QString strChannel)
     if (pNickListWidget->get_channel() == strChannel)
     {
         // sort
-        pNickListWidget->sortItems(0, Qt::DescendingOrder);
-
-        // expand
-        pNickListWidget->expandAll();
+        //pNickListWidget->sortItems(Qt::DescendingOrder);
     }
 }
 
@@ -1079,7 +1069,7 @@ void MainWindow::update_nick_avatar(QString strNick)
 {
     QString strChannel = pNickListWidget->get_channel();
     if (nicklist_exist(strChannel, strNick))
-        pNickListWidget->update_avatar(strNick);
+        pNickListWidget->reset(); // like repaint
 }
 
 // clear all channel avatars

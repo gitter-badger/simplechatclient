@@ -274,25 +274,25 @@ void MainTextEdit::menu_nick(QString strNick, QContextMenuEvent *event)
     QMenu *privilege = new QMenu(tr("Actions"));
     privilege->setIcon(QIcon(":/images/oxygen/16x16/irc-operator.png"));
 
-    if (strModes.indexOf("@") == -1)
-        privilege->addAction(QIcon(":/images/op.png"), tr("Give super operator status"), this, SLOT(op_add()));
-    else
+    if (strModes.contains("@"))
         privilege->addAction(QIcon(":/images/op.png"), tr("Take super operator status"), this, SLOT(op_del()));
-
-    if (strModes.indexOf("%") == -1)
-        privilege->addAction(QIcon(":/images/halfop.png"), tr("Give operator status"), this, SLOT(halfop_add()));
     else
+        privilege->addAction(QIcon(":/images/op.png"), tr("Give super operator status"), this, SLOT(op_add()));
+
+    if (strModes.contains("%"))
         privilege->addAction(QIcon(":/images/halfop.png"), tr("Take operator status"), this, SLOT(halfop_del()));
-
-    if (strModes.indexOf("!") == -1)
-        privilege->addAction(QIcon(":/images/mod.png"), tr("Give moderator status"), this, SLOT(moderator_add()));
     else
+        privilege->addAction(QIcon(":/images/halfop.png"), tr("Give operator status"), this, SLOT(halfop_add()));
+
+    if (strModes.contains("!"))
         privilege->addAction(QIcon(":/images/mod.png"), tr("Take moderator status"), this, SLOT(moderator_del()));
-
-    if (strModes.indexOf("+") == -1)
-        privilege->addAction(QIcon(":/images/voice.png"), tr("Give guest status"), this, SLOT(voice_add()));
     else
+        privilege->addAction(QIcon(":/images/mod.png"), tr("Give moderator status"), this, SLOT(moderator_add()));
+
+    if (strModes.contains("+"))
         privilege->addAction(QIcon(":/images/voice.png"), tr("Take guest status"), this, SLOT(voice_del()));
+    else
+        privilege->addAction(QIcon(":/images/voice.png"), tr("Give guest status"), this, SLOT(voice_add()));
 
     QAction *nickAct = new QAction(strNick, this);
     nickAct->setIcon(QIcon(":/images/oxygen/16x16/user-identity.png"));
@@ -306,7 +306,8 @@ void MainTextEdit::menu_nick(QString strNick, QContextMenuEvent *event)
     if (strNick[0] != '~')
     {
         menu.addAction(QIcon(":/images/oxygen/16x16/view-pim-contacts.png"), tr("Profile"), this, SLOT(profile()));
-        menu.addAction(QIcon(":/images/pubcam.png"), tr("Webcam"), this, SLOT(cam()));
+        if ((strModes.contains("W")) || (strModes.contains("V")))
+            menu.addAction(QIcon(":/images/pubcam.png"), tr("Webcam"), this, SLOT(cam()));
     }
     menu.addMenu(minvite);
     menu.addMenu(friends);
