@@ -70,9 +70,8 @@ void DlgNotes::read_path()
 #endif
 
     // create dir if not exist
-    QDir d(path);
-    if (d.exists(path) == false)
-        d.mkdir(path);
+    if (QDir().exists(path) == false)
+        QDir().mkdir(path);
 
     strNotesFile = path+"/notes.txt";
 }

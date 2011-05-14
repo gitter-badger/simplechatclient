@@ -73,13 +73,11 @@ void crashHandler()
     QString path = QDir::homePath()+"/.scc";
 
     // create dir if not exist
-    QDir d(path);
-    if (d.exists(path) == false)
-        d.mkdir(path);
+    if (QDir().exists(path) == false)
+        QDir().mkdir(path);
 
-    QDir d1(path);
-    if (d1.exists(path+"/log") == false)
-        d1.mkdir(path+"/log");
+    if (QDir().exists(path+"/log") == false)
+        QDir().mkdir(path+"/log");
 
     QProcess pProcess;
 
@@ -218,13 +216,11 @@ void saveMessage(QString strFilename, QString strData)
 #endif
 
     // create dir if not exist
-    QDir d(path);
-    if (d.exists(path) == false)
-        d.mkdir(path);
+    if (QDir().exists(path) == false)
+        QDir().mkdir(path);
 
-    QDir d1(path);
-    if (d1.exists(path+"/log") == false)
-        d1.mkdir(path+"/log");
+    if (QDir().exists(path+"/log") == false)
+        QDir().mkdir(path+"/log");
 
     QFile f(path+"/log/"+strFilename+".txt");
     if (!f.open(QIODevice::Append))

@@ -19,10 +19,7 @@
  ****************************************************************************/
 
 #include <QDesktopWidget>
-#include <QDir>
-#include <QFile>
 #include <QSettings>
-#include <QTimer>
 #include "config.h"
 #include "core.h"
 #include "dlg_about.h"

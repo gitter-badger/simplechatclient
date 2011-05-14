@@ -42,9 +42,8 @@ Config::Config()
 #endif
 
     // create dir if not exist
-    QDir d(path);
-    if (d.exists(path) == false)
-        d.mkdir(path);
+    if (QDir().exists(path) == false)
+        QDir().mkdir(path);
 
     strConfigFile = path+"/scc.conf";
     file = new QFile(strConfigFile);

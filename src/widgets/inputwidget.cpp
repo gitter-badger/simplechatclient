@@ -116,9 +116,9 @@ void InputWidget::set_color(QString color)
     pInputLine->setStyleSheet(QString("color:%1").arg(color));
 }
 
-void InputWidget::set_moderation(bool m)
+void InputWidget::set_moderation(bool value)
 {
-    if (m)
+    if (value)
         moderSendButton->show();
     else
         moderSendButton->hide();
