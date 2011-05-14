@@ -113,7 +113,7 @@ void DlgUserProfile::set_user_info(QString strKey, QString strValue)
     else if (strKey == "type")
         ui.lineEdit_type->setText(convert_type(strValue));
     else if (strKey == "www")
-        ui.lineEdit_www->setText(strValue);
+        ui.labelEdit_www->setText(QString("<a href=\"%1\">%1</a>").arg(strValue));
 }
 
 void DlgUserProfile::avatar_finished()
@@ -187,7 +187,7 @@ void DlgUserProfile::clear_info()
     ui.lineEdit_country->clear();
     ui.plainTextEdit_hobby->clear();
     ui.lineEdit_type->clear();
-    ui.lineEdit_www->clear();
+    ui.labelEdit_www->clear();
 }
 
 QString DlgUserProfile::convert_desc(QString strContent)

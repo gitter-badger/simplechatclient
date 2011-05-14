@@ -374,23 +374,17 @@
            </widget>
           </item>
           <item row="5" column="1">
-           <widget class="QLineEdit" name="lineEdit_www">
-            <property name="minimumSize">
-             <size>
-              <width>200</width>
-              <height>25</height>
-             </size>
+           <widget class="QLabel" name="labelEdit_www">
+            <property name="text">
+             <string/>
             </property>
-            <property name="maximumSize">
-             <size>
-              <width>200</width>
-              <height>25</height>
-             </size>
+            <property name="scaledContents">
+             <bool>true</bool>
             </property>
             <property name="alignment">
              <set>Qt::AlignCenter</set>
             </property>
-            <property name="readOnly">
+            <property name="openExternalLinks">
              <bool>true</bool>
             </property>
            </widget>
