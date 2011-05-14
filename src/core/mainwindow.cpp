@@ -812,15 +812,7 @@ void MainWindow::current_tab_changed(int index)
 
     // moderation
     QString strMe = settings.value("nick").toString();
-    QString strModes;
-    for (int i = 0; i < Core::instance()->lUsers.size(); i++)
-    {
-        if ((Core::instance()->lUsers.at(i).nick == strMe) && (Core::instance()->lUsers.at(i).channel == strChannel))
-        {
-            strModes = Core::instance()->lUsers.at(i).modes;
-            break;
-        }
-    }
+    QString strModes = Core::instance()->get_user_modes(strMe, strChannel);
     if (strModes.contains("!")) pInputLineDockWidget->enable_moderation();
     else pInputLineDockWidget->disable_moderation();
 }
@@ -964,15 +956,7 @@ void MainWindow::change_flag(QString strNick, QString strChannel, QString strNew
 {
     if (!nicklist_exist(strChannel, strNick)) return; // nick not exist
 
-    QString strModes;
-    for (int i = 0; i < Core::instance()->lUsers.size(); i++)
-    {
-        if ((Core::instance()->lUsers.at(i).nick == strNick) && (Core::instance()->lUsers.at(i).channel == strChannel))
-        {
-            strModes = Core::instance()->lUsers.at(i).modes;
-            break;
-        }
-    }
+    QString strModes = Core::instance()->get_user_modes(strNick, strChannel);
 
     QString strConvertFrom = "qaohXYvObrWVx";
     QString strConvertTo = "`&@%!=+ObrWVx";

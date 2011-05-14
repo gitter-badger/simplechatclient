@@ -72,6 +72,7 @@ void DlgFriends::refresh()
     while (i != Core::instance()->mFriends.constEnd())
     {
         SortedListWidgetItem *item = new SortedListWidgetItem();
+        item->setData(Qt::UserRole+11, false); // is nicklist
 
         if (Core::instance()->mNickAvatar.contains(i.key()))
         {

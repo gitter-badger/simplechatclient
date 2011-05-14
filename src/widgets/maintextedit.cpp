@@ -227,15 +227,7 @@ void MainTextEdit::menu_channel(QString strChannel, QContextMenuEvent *event)
 
 void MainTextEdit::menu_nick(QString strNick, QContextMenuEvent *event)
 {
-    QString strModes;
-    for (int i = 0; i < Core::instance()->lUsers.size(); i++)
-    {
-        if ((Core::instance()->lUsers.at(i).nick == strNick) && (Core::instance()->lUsers.at(i).channel == strChannel))
-        {
-            strModes = Core::instance()->lUsers.at(i).modes;
-            break;
-        }
-    }
+    QString strModes = Core::instance()->get_user_modes(strNick, strChannel);
 
     QMenu *minvite = new QMenu(tr("Invite"));
     minvite->setIcon(QIcon(":/images/oxygen/16x16/legalmoves.png"));

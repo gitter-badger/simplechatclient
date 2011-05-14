@@ -548,6 +548,7 @@ void DlgChannelSettings::add_op(QString strNick)
     if (!exist_item(strNick, ui.listWidget_op))
     {
         SortedListWidgetItem *item = new SortedListWidgetItem();
+        item->setData(Qt::UserRole+11, false); // is nicklist
         item->setText(strNick);
         ui.listWidget_op->insertItem(ui.listWidget_op->count(), item);
     }
@@ -564,6 +565,7 @@ void DlgChannelSettings::add_halfop(QString strNick)
     if (!exist_item(strNick, ui.listWidget_halfop))
     {
         SortedListWidgetItem *item = new SortedListWidgetItem();
+        item->setData(Qt::UserRole+11, false); // is nicklist
         item->setText(strNick);
         ui.listWidget_halfop->insertItem(ui.listWidget_halfop->count(), item);
     }
@@ -580,6 +582,7 @@ void DlgChannelSettings::add_ban(QString strNick, QString strWho, QString strDT,
     if (!exist_item(strNick, ui.listWidget_ban))
     {
         SortedListWidgetItem *item = new SortedListWidgetItem();
+        item->setData(Qt::UserRole+11, false); // is nicklist
         if (strIPNick.isEmpty())
         {
             item->setText(strNick);
@@ -601,6 +604,7 @@ void DlgChannelSettings::add_invite(QString strNick, QString strWho, QString str
     if (!exist_item(strNick, ui.listWidget_invite))
     {
         SortedListWidgetItem *item = new SortedListWidgetItem();
+        item->setData(Qt::UserRole+11, false); // is nicklist
         item->setText(strNick);
         item->setToolTip(QString("%1: %2 (%3)").arg(tr("Created by")).arg(strWho).arg(strDT));
 

@@ -56,6 +56,10 @@ public:
     int get_nick_channels(QString);
     // get users per channel
     QList<QString> get_nicks_from_channel(QString);
+    // get user modes
+    QString get_user_modes(QString, QString);
+    // get user max modes - for sorting
+    int get_user_max_modes(QString, QString);
 
     QAction *lagAct;
     QList<QString> lAwaylog;

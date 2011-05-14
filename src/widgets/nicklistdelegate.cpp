@@ -74,15 +74,7 @@ void NickListDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opti
 
     bool busy = false;
 
-    QString modes;
-    for (int i = 0; i < Core::instance()->lUsers.size(); i++)
-    {
-        if ((Core::instance()->lUsers.at(i).nick == nick) && (Core::instance()->lUsers.at(i).channel == channel))
-        {
-            modes = Core::instance()->lUsers.at(i).modes;
-            break;
-        }
-    }
+    QString modes = Core::instance()->get_user_modes(nick, channel);
 
     QList<QIcon> icons;
     if (modes.contains("b")) { busy = true; }

@@ -72,10 +72,28 @@ public:
     {
         QVariant my = data(Qt::DisplayRole); // compare value 1
         QVariant other = o.data(Qt::DisplayRole); // compare value 2
+        QVariant isNickList = data(Qt::UserRole+11); // compare value 2
         if (!my.isValid() || !other.isValid() || my.type() != other.type()) // valid compare
             return QListWidgetItem::operator< (o);
         if (my.canConvert(QVariant::String)) // my compare
-            return text().toLower() < o.text().toLower();
+        {
+            if (isNickList.toBool() == true) // sorting by status
+            {
+                int mModes = data(Qt::UserRole+12).toInt();
+                int oModes = o.data(Qt::UserRole+12).toInt();
+                if (mModes != oModes)
+                {
+                    if (mModes < oModes)
+                        return false;
+                    else
+                        return true;
+                }
+                else
+                    return text().toLower() < o.text().toLower();
+            }
+            else
+                return text().toLower() < o.text().toLower();
+        }
         else
             return QListWidgetItem::operator< (o); // other compare
     }

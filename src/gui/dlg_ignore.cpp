@@ -72,6 +72,7 @@ void DlgIgnore::refresh()
             pixmap.loadFromData(Core::instance()->mNickAvatar.value(strNick));
 
             SortedListWidgetItem *item = new SortedListWidgetItem();
+            item->setData(Qt::UserRole+11, false); // is nicklist
             item->setText(strNick);
             item->setIcon(QIcon(pixmap));
 
@@ -80,6 +81,7 @@ void DlgIgnore::refresh()
         else
         {
             SortedListWidgetItem *item = new SortedListWidgetItem();
+            item->setData(Qt::UserRole+11, false); // is nicklist
             item->setText(strNick);
             item->setIcon(QIcon(":/images/oxygen/16x16/meeting-attending-tentative.png"));
 

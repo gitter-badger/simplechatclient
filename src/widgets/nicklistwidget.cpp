@@ -66,6 +66,8 @@ void NickListWidget::add(QString strNick)
     SortedListWidgetItem *item = new SortedListWidgetItem();
     item->setText(strNick);
     item->setData(Qt::UserRole+10, strChannel);
+    item->setData(Qt::UserRole+11, true); // is nicklist
+    item->setData(Qt::UserRole+12, Core::instance()->get_user_max_modes(strNick, strChannel));
 
     this->addItem(item);
 }
@@ -284,16 +286,7 @@ void NickListWidget::contextMenuEvent(QContextMenuEvent *e)
 
     QString strNick = this->selectedItems().at(0)->text();
 
-    QString strModes;
-
-    for (int i = 0; i < Core::instance()->lUsers.size(); i++)
-    {
-        if ((Core::instance()->lUsers.at(i).nick == strNick) && (Core::instance()->lUsers.at(i).channel == strChannel))
-        {
-            strModes = Core::instance()->lUsers.at(i).modes;
-            break;
-        }
-    }
+    QString strModes = Core::instance()->get_user_modes(strNick, strChannel);
 
     QMenu *minvite = new QMenu(tr("Invite"));
     minvite->setIcon(QIcon(":/images/oxygen/16x16/legalmoves.png"));
