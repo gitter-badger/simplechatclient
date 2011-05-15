@@ -209,9 +209,9 @@ void saveMessage(QString strFilename, QString strData)
 #ifdef Q_WS_X11
     path = QDir::homePath()+"/.scc";
 #else
-    QSettings settings(QSettings::UserScope, "Microsoft", "Windows");
-    settings.beginGroup("CurrentVersion/Explorer/Shell Folders");
-    path = settings.value("Personal").toString();
+    QSettings winSettings(QSettings::UserScope, "Microsoft", "Windows");
+    winSettings.beginGroup("CurrentVersion/Explorer/Shell Folders");
+    path = winSettings.value("Personal").toString();
     path += "/scc";
 #endif
 

@@ -86,9 +86,9 @@ void Kamerzysta::log(QString strData)
 
 void Kamerzysta::get_path()
 {
-    QSettings settings(QSettings::UserScope, "Microsoft", "Windows");
-    settings.beginGroup("CurrentVersion/Explorer/Shell Folders");
-    strAppPath = settings.value("AppData").toString();
+    QSettings winSettings(QSettings::UserScope, "Microsoft", "Windows");
+    winSettings.beginGroup("CurrentVersion/Explorer/Shell Folders");
+    strAppPath = winSettings.value("AppData").toString();
 
     QDir dir;
     if (dir.exists(strAppPath+"/Kamerzysta"))

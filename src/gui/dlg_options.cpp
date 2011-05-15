@@ -259,9 +259,9 @@ void DlgOptions::set_default_values()
 #ifdef Q_WS_X11
     strLogsPath = QDir::homePath()+"/.scc/log";
 #else
-    QSettings mySettings(QSettings::UserScope, "Microsoft", "Windows");
-    mySettings.beginGroup("CurrentVersion/Explorer/Shell Folders");
-    QString path = mySettings.value("Personal").toString();
+    QSettings winSettings(QSettings::UserScope, "Microsoft", "Windows");
+    winSettings.beginGroup("CurrentVersion/Explorer/Shell Folders");
+    QString path = winSettings.value("Personal").toString();
     path += "/scc";
 
     strLogsPath = path+"/log";
