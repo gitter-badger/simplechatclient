@@ -66,7 +66,7 @@ void Core::createSettings()
 {
     // default settings
     QSettings settings;
-    settings.setValue("version", "1.0.12.858");
+    settings.setValue("version", "1.0.12.859");
     settings.setValue("logged", "off");
     settings.setValue("busy", "off");
     settings.setValue("away", "off");
@@ -226,15 +226,14 @@ int Core::get_user_max_modes(QString strNick, QString strChannel)
 {
     QString modes = get_user_modes(strNick, strChannel);
 
-    if (modes.contains("O")) { return 128; }
-    if (modes.contains("o")) { return 64; }
-    if (modes.contains("`")) { return 32; }
-    if (modes.contains("@")) { return 16; }
-    if (modes.contains("%")) { return 8; }
-    if (modes.contains("!")) { return 4; }
-    if (modes.contains("=")) { return 2; }
-    if (modes.contains("+")) { return 1; }
-    if ((modes.contains("W")) || (modes.contains("V"))) { return 0; }
+    if (modes.contains("O")) { return 64; }
+    if (modes.contains("o")) { return 32; }
+    if (modes.contains("`")) { return 16; }
+    if (modes.contains("@")) { return 8; }
+    if (modes.contains("%")) { return 4; }
+    if (modes.contains("!")) { return 2; }
+    if (modes.contains("=")) { return 1; }
+    if (modes.contains("+")) { return 0; }
 
     return -1;
 }
