@@ -114,7 +114,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     // hide awaylog
     awaylogAct->setVisible(false);
 
-    // hide my avtar
+    // TODO
+    // hide my avtar - too many errors
     myAvatarAct->setVisible(false);
 
     // show options if config not exist

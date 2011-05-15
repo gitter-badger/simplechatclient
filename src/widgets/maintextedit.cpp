@@ -318,7 +318,7 @@ void MainTextEdit::menu_nick(QString strNick, QContextMenuEvent *event)
 void MainTextEdit::menu_website(QContextMenuEvent *event)
 {
     QString strShortLink = strWebsite;
-    if (strShortLink.size() > 35) strShortLink = strShortLink.left(35)+"...";
+    if (strShortLink.size() > 40) strShortLink = strShortLink.left(20)+"..."+strShortLink.right(20);
 
     QMenu menu(this);
 

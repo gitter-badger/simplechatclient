@@ -113,7 +113,12 @@ void DlgUserProfile::set_user_info(QString strKey, QString strValue)
     else if (strKey == "type")
         ui.lineEdit_type->setText(convert_type(strValue));
     else if (strKey == "www")
-        ui.labelEdit_www->setText(QString("<a href=\"%1\">%1</a>").arg(strValue));
+    {
+        QString strShortLink = strValue;
+        if (strShortLink.size() > 30) strShortLink = strShortLink.left(15)+"..."+strShortLink.right(15);
+
+        ui.labelEdit_www->setText(QString("<a href=\"%1\">%2</a>").arg(strValue).arg(strShortLink));
+    }
 }
 
 void DlgUserProfile::avatar_finished()

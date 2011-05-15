@@ -319,10 +319,10 @@ void Network::write(QString strData)
 
 void Network::send(QString strData)
 {
-    if (!strData.startsWith("NS"))
-        msgSendQueue.append(strData);
-    else
+    if (strData.startsWith("NS"))
         msgSendQueueNS.append(strData);
+    else
+        msgSendQueue.append(strData);
 }
 
 void Network::recv()
