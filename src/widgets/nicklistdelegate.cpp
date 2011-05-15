@@ -51,6 +51,7 @@ void NickListDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opti
     QColor cGradient1 = QColor(strNicklistGradient1Color);
     QColor cGradient2 = QColor(strNicklistGradient2Color);
 
+    bool selected;
     if (option.state & QStyle::State_Selected)
     {
         QLinearGradient backgroundGradient(option.rect.left(), option.rect.top(), option.rect.left(), option.rect.height()+option.rect.top());
@@ -58,16 +59,21 @@ void NickListDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opti
         backgroundGradient.setColorAt(1.0, cGradient2);
         painter->fillRect(option.rect, QBrush(backgroundGradient));
         painter->setPen(selectedFontPen);
+        selected = true;
     }
 #ifndef Q_WS_WIN
     else if (option.state & QStyle::State_MouseOver)
     {
         painter->fillRect(option.rect, option.palette.highlight());
         painter->setPen(selectedFontPen);
+        selected = true;
     }
 #endif
     else
+    {
         painter->setPen(fontPen);
+        selected = false;
+    }
 
     QString nick = index.data(Qt::DisplayRole).toString();
     QString channel = index.data(Qt::UserRole+10).toString();
@@ -105,7 +111,7 @@ void NickListDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opti
     if (strDisableAvatars == "off")
     {
         // with avatars
-        if ((busy) && (!(option.state & QStyle::State_Selected)) && (!(option.state & QStyle::State_MouseOver))) painter->setPen(busyPen); // gray
+        if ((busy) && (!selected)) painter->setPen(busyPen); // gray
         painter->setFont(QFont(option.font.family(), option.font.pointSize(), busy ? QFont::Light : QFont::Normal, busy));
 
         int x = option.rect.left();
@@ -116,7 +122,7 @@ void NickListDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opti
     else
     {
         // without avatars
-        if ((busy) && (!(option.state & QStyle::State_Selected)) && (!(option.state & QStyle::State_MouseOver))) painter->setPen(busyPen); // gray
+        if ((busy) && (!selected)) painter->setPen(busyPen); // gray
         painter->setFont(QFont(option.font.family(), option.font.pointSize(), busy ? QFont::Light : QFont::Normal, busy));
 
         painter->drawText(option.rect, nick);
