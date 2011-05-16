@@ -242,7 +242,9 @@ QString DlgUserProfile::convert_age(QString strDate)
 
     int iAge = strCurrentYear.toInt() - strYear.toInt();
 
-    if ((strCurrentMonth.toInt() <= strMonth.toInt()) && (strCurrentDay.toInt() < strDay.toInt()))
+    if (strCurrentMonth.toInt() < strMonth.toInt())
+        iAge--;
+    else if ((strCurrentMonth.toInt() == strMonth.toInt()) && (strCurrentDay.toInt() < strDay.toInt()))
         iAge--;
 
     return QString::number(iAge);
