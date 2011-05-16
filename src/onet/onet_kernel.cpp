@@ -1358,6 +1358,15 @@ void OnetKernel::raw_001()
 
     // channel list
     pNetwork->send("SLIST  R- 0 0 100 null");
+
+    // update last active
+    QDateTime cdt = QDateTime::currentDateTime();
+    int t = (int)cdt.toTime_t(); // seconds that have passed since 1970
+    settings.setValue("last_active", QString::number(t));
+
+    // auto-away
+    if (!Core::instance()->autoAwayTimer->isActive())
+        Core::instance()->autoAwayTimer->start();
 }
 
 // :cf1f4.onet 002 Merovingian :Your host is cf1f4.onet, running version InspIRCd-1.1

@@ -319,6 +319,19 @@ void InputWidget::update_nick(QString strNick)
 
 void InputWidget::inputline_return_pressed()
 {
+    QSettings settings;
+
+    // update last active
+    QDateTime cdt = QDateTime::currentDateTime();
+    int t = (int)cdt.toTime_t(); // seconds that have passed since 1970
+    settings.setValue("last_active", QString::number(t));
+
+    // disable away
+    bool bAway = settings.value("away").toString() == "on" ? true : false;
+    if (bAway)
+        pNetwork->send("AWAY :");
+
+    // text
     QString strText = pInputLine->toPlainText().trimmed();
     paste_multi_line(strText, false);
     pInputLine->clear();
@@ -326,6 +339,19 @@ void InputWidget::inputline_return_pressed()
 
 void InputWidget::moder_button_clicked()
 {
+    QSettings settings;
+
+    // update last active
+    QDateTime cdt = QDateTime::currentDateTime();
+    int t = (int)cdt.toTime_t(); // seconds that have passed since 1970
+    settings.setValue("last_active", QString::number(t));
+
+    // disable away
+    bool bAway = settings.value("away").toString() == "on" ? true : false;
+    if (bAway)
+        pNetwork->send("AWAY :");
+
+    // text
     QString strText = pInputLine->toPlainText().trimmed();
     paste_multi_line(strText, true);
     pInputLine->clear();

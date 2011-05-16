@@ -26,6 +26,7 @@ class MainWindow;
 class Update;
 #include <QAction>
 #include <QObject>
+#include <QTimer>
 
 /**
  * Core
@@ -83,6 +84,8 @@ public:
     QAction *offlineMsgAct;
     sOfflineMsg lOfflineMsg;
     QList<QString> lOfflineNicks;
+    // auto-away
+    QTimer *autoAwayTimer;
 
 public slots:
     void quit();

@@ -89,6 +89,8 @@ bool Network::is_writable()
 
 void Network::clear_all()
 {
+    QSettings settings;
+
     // close cam socket
     emit close_cam_socket();
 
@@ -111,7 +113,6 @@ void Network::clear_all()
     emit clear_all_nicklist();
 
     // state
-    QSettings settings;
     settings.setValue("logged", "off");
 
     // timer
@@ -127,6 +128,13 @@ void Network::clear_all()
     // reconnect
     if (timerReconnect->isActive())
         timerReconnect->stop();
+
+    // auto-away
+    if (Core::instance()->autoAwayTimer->isActive())
+        Core::instance()->autoAwayTimer->stop();
+
+    // last active
+    settings.setValue("last_active", "0");
 
     // clear queue
     msgSendQueue.clear();

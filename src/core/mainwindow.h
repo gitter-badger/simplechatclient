@@ -170,6 +170,7 @@ private slots:
     void set_connect_enabled(bool);
     void tab_close_requested(int);
     void current_tab_changed(int);
+    void timeout_autoaway();
 
 protected:
     virtual void closeEvent(QCloseEvent *);

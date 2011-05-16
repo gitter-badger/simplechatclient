@@ -18,6 +18,7 @@
  *                                                                          *
  ****************************************************************************/
 
+#include <QDateTime>
 #include <QDesktopWidget>
 #include <QSettings>
 #include "config.h"
@@ -94,6 +95,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     pTabC->set_dlg_cam(pDlgCam);
 #endif
 
+    // auto-away
+    Core::instance()->autoAwayTimer = new QTimer();
+    Core::instance()->autoAwayTimer->setInterval(1000*60*1); // 1 min
+
     // gui
     createGui();
 
@@ -126,6 +131,9 @@ MainWindow::~MainWindow()
 {
     // clear arrays
     clear_all_nicklist();
+
+    // auto-away
+    Core::instance()->autoAwayTimer->stop();
 
     delete pOnetAuth;
     delete pOnetKernel;
@@ -409,6 +417,9 @@ void MainWindow::create_signals()
     QObject::connect(pNetwork, SIGNAL(clear_all_nicklist()), this, SLOT(clear_all_nicklist()));
     QObject::connect(pNetwork, SIGNAL(update_actions()), this, SLOT(update_actions()));
     QObject::connect(pNetwork, SIGNAL(close_cam_socket()), this, SLOT(close_cam_socket()));
+
+    // auto-away
+    QObject::connect(Core::instance()->autoAwayTimer, SIGNAL(timeout()), this, SLOT(timeout_autoaway()));
 }
 
 void MainWindow::closeEvent(QCloseEvent *event)
@@ -760,6 +771,23 @@ QString MainWindow::get_current_tab_name(int index)
             return strChannel;
     }
     return QString::null;
+}
+
+void MainWindow::timeout_autoaway()
+{
+    QSettings settings;
+    if ((pNetwork->is_connected()) && (pNetwork->is_writable()) && (settings.value("logged") == "on"))
+    {
+        QDateTime cdt = QDateTime::currentDateTime();
+        int t = (int)cdt.toTime_t(); // seconds that have passed since 1970
+
+        int iLastActive = settings.value("last_active").toInt();
+
+        bool bAway = settings.value("away").toString() == "on" ? true : false;
+
+        if ((!bAway) && (iLastActive != 0) && (t-iLastActive > 300))
+            pNetwork->send(QString("AWAY :%1").arg(tr("Not here right now")));
+    }
 }
 
 // tab changed

@@ -66,7 +66,7 @@ void Core::createSettings()
 {
     // default settings
     QSettings settings;
-    settings.setValue("version", "1.0.12.863");
+    settings.setValue("version", "1.0.12.864");
     settings.setValue("logged", "off");
     settings.setValue("busy", "off");
     settings.setValue("away", "off");
@@ -81,6 +81,7 @@ void Core::createSettings()
     settings.setValue("onet_sid", "");
     settings.setValue("onet_uid", "");
     settings.setValue("onetzuo_ticket", "");
+    settings.setValue("last_active", "0");
 
     // config values
     Config *pConfig = new Config();
