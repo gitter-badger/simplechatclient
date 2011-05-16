@@ -67,6 +67,9 @@ void Avatar::set_avatar(QString strNickOrChannel, QString strCategory, QByteArra
 {
     if (strCategory == "nick")
     {
+        // return if nick not exist any more
+        if (Core::instance()->get_nick_channels(strNickOrChannel) == 0) return;
+
         // insert
         if (!Core::instance()->mNickAvatar.contains(strNickOrChannel))
             Core::instance()->mNickAvatar.insert(strNickOrChannel, bAvatar);

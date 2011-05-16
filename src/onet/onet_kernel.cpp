@@ -1482,7 +1482,7 @@ void OnetKernel::raw_111n()
     }
 
     // get avatar
-    if (!strAvatarLink.isEmpty())
+    if ((!strAvatarLink.isEmpty()) && (Core::instance()->get_nick_channels(strNick) != 0))
         avatar->get_avatar(strNick, "nick", strAvatarLink);
 }
 
