@@ -170,7 +170,7 @@ void DlgUserProfile::button_more()
         ui.pushButton_more->setIcon(QIcon(":/images/oxygen/16x16/list-add.png"));
         ui.pushButton_more->setText(tr("More..."));
 
-        int iHeight = ui.verticalLayout->sizeHint().height() - ui.formLayout_more->sizeHint().height();
+        int iHeight = ui.verticalLayout->sizeHint().height() - (ui.formLayout_more->sizeHint().height()+20);
         setMinimumHeight(iHeight);
         setMaximumHeight(iHeight);
         setMinimumWidth(iWidth);
@@ -342,7 +342,7 @@ void DlgUserProfile::showEvent(QShowEvent *event)
         ui.pushButton_more->setText(tr("More..."));
 
         // resize
-        int iHeight = ui.verticalLayout->sizeHint().height() - ui.formLayout_more->sizeHint().height();
+        int iHeight = ui.verticalLayout->sizeHint().height() - (ui.formLayout_more->sizeHint().height()+20);
         setMinimumHeight(iHeight);
         setMaximumHeight(iHeight);
         setMinimumWidth(iWidth);
