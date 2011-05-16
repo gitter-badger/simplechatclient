@@ -215,6 +215,13 @@ void MainWindow::createGui()
         toolBar->hide();
         pInputLineDockWidget->hide_toolwidget();
     }
+
+    // maximum size
+    QString strDisableAvatars = settings.value("disable_avatars").toString();
+    if (strDisableAvatars == "off") // with avatars
+        rightDockWidget->setMaximumWidth(260);
+    else // without avatars
+        rightDockWidget->setMaximumWidth(230);
 }
 
 void MainWindow::create_actions()
@@ -796,12 +803,13 @@ void MainWindow::current_tab_changed(int index)
     QString strChannel = get_current_tab_name(index);
     if (strChannel.isEmpty()) return; // something wrong
 
+    QSettings settings;
+
     // change tab name
     QString strTabText = pTabM->tabText(index);
     this->setWindowTitle(QString("Simple Chat Client - [%1]").arg(strTabText));
 
     // change tab color
-    QSettings settings;
     pTabM->set_color(index, QColor(settings.value("default_font_color").toString()));
 
     // hide/show Status nicklist
@@ -809,10 +817,6 @@ void MainWindow::current_tab_changed(int index)
         rightDockWidget->hide();
     else
         rightDockWidget->show();
-
-    // hide on classic
-    if (settings.value("style") == "classic")
-        rightDockWidget->hide();
 
     // hide/show settings on non channel
     if (strChannel[0] != '#')

@@ -109,7 +109,7 @@ public:
 
 private:
     bool bCreatedCapture;
-    char* full_filename;
+    const char* full_filename;
     pixel_format m_pixelformat;
     imagebuffer m_currentbuffer;
     QVector<rawbuffer> m_rawbuffers;

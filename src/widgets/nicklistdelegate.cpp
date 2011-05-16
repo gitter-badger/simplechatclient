@@ -151,7 +151,7 @@ QSize NickListDelegate::sizeHint(const QStyleOptionViewItem &option, const QMode
     QString strDisableAvatars = settings.value("disable_avatars").toString();
 
     if (strDisableAvatars == "off") // with avatars
-        return QSize(150, 35);
+        return QSize(200, 35);
     else // without avatars
-        return QSize(100, 16);
+        return QSize(170, 16);
 }
