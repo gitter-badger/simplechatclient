@@ -95,7 +95,6 @@ private slots:
     void disable_logs(bool);
     void set_background_image();
     void disable_background_image(bool);
-    void set_spellchecker();
     void button_ok();
     void button_cancel();
 };

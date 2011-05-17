@@ -145,11 +145,6 @@ void DlgOptions::create_gui()
     ui.pushButton_set_background_image->setText(tr("Set"));
     ui.checkBox_disable_background_image->setText(tr("Disable background image"));
 
-    // spell checker
-    ui.groupBox_spellchecker->setTitle(tr("Spellchecker"));
-    ui.radioButton_spellchecker_active->setText(tr("Active"));
-    ui.radioButton_spellchecker_inactive->setText(tr("Inactive"));
-
     // options list
     QTreeWidgetItem *basic = new QTreeWidgetItem(ui.treeWidget_options);
     basic->setIcon(0, QIcon(":/images/oxygen/16x16/view-media-artist.png"));
@@ -190,11 +185,6 @@ void DlgOptions::create_gui()
     background_image->setIcon(0, QIcon(":/images/oxygen/16x16/games-config-background.png"));
     background_image->setText(0, tr("Background image"));
     background_image->setToolTip(0, tr("Background image"));
-
-    QTreeWidgetItem *spell_checker = new QTreeWidgetItem(ui.treeWidget_options);
-    spell_checker->setIcon(0, QIcon(":/images/oxygen/16x16/character-set.png"));
-    spell_checker->setText(0, tr("Spellchecker"));
-    spell_checker->setToolTip(0, tr("Spellchecker"));
 }
 
 void DlgOptions::set_default_values()
@@ -301,7 +291,6 @@ void DlgOptions::set_default_values()
     QString strDisableLogs = settings.value("disable_logs").toString();
     QString strDisableSounds = settings.value("disable_sounds").toString();
     QString strDisableBackgroundImage = settings.value("disable_background_image").toString();
-    QString strSpellchecker = settings.value("spellchecker").toString();
 
     // decrypt pass
     if (!strPass.isEmpty())
@@ -486,18 +475,6 @@ void DlgOptions::set_default_values()
     else
         ui.checkBox_disable_background_image->setChecked(false);
 
-    // spellchecker
-    if (strSpellchecker == "on")
-    {
-        ui.radioButton_spellchecker_active->setChecked(true);
-        ui.radioButton_spellchecker_inactive->setChecked(false);
-    }
-    else
-    {
-        ui.radioButton_spellchecker_active->setChecked(false);
-        ui.radioButton_spellchecker_inactive->setChecked(true);
-    }
-
     // set mainwindow colors
     set_mainwindow_colors();
 
@@ -582,8 +559,6 @@ void DlgOptions::create_signals()
     QObject::connect(ui.checkBox_disable_logs, SIGNAL(clicked(bool)), this, SLOT(disable_logs(bool)));
     QObject::connect(ui.pushButton_set_background_image, SIGNAL(clicked()), this, SLOT(set_background_image()));
     QObject::connect(ui.checkBox_disable_background_image, SIGNAL(clicked(bool)), this, SLOT(disable_background_image(bool)));
-    QObject::connect(ui.radioButton_spellchecker_active, SIGNAL(clicked()), this, SLOT(set_spellchecker()));
-    QObject::connect(ui.radioButton_spellchecker_inactive, SIGNAL(clicked()), this, SLOT(set_spellchecker()));
     QObject::connect(ui.buttonBox, SIGNAL(accepted()), this, SLOT(button_ok()));
     QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(button_cancel()));
 }
@@ -1153,17 +1128,6 @@ void DlgOptions::disable_background_image(bool bValue)
 
     // refresh
     Core::instance()->refresh_background_image();
-}
-
-void DlgOptions::set_spellchecker()
-{
-    QString strValue = (ui.radioButton_spellchecker_active->isChecked() ? "on" : "off");
-
-    QSettings settings;
-    Config *pConfig = new Config();
-    pConfig->set_value("spellchecker", strValue);
-    settings.setValue("spellchecker", strValue);
-    delete pConfig;
 }
 
 void DlgOptions::button_cancel()

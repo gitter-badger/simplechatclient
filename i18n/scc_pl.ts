@@ -1702,10 +1702,6 @@
         <translation>Wyłącz tapetę</translation>
     </message>
     <message>
-        <source>Spellchecker</source>
-        <translation>Sprawdzanie pisowni</translation>
-    </message>
-    <message>
         <source>Active</source>
         <translation>Aktywne</translation>
     </message>

@@ -1154,47 +1154,6 @@
       </widget>
      </widget>
     </widget>
-    <widget class="QWidget" name="page_9">
-     <widget class="QGroupBox" name="groupBox_spellchecker">
-      <property name="geometry">
-       <rect>
-        <x>0</x>
-        <y>20</y>
-        <width>441</width>
-        <height>151</height>
-       </rect>
-      </property>
-      <property name="title">
-       <string>Spell checker</string>
-      </property>
-      <widget class="QWidget" name="horizontalLayoutWidget">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>29</y>
-         <width>421</width>
-         <height>91</height>
-        </rect>
-       </property>
-       <layout class="QHBoxLayout" name="horizontalLayout_8">
-        <item>
-         <widget class="QRadioButton" name="radioButton_spellchecker_active">
-          <property name="text">
-           <string>Active</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QRadioButton" name="radioButton_spellchecker_inactive">
-          <property name="text">
-           <string>Inactive</string>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </widget>
-     </widget>
-    </widget>
    </widget>
   </widget>
  </widget>

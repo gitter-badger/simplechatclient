@@ -21,7 +21,6 @@
 #ifndef INPUTWIDGET_H
 #define INPUTWIDGET_H
 
-class Highlighter;
 class InputLineWidget;
 class Network;
 #include <QHBoxLayout>
@@ -59,7 +58,6 @@ private:
     QPushButton *sendButton;
     QPushButton *moderSendButton;
     QString strChannel;
-    Highlighter *pHighlighter;
 
 private slots:
     void inputline_return_pressed();

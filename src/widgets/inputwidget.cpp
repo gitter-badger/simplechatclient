@@ -27,7 +27,6 @@
 #include <QSettings>
 #include "commands.h"
 #include "core.h"
-#include "highlighter.h"
 #include "inputlinewidget.h"
 #include "log.h"
 #include "network.h"
@@ -76,9 +75,6 @@ InputWidget::InputWidget(QWidget *parent, Network *param1) : QWidget(parent)
 
     // default hidden
     moderSendButton->hide();
-
-    // highlighter
-    pHighlighter = new Highlighter(pInputLine->document());
 
     QObject::connect(sendButton, SIGNAL(clicked()), this, SLOT(inputline_return_pressed()));
     QObject::connect(pInputLine, SIGNAL(returnPressed()), this, SLOT(inputline_return_pressed()));

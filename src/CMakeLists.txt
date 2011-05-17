@@ -72,7 +72,6 @@ set (scc_SRCS
 	tab/tab_manager.cpp
 	tab/tab_widget.cpp
 	widgets/animatedemoticonwidget.cpp
-	widgets/highlighter.cpp
 	widgets/inputlinewidget.cpp
 	widgets/inputlinedockwidget.cpp
 	widgets/inputwidget.cpp
@@ -127,7 +126,6 @@ set (scc_MOC_HDRS
 	tab/tab_manager.h
 	tab/tab_widget.h
 	widgets/animatedemoticonwidget.h
-	widgets/highlighter.h
 	widgets/inputlinewidget.h
 	widgets/inputlinedockwidget.h
 	widgets/inputwidget.h
