@@ -128,21 +128,18 @@ void InputWidget::set_toolwidget_icon(bool bShowHide)
         showHideToolWidget->setIcon(QIcon(":/images/oxygen/16x16/text-frame-link.png"));
 }
 
-QString InputWidget::convert_emots(QString strData)
+void InputWidget::convert_emots(QString *strData)
 {
-    strData.replace(QRegExp("(http:|https:)//"), "\\1\\\\"); // fix http/s
-    strData.replace(QRegExp("//([a-zA-Z0-9_-]+)\\b"), "%I\\1%");
-    strData.replace(QRegExp("(http:|https:)\\\\\\\\"), "\\1//"); // fix http/s
-    return strData;
+    strData->replace(QRegExp("(http:|https:)//"), "\\1\\\\"); // fix http/s
+    strData->replace(QRegExp("//([a-zA-Z0-9_-]+)\\b"), "%I\\1%");
+    strData->replace(QRegExp("(http:|https:)\\\\\\\\"), "\\1//"); // fix http/s
 }
 
-QString InputWidget::replace_emots(QString strData)
+void InputWidget::replace_emots(QString *strData)
 {
     Replace *pReplace = new Replace();
-    strData = pReplace->replace_emots(strData);
+    pReplace->replace_emots(strData);
     delete pReplace;
-
-    return strData;
 }
 
 void InputWidget::paste_multi_line(QString strText, bool bModeration)
@@ -225,10 +222,10 @@ void InputWidget::send_message(QString strText, bool bModeration)
                 if ((!weight.isEmpty()) || (!font.isEmpty()))
                     strTextDisplay = "%F"+weight+font+"%"+strTextDisplay;
 
-                strTextSend = convert_emots(strTextSend);
-                strTextSend = replace_emots(strTextSend);
-                strTextDisplay = convert_emots(strTextDisplay);
-                strTextDisplay = replace_emots(strTextDisplay);
+                convert_emots(&strTextSend);
+                replace_emots(&strTextSend);
+                convert_emots(&strTextDisplay);
+                replace_emots(&strTextDisplay);
 
                 QDateTime dt = QDateTime::currentDateTime();
                 QString strDT = dt.toString("[hh:mm:ss] ");
@@ -271,8 +268,8 @@ void InputWidget::send_message(QString strText, bool bModeration)
         if ((!weight.isEmpty()) || (!font.isEmpty()))
             strText = "%F"+weight+font+"%"+strText;
 
-        strText = convert_emots(strText);
-        strText = replace_emots(strText);
+        convert_emots(&strText);
+        replace_emots(&strText);
 
         QDateTime dt = QDateTime::currentDateTime();
         QString strDT = dt.toString("[hh:mm:ss] ");

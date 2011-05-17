@@ -39,7 +39,7 @@ public:
     void save(QString, QString);
 
 private:
-    QString convert(QString);
+    void convert(QString *);
 };
 
 #endif // LOG_H
