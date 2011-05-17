@@ -645,6 +645,10 @@
         <translation>Wejdź</translation>
     </message>
     <message>
+        <source>Settings</source>
+        <translation>Ustawienia</translation>
+    </message>
+    <message>
         <source>Changing channels</source>
         <translation>Zmiana kanałów</translation>
     </message>

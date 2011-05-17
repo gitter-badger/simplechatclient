@@ -46,11 +46,13 @@ void DlgChannelHomes::create_gui()
     ui.pushButton_create->setIcon(QIcon(":/images/oxygen/16x16/irc-join-channel.png"));
     ui.pushButton_remove->setIcon(QIcon(":/images/oxygen/16x16/irc-close-channel.png"));
     ui.pushButton_join->setIcon(QIcon(":/images/oxygen/16x16/legalmoves.png"));
+    ui.pushButton_settings->setIcon(QIcon(":/images/oxygen/16x16/configure.png"));
     ui.buttonBox->button(QDialogButtonBox::Close)->setIcon(QIcon(":/images/oxygen/16x16/dialog-close.png"));
 
     ui.pushButton_create->setText(tr("Create"));
     ui.pushButton_remove->setText(tr("Remove"));
     ui.pushButton_join->setText(tr("Join"));
+    ui.pushButton_settings->setText(tr("Settings"));
 }
 
 void DlgChannelHomes::create_signals()
@@ -59,6 +61,7 @@ void DlgChannelHomes::create_signals()
     QObject::connect(ui.pushButton_create, SIGNAL(clicked()), this, SLOT(button_create()));
     QObject::connect(ui.pushButton_remove, SIGNAL(clicked()), this, SLOT(button_remove()));
     QObject::connect(ui.pushButton_join, SIGNAL(clicked()), this, SLOT(button_join()));
+    QObject::connect(ui.pushButton_settings, SIGNAL(clicked()), this, SLOT(button_settings()));
     QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(button_close()));
 }
 
@@ -126,6 +129,19 @@ void DlgChannelHomes::button_join()
     {
         QString strChannel = ui.listWidget_channels->selectedItems().at(0)->text();
         pNetwork->send(QString("JOIN %1").arg(strChannel));
+    }
+}
+
+void DlgChannelHomes::button_settings()
+{
+    if (ui.listWidget_channels->selectedItems().size() != 0)
+    {
+        QString strChannel = ui.listWidget_channels->selectedItems().at(0)->text();
+
+        pDlgChannelSettings->set_channel(strChannel);
+        pDlgChannelSettings->show();
+
+        this->close();
     }
 }
 

@@ -46,6 +46,7 @@ private slots:
     void button_create();
     void button_remove();
     void button_join();
+    void button_settings();
     void button_close();
 };
 

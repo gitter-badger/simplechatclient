@@ -6,19 +6,19 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>362</width>
+    <width>461</width>
     <height>211</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>362</width>
+    <width>461</width>
     <height>211</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>362</width>
+    <width>461</width>
     <height>211</height>
    </size>
   </property>
@@ -34,7 +34,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>361</width>
+     <width>461</width>
      <height>211</height>
     </rect>
    </property>
@@ -75,6 +75,13 @@
        <widget class="QPushButton" name="pushButton_join">
         <property name="text">
          <string>Join</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="pushButton_settings">
+        <property name="text">
+         <string>Settings</string>
         </property>
        </widget>
       </item>
