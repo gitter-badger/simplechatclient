@@ -281,7 +281,7 @@ QString DlgMyProfile::convert_text_to_desc(QString strContent)
                     else if (strFontName == "courier") ui.comboBox_font->setCurrentIndex(4);
                     else ui.comboBox_font->setCurrentIndex(2);
 
-                    strContent.replace(strFontFull, "");
+                    strContent.remove(strFontFull);
                 }
                 else
                     strContent.insert(iStartPos+1, " "); // fix wrong %F
@@ -305,7 +305,7 @@ QString DlgMyProfile::convert_text_to_desc(QString strContent)
         if (strContent.contains(strFontColor))
             ui.comboBox_color->setCurrentIndex(iFontColor);
 
-        strContent.replace(strFontColor, "");
+        strContent.remove(strFontColor);
         iFontColor++;
     }
 
@@ -322,7 +322,7 @@ QString DlgMyProfile::convert_text_to_desc(QString strContent)
 
 QString DlgMyProfile::convert_desc_to_text(QString strContent)
 {
-    strContent.replace(QRegExp("(\r|\n)"), "");
+    strContent.remove(QRegExp("(\r|\n)"));
     strContent.replace(QRegExp("(http:|https:)//"), "\\1\\\\"); // fix http https
     strContent.replace(QRegExp("//([a-zA-Z0-9_-]+)\\b"), "%I\\1%");
     strContent.replace(QRegExp("(http:|https:)\\\\\\\\"), "\\1//"); // fix http https

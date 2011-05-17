@@ -73,7 +73,7 @@ QString InputLineWidget::get_word()
         iLength = this->textCursor().position()-iStart;
         strWord = strWord.mid(iStart, iLength);
 
-        strWord.replace(" ", "");
+        strWord.remove(" ");
     }
     return strWord;
 }

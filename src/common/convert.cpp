@@ -149,7 +149,7 @@ void Convert::convert_text(QString *strData, QString *strLastContent)
 
         QStringListIterator strliReplace (strlReplace);
         while (strliReplace.hasNext())
-            strData->replace(strliReplace.next(), "");
+            strData->remove(strliReplace.next());
     }
 
     // emoticons

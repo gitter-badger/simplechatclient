@@ -284,8 +284,8 @@ void TabWidget::display_message(QString strData, int iLevel)
                 }
             }
             // remove color, font, emots
-            strAwayData.replace(QRegExp("%C([a-zA-Z0-9]+)%"),"");
-            strAwayData.replace(QRegExp("%F([a-zA-Z0-9:]+)%"),"");
+            strAwayData.remove(QRegExp("%C([a-zA-Z0-9]+)%"));
+            strAwayData.remove(QRegExp("%F([a-zA-Z0-9:]+)%"));
             strAwayData.replace(QRegExp("%I([a-zA-Z0-9_-]+)%"),"<\\1>");
 
             Core::instance()->lAwaylog.append(QString("%1\n%2").arg(strName).arg(strAwayData));
@@ -405,8 +405,8 @@ void TabWidget::set_topic(QString strTopic)
     topic->setHtml(strContent+strLastContent);
 
     // tooltip
-    strTopic.replace(QRegExp("%C([a-zA-Z0-9]+)%"),"");
-    strTopic.replace(QRegExp("%F([a-zA-Z0-9:]+)%"),"");
+    strTopic.remove(QRegExp("%C([a-zA-Z0-9]+)%"));
+    strTopic.remove(QRegExp("%F([a-zA-Z0-9:]+)%"));
     strTopic.replace(QRegExp("%I([a-zA-Z0-9_-]+)%"),"<\\1>");
 
     if (settings.value("style") == "modern")

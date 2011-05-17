@@ -468,7 +468,7 @@ void DlgChannelSettings::set_topic(QString strTopic)
                     else if (strFontName == "courier") ui.comboBox_font->setCurrentIndex(4);
                     else ui.comboBox_font->setCurrentIndex(2);
 
-                    strTopic.replace(strFontFull, "");
+                    strTopic.remove(strFontFull);
                 }
                 else
                     strTopic.insert(iStartPos+1, " "); // fix wrong %F
@@ -492,7 +492,7 @@ void DlgChannelSettings::set_topic(QString strTopic)
         if (strTopic.contains(strFontColor))
             ui.comboBox_color->setCurrentIndex(iFontColor);
 
-        strTopic.replace(strFontColor, "");
+        strTopic.remove(strFontColor);
         iFontColor++;
     }
 
@@ -532,8 +532,8 @@ void DlgChannelSettings::set_description(QString strDescription)
     if (!strDescription.isEmpty())
     {
         QString strDescriptionText = strDescription;
-        strDescriptionText.replace(QRegExp("%C([a-zA-Z0-9]+)%"),"");
-        strDescriptionText.replace(QRegExp("%F([a-zA-Z0-9:]+)%"),"");
+        strDescriptionText.remove(QRegExp("%C([a-zA-Z0-9]+)%"));
+        strDescriptionText.remove(QRegExp("%F([a-zA-Z0-9:]+)%"));
         strDescriptionText.replace(QRegExp("%I([a-zA-Z0-9_-]+)%"),"//\\1");
 
         ui.plainTextEdit_summary_desc->setPlainText(strDescriptionText);
@@ -655,7 +655,7 @@ void DlgChannelSettings::www_changed()
 void DlgChannelSettings::topic_changed()
 {
     QString strTopic = ui.plainTextEdit_topic->toPlainText();
-    strTopic.replace(QRegExp("(\r|\n)"), "");
+    strTopic.remove(QRegExp("(\r|\n)"));
     strTopic.replace(QRegExp("(http:|https:)//"), "\\1\\\\"); // fix http https
     strTopic.replace(QRegExp("//([a-zA-Z0-9_-]+)\\b"), "%I\\1%");
     strTopic.replace(QRegExp("(http:|https:)\\\\\\\\"), "\\1//"); // fix http https
