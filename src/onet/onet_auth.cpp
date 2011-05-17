@@ -154,6 +154,7 @@ void OnetAuth::authorize(QString param1, QString param2, QString param3)
         QString strKropka = "http://kropka.onet.pl/_s/kropka/1?DV=czat%2Fchat&SC=1&IP=&DG=id%3Dno-gemius&RI=&C1=&CL=std161&CS=1280x800x24&CW=1280x243&DU=http://czat.onet.pl/chat.html&DR=http://czat.onet.pl/";
         network_request(accessManager, strKropka, QString::null);
 
+/*
 #ifdef Q_WS_X11
         if (settings.value("debug").toString() == "on") { qDebug() << "Request: targetowanie behawioralne - rc"; }
 #endif
@@ -167,6 +168,7 @@ void OnetAuth::authorize(QString param1, QString param2, QString param3)
         QString strContentGroup = "";
         QString strParams = "&CustomerId=onet&WebsiteId=czat.onet.pl&AC=on";
         network_request(accessManager, QString("http://tr.onetwl.pl/Cnt/onet/CP/%1?ord=%2%3").arg(strContentGroup).arg(strRandom).arg(strParams), QString::null);
+*/
 
 #ifdef Q_WS_X11
         if (settings.value("debug").toString() == "on") { qDebug() << "Request: kropka full"; }
