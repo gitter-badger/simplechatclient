@@ -23,6 +23,7 @@
 #include <QInputDialog>
 #include <QMessageBox>
 #include <QSettings>
+#include "convert.h"
 #include "core.h"
 #include "dlg_email.h"
 #include "network.h"
@@ -420,81 +421,29 @@ void DlgChannelSettings::set_topic(QString strTopic)
     strTopic.replace(QRegExp("%I([a-zA-Z0-9_-]+)%"), "//\\1");
 
     // convert font
-    while (strTopic.contains("%F"))
-    {
-        int iStartPos = strTopic.indexOf("%F");
-        int iEndPos = strTopic.indexOf("%", iStartPos+1);
-        int iSpacePos = strTopic.indexOf(" ", iStartPos);
+    Convert *pConvertF = new Convert();
+    pConvertF->remove_font(&strTopic);
+    bool bRemovedBold = pConvertF->get_removed_bold();
+    bool bRemovedItalic = pConvertF->get_removed_italic();
+    QString strRemovedFont = pConvertF->get_removed_font();
+    delete pConvertF;
 
-        if (iEndPos != -1)
-        {
-            if ((iEndPos < iSpacePos) || (iSpacePos == -1))
-            {
-                iEndPos++;
-                QString strFontFull = strTopic.mid(iStartPos, iEndPos-iStartPos);
-                QString strFont = strFontFull.mid(2,strFontFull.length()-3);
-                strFont = strFont.toLower();
+    if (bRemovedBold) ui.pushButton_bold->setChecked(true);
+    else if (bRemovedItalic) ui.pushButton_italic->setChecked(true);
 
-                QString strFontWeight;
-                QString strFontName;
-
-                if (strFont.contains(":"))
-                {
-                    strFontWeight = strFont.left(strFont.indexOf(":"));
-                    strFontName = strFont.right(strFont.length()-strFont.indexOf(":")-1);
-                }
-                else
-                {
-                    QRegExp rx("((b|i)?)((b|i)?)");
-                    if (rx.exactMatch(strFont))
-                        strFontWeight = strFont;
-                }
-
-                if (!strFontWeight.isEmpty())
-                {
-                    for (int fw = 0; fw < strFontWeight.length(); fw++)
-                    {
-                        if (strFontWeight[fw] == 'b') ui.pushButton_bold->setChecked(true);
-                        else if (strFontWeight[fw] == 'i') ui.pushButton_italic->setChecked(true);
-                    }
-                }
-
-                if ((!strFontName.isEmpty()) || (!strFontWeight.isEmpty()))
-                {
-                    if (strFontName == "arial") ui.comboBox_font->setCurrentIndex(0);
-                    else if (strFontName == "times") ui.comboBox_font->setCurrentIndex(1);
-                    else if (strFontName == "verdana") ui.comboBox_font->setCurrentIndex(2);
-                    else if (strFontName == "tahoma") ui.comboBox_font->setCurrentIndex(3);
-                    else if (strFontName == "courier") ui.comboBox_font->setCurrentIndex(4);
-                    else ui.comboBox_font->setCurrentIndex(2);
-
-                    strTopic.remove(strFontFull);
-                }
-                else
-                    strTopic.insert(iStartPos+1, " "); // fix wrong %F
-            }
-            else
-                strTopic.insert(iStartPos+1, " "); // fix wrong %F
-        }
-        else
-            break;
-    }
+    if (strRemovedFont == "arial") ui.comboBox_font->setCurrentIndex(0);
+    else if (strRemovedFont == "times") ui.comboBox_font->setCurrentIndex(1);
+    else if (strRemovedFont == "verdana") ui.comboBox_font->setCurrentIndex(2);
+    else if (strRemovedFont == "tahoma") ui.comboBox_font->setCurrentIndex(3);
+    else if (strRemovedFont == "courier") ui.comboBox_font->setCurrentIndex(4);
+    else ui.comboBox_font->setCurrentIndex(2);
 
     // convert color
-    QStringList strlFontColors;
-    strlFontColors << "#000000" << "#623c00" << "#c86c00" << "#ff6500" << "#ff0000" << "#e40f0f" << "#990033" << "#8800ab" << "#ce00ff" << "#0f2ab1" << "#3030ce" << "#006699" << "#1a866e" << "#008100" << "#959595";
-
-    int iFontColor = 0;
-    foreach (QString strFontColor, strlFontColors)
-    {
-        strFontColor = "%C"+strFontColor.right(6)+"%";
-
-        if (strTopic.contains(strFontColor))
-            ui.comboBox_color->setCurrentIndex(iFontColor);
-
-        strTopic.remove(strFontColor);
-        iFontColor++;
-    }
+    Convert *pConvertC = new Convert();
+    pConvertC->remove_color(&strTopic);
+    int iRemovedColor = pConvertC->get_removed_color();
+    delete pConvertC;
+    ui.comboBox_color->setCurrentIndex(iRemovedColor);
 
     // default #000000
     if (ui.comboBox_color->currentIndex() == -1)

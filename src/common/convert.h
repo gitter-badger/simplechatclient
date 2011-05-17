@@ -33,6 +33,19 @@ class Convert : public QObject
 public:
     Convert();
     void convert_text(QString *, QString *);
+    void remove_font(QString *);
+    void remove_color(QString *);
+
+    bool get_removed_bold() { return bRemovedBold; }
+    bool get_removed_italic() { return bRemovedItalic; }
+    QString get_removed_font() { return strRemovedFont; }
+    int get_removed_color() { return iRemovedColor; }
+
+private:
+    bool bRemovedBold;
+    bool bRemovedItalic;
+    QString strRemovedFont;
+    int iRemovedColor;
 };
 
 #endif // CONVERT_H

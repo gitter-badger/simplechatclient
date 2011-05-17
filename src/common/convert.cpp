@@ -24,7 +24,7 @@
 #include <QStringListIterator>
 #include "convert.h"
 
-Convert::Convert()
+Convert::Convert() : bRemovedBold(false), bRemovedItalic(false), iRemovedColor(-1)
 {
 }
 
@@ -196,5 +196,86 @@ void Convert::convert_text(QString *strData, QString *strLastContent)
             else
                 break;
         }
+    }
+}
+
+void Convert::remove_font(QString *strData)
+{
+    while (strData->contains("%F"))
+    {
+        int iStartPos = strData->indexOf("%F");
+        int iEndPos = strData->indexOf("%", iStartPos+1);
+        int iSpacePos = strData->indexOf(" ", iStartPos);
+
+        if (iEndPos != -1)
+        {
+            if ((iEndPos < iSpacePos) || (iSpacePos == -1))
+            {
+                iEndPos++;
+                QString strFontFull = strData->mid(iStartPos, iEndPos-iStartPos);
+                QString strFont = strFontFull.mid(2,strFontFull.length()-3);
+                strFont = strFont.toLower();
+
+                QString strFontWeight;
+                QString strFontName;
+
+                if (strFont.contains(":"))
+                {
+                    strFontWeight = strFont.left(strFont.indexOf(":"));
+                    strFontName = strFont.right(strFont.length()-strFont.indexOf(":")-1);
+                }
+                else
+                {
+                    QRegExp rx("((b|i)?)((b|i)?)");
+                    if (rx.exactMatch(strFont))
+                        strFontWeight = strFont;
+                }
+
+                if (!strFontWeight.isEmpty())
+                {
+                    for (int fw = 0; fw < strFontWeight.length(); fw++)
+                    {
+                        if (strFontWeight[fw] == 'b') bRemovedBold = true;
+                        else if (strFontWeight[fw] == 'i') bRemovedItalic = true;
+                    }
+                }
+
+                if ((!strFontName.isEmpty()) || (!strFontWeight.isEmpty()))
+                {
+                    if (strFontName == "arial") strRemovedFont = "arial";
+                    else if (strFontName == "times") strRemovedFont = "times";
+                    else if (strFontName == "verdana") strRemovedFont = "verdana";
+                    else if (strFontName == "tahoma") strRemovedFont = "tahoma";
+                    else if (strFontName == "courier") strRemovedFont = "courier";
+                    else strRemovedFont = "verdana";
+
+                    strData->remove(strFontFull);
+                }
+                else
+                    strData->insert(iStartPos+1, " "); // fix wrong %F
+            }
+            else
+                strData->insert(iStartPos+1, " "); // fix wrong %F
+        }
+        else
+            break;
+    }
+}
+
+void Convert::remove_color(QString *strData)
+{
+    QStringList strlFontColors;
+    strlFontColors << "#000000" << "#623c00" << "#c86c00" << "#ff6500" << "#ff0000" << "#e40f0f" << "#990033" << "#8800ab" << "#ce00ff" << "#0f2ab1" << "#3030ce" << "#006699" << "#1a866e" << "#008100" << "#959595";
+
+    int iFontColor = 0;
+    foreach (QString strFontColor, strlFontColors)
+    {
+        strFontColor = "%C"+strFontColor.right(6)+"%";
+
+        if (strData->contains(strFontColor))
+            iRemovedColor = iFontColor;
+
+        strData->remove(strFontColor);
+        iFontColor++;
     }
 }
