@@ -34,14 +34,14 @@ Log::Log()
 {
 }
 
-void Log::convert(QString *strData)
+void Log::convert(QString &strData)
 {
-    strData->remove(QRegExp("%C([a-zA-Z0-9]+)%"));
-    strData->remove(QRegExp("%F([a-zA-Z0-9:]+)%"));
-    strData->replace(QRegExp("%I([a-zA-Z0-9_-]+)%"),"<\\1>");
+    strData.remove(QRegExp("%C([a-zA-Z0-9]+)%"));
+    strData.remove(QRegExp("%F([a-zA-Z0-9:]+)%"));
+    strData.replace(QRegExp("%I([a-zA-Z0-9_-]+)%"),"<\\1>");
 }
 
-void Log::save(QString strChannel, QString strData)
+void Log::save(QString &strChannel, QString &strData)
 {
     QString path;
 
@@ -87,11 +87,12 @@ void Log::save(QString strChannel, QString strData)
     }
 
     // convert
-    convert(&strData);
+    QString strSaveData = strData;
+    convert(strSaveData);
 
     // save
     QTextStream out(&f);
-    out << strData << "\r\n";
+    out << strSaveData << "\r\n";
     
     f.close();
 }

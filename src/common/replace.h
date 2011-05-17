@@ -31,7 +31,7 @@ class Replace : public QObject
     Q_OBJECT
 public:
     Replace();
-    void replace_emots(QString *);
+    void replace_emots(QString &);
 };
 
 #endif // REPLACE_H

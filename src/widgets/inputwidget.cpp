@@ -128,14 +128,14 @@ void InputWidget::set_toolwidget_icon(bool bShowHide)
         showHideToolWidget->setIcon(QIcon(":/images/oxygen/16x16/text-frame-link.png"));
 }
 
-void InputWidget::convert_emots(QString *strData)
+void InputWidget::convert_emots(QString &strData)
 {
-    strData->replace(QRegExp("(http:|https:)//"), "\\1\\\\"); // fix http/s
-    strData->replace(QRegExp("//([a-zA-Z0-9_-]+)\\b"), "%I\\1%");
-    strData->replace(QRegExp("(http:|https:)\\\\\\\\"), "\\1//"); // fix http/s
+    strData.replace(QRegExp("(http:|https:)//"), "\\1\\\\"); // fix http/s
+    strData.replace(QRegExp("//([a-zA-Z0-9_-]+)\\b"), "%I\\1%");
+    strData.replace(QRegExp("(http:|https:)\\\\\\\\"), "\\1//"); // fix http/s
 }
 
-void InputWidget::replace_emots(QString *strData)
+void InputWidget::replace_emots(QString &strData)
 {
     Replace *pReplace = new Replace();
     pReplace->replace_emots(strData);
@@ -195,7 +195,10 @@ void InputWidget::send_message(QString strText, bool bModeration)
         {
             QStringList strlHelp = strText.split(";");
             for (int i = 0; i < strlHelp.size(); i++)
-                emit show_msg(strChannel, strlHelp.at(i), 7);
+            {
+                QString strDisplay = strlHelp.at(i);
+                emit show_msg(strChannel, strDisplay, 7);
+            }
         }
         // me
         else if (strTextList[0] == "me")
@@ -222,10 +225,10 @@ void InputWidget::send_message(QString strText, bool bModeration)
                 if ((!weight.isEmpty()) || (!font.isEmpty()))
                     strTextDisplay = "%F"+weight+font+"%"+strTextDisplay;
 
-                convert_emots(&strTextSend);
-                replace_emots(&strTextSend);
-                convert_emots(&strTextDisplay);
-                replace_emots(&strTextDisplay);
+                convert_emots(strTextSend);
+                replace_emots(strTextSend);
+                convert_emots(strTextDisplay);
+                replace_emots(strTextDisplay);
 
                 QDateTime dt = QDateTime::currentDateTime();
                 QString strDT = dt.toString("[hh:mm:ss] ");
@@ -234,12 +237,14 @@ void InputWidget::send_message(QString strText, bool bModeration)
                 if (settings.value("disable_logs").toString() == "off")
                 {
                     Log *l = new Log();
-                    l->save(strChannel, QString("%1<%2> %3").arg(strDT).arg(strMe).arg(strTextDisplay));
+                    QString strSave = QString("%1<%2> %3").arg(strDT).arg(strMe).arg(strTextDisplay);
+                    l->save(strChannel, strSave);
                     delete l;
                 }
 
                 pNetwork->send(strTextSend);
-                emit display_message(strChannel, QString("%1<%2> %3ACTION %4%5").arg(strDT).arg(strMe).arg(QString(QByteArray("\x01"))).arg(strTextDisplay).arg(QString(QByteArray("\x01"))), 0);
+                QString strDisplay = QString("%1<%2> %3ACTION %4%5").arg(strDT).arg(strMe).arg(QString(QByteArray("\x01"))).arg(strTextDisplay).arg(QString(QByteArray("\x01")));
+                emit display_message(strChannel, strDisplay, 0);
             }
         }
         // other command
@@ -268,8 +273,8 @@ void InputWidget::send_message(QString strText, bool bModeration)
         if ((!weight.isEmpty()) || (!font.isEmpty()))
             strText = "%F"+weight+font+"%"+strText;
 
-        convert_emots(&strText);
-        replace_emots(&strText);
+        convert_emots(strText);
+        replace_emots(strText);
 
         QDateTime dt = QDateTime::currentDateTime();
         QString strDT = dt.toString("[hh:mm:ss] ");
@@ -280,13 +285,15 @@ void InputWidget::send_message(QString strText, bool bModeration)
             if (settings.value("disable_logs").toString() == "off")
             {
                 Log *l = new Log();
-                l->save(strChannel, QString("%1<%2> %3").arg(strDT).arg(strMe).arg(strText));
+                QString strSave = QString("%1<%2> %3").arg(strDT).arg(strMe).arg(strText);
+                l->save(strChannel, strSave);
                 delete l;
             }
 
             strText = QString("PRIVMSG %1 :%2").arg(strChannel).arg(strText);
             pNetwork->send(strText);
-            emit display_message(strChannel, QString("%1<%2> %3").arg(strDT).arg(strMe).arg(strText.right(strText.length()-10-strChannel.length())), 0);
+            QString strDisplay = QString("%1<%2> %3").arg(strDT).arg(strMe).arg(strText.right(strText.length()-10-strChannel.length()));
+            emit display_message(strChannel, strDisplay, 0);
         }
         // moder notice
         else if (bModeration)
@@ -294,13 +301,15 @@ void InputWidget::send_message(QString strText, bool bModeration)
             if (settings.value("disable_logs").toString() == "off")
             {
                 Log *l = new Log();
-                l->save(strChannel, QString("%1 *<%2> %3").arg(strDT).arg(strMe).arg(strText));
+                QString strSave = QString("%1 *<%2> %3").arg(strDT).arg(strMe).arg(strText);
+                l->save(strChannel, strSave);
                 delete l;
             }
 
             strText = QString("MODERNOTICE %1 :%2").arg(strChannel).arg(strText);
             pNetwork->send(strText);
-            emit display_message(strChannel, QString("%1 *<%2> %3").arg(strDT).arg(strMe).arg(strText.right(strText.length()-14-strChannel.length())), 6);
+            QString strDisplay = QString("%1 *<%2> %3").arg(strDT).arg(strMe).arg(strText.right(strText.length()-14-strChannel.length()));
+            emit display_message(strChannel, strDisplay, 6);
         }
     }
 }

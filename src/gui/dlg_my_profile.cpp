@@ -234,7 +234,7 @@ QString DlgMyProfile::convert_text_to_desc(QString strContent)
 
     // convert font
     Convert *pConvertF = new Convert();
-    pConvertF->remove_font(&strContent);
+    pConvertF->remove_font(strContent);
     bool bRemovedBold = pConvertF->get_removed_bold();
     bool bRemovedItalic = pConvertF->get_removed_italic();
     QString strRemovedFont = pConvertF->get_removed_font();
@@ -252,7 +252,7 @@ QString DlgMyProfile::convert_text_to_desc(QString strContent)
 
     // convert color
     Convert *pConvertC = new Convert();
-    pConvertC->remove_color(&strContent);
+    pConvertC->remove_color(strContent);
     int iRemovedColor = pConvertC->get_removed_color();
     delete pConvertC;
     ui.comboBox_color->setCurrentIndex(iRemovedColor);

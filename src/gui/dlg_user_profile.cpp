@@ -40,6 +40,14 @@ DlgUserProfile::DlgUserProfile(QWidget *parent, Network *param1) : QDialog(paren
     create_gui();
     set_default_values();
     create_signals();
+
+    accessManager = new QNetworkAccessManager;
+    QObject::connect(accessManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(avatar_finished(QNetworkReply*)));
+}
+
+DlgUserProfile::~DlgUserProfile()
+{
+    accessManager->deleteLater();
 }
 
 void DlgUserProfile::create_gui()
@@ -121,9 +129,8 @@ void DlgUserProfile::set_user_info(QString strKey, QString strValue)
     }
 }
 
-void DlgUserProfile::avatar_finished()
+void DlgUserProfile::avatar_finished(QNetworkReply *pReply)
 {
-    accessManager->deleteLater();
     pReply->deleteLater();
 
     // if errors
@@ -170,7 +177,7 @@ void DlgUserProfile::button_more()
         ui.pushButton_more->setIcon(QIcon(":/images/oxygen/16x16/list-add.png"));
         ui.pushButton_more->setText(tr("More..."));
 
-        int iHeight = ui.verticalLayout->sizeHint().height() - (ui.formLayout_more->sizeHint().height()+20);
+        int iHeight = ui.verticalLayout->sizeHint().height() - (ui.formLayout_more->sizeHint().height()+15);
         setMinimumHeight(iHeight);
         setMaximumHeight(iHeight);
         setMinimumWidth(iWidth);
@@ -208,7 +215,7 @@ QString DlgUserProfile::convert_desc(QString strContent)
 
     // convert
     Convert *convertText = new Convert();
-    convertText->convert_text(&strContent, &strContentLast);
+    convertText->convert_text(strContent, strContentLast);
     delete convertText;
 
     // return
@@ -319,9 +326,7 @@ void DlgUserProfile::show_avatar(QString strUrl)
     strUrl = lUrl.join(",");
 
     // get url
-    accessManager = new QNetworkAccessManager;
-    pReply = accessManager->get(QNetworkRequest(QUrl(strUrl)));
-    QObject::connect(pReply, SIGNAL(finished()), this, SLOT(avatar_finished()));
+    accessManager->get(QNetworkRequest(QUrl(strUrl)));
 }
 
 void DlgUserProfile::button_close()
@@ -344,7 +349,7 @@ void DlgUserProfile::showEvent(QShowEvent *event)
         ui.pushButton_more->setText(tr("More..."));
 
         // resize
-        int iHeight = ui.verticalLayout->sizeHint().height() - (ui.formLayout_more->sizeHint().height()+20);
+        int iHeight = ui.verticalLayout->sizeHint().height() - (ui.formLayout_more->sizeHint().height()+15);
         setMinimumHeight(iHeight);
         setMaximumHeight(iHeight);
         setMinimumWidth(iWidth);

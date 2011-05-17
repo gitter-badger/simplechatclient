@@ -517,7 +517,8 @@ void OnetKernel::kernel(QString param1)
     if (bUnknownRaw1 && bUnknownRaw2 && bUnknownRaw3)
     {
         Log *l = new Log();
-        l->save("unknown_raw", strData);
+        QString strUnknown = "unknown_raw";
+        l->save(strUnknown, strData);
         delete l;
     }
 }
@@ -1028,7 +1029,10 @@ void OnetKernel::raw_mode()
                 strDisplay = QString(tr("* %1 now has a flag %2")).arg(strNickChannel).arg(strFlag);
 
             if ((strFlag == "+r") || (strFlag == "-r") || (strFlag == "+x") || (strFlag == "-x"))
-                pTabC->show_msg("Status", strDisplay, 5);
+            {
+                QString strStatus = "Status";
+                pTabC->show_msg(strStatus, strDisplay, 5);
+            }
 
             emit change_flag(strNickChannel, strFlag);
 
@@ -2202,7 +2206,8 @@ void OnetKernel::raw_256()
         strMessage = strMessage.right(strMessage.length()-1);
     strMessage = "* "+strMessage;
 
-    pTabC->show_msg("Status", strMessage, 7);
+    QString strStatus = "Status";
+    pTabC->show_msg(strStatus, strMessage, 7);
 }
 
 // :ChanServ!service@service.onet NOTICE #scc :256 Merovingian +o scc_test :channel privilege changed
@@ -2251,7 +2256,8 @@ void OnetKernel::raw_257()
         strMessage = strMessage.right(strMessage.length()-1);
     strMessage = "* "+strMessage;
 
-    pTabC->show_msg("Status", strMessage, 7);
+    QString strStatus = "Status";
+    pTabC->show_msg(strStatus, strMessage, 7);
 }
 
 // :ChanServ!service@service.onet NOTICE scc_test :257 #scc * :settings changed
@@ -2276,7 +2282,8 @@ void OnetKernel::raw_258()
         strMessage = strMessage.right(strMessage.length()-1);
     strMessage = "* "+strMessage;
 
-    pTabC->show_msg("Status", strMessage, 7);
+    QString strStatus = "Status";
+    pTabC->show_msg(strStatus, strMessage, 7);
 }
 
 // :ChanServ!service@service.onet NOTICE #glupia_nazwa :258 ovo_ d :channel settings changed
@@ -2308,7 +2315,8 @@ void OnetKernel::raw_259()
         strMessage = strMessage.right(strMessage.length()-1);
     strMessage = "* "+strMessage;
 
-    pTabC->show_msg("Status", strMessage, 7);
+    QString strStatus = "Status";
+    pTabC->show_msg(strStatus, strMessage, 7);
 }
 
 // :ChanServ!service@service.onet NOTICE scc_test :259 #scc :nothing changed
@@ -2914,7 +2922,8 @@ void OnetKernel::raw_371()
         strMessage = strMessage.right(strMessage.length()-1);
     strMessage = "* "+strMessage;
 
-    pTabC->show_msg("Status", strMessage, 7);
+    QString strStatus = "Status";
+    pTabC->show_msg(strStatus, strMessage, 7);
 }
 
 // MOTD
@@ -2928,7 +2937,8 @@ void OnetKernel::raw_372()
     if (strMessage[0] == ':')
         strMessage = strMessage.right(strMessage.length()-1);
 
-    pTabC->show_msg("Status", strMessage, 0);
+    QString strStatus = "Status";
+    pTabC->show_msg(strStatus, strMessage, 0);
 }
 
 // INFO
@@ -2943,7 +2953,9 @@ void OnetKernel::raw_374()
 void OnetKernel::raw_375()
 {
     QString strDisplay = tr("Message Of The Day:");
-    pTabC->show_msg("Status", strDisplay, 0);
+
+    QString strStatus = "Status";
+    pTabC->show_msg(strStatus, strDisplay, 0);
 }
 
 // MOTD
@@ -3681,7 +3693,9 @@ void OnetKernel::raw_470()
     QString strLinked = strDataList[strDataList.size()-1];
 
     QString strMessage = QString(tr("* %1 has become full, so you are automatically being transferred to the linked channel %2")).arg(strChannel).arg(strLinked);
-    pTabC->show_msg("Status", strMessage, 7);
+
+    QString strStatus = "Status";
+    pTabC->show_msg(strStatus, strMessage, 7);
 }
 
 // :cf1f2.onet 471 ~Merovingian #testy :Cannot join channel (Channel is full)
@@ -3956,7 +3970,11 @@ void OnetKernel::raw_801()
             pNetwork->send(QString("USER * %1 czat-app.onet.pl :%2").arg(strUOKey).arg(strNickUo));
     }
     else
-        pTabC->show_msg("Status", tr("Error: Invalid auth key"), 9);
+    {
+        QString strStatus = "Status";
+        QString strError = tr("Error: Invalid auth key");
+        pTabC->show_msg(strStatus, strError, 9);
+    }
 }
 
 // :cf1f1.onet 802 * :Corrupted Nickname
@@ -4064,8 +4082,9 @@ void OnetKernel::raw_817()
     if (strMessage[0] == ':')
         strMessage = strMessage.right(strMessage.length()-1);
 
+    QString strDisplay = QString("<%1> %2").arg(strNick).arg(strMessage);
     if (!strMessage.isEmpty())
-        pTabC->show_msg(strTime, strChannel, QString("<%1> %2").arg(strNick).arg(strMessage), 0);
+        pTabC->show_msg(strTime, strChannel, strDisplay, 0);
 }
 
 // SLIST

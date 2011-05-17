@@ -32,6 +32,7 @@ class DlgUserProfile : public QDialog
     Q_OBJECT
 public:
     DlgUserProfile(QWidget *, Network *);
+    virtual ~DlgUserProfile();
     void set_nick(QString);
     inline QString get_nick() { return strNick; }
 
@@ -44,7 +45,6 @@ private:
     int iWidth; // widget width
     QPixmap avatar;
     QNetworkAccessManager *accessManager;
-    QNetworkReply *pReply;
     QString strNick;
 
     void create_gui();
@@ -61,7 +61,7 @@ private:
     void show_avatar(QString);
 
 private slots:
-    void avatar_finished();
+    void avatar_finished(QNetworkReply*);
     void button_zoom();
     void button_more();
     void button_close();

@@ -109,9 +109,12 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     create_signals();
 
     // welcome
-    pTabC->add_tab("Status");
-    pTabC->show_msg("Status", "%Fi:courier%"+tr("Welcome to the Simple Chat Client")+" %Ihehe%", 0);
-    pTabC->show_msg("Status", "%Fb:courier%%C008100%"+tr("Official website")+" SCC%C3030ce%: http://simplechatclien.sf.net/ %Izaskoczony%", 0);
+    QString strStatus = "Status";
+    QString strWelcome = "%Fi:courier%"+tr("Welcome to the Simple Chat Client")+" %Ihehe%";
+    QString strWebsite = "%Fb:courier%%C008100%"+tr("Official website")+" SCC%C3030ce%: http://simplechatclien.sf.net/ %Izaskoczony%";
+    pTabC->add_tab(strStatus);
+    pTabC->show_msg(strStatus, strWelcome, 0);
+    pTabC->show_msg(strStatus, strWebsite, 0);
 
     // hide offline messages
     Core::instance()->offlineMsgAct->setVisible(false);
@@ -388,11 +391,11 @@ void MainWindow::create_signals()
     // signals tab
     QObject::connect(pTabM, SIGNAL(tabCloseRequested(int)), this, SLOT(tab_close_requested(int)));
     QObject::connect(pTabM, SIGNAL(currentChanged(int)), this, SLOT(current_tab_changed(int)));
-    QObject::connect(pDlgModeration, SIGNAL(display_msg(QString,QString,int)), pTabC, SLOT(slot_show_msg(QString,QString,int)));
+    QObject::connect(pDlgModeration, SIGNAL(display_msg(QString&,QString&,int)), pTabC, SLOT(slot_show_msg(QString&,QString&,int)));
 
     // signals inputLineWidget
-    QObject::connect(pInputLineDockWidget, SIGNAL(show_msg(QString,QString,int)), pTabC, SLOT(slot_show_msg(QString,QString,int)));
-    QObject::connect(pInputLineDockWidget, SIGNAL(display_message(QString,QString,int)), pTabC, SLOT(slot_display_message(QString,QString,int)));
+    QObject::connect(pInputLineDockWidget, SIGNAL(show_msg(QString&,QString&,int)), pTabC, SLOT(slot_show_msg(QString&,QString&,int)));
+    QObject::connect(pInputLineDockWidget, SIGNAL(display_message(QString&,QString&,int)), pTabC, SLOT(slot_display_message(QString&,QString&,int)));
     QObject::connect(pInputLineDockWidget, SIGNAL(change_font_size(QString)), pTabC, SLOT(slot_change_font_size(QString)));
     QObject::connect(pInputLineDockWidget, SIGNAL(clear_content(QString)), pTabC, SLOT(slot_clear_content(QString)));
 
@@ -418,8 +421,8 @@ void MainWindow::create_signals()
     QObject::connect(pNetwork, SIGNAL(set_connect_enabled(bool)), this, SLOT(set_connect_enabled(bool)));
     QObject::connect(pNetwork, SIGNAL(kernel(QString)), pOnetKernel, SLOT(kernel(QString)));
     QObject::connect(pNetwork, SIGNAL(authorize(QString,QString,QString)), pOnetAuth, SLOT(authorize(QString,QString,QString)));
-    QObject::connect(pNetwork, SIGNAL(show_msg_active(QString,int)), pTabC, SLOT(slot_show_msg_active(QString,int)));
-    QObject::connect(pNetwork, SIGNAL(show_msg_all(QString,int)), pTabC, SLOT(slot_show_msg_all(QString,int)));
+    QObject::connect(pNetwork, SIGNAL(show_msg_active(QString&,int)), pTabC, SLOT(slot_show_msg_active(QString&,int)));
+    QObject::connect(pNetwork, SIGNAL(show_msg_all(QString&,int)), pTabC, SLOT(slot_show_msg_all(QString&,int)));
     QObject::connect(pNetwork, SIGNAL(update_nick(QString)), pInputLineDockWidget, SLOT(slot_update_nick(QString)));
     QObject::connect(pNetwork, SIGNAL(clear_all_nicklist()), this, SLOT(clear_all_nicklist()));
     QObject::connect(pNetwork, SIGNAL(update_actions()), this, SLOT(update_actions()));
@@ -972,7 +975,8 @@ void MainWindow::quit_user(QString strNick, QString strDisplay)
         if (nicklist_exist(strChannel, strNick))
         {
             int iLevel = 3;
-            pTabC->show_msg(strChannel, strDisplay, iLevel);
+            QString strDisplayAll = strDisplay;
+            pTabC->show_msg(strChannel, strDisplayAll, iLevel);
             del_user(strChannel, strNick);
 
             if (i+1 != pTabM->currentIndex())

@@ -200,7 +200,8 @@ void Network::connect()
 
         if (hInfo.error() != QHostInfo::NoError)
         {
-            emit show_msg_all(QString(tr("Error: Could not connect to the server [%1]")).arg(hInfo.errorString()), 9);
+            QString strError = QString(tr("Error: Could not connect to the server [%1]")).arg(hInfo.errorString());
+            emit show_msg_all(strError, 9);
 
             // clear all
             clear_all();
@@ -232,7 +233,10 @@ void Network::connect()
         timerQueue->start();
     }
     else
-        emit show_msg_all(tr("Error: Could not connect to the server - connection already exists!"), 9);
+    {
+        QString strError = tr("Error: Could not connect to the server - connection already exists!");
+        emit show_msg_all(strError, 9);
+    }
 }
 
 void Network::connected()
@@ -240,7 +244,8 @@ void Network::connected()
     emit set_connected();
     Core::instance()->lagAct->setText("Lag: ?");
 
-    emit show_msg_all(tr("Connected to server"), 9);
+    QString strDisplay = tr("Connected to server");
+    emit show_msg_all(strDisplay, 9);
 
     // authorize
     if (!bAuthorized)
@@ -271,9 +276,15 @@ void Network::disconnect()
 void Network::disconnected()
 {
     if (socket->error() != QAbstractSocket::UnknownSocketError)
-        emit show_msg_all(QString(tr("Disconnected from server [%1]")).arg(socket->errorString()), 9);
+    {
+        QString strError = QString(tr("Disconnected from server [%1]")).arg(socket->errorString());
+        emit show_msg_all(strError, 9);
+    }
     else
-        emit show_msg_all(tr("Disconnected from server"), 9);
+    {
+        QString strError = tr("Disconnected from server");
+        emit show_msg_all(strError, 9);
+    }
 
     // clear all
     clear_all();
@@ -293,7 +304,8 @@ void Network::reconnect()
     {
         if ((!this->is_connected()) && (settings.value("logged").toString() == "off"))
         {
-            emit show_msg_all(tr("Reconnecting..."), 7);
+            QString strDisplay = tr("Reconnecting...");
+            emit show_msg_all(strDisplay, 7);
             connect();
         }
     }
@@ -316,13 +328,22 @@ void Network::write(QString strData)
         if (socket->write(qbaData) == -1)
         {
             if (socket->state() == QAbstractSocket::ConnectedState)
-                emit show_msg_active(QString(tr("Error: Could not send data! [%1]")).arg(socket->errorString()), 9);
+            {
+                QString strError = QString(tr("Error: Could not send data! [%1]")).arg(socket->errorString());
+                emit show_msg_active(strError, 9);
+            }
             else if (socket->state() == QAbstractSocket::UnconnectedState)
-                emit show_msg_active(tr("Error: Could not send data! [Not connected]"), 9);
+            {
+                QString strError = tr("Error: Could not send data! [Not connected]");
+                emit show_msg_active(strError, 9);
+            }
         }
     }
     else
-        emit show_msg_active(tr("Error: Could not send data! [Not Connected]"), 9);
+    {
+        QString strError = tr("Error: Could not send data! [Not Connected]");
+        emit show_msg_active(strError, 9);
+    }
 }
 
 void Network::send(QString strData)
@@ -353,7 +374,8 @@ void Network::error(QAbstractSocket::SocketError error)
 {
     if (error == QAbstractSocket::RemoteHostClosedError) return; // supported by disconnected
 
-    emit show_msg_all(QString(tr("Disconnected from server [%1]")).arg(socket->errorString()), 9);
+    QString strError = QString(tr("Disconnected from server [%1]")).arg(socket->errorString());
+    emit show_msg_all(strError, 9);
 
     // clear all
     clear_all();
@@ -394,7 +416,8 @@ void Network::timeout_pong()
     {
         if (socket->state() == QAbstractSocket::ConnectedState)
         {
-            emit show_msg_all(tr("No PONG reply from server in 301 seconds. Disconnecting..."), 9);
+            QString strDisplay = tr("No PONG reply from server in 301 seconds. Disconnecting...");
+            emit show_msg_all(strDisplay, 9);
 
             // disconnect
             disconnect();

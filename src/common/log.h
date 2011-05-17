@@ -36,10 +36,10 @@ public:
      * @param QString file name
      * @param QString data
      */
-    void save(QString, QString);
+    void save(QString &, QString &);
 
 private:
-    void convert(QString *);
+    void convert(QString &);
 };
 
 #endif // LOG_H

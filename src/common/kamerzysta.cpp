@@ -79,7 +79,8 @@ void Kamerzysta::log(QString strData)
     if (settings.value("debug").toString() == "on")
     {
         Log *l = new Log();
-        l->save("kamerzysta", strData);
+        QString strKamerzysta = "kamerzysta";
+        l->save(strKamerzysta, strData);
         delete l;
     }
 }

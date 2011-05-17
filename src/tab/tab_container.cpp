@@ -179,7 +179,7 @@ void TabContainer::part_tab(int index)
         remove_tab(strChannel);
 }
 
-void TabContainer::show_msg(QString strTime, QString strChannel, QString strData, int iLevel)
+void TabContainer::show_msg(QString &strTime, QString &strChannel, QString &strData, int iLevel)
 {
     int i = get_index(strChannel);
     if (i != -1)
@@ -220,7 +220,7 @@ void TabContainer::show_msg(QString strTime, QString strChannel, QString strData
     }
 }
 
-void TabContainer::show_msg(QString strChannel, QString strData, int iLevel)
+void TabContainer::show_msg(QString &strChannel, QString &strData, int iLevel)
 {
     int i = get_index(strChannel);
     if (i != -1)
@@ -261,11 +261,12 @@ void TabContainer::show_msg(QString strChannel, QString strData, int iLevel)
     }
 }
 
-void TabContainer::show_msg_all(QString strData, int iLevel)
+void TabContainer::show_msg_all(QString &strData, int iLevel)
 {
     for (int i = 0; i < tw.size(); i++)
     {
-        tw[i]->display_msg(strData, iLevel);
+        QString strDataAll = strData;
+        tw[i]->display_msg(strDataAll, iLevel);
         if (i != pTabM->currentIndex())
         {
             if (iLevel != 0)
@@ -276,7 +277,7 @@ void TabContainer::show_msg_all(QString strData, int iLevel)
     }
 }
 
-void TabContainer::show_msg_active(QString strData, int iLevel)
+void TabContainer::show_msg_active(QString &strData, int iLevel)
 {
     for (int i = 0; i < tw.size(); i++)
     {
@@ -288,21 +289,21 @@ void TabContainer::show_msg_active(QString strData, int iLevel)
     }
 }
 
-void TabContainer::set_topic(QString strChannel, QString strTopic)
+void TabContainer::set_topic(QString &strChannel, QString &strTopic)
 {
     int i = get_index(strChannel);
     if (i != -1)
         tw[i]->set_topic(strTopic);
 }
 
-void TabContainer::author_topic(QString strChannel, QString strNick)
+void TabContainer::author_topic(QString &strChannel, QString &strNick)
 {
     int i = get_index(strChannel);
     if (i != -1)
         tw[i]->author_topic(strNick);
 }
 
-void TabContainer::set_link(QString strChannel, QString strLink)
+void TabContainer::set_link(QString &strChannel, QString &strLink)
 {
     int i = get_index(strChannel);
     if (i != -1)
@@ -321,22 +322,22 @@ void TabContainer::slot_update_channel_avatar(QString strChannel)
         tw[i]->update_channel_avatar();
 }
 
-void TabContainer::slot_show_msg(QString strChannel, QString strData, int iLevel)
+void TabContainer::slot_show_msg(QString &strChannel, QString &strData, int iLevel)
 {
     show_msg(strChannel, strData, iLevel);
 }
 
-void TabContainer::slot_show_msg_active(QString strData, int iLevel)
+void TabContainer::slot_show_msg_active(QString &strData, int iLevel)
 {
     show_msg_active(strData, iLevel);
 }
 
-void TabContainer::slot_show_msg_all(QString strData, int iLevel)
+void TabContainer::slot_show_msg_all(QString &strData, int iLevel)
 {
     show_msg_all(strData, iLevel);
 }
 
-void TabContainer::slot_display_message(QString strChannel, QString strData, int iLevel)
+void TabContainer::slot_display_message(QString &strChannel, QString &strData, int iLevel)
 {
     int i = get_index(strChannel);
     if (i != -1)

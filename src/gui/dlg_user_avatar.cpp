@@ -19,6 +19,7 @@
  ****************************************************************************/
 
 #include <QDesktopWidget>
+#include <QPushButton>
 #include "mainwindow.h"
 #include "dlg_user_avatar.h"
 
@@ -40,6 +41,7 @@ void DlgUserAvatar::create_gui()
 {
     ui.toolButton_zoom_out->setIcon(QIcon(":/images/oxygen/16x16/list-remove.png"));
     ui.toolButton_zoom_in->setIcon(QIcon(":/images/oxygen/16x16/list-add.png"));
+    ui.buttonBox->button(QDialogButtonBox::Close)->setIcon(QIcon(":/images/oxygen/16x16/dialog-close.png"));
 }
 
 void DlgUserAvatar::set_default_values()

@@ -55,7 +55,7 @@ protected:
     virtual void closeEvent(QCloseEvent *);
 
 signals:
-    void display_msg(QString, QString, int);
+    void display_msg(QString&, QString&, int);
     void send(QString);
 };
 

@@ -41,8 +41,8 @@ public:
     void set_color(QString);
     void set_moderation(bool);
     void set_toolwidget_icon(bool);
-    void convert_emots(QString *);
-    void replace_emots(QString *);
+    void convert_emots(QString &);
+    void replace_emots(QString &);
     void paste_multi_line(QString, bool);
     void send_message(QString, bool);
     void update_nick(QString);
@@ -65,8 +65,8 @@ private slots:
     void show_hide_toolwidget_clicked();
 
 signals:
-    void show_msg(QString, QString, int);
-    void display_message(QString, QString, int);
+    void show_msg(QString&,QString&,int);
+    void display_message(QString&,QString&,int);
     void show_hide_toolwidget();
 };
 

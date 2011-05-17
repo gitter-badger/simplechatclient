@@ -28,27 +28,27 @@ Convert::Convert() : bRemovedBold(false), bRemovedItalic(false), iRemovedColor(-
 {
 }
 
-void Convert::convert_text(QString *strData, QString *strLastContent)
+void Convert::convert_text(QString &strData, QString &strLastContent)
 {
-    (*strData) += " "; // fix convert algorithm
+    strData += " "; // fix convert algorithm
 
     // fonts
-    if (strData->contains("%F"))
+    if (strData.contains("%F"))
     {
-        int iCount = strData->count("%F");
+        int iCount = strData.count("%F");
 
-        while (strData->contains("%F"))
+        while (strData.contains("%F"))
         {
-            int iStartPos = strData->indexOf("%F");
-            int iEndPos = strData->indexOf("%", iStartPos+1);
-            int iSpacePos = strData->indexOf(" ", iStartPos);
+            int iStartPos = strData.indexOf("%F");
+            int iEndPos = strData.indexOf("%", iStartPos+1);
+            int iSpacePos = strData.indexOf(" ", iStartPos);
 
             if (iEndPos != -1)
             {
                 if ((iEndPos < iSpacePos) || (iSpacePos == -1))
                 {
                     iEndPos++;
-                    QString strFontFull = strData->mid(iStartPos, iEndPos-iStartPos);
+                    QString strFontFull = strData.mid(iStartPos, iEndPos-iStartPos);
                     QString strFont = strFontFull.mid(2,strFontFull.size()-3);
                     strFont = strFont.toLower();
 
@@ -94,13 +94,13 @@ void Convert::convert_text(QString *strData, QString *strLastContent)
                             strFontStyle = "normal";
 
                         QString strInsert = "<span style=\"font-weight:"+strFontWeight+";font-style:"+strFontStyle+";font-family:"+strFontFamily+";\">";
-                        strData->replace(strFontFull, strInsert);
+                        strData.replace(strFontFull, strInsert);
                     }
                     else
-                        strData->insert(iStartPos+1, " "); // fix wrong %F
+                        strData.insert(iStartPos+1, " "); // fix wrong %F
                 }
                 else
-                    strData->insert(iStartPos+1, " "); // fix wrong %F
+                    strData.insert(iStartPos+1, " "); // fix wrong %F
             }
             else
                 break;
@@ -110,36 +110,36 @@ void Convert::convert_text(QString *strData, QString *strLastContent)
         for (int i = 0; i < iCount; i++)
             strSpan += "</span>";
 
-        (*strLastContent) = strSpan+(*strLastContent);
+        strLastContent = strSpan+strLastContent;
     }
 
     // colors
     QSettings settings;
     if (settings.value("hide_formating").toString() == "off")
     {
-        int iCount = strData->count("%C");
+        int iCount = strData.count("%C");
 
-        strData->replace("%C000000%", "<span style=\"color:#000000;\">");
-        strData->replace("%C623c00%", "<span style=\"color:#623c00;\">");
-        strData->replace("%Cc86c00%", "<span style=\"color:#c86c00;\">");
-        strData->replace("%Cff6500%", "<span style=\"color:#ff6500;\">");
-        strData->replace("%Cff0000%", "<span style=\"color:#ff0000;\">");
-        strData->replace("%Ce40f0f%", "<span style=\"color:#e40f0f;\">");
-        strData->replace("%C990033%", "<span style=\"color:#990033;\">");
-        strData->replace("%C8800ab%", "<span style=\"color:#8800ab;\">");
-        strData->replace("%Cce00ff%", "<span style=\"color:#ce00ff;\">");
-        strData->replace("%C0f2ab1%", "<span style=\"color:#0f2ab1;\">");
-        strData->replace("%C3030ce%", "<span style=\"color:#3030ce;\">");
-        strData->replace("%C006699%", "<span style=\"color:#006699;\">");
-        strData->replace("%C1a866e%", "<span style=\"color:#1a866e;\">");
-        strData->replace("%C008100%", "<span style=\"color:#008100;\">");
-        strData->replace("%C959595%", "<span style=\"color:#959595;\">");
+        strData.replace("%C000000%", "<span style=\"color:#000000;\">");
+        strData.replace("%C623c00%", "<span style=\"color:#623c00;\">");
+        strData.replace("%Cc86c00%", "<span style=\"color:#c86c00;\">");
+        strData.replace("%Cff6500%", "<span style=\"color:#ff6500;\">");
+        strData.replace("%Cff0000%", "<span style=\"color:#ff0000;\">");
+        strData.replace("%Ce40f0f%", "<span style=\"color:#e40f0f;\">");
+        strData.replace("%C990033%", "<span style=\"color:#990033;\">");
+        strData.replace("%C8800ab%", "<span style=\"color:#8800ab;\">");
+        strData.replace("%Cce00ff%", "<span style=\"color:#ce00ff;\">");
+        strData.replace("%C0f2ab1%", "<span style=\"color:#0f2ab1;\">");
+        strData.replace("%C3030ce%", "<span style=\"color:#3030ce;\">");
+        strData.replace("%C006699%", "<span style=\"color:#006699;\">");
+        strData.replace("%C1a866e%", "<span style=\"color:#1a866e;\">");
+        strData.replace("%C008100%", "<span style=\"color:#008100;\">");
+        strData.replace("%C959595%", "<span style=\"color:#959595;\">");
 
         QString strSpan;
         for (int i = 0; i < iCount; i++)
             strSpan += "</span>";
 
-        (*strLastContent) = strSpan+(*strLastContent);
+        strLastContent = strSpan+strLastContent;
     }
     else
     {
@@ -149,26 +149,26 @@ void Convert::convert_text(QString *strData, QString *strLastContent)
 
         QStringListIterator strliReplace (strlReplace);
         while (strliReplace.hasNext())
-            strData->remove(strliReplace.next());
+            strData.remove(strliReplace.next());
     }
 
     // emoticons
-    if (strData->contains("%I"))
+    if (strData.contains("%I"))
     {
         QString strPath = QCoreApplication::applicationDirPath();
 
-        while (strData->contains("%I"))
+        while (strData.contains("%I"))
         {
-            int iStartPos = strData->indexOf("%I");
-            int iEndPos = strData->indexOf("%", iStartPos+1);
-            int iSpacePos = strData->indexOf(" ", iStartPos);
+            int iStartPos = strData.indexOf("%I");
+            int iEndPos = strData.indexOf("%", iStartPos+1);
+            int iSpacePos = strData.indexOf(" ", iStartPos);
 
             if (iEndPos != -1)
             {
                 if ((iEndPos < iSpacePos) || (iSpacePos == -1))
                 {
                     iEndPos++;
-                    QString strEmoticonFull = strData->mid(iStartPos, iEndPos-iStartPos);
+                    QString strEmoticonFull = strData.mid(iStartPos, iEndPos-iStartPos);
                     QString strEmoticon = strEmoticonFull.mid(2,strEmoticonFull.size()-3);
                     QString strInsert;
 
@@ -188,10 +188,10 @@ void Convert::convert_text(QString *strData, QString *strLastContent)
                     else
                         strInsert = "//"+strEmoticon;
 
-                    strData->replace(strEmoticonFull, strInsert);
+                    strData.replace(strEmoticonFull, strInsert);
                 }
                 else
-                    strData->insert(iStartPos+1, " "); // fix wrong %I
+                    strData.insert(iStartPos+1, " "); // fix wrong %I
             }
             else
                 break;
@@ -199,20 +199,20 @@ void Convert::convert_text(QString *strData, QString *strLastContent)
     }
 }
 
-void Convert::remove_font(QString *strData)
+void Convert::remove_font(QString &strData)
 {
-    while (strData->contains("%F"))
+    while (strData.contains("%F"))
     {
-        int iStartPos = strData->indexOf("%F");
-        int iEndPos = strData->indexOf("%", iStartPos+1);
-        int iSpacePos = strData->indexOf(" ", iStartPos);
+        int iStartPos = strData.indexOf("%F");
+        int iEndPos = strData.indexOf("%", iStartPos+1);
+        int iSpacePos = strData.indexOf(" ", iStartPos);
 
         if (iEndPos != -1)
         {
             if ((iEndPos < iSpacePos) || (iSpacePos == -1))
             {
                 iEndPos++;
-                QString strFontFull = strData->mid(iStartPos, iEndPos-iStartPos);
+                QString strFontFull = strData.mid(iStartPos, iEndPos-iStartPos);
                 QString strFont = strFontFull.mid(2,strFontFull.length()-3);
                 strFont = strFont.toLower();
 
@@ -249,20 +249,20 @@ void Convert::remove_font(QString *strData)
                     else if (strFontName == "courier") strRemovedFont = "courier";
                     else strRemovedFont = "verdana";
 
-                    strData->remove(strFontFull);
+                    strData.remove(strFontFull);
                 }
                 else
-                    strData->insert(iStartPos+1, " "); // fix wrong %F
+                    strData.insert(iStartPos+1, " "); // fix wrong %F
             }
             else
-                strData->insert(iStartPos+1, " "); // fix wrong %F
+                strData.insert(iStartPos+1, " "); // fix wrong %F
         }
         else
             break;
     }
 }
 
-void Convert::remove_color(QString *strData)
+void Convert::remove_color(QString &strData)
 {
     QStringList strlFontColors;
     strlFontColors << "#000000" << "#623c00" << "#c86c00" << "#ff6500" << "#ff0000" << "#e40f0f" << "#990033" << "#8800ab" << "#ce00ff" << "#0f2ab1" << "#3030ce" << "#006699" << "#1a866e" << "#008100" << "#959595";
@@ -272,10 +272,10 @@ void Convert::remove_color(QString *strData)
     {
         strFontColor = "%C"+strFontColor.right(6)+"%";
 
-        if (strData->contains(strFontColor))
+        if (strData.contains(strFontColor))
             iRemovedColor = iFontColor;
 
-        strData->remove(strFontColor);
+        strData.remove(strFontColor);
         iFontColor++;
     }
 }

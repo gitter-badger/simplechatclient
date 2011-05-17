@@ -32,9 +32,9 @@ class Convert : public QObject
     Q_OBJECT
 public:
     Convert();
-    void convert_text(QString *, QString *);
-    void remove_font(QString *);
-    void remove_color(QString *);
+    void convert_text(QString &, QString &);
+    void remove_font(QString &);
+    void remove_color(QString &);
 
     bool get_removed_bold() { return bRemovedBold; }
     bool get_removed_italic() { return bRemovedItalic; }

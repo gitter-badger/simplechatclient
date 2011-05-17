@@ -422,7 +422,7 @@ void DlgChannelSettings::set_topic(QString strTopic)
 
     // convert font
     Convert *pConvertF = new Convert();
-    pConvertF->remove_font(&strTopic);
+    pConvertF->remove_font(strTopic);
     bool bRemovedBold = pConvertF->get_removed_bold();
     bool bRemovedItalic = pConvertF->get_removed_italic();
     QString strRemovedFont = pConvertF->get_removed_font();
@@ -440,7 +440,7 @@ void DlgChannelSettings::set_topic(QString strTopic)
 
     // convert color
     Convert *pConvertC = new Convert();
-    pConvertC->remove_color(&strTopic);
+    pConvertC->remove_color(strTopic);
     int iRemovedColor = pConvertC->get_removed_color();
     delete pConvertC;
     ui.comboBox_color->setCurrentIndex(iRemovedColor);
