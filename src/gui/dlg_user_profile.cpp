@@ -310,7 +310,7 @@ QString DlgUserProfile::convert_type(QString strType)
 
 void DlgUserProfile::show_avatar(QString strUrl)
 {
-    if (strUrl.indexOf(",") == -1) return; // wrong url
+    if (!strUrl.contains(",")) return; // wrong url
 
     // change url
     QStringList lUrl = strUrl.split(",");

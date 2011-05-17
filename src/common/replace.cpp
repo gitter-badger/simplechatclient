@@ -68,7 +68,7 @@ QString Replace::replace_emots(QString strData)
     strData.replace(":<", "%Iumm%");
     strData.replace(";<", "%Ibuu%");
 
-    if ((strData.indexOf("http://") == -1) && (strData.indexOf("https://") == -1))
+    if ((!strData.contains("http://")) && (!strData.contains("https://")))
         strData.replace(":/", "%Isceptyczny%");
     strData.replace(";/", "%Isceptyczny%");
     strData.replace(":\\", "%Isceptyczny%");

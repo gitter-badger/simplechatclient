@@ -374,7 +374,7 @@ QString OnetAuth::get_version(QString strData)
 {
     if (!strData.isEmpty())
     {
-        if (strData.indexOf("OnetCzatLoader") != -1)
+        if (strData.contains("OnetCzatLoader"))
         {
             QString strFind1 = "signed-OnetCzatLoader-";
             QString strFind2 = ".jar";

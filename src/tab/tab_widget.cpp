@@ -197,10 +197,10 @@ QString TabWidget::addslashes(QString strData)
     strData.replace("&", "&amp;");
     strData.replace("<", "&lt;");
     strData.replace(">", "&gt;");
-    strData.replace("\"", "");
-    strData.replace("\'", "");
-    strData.replace(";", "");
-    strData.replace("%", "");
+    strData.remove("\"");
+    strData.remove("\'");
+    strData.remove(";");
+    strData.remove("%");
 
     return strData;
 }
@@ -279,8 +279,8 @@ void TabWidget::display_message(QString strData, int iLevel)
                     strAwayData.remove("ACTION ");
 
                     strAwayData.insert(11, "* ");
-                    if (strAwayData.indexOf("<") != -1) strAwayData = strAwayData.remove(strAwayData.indexOf("<"),4);
-                    if (strAwayData.indexOf(">") != -1) strAwayData = strAwayData.remove(strAwayData.indexOf(">"),4);
+                    if (strAwayData.contains("<")) strAwayData = strAwayData.remove(strAwayData.indexOf("<"),4);
+                    if (strAwayData.contains(">")) strAwayData = strAwayData.remove(strAwayData.indexOf(">"),4);
                 }
             }
             // remove color, font, emots
@@ -309,8 +309,8 @@ void TabWidget::display_message(QString strData, int iLevel)
             strData.remove("ACTION ");
 
             strData.insert(11, "* ");
-            if (strData.indexOf("&lt;") != -1) strData = strData.remove(strData.indexOf("&lt;"),4);
-            if (strData.indexOf("&gt;") != -1) strData = strData.remove(strData.indexOf("&gt;"),4);
+            if (strData.contains("&lt;")) strData = strData.remove(strData.indexOf("&lt;"),4);
+            if (strData.contains("&gt;")) strData = strData.remove(strData.indexOf("&gt;"),4);
 
             iLevel = 8;
         }

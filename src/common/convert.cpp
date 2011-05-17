@@ -33,11 +33,11 @@ void Convert::convert_text(QString *strData, QString *strLastContent)
     (*strData) += " "; // fix convert algorithm
 
     // fonts
-    if (strData->indexOf("%F") != -1)
+    if (strData->contains("%F"))
     {
         int iCount = strData->count("%F");
 
-        while (strData->indexOf("%F") != -1)
+        while (strData->contains("%F"))
         {
             int iStartPos = strData->indexOf("%F");
             int iEndPos = strData->indexOf("%", iStartPos+1);
@@ -57,7 +57,7 @@ void Convert::convert_text(QString *strData, QString *strLastContent)
                     QString strFontWeight;
                     QString strShortFontWeight;
 
-                    if (strFont.indexOf(":") != -1)
+                    if (strFont.contains(":"))
                     {
                         strShortFontWeight = strFont.left(strFont.indexOf(":"));
                         strFontName = strFont.right(strFont.size()-strFont.indexOf(":")-1);
@@ -153,11 +153,11 @@ void Convert::convert_text(QString *strData, QString *strLastContent)
     }
 
     // emoticons
-    if (strData->indexOf("%I") != -1)
+    if (strData->contains("%I"))
     {
         QString strPath = QCoreApplication::applicationDirPath();
 
-        while (strData->indexOf("%I") != -1)
+        while (strData->contains("%I"))
         {
             int iStartPos = strData->indexOf("%I");
             int iEndPos = strData->indexOf("%", iStartPos+1);

@@ -188,7 +188,7 @@ void TabContainer::show_msg(QString strTime, QString strChannel, QString strData
         QSettings settings;
         QString strMe = settings.value("nick").toString();
 
-        if (strData.indexOf(QRegExp("(\\s|\\W)"+strMe+"\\b")) != -1)
+        if (strData.contains(QRegExp("(\\s|\\W)"+strMe+"\\b")))
         {
             if (iLevel == 0)
             {
@@ -229,7 +229,7 @@ void TabContainer::show_msg(QString strChannel, QString strData, int iLevel)
         QSettings settings;
         QString strMe = settings.value("nick").toString();
 
-        if (strData.indexOf(QRegExp("(\\s|\\W)"+strMe+"\\b")) != -1)
+        if (strData.contains(QRegExp("(\\s|\\W)"+strMe+"\\b")))
         {
             if (iLevel == 0)
             {

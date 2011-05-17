@@ -1001,12 +1001,12 @@ void MainWindow::change_flag(QString strNick, QString strChannel, QString strNew
 
         if (plusminus == "+")
         {
-            if ((strFlag == strConvertFrom.at(i)) && (strModes.indexOf(strConvertTo.at(i)) == -1))
+            if ((strFlag == strConvertFrom.at(i)) && (!strModes.contains(strConvertTo.at(i))))
                 strModes.append(strConvertTo.at(i));
         }
         else
         {
-            if ((strFlag == strConvertFrom.at(i)) && (strModes.indexOf(strConvertTo.at(i)) != -1))
+            if ((strFlag == strConvertFrom.at(i)) && (strModes.contains(strConvertTo.at(i))))
                 strModes.remove(strConvertTo.at(i));
         }
     }

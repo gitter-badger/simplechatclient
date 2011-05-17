@@ -1396,7 +1396,7 @@ void OnetKernel::raw_005()
 
     for (int i = 0; i < strDataList.size(); i++)
     {
-        if (strDataList.at(i).indexOf("=") != -1)
+        if (strDataList.at(i).contains("="))
         {
             QString strData = strDataList.at(i);
             QString strKey = strData.mid(0, strData.indexOf('='));
@@ -2833,7 +2833,7 @@ void OnetKernel::raw_353()
             strNick = strNick.left(strNick.indexOf("|"));
 
             QString strSuffix = strDataList[i];
-            if (strSuffix.indexOf("|") != -1)
+            if (strSuffix.contains("|"))
             {
                 strSuffix = strSuffix.right(strSuffix.length() - strSuffix.indexOf("|") -1);
                 strSuffix = strSuffix.left(strSuffix.length()-2);
@@ -2844,12 +2844,12 @@ void OnetKernel::raw_353()
             QString strCleanNick = strNick;
 
             QString strPrefix;
-            if (strCleanNick.indexOf("`") != -1) { strCleanNick.remove("`"); strPrefix.append("`"); }
-            if (strCleanNick.indexOf("@") != -1) { strCleanNick.remove("@"); strPrefix.append("@"); }
-            if (strCleanNick.indexOf("%") != -1) { strCleanNick.remove("%"); strPrefix.append("%"); }
-            if (strCleanNick.indexOf("!") != -1) { strCleanNick.remove("!"); strPrefix.append("!"); }
-            if (strCleanNick.indexOf("=") != -1) { strCleanNick.remove("="); strPrefix.append("="); }
-            if (strCleanNick.indexOf("+") != -1) { strCleanNick.remove("+"); strPrefix.append("+"); }
+            if (strCleanNick.contains("`")) { strCleanNick.remove("`"); strPrefix.append("`"); }
+            if (strCleanNick.contains("@")) { strCleanNick.remove("@"); strPrefix.append("@"); }
+            if (strCleanNick.contains("%")) { strCleanNick.remove("%"); strPrefix.append("%"); }
+            if (strCleanNick.contains("!")) { strCleanNick.remove("!"); strPrefix.append("!"); }
+            if (strCleanNick.contains("=")) { strCleanNick.remove("="); strPrefix.append("="); }
+            if (strCleanNick.contains("+")) { strCleanNick.remove("+"); strPrefix.append("+"); }
 
             QString strModes = strPrefix+strSuffix;
             emit add_user(strChannel, strCleanNick, strModes, true);

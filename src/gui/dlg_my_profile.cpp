@@ -233,7 +233,7 @@ QString DlgMyProfile::convert_text_to_desc(QString strContent)
     strContent.replace(QRegExp("%I([a-zA-Z0-9_-]+)%"), "//\\1");
 
     // convert font
-    while (strContent.indexOf("%F") != -1)
+    while (strContent.contains("%F"))
     {
         int iStartPos = strContent.indexOf("%F");
         int iEndPos = strContent.indexOf("%", iStartPos+1);
@@ -251,7 +251,7 @@ QString DlgMyProfile::convert_text_to_desc(QString strContent)
                 QString strFontWeight;
                 QString strFontName;
 
-                if (strFont.indexOf(":") != -1)
+                if (strFont.contains(":"))
                 {
                     strFontWeight = strFont.left(strFont.indexOf(":"));
                     strFontName = strFont.right(strFont.length()-strFont.indexOf(":")-1);

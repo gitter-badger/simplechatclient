@@ -420,7 +420,7 @@ void DlgChannelSettings::set_topic(QString strTopic)
     strTopic.replace(QRegExp("%I([a-zA-Z0-9_-]+)%"), "//\\1");
 
     // convert font
-    while (strTopic.indexOf("%F") != -1)
+    while (strTopic.contains("%F"))
     {
         int iStartPos = strTopic.indexOf("%F");
         int iEndPos = strTopic.indexOf("%", iStartPos+1);
@@ -438,7 +438,7 @@ void DlgChannelSettings::set_topic(QString strTopic)
                 QString strFontWeight;
                 QString strFontName;
 
-                if (strFont.indexOf(":") != -1)
+                if (strFont.contains(":"))
                 {
                     strFontWeight = strFont.left(strFont.indexOf(":"));
                     strFontName = strFont.right(strFont.length()-strFont.indexOf(":")-1);
