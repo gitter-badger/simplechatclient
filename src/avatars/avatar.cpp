@@ -63,7 +63,7 @@ void Avatar::avatar_finished(QNetworkReply *reply)
         set_avatar(strNickOrChannel, strCategory, bData);
 }
 
-void Avatar::set_avatar(QString strNickOrChannel, QString strCategory, QByteArray bAvatar)
+void Avatar::set_avatar(QString &strNickOrChannel, QString &strCategory, QByteArray &bAvatar)
 {
     if (strCategory == "nick")
     {
@@ -87,6 +87,9 @@ void Avatar::set_avatar(QString strNickOrChannel, QString strCategory, QByteArra
     }
     else if (strCategory == "channel")
     {
+        // return if channel not exist any more
+        if (!Core::instance()->lOpenChannels.contains(strNickOrChannel)) return;
+
         // insert
         if (!Core::instance()->mChannelAvatar.contains(strNickOrChannel))
             Core::instance()->mChannelAvatar.insert(strNickOrChannel, bAvatar);

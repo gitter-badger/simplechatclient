@@ -46,7 +46,7 @@ private:
 
 public slots:
     void avatar_finished(QNetworkReply*);
-    void set_avatar(QString, QString, QByteArray);
+    void set_avatar(QString&, QString&, QByteArray&);
 
 signals:
     void set_nick_avatar(QString);
