@@ -192,7 +192,7 @@ void TabContainer::show_msg(QString strTime, QString strChannel, QString strData
         {
             if (iLevel == 0)
             {
-                tw[i]->display_msg(strTime, strData, 8);
+                tw[i]->display_msg(strTime, strData, 10);
                 if (i != pTabM->currentIndex())
                     pTabM->set_hilight(i);
             }
@@ -233,7 +233,7 @@ void TabContainer::show_msg(QString strChannel, QString strData, int iLevel)
         {
             if (iLevel == 0)
             {
-                tw[i]->display_msg(strData, 8);
+                tw[i]->display_msg(strData, 10);
                 if (i != pTabM->currentIndex())
                     pTabM->set_hilight(i);
             }

@@ -247,6 +247,7 @@ QMap<QString,QString> Config::get_default_values()
     mDefaultValues.insert("font_color_level_5", "#009300");
     mDefaultValues.insert("font_color_level_6", "#0066FF");
     mDefaultValues.insert("font_color_level_7", "#666666");
+    mDefaultValues.insert("font_color_level_8", "#800080");
     mDefaultValues.insert("font_color_level_9", "#ff0000");
     mDefaultValues.insert("channel_font_color", "#0000ff");
     mDefaultValues.insert("nicklist_nick_color", "#333333");

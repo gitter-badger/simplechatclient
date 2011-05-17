@@ -264,21 +264,25 @@ void TabWidget::display_message(QString strData, int iLevel)
     QSettings settings;
 
     // awaylog
-    if (iLevel == 8)
+    if (iLevel == 10)
     {
         if (settings.value("away").toString() == "on")
         {
             QString strAwayData = strData;
 
-            // if /me remove time,action <>
-            if (strAwayData.indexOf(QString(QByteArray("\x01"))) != -1)
+            // if /me
+            if (strAwayData.contains((QString(QByteArray("\x01")))))
             {
-                strAwayData = strAwayData.right(strAwayData.length() - 11);
-                if (strAwayData.indexOf("ACTION ") != -1) strAwayData = strAwayData.replace("ACTION ", QString::null);
-                if (strAwayData.indexOf("<") != -1) strAwayData = strAwayData.remove(strAwayData.indexOf("<"),4);
-                if (strAwayData.indexOf(">") != -1) strAwayData = strAwayData.remove(strAwayData.indexOf(">"),4);
-            }
+                if (strAwayData.contains("ACTION "))
+                {
+                    strAwayData.remove(QString(QByteArray("\x01")));
+                    strAwayData.remove("ACTION ");
 
+                    strAwayData.insert(11, "* ");
+                    if (strAwayData.indexOf("<") != -1) strAwayData = strAwayData.remove(strAwayData.indexOf("<"),4);
+                    if (strAwayData.indexOf(">") != -1) strAwayData = strAwayData.remove(strAwayData.indexOf(">"),4);
+                }
+            }
             // remove color, font, emots
             strAwayData.replace(QRegExp("%C([a-zA-Z0-9]+)%"),"");
             strAwayData.replace(QRegExp("%F([a-zA-Z0-9:]+)%"),"");
@@ -295,6 +299,22 @@ void TabWidget::display_message(QString strData, int iLevel)
 
     // channels
     strData.replace(QRegExp("#([~-_a-zA-Z0-9\xa1\xaf\xa6\xac\xca\xc6\xd1\xd3\xa3\xb1\xbf\xb6\xbc\xea\xe6\xf1\xf3\xb3]+)"), "<span style=\"color:"+addslashes(settings.value("channel_font_color").toString())+";text-decoration:none;\">#\\1</span>");
+
+    // if /me
+    if (strData.contains((QString(QByteArray("\x01")))))
+    {
+        if (strData.contains("ACTION "))
+        {
+            strData.remove(QString(QByteArray("\x01")));
+            strData.remove("ACTION ");
+
+            strData.insert(11, "* ");
+            if (strData.indexOf("&lt;") != -1) strData = strData.remove(strData.indexOf("&lt;"),4);
+            if (strData.indexOf("&gt;") != -1) strData = strData.remove(strData.indexOf("&gt;"),4);
+
+            iLevel = 8;
+        }
+    }
 
     // content last
     QString strContentLast;
@@ -318,10 +338,12 @@ void TabWidget::display_message(QString strData, int iLevel)
         strFontColor = addslashes(settings.value("font_color_level_6").toString()); // default blue
     else if (iLevel == 7) // info
         strFontColor = addslashes(settings.value("font_color_level_7").toString()); // default gray
-    else if (iLevel == 8) // hilight no color
-        strFontColor = addslashes(settings.value("default_font_color").toString()); // default black
+    else if (iLevel == 8) // me
+        strFontColor = addslashes(settings.value("font_color_level_8").toString()); // default violet
     else if (iLevel == 9) // error
         strFontColor = addslashes(settings.value("font_color_level_9").toString()); // default red
+    else if (iLevel == 10) // hilight no color
+        strFontColor = addslashes(settings.value("default_font_color").toString()); // default black
     else
     {
         iLevel = 0;
@@ -331,15 +353,6 @@ void TabWidget::display_message(QString strData, int iLevel)
     strData.insert(11, "<span style=\"color:"+strFontColor+";\">");
     strContentLast = "</span>"+strContentLast;
 
-    // if /me remove time,action <>
-    if (strData.indexOf(QString(QByteArray("\x01"))) != -1)
-    {
-        strData = strData.right(strData.length() - 11);
-        if (strData.indexOf("ACTION ") != -1) strData = strData.replace("ACTION ", QString::null);
-        if (strData.indexOf("&lt;") != -1) strData = strData.remove(strData.indexOf("&lt;"),4);
-        if (strData.indexOf("&gt;") != -1) strData = strData.remove(strData.indexOf("&gt;"),4);
-    }
-
     // convert emoticons, font
     Convert *convertText = new Convert();
     convertText->convert_text(&strData, &strContentLast);
@@ -347,7 +360,7 @@ void TabWidget::display_message(QString strData, int iLevel)
 
     // hilight
     QString strTextDecoration = "none";
-    if (iLevel == 8)
+    if (iLevel == 10)
     {
         strTextDecoration = "underline";
 
@@ -356,39 +369,12 @@ void TabWidget::display_message(QString strData, int iLevel)
             Notify::instance()->play(Beep);
     }
 
-    // /me
-    QString strAlign = "left";
-    if (settings.value("hide_formating").toString() == "off")
-    {
-        if (strData.indexOf(QString(QByteArray("\x01"))) != -1)
-        {
-            strAlign = "center";
-            strData.remove(QString(QByteArray("\x01")));
-        }
-    }
-
     // init text
     QString strContent = "<span style=\"color:"+addslashes(settings.value("default_font_color").toString())+";font-size:"+strFontSize+";text-decoration:"+strTextDecoration+";\">";
     strContent = strContent+strData+strContentLast+"</span>";
 
-    // move cursor - fix align bug
-    QTextCursor cursor(pMainTextEdit->document());
-    cursor.movePosition(QTextCursor::End);
-
-    // text align
-    QTextBlockFormat format;
-    if (strAlign == "center")
-        format.setAlignment(Qt::AlignCenter);
-    else
-        format.setAlignment(Qt::AlignLeft);
-
-    // insert text
-    cursor.insertBlock(format);
-    cursor.insertHtml(strContent);
-
-    // move cursor
-    if (pMainTextEdit->textCursor().selectedText().isEmpty())
-        pMainTextEdit->moveCursor(QTextCursor::End, QTextCursor::MoveAnchor);
+    // append
+    pMainTextEdit->append(strContent);
 }
 
 // window options
