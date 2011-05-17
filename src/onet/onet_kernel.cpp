@@ -1603,7 +1603,7 @@ void OnetKernel::raw_141n()
         if (!Core::instance()->lChannelFavourites.contains(strChannel))
             Core::instance()->lChannelFavourites.append(strChannel);
 
-        if ((settings.value("ignore_raw_141").toString() == "off") && (settings.value("disable_auto_favourites").toString() == "off"))
+        if (settings.value("ignore_raw_141").toString() == "off")
             pNetwork->send_queue(QString("JOIN %1").arg(strChannel));
     }
 
@@ -3242,7 +3242,11 @@ void OnetKernel::raw_409n()
 // :NickServ!service@service.onet NOTICE ~Merovingian :412 admi :user's data is not ready
 void OnetKernel::raw_412n()
 {
-// ignore
+    if (strDataList.size() < 5) return;
+
+    QString strNick = strDataList[4];
+
+    pNetwork->send(QString("RS INFO %1").arg(strNick));
 }
 
 // RS INFO istota_bezduszna
