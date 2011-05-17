@@ -1357,7 +1357,7 @@ void OnetKernel::raw_001()
         QString strChannel = lOpenChannels.at(i);
 
         pTabC->remove_tab(strChannel);
-        pNetwork->send(QString("JOIN %1").arg(strChannel));
+        pNetwork->send_queue(QString("JOIN %1").arg(strChannel));
     }
 
     // channel list
@@ -1603,8 +1603,8 @@ void OnetKernel::raw_141n()
         if (!Core::instance()->lChannelFavourites.contains(strChannel))
             Core::instance()->lChannelFavourites.append(strChannel);
 
-        if ((settings.value("ignore_raw_141").toString() == "off") && (settings.value("disable_autojoin_favourites").toString() == "off"))
-            pNetwork->send(QString("JOIN %1").arg(strChannel));
+        if ((settings.value("ignore_raw_141").toString() == "off") && (settings.value("disable_auto_favourites").toString() == "off"))
+            pNetwork->send_queue(QString("JOIN %1").arg(strChannel));
     }
 
     // turn on ignore_raw_141
@@ -2033,7 +2033,7 @@ void OnetKernel::raw_250n()
             Core::instance()->lChannelHomes.append(strChannel);
 
         // join
-        pNetwork->send(QString("JOIN %1").arg(strChannel));
+        pNetwork->send_queue(QString("JOIN %1").arg(strChannel));
     }
     else if (strNick.toLower() == "nickserv")
     {

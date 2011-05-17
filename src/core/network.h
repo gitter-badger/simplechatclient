@@ -43,6 +43,7 @@ public slots:
     void connect();
     void disconnect();
     void send(QString);
+    void send_queue(QString);
 
 private:
     QString strServer;

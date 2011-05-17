@@ -351,6 +351,14 @@ void Network::send(QString strData)
     if (strData.startsWith("NS"))
         msgSendQueueNS.append(strData);
     else
+        write(strData);
+}
+
+void Network::send_queue(QString strData)
+{
+    if (strData.startsWith("NS"))
+        msgSendQueueNS.append(strData);
+    else
         msgSendQueue.append(strData);
 }
 
