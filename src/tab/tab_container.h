@@ -21,6 +21,7 @@
 #ifndef TAB_CONTAINER_H
 #define TAB_CONTAINER_H
 
+#include "defines.h"
 #ifndef Q_WS_WIN
     class DlgCam;
 #endif
@@ -52,10 +53,10 @@ public:
     void remove_tab(QString);
     bool rename_tab(QString, QString);
     void part_tab(int);
-    void show_msg(QString &, QString &, QString &, int);
-    void show_msg(QString &, QString &, int);
-    void show_msg_all(QString &, int);
-    void show_msg_active(QString &, int);
+    void show_msg(QString &, QString &, QString &, MessageCategory);
+    void show_msg(QString &, QString &, MessageCategory);
+    void show_msg_all(QString &, MessageCategory);
+    void show_msg_active(QString &, MessageCategory);
     void set_topic(QString &, QString &);
     void author_topic(QString &, QString &);
     void set_link(QString &, QString &);
@@ -63,10 +64,10 @@ public:
 public slots:
     void slot_update_nick_avatar(QString);
     void slot_update_channel_avatar(QString);
-    void slot_show_msg(QString &, QString &, int);
-    void slot_show_msg_active(QString &, int);
-    void slot_show_msg_all(QString &, int);
-    void slot_display_message(QString &, QString &, int);
+    void slot_show_msg(QString &, QString &, MessageCategory);
+    void slot_show_msg_active(QString &, MessageCategory);
+    void slot_show_msg_all(QString &, MessageCategory);
+    void slot_display_message(QString &, QString &, MessageCategory);
     void slot_change_font_size(QString);
     void slot_clear_content(QString);
     void refresh_colors();

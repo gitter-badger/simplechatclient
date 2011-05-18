@@ -27,6 +27,8 @@
 #include <QTableWidgetItem>
 #include <QTreeWidgetItem>
 
+enum MessageCategory {DefaultMessage, JoinMessage, PartMessage, QuitMessage, KickMessage, ModeMessage, NoticeMessage, InfoMessage, MeMessage, ErrorMessage, HilightMessage};
+
 struct User
 {
     QString nick;

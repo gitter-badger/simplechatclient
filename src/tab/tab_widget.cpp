@@ -205,7 +205,7 @@ void TabWidget::addslashes(QString &strData)
     strData.remove("%");
 }
 
-void TabWidget::display_msg(QString &strTime, QString &strData, int iLevel)
+void TabWidget::display_msg(QString &strTime, QString &strData, MessageCategory eMessageCategory)
 {
     QDateTime dt = QDateTime::fromTime_t(strTime.toUInt());
     QString strDT = dt.toString("[hh:mm:ss] ");
@@ -219,7 +219,7 @@ void TabWidget::display_msg(QString &strTime, QString &strData, int iLevel)
         delete l;
     }
 
-    if ((iLevel == 1) || (iLevel == 2) || (iLevel == 3))
+    if ((eMessageCategory == JoinMessage) || (eMessageCategory == PartMessage) || (eMessageCategory == QuitMessage))
     {
         if (settings.value("hide_join_part").toString() == "on")
             return;
@@ -229,10 +229,10 @@ void TabWidget::display_msg(QString &strTime, QString &strData, int iLevel)
             return;
     }
 
-    display_message(strData, iLevel);
+    display_message(strData, eMessageCategory);
 }
 
-void TabWidget::display_msg(QString &strData, int iLevel)
+void TabWidget::display_msg(QString &strData, MessageCategory eMessageCategory)
 {
     QDateTime dt = QDateTime::currentDateTime();
     QString strDT = dt.toString("[hh:mm:ss] ");
@@ -246,7 +246,7 @@ void TabWidget::display_msg(QString &strData, int iLevel)
         delete l;
     }
 
-    if ((iLevel == 1) || (iLevel == 2) || (iLevel == 3))
+    if ((eMessageCategory == JoinMessage) || (eMessageCategory == PartMessage) || (eMessageCategory == QuitMessage))
     {
         if (settings.value("hide_join_part").toString() == "on")
             return;
@@ -256,15 +256,15 @@ void TabWidget::display_msg(QString &strData, int iLevel)
             return;
     }
 
-    display_message(strData, iLevel);
+    display_message(strData, eMessageCategory);
 }
 
-void TabWidget::display_message(QString &strData, int iLevel)
+void TabWidget::display_message(QString &strData, MessageCategory eMessageCategory)
 {
     QSettings settings;
 
     // awaylog
-    if (iLevel == 10)
+    if (eMessageCategory == HilightMessage)
     {
         if (settings.value("away").toString() == "on")
         {
@@ -314,7 +314,7 @@ void TabWidget::display_message(QString &strData, int iLevel)
             if (strData.contains("&lt;")) strData = strData.remove(strData.indexOf("&lt;"),4);
             if (strData.contains("&gt;")) strData = strData.remove(strData.indexOf("&gt;"),4);
 
-            iLevel = 8;
+            eMessageCategory = MeMessage;
         }
     }
 
@@ -324,31 +324,31 @@ void TabWidget::display_message(QString &strData, int iLevel)
     // colors
     QString strFontColor;
 
-    if (iLevel == 0)
+    if (eMessageCategory == DefaultMessage)
         strFontColor = settings.value("default_font_color").toString(); // default black
-    else if (iLevel == 1) // join
+    else if (eMessageCategory == JoinMessage) // join
         strFontColor = settings.value("font_color_level_1").toString(); // default green
-    else if (iLevel == 2) // part
+    else if (eMessageCategory == PartMessage) // part
         strFontColor = settings.value("font_color_level_2").toString(); // default light blue
-    else if (iLevel == 3) // quit
+    else if (eMessageCategory == QuitMessage) // quit
         strFontColor = settings.value("font_color_level_3").toString(); // default dark blue
-    else if (iLevel == 4) // kick
+    else if (eMessageCategory == KickMessage) // kick
         strFontColor = settings.value("font_color_level_4").toString(); // default dark blue
-    else if (iLevel == 5) // mode
+    else if (eMessageCategory == ModeMessage) // mode
         strFontColor = settings.value("font_color_level_5").toString(); // default green
-    else if (iLevel == 6) // notice
+    else if (eMessageCategory == NoticeMessage) // notice
         strFontColor = settings.value("font_color_level_6").toString(); // default blue
-    else if (iLevel == 7) // info
+    else if (eMessageCategory == InfoMessage) // info
         strFontColor = settings.value("font_color_level_7").toString(); // default gray
-    else if (iLevel == 8) // me
+    else if (eMessageCategory == MeMessage) // me
         strFontColor = settings.value("font_color_level_8").toString(); // default violet
-    else if (iLevel == 9) // error
+    else if (eMessageCategory == ErrorMessage) // error
         strFontColor = settings.value("font_color_level_9").toString(); // default red
-    else if (iLevel == 10) // hilight no color
+    else if (eMessageCategory == HilightMessage) // hilight no color
         strFontColor = settings.value("default_font_color").toString(); // default black
     else
     {
-        iLevel = 0;
+        eMessageCategory = DefaultMessage;
         strFontColor = settings.value("default_font_color").toString(); // default black
     }
 
@@ -363,7 +363,7 @@ void TabWidget::display_message(QString &strData, int iLevel)
 
     // hilight
     QString strTextDecoration = "none";
-    if (iLevel == 10)
+    if (eMessageCategory == HilightMessage)
     {
         strTextDecoration = "underline";
 

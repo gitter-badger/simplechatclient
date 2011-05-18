@@ -197,7 +197,7 @@ void InputWidget::send_message(QString strText, bool bModeration)
             for (int i = 0; i < strlHelp.size(); i++)
             {
                 QString strDisplay = strlHelp.at(i);
-                emit show_msg(strChannel, strDisplay, 7);
+                emit show_msg(strChannel, strDisplay, InfoMessage);
             }
         }
         // me
@@ -244,7 +244,7 @@ void InputWidget::send_message(QString strText, bool bModeration)
 
                 pNetwork->send(strTextSend);
                 QString strDisplay = QString("%1<%2> %3ACTION %4%5").arg(strDT).arg(strMe).arg(QString(QByteArray("\x01"))).arg(strTextDisplay).arg(QString(QByteArray("\x01")));
-                emit display_message(strChannel, strDisplay, 0);
+                emit display_message(strChannel, strDisplay, MeMessage);
             }
         }
         // other command
@@ -293,7 +293,7 @@ void InputWidget::send_message(QString strText, bool bModeration)
             strText = QString("PRIVMSG %1 :%2").arg(strChannel).arg(strText);
             pNetwork->send(strText);
             QString strDisplay = QString("%1<%2> %3").arg(strDT).arg(strMe).arg(strText.right(strText.length()-10-strChannel.length()));
-            emit display_message(strChannel, strDisplay, 0);
+            emit display_message(strChannel, strDisplay, DefaultMessage);
         }
         // moder notice
         else if (bModeration)
@@ -309,7 +309,7 @@ void InputWidget::send_message(QString strText, bool bModeration)
             strText = QString("MODERNOTICE %1 :%2").arg(strChannel).arg(strText);
             pNetwork->send(strText);
             QString strDisplay = QString("%1 *<%2> %3").arg(strDT).arg(strMe).arg(strText.right(strText.length()-14-strChannel.length()));
-            emit display_message(strChannel, strDisplay, 6);
+            emit display_message(strChannel, strDisplay, NoticeMessage);
         }
     }
 }

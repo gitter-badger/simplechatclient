@@ -21,6 +21,7 @@
 #ifndef NETWORK_H
 #define NETWORK_H
 
+#include "defines.h"
 #include <QTcpSocket>
 #include <QTimer>
 #include <QThread>
@@ -81,8 +82,8 @@ signals:
     void set_connect_enabled(bool);
     void kernel(QString);
     void authorize(QString, QString, QString);
-    void show_msg_all(QString&, int);
-    void show_msg_active(QString&, int);
+    void show_msg_all(QString&, MessageCategory);
+    void show_msg_active(QString&, MessageCategory);
     void update_nick(QString);
     void update_actions();
     void clear_all_nicklist();

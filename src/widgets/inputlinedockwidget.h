@@ -21,6 +21,7 @@
 #ifndef INPUTLINEDOCKWIDGET_H
 #define INPUTLINEDOCKWIDGET_H
 
+#include "defines.h"
 class DlgChannelSettings;
 class DlgModeration;
 class InputWidget;
@@ -46,8 +47,8 @@ public:
 
 public slots:
     void slot_update_nick(QString);
-    void slot_display_message(QString&, QString&, int);
-    void slot_show_msg(QString&, QString&, int);
+    void slot_display_message(QString&, QString&, MessageCategory);
+    void slot_show_msg(QString&, QString&, MessageCategory);
     void slot_show_hide_toolwidget();
     void slot_change_font_size(QString);
     void slot_clear_content(QString);
@@ -62,8 +63,8 @@ private:
     ToolWidget *pToolWidget;
 
 signals:
-    void display_message(QString&,QString&,int);
-    void show_msg(QString&,QString&,int);
+    void display_message(QString&,QString&,MessageCategory);
+    void show_msg(QString&,QString&,MessageCategory);
     void change_font_size(QString);
     void clear_content(QString);
 };

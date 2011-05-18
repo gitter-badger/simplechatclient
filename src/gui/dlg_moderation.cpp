@@ -178,7 +178,7 @@ void DlgModeration::button_accept()
         emit send(strSend);
 
         QString strDisplay = QString("<%1> %2").arg(strNick).arg(strMessage);
-        emit display_msg(strChannel, strDisplay, 0);
+        emit display_msg(strChannel, strDisplay, DefaultMessage);
     }
 
     // remove

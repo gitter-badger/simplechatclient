@@ -54,8 +54,8 @@ InputLineDockWidget::InputLineDockWidget(QWidget *parent, Network *param1, DlgCh
     setMaximumHeight(iMinimumSize);
 
     // signals
-    QObject::connect(pInputWidget, SIGNAL(display_message(QString&,QString&,int)), this, SLOT(slot_display_message(QString&,QString&,int)));
-    QObject::connect(pInputWidget, SIGNAL(show_msg(QString&,QString&,int)), this, SLOT(slot_show_msg(QString&,QString&,int)));
+    QObject::connect(pInputWidget, SIGNAL(display_message(QString&,QString&,MessageCategory)), this, SLOT(slot_display_message(QString&,QString&,MessageCategory)));
+    QObject::connect(pInputWidget, SIGNAL(show_msg(QString&,QString&,MessageCategory)), this, SLOT(slot_show_msg(QString&,QString&,MessageCategory)));
     QObject::connect(pToolWidget, SIGNAL(change_font_size(QString)), this, SLOT(slot_change_font_size(QString)));
     QObject::connect(pToolWidget, SIGNAL(clear_content(QString)), this, SLOT(slot_clear_content(QString)));
     QObject::connect(pInputWidget, SIGNAL(show_hide_toolwidget()), this, SLOT(slot_show_hide_toolwidget()));
@@ -135,14 +135,14 @@ void InputLineDockWidget::slot_update_nick(QString strNick)
     pInputWidget->update_nick(strNick);
 }
 
-void InputLineDockWidget::slot_display_message(QString &strChannel, QString &strData, int iLevel)
+void InputLineDockWidget::slot_display_message(QString &strChannel, QString &strData, MessageCategory eMessageCategory)
 {
-    emit display_message(strChannel, strData, iLevel);
+    emit display_message(strChannel, strData, eMessageCategory);
 }
 
-void InputLineDockWidget::slot_show_msg(QString &strChannel, QString &strData, int iLevel)
+void InputLineDockWidget::slot_show_msg(QString &strChannel, QString &strData, MessageCategory eMessageCategory)
 {
-    emit show_msg(strChannel, strData, iLevel);
+    emit show_msg(strChannel, strData, eMessageCategory);
 }
 
 void InputLineDockWidget::slot_show_hide_toolwidget()

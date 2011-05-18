@@ -21,6 +21,7 @@
 #ifndef TAB_WIDGET_H
 #define TAB_WIDGET_H
 
+#include "defines.h"
 #ifndef Q_WS_WIN
     class DlgCam;
 #endif
@@ -49,9 +50,9 @@ public:
 #endif
     inline QString get_name() { return strName; }
     void addslashes(QString &);
-    void display_msg(QString &, QString &, int);
-    void display_msg(QString &, int);
-    void display_message(QString &, int); // private, exteption: inputlinewidget
+    void display_msg(QString &, QString &, MessageCategory);
+    void display_msg(QString &, MessageCategory);
+    void display_message(QString &, MessageCategory); // private, exteption: inputlinewidget
     void set_topic(QString &);
     void author_topic(QString &);
     void set_link(QString &);

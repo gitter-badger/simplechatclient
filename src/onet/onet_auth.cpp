@@ -241,7 +241,7 @@ void OnetAuth::authorize(QString param1, QString param2, QString param3)
     else
     {
         QString strError = tr("Error: Authentication error [onet.pl servers are not available]");
-        pTabC->show_msg_active(strError, 9);
+        pTabC->show_msg_active(strError, ErrorMessage);
     }
 
     // not empty key; not logged
@@ -423,12 +423,12 @@ void OnetAuth::request_finished(QString strNickAuth, QString strData)
         else
         {
             QString strError = QString(tr("Error: Authentication error [%1]")).arg(strErrorText);
-            pTabC->show_msg_active(strError, 9);
+            pTabC->show_msg_active(strError, ErrorMessage);
         }
     }
     else
     {
         QString strError = tr("Error: Authorization Failed.");
-        pTabC->show_msg_active(strError, 9);
+        pTabC->show_msg_active(strError, ErrorMessage);
     }
 }

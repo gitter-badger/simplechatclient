@@ -179,7 +179,7 @@ void TabContainer::part_tab(int index)
         remove_tab(strChannel);
 }
 
-void TabContainer::show_msg(QString &strTime, QString &strChannel, QString &strData, int iLevel)
+void TabContainer::show_msg(QString &strTime, QString &strChannel, QString &strData, MessageCategory eMessageCategory)
 {
     int i = get_index(strChannel);
     if (i != -1)
@@ -190,15 +190,15 @@ void TabContainer::show_msg(QString &strTime, QString &strChannel, QString &strD
 
         if (strData.contains(QRegExp("(\\s|\\W)"+strMe+"\\b")))
         {
-            if (iLevel == 0)
+            if (eMessageCategory == DefaultMessage)
             {
-                tw[i]->display_msg(strTime, strData, 10);
+                tw[i]->display_msg(strTime, strData, HilightMessage);
                 if (i != pTabM->currentIndex())
                     pTabM->set_hilight(i);
             }
             else
             {
-                tw[i]->display_msg(strTime, strData, iLevel);
+                tw[i]->display_msg(strTime, strData, eMessageCategory);
                 if (i != pTabM->currentIndex())
                     pTabM->set_alert(i, QColor(0, 147, 0, 255)); // green
             }
@@ -208,10 +208,10 @@ void TabContainer::show_msg(QString &strTime, QString &strChannel, QString &strD
         }
         else
         {
-            tw[i]->display_msg(strTime, strData, iLevel);
+            tw[i]->display_msg(strTime, strData, eMessageCategory);
             if (i != pTabM->currentIndex())
             {
-                if (iLevel != 0)
+                if (eMessageCategory != DefaultMessage)
                     pTabM->set_alert(i, QColor(0, 147, 0, 255)); // green
                 else
                     pTabM->set_alert(i, QColor(255, 0, 0, 255)); // red
@@ -220,7 +220,7 @@ void TabContainer::show_msg(QString &strTime, QString &strChannel, QString &strD
     }
 }
 
-void TabContainer::show_msg(QString &strChannel, QString &strData, int iLevel)
+void TabContainer::show_msg(QString &strChannel, QString &strData, MessageCategory eMessageCategory)
 {
     int i = get_index(strChannel);
     if (i != -1)
@@ -231,15 +231,15 @@ void TabContainer::show_msg(QString &strChannel, QString &strData, int iLevel)
 
         if (strData.contains(QRegExp("(\\s|\\W)"+strMe+"\\b")))
         {
-            if (iLevel == 0)
+            if (eMessageCategory == DefaultMessage)
             {
-                tw[i]->display_msg(strData, 10);
+                tw[i]->display_msg(strData, HilightMessage);
                 if (i != pTabM->currentIndex())
                     pTabM->set_hilight(i);
             }
             else
             {
-                tw[i]->display_msg(strData, iLevel);
+                tw[i]->display_msg(strData, eMessageCategory);
                 if (i != pTabM->currentIndex())
                     pTabM->set_alert(i, QColor(0, 147, 0, 255)); // green
             }
@@ -249,10 +249,10 @@ void TabContainer::show_msg(QString &strChannel, QString &strData, int iLevel)
         }
         else
         {
-            tw[i]->display_msg(strData, iLevel);
+            tw[i]->display_msg(strData, eMessageCategory);
             if (i != pTabM->currentIndex())
             {
-                if (iLevel != 0)
+                if (eMessageCategory != DefaultMessage)
                     pTabM->set_alert(i, QColor(0, 147, 0, 255)); // green
                 else
                     pTabM->set_alert(i, QColor(255, 0, 0, 255)); // red
@@ -261,15 +261,15 @@ void TabContainer::show_msg(QString &strChannel, QString &strData, int iLevel)
     }
 }
 
-void TabContainer::show_msg_all(QString &strData, int iLevel)
+void TabContainer::show_msg_all(QString &strData, MessageCategory eMessageCategory)
 {
     for (int i = 0; i < tw.size(); i++)
     {
         QString strDataAll = strData;
-        tw[i]->display_msg(strDataAll, iLevel);
+        tw[i]->display_msg(strDataAll, eMessageCategory);
         if (i != pTabM->currentIndex())
         {
-            if (iLevel != 0)
+            if (eMessageCategory != DefaultMessage)
                 pTabM->set_alert(i, QColor(0, 147, 0, 255)); // green
             else
                 pTabM->set_alert(i, QColor(255, 0, 0, 255)); // red
@@ -277,13 +277,13 @@ void TabContainer::show_msg_all(QString &strData, int iLevel)
     }
 }
 
-void TabContainer::show_msg_active(QString &strData, int iLevel)
+void TabContainer::show_msg_active(QString &strData, MessageCategory eMessageCategory)
 {
     for (int i = 0; i < tw.size(); i++)
     {
         if (i == pTabM->currentIndex())
         {
-            tw[i]->display_msg(strData, iLevel);
+            tw[i]->display_msg(strData, eMessageCategory);
             return;
         }
     }
@@ -322,26 +322,26 @@ void TabContainer::slot_update_channel_avatar(QString strChannel)
         tw[i]->update_channel_avatar();
 }
 
-void TabContainer::slot_show_msg(QString &strChannel, QString &strData, int iLevel)
+void TabContainer::slot_show_msg(QString &strChannel, QString &strData, MessageCategory eMessageCategory)
 {
-    show_msg(strChannel, strData, iLevel);
+    show_msg(strChannel, strData, eMessageCategory);
 }
 
-void TabContainer::slot_show_msg_active(QString &strData, int iLevel)
+void TabContainer::slot_show_msg_active(QString &strData, MessageCategory eMessageCategory)
 {
-    show_msg_active(strData, iLevel);
+    show_msg_active(strData, eMessageCategory);
 }
 
-void TabContainer::slot_show_msg_all(QString &strData, int iLevel)
+void TabContainer::slot_show_msg_all(QString &strData, MessageCategory eMessageCategory)
 {
-    show_msg_all(strData, iLevel);
+    show_msg_all(strData, eMessageCategory);
 }
 
-void TabContainer::slot_display_message(QString &strChannel, QString &strData, int iLevel)
+void TabContainer::slot_display_message(QString &strChannel, QString &strData, MessageCategory eMessageCategory)
 {
     int i = get_index(strChannel);
     if (i != -1)
-        tw[i]->display_message(strData, iLevel);
+        tw[i]->display_message(strData, eMessageCategory);
 }
 
 void TabContainer::slot_change_font_size(QString strSize)
