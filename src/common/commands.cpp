@@ -172,7 +172,7 @@ QString Commands::cmd_ignore()
 
     QString strNick = strDataList[1];
     QChar cPlusMinus =  strNick[0];
-    strNick = strNick.right(strNick.length()-1);
+    strNick.remove(0,1);
 
     if (cPlusMinus == '+')
         return QString("NS IGNORE ADD %1").arg(strNick);
@@ -188,7 +188,7 @@ QString Commands::cmd_friend()
 
     QString strNick = strDataList[1];
     QChar cPlusMinus =  strNick[0];
-    strNick = strNick.right(strNick.length()-1);
+    strNick.remove(0,1);
 
     if (cPlusMinus == '+')
         return QString("NS FRIENDS ADD %1").arg(strNick);
@@ -363,7 +363,7 @@ QString Commands::cmd_ban()
 
     QString strNick = strDataList[1];
     QChar cPlusMinus =  strNick[0];
-    strNick = strNick.right(strNick.length()-1);
+    strNick.remove(0,1);
 
     if ((strNick.contains("*")) && (cPlusMinus == '+'))
     {
@@ -397,7 +397,7 @@ QString Commands::cmd_banip()
 
     QString strNick = strDataList[1];
     QChar cPlusMinus =  strNick[0];
-    strNick = strNick.right(strNick.length()-1);
+    strNick.remove(0,1);
 
     if (cPlusMinus == '+')
         return QString("CS BANIP %1 ADD %2").arg(strChannel).arg(strNick);
@@ -414,7 +414,7 @@ QString Commands::cmd_sop()
     QString strChannel = strChan;
     QString strNick = strDataList[1];
     QChar cPlusMinus =  strNick[0];
-    strNick = strNick.right(strNick.length()-1);
+    strNick.remove(0,1);
 
     if (cPlusMinus == '+')
         return QString("CS OP %1 ADD %2").arg(strChannel).arg(strNick);
@@ -431,7 +431,7 @@ QString Commands::cmd_op()
     QString strChannel = strChan;
     QString strNick = strDataList[1];
     QChar cPlusMinus =  strNick[0];
-    strNick = strNick.right(strNick.length()-1);
+    strNick.remove(0,1);
 
     if (cPlusMinus == '+')
         return QString("CS HALFOP %1 ADD %2").arg(strChannel).arg(strNick);
@@ -448,7 +448,7 @@ QString Commands::cmd_moder()
     QString strChannel = strChan;
     QString strNick = strDataList[1];
     QChar cPlusMinus =  strNick[0];
-    strNick = strNick.right(strNick.length()-1);
+    strNick.remove(0,1);
 
     if (cPlusMinus == '+')
         return QString("CS MODERATOR %1 ADD %2").arg(strChannel).arg(strNick);
@@ -465,7 +465,7 @@ QString Commands::cmd_vip()
     QString strChannel = strChan;
     QString strNick = strDataList[1];
     QChar cPlusMinus =  strNick[0];
-    strNick = strNick.right(strNick.length()-1);
+    strNick.remove(0,1);
 
     if (cPlusMinus == '+')
         return QString("CS VOICE %1 ADD %2").arg(strChannel).arg(strNick);

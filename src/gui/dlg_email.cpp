@@ -35,7 +35,7 @@ DlgEmail::DlgEmail(MainWindow *parent, QString param1, QString param2) : QDialog
     move(QApplication::desktop()->screen()->rect().center() - rect().center());
 
     strChannel = param1;
-    strChannel = strChannel.right(strChannel.length()-1);
+    strChannel.remove(0,1);
     strEmail = param2;
 
     create_gui();

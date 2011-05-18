@@ -1161,8 +1161,7 @@ void DlgOptions::save_settings()
     else if (ui.radioButton_registered_nick->isChecked())
     {
         // fix nick
-        if (strNick[0] == '~')
-            strNick = strNick.right(strNick.length()-1);
+        if (strNick[0] == '~') strNick.remove(0,1);
 
         strPass = ui.lineEdit_password->text();
     }

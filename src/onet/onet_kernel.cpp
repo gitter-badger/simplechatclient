@@ -540,8 +540,7 @@ void OnetKernel::raw_pong()
     if (strDataList.size() < 4) return;
 
     QString strServerTime = strDataList[3];
-    if (strServerTime[0] == ':')
-        strServerTime = strServerTime.right(strServerTime.length()-1);
+    if (strServerTime[0] == ':') strServerTime.remove(0,1);
 
     // check correct pong
     if (!strServerTime.contains(QRegExp("(\\d+)\\.(\\d+)")))
@@ -591,8 +590,7 @@ void OnetKernel::raw_error()
 {
     QString strMessage;
     for (int i = 0; i < strDataList.size(); i++) { if (i != 0) strMessage += " "; strMessage += strDataList[i]; }
-    if (strMessage[0] == ':')
-        strMessage = strMessage.right(strMessage.length()-1);
+    if (strMessage[0] == ':') strMessage.remove(0,1);
 
     pTabC->show_msg_all(strMessage, 7);
 }
@@ -603,28 +601,24 @@ void OnetKernel::raw_join()
     if (strDataList.size() < 3) return;
 
     QString strNick = strDataList[0];
-    if (strNick[0] == ':')
-        strNick = strNick.right(strNick.length()-1);
+    if (strNick[0] == ':') strNick.remove(0,1);
     strNick = strNick.left(strNick.indexOf('!'));
 
     QString strZUO = strDataList[0];
     strZUO = strZUO.mid(strZUO.indexOf('!')+1, strZUO.indexOf('@')-strZUO.indexOf('!')-1);
 
     QString strIP = strDataList[0];
-    if (strIP[0] == ':')
-        strIP = strIP.right(strIP.length()-1);
+    if (strIP[0] == ':') strIP.remove(0,1);
     strIP = strIP.right(strIP.length()-strIP.indexOf('@')-1);
 
     QString strChannel = strDataList[2];
-    if (strChannel[0] == ':')
-        strChannel = strChannel.right(strChannel.length()-1);
+    if (strChannel[0] == ':') strChannel.remove(0,1);
 
     QString strSuffix;
     if (!strDataList.value(3).isEmpty())
     {
         strSuffix= strDataList[3];
-        if (strSuffix[0] == ':')
-            strSuffix = strSuffix.right(strSuffix.length()-1);
+        if (strSuffix[0] == ':') strSuffix.remove(0,1);
         strSuffix = strSuffix.left(strSuffix.length()-2);
     }
 
@@ -671,26 +665,22 @@ void OnetKernel::raw_part()
     if (strDataList.size() < 3) return;
 
     QString strNick = strDataList[0];
-    if (strNick[0] == ':')
-        strNick = strNick.right(strNick.length()-1);
+    if (strNick[0] == ':') strNick.remove(0,1);
     strNick = strNick.left(strNick.indexOf('!'));
 
     QString strZUO = strDataList[0];
     strZUO = strZUO.mid(strZUO.indexOf('!')+1, strZUO.indexOf('@')-strZUO.indexOf('!')-1);
 
     QString strIP = strDataList[0];
-    if (strIP[0] == ':')
-        strIP = strIP.right(strIP.length()-1);
+    if (strIP[0] == ':') strIP.remove(0,1);
     strIP = strIP.right(strIP.length()-strIP.indexOf('@')-1);
 
     QString strChannel = strDataList[2];
-    if (strChannel[0] == ':')
-        strChannel = strChannel.right(strChannel.length()-1);
+    if (strChannel[0] == ':') strChannel.remove(0,1);
 
     QString strReason;
     for (int i = 3; i < strDataList.size(); i++) { if (i != 3) strReason += " "; strReason += strDataList[i]; }
-    if (strReason[0] == ':')
-        strReason = strReason.right(strReason.length()-1);
+    if (strReason[0] == ':') strReason.remove(0,1);
 
     QSettings settings;
     QString strDisplay;
@@ -749,22 +739,19 @@ void OnetKernel::raw_quit()
     if (strDataList.size() < 3) return;
 
     QString strNick = strDataList[0];
-    if (strNick[0] == ':')
-        strNick = strNick.right(strNick.length()-1);
+    if (strNick[0] == ':') strNick.remove(0,1);
     strNick = strNick.left(strNick.indexOf('!'));
 
     QString strZUO = strDataList[0];
     strZUO = strZUO.mid(strZUO.indexOf('!')+1, strZUO.indexOf('@')-strZUO.indexOf('!')-1);
 
     QString strIP = strDataList[0];
-    if (strIP[0] == ':')
-        strIP = strIP.right(strIP.length()-1);
+    if (strIP[0] == ':') strIP.remove(0,1);
     strIP = strIP.right(strIP.length()-strIP.indexOf('@')-1);
 
     QString strReason;
     for (int i = 2; i < strDataList.size(); i++) { if (i != 2) strReason += " "; strReason += strDataList[i]; }
-    if (strReason[0] == ':')
-        strReason = strReason.right(strReason.length()-1);
+    if (strReason[0] == ':') strReason.remove(0,1);
 
     QSettings settings;
     QString strDisplay;
@@ -786,31 +773,26 @@ void OnetKernel::raw_kick()
     if (strDataList.size() < 3) return;
 
     QString strWho = strDataList[0];
-    if (strWho[0] == ':')
-        strWho = strWho.right(strWho.length()-1);
+    if (strWho[0] == ':') strWho.remove(0,1);
     strWho = strWho.left(strWho.indexOf('!'));
 
     QString strZUO = strDataList[0];
     strZUO = strZUO.mid(strZUO.indexOf('!')+1, strZUO.indexOf('@')-strZUO.indexOf('!')-1);
 
     QString strIP = strDataList[0];
-    if (strIP[0] == ':')
-        strIP = strIP.right(strIP.length()-1);
+    if (strIP[0] == ':') strIP.remove(0,1);
     strIP = strIP.right(strIP.length()-strIP.indexOf('@')-1);
 
     QString strChannel = strDataList[2];
-    if (strChannel[0] == ':')
-        strChannel = strChannel.right(strChannel.length()-1);
+    if (strChannel[0] == ':') strChannel.remove(0,1);
 
     QString strNick = strDataList[3];
-    if (strNick[0] == ':')
-        strNick = strNick.right(strNick.length()-1);
+    if (strNick[0] == ':') strNick.remove(0,1);
     strNick = strNick.left(strNick.indexOf('!'));
 
     QString strReason;
     for (int i = 4; i < strDataList.size(); i++) { if (i != 4) strReason += " "; strReason += strDataList[i]; }
-    if (strReason[0] == ':')
-        strReason = strReason.right(strReason.length()-1);
+    if (strReason[0] == ':') strReason.remove(0,1);
 
     QString strDisplay;
     strDisplay = QString(tr("* %1 has been kicked from channel %2 by %3 Reason: %4")).arg(strNick).arg(strChannel).arg(strWho).arg(strReason);
@@ -849,8 +831,7 @@ void OnetKernel::raw_mode()
     if (strDataList.size() < 4) return;
 
     QString strWho = strDataList[0];
-    if (strWho[0] == ':')
-        strWho = strWho.right(strWho.length()-1);
+    if (strWho[0] == ':') strWho.remove(0,1);
     strWho = strWho.left(strWho.indexOf('!'));
 
     QString strNickChannel = strDataList[2];
@@ -996,12 +977,12 @@ void OnetKernel::raw_mode()
     {
         // get args
         QString strFlag = strDataList[3];
-        if (strFlag[0] == ':') strFlag = strFlag.right(strFlag.length()-1);
+        if (strFlag[0] == ':') strFlag.remove(0,1);
 
         // get +-
         QString plusminus = strFlag.at(0);
         // fix flag
-        strFlag = strFlag.right(strFlag.length()-1);
+        strFlag.remove(0,1);
 
         // create flags list
         QStringList strlFlags;
@@ -1056,18 +1037,15 @@ void OnetKernel::raw_privmsg()
     if (strDataList.size() < 3) return;
 
     QString strNick = strDataList[0];
-    if (strNick[0] == ':')
-        strNick = strNick.right(strNick.length()-1);
+    if (strNick[0] == ':') strNick.remove(0,1);
     strNick = strNick.left(strNick.indexOf('!'));
 
     QString strChannel = strDataList[2];
-    if (strChannel[0] == ':')
-        strChannel = strChannel.right(strChannel.length()-1);
+    if (strChannel[0] == ':') strChannel.remove(0,1);
 
     QString strMessage;
     for (int i = 3; i < strDataList.size(); i++) { if (i != 3) strMessage += " "; strMessage += strDataList[i]; }
-    if (strMessage[0] == ':')
-        strMessage = strMessage.right(strMessage.length()-1);
+    if (strMessage[0] == ':') strMessage.remove(0,1);
 
     QString strDisplay = QString("<%1> %2").arg(strNick).arg(strMessage);
 
@@ -1084,8 +1062,7 @@ void OnetKernel::raw_notice()
     if (strDataList.size() < 3) return;
 
     QString strWho = strDataList[0];
-    if (strWho[0] == ':')
-        strWho = strWho.right(strWho.length()-1);
+    if (strWho[0] == ':') strWho.remove(0,1);
     strWho = strWho.left(strWho.indexOf('!'));
 
     QString strNick = strDataList[2];
@@ -1095,15 +1072,13 @@ void OnetKernel::raw_notice()
     if ((!strDataList.value(4).isEmpty()) && (strDataList[4] == "*") && (!strDataList.value(5).isEmpty()) && (strDataList[5] == "*"))
     {
         for (int i = 6; i < strDataList.size(); i++) { if (i != 6) strMessage += " "; strMessage += strDataList[i]; }
-        if (strMessage[0] == ':')
-            strMessage = strMessage.right(strMessage.length()-1);
+        if (strMessage[0] == ':') strMessage.remove(0,1);
     }
     // standard notice
     else
     {
         for (int i = 3; i < strDataList.size(); i++) { if (i != 3) strMessage += " "; strMessage += strDataList[i]; }
-        if (strMessage[0] == ':')
-            strMessage = strMessage.right(strMessage.length()-1);
+        if (strMessage[0] == ':') strMessage.remove(0,1);
     }
 
     // display
@@ -1121,18 +1096,15 @@ void OnetKernel::raw_invite()
     if (strDataList.size() < 4) return;
 
     QString strWho = strDataList[0];
-    if (strWho[0] == ':')
-        strWho = strWho.right(strWho.length()-1);
+    if (strWho[0] == ':') strWho.remove(0,1);
     strWho = strWho.left(strWho.indexOf('!'));
 
     QString strIP = strDataList[0];
-    if (strIP[0] == ':')
-        strIP = strIP.right(strIP.length()-1);
+    if (strIP[0] == ':') strIP.remove(0,1);
     strIP = strIP.right(strIP.length()-strIP.indexOf('@')-1);
 
     QString strWhere = strDataList[3];
-    if (strWhere[0] == ':')
-        strWhere = strWhere.right(strWhere.length()-1);
+    if (strWhere[0] == ':') strWhere.remove(0,1);
 
     Notify::instance()->play(Query);
 
@@ -1145,16 +1117,14 @@ void OnetKernel::raw_topic()
     if (strDataList.size() < 3) return;
 
     QString strWho = strDataList[0];
-    if (strWho[0] == ':')
-        strWho = strWho.right(strWho.length()-1);
+    if (strWho[0] == ':') strWho.remove(0,1);
     strWho = strWho.left(strWho.indexOf('!'));
 
     QString strChannel = strDataList[2];
 
     QString strTopic;
     for (int i = 3; i < strDataList.size(); i++) { if (i != 3) strTopic += " "; strTopic += strDataList[i]; }
-    if (strTopic[0] == ':')
-        strTopic = strTopic.right(strTopic.length()-1);
+    if (strTopic[0] == ':') strTopic.remove(0,1);
 
     QString strDisplay = QString(tr("* %1 changed the topic to: %2")).arg(strWho).arg(strTopic);
 
@@ -1179,8 +1149,7 @@ void OnetKernel::raw_invreject()
     if (strDataList.size() < 4) return;
 
     QString strWho = strDataList[0];
-    if (strWho[0] == ':')
-        strWho = strWho.right(strWho.length()-1);
+    if (strWho[0] == ':') strWho.remove(0,1);
     strWho = strWho.left(strWho.indexOf('!'));
 
     QString strChannel = strDataList[3];
@@ -1201,8 +1170,7 @@ void OnetKernel::raw_invignore()
     if (strDataList.size() < 4) return;
 
     QString strWho = strDataList[0];
-    if (strWho[0] == ':')
-        strWho = strWho.right(strWho.length()-1);
+    if (strWho[0] == ':') strWho.remove(0,1);
     strWho = strWho.left(strWho.indexOf('!'));
 
     QString strChannel = strDataList[3];
@@ -1226,8 +1194,7 @@ void OnetKernel::raw_modermsg()
     if (strDataList.size() < 5) return;
 
     QString strModerator = strDataList[0];
-    if (strModerator[0] == ':')
-        strModerator = strModerator.right(strModerator.length()-1);
+    if (strModerator[0] == ':') strModerator.remove(0,1);
     strModerator = strModerator.left(strModerator.indexOf('!'));
 
     QString strNick = strDataList[2];
@@ -1235,8 +1202,7 @@ void OnetKernel::raw_modermsg()
 
     QString strMessage;
     for (int i = 5; i < strDataList.size(); i++) { if (i != 5) strMessage += " "; strMessage += strDataList[i]; }
-    if (strMessage[0] == ':')
-        strMessage = strMessage.right(strMessage.length()-1);
+    if (strMessage[0] == ':') strMessage.remove(0,1);
 
     QString strDisplay = QString("<%1> %2 [%3 %4]").arg(strNick).arg(strMessage).arg(tr("Moderated by")).arg(strModerator);
 
@@ -1250,16 +1216,14 @@ void OnetKernel::raw_modernotice()
     if (strDataList.size() < 3) return;
 
     QString strNick = strDataList[0];
-    if (strNick[0] == ':')
-        strNick = strNick.right(strNick.length()-1);
+    if (strNick[0] == ':') strNick.remove(0,1);
     strNick = strNick.left(strNick.indexOf('!'));
 
     QString strChannel = strDataList[2];
 
     QString strMessage;
     for (int i = 3; i < strDataList.size(); i++) { if (i != 3) strMessage += " "; strMessage += strDataList[i]; }
-    if (strMessage[0] == ':')
-        strMessage = strMessage.right(strMessage.length()-1);
+    if (strMessage[0] == ':') strMessage.remove(0,1);
 
     QString strDisplay = "* <"+strNick+"> "+strMessage;
 
@@ -1278,8 +1242,7 @@ void OnetKernel::raw_moderate()
 
     QString strMessage;
     for (int i = 6; i < strDataList.size(); i++) { if (i != 6) strMessage += " "; strMessage += strDataList[i]; }
-    if (strMessage[0] == ':')
-        strMessage = strMessage.right(strMessage.length()-1);
+    if (strMessage[0] == ':') strMessage.remove(0,1);
 
     pDlgModeration->add_msg(strID, strChannel, strNick, strMessage);
 }
@@ -1291,13 +1254,11 @@ void OnetKernel::raw_kill()
     if (strDataList.size() < 4) return;
 
     QString strNick = strDataList[2];
-    if (strNick[0] == ':')
-        strNick = strNick.right(strNick.length()-1);
+    if (strNick[0] == ':') strNick.remove(0,1);
     strNick = strNick.left(strNick.indexOf('!'));
 
     QString strWho = strDataList[3];
-    if (strWho[0] == ':')
-        strWho = strWho.right(strWho.length()-1);
+    if (strWho[0] == ':') strWho.remove(0,1);
     QRegExp rx("(.*)!(.*)!(.*)");
     if (rx.exactMatch(strWho))
         strWho = strWho.replace(QRegExp("(.*)!(.*)!(.*)"), "\\3");
@@ -1428,8 +1389,7 @@ void OnetKernel::raw_100n()
 
     QString strMessage;
     for (int i = 6; i < strDataList.size(); i++) { if (i != 6) strMessage += " "; strMessage += strDataList[i]; }
-    if (strMessage[0] == ':')
-        strMessage = strMessage.right(strMessage.length()-1);
+    if (strMessage[0] == ':') strMessage.remove(0,1);
 
     QString strDisplay;
     if (iTime < iCurrentTime)
@@ -1449,8 +1409,7 @@ void OnetKernel::raw_109n()
 
     QString strMessage;
     for (int i = 5; i < strDataList.size(); i++) { if (i != 5) strMessage += " "; strMessage += strDataList[i]; }
-    if (strMessage[0] == ':')
-        strMessage = strMessage.right(strMessage.length()-1);
+    if (strMessage[0] == ':') strMessage.remove(0,1);
     strMessage[0] = strMessage[0].toUpper();
 
     strMessage = QString("* %1").arg(strMessage);
@@ -1470,8 +1429,7 @@ void OnetKernel::raw_111n()
 
     QString strValue;
     for (int i = 6; i < strDataList.size(); i++) { if (i != 6) strValue += " "; strValue += strDataList[i]; }
-    if (strValue[0] == ':')
-        strValue = strValue.right(strValue.length()-1);
+    if (strValue[0] == ':') strValue.remove(0,1);
 
     QSettings settings;
     QString strMe = settings.value("nick").toString();
@@ -1515,8 +1473,7 @@ void OnetKernel::raw_121n()
     for (int i = 4; i < strDataList.size(); i++)
     {
         QString strNick = strDataList[i];
-        if (strNick[0] == ':')
-            strNick = strNick.right(strNick.length()-1);
+        if (strNick[0] == ':') strNick.remove(0,1);
 
         // nothing
     }
@@ -1535,12 +1492,10 @@ void OnetKernel::raw_123n()
     if (strDataList.size() < 6) return;
 
     QString strOldNick = strDataList[4];
-    if (strOldNick[0] == ':')
-        strOldNick = strOldNick.right(strOldNick.length()-1);
+    if (strOldNick[0] == ':') strOldNick.remove(0,1);
 
     QString strNewNick = strDataList[5];
-    if (strNewNick[0] == ':')
-        strNewNick = strNewNick.right(strNewNick.length()-1);
+    if (strNewNick[0] == ':') strNewNick.remove(0,1);
 
     QString strDisplay = QString(tr("* %1 changed nickname to %2 from your friend list")).arg(strOldNick).arg(strNewNick);
     pTabC->show_msg_active(strDisplay, 7);
@@ -1555,8 +1510,7 @@ void OnetKernel::raw_131n()
     for (int i = 4; i < strDataList.size(); i++)
     {
         QString strNick = strDataList[i];
-        if (strNick[0] == ':')
-            strNick = strNick.right(strNick.length()-1);
+        if (strNick[0] == ':') strNick.remove(0,1);
 
         if (!Core::instance()->lIgnore.contains(strNick))
             Core::instance()->lIgnore.append(strNick);
@@ -1576,12 +1530,10 @@ void OnetKernel::raw_133n()
     if (strDataList.size() < 6) return;
 
     QString strOldNick = strDataList[4];
-    if (strOldNick[0] == ':')
-        strOldNick = strOldNick.right(strOldNick.length()-1);
+    if (strOldNick[0] == ':') strOldNick.remove(0,1);
 
     QString strNewNick = strDataList[5];
-    if (strNewNick[0] == ':')
-        strNewNick = strNewNick.right(strNewNick.length()-1);
+    if (strNewNick[0] == ':') strNewNick.remove(0,1);
 
     QString strDisplay = QString(tr("* %1 changed nickname to %2 from your ignored list")).arg(strOldNick).arg(strNewNick);
     pTabC->show_msg_active(strDisplay, 7);
@@ -1597,13 +1549,12 @@ void OnetKernel::raw_141n()
     for (int i = 4; i < strDataList.size(); i++)
     {
         QString strChannel = strDataList[i];
-        if (strChannel[0] == ':')
-            strChannel = strChannel.right(strChannel.length()-1);
+        if (strChannel[0] == ':') strChannel.remove(0,1);
 
         if (!Core::instance()->lChannelFavourites.contains(strChannel))
             Core::instance()->lChannelFavourites.append(strChannel);
 
-        if (settings.value("ignore_raw_141").toString() == "off")
+        if ((settings.value("ignore_raw_141").toString() == "off") && (!Core::instance()->lOpenChannels.contains(strChannel)))
             pNetwork->send_queue(QString("JOIN %1").arg(strChannel));
     }
 
@@ -1628,8 +1579,7 @@ void OnetKernel::raw_151n()
     if (strDataList.size() < 5) return;
 
     QString strNick = strDataList[0];
-    if (strNick[0] == ':')
-        strNick = strNick.right(strNick.length()-1);
+    if (strNick[0] == ':') strNick.remove(0,1);
     strNick = strNick.left(strNick.indexOf('!'));
 
     if (strNick.toLower() == "chanserv")
@@ -1637,8 +1587,7 @@ void OnetKernel::raw_151n()
         for (int i = 4; i < strDataList.size(); i++)
         {
             QString strChannel = strDataList[i];
-            if (strChannel[0] == ':')
-                strChannel = strChannel.right(strChannel.length()-1);
+            if (strChannel[0] == ':') strChannel.remove(0,1);
 
             if (!Core::instance()->lChannelHomes.contains(strChannel))
                 Core::instance()->lChannelHomes.append(strChannel);
@@ -1654,8 +1603,7 @@ void OnetKernel::raw_151n()
         for (int i = 4; i < strDataList.size(); i++)
         {
             QString strNick = strDataList[i];
-            if (strNick[0] == ':')
-                strNick = strNick.right(strNick.length()-1);
+            if (strNick[0] == ':') strNick.remove(0,1);
 
             if (!Core::instance()->lOfflineNicks.contains(strNick))
                 Core::instance()->lOfflineNicks.append(strNick);
@@ -1682,8 +1630,7 @@ void OnetKernel::raw_160n()
 
     QString strTopic;
     for (int i = 5; i < strDataList.size(); i++) { if (i != 5) strTopic += " "; strTopic += strDataList[i]; }
-    if (strTopic[0] == ':')
-        strTopic = strTopic.right(strTopic.length()-1);
+    if (strTopic[0] == ':') strTopic.remove(0,1);
 
     // set topic in channel settings
     if (pDlgChannelSettings->get_channel() == strChannel)
@@ -1706,7 +1653,7 @@ void OnetKernel::raw_161n()
     for (int i = 5; i < strDataList.size(); i++)
     {
         QString strLine = strDataList[i];
-        if (i == 5) strLine = strLine.right(strLine.length()-1);
+        if (i == 5) strLine.remove(0,1);
         QString strKey = strLine.left(strLine.indexOf("="));
         QString strValue = strLine.right(strLine.length() - strLine.indexOf("=")-1);
 
@@ -1754,7 +1701,7 @@ void OnetKernel::raw_162n()
     for (int i = 5; i < strDataList.size(); i++)
     {
         QString strLine = strDataList[i];
-        if (i == 5) strLine = strLine.right(strLine.length()-1);
+        if (i == 5) strLine.remove(0,1);
         QString strKey = strLine.left(strLine.indexOf(","));
         QString strValue = strLine.right(strLine.length() - strLine.indexOf(",")-1);
 
@@ -1787,8 +1734,7 @@ void OnetKernel::raw_163n()
     QString strWho = strDataList[7];
     QString strDT = strDataList[8];
     QString strIPNick = strDataList[9];
-    if (strIPNick[0] == ':')
-        strIPNick = strIPNick.right(strIPNick.length()-1);
+    if (strIPNick[0] == ':') strIPNick.remove(0,1);
 
     QDateTime dt = QDateTime::fromTime_t(strDT.toInt());
     strDT = dt.toString("dd/MM/yyyy hh:mm:ss");
@@ -1819,8 +1765,7 @@ void OnetKernel::raw_165n()
 
     QString strDescription;
     for (int i = 5; i < strDataList.size(); i++) { if (i != 5) strDescription += " "; strDescription += strDataList[i]; }
-    if (strDescription[0] == ':')
-        strDescription = strDescription.right(strDescription.length()-1);
+    if (strDescription[0] == ':') strDescription.remove(0,1);
 
     if (pDlgChannelSettings->get_channel() == strChannel)
         pDlgChannelSettings->set_description(strDescription);
@@ -1840,7 +1785,7 @@ void OnetKernel::raw_170n()
     for (int i = 5; i < strDataList.size(); i++)
     {
         QString strLine = strDataList[i];
-        if (i == 5) strLine = strLine.right(strLine.length()-1);
+        if (i == 5) strLine.remove(0,1);
         QString strKey = strLine.left(strLine.indexOf("="));
         QString strValue = strLine.right(strLine.length() - strLine.indexOf("=")-1);
 
@@ -1869,7 +1814,7 @@ void OnetKernel::raw_175n()
     for (int i = 5; i < strDataList.size(); i++)
     {
         QString strLine = strDataList[i];
-        if (i == 5) strLine = strLine.right(strLine.length()-1);
+        if (i == 5) strLine.remove(0,1);
         QString strKey = strLine.left(strLine.indexOf("="));
         QString strValue = strLine.right(strLine.length() - strLine.indexOf("=")-1);
 
@@ -2018,8 +1963,7 @@ void OnetKernel::raw_250n()
     if (strDataList.size() < 5) return;
 
     QString strNick = strDataList[0];
-    if (strNick[0] == ':')
-        strNick = strNick.right(strNick.length()-1);
+    if (strNick[0] == ':') strNick.remove(0,1);
     strNick = strNick.left(strNick.indexOf('!'));
 
     if (strNick.toLower() == "chanserv")
@@ -2060,8 +2004,7 @@ void OnetKernel::raw_251n()
     if (strDataList.size() < 5) return;
 
     QString strNick = strDataList[0];
-    if (strNick[0] == ':')
-        strNick = strNick.right(strNick.length()-1);
+    if (strNick[0] == ':') strNick.remove(0,1);
     strNick = strNick.left(strNick.indexOf('!'));
 
     if (strNick.toLower() == "chanserv")
@@ -2080,8 +2023,7 @@ void OnetKernel::raw_251n()
 
         QString strMessage;
         for (int i = 7; i < strDataList.size(); i++) { if (i != 7) strMessage += " "; strMessage += strDataList[i]; }
-        if (strMessage[0] == ':')
-            strMessage = strMessage.right(strMessage.length()-1);
+        if (strMessage[0] == ':') strMessage.remove(0,1);
 
         OfflineMsg add;
         add.datetime = strDT;
@@ -2108,8 +2050,7 @@ void OnetKernel::raw_252n()
     if (strDataList.size() < 5) return;
 
     QString strNick = strDataList[0];
-    if (strNick[0] == ':')
-        strNick = strNick.right(strNick.length()-1);
+    if (strNick[0] == ':') strNick.remove(0,1);
     strNick = strNick.left(strNick.indexOf('!'));
 
     if (strNick.toLower() == "chanserv")
@@ -2202,8 +2143,7 @@ void OnetKernel::raw_256()
 
     QString strMessage;
     for (int i = 3; i < strDataList.size(); i++) { if (i != 3) strMessage += " "; strMessage += strDataList[i]; }
-    if (strMessage[0] == ':')
-        strMessage = strMessage.right(strMessage.length()-1);
+    if (strMessage[0] == ':') strMessage.remove(0,1);
     strMessage = "* "+strMessage;
 
     QString strStatus = "Status";
@@ -2252,8 +2192,7 @@ void OnetKernel::raw_257()
 
     QString strMessage;
     for (int i = 3; i < strDataList.size(); i++) { if (i != 3) strMessage += " "; strMessage += strDataList[i]; }
-    if (strMessage[0] == ':')
-        strMessage = strMessage.right(strMessage.length()-1);
+    if (strMessage[0] == ':') strMessage.remove(0,1);
     strMessage = "* "+strMessage;
 
     QString strStatus = "Status";
@@ -2278,8 +2217,7 @@ void OnetKernel::raw_258()
 
     QString strMessage;
     for (int i = 3; i < strDataList.size(); i++) { if (i != 3) strMessage += " "; strMessage += strDataList[i]; }
-    if (strMessage[0] == ':')
-        strMessage = strMessage.right(strMessage.length()-1);
+    if (strMessage[0] == ':') strMessage.remove(0,1);
     strMessage = "* "+strMessage;
 
     QString strStatus = "Status";
@@ -2311,8 +2249,7 @@ void OnetKernel::raw_259()
 
     QString strMessage;
     for (int i = 3; i < strDataList.size(); i++) { if (i != 3) strMessage += " "; strMessage += strDataList[i]; }
-    if (strMessage[0] == ':')
-        strMessage = strMessage.right(strMessage.length()-1);
+    if (strMessage[0] == ':') strMessage.remove(0,1);
     strMessage = "* "+strMessage;
 
     QString strStatus = "Status";
@@ -2374,8 +2311,7 @@ void OnetKernel::raw_261n()
     if (strDataList.size() < 6) return;
 
     QString strNick = strDataList[0];
-    if (strNick[0] == ':')
-        strNick = strNick.right(strNick.length()-1);
+    if (strNick[0] == ':') strNick.remove(0,1);
     strNick = strNick.left(strNick.indexOf('!'));
 
     if (strNick.toLower() == "chanserv")
@@ -2449,8 +2385,7 @@ void OnetKernel::raw_301()
 
     QString strMessage;
     for (int i = 4; i < strDataList.size(); i++) { if (i != 4) strMessage += " "; strMessage += strDataList[i]; }
-    if (strMessage[0] == ':')
-        strMessage = strMessage.right(strMessage.length()-1);
+    if (strMessage[0] == ':') strMessage.remove(0,1);
 
     QString strDisplay = QString(tr("%1 is away: %2")).arg(strNick).arg(strMessage);
     pTabC->show_msg_active(strDisplay, 7);
@@ -2466,8 +2401,7 @@ void OnetKernel::raw_302()
 
     QString strMessage;
     for (int i = 3; i < strDataList.size(); i++) { if (i != 3) strMessage += " "; strMessage += strDataList[i]; }
-    if (strMessage[0] == ':')
-        strMessage = strMessage.right(strMessage.length()-1);
+    if (strMessage[0] == ':') strMessage.remove(0,1);
     strMessage = "* "+strMessage;
 
     pTabC->show_msg_active(strMessage, 7);
@@ -2480,8 +2414,7 @@ void OnetKernel::raw_303()
     if (strDataList.size() < 4) return;
 
     QString strNick = strDataList[3];
-    if (strNick[0] == ':')
-        strNick = strNick.right(strNick.length()-1);
+    if (strNick[0] == ':') strNick.remove(0,1);
 
     QString strDisplay = QString("* ISON: %1").arg(strNick);
     pTabC->show_msg_active(strDisplay, 7);
@@ -2495,8 +2428,7 @@ void OnetKernel::raw_304()
 
     QString strMessage;
     for (int i = 3; i < strDataList.size(); i++) { if (i != 3) strMessage += " "; strMessage += strDataList[i]; }
-    if (strMessage[0] == ':')
-        strMessage = strMessage.right(strMessage.length()-1);
+    if (strMessage[0] == ':') strMessage.remove(0,1);
     strMessage = "* "+strMessage;
 
     pTabC->show_msg_active(strMessage, 7);
@@ -2536,8 +2468,7 @@ void OnetKernel::raw_307()
 
     QString strMessage;
     for (int i = 4; i < strDataList.size(); i++) { if (i != 4) strMessage += " "; strMessage += strDataList[i]; }
-    if (strMessage[0] == ':')
-        strMessage = strMessage.right(strMessage.length()-1);
+    if (strMessage[0] == ':') strMessage.remove(0,1);
 
     if (strMessage == "is a registered nick")
         strMessage = tr("is a registered nick");
@@ -2558,8 +2489,7 @@ void OnetKernel::raw_311()
     QString strIrcname;
 
     for (int i = 7; i < strDataList.size(); i++) { if (i != 7) strIrcname += " "; strIrcname += strDataList[i]; }
-    if (strIrcname[0] == ':')
-        strIrcname = strIrcname.right(strIrcname.length()-1);
+    if (strIrcname[0] == ':') strIrcname.remove(0,1);
 
     QString strDisplayNick = QString(tr("* %1 is %2@%3")).arg(strNick).arg(strZUO).arg(strIP);
     pTabC->show_msg_active(strDisplayNick, 7);
@@ -2596,8 +2526,7 @@ void OnetKernel::raw_313()
 
     QString strMessage;
     for (int i = 4; i < strDataList.size(); i++) { if (i != 4) strMessage += " "; strMessage += strDataList[i]; }
-    if (strMessage[0] == ':')
-        strMessage = strMessage.right(strMessage.length()-1);
+    if (strMessage[0] == ':') strMessage.remove(0,1);
 
     QString strDisplay;
     if (strMessage == "is a GlobalOp on OnetCzat")
@@ -2623,8 +2552,7 @@ void OnetKernel::raw_314()
     QString strIrcname;
 
     for (int i = 7; i < strDataList.size(); i++) { if (i != 7) strIrcname += " "; strIrcname += strDataList[i]; }
-    if (strIrcname[0] == ':')
-        strIrcname = strIrcname.right(strIrcname.length()-1);
+    if (strIrcname[0] == ':') strIrcname.remove(0,1);
 
     QString strDisplayNick = QString(tr("* %1 is %2@%3")).arg(strNick).arg(strZUO).arg(strIP);
     pTabC->show_msg_active(strDisplayNick, 7);
@@ -2644,8 +2572,7 @@ void OnetKernel::raw_315()
 
     QString strMessage;
     for (int i = 4; i < strDataList.size(); i++) { if (i != 4) strMessage += " "; strMessage += strDataList[i]; }
-    if (strMessage[0] == ':')
-        strMessage = strMessage.right(strMessage.length()-1);
+    if (strMessage[0] == ':') strMessage.remove(0,1);
 
     if (strMessage == "End of /WHO list.")
         return;
@@ -2669,8 +2596,7 @@ void OnetKernel::raw_316()
     QString strIrcname;
 
     for (int i = 7; i < strDataList.size(); i++) { if (i != 7) strIrcname += " "; strIrcname += strDataList[i]; }
-    if (strIrcname[0] == ':')
-        strIrcname = strIrcname.right(strIrcname.length()-1);
+    if (strIrcname[0] == ':') strIrcname.remove(0,1);
 
     QString strDisplayNick = QString(tr("* %1 is %2@%3")).arg(strNick).arg(strZUO).arg(strIP);
     pTabC->show_msg_active(strDisplayNick, 7);
@@ -2740,10 +2666,8 @@ void OnetKernel::raw_319()
     {
         if (i != 4) strChannels += " ";
         QString strChannel = strDataList[i];
-        if (strChannel[0] == ':')
-            strChannel = strChannel.right(strChannel.length()-1);
-        if ((strChannel[0] != '#') && (strChannel[0] != '^'))
-            strChannel = strChannel.right(strChannel.length()-1);
+        if (strChannel[0] == ':') strChannel.remove(0,1);
+        if ((strChannel[0] != '#') && (strChannel[0] != '^')) strChannel.remove(0,1);
         strChannels += strChannel;
     }
 
@@ -2757,13 +2681,11 @@ void OnetKernel::raw_332()
     if (strDataList.size() < 5) return;
 
     QString strChannel = strDataList[3];
-    if (strChannel[0] == ':')
-        strChannel = strChannel.right(strChannel.length()-1);
+    if (strChannel[0] == ':') strChannel.remove(0,1);
 
     QString strTopic;
     for (int i = 4; i < strDataList.size(); i++) { if (i != 4) strTopic += " "; strTopic += strDataList[i]; }
-    if (strTopic[0] == ':')
-        strTopic = strTopic.right(strTopic.length()-1);
+    if (strTopic[0] == ':') strTopic.remove(0,1);
 
     pTabC->set_topic(strChannel, strTopic);
 }
@@ -2837,7 +2759,7 @@ void OnetKernel::raw_353()
         if (!strDataList[i].isEmpty())
         {
             QString strNick = strDataList[i];
-            if (i == 5) strNick = strNick.right(strNick.length()-1); // remove :
+            if (i == 5) strNick.remove(0,1); // remove :
             strNick = strNick.left(strNick.indexOf("|"));
 
             QString strSuffix = strDataList[i];
@@ -2918,8 +2840,7 @@ void OnetKernel::raw_371()
 
     QString strMessage;
     for (int i = 3; i < strDataList.size(); i++) { if (i != 3) strMessage += " "; strMessage += strDataList[i]; }
-    if (strMessage[0] == ':')
-        strMessage = strMessage.right(strMessage.length()-1);
+    if (strMessage[0] == ':') strMessage.remove(0,1);
     strMessage = "* "+strMessage;
 
     QString strStatus = "Status";
@@ -2934,8 +2855,7 @@ void OnetKernel::raw_372()
 
     QString strMessage;
     for (int i = 3; i < strDataList.size(); i++) { if (i != 3) strMessage += " "; strMessage += strDataList[i]; }
-    if (strMessage[0] == ':')
-        strMessage = strMessage.right(strMessage.length()-1);
+    if (strMessage[0] == ':') strMessage.remove(0,1);
 
     QString strStatus = "Status";
     pTabC->show_msg(strStatus, strMessage, 0);
@@ -2989,8 +2909,7 @@ void OnetKernel::raw_391()
 
     QString strDateTime;
     for (int i = 4; i < strDataList.size(); i++) { if (i != 4) strDateTime += " "; strDateTime += strDataList[i]; }
-    if (strDateTime[0] == ':')
-        strDateTime = strDateTime.right(strDateTime.length()-1);
+    if (strDateTime[0] == ':') strDateTime.remove(0,1);
 
     QString strMessage = QString(tr("* Date and time of the server %1: %2")).arg(strServer).arg(strDateTime);
 
@@ -3033,8 +2952,7 @@ void OnetKernel::raw_401()
 
     QString strMessage;
     for (int i = 4; i < strDataList.size(); i++) { if (i != 4) strMessage += " "; strMessage += strDataList[i]; }
-    if (strMessage[0] == ':')
-        strMessage = strMessage.right(strMessage.length()-1);
+    if (strMessage[0] == ':') strMessage.remove(0,1);
 
     if (strMessage == "No such nick")
         strMessage = QString(tr("* %1 :No such nick")).arg(strNickChannel);
@@ -3122,8 +3040,7 @@ void OnetKernel::raw_403n()
     if (strDataList.size() < 4) return;
 
     QString strNick = strDataList[0];
-    if (strNick[0] == ':')
-        strNick = strNick.right(strNick.length()-1);
+    if (strNick[0] == ':') strNick.remove(0,1);
     strNick = strNick.left(strNick.indexOf('!'));
 
     if (strNick.toLower() == "chanserv")
@@ -3150,10 +3067,8 @@ void OnetKernel::raw_404()
 
     QString strReason;
     for (int i = 8; i < strDataList.size(); i++) { if (i != 8) strReason += " "; strReason += strDataList[i]; }
-    if (strReason[0] == ':')
-        strReason = strReason.right(strReason.length()-1);
-    if (strReason[0] == '(')
-        strReason = strReason.right(strReason.length()-1);
+    if (strReason[0] == ':') strReason.remove(0,1);
+    if (strReason[0] == '(') strReason.remove(0,1);
     if (strReason[strReason.length()-1] == ')')
         strReason = strReason.left(strReason.length()-1);
 
@@ -3299,8 +3214,7 @@ void OnetKernel::raw_421()
 
     QString strReason;
     for (int i = 4; i < strDataList.size(); i++) { if (i != 4) strReason += " "; strReason += strDataList[i]; }
-    if (strReason[0] == ':')
-        strReason = strReason.right(strReason.length()-1);
+    if (strReason[0] == ':') strReason.remove(0,1);
 
     if (strReason == "Unknown command")
         strReason = tr("Unknown command");
@@ -3454,8 +3368,7 @@ void OnetKernel::raw_445()
 
     QString strMessage;
     for (int i = 3; i < strDataList.size(); i++) { if (i != 3) strMessage += " "; strMessage += strDataList[i]; }
-    if (strMessage[0] == ':')
-        strMessage = strMessage.right(strMessage.length()-1);
+    if (strMessage[0] == ':') strMessage.remove(0,1);
     strMessage = "* "+strMessage;
 
     pTabC->show_msg_active(strMessage, 7);
@@ -3469,8 +3382,7 @@ void OnetKernel::raw_446()
 
     QString strMessage;
     for (int i = 3; i < strDataList.size(); i++) { if (i != 3) strMessage += " "; strMessage += strDataList[i]; }
-    if (strMessage[0] == ':')
-        strMessage = strMessage.right(strMessage.length()-1);
+    if (strMessage[0] == ':') strMessage.remove(0,1);
     strMessage = "* "+strMessage;
 
     pTabC->show_msg_active(strMessage, 7);
@@ -3506,8 +3418,7 @@ void OnetKernel::raw_454n()
     if (strDataList.size() < 5) return;
 
     QString strNick = strDataList[0];
-    if (strNick[0] == ':')
-        strNick = strNick.right(strNick.length()-1);
+    if (strNick[0] == ':') strNick.remove(0,1);
     strNick = strNick.left(strNick.indexOf('!'));
 
     if (strNick.toLower() == "chanserv")
@@ -3545,8 +3456,7 @@ void OnetKernel::raw_456n()
     if (strDataList.size() < 6) return;
 
     QString strNick = strDataList[0];
-    if (strNick[0] == ':')
-        strNick = strNick.right(strNick.length()-1);
+    if (strNick[0] == ':') strNick.remove(0,1);
     strNick = strNick.left(strNick.indexOf('!'));
 
     if (strNick.toLower() == "chanserv")
@@ -3691,8 +3601,7 @@ void OnetKernel::raw_470()
     if (strDataList.size() < 4) return;
 
     QString strChannel = strDataList[3];
-    if (strChannel[0] == ':')
-        strChannel = strChannel.right(strChannel.length()-1);
+    if (strChannel[0] == ':') strChannel.remove(0,1);
 
     QString strLinked = strDataList[strDataList.size()-1];
 
@@ -3791,8 +3700,7 @@ void OnetKernel::raw_484()
 
     QString strMessage;
     for (int i = 4; i < strDataList.size(); i++) { if (i != 4) strMessage += " "; strMessage += strDataList[i]; }
-    if (strMessage[0] == ':')
-        strMessage = strMessage.right(strMessage.length()-1);
+    if (strMessage[0] == ':') strMessage.remove(0,1);
     strMessage = "* "+strMessage;
 
     pTabC->show_msg(strChannel, strMessage, 7);
@@ -3930,8 +3838,7 @@ void OnetKernel::raw_702()
 
     QString strMessage;
     for (int i = 3; i < strDataList.size(); i++) { if (i != 3) strMessage += " "; strMessage += strDataList[i]; }
-    if (strMessage[0] == ':')
-        strMessage = strMessage.right(strMessage.length()-1);
+    if (strMessage[0] == ':') strMessage.remove(0,1);
     strMessage = "* "+strMessage;
 
     pTabC->show_msg_active(strMessage, 7);
@@ -3957,8 +3864,7 @@ void OnetKernel::raw_801()
     if (strDataList.size() < 4) return;
 
     QString strKey = strDataList[3];
-    if (strKey[0] == ':')
-        strKey = strKey.right(strKey.length()-1);
+    if (strKey[0] == ':') strKey.remove(0,1);
 
     OnetAuth *pOnet_auth = new OnetAuth(pTabC);
     QString strAuth = pOnet_auth->transform_key(strKey);
@@ -4083,8 +3989,7 @@ void OnetKernel::raw_817()
 
     QString strMessage;
     for (int i = 7; i < strDataList.size(); i++) { if (i != 7) strMessage += " "; strMessage += strDataList[i]; }
-    if (strMessage[0] == ':')
-        strMessage = strMessage.right(strMessage.length()-1);
+    if (strMessage[0] == ':') strMessage.remove(0,1);
 
     QString strDisplay = QString("<%1> %2").arg(strNick).arg(strMessage);
     if (!strMessage.isEmpty())
@@ -4106,8 +4011,7 @@ void OnetKernel::raw_819()
 
     QString strChannelsString;
     for (int i = 3; i < strDataList.size(); i++) { if (i != 3) strChannelsString += " "; strChannelsString += strDataList[i]; }
-    if (strChannelsString[0] == ':')
-        strChannelsString = strChannelsString.right(strChannelsString.length()-1);
+    if (strChannelsString[0] == ':') strChannelsString.remove(0,1);
 
     QStringList strChannelsList = strChannelsString.split(",");
     for (int i = 0; i < strChannelsList.size(); i++)
@@ -4238,8 +4142,7 @@ void OnetKernel::raw_952()
     if (strDataList.size() < 5) return;
 
     QString strNick = strDataList[4];
-    if (strNick[0] == ':')
-        strNick = strNick.right(strNick.length()-1);
+    if (strNick[0] == ':') strNick.remove(0,1);
 
     QString strMessage = QString(tr("* %1 is already on your silence list")).arg(strNick);
     pTabC->show_msg_active(strMessage, 7);
