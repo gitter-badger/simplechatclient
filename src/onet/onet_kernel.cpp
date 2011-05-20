@@ -34,6 +34,7 @@
 #include "network.h"
 #include "notify.h"
 #include "onet_auth.h"
+#include "replace.h"
 #include "tab_container.h"
 #include "onet_kernel.h"
 
@@ -1046,6 +1047,11 @@ void OnetKernel::raw_privmsg()
     QString strMessage;
     for (int i = 3; i < strDataList.size(); i++) { if (i != 3) strMessage += " "; strMessage += strDataList[i]; }
     if (strMessage[0] == ':') strMessage.remove(0,1);
+
+    // fix emots
+    Replace *pReplace = new Replace();
+    pReplace->convert_and_replace_emots(strMessage);
+    delete pReplace;
 
     QString strDisplay = QString("<%1> %2").arg(strNick).arg(strMessage);
 

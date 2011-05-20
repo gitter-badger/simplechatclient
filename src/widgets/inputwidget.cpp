@@ -128,20 +128,6 @@ void InputWidget::set_toolwidget_icon(bool bShowHide)
         showHideToolWidget->setIcon(QIcon(":/images/oxygen/16x16/text-frame-link.png"));
 }
 
-void InputWidget::convert_emots(QString &strData)
-{
-    strData.replace(QRegExp("(http:|https:)//"), "\\1\\\\"); // fix http/s
-    strData.replace(QRegExp("//([a-zA-Z0-9_-]+)\\b"), "%I\\1%");
-    strData.replace(QRegExp("(http:|https:)\\\\\\\\"), "\\1//"); // fix http/s
-}
-
-void InputWidget::replace_emots(QString &strData)
-{
-    Replace *pReplace = new Replace();
-    pReplace->replace_emots(strData);
-    delete pReplace;
-}
-
 void InputWidget::paste_multi_line(QString strText, bool bModeration)
 {
     QStringList list = strText.split(QRegExp("(\n|\r)"));
@@ -225,10 +211,10 @@ void InputWidget::send_message(QString strText, bool bModeration)
                 if ((!weight.isEmpty()) || (!font.isEmpty()))
                     strTextDisplay = "%F"+weight+font+"%"+strTextDisplay;
 
-                convert_emots(strTextSend);
-                replace_emots(strTextSend);
-                convert_emots(strTextDisplay);
-                replace_emots(strTextDisplay);
+                Replace *pReplace = new Replace();
+                pReplace->convert_and_replace_emots(strTextSend);
+                pReplace->convert_and_replace_emots(strTextDisplay);
+                delete pReplace;
 
                 QDateTime dt = QDateTime::currentDateTime();
                 QString strDT = dt.toString("[hh:mm:ss] ");
@@ -273,8 +259,9 @@ void InputWidget::send_message(QString strText, bool bModeration)
         if ((!weight.isEmpty()) || (!font.isEmpty()))
             strText = "%F"+weight+font+"%"+strText;
 
-        convert_emots(strText);
-        replace_emots(strText);
+        Replace *pReplace = new Replace();
+        pReplace->convert_and_replace_emots(strText);
+        delete pReplace;
 
         QDateTime dt = QDateTime::currentDateTime();
         QString strDT = dt.toString("[hh:mm:ss] ");
