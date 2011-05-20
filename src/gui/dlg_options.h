@@ -75,6 +75,7 @@ private slots:
     void set_mode_font_color();
     void set_notice_font_color();
     void set_info_font_color();
+    void set_me_font_color();
     void set_error_font_color();
     void set_channel_font_color();
     void mainwindow_restore_default();

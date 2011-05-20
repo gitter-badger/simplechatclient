@@ -1602,6 +1602,10 @@
         <translation>Kolor Info:</translation>
     </message>
     <message>
+        <source>Me color:</source>
+        <translation>Kolor Me:</translation>
+    </message>
+    <message>
         <source>Error color:</source>
         <translation>Kolor błędów:</translation>
     </message>

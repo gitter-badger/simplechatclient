@@ -109,6 +109,7 @@ void DlgOptions::create_gui()
     ui.label_mode_font_color->setText(tr("Mode color:"));
     ui.label_notice_font_color->setText(tr("Notice color:"));
     ui.label_info_font_color->setText(tr("Info color:"));
+    ui.label_me_font_color->setText(tr("Me color:"));
     ui.label_error_font_color->setText(tr("Error color:"));
     ui.label_channel_font_color->setText(tr("Channel color:"));
     ui.pushButton_mainwindow_restore_default->setText(tr("Restore default"));
@@ -539,6 +540,7 @@ void DlgOptions::create_signals()
     QObject::connect(ui.pushButton_mode_font_color, SIGNAL(clicked()), this, SLOT(set_mode_font_color()));
     QObject::connect(ui.pushButton_notice_font_color, SIGNAL(clicked()), this, SLOT(set_notice_font_color()));
     QObject::connect(ui.pushButton_info_font_color, SIGNAL(clicked()), this, SLOT(set_info_font_color()));
+    QObject::connect(ui.pushButton_me_font_color, SIGNAL(clicked()), this, SLOT(set_me_font_color()));
     QObject::connect(ui.pushButton_error_font_color, SIGNAL(clicked()), this, SLOT(set_error_font_color()));
     QObject::connect(ui.pushButton_channel_font_color, SIGNAL(clicked()), this, SLOT(set_channel_font_color()));
     QObject::connect(ui.pushButton_mainwindow_restore_default, SIGNAL(clicked()), this, SLOT(mainwindow_restore_default()));
@@ -882,6 +884,11 @@ void DlgOptions::set_info_font_color()
     set_color("font_color_level_7");
 }
 
+void DlgOptions::set_me_font_color()
+{
+    set_color("font_color_level_8");
+}
+
 void DlgOptions::set_error_font_color()
 {
     set_color("font_color_level_9");
@@ -923,6 +930,9 @@ void DlgOptions::mainwindow_restore_default()
 
     pConfig->set_value("font_color_level_7", "#666666");
     settings.setValue("font_color_level_7", "#666666");
+
+    pConfig->set_value("font_color_level_8", "#800080");
+    settings.setValue("font_color_level_8", "#800080");
 
     pConfig->set_value("font_color_level_9", "#ff0000");
     settings.setValue("font_color_level_9", "#ff0000");
@@ -1229,6 +1239,8 @@ void DlgOptions::set_color(QString strKey)
             ui.pushButton_notice_font_color->setIcon(QIcon(color));
         else if (strKey == "font_color_level_7")
             ui.pushButton_info_font_color->setIcon(QIcon(color));
+        else if (strKey == "font_color_level_8")
+            ui.pushButton_me_font_color->setIcon(QIcon(color));
         else if (strKey == "font_color_level_9")
             ui.pushButton_error_font_color->setIcon(QIcon(color));
         else if (strKey == "channel_font_color")
@@ -1261,6 +1273,7 @@ void DlgOptions::set_mainwindow_colors()
     QString strModeFontColor = settings.value("font_color_level_5").toString();
     QString strNoticeFontColor = settings.value("font_color_level_6").toString();
     QString strInfoFontColor = settings.value("font_color_level_7").toString();
+    QString strMeFontColor = settings.value("font_color_level_8").toString();
     QString strErrorFontColor = settings.value("font_color_level_9").toString();
     QString strChannelFontColor = settings.value("channel_font_color").toString();
 
@@ -1308,6 +1321,11 @@ void DlgOptions::set_mainwindow_colors()
     QPixmap ifcolor(50,15);
     ifcolor.fill(QColor(strInfoFontColor));
     ui.pushButton_info_font_color->setIcon(QIcon(ifcolor));
+
+    // set me font color
+    QPixmap mecolor(50,15);
+    mecolor.fill(QColor(strMeFontColor));
+    ui.pushButton_me_font_color->setIcon(QIcon(mecolor));
 
     // set error font color
     QPixmap efcolor(50,15);
