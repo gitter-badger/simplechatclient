@@ -91,6 +91,9 @@ private:
     QLabel *topicDetails;
     QLabel *websiteLink;
     MainTextEdit *pMainTextEdit;
+
+    void convert_emots(QString &);
+    void replace_emots(QString &);
 };
 
 #endif // TAB_WIDGET_H

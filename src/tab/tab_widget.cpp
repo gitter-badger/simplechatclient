@@ -27,6 +27,7 @@
 #include "network.h"
 #include "maintextedit.h"
 #include "notify.h"
+#include "replace.h"
 #include "tab_widget.h"
 
 #ifndef Q_WS_WIN
@@ -205,6 +206,20 @@ void TabWidget::addslashes(QString &strData)
     strData.remove("%");
 }
 
+void TabWidget::convert_emots(QString &strData)
+{
+    strData.replace(QRegExp("(http:|https:)//"), "\\1\\\\"); // fix http/s
+    strData.replace(QRegExp("//([a-zA-Z0-9_-]+)\\b"), "%I\\1%");
+    strData.replace(QRegExp("(http:|https:)\\\\\\\\"), "\\1//"); // fix http/s
+}
+
+void TabWidget::replace_emots(QString &strData)
+{
+    Replace *pReplace = new Replace();
+    pReplace->replace_emots(strData);
+    delete pReplace;
+}
+
 void TabWidget::display_msg(QString &strTime, QString &strData, MessageCategory eMessageCategory)
 {
     QDateTime dt = QDateTime::fromTime_t(strTime.toUInt());
@@ -291,6 +306,10 @@ void TabWidget::display_message(QString &strData, MessageCategory eMessageCatego
             Core::instance()->lAwaylog.append(QString("%1\n%2").arg(strName).arg(strAwayData));
         }
     }
+
+    // fix emots
+    convert_emots(strData);
+    replace_emots(strData);
 
     // fix data
     strData.replace("&", "&amp;");
