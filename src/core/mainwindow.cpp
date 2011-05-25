@@ -1004,6 +1004,10 @@ void MainWindow::change_flag(QString strNick, QString strChannel, QString strNew
 
         if (plusminus == "+")
         {
+            // fix webcam flags
+            if ((strFlag == "W") && (strModes.contains("V"))) { strModes.remove("V"); }
+            if ((strFlag == "V") && (strModes.contains("W"))) { strModes.remove("W"); }
+
             if ((strFlag == strConvertFrom.at(i)) && (!strModes.contains(strConvertTo.at(i))))
                 strModes.append(strConvertTo.at(i));
         }
