@@ -1,7 +1,11 @@
 ChangeLog for Simple Chat Client
 ========================= 
 
-Version 1.0.12 (unknown date)
+Version 1.0.13 (unknown date)
+================================
+* Many bugfixes
+
+Version 1.0.12 (20.05.2011)
 ================================
 * Added auto-away
 * New nicklist

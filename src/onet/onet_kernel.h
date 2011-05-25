@@ -178,6 +178,7 @@ private:
     void raw_403();
     void raw_403n();
     void raw_404n();
+    void raw_405();
     void raw_406();
     void raw_406n();
     void raw_407n();

@@ -2447,6 +2447,10 @@
         <translation>* %1 :Nick nie jest zarejestrowany</translation>
     </message>
     <message>
+        <source>* You are on too many channels</source>
+        <translation>* Jesteś na zbyt wielu kanałach</translation>
+    </message>
+    <message>
         <source>* %1 :There was no such nickname</source>
         <translation>* %1 :Nie było takiego nicka</translation>
     </message>

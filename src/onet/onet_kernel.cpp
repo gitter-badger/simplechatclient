@@ -238,6 +238,8 @@ void OnetKernel::kernel(QString param1)
             raw_403();
         else if (strDataList[1].toLower() == "404")
             raw_404();
+        else if (strDataList[1].toLower() == "405")
+            raw_405();
         else if (strDataList[1].toLower() == "406")
             raw_406();
         else if (strDataList[1].toLower() == "421")
@@ -3094,6 +3096,16 @@ void OnetKernel::raw_404n()
     QString strNick = strDataList[4];
 
     QString strMessage = QString(tr("* %1 :User is not registred")).arg(strNick);
+
+    pTabC->show_msg_active(strMessage, InfoMessage);
+}
+
+// :cf1f2.onet 405 Merovingian #Warszawa :You are on too many channels
+void OnetKernel::raw_405()
+{
+    if (strDataList.size() < 4) return;
+
+    QString strMessage = QString(tr("* You are on too many channels"));
 
     pTabC->show_msg_active(strMessage, InfoMessage);
 }
