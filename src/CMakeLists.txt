@@ -35,7 +35,6 @@ set (scc_SRCS
 	common/log.cpp
 	common/replace.cpp
 	core/core.cpp
-	core/debug.cpp
 	core/main.cpp
 	core/mainwindow.cpp
 	core/network.cpp
@@ -154,6 +153,9 @@ endif (UNIX AND NOT APPLE)
 
 # debug
 if (UNIX)
+	LIST (APPEND scc_SRCS
+		core/debug.cpp
+	)
 	LIST (APPEND scc_HDRS
 		core/debug.h
 	)
