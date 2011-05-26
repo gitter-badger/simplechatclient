@@ -487,6 +487,8 @@ void OnetKernel::kernel(QString param1)
                 raw_458n();
             else if (strDataList[3].toLower() == ":459")
                 raw_459n();
+            else if (strDataList[3].toLower() == ":460")
+                raw_460n();
             else if (strDataList[3].toLower() == ":461")
                 raw_461n();
             else if (strDataList[3].toLower() == ":463")
@@ -3518,6 +3520,26 @@ void OnetKernel::raw_459n()
     QString strWho = strDataList[6];
 
     QString strMessage = QString(tr("* %1 :Channel privilege already given")).arg(strWho);
+
+    // display
+    pTabC->show_msg(strChannel, strMessage, InfoMessage);
+}
+
+// :ChanServ!service@service.onet NOTICE Merovingian :460 #scc b abc193!*@* :channel list is full
+void OnetKernel::raw_460n()
+{
+    if (strDataList.size() < 7) return;
+
+    QString strChannel = strDataList[4];
+    QString strFlag = strDataList[5];
+    QString strNick = strDataList[6];
+
+    if (strFlag == "b")
+        strFlag = tr("ban");
+    else if (strFlag == "I")
+        strFlag = tr("invite");
+
+    QString strMessage = QString(tr("* Cannot %1 %2. Channel list is full")).arg(strFlag).arg(strNick);
 
     // display
     pTabC->show_msg(strChannel, strMessage, InfoMessage);

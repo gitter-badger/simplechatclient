@@ -338,11 +338,11 @@
     <name>Network</name>
     <message>
         <source>Error: Could not connect to the server [%1]</source>
-        <translation>Error: Nie można się połączyć z serwerem [%1]</translation>
+        <translation>Błąd: Nie można się połączyć z serwerem [%1]</translation>
     </message>
     <message>
         <source>Error: Could not connect to the server - connection already exists!</source>
-        <translation>Error: Nie można się połączyć z serwerem - połączenie już istnieje!</translation>
+        <translation>Błąd: Nie można się połączyć z serwerem - połączenie już istnieje!</translation>
     </message>
     <message>
         <source>Reconnecting...</source>
@@ -350,11 +350,11 @@
     </message>
     <message>
         <source>Error: Could not send data! [%1]</source>
-        <translation>Error: Nie udało się wysłać danych! [%1]</translation>
+        <translation>Błąd: Nie udało się wysłać danych! [%1]</translation>
     </message>
     <message>
         <source>Error: Could not send data! [Not connected]</source>
-        <translation>Error: Nie udało się wysłać danych! [Not connected]</translation>
+        <translation>Błąd: Nie udało się wysłać danych! [Not connected]</translation>
     </message>
     <message>
         <source>Connected to server</source>
@@ -436,11 +436,11 @@
     </message>
     <message>
         <source>Error: Failed to send data! [%1]</source>
-        <translation>Error: Nie udało się wysłać danych! [%1]</translation>
+        <translation>Błąd: Nie udało się wysłać danych! [%1]</translation>
     </message>
     <message>
         <source>Error: Failed to send data! [Not connected]</source>
-        <translation>Error: Nie udało się wysłać danych! [Not connected]</translation>
+        <translation>Błąd: Nie udało się wysłać danych! [Not connected]</translation>
     </message>
     <message>
         <source>This user does not send data</source>
@@ -1392,8 +1392,8 @@
         <translation>Notatki</translation>
     </message>
     <message>
-        <source>Error: notes: Cannot read notes file!</source>
-        <translation>Error: notes: Nie można odczytać pliku notatek!</translation>
+        <source>Error: Cannot read notes file!</source>
+        <translation>Błąd: Nie można odczytać pliku notatek!</translation>
     </message>
 </context>
 <context>
@@ -1893,15 +1893,15 @@
     <name>OnetAuth</name>
     <message>
         <source>Error: Authentication error [onet.pl servers are not available]</source>
-        <translation>Error: Błąd autoryzacji [Serwery onet.pl nie są dostępne]</translation>
+        <translation>Błąd: Błąd autoryzacji [Serwery onet.pl nie są dostępne]</translation>
     </message>
     <message>
         <source>Error: Authorization Failed.</source>
-        <translation>Error: Błąd autoryzacji.</translation>
+        <translation>Błąd: Błąd autoryzacji.</translation>
     </message>
     <message>
         <source>Error: Authentication error [%1]</source>
-        <translation>Error: Błąd autoryzacji [%1]</translation>
+        <translation>Błąd: Błąd autoryzacji [%1]</translation>
     </message>
 </context>
 <context>
@@ -2555,6 +2555,18 @@
         <translation>* %1 :Uprawnienia zostały już nadane</translation>
     </message>
     <message>
+        <source>ban</source>
+        <translation>ban</translation>
+    </message>
+    <message>
+        <source>invite</source>
+        <translation>zaproszenie</translation>
+    </message>
+    <message>
+        <source>* Cannot %1 %2. Channel list is full</source>
+        <translation>* Nie można nadać %1 na nick %2. Lista jest pełna</translation>
+    </message>
+    <message>
         <source>* %1 :Channel operators cannot be banned</source>
         <translation>* %1 :Nie można zbanować super operatora/operatora</translation>
     </message>
@@ -2648,7 +2660,7 @@
     </message>
     <message>
         <source>Error: Invalid auth key</source>
-        <translation>Error: Błędny klucz auth</translation>
+        <translation>Błąd: Błędny klucz auth</translation>
     </message>
     <message>
         <source>* Corrupted Nickname</source>

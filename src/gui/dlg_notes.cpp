@@ -84,7 +84,7 @@ void DlgNotes::read()
         if (!file->open(QIODevice::ReadWrite))
         {
 #ifdef Q_WS_X11
-            qDebug() << tr("Error: notes: Cannot read notes file!");
+            qDebug() << tr("Error: Cannot read notes file!");
 #endif
             return;
         }
