@@ -20,25 +20,21 @@
 
 #include <QCoreApplication>
 #include <QDir>
-#include <QFile>
-#ifndef Q_WS_X11
-#include <QSettings>
-#endif
-#include <QTextStream>
+#include <QProcess>
+#include "log.h"
+
 // for abort()
 #include <stdio.h>
 #include <stdlib.h>
 // debug
-#include "debug.h"
 
-#ifdef Q_WS_X11
-#include <QProcess>
 #include <signal.h>
-#include <QDebug>
 #include <cstdio>
 #include <pwd.h>
 #include <stdlib.h>
 #include <execinfo.h>
+
+#include "debug.h"
 
 // function printBacktrace is from Kadu project (kadu.net)
 void printBacktrace(const QString &header)
@@ -68,23 +64,9 @@ void printBacktrace(const QString &header)
     fflush(stderr);
 }
 
-void crashHandler()
+QString create_random6()
 {
-    QString path = QDir::homePath()+"/.scc";
-
-    // create dir if not exist
-    if (!QDir().exists(path))
-        QDir().mkdir(path);
-
-    if (!QDir().exists(path+"/log"))
-        QDir().mkdir(path+"/log");
-
-    QProcess pProcess;
-
-    int pid = QCoreApplication::applicationPid();
-    QString strPid = QString::number(pid);
     QString strRandom;
-
     while(strRandom.length() < 6)
     {
         int cat = qrand() % 3;
@@ -111,109 +93,12 @@ void crashHandler()
             strRandom += c.toAscii();
         }
     }
-
-    QString strCommand = "gdb --pid "+ strPid +" -ex \"set logging overwrite on\" -ex \"set logging file "+ path +"/log/crash-"+ strRandom +".txt\" -ex \"set logging on\" -ex \"backtrace\" -ex \"info registers\" -ex \"x/16i $pc\" -ex \"thread apply all backtrace\" -ex \"up\" -ex \"list\" -ex \"quit\"";
-
-    pProcess.start(strCommand);
-    pProcess.waitForFinished();
-
-    exit(1);
+    return strRandom;
 }
 
-void got_bus(int z)
+void crashHandler()
 {
-    Q_UNUSED (z);
-    saveMessage("debug", "error: SIGBUS: BUS ERROR -- CRASHING!");
-    crashHandler();
-}
-
-void got_segv(int z)
-{
-    Q_UNUSED (z);
-    saveMessage("debug", "error: SIGSEGV: SEGMENT VIOLATION -- CRASHING!");
-    crashHandler();
-}
-
-void got_fpe(int z)
-{
-    Q_UNUSED (z);
-    saveMessage("debug", "error: SIGFPE: FLOATING POINT ERROR -- CRASHING!");
-    crashHandler();
-}
-
-void got_term(int z)
-{
-    Q_UNUSED (z);
-    saveMessage("debug", "error: SIGTERM: TERMINATE SIGNAL -- SIGNING OFF!");
-    crashHandler();
-}
-
-void got_hup(int z)
-{
-    Q_UNUSED (z);
-    saveMessage("debug", "error: SIGHUP: HANGUP SIGNAL -- SIGNING OFF!");
-    crashHandler();
-}
-
-void got_ill(int z)
-{
-    Q_UNUSED (z);
-    saveMessage("debug", "error: SIGILL: ILL SIGNAL -- SIGNING OFF!");
-    crashHandler();
-}
-
-void got_abrt(int z)
-{
-    Q_UNUSED (z);
-    saveMessage("debug", "error: SIGABRT: ABRT SIGNAL -- SIGNING OFF!");
-    crashHandler();
-}
-
-void linux_crash_handler()
-{
-    struct sigaction sv;
-
-    // sigbus
-    sv.sa_handler = got_bus;
-    sigemptyset(&sv.sa_mask);
-    sv.sa_flags = 0;
-    sigaction(SIGBUS, &sv, NULL);
-    // sigsegv
-    sv.sa_handler = got_segv;
-    sigaction(SIGSEGV, &sv, NULL);
-    // sigfpe
-    sv.sa_handler = got_fpe;
-    sigaction(SIGFPE, &sv, NULL);
-    // sigterm
-    sv.sa_handler = got_term;
-    sigaction(SIGTERM, &sv, NULL);
-    // sighup
-    sv.sa_handler = got_hup;
-    sigaction(SIGHUP, &sv, NULL);
-    // sigpipe
-    sv.sa_handler = SIG_IGN;
-    sigaction(SIGPIPE, &sv, NULL);
-    // sigill
-    sv.sa_handler = got_ill;
-    sigaction(SIGILL, &sv, NULL);
-    // sigabrt
-    sv.sa_handler = got_abrt;
-    sigaction(SIGABRT, &sv, NULL);
-}
-#endif
-
-void saveMessage(QString strFilename, QString strData)
-{
-    QString path;
-
-#ifdef Q_WS_X11
-    path = QDir::homePath()+"/.scc";
-#else
-    QSettings winSettings(QSettings::UserScope, "Microsoft", "Windows");
-    winSettings.beginGroup("CurrentVersion/Explorer/Shell Folders");
-    path = winSettings.value("Personal").toString();
-    path += "/scc";
-#endif
+    QString path = QDir::homePath()+"/.scc";
 
     // create dir if not exist
     if (!QDir().exists(path))
@@ -222,53 +107,62 @@ void saveMessage(QString strFilename, QString strData)
     if (!QDir().exists(path+"/log"))
         QDir().mkdir(path+"/log");
 
-    QFile f(path+"/log/"+strFilename+".txt");
-    if (!f.open(QIODevice::Append))
-    {
-#ifdef Q_WS_X11
-        qDebug() << "Error: log: Cannot open file " << strFilename << ".txt";
-#endif
-        return;
-    }
+    int pid = QCoreApplication::applicationPid();
+    QString strPid = QString::number(pid);
+    QString strRandom = create_random6();
 
-    QTextStream out(&f);
-    out << strData << "\r\n";
+    QString strCommand = "gdb --pid "+ strPid +" -ex \"set logging overwrite on\" -ex \"set logging file "+ path +"/log/crash-"+ strRandom +".txt\" -ex \"set logging on\" -ex \"backtrace\" -ex \"info registers\" -ex \"x/16i $pc\" -ex \"thread apply all backtrace\" -ex \"up\" -ex \"list\" -ex \"quit\"";
 
-    f.close();
+    QProcess pProcess;
+    pProcess.start(strCommand);
+    pProcess.waitForFinished();
+
+    exit(1);
+}
+
+void got_signal(int signal)
+{
+    Q_UNUSED (signal);
+
+    QString strCategory = "debug";
+    QString strMessage = "Error: Got signal SIGSEGV";
+
+    // save
+    Log *l = new Log();
+    l->save(strCategory, strMessage);
+    delete l;
+
+    // handler
+    crashHandler();
+}
+
+void linux_crash_handler()
+{
+    signal(SIGSEGV, got_signal);
 }
 
 void messageHandler(QtMsgType type, const char *msg)
 {
-    switch (type)
-    {
-        case QtDebugMsg:
-            fprintf(stderr, "Debug: %s\n", msg);
-            saveMessage("debug", QString("Debug: %1").arg(msg));
-            break;
-        case QtWarningMsg:
-            fprintf(stderr, "Warning: %s\n", msg);
-            saveMessage("debug", QString("Warning: %1").arg(msg));
-#ifdef Q_WS_X11
-            printBacktrace("warning from Qt");
-#endif
-            break;
-        case QtCriticalMsg:
-            fprintf(stderr, "Critical: %s\n", msg);
-            saveMessage("debug", QString("Critical: %1").arg(msg));
-#ifdef Q_WS_X11
-            printBacktrace("critical error from Qt");
-#endif
-#ifndef Q_WS_X11
-            abort();
-#endif
-            break;
-        case QtFatalMsg:
-            fprintf(stderr, "Fatal: %s\n", msg);
-            saveMessage("debug", QString("Fatal: %1").arg(msg));
-#ifdef Q_WS_X11
-            printBacktrace("fatal error from Qt");
-#endif
-            abort();
-            break;
-    }
+    std::string strCategory;
+
+    if (type == QtDebugMsg) strCategory = "Debug";
+    else if (type == QtWarningMsg) strCategory = "Warning";
+    else if (type == QtCriticalMsg) strCategory = "Critical";
+    else if (type == QtFatalMsg) strCategory = "Fatal";
+
+    // display
+    fprintf(stderr, "%s: %s\n", strCategory.c_str(), msg);
+
+    QString strDebug = "debug";
+    QString strMessage = QString("%1: %2").arg(strCategory.c_str()).arg(msg);
+
+    // save
+    Log *l = new Log();
+    l->save(strDebug, strMessage);
+    delete l;
+
+    // backtrace
+    if (type == QtWarningMsg) printBacktrace("warning from Qt");
+    else if (type == QtCriticalMsg) printBacktrace("critical error from Qt");
+    else if (type == QtFatalMsg) printBacktrace("fatal error from Qt");
 }

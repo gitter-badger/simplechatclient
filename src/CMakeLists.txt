@@ -138,7 +138,6 @@ set (scc_MOC_HDRS
 )
 
 set (scc_HDRS
-	core/debug.h
 	core/defines.h
 	core/singleapplication.h
 )
@@ -153,8 +152,12 @@ if (UNIX AND NOT APPLE)
 	set (CMAKE_CXX_FLAGS "-W -Wall -fno-strict-aliasing ${CMAKE_CXX_FLAGS}")
 endif (UNIX AND NOT APPLE)
 
-# qt
-find_package (Qt4 REQUIRED)
+# debug
+if (UNIX)
+	LIST (APPEND scc_HDRS
+		core/debug.h
+	)
+endif (UNIX)
 
 # v4l2
 if (UNIX)
@@ -195,33 +198,6 @@ else (WIN32)
 	)
 endif (WIN32)
 
-# xml
-set (QT_USE_QTXML TRUE)
-
-# webkit
-#set (QT_USE_QTWEBKIT TRUE)
-
-# phonon
-set (QT_USE_PHONON TRUE)
-
-# rest
-include (${QT_USE_FILE})
-
-# include qt qtnetwork
-include_directories (
-	${QT_INCLUDE_DIR}
-	${QT_QTNETWORK_INCLUDE_DIR}
-	${CMAKE_CURRENT_SOURCE_DIR}
-	${CMAKE_CURRENT_SOURCE_DIR}/avatars
-	${CMAKE_CURRENT_SOURCE_DIR}/common
-	${CMAKE_CURRENT_SOURCE_DIR}/core
-	${CMAKE_CURRENT_SOURCE_DIR}/gui
-	${CMAKE_CURRENT_SOURCE_DIR}/notify
-	${CMAKE_CURRENT_SOURCE_DIR}/onet
-	${CMAKE_CURRENT_SOURCE_DIR}/tab
-	${CMAKE_CURRENT_SOURCE_DIR}/widgets
-)
-
 # qca2
 if (WIN32)
 	set (QCA2_INCLUDE_DIRS ${WIN32_QCA2_DIR}/include/QtCrypto)
@@ -246,6 +222,33 @@ endif (WIN32)
 include_directories (${QCA2_INCLUDE_DIRS})
 link_directories (${QCA2_LIBRARY_DIRS})
 add_definitions (${QCA2_CFLAGS_OTHER})
+
+# qt
+find_package (Qt4 REQUIRED)
+
+# xml
+set (QT_USE_QTXML TRUE)
+
+# phonon
+set (QT_USE_PHONON TRUE)
+
+# rest
+include (${QT_USE_FILE})
+
+# include qt qtnetwork
+include_directories (
+	${QT_INCLUDE_DIR}
+	${QT_QTNETWORK_INCLUDE_DIR}
+	${CMAKE_CURRENT_SOURCE_DIR}
+	${CMAKE_CURRENT_SOURCE_DIR}/avatars
+	${CMAKE_CURRENT_SOURCE_DIR}/common
+	${CMAKE_CURRENT_SOURCE_DIR}/core
+	${CMAKE_CURRENT_SOURCE_DIR}/gui
+	${CMAKE_CURRENT_SOURCE_DIR}/notify
+	${CMAKE_CURRENT_SOURCE_DIR}/onet
+	${CMAKE_CURRENT_SOURCE_DIR}/tab
+	${CMAKE_CURRENT_SOURCE_DIR}/widgets
+)
 
 # resources
 set (scc_QRC ../scc.qrc)

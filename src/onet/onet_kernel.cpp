@@ -843,35 +843,32 @@ void OnetKernel::raw_mode()
 
     if (strNickChannel[0] == '#')
     {
-        QString strFlag = strDataList[3];
-        QString strDisplay;
-        int index = 4;
-        QString plusminus = QString::null;
+        QString strFlags = strDataList[3];
         QMultiHash<QString, QString> flag_nick;
+        QString strMode3 = "GQLDMRVimnprstu";
+        QString plusminus;
 
-        for (int i = 0; i < strFlag.length(); i++)
+        int index = 4;
+        for (int i = 0; i < strFlags.length(); i++)
         {
-            QString c = strFlag.at(i);
-            if ((c == "+") || (c == "-"))
+            QString f = strFlags.at(i);
+            if ((f == "+") || (f == "-"))
             {
-                if (c == "+") plusminus = "+";
-                else if (c == "-") plusminus = "-";
+                if (f == "+") plusminus = f;
+                else if (f == "-") plusminus = f;
             }
             else
             {
-                if (index <= strDataList.size()) // prevent crash!
+                QString strFlag = plusminus+f;
+
+                if (strMode3.contains(f))
+                    flag_nick.insert(strFlag, QString::null);
+                else
                 {
-                    QString strFlag = plusminus+c;
-                    // flag ntipsmuGQVL do not need value
-                    if ((c != "n") && (c != "t") && (c != "i") && (c != "p") && (c != "s") && (c != "m") && (c != "u") && (c != "G") && (c != "Q") && (c != "V") && (c != "L"))
+                    if (index < strDataList.size())
                     {
-                        if (index >= strDataList.size())
-                            flag_nick.insert(strFlag, QString::null);
-                        else
-                        {
-                            flag_nick.insert(strFlag, strDataList[index]);
-                            index++;
-                        }
+                        flag_nick.insert(strFlag, strDataList[index]);
+                        index++;
                     }
                     else
                         flag_nick.insert(strFlag, QString::null);
@@ -884,6 +881,7 @@ void OnetKernel::raw_mode()
         {
             QString strFlag = i.key();
             QString strNick = i.value();
+            QString strDisplay;
 
             if (strFlag == "+q") strDisplay = QString(tr("* %1 is now the owner of the channel %2 (set by %3)")).arg(strNick).arg(strNickChannel).arg(strWho);
             else if (strFlag == "-q") strDisplay = QString(tr("* %1 is no longer the owner of the channel %2 (set by %3)")).arg(strNick).arg(strNickChannel).arg(strWho);

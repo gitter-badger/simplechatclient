@@ -24,7 +24,9 @@
 #include <QTextCodec>
 #include <QTranslator>
 #include "config.h"
+#ifdef Q_WS_X11
 #include "debug.h"
+#endif
 #include "core.h"
 #include "singleapplication.h"
 
@@ -70,7 +72,9 @@ int main(int argc, char *argv[])
 #endif
 
     // message handler
+#ifdef Q_WS_X11
     qInstallMsgHandler(messageHandler);
+#endif
 
     // single app
     SingleApplication app(argc, argv, "scc");
