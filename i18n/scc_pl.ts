@@ -32,7 +32,7 @@
     </message>
     <message>
         <source>/join [channel] [key] or /j [channel] [key]</source>
-        <translation>/join [kanał] [klucz] lub /j [kanał] [klucz]</translation>
+        <translation>/join [pokój] [klucz] lub /j [pokój] [klucz]</translation>
     </message>
     <message>
         <source>/part or /p</source>
@@ -297,15 +297,15 @@
     </message>
     <message>
         <source>Channel list</source>
-        <translation>Lista kanałów</translation>
+        <translation>Lista pokoi</translation>
     </message>
     <message>
         <source>Your channels</source>
-        <translation>Twoje kanały</translation>
+        <translation>Twoje pokoje</translation>
     </message>
     <message>
         <source>Favorite channels</source>
-        <translation>Ulubione kanały</translation>
+        <translation>Ulubione pokoje</translation>
     </message>
     <message>
         <source>Friends</source>
@@ -524,7 +524,7 @@
     <name>DlgChannelFavourites</name>
     <message>
         <source>Favorite channels</source>
-        <translation>Ulubione kanały</translation>
+        <translation>Ulubione pokoje</translation>
     </message>
     <message>
         <source>Add</source>
@@ -536,22 +536,22 @@
     </message>
     <message>
         <source>Change your favorite channels</source>
-        <translation>Zmiana ulubionych kanałów</translation>
+        <translation>Zmiana ulubionych pokoi</translation>
     </message>
     <message>
         <source>Enter the name of the new channel to add to favorites:</source>
-        <translation>Podaj nazwę nowego kanału do dodania do ulubionych:</translation>
+        <translation>Podaj nazwę nowego pokoju do dodania do ulubionych:</translation>
     </message>
     <message>
         <source>Enter the name of the channel to remove from the favorites:</source>
-        <translation>Podaj nazwę kanału do usunięcia z ulubionych:</translation>
+        <translation>Podaj nazwę pokoju do usunięcia z ulubionych:</translation>
     </message>
 </context>
 <context>
     <name>DlgChannelHomes</name>
     <message>
         <source>Your channels</source>
-        <translation>Twoje kanały</translation>
+        <translation>Twoje pokoje</translation>
     </message>
     <message>
         <source>Create</source>
@@ -571,19 +571,19 @@
     </message>
     <message>
         <source>Changing channels</source>
-        <translation>Zmiana kanałów</translation>
+        <translation>Zmiana pokoi</translation>
     </message>
     <message>
         <source>Enter the name of the new channel:</source>
-        <translation>Podaj nazwę nowego kanału:</translation>
+        <translation>Podaj nazwę nowego pokoju:</translation>
     </message>
     <message>
         <source>The removal of the channel operation is irreversible!</source>
-        <translation>Usunięcie kanału jest operacją nieodwracalną!</translation>
+        <translation>Usunięcie pokoju jest operacją nieodwracalną!</translation>
     </message>
     <message>
         <source>Enter the name of the channel to remove:</source>
-        <translation>Podaj nazwę kanału do usunięcia:</translation>
+        <translation>Podaj nazwę pokoju do usunięcia:</translation>
     </message>
 </context>
 <context>
@@ -601,11 +601,11 @@
     <name>DlgChannelList</name>
     <message>
         <source>Channel list</source>
-        <translation>Lista kanałów</translation>
+        <translation>Lista pokoi</translation>
     </message>
     <message>
         <source>Channel name</source>
-        <translation>Nazwa kanału</translation>
+        <translation>Nazwa pokoju</translation>
     </message>
     <message>
         <source>Number of persons</source>
@@ -621,7 +621,7 @@
     </message>
     <message>
         <source>Channel name:</source>
-        <translation>Nazwa kanału:</translation>
+        <translation>Nazwa pokoju:</translation>
     </message>
     <message>
         <source>Search</source>
@@ -633,7 +633,7 @@
     </message>
     <message>
         <source>Hide empty channels</source>
-        <translation>Ukryj puste kanały</translation>
+        <translation>Ukryj puste pokoje</translation>
     </message>
     <message>
         <source>Show advanced</source>
@@ -760,7 +760,7 @@
     </message>
     <message>
         <source>Website:</source>
-        <translation>Strona kanału:</translation>
+        <translation>Strona pokoju:</translation>
     </message>
     <message>
         <source>Topic:</source>
@@ -848,7 +848,7 @@
     </message>
     <message>
         <source>Channel:</source>
-        <translation>Kanał:</translation>
+        <translation>Pokój:</translation>
     </message>
     <message>
         <source>Transfer</source>
@@ -908,7 +908,7 @@
     </message>
     <message>
         <source>The owner of the channel can be only one!</source>
-        <translation>Właściciel kanału może być tylko jeden!</translation>
+        <translation>Właściciel pokoju może być tylko jeden!</translation>
     </message>
     <message>
         <source>Enter the nickname of the new owner:</source>
@@ -916,7 +916,7 @@
     </message>
     <message>
         <source>The removal of the channel operation is irreversible!</source>
-        <translation>Usunięcie kanału jest operacją nieodwracalną!</translation>
+        <translation>Usunięcie pokoju jest operacją nieodwracalną!</translation>
     </message>
     <message>
         <source>Add super-operator:</source>
@@ -964,7 +964,7 @@
     </message>
     <message>
         <source>Channel added in favourites:</source>
-        <translation>Dodało kanał do ulubionych:</translation>
+        <translation>Dodało pokój do ulubionych:</translation>
     </message>
     <message>
         <source>Average per day spoken words:</source>
@@ -972,7 +972,7 @@
     </message>
     <message>
         <source>Channel exists days:</source>
-        <translation>Kanał istnieje dni:</translation>
+        <translation>Pokój istnieje dni:</translation>
     </message>
 </context>
 <context>
@@ -1107,7 +1107,7 @@
     </message>
     <message>
         <source>%1 invites you to channel %2</source>
-        <translation>%1 zaprasza Cie do kanału %2</translation>
+        <translation>%1 zaprasza Cie do pokoju %2</translation>
     </message>
     <message>
         <source>%1 invites you to priv</source>
@@ -1122,7 +1122,7 @@
     </message>
     <message>
         <source>Channel: </source>
-        <translation> Kanał: </translation>
+        <translation> Pokój: </translation>
     </message>
     <message>
         <source>Accept</source>
@@ -1424,7 +1424,7 @@
     </message>
     <message>
         <source>Disable autojoin favourite channels</source>
-        <translation>Wyłącz automatyczne wchodzenie do ulubionych kanałów</translation>
+        <translation>Wyłącz automatyczne wchodzenie do ulubionych pokoi</translation>
     </message>
     <message>
         <source>Show ZUO</source>
@@ -1440,7 +1440,7 @@
     </message>
     <message>
         <source>Hide join/part on big channels</source>
-        <translation>Ukryj wejścia/wyjścia osób w dużych kanałach</translation>
+        <translation>Ukryj wejścia/wyjścia osób w dużych pokojach</translation>
     </message>
     <message>
         <source>Disable avatars</source>
@@ -1532,7 +1532,7 @@
     </message>
     <message>
         <source>Channel color:</source>
-        <translation>Kolor kanałów:</translation>
+        <translation>Kolor pokoi:</translation>
     </message>
     <message>
         <source>Nicklist</source>
@@ -1829,11 +1829,11 @@
     <name>OnetKernel</name>
     <message>
         <source>* %1 [%2@%3] has joined %4</source>
-        <translation>* %1 [%2@%3] wszedł do kanału %4</translation>
+        <translation>* %1 [%2@%3] wszedł do pokoju %4</translation>
     </message>
     <message>
         <source>* %1 [%2] has joined %3</source>
-        <translation>* %1 [%2] wszedł do kanału %3</translation>
+        <translation>* %1 [%2] wszedł do pokoju %3</translation>
     </message>
     <message>
         <source>* %1 [%2@%3] has joined priv</source>
@@ -1845,19 +1845,19 @@
     </message>
     <message>
         <source>* %1 [%2@%3] has left %4 [%5]</source>
-        <translation>* %1 [%2@%3] wyszedł z kanału %4. Powód: %5</translation>
+        <translation>* %1 [%2@%3] wyszedł z pokoju %4. Powód: %5</translation>
     </message>
     <message>
         <source>* %1 [%2] has left %3 [%4]</source>
-        <translation>* %1 [%2] wyszedł z kanału %3. Powód: %4</translation>
+        <translation>* %1 [%2] wyszedł z pokoju %3. Powód: %4</translation>
     </message>
     <message>
         <source>* %1 [%2@%3] has left %4</source>
-        <translation>* %1 [%2@%3] wyszedł z kanału %4</translation>
+        <translation>* %1 [%2@%3] wyszedł z pokoju %4</translation>
     </message>
     <message>
         <source>* %1 [%2] has left %3</source>
-        <translation>* %1 [%2] wyszedł z kanału %3</translation>
+        <translation>* %1 [%2] wyszedł z pokoju %3</translation>
     </message>
     <message>
         <source>* %1 [%2@%3] has left priv</source>
@@ -1877,11 +1877,11 @@
     </message>
     <message>
         <source>* %1 has been kicked from channel %2 by %3 Reason: %4</source>
-        <translation>* %1 został wyrzucony z kanału %2 przez %3. Powód: %4</translation>
+        <translation>* %1 został wyrzucony z pokoju %2 przez %3. Powód: %4</translation>
     </message>
     <message>
         <source>You have been kicked from %1 by %2</source>
-        <translation>%1 wyrzucił Cie z kanału %2</translation>
+        <translation>%1 wyrzucił Cie z pokoju %2</translation>
     </message>
     <message>
         <source>Reason: %3</source>
@@ -1889,51 +1889,51 @@
     </message>
     <message>
         <source>* %1 is now the owner of the channel %2 (set by %3)</source>
-        <translation>* %1 jest teraz właścicielem kanału %2 (Ustawił %3)</translation>
+        <translation>* %1 jest teraz właścicielem pokoju %2 (Ustawił %3)</translation>
     </message>
     <message>
         <source>* %1 is no longer the owner of the channel %2 (set by %3)</source>
-        <translation>* %1 nie jest już właścicielem kanału %2 (Ustawił %3)</translation>
+        <translation>* %1 nie jest już właścicielem pokoju %2 (Ustawił %3)</translation>
     </message>
     <message>
         <source>* %1 is now super-operator on the channel %2 (set by %3)</source>
-        <translation>* %1 jest teraz super operatorem kanału %2 (Ustawił %3)</translation>
+        <translation>* %1 jest teraz super operatorem pokoju %2 (Ustawił %3)</translation>
     </message>
     <message>
         <source>* %1 is no longer super-operator on the channel %2 (set by %3)</source>
-        <translation>* %1 nie jest już super operatorem kanału %2 (Ustawił %3)</translation>
+        <translation>* %1 nie jest już super operatorem pokoju %2 (Ustawił %3)</translation>
     </message>
     <message>
         <source>* %1 is now the operator of the channel %2 (set by %3)</source>
-        <translation>* %1 jest teraz operatorem kanału %2 (Ustawił %3)</translation>
+        <translation>* %1 jest teraz operatorem pokoju %2 (Ustawił %3)</translation>
     </message>
     <message>
         <source>* %1 is no longer the operator of the channel %2 (set by %3)</source>
-        <translation>* %1 nie jest już operatorem kanału %2 (Ustawił %3)</translation>
+        <translation>* %1 nie jest już operatorem pokoju %2 (Ustawił %3)</translation>
     </message>
     <message>
         <source>* %1 is now a guest of channel %2 (set by %3)</source>
-        <translation>* %1 jest teraz gościem kanału %2 (Ustawił %3)</translation>
+        <translation>* %1 jest teraz gościem pokoju %2 (Ustawił %3)</translation>
     </message>
     <message>
         <source>* %1 is no longer a guest of channel %2 (set by %3)</source>
-        <translation>* %1 nie jest już gościem kanału %2 (Ustawił %3)</translation>
+        <translation>* %1 nie jest już gościem pokoju %2 (Ustawił %3)</translation>
     </message>
     <message>
         <source>* %1 is now moderator of the channel %2 (set by %3)</source>
-        <translation>* %1 jest teraz moderatorem kanału %2 (Ustawił %3)</translation>
+        <translation>* %1 jest teraz moderatorem pokoju %2 (Ustawił %3)</translation>
     </message>
     <message>
         <source>* %1 is no longer moderating channel %2 (set by %3)</source>
-        <translation>* %1 nie jest już moderatorem kanału %2 (Ustawił %3)</translation>
+        <translation>* %1 nie jest już moderatorem pokoju %2 (Ustawił %3)</translation>
     </message>
     <message>
         <source>* %1 is now screener channel %2 (set by %3)</source>
-        <translation>* %1 jest teraz screenerem kanału %2 (Ustawił %3)</translation>
+        <translation>* %1 jest teraz screenerem pokoju %2 (Ustawił %3)</translation>
     </message>
     <message>
         <source>* %1 is no longer a screener channel %2 (set by %3)</source>
-        <translation>* %1 nie jest już screenerem kanału %2 (Ustawił %3)</translation>
+        <translation>* %1 nie jest już screenerem pokoju %2 (Ustawił %3)</translation>
     </message>
     <message>
         <source>* %1 is now on the banned list in %2 (set by %3)</source>
@@ -1953,143 +1953,143 @@
     </message>
     <message>
         <source>* %1 now has ban exception flag in %2 (set by %3)</source>
-        <translation>* %1 posiada teraz wyjątek od bana w kanale %2 (Ustawił %3)</translation>
+        <translation>* %1 posiada teraz wyjątek od bana w pokoju %2 (Ustawił %3)</translation>
     </message>
     <message>
         <source>* %1 no longer has a ban exception flag in %2 (set by %3)</source>
-        <translation>* %1 nie posiada już wyjątku od bana w kanale %2 (Ustawił %3)</translation>
+        <translation>* %1 nie posiada już wyjątku od bana w pokoju %2 (Ustawił %3)</translation>
     </message>
     <message>
         <source>* Channel %1 now has key set to %2 (set by %3)</source>
-        <translation>* Kanał %1 ma teraz ustawiony klucz %2 (Ustawił %3)</translation>
+        <translation>* Pokój %1 ma teraz ustawiony klucz %2 (Ustawił %3)</translation>
     </message>
     <message>
         <source>* Channel %1 no longer has key set (set by %2)</source>
-        <translation>* Kanał %1 nie ma już ustawionego klucza (Ustawił %2)</translation>
+        <translation>* Pokój %1 nie ma już ustawionego klucza (Ustawił %2)</translation>
     </message>
     <message>
         <source>* Channel %1 will now have no external messages sent to the channel (set by %2)</source>
-        <translation>* Kanał %1 nie będzie teraz otrzymywać zewnętrznych wiadomości wysyłanych do kanału (Ustawił %2)</translation>
+        <translation>* Pokój %1 nie będzie teraz otrzymywać zewnętrznych wiadomości wysyłanych do pokoju (Ustawił %2)</translation>
     </message>
     <message>
         <source>* Channel %1 will now allow external messages sent to the channel (set by %2)</source>
-        <translation>* Kanał %1 będzie mógł teraz otrzymywać zewnętrzne wiadomości wysyłane do kanału (Ustawił %2)</translation>
+        <translation>* Pokój %1 będzie mógł teraz otrzymywać zewnętrzne wiadomości wysyłane do pokoju (Ustawił %2)</translation>
     </message>
     <message>
         <source>* Only channel operators can now change the topic in %1 channel (set by %2)</source>
-        <translation>* Tylko operatorzy będą mogli teraz zmieniać temat w kanale %1 (Ustawił %2)</translation>
+        <translation>* Tylko operatorzy będą mogli teraz zmieniać temat w pokoju %1 (Ustawił %2)</translation>
     </message>
     <message>
         <source>* Anyone can now change the topic in %1 channel (set by %2)</source>
-        <translation>* Każdy będzie mógł teraz zmienić temat w kanale %1 (Ustawił %2)</translation>
+        <translation>* Każdy będzie mógł teraz zmienić temat w pokoju %1 (Ustawił %2)</translation>
     </message>
     <message>
         <source>* Channel %1 is now a hidden channel (set by %2)</source>
-        <translation>* Kanał %1 jest teraz kanałem ukrytym (Ustawił %2)</translation>
+        <translation>* Pokój %1 jest teraz pokojem ukrytym (Ustawił %2)</translation>
     </message>
     <message>
         <source>* Channel %1 is no longer hidden channel (set by %2)</source>
-        <translation>* Kanał %1 nie jest już kanałem ukrytym (Ustawił %2)</translation>
+        <translation>* Pokój %1 nie jest już pokojem ukrytym (Ustawił %2)</translation>
     </message>
     <message>
         <source>* Channel %1 is now a private channel (set by %2)</source>
-        <translation>* Kanał %1 jest teraz kanałem prywatnym (Ustawił %2)</translation>
+        <translation>* Pokój %1 jest teraz pokojem prywatnym (Ustawił %2)</translation>
     </message>
     <message>
         <source>* Channel %1 is no longer a private channel (set by %2)</source>
-        <translation>* Kanał %1 nie jest już kanałem prywatnym (Ustawił %2)</translation>
+        <translation>* Pokój %1 nie jest już pokojem prywatnym (Ustawił %2)</translation>
     </message>
     <message>
         <source>* Channel %1 is now a secret channel (set by %2)</source>
-        <translation>* Kanał %1 jest teraz kanałem sekretnym (Ustawił %2)</translation>
+        <translation>* Pokój %1 jest teraz pokojem sekretnym (Ustawił %2)</translation>
     </message>
     <message>
         <source>* Channel %1 is no longer a secret channel (set by %2)</source>
-        <translation>* Kanał %1 nie jest już kanałem sekretnym (Ustawił %2)</translation>
+        <translation>* Pokój %1 nie jest już pokojem sekretnym (Ustawił %2)</translation>
     </message>
     <message>
         <source>* Channel %1 is now moderated channel (set by %2)</source>
-        <translation>* Kanał %1 jest teraz kanałem moderowanym (Ustawił %2)</translation>
+        <translation>* Pokój %1 jest teraz pokojem moderowanym (Ustawił %2)</translation>
     </message>
     <message>
         <source>* Channel %1 is no longer moderated channel (set by %2)</source>
-        <translation>* Kanał %1 nie jest już kanałem moderowanym (Ustawił %2)</translation>
+        <translation>* Pokój %1 nie jest już pokojem moderowanym (Ustawił %2)</translation>
     </message>
     <message>
         <source>* Channel %1 now has enabled auditorium mode (set by %2)</source>
-        <translation>* Kanał %1 jest teraz kanałem audytywnym (Ustawił %2)</translation>
+        <translation>* Pokój %1 jest teraz pokojem audytywnym (Ustawił %2)</translation>
     </message>
     <message>
         <source>* Channel %1 no longer has enabled auditorium mode (set by %2)</source>
-        <translation>* Kanał %1 nie jest już kanałem audytywnym (Ustawił %2)</translation>
+        <translation>* Pokój %1 nie jest już pokojem audytywnym (Ustawił %2)</translation>
     </message>
     <message>
         <source>* Channel %1 now has max number of users set to %2 (set by %3)</source>
-        <translation>* Kanał %1 ma teraz ustawiony limit użytkowników na %2 (Ustawił %3)</translation>
+        <translation>* Pokój %1 ma teraz ustawiony limit użytkowników na %2 (Ustawił %3)</translation>
     </message>
     <message>
         <source>* Channel %1 no longer has max number of users set (set by %2)</source>
-        <translation>* Kanał %1 nie ma już ustawionego limitu użytkowników (Ustawił %2)</translation>
+        <translation>* Pokój %1 nie ma już ustawionego limitu użytkowników (Ustawił %2)</translation>
     </message>
     <message>
         <source>* Channel %1 now has word censoring enabled (set by %2)</source>
-        <translation>* Kanał %1 ma teraz włączoną cenzure słów (Ustawił %2)</translation>
+        <translation>* Pokój %1 ma teraz włączoną cenzure słów (Ustawił %2)</translation>
     </message>
     <message>
         <source>* Channel %1 no longer has word censoring enabled (set by %2)</source>
-        <translation>* Kanał %1 nie ma już włączonej cenzury słów (Ustawił %2)</translation>
+        <translation>* Pokój %1 nie ma już włączonej cenzury słów (Ustawił %2)</translation>
     </message>
     <message>
         <source>* Channel %1 now has blocked kick (set by %2)</source>
-        <translation>* Kanał %1 ma teraz włączoną blokade wyrzucania użytkowników (Ustawił %2)</translation>
+        <translation>* Pokój %1 ma teraz włączoną blokade wyrzucania użytkowników (Ustawił %2)</translation>
     </message>
     <message>
         <source>* Channel %1 no longer has blocked kick (set by %2)</source>
-        <translation>* Kanał %1 nie ma już włączonej blokady wyrzucania użytkowników (Ustawił %2)</translation>
+        <translation>* Pokój %1 nie ma już włączonej blokady wyrzucania użytkowników (Ustawił %2)</translation>
     </message>
     <message>
         <source>* Channel %1 now has blocked invites for 1 hour (set by %2)</source>
-        <translation>* Kanał %1 posiada teraz blokade wysyłania zaproszeń przez 1 godzinę (Ustawił %2)</translation>
+        <translation>* Pokój %1 posiada teraz blokade wysyłania zaproszeń przez 1 godzinę (Ustawił %2)</translation>
     </message>
     <message>
         <source>* Channel %1 no longer has blocked invites (set by %2)</source>
-        <translation>* Kanał %1 nie posiada już blokady wysyłania zaproszeń (Ustawił %2)</translation>
+        <translation>* Pokój %1 nie posiada już blokady wysyłania zaproszeń (Ustawił %2)</translation>
     </message>
     <message>
         <source>* Channel %1 now has limit redirection to %2 channel (set by %3)</source>
-        <translation>* Kanał %1 ma teraz ustawione przekierowanie do innego kanału gdy zostanie przekroczona ilość użytkowników w %2 (Ustawił %3)</translation>
+        <translation>* Pokój %1 ma teraz ustawione przekierowanie do innego pokoju gdy zostanie przekroczona ilość użytkowników w %2 (Ustawił %3)</translation>
     </message>
     <message>
         <source>* Channel %1 no longer has limit redirection (set by %2)</source>
-        <translation>* Kanał %1 nie ma już ustawionego przekierowania do innego kanału gdy zostanie przekroczona ilość użytkowników (Ustawił %2)</translation>
+        <translation>* Pokój %1 nie ma już ustawionego przekierowania do innego pokoju gdy zostanie przekroczona ilość użytkowników (Ustawił %2)</translation>
     </message>
     <message>
         <source>* Channel %1 now prevents users from automatically rejoining the channel when they are kicked. Limit is set to %2 sec. (set by %3)</source>
-        <translation>* Kanał %1 posiada teraz blokade uniemożliwiającą użytkownikom automatyczny powrót do kanału kiedy zostaną wyrzuceni. Limit wynosi %2 sec. (Ustawił %3)</translation>
+        <translation>* Pokój %1 posiada teraz blokade uniemożliwiającą użytkownikom automatyczny powrót do pokoju kiedy zostaną wyrzuceni. Limit wynosi %2 sec. (Ustawił %3)</translation>
     </message>
     <message>
         <source>* Channel %1 no longer prevents users from automatically rejoining the channel when they are kicked (set by %2)</source>
-        <translation>* Kanał %1 nie posiada już blokady uniemożliwiającej użytkownikom na automatyczny powrót do kanału kiedy zostaną wyrzuceni (Ustawił %2)</translation>
+        <translation>* Pokój %1 nie posiada już blokady uniemożliwiającej użytkownikom na automatyczny powrót do pokoju kiedy zostaną wyrzuceni (Ustawił %2)</translation>
     </message>
     <message>
         <source>* Channel %1 now has status %2 (set by %3)</source>
-        <translation>* Kanał %1 ma teraz status %2 (Ustawił %3)</translation>
+        <translation>* Pokój %1 ma teraz status %2 (Ustawił %3)</translation>
     </message>
     <message>
         <source>* Channel %1 no longer has status %2 (set by %3)</source>
-        <translation>* Kanał %1 nie ma już statusu %2 (Ustawił %3)</translation>
+        <translation>* Pokój %1 nie ma już statusu %2 (Ustawił %3)</translation>
     </message>
     <message>
         <source>* Channel %1 now belongs to a category %2 (set by %3)</source>
-        <translation>* Kanał %1 należy teraz do kategorii %2 (Ustawił %3)</translation>
+        <translation>* Pokój %1 należy teraz do kategorii %2 (Ustawił %3)</translation>
     </message>
     <message>
         <source>* Channel %1 is no longer category %2 (set by %3)</source>
-        <translation>* Kanał %1 nie należy już do kategorii %2 (Ustawił %3)</translation>
+        <translation>* Pokój %1 nie należy już do kategorii %2 (Ustawił %3)</translation>
     </message>
     <message>
         <source>* Channel %1 now has a flag %2 (set by %3)</source>
-        <translation>* Kanał %1 ma teraz flage %2 (Ustawił %3)</translation>
+        <translation>* Pokój %1 ma teraz flage %2 (Ustawił %3)</translation>
     </message>
     <message>
         <source>* %1 now has a flag %2 (set by %3)</source>
@@ -2157,7 +2157,7 @@
     </message>
     <message>
         <source>* %1 rejected an invitation to channel %2</source>
-        <translation>* %1 odrzucił/a zaproszenie do kanału %2</translation>
+        <translation>* %1 odrzucił/a zaproszenie do pokoju %2</translation>
     </message>
     <message>
         <source>* %1 ignored your invitation to the priv</source>
@@ -2165,7 +2165,7 @@
     </message>
     <message>
         <source>* %1 ignored your invitation to the channel %2</source>
-        <translation>* %1 zignorował/a Twoje zaproszenie do kanału %2</translation>
+        <translation>* %1 zignorował/a Twoje zaproszenie do pokoju %2</translation>
     </message>
     <message>
         <source>Moderated by</source>
@@ -2177,11 +2177,11 @@
     </message>
     <message>
         <source>* %1 In progress on channel %2</source>
-        <translation>* %1 Właśnie trwa na kanale %2</translation>
+        <translation>* %1 Właśnie trwa w pokoju %2</translation>
     </message>
     <message>
         <source>* %1 Starting at %2 on channel %3</source>
-        <translation>* %1 Rozpoczęcie o %2 na kanale %3</translation>
+        <translation>* %1 Rozpoczęcie o %2 w pokoju %3</translation>
     </message>
     <message>
         <source>* %1 changed nickname to %2 from your friend list</source>
@@ -2209,15 +2209,15 @@
     </message>
     <message>
         <source>* Added %1 channel to your favorites list</source>
-        <translation>* Dodano kanał %1 do listy ulubionych</translation>
+        <translation>* Dodano pokój %1 do listy ulubionych</translation>
     </message>
     <message>
         <source>* Removed channel %1 from your favorites list</source>
-        <translation>* Usunięto kanał %1 z listy ulubionych</translation>
+        <translation>* Usunięto pokój %1 z listy ulubionych</translation>
     </message>
     <message>
         <source>Successfully created a channel %1</source>
-        <translation>Pomyślnie utworzono kanał %1</translation>
+        <translation>Pomyślnie utworzono pokój %1</translation>
     </message>
     <message>
         <source>* Offline message sent to %1</source>
@@ -2225,11 +2225,11 @@
     </message>
     <message>
         <source>* Channel %1 has been removed</source>
-        <translation>* Usunięto kanał %1</translation>
+        <translation>* Usunięto pokój %1</translation>
     </message>
     <message>
         <source>* Confirmed the removal of the channel %1</source>
-        <translation>* Potwierdzam usunięcie kanału %1</translation>
+        <translation>* Potwierdzam usunięcie pokoju %1</translation>
     </message>
     <message>
         <source>* Offline messages rejected from %1</source>
@@ -2241,7 +2241,7 @@
     </message>
     <message>
         <source>* %1 changed channel %2 settings</source>
-        <translation>* %1 zmienił/a ustawienia kanału %2</translation>
+        <translation>* %1 zmienił/a ustawienia pokoju %2</translation>
     </message>
     <message>
         <source>* Nothing changed in %1</source>
@@ -2249,7 +2249,7 @@
     </message>
     <message>
         <source>Successfully removed channel %1</source>
-        <translation>Pomyślnie usunięto kanał %1</translation>
+        <translation>Pomyślnie usunięto pokój %1</translation>
     </message>
     <message>
         <source>%1 is away: %2</source>
@@ -2301,7 +2301,7 @@
     </message>
     <message>
         <source>* %1 is on channels: %2</source>
-        <translation>* %1 jest na kanałach: %2</translation>
+        <translation>* %1 jest na pokojach: %2</translation>
     </message>
     <message>
         <source>Message Of The Day:</source>
@@ -2329,7 +2329,7 @@
     </message>
     <message>
         <source>* %1 :No such nick/channel</source>
-        <translation>* %1 :Nick lub kanał nie istnieje</translation>
+        <translation>* %1 :Nick lub pokój nie istnieje</translation>
     </message>
     <message>
         <source>* %1 is currently unavailable. Please try again later.</source>
@@ -2349,7 +2349,7 @@
     </message>
     <message>
         <source>* %1 :Invalid channel name</source>
-        <translation>* %1 :Nieprawidłowa nazwa kanału</translation>
+        <translation>* %1 :Nieprawidłowa nazwa pokoju</translation>
     </message>
     <message>
         <source>* %1 :User is not on-line</source>
@@ -2357,7 +2357,7 @@
     </message>
     <message>
         <source>No moderator on the channel!</source>
-        <translation>Brak moderatora na kanale!</translation>
+        <translation>Brak moderatora na pokoju!</translation>
     </message>
     <message>
         <source>* Unable to send a message to %1: %2</source>
@@ -2369,7 +2369,7 @@
     </message>
     <message>
         <source>* You are on too many channels</source>
-        <translation>* Jesteś na zbyt wielu kanałach</translation>
+        <translation>* Jesteś na zbyt wielu pokojach</translation>
     </message>
     <message>
         <source>* %1 :There was no such nickname</source>
@@ -2385,7 +2385,7 @@
     </message>
     <message>
         <source>* %1 :No such channel</source>
-        <translation>* %1 :Nie ma takiego kanału</translation>
+        <translation>* %1 :Nie ma takiego pokoju</translation>
     </message>
     <message>
         <source>* Nick %1 is already on your friend list</source>
@@ -2421,23 +2421,23 @@
     </message>
     <message>
         <source>* Channel %1 is already on your favourite list</source>
-        <translation>* Kanał %1 jest już na liście ulubionych</translation>
+        <translation>* Pokój %1 jest już na liście ulubionych</translation>
     </message>
     <message>
         <source>* %1 is not on %2 channel</source>
-        <translation>* %1 nie jest na kanale %2</translation>
+        <translation>* %1 nie jest na pokoju %2</translation>
     </message>
     <message>
         <source>* Channel %1 is not on your favourite list</source>
-        <translation>* Kanał %1 nie jest na liście ulubionych</translation>
+        <translation>* Pokój %1 nie jest na liście ulubionych</translation>
     </message>
     <message>
         <source>* You're not on %1 channel!</source>
-        <translation>* Nie jesteś na kanale %1!</translation>
+        <translation>* Nie jesteś w pokoju %1!</translation>
     </message>
     <message>
         <source>* %1 is already on channel %2</source>
-        <translation>* %1 jest już na kanale %2</translation>
+        <translation>* %1 jest już w pokoju %2</translation>
     </message>
     <message>
         <source>* You have not registered to perform operation %1</source>
@@ -2445,11 +2445,11 @@
     </message>
     <message>
         <source>* %1 :Channel name already in use</source>
-        <translation>* %1 :Nazwa kanału już istnieje</translation>
+        <translation>* %1 :Nazwa pokoju już istnieje</translation>
     </message>
     <message>
         <source>* %1 :Not enough unique channel name</source>
-        <translation>* %1 :Nazwa kanału nie jest unikalna</translation>
+        <translation>* %1 :Nazwa pokoju nie jest unikalna</translation>
     </message>
     <message>
         <source>* No offline messages from %1</source>
@@ -2461,7 +2461,7 @@
     </message>
     <message>
         <source>* %1 is already channel owner</source>
-        <translation>* %1 jest już właścicielem kanału</translation>
+        <translation>* %1 jest już właścicielem pokoju</translation>
     </message>
     <message>
         <source>* Offline message cannot be sent. %1 is online</source>
@@ -2505,7 +2505,7 @@
     </message>
     <message>
         <source>* %1 :Permission denied, you are not a channel owner</source>
-        <translation>* %1 :Dostęp zabroniony, nie jesteś właścicielem kanału</translation>
+        <translation>* %1 :Dostęp zabroniony, nie jesteś właścicielem pokoju</translation>
     </message>
     <message>
         <source>* Permission denied, insufficient privileges in %1 channel</source>
@@ -2513,19 +2513,19 @@
     </message>
     <message>
         <source>* Channel %1 is private</source>
-        <translation>* Kanał %1 jest prywatny</translation>
+        <translation>* Pokój %1 jest prywatny</translation>
     </message>
     <message>
         <source>* %1 has become full, so you are automatically being transferred to the linked channel %2</source>
-        <translation>* Kanał %1 jest pełny, zostajesz automatycznie przekierowany do kanału %2</translation>
+        <translation>* Pokój %1 jest pełny, zostajesz automatycznie przekierowany do pokoju %2</translation>
     </message>
     <message>
         <source>* Cannot join channel %1: channel is full</source>
-        <translation>* Nie możesz wejść do %1: Kanał jest pełny</translation>
+        <translation>* Nie możesz wejść do %1: Pokój jest pełny</translation>
     </message>
     <message>
         <source>* Wait 60 seconds before creating next channel</source>
-        <translation>* Utworzenie kolejnego kanału będzie możliwe po upłynięciu 60 sekund</translation>
+        <translation>* Utworzenie kolejnego pokoju będzie możliwe po upłynięciu 60 sekund</translation>
     </message>
     <message>
         <source>* Cannot join channel %1: Invite only</source>
@@ -2545,7 +2545,7 @@
     </message>
     <message>
         <source>* Only a u-line may kick a u-line from a channel.</source>
-        <translation>* Tylko u-line może wyrzucić u-line z kanału.</translation>
+        <translation>* Tylko u-line może wyrzucić u-line z pokoju.</translation>
     </message>
     <message>
         <source>* Invalid oper credentials</source>
@@ -2553,7 +2553,7 @@
     </message>
     <message>
         <source>* %1 :Only IRC operators may create new channels</source>
-        <translation>* %1 :Tylko Administratorzy mogą tworzyć nowe kanały</translation>
+        <translation>* %1 :Tylko Administratorzy mogą tworzyć nowe pokoje</translation>
     </message>
     <message>
         <source>* %1 :You are not permitted to send private messages to this user</source>
@@ -2665,7 +2665,7 @@
     </message>
     <message>
         <source>* Channel %1 is not moderated</source>
-        <translation>* Kanał %1 nie jest moderowany</translation>
+        <translation>* Pokój %1 nie jest moderowany</translation>
     </message>
     <message>
         <source>* Removed %1 from silence list</source>
@@ -2688,7 +2688,7 @@
     </message>
     <message>
         <source>Channel website</source>
-        <translation>Strona kanału</translation>
+        <translation>Strona pokoju</translation>
     </message>
 </context>
 <context>
@@ -2714,7 +2714,7 @@
     <name>MainTextEdit</name>
     <message>
         <source>Join channel</source>
-        <translation>Wejdź do kanału</translation>
+        <translation>Wejdź do pokoju</translation>
     </message>
     <message>
         <source>No reason</source>
@@ -2972,7 +2972,7 @@
     </message>
     <message>
         <source>Channel settings</source>
-        <translation>Ustawienia kanału</translation>
+        <translation>Ustawienia pokoju</translation>
     </message>
     <message>
         <source>Moderation</source>
