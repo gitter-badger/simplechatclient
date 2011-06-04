@@ -870,6 +870,9 @@ void MainWindow::create_nicklist(QString strChannel)
 
 void MainWindow::add_user(QString strChannel, QString strNick, QString strModes, bool bFastAdd)
 {
+    // if owner remove op
+    if (strModes.contains("`")) strModes.remove("@");
+
     // add
     User add;
     add.channel = strChannel;
