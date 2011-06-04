@@ -32,7 +32,7 @@
 #ifdef Q_WS_WIN
     #include "kamerzysta.h"
 #else
-    #include "dlg_cam.h"
+    #include "dlg_webcam.h"
 #endif
 
 NickListWidget::NickListWidget(Network *param1, QTcpSocket *param2, DlgUserProfile *param3)
@@ -48,13 +48,6 @@ NickListWidget::NickListWidget(Network *param1, QTcpSocket *param2, DlgUserProfi
 NickListWidget::~NickListWidget()
 {
 }
-
-#ifndef Q_WS_WIN
-void NickListWidget::set_dlg_cam(DlgCam *param1)
-{
-    pDlgCam = param1;
-}
-#endif
 
 void NickListWidget::set_channel(QString param1)
 {
@@ -121,8 +114,7 @@ void NickListWidget::cam()
 #ifdef Q_WS_WIN
     (new Kamerzysta(camSocket))->show(strNick);
 #else
-    pDlgCam->set_nick(strNick);
-    pDlgCam->show();
+    new DlgWebcam(strNick, true);
 #endif
 }
 

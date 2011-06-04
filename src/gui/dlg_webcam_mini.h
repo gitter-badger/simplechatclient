@@ -18,61 +18,31 @@
  *                                                                          *
  ****************************************************************************/
 
-#ifndef NICKLISTTREEWIDGET_H
-#define NICKLISTTREEWIDGET_H
+#ifndef DLG_WEBCAM_MINI_H
+#define DLG_WEBCAM_MINI_H
 
-#include "defines.h"
-class DlgUserProfile;
-class Network;
-#include <QListWidget>
-#include <QTcpSocket>
+#include <QDialog>
+#include "ui_webcam_mini.h"
 
-class NickListWidget : public QListWidget
+class DlgWebcamMini : public QDialog
 {
     Q_OBJECT
 public:
-    NickListWidget(Network *, QTcpSocket *, DlgUserProfile *);
-    virtual ~NickListWidget();
-    void set_channel(QString);
-    QString get_channel() { return strChannel; }
-    void add(QString);
-    void remove(QString);
+    DlgWebcamMini(QString);
+
+public slots:
+    void update_image(QByteArray);
+    void update_text(QString);
+    void error(QString);
 
 private:
-    // params
-    Network *pNetwork;
-    QTcpSocket *camSocket;
-    DlgUserProfile *pDlgUserProfile;
-    // other
-    QString strChannel;
-    enum { maxOpenChannels = 30 };
-    QAction *openChannelsActs[maxOpenChannels];
-
-private slots:
-    void priv();
-    void whois();
-    void profile();
-    void cam();
-    void friends_add();
-    void friends_del();
-    void ignore_add();
-    void ignore_del();
-    void kick();
-    void ban();
-    void kban();
-    void ipban();
-    void op_add();
-    void op_del();
-    void halfop_add();
-    void halfop_del();
-    void moderator_add();
-    void moderator_del();
-    void voice_add();
-    void voice_del();
-    void invite();
+    Ui::uiWebcamMini ui;
 
 protected:
-    virtual void contextMenuEvent(QContextMenuEvent *);
+    virtual void closeEvent(QCloseEvent *);
+
+signals:
+    void close_cam();
 };
 
-#endif // NICKLISTTREEWIDGET_H
+#endif // DLG_WEBCAM_MINI_H

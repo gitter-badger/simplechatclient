@@ -33,7 +33,7 @@
 #ifdef Q_WS_WIN
     #include "kamerzysta.h"
 #else
-    #include "dlg_cam.h"
+    #include "dlg_webcam.h"
 #endif
 
 MainTextEdit::MainTextEdit(Network *param1, QString param2, QTcpSocket *param3, DlgUserProfile *param4)
@@ -51,13 +51,6 @@ MainTextEdit::MainTextEdit(Network *param1, QString param2, QTcpSocket *param3, 
     pAnimatedEmoticonWidget = new AnimatedEmoticonWidget(this);
     QObject::connect(this, SIGNAL(textChanged()), this, SLOT(text_changed()));
 }
-
-#ifndef Q_WS_WIN
-void MainTextEdit::set_dlg_cam(DlgCam *param1)
-{
-    pDlgCam = param1;
-}
-#endif
 
 void MainTextEdit::update_background_image()
 {
@@ -100,8 +93,7 @@ void MainTextEdit::cam()
 #ifdef Q_WS_WIN
     (new Kamerzysta(camSocket))->show(strNick);
 #else
-    pDlgCam->set_nick(strNick);
-    pDlgCam->show();
+    new DlgWebcam(strNick, true);
 #endif
 }
 

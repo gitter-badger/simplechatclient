@@ -18,115 +18,18 @@
  *                                                                          *
  ****************************************************************************/
 
-#ifndef DLG_CAM_H
-#define DLG_CAM_H
+#ifndef WEBCAM_NETWORK_H
+#define WEBCAM_NETWORK_H
 
-class DlgCamNetwork;
-class Network;
-class SimpleRankWidget;
-class Video;
-#include <QDialog>
+#include <QObject>
 #include <QTcpSocket>
-#include "ui_cam.h"
+#include <QTimer>
 
-class DlgCam : public QDialog
+class WebcamNetwork : public QObject
 {
     Q_OBJECT
 public:
-    DlgCam(QWidget *, Network *, QTcpSocket *);
-    ~DlgCam();
-    void set_nick(QString);
-
-private:
-    Ui::uiCam ui;
-    Network *pNetwork;
-    QString strNick;
-    SimpleRankWidget *pSimpleRankWidget;
-    int iCamCmd;
-
-    DlgCamNetwork *camNetwork;
-    QImage imCapturedFrame;
-    QTimer *videoFrameTimer;
-
-    bool bBroadcasting;
-    bool bBroadcasting_pubpriv; // false = public; true = private;
-
-    bool bFirstSendPUT;
-    bool bReadySendPUT;
-    int iLastSendPUT;
-    QList<QString> lLastCommand;
-    QMap<QString,QString> mNickChannels;
-
-    void create_gui();
-    void set_default_values();
-    void create_signals();
-
-    QString get_cauth();
-    Video *video;
-
-    bool exist_video_device();
-    void detect_broadcasting();
-    void set_broadcasting();
-
-    // options
-    void send_all_my_options();
-    // items
-    void add_item(int, QString, QString, QString);
-    void add_item(QString, QString, QString);
-    bool exist_item(QString);
-    void remove_item(QString);
-    int get_item(QString);
-    void update_item(QString, QString, QString);
-
-private slots:
-    // video frame timer
-    void get_frame();
-    // kernel
-    void data_kernel(QByteArray);
-    void text_kernel(QString);
-    // from network
-    void nconnected();
-    void ndisconnected();
-    void set_label(QString); // set label img text
-    // broadcast
-    void broadcast_start_stop();
-    void broadcast_public();
-    void broadcast_private();
-    // my images
-    void set_status();
-    void set_about_me();
-    void set_homepage();
-    void add_img0();
-    void remove_img0();
-    void add_img1();
-    void remove_img1();
-    void add_img2();
-    void remove_img2();
-    void add_img3();
-    void remove_img3();
-    // standard buttons
-    void vote_minus();
-    void vote_plus();
-    void button_connect();
-    void button_ok();
-    // vote
-    void enable_vote();
-    // change user
-    void change_user(int,int);
-    // read video image
-    void read_video();
-
-protected:
-    virtual void showEvent(QShowEvent *);
-    virtual void hideEvent(QHideEvent *);
-    virtual void closeEvent(QCloseEvent *);
-};
-
-class DlgCamNetwork : public QObject
-{
-    Q_OBJECT
-public:
-    DlgCamNetwork(Network *, QTcpSocket *);
+    WebcamNetwork();
     inline void set_bytes_need(int i) { iBytes_need = i; }
     inline void set_btext(bool b) { bText = b; }
     inline void set_last_keep_alive(int i) { iLastKeepAlive = i; }
@@ -141,7 +44,6 @@ public:
     void network_disconnect();
 
 private:
-    Network *pNetwork;
     QTcpSocket *socket;
     QString strData;
     QByteArray bData;
@@ -164,9 +66,9 @@ private slots:
 signals:
     void data_kernel(QByteArray);
     void text_kernel(QString);
-    void set_label(QString);
-    void nconnected();
-    void ndisconnected();
+    void error(QString);
+    void connected();
+    void disconnected();
 };
 
-#endif // DLG_CAM_H
+#endif // WEBCAM_NETWORK_H

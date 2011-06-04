@@ -52,7 +52,7 @@
 #ifdef Q_WS_WIN
     #include "kamerzysta.h"
 #else
-    #include "dlg_cam.h"
+    #include "dlg_webcam.h"
 #endif
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
@@ -65,7 +65,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     create_actions();
     create_menus();
 
-    // init all
+    // camsocket - for kamerzysta
     camSocket = new QTcpSocket();
     camSocket->setSocketOption(QAbstractSocket::LowDelayOption, 1);
     camSocket->setSocketOption(QAbstractSocket::KeepAliveOption, 0);
@@ -73,7 +73,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     pTabM = new TabManager(this);
     this->setCentralWidget(pTabM);
 
-    pNetwork = new Network("czat-app.onet.pl", 5015);
+    QString strServer = "czat-app.onet.pl";
+    int iPort = 5015;
+    pNetwork = new Network(strServer, iPort);
     pNetwork->start(QThread::InheritPriority);
 
     // classes
@@ -83,17 +85,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     pDlgModeration = new DlgModeration(this);
     pDlgUserProfile = new DlgUserProfile(this, pNetwork);
 
-#ifndef Q_WS_WIN
-    pDlgCam = new DlgCam(this, pNetwork, camSocket);
-#endif
-
     pOnetKernel = new OnetKernel(pNetwork, pTabC, pDlgChannelSettings, pDlgModeration, pDlgUserProfile);
     pOnetAuth = new OnetAuth(pTabC);
 
     pTabC->set_dlg(pDlgUserProfile);
-#ifndef Q_WS_WIN
-    pTabC->set_dlg_cam(pDlgCam);
-#endif
 
     // auto-away
     Core::instance()->autoAwayTimer = new QTimer();
@@ -140,9 +135,6 @@ MainWindow::~MainWindow()
 
     delete pOnetAuth;
     delete pOnetKernel;
-#ifndef Q_WS_WIN
-    delete pDlgCam;
-#endif
     delete pDlgUserProfile;
     delete pDlgModeration;
     delete pDlgChannelSettings;
@@ -204,9 +196,6 @@ void MainWindow::createGui()
 
     // nicklist
     pNickListWidget = new NickListWidget(pNetwork, camSocket, pDlgUserProfile);
-#ifndef Q_WS_WIN
-    pNickListWidget->set_dlg_cam(pDlgCam);
-#endif
     pNickListWidget->setParent(rightDockWidget);
     pNickListWidget->setItemDelegate(new NickListDelegate(pNickListWidget));
     rightDockWidget->setWidget(pNickListWidget);
@@ -704,7 +693,7 @@ void MainWindow::open_cams()
 #else
     QSettings settings;
     if ((pNetwork->is_connected()) && (pNetwork->is_writable()) && (settings.value("logged") == "on"))
-        pDlgCam->show();
+        new DlgWebcam();
 #endif
 }
 

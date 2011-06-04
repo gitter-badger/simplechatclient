@@ -22,9 +22,6 @@
 #define MAINWINDOW_H
 
 #include "defines.h"
-#ifndef Q_WS_WIN
-    class DlgCam;
-#endif
 class DlgAbout;
 class DlgChannelSettings;
 class DlgModeration;
@@ -109,11 +106,7 @@ private:
     QDockWidget *rightDockWidget;
 
     // other
-#ifndef Q_WS_WIN
-    DlgCam *pDlgCam;
-#endif
-    QTcpSocket *camSocket;
-
+    QTcpSocket *camSocket; // for kamerzysta
     void set_geometry();
     void create_actions();
     void create_menus();

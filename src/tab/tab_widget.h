@@ -22,9 +22,6 @@
 #define TAB_WIDGET_H
 
 #include "defines.h"
-#ifndef Q_WS_WIN
-    class DlgCam;
-#endif
 class DlgUserProfile;
 class MainTextEdit;
 class MainWindow;
@@ -45,9 +42,6 @@ class TabWidget : public QWidget
 public:
     TabWidget(Network *, QString, QTcpSocket *, DlgUserProfile *);
     virtual ~TabWidget();
-#ifndef Q_WS_WIN
-    void set_dlg_cam(DlgCam *);
-#endif
     inline QString get_name() { return strName; }
     void addslashes(QString &);
     void display_msg(QString &, QString &, MessageCategory);
@@ -68,9 +62,6 @@ private:
     QString strName;
     QTcpSocket *camSocket;
     DlgUserProfile *pDlgUserProfile;
-#ifndef Q_WS_WIN
-    DlgCam *pDlgCam;
-#endif
 
     // other
     QString strFontSize;

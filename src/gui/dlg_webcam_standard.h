@@ -18,61 +18,55 @@
  *                                                                          *
  ****************************************************************************/
 
-#ifndef NICKLISTTREEWIDGET_H
-#define NICKLISTTREEWIDGET_H
+#ifndef DLG_WEBCAM_STANDARD_H
+#define DLG_WEBCAM_STANDARD_H
 
-#include "defines.h"
-class DlgUserProfile;
-class Network;
-#include <QListWidget>
-#include <QTcpSocket>
+class SimpleRankWidget;
+#include <QDialog>
+#include "ui_webcam_standard.h"
 
-class NickListWidget : public QListWidget
+class DlgWebcamStandard : public QDialog
 {
     Q_OBJECT
 public:
-    NickListWidget(Network *, QTcpSocket *, DlgUserProfile *);
-    virtual ~NickListWidget();
-    void set_channel(QString);
-    QString get_channel() { return strChannel; }
-    void add(QString);
-    void remove(QString);
+    DlgWebcamStandard();
+
+public slots:
+    void update_image(QByteArray);
+    void update_text(QString);
+    void update_rank(int);
+    void user_error(QString);
+    void update_status(QString);
+    void vote_ok();
+    void error(QString);
+    void add_user(QString,int,QString);
+    void update_user(QString,int,QString);
+    void remove_user(QString);
+    void clear_users();
 
 private:
-    // params
-    Network *pNetwork;
-    QTcpSocket *camSocket;
-    DlgUserProfile *pDlgUserProfile;
-    // other
-    QString strChannel;
-    enum { maxOpenChannels = 30 };
-    QAction *openChannelsActs[maxOpenChannels];
+    Ui::uiWebcamStandard ui;
+    QString strNick;
+    SimpleRankWidget *pSimpleRankWidget;
+
+    void create_gui();
+    void create_signals();
+    bool exist_user(QString);
 
 private slots:
-    void priv();
-    void whois();
-    void profile();
-    void cam();
-    void friends_add();
-    void friends_del();
-    void ignore_add();
-    void ignore_del();
-    void kick();
-    void ban();
-    void kban();
-    void ipban();
-    void op_add();
-    void op_del();
-    void halfop_add();
-    void halfop_del();
-    void moderator_add();
-    void moderator_del();
-    void voice_add();
-    void voice_del();
-    void invite();
+    void change_user(QListWidgetItem *);
+    void vote_minus();
+    void vote_plus();
+    void enable_vote();
+    void button_close();
 
 protected:
-    virtual void contextMenuEvent(QContextMenuEvent *);
+    virtual void closeEvent(QCloseEvent *);
+
+signals:
+    void close_cam();
+    void network_send(QString);
+    void set_user(QString);
 };
 
-#endif // NICKLISTTREEWIDGET_H
+#endif // DLG_WEBCAM_STANDARD_H

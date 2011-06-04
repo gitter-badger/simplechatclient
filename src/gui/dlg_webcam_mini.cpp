@@ -18,61 +18,35 @@
  *                                                                          *
  ****************************************************************************/
 
-#ifndef NICKLISTTREEWIDGET_H
-#define NICKLISTTREEWIDGET_H
+#include "dlg_webcam_mini.h"
 
-#include "defines.h"
-class DlgUserProfile;
-class Network;
-#include <QListWidget>
-#include <QTcpSocket>
-
-class NickListWidget : public QListWidget
+DlgWebcamMini::DlgWebcamMini(QString nick)
 {
-    Q_OBJECT
-public:
-    NickListWidget(Network *, QTcpSocket *, DlgUserProfile *);
-    virtual ~NickListWidget();
-    void set_channel(QString);
-    QString get_channel() { return strChannel; }
-    void add(QString);
-    void remove(QString);
+    ui.setupUi(this);
+    setWindowFlags(Qt::Dialog | Qt::WindowStaysOnTopHint);
+    setWindowTitle(nick);
+}
 
-private:
-    // params
-    Network *pNetwork;
-    QTcpSocket *camSocket;
-    DlgUserProfile *pDlgUserProfile;
-    // other
-    QString strChannel;
-    enum { maxOpenChannels = 30 };
-    QAction *openChannelsActs[maxOpenChannels];
+void DlgWebcamMini::update_image(QByteArray b)
+{
+    QPixmap pixmap;
+    pixmap.loadFromData(b);
+    ui.label_img->setPixmap(pixmap);
+}
 
-private slots:
-    void priv();
-    void whois();
-    void profile();
-    void cam();
-    void friends_add();
-    void friends_del();
-    void ignore_add();
-    void ignore_del();
-    void kick();
-    void ban();
-    void kban();
-    void ipban();
-    void op_add();
-    void op_del();
-    void halfop_add();
-    void halfop_del();
-    void moderator_add();
-    void moderator_del();
-    void voice_add();
-    void voice_del();
-    void invite();
+void DlgWebcamMini::update_text(QString s)
+{
+    ui.label_img->setText(s);
+}
 
-protected:
-    virtual void contextMenuEvent(QContextMenuEvent *);
-};
+void DlgWebcamMini::error(QString s)
+{
+    s += "<br>"+tr("Disconnected from server webcams");
+    update_text(s);
+}
 
-#endif // NICKLISTTREEWIDGET_H
+void DlgWebcamMini::closeEvent(QCloseEvent *e)
+{
+    Q_UNUSED (e);
+    emit close_cam();
+}

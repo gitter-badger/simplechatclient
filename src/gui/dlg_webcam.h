@@ -18,61 +18,33 @@
  *                                                                          *
  ****************************************************************************/
 
-#ifndef NICKLISTTREEWIDGET_H
-#define NICKLISTTREEWIDGET_H
+#ifndef DLG_WEBCAM_H
+#define DLG_WEBCAM_H
 
-#include "defines.h"
-class DlgUserProfile;
-class Network;
-#include <QListWidget>
-#include <QTcpSocket>
+class WebcamEngine;
+class DlgWebcamMini;
+class DlgWebcamStandard;
+#include <QObject>
 
-class NickListWidget : public QListWidget
+class DlgWebcam : public QObject
 {
     Q_OBJECT
 public:
-    NickListWidget(Network *, QTcpSocket *, DlgUserProfile *);
-    virtual ~NickListWidget();
-    void set_channel(QString);
-    QString get_channel() { return strChannel; }
-    void add(QString);
-    void remove(QString);
+    DlgWebcam(QString n = "", bool m = false);
+    virtual ~DlgWebcam();
 
 private:
-    // params
-    Network *pNetwork;
-    QTcpSocket *camSocket;
-    DlgUserProfile *pDlgUserProfile;
-    // other
-    QString strChannel;
-    enum { maxOpenChannels = 30 };
-    QAction *openChannelsActs[maxOpenChannels];
+    QString strNick;
+    bool bMini;
+    WebcamEngine *pWebcamEngine;
+    DlgWebcamMini *pWebcamMini;
+    DlgWebcamStandard *pWebcamStandard;
+
+    void create_signals();
 
 private slots:
-    void priv();
-    void whois();
-    void profile();
-    void cam();
-    void friends_add();
-    void friends_del();
-    void ignore_add();
-    void ignore_del();
-    void kick();
-    void ban();
-    void kban();
-    void ipban();
-    void op_add();
-    void op_del();
-    void halfop_add();
-    void halfop_del();
-    void moderator_add();
-    void moderator_del();
-    void voice_add();
-    void voice_del();
-    void invite();
-
-protected:
-    virtual void contextMenuEvent(QContextMenuEvent *);
+    void close_cam();
+    void user_error(QString);
 };
 
-#endif // NICKLISTTREEWIDGET_H
+#endif // DLG_WEBCAM_H

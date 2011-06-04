@@ -29,10 +29,6 @@
 #include "notify.h"
 #include "tab_widget.h"
 
-#ifndef Q_WS_WIN
-    #include "dlg_cam.h"
-#endif
-
 TabWidget::TabWidget(Network *param1, QString param2, QTcpSocket *param3, DlgUserProfile *param4)
 {
     pNetwork = param1;
@@ -185,14 +181,6 @@ TabWidget::~TabWidget()
 {
     pMainTextEdit->clear();
 }
-
-#ifndef Q_WS_WIN
-void TabWidget::set_dlg_cam(DlgCam *param1)
-{
-    pDlgCam = param1;
-    pMainTextEdit->set_dlg_cam(pDlgCam);
-}
-#endif
 
 void TabWidget::addslashes(QString &strData)
 {

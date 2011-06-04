@@ -18,61 +18,19 @@
  *                                                                          *
  ****************************************************************************/
 
-#ifndef NICKLISTTREEWIDGET_H
-#define NICKLISTTREEWIDGET_H
+#ifndef WEBCAMDELEGATE_H
+#define WEBCAMDELEGATE_H
 
-#include "defines.h"
-class DlgUserProfile;
-class Network;
-#include <QListWidget>
-#include <QTcpSocket>
+#include <QAbstractItemDelegate>
 
-class NickListWidget : public QListWidget
+class WebcamDelegate : public QAbstractItemDelegate
 {
     Q_OBJECT
 public:
-    NickListWidget(Network *, QTcpSocket *, DlgUserProfile *);
-    virtual ~NickListWidget();
-    void set_channel(QString);
-    QString get_channel() { return strChannel; }
-    void add(QString);
-    void remove(QString);
+    WebcamDelegate(QObject *parent = 0);
 
-private:
-    // params
-    Network *pNetwork;
-    QTcpSocket *camSocket;
-    DlgUserProfile *pDlgUserProfile;
-    // other
-    QString strChannel;
-    enum { maxOpenChannels = 30 };
-    QAction *openChannelsActs[maxOpenChannels];
-
-private slots:
-    void priv();
-    void whois();
-    void profile();
-    void cam();
-    void friends_add();
-    void friends_del();
-    void ignore_add();
-    void ignore_del();
-    void kick();
-    void ban();
-    void kban();
-    void ipban();
-    void op_add();
-    void op_del();
-    void halfop_add();
-    void halfop_del();
-    void moderator_add();
-    void moderator_del();
-    void voice_add();
-    void voice_del();
-    void invite();
-
-protected:
-    virtual void contextMenuEvent(QContextMenuEvent *);
+    void paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const;
+    QSize sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const;
 };
 
-#endif // NICKLISTTREEWIDGET_H
+#endif // WEBCAMDELEGATE_H

@@ -147,8 +147,8 @@ if (UNIX)
 endif (UNIX)
 
 if (UNIX AND NOT APPLE)
-	set (CMAKE_C_FLAGS "-W -Wall -fno-strict-aliasing ${CMAKE_C_FLAGS}")
-	set (CMAKE_CXX_FLAGS "-W -Wall -fno-strict-aliasing ${CMAKE_CXX_FLAGS}")
+	set (CMAKE_C_FLAGS "-W -Wall ${CMAKE_C_FLAGS}")
+	set (CMAKE_CXX_FLAGS "-W -Wall ${CMAKE_CXX_FLAGS}")
 endif (UNIX AND NOT APPLE)
 
 # debug
@@ -161,24 +161,7 @@ if (UNIX)
 	)
 endif (UNIX)
 
-# v4l2
-if (UNIX)
-	find_package(LibV4L2)
-
-	IF (LIBV4L2_FOUND)
-		SET (HAVE_LIBV4L2 1)
-		SET (V4L2_CAP_VIDEO_CAPTURE 1)
-		message (STATUS "Lib Video4Linux2 found")
-	ELSE (LIBV4L2_FOUND)
-		check_include_files(linux/videodev2.h V4L2_FOUND)
-
-		if (NOT V4L2_FOUND)
-			message (FATAL_ERROR "Video4Linux2 not found")
-		endif (NOT V4L2_FOUND)
-	endif (LIBV4L2_FOUND)
-endif (UNIX)
-
-# kamerzysta/video
+# kamerzysta/cam
 if (WIN32)
 	LIST (APPEND scc_SRCS
 		common/kamerzysta.cpp
@@ -188,15 +171,24 @@ if (WIN32)
 	)
 else (WIN32)
 	LIST (APPEND scc_UIS
-		../ui/cam.ui
+		../ui/webcam_standard.ui
+		../ui/webcam_mini.ui
 	)
 	LIST (APPEND scc_SRCS
-		common/video.cpp
-		gui/dlg_cam.cpp
+		common/webcam_engine.cpp
+		common/webcam_network.cpp
+		gui/dlg_webcam.cpp
+		gui/dlg_webcam_standard.cpp
+		gui/dlg_webcam_mini.cpp
+		widgets/webcamdelegate.cpp
 	)
 	LIST (APPEND scc_MOC_HDRS
-		common/video.h
-		gui/dlg_cam.h
+		common/webcam_engine.h
+		common/webcam_network.h
+		gui/dlg_webcam.h
+		gui/dlg_webcam_standard.h
+		gui/dlg_webcam_mini.h
+		widgets/webcamdelegate.h
 	)
 endif (WIN32)
 

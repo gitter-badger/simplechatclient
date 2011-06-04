@@ -200,6 +200,64 @@
     </message>
 </context>
 <context>
+    <name>WebcamEngine</name>
+    <message>
+        <source>Starting the service webcams</source>
+        <translation>Uruchamianie obsługi kamerek</translation>
+    </message>
+    <message>
+        <source>Connected to server webcam.</source>
+        <translation>Połączono z serwerem kamerek.</translation>
+    </message>
+    <message>
+        <source>Please wait ...</source>
+        <translation>Proszę czekać...</translation>
+    </message>
+    <message>
+        <source>Disconnected from server webcams</source>
+        <translation>Rozłączono z serwerem kamerek</translation>
+    </message>
+    <message>
+        <source>Select user</source>
+        <translation>Wybierz użytkownika</translation>
+    </message>
+    <message>
+        <source>This user does not send data</source>
+        <translation>Podany użytkownik nie wysyła obrazu</translation>
+    </message>
+    <message>
+        <source>Setting mode for viewing only</source>
+        <translation>Ustawienie trybu tylko do oglądania</translation>
+    </message>
+    <message>
+        <source>The specified user has left the chat</source>
+        <translation>Podany użytkownik opuścił czat</translation>
+    </message>
+    <message>
+        <source>The specified user does not have a webcam enabled</source>
+        <translation>Podany użytkownik nie ma włączonej kamerki</translation>
+    </message>
+    <message>
+        <source>Failed to retrieve the image from the webcam</source>
+        <translation>Nie udało się pobrać obrazu z kamerki</translation>
+    </message>
+    <message>
+        <source>Invalid authorization key</source>
+        <translation>Nieprawidłowy klucz autoryzacji</translation>
+    </message>
+</context>
+<context>
+    <name>WebcamNetwork</name>
+    <message>
+        <source>Error: Failed to send data! [%1]</source>
+        <translation>Błąd: Nie udało się wysłać danych! [%1]</translation>
+    </message>
+    <message>
+        <source>Error: Failed to send data! [Not connected]</source>
+        <translation>Błąd: Nie udało się wysłać danych! [Not connected]</translation>
+    </message>
+</context>
+<context>
     <name>MainWindow</name>
     <message>
         <source>Navigation bar</source>
@@ -429,174 +487,37 @@
     </message>
 </context>
 <context>
-    <name>DlgCam</name>
+    <name>DlgWebcamMini</name>
+    <message>
+        <source>Disconnected from server webcams</source>
+        <translation>Rozłączono z serwerem kamerek</translation>
+    </message>
+</context>
+<context>
+    <name>DlgWebcamStandard</name>
     <message>
         <source>Webcams</source>
         <translation>Kamerki</translation>
     </message>
     <message>
-        <source>Error: Failed to send data! [%1]</source>
-        <translation>Błąd: Nie udało się wysłać danych! [%1]</translation>
-    </message>
-    <message>
-        <source>Error: Failed to send data! [Not connected]</source>
-        <translation>Błąd: Nie udało się wysłać danych! [Not connected]</translation>
-    </message>
-    <message>
-        <source>This user does not send data</source>
-        <translation>Podany użytkownik nie wysyła obrazu</translation>
-    </message>
-    <message>
-        <source>Setting mode for viewing only</source>
-        <translation>Ustawienie trybu tylko do oglądania</translation>
-    </message>
-    <message>
-        <source>Select user</source>
-        <translation>Wybierz użytkownika</translation>
-    </message>
-    <message>
-        <source>Downloading image</source>
-        <translation>Pobieranie obrazu</translation>
-    </message>
-    <message>
-        <source>Authorization failed</source>
-        <translation>Błąd autoryzacji</translation>
-    </message>
-    <message>
-        <source>The specified user has left the chat</source>
-        <translation>Podany użytkownik opuścił czat</translation>
-    </message>
-    <message>
-        <source>The specified user does not have a webcam enabled</source>
-        <translation>Podany użytkownik nie ma włączonej kamerki</translation>
-    </message>
-    <message>
-        <source>Failed to retrieve the image from the webcam</source>
-        <translation>Nie udało się pobrać obrazu z kamerki</translation>
-    </message>
-    <message>
-        <source>Invalid authorization key</source>
-        <translation>Nieprawidłowy klucz autoryzacji</translation>
-    </message>
-    <message>
-        <source>Connected to server webcam.</source>
-        <translation>Połączono z serwerem kamerek.</translation>
-    </message>
-    <message>
-        <source>Please wait ...</source>
-        <translation>Proszę czekać...</translation>
-    </message>
-    <message>
-        <source>Disconnected from server webcams</source>
-        <translation>Rozłączono z serwerem kamerek</translation>
-    </message>
-    <message>
-        <source>Disconnected from server [%1]</source>
-        <translation>Rozłączono z serwerem [%1]</translation>
-    </message>
-    <message>
-        <source>Starting the service webcams</source>
-        <translation>Uruchamianie obsługi kamerek</translation>
-    </message>
-    <message>
-        <source>Viewing</source>
-        <translation>Oglądanie</translation>
-    </message>
-    <message>
-        <source>Broadcasting</source>
-        <translation>Nadawanie</translation>
-    </message>
-    <message>
-        <source>About me</source>
-        <translation>O mnie</translation>
-    </message>
-    <message>
-        <source>Settings</source>
-        <translation>Ustawienia</translation>
-    </message>
-    <message>
         <source>Nick</source>
-        <translation>Nick</translation>
-    </message>
-    <message>
-        <source>Rank</source>
-        <translation>Ocena</translation>
+        <translation>Osoba</translation>
     </message>
     <message>
         <source>Spectators</source>
         <translation>Widzów</translation>
     </message>
     <message>
-        <source>Is on channels:</source>
-        <translation>Jest na kanałach:</translation>
+        <source>Rank</source>
+        <translation>Ocena</translation>
     </message>
     <message>
-        <source>Bradcasting public</source>
-        <translation>Nadajesz publicznie</translation>
+        <source>Disconnected from server webcams</source>
+        <translation>Rozłączono z serwerem kamerek</translation>
     </message>
     <message>
-        <source>Bradcasting private</source>
-        <translation>Nadajesz prywatne</translation>
-    </message>
-    <message>
-        <source>No broadcasting</source>
-        <translation>Nie nadajesz</translation>
-    </message>
-    <message>
-        <source>Start broadcast</source>
-        <translation>Rozpocznij nadawanie</translation>
-    </message>
-    <message>
-        <source>Stop broadcast</source>
-        <translation>Zakończ nadawanie</translation>
-    </message>
-    <message>
-        <source>Funs</source>
-        <translation>Oglądają mnie</translation>
-    </message>
-    <message>
-        <source>Public</source>
-        <translation>Publiczne</translation>
-    </message>
-    <message>
-        <source>Private</source>
-        <translation>Prywatne</translation>
-    </message>
-    <message>
-        <source>My status:</source>
-        <translation>Mój opis:</translation>
-    </message>
-    <message>
-        <source>Apply</source>
-        <translation>Ustaw</translation>
-    </message>
-    <message>
-        <source>My homepage</source>
-        <translation>Moja strona WWW</translation>
-    </message>
-    <message>
-        <source>My photos</source>
-        <translation>Moje obrazki</translation>
-    </message>
-    <message>
-        <source>Add</source>
-        <translation>Dodaj</translation>
-    </message>
-    <message>
-        <source>Remove</source>
-        <translation>Usuń</translation>
-    </message>
-    <message>
-        <source>Device:</source>
-        <translation>Urządzenie nadające:</translation>
-    </message>
-    <message>
-        <source>Connect</source>
-        <translation>Połącz</translation>
-    </message>
-    <message>
-        <source>Disconnect</source>
-        <translation>Rozłącz</translation>
+        <source>Downloading image</source>
+        <translation>Pobieranie obrazu</translation>
     </message>
 </context>
 <context>

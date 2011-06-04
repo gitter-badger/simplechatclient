@@ -69,13 +69,6 @@ void TabContainer::set_dlg(DlgUserProfile *param1)
     pDlgUserProfile = param1;
 }
 
-#ifndef Q_WS_WIN
-void TabContainer::set_dlg_cam(DlgCam *param1)
-{
-    pDlgCam = param1;
-}
-#endif
-
 int TabContainer::get_index(QString strName)
 {
     for (int i = 0; i < tw.size(); i++)
@@ -115,9 +108,6 @@ void TabContainer::add_tab(QString strChannel)
 
         // create tab
         tw.append(new TabWidget(pNetwork, strChannel, camSocket, pDlgUserProfile));
-#ifndef Q_WS_WIN
-        tw.at(tw.size()-1)->set_dlg_cam(pDlgCam);
-#endif
         pTabM->addTab(tw.at(tw.size()-1), strChannel);
         pTabM->setCurrentIndex(tw.size()-1);
     }

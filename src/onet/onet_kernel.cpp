@@ -1345,19 +1345,16 @@ void OnetKernel::raw_001()
 // :cf1f4.onet 002 Merovingian :Your host is cf1f4.onet, running version InspIRCd-1.1
 void OnetKernel::raw_002()
 {
-// ignore
 }
 
 // :cf1f4.onet 003 Merovingian :This server was created 06:35:35 Jan 12 2010
 void OnetKernel::raw_003()
 {
-// ignore
 }
 
 // :cf1f4.onet 004 Merovingian cf1f4.onet InspIRCd-1.1 BGQRVWbinoqrswx DFGIJLMPQRVXYabcehiklmnopqrstuv FIJLXYabcehkloqv
 void OnetKernel::raw_004()
 {
-// ignore
 }
 
 // :cf1f4.onet 005 Merovingian WALLCHOPS WALLVOICES MODES=19 CHANTYPES=^# PREFIX=(qaohXYv)`&@%!=+ MAP MAXCHANNELS=20 MAXBANS=60 VBANLIST NICKLEN=32 CASEMAPPING=rfc1459 STATUSMSG=@%+ CHARSET=ascii :are supported by this server
@@ -1469,7 +1466,6 @@ void OnetKernel::raw_111n()
 // :NickServ!service@service.onet NOTICE Merovingian :112 aleksa7 :end of user info
 void OnetKernel::raw_112n()
 {
-// ignore
 }
 
 // NS FRIENDS
@@ -1491,7 +1487,6 @@ void OnetKernel::raw_121n()
 // :NickServ!service@service.onet NOTICE scc_test :122 :end of friend list
 void OnetKernel::raw_122n()
 {
-// ignore
 }
 
 // :NickServ!service@service.onet NOTICE Merovingian :123 mokka00 Viola_de_luxe :friend nick changed
@@ -1529,7 +1524,6 @@ void OnetKernel::raw_131n()
 // :NickServ!service@service.onet NOTICE scc_test :132 :end of ignore list
 void OnetKernel::raw_132n()
 {
-// ignore
 }
 
 // :NickServ!service@service.onet NOTICE Merovingian :133 test_nick test_nick_nowy :ignored nick changed
@@ -1575,7 +1569,6 @@ void OnetKernel::raw_141n()
 // :NickServ!service@service.onet NOTICE scc_test :142 :end of favourites list
 void OnetKernel::raw_142n()
 {
-// ignore
 }
 
 // CS HOMES
@@ -1625,7 +1618,6 @@ void OnetKernel::raw_151n()
 // :ChanServ!service@service.onet NOTICE scc_test :152 :end of homes list
 void OnetKernel::raw_152n()
 {
-// ignore
 }
 
 // CS INFO #scc
@@ -1760,7 +1752,6 @@ void OnetKernel::raw_163n()
 // :ChanServ!service@service.onet NOTICE scc_test :164 #scc :end of channel info
 void OnetKernel::raw_164n()
 {
-// ignore
 }
 
 // CS INFO #Relax
@@ -1805,7 +1796,6 @@ void OnetKernel::raw_170n()
 // :RankServ!service@service.onet NOTICE Merovingian :171 Merovingian :end of user stats
 void OnetKernel::raw_171n()
 {
-// ignore
 }
 
 // RS INFO #scc
@@ -1836,14 +1826,12 @@ void OnetKernel::raw_175n()
 // :RankServ!service@service.onet NOTICE Merovingian :176 #scc :end of channel stats
 void OnetKernel::raw_176n()
 {
-// ignore
 }
 
 // NS SET city
 // :NickServ!service@service.onet NOTICE Merovingian :210 :nothing changed
 void OnetKernel::raw_210n()
 {
-// ignore
 }
 
 // NS SET city
@@ -2000,7 +1988,6 @@ void OnetKernel::raw_250n()
 // :cf1f4.onet 251 Merovingian :There are 2300 users and 5 invisible on 10 servers
 void OnetKernel::raw_251()
 {
-// ignore
 }
 
 // CS DROP czesctoja
@@ -2046,7 +2033,6 @@ void OnetKernel::raw_251n()
 // :cf1f4.onet 252 Merovingian 5 :operator(s) online
 void OnetKernel::raw_252()
 {
-// ignore
 }
 
 // CS DROP czesctoja
@@ -2081,7 +2067,6 @@ void OnetKernel::raw_252n()
 // :cf1f4.onet 253 Merovingian 1 :unknown connections
 void OnetKernel::raw_253()
 {
-// ignore
 }
 
 // :ChanServ!service@service.onet NOTICE scc_test :253 #test_scc_moj Merovingian :channel owner changed
@@ -2104,7 +2089,6 @@ void OnetKernel::raw_253n()
 // :cf1f4.onet 254 Merovingian 4641 :channels formed
 void OnetKernel::raw_254()
 {
-// ignore
 }
 
 // CS TRANSFER #test_scc_moj Merovingian
@@ -2127,7 +2111,6 @@ void OnetKernel::raw_254n()
 // :cf1f4.onet 255 Merovingian :I have 568 clients and 1 servers
 void OnetKernel::raw_255()
 {
-// ignore
 }
 
 // CS BAN #scc ADD cos
@@ -2359,14 +2342,12 @@ void OnetKernel::raw_263n()
 // :cf1f4.onet 265 Merovingian :Current Local Users: 568  Max: 1633
 void OnetKernel::raw_265()
 {
-// ignore
 }
 
 // LUSERS
 // :cf1f4.onet 266 Merovingian :Current Global Users: 2305  Max: 6562
 void OnetKernel::raw_266()
 {
-// ignore
 }
 
 // SILENCE
@@ -2380,7 +2361,6 @@ void OnetKernel::raw_271()
 // :cf1f2.onet 272 Merovingian :End of Silence List
 void OnetKernel::raw_272()
 {
-// ignore
 }
 
 // WHOIS Merovingian
@@ -2658,7 +2638,6 @@ void OnetKernel::raw_317()
 // :cf1f4.onet 318 scc_test Merovingian :End of /WHOIS list.
 void OnetKernel::raw_318()
 {
-// ignore
 }
 
 // WHOIS
@@ -2819,7 +2798,6 @@ void OnetKernel::raw_353()
 // :cf1f1.onet 355 Merovingian #uwaga 958 :users
 void OnetKernel::raw_355()
 {
-// ignore
 }
 
 // NAMES
@@ -2837,7 +2815,6 @@ void OnetKernel::raw_366()
 // :cf1f2.onet 369 Merovingian merovingian :End of WHOWAS
 void OnetKernel::raw_369()
 {
-// ignore
 }
 
 // INFO
@@ -2873,7 +2850,6 @@ void OnetKernel::raw_372()
 // :cf1f3.onet 374 ~test :End of /INFO list
 void OnetKernel::raw_374()
 {
-// ignore
 }
 
 // MOTD
@@ -2890,7 +2866,6 @@ void OnetKernel::raw_375()
 // :cf1f1.onet 376 scc_test :End of message of the day.
 void OnetKernel::raw_376()
 {
-// ignore
 }
 
 // WHOIS
@@ -3186,28 +3161,24 @@ void OnetKernel::raw_412n()
 // :RankServ!service@service.onet NOTICE istota_bezduszna :413 istota_bezduszna :user has no stats
 void OnetKernel::raw_413n()
 {
-// ignore
 }
 
 // RS INFO #testa
 // :RankServ!service@service.onet NOTICE Merovingian :414 #testa :channel has no stats
 void OnetKernel::raw_414n()
 {
-// ignore
 }
 
 // RS INFO succubi
 // :RankServ!service@service.onet NOTICE Merovingian :415 Succubi :permission denied
 void OnetKernel::raw_415n()
 {
-// ignore
 }
 
 // RS INFO #a
 // :RankServ!service@service.onet NOTICE Merovingian :416 #a :permission denied
 void OnetKernel::raw_416n()
 {
-// ignore
 }
 
 // :NickServ!service@service.onet NOTICE scc_test :420 aleksa7 :is already on your friend list
@@ -3854,7 +3825,6 @@ void OnetKernel::raw_605()
 // :cf1f2.onet 607 Merovingian :End of WATCH list
 void OnetKernel::raw_607()
 {
-// ignore
 }
 
 // SERVER
@@ -3886,14 +3856,12 @@ void OnetKernel::raw_702()
 // :cf1f2.onet 703 Merovingian :End of MODULES list
 void OnetKernel::raw_703()
 {
-// ignore
 }
 
 // COMMANDS
 // :cf1f2.onet 704 Merovingian :End of COMMANDS list
 void OnetKernel::raw_704()
 {
-// ignore
 }
 
 //:cf1f3.onet 801 scc_test :q5VMy1wl6hKL5ZUt
@@ -4136,7 +4104,6 @@ void OnetKernel::raw_819()
 // :cf1f3.onet 820 scc_test :End of simple channel list.
 void OnetKernel::raw_820()
 {
-    // ignore
 }
 
 // :cf1f3.onet 821 scc_test #scc :Channel is not moderated

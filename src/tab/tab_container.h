@@ -22,9 +22,6 @@
 #define TAB_CONTAINER_H
 
 #include "defines.h"
-#ifndef Q_WS_WIN
-    class DlgCam;
-#endif
 class DlgChannelSettings;
 class DlgModeration;
 class DlgUserProfile;
@@ -45,9 +42,6 @@ public:
     TabContainer(Network *, TabManager *, QTcpSocket *);
     virtual ~TabContainer();
     void set_dlg(DlgUserProfile *);
-#ifndef Q_WS_WIN
-    void set_dlg_cam(DlgCam *);
-#endif
     bool exist_tab(QString);
     void add_tab(QString);
     void remove_tab(QString);
@@ -81,9 +75,6 @@ private:
     DlgModeration *pDlgModeration;
     QTcpSocket *camSocket;
     DlgUserProfile *pDlgUserProfile;
-#ifndef Q_WS_WIN
-    DlgCam *pDlgCam;
-#endif
     // other
     QList<TabWidget*> tw;
 

@@ -16,7 +16,6 @@ SOURCES += src/avatars/avatar.cpp \
     src/common/kamerzysta.cpp \
     src/common/log.cpp \
     src/common/replace.cpp \
-    src/common/video.cpp \
     src/core/core.cpp \
     src/core/debug.cpp \
     src/core/main.cpp \
@@ -26,7 +25,6 @@ SOURCES += src/avatars/avatar.cpp \
     src/core/update.cpp \
     src/gui/dlg_about.cpp \
     src/gui/dlg_awaylog.cpp \
-    src/gui/dlg_cam.cpp \
     src/gui/dlg_channel_favourites.cpp \
     src/gui/dlg_channel_homes.cpp \
     src/gui/dlg_channel_key.cpp \
@@ -65,7 +63,13 @@ SOURCES += src/avatars/avatar.cpp \
     src/widgets/nicklistwidget.cpp \
     src/widgets/simplerankwidget.cpp \
     src/widgets/simplestatswidget.cpp \
-    src/widgets/toolwidget.cpp
+    src/widgets/toolwidget.cpp \
+    src/common/webcam_network.cpp \
+    src/gui/dlg_webcam.cpp \
+    src/gui/dlg_webcam_mini.cpp \
+    src/gui/dlg_webcam_standard.cpp \
+    src/common/webcam_engine.cpp \
+    src/widgets/webcamdelegate.cpp
 HEADERS += src/avatars/avatar.h \
     src/common/commands.h \
     src/common/config.h \
@@ -74,7 +78,6 @@ HEADERS += src/avatars/avatar.h \
     src/common/log.h \
     src/common/kamerzysta.h \
     src/common/replace.h \
-    src/common/video.h \
     src/core/core.h \
     src/core/debug.h \
     src/core/defines.h \
@@ -85,7 +88,6 @@ HEADERS += src/avatars/avatar.h \
     src/core/update.h \
     src/gui/dlg_about.h \
     src/gui/dlg_awaylog.h \
-    src/gui/dlg_cam.h \
     src/gui/dlg_channel_favourites.h \
     src/gui/dlg_channel_homes.h \
     src/gui/dlg_channel_key.h \
@@ -124,7 +126,13 @@ HEADERS += src/avatars/avatar.h \
     src/widgets/nicklistwidget.h \
     src/widgets/simplerankwidget.h \
     src/widgets/simplestatswidget.h \
-    src/widgets/toolwidget.h
+    src/widgets/toolwidget.h \
+    src/common/webcam_network.h \
+    src/gui/dlg_webcam.h \
+    src/gui/dlg_webcam_mini.h \
+    src/gui/dlg_webcam_standard.h \
+    src/common/webcam_engine.h \
+    src/widgets/webcamdelegate.h
 FORMS += ui/about.ui \
     ui/awaylog.ui \
     ui/cam.ui \
@@ -150,4 +158,6 @@ FORMS += ui/about.ui \
     ui/register_nick.ui \
     ui/update.ui \
     ui/user_avatar.ui \
-    ui/user_profile.ui
+    ui/user_profile.ui \
+    ui/webcam_mini.ui \
+    ui/webcam_standard.ui

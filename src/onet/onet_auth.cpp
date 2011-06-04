@@ -112,6 +112,7 @@ void OnetAuth::authorize(QString param1, QString param2, QString param3)
     if (settings.value("debug").toString() == "on") { qDebug() << "Override: " << bOverride; }
 #endif
 
+/*
     QString strRandom = "";
     while(strRandom.length() < 11)
     {
@@ -123,7 +124,7 @@ void OnetAuth::authorize(QString param1, QString param2, QString param3)
 #ifdef Q_WS_X11
     if (settings.value("debug").toString() == "on") { qDebug() << "Random: " << strRandom; }
 #endif
-
+*/
     QHostInfo test_host1 = QHostInfo::fromName("czat.onet.pl");
     QHostInfo test_host2 = QHostInfo::fromName("secure.onet.pl");
     QHostInfo test_host3 = QHostInfo::fromName("kropka.onet.pl");
