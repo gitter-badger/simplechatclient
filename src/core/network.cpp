@@ -92,7 +92,8 @@ void Network::clear_all()
     QSettings settings;
 
     // close cam socket
-    emit close_cam_socket();
+    if (Core::instance()->kamerzystaSocket->state() == QAbstractSocket::ConnectedState)
+        Core::instance()->kamerzystaSocket->disconnectFromHost();
 
     // set button
     emit set_disconnected();

@@ -25,13 +25,12 @@
 class DlgUserProfile;
 class Network;
 #include <QListWidget>
-#include <QTcpSocket>
 
 class NickListWidget : public QListWidget
 {
     Q_OBJECT
 public:
-    NickListWidget(Network *, QTcpSocket *, DlgUserProfile *);
+    NickListWidget(Network *, DlgUserProfile *);
     virtual ~NickListWidget();
     void set_channel(QString);
     QString get_channel() { return strChannel; }
@@ -41,7 +40,6 @@ public:
 private:
     // params
     Network *pNetwork;
-    QTcpSocket *camSocket;
     DlgUserProfile *pDlgUserProfile;
     // other
     QString strChannel;

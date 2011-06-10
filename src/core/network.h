@@ -87,7 +87,6 @@ signals:
     void update_nick(QString);
     void update_actions();
     void clear_all_nicklist();
-    void close_cam_socket();
 };
 
 #endif // NETWORK_H

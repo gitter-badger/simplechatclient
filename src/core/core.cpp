@@ -47,6 +47,8 @@ Core::Core() : window(0)
 
 Core::~Core()
 {
+    kamerzystaSocket->deleteLater();
+
     delete pUpdate;
     delete window;
     window = 0;
@@ -55,6 +57,10 @@ Core::~Core()
 void Core::init()
 {
     createSettings();
+
+    kamerzystaSocket = new QTcpSocket();
+    kamerzystaSocket->setSocketOption(QAbstractSocket::LowDelayOption, 1);
+    kamerzystaSocket->setSocketOption(QAbstractSocket::KeepAliveOption, 0);
 }
 
 void Core::createGui()
@@ -66,7 +72,7 @@ void Core::createSettings()
 {
     // default settings
     QSettings settings;
-    settings.setValue("version", "1.0.13.894");
+    settings.setValue("version", "1.0.13.895");
     settings.setValue("logged", "off");
     settings.setValue("busy", "off");
     settings.setValue("away", "off");

@@ -35,11 +35,10 @@
     #include "dlg_webcam.h"
 #endif
 
-NickListWidget::NickListWidget(Network *param1, QTcpSocket *param2, DlgUserProfile *param3)
+NickListWidget::NickListWidget(Network *param1, DlgUserProfile *param2)
 {
     pNetwork = param1;
-    camSocket = param2;
-    pDlgUserProfile = param3;
+    pDlgUserProfile = param2;
 
     setSortingEnabled(false);
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
@@ -112,7 +111,7 @@ void NickListWidget::cam()
 
     QString strNick = this->selectedItems().at(0)->text();
 #ifdef Q_WS_WIN
-    (new Kamerzysta(camSocket))->show(strNick);
+    (new Kamerzysta(Core::instance()->kamerzystaSocket))->show(strNick);
 #else
     new DlgWebcam(strNick, true);
 #endif

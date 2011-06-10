@@ -27,11 +27,10 @@
 #include "tab_widget.h"
 #include "tab_container.h"
 
-TabContainer::TabContainer(Network *param1, TabManager *param2, QTcpSocket *param3)
+TabContainer::TabContainer(Network *param1, TabManager *param2)
 {
     pNetwork = param1;
     pTabM = param2;
-    camSocket = param3;
 }
 
 TabContainer::~TabContainer()
@@ -107,7 +106,7 @@ void TabContainer::add_tab(QString strChannel)
         Core::instance()->mChannelNicks.insert(strChannel, 0);
 
         // create tab
-        tw.append(new TabWidget(pNetwork, strChannel, camSocket, pDlgUserProfile));
+        tw.append(new TabWidget(pNetwork, strChannel, pDlgUserProfile));
         pTabM->addTab(tw.at(tw.size()-1), strChannel);
         pTabM->setCurrentIndex(tw.size()-1);
     }

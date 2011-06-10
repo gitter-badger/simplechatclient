@@ -40,7 +40,6 @@ class TabManager;
 #include <QMenuBar>
 #include <QObject>
 #include <QSystemTrayIcon>
-#include <QTcpSocket>
 #include <QToolBar>
 
 /**
@@ -106,7 +105,6 @@ private:
     QDockWidget *rightDockWidget;
 
     // other
-    QTcpSocket *camSocket; // for kamerzysta
     void set_geometry();
     void create_actions();
     void create_menus();
@@ -158,7 +156,6 @@ private slots:
     void set_connected();
     void set_disconnected();
     void update_actions();
-    void close_cam_socket();
     void update_awaylog_status();
     void set_connect_enabled(bool);
     void tab_close_requested(int);

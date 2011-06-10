@@ -30,7 +30,6 @@ class TabManager;
 class TabWidget;
 #include <QMap>
 #include <QObject>
-#include <QTcpSocket>
 
 /**
  * Class for displaying messages in tabs or change main window settings
@@ -39,7 +38,7 @@ class TabContainer : public QObject
 {
     Q_OBJECT
 public:
-    TabContainer(Network *, TabManager *, QTcpSocket *);
+    TabContainer(Network *, TabManager *);
     virtual ~TabContainer();
     void set_dlg(DlgUserProfile *);
     bool exist_tab(QString);
@@ -73,7 +72,6 @@ private:
     TabManager *pTabM;
     DlgChannelSettings *pDlgChannelSettings;
     DlgModeration *pDlgModeration;
-    QTcpSocket *camSocket;
     DlgUserProfile *pDlgUserProfile;
     // other
     QList<TabWidget*> tw;

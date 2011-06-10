@@ -36,12 +36,11 @@
     #include "dlg_webcam.h"
 #endif
 
-MainTextEdit::MainTextEdit(Network *param1, QString param2, QTcpSocket *param3, DlgUserProfile *param4)
+MainTextEdit::MainTextEdit(Network *param1, QString param2, DlgUserProfile *param3)
 {
     pNetwork = param1;
     strChannel = param2;
-    camSocket = param3;
-    pDlgUserProfile = param4;
+    pDlgUserProfile = param3;
 
     strNick = QString::null;
 
@@ -91,7 +90,7 @@ void MainTextEdit::profile()
 void MainTextEdit::cam()
 {
 #ifdef Q_WS_WIN
-    (new Kamerzysta(camSocket))->show(strNick);
+    (new Kamerzysta(Core::instance()->kamerzystaSocket))->show(strNick);
 #else
     new DlgWebcam(strNick, true);
 #endif

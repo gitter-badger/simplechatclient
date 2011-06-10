@@ -65,11 +65,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     create_actions();
     create_menus();
 
-    // camsocket - for kamerzysta
-    camSocket = new QTcpSocket();
-    camSocket->setSocketOption(QAbstractSocket::LowDelayOption, 1);
-    camSocket->setSocketOption(QAbstractSocket::KeepAliveOption, 0);
-
     pTabM = new TabManager(this);
     this->setCentralWidget(pTabM);
 
@@ -79,7 +74,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     pNetwork->start(QThread::InheritPriority);
 
     // classes
-    pTabC = new TabContainer(pNetwork, pTabM, camSocket);
+    pTabC = new TabContainer(pNetwork, pTabM);
 
     pDlgChannelSettings = new DlgChannelSettings(this, pNetwork);
     pDlgModeration = new DlgModeration(this);
@@ -153,7 +148,6 @@ MainWindow::~MainWindow()
     delete pTabM;
     delete bottomDockWidget;
     delete rightDockWidget;
-    camSocket->deleteLater();
 
     // hide tray
     trayIcon->hide();
@@ -195,7 +189,7 @@ void MainWindow::createGui()
     bottomDockWidget->setWidget(pInputLineDockWidget);
 
     // nicklist
-    pNickListWidget = new NickListWidget(pNetwork, camSocket, pDlgUserProfile);
+    pNickListWidget = new NickListWidget(pNetwork, pDlgUserProfile);
     pNickListWidget->setParent(rightDockWidget);
     pNickListWidget->setItemDelegate(new NickListDelegate(pNickListWidget));
     rightDockWidget->setWidget(pNickListWidget);
@@ -415,7 +409,6 @@ void MainWindow::create_signals()
     QObject::connect(pNetwork, SIGNAL(update_nick(QString)), pInputLineDockWidget, SLOT(slot_update_nick(QString)));
     QObject::connect(pNetwork, SIGNAL(clear_all_nicklist()), this, SLOT(clear_all_nicklist()));
     QObject::connect(pNetwork, SIGNAL(update_actions()), this, SLOT(update_actions()));
-    QObject::connect(pNetwork, SIGNAL(close_cam_socket()), this, SLOT(close_cam_socket()));
 
     // auto-away
     QObject::connect(Core::instance()->autoAwayTimer, SIGNAL(timeout()), this, SLOT(timeout_autoaway()));
@@ -556,12 +549,6 @@ void MainWindow::update_actions()
         myProfileAct->setEnabled(false);
         myAvatarAct->setEnabled(false);
     }
-}
-
-void MainWindow::close_cam_socket()
-{
-    if (camSocket->state() == QAbstractSocket::ConnectedState)
-        camSocket->disconnectFromHost();
 }
 
 void MainWindow::update_awaylog_status()

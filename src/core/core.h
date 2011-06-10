@@ -26,6 +26,7 @@ class MainWindow;
 class Update;
 #include <QAction>
 #include <QObject>
+#include <QTcpSocket>
 #include <QTimer>
 
 /**
@@ -86,6 +87,8 @@ public:
     QList<QString> lOfflineNicks;
     // auto-away
     QTimer *autoAwayTimer;
+    // kamerzysta socket
+    QTcpSocket *kamerzystaSocket;
 
 public slots:
     void quit();

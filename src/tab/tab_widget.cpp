@@ -29,12 +29,11 @@
 #include "notify.h"
 #include "tab_widget.h"
 
-TabWidget::TabWidget(Network *param1, QString param2, QTcpSocket *param3, DlgUserProfile *param4)
+TabWidget::TabWidget(Network *param1, QString param2, DlgUserProfile *param3)
 {
     pNetwork = param1;
     strName = param2;
-    camSocket = param3;
-    pDlgUserProfile = param4;
+    pDlgUserProfile = param3;
 
     QSettings settings;
     QString strDefaultFontColor = settings.value("default_font_color").toString();
@@ -105,7 +104,7 @@ TabWidget::TabWidget(Network *param1, QString param2, QTcpSocket *param3, DlgUse
     topLayout->addWidget(topRightWidget);
     topWidget->setLayout(topLayout);
 
-    pMainTextEdit = new MainTextEdit(pNetwork, strName, camSocket, pDlgUserProfile);
+    pMainTextEdit = new MainTextEdit(pNetwork, strName, pDlgUserProfile);
     pMainTextEdit->document()->setMaximumBlockCount(1000);
     pMainTextEdit->setReadOnly(true);
     pMainTextEdit->setAcceptRichText(false);

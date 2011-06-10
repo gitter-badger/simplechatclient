@@ -28,7 +28,6 @@ class MainWindow;
 class Network;
 class TabManager;
 #include <QLabel>
-#include <QTcpSocket>
 #include <QTextEdit>
 #include <QVBoxLayout>
 #include <QWidget>
@@ -40,7 +39,7 @@ class TabWidget : public QWidget
 {
     Q_OBJECT
 public:
-    TabWidget(Network *, QString, QTcpSocket *, DlgUserProfile *);
+    TabWidget(Network *, QString, DlgUserProfile *);
     virtual ~TabWidget();
     inline QString get_name() { return strName; }
     void addslashes(QString &);
@@ -60,7 +59,6 @@ private:
     // params
     Network *pNetwork;
     QString strName;
-    QTcpSocket *camSocket;
     DlgUserProfile *pDlgUserProfile;
 
     // other
