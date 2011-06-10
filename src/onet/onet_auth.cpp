@@ -73,8 +73,15 @@ QString OnetAuth::network_request(QNetworkAccessManager *accessManager, QString 
     return strData;
 }
 
-void OnetAuth::authorize(QString param1, QString param2, QString param3)
+void OnetAuth::authorize(QString strNick, QString strNickAuth, QString strPass)
 {
+    if ((QHostInfo::fromName("czat.onet.pl").error() != QHostInfo::NoError) || (QHostInfo::fromName("secure.onet.pl").error() != QHostInfo::NoError) || (QHostInfo::fromName("kropka.onet.pl").error() != QHostInfo::NoError))
+    {
+        QString strError = tr("Error: Authentication error [onet.pl servers are not available]");
+        pTabC->show_msg_active(strError, ErrorMessage);
+        return;
+    }
+
     QSettings settings;
 #ifdef Q_WS_X11
     if (settings.value("debug").toString() == "on")
@@ -88,10 +95,6 @@ void OnetAuth::authorize(QString param1, QString param2, QString param3)
 
     if (bAuthorizing) return; // already authorizing
 
-    QString strNick = param1;
-    QString strNickAuth = param2;
-    QString strPass = param3;
-    QString strVersion;
     bool bOverride;
     QString strData;
     QString strGetUo;
@@ -112,137 +115,96 @@ void OnetAuth::authorize(QString param1, QString param2, QString param3)
     if (settings.value("debug").toString() == "on") { qDebug() << "Override: " << bOverride; }
 #endif
 
-/*
-    QString strRandom = "";
-    while(strRandom.length() < 11)
+#ifdef Q_WS_X11
+    if (settings.value("debug").toString() == "on") { qDebug() << "Request: chat"; }
+#endif
+    // chat
+    network_request(accessManager, "http://czat.onet.pl/chat.html", "ch=&n=&p=&category=0");
+
+#ifdef Q_WS_X11
+    if (settings.value("debug").toString() == "on") { qDebug() << "Request: deploy"; }
+#endif
+    // deploy
+    QString strVersion = network_request(accessManager, "http://czat.onet.pl/_s/deployOnetCzat.js", QString::null);
+    strVersion = this->get_version(strVersion);
+    strVersion = QString("1.1(%1 - R)").arg(strVersion);
+
+    QString strNickLen = QString("%1").arg(strNick.length());
+    QString strVersionLen = QString("%1").arg(strVersion.length());
+
+#ifdef Q_WS_X11
+    if (settings.value("debug").toString() == "on") { qDebug() << "Request: kropka"; }
+#endif
+    // kropka
+    QString strKropka = "http://kropka.onet.pl/_s/kropka/1?DV=czat%2Fchat&SC=1&IP=&DG=id%3Dno-gemius&RI=&C1=&CL=std161&CS=1280x800x24&CW=1280x243&DU=http://czat.onet.pl/chat.html&DR=http://czat.onet.pl/";
+    network_request(accessManager, strKropka, QString::null);
+
+#ifdef Q_WS_X11
+    if (settings.value("debug").toString() == "on") { qDebug() << "Request: kropka full"; }
+#endif
+    // full
+    network_request(accessManager, "http://kropka.onet.pl/_s/kropka/1?DV=czat/applet/FULL", QString::null);
+
+#ifdef Q_WS_X11
+    if (settings.value("debug").toString() == "on") { qDebug() << "Request: sk"; }
+#endif
+    // sk
+    network_request(accessManager, "http://czat.onet.pl/sk.gif", QString::null);
+
+    // registered nick
+    if (!strPass.isEmpty())
     {
-        int i = qrand() % 9;
-        QChar c = i+=48;
-        strRandom += c.toAscii();
-    }
+#ifdef Q_WS_X11
+        if (settings.value("debug").toString() == "on") { qDebug() << "Request: secure kropka"; }
+#endif
+        // secure kropka
+        QString strSecureKropka = "http://kropka.onet.pl/_s/kropka/1?DV=secure&SC=1&CL=std161&CS=1280x800x24&CW=1280x243&DU=http://secure.onet.pl/&DR=";
+        network_request(accessManager, strSecureKropka, QString::null);
 
 #ifdef Q_WS_X11
-    if (settings.value("debug").toString() == "on") { qDebug() << "Random: " << strRandom; }
+        if (settings.value("debug").toString() == "on") { qDebug() << "Request: secure login"; }
 #endif
-*/
-    QHostInfo test_host1 = QHostInfo::fromName("czat.onet.pl");
-    QHostInfo test_host2 = QHostInfo::fromName("secure.onet.pl");
-    QHostInfo test_host3 = QHostInfo::fromName("kropka.onet.pl");
+        // secure login
+        strData = QString("r=&url=&login=%1&haslo=%2&app_id=20&ssl=1&ok=1").arg(strNick).arg(strPass);
+        network_request(accessManager, "https://secure.onet.pl/mlogin.html", strData);
 
-    if ((test_host1.error() == QHostInfo::NoError) && (test_host2.error() == QHostInfo::NoError) && (test_host3.error() == QHostInfo::NoError))
-    {
-#ifdef Q_WS_X11
-        if (settings.value("debug").toString() == "on") { qDebug() << "Request: chat"; }
-#endif
-        // chat
-        network_request(accessManager, "http://czat.onet.pl/chat.html", "ch=&n=&p=&category=0");
-
-#ifdef Q_WS_X11
-        if (settings.value("debug").toString() == "on") { qDebug() << "Request: deploy"; }
-#endif
-        // deploy
-        strVersion = network_request(accessManager, "http://czat.onet.pl/_s/deployOnetCzat.js", QString::null);
-        strVersion = this->get_version(strVersion);
-        strVersion = QString("1.1(%1 - R)").arg(strVersion);
-
-        QString strNickLen = QString("%1").arg(strNick.length());
-        QString strVersionLen = QString("%1").arg(strVersion.length());
-
-#ifdef Q_WS_X11
-        if (settings.value("debug").toString() == "on") { qDebug() << "Request: kropka"; }
-#endif
-        // kropka
-        QString strKropka = "http://kropka.onet.pl/_s/kropka/1?DV=czat%2Fchat&SC=1&IP=&DG=id%3Dno-gemius&RI=&C1=&CL=std161&CS=1280x800x24&CW=1280x243&DU=http://czat.onet.pl/chat.html&DR=http://czat.onet.pl/";
-        network_request(accessManager, strKropka, QString::null);
-
-/*
-#ifdef Q_WS_X11
-        if (settings.value("debug").toString() == "on") { qDebug() << "Request: targetowanie behawioralne - rc"; }
-#endif
-        // targetowanie behawioralne - rc
-        network_request(accessManager, QString("http://rc.onetwl.pl/Get/onet/JS/GetRcmd.js?ord=%1").arg(strRandom), QString::null);
-
-#ifdef Q_WS_X11
-        if (settings.value("debug").toString() == "on") { qDebug() << "Request: targetowanie behawioralne - tr"; }
-#endif
-        // targetowanie behawioralne - tr
-        QString strContentGroup = "";
-        QString strParams = "&CustomerId=onet&WebsiteId=czat.onet.pl&AC=on";
-        network_request(accessManager, QString("http://tr.onetwl.pl/Cnt/onet/CP/%1?ord=%2%3").arg(strContentGroup).arg(strRandom).arg(strParams), QString::null);
-*/
-
-#ifdef Q_WS_X11
-        if (settings.value("debug").toString() == "on") { qDebug() << "Request: kropka full"; }
-#endif
-        // full
-        network_request(accessManager, "http://kropka.onet.pl/_s/kropka/1?DV=czat/applet/FULL", QString::null);
-
-#ifdef Q_WS_X11
-        if (settings.value("debug").toString() == "on") { qDebug() << "Request: sk"; }
-#endif
-        // sk
-        network_request(accessManager, "http://czat.onet.pl/sk.gif", QString::null);
-
-        // registered nick
-        if (!strPass.isEmpty())
+        if (bOverride)
         {
 #ifdef Q_WS_X11
-            if (settings.value("debug").toString() == "on") { qDebug() << "Request: secure kropka"; }
+            if (settings.value("debug").toString() == "on") { qDebug() << "Request: override"; }
 #endif
-            // secure kropka
-            QString strSecureKropka = "http://kropka.onet.pl/_s/kropka/1?DV=secure&SC=1&CL=std161&CS=1280x800x24&CW=1280x243&DU=http://secure.onet.pl/&DR=";
-            network_request(accessManager, strSecureKropka, QString::null);
-
-#ifdef Q_WS_X11
-            if (settings.value("debug").toString() == "on") { qDebug() << "Request: secure login"; }
-#endif
-            // secure login
-            strData = QString("r=&url=&login=%1&haslo=%2&app_id=20&ssl=1&ok=1").arg(strNick).arg(strPass);
-            network_request(accessManager, "https://secure.onet.pl/mlogin.html", strData);
-
-            if (bOverride)
-            {
-#ifdef Q_WS_X11
-                if (settings.value("debug").toString() == "on") { qDebug() << "Request: override"; }
-#endif
-                // override
-                strData = QString("api_function=userOverride&params=a:1:{s:4:\"nick\";s:%1:\"%2\";}").arg(strNickLen).arg(strNick);
-                network_request(accessManager, "http://czat.onet.pl/include/ajaxapi.xml.php3", strData);
-            }
-
-#ifdef Q_WS_X11
-            if (settings.value("debug").toString() == "on") { qDebug() << "Request: getuo"; }
-#endif
-            // getuo
-            strData = QString("api_function=getUoKey&params=a:3:{s:4:\"nick\";s:%1:\"%2\";s:8:\"tempNick\";i:0;s:7:\"version\";s:%3:\"%4\";}").arg(strNickLen).arg(strNick).arg(strVersionLen).arg(strVersion);
-            strGetUo = network_request(accessManager, "http://czat.onet.pl/include/ajaxapi.xml.php3", strData);
+            // override
+            strData = QString("api_function=userOverride&params=a:1:{s:4:\"nick\";s:%1:\"%2\";}").arg(strNickLen).arg(strNick);
+            network_request(accessManager, "http://czat.onet.pl/include/ajaxapi.xml.php3", strData);
         }
-        // unregistered nick
-        else
-        {
-            // captcha dialog
-            QString strCaptcha;
-            DlgCaptcha(accessManager, &strCaptcha).exec();
 
 #ifdef Q_WS_X11
-            if (settings.value("debug").toString() == "on") { qDebug() << "Request: check code"; }
+        if (settings.value("debug").toString() == "on") { qDebug() << "Request: getuo"; }
 #endif
-            // check code
-            strData = QString("api_function=checkCode&params=a:1:{s:4:\"code\";s:%1:\"%2\";}").arg(strCaptcha.size()).arg(strCaptcha);
-            strGetUo = network_request(accessManager, "http://czat.onet.pl/include/ajaxapi.xml.php3", strData);
-
-#ifdef Q_WS_X11
-            if (settings.value("debug").toString() == "on") { qDebug() << "Request: getuo"; }
-#endif
-            // getuo
-            strData = QString("api_function=getUoKey&params=a:3:{s:4:\"nick\";s:%1:\"%2\";s:8:\"tempNick\";i:1;s:7:\"version\";s:%3:\"%4\";}").arg(strNickLen).arg(strNick).arg(strVersionLen).arg(strVersion);
-            strGetUo = network_request(accessManager, "http://czat.onet.pl/include/ajaxapi.xml.php3", strData);
-        }
+        // getuo
+        strData = QString("api_function=getUoKey&params=a:3:{s:4:\"nick\";s:%1:\"%2\";s:8:\"tempNick\";i:0;s:7:\"version\";s:%3:\"%4\";}").arg(strNickLen).arg(strNick).arg(strVersionLen).arg(strVersion);
+        strGetUo = network_request(accessManager, "http://czat.onet.pl/include/ajaxapi.xml.php3", strData);
     }
+    // unregistered nick
     else
     {
-        QString strError = tr("Error: Authentication error [onet.pl servers are not available]");
-        pTabC->show_msg_active(strError, ErrorMessage);
+        // captcha dialog
+        QString strCaptcha;
+        DlgCaptcha(accessManager, &strCaptcha).exec();
+
+#ifdef Q_WS_X11
+        if (settings.value("debug").toString() == "on") { qDebug() << "Request: check code"; }
+#endif
+        // check code
+        strData = QString("api_function=checkCode&params=a:1:{s:4:\"code\";s:%1:\"%2\";}").arg(strCaptcha.size()).arg(strCaptcha);
+        strGetUo = network_request(accessManager, "http://czat.onet.pl/include/ajaxapi.xml.php3", strData);
+
+#ifdef Q_WS_X11
+        if (settings.value("debug").toString() == "on") { qDebug() << "Request: getuo"; }
+#endif
+        // getuo
+        strData = QString("api_function=getUoKey&params=a:3:{s:4:\"nick\";s:%1:\"%2\";s:8:\"tempNick\";i:1;s:7:\"version\";s:%3:\"%4\";}").arg(strNickLen).arg(strNick).arg(strVersionLen).arg(strVersion);
+        strGetUo = network_request(accessManager, "http://czat.onet.pl/include/ajaxapi.xml.php3", strData);
     }
 
     // not empty key; not logged
