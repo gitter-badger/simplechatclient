@@ -1829,59 +1829,59 @@
     <name>OnetKernel</name>
     <message>
         <source>* %1 [%2@%3] has joined %4</source>
-        <translation>* %1 [%2@%3] wszedł do pokoju %4</translation>
+        <translation>* %1 [%2@%3] wchodzi do pokoju %4</translation>
     </message>
     <message>
-        <source>* %1 [%2] has joined %3</source>
-        <translation>* %1 [%2] wszedł do pokoju %3</translation>
+        <source>* %1 has joined %2</source>
+        <translation>* %1 wchodzi do pokoju %2</translation>
     </message>
     <message>
         <source>* %1 [%2@%3] has joined priv</source>
         <translation>* %1 [%2@%3] dołączył do rozmowy prywatnej</translation>
     </message>
     <message>
-        <source>* %1 [%2] has joined priv</source>
-        <translation>* %1 [%2] dołączył do rozmowy prywatnej</translation>
+        <source>* %1 has joined priv</source>
+        <translation>* %1 dołączył do rozmowy prywatnej</translation>
     </message>
     <message>
         <source>* %1 [%2@%3] has left %4 [%5]</source>
-        <translation>* %1 [%2@%3] wyszedł z pokoju %4. Powód: %5</translation>
+        <translation>* %1 [%2@%3] wychodzi z pokoju %4. Powód: %5</translation>
     </message>
     <message>
-        <source>* %1 [%2] has left %3 [%4]</source>
-        <translation>* %1 [%2] wyszedł z pokoju %3. Powód: %4</translation>
+        <source>* %1 has left %2 [%3]</source>
+        <translation>* %1 wychodzi z pokoju %2. Powód: %3</translation>
     </message>
     <message>
         <source>* %1 [%2@%3] has left %4</source>
-        <translation>* %1 [%2@%3] wyszedł z pokoju %4</translation>
+        <translation>* %1 [%2@%3] wychodzi z pokoju %4</translation>
     </message>
     <message>
-        <source>* %1 [%2] has left %3</source>
-        <translation>* %1 [%2] wyszedł z pokoju %3</translation>
+        <source>* %1 has left %2</source>
+        <translation>* %1 wychodzi z pokoju %2</translation>
     </message>
     <message>
         <source>* %1 [%2@%3] has left priv</source>
         <translation>* %1 [%2@%3] zakończył rozmowę prywatną</translation>
     </message>
     <message>
-        <source>* %1 [%2] has left priv</source>
-        <translation>* %1 [%2] zakończył rozmowę prywatną</translation>
+        <source>* %1 has left priv</source>
+        <translation>* %1 zakończył rozmowę prywatną</translation>
     </message>
     <message>
         <source>* %1 [%2@%3] has quit [%4]</source>
-        <translation>* %1 [%2@%3] opuścił irc [%4]</translation>
+        <translation>* %1 [%2@%3] wychodzi z czata [%4]</translation>
     </message>
     <message>
-        <source>* %1 [%2] has quit [%3]</source>
-        <translation>* %1 [%2] opuścił irc [%3]</translation>
+        <source>* %1 has quit [%2]</source>
+        <translation>* %1 wychodzi z czata [%2]</translation>
     </message>
     <message>
         <source>* %1 has been kicked from channel %2 by %3 Reason: %4</source>
-        <translation>* %1 został wyrzucony z pokoju %2 przez %3. Powód: %4</translation>
+        <translation>* %1 zostaje wyrzucony z pokoju %2 przez %3. Powód: %4</translation>
     </message>
     <message>
         <source>You have been kicked from %1 by %2</source>
-        <translation>%1 wyrzucił Cie z pokoju %2</translation>
+        <translation>%1 wyrzuca Cie z pokoju %2</translation>
     </message>
     <message>
         <source>Reason: %3</source>

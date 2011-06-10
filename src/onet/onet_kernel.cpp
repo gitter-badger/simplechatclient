@@ -635,14 +635,14 @@ void OnetKernel::raw_join()
         if (settings.value("show_zuo").toString() == "on")
             strDisplay = QString(tr("* %1 [%2@%3] has joined %4")).arg(strNick).arg(strZUO).arg(strIP).arg(strChannel);
         else
-            strDisplay = QString(tr("* %1 [%2] has joined %3")).arg(strNick).arg(strIP).arg(strChannel);
+            strDisplay = QString(tr("* %1 has joined %2")).arg(strNick).arg(strChannel);
     }
     else
     {
         if (settings.value("show_zuo").toString() == "on")
             strDisplay = QString(tr("* %1 [%2@%3] has joined priv")).arg(strNick).arg(strZUO).arg(strIP);
         else
-            strDisplay = QString(tr("* %1 [%2] has joined priv")).arg(strNick).arg(strIP);
+            strDisplay = QString(tr("* %1 has joined priv")).arg(strNick);
     }
 
     pTabC->add_tab(strChannel);
@@ -697,14 +697,14 @@ void OnetKernel::raw_part()
             if (settings.value("show_zuo").toString() == "on")
                 strDisplay = QString(tr("* %1 [%2@%3] has left %4 [%5]")).arg(strNick).arg(strZUO).arg(strIP).arg(strChannel).arg(strReason);
             else
-                strDisplay = QString(tr("* %1 [%2] has left %3 [%4]")).arg(strNick).arg(strIP).arg(strChannel).arg(strReason);
+                strDisplay = QString(tr("* %1 has left %2 [%3]")).arg(strNick).arg(strChannel).arg(strReason);
         }
         else
         {
             if (settings.value("show_zuo").toString() == "on")
                 strDisplay = QString(tr("* %1 [%2@%3] has left %4")).arg(strNick).arg(strZUO).arg(strIP).arg(strChannel);
             else
-                strDisplay = QString(tr("* %1 [%2] has left %3")).arg(strNick).arg(strIP).arg(strChannel);
+                strDisplay = QString(tr("* %1 has left %2")).arg(strNick).arg(strChannel);
         }
     }
     else
@@ -712,7 +712,7 @@ void OnetKernel::raw_part()
         if (settings.value("show_zuo").toString() == "on")
             strDisplay = QString(tr("* %1 [%2@%3] has left priv")).arg(strNick).arg(strZUO).arg(strIP);
         else
-            strDisplay = QString(tr("* %1 [%2] has left priv")).arg(strNick).arg(strIP);
+            strDisplay = QString(tr("* %1 has left priv")).arg(strNick);
     }
 
     pTabC->show_msg(strChannel, strDisplay, PartMessage);
@@ -763,7 +763,7 @@ void OnetKernel::raw_quit()
     if (settings.value("show_zuo").toString() == "on")
         strDisplay = QString(tr("* %1 [%2@%3] has quit [%4]")).arg(strNick).arg(strZUO).arg(strIP).arg(strReason);
     else
-        strDisplay = QString(tr("* %1 [%2] has quit [%3]")).arg(strNick).arg(strIP).arg(strReason);
+        strDisplay = QString(tr("* %1 has quit [%2]")).arg(strNick).arg(strReason);
 
     // remove nick from avatars
     if (Core::instance()->mNickAvatar.contains(strNick))
