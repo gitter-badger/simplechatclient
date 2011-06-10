@@ -675,7 +675,7 @@ void MainWindow::open_cams()
     {
         QSettings settings;
         QString strMe = settings.value("nick").toString();
-        (new Kamerzysta(camSocket))->show(strMe);
+        (new Kamerzysta(Core::instance()->kamerzystaSocket))->show(strMe);
     }
 #else
     QSettings settings;
