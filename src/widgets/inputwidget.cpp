@@ -321,7 +321,7 @@ void InputWidget::inputline_return_pressed()
         pNetwork->send("AWAY :");
 
     // text
-    QString strText = pInputLine->toPlainText().trimmed();
+    QString strText = pInputLine->text().trimmed();
     paste_multi_line(strText, false);
     pInputLine->clear();
 }
@@ -341,7 +341,7 @@ void InputWidget::moder_button_clicked()
         pNetwork->send("AWAY :");
 
     // text
-    QString strText = pInputLine->toPlainText().trimmed();
+    QString strText = pInputLine->text().trimmed();
     paste_multi_line(strText, true);
     pInputLine->clear();
 }

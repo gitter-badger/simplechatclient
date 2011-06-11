@@ -21,9 +21,9 @@
 #ifndef INPUTLINEWIDGET_H
 #define INPUTLINEWIDGET_H
 
-#include <QPlainTextEdit>
+#include <QLineEdit>
 
-class InputLineWidget : public QPlainTextEdit
+class InputLineWidget : public QLineEdit
 {
     Q_OBJECT
 public:
@@ -41,11 +41,9 @@ private:
 
     QString get_word();
     void set_word(QString);
-    void paste_multi_line(QString);
 
 protected:
     virtual bool event(QEvent *);
-    virtual void insertFromMimeData(const QMimeData *);
 
 signals:
     void returnPressed();

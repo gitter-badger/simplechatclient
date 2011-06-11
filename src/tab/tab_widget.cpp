@@ -49,7 +49,7 @@ TabWidget::TabWidget(Network *param1, QString param2, DlgUserProfile *param3)
     topic = new QLabel(this);
     topic->setAlignment(Qt::AlignVCenter);
     topic->setWordWrap(true);
-    topic->setMinimumHeight(30);
+    topic->setMinimumHeight(25);
     topic->show();
 
     pMainTextEdit = new MainTextEdit(pNetwork, strName, pDlgUserProfile);
