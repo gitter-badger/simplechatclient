@@ -60,7 +60,6 @@
         <file>images/oxygen/16x16/text-frame-link.png</file>
         <file>images/oxygen/16x16/text-frame-unlink.png</file>
         <file>images/oxygen/16x16/folder-txt.png</file>
-        <file>images/oxygen/16x16/page-zoom.png</file>
         <file>images/oxygen/16x16/document-revert.png</file>
         <file>images/oxygen/16x16/games-config-background.png</file>
         <file>images/oxygen/16x16/office-chart-bar.png</file>
@@ -86,5 +85,7 @@
         <file>images/oxygen/16x16/im-user-away.png</file>
         <file>images/oxygen/16x16/applications-internet.png</file>
         <file>images/oxygen/16x16/preferences-web-browser-shortcuts.png</file>
+        <file>images/oxygen/16x16/zoom-in.png</file>
+        <file>images/oxygen/16x16/zoom-out.png</file>
     </qresource>
 </RCC>

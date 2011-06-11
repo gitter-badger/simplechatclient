@@ -52,7 +52,7 @@ DlgUserProfile::~DlgUserProfile()
 
 void DlgUserProfile::create_gui()
 {
-    ui.toolButton_zoom->setIcon(QIcon(":/images/oxygen/16x16/page-zoom.png"));
+    ui.toolButton_zoom->setIcon(QIcon(":/images/oxygen/16x16/zoom-in.png"));
     ui.pushButton_more->setIcon(QIcon(":/images/oxygen/16x16/list-add.png"));
     ui.buttonBox->button(QDialogButtonBox::Close)->setIcon(QIcon(":/images/oxygen/16x16/dialog-close.png"));
 
