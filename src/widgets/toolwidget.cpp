@@ -40,6 +40,17 @@ ToolWidget::ToolWidget(QWidget *parent, Network *param1, InputWidget *param2, Dl
 
     strCurrentColor = "#000000";
 
+    showFontButtons = new QPushButton(QIcon(":/images/oxygen/16x16/format-text-color.png"), "", this);
+    showFontButtons->setToolTip(tr("Show/Hide font buttons"));
+    showFontButtons->setMaximumWidth(25);
+    showFontButtons->setMaximumHeight(25);
+    showFontButtons->show();
+
+    separator1 = new QFrame(this);
+    separator1->setFrameShape(QFrame::VLine);
+    separator1->setFrameShadow(QFrame::Sunken);
+    separator1->show();
+
     bold = new QPushButton(QIcon(":/images/oxygen/16x16/format-text-bold.png"), "", this);
     bold->setToolTip(tr("Bold"));
     bold->setFlat(true);
@@ -142,16 +153,16 @@ ToolWidget::ToolWidget(QWidget *parent, Network *param1, InputWidget *param2, Dl
     size->setMenu(sizeMenu);
     size->show();
 
+    separator2 = new QFrame(this);
+    separator2->setFrameShape(QFrame::VLine);
+    separator2->setFrameShadow(QFrame::Sunken);
+    separator2->show();
+
     emoticons = new QPushButton(QIcon(":/images/oxygen/16x16/face-smile.png"), "", this);
     emoticons->setToolTip(tr("Emoticons"));
     emoticons->setMaximumWidth(25);
     emoticons->setMaximumHeight(25);
     emoticons->show();
-
-    separator1 = new QFrame(this);
-    separator1->setFrameShape(QFrame::VLine);
-    separator1->setFrameShadow(QFrame::Sunken);
-    separator1->show();
 
     channel_settings = new QPushButton(QIcon(":/images/oxygen/16x16/configure.png"), "", this);
     channel_settings->setToolTip(tr("Channel settings"));
@@ -172,13 +183,15 @@ ToolWidget::ToolWidget(QWidget *parent, Network *param1, InputWidget *param2, Dl
     toolLayout = new QHBoxLayout();
     toolLayout->setMargin(0);
     toolLayout->setAlignment(Qt::AlignLeft);
+    toolLayout->addWidget(showFontButtons);
+    toolLayout->addWidget(separator1);
     toolLayout->addWidget(bold);
     toolLayout->addWidget(italic);
     toolLayout->addWidget(fontfamily);
     toolLayout->addWidget(color);
     toolLayout->addWidget(size);
+    toolLayout->addWidget(separator2);
     toolLayout->addWidget(emoticons);
-    toolLayout->addWidget(separator1);
     toolLayout->addWidget(channel_settings);
     toolLayout->addWidget(moderation);
     toolLayout->addWidget(clear);
@@ -188,6 +201,8 @@ ToolWidget::ToolWidget(QWidget *parent, Network *param1, InputWidget *param2, Dl
     set_default();
 
     // signals
+    QObject::connect(showFontButtons, SIGNAL(clicked()), this, SLOT(show_font_buttons_clicked()));
+
     QObject::connect(bold, SIGNAL(clicked()), this, SLOT(bold_clicked()));
     QObject::connect(italic, SIGNAL(clicked()), this, SLOT(italic_clicked()));
 
@@ -218,6 +233,16 @@ ToolWidget::ToolWidget(QWidget *parent, Network *param1, InputWidget *param2, Dl
 void ToolWidget::set_default()
 {
     QSettings settings;
+
+    // font buttons
+    bShowFontButtons = false;
+    separator1->hide();
+    bold->hide();
+    italic->hide();
+    fontfamily->hide();
+    color->hide();
+    size->hide();
+    separator2->hide();
 
     // set default bold
     if (settings.value("my_bold").toString() == "on")
@@ -299,6 +324,32 @@ void ToolWidget::set_channel_settings(bool bEnable)
         channel_settings->show();
     else
         channel_settings->hide();
+}
+
+void ToolWidget::show_font_buttons_clicked()
+{
+    if (bShowFontButtons)
+    {
+        bShowFontButtons = false;
+        separator1->hide();
+        bold->hide();
+        italic->hide();
+        fontfamily->hide();
+        color->hide();
+        size->hide();
+        separator2->hide();
+    }
+    else
+    {
+        bShowFontButtons = true;
+        separator1->show();
+        bold->show();
+        italic->show();
+        fontfamily->show();
+        color->show();
+        size->show();
+        separator2->show();
+    }
 }
 
 void ToolWidget::bold_clicked()

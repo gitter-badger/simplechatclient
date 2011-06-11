@@ -2947,6 +2947,10 @@
 <context>
     <name>ToolWidget</name>
     <message>
+        <source>Show/Hide font buttons</source>
+        <translation>Pokaż/Ukryj przyciski czcionki</translation>
+    </message>
+    <message>
         <source>Bold</source>
         <translation>Pogrubienie</translation>
     </message>

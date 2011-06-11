@@ -46,6 +46,7 @@ private:
     DlgChannelSettings *pDlgChannelSettings;
     DlgModeration *pDlgModeration;
     // other
+    bool bShowFontButtons;
     bool bMyBold;
     bool bMyItalic;
     QString strMyFontWeight;
@@ -54,12 +55,14 @@ private:
     QString strCurrentColor;
 
     QHBoxLayout *toolLayout;
+    QPushButton *showFontButtons;
+    QFrame *separator1;
     QPushButton *bold;
     QPushButton *italic;
     QPushButton *fontfamily;
     QComboBox *color;
     QPushButton *emoticons;
-    QFrame *separator1;
+    QFrame *separator2;
     QPushButton *channel_settings;
     QPushButton *moderation;
     QPushButton *clear;
@@ -87,6 +90,7 @@ private:
     void set_default();
 
 private slots:
+    void show_font_buttons_clicked();
     void bold_clicked();
     void italic_clicked();
     void arial_triggered();
