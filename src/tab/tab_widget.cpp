@@ -46,63 +46,11 @@ TabWidget::TabWidget(Network *param1, QString param2, DlgUserProfile *param3)
     mainLayout->setMargin(0);
     mainWidget = new QWidget(this);
 
-    topic = new QTextEdit(this);
-    topic->setReadOnly(true);
-    topic->setAcceptRichText(false);
+    topic = new QLabel(this);
+    topic->setAlignment(Qt::AlignVCenter);
+    topic->setWordWrap(true);
     topic->setMinimumHeight(30);
-    topic->setMinimumWidth(16777215);
-    topic->setMaximumHeight(30);
-    topic->setMaximumWidth(16777215);
     topic->show();
-
-    topicDetails = new QLabel(this);
-    topicDetails->setMargin(0);
-    topicDetails->setOpenExternalLinks(false);
-    topicDetails->setAlignment(Qt::AlignLeft);
-    topicDetails->show();
-
-    websiteLink = new QLabel(this);
-    websiteLink->setMargin(0);
-    websiteLink->setOpenExternalLinks(true);
-    websiteLink->setAlignment(Qt::AlignRight);
-    websiteLink->show();
-
-    avatar = new QLabel(this);
-    avatar->setMaximumSize(QSize(50,50));
-    avatar->setMargin(0);
-    avatar->show();
-
-    detailsWidget = new QWidget(this);
-    detailsLayout = new QHBoxLayout();
-    detailsLayout->setMargin(0);
-    detailsLayout->addWidget(topicDetails);
-    detailsLayout->addWidget(websiteLink);
-    detailsWidget->setLayout(detailsLayout);
-
-    topRightWidget = new QWidget(this);
-    topRightWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Minimum);
-    topRightLayout = new QVBoxLayout();
-    topRightLayout->setMargin(0);
-    topRightLayout->setAlignment(Qt::AlignTop);
-    topRightLayout->addWidget(topic);
-    topRightLayout->addWidget(detailsWidget);
-    topRightWidget->setLayout(topRightLayout);
-
-    topLeftWidget = new QWidget(this);
-    topLeftLayout = new QVBoxLayout();
-    topLeftLayout->setMargin(0);
-    topLeftLayout->setAlignment(Qt::AlignTop);
-    topLeftLayout->addWidget(avatar);
-    topLeftWidget->setLayout(topLeftLayout);
-
-    topWidget = new QWidget(this);
-    topWidget->setMaximumHeight(50);
-    topLayout = new QHBoxLayout();
-    topLayout->setMargin(0);
-    topLayout->setAlignment(Qt::AlignLeft);
-    topLayout->addWidget(topLeftWidget);
-    topLayout->addWidget(topRightWidget);
-    topWidget->setLayout(topLayout);
 
     pMainTextEdit = new MainTextEdit(pNetwork, strName, pDlgUserProfile);
     pMainTextEdit->document()->setMaximumBlockCount(1000);
@@ -113,58 +61,24 @@ TabWidget::TabWidget(Network *param1, QString param2, DlgUserProfile *param3)
 
     if (strName[0] == '#')
     {
-        if (settings.value("style") == "classic")
-        {
-            avatar->hide();
-            topic->hide();
-            topicDetails->hide();
-            websiteLink->hide();
-            detailsWidget->hide();
-            topRightWidget->hide();
-            topLeftWidget->hide();
-            topWidget->hide();
-        }
-        else
-            mainLayout->addWidget(topWidget);
-
+        mainLayout->addWidget(topic);
         mainLayout->addWidget(pMainTextEdit);
         mainWidget->setLayout(mainLayout);
     }
     else if (strName[0] == '^')
     {
-        avatar->hide();
         topic->hide();
-        topicDetails->hide();
-        websiteLink->hide();
-        detailsWidget->hide();
-        topRightWidget->hide();
-        topLeftWidget->hide();
-        topWidget->hide();
 
         mainLayout->addWidget(pMainTextEdit);
         mainWidget->setLayout(mainLayout);
     }
     else
     {
-        avatar->hide();
         topic->hide();
-        topicDetails->hide();
-        websiteLink->hide();
-        detailsWidget->hide();
-        topRightWidget->hide();
-        topLeftWidget->hide();
-        topWidget->hide();
 
         mainLayout->addWidget(pMainTextEdit);
         mainWidget->setLayout(mainLayout);
     }
-
-    // hide avatar
-    topLeftWidget->hide();
-    // hide topic details
-    topicDetails->hide();
-    // hide website link
-    websiteLink->hide();
 
     // show layout
     this->setLayout(mainLayout);
@@ -375,15 +289,6 @@ void TabWidget::display_message(QString &strData, MessageCategory eMessageCatego
 
 void TabWidget::set_topic(QString &strTopic)
 {
-    // colors
-    QSettings settings;
-    QString strDefaultFontColor = settings.value("default_font_color").toString();
-    addslashes(strDefaultFontColor);
-    QString strBackgroundColor = settings.value("background_color").toString();
-    addslashes(strBackgroundColor);
-    topic->setTextColor(QColor(strDefaultFontColor));
-    topic->setTextBackgroundColor(QColor(strBackgroundColor));
-
     // replace
     strTopic.replace("&", "&amp;");
     strTopic.replace("<", "&lt;");
@@ -398,49 +303,19 @@ void TabWidget::set_topic(QString &strTopic)
     delete convertText;
 
     // set topic
-    topic->setHtml(strContent+strLastContent);
+    topic->setText("<b>"+tr("Topic:")+"</b> "+strContent+strLastContent);
 
     // tooltip
     strTopic.remove(QRegExp("%C([a-zA-Z0-9]+)%"));
     strTopic.remove(QRegExp("%F([a-zA-Z0-9:]+)%"));
     strTopic.replace(QRegExp("%I([a-zA-Z0-9_-]+)%"),"<\\1>");
-
-    if (settings.value("style") == "modern")
-        topic->setToolTip(strTopic);
-    else if (settings.value("style") == "classic")
-        topic->setToolTip(topicDetails->text());
+    topic->setToolTip(strTopic);
 }
 
 void TabWidget::author_topic(QString &strAuthor)
 {
-    topicDetails->show();
-    topicDetails->setText(QString(tr("Topic set by %1")).arg(strAuthor));
-
-    QSettings settings;
-    if (settings.value("style") == "classic")
-        topic->setToolTip(topicDetails->text());
-}
-
-void TabWidget::set_link(QString &strUrl)
-{
-    websiteLink->show();
-
-    websiteLink->setText(QString("<a href=\"%1\" style=\"color:#0000FF;text-decoration:none;\" >&nbsp;&nbsp;"+tr("Channel website")+"&nbsp;&nbsp;</a>").arg(strUrl));
-    websiteLink->setToolTip(strUrl);
-}
-
-void TabWidget::update_channel_avatar()
-{
-    if (Core::instance()->mChannelAvatar.contains(strName))
-    {
-        // show widget
-        topLeftWidget->show();
-
-        // display avatar
-        QPixmap pixmap;
-        pixmap.loadFromData(Core::instance()->mChannelAvatar.value(strName));
-        avatar->setPixmap(pixmap);
-    }
+    QString strTopicDetails = QString(tr("Topic set by %1")).arg(strAuthor);
+    topic->setToolTip(strTopicDetails);
 }
 
 void TabWidget::clear_content()
@@ -465,10 +340,6 @@ void TabWidget::refresh_colors()
 
     // mainTextEdit
     pMainTextEdit->setTextBackgroundColor(QColor(strBackgroundColor));
-
-    // topic
-    topic->setTextColor(QColor(strDefaultFontColor));
-    topic->setTextBackgroundColor(QColor(strBackgroundColor));
 }
 
 void TabWidget::refresh_background_image()

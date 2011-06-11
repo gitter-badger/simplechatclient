@@ -194,15 +194,8 @@ void MainWindow::createGui()
     pNickListWidget->setItemDelegate(new NickListDelegate(pNickListWidget));
     rightDockWidget->setWidget(pNickListWidget);
 
-    // hide on classic
-    QSettings settings;
-    if (settings.value("style") == "classic")
-    {
-        toolBar->hide();
-        pInputLineDockWidget->hide_toolwidget();
-    }
-
     // maximum size
+    QSettings settings;
     QString strDisableAvatars = settings.value("disable_avatars").toString();
     if (strDisableAvatars == "off") // with avatars
         rightDockWidget->setMaximumWidth(260);

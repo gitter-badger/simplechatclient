@@ -70,7 +70,6 @@ void DlgOptions::create_gui()
     ui.groupBox_skins->setTitle(tr("Skins"));
     ui.radioButton_modern_avatars->setText(tr("Modern"));
     ui.radioButton_modern_no_avatars->setText(tr("Modern without avatars"));
-    ui.radioButton_classic->setText(tr("Classic"));
     ui.groupBox_language->setTitle(tr("Language"));
 
     // page adv
@@ -327,8 +326,6 @@ void DlgOptions::set_default_values()
         else
             ui.radioButton_modern_no_avatars->setChecked(true);
     }
-    else if (strStyle == "classic")
-        ui.radioButton_classic->setChecked(true);
 
     // language
     if (strLanguage == "en")
@@ -492,7 +489,6 @@ void DlgOptions::set_default_values()
         ui.groupBox_skins->setDisabled(true);
         ui.radioButton_modern_avatars->setDisabled(true);
         ui.radioButton_modern_no_avatars->setDisabled(true);
-        ui.radioButton_classic->setDisabled(true);
     }
     else
     {
@@ -503,7 +499,6 @@ void DlgOptions::set_default_values()
         ui.groupBox_skins->setDisabled(false);
         ui.radioButton_modern_avatars->setDisabled(false);
         ui.radioButton_modern_no_avatars->setDisabled(false);
-        ui.radioButton_classic->setDisabled(false);
     }
 }
 
@@ -515,7 +510,6 @@ void DlgOptions::create_signals()
     QObject::connect(ui.pushButton_register_nick, SIGNAL(clicked()), this, SLOT(button_register_nick()));
     QObject::connect(ui.radioButton_modern_avatars, SIGNAL(clicked()), this, SLOT(set_modern_style_avatars()));
     QObject::connect(ui.radioButton_modern_no_avatars, SIGNAL(clicked()), this, SLOT(set_modern_style_no_avatars()));
-    QObject::connect(ui.radioButton_classic, SIGNAL(clicked()), this, SLOT(set_classic_style()));
     QObject::connect(ui.comboBox_language, SIGNAL(currentIndexChanged(int)), this, SLOT(language_changed(int)));
     QObject::connect(ui.checkBox_auto_busy, SIGNAL(clicked(bool)), this, SLOT(auto_busy(bool)));
     QObject::connect(ui.checkBox_disable_autojoin_favourites, SIGNAL(clicked(bool)), this, SLOT(disable_autojoin_favourites(bool)));
@@ -625,23 +619,6 @@ void DlgOptions::set_modern_style_no_avatars()
     Config *pConfig = new Config();
     pConfig->set_value("style", "modern");
     settings.setValue("style", "modern");
-    pConfig->set_value("disable_avatars", "on");
-    settings.setValue("disable_avatars", "on");
-    delete pConfig;
-
-    QMessageBox::information(0, "", tr("Restart program to apply the changes."));
-}
-
-void DlgOptions::set_classic_style()
-{
-    // save settings
-    save_settings();
-
-    // save style
-    QSettings settings;
-    Config *pConfig = new Config();
-    pConfig->set_value("style", "classic");
-    settings.setValue("style", "classic");
     pConfig->set_value("disable_avatars", "on");
     settings.setValue("disable_avatars", "on");
     delete pConfig;

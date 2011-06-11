@@ -1403,10 +1403,6 @@
         <translation>Nowoczesny bez avatarów</translation>
     </message>
     <message>
-        <source>Classic</source>
-        <translation>Klasyczny</translation>
-    </message>
-    <message>
         <source>Language</source>
         <translation>Język</translation>
     </message>
@@ -2683,12 +2679,12 @@
 <context>
     <name>TabWidget</name>
     <message>
-        <source>Topic set by %1</source>
-        <translation>Temat ustawiony przez %1</translation>
+        <source>Topic:</source>
+        <translation>Temat:</translation>
     </message>
     <message>
-        <source>Channel website</source>
-        <translation>Strona pokoju</translation>
+        <source>Topic set by %1</source>
+        <translation>Temat ustawiony przez %1</translation>
     </message>
 </context>
 <context>

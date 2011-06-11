@@ -72,7 +72,7 @@ void Core::createSettings()
 {
     // default settings
     QSettings settings;
-    settings.setValue("version", "1.0.13.897");
+    settings.setValue("version", "1.0.13.898");
     settings.setValue("logged", "off");
     settings.setValue("busy", "off");
     settings.setValue("away", "off");
@@ -104,7 +104,12 @@ void Core::createSettings()
 
     // fix config values
     if (settings.value("style").toString() == "classic")
-        settings.setValue("disable_avatars", "on");
+    {
+        Config *pConfig = new Config();
+        pConfig->set_value("style", "modern");
+        settings.setValue("style", "modern");
+        delete pConfig;
+    }
 
     // check settings
     check_settings();

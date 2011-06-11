@@ -24,6 +24,7 @@ TabManager::TabManager(QWidget *parent) : QTabWidget(parent)
 {
     tab = tabBar();
     setTabsClosable(true);
+    setIconSize(QSize(22,22));
 }
 
 void TabManager::set_hilight(int index)

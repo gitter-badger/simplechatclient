@@ -292,13 +292,6 @@ void TabContainer::author_topic(QString &strChannel, QString &strNick)
         tw[i]->author_topic(strNick);
 }
 
-void TabContainer::set_link(QString &strChannel, QString &strLink)
-{
-    int i = get_index(strChannel);
-    if (i != -1)
-        tw[i]->set_link(strLink);
-}
-
 void TabContainer::slot_update_nick_avatar(QString strNick)
 {
     emit update_nick_avatar(strNick);
@@ -308,7 +301,14 @@ void TabContainer::slot_update_channel_avatar(QString strChannel)
 {
     int i = get_index(strChannel);
     if (i != -1)
-        tw[i]->update_channel_avatar();
+    {
+        QByteArray bAvatar = Core::instance()->mChannelAvatar.value(strChannel);
+        QPixmap pixmap;
+        pixmap.loadFromData(bAvatar);
+
+        QIcon icon(pixmap);
+        pTabM->setTabIcon(i, icon);
+    }
 }
 
 void TabContainer::slot_show_msg(QString &strChannel, QString &strData, MessageCategory eMessageCategory)

@@ -48,8 +48,6 @@ public:
     void display_message(QString &, MessageCategory); // private, exteption: inputlinewidget
     void set_topic(QString &);
     void author_topic(QString &);
-    void set_link(QString &);
-    void update_channel_avatar();
     inline void change_font_size(QString f) { strFontSize = f; }
     void clear_content();
     void refresh_colors();
@@ -66,19 +64,8 @@ private:
 
     QVBoxLayout *mainLayout;
     QWidget *mainWidget;
-    QWidget *topLeftWidget;
-    QVBoxLayout *topLeftLayout;
-    QWidget *topRightWidget;
-    QVBoxLayout *topRightLayout;
-    QWidget *detailsWidget;
-    QHBoxLayout *detailsLayout;
-    QWidget *topWidget;
-    QHBoxLayout *topLayout;
 
-    QTextEdit *topic;
-    QLabel *avatar;
-    QLabel *topicDetails;
-    QLabel *websiteLink;
+    QLabel *topic;
     MainTextEdit *pMainTextEdit;
 
     void convert_emots(QString &);

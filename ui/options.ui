@@ -191,13 +191,6 @@
           </property>
          </widget>
         </item>
-        <item>
-         <widget class="QRadioButton" name="radioButton_classic">
-          <property name="text">
-           <string>Classic</string>
-          </property>
-         </widget>
-        </item>
        </layout>
       </widget>
      </widget>

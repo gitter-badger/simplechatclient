@@ -52,7 +52,6 @@ public:
     void show_msg_active(QString &, MessageCategory);
     void set_topic(QString &, QString &);
     void author_topic(QString &, QString &);
-    void set_link(QString &, QString &);
 
 public slots:
     void slot_update_nick_avatar(QString);

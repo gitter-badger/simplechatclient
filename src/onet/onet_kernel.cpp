@@ -1664,11 +1664,6 @@ void OnetKernel::raw_161n()
     if (pDlgChannelSettings->get_channel() == strChannel)
         pDlgChannelSettings->set_data(mKeyValue);
 
-    // update link
-    QString strLink = mKeyValue.value("www");
-    if (!strLink.isEmpty())
-        pTabC->set_link(strChannel, strLink);
-
     // update topic author
     QString strTopicAuthor = mKeyValue.value("topicAuthor");
     QString strTopicDate = mKeyValue.value("topicDate");

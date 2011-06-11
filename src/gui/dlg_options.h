@@ -50,7 +50,6 @@ private slots:
     void button_register_nick();
     void set_modern_style_avatars();
     void set_modern_style_no_avatars();
-    void set_classic_style();
     void language_changed(int);
     void auto_busy(bool);
     void disable_autojoin_favourites(bool);
