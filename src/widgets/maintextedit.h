@@ -81,6 +81,7 @@ private slots:
     void text_changed();
     void open_webbrowser();
     void send_to_notes();
+    void search();
 
 protected:
     virtual void contextMenuEvent(QContextMenuEvent *);

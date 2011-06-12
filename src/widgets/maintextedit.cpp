@@ -255,6 +255,16 @@ void MainTextEdit::send_to_notes()
     delete fs;
 }
 
+void MainTextEdit::search()
+{
+    QString strMsg = tr("Find:");
+    bool ok;
+    QString strText = QInputDialog::getText(this, tr("Find"), strMsg, QLineEdit::Normal, "", &ok);
+
+    if ((ok) && (!strText.isEmpty()))
+        this->find(strText, QTextDocument::FindBackward);
+}
+
 void MainTextEdit::menu_channel(QString strChannel, QContextMenuEvent *event)
 {
     QMenu menu(this);
@@ -387,6 +397,10 @@ void MainTextEdit::menu_standard(QContextMenuEvent *event)
         connect(sendToNotes, SIGNAL(triggered()), this, SLOT(send_to_notes()));
         menu.addAction(sendToNotes);
     }
+
+    QAction *search = new QAction(QIcon(":/images/oxygen/16x16/edit-find.png"), tr("Find"), &menu);
+    connect(search, SIGNAL(triggered()), this, SLOT(search()));
+    menu.addAction(search);
 
     QAction *clear = new QAction(QIcon(":/images/oxygen/16x16/draw-eraser.png"), tr("Clear"), &menu);
     connect(clear, SIGNAL(triggered()), this, SLOT(clear()));
