@@ -82,10 +82,11 @@ void DlgUserProfile::create_signals()
 
 void DlgUserProfile::set_nick(QString n)
 {
-    strNick = n;
-
     // clear
     clear_info();
+
+    // set nick
+    strNick = n;
 
     //set label
     ui.label_nick->setText(QString("<b>%1</b>").arg(strNick));
@@ -188,6 +189,7 @@ void DlgUserProfile::button_more()
 
 void DlgUserProfile::clear_info()
 {
+    strNick.clear();
     ui.label_avatar->clear();
     ui.toolButton_zoom->setEnabled(false);
     ui.label_nick->clear();
@@ -337,8 +339,6 @@ void DlgUserProfile::button_close()
 void DlgUserProfile::showEvent(QShowEvent *event)
 {
     event->accept();
-    // center screen
-    move(QApplication::desktop()->screen()->rect().center() - rect().center());
 
     // is hidden?
     if (!ui.widget_more->isHidden())
@@ -356,6 +356,13 @@ void DlgUserProfile::showEvent(QShowEvent *event)
         setMaximumWidth(iWidth);
         resize(iWidth, iHeight);
     }
+
+    // center screen
+    move(QApplication::desktop()->screen()->rect().center() - rect().center());
+
+    // hide if no nick
+    if (strNick.isEmpty())
+        this->hide();
 }
 
 void DlgUserProfile::hideEvent(QHideEvent *event)
