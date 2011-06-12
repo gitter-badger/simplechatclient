@@ -47,7 +47,7 @@ TabWidget::TabWidget(Network *param1, QString param2, DlgUserProfile *param3)
     mainWidget = new QWidget(this);
 
     topic = new QLabel(this);
-    topic->setAlignment(Qt::AlignVCenter);
+    topic->setAlignment(Qt::AlignLeft | Qt::AlignVCenter);
     topic->setWordWrap(true);
     topic->setMinimumHeight(25);
     topic->show();

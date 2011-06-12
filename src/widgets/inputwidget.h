@@ -62,11 +62,15 @@ private slots:
     void inputline_return_pressed();
     void moder_button_clicked();
     void show_hide_toolwidget_clicked();
+    void ctrl_tab_pressed();
+    void ctrl_shift_tab_pressed();
 
 signals:
     void show_msg(QString&,QString&,MessageCategory);
     void display_message(QString&,QString&,MessageCategory);
     void show_hide_toolwidget();
+    void ctrlTabPressed();
+    void ctrlShiftTabPressed();
 };
 
 #endif // INPUTWIDGET_H

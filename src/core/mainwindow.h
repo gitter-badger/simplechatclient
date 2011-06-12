@@ -124,6 +124,8 @@ private slots:
     void open_about();
     void button_show();
     void tray_icon(QSystemTrayIcon::ActivationReason);
+    void ctrl_tab_pressed();
+    void ctrl_shift_tab_pressed();
 
     // onet dialogs
     void open_channel_list();

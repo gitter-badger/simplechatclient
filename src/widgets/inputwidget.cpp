@@ -80,6 +80,8 @@ InputWidget::InputWidget(QWidget *parent, Network *param1) : QWidget(parent)
     QObject::connect(pInputLine, SIGNAL(returnPressed()), this, SLOT(inputline_return_pressed()));
     QObject::connect(moderSendButton, SIGNAL(clicked()), this, SLOT(moder_button_clicked()));
     QObject::connect(showHideToolWidget, SIGNAL(clicked()), this, SLOT(show_hide_toolwidget_clicked()));
+    QObject::connect(pInputLine, SIGNAL(ctrlTabPressed()), this, SLOT(ctrl_tab_pressed()));
+    QObject::connect(pInputLine, SIGNAL(ctrlShiftTabPressed()), this, SLOT(ctrl_shift_tab_pressed()));
 }
 
 void InputWidget::set_active(QString strName)
@@ -349,4 +351,14 @@ void InputWidget::moder_button_clicked()
 void InputWidget::show_hide_toolwidget_clicked()
 {
     emit show_hide_toolwidget();
+}
+
+void InputWidget::ctrl_tab_pressed()
+{
+    emit ctrlTabPressed();
+}
+
+void InputWidget::ctrl_shift_tab_pressed()
+{
+    emit ctrlShiftTabPressed();
 }

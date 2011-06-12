@@ -374,6 +374,8 @@ void MainWindow::create_signals()
     QObject::connect(pInputLineDockWidget, SIGNAL(display_message(QString&,QString&,MessageCategory)), pTabC, SLOT(slot_display_message(QString&,QString&,MessageCategory)));
     QObject::connect(pInputLineDockWidget, SIGNAL(change_font_size(QString)), pTabC, SLOT(slot_change_font_size(QString)));
     QObject::connect(pInputLineDockWidget, SIGNAL(clear_content(QString)), pTabC, SLOT(slot_clear_content(QString)));
+    QObject::connect(pInputLineDockWidget, SIGNAL(ctrlTabPressed()), this, SLOT(ctrl_tab_pressed()));
+    QObject::connect(pInputLineDockWidget, SIGNAL(ctrlShiftTabPressed()), this, SLOT(ctrl_shift_tab_pressed()));
 
     // signals onet kernel
     QObject::connect(pOnetKernel, SIGNAL(clear_nicklist(QString)), this, SLOT(clear_nicklist(QString)));
@@ -736,6 +738,20 @@ void MainWindow::tab_close_requested(int index)
 {
     if (index != 0)
         pTabC->part_tab(index);
+}
+
+// ctrl+tab pressed in inputline
+void MainWindow::ctrl_tab_pressed()
+{
+    int index = pTabM->currentIndex();
+    pTabM->setCurrentIndex(index+1);
+}
+
+// ctrl+shift+tab pressed in inputline
+void MainWindow::ctrl_shift_tab_pressed()
+{
+    int index = pTabM->currentIndex();
+    pTabM->setCurrentIndex(index-1);
 }
 
 QString MainWindow::get_current_tab_name(int index)

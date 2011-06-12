@@ -52,6 +52,8 @@ public slots:
     void slot_show_hide_toolwidget();
     void slot_change_font_size(QString);
     void slot_clear_content(QString);
+    void slot_ctrl_tab_pressed();
+    void slot_ctrl_shift_tab_pressed();
 
 private:
     // params
@@ -67,6 +69,8 @@ signals:
     void show_msg(QString&,QString&,MessageCategory);
     void change_font_size(QString);
     void clear_content(QString);
+    void ctrlTabPressed();
+    void ctrlShiftTabPressed();
 };
 
 #endif // INPUTLINEDOCKWIDGET_H

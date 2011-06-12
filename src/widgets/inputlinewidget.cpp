@@ -109,44 +109,57 @@ bool InputLineWidget::event(QEvent *e)
 
     if (k->key() == Qt::Key_Tab)
     {
-        if (usersList.size() == 0)
-            return true;
-
-        QString strWord = get_word();
-
-        if (strWord.isEmpty())
-            return true;
-
-        if (strLastWord.isEmpty())
+        if (k->modifiers() == Qt::ControlModifier)
         {
-            find.clear();
-            for (int i = 0; i < usersList.size(); i++)
-            {
-                if (usersList.at(i).startsWith(strWord, Qt::CaseInsensitive))
-                    find.append(usersList.at(i));
-                if (usersList.at(i).startsWith("~"+strWord, Qt::CaseInsensitive))
-                    find.append(usersList.at(i));
-            }
-
-            strLastWord = strWord;
+            emit ctrlTabPressed();
+            return true;
         }
-
-        if (!find.isEmpty())
+        else
         {
-            if (index > find.size())
-                index = 0;
+            if (usersList.size() == 0)
+                return true;
+
+            QString strWord = get_word();
+
+            if (strWord.isEmpty())
+                return true;
+
+            if (strLastWord.isEmpty())
+            {
+                find.clear();
+                for (int i = 0; i < usersList.size(); i++)
+                {
+                    if (usersList.at(i).startsWith(strWord, Qt::CaseInsensitive))
+                        find.append(usersList.at(i));
+                    if (usersList.at(i).startsWith("~"+strWord, Qt::CaseInsensitive))
+                        find.append(usersList.at(i));
+                }
+
+                strLastWord = strWord;
+            }
 
             if (!find.isEmpty())
             {
-                QString strSetWord = find.at(index);
-                set_word(strSetWord);
+                if (index > find.size())
+                    index = 0;
+
+                if (!find.isEmpty())
+                {
+                    QString strSetWord = find.at(index);
+                    set_word(strSetWord);
+                }
+
+                index++;
+                if (index >= find.size())
+                    index = 0;
             }
 
-            index++;
-            if (index >= find.size())
-                index = 0;
+            return true;
         }
-
+    }
+    else if ((k->key() == Qt::Key_Backtab) && (k->modifiers() == (Qt::ControlModifier | Qt::ShiftModifier)))
+    {
+        emit ctrlShiftTabPressed();
         return true;
     }
     else if ((k->key() == Qt::Key_Enter) || (k->key() == Qt::Key_Return))

@@ -328,18 +328,17 @@ void MainTextEdit::menu_standard(QContextMenuEvent *event)
 {
     QMenu menu(this);
 
-    QAction *copy = new QAction(QIcon(":/images/oxygen/16x16/edit-copy.png"), tr("Copy"), &menu);
-    if (this->textCursor().selectedText().isEmpty())
-        copy->setEnabled(false);
-    copy->setShortcut(QKeySequence::Copy);
-    connect(copy, SIGNAL(triggered()), this, SLOT(copy()));
-    menu.addAction(copy);
+    if (!this->textCursor().selectedText().isEmpty())
+    {
+        QAction *copy = new QAction(QIcon(":/images/oxygen/16x16/edit-copy.png"), tr("Copy"), &menu);
+        copy->setShortcut(QKeySequence::Copy);
+        connect(copy, SIGNAL(triggered()), this, SLOT(copy()));
+        menu.addAction(copy);
+    }
 
     QAction *clear = new QAction(QIcon(":/images/oxygen/16x16/draw-eraser.png"), tr("Clear"), &menu);
     connect(clear, SIGNAL(triggered()), this, SLOT(clear()));
     menu.addAction(clear);
-
-    menu.addSeparator();
 
     QAction *all = new QAction(QIcon(":/images/oxygen/16x16/edit-select-all.png"), tr("Select All"), &menu);
     all->setShortcut(QKeySequence::SelectAll);

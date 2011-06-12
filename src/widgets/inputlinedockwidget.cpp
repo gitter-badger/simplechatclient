@@ -59,6 +59,9 @@ InputLineDockWidget::InputLineDockWidget(QWidget *parent, Network *param1, DlgCh
     QObject::connect(pToolWidget, SIGNAL(change_font_size(QString)), this, SLOT(slot_change_font_size(QString)));
     QObject::connect(pToolWidget, SIGNAL(clear_content(QString)), this, SLOT(slot_clear_content(QString)));
     QObject::connect(pInputWidget, SIGNAL(show_hide_toolwidget()), this, SLOT(slot_show_hide_toolwidget()));
+
+    QObject::connect(pInputWidget, SIGNAL(ctrlTabPressed()), this, SLOT(slot_ctrl_tab_pressed()));
+    QObject::connect(pInputWidget, SIGNAL(ctrlShiftTabPressed()), this, SLOT(slot_ctrl_shift_tab_pressed()));
 }
 
 InputLineDockWidget::~InputLineDockWidget()
@@ -151,6 +154,16 @@ void InputLineDockWidget::slot_show_hide_toolwidget()
         show_toolwidget();
     else
         hide_toolwidget();
+}
+
+void InputLineDockWidget::slot_ctrl_tab_pressed()
+{
+    emit ctrlTabPressed();
+}
+
+void InputLineDockWidget::slot_ctrl_shift_tab_pressed()
+{
+    emit ctrlShiftTabPressed();
 }
 
 // tool widget
