@@ -2817,12 +2817,16 @@
         <translation>Podaj powód wyrzucenia:</translation>
     </message>
     <message>
-        <source>Copy</source>
-        <translation>Kopiuj</translation>
+        <source>Send to notes</source>
+        <translation>Wyślij do notatek</translation>
     </message>
     <message>
         <source>Clear</source>
         <translation>Wyczyść</translation>
+    </message>
+    <message>
+        <source>Copy</source>
+        <translation>Kopiuj</translation>
     </message>
     <message>
         <source>Select All</source>

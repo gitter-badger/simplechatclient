@@ -80,6 +80,7 @@ private slots:
     void invite();
     void text_changed();
     void open_webbrowser();
+    void send_to_notes();
 
 protected:
     virtual void contextMenuEvent(QContextMenuEvent *);

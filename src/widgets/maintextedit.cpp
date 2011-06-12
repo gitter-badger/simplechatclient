@@ -20,6 +20,8 @@
 
 #include <QContextMenuEvent>
 #include <QDesktopServices>
+#include <QDir>
+#include <QFile>
 #include <QInputDialog>
 #include <QMenu>
 #include <QSettings>
@@ -202,6 +204,57 @@ void MainTextEdit::open_webbrowser()
     QDesktopServices::openUrl(QUrl(strWebsite, QUrl::TolerantMode));
 }
 
+void MainTextEdit::send_to_notes()
+{
+    QString path;
+
+#ifdef Q_WS_X11
+    path = QDir::homePath()+"/.scc";
+#else
+    QSettings winSettings(QSettings::UserScope, "Microsoft", "Windows");
+    winSettings.beginGroup("CurrentVersion/Explorer/Shell Folders");
+    path = winSettings.value("Personal").toString();
+    path += "/scc";
+#endif
+
+    // create dir if not exist
+    if (!QDir().exists(path))
+        QDir().mkdir(path);
+
+    QString strNotesFile = path+"/notes.txt";
+    QString strContent;
+
+    // read
+    QFile *file = new QFile(strNotesFile);
+    if (file->exists())
+    {
+        if (!file->open(QIODevice::ReadWrite))
+        {
+#ifdef Q_WS_X11
+            qDebug() << tr("Error: Cannot read notes file!");
+#endif
+            return;
+        }
+
+        // set content
+        strContent = file->readAll();
+    }
+
+    file->close();
+    delete file;
+
+    // content
+    strContent += this->textCursor().selectedText()+"\r\n";
+    QByteArray baContent = strContent.toAscii();
+
+    // save
+    QFile *fs = new QFile(strNotesFile);
+    fs->open(QIODevice::WriteOnly | QIODevice::Truncate);
+    fs->write(baContent);
+    fs->close();
+    delete fs;
+}
+
 void MainTextEdit::menu_channel(QString strChannel, QContextMenuEvent *event)
 {
     QMenu menu(this);
@@ -330,15 +383,24 @@ void MainTextEdit::menu_standard(QContextMenuEvent *event)
 
     if (!this->textCursor().selectedText().isEmpty())
     {
-        QAction *copy = new QAction(QIcon(":/images/oxygen/16x16/edit-copy.png"), tr("Copy"), &menu);
-        copy->setShortcut(QKeySequence::Copy);
-        connect(copy, SIGNAL(triggered()), this, SLOT(copy()));
-        menu.addAction(copy);
+        QAction *sendToNotes = new QAction(QIcon(":/images/oxygen/16x16/story-editor.png"), tr("Send to notes"), &menu);
+        connect(sendToNotes, SIGNAL(triggered()), this, SLOT(send_to_notes()));
+        menu.addAction(sendToNotes);
     }
 
     QAction *clear = new QAction(QIcon(":/images/oxygen/16x16/draw-eraser.png"), tr("Clear"), &menu);
     connect(clear, SIGNAL(triggered()), this, SLOT(clear()));
     menu.addAction(clear);
+
+    menu.addSeparator();
+
+    if (!this->textCursor().selectedText().isEmpty())
+    {
+        QAction *copy = new QAction(QIcon(":/images/oxygen/16x16/edit-copy.png"), tr("Copy"), &menu);
+        copy->setShortcut(QKeySequence::Copy);
+        connect(copy, SIGNAL(triggered()), this, SLOT(copy()));
+        menu.addAction(copy);
+    }
 
     QAction *all = new QAction(QIcon(":/images/oxygen/16x16/edit-select-all.png"), tr("Select All"), &menu);
     all->setShortcut(QKeySequence::SelectAll);
