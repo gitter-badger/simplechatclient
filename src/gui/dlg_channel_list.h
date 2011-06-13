@@ -55,7 +55,6 @@ private slots:
     void erotic_CellDoubleClicked(int, int);
     void thematic_CellDoubleClicked(int, int);
     void regional_CellDoubleClicked(int, int);
-    void button_close();
     void button_search();
     void button_clear();
     void hide_empty_channels();

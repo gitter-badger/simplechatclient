@@ -556,7 +556,7 @@ void DlgOptions::create_signals()
     QObject::connect(ui.pushButton_set_background_image, SIGNAL(clicked()), this, SLOT(set_background_image()));
     QObject::connect(ui.checkBox_disable_background_image, SIGNAL(clicked(bool)), this, SLOT(disable_background_image(bool)));
     QObject::connect(ui.buttonBox, SIGNAL(accepted()), this, SLOT(button_ok()));
-    QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(button_cancel()));
+    QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(close()));
 }
 
 void DlgOptions::change_page(QTreeWidgetItem *current, QTreeWidgetItem *previous)
@@ -1115,11 +1115,6 @@ void DlgOptions::disable_background_image(bool bValue)
 
     // refresh
     Core::instance()->refresh_background_image();
-}
-
-void DlgOptions::button_cancel()
-{
-    this->close();
 }
 
 void DlgOptions::button_ok()

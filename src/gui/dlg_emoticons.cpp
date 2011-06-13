@@ -134,7 +134,7 @@ void DlgEmoticons::create_signals()
     QObject::connect(ui.listWidget_standard, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(clicked_standard(QModelIndex)));
     QObject::connect(ui.listWidget_extended, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(clicked_extended(QModelIndex)));
     QObject::connect(ui.pushButton_insert, SIGNAL(clicked()), this, SLOT(button_insert()));
-    QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(button_close()));
+    QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(close()));
 
     QObject::connect(&pThreadEmoticonsStandard, SIGNAL(insert_emoticons_standard(QString, QByteArray)), this, SLOT(insert_emoticons_standard(QString, QByteArray)));
     QObject::connect(&pThreadEmoticonsExtended, SIGNAL(insert_emoticons_extended(QString, QByteArray)), this, SLOT(insert_emoticons_extended(QString, QByteArray)));
@@ -244,9 +244,4 @@ void DlgEmoticons::button_insert()
         // close
         this->close();
     }
-}
-
-void DlgEmoticons::button_close()
-{
-    this->close();
 }

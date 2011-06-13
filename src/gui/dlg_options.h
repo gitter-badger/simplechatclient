@@ -96,7 +96,6 @@ private slots:
     void set_background_image();
     void disable_background_image(bool);
     void button_ok();
-    void button_cancel();
 };
 
 #endif // DLG_OPTIONS_H

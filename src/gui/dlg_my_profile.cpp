@@ -138,7 +138,7 @@ void DlgMyProfile::set_default_values()
 void DlgMyProfile::create_signals()
 {
     QObject::connect(ui.buttonBox, SIGNAL(accepted()), this, SLOT(button_ok()));
-    QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(button_close()));
+    QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(close()));
 }
 
 void DlgMyProfile::refresh()
@@ -491,10 +491,5 @@ void DlgMyProfile::button_ok()
         pNetwork->send(QString("NS SET www %1").arg(strWWW));
 
     // close
-    this->close();
-}
-
-void DlgMyProfile::button_close()
-{
     this->close();
 }

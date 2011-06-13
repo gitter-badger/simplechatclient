@@ -42,7 +42,6 @@ private:
 
 private slots:
     void button_ok();
-    void button_cancel();
 };
 
 #endif // DLG_CHANNEL_KEY_H

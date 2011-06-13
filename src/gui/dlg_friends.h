@@ -44,7 +44,6 @@ private slots:
     void button_add();
     void button_remove();
     void button_whois();
-    void button_close();
 };
 
 #endif // DLG_FRIENDS_H

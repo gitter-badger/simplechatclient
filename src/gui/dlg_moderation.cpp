@@ -49,7 +49,7 @@ void DlgModeration::create_signals()
 {
     QObject::connect(ui.pushButton_accept, SIGNAL(clicked()), this, SLOT(button_accept()));
     QObject::connect(ui.pushButton_remove, SIGNAL(clicked()), this, SLOT(button_remove()));
-    QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(button_close()));
+    QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(hide()));
     QObject::connect(ui.comboBox_channels, SIGNAL(currentIndexChanged(QString)), this, SLOT(combo_changed(QString)));
 }
 
@@ -189,11 +189,6 @@ void DlgModeration::button_remove()
 {
     // remove
     remove_selected();
-}
-
-void DlgModeration::button_close()
-{
-    this->hide();
 }
 
 void DlgModeration::showEvent(QShowEvent *event)

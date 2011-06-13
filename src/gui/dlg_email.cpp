@@ -72,7 +72,7 @@ void DlgEmail::create_signals()
 {
     QObject::connect(ui.pushButton_ok, SIGNAL(clicked()), this, SLOT(button_ok()));
     QObject::connect(ui.pushButton_refresh, SIGNAL(clicked()), this, SLOT(button_refresh()));
-    QObject::connect(ui.pushButton_cancel, SIGNAL(clicked()), this, SLOT(button_cancel()));
+    QObject::connect(ui.pushButton_cancel, SIGNAL(clicked()), this, SLOT(close()));
 }
 
 void DlgEmail::get_cookies()
@@ -194,9 +194,4 @@ void DlgEmail::button_refresh()
 {
     ui.lineEdit_code->clear();
     get_img();
-}
-
-void DlgEmail::button_cancel()
-{
-    this->close();
 }

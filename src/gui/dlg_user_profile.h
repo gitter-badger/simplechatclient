@@ -64,7 +64,6 @@ private slots:
     void avatar_finished(QNetworkReply*);
     void button_zoom();
     void button_more();
-    void button_close();
 
 protected:
     virtual void showEvent(QShowEvent *);

@@ -40,9 +40,6 @@ private:
 
     int replace_value(QString);
     void refresh();
-
-private slots:
-    void button_close();
 };
 
 #endif // DLG_MY_STATS_H

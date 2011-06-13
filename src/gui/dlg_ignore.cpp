@@ -55,7 +55,7 @@ void DlgIgnore::create_signals()
 {
     QObject::connect(ui.pushButton_add, SIGNAL(clicked()), this, SLOT(button_add()));
     QObject::connect(ui.pushButton_remove, SIGNAL(clicked()), this, SLOT(button_remove()));
-    QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(button_close()));
+    QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(close()));
 }
 
 void DlgIgnore::refresh()
@@ -120,9 +120,4 @@ void DlgIgnore::button_remove()
         pNetwork->send(QString("NS IGNORE DEL %1").arg(strText));
         QTimer::singleShot(1000*4, this, SLOT(refresh())); // 4 sec
     }
-}
-
-void DlgIgnore::button_close()
-{
-    this->close();
 }

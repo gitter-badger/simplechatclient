@@ -60,7 +60,7 @@ void DlgFriends::create_signals()
     QObject::connect(ui.pushButton_add, SIGNAL(clicked()), this, SLOT(button_add()));
     QObject::connect(ui.pushButton_remove, SIGNAL(clicked()), this, SLOT(button_remove()));
     QObject::connect(ui.pushButton_whois, SIGNAL(clicked()), this, SLOT(button_whois()));
-    QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(button_close()));
+    QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(close()));
 }
 
 void DlgFriends::refresh()
@@ -163,9 +163,4 @@ void DlgFriends::button_whois()
 
     if (!strSelected.isEmpty())
         pNetwork->send(QString("WHOIS %1 :%1").arg(strSelected));
-}
-
-void DlgFriends::button_close()
-{
-    this->close();
 }

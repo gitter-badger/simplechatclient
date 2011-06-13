@@ -73,10 +73,5 @@ void DlgAbout::set_default_values()
 
 void DlgAbout::create_signals()
 {
-    QObject::connect(ui.buttonBox, SIGNAL(accepted()), this, SLOT(button_ok()));
-}
-
-void DlgAbout::button_ok()
-{
-    this->close();
+    QObject::connect(ui.buttonBox, SIGNAL(accepted()), this, SLOT(close()));
 }

@@ -42,7 +42,6 @@ private slots:
     void refresh();
     void button_add();
     void button_remove();
-    void button_close();
 };
 
 #endif // DLG_IGNORE_H

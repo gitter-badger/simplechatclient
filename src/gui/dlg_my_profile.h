@@ -51,7 +51,6 @@ private:
 
 private slots:
     void button_ok();
-    void button_close();
 };
 
 #endif // DLG_MY_PROFILE_H

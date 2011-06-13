@@ -106,7 +106,7 @@ void DlgMyAvatar::create_signals()
     QObject::connect(ui.pushButton_set_empty_avatar2, SIGNAL(clicked()), this, SLOT(button_set_empty_avatar()));
     QObject::connect(ui.tabWidget, SIGNAL(currentChanged(int)), this, SLOT(tab_changed(int)));
     QObject::connect(ui.listWidget_list_collections, SIGNAL(currentTextChanged(QString)), this, SLOT(collection_changed(QString)));
-    QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(button_close()));
+    QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(close()));
 }
 
 void DlgMyAvatar::get_cookies()
@@ -634,9 +634,4 @@ void DlgMyAvatar::network_finished(QNetworkReply *reply)
         got_add_avatar(QString(bData));
     else if (strCategory == "remove_avatar")
         got_remove_avatar(QString(bData));
-}
-
-void DlgMyAvatar::button_close()
-{
-    this->close();
 }

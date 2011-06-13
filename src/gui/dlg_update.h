@@ -38,9 +38,6 @@ private:
     void create_gui();
     void set_default_values();
     void create_signals();
-
-private slots:
-    void button_ok();
 };
 
 #endif // DLG_UPDATE_H

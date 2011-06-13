@@ -62,7 +62,7 @@ void DlgChannelHomes::create_signals()
     QObject::connect(ui.pushButton_remove, SIGNAL(clicked()), this, SLOT(button_remove()));
     QObject::connect(ui.pushButton_join, SIGNAL(clicked()), this, SLOT(button_join()));
     QObject::connect(ui.pushButton_settings, SIGNAL(clicked()), this, SLOT(button_settings()));
-    QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(button_close()));
+    QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(close()));
 }
 
 void DlgChannelHomes::refresh()
@@ -143,9 +143,4 @@ void DlgChannelHomes::button_settings()
 
         this->close();
     }
-}
-
-void DlgChannelHomes::button_close()
-{
-    this->close();
 }

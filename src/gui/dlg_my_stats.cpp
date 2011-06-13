@@ -54,7 +54,7 @@ void DlgMyStats::create_gui()
 
 void DlgMyStats::create_signals()
 {
-    QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(button_close()));
+    QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(close()));
 }
 
 int DlgMyStats::replace_value(QString strValue)
@@ -124,9 +124,4 @@ void DlgMyStats::refresh()
 
         ++i;
     }
-}
-
-void DlgMyStats::button_close()
-{
-    this->close();
 }

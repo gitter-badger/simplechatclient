@@ -47,7 +47,6 @@ private slots:
     void combo_changed(QString);
     void button_accept();
     void button_remove();
-    void button_close();
 
 protected:
     virtual void showEvent(QShowEvent *);

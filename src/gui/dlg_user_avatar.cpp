@@ -55,7 +55,7 @@ void DlgUserAvatar::create_signals()
     QObject::connect(ui.toolButton_zoom_out, SIGNAL(clicked()), this, SLOT(button_zoom_out()));
     QObject::connect(ui.horizontalSlider, SIGNAL(valueChanged(int)), this, SLOT(slider_value_changed(int)));
     QObject::connect(ui.toolButton_zoom_in, SIGNAL(clicked()), this, SLOT(button_zoom_in()));
-    QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(button_close()));
+    QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(close()));
 }
 
 void DlgUserAvatar::button_zoom_out()
@@ -82,9 +82,4 @@ void DlgUserAvatar::button_zoom_in()
 
     if (value <= ui.horizontalSlider->maximum())
         ui.horizontalSlider->setValue(value);
-}
-
-void DlgUserAvatar::button_close()
-{
-    this->close();
 }

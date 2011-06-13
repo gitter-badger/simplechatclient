@@ -55,7 +55,7 @@ void DlgNotes::create_gui()
 void DlgNotes::create_signals()
 {
     QObject::connect(ui.buttonBox, SIGNAL(accepted()), this, SLOT(button_ok()));
-    QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(button_cancel()));
+    QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(close()));
 }
 
 void DlgNotes::read_path()
@@ -118,11 +118,6 @@ void DlgNotes::button_ok()
     save();
 
     // close
-    this->close();
-}
-
-void DlgNotes::button_cancel()
-{
     this->close();
 }
 

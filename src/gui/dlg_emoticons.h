@@ -82,7 +82,6 @@ private slots:
     void clicked_standard(QModelIndex);
     void clicked_extended(QModelIndex);
     void button_insert();
-    void button_close();
 };
 
 #endif // DLG_EMOTICONS_H

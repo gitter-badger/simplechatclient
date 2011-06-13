@@ -85,7 +85,6 @@ private slots:
     void button_remove_avatar();
     void button_set_empty_avatar();
     void button_apply_collection_avatar();
-    void button_close();
 };
 
 #endif // DLG_MY_AVATAR_H

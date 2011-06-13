@@ -50,7 +50,7 @@ void DlgChannelKey::create_gui()
 void DlgChannelKey::create_signals()
 {
     QObject::connect(ui.buttonBox, SIGNAL(accepted()), this, SLOT(button_ok()));
-    QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(button_cancel()));
+    QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(close()));
 }
 
 void DlgChannelKey::button_ok()
@@ -61,9 +61,4 @@ void DlgChannelKey::button_ok()
         pNetwork->send(QString("JOIN %1 %2").arg(strChannel).arg(strKey));
         this->close();
     }
-}
-
-void DlgChannelKey::button_cancel()
-{
-    this->close();
 }

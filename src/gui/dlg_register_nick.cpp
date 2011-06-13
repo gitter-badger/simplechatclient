@@ -76,7 +76,7 @@ void DlgRegisterNick::create_signals()
 {
     QObject::connect(ui.pushButton_refresh, SIGNAL(clicked()), this, SLOT(button_refresh()));
     QObject::connect(ui.buttonBox, SIGNAL(accepted()), this, SLOT(button_ok()));
-    QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(button_cancel()));
+    QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(close()));
 }
 
 void DlgRegisterNick::get_cookies()
@@ -261,9 +261,4 @@ void DlgRegisterNick::button_refresh()
 {
     ui.lineEdit_code->clear();
     get_img();
-}
-
-void DlgRegisterNick::button_cancel()
-{
-    this->close();
 }

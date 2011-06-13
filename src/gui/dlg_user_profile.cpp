@@ -77,7 +77,7 @@ void DlgUserProfile::create_signals()
 {
     QObject::connect(ui.toolButton_zoom, SIGNAL(clicked()), this, SLOT(button_zoom()));
     QObject::connect(ui.pushButton_more, SIGNAL(clicked()), this, SLOT(button_more()));
-    QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(button_close()));
+    QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(hide()));
 }
 
 void DlgUserProfile::set_nick(QString n)
@@ -329,11 +329,6 @@ void DlgUserProfile::show_avatar(QString strUrl)
 
     // get url
     accessManager->get(QNetworkRequest(QUrl(strUrl)));
-}
-
-void DlgUserProfile::button_close()
-{
-    this->hide();
 }
 
 void DlgUserProfile::showEvent(QShowEvent *event)

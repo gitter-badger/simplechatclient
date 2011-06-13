@@ -54,7 +54,6 @@ private slots:
     void network_finished(QNetworkReply*);
     void button_ok();
     void button_refresh();
-    void button_cancel();
 };
 
 #endif // DLG_EMAIL_H
