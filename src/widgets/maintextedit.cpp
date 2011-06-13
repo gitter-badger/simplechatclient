@@ -453,14 +453,37 @@ QString MainTextEdit::get_word(QTextCursor cursor)
         return "";
 }
 
-QString MainTextEdit::get_first_word(QTextCursor cursor)
+QString MainTextEdit::get_word_n(QTextCursor cursor, int n)
 {
     // get line
     cursor.select(QTextCursor::BlockUnderCursor);
     QString strBlock = cursor.selectedText().trimmed();
     QStringList strlBlock = strBlock.split(" ");
 
-    return strlBlock.at(1);
+    return strlBlock.at(n);
+}
+
+int MainTextEdit::get_word_pos_index(QTextCursor cursor)
+{
+    // get pos
+    int iPos = cursor.position() - cursor.block().position(); // cursor.positionInBlock()
+    // get line
+    cursor.select(QTextCursor::BlockUnderCursor);
+    QString strBlock = cursor.selectedText().trimmed();
+
+    return get_word_index(strBlock, iPos);
+}
+
+bool MainTextEdit::is_join_part_quit(QTextCursor cursor)
+{
+    // get line
+    cursor.select(QTextCursor::BlockUnderCursor);
+    QString strBlock = cursor.selectedText().trimmed();
+
+    if ((strBlock.contains(tr("has joined"))) || (strBlock.contains(tr("has joined priv"))) || (strBlock.contains(tr("has left"))) || (strBlock.contains(tr("has left priv"))) || (strBlock.contains(tr("has quit"))) || (strBlock.contains(tr("has been kicked"))))
+        return true;
+    else
+        return false;
 }
 
 void MainTextEdit::contextMenuEvent(QContextMenuEvent *event)
@@ -471,12 +494,20 @@ void MainTextEdit::contextMenuEvent(QContextMenuEvent *event)
         cursor.select(QTextCursor::WordUnderCursor);
         if (!cursor.selectedText().isEmpty())
         {
-            int iPos = cursor.position() - cursor.block().position(); // cursor.positionInBlock()
-            QString strFirstWord = get_first_word(cursor);
+            int iWordPos = get_word_pos_index(cursor);
+            QString strFirstWord = get_word_n(cursor, 1);
             QString strWord = get_word(cursor);
 
             if ((!strFirstWord.isEmpty()) && (!strWord.isEmpty()))
             {
+                // website
+                if ((strWord.contains("http")) || (strWord.contains("www")))
+                {
+                    strWebsite = strWord;
+                    menu_website(event);
+                    return;
+                }
+
                 // channel
                 if (strWord.at(0) == '#')
                 {
@@ -485,26 +516,29 @@ void MainTextEdit::contextMenuEvent(QContextMenuEvent *event)
                     return;
                 }
 
-                // nick
-                if ((iPos > 11) && (iPos < 11+strFirstWord.length()))
+                // <nick>
+                if (iWordPos == 1)
                 {
-                    QString strFixedWord = strWord.mid(1,strWord.length()-2);
-                    QString strFixedFirstWord = strFirstWord.mid(1,strFirstWord.length()-2);
-
-                    if (strFixedWord == strFixedFirstWord)
+                    if ((strWord.contains("<")) && (strWord.contains(">")))
                     {
-                        strNick = strFixedWord;
+                        strWord.remove("<"); strWord.remove(">");
+                        strNick = strWord;
                         menu_nick(strNick, event);
                         return;
                     }
                 }
 
-                // website
-                if ((strWord.contains("http")) || (strWord.contains("www")))
+                // nick [join,part,quit,kick]
+                if (iWordPos == 2)
                 {
-                    strWebsite = strWord;
-                    menu_website(event);
-                    return;
+                    QString strStar = get_word_n(cursor, 1);
+
+                    if ((strStar == "*") && (is_join_part_quit(cursor)))
+                    {
+                        strNick = strWord;
+                        menu_nick(strNick, event);
+                        return;
+                    }
                 }
             }
         }

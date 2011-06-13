@@ -53,7 +53,9 @@ private:
 
     int get_word_index(QString, int);
     QString get_word(QTextCursor);
-    QString get_first_word(QTextCursor);
+    QString get_word_n(QTextCursor, int);
+    int get_word_pos_index(QTextCursor);
+    bool is_join_part_quit(QTextCursor);
 
 private slots:
     void join_channel();

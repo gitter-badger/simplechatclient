@@ -2879,6 +2879,30 @@
         <source>Open link</source>
         <translation>Otwórz w przeglądarce</translation>
     </message>
+    <message>
+        <source>has joined</source>
+        <translation>wchodzi</translation>
+    </message>
+    <message>
+        <source>has joined priv</source>
+        <translation>dołączył</translation>
+    </message>
+    <message>
+        <source>has left</source>
+        <translation>wychodzi</translation>
+    </message>
+    <message>
+        <source>has left priv</source>
+        <translation>zakończył rozmowę prywatną</translation>
+    </message>
+    <message>
+        <source>has quit</source>
+        <translation>wychodzi z czata</translation>
+    </message>
+    <message>
+        <source>has been kicked</source>
+        <translation>zostaje wyrzucony</translation>
+    </message>
 </context>
 <context>
     <name>NickListWidget</name>
