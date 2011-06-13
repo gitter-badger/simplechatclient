@@ -69,7 +69,8 @@ SOURCES += src/avatars/avatar.cpp \
     src/gui/dlg_webcam_mini.cpp \
     src/gui/dlg_webcam_standard.cpp \
     src/common/webcam_engine.cpp \
-    src/widgets/webcamdelegate.cpp
+    src/widgets/webcamdelegate.cpp \
+    src/gui/dlg_find_text.cpp
 HEADERS += src/avatars/avatar.h \
     src/common/commands.h \
     src/common/config.h \
@@ -132,7 +133,8 @@ HEADERS += src/avatars/avatar.h \
     src/gui/dlg_webcam_mini.h \
     src/gui/dlg_webcam_standard.h \
     src/common/webcam_engine.h \
-    src/widgets/webcamdelegate.h
+    src/widgets/webcamdelegate.h \
+    src/gui/dlg_find_text.h
 FORMS += ui/about.ui \
     ui/awaylog.ui \
     ui/cam.ui \
@@ -160,4 +162,5 @@ FORMS += ui/about.ui \
     ui/user_avatar.ui \
     ui/user_profile.ui \
     ui/webcam_mini.ui \
-    ui/webcam_standard.ui
+    ui/webcam_standard.ui \
+    ui/find_text.ui

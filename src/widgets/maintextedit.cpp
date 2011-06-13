@@ -28,6 +28,7 @@
 #include <QTextBlock>
 #include "animatedemoticonwidget.h"
 #include "core.h"
+#include "dlg_find_text.h"
 #include "dlg_user_profile.h"
 #include "network.h"
 #include "maintextedit.h"
@@ -257,12 +258,7 @@ void MainTextEdit::send_to_notes()
 
 void MainTextEdit::search()
 {
-    QString strMsg = tr("Find:");
-    bool ok;
-    QString strText = QInputDialog::getText(this, tr("Find"), strMsg, QLineEdit::Normal, "", &ok);
-
-    if ((ok) && (!strText.isEmpty()))
-        this->find(strText, QTextDocument::FindBackward);
+    DlgFindText(Core::instance()->sccWindow(), this).exec();
 }
 
 void MainTextEdit::menu_channel(QString strChannel, QContextMenuEvent *event)
@@ -398,7 +394,7 @@ void MainTextEdit::menu_standard(QContextMenuEvent *event)
         menu.addAction(sendToNotes);
     }
 
-    QAction *search = new QAction(QIcon(":/images/oxygen/16x16/edit-find.png"), tr("Find"), &menu);
+    QAction *search = new QAction(QIcon(":/images/oxygen/16x16/edit-find.png"), tr("Find..."), &menu);
     connect(search, SIGNAL(triggered()), this, SLOT(search()));
     menu.addAction(search);
 

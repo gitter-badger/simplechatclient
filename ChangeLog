@@ -3,6 +3,10 @@ ChangeLog for Simple Chat Client
 
 Version 1.0.13 (unknown date)
 ================================
+* Added button Find text
+* Added button Send to notes
+* Added shortcut ctrl+tab and ctrl+shift+tab
+* Changed main layout
 * Fixed cam support in linux
 * Many bugfixes
 

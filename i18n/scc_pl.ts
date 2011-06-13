@@ -1026,6 +1026,45 @@
     </message>
 </context>
 <context>
+    <name>DlgFindText</name>
+    <message>
+        <source>Find</source>
+        <translation>Znajdź</translation>
+    </message>
+    <message>
+        <source>Find what:</source>
+        <translation>Znajdź tekst:</translation>
+    </message>
+    <message>
+        <source>Find next</source>
+        <translation>Znajdź</translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation>Zamknij</translation>
+    </message>
+    <message>
+        <source>Match whole word only</source>
+        <translation>Znajdź tylko całe wyrazy</translation>
+    </message>
+    <message>
+        <source>Match case</source>
+        <translation>Uwzględniaj wielkość liter</translation>
+    </message>
+    <message>
+        <source>Direction</source>
+        <translation>Kierunek</translation>
+    </message>
+    <message>
+        <source>Up</source>
+        <translation>W górę</translation>
+    </message>
+    <message>
+        <source>Down</source>
+        <translation>W dół</translation>
+    </message>
+</context>
+<context>
     <name>DlgFriends</name>
     <message>
         <source>Friends list</source>
@@ -2817,16 +2856,12 @@
         <translation>Podaj powód wyrzucenia:</translation>
     </message>
     <message>
-        <source>Find:</source>
-        <translation>Szukaj:</translation>
-    </message>
-    <message>
         <source>Send to notes</source>
         <translation>Wyślij do notatek</translation>
     </message>
     <message>
-        <source>Find</source>
-        <translation>Szukaj</translation>
+        <source>Find...</source>
+        <translation>Znajdź...</translation>
     </message>
     <message>
         <source>Clear</source>
