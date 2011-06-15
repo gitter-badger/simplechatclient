@@ -21,11 +21,19 @@
 #ifndef DLG_USER_PROFILE_H
 #define DLG_USER_PROFILE_H
 
+class QFormLayout;
+class QHBoxLayout;
+class QLabel;
+class QLineEdit;
+class QPlainTextEdit;
+class QTextEdit;
+class QToolButton;
+class QVBoxLayout;
+
 class Network;
 #include <QDialog>
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
-#include "ui_user_profile.h"
 
 class DlgUserProfile : public QDialog
 {
@@ -40,15 +48,45 @@ public slots:
     void set_user_info(QString, QString);
 
 private:
-    Ui::uiUserProfile ui;
     Network *pNetwork;
-    int iWidth; // widget width
     QPixmap avatar;
     QNetworkAccessManager *accessManager;
     QString strNick;
 
+    QVBoxLayout *mainLayout;
+    QLabel *label_nick;
+
+    QWidget *toolWidget;
+    QVBoxLayout *toolLayout;
+    QToolButton *toolButton_zoom;
+
+    QWidget *topWidget;
+    QHBoxLayout *topLayout;
+    QLabel *label_avatar;
+    QTextEdit *textEdit_desc;
+
+    QWidget *agesexWidget;
+    QHBoxLayout *agesexLayout;
+    QLabel *label_age;
+    QLineEdit *lineEdit_age;
+    QLabel *label_sex;
+    QLineEdit *lineEdit_sex;
+
+    QWidget *moreWidget;
+    QFormLayout *moreLayout;
+    QLineEdit *lineEdit_birthdate;
+    QLineEdit *lineEdit_city;
+    QLineEdit *lineEdit_country;
+    QPlainTextEdit *plainTextEdit_hobby;
+    QLineEdit *lineEdit_type;
+    QLabel *label_website_link;
+
+    QWidget *pushButtonWidget;
+    QHBoxLayout *pushButtonLayout;
+    QPushButton *pushButton_more;
+    QPushButton *pushButton_close;
+
     void create_gui();
-    void set_default_values();
     void create_signals();
 
     void clear_info();

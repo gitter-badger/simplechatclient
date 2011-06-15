@@ -24,7 +24,6 @@ set (scc_UIS
 	../ui/register_nick.ui
 	../ui/update.ui
 	../ui/user_avatar.ui
-	../ui/user_profile.ui
 )
 
 set (scc_SRCS

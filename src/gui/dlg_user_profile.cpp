@@ -18,9 +18,18 @@
  *                                                                          *
  ****************************************************************************/
 
+#include <QFormLayout>
+#include <QHBoxLayout>
+#include <QLabel>
+#include <QLineEdit>
+#include <QPlainTextEdit>
+#include <QPushButton>
+#include <QTextEdit>
+#include <QToolButton>
+#include <QVBoxLayout>
+
 #include <QDate>
 #include <QDesktopWidget>
-#include <QPushButton>
 #include "convert.h"
 #include "core.h"
 #include "dlg_user_avatar.h"
@@ -29,7 +38,6 @@
 
 DlgUserProfile::DlgUserProfile(QWidget *parent, Network *param1) : QDialog(parent)
 {
-    ui.setupUi(this);
     setAttribute(Qt::WA_DeleteOnClose);
     setWindowTitle(tr("Profile"));
     // center screen
@@ -38,7 +46,6 @@ DlgUserProfile::DlgUserProfile(QWidget *parent, Network *param1) : QDialog(paren
     pNetwork = param1;
 
     create_gui();
-    set_default_values();
     create_signals();
 
     accessManager = new QNetworkAccessManager;
@@ -52,32 +59,114 @@ DlgUserProfile::~DlgUserProfile()
 
 void DlgUserProfile::create_gui()
 {
-    ui.toolButton_zoom->setIcon(QIcon(":/images/oxygen/16x16/zoom-in.png"));
-    ui.pushButton_more->setIcon(QIcon(":/images/oxygen/16x16/list-add.png"));
-    ui.buttonBox->button(QDialogButtonBox::Close)->setIcon(QIcon(":/images/oxygen/16x16/dialog-close.png"));
+    toolButton_zoom = new QToolButton();
+    toolLayout = new QVBoxLayout();
+    toolLayout->setMargin(0);
+    toolLayout->addStretch();
+    toolLayout->addWidget(toolButton_zoom);
+    toolWidget = new QWidget(this);
+    toolWidget->setLayout(toolLayout);
 
-    ui.label_sex->setText(tr("Sex:"));
-    ui.label_age->setText(tr("Age:"));
-    ui.label_birthdate->setText(tr("Birthdate:"));
-    ui.label_city->setText(tr("City:"));
-    ui.label_country->setText(tr("Country:"));
-    ui.label_hobby->setText(tr("Hobby:"));
-    ui.label_type->setText(tr("Type:"));
-    ui.label_www->setText(tr("Website:"));
-    ui.pushButton_more->setText(tr("More..."));
-}
+    label_avatar = new QLabel();
+    label_avatar->setMinimumSize(50,50);
+    textEdit_desc = new QTextEdit();
+    textEdit_desc->setMinimumSize(190,70);
+    textEdit_desc->setMaximumSize(190,70);
+    textEdit_desc->setReadOnly(true);
+    topLayout = new QHBoxLayout();
+    topLayout->setMargin(0);
+    topLayout->addWidget(toolWidget);
+    topLayout->addWidget(label_avatar);
+    topLayout->addWidget(textEdit_desc);
+    topWidget = new QWidget(this);
+    topWidget->setLayout(topLayout);
 
-void DlgUserProfile::set_default_values()
-{
-    // set width
-    iWidth = ui.verticalLayout->sizeHint().width();
+    label_age = new QLabel();
+    lineEdit_age = new QLineEdit();
+    lineEdit_age->setAlignment(Qt::AlignCenter);
+    lineEdit_age->setReadOnly(true);
+    label_age->setBuddy(label_age);
+    label_sex = new QLabel();
+    lineEdit_sex = new QLineEdit();
+    lineEdit_sex->setAlignment(Qt::AlignCenter);
+    lineEdit_sex->setReadOnly(true);
+    label_sex->setBuddy(label_sex);
+    agesexLayout = new QHBoxLayout();
+    agesexLayout->setMargin(0);
+    agesexLayout->addWidget(label_age);
+    agesexLayout->addWidget(lineEdit_age);
+    agesexLayout->addWidget(label_sex);
+    agesexLayout->addWidget(lineEdit_sex);
+    agesexWidget = new QWidget(this);
+    agesexWidget->setLayout(agesexLayout);
+
+    lineEdit_birthdate = new QLineEdit();
+    lineEdit_birthdate->setAlignment(Qt::AlignCenter);
+    lineEdit_birthdate->setReadOnly(true);
+    lineEdit_city = new QLineEdit();
+    lineEdit_city->setAlignment(Qt::AlignCenter);
+    lineEdit_city->setReadOnly(true);
+    lineEdit_country = new QLineEdit();
+    lineEdit_country->setAlignment(Qt::AlignCenter);
+    lineEdit_country->setReadOnly(true);
+    plainTextEdit_hobby = new QPlainTextEdit();
+    plainTextEdit_hobby->setReadOnly(true);
+    plainTextEdit_hobby->setMaximumHeight(50);
+    plainTextEdit_hobby->setMaximumHeight(50);
+    lineEdit_type = new QLineEdit();
+    lineEdit_type->setAlignment(Qt::AlignCenter);
+    lineEdit_type->setReadOnly(true);
+    label_website_link = new QLabel();
+    label_website_link->setOpenExternalLinks(true);
+    moreLayout = new QFormLayout();
+    moreLayout->setMargin(0);
+    moreLayout->addRow(tr("Birthdate:"), lineEdit_birthdate);
+    moreLayout->addRow(tr("City:"), lineEdit_city);
+    moreLayout->addRow(tr("Country:"), lineEdit_country);
+    moreLayout->addRow(tr("Hobby:"), plainTextEdit_hobby);
+    moreLayout->addRow(tr("Type:"), lineEdit_type);
+    moreLayout->addRow(tr("Website:"), label_website_link);
+    moreWidget = new QWidget(this);
+    moreWidget->setLayout(moreLayout);
+
+    pushButton_more = new QPushButton();
+    pushButton_close = new QPushButton();
+    pushButtonLayout = new QHBoxLayout();
+    pushButtonLayout->setMargin(0);
+    pushButtonLayout->addWidget(pushButton_more);
+    pushButtonLayout->addStretch();
+    pushButtonLayout->addWidget(pushButton_close);
+    pushButtonWidget = new QWidget(this);
+    pushButtonWidget->setLayout(pushButtonLayout);
+
+    label_nick = new QLabel();
+    label_nick->setAlignment(Qt::AlignCenter);
+    label_nick->setStyleSheet("font-weight:bold;");
+    mainLayout = new QVBoxLayout();
+    mainLayout->setSizeConstraint(QLayout::SetFixedSize);
+    mainLayout->setMargin(0);
+    mainLayout->addWidget(label_nick);
+    mainLayout->addWidget(topWidget);
+    mainLayout->addWidget(agesexWidget);
+    mainLayout->addWidget(moreWidget);
+    mainLayout->addWidget(pushButtonWidget);
+    this->setLayout(mainLayout);
+
+    toolButton_zoom->setIcon(QIcon(":/images/oxygen/16x16/zoom-in.png"));
+    pushButton_more->setIcon(QIcon(":/images/oxygen/16x16/list-add.png"));
+    pushButton_close->setIcon(QIcon(":/images/oxygen/16x16/dialog-close.png"));
+
+    label_sex->setText(tr("Sex:"));
+    label_age->setText(tr("Age:"));
+    pushButton_more->setText(tr("More..."));
+    pushButton_close->setText(tr("Close"));
 }
 
 void DlgUserProfile::create_signals()
 {
-    QObject::connect(ui.toolButton_zoom, SIGNAL(clicked()), this, SLOT(button_zoom()));
-    QObject::connect(ui.pushButton_more, SIGNAL(clicked()), this, SLOT(button_more()));
-    QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(hide()));
+    QObject::connect(toolButton_zoom, SIGNAL(clicked()), this, SLOT(button_zoom()));
+    QObject::connect(pushButton_more, SIGNAL(clicked()), this, SLOT(button_more()));
+    QObject::connect(pushButton_close, SIGNAL(clicked()), this, SLOT(hide()));
 }
 
 void DlgUserProfile::set_nick(QString n)
@@ -89,7 +178,7 @@ void DlgUserProfile::set_nick(QString n)
     strNick = n;
 
     //set label
-    ui.label_nick->setText(QString("<b>%1</b>").arg(strNick));
+    label_nick->setText(strNick);
 
     // get new user info
     pNetwork->send(QString("NS INFO %1").arg(strNick));
@@ -102,31 +191,31 @@ void DlgUserProfile::set_user_info(QString strKey, QString strValue)
         if (!strValue.isEmpty())
             show_avatar(strValue);
         else
-            ui.label_avatar->setText(tr("No photo available"));
+            label_avatar->setText(tr("No photo available"));
     }
     else if (strKey == "birthdate")
     {
-        ui.lineEdit_age->setText(convert_age(strValue));
-        ui.lineEdit_birthdate->setText(strValue);
+        lineEdit_age->setText(convert_age(strValue));
+        lineEdit_birthdate->setText(strValue);
     }
     else if (strKey == "city")
-        ui.lineEdit_city->setText(strValue);
+        lineEdit_city->setText(strValue);
     else if (strKey == "country")
-        ui.lineEdit_country->setText(convert_code_to_country(strValue));
+        lineEdit_country->setText(convert_code_to_country(strValue));
     else if (strKey == "longDesc")
-        ui.plainTextEdit_hobby->setPlainText(strValue);
+        plainTextEdit_hobby->setPlainText(strValue);
     else if (strKey == "sex")
-        ui.lineEdit_sex->setText(convert_sex(strValue));
+        lineEdit_sex->setText(convert_sex(strValue));
     else if (strKey == "shortDesc")
-        ui.textEdit_desc->setHtml(convert_desc(strValue));
+        textEdit_desc->setHtml(convert_desc(strValue));
     else if (strKey == "type")
-        ui.lineEdit_type->setText(convert_type(strValue));
+        lineEdit_type->setText(convert_type(strValue));
     else if (strKey == "www")
     {
         QString strShortLink = strValue;
         if (strShortLink.size() > 30) strShortLink = strShortLink.left(15)+"..."+strShortLink.right(15);
 
-        ui.labelEdit_www->setText(QString("<a href=\"%1\">%2</a>").arg(strValue).arg(strShortLink));
+        label_website_link->setText(QString("<a href=\"%1\">%2</a>").arg(strValue).arg(strShortLink));
     }
 }
 
@@ -145,10 +234,10 @@ void DlgUserProfile::avatar_finished(QNetworkReply *pReply)
     {
         // display
         avatar.loadFromData(bData);
-        ui.label_avatar->setPixmap(avatar.scaled(QSize(50,50)));
+        label_avatar->setPixmap(avatar.scaled(QSize(50,50)));
 
         // enable zoom
-        ui.toolButton_zoom->setEnabled(true);
+        toolButton_zoom->setEnabled(true);
     }
 }
 
@@ -159,49 +248,35 @@ void DlgUserProfile::button_zoom()
 
 void DlgUserProfile::button_more()
 {
-    if (ui.widget_more->isHidden())
+    if (moreWidget->isVisible())
     {
-        ui.widget_more->show();
-        ui.pushButton_more->setIcon(QIcon(":/images/oxygen/16x16/list-remove.png"));
-        ui.pushButton_more->setText(tr("Less..."));
-
-        int iHeight = ui.verticalLayout->sizeHint().height();
-        setMinimumHeight(iHeight);
-        setMaximumHeight(iHeight);
-        setMinimumWidth(iWidth);
-        setMaximumWidth(iWidth);
-        resize(iWidth, iHeight);
+        moreWidget->setVisible(false);
+        pushButton_more->setIcon(QIcon(":/images/oxygen/16x16/list-add.png"));
+        pushButton_more->setText(tr("More..."));
     }
     else
     {
-        ui.widget_more->hide();
-        ui.pushButton_more->setIcon(QIcon(":/images/oxygen/16x16/list-add.png"));
-        ui.pushButton_more->setText(tr("More..."));
-
-        int iHeight = ui.verticalLayout->sizeHint().height() - (ui.formLayout_more->sizeHint().height()+15);
-        setMinimumHeight(iHeight);
-        setMaximumHeight(iHeight);
-        setMinimumWidth(iWidth);
-        setMaximumWidth(iWidth);
-        resize(iWidth, iHeight);
+        moreWidget->setVisible(true);
+        pushButton_more->setIcon(QIcon(":/images/oxygen/16x16/list-remove.png"));
+        pushButton_more->setText(tr("Less..."));
     }
 }
 
 void DlgUserProfile::clear_info()
 {
     strNick.clear();
-    ui.label_avatar->clear();
-    ui.toolButton_zoom->setEnabled(false);
-    ui.label_nick->clear();
-    ui.textEdit_desc->clear();
-    ui.lineEdit_sex->clear();
-    ui.lineEdit_age->clear();
-    ui.lineEdit_birthdate->clear();
-    ui.lineEdit_city->clear();
-    ui.lineEdit_country->clear();
-    ui.plainTextEdit_hobby->clear();
-    ui.lineEdit_type->clear();
-    ui.labelEdit_www->clear();
+    label_avatar->clear();
+    toolButton_zoom->setEnabled(false);
+    label_nick->clear();
+    textEdit_desc->clear();
+    lineEdit_sex->clear();
+    lineEdit_age->clear();
+    lineEdit_birthdate->clear();
+    lineEdit_city->clear();
+    lineEdit_country->clear();
+    plainTextEdit_hobby->clear();
+    lineEdit_type->clear();
+    label_website_link->clear();
 }
 
 QString DlgUserProfile::convert_desc(QString strContent)
@@ -335,21 +410,13 @@ void DlgUserProfile::showEvent(QShowEvent *event)
 {
     event->accept();
 
-    // is hidden?
-    if (!ui.widget_more->isHidden())
+    // is visible
+    if (moreWidget->isVisible())
     {
         // change text
-        ui.widget_more->hide();
-        ui.pushButton_more->setIcon(QIcon(":/images/oxygen/16x16/list-add.png"));
-        ui.pushButton_more->setText(tr("More..."));
-
-        // resize
-        int iHeight = ui.verticalLayout->sizeHint().height() - (ui.formLayout_more->sizeHint().height()+15);
-        setMinimumHeight(iHeight);
-        setMaximumHeight(iHeight);
-        setMinimumWidth(iWidth);
-        setMaximumWidth(iWidth);
-        resize(iWidth, iHeight);
+        moreWidget->setVisible(false);
+        pushButton_more->setIcon(QIcon(":/images/oxygen/16x16/list-add.png"));
+        pushButton_more->setText(tr("More..."));
     }
 
     // center screen
