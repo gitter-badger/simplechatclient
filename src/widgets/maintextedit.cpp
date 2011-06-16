@@ -305,13 +305,17 @@ void MainTextEdit::menu_nick(QString strNick, QContextMenuEvent *event)
 
     QMenu *friends = new QMenu(tr("Friends list"));
     friends->setIcon(QIcon(":/images/oxygen/16x16/meeting-attending.png"));
-    friends->addAction(QIcon(":/images/oxygen/16x16/list-add.png"), tr("Add to friends"), this, SLOT(friends_add()));
-    friends->addAction(QIcon(":/images/oxygen/16x16/list-remove.png"), tr("Remove from friends"), this, SLOT(friends_del()));
+    if (Core::instance()->mFriends.contains(strNick))
+        friends->addAction(QIcon(":/images/oxygen/16x16/list-remove.png"), tr("Remove from friends"), this, SLOT(friends_del()));
+    else
+        friends->addAction(QIcon(":/images/oxygen/16x16/list-add.png"), tr("Add to friends"), this, SLOT(friends_add()));
 
     QMenu *ignore = new QMenu(tr("Ignore list"));
     ignore->setIcon(QIcon(":/images/oxygen/16x16/meeting-attending-tentative.png"));
-    ignore->addAction(QIcon(":/images/oxygen/16x16/list-add.png"), tr("Add to Ignore list"), this, SLOT(ignore_add()));
-    ignore->addAction(QIcon(":/images/oxygen/16x16/list-remove.png"), tr("Remove from Ignore list"), this, SLOT(ignore_del()));
+    if (Core::instance()->lIgnore.contains(strNick))
+        ignore->addAction(QIcon(":/images/oxygen/16x16/list-remove.png"), tr("Remove from Ignore list"), this, SLOT(ignore_del()));
+    else
+        ignore->addAction(QIcon(":/images/oxygen/16x16/list-add.png"), tr("Add to Ignore list"), this, SLOT(ignore_add()));
 
     QMenu *privilege = new QMenu(tr("Actions"));
     privilege->setIcon(QIcon(":/images/oxygen/16x16/irc-operator.png"));
