@@ -72,7 +72,7 @@ void Core::createSettings()
 {
     // default settings
     QSettings settings;
-    settings.setValue("version", "1.0.13.908");
+    settings.setValue("version", "1.0.13.909");
     settings.setValue("logged", "off");
     settings.setValue("busy", "off");
     settings.setValue("away", "off");
@@ -206,6 +206,12 @@ int Core::get_nick_channels(QString strNick)
         if (lUsers.at(i).nick == strNick)
             iResult++;
     }
+
+    // fix for self nick
+    QSettings settings;
+    QString strMe = settings.value("nick").toString();
+    if (strNick == strMe)
+        iResult = 1;
 
     return iResult;
 }
