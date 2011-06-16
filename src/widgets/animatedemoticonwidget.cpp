@@ -110,6 +110,10 @@ int AnimatedEmoticonWidget::get_correct_x(int x, int y)
             // fix x
             x--;
         }
+
+        // fix hangup
+        if (x > 2048)
+            bIsXImage = false;
     }
     return x;
 }
@@ -129,6 +133,10 @@ int AnimatedEmoticonWidget::get_correct_y(int x, int y)
             // fix y
             y--;
         }
+
+        // fix hangup
+        if (y > 2048)
+            bIsYImage = false;
     }
     return y;
 }
