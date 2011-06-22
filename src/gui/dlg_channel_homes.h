@@ -43,6 +43,7 @@ private:
 private slots:
     void refresh();
     void list_clicked(QModelIndex);
+    void item_clicked(QListWidgetItem*);
     void button_create();
     void button_remove();
     void button_join();

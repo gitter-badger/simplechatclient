@@ -41,6 +41,7 @@ private:
 private slots:
     void refresh();
     void tab_changed(int);
+    void item_clicked(QListWidgetItem*);
     void button_add();
     void button_remove();
     void button_whois();

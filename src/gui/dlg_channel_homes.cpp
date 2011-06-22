@@ -43,6 +43,9 @@ DlgChannelHomes::DlgChannelHomes(QWidget *parent, Network *param1, DlgChannelSet
 
 void DlgChannelHomes::create_gui()
 {
+    ui.pushButton_join->setEnabled(false);
+    ui.pushButton_settings->setEnabled(false);
+
     ui.pushButton_create->setIcon(QIcon(":/images/oxygen/16x16/irc-join-channel.png"));
     ui.pushButton_remove->setIcon(QIcon(":/images/oxygen/16x16/irc-close-channel.png"));
     ui.pushButton_join->setIcon(QIcon(":/images/oxygen/16x16/legalmoves.png"));
@@ -58,6 +61,7 @@ void DlgChannelHomes::create_gui()
 void DlgChannelHomes::create_signals()
 {
     QObject::connect(ui.listWidget_channels, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(list_clicked(QModelIndex)));
+    QObject::connect(ui.listWidget_channels, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(item_clicked(QListWidgetItem*)));
     QObject::connect(ui.pushButton_create, SIGNAL(clicked()), this, SLOT(button_create()));
     QObject::connect(ui.pushButton_remove, SIGNAL(clicked()), this, SLOT(button_remove()));
     QObject::connect(ui.pushButton_join, SIGNAL(clicked()), this, SLOT(button_join()));
@@ -97,6 +101,16 @@ void DlgChannelHomes::list_clicked(QModelIndex index)
     pDlgChannelSettings->show();
 
     this->close();
+}
+
+void DlgChannelHomes::item_clicked(QListWidgetItem *item)
+{
+    Q_UNUSED (item);
+
+    if (!ui.pushButton_join->isEnabled())
+        ui.pushButton_join->setEnabled(true);
+    if (!ui.pushButton_settings->isEnabled())
+        ui.pushButton_settings->setEnabled(true);
 }
 
 void DlgChannelHomes::button_create()

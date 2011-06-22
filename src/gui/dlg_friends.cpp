@@ -44,6 +44,8 @@ DlgFriends::DlgFriends(QWidget *parent, Network *param1) : QDialog(parent)
 
 void DlgFriends::create_gui()
 {
+    ui.pushButton_whois->setEnabled(false);
+
     ui.pushButton_add->setIcon(QIcon(":/images/oxygen/16x16/list-add-user.png"));
     ui.pushButton_remove->setIcon(QIcon(":/images/oxygen/16x16/list-remove-user.png"));
     ui.pushButton_whois->setIcon(QIcon(":/images/oxygen/16x16/user-properties.png"));
@@ -57,6 +59,7 @@ void DlgFriends::create_gui()
 void DlgFriends::create_signals()
 {
     QObject::connect(ui.tabWidget, SIGNAL(currentChanged(int)), this, SLOT(tab_changed(int)));
+    QObject::connect(ui.listWidget_online, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(item_clicked(QListWidgetItem*)));
     QObject::connect(ui.pushButton_add, SIGNAL(clicked()), this, SLOT(button_add()));
     QObject::connect(ui.pushButton_remove, SIGNAL(clicked()), this, SLOT(button_remove()));
     QObject::connect(ui.pushButton_whois, SIGNAL(clicked()), this, SLOT(button_whois()));
@@ -109,6 +112,14 @@ void DlgFriends::tab_changed(int index)
     // offline - hide whois
     else if ((index == 1) && (!ui.pushButton_whois->isHidden()))
         ui.pushButton_whois->setHidden(true);
+}
+
+void DlgFriends::item_clicked(QListWidgetItem *item)
+{
+    Q_UNUSED (item);
+
+    if (!ui.pushButton_whois->isEnabled())
+        ui.pushButton_whois->setEnabled(true);
 }
 
 void DlgFriends::button_add()
