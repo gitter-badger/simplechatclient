@@ -277,7 +277,11 @@ void NickListWidget::contextMenuEvent(QContextMenuEvent *e)
 
     QString strNick = this->selectedItems().at(0)->text();
 
-    QString strModes = Core::instance()->get_user_modes(strNick, strChannel);
+    QSettings settings;
+    QString strMe = settings.value("nick").toString();
+    QString strSelfModes = Core::instance()->get_user_modes(strMe, strChannel);
+    int iSelfMaxModes = Core::instance()->get_user_max_modes(strMe, strChannel);
+    QString strNickModes = Core::instance()->get_user_modes(strNick, strChannel);
 
     QMenu *minvite = new QMenu(tr("Invite"));
     minvite->setIcon(QIcon(":/images/oxygen/16x16/legalmoves.png"));
@@ -320,24 +324,24 @@ void NickListWidget::contextMenuEvent(QContextMenuEvent *e)
     QMenu *privilege = new QMenu(tr("Actions"));
     privilege->setIcon(QIcon(":/images/oxygen/16x16/irc-operator.png"));
 
-    if (strModes.contains("@"))
+    if ((strNickModes.contains("@")) && ((iSelfMaxModes >= 16) || (strNick == strMe)))
         privilege->addAction(QIcon(":/images/op.png"), tr("Take super operator status"), this, SLOT(op_del()));
-    else
+    else if ((!strNickModes.contains("@")) && (iSelfMaxModes >= 16))
         privilege->addAction(QIcon(":/images/op.png"), tr("Give super operator status"), this, SLOT(op_add()));
 
-    if (strModes.contains("%"))
+    if ((strNickModes.contains("%")) && ((iSelfMaxModes >= 8) || (strNick == strMe)))
         privilege->addAction(QIcon(":/images/halfop.png"), tr("Take operator status"), this, SLOT(halfop_del()));
-    else
+    else if ((!strNickModes.contains("%")) && (iSelfMaxModes >= 8))
         privilege->addAction(QIcon(":/images/halfop.png"), tr("Give operator status"), this, SLOT(halfop_add()));
 
-    if (strModes.contains("!"))
+    if ((strNickModes.contains("!")) && ((iSelfMaxModes >= 4) || (strNick == strMe)))
         privilege->addAction(QIcon(":/images/mod.png"), tr("Take moderator status"), this, SLOT(moderator_del()));
-    else
+    else if ((!strNickModes.contains("!")) && (iSelfMaxModes >= 4))
         privilege->addAction(QIcon(":/images/mod.png"), tr("Give moderator status"), this, SLOT(moderator_add()));
 
-    if (strModes.contains("+"))
+    if ((strNickModes.contains("+")) && ((iSelfMaxModes >= 4) || (strNick == strMe)))
         privilege->addAction(QIcon(":/images/voice.png"), tr("Take guest status"), this, SLOT(voice_del()));
-    else
+    else if ((!strNickModes.contains("+")) && (iSelfMaxModes >= 4))
         privilege->addAction(QIcon(":/images/voice.png"), tr("Give guest status"), this, SLOT(voice_add()));
 
     QAction *nickAct = new QAction(strNick, this);
@@ -352,19 +356,28 @@ void NickListWidget::contextMenuEvent(QContextMenuEvent *e)
     if (strNick[0] != '~')
     {
         menu->addAction(QIcon(":/images/oxygen/16x16/view-pim-contacts.png"), tr("Profile"), this, SLOT(profile()));
-        if ((strModes.contains("W")) || (strModes.contains("V")))
+        if ((strNickModes.contains("W")) || (strNickModes.contains("V")))
             menu->addAction(QIcon(":/images/pubcam.png"), tr("Webcam"), this, SLOT(cam()));
     }
     menu->addMenu(minvite);
-    menu->addMenu(friends);
-    menu->addMenu(ignore);
-    menu->addSeparator();
-    menu->addAction(QIcon(":/images/oxygen/16x16/im-kick-user.png"), tr("Kick From Channel"), this, SLOT(kick()));
-    menu->addAction(QIcon(":/images/oxygen/16x16/im-ban-user.png"), tr("Ban From Channel"), this, SLOT(ban()));
-    menu->addAction(QIcon(":/images/oxygen/16x16/im-ban-kick-user.png"), tr("Kick & Ban"), this, SLOT(kban()));
-    menu->addAction(QIcon(":/images/oxygen/16x16/im-user-busy.png"), tr("IP Ban"), this, SLOT(ipban()));
-    menu->addSeparator();
-    menu->addMenu(privilege);
+    if (strSelfModes.contains("r"))
+    {
+        menu->addMenu(friends);
+        menu->addMenu(ignore);
+    }
+    if (iSelfMaxModes >= 4)
+    {
+        menu->addSeparator();
+        menu->addAction(QIcon(":/images/oxygen/16x16/im-kick-user.png"), tr("Kick From Channel"), this, SLOT(kick()));
+        menu->addAction(QIcon(":/images/oxygen/16x16/im-ban-user.png"), tr("Ban From Channel"), this, SLOT(ban()));
+        menu->addAction(QIcon(":/images/oxygen/16x16/im-ban-kick-user.png"), tr("Kick & Ban"), this, SLOT(kban()));
+        menu->addAction(QIcon(":/images/oxygen/16x16/im-user-busy.png"), tr("IP Ban"), this, SLOT(ipban()));
+    }
+    if (!privilege->isEmpty())
+    {
+        menu->addSeparator();
+        menu->addMenu(privilege);
+    }
 
     menu->popup(e->globalPos());
 }

@@ -3,6 +3,7 @@ ChangeLog for Simple Chat Client
 
 Version 1.0.13 (unknown date)
 ================================
+* Fixed offline messages
 * Added button Find text
 * Added button Send to notes
 * Added shortcut ctrl+tab and ctrl+shift+tab
