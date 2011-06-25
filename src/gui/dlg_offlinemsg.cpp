@@ -96,8 +96,26 @@ void DlgOfflineMsg::refresh()
         ui.listWidget_nicks->insertItem(ui.listWidget_nicks->count(), Core::instance()->lOfflineNicks.at(i));
 }
 
+bool DlgOfflineMsg::exist_nick()
+{
+    for (int i = 0; i < Core::instance()->lOfflineMsg.size(); i++)
+    {
+        OfflineMsg msg = Core::instance()->lOfflineMsg.at(i);
+        QString strNick = msg.nick;
+        if (strNick == strCurrentNick)
+            return true;
+    }
+    return false;
+}
+
 void DlgOfflineMsg::refresh_msg()
 {
+    if (!exist_nick())
+    {
+        QTimer::singleShot(1000*4, this, SLOT(refresh_msg())); // 3 sec
+        return;
+    }
+
     ui.listWidget_msg->clear();
     ui.lineEdit_reply->clear();
     ui.listWidget_msg->setEnabled(true);
@@ -108,6 +126,7 @@ void DlgOfflineMsg::refresh_msg()
     {
         OfflineMsg msg = Core::instance()->lOfflineMsg.at(i);
         QString strTime = msg.datetime;
+        QString strType = msg.type;
         QString strNick = msg.nick;
         QString strMessage = msg.message;
 
@@ -120,8 +139,37 @@ void DlgOfflineMsg::refresh_msg()
             strMessage.remove(QRegExp("%F([a-zA-Z0-9:]+)%"));
             strMessage.replace(QRegExp("%I([a-zA-Z0-9_-]+)%"),"<\\1>");
 
-            strMessage = QString("%1 <%2> %3").arg(strDT).arg(strNick).arg(strMessage);
-            ui.listWidget_msg->addItem(strMessage);
+            if (strType == "quote")
+            {
+                if (!messagesQuoted.contains(strNick))
+                {
+                    QString strDisplay = QString(tr("* You sent offline message to %1:").arg(strNick));
+                    ui.listWidget_msg->addItem(strDisplay);
+                    messagesQuoted.append(strNick);
+                }
+
+                QSettings settings;
+                QString strMe = settings.value("nick").toString();
+
+                strMessage = QString("%1 <%2> %3").arg(strDT).arg(strMe).arg(strMessage);
+                ui.listWidget_msg->addItem(strMessage);
+            }
+            else if (strType == "reply")
+            {
+                if (!messagesReplied.contains(strNick))
+                {
+                    QString strDisplay = QString(tr("* User %1 replied:").arg(strNick));
+                    ui.listWidget_msg->addItem(strDisplay);
+                    messagesReplied.append(strNick);
+                }
+                strMessage = QString("%1 <%2> %3").arg(strDT).arg(strNick).arg(strMessage);
+                ui.listWidget_msg->addItem(strMessage);
+            }
+            else if (strType == "msg")
+            {
+                strMessage = QString("%1 <%2> %3").arg(strDT).arg(strNick).arg(strMessage);
+                ui.listWidget_msg->addItem(strMessage);
+            }
         }
     }
 }
@@ -162,7 +210,14 @@ void DlgOfflineMsg::button_reply()
     QString strNick = strCurrentNick;
     QString strMessage = ui.lineEdit_reply->text();
 
-    // send
+    // quote
+    if (!messagesQuotedToSender.contains(strNick))
+    {
+        pNetwork->send(QString("NS OFFLINE QUOTE %1").arg(strNick));
+        messagesQuotedToSender.append(strNick);
+    }
+
+    // reply
     pNetwork->send(QString("NS OFFLINE REPLY %1 %2").arg(strNick).arg(strMessage));
 
     // clear

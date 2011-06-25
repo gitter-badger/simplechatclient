@@ -59,6 +59,7 @@ typedef QList<ModerateMsg> sModerateMsg;
 struct OfflineMsg
 {
     QString datetime;
+    QString type;
     QString nick;
     QString message;
 };

@@ -1296,6 +1296,8 @@ void OnetKernel::raw_001()
     Core::instance()->mMyStats.clear();
     Core::instance()->mMyProfile.clear();
     Core::instance()->lChannelHomes.clear();
+    Core::instance()->lOfflineMsg.clear();
+    Core::instance()->lOfflineNicks.clear();
 
     // protocol
     pNetwork->send("PROTOCTL ONETNAMESX");
@@ -1989,6 +1991,8 @@ void OnetKernel::raw_251()
 // :ChanServ!service@service.onet NOTICE scc_test :251 #czesctoja :has been dropped
 // NS OFFLINE GET scc_test
 // :NickServ!service@service.onet NOTICE Merovingian :251 scc_test 1291386193 msg :test message
+// :NickServ!service@service.onet NOTICE scc_test :251 Merovingian 1308924405 quote :zostawiam ci wiadomosc
+// :NickServ!service@service.onet NOTICE scc_test :251 Merovingian 1308924406 reply :spoko
 void OnetKernel::raw_251n()
 {
     if (strDataList.size() < 5) return;
@@ -2008,8 +2012,7 @@ void OnetKernel::raw_251n()
     {
         QString strNick = strDataList[4];
         QString strDT = strDataList[5];
-        QString strMsgReply = strDataList[6];
-        Q_UNUSED (strMsgReply);
+        QString strType = strDataList[6];
 
         QString strMessage;
         for (int i = 7; i < strDataList.size(); i++) { if (i != 7) strMessage += " "; strMessage += strDataList[i]; }
@@ -2017,6 +2020,7 @@ void OnetKernel::raw_251n()
 
         OfflineMsg add;
         add.datetime = strDT;
+        add.type = strType;
         add.nick = strNick;
         add.message = strMessage;
 
@@ -2064,20 +2068,32 @@ void OnetKernel::raw_253()
 {
 }
 
+// CS TRANSFER %1 %2
 // :ChanServ!service@service.onet NOTICE scc_test :253 #test_scc_moj Merovingian :channel owner changed
+// NS OFFLINE QUOTE merovingian
+// :NickServ!service@service.onet NOTICE scc_test :253 merovingian :offline messages quoted to sender
 void OnetKernel::raw_253n()
 {
-    // copy raw 254
     if (strDataList.size() < 6) return;
 
-    QString strChannel = strDataList[4];
-    QString strWho = strDataList[2];
-    QString strNick = strDataList[5];
+    QString strNick = strDataList[0];
+    if (strNick[0] == ':') strNick.remove(0,1);
+    strNick = strNick.left(strNick.indexOf('!'));
 
-    QString strDisplay = QString(tr("* %1 is now the owner of the channel %2 (set by %3)")).arg(strNick).arg(strChannel).arg(strWho);
+    if (strNick.toLower() == "chanserv")
+    {
+        QString strChannel = strDataList[4];
+        QString strWho = strDataList[2];
+        QString strNick = strDataList[5];
 
-    // display
-    pTabC->show_msg(strChannel, strDisplay, ModeMessage);
+        QString strDisplay = QString(tr("* %1 is now the owner of the channel %2 (set by %3)")).arg(strNick).arg(strChannel).arg(strWho);
+
+        // display
+        pTabC->show_msg(strChannel, strDisplay, ModeMessage);
+    }
+    else if (strNick.toLower() == "nickserv")
+    {
+    }
 }
 
 // LUSERS

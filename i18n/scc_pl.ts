@@ -1378,6 +1378,14 @@
         <source>Reply</source>
         <translation>Odpowiedz</translation>
     </message>
+    <message>
+        <source>* You sent offline message to %1:</source>
+        <translation>Wysłałeś do %1 wiadomość offline:</translation>
+    </message>
+    <message>
+        <source>* User %1 replied:</source>
+        <translation>* Użytkownik %1 odpowiedział:</translation>
+    </message>
 </context>
 <context>
     <name>DlgOptions</name>

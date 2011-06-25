@@ -35,11 +35,15 @@ private:
     Ui::uiOfflineMsg ui;
     Network *pNetwork;
     QString strCurrentNick;
+    QList<QString> messagesQuoted;
+    QList<QString> messagesReplied;
+    QList<QString> messagesQuotedToSender;
 
     void create_gui();
     void create_signals();
     void refresh();
     void remove_nick(QString);
+    bool exist_nick();
 
 private slots:
     void refresh_msg();
