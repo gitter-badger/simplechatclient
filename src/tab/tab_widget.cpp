@@ -180,8 +180,8 @@ void TabWidget::display_message(QString &strData, MessageCategory eMessageCatego
                     strAwayData.remove("ACTION ");
 
                     strAwayData.insert(11, "* ");
-                    if (strAwayData.contains("<")) strAwayData = strAwayData.remove(strAwayData.indexOf("<"),4);
-                    if (strAwayData.contains(">")) strAwayData = strAwayData.remove(strAwayData.indexOf(">"),4);
+                    if (strAwayData.contains("<")) strAwayData = strAwayData.remove(strAwayData.indexOf("<"),1);
+                    if (strAwayData.contains(">")) strAwayData = strAwayData.remove(strAwayData.indexOf(">"),1);
                 }
             }
             // remove color, font, emots
