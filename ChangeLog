@@ -29,7 +29,7 @@ Version 1.0.11 (29.04.2011)
 Version 1.0.10 (14.04.2011)
 ================================
 
-* Fixed pasting milti-line
+* Fixed pasting multi-line
 * Fixed lag
 * Fixed classic style
 * Fixed network reconnect

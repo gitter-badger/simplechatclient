@@ -18,36 +18,16 @@
  *                                                                          *
  ****************************************************************************/
 
-#ifndef ONET_AUTH_H
-#define ONET_AUTH_H
+#ifndef ONET_UTILS_H
+#define ONET_UTILS_H
 
-class TabContainer;
-#include <QNetworkAccessManager>
 #include <QObject>
 
-/**
- * Authorize class for onet
- */
-class OnetAuth : public QObject
+class OnetUtils : public QObject
 {
-    Q_OBJECT
 public:
-    OnetAuth(TabContainer *);
-
-public slots:
-    void authorize(QString, QString, QString);
-
-private:
-    TabContainer *pTabC;
-    bool bAuthorizing;
-
-    QString network_request(QNetworkAccessManager *, QString, QString);
-    QString get_version(QString);
-    void save_cookies(QNetworkAccessManager*);
-    void request_finished(QString, QString);
-
-signals:
-    void send(QString);
+    OnetUtils();
+    QString transform_key(QString);
 };
 
-#endif // ONET_AUTH_H
+#endif // ONET_UTILS_H

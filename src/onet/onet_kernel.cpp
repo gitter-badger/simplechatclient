@@ -33,7 +33,7 @@
 #include "log.h"
 #include "network.h"
 #include "notify.h"
-#include "onet_auth.h"
+#include "onet_utils.h"
 #include "replace.h"
 #include "tab_container.h"
 #include "onet_kernel.h"
@@ -3883,14 +3883,14 @@ void OnetKernel::raw_801()
     QString strKey = strDataList[3];
     if (strKey[0] == ':') strKey.remove(0,1);
 
-    OnetAuth *pOnet_auth = new OnetAuth(pTabC);
-    QString strAuth = pOnet_auth->transform_key(strKey);
-    delete pOnet_auth;
+    OnetUtils *pOnetUtils = new OnetUtils();
+    QString strAuthKey = pOnetUtils->transform_key(strKey);
+    delete pOnetUtils;
 
-    if (strAuth.length() == 16)
+    if (strAuthKey.length() == 16)
     {
         QSettings settings;
-        pNetwork->send(QString("AUTHKEY %1").arg(strAuth));
+        pNetwork->send(QString("AUTHKEY %1").arg(strAuthKey));
         QString strUOKey = settings.value("uokey").toString();
         QString strNickUo = settings.value("uo_nick").toString();
         if ((!strUOKey.isEmpty()) && (!strNickUo.isEmpty()))

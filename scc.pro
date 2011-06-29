@@ -32,6 +32,7 @@ SOURCES += src/avatars/avatar.cpp \
     src/gui/dlg_channel_settings.cpp \
     src/gui/dlg_email.cpp \
     src/gui/dlg_emoticons.cpp \
+    src/gui/dlg_find_text.cpp \
     src/gui/dlg_friends.cpp \
     src/gui/dlg_ignore.cpp \
     src/gui/dlg_ignore_ad.cpp \
@@ -51,6 +52,7 @@ SOURCES += src/avatars/avatar.cpp \
     src/onet/dlg_captcha.cpp \
     src/onet/onet_auth.cpp \
     src/onet/onet_kernel.cpp \
+    src/onet/onet_utils.cpp \
     src/tab/tab_container.cpp \
     src/tab/tab_manager.cpp \
     src/tab/tab_widget.cpp \
@@ -69,8 +71,7 @@ SOURCES += src/avatars/avatar.cpp \
     src/gui/dlg_webcam_mini.cpp \
     src/gui/dlg_webcam_standard.cpp \
     src/common/webcam_engine.cpp \
-    src/widgets/webcamdelegate.cpp \
-    src/gui/dlg_find_text.cpp
+    src/widgets/webcamdelegate.cpp
 HEADERS += src/avatars/avatar.h \
     src/common/commands.h \
     src/common/config.h \
@@ -96,6 +97,7 @@ HEADERS += src/avatars/avatar.h \
     src/gui/dlg_channel_settings.h \
     src/gui/dlg_email.h \
     src/gui/dlg_emoticons.h \
+    src/gui/dlg_find_text.h \
     src/gui/dlg_friends.h \
     src/gui/dlg_ignore.h \
     src/gui/dlg_ignore_ad.h \
@@ -115,6 +117,7 @@ HEADERS += src/avatars/avatar.h \
     src/onet/dlg_captcha.h \
     src/onet/onet_auth.h \
     src/onet/onet_kernel.h \
+    src/onet/onet_utils.h \
     src/tab/tab_container.h \
     src/tab/tab_manager.h \
     src/tab/tab_widget.h \
@@ -133,8 +136,7 @@ HEADERS += src/avatars/avatar.h \
     src/gui/dlg_webcam_mini.h \
     src/gui/dlg_webcam_standard.h \
     src/common/webcam_engine.h \
-    src/widgets/webcamdelegate.h \
-    src/gui/dlg_find_text.h
+    src/widgets/webcamdelegate.h
 FORMS += ui/about.ui \
     ui/awaylog.ui \
     ui/cam.ui \
@@ -146,6 +148,7 @@ FORMS += ui/about.ui \
     ui/channel_settings.ui \
     ui/email.ui \
     ui/emoticons.ui \
+    ui/find_text.ui \
     ui/friends.ui \
     ui/ignore.ui \
     ui/ignore_ad.ui \
@@ -162,5 +165,4 @@ FORMS += ui/about.ui \
     ui/user_avatar.ui \
     ui/user_profile.ui \
     ui/webcam_mini.ui \
-    ui/webcam_standard.ui \
-    ui/find_text.ui
+    ui/webcam_standard.ui

@@ -68,6 +68,7 @@ set (scc_SRCS
 	onet/dlg_captcha.cpp
 	onet/onet_auth.cpp
 	onet/onet_kernel.cpp
+	onet/onet_utils.cpp
 	tab/tab_container.cpp
 	tab/tab_manager.cpp
 	tab/tab_widget.cpp
@@ -123,6 +124,7 @@ set (scc_MOC_HDRS
 	onet/dlg_captcha.h
 	onet/onet_auth.h
 	onet/onet_kernel.h
+	onet/onet_utils.h
 	tab/tab_container.h
 	tab/tab_manager.h
 	tab/tab_widget.h
