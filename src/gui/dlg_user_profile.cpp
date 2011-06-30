@@ -421,10 +421,6 @@ void DlgUserProfile::showEvent(QShowEvent *event)
 
     // center screen
     move(QApplication::desktop()->screen()->rect().center() - rect().center());
-
-    // hide if no nick
-    if (strNick.isEmpty())
-        this->hide();
 }
 
 void DlgUserProfile::hideEvent(QHideEvent *event)
