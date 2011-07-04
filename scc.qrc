@@ -87,5 +87,6 @@
         <file>images/oxygen/16x16/preferences-web-browser-shortcuts.png</file>
         <file>images/oxygen/16x16/zoom-in.png</file>
         <file>images/oxygen/16x16/zoom-out.png</file>
+        <file>images/oxygen/16x16/download.png</file>
     </qresource>
 </RCC>

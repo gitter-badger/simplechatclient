@@ -1751,6 +1751,18 @@
         <source>A new version %1 is available. Please %2 an installer and upgrade.</source>
         <translation>Nowa wersja %1 jest dostępna. Proszę %2 instalacje i zaktualizuj program.</translation>
     </message>
+    <message>
+        <source>Download</source>
+        <translation>Pobierz</translation>
+    </message>
+    <message>
+        <source>Cannot download file</source>
+        <translation>Nie można pobrać pliku</translation>
+    </message>
+    <message>
+        <source>Cannot save file</source>
+        <translation>Nie można zapisać pliku</translation>
+    </message>
 </context>
 <context>
     <name>DlgUserAvatar</name>

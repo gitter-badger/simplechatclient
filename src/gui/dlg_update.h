@@ -23,6 +23,8 @@
 
 class MainWindow;
 #include <QDialog>
+#include <QNetworkAccessManager>
+#include <QNetworkReply>
 #include "ui_update.h"
 
 class DlgUpdate : public QDialog
@@ -30,14 +32,24 @@ class DlgUpdate : public QDialog
     Q_OBJECT
 public:
     DlgUpdate(MainWindow *, QString);
+    virtual ~DlgUpdate();
 
 private:
     Ui::uiUpdate ui;
     QString strVersion;
+    QNetworkAccessManager *accessManager;
 
     void create_gui();
     void set_default_values();
     void create_signals();
+    void got_site(QString);
+    void got_file(QByteArray);
+
+private slots:
+    void button_download();
+    void network_finished(QNetworkReply*);
+    void downloadProgress(qint64,qint64);
+    void downloadError(QNetworkReply::NetworkError);
 };
 
 #endif // DLG_UPDATE_H

@@ -1,6 +1,11 @@
 ChangeLog for Simple Chat Client
 ========================= 
 
+Version 1.0.14 (unknown date)
+================================
+* Fixed update
+* Many bugfixes
+
 Version 1.0.13 (30.06.2011)
 ================================
 * Fixed offline messages
