@@ -88,5 +88,6 @@
         <file>images/oxygen/16x16/zoom-in.png</file>
         <file>images/oxygen/16x16/zoom-out.png</file>
         <file>images/oxygen/16x16/download.png</file>
+        <file>images/winamp.png</file>
     </qresource>
 </RCC>

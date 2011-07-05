@@ -57,6 +57,7 @@ void DlgOptions::create_gui()
     ui.pushButton_sound_query_change->setIcon(QIcon(":/images/oxygen/16x16/document-edit.png"));
     ui.pushButton_logs_open_folder->setIcon(QIcon(":/images/oxygen/16x16/folder-txt.png"));
     ui.pushButton_set_background_image->setIcon(QIcon(":/images/oxygen/16x16/insert-image.png"));
+    ui.pushButton_set_winamp->setIcon(QIcon(":/images/oxygen/16x16/dialog-ok-apply.png"));
     ui.buttonBox->button(QDialogButtonBox::Ok)->setIcon(QIcon(":/images/oxygen/16x16/dialog-ok.png"));
     ui.buttonBox->button(QDialogButtonBox::Cancel)->setIcon(QIcon(":/images/oxygen/16x16/dialog-cancel.png"));
 
@@ -139,11 +140,20 @@ void DlgOptions::create_gui()
     ui.checkBox_save_logs_by_date->setText(tr("Save logs by date"));
     ui.checkBox_disable_logs->setText(tr("Disable logs"));
 
-    // background image
+    // page background image
     ui.groupBox_background_image->setTitle(tr("Background image"));
     ui.label_background_image->setText(tr("Default background image:"));
     ui.pushButton_set_background_image->setText(tr("Set"));
     ui.checkBox_disable_background_image->setText(tr("Disable background image"));
+
+    // page winamp
+    ui.groupBox_winamp->setTitle(tr("Winamp"));
+    ui.label_winamp_text->setText(tr("Displayed text:"));
+    ui.label_winamp_version->setText(tr("$version - Winamp version"));
+    ui.label_winamp_song->setText(tr("$song - current song"));
+    ui.label_winamp_position->setText(tr("$position - position"));
+    ui.label_winamp_length->setText(tr("$length - length"));
+    ui.pushButton_set_winamp->setText(tr("Set"));
 
     // options list
     QTreeWidgetItem *basic = new QTreeWidgetItem(ui.treeWidget_options);
@@ -185,6 +195,11 @@ void DlgOptions::create_gui()
     background_image->setIcon(0, QIcon(":/images/oxygen/16x16/games-config-background.png"));
     background_image->setText(0, tr("Background image"));
     background_image->setToolTip(0, tr("Background image"));
+
+    QTreeWidgetItem *winamp = new QTreeWidgetItem(ui.treeWidget_options);
+    winamp->setIcon(0, QIcon(":/images/winamp.png"));
+    winamp->setText(0, tr("Winamp"));
+    winamp->setToolTip(0, tr("Winamp"));
 }
 
 void DlgOptions::set_default_values()
@@ -291,6 +306,8 @@ void DlgOptions::set_default_values()
     QString strDisableLogs = settings.value("disable_logs").toString();
     QString strDisableSounds = settings.value("disable_sounds").toString();
     QString strDisableBackgroundImage = settings.value("disable_background_image").toString();
+
+    QString strWinamp = settings.value("winamp").toString();
 
     // decrypt pass
     if (!strPass.isEmpty())
@@ -473,6 +490,9 @@ void DlgOptions::set_default_values()
     else
         ui.checkBox_disable_background_image->setChecked(false);
 
+    // winamp
+    ui.lineEdit_winamp->setText(strWinamp);
+
     // set mainwindow colors
     set_mainwindow_colors();
 
@@ -555,6 +575,7 @@ void DlgOptions::create_signals()
     QObject::connect(ui.checkBox_disable_logs, SIGNAL(clicked(bool)), this, SLOT(disable_logs(bool)));
     QObject::connect(ui.pushButton_set_background_image, SIGNAL(clicked()), this, SLOT(set_background_image()));
     QObject::connect(ui.checkBox_disable_background_image, SIGNAL(clicked(bool)), this, SLOT(disable_background_image(bool)));
+    QObject::connect(ui.pushButton_set_winamp, SIGNAL(clicked()), this, SLOT(set_winamp()));
     QObject::connect(ui.buttonBox, SIGNAL(accepted()), this, SLOT(button_ok()));
     QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(close()));
 }
@@ -1115,6 +1136,17 @@ void DlgOptions::disable_background_image(bool bValue)
 
     // refresh
     Core::instance()->refresh_background_image();
+}
+
+void DlgOptions::set_winamp()
+{
+    QString strValue = ui.lineEdit_winamp->text();
+
+    QSettings settings;
+    Config *pConfig = new Config();
+    pConfig->set_value("winamp", strValue);
+    settings.setValue("winamp", strValue);
+    delete pConfig;
 }
 
 void DlgOptions::button_ok()

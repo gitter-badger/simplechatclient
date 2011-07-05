@@ -1690,6 +1690,30 @@
         <translation>Wyłącz tapetę</translation>
     </message>
     <message>
+        <source>Winamp</source>
+        <translation>Winamp</translation>
+    </message>
+    <message>
+        <source>Displayed text:</source>
+        <translation>Wyświetlany tekst:</translation>
+    </message>
+    <message>
+        <source>$version - Winamp version</source>
+        <translation>$version - wersja Winampa</translation>
+    </message>
+    <message>
+        <source>$song - current song</source>
+        <translation>$song - aktualna piosenka</translation>
+    </message>
+    <message>
+        <source>$position - position</source>
+        <translation>$position - pozycja</translation>
+    </message>
+    <message>
+        <source>$length - length</source>
+        <translation>$length - długość</translation>
+    </message>
+    <message>
         <source>Active</source>
         <translation>Aktywne</translation>
     </message>

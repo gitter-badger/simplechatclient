@@ -1170,6 +1170,107 @@
       </widget>
      </widget>
     </widget>
+    <widget class="QWidget" name="page_9">
+     <widget class="QGroupBox" name="groupBox_winamp">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>20</y>
+        <width>441</width>
+        <height>111</height>
+       </rect>
+      </property>
+      <property name="title">
+       <string>Winamp</string>
+      </property>
+      <widget class="QWidget" name="verticalLayoutWidget_4">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>30</y>
+         <width>421</width>
+         <height>61</height>
+        </rect>
+       </property>
+       <layout class="QVBoxLayout" name="verticalLayout_4">
+        <item>
+         <widget class="QLabel" name="label_winamp_text">
+          <property name="text">
+           <string>Displayed text:</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_8">
+          <item>
+           <widget class="QLineEdit" name="lineEdit_winamp"/>
+          </item>
+          <item>
+           <widget class="QPushButton" name="pushButton_set_winamp">
+            <property name="text">
+             <string>Set</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+     <widget class="QGroupBox" name="groupBox_winamp_summary">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>150</y>
+        <width>441</width>
+        <height>121</height>
+       </rect>
+      </property>
+      <property name="title">
+       <string/>
+      </property>
+      <widget class="QWidget" name="verticalLayoutWidget_5">
+       <property name="geometry">
+        <rect>
+         <x>9</x>
+         <y>20</y>
+         <width>421</width>
+         <height>81</height>
+        </rect>
+       </property>
+       <layout class="QVBoxLayout" name="verticalLayout_5">
+        <item>
+         <widget class="QLabel" name="label_winamp_version">
+          <property name="text">
+           <string>$version - Winamp version</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="label_winamp_song">
+          <property name="text">
+           <string>$song - current song</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="label_winamp_position">
+          <property name="text">
+           <string>$position - position</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="label_winamp_length">
+          <property name="text">
+           <string>$length - length</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+    </widget>
    </widget>
   </widget>
  </widget>
