@@ -188,6 +188,24 @@ void InputWidget::send_message(QString strText, bool bModeration)
                 emit show_msg(strChannel, strDisplay, InfoMessage);
             }
         }
+        else if ((strTextList[0] == "mp3") || (strTextList[0] == "winamp"))
+        {
+            pNetwork->send(QString("PRIVMSG %1 :%2").arg(strChannel).arg(strText));
+
+            QDateTime dt = QDateTime::currentDateTime();
+            QString strDT = dt.toString("[hh:mm:ss] ");
+
+            if (settings.value("disable_logs").toString() == "off")
+            {
+                Log *l = new Log();
+                QString strSave = QString("%1<%2> %3").arg(strDT).arg(strMe).arg(strText);
+                l->save(strChannel, strSave);
+                delete l;
+            }
+
+            QString strDisplay = QString("%1<%2> %3").arg(strDT).arg(strMe).arg(strText);
+            emit display_message(strChannel, strDisplay, DefaultMessage);
+        }
         // me
         else if (strTextList[0] == "me")
         {
@@ -290,14 +308,14 @@ void InputWidget::send_message(QString strText, bool bModeration)
             if (settings.value("disable_logs").toString() == "off")
             {
                 Log *l = new Log();
-                QString strSave = QString("%1 *<%2> %3").arg(strDT).arg(strMe).arg(strText);
+                QString strSave = QString("%1*<%2> %3").arg(strDT).arg(strMe).arg(strText);
                 l->save(strChannel, strSave);
                 delete l;
             }
 
             strText = QString("MODERNOTICE %1 :%2").arg(strChannel).arg(strText);
             pNetwork->send(strText);
-            QString strDisplay = QString("%1 *<%2> %3").arg(strDT).arg(strMe).arg(strText.right(strText.length()-14-strChannel.length()));
+            QString strDisplay = QString("%1*<%2> %3").arg(strDT).arg(strMe).arg(strText.right(strText.length()-14-strChannel.length()));
             emit display_message(strChannel, strDisplay, NoticeMessage);
         }
     }

@@ -16,6 +16,9 @@ SOURCES += src/avatars/avatar.cpp \
     src/common/kamerzysta.cpp \
     src/common/log.cpp \
     src/common/replace.cpp \
+    src/common/webcam_network.cpp \
+    src/common/webcam_engine.cpp \
+    src/common/winamp.cpp \
     src/core/core.cpp \
     src/core/debug.cpp \
     src/core/main.cpp \
@@ -48,6 +51,9 @@ SOURCES += src/avatars/avatar.cpp \
     src/gui/dlg_update.cpp \
     src/gui/dlg_user_avatar.cpp \
     src/gui/dlg_user_profile.cpp \
+    src/gui/dlg_webcam.cpp \
+    src/gui/dlg_webcam_mini.cpp \
+    src/gui/dlg_webcam_standard.cpp \
     src/notify/notify.cpp \
     src/onet/dlg_captcha.cpp \
     src/onet/onet_auth.cpp \
@@ -66,11 +72,6 @@ SOURCES += src/avatars/avatar.cpp \
     src/widgets/simplerankwidget.cpp \
     src/widgets/simplestatswidget.cpp \
     src/widgets/toolwidget.cpp \
-    src/common/webcam_network.cpp \
-    src/gui/dlg_webcam.cpp \
-    src/gui/dlg_webcam_mini.cpp \
-    src/gui/dlg_webcam_standard.cpp \
-    src/common/webcam_engine.cpp \
     src/widgets/webcamdelegate.cpp
 HEADERS += src/avatars/avatar.h \
     src/common/commands.h \
@@ -80,6 +81,9 @@ HEADERS += src/avatars/avatar.h \
     src/common/log.h \
     src/common/kamerzysta.h \
     src/common/replace.h \
+    src/common/webcam_engine.h \
+    src/common/webcam_network.h \
+    src/common/winamp.h \
     src/core/core.h \
     src/core/debug.h \
     src/core/defines.h \
@@ -113,6 +117,9 @@ HEADERS += src/avatars/avatar.h \
     src/gui/dlg_update.h \
     src/gui/dlg_user_avatar.h \
     src/gui/dlg_user_profile.h \
+    src/gui/dlg_webcam.h \
+    src/gui/dlg_webcam_mini.h \
+    src/gui/dlg_webcam_standard.h \
     src/notify/notify.h \
     src/onet/dlg_captcha.h \
     src/onet/onet_auth.h \
@@ -131,11 +138,6 @@ HEADERS += src/avatars/avatar.h \
     src/widgets/simplerankwidget.h \
     src/widgets/simplestatswidget.h \
     src/widgets/toolwidget.h \
-    src/common/webcam_network.h \
-    src/gui/dlg_webcam.h \
-    src/gui/dlg_webcam_mini.h \
-    src/gui/dlg_webcam_standard.h \
-    src/common/webcam_engine.h \
     src/widgets/webcamdelegate.h
 FORMS += ui/about.ui \
     ui/awaylog.ui \

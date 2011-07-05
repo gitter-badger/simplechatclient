@@ -196,6 +196,16 @@ else (WIN32)
 	)
 endif (WIN32)
 
+# winamp
+if (WIN32)
+	LIST (APPEND scc_SRCS
+		common/winamp.cpp
+	)
+	LIST (APPEND scc_MOC_HDRS
+		common/winamp.h
+	)
+endif (WIN32)
+
 # qca2
 if (WIN32)
 	set (QCA2_INCLUDE_DIRS ${WIN32_QCA2_DIR}/include/QtCrypto)

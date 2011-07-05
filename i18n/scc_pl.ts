@@ -103,6 +103,10 @@
         <translation>/vip [[+|-]nick]</translation>
     </message>
     <message>
+        <source>/mp3 or /winamp</source>
+        <translation>/mp3 lub /winamp</translation>
+    </message>
+    <message>
         <source>/help</source>
         <translation>/help lub /pomoc</translation>
     </message>
@@ -137,6 +141,22 @@
     <message>
         <source>Enter</source>
         <translation>Wchodzę</translation>
+    </message>
+    <message>
+        <source>Winamp is paused</source>
+        <translation>Winamp jest wstrzymany</translation>
+    </message>
+    <message>
+        <source>Winamp is not playing</source>
+        <translation>Winamp aktualnie nie odtwarza muzyki</translation>
+    </message>
+    <message>
+        <source>Winamp is not running</source>
+        <translation>Winamp nie jest uruchomiony</translation>
+    </message>
+    <message>
+        <source>This command is only for Windows</source>
+        <translation>Ta komenda jest tylko pod Windows</translation>
     </message>
 </context>
 <context>

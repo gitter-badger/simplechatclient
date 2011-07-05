@@ -262,6 +262,7 @@ QMap<QString,QString> Config::get_default_values()
     mDefaultValues.insert("disable_sounds", "off");
     mDefaultValues.insert("background_image", strBackgroundImage);
     mDefaultValues.insert("disable_background_image", "off");
+    mDefaultValues.insert("winamp", "Winamp $version odtwarza teraz $song [$position/$length] //muzyka");
 
     return mDefaultValues;
 }

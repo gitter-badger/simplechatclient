@@ -25,6 +25,10 @@
 #include "core.h"
 #include "commands.h"
 
+#ifdef Q_WS_WIN
+    #include "winamp.h"
+#endif
+
 Commands::Commands(QString param1, QString param2)
 {
     strChan = param1;
@@ -58,6 +62,8 @@ QString Commands::execute()
             strResult = cmd_offmsg();
         else if ((strCmd == "logout") || (strCmd == "quit") || (strCmd == "q"))
             strResult = cmd_quit();
+        else if ((strCmd == "mp3") || (strCmd == "winamp"))
+            strResult = cmd_mp3();
         else if ((strCmd == "help") || (strCmd == "pomoc"))
             strResult = cmd_help();
         else
@@ -255,6 +261,54 @@ QString Commands::cmd_quit()
         return "QUIT";
 }
 
+QString Commands::cmd_mp3()
+{
+#ifdef Q_WS_WIN
+    Winamp *pWinamp = new Winamp();
+    bool bIsRunning = pWinamp->isRunning();
+    int iState = pWinamp->state();
+    delete pWinamp;
+
+    if (bIsRunning)
+    {
+        if (iState == 1)
+        {
+            Winamp *pWinamp = new Winamp();
+            QString strVersion = pWinamp->version();
+            QString strSong = pWinamp->song();
+            QString strPosition = pWinamp->position();
+            QString strLength = pWinamp->length();
+            delete pWinamp;
+
+            QSettings settings;
+            QString strWinamp = settings.value("winamp").toString();
+
+            strWinamp.replace("$version", strVersion);
+            strWinamp.replace("$song", strSong);
+            strWinamp.replace("$position", strPosition);
+            strWinamp.replace("$length", strLength);
+
+            // emots
+            strWinamp.replace(QRegExp("(http:|https:)//"), "\\1\\\\"); // fix http https
+            strWinamp.replace(QRegExp("//([a-zA-Z0-9_-]+)\\b"), "%I\\1%");
+            strWinamp.replace(QRegExp("(http:|https:)\\\\\\\\"), "\\1//"); // fix http https
+
+            return strWinamp;
+        }
+        else if (iState == 3)
+            return tr("Winamp is paused");
+        else if (iState == 0)
+            return tr("Winamp is not playing");
+        else
+            return tr("Winamp is not running");
+    }
+    else
+        return tr("Winamp is not running");
+#else
+    return tr("This command is only for Windows");
+#endif
+}
+
 QString Commands::cmd_help()
 {
     QString strResult;
@@ -281,6 +335,7 @@ QString Commands::cmd_help()
     strResult.append(tr("/op [[+|-]nick]")+";");
     strResult.append(tr("/moder [[+|-]nick] or /moderator [[+|-]nick]")+";");
     strResult.append(tr("/vip [[+|-]nick]")+";");
+    strResult.append(tr("/mp3 or /winamp")+";");
     strResult.append(tr("/help"));
 
     return strResult;
