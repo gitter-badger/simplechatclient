@@ -190,7 +190,20 @@ void InputWidget::send_message(QString strText, bool bModeration)
         }
         else if ((strTextList[0] == "mp3") || (strTextList[0] == "winamp"))
         {
-            pNetwork->send(QString("PRIVMSG %1 :%2").arg(strChannel).arg(strText));
+            QString weight;
+            QString font = strFontFamily.toLower();
+
+            if (bMyBold) weight += "b";
+            if (bMyItalic) weight += "i";
+
+            if (font == "verdana")
+                font = "";
+            if ((strCurrentColor != "#000000") && (!strCurrentColor.isEmpty()))
+                strText = "%C"+strCurrentColor.right(6)+"%"+strText;
+            if (!font.isEmpty())
+                font = ":"+font;
+            if ((!weight.isEmpty()) || (!font.isEmpty()))
+                strText = "%F"+weight+font+"%"+strText;
 
             QDateTime dt = QDateTime::currentDateTime();
             QString strDT = dt.toString("[hh:mm:ss] ");
@@ -203,6 +216,7 @@ void InputWidget::send_message(QString strText, bool bModeration)
                 delete l;
             }
 
+            pNetwork->send(QString("PRIVMSG %1 :%2").arg(strChannel).arg(strText));
             QString strDisplay = QString("%1<%2> %3").arg(strDT).arg(strMe).arg(strText);
             emit display_message(strChannel, strDisplay, DefaultMessage);
         }
