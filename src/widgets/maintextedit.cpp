@@ -518,7 +518,7 @@ void MainTextEdit::contextMenuEvent(QContextMenuEvent *event)
             if ((!strFirstWord.isEmpty()) && (!strWord.isEmpty()))
             {
                 // website
-                if ((strWord.contains("http")) || (strWord.contains("www")))
+                if ((strWord.contains("http")) || (strWord.contains("www.")))
                 {
                     strWebsite = strWord;
                     menu_website(event);
