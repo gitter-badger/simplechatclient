@@ -1323,11 +1323,26 @@ void OnetKernel::raw_001()
 
     // auto rejoin
     QList<QString> lOpenChannels = Core::instance()->lOpenChannels;
-    for (int i = 0; i < lOpenChannels.size(); i++)
-    {
-        QString strChannel = lOpenChannels.at(i);
+    QList<CaseIgnoreString> lOpenChannelsCaseIgnore;
 
+    // copy to new list
+    for (int i = 0; i < lOpenChannels.size(); i++)
+        lOpenChannelsCaseIgnore.append(lOpenChannels[i]);
+
+    // sort
+    qSort(lOpenChannelsCaseIgnore.begin(), lOpenChannelsCaseIgnore.end());
+
+    // remove all channels
+    for (int i = 0; i < lOpenChannelsCaseIgnore.size(); i++)
+    {
+        QString strChannel = lOpenChannelsCaseIgnore.at(i);
         pTabC->removeTab(strChannel);
+    }
+
+    // join channels
+    for (int i = 0; i < lOpenChannelsCaseIgnore.size(); i++)
+    {
+        QString strChannel = lOpenChannelsCaseIgnore.at(i);
         pNetwork->sendQueue(QString("JOIN %1").arg(strChannel));
     }
 
@@ -1550,6 +1565,8 @@ void OnetKernel::raw_141n()
     if (strDataList.size() < 5) return;
 
     QSettings settings;
+    QList<CaseIgnoreString> lList;
+
     for (int i = 4; i < strDataList.size(); i++)
     {
         QString strChannel = strDataList[i];
@@ -1558,8 +1575,19 @@ void OnetKernel::raw_141n()
         if (!Core::instance()->lChannelFavourites.contains(strChannel))
             Core::instance()->lChannelFavourites.append(strChannel);
 
-        if ((settings.value("ignore_raw_141").toString() == "off") && (!Core::instance()->lOpenChannels.contains(strChannel)))
-            pNetwork->sendQueue(QString("JOIN %1").arg(strChannel));
+        lList.append(strChannel);
+    }
+
+    // join
+    if (settings.value("ignore_raw_141").toString() == "off")
+    {
+        qSort(lList.begin(), lList.end());
+        for (int i = 0; i < lList.size(); i++)
+        {
+            QString strChannel = lList[i];
+            if (!Core::instance()->lOpenChannels.contains(strChannel))
+                pNetwork->sendQueue(QString("JOIN %1").arg(strChannel));
+        }
     }
 
     // turn on ignore_raw_141

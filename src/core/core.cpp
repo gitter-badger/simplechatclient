@@ -72,7 +72,7 @@ void Core::createSettings()
 {
     // default settings
     QSettings settings;
-    settings.setValue("version", "1.0.14.927");
+    settings.setValue("version", "1.0.14.928");
     settings.setValue("logged", "off");
     settings.setValue("busy", "off");
     settings.setValue("away", "off");

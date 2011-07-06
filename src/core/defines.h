@@ -65,6 +65,19 @@ struct OfflineMsg
 };
 typedef QList<OfflineMsg> sOfflineMsg;
 
+class CaseIgnoreString : public QString
+{
+public:
+    CaseIgnoreString(const QString& other = QString()) : QString(other) {}
+
+    bool operator<(const QString & other) const {
+        return toLower() < other.toLower();
+    }
+    bool operator==(const QString& other) const {
+        return toLower() == other.toLower();
+    }
+};
+
 class SortedListWidgetItem : public QListWidgetItem
 {
 public:
