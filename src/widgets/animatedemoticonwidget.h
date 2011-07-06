@@ -31,8 +31,8 @@ class AnimatedEmoticonWidget : public QWidget
     Q_OBJECT
 public:
     AnimatedEmoticonWidget(QTextEdit*);
-    void start_emoticon(QString, int, int);
-    void stop_emoticon();
+    void startEmoticon(QString, int, int);
+    void stopEmoticon();
 
 private:
     QTextEdit *parentWidget;
@@ -41,8 +41,8 @@ private:
     QVBoxLayout *layout;
     QLabel *label;
 
-    int get_correct_x(int, int);
-    int get_correct_y(int, int);
+    int getCorrectX(int, int);
+    int getCorrectY(int, int);
 };
 
 #endif // ANIMATEDEMOTICONWIDGET_H

@@ -30,18 +30,18 @@ class WebcamNetwork : public QObject
     Q_OBJECT
 public:
     WebcamNetwork();
-    inline void set_bytes_need(int i) { iBytes_need = i; }
-    inline void set_btext(bool b) { bText = b; }
-    inline void set_last_keep_alive(int i) { iLastKeepAlive = i; }
-    inline int get_last_keep_alive() { return iLastKeepAlive; }
-    inline void set_reconnect(bool b) { bReconnecting = b; }
+    inline void setBytesNeed(int i) { iBytes_need = i; }
+    inline void setBText(bool b) { bText = b; }
+    inline void setLastKeepAlive(int i) { iLastKeepAlive = i; }
+    inline int getLastKeepAlive() { return iLastKeepAlive; }
+    inline void setReconnect(bool b) { bReconnecting = b; }
 
-    void clear_all();
-    bool is_connected();
-    void network_connect();
-    void network_send(QString);
-    void network_sendb(QByteArray);
-    void network_disconnect();
+    void clearAll();
+    bool isConnected();
+    void networkConnect();
+    void networkSend(QString);
+    void networkSendb(QByteArray);
+    void networkDisconnect();
 
 private:
     QTcpSocket *socket;
@@ -56,16 +56,16 @@ private:
     bool bReconnecting;
 
 private slots:
-    void network_read();
-    void network_connected();
-    void network_disconnected();
-    void network_error(QAbstractSocket::SocketError);
-    void slot_network_connect();
-    void timeout_pingpong();
+    void networkRead();
+    void networkConnected();
+    void networkDisconnected();
+    void networkError(QAbstractSocket::SocketError);
+    void slotNetworkConnect();
+    void timeoutPingpong();
 
 signals:
-    void data_kernel(QByteArray);
-    void text_kernel(QString);
+    void dataKernel(QByteArray);
+    void textKernel(QString);
     void error(QString);
     void connected();
     void disconnected();

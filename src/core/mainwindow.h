@@ -53,13 +53,13 @@ public:
     virtual ~MainWindow();
     void createGui();
 
-    void network_connect();
-    void network_disconnect();
-    void network_send(QString);
-    bool network_is_connected();
+    void networkConnect();
+    void networkDisconnect();
+    void networkSend(QString);
+    bool networkIsConnected();
     // options
-    void refresh_colors();
-    void refresh_background_image();
+    void refreshColors();
+    void refreshBackgroundImage();
 
 private:
     QToolBar *toolBar;
@@ -105,71 +105,71 @@ private:
     QDockWidget *rightDockWidget;
 
     // other
-    void set_geometry();
-    void create_actions();
-    void create_menus();
-    void create_signals();
-    void show_options();
-    QString get_current_tab_name(int);
+    void setWindowGeometry();
+    void createActions();
+    void createMenus();
+    void createSignals();
+    void showOptions();
+    QString getCurrentTabName(int);
     // nicklist
-    void update_users_count();
-    bool nicklist_exist(QString, QString);
+    void updateUsersCount();
+    bool nicklistExist(QString, QString);
 
 private slots:
-    void button_connect();
-    void button_close();
-    void open_options();
-    void open_awaylog();
-    void open_notes();
-    void open_about();
-    void button_show();
-    void tray_icon(QSystemTrayIcon::ActivationReason);
-    void ctrl_tab_pressed();
-    void ctrl_shift_tab_pressed();
+    void buttonConnect();
+    void buttonClose();
+    void openOptions();
+    void openAwaylog();
+    void openNotes();
+    void openAbout();
+    void buttonShow();
+    void trayIconPressed(QSystemTrayIcon::ActivationReason);
+    void ctrlTabPressed();
+    void ctrlShiftTabPressed();
 
     // onet dialogs
-    void open_channel_list();
-    void open_channel_homes();
-    void open_channel_favourites();
-    void open_friends();
-    void open_ignore();
-    void open_cams();
-    void button_set_busy();
-    void button_set_away();
-    void open_my_stats();
-    void open_my_profile();
-    void open_my_avatar();
-    void open_offlinemsg();
+    void openChannelList();
+    void openChannelHomes();
+    void openChannelFavourites();
+    void openFriends();
+    void openIgnore();
+    void openCams();
+    void buttonSetBusy();
+    void buttonSetAway();
+    void openMyStats();
+    void openMyProfile();
+    void openMyAvatar();
+    void openOfflinemsg();
 
 public slots:
-    void create_nicklist(QString);
-    void add_user(QString, QString, QString, bool);
-    void del_user(QString, QString);
-    void nicklist_refresh(QString);
-    void quit_user(QString, QString);
-    void change_flag(QString, QString, QString);
-    void change_flag(QString, QString);
-    void clear_nicklist(QString);
-    void clear_all_nicklist();
-    void update_nick_avatar(QString);
-    void clear_channel_all_nick_avatars(QString);
+    void createNicklist(QString);
+    void addUser(QString, QString, QString, bool);
+    void delUser(QString, QString);
+    void nicklistRefresh(QString);
+    void quitUser(QString, QString);
+    void changeFlag(QString, QString, QString);
+    void changeFlag(QString, QString);
+    void clearNicklist(QString);
+    void clearAllNicklist();
+    void updateNickAvatar(QString);
+    void clearChannelAllNickAvatars(QString);
 
 private slots:
-    void set_connected();
-    void set_disconnected();
-    void update_actions();
-    void update_awaylog_status();
-    void set_connect_enabled(bool);
-    void tab_close_requested(int);
-    void current_tab_changed(int);
-    void timeout_autoaway();
+    void setConnected();
+    void setDisconnected();
+    void updateActions();
+    void updateAwaylogStatus();
+    void setConnectEnabled(bool);
+    void tabCloseRequested(int);
+    void currentTabChanged(int);
+    void timeoutAutoaway();
 
 protected:
     virtual void closeEvent(QCloseEvent *);
 
 signals:
     void skernel(QString);
-    void srequest_uo(QString, QString, QString);
+    void srequestUo(QString, QString, QString);
 };
 
 #endif // MAINWINDOW_H

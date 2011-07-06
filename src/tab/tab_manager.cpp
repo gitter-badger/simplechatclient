@@ -27,24 +27,24 @@ TabManager::TabManager(QWidget *parent) : QTabWidget(parent)
     setIconSize(QSize(22,22));
 }
 
-void TabManager::set_hilight(int index)
+void TabManager::setHilight(int index)
 {
     tab->setTabTextColor(index, QColor(138, 0, 184, 255));
 }
 
-void TabManager::set_alert(int index, QColor color)
+void TabManager::setAlert(int index, QColor color)
 {
     // if not hilighted and not current color
     if ((tab->tabTextColor(index) != QColor(138, 0, 184, 255)) && (tab->tabTextColor(index) != color))
         tab->setTabTextColor(index, color);
 }
 
-void TabManager::set_color(int index, QColor color)
+void TabManager::setColor(int index, QColor color)
 {
     tab->setTabTextColor(index, color);
 }
 
-void TabManager::hide_close_button(int index)
+void TabManager::hideCloseButton(int index)
 {
     tab->setTabButton(index, QTabBar::RightSide, 0);
 }
@@ -52,5 +52,5 @@ void TabManager::hide_close_button(int index)
 void TabManager::tabInserted(int index)
 {
     if (index == 0) // hide close on status
-        hide_close_button(index);
+        hideCloseButton(index);
 }

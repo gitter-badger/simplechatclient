@@ -41,31 +41,31 @@ private:
     QString strData;
     QStringList strDataList;
 
-    bool is_erotic(QString);
+    bool isErotic(QString);
 
-    QString cmd_join();
-    QString cmd_priv();
-    QString cmd_ignore();
-    QString cmd_friend();
-    QString cmd_whereis();
-    QString cmd_busy();
-    QString cmd_away();
-    QString cmd_offmsg();
-    QString cmd_mp3();
-    QString cmd_quit();
-    QString cmd_help();
-    QString cmd_cycle();
-    QString cmd_me();
-    QString cmd_topic();
-    QString cmd_part();
-    QString cmd_invite();
-    QString cmd_kick();
-    QString cmd_ban();
-    QString cmd_banip();
-    QString cmd_sop();
-    QString cmd_op();
-    QString cmd_moder();
-    QString cmd_vip();
+    QString cmdJoin();
+    QString cmdPriv();
+    QString cmdIgnore();
+    QString cmdFriend();
+    QString cmdWhereis();
+    QString cmdBusy();
+    QString cmdAway();
+    QString cmdOffmsg();
+    QString cmdMp3();
+    QString cmdQuit();
+    QString cmdHelp();
+    QString cmdCycle();
+    QString cmdMe();
+    QString cmdTopic();
+    QString cmdPart();
+    QString cmdInvite();
+    QString cmdKick();
+    QString cmdBan();
+    QString cmdBanip();
+    QString cmdSop();
+    QString cmdOp();
+    QString cmdModer();
+    QString cmdVip();
 };
 
 #endif // COMMANDS_H

@@ -30,7 +30,7 @@
 Update::Update()
 {
     accessManager = new QNetworkAccessManager;
-    QObject::connect(accessManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(update_finished(QNetworkReply*)));
+    QObject::connect(accessManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(updateFinished(QNetworkReply*)));
 }
 
 Update::~Update()
@@ -38,7 +38,7 @@ Update::~Update()
     accessManager->deleteLater();
 }
 
-void Update::check_update()
+void Update::checkUpdate()
 {
     QHostInfo test_host = QHostInfo::fromName("simplechatclien.sourceforge.net");
     if (test_host.error() == QHostInfo::NoError)
@@ -73,7 +73,7 @@ void Update::version(QString strAvailableVersion)
         DlgUpdate(Core::instance()->sccWindow(), strAvailableVersion).exec();
 }
 
-void Update::update_finished(QNetworkReply *reply)
+void Update::updateFinished(QNetworkReply *reply)
 {
     reply->deleteLater();
 

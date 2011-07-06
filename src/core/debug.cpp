@@ -64,7 +64,7 @@ void printBacktrace(const QString &header)
     fflush(stderr);
 }
 
-QString create_random6()
+QString createRandom6()
 {
     QString strRandom;
     while(strRandom.length() < 6)
@@ -109,7 +109,7 @@ void crashHandler()
 
     int pid = QCoreApplication::applicationPid();
     QString strPid = QString::number(pid);
-    QString strRandom = create_random6();
+    QString strRandom = createRandom6();
 
     QString strCommand = "gdb --pid "+ strPid +" -ex \"set logging overwrite on\" -ex \"set logging file "+ path +"/log/crash-"+ strRandom +".txt\" -ex \"set logging on\" -ex \"backtrace\" -ex \"info registers\" -ex \"x/16i $pc\" -ex \"thread apply all backtrace\" -ex \"up\" -ex \"list\" -ex \"quit\"";
 
@@ -120,7 +120,7 @@ void crashHandler()
     exit(1);
 }
 
-void got_signal(int signal)
+void gotSignal(int signal)
 {
     Q_UNUSED (signal);
 
@@ -136,9 +136,9 @@ void got_signal(int signal)
     crashHandler();
 }
 
-void linux_crash_handler()
+void linuxCrashHandler()
 {
-    signal(SIGSEGV, got_signal);
+    signal(SIGSEGV, gotSignal);
 }
 
 void messageHandler(QtMsgType type, const char *msg)

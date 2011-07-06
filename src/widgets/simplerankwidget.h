@@ -28,7 +28,7 @@ class SimpleRankWidget : public QWidget
     Q_OBJECT
 public:
     SimpleRankWidget(QWidget *parent = 0, int r = 0, int p1 = 250, int p2 = 15);
-    void set_rank(int);
+    void setRank(int);
 
     QSize sizeHint() const;
 

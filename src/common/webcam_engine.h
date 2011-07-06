@@ -30,18 +30,18 @@ class WebcamEngine : public QObject
 public:
     WebcamEngine(QString, bool);
     virtual ~WebcamEngine();
-    void close_engine();
+    void closeEngine();
 
 public slots:
-    void network_send(QString);
-    void set_user(QString);
+    void networkSend(QString);
+    void setUser(QString);
 
 private:
     QString strNick;
     bool bMini;
     WebcamNetwork *pWebcamNetwork;
 
-    void create_signals();
+    void createSignals();
     int iCamCmd;
     // data
     void raw_202b(QByteArray&);
@@ -88,22 +88,22 @@ private:
 private slots:
     void connected();
     void disconnected();
-    void data_kernel(QByteArray);
-    void text_kernel(QString);
-    void slot_error(QString);
+    void dataKernel(QByteArray);
+    void textKernel(QString);
+    void slotError(QString);
 
 signals:
-    void update_image(QByteArray);
-    void update_text(QString);
-    void update_rank(int);
-    void update_status(QString);
-    void user_error(QString);
-    void vote_ok();
+    void updateImage(QByteArray);
+    void updateText(QString);
+    void updateRank(int);
+    void updateStatus(QString);
+    void userError(QString);
+    void voteOk();
     void error(QString);
-    void add_user(QString,int,QString);
-    void update_user(QString,int,QString);
-    void remove_user(QString);
-    void clear_users();
+    void addUser(QString,int,QString);
+    void updateUser(QString,int,QString);
+    void removeUser(QString);
+    void clearUsers();
 };
 
 #endif // WEBCAM_ENGINE_H

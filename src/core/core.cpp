@@ -72,7 +72,7 @@ void Core::createSettings()
 {
     // default settings
     QSettings settings;
-    settings.setValue("version", "1.0.14.924");
+    settings.setValue("version", "1.0.14.925");
     settings.setValue("logged", "off");
     settings.setValue("busy", "off");
     settings.setValue("away", "off");
@@ -91,7 +91,7 @@ void Core::createSettings()
 
     // config values
     Config *pConfig = new Config();
-    QMap<QString,QString> mConfigValues = pConfig->read_config();
+    QMap<QString,QString> mConfigValues = pConfig->readConfig();
     delete pConfig;
 
     // set settings
@@ -106,16 +106,16 @@ void Core::createSettings()
     if (settings.value("style").toString() == "classic")
     {
         Config *pConfig = new Config();
-        pConfig->set_value("style", "modern");
+        pConfig->setValue("style", "modern");
         settings.setValue("style", "modern");
         delete pConfig;
     }
 
     // check settings
-    check_settings();
+    checkSettings();
 }
 
-void Core::check_settings()
+void Core::checkSettings()
 {
     QSettings settings;
     QString strSoundBeep = settings.value("sound_beep").toString();
@@ -130,17 +130,17 @@ void Core::check_settings()
 
     if (!fSoundBeep.exists())
     {
-        pConfig->set_value("sound_beep", "");
+        pConfig->setValue("sound_beep", "");
         settings.setValue("sound_beep", "");
     }
     if (!fSoundQuery.exists())
     {
-        pConfig->set_value("sound_query", "");
+        pConfig->setValue("sound_query", "");
         settings.setValue("sound_query", "");
     }
     if (!fBackgroundImage.exists())
     {
-        pConfig->set_value("background_image", "");
+        pConfig->setValue("background_image", "");
         settings.setValue("background_image", "");
     }
 
@@ -179,25 +179,25 @@ void Core::quit()
 }
 
 // from options
-void Core::refresh_colors()
+void Core::refreshColors()
 {
-    window->refresh_colors();
+    window->refreshColors();
 }
 
 // from options
-void Core::refresh_background_image()
+void Core::refreshBackgroundImage()
 {
-    window->refresh_background_image();
+    window->refreshBackgroundImage();
 }
 
 // update
-void Core::check_update()
+void Core::checkUpdate()
 {
-    pUpdate->check_update();
+    pUpdate->checkUpdate();
 }
 
 // for avatars (if nick not in any channels -> remove avatar)
-int Core::get_nick_channels(QString strNick)
+int Core::getNickChannels(QString strNick)
 {
     int iResult = 0;
 
@@ -216,7 +216,7 @@ int Core::get_nick_channels(QString strNick)
     return iResult;
 }
 
-QList<QString> Core::get_nicks_from_channel(QString strChannel)
+QList<QString> Core::getNicksFromChannel(QString strChannel)
 {
     QList<QString> usersList;
     for (int i = 0; i < lUsers.size(); i++)
@@ -230,7 +230,7 @@ QList<QString> Core::get_nicks_from_channel(QString strChannel)
     return usersList;
 }
 
-QString Core::get_user_modes(QString strNick, QString strChannel)
+QString Core::getUserModes(QString strNick, QString strChannel)
 {
     for (int i = 0; i < Core::instance()->lUsers.size(); i++)
     {
@@ -240,9 +240,9 @@ QString Core::get_user_modes(QString strNick, QString strChannel)
     return QString::null;
 }
 
-int Core::get_user_max_modes(QString strNick, QString strChannel)
+int Core::getUserMaxModes(QString strNick, QString strChannel)
 {
-    QString modes = get_user_modes(strNick, strChannel);
+    QString modes = getUserModes(strNick, strChannel);
 
     if (modes.contains("O")) { return 64; }
     if (modes.contains("o")) { return 32; }

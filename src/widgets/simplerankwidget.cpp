@@ -36,7 +36,7 @@ SimpleRankWidget::SimpleRankWidget(QWidget *parent, int param1, int param2, int 
     setMinimumSize(iWidth, iHeight);
 }
 
-void SimpleRankWidget::set_rank(int r)
+void SimpleRankWidget::setRank(int r)
 {
     iRank = r;
     update();

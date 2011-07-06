@@ -32,14 +32,14 @@ class TabManager : public QTabWidget
     Q_OBJECT
 public:
     TabManager(QWidget *);
-    void set_hilight(int);
-    void set_alert(int, QColor);
-    void set_color(int, QColor);
+    void setHilight(int);
+    void setAlert(int, QColor);
+    void setColor(int, QColor);
 
 private:
     QTabBar *tab;
 
-    void hide_close_button(int);
+    void hideCloseButton(int);
 
 protected:
     virtual void tabInserted(int);

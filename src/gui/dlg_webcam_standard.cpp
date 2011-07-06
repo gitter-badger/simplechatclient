@@ -79,7 +79,7 @@ void DlgWebcamStandard::update_text(QString s)
 
 void DlgWebcamStandard::update_rank(int i)
 {
-    pSimpleRankWidget->set_rank(i);
+    pSimpleRankWidget->setRank(i);
 }
 
 void DlgWebcamStandard::user_error(QString s)
@@ -90,7 +90,7 @@ void DlgWebcamStandard::user_error(QString s)
     // img
     ui.label_img->setText(s);
     // rank
-    pSimpleRankWidget->set_rank(0);
+    pSimpleRankWidget->setRank(0);
     // channels
     ui.textEdit_channels->clear();
 }
@@ -136,7 +136,7 @@ void DlgWebcamStandard::error(QString s)
     ui.listWidget_nicks->clear();
     ui.textEdit_desc->clear();
     ui.textEdit_desc->hide();
-    pSimpleRankWidget->set_rank(0);
+    pSimpleRankWidget->setRank(0);
     ui.textEdit_channels->clear();
 }
 
@@ -202,7 +202,7 @@ void DlgWebcamStandard::change_user(QListWidgetItem *item)
     ui.textEdit_desc->hide();
 
     // clear rank
-    pSimpleRankWidget->set_rank(0);
+    pSimpleRankWidget->setRank(0);
 
     // read nick
     QString strNewNick = item->text();

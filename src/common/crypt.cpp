@@ -31,11 +31,11 @@
 Crypt::Crypt()
 {
     Config *pConfig = new Config();
-    strIv = pConfig->get_value("iv");
+    strIv = pConfig->getValue("iv");
     delete pConfig;
 
     if (strIv.isEmpty())
-        gen_iv();
+        genIv();
 }
 
 QString Crypt::encrypt(QString strKey, QString strData)
@@ -112,7 +112,7 @@ QString Crypt::decrypt(QString strKey, QString strData)
     return QString::null;
 }
 
-void Crypt::gen_iv()
+void Crypt::genIv()
 {
     strIv.clear();
     QTime midnight(0, 0, 0);
@@ -146,6 +146,6 @@ void Crypt::gen_iv()
     }
 
     Config *pConfig = new Config();
-    pConfig->set_value("iv", strIv);
+    pConfig->setValue("iv", strIv);
     delete pConfig;
 }

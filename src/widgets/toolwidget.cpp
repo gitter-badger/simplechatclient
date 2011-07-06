@@ -198,39 +198,39 @@ ToolWidget::ToolWidget(QWidget *parent, Network *param1, InputWidget *param2, Dl
     setLayout(toolLayout);
 
     // set default
-    set_default();
+    setDefault();
 
     // signals
-    QObject::connect(showFontButtons, SIGNAL(clicked()), this, SLOT(show_font_buttons_clicked()));
+    QObject::connect(showFontButtons, SIGNAL(clicked()), this, SLOT(showFontButtonsClicked()));
 
-    QObject::connect(bold, SIGNAL(clicked()), this, SLOT(bold_clicked()));
-    QObject::connect(italic, SIGNAL(clicked()), this, SLOT(italic_clicked()));
+    QObject::connect(bold, SIGNAL(clicked()), this, SLOT(boldClicked()));
+    QObject::connect(italic, SIGNAL(clicked()), this, SLOT(italicClicked()));
 
-    QObject::connect(arialAct, SIGNAL(triggered()), this, SLOT(arial_triggered()));
-    QObject::connect(timesAct, SIGNAL(triggered()), this, SLOT(times_triggered()));
-    QObject::connect(verdanaAct, SIGNAL(triggered()), this, SLOT(verdana_triggered()));
-    QObject::connect(tahomaAct, SIGNAL(triggered()), this, SLOT(tahoma_triggered()));
-    QObject::connect(courierAct, SIGNAL(triggered()), this, SLOT(courier_triggered()));
+    QObject::connect(arialAct, SIGNAL(triggered()), this, SLOT(arialTriggered()));
+    QObject::connect(timesAct, SIGNAL(triggered()), this, SLOT(timesTriggered()));
+    QObject::connect(verdanaAct, SIGNAL(triggered()), this, SLOT(verdanaTriggered()));
+    QObject::connect(tahomaAct, SIGNAL(triggered()), this, SLOT(tahomaTriggered()));
+    QObject::connect(courierAct, SIGNAL(triggered()), this, SLOT(courierTriggered()));
 
-    QObject::connect(size8Act, SIGNAL(triggered()), this, SLOT(size8_triggered()));
-    QObject::connect(size9Act, SIGNAL(triggered()), this, SLOT(size9_triggered()));
-    QObject::connect(size10Act, SIGNAL(triggered()), this, SLOT(size10_triggered()));
-    QObject::connect(size11Act, SIGNAL(triggered()), this, SLOT(size11_triggered()));
-    QObject::connect(size12Act, SIGNAL(triggered()), this, SLOT(size12_triggered()));
-    QObject::connect(size14Act, SIGNAL(triggered()), this, SLOT(size14_triggered()));
-    QObject::connect(size16Act, SIGNAL(triggered()), this, SLOT(size16_triggered()));
-    QObject::connect(size18Act, SIGNAL(triggered()), this, SLOT(size18_triggered()));
-    QObject::connect(size20Act, SIGNAL(triggered()), this, SLOT(size20_triggered()));
-    QObject::connect(size24Act, SIGNAL(triggered()), this, SLOT(size24_triggered()));
+    QObject::connect(size8Act, SIGNAL(triggered()), this, SLOT(size8Triggered()));
+    QObject::connect(size9Act, SIGNAL(triggered()), this, SLOT(size9Triggered()));
+    QObject::connect(size10Act, SIGNAL(triggered()), this, SLOT(size10Triggered()));
+    QObject::connect(size11Act, SIGNAL(triggered()), this, SLOT(size11Triggered()));
+    QObject::connect(size12Act, SIGNAL(triggered()), this, SLOT(size12Triggered()));
+    QObject::connect(size14Act, SIGNAL(triggered()), this, SLOT(size14Triggered()));
+    QObject::connect(size16Act, SIGNAL(triggered()), this, SLOT(size16Triggered()));
+    QObject::connect(size18Act, SIGNAL(triggered()), this, SLOT(size18Triggered()));
+    QObject::connect(size20Act, SIGNAL(triggered()), this, SLOT(size20Triggered()));
+    QObject::connect(size24Act, SIGNAL(triggered()), this, SLOT(size24Triggered()));
 
-    QObject::connect(color, SIGNAL(currentIndexChanged(int)), this, SLOT(color_clicked(int)));
-    QObject::connect(emoticons, SIGNAL(clicked()), this, SLOT(emoticons_clicked()));
-    QObject::connect(channel_settings, SIGNAL(clicked()), this, SLOT(channel_settings_clicked()));
-    QObject::connect(moderation, SIGNAL(clicked()), this, SLOT(moderation_clicked()));
-    QObject::connect(clear, SIGNAL(clicked()), this, SLOT(clear_clicked()));
+    QObject::connect(color, SIGNAL(currentIndexChanged(int)), this, SLOT(colorClicked(int)));
+    QObject::connect(emoticons, SIGNAL(clicked()), this, SLOT(emoticonsClicked()));
+    QObject::connect(channel_settings, SIGNAL(clicked()), this, SLOT(channelSettingsClicked()));
+    QObject::connect(moderation, SIGNAL(clicked()), this, SLOT(moderationClicked()));
+    QObject::connect(clear, SIGNAL(clicked()), this, SLOT(clearClicked()));
 }
 
-void ToolWidget::set_default()
+void ToolWidget::setDefault()
 {
     QSettings settings;
 
@@ -274,7 +274,7 @@ void ToolWidget::set_default()
 
     // refresh bold italic
     int iWeight = (bMyBold ? 75 : 50);
-    pInputWidget->set_font(QFont(strMyFontFamily, -1, iWeight, bMyItalic));
+    pInputWidget->setFont(QFont(strMyFontFamily, -1, iWeight, bMyItalic));
 
     // set default font
     QString strMyFont = settings.value("my_font").toString();
@@ -310,7 +310,7 @@ void ToolWidget::set_default()
     moderation->hide();
 }
 
-void ToolWidget::set_moderation(bool bEnable)
+void ToolWidget::setModeration(bool bEnable)
 {
     if (bEnable)
         moderation->show();
@@ -318,7 +318,7 @@ void ToolWidget::set_moderation(bool bEnable)
         moderation->hide();
 }
 
-void ToolWidget::set_channel_settings(bool bEnable)
+void ToolWidget::setChannelSettings(bool bEnable)
 {
     if (bEnable)
         channel_settings->show();
@@ -326,7 +326,7 @@ void ToolWidget::set_channel_settings(bool bEnable)
         channel_settings->hide();
 }
 
-void ToolWidget::show_font_buttons_clicked()
+void ToolWidget::showFontButtonsClicked()
 {
     if (bShowFontButtons)
     {
@@ -352,7 +352,7 @@ void ToolWidget::show_font_buttons_clicked()
     }
 }
 
-void ToolWidget::bold_clicked()
+void ToolWidget::boldClicked()
 {
     QSettings settings;
     if (bMyBold)
@@ -371,10 +371,10 @@ void ToolWidget::bold_clicked()
     }
 
     int iWeight = (bMyBold ? 75 : 50);
-    pInputWidget->set_font(QFont(strMyFontFamily, -1, iWeight, bMyItalic));
+    pInputWidget->setFont(QFont(strMyFontFamily, -1, iWeight, bMyItalic));
 }
 
-void ToolWidget::italic_clicked()
+void ToolWidget::italicClicked()
 {
     QSettings settings;
     if (bMyItalic)
@@ -393,10 +393,10 @@ void ToolWidget::italic_clicked()
     }
 
     int iWeight = (bMyBold ? 75 : 50);
-    pInputWidget->set_font(QFont(strMyFontFamily, -1, iWeight, bMyItalic));
+    pInputWidget->setFont(QFont(strMyFontFamily, -1, iWeight, bMyItalic));
 }
 
-void ToolWidget::arial_triggered()
+void ToolWidget::arialTriggered()
 {
     fontfamily->setText("Arial");
     strMyFontFamily = "Arial";
@@ -404,10 +404,10 @@ void ToolWidget::arial_triggered()
     settings.setValue("my_font", strMyFontFamily);
 
     int iWeight = (bMyBold ? 75 : 50);
-    pInputWidget->set_font(QFont(strMyFontFamily, -1, iWeight, bMyItalic));
+    pInputWidget->setFont(QFont(strMyFontFamily, -1, iWeight, bMyItalic));
 }
 
-void ToolWidget::times_triggered()
+void ToolWidget::timesTriggered()
 {
     fontfamily->setText("Times");
     strMyFontFamily = "Times";
@@ -415,10 +415,10 @@ void ToolWidget::times_triggered()
     settings.setValue("my_font", strMyFontFamily);
 
     int iWeight = (bMyBold ? 75 : 50);
-    pInputWidget->set_font(QFont(strMyFontFamily, -1, iWeight, bMyItalic));
+    pInputWidget->setFont(QFont(strMyFontFamily, -1, iWeight, bMyItalic));
 }
 
-void ToolWidget::verdana_triggered()
+void ToolWidget::verdanaTriggered()
 {
     fontfamily->setText("Verdana");
     strMyFontFamily = "Verdana";
@@ -426,10 +426,10 @@ void ToolWidget::verdana_triggered()
     settings.setValue("my_font", strMyFontFamily);
 
     int iWeight = (bMyBold ? 75 : 50);
-    pInputWidget->set_font(QFont(strMyFontFamily, -1, iWeight, bMyItalic));
+    pInputWidget->setFont(QFont(strMyFontFamily, -1, iWeight, bMyItalic));
 }
 
-void ToolWidget::tahoma_triggered()
+void ToolWidget::tahomaTriggered()
 {
     fontfamily->setText("Tahoma");
     strMyFontFamily = "Tahoma";
@@ -437,10 +437,10 @@ void ToolWidget::tahoma_triggered()
     settings.setValue("my_font", strMyFontFamily);
 
     int iWeight = (bMyBold ? 75 : 50);
-    pInputWidget->set_font(QFont(strMyFontFamily, -1, iWeight, bMyItalic));
+    pInputWidget->setFont(QFont(strMyFontFamily, -1, iWeight, bMyItalic));
 }
 
-void ToolWidget::courier_triggered()
+void ToolWidget::courierTriggered()
 {
     fontfamily->setText("Courier");
     strMyFontFamily = "Courier";
@@ -448,62 +448,62 @@ void ToolWidget::courier_triggered()
     settings.setValue("my_font", strMyFontFamily);
 
     int iWeight = (bMyBold ? 75 : 50);
-    pInputWidget->set_font(QFont(strMyFontFamily, -1, iWeight, bMyItalic));
+    pInputWidget->setFont(QFont(strMyFontFamily, -1, iWeight, bMyItalic));
 }
 
-void ToolWidget::size8_triggered()
+void ToolWidget::size8Triggered()
 {
-    emit change_font_size("8px");
+    emit changeFontSize("8px");
 }
 
-void ToolWidget::size9_triggered()
+void ToolWidget::size9Triggered()
 {
-    emit change_font_size("9px");
+    emit changeFontSize("9px");
 }
 
-void ToolWidget::size10_triggered()
+void ToolWidget::size10Triggered()
 {
-    emit change_font_size("10px");
+    emit changeFontSize("10px");
 }
 
-void ToolWidget::size11_triggered()
+void ToolWidget::size11Triggered()
 {
-    emit change_font_size("11px");
+    emit changeFontSize("11px");
 }
 
-void ToolWidget::size12_triggered()
+void ToolWidget::size12Triggered()
 {
-    emit change_font_size("12px");
+    emit changeFontSize("12px");
 }
 
-void ToolWidget::size14_triggered()
+void ToolWidget::size14Triggered()
 {
-    emit change_font_size("14px");
+    emit changeFontSize("14px");
 }
 
-void ToolWidget::size16_triggered()
+void ToolWidget::size16Triggered()
 {
-    emit change_font_size("16px");
+    emit changeFontSize("16px");
 }
 
-void ToolWidget::size18_triggered()
+void ToolWidget::size18Triggered()
 {
-    emit change_font_size("18px");
+    emit changeFontSize("18px");
 }
 
-void ToolWidget::size20_triggered()
+void ToolWidget::size20Triggered()
 {
-    emit change_font_size("20px");
+    emit changeFontSize("20px");
 }
 
-void ToolWidget::size24_triggered()
+void ToolWidget::size24Triggered()
 {
-    emit change_font_size("24px");
+    emit changeFontSize("24px");
 }
 
 // color
 
-void ToolWidget::color_clicked(int index)
+void ToolWidget::colorClicked(int index)
 {
     if (index == 0) strCurrentColor = "#000000";
     else if (index == 1) strCurrentColor = "#623c00";
@@ -525,23 +525,23 @@ void ToolWidget::color_clicked(int index)
     QSettings settings;
     settings.setValue("my_color", strCurrentColor);
 
-    pInputWidget->set_color(strCurrentColor);
+    pInputWidget->setColor(strCurrentColor);
 }
 
 // emoticons
 
-void ToolWidget::emoticons_clicked()
+void ToolWidget::emoticonsClicked()
 {
     DlgEmoticons(Core::instance()->sccWindow(), pInputWidget).exec();
 }
 
 // channel settings
 
-void ToolWidget::channel_settings_clicked()
+void ToolWidget::channelSettingsClicked()
 {
-    if (pNetwork->is_connected())
+    if (pNetwork->isConnected())
     {
-        QString strChannel = pInputWidget->get_active();
+        QString strChannel = pInputWidget->getActive();
         if (strChannel != "Status")
         {
             pDlgChannelSettings->set_channel(strChannel);
@@ -552,17 +552,17 @@ void ToolWidget::channel_settings_clicked()
 
 // moderation
 
-void ToolWidget::moderation_clicked()
+void ToolWidget::moderationClicked()
 {
-    QString strChannel = pInputWidget->get_active();
+    QString strChannel = pInputWidget->getActive();
     pDlgModeration->set_current_channel(strChannel);
     pDlgModeration->show();
 }
 
 // clear
 
-void ToolWidget::clear_clicked()
+void ToolWidget::clearClicked()
 {
-    QString strChannel = pInputWidget->get_active();
-    emit clear_content(strChannel);
+    QString strChannel = pInputWidget->getActive();
+    emit clearContent(strChannel);
 }

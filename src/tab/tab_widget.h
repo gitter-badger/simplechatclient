@@ -41,17 +41,17 @@ class TabWidget : public QWidget
 public:
     TabWidget(Network *, QString, DlgUserProfile *);
     virtual ~TabWidget();
-    inline QString get_name() { return strName; }
+    inline QString getName() { return strName; }
     void addslashes(QString &);
-    void display_msg(QString &, QString &, MessageCategory);
-    void display_msg(QString &, MessageCategory);
-    void display_message(QString &, MessageCategory); // private, exteption: inputlinewidget
-    void set_topic(QString &);
-    void author_topic(QString &);
-    inline void change_font_size(QString f) { strFontSize = f; }
-    void clear_content();
-    void refresh_colors();
-    void refresh_background_image();
+    void displayMsg(QString &, QString &, MessageCategory);
+    void displayMsg(QString &, MessageCategory);
+    void displayMessage(QString &, MessageCategory); // private, exteption: inputlinewidget
+    void setTopic(QString &);
+    void authorTopic(QString &);
+    inline void changeFontSize(QString f) { strFontSize = f; }
+    void clearContent();
+    void refreshColors();
+    void refreshBackgroundImage();
 
 private:
     // params
@@ -68,8 +68,8 @@ private:
     QLabel *topic;
     MainTextEdit *pMainTextEdit;
 
-    void convert_emots(QString &);
-    void replace_emots(QString &);
+    void convertEmots(QString &);
+    void replaceEmots(QString &);
 };
 
 #endif // TAB_WIDGET_H

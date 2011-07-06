@@ -196,7 +196,7 @@ void DlgEmoticons::clicked_standard(QModelIndex index)
     if (!strEmoticon.isEmpty())
     {
         // insert emots
-        pInputWidget->insert_text("//"+strEmoticon);
+        pInputWidget->insertText("//"+strEmoticon);
 
         // close
         this->close();
@@ -213,7 +213,7 @@ void DlgEmoticons::clicked_extended(QModelIndex index)
     if (!strEmoticon.isEmpty())
     {
         // insert emots
-        pInputWidget->insert_text("//"+strEmoticon);
+        pInputWidget->insertText("//"+strEmoticon);
 
         // close
         this->close();
@@ -239,7 +239,7 @@ void DlgEmoticons::button_insert()
     if (!strSelected.isEmpty())
     {
         // insert emots
-        pInputWidget->insert_text("//"+strSelected);
+        pInputWidget->insertText("//"+strSelected);
 
         // close
         this->close();

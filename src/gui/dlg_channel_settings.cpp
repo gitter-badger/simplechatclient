@@ -397,7 +397,7 @@ void DlgChannelSettings::set_stats_data(QMap<QString, QString> mData)
             ui.label_stats_words->setText(QString::number(iWords));
 
             // simple stats widget
-            pSimpleStatsWidget->set_stats(lWords);
+            pSimpleStatsWidget->setStats(lWords);
         }
         else if (strKey == "relationsFavourite")
         {
@@ -422,10 +422,10 @@ void DlgChannelSettings::set_topic(QString strTopic)
 
     // convert font
     Convert *pConvertF = new Convert();
-    pConvertF->remove_font(strTopic);
-    bool bRemovedBold = pConvertF->get_removed_bold();
-    bool bRemovedItalic = pConvertF->get_removed_italic();
-    QString strRemovedFont = pConvertF->get_removed_font();
+    pConvertF->removeFont(strTopic);
+    bool bRemovedBold = pConvertF->getRemovedBold();
+    bool bRemovedItalic = pConvertF->getRemovedItalic();
+    QString strRemovedFont = pConvertF->getRemovedFont();
     delete pConvertF;
 
     if (bRemovedBold) ui.pushButton_bold->setChecked(true);
@@ -440,8 +440,8 @@ void DlgChannelSettings::set_topic(QString strTopic)
 
     // convert color
     Convert *pConvertC = new Convert();
-    pConvertC->remove_color(strTopic);
-    int iRemovedColor = pConvertC->get_removed_color();
+    pConvertC->removeColor(strTopic);
+    int iRemovedColor = pConvertC->getRemovedColor();
     delete pConvertC;
     ui.comboBox_color->setCurrentIndex(iRemovedColor);
 
@@ -973,7 +973,7 @@ void DlgChannelSettings::hideEvent(QHideEvent *event)
     // clear
     strChannel.clear();
     clear();
-    pSimpleStatsWidget->clear_stats();
+    pSimpleStatsWidget->clearStats();
     ui.label_owner->hide();
     ui.label_owner_nick->hide();
 

@@ -33,7 +33,7 @@ class Update : public QObject
 public:
     Update();
     virtual ~Update();
-    void check_update();
+    void checkUpdate();
 
 private:
     QNetworkAccessManager *accessManager;
@@ -41,7 +41,7 @@ private:
     void version(QString);
 
 private slots:
-    void update_finished(QNetworkReply*);
+    void updateFinished(QNetworkReply*);
 };
 
 #endif // UPDATE_H

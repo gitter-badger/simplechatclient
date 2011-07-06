@@ -31,10 +31,10 @@ SimpleStatsWidget::SimpleStatsWidget(QWidget *parent) : QWidget(parent)
     setMaximumSize(400, 100);
     setMinimumSize(400, 100);
 
-    clear_stats();
+    clearStats();
 }
 
-void SimpleStatsWidget::clear_stats()
+void SimpleStatsWidget::clearStats()
 {
     fForceMax = 0;
     lStats.clear();
@@ -44,12 +44,12 @@ void SimpleStatsWidget::clear_stats()
     update();
 }
 
-void SimpleStatsWidget::set_max(qreal f)
+void SimpleStatsWidget::setMax(qreal f)
 {
     fForceMax = f;
 }
 
-void SimpleStatsWidget::set_stats(QList<int> s)
+void SimpleStatsWidget::setStats(QList<int> s)
 {
     lStats = s;
     update();

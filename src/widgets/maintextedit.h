@@ -31,8 +31,8 @@ class MainTextEdit : public QTextEdit
     Q_OBJECT
 public:
     MainTextEdit(Network *, QString, DlgUserProfile *);
-    void update_background_image();
-    inline QString get_current_nick() { return strNick; }
+    void updateBackgroundImage();
+    inline QString getCurrentNick() { return strNick; }
 
 private:
     // params
@@ -46,43 +46,43 @@ private:
     QAction *openChannelsActs[maxOpenChannels];
     AnimatedEmoticonWidget *pAnimatedEmoticonWidget;
 
-    void menu_nick(QString, QContextMenuEvent *);
-    void menu_channel(QString, QContextMenuEvent *);
-    void menu_website(QContextMenuEvent *);
-    void menu_standard(QContextMenuEvent *);
+    void menuNick(QString, QContextMenuEvent *);
+    void menuChannel(QString, QContextMenuEvent *);
+    void menuWebsite(QContextMenuEvent *);
+    void menuStandard(QContextMenuEvent *);
 
-    int get_word_index(QString, int);
-    QString get_word(QTextCursor);
-    QString get_word_n(QTextCursor, int);
-    int get_word_pos_index(QTextCursor);
-    bool is_join_part_quit(QTextCursor);
+    int getWordIndex(QString, int);
+    QString getWord(QTextCursor);
+    QString getWordN(QTextCursor, int);
+    int getWordPosIndex(QTextCursor);
+    bool isJoinPartQuit(QTextCursor);
 
 private slots:
-    void join_channel();
+    void joinChannel();
     void priv();
     void whois();
     void profile();
     void cam();
-    void friends_add();
-    void friends_del();
-    void ignore_add();
-    void ignore_del();
+    void friendsAdd();
+    void friendsDel();
+    void ignoreAdd();
+    void ignoreDel();
     void kick();
     void ban();
     void kban();
     void ipban();
-    void op_add();
-    void op_del();
-    void halfop_add();
-    void halfop_del();
-    void moderator_add();
-    void moderator_del();
-    void voice_add();
-    void voice_del();
+    void opAdd();
+    void opDel();
+    void halfopAdd();
+    void halfopDel();
+    void moderatorAdd();
+    void moderatorDel();
+    void voiceAdd();
+    void voiceDel();
     void invite();
-    void text_changed();
-    void open_webbrowser();
-    void send_to_notes();
+    void textChanged();
+    void openWebbrowser();
+    void sendToNotes();
     void search();
 
 protected:

@@ -87,7 +87,7 @@ void DlgWebcam::create_signals()
 
 void DlgWebcam::close_cam()
 {
-    pWebcamEngine->close_engine();
+    pWebcamEngine->closeEngine();
     this->deleteLater();
 }
 
@@ -95,5 +95,5 @@ void DlgWebcam::user_error(QString s)
 {
     /* mini */
     pWebcamMini->update_text(s);
-    pWebcamEngine->close_engine();
+    pWebcamEngine->closeEngine();
 }

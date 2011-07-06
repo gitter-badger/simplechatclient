@@ -32,14 +32,14 @@ class Convert : public QObject
     Q_OBJECT
 public:
     Convert();
-    void convert_text(QString &, QString &);
-    void remove_font(QString &);
-    void remove_color(QString &);
+    void convertText(QString &, QString &);
+    void removeFont(QString &);
+    void removeColor(QString &);
 
-    bool get_removed_bold() { return bRemovedBold; }
-    bool get_removed_italic() { return bRemovedItalic; }
-    QString get_removed_font() { return strRemovedFont; }
-    int get_removed_color() { return iRemovedColor; }
+    bool getRemovedBold() { return bRemovedBold; }
+    bool getRemovedItalic() { return bRemovedItalic; }
+    QString getRemovedFont() { return strRemovedFont; }
+    int getRemovedColor() { return iRemovedColor; }
 
 private:
     bool bRemovedBold;

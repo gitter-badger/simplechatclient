@@ -50,18 +50,18 @@ public:
     void showSccWindow();
     MainWindow *sccWindow();
     // from options
-    void refresh_colors();
-    void refresh_background_image();
+    void refreshColors();
+    void refreshBackgroundImage();
     // update
-    void check_update();
+    void checkUpdate();
     // for avatars
-    int get_nick_channels(QString);
+    int getNickChannels(QString);
     // get users per channel
-    QList<QString> get_nicks_from_channel(QString);
+    QList<QString> getNicksFromChannel(QString);
     // get user modes
-    QString get_user_modes(QString, QString);
+    QString getUserModes(QString, QString);
     // get user max modes - for sorting
-    int get_user_max_modes(QString, QString);
+    int getUserMaxModes(QString, QString);
 
     QAction *lagAct;
     QList<QString> lAwaylog;
@@ -99,7 +99,7 @@ private:
 
     void init();
     void createSettings();
-    void check_settings();
+    void checkSettings();
 };
 
 #endif // CORE_H

@@ -45,56 +45,56 @@ QString Commands::execute()
         QString strCmd = strDataList[0].toLower();
 
         if ((strCmd == "join") || (strCmd == "j"))
-            strResult = cmd_join();
+            strResult = cmdJoin();
         else if (strCmd == "priv")
-            strResult = cmd_priv();
+            strResult = cmdPriv();
         else if (strCmd == "ignore")
-            strResult = cmd_ignore();
+            strResult = cmdIgnore();
         else if (strCmd == "friend")
-            strResult = cmd_friend();
+            strResult = cmdFriend();
         else if ((strCmd == "whereis") || (strCmd == "whois")  || (strCmd == "wi")  || (strCmd == "wii"))
-            strResult = cmd_whereis();
+            strResult = cmdWhereis();
         else if (strCmd == "busy")
-            strResult = cmd_busy();
+            strResult = cmdBusy();
         else if (strCmd == "away")
-            strResult = cmd_away();
+            strResult = cmdAway();
         else if (strCmd == "offmsg")
-            strResult = cmd_offmsg();
+            strResult = cmdOffmsg();
         else if ((strCmd == "logout") || (strCmd == "quit") || (strCmd == "q"))
-            strResult = cmd_quit();
+            strResult = cmdQuit();
         else if ((strCmd == "mp3") || (strCmd == "winamp"))
-            strResult = cmd_mp3();
+            strResult = cmdMp3();
         else if ((strCmd == "help") || (strCmd == "pomoc"))
-            strResult = cmd_help();
+            strResult = cmdHelp();
         else
             strResult = strData;
 
         if ((strChan != "Status") && (strResult == strData))
         {
             if ((strCmd == "cycle") || (strCmd == "hop"))
-                strResult = cmd_cycle();
+                strResult = cmdCycle();
             else if (strCmd == "me")
-                strResult = cmd_me();
+                strResult = cmdMe();
             else if (strCmd == "topic")
-                strResult = cmd_topic();
+                strResult = cmdTopic();
             else if ((strCmd == "part") || (strCmd == "p"))
-                strResult = cmd_part();
+                strResult = cmdPart();
             else if (strCmd == "invite")
-                strResult = cmd_invite();
+                strResult = cmdInvite();
             else if ((strCmd == "kick") || (strCmd == "k"))
-                strResult = cmd_kick();
+                strResult = cmdKick();
             else if (strCmd == "ban")
-                strResult = cmd_ban();
+                strResult = cmdBan();
             else if (strCmd == "banip")
-                strResult = cmd_banip();
+                strResult = cmdBanip();
             else if (strCmd == "sop")
-                strResult = cmd_sop();
+                strResult = cmdSop();
             else if (strCmd == "op")
-                strResult = cmd_op();
+                strResult = cmdOp();
             else if ((strCmd == "moder") || (strCmd == "moderator"))
-                strResult = cmd_moder();
+                strResult = cmdModer();
             else if (strCmd == "vip")
-                strResult = cmd_vip();
+                strResult = cmdVip();
             else
                 strResult = strData;
         }
@@ -103,7 +103,7 @@ QString Commands::execute()
     return strResult;
 }
 
-bool Commands::is_erotic(QString strChannel)
+bool Commands::isErotic(QString strChannel)
 {
     for (int i = 0; i < Core::instance()->lChannelList.size(); i++)
     {
@@ -122,7 +122,7 @@ bool Commands::is_erotic(QString strChannel)
     return false;
 }
 
-QString Commands::cmd_join()
+QString Commands::cmdJoin()
 {
     if (strDataList.value(1).isEmpty()) return QString::null;
 
@@ -133,7 +133,7 @@ QString Commands::cmd_join()
     QString strKey;
     for (int i = 2; i < strDataList.size(); i++) { if (i != 2) strKey += " "; strKey += strDataList[i]; }
 
-    if (is_erotic(strChannel))
+    if (isErotic(strChannel))
     {
         QSettings settings;
         if (settings.value("age_check").toString() == "on")
@@ -163,7 +163,7 @@ QString Commands::cmd_join()
         return QString("JOIN %1").arg(strChannel);
 }
 
-QString Commands::cmd_priv()
+QString Commands::cmdPriv()
 {
     if (strDataList.value(1).isEmpty()) return QString::null;
 
@@ -172,7 +172,7 @@ QString Commands::cmd_priv()
     return QString("PRIV %1").arg(strNick);
 }
 
-QString Commands::cmd_ignore()
+QString Commands::cmdIgnore()
 {
     if (strDataList.value(1).isEmpty()) return QString::null;
 
@@ -188,7 +188,7 @@ QString Commands::cmd_ignore()
         return QString::null;
 }
 
-QString Commands::cmd_friend()
+QString Commands::cmdFriend()
 {
     if (strDataList.value(1).isEmpty()) return QString::null;
 
@@ -204,7 +204,7 @@ QString Commands::cmd_friend()
         return QString::null;
 }
 
-QString Commands::cmd_whereis()
+QString Commands::cmdWhereis()
 {
     if (strDataList.value(1).isEmpty()) return QString::null;
 
@@ -213,7 +213,7 @@ QString Commands::cmd_whereis()
     return QString("WHOIS %1 :%1").arg(strNick);
 }
 
-QString Commands::cmd_busy()
+QString Commands::cmdBusy()
 {
     QSettings settings;
     QString strBusy = settings.value("busy").toString();
@@ -226,7 +226,7 @@ QString Commands::cmd_busy()
         return QString::null;
 }
 
-QString Commands::cmd_away()
+QString Commands::cmdAway()
 {
     QString strMessage;
     for (int i = 1; i < strDataList.size(); i++) { if (i != 1) strMessage += " "; strMessage += strDataList[i]; }
@@ -234,7 +234,7 @@ QString Commands::cmd_away()
     return QString("AWAY :%1").arg(strMessage);
 }
 
-QString Commands::cmd_offmsg()
+QString Commands::cmdOffmsg()
 {
     if (strDataList.value(1).isEmpty()) return QString::null;
     if (strDataList.value(2).isEmpty()) return QString::null;
@@ -247,7 +247,7 @@ QString Commands::cmd_offmsg()
     return QString("NS OFFLINE MSG %1 %2").arg(strNick).arg(strMessage);
 }
 
-QString Commands::cmd_quit()
+QString Commands::cmdQuit()
 {
     QString strReason;
     for (int i = 1; i < strDataList.size(); i++) { if (i != 1) strReason += " "; strReason += strDataList[i]; }
@@ -261,7 +261,7 @@ QString Commands::cmd_quit()
         return "QUIT";
 }
 
-QString Commands::cmd_mp3()
+QString Commands::cmdMp3()
 {
 #ifdef Q_WS_WIN
     Winamp *pWinamp = new Winamp();
@@ -309,7 +309,7 @@ QString Commands::cmd_mp3()
 #endif
 }
 
-QString Commands::cmd_help()
+QString Commands::cmdHelp()
 {
     QString strResult;
 
@@ -341,14 +341,14 @@ QString Commands::cmd_help()
     return strResult;
 }
 
-QString Commands::cmd_cycle()
+QString Commands::cmdCycle()
 {
     QString strChannel = strChan;
 
     return QString("PART %1\nJOIN %1").arg(strChannel);
 }
 
-QString Commands::cmd_me()
+QString Commands::cmdMe()
 {
     QString strChannel = strChan;
 
@@ -358,7 +358,7 @@ QString Commands::cmd_me()
     return QString("PRIVMSG %1 :%2ACTION %3%4").arg(strChannel).arg(QString(QByteArray("\x01"))).arg(strMessage).arg(QString(QByteArray("\x01")));
 }
 
-QString Commands::cmd_topic()
+QString Commands::cmdTopic()
 {
     QString strChannel = strChan;
 
@@ -371,7 +371,7 @@ QString Commands::cmd_topic()
     return QString("CS SET %1 TOPIC %2").arg(strChannel).arg(strMessage);
 }
 
-QString Commands::cmd_part()
+QString Commands::cmdPart()
 {
     QString strChannel;
     if (strDataList.value(1).isEmpty())
@@ -384,7 +384,7 @@ QString Commands::cmd_part()
     return QString("PART %1").arg(strChannel);
 }
 
-QString Commands::cmd_invite()
+QString Commands::cmdInvite()
 {
     if (strDataList.value(1).isEmpty()) return QString::null;
 
@@ -394,7 +394,7 @@ QString Commands::cmd_invite()
     return QString("INVITE %1 %2").arg(strNick).arg(strChannel);
 }
 
-QString Commands::cmd_kick()
+QString Commands::cmdKick()
 {
     if (strDataList.value(1).isEmpty()) return QString::null;
 
@@ -410,7 +410,7 @@ QString Commands::cmd_kick()
     return QString("KICK %1 %2 :%3").arg(strChannel).arg(strNick).arg(strReason);
 }
 
-QString Commands::cmd_ban()
+QString Commands::cmdBan()
 {
     if (strDataList.value(1).isEmpty()) return QString::null;
 
@@ -444,7 +444,7 @@ QString Commands::cmd_ban()
         return QString::null;
 }
 
-QString Commands::cmd_banip()
+QString Commands::cmdBanip()
 {
     if (strDataList.value(1).isEmpty()) return QString::null;
 
@@ -462,7 +462,7 @@ QString Commands::cmd_banip()
         return QString::null;
 }
 
-QString Commands::cmd_sop()
+QString Commands::cmdSop()
 {
     if (strDataList.value(1).isEmpty()) return QString::null;
 
@@ -479,7 +479,7 @@ QString Commands::cmd_sop()
         return QString::null;
 }
 
-QString Commands::cmd_op()
+QString Commands::cmdOp()
 {
     if (strDataList.value(1).isEmpty()) return QString::null;
 
@@ -496,7 +496,7 @@ QString Commands::cmd_op()
         return QString::null;
 }
 
-QString Commands::cmd_moder()
+QString Commands::cmdModer()
 {
     if (strDataList.value(1).isEmpty()) return QString::null;
 
@@ -513,7 +513,7 @@ QString Commands::cmd_moder()
         return QString::null;
 }
 
-QString Commands::cmd_vip()
+QString Commands::cmdVip()
 {
     if (strDataList.value(1).isEmpty()) return QString::null;
 

@@ -26,20 +26,20 @@ Replace::Replace()
 {
 }
 
-void Replace::convert_and_replace_emots(QString &strData)
+void Replace::convertAndReplaceEmots(QString &strData)
 {
-    convert_emots(strData);
-    replace_emots(strData);
+    convertEmots(strData);
+    replaceEmots(strData);
 }
 
-void Replace::convert_emots(QString &strData)
+void Replace::convertEmots(QString &strData)
 {
     strData.replace(QRegExp("(http:|https:)//"), "\\1\\\\"); // fix http/s
     strData.replace(QRegExp("//([a-zA-Z0-9_-]+)\\b"), "%I\\1%");
     strData.replace(QRegExp("(http:|https:)\\\\\\\\"), "\\1//"); // fix http/s
 }
 
-void Replace::replace_emots(QString &strData)
+void Replace::replaceEmots(QString &strData)
 {
     // return if disable replaces == on
     QSettings settings;

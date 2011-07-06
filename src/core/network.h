@@ -36,15 +36,15 @@ public:
     Network(QString, int);
     virtual ~Network();
     void run();
-    void set_reconnect(bool);
-    bool is_connected();
-    bool is_writable();
+    void setReconnect(bool);
+    bool isConnected();
+    bool isWritable();
 
 public slots:
     void connect();
     void disconnect();
     void send(QString);
-    void send_queue(QString);
+    void sendQueue(QString);
 
 private:
     QString strServer;
@@ -61,7 +61,7 @@ private:
     QTimer *timerReconnect;
 
     void authorize();
-    void clear_all();
+    void clearAll();
     void write(QString);
 
 private slots:
@@ -70,23 +70,23 @@ private slots:
     void reconnect();
     void recv();
     void error(QAbstractSocket::SocketError);
-    void state_changed(QAbstractSocket::SocketState);
-    void timeout_pong();
-    void timeout_ping();
-    void timeout_lag();
-    void timeout_queue();
+    void stateChanged(QAbstractSocket::SocketState);
+    void timeoutPong();
+    void timeoutPing();
+    void timeoutLag();
+    void timeoutQueue();
 
 signals:
-    void set_connected();
-    void set_disconnected();
-    void set_connect_enabled(bool);
+    void setConnected();
+    void setDisconnected();
+    void setConnectEnabled(bool);
     void kernel(QString);
     void authorize(QString, QString, QString);
-    void show_msg_all(QString&, MessageCategory);
-    void show_msg_active(QString&, MessageCategory);
-    void update_nick(QString);
-    void update_actions();
-    void clear_all_nicklist();
+    void showMsgAll(QString&, MessageCategory);
+    void showMsgActive(QString&, MessageCategory);
+    void updateNick(QString);
+    void updateActions();
+    void clearAllNicklist();
 };
 
 #endif // NETWORK_H

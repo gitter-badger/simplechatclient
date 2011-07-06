@@ -621,9 +621,9 @@ void DlgOptions::set_modern_style_avatars()
     // save style
     QSettings settings;
     Config *pConfig = new Config();
-    pConfig->set_value("style", "modern");
+    pConfig->setValue("style", "modern");
     settings.setValue("style", "modern");
-    pConfig->set_value("disable_avatars", "off");
+    pConfig->setValue("disable_avatars", "off");
     settings.setValue("disable_avatars", "off");
     delete pConfig;
 
@@ -638,9 +638,9 @@ void DlgOptions::set_modern_style_no_avatars()
     // save style
     QSettings settings;
     Config *pConfig = new Config();
-    pConfig->set_value("style", "modern");
+    pConfig->setValue("style", "modern");
     settings.setValue("style", "modern");
-    pConfig->set_value("disable_avatars", "on");
+    pConfig->setValue("disable_avatars", "on");
     settings.setValue("disable_avatars", "on");
     delete pConfig;
 
@@ -653,17 +653,17 @@ void DlgOptions::language_changed(int index)
     Config *pConfig = new Config();
     if (index == 0) // english
     {
-        pConfig->set_value("language", "en");
+        pConfig->setValue("language", "en");
         settings.setValue("language", "en");
     }
     else if (index == 1) // polish
     {
-        pConfig->set_value("language", "pl");
+        pConfig->setValue("language", "pl");
         settings.setValue("language", "pl");
     }
     else // polish
     {
-        pConfig->set_value("language", "pl");
+        pConfig->setValue("language", "pl");
         settings.setValue("language", "pl");
     }
     delete pConfig;
@@ -677,7 +677,7 @@ void DlgOptions::auto_busy(bool bValue)
 
     QSettings settings;
     Config *pConfig = new Config();
-    pConfig->set_value("auto_busy", strValue);
+    pConfig->setValue("auto_busy", strValue);
     settings.setValue("auto_busy", strValue);
     delete pConfig;
 }
@@ -688,7 +688,7 @@ void DlgOptions::disable_autojoin_favourites(bool bValue)
 
     QSettings settings;
     Config *pConfig = new Config();
-    pConfig->set_value("disable_autojoin_favourites", strValue);
+    pConfig->setValue("disable_autojoin_favourites", strValue);
     settings.setValue("disable_autojoin_favourites", strValue);
     delete pConfig;
 }
@@ -699,7 +699,7 @@ void DlgOptions::show_zuo(bool bValue)
 
     QSettings settings;
     Config *pConfig = new Config();
-    pConfig->set_value("show_zuo", strValue);
+    pConfig->setValue("show_zuo", strValue);
     settings.setValue("show_zuo", strValue);
     delete pConfig;
 }
@@ -710,7 +710,7 @@ void DlgOptions::hide_formating(bool bValue)
 
     QSettings settings;
     Config *pConfig = new Config();
-    pConfig->set_value("hide_formating", strValue);
+    pConfig->setValue("hide_formating", strValue);
     settings.setValue("hide_formating", strValue);
     delete pConfig;
 }
@@ -721,7 +721,7 @@ void DlgOptions::hide_join_part(bool bValue)
 
     QSettings settings;
     Config *pConfig = new Config();
-    pConfig->set_value("hide_join_part", strValue);
+    pConfig->setValue("hide_join_part", strValue);
     settings.setValue("hide_join_part", strValue);
     delete pConfig;
 }
@@ -732,7 +732,7 @@ void DlgOptions::hide_join_part_200(bool bValue)
 
     QSettings settings;
     Config *pConfig = new Config();
-    pConfig->set_value("hide_join_part_200", strValue);
+    pConfig->setValue("hide_join_part_200", strValue);
     settings.setValue("hide_join_part_200", strValue);
     delete pConfig;
 }
@@ -743,7 +743,7 @@ void DlgOptions::disable_avatars(bool bValue)
 
     QSettings settings;
     Config *pConfig = new Config();
-    pConfig->set_value("disable_avatars", strValue);
+    pConfig->setValue("disable_avatars", strValue);
     settings.setValue("disable_avatars", strValue);
     delete pConfig;
 }
@@ -754,7 +754,7 @@ void DlgOptions::disable_emots(bool bValue)
 
     QSettings settings;
     Config *pConfig = new Config();
-    pConfig->set_value("disable_emots", strValue);
+    pConfig->setValue("disable_emots", strValue);
     settings.setValue("disable_emots", strValue);
     delete pConfig;
 }
@@ -765,7 +765,7 @@ void DlgOptions::disable_replaces(bool bValue)
 
     QSettings settings;
     Config *pConfig = new Config();
-    pConfig->set_value("disable_replaces", strValue);
+    pConfig->setValue("disable_replaces", strValue);
     settings.setValue("disable_replaces", strValue);
     delete pConfig;
 }
@@ -776,7 +776,7 @@ void DlgOptions::set_my_bold(int index)
 
     QSettings settings;
     Config *pConfig = new Config();
-    pConfig->set_value("my_bold", strValue);
+    pConfig->setValue("my_bold", strValue);
     settings.setValue("my_bold", strValue);
     delete pConfig;
 }
@@ -787,7 +787,7 @@ void DlgOptions::set_my_italic(int index)
 
     QSettings settings;
     Config *pConfig = new Config();
-    pConfig->set_value("my_italic", strValue);
+    pConfig->setValue("my_italic", strValue);
     settings.setValue("my_italic", strValue);
     delete pConfig;
 }
@@ -796,7 +796,7 @@ void DlgOptions::set_my_font(QString strFont)
 {
     QSettings settings;
     Config *pConfig = new Config();
-    pConfig->set_value("my_font", strFont);
+    pConfig->setValue("my_font", strFont);
     settings.setValue("my_font", strFont);
     delete pConfig;
 }
@@ -823,7 +823,7 @@ void DlgOptions::set_my_color(int index)
 
     QSettings settings;
     Config *pConfig = new Config();
-    pConfig->set_value("my_color", strMyColor);
+    pConfig->setValue("my_color", strMyColor);
     settings.setValue("my_color", strMyColor);
     delete pConfig;
 }
@@ -832,7 +832,7 @@ void DlgOptions::set_font_size(QString strFontSize)
 {
     QSettings settings;
     Config *pConfig = new Config();
-    pConfig->set_value("font_size", strFontSize+"px");
+    pConfig->setValue("font_size", strFontSize+"px");
     settings.setValue("font_size", strFontSize+"px");
     delete pConfig;
 }
@@ -902,40 +902,40 @@ void DlgOptions::mainwindow_restore_default()
     QSettings settings;
     Config *pConfig = new Config();
 
-    pConfig->set_value("background_color", "#ffffff");
+    pConfig->setValue("background_color", "#ffffff");
     settings.setValue("background_color", "#ffffff");
 
-    pConfig->set_value("default_font_color", "#000000");
+    pConfig->setValue("default_font_color", "#000000");
     settings.setValue("default_font_color", "#000000");
 
-    pConfig->set_value("font_color_level_1", "#009300");
+    pConfig->setValue("font_color_level_1", "#009300");
     settings.setValue("font_color_level_1", "#009300");
 
-    pConfig->set_value("font_color_level_2", "#4733FF");
+    pConfig->setValue("font_color_level_2", "#4733FF");
     settings.setValue("font_color_level_2", "#4733FF");
 
-    pConfig->set_value("font_color_level_3", "#00007F");
+    pConfig->setValue("font_color_level_3", "#00007F");
     settings.setValue("font_color_level_3", "#00007F");
 
-    pConfig->set_value("font_color_level_4", "#00007F");
+    pConfig->setValue("font_color_level_4", "#00007F");
     settings.setValue("font_color_level_4", "#00007F");
 
-    pConfig->set_value("font_color_level_5", "#009300");
+    pConfig->setValue("font_color_level_5", "#009300");
     settings.setValue("font_color_level_5", "#009300");
 
-    pConfig->set_value("font_color_level_6", "#0066FF");
+    pConfig->setValue("font_color_level_6", "#0066FF");
     settings.setValue("font_color_level_6", "#0066FF");
 
-    pConfig->set_value("font_color_level_7", "#666666");
+    pConfig->setValue("font_color_level_7", "#666666");
     settings.setValue("font_color_level_7", "#666666");
 
-    pConfig->set_value("font_color_level_8", "#800080");
+    pConfig->setValue("font_color_level_8", "#800080");
     settings.setValue("font_color_level_8", "#800080");
 
-    pConfig->set_value("font_color_level_9", "#ff0000");
+    pConfig->setValue("font_color_level_9", "#ff0000");
     settings.setValue("font_color_level_9", "#ff0000");
 
-    pConfig->set_value("channel_font_color", "#0000ff");
+    pConfig->setValue("channel_font_color", "#0000ff");
     settings.setValue("channel_font_color", "#0000ff");
 
     delete pConfig;
@@ -944,7 +944,7 @@ void DlgOptions::mainwindow_restore_default()
     set_mainwindow_colors();
 
     // refresh tabs
-    Core::instance()->refresh_colors();
+    Core::instance()->refreshColors();
 }
 
 void DlgOptions::set_nicklist_nick_color()
@@ -977,19 +977,19 @@ void DlgOptions::nicklist_restore_default()
     QSettings settings;
     Config *pConfig = new Config();
 
-    pConfig->set_value("nicklist_nick_color", "#333333");
+    pConfig->setValue("nicklist_nick_color", "#333333");
     settings.setValue("nicklist_nick_color", "#333333");
 
-    pConfig->set_value("nicklist_selected_nick_color", "#ffffff");
+    pConfig->setValue("nicklist_selected_nick_color", "#ffffff");
     settings.setValue("nicklist_selected_nick_color", "#ffffff");
 
-    pConfig->set_value("nicklist_busy_nick_color", "#a0a0a4");
+    pConfig->setValue("nicklist_busy_nick_color", "#a0a0a4");
     settings.setValue("nicklist_busy_nick_color", "#a0a0a4");
 
-    pConfig->set_value("nicklist_gradient_1_color", "#77d5f7");
+    pConfig->setValue("nicklist_gradient_1_color", "#77d5f7");
     settings.setValue("nicklist_gradient_1_color", "#77d5f7");
 
-    pConfig->set_value("nicklist_gradient_2_color", "#1b86b7");
+    pConfig->setValue("nicklist_gradient_2_color", "#1b86b7");
     settings.setValue("nicklist_gradient_2_color", "#1b86b7");
 
     delete pConfig;
@@ -1028,7 +1028,7 @@ void DlgOptions::set_sound_beep()
         QSettings settings;
         Config *pConfig = new Config();
 
-        pConfig->set_value("sound_beep", fileName);
+        pConfig->setValue("sound_beep", fileName);
         settings.setValue("sound_beep", fileName);
 
         delete pConfig;
@@ -1050,7 +1050,7 @@ void DlgOptions::set_sound_query()
         QSettings settings;
         Config *pConfig = new Config();
 
-        pConfig->set_value("sound_query", fileName);
+        pConfig->setValue("sound_query", fileName);
         settings.setValue("sound_query", fileName);
 
         delete pConfig;
@@ -1064,7 +1064,7 @@ void DlgOptions::disable_sounds(bool bValue)
 
     QSettings settings;
     Config *pConfig = new Config();
-    pConfig->set_value("disable_sounds", strValue);
+    pConfig->setValue("disable_sounds", strValue);
     settings.setValue("disable_sounds", strValue);
     delete pConfig;
 }
@@ -1083,7 +1083,7 @@ void DlgOptions::set_save_logs_by_date(bool bValue)
 
     QSettings settings;
     Config *pConfig = new Config();
-    pConfig->set_value("save_logs_by_date", strValue);
+    pConfig->setValue("save_logs_by_date", strValue);
     settings.setValue("save_logs_by_date", strValue);
     delete pConfig;
 }
@@ -1094,7 +1094,7 @@ void DlgOptions::disable_logs(bool bValue)
 
     QSettings settings;
     Config *pConfig = new Config();
-    pConfig->set_value("disable_logs", strValue);
+    pConfig->setValue("disable_logs", strValue);
     settings.setValue("disable_logs", strValue);
     delete pConfig;
 }
@@ -1113,14 +1113,14 @@ void DlgOptions::set_background_image()
         QSettings settings;
         Config *pConfig = new Config();
 
-        pConfig->set_value("background_image", fileName);
+        pConfig->setValue("background_image", fileName);
         settings.setValue("background_image", fileName);
 
         delete pConfig;
         ui.lineEdit_background_image->setText(fileName);
 
         // refresh
-        Core::instance()->refresh_background_image();
+        Core::instance()->refreshBackgroundImage();
     }
 }
 
@@ -1130,12 +1130,12 @@ void DlgOptions::disable_background_image(bool bValue)
 
     QSettings settings;
     Config *pConfig = new Config();
-    pConfig->set_value("disable_background_image", strValue);
+    pConfig->setValue("disable_background_image", strValue);
     settings.setValue("disable_background_image", strValue);
     delete pConfig;
 
     // refresh
-    Core::instance()->refresh_background_image();
+    Core::instance()->refreshBackgroundImage();
 }
 
 void DlgOptions::set_winamp()
@@ -1144,7 +1144,7 @@ void DlgOptions::set_winamp()
 
     QSettings settings;
     Config *pConfig = new Config();
-    pConfig->set_value("winamp", strValue);
+    pConfig->setValue("winamp", strValue);
     settings.setValue("winamp", strValue);
     delete pConfig;
 }
@@ -1194,8 +1194,8 @@ void DlgOptions::save_settings()
     settings.setValue("pass", strPass);
 
     Config *pConfig = new Config();
-    pConfig->set_value("nick", strNick);
-    pConfig->set_value("pass", strPass);
+    pConfig->setValue("nick", strNick);
+    pConfig->setValue("pass", strPass);
     delete pConfig;
 }
 
@@ -1215,7 +1215,7 @@ void DlgOptions::set_color(QString strKey)
 
         // save
         Config *pConfig = new Config();
-        pConfig->set_value(strKey, strColor);
+        pConfig->setValue(strKey, strColor);
         settings.setValue(strKey, strColor);
         delete pConfig;
 
@@ -1261,7 +1261,7 @@ void DlgOptions::set_color(QString strKey)
             ui.pushButton_nicklist_gradient_2_color->setIcon(QIcon(color));
 
         // refresh
-        Core::instance()->refresh_colors();
+        Core::instance()->refreshColors();
     }
 }
 

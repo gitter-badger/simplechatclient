@@ -32,8 +32,8 @@ class NickListWidget : public QListWidget
 public:
     NickListWidget(Network *, DlgUserProfile *);
     virtual ~NickListWidget();
-    void set_channel(QString);
-    QString get_channel() { return strChannel; }
+    void setChannel(QString);
+    QString getChannel() { return strChannel; }
     void add(QString);
     void remove(QString);
 
@@ -51,22 +51,22 @@ private slots:
     void whois();
     void profile();
     void cam();
-    void friends_add();
-    void friends_del();
-    void ignore_add();
-    void ignore_del();
+    void friendsAdd();
+    void friendsDel();
+    void ignoreAdd();
+    void ignoreDel();
     void kick();
     void ban();
     void kban();
     void ipban();
-    void op_add();
-    void op_del();
-    void halfop_add();
-    void halfop_del();
-    void moderator_add();
-    void moderator_del();
-    void voice_add();
-    void voice_del();
+    void opAdd();
+    void opDel();
+    void halfopAdd();
+    void halfopDel();
+    void moderatorAdd();
+    void moderatorDel();
+    void voiceAdd();
+    void voiceDel();
     void invite();
 
 protected:

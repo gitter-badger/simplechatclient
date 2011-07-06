@@ -23,8 +23,8 @@
 
 QString create_random6();
 void crashHandler();
-void got_signal(int);
-void linux_crash_handler();
+void gotSignal(int);
+void linuxCrashHandler();
 void messageHandler(QtMsgType, const char *);
 
 #endif // DEBUG_H

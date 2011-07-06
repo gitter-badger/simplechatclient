@@ -47,14 +47,14 @@ MainTextEdit::MainTextEdit(Network *param1, QString param2, DlgUserProfile *para
 
     strNick = QString::null;
 
-    update_background_image();
+    updateBackgroundImage();
 
     setMouseTracking(true);
     pAnimatedEmoticonWidget = new AnimatedEmoticonWidget(this);
-    QObject::connect(this, SIGNAL(textChanged()), this, SLOT(text_changed()));
+    QObject::connect(this, SIGNAL(textChanged()), this, SLOT(textChanged()));
 }
 
-void MainTextEdit::update_background_image()
+void MainTextEdit::updateBackgroundImage()
 {
     QSettings settings;
     QString strBackgroundImage = settings.value("background_image").toString();
@@ -66,7 +66,7 @@ void MainTextEdit::update_background_image()
         this->setStyleSheet("");
 }
 
-void MainTextEdit::join_channel()
+void MainTextEdit::joinChannel()
 {
     pNetwork->send(QString("JOIN %1").arg(strChannel));
 }
@@ -99,22 +99,22 @@ void MainTextEdit::cam()
 #endif
 }
 
-void MainTextEdit::friends_add()
+void MainTextEdit::friendsAdd()
 {
     pNetwork->send(QString("NS FRIENDS ADD %1").arg(strNick));
 }
 
-void MainTextEdit::friends_del()
+void MainTextEdit::friendsDel()
 {
     pNetwork->send(QString("NS FRIENDS DEL %1").arg(strNick));
 }
 
-void MainTextEdit::ignore_add()
+void MainTextEdit::ignoreAdd()
 {
     pNetwork->send(QString("NS IGNORE ADD %1").arg(strNick));
 }
 
-void MainTextEdit::ignore_del()
+void MainTextEdit::ignoreDel()
 {
     pNetwork->send(QString("NS IGNORE DEL %1").arg(strNick));
 }
@@ -150,42 +150,42 @@ void MainTextEdit::ipban()
     pNetwork->send(QString("CS BANIP %1 ADD %2").arg(strChannel).arg(strNick));
 }
 
-void MainTextEdit::op_add()
+void MainTextEdit::opAdd()
 {
     pNetwork->send(QString("CS OP %1 ADD %2").arg(strChannel).arg(strNick));
 }
 
-void MainTextEdit::op_del()
+void MainTextEdit::opDel()
 {
     pNetwork->send(QString("CS OP %1 DEL %2").arg(strChannel).arg(strNick));
 }
 
-void MainTextEdit::halfop_add()
+void MainTextEdit::halfopAdd()
 {
     pNetwork->send(QString("CS HALFOP %1 ADD %2").arg(strChannel).arg(strNick));
 }
 
-void MainTextEdit::halfop_del()
+void MainTextEdit::halfopDel()
 {
     pNetwork->send(QString("CS HALFOP %1 DEL %2").arg(strChannel).arg(strNick));
 }
 
-void MainTextEdit::moderator_add()
+void MainTextEdit::moderatorAdd()
 {
     pNetwork->send(QString("CS MODERATOR %1 ADD %2").arg(strChannel).arg(strNick));
 }
 
-void MainTextEdit::moderator_del()
+void MainTextEdit::moderatorDel()
 {
     pNetwork->send(QString("CS MODERATOR %1 DEL %2").arg(strChannel).arg(strNick));
 }
 
-void MainTextEdit::voice_add()
+void MainTextEdit::voiceAdd()
 {
     pNetwork->send(QString("CS VOICE %1 ADD %2").arg(strChannel).arg(strNick));
 }
 
-void MainTextEdit::voice_del()
+void MainTextEdit::voiceDel()
 {
     pNetwork->send(QString("CS VOICE %1 DEL %2").arg(strChannel).arg(strNick));
 }
@@ -200,12 +200,12 @@ void MainTextEdit::invite()
     }
 }
 
-void MainTextEdit::open_webbrowser()
+void MainTextEdit::openWebbrowser()
 {
     QDesktopServices::openUrl(QUrl(strWebsite, QUrl::TolerantMode));
 }
 
-void MainTextEdit::send_to_notes()
+void MainTextEdit::sendToNotes()
 {
     QString path;
 
@@ -261,7 +261,7 @@ void MainTextEdit::search()
     DlgFindText(Core::instance()->sccWindow(), this).exec();
 }
 
-void MainTextEdit::menu_channel(QString strChannel, QContextMenuEvent *event)
+void MainTextEdit::menuChannel(QString strChannel, QContextMenuEvent *event)
 {
     QMenu menu(this);
 
@@ -275,13 +275,13 @@ void MainTextEdit::menu_channel(QString strChannel, QContextMenuEvent *event)
     menu.exec(event->globalPos());
 }
 
-void MainTextEdit::menu_nick(QString strNick, QContextMenuEvent *event)
+void MainTextEdit::menuNick(QString strNick, QContextMenuEvent *event)
 {
     QSettings settings;
     QString strMe = settings.value("nick").toString();
-    QString strSelfModes = Core::instance()->get_user_modes(strMe, strChannel);
-    int iSelfMaxModes = Core::instance()->get_user_max_modes(strMe, strChannel);
-    QString strNickModes = Core::instance()->get_user_modes(strNick, strChannel);
+    QString strSelfModes = Core::instance()->getUserModes(strMe, strChannel);
+    int iSelfMaxModes = Core::instance()->getUserMaxModes(strMe, strChannel);
+    QString strNickModes = Core::instance()->getUserModes(strNick, strChannel);
 
     QMenu *minvite = new QMenu(tr("Invite"));
     minvite->setIcon(QIcon(":/images/oxygen/16x16/legalmoves.png"));
@@ -310,39 +310,39 @@ void MainTextEdit::menu_nick(QString strNick, QContextMenuEvent *event)
     QMenu *friends = new QMenu(tr("Friends list"));
     friends->setIcon(QIcon(":/images/oxygen/16x16/meeting-attending.png"));
     if (Core::instance()->mFriends.contains(strNick))
-        friends->addAction(QIcon(":/images/oxygen/16x16/list-remove.png"), tr("Remove from friends"), this, SLOT(friends_del()));
+        friends->addAction(QIcon(":/images/oxygen/16x16/list-remove.png"), tr("Remove from friends"), this, SLOT(friendsDel()));
     else
-        friends->addAction(QIcon(":/images/oxygen/16x16/list-add.png"), tr("Add to friends"), this, SLOT(friends_add()));
+        friends->addAction(QIcon(":/images/oxygen/16x16/list-add.png"), tr("Add to friends"), this, SLOT(friendsAdd()));
 
     QMenu *ignore = new QMenu(tr("Ignore list"));
     ignore->setIcon(QIcon(":/images/oxygen/16x16/meeting-attending-tentative.png"));
     if (Core::instance()->lIgnore.contains(strNick))
-        ignore->addAction(QIcon(":/images/oxygen/16x16/list-remove.png"), tr("Remove from Ignore list"), this, SLOT(ignore_del()));
+        ignore->addAction(QIcon(":/images/oxygen/16x16/list-remove.png"), tr("Remove from Ignore list"), this, SLOT(ignoreDel()));
     else
-        ignore->addAction(QIcon(":/images/oxygen/16x16/list-add.png"), tr("Add to Ignore list"), this, SLOT(ignore_add()));
+        ignore->addAction(QIcon(":/images/oxygen/16x16/list-add.png"), tr("Add to Ignore list"), this, SLOT(ignoreAdd()));
 
     QMenu *privilege = new QMenu(tr("Actions"));
     privilege->setIcon(QIcon(":/images/oxygen/16x16/irc-operator.png"));
 
     if ((strNickModes.contains("@")) && ((iSelfMaxModes >= 16) || (strNick == strMe)))
-        privilege->addAction(QIcon(":/images/op.png"), tr("Take super operator status"), this, SLOT(op_del()));
+        privilege->addAction(QIcon(":/images/op.png"), tr("Take super operator status"), this, SLOT(opDel()));
     else if ((!strNickModes.contains("@")) && (iSelfMaxModes >= 16))
-        privilege->addAction(QIcon(":/images/op.png"), tr("Give super operator status"), this, SLOT(op_add()));
+        privilege->addAction(QIcon(":/images/op.png"), tr("Give super operator status"), this, SLOT(opAdd()));
 
     if ((strNickModes.contains("%")) && ((iSelfMaxModes >= 8) || (strNick == strMe)))
-        privilege->addAction(QIcon(":/images/halfop.png"), tr("Take operator status"), this, SLOT(halfop_del()));
+        privilege->addAction(QIcon(":/images/halfop.png"), tr("Take operator status"), this, SLOT(halfopDel()));
     else if ((!strNickModes.contains("%")) && (iSelfMaxModes >= 8))
-        privilege->addAction(QIcon(":/images/halfop.png"), tr("Give operator status"), this, SLOT(halfop_add()));
+        privilege->addAction(QIcon(":/images/halfop.png"), tr("Give operator status"), this, SLOT(halfopAdd()));
 
     if ((strNickModes.contains("!")) && ((iSelfMaxModes >= 4) || (strNick == strMe)))
-        privilege->addAction(QIcon(":/images/mod.png"), tr("Take moderator status"), this, SLOT(moderator_del()));
+        privilege->addAction(QIcon(":/images/mod.png"), tr("Take moderator status"), this, SLOT(moderatorDel()));
     else if ((!strNickModes.contains("!")) && (iSelfMaxModes >= 4))
-        privilege->addAction(QIcon(":/images/mod.png"), tr("Give moderator status"), this, SLOT(moderator_add()));
+        privilege->addAction(QIcon(":/images/mod.png"), tr("Give moderator status"), this, SLOT(moderatorAdd()));
 
     if ((strNickModes.contains("+")) && ((iSelfMaxModes >= 4) || (strNick == strMe)))
-        privilege->addAction(QIcon(":/images/voice.png"), tr("Take guest status"), this, SLOT(voice_del()));
+        privilege->addAction(QIcon(":/images/voice.png"), tr("Take guest status"), this, SLOT(voiceDel()));
     else if ((!strNickModes.contains("+")) && (iSelfMaxModes >= 4))
-        privilege->addAction(QIcon(":/images/voice.png"), tr("Give guest status"), this, SLOT(voice_add()));
+        privilege->addAction(QIcon(":/images/voice.png"), tr("Give guest status"), this, SLOT(voiceAdd()));
 
     QAction *nickAct = new QAction(strNick, this);
     nickAct->setIcon(QIcon(":/images/oxygen/16x16/user-identity.png"));
@@ -382,7 +382,7 @@ void MainTextEdit::menu_nick(QString strNick, QContextMenuEvent *event)
     menu.exec(event->globalPos());
 }
 
-void MainTextEdit::menu_website(QContextMenuEvent *event)
+void MainTextEdit::menuWebsite(QContextMenuEvent *event)
 {
     QString strShortLink = strWebsite;
     if (strShortLink.size() > 40) strShortLink = strShortLink.left(20)+"..."+strShortLink.right(20);
@@ -395,12 +395,12 @@ void MainTextEdit::menu_website(QContextMenuEvent *event)
 
     menu.addAction(websiteLinkAct);
     menu.addSeparator();
-    menu.addAction(QIcon(":/images/oxygen/16x16/applications-internet.png"), tr("Open link"), this, SLOT(open_webbrowser()));
+    menu.addAction(QIcon(":/images/oxygen/16x16/applications-internet.png"), tr("Open link"), this, SLOT(openWebbrowser()));
 
     menu.exec(event->globalPos());
 }
 
-void MainTextEdit::menu_standard(QContextMenuEvent *event)
+void MainTextEdit::menuStandard(QContextMenuEvent *event)
 {
     QMenu menu(this);
 
@@ -437,7 +437,7 @@ void MainTextEdit::menu_standard(QContextMenuEvent *event)
     menu.exec(event->globalPos());
 }
 
-int MainTextEdit::get_word_index(QString strLine, int iPos)
+int MainTextEdit::getWordIndex(QString strLine, int iPos)
 {
     strLine +=" ";
     int iCount = strLine.count(" ");
@@ -454,7 +454,7 @@ int MainTextEdit::get_word_index(QString strLine, int iPos)
     return -1;
 }
 
-QString MainTextEdit::get_word(QTextCursor cursor)
+QString MainTextEdit::getWord(QTextCursor cursor)
 {
     // get pos
     int iPos = cursor.position() - cursor.block().position(); // cursor.positionInBlock()
@@ -463,14 +463,14 @@ QString MainTextEdit::get_word(QTextCursor cursor)
     QString strBlock = cursor.selectedText().trimmed();
     QStringList strlBlock = strBlock.split(" ");
 
-    int index = get_word_index(strBlock, iPos);
+    int index = getWordIndex(strBlock, iPos);
     if (index != -1)
         return strlBlock.at(index);
     else
         return "";
 }
 
-QString MainTextEdit::get_word_n(QTextCursor cursor, int n)
+QString MainTextEdit::getWordN(QTextCursor cursor, int n)
 {
     // get line
     cursor.select(QTextCursor::BlockUnderCursor);
@@ -480,7 +480,7 @@ QString MainTextEdit::get_word_n(QTextCursor cursor, int n)
     return strlBlock.at(n);
 }
 
-int MainTextEdit::get_word_pos_index(QTextCursor cursor)
+int MainTextEdit::getWordPosIndex(QTextCursor cursor)
 {
     // get pos
     int iPos = cursor.position() - cursor.block().position(); // cursor.positionInBlock()
@@ -488,10 +488,10 @@ int MainTextEdit::get_word_pos_index(QTextCursor cursor)
     cursor.select(QTextCursor::BlockUnderCursor);
     QString strBlock = cursor.selectedText().trimmed();
 
-    return get_word_index(strBlock, iPos);
+    return getWordIndex(strBlock, iPos);
 }
 
-bool MainTextEdit::is_join_part_quit(QTextCursor cursor)
+bool MainTextEdit::isJoinPartQuit(QTextCursor cursor)
 {
     // get line
     cursor.select(QTextCursor::BlockUnderCursor);
@@ -511,9 +511,9 @@ void MainTextEdit::contextMenuEvent(QContextMenuEvent *event)
         cursor.select(QTextCursor::WordUnderCursor);
         if (!cursor.selectedText().isEmpty())
         {
-            int iWordPos = get_word_pos_index(cursor);
-            QString strFirstWord = get_word_n(cursor, 1);
-            QString strWord = get_word(cursor);
+            int iWordPos = getWordPosIndex(cursor);
+            QString strFirstWord = getWordN(cursor, 1);
+            QString strWord = getWord(cursor);
 
             if ((!strFirstWord.isEmpty()) && (!strWord.isEmpty()))
             {
@@ -521,7 +521,7 @@ void MainTextEdit::contextMenuEvent(QContextMenuEvent *event)
                 if ((strWord.contains("http")) || (strWord.contains("www.")))
                 {
                     strWebsite = strWord;
-                    menu_website(event);
+                    menuWebsite(event);
                     return;
                 }
 
@@ -529,7 +529,7 @@ void MainTextEdit::contextMenuEvent(QContextMenuEvent *event)
                 if (strWord.at(0) == '#')
                 {
                     strChannel = strWord;
-                    menu_channel(strChannel, event);
+                    menuChannel(strChannel, event);
                     return;
                 }
 
@@ -540,7 +540,7 @@ void MainTextEdit::contextMenuEvent(QContextMenuEvent *event)
                     {
                         strWord.remove("<"); strWord.remove(">");
                         strNick = strWord;
-                        menu_nick(strNick, event);
+                        menuNick(strNick, event);
                         return;
                     }
                 }
@@ -548,12 +548,12 @@ void MainTextEdit::contextMenuEvent(QContextMenuEvent *event)
                 // nick [join,part,quit,kick]
                 if (iWordPos == 2)
                 {
-                    QString strStar = get_word_n(cursor, 1);
+                    QString strStar = getWordN(cursor, 1);
 
-                    if ((strStar == "*") && (is_join_part_quit(cursor)))
+                    if ((strStar == "*") && (isJoinPartQuit(cursor)))
                     {
                         strNick = strWord;
-                        menu_nick(strNick, event);
+                        menuNick(strNick, event);
                         return;
                     }
                 }
@@ -561,7 +561,7 @@ void MainTextEdit::contextMenuEvent(QContextMenuEvent *event)
         }
     }
 
-    menu_standard(event);
+    menuStandard(event);
 }
 
 void MainTextEdit::mouseMoveEvent(QMouseEvent *event)
@@ -572,7 +572,7 @@ void MainTextEdit::mouseMoveEvent(QMouseEvent *event)
 
     if (!format.isImageFormat())
     {
-        pAnimatedEmoticonWidget->stop_emoticon();
+        pAnimatedEmoticonWidget->stopEmoticon();
         QTextEdit::mouseMoveEvent(event);
     }
     else
@@ -580,13 +580,13 @@ void MainTextEdit::mouseMoveEvent(QMouseEvent *event)
         QString strName = format.toImageFormat().name();
         int x = pos.x();
         int y = pos.y();
-        pAnimatedEmoticonWidget->start_emoticon(strName, x, y);
+        pAnimatedEmoticonWidget->startEmoticon(strName, x, y);
     }
 
     QTextEdit::mouseMoveEvent(event);
 }
 
-void MainTextEdit::text_changed()
+void MainTextEdit::textChanged()
 {
-    pAnimatedEmoticonWidget->stop_emoticon();
+    pAnimatedEmoticonWidget->stopEmoticon();
 }

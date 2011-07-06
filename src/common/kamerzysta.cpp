@@ -40,22 +40,22 @@ Kamerzysta::Kamerzysta(QTcpSocket *param1)
     timerGetPort = new QTimer();
     timerGetPort->setInterval(500);
 
-    QObject::connect(socket, SIGNAL(connected()), this, SLOT(network_connected()));
-    QObject::connect(socket, SIGNAL(disconnected()), this, SLOT(network_disconnected()));
+    QObject::connect(socket, SIGNAL(connected()), this, SLOT(networkConnected()));
+    QObject::connect(socket, SIGNAL(disconnected()), this, SLOT(networkDisconnected()));
     QObject::connect(socket, SIGNAL(error(QAbstractSocket::SocketError)), this, SLOT(error(QAbstractSocket::SocketError)));
-    QObject::connect(socket, SIGNAL(readyRead()), this, SLOT(network_read()));
-    QObject::connect(timerGetPort, SIGNAL(timeout()), this, SLOT(get_port()));
+    QObject::connect(socket, SIGNAL(readyRead()), this, SLOT(networkRead()));
+    QObject::connect(timerGetPort, SIGNAL(timeout()), this, SLOT(getPort()));
 }
 
 void Kamerzysta::close()
 {
     log("Like destructor");
 
-    QObject::disconnect(timerGetPort, SIGNAL(timeout()), this, SLOT(get_port()));
-    QObject::disconnect(socket, SIGNAL(readyRead()), this, SLOT(network_read()));
+    QObject::disconnect(timerGetPort, SIGNAL(timeout()), this, SLOT(getPort()));
+    QObject::disconnect(socket, SIGNAL(readyRead()), this, SLOT(networkRead()));
     QObject::disconnect(socket, SIGNAL(error(QAbstractSocket::SocketError)), this, SLOT(error(QAbstractSocket::SocketError)));
-    QObject::disconnect(socket, SIGNAL(disconnected()), this, SLOT(network_disconnected()));
-    QObject::disconnect(socket, SIGNAL(connected()), this, SLOT(network_connected()));
+    QObject::disconnect(socket, SIGNAL(disconnected()), this, SLOT(networkDisconnected()));
+    QObject::disconnect(socket, SIGNAL(connected()), this, SLOT(networkConnected()));
 
     delete timerGetPort;
 }
@@ -70,7 +70,7 @@ void Kamerzysta::show(QString n)
     log("Nick:"+strNick);
     log("UO:"+strUOKey);
 
-    get_path();
+    getPath();
 }
 
 void Kamerzysta::log(QString strData)
@@ -85,7 +85,7 @@ void Kamerzysta::log(QString strData)
     }
 }
 
-void Kamerzysta::get_path()
+void Kamerzysta::getPath()
 {
     QSettings winSettings(QSettings::UserScope, "Microsoft", "Windows");
     winSettings.beginGroup("CurrentVersion/Explorer/Shell Folders");
@@ -109,16 +109,16 @@ void Kamerzysta::get_path()
     if (QFile::exists(strAppPath+"\\port"))
     {
         log("Port:exist");
-        kamerzysta_running();
+        kamerzystaRunning();
     }
     else
     {
         log("Port:not exist");
-        kamerzysta_not_running();
+        kamerzystaNotRunning();
     }
 }
 
-void Kamerzysta::kamerzysta_not_running()
+void Kamerzysta::kamerzystaNotRunning()
 {
     log("Kamerzysta not running");
 
@@ -176,18 +176,18 @@ void Kamerzysta::kamerzysta_not_running()
     }
 }
 
-void Kamerzysta::kamerzysta_running()
+void Kamerzysta::kamerzystaRunning()
 {
     log("Kamerzysta running");
 
     // send
-    network_send(QString("e%1").arg(strNick));
+    networkSend(QString("e%1").arg(strNick));
 
     // close
     close();
 }
 
-void Kamerzysta::get_port()
+void Kamerzysta::getPort()
 {
     QString strPort;
 
@@ -205,7 +205,7 @@ void Kamerzysta::get_port()
     if (!strPort.isEmpty())
     {
         timerGetPort->stop();
-        network_connect();
+        networkConnect();
     }
     else
     {
@@ -219,16 +219,16 @@ void Kamerzysta::authorize()
     QString strMe = settings.value("nick").toString();
     QString strUOKey = settings.value("uokey").toString();
 
-    network_send(QString("d%1|%2").arg(strMe).arg(strUOKey));
+    networkSend(QString("d%1|%2").arg(strMe).arg(strUOKey));
 
     if (strNick.isEmpty())
         log("Nick empty!");
 
     if ((strNick != strMe) && (!strNick.isEmpty()))
-        network_send(QString("e%1").arg(strNick).arg(strUOKey));
+        networkSend(QString("e%1").arg(strNick).arg(strUOKey));
 }
 
-void Kamerzysta::network_connect()
+void Kamerzysta::networkConnect()
 {
     if (socket->state() == QAbstractSocket::UnconnectedState)
     {
@@ -237,12 +237,12 @@ void Kamerzysta::network_connect()
     }
 }
 
-void Kamerzysta::network_connected()
+void Kamerzysta::networkConnected()
 {
     log("Connected");
 }
 
-void Kamerzysta::network_disconnect()
+void Kamerzysta::networkDisconnect()
 {
     log("Disconnecting...");
 
@@ -250,7 +250,7 @@ void Kamerzysta::network_disconnect()
         socket->disconnectFromHost();
 }
 
-void Kamerzysta::network_disconnected()
+void Kamerzysta::networkDisconnected()
 {
     log("Disconnected");
 
@@ -265,7 +265,7 @@ void Kamerzysta::network_disconnected()
     close();
 }
 
-void Kamerzysta::network_send(QString strData)
+void Kamerzysta::networkSend(QString strData)
 {
     if ((socket->isValid()) && (socket->state() == QAbstractSocket::ConnectedState) && (socket->isWritable()))
     {
@@ -280,7 +280,7 @@ void Kamerzysta::network_send(QString strData)
     }
 }
 
-void Kamerzysta::network_read()
+void Kamerzysta::networkRead()
 {
     log("Ready read");
 
@@ -306,7 +306,7 @@ void Kamerzysta::error(QAbstractSocket::SocketError err)
     log("Error:"+socket->errorString());
 
     if (socket->state() == QAbstractSocket::ConnectedState)
-        network_disconnect();
+        networkDisconnect();
     else
     {
         // clear nick

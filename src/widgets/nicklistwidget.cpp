@@ -48,7 +48,7 @@ NickListWidget::~NickListWidget()
 {
 }
 
-void NickListWidget::set_channel(QString param1)
+void NickListWidget::setChannel(QString param1)
 {
     strChannel = param1;
 }
@@ -59,7 +59,7 @@ void NickListWidget::add(QString strNick)
     item->setText(strNick);
     item->setData(Qt::UserRole+10, strChannel);
     item->setData(Qt::UserRole+11, true); // is nicklist
-    item->setData(Qt::UserRole+12, Core::instance()->get_user_max_modes(strNick, strChannel));
+    item->setData(Qt::UserRole+12, Core::instance()->getUserMaxModes(strNick, strChannel));
 
     this->addItem(item);
 }
@@ -117,7 +117,7 @@ void NickListWidget::cam()
 #endif
 }
 
-void NickListWidget::friends_add()
+void NickListWidget::friendsAdd()
 {
     if (this->selectedItems().size() == 0) return;
 
@@ -125,7 +125,7 @@ void NickListWidget::friends_add()
     pNetwork->send(QString("NS FRIENDS ADD %1").arg(strNick));
 }
 
-void NickListWidget::friends_del()
+void NickListWidget::friendsDel()
 {
     if (this->selectedItems().size() == 0) return;
 
@@ -133,7 +133,7 @@ void NickListWidget::friends_del()
     pNetwork->send(QString("NS FRIENDS DEL %1").arg(strNick));
 }
 
-void NickListWidget::ignore_add()
+void NickListWidget::ignoreAdd()
 {
     if (this->selectedItems().size() == 0) return;
 
@@ -141,7 +141,7 @@ void NickListWidget::ignore_add()
     pNetwork->send(QString("NS IGNORE ADD %1").arg(strNick));
 }
 
-void NickListWidget::ignore_del()
+void NickListWidget::ignoreDel()
 {
     if (this->selectedItems().size() == 0) return;
 
@@ -194,7 +194,7 @@ void NickListWidget::ipban()
     pNetwork->send(QString("CS BANIP %1 ADD %2").arg(strChannel).arg(strNick));
 }
 
-void NickListWidget::op_add()
+void NickListWidget::opAdd()
 {
     if (this->selectedItems().size() == 0) return;
 
@@ -202,7 +202,7 @@ void NickListWidget::op_add()
     pNetwork->send(QString("CS OP %1 ADD %2").arg(strChannel).arg(strNick));
 }
 
-void NickListWidget::op_del()
+void NickListWidget::opDel()
 {
     if (this->selectedItems().size() == 0) return;
 
@@ -210,7 +210,7 @@ void NickListWidget::op_del()
     pNetwork->send(QString("CS OP %1 DEL %2").arg(strChannel).arg(strNick));
 }
 
-void NickListWidget::halfop_add()
+void NickListWidget::halfopAdd()
 {
     if (this->selectedItems().size() == 0) return;
 
@@ -218,7 +218,7 @@ void NickListWidget::halfop_add()
     pNetwork->send(QString("CS HALFOP %1 ADD %2").arg(strChannel).arg(strNick));
 }
 
-void NickListWidget::halfop_del()
+void NickListWidget::halfopDel()
 {
     if (this->selectedItems().size() == 0) return;
 
@@ -226,7 +226,7 @@ void NickListWidget::halfop_del()
     pNetwork->send(QString("CS HALFOP %1 DEL %2").arg(strChannel).arg(strNick));
 }
 
-void NickListWidget::moderator_add()
+void NickListWidget::moderatorAdd()
 {
     if (this->selectedItems().size() == 0) return;
 
@@ -234,7 +234,7 @@ void NickListWidget::moderator_add()
     pNetwork->send(QString("CS MODERATOR %1 ADD %2").arg(strChannel).arg(strNick));
 }
 
-void NickListWidget::moderator_del()
+void NickListWidget::moderatorDel()
 {
     if (this->selectedItems().size() == 0) return;
 
@@ -242,7 +242,7 @@ void NickListWidget::moderator_del()
     pNetwork->send(QString("CS MODERATOR %1 DEL %2").arg(strChannel).arg(strNick));
 }
 
-void NickListWidget::voice_add()
+void NickListWidget::voiceAdd()
 {
     if (this->selectedItems().size() == 0) return;
 
@@ -250,7 +250,7 @@ void NickListWidget::voice_add()
     pNetwork->send(QString("CS VOICE %1 ADD %2").arg(strChannel).arg(strNick));
 }
 
-void NickListWidget::voice_del()
+void NickListWidget::voiceDel()
 {
     if (this->selectedItems().size() == 0) return;
 
@@ -279,9 +279,9 @@ void NickListWidget::contextMenuEvent(QContextMenuEvent *e)
 
     QSettings settings;
     QString strMe = settings.value("nick").toString();
-    QString strSelfModes = Core::instance()->get_user_modes(strMe, strChannel);
-    int iSelfMaxModes = Core::instance()->get_user_max_modes(strMe, strChannel);
-    QString strNickModes = Core::instance()->get_user_modes(strNick, strChannel);
+    QString strSelfModes = Core::instance()->getUserModes(strMe, strChannel);
+    int iSelfMaxModes = Core::instance()->getUserMaxModes(strMe, strChannel);
+    QString strNickModes = Core::instance()->getUserModes(strNick, strChannel);
 
     QMenu *minvite = new QMenu(tr("Invite"));
     minvite->setIcon(QIcon(":/images/oxygen/16x16/legalmoves.png"));
@@ -310,39 +310,39 @@ void NickListWidget::contextMenuEvent(QContextMenuEvent *e)
     QMenu *friends = new QMenu(tr("Friends list"));
     friends->setIcon(QIcon(":/images/oxygen/16x16/meeting-attending.png"));
     if (Core::instance()->mFriends.contains(strNick))
-        friends->addAction(QIcon(":/images/oxygen/16x16/list-remove.png"), tr("Remove from friends"), this, SLOT(friends_del()));
+        friends->addAction(QIcon(":/images/oxygen/16x16/list-remove.png"), tr("Remove from friends"), this, SLOT(friendsDel()));
     else
-        friends->addAction(QIcon(":/images/oxygen/16x16/list-add.png"), tr("Add to friends"), this, SLOT(friends_add()));
+        friends->addAction(QIcon(":/images/oxygen/16x16/list-add.png"), tr("Add to friends"), this, SLOT(friendsAdd()));
 
     QMenu *ignore = new QMenu(tr("Ignore list"));
     ignore->setIcon(QIcon(":/images/oxygen/16x16/meeting-attending-tentative.png"));
     if (Core::instance()->lIgnore.contains(strNick))
-        ignore->addAction(QIcon(":/images/oxygen/16x16/list-remove.png"), tr("Remove from Ignore list"), this, SLOT(ignore_del()));
+        ignore->addAction(QIcon(":/images/oxygen/16x16/list-remove.png"), tr("Remove from Ignore list"), this, SLOT(ignoreDel()));
     else
-        ignore->addAction(QIcon(":/images/oxygen/16x16/list-add.png"), tr("Add to Ignore list"), this, SLOT(ignore_add()));
+        ignore->addAction(QIcon(":/images/oxygen/16x16/list-add.png"), tr("Add to Ignore list"), this, SLOT(ignoreAdd()));
 
     QMenu *privilege = new QMenu(tr("Actions"));
     privilege->setIcon(QIcon(":/images/oxygen/16x16/irc-operator.png"));
 
     if ((strNickModes.contains("@")) && ((iSelfMaxModes >= 16) || (strNick == strMe)))
-        privilege->addAction(QIcon(":/images/op.png"), tr("Take super operator status"), this, SLOT(op_del()));
+        privilege->addAction(QIcon(":/images/op.png"), tr("Take super operator status"), this, SLOT(opDel()));
     else if ((!strNickModes.contains("@")) && (iSelfMaxModes >= 16))
-        privilege->addAction(QIcon(":/images/op.png"), tr("Give super operator status"), this, SLOT(op_add()));
+        privilege->addAction(QIcon(":/images/op.png"), tr("Give super operator status"), this, SLOT(opAdd()));
 
     if ((strNickModes.contains("%")) && ((iSelfMaxModes >= 8) || (strNick == strMe)))
-        privilege->addAction(QIcon(":/images/halfop.png"), tr("Take operator status"), this, SLOT(halfop_del()));
+        privilege->addAction(QIcon(":/images/halfop.png"), tr("Take operator status"), this, SLOT(halfopDel()));
     else if ((!strNickModes.contains("%")) && (iSelfMaxModes >= 8))
-        privilege->addAction(QIcon(":/images/halfop.png"), tr("Give operator status"), this, SLOT(halfop_add()));
+        privilege->addAction(QIcon(":/images/halfop.png"), tr("Give operator status"), this, SLOT(halfopAdd()));
 
     if ((strNickModes.contains("!")) && ((iSelfMaxModes >= 4) || (strNick == strMe)))
-        privilege->addAction(QIcon(":/images/mod.png"), tr("Take moderator status"), this, SLOT(moderator_del()));
+        privilege->addAction(QIcon(":/images/mod.png"), tr("Take moderator status"), this, SLOT(moderatorDel()));
     else if ((!strNickModes.contains("!")) && (iSelfMaxModes >= 4))
-        privilege->addAction(QIcon(":/images/mod.png"), tr("Give moderator status"), this, SLOT(moderator_add()));
+        privilege->addAction(QIcon(":/images/mod.png"), tr("Give moderator status"), this, SLOT(moderatorAdd()));
 
     if ((strNickModes.contains("+")) && ((iSelfMaxModes >= 4) || (strNick == strMe)))
-        privilege->addAction(QIcon(":/images/voice.png"), tr("Take guest status"), this, SLOT(voice_del()));
+        privilege->addAction(QIcon(":/images/voice.png"), tr("Take guest status"), this, SLOT(voiceDel()));
     else if ((!strNickModes.contains("+")) && (iSelfMaxModes >= 4))
-        privilege->addAction(QIcon(":/images/voice.png"), tr("Give guest status"), this, SLOT(voice_add()));
+        privilege->addAction(QIcon(":/images/voice.png"), tr("Give guest status"), this, SLOT(voiceAdd()));
 
     QAction *nickAct = new QAction(strNick, this);
     nickAct->setIcon(QIcon(":/images/oxygen/16x16/user-identity.png"));

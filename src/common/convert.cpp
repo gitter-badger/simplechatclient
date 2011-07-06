@@ -28,7 +28,7 @@ Convert::Convert() : bRemovedBold(false), bRemovedItalic(false), iRemovedColor(-
 {
 }
 
-void Convert::convert_text(QString &strData, QString &strLastContent)
+void Convert::convertText(QString &strData, QString &strLastContent)
 {
     strData += " "; // fix convert algorithm
 
@@ -199,7 +199,7 @@ void Convert::convert_text(QString &strData, QString &strLastContent)
     }
 }
 
-void Convert::remove_font(QString &strData)
+void Convert::removeFont(QString &strData)
 {
     while (strData.contains("%F"))
     {
@@ -262,7 +262,7 @@ void Convert::remove_font(QString &strData)
     }
 }
 
-void Convert::remove_color(QString &strData)
+void Convert::removeColor(QString &strData)
 {
     QStringList strlFontColors;
     strlFontColors << "#000000" << "#623c00" << "#c86c00" << "#ff6500" << "#ff0000" << "#e40f0f" << "#990033" << "#8800ab" << "#ce00ff" << "#0f2ab1" << "#3030ce" << "#006699" << "#1a866e" << "#008100" << "#959595";

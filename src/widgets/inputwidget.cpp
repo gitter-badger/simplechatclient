@@ -76,45 +76,45 @@ InputWidget::InputWidget(QWidget *parent, Network *param1) : QWidget(parent)
     // default hidden
     moderSendButton->hide();
 
-    QObject::connect(sendButton, SIGNAL(clicked()), this, SLOT(inputline_return_pressed()));
-    QObject::connect(pInputLine, SIGNAL(returnPressed()), this, SLOT(inputline_return_pressed()));
-    QObject::connect(moderSendButton, SIGNAL(clicked()), this, SLOT(moder_button_clicked()));
-    QObject::connect(showHideToolWidget, SIGNAL(clicked()), this, SLOT(show_hide_toolwidget_clicked()));
-    QObject::connect(pInputLine, SIGNAL(ctrlTabPressed()), this, SLOT(ctrl_tab_pressed()));
-    QObject::connect(pInputLine, SIGNAL(ctrlShiftTabPressed()), this, SLOT(ctrl_shift_tab_pressed()));
+    QObject::connect(sendButton, SIGNAL(clicked()), this, SLOT(inputlineReturnPressed()));
+    QObject::connect(pInputLine, SIGNAL(returnPressed()), this, SLOT(inputlineReturnPressed()));
+    QObject::connect(moderSendButton, SIGNAL(clicked()), this, SLOT(moderButtonClicked()));
+    QObject::connect(showHideToolWidget, SIGNAL(clicked()), this, SLOT(showHideToolwidgetClicked()));
+    QObject::connect(pInputLine, SIGNAL(ctrlTabPressed()), this, SLOT(slotCtrlTabPressed()));
+    QObject::connect(pInputLine, SIGNAL(ctrlShiftTabPressed()), this, SLOT(slotCtrlShiftTabPressed()));
 }
 
-void InputWidget::set_active(QString strName)
+void InputWidget::setActive(QString strName)
 {
     strChannel = strName;
 
     // update nicklist
-    QList<QString> usersList = Core::instance()->get_nicks_from_channel(strChannel);
-    pInputLine->set_userslist(usersList);
+    QList<QString> usersList = Core::instance()->getNicksFromChannel(strChannel);
+    pInputLine->setUserslist(usersList);
 }
 
-void InputWidget::update_nicklist()
+void InputWidget::updateNicklist()
 {
-    QList<QString> usersList = Core::instance()->get_nicks_from_channel(strChannel);
-    pInputLine->set_userslist(usersList);
+    QList<QString> usersList = Core::instance()->getNicksFromChannel(strChannel);
+    pInputLine->setUserslist(usersList);
 }
 
-void InputWidget::insert_text(QString strText)
+void InputWidget::insertText(QString strText)
 {
-    pInputLine->insert_text(strText);
+    pInputLine->insertText(strText);
 }
 
-void InputWidget::set_font(QFont font)
+void InputWidget::setFont(QFont font)
 {
     pInputLine->setFont(font);
 }
 
-void InputWidget::set_color(QString color)
+void InputWidget::setColor(QString color)
 {
     pInputLine->setStyleSheet(QString("color:%1").arg(color));
 }
 
-void InputWidget::set_moderation(bool value)
+void InputWidget::setModeration(bool value)
 {
     if (value)
         moderSendButton->show();
@@ -122,7 +122,7 @@ void InputWidget::set_moderation(bool value)
         moderSendButton->hide();
 }
 
-void InputWidget::set_toolwidget_icon(bool bShowHide)
+void InputWidget::setToolwidgetIcon(bool bShowHide)
 {
     if (bShowHide)
         showHideToolWidget->setIcon(QIcon(":/images/oxygen/16x16/text-frame-unlink.png"));
@@ -130,7 +130,7 @@ void InputWidget::set_toolwidget_icon(bool bShowHide)
         showHideToolWidget->setIcon(QIcon(":/images/oxygen/16x16/text-frame-link.png"));
 }
 
-void InputWidget::paste_multi_line(QString strText, bool bModeration)
+void InputWidget::pasteMultiLine(QString strText, bool bModeration)
 {
     QStringList list = strText.split(QRegExp("(\n|\r)"));
     int len = 400;
@@ -143,16 +143,16 @@ void InputWidget::paste_multi_line(QString strText, bool bModeration)
             while (line.size() > len)
             {
                 QString short_line = line.left(len);
-                send_message(short_line, bModeration);
+                sendMessage(short_line, bModeration);
                 line.remove(0, len);
             }
         }
         if ((line.size() < len) && (line.size() != 0))
-            send_message(line, bModeration);
+            sendMessage(line, bModeration);
     }
 }
 
-void InputWidget::send_message(QString strText, bool bModeration)
+void InputWidget::sendMessage(QString strText, bool bModeration)
 {
     if (strText.isEmpty()) return; // empty text!
     if (strChannel.isEmpty()) return; // empty channel!
@@ -185,11 +185,13 @@ void InputWidget::send_message(QString strText, bool bModeration)
             for (int i = 0; i < strlHelp.size(); i++)
             {
                 QString strDisplay = strlHelp.at(i);
-                emit show_msg(strChannel, strDisplay, InfoMessage);
+                emit showMsg(strChannel, strDisplay, InfoMessage);
             }
         }
         else if ((strTextList[0] == "mp3") || (strTextList[0] == "winamp"))
         {
+            if (strChannel == "Status") return; // return if status
+
             QString weight;
             QString font = strFontFamily.toLower();
 
@@ -218,7 +220,7 @@ void InputWidget::send_message(QString strText, bool bModeration)
 
             pNetwork->send(QString("PRIVMSG %1 :%2").arg(strChannel).arg(strText));
             QString strDisplay = QString("%1<%2> %3").arg(strDT).arg(strMe).arg(strText);
-            emit display_message(strChannel, strDisplay, DefaultMessage);
+            emit displayMessage(strChannel, strDisplay, DefaultMessage);
         }
         // me
         else if (strTextList[0] == "me")
@@ -246,8 +248,8 @@ void InputWidget::send_message(QString strText, bool bModeration)
                     strTextDisplay = "%F"+weight+font+"%"+strTextDisplay;
 
                 Replace *pReplace = new Replace();
-                pReplace->convert_and_replace_emots(strTextSend);
-                pReplace->convert_and_replace_emots(strTextDisplay);
+                pReplace->convertAndReplaceEmots(strTextSend);
+                pReplace->convertAndReplaceEmots(strTextDisplay);
                 delete pReplace;
 
                 QDateTime dt = QDateTime::currentDateTime();
@@ -264,7 +266,7 @@ void InputWidget::send_message(QString strText, bool bModeration)
 
                 pNetwork->send(strTextSend);
                 QString strDisplay = QString("%1<%2> %3ACTION %4%5").arg(strDT).arg(strMe).arg(QString(QByteArray("\x01"))).arg(strTextDisplay).arg(QString(QByteArray("\x01")));
-                emit display_message(strChannel, strDisplay, MeMessage);
+                emit displayMessage(strChannel, strDisplay, MeMessage);
             }
         }
         // other command
@@ -294,7 +296,7 @@ void InputWidget::send_message(QString strText, bool bModeration)
             strText = "%F"+weight+font+"%"+strText;
 
         Replace *pReplace = new Replace();
-        pReplace->convert_and_replace_emots(strText);
+        pReplace->convertAndReplaceEmots(strText);
         delete pReplace;
 
         QDateTime dt = QDateTime::currentDateTime();
@@ -314,7 +316,7 @@ void InputWidget::send_message(QString strText, bool bModeration)
             strText = QString("PRIVMSG %1 :%2").arg(strChannel).arg(strText);
             pNetwork->send(strText);
             QString strDisplay = QString("%1<%2> %3").arg(strDT).arg(strMe).arg(strText.right(strText.length()-10-strChannel.length()));
-            emit display_message(strChannel, strDisplay, DefaultMessage);
+            emit displayMessage(strChannel, strDisplay, DefaultMessage);
         }
         // moder notice
         else if (bModeration)
@@ -330,17 +332,17 @@ void InputWidget::send_message(QString strText, bool bModeration)
             strText = QString("MODERNOTICE %1 :%2").arg(strChannel).arg(strText);
             pNetwork->send(strText);
             QString strDisplay = QString("%1*<%2> %3").arg(strDT).arg(strMe).arg(strText.right(strText.length()-14-strChannel.length()));
-            emit display_message(strChannel, strDisplay, NoticeMessage);
+            emit displayMessage(strChannel, strDisplay, NoticeMessage);
         }
     }
 }
 
-void InputWidget::update_nick(QString strNick)
+void InputWidget::updateNick(QString strNick)
 {
     nickLabel->setText(QString("<b>%1</b>").arg(strNick));
 }
 
-void InputWidget::inputline_return_pressed()
+void InputWidget::inputlineReturnPressed()
 {
     QSettings settings;
 
@@ -356,11 +358,11 @@ void InputWidget::inputline_return_pressed()
 
     // text
     QString strText = pInputLine->text().trimmed();
-    paste_multi_line(strText, false);
+    pasteMultiLine(strText, false);
     pInputLine->clear();
 }
 
-void InputWidget::moder_button_clicked()
+void InputWidget::moderButtonClicked()
 {
     QSettings settings;
 
@@ -376,21 +378,21 @@ void InputWidget::moder_button_clicked()
 
     // text
     QString strText = pInputLine->text().trimmed();
-    paste_multi_line(strText, true);
+    pasteMultiLine(strText, true);
     pInputLine->clear();
 }
 
-void InputWidget::show_hide_toolwidget_clicked()
+void InputWidget::showHideToolwidgetClicked()
 {
-    emit show_hide_toolwidget();
+    emit showHideToolwidget();
 }
 
-void InputWidget::ctrl_tab_pressed()
+void InputWidget::slotCtrlTabPressed()
 {
     emit ctrlTabPressed();
 }
 
-void InputWidget::ctrl_shift_tab_pressed()
+void InputWidget::slotCtrlShiftTabPressed()
 {
     emit ctrlShiftTabPressed();
 }

@@ -35,25 +35,25 @@ class InputLineDockWidget : public QWidget
 public:
     InputLineDockWidget(QWidget *, Network *, DlgChannelSettings *, DlgModeration *);
     virtual ~InputLineDockWidget();
-    void enable_moderation();
-    void disable_moderation();
-    void hide_toolwidget();
-    void show_toolwidget();
-    void hide_channel_settings();
-    void show_channel_settings();
-    void set_active(QString);
-    QString get_active();
-    void update_nick_list();
+    void enableModeration();
+    void disableModeration();
+    void hideToolwidget();
+    void showToolwidget();
+    void hideChannelSettings();
+    void showChannelSettings();
+    void setActive(QString);
+    QString getActive();
+    void updateNickList();
 
 public slots:
-    void slot_update_nick(QString);
-    void slot_display_message(QString&, QString&, MessageCategory);
-    void slot_show_msg(QString&, QString&, MessageCategory);
-    void slot_show_hide_toolwidget();
-    void slot_change_font_size(QString);
-    void slot_clear_content(QString);
-    void slot_ctrl_tab_pressed();
-    void slot_ctrl_shift_tab_pressed();
+    void slotUpdateNick(QString);
+    void slotDisplayMessage(QString&, QString&, MessageCategory);
+    void slotShowMsg(QString&, QString&, MessageCategory);
+    void slotShowHideToolwidget();
+    void slotChangeFontSize(QString);
+    void slotClearContent(QString);
+    void slotCtrlTabPressed();
+    void slotCtrlShiftTabPressed();
 
 private:
     // params
@@ -65,10 +65,10 @@ private:
     ToolWidget *pToolWidget;
 
 signals:
-    void display_message(QString&,QString&,MessageCategory);
-    void show_msg(QString&,QString&,MessageCategory);
-    void change_font_size(QString);
-    void clear_content(QString);
+    void displayMessage(QString&,QString&,MessageCategory);
+    void showMsg(QString&,QString&,MessageCategory);
+    void changeFontSize(QString);
+    void clearContent(QString);
     void ctrlTabPressed();
     void ctrlShiftTabPressed();
 };

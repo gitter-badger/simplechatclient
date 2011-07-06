@@ -35,14 +35,14 @@ WebcamNetwork::WebcamNetwork()
     socket->setSocketOption(QAbstractSocket::LowDelayOption, 1);
     socket->setSocketOption(QAbstractSocket::KeepAliveOption, 0);
 
-    QObject::connect(socket, SIGNAL(connected()), this, SLOT(network_connected()));
-    QObject::connect(socket, SIGNAL(disconnected()), this, SLOT(network_disconnected()));
-    QObject::connect(socket, SIGNAL(error(QAbstractSocket::SocketError)), this, SLOT(network_error(QAbstractSocket::SocketError)));
-    QObject::connect(socket, SIGNAL(readyRead()), this, SLOT(network_read()));
-    QObject::connect(timerPingPong, SIGNAL(timeout()), this, SLOT(timeout_pingpong()));
+    QObject::connect(socket, SIGNAL(connected()), this, SLOT(networkConnected()));
+    QObject::connect(socket, SIGNAL(disconnected()), this, SLOT(networkDisconnected()));
+    QObject::connect(socket, SIGNAL(error(QAbstractSocket::SocketError)), this, SLOT(networkError(QAbstractSocket::SocketError)));
+    QObject::connect(socket, SIGNAL(readyRead()), this, SLOT(networkRead()));
+    QObject::connect(timerPingPong, SIGNAL(timeout()), this, SLOT(timeoutPingpong()));
 }
 
-bool WebcamNetwork::is_connected()
+bool WebcamNetwork::isConnected()
 {
     if (socket->state() == QAbstractSocket::ConnectedState)
         return true;
@@ -50,7 +50,7 @@ bool WebcamNetwork::is_connected()
         return false;
 }
 
-void WebcamNetwork::clear_all()
+void WebcamNetwork::clearAll()
 {
     bText = true;
     iBytes_need = 0;
@@ -61,12 +61,12 @@ void WebcamNetwork::clear_all()
         timerPingPong->stop();
 }
 
-void WebcamNetwork::network_connect()
+void WebcamNetwork::networkConnect()
 {
     if (socket->state() == QAbstractSocket::UnconnectedState)
     {
         // clear all
-        clear_all();
+        clearAll();
 
         // reconnect
         bReconnecting = true;
@@ -83,22 +83,22 @@ void WebcamNetwork::network_connect()
     }
 }
 
-void WebcamNetwork::network_disconnect()
+void WebcamNetwork::networkDisconnect()
 {
     bReconnecting = false;
     if (socket->state() == QAbstractSocket::ConnectedState)
         socket->disconnectFromHost();
 }
 
-void WebcamNetwork::network_send(QString strData)
+void WebcamNetwork::networkSend(QString strData)
 {
     strData += "\n";
     QByteArray qbaData = strData.toAscii();
 
-    network_sendb(qbaData);
+    networkSendb(qbaData);
 }
 
-void WebcamNetwork::network_sendb(QByteArray qbaData)
+void WebcamNetwork::networkSendb(QByteArray qbaData)
 {
     if ((socket->isValid()) && (socket->state() == QAbstractSocket::ConnectedState) && (socket->isWritable()))
     {
@@ -123,7 +123,7 @@ void WebcamNetwork::network_sendb(QByteArray qbaData)
         emit error(tr("Error: Failed to send data! [Not connected]"));
 }
 
-void WebcamNetwork::network_read()
+void WebcamNetwork::networkRead()
 {
     // set last active
     QDateTime dt = QDateTime::currentDateTime();
@@ -135,7 +135,7 @@ void WebcamNetwork::network_read()
         // read line
         QByteArray data = socket->readLine().trimmed();
         QString strData = QString(data);
-        emit text_kernel(strData);
+        emit textKernel(strData);
     }
     // read data (image, description)
     else
@@ -151,7 +151,7 @@ void WebcamNetwork::network_read()
 
         if (iBytes_recv == iBytes_need)
         {
-            emit data_kernel(bData);
+            emit dataKernel(bData);
 
             // clear bdata
             bData.clear();
@@ -163,58 +163,58 @@ void WebcamNetwork::network_read()
 
     // again
     if (socket->bytesAvailable() != 0)
-        network_read();
+        networkRead();
 }
 
-void WebcamNetwork::network_connected()
+void WebcamNetwork::networkConnected()
 {
     emit connected();
 }
 
-void WebcamNetwork::network_disconnected()
+void WebcamNetwork::networkDisconnected()
 {
     emit disconnected();
 
     // clear all
-    clear_all();
+    clearAll();
 
     // reconnect
     if (bReconnecting)
-        QTimer::singleShot(1000*10, this, SLOT(slot_network_connect())); // 10 sec
+        QTimer::singleShot(1000*10, this, SLOT(slotNetworkConnect())); // 10 sec
 }
 
-void WebcamNetwork::network_error(QAbstractSocket::SocketError err)
+void WebcamNetwork::networkError(QAbstractSocket::SocketError err)
 {
     Q_UNUSED (err);
 
     emit error(socket->errorString());
 
     if (socket->state() == QAbstractSocket::ConnectedState)
-        network_disconnect();
+        networkDisconnect();
     else if (socket->state() == QAbstractSocket::UnconnectedState)
     {
         // clear all
-        clear_all();
+        clearAll();
 
         // reconnect
         if (bReconnecting)
-            QTimer::singleShot(1000*10, this, SLOT(slot_network_connect())); // 10 sec
+            QTimer::singleShot(1000*10, this, SLOT(slotNetworkConnect())); // 10 sec
     }
 }
 
-void WebcamNetwork::slot_network_connect()
+void WebcamNetwork::slotNetworkConnect()
 {
-    network_connect();
+    networkConnect();
 }
 
-void WebcamNetwork::timeout_pingpong()
+void WebcamNetwork::timeoutPingpong()
 {
     QDateTime dt = QDateTime::currentDateTime();
     int iCurrent = (int)dt.toTime_t();
 
     if (iLastActive+301 < iCurrent)
     {
-        network_disconnect();
+        networkDisconnect();
         iLastActive = iCurrent;
     }
 }

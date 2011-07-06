@@ -34,27 +34,27 @@ DlgCaptcha::DlgCaptcha(QNetworkAccessManager *param1, QString *param2)
     accessManager = param1;
     strCaptcha = param2;
 
-    create_gui();
-    create_signals();
+    createGui();
+    createSignals();
 
-    QObject::connect(accessManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(network_finished(QNetworkReply*)));
+    QObject::connect(accessManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(networkFinished(QNetworkReply*)));
 
-    get_img();
+    getImg();
 }
 
-void DlgCaptcha::create_gui()
+void DlgCaptcha::createGui()
 {
     ui.buttonBox->button(QDialogButtonBox::Ok)->setIcon(QIcon(":/images/oxygen/16x16/dialog-ok.png"));
 
     ui.label_text->setText(tr("Enter the characters you see:"));
 }
 
-void DlgCaptcha::create_signals()
+void DlgCaptcha::createSignals()
 {
     QObject::connect(ui.buttonBox, SIGNAL(accepted()), this, SLOT(button_ok()));
 }
 
-void DlgCaptcha::get_img()
+void DlgCaptcha::getImg()
 {
     // clear
     ui.label_img->setText(tr("Loading..."));
@@ -64,7 +64,7 @@ void DlgCaptcha::get_img()
     pReply->setProperty("category", "get_captcha");
 }
 
-void DlgCaptcha::got_img(QByteArray bData)
+void DlgCaptcha::gotImg(QByteArray bData)
 {
     // show img
     QPixmap pixmap;
@@ -72,7 +72,7 @@ void DlgCaptcha::got_img(QByteArray bData)
     ui.label_img->setPixmap(pixmap);
 }
 
-void DlgCaptcha::network_finished(QNetworkReply *reply)
+void DlgCaptcha::networkFinished(QNetworkReply *reply)
 {
     reply->deleteLater();
 
@@ -86,10 +86,10 @@ void DlgCaptcha::network_finished(QNetworkReply *reply)
         return;
 
     if (strCategory == "get_captcha")
-        got_img(bData);
+        gotImg(bData);
 }
 
-void DlgCaptcha::button_ok()
+void DlgCaptcha::buttonOk()
 {
     (*strCaptcha) = ui.lineEdit_code->text();
     this->close();

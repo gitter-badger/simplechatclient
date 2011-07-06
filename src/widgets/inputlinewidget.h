@@ -29,8 +29,8 @@ class InputLineWidget : public QLineEdit
 public:
     InputLineWidget(QWidget*);
     virtual ~InputLineWidget();
-    void set_userslist(QList<QString>);
-    void insert_text(QString);
+    void setUserslist(QList<QString>);
+    void insertText(QString);
 
 private:
     int index;
@@ -39,8 +39,8 @@ private:
     QList<QString> find;
     QString strLastMsg;
 
-    QString get_word();
-    void set_word(QString);
+    QString getWord();
+    void setWord(QString);
 
 protected:
     virtual bool event(QEvent *);

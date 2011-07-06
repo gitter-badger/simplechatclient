@@ -40,30 +40,30 @@ class TabContainer : public QObject
 public:
     TabContainer(Network *, TabManager *);
     virtual ~TabContainer();
-    void set_dlg(DlgUserProfile *);
-    bool exist_tab(QString);
-    void add_tab(QString);
-    void remove_tab(QString);
-    bool rename_tab(QString, QString);
-    void part_tab(int);
-    void show_msg(QString &, QString &, QString &, MessageCategory);
-    void show_msg(QString &, QString &, MessageCategory);
-    void show_msg_all(QString &, MessageCategory);
-    void show_msg_active(QString &, MessageCategory);
-    void set_topic(QString &, QString &);
-    void author_topic(QString &, QString &);
+    void setDlg(DlgUserProfile *);
+    bool existTab(QString);
+    void addTab(QString);
+    void removeTab(QString);
+    bool renameTab(QString, QString);
+    void partTab(int);
+    void showMsg(QString &, QString &, QString &, MessageCategory);
+    void showMsg(QString &, QString &, MessageCategory);
+    void showMsgAll(QString &, MessageCategory);
+    void showMsgActive(QString &, MessageCategory);
+    void setTopic(QString &, QString &);
+    void authorTopic(QString &, QString &);
 
 public slots:
-    void slot_update_nick_avatar(QString);
-    void slot_update_channel_avatar(QString);
-    void slot_show_msg(QString &, QString &, MessageCategory);
-    void slot_show_msg_active(QString &, MessageCategory);
-    void slot_show_msg_all(QString &, MessageCategory);
-    void slot_display_message(QString &, QString &, MessageCategory);
-    void slot_change_font_size(QString);
-    void slot_clear_content(QString);
-    void refresh_colors();
-    void refresh_background_image();
+    void slotUpdateNickAvatar(QString);
+    void slotUpdateChannelAvatar(QString);
+    void slotShowMsg(QString &, QString &, MessageCategory);
+    void slotShowMsgActive(QString &, MessageCategory);
+    void slotShowMsgAll(QString &, MessageCategory);
+    void slotDisplayMessage(QString &, QString &, MessageCategory);
+    void slotChangeFontSize(QString);
+    void slotClearContent(QString);
+    void refreshColors();
+    void refreshBackgroundImage();
 
 private:
     // params
@@ -75,13 +75,13 @@ private:
     // other
     QList<TabWidget*> tw;
 
-    int get_index(QString);
+    int getIndex(QString);
 
 signals:
-    void clear_channel_all_nick_avatars(QString);
-    void clear_nicklist(QString);
-    void update_nick_avatar(QString);
-    void update_awaylog_status();
+    void clearChannelAllNickAvatars(QString);
+    void clearNicklist(QString);
+    void updateNickAvatar(QString);
+    void updateAwaylogStatus();
 };
 
 #endif // TAB_CONTAINER_H

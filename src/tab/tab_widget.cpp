@@ -106,7 +106,7 @@ void TabWidget::addslashes(QString &strData)
     strData.remove("%");
 }
 
-void TabWidget::display_msg(QString &strTime, QString &strData, MessageCategory eMessageCategory)
+void TabWidget::displayMsg(QString &strTime, QString &strData, MessageCategory eMessageCategory)
 {
     QDateTime dt = QDateTime::fromTime_t(strTime.toUInt());
     QString strDT = dt.toString("[hh:mm:ss] ");
@@ -130,10 +130,10 @@ void TabWidget::display_msg(QString &strTime, QString &strData, MessageCategory 
             return;
     }
 
-    display_message(strData, eMessageCategory);
+    displayMessage(strData, eMessageCategory);
 }
 
-void TabWidget::display_msg(QString &strData, MessageCategory eMessageCategory)
+void TabWidget::displayMsg(QString &strData, MessageCategory eMessageCategory)
 {
     QDateTime dt = QDateTime::currentDateTime();
     QString strDT = dt.toString("[hh:mm:ss] ");
@@ -157,10 +157,10 @@ void TabWidget::display_msg(QString &strData, MessageCategory eMessageCategory)
             return;
     }
 
-    display_message(strData, eMessageCategory);
+    displayMessage(strData, eMessageCategory);
 }
 
-void TabWidget::display_message(QString &strData, MessageCategory eMessageCategory)
+void TabWidget::displayMessage(QString &strData, MessageCategory eMessageCategory)
 {
     QSettings settings;
 
@@ -259,7 +259,7 @@ void TabWidget::display_message(QString &strData, MessageCategory eMessageCatego
 
     // convert emoticons, font
     Convert *convertText = new Convert();
-    convertText->convert_text(strData, strContentLast);
+    convertText->convertText(strData, strContentLast);
     delete convertText;
 
     // hilight
@@ -287,7 +287,7 @@ void TabWidget::display_message(QString &strData, MessageCategory eMessageCatego
 
 // window options
 
-void TabWidget::set_topic(QString &strTopic)
+void TabWidget::setTopic(QString &strTopic)
 {
     // replace
     strTopic.replace("&", "&amp;");
@@ -299,7 +299,7 @@ void TabWidget::set_topic(QString &strTopic)
 
     // convert emoticons, font
     Convert *convertText = new Convert();
-    convertText->convert_text(strContent,strLastContent);
+    convertText->convertText(strContent,strLastContent);
     delete convertText;
 
     // set topic
@@ -312,18 +312,18 @@ void TabWidget::set_topic(QString &strTopic)
     topic->setToolTip(strTopic);
 }
 
-void TabWidget::author_topic(QString &strAuthor)
+void TabWidget::authorTopic(QString &strAuthor)
 {
     QString strTopicDetails = QString(tr("Topic set by %1")).arg(strAuthor);
     topic->setToolTip(strTopicDetails);
 }
 
-void TabWidget::clear_content()
+void TabWidget::clearContent()
 {
     pMainTextEdit->clear();
 }
 
-void TabWidget::refresh_colors()
+void TabWidget::refreshColors()
 {
     // get values
     QSettings settings;
@@ -342,7 +342,7 @@ void TabWidget::refresh_colors()
     pMainTextEdit->setTextBackgroundColor(QColor(strBackgroundColor));
 }
 
-void TabWidget::refresh_background_image()
+void TabWidget::refreshBackgroundImage()
 {
-    pMainTextEdit->update_background_image();
+    pMainTextEdit->updateBackgroundImage();
 }

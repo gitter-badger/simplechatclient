@@ -34,17 +34,17 @@ class InputWidget : public QWidget
     Q_OBJECT
 public:
     InputWidget(QWidget *, Network *);
-    void set_active(QString);
-    inline QString get_active() { return strChannel; }
-    void update_nicklist();
-    void insert_text(QString);
-    void set_font(QFont);
-    void set_color(QString);
-    void set_moderation(bool);
-    void set_toolwidget_icon(bool);
-    void paste_multi_line(QString, bool);
-    void send_message(QString, bool);
-    void update_nick(QString);
+    void setActive(QString);
+    inline QString getActive() { return strChannel; }
+    void updateNicklist();
+    void insertText(QString);
+    void setFont(QFont);
+    void setColor(QString);
+    void setModeration(bool);
+    void setToolwidgetIcon(bool);
+    void pasteMultiLine(QString, bool);
+    void sendMessage(QString, bool);
+    void updateNick(QString);
 
 private:
     // params
@@ -59,16 +59,16 @@ private:
     QString strChannel;
 
 private slots:
-    void inputline_return_pressed();
-    void moder_button_clicked();
-    void show_hide_toolwidget_clicked();
-    void ctrl_tab_pressed();
-    void ctrl_shift_tab_pressed();
+    void inputlineReturnPressed();
+    void moderButtonClicked();
+    void showHideToolwidgetClicked();
+    void slotCtrlTabPressed();
+    void slotCtrlShiftTabPressed();
 
 signals:
-    void show_msg(QString&,QString&,MessageCategory);
-    void display_message(QString&,QString&,MessageCategory);
-    void show_hide_toolwidget();
+    void showMsg(QString&,QString&,MessageCategory);
+    void displayMessage(QString&,QString&,MessageCategory);
+    void showHideToolwidget();
     void ctrlTabPressed();
     void ctrlShiftTabPressed();
 };

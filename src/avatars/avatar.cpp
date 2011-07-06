@@ -29,11 +29,11 @@ Avatar::Avatar(TabContainer *param1)
 {
     tabc = param1;
 
-    QObject::connect(this, SIGNAL(set_nick_avatar(QString)), tabc, SLOT(slot_update_nick_avatar(QString)));
-    QObject::connect(this, SIGNAL(set_channel_avatar(QString)), tabc, SLOT(slot_update_channel_avatar(QString)));
+    QObject::connect(this, SIGNAL(setNickAvatar(QString)), tabc, SLOT(slotUpdateNickAvatar(QString)));
+    QObject::connect(this, SIGNAL(setChannelAvatar(QString)), tabc, SLOT(slotUpdateChannelAvatar(QString)));
 
     accessManager = new QNetworkAccessManager;
-    QObject::connect(accessManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(avatar_finished(QNetworkReply*)));
+    QObject::connect(accessManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(avatarFinished(QNetworkReply*)));
 }
 
 Avatar::~Avatar()
@@ -41,14 +41,14 @@ Avatar::~Avatar()
     accessManager->deleteLater();
 }
 
-void Avatar::get_avatar(QString strNickOrChannel, QString strCategory, QString strUrl)
+void Avatar::getAvatar(QString strNickOrChannel, QString strCategory, QString strUrl)
 {
     QNetworkReply *reply = accessManager->get(QNetworkRequest(strUrl));
     reply->setProperty("nickorchannel", strNickOrChannel);
     reply->setProperty("category", strCategory);
 }
 
-void Avatar::avatar_finished(QNetworkReply *reply)
+void Avatar::avatarFinished(QNetworkReply *reply)
 {
     reply->deleteLater();
 
@@ -60,15 +60,15 @@ void Avatar::avatar_finished(QNetworkReply *reply)
     QByteArray bData = reply->readAll();
 
     if (!bData.isEmpty())
-        set_avatar(strNickOrChannel, strCategory, bData);
+        setAvatar(strNickOrChannel, strCategory, bData);
 }
 
-void Avatar::set_avatar(QString &strNickOrChannel, QString &strCategory, QByteArray &bAvatar)
+void Avatar::setAvatar(QString &strNickOrChannel, QString &strCategory, QByteArray &bAvatar)
 {
     if (strCategory == "nick")
     {
         // return if nick not exist any more
-        if (Core::instance()->get_nick_channels(strNickOrChannel) == 0) return;
+        if (Core::instance()->getNickChannels(strNickOrChannel) == 0) return;
 
         // insert
         if (!Core::instance()->mNickAvatar.contains(strNickOrChannel))
@@ -83,7 +83,7 @@ void Avatar::set_avatar(QString &strNickOrChannel, QString &strCategory, QByteAr
             }
         }
 
-        emit set_nick_avatar(strNickOrChannel);
+        emit setNickAvatar(strNickOrChannel);
     }
     else if (strCategory == "channel")
     {
@@ -103,6 +103,6 @@ void Avatar::set_avatar(QString &strNickOrChannel, QString &strCategory, QByteAr
             }
         }
 
-        emit set_channel_avatar(strNickOrChannel);
+        emit setChannelAvatar(strNickOrChannel);
     }
 }

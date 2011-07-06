@@ -38,19 +38,19 @@ class Avatar : public QObject
 public:
     Avatar(TabContainer *);
     virtual ~Avatar();
-    void get_avatar(QString, QString, QString);
+    void getAvatar(QString, QString, QString);
 
 private:
     TabContainer *tabc;
     QNetworkAccessManager *accessManager;
 
 public slots:
-    void avatar_finished(QNetworkReply*);
-    void set_avatar(QString&, QString&, QByteArray&);
+    void avatarFinished(QNetworkReply*);
+    void setAvatar(QString&, QString&, QByteArray&);
 
 signals:
-    void set_nick_avatar(QString);
-    void set_channel_avatar(QString);
+    void setNickAvatar(QString);
+    void setChannelAvatar(QString);
 };
 
 #endif // AVATAR_H

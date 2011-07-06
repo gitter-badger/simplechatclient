@@ -31,11 +31,11 @@ WebcamEngine::WebcamEngine(QString n, bool m)
 
     pWebcamNetwork = new WebcamNetwork();
 
-    create_signals();
+    createSignals();
 
-    emit update_text(tr("Starting the service webcams"));
+    emit updateText(tr("Starting the service webcams"));
 
-    pWebcamNetwork->network_connect();
+    pWebcamNetwork->networkConnect();
 }
 
 WebcamEngine::~WebcamEngine()
@@ -43,49 +43,49 @@ WebcamEngine::~WebcamEngine()
     delete pWebcamNetwork;
 }
 
-void WebcamEngine::create_signals()
+void WebcamEngine::createSignals()
 {
     QObject::connect(pWebcamNetwork, SIGNAL(connected()), this, SLOT(connected()));
-    QObject::connect(pWebcamNetwork, SIGNAL(data_kernel(QByteArray)), this, SLOT(data_kernel(QByteArray)));
-    QObject::connect(pWebcamNetwork, SIGNAL(text_kernel(QString)), this, SLOT(text_kernel(QString)));
-    QObject::connect(pWebcamNetwork, SIGNAL(error(QString)), this, SLOT(slot_error(QString)));
+    QObject::connect(pWebcamNetwork, SIGNAL(dataKernel(QByteArray)), this, SLOT(dataKernel(QByteArray)));
+    QObject::connect(pWebcamNetwork, SIGNAL(textKernel(QString)), this, SLOT(textKernel(QString)));
+    QObject::connect(pWebcamNetwork, SIGNAL(error(QString)), this, SLOT(slotError(QString)));
 }
 
-void WebcamEngine::close_engine()
+void WebcamEngine::closeEngine()
 {
-    pWebcamNetwork->network_disconnect();
+    pWebcamNetwork->networkDisconnect();
 }
 
-void WebcamEngine::network_send(QString s)
+void WebcamEngine::networkSend(QString s)
 {
-    pWebcamNetwork->network_send(s);
+    pWebcamNetwork->networkSend(s);
 }
 
-void WebcamEngine::set_user(QString s)
+void WebcamEngine::setUser(QString s)
 {
     strNick = s;
 }
 
 /* from WebcamNetwork to DlgWebcam */
-void WebcamEngine::slot_error(QString s)
+void WebcamEngine::slotError(QString s)
 {
     emit error(s);
 }
 
 void WebcamEngine::connected()
 {
-    emit update_text(tr("Connected to server webcam.")+"<br>"+tr("Please wait ..."));
+    emit updateText(tr("Connected to server webcam.")+"<br>"+tr("Please wait ..."));
 
     QString strCAUTH = "1234567890123456";
-    pWebcamNetwork->network_send(QString("CAUTH %1 3.00.159").arg(strCAUTH));
+    pWebcamNetwork->networkSend(QString("CAUTH %1 3.00.159").arg(strCAUTH));
 }
 
 void WebcamEngine::disconnected()
 {
-    emit update_text(tr("Disconnected from server webcams"));
+    emit updateText(tr("Disconnected from server webcams"));
 }
 
-void WebcamEngine::data_kernel(QByteArray bData)
+void WebcamEngine::dataKernel(QByteArray bData)
 {
 #ifdef Q_WS_X11
         QSettings settings;
@@ -114,7 +114,7 @@ void WebcamEngine::data_kernel(QByteArray bData)
 */
 void WebcamEngine::raw_202b(QByteArray &data)
 {
-    emit update_image(data);
+    emit updateImage(data);
 }
 
 /*
@@ -131,7 +131,7 @@ void WebcamEngine::raw_250b(QByteArray &data)
     QStringList strDataList = strData.split("\n");
 
     /* clear users */
-    emit clear_users();
+    emit clearUsers();
 
     foreach (QString strLine, strDataList)
     {
@@ -169,10 +169,10 @@ void WebcamEngine::raw_250b(QByteArray &data)
             }
 
             // add user
-            emit add_user(strUser, iRank, strSpectators);
+            emit addUser(strUser, iRank, strSpectators);
         }
     }
-    emit update_text(tr("Select user"));
+    emit updateText(tr("Select user"));
 }
 
 /*
@@ -224,7 +224,7 @@ void WebcamEngine::raw_251b(QByteArray &data)
             if (strUser == strNick)
             {
                 // update rank
-                emit update_rank(iRank);
+                emit updateRank(iRank);
 
                 // update channels
                 //ui.textEdit_channels->setText(QString("<b>%1</b><br><font color=\"#0000ff\">%2</font>").arg(tr("Is on channels:")).arg(mNickChannels[strUser]));
@@ -234,13 +234,13 @@ void WebcamEngine::raw_251b(QByteArray &data)
             if (iCamOnOff == 0)
             {
                 //mNickChannels.remove(strUser);
-                emit remove_user(strUser);
+                emit removeUser(strUser);
             }
             // cam on
             else
             {
                 // add user or update user
-                emit update_user(strUser, iRank, strSpectators);
+                emit updateUser(strUser, iRank, strSpectators);
             }
         }
     }
@@ -260,7 +260,7 @@ void WebcamEngine::raw_252b(QByteArray &data)
             qDebug() << "CAM <- " << strStatus;
 #endif
         strStatus.remove("SETSTATUS ");
-        emit update_status(strStatus);
+        emit updateStatus(strStatus);
     }
 }
 
@@ -274,7 +274,7 @@ void WebcamEngine::raw_254b(QByteArray &data)
     QStringList strDataList = strData.split("\n");
 
     /* clear users */
-    emit clear_users();
+    emit clearUsers();
 
     foreach (QString strLine, strDataList)
     {
@@ -288,11 +288,11 @@ void WebcamEngine::raw_254b(QByteArray &data)
                 int iRank = strLineList[2].toInt();
 
                 // add to table
-                emit add_user(strUser, iRank, strSpectators);
+                emit addUser(strUser, iRank, strSpectators);
 
                 // if current nick
                 if (strUser == strNick)
-                    emit update_rank(iRank);
+                    emit updateRank(iRank);
             }
         }
     }
@@ -312,7 +312,7 @@ void WebcamEngine::raw_403b(QByteArray &data)
     emit error(strError);
 }
 
-void WebcamEngine::text_kernel(QString strData)
+void WebcamEngine::textKernel(QString strData)
 {
 #ifdef Q_WS_X11
     QSettings settings;
@@ -398,7 +398,7 @@ void WebcamEngine::text_kernel(QString strData)
 */
 void WebcamEngine::raw_200()
 {
-    pWebcamNetwork->network_send(QString("SUBSCRIBE_BIG * %1").arg(strNick));
+    pWebcamNetwork->networkSend(QString("SUBSCRIBE_BIG * %1").arg(strNick));
 }
 
 /*
@@ -410,7 +410,7 @@ void WebcamEngine::raw_202(QStringList &strDataList)
 
     QString strUser = strDataList[3];
 
-    pWebcamNetwork->set_bytes_need(strDataList[1].toInt());
+    pWebcamNetwork->setBytesNeed(strDataList[1].toInt());
     if (strDataList[1].toInt() != 0)
     {
         // re-send
@@ -418,12 +418,12 @@ void WebcamEngine::raw_202(QStringList &strDataList)
         {
             QDateTime dt = QDateTime::currentDateTime();
             int iCurrentTime = (int)dt.toTime_t(); // seconds that have passed since 1970
-            pWebcamNetwork->set_last_keep_alive(iCurrentTime);
+            pWebcamNetwork->setLastKeepAlive(iCurrentTime);
 
-            pWebcamNetwork->network_send(QString("KEEPALIVE_BIG %1").arg(strNick));
+            pWebcamNetwork->networkSend(QString("KEEPALIVE_BIG %1").arg(strNick));
         }
 
-        pWebcamNetwork->set_btext(false);
+        pWebcamNetwork->setBText(false);
         if (strUser == strNick)
             iCamCmd = 202;
         else
@@ -432,7 +432,7 @@ void WebcamEngine::raw_202(QStringList &strDataList)
     else
     {
         if (strUser == strNick)
-            emit user_error(tr("This user does not send data"));
+            emit userError(tr("This user does not send data"));
     }
 }
 
@@ -450,8 +450,8 @@ void WebcamEngine::raw_211(QStringList &strDataList)
 
     if (strDataList[1].toInt() > 0)
     {
-        pWebcamNetwork->set_btext(false);
-        pWebcamNetwork->set_bytes_need(strDataList[1].toInt());
+        pWebcamNetwork->setBText(false);
+        pWebcamNetwork->setBytesNeed(strDataList[1].toInt());
         iCamCmd = 211;
     }
 }
@@ -492,8 +492,8 @@ void WebcamEngine::raw_250(QStringList &strDataList)
     if (strDataList.size() < 3) return;
 
     // initial read users status
-    pWebcamNetwork->set_btext(false);
-    pWebcamNetwork->set_bytes_need(strDataList[1].toInt());
+    pWebcamNetwork->setBText(false);
+    pWebcamNetwork->setBytesNeed(strDataList[1].toInt());
     iCamCmd = 250;
 }
 
@@ -504,8 +504,8 @@ void WebcamEngine::raw_251(QStringList &strDataList)
 {
     if (strDataList.size() < 3) return;
 
-    pWebcamNetwork->set_btext(false);
-    pWebcamNetwork->set_bytes_need(strDataList[1].toInt());
+    pWebcamNetwork->setBText(false);
+    pWebcamNetwork->setBytesNeed(strDataList[1].toInt());
     iCamCmd = 251;
 }
 
@@ -518,8 +518,8 @@ void WebcamEngine::raw_252(QStringList &strDataList)
 
     if (strDataList[1].toInt() > 0)
     {
-        pWebcamNetwork->set_bytes_need(strDataList[1].toInt());
-        pWebcamNetwork->set_btext(false);
+        pWebcamNetwork->setBytesNeed(strDataList[1].toInt());
+        pWebcamNetwork->setBText(false);
 
         QString strUser = strDataList[3];
         if (strUser == strNick)
@@ -540,7 +540,7 @@ void WebcamEngine::raw_253(QStringList &strDataList)
     int iRank = strDataList[4].toInt();
 
     if (strUser == strNick) // is current nick
-        emit update_rank(iRank);
+        emit updateRank(iRank);
 }
 
 /*
@@ -550,18 +550,18 @@ void WebcamEngine::raw_254(QStringList &strDataList)
 {
     if (strDataList.size() < 3) return;
 
-    pWebcamNetwork->set_btext(false);
-    pWebcamNetwork->set_bytes_need(strDataList[1].toInt());
+    pWebcamNetwork->setBText(false);
+    pWebcamNetwork->setBytesNeed(strDataList[1].toInt());
     iCamCmd = 254;
 
     // check keepalive
     QDateTime dt = QDateTime::currentDateTime();
     int iCurrentTime = (int)dt.toTime_t(); // seconds that have passed since 1970
 
-    if (iCurrentTime - pWebcamNetwork->get_last_keep_alive() > 30) // 30 sec
+    if (iCurrentTime - pWebcamNetwork->getLastKeepAlive() > 30) // 30 sec
     {
         if (!strNick.isEmpty())
-            pWebcamNetwork->network_send(QString("KEEPALIVE_BIG %1").arg(strNick));
+            pWebcamNetwork->networkSend(QString("KEEPALIVE_BIG %1").arg(strNick));
     }
 }
 
@@ -579,12 +579,12 @@ void WebcamEngine::raw_261()
 /* successfully logged in */
 void WebcamEngine::raw_264()
 {
-    emit update_text(tr("Setting mode for viewing only"));
-    pWebcamNetwork->network_send("SENDMODE 0");
+    emit updateText(tr("Setting mode for viewing only"));
+    pWebcamNetwork->networkSend("SENDMODE 0");
 
     // if mini get user image
     if (bMini)
-        pWebcamNetwork->network_send(QString("SUBSCRIBE_BIG * %1").arg(strNick));
+        pWebcamNetwork->networkSend(QString("SUBSCRIBE_BIG * %1").arg(strNick));
 }
 
 /*
@@ -599,7 +599,7 @@ void WebcamEngine::raw_262()
 */
 void WebcamEngine::raw_263()
 {
-    emit vote_ok();
+    emit voteOk();
 }
 
 /*
@@ -618,7 +618,7 @@ void WebcamEngine::raw_268()
     // CAUTH ok
     QSettings settings;
     QString strUOKey = settings.value("uokey").toString();
-    pWebcamNetwork->network_send(QString("AUTH %1 3.00.159").arg(strUOKey));
+    pWebcamNetwork->networkSend(QString("AUTH %1 3.00.159").arg(strUOKey));
 }
 
 /*
@@ -629,8 +629,8 @@ void WebcamEngine::raw_403(QStringList &strDataList)
 {
     if (strDataList.size() < 3) return;
 
-    pWebcamNetwork->set_btext(false);
-    pWebcamNetwork->set_bytes_need(strDataList[1].toInt());
+    pWebcamNetwork->setBText(false);
+    pWebcamNetwork->setBytesNeed(strDataList[1].toInt());
     iCamCmd = 403;
 }
 
@@ -643,7 +643,7 @@ void WebcamEngine::raw_405(QStringList &strDataList)
 
     QString strUser = strDataList[3];
     if (strUser == strNick)
-        emit user_error(tr("The specified user has left the chat"));
+        emit userError(tr("The specified user has left the chat"));
 }
 
 /*
@@ -662,7 +662,7 @@ void WebcamEngine::raw_408(QStringList &strDataList)
 
     QString strUser = strDataList[3];
     if (strUser == strNick)
-        emit user_error(tr("The specified user does not have a webcam enabled"));
+        emit userError(tr("The specified user does not have a webcam enabled"));
 }
 
 /*
@@ -688,7 +688,7 @@ void WebcamEngine::raw_412(QStringList &strDataList)
 
     QString strUser = strDataList[3];
     if (strUser == strNick)
-        emit user_error(tr("Failed to retrieve the image from the webcam"));
+        emit userError(tr("Failed to retrieve the image from the webcam"));
 }
 
 /*
@@ -700,7 +700,7 @@ void WebcamEngine::raw_413(QStringList &strDataList)
 
     QString strUser = strDataList[3];
     if (strUser == strNick)
-        emit user_error(tr("Failed to retrieve the image from the webcam"));
+        emit userError(tr("Failed to retrieve the image from the webcam"));
 }
 
 /*
@@ -708,7 +708,7 @@ void WebcamEngine::raw_413(QStringList &strDataList)
 */
 void WebcamEngine::raw_418()
 {
-    pWebcamNetwork->network_disconnect();
+    pWebcamNetwork->networkDisconnect();
 }
 
 /*
@@ -724,7 +724,7 @@ void WebcamEngine::raw_501()
 */
 void WebcamEngine::raw_502()
 {
-    pWebcamNetwork->network_disconnect();
+    pWebcamNetwork->networkDisconnect();
 }
 
 /*
@@ -754,5 +754,5 @@ void WebcamEngine::raw_515()
 void WebcamEngine::raw_520()
 {
     emit error(tr("Invalid authorization key"));
-    pWebcamNetwork->network_disconnect();
+    pWebcamNetwork->networkDisconnect();
 }

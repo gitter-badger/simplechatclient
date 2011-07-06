@@ -37,14 +37,14 @@ private:
     QNetworkAccessManager *accessManager;
 
 private:
-    void create_gui();
-    void create_signals();
-    void get_img();
-    void got_img(QByteArray);
+    void createGui();
+    void createSignals();
+    void getImg();
+    void gotImg(QByteArray);
 
 private slots:
-    void network_finished(QNetworkReply *);
-    void button_ok();
+    void networkFinished(QNetworkReply *);
+    void buttonOk();
 };
 
 #endif // DLG_CAPTCHA_H

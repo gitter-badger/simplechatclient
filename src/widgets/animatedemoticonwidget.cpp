@@ -36,7 +36,7 @@ AnimatedEmoticonWidget::AnimatedEmoticonWidget(QTextEdit *parent) : QWidget(pare
     this->setLayout(layout);
 }
 
-void AnimatedEmoticonWidget::start_emoticon(QString strEmoticon, int x, int y)
+void AnimatedEmoticonWidget::startEmoticon(QString strEmoticon, int x, int y)
 {
     if (strEmoticon != strCurrentEmoticon)
     {
@@ -66,8 +66,8 @@ void AnimatedEmoticonWidget::start_emoticon(QString strEmoticon, int x, int y)
             movie->start();
 
             // move widget
-            int img_begin_x = get_correct_x(x, y);
-            int img_begin_y = get_correct_y(x, y);
+            int img_begin_x = getCorrectX(x, y);
+            int img_begin_y = getCorrectY(x, y);
 
             int fix_x = (this->frameGeometry().width() - w)/2;
             int fix_y = (this->frameGeometry().height() - h)/2;
@@ -85,7 +85,7 @@ void AnimatedEmoticonWidget::start_emoticon(QString strEmoticon, int x, int y)
     }
 }
 
-void AnimatedEmoticonWidget::stop_emoticon()
+void AnimatedEmoticonWidget::stopEmoticon()
 {
     if (movie->state() == QMovie::Running)
         movie->stop();
@@ -95,7 +95,7 @@ void AnimatedEmoticonWidget::stop_emoticon()
         strCurrentEmoticon.clear();
 }
 
-int AnimatedEmoticonWidget::get_correct_x(int x, int y)
+int AnimatedEmoticonWidget::getCorrectX(int x, int y)
 {
     bool bIsXImage = true;
     while(bIsXImage)
@@ -118,7 +118,7 @@ int AnimatedEmoticonWidget::get_correct_x(int x, int y)
     return x;
 }
 
-int AnimatedEmoticonWidget::get_correct_y(int x, int y)
+int AnimatedEmoticonWidget::getCorrectY(int x, int y)
 {
     bool bIsYImage = true;
     while(bIsYImage)

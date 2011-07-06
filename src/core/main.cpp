@@ -68,7 +68,7 @@ int main(int argc, char *argv[])
 
     // linux crash handler
 #ifdef Q_WS_X11
-    linux_crash_handler();
+    linuxCrashHandler();
 #endif
 
     // message handler
@@ -94,7 +94,7 @@ int main(int argc, char *argv[])
 
     // get translate
     Config *pConfig = new Config();
-    QString strLanguage = pConfig->get_value("language");
+    QString strLanguage = pConfig->getValue("language");
     delete pConfig;
 
     // set translate
@@ -146,7 +146,7 @@ int main(int argc, char *argv[])
     // core
     Core::instance()->createGui();
     Core::instance()->showSccWindow();
-    Core::instance()->check_update();
+    Core::instance()->checkUpdate();
 
     return app.exec();
 }

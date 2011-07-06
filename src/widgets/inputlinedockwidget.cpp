@@ -54,14 +54,14 @@ InputLineDockWidget::InputLineDockWidget(QWidget *parent, Network *param1, DlgCh
     setMaximumHeight(iMinimumSize);
 
     // signals
-    QObject::connect(pInputWidget, SIGNAL(display_message(QString&,QString&,MessageCategory)), this, SLOT(slot_display_message(QString&,QString&,MessageCategory)));
-    QObject::connect(pInputWidget, SIGNAL(show_msg(QString&,QString&,MessageCategory)), this, SLOT(slot_show_msg(QString&,QString&,MessageCategory)));
-    QObject::connect(pToolWidget, SIGNAL(change_font_size(QString)), this, SLOT(slot_change_font_size(QString)));
-    QObject::connect(pToolWidget, SIGNAL(clear_content(QString)), this, SLOT(slot_clear_content(QString)));
-    QObject::connect(pInputWidget, SIGNAL(show_hide_toolwidget()), this, SLOT(slot_show_hide_toolwidget()));
+    QObject::connect(pInputWidget, SIGNAL(displayMessage(QString&,QString&,MessageCategory)), this, SLOT(slotDisplayMessage(QString&,QString&,MessageCategory)));
+    QObject::connect(pInputWidget, SIGNAL(showMsg(QString&,QString&,MessageCategory)), this, SLOT(slotShowMsg(QString&,QString&,MessageCategory)));
+    QObject::connect(pToolWidget, SIGNAL(changeFontSize(QString)), this, SLOT(slotChangeFontSize(QString)));
+    QObject::connect(pToolWidget, SIGNAL(clearContent(QString)), this, SLOT(slotClearContent(QString)));
+    QObject::connect(pInputWidget, SIGNAL(showHideToolwidget()), this, SLOT(slotShowHideToolwidget()));
 
-    QObject::connect(pInputWidget, SIGNAL(ctrlTabPressed()), this, SLOT(slot_ctrl_tab_pressed()));
-    QObject::connect(pInputWidget, SIGNAL(ctrlShiftTabPressed()), this, SLOT(slot_ctrl_shift_tab_pressed()));
+    QObject::connect(pInputWidget, SIGNAL(ctrlTabPressed()), this, SLOT(slotCtrlTabPressed()));
+    QObject::connect(pInputWidget, SIGNAL(ctrlShiftTabPressed()), this, SLOT(slotCtrlShiftTabPressed()));
 }
 
 InputLineDockWidget::~InputLineDockWidget()
@@ -70,19 +70,19 @@ InputLineDockWidget::~InputLineDockWidget()
     delete pInputWidget;
 }
 
-void InputLineDockWidget::enable_moderation()
+void InputLineDockWidget::enableModeration()
 {
-    pToolWidget->set_moderation(true);
-    pInputWidget->set_moderation(true);
+    pToolWidget->setModeration(true);
+    pInputWidget->setModeration(true);
 }
 
-void InputLineDockWidget::disable_moderation()
+void InputLineDockWidget::disableModeration()
 {
-    pToolWidget->set_moderation(false);
-    pInputWidget->set_moderation(false);
+    pToolWidget->setModeration(false);
+    pInputWidget->setModeration(false);
 }
 
-void InputLineDockWidget::show_toolwidget()
+void InputLineDockWidget::showToolwidget()
 {
     // show toolwidget
     pToolWidget->show();
@@ -91,10 +91,10 @@ void InputLineDockWidget::show_toolwidget()
     setMinimumHeight(iMinimumSize);
     setMaximumHeight(iMinimumSize);
     // refresh icon
-    pInputWidget->set_toolwidget_icon(true);
+    pInputWidget->setToolwidgetIcon(true);
 }
 
-void InputLineDockWidget::hide_toolwidget()
+void InputLineDockWidget::hideToolwidget()
 {
     // hide toolwidget
     pToolWidget->hide();
@@ -103,77 +103,77 @@ void InputLineDockWidget::hide_toolwidget()
     setMinimumHeight(iMinimumSize);
     setMaximumHeight(iMinimumSize);
     // refresh icon
-    pInputWidget->set_toolwidget_icon(false);
+    pInputWidget->setToolwidgetIcon(false);
 }
 
-void InputLineDockWidget::hide_channel_settings()
+void InputLineDockWidget::hideChannelSettings()
 {
-    pToolWidget->set_channel_settings(false);
+    pToolWidget->setChannelSettings(false);
 }
 
-void InputLineDockWidget::show_channel_settings()
+void InputLineDockWidget::showChannelSettings()
 {
-    pToolWidget->set_channel_settings(true);
+    pToolWidget->setChannelSettings(true);
 }
 
-void InputLineDockWidget::set_active(QString strChannel)
+void InputLineDockWidget::setActive(QString strChannel)
 {
-    pInputWidget->set_active(strChannel);
+    pInputWidget->setActive(strChannel);
 }
 
-QString InputLineDockWidget::get_active()
+QString InputLineDockWidget::getActive()
 {
-    return pInputWidget->get_active();
+    return pInputWidget->getActive();
 }
 
 // input widget
 
-void InputLineDockWidget::update_nick_list()
+void InputLineDockWidget::updateNickList()
 {
-    pInputWidget->update_nicklist();
+    pInputWidget->updateNicklist();
 }
 
-void InputLineDockWidget::slot_update_nick(QString strNick)
+void InputLineDockWidget::slotUpdateNick(QString strNick)
 {
-    pInputWidget->update_nick(strNick);
+    pInputWidget->updateNick(strNick);
 }
 
-void InputLineDockWidget::slot_display_message(QString &strChannel, QString &strData, MessageCategory eMessageCategory)
+void InputLineDockWidget::slotDisplayMessage(QString &strChannel, QString &strData, MessageCategory eMessageCategory)
 {
-    emit display_message(strChannel, strData, eMessageCategory);
+    emit displayMessage(strChannel, strData, eMessageCategory);
 }
 
-void InputLineDockWidget::slot_show_msg(QString &strChannel, QString &strData, MessageCategory eMessageCategory)
+void InputLineDockWidget::slotShowMsg(QString &strChannel, QString &strData, MessageCategory eMessageCategory)
 {
-    emit show_msg(strChannel, strData, eMessageCategory);
+    emit showMsg(strChannel, strData, eMessageCategory);
 }
 
-void InputLineDockWidget::slot_show_hide_toolwidget()
+void InputLineDockWidget::slotShowHideToolwidget()
 {
     if (pToolWidget->isHidden())
-        show_toolwidget();
+        showToolwidget();
     else
-        hide_toolwidget();
+        hideToolwidget();
 }
 
-void InputLineDockWidget::slot_ctrl_tab_pressed()
+void InputLineDockWidget::slotCtrlTabPressed()
 {
     emit ctrlTabPressed();
 }
 
-void InputLineDockWidget::slot_ctrl_shift_tab_pressed()
+void InputLineDockWidget::slotCtrlShiftTabPressed()
 {
     emit ctrlShiftTabPressed();
 }
 
 // tool widget
 
-void InputLineDockWidget::slot_change_font_size(QString strSize)
+void InputLineDockWidget::slotChangeFontSize(QString strSize)
 {
-    emit change_font_size(strSize);
+    emit changeFontSize(strSize);
 }
 
-void InputLineDockWidget::slot_clear_content(QString strChannel)
+void InputLineDockWidget::slotClearContent(QString strChannel)
 {
-    emit clear_content(strChannel);
+    emit clearContent(strChannel);
 }

@@ -28,9 +28,9 @@ class SimpleStatsWidget : public QWidget
     Q_OBJECT
 public:
     SimpleStatsWidget(QWidget *parent = 0);
-    void clear_stats();
-    void set_max(qreal);
-    void set_stats(QList<int>);
+    void clearStats();
+    void setMax(qreal);
+    void setStats(QList<int>);
 
     QSize sizeHint() const;
 

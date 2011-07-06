@@ -292,7 +292,7 @@ QString DlgUserProfile::convert_desc(QString strContent)
 
     // convert
     Convert *convertText = new Convert();
-    convertText->convert_text(strContent, strContentLast);
+    convertText->convertText(strContent, strContentLast);
     delete convertText;
 
     // return

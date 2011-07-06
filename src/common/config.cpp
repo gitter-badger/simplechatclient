@@ -21,12 +21,12 @@
 #include <QCoreApplication>
 #include <QDir>
 #ifndef Q_WS_X11
-#include <QSettings>
+    #include <QSettings>
 #endif
 #include "config.h"
 
 #ifdef Q_WS_X11
-#include <QDebug>
+    #include <QDebug>
 #endif
 
 Config::Config()
@@ -50,7 +50,7 @@ Config::Config()
 
     // if not exist - create new
     if (!file->exists())
-        create_new_config();
+        createNewConfig();
 
     // try read
     if (file->exists())
@@ -70,7 +70,7 @@ Config::Config()
             return;
         }
         // fix config
-        fix_config();
+        fixConfig();
     }
     else
     {
@@ -87,7 +87,7 @@ Config::~Config()
     delete file;
 }
 
-QString Config::get_value(QString strKey)
+QString Config::getValue(QString strKey)
 {
     if ((doc.isNull()) || (!file->isOpen()))
     {
@@ -114,7 +114,7 @@ QString Config::get_value(QString strKey)
     return QString::null;
 }
 
-void Config::set_value(QString strKey, QString strValue)
+void Config::setValue(QString strKey, QString strValue)
 {
     if ((doc.isNull()) || (!file->isOpen()))
     {
@@ -125,7 +125,7 @@ void Config::set_value(QString strKey, QString strValue)
     }
 
     // remove
-    remove_value(strKey);
+    removeValue(strKey);
 
     // add value
     QDomElement docElem = doc.documentElement();
@@ -138,7 +138,7 @@ void Config::set_value(QString strKey, QString strValue)
     save();
 }
 
-void Config::remove_value(QString strKey)
+void Config::removeValue(QString strKey)
 {
     if ((doc.isNull()) || (!file->isOpen()))
     {
@@ -170,9 +170,9 @@ void Config::remove_value(QString strKey)
     save();
 }
 
-void Config::fix_config()
+void Config::fixConfig()
 {
-    QMap<QString,QString> mDefaultValues = get_default_values();
+    QMap<QString,QString> mDefaultValues = getDefaultValues();
     QMapIterator<QString, QString> i(mDefaultValues);
     while (i.hasNext())
     {
@@ -180,22 +180,22 @@ void Config::fix_config()
         QString strDefaultKey = i.key();
         QString strDefaultValue = i.value();
 
-        QString strValue = get_value(strDefaultKey);
+        QString strValue = getValue(strDefaultKey);
         if (strValue.isEmpty())
         {
             if (strDefaultKey != "pass") // ignore pass
-                set_value(strDefaultKey, strDefaultValue);
+                setValue(strDefaultKey, strDefaultValue);
         }
     }
 }
 
-void Config::create_new_config()
+void Config::createNewConfig()
 {
     doc.clear();
     QDomElement root = doc.createElement("config");
     doc.appendChild(root);
 
-    QMap<QString,QString> mDefaultValues = get_default_values();
+    QMap<QString,QString> mDefaultValues = getDefaultValues();
     QMapIterator<QString, QString> i(mDefaultValues);
     while (i.hasNext())
     {
@@ -203,14 +203,14 @@ void Config::create_new_config()
         QString strDefaultKey = i.key();
         QString strDefaultValue = i.value();
 
-        add_config_value(&doc, &root, strDefaultKey, strDefaultValue);
+        addConfigValue(&doc, &root, strDefaultKey, strDefaultValue);
     }
 
     // save
     save();
 }
 
-QMap<QString,QString> Config::get_default_values()
+QMap<QString,QString> Config::getDefaultValues()
 {
     QString path = QCoreApplication::applicationDirPath();
     QString strSoundBeep = path+"/3rdparty/sounds/beep.wav";
@@ -267,7 +267,7 @@ QMap<QString,QString> Config::get_default_values()
     return mDefaultValues;
 }
 
-QMap<QString,QString> Config::read_config()
+QMap<QString,QString> Config::readConfig()
 {
     QMap<QString, QString> mResult;
 
@@ -291,7 +291,7 @@ QMap<QString,QString> Config::read_config()
     return mResult;
 }
 
-void Config::add_config_value(QDomDocument *doc, QDomElement *root, QString strKey, QString strValue)
+void Config::addConfigValue(QDomDocument *doc, QDomElement *root, QString strKey, QString strValue)
 {
     QDomElement eKey = doc->createElement(strKey);
     root->appendChild(eKey);

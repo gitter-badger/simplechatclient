@@ -37,13 +37,13 @@ TabContainer::~TabContainer()
 {
     for (int i = 0; i < tw.size(); i++)
     {
-        QString strChannel = tw[i]->get_name();
+        QString strChannel = tw[i]->getName();
 
         // clear avatars
-        emit clear_channel_all_nick_avatars(strChannel);
+        emit clearChannelAllNickAvatars(strChannel);
 
         // clear nicklist
-        emit clear_nicklist(strChannel);
+        emit clearNicklist(strChannel);
 
         // remove from open channels
         Core::instance()->lOpenChannels.removeAll(strChannel);
@@ -63,34 +63,34 @@ TabContainer::~TabContainer()
     }
 }
 
-void TabContainer::set_dlg(DlgUserProfile *param1)
+void TabContainer::setDlg(DlgUserProfile *param1)
 {
     pDlgUserProfile = param1;
 }
 
-int TabContainer::get_index(QString strName)
+int TabContainer::getIndex(QString strName)
 {
     for (int i = 0; i < tw.size(); i++)
     {
-        if (tw[i]->get_name() == strName)
+        if (tw[i]->getName() == strName)
             return i;
     }
     return -1;
 }
 
-bool TabContainer::exist_tab(QString strChannel)
+bool TabContainer::existTab(QString strChannel)
 {
     for (int i = 0; i < tw.size(); i++)
     {
-        if (tw[i]->get_name() == strChannel)
+        if (tw[i]->getName() == strChannel)
             return true;
     }
     return false;
 }
 
-void TabContainer::add_tab(QString strChannel)
+void TabContainer::addTab(QString strChannel)
 {
-    if (!exist_tab(strChannel))
+    if (!existTab(strChannel))
     {
         // log
         QString strData = "--- Log opened "+QDateTime::currentDateTime().toString(Qt::TextDate);
@@ -112,18 +112,18 @@ void TabContainer::add_tab(QString strChannel)
     }
 }
 
-void TabContainer::remove_tab(QString strChannel)
+void TabContainer::removeTab(QString strChannel)
 {
     if (strChannel == "Status") return;
 
-    int i = get_index(strChannel);
+    int i = getIndex(strChannel);
     if (i != -1)
     {
         // clear avatars
-        emit clear_channel_all_nick_avatars(strChannel);
+        emit clearChannelAllNickAvatars(strChannel);
 
         // clear nicklist
-        emit clear_nicklist(strChannel);
+        emit clearNicklist(strChannel);
 
         // remove from open channels
         Core::instance()->lOpenChannels.removeAll(strChannel);
@@ -143,9 +143,9 @@ void TabContainer::remove_tab(QString strChannel)
     }
 }
 
-bool TabContainer::rename_tab(QString strChannel, QString strNewName)
+bool TabContainer::renameTab(QString strChannel, QString strNewName)
 {
-    int i = get_index(strChannel);
+    int i = getIndex(strChannel);
     if (i != -1)
     {
         if (pTabM->tabText(i)[0] == '^')
@@ -158,19 +158,19 @@ bool TabContainer::rename_tab(QString strChannel, QString strNewName)
     return false;
 }
 
-void TabContainer::part_tab(int index)
+void TabContainer::partTab(int index)
 {
-    QString strChannel = tw[index]->get_name();
+    QString strChannel = tw[index]->getName();
 
-    if (pNetwork->is_connected())
+    if (pNetwork->isConnected())
         pNetwork->send(QString("PART %1").arg(strChannel));
     else
-        remove_tab(strChannel);
+        removeTab(strChannel);
 }
 
-void TabContainer::show_msg(QString &strTime, QString &strChannel, QString &strData, MessageCategory eMessageCategory)
+void TabContainer::showMsg(QString &strTime, QString &strChannel, QString &strData, MessageCategory eMessageCategory)
 {
-    int i = get_index(strChannel);
+    int i = getIndex(strChannel);
     if (i != -1)
     {
         // hilight
@@ -181,37 +181,37 @@ void TabContainer::show_msg(QString &strTime, QString &strChannel, QString &strD
         {
             if (eMessageCategory == DefaultMessage)
             {
-                tw[i]->display_msg(strTime, strData, HilightMessage);
+                tw[i]->displayMsg(strTime, strData, HilightMessage);
                 if (i != pTabM->currentIndex())
-                    pTabM->set_hilight(i);
+                    pTabM->setHilight(i);
             }
             else
             {
-                tw[i]->display_msg(strTime, strData, eMessageCategory);
+                tw[i]->displayMsg(strTime, strData, eMessageCategory);
                 if (i != pTabM->currentIndex())
-                    pTabM->set_alert(i, QColor(0, 147, 0, 255)); // green
+                    pTabM->setAlert(i, QColor(0, 147, 0, 255)); // green
             }
 
             // update awaylog status
-            emit update_awaylog_status();
+            emit updateAwaylogStatus();
         }
         else
         {
-            tw[i]->display_msg(strTime, strData, eMessageCategory);
+            tw[i]->displayMsg(strTime, strData, eMessageCategory);
             if (i != pTabM->currentIndex())
             {
                 if (eMessageCategory != DefaultMessage)
-                    pTabM->set_alert(i, QColor(0, 147, 0, 255)); // green
+                    pTabM->setAlert(i, QColor(0, 147, 0, 255)); // green
                 else
-                    pTabM->set_alert(i, QColor(255, 0, 0, 255)); // red
+                    pTabM->setAlert(i, QColor(255, 0, 0, 255)); // red
             }
         }
     }
 }
 
-void TabContainer::show_msg(QString &strChannel, QString &strData, MessageCategory eMessageCategory)
+void TabContainer::showMsg(QString &strChannel, QString &strData, MessageCategory eMessageCategory)
 {
-    int i = get_index(strChannel);
+    int i = getIndex(strChannel);
     if (i != -1)
     {
         // hilight
@@ -222,84 +222,84 @@ void TabContainer::show_msg(QString &strChannel, QString &strData, MessageCatego
         {
             if (eMessageCategory == DefaultMessage)
             {
-                tw[i]->display_msg(strData, HilightMessage);
+                tw[i]->displayMsg(strData, HilightMessage);
                 if (i != pTabM->currentIndex())
-                    pTabM->set_hilight(i);
+                    pTabM->setHilight(i);
             }
             else
             {
-                tw[i]->display_msg(strData, eMessageCategory);
+                tw[i]->displayMsg(strData, eMessageCategory);
                 if (i != pTabM->currentIndex())
-                    pTabM->set_alert(i, QColor(0, 147, 0, 255)); // green
+                    pTabM->setAlert(i, QColor(0, 147, 0, 255)); // green
             }
 
             // update awaylog status
-            emit update_awaylog_status();
+            emit updateAwaylogStatus();
         }
         else
         {
-            tw[i]->display_msg(strData, eMessageCategory);
+            tw[i]->displayMsg(strData, eMessageCategory);
             if (i != pTabM->currentIndex())
             {
                 if (eMessageCategory != DefaultMessage)
-                    pTabM->set_alert(i, QColor(0, 147, 0, 255)); // green
+                    pTabM->setAlert(i, QColor(0, 147, 0, 255)); // green
                 else
-                    pTabM->set_alert(i, QColor(255, 0, 0, 255)); // red
+                    pTabM->setAlert(i, QColor(255, 0, 0, 255)); // red
             }
         }
     }
 }
 
-void TabContainer::show_msg_all(QString &strData, MessageCategory eMessageCategory)
+void TabContainer::showMsgAll(QString &strData, MessageCategory eMessageCategory)
 {
     for (int i = 0; i < tw.size(); i++)
     {
         QString strDataAll = strData;
-        tw[i]->display_msg(strDataAll, eMessageCategory);
+        tw[i]->displayMsg(strDataAll, eMessageCategory);
         if (i != pTabM->currentIndex())
         {
             if (eMessageCategory != DefaultMessage)
-                pTabM->set_alert(i, QColor(0, 147, 0, 255)); // green
+                pTabM->setAlert(i, QColor(0, 147, 0, 255)); // green
             else
-                pTabM->set_alert(i, QColor(255, 0, 0, 255)); // red
+                pTabM->setAlert(i, QColor(255, 0, 0, 255)); // red
         }
     }
 }
 
-void TabContainer::show_msg_active(QString &strData, MessageCategory eMessageCategory)
+void TabContainer::showMsgActive(QString &strData, MessageCategory eMessageCategory)
 {
     for (int i = 0; i < tw.size(); i++)
     {
         if (i == pTabM->currentIndex())
         {
-            tw[i]->display_msg(strData, eMessageCategory);
+            tw[i]->displayMsg(strData, eMessageCategory);
             return;
         }
     }
 }
 
-void TabContainer::set_topic(QString &strChannel, QString &strTopic)
+void TabContainer::setTopic(QString &strChannel, QString &strTopic)
 {
-    int i = get_index(strChannel);
+    int i = getIndex(strChannel);
     if (i != -1)
-        tw[i]->set_topic(strTopic);
+        tw[i]->setTopic(strTopic);
 }
 
-void TabContainer::author_topic(QString &strChannel, QString &strNick)
+void TabContainer::authorTopic(QString &strChannel, QString &strNick)
 {
-    int i = get_index(strChannel);
+    int i = getIndex(strChannel);
     if (i != -1)
-        tw[i]->author_topic(strNick);
+        tw[i]->authorTopic(strNick);
 }
 
-void TabContainer::slot_update_nick_avatar(QString strNick)
+void TabContainer::slotUpdateNickAvatar(QString strNick)
 {
-    emit update_nick_avatar(strNick);
+    emit updateNickAvatar(strNick);
 }
 
-void TabContainer::slot_update_channel_avatar(QString strChannel)
+void TabContainer::slotUpdateChannelAvatar(QString strChannel)
 {
-    int i = get_index(strChannel);
+    int i = getIndex(strChannel);
     if (i != -1)
     {
         QByteArray bAvatar = Core::instance()->mChannelAvatar.value(strChannel);
@@ -311,54 +311,54 @@ void TabContainer::slot_update_channel_avatar(QString strChannel)
     }
 }
 
-void TabContainer::slot_show_msg(QString &strChannel, QString &strData, MessageCategory eMessageCategory)
+void TabContainer::slotShowMsg(QString &strChannel, QString &strData, MessageCategory eMessageCategory)
 {
-    show_msg(strChannel, strData, eMessageCategory);
+    showMsg(strChannel, strData, eMessageCategory);
 }
 
-void TabContainer::slot_show_msg_active(QString &strData, MessageCategory eMessageCategory)
+void TabContainer::slotShowMsgActive(QString &strData, MessageCategory eMessageCategory)
 {
-    show_msg_active(strData, eMessageCategory);
+    showMsgActive(strData, eMessageCategory);
 }
 
-void TabContainer::slot_show_msg_all(QString &strData, MessageCategory eMessageCategory)
+void TabContainer::slotShowMsgAll(QString &strData, MessageCategory eMessageCategory)
 {
-    show_msg_all(strData, eMessageCategory);
+    showMsgAll(strData, eMessageCategory);
 }
 
-void TabContainer::slot_display_message(QString &strChannel, QString &strData, MessageCategory eMessageCategory)
+void TabContainer::slotDisplayMessage(QString &strChannel, QString &strData, MessageCategory eMessageCategory)
 {
-    int i = get_index(strChannel);
+    int i = getIndex(strChannel);
     if (i != -1)
-        tw[i]->display_message(strData, eMessageCategory);
+        tw[i]->displayMessage(strData, eMessageCategory);
 }
 
-void TabContainer::slot_change_font_size(QString strSize)
+void TabContainer::slotChangeFontSize(QString strSize)
 {
     for (int i = 0; i < tw.size(); i++)
-        tw[i]->change_font_size(strSize);
+        tw[i]->changeFontSize(strSize);
 }
 
-void TabContainer::slot_clear_content(QString strChannel)
+void TabContainer::slotClearContent(QString strChannel)
 {
-    int i = get_index(strChannel);
+    int i = getIndex(strChannel);
     if (i != -1)
-        tw[i]->clear_content();
+        tw[i]->clearContent();
 }
 
-void TabContainer::refresh_colors()
+void TabContainer::refreshColors()
 {
     QSettings settings;
     for (int i = 0; i < tw.size(); i++)
     {
-        tw[i]->refresh_colors();
+        tw[i]->refreshColors();
         // update tab name color
-        pTabM->set_color(i, QColor(settings.value("default_font_color").toString()));
+        pTabM->setColor(i, QColor(settings.value("default_font_color").toString()));
     }
 }
 
-void TabContainer::refresh_background_image()
+void TabContainer::refreshBackgroundImage()
 {
     for (int i = 0; i < tw.size(); i++)
-        tw[i]->refresh_background_image();
+        tw[i]->refreshBackgroundImage();
 }

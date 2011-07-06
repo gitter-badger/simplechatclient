@@ -52,7 +52,7 @@ private:
     /**
      * Generate iv
      */
-    void gen_iv();
+    void genIv();
 };
 
 #endif // CRYPT_H

@@ -41,10 +41,10 @@ private:
     TabContainer *pTabC;
     bool bAuthorizing;
 
-    QString network_request(QNetworkAccessManager *, QString, QString);
-    QString get_version(QString);
-    void save_cookies(QNetworkAccessManager*);
-    void request_finished(QString, QString);
+    QString networkRequest(QNetworkAccessManager *, QString, QString);
+    QString getVersion(QString);
+    void saveCookies(QNetworkAccessManager*);
+    void requestFinished(QString, QString);
 
 signals:
     void send(QString);

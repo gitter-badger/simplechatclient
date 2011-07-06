@@ -41,29 +41,29 @@ public:
      * @param QString key
      * @return QString value
      */
-    QString get_value(QString);
+    QString getValue(QString);
     /**
      * Set config key value
      * @param QString key
      * @param QString value
      */
-    void set_value(QString, QString);
+    void setValue(QString, QString);
     /**
      * Read config to QMap
      * @return QMap all keys,values
      */
-    QMap<QString,QString> read_config();
+    QMap<QString,QString> readConfig();
 
 private:
     QString strConfigFile;
     QFile *file;
     QDomDocument doc;
 
-    void remove_value(QString);
-    void fix_config();
-    void create_new_config();
-    QMap<QString,QString> get_default_values();
-    void add_config_value(QDomDocument *, QDomElement *, QString, QString);
+    void removeValue(QString);
+    void fixConfig();
+    void createNewConfig();
+    QMap<QString,QString> getDefaultValues();
+    void addConfigValue(QDomDocument *, QDomElement *, QString, QString);
     void save();
 };
 

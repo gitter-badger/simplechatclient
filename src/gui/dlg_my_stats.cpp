@@ -110,8 +110,8 @@ void DlgMyStats::refresh()
             ui.label_stats_average_time->setText(QString::number(fAverageTime24,'g',3)+" h");
 
             // simple stats widget
-            pSimpleStatsWidget->set_max(100);
-            pSimpleStatsWidget->set_stats(lStats);
+            pSimpleStatsWidget->setMax(100);
+            pSimpleStatsWidget->setStats(lStats);
         }
         else if (strKey == "relationsFriend")
         {

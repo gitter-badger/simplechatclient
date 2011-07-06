@@ -36,8 +36,8 @@ class ToolWidget : public QWidget
     Q_OBJECT
 public:
     ToolWidget(QWidget *, Network *, InputWidget *, DlgChannelSettings *, DlgModeration *);
-    void set_moderation(bool);
-    void set_channel_settings(bool);
+    void setModeration(bool);
+    void setChannelSettings(bool);
 
 private:
     // params
@@ -87,38 +87,38 @@ private:
     QAction *size20Act;
     QAction *size24Act;
 
-    void set_default();
+    void setDefault();
 
 private slots:
-    void show_font_buttons_clicked();
-    void bold_clicked();
-    void italic_clicked();
-    void arial_triggered();
-    void times_triggered();
-    void verdana_triggered();
-    void tahoma_triggered();
-    void courier_triggered();
+    void showFontButtonsClicked();
+    void boldClicked();
+    void italicClicked();
+    void arialTriggered();
+    void timesTriggered();
+    void verdanaTriggered();
+    void tahomaTriggered();
+    void courierTriggered();
 
-    void size8_triggered();
-    void size9_triggered();
-    void size10_triggered();
-    void size11_triggered();
-    void size12_triggered();
-    void size14_triggered();
-    void size16_triggered();
-    void size18_triggered();
-    void size20_triggered();
-    void size24_triggered();
+    void size8Triggered();
+    void size9Triggered();
+    void size10Triggered();
+    void size11Triggered();
+    void size12Triggered();
+    void size14Triggered();
+    void size16Triggered();
+    void size18Triggered();
+    void size20Triggered();
+    void size24Triggered();
 
-    void color_clicked(int);
-    void emoticons_clicked();
-    void channel_settings_clicked();
-    void moderation_clicked();
-    void clear_clicked();
+    void colorClicked(int);
+    void emoticonsClicked();
+    void channelSettingsClicked();
+    void moderationClicked();
+    void clearClicked();
 
 signals:
-    void change_font_size(QString);
-    void clear_content(QString);
+    void changeFontSize(QString);
+    void clearContent(QString);
 };
 
 #endif // TOOLWIDGET_H

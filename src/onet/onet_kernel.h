@@ -260,17 +260,17 @@ private:
     void raw_952();
 
 private slots:
-    void timer_rename_channel();
+    void timerRenameChannel();
 
 signals:
-    void add_user(QString,QString,QString,bool);
-    void del_user(QString,QString);
-    void nicklist_refresh(QString);
-    void quit_user(QString,QString);
-    void change_flag(QString,QString,QString);
-    void change_flag(QString,QString);
-    void clear_nicklist(QString);
-    void clear_channel_all_nick_avatars(QString);
+    void addUser(QString,QString,QString,bool);
+    void delUser(QString,QString);
+    void nicklistRefresh(QString);
+    void quitUser(QString,QString);
+    void changeFlag(QString,QString,QString);
+    void changeFlag(QString,QString);
+    void clearNicklist(QString);
+    void clearChannelAllNickAvatars(QString);
 };
 
 #endif // ONET_KERNEL_H

@@ -47,19 +47,19 @@ private:
     QTimer *timerGetPort;
 
     void log(QString);
-    void get_path();
+    void getPath();
     void authorize();
-    void kamerzysta_not_running();
-    void kamerzysta_running();
+    void kamerzystaNotRunning();
+    void kamerzystaRunning();
 
 private slots:
-    void get_port();
-    void network_connect();
-    void network_connected();
-    void network_disconnect();
-    void network_disconnected();
-    void network_send(QString);
-    void network_read();
+    void getPort();
+    void networkConnect();
+    void networkConnected();
+    void networkDisconnect();
+    void networkDisconnected();
+    void networkSend(QString);
+    void networkRead();
     void error(QAbstractSocket::SocketError);
 };
 

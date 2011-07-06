@@ -34,12 +34,12 @@ InputLineWidget::~InputLineWidget()
     usersList.clear();
 }
 
-void InputLineWidget::set_userslist(QList<QString> newUsersList)
+void InputLineWidget::setUserslist(QList<QString> newUsersList)
 {
     usersList = newUsersList;
 }
 
-void InputLineWidget::insert_text(QString strText)
+void InputLineWidget::insertText(QString strText)
 {
     // pos
     int iPos = this->cursorPosition();
@@ -50,7 +50,7 @@ void InputLineWidget::insert_text(QString strText)
     this->setText(strLine);
 }
 
-QString InputLineWidget::get_word()
+QString InputLineWidget::getWord()
 {
     QString strWord = this->text();
     if (!strWord.isEmpty())
@@ -72,7 +72,7 @@ QString InputLineWidget::get_word()
     return strWord;
 }
 
-void InputLineWidget::set_word(QString strSetWord)
+void InputLineWidget::setWord(QString strSetWord)
 {
     QString strWord = this->text();
     if (!strWord.isEmpty())
@@ -119,7 +119,7 @@ bool InputLineWidget::event(QEvent *e)
             if (usersList.size() == 0)
                 return true;
 
-            QString strWord = get_word();
+            QString strWord = getWord();
 
             if (strWord.isEmpty())
                 return true;
@@ -146,7 +146,7 @@ bool InputLineWidget::event(QEvent *e)
                 if (!find.isEmpty())
                 {
                     QString strSetWord = find.at(index);
-                    set_word(strSetWord);
+                    setWord(strSetWord);
                 }
 
                 index++;
