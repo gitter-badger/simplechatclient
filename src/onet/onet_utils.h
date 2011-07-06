@@ -25,6 +25,7 @@
 
 class OnetUtils : public QObject
 {
+    Q_OBJECT
 public:
     OnetUtils();
     QString transformKey(QString);
