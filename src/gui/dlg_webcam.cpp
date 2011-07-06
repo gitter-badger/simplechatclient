@@ -41,7 +41,7 @@ DlgWebcam::DlgWebcam(QString n, bool m)
 
     pWebcamEngine = new WebcamEngine(strNick, bMini);
 
-    create_signals();
+    createSignals();
 }
 
 DlgWebcam::~DlgWebcam()
@@ -54,46 +54,46 @@ DlgWebcam::~DlgWebcam()
     delete pWebcamEngine;
 }
 
-void DlgWebcam::create_signals()
+void DlgWebcam::createSignals()
 {
     if (bMini)
     {
-        QObject::connect(pWebcamEngine, SIGNAL(update_image(QByteArray)), pWebcamMini, SLOT(update_image(QByteArray)));
-        QObject::connect(pWebcamEngine, SIGNAL(update_text(QString)), pWebcamMini, SLOT(update_text(QString)));
-        QObject::connect(pWebcamEngine, SIGNAL(user_error(QString)), this, SLOT(user_error(QString)));
+        QObject::connect(pWebcamEngine, SIGNAL(updateImage(QByteArray)), pWebcamMini, SLOT(updateImage(QByteArray)));
+        QObject::connect(pWebcamEngine, SIGNAL(updateText(QString)), pWebcamMini, SLOT(updateText(QString)));
+        QObject::connect(pWebcamEngine, SIGNAL(userError(QString)), this, SLOT(userError(QString)));
         QObject::connect(pWebcamEngine, SIGNAL(error(QString)), pWebcamMini, SLOT(error(QString)));
 
-        QObject::connect(pWebcamMini, SIGNAL(close_cam()), this, SLOT(close_cam()));
+        QObject::connect(pWebcamMini, SIGNAL(closeCam()), this, SLOT(closeCam()));
     }
     else
     {
-        QObject::connect(pWebcamEngine, SIGNAL(update_image(QByteArray)), pWebcamStandard, SLOT(update_image(QByteArray)));
-        QObject::connect(pWebcamEngine, SIGNAL(update_text(QString)), pWebcamStandard, SLOT(update_text(QString)));
-        QObject::connect(pWebcamEngine, SIGNAL(update_rank(int)), pWebcamStandard, SLOT(update_rank(int)));
-        QObject::connect(pWebcamEngine, SIGNAL(update_status(QString)), pWebcamStandard, SLOT(update_status(QString)));
-        QObject::connect(pWebcamEngine, SIGNAL(vote_ok()), pWebcamStandard, SLOT(vote_ok()));
-        QObject::connect(pWebcamEngine, SIGNAL(user_error(QString)), pWebcamStandard, SLOT(user_error(QString)));
+        QObject::connect(pWebcamEngine, SIGNAL(updateImage(QByteArray)), pWebcamStandard, SLOT(updateImage(QByteArray)));
+        QObject::connect(pWebcamEngine, SIGNAL(updateText(QString)), pWebcamStandard, SLOT(updateText(QString)));
+        QObject::connect(pWebcamEngine, SIGNAL(updateRank(int)), pWebcamStandard, SLOT(updateRank(int)));
+        QObject::connect(pWebcamEngine, SIGNAL(updateStatus(QString)), pWebcamStandard, SLOT(updateStatus(QString)));
+        QObject::connect(pWebcamEngine, SIGNAL(voteOk()), pWebcamStandard, SLOT(voteOk()));
+        QObject::connect(pWebcamEngine, SIGNAL(userError(QString)), pWebcamStandard, SLOT(userError(QString)));
         QObject::connect(pWebcamEngine, SIGNAL(error(QString)), pWebcamStandard, SLOT(error(QString)));
-        QObject::connect(pWebcamEngine, SIGNAL(add_user(QString,int,QString)), pWebcamStandard, SLOT(add_user(QString,int,QString)));
-        QObject::connect(pWebcamEngine, SIGNAL(update_user(QString,int,QString)), pWebcamStandard, SLOT(update_user(QString,int,QString)));
-        QObject::connect(pWebcamEngine, SIGNAL(remove_user(QString)), pWebcamStandard, SLOT(remove_user(QString)));
-        QObject::connect(pWebcamEngine, SIGNAL(clear_users()), pWebcamStandard, SLOT(clear_users()));
+        QObject::connect(pWebcamEngine, SIGNAL(addUser(QString,int,QString)), pWebcamStandard, SLOT(addUser(QString,int,QString)));
+        QObject::connect(pWebcamEngine, SIGNAL(updateUser(QString,int,QString)), pWebcamStandard, SLOT(updateUser(QString,int,QString)));
+        QObject::connect(pWebcamEngine, SIGNAL(removeUser(QString)), pWebcamStandard, SLOT(removeUser(QString)));
+        QObject::connect(pWebcamEngine, SIGNAL(clearUsers()), pWebcamStandard, SLOT(clearUsers()));
 
-        QObject::connect(pWebcamStandard, SIGNAL(close_cam()), this, SLOT(close_cam()));
-        QObject::connect(pWebcamStandard, SIGNAL(network_send(QString)), pWebcamEngine, SLOT(network_send(QString)));
-        QObject::connect(pWebcamStandard, SIGNAL(set_user(QString)), pWebcamEngine, SLOT(set_user(QString)));
+        QObject::connect(pWebcamStandard, SIGNAL(closeCam()), this, SLOT(closeCam()));
+        QObject::connect(pWebcamStandard, SIGNAL(networkSend(QString)), pWebcamEngine, SLOT(networksend(QString)));
+        QObject::connect(pWebcamStandard, SIGNAL(setUser(QString)), pWebcamEngine, SLOT(setUser(QString)));
     }
 }
 
-void DlgWebcam::close_cam()
+void DlgWebcam::closeCam()
 {
     pWebcamEngine->closeEngine();
     this->deleteLater();
 }
 
-void DlgWebcam::user_error(QString s)
+void DlgWebcam::userError(QString s)
 {
     /* mini */
-    pWebcamMini->update_text(s);
+    pWebcamMini->updateText(s);
     pWebcamEngine->closeEngine();
 }

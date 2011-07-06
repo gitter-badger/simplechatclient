@@ -31,18 +31,18 @@ class DlgChannelSettings : public QDialog
     Q_OBJECT
 public:
     DlgChannelSettings(QWidget *, Network *);
-    void set_channel(QString);
-    inline QString get_channel() { return strChannel; }
-    void set_data(QMap<QString, QString>);
-    void set_stats_data(QMap<QString, QString>);
+    void setChannel(QString);
+    inline QString getChannel() { return strChannel; }
+    void setData(QMap<QString, QString>);
+    void setStatsData(QMap<QString, QString>);
 
-    void set_topic(QString);
-    void set_owner(QString);
-    void set_description(QString);
-    void add_op(QString);
-    void add_halfop(QString);
-    void add_ban(QString, QString, QString, QString);
-    void add_invite(QString, QString, QString);
+    void setTopic(QString);
+    void setOwner(QString);
+    void setDescription(QString);
+    void addOp(QString);
+    void addHalfop(QString);
+    void addBan(QString, QString, QString, QString);
+    void addInvite(QString, QString, QString);
 
 private:
     Ui::uiChannelSettings ui;
@@ -50,12 +50,12 @@ private:
     QString strChannel;
     SimpleStatsWidget *pSimpleStatsWidget;
 
-    void create_gui();
-    void set_default_values();
-    void create_signals();
+    void createGui();
+    void setDefaultValues();
+    void createSignals();
 
-    void enable_tabs();
-    bool exist_item(QString, QListWidget *); // for permissions
+    void enableTabs();
+    bool existItem(QString, QListWidget *); // for permissions
     void clear();
 
 protected:
@@ -64,31 +64,31 @@ protected:
     virtual void closeEvent(QCloseEvent *);
 
 private slots:
-    void owner_changed();
-    void remove_channel_clicked();
-    void email_changed();
-    void www_changed();
-    void topic_changed();
-    void desc_changed();
-    void status_pub();
-    void status_priv();
-    void category_changed(int);
-    void guardian_inactive();
-    void guardian_active();
-    void guardian_clicked(int);
-    void password_changed();
-    void limit_changed();
-    void moderated_inactive();
-    void moderated_active();
-    void auditorium_inactive();
-    void auditorium_active();
+    void ownerChanged();
+    void removeChannelClicked();
+    void emailChanged();
+    void wwwChanged();
+    void topicChanged();
+    void descChanged();
+    void statusPub();
+    void statusPriv();
+    void categoryChanged(int);
+    void guardianInactive();
+    void guardianActive();
+    void guardianClicked(int);
+    void passwordChanged();
+    void limitChanged();
+    void moderatedInactive();
+    void moderatedActive();
+    void auditoriumInactive();
+    void auditoriumActive();
 
-    void button_permission_add();
-    void button_permission_remove();
-    void change_permission_list(QModelIndex);
+    void buttonPermissionAdd();
+    void buttonPermissionRemove();
+    void changePermissionList(QModelIndex);
 
-    void button_ok();
-    void button_cancel();
+    void buttonOk();
+    void buttonCancel();
 };
 
 #endif // DLG_CHANNEL_SETTINGS_H

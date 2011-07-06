@@ -39,15 +39,15 @@ private:
     QString strVersion;
     QNetworkAccessManager *accessManager;
 
-    void create_gui();
-    void set_default_values();
-    void create_signals();
-    void got_site(QString);
-    void got_file(QByteArray);
+    void createGui();
+    void setDefaultValues();
+    void createSignals();
+    void gotSite(QString);
+    void gotFile(QByteArray);
 
 private slots:
-    void button_download();
-    void network_finished(QNetworkReply*);
+    void buttonDownload();
+    void networkFinished(QNetworkReply*);
     void downloadProgress(qint64,qint64);
     void downloadError(QNetworkReply::NetworkError);
 };

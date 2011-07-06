@@ -31,8 +31,8 @@ public:
     DlgWebcamMini(QString);
 
 public slots:
-    void update_image(QByteArray);
-    void update_text(QString);
+    void updateImage(QByteArray);
+    void updateText(QString);
     void error(QString);
 
 private:
@@ -42,7 +42,7 @@ protected:
     virtual void closeEvent(QCloseEvent *);
 
 signals:
-    void close_cam();
+    void closeCam();
 };
 
 #endif // DLG_WEBCAM_MINI_H

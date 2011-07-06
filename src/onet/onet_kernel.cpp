@@ -1140,8 +1140,8 @@ void OnetKernel::raw_topic()
     pTabC->showMsg(strChannel, strDisplay, ModeMessage);
 
     // set topic in channel settings
-    if (pDlgChannelSettings->get_channel() == strChannel)
-        pDlgChannelSettings->set_topic(strTopic);
+    if (pDlgChannelSettings->getChannel() == strChannel)
+        pDlgChannelSettings->setTopic(strTopic);
 
     // set topic in widget
     pTabC->setTopic(strChannel, strTopic);
@@ -1252,7 +1252,7 @@ void OnetKernel::raw_moderate()
     for (int i = 6; i < strDataList.size(); i++) { if (i != 6) strMessage += " "; strMessage += strDataList[i]; }
     if (strMessage[0] == ':') strMessage.remove(0,1);
 
-    pDlgModeration->add_msg(strID, strChannel, strNick, strMessage);
+    pDlgModeration->addMsg(strID, strChannel, strNick, strMessage);
 }
 
 // :cf1f4.onet KILL scc_test :cf1f4.onet (Killed (Nickname collision))
@@ -1447,8 +1447,8 @@ void OnetKernel::raw_111n()
         strAvatarLink = strValue;
 
     // set user info
-    if (pDlgUserProfile->get_nick() == strNick)
-        pDlgUserProfile->set_user_info(strKey, strValue);
+    if (pDlgUserProfile->getNick() == strNick)
+        pDlgUserProfile->setUserInfo(strKey, strValue);
 
     // set my profile
     if (strNick == strMe)
@@ -1635,8 +1635,8 @@ void OnetKernel::raw_160n()
     if (strTopic[0] == ':') strTopic.remove(0,1);
 
     // set topic in channel settings
-    if (pDlgChannelSettings->get_channel() == strChannel)
-        pDlgChannelSettings->set_topic(strTopic);
+    if (pDlgChannelSettings->getChannel() == strChannel)
+        pDlgChannelSettings->setTopic(strTopic);
 
     // set topic in widget
     pTabC->setTopic(strChannel, strTopic);
@@ -1663,8 +1663,8 @@ void OnetKernel::raw_161n()
     }
 
     // set data
-    if (pDlgChannelSettings->get_channel() == strChannel)
-        pDlgChannelSettings->set_data(mKeyValue);
+    if (pDlgChannelSettings->getChannel() == strChannel)
+        pDlgChannelSettings->setData(mKeyValue);
 
     // update topic author
     QString strTopicAuthor = mKeyValue.value("topicAuthor");
@@ -1704,14 +1704,14 @@ void OnetKernel::raw_162n()
 
         if ((!strKey.isEmpty()) && (!strValue.isEmpty()))
         {
-            if (pDlgChannelSettings->get_channel() == strChannel)
+            if (pDlgChannelSettings->getChannel() == strChannel)
             {
                 if (strKey == "q")
-                    pDlgChannelSettings->set_owner(strValue);
+                    pDlgChannelSettings->setOwner(strValue);
                 else if (strKey == "o")
-                    pDlgChannelSettings->add_op(strValue);
+                    pDlgChannelSettings->addOp(strValue);
                 else if (strKey == "h")
-                    pDlgChannelSettings->add_halfop(strValue);
+                    pDlgChannelSettings->addHalfop(strValue);
             }
         }
     }
@@ -1736,12 +1736,12 @@ void OnetKernel::raw_163n()
     QDateTime dt = QDateTime::fromTime_t(strDT.toInt());
     strDT = dt.toString("dd/MM/yyyy hh:mm:ss");
 
-    if (pDlgChannelSettings->get_channel() == strChannel)
+    if (pDlgChannelSettings->getChannel() == strChannel)
     {
         if (strFlag == "b")
-            pDlgChannelSettings->add_ban(strNick, strWho, strDT, strIPNick);
+            pDlgChannelSettings->addBan(strNick, strWho, strDT, strIPNick);
         else if (strFlag == "I")
-            pDlgChannelSettings->add_invite(strNick, strWho, strDT);
+            pDlgChannelSettings->addInvite(strNick, strWho, strDT);
     }
 }
 
@@ -1763,8 +1763,8 @@ void OnetKernel::raw_165n()
     for (int i = 5; i < strDataList.size(); i++) { if (i != 5) strDescription += " "; strDescription += strDataList[i]; }
     if (strDescription[0] == ':') strDescription.remove(0,1);
 
-    if (pDlgChannelSettings->get_channel() == strChannel)
-        pDlgChannelSettings->set_description(strDescription);
+    if (pDlgChannelSettings->getChannel() == strChannel)
+        pDlgChannelSettings->setDescription(strDescription);
 }
 
 // RS INFO Merovingian
@@ -1816,8 +1816,8 @@ void OnetKernel::raw_175n()
         mKeyValue.insert(strKey, strValue);
     }
 
-    if (pDlgChannelSettings->get_channel() == strChannel)
-        pDlgChannelSettings->set_stats_data(mKeyValue);
+    if (pDlgChannelSettings->getChannel() == strChannel)
+        pDlgChannelSettings->setStatsData(mKeyValue);
 }
 
 // :RankServ!service@service.onet NOTICE Merovingian :176 #scc :end of channel stats
@@ -2706,7 +2706,7 @@ void OnetKernel::raw_341()
     if (strChannel[0] == '^')
     {
         mOldNameNewName.insert(strChannel, strNick);
-        QTimer::singleShot(1000*3, this, SLOT(timer_rename_channel())); // 3 sec
+        QTimer::singleShot(1000*3, this, SLOT(timerRenameChannel())); // 3 sec
     }
 }
 
@@ -2791,7 +2791,7 @@ void OnetKernel::raw_353()
                 if (strCleanNick != strMe)
                 {
                     mOldNameNewName.insert(strChannel, strCleanNick);
-                    QTimer::singleShot(1000*3, this, SLOT(timer_rename_channel())); // 3 sec
+                    QTimer::singleShot(1000*3, this, SLOT(timerRenameChannel())); // 3 sec
                 }
             }
 

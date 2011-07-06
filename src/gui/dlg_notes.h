@@ -35,15 +35,15 @@ private:
     QString path;
     QString strNotesFile;
 
-    void create_gui();
-    void create_signals();
+    void createGui();
+    void createSignals();
 
-    void read_path();
+    void readPath();
     void read();
     void save();
 
 private slots:
-    void button_ok();
+    void buttonOk();
 
 protected:
     virtual void resizeEvent(QResizeEvent *);

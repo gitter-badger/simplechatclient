@@ -35,13 +35,13 @@ DlgOfflineMsg::DlgOfflineMsg(QWidget *parent, Network *param1) : QDialog(parent)
 
     pNetwork = param1;
 
-    create_gui();
-    create_signals();
+    createGui();
+    createSignals();
 
     refresh();
 }
 
-void DlgOfflineMsg::create_gui()
+void DlgOfflineMsg::createGui()
 {
     ui.pushButton_read->setIcon(QIcon(":/images/oxygen/16x16/mail-mark-read.png"));
     ui.pushButton_reject->setIcon(QIcon(":/images/oxygen/16x16/mail-mark-junk.png"));
@@ -57,16 +57,16 @@ void DlgOfflineMsg::create_gui()
     ui.pushButton_reply->setEnabled(false);
 }
 
-void DlgOfflineMsg::create_signals()
+void DlgOfflineMsg::createSignals()
 {
-    QObject::connect(ui.pushButton_read, SIGNAL(clicked()), this, SLOT(button_read()));
-    QObject::connect(ui.pushButton_reject, SIGNAL(clicked()), this, SLOT(button_reject()));
-    QObject::connect(ui.pushButton_reply, SIGNAL(clicked()), this, SLOT(button_reply()));
-    QObject::connect(ui.lineEdit_reply, SIGNAL(returnPressed()), this, SLOT(button_reply()));
-    QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(button_close()));
+    QObject::connect(ui.pushButton_read, SIGNAL(clicked()), this, SLOT(buttonRead()));
+    QObject::connect(ui.pushButton_reject, SIGNAL(clicked()), this, SLOT(buttonReject()));
+    QObject::connect(ui.pushButton_reply, SIGNAL(clicked()), this, SLOT(buttonReply()));
+    QObject::connect(ui.lineEdit_reply, SIGNAL(returnPressed()), this, SLOT(buttonReply()));
+    QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(buttonClose()));
 }
 
-void DlgOfflineMsg::remove_nick(QString strRemoveNick)
+void DlgOfflineMsg::removeNick(QString strRemoveNick)
 {
     // list
     Core::instance()->lOfflineNicks.removeOne(strRemoveNick);
@@ -96,7 +96,7 @@ void DlgOfflineMsg::refresh()
         ui.listWidget_nicks->insertItem(ui.listWidget_nicks->count(), Core::instance()->lOfflineNicks.at(i));
 }
 
-bool DlgOfflineMsg::exist_nick()
+bool DlgOfflineMsg::existNick()
 {
     for (int i = 0; i < Core::instance()->lOfflineMsg.size(); i++)
     {
@@ -108,11 +108,11 @@ bool DlgOfflineMsg::exist_nick()
     return false;
 }
 
-void DlgOfflineMsg::refresh_msg()
+void DlgOfflineMsg::refreshMsg()
 {
-    if (!exist_nick())
+    if (!existNick())
     {
-        QTimer::singleShot(1000*4, this, SLOT(refresh_msg())); // 3 sec
+        QTimer::singleShot(1000*4, this, SLOT(refreshMsg())); // 3 sec
         return;
     }
 
@@ -174,7 +174,7 @@ void DlgOfflineMsg::refresh_msg()
     }
 }
 
-void DlgOfflineMsg::button_read()
+void DlgOfflineMsg::buttonRead()
 {
     if (ui.listWidget_nicks->selectedItems().size() == 0) return; // nothing selected
 
@@ -184,15 +184,15 @@ void DlgOfflineMsg::button_read()
     strCurrentNick = strNick;
     ui.label_nick->setText(QString(tr("Offline messages from %1")).arg(strNick));
     // remove nick
-    remove_nick(strNick);
+    removeNick(strNick);
     // clear
     ui.listWidget_msg->clear();
     ui.lineEdit_reply->clear();
 
-    QTimer::singleShot(1000*4, this, SLOT(refresh_msg())); // 3 sec
+    QTimer::singleShot(1000*4, this, SLOT(refreshMsg())); // 3 sec
 }
 
-void DlgOfflineMsg::button_reject()
+void DlgOfflineMsg::buttonReject()
 {
     if (ui.listWidget_nicks->selectedItems().size() == 0) return; // nothing selected
 
@@ -200,10 +200,10 @@ void DlgOfflineMsg::button_reject()
     pNetwork->send(QString("NS OFFLINE REJECT %1").arg(strNick));
 
     // remove nick
-    remove_nick(strNick);
+    removeNick(strNick);
 }
 
-void DlgOfflineMsg::button_reply()
+void DlgOfflineMsg::buttonReply()
 {
     if (strCurrentNick.isEmpty()) return; // wrong nick
 
@@ -232,7 +232,7 @@ void DlgOfflineMsg::button_reply()
     ui.listWidget_msg->addItem(strMessage);
 }
 
-void DlgOfflineMsg::button_close()
+void DlgOfflineMsg::buttonClose()
 {
     // hide if no messages
     if (Core::instance()->lOfflineNicks.size() == 0)

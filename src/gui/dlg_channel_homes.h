@@ -37,17 +37,17 @@ private:
     Network *pNetwork;
     DlgChannelSettings *pDlgChannelSettings;
 
-    void create_gui();
-    void create_signals();
+    void createGui();
+    void createSignals();
 
 private slots:
     void refresh();
-    void list_clicked(QModelIndex);
-    void item_clicked(QListWidgetItem*);
-    void button_create();
-    void button_remove();
-    void button_join();
-    void button_settings();
+    void listClicked(QModelIndex);
+    void itemClicked(QListWidgetItem*);
+    void buttonCreate();
+    void buttonRemove();
+    void buttonJoin();
+    void buttonSettings();
 };
 
 #endif // DLG_CHANNEL_HOMES_H

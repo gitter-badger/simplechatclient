@@ -35,16 +35,16 @@ private:
     Ui::uiFriends ui;
     Network *pNetwork;
 
-    void create_gui();
-    void create_signals();
+    void createGui();
+    void createSignals();
 
 private slots:
     void refresh();
-    void tab_changed(int);
-    void item_clicked(QListWidgetItem*);
-    void button_add();
-    void button_remove();
-    void button_whois();
+    void tabChanged(int);
+    void itemClicked(QListWidgetItem*);
+    void buttonAdd();
+    void buttonRemove();
+    void buttonWhois();
 };
 
 #endif // DLG_FRIENDS_H

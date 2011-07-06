@@ -40,11 +40,11 @@ private:
     DlgWebcamMini *pWebcamMini;
     DlgWebcamStandard *pWebcamStandard;
 
-    void create_signals();
+    void createSignals();
 
 private slots:
-    void close_cam();
-    void user_error(QString);
+    void closeCam();
+    void userError(QString);
 };
 
 #endif // DLG_WEBCAM_H

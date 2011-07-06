@@ -36,29 +36,29 @@ DlgNotes::DlgNotes(QWidget *parent) : QDialog(parent)
     // center screen
     move(QApplication::desktop()->screen()->rect().center() - rect().center());
 
-    create_gui();
+    createGui();
 
     // read path
-    read_path();
+    readPath();
     // read notes
     read();
 
-    create_signals();
+    createSignals();
 }
 
-void DlgNotes::create_gui()
+void DlgNotes::createGui()
 {
     ui.buttonBox->button(QDialogButtonBox::Ok)->setIcon(QIcon(":/images/oxygen/16x16/dialog-ok.png"));
     ui.buttonBox->button(QDialogButtonBox::Cancel)->setIcon(QIcon(":/images/oxygen/16x16/dialog-cancel.png"));
 }
 
-void DlgNotes::create_signals()
+void DlgNotes::createSignals()
 {
-    QObject::connect(ui.buttonBox, SIGNAL(accepted()), this, SLOT(button_ok()));
+    QObject::connect(ui.buttonBox, SIGNAL(accepted()), this, SLOT(buttonOk()));
     QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(close()));
 }
 
-void DlgNotes::read_path()
+void DlgNotes::readPath()
 {
 #ifdef Q_WS_X11
     path = QDir::homePath()+"/.scc";
@@ -112,7 +112,7 @@ void DlgNotes::save()
     delete fs;
 }
 
-void DlgNotes::button_ok()
+void DlgNotes::buttonOk()
 {
     // save notes
     save();

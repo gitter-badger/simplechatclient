@@ -41,19 +41,19 @@ private:
     QNetworkAccessManager *accessManager;
     QNetworkCookieJar *cookieJar;
 
-    void create_gui();
-    void create_signals();
+    void createGui();
+    void createSignals();
 
-    void get_cookies();
-    void get_img();
-    void got_img(QByteArray);
-    void set_email();
-    void parse_result(QString);
+    void getCookies();
+    void getImg();
+    void gotImg(QByteArray);
+    void setEmail();
+    void parseResult(QString);
 
 private slots:
-    void network_finished(QNetworkReply*);
-    void button_ok();
-    void button_refresh();
+    void networkFinished(QNetworkReply*);
+    void buttonOk();
+    void buttonRefresh();
 };
 
 #endif // DLG_EMAIL_H

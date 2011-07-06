@@ -37,11 +37,11 @@ DlgWebcamStandard::DlgWebcamStandard()
     pSimpleRankWidget->show();
     ui.horizontalLayout_toolbuttons->insertWidget(2, pSimpleRankWidget);
 
-    create_gui();
-    create_signals();
+    createGui();
+    createSignals();
 }
 
-void DlgWebcamStandard::create_gui()
+void DlgWebcamStandard::createGui()
 {
     ui.toolButton_vote_minus->setIcon(QIcon(":/images/oxygen/16x16/list-remove.png"));
     ui.toolButton_vote_plus->setIcon(QIcon(":/images/oxygen/16x16/list-add.png"));
@@ -56,15 +56,15 @@ void DlgWebcamStandard::create_gui()
     ui.textEdit_desc->hide();
 }
 
-void DlgWebcamStandard::create_signals()
+void DlgWebcamStandard::createSignals()
 {
-    QObject::connect(ui.listWidget_nicks, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(change_user(QListWidgetItem*)));
-    QObject::connect(ui.toolButton_vote_minus, SIGNAL(clicked()), this, SLOT(vote_minus()));
-    QObject::connect(ui.toolButton_vote_plus, SIGNAL(clicked()), this, SLOT(vote_plus()));
-    QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(button_close()));
+    QObject::connect(ui.listWidget_nicks, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(changeUser(QListWidgetItem*)));
+    QObject::connect(ui.toolButton_vote_minus, SIGNAL(clicked()), this, SLOT(voteMinus()));
+    QObject::connect(ui.toolButton_vote_plus, SIGNAL(clicked()), this, SLOT(votePlus()));
+    QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(buttonClose()));
 }
 
-void DlgWebcamStandard::update_image(QByteArray b)
+void DlgWebcamStandard::updateImage(QByteArray b)
 {
     ui.label_img->clear();
     QPixmap pixmap;
@@ -72,17 +72,17 @@ void DlgWebcamStandard::update_image(QByteArray b)
     ui.label_img->setPixmap(pixmap);
 }
 
-void DlgWebcamStandard::update_text(QString s)
+void DlgWebcamStandard::updateText(QString s)
 {
     ui.label_img->setText(s);
 }
 
-void DlgWebcamStandard::update_rank(int i)
+void DlgWebcamStandard::updateRank(int i)
 {
     pSimpleRankWidget->setRank(i);
 }
 
-void DlgWebcamStandard::user_error(QString s)
+void DlgWebcamStandard::userError(QString s)
 {
     // desc
     ui.textEdit_desc->clear();
@@ -95,33 +95,33 @@ void DlgWebcamStandard::user_error(QString s)
     ui.textEdit_channels->clear();
 }
 
-void DlgWebcamStandard::update_status(QString s)
+void DlgWebcamStandard::updateStatus(QString s)
 {
     ui.textEdit_desc->setText(s);
     ui.textEdit_desc->show();
 }
 
-void DlgWebcamStandard::vote_minus()
+void DlgWebcamStandard::voteMinus()
 {
     if (!strNick.isEmpty())
-        emit network_send(QString("VOTE %1 -").arg(strNick));
+        emit networkSend(QString("VOTE %1 -").arg(strNick));
 }
 
-void DlgWebcamStandard::vote_plus()
+void DlgWebcamStandard::votePlus()
 {
     if (!strNick.isEmpty())
-        emit network_send(QString("VOTE %1 +").arg(strNick));
+        emit networkSend(QString("VOTE %1 +").arg(strNick));
 }
 
-void DlgWebcamStandard::vote_ok()
+void DlgWebcamStandard::voteOk()
 {
     ui.toolButton_vote_minus->setEnabled(false);
     ui.toolButton_vote_plus->setEnabled(false);
 
-    QTimer::singleShot(1000*3, this, SLOT(enable_vote())); // 3 sec
+    QTimer::singleShot(1000*3, this, SLOT(enableVote())); // 3 sec
 }
 
-void DlgWebcamStandard::enable_vote()
+void DlgWebcamStandard::enableVote()
 {
     ui.toolButton_vote_minus->setEnabled(true);
     ui.toolButton_vote_plus->setEnabled(true);
@@ -130,7 +130,7 @@ void DlgWebcamStandard::enable_vote()
 void DlgWebcamStandard::error(QString s)
 {
     s += "<br>"+tr("Disconnected from server webcams");
-    update_text(s);
+    updateText(s);
 
     // clear
     ui.listWidget_nicks->clear();
@@ -140,7 +140,7 @@ void DlgWebcamStandard::error(QString s)
     ui.textEdit_channels->clear();
 }
 
-void DlgWebcamStandard::add_user(QString strNick, int iRank, QString strSpectators)
+void DlgWebcamStandard::addUser(QString strNick, int iRank, QString strSpectators)
 {
     int row = ui.listWidget_nicks->count();
     SortedListWidgetItem *item = new SortedListWidgetItem();
@@ -150,11 +150,11 @@ void DlgWebcamStandard::add_user(QString strNick, int iRank, QString strSpectato
     ui.listWidget_nicks->insertItem(row,item);
 }
 
-void DlgWebcamStandard::update_user(QString strNick, int iRank, QString strSpectators)
+void DlgWebcamStandard::updateUser(QString strNick, int iRank, QString strSpectators)
 {
     /* update */
-    if (exist_user(strNick))
-        remove_user(strNick);
+    if (existUser(strNick))
+        removeUser(strNick);
 
     /* add user */
     int row = ui.listWidget_nicks->count();
@@ -165,7 +165,7 @@ void DlgWebcamStandard::update_user(QString strNick, int iRank, QString strSpect
     ui.listWidget_nicks->insertItem(row,item);
 }
 
-void DlgWebcamStandard::remove_user(QString strNick)
+void DlgWebcamStandard::removeUser(QString strNick)
 {
     for (int i = 0; i < ui.listWidget_nicks->count(); i++)
     {
@@ -177,12 +177,12 @@ void DlgWebcamStandard::remove_user(QString strNick)
     }
 }
 
-void DlgWebcamStandard::clear_users()
+void DlgWebcamStandard::clearUsers()
 {
     ui.listWidget_nicks->clear();
 }
 
-bool DlgWebcamStandard::exist_user(QString strNick)
+bool DlgWebcamStandard::existUser(QString strNick)
 {
     QList<QListWidgetItem*> items = ui.listWidget_nicks->findItems(strNick, Qt::MatchCaseSensitive);
 
@@ -192,7 +192,7 @@ bool DlgWebcamStandard::exist_user(QString strNick)
         return false;
 }
 
-void DlgWebcamStandard::change_user(QListWidgetItem *item)
+void DlgWebcamStandard::changeUser(QListWidgetItem *item)
 {
     // img
     ui.label_img->setText(tr("Downloading image"));
@@ -209,9 +209,9 @@ void DlgWebcamStandard::change_user(QListWidgetItem *item)
 
     // change user
     if (strNick.isEmpty())
-        emit network_send(QString("SUBSCRIBE_BIG * %1").arg(strNewNick));
+        emit networkSend(QString("SUBSCRIBE_BIG * %1").arg(strNewNick));
     else
-        emit network_send(QString("UNSUBSCRIBE_BIG %1").arg(strNick));
+        emit networkSend(QString("UNSUBSCRIBE_BIG %1").arg(strNick));
 
     // set nick
     strNick = strNewNick;
@@ -220,13 +220,13 @@ void DlgWebcamStandard::change_user(QListWidgetItem *item)
     ui.label_nick->setText(strNick);
 
     // set nick
-    emit set_user(strNick);
+    emit setUser(strNick);
 
     // update channels
     //ui.textEdit_channels->setText(QString("<b>%1</b><br><font color=\"#0000ff\">%2</font>").arg(tr("Is on channels:")).arg(mNickChannels[strNick]));
 }
 
-void DlgWebcamStandard::button_close()
+void DlgWebcamStandard::buttonClose()
 {
     this->close();
 }
@@ -234,5 +234,5 @@ void DlgWebcamStandard::button_close()
 void DlgWebcamStandard::closeEvent(QCloseEvent *e)
 {
     Q_UNUSED (e);
-    emit close_cam();
+    emit closeCam();
 }

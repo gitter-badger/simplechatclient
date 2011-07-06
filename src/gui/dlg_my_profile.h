@@ -35,22 +35,22 @@ private:
     Ui::uiMyProfile ui;
     Network *pNetwork;
 
-    void create_gui();
-    void set_default_values();
-    void create_signals();
+    void createGui();
+    void setDefaultValues();
+    void createSignals();
 
     void refresh();
-    int get_index(QComboBox *, QString);
-    QString convert_text_to_desc(QString);
-    QString convert_desc_to_text(QString);
-    QString convert_code_to_country(QString);
-    QString convert_country_to_code(QString);
-    QString convert_int_to_month(QString);
-    QString convert_month_to_int(QString);
-    QString convert_type(QString);
+    int getIndex(QComboBox *, QString);
+    QString convertTextToDesc(QString);
+    QString convertDescToText(QString);
+    QString convertCodeToCountry(QString);
+    QString convertCountryToCode(QString);
+    QString convertIntToMonth(QString);
+    QString convertMonthToInt(QString);
+    QString convertType(QString);
 
 private slots:
-    void button_ok();
+    void buttonOk();
 };
 
 #endif // DLG_MY_PROFILE_H

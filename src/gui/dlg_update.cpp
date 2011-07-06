@@ -39,12 +39,12 @@ DlgUpdate::DlgUpdate(MainWindow *parent, QString param1) : QDialog(parent)
 
     strVersion = param1;
 
-    create_gui();
-    set_default_values();
-    create_signals();
+    createGui();
+    setDefaultValues();
+    createSignals();
 
     accessManager = new QNetworkAccessManager;
-    QObject::connect(accessManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(network_finished(QNetworkReply*)));
+    QObject::connect(accessManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(networkFinished(QNetworkReply*)));
 }
 
 DlgUpdate::~DlgUpdate()
@@ -52,7 +52,7 @@ DlgUpdate::~DlgUpdate()
     accessManager->deleteLater();
 }
 
-void DlgUpdate::create_gui()
+void DlgUpdate::createGui()
 {
 #ifndef Q_WS_WIN
     ui.progressBar->hide();
@@ -64,7 +64,7 @@ void DlgUpdate::create_gui()
     ui.pushButton_download->setText(tr("Download"));
 }
 
-void DlgUpdate::set_default_values()
+void DlgUpdate::setDefaultValues()
 {
     QString strLink;
 #ifdef Q_WS_WIN
@@ -78,13 +78,13 @@ void DlgUpdate::set_default_values()
     ui.label_msg->setText(strDisplay);
 }
 
-void DlgUpdate::create_signals()
+void DlgUpdate::createSignals()
 {
     QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(close()));
-    QObject::connect(ui.pushButton_download, SIGNAL(clicked()), this, SLOT(button_download()));
+    QObject::connect(ui.pushButton_download, SIGNAL(clicked()), this, SLOT(buttonDownload()));
 }
 
-void DlgUpdate::button_download()
+void DlgUpdate::buttonDownload()
 {
     ui.pushButton_download->setEnabled(false);
 
@@ -94,7 +94,7 @@ void DlgUpdate::button_download()
 
 // <a href="http://downloads.sourceforge.net..." class="direct-download">
 // http://leaseweb.dl.sourceforge.net/project/simplechatclien/scc-1.0.13.917.exe
-void DlgUpdate::got_site(QString site)
+void DlgUpdate::gotSite(QString site)
 {
     site.replace(QRegExp(".*<a href=\"http://downloads.sourceforge.net.*use_mirror=(.*)\" class=\"direct-download\">.*"), "http://\\1.dl.sourceforge.net/project/simplechatclien/scc-"+strVersion+".exe");
 
@@ -109,7 +109,7 @@ void DlgUpdate::got_site(QString site)
         QMessageBox::critical(0, "", tr("Cannot download file"));
 }
 
-void DlgUpdate::got_file(QByteArray bData)
+void DlgUpdate::gotFile(QByteArray bData)
 {
     QString path;
 
@@ -153,7 +153,7 @@ void DlgUpdate::got_file(QByteArray bData)
     exit(0);
 }
 
-void DlgUpdate::network_finished(QNetworkReply *reply)
+void DlgUpdate::networkFinished(QNetworkReply *reply)
 {
     reply->deleteLater();
 
@@ -170,9 +170,9 @@ void DlgUpdate::network_finished(QNetworkReply *reply)
     }
 
     if (strCategory == "site")
-        got_site(QString(bData));
+        gotSite(QString(bData));
     else if (strCategory == "file")
-        got_file(bData);
+        gotFile(bData);
 }
 
 void DlgUpdate::downloadProgress(qint64 bytesReceived,qint64 bytesTotal)

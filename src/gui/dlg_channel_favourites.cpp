@@ -34,13 +34,13 @@ DlgChannelFavourites::DlgChannelFavourites(QWidget *parent, Network *param1) : Q
 
     pNetwork = param1;
 
-    create_gui();
-    create_signals();
+    createGui();
+    createSignals();
 
     refresh();
 }
 
-void DlgChannelFavourites::create_gui()
+void DlgChannelFavourites::createGui()
 {
     ui.pushButton_add->setIcon(QIcon(":/images/oxygen/16x16/irc-join-channel.png"));
     ui.pushButton_remove->setIcon(QIcon(":/images/oxygen/16x16/irc-close-channel.png"));
@@ -50,10 +50,10 @@ void DlgChannelFavourites::create_gui()
     ui.pushButton_remove->setText(tr("Remove"));
 }
 
-void DlgChannelFavourites::create_signals()
+void DlgChannelFavourites::createSignals()
 {
-    QObject::connect(ui.pushButton_add, SIGNAL(clicked()), this, SLOT(button_add()));
-    QObject::connect(ui.pushButton_remove, SIGNAL(clicked()), this, SLOT(button_remove()));
+    QObject::connect(ui.pushButton_add, SIGNAL(clicked()), this, SLOT(buttonAdd()));
+    QObject::connect(ui.pushButton_remove, SIGNAL(clicked()), this, SLOT(buttonRemove()));
     QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(close()));
 }
 
@@ -79,7 +79,7 @@ void DlgChannelFavourites::refresh()
     }
 }
 
-void DlgChannelFavourites::button_add()
+void DlgChannelFavourites::buttonAdd()
 {
     bool ok;
     QString strText = QInputDialog::getText(this, tr("Change your favorite channels"), tr("Enter the name of the new channel to add to favorites:"), QLineEdit::Normal, QString::null, &ok);
@@ -91,7 +91,7 @@ void DlgChannelFavourites::button_add()
     }
 }
 
-void DlgChannelFavourites::button_remove()
+void DlgChannelFavourites::buttonRemove()
 {
     QString strSelected;
     if (ui.listWidget_channels->selectedItems().size() != 0)

@@ -367,7 +367,7 @@ void MainWindow::createSignals()
     // signals tab
     QObject::connect(pTabM, SIGNAL(tabCloseRequested(int)), this, SLOT(tabCloseRequested(int)));
     QObject::connect(pTabM, SIGNAL(currentChanged(int)), this, SLOT(currentTabChanged(int)));
-    QObject::connect(pDlgModeration, SIGNAL(display_msg(QString&,QString&,MessageCategory)), pTabC, SLOT(slotShowMsg(QString&,QString&,MessageCategory)));
+    QObject::connect(pDlgModeration, SIGNAL(displayMsg(QString&,QString&,MessageCategory)), pTabC, SLOT(slotShowMsg(QString&,QString&,MessageCategory)));
 
     // signals pInputLineDockWidget
     QObject::connect(pInputLineDockWidget, SIGNAL(showMsg(QString&,QString&,MessageCategory)), pTabC, SLOT(slotShowMsg(QString&,QString&,MessageCategory)));

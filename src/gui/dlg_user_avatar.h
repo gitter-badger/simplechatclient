@@ -35,14 +35,14 @@ private:
     Ui::uiUserAvatar ui;
     QPixmap avatar;
 
-    void create_gui();
-    void set_default_values();
-    void create_signals();
+    void createGui();
+    void setDefaultValues();
+    void createSignals();
 
 private slots:
-    void button_zoom_out();
-    void slider_value_changed(int);
-    void button_zoom_in();
+    void buttonZoomOut();
+    void sliderValueChanged(int);
+    void buttonZoomIn();
 };
 
 #endif // DLG_USER_AVATAR_H

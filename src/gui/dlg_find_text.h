@@ -36,11 +36,11 @@ private:
     Ui::uiFindText ui;
     MainTextEdit *textEdit;
 
-    void create_gui();
-    void create_signals();
+    void createGui();
+    void createSignals();
 
 private slots:
-    void button_find_next();
+    void buttonFindNext();
 };
 
 #endif // DLG_FIND_TEXT_H

@@ -40,12 +40,12 @@ DlgOptions::DlgOptions(QWidget *parent) : QDialog(parent)
     // center screen
     move(QApplication::desktop()->screen()->rect().center() - rect().center());
 
-    create_gui();
-    set_default_values();
-    create_signals();
+    createGui();
+    setDefaultValues();
+    createSignals();
 }
 
-void DlgOptions::create_gui()
+void DlgOptions::createGui()
 {
     ui.pushButton_register_nick->setIcon(QIcon(":/images/oxygen/16x16/list-add-user.png"));
     ui.pushButton_mainwindow_restore_default->setIcon(QIcon(":/images/oxygen/16x16/edit-undo.png"));
@@ -202,7 +202,7 @@ void DlgOptions::create_gui()
     winamp->setToolTip(0, tr("Winamp"));
 }
 
-void DlgOptions::set_default_values()
+void DlgOptions::setDefaultValues()
 {
     QSettings settings;
 
@@ -494,10 +494,10 @@ void DlgOptions::set_default_values()
     ui.lineEdit_winamp->setText(strWinamp);
 
     // set mainwindow colors
-    set_mainwindow_colors();
+    setMainwindowColors();
 
     // set nicklist colors
-    set_nicklist_colors();
+    setNicklistColors();
 
     // disable change nick if connected
     if (settings.value("logged").toString() == "on")
@@ -522,65 +522,65 @@ void DlgOptions::set_default_values()
     }
 }
 
-void DlgOptions::create_signals()
+void DlgOptions::createSignals()
 {
-    QObject::connect(ui.treeWidget_options, SIGNAL(currentItemChanged(QTreeWidgetItem*,QTreeWidgetItem*)), this, SLOT(change_page(QTreeWidgetItem*,QTreeWidgetItem*)));
-    QObject::connect(ui.radioButton_unregistered_nick, SIGNAL(clicked()), this, SLOT(hide_pass()));
-    QObject::connect(ui.radioButton_registered_nick, SIGNAL(clicked()), this, SLOT(show_pass()));
-    QObject::connect(ui.pushButton_register_nick, SIGNAL(clicked()), this, SLOT(button_register_nick()));
-    QObject::connect(ui.radioButton_modern_avatars, SIGNAL(clicked()), this, SLOT(set_modern_style_avatars()));
-    QObject::connect(ui.radioButton_modern_no_avatars, SIGNAL(clicked()), this, SLOT(set_modern_style_no_avatars()));
-    QObject::connect(ui.comboBox_language, SIGNAL(currentIndexChanged(int)), this, SLOT(language_changed(int)));
-    QObject::connect(ui.checkBox_auto_busy, SIGNAL(clicked(bool)), this, SLOT(auto_busy(bool)));
-    QObject::connect(ui.checkBox_disable_autojoin_favourites, SIGNAL(clicked(bool)), this, SLOT(disable_autojoin_favourites(bool)));
-    QObject::connect(ui.checkBox_show_zuo, SIGNAL(clicked(bool)), this, SLOT(show_zuo(bool)));
-    QObject::connect(ui.checkBox_hide_formating, SIGNAL(clicked(bool)), this, SLOT(hide_formating(bool)));
-    QObject::connect(ui.checkBox_hide_join_part, SIGNAL(clicked(bool)), this, SLOT(hide_join_part(bool)));
-    QObject::connect(ui.checkBox_hide_join_part_200, SIGNAL(clicked(bool)), this, SLOT(hide_join_part_200(bool)));
-    QObject::connect(ui.checkBox_disable_avatars, SIGNAL(clicked(bool)), this, SLOT(disable_avatars(bool)));
-    QObject::connect(ui.checkBox_disable_emots, SIGNAL(clicked(bool)), this, SLOT(disable_emots(bool)));
-    QObject::connect(ui.checkBox_disable_replaces, SIGNAL(clicked(bool)), this, SLOT(disable_replaces(bool)));
-    QObject::connect(ui.comboBox_my_bold, SIGNAL(currentIndexChanged(int)), this, SLOT(set_my_bold(int)));
-    QObject::connect(ui.comboBox_my_italic, SIGNAL(currentIndexChanged(int)), this, SLOT(set_my_italic(int)));
-    QObject::connect(ui.comboBox_my_font, SIGNAL(currentIndexChanged(QString)), this, SLOT(set_my_font(QString)));
-    QObject::connect(ui.comboBox_my_color, SIGNAL(currentIndexChanged(int)), this, SLOT(set_my_color(int)));
-    QObject::connect(ui.comboBox_font_size, SIGNAL(currentIndexChanged(QString)), this, SLOT(set_font_size(QString)));
-    QObject::connect(ui.pushButton_background_color, SIGNAL(clicked()), this, SLOT(set_background_color()));
-    QObject::connect(ui.pushButton_default_font_color, SIGNAL(clicked()), this, SLOT(set_default_font_color()));
-    QObject::connect(ui.pushButton_join_font_color, SIGNAL(clicked()), this, SLOT(set_join_font_color()));
-    QObject::connect(ui.pushButton_part_font_color, SIGNAL(clicked()), this, SLOT(set_part_font_color()));
-    QObject::connect(ui.pushButton_quit_font_color, SIGNAL(clicked()), this, SLOT(set_quit_font_color()));
-    QObject::connect(ui.pushButton_kick_font_color, SIGNAL(clicked()), this, SLOT(set_kick_font_color()));
-    QObject::connect(ui.pushButton_mode_font_color, SIGNAL(clicked()), this, SLOT(set_mode_font_color()));
-    QObject::connect(ui.pushButton_notice_font_color, SIGNAL(clicked()), this, SLOT(set_notice_font_color()));
-    QObject::connect(ui.pushButton_info_font_color, SIGNAL(clicked()), this, SLOT(set_info_font_color()));
-    QObject::connect(ui.pushButton_me_font_color, SIGNAL(clicked()), this, SLOT(set_me_font_color()));
-    QObject::connect(ui.pushButton_error_font_color, SIGNAL(clicked()), this, SLOT(set_error_font_color()));
-    QObject::connect(ui.pushButton_channel_font_color, SIGNAL(clicked()), this, SLOT(set_channel_font_color()));
-    QObject::connect(ui.pushButton_mainwindow_restore_default, SIGNAL(clicked()), this, SLOT(mainwindow_restore_default()));
-    QObject::connect(ui.pushButton_nicklist_nick_color, SIGNAL(clicked()), this, SLOT(set_nicklist_nick_color()));
-    QObject::connect(ui.pushButton_nicklist_selected_nick_color, SIGNAL(clicked()), this, SLOT(set_nicklist_selected_nick_color()));
-    QObject::connect(ui.pushButton_nicklist_busy_nick_color, SIGNAL(clicked()), this, SLOT(set_nicklist_busy_nick_color()));
-    QObject::connect(ui.pushButton_nicklist_gradient_1_color, SIGNAL(clicked()), this, SLOT(set_nicklist_gradient_1_color()));
-    QObject::connect(ui.pushButton_nicklist_gradient_2_color, SIGNAL(clicked()), this, SLOT(set_nicklist_gradient_2_color()));
-    QObject::connect(ui.pushButton_nicklist_restore_default, SIGNAL(clicked()), this, SLOT(nicklist_restore_default()));
-    QObject::connect(ui.pushButton_set_embedded_style, SIGNAL(clicked()), this, SLOT(set_embedded_style()));
-    QObject::connect(ui.pushButton_play_beep, SIGNAL(clicked()), this, SLOT(try_play_beep()));
-    QObject::connect(ui.pushButton_play_query, SIGNAL(clicked()), this, SLOT(try_play_query()));
-    QObject::connect(ui.pushButton_sound_beep_change, SIGNAL(clicked()), this, SLOT(set_sound_beep()));
-    QObject::connect(ui.pushButton_sound_query_change, SIGNAL(clicked()), this, SLOT(set_sound_query()));
-    QObject::connect(ui.checkBox_disable_sounds, SIGNAL(clicked(bool)), this, SLOT(disable_sounds(bool)));
-    QObject::connect(ui.pushButton_logs_open_folder, SIGNAL(clicked()), this, SLOT(open_logs_folder()));
-    QObject::connect(ui.checkBox_save_logs_by_date, SIGNAL(clicked(bool)), this, SLOT(set_save_logs_by_date(bool)));
-    QObject::connect(ui.checkBox_disable_logs, SIGNAL(clicked(bool)), this, SLOT(disable_logs(bool)));
-    QObject::connect(ui.pushButton_set_background_image, SIGNAL(clicked()), this, SLOT(set_background_image()));
-    QObject::connect(ui.checkBox_disable_background_image, SIGNAL(clicked(bool)), this, SLOT(disable_background_image(bool)));
-    QObject::connect(ui.pushButton_set_winamp, SIGNAL(clicked()), this, SLOT(set_winamp()));
-    QObject::connect(ui.buttonBox, SIGNAL(accepted()), this, SLOT(button_ok()));
+    QObject::connect(ui.treeWidget_options, SIGNAL(currentItemChanged(QTreeWidgetItem*,QTreeWidgetItem*)), this, SLOT(changePage(QTreeWidgetItem*,QTreeWidgetItem*)));
+    QObject::connect(ui.radioButton_unregistered_nick, SIGNAL(clicked()), this, SLOT(hidePass()));
+    QObject::connect(ui.radioButton_registered_nick, SIGNAL(clicked()), this, SLOT(showPass()));
+    QObject::connect(ui.pushButton_register_nick, SIGNAL(clicked()), this, SLOT(buttonRegisterNick()));
+    QObject::connect(ui.radioButton_modern_avatars, SIGNAL(clicked()), this, SLOT(setModernStyleAvatars()));
+    QObject::connect(ui.radioButton_modern_no_avatars, SIGNAL(clicked()), this, SLOT(setModernStyleNoAvatars()));
+    QObject::connect(ui.comboBox_language, SIGNAL(currentIndexChanged(int)), this, SLOT(languageChanged(int)));
+    QObject::connect(ui.checkBox_auto_busy, SIGNAL(clicked(bool)), this, SLOT(autoBusy(bool)));
+    QObject::connect(ui.checkBox_disable_autojoin_favourites, SIGNAL(clicked(bool)), this, SLOT(disableAutojoinFavourites(bool)));
+    QObject::connect(ui.checkBox_show_zuo, SIGNAL(clicked(bool)), this, SLOT(showZuo(bool)));
+    QObject::connect(ui.checkBox_hide_formating, SIGNAL(clicked(bool)), this, SLOT(hideFormating(bool)));
+    QObject::connect(ui.checkBox_hide_join_part, SIGNAL(clicked(bool)), this, SLOT(hideJoinPart(bool)));
+    QObject::connect(ui.checkBox_hide_join_part_200, SIGNAL(clicked(bool)), this, SLOT(hideJoinPart200(bool)));
+    QObject::connect(ui.checkBox_disable_avatars, SIGNAL(clicked(bool)), this, SLOT(disableAvatars(bool)));
+    QObject::connect(ui.checkBox_disable_emots, SIGNAL(clicked(bool)), this, SLOT(disableEmots(bool)));
+    QObject::connect(ui.checkBox_disable_replaces, SIGNAL(clicked(bool)), this, SLOT(disableReplaces(bool)));
+    QObject::connect(ui.comboBox_my_bold, SIGNAL(currentIndexChanged(int)), this, SLOT(setMyBold(int)));
+    QObject::connect(ui.comboBox_my_italic, SIGNAL(currentIndexChanged(int)), this, SLOT(setMyItalic(int)));
+    QObject::connect(ui.comboBox_my_font, SIGNAL(currentIndexChanged(QString)), this, SLOT(setMyFont(QString)));
+    QObject::connect(ui.comboBox_my_color, SIGNAL(currentIndexChanged(int)), this, SLOT(setMyColor(int)));
+    QObject::connect(ui.comboBox_font_size, SIGNAL(currentIndexChanged(QString)), this, SLOT(setFontSize(QString)));
+    QObject::connect(ui.pushButton_background_color, SIGNAL(clicked()), this, SLOT(setBackgroundColor()));
+    QObject::connect(ui.pushButton_default_font_color, SIGNAL(clicked()), this, SLOT(setDefaultFontColor()));
+    QObject::connect(ui.pushButton_join_font_color, SIGNAL(clicked()), this, SLOT(setJoinFontColor()));
+    QObject::connect(ui.pushButton_part_font_color, SIGNAL(clicked()), this, SLOT(setPartFontColor()));
+    QObject::connect(ui.pushButton_quit_font_color, SIGNAL(clicked()), this, SLOT(setQuitFontColor()));
+    QObject::connect(ui.pushButton_kick_font_color, SIGNAL(clicked()), this, SLOT(setKickFontColor()));
+    QObject::connect(ui.pushButton_mode_font_color, SIGNAL(clicked()), this, SLOT(setModeFontColor()));
+    QObject::connect(ui.pushButton_notice_font_color, SIGNAL(clicked()), this, SLOT(setNoticeFontColor()));
+    QObject::connect(ui.pushButton_info_font_color, SIGNAL(clicked()), this, SLOT(setInfoFontColor()));
+    QObject::connect(ui.pushButton_me_font_color, SIGNAL(clicked()), this, SLOT(setMeFontColor()));
+    QObject::connect(ui.pushButton_error_font_color, SIGNAL(clicked()), this, SLOT(setErrorFontColor()));
+    QObject::connect(ui.pushButton_channel_font_color, SIGNAL(clicked()), this, SLOT(setChannelFontColor()));
+    QObject::connect(ui.pushButton_mainwindow_restore_default, SIGNAL(clicked()), this, SLOT(mainwindowRestoreDefault()));
+    QObject::connect(ui.pushButton_nicklist_nick_color, SIGNAL(clicked()), this, SLOT(setNicklistNickColor()));
+    QObject::connect(ui.pushButton_nicklist_selected_nick_color, SIGNAL(clicked()), this, SLOT(setNicklistSelectedNickColor()));
+    QObject::connect(ui.pushButton_nicklist_busy_nick_color, SIGNAL(clicked()), this, SLOT(setNicklistBusyNickColor()));
+    QObject::connect(ui.pushButton_nicklist_gradient_1_color, SIGNAL(clicked()), this, SLOT(setNicklistGradient1Color()));
+    QObject::connect(ui.pushButton_nicklist_gradient_2_color, SIGNAL(clicked()), this, SLOT(setNicklistGradient2Color()));
+    QObject::connect(ui.pushButton_nicklist_restore_default, SIGNAL(clicked()), this, SLOT(nicklistRestoreDefault()));
+    QObject::connect(ui.pushButton_set_embedded_style, SIGNAL(clicked()), this, SLOT(setEmbeddedStyle()));
+    QObject::connect(ui.pushButton_play_beep, SIGNAL(clicked()), this, SLOT(tryPlayBeep()));
+    QObject::connect(ui.pushButton_play_query, SIGNAL(clicked()), this, SLOT(tryPlayQuery()));
+    QObject::connect(ui.pushButton_sound_beep_change, SIGNAL(clicked()), this, SLOT(setSoundBeep()));
+    QObject::connect(ui.pushButton_sound_query_change, SIGNAL(clicked()), this, SLOT(setSoundQuery()));
+    QObject::connect(ui.checkBox_disable_sounds, SIGNAL(clicked(bool)), this, SLOT(disableSounds(bool)));
+    QObject::connect(ui.pushButton_logs_open_folder, SIGNAL(clicked()), this, SLOT(openLogsFolder()));
+    QObject::connect(ui.checkBox_save_logs_by_date, SIGNAL(clicked(bool)), this, SLOT(setSaveLogsByDate(bool)));
+    QObject::connect(ui.checkBox_disable_logs, SIGNAL(clicked(bool)), this, SLOT(disableLogs(bool)));
+    QObject::connect(ui.pushButton_set_background_image, SIGNAL(clicked()), this, SLOT(setBackgroundImage()));
+    QObject::connect(ui.checkBox_disable_background_image, SIGNAL(clicked(bool)), this, SLOT(disableBackgroundImage(bool)));
+    QObject::connect(ui.pushButton_set_winamp, SIGNAL(clicked()), this, SLOT(setWinamp()));
+    QObject::connect(ui.buttonBox, SIGNAL(accepted()), this, SLOT(buttonOk()));
     QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(close()));
 }
 
-void DlgOptions::change_page(QTreeWidgetItem *current, QTreeWidgetItem *previous)
+void DlgOptions::changePage(QTreeWidgetItem *current, QTreeWidgetItem *previous)
 {
     if (!current)
         current = previous;
@@ -588,7 +588,7 @@ void DlgOptions::change_page(QTreeWidgetItem *current, QTreeWidgetItem *previous
     ui.stackedWidget->setCurrentIndex(ui.treeWidget_options->currentIndex().row());
 }
 
-void DlgOptions::hide_pass()
+void DlgOptions::hidePass()
 {
     ui.label_password->hide();
     ui.lineEdit_password->hide();
@@ -598,7 +598,7 @@ void DlgOptions::hide_pass()
         ui.lineEdit_nick->setText("~"+ui.lineEdit_nick->text());
 }
 
-void DlgOptions::show_pass()
+void DlgOptions::showPass()
 {
     ui.label_password->show();
     ui.lineEdit_password->show();
@@ -608,15 +608,15 @@ void DlgOptions::show_pass()
         ui.lineEdit_nick->setText(ui.lineEdit_nick->text().right(ui.lineEdit_nick->text().length()-1));
 }
 
-void DlgOptions::button_register_nick()
+void DlgOptions::buttonRegisterNick()
 {
     DlgRegisterNick(Core::instance()->sccWindow(), this).exec();
 }
 
-void DlgOptions::set_modern_style_avatars()
+void DlgOptions::setModernStyleAvatars()
 {
     // save settings
-    save_settings();
+    saveSettings();
 
     // save style
     QSettings settings;
@@ -630,10 +630,10 @@ void DlgOptions::set_modern_style_avatars()
     QMessageBox::information(0, "", tr("Restart program to apply the changes."));
 }
 
-void DlgOptions::set_modern_style_no_avatars()
+void DlgOptions::setModernStyleNoAvatars()
 {
     // save settings
-    save_settings();
+    saveSettings();
 
     // save style
     QSettings settings;
@@ -647,7 +647,7 @@ void DlgOptions::set_modern_style_no_avatars()
     QMessageBox::information(0, "", tr("Restart program to apply the changes."));
 }
 
-void DlgOptions::language_changed(int index)
+void DlgOptions::languageChanged(int index)
 {
     QSettings settings;
     Config *pConfig = new Config();
@@ -671,7 +671,7 @@ void DlgOptions::language_changed(int index)
     QMessageBox::information(0, "", tr("Restart program to apply the changes."));
 }
 
-void DlgOptions::auto_busy(bool bValue)
+void DlgOptions::autoBusy(bool bValue)
 {
     QString strValue = (bValue ? "on" : "off");
 
@@ -682,7 +682,7 @@ void DlgOptions::auto_busy(bool bValue)
     delete pConfig;
 }
 
-void DlgOptions::disable_autojoin_favourites(bool bValue)
+void DlgOptions::disableAutojoinFavourites(bool bValue)
 {
     QString strValue = (bValue ? "on" : "off");
 
@@ -693,7 +693,7 @@ void DlgOptions::disable_autojoin_favourites(bool bValue)
     delete pConfig;
 }
 
-void DlgOptions::show_zuo(bool bValue)
+void DlgOptions::showZuo(bool bValue)
 {
     QString strValue = (bValue ? "on" : "off");
 
@@ -704,7 +704,7 @@ void DlgOptions::show_zuo(bool bValue)
     delete pConfig;
 }
 
-void DlgOptions::hide_formating(bool bValue)
+void DlgOptions::hideFormating(bool bValue)
 {
     QString strValue = (bValue ? "on" : "off");
 
@@ -715,7 +715,7 @@ void DlgOptions::hide_formating(bool bValue)
     delete pConfig;
 }
 
-void DlgOptions::hide_join_part(bool bValue)
+void DlgOptions::hideJoinPart(bool bValue)
 {
     QString strValue = (bValue ? "on" : "off");
 
@@ -726,7 +726,7 @@ void DlgOptions::hide_join_part(bool bValue)
     delete pConfig;
 }
 
-void DlgOptions::hide_join_part_200(bool bValue)
+void DlgOptions::hideJoinPart200(bool bValue)
 {
     QString strValue = (bValue ? "on" : "off");
 
@@ -737,7 +737,7 @@ void DlgOptions::hide_join_part_200(bool bValue)
     delete pConfig;
 }
 
-void DlgOptions::disable_avatars(bool bValue)
+void DlgOptions::disableAvatars(bool bValue)
 {
     QString strValue = (bValue ? "on" : "off");
 
@@ -748,7 +748,7 @@ void DlgOptions::disable_avatars(bool bValue)
     delete pConfig;
 }
 
-void DlgOptions::disable_emots(bool bValue)
+void DlgOptions::disableEmots(bool bValue)
 {
     QString strValue = (bValue ? "on" : "off");
 
@@ -759,7 +759,7 @@ void DlgOptions::disable_emots(bool bValue)
     delete pConfig;
 }
 
-void DlgOptions::disable_replaces(bool bValue)
+void DlgOptions::disableReplaces(bool bValue)
 {
     QString strValue = (bValue ? "on" : "off");
 
@@ -770,7 +770,7 @@ void DlgOptions::disable_replaces(bool bValue)
     delete pConfig;
 }
 
-void DlgOptions::set_my_bold(int index)
+void DlgOptions::setMyBold(int index)
 {
     QString strValue = (index == 0 ? "off" : "on");
 
@@ -781,7 +781,7 @@ void DlgOptions::set_my_bold(int index)
     delete pConfig;
 }
 
-void DlgOptions::set_my_italic(int index)
+void DlgOptions::setMyItalic(int index)
 {
     QString strValue = (index == 0 ? "off" : "on");
 
@@ -792,7 +792,7 @@ void DlgOptions::set_my_italic(int index)
     delete pConfig;
 }
 
-void DlgOptions::set_my_font(QString strFont)
+void DlgOptions::setMyFont(QString strFont)
 {
     QSettings settings;
     Config *pConfig = new Config();
@@ -801,7 +801,7 @@ void DlgOptions::set_my_font(QString strFont)
     delete pConfig;
 }
 
-void DlgOptions::set_my_color(int index)
+void DlgOptions::setMyColor(int index)
 {
     QString strMyColor;
     if (index == 0) strMyColor = "#000000";
@@ -828,7 +828,7 @@ void DlgOptions::set_my_color(int index)
     delete pConfig;
 }
 
-void DlgOptions::set_font_size(QString strFontSize)
+void DlgOptions::setFontSize(QString strFontSize)
 {
     QSettings settings;
     Config *pConfig = new Config();
@@ -837,67 +837,67 @@ void DlgOptions::set_font_size(QString strFontSize)
     delete pConfig;
 }
 
-void DlgOptions::set_background_color()
+void DlgOptions::setBackgroundColor()
 {
-    set_color("background_color");
+    setColor("background_color");
 }
 
-void DlgOptions::set_default_font_color()
+void DlgOptions::setDefaultFontColor()
 {
-    set_color("default_font_color");
+    setColor("default_font_color");
 }
 
-void DlgOptions::set_join_font_color()
+void DlgOptions::setJoinFontColor()
 {
-    set_color("font_color_level_1");
+    setColor("font_color_level_1");
 }
 
-void DlgOptions::set_part_font_color()
+void DlgOptions::setPartFontColor()
 {
-    set_color("font_color_level_2");
+    setColor("font_color_level_2");
 }
 
-void DlgOptions::set_quit_font_color()
+void DlgOptions::setQuitFontColor()
 {
-    set_color("font_color_level_3");
+    setColor("font_color_level_3");
 }
 
-void DlgOptions::set_kick_font_color()
+void DlgOptions::setKickFontColor()
 {
-    set_color("font_color_level_4");
+    setColor("font_color_level_4");
 }
 
-void DlgOptions::set_mode_font_color()
+void DlgOptions::setModeFontColor()
 {
-    set_color("font_color_level_5");
+    setColor("font_color_level_5");
 }
 
-void DlgOptions::set_notice_font_color()
+void DlgOptions::setNoticeFontColor()
 {
-    set_color("font_color_level_6");
+    setColor("font_color_level_6");
 }
 
-void DlgOptions::set_info_font_color()
+void DlgOptions::setInfoFontColor()
 {
-    set_color("font_color_level_7");
+    setColor("font_color_level_7");
 }
 
-void DlgOptions::set_me_font_color()
+void DlgOptions::setMeFontColor()
 {
-    set_color("font_color_level_8");
+    setColor("font_color_level_8");
 }
 
-void DlgOptions::set_error_font_color()
+void DlgOptions::setErrorFontColor()
 {
-    set_color("font_color_level_9");
+    setColor("font_color_level_9");
 }
 
-void DlgOptions::set_channel_font_color()
+void DlgOptions::setChannelFontColor()
 {
-    set_color("channel_font_color");
+    setColor("channel_font_color");
 }
 
-void DlgOptions::mainwindow_restore_default()
+void DlgOptions::mainwindowRestoreDefault()
 {
     QSettings settings;
     Config *pConfig = new Config();
@@ -941,38 +941,38 @@ void DlgOptions::mainwindow_restore_default()
     delete pConfig;
 
     // set
-    set_mainwindow_colors();
+    setMainwindowColors();
 
     // refresh tabs
     Core::instance()->refreshColors();
 }
 
-void DlgOptions::set_nicklist_nick_color()
+void DlgOptions::setNicklistNickColor()
 {
-    set_color("nicklist_nick_color");
+    setColor("nicklist_nick_color");
 }
 
-void DlgOptions::set_nicklist_selected_nick_color()
+void DlgOptions::setNicklistSelectedNickColor()
 {
-    set_color("nicklist_selected_nick_color");
+    setColor("nicklist_selected_nick_color");
 }
 
-void DlgOptions::set_nicklist_busy_nick_color()
+void DlgOptions::setNicklistBusyNickColor()
 {
-    set_color("nicklist_busy_nick_color");
+    setColor("nicklist_busy_nick_color");
 }
 
-void DlgOptions::set_nicklist_gradient_1_color()
+void DlgOptions::setNicklistGradient1Color()
 {
-    set_color("nicklist_gradient_1_color");
+    setColor("nicklist_gradient_1_color");
 }
 
-void DlgOptions::set_nicklist_gradient_2_color()
+void DlgOptions::setNicklistGradient2Color()
 {
-    set_color("nicklist_gradient_2_color");
+    setColor("nicklist_gradient_2_color");
 }
 
-void DlgOptions::nicklist_restore_default()
+void DlgOptions::nicklistRestoreDefault()
 {
     QSettings settings;
     Config *pConfig = new Config();
@@ -995,26 +995,26 @@ void DlgOptions::nicklist_restore_default()
     delete pConfig;
 
     // set
-    set_nicklist_colors();
+    setNicklistColors();
 }
 
-void DlgOptions::set_embedded_style()
+void DlgOptions::setEmbeddedStyle()
 {
     QStyle *style = QStyleFactory::create(ui.comboBox_embedded_styles->currentText());
     QApplication::setStyle(style);
 }
 
-void DlgOptions::try_play_beep()
+void DlgOptions::tryPlayBeep()
 {
     Notify::instance()->play(Beep);
 }
 
-void DlgOptions::try_play_query()
+void DlgOptions::tryPlayQuery()
 {
     Notify::instance()->play(Query);
 }
 
-void DlgOptions::set_sound_beep()
+void DlgOptions::setSoundBeep()
 {
     QString selectedFilter;
     QString fileName = QFileDialog::getOpenFileName(this,
@@ -1036,7 +1036,7 @@ void DlgOptions::set_sound_beep()
     }
 }
 
-void DlgOptions::set_sound_query()
+void DlgOptions::setSoundQuery()
 {
     QString selectedFilter;
     QString fileName = QFileDialog::getOpenFileName(this,
@@ -1058,7 +1058,7 @@ void DlgOptions::set_sound_query()
     }
 }
 
-void DlgOptions::disable_sounds(bool bValue)
+void DlgOptions::disableSounds(bool bValue)
 {
     QString strValue = (bValue ? "on" : "off");
 
@@ -1069,7 +1069,7 @@ void DlgOptions::disable_sounds(bool bValue)
     delete pConfig;
 }
 
-void DlgOptions::open_logs_folder()
+void DlgOptions::openLogsFolder()
 {
     QString strLogsPath = ui.lineEdit_logs_folder->text();
 
@@ -1077,7 +1077,7 @@ void DlgOptions::open_logs_folder()
     pProcess.execute(strOpenFolderCommand+" "+strLogsPath);
 }
 
-void DlgOptions::set_save_logs_by_date(bool bValue)
+void DlgOptions::setSaveLogsByDate(bool bValue)
 {
     QString strValue = (bValue ? "on" : "off");
 
@@ -1088,7 +1088,7 @@ void DlgOptions::set_save_logs_by_date(bool bValue)
     delete pConfig;
 }
 
-void DlgOptions::disable_logs(bool bValue)
+void DlgOptions::disableLogs(bool bValue)
 {
     QString strValue = (bValue ? "on" : "off");
 
@@ -1099,7 +1099,7 @@ void DlgOptions::disable_logs(bool bValue)
     delete pConfig;
 }
 
-void DlgOptions::set_background_image()
+void DlgOptions::setBackgroundImage()
 {
     QString selectedFilter;
     QString fileName = QFileDialog::getOpenFileName(this,
@@ -1124,7 +1124,7 @@ void DlgOptions::set_background_image()
     }
 }
 
-void DlgOptions::disable_background_image(bool bValue)
+void DlgOptions::disableBackgroundImage(bool bValue)
 {
     QString strValue = (bValue ? "on" : "off");
 
@@ -1138,7 +1138,7 @@ void DlgOptions::disable_background_image(bool bValue)
     Core::instance()->refreshBackgroundImage();
 }
 
-void DlgOptions::set_winamp()
+void DlgOptions::setWinamp()
 {
     QString strValue = ui.lineEdit_winamp->text();
 
@@ -1149,15 +1149,15 @@ void DlgOptions::set_winamp()
     delete pConfig;
 }
 
-void DlgOptions::button_ok()
+void DlgOptions::buttonOk()
 {
     // save
-    save_settings();
+    saveSettings();
 
     this->close();
 }
 
-void DlgOptions::save_settings()
+void DlgOptions::saveSettings()
 {
     // get values
     QString strNick = ui.lineEdit_nick->text();
@@ -1199,7 +1199,7 @@ void DlgOptions::save_settings()
     delete pConfig;
 }
 
-void DlgOptions::set_color(QString strKey)
+void DlgOptions::setColor(QString strKey)
 {
     // get current value
     QSettings settings;
@@ -1265,7 +1265,7 @@ void DlgOptions::set_color(QString strKey)
     }
 }
 
-void DlgOptions::set_mainwindow_colors()
+void DlgOptions::setMainwindowColors()
 {
     QSettings settings;
     QString strBackgroundColor = settings.value("background_color").toString();
@@ -1342,7 +1342,7 @@ void DlgOptions::set_mainwindow_colors()
     ui.pushButton_channel_font_color->setIcon(QIcon(cfcolor));
 }
 
-void DlgOptions::set_nicklist_colors()
+void DlgOptions::setNicklistColors()
 {
     QSettings settings;
     QString strNicklistNickColor = settings.value("nicklist_nick_color").toString();

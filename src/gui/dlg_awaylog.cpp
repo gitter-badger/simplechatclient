@@ -32,19 +32,19 @@ DlgAwaylog::DlgAwaylog(QWidget *parent, QAction *param1) : QDialog(parent)
 
     awaylogAct = param1;
 
-    create_gui();
-    create_signals();
+    createGui();
+    createSignals();
 
     refresh();
 }
 
-void DlgAwaylog::create_gui()
+void DlgAwaylog::createGui()
 {
     ui.buttonBox->button(QDialogButtonBox::Reset)->setIcon(QIcon(":/images/oxygen/16x16/document-revert.png"));
     ui.buttonBox->button(QDialogButtonBox::Close)->setIcon(QIcon(":/images/oxygen/16x16/dialog-close.png"));
 }
 
-void DlgAwaylog::create_signals()
+void DlgAwaylog::createSignals()
 {
     QObject::connect(ui.buttonBox, SIGNAL(clicked(QAbstractButton*)), this, SLOT(buttons(QAbstractButton*)));
 }
@@ -58,12 +58,12 @@ void DlgAwaylog::refresh()
 void DlgAwaylog::buttons(QAbstractButton *button)
 {
     if (ui.buttonBox->button(QDialogButtonBox::Reset) == button)
-        button_reset();
+        buttonReset();
     else if (ui.buttonBox->button(QDialogButtonBox::Close) == button)
-        button_close();
+        buttonClose();
 }
 
-void DlgAwaylog::button_reset()
+void DlgAwaylog::buttonReset()
 {
     Core::instance()->lAwaylog.clear();
     ui.listWidget->clear();
@@ -73,7 +73,7 @@ void DlgAwaylog::button_reset()
         awaylogAct->setVisible(false);
 }
 
-void DlgAwaylog::button_close()
+void DlgAwaylog::buttonClose()
 {
     this->close();
 }

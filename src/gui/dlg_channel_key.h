@@ -37,11 +37,11 @@ private:
     Network *pNetwork;
     QString strChannel;
 
-    void create_gui();
-    void create_signals();
+    void createGui();
+    void createSignals();
 
 private slots:
-    void button_ok();
+    void buttonOk();
 };
 
 #endif // DLG_CHANNEL_KEY_H

@@ -36,13 +36,13 @@ DlgMyStats::DlgMyStats(QWidget *parent) : QDialog(parent)
     pSimpleStatsWidget->show();
     ui.verticalLayout_stats->addWidget(pSimpleStatsWidget);
 
-    create_gui();
-    create_signals();
+    createGui();
+    createSignals();
 
     refresh();
 }
 
-void DlgMyStats::create_gui()
+void DlgMyStats::createGui()
 {
     ui.buttonBox->button(QDialogButtonBox::Close)->setIcon(QIcon(":/images/oxygen/16x16/dialog-close.png"));
 
@@ -52,12 +52,12 @@ void DlgMyStats::create_gui()
     ui.label_average_time->setText(tr("Average time:"));
 }
 
-void DlgMyStats::create_signals()
+void DlgMyStats::createSignals()
 {
     QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(close()));
 }
 
-int DlgMyStats::replace_value(QString strValue)
+int DlgMyStats::replaceValue(QString strValue)
 {
     int iValue = 0;
 
@@ -95,7 +95,7 @@ void DlgMyStats::refresh()
             qreal fAverageTime = 0;
             for (int i = 0; i < strValue.size(); i++)
             {
-                int iTime = replace_value(strValue.at(i));
+                int iTime = replaceValue(strValue.at(i));
 
                 // add to list
                 lStats.append(iTime);

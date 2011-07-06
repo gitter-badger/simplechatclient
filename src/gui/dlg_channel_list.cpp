@@ -35,14 +35,14 @@ DlgChannelList::DlgChannelList(QWidget *parent, Network *param1) : QDialog(paren
 
     pNetwork = param1;
 
-    create_gui();
-    set_default_values();
-    create_signals();
+    createGui();
+    setDefaultValues();
+    createSignals();
 
-    create_list();
+    createList();
 }
 
-void DlgChannelList::create_gui()
+void DlgChannelList::createGui()
 {
     ui.pushButton_search->setIcon(QIcon(":/images/oxygen/16x16/edit-find.png"));
     ui.pushButton_clear->setIcon(QIcon(":/images/oxygen/16x16/draw-eraser.png"));
@@ -89,7 +89,7 @@ void DlgChannelList::create_gui()
     ui.tableWidget_regional->setHorizontalHeaderLabels(strlLabels);
 }
 
-void DlgChannelList::set_default_values()
+void DlgChannelList::setDefaultValues()
 {
     // set checked
     ui.checkBox_teen->setChecked(true);
@@ -112,24 +112,24 @@ void DlgChannelList::set_default_values()
     ui.groupBox_category->hide();
 }
 
-void DlgChannelList::create_signals()
+void DlgChannelList::createSignals()
 {
-    QObject::connect(ui.tableWidget_all, SIGNAL(cellDoubleClicked(int,int)), this, SLOT(all_CellDoubleClicked(int,int)));
-    QObject::connect(ui.tableWidget_teen, SIGNAL(cellDoubleClicked(int,int)), this, SLOT(teen_CellDoubleClicked(int,int)));
-    QObject::connect(ui.tableWidget_common, SIGNAL(cellDoubleClicked(int,int)), this, SLOT(common_CellDoubleClicked(int,int)));
-    QObject::connect(ui.tableWidget_erotic, SIGNAL(cellDoubleClicked(int,int)), this, SLOT(erotic_CellDoubleClicked(int,int)));
-    QObject::connect(ui.tableWidget_thematic, SIGNAL(cellDoubleClicked(int,int)), this, SLOT(thematic_CellDoubleClicked(int,int)));
-    QObject::connect(ui.tableWidget_regional, SIGNAL(cellDoubleClicked(int,int)), this, SLOT(regional_CellDoubleClicked(int,int)));
+    QObject::connect(ui.tableWidget_all, SIGNAL(cellDoubleClicked(int,int)), this, SLOT(allCellDoubleClicked(int,int)));
+    QObject::connect(ui.tableWidget_teen, SIGNAL(cellDoubleClicked(int,int)), this, SLOT(teenCellDoubleClicked(int,int)));
+    QObject::connect(ui.tableWidget_common, SIGNAL(cellDoubleClicked(int,int)), this, SLOT(commonCellDoubleClicked(int,int)));
+    QObject::connect(ui.tableWidget_erotic, SIGNAL(cellDoubleClicked(int,int)), this, SLOT(eroticCellDoubleClicked(int,int)));
+    QObject::connect(ui.tableWidget_thematic, SIGNAL(cellDoubleClicked(int,int)), this, SLOT(thematicCellDoubleClicked(int,int)));
+    QObject::connect(ui.tableWidget_regional, SIGNAL(cellDoubleClicked(int,int)), this, SLOT(regionalCellDoubleClicked(int,int)));
     QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(close()));
 
-    QObject::connect(ui.lineEdit_search, SIGNAL(returnPressed()), this, SLOT(button_search()));
-    QObject::connect(ui.pushButton_search, SIGNAL(clicked()), this, SLOT(button_search()));
-    QObject::connect(ui.pushButton_clear, SIGNAL(clicked()), this, SLOT(button_clear()));
-    QObject::connect(ui.checkBox_hide_empty_channels, SIGNAL(clicked()), this, SLOT(hide_empty_channels()));
-    QObject::connect(ui.checkBox_show_adv_options, SIGNAL(clicked()), this, SLOT(show_adv_options()));
+    QObject::connect(ui.lineEdit_search, SIGNAL(returnPressed()), this, SLOT(buttonSearch()));
+    QObject::connect(ui.pushButton_search, SIGNAL(clicked()), this, SLOT(buttonSearch()));
+    QObject::connect(ui.pushButton_clear, SIGNAL(clicked()), this, SLOT(buttonClear()));
+    QObject::connect(ui.checkBox_hide_empty_channels, SIGNAL(clicked()), this, SLOT(hideEmptyChannels()));
+    QObject::connect(ui.checkBox_show_adv_options, SIGNAL(clicked()), this, SLOT(showAdvOptions()));
 }
 
-bool DlgChannelList::is_erotic(QString strChannel)
+bool DlgChannelList::isErotic(QString strChannel)
 {
     for (int i = 0; i < Core::instance()->lChannelList.size(); i++)
     {
@@ -148,7 +148,7 @@ bool DlgChannelList::is_erotic(QString strChannel)
     return false;
 }
 
-void DlgChannelList::create_list()
+void DlgChannelList::createList()
 {
     // count rows
     int iAllCount = 0;
@@ -256,7 +256,7 @@ void DlgChannelList::create_list()
     ui.tableWidget_regional->sortByColumn(1);
 }
 
-void DlgChannelList::show_all_channels()
+void DlgChannelList::showAllChannels()
 {
     // all
     for (int i = 0; i < ui.tableWidget_all->rowCount()-1; i++)
@@ -283,7 +283,7 @@ void DlgChannelList::show_all_channels()
         ui.tableWidget_regional->showRow(i);
 }
 
-void DlgChannelList::apply_checkboxes()
+void DlgChannelList::applyCheckboxes()
 {
     bool bShowTeen;
     bool bShowCommon;
@@ -729,13 +729,13 @@ void DlgChannelList::apply_checkboxes()
     }
 }
 
-void DlgChannelList::all_CellDoubleClicked(int row, int column)
+void DlgChannelList::allCellDoubleClicked(int row, int column)
 {
     Q_UNUSED (column);
 
     QString strChannel = ui.tableWidget_all->item(row, 0)->text();
 
-    if (is_erotic(strChannel))
+    if (isErotic(strChannel))
     {
         QSettings settings;
         if (settings.value("age_check").toString() == "on")
@@ -761,7 +761,7 @@ void DlgChannelList::all_CellDoubleClicked(int row, int column)
     pNetwork->send(QString("JOIN %1").arg(strChannel));
 }
 
-void DlgChannelList::teen_CellDoubleClicked(int row, int column)
+void DlgChannelList::teenCellDoubleClicked(int row, int column)
 {
     Q_UNUSED (column);
 
@@ -769,7 +769,7 @@ void DlgChannelList::teen_CellDoubleClicked(int row, int column)
     pNetwork->send(QString("JOIN %1").arg(strChannel));
 }
 
-void DlgChannelList::common_CellDoubleClicked(int row, int column)
+void DlgChannelList::commonCellDoubleClicked(int row, int column)
 {
     Q_UNUSED (column);
 
@@ -777,13 +777,13 @@ void DlgChannelList::common_CellDoubleClicked(int row, int column)
     pNetwork->send(QString("JOIN %1").arg(strChannel));
 }
 
-void DlgChannelList::erotic_CellDoubleClicked(int row, int column)
+void DlgChannelList::eroticCellDoubleClicked(int row, int column)
 {
     Q_UNUSED (column);
 
     QString strChannel = ui.tableWidget_erotic->item(row, 0)->text();
 
-    if (is_erotic(strChannel))
+    if (isErotic(strChannel))
     {
         QSettings settings;
         if (settings.value("age_check").toString() == "on")
@@ -813,7 +813,7 @@ void DlgChannelList::erotic_CellDoubleClicked(int row, int column)
         pNetwork->send(QString("JOIN %1").arg(strChannel));
 }
 
-void DlgChannelList::thematic_CellDoubleClicked(int row, int column)
+void DlgChannelList::thematicCellDoubleClicked(int row, int column)
 {
     Q_UNUSED (column);
 
@@ -821,7 +821,7 @@ void DlgChannelList::thematic_CellDoubleClicked(int row, int column)
     pNetwork->send(QString("JOIN %1").arg(strChannel));
 }
 
-void DlgChannelList::regional_CellDoubleClicked(int row, int column)
+void DlgChannelList::regionalCellDoubleClicked(int row, int column)
 {
     Q_UNUSED (column);
 
@@ -829,13 +829,13 @@ void DlgChannelList::regional_CellDoubleClicked(int row, int column)
     pNetwork->send(QString("JOIN %1").arg(strChannel));
 }
 
-void DlgChannelList::button_search()
+void DlgChannelList::buttonSearch()
 {
     // show all channels
-    show_all_channels();
+    showAllChannels();
 
     // apply checkboxes - hide selected channels
-    apply_checkboxes();
+    applyCheckboxes();
 
     // find channel
     // all
@@ -887,7 +887,7 @@ void DlgChannelList::button_search()
     }
 }
 
-void DlgChannelList::button_clear()
+void DlgChannelList::buttonClear()
 {
     ui.lineEdit_search->setText("");
 
@@ -906,10 +906,10 @@ void DlgChannelList::button_clear()
 
     ui.checkBox_hide_empty_channels->setChecked(false);
 
-    show_all_channels();
+    showAllChannels();
 }
 
-void DlgChannelList::hide_empty_channels()
+void DlgChannelList::hideEmptyChannels()
 {
     bool bHide;
 
@@ -997,7 +997,7 @@ void DlgChannelList::hide_empty_channels()
     }
 }
 
-void DlgChannelList::show_adv_options()
+void DlgChannelList::showAdvOptions()
 {
     if (ui.checkBox_show_adv_options->isChecked())
     {
@@ -1031,7 +1031,7 @@ void DlgChannelList::keyPressEvent(QKeyEvent *event)
     {
         case Qt::Key_Enter:
         case Qt::Key_Return:
-            button_search();
+            buttonSearch();
             break;
         default:
             QDialog::keyPressEvent(event);

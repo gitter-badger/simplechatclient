@@ -36,14 +36,14 @@ DlgMyProfile::DlgMyProfile(QWidget *parent, Network *param1) : QDialog(parent)
 
     pNetwork = param1;
 
-    create_gui();
-    set_default_values();
-    create_signals();
+    createGui();
+    setDefaultValues();
+    createSignals();
 
     refresh();
 }
 
-void DlgMyProfile::create_gui()
+void DlgMyProfile::createGui()
 {
     ui.pushButton_bold->setIcon(QIcon(":/images/oxygen/16x16/format-text-bold.png"));
     ui.pushButton_italic->setIcon(QIcon(":/images/oxygen/16x16/format-text-italic.png"));
@@ -67,7 +67,7 @@ void DlgMyProfile::create_gui()
     ui.pushButton_italic->setCheckable(true);
 }
 
-void DlgMyProfile::set_default_values()
+void DlgMyProfile::setDefaultValues()
 {
     // font
     QStringList comboBoxFont;
@@ -135,9 +135,9 @@ void DlgMyProfile::set_default_values()
         ui.comboBox_country->insertItem(i, strlCountries.at(i));
 }
 
-void DlgMyProfile::create_signals()
+void DlgMyProfile::createSignals()
 {
-    QObject::connect(ui.buttonBox, SIGNAL(accepted()), this, SLOT(button_ok()));
+    QObject::connect(ui.buttonBox, SIGNAL(accepted()), this, SLOT(buttonOk()));
     QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(close()));
 }
 
@@ -172,11 +172,11 @@ void DlgMyProfile::refresh()
                 QString strMonth = strlDate.at(1);
                 QString strDay = strlDate.at(2);
 
-                strMonth = convert_int_to_month(strMonth);
+                strMonth = convertIntToMonth(strMonth);
 
-                ui.comboBox_day->setCurrentIndex(get_index(ui.comboBox_day, strDay));
-                ui.comboBox_month->setCurrentIndex(get_index(ui.comboBox_month, strMonth));
-                ui.comboBox_year->setCurrentIndex(get_index(ui.comboBox_year, strYear));
+                ui.comboBox_day->setCurrentIndex(getIndex(ui.comboBox_day, strDay));
+                ui.comboBox_month->setCurrentIndex(getIndex(ui.comboBox_month, strMonth));
+                ui.comboBox_year->setCurrentIndex(getIndex(ui.comboBox_year, strYear));
             }
             else
             {
@@ -189,8 +189,8 @@ void DlgMyProfile::refresh()
             ui.lineEdit_city->setText(strValue);
         else if (strKey == "country")
         {
-            QString strCountry = convert_code_to_country(strValue);
-            ui.comboBox_country->setCurrentIndex(get_index(ui.comboBox_country, strCountry));
+            QString strCountry = convertCodeToCountry(strValue);
+            ui.comboBox_country->setCurrentIndex(getIndex(ui.comboBox_country, strCountry));
         }
         else if (strKey == "longDesc")
             ui.plainTextEdit_hobby->setPlainText(strValue);
@@ -205,9 +205,9 @@ void DlgMyProfile::refresh()
                 ui.comboBox_sex->setCurrentIndex(2);
         }
         else if (strKey == "shortDesc")
-            ui.plainTextEdit_desc->setPlainText(convert_text_to_desc(strValue));
+            ui.plainTextEdit_desc->setPlainText(convertTextToDesc(strValue));
         else if (strKey == "type")
-            ui.label_type->setText(convert_type(strValue));
+            ui.label_type->setText(convertType(strValue));
         else if (strKey == "www")
             ui.lineEdit_www->setText(strValue);
 
@@ -215,7 +215,7 @@ void DlgMyProfile::refresh()
     }
 }
 
-int DlgMyProfile::get_index(QComboBox *comboBox, QString strCheck)
+int DlgMyProfile::getIndex(QComboBox *comboBox, QString strCheck)
 {
     for (int i = 0; i < comboBox->count(); i++)
     {
@@ -225,7 +225,7 @@ int DlgMyProfile::get_index(QComboBox *comboBox, QString strCheck)
     return 0;
 }
 
-QString DlgMyProfile::convert_text_to_desc(QString strContent)
+QString DlgMyProfile::convertTextToDesc(QString strContent)
 {
     strContent += " "; // fix convert algorithm
 
@@ -268,7 +268,7 @@ QString DlgMyProfile::convert_text_to_desc(QString strContent)
     return strContent;
 }
 
-QString DlgMyProfile::convert_desc_to_text(QString strContent)
+QString DlgMyProfile::convertDescToText(QString strContent)
 {
     strContent.remove(QRegExp("(\r|\n)"));
     strContent.replace(QRegExp("(http:|https:)//"), "\\1\\\\"); // fix http https
@@ -313,7 +313,7 @@ QString DlgMyProfile::convert_desc_to_text(QString strContent)
     return strContent;
 }
 
-QString DlgMyProfile::convert_code_to_country(QString strCountryCode)
+QString DlgMyProfile::convertCodeToCountry(QString strCountryCode)
 {
     QStringList strlCodes =  (QStringList() <<
        "AF" << "AL" << "DZ" << "AD" << "AO" << "AI" << "AQ" << "AG" << "AN" <<
@@ -357,7 +357,7 @@ QString DlgMyProfile::convert_code_to_country(QString strCountryCode)
     return "";
 }
 
-QString DlgMyProfile::convert_country_to_code(QString strCountry)
+QString DlgMyProfile::convertCountryToCode(QString strCountry)
 {
     QStringList strlCodes =  (QStringList() <<
        "AF" << "AL" << "DZ" << "AD" << "AO" << "AI" << "AQ" << "AG" << "AN" <<
@@ -401,7 +401,7 @@ QString DlgMyProfile::convert_country_to_code(QString strCountry)
     return "";
 }
 
-QString DlgMyProfile::convert_int_to_month(QString strCheckMonth)
+QString DlgMyProfile::convertIntToMonth(QString strCheckMonth)
 {
     QStringList strlMonths;
     strlMonths << "" << tr("January") << tr("February") << tr("March") << tr("April") << tr("May") << tr("June") << tr("July") << tr("August") << tr("September") << tr("October") << tr("November") << tr("December");
@@ -415,7 +415,7 @@ QString DlgMyProfile::convert_int_to_month(QString strCheckMonth)
     return "";
 }
 
-QString DlgMyProfile::convert_month_to_int(QString strMonth)
+QString DlgMyProfile::convertMonthToInt(QString strMonth)
 {
     QStringList strlMonths;
     strlMonths << "" << tr("January") << tr("February") << tr("March") << tr("April") << tr("May") << tr("June") << tr("July") << tr("August") << tr("September") << tr("October") << tr("November") << tr("December");
@@ -430,7 +430,7 @@ QString DlgMyProfile::convert_month_to_int(QString strMonth)
     return "";
 }
 
-QString DlgMyProfile::convert_type(QString strType)
+QString DlgMyProfile::convertType(QString strType)
 {
     if (strType == "0")
         strType = tr("Novice");
@@ -444,10 +444,10 @@ QString DlgMyProfile::convert_type(QString strType)
     return strType;
 }
 
-void DlgMyProfile::button_ok()
+void DlgMyProfile::buttonOk()
 {
     // set desc - shortDesc
-    QString strDesc = convert_desc_to_text(ui.plainTextEdit_desc->toPlainText());
+    QString strDesc = convertDescToText(ui.plainTextEdit_desc->toPlainText());
     if (strDesc != Core::instance()->mMyProfile.value("shortDesc"))
         pNetwork->send(QString("NS SET shortDesc %1").arg(strDesc));
 
@@ -461,7 +461,7 @@ void DlgMyProfile::button_ok()
 
     // set birthdate
     QString strDay = ui.comboBox_day->currentText();
-    QString strMonth = convert_month_to_int(ui.comboBox_month->currentText());
+    QString strMonth = convertMonthToInt(ui.comboBox_month->currentText());
     QString strYear = ui.comboBox_year->currentText();
     QString strBirthdate;
     if ((!strDay.isEmpty()) && (!strMonth.isEmpty()) && (!strYear.isEmpty()))
@@ -476,7 +476,7 @@ void DlgMyProfile::button_ok()
 
     // set country
     QString strCountry = ui.comboBox_country->currentText();
-    QString strCountryCode = convert_country_to_code(strCountry);
+    QString strCountryCode = convertCountryToCode(strCountry);
     if (strCountryCode != Core::instance()->mMyProfile.value("country"))
         pNetwork->send(QString("NS SET country %1").arg(strCountryCode));
 

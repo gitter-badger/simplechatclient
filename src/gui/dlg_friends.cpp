@@ -36,13 +36,13 @@ DlgFriends::DlgFriends(QWidget *parent, Network *param1) : QDialog(parent)
 
     pNetwork = param1;
 
-    create_gui();
-    create_signals();
+    createGui();
+    createSignals();
 
     refresh();
 }
 
-void DlgFriends::create_gui()
+void DlgFriends::createGui()
 {
     ui.pushButton_whois->setEnabled(false);
 
@@ -56,13 +56,13 @@ void DlgFriends::create_gui()
     ui.pushButton_whois->setText(tr("Whois"));
 }
 
-void DlgFriends::create_signals()
+void DlgFriends::createSignals()
 {
-    QObject::connect(ui.tabWidget, SIGNAL(currentChanged(int)), this, SLOT(tab_changed(int)));
-    QObject::connect(ui.listWidget_online, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(item_clicked(QListWidgetItem*)));
-    QObject::connect(ui.pushButton_add, SIGNAL(clicked()), this, SLOT(button_add()));
-    QObject::connect(ui.pushButton_remove, SIGNAL(clicked()), this, SLOT(button_remove()));
-    QObject::connect(ui.pushButton_whois, SIGNAL(clicked()), this, SLOT(button_whois()));
+    QObject::connect(ui.tabWidget, SIGNAL(currentChanged(int)), this, SLOT(tabChanged(int)));
+    QObject::connect(ui.listWidget_online, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(itemClicked(QListWidgetItem*)));
+    QObject::connect(ui.pushButton_add, SIGNAL(clicked()), this, SLOT(buttonAdd()));
+    QObject::connect(ui.pushButton_remove, SIGNAL(clicked()), this, SLOT(buttonRemove()));
+    QObject::connect(ui.pushButton_whois, SIGNAL(clicked()), this, SLOT(buttonWhois()));
     QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(close()));
 }
 
@@ -104,7 +104,7 @@ void DlgFriends::refresh()
     }
 }
 
-void DlgFriends::tab_changed(int index)
+void DlgFriends::tabChanged(int index)
 {
     // online - show whois
     if ((index == 0) && (ui.pushButton_whois->isHidden()))
@@ -114,7 +114,7 @@ void DlgFriends::tab_changed(int index)
         ui.pushButton_whois->setHidden(true);
 }
 
-void DlgFriends::item_clicked(QListWidgetItem *item)
+void DlgFriends::itemClicked(QListWidgetItem *item)
 {
     Q_UNUSED (item);
 
@@ -122,7 +122,7 @@ void DlgFriends::item_clicked(QListWidgetItem *item)
         ui.pushButton_whois->setEnabled(true);
 }
 
-void DlgFriends::button_add()
+void DlgFriends::buttonAdd()
 {
     bool ok;
     QString strText = QInputDialog::getText(this, tr("Changing your friends list"), tr("Enter a nickname to be added:"), QLineEdit::Normal, QString::null, &ok);
@@ -134,7 +134,7 @@ void DlgFriends::button_add()
     }
 }
 
-void DlgFriends::button_remove()
+void DlgFriends::buttonRemove()
 {
     QString strSelected;
     if (ui.tabWidget->currentIndex() == 0)
@@ -158,7 +158,7 @@ void DlgFriends::button_remove()
     }
 }
 
-void DlgFriends::button_whois()
+void DlgFriends::buttonWhois()
 {
     QString strSelected;
     if (ui.tabWidget->currentIndex() == 0)

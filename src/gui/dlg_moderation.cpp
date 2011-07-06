@@ -30,11 +30,11 @@ DlgModeration::DlgModeration(QWidget *parent) : QDialog(parent)
     setAttribute(Qt::WA_DeleteOnClose);
     setWindowTitle(tr("Moderation"));
 
-    create_gui();
-    create_signals();
+    createGui();
+    createSignals();
 }
 
-void DlgModeration::create_gui()
+void DlgModeration::createGui()
 {
     ui.pushButton_accept->setIcon(QIcon(":/images/oxygen/16x16/list-add.png"));
     ui.pushButton_remove->setIcon(QIcon(":/images/oxygen/16x16/list-remove.png"));
@@ -45,12 +45,12 @@ void DlgModeration::create_gui()
     ui.pushButton_remove->setText(tr("Remove"));
 }
 
-void DlgModeration::create_signals()
+void DlgModeration::createSignals()
 {
-    QObject::connect(ui.pushButton_accept, SIGNAL(clicked()), this, SLOT(button_accept()));
-    QObject::connect(ui.pushButton_remove, SIGNAL(clicked()), this, SLOT(button_remove()));
+    QObject::connect(ui.pushButton_accept, SIGNAL(clicked()), this, SLOT(buttonAccept()));
+    QObject::connect(ui.pushButton_remove, SIGNAL(clicked()), this, SLOT(buttonRemove()));
     QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(hide()));
-    QObject::connect(ui.comboBox_channels, SIGNAL(currentIndexChanged(QString)), this, SLOT(combo_changed(QString)));
+    QObject::connect(ui.comboBox_channels, SIGNAL(currentIndexChanged(QString)), this, SLOT(comboChanged(QString)));
 }
 
 void DlgModeration::refresh()
@@ -81,16 +81,16 @@ void DlgModeration::refresh()
     }
 }
 
-void DlgModeration::set_current_channel(QString strName)
+void DlgModeration::setCurrentChannel(QString strName)
 {
     // set combobox
     ui.comboBox_channels->setCurrentIndex(ui.comboBox_channels->findText(strName));
 
     // combo changed
-    combo_changed(strName);
+    comboChanged(strName);
 }
 
-void DlgModeration::add_msg(QString strID, QString strChannel, QString strNick, QString strMessage)
+void DlgModeration::addMsg(QString strID, QString strChannel, QString strNick, QString strMessage)
 {
     if (ui.comboBox_channels->findText(strChannel) == -1)
         ui.comboBox_channels->addItem(strChannel);
@@ -124,7 +124,7 @@ void DlgModeration::add_msg(QString strID, QString strChannel, QString strNick, 
     }
 }
 
-void DlgModeration::combo_changed(QString strComboName)
+void DlgModeration::comboChanged(QString strComboName)
 {
     ui.listWidget_msg->clear();
     strCurrentChannel = strComboName;
@@ -132,7 +132,7 @@ void DlgModeration::combo_changed(QString strComboName)
     refresh();
 }
 
-void DlgModeration::remove_selected()
+void DlgModeration::removeSelected()
 {
     QList<QListWidgetItem*> list = ui.listWidget_msg->selectedItems();
 
@@ -162,7 +162,7 @@ void DlgModeration::remove_selected()
     }
 }
 
-void DlgModeration::button_accept()
+void DlgModeration::buttonAccept()
 {
     QList<QListWidgetItem*> list = ui.listWidget_msg->selectedItems();
 
@@ -178,17 +178,17 @@ void DlgModeration::button_accept()
         emit send(strSend);
 
         QString strDisplay = QString("<%1> %2").arg(strNick).arg(strMessage);
-        emit display_msg(strChannel, strDisplay, DefaultMessage);
+        emit displayMsg(strChannel, strDisplay, DefaultMessage);
     }
 
     // remove
-    remove_selected();
+    removeSelected();
 }
 
-void DlgModeration::button_remove()
+void DlgModeration::buttonRemove()
 {
     // remove
-    remove_selected();
+    removeSelected();
 }
 
 void DlgModeration::showEvent(QShowEvent *event)

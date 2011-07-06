@@ -32,33 +32,33 @@ DlgUserAvatar::DlgUserAvatar(MainWindow *parent, QPixmap param1) : QDialog(paren
 
     avatar = param1;
 
-    create_gui();
-    set_default_values();
-    create_signals();
+    createGui();
+    setDefaultValues();
+    createSignals();
 }
 
-void DlgUserAvatar::create_gui()
+void DlgUserAvatar::createGui()
 {
     ui.toolButton_zoom_out->setIcon(QIcon(":/images/oxygen/16x16/zoom-out.png"));
     ui.toolButton_zoom_in->setIcon(QIcon(":/images/oxygen/16x16/zoom-in.png"));
     ui.buttonBox->button(QDialogButtonBox::Close)->setIcon(QIcon(":/images/oxygen/16x16/dialog-close.png"));
 }
 
-void DlgUserAvatar::set_default_values()
+void DlgUserAvatar::setDefaultValues()
 {
     // slider value 5
     ui.label_avatar->setPixmap(avatar.scaled(QSize(250,250)));
 }
 
-void DlgUserAvatar::create_signals()
+void DlgUserAvatar::createSignals()
 {
-    QObject::connect(ui.toolButton_zoom_out, SIGNAL(clicked()), this, SLOT(button_zoom_out()));
-    QObject::connect(ui.horizontalSlider, SIGNAL(valueChanged(int)), this, SLOT(slider_value_changed(int)));
-    QObject::connect(ui.toolButton_zoom_in, SIGNAL(clicked()), this, SLOT(button_zoom_in()));
+    QObject::connect(ui.toolButton_zoom_out, SIGNAL(clicked()), this, SLOT(buttonZoomOut()));
+    QObject::connect(ui.horizontalSlider, SIGNAL(valueChanged(int)), this, SLOT(sliderValueChanged(int)));
+    QObject::connect(ui.toolButton_zoom_in, SIGNAL(clicked()), this, SLOT(buttonZoomIn()));
     QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(close()));
 }
 
-void DlgUserAvatar::button_zoom_out()
+void DlgUserAvatar::buttonZoomOut()
 {
     int value = ui.horizontalSlider->value();
     value--;
@@ -67,7 +67,7 @@ void DlgUserAvatar::button_zoom_out()
         ui.horizontalSlider->setValue(value);
 }
 
-void DlgUserAvatar::slider_value_changed(int iValue)
+void DlgUserAvatar::sliderValueChanged(int iValue)
 {
     int iSize = 50;
     iSize *= iValue;
@@ -75,7 +75,7 @@ void DlgUserAvatar::slider_value_changed(int iValue)
     ui.label_avatar->setPixmap(avatar.scaled(QSize(iSize,iSize)));
 }
 
-void DlgUserAvatar::button_zoom_in()
+void DlgUserAvatar::buttonZoomIn()
 {
     int value = ui.horizontalSlider->value();
     value++;

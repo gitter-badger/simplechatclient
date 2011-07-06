@@ -34,12 +34,12 @@ private:
     Ui::uiAwaylog ui;
     QAction *awaylogAct;
 
-    void create_gui();
-    void create_signals();
+    void createGui();
+    void createSignals();
 
     void refresh();
-    void button_reset();
-    void button_close();
+    void buttonReset();
+    void buttonClose();
 
 private slots:
     void buttons(QAbstractButton*);

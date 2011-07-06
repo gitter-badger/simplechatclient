@@ -45,11 +45,11 @@ DlgUserProfile::DlgUserProfile(QWidget *parent, Network *param1) : QDialog(paren
 
     pNetwork = param1;
 
-    create_gui();
-    create_signals();
+    createGui();
+    createSignals();
 
     accessManager = new QNetworkAccessManager;
-    QObject::connect(accessManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(avatar_finished(QNetworkReply*)));
+    QObject::connect(accessManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(avatarFinished(QNetworkReply*)));
 }
 
 DlgUserProfile::~DlgUserProfile()
@@ -57,7 +57,7 @@ DlgUserProfile::~DlgUserProfile()
     accessManager->deleteLater();
 }
 
-void DlgUserProfile::create_gui()
+void DlgUserProfile::createGui()
 {
     toolButton_zoom = new QToolButton();
     toolLayout = new QVBoxLayout();
@@ -162,17 +162,17 @@ void DlgUserProfile::create_gui()
     pushButton_close->setText(tr("Close"));
 }
 
-void DlgUserProfile::create_signals()
+void DlgUserProfile::createSignals()
 {
-    QObject::connect(toolButton_zoom, SIGNAL(clicked()), this, SLOT(button_zoom()));
-    QObject::connect(pushButton_more, SIGNAL(clicked()), this, SLOT(button_more()));
+    QObject::connect(toolButton_zoom, SIGNAL(clicked()), this, SLOT(buttonZoom()));
+    QObject::connect(pushButton_more, SIGNAL(clicked()), this, SLOT(buttonMore()));
     QObject::connect(pushButton_close, SIGNAL(clicked()), this, SLOT(hide()));
 }
 
-void DlgUserProfile::set_nick(QString n)
+void DlgUserProfile::setNick(QString n)
 {
     // clear
-    clear_info();
+    clearInfo();
 
     // set nick
     strNick = n;
@@ -184,32 +184,32 @@ void DlgUserProfile::set_nick(QString n)
     pNetwork->send(QString("NS INFO %1").arg(strNick));
 }
 
-void DlgUserProfile::set_user_info(QString strKey, QString strValue)
+void DlgUserProfile::setUserInfo(QString strKey, QString strValue)
 {
     if (strKey == "avatar")
     {
         if (!strValue.isEmpty())
-            show_avatar(strValue);
+            showAvatar(strValue);
         else
             label_avatar->setText(tr("No photo available"));
     }
     else if (strKey == "birthdate")
     {
-        lineEdit_age->setText(convert_age(strValue));
+        lineEdit_age->setText(convertAge(strValue));
         lineEdit_birthdate->setText(strValue);
     }
     else if (strKey == "city")
         lineEdit_city->setText(strValue);
     else if (strKey == "country")
-        lineEdit_country->setText(convert_code_to_country(strValue));
+        lineEdit_country->setText(convertCodeToCountry(strValue));
     else if (strKey == "longDesc")
         plainTextEdit_hobby->setPlainText(strValue);
     else if (strKey == "sex")
-        lineEdit_sex->setText(convert_sex(strValue));
+        lineEdit_sex->setText(convertSex(strValue));
     else if (strKey == "shortDesc")
-        textEdit_desc->setHtml(convert_desc(strValue));
+        textEdit_desc->setHtml(convertDesc(strValue));
     else if (strKey == "type")
-        lineEdit_type->setText(convert_type(strValue));
+        lineEdit_type->setText(convertType(strValue));
     else if (strKey == "www")
     {
         QString strShortLink = strValue;
@@ -219,7 +219,7 @@ void DlgUserProfile::set_user_info(QString strKey, QString strValue)
     }
 }
 
-void DlgUserProfile::avatar_finished(QNetworkReply *pReply)
+void DlgUserProfile::avatarFinished(QNetworkReply *pReply)
 {
     pReply->deleteLater();
 
@@ -241,12 +241,12 @@ void DlgUserProfile::avatar_finished(QNetworkReply *pReply)
     }
 }
 
-void DlgUserProfile::button_zoom()
+void DlgUserProfile::buttonZoom()
 {
     DlgUserAvatar(Core::instance()->sccWindow(), avatar).exec();
 }
 
-void DlgUserProfile::button_more()
+void DlgUserProfile::buttonMore()
 {
     if (moreWidget->isVisible())
     {
@@ -262,7 +262,7 @@ void DlgUserProfile::button_more()
     }
 }
 
-void DlgUserProfile::clear_info()
+void DlgUserProfile::clearInfo()
 {
     strNick.clear();
     label_avatar->clear();
@@ -279,7 +279,7 @@ void DlgUserProfile::clear_info()
     label_website_link->clear();
 }
 
-QString DlgUserProfile::convert_desc(QString strContent)
+QString DlgUserProfile::convertDesc(QString strContent)
 {
     QString strContentStart = "<html><body style=\"background-color:white;font-size:12px;font-family:Verdana;\">";
     QString strContentEnd = "</body></html>";
@@ -300,7 +300,7 @@ QString DlgUserProfile::convert_desc(QString strContent)
     return (strContentStart+strContent+strContentEnd);
 }
 
-QString DlgUserProfile::convert_sex(QString strSex)
+QString DlgUserProfile::convertSex(QString strSex)
 {
     if (strSex == "F")
         strSex = tr("Female");
@@ -310,7 +310,7 @@ QString DlgUserProfile::convert_sex(QString strSex)
     return strSex;
 }
 
-QString DlgUserProfile::convert_age(QString strDate)
+QString DlgUserProfile::convertAge(QString strDate)
 {
     if (strDate.isEmpty()) return QString::null; // empty date
     QStringList strlDate = strDate.split("-");
@@ -334,7 +334,7 @@ QString DlgUserProfile::convert_age(QString strDate)
     return QString::number(iAge);
 }
 
-QString DlgUserProfile::convert_code_to_country(QString strCountryCode)
+QString DlgUserProfile::convertCodeToCountry(QString strCountryCode)
 {
     QStringList strlCodes =  (QStringList() <<
        "AF" << "AL" << "DZ" << "AD" << "AO" << "AI" << "AQ" << "AG" << "AN" <<
@@ -378,7 +378,7 @@ QString DlgUserProfile::convert_code_to_country(QString strCountryCode)
     return "";
 }
 
-QString DlgUserProfile::convert_type(QString strType)
+QString DlgUserProfile::convertType(QString strType)
 {
     if (strType == "0")
         strType = tr("Novice");
@@ -392,7 +392,7 @@ QString DlgUserProfile::convert_type(QString strType)
     return strType;
 }
 
-void DlgUserProfile::show_avatar(QString strUrl)
+void DlgUserProfile::showAvatar(QString strUrl)
 {
     if (!strUrl.contains(",")) return; // wrong url
 
@@ -427,7 +427,7 @@ void DlgUserProfile::hideEvent(QHideEvent *event)
 {
     event->accept();
 
-    clear_info();
+    clearInfo();
 }
 
 void DlgUserProfile::closeEvent(QCloseEvent *event)

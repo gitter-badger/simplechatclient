@@ -100,7 +100,7 @@ void NickListWidget::profile()
 
     if (strNick[0] != '~')
     {
-        pDlgUserProfile->set_nick(strNick);
+        pDlgUserProfile->setNick(strNick);
         pDlgUserProfile->show();
     }
 }

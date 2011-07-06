@@ -38,16 +38,16 @@ DlgEmail::DlgEmail(MainWindow *parent, QString param1, QString param2) : QDialog
     strChannel.remove(0,1);
     strEmail = param2;
 
-    create_gui();
-    create_signals();
+    createGui();
+    createSignals();
 
     accessManager = new QNetworkAccessManager;
     cookieJar = new QNetworkCookieJar();
     accessManager->setCookieJar(cookieJar);
-    QObject::connect(accessManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(network_finished(QNetworkReply*)));
+    QObject::connect(accessManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(networkFinished(QNetworkReply*)));
 
-    get_cookies();
-    get_img();
+    getCookies();
+    getImg();
 }
 
 DlgEmail::~DlgEmail()
@@ -56,7 +56,7 @@ DlgEmail::~DlgEmail()
     accessManager->deleteLater();
 }
 
-void DlgEmail::create_gui()
+void DlgEmail::createGui()
 {
     ui.pushButton_ok->setIcon(QIcon(":/images/oxygen/16x16/dialog-ok.png"));
     ui.pushButton_refresh->setIcon(QIcon(":/images/oxygen/16x16/view-refresh.png"));
@@ -68,14 +68,14 @@ void DlgEmail::create_gui()
     ui.pushButton_cancel->setText(tr("Cancel"));
 }
 
-void DlgEmail::create_signals()
+void DlgEmail::createSignals()
 {
-    QObject::connect(ui.pushButton_ok, SIGNAL(clicked()), this, SLOT(button_ok()));
-    QObject::connect(ui.pushButton_refresh, SIGNAL(clicked()), this, SLOT(button_refresh()));
+    QObject::connect(ui.pushButton_ok, SIGNAL(clicked()), this, SLOT(buttonOk()));
+    QObject::connect(ui.pushButton_refresh, SIGNAL(clicked()), this, SLOT(buttonRefresh()));
     QObject::connect(ui.pushButton_cancel, SIGNAL(clicked()), this, SLOT(close()));
 }
 
-void DlgEmail::get_cookies()
+void DlgEmail::getCookies()
 {
     QList<QNetworkCookie> cookieList;
     QNetworkCookie cookie;
@@ -104,7 +104,7 @@ void DlgEmail::get_cookies()
     accessManager->cookieJar()->setCookiesFromUrl(cookieList, QUrl("http://czat.onet.pl"));
 }
 
-void DlgEmail::get_img()
+void DlgEmail::getImg()
 {
     // disable button
     ui.pushButton_refresh->setEnabled(false);
@@ -117,7 +117,7 @@ void DlgEmail::get_img()
     pReply->setProperty("category", "get_img");
 }
 
-void DlgEmail::got_img(QByteArray bData)
+void DlgEmail::gotImg(QByteArray bData)
 {
     // show img
     QPixmap pixmap;
@@ -128,7 +128,7 @@ void DlgEmail::got_img(QByteArray bData)
     ui.pushButton_refresh->setEnabled(true);
 }
 
-void DlgEmail::set_email()
+void DlgEmail::setEmail()
 {
     QString strChannelLength = QString::number(strChannel.length());
     QString strEmailLength = QString::number(strEmail.length());
@@ -145,7 +145,7 @@ void DlgEmail::set_email()
 
 // <?xml version="1.0" encoding="ISO-8859-2"?><root><status>0</status><error err_code="0"  err_text="OK" ></error></root>
 ///<?xml version="1.0" encoding="ISO-8859-2"?><root><error err_code="-7"  err_text="Nieprawid.owy kod CAPTCHA" ></error></root>
-void DlgEmail::parse_result(QString strResult)
+void DlgEmail::parseResult(QString strResult)
 {
     QDomDocument doc;
     doc.setContent(strResult);
@@ -162,11 +162,11 @@ void DlgEmail::parse_result(QString strResult)
     {
         ui.lineEdit_code->clear();
         QMessageBox::critical(0, tr("Error"), strErrText);
-        get_img();
+        getImg();
     }
 }
 
-void DlgEmail::network_finished(QNetworkReply *reply)
+void DlgEmail::networkFinished(QNetworkReply *reply)
 {
     reply->deleteLater();
 
@@ -180,18 +180,18 @@ void DlgEmail::network_finished(QNetworkReply *reply)
         return;
 
     if (strCategory == "get_img")
-        got_img(bData);
+        gotImg(bData);
     else if (strCategory == "set_email")
-        parse_result(QString(bData));
+        parseResult(QString(bData));
 }
 
-void DlgEmail::button_ok()
+void DlgEmail::buttonOk()
 {
-    set_email();
+    setEmail();
 }
 
-void DlgEmail::button_refresh()
+void DlgEmail::buttonRefresh()
 {
     ui.lineEdit_code->clear();
-    get_img();
+    getImg();
 }

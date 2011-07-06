@@ -50,41 +50,41 @@ private:
     QList<QString> lMyAvatars; // list of my avatars
     QMap<QString, QString> mMyAvatarsID; // url, id
 
-    void create_gui();
-    void set_default_values();
-    void create_signals();
+    void createGui();
+    void setDefaultValues();
+    void createSignals();
 
-    void get_cookies();
+    void getCookies();
     // avatar
-    void get_avatar(QString);
-    void got_avatar(QString, QByteArray);
+    void getAvatar(QString);
+    void gotAvatar(QString, QByteArray);
     // my avatars
-    void load_my_avatars();
-    void got_my_avatars(QString);
-    void draw_my_avatar(QString, QByteArray);
+    void loadMyAvatars();
+    void gotMyAvatars(QString);
+    void drawMyAvatar(QString, QByteArray);
     // collections
-    void get_collections();
-    void got_collections(QString);
-    void draw_collections();
+    void getCollections();
+    void gotCollections(QString);
+    void drawCollections();
     // avatars from collect
-    void get_avatars_from_collect(int);
-    void got_avatars_from_collect(QString);
-    void draw_avatar_from_collect(QString, QByteArray);
+    void getAvatarsFromCollect(int);
+    void gotAvatarsFromCollect(QString);
+    void drawAvatarFromCollect(QString, QByteArray);
     // add avatar
-    void got_add_avatar(QString);
+    void gotAddAvatar(QString);
     // remove avatar
-    void got_remove_avatar(QString);
+    void gotRemoveAvatar(QString);
 
 private slots:
-    void network_finished(QNetworkReply*);
-    void refresh_avatar();
-    void tab_changed(int);
-    void collection_changed(QString);
-    void button_add_avatar();
-    void button_apply_avatar();
-    void button_remove_avatar();
-    void button_set_empty_avatar();
-    void button_apply_collection_avatar();
+    void networkFinished(QNetworkReply*);
+    void refreshAvatar();
+    void tabChanged(int);
+    void collectionChanged(QString);
+    void buttonAddAvatar();
+    void buttonApplyAvatar();
+    void buttonRemoveAvatar();
+    void buttonSetEmptyAvatar();
+    void buttonApplyCollectionAvatar();
 };
 
 #endif // DLG_MY_AVATAR_H

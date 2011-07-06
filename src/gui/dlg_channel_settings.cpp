@@ -41,12 +41,12 @@ DlgChannelSettings::DlgChannelSettings(QWidget *parent, Network *param1) : QDial
     pSimpleStatsWidget->show();
     ui.verticalLayout_stats->addWidget(pSimpleStatsWidget);
 
-    create_gui();
-    set_default_values();
-    create_signals();
+    createGui();
+    setDefaultValues();
+    createSignals();
 }
 
-void DlgChannelSettings::create_gui()
+void DlgChannelSettings::createGui()
 {
     ui.pushButton_transfer->setIcon(QIcon(":/images/oxygen/16x16/user-group-new.png"));
     ui.pushButton_remove_channel->setIcon(QIcon(":/images/oxygen/16x16/user-group-delete.png"));
@@ -148,7 +148,7 @@ void DlgChannelSettings::create_gui()
     ui.pushButton_italic->setCheckable(true);
 }
 
-void DlgChannelSettings::set_default_values()
+void DlgChannelSettings::setDefaultValues()
 {
     // font
     QStringList comboBoxFont;
@@ -178,41 +178,41 @@ void DlgChannelSettings::set_default_values()
     }
 }
 
-void DlgChannelSettings::create_signals()
+void DlgChannelSettings::createSignals()
 {
-    QObject::connect(ui.pushButton_transfer, SIGNAL(clicked()), this, SLOT(owner_changed()));
-    QObject::connect(ui.pushButton_remove_channel, SIGNAL(clicked()), this, SLOT(remove_channel_clicked()));
-    QObject::connect(ui.pushButton_set_email, SIGNAL(clicked()), this, SLOT(email_changed()));
-    QObject::connect(ui.pushButton_set_website, SIGNAL(clicked()), this, SLOT(www_changed()));
-    QObject::connect(ui.pushButton_set_topic, SIGNAL(clicked()), this, SLOT(topic_changed()));
-    QObject::connect(ui.pushButton_set_desc, SIGNAL(clicked()), this, SLOT(desc_changed()));
-    QObject::connect(ui.radioButton_status_pub, SIGNAL(clicked()), this, SLOT(status_pub()));
-    QObject::connect(ui.radioButton_status_priv, SIGNAL(clicked()), this, SLOT(status_priv()));
-    QObject::connect(ui.comboBox_category, SIGNAL(activated(int)), this, SLOT(category_changed(int)));
-    QObject::connect(ui.radioButton_guardian_off, SIGNAL(clicked()), this, SLOT(guardian_inactive()));
-    QObject::connect(ui.radioButton_guardian_on, SIGNAL(clicked()), this, SLOT(guardian_active()));
-    QObject::connect(ui.comboBox_guardian_level, SIGNAL(activated(int)), this, SLOT(guardian_clicked(int)));
-    QObject::connect(ui.pushButton_set_password, SIGNAL(clicked()), this, SLOT(password_changed()));
-    QObject::connect(ui.pushButton_set_limit, SIGNAL(clicked()), this, SLOT(limit_changed()));
-    QObject::connect(ui.radioButton_moderation_off, SIGNAL(clicked()), this, SLOT(moderated_inactive()));
-    QObject::connect(ui.radioButton_moderation_on, SIGNAL(clicked()), this, SLOT(moderated_active()));
-    QObject::connect(ui.radioButton_auditorium_off, SIGNAL(clicked()), this, SLOT(auditorium_inactive()));
-    QObject::connect(ui.radioButton_auditorium_on, SIGNAL(clicked()), this, SLOT(auditorium_active()));
+    QObject::connect(ui.pushButton_transfer, SIGNAL(clicked()), this, SLOT(ownerChanged()));
+    QObject::connect(ui.pushButton_remove_channel, SIGNAL(clicked()), this, SLOT(removeChannelClicked()));
+    QObject::connect(ui.pushButton_set_email, SIGNAL(clicked()), this, SLOT(emailChanged()));
+    QObject::connect(ui.pushButton_set_website, SIGNAL(clicked()), this, SLOT(wwwChanged()));
+    QObject::connect(ui.pushButton_set_topic, SIGNAL(clicked()), this, SLOT(topicChanged()));
+    QObject::connect(ui.pushButton_set_desc, SIGNAL(clicked()), this, SLOT(descChanged()));
+    QObject::connect(ui.radioButton_status_pub, SIGNAL(clicked()), this, SLOT(statusPub()));
+    QObject::connect(ui.radioButton_status_priv, SIGNAL(clicked()), this, SLOT(statusPriv()));
+    QObject::connect(ui.comboBox_category, SIGNAL(activated(int)), this, SLOT(categoryChanged(int)));
+    QObject::connect(ui.radioButton_guardian_off, SIGNAL(clicked()), this, SLOT(guardianInactive()));
+    QObject::connect(ui.radioButton_guardian_on, SIGNAL(clicked()), this, SLOT(guardianActive()));
+    QObject::connect(ui.comboBox_guardian_level, SIGNAL(activated(int)), this, SLOT(guardianClicked(int)));
+    QObject::connect(ui.pushButton_set_password, SIGNAL(clicked()), this, SLOT(passwordChanged()));
+    QObject::connect(ui.pushButton_set_limit, SIGNAL(clicked()), this, SLOT(limitChanged()));
+    QObject::connect(ui.radioButton_moderation_off, SIGNAL(clicked()), this, SLOT(moderatedInactive()));
+    QObject::connect(ui.radioButton_moderation_on, SIGNAL(clicked()), this, SLOT(moderatedActive()));
+    QObject::connect(ui.radioButton_auditorium_off, SIGNAL(clicked()), this, SLOT(auditoriumInactive()));
+    QObject::connect(ui.radioButton_auditorium_on, SIGNAL(clicked()), this, SLOT(auditoriumActive()));
 
-    QObject::connect(ui.pushButton_permission_add, SIGNAL(clicked()), this, SLOT(button_permission_add()));
-    QObject::connect(ui.pushButton_permission_remove, SIGNAL(clicked()), this, SLOT(button_permission_remove()));
-    QObject::connect(ui.listWidget_permissions, SIGNAL(clicked(QModelIndex)), this, SLOT(change_permission_list(QModelIndex)));
+    QObject::connect(ui.pushButton_permission_add, SIGNAL(clicked()), this, SLOT(buttonPermissionAdd()));
+    QObject::connect(ui.pushButton_permission_remove, SIGNAL(clicked()), this, SLOT(buttonPermissionRemove()));
+    QObject::connect(ui.listWidget_permissions, SIGNAL(clicked(QModelIndex)), this, SLOT(changePermissionList(QModelIndex)));
 
-    QObject::connect(ui.buttonBox, SIGNAL(accepted()), this, SLOT(button_ok()));
-    QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(button_cancel()));
+    QObject::connect(ui.buttonBox, SIGNAL(accepted()), this, SLOT(buttonOk()));
+    QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(buttonCancel()));
 }
 
-void DlgChannelSettings::set_channel(QString param1)
+void DlgChannelSettings::setChannel(QString param1)
 {
     strChannel = param1;
 }
 
-void DlgChannelSettings::set_data(QMap<QString, QString> mData)
+void DlgChannelSettings::setData(QMap<QString, QString> mData)
 {
     QMapIterator<QString, QString> i(mData);
     while (i.hasNext())
@@ -364,7 +364,7 @@ void DlgChannelSettings::set_data(QMap<QString, QString> mData)
     }
 }
 
-void DlgChannelSettings::set_stats_data(QMap<QString, QString> mData)
+void DlgChannelSettings::setStatsData(QMap<QString, QString> mData)
 {
     QMapIterator<QString, QString> i(mData);
     while (i.hasNext())
@@ -406,14 +406,14 @@ void DlgChannelSettings::set_stats_data(QMap<QString, QString> mData)
     }
 }
 
-void DlgChannelSettings::enable_tabs()
+void DlgChannelSettings::enableTabs()
 {
     ui.tabWidget->setTabEnabled(1, true);
     ui.tabWidget->setTabEnabled(2, true);
     ui.tabWidget->setTabEnabled(3, true);
 }
 
-void DlgChannelSettings::set_topic(QString strTopic)
+void DlgChannelSettings::setTopic(QString strTopic)
 {
     strTopic += " "; // fix convert algorithm
 
@@ -461,7 +461,7 @@ void DlgChannelSettings::set_topic(QString strTopic)
     ui.plainTextEdit_topic->setPlainText(strTopic);
 }
 
-void DlgChannelSettings::set_owner(QString strNick)
+void DlgChannelSettings::setOwner(QString strNick)
 {
     ui.label_owner->show();
     ui.label_owner_nick->show();
@@ -472,10 +472,10 @@ void DlgChannelSettings::set_owner(QString strNick)
     QSettings settings;
     QString strMe = settings.value("nick").toString();
     if (strNick == strMe)
-        enable_tabs();
+        enableTabs();
 }
 
-void DlgChannelSettings::set_description(QString strDescription)
+void DlgChannelSettings::setDescription(QString strDescription)
 {
     // set summary description
     if (!strDescription.isEmpty())
@@ -492,9 +492,9 @@ void DlgChannelSettings::set_description(QString strDescription)
     ui.plainTextEdit_desc->setPlainText(strDescription);
 }
 
-void DlgChannelSettings::add_op(QString strNick)
+void DlgChannelSettings::addOp(QString strNick)
 {
-    if (!exist_item(strNick, ui.listWidget_op))
+    if (!existItem(strNick, ui.listWidget_op))
     {
         SortedListWidgetItem *item = new SortedListWidgetItem();
         item->setData(Qt::UserRole+11, false); // is nicklist
@@ -506,12 +506,12 @@ void DlgChannelSettings::add_op(QString strNick)
     QSettings settings;
     QString strMe = settings.value("nick").toString();
     if (strNick == strMe)
-        enable_tabs();
+        enableTabs();
 }
 
-void DlgChannelSettings::add_halfop(QString strNick)
+void DlgChannelSettings::addHalfop(QString strNick)
 {
-    if (!exist_item(strNick, ui.listWidget_halfop))
+    if (!existItem(strNick, ui.listWidget_halfop))
     {
         SortedListWidgetItem *item = new SortedListWidgetItem();
         item->setData(Qt::UserRole+11, false); // is nicklist
@@ -523,12 +523,12 @@ void DlgChannelSettings::add_halfop(QString strNick)
     QSettings settings;
     QString strMe = settings.value("nick").toString();
     if (strNick == strMe)
-        enable_tabs();
+        enableTabs();
 }
 
-void DlgChannelSettings::add_ban(QString strNick, QString strWho, QString strDT, QString strIPNick)
+void DlgChannelSettings::addBan(QString strNick, QString strWho, QString strDT, QString strIPNick)
 {
-    if (!exist_item(strNick, ui.listWidget_ban))
+    if (!existItem(strNick, ui.listWidget_ban))
     {
         SortedListWidgetItem *item = new SortedListWidgetItem();
         item->setData(Qt::UserRole+11, false); // is nicklist
@@ -548,9 +548,9 @@ void DlgChannelSettings::add_ban(QString strNick, QString strWho, QString strDT,
     }
 }
 
-void DlgChannelSettings::add_invite(QString strNick, QString strWho, QString strDT)
+void DlgChannelSettings::addInvite(QString strNick, QString strWho, QString strDT)
 {
-    if (!exist_item(strNick, ui.listWidget_invite))
+    if (!existItem(strNick, ui.listWidget_invite))
     {
         SortedListWidgetItem *item = new SortedListWidgetItem();
         item->setData(Qt::UserRole+11, false); // is nicklist
@@ -561,7 +561,7 @@ void DlgChannelSettings::add_invite(QString strNick, QString strWho, QString str
     }
 }
 
-void DlgChannelSettings::owner_changed()
+void DlgChannelSettings::ownerChanged()
 {
     QString strMsg = "<p style=\"font-weight:bold;\">"+tr("The owner of the channel can be only one!")+"</p><p>"+tr("Enter the nickname of the new owner:")+"</p>";
     bool ok;
@@ -575,7 +575,7 @@ void DlgChannelSettings::owner_changed()
     pNetwork->send(QString("CS INFO %1").arg(strChannel));
 }
 
-void DlgChannelSettings::remove_channel_clicked()
+void DlgChannelSettings::removeChannelClicked()
 {
     QString strMsg = "<p style=\"font-weight:bold;\">"+tr("The removal of the channel operation is irreversible!")+"</p>";
     bool ok;
@@ -589,19 +589,19 @@ void DlgChannelSettings::remove_channel_clicked()
     this->hide();
 }
 
-void DlgChannelSettings::email_changed()
+void DlgChannelSettings::emailChanged()
 {
     if (!ui.lineEdit_email->text().isEmpty())
         DlgEmail(Core::instance()->sccWindow(), strChannel, ui.lineEdit_email->text()).exec();
 }
 
-void DlgChannelSettings::www_changed()
+void DlgChannelSettings::wwwChanged()
 {
     pNetwork->send(QString("CS SET %1 WWW %2").arg(strChannel).arg(ui.lineEdit_website->text()));
     pNetwork->send(QString("CS INFO %1").arg(strChannel));
 }
 
-void DlgChannelSettings::topic_changed()
+void DlgChannelSettings::topicChanged()
 {
     QString strTopic = ui.plainTextEdit_topic->toPlainText();
     strTopic.remove(QRegExp("(\r|\n)"));
@@ -648,37 +648,37 @@ void DlgChannelSettings::topic_changed()
     pNetwork->send(QString("CS INFO %1").arg(strChannel));
 }
 
-void DlgChannelSettings::desc_changed()
+void DlgChannelSettings::descChanged()
 {
     pNetwork->send(QString("CS SET %1 LONGDESC %2").arg(strChannel).arg(ui.plainTextEdit_desc->toPlainText().replace(QRegExp("(\r|\n)"), "")));
     pNetwork->send(QString("CS INFO %1").arg(strChannel));
 }
 
-void DlgChannelSettings::status_pub()
+void DlgChannelSettings::statusPub()
 {
     pNetwork->send(QString("CS SET %1 PRIVATE OFF").arg(strChannel));
     pNetwork->send(QString("CS INFO %1").arg(strChannel));
 }
 
-void DlgChannelSettings::status_priv()
+void DlgChannelSettings::statusPriv()
 {
     pNetwork->send(QString("CS SET %1 PRIVATE ON").arg(strChannel));
     pNetwork->send(QString("CS INFO %1").arg(strChannel));
 }
 
-void DlgChannelSettings::category_changed(int index)
+void DlgChannelSettings::categoryChanged(int index)
 {
     pNetwork->send(QString("CS SET %1 CATMAJOR %2").arg(strChannel).arg(index+1));
     pNetwork->send(QString("CS INFO %1").arg(strChannel));
 }
 
-void DlgChannelSettings::guardian_inactive()
+void DlgChannelSettings::guardianInactive()
 {
     pNetwork->send(QString("CS SET %1 GUARDIAN 0").arg(strChannel));
     pNetwork->send(QString("CS INFO %1").arg(strChannel));
 }
 
-void DlgChannelSettings::guardian_active()
+void DlgChannelSettings::guardianActive()
 {
     if (ui.comboBox_guardian_level->currentIndex() != -1)
         pNetwork->send(QString("CS SET %1 GUARDIAN %2").arg(strChannel).arg(ui.comboBox_guardian_level->currentIndex()));
@@ -687,50 +687,50 @@ void DlgChannelSettings::guardian_active()
     pNetwork->send(QString("CS INFO %1").arg(strChannel));
 }
 
-void DlgChannelSettings::guardian_clicked(int iLevel)
+void DlgChannelSettings::guardianClicked(int iLevel)
 {
     if (ui.radioButton_guardian_on->isChecked())
         pNetwork->send(QString("CS SET %1 GUARDIAN %2").arg(strChannel).arg(iLevel+1));
     pNetwork->send(QString("CS INFO %1").arg(strChannel));
 }
 
-void DlgChannelSettings::password_changed()
+void DlgChannelSettings::passwordChanged()
 {
     pNetwork->send(QString("CS SET %1 PASSWORD %2").arg(strChannel).arg(ui.lineEdit_password->text()));
     pNetwork->send(QString("CS INFO %1").arg(strChannel));
 }
 
-void DlgChannelSettings::limit_changed()
+void DlgChannelSettings::limitChanged()
 {
     pNetwork->send(QString("CS SET %1 LIMIT %2").arg(strChannel).arg(ui.spinBox_limit->value()));
     pNetwork->send(QString("CS INFO %1").arg(strChannel));
 }
 
-void DlgChannelSettings::moderated_inactive()
+void DlgChannelSettings::moderatedInactive()
 {
     pNetwork->send(QString("CS SET %1 MODERATED OFF").arg(strChannel));
     pNetwork->send(QString("CS INFO %1").arg(strChannel));
 }
 
-void DlgChannelSettings::moderated_active()
+void DlgChannelSettings::moderatedActive()
 {
     pNetwork->send(QString("CS SET %1 MODERATED ON").arg(strChannel));
     pNetwork->send(QString("CS INFO %1").arg(strChannel));
 }
 
-void DlgChannelSettings::auditorium_inactive()
+void DlgChannelSettings::auditoriumInactive()
 {
     pNetwork->send(QString("CS SET %1 AUDITORIUM OFF").arg(strChannel));
     pNetwork->send(QString("CS INFO %1").arg(strChannel));
 }
 
-void DlgChannelSettings::auditorium_active()
+void DlgChannelSettings::auditoriumActive()
 {
     pNetwork->send(QString("CS SET %1 AUDITORIUM ON").arg(strChannel));
     pNetwork->send(QString("CS INFO %1").arg(strChannel));
 }
 
-void DlgChannelSettings::button_permission_add()
+void DlgChannelSettings::buttonPermissionAdd()
 {
     int tab = ui.stackedWidget->currentIndex();
     QString strNick;
@@ -787,7 +787,7 @@ void DlgChannelSettings::button_permission_add()
     pNetwork->send(QString("CS INFO %1").arg(strChannel));
 }
 
-void DlgChannelSettings::button_permission_remove()
+void DlgChannelSettings::buttonPermissionRemove()
 {
     int tab = ui.stackedWidget->currentIndex();
     QList<QListWidgetItem*> lRemoveNicks;
@@ -870,23 +870,23 @@ void DlgChannelSettings::button_permission_remove()
     pNetwork->send(QString("CS INFO %1").arg(strChannel));
 }
 
-void DlgChannelSettings::change_permission_list(QModelIndex index)
+void DlgChannelSettings::changePermissionList(QModelIndex index)
 {
     int row = index.row();
     ui.stackedWidget->setCurrentIndex(row);
 }
 
-void DlgChannelSettings::button_ok()
+void DlgChannelSettings::buttonOk()
 {
     this->hide();
 }
 
-void DlgChannelSettings::button_cancel()
+void DlgChannelSettings::buttonCancel()
 {
     this->hide();
 }
 
-bool DlgChannelSettings::exist_item(QString find, QListWidget *list)
+bool DlgChannelSettings::existItem(QString find, QListWidget *list)
 {
     QList<QListWidgetItem *> items = list->findItems(find, Qt::MatchExactly);
     if (items.size() != 0)

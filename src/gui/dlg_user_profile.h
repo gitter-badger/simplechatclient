@@ -41,11 +41,11 @@ class DlgUserProfile : public QDialog
 public:
     DlgUserProfile(QWidget *, Network *);
     virtual ~DlgUserProfile();
-    void set_nick(QString);
-    inline QString get_nick() { return strNick; }
+    void setNick(QString);
+    inline QString getNick() { return strNick; }
 
 public slots:
-    void set_user_info(QString, QString);
+    void setUserInfo(QString, QString);
 
 private:
     Network *pNetwork;
@@ -86,22 +86,22 @@ private:
     QPushButton *pushButton_more;
     QPushButton *pushButton_close;
 
-    void create_gui();
-    void create_signals();
+    void createGui();
+    void createSignals();
 
-    void clear_info();
-    void show_info();
-    QString convert_desc(QString);
-    QString convert_sex(QString);
-    QString convert_age(QString);
-    QString convert_code_to_country(QString);
-    QString convert_type(QString);
-    void show_avatar(QString);
+    void clearInfo();
+    void showInfo();
+    QString convertDesc(QString);
+    QString convertSex(QString);
+    QString convertAge(QString);
+    QString convertCodeToCountry(QString);
+    QString convertType(QString);
+    void showAvatar(QString);
 
 private slots:
-    void avatar_finished(QNetworkReply*);
-    void button_zoom();
-    void button_more();
+    void avatarFinished(QNetworkReply*);
+    void buttonZoom();
+    void buttonMore();
 
 protected:
     virtual void showEvent(QShowEvent *);

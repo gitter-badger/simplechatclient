@@ -35,10 +35,10 @@ private:
     Ui::uiMyStats ui;
     SimpleStatsWidget *pSimpleStatsWidget;
 
-    void create_gui();
-    void create_signals();
+    void createGui();
+    void createSignals();
 
-    int replace_value(QString);
+    int replaceValue(QString);
     void refresh();
 };
 

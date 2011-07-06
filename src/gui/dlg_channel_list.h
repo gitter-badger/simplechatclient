@@ -35,30 +35,30 @@ private:
     Ui::uiChannelList ui;
     Network *pNetwork;
 
-    void create_gui();
-    void set_default_values();
-    void create_signals();
+    void createGui();
+    void setDefaultValues();
+    void createSignals();
 
-    bool is_erotic(QString);
-    void create_list();
-    void show_all_channels();
-    void apply_checkboxes();
+    bool isErotic(QString);
+    void createList();
+    void showAllChannels();
+    void applyCheckboxes();
 
 protected:
     virtual void resizeEvent(QResizeEvent *);
     virtual void keyPressEvent(QKeyEvent *);
 
 private slots:
-    void all_CellDoubleClicked(int, int);
-    void teen_CellDoubleClicked(int, int);
-    void common_CellDoubleClicked(int, int);
-    void erotic_CellDoubleClicked(int, int);
-    void thematic_CellDoubleClicked(int, int);
-    void regional_CellDoubleClicked(int, int);
-    void button_search();
-    void button_clear();
-    void hide_empty_channels();
-    void show_adv_options();
+    void allCellDoubleClicked(int, int);
+    void teenCellDoubleClicked(int, int);
+    void commonCellDoubleClicked(int, int);
+    void eroticCellDoubleClicked(int, int);
+    void thematicCellDoubleClicked(int, int);
+    void regionalCellDoubleClicked(int, int);
+    void buttonSearch();
+    void buttonClear();
+    void hideEmptyChannels();
+    void showAdvOptions();
 };
 
 #endif // DLG_CHANNEL_LIST_H

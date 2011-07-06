@@ -35,13 +35,13 @@ private:
     Ui::uiChannelFavourites ui;
     Network *pNetwork;
 
-    void create_gui();
-    void create_signals();
+    void createGui();
+    void createSignals();
 
 private slots:
     void refresh();
-    void button_add();
-    void button_remove();
+    void buttonAdd();
+    void buttonRemove();
 };
 
 #endif // DLG_CHANNEL_FAVOURITES_H

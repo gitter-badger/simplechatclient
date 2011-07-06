@@ -33,9 +33,9 @@ public:
 private:
     Ui::uiAbout ui;
 
-    void create_gui();
-    void set_default_values();
-    void create_signals();
+    void createGui();
+    void setDefaultValues();
+    void createSignals();
 };
 
 #endif // DLG_ABOUT_H

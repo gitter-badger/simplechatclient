@@ -35,11 +35,11 @@ DlgChannelKey::DlgChannelKey(MainWindow *parent, Network *param1, QString param2
     pNetwork = param1;
     strChannel = param2;
 
-    create_gui();
-    create_signals();
+    createGui();
+    createSignals();
 }
 
-void DlgChannelKey::create_gui()
+void DlgChannelKey::createGui()
 {
     ui.buttonBox->button(QDialogButtonBox::Ok)->setIcon(QIcon(":/images/oxygen/16x16/dialog-ok.png"));
     ui.buttonBox->button(QDialogButtonBox::Cancel)->setIcon(QIcon(":/images/oxygen/16x16/dialog-cancel.png"));
@@ -47,13 +47,13 @@ void DlgChannelKey::create_gui()
     ui.label_msg->setText(tr("Enter key:"));
 }
 
-void DlgChannelKey::create_signals()
+void DlgChannelKey::createSignals()
 {
-    QObject::connect(ui.buttonBox, SIGNAL(accepted()), this, SLOT(button_ok()));
+    QObject::connect(ui.buttonBox, SIGNAL(accepted()), this, SLOT(buttonOk()));
     QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(close()));
 }
 
-void DlgChannelKey::button_ok()
+void DlgChannelKey::buttonOk()
 {
     QString strKey = ui.lineEdit_key->text();
     if (!strKey.isEmpty())

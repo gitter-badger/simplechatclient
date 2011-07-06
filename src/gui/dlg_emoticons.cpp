@@ -47,7 +47,7 @@ void ThreadEmoticonsStandard::run()
         QByteArray bData = f.readAll();
         f.close();
 
-        emit insert_emoticons_standard(strEmoticon, bData);
+        emit insertEmoticonsStandard(strEmoticon, bData);
     }
 }
 
@@ -73,7 +73,7 @@ void ThreadEmoticonsExtended::run()
         QByteArray bData = f.readAll();
         f.close();
 
-        emit insert_emoticons_extended(strEmoticon, bData);
+        emit insertEmoticonsExtended(strEmoticon, bData);
     }
 }
 
@@ -86,11 +86,11 @@ DlgEmoticons::DlgEmoticons(MainWindow *parent, InputWidget *param1) : QDialog(pa
 
     pInputWidget = param1;
 
-    create_gui();
-    set_default_values();
-    create_signals();
+    createGui();
+    setDefaultValues();
+    createSignals();
 
-    get_emoticons_standard();
+    getEmoticonsStandard();
 }
 
 DlgEmoticons::~DlgEmoticons()
@@ -110,7 +110,7 @@ DlgEmoticons::~DlgEmoticons()
     }
 }
 
-void DlgEmoticons::create_gui()
+void DlgEmoticons::createGui()
 {
     ui.pushButton_insert->setIcon(QIcon(":/images/oxygen/16x16/insert-image.png"));
     ui.buttonBox->button(QDialogButtonBox::Close)->setIcon(QIcon(":/images/oxygen/16x16/dialog-close.png"));
@@ -120,7 +120,7 @@ void DlgEmoticons::create_gui()
     ui.pushButton_insert->setText(tr("Insert"));
 }
 
-void DlgEmoticons::set_default_values()
+void DlgEmoticons::setDefaultValues()
 {
     ui.listWidget_standard->clear();
     ui.listWidget_extended->clear();
@@ -128,26 +128,26 @@ void DlgEmoticons::set_default_values()
     bDoneExtended = false;
 }
 
-void DlgEmoticons::create_signals()
+void DlgEmoticons::createSignals()
 {
-    QObject::connect(ui.tabWidget, SIGNAL(currentChanged(int)), this, SLOT(current_tab_changed(int)));
-    QObject::connect(ui.listWidget_standard, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(clicked_standard(QModelIndex)));
-    QObject::connect(ui.listWidget_extended, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(clicked_extended(QModelIndex)));
-    QObject::connect(ui.pushButton_insert, SIGNAL(clicked()), this, SLOT(button_insert()));
+    QObject::connect(ui.tabWidget, SIGNAL(currentChanged(int)), this, SLOT(currentTabChanged(int)));
+    QObject::connect(ui.listWidget_standard, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(clickedStandard(QModelIndex)));
+    QObject::connect(ui.listWidget_extended, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(clickedExtended(QModelIndex)));
+    QObject::connect(ui.pushButton_insert, SIGNAL(clicked()), this, SLOT(buttonInsert()));
     QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(close()));
 
-    QObject::connect(&pThreadEmoticonsStandard, SIGNAL(insert_emoticons_standard(QString, QByteArray)), this, SLOT(insert_emoticons_standard(QString, QByteArray)));
-    QObject::connect(&pThreadEmoticonsExtended, SIGNAL(insert_emoticons_extended(QString, QByteArray)), this, SLOT(insert_emoticons_extended(QString, QByteArray)));
+    QObject::connect(&pThreadEmoticonsStandard, SIGNAL(insertEmoticonsStandard(QString, QByteArray)), this, SLOT(insertEmoticonsStandard(QString, QByteArray)));
+    QObject::connect(&pThreadEmoticonsExtended, SIGNAL(insertEmoticonsExtended(QString, QByteArray)), this, SLOT(insertEmoticonsExtended(QString, QByteArray)));
 }
 
-void DlgEmoticons::get_emoticons_standard()
+void DlgEmoticons::getEmoticonsStandard()
 {
     pThreadEmoticonsStandard.start();
 
     bDoneStandard = true;
 }
 
-void DlgEmoticons::insert_emoticons_standard(QString strEmoticon, QByteArray bData)
+void DlgEmoticons::insertEmoticonsStandard(QString strEmoticon, QByteArray bData)
 {
     QPixmap pix;
     pix.loadFromData(bData);
@@ -160,14 +160,14 @@ void DlgEmoticons::insert_emoticons_standard(QString strEmoticon, QByteArray bDa
     ui.listWidget_standard->addItem(item);
 }
 
-void DlgEmoticons::get_emoticons_extended()
+void DlgEmoticons::getEmoticonsExtended()
 {
     pThreadEmoticonsExtended.start();
 
     bDoneExtended = true;
 }
 
-void DlgEmoticons::insert_emoticons_extended(QString strEmoticon, QByteArray bData)
+void DlgEmoticons::insertEmoticonsExtended(QString strEmoticon, QByteArray bData)
 {
     QPixmap pix;
     pix.loadFromData(bData);
@@ -180,15 +180,15 @@ void DlgEmoticons::insert_emoticons_extended(QString strEmoticon, QByteArray bDa
     ui.listWidget_extended->addItem(item);
 }
 
-void DlgEmoticons::current_tab_changed(int index)
+void DlgEmoticons::currentTabChanged(int index)
 {
     if ((index == 0) && (!bDoneStandard))
-        get_emoticons_standard();
+        getEmoticonsStandard();
     else if ((index == 1) && (!bDoneExtended))
-        get_emoticons_extended();
+        getEmoticonsExtended();
 }
 
-void DlgEmoticons::clicked_standard(QModelIndex index)
+void DlgEmoticons::clickedStandard(QModelIndex index)
 {
     // get emoticon
     QString strEmoticon = ui.listWidget_standard->item(index.row())->data(Qt::UserRole).toString();
@@ -203,7 +203,7 @@ void DlgEmoticons::clicked_standard(QModelIndex index)
     }
 }
 
-void DlgEmoticons::clicked_extended(QModelIndex index)
+void DlgEmoticons::clickedExtended(QModelIndex index)
 {
     QString strEmoticon;
 
@@ -220,7 +220,7 @@ void DlgEmoticons::clicked_extended(QModelIndex index)
     }
 }
 
-void DlgEmoticons::button_insert()
+void DlgEmoticons::buttonInsert()
 {
     QString strSelected;
 

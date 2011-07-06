@@ -35,13 +35,13 @@ DlgIgnore::DlgIgnore(QWidget *parent, Network *param1) : QDialog(parent)
 
     pNetwork = param1;
 
-    create_gui();
-    create_signals();
+    createGui();
+    createSignals();
 
     refresh();
 }
 
-void DlgIgnore::create_gui()
+void DlgIgnore::createGui()
 {
     ui.pushButton_add->setIcon(QIcon(":/images/oxygen/16x16/list-add-user.png"));
     ui.pushButton_remove->setIcon(QIcon(":/images/oxygen/16x16/list-remove-user.png"));
@@ -51,10 +51,10 @@ void DlgIgnore::create_gui()
     ui.pushButton_remove->setText(tr("Remove"));
 }
 
-void DlgIgnore::create_signals()
+void DlgIgnore::createSignals()
 {
-    QObject::connect(ui.pushButton_add, SIGNAL(clicked()), this, SLOT(button_add()));
-    QObject::connect(ui.pushButton_remove, SIGNAL(clicked()), this, SLOT(button_remove()));
+    QObject::connect(ui.pushButton_add, SIGNAL(clicked()), this, SLOT(buttonAdd()));
+    QObject::connect(ui.pushButton_remove, SIGNAL(clicked()), this, SLOT(buttonRemove()));
     QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(close()));
 }
 
@@ -94,7 +94,7 @@ void DlgIgnore::refresh()
     }
 }
 
-void DlgIgnore::button_add()
+void DlgIgnore::buttonAdd()
 {
     bool ok;
     QString strText = QInputDialog::getText(this, tr("Change your ignore list"), tr("Enter a nickname to be added:"), QLineEdit::Normal, QString::null, &ok);
@@ -106,7 +106,7 @@ void DlgIgnore::button_add()
     }
 }
 
-void DlgIgnore::button_remove()
+void DlgIgnore::buttonRemove()
 {
     QString strSelected;
     if (ui.listWidget_nicks->selectedItems().size() != 0)

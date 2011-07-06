@@ -32,41 +32,41 @@ public:
     DlgWebcamStandard();
 
 public slots:
-    void update_image(QByteArray);
-    void update_text(QString);
-    void update_rank(int);
-    void user_error(QString);
-    void update_status(QString);
-    void vote_ok();
+    void updateImage(QByteArray);
+    void updateText(QString);
+    void updateRank(int);
+    void userError(QString);
+    void updateStatus(QString);
+    void voteOk();
     void error(QString);
-    void add_user(QString,int,QString);
-    void update_user(QString,int,QString);
-    void remove_user(QString);
-    void clear_users();
+    void addUser(QString,int,QString);
+    void updateUser(QString,int,QString);
+    void removeUser(QString);
+    void clearUsers();
 
 private:
     Ui::uiWebcamStandard ui;
     QString strNick;
     SimpleRankWidget *pSimpleRankWidget;
 
-    void create_gui();
-    void create_signals();
-    bool exist_user(QString);
+    void createGui();
+    void createSignals();
+    bool existUser(QString);
 
 private slots:
-    void change_user(QListWidgetItem *);
-    void vote_minus();
-    void vote_plus();
-    void enable_vote();
-    void button_close();
+    void changeUser(QListWidgetItem *);
+    void voteMinus();
+    void votePlus();
+    void enableVote();
+    void buttonClose();
 
 protected:
     virtual void closeEvent(QCloseEvent *);
 
 signals:
-    void close_cam();
-    void network_send(QString);
-    void set_user(QString);
+    void closeCam();
+    void networkSend(QString);
+    void setUser(QString);
 };
 
 #endif // DLG_WEBCAM_STANDARD_H

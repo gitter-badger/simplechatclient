@@ -39,18 +39,18 @@ private:
     QList<QString> messagesReplied;
     QList<QString> messagesQuotedToSender;
 
-    void create_gui();
-    void create_signals();
+    void createGui();
+    void createSignals();
     void refresh();
-    void remove_nick(QString);
-    bool exist_nick();
+    void removeNick(QString);
+    bool existNick();
 
 private slots:
-    void refresh_msg();
-    void button_read();
-    void button_reject();
-    void button_reply();
-    void button_close();
+    void refreshMsg();
+    void buttonRead();
+    void buttonReject();
+    void buttonReply();
+    void buttonClose();
 };
 
 #endif // DLG_OFFLINEMSG_H

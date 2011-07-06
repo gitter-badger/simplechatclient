@@ -35,6 +35,17 @@ DlgInvite::DlgInvite(MainWindow *parent, Network *param1, QString param2, QStrin
     strNick = param2;
     strChannel = param3;
 
+    createGui();
+    createSignals();
+
+    if (strChannel[0] == '^')
+        ui.label_msg->setText(QString(tr("%1 invites you to priv")).arg(strNick));
+    else
+        ui.label_msg->setText(QString(tr("%1 invites you to channel %2")).arg(strNick).arg(strChannel));
+}
+
+void DlgInvite::createGui()
+{
     ui.pushButton_whois->setIcon(QIcon(":/images/oxygen/16x16/user-properties.png"));
     ui.pushButton_reject->setIcon(QIcon(":/images/oxygen/16x16/user-invisible.png"));
     ui.pushButton_ignore->setIcon(QIcon(":/images/oxygen/16x16/user-busy.png"));
@@ -44,36 +55,34 @@ DlgInvite::DlgInvite(MainWindow *parent, Network *param1, QString param2, QStrin
     ui.pushButton_reject->setText(tr("Reject"));
     ui.pushButton_ignore->setText(tr("Ignore"));
     ui.pushButton_accept->setText(tr("Accept"));
-
-    if (strChannel[0] == '^')
-        ui.label_msg->setText(QString(tr("%1 invites you to priv")).arg(strNick));
-    else
-        ui.label_msg->setText(QString(tr("%1 invites you to channel %2")).arg(strNick).arg(strChannel));
-
-    QObject::connect(ui.pushButton_whois, SIGNAL(clicked()), this, SLOT(button_whois()));
-    QObject::connect(ui.pushButton_reject, SIGNAL(clicked()), this, SLOT(button_reject()));
-    QObject::connect(ui.pushButton_ignore, SIGNAL(clicked()), this, SLOT(button_ignore()));
-    QObject::connect(ui.pushButton_accept, SIGNAL(clicked()), this, SLOT(button_accept()));
 }
 
-void DlgInvite::button_whois()
+void DlgInvite::createSignals()
+{
+    QObject::connect(ui.pushButton_whois, SIGNAL(clicked()), this, SLOT(buttonWhois()));
+    QObject::connect(ui.pushButton_reject, SIGNAL(clicked()), this, SLOT(buttonReject()));
+    QObject::connect(ui.pushButton_ignore, SIGNAL(clicked()), this, SLOT(buttonIgnore()));
+    QObject::connect(ui.pushButton_accept, SIGNAL(clicked()), this, SLOT(buttonAccept()));
+}
+
+void DlgInvite::buttonWhois()
 {
     pNetwork->send(QString("WHOIS %1 %1").arg(strNick));
 }
 
-void DlgInvite::button_reject()
+void DlgInvite::buttonReject()
 {
     pNetwork->send(QString("INVREJECT %1 %2").arg(strNick).arg(strChannel));
     this->close();
 }
 
-void DlgInvite::button_ignore()
+void DlgInvite::buttonIgnore()
 {
     pNetwork->send(QString("INVIGNORE %1 %2").arg(strNick).arg(strChannel));
     this->close();
 }
 
-void DlgInvite::button_accept()
+void DlgInvite::buttonAccept()
 {
     pNetwork->send(QString("JOIN %1").arg(strChannel));
     this->close();

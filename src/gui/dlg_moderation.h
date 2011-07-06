@@ -30,23 +30,23 @@ class DlgModeration : public QDialog
     Q_OBJECT
 public:
     DlgModeration(QWidget *);
-    void set_current_channel(QString);
-    void add_msg(QString, QString, QString, QString);
+    void setCurrentChannel(QString);
+    void addMsg(QString, QString, QString, QString);
 
 private:
     Ui::uiModeration ui;
     QString strCurrentChannel;
     sModerateMsg mModerateMessages;
 
-    void create_gui();
-    void create_signals();
+    void createGui();
+    void createSignals();
     void refresh();
-    void remove_selected();
+    void removeSelected();
 
 private slots:
-    void combo_changed(QString);
-    void button_accept();
-    void button_remove();
+    void comboChanged(QString);
+    void buttonAccept();
+    void buttonRemove();
 
 protected:
     virtual void showEvent(QShowEvent *);
@@ -54,7 +54,7 @@ protected:
     virtual void closeEvent(QCloseEvent *);
 
 signals:
-    void display_msg(QString&, QString&, MessageCategory);
+    void displayMsg(QString&, QString&, MessageCategory);
     void send(QString);
 };
 

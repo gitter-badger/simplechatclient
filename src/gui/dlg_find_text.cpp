@@ -33,11 +33,11 @@ DlgFindText::DlgFindText(MainWindow *parent, MainTextEdit *param1) : QDialog(par
 
     textEdit = param1;
 
-    create_gui();
-    create_signals();
+    createGui();
+    createSignals();
 }
 
-void DlgFindText::create_gui()
+void DlgFindText::createGui()
 {
     ui.label_find->setText(tr("Find what:"));
     ui.checkBox_match_whole_word_only->setText(tr("Match whole word only"));
@@ -54,13 +54,13 @@ void DlgFindText::create_gui()
     ui.radioButton_direction_up->setChecked(true);
 }
 
-void DlgFindText::create_signals()
+void DlgFindText::createSignals()
 {
-    QObject::connect(ui.pushButton_find_next, SIGNAL(clicked()), this, SLOT(button_find_next()));
+    QObject::connect(ui.pushButton_find_next, SIGNAL(clicked()), this, SLOT(buttonFindNext()));
     QObject::connect(ui.pushButton_close, SIGNAL(clicked()), this, SLOT(close()));
 }
 
-void DlgFindText::button_find_next()
+void DlgFindText::buttonFindNext()
 {
     QString strText = ui.lineEdit_find->text();
     bool bMatchWholeWordOnly = ui.checkBox_match_whole_word_only->isChecked();

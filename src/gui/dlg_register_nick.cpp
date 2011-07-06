@@ -41,16 +41,16 @@ DlgRegisterNick::DlgRegisterNick(MainWindow *parent, QWidget *param1) : QDialog(
     // close options
     options->close();
 
-    create_gui();
-    create_signals();
+    createGui();
+    createSignals();
 
     accessManager = new QNetworkAccessManager;
     cookieJar = new QNetworkCookieJar();
     accessManager->setCookieJar(cookieJar);
-    QObject::connect(accessManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(network_finished(QNetworkReply*)));
+    QObject::connect(accessManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(networkFinished(QNetworkReply*)));
 
-    get_cookies();
-    get_img();
+    getCookies();
+    getImg();
 }
 
 DlgRegisterNick::~DlgRegisterNick()
@@ -59,7 +59,7 @@ DlgRegisterNick::~DlgRegisterNick()
     accessManager->deleteLater();
 }
 
-void DlgRegisterNick::create_gui()
+void DlgRegisterNick::createGui()
 {
     ui.buttonBox->button(QDialogButtonBox::Ok)->setIcon(QIcon(":/images/oxygen/16x16/dialog-ok.png"));
     ui.buttonBox->button(QDialogButtonBox::Cancel)->setIcon(QIcon(":/images/oxygen/16x16/dialog-cancel.png"));
@@ -72,20 +72,20 @@ void DlgRegisterNick::create_gui()
     ui.pushButton_refresh->setText(tr("Refresh"));
 }
 
-void DlgRegisterNick::create_signals()
+void DlgRegisterNick::createSignals()
 {
-    QObject::connect(ui.pushButton_refresh, SIGNAL(clicked()), this, SLOT(button_refresh()));
-    QObject::connect(ui.buttonBox, SIGNAL(accepted()), this, SLOT(button_ok()));
+    QObject::connect(ui.pushButton_refresh, SIGNAL(clicked()), this, SLOT(buttonRefresh()));
+    QObject::connect(ui.buttonBox, SIGNAL(accepted()), this, SLOT(buttonOk()));
     QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(close()));
 }
 
-void DlgRegisterNick::get_cookies()
+void DlgRegisterNick::getCookies()
 {
     QNetworkReply *pReply = accessManager->get(QNetworkRequest(QUrl("http://kropka.onet.pl/_s/kropka/1?DV=czat%2Findex")));
     pReply->setProperty("category", "get_cookies");
 }
 
-void DlgRegisterNick::got_cookies()
+void DlgRegisterNick::gotCookies()
 {
     // save cookies
     QList<QNetworkCookie> cookies = accessManager->cookieJar()->cookiesForUrl(QUrl("http://czat.onet.pl"));
@@ -98,7 +98,7 @@ void DlgRegisterNick::got_cookies()
     }
 }
 
-void DlgRegisterNick::get_img()
+void DlgRegisterNick::getImg()
 {
     // disable button
     ui.pushButton_refresh->setEnabled(false);
@@ -111,7 +111,7 @@ void DlgRegisterNick::get_img()
     pReply->setProperty("category", "get_img");
 }
 
-void DlgRegisterNick::got_img(QByteArray bData)
+void DlgRegisterNick::gotImg(QByteArray bData)
 {
     // show img
     QPixmap pixmap;
@@ -122,7 +122,7 @@ void DlgRegisterNick::got_img(QByteArray bData)
     ui.pushButton_refresh->setEnabled(true);
 }
 
-void DlgRegisterNick::register_nick()
+void DlgRegisterNick::registerNick()
 {
     QString strNick = ui.lineEdit_nick->text();
     QString strNickLength = QString::number(strNick.length());
@@ -164,7 +164,7 @@ void DlgRegisterNick::register_nick()
 // <?xml version="1.0" encoding="ISO-8859-2"?><root><status>-2</status><error err_code="0"  err_text="OK" ></error></root>
 // <?xml version="1.0" encoding="ISO-8859-2"?><root><status>-1</status><error err_code="0"  err_text="OK" ></error></root>
 // <?xml version="1.0" encoding="ISO-8859-2"?><root><status>1</status><error err_code="0"  err_text="OK" ></error></root>
-void DlgRegisterNick::parse_result(QString strResult)
+void DlgRegisterNick::parseResult(QString strResult)
 {
     QDomDocument doc;
     doc.setContent(strResult);
@@ -215,11 +215,11 @@ void DlgRegisterNick::parse_result(QString strResult)
             strErrText = QString(tr("Unknown error: %1")).arg(strErrCode);
 
         QMessageBox::critical(0, tr("Error"), strErrText);
-        get_img();
+        getImg();
     }
 }
 
-void DlgRegisterNick::network_finished(QNetworkReply *reply)
+void DlgRegisterNick::networkFinished(QNetworkReply *reply)
 {
     reply->deleteLater();
 
@@ -233,14 +233,14 @@ void DlgRegisterNick::network_finished(QNetworkReply *reply)
         return;
 
     if (strCategory == "get_img")
-        got_img(bData);
+        gotImg(bData);
     else if (strCategory == "get_cookies")
-        got_cookies();
+        gotCookies();
     else if (strCategory == "register_nick")
-        parse_result(QString(bData));
+        parseResult(QString(bData));
 }
 
-void DlgRegisterNick::button_ok()
+void DlgRegisterNick::buttonOk()
 {
     bool identical = false;
 
@@ -248,17 +248,17 @@ void DlgRegisterNick::button_ok()
         identical = true;
 
     if (identical)
-        register_nick();
+        registerNick();
     else
     {
         ui.lineEdit_code->clear();
         QMessageBox::critical(0, tr("Error"), tr("Given passwords are not identical."));
-        get_img();
+        getImg();
     }
 }
 
-void DlgRegisterNick::button_refresh()
+void DlgRegisterNick::buttonRefresh()
 {
     ui.lineEdit_code->clear();
-    get_img();
+    getImg();
 }

@@ -38,11 +38,14 @@ private:
     QString strNick;
     QString strChannel;
 
+    void createGui();
+    void createSignals();
+
 private slots:
-    void button_whois();
-    void button_reject();
-    void button_ignore();
-    void button_accept();
+    void buttonWhois();
+    void buttonReject();
+    void buttonIgnore();
+    void buttonAccept();
 };
 
 #endif // DLG_PRIV_H

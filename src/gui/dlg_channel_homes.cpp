@@ -35,13 +35,13 @@ DlgChannelHomes::DlgChannelHomes(QWidget *parent, Network *param1, DlgChannelSet
     pNetwork = param1;
     pDlgChannelSettings = param2;
 
-    create_gui();
-    create_signals();
+    createGui();
+    createSignals();
 
     refresh();
 }
 
-void DlgChannelHomes::create_gui()
+void DlgChannelHomes::createGui()
 {
     ui.pushButton_join->setEnabled(false);
     ui.pushButton_settings->setEnabled(false);
@@ -58,14 +58,14 @@ void DlgChannelHomes::create_gui()
     ui.pushButton_settings->setText(tr("Settings"));
 }
 
-void DlgChannelHomes::create_signals()
+void DlgChannelHomes::createSignals()
 {
-    QObject::connect(ui.listWidget_channels, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(list_clicked(QModelIndex)));
-    QObject::connect(ui.listWidget_channels, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(item_clicked(QListWidgetItem*)));
-    QObject::connect(ui.pushButton_create, SIGNAL(clicked()), this, SLOT(button_create()));
-    QObject::connect(ui.pushButton_remove, SIGNAL(clicked()), this, SLOT(button_remove()));
-    QObject::connect(ui.pushButton_join, SIGNAL(clicked()), this, SLOT(button_join()));
-    QObject::connect(ui.pushButton_settings, SIGNAL(clicked()), this, SLOT(button_settings()));
+    QObject::connect(ui.listWidget_channels, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(listClicked(QModelIndex)));
+    QObject::connect(ui.listWidget_channels, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(itemClicked(QListWidgetItem*)));
+    QObject::connect(ui.pushButton_create, SIGNAL(clicked()), this, SLOT(buttonCreate()));
+    QObject::connect(ui.pushButton_remove, SIGNAL(clicked()), this, SLOT(buttonRemove()));
+    QObject::connect(ui.pushButton_join, SIGNAL(clicked()), this, SLOT(buttonJoin()));
+    QObject::connect(ui.pushButton_settings, SIGNAL(clicked()), this, SLOT(buttonSettings()));
     QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(close()));
 }
 
@@ -92,18 +92,18 @@ void DlgChannelHomes::refresh()
     }
 }
 
-void DlgChannelHomes::list_clicked(QModelIndex index)
+void DlgChannelHomes::listClicked(QModelIndex index)
 {
     int i = index.row();
     QString strChannel = ui.listWidget_channels->item(i)->text();
 
-    pDlgChannelSettings->set_channel(strChannel);
+    pDlgChannelSettings->setChannel(strChannel);
     pDlgChannelSettings->show();
 
     this->close();
 }
 
-void DlgChannelHomes::item_clicked(QListWidgetItem *item)
+void DlgChannelHomes::itemClicked(QListWidgetItem *item)
 {
     Q_UNUSED (item);
 
@@ -113,7 +113,7 @@ void DlgChannelHomes::item_clicked(QListWidgetItem *item)
         ui.pushButton_settings->setEnabled(true);
 }
 
-void DlgChannelHomes::button_create()
+void DlgChannelHomes::buttonCreate()
 {
     bool ok;
     QString strText = QInputDialog::getText(this, tr("Changing channels"), tr("Enter the name of the new channel:"), QLineEdit::Normal, QString::null, &ok);
@@ -125,7 +125,7 @@ void DlgChannelHomes::button_create()
     }
 }
 
-void DlgChannelHomes::button_remove()
+void DlgChannelHomes::buttonRemove()
 {
     bool ok;
     QString strText = QInputDialog::getText(this, tr("Changing channels"), "<p style=\"font-weight:bold;\">"+tr("The removal of the channel operation is irreversible!")+"</p><p>"+tr("Enter the name of the channel to remove:")+"</p>", QLineEdit::Normal, QString::null, &ok);
@@ -137,7 +137,7 @@ void DlgChannelHomes::button_remove()
     }
 }
 
-void DlgChannelHomes::button_join()
+void DlgChannelHomes::buttonJoin()
 {
     if (ui.listWidget_channels->selectedItems().size() != 0)
     {
@@ -146,13 +146,13 @@ void DlgChannelHomes::button_join()
     }
 }
 
-void DlgChannelHomes::button_settings()
+void DlgChannelHomes::buttonSettings()
 {
     if (ui.listWidget_channels->selectedItems().size() != 0)
     {
         QString strChannel = ui.listWidget_channels->selectedItems().at(0)->text();
 
-        pDlgChannelSettings->set_channel(strChannel);
+        pDlgChannelSettings->setChannel(strChannel);
         pDlgChannelSettings->show();
 
         this->close();

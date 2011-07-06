@@ -85,7 +85,7 @@ void MainTextEdit::profile()
 {
     if (strNick[0] != '~')
     {
-        pDlgUserProfile->set_nick(strNick);
+        pDlgUserProfile->setNick(strNick);
         pDlgUserProfile->show();
     }
 }
@@ -271,7 +271,7 @@ void MainTextEdit::menuChannel(QString strChannel, QContextMenuEvent *event)
 
     menu.addAction(nameAct);
     menu.addSeparator();
-    menu.addAction(QIcon(":/images/oxygen/16x16/legalmoves.png"), tr("Join channel"), this, SLOT(join_channel()));
+    menu.addAction(QIcon(":/images/oxygen/16x16/legalmoves.png"), tr("Join channel"), this, SLOT(joinChannel()));
     menu.exec(event->globalPos());
 }
 
@@ -407,7 +407,7 @@ void MainTextEdit::menuStandard(QContextMenuEvent *event)
     if (!this->textCursor().selectedText().isEmpty())
     {
         QAction *sendToNotes = new QAction(QIcon(":/images/oxygen/16x16/story-editor.png"), tr("Send to notes"), &menu);
-        connect(sendToNotes, SIGNAL(triggered()), this, SLOT(send_to_notes()));
+        connect(sendToNotes, SIGNAL(triggered()), this, SLOT(sendToNotes()));
         menu.addAction(sendToNotes);
     }
 

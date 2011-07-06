@@ -37,7 +37,7 @@ protected:
     void run();
 
 signals:
-    void insert_emoticons_standard(QString, QByteArray);
+    void insertEmoticonsStandard(QString, QByteArray);
 };
 
 class ThreadEmoticonsExtended : public QThread
@@ -50,7 +50,7 @@ protected:
     void run();
 
 signals:
-    void insert_emoticons_extended(QString, QByteArray);
+    void insertEmoticonsExtended(QString, QByteArray);
 };
 
 class DlgEmoticons : public QDialog
@@ -68,20 +68,20 @@ private:
     bool bDoneStandard;
     bool bDoneExtended;
 
-    void create_gui();
-    void set_default_values();
-    void create_signals();
+    void createGui();
+    void setDefaultValues();
+    void createSignals();
 
-    void get_emoticons_standard();
-    void get_emoticons_extended();
+    void getEmoticonsStandard();
+    void getEmoticonsExtended();
 
 private slots:
-    void insert_emoticons_standard(QString, QByteArray);
-    void insert_emoticons_extended(QString, QByteArray);
-    void current_tab_changed(int);
-    void clicked_standard(QModelIndex);
-    void clicked_extended(QModelIndex);
-    void button_insert();
+    void insertEmoticonsStandard(QString, QByteArray);
+    void insertEmoticonsExtended(QString, QByteArray);
+    void currentTabChanged(int);
+    void clickedStandard(QModelIndex);
+    void clickedExtended(QModelIndex);
+    void buttonInsert();
 };
 
 #endif // DLG_EMOTICONS_H
