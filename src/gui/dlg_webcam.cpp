@@ -80,7 +80,7 @@ void DlgWebcam::createSignals()
         QObject::connect(pWebcamEngine, SIGNAL(clearUsers()), pWebcamStandard, SLOT(clearUsers()));
 
         QObject::connect(pWebcamStandard, SIGNAL(closeCam()), this, SLOT(closeCam()));
-        QObject::connect(pWebcamStandard, SIGNAL(networkSend(QString)), pWebcamEngine, SLOT(networksend(QString)));
+        QObject::connect(pWebcamStandard, SIGNAL(networkSend(QString)), pWebcamEngine, SLOT(networkSend(QString)));
         QObject::connect(pWebcamStandard, SIGNAL(setUser(QString)), pWebcamEngine, SLOT(setUser(QString)));
     }
 }

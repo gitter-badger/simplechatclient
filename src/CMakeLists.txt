@@ -92,7 +92,6 @@ set (scc_MOC_HDRS
 	common/log.h
 	common/replace.h
 	core/core.h
-	core/debugblock.h
 	core/mainwindow.h
 	core/network.h
 	core/update.h
@@ -141,6 +140,7 @@ set (scc_MOC_HDRS
 
 set (scc_HDRS
 	core/defines.h
+	core/debugblock.h
 	core/singleapplication.h
 )
 
