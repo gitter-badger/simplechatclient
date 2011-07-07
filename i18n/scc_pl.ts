@@ -364,10 +364,6 @@
         <translation>Moja wizytówka</translation>
     </message>
     <message>
-        <source>My avatar</source>
-        <translation>Mój awatar</translation>
-    </message>
-    <message>
         <source>About SCC ...</source>
         <translation>O programie SCC...</translation>
     </message>
@@ -1190,41 +1186,6 @@
     <message>
         <source>Remove</source>
         <translation>Usuń</translation>
-    </message>
-</context>
-<context>
-    <name>DlgMyAvatar</name>
-    <message>
-        <source>My avatar</source>
-        <translation>Mój awatar</translation>
-    </message>
-    <message>
-        <source>My avatars</source>
-        <translation>Moje awatary</translation>
-    </message>
-    <message>
-        <source>Collection of avatars</source>
-        <translation>Kolekcje awatarów</translation>
-    </message>
-    <message>
-        <source>Add</source>
-        <translation>Dodaj</translation>
-    </message>
-    <message>
-        <source>Remove</source>
-        <translation>Usuń</translation>
-    </message>
-    <message>
-        <source>Apply empty</source>
-        <translation>Ustaw pusty</translation>
-    </message>
-    <message>
-        <source>Apply avatar</source>
-        <translation>Ustaw awatar</translation>
-    </message>
-    <message>
-        <source>No photo available</source>
-        <translation>Brak zdjęcia</translation>
     </message>
 </context>
 <context>

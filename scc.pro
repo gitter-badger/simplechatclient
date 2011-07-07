@@ -41,7 +41,6 @@ SOURCES += src/avatars/avatar.cpp \
     src/gui/dlg_ignore_ad.cpp \
     src/gui/dlg_invite.cpp \
     src/gui/dlg_moderation.cpp \
-    src/gui/dlg_my_avatar.cpp \
     src/gui/dlg_my_profile.cpp \
     src/gui/dlg_my_stats.cpp \
     src/gui/dlg_notes.cpp \
@@ -107,7 +106,6 @@ HEADERS += src/avatars/avatar.h \
     src/gui/dlg_ignore_ad.h \
     src/gui/dlg_invite.h \
     src/gui/dlg_moderation.h \
-    src/gui/dlg_my_avatar.h \
     src/gui/dlg_my_profile.h \
     src/gui/dlg_my_stats.h \
     src/gui/dlg_notes.h \
@@ -156,7 +154,6 @@ FORMS += ui/about.ui \
     ui/ignore_ad.ui \
     ui/invite.ui \
     ui/moderation.ui \
-    ui/my_avatar.ui \
     ui/my_profile.ui \
     ui/my_stats.ui \
     ui/notes.ui \

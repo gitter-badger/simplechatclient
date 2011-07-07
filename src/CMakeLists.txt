@@ -15,7 +15,6 @@ set (scc_UIS
 	../ui/ignore.ui
 	../ui/invite.ui
 	../ui/moderation.ui
-	../ui/my_avatar.ui
 	../ui/my_profile.ui
 	../ui/my_stats.ui
 	../ui/notes.ui
@@ -54,7 +53,6 @@ set (scc_SRCS
 	gui/dlg_ignore.cpp
 	gui/dlg_invite.cpp
 	gui/dlg_moderation.cpp
-	gui/dlg_my_avatar.cpp
 	gui/dlg_my_profile.cpp
 	gui/dlg_my_stats.cpp
 	gui/dlg_notes.cpp
@@ -110,7 +108,6 @@ set (scc_MOC_HDRS
 	gui/dlg_ignore.h
 	gui/dlg_invite.h
 	gui/dlg_moderation.h
-	gui/dlg_my_avatar.h
 	gui/dlg_my_profile.h
 	gui/dlg_my_stats.h
 	gui/dlg_notes.h

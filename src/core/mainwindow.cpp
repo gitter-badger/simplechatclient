@@ -32,7 +32,6 @@
 #include "dlg_friends.h"
 #include "dlg_ignore.h"
 #include "dlg_moderation.h"
-#include "dlg_my_avatar.h"
 #include "dlg_my_profile.h"
 #include "dlg_my_stats.h"
 #include "dlg_notes.h"
@@ -111,10 +110,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
     // hide awaylog
     awaylogAct->setVisible(false);
-
-    // TODO
-    // hide my avtar - too many errors
-    myAvatarAct->setVisible(false);
 
     // show options if config not exist
     showOptions();
@@ -226,7 +221,6 @@ void MainWindow::createActions()
     Core::instance()->awayAct = new QAction(QIcon(":/images/oxygen/16x16/im-user-away.png"), tr("Mark as away"), this);
     myStatsAct = new QAction(QIcon(":/images/oxygen/16x16/office-chart-bar.png"),tr("My statistics"), this);
     myProfileAct = new QAction(QIcon(":/images/oxygen/16x16/view-pim-contacts.png"),tr("My profile"), this);
-    myAvatarAct = new QAction(QIcon(":/images/oxygen/16x16/preferences-desktop-user.png"),tr("My avatar"), this);
 
     // checkable
     Core::instance()->busyAct->setCheckable(true);
@@ -283,7 +277,6 @@ void MainWindow::createMenus()
     chatMenu = menuBar()->addMenu(tr("&My"));
     chatMenu->addAction(myStatsAct);
     chatMenu->addAction(myProfileAct);
-    chatMenu->addAction(myAvatarAct);
     chatMenu->addAction(notesAct);
 
     // help menu
@@ -345,7 +338,6 @@ void MainWindow::createSignals()
     QObject::connect(Core::instance()->awayAct, SIGNAL(triggered()), this, SLOT(buttonSetAway()));
     QObject::connect(myStatsAct, SIGNAL(triggered()), this, SLOT(openMyStats()));
     QObject::connect(myProfileAct, SIGNAL(triggered()), this, SLOT(openMyProfile()));
-    QObject::connect(myAvatarAct, SIGNAL(triggered()), this, SLOT(openMyAvatar()));
 
     // offlinemsg
     QObject::connect(Core::instance()->offlineMsgAct, SIGNAL(triggered()), this, SLOT(openOfflinemsg()));
@@ -532,7 +524,6 @@ void MainWindow::updateActions()
         ignoreAct->setEnabled(true);
         myStatsAct->setEnabled(true);
         myProfileAct->setEnabled(true);
-        myAvatarAct->setEnabled(true);
     }
     else
     {
@@ -542,7 +533,6 @@ void MainWindow::updateActions()
         ignoreAct->setEnabled(false);
         myStatsAct->setEnabled(false);
         myProfileAct->setEnabled(false);
-        myAvatarAct->setEnabled(false);
     }
 }
 
@@ -691,13 +681,6 @@ void MainWindow::openMyProfile()
     QSettings settings;
     if ((pNetwork->isConnected()) && (pNetwork->isWritable()) && (settings.value("logged") == "on"))
         DlgMyProfile(this, pNetwork).exec();
-}
-
-void MainWindow::openMyAvatar()
-{
-    QSettings settings;
-    if ((pNetwork->isConnected()) && (pNetwork->isWritable()) && (settings.value("logged") == "on"))
-        DlgMyAvatar(this, pNetwork).exec();
 }
 
 void MainWindow::openNotes()
