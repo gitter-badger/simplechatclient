@@ -146,6 +146,18 @@ void DlgChannelSettings::createGui()
 
     // italic
     ui.pushButton_italic->setCheckable(true);
+
+    // transparent summary topic
+    QPalette paletteTopic = ui.plainTextEdit_summary_topic->palette();
+    paletteTopic.setBrush(QPalette::Base, Qt::transparent);
+    ui.plainTextEdit_summary_topic->setPalette(paletteTopic);
+    ui.plainTextEdit_summary_topic->setAttribute(Qt::WA_OpaquePaintEvent, false);
+
+    // transparent summary desc
+    QPalette paletteDesc = ui.plainTextEdit_summary_desc->palette();
+    paletteDesc.setBrush(QPalette::Base, Qt::transparent);
+    ui.plainTextEdit_summary_desc->setPalette(paletteDesc);
+    ui.plainTextEdit_summary_desc->setAttribute(Qt::WA_OpaquePaintEvent, false);
 }
 
 void DlgChannelSettings::setDefaultValues()
