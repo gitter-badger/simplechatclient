@@ -71,7 +71,8 @@ SOURCES += src/avatars/avatar.cpp \
     src/widgets/simplerankwidget.cpp \
     src/widgets/simplestatswidget.cpp \
     src/widgets/toolwidget.cpp \
-    src/widgets/webcamdelegate.cpp
+    src/widgets/webcamdelegate.cpp \
+    src/core/debugblock.cpp
 HEADERS += src/avatars/avatar.h \
     src/common/commands.h \
     src/common/config.h \
@@ -136,7 +137,8 @@ HEADERS += src/avatars/avatar.h \
     src/widgets/simplerankwidget.h \
     src/widgets/simplestatswidget.h \
     src/widgets/toolwidget.h \
-    src/widgets/webcamdelegate.h
+    src/widgets/webcamdelegate.h \
+    src/core/debugblock.h
 FORMS += ui/about.ui \
     ui/awaylog.ui \
     ui/cam.ui \

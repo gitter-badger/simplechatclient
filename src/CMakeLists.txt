@@ -34,6 +34,7 @@ set (scc_SRCS
 	common/log.cpp
 	common/replace.cpp
 	core/core.cpp
+	core/debugblock.cpp
 	core/main.cpp
 	core/mainwindow.cpp
 	core/network.cpp
@@ -91,6 +92,7 @@ set (scc_MOC_HDRS
 	common/log.h
 	common/replace.h
 	core/core.h
+	core/debugblock.h
 	core/mainwindow.h
 	core/network.h
 	core/update.h
