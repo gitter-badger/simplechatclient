@@ -146,6 +146,9 @@ QString Winamp::length()
         */
         int res = SendMessage(hwnd_winamp,WM_USER,1,IPC_GETOUTPUTTIME);
 
+        if (res == -1)
+            return QString::number(res);
+
         int m = res/60;
         int s = res%60;
 
