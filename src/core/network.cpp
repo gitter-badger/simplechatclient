@@ -18,9 +18,12 @@
  *                                                                          *
  ****************************************************************************/
 
+#include <QAction>
 #include <QDateTime>
 #include <QHostInfo>
 #include <QSettings>
+#include <QTcpSocket>
+#include <QTimer>
 #include "config.h"
 #include "core.h"
 #include "crypt.h"

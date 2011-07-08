@@ -22,11 +22,11 @@
 #define INPUTWIDGET_H
 
 #include "defines.h"
+class QHBoxLayout;
+class QLabel;
+class QPushButton;
 class InputLineWidget;
 class Network;
-#include <QHBoxLayout>
-#include <QLabel>
-#include <QPushButton>
 #include <QWidget>
 
 class InputWidget : public QWidget

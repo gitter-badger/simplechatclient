@@ -22,12 +22,12 @@
 #define CORE_H
 
 #include "defines.h"
+class QAction;
+class QTcpSocket;
+class QTimer;
 class MainWindow;
 class Update;
-#include <QAction>
 #include <QObject>
-#include <QTcpSocket>
-#include <QTimer>
 
 /**
  * Core

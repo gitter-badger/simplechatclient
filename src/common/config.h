@@ -21,9 +21,10 @@
 #ifndef CONFIG_H
 #define CONFIG_H
 
-#include <QDomDocument>
-#include <QFile>
+class QDomElement;
+class QFile;
 #include <QMap>
+#include <QDomDocument>
 #include <QObject>
 
 /**

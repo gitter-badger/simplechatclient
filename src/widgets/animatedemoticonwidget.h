@@ -21,10 +21,11 @@
 #ifndef ANIMATEDEMOTICONWIDGET_H
 #define ANIMATEDEMOTICONWIDGET_H
 
-#include <QLabel>
-#include <QMovie>
-#include <QTextEdit>
-#include <QVBoxLayout>
+class QLabel;
+class QMovie;
+class QTextEdit;
+class QVBoxLayout;
+#include <QWidget>
 
 class AnimatedEmoticonWidget : public QWidget
 {

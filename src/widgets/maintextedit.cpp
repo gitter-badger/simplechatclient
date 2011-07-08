@@ -26,6 +26,7 @@
 #include <QMenu>
 #include <QSettings>
 #include <QTextBlock>
+#include <QUrl>
 #include "animatedemoticonwidget.h"
 #include "core.h"
 #include "dlg_find_text.h"

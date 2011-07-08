@@ -30,10 +30,10 @@ class QTextEdit;
 class QToolButton;
 class QVBoxLayout;
 
+class QNetworkAccessManager;
+class QNetworkReply;
 class Network;
 #include <QDialog>
-#include <QNetworkAccessManager>
-#include <QNetworkReply>
 
 class DlgUserProfile : public QDialog
 {

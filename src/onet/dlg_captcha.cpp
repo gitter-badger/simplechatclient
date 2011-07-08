@@ -19,6 +19,7 @@
  ****************************************************************************/
 
 #include <QDesktopWidget>
+#include <QNetworkAccessManager>
 #include <QNetworkReply>
 #include <QPushButton>
 #include <QUrl>

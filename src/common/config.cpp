@@ -20,6 +20,7 @@
 
 #include <QCoreApplication>
 #include <QDir>
+#include <QFile>
 #ifndef Q_WS_X11
     #include <QSettings>
 #endif

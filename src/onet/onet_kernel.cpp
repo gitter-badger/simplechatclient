@@ -21,7 +21,6 @@
 #include <QDateTime>
 #include <QMessageBox>
 #include <QSettings>
-#include <QStringList>
 #include <QTimer>
 #include "avatar.h"
 #include "core.h"

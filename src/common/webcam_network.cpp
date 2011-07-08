@@ -20,6 +20,8 @@
 
 #include <QDateTime>
 #include <QSettings>
+#include <QTcpSocket>
+#include <QTimer>
 #include "webcam_network.h"
 
 WebcamNetwork::WebcamNetwork()

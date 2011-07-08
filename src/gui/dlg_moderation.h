@@ -21,8 +21,8 @@
 #ifndef DLG_MODERATION_H
 #define DLG_MODERATION_H
 
-#include <QDialog>
 #include "defines.h"
+#include <QDialog>
 #include "ui_moderation.h"
 
 class DlgModeration : public QDialog

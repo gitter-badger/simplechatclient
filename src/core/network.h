@@ -22,8 +22,9 @@
 #define NETWORK_H
 
 #include "defines.h"
-#include <QTcpSocket>
-#include <QTimer>
+class QTimer;
+class QTcpSocket;
+#include <QAbstractSocket>
 #include <QThread>
 
 /**

@@ -20,6 +20,7 @@
 
 #include <QDesktopWidget>
 #include <QInputDialog>
+#include <QTimer>
 #include "core.h"
 #include "dlg_channel_settings.h"
 #include "network.h"

@@ -21,16 +21,14 @@
 #ifndef AVATAR_H
 #define AVATAR_H
 
+class QNetworkAccessManager;
+class QNetworkReply;
 class TabContainer;
-#include <QMap>
-#include <QNetworkReply>
 #include <QObject>
 
 /**
  * Class for downloading avatar
  * @param TabContainer* for refresh image
- * @param QMap map with nick avatar
- * @param QMap map with channel avatar
  */
 class Avatar : public QObject
 {

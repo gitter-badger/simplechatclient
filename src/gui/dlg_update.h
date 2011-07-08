@@ -21,9 +21,9 @@
 #ifndef DLG_UPDATE_H
 #define DLG_UPDATE_H
 
+class QNetworkAccessManager;
 class MainWindow;
 #include <QDialog>
-#include <QNetworkAccessManager>
 #include <QNetworkReply>
 #include "ui_update.h"
 

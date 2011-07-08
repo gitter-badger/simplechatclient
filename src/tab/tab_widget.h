@@ -22,14 +22,13 @@
 #define TAB_WIDGET_H
 
 #include "defines.h"
+class QLabel;
+class QVBoxLayout;
 class DlgUserProfile;
 class MainTextEdit;
 class MainWindow;
 class Network;
 class TabManager;
-#include <QLabel>
-#include <QTextEdit>
-#include <QVBoxLayout>
 #include <QWidget>
 
 /**

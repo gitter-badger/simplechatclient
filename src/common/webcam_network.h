@@ -21,9 +21,10 @@
 #ifndef WEBCAM_NETWORK_H
 #define WEBCAM_NETWORK_H
 
+class QTcpSocket;
+class QTimer;
+#include <QAbstractSocket>
 #include <QObject>
-#include <QTcpSocket>
-#include <QTimer>
 
 class WebcamNetwork : public QObject
 {

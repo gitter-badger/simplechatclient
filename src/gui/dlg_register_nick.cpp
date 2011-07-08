@@ -21,6 +21,8 @@
 #include <QDesktopWidget>
 #include <QDomDocument>
 #include <QMessageBox>
+#include <QNetworkAccessManager>
+#include <QNetworkCookieJar>
 #include <QNetworkReply>
 #include <QSettings>
 #include <QUrl>

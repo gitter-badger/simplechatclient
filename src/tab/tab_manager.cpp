@@ -18,6 +18,7 @@
  *                                                                          *
  ****************************************************************************/
 
+#include <QTabBar>
 #include "tab_manager.h"
 
 TabManager::TabManager(QWidget *parent) : QTabWidget(parent)

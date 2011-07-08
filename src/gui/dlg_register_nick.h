@@ -21,10 +21,11 @@
 #ifndef DLG_REGISTER_NICK_H
 #define DLG_REGISTER_NICK_H
 
+class QNetworkAccessManager;
+class QNetworkCookieJar;
+class QNetworkReply;
 class MainWindow;
 #include <QDialog>
-#include <QNetworkAccessManager>
-#include <QNetworkCookieJar>
 #include "ui_register_nick.h"
 
 class DlgRegisterNick : public QDialog

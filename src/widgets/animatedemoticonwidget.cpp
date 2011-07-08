@@ -18,7 +18,11 @@
  *                                                                          *
  ****************************************************************************/
 
+#include <QLabel>
+#include <QMovie>
 #include <QSettings>
+#include <QTextEdit>
+#include <QVBoxLayout>
 #include "animatedemoticonwidget.h"
 
 AnimatedEmoticonWidget::AnimatedEmoticonWidget(QTextEdit *parent) : QWidget(parent)

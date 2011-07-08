@@ -21,6 +21,7 @@
 #include <QDesktopWidget>
 #include <QInputDialog>
 #include <QShowEvent>
+#include <QTimer>
 #include "core.h"
 #include "network.h"
 #include "dlg_channel_favourites.h"

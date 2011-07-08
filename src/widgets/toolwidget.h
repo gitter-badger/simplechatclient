@@ -21,14 +21,15 @@
 #ifndef TOOLWIDGET_H
 #define TOOLWIDGET_H
 
+class QComboBox;
+class QFrame;
+class QHBoxLayout;
+class QMenu;
+class QPushButton;
 class DlgChannelSettings;
 class DlgModeration;
 class InputWidget;
 class Network;
-#include <QComboBox>
-#include <QHBoxLayout>
-#include <QMenu>
-#include <QPushButton>
 #include <QWidget>
 
 class ToolWidget : public QWidget

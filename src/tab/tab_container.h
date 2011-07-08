@@ -28,7 +28,6 @@ class DlgUserProfile;
 class Network;
 class TabManager;
 class TabWidget;
-#include <QMap>
 #include <QObject>
 
 /**

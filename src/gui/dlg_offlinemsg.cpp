@@ -22,6 +22,7 @@
 #include <QDesktopWidget>
 #include <QPushButton>
 #include <QSettings>
+#include <QTimer>
 #include "core.h"
 #include "network.h"
 #include "dlg_offlinemsg.h"

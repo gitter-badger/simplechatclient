@@ -21,10 +21,10 @@
 #ifndef KAMERZYSTA_H
 #define KAMERZYSTA_H
 
+class QTcpSocket;
+class QTimer;
 class Log;
 #include <QObject>
-#include <QTcpSocket>
-#include <QTimer>
 
 /**
  * Cams support using Kamerzysta (http://programy.onet.pl/72,34,10195,,,Kamerzysta_3.00.159,programy.html)

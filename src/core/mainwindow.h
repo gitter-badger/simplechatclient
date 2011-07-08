@@ -22,6 +22,9 @@
 #define MAINWINDOW_H
 
 #include "defines.h"
+class QDockWidget;
+class QMenuBar;
+class QToolBar;
 class DlgAbout;
 class DlgChannelSettings;
 class DlgModeration;
@@ -35,12 +38,8 @@ class OnetAuth;
 class OnetKernel;
 class TabContainer;
 class TabManager;
-#include <QDockWidget>
-#include <QMainWindow>
-#include <QMenuBar>
-#include <QObject>
 #include <QSystemTrayIcon>
-#include <QToolBar>
+#include <QMainWindow>
 
 /**
  * Main window

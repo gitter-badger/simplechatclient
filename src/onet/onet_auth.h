@@ -21,8 +21,8 @@
 #ifndef ONET_AUTH_H
 #define ONET_AUTH_H
 
+class QNetworkAccessManager;
 class TabContainer;
-#include <QNetworkAccessManager>
 #include <QObject>
 
 /**

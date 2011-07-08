@@ -21,8 +21,9 @@
 #ifndef DLG_CAPTCHA_H
 #define DLG_CAPTCHA_H
 
+class QNetworkAccessManager;
+class QNetworkReply;
 #include <QDialog>
-#include <QNetworkAccessManager>
 #include "ui_captcha.h"
 
 class DlgCaptcha : public QDialog

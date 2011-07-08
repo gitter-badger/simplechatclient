@@ -21,7 +21,7 @@
 #ifndef TAB_MANAGER_H
 #define TAB_MANAGER_H
 
-#include <QTabBar>
+class QTabBar;
 #include <QTabWidget>
 
 /**

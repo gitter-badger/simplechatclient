@@ -18,7 +18,11 @@
  *                                                                          *
  ****************************************************************************/
 
+#include <QAction>
+#include <QFile>
 #include <QSettings>
+#include <QTcpSocket>
+#include <QTimer>
 #include "config.h"
 #include "mainwindow.h"
 #include "update.h"
@@ -73,7 +77,7 @@ void Core::createSettings()
 {
     // default settings
     QSettings settings;
-    settings.setValue("version", "1.0.14.937");
+    settings.setValue("version", "1.0.14.938");
     settings.setValue("logged", "off");
     settings.setValue("busy", "off");
     settings.setValue("away", "off");

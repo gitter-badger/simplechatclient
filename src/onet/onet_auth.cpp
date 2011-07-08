@@ -21,6 +21,7 @@
 #include <QDomDocument>
 #include <QEventLoop>
 #include <QHostInfo>
+#include <QNetworkAccessManager>
 #include <QNetworkCookieJar>
 #include <QNetworkReply>
 #include <QNetworkRequest>

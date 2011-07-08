@@ -21,6 +21,7 @@
 #include <QDesktopWidget>
 #include <QDir>
 #include <QMessageBox>
+#include <QNetworkAccessManager>
 #include <QProcess>
 #include <QPushButton>
 #include <QSettings>

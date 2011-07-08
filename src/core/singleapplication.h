@@ -21,8 +21,8 @@
 #ifndef SINGLEAPPLICATION_H
 #define SINGLEAPPLICATION_H
 
-#include <QtGui/QApplication>
 #include <QSharedMemory>
+#include <QApplication>
 
 class SingleApplication : public QApplication
 {

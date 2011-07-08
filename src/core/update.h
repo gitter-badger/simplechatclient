@@ -21,7 +21,8 @@
 #ifndef UPDATE_H
 #define UPDATE_H
 
-#include <QNetworkAccessManager>
+class QNetworkAccessManager;
+class QNetworkReply;
 #include <QObject>
 
 /**

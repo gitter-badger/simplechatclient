@@ -20,7 +20,9 @@
 
 #include <QDateTime>
 #include <QFile>
+#include <QLabel>
 #include <QSettings>
+#include <QVBoxLayout>
 #include "convert.h"
 #include "core.h"
 #include "log.h"

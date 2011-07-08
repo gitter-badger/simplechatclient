@@ -18,9 +18,15 @@
  *                                                                          *
  ****************************************************************************/
 
+
 #include <QDateTime>
 #include <QDesktopWidget>
+#include <QDockWidget>
+#include <QMenuBar>
 #include <QSettings>
+#include <QSystemTrayIcon>
+#include <QTimer>
+#include <QToolBar>
 #include "config.h"
 #include "core.h"
 #include "dlg_about.h"

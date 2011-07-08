@@ -30,6 +30,8 @@
 
 #include <QDate>
 #include <QDesktopWidget>
+#include <QNetworkAccessManager>
+#include <QNetworkReply>
 #include "convert.h"
 #include "core.h"
 #include "dlg_user_avatar.h"

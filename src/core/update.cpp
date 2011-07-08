@@ -20,6 +20,7 @@
 
 #include <QDomDocument>
 #include <QHostInfo>
+#include <QNetworkAccessManager>
 #include <QNetworkReply>
 #include <QSettings>
 #include <QStringList>

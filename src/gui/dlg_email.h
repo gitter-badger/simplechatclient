@@ -21,10 +21,11 @@
 #ifndef DLG_EMAIL_H
 #define DLG_EMAIL_H
 
+class QNetworkAccessManager;
+class QNetworkCookieJar;
+class QNetworkReply;
 class MainWindow;
 #include <QDialog>
-#include <QNetworkAccessManager>
-#include <QNetworkCookieJar>
 #include "ui_email.h"
 
 class DlgEmail : public QDialog
