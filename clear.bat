@@ -11,7 +11,7 @@ del /S /Q /F /A i18n.vcproj* *.qm generate*
 cd ..
 
 cd src
-rd /S /Q CMakeFiles scc.dir
+rd /S /Q CMakeFiles scc.dir __
 del /S /Q /F /A cmake_install.cmake Makefile moc_* ui_* qrc_* scc.*
 cd ..
 cls

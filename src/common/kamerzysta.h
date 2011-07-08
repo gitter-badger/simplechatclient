@@ -24,6 +24,7 @@
 class QTcpSocket;
 class QTimer;
 class Log;
+#include <QAbstractSocket>
 #include <QObject>
 
 /**
