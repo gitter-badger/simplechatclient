@@ -27,6 +27,7 @@
 DlgCaptcha::DlgCaptcha(QNetworkAccessManager *param1, QString *param2)
 {
     ui.setupUi(this);
+    setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
     setWindowTitle(tr("Captcha"));
     // center screen
     move(QApplication::desktop()->screen()->rect().center() - rect().center());
