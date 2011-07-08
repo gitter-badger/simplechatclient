@@ -54,6 +54,9 @@ public:
     void refreshBackgroundImage();
     // update
     void checkUpdate();
+    // for window
+    QString getChannelNameFromIndex(int index);
+    QString getCurrentChannelName();
     // for avatars
     int getNickChannels(QString);
     // get users per channel

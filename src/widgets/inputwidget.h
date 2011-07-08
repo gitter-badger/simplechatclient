@@ -34,9 +34,6 @@ class InputWidget : public QWidget
     Q_OBJECT
 public:
     InputWidget(QWidget *, Network *);
-    void setActive(QString);
-    inline QString getActive() { return strChannel; }
-    void updateNicklist();
     void insertText(QString);
     void setFont(QFont);
     void setColor(QString);
@@ -56,7 +53,6 @@ private:
     InputLineWidget *pInputLine;
     QPushButton *sendButton;
     QPushButton *moderSendButton;
-    QString strChannel;
 
 private slots:
     void inputlineReturnPressed();

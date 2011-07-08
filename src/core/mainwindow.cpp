@@ -737,18 +737,12 @@ void MainWindow::ctrlShiftTabPressed()
     pTabM->setCurrentIndex(index-1);
 }
 
-QString MainWindow::getCurrentTabName(int index)
+int MainWindow::getCurrentTabIndex()
 {
-    QList<QString> lOpenChannels = Core::instance()->lOpenChannels;
-    lOpenChannels.insert(0, "Status");
-
-    for (int i = 0; i < lOpenChannels.size(); i++)
-    {
-        QString strChannel = lOpenChannels.at(i);
-        if (index == i)
-            return strChannel;
-    }
-    return QString::null;
+    if (pTabM->count() != 0)
+        return pTabM->currentIndex();
+    else
+        return -1;
 }
 
 void MainWindow::timeoutAutoaway()
@@ -771,8 +765,7 @@ void MainWindow::timeoutAutoaway()
 // tab changed
 void MainWindow::currentTabChanged(int index)
 {
-    QString strChannel = getCurrentTabName(index);
-    if (strChannel.isEmpty()) return; // something wrong
+    QString strChannel = Core::instance()->getChannelNameFromIndex(index);
 
     QSettings settings;
 
@@ -810,9 +803,6 @@ void MainWindow::currentTabChanged(int index)
 
     // update nick count
     updateUsersCount();
-
-    // set tab active
-    pInputLineDockWidget->setActive(strChannel);
 
     // moderation
     QString strMe = settings.value("nick").toString();
@@ -874,16 +864,11 @@ void MainWindow::addUser(QString strChannel, QString strNick, QString strModes, 
             pNickListWidget->sortItems(Qt::AscendingOrder);
         }
 
-        // set inputline users
-        if (pInputLineDockWidget->getActive() == strChannel)
-            pInputLineDockWidget->updateNickList();
-
         // update nick count for option hide join/part when > 200
         Core::instance()->mChannelNicks[strChannel] = Core::instance()->mChannelNicks[strChannel]++;
 
         // update nick count
-        if (pInputLineDockWidget->getActive() == strChannel)
-            updateUsersCount();
+        updateUsersCount();
     }
 }
 
@@ -904,16 +889,11 @@ void MainWindow::delUser(QString strChannel, QString strNick)
     {
         pNickListWidget->remove(strNick);
 
-        // set inputline users
-        if (pInputLineDockWidget->getActive() == strChannel)
-            pInputLineDockWidget->updateNickList();
-
         // update nick count for option hide join/part when > 200
         Core::instance()->mChannelNicks[strChannel] = Core::instance()->mChannelNicks[strChannel]--;
 
         // update nick count
-        if (pInputLineDockWidget->getActive() == strChannel)
-            updateUsersCount();
+        updateUsersCount();
     }
 }
 
@@ -953,7 +933,7 @@ void MainWindow::quitUser(QString strNick, QString strDisplay)
                 pTabM->setAlert(i+1, QColor(0, 147, 0, 255)); // green
 
             // update nick count
-            if (pInputLineDockWidget->getActive() == strChannel)
+            if (pNickListWidget->getChannel() == strChannel)
                 updateUsersCount();
         }
     }

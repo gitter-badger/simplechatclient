@@ -41,9 +41,6 @@ public:
     void showToolwidget();
     void hideChannelSettings();
     void showChannelSettings();
-    void setActive(QString);
-    QString getActive();
-    void updateNickList();
 
 public slots:
     void slotUpdateNick(QString);

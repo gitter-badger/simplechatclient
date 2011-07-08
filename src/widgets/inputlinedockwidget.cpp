@@ -116,22 +116,7 @@ void InputLineDockWidget::showChannelSettings()
     pToolWidget->setChannelSettings(true);
 }
 
-void InputLineDockWidget::setActive(QString strChannel)
-{
-    pInputWidget->setActive(strChannel);
-}
-
-QString InputLineDockWidget::getActive()
-{
-    return pInputWidget->getActive();
-}
-
 // input widget
-
-void InputLineDockWidget::updateNickList()
-{
-    pInputWidget->updateNicklist();
-}
 
 void InputLineDockWidget::slotUpdateNick(QString strNick)
 {

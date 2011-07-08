@@ -73,7 +73,7 @@ void Core::createSettings()
 {
     // default settings
     QSettings settings;
-    settings.setValue("version", "1.0.14.936");
+    settings.setValue("version", "1.0.14.937");
     settings.setValue("logged", "off");
     settings.setValue("busy", "off");
     settings.setValue("away", "off");
@@ -195,6 +195,26 @@ void Core::refreshBackgroundImage()
 void Core::checkUpdate()
 {
     pUpdate->checkUpdate();
+}
+
+QString Core::getChannelNameFromIndex(int index)
+{
+    QList<QString> lOpenChannels = Core::instance()->lOpenChannels;
+    lOpenChannels.insert(0, "Status");
+
+    for (int i = 0; i < lOpenChannels.size(); i++)
+    {
+        QString strChannel = lOpenChannels.at(i);
+        if (index == i)
+            return strChannel;
+    }
+    return QString::null;
+}
+
+QString Core::getCurrentChannelName()
+{
+    int index = window->getCurrentTabIndex();
+    return getChannelNameFromIndex(index);
 }
 
 // for avatars (if nick not in any channels -> remove avatar)

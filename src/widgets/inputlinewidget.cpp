@@ -20,6 +20,7 @@
 
 #include <QEvent>
 #include <QKeyEvent>
+#include "core.h"
 #include "inputlinewidget.h"
 
 InputLineWidget::InputLineWidget(QWidget *parent) : QLineEdit(parent)
@@ -31,12 +32,6 @@ InputLineWidget::InputLineWidget(QWidget *parent) : QLineEdit(parent)
 InputLineWidget::~InputLineWidget()
 {
     strLastWord = QString::null;
-    usersList.clear();
-}
-
-void InputLineWidget::setUserslist(QList<QString> newUsersList)
-{
-    usersList = newUsersList;
 }
 
 void InputLineWidget::insertText(QString strText)
@@ -116,6 +111,8 @@ bool InputLineWidget::event(QEvent *e)
         }
         else
         {
+            QList<QString> usersList = Core::instance()->getNicksFromChannel(Core::instance()->getCurrentChannelName());
+
             if (usersList.size() == 0)
                 return true;
 

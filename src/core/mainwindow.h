@@ -60,6 +60,8 @@ public:
     // options
     void refreshColors();
     void refreshBackgroundImage();
+    // for core
+    int getCurrentTabIndex();
 
 private:
     QToolBar *toolBar;
@@ -109,7 +111,6 @@ private:
     void createMenus();
     void createSignals();
     void showOptions();
-    QString getCurrentTabName(int);
     // nicklist
     void updateUsersCount();
     bool nicklistExist(QString, QString);

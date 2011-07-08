@@ -541,12 +541,8 @@ void ToolWidget::channelSettingsClicked()
 {
     if (pNetwork->isConnected())
     {
-        QString strChannel = pInputWidget->getActive();
-        if (strChannel != "Status")
-        {
-            pDlgChannelSettings->setChannel(strChannel);
-            pDlgChannelSettings->show();
-        }
+        pDlgChannelSettings->setChannel(Core::instance()->getCurrentChannelName());
+        pDlgChannelSettings->show();
     }
 }
 
@@ -554,7 +550,7 @@ void ToolWidget::channelSettingsClicked()
 
 void ToolWidget::moderationClicked()
 {
-    QString strChannel = pInputWidget->getActive();
+    QString strChannel = Core::instance()->getCurrentChannelName();
     pDlgModeration->setCurrentChannel(strChannel);
     pDlgModeration->show();
 }
@@ -563,6 +559,6 @@ void ToolWidget::moderationClicked()
 
 void ToolWidget::clearClicked()
 {
-    QString strChannel = pInputWidget->getActive();
+    QString strChannel = Core::instance()->getCurrentChannelName();
     emit clearContent(strChannel);
 }

@@ -29,13 +29,11 @@ class InputLineWidget : public QLineEdit
 public:
     InputLineWidget(QWidget*);
     virtual ~InputLineWidget();
-    void setUserslist(QList<QString>);
     void insertText(QString);
 
 private:
     int index;
     QString strLastWord;
-    QList<QString> usersList;
     QList<QString> find;
     QString strLastMsg;
 

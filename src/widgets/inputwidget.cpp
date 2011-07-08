@@ -84,21 +84,6 @@ InputWidget::InputWidget(QWidget *parent, Network *param1) : QWidget(parent)
     QObject::connect(pInputLine, SIGNAL(ctrlShiftTabPressed()), this, SLOT(slotCtrlShiftTabPressed()));
 }
 
-void InputWidget::setActive(QString strName)
-{
-    strChannel = strName;
-
-    // update nicklist
-    QList<QString> usersList = Core::instance()->getNicksFromChannel(strChannel);
-    pInputLine->setUserslist(usersList);
-}
-
-void InputWidget::updateNicklist()
-{
-    QList<QString> usersList = Core::instance()->getNicksFromChannel(strChannel);
-    pInputLine->setUserslist(usersList);
-}
-
 void InputWidget::insertText(QString strText)
 {
     pInputLine->insertText(strText);
@@ -155,7 +140,7 @@ void InputWidget::pasteMultiLine(QString strText, bool bModeration)
 void InputWidget::sendMessage(QString strText, bool bModeration)
 {
     if (strText.isEmpty()) return; // empty text!
-    if (strChannel.isEmpty()) return; // empty channel!
+    QString strChannel = Core::instance()->getCurrentChannelName();
 
     QString strTextOriginal = strText;
 
