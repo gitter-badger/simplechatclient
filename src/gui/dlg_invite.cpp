@@ -26,6 +26,7 @@
 DlgInvite::DlgInvite(MainWindow *parent, Network *param1, QString param2, QString param3) : QDialog(parent)
 {
     ui.setupUi(this);
+    setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
     setAttribute(Qt::WA_DeleteOnClose);
     setWindowTitle(tr("Invitation"));
     // center screen

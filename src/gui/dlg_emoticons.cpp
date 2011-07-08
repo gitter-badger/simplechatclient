@@ -80,6 +80,7 @@ void ThreadEmoticonsExtended::run()
 DlgEmoticons::DlgEmoticons(MainWindow *parent, InputWidget *param1) : QDialog(parent)
 {
     ui.setupUi(this);
+    setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
     setWindowTitle(tr("Emoticons"));
     // center screen
     move(QApplication::desktop()->screen()->rect().center() - rect().center());

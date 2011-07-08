@@ -39,6 +39,7 @@
 DlgUserProfile::DlgUserProfile(QWidget *parent, Network *param1) : QDialog(parent)
 {
     setAttribute(Qt::WA_DeleteOnClose);
+    setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
     setWindowTitle(tr("Profile"));
     // center screen
     move(QApplication::desktop()->screen()->rect().center() - rect().center());

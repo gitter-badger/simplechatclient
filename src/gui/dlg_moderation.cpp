@@ -27,6 +27,7 @@
 DlgModeration::DlgModeration(QWidget *parent) : QDialog(parent)
 {
     ui.setupUi(this);
+    setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
     setAttribute(Qt::WA_DeleteOnClose);
     setWindowTitle(tr("Moderation"));
 

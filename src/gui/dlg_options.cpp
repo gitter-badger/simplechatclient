@@ -36,6 +36,7 @@
 DlgOptions::DlgOptions(QWidget *parent) : QDialog(parent)
 {
     ui.setupUi(this);
+    setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
     setWindowTitle(tr("Options"));
     // center screen
     move(QApplication::desktop()->screen()->rect().center() - rect().center());

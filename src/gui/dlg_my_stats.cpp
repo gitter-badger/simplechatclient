@@ -28,6 +28,7 @@
 DlgMyStats::DlgMyStats(QWidget *parent) : QDialog(parent)
 {
     ui.setupUi(this);
+    setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
     setWindowTitle(tr("My statistics"));
     // center screen
     move(QApplication::desktop()->screen()->rect().center() - rect().center());

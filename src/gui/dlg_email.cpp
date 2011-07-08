@@ -30,6 +30,7 @@
 DlgEmail::DlgEmail(MainWindow *parent, QString param1, QString param2) : QDialog(parent)
 {
     ui.setupUi(this);
+    setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
     setWindowTitle(tr("Change email address"));
     // center screen
     move(QApplication::desktop()->screen()->rect().center() - rect().center());

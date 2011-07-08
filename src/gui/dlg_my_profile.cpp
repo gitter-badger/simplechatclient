@@ -30,6 +30,7 @@
 DlgMyProfile::DlgMyProfile(QWidget *parent, Network *param1) : QDialog(parent)
 {
     ui.setupUi(this);
+    setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
     setWindowTitle(tr("My profile"));
     // center screen
     move(QApplication::desktop()->screen()->rect().center() - rect().center());

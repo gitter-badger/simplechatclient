@@ -24,6 +24,7 @@ DlgWebcamMini::DlgWebcamMini(QString nick)
 {
     ui.setupUi(this);
     setWindowFlags(Qt::Dialog | Qt::WindowStaysOnTopHint);
+    setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
     setWindowTitle(nick);
 }
 

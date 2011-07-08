@@ -32,6 +32,7 @@
 DlgRegisterNick::DlgRegisterNick(MainWindow *parent, QWidget *param1) : QDialog(parent)
 {
     ui.setupUi(this);
+    setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
     setWindowTitle(tr("Register nick"));
     // center screen
     move(QApplication::desktop()->screen()->rect().center() - rect().center());

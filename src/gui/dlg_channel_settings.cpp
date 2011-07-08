@@ -34,6 +34,7 @@ DlgChannelSettings::DlgChannelSettings(QWidget *parent, Network *param1) : QDial
 {
     ui.setupUi(this);
     setAttribute(Qt::WA_DeleteOnClose);
+    setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
 
     pNetwork = param1;
 

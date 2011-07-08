@@ -26,8 +26,9 @@
 DlgFindText::DlgFindText(MainWindow *parent, MainTextEdit *param1) : QDialog(parent)
 {
     ui.setupUi(this);
-    setWindowTitle(tr("Find"));
     setWindowFlags(Qt::Dialog | Qt::WindowStaysOnTopHint);
+    setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
+    setWindowTitle(tr("Find"));
     // center screen
     move(QApplication::desktop()->screen()->rect().center() - rect().center());
 

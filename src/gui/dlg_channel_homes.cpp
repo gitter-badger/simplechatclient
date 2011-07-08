@@ -28,6 +28,7 @@
 DlgChannelHomes::DlgChannelHomes(QWidget *parent, Network *param1, DlgChannelSettings *param2) : QDialog(parent)
 {
     ui.setupUi(this);
+    setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
     setWindowTitle(tr("Your channels"));
     // center screen
     move(QApplication::desktop()->screen()->rect().center() - rect().center());

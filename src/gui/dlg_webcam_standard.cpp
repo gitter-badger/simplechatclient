@@ -29,6 +29,7 @@ DlgWebcamStandard::DlgWebcamStandard()
 {
     ui.setupUi(this);
     setWindowFlags(Qt::Dialog | Qt::WindowStaysOnTopHint);
+    setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
     setWindowTitle(tr("Webcams"));
 
     ui.listWidget_nicks->setItemDelegate(new WebcamDelegate());

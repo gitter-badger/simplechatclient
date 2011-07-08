@@ -33,6 +33,7 @@ DlgUpdate::DlgUpdate(MainWindow *parent, QString param1) : QDialog(parent)
 {
     ui.setupUi(this);
     setWindowFlags(Qt::Dialog | Qt::WindowStaysOnTopHint);
+    setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
     setWindowTitle(tr("Update"));
     // center screen
     move(QApplication::desktop()->screen()->rect().center() - rect().center());
