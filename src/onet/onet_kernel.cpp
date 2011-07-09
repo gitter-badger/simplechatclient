@@ -2956,7 +2956,7 @@ void OnetKernel::raw_400n()
 
     QString strNick = strDataList[2];
 
-    QString strMessage = QString(tr("* %1: Nick is not registered")).arg(strNick);
+    QString strMessage = QString(tr("* %1 :Nick is not registered")).arg(strNick);
 
     pTabC->showMsgActive(strMessage, InfoMessage);
 }
@@ -3665,7 +3665,7 @@ void OnetKernel::raw_471()
 
     QString strChannel = strDataList[3];
 
-    QString strMessage = QString(tr("* Cannot join channel %1: channel is full")).arg(strChannel);
+    QString strMessage = QString(tr("* Cannot join channel %1 - channel is full")).arg(strChannel);
     pTabC->showMsgActive(strMessage, InfoMessage);
 }
 
@@ -3683,7 +3683,7 @@ void OnetKernel::raw_473()
 
     QString strChannel = strDataList[3];
 
-    QString strMessage = QString(tr("* Cannot join channel %1: Invite only")).arg(strChannel);
+    QString strMessage = QString(tr("* Cannot join channel %1 - Invite only")).arg(strChannel);
     pTabC->showMsgActive(strMessage, InfoMessage);
 
     // close inactive priv
@@ -3701,7 +3701,7 @@ void OnetKernel::raw_474()
 
     QString strChannel = strDataList[3];
 
-    QString strMessage = QString(tr("* Cannot join channel %1: You're banned")).arg(strChannel);
+    QString strMessage = QString(tr("* Cannot join channel %1 - You're banned")).arg(strChannel);
     pTabC->showMsgActive(strMessage, InfoMessage);
 }
 
@@ -3712,7 +3712,7 @@ void OnetKernel::raw_475()
 
     QString strChannel = strDataList[3];
 
-    QString strMessage = QString(tr("* Cannot join channel %1: Incorrect channel key")).arg(strChannel);
+    QString strMessage = QString(tr("* Cannot join channel %1 - Incorrect channel key")).arg(strChannel);
     pTabC->showMsgActive(strMessage, InfoMessage);
 
     (new DlgChannelKey(Core::instance()->sccWindow(), pNetwork, strChannel))->show(); // should be show - prevent hangup!

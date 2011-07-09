@@ -2384,7 +2384,7 @@
         <translation>* Twoim wyświetlanym hostem jest teraz: %1</translation>
     </message>
     <message>
-        <source>* %1: Nick is not registered</source>
+        <source>* %1 :Nick is not registered</source>
         <translation>* %1 :Nick nie jest zarejestrowany</translation>
     </message>
     <message>
@@ -2584,24 +2584,24 @@
         <translation>* Pokój %1 jest pełny, zostajesz automatycznie przekierowany do pokoju %2</translation>
     </message>
     <message>
-        <source>* Cannot join channel %1: channel is full</source>
-        <translation>* Nie możesz wejść do %1: Pokój jest pełny</translation>
+        <source>* Cannot join channel %1 - channel is full</source>
+        <translation>* Nie możesz wejść do %1 - Pokój jest pełny</translation>
     </message>
     <message>
         <source>* Wait 60 seconds before creating next channel</source>
         <translation>* Utworzenie kolejnego pokoju będzie możliwe po upłynięciu 60 sekund</translation>
     </message>
     <message>
-        <source>* Cannot join channel %1: Invite only</source>
-        <translation>* Nie możesz wejść do %1: Nie jesteś na liście zaproszonych</translation>
+        <source>* Cannot join channel %1 - Invite only</source>
+        <translation>* Nie możesz wejść do %1 - Nie jesteś na liście zaproszonych</translation>
     </message>
     <message>
-        <source>* Cannot join channel %1: You're banned</source>
-        <translation>* Nie możesz wejść do %1: Jesteś zbanowany</translation>
+        <source>* Cannot join channel %1 - You're banned</source>
+        <translation>* Nie możesz wejść do %1 - Jesteś zbanowany</translation>
     </message>
     <message>
-        <source>* Cannot join channel %1: Incorrect channel key</source>
-        <translation>* Nie możesz wejść do %1: Nieprawidłowy klucz</translation>
+        <source>* Cannot join channel %1 - Incorrect channel key</source>
+        <translation>* Nie możesz wejść do %1 - Nieprawidłowy klucz</translation>
     </message>
     <message>
         <source>* Permission Denied - You do not have the required operator privileges</source>
