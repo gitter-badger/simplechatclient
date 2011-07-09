@@ -76,6 +76,10 @@ InputWidget::InputWidget(QWidget *parent, Network *param1) : QWidget(parent)
     // default hidden
     moderSendButton->hide();
 
+    // focus
+    setFocusPolicy(Qt::StrongFocus);
+    setFocusProxy(pInputLine);
+
     QObject::connect(sendButton, SIGNAL(clicked()), this, SLOT(inputlineReturnPressed()));
     QObject::connect(pInputLine, SIGNAL(returnPressed()), this, SLOT(inputlineReturnPressed()));
     QObject::connect(moderSendButton, SIGNAL(clicked()), this, SLOT(moderButtonClicked()));

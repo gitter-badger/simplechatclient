@@ -53,6 +53,10 @@ InputLineDockWidget::InputLineDockWidget(QWidget *parent, Network *param1, DlgCh
     setMinimumHeight(iMinimumSize);
     setMaximumHeight(iMinimumSize);
 
+    // focus
+    setFocusPolicy(Qt::StrongFocus);
+    setFocusProxy(pInputWidget);
+
     // signals
     QObject::connect(pInputWidget, SIGNAL(displayMessage(QString&,QString&,MessageCategory)), this, SLOT(slotDisplayMessage(QString&,QString&,MessageCategory)));
     QObject::connect(pInputWidget, SIGNAL(showMsg(QString&,QString&,MessageCategory)), this, SLOT(slotShowMsg(QString&,QString&,MessageCategory)));

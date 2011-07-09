@@ -119,6 +119,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
     // show options if config not exist
     showOptions();
+
+    // focus
+    pInputLineDockWidget->setFocus();
 }
 
 MainWindow::~MainWindow()
