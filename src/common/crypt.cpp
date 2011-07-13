@@ -24,18 +24,40 @@
 #include "config.h"
 #include "crypt.h"
 
-#ifdef Q_WS_X11
-#include <QDebug>
+#ifdef Q_WS_WIN
+    #include <windows.h>
+#else
+    #include <QDebug>
 #endif
 
 Crypt::Crypt()
 {
+#ifdef Q_WS_WIN
+    char volName[256];
+    char fileSysName[256];
+    DWORD dwSerialNumber;
+    DWORD dwMaxComponentLen;
+    DWORD dwFileSysFlags;
+
+    bool res = GetVolumeInformation("c:\\", volName, 256, &dwSerialNumber, &dwMaxComponentLen, &dwFileSysFlags, fileSysName, 256);
+    if (res)
+        strIv = QString::number(dwSerialNumber,10);
+    else
+        genIv();
+#else
     Config *pConfig = new Config();
     strIv = pConfig->getValue("iv");
     delete pConfig;
 
     if (strIv.isEmpty())
+    {
         genIv();
+
+        Config *pConfig = new Config();
+        pConfig->setValue("iv", strIv);
+        delete pConfig;
+    }
+#endif
 }
 
 QString Crypt::encrypt(QString strKey, QString strData)
@@ -144,8 +166,4 @@ void Crypt::genIv()
             strIv += c.toAscii();
         }
     }
-
-    Config *pConfig = new Config();
-    pConfig->setValue("iv", strIv);
-    delete pConfig;
 }

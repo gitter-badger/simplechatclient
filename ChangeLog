@@ -1,6 +1,11 @@
 ChangeLog for Simple Chat Client
 ========================= 
 
+Version 1.1.1 (unknown date)
+================================
+* New crypt
+* Many bugfixes
+
 Version 1.1.0 (09.07.2011)
 ================================
 * Added /mp3 command
