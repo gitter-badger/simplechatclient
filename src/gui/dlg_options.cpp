@@ -487,7 +487,7 @@ void DlgOptions::setDefaultValues()
 
 void DlgOptions::createSignals()
 {
-    QObject::connect(ui.treeWidget_options, SIGNAL(activated(QModelIndex)), this, SLOT(changePage(QModelIndex)));
+    QObject::connect(ui.treeWidget_options, SIGNAL(clicked(QModelIndex)), this, SLOT(changePage(QModelIndex)));
     QObject::connect(ui.comboBox_profiles, SIGNAL(activated(int)), this, SLOT(currentProfileChanged(int)));
     QObject::connect(ui.pushButton_profiles, SIGNAL(clicked()), this, SLOT(buttonProfiles()));
     QObject::connect(ui.radioButton_modern_avatars, SIGNAL(clicked()), this, SLOT(setModernStyleAvatars()));
