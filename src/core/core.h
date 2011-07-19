@@ -43,6 +43,11 @@ public:
     Core();
     virtual ~Core();
     void createGui();
+    void createSettings();
+    // config
+    void configValues();
+    void configProfileValues();
+    void removeOldConfig();
     // from main
     static QString version();
     static void enableDebug();
@@ -101,7 +106,6 @@ private:
     Update *pUpdate;
 
     void init();
-    void createSettings();
     void checkSettings();
 };
 

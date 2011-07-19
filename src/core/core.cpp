@@ -19,6 +19,7 @@
  ****************************************************************************/
 
 #include <QAction>
+#include <QDir>
 #include <QFile>
 #include <QSettings>
 #include <QTcpSocket>
@@ -75,9 +76,19 @@ void Core::createGui()
 
 void Core::createSettings()
 {
-    // default settings
     QSettings settings;
-    settings.setValue("version", "1.1.1.943");
+
+    // read debug
+    QString strDebug = settings.value("debug").toString();
+
+    // clear
+    settings.clear();
+
+    // restore debug
+    settings.setValue("debug", strDebug);
+
+    // default settings
+    settings.setValue("version", "1.1.1.944");
     settings.setValue("logged", "off");
     settings.setValue("busy", "off");
     settings.setValue("away", "off");
@@ -94,20 +105,14 @@ void Core::createSettings()
     settings.setValue("onetzuo_ticket", "");
     settings.setValue("last_active", "0");
 
-    // config values
-    Config *pConfig = new Config();
-    QMap<QString,QString> mConfigValues = pConfig->readConfig();
-    delete pConfig;
+    // config
+    configValues();
+    configProfileValues();
 
-    // set settings
-    QMapIterator <QString, QString> i(mConfigValues);
-    while (i.hasNext())
-    {
-        i.next();
-        settings.setValue(i.key(), i.value());
-    }
+    // remove old config
+    removeOldConfig();
 
-    // fix config values
+    // fix config profile values
     if (settings.value("style").toString() == "classic")
     {
         Config *pConfig = new Config();
@@ -118,6 +123,63 @@ void Core::createSettings()
 
     // check settings
     checkSettings();
+}
+
+void Core::configValues()
+{
+    QSettings settings;
+
+    // config values
+    Config *pConfig = new Config(false);
+    QMap<QString,QString> mConfigValues = pConfig->readConfig();
+    delete pConfig;
+
+    // set settings
+    QMapIterator <QString, QString> i(mConfigValues);
+    while (i.hasNext())
+    {
+        i.next();
+        settings.setValue(i.key(), i.value());
+    }
+}
+
+void Core::configProfileValues()
+{
+    QSettings settings;
+
+    // config profile values
+    Config *pConfigProfile = new Config();
+    QMap<QString,QString> mConfigProfileValues = pConfigProfile->readConfig();
+    delete pConfigProfile;
+
+    // set profile settings
+    QMapIterator <QString, QString> ip(mConfigProfileValues);
+    while (ip.hasNext())
+    {
+        ip.next();
+        settings.setValue(ip.key(), ip.value());
+    }
+}
+
+void Core::removeOldConfig()
+{
+    QString path;
+#ifdef Q_WS_X11
+    path = QDir::homePath()+"/.scc";
+#else
+    QSettings winSettings(QSettings::UserScope, "Microsoft", "Windows");
+    winSettings.beginGroup("CurrentVersion/Explorer/Shell Folders");
+    path = winSettings.value("Personal").toString();
+    path += "/scc";
+#endif
+
+    // create dir if not exist
+    if (!QDir().exists(path))
+        QDir().mkdir(path);
+
+    // remove file
+    if (QFile::exists(path+"/scc.conf"))
+        QFile::remove(path+"/scc.conf");
 }
 
 void Core::checkSettings()

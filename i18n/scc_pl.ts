@@ -1399,24 +1399,12 @@
         <translation>Uruchom ponownie program aby zastosować wprowadzone zmiany.</translation>
     </message>
     <message>
-        <source>Unregistered nick</source>
-        <translation>Nick tymczasowy</translation>
+        <source>Current profile:</source>
+        <translation>Aktualny profil:</translation>
     </message>
     <message>
-        <source>Registered nick</source>
-        <translation>Nick stały</translation>
-    </message>
-    <message>
-        <source>Register nick</source>
-        <translation>Zarejestruj nick</translation>
-    </message>
-    <message>
-        <source>Nick:</source>
-        <translation>Login:</translation>
-    </message>
-    <message>
-        <source>Password:</source>
-        <translation>Hasło:</translation>
+        <source>Profiles</source>
+        <translation>Profile</translation>
     </message>
     <message>
         <source>Skins</source>
@@ -1681,6 +1669,83 @@
     <message>
         <source>Inactive</source>
         <translation>Nieaktywne</translation>
+    </message>
+</context>
+<context>
+    <name>DlgProfileAdd</name>
+    <message>
+        <source>Add profile</source>
+        <translation>Dodaj profil</translation>
+    </message>
+    <message>
+        <source>Unregistered nick</source>
+        <translation>Nick tymczasowy</translation>
+    </message>
+    <message>
+        <source>Registered nick</source>
+        <translation>Nick stały</translation>
+    </message>
+    <message>
+        <source>Register nick</source>
+        <translation>Zarejestruj nick</translation>
+    </message>
+    <message>
+        <source>Nick:</source>
+        <translation>Login:</translation>
+    </message>
+    <message>
+        <source>Password:</source>
+        <translation>Hasło:</translation>
+    </message>
+    <message>
+        <source>Nick is empty!</source>
+        <translation>Login jest pusty!</translation>
+    </message>
+    <message>
+        <source>Profile already exists!</source>
+        <translation>Profil już istnieje!</translation>
+    </message>
+</context>
+<context>
+    <name>DlgProfileEdit</name>
+    <message>
+        <source>Edit profile</source>
+        <translation>Edycja profilu</translation>
+    </message>
+    <message>
+        <source>Nick:</source>
+        <translation>Login:</translation>
+    </message>
+    <message>
+        <source>Password:</source>
+        <translation>Hasło:</translation>
+    </message>
+    <message>
+        <source>Password is empty!</source>
+        <translation>Hasło jest puste!</translation>
+    </message>
+</context>
+<context>
+    <name>DlgProfileManager</name>
+    <message>
+        <source>Profile manager</source>
+        <translation>Ustawienia profili</translation>
+    </message>
+    <message>
+        <source>Add</source>
+        <translation>Dodaj</translation>
+    </message>
+    <message>
+        <source>Edit</source>
+        <translation>Edytuj</translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation>Usuń</translation>
+    </message>
+    <message>
+        <source>Cannot remove last profile</source>
+        <translation>Nie można usunąć ostatniego profilu</translation>
     </message>
 </context>
 <context>
@@ -2316,7 +2381,7 @@
         <translation>Pomyślnie usunięto pokój %1</translation>
     </message>
     <message>
-        <source>%1 is away: %2</source>
+        <source>* %1 is away: %2</source>
         <translation>* %1 jest nieobecny z powodu: %2</translation>
     </message>
     <message>

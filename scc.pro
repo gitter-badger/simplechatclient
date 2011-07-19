@@ -21,6 +21,7 @@ SOURCES += src/avatars/avatar.cpp \
     src/common/winamp.cpp \
     src/core/core.cpp \
     src/core/debug.cpp \
+    src/core/debugblock.cpp \
     src/core/main.cpp \
     src/core/mainwindow.cpp \
     src/core/network.cpp \
@@ -46,6 +47,9 @@ SOURCES += src/avatars/avatar.cpp \
     src/gui/dlg_notes.cpp \
     src/gui/dlg_offlinemsg.cpp \
     src/gui/dlg_options.cpp \
+    src/gui/dlg_profile_add.cpp \
+    src/gui/dlg_profile_edit.cpp \
+    src/gui/dlg_profile_manager.cpp \
     src/gui/dlg_register_nick.cpp \
     src/gui/dlg_update.cpp \
     src/gui/dlg_user_avatar.cpp \
@@ -71,8 +75,7 @@ SOURCES += src/avatars/avatar.cpp \
     src/widgets/simplerankwidget.cpp \
     src/widgets/simplestatswidget.cpp \
     src/widgets/toolwidget.cpp \
-    src/widgets/webcamdelegate.cpp \
-    src/core/debugblock.cpp
+    src/widgets/webcamdelegate.cpp
 HEADERS += src/avatars/avatar.h \
     src/common/commands.h \
     src/common/config.h \
@@ -86,6 +89,7 @@ HEADERS += src/avatars/avatar.h \
     src/common/winamp.h \
     src/core/core.h \
     src/core/debug.h \
+    src/core/debugblock.h \
     src/core/defines.h \
     src/core/main.h \
     src/core/mainwindow.h \
@@ -112,6 +116,9 @@ HEADERS += src/avatars/avatar.h \
     src/gui/dlg_notes.h \
     src/gui/dlg_offlinemsg.h \
     src/gui/dlg_options.h \
+    src/gui/dlg_profile_add.h \
+    src/gui/dlg_profile_edit.h \
+    src/gui/dlg_profile_manager.h \
     src/gui/dlg_register_nick.h \
     src/gui/dlg_update.h \
     src/gui/dlg_user_avatar.h \
@@ -137,8 +144,7 @@ HEADERS += src/avatars/avatar.h \
     src/widgets/simplerankwidget.h \
     src/widgets/simplestatswidget.h \
     src/widgets/toolwidget.h \
-    src/widgets/webcamdelegate.h \
-    src/core/debugblock.h
+    src/widgets/webcamdelegate.h
 FORMS += ui/about.ui \
     ui/awaylog.ui \
     ui/cam.ui \
@@ -161,6 +167,9 @@ FORMS += ui/about.ui \
     ui/notes.ui \
     ui/offlinemsg.ui \
     ui/options.ui \
+    ui/profile_add.ui \
+    ui/profile_edit.ui \
+    ui/profile_manager.ui \
     ui/register_nick.ui \
     ui/update.ui \
     ui/user_avatar.ui \

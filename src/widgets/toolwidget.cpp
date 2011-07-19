@@ -223,7 +223,7 @@ ToolWidget::ToolWidget(QWidget *parent, Network *param1, InputWidget *param2, Dl
     QObject::connect(size20Act, SIGNAL(triggered()), this, SLOT(size20Triggered()));
     QObject::connect(size24Act, SIGNAL(triggered()), this, SLOT(size24Triggered()));
 
-    QObject::connect(color, SIGNAL(currentIndexChanged(int)), this, SLOT(colorClicked(int)));
+    QObject::connect(color, SIGNAL(activated(int)), this, SLOT(colorClicked(int)));
     QObject::connect(emoticons, SIGNAL(clicked()), this, SLOT(emoticonsClicked()));
     QObject::connect(channel_settings, SIGNAL(clicked()), this, SLOT(channelSettingsClicked()));
     QObject::connect(moderation, SIGNAL(clicked()), this, SLOT(moderationClicked()));

@@ -29,6 +29,8 @@ class DlgOptions : public QDialog
     Q_OBJECT
 public:
     DlgOptions(QWidget *);
+    void setCurrentProfile(int);
+    void refreshProfilesList();
 
 private:
     Ui::uiOptions ui;
@@ -38,16 +40,14 @@ private:
     void setDefaultValues();
     void createSignals();
 
-    void saveSettings();
     void setColor(QString);
     void setMainwindowColors();
     void setNicklistColors();
 
 private slots:
-    void changePage(QTreeWidgetItem *, QTreeWidgetItem *);
-    void hidePass();
-    void showPass();
-    void buttonRegisterNick();
+    void changePage(QModelIndex);
+    void currentProfileChanged(int);
+    void buttonProfiles();
     void setModernStyleAvatars();
     void setModernStyleNoAvatars();
     void languageChanged(int);
@@ -96,7 +96,6 @@ private slots:
     void setBackgroundImage();
     void disableBackgroundImage(bool);
     void setWinamp();
-    void buttonOk();
 };
 
 #endif // DLG_OPTIONS_H

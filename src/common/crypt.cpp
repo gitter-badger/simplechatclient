@@ -27,6 +27,7 @@
 #ifdef Q_WS_WIN
     #include <windows.h>
 #else
+    #include <unistd.h>
     #include <QDebug>
 #endif
 
@@ -42,27 +43,15 @@ Crypt::Crypt()
     bool res = GetVolumeInformation("c:\\", volName, 256, &dwSerialNumber, &dwMaxComponentLen, &dwFileSysFlags, fileSysName, 256);
     if (res)
         strIv = QString::number(dwSerialNumber,10);
-    else
-        genIv();
 #else
-    Config *pConfig = new Config();
-    strIv = pConfig->getValue("iv");
-    delete pConfig;
-
-    if (strIv.isEmpty())
-    {
-        genIv();
-
-        Config *pConfig = new Config();
-        pConfig->setValue("iv", strIv);
-        delete pConfig;
-    }
+    long lSerialNumber = gethostid();
+    strIv = QString::number(lSerialNumber, 10);
 #endif
 }
 
 QString Crypt::encrypt(QString strKey, QString strData)
 {
-    if ((strKey.isEmpty()) || (strData.isEmpty()))
+    if ((strKey.isEmpty()) || (strData.isEmpty()) || (strIv.isEmpty()))
     {
 #ifdef Q_WS_X11
         qDebug() << tr("Error: crypt: Cannot encrypt - empty argument");
@@ -99,7 +88,7 @@ QString Crypt::encrypt(QString strKey, QString strData)
 
 QString Crypt::decrypt(QString strKey, QString strData)
 {
-    if ((strKey.isEmpty()) || (strData.isEmpty()))
+    if ((strKey.isEmpty()) || (strData.isEmpty()) || (strIv.isEmpty()))
     {
 #ifdef Q_WS_X11
         qDebug() << tr("Error: crypt: Cannot decrypt - empty argument");
@@ -132,38 +121,4 @@ QString Crypt::decrypt(QString strKey, QString strData)
     }
 
     return QString::null;
-}
-
-void Crypt::genIv()
-{
-    strIv.clear();
-    QTime midnight(0, 0, 0);
-    qsrand(midnight.secsTo(QTime::currentTime()));
-
-    while(strIv.length() < 32)
-    {
-        int cat = qrand() % 3;
-
-        // 0-9
-        if (cat == 0)
-        {
-            int i = qrand() % 9;
-            QChar c = i+=48;
-            strIv += c.toAscii();
-        }
-        // A-Z
-        else if (cat == 1)
-        {
-            int i = qrand() % 25;
-            QChar c = i+=65;
-            strIv += c.toAscii();
-        }
-        // a-z
-        else if (cat == 2)
-        {
-            int i = qrand() % 25;
-            QChar c = i+=97;
-            strIv += c.toAscii();
-        }
-    }
 }

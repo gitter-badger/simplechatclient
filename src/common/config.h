@@ -34,7 +34,7 @@ class Config : public QObject
 {
     Q_OBJECT
 public:
-    Config();
+    Config(bool b = true, QString p = QString::null);
     virtual ~Config();
 
     /**
@@ -59,6 +59,8 @@ private:
     QString strConfigFile;
     QFile *file;
     QDomDocument doc;
+    bool bProfileConfig;
+    QString strForceProfile;
 
     void removeValue(QString);
     void fixConfig();

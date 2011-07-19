@@ -2413,7 +2413,7 @@ void OnetKernel::raw_301()
     for (int i = 4; i < strDataList.size(); i++) { if (i != 4) strMessage += " "; strMessage += strDataList[i]; }
     if (strMessage[0] == ':') strMessage.remove(0,1);
 
-    QString strDisplay = QString(tr("%1 is away: %2")).arg(strNick).arg(strMessage);
+    QString strDisplay = QString(tr("* %1 is away: %2")).arg(strNick).arg(strMessage);
     pTabC->showMsgActive(strDisplay, InfoMessage);
 }
 

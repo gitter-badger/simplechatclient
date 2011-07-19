@@ -39,7 +39,7 @@
     </rect>
    </property>
    <property name="standardButtons">
-    <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+    <set>QDialogButtonBox::Close</set>
    </property>
   </widget>
   <widget class="QSplitter" name="splitter">
@@ -96,17 +96,17 @@
      <number>0</number>
     </property>
     <widget class="QWidget" name="page">
-     <widget class="QGroupBox" name="groupBox_login_password">
+     <widget class="QGroupBox" name="groupBox_profiles">
       <property name="geometry">
        <rect>
         <x>0</x>
-        <y>60</y>
+        <y>10</y>
         <width>441</width>
-        <height>81</height>
+        <height>111</height>
        </rect>
       </property>
       <property name="title">
-       <string/>
+       <string>Profiles</string>
       </property>
       <property name="flat">
        <bool>false</bool>
@@ -117,38 +117,70 @@
       <widget class="QWidget" name="verticalLayoutWidget_10">
        <property name="geometry">
         <rect>
-         <x>90</x>
-         <y>10</y>
-         <width>251</width>
-         <height>61</height>
+         <x>100</x>
+         <y>20</y>
+         <width>231</width>
+         <height>84</height>
         </rect>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_10">
         <item>
-         <layout class="QFormLayout" name="formLayout_7">
-          <item row="0" column="0">
-           <widget class="QLabel" name="label_nick">
+         <layout class="QHBoxLayout" name="horizontalLayout_5">
+          <item>
+           <widget class="QLabel" name="label_profile">
+            <property name="maximumSize">
+             <size>
+              <width>100</width>
+              <height>16777215</height>
+             </size>
+            </property>
             <property name="text">
-             <string>Nick:</string>
+             <string>Current profile:</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
             </property>
            </widget>
           </item>
-          <item row="0" column="1">
-           <widget class="QLineEdit" name="lineEdit_nick"/>
+          <item>
+           <widget class="QComboBox" name="comboBox_profiles"/>
           </item>
-          <item row="1" column="0">
-           <widget class="QLabel" name="label_password">
+         </layout>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_9">
+          <item>
+           <spacer name="horizontalSpacer">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QPushButton" name="pushButton_profiles">
             <property name="text">
-             <string>Password:</string>
+             <string>Profiles</string>
             </property>
            </widget>
           </item>
-          <item row="1" column="1">
-           <widget class="QLineEdit" name="lineEdit_password">
-            <property name="echoMode">
-             <enum>QLineEdit::Password</enum>
+          <item>
+           <spacer name="horizontalSpacer_2">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
             </property>
-           </widget>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
           </item>
          </layout>
         </item>
@@ -159,7 +191,7 @@
       <property name="geometry">
        <rect>
         <x>0</x>
-        <y>160</y>
+        <y>130</y>
         <width>441</width>
         <height>111</height>
        </rect>
@@ -171,9 +203,9 @@
        <property name="geometry">
         <rect>
          <x>10</x>
-         <y>30</y>
+         <y>20</y>
          <width>421</width>
-         <height>73</height>
+         <height>61</height>
         </rect>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_13">
@@ -193,53 +225,36 @@
         </item>
        </layout>
       </widget>
-     </widget>
-     <widget class="QWidget" name="horizontalLayoutWidget_4">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>20</y>
-        <width>421</width>
-        <height>26</height>
-       </rect>
-      </property>
-      <layout class="QHBoxLayout" name="horizontalLayout_5">
-       <item>
-        <widget class="QRadioButton" name="radioButton_unregistered_nick">
-         <property name="text">
-          <string>Unregistered nick</string>
-         </property>
-         <property name="checkable">
-          <bool>true</bool>
-         </property>
-         <property name="checked">
-          <bool>false</bool>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QRadioButton" name="radioButton_registered_nick">
-         <property name="text">
-          <string>Registered nick</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="pushButton_register_nick">
-         <property name="text">
-          <string>Register nick</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
+      <widget class="QLabel" name="label_skins_warning">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>80</y>
+         <width>421</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">font-weight:bold;</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+       <property name="wordWrap">
+        <bool>true</bool>
+       </property>
+      </widget>
      </widget>
      <widget class="QGroupBox" name="groupBox_language">
       <property name="geometry">
        <rect>
         <x>0</x>
-        <y>290</y>
+        <y>260</y>
         <width>441</width>
-        <height>71</height>
+        <height>81</height>
        </rect>
       </property>
       <property name="title">
@@ -251,8 +266,36 @@
          <x>170</x>
          <y>30</y>
          <width>91</width>
-         <height>20</height>
+         <height>21</height>
         </rect>
+       </property>
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_language_warning">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>50</y>
+         <width>421</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">font-weight:bold;</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+       <property name="wordWrap">
+        <bool>true</bool>
        </property>
       </widget>
      </widget>

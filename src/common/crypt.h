@@ -48,11 +48,6 @@ public:
 
 private:
     QString strIv;
-
-    /**
-     * Generate iv
-     */
-    void genIv();
 };
 
 #endif // CRYPT_H

@@ -19,80 +19,81 @@
  ****************************************************************************/
 
 #include <QDesktopWidget>
-#include <QNetworkAccessManager>
-#include <QNetworkReply>
+#include <QMessageBox>
 #include <QPushButton>
-#include <QUrl>
-#include "dlg_captcha.h"
+#include "config.h"
+#include "crypt.h"
+#include "mainwindow.h"
+#include "dlg_profile_edit.h"
 
-DlgCaptcha::DlgCaptcha(QNetworkAccessManager *param1, QString *param2)
+DlgProfileEdit::DlgProfileEdit(MainWindow *parent, QString n) : QDialog(parent)
 {
     ui.setupUi(this);
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
-    setWindowTitle(tr("Captcha"));
+    setWindowTitle(tr("Edit profile"));
     // center screen
     move(QApplication::desktop()->screen()->rect().center() - rect().center());
 
-    accessManager = param1;
-    strCaptcha = param2;
+    strNick = n;
 
     createGui();
+    setDefaultValues();
     createSignals();
-
-    QObject::connect(accessManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(networkFinished(QNetworkReply*)));
-
-    getImg();
 }
 
-void DlgCaptcha::createGui()
+void DlgProfileEdit::createGui()
 {
     ui.buttonBox->button(QDialogButtonBox::Ok)->setIcon(QIcon(":/images/oxygen/16x16/dialog-ok.png"));
+    ui.buttonBox->button(QDialogButtonBox::Cancel)->setIcon(QIcon(":/images/oxygen/16x16/dialog-cancel.png"));
 
-    ui.label_text->setText(tr("Enter the characters you see:"));
+    ui.label_nick->setText(tr("Nick:"));
+    ui.label_password->setText(tr("Password:"));
 }
 
-void DlgCaptcha::createSignals()
+void DlgProfileEdit::setDefaultValues()
+{
+    Config *pConfig = new Config(true, strNick);
+    QString strPassword = pConfig->getValue("pass");
+    delete pConfig;
+
+    // decrypt pass
+    if (!strPassword.isEmpty())
+    {
+        Crypt *pCrypt = new Crypt();
+        strPassword = pCrypt->decrypt(strNick, strPassword);
+        delete pCrypt;
+    }
+
+    ui.lineEdit_nick->setText(strNick);
+    ui.lineEdit_password->setText(strPassword);
+}
+
+void DlgProfileEdit::createSignals()
 {
     QObject::connect(ui.buttonBox, SIGNAL(accepted()), this, SLOT(buttonOk()));
+    QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(close()));
 }
 
-void DlgCaptcha::getImg()
+void DlgProfileEdit::buttonOk()
 {
-    // clear
-    ui.label_img->setText(tr("Loading..."));
+    QString strPassword = ui.lineEdit_password->text();
 
-    // request
-    QNetworkReply *pReply = accessManager->get(QNetworkRequest(QUrl("http://czat.onet.pl/myimg.gif")));
-    pReply->setProperty("category", "get_captcha");
-}
-
-void DlgCaptcha::gotImg(QByteArray bData)
-{
-    // show img
-    QPixmap pixmap;
-    pixmap.loadFromData(bData);
-    ui.label_img->setPixmap(pixmap);
-}
-
-void DlgCaptcha::networkFinished(QNetworkReply *reply)
-{
-    reply->deleteLater();
-
-    if (reply->error())
+    // empty
+    if (strPassword.isEmpty())
+    {
+        QMessageBox::critical(0, "", tr("Password is empty!"));
         return;
+    }
 
-    QString strCategory = reply->property("category").toString();
-    QByteArray bData = reply->readAll();
+    // encrypt pass
+    Crypt *pCrypt = new Crypt();
+    strPassword = pCrypt->encrypt(strNick, strPassword);
+    delete pCrypt;
 
-    if (bData.isEmpty())
-        return;
+    Config *pConfig = new Config(true, strNick);
+    pConfig->setValue("pass", strPassword);
+    delete pConfig;
 
-    if (strCategory == "get_captcha")
-        gotImg(bData);
-}
-
-void DlgCaptcha::buttonOk()
-{
-    (*strCaptcha) = ui.lineEdit_code->text();
+    // close
     this->close();
 }

@@ -49,8 +49,8 @@ DlgChannelSettings::DlgChannelSettings(QWidget *parent, Network *param1) : QDial
 
 void DlgChannelSettings::createGui()
 {
-    ui.pushButton_transfer->setIcon(QIcon(":/images/oxygen/16x16/user-group-new.png"));
-    ui.pushButton_remove_channel->setIcon(QIcon(":/images/oxygen/16x16/user-group-delete.png"));
+    ui.pushButton_transfer->setIcon(QIcon(":/images/oxygen/16x16/meeting-participant-request-response.png"));
+    ui.pushButton_remove_channel->setIcon(QIcon(":/images/oxygen/16x16/meeting-participant-no-response.png"));
     ui.pushButton_set_email->setIcon(QIcon(":/images/oxygen/16x16/dialog-ok-apply.png"));
     ui.pushButton_set_website->setIcon(QIcon(":/images/oxygen/16x16/dialog-ok-apply.png"));
     ui.pushButton_set_topic->setIcon(QIcon(":/images/oxygen/16x16/dialog-ok-apply.png"));

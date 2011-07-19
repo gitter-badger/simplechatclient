@@ -18,45 +18,38 @@
  *                                                                          *
  ****************************************************************************/
 
-#ifndef DLG_REGISTER_NICK_H
-#define DLG_REGISTER_NICK_H
+#ifndef DLG_PROFILE_MANAGER_H
+#define DLG_PROFILE_MANAGER_H
 
-class QNetworkAccessManager;
-class QNetworkCookieJar;
-class QNetworkReply;
-class DlgProfileAdd;
+class DlgOptions;
 class MainWindow;
 #include <QDialog>
-#include "ui_register_nick.h"
+#include "ui_profile_manager.h"
 
-class DlgRegisterNick : public QDialog
+class DlgProfileManager : public QDialog
 {
     Q_OBJECT
 public:
-    DlgRegisterNick(MainWindow *, DlgProfileAdd *);
-    virtual ~DlgRegisterNick();
+    DlgProfileManager(MainWindow *, DlgOptions *);
+    void refreshAllLists();
+    bool existProfile(QString);
 
 private:
-    Ui::uiRegisterNick ui;
-    DlgProfileAdd *profileAdd;
-    QNetworkAccessManager *accessManager;
-    QNetworkCookieJar *cookieJar;
-    QMap<QString,QString> mCookies;
+    Ui::uiProfileManager ui;
+    DlgOptions *options;
+    QString path;
 
     void createGui();
+    void setDefaultValues();
     void createSignals();
-
-    void getCookies();
-    void gotCookies();
-    void getImg();
-    void gotImg(QByteArray);
-    void registerNick();
-    void parseResult(QString);
+    void createPath();
+    void refreshProfilesList();
 
 private slots:
-    void networkFinished(QNetworkReply*);
-    void buttonRefresh();
-    void buttonOk();
+    void itemClicked();
+    void addProfile();
+    void editProfile();
+    void removeProfile();
 };
 
-#endif // DLG_REGISTER_NICK_H
+#endif // DLG_PROFILE_MANAGER_H

@@ -18,45 +18,34 @@
  *                                                                          *
  ****************************************************************************/
 
-#ifndef DLG_REGISTER_NICK_H
-#define DLG_REGISTER_NICK_H
+#ifndef DLG_PROFILE_ADD_H
+#define DLG_PROFILE_ADD_H
 
-class QNetworkAccessManager;
-class QNetworkCookieJar;
-class QNetworkReply;
-class DlgProfileAdd;
+class DlgProfileManager;
 class MainWindow;
 #include <QDialog>
-#include "ui_register_nick.h"
+#include "ui_profile_add.h"
 
-class DlgRegisterNick : public QDialog
+class DlgProfileAdd : public QDialog
 {
     Q_OBJECT
 public:
-    DlgRegisterNick(MainWindow *, DlgProfileAdd *);
-    virtual ~DlgRegisterNick();
+    DlgProfileAdd(MainWindow *, DlgProfileManager *);
+    void setNickPass(QString, QString);
 
 private:
-    Ui::uiRegisterNick ui;
-    DlgProfileAdd *profileAdd;
-    QNetworkAccessManager *accessManager;
-    QNetworkCookieJar *cookieJar;
-    QMap<QString,QString> mCookies;
+    Ui::uiProfileAdd ui;
+    DlgProfileManager *profileManager;
 
     void createGui();
+    void setDefaultValues();
     void createSignals();
 
-    void getCookies();
-    void gotCookies();
-    void getImg();
-    void gotImg(QByteArray);
-    void registerNick();
-    void parseResult(QString);
-
 private slots:
-    void networkFinished(QNetworkReply*);
-    void buttonRefresh();
+    void hidePass();
+    void showPass();
+    void buttonRegisterNick();
     void buttonOk();
 };
 
-#endif // DLG_REGISTER_NICK_H
+#endif // DLG_PROFILE_ADD_H

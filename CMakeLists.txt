@@ -2,8 +2,8 @@
 # init
 
 project (scc)
-cmake_minimum_required (VERSION 2.8.2 FATAL_ERROR)
-set (QT_MIN_VERSION "4.6.3")
+cmake_minimum_required (VERSION 2.8.1 FATAL_ERROR)
+set (QT_MIN_VERSION "4.6.2")
 find_package (Qt4 REQUIRED)
 
 # modules

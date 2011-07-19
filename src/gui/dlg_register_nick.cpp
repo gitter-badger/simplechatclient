@@ -27,11 +27,11 @@
 #include <QSettings>
 #include <QUrl>
 #include "config.h"
-#include "crypt.h"
 #include "mainwindow.h"
+#include "dlg_profile_add.h"
 #include "dlg_register_nick.h"
 
-DlgRegisterNick::DlgRegisterNick(MainWindow *parent, QWidget *param1) : QDialog(parent)
+DlgRegisterNick::DlgRegisterNick(MainWindow *parent, DlgProfileAdd *param1) : QDialog(parent)
 {
     ui.setupUi(this);
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
@@ -39,10 +39,7 @@ DlgRegisterNick::DlgRegisterNick(MainWindow *parent, QWidget *param1) : QDialog(
     // center screen
     move(QApplication::desktop()->screen()->rect().center() - rect().center());
 
-    options = param1;
-
-    // close options
-    options->close();
+    profileAdd = param1;
 
     createGui();
     createSignals();
@@ -181,22 +178,7 @@ void DlgRegisterNick::parseResult(QString strResult)
         QString strNick = ui.lineEdit_nick->text();
         QString strPassword = ui.lineEdit_password->text();
 
-        if (!strPassword.isEmpty())
-        {
-            Crypt *pCrypt = new Crypt();
-            strPassword = pCrypt->encrypt(strNick, strPassword);
-            delete pCrypt;
-        }
-
-        // save values
-        QSettings settings;
-        settings.setValue("nick", strNick);
-        settings.setValue("pass", strPassword);
-
-        Config *pConfig = new Config();
-        pConfig->setValue("nick", strNick);
-        pConfig->setValue("pass", strPassword);
-        delete pConfig;
+        profileAdd->setNickPass(strNick, strPassword);
 
         // close
         this->close();

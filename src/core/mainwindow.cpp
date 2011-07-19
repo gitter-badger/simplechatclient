@@ -423,7 +423,7 @@ void MainWindow::showOptions()
 
     if (strFirstRun == "true")
     {
-        Config *pConfig = new Config();
+        Config *pConfig = new Config(false);
         pConfig->setValue("first_run", "false");
         settings.setValue("first_run", "false");
         delete pConfig;

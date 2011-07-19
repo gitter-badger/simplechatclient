@@ -51,7 +51,7 @@ void DlgModeration::createSignals()
     QObject::connect(ui.pushButton_accept, SIGNAL(clicked()), this, SLOT(buttonAccept()));
     QObject::connect(ui.pushButton_remove, SIGNAL(clicked()), this, SLOT(buttonRemove()));
     QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(hide()));
-    QObject::connect(ui.comboBox_channels, SIGNAL(currentIndexChanged(QString)), this, SLOT(comboChanged(QString)));
+    QObject::connect(ui.comboBox_channels, SIGNAL(activated(QString)), this, SLOT(comboChanged(QString)));
 }
 
 void DlgModeration::refresh()

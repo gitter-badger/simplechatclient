@@ -21,15 +21,13 @@
 #include <QColorDialog>
 #include <QDesktopWidget>
 #include <QFileDialog>
-#include <QMessageBox>
 #include <QProcess>
 #include <QSettings>
 #include <QShowEvent>
 #include <QStyleFactory>
 #include "config.h"
 #include "core.h"
-#include "crypt.h"
-#include "dlg_register_nick.h"
+#include "dlg_profile_manager.h"
 #include "notify.h"
 #include "dlg_options.h"
 
@@ -42,13 +40,14 @@ DlgOptions::DlgOptions(QWidget *parent) : QDialog(parent)
     move(QApplication::desktop()->screen()->rect().center() - rect().center());
 
     createGui();
+    refreshProfilesList();
     setDefaultValues();
     createSignals();
 }
 
 void DlgOptions::createGui()
 {
-    ui.pushButton_register_nick->setIcon(QIcon(":/images/oxygen/16x16/list-add-user.png"));
+    ui.pushButton_profiles->setIcon(QIcon(":/images/oxygen/16x16/preferences-activities.png"));
     ui.pushButton_mainwindow_restore_default->setIcon(QIcon(":/images/oxygen/16x16/edit-undo.png"));
     ui.pushButton_nicklist_restore_default->setIcon(QIcon(":/images/oxygen/16x16/edit-undo.png"));
     ui.pushButton_set_embedded_style->setIcon(QIcon(":/images/oxygen/16x16/dialog-ok-apply.png"));
@@ -59,16 +58,12 @@ void DlgOptions::createGui()
     ui.pushButton_logs_open_folder->setIcon(QIcon(":/images/oxygen/16x16/folder-txt.png"));
     ui.pushButton_set_background_image->setIcon(QIcon(":/images/oxygen/16x16/insert-image.png"));
     ui.pushButton_set_winamp->setIcon(QIcon(":/images/oxygen/16x16/dialog-ok-apply.png"));
-    ui.buttonBox->button(QDialogButtonBox::Ok)->setIcon(QIcon(":/images/oxygen/16x16/dialog-ok.png"));
-    ui.buttonBox->button(QDialogButtonBox::Cancel)->setIcon(QIcon(":/images/oxygen/16x16/dialog-cancel.png"));
+    ui.buttonBox->button(QDialogButtonBox::Close)->setIcon(QIcon(":/images/oxygen/16x16/dialog-close.png"));
 
     // page basic
-    ui.radioButton_unregistered_nick->setText(tr("Unregistered nick"));
-    ui.radioButton_registered_nick->setText(tr("Registered nick"));
-    ui.pushButton_register_nick->setText(tr("Register nick"));
-
-    ui.label_nick->setText(tr("Nick:"));
-    ui.label_password->setText(tr("Password:"));
+    ui.groupBox_profiles->setTitle(tr("Profiles"));
+    ui.label_profile->setText(tr("Current profile:"));
+    ui.pushButton_profiles->setText(tr("Profiles"));
     ui.groupBox_skins->setTitle(tr("Skins"));
     ui.radioButton_modern_avatars->setText(tr("Modern"));
     ui.radioButton_modern_no_avatars->setText(tr("Modern without avatars"));
@@ -223,11 +218,13 @@ void DlgOptions::setDefaultValues()
     // language
     QStringList strlLanguage;
     strlLanguage << tr("English") << tr("Polish");
+    ui.comboBox_language->clear();
     ui.comboBox_language->addItems(strlLanguage);
 
     // my font
     QStringList strlMyFont;
     strlMyFont << "Arial" << "Times" << "Verdana" << "Tahoma" << "Courier";
+    ui.comboBox_my_font->clear();
     ui.comboBox_my_font->insertItems(0, strlMyFont);
 
     // my color
@@ -237,6 +234,7 @@ void DlgOptions::setDefaultValues()
     comboBoxMyColors << "#000000" << "#623c00" << "#c86c00" << "#ff6500" << "#ff0000" << "#e40f0f" << "#990033" << "#8800ab" << "#ce00ff" << "#0f2ab1" << "#3030ce" << "#006699" << "#1a866e" << "#008100" << "#959595";
 
     int iComboBoxMyColors = 0;
+    ui.comboBox_my_color->clear();
     foreach (QString strColor, comboBoxMyColors)
     {
         QPixmap pixmap(50,10);
@@ -249,10 +247,12 @@ void DlgOptions::setDefaultValues()
     QStringList comboBoxFontSize;
     comboBoxFontSize << "8" << "9" << "10" << "11" << "12" << "14" << "16" << "18" << "20" << "24";
 
+    ui.comboBox_font_size->clear();
     foreach (QString strFontSize, comboBoxFontSize)
         ui.comboBox_font_size->addItem(strFontSize);
 
     // embedded styles
+    ui.comboBox_embedded_styles->clear();
     foreach (QString strStyleName, QStyleFactory::keys())
         ui.comboBox_embedded_styles->addItem(strStyleName);
 
@@ -282,8 +282,6 @@ void DlgOptions::setDefaultValues()
     ui.lineEdit_background_image->setText(settings.value("background_image").toString());
 
     // default values
-    QString strNick = settings.value("nick").toString();
-    QString strPass = settings.value("pass").toString();
     QString strStyle = settings.value("style").toString();
     QString strLanguage = settings.value("language").toString();
 
@@ -309,32 +307,6 @@ void DlgOptions::setDefaultValues()
     QString strDisableBackgroundImage = settings.value("disable_background_image").toString();
 
     QString strWinamp = settings.value("winamp").toString();
-
-    // decrypt pass
-    if (!strPass.isEmpty())
-    {
-        Crypt *pCrypt = new Crypt();
-        strPass = pCrypt->decrypt(strNick, strPass);
-        delete pCrypt;
-    }
-
-    // set nick staly/tyldowy
-    if (strPass.isEmpty())
-    {
-        ui.radioButton_unregistered_nick->setChecked(true);
-        ui.radioButton_registered_nick->setChecked(false);
-        ui.label_password->hide();
-        ui.lineEdit_password->hide();
-    }
-    else
-    {
-        ui.radioButton_unregistered_nick->setChecked(false);
-        ui.radioButton_registered_nick->setChecked(true);
-    }
-
-    // set nick and pass
-    ui.lineEdit_nick->setText(strNick);
-    ui.lineEdit_password->setText(strPass);
 
     // set style
     if (strStyle == "modern")
@@ -503,35 +475,24 @@ void DlgOptions::setDefaultValues()
     // disable change nick if connected
     if (settings.value("logged").toString() == "on")
     {
-        ui.radioButton_registered_nick->setDisabled(true);
-        ui.radioButton_unregistered_nick->setDisabled(true);
-        ui.pushButton_register_nick->setDisabled(true);
-        ui.groupBox_login_password->setDisabled(true);
+        ui.groupBox_profiles->setDisabled(true);
         ui.groupBox_skins->setDisabled(true);
-        ui.radioButton_modern_avatars->setDisabled(true);
-        ui.radioButton_modern_no_avatars->setDisabled(true);
     }
     else
     {
-        ui.radioButton_registered_nick->setDisabled(false);
-        ui.radioButton_unregistered_nick->setDisabled(false);
-        ui.pushButton_register_nick->setDisabled(false);
-        ui.groupBox_login_password->setDisabled(false);
+        ui.groupBox_profiles->setDisabled(false);
         ui.groupBox_skins->setDisabled(false);
-        ui.radioButton_modern_avatars->setDisabled(false);
-        ui.radioButton_modern_no_avatars->setDisabled(false);
     }
 }
 
 void DlgOptions::createSignals()
 {
-    QObject::connect(ui.treeWidget_options, SIGNAL(currentItemChanged(QTreeWidgetItem*,QTreeWidgetItem*)), this, SLOT(changePage(QTreeWidgetItem*,QTreeWidgetItem*)));
-    QObject::connect(ui.radioButton_unregistered_nick, SIGNAL(clicked()), this, SLOT(hidePass()));
-    QObject::connect(ui.radioButton_registered_nick, SIGNAL(clicked()), this, SLOT(showPass()));
-    QObject::connect(ui.pushButton_register_nick, SIGNAL(clicked()), this, SLOT(buttonRegisterNick()));
+    QObject::connect(ui.treeWidget_options, SIGNAL(activated(QModelIndex)), this, SLOT(changePage(QModelIndex)));
+    QObject::connect(ui.comboBox_profiles, SIGNAL(activated(int)), this, SLOT(currentProfileChanged(int)));
+    QObject::connect(ui.pushButton_profiles, SIGNAL(clicked()), this, SLOT(buttonProfiles()));
     QObject::connect(ui.radioButton_modern_avatars, SIGNAL(clicked()), this, SLOT(setModernStyleAvatars()));
     QObject::connect(ui.radioButton_modern_no_avatars, SIGNAL(clicked()), this, SLOT(setModernStyleNoAvatars()));
-    QObject::connect(ui.comboBox_language, SIGNAL(currentIndexChanged(int)), this, SLOT(languageChanged(int)));
+    QObject::connect(ui.comboBox_language, SIGNAL(activated(int)), this, SLOT(languageChanged(int)));
     QObject::connect(ui.checkBox_auto_busy, SIGNAL(clicked(bool)), this, SLOT(autoBusy(bool)));
     QObject::connect(ui.checkBox_disable_autojoin_favourites, SIGNAL(clicked(bool)), this, SLOT(disableAutojoinFavourites(bool)));
     QObject::connect(ui.checkBox_show_zuo, SIGNAL(clicked(bool)), this, SLOT(showZuo(bool)));
@@ -541,11 +502,11 @@ void DlgOptions::createSignals()
     QObject::connect(ui.checkBox_disable_avatars, SIGNAL(clicked(bool)), this, SLOT(disableAvatars(bool)));
     QObject::connect(ui.checkBox_disable_emots, SIGNAL(clicked(bool)), this, SLOT(disableEmots(bool)));
     QObject::connect(ui.checkBox_disable_replaces, SIGNAL(clicked(bool)), this, SLOT(disableReplaces(bool)));
-    QObject::connect(ui.comboBox_my_bold, SIGNAL(currentIndexChanged(int)), this, SLOT(setMyBold(int)));
-    QObject::connect(ui.comboBox_my_italic, SIGNAL(currentIndexChanged(int)), this, SLOT(setMyItalic(int)));
-    QObject::connect(ui.comboBox_my_font, SIGNAL(currentIndexChanged(QString)), this, SLOT(setMyFont(QString)));
-    QObject::connect(ui.comboBox_my_color, SIGNAL(currentIndexChanged(int)), this, SLOT(setMyColor(int)));
-    QObject::connect(ui.comboBox_font_size, SIGNAL(currentIndexChanged(QString)), this, SLOT(setFontSize(QString)));
+    QObject::connect(ui.comboBox_my_bold, SIGNAL(activated(int)), this, SLOT(setMyBold(int)));
+    QObject::connect(ui.comboBox_my_italic, SIGNAL(activated(int)), this, SLOT(setMyItalic(int)));
+    QObject::connect(ui.comboBox_my_font, SIGNAL(activated(QString)), this, SLOT(setMyFont(QString)));
+    QObject::connect(ui.comboBox_my_color, SIGNAL(activated(int)), this, SLOT(setMyColor(int)));
+    QObject::connect(ui.comboBox_font_size, SIGNAL(activated(QString)), this, SLOT(setFontSize(QString)));
     QObject::connect(ui.pushButton_background_color, SIGNAL(clicked()), this, SLOT(setBackgroundColor()));
     QObject::connect(ui.pushButton_default_font_color, SIGNAL(clicked()), this, SLOT(setDefaultFontColor()));
     QObject::connect(ui.pushButton_join_font_color, SIGNAL(clicked()), this, SLOT(setJoinFontColor()));
@@ -577,48 +538,104 @@ void DlgOptions::createSignals()
     QObject::connect(ui.pushButton_set_background_image, SIGNAL(clicked()), this, SLOT(setBackgroundImage()));
     QObject::connect(ui.checkBox_disable_background_image, SIGNAL(clicked(bool)), this, SLOT(disableBackgroundImage(bool)));
     QObject::connect(ui.pushButton_set_winamp, SIGNAL(clicked()), this, SLOT(setWinamp()));
-    QObject::connect(ui.buttonBox, SIGNAL(accepted()), this, SLOT(buttonOk()));
     QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(close()));
 }
 
-void DlgOptions::changePage(QTreeWidgetItem *current, QTreeWidgetItem *previous)
+void DlgOptions::refreshProfilesList()
 {
-    if (!current)
-        current = previous;
+    // clear
+    ui.comboBox_profiles->clear();
 
-    ui.stackedWidget->setCurrentIndex(ui.treeWidget_options->currentIndex().row());
+    QString path;
+#ifdef Q_WS_X11
+    path = QDir::homePath()+"/.scc";
+#else
+    QSettings winSettings(QSettings::UserScope, "Microsoft", "Windows");
+    winSettings.beginGroup("CurrentVersion/Explorer/Shell Folders");
+    path = winSettings.value("Personal").toString();
+    path += "/scc";
+#endif
+
+    // create dir if not exist
+    if (!QDir().exists(path))
+        QDir().mkdir(path);
+
+    path += "/profiles";
+
+    // create dir if not exist
+    if (!QDir().exists(path))
+        QDir().mkdir(path);
+
+    QDir dir(path);
+    dir.setFilter(QDir::Files | QDir::Hidden | QDir::NoSymLinks);
+    dir.setSorting(QDir::Name);
+
+    QStringList nameFilters;
+    nameFilters << "*.xml";
+    QFileInfoList list = dir.entryInfoList(nameFilters);
+    for (int i = 0; i < list.size(); ++i)
+    {
+        QString fileName = list.at(i).fileName();
+        fileName.remove(".xml");
+        ui.comboBox_profiles->addItem(fileName);
+    }
+
+    // set current profile
+    QSettings settings;
+    for (int i = 0; i < ui.comboBox_profiles->count(); i++)
+    {
+        if (ui.comboBox_profiles->itemText(i) == settings.value("current_profile").toString())
+        {
+            ui.comboBox_profiles->setCurrentIndex(i);
+            return;
+        }
+    }
 }
 
-void DlgOptions::hidePass()
+void DlgOptions::changePage(QModelIndex index)
 {
-    ui.label_password->hide();
-    ui.lineEdit_password->hide();
-
-    // fix nick
-    if (ui.lineEdit_nick->text()[0] != '~')
-        ui.lineEdit_nick->setText("~"+ui.lineEdit_nick->text());
+    ui.stackedWidget->setCurrentIndex(index.row());
 }
 
-void DlgOptions::showPass()
+void DlgOptions::setCurrentProfile(int row)
 {
-    ui.label_password->show();
-    ui.lineEdit_password->show();
-
-    // fix nick
-    if (ui.lineEdit_nick->text()[0] == '~')
-        ui.lineEdit_nick->setText(ui.lineEdit_nick->text().right(ui.lineEdit_nick->text().length()-1));
+    ui.comboBox_profiles->setCurrentIndex(row);
+    currentProfileChanged(row);
 }
 
-void DlgOptions::buttonRegisterNick()
+void DlgOptions::currentProfileChanged(int row)
 {
-    DlgRegisterNick(Core::instance()->sccWindow(), this).exec();
+    QString profileName = ui.comboBox_profiles->itemText(row);
+
+    if (profileName.isEmpty())
+        return;
+
+    QSettings settings;
+    Config *pConfig = new Config(false);
+    settings.setValue("current_profile", profileName);
+    pConfig->setValue("current_profile", profileName);
+    delete pConfig;
+
+    // refresh settings
+    Core::instance()->createSettings();
+
+    // refresh options
+    setDefaultValues();
+
+    // refresh colors
+    Core::instance()->refreshColors();
+
+    // refresh background image
+    Core::instance()->refreshBackgroundImage();
+}
+
+void DlgOptions::buttonProfiles()
+{
+    DlgProfileManager(Core::instance()->sccWindow(), this).exec();
 }
 
 void DlgOptions::setModernStyleAvatars()
 {
-    // save settings
-    saveSettings();
-
     // save style
     QSettings settings;
     Config *pConfig = new Config();
@@ -628,14 +645,11 @@ void DlgOptions::setModernStyleAvatars()
     settings.setValue("disable_avatars", "off");
     delete pConfig;
 
-    QMessageBox::information(0, "", tr("Restart program to apply the changes."));
+    ui.label_skins_warning->setText(tr("Restart program to apply the changes."));
 }
 
 void DlgOptions::setModernStyleNoAvatars()
 {
-    // save settings
-    saveSettings();
-
     // save style
     QSettings settings;
     Config *pConfig = new Config();
@@ -645,7 +659,7 @@ void DlgOptions::setModernStyleNoAvatars()
     settings.setValue("disable_avatars", "on");
     delete pConfig;
 
-    QMessageBox::information(0, "", tr("Restart program to apply the changes."));
+    ui.label_skins_warning->setText(tr("Restart program to apply the changes."));
 }
 
 void DlgOptions::languageChanged(int index)
@@ -669,7 +683,7 @@ void DlgOptions::languageChanged(int index)
     }
     delete pConfig;
 
-    QMessageBox::information(0, "", tr("Restart program to apply the changes."));
+    ui.label_language_warning->setText(tr("Restart program to apply the changes."));
 }
 
 void DlgOptions::autoBusy(bool bValue)
@@ -1147,56 +1161,6 @@ void DlgOptions::setWinamp()
     Config *pConfig = new Config();
     pConfig->setValue("winamp", strValue);
     settings.setValue("winamp", strValue);
-    delete pConfig;
-}
-
-void DlgOptions::buttonOk()
-{
-    // save
-    saveSettings();
-
-    this->close();
-}
-
-void DlgOptions::saveSettings()
-{
-    // get values
-    QString strNick = ui.lineEdit_nick->text();
-
-    // check nick
-    QString strPass;
-    if (ui.radioButton_unregistered_nick->isChecked())
-    {
-        // fix nick
-        if (strNick[0] != '~')
-            strNick = "~"+strNick;
-
-        strPass = "";
-    }
-    else if (ui.radioButton_registered_nick->isChecked())
-    {
-        // fix nick
-        if (strNick[0] == '~') strNick.remove(0,1);
-
-        strPass = ui.lineEdit_password->text();
-    }
-
-    // encrypt pass
-    if (!strPass.isEmpty())
-    {
-        Crypt *pCrypt = new Crypt();
-        strPass = pCrypt->encrypt(strNick, strPass);
-        delete pCrypt;
-    }
-
-    // save values
-    QSettings settings;
-    settings.setValue("nick", strNick);
-    settings.setValue("pass", strPass);
-
-    Config *pConfig = new Config();
-    pConfig->setValue("nick", strNick);
-    pConfig->setValue("pass", strPass);
     delete pConfig;
 }
 

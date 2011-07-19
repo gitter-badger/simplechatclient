@@ -47,21 +47,6 @@ void displayOptions()
            "  --debug                    Enable debug output\n\n");
 }
 
-// clear settings without debug
-void clearSettings()
-{
-    QSettings settings;
-
-    // read debug
-    QString strOldDebug = settings.value("debug").toString();
-
-    // clear
-    settings.clear();
-
-    // restore debug
-    settings.setValue("debug", strOldDebug);
-}
-
 int main(int argc, char *argv[])
 {
     Q_INIT_RESOURCE(scc);
@@ -88,12 +73,18 @@ int main(int argc, char *argv[])
     QCoreApplication::setOrganizationDomain("simplechatclien.sourceforge.net");
     QCoreApplication::setApplicationName("scc");
 
-    // debug off
+    // settings clear
     QSettings settings;
+    settings.clear();
+
+    // debug off
     settings.setValue("debug", "off");
 
-    // get translate
     Config *pConfig = new Config();
+    // set current profile
+    QString strCurrentProfile = pConfig->getValue("current_profile");
+    settings.setValue("current_profile", strCurrentProfile);
+    // get language
     QString strLanguage = pConfig->getValue("language");
     delete pConfig;
 
@@ -139,9 +130,6 @@ int main(int argc, char *argv[])
         QMessageBox::critical(0, app.translate("@default", "Error"), app.translate("@default", "Simple Chat Client is already running"));
         return 0;
     }
-
-    // clear settings;
-    clearSettings();
 
     // core
     Core::instance()->createGui();

@@ -20,6 +20,9 @@ set (scc_UIS
 	../ui/notes.ui
 	../ui/offlinemsg.ui
 	../ui/options.ui
+	../ui/profile_add.ui
+	../ui/profile_edit.ui
+	../ui/profile_manager.ui
 	../ui/register_nick.ui
 	../ui/update.ui
 	../ui/user_avatar.ui
@@ -59,6 +62,9 @@ set (scc_SRCS
 	gui/dlg_notes.cpp
 	gui/dlg_offlinemsg.cpp
 	gui/dlg_options.cpp
+	gui/dlg_profile_add.cpp
+	gui/dlg_profile_edit.cpp
+	gui/dlg_profile_manager.cpp
 	gui/dlg_register_nick.cpp
 	gui/dlg_update.cpp
 	gui/dlg_user_avatar.cpp
@@ -114,6 +120,9 @@ set (scc_MOC_HDRS
 	gui/dlg_notes.h
 	gui/dlg_offlinemsg.h
 	gui/dlg_options.h
+	gui/dlg_profile_add.h
+	gui/dlg_profile_edit.h
+	gui/dlg_profile_manager.h
 	gui/dlg_register_nick.h
 	gui/dlg_update.h
 	gui/dlg_user_avatar.h

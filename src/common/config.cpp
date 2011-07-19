@@ -21,16 +21,14 @@
 #include <QCoreApplication>
 #include <QDir>
 #include <QFile>
-#ifndef Q_WS_X11
-    #include <QSettings>
-#endif
+#include <QSettings>
 #include "config.h"
 
 #ifdef Q_WS_X11
     #include <QDebug>
 #endif
 
-Config::Config()
+Config::Config(bool b, QString p) : bProfileConfig(b), strForceProfile(p)
 {
     QString path;
 #ifdef Q_WS_X11
@@ -46,7 +44,23 @@ Config::Config()
     if (!QDir().exists(path))
         QDir().mkdir(path);
 
-    strConfigFile = path+"/scc.conf";
+    if (bProfileConfig)
+    {
+        path += "/profiles";
+
+        // create dir if not exist
+        if (!QDir().exists(path))
+            QDir().mkdir(path);
+
+        QSettings settings;
+        QString user = (strForceProfile.isEmpty() ? settings.value("current_profile").toString() : strForceProfile);
+        if (user.isEmpty()) user = "~test";
+
+        strConfigFile = path+"/"+user+".xml";
+    }
+    else
+        strConfigFile = path+"/scc.xml";
+
     file = new QFile(strConfigFile);
 
     // if not exist - create new
@@ -193,7 +207,8 @@ void Config::fixConfig()
 void Config::createNewConfig()
 {
     doc.clear();
-    QDomElement root = doc.createElement("config");
+    QString strRootName = (bProfileConfig  == true ? "profile" : "settings");
+    QDomElement root = doc.createElement(strRootName);
     doc.appendChild(root);
 
     QMap<QString,QString> mDefaultValues = getDefaultValues();
@@ -220,50 +235,57 @@ QMap<QString,QString> Config::getDefaultValues()
 
     QMap<QString,QString> mDefaultValues;
 
-    mDefaultValues.insert("first_run", "true");
-    mDefaultValues.insert("nick", "~test");
-    mDefaultValues.insert("pass", "");
-    mDefaultValues.insert("language", "pl");
-    mDefaultValues.insert("auto_busy", "off");
-    mDefaultValues.insert("disable_autojoin_favourites", "off");
-    mDefaultValues.insert("show_zuo", "off");
-    mDefaultValues.insert("hide_formating", "off");
-    mDefaultValues.insert("hide_join_part", "off");
-    mDefaultValues.insert("hide_join_part_200", "on");
-    mDefaultValues.insert("disable_avatars", "on");
-    mDefaultValues.insert("disable_emots", "off");
-    mDefaultValues.insert("disable_replaces", "off");
-    mDefaultValues.insert("style", "modern");
-    mDefaultValues.insert("background_color", "#ffffff");
-    mDefaultValues.insert("my_bold", "off");
-    mDefaultValues.insert("my_italic", "off");
-    mDefaultValues.insert("my_font", "Verdana");
-    mDefaultValues.insert("my_color", "#000000");
-    mDefaultValues.insert("font_size", "11px");
-    mDefaultValues.insert("default_font_color", "#000000");
-    mDefaultValues.insert("font_color_level_1", "#009300");
-    mDefaultValues.insert("font_color_level_2", "#4733FF");
-    mDefaultValues.insert("font_color_level_3", "#00007F");
-    mDefaultValues.insert("font_color_level_4", "#00007F");
-    mDefaultValues.insert("font_color_level_5", "#009300");
-    mDefaultValues.insert("font_color_level_6", "#0066FF");
-    mDefaultValues.insert("font_color_level_7", "#666666");
-    mDefaultValues.insert("font_color_level_8", "#800080");
-    mDefaultValues.insert("font_color_level_9", "#ff0000");
-    mDefaultValues.insert("channel_font_color", "#0000ff");
-    mDefaultValues.insert("nicklist_nick_color", "#333333");
-    mDefaultValues.insert("nicklist_selected_nick_color", "#ffffff");
-    mDefaultValues.insert("nicklist_busy_nick_color", "#a0a0a4");
-    mDefaultValues.insert("nicklist_gradient_1_color", "#77d5f7");
-    mDefaultValues.insert("nicklist_gradient_2_color", "#1b86b7");
-    mDefaultValues.insert("save_logs_by_date", "on");
-    mDefaultValues.insert("disable_logs", "off");
-    mDefaultValues.insert("sound_beep", strSoundBeep);
-    mDefaultValues.insert("sound_query", strSoundQuery);
-    mDefaultValues.insert("disable_sounds", "off");
-    mDefaultValues.insert("background_image", strBackgroundImage);
-    mDefaultValues.insert("disable_background_image", "off");
-    mDefaultValues.insert("winamp", "Winamp $version odtwarza teraz $song [$position/$length] //muzyka");
+    if (!bProfileConfig)
+    {
+        mDefaultValues.insert("first_run", "true");
+        mDefaultValues.insert("current_profile", "~test");
+    }
+    else
+    {
+        mDefaultValues.insert("nick", "~test");
+        mDefaultValues.insert("pass", "");
+        mDefaultValues.insert("language", "pl");
+        mDefaultValues.insert("auto_busy", "off");
+        mDefaultValues.insert("disable_autojoin_favourites", "off");
+        mDefaultValues.insert("show_zuo", "off");
+        mDefaultValues.insert("hide_formating", "off");
+        mDefaultValues.insert("hide_join_part", "off");
+        mDefaultValues.insert("hide_join_part_200", "on");
+        mDefaultValues.insert("disable_avatars", "on");
+        mDefaultValues.insert("disable_emots", "off");
+        mDefaultValues.insert("disable_replaces", "off");
+        mDefaultValues.insert("style", "modern");
+        mDefaultValues.insert("background_color", "#ffffff");
+        mDefaultValues.insert("my_bold", "off");
+        mDefaultValues.insert("my_italic", "off");
+        mDefaultValues.insert("my_font", "Verdana");
+        mDefaultValues.insert("my_color", "#000000");
+        mDefaultValues.insert("font_size", "11px");
+        mDefaultValues.insert("default_font_color", "#000000");
+        mDefaultValues.insert("font_color_level_1", "#009300");
+        mDefaultValues.insert("font_color_level_2", "#4733FF");
+        mDefaultValues.insert("font_color_level_3", "#00007F");
+        mDefaultValues.insert("font_color_level_4", "#00007F");
+        mDefaultValues.insert("font_color_level_5", "#009300");
+        mDefaultValues.insert("font_color_level_6", "#0066FF");
+        mDefaultValues.insert("font_color_level_7", "#666666");
+        mDefaultValues.insert("font_color_level_8", "#800080");
+        mDefaultValues.insert("font_color_level_9", "#ff0000");
+        mDefaultValues.insert("channel_font_color", "#0000ff");
+        mDefaultValues.insert("nicklist_nick_color", "#333333");
+        mDefaultValues.insert("nicklist_selected_nick_color", "#ffffff");
+        mDefaultValues.insert("nicklist_busy_nick_color", "#a0a0a4");
+        mDefaultValues.insert("nicklist_gradient_1_color", "#77d5f7");
+        mDefaultValues.insert("nicklist_gradient_2_color", "#1b86b7");
+        mDefaultValues.insert("save_logs_by_date", "on");
+        mDefaultValues.insert("disable_logs", "off");
+        mDefaultValues.insert("sound_beep", strSoundBeep);
+        mDefaultValues.insert("sound_query", strSoundQuery);
+        mDefaultValues.insert("disable_sounds", "off");
+        mDefaultValues.insert("background_image", strBackgroundImage);
+        mDefaultValues.insert("disable_background_image", "off");
+        mDefaultValues.insert("winamp", "Winamp $version odtwarza teraz $song [$position/$length] //muzyka");
+    }
 
     return mDefaultValues;
 }
