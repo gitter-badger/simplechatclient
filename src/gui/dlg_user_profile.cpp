@@ -51,6 +51,9 @@ DlgUserProfile::DlgUserProfile(QWidget *parent, Network *param1) : QDialog(paren
     createGui();
     createSignals();
 
+    setMaximumWidth(0);
+    setMaximumHeight(0);
+
     accessManager = new QNetworkAccessManager;
     QObject::connect(accessManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(avatarFinished(QNetworkReply*)));
 }
@@ -146,8 +149,8 @@ void DlgUserProfile::createGui()
     label_nick->setAlignment(Qt::AlignCenter);
     label_nick->setStyleSheet("font-weight:bold;");
     mainLayout = new QVBoxLayout();
-    mainLayout->setSizeConstraint(QLayout::SetFixedSize);
-    mainLayout->setMargin(0);
+    mainLayout->setMargin(5);
+    mainLayout->setSizeConstraint(QLayout::SetMinimumSize);
     mainLayout->addWidget(label_nick);
     mainLayout->addWidget(topWidget);
     mainLayout->addWidget(agesexWidget);
