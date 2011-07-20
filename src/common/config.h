@@ -35,7 +35,6 @@ class Config : public QObject
     Q_OBJECT
 public:
     Config(bool b = true, QString p = QString::null);
-    virtual ~Config();
 
     /**
      * Get config value
@@ -57,7 +56,6 @@ public:
 
 private:
     QString strConfigFile;
-    QFile *file;
     QDomDocument doc;
     bool bProfileConfig;
     QString strForceProfile;

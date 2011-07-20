@@ -22,6 +22,7 @@
 #include <QDir>
 #include <QFile>
 #include <QSettings>
+#include <QTextStream>
 #include "config.h"
 
 #ifdef Q_WS_X11
@@ -61,23 +62,25 @@ Config::Config(bool b, QString p) : bProfileConfig(b), strForceProfile(p)
     else
         strConfigFile = path+"/scc.xml";
 
-    file = new QFile(strConfigFile);
+    QFile file(strConfigFile);
 
     // if not exist - create new
-    if (!file->exists())
+    if (!file.exists())
         createNewConfig();
 
     // try read
-    if (file->exists())
+    if (file.exists())
     {
-        if (!file->open(QIODevice::ReadWrite))
+        if (!file.open(QIODevice::ReadOnly))
         {
 #ifdef Q_WS_X11
             qDebug() << tr("Error: config: Cannot read config file!");
 #endif
             return;
         }
-        if (!doc.setContent(file))
+        QTextStream ts(&file);
+        QString strData = ts.readAll();
+        if (!doc.setContent(strData))
         {
 #ifdef Q_WS_X11
             qDebug() << tr("Error: config: Cannot set content from file!");
@@ -94,17 +97,12 @@ Config::Config(bool b, QString p) : bProfileConfig(b), strForceProfile(p)
 #endif
         return;
     }
-}
-
-Config::~Config()
-{
-    file->close();
-    delete file;
+    file.close();
 }
 
 QString Config::getValue(QString strKey)
 {
-    if ((doc.isNull()) || (!file->isOpen()))
+    if (doc.isNull())
     {
 #ifdef Q_WS_X11
         qDebug() << tr("Error: config: Cannot get value: ") << strKey;
@@ -131,7 +129,7 @@ QString Config::getValue(QString strKey)
 
 void Config::setValue(QString strKey, QString strValue)
 {
-    if ((doc.isNull()) || (!file->isOpen()))
+    if (doc.isNull())
     {
 #ifdef Q_WS_X11
         qDebug() << tr("Error: config: Cannot set value: ") << strKey;
@@ -155,7 +153,7 @@ void Config::setValue(QString strKey, QString strValue)
 
 void Config::removeValue(QString strKey)
 {
-    if ((doc.isNull()) || (!file->isOpen()))
+    if (doc.isNull())
     {
 #ifdef Q_WS_X11
         qDebug() << tr("Error: config: Cannot remove value: ") << strKey;
@@ -294,7 +292,7 @@ QMap<QString,QString> Config::readConfig()
 {
     QMap<QString, QString> mResult;
 
-    if ((!doc.isNull()) && (file->isOpen()))
+    if (!doc.isNull())
     {
         QDomElement docElem = doc.documentElement();
         QDomNode n = docElem.firstChild();
@@ -325,11 +323,12 @@ void Config::addConfigValue(QDomDocument *doc, QDomElement *root, QString strKey
 void Config::save()
 {
     QString xml = doc.toString();
-    QByteArray baSave = xml.toAscii();
 
-    QFile *fs = new QFile(strConfigFile);
-    fs->open(QIODevice::WriteOnly | QIODevice::Truncate);
-    fs->write(baSave);
-    fs->close();
-    delete fs;
+    QFile f(strConfigFile);
+    f.open(QIODevice::WriteOnly | QIODevice::Truncate);
+
+    QTextStream out(&f);
+    out << xml;
+
+    f.close();
 }

@@ -23,6 +23,7 @@
 #include <QFile>
 #include <QPushButton>
 #include <QSettings>
+#include <QTextStream>
 #include "dlg_notes.h"
 
 #ifdef Q_WS_X11
@@ -79,10 +80,10 @@ void DlgNotes::readPath()
 
 void DlgNotes::read()
 {
-    QFile *file = new QFile(strNotesFile);
-    if (file->exists())
+    QFile f(strNotesFile);
+    if (f.exists())
     {
-        if (!file->open(QIODevice::ReadWrite))
+        if (!f.open(QIODevice::ReadOnly))
         {
 #ifdef Q_WS_X11
             qDebug() << tr("Error: Cannot read notes file!");
@@ -90,27 +91,30 @@ void DlgNotes::read()
             return;
         }
 
+        // read content
+        QTextStream in(&f);
+        QString strContent = in.readAll();
+
         // set content
-        QString strContent = file->readAll();
         ui.plainTextEdit->setPlainText(strContent);
     }
 
-    file->close();
-    delete file;
+    f.close();
 }
 
 void DlgNotes::save()
 {
     // get content
     QString strContent = ui.plainTextEdit->toPlainText();
-    QByteArray baContent = strContent.toAscii();
 
     // save
-    QFile *fs = new QFile(strNotesFile);
-    fs->open(QIODevice::WriteOnly | QIODevice::Truncate);
-    fs->write(baContent);
-    fs->close();
-    delete fs;
+    QFile f(strNotesFile);
+    f.open(QIODevice::WriteOnly | QIODevice::Truncate);
+
+    QTextStream out(&f);
+    out << strContent << "\r\n";
+
+    f.close();
 }
 
 void DlgNotes::buttonOk()

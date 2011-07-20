@@ -88,7 +88,7 @@ void Core::createSettings()
     settings.setValue("debug", strDebug);
 
     // default settings
-    settings.setValue("version", "1.1.1.946");
+    settings.setValue("version", "1.1.1.947");
     settings.setValue("logged", "off");
     settings.setValue("busy", "off");
     settings.setValue("away", "off");

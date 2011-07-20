@@ -138,8 +138,8 @@ void Kamerzysta::kamerzystaNotRunning()
             return;
         }
 
-        QTextStream in(&file);
-        strKamerzystaFile = in.readLine();
+        QTextStream ts(&file);
+        strKamerzystaFile = ts.readLine();
         file.close();
     }
 
@@ -194,8 +194,8 @@ void Kamerzysta::getPort()
     QFile file(strAppPath+"\\port");
     if (file.open(QIODevice::ReadOnly | QIODevice::Text))
     {
-        QTextStream in(&file);
-        strPort = in.readLine();
+        QTextStream ts(&file);
+        strPort = ts.readLine();
         iPort = strPort.toInt();
         file.close();
     }

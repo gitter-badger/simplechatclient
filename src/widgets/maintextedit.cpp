@@ -227,10 +227,10 @@ void MainTextEdit::sendToNotes()
     QString strContent;
 
     // read
-    QFile *file = new QFile(strNotesFile);
-    if (file->exists())
+    QFile fr(strNotesFile);
+    if (fr.exists())
     {
-        if (!file->open(QIODevice::ReadWrite))
+        if (!fr.open(QIODevice::ReadOnly))
         {
 #ifdef Q_WS_X11
             qDebug() << tr("Error: Cannot read notes file!");
@@ -238,23 +238,24 @@ void MainTextEdit::sendToNotes()
             return;
         }
 
-        // set content
-        strContent = file->readAll();
+        // read content
+        QTextStream ts(&fr);
+        strContent = ts.readAll();
     }
 
-    file->close();
-    delete file;
+    fr.close();
 
     // content
-    strContent += this->textCursor().selectedText()+"\r\n";
-    QByteArray baContent = strContent.toAscii();
+    strContent += this->textCursor().selectedText();
 
     // save
-    QFile *fs = new QFile(strNotesFile);
-    fs->open(QIODevice::WriteOnly | QIODevice::Truncate);
-    fs->write(baContent);
-    fs->close();
-    delete fs;
+    QFile f(strNotesFile);
+    f.open(QIODevice::WriteOnly | QIODevice::Truncate);
+
+    QTextStream out(&f);
+    out << strContent << "\r\n";
+
+    f.close();
 }
 
 void MainTextEdit::search()
