@@ -32,7 +32,7 @@ DlgProfileAdd::DlgProfileAdd(MainWindow *parent, DlgProfileManager *param1) : QD
 {
     ui.setupUi(this);
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
-    setWindowTitle(tr("Profile add"));
+    setWindowTitle(tr("Add profile"));
     // center screen
     move(QApplication::desktop()->screen()->rect().center() - rect().center());
 
@@ -41,6 +41,8 @@ DlgProfileAdd::DlgProfileAdd(MainWindow *parent, DlgProfileManager *param1) : QD
     createGui();
     setDefaultValues();
     createSignals();
+
+    ui.lineEdit_nick->setFocus();
 }
 
 void DlgProfileAdd::createGui()
@@ -90,6 +92,8 @@ void DlgProfileAdd::hidePass()
     // fix nick
     if ((!strNick.isEmpty()) && (strNick[0] != '~'))
         ui.lineEdit_nick->setText("~"+strNick);
+
+    ui.lineEdit_nick->setFocus();
 }
 
 void DlgProfileAdd::showPass()
@@ -102,6 +106,8 @@ void DlgProfileAdd::showPass()
     // fix nick
     if ((!strNick.isEmpty()) && (strNick[0] == '~'))
         ui.lineEdit_nick->setText(strNick.remove(0,1));
+
+    ui.lineEdit_nick->setFocus();
 }
 
 void DlgProfileAdd::buttonRegisterNick()
