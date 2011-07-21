@@ -43,16 +43,11 @@ DlgUserProfile::DlgUserProfile(QWidget *parent, Network *param1) : QDialog(paren
     setAttribute(Qt::WA_DeleteOnClose);
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
     setWindowTitle(tr("Profile"));
-    // center screen
-    move(QApplication::desktop()->screen()->rect().center() - rect().center());
 
     pNetwork = param1;
 
     createGui();
     createSignals();
-
-    setMaximumWidth(0);
-    setMaximumHeight(0);
 
     accessManager = new QNetworkAccessManager;
     QObject::connect(accessManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(avatarFinished(QNetworkReply*)));
@@ -266,6 +261,9 @@ void DlgUserProfile::buttonMore()
         pushButton_more->setIcon(QIcon(":/images/oxygen/16x16/list-remove.png"));
         pushButton_more->setText(tr("Less..."));
     }
+
+    setMinimumSize(0, sizeHint().height());
+    setMaximumSize(0, sizeHint().height());
 }
 
 void DlgUserProfile::clearInfo()
@@ -424,6 +422,9 @@ void DlgUserProfile::showEvent(QShowEvent *event)
         pushButton_more->setIcon(QIcon(":/images/oxygen/16x16/list-add.png"));
         pushButton_more->setText(tr("More..."));
     }
+
+    setMinimumSize(0, sizeHint().height());
+    setMaximumSize(0, sizeHint().height());
 
     // center screen
     move(QApplication::desktop()->screen()->rect().center() - rect().center());
