@@ -150,6 +150,10 @@ void DlgProfileAdd::buttonOk()
     if ((strPass.isEmpty()) && (strNick[0] != '~'))
         strNick = '~'+strNick;
 
+    // fix too long nick
+    if ((strPass.isEmpty()) && (strNick.size() > 32))
+        strNick = strNick.left(32);
+
     // exist profile
     if (profileManager->existProfile(strNick))
     {

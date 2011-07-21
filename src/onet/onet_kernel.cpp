@@ -4061,80 +4061,83 @@ void OnetKernel::raw_819()
     for (int i = 0; i < strChannelsList.size(); i++)
     {
         QStringList strChannelParameters = strChannelsList[i].split(":");
-        QString strChannelName = strChannelParameters[0];
-        QString strChannelPeople = strChannelParameters[2];
-        QString strChannelCat = QString::null;
-        QString strChannelType = QString::null;
-
-        bool flag = false;
-        bool flag1 = false;
-        //bool flag2 = false;
-        //bool flag3 = false;
-        bool flag4 = false;
-
-        QString s1 = strChannelParameters[1];
-        int c;
-        if (s1.length() > 1)
+        if (strChannelParameters.size() == 3)
         {
-            c = s1[0].toAscii();
-            flag = (c & 0x6d) == 109;
-            flag1 = (c & 0x70) == 112;
-            c = s1[1].toAscii();
+            QString strChannelName = strChannelParameters[0];
+            QString strChannelPeople = strChannelParameters[2];
+            QString strChannelCat = QString::null;
+            QString strChannelType = QString::null;
+
+            bool flag = false;
+            bool flag1 = false;
+            //bool flag2 = false;
+            //bool flag3 = false;
+            bool flag4 = false;
+
+            QString s1 = strChannelParameters[1];
+            int c;
+            if (s1.length() > 1)
+            {
+                c = s1[0].toAscii();
+                flag = (c & 0x6d) == 109;
+                flag1 = (c & 0x70) == 112;
+                c = s1[1].toAscii();
+            }
+            else
+                c = s1[0].toAscii();
+            c++;
+            int k = c & 7;
+            int l = (c & 0x38) >> 3;
+            flag4 = l == 3;
+
+            switch(l)
+            {
+                case 1:
+                    strChannelType = tr("Teen");
+                    break;
+                case 2:
+                    strChannelType = tr("Common");
+                    break;
+                case 3:
+                    strChannelType = tr("Erotic");
+                    break;
+                case 4:
+                    strChannelType = tr("Thematic");
+                    break;
+                case 5:
+                    strChannelType = tr("Regional");
+                    break;
+            }
+
+            if (flag)
+                strChannelCat += tr("Moderated")+" ";
+            if (flag1)
+                strChannelCat += tr("Recommended")+" ";
+
+            switch(k)
+            {
+                case 0:
+                    strChannelCat = tr("Wild")+" "+ strChannelCat;
+                    break;
+                case 1:
+                    strChannelCat = tr("Tame")+" "+ strChannelCat;
+                    break;
+                case 2:
+                    strChannelCat = tr("With class")+" "+ strChannelCat;
+                    break;
+                case 3:
+                    strChannelCat = tr("Cult")+" "+ strChannelCat;
+                    break;
+            }
+
+            ChannelList add;
+            add.name = strChannelName;
+            add.people = strChannelPeople;
+            add.cat = strChannelCat;
+            add.type = strChannelType;
+
+            Core::instance()->lChannelList.append(add);
         }
-        else
-            c = s1[0].toAscii();
-        c++;
-        int k = c & 7;
-        int l = (c & 0x38) >> 3;
-        flag4 = l == 3;
-
-        switch(l)
-        {
-            case 1:
-                strChannelType = tr("Teen");
-                break;
-            case 2:
-                strChannelType = tr("Common");
-                break;
-            case 3:
-                strChannelType = tr("Erotic");
-                break;
-            case 4:
-                strChannelType = tr("Thematic");
-                break;
-            case 5:
-                strChannelType = tr("Regional");
-                break;
-        }
-
-        if (flag)
-            strChannelCat += tr("Moderated")+" ";
-        if (flag1)
-            strChannelCat += tr("Recommended")+" ";
-
-        switch(k)
-        {
-            case 0:
-                strChannelCat = tr("Wild")+" "+ strChannelCat;
-                break;
-            case 1:
-                strChannelCat = tr("Tame")+" "+ strChannelCat;
-                break;
-            case 2:
-                strChannelCat = tr("With class")+" "+ strChannelCat;
-                break;
-            case 3:
-                strChannelCat = tr("Cult")+" "+ strChannelCat;
-                break;
-        }
-
-        ChannelList add;
-        add.name = strChannelName;
-        add.people = strChannelPeople;
-        add.cat = strChannelCat;
-        add.type = strChannelType;
-
-        Core::instance()->lChannelList.append(add);
     }
 }
 
