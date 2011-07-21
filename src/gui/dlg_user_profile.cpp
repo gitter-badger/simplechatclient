@@ -262,8 +262,8 @@ void DlgUserProfile::buttonMore()
         pushButton_more->setText(tr("Less..."));
     }
 
-    setMinimumSize(0, sizeHint().height());
-    setMaximumSize(0, sizeHint().height());
+    setMinimumSize(285, sizeHint().height());
+    setMaximumSize(285, sizeHint().height());
 }
 
 void DlgUserProfile::clearInfo()
@@ -423,8 +423,8 @@ void DlgUserProfile::showEvent(QShowEvent *event)
         pushButton_more->setText(tr("More..."));
     }
 
-    setMinimumSize(0, sizeHint().height());
-    setMaximumSize(0, sizeHint().height());
+    setMinimumSize(285, sizeHint().height());
+    setMaximumSize(285, sizeHint().height());
 
     // center screen
     move(QApplication::desktop()->screen()->rect().center() - rect().center());
