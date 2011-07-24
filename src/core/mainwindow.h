@@ -86,6 +86,7 @@ private:
     QAction *friendsAct;
     QAction *ignoreAct;
     QAction *camsAct;
+    QMenu *myMenu;
     QAction *myStatsAct;
     QAction *myProfileAct;
 

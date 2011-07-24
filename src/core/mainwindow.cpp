@@ -283,10 +283,10 @@ void MainWindow::createMenus()
     chatMenu->addAction(Core::instance()->awayAct);
 
     // onet my menu
-    chatMenu = menuBar()->addMenu(tr("&My"));
-    chatMenu->addAction(myStatsAct);
-    chatMenu->addAction(myProfileAct);
-    chatMenu->addAction(notesAct);
+    myMenu = menuBar()->addMenu(tr("&My"));
+    myMenu->addAction(myStatsAct);
+    myMenu->addAction(myProfileAct);
+    myMenu->addAction(notesAct);
 
     // help menu
     helpMenu = menuBar()->addMenu(tr("He&lp"));
@@ -320,6 +320,7 @@ void MainWindow::createMenus()
     // tray
     trayMenu = new QMenu();
     trayMenu->addAction(showAct);
+    trayMenu->addSeparator();
     trayMenu->addAction(closeAct);
 
     trayIcon = new QSystemTrayIcon(this);
