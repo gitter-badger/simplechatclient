@@ -29,10 +29,15 @@ ThreadEmoticonsStandard::ThreadEmoticonsStandard() {}
 
 void ThreadEmoticonsStandard::run()
 {
-    QString path = QCoreApplication::applicationDirPath();
+    QString strPath;
+#ifdef Q_WS_WIN
+    strPath = QCoreApplication::applicationDirPath();
+#else
+    strPath = "/usr/share/scc";
+#endif
 
     // standard
-    QDir dStandardEmoticons = path+"/3rdparty/emoticons";
+    QDir dStandardEmoticons = strPath+"/3rdparty/emoticons";
     QStringList slFiles = dStandardEmoticons.entryList(QStringList("*.gif"), QDir::Files | QDir::NoSymLinks);
 
     for (int i = 0; i < slFiles.size(); i++)
@@ -41,7 +46,7 @@ void ThreadEmoticonsStandard::run()
         QString strEmoticon = strFileName;
         strEmoticon.remove(".gif");
 
-        QFile f(path+"/3rdparty/emoticons/"+strFileName);
+        QFile f(strPath+"/3rdparty/emoticons/"+strFileName);
         if (!f.open(QIODevice::ReadOnly))
             break;
         QByteArray bData = f.readAll();
@@ -55,10 +60,15 @@ ThreadEmoticonsExtended::ThreadEmoticonsExtended() {}
 
 void ThreadEmoticonsExtended::run()
 {
-    QString path = QCoreApplication::applicationDirPath();
+    QString strPath;
+#ifdef Q_WS_WIN
+    strPath = QCoreApplication::applicationDirPath();
+#else
+    strPath = "/usr/share/scc";
+#endif
 
     // extended
-    QDir dExtendedEmoticons = path+"/3rdparty/emoticons_other";
+    QDir dExtendedEmoticons = strPath+"/3rdparty/emoticons_other";
     QStringList slFiles = dExtendedEmoticons.entryList(QStringList("*.gif"), QDir::Files | QDir::NoSymLinks);
 
     for (int i = 0; i < slFiles.size(); i++)
@@ -67,7 +77,7 @@ void ThreadEmoticonsExtended::run()
         QString strEmoticon = strFileName;
         strEmoticon.remove(".gif");
 
-        QFile f(path+"/3rdparty/emoticons_other/"+strFileName);
+        QFile f(strPath+"/3rdparty/emoticons_other/"+strFileName);
         if (!f.open(QIODevice::ReadOnly))
             break;
         QByteArray bData = f.readAll();

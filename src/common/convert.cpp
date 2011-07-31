@@ -155,7 +155,12 @@ void Convert::convertText(QString &strData, QString &strLastContent)
     // emoticons
     if (strData.contains("%I"))
     {
-        QString strPath = QCoreApplication::applicationDirPath();
+        QString strPath;
+#ifdef Q_WS_WIN
+        strPath = QCoreApplication::applicationDirPath();
+#else
+        strPath = "/usr/share/scc";
+#endif
 
         while (strData.contains("%I"))
         {

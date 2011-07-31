@@ -89,7 +89,12 @@ int main(int argc, char *argv[])
     delete pConfig;
 
     // set translate
-    QString strPath = QCoreApplication::applicationDirPath();
+    QString strPath;
+#ifdef Q_WS_WIN
+    strPath = QCoreApplication::applicationDirPath();
+#else
+    strPath = "/usr/share/scc";
+#endif
 
     // load translate
     QTranslator qtTranslator;

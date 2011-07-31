@@ -39,7 +39,6 @@ SOURCES += src/avatars/avatar.cpp \
     src/gui/dlg_find_text.cpp \
     src/gui/dlg_friends.cpp \
     src/gui/dlg_ignore.cpp \
-    src/gui/dlg_ignore_ad.cpp \
     src/gui/dlg_invite.cpp \
     src/gui/dlg_moderation.cpp \
     src/gui/dlg_my_profile.cpp \
@@ -147,7 +146,6 @@ HEADERS += src/avatars/avatar.h \
     src/widgets/webcamdelegate.h
 FORMS += ui/about.ui \
     ui/awaylog.ui \
-    ui/cam.ui \
     ui/captcha.ui \
     ui/channel_favourites.ui \
     ui/channel_homes.ui \
@@ -159,7 +157,6 @@ FORMS += ui/about.ui \
     ui/find_text.ui \
     ui/friends.ui \
     ui/ignore.ui \
-    ui/ignore_ad.ui \
     ui/invite.ui \
     ui/moderation.ui \
     ui/my_profile.ui \
@@ -173,6 +170,5 @@ FORMS += ui/about.ui \
     ui/register_nick.ui \
     ui/update.ui \
     ui/user_avatar.ui \
-    ui/user_profile.ui \
     ui/webcam_mini.ui \
     ui/webcam_standard.ui

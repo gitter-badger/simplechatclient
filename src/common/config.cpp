@@ -226,10 +226,15 @@ void Config::createNewConfig()
 
 QMap<QString,QString> Config::getDefaultValues()
 {
-    QString path = QCoreApplication::applicationDirPath();
-    QString strSoundBeep = path+"/3rdparty/sounds/beep.wav";
-    QString strSoundQuery = path+"/3rdparty/sounds/query.wav";
-    QString strBackgroundImage = path+"/images/wallpaper/default.jpg";
+    QString strPath;
+#ifdef Q_WS_WIN
+    strPath = QCoreApplication::applicationDirPath();
+#else
+    strPath = "/usr/share/scc";
+#endif
+    QString strSoundBeep = strPath+"/3rdparty/sounds/beep.wav";
+    QString strSoundQuery = strPath+"/3rdparty/sounds/query.wav";
+    QString strBackgroundImage = strPath+"/images/wallpaper/default.jpg";
 
     QMap<QString,QString> mDefaultValues;
 

@@ -23,29 +23,28 @@ add_subdirectory (src)
 # install
 
 if (UNIX AND NOT APPLE)
-	set (scc_BIN_DIR /usr/local/bin)
-	set (scc_SHARE_DIR /usr/local/share)
+	set (scc_BIN_DIR /usr/bin)
+	set (scc_SHARE_DIR /usr/share/scc)
 
-	set (scc_MAIN_FILE scc)
-
-	file (GLOB scc_TRANSLATIONS_FILES translations/*.qm)
-	file (GLOB scc_IMAGES_FILES images/*.png)
-
-	file (GLOB scc_EMOTICONS1_FILES 3rdparty/emoticons/*.gif)
-	file (GLOB scc_EMOTICONS2_FILES 3rdparty/emoticons_other/*.gif)
-	file (GLOB scc_IMAGES_FILES 3rdparty/images/*.png)
+	file (GLOB scc_EMOTICONS_FILES 3rdparty/emoticons/*.gif)
+	file (GLOB scc_EMOTICONS_OTHER_FILES 3rdparty/emoticons_other/*.gif)
 	file (GLOB scc_SOUNDS_FILES 3rdparty/sounds/*.wav)
-	set (scc_3RDPARTY_LICENSE 3rdparty/LICENSE)
 
-	install (FILES ${scc_MAIN_FILE} DESTINATION ${scc_BIN_DIR})
-	install (FILES ${scc_TRANSLATIONS_FILES} DESTINATION ${scc_SHARE_DIR}/scc/translations)
-	install (FILES ${scc_IMAGES_FILES} DESTINATION ${scc_SHARE_DIR}/scc/images)
+	file (GLOB scc_IMAGES_FILES 3rdparty/images/wallpaper/*.jpg)
+	file (GLOB scc_TRANSLATIONS_FILES translations/*.qm)
 
-	install (FILES ${scc_EMOTICONS1_FILES} DESTINATION ${scc_SHARE_DIR}/scc/3rdparty/emoticons)
-	install (FILES ${scc_EMOTICONS2_FILES} DESTINATION ${scc_SHARE_DIR}/scc/3rdparty/emoticons_other)
-	install (FILES ${scc_IMAGES_FILES} DESTINATION ${scc_SHARE_DIR}/scc/3rdparty/images)
-	install (FILES ${scc_SOUNDS_FILES} DESTINATION ${scc_SHARE_DIR}/scc/3rdparty/sounds)
-	install (FILES ${scc_3RDPARTY_LICENSE} DESTINATION ${scc_SHARE_DIR}/scc/3rdparty)
+	install (FILES AUTHORS ChangeLog LICENSE README scc.png TODO DESTINATION ${scc_SHARE_DIR})
+	install (FILES scc DESTINATION ${scc_BIN_DIR})
+
+	install (FILES ${scc_IMAGES_FILES} DESTINATION ${scc_SHARE_DIR}/images/wallpaper)
+	install (FILES ${scc_TRANSLATIONS_FILES} DESTINATION ${scc_SHARE_DIR}/translations)
+
+	install (FILES ${scc_EMOTICONS_FILES} DESTINATION ${scc_SHARE_DIR}/3rdparty/emoticons)
+	install (FILES ${scc_EMOTICONS_OTHER_FILES} DESTINATION ${scc_SHARE_DIR}/3rdparty/emoticons_other)
+	install (FILES ${scc_SOUNDS_FILES} DESTINATION ${scc_SHARE_DIR}/3rdparty/sounds)
+	install (FILES 3rdparty/LICENSE DESTINATION ${scc_SHARE_DIR}/3rdparty)
+
+	install (FILES scc.desktop DESTINATION /usr/share/applications)
 endif (UNIX AND NOT APPLE)
 
 # uninstall
