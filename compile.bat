@@ -1,14 +1,58 @@
+@if not exist C:\MinGW\bin\mingw32-make.exe (
+@echo Download MinGW from http://sourceforge.net/projects/mingw/files/Automated%20MinGW%20Installer/mingw-get-inst/mingw-get-inst-20110530/
+@pause
+@exit
+)
+
 cmake . -G "MinGW Makefiles" -DWIN32_QCA2_DIR=C:\qca2
 mingw32-make
 
-@ECHO OFF 
+@echo off 
+
+if not exist scc.exe (
+echo SCC is not compiled. Please compile program.
+pause
+exit
+)
+
+if not exist C:\Qt\4.7.3 (
+echo Download Qt 4.7.3 from http://qt.nokia.com/downloads/windows-cpp
+pause
+exit
+)
+
+if not exist C:\OpenSSL-Win32 (
+echo Download OpenSSL from http://www.slproweb.com/download/Win32OpenSSL_Light-1_0_0d.exe
+pause
+exit
+)
+
+if not exist C:\zlib-1.2.5 (
+echo Download ZLib from http://zlib.net/zlib125-dll.zip
+pause
+exit
+)
+
+if not exist C:\qca2 (
+echo Download QCA2 from http://delta.affinix.com/download/qca/2.0/qca-2.0.3.tar.bz2
+pause
+exit
+)
+
+if not exist C:\qca2\lib\qca2.dll (
+echo Compiling qca2
+cd C:\qca2
+configure.exe --release --disable-tests
+mingw32-make
+cd C:\scc
+)
 
 set DESTINATION="C:\scc\release"
 set QT_DIR="C:\Qt\4.7.3\bin"
 set QT_PLUGINS_DIR="C:\Qt\4.7.3\plugins"
 set OPENSSL_DIR="C:\OpenSSL-Win32"
 set ZLIB_DIR="C:\zlib-1.2.5"
-set QCA2_DIR="C:\qca2\bin"
+set QCA2_DIR="C:\qca2\lib"
 
 echo Removing destination folder
 rd %DESTINATION% /S /Q
@@ -70,3 +114,4 @@ xcopy libcrypto-8.dll  %DESTINATION%\ /C /H /R /Y /Q
 xcopy libssl-8.dll  %DESTINATION%\ /C /H /R /Y /Q
 
 echo Done!
+pause
