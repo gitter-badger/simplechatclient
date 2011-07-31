@@ -17,7 +17,7 @@ include(CheckIncludeFiles)
 
 # sub dir
 
-add_subdirectory (i18n)
+add_subdirectory (translations)
 add_subdirectory (src)
 
 # install
@@ -28,7 +28,7 @@ if (UNIX AND NOT APPLE)
 
 	set (scc_MAIN_FILE scc)
 
-	file (GLOB scc_I18N_FILES i18n/*.qm)
+	file (GLOB scc_TRANSLATIONS_FILES translations/*.qm)
 	file (GLOB scc_IMAGES_FILES images/*.png)
 
 	file (GLOB scc_EMOTICONS1_FILES 3rdparty/emoticons/*.gif)
@@ -38,7 +38,7 @@ if (UNIX AND NOT APPLE)
 	set (scc_3RDPARTY_LICENSE 3rdparty/LICENSE)
 
 	install (FILES ${scc_MAIN_FILE} DESTINATION ${scc_BIN_DIR})
-	install (FILES ${scc_I18N_FILES} DESTINATION ${scc_SHARE_DIR}/scc/i18n)
+	install (FILES ${scc_TRANSLATIONS_FILES} DESTINATION ${scc_SHARE_DIR}/scc/translations)
 	install (FILES ${scc_IMAGES_FILES} DESTINATION ${scc_SHARE_DIR}/scc/images)
 
 	install (FILES ${scc_EMOTICONS1_FILES} DESTINATION ${scc_SHARE_DIR}/scc/3rdparty/emoticons)

@@ -1,13 +1,12 @@
 call make clean
 
 rd /S /Q CMakeFiles
-rd /S /Q ZERO_CHECK.dir
-del /S /Q /F /A CMakeCache.txt cmake_install.cmake Makefile scc.pro.user ALL_BUILD* ZERO_CHECK* scc.ncb scc.sln scc.suo scc.vcproj*
+del /S /Q /F /A CMakeCache.txt cmake_install.cmake Makefile scc.pro.user
 
-cd i18n
+cd translations
 rd /S /Q CMakeFiles
-rd /S /Q i18n.dir
-del /S /Q /F /A i18n.vcproj* *.qm generate*
+rd /S /Q translations.dir
+del /S /Q /F /A *.qm
 cd ..
 
 cd src

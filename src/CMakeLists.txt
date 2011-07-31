@@ -297,5 +297,5 @@ else (MSVC) # mingw or linux
 	target_link_libraries (../scc ${QT_LIBRARIES} ${QT_QTNETWORK_LIBRARIES} ${QCA2_LIBRARIES})
 endif (MSVC)
 
-# i18n
-add_dependencies (../scc i18n)
+# translations
+add_dependencies (../scc translations)

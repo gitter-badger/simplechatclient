@@ -93,11 +93,11 @@ int main(int argc, char *argv[])
 
     // load translate
     QTranslator qtTranslator;
-    qtTranslator.load(QString("%1/i18n/qt_%2").arg(strPath).arg(strLanguage));
+    qtTranslator.load(QString("%1/translations/qt_%2").arg(strPath).arg(strLanguage));
     app.installTranslator(&qtTranslator);
 
     QTranslator sccTranslator;
-    sccTranslator.load(QString("%1/i18n/scc_%2").arg(strPath).arg(strLanguage));
+    sccTranslator.load(QString("%1/translations/scc_%2").arg(strPath).arg(strLanguage));
     app.installTranslator(&sccTranslator);
 
     // args
