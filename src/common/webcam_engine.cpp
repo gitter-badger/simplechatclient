@@ -234,13 +234,14 @@ void WebcamEngine::raw_251b(QByteArray &data)
             if (iCamOnOff == 0)
             {
                 //mNickChannels.remove(strUser);
-                emit removeUser(strUser);
+                // remove user
+                //emit removeUser(strUser);
             }
             // cam on
             else
             {
                 // add user or update user
-                emit updateUser(strUser, iRank, strSpectators);
+                //emit updateUser(strUser, iRank, strSpectators);
             }
         }
     }
