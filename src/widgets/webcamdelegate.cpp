@@ -20,7 +20,6 @@
 
 #include <QBrush>
 #include <QPainter>
-#include <QPen>
 #include "webcamdelegate.h"
 
 WebcamDelegate::WebcamDelegate(QObject *parent)
@@ -30,9 +29,6 @@ WebcamDelegate::WebcamDelegate(QObject *parent)
 
 void WebcamDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
-    // save
-    painter->save();
-
     QString nick = index.data(Qt::DisplayRole).toString();
     nick = nick.left(19); // short nick
     int rank = index.data(Qt::UserRole).toInt();
@@ -58,11 +54,16 @@ void WebcamDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option
     int w = 50;
     int half_w = x+w/2;
     int h = option.rect.height();
+    int new_w;
+
+    QBrush bRed(Qt::red);
+    QBrush bGreen(Qt::green);
+    QBrush bBlack(Qt::black);
+    QBrush bWhite(Qt::white);
 
     // rank background
-    painter->setBrush(Qt::white);
-    painter->setPen(Qt::white);
-    painter->drawRect(x,y,w,h);
+    painter->fillRect(x,y,w-1,h, bBlack);
+    painter->fillRect(x+1,y+1,w-3,h-1, bWhite);
 
     // correct rank
     if (rank > 500) rank = 500;
@@ -70,36 +71,17 @@ void WebcamDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option
 
     if (rank < 0)
     {
-        int new_w = qAbs(rank)/20;
-
-        painter->setBrush(Qt::red);
-        painter->setPen(Qt::red);
-        painter->drawRect(half_w - new_w, y, new_w, h);
+        new_w = qAbs(rank)/20;
+        painter->fillRect(half_w - new_w, y+1, new_w, h, bRed);
     }
     else if (rank > 0)
     {
-        int new_w = rank/20;
-
-        painter->setBrush(Qt::green);
-        painter->setPen(Qt::green);
-        painter->drawRect(half_w, y, new_w, h);
+        new_w = rank/20;
+        painter->fillRect(half_w, y+1, new_w, h, bGreen);
     }
 
     // zero
-    painter->setBrush(Qt::black);
-    painter->setPen(Qt::black);
-    painter->drawLine(half_w, y, half_w, h);
-
-    // border
-    painter->setBrush(Qt::black);
-    painter->setPen(Qt::black);
-    painter->drawLine(x,y,x,h); // left
-    painter->drawLine(x+w-1,y,x+w-1,h-1); // right
-    painter->drawLine(x,y,x+w-1,y); // top
-    painter->drawLine(x,y+h-1,x+w-1,y+w-1); // bottom
-
-    // restore
-    painter->restore();
+    painter->fillRect(half_w, y, 1, h, bBlack);
 }
 
 QSize WebcamDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const
