@@ -24,6 +24,7 @@
 class QTcpSocket;
 class QTimer;
 class Log;
+class Network;
 #include <QAbstractSocket>
 #include <QObject>
 
@@ -34,22 +35,24 @@ class Kamerzysta : public QObject
 {
     Q_OBJECT
 public:
-    Kamerzysta(QTcpSocket *);
+    Kamerzysta(QTcpSocket *, Network *);
     void show(QString);
     void close();
 
 private:
+    QTcpSocket *socket;
+    Network *pNetwork;
     QString strNick;
     QString strAppPath;
     QString strKamerzystaFile;
     int iPort;
-    QTcpSocket *socket;
     int iTryGetPort;
     QTimer *timerGetPort;
 
     void log(QString);
     void getPath();
     void authorize();
+    void invite(QString);
     void kamerzystaNotRunning();
     void kamerzystaRunning();
 

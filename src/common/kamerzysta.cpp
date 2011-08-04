@@ -29,13 +29,15 @@
 #include <QTimer>
 #include <QTextStream>
 #include "log.h"
+#include "network.h"
 #include "kamerzysta.h"
 
-Kamerzysta::Kamerzysta(QTcpSocket *param1)
+Kamerzysta::Kamerzysta(QTcpSocket *param1, Network *param2)
 {
     log("Like constructor");
 
     socket = param1;
+    pNetwork = param2;
 
     timerGetPort = new QTimer();
     timerGetPort->setInterval(500);
@@ -228,6 +230,14 @@ void Kamerzysta::authorize()
         networkSend(QString("e%1").arg(strNick).arg(strUOKey));
 }
 
+void Kamerzysta::invite(QString strInviteNick)
+{
+    strInviteNick.remove(0,1);
+    log(QString("Invite:%1").arg(strInviteNick));
+
+    pNetwork->send(QString("PRIV %1").arg(strInviteNick));
+}
+
 void Kamerzysta::networkConnect()
 {
     if (socket->state() == QAbstractSocket::UnconnectedState)
@@ -294,8 +304,13 @@ void Kamerzysta::networkRead()
         log("Recv:"+strDataRecv);
 
         // data
-        if (strDataRecv == "d")
-            authorize();
+        if (!strDataRecv.isEmpty())
+        {
+            if (strDataRecv == "d")
+                authorize();
+            else if (strDataRecv[0] == 'e')
+                invite(strDataRecv);
+        }
     }
 }
 

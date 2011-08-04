@@ -4,6 +4,7 @@
 @exit
 )
 
+@del /Q /F /A scc.exe
 cmake . -G "MinGW Makefiles" -DWIN32_QCA2_DIR=C:\qca2
 mingw32-make
 
@@ -109,9 +110,9 @@ echo Copying qca2 libs
 xcopy %QCA2_DIR%\qca2.dll %DESTINATION%\ /C /H /R /Y /Q
 
 echo Copying crypt libs
-xcopy qca-ossl2.dll  %DESTINATION%\plugins\crypto\ /C /H /R /Y /Q
-xcopy libcrypto-8.dll  %DESTINATION%\ /C /H /R /Y /Q
-xcopy libssl-8.dll  %DESTINATION%\ /C /H /R /Y /Q
+xcopy crypt\qca-ossl2.dll  %DESTINATION%\plugins\crypto\ /C /H /R /Y /Q
+xcopy crypt\libcrypto-8.dll  %DESTINATION%\ /C /H /R /Y /Q
+xcopy crypt\libssl-8.dll  %DESTINATION%\ /C /H /R /Y /Q
 
 echo Done!
 pause

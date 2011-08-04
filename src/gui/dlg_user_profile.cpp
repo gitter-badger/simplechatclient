@@ -71,6 +71,7 @@ void DlgUserProfile::createGui()
     label_avatar = new QLabel();
     label_avatar->setMinimumSize(50,50);
     label_avatar->setWordWrap(true);
+    label_avatar->setAlignment(Qt::AlignCenter);
     textEdit_desc = new QTextEdit();
     textEdit_desc->setMinimumSize(190,70);
     textEdit_desc->setMaximumSize(190,70);
