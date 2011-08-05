@@ -55,6 +55,13 @@ MainTextEdit::MainTextEdit(Network *param1, QString param2, DlgUserProfile *para
     QObject::connect(this, SIGNAL(textChanged()), this, SLOT(textChanged()));
 }
 
+MainTextEdit::~MainTextEdit()
+{
+    setMouseTracking(false);
+    pAnimatedEmoticonWidget->stopEmoticon();
+    delete pAnimatedEmoticonWidget;
+}
+
 void MainTextEdit::updateBackgroundImage()
 {
     QSettings settings;

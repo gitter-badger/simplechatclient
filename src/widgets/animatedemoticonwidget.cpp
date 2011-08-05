@@ -40,6 +40,11 @@ AnimatedEmoticonWidget::AnimatedEmoticonWidget(QTextEdit *parent) : QWidget(pare
     this->setLayout(layout);
 }
 
+AnimatedEmoticonWidget::~AnimatedEmoticonWidget()
+{
+    stopEmoticon();
+}
+
 void AnimatedEmoticonWidget::startEmoticon(QString strEmoticon, int x, int y)
 {
     if (strEmoticon != strCurrentEmoticon)

@@ -34,6 +34,7 @@ class InputWidget : public QWidget
     Q_OBJECT
 public:
     InputWidget(QWidget *, Network *);
+    virtual ~InputWidget();
     void insertText(QString);
     void setFont(QFont);
     void setColor(QString);

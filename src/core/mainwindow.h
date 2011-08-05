@@ -33,7 +33,6 @@ class DlgUserProfile;
 class InputLineDockWidget;
 class Network;
 class NickListWidget;
-class Notify;
 class OnetAuth;
 class OnetKernel;
 class TabContainer;
@@ -162,9 +161,6 @@ private slots:
     void tabCloseRequested(int);
     void currentTabChanged(int);
     void timeoutAutoaway();
-
-protected:
-    virtual void closeEvent(QCloseEvent *);
 
 signals:
     void skernel(QString);

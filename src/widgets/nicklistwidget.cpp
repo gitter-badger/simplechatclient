@@ -44,10 +44,6 @@ NickListWidget::NickListWidget(Network *param1, DlgUserProfile *param2)
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 }
 
-NickListWidget::~NickListWidget()
-{
-}
-
 void NickListWidget::setChannel(QString param1)
 {
     strChannel = param1;

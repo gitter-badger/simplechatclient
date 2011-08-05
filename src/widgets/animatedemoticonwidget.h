@@ -32,6 +32,7 @@ class AnimatedEmoticonWidget : public QWidget
     Q_OBJECT
 public:
     AnimatedEmoticonWidget(QTextEdit*);
+    virtual ~AnimatedEmoticonWidget();
     void startEmoticon(QString, int, int);
     void stopEmoticon();
 

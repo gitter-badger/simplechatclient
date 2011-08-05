@@ -129,6 +129,12 @@ MainWindow::~MainWindow()
     // clear arrays
     clearAllNicklist();
 
+    delete pNickListWidget;
+    delete pInputLineDockWidget;
+
+    delete rightDockWidget;
+    delete bottomDockWidget;
+
     // auto-away
     Core::instance()->autoAwayTimer->stop();
 
@@ -141,6 +147,7 @@ MainWindow::~MainWindow()
     // close network
     QSettings settings;
     settings.setValue("reconnect", "false");
+    QObject::disconnect(pNetwork, SIGNAL(clearAllNicklist()), this, SLOT(clearAllNicklist()));
     pNetwork->disconnect();
     pNetwork->quit();
     pNetwork->wait();
@@ -148,10 +155,10 @@ MainWindow::~MainWindow()
     pNetwork->QObject::disconnect();
     delete pNetwork;
 
+    QObject::disconnect(pTabC, SIGNAL(clearNicklist(QString)), this, SLOT(clearNicklist(QString)));
+    QObject::disconnect(pTabM, SIGNAL(currentChanged(int)), this, SLOT(currentTabChanged(int)));
     delete pTabC;
     delete pTabM;
-    delete bottomDockWidget;
-    delete rightDockWidget;
 
     // hide tray
     trayIcon->hide();
@@ -409,12 +416,6 @@ void MainWindow::createSignals()
 
     // auto-away
     QObject::connect(Core::instance()->autoAwayTimer, SIGNAL(timeout()), this, SLOT(timeoutAutoaway()));
-}
-
-void MainWindow::closeEvent(QCloseEvent *event)
-{
-    QMainWindow::closeEvent(event);
-    Core::instance()->quit();
 }
 
 void MainWindow::showOptions()

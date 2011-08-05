@@ -70,6 +70,12 @@ Network::Network(QString param1, int param2)
 Network::~Network()
 {
     socket->deleteLater();
+    timerQueue->stop();
+    timerLag->stop();
+    timerPing->stop();
+    timerPong->stop();
+    timerReconnect->stop();
+    Core::instance()->autoAwayTimer->stop();
 }
 
 void Network::run()

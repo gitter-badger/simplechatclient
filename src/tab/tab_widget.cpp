@@ -95,6 +95,7 @@ TabWidget::TabWidget(Network *param1, QString param2, DlgUserProfile *param3)
 TabWidget::~TabWidget()
 {
     pMainTextEdit->clear();
+    delete pMainTextEdit;
 }
 
 void TabWidget::addslashes(QString &strData)

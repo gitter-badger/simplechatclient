@@ -88,6 +88,11 @@ InputWidget::InputWidget(QWidget *parent, Network *param1) : QWidget(parent)
     QObject::connect(pInputLine, SIGNAL(ctrlShiftTabPressed()), this, SLOT(slotCtrlShiftTabPressed()));
 }
 
+InputWidget::~InputWidget()
+{
+    delete pInputLine;
+}
+
 void InputWidget::insertText(QString strText)
 {
     pInputLine->insertText(strText);

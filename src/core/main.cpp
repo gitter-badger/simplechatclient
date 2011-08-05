@@ -141,5 +141,8 @@ int main(int argc, char *argv[])
     Core::instance()->showSccWindow();
     Core::instance()->checkUpdate();
 
-    return app.exec();
+    int ret = app.exec();
+    Core::instance()->quit();
+    app.deleteLater();
+    return ret;
 }

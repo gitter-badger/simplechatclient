@@ -57,11 +57,11 @@ Core::Core() : window(0)
 
 Core::~Core()
 {
-    kamerzystaSocket->deleteLater();
-
     delete pUpdate;
     delete window;
     window = 0;
+
+    kamerzystaSocket->deleteLater();
 }
 
 void Core::init()
@@ -92,7 +92,7 @@ void Core::createSettings()
     settings.setValue("debug", strDebug);
 
     // default settings
-    settings.setValue("version", "1.1.2.961");
+    settings.setValue("version", "1.1.2.962");
     settings.setValue("logged", "off");
     settings.setValue("busy", "off");
     settings.setValue("away", "off");

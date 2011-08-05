@@ -31,6 +31,7 @@ class MainTextEdit : public QTextEdit
     Q_OBJECT
 public:
     MainTextEdit(Network *, QString, DlgUserProfile *);
+    virtual ~MainTextEdit();
     void updateBackgroundImage();
     inline QString getCurrentNick() { return strNick; }
 
