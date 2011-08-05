@@ -31,6 +31,10 @@
 #include "notify.h"
 #include "dlg_options.h"
 
+#ifdef Q_WS_WIN
+    #include <QDesktopServices>
+#endif
+
 DlgOptions::DlgOptions(QWidget *parent) : QDialog(parent)
 {
     ui.setupUi(this);
@@ -265,9 +269,7 @@ void DlgOptions::setDefaultValues()
 #ifdef Q_WS_X11
     strLogsPath = QDir::homePath()+"/.scc/log";
 #else
-    QSettings winSettings(QSettings::UserScope, "Microsoft", "Windows");
-    winSettings.beginGroup("CurrentVersion/Explorer/Shell Folders");
-    QString path = winSettings.value("Personal").toString();
+    QString path = QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation);
     path += "/scc";
 
     strLogsPath = path+"/log";
@@ -550,9 +552,7 @@ void DlgOptions::refreshProfilesList()
 #ifdef Q_WS_X11
     path = QDir::homePath()+"/.scc";
 #else
-    QSettings winSettings(QSettings::UserScope, "Microsoft", "Windows");
-    winSettings.beginGroup("CurrentVersion/Explorer/Shell Folders");
-    path = winSettings.value("Personal").toString();
+    path = QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation);
     path += "/scc";
 #endif
 

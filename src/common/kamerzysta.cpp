@@ -89,17 +89,12 @@ void Kamerzysta::log(QString strData)
 
 void Kamerzysta::getPath()
 {
-    QSettings winSettings(QSettings::UserScope, "Microsoft", "Windows");
-    winSettings.beginGroup("CurrentVersion/Explorer/Shell Folders");
-    strAppPath = winSettings.value("AppData").toString();
+    QSettings winSettings(QSettings::UserScope, "Onet.pl", "InstalledApps");
+    winSettings.beginGroup("Kamerzysta");
+    strAppPath = winSettings.value("DataPath").toString();
 
     QDir dir;
-    if (dir.exists(strAppPath+"/Kamerzysta"))
-    {
-        strAppPath = strAppPath+"/Kamerzysta";
-        strAppPath.replace("/", "\\");
-    }
-    else
+    if (!dir.exists(strAppPath))
     {
         QMessageBox::critical(0, tr("Error"), tr("Kamerzysta not found!"));
         close();

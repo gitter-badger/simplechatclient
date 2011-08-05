@@ -27,7 +27,9 @@
 #include "dlg_notes.h"
 
 #ifdef Q_WS_X11
-#include <QDebug>
+    #include <QDebug>
+#else
+    #include <QDesktopServices>
 #endif
 
 DlgNotes::DlgNotes(QWidget *parent) : QDialog(parent)
@@ -65,9 +67,7 @@ void DlgNotes::readPath()
 #ifdef Q_WS_X11
     path = QDir::homePath()+"/.scc";
 #else
-    QSettings winSettings(QSettings::UserScope, "Microsoft", "Windows");
-    winSettings.beginGroup("CurrentVersion/Explorer/Shell Folders");
-    path = winSettings.value("Personal").toString();
+    path = QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation);
     path += "/scc";
 #endif
 

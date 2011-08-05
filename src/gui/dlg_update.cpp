@@ -30,6 +30,10 @@
 #include "mainwindow.h"
 #include "dlg_update.h"
 
+#ifdef Q_WS_WIN
+    #include <QDesktopServices>
+#endif
+
 DlgUpdate::DlgUpdate(MainWindow *parent, QString param1) : QDialog(parent)
 {
     ui.setupUi(this);
@@ -118,9 +122,7 @@ void DlgUpdate::gotFile(QByteArray bData)
 #ifdef Q_WS_X11
     path = QDir::homePath()+"/.scc";
 #else
-    QSettings winSettings(QSettings::UserScope, "Microsoft", "Windows");
-    winSettings.beginGroup("CurrentVersion/Explorer/Shell Folders");
-    path = winSettings.value("Personal").toString();
+    path = QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation);
     path += "/scc";
 #endif
 

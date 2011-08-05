@@ -213,9 +213,7 @@ void MainTextEdit::sendToNotes()
 #ifdef Q_WS_X11
     path = QDir::homePath()+"/.scc";
 #else
-    QSettings winSettings(QSettings::UserScope, "Microsoft", "Windows");
-    winSettings.beginGroup("CurrentVersion/Explorer/Shell Folders");
-    path = winSettings.value("Personal").toString();
+    path = QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation);
     path += "/scc";
 #endif
 

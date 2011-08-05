@@ -29,6 +29,10 @@
 #include "update.h"
 #include "core.h"
 
+#ifdef Q_WS_WIN
+    #include <QDesktopServices>
+#endif
+
 Core * Core::Instance = 0;
 
 Core * Core::instance()
@@ -88,7 +92,7 @@ void Core::createSettings()
     settings.setValue("debug", strDebug);
 
     // default settings
-    settings.setValue("version", "1.1.2.960");
+    settings.setValue("version", "1.1.2.961");
     settings.setValue("logged", "off");
     settings.setValue("busy", "off");
     settings.setValue("away", "off");
@@ -167,9 +171,7 @@ void Core::removeOldConfig()
 #ifdef Q_WS_X11
     path = QDir::homePath()+"/.scc";
 #else
-    QSettings winSettings(QSettings::UserScope, "Microsoft", "Windows");
-    winSettings.beginGroup("CurrentVersion/Explorer/Shell Folders");
-    path = winSettings.value("Personal").toString();
+    path = QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation);
     path += "/scc";
 #endif
 
