@@ -216,12 +216,7 @@ void DlgMyProfile::refresh()
 
 int DlgMyProfile::getIndex(QComboBox *comboBox, QString strCheck)
 {
-    for (int i = 0; i < comboBox->count(); i++)
-    {
-        if (comboBox->itemText(i) == strCheck)
-            return i;
-    }
-    return 0;
+    return comboBox->findText(strCheck);
 }
 
 QString DlgMyProfile::convertTextToDesc(QString strContent)

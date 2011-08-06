@@ -75,11 +75,8 @@ int main(int argc, char *argv[])
     // debug off
     Core::instance()->setDebug(false);
 
-    Config *pConfig = new Config();
-    // set current profile
-    QString strCurrentProfile = pConfig->getValue("current_profile");
-    Core::instance()->settings["current_profile"] = strCurrentProfile;
     // get language
+    Config *pConfig = new Config();
     QString strLanguage = pConfig->getValue("language");
     delete pConfig;
 

@@ -391,11 +391,7 @@ void DlgOptions::setDefaultValues()
         ui.comboBox_my_italic->setCurrentIndex(0);
 
     // set my font combobox
-    for (int i = 0; i < ui.comboBox_my_font->count(); i++)
-    {
-        if (ui.comboBox_my_font->itemText(i) == strMyFont)
-            ui.comboBox_my_font->setCurrentIndex(i);
-    }
+    ui.comboBox_my_font->setCurrentIndex(ui.comboBox_my_font->findText(strMyFont));
 
     // set my color combobox
     int iMyColor;
@@ -578,14 +574,7 @@ void DlgOptions::refreshProfilesList()
     }
 
     // set current profile
-    for (int i = 0; i < ui.comboBox_profiles->count(); i++)
-    {
-        if (ui.comboBox_profiles->itemText(i) == Core::instance()->settings.value("current_profile"))
-        {
-            ui.comboBox_profiles->setCurrentIndex(i);
-            return;
-        }
-    }
+    ui.comboBox_profiles->setCurrentIndex(ui.comboBox_profiles->findText(Core::instance()->settings.value("current_profile")));
 }
 
 void DlgOptions::changePage(QModelIndex index)
