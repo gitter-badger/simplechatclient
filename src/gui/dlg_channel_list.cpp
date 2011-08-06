@@ -21,7 +21,6 @@
 #include <QDesktopWidget>
 #include <QKeyEvent>
 #include <QMessageBox>
-#include <QSettings>
 #include "core.h"
 #include "network.h"
 #include "dlg_channel_list.h"
@@ -738,8 +737,7 @@ void DlgChannelList::allCellDoubleClicked(int row, int column)
 
     if (isErotic(strChannel))
     {
-        QSettings settings;
-        if (settings.value("age_check").toString() == "on")
+        if (Core::instance()->settings.value("age_check") == "on")
         {
             QMessageBox msgBox;
             msgBox.setStyleSheet("background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:0.557, stop:0 rgba(198, 0, 0, 255), stop:1 rgba(255, 0, 0, 255));");
@@ -754,7 +752,7 @@ void DlgChannelList::allCellDoubleClicked(int row, int column)
             msgBox.exec();
 
             if (msgBox.clickedButton() == enterButton)
-                settings.setValue("age_check", "off");
+                Core::instance()->settings["age_check"] = "off";
             else
                 return;
         }
@@ -786,8 +784,7 @@ void DlgChannelList::eroticCellDoubleClicked(int row, int column)
 
     if (isErotic(strChannel))
     {
-        QSettings settings;
-        if (settings.value("age_check").toString() == "on")
+        if (Core::instance()->settings.value("age_check") == "on")
         {
             QMessageBox msgBox;
             msgBox.setStyleSheet("background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:0.557, stop:0 rgba(198, 0, 0, 255), stop:1 rgba(255, 0, 0, 255));");
@@ -803,7 +800,7 @@ void DlgChannelList::eroticCellDoubleClicked(int row, int column)
 
             if (msgBox.clickedButton() == enterButton)
             {
-                settings.setValue("age_check", "off");
+                Core::instance()->settings["age_check"] = "off";
                 pNetwork->send(QString("JOIN %1").arg(strChannel));
             }
         }

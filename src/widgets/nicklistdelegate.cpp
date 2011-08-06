@@ -19,7 +19,6 @@
  ****************************************************************************/
 
 #include <QPainter>
-#include <QSettings>
 #include "core.h"
 #include "nicklistdelegate.h"
 
@@ -37,13 +36,12 @@ void NickListDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opti
     // save
     painter->save();
 
-    QSettings settings;
-    QString strNicklistNickColor = settings.value("nicklist_nick_color").toString();
-    QString strNicklistSelectedNickColor = settings.value("nicklist_selected_nick_color").toString();
-    QString strNicklistBusyNickColor = settings.value("nicklist_busy_nick_color").toString();
-    QString strNicklistGradient1Color = settings.value("nicklist_gradient_1_color").toString();
-    QString strNicklistGradient2Color = settings.value("nicklist_gradient_2_color").toString();
-    QString strDisableAvatars = settings.value("disable_avatars").toString();
+    QString strNicklistNickColor = Core::instance()->settings.value("nicklist_nick_color");
+    QString strNicklistSelectedNickColor = Core::instance()->settings.value("nicklist_selected_nick_color");
+    QString strNicklistBusyNickColor = Core::instance()->settings.value("nicklist_busy_nick_color");
+    QString strNicklistGradient1Color = Core::instance()->settings.value("nicklist_gradient_1_color");
+    QString strNicklistGradient2Color = Core::instance()->settings.value("nicklist_gradient_2_color");
+    QString strDisableAvatars = Core::instance()->settings.value("disable_avatars");
 
     QPen fontPen(QColor(strNicklistNickColor), 1, Qt::SolidLine);
     QPen selectedFontPen(QColor(strNicklistSelectedNickColor), 1, Qt::SolidLine);
@@ -147,8 +145,7 @@ QSize NickListDelegate::sizeHint(const QStyleOptionViewItem &option, const QMode
     Q_UNUSED (option);
     Q_UNUSED (index);
 
-    QSettings settings;
-    QString strDisableAvatars = settings.value("disable_avatars").toString();
+    QString strDisableAvatars = Core::instance()->settings.value("disable_avatars");
 
     if (strDisableAvatars == "off") // with avatars
         return QSize(200, 35);

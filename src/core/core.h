@@ -49,8 +49,8 @@ public:
     void configProfileValues();
     void removeOldConfig();
     // from main
-    static QString version();
-    static void enableDebug();
+    QString version();
+    void setDebug(bool);
     // window
     void showSccWindow();
     MainWindow *sccWindow();
@@ -70,6 +70,8 @@ public:
     QString getUserModes(QString, QString);
     // get user max modes - for sorting
     int getUserMaxModes(QString, QString);
+    // settings
+    QMap<QString,QString> settings;
 
     QAction *lagAct;
     QList<QString> lAwaylog;

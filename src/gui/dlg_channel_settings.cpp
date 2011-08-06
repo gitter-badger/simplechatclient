@@ -22,7 +22,6 @@
 #include <QDesktopWidget>
 #include <QInputDialog>
 #include <QMessageBox>
-#include <QSettings>
 #include "convert.h"
 #include "core.h"
 #include "dlg_email.h"
@@ -482,8 +481,7 @@ void DlgChannelSettings::setOwner(QString strNick)
     ui.label_owner_nick->setText(strNick);
 
     // enable tabs
-    QSettings settings;
-    QString strMe = settings.value("nick").toString();
+    QString strMe = Core::instance()->settings.value("nick");
     if (strNick == strMe)
         enableTabs();
 }
@@ -516,8 +514,7 @@ void DlgChannelSettings::addOp(QString strNick)
     }
 
     // enable tabs
-    QSettings settings;
-    QString strMe = settings.value("nick").toString();
+    QString strMe = Core::instance()->settings.value("nick");
     if (strNick == strMe)
         enableTabs();
 }
@@ -533,8 +530,7 @@ void DlgChannelSettings::addHalfop(QString strNick)
     }
 
     // enable tabs
-    QSettings settings;
-    QString strMe = settings.value("nick").toString();
+    QString strMe = Core::instance()->settings.value("nick");
     if (strNick == strMe)
         enableTabs();
 }

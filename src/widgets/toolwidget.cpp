@@ -22,7 +22,6 @@
 #include <QHBoxLayout>
 #include <QMenu>
 #include <QPushButton>
-#include <QSettings>
 #include "core.h"
 #include "dlg_channel_settings.h"
 #include "dlg_emoticons.h"
@@ -232,8 +231,6 @@ ToolWidget::ToolWidget(QWidget *parent, Network *param1, InputWidget *param2, Dl
 
 void ToolWidget::setDefault()
 {
-    QSettings settings;
-
     // font buttons
     bShowFontButtons = false;
     separator1->hide();
@@ -245,7 +242,7 @@ void ToolWidget::setDefault()
     separator2->hide();
 
     // set default bold
-    if (settings.value("my_bold").toString() == "on")
+    if (Core::instance()->settings.value("my_bold") == "on")
     {
         bold->setChecked(true);
         bMyBold = true;
@@ -259,7 +256,7 @@ void ToolWidget::setDefault()
     }
 
     // set default italic
-    if (settings.value("my_italic").toString() == "on")
+    if (Core::instance()->settings.value("my_italic") == "on")
     {
         italic->setChecked(true);
         bMyItalic = true;
@@ -277,12 +274,12 @@ void ToolWidget::setDefault()
     pInputWidget->setFont(QFont(strMyFontFamily, -1, iWeight, bMyItalic));
 
     // set default font
-    QString strMyFont = settings.value("my_font").toString();
+    QString strMyFont = Core::instance()->settings.value("my_font");
     fontfamily->setText(strMyFont);
     strMyFontFamily = strMyFont;
 
     // set default color
-    QString strMyColor = settings.value("my_color").toString();
+    QString strMyColor = Core::instance()->settings.value("my_color");
     strCurrentColor = strMyColor;
 
     int iMyColor;
@@ -354,20 +351,19 @@ void ToolWidget::showFontButtonsClicked()
 
 void ToolWidget::boldClicked()
 {
-    QSettings settings;
     if (bMyBold)
     {
         bold->setChecked(false);
         bMyBold = false;
         strMyFontWeight = "";
-        settings.setValue("my_bold", "off");
+        Core::instance()->settings["my_bold"] = "off";
     }
     else
     {
         bold->setChecked(true);
         bMyBold = true;
         strMyFontWeight = "bold";
-        settings.setValue("my_bold", "on");
+        Core::instance()->settings["my_bold"] = "on";
     }
 
     int iWeight = (bMyBold ? 75 : 50);
@@ -376,20 +372,19 @@ void ToolWidget::boldClicked()
 
 void ToolWidget::italicClicked()
 {
-    QSettings settings;
     if (bMyItalic)
     {
         italic->setChecked(false);
         bMyItalic = false;
         strMyFontStyle = "";
-        settings.setValue("my_italic", "off");
+        Core::instance()->settings["my_italic"] = "off";
     }
     else
     {
         italic->setChecked(true);
         bMyItalic = true;
         strMyFontStyle = "italic";
-        settings.setValue("my_italic", "on");
+        Core::instance()->settings["my_italic"] = "on";
     }
 
     int iWeight = (bMyBold ? 75 : 50);
@@ -400,8 +395,7 @@ void ToolWidget::arialTriggered()
 {
     fontfamily->setText("Arial");
     strMyFontFamily = "Arial";
-    QSettings settings;
-    settings.setValue("my_font", strMyFontFamily);
+    Core::instance()->settings["my_font"] = strMyFontFamily;
 
     int iWeight = (bMyBold ? 75 : 50);
     pInputWidget->setFont(QFont(strMyFontFamily, -1, iWeight, bMyItalic));
@@ -411,8 +405,7 @@ void ToolWidget::timesTriggered()
 {
     fontfamily->setText("Times");
     strMyFontFamily = "Times";
-    QSettings settings;
-    settings.setValue("my_font", strMyFontFamily);
+    Core::instance()->settings["my_font"] = strMyFontFamily;
 
     int iWeight = (bMyBold ? 75 : 50);
     pInputWidget->setFont(QFont(strMyFontFamily, -1, iWeight, bMyItalic));
@@ -422,8 +415,7 @@ void ToolWidget::verdanaTriggered()
 {
     fontfamily->setText("Verdana");
     strMyFontFamily = "Verdana";
-    QSettings settings;
-    settings.setValue("my_font", strMyFontFamily);
+    Core::instance()->settings["my_font"] = strMyFontFamily;
 
     int iWeight = (bMyBold ? 75 : 50);
     pInputWidget->setFont(QFont(strMyFontFamily, -1, iWeight, bMyItalic));
@@ -433,8 +425,7 @@ void ToolWidget::tahomaTriggered()
 {
     fontfamily->setText("Tahoma");
     strMyFontFamily = "Tahoma";
-    QSettings settings;
-    settings.setValue("my_font", strMyFontFamily);
+    Core::instance()->settings["my_font"] = strMyFontFamily;
 
     int iWeight = (bMyBold ? 75 : 50);
     pInputWidget->setFont(QFont(strMyFontFamily, -1, iWeight, bMyItalic));
@@ -444,8 +435,7 @@ void ToolWidget::courierTriggered()
 {
     fontfamily->setText("Courier");
     strMyFontFamily = "Courier";
-    QSettings settings;
-    settings.setValue("my_font", strMyFontFamily);
+    Core::instance()->settings["my_font"] = strMyFontFamily;
 
     int iWeight = (bMyBold ? 75 : 50);
     pInputWidget->setFont(QFont(strMyFontFamily, -1, iWeight, bMyItalic));
@@ -522,8 +512,7 @@ void ToolWidget::colorClicked(int index)
     else if (index == 14) strCurrentColor = "#959595";
     else strCurrentColor = "#000000";
 
-    QSettings settings;
-    settings.setValue("my_color", strCurrentColor);
+    Core::instance()->settings["my_color"] = strCurrentColor;
 
     pInputWidget->setColor(strCurrentColor);
 }

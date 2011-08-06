@@ -18,12 +18,10 @@
  *                                                                          *
  ****************************************************************************/
 
-
 #include <QDateTime>
 #include <QDesktopWidget>
 #include <QDockWidget>
 #include <QMenuBar>
-#include <QSettings>
 #include <QSystemTrayIcon>
 #include <QTimer>
 #include <QToolBar>
@@ -145,8 +143,7 @@ MainWindow::~MainWindow()
     delete pDlgChannelSettings;
 
     // close network
-    QSettings settings;
-    settings.setValue("reconnect", "false");
+    Core::instance()->settings["reconnect"] = "false";
     QObject::disconnect(pNetwork, SIGNAL(clearAllNicklist()), this, SLOT(clearAllNicklist()));
     pNetwork->disconnect();
     pNetwork->quit();
@@ -206,8 +203,7 @@ void MainWindow::createGui()
     rightDockWidget->setWidget(pNickListWidget);
 
     // maximum size
-    QSettings settings;
-    QString strDisableAvatars = settings.value("disable_avatars").toString();
+    QString strDisableAvatars = Core::instance()->settings.value("disable_avatars");
     if (strDisableAvatars == "off") // with avatars
         rightDockWidget->setMaximumWidth(260);
     else // without avatars
@@ -420,14 +416,13 @@ void MainWindow::createSignals()
 
 void MainWindow::showOptions()
 {
-    QSettings settings;
-    QString strFirstRun = settings.value("first_run").toString();
+    QString strFirstRun = Core::instance()->settings.value("first_run");
 
     if (strFirstRun == "true")
     {
         Config *pConfig = new Config(false);
         pConfig->setValue("first_run", "false");
-        settings.setValue("first_run", "false");
+        Core::instance()->settings["first_run"] = "false";
         delete pConfig;
 
         QTimer::singleShot(1000*1, this, SLOT(openOptions())); // 1 sec
@@ -437,9 +432,8 @@ void MainWindow::showOptions()
 // refresh colors
 void MainWindow::refreshColors()
 {
-    QSettings settings;
-    QString strBackgroundColor = settings.value("background_color").toString();
-    QString strDefaultFontColor = settings.value("default_font_color").toString();
+    QString strBackgroundColor = Core::instance()->settings.value("background_color");
+    QString strDefaultFontColor = Core::instance()->settings.value("default_font_color");
 
     if (strBackgroundColor.toLower() != "#ffffff")
         this->setStyleSheet(QString("color:%1;background-color:%2;").arg(strDefaultFontColor).arg(strBackgroundColor));
@@ -473,19 +467,18 @@ bool MainWindow::networkIsConnected()
 // buttons
 void MainWindow::buttonConnect()
 {
-    QSettings settings;
     if (!networkIsConnected())
     {
         connectAct->setText(tr("&Disconnect"));
         connectAct->setIconText(tr("&Disconnect"));
         connectAct->setIcon(QIcon(":/images/oxygen/16x16/network-disconnect.png"));
-        settings.setValue("reconnect", "true");
+        Core::instance()->settings["reconnect"] = "true";
         networkConnect();
     }
     else
     {
-        settings.setValue("reconnect", "false");
-        settings.setValue("logged", "off");
+        Core::instance()->settings["reconnect"] = "false";
+        Core::instance()->settings["logged"] = "off";
         connectAct->setText(tr("&Connect"));
         connectAct->setIconText(tr("&Connect"));
         connectAct->setIcon(QIcon(":/images/oxygen/16x16/network-connect.png"));
@@ -520,8 +513,7 @@ void MainWindow::setConnectEnabled(bool bSet)
 
 void MainWindow::updateActions()
 {
-    QSettings settings;
-    QString strNick = settings.value("nick").toString();
+    QString strNick = Core::instance()->settings.value("nick");
 
     bool bRegistered = false;
     if (strNick[0] != '~')
@@ -575,36 +567,31 @@ void MainWindow::updateUsersCount()
 // onet dialogs
 void MainWindow::openChannelList()
 {
-    QSettings settings;
-    if ((pNetwork->isConnected()) && (pNetwork->isWritable()) && (settings.value("logged") == "on"))
+    if ((pNetwork->isConnected()) && (pNetwork->isWritable()) && (Core::instance()->settings.value("logged") == "on"))
         DlgChannelList(this, pNetwork).exec();
 }
 
 void MainWindow::openChannelHomes()
 {
-    QSettings settings;
-    if ((pNetwork->isConnected()) && (pNetwork->isWritable()) && (settings.value("logged") == "on"))
+    if ((pNetwork->isConnected()) && (pNetwork->isWritable()) && (Core::instance()->settings.value("logged") == "on"))
         DlgChannelHomes(this, pNetwork, pDlgChannelSettings).exec();
 }
 
 void MainWindow::openChannelFavourites()
 {
-    QSettings settings;
-    if ((pNetwork->isConnected()) && (pNetwork->isWritable()) && (settings.value("logged") == "on"))
+    if ((pNetwork->isConnected()) && (pNetwork->isWritable()) && (Core::instance()->settings.value("logged") == "on"))
         DlgChannelFavourites(this, pNetwork).exec();
 }
 
 void MainWindow::openFriends()
 {
-    QSettings settings;
-    if ((pNetwork->isConnected()) && (pNetwork->isWritable()) && (settings.value("logged") == "on"))
+    if ((pNetwork->isConnected()) && (pNetwork->isWritable()) && (Core::instance()->settings.value("logged") == "on"))
         DlgFriends(this, pNetwork).exec();
 }
 
 void MainWindow::openIgnore()
 {
-    QSettings settings;
-    if ((pNetwork->isConnected()) && (pNetwork->isWritable()) && (settings.value("logged") == "on"))
+    if ((pNetwork->isConnected()) && (pNetwork->isWritable()) && (Core::instance()->settings.value("logged") == "on"))
         DlgIgnore(this, pNetwork).exec();
 }
 
@@ -616,10 +603,9 @@ void MainWindow::buttonSetBusy()
     else
         Core::instance()->busyAct->setChecked(true);
 
-    QSettings settings;
-    if ((pNetwork->isConnected()) && (pNetwork->isWritable()) && (settings.value("logged") == "on"))
+    if ((pNetwork->isConnected()) && (pNetwork->isWritable()) && (Core::instance()->settings.value("logged") == "on"))
     {
-        bool bBusy = settings.value("busy").toString() == "on" ? true : false;
+        bool bBusy = Core::instance()->settings.value("busy") == "on" ? true : false;
 
         if (bBusy)
             pNetwork->send("BUSY 0");
@@ -636,10 +622,9 @@ void MainWindow::buttonSetAway()
     else
         Core::instance()->awayAct->setChecked(true);
 
-    QSettings settings;
-    if ((pNetwork->isConnected()) && (pNetwork->isWritable()) && (settings.value("logged") == "on"))
+    if ((pNetwork->isConnected()) && (pNetwork->isWritable()) && (Core::instance()->settings.value("logged") == "on"))
     {
-        bool bAway = settings.value("away").toString() == "on" ? true : false;
+        bool bAway = Core::instance()->settings.value("away") == "on" ? true : false;
 
         QString strReason;
         if (bAway)
@@ -653,8 +638,7 @@ void MainWindow::buttonSetAway()
 
 void MainWindow::openOfflinemsg()
 {
-    QSettings settings;
-    if ((pNetwork->isConnected()) && (pNetwork->isWritable()) && (settings.value("logged") == "on"))
+    if ((pNetwork->isConnected()) && (pNetwork->isWritable()) && (Core::instance()->settings.value("logged") == "on"))
         DlgOfflineMsg(this, pNetwork).exec();
 }
 
@@ -666,31 +650,26 @@ void MainWindow::openAwaylog()
 void MainWindow::openCams()
 {
 #ifdef Q_WS_WIN
-    QSettings settings;
-    if ((pNetwork->isConnected()) && (pNetwork->isWritable()) && (settings.value("logged") == "on"))
+    if ((pNetwork->isConnected()) && (pNetwork->isWritable()) && (Core::instance()->settings.value("logged") == "on"))
     {
-        QSettings settings;
-        QString strMe = settings.value("nick").toString();
+        QString strMe = Core::instance()->settings.value("nick");
         (new Kamerzysta(Core::instance()->kamerzystaSocket, pNetwork))->show(strMe);
     }
 #else
-    QSettings settings;
-    if ((pNetwork->isConnected()) && (pNetwork->isWritable()) && (settings.value("logged") == "on"))
+    if ((pNetwork->isConnected()) && (pNetwork->isWritable()) && (Core::instance()->settings.value("logged") == "on"))
         new DlgWebcam();
 #endif
 }
 
 void MainWindow::openMyStats()
 {
-    QSettings settings;
-    if ((pNetwork->isConnected()) && (pNetwork->isWritable()) && (settings.value("logged") == "on"))
+    if ((pNetwork->isConnected()) && (pNetwork->isWritable()) && (Core::instance()->settings.value("logged") == "on"))
         DlgMyStats(this).exec();
 }
 
 void MainWindow::openMyProfile()
 {
-    QSettings settings;
-    if ((pNetwork->isConnected()) && (pNetwork->isWritable()) && (settings.value("logged") == "on"))
+    if ((pNetwork->isConnected()) && (pNetwork->isWritable()) && (Core::instance()->settings.value("logged") == "on"))
         DlgMyProfile(this, pNetwork).exec();
 }
 
@@ -758,15 +737,14 @@ int MainWindow::getCurrentTabIndex()
 
 void MainWindow::timeoutAutoaway()
 {
-    QSettings settings;
-    if ((pNetwork->isConnected()) && (pNetwork->isWritable()) && (settings.value("logged") == "on"))
+    if ((pNetwork->isConnected()) && (pNetwork->isWritable()) && (Core::instance()->settings.value("logged") == "on"))
     {
         QDateTime cdt = QDateTime::currentDateTime();
         int t = (int)cdt.toTime_t(); // seconds that have passed since 1970
 
-        int iLastActive = settings.value("last_active").toInt();
+        int iLastActive = Core::instance()->settings.value("last_active").toInt();
 
-        bool bAway = settings.value("away").toString() == "on" ? true : false;
+        bool bAway = Core::instance()->settings.value("away") == "on" ? true : false;
 
         if ((!bAway) && (iLastActive != 0) && (t-iLastActive > 300))
             pNetwork->send(QString("AWAY :%1").arg(tr("Not here right now")));
@@ -778,14 +756,12 @@ void MainWindow::currentTabChanged(int index)
 {
     QString strChannel = Core::instance()->getChannelNameFromIndex(index);
 
-    QSettings settings;
-
     // change tab name
     QString strTabText = pTabM->tabText(index);
     this->setWindowTitle(QString("Simple Chat Client - [%1]").arg(strTabText));
 
     // change tab color
-    pTabM->setColor(index, QColor(settings.value("default_font_color").toString()));
+    pTabM->setColor(index, QColor(Core::instance()->settings.value("default_font_color")));
 
     // hide/show Status nicklist
     if (index == 0)
@@ -816,7 +792,7 @@ void MainWindow::currentTabChanged(int index)
     updateUsersCount();
 
     // moderation
-    QString strMe = settings.value("nick").toString();
+    QString strMe = Core::instance()->settings.value("nick");
     QString strModes = Core::instance()->getUserModes(strMe, strChannel);
     if (strModes.contains("!")) pInputLineDockWidget->enableModeration();
     else pInputLineDockWidget->disableModeration();
@@ -985,8 +961,7 @@ void MainWindow::changeFlag(QString strNick, QString strChannel, QString strNewF
     addUser(strChannel, strNick, strModes, false);
 
     // me ?
-    QSettings settings;
-    QString strMe = settings.value("nick").toString();
+    QString strMe = Core::instance()->settings.value("nick");
 
     if (strNick == strMe)
     {

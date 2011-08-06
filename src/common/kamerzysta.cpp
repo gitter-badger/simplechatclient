@@ -28,6 +28,7 @@
 #include <QTcpSocket>
 #include <QTimer>
 #include <QTextStream>
+#include "core.h"
 #include "log.h"
 #include "network.h"
 #include "kamerzysta.h"
@@ -66,8 +67,7 @@ void Kamerzysta::show(QString n)
 {
     strNick = n;
 
-    QSettings settings;
-    QString strUOKey = settings.value("uokey").toString();
+    QString strUOKey = Core::instance()->settings.value("uokey");
 
     log("Nick:"+strNick);
     log("UO:"+strUOKey);
@@ -77,8 +77,7 @@ void Kamerzysta::show(QString n)
 
 void Kamerzysta::log(QString strData)
 {
-    QSettings settings;
-    if (settings.value("debug").toString() == "on")
+    if (Core::instance()->settings.value("debug") == "on")
     {
         Log *l = new Log();
         QString strKamerzysta = "kamerzysta";
@@ -212,9 +211,8 @@ void Kamerzysta::getPort()
 
 void Kamerzysta::authorize()
 {
-    QSettings settings;
-    QString strMe = settings.value("nick").toString();
-    QString strUOKey = settings.value("uokey").toString();
+    QString strMe = Core::instance()->settings.value("nick");
+    QString strUOKey = Core::instance()->settings.value("uokey");
 
     networkSend(QString("d%1|%2").arg(strMe).arg(strUOKey));
 

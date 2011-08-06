@@ -22,7 +22,6 @@
 #include <QDesktopWidget>
 #include <QFileDialog>
 #include <QProcess>
-#include <QSettings>
 #include <QShowEvent>
 #include <QStyleFactory>
 #include "config.h"
@@ -204,8 +203,6 @@ void DlgOptions::createGui()
 
 void DlgOptions::setDefaultValues()
 {
-    QSettings settings;
-
     // open folder command
 #ifdef Q_WS_X11
     if (QFile::exists("/usr/bin/nautilus"))
@@ -261,8 +258,8 @@ void DlgOptions::setDefaultValues()
         ui.comboBox_embedded_styles->addItem(strStyleName);
 
     // sound beep
-    ui.lineEdit_sound_beep->setText(settings.value("sound_beep").toString());
-    ui.lineEdit_sound_query->setText(settings.value("sound_query").toString());
+    ui.lineEdit_sound_beep->setText(Core::instance()->settings.value("sound_beep"));
+    ui.lineEdit_sound_query->setText(Core::instance()->settings.value("sound_query"));
 
     // logs
     QString strLogsPath;
@@ -281,34 +278,34 @@ void DlgOptions::setDefaultValues()
         ui.pushButton_logs_open_folder->setEnabled(false);
 
     // background image
-    ui.lineEdit_background_image->setText(settings.value("background_image").toString());
+    ui.lineEdit_background_image->setText(Core::instance()->settings.value("background_image"));
 
     // default values
-    QString strStyle = settings.value("style").toString();
-    QString strLanguage = settings.value("language").toString();
+    QString strStyle = Core::instance()->settings.value("style");
+    QString strLanguage = Core::instance()->settings.value("language");
 
-    QString strAutoBusy = settings.value("auto_busy").toString();
-    QString strDisableAutojoinFavourites = settings.value("disable_autojoin_favourites").toString();
-    QString strShowZuo = settings.value("show_zuo").toString();
-    QString strHideFormating = settings.value("hide_formating").toString();
-    QString strHideJoinPart = settings.value("hide_join_part").toString();
-    QString strHideJoinPart200 = settings.value("hide_join_part_200").toString();
-    QString strDisableAvatars = settings.value("disable_avatars").toString();
-    QString strDisableEmots = settings.value("disable_emots").toString();
-    QString strDisableReplaces = settings.value("disable_replaces").toString();
+    QString strAutoBusy = Core::instance()->settings.value("auto_busy");
+    QString strDisableAutojoinFavourites = Core::instance()->settings.value("disable_autojoin_favourites");
+    QString strShowZuo = Core::instance()->settings.value("show_zuo");
+    QString strHideFormating = Core::instance()->settings.value("hide_formating");
+    QString strHideJoinPart = Core::instance()->settings.value("hide_join_part");
+    QString strHideJoinPart200 = Core::instance()->settings.value("hide_join_part_200");
+    QString strDisableAvatars = Core::instance()->settings.value("disable_avatars");
+    QString strDisableEmots = Core::instance()->settings.value("disable_emots");
+    QString strDisableReplaces = Core::instance()->settings.value("disable_replaces");
 
-    QString strMyBold = settings.value("my_bold").toString();
-    QString strMyItalic = settings.value("my_italic").toString();
-    QString strMyFont = settings.value("my_font").toString();
-    QString strMyColor = settings.value("my_color").toString();
-    QString strFontSize = settings.value("font_size").toString();
+    QString strMyBold = Core::instance()->settings.value("my_bold");
+    QString strMyItalic = Core::instance()->settings.value("my_italic");
+    QString strMyFont = Core::instance()->settings.value("my_font");
+    QString strMyColor = Core::instance()->settings.value("my_color");
+    QString strFontSize = Core::instance()->settings.value("font_size");
 
-    QString strSaveLogsByDate = settings.value("save_logs_by_date").toString();
-    QString strDisableLogs = settings.value("disable_logs").toString();
-    QString strDisableSounds = settings.value("disable_sounds").toString();
-    QString strDisableBackgroundImage = settings.value("disable_background_image").toString();
+    QString strSaveLogsByDate = Core::instance()->settings.value("save_logs_by_date");
+    QString strDisableLogs = Core::instance()->settings.value("disable_logs");
+    QString strDisableSounds = Core::instance()->settings.value("disable_sounds");
+    QString strDisableBackgroundImage = Core::instance()->settings.value("disable_background_image");
 
-    QString strWinamp = settings.value("winamp").toString();
+    QString strWinamp = Core::instance()->settings.value("winamp");
 
     // set style
     if (strStyle == "modern")
@@ -475,7 +472,7 @@ void DlgOptions::setDefaultValues()
     setNicklistColors();
 
     // disable change nick if connected
-    if (settings.value("logged").toString() == "on")
+    if (Core::instance()->settings.value("logged") == "on")
     {
         ui.groupBox_profiles->setDisabled(true);
         ui.groupBox_skins->setDisabled(true);
@@ -581,10 +578,9 @@ void DlgOptions::refreshProfilesList()
     }
 
     // set current profile
-    QSettings settings;
     for (int i = 0; i < ui.comboBox_profiles->count(); i++)
     {
-        if (ui.comboBox_profiles->itemText(i) == settings.value("current_profile").toString())
+        if (ui.comboBox_profiles->itemText(i) == Core::instance()->settings.value("current_profile"))
         {
             ui.comboBox_profiles->setCurrentIndex(i);
             return;
@@ -610,10 +606,9 @@ void DlgOptions::currentProfileChanged(int row)
     if (profileName.isEmpty())
         return;
 
-    QSettings settings;
     Config *pConfig = new Config(false);
-    settings.setValue("current_profile", profileName);
     pConfig->setValue("current_profile", profileName);
+    Core::instance()->settings["current_profile"] = profileName;
     delete pConfig;
 
     // refresh settings
@@ -637,12 +632,11 @@ void DlgOptions::buttonProfiles()
 void DlgOptions::setModernStyleAvatars()
 {
     // save style
-    QSettings settings;
     Config *pConfig = new Config();
     pConfig->setValue("style", "modern");
-    settings.setValue("style", "modern");
+    Core::instance()->settings["style"] = "modern";
     pConfig->setValue("disable_avatars", "off");
-    settings.setValue("disable_avatars", "off");
+    Core::instance()->settings["disable_avatars"] = "off";
     delete pConfig;
 
     ui.label_skins_warning->setText(tr("Restart program to apply the changes."));
@@ -651,12 +645,11 @@ void DlgOptions::setModernStyleAvatars()
 void DlgOptions::setModernStyleNoAvatars()
 {
     // save style
-    QSettings settings;
     Config *pConfig = new Config();
     pConfig->setValue("style", "modern");
-    settings.setValue("style", "modern");
+    Core::instance()->settings["style"] = "modern";
     pConfig->setValue("disable_avatars", "on");
-    settings.setValue("disable_avatars", "on");
+    Core::instance()->settings["disable_avatars"] = "on";
     delete pConfig;
 
     ui.label_skins_warning->setText(tr("Restart program to apply the changes."));
@@ -664,22 +657,21 @@ void DlgOptions::setModernStyleNoAvatars()
 
 void DlgOptions::languageChanged(int index)
 {
-    QSettings settings;
     Config *pConfig = new Config();
     if (index == 0) // english
     {
         pConfig->setValue("language", "en");
-        settings.setValue("language", "en");
+        Core::instance()->settings["language"] = "en";
     }
     else if (index == 1) // polish
     {
         pConfig->setValue("language", "pl");
-        settings.setValue("language", "pl");
+        Core::instance()->settings["language"] = "pl";
     }
     else // polish
     {
         pConfig->setValue("language", "pl");
-        settings.setValue("language", "pl");
+        Core::instance()->settings["language"] = "pl";
     }
     delete pConfig;
 
@@ -690,10 +682,9 @@ void DlgOptions::autoBusy(bool bValue)
 {
     QString strValue = (bValue ? "on" : "off");
 
-    QSettings settings;
     Config *pConfig = new Config();
     pConfig->setValue("auto_busy", strValue);
-    settings.setValue("auto_busy", strValue);
+    Core::instance()->settings["auto_busy"] = strValue;
     delete pConfig;
 }
 
@@ -701,10 +692,9 @@ void DlgOptions::disableAutojoinFavourites(bool bValue)
 {
     QString strValue = (bValue ? "on" : "off");
 
-    QSettings settings;
     Config *pConfig = new Config();
     pConfig->setValue("disable_autojoin_favourites", strValue);
-    settings.setValue("disable_autojoin_favourites", strValue);
+    Core::instance()->settings["disable_autojoin_favourites"] = strValue;
     delete pConfig;
 }
 
@@ -712,10 +702,9 @@ void DlgOptions::showZuo(bool bValue)
 {
     QString strValue = (bValue ? "on" : "off");
 
-    QSettings settings;
     Config *pConfig = new Config();
     pConfig->setValue("show_zuo", strValue);
-    settings.setValue("show_zuo", strValue);
+    Core::instance()->settings["show_zuo"] = strValue;
     delete pConfig;
 }
 
@@ -723,10 +712,9 @@ void DlgOptions::hideFormating(bool bValue)
 {
     QString strValue = (bValue ? "on" : "off");
 
-    QSettings settings;
     Config *pConfig = new Config();
     pConfig->setValue("hide_formating", strValue);
-    settings.setValue("hide_formating", strValue);
+    Core::instance()->settings["hide_formating"] = strValue;
     delete pConfig;
 }
 
@@ -734,10 +722,9 @@ void DlgOptions::hideJoinPart(bool bValue)
 {
     QString strValue = (bValue ? "on" : "off");
 
-    QSettings settings;
     Config *pConfig = new Config();
     pConfig->setValue("hide_join_part", strValue);
-    settings.setValue("hide_join_part", strValue);
+    Core::instance()->settings["hide_join_part"] = strValue;
     delete pConfig;
 }
 
@@ -745,10 +732,9 @@ void DlgOptions::hideJoinPart200(bool bValue)
 {
     QString strValue = (bValue ? "on" : "off");
 
-    QSettings settings;
     Config *pConfig = new Config();
     pConfig->setValue("hide_join_part_200", strValue);
-    settings.setValue("hide_join_part_200", strValue);
+    Core::instance()->settings["hide_join_part_200"] = strValue;
     delete pConfig;
 }
 
@@ -756,10 +742,9 @@ void DlgOptions::disableAvatars(bool bValue)
 {
     QString strValue = (bValue ? "on" : "off");
 
-    QSettings settings;
     Config *pConfig = new Config();
     pConfig->setValue("disable_avatars", strValue);
-    settings.setValue("disable_avatars", strValue);
+    Core::instance()->settings["disable_avatars"] = strValue;
     delete pConfig;
 }
 
@@ -767,10 +752,9 @@ void DlgOptions::disableEmots(bool bValue)
 {
     QString strValue = (bValue ? "on" : "off");
 
-    QSettings settings;
     Config *pConfig = new Config();
     pConfig->setValue("disable_emots", strValue);
-    settings.setValue("disable_emots", strValue);
+    Core::instance()->settings["disable_emots"] = strValue;
     delete pConfig;
 }
 
@@ -778,10 +762,9 @@ void DlgOptions::disableReplaces(bool bValue)
 {
     QString strValue = (bValue ? "on" : "off");
 
-    QSettings settings;
     Config *pConfig = new Config();
     pConfig->setValue("disable_replaces", strValue);
-    settings.setValue("disable_replaces", strValue);
+    Core::instance()->settings["disable_replaces"] = strValue;
     delete pConfig;
 }
 
@@ -789,10 +772,9 @@ void DlgOptions::setMyBold(int index)
 {
     QString strValue = (index == 0 ? "off" : "on");
 
-    QSettings settings;
     Config *pConfig = new Config();
     pConfig->setValue("my_bold", strValue);
-    settings.setValue("my_bold", strValue);
+    Core::instance()->settings["my_bold"] = strValue;
     delete pConfig;
 }
 
@@ -800,19 +782,17 @@ void DlgOptions::setMyItalic(int index)
 {
     QString strValue = (index == 0 ? "off" : "on");
 
-    QSettings settings;
     Config *pConfig = new Config();
     pConfig->setValue("my_italic", strValue);
-    settings.setValue("my_italic", strValue);
+    Core::instance()->settings["my_italic"] = strValue;
     delete pConfig;
 }
 
 void DlgOptions::setMyFont(QString strFont)
 {
-    QSettings settings;
     Config *pConfig = new Config();
     pConfig->setValue("my_font", strFont);
-    settings.setValue("my_font", strFont);
+    Core::instance()->settings["my_font"] = strFont;
     delete pConfig;
 }
 
@@ -836,19 +816,17 @@ void DlgOptions::setMyColor(int index)
     else if (index == 14) strMyColor = "#959595";
     else strMyColor = "#000000";
 
-    QSettings settings;
     Config *pConfig = new Config();
     pConfig->setValue("my_color", strMyColor);
-    settings.setValue("my_color", strMyColor);
+    Core::instance()->settings["my_color"] = strMyColor;
     delete pConfig;
 }
 
 void DlgOptions::setFontSize(QString strFontSize)
 {
-    QSettings settings;
     Config *pConfig = new Config();
     pConfig->setValue("font_size", strFontSize+"px");
-    settings.setValue("font_size", strFontSize+"px");
+    Core::instance()->settings["font_size"] = strFontSize+"px";
     delete pConfig;
 }
 
@@ -914,44 +892,43 @@ void DlgOptions::setChannelFontColor()
 
 void DlgOptions::mainwindowRestoreDefault()
 {
-    QSettings settings;
     Config *pConfig = new Config();
 
     pConfig->setValue("background_color", "#ffffff");
-    settings.setValue("background_color", "#ffffff");
+    Core::instance()->settings["background_color"] = "#ffffff";
 
     pConfig->setValue("default_font_color", "#000000");
-    settings.setValue("default_font_color", "#000000");
+    Core::instance()->settings["default_font_color"] = "#000000";
 
     pConfig->setValue("font_color_level_1", "#009300");
-    settings.setValue("font_color_level_1", "#009300");
+    Core::instance()->settings["font_color_level_1"] = "#009300";
 
     pConfig->setValue("font_color_level_2", "#4733FF");
-    settings.setValue("font_color_level_2", "#4733FF");
+    Core::instance()->settings["font_color_level_2"] = "#4733FF";
 
     pConfig->setValue("font_color_level_3", "#00007F");
-    settings.setValue("font_color_level_3", "#00007F");
+    Core::instance()->settings["font_color_level_3"] = "#00007F";
 
     pConfig->setValue("font_color_level_4", "#00007F");
-    settings.setValue("font_color_level_4", "#00007F");
+    Core::instance()->settings["font_color_level_4"] = "#00007F";
 
     pConfig->setValue("font_color_level_5", "#009300");
-    settings.setValue("font_color_level_5", "#009300");
+    Core::instance()->settings["font_color_level_5"] = "#009300";
 
     pConfig->setValue("font_color_level_6", "#0066FF");
-    settings.setValue("font_color_level_6", "#0066FF");
+    Core::instance()->settings["font_color_level_6"] = "#0066FF";
 
     pConfig->setValue("font_color_level_7", "#666666");
-    settings.setValue("font_color_level_7", "#666666");
+    Core::instance()->settings["font_color_level_7"] = "#666666";
 
     pConfig->setValue("font_color_level_8", "#800080");
-    settings.setValue("font_color_level_8", "#800080");
+    Core::instance()->settings["font_color_level_8"] = "#800080";
 
     pConfig->setValue("font_color_level_9", "#ff0000");
-    settings.setValue("font_color_level_9", "#ff0000");
+    Core::instance()->settings["font_color_level_9"] = "#ff0000";
 
     pConfig->setValue("channel_font_color", "#0000ff");
-    settings.setValue("channel_font_color", "#0000ff");
+    Core::instance()->settings["channel_font_color"] = "#0000ff";
 
     delete pConfig;
 
@@ -989,23 +966,22 @@ void DlgOptions::setNicklistGradient2Color()
 
 void DlgOptions::nicklistRestoreDefault()
 {
-    QSettings settings;
     Config *pConfig = new Config();
 
     pConfig->setValue("nicklist_nick_color", "#333333");
-    settings.setValue("nicklist_nick_color", "#333333");
+    Core::instance()->settings["nicklist_nick_color"] = "#333333";
 
     pConfig->setValue("nicklist_selected_nick_color", "#ffffff");
-    settings.setValue("nicklist_selected_nick_color", "#ffffff");
+    Core::instance()->settings["nicklist_selected_nick_color"] = "#ffffff";
 
     pConfig->setValue("nicklist_busy_nick_color", "#a0a0a4");
-    settings.setValue("nicklist_busy_nick_color", "#a0a0a4");
+    Core::instance()->settings["nicklist_busy_nick_color"] = "#a0a0a4";
 
     pConfig->setValue("nicklist_gradient_1_color", "#77d5f7");
-    settings.setValue("nicklist_gradient_1_color", "#77d5f7");
+    Core::instance()->settings["nicklist_gradient_1_color"] = "#77d5f7";
 
     pConfig->setValue("nicklist_gradient_2_color", "#1b86b7");
-    settings.setValue("nicklist_gradient_2_color", "#1b86b7");
+    Core::instance()->settings["nicklist_gradient_2_color"] = "#1b86b7";
 
     delete pConfig;
 
@@ -1040,11 +1016,10 @@ void DlgOptions::setSoundBeep()
                                      0);
     if (!fileName.isEmpty())
     {
-        QSettings settings;
         Config *pConfig = new Config();
 
         pConfig->setValue("sound_beep", fileName);
-        settings.setValue("sound_beep", fileName);
+        Core::instance()->settings["sound_beep"] = fileName;
 
         delete pConfig;
         ui.lineEdit_sound_beep->setText(fileName);
@@ -1062,11 +1037,10 @@ void DlgOptions::setSoundQuery()
                                      0);
     if (!fileName.isEmpty())
     {
-        QSettings settings;
         Config *pConfig = new Config();
 
         pConfig->setValue("sound_query", fileName);
-        settings.setValue("sound_query", fileName);
+        Core::instance()->settings["sound_query"] = fileName;
 
         delete pConfig;
         ui.lineEdit_sound_query->setText(fileName);
@@ -1077,10 +1051,9 @@ void DlgOptions::disableSounds(bool bValue)
 {
     QString strValue = (bValue ? "on" : "off");
 
-    QSettings settings;
     Config *pConfig = new Config();
     pConfig->setValue("disable_sounds", strValue);
-    settings.setValue("disable_sounds", strValue);
+    Core::instance()->settings["disable_sounds"] = strValue;
     delete pConfig;
 }
 
@@ -1096,10 +1069,9 @@ void DlgOptions::setSaveLogsByDate(bool bValue)
 {
     QString strValue = (bValue ? "on" : "off");
 
-    QSettings settings;
     Config *pConfig = new Config();
     pConfig->setValue("save_logs_by_date", strValue);
-    settings.setValue("save_logs_by_date", strValue);
+    Core::instance()->settings["save_logs_by_date"] = strValue;
     delete pConfig;
 }
 
@@ -1107,10 +1079,9 @@ void DlgOptions::disableLogs(bool bValue)
 {
     QString strValue = (bValue ? "on" : "off");
 
-    QSettings settings;
     Config *pConfig = new Config();
     pConfig->setValue("disable_logs", strValue);
-    settings.setValue("disable_logs", strValue);
+    Core::instance()->settings["disable_logs"] = strValue;
     delete pConfig;
 }
 
@@ -1125,11 +1096,10 @@ void DlgOptions::setBackgroundImage()
                                      0);
     if (!fileName.isEmpty())
     {
-        QSettings settings;
         Config *pConfig = new Config();
 
         pConfig->setValue("background_image", fileName);
-        settings.setValue("background_image", fileName);
+        Core::instance()->settings["background_image"] = fileName;
 
         delete pConfig;
         ui.lineEdit_background_image->setText(fileName);
@@ -1143,10 +1113,9 @@ void DlgOptions::disableBackgroundImage(bool bValue)
 {
     QString strValue = (bValue ? "on" : "off");
 
-    QSettings settings;
     Config *pConfig = new Config();
     pConfig->setValue("disable_background_image", strValue);
-    settings.setValue("disable_background_image", strValue);
+    Core::instance()->settings["disable_background_image"] = strValue;
     delete pConfig;
 
     // refresh
@@ -1157,18 +1126,16 @@ void DlgOptions::setWinamp()
 {
     QString strValue = ui.lineEdit_winamp->text();
 
-    QSettings settings;
     Config *pConfig = new Config();
     pConfig->setValue("winamp", strValue);
-    settings.setValue("winamp", strValue);
+    Core::instance()->settings["winamp"] = strValue;
     delete pConfig;
 }
 
 void DlgOptions::setColor(QString strKey)
 {
     // get current value
-    QSettings settings;
-    QString strDefaultColor = settings.value(strKey).toString();
+    QString strDefaultColor = Core::instance()->settings.value(strKey);
 
     // color dialog
     QColor cColor = QColorDialog::getColor(QColor(strDefaultColor), this);
@@ -1181,7 +1148,7 @@ void DlgOptions::setColor(QString strKey)
         // save
         Config *pConfig = new Config();
         pConfig->setValue(strKey, strColor);
-        settings.setValue(strKey, strColor);
+        Core::instance()->settings[strKey] = strColor;
         delete pConfig;
 
         // save to pushbutton
@@ -1232,19 +1199,18 @@ void DlgOptions::setColor(QString strKey)
 
 void DlgOptions::setMainwindowColors()
 {
-    QSettings settings;
-    QString strBackgroundColor = settings.value("background_color").toString();
-    QString strDefaultFontColor = settings.value("default_font_color").toString();
-    QString strJoinFontColor = settings.value("font_color_level_1").toString();
-    QString strPartFontColor = settings.value("font_color_level_2").toString();
-    QString strQuitFontColor = settings.value("font_color_level_3").toString();
-    QString strKickFontColor = settings.value("font_color_level_4").toString();
-    QString strModeFontColor = settings.value("font_color_level_5").toString();
-    QString strNoticeFontColor = settings.value("font_color_level_6").toString();
-    QString strInfoFontColor = settings.value("font_color_level_7").toString();
-    QString strMeFontColor = settings.value("font_color_level_8").toString();
-    QString strErrorFontColor = settings.value("font_color_level_9").toString();
-    QString strChannelFontColor = settings.value("channel_font_color").toString();
+    QString strBackgroundColor = Core::instance()->settings.value("background_color");
+    QString strDefaultFontColor = Core::instance()->settings.value("default_font_color");
+    QString strJoinFontColor = Core::instance()->settings.value("font_color_level_1");
+    QString strPartFontColor = Core::instance()->settings.value("font_color_level_2");
+    QString strQuitFontColor = Core::instance()->settings.value("font_color_level_3");
+    QString strKickFontColor = Core::instance()->settings.value("font_color_level_4");
+    QString strModeFontColor = Core::instance()->settings.value("font_color_level_5");
+    QString strNoticeFontColor = Core::instance()->settings.value("font_color_level_6");
+    QString strInfoFontColor = Core::instance()->settings.value("font_color_level_7");
+    QString strMeFontColor = Core::instance()->settings.value("font_color_level_8");
+    QString strErrorFontColor = Core::instance()->settings.value("font_color_level_9");
+    QString strChannelFontColor = Core::instance()->settings.value("channel_font_color");
 
     // set background color
     QPixmap bcolor(50,15);
@@ -1309,12 +1275,11 @@ void DlgOptions::setMainwindowColors()
 
 void DlgOptions::setNicklistColors()
 {
-    QSettings settings;
-    QString strNicklistNickColor = settings.value("nicklist_nick_color").toString();
-    QString strNicklistSelectedNickColor = settings.value("nicklist_selected_nick_color").toString();
-    QString strNicklistBusyNickColor = settings.value("nicklist_busy_nick_color").toString();
-    QString strNicklistGradient1Color = settings.value("nicklist_gradient_1_color").toString();
-    QString strNicklistGradient2Color = settings.value("nicklist_gradient_2_color").toString();
+    QString strNicklistNickColor = Core::instance()->settings.value("nicklist_nick_color");
+    QString strNicklistSelectedNickColor = Core::instance()->settings.value("nicklist_selected_nick_color");
+    QString strNicklistBusyNickColor = Core::instance()->settings.value("nicklist_busy_nick_color");
+    QString strNicklistGradient1Color = Core::instance()->settings.value("nicklist_gradient_1_color");
+    QString strNicklistGradient2Color = Core::instance()->settings.value("nicklist_gradient_2_color");
 
     // set nicklist nick color
     QPixmap nncolor(50,15);

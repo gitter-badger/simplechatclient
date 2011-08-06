@@ -20,8 +20,8 @@
 
 #include <QCoreApplication>
 #include <QFile>
-#include <QSettings>
 #include <QStringListIterator>
+#include "core.h"
 #include "convert.h"
 
 Convert::Convert() : bRemovedBold(false), bRemovedItalic(false), iRemovedColor(-1)
@@ -114,8 +114,7 @@ void Convert::convertText(QString &strData, QString &strLastContent)
     }
 
     // colors
-    QSettings settings;
-    if (settings.value("hide_formating").toString() == "off")
+    if (Core::instance()->settings.value("hide_formating") == "off")
     {
         int iCount = strData.count("%C");
 
@@ -181,11 +180,11 @@ void Convert::convertText(QString &strData, QString &strLastContent)
                     QString strEmoticonFull2 = strPath+"/3rdparty/emoticons_other/"+strEmoticon+".gif";
                     QFile f1(strEmoticonFull1);
                     QFile f2(strEmoticonFull2);
-                    if ((f1.exists()) && (settings.value("hide_formating").toString() == "off") && (settings.value("disable_emots").toString() == "off"))
+                    if ((f1.exists()) && (Core::instance()->settings.value("hide_formating") == "off") && (Core::instance()->settings.value("disable_emots") == "off"))
                     {
                         strInsert = "<img src=\""+strEmoticonFull1+"\" alt=\""+strEmoticon+"\" />";
                     }
-                    else if ((f2.exists()) && (settings.value("hide_formating").toString() == "off") && (settings.value("disable_emots").toString() == "off"))
+                    else if ((f2.exists()) && (Core::instance()->settings.value("hide_formating") == "off") && (Core::instance()->settings.value("disable_emots") == "off"))
                     {
                         strInsert = "<img src=\""+strEmoticonFull2+"\" alt=\""+strEmoticon+"\" />";
                     }

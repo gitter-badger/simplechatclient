@@ -25,8 +25,8 @@
 #include <QNetworkCookieJar>
 #include <QNetworkReply>
 #include <QNetworkRequest>
-#include <QSettings>
 #include <QUrl>
+#include "core.h"
 #include "dlg_captcha.h"
 #include "tab_container.h"
 #include "onet_auth.h"
@@ -83,16 +83,15 @@ void OnetAuth::authorize(QString strNick, QString strNickAuth, QString strPass)
         return;
     }
 
-    QSettings settings;
 #ifdef Q_WS_X11
-    if (settings.value("debug").toString() == "on")
+    if (Core::instance()->settings.value("debug") == "on")
     {
-        qDebug() << "Logged: " << settings.value("logged").toString();
+        qDebug() << "Logged: " << Core::instance()->settings.value("logged");
         qDebug() << "Authorizing: " << bAuthorizing;
     }
 #endif
 
-    if (settings.value("logged").toString() == "on") return; // already logged
+    if (Core::instance()->settings.value("logged") == "on") return; // already logged
 
     if (bAuthorizing) return; // already authorizing
 
@@ -105,7 +104,7 @@ void OnetAuth::authorize(QString strNick, QString strNickAuth, QString strPass)
     QNetworkCookieJar *cookieJar = new QNetworkCookieJar();
     accessManager->setCookieJar(cookieJar);
 
-    QString strOverride = settings.value("override").toString();
+    QString strOverride = Core::instance()->settings.value("override");
 
     if (strOverride == "on")
         bOverride = true;
@@ -113,17 +112,17 @@ void OnetAuth::authorize(QString strNick, QString strNickAuth, QString strPass)
         bOverride = false;
 
 #ifdef Q_WS_X11
-    if (settings.value("debug").toString() == "on") { qDebug() << "Override: " << bOverride; }
+    if (Core::instance()->settings.value("debug") == "on") { qDebug() << "Override: " << bOverride; }
 #endif
 
 #ifdef Q_WS_X11
-    if (settings.value("debug").toString() == "on") { qDebug() << "Request: chat"; }
+    if (Core::instance()->settings.value("debug") == "on") { qDebug() << "Request: chat"; }
 #endif
     // chat
     networkRequest(accessManager, "http://czat.onet.pl/chat.html", "ch=&n=&p=&category=0");
 
 #ifdef Q_WS_X11
-    if (settings.value("debug").toString() == "on") { qDebug() << "Request: deploy"; }
+    if (Core::instance()->settings.value("debug") == "on") { qDebug() << "Request: deploy"; }
 #endif
     // deploy
     QString strVersion = networkRequest(accessManager, "http://czat.onet.pl/_s/deployOnetCzat.js", QString::null);
@@ -134,20 +133,20 @@ void OnetAuth::authorize(QString strNick, QString strNickAuth, QString strPass)
     QString strVersionLen = QString("%1").arg(strVersion.length());
 
 #ifdef Q_WS_X11
-    if (settings.value("debug").toString() == "on") { qDebug() << "Request: kropka"; }
+    if (Core::instance()->settings.value("debug") == "on") { qDebug() << "Request: kropka"; }
 #endif
     // kropka
     QString strKropka = "http://kropka.onet.pl/_s/kropka/1?DV=czat%2Fchat&SC=1&IP=&DG=id%3Dno-gemius&RI=&C1=&CL=std161&CS=1280x800x24&CW=1280x243&DU=http://czat.onet.pl/chat.html&DR=http://czat.onet.pl/";
     networkRequest(accessManager, strKropka, QString::null);
 
 #ifdef Q_WS_X11
-    if (settings.value("debug").toString() == "on") { qDebug() << "Request: kropka full"; }
+    if (Core::instance()->settings.value("debug") == "on") { qDebug() << "Request: kropka full"; }
 #endif
     // full
     networkRequest(accessManager, "http://kropka.onet.pl/_s/kropka/1?DV=czat/applet/FULL", QString::null);
 
 #ifdef Q_WS_X11
-    if (settings.value("debug").toString() == "on") { qDebug() << "Request: sk"; }
+    if (Core::instance()->settings.value("debug") == "on") { qDebug() << "Request: sk"; }
 #endif
     // sk
     networkRequest(accessManager, "http://czat.onet.pl/sk.gif", QString::null);
@@ -156,14 +155,14 @@ void OnetAuth::authorize(QString strNick, QString strNickAuth, QString strPass)
     if (!strPass.isEmpty())
     {
 #ifdef Q_WS_X11
-        if (settings.value("debug").toString() == "on") { qDebug() << "Request: secure kropka"; }
+        if (Core::instance()->settings.value("debug") == "on") { qDebug() << "Request: secure kropka"; }
 #endif
         // secure kropka
         QString strSecureKropka = "http://kropka.onet.pl/_s/kropka/1?DV=secure&SC=1&CL=std161&CS=1280x800x24&CW=1280x243&DU=http://secure.onet.pl/&DR=";
         networkRequest(accessManager, strSecureKropka, QString::null);
 
 #ifdef Q_WS_X11
-        if (settings.value("debug").toString() == "on") { qDebug() << "Request: secure login"; }
+        if (Core::instance()->settings.value("debug") == "on") { qDebug() << "Request: secure login"; }
 #endif
         // secure login
         strData = QString("r=&url=&login=%1&haslo=%2&app_id=20&ssl=1&ok=1").arg(strNick).arg(strPass);
@@ -172,7 +171,7 @@ void OnetAuth::authorize(QString strNick, QString strNickAuth, QString strPass)
         if (bOverride)
         {
 #ifdef Q_WS_X11
-            if (settings.value("debug").toString() == "on") { qDebug() << "Request: override"; }
+            if (Core::instance()->settings.value("debug") == "on") { qDebug() << "Request: override"; }
 #endif
             // override
             strData = QString("api_function=userOverride&params=a:1:{s:4:\"nick\";s:%1:\"%2\";}").arg(strNickLen).arg(strNick);
@@ -180,7 +179,7 @@ void OnetAuth::authorize(QString strNick, QString strNickAuth, QString strPass)
         }
 
 #ifdef Q_WS_X11
-        if (settings.value("debug").toString() == "on") { qDebug() << "Request: getuo"; }
+        if (Core::instance()->settings.value("debug") == "on") { qDebug() << "Request: getuo"; }
 #endif
         // getuo
         strData = QString("api_function=getUoKey&params=a:3:{s:4:\"nick\";s:%1:\"%2\";s:8:\"tempNick\";i:0;s:7:\"version\";s:%3:\"%4\";}").arg(strNickLen).arg(strNick).arg(strVersionLen).arg(strVersion);
@@ -194,14 +193,14 @@ void OnetAuth::authorize(QString strNick, QString strNickAuth, QString strPass)
         DlgCaptcha(accessManager, &strCaptcha).exec();
 
 #ifdef Q_WS_X11
-        if (settings.value("debug").toString() == "on") { qDebug() << "Request: check code"; }
+        if (Core::instance()->settings.value("debug") == "on") { qDebug() << "Request: check code"; }
 #endif
         // check code
         strData = QString("api_function=checkCode&params=a:1:{s:4:\"code\";s:%1:\"%2\";}").arg(strCaptcha.size()).arg(strCaptcha);
         strGetUo = networkRequest(accessManager, "http://czat.onet.pl/include/ajaxapi.xml.php3", strData);
 
 #ifdef Q_WS_X11
-        if (settings.value("debug").toString() == "on") { qDebug() << "Request: getuo"; }
+        if (Core::instance()->settings.value("debug") == "on") { qDebug() << "Request: getuo"; }
 #endif
         // getuo
         strData = QString("api_function=getUoKey&params=a:3:{s:4:\"nick\";s:%1:\"%2\";s:8:\"tempNick\";i:1;s:7:\"version\";s:%3:\"%4\";}").arg(strNickLen).arg(strNick).arg(strVersionLen).arg(strVersion);
@@ -209,7 +208,7 @@ void OnetAuth::authorize(QString strNick, QString strNickAuth, QString strPass)
     }
 
     // not empty key; not logged
-    if ((!strGetUo.isEmpty()) && (settings.value("logged") == "off"))
+    if ((!strGetUo.isEmpty()) && (Core::instance()->settings.value("logged") == "off"))
     {
         requestFinished(strNickAuth, strGetUo);
 
@@ -223,8 +222,6 @@ void OnetAuth::authorize(QString strNick, QString strNickAuth, QString strPass)
 
 void OnetAuth::saveCookies(QNetworkAccessManager *accessManager)
 {
-    QSettings settings;
-
     // save cookies
     QList<QNetworkCookie> cookies = accessManager->cookieJar()->cookiesForUrl(QUrl("http://czat.onet.pl"));
     for (QList<QNetworkCookie>::iterator i = cookies.begin(); i != cookies.end(); ++i)
@@ -233,15 +230,15 @@ void OnetAuth::saveCookies(QNetworkAccessManager *accessManager)
         QString strValue = i->value();
 
         if (strKey == "onet_ubi")
-            settings.setValue("onet_ubi", strValue);
+            Core::instance()->settings["onet_ubi"] = strValue;
         else if (strKey == "onet_cid")
-            settings.setValue("onet_cid", strValue);
+            Core::instance()->settings["onet_cid"] = strValue;
         else if (strKey == "onet_sid")
-            settings.setValue("onet_sid", strValue);
+            Core::instance()->settings["onet_sid"] = strValue;
         else if (strKey == "onet_uid")
-            settings.setValue("onet_uid", strValue);
+            Core::instance()->settings["onet_uid"] = strValue;
         else if (strKey == "onetzuo_ticket")
-            settings.setValue("onetzuo_ticket", strValue);
+            Core::instance()->settings["onetzuo_ticket"] = strValue;
     }
 }
 
@@ -284,9 +281,8 @@ void OnetAuth::requestFinished(QString strNickAuth, QString strData)
             QString strUOKey = doc.elementsByTagName("uoKey").item(0).toElement().text();
             QString strNick = doc.elementsByTagName("zuoUsername").item(0).toElement().text();
 
-            QSettings settings;
-            settings.setValue("uokey", strUOKey);
-            settings.setValue("uo_nick", strNick);
+            Core::instance()->settings["uokey"] = strUOKey;
+            Core::instance()->settings["uo_nick"] = strNick;
 
             // send auth
             emit send(QString("NICK %1").arg(strNickAuth));

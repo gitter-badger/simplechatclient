@@ -22,7 +22,6 @@
 #include <QDir>
 #include <QFile>
 #include <QPushButton>
-#include <QSettings>
 #include <QTextStream>
 #include "dlg_notes.h"
 

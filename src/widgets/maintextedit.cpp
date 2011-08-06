@@ -24,7 +24,6 @@
 #include <QFile>
 #include <QInputDialog>
 #include <QMenu>
-#include <QSettings>
 #include <QTextBlock>
 #include <QUrl>
 #include "animatedemoticonwidget.h"
@@ -64,9 +63,8 @@ MainTextEdit::~MainTextEdit()
 
 void MainTextEdit::updateBackgroundImage()
 {
-    QSettings settings;
-    QString strBackgroundImage = settings.value("background_image").toString();
-    QString strDisableBackgroundImage = settings.value("disable_background_image").toString();
+    QString strBackgroundImage = Core::instance()->settings.value("background_image");
+    QString strDisableBackgroundImage = Core::instance()->settings.value("disable_background_image");
 
     if ((strDisableBackgroundImage == "off") && (!strBackgroundImage.isEmpty()))
         this->setStyleSheet("QTextEdit{background-image: url("+strBackgroundImage+"); background-attachment: fixed; background-position: center; background-repeat: no-repeat; background-color: #ffffff; }");
@@ -284,8 +282,7 @@ void MainTextEdit::menuChannel(QString strChannel, QContextMenuEvent *event)
 
 void MainTextEdit::menuNick(QString strNick, QContextMenuEvent *event)
 {
-    QSettings settings;
-    QString strMe = settings.value("nick").toString();
+    QString strMe = Core::instance()->settings.value("nick");
     QString strSelfModes = Core::instance()->getUserModes(strMe, strChannel);
     int iSelfMaxModes = Core::instance()->getUserMaxModes(strMe, strChannel);
     QString strNickModes = Core::instance()->getUserModes(strNick, strChannel);

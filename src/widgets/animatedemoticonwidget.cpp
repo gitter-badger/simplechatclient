@@ -20,17 +20,16 @@
 
 #include <QLabel>
 #include <QMovie>
-#include <QSettings>
 #include <QTextEdit>
 #include <QVBoxLayout>
+#include "core.h"
 #include "animatedemoticonwidget.h"
 
 AnimatedEmoticonWidget::AnimatedEmoticonWidget(QTextEdit *parent) : QWidget(parent)
 {
     parentWidget = parent;
 
-    QSettings settings;
-    QString strBackgroundColor = settings.value("background_color").toString();
+    QString strBackgroundColor = Core::instance()->settings.value("background_color");
     this->setStyleSheet(QString("background-color:%1").arg(strBackgroundColor));
 
     label = new QLabel();

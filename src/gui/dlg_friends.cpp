@@ -20,7 +20,6 @@
 
 #include <QDesktopWidget>
 #include <QInputDialog>
-#include <QSettings>
 #include <QShowEvent>
 #include <QTimer>
 #include "core.h"
@@ -91,8 +90,7 @@ void DlgFriends::refresh()
             item->setText(i.key());
             item->setIcon(QIcon(":/images/oxygen/16x16/meeting-attending.png"));
 
-            QSettings settings;
-            if (settings.value("disable_avatars").toString() == "off") // with avatars
+            if (Core::instance()->settings.value("disable_avatars") == "off") // with avatars
                 pNetwork->send(QString("NS INFO %1 s").arg(i.key()));
         }
 

@@ -20,7 +20,6 @@
 
 #include <QDesktopWidget>
 #include <QPushButton>
-#include <QSettings>
 #include "core.h"
 #include "simplestatswidget.h"
 #include "dlg_my_stats.h"

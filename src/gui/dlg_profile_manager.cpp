@@ -21,7 +21,6 @@
 #include <QDesktopWidget>
 #include <QDir>
 #include <QMessageBox>
-#include <QSettings>
 #include "core.h"
 #include "mainwindow.h"
 #include "dlg_options.h"
@@ -186,8 +185,7 @@ void DlgProfileManager::removeProfile()
 
         refreshAllLists();
 
-        QSettings settings;
-        if (profileName == settings.value("current_profile").toString())
+        if (profileName == Core::instance()->settings.value("current_profile"))
             options->setCurrentProfile(0);
     }
 }

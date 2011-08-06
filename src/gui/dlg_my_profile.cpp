@@ -21,7 +21,6 @@
 #include <QDate>
 #include <QDesktopWidget>
 #include <QPushButton>
-#include <QSettings>
 #include "core.h"
 #include "convert.h"
 #include "network.h"
@@ -144,8 +143,7 @@ void DlgMyProfile::createSignals()
 
 void DlgMyProfile::refresh()
 {
-    QSettings settings;
-    QString strMe = settings.value("nick").toString();
+    QString strMe = Core::instance()->settings.value("nick");
 
     QMap<QString, QString>::const_iterator i = Core::instance()->mMyProfile.constBegin();
     while (i != Core::instance()->mMyProfile.constEnd())

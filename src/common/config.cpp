@@ -21,8 +21,8 @@
 #include <QCoreApplication>
 #include <QDir>
 #include <QFile>
-#include <QSettings>
 #include <QTextStream>
+#include "core.h"
 #include "config.h"
 
 #ifdef Q_WS_X11
@@ -53,8 +53,7 @@ Config::Config(bool b, QString p) : bProfileConfig(b), strForceProfile(p)
         if (!QDir().exists(path))
             QDir().mkdir(path);
 
-        QSettings settings;
-        QString user = (strForceProfile.isEmpty() ? settings.value("current_profile").toString() : strForceProfile);
+        QString user = (strForceProfile.isEmpty() ? Core::instance()->settings.value("current_profile") : strForceProfile);
         if (user.isEmpty()) user = "~test";
 
         strConfigFile = path+"/"+user+".xml";

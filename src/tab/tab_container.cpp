@@ -19,7 +19,6 @@
  ****************************************************************************/
 
 #include <QDateTime>
-#include <QSettings>
 #include "core.h"
 #include "log.h"
 #include "network.h"
@@ -174,8 +173,7 @@ void TabContainer::showMsg(QString &strTime, QString &strChannel, QString &strDa
     if (i != -1)
     {
         // hilight
-        QSettings settings;
-        QString strMe = settings.value("nick").toString();
+        QString strMe = Core::instance()->settings.value("nick");
 
         if (strData.contains(QRegExp("(\\s|\\W)"+strMe+"\\b")))
         {
@@ -215,8 +213,7 @@ void TabContainer::showMsg(QString &strChannel, QString &strData, MessageCategor
     if (i != -1)
     {
         // hilight
-        QSettings settings;
-        QString strMe = settings.value("nick").toString();
+        QString strMe = Core::instance()->settings.value("nick");
 
         if (strData.contains(QRegExp("(\\s|\\W)"+strMe+"\\b")))
         {
@@ -348,12 +345,11 @@ void TabContainer::slotClearContent(QString strChannel)
 
 void TabContainer::refreshColors()
 {
-    QSettings settings;
     for (int i = 0; i < tw.size(); i++)
     {
         tw[i]->refreshColors();
         // update tab name color
-        pTabM->setColor(i, QColor(settings.value("default_font_color").toString()));
+        pTabM->setColor(i, QColor(Core::instance()->settings.value("default_font_color")));
     }
 }
 

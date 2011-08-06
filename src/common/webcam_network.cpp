@@ -19,9 +19,9 @@
  ****************************************************************************/
 
 #include <QDateTime>
-#include <QSettings>
 #include <QTcpSocket>
 #include <QTimer>
+#include "core.h"
 #include "webcam_network.h"
 
 WebcamNetwork::WebcamNetwork()
@@ -115,8 +115,7 @@ void WebcamNetwork::networkSendb(QByteArray qbaData)
         else
         {
 #ifdef Q_WS_X11
-            QSettings settings;
-            if (settings.value("debug").toString() == "on")
+            if (Core::instance()->settings.value("debug") == "on")
                 qDebug() << "CAM -> " << QString(qbaData);
 #endif
         }

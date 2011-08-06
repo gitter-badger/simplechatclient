@@ -20,7 +20,6 @@
 
 #include <QDesktopWidget>
 #include <QInputDialog>
-#include <QSettings>
 #include <QTimer>
 #include "core.h"
 #include "network.h"
@@ -88,8 +87,7 @@ void DlgIgnore::refresh()
 
             ui.listWidget_nicks->addItem(item);
 
-            QSettings settings;
-            if (settings.value("disable_avatars").toString() == "off") // with avatars
+            if (Core::instance()->settings.value("disable_avatars") == "off") // with avatars
                 pNetwork->send(QString("NS INFO %1 s").arg(strNick));
         }
     }

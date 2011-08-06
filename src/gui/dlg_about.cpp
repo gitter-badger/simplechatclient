@@ -20,7 +20,7 @@
 
 #include <QDesktopWidget>
 #include <QPushButton>
-#include <QSettings>
+#include "core.h"
 #include "dlg_about.h"
 
 DlgAbout::DlgAbout(QWidget *parent) : QDialog(parent)
@@ -46,8 +46,7 @@ void DlgAbout::createGui()
 
 void DlgAbout::setDefaultValues()
 {
-    QSettings settings;
-    QString version = settings.value("version").toString();
+    QString version = Core::instance()->settings.value("version");
 
     QString strVersion = "<p style=\"font-size:16px;\"><b>Simple Chat Client</b></p>";
     strVersion += "<p><b>"+tr("Version")+" "+version+"</b></p>";

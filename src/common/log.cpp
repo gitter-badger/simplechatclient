@@ -22,8 +22,8 @@
 #include <QDate>
 #include <QDir>
 #include <QFile>
-#include <QSettings>
 #include <QTextStream>
+#include "core.h"
 #include "log.h"
 
 #ifdef Q_WS_X11
@@ -64,8 +64,7 @@ void Log::save(QString &strChannel, QString &strData)
         QDir().mkdir(path);
 
     // save logs by date
-    QSettings settings;
-    bool bSaveLogsByDate = settings.value("save_logs_by_date").toString() == "on" ? true : false;
+    bool bSaveLogsByDate = Core::instance()->settings.value("save_logs_by_date") == "on" ? true : false;
 
     if (bSaveLogsByDate)
     {

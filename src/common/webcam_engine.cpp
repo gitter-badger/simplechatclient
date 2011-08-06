@@ -19,8 +19,8 @@
  ****************************************************************************/
 
 #include <QDateTime>
-#include <QSettings>
 #include <QStringList>
+#include "core.h"
 #include "webcam_network.h"
 #include "webcam_engine.h"
 
@@ -88,9 +88,8 @@ void WebcamEngine::disconnected()
 void WebcamEngine::dataKernel(QByteArray bData)
 {
 #ifdef Q_WS_X11
-        QSettings settings;
-        if (settings.value("debug").toString() == "on")
-            qDebug() << "CAM byte <- " << bData;
+    if (Core::instance()->settings.value("debug") == "on")
+        qDebug() << "CAM byte <- " << bData;
 #endif
 
     if (iCamCmd == 202)
@@ -256,8 +255,7 @@ void WebcamEngine::raw_252b(QByteArray &data)
     if (strStatus.left(9) == "SETSTATUS")
     {
 #ifdef Q_WS_X11
-        QSettings settings;
-        if (settings.value("debug").toString() == "on")
+        if (Core::instance()->settings.value("debug") == "on")
             qDebug() << "CAM <- " << strStatus;
 #endif
         strStatus.remove("SETSTATUS ");
@@ -306,8 +304,7 @@ void WebcamEngine::raw_403b(QByteArray &data)
 {
     QString strError = data;
 #ifdef Q_WS_X11
-    QSettings settings;
-    if (settings.value("debug").toString() == "on")
+    if (Core::instance()->settings.value("debug") == "on")
         qDebug() << "CAM <- " << strError;
 #endif
     emit error(strError);
@@ -316,8 +313,7 @@ void WebcamEngine::raw_403b(QByteArray &data)
 void WebcamEngine::textKernel(QString strData)
 {
 #ifdef Q_WS_X11
-    QSettings settings;
-    if (settings.value("debug").toString() == "on")
+    if (Core::instance()->settings.value("debug") == "on")
         qDebug() << "CAM <- " << strData;
 #endif
 
@@ -617,8 +613,7 @@ void WebcamEngine::raw_267()
 void WebcamEngine::raw_268()
 {
     // CAUTH ok
-    QSettings settings;
-    QString strUOKey = settings.value("uokey").toString();
+    QString strUOKey = Core::instance()->settings.value("uokey");
     pWebcamNetwork->networkSend(QString("AUTH %1 3.00.159").arg(strUOKey));
 }
 

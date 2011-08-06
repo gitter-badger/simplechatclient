@@ -22,7 +22,6 @@
 #include <QHostInfo>
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
-#include <QSettings>
 #include <QStringList>
 #include "core.h"
 #include "dlg_update.h"
@@ -44,8 +43,7 @@ void Update::checkUpdate()
     QHostInfo test_host = QHostInfo::fromName("simplechatclien.sourceforge.net");
     if (test_host.error() == QHostInfo::NoError)
     {
-        QSettings settings;
-        QString strSendVersion = settings.value("version").toString();
+        QString strSendVersion = Core::instance()->settings.value("version");
         QUrl url = QUrl(QString("http://simplechatclien.sourceforge.net/update.php?version=%1").arg(strSendVersion));
 
         accessManager->get(QNetworkRequest(url));
@@ -54,8 +52,7 @@ void Update::checkUpdate()
 
 void Update::version(QString strAvailableVersion)
 {
-    QSettings settings;
-    QString strCurrentVersion = settings.value("version").toString();
+    QString strCurrentVersion = Core::instance()->settings.value("version");
 
     QStringList lCurrentVersion = strCurrentVersion.split(".");
     QString strCurrentRev = lCurrentVersion.last();
@@ -66,7 +63,7 @@ void Update::version(QString strAvailableVersion)
     int iAvailableRev = strAvailableRev.toInt();
 
 #ifdef Q_WS_X11
-        if (settings.value("debug").toString() == "on")
+        if (Core::instance()->settings.value("debug") == "on")
             qDebug() << "Current rev: " << strCurrentRev << " Available rev: " << strAvailableRev;
 #endif
 

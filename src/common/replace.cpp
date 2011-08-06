@@ -19,7 +19,7 @@
  ****************************************************************************/
 
 #include <QRegExp>
-#include <QSettings>
+#include "core.h"
 #include "replace.h"
 
 Replace::Replace()
@@ -42,8 +42,7 @@ void Replace::convertEmots(QString &strData)
 void Replace::replaceEmots(QString &strData)
 {
     // return if disable replaces == on
-    QSettings settings;
-    if (settings.value("disable_replaces").toString() == "on") return;
+    if (Core::instance()->settings.value("disable_replaces") == "on") return;
 
     strData.replace(":))", "%Ihaha%");
     strData.replace(";))", "%Ioczko%");

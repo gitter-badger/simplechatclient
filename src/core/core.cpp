@@ -21,7 +21,6 @@
 #include <QAction>
 #include <QDir>
 #include <QFile>
-#include <QSettings>
 #include <QTcpSocket>
 #include <QTimer>
 #include "config.h"
@@ -80,34 +79,23 @@ void Core::createGui()
 
 void Core::createSettings()
 {
-    QSettings settings;
-
-    // read debug
-    QString strDebug = settings.value("debug").toString();
-
-    // clear
-    settings.clear();
-
-    // restore debug
-    settings.setValue("debug", strDebug);
-
     // default settings
-    settings.setValue("version", "1.1.2.962");
-    settings.setValue("logged", "off");
-    settings.setValue("busy", "off");
-    settings.setValue("away", "off");
-    settings.setValue("override", "off");
-    settings.setValue("ignore_raw_141", "off");
-    settings.setValue("age_check", "on");
-    settings.setValue("first_run", "true");
-    settings.setValue("uokey", "");
-    settings.setValue("uo_nick", "");
-    settings.setValue("onet_ubi", "");
-    settings.setValue("onet_cid", "");
-    settings.setValue("onet_sid", "");
-    settings.setValue("onet_uid", "");
-    settings.setValue("onetzuo_ticket", "");
-    settings.setValue("last_active", "0");
+    settings["version"] = "1.1.2.963";
+    settings["logged"] = "off";
+    settings["busy"] = "off";
+    settings["away"] = "off";
+    settings["override"] = "off";
+    settings["ignore_raw_141"] = "off";
+    settings["age_check"] = "on";
+    settings["first_run"] = "true";
+    settings["uokey"] = "";
+    settings["uo_nick"] = "";
+    settings["onet_ubi"] = "";
+    settings["onet_cid"] = "";
+    settings["onet_sid"] = "";
+    settings["onet_uid"] = "";
+    settings["onetzuo_ticket"] = "";
+    settings["last_active"] = "0";
 
     // config
     configValues();
@@ -117,11 +105,11 @@ void Core::createSettings()
     removeOldConfig();
 
     // fix config profile values
-    if (settings.value("style").toString() == "classic")
+    if (settings.value("style") == "classic")
     {
         Config *pConfig = new Config();
         pConfig->setValue("style", "modern");
-        settings.setValue("style", "modern");
+        settings["style"] = "modern";
         delete pConfig;
     }
 
@@ -131,8 +119,6 @@ void Core::createSettings()
 
 void Core::configValues()
 {
-    QSettings settings;
-
     // config values
     Config *pConfig = new Config(false);
     QMap<QString,QString> mConfigValues = pConfig->readConfig();
@@ -143,14 +129,12 @@ void Core::configValues()
     while (i.hasNext())
     {
         i.next();
-        settings.setValue(i.key(), i.value());
+        settings[i.key()] = i.value();
     }
 }
 
 void Core::configProfileValues()
 {
-    QSettings settings;
-
     // config profile values
     Config *pConfigProfile = new Config();
     QMap<QString,QString> mConfigProfileValues = pConfigProfile->readConfig();
@@ -161,7 +145,7 @@ void Core::configProfileValues()
     while (ip.hasNext())
     {
         ip.next();
-        settings.setValue(ip.key(), ip.value());
+        settings[ip.key()] = ip.value();
     }
 }
 
@@ -186,10 +170,9 @@ void Core::removeOldConfig()
 
 void Core::checkSettings()
 {
-    QSettings settings;
-    QString strSoundBeep = settings.value("sound_beep").toString();
-    QString strSoundQuery = settings.value("sound_query").toString();
-    QString strBackgroundImage = settings.value("background_image").toString();
+    QString strSoundBeep = settings.value("sound_beep");
+    QString strSoundQuery = settings.value("sound_query");
+    QString strBackgroundImage = settings.value("background_image");
 
     Config *pConfig = new Config();
 
@@ -200,17 +183,17 @@ void Core::checkSettings()
     if (!fSoundBeep.exists())
     {
         pConfig->setValue("sound_beep", "");
-        settings.setValue("sound_beep", "");
+        settings["sound_beep"] = "";
     }
     if (!fSoundQuery.exists())
     {
         pConfig->setValue("sound_query", "");
-        settings.setValue("sound_query", "");
+        settings["sound_query"] = "";
     }
     if (!fBackgroundImage.exists())
     {
         pConfig->setValue("background_image", "");
-        settings.setValue("background_image", "");
+        settings["background_image"] = "";
     }
 
     delete pConfig;
@@ -218,14 +201,15 @@ void Core::checkSettings()
 
 QString Core::version()
 {
-    QSettings settings;
-    return settings.value("version").toString();
+    return settings.value("version");
 }
 
-void Core::enableDebug()
+void Core::setDebug(bool b)
 {
-    QSettings settings;
-    settings.setValue("debug", "on");
+    if (b == true)
+        settings["debug"] = "on";
+    else
+        settings["debug"] = "off";
 }
 
 void Core::showSccWindow()
@@ -297,8 +281,7 @@ int Core::getNickChannels(QString strNick)
     }
 
     // fix for self nick
-    QSettings settings;
-    QString strMe = settings.value("nick").toString();
+    QString strMe = settings.value("nick");
     if (strNick == strMe)
         iResult = 1;
 

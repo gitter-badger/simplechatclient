@@ -24,8 +24,8 @@
 #include <QNetworkAccessManager>
 #include <QNetworkCookieJar>
 #include <QNetworkReply>
-#include <QSettings>
 #include <QUrl>
+#include "core.h"
 #include "mainwindow.h"
 #include "dlg_email.h"
 
@@ -82,26 +82,25 @@ void DlgEmail::getCookies()
 {
     QList<QNetworkCookie> cookieList;
     QNetworkCookie cookie;
-    QSettings settings;
 
     cookie.setName("onet_ubi");
-    cookie.setValue(settings.value("onet_ubi").toByteArray());
+    cookie.setValue(Core::instance()->settings.value("onet_ubi").toAscii());
     cookieList.append(cookie);
 
     cookie.setName("onet_cid");
-    cookie.setValue(settings.value("onet_cid").toByteArray());
+    cookie.setValue(Core::instance()->settings.value("onet_cid").toAscii());
     cookieList.append(cookie);
 
     cookie.setName("onet_sid");
-    cookie.setValue(settings.value("onet_sid").toByteArray());
+    cookie.setValue(Core::instance()->settings.value("onet_sid").toAscii());
     cookieList.append(cookie);
 
     cookie.setName("onet_uid");
-    cookie.setValue(settings.value("onet_uid").toByteArray());
+    cookie.setValue(Core::instance()->settings.value("onet_uid").toAscii());
     cookieList.append(cookie);
 
     cookie.setName("onetzuo_ticket");
-    cookie.setValue(settings.value("onetzuo_ticket").toByteArray());
+    cookie.setValue(Core::instance()->settings.value("onetzuo_ticket").toAscii());
     cookieList.append(cookie);
 
     accessManager->cookieJar()->setCookiesFromUrl(cookieList, QUrl("http://czat.onet.pl"));

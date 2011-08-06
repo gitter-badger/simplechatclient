@@ -24,7 +24,6 @@
 #include <QKeyEvent>
 #include <QLabel>
 #include <QPushButton>
-#include <QSettings>
 #include "commands.h"
 #include "core.h"
 #include "inputlinewidget.h"
@@ -153,12 +152,11 @@ void InputWidget::sendMessage(QString strText, bool bModeration)
 
     QString strTextOriginal = strText;
 
-    QSettings settings;
-    QString strMe = settings.value("nick").toString();
-    QString strCurrentColor = settings.value("my_color").toString();
-    QString strFontFamily = settings.value("my_font").toString();
-    bool bMyBold = settings.value("my_bold").toString() == "on" ? true : false;
-    bool bMyItalic = settings.value("my_italic").toString() == "on" ? true : false;
+    QString strMe = Core::instance()->settings.value("nick");
+    QString strCurrentColor = Core::instance()->settings.value("my_color");
+    QString strFontFamily = Core::instance()->settings.value("my_font");
+    bool bMyBold = Core::instance()->settings.value("my_bold") == "on" ? true : false;
+    bool bMyItalic = Core::instance()->settings.value("my_italic") == "on" ? true : false;
 
     // if command
     if ((strText[0] == '/') && (strText[1] != '/'))
@@ -204,7 +202,7 @@ void InputWidget::sendMessage(QString strText, bool bModeration)
             QDateTime dt = QDateTime::currentDateTime();
             QString strDT = dt.toString("[hh:mm:ss] ");
 
-            if (settings.value("disable_logs").toString() == "off")
+            if (Core::instance()->settings.value("disable_logs") == "off")
             {
                 Log *l = new Log();
                 QString strSave = QString("%1<%2> %3").arg(strDT).arg(strMe).arg(strText);
@@ -249,8 +247,7 @@ void InputWidget::sendMessage(QString strText, bool bModeration)
                 QDateTime dt = QDateTime::currentDateTime();
                 QString strDT = dt.toString("[hh:mm:ss] ");
 
-                QSettings settings;
-                if (settings.value("disable_logs").toString() == "off")
+                if (Core::instance()->settings.value("disable_logs") == "off")
                 {
                     Log *l = new Log();
                     QString strSave = QString("%1<%2> %3").arg(strDT).arg(strMe).arg(strTextDisplay);
@@ -299,7 +296,7 @@ void InputWidget::sendMessage(QString strText, bool bModeration)
         // standard text
         if (!bModeration)
         {
-            if (settings.value("disable_logs").toString() == "off")
+            if (Core::instance()->settings.value("disable_logs") == "off")
             {
                 Log *l = new Log();
                 QString strSave = QString("%1<%2> %3").arg(strDT).arg(strMe).arg(strText);
@@ -315,7 +312,7 @@ void InputWidget::sendMessage(QString strText, bool bModeration)
         // moder notice
         else if (bModeration)
         {
-            if (settings.value("disable_logs").toString() == "off")
+            if (Core::instance()->settings.value("disable_logs") == "off")
             {
                 Log *l = new Log();
                 QString strSave = QString("%1*<%2> %3").arg(strDT).arg(strMe).arg(strText);
@@ -338,15 +335,13 @@ void InputWidget::updateNick(QString strNick)
 
 void InputWidget::inputlineReturnPressed()
 {
-    QSettings settings;
-
     // update last active
     QDateTime cdt = QDateTime::currentDateTime();
     int t = (int)cdt.toTime_t(); // seconds that have passed since 1970
-    settings.setValue("last_active", QString::number(t));
+    Core::instance()->settings["last_active"] = QString::number(t);
 
     // disable away
-    bool bAway = settings.value("away").toString() == "on" ? true : false;
+    bool bAway = Core::instance()->settings.value("away") == "on" ? true : false;
     if (bAway)
         pNetwork->send("AWAY :");
 
@@ -358,15 +353,13 @@ void InputWidget::inputlineReturnPressed()
 
 void InputWidget::moderButtonClicked()
 {
-    QSettings settings;
-
     // update last active
     QDateTime cdt = QDateTime::currentDateTime();
     int t = (int)cdt.toTime_t(); // seconds that have passed since 1970
-    settings.setValue("last_active", QString::number(t));
+    Core::instance()->settings["last_active"] = QString::number(t);
 
     // disable away
-    bool bAway = settings.value("away").toString() == "on" ? true : false;
+    bool bAway = Core::instance()->settings.value("away") == "on" ? true : false;
     if (bAway)
         pNetwork->send("AWAY :");
 

@@ -24,7 +24,6 @@
 #include <QNetworkAccessManager>
 #include <QNetworkCookieJar>
 #include <QNetworkReply>
-#include <QSettings>
 #include <QUrl>
 #include "config.h"
 #include "mainwindow.h"

@@ -21,7 +21,6 @@
 #include <QDateTime>
 #include <QFile>
 #include <QLabel>
-#include <QSettings>
 #include <QVBoxLayout>
 #include "convert.h"
 #include "core.h"
@@ -37,12 +36,11 @@ TabWidget::TabWidget(Network *param1, QString param2, DlgUserProfile *param3)
     strName = param2;
     pDlgUserProfile = param3;
 
-    QSettings settings;
-    QString strDefaultFontColor = settings.value("default_font_color").toString();
+    QString strDefaultFontColor = Core::instance()->settings.value("default_font_color");
     addslashes(strDefaultFontColor);
-    QString strBackgroundColor = settings.value("background_color").toString();
+    QString strBackgroundColor = Core::instance()->settings.value("background_color");
     addslashes(strBackgroundColor);
-    strFontSize = settings.value("font_size").toString();
+    strFontSize = Core::instance()->settings.value("font_size");
 
     mainLayout = new QVBoxLayout();
     mainLayout->setMargin(0);
@@ -115,8 +113,7 @@ void TabWidget::displayMsg(QString &strTime, QString &strData, MessageCategory e
     QString strDT = dt.toString("[hh:mm:ss] ");
     strData = strDT+strData;
 
-    QSettings settings;
-    if (settings.value("disable_logs").toString() == "off")
+    if (Core::instance()->settings.value("disable_logs") == "off")
     {
         Log *l = new Log();
         l->save(strName, strData);
@@ -125,11 +122,11 @@ void TabWidget::displayMsg(QString &strTime, QString &strData, MessageCategory e
 
     if ((eMessageCategory == JoinMessage) || (eMessageCategory == PartMessage) || (eMessageCategory == QuitMessage))
     {
-        if (settings.value("hide_join_part").toString() == "on")
+        if (Core::instance()->settings.value("hide_join_part") == "on")
             return;
 
         int iNickCount = Core::instance()->mChannelNicks[strName];
-        if ((settings.value("hide_join_part_200").toString() == "on") && (iNickCount > 200))
+        if ((Core::instance()->settings.value("hide_join_part_200") == "on") && (iNickCount > 200))
             return;
     }
 
@@ -142,8 +139,7 @@ void TabWidget::displayMsg(QString &strData, MessageCategory eMessageCategory)
     QString strDT = dt.toString("[hh:mm:ss] ");
     strData = strDT+strData;
 
-    QSettings settings;
-    if (settings.value("disable_logs").toString() == "off")
+    if (Core::instance()->settings.value("disable_logs") == "off")
     {
         Log *l = new Log();
         l->save(strName, strData);
@@ -152,11 +148,11 @@ void TabWidget::displayMsg(QString &strData, MessageCategory eMessageCategory)
 
     if ((eMessageCategory == JoinMessage) || (eMessageCategory == PartMessage) || (eMessageCategory == QuitMessage))
     {
-        if (settings.value("hide_join_part").toString() == "on")
+        if (Core::instance()->settings.value("hide_join_part") == "on")
             return;
 
         int iNickCount = Core::instance()->mChannelNicks[strName];
-        if ((settings.value("hide_join_part_200").toString() == "on") && (iNickCount > 200))
+        if ((Core::instance()->settings.value("hide_join_part_200") == "on") && (iNickCount > 200))
             return;
     }
 
@@ -165,12 +161,10 @@ void TabWidget::displayMsg(QString &strData, MessageCategory eMessageCategory)
 
 void TabWidget::displayMessage(QString &strData, MessageCategory eMessageCategory)
 {
-    QSettings settings;
-
     // awaylog
     if (eMessageCategory == HilightMessage)
     {
-        if (settings.value("away").toString() == "on")
+        if (Core::instance()->settings.value("away") == "on")
         {
             QString strAwayData = strData;
 
@@ -202,7 +196,7 @@ void TabWidget::displayMessage(QString &strData, MessageCategory eMessageCategor
     strData.replace(">", "&gt;");
 
     // channels
-    QString strChannelFontColor = settings.value("channel_font_color").toString();
+    QString strChannelFontColor = Core::instance()->settings.value("channel_font_color");
     addslashes(strChannelFontColor);
     strData.replace(QRegExp("#([~-_a-zA-Z0-9\xa1\xaf\xa6\xac\xca\xc6\xd1\xd3\xa3\xb1\xbf\xb6\xbc\xea\xe6\xf1\xf3\xb3]+)"), "<span style=\"color:"+strChannelFontColor+";text-decoration:none;\">#\\1</span>");
 
@@ -229,31 +223,31 @@ void TabWidget::displayMessage(QString &strData, MessageCategory eMessageCategor
     QString strFontColor;
 
     if (eMessageCategory == DefaultMessage)
-        strFontColor = settings.value("default_font_color").toString(); // default black
+        strFontColor = Core::instance()->settings.value("default_font_color"); // default black
     else if (eMessageCategory == JoinMessage) // join
-        strFontColor = settings.value("font_color_level_1").toString(); // default green
+        strFontColor = Core::instance()->settings.value("font_color_level_1"); // default green
     else if (eMessageCategory == PartMessage) // part
-        strFontColor = settings.value("font_color_level_2").toString(); // default light blue
+        strFontColor = Core::instance()->settings.value("font_color_level_2"); // default light blue
     else if (eMessageCategory == QuitMessage) // quit
-        strFontColor = settings.value("font_color_level_3").toString(); // default dark blue
+        strFontColor = Core::instance()->settings.value("font_color_level_3"); // default dark blue
     else if (eMessageCategory == KickMessage) // kick
-        strFontColor = settings.value("font_color_level_4").toString(); // default dark blue
+        strFontColor = Core::instance()->settings.value("font_color_level_4"); // default dark blue
     else if (eMessageCategory == ModeMessage) // mode
-        strFontColor = settings.value("font_color_level_5").toString(); // default green
+        strFontColor = Core::instance()->settings.value("font_color_level_5"); // default green
     else if (eMessageCategory == NoticeMessage) // notice
-        strFontColor = settings.value("font_color_level_6").toString(); // default blue
+        strFontColor = Core::instance()->settings.value("font_color_level_6"); // default blue
     else if (eMessageCategory == InfoMessage) // info
-        strFontColor = settings.value("font_color_level_7").toString(); // default gray
+        strFontColor = Core::instance()->settings.value("font_color_level_7"); // default gray
     else if (eMessageCategory == MeMessage) // me
-        strFontColor = settings.value("font_color_level_8").toString(); // default violet
+        strFontColor = Core::instance()->settings.value("font_color_level_8"); // default violet
     else if (eMessageCategory == ErrorMessage) // error
-        strFontColor = settings.value("font_color_level_9").toString(); // default red
+        strFontColor = Core::instance()->settings.value("font_color_level_9"); // default red
     else if (eMessageCategory == HilightMessage) // hilight no color
-        strFontColor = settings.value("default_font_color").toString(); // default black
+        strFontColor = Core::instance()->settings.value("default_font_color"); // default black
     else
     {
         eMessageCategory = DefaultMessage;
-        strFontColor = settings.value("default_font_color").toString(); // default black
+        strFontColor = Core::instance()->settings.value("default_font_color"); // default black
     }
 
     addslashes(strFontColor);
@@ -272,12 +266,12 @@ void TabWidget::displayMessage(QString &strData, MessageCategory eMessageCategor
         strTextDecoration = "underline";
 
         // sound
-        if (settings.value("disable_sounds").toString() == "off")
+        if (Core::instance()->settings.value("disable_sounds") == "off")
             Notify::instance()->play(Beep);
     }
 
     // default font color
-    QString strDefaultFontColor = settings.value("default_font_color").toString();
+    QString strDefaultFontColor = Core::instance()->settings.value("default_font_color");
     addslashes(strDefaultFontColor);
 
     // init text
@@ -329,10 +323,9 @@ void TabWidget::clearContent()
 void TabWidget::refreshColors()
 {
     // get values
-    QSettings settings;
-    QString strBackgroundColor = settings.value("background_color").toString();
+    QString strBackgroundColor = Core::instance()->settings.value("background_color");
     addslashes(strBackgroundColor);
-    QString strDefaultFontColor = settings.value("default_font_color").toString();
+    QString strDefaultFontColor = Core::instance()->settings.value("default_font_color");
     addslashes(strDefaultFontColor);
 
     // this

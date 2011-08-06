@@ -21,7 +21,6 @@
 #include <QAction>
 #include <QDateTime>
 #include <QHostInfo>
-#include <QSettings>
 #include <QTcpSocket>
 #include <QTimer>
 #include "config.h"
@@ -38,8 +37,7 @@ Network::Network(QString param1, int param2)
     bAuthorized = false;
     timerReconnect = new QTimer();
     timerReconnect->setInterval(1000*30); // 30 sec
-    QSettings settings;
-    settings.setValue("reconnect", "true");
+    Core::instance()->settings["reconnect"] = "true";
     timerPong = new QTimer();
     timerPong->setInterval(1000*60*1); // 1 min
     timerPing = new QTimer();
@@ -98,8 +96,6 @@ bool Network::isWritable()
 
 void Network::clearAll()
 {
-    QSettings settings;
-
     // close cam socket
     if (Core::instance()->kamerzystaSocket->state() == QAbstractSocket::ConnectedState)
         Core::instance()->kamerzystaSocket->disconnectFromHost();
@@ -123,7 +119,7 @@ void Network::clearAll()
     emit clearAllNicklist();
 
     // state
-    settings.setValue("logged", "off");
+    Core::instance()->settings["logged"] = "off";
 
     // timer
     if (timerPong->isActive())
@@ -144,7 +140,7 @@ void Network::clearAll()
         Core::instance()->autoAwayTimer->stop();
 
     // last active
-    settings.setValue("last_active", "0");
+    Core::instance()->settings["last_active"] = "0";
 
     // clear queue
     msgSendQueue.clear();
@@ -160,9 +156,8 @@ void Network::authorize()
     bAuthorized = true;
 
     // get nick
-    QSettings settings;
-    QString strNick = settings.value("nick").toString();
-    QString strPass = settings.value("pass").toString();
+    QString strNick = Core::instance()->settings.value("nick");
+    QString strPass = Core::instance()->settings.value("pass");
 
     // nick & pass is null
     if ((strNick.isEmpty()) && (strPass.isEmpty()))
@@ -183,8 +178,8 @@ void Network::authorize()
         strNick = strNick.right(strNick.length()-1);
 
     Config *pConfig = new Config();
-    settings.setValue("nick", strNick);
     pConfig->setValue("nick", strNick);
+    Core::instance()->settings["nick"] = strNick;
     delete pConfig;
 
     // update nick
@@ -309,10 +304,9 @@ void Network::reconnect()
     if (timerReconnect->isActive())
         timerReconnect->stop();
 
-    QSettings settings;
-    if (settings.value("reconnect").toString() == "true")
+    if (Core::instance()->settings.value("reconnect") == "true")
     {
-        if ((!this->isConnected()) && (settings.value("logged").toString() == "off"))
+        if ((!this->isConnected()) && (Core::instance()->settings.value("logged") == "off"))
         {
             QString strDisplay = tr("Reconnecting...");
             emit showMsgAll(strDisplay, InfoMessage);
@@ -326,8 +320,7 @@ void Network::write(QString strData)
     if ((socket->isValid()) && (socket->state() == QAbstractSocket::ConnectedState) && (socket->isWritable()))
     {
 #ifdef Q_WS_X11
-        QSettings settings;
-        if (settings.value("debug").toString() == "on")
+        if (Core::instance()->settings.value("debug") == "on")
             qDebug() << "-> " << strData;
 #endif
         strData += "\r\n";
@@ -450,8 +443,7 @@ void Network::timeoutPing()
     int i1 = (int)dta.toTime_t(); // seconds that have passed since 1970
     QString t2 = dta.toString("zzz"); // miliseconds
 
-    QSettings settings;
-    if ((isConnected()) && (isWritable()) && (settings.value("logged").toString() == "on"))
+    if ((isConnected()) && (isWritable()) && (Core::instance()->settings.value("logged") == "on"))
         emit send(QString("PING :%1.%2").arg(i1).arg(t2));
 }
 

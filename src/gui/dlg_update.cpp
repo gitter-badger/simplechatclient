@@ -24,7 +24,6 @@
 #include <QNetworkAccessManager>
 #include <QProcess>
 #include <QPushButton>
-#include <QSettings>
 #include <QUrl>
 #include "core.h"
 #include "mainwindow.h"

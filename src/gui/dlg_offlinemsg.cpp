@@ -21,7 +21,6 @@
 #include <QDateTime>
 #include <QDesktopWidget>
 #include <QPushButton>
-#include <QSettings>
 #include <QTimer>
 #include "core.h"
 #include "network.h"
@@ -150,8 +149,7 @@ void DlgOfflineMsg::refreshMsg()
                     messagesQuoted.append(strNick);
                 }
 
-                QSettings settings;
-                QString strMe = settings.value("nick").toString();
+                QString strMe = Core::instance()->settings.value("nick");
 
                 strMessage = QString("%1 <%2> %3").arg(strDT).arg(strMe).arg(strMessage);
                 ui.listWidget_msg->addItem(strMessage);
@@ -226,8 +224,7 @@ void DlgOfflineMsg::buttonReply()
     ui.lineEdit_reply->clear();
 
     // show
-    QSettings settings;
-    QString strMe = settings.value("nick").toString();
+    QString strMe = Core::instance()->settings.value("nick");
     QDateTime dt = QDateTime::currentDateTime();
     QString strDT = dt.toString("[hh:mm:ss]");
     strMessage = QString("%1 <%2> %3").arg(strDT).arg(strMe).arg(strMessage);

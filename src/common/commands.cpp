@@ -21,7 +21,6 @@
 #include <QIcon>
 #include <QMessageBox>
 #include <QPushButton>
-#include <QSettings>
 #include "core.h"
 #include "commands.h"
 
@@ -135,8 +134,7 @@ QString Commands::cmdJoin()
 
     if (isErotic(strChannel))
     {
-        QSettings settings;
-        if (settings.value("age_check").toString() == "on")
+        if (Core::instance()->settings.value("age_check") == "on")
         {
             QMessageBox msgBox;
             msgBox.setStyleSheet("background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:0.557, stop:0 rgba(198, 0, 0, 255), stop:1 rgba(255, 0, 0, 255));");
@@ -151,7 +149,7 @@ QString Commands::cmdJoin()
             msgBox.exec();
 
             if (msgBox.clickedButton() == enterButton)
-                settings.setValue("age_check", "off");
+                Core::instance()->settings["age_check"] =  "off";
             else
                 return QString::null;
         }
@@ -215,8 +213,7 @@ QString Commands::cmdWhereis()
 
 QString Commands::cmdBusy()
 {
-    QSettings settings;
-    QString strBusy = settings.value("busy").toString();
+    QString strBusy = Core::instance()->settings.value("busy");
 
     if (strBusy == "on")
         return "BUSY 0";
@@ -252,8 +249,7 @@ QString Commands::cmdQuit()
     QString strReason;
     for (int i = 1; i < strDataList.size(); i++) { if (i != 1) strReason += " "; strReason += strDataList[i]; }
 
-    QSettings settings;
-    settings.setValue("reconnect", "false");
+    Core::instance()->settings["reconnect"] = "false";
 
     if (!strReason.isEmpty())
         return QString("QUIT :%1").arg(strReason);
@@ -280,8 +276,7 @@ QString Commands::cmdMp3()
             QString strLength = pWinamp->length();
             delete pWinamp;
 
-            QSettings settings;
-            QString strWinamp = settings.value("winamp").toString();
+            QString strWinamp = Core::instance()->settings.value("winamp");
 
             strWinamp.replace("$version", strVersion);
             strWinamp.replace("$song", strSong);

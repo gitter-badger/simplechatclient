@@ -22,7 +22,6 @@
 #include <QInputDialog>
 #include <QListWidgetItem>
 #include <QMenu>
-#include <QSettings>
 #include "core.h"
 #include "defines.h"
 #include "dlg_user_profile.h"
@@ -273,8 +272,7 @@ void NickListWidget::contextMenuEvent(QContextMenuEvent *e)
 
     QString strNick = this->selectedItems().at(0)->text();
 
-    QSettings settings;
-    QString strMe = settings.value("nick").toString();
+    QString strMe = Core::instance()->settings.value("nick");
     QString strSelfModes = Core::instance()->getUserModes(strMe, strChannel);
     int iSelfMaxModes = Core::instance()->getUserMaxModes(strMe, strChannel);
     QString strNickModes = Core::instance()->getUserModes(strNick, strChannel);

@@ -18,7 +18,7 @@
  *                                                                          *
  ****************************************************************************/
 
-#include <QSettings>
+#include "core.h"
 #include "notify.h"
 
 Notify * Notify::Instance = 0;
@@ -46,8 +46,7 @@ Notify::~Notify()
 
 void Notify::init()
 {
-    QSettings settings;
-    QString strSoundBeep = settings.value("sound_beep").toString();
+    QString strSoundBeep = Core::instance()->settings.value("sound_beep");
     music = Phonon::createPlayer(Phonon::NotificationCategory, Phonon::MediaSource(strSoundBeep));
 }
 
@@ -55,12 +54,11 @@ void Notify::play(NotifyCategory eCategory)
 {
     music->stop();
 
-    QSettings settings;
     if (eCategory == Query)
     {
         if (eCurrentCategory != Query)
         {
-            QString strSoundQuery = settings.value("sound_query").toString();
+            QString strSoundQuery = Core::instance()->settings.value("sound_query");
             music->setCurrentSource(strSoundQuery);
             eCurrentCategory = Query;
         }
@@ -69,7 +67,7 @@ void Notify::play(NotifyCategory eCategory)
     {
         if (eCurrentCategory != Beep)
         {
-            QString strSoundBeep = settings.value("sound_beep").toString();
+            QString strSoundBeep = Core::instance()->settings.value("sound_beep");
             music->setCurrentSource(strSoundBeep);
             eCurrentCategory = Beep;
         }

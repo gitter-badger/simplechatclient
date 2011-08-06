@@ -20,7 +20,6 @@
 
 #include <QtGui/QApplication>
 #include <QMessageBox>
-#include <QSettings>
 #include <QTextCodec>
 #include <QTranslator>
 #include "config.h"
@@ -36,7 +35,7 @@ void displayVersion()
            "Copyright (C) 2011 Piotr Łuczko <piotr.luczko@gmail.com>\n"
            "License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>\n"
            "This is free software: you are free to change and redistribute it.\n\n",
-           qPrintable(Core::version()));
+           qPrintable(Core::instance()->version()));
 }
 
 void displayOptions()
@@ -73,17 +72,13 @@ int main(int argc, char *argv[])
     QCoreApplication::setOrganizationDomain("simplechatclien.sourceforge.net");
     QCoreApplication::setApplicationName("scc");
 
-    // settings clear
-    QSettings settings;
-    settings.clear();
-
     // debug off
-    settings.setValue("debug", "off");
+    Core::instance()->setDebug(false);
 
     Config *pConfig = new Config();
     // set current profile
     QString strCurrentProfile = pConfig->getValue("current_profile");
-    settings.setValue("current_profile", strCurrentProfile);
+    Core::instance()->settings["current_profile"] = strCurrentProfile;
     // get language
     QString strLanguage = pConfig->getValue("language");
     delete pConfig;
@@ -112,7 +107,7 @@ int main(int argc, char *argv[])
         if (param == "--debug")
         {
             printf("Debug enabled\n\n");
-            Core::enableDebug();
+            Core::instance()->setDebug(true);
         }
         else if (param == "--version")
         {
