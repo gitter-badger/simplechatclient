@@ -606,9 +606,10 @@ void DlgOptions::currentProfileChanged(int row)
     if (profileName.isEmpty())
         return;
 
+    Core::instance()->settings["current_profile"] = profileName; // must be before config !
+
     Config *pConfig = new Config(false);
     pConfig->setValue("current_profile", profileName);
-    Core::instance()->settings["current_profile"] = profileName;
     delete pConfig;
 
     // refresh settings
