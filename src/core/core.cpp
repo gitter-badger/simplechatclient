@@ -21,6 +21,7 @@
 #include <QAction>
 #include <QDir>
 #include <QFile>
+#include <QSettings>
 #include <QTcpSocket>
 #include <QTimer>
 #include "config.h"
@@ -80,7 +81,7 @@ void Core::createGui()
 void Core::createSettings()
 {
     // default settings
-    settings["version"] = "1.1.2.965";
+    settings["version"] = "1.1.2.966";
     settings["logged"] = "off";
     settings["busy"] = "off";
     settings["away"] = "off";
@@ -103,6 +104,9 @@ void Core::createSettings()
 
     // remove old config
     removeOldConfig();
+    // clear old settings
+    QSettings oldSettings;
+    oldSettings.clear();
 
     // fix config profile values
     if (settings.value("style") == "classic")
