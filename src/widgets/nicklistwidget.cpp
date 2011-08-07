@@ -25,7 +25,6 @@
 #include "core.h"
 #include "defines.h"
 #include "dlg_user_profile.h"
-#include "network.h"
 #include "nicklistwidget.h"
 
 #ifdef Q_WS_WIN
@@ -34,10 +33,9 @@
     #include "dlg_webcam.h"
 #endif
 
-NickListWidget::NickListWidget(Network *param1, DlgUserProfile *param2)
+NickListWidget::NickListWidget(DlgUserProfile *param1)
 {
-    pNetwork = param1;
-    pDlgUserProfile = param2;
+    pDlgUserProfile = param1;
 
     setSortingEnabled(false);
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
@@ -76,7 +74,7 @@ void NickListWidget::priv()
     if (this->selectedItems().size() == 0) return;
 
     QString strNick = this->selectedItems().at(0)->text();
-    pNetwork->send(QString("PRIV %1").arg(strNick));
+    Core::instance()->pNetwork->send(QString("PRIV %1").arg(strNick));
 }
 
 void NickListWidget::whois()
@@ -84,7 +82,7 @@ void NickListWidget::whois()
     if (this->selectedItems().size() == 0) return;
 
     QString strNick = this->selectedItems().at(0)->text();
-    pNetwork->send(QString("WHOIS %1 :%1").arg(strNick));
+    Core::instance()->pNetwork->send(QString("WHOIS %1 :%1").arg(strNick));
 }
 
 void NickListWidget::profile()
@@ -117,7 +115,7 @@ void NickListWidget::friendsAdd()
     if (this->selectedItems().size() == 0) return;
 
     QString strNick = this->selectedItems().at(0)->text();
-    pNetwork->send(QString("NS FRIENDS ADD %1").arg(strNick));
+    Core::instance()->pNetwork->send(QString("NS FRIENDS ADD %1").arg(strNick));
 }
 
 void NickListWidget::friendsDel()
@@ -125,7 +123,7 @@ void NickListWidget::friendsDel()
     if (this->selectedItems().size() == 0) return;
 
     QString strNick = this->selectedItems().at(0)->text();
-    pNetwork->send(QString("NS FRIENDS DEL %1").arg(strNick));
+    Core::instance()->pNetwork->send(QString("NS FRIENDS DEL %1").arg(strNick));
 }
 
 void NickListWidget::ignoreAdd()
@@ -133,7 +131,7 @@ void NickListWidget::ignoreAdd()
     if (this->selectedItems().size() == 0) return;
 
     QString strNick = this->selectedItems().at(0)->text();
-    pNetwork->send(QString("NS IGNORE ADD %1").arg(strNick));
+    Core::instance()->pNetwork->send(QString("NS IGNORE ADD %1").arg(strNick));
 }
 
 void NickListWidget::ignoreDel()
@@ -141,7 +139,7 @@ void NickListWidget::ignoreDel()
     if (this->selectedItems().size() == 0) return;
 
     QString strNick = this->selectedItems().at(0)->text();
-    pNetwork->send(QString("NS IGNORE DEL %1").arg(strNick));
+    Core::instance()->pNetwork->send(QString("NS IGNORE DEL %1").arg(strNick));
 }
 
 void NickListWidget::kick()
@@ -154,7 +152,7 @@ void NickListWidget::kick()
     QString strText = QInputDialog::getText(this, tr("Kick From Channel"), tr("Reason for kicking:"), QLineEdit::Normal, tr("No reason"), &ok);
 
     if ((ok) && (!strText.isEmpty()))
-        pNetwork->send(QString("KICK %1 %2 :%3").arg(strChannel).arg(strNick).arg(strText));
+        Core::instance()->pNetwork->send(QString("KICK %1 %2 :%3").arg(strChannel).arg(strNick).arg(strText));
 }
 
 void NickListWidget::ban()
@@ -162,7 +160,7 @@ void NickListWidget::ban()
     if (this->selectedItems().size() == 0) return;
 
     QString strNick = this->selectedItems().at(0)->text();
-    pNetwork->send(QString("CS BAN %1 ADD %2").arg(strChannel).arg(strNick));
+    Core::instance()->pNetwork->send(QString("CS BAN %1 ADD %2").arg(strChannel).arg(strNick));
 }
 
 void NickListWidget::kban()
@@ -176,8 +174,8 @@ void NickListWidget::kban()
 
     if ((ok) && (!strText.isEmpty()))
     {
-        pNetwork->send(QString("CS BAN %1 ADD %2").arg(strChannel).arg(strNick));
-        pNetwork->send(QString("KICK %1 %2 :%3").arg(strChannel).arg(strNick).arg(strText));
+        Core::instance()->pNetwork->send(QString("CS BAN %1 ADD %2").arg(strChannel).arg(strNick));
+        Core::instance()->pNetwork->send(QString("KICK %1 %2 :%3").arg(strChannel).arg(strNick).arg(strText));
     }
 }
 
@@ -186,7 +184,7 @@ void NickListWidget::ipban()
     if (this->selectedItems().size() == 0) return;
 
     QString strNick = this->selectedItems().at(0)->text();
-    pNetwork->send(QString("CS BANIP %1 ADD %2").arg(strChannel).arg(strNick));
+    Core::instance()->pNetwork->send(QString("CS BANIP %1 ADD %2").arg(strChannel).arg(strNick));
 }
 
 void NickListWidget::opAdd()
@@ -194,7 +192,7 @@ void NickListWidget::opAdd()
     if (this->selectedItems().size() == 0) return;
 
     QString strNick = this->selectedItems().at(0)->text();
-    pNetwork->send(QString("CS OP %1 ADD %2").arg(strChannel).arg(strNick));
+    Core::instance()->pNetwork->send(QString("CS OP %1 ADD %2").arg(strChannel).arg(strNick));
 }
 
 void NickListWidget::opDel()
@@ -202,7 +200,7 @@ void NickListWidget::opDel()
     if (this->selectedItems().size() == 0) return;
 
     QString strNick = this->selectedItems().at(0)->text();
-    pNetwork->send(QString("CS OP %1 DEL %2").arg(strChannel).arg(strNick));
+    Core::instance()->pNetwork->send(QString("CS OP %1 DEL %2").arg(strChannel).arg(strNick));
 }
 
 void NickListWidget::halfopAdd()
@@ -210,7 +208,7 @@ void NickListWidget::halfopAdd()
     if (this->selectedItems().size() == 0) return;
 
     QString strNick = this->selectedItems().at(0)->text();
-    pNetwork->send(QString("CS HALFOP %1 ADD %2").arg(strChannel).arg(strNick));
+    Core::instance()->pNetwork->send(QString("CS HALFOP %1 ADD %2").arg(strChannel).arg(strNick));
 }
 
 void NickListWidget::halfopDel()
@@ -218,7 +216,7 @@ void NickListWidget::halfopDel()
     if (this->selectedItems().size() == 0) return;
 
     QString strNick = this->selectedItems().at(0)->text();
-    pNetwork->send(QString("CS HALFOP %1 DEL %2").arg(strChannel).arg(strNick));
+    Core::instance()->pNetwork->send(QString("CS HALFOP %1 DEL %2").arg(strChannel).arg(strNick));
 }
 
 void NickListWidget::moderatorAdd()
@@ -226,7 +224,7 @@ void NickListWidget::moderatorAdd()
     if (this->selectedItems().size() == 0) return;
 
     QString strNick = this->selectedItems().at(0)->text();
-    pNetwork->send(QString("CS MODERATOR %1 ADD %2").arg(strChannel).arg(strNick));
+    Core::instance()->pNetwork->send(QString("CS MODERATOR %1 ADD %2").arg(strChannel).arg(strNick));
 }
 
 void NickListWidget::moderatorDel()
@@ -234,7 +232,7 @@ void NickListWidget::moderatorDel()
     if (this->selectedItems().size() == 0) return;
 
     QString strNick = this->selectedItems().at(0)->text();
-    pNetwork->send(QString("CS MODERATOR %1 DEL %2").arg(strChannel).arg(strNick));
+    Core::instance()->pNetwork->send(QString("CS MODERATOR %1 DEL %2").arg(strChannel).arg(strNick));
 }
 
 void NickListWidget::voiceAdd()
@@ -242,7 +240,7 @@ void NickListWidget::voiceAdd()
     if (this->selectedItems().size() == 0) return;
 
     QString strNick = this->selectedItems().at(0)->text();
-    pNetwork->send(QString("CS VOICE %1 ADD %2").arg(strChannel).arg(strNick));
+    Core::instance()->pNetwork->send(QString("CS VOICE %1 ADD %2").arg(strChannel).arg(strNick));
 }
 
 void NickListWidget::voiceDel()
@@ -250,7 +248,7 @@ void NickListWidget::voiceDel()
     if (this->selectedItems().size() == 0) return;
 
     QString strNick = this->selectedItems().at(0)->text();
-    pNetwork->send(QString("CS VOICE %1 DEL %2").arg(strChannel).arg(strNick));
+    Core::instance()->pNetwork->send(QString("CS VOICE %1 DEL %2").arg(strChannel).arg(strNick));
 }
 
 void NickListWidget::invite()
@@ -262,7 +260,7 @@ void NickListWidget::invite()
     {
         QString strInviteChannel = action->data().toString();
         QString strNick = this->selectedItems().at(0)->text();
-        pNetwork->send(QString("INVITE %1 %2").arg(strNick).arg(strInviteChannel));
+        Core::instance()->pNetwork->send(QString("INVITE %1 %2").arg(strNick).arg(strInviteChannel));
     }
 }
 

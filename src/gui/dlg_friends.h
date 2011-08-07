@@ -21,7 +21,6 @@
 #ifndef DLG_FRIENDS_H
 #define DLG_FRIENDS_H
 
-class Network;
 #include <QDialog>
 #include "ui_friends.h"
 
@@ -29,11 +28,10 @@ class DlgFriends : public QDialog
 {
     Q_OBJECT
 public:
-    DlgFriends(QWidget *, Network *);
+    DlgFriends(QWidget *);
 
 private:
     Ui::uiFriends ui;
-    Network *pNetwork;
 
     void createGui();
     void createSignals();

@@ -21,7 +21,6 @@
 #ifndef DLG_IGNORE_H
 #define DLG_IGNORE_H
 
-class Network;
 #include <QDialog>
 #include "ui_ignore.h"
 
@@ -29,11 +28,10 @@ class DlgIgnore : public QDialog
 {
     Q_OBJECT
 public:
-    DlgIgnore(QWidget *, Network *);
+    DlgIgnore(QWidget *);
 
 private:
     Ui::uiIgnore ui;
-    Network *pNetwork;
 
     void createGui();
     void createSignals();

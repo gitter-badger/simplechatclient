@@ -21,7 +21,6 @@
 #ifndef DLG_CHANNEL_SETTINGS_H
 #define DLG_CHANNEL_SETTINGS_H
 
-class Network;
 class SimpleStatsWidget;
 #include <QDialog>
 #include "ui_channel_settings.h"
@@ -30,7 +29,7 @@ class DlgChannelSettings : public QDialog
 {
     Q_OBJECT
 public:
-    DlgChannelSettings(QWidget *, Network *);
+    DlgChannelSettings(QWidget *);
     void setChannel(QString);
     inline QString getChannel() { return strChannel; }
     void setData(QMap<QString, QString>);
@@ -46,7 +45,6 @@ public:
 
 private:
     Ui::uiChannelSettings ui;
-    Network *pNetwork;
     QString strChannel;
     SimpleStatsWidget *pSimpleStatsWidget;
 

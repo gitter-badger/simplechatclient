@@ -285,8 +285,8 @@ void OnetAuth::requestFinished(QString strNickAuth, QString strData)
             Core::instance()->settings["uo_nick"] = strNick;
 
             // send auth
-            emit send(QString("NICK %1").arg(strNickAuth));
-            emit send("AUTHKEY");
+            Core::instance()->pNetwork->send(QString("NICK %1").arg(strNickAuth));
+            Core::instance()->pNetwork->send("AUTHKEY");
         }
         else
         {

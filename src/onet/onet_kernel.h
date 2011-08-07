@@ -25,7 +25,6 @@ class Avatar;
 class DlgChannelSettings;
 class DlgModeration;
 class DlgUserProfile;
-class Network;
 class TabContainer;
 #include <QMap>
 #include <QObject>
@@ -38,14 +37,13 @@ class OnetKernel : public QObject
 {
     Q_OBJECT
 public:
-    OnetKernel(Network *, TabContainer *, DlgChannelSettings *, DlgModeration *, DlgUserProfile *);
+    OnetKernel(TabContainer *, DlgChannelSettings *, DlgModeration *, DlgUserProfile *);
     virtual ~OnetKernel();
 
 public slots:
     void kernel(QString);
 
 private:
-    Network *pNetwork;
     TabContainer *pTabC;
     DlgChannelSettings *pDlgChannelSettings;
     DlgModeration *pDlgModeration;

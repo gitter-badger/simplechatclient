@@ -27,7 +27,6 @@ class QVBoxLayout;
 class DlgUserProfile;
 class MainTextEdit;
 class MainWindow;
-class Network;
 class TabManager;
 #include <QWidget>
 
@@ -38,7 +37,7 @@ class TabWidget : public QWidget
 {
     Q_OBJECT
 public:
-    TabWidget(Network *, QString, DlgUserProfile *);
+    TabWidget(QString, DlgUserProfile *);
     virtual ~TabWidget();
     inline QString getName() { return strName; }
     void addslashes(QString &);
@@ -54,7 +53,6 @@ public:
 
 private:
     // params
-    Network *pNetwork;
     QString strName;
     DlgUserProfile *pDlgUserProfile;
 

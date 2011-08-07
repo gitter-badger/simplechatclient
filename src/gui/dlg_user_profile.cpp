@@ -35,16 +35,13 @@
 #include "convert.h"
 #include "core.h"
 #include "dlg_user_avatar.h"
-#include "network.h"
 #include "dlg_user_profile.h"
 
-DlgUserProfile::DlgUserProfile(QWidget *parent, Network *param1) : QDialog(parent)
+DlgUserProfile::DlgUserProfile(QWidget *parent) : QDialog(parent)
 {
     setAttribute(Qt::WA_DeleteOnClose);
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
     setWindowTitle(tr("Profile"));
-
-    pNetwork = param1;
 
     createGui();
     createSignals();
@@ -184,7 +181,7 @@ void DlgUserProfile::setNick(QString n)
     label_nick->setText(strNick);
 
     // get new user info
-    pNetwork->send(QString("NS INFO %1").arg(strNick));
+    Core::instance()->pNetwork->send(QString("NS INFO %1").arg(strNick));
 }
 
 void DlgUserProfile::setUserInfo(QString strKey, QString strValue)

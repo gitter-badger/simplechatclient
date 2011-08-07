@@ -22,18 +22,15 @@
 #include <QKeyEvent>
 #include <QMessageBox>
 #include "core.h"
-#include "network.h"
 #include "dlg_channel_list.h"
 
-DlgChannelList::DlgChannelList(QWidget *parent, Network *param1) : QDialog(parent)
+DlgChannelList::DlgChannelList(QWidget *parent) : QDialog(parent)
 {
     ui.setupUi(this);
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
     setWindowTitle(tr("Channel list"));
     // center screen
     move(QApplication::desktop()->screen()->rect().center() - rect().center());
-
-    pNetwork = param1;
 
     createGui();
     setDefaultValues();
@@ -757,7 +754,7 @@ void DlgChannelList::allCellDoubleClicked(int row, int column)
                 return;
         }
     }
-    pNetwork->send(QString("JOIN %1").arg(strChannel));
+    Core::instance()->pNetwork->send(QString("JOIN %1").arg(strChannel));
 }
 
 void DlgChannelList::teenCellDoubleClicked(int row, int column)
@@ -765,7 +762,7 @@ void DlgChannelList::teenCellDoubleClicked(int row, int column)
     Q_UNUSED (column);
 
     QString strChannel = ui.tableWidget_teen->item(row, 0)->text();
-    pNetwork->send(QString("JOIN %1").arg(strChannel));
+    Core::instance()->pNetwork->send(QString("JOIN %1").arg(strChannel));
 }
 
 void DlgChannelList::commonCellDoubleClicked(int row, int column)
@@ -773,7 +770,7 @@ void DlgChannelList::commonCellDoubleClicked(int row, int column)
     Q_UNUSED (column);
 
     QString strChannel = ui.tableWidget_common->item(row, 0)->text();
-    pNetwork->send(QString("JOIN %1").arg(strChannel));
+    Core::instance()->pNetwork->send(QString("JOIN %1").arg(strChannel));
 }
 
 void DlgChannelList::eroticCellDoubleClicked(int row, int column)
@@ -801,14 +798,14 @@ void DlgChannelList::eroticCellDoubleClicked(int row, int column)
             if (msgBox.clickedButton() == enterButton)
             {
                 Core::instance()->settings["age_check"] = "off";
-                pNetwork->send(QString("JOIN %1").arg(strChannel));
+                Core::instance()->pNetwork->send(QString("JOIN %1").arg(strChannel));
             }
         }
         else
-            pNetwork->send(QString("JOIN %1").arg(strChannel));
+            Core::instance()->pNetwork->send(QString("JOIN %1").arg(strChannel));
     }
     else
-        pNetwork->send(QString("JOIN %1").arg(strChannel));
+        Core::instance()->pNetwork->send(QString("JOIN %1").arg(strChannel));
 }
 
 void DlgChannelList::thematicCellDoubleClicked(int row, int column)
@@ -816,7 +813,7 @@ void DlgChannelList::thematicCellDoubleClicked(int row, int column)
     Q_UNUSED (column);
 
     QString strChannel = ui.tableWidget_thematic->item(row, 0)->text();
-    pNetwork->send(QString("JOIN %1").arg(strChannel));
+    Core::instance()->pNetwork->send(QString("JOIN %1").arg(strChannel));
 }
 
 void DlgChannelList::regionalCellDoubleClicked(int row, int column)
@@ -824,7 +821,7 @@ void DlgChannelList::regionalCellDoubleClicked(int row, int column)
     Q_UNUSED (column);
 
     QString strChannel = ui.tableWidget_regional->item(row, 0)->text();
-    pNetwork->send(QString("JOIN %1").arg(strChannel));
+    Core::instance()->pNetwork->send(QString("JOIN %1").arg(strChannel));
 }
 
 void DlgChannelList::buttonSearch()

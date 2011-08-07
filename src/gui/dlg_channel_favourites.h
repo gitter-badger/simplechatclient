@@ -21,7 +21,6 @@
 #ifndef DLG_CHANNEL_FAVOURITES_H
 #define DLG_CHANNEL_FAVOURITES_H
 
-class Network;
 #include <QDialog>
 #include "ui_channel_favourites.h"
 
@@ -29,11 +28,10 @@ class DlgChannelFavourites : public QDialog
 {
     Q_OBJECT
 public:
-    DlgChannelFavourites(QWidget *, Network *);
+    DlgChannelFavourites(QWidget *);
 
 private:
     Ui::uiChannelFavourites ui;
-    Network *pNetwork;
 
     void createGui();
     void createSignals();

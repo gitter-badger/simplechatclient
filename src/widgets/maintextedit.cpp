@@ -30,7 +30,6 @@
 #include "core.h"
 #include "dlg_find_text.h"
 #include "dlg_user_profile.h"
-#include "network.h"
 #include "maintextedit.h"
 
 #ifdef Q_WS_WIN
@@ -39,11 +38,10 @@
     #include "dlg_webcam.h"
 #endif
 
-MainTextEdit::MainTextEdit(Network *param1, QString param2, DlgUserProfile *param3)
+MainTextEdit::MainTextEdit(QString param1, DlgUserProfile *param2)
 {
-    pNetwork = param1;
-    strChannel = param2;
-    pDlgUserProfile = param3;
+    strChannel = param1;
+    pDlgUserProfile = param2;
 
     strNick = QString::null;
 
@@ -74,17 +72,17 @@ void MainTextEdit::updateBackgroundImage()
 
 void MainTextEdit::joinChannel()
 {
-    pNetwork->send(QString("JOIN %1").arg(strChannel));
+    Core::instance()->pNetwork->send(QString("JOIN %1").arg(strChannel));
 }
 
 void MainTextEdit::priv()
 {
-    pNetwork->send(QString("PRIV %1").arg(strNick));
+    Core::instance()->pNetwork->send(QString("PRIV %1").arg(strNick));
 }
 
 void MainTextEdit::whois()
 {
-    pNetwork->send(QString("WHOIS %1 :%1").arg(strNick));
+    Core::instance()->pNetwork->send(QString("WHOIS %1 :%1").arg(strNick));
 }
 
 void MainTextEdit::profile()
@@ -107,22 +105,22 @@ void MainTextEdit::cam()
 
 void MainTextEdit::friendsAdd()
 {
-    pNetwork->send(QString("NS FRIENDS ADD %1").arg(strNick));
+    Core::instance()->pNetwork->send(QString("NS FRIENDS ADD %1").arg(strNick));
 }
 
 void MainTextEdit::friendsDel()
 {
-    pNetwork->send(QString("NS FRIENDS DEL %1").arg(strNick));
+    Core::instance()->pNetwork->send(QString("NS FRIENDS DEL %1").arg(strNick));
 }
 
 void MainTextEdit::ignoreAdd()
 {
-    pNetwork->send(QString("NS IGNORE ADD %1").arg(strNick));
+    Core::instance()->pNetwork->send(QString("NS IGNORE ADD %1").arg(strNick));
 }
 
 void MainTextEdit::ignoreDel()
 {
-    pNetwork->send(QString("NS IGNORE DEL %1").arg(strNick));
+    Core::instance()->pNetwork->send(QString("NS IGNORE DEL %1").arg(strNick));
 }
 
 void MainTextEdit::kick()
@@ -131,12 +129,12 @@ void MainTextEdit::kick()
     QString strText = QInputDialog::getText(this, tr("Kick From Channel"), tr("Reason for kicking:"), QLineEdit::Normal, tr("No reason"), &ok);
 
     if ((ok) && (!strText.isEmpty()))
-        pNetwork->send(QString("KICK %1 %2 :%3").arg(strChannel).arg(strNick).arg(strText));
+        Core::instance()->pNetwork->send(QString("KICK %1 %2 :%3").arg(strChannel).arg(strNick).arg(strText));
 }
 
 void MainTextEdit::ban()
 {
-    pNetwork->send(QString("CS BAN %1 ADD %2").arg(strChannel).arg(strNick));
+    Core::instance()->pNetwork->send(QString("CS BAN %1 ADD %2").arg(strChannel).arg(strNick));
 }
 
 void MainTextEdit::kban()
@@ -146,54 +144,54 @@ void MainTextEdit::kban()
 
     if ((ok) && (!strText.isEmpty()))
     {
-        pNetwork->send(QString("CS BAN %1 ADD %2").arg(strChannel).arg(strNick));
-        pNetwork->send(QString("KICK %1 %2 :%3").arg(strChannel).arg(strNick).arg(strText));
+        Core::instance()->pNetwork->send(QString("CS BAN %1 ADD %2").arg(strChannel).arg(strNick));
+        Core::instance()->pNetwork->send(QString("KICK %1 %2 :%3").arg(strChannel).arg(strNick).arg(strText));
     }
 }
 
 void MainTextEdit::ipban()
 {
-    pNetwork->send(QString("CS BANIP %1 ADD %2").arg(strChannel).arg(strNick));
+    Core::instance()->pNetwork->send(QString("CS BANIP %1 ADD %2").arg(strChannel).arg(strNick));
 }
 
 void MainTextEdit::opAdd()
 {
-    pNetwork->send(QString("CS OP %1 ADD %2").arg(strChannel).arg(strNick));
+    Core::instance()->pNetwork->send(QString("CS OP %1 ADD %2").arg(strChannel).arg(strNick));
 }
 
 void MainTextEdit::opDel()
 {
-    pNetwork->send(QString("CS OP %1 DEL %2").arg(strChannel).arg(strNick));
+    Core::instance()->pNetwork->send(QString("CS OP %1 DEL %2").arg(strChannel).arg(strNick));
 }
 
 void MainTextEdit::halfopAdd()
 {
-    pNetwork->send(QString("CS HALFOP %1 ADD %2").arg(strChannel).arg(strNick));
+    Core::instance()->pNetwork->send(QString("CS HALFOP %1 ADD %2").arg(strChannel).arg(strNick));
 }
 
 void MainTextEdit::halfopDel()
 {
-    pNetwork->send(QString("CS HALFOP %1 DEL %2").arg(strChannel).arg(strNick));
+    Core::instance()->pNetwork->send(QString("CS HALFOP %1 DEL %2").arg(strChannel).arg(strNick));
 }
 
 void MainTextEdit::moderatorAdd()
 {
-    pNetwork->send(QString("CS MODERATOR %1 ADD %2").arg(strChannel).arg(strNick));
+    Core::instance()->pNetwork->send(QString("CS MODERATOR %1 ADD %2").arg(strChannel).arg(strNick));
 }
 
 void MainTextEdit::moderatorDel()
 {
-    pNetwork->send(QString("CS MODERATOR %1 DEL %2").arg(strChannel).arg(strNick));
+    Core::instance()->pNetwork->send(QString("CS MODERATOR %1 DEL %2").arg(strChannel).arg(strNick));
 }
 
 void MainTextEdit::voiceAdd()
 {
-    pNetwork->send(QString("CS VOICE %1 ADD %2").arg(strChannel).arg(strNick));
+    Core::instance()->pNetwork->send(QString("CS VOICE %1 ADD %2").arg(strChannel).arg(strNick));
 }
 
 void MainTextEdit::voiceDel()
 {
-    pNetwork->send(QString("CS VOICE %1 DEL %2").arg(strChannel).arg(strNick));
+    Core::instance()->pNetwork->send(QString("CS VOICE %1 DEL %2").arg(strChannel).arg(strNick));
 }
 
 void MainTextEdit::invite()
@@ -202,7 +200,7 @@ void MainTextEdit::invite()
     if (action)
     {
         QString strInviteChannel = action->data().toString();
-        pNetwork->send(QString("INVITE %1 %2").arg(strNick).arg(strInviteChannel));
+        Core::instance()->pNetwork->send(QString("INVITE %1 %2").arg(strNick).arg(strInviteChannel));
     }
 }
 

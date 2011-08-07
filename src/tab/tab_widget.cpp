@@ -25,16 +25,14 @@
 #include "convert.h"
 #include "core.h"
 #include "log.h"
-#include "network.h"
 #include "maintextedit.h"
 #include "notify.h"
 #include "tab_widget.h"
 
-TabWidget::TabWidget(Network *param1, QString param2, DlgUserProfile *param3)
+TabWidget::TabWidget(QString param1, DlgUserProfile *param2)
 {
-    pNetwork = param1;
-    strName = param2;
-    pDlgUserProfile = param3;
+    strName = param1;
+    pDlgUserProfile = param2;
 
     QString strDefaultFontColor = Core::instance()->settings.value("default_font_color");
     addslashes(strDefaultFontColor);
@@ -52,7 +50,7 @@ TabWidget::TabWidget(Network *param1, QString param2, DlgUserProfile *param3)
     topic->setMinimumHeight(25);
     topic->show();
 
-    pMainTextEdit = new MainTextEdit(pNetwork, strName, pDlgUserProfile);
+    pMainTextEdit = new MainTextEdit(strName, pDlgUserProfile);
     pMainTextEdit->document()->setMaximumBlockCount(1000);
     pMainTextEdit->setReadOnly(true);
     pMainTextEdit->setAcceptRichText(false);

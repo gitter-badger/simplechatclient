@@ -28,14 +28,11 @@
 #include "core.h"
 #include "inputlinewidget.h"
 #include "log.h"
-#include "network.h"
 #include "replace.h"
 #include "inputwidget.h"
 
-InputWidget::InputWidget(QWidget *parent, Network *param1) : QWidget(parent)
+InputWidget::InputWidget(QWidget *parent) : QWidget(parent)
 {
-    pNetwork = param1;
-
     nickLabel = new QLabel(parent);
     nickLabel->setText(QString("<p style=\"font-weight:bold;\"> %1</p>").arg(tr("(Unregistered)")));
     nickLabel->show();
@@ -210,7 +207,7 @@ void InputWidget::sendMessage(QString strText, bool bModeration)
                 delete l;
             }
 
-            pNetwork->send(QString("PRIVMSG %1 :%2").arg(strChannel).arg(strText));
+            Core::instance()->pNetwork->send(QString("PRIVMSG %1 :%2").arg(strChannel).arg(strText));
             QString strDisplay = QString("%1<%2> %3").arg(strDT).arg(strMe).arg(strText);
             emit displayMessage(strChannel, strDisplay, DefaultMessage);
         }
@@ -255,7 +252,7 @@ void InputWidget::sendMessage(QString strText, bool bModeration)
                     delete l;
                 }
 
-                pNetwork->send(strTextSend);
+                Core::instance()->pNetwork->send(strTextSend);
                 QString strDisplay = QString("%1<%2> %3ACTION %4%5").arg(strDT).arg(strMe).arg(QString(QByteArray("\x01"))).arg(strTextDisplay).arg(QString(QByteArray("\x01")));
                 emit displayMessage(strChannel, strDisplay, MeMessage);
             }
@@ -264,7 +261,7 @@ void InputWidget::sendMessage(QString strText, bool bModeration)
         else
         {
             if (strText.length() > 0)
-                pNetwork->send(strText);
+                Core::instance()->pNetwork->send(strText);
         }
     }
     else
@@ -305,7 +302,7 @@ void InputWidget::sendMessage(QString strText, bool bModeration)
             }
 
             strText = QString("PRIVMSG %1 :%2").arg(strChannel).arg(strText);
-            pNetwork->send(strText);
+            Core::instance()->pNetwork->send(strText);
             QString strDisplay = QString("%1<%2> %3").arg(strDT).arg(strMe).arg(strText.right(strText.length()-10-strChannel.length()));
             emit displayMessage(strChannel, strDisplay, DefaultMessage);
         }
@@ -321,7 +318,7 @@ void InputWidget::sendMessage(QString strText, bool bModeration)
             }
 
             strText = QString("MODERNOTICE %1 :%2").arg(strChannel).arg(strText);
-            pNetwork->send(strText);
+            Core::instance()->pNetwork->send(strText);
             QString strDisplay = QString("%1*<%2> %3").arg(strDT).arg(strMe).arg(strText.right(strText.length()-14-strChannel.length()));
             emit displayMessage(strChannel, strDisplay, NoticeMessage);
         }
@@ -343,7 +340,7 @@ void InputWidget::inputlineReturnPressed()
     // disable away
     bool bAway = Core::instance()->settings.value("away") == "on" ? true : false;
     if (bAway)
-        pNetwork->send("AWAY :");
+        Core::instance()->pNetwork->send("AWAY :");
 
     // text
     QString strText = pInputLine->text().trimmed();
@@ -361,7 +358,7 @@ void InputWidget::moderButtonClicked()
     // disable away
     bool bAway = Core::instance()->settings.value("away") == "on" ? true : false;
     if (bAway)
-        pNetwork->send("AWAY :");
+        Core::instance()->pNetwork->send("AWAY :");
 
     // text
     QString strText = pInputLine->text().trimmed();

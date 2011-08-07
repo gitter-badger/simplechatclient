@@ -20,11 +20,11 @@
 
 #include <QDesktopWidget>
 #include <QPushButton>
+#include "core.h"
 #include "mainwindow.h"
-#include "network.h"
 #include "dlg_channel_key.h"
 
-DlgChannelKey::DlgChannelKey(MainWindow *parent, Network *param1, QString param2) : QDialog(parent)
+DlgChannelKey::DlgChannelKey(MainWindow *parent, QString param1) : QDialog(parent)
 {
     ui.setupUi(this);
     setAttribute(Qt::WA_DeleteOnClose);
@@ -33,8 +33,7 @@ DlgChannelKey::DlgChannelKey(MainWindow *parent, Network *param1, QString param2
     // center screen
     move(QApplication::desktop()->screen()->rect().center() - rect().center());
 
-    pNetwork = param1;
-    strChannel = param2;
+    strChannel = param1;
 
     createGui();
     createSignals();
@@ -59,7 +58,7 @@ void DlgChannelKey::buttonOk()
     QString strKey = ui.lineEdit_key->text();
     if (!strKey.isEmpty())
     {
-        pNetwork->send(QString("JOIN %1 %2").arg(strChannel).arg(strKey));
+        Core::instance()->pNetwork->send(QString("JOIN %1 %2").arg(strChannel).arg(strKey));
         this->close();
     }
 }

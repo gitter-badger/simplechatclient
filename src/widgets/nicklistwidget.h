@@ -23,14 +23,13 @@
 
 #include "defines.h"
 class DlgUserProfile;
-class Network;
 #include <QListWidget>
 
 class NickListWidget : public QListWidget
 {
     Q_OBJECT
 public:
-    NickListWidget(Network *, DlgUserProfile *);
+    NickListWidget(DlgUserProfile *);
     void setChannel(QString);
     QString getChannel() { return strChannel; }
     void add(QString);
@@ -38,7 +37,6 @@ public:
 
 private:
     // params
-    Network *pNetwork;
     DlgUserProfile *pDlgUserProfile;
     // other
     QString strChannel;

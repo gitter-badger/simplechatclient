@@ -23,18 +23,15 @@
 #include <QShowEvent>
 #include <QTimer>
 #include "core.h"
-#include "network.h"
 #include "dlg_friends.h"
 
-DlgFriends::DlgFriends(QWidget *parent, Network *param1) : QDialog(parent)
+DlgFriends::DlgFriends(QWidget *parent) : QDialog(parent)
 {
     ui.setupUi(this);
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
     setWindowTitle(tr("Friends list"));
     // center screen
     move(QApplication::desktop()->screen()->rect().center() - rect().center());
-
-    pNetwork = param1;
 
     createGui();
     createSignals();
@@ -91,7 +88,7 @@ void DlgFriends::refresh()
             item->setIcon(QIcon(":/images/oxygen/16x16/meeting-attending.png"));
 
             if (Core::instance()->settings.value("disable_avatars") == "off") // with avatars
-                pNetwork->send(QString("NS INFO %1 s").arg(i.key()));
+                Core::instance()->pNetwork->send(QString("NS INFO %1 s").arg(i.key()));
         }
 
         if (i.value())
@@ -128,7 +125,7 @@ void DlgFriends::buttonAdd()
 
     if ((ok) && (!strText.isEmpty()))
     {
-        pNetwork->send(QString("NS FRIENDS ADD %1").arg(strText));
+        Core::instance()->pNetwork->send(QString("NS FRIENDS ADD %1").arg(strText));
         QTimer::singleShot(1000*4, this, SLOT(refresh())); // 4 sec
     }
 }
@@ -152,7 +149,7 @@ void DlgFriends::buttonRemove()
 
     if ((ok) && (!strText.isEmpty()))
     {
-        pNetwork->send(QString("NS FRIENDS DEL %1").arg(strText));
+        Core::instance()->pNetwork->send(QString("NS FRIENDS DEL %1").arg(strText));
         QTimer::singleShot(1000*4, this, SLOT(refresh())); // 4 sec
     }
 }
@@ -172,5 +169,5 @@ void DlgFriends::buttonWhois()
     }
 
     if (!strSelected.isEmpty())
-        pNetwork->send(QString("WHOIS %1 :%1").arg(strSelected));
+        Core::instance()->pNetwork->send(QString("WHOIS %1 :%1").arg(strSelected));
 }

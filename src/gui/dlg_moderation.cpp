@@ -21,6 +21,7 @@
 #include <QDateTime>
 #include <QDesktopWidget>
 #include <QShowEvent>
+#include "core.h"
 #include "dlg_moderation.h"
 
 DlgModeration::DlgModeration(QWidget *parent) : QDialog(parent)
@@ -175,7 +176,7 @@ void DlgModeration::buttonAccept()
         QString strMessage = item->data(Qt::UserRole+4).toString();
 
         QString strSend = QString("MODERMSG %1 - %2 :%3").arg(strNick).arg(strChannel).arg(strMessage);
-        emit send(strSend);
+        Core::instance()->pNetwork->send(strSend);
 
         QString strDisplay = QString("<%1> %2").arg(strNick).arg(strMessage);
         emit displayMsg(strChannel, strDisplay, DefaultMessage);

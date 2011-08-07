@@ -21,15 +21,13 @@
 #include <QDateTime>
 #include "core.h"
 #include "log.h"
-#include "network.h"
 #include "tab_manager.h"
 #include "tab_widget.h"
 #include "tab_container.h"
 
-TabContainer::TabContainer(Network *param1, TabManager *param2)
+TabContainer::TabContainer(TabManager *param1)
 {
-    pNetwork = param1;
-    pTabM = param2;
+    pTabM = param1;
 }
 
 TabContainer::~TabContainer()
@@ -105,7 +103,7 @@ void TabContainer::addTab(QString strChannel)
         Core::instance()->mChannelNicks.insert(strChannel, 0);
 
         // create tab
-        tw.append(new TabWidget(pNetwork, strChannel, pDlgUserProfile));
+        tw.append(new TabWidget(strChannel, pDlgUserProfile));
         pTabM->addTab(tw.at(tw.size()-1), strChannel);
         pTabM->setCurrentIndex(tw.size()-1);
     }
@@ -161,8 +159,8 @@ void TabContainer::partTab(int index)
 {
     QString strChannel = tw[index]->getName();
 
-    if (pNetwork->isConnected())
-        pNetwork->send(QString("PART %1").arg(strChannel));
+    if (Core::instance()->pNetwork->isConnected())
+        Core::instance()->pNetwork->send(QString("PART %1").arg(strChannel));
     else
         removeTab(strChannel);
 }

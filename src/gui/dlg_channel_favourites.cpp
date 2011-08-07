@@ -23,18 +23,15 @@
 #include <QShowEvent>
 #include <QTimer>
 #include "core.h"
-#include "network.h"
 #include "dlg_channel_favourites.h"
 
-DlgChannelFavourites::DlgChannelFavourites(QWidget *parent, Network *param1) : QDialog(parent)
+DlgChannelFavourites::DlgChannelFavourites(QWidget *parent) : QDialog(parent)
 {
     ui.setupUi(this);
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
     setWindowTitle(tr("Favorite channels"));
     // center screen
     move(QApplication::desktop()->screen()->rect().center() - rect().center());
-
-    pNetwork = param1;
 
     createGui();
     createSignals();
@@ -76,7 +73,7 @@ void DlgChannelFavourites::refresh()
         else
         {
             ui.listWidget_channels->addItem(new QListWidgetItem(QIcon(":/images/channel_avatar.png"), strChannel));
-            pNetwork->send(QString("CS INFO %1 i").arg(strChannel));
+            Core::instance()->pNetwork->send(QString("CS INFO %1 i").arg(strChannel));
         }
     }
 }
@@ -88,7 +85,7 @@ void DlgChannelFavourites::buttonAdd()
 
     if ((ok) && (!strText.isEmpty()))
     {
-        pNetwork->send(QString("NS FAVOURITES ADD %1").arg(strText));
+        Core::instance()->pNetwork->send(QString("NS FAVOURITES ADD %1").arg(strText));
         QTimer::singleShot(1000*2, this, SLOT(refresh())); // 2 sec
     }
 }
@@ -104,7 +101,7 @@ void DlgChannelFavourites::buttonRemove()
 
     if ((ok) && (!strText.isEmpty()))
     {
-        pNetwork->send(QString("NS FAVOURITES DEL %1").arg(strText));
+        Core::instance()->pNetwork->send(QString("NS FAVOURITES DEL %1").arg(strText));
         QTimer::singleShot(1000*2, this, SLOT(refresh())); // 2 sec
     }
 }

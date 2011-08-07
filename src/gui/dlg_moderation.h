@@ -55,7 +55,6 @@ protected:
 
 signals:
     void displayMsg(QString&, QString&, MessageCategory);
-    void send(QString);
 };
 
 #endif // DLG_MODERATION_H

@@ -27,15 +27,13 @@
 #include "dlg_emoticons.h"
 #include "dlg_moderation.h"
 #include "inputwidget.h"
-#include "network.h"
 #include "toolwidget.h"
 
-ToolWidget::ToolWidget(QWidget *parent, Network *param1, InputWidget *param2, DlgChannelSettings *param3, DlgModeration *param4) : QWidget(parent)
+ToolWidget::ToolWidget(QWidget *parent, InputWidget *param1, DlgChannelSettings *param2, DlgModeration *param3) : QWidget(parent)
 {
-    pNetwork = param1;
-    pInputWidget = param2;
-    pDlgChannelSettings = param3;
-    pDlgModeration = param4;
+    pInputWidget = param1;
+    pDlgChannelSettings = param2;
+    pDlgModeration = param3;
 
     strCurrentColor = "#000000";
 
@@ -528,7 +526,7 @@ void ToolWidget::emoticonsClicked()
 
 void ToolWidget::channelSettingsClicked()
 {
-    if (pNetwork->isConnected())
+    if (Core::instance()->pNetwork->isConnected())
     {
         pDlgChannelSettings->setChannel(Core::instance()->getCurrentChannelName());
         pDlgChannelSettings->show();

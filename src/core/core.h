@@ -28,6 +28,7 @@ class QTimer;
 class MainWindow;
 class Update;
 #include <QObject>
+#include "network.h"
 
 /**
  * Core
@@ -72,6 +73,8 @@ public:
     int getUserMaxModes(QString, QString);
     // settings
     QMap<QString,QString> settings;
+    // network
+    Network *pNetwork;
 
     QAction *lagAct;
     QList<QString> lAwaylog;

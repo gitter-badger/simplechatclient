@@ -22,18 +22,15 @@
 #include <QInputDialog>
 #include <QTimer>
 #include "core.h"
-#include "network.h"
 #include "dlg_ignore.h"
 
-DlgIgnore::DlgIgnore(QWidget *parent, Network *param1) : QDialog(parent)
+DlgIgnore::DlgIgnore(QWidget *parent) : QDialog(parent)
 {
     ui.setupUi(this);
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
     setWindowTitle(tr("Ignore list"));
     // center screen
     move(QApplication::desktop()->screen()->rect().center() - rect().center());
-
-    pNetwork = param1;
 
     createGui();
     createSignals();
@@ -88,7 +85,7 @@ void DlgIgnore::refresh()
             ui.listWidget_nicks->addItem(item);
 
             if (Core::instance()->settings.value("disable_avatars") == "off") // with avatars
-                pNetwork->send(QString("NS INFO %1 s").arg(strNick));
+                Core::instance()->pNetwork->send(QString("NS INFO %1 s").arg(strNick));
         }
     }
 }
@@ -100,7 +97,7 @@ void DlgIgnore::buttonAdd()
 
     if ((ok) && (!strText.isEmpty()))
     {
-        pNetwork->send(QString("NS IGNORE ADD %1").arg(strText));
+        Core::instance()->pNetwork->send(QString("NS IGNORE ADD %1").arg(strText));
         QTimer::singleShot(1000*4, this, SLOT(refresh())); // 4 sec
     }
 }
@@ -116,7 +113,7 @@ void DlgIgnore::buttonRemove()
 
     if ((ok) && (!strText.isEmpty()))
     {
-        pNetwork->send(QString("NS IGNORE DEL %1").arg(strText));
+        Core::instance()->pNetwork->send(QString("NS IGNORE DEL %1").arg(strText));
         QTimer::singleShot(1000*4, this, SLOT(refresh())); // 4 sec
     }
 }

@@ -43,7 +43,6 @@
 #include "dlg_options.h"
 #include "dlg_user_profile.h"
 #include "inputlinedockwidget.h"
-#include "network.h"
 #include "nicklistdelegate.h"
 #include "nicklistwidget.h"
 #include "onet_auth.h"
@@ -71,19 +70,14 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     pTabM = new TabManager(this);
     this->setCentralWidget(pTabM);
 
-    QString strServer = "czat-app.onet.pl";
-    int iPort = 5015;
-    pNetwork = new Network(strServer, iPort);
-    pNetwork->start(QThread::InheritPriority);
-
     // classes
-    pTabC = new TabContainer(pNetwork, pTabM);
+    pTabC = new TabContainer(pTabM);
 
-    pDlgChannelSettings = new DlgChannelSettings(this, pNetwork);
+    pDlgChannelSettings = new DlgChannelSettings(this);
     pDlgModeration = new DlgModeration(this);
-    pDlgUserProfile = new DlgUserProfile(this, pNetwork);
+    pDlgUserProfile = new DlgUserProfile(this);
 
-    pOnetKernel = new OnetKernel(pNetwork, pTabC, pDlgChannelSettings, pDlgModeration, pDlgUserProfile);
+    pOnetKernel = new OnetKernel(pTabC, pDlgChannelSettings, pDlgModeration, pDlgUserProfile);
     pOnetAuth = new OnetAuth(pTabC);
 
     pTabC->setDlg(pDlgUserProfile);
@@ -142,15 +136,7 @@ MainWindow::~MainWindow()
     delete pDlgModeration;
     delete pDlgChannelSettings;
 
-    // close network
-    Core::instance()->settings["reconnect"] = "false";
-    QObject::disconnect(pNetwork, SIGNAL(clearAllNicklist()), this, SLOT(clearAllNicklist()));
-    pNetwork->disconnect();
-    pNetwork->quit();
-    pNetwork->wait();
-    pNetwork->deleteLater();
-    pNetwork->QObject::disconnect();
-    delete pNetwork;
+    QObject::disconnect(Core::instance()->pNetwork, SIGNAL(clearAllNicklist()), this, SLOT(clearAllNicklist()));
 
     QObject::disconnect(pTabC, SIGNAL(clearNicklist(QString)), this, SLOT(clearNicklist(QString)));
     QObject::disconnect(pTabM, SIGNAL(currentChanged(int)), this, SLOT(currentTabChanged(int)));
@@ -193,11 +179,11 @@ void MainWindow::createGui()
     viewMenu->addAction(rightDockWidget->toggleViewAction());
 
     // inputline
-    pInputLineDockWidget = new InputLineDockWidget(bottomDockWidget, pNetwork, pDlgChannelSettings, pDlgModeration);
+    pInputLineDockWidget = new InputLineDockWidget(bottomDockWidget, pDlgChannelSettings, pDlgModeration);
     bottomDockWidget->setWidget(pInputLineDockWidget);
 
     // nicklist
-    pNickListWidget = new NickListWidget(pNetwork, pDlgUserProfile);
+    pNickListWidget = new NickListWidget(pDlgUserProfile);
     pNickListWidget->setParent(rightDockWidget);
     pNickListWidget->setItemDelegate(new NickListDelegate(pNickListWidget));
     rightDockWidget->setWidget(pNickListWidget);
@@ -229,16 +215,8 @@ void MainWindow::createActions()
     ignoreAct = new QAction(QIcon(":/images/oxygen/16x16/meeting-attending-tentative.png"), tr("Ignored"), this);
     Core::instance()->offlineMsgAct = new QAction(QIcon(":/images/oxygen/16x16/mail-mark-unread.png") , tr("Offline messages"), this);
     camsAct = new QAction(QIcon(":/images/oxygen/16x16/camera-web.png"),tr("Cams"), this);
-    Core::instance()->busyAct = new QAction(QIcon(":/images/oxygen/16x16/im-user-offline.png"), tr("Mark as busy"), this);
-    Core::instance()->awayAct = new QAction(QIcon(":/images/oxygen/16x16/im-user-away.png"), tr("Mark as away"), this);
     myStatsAct = new QAction(QIcon(":/images/oxygen/16x16/office-chart-bar.png"),tr("My statistics"), this);
     myProfileAct = new QAction(QIcon(":/images/oxygen/16x16/view-pim-contacts.png"),tr("My profile"), this);
-
-    // checkable
-    Core::instance()->busyAct->setCheckable(true);
-    Core::instance()->awayAct->setCheckable(true);
-    Core::instance()->busyAct->setChecked(false);
-    Core::instance()->awayAct->setChecked(false);
 
     // shortcut
     connectAct->setShortcuts(QKeySequence::New);
@@ -394,21 +372,17 @@ void MainWindow::createSignals()
     QObject::connect(pOnetKernel, SIGNAL(changeFlag(QString,QString)), this, SLOT(changeFlag(QString,QString)));
     QObject::connect(pOnetKernel, SIGNAL(clearChannelAllNickAvatars(QString)), this, SLOT(clearChannelAllNickAvatars(QString)));
 
-    // signals to network
-    QObject::connect(pDlgModeration, SIGNAL(send(QString)), pNetwork, SLOT(send(QString)));
-    QObject::connect(pOnetAuth, SIGNAL(send(QString)), pNetwork, SLOT(send(QString)));
-
     // signals from network
-    QObject::connect(pNetwork, SIGNAL(setConnected()), this, SLOT(setConnected()));
-    QObject::connect(pNetwork, SIGNAL(setDisconnected()), this, SLOT(setDisconnected()));
-    QObject::connect(pNetwork, SIGNAL(setConnectEnabled(bool)), this, SLOT(setConnectEnabled(bool)));
-    QObject::connect(pNetwork, SIGNAL(kernel(QString)), pOnetKernel, SLOT(kernel(QString)));
-    QObject::connect(pNetwork, SIGNAL(authorize(QString,QString,QString)), pOnetAuth, SLOT(authorize(QString,QString,QString)));
-    QObject::connect(pNetwork, SIGNAL(showMsgActive(QString&,MessageCategory)), pTabC, SLOT(slotShowMsgActive(QString&,MessageCategory)));
-    QObject::connect(pNetwork, SIGNAL(showMsgAll(QString&,MessageCategory)), pTabC, SLOT(slotShowMsgAll(QString&,MessageCategory)));
-    QObject::connect(pNetwork, SIGNAL(updateNick(QString)), pInputLineDockWidget, SLOT(slotUpdateNick(QString)));
-    QObject::connect(pNetwork, SIGNAL(clearAllNicklist()), this, SLOT(clearAllNicklist()));
-    QObject::connect(pNetwork, SIGNAL(updateActions()), this, SLOT(updateActions()));
+    QObject::connect(Core::instance()->pNetwork, SIGNAL(setConnected()), this, SLOT(setConnected()));
+    QObject::connect(Core::instance()->pNetwork, SIGNAL(setDisconnected()), this, SLOT(setDisconnected()));
+    QObject::connect(Core::instance()->pNetwork, SIGNAL(setConnectEnabled(bool)), this, SLOT(setConnectEnabled(bool)));
+    QObject::connect(Core::instance()->pNetwork, SIGNAL(kernel(QString)), pOnetKernel, SLOT(kernel(QString)));
+    QObject::connect(Core::instance()->pNetwork, SIGNAL(authorize(QString,QString,QString)), pOnetAuth, SLOT(authorize(QString,QString,QString)));
+    QObject::connect(Core::instance()->pNetwork, SIGNAL(showMsgActive(QString&,MessageCategory)), pTabC, SLOT(slotShowMsgActive(QString&,MessageCategory)));
+    QObject::connect(Core::instance()->pNetwork, SIGNAL(showMsgAll(QString&,MessageCategory)), pTabC, SLOT(slotShowMsgAll(QString&,MessageCategory)));
+    QObject::connect(Core::instance()->pNetwork, SIGNAL(updateNick(QString)), pInputLineDockWidget, SLOT(slotUpdateNick(QString)));
+    QObject::connect(Core::instance()->pNetwork, SIGNAL(clearAllNicklist()), this, SLOT(clearAllNicklist()));
+    QObject::connect(Core::instance()->pNetwork, SIGNAL(updateActions()), this, SLOT(updateActions()));
 
     // auto-away
     QObject::connect(Core::instance()->autoAwayTimer, SIGNAL(timeout()), this, SLOT(timeoutAutoaway()));
@@ -443,37 +417,16 @@ void MainWindow::refreshColors()
     pTabC->refreshColors();
 }
 
-// network
-void MainWindow::networkConnect()
-{
-    pNetwork->connect();
-}
-
-void MainWindow::networkDisconnect()
-{
-    pNetwork->disconnect();
-}
-
-void MainWindow::networkSend(QString data)
-{
-    pNetwork->send(data);
-}
-
-bool MainWindow::networkIsConnected()
-{
-    return pNetwork->isConnected();
-}
-
 // buttons
 void MainWindow::buttonConnect()
 {
-    if (!networkIsConnected())
+    if (!Core::instance()->pNetwork->isConnected())
     {
         connectAct->setText(tr("&Disconnect"));
         connectAct->setIconText(tr("&Disconnect"));
         connectAct->setIcon(QIcon(":/images/oxygen/16x16/network-disconnect.png"));
         Core::instance()->settings["reconnect"] = "true";
-        networkConnect();
+        Core::instance()->pNetwork->connect();
     }
     else
     {
@@ -482,7 +435,7 @@ void MainWindow::buttonConnect()
         connectAct->setText(tr("&Connect"));
         connectAct->setIconText(tr("&Connect"));
         connectAct->setIcon(QIcon(":/images/oxygen/16x16/network-connect.png"));
-        networkDisconnect();
+        Core::instance()->pNetwork->disconnect();
     }
 }
 
@@ -567,32 +520,32 @@ void MainWindow::updateUsersCount()
 // onet dialogs
 void MainWindow::openChannelList()
 {
-    if ((pNetwork->isConnected()) && (pNetwork->isWritable()) && (Core::instance()->settings.value("logged") == "on"))
-        DlgChannelList(this, pNetwork).exec();
+    if ((Core::instance()->pNetwork->isConnected()) && (Core::instance()->pNetwork->isWritable()) && (Core::instance()->settings.value("logged") == "on"))
+        DlgChannelList(this).exec();
 }
 
 void MainWindow::openChannelHomes()
 {
-    if ((pNetwork->isConnected()) && (pNetwork->isWritable()) && (Core::instance()->settings.value("logged") == "on"))
-        DlgChannelHomes(this, pNetwork, pDlgChannelSettings).exec();
+    if ((Core::instance()->pNetwork->isConnected()) && (Core::instance()->pNetwork->isWritable()) && (Core::instance()->settings.value("logged") == "on"))
+        DlgChannelHomes(this, pDlgChannelSettings).exec();
 }
 
 void MainWindow::openChannelFavourites()
 {
-    if ((pNetwork->isConnected()) && (pNetwork->isWritable()) && (Core::instance()->settings.value("logged") == "on"))
-        DlgChannelFavourites(this, pNetwork).exec();
+    if ((Core::instance()->pNetwork->isConnected()) && (Core::instance()->pNetwork->isWritable()) && (Core::instance()->settings.value("logged") == "on"))
+        DlgChannelFavourites(this).exec();
 }
 
 void MainWindow::openFriends()
 {
-    if ((pNetwork->isConnected()) && (pNetwork->isWritable()) && (Core::instance()->settings.value("logged") == "on"))
-        DlgFriends(this, pNetwork).exec();
+    if ((Core::instance()->pNetwork->isConnected()) && (Core::instance()->pNetwork->isWritable()) && (Core::instance()->settings.value("logged") == "on"))
+        DlgFriends(this).exec();
 }
 
 void MainWindow::openIgnore()
 {
-    if ((pNetwork->isConnected()) && (pNetwork->isWritable()) && (Core::instance()->settings.value("logged") == "on"))
-        DlgIgnore(this, pNetwork).exec();
+    if ((Core::instance()->pNetwork->isConnected()) && (Core::instance()->pNetwork->isWritable()) && (Core::instance()->settings.value("logged") == "on"))
+        DlgIgnore(this).exec();
 }
 
 void MainWindow::buttonSetBusy()
@@ -603,14 +556,14 @@ void MainWindow::buttonSetBusy()
     else
         Core::instance()->busyAct->setChecked(true);
 
-    if ((pNetwork->isConnected()) && (pNetwork->isWritable()) && (Core::instance()->settings.value("logged") == "on"))
+    if ((Core::instance()->pNetwork->isConnected()) && (Core::instance()->pNetwork->isWritable()) && (Core::instance()->settings.value("logged") == "on"))
     {
         bool bBusy = Core::instance()->settings.value("busy") == "on" ? true : false;
 
         if (bBusy)
-            pNetwork->send("BUSY 0");
+            Core::instance()->pNetwork->send("BUSY 0");
         else
-            pNetwork->send("BUSY 1");
+            Core::instance()->pNetwork->send("BUSY 1");
     }
 }
 
@@ -622,7 +575,7 @@ void MainWindow::buttonSetAway()
     else
         Core::instance()->awayAct->setChecked(true);
 
-    if ((pNetwork->isConnected()) && (pNetwork->isWritable()) && (Core::instance()->settings.value("logged") == "on"))
+    if ((Core::instance()->pNetwork->isConnected()) && (Core::instance()->pNetwork->isWritable()) && (Core::instance()->settings.value("logged") == "on"))
     {
         bool bAway = Core::instance()->settings.value("away") == "on" ? true : false;
 
@@ -632,14 +585,14 @@ void MainWindow::buttonSetAway()
         else
             strReason = tr("Not here right now");
 
-        pNetwork->send(QString("AWAY :%1").arg(strReason));
+        Core::instance()->pNetwork->send(QString("AWAY :%1").arg(strReason));
     }
 }
 
 void MainWindow::openOfflinemsg()
 {
-    if ((pNetwork->isConnected()) && (pNetwork->isWritable()) && (Core::instance()->settings.value("logged") == "on"))
-        DlgOfflineMsg(this, pNetwork).exec();
+    if ((Core::instance()->pNetwork->isConnected()) && (Core::instance()->pNetwork->isWritable()) && (Core::instance()->settings.value("logged") == "on"))
+        DlgOfflineMsg(this).exec();
 }
 
 void MainWindow::openAwaylog()
@@ -650,27 +603,27 @@ void MainWindow::openAwaylog()
 void MainWindow::openCams()
 {
 #ifdef Q_WS_WIN
-    if ((pNetwork->isConnected()) && (pNetwork->isWritable()) && (Core::instance()->settings.value("logged") == "on"))
+    if ((Core::instance()->pNetwork->isConnected()) && (Core::instance()->pNetwork->isWritable()) && (Core::instance()->settings.value("logged") == "on"))
     {
         QString strMe = Core::instance()->settings.value("nick");
-        (new Kamerzysta(Core::instance()->kamerzystaSocket, pNetwork))->show(strMe);
+        (new Kamerzysta(Core::instance()->kamerzystaSocket))->show(strMe);
     }
 #else
-    if ((pNetwork->isConnected()) && (pNetwork->isWritable()) && (Core::instance()->settings.value("logged") == "on"))
+    if ((Core::instance()->pNetwork->isConnected()) && (Core::instance()->pNetwork->isWritable()) && (Core::instance()->settings.value("logged") == "on"))
         new DlgWebcam();
 #endif
 }
 
 void MainWindow::openMyStats()
 {
-    if ((pNetwork->isConnected()) && (pNetwork->isWritable()) && (Core::instance()->settings.value("logged") == "on"))
+    if ((Core::instance()->pNetwork->isConnected()) && (Core::instance()->pNetwork->isWritable()) && (Core::instance()->settings.value("logged") == "on"))
         DlgMyStats(this).exec();
 }
 
 void MainWindow::openMyProfile()
 {
-    if ((pNetwork->isConnected()) && (pNetwork->isWritable()) && (Core::instance()->settings.value("logged") == "on"))
-        DlgMyProfile(this, pNetwork).exec();
+    if ((Core::instance()->pNetwork->isConnected()) && (Core::instance()->pNetwork->isWritable()) && (Core::instance()->settings.value("logged") == "on"))
+        DlgMyProfile(this).exec();
 }
 
 void MainWindow::openNotes()
@@ -737,7 +690,7 @@ int MainWindow::getCurrentTabIndex()
 
 void MainWindow::timeoutAutoaway()
 {
-    if ((pNetwork->isConnected()) && (pNetwork->isWritable()) && (Core::instance()->settings.value("logged") == "on"))
+    if ((Core::instance()->pNetwork->isConnected()) && (Core::instance()->pNetwork->isWritable()) && (Core::instance()->settings.value("logged") == "on"))
     {
         QDateTime cdt = QDateTime::currentDateTime();
         int t = (int)cdt.toTime_t(); // seconds that have passed since 1970
@@ -747,7 +700,7 @@ void MainWindow::timeoutAutoaway()
         bool bAway = Core::instance()->settings.value("away") == "on" ? true : false;
 
         if ((!bAway) && (iLastActive != 0) && (t-iLastActive > 300))
-            pNetwork->send(QString("AWAY :%1").arg(tr("Not here right now")));
+            Core::instance()->pNetwork->send(QString("AWAY :%1").arg(tr("Not here right now")));
     }
 }
 

@@ -25,17 +25,14 @@
 #include "convert.h"
 #include "core.h"
 #include "dlg_email.h"
-#include "network.h"
 #include "dlg_channel_settings.h"
 #include "simplestatswidget.h"
 
-DlgChannelSettings::DlgChannelSettings(QWidget *parent, Network *param1) : QDialog(parent)
+DlgChannelSettings::DlgChannelSettings(QWidget *parent) : QDialog(parent)
 {
     ui.setupUi(this);
     setAttribute(Qt::WA_DeleteOnClose);
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
-
-    pNetwork = param1;
 
     pSimpleStatsWidget = new SimpleStatsWidget(this);
     pSimpleStatsWidget->show();
@@ -577,11 +574,11 @@ void DlgChannelSettings::ownerChanged()
     QString strNick = QInputDialog::getText(this, tr("Changing privileges"), strMsg, QLineEdit::Normal, QString::null, &ok);
 
     if ((ok) && (!strNick.isEmpty()))
-        pNetwork->send(QString("CS TRANSFER %1 %2").arg(strChannel).arg(strNick));
+        Core::instance()->pNetwork->send(QString("CS TRANSFER %1 %2").arg(strChannel).arg(strNick));
 
     clear();
     ui.label_channel_name->setText(strChannel);
-    pNetwork->send(QString("CS INFO %1").arg(strChannel));
+    Core::instance()->pNetwork->send(QString("CS INFO %1").arg(strChannel));
 }
 
 void DlgChannelSettings::removeChannelClicked()
@@ -591,7 +588,7 @@ void DlgChannelSettings::removeChannelClicked()
     QString strText = QInputDialog::getText(this, tr("Changing privileges"), strMsg, QLineEdit::Normal, strChannel, &ok);
 
     if ((ok) && (!strText.isEmpty()))
-        pNetwork->send(QString("CS DROP %1").arg(strText));
+        Core::instance()->pNetwork->send(QString("CS DROP %1").arg(strText));
 
     strChannel.clear();
     clear();
@@ -606,8 +603,8 @@ void DlgChannelSettings::emailChanged()
 
 void DlgChannelSettings::wwwChanged()
 {
-    pNetwork->send(QString("CS SET %1 WWW %2").arg(strChannel).arg(ui.lineEdit_website->text()));
-    pNetwork->send(QString("CS INFO %1").arg(strChannel));
+    Core::instance()->pNetwork->send(QString("CS SET %1 WWW %2").arg(strChannel).arg(ui.lineEdit_website->text()));
+    Core::instance()->pNetwork->send(QString("CS INFO %1").arg(strChannel));
 }
 
 void DlgChannelSettings::topicChanged()
@@ -653,90 +650,90 @@ void DlgChannelSettings::topicChanged()
     if ((!strFontWeight.isEmpty()) || (!strFontName.isEmpty()))
         strTopic = "%F"+strFontWeight+strFontName+"%"+strTopic;
 
-    pNetwork->send(QString("CS SET %1 TOPIC %2").arg(strChannel).arg(strTopic));
-    pNetwork->send(QString("CS INFO %1").arg(strChannel));
+    Core::instance()->pNetwork->send(QString("CS SET %1 TOPIC %2").arg(strChannel).arg(strTopic));
+    Core::instance()->pNetwork->send(QString("CS INFO %1").arg(strChannel));
 }
 
 void DlgChannelSettings::descChanged()
 {
-    pNetwork->send(QString("CS SET %1 LONGDESC %2").arg(strChannel).arg(ui.plainTextEdit_desc->toPlainText().replace(QRegExp("(\r|\n)"), "")));
-    pNetwork->send(QString("CS INFO %1").arg(strChannel));
+    Core::instance()->pNetwork->send(QString("CS SET %1 LONGDESC %2").arg(strChannel).arg(ui.plainTextEdit_desc->toPlainText().replace(QRegExp("(\r|\n)"), "")));
+    Core::instance()->pNetwork->send(QString("CS INFO %1").arg(strChannel));
 }
 
 void DlgChannelSettings::statusPub()
 {
-    pNetwork->send(QString("CS SET %1 PRIVATE OFF").arg(strChannel));
-    pNetwork->send(QString("CS INFO %1").arg(strChannel));
+    Core::instance()->pNetwork->send(QString("CS SET %1 PRIVATE OFF").arg(strChannel));
+    Core::instance()->pNetwork->send(QString("CS INFO %1").arg(strChannel));
 }
 
 void DlgChannelSettings::statusPriv()
 {
-    pNetwork->send(QString("CS SET %1 PRIVATE ON").arg(strChannel));
-    pNetwork->send(QString("CS INFO %1").arg(strChannel));
+    Core::instance()->pNetwork->send(QString("CS SET %1 PRIVATE ON").arg(strChannel));
+    Core::instance()->pNetwork->send(QString("CS INFO %1").arg(strChannel));
 }
 
 void DlgChannelSettings::categoryChanged(int index)
 {
-    pNetwork->send(QString("CS SET %1 CATMAJOR %2").arg(strChannel).arg(index+1));
-    pNetwork->send(QString("CS INFO %1").arg(strChannel));
+    Core::instance()->pNetwork->send(QString("CS SET %1 CATMAJOR %2").arg(strChannel).arg(index+1));
+    Core::instance()->pNetwork->send(QString("CS INFO %1").arg(strChannel));
 }
 
 void DlgChannelSettings::guardianInactive()
 {
-    pNetwork->send(QString("CS SET %1 GUARDIAN 0").arg(strChannel));
-    pNetwork->send(QString("CS INFO %1").arg(strChannel));
+    Core::instance()->pNetwork->send(QString("CS SET %1 GUARDIAN 0").arg(strChannel));
+    Core::instance()->pNetwork->send(QString("CS INFO %1").arg(strChannel));
 }
 
 void DlgChannelSettings::guardianActive()
 {
     if (ui.comboBox_guardian_level->currentIndex() != -1)
-        pNetwork->send(QString("CS SET %1 GUARDIAN %2").arg(strChannel).arg(ui.comboBox_guardian_level->currentIndex()));
+        Core::instance()->pNetwork->send(QString("CS SET %1 GUARDIAN %2").arg(strChannel).arg(ui.comboBox_guardian_level->currentIndex()));
     else
-        pNetwork->send(QString("CS SET %1 GUARDIAN 1").arg(strChannel));
-    pNetwork->send(QString("CS INFO %1").arg(strChannel));
+        Core::instance()->pNetwork->send(QString("CS SET %1 GUARDIAN 1").arg(strChannel));
+    Core::instance()->pNetwork->send(QString("CS INFO %1").arg(strChannel));
 }
 
 void DlgChannelSettings::guardianClicked(int iLevel)
 {
     if (ui.radioButton_guardian_on->isChecked())
-        pNetwork->send(QString("CS SET %1 GUARDIAN %2").arg(strChannel).arg(iLevel+1));
-    pNetwork->send(QString("CS INFO %1").arg(strChannel));
+        Core::instance()->pNetwork->send(QString("CS SET %1 GUARDIAN %2").arg(strChannel).arg(iLevel+1));
+    Core::instance()->pNetwork->send(QString("CS INFO %1").arg(strChannel));
 }
 
 void DlgChannelSettings::passwordChanged()
 {
-    pNetwork->send(QString("CS SET %1 PASSWORD %2").arg(strChannel).arg(ui.lineEdit_password->text()));
-    pNetwork->send(QString("CS INFO %1").arg(strChannel));
+    Core::instance()->pNetwork->send(QString("CS SET %1 PASSWORD %2").arg(strChannel).arg(ui.lineEdit_password->text()));
+    Core::instance()->pNetwork->send(QString("CS INFO %1").arg(strChannel));
 }
 
 void DlgChannelSettings::limitChanged()
 {
-    pNetwork->send(QString("CS SET %1 LIMIT %2").arg(strChannel).arg(ui.spinBox_limit->value()));
-    pNetwork->send(QString("CS INFO %1").arg(strChannel));
+    Core::instance()->pNetwork->send(QString("CS SET %1 LIMIT %2").arg(strChannel).arg(ui.spinBox_limit->value()));
+    Core::instance()->pNetwork->send(QString("CS INFO %1").arg(strChannel));
 }
 
 void DlgChannelSettings::moderatedInactive()
 {
-    pNetwork->send(QString("CS SET %1 MODERATED OFF").arg(strChannel));
-    pNetwork->send(QString("CS INFO %1").arg(strChannel));
+    Core::instance()->pNetwork->send(QString("CS SET %1 MODERATED OFF").arg(strChannel));
+    Core::instance()->pNetwork->send(QString("CS INFO %1").arg(strChannel));
 }
 
 void DlgChannelSettings::moderatedActive()
 {
-    pNetwork->send(QString("CS SET %1 MODERATED ON").arg(strChannel));
-    pNetwork->send(QString("CS INFO %1").arg(strChannel));
+    Core::instance()->pNetwork->send(QString("CS SET %1 MODERATED ON").arg(strChannel));
+    Core::instance()->pNetwork->send(QString("CS INFO %1").arg(strChannel));
 }
 
 void DlgChannelSettings::auditoriumInactive()
 {
-    pNetwork->send(QString("CS SET %1 AUDITORIUM OFF").arg(strChannel));
-    pNetwork->send(QString("CS INFO %1").arg(strChannel));
+    Core::instance()->pNetwork->send(QString("CS SET %1 AUDITORIUM OFF").arg(strChannel));
+    Core::instance()->pNetwork->send(QString("CS INFO %1").arg(strChannel));
 }
 
 void DlgChannelSettings::auditoriumActive()
 {
-    pNetwork->send(QString("CS SET %1 AUDITORIUM ON").arg(strChannel));
-    pNetwork->send(QString("CS INFO %1").arg(strChannel));
+    Core::instance()->pNetwork->send(QString("CS SET %1 AUDITORIUM ON").arg(strChannel));
+    Core::instance()->pNetwork->send(QString("CS INFO %1").arg(strChannel));
 }
 
 void DlgChannelSettings::buttonPermissionAdd()
@@ -782,18 +779,18 @@ void DlgChannelSettings::buttonPermissionAdd()
 
     // add permission
     if (tab == 0)
-        pNetwork->send(QString("CS OP %1 ADD %2").arg(strChannel).arg(strNick));
+        Core::instance()->pNetwork->send(QString("CS OP %1 ADD %2").arg(strChannel).arg(strNick));
     else if (tab == 1)
-        pNetwork->send(QString("CS HALFOP %1 ADD %2").arg(strChannel).arg(strNick));
+        Core::instance()->pNetwork->send(QString("CS HALFOP %1 ADD %2").arg(strChannel).arg(strNick));
     else if (tab == 2)
-        pNetwork->send(QString("CS BAN %1 ADD %2").arg(strChannel).arg(strNick));
+        Core::instance()->pNetwork->send(QString("CS BAN %1 ADD %2").arg(strChannel).arg(strNick));
     else if (tab == 3)
-        pNetwork->send(QString("CS INVITE %1 ADD %2").arg(strChannel).arg(strNick));
+        Core::instance()->pNetwork->send(QString("CS INVITE %1 ADD %2").arg(strChannel).arg(strNick));
 
     // clear
     clear();
     ui.label_channel_name->setText(strChannel);
-    pNetwork->send(QString("CS INFO %1").arg(strChannel));
+    Core::instance()->pNetwork->send(QString("CS INFO %1").arg(strChannel));
 }
 
 void DlgChannelSettings::buttonPermissionRemove()
@@ -850,33 +847,33 @@ void DlgChannelSettings::buttonPermissionRemove()
     if (tab == 0)
     {
         for (int i = 0; i < lRemoveNicks.size(); i++)
-            pNetwork->send(QString("CS OP %1 DEL %2").arg(strChannel).arg(lRemoveNicks.at(i)->text()));
+            Core::instance()->pNetwork->send(QString("CS OP %1 DEL %2").arg(strChannel).arg(lRemoveNicks.at(i)->text()));
     }
     else if (tab == 1)
     {
         for (int i = 0; i < lRemoveNicks.size(); i++)
-            pNetwork->send(QString("CS HALFOP %1 DEL %2").arg(strChannel).arg(lRemoveNicks.at(i)->text()));
+            Core::instance()->pNetwork->send(QString("CS HALFOP %1 DEL %2").arg(strChannel).arg(lRemoveNicks.at(i)->text()));
     }
     else if (tab == 2)
     {
         for (int i = 0; i < lRemoveNicks.size(); i++)
         {
             if (!lRemoveNicks.at(i)->data(Qt::UserRole).isNull())
-                pNetwork->send(QString("CS BANIP %1 DEL %2").arg(strChannel).arg(lRemoveNicks.at(i)->text()));
+                Core::instance()->pNetwork->send(QString("CS BANIP %1 DEL %2").arg(strChannel).arg(lRemoveNicks.at(i)->text()));
             else
-                pNetwork->send(QString("CS BAN %1 DEL %2").arg(strChannel).arg(lRemoveNicks.at(i)->text()));
+                Core::instance()->pNetwork->send(QString("CS BAN %1 DEL %2").arg(strChannel).arg(lRemoveNicks.at(i)->text()));
         }
     }
     else if (tab == 3)
     {
         for (int i = 0; i < lRemoveNicks.size(); i++)
-            pNetwork->send(QString("CS INVITE %1 DEL %2").arg(strChannel).arg(lRemoveNicks.at(i)->text()));
+            Core::instance()->pNetwork->send(QString("CS INVITE %1 DEL %2").arg(strChannel).arg(lRemoveNicks.at(i)->text()));
     }
 
     // clear
     clear();
     ui.label_channel_name->setText(strChannel);
-    pNetwork->send(QString("CS INFO %1").arg(strChannel));
+    Core::instance()->pNetwork->send(QString("CS INFO %1").arg(strChannel));
 }
 
 void DlgChannelSettings::changePermissionList(QModelIndex index)
@@ -971,8 +968,8 @@ void DlgChannelSettings::showEvent(QShowEvent *event)
     ui.tabWidget->setTabEnabled(3, false);
 
     // get data
-    pNetwork->send(QString("CS INFO %1").arg(strChannel));
-    pNetwork->send(QString("RS INFO %1").arg(strChannel));
+    Core::instance()->pNetwork->send(QString("CS INFO %1").arg(strChannel));
+    Core::instance()->pNetwork->send(QString("RS INFO %1").arg(strChannel));
 }
 
 void DlgChannelSettings::hideEvent(QHideEvent *event)

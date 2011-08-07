@@ -29,20 +29,18 @@
 #include "dlg_moderation.h"
 #include "dlg_user_profile.h"
 #include "log.h"
-#include "network.h"
 #include "notify.h"
 #include "onet_utils.h"
 #include "replace.h"
 #include "tab_container.h"
 #include "onet_kernel.h"
 
-OnetKernel::OnetKernel(Network *param1, TabContainer *param2, DlgChannelSettings *param3, DlgModeration *param4,  DlgUserProfile *param5)
+OnetKernel::OnetKernel(TabContainer *param1, DlgChannelSettings *param2, DlgModeration *param3,  DlgUserProfile *param4)
 {
-    pNetwork = param1;
-    pTabC = param2;
-    pDlgChannelSettings = param3;
-    pDlgModeration = param4;
-    pDlgUserProfile = param5;
+    pTabC = param1;
+    pDlgChannelSettings = param2;
+    pDlgModeration = param3;
+    pDlgUserProfile = param4;
 
     avatar = new Avatar(pTabC);
 }
@@ -533,7 +531,7 @@ void OnetKernel::raw_ping()
     QString strServer = strDataList[1];
 
     if (!strServer.isEmpty())
-        pNetwork->send(QString("PONG %1").arg(strServer));
+        Core::instance()->pNetwork->send(QString("PONG %1").arg(strServer));
 }
 
 // :cf1f4.onet PONG cf1f4.onet :1279652441.189
@@ -647,13 +645,13 @@ void OnetKernel::raw_join()
     QString strMe = Core::instance()->settings.value("nick");
 
     if ((strNick == strMe) && (strChannel[0] != '^'))
-        pNetwork->send(QString("CS INFO %1 i").arg(strChannel));
+        Core::instance()->pNetwork->send(QString("CS INFO %1 i").arg(strChannel));
 
     // nick avatar
     if ((strNick[0] != '~') && (!Core::instance()->mNickAvatar.contains(strNick)))
     {
         if (Core::instance()->settings.value("disable_avatars") == "off") // with avatars
-            pNetwork->send(QString("NS INFO %1 s").arg(strNick));
+            Core::instance()->pNetwork->send(QString("NS INFO %1 s").arg(strNick));
     }
 
     if (strNick != strMe)
@@ -1017,10 +1015,10 @@ void OnetKernel::raw_mode()
             if ((strNickChannel == Core::instance()->settings.value("nick")) && (strFlag == "+r"))
             {
                 // get my stats
-                pNetwork->send(QString("RS INFO %1").arg(Core::instance()->settings.value("nick")));
+                Core::instance()->pNetwork->send(QString("RS INFO %1").arg(Core::instance()->settings.value("nick")));
 
                 // channel homes
-                pNetwork->send("CS HOMES");
+                Core::instance()->pNetwork->send("CS HOMES");
             }
         }
     }
@@ -1108,7 +1106,7 @@ void OnetKernel::raw_invite()
 
     Notify::instance()->play(Query);
 
-    (new DlgInvite(Core::instance()->sccWindow(), pNetwork, strWho, strWhere))->show(); // should be show - prevent hangup!
+    (new DlgInvite(Core::instance()->sccWindow(), strWho, strWhere))->show(); // should be show - prevent hangup!
 }
 
 // :cf1f3.onet TOPIC #scc :Simple Chat Client; current version: beta;
@@ -1139,7 +1137,7 @@ void OnetKernel::raw_topic()
     pTabC->setTopic(strChannel, strTopic);
 
     // get info
-    pNetwork->send(QString("CS INFO %1 i").arg(strChannel));
+    Core::instance()->pNetwork->send(QString("CS INFO %1 i").arg(strChannel));
 }
 
 // :~test34534!anonymous@2294E8.94913F.A00186.1A3C28 INVREJECT Merovingian #Scrabble
@@ -1290,7 +1288,7 @@ void OnetKernel::raw_001()
     Core::instance()->lOfflineNicks.clear();
 
     // protocol
-    pNetwork->send("PROTOCTL ONETNAMESX");
+    Core::instance()->pNetwork->send("PROTOCTL ONETNAMESX");
 
     // busy
     Core::instance()->settings["busy"] = "off";
@@ -1300,7 +1298,7 @@ void OnetKernel::raw_001()
 
     // auto busy
     if (Core::instance()->settings.value("auto_busy") == "on")
-        pNetwork->send("BUSY 1");
+        Core::instance()->pNetwork->send("BUSY 1");
 
     // ignore_raw_141
     Core::instance()->settings["ignore_raw_141"] = "off";
@@ -1333,11 +1331,11 @@ void OnetKernel::raw_001()
     for (int i = 0; i < lOpenChannelsCaseIgnore.size(); i++)
     {
         QString strChannel = lOpenChannelsCaseIgnore.at(i);
-        pNetwork->sendQueue(QString("JOIN %1").arg(strChannel));
+        Core::instance()->pNetwork->sendQueue(QString("JOIN %1").arg(strChannel));
     }
 
     // channel list
-    pNetwork->send("SLIST  R- 0 0 100 null");
+    Core::instance()->pNetwork->send("SLIST  R- 0 0 100 null");
 
     // update last active
     QDateTime cdt = QDateTime::currentDateTime();
@@ -1574,7 +1572,7 @@ void OnetKernel::raw_141n()
         {
             QString strChannel = lList[i];
             if (!Core::instance()->lOpenChannels.contains(strChannel))
-                pNetwork->sendQueue(QString("JOIN %1").arg(strChannel));
+                Core::instance()->pNetwork->sendQueue(QString("JOIN %1").arg(strChannel));
         }
     }
 
@@ -1983,7 +1981,7 @@ void OnetKernel::raw_250n()
             Core::instance()->lChannelHomes.append(strChannel);
 
         // join
-        pNetwork->sendQueue(QString("JOIN %1").arg(strChannel));
+        Core::instance()->pNetwork->sendQueue(QString("JOIN %1").arg(strChannel));
     }
     else if (strNick.toLower() == "nickserv")
     {
@@ -2221,7 +2219,7 @@ void OnetKernel::raw_257n()
 
     QString strChannel = strDataList[4];
 
-    pNetwork->send(QString("CS INFO %1 i").arg(strChannel));
+    Core::instance()->pNetwork->send(QString("CS INFO %1 i").arg(strChannel));
 }
 
 // ADMIN
@@ -2253,7 +2251,7 @@ void OnetKernel::raw_258n()
     // display
     pTabC->showMsg(strChannel, strDisplay, InfoMessage);
 
-    pNetwork->send(QString("CS INFO %1 i").arg(strChannel));
+    Core::instance()->pNetwork->send(QString("CS INFO %1 i").arg(strChannel));
 }
 
 // ADMIN
@@ -2341,7 +2339,7 @@ void OnetKernel::raw_261n()
 
         // part
         if (pTabC->existTab(strChannel))
-            pNetwork->send(QString("PART %1").arg(strChannel));
+            Core::instance()->pNetwork->send(QString("PART %1").arg(strChannel));
     }
     else if (strNick.toLower() == "nickserv")
     {
@@ -2809,7 +2807,7 @@ void OnetKernel::raw_353()
             if ((strCleanNick[0] != '~') && (!Core::instance()->mNickAvatar.contains(strCleanNick)))
             {
                 if (Core::instance()->settings.value("disable_avatars") == "off") // with avatars
-                    pNetwork->send(QString("NS INFO %1 s").arg(strCleanNick));
+                    Core::instance()->pNetwork->send(QString("NS INFO %1 s").arg(strCleanNick));
             }
         }
     }
@@ -3174,7 +3172,7 @@ void OnetKernel::raw_412n()
 
     QString strNick = strDataList[4];
 
-    pNetwork->send(QString("RS INFO %1").arg(strNick));
+    Core::instance()->pNetwork->send(QString("RS INFO %1").arg(strNick));
 }
 
 // RS INFO istota_bezduszna
@@ -3299,8 +3297,8 @@ void OnetKernel::raw_433()
     // reconnect
     if (strNick[0] != '~')
     {
-        pNetwork->disconnect();
-        pNetwork->connect();
+        Core::instance()->pNetwork->disconnect();
+        Core::instance()->pNetwork->connect();
     }
 }
 
@@ -3696,7 +3694,7 @@ void OnetKernel::raw_475()
     QString strMessage = QString(tr("* Cannot join channel %1 - Incorrect channel key")).arg(strChannel);
     pTabC->showMsgActive(strMessage, InfoMessage);
 
-    (new DlgChannelKey(Core::instance()->sccWindow(), pNetwork, strChannel))->show(); // should be show - prevent hangup!
+    (new DlgChannelKey(Core::instance()->sccWindow(), strChannel))->show(); // should be show - prevent hangup!
 }
 
 // :cf1f4.onet 481 Merovingian :Permission Denied - You do not have the required operator privileges
@@ -3897,11 +3895,11 @@ void OnetKernel::raw_801()
 
     if (strAuthKey.length() == 16)
     {
-        pNetwork->send(QString("AUTHKEY %1").arg(strAuthKey));
+        Core::instance()->pNetwork->send(QString("AUTHKEY %1").arg(strAuthKey));
         QString strUOKey = Core::instance()->settings.value("uokey");
         QString strNickUo = Core::instance()->settings.value("uo_nick");
         if ((!strUOKey.isEmpty()) && (!strNickUo.isEmpty()))
-            pNetwork->send(QString("USER * %1 czat-app.onet.pl :%2").arg(strUOKey).arg(strNickUo));
+            Core::instance()->pNetwork->send(QString("USER * %1 czat-app.onet.pl :%2").arg(strUOKey).arg(strNickUo));
     }
     else
     {

@@ -21,7 +21,6 @@
 #ifndef DLG_MY_PROFILE_H
 #define DLG_MY_PROFILE_H
 
-class Network;
 #include <QDialog>
 #include "ui_my_profile.h"
 
@@ -29,11 +28,10 @@ class DlgMyProfile : public QDialog
 {
     Q_OBJECT
 public:
-    DlgMyProfile(QWidget *, Network *);
+    DlgMyProfile(QWidget *);
 
 private:
     Ui::uiMyProfile ui;
-    Network *pNetwork;
 
     void createGui();
     void setDefaultValues();

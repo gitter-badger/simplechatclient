@@ -45,9 +45,6 @@ private:
     QString getVersion(QString);
     void saveCookies(QNetworkAccessManager*);
     void requestFinished(QString, QString);
-
-signals:
-    void send(QString);
 };
 
 #endif // ONET_AUTH_H

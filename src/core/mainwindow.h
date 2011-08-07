@@ -31,7 +31,6 @@ class DlgModeration;
 class DlgNotes;
 class DlgUserProfile;
 class InputLineDockWidget;
-class Network;
 class NickListWidget;
 class OnetAuth;
 class OnetKernel;
@@ -51,10 +50,6 @@ public:
     virtual ~MainWindow();
     void createGui();
 
-    void networkConnect();
-    void networkDisconnect();
-    void networkSend(QString);
-    bool networkIsConnected();
     // options
     void refreshColors();
     void refreshBackgroundImage();
@@ -91,7 +86,6 @@ private:
 
     TabManager *pTabM;
     TabContainer *pTabC;
-    Network *pNetwork;
     OnetKernel *pOnetKernel;
     OnetAuth *pOnetAuth;
     DlgChannelSettings *pDlgChannelSettings;

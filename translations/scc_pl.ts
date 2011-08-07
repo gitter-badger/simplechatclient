@@ -183,6 +183,17 @@
     </message>
 </context>
 <context>
+    <name>Core</name>
+    <message>
+        <source>Mark as busy</source>
+        <translation>Oznacz jako zajęty</translation>
+    </message>
+    <message>
+        <source>Mark as away</source>
+        <translation>Oznacz jako nieobecny</translation>
+    </message>
+</context>
+<context>
     <name>Crypt</name>
     <message>
         <source>Error: crypt: Cannot encrypt - empty argument</source>
@@ -334,14 +345,6 @@
     <message>
         <source>Ignored</source>
         <translation>Ignorowani</translation>
-    </message>
-    <message>
-        <source>Mark as busy</source>
-        <translation>Oznacz jako zajęty</translation>
-    </message>
-    <message>
-        <source>Mark as away</source>
-        <translation>Oznacz jako nieobecny</translation>
     </message>
     <message>
         <source>Offline messages</source>

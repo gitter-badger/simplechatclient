@@ -23,21 +23,19 @@
 
 class AnimatedEmoticonWidget;
 class DlgUserProfile;
-class Network;
 #include <QTextEdit>
 
 class MainTextEdit : public QTextEdit
 {
     Q_OBJECT
 public:
-    MainTextEdit(Network *, QString, DlgUserProfile *);
+    MainTextEdit(QString, DlgUserProfile *);
     virtual ~MainTextEdit();
     void updateBackgroundImage();
     inline QString getCurrentNick() { return strNick; }
 
 private:
     // params
-    Network *pNetwork;
     DlgUserProfile *pDlgUserProfile;
     // other
     QString strChannel;

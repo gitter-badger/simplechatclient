@@ -29,20 +29,18 @@ class QPushButton;
 class DlgChannelSettings;
 class DlgModeration;
 class InputWidget;
-class Network;
 #include <QWidget>
 
 class ToolWidget : public QWidget
 {
     Q_OBJECT
 public:
-    ToolWidget(QWidget *, Network *, InputWidget *, DlgChannelSettings *, DlgModeration *);
+    ToolWidget(QWidget *, InputWidget *, DlgChannelSettings *, DlgModeration *);
     void setModeration(bool);
     void setChannelSettings(bool);
 
 private:
     // params
-    Network *pNetwork;
     InputWidget *pInputWidget;
     DlgChannelSettings *pDlgChannelSettings;
     DlgModeration *pDlgModeration;

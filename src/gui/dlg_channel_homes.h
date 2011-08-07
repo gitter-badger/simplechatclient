@@ -22,7 +22,6 @@
 #define DLG_CHANNEL_HOMES_H
 
 class DlgChannelSettings;
-class Network;
 #include <QDialog>
 #include "ui_channel_homes.h"
 
@@ -30,11 +29,10 @@ class DlgChannelHomes : public QDialog
 {
     Q_OBJECT
 public:
-    DlgChannelHomes(QWidget *, Network *, DlgChannelSettings *);
+    DlgChannelHomes(QWidget *, DlgChannelSettings *);
 
 private:
     Ui::uiChannelHomes ui;
-    Network *pNetwork;
     DlgChannelSettings *pDlgChannelSettings;
 
     void createGui();

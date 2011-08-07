@@ -23,10 +23,9 @@
 #include <QTimer>
 #include "core.h"
 #include "dlg_channel_settings.h"
-#include "network.h"
 #include "dlg_channel_homes.h"
 
-DlgChannelHomes::DlgChannelHomes(QWidget *parent, Network *param1, DlgChannelSettings *param2) : QDialog(parent)
+DlgChannelHomes::DlgChannelHomes(QWidget *parent, DlgChannelSettings *param1) : QDialog(parent)
 {
     ui.setupUi(this);
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
@@ -34,8 +33,7 @@ DlgChannelHomes::DlgChannelHomes(QWidget *parent, Network *param1, DlgChannelSet
     // center screen
     move(QApplication::desktop()->screen()->rect().center() - rect().center());
 
-    pNetwork = param1;
-    pDlgChannelSettings = param2;
+    pDlgChannelSettings = param1;
 
     createGui();
     createSignals();
@@ -89,7 +87,7 @@ void DlgChannelHomes::refresh()
         else
         {
             ui.listWidget_channels->addItem(new QListWidgetItem(QIcon(":/images/channel_avatar.png"), strChannel));
-            pNetwork->send(QString("CS INFO %1 i").arg(strChannel));
+            Core::instance()->pNetwork->send(QString("CS INFO %1 i").arg(strChannel));
         }
     }
 }
@@ -122,7 +120,7 @@ void DlgChannelHomes::buttonCreate()
 
     if ((ok) && (!strText.isEmpty()))
     {
-        pNetwork->send(QString("CS REGISTER %1").arg(strText));
+        Core::instance()->pNetwork->send(QString("CS REGISTER %1").arg(strText));
         QTimer::singleShot(1000*2, this, SLOT(refresh())); // 2 sec
     }
 }
@@ -134,7 +132,7 @@ void DlgChannelHomes::buttonRemove()
 
     if ((ok) && (!strText.isEmpty()))
     {
-        pNetwork->send(QString("CS DROP %1").arg(strText));
+        Core::instance()->pNetwork->send(QString("CS DROP %1").arg(strText));
         QTimer::singleShot(1000*2, this, SLOT(refresh())); // 2 sec
     }
 }
@@ -144,7 +142,7 @@ void DlgChannelHomes::buttonJoin()
     if (ui.listWidget_channels->selectedItems().size() != 0)
     {
         QString strChannel = ui.listWidget_channels->selectedItems().at(0)->text();
-        pNetwork->send(QString("JOIN %1").arg(strChannel));
+        Core::instance()->pNetwork->send(QString("JOIN %1").arg(strChannel));
     }
 }
 

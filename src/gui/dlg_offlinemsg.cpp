@@ -23,18 +23,15 @@
 #include <QPushButton>
 #include <QTimer>
 #include "core.h"
-#include "network.h"
 #include "dlg_offlinemsg.h"
 
-DlgOfflineMsg::DlgOfflineMsg(QWidget *parent, Network *param1) : QDialog(parent)
+DlgOfflineMsg::DlgOfflineMsg(QWidget *parent) : QDialog(parent)
 {
     ui.setupUi(this);
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
     setWindowTitle(tr("Offline messages"));
     // center screen
     move(QApplication::desktop()->screen()->rect().center() - rect().center());
-
-    pNetwork = param1;
 
     createGui();
     createSignals();
@@ -179,7 +176,7 @@ void DlgOfflineMsg::buttonRead()
     if (ui.listWidget_nicks->selectedItems().size() == 0) return; // nothing selected
 
     QString strNick = ui.listWidget_nicks->selectedItems().at(0)->text();
-    pNetwork->send(QString("NS OFFLINE GET %1").arg(strNick));
+    Core::instance()->pNetwork->send(QString("NS OFFLINE GET %1").arg(strNick));
 
     strCurrentNick = strNick;
     ui.label_nick->setText(QString(tr("Offline messages from %1")).arg(strNick));
@@ -197,7 +194,7 @@ void DlgOfflineMsg::buttonReject()
     if (ui.listWidget_nicks->selectedItems().size() == 0) return; // nothing selected
 
     QString strNick = ui.listWidget_nicks->selectedItems().at(0)->text();
-    pNetwork->send(QString("NS OFFLINE REJECT %1").arg(strNick));
+    Core::instance()->pNetwork->send(QString("NS OFFLINE REJECT %1").arg(strNick));
 
     // remove nick
     removeNick(strNick);
@@ -213,12 +210,12 @@ void DlgOfflineMsg::buttonReply()
     // quote
     if (!messagesQuotedToSender.contains(strNick))
     {
-        pNetwork->send(QString("NS OFFLINE QUOTE %1").arg(strNick));
+        Core::instance()->pNetwork->send(QString("NS OFFLINE QUOTE %1").arg(strNick));
         messagesQuotedToSender.append(strNick);
     }
 
     // reply
-    pNetwork->send(QString("NS OFFLINE REPLY %1 %2").arg(strNick).arg(strMessage));
+    Core::instance()->pNetwork->send(QString("NS OFFLINE REPLY %1 %2").arg(strNick).arg(strMessage));
 
     // clear
     ui.lineEdit_reply->clear();

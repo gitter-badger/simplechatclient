@@ -26,14 +26,13 @@ class QHBoxLayout;
 class QLabel;
 class QPushButton;
 class InputLineWidget;
-class Network;
 #include <QWidget>
 
 class InputWidget : public QWidget
 {
     Q_OBJECT
 public:
-    InputWidget(QWidget *, Network *);
+    InputWidget(QWidget *);
     virtual ~InputWidget();
     void insertText(QString);
     void setFont(QFont);
@@ -45,8 +44,6 @@ public:
     void updateNick(QString);
 
 private:
-    // params
-    Network *pNetwork;
     // inputline widget
     QHBoxLayout *mainLayout;
     QPushButton *showHideToolWidget;

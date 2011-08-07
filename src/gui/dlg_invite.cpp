@@ -19,11 +19,11 @@
  ****************************************************************************/
 
 #include <QDesktopWidget>
+#include "core.h"
 #include "mainwindow.h"
-#include "network.h"
 #include "dlg_invite.h"
 
-DlgInvite::DlgInvite(MainWindow *parent, Network *param1, QString param2, QString param3) : QDialog(parent)
+DlgInvite::DlgInvite(MainWindow *parent, QString param1, QString param2) : QDialog(parent)
 {
     ui.setupUi(this);
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
@@ -32,9 +32,8 @@ DlgInvite::DlgInvite(MainWindow *parent, Network *param1, QString param2, QStrin
     // center screen
     move(QApplication::desktop()->screen()->rect().center() - rect().center());
 
-    pNetwork = param1;
-    strNick = param2;
-    strChannel = param3;
+    strNick = param1;
+    strChannel = param2;
 
     createGui();
     createSignals();
@@ -68,23 +67,23 @@ void DlgInvite::createSignals()
 
 void DlgInvite::buttonWhois()
 {
-    pNetwork->send(QString("WHOIS %1 %1").arg(strNick));
+    Core::instance()->pNetwork->send(QString("WHOIS %1 %1").arg(strNick));
 }
 
 void DlgInvite::buttonReject()
 {
-    pNetwork->send(QString("INVREJECT %1 %2").arg(strNick).arg(strChannel));
+    Core::instance()->pNetwork->send(QString("INVREJECT %1 %2").arg(strNick).arg(strChannel));
     this->close();
 }
 
 void DlgInvite::buttonIgnore()
 {
-    pNetwork->send(QString("INVIGNORE %1 %2").arg(strNick).arg(strChannel));
+    Core::instance()->pNetwork->send(QString("INVIGNORE %1 %2").arg(strNick).arg(strChannel));
     this->close();
 }
 
 void DlgInvite::buttonAccept()
 {
-    pNetwork->send(QString("JOIN %1").arg(strChannel));
+    Core::instance()->pNetwork->send(QString("JOIN %1").arg(strChannel));
     this->close();
 }

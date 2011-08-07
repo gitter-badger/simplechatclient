@@ -22,7 +22,6 @@
 #define DLG_PRIV_H
 
 class MainWindow;
-class Network;
 #include <QDialog>
 #include "ui_invite.h"
 
@@ -30,11 +29,10 @@ class DlgInvite : public QDialog
 {
     Q_OBJECT
 public:
-    DlgInvite(MainWindow *, Network *, QString, QString);
+    DlgInvite(MainWindow *, QString, QString);
 
 private:
     Ui::uiInvite ui;
-    Network *pNetwork;
     QString strNick;
     QString strChannel;
 

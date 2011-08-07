@@ -25,7 +25,6 @@
 class DlgChannelSettings;
 class DlgModeration;
 class DlgUserProfile;
-class Network;
 class TabManager;
 class TabWidget;
 #include <QObject>
@@ -37,7 +36,7 @@ class TabContainer : public QObject
 {
     Q_OBJECT
 public:
-    TabContainer(Network *, TabManager *);
+    TabContainer(TabManager *);
     virtual ~TabContainer();
     void setDlg(DlgUserProfile *);
     bool existTab(QString);
@@ -66,7 +65,6 @@ public slots:
 
 private:
     // params
-    Network *pNetwork;
     TabManager *pTabM;
     DlgChannelSettings *pDlgChannelSettings;
     DlgModeration *pDlgModeration;

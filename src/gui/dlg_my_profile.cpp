@@ -23,18 +23,15 @@
 #include <QPushButton>
 #include "core.h"
 #include "convert.h"
-#include "network.h"
 #include "dlg_my_profile.h"
 
-DlgMyProfile::DlgMyProfile(QWidget *parent, Network *param1) : QDialog(parent)
+DlgMyProfile::DlgMyProfile(QWidget *parent) : QDialog(parent)
 {
     ui.setupUi(this);
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
     setWindowTitle(tr("My profile"));
     // center screen
     move(QApplication::desktop()->screen()->rect().center() - rect().center());
-
-    pNetwork = param1;
 
     createGui();
     setDefaultValues();
@@ -443,7 +440,7 @@ void DlgMyProfile::buttonOk()
     // set desc - shortDesc
     QString strDesc = convertDescToText(ui.plainTextEdit_desc->toPlainText());
     if (strDesc != Core::instance()->mMyProfile.value("shortDesc"))
-        pNetwork->send(QString("NS SET shortDesc %1").arg(strDesc));
+        Core::instance()->pNetwork->send(QString("NS SET shortDesc %1").arg(strDesc));
 
     // set sex
     int iSex = ui.comboBox_sex->currentIndex();
@@ -451,7 +448,7 @@ void DlgMyProfile::buttonOk()
     if (iSex == 1) strSexChar = "M";
     else if (iSex == 2) strSexChar = "F";
     if (strSexChar != Core::instance()->mMyProfile.value("sex"))
-        pNetwork->send(QString("NS SET sex %1").arg(strSexChar));
+        Core::instance()->pNetwork->send(QString("NS SET sex %1").arg(strSexChar));
 
     // set birthdate
     QString strDay = ui.comboBox_day->currentText();
@@ -461,28 +458,28 @@ void DlgMyProfile::buttonOk()
     if ((!strDay.isEmpty()) && (!strMonth.isEmpty()) && (!strYear.isEmpty()))
         strBirthdate = QString("%1-%2-%3").arg(strYear).arg(strMonth).arg(strDay);
     if (strBirthdate != Core::instance()->mMyProfile.value("birthdate"))
-        pNetwork->send(QString("NS SET birthdate %1").arg(strBirthdate));
+        Core::instance()->pNetwork->send(QString("NS SET birthdate %1").arg(strBirthdate));
 
     // set city
     QString strCity = ui.lineEdit_city->text();
     if (strCity != Core::instance()->mMyProfile.value("city"))
-        pNetwork->send(QString("NS SET city %1").arg(strCity));
+        Core::instance()->pNetwork->send(QString("NS SET city %1").arg(strCity));
 
     // set country
     QString strCountry = ui.comboBox_country->currentText();
     QString strCountryCode = convertCountryToCode(strCountry);
     if (strCountryCode != Core::instance()->mMyProfile.value("country"))
-        pNetwork->send(QString("NS SET country %1").arg(strCountryCode));
+        Core::instance()->pNetwork->send(QString("NS SET country %1").arg(strCountryCode));
 
     // set hobby - longDesc
     QString strHobby = ui.plainTextEdit_hobby->toPlainText();
     if (strHobby != Core::instance()->mMyProfile.value("longDesc"))
-        pNetwork->send(QString("NS SET longDesc %1").arg(strHobby));
+        Core::instance()->pNetwork->send(QString("NS SET longDesc %1").arg(strHobby));
 
     // set www
     QString strWWW = ui.lineEdit_www->text();
     if (strWWW != Core::instance()->mMyProfile.value("www"))
-        pNetwork->send(QString("NS SET www %1").arg(strWWW));
+        Core::instance()->pNetwork->send(QString("NS SET www %1").arg(strWWW));
 
     // close
     this->close();

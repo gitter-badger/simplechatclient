@@ -32,14 +32,13 @@ class QVBoxLayout;
 
 class QNetworkAccessManager;
 class QNetworkReply;
-class Network;
 #include <QDialog>
 
 class DlgUserProfile : public QDialog
 {
     Q_OBJECT
 public:
-    DlgUserProfile(QWidget *, Network *);
+    DlgUserProfile(QWidget *);
     virtual ~DlgUserProfile();
     void setNick(QString);
     inline QString getNick() { return strNick; }
@@ -48,7 +47,6 @@ public slots:
     void setUserInfo(QString, QString);
 
 private:
-    Network *pNetwork;
     QPixmap avatar;
     QNetworkAccessManager *accessManager;
     QString strNick;

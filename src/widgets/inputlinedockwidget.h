@@ -25,7 +25,6 @@
 class DlgChannelSettings;
 class DlgModeration;
 class InputWidget;
-class Network;
 class ToolWidget;
 #include <QWidget>
 
@@ -33,7 +32,7 @@ class InputLineDockWidget : public QWidget
 {
     Q_OBJECT
 public:
-    InputLineDockWidget(QWidget *, Network *, DlgChannelSettings *, DlgModeration *);
+    InputLineDockWidget(QWidget *, DlgChannelSettings *, DlgModeration *);
     virtual ~InputLineDockWidget();
     void enableModeration();
     void disableModeration();
@@ -54,7 +53,6 @@ public slots:
 
 private:
     // params
-    Network *pNetwork;
     DlgChannelSettings *pDlgChannelSettings;
     DlgModeration *pDlgModeration;
     // other

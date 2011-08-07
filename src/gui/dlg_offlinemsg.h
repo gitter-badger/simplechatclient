@@ -21,7 +21,6 @@
 #ifndef DLG_OFFLINEMSG_H
 #define DLG_OFFLINEMSG_H
 
-class Network;
 #include <QDialog>
 #include "ui_offlinemsg.h"
 
@@ -29,11 +28,10 @@ class DlgOfflineMsg : public QDialog
 {
     Q_OBJECT
 public:
-    DlgOfflineMsg(QWidget *, Network *);
+    DlgOfflineMsg(QWidget *);
 
 private:
     Ui::uiOfflineMsg ui;
-    Network *pNetwork;
     QString strCurrentNick;
     QList<QString> messagesQuoted;
     QList<QString> messagesReplied;

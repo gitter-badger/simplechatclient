@@ -53,6 +53,17 @@ Core::Core() : window(0)
     // lag
     lagAct = new QAction("Lag: ?", this);
     lagAct->setEnabled(false);
+
+    busyAct = new QAction(this);
+    busyAct->setIcon(QIcon(":/images/oxygen/16x16/im-user-offline.png"));
+    awayAct = new QAction(this);
+    awayAct->setIcon(QIcon(":/images/oxygen/16x16/im-user-away.png"));
+
+    // checkable
+    busyAct->setCheckable(true);
+    awayAct->setCheckable(true);
+    busyAct->setChecked(false);
+    awayAct->setChecked(false);
 }
 
 Core::~Core()
@@ -62,6 +73,15 @@ Core::~Core()
     window = 0;
 
     kamerzystaSocket->deleteLater();
+
+    // close network
+    settings["reconnect"] = "false";
+    pNetwork->disconnect();
+    pNetwork->quit();
+    pNetwork->wait();
+    pNetwork->deleteLater();
+    pNetwork->QObject::disconnect();
+    delete pNetwork;
 }
 
 void Core::init()
@@ -71,17 +91,25 @@ void Core::init()
     kamerzystaSocket = new QTcpSocket();
     kamerzystaSocket->setSocketOption(QAbstractSocket::LowDelayOption, 1);
     kamerzystaSocket->setSocketOption(QAbstractSocket::KeepAliveOption, 0);
+
+    QString strServer = "czat-app.onet.pl";
+    int iPort = 5015;
+    pNetwork = new Network(strServer, iPort);
+    pNetwork->start(QThread::InheritPriority);
 }
 
 void Core::createGui()
 {
+    busyAct->setText(tr("Mark as busy"));
+    awayAct->setText(tr("Mark as away"));
+
     window = new MainWindow(0);
 }
 
 void Core::createSettings()
 {
     // default settings
-    settings["version"] = "1.1.2.967";
+    settings["version"] = "1.1.2.968";
     settings["logged"] = "off";
     settings["busy"] = "off";
     settings["away"] = "off";
