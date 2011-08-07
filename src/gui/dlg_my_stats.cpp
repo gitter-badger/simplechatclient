@@ -42,6 +42,11 @@ DlgMyStats::DlgMyStats(QWidget *parent) : QDialog(parent)
     refresh();
 }
 
+DlgMyStats::~DlgMyStats()
+{
+    delete pSimpleStatsWidget;
+}
+
 void DlgMyStats::createGui()
 {
     ui.buttonBox->button(QDialogButtonBox::Close)->setIcon(QIcon(":/images/oxygen/16x16/dialog-close.png"));

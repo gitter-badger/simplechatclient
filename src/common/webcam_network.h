@@ -31,6 +31,7 @@ class WebcamNetwork : public QObject
     Q_OBJECT
 public:
     WebcamNetwork();
+    virtual ~WebcamNetwork();
     inline void setBytesNeed(int i) { iBytes_need = i; }
     inline void setBText(bool b) { bText = b; }
     inline void setLastKeepAlive(int i) { iLastKeepAlive = i; }

@@ -46,12 +46,12 @@ DlgWebcam::DlgWebcam(QString n, bool m)
 
 DlgWebcam::~DlgWebcam()
 {
+    delete pWebcamEngine;
+
     if (bMini)
         delete pWebcamMini;
     else
         delete pWebcamStandard;
-
-    delete pWebcamEngine;
 }
 
 void DlgWebcam::createSignals()

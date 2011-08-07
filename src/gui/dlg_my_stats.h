@@ -30,6 +30,7 @@ class DlgMyStats : public QDialog
     Q_OBJECT
 public:
     DlgMyStats(QWidget *);
+    virtual ~DlgMyStats();
 
 private:
     Ui::uiMyStats ui;

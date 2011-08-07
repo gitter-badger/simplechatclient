@@ -44,6 +44,12 @@ WebcamNetwork::WebcamNetwork()
     QObject::connect(timerPingPong, SIGNAL(timeout()), this, SLOT(timeoutPingpong()));
 }
 
+WebcamNetwork::~WebcamNetwork()
+{
+    socket->deleteLater();
+    timerPingPong->stop();
+}
+
 bool WebcamNetwork::isConnected()
 {
     if (socket->state() == QAbstractSocket::ConnectedState)

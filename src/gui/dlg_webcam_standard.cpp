@@ -42,6 +42,11 @@ DlgWebcamStandard::DlgWebcamStandard()
     createSignals();
 }
 
+DlgWebcamStandard::~DlgWebcamStandard()
+{
+    delete pSimpleRankWidget;
+}
+
 void DlgWebcamStandard::createGui()
 {
     ui.toolButton_vote_minus->setIcon(QIcon(":/images/oxygen/16x16/list-remove.png"));

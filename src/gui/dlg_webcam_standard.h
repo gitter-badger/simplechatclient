@@ -30,6 +30,7 @@ class DlgWebcamStandard : public QDialog
     Q_OBJECT
 public:
     DlgWebcamStandard();
+    virtual ~DlgWebcamStandard();
 
 public slots:
     void updateImage(QByteArray);
