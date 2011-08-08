@@ -8,12 +8,12 @@ find_package (Qt4 REQUIRED)
 
 # modules
 
-set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake/modules)
+set (CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake/modules)
 
 # include
 
 include (FindPkgConfig)
-include(CheckIncludeFiles)
+include (CheckIncludeFiles)
 
 # sub dir
 
