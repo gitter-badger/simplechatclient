@@ -2,17 +2,6 @@
 <!DOCTYPE TS>
 <TS version="2.0" language="pl">
 <context>
-    <name>@default</name>
-    <message>
-        <source>Error</source>
-        <translation>Błąd</translation>
-    </message>
-    <message>
-        <source>Simple Chat Client is already running</source>
-        <translation>Simple Chat Client jest już uruchomiony</translation>
-    </message>
-</context>
-<context>
     <name>Commands</name>
     <message>
         <source>* Available commands:</source>

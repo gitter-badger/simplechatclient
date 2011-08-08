@@ -41,7 +41,6 @@ set (scc_SRCS
 	core/main.cpp
 	core/mainwindow.cpp
 	core/network.cpp
-	core/singleapplication.cpp
 	core/update.cpp
 	gui/dlg_about.cpp
 	gui/dlg_awaylog.cpp
@@ -150,7 +149,6 @@ set (scc_MOC_HDRS
 set (scc_HDRS
 	core/defines.h
 	core/debugblock.h
-	core/singleapplication.h
 )
 
 # debug

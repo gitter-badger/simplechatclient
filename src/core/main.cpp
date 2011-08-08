@@ -19,7 +19,6 @@
  ****************************************************************************/
 
 #include <QtGui/QApplication>
-#include <QMessageBox>
 #include <QTextCodec>
 #include <QTranslator>
 #include "config.h"
@@ -27,7 +26,6 @@
 #include "debug.h"
 #endif
 #include "core.h"
-#include "singleapplication.h"
 
 void displayVersion()
 {
@@ -60,8 +58,8 @@ int main(int argc, char *argv[])
     qInstallMsgHandler(messageHandler);
 #endif
 
-    // single app
-    SingleApplication app(argc, argv, "scc");
+    // app
+    QApplication app(argc, argv);
 
     // set codec
     QTextCodec::setCodecForCStrings(QTextCodec::codecForName("ISO-8859-2"));
@@ -119,13 +117,6 @@ int main(int argc, char *argv[])
             app.deleteLater();
             return 0;
         }
-    }
-
-    // detect already running
-    if (app.isRunning())
-    {
-        QMessageBox::critical(0, app.translate("@default", "Error"), app.translate("@default", "Simple Chat Client is already running"));
-        return 0;
     }
 
     // core
