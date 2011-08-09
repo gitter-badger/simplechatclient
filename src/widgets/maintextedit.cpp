@@ -97,7 +97,7 @@ void MainTextEdit::profile()
 void MainTextEdit::cam()
 {
 #ifdef Q_WS_WIN
-    (new Kamerzysta(Core::instance()->kamerzystaSocket, pNetwork))->show(strNick);
+    (new Kamerzysta(Core::instance()->kamerzystaSocket))->show(strNick);
 #else
     new DlgWebcam(strNick, true);
 #endif
