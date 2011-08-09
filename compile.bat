@@ -4,13 +4,13 @@
 @exit
 )
 
-@del /Q /F /A scc.exe
+@del /Q /F /A src\scc.exe
 cmake . -G "MinGW Makefiles" -DWIN32_QCA2_DIR=C:\qca2
 mingw32-make
 
 @echo off 
 
-if not exist scc.exe (
+if not exist src\scc.exe (
 echo SCC is not compiled. Please compile program.
 pause
 exit
@@ -65,7 +65,7 @@ xcopy LICENSE %DESTINATION%\ /R /Y /Q
 xcopy README %DESTINATION%\ /R /Y /Q
 xcopy TODO %DESTINATION%\ /R /Y /Q
 xcopy VERSION %DESTINATION%\ /R /Y /Q
-xcopy scc.exe %DESTINATION%\ /R /Y /Q
+xcopy src\scc.exe %DESTINATION%\ /R /Y /Q
 
 echo Copying Qt files
 xcopy %QT_DIR%\libgcc_s_dw2-1.dll %DESTINATION%\ /C /H /R /Y /Q
