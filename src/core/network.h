@@ -40,6 +40,7 @@ public:
     void setReconnect(bool);
     bool isConnected();
     bool isWritable();
+    QTimer *timerReconnect;
 
 public slots:
     void connect();
@@ -59,7 +60,6 @@ private:
     QList<QString> msgSendQueue;
     QList<QString> msgSendQueueNS;
     bool bAuthorized;
-    QTimer *timerReconnect;
 
     void authorize();
     void clearAll();

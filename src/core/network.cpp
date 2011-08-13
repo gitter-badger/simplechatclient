@@ -96,6 +96,11 @@ bool Network::isWritable()
 
 void Network::clearAll()
 {
+#ifdef Q_WS_X11
+    if (Core::instance()->settings.value("debug") == "on")
+        DEBUG_BLOCK
+#endif
+
     // close cam socket
     if (Core::instance()->kamerzystaSocket->state() == QAbstractSocket::ConnectedState)
         Core::instance()->kamerzystaSocket->disconnectFromHost();
@@ -122,22 +127,16 @@ void Network::clearAll()
     Core::instance()->settings["logged"] = "off";
 
     // timer
-    if (timerPong->isActive())
-        timerPong->stop();
-    if (timerPing->isActive())
-        timerPing->stop();
-    if (timerLag->isActive())
-        timerLag->stop();
-    if (timerQueue->isActive())
-        timerQueue->stop();
+    timerPong->stop();
+    timerPing->stop();
+    timerLag->stop();
+    timerQueue->stop();
 
     // reconnect
-    if (timerReconnect->isActive())
-        timerReconnect->stop();
+    timerReconnect->stop();
 
     // auto-away
-    if (Core::instance()->autoAwayTimer->isActive())
-        Core::instance()->autoAwayTimer->stop();
+    Core::instance()->autoAwayTimer->stop();
 
     // last active
     Core::instance()->settings["last_active"] = "0";
@@ -198,6 +197,11 @@ void Network::authorize()
 
 void Network::connect()
 {
+#ifdef Q_WS_X11
+    if (Core::instance()->settings.value("debug") == "on")
+        DEBUG_BLOCK
+#endif
+
     if (socket->state() == QAbstractSocket::UnconnectedState)
     {
         // host
@@ -246,6 +250,11 @@ void Network::connect()
 
 void Network::connected()
 {
+#ifdef Q_WS_X11
+    if (Core::instance()->settings.value("debug") == "on")
+        DEBUG_BLOCK
+#endif
+
     emit setConnected();
     Core::instance()->lagAct->setText("Lag: ?");
 
@@ -259,6 +268,11 @@ void Network::connected()
 
 void Network::disconnect()
 {
+#ifdef Q_WS_X11
+    if (Core::instance()->settings.value("debug") == "on")
+        DEBUG_BLOCK
+#endif
+
     // clear queue
     msgSendQueue.clear();
     msgSendQueueNS.clear();
@@ -270,16 +284,21 @@ void Network::disconnect()
         socket->waitForBytesWritten();
     }
 
+    // clear all
+    clearAll();
+
     // close
     if (socket->state() == QAbstractSocket::ConnectedState)
         socket->disconnectFromHost();
-
-    // clear all
-    clearAll();
 }
 
 void Network::disconnected()
 {
+#ifdef Q_WS_X11
+    if (Core::instance()->settings.value("debug") == "on")
+        DEBUG_BLOCK
+#endif
+
     if (socket->error() != QAbstractSocket::UnknownSocketError)
     {
         QString strError = QString(tr("Disconnected from server [%1]")).arg(socket->errorString());
@@ -301,8 +320,12 @@ void Network::disconnected()
 
 void Network::reconnect()
 {
-    if (timerReconnect->isActive())
-        timerReconnect->stop();
+#ifdef Q_WS_X11
+    if (Core::instance()->settings.value("debug") == "on")
+        DEBUG_BLOCK
+#endif
+
+    timerReconnect->stop();
 
     if (Core::instance()->settings.value("reconnect") == "true")
     {
@@ -383,6 +406,11 @@ void Network::recv()
 
 void Network::error(QAbstractSocket::SocketError error)
 {
+#ifdef Q_WS_X11
+    if (Core::instance()->settings.value("debug") == "on")
+        DEBUG_BLOCK
+#endif
+
     if (error == QAbstractSocket::RemoteHostClosedError) return; // supported by disconnected
 
     QString strError = QString(tr("Disconnected from server [%1]")).arg(socket->errorString());
@@ -401,6 +429,14 @@ void Network::error(QAbstractSocket::SocketError error)
  */
 void Network::stateChanged(QAbstractSocket::SocketState socketState)
 {
+#ifdef Q_WS_X11
+    if (Core::instance()->settings.value("debug") == "on")
+    {
+        DEBUG_BLOCK
+        qDebug() << "Network socket state changed to: " << socketState;
+    }
+#endif
+
     if ((socketState != QAbstractSocket::UnconnectedState) && (socketState != QAbstractSocket::ConnectedState))
         emit setConnectEnabled(false);
     else
@@ -425,6 +461,11 @@ void Network::timeoutPong()
     // check timeout
     if (iActive+301 < iCurrent)
     {
+#ifdef Q_WS_X11
+        if (Core::instance()->settings.value("debug") == "on")
+            DEBUG_BLOCK
+#endif
+
         if (socket->state() == QAbstractSocket::ConnectedState)
         {
             QString strDisplay = tr("No PONG reply from server in 301 seconds. Disconnecting...");
