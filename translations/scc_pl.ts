@@ -2377,11 +2377,11 @@
         <translation>* %1 jest nieobecny z powodu: %2</translation>
     </message>
     <message>
-        <source>You are no longer marked as being away</source>
+        <source>* You are no longer marked as being away</source>
         <translation>* Nie jesteś już oznaczony "zaraz wracam".</translation>
     </message>
     <message>
-        <source>You have been marked as being away</source>
+        <source>* You have been marked as being away</source>
         <translation>* Jesteś teraz oznaczony "zaraz wracam".</translation>
     </message>
     <message>
@@ -2713,7 +2713,7 @@
         <translation>* Jesteś teraz w stanie "zajęty", nie będziesz otrzymywać żadnych prywatnych komunikatów.</translation>
     </message>
     <message>
-        <source>You are no longer marked busy</source>
+        <source>* You are no longer marked busy</source>
         <translation>* Nie jesteś już "zajęty" - możesz otrzymywać prywatne komunikaty.</translation>
     </message>
     <message>
@@ -2799,6 +2799,10 @@
     <message>
         <source>* %1 is already on your silence list</source>
         <translation>* %1 jest już na liście ignorowanych</translation>
+    </message>
+    <message>
+        <source>unknown</source>
+        <translation>nieznany</translation>
     </message>
 </context>
 <context>

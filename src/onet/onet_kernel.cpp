@@ -928,7 +928,7 @@ void OnetKernel::raw_mode()
                 if (strNick == "1") strStatus = tr("Tame");
                 else if (strNick == "2") strStatus = tr("With class");
                 else if (strNick == "3") strStatus = tr("Cult");
-                else strStatus = "unknown";
+                else strStatus = tr("unknown");
 
                 if (strFlag.at(0) == QChar('+'))
                     strDisplay = QString(tr("* Channel %1 now has status %2 (set by %3)")).arg(strNickChannel).arg(strStatus).arg(strWho);
@@ -943,7 +943,7 @@ void OnetKernel::raw_mode()
                 else if (strNick == "3") strCategory = tr("Erotic");
                 else if (strNick == "4") strCategory = tr("Thematic");
                 else if (strNick == "5") strCategory = tr("Regional");
-                else strCategory = "unknown";
+                else strCategory = tr("unknown");
 
                 if (strFlag.at(0) == QChar('+'))
                     strDisplay = QString(tr("* Channel %1 now belongs to a category %2 (set by %3)")).arg(strNickChannel).arg(strCategory).arg(strWho);
@@ -2451,7 +2451,7 @@ void OnetKernel::raw_305()
     Core::instance()->settings["away"] = "off";
     Core::instance()->awayAct->setChecked(false);
 
-    QString strDisplay = tr("You are no longer marked as being away");
+    QString strDisplay = tr("* You are no longer marked as being away");
     pTabC->showMsgActive(strDisplay, InfoMessage);
 }
 
@@ -2462,7 +2462,7 @@ void OnetKernel::raw_306()
     Core::instance()->settings["away"] = "on";
     Core::instance()->awayAct->setChecked(true);
 
-    QString strDisplay = tr("You have been marked as being away");
+    QString strDisplay = tr("* You have been marked as being away");
     pTabC->showMsgActive(strDisplay, InfoMessage);
 }
 
@@ -3934,7 +3934,7 @@ void OnetKernel::raw_808()
     Core::instance()->settings["busy"] = "off";
     Core::instance()->busyAct->setChecked(false);
 
-    QString strDisplay = tr("You are no longer marked busy");
+    QString strDisplay = tr("* You are no longer marked busy");
     pTabC->showMsgActive(strDisplay, InfoMessage);
 }
 
