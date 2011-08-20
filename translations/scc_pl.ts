@@ -320,8 +320,8 @@
         <translation>Lista pokoi</translation>
     </message>
     <message>
-        <source>Your channels</source>
-        <translation>Twoje pokoje</translation>
+        <source>My channels</source>
+        <translation>Moje pokoje</translation>
     </message>
     <message>
         <source>Favorite channels</source>
@@ -1933,10 +1933,6 @@
 </context>
 <context>
     <name>OnetAuth</name>
-    <message>
-        <source>Error: Authentication error [onet.pl servers are not available]</source>
-        <translation>Błąd: Błąd autoryzacji [Serwery onet.pl nie są dostępne]</translation>
-    </message>
     <message>
         <source>Error: Authorization Failed.</source>
         <translation>Błąd: Błąd autoryzacji.</translation>

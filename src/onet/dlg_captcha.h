@@ -22,6 +22,7 @@
 #define DLG_CAPTCHA_H
 
 class QNetworkAccessManager;
+class QNetworkCookieJar;
 class QNetworkReply;
 #include <QDialog>
 #include "ui_captcha.h"
@@ -30,12 +31,13 @@ class DlgCaptcha : public QDialog
 {
     Q_OBJECT
 public:
-    DlgCaptcha(QNetworkAccessManager *, QString *);
+    DlgCaptcha(QNetworkCookieJar *, QString *);
 
 private:
     Ui::uiCaptcha ui;
     QString *strCaptcha;
     QNetworkAccessManager *accessManager;
+    QNetworkCookieJar *cookieJar;
 
 private:
     void createGui();

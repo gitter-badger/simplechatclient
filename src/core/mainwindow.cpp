@@ -209,7 +209,7 @@ void MainWindow::createActions()
 
     // onet action
     channelListAct = new QAction(QIcon(":/images/oxygen/16x16/documentation.png"), tr("Channel list"), this);
-    channelHomesAct = new QAction(QIcon(":/images/oxygen/16x16/configure.png"), tr("Your channels"), this);
+    channelHomesAct = new QAction(QIcon(":/images/oxygen/16x16/configure.png"), tr("My channels"), this);
     channelFavouritesAct = new QAction(QIcon(":/images/oxygen/16x16/emblem-favorite.png"), tr("Favorite channels"), this);
     friendsAct = new QAction(QIcon(":/images/oxygen/16x16/meeting-attending.png"), tr("Friends"), this);
     ignoreAct = new QAction(QIcon(":/images/oxygen/16x16/meeting-attending-tentative.png"), tr("Ignored"), this);
@@ -713,10 +713,6 @@ void MainWindow::timeoutAutoaway()
 void MainWindow::currentTabChanged(int index)
 {
     QString strChannel = Core::instance()->getChannelNameFromIndex(index);
-
-    // change tab name
-    QString strTabText = pTabM->tabText(index);
-    this->setWindowTitle(QString("Simple Chat Client - [%1]").arg(strTabText));
 
     // change tab color
     pTabM->setColor(index, QColor(Core::instance()->settings.value("default_font_color")));

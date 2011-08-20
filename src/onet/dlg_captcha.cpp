@@ -20,12 +20,14 @@
 
 #include <QDesktopWidget>
 #include <QNetworkAccessManager>
+#include <QNetworkCookieJar>
 #include <QNetworkReply>
+#include <QNetworkRequest>
 #include <QPushButton>
 #include <QUrl>
 #include "dlg_captcha.h"
 
-DlgCaptcha::DlgCaptcha(QNetworkAccessManager *param1, QString *param2)
+DlgCaptcha::DlgCaptcha(QNetworkCookieJar *param1, QString *param2)
 {
     ui.setupUi(this);
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
@@ -33,12 +35,14 @@ DlgCaptcha::DlgCaptcha(QNetworkAccessManager *param1, QString *param2)
     // center screen
     move(QApplication::desktop()->screen()->rect().center() - rect().center());
 
-    accessManager = param1;
+    cookieJar = param1;
     strCaptcha = param2;
 
     createGui();
     createSignals();
 
+    accessManager = new QNetworkAccessManager;
+    accessManager->setCookieJar(cookieJar);
     QObject::connect(accessManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(networkFinished(QNetworkReply*)));
 
     getImg();

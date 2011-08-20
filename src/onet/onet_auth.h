@@ -22,6 +22,8 @@
 #define ONET_AUTH_H
 
 class QNetworkAccessManager;
+class QNetworkCookieJar;
+class QNetworkReply;
 class TabContainer;
 #include <QObject>
 
@@ -33,18 +35,49 @@ class OnetAuth : public QObject
     Q_OBJECT
 public:
     OnetAuth(TabContainer *);
+    virtual ~OnetAuth();
 
 public slots:
     void authorize(QString, QString, QString);
 
 private:
     TabContainer *pTabC;
+    QNetworkAccessManager *accessManager;
+    QNetworkCookieJar *cookieJar;
+
+    QString strNick;
+    QString strNickAuth;
+    QString strPass;
+    QString strNickLen;
+    QString strVersionLen;
+    bool bRegisteredNick;
+    bool bOverride;
+
     bool bAuthorizing;
 
-    QString networkRequest(QNetworkAccessManager *, QString, QString);
+    QString strVersion;
+    QString strCaptcha;
+
+    void getChat();
+    void getDeploy();
+    void gotDeploy(QString);
+    void getKropka();
+    void getKropkaFull();
+    void getSk();
+    void getSecureKropka();
+    void getSecureMlogin();
+    void getOverride();
+    void getUo();
+    void showCaptchaDialog();
+    void getCheckCode();
+
     QString getVersion(QString);
-    void saveCookies(QNetworkAccessManager*);
-    void requestFinished(QString, QString);
+    void saveCookies();
+    void requestFinished(QString);
+
+private slots:
+    void networkFinished(QNetworkReply*);
+
 };
 
 #endif // ONET_AUTH_H
