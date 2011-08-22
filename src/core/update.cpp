@@ -19,7 +19,6 @@
  ****************************************************************************/
 
 #include <QDomDocument>
-#include <QHostInfo>
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
 #include <QStringList>
@@ -40,14 +39,10 @@ Update::~Update()
 
 void Update::checkUpdate()
 {
-    QHostInfo test_host = QHostInfo::fromName("simplechatclien.sourceforge.net");
-    if (test_host.error() == QHostInfo::NoError)
-    {
-        QString strSendVersion = Core::instance()->settings.value("version");
-        QUrl url = QUrl(QString("http://simplechatclien.sourceforge.net/update.php?version=%1").arg(strSendVersion));
+    QString strSendVersion = Core::instance()->settings.value("version");
+    QUrl url = QUrl(QString("http://simplechatclien.sourceforge.net/update.php?version=%1").arg(strSendVersion));
 
-        accessManager->get(QNetworkRequest(url));
-    }
+    accessManager->get(QNetworkRequest(url));
 }
 
 void Update::version(QString strAvailableVersion)

@@ -54,6 +54,7 @@ void ThreadEmoticonsStandard::run()
 
         emit insertEmoticonsStandard(strEmoticon, bData);
     }
+    exec();
 }
 
 ThreadEmoticonsExtended::ThreadEmoticonsExtended() {}
@@ -85,6 +86,7 @@ void ThreadEmoticonsExtended::run()
 
         emit insertEmoticonsExtended(strEmoticon, bData);
     }
+    exec();
 }
 
 DlgEmoticons::DlgEmoticons(MainWindow *parent, InputWidget *param1) : QDialog(parent)

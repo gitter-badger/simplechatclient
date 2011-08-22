@@ -403,10 +403,6 @@
 <context>
     <name>Network</name>
     <message>
-        <source>Error: Could not connect to the server [%1]</source>
-        <translation>Błąd: Nie można się połączyć z serwerem [%1]</translation>
-    </message>
-    <message>
         <source>Error: Could not connect to the server - connection already exists!</source>
         <translation>Błąd: Nie można się połączyć z serwerem - połączenie już istnieje!</translation>
     </message>

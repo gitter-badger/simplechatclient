@@ -20,7 +20,6 @@
 
 #include <QAction>
 #include <QDateTime>
-#include <QHostInfo>
 #include <QTcpSocket>
 #include <QTimer>
 #include "config.h"
@@ -204,36 +203,15 @@ void Network::connect()
 
     if (socket->state() == QAbstractSocket::UnconnectedState)
     {
-        // host
-        QHostInfo hInfo = QHostInfo::fromName(strServer);
-
-        if (hInfo.error() != QHostInfo::NoError)
-        {
-            QString strError = QString(tr("Error: Could not connect to the server [%1]")).arg(hInfo.errorString());
-            emit showMsgAll(strError, ErrorMessage);
-
-            // clear all
-            clearAll();
-
-            // reconnect
-            if ((!timerReconnect->isActive()) && (!bAuthorized))
-                timerReconnect->start();
-
-            return;
-        }
-
         // clear all
         clearAll();
-
-        // random
-        int iRandom = qrand() % hInfo.addresses().size();
 
         // set active
         QDateTime dt = QDateTime::currentDateTime();
         iActive = (int)dt.toTime_t();
 
         // connect
-        socket->connectToHost(hInfo.addresses().at(iRandom).toString(), iPort);
+        socket->connectToHost(strServer, iPort);
 
         // start timers
         timerPong->start();
