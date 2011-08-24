@@ -48,6 +48,16 @@ OnetAuth::~OnetAuth()
 
 void OnetAuth::authorize(QString p1, QString p2, QString p3)
 {
+    // fix too long registered nick
+    if ((p1.size() > 32))
+        p1 = p1.left(32);
+    // fix too long unregistered nick
+    if ((p3.isEmpty()) && (p1.size() > 31))
+        p1 = p1.left(31);
+    // fix too long auth nick
+    if ((p2.size() > 32))
+        p2 = p2.left(32);
+
     strNick = p1;
     strNickAuth = p2;
     strPass = p3;
