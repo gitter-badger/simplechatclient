@@ -21,7 +21,6 @@
 #ifndef MAINTEXTEDIT_H
 #define MAINTEXTEDIT_H
 
-class AnimatedEmoticonWidget;
 class DlgUserProfile;
 #include <QTextEdit>
 
@@ -43,7 +42,6 @@ private:
     QString strWebsite;
     enum { maxOpenChannels = 30 };
     QAction *openChannelsActs[maxOpenChannels];
-    AnimatedEmoticonWidget *pAnimatedEmoticonWidget;
 
     void menuNick(QString, QContextMenuEvent *);
     void menuChannel(QString, QContextMenuEvent *);
@@ -79,14 +77,12 @@ private slots:
     void voiceAdd();
     void voiceDel();
     void invite();
-    void textChanged();
     void openWebbrowser();
     void sendToNotes();
     void search();
 
 protected:
     virtual void contextMenuEvent(QContextMenuEvent *);
-    virtual void mouseMoveEvent(QMouseEvent *);
 };
 
 #endif // MAINTEXTEDIT_H

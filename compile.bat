@@ -74,6 +74,7 @@ xcopy %QT_DIR%\phonon4.dll %DESTINATION%\ /C /H /R /Y /Q
 xcopy %QT_DIR%\QtCore4.dll %DESTINATION%\ /C /H /R /Y /Q
 xcopy %QT_DIR%\QtGui4.dll %DESTINATION%\ /C /H /R /Y /Q
 xcopy %QT_DIR%\QtNetwork4.dll %DESTINATION%\ /C /H /R /Y /Q
+xcopy %QT_DIR%\QtWebKit4.dll %DESTINATION%\ /C /H /R /Y /Q
 xcopy %QT_DIR%\QtXml4.dll %DESTINATION%\ /C /H /R /Y /Q
 xcopy %QT_DIR%\QtXmlPatterns4.dll %DESTINATION%\ /C /H /R /Y /Q
 

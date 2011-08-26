@@ -63,7 +63,6 @@ SOURCES += src/avatars/avatar.cpp \
     src/tab/tab_container.cpp \
     src/tab/tab_manager.cpp \
     src/tab/tab_widget.cpp \
-    src/widgets/animatedemoticonwidget.cpp \
     src/widgets/inputwidget.cpp \
     src/widgets/inputlinewidget.cpp \
     src/widgets/inputlinedockwidget.cpp \
@@ -131,7 +130,6 @@ HEADERS += src/avatars/avatar.h \
     src/tab/tab_container.h \
     src/tab/tab_manager.h \
     src/tab/tab_widget.h \
-    src/widgets/animatedemoticonwidget.h \
     src/widgets/inputwidget.h \
     src/widgets/inputlinewidget.h \
     src/widgets/inputlinedockwidget.h \

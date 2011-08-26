@@ -76,7 +76,6 @@ set (scc_SRCS
 	tab/tab_container.cpp
 	tab/tab_manager.cpp
 	tab/tab_widget.cpp
-	widgets/animatedemoticonwidget.cpp
 	widgets/inputlinewidget.cpp
 	widgets/inputlinedockwidget.cpp
 	widgets/inputwidget.cpp
@@ -134,7 +133,6 @@ set (scc_MOC_HDRS
 	tab/tab_container.h
 	tab/tab_manager.h
 	tab/tab_widget.h
-	widgets/animatedemoticonwidget.h
 	widgets/inputlinewidget.h
 	widgets/inputlinedockwidget.h
 	widgets/inputwidget.h
@@ -245,6 +243,9 @@ set (QT_USE_QTXML TRUE)
 
 # phonon
 set (QT_USE_PHONON TRUE)
+
+# webkit
+set(QT_USE_QTWEBKIT TRUE)
 
 # rest
 include (${QT_USE_FILE})

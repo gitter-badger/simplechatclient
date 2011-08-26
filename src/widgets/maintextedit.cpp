@@ -26,7 +26,6 @@
 #include <QMenu>
 #include <QTextBlock>
 #include <QUrl>
-#include "animatedemoticonwidget.h"
 #include "core.h"
 #include "dlg_find_text.h"
 #include "dlg_user_profile.h"
@@ -46,17 +45,10 @@ MainTextEdit::MainTextEdit(QString param1, DlgUserProfile *param2)
     strNick = QString::null;
 
     updateBackgroundImage();
-
-    setMouseTracking(true);
-    pAnimatedEmoticonWidget = new AnimatedEmoticonWidget(this);
-    QObject::connect(this, SIGNAL(textChanged()), this, SLOT(textChanged()));
 }
 
 MainTextEdit::~MainTextEdit()
 {
-    setMouseTracking(false);
-    pAnimatedEmoticonWidget->stopEmoticon();
-    delete pAnimatedEmoticonWidget;
 }
 
 void MainTextEdit::updateBackgroundImage()
@@ -564,31 +556,4 @@ void MainTextEdit::contextMenuEvent(QContextMenuEvent *event)
     }
 
     menuStandard(event);
-}
-
-void MainTextEdit::mouseMoveEvent(QMouseEvent *event)
-{
-    QPoint pos = event->pos();
-    QTextCursor cursor = cursorForPosition(pos);
-    QTextFormat format = cursor.charFormat();
-
-    if (!format.isImageFormat())
-    {
-        pAnimatedEmoticonWidget->stopEmoticon();
-        QTextEdit::mouseMoveEvent(event);
-    }
-    else
-    {
-        QString strName = format.toImageFormat().name();
-        int x = pos.x();
-        int y = pos.y();
-        pAnimatedEmoticonWidget->startEmoticon(strName, x, y);
-    }
-
-    QTextEdit::mouseMoveEvent(event);
-}
-
-void MainTextEdit::textChanged()
-{
-    pAnimatedEmoticonWidget->stopEmoticon();
 }
