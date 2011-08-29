@@ -309,7 +309,7 @@ QString Commands::cmdHelp()
     QString strResult;
 
     strResult = (tr("* Available commands:")+";");
-    strResult.append(tr("/cycle or /hop")+";");
+    strResult.append(tr("/cycle [text] or /hop [text]")+";");
     strResult.append(tr("/me [text]")+";");
     strResult.append(tr("/topic [text]")+";");
     strResult.append(tr("/join [channel] [key] or /j [channel] [key]")+";");
@@ -340,7 +340,13 @@ QString Commands::cmdCycle()
 {
     QString strChannel = strChan;
 
-    return QString("PART %1\nJOIN %1").arg(strChannel);
+    QString strMessage;
+    for (int i = 1; i < strDataList.size(); i++) { if (i != 1) strMessage += " "; strMessage += strDataList[i]; }
+
+    if (!strMessage.isEmpty())
+        return QString("PART %1 :%2\nJOIN %1").arg(strChannel).arg(strMessage);
+    else
+        return QString("PART %1\nJOIN %1").arg(strChannel);
 }
 
 QString Commands::cmdMe()

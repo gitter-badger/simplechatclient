@@ -8,8 +8,8 @@
         <translation>* Dostępne komendy:</translation>
     </message>
     <message>
-        <source>/cycle or /hop</source>
-        <translation>/cycle lub /hop</translation>
+        <source>/cycle [text] or /hop [text]</source>
+        <translation>/cycle [tekst] lub /hop [tekst]</translation>
     </message>
     <message>
         <source>/me [text]</source>
