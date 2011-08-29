@@ -952,44 +952,6 @@
       </widget>
      </widget>
     </widget>
-    <widget class="QWidget" name="page_5">
-     <widget class="QGroupBox" name="groupBox_embedded_styles">
-      <property name="geometry">
-       <rect>
-        <x>0</x>
-        <y>20</y>
-        <width>441</width>
-        <height>131</height>
-       </rect>
-      </property>
-      <property name="title">
-       <string>Embedded styles</string>
-      </property>
-      <widget class="QComboBox" name="comboBox_embedded_styles">
-       <property name="geometry">
-        <rect>
-         <x>170</x>
-         <y>40</y>
-         <width>91</width>
-         <height>25</height>
-        </rect>
-       </property>
-      </widget>
-      <widget class="QPushButton" name="pushButton_set_embedded_style">
-       <property name="geometry">
-        <rect>
-         <x>170</x>
-         <y>80</y>
-         <width>91</width>
-         <height>24</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>Set</string>
-       </property>
-      </widget>
-     </widget>
-    </widget>
     <widget class="QWidget" name="page_6">
      <widget class="QGroupBox" name="groupBox_sounds">
       <property name="geometry">
