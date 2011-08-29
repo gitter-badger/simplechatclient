@@ -23,7 +23,6 @@
 #include <QFileDialog>
 #include <QProcess>
 #include <QShowEvent>
-#include <QStyleFactory>
 #include "config.h"
 #include "core.h"
 #include "dlg_profile_manager.h"
@@ -53,7 +52,6 @@ void DlgOptions::createGui()
     ui.pushButton_profiles->setIcon(QIcon(":/images/oxygen/16x16/preferences-activities.png"));
     ui.pushButton_mainwindow_restore_default->setIcon(QIcon(":/images/oxygen/16x16/edit-undo.png"));
     ui.pushButton_nicklist_restore_default->setIcon(QIcon(":/images/oxygen/16x16/edit-undo.png"));
-    ui.pushButton_set_embedded_style->setIcon(QIcon(":/images/oxygen/16x16/dialog-ok-apply.png"));
     ui.pushButton_play_beep->setIcon(QIcon(":/images/oxygen/16x16/media-playback-start.png"));
     ui.pushButton_play_query->setIcon(QIcon(":/images/oxygen/16x16/media-playback-start.png"));
     ui.pushButton_sound_beep_change->setIcon(QIcon(":/images/oxygen/16x16/document-edit.png"));
@@ -120,10 +118,6 @@ void DlgOptions::createGui()
     ui.label_nicklist_gradient_2_color->setText(tr("Gradient 2:"));
     ui.pushButton_nicklist_restore_default->setText(tr("Restore default"));
 
-    // page embedded styles
-    ui.groupBox_embedded_styles->setTitle(tr("Embedded styles"));
-    ui.pushButton_set_embedded_style->setText(tr("Set"));
-
     // page sounds
     ui.groupBox_sounds->setTitle(tr("Sounds"));
     ui.label_sound_beep->setText(tr("Beep"));
@@ -174,11 +168,6 @@ void DlgOptions::createGui()
     colors->setIcon(0, QIcon(":/images/oxygen/16x16/view-media-visualization.png"));
     colors->setText(0, tr("Colors"));
     colors->setToolTip(0, tr("Colors"));
-
-    QTreeWidgetItem *embedded_styles = new QTreeWidgetItem(ui.treeWidget_options);
-    embedded_styles->setIcon(0, QIcon(":/images/oxygen/16x16/system-switch-user.png"));
-    embedded_styles->setText(0, tr("Embedded styles"));
-    embedded_styles->setToolTip(0, tr("Embedded styles"));
 
     QTreeWidgetItem *sounds = new QTreeWidgetItem(ui.treeWidget_options);
     sounds->setIcon(0, QIcon(":/images/oxygen/16x16/media-playback-start.png"));
@@ -251,11 +240,6 @@ void DlgOptions::setDefaultValues()
     ui.comboBox_font_size->clear();
     foreach (QString strFontSize, comboBoxFontSize)
         ui.comboBox_font_size->addItem(strFontSize);
-
-    // embedded styles
-    ui.comboBox_embedded_styles->clear();
-    foreach (QString strStyleName, QStyleFactory::keys())
-        ui.comboBox_embedded_styles->addItem(strStyleName);
 
     // sound beep
     ui.lineEdit_sound_beep->setText(Core::instance()->settings.value("sound_beep"));
@@ -521,7 +505,6 @@ void DlgOptions::createSignals()
     QObject::connect(ui.pushButton_nicklist_gradient_1_color, SIGNAL(clicked()), this, SLOT(setNicklistGradient1Color()));
     QObject::connect(ui.pushButton_nicklist_gradient_2_color, SIGNAL(clicked()), this, SLOT(setNicklistGradient2Color()));
     QObject::connect(ui.pushButton_nicklist_restore_default, SIGNAL(clicked()), this, SLOT(nicklistRestoreDefault()));
-    QObject::connect(ui.pushButton_set_embedded_style, SIGNAL(clicked()), this, SLOT(setEmbeddedStyle()));
     QObject::connect(ui.pushButton_play_beep, SIGNAL(clicked()), this, SLOT(tryPlayBeep()));
     QObject::connect(ui.pushButton_play_query, SIGNAL(clicked()), this, SLOT(tryPlayQuery()));
     QObject::connect(ui.pushButton_sound_beep_change, SIGNAL(clicked()), this, SLOT(setSoundBeep()));
@@ -977,12 +960,6 @@ void DlgOptions::nicklistRestoreDefault()
 
     // set
     setNicklistColors();
-}
-
-void DlgOptions::setEmbeddedStyle()
-{
-    QStyle *style = QStyleFactory::create(ui.comboBox_embedded_styles->currentText());
-    QApplication::setStyle(style);
 }
 
 void DlgOptions::tryPlayBeep()

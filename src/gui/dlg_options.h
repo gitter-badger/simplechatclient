@@ -84,7 +84,6 @@ private slots:
     void setNicklistGradient1Color();
     void setNicklistGradient2Color();
     void nicklistRestoreDefault();
-    void setEmbeddedStyle();
     void tryPlayBeep();
     void tryPlayQuery();
     void setSoundBeep();

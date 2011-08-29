@@ -1559,10 +1559,6 @@
         <translation>Gradient 2:</translation>
     </message>
     <message>
-        <source>Embedded styles</source>
-        <translation>Wbudowane skórki</translation>
-    </message>
-    <message>
         <source>Set</source>
         <translation>Ustaw</translation>
     </message>
