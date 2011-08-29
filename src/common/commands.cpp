@@ -313,7 +313,7 @@ QString Commands::cmdHelp()
     strResult.append(tr("/me [text]")+";");
     strResult.append(tr("/topic [text]")+";");
     strResult.append(tr("/join [channel] [key] or /j [channel] [key]")+";");
-    strResult.append(tr("/part or /p")+";");
+    strResult.append(tr("/part [text] or /p [text]")+";");
     strResult.append(tr("/priv [nick]")+";");
     strResult.append(tr("/ignore [[+|-]nick]")+";");
     strResult.append(tr("/friend [[+|-]nick]")+";");
@@ -322,7 +322,7 @@ QString Commands::cmdHelp()
     strResult.append(tr("/away [text]")+";");
     strResult.append(tr("/invite [nick]")+";");
     strResult.append(tr("/offmsg [nick] [text]")+";");
-    strResult.append(tr("/logout or /quit or /q")+";");
+    strResult.append(tr("/logout [text] or /quit [text] or /q [text]")+";");
     strResult.append(tr("/kick [nick] [reason] or /k [nick] [reason]")+";");
     strResult.append(tr("/ban [[+|-]nick]")+";");
     strResult.append(tr("/banip [[+|-]nick]")+";");
@@ -368,15 +368,15 @@ QString Commands::cmdTopic()
 
 QString Commands::cmdPart()
 {
-    QString strChannel;
-    if (strDataList.value(1).isEmpty())
-        strChannel = strChan;
-    else
-        strChannel = strDataList[1];
-    if ((strChannel[0] != '#') && (strChannel[0] != '^'))
-        strChannel = "#"+strChannel;
+    QString strChannel = strChan;
 
-    return QString("PART %1").arg(strChannel);
+    QString strMessage;
+    for (int i = 1; i < strDataList.size(); i++) { if (i != 1) strMessage += " "; strMessage += strDataList[i]; }
+
+    if (!strMessage.isEmpty())
+        return QString("PART %1 :%2").arg(strChannel).arg(strMessage);
+    else
+        return QString("PART %1").arg(strChannel);
 }
 
 QString Commands::cmdInvite()

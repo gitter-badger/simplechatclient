@@ -24,8 +24,8 @@
         <translation>/join [pokój] [klucz] lub /j [pokój] [klucz]</translation>
     </message>
     <message>
-        <source>/part or /p</source>
-        <translation>/part lub /p</translation>
+        <source>/part [text] or /p [text]</source>
+        <translation>/part [tekst] lub /p [tekst]</translation>
     </message>
     <message>
         <source>/priv [nick]</source>
@@ -60,8 +60,8 @@
         <translation>/offmsg [nick] [tekst]</translation>
     </message>
     <message>
-        <source>/logout or /quit or /q</source>
-        <translation>/logout lub /quit lub /q</translation>
+        <source>/logout [text] or /quit [text] or /q [text]</source>
+        <translation>/logout [tekst] lub /quit [tekst] lub /q [tekst]</translation>
     </message>
     <message>
         <source>/kick [nick] [reason] or /k [nick] [reason]</source>
