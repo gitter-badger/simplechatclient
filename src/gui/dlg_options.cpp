@@ -81,18 +81,6 @@ void DlgOptions::createGui()
     ui.checkBox_disable_emots->setText(tr("Disable emoticons"));
     ui.checkBox_disable_replaces->setText(tr("Disable replaces"));
 
-    // page default font
-    ui.groupBox_my_font->setTitle(tr("Default font"));
-    ui.label_my_bold->setText(tr("Bold:"));
-    ui.comboBox_my_bold->setItemText(0, tr("Off"));
-    ui.comboBox_my_bold->setItemText(1, tr("On"));
-    ui.label_my_italic->setText(tr("Italic:"));
-    ui.comboBox_my_italic->setItemText(0, tr("Off"));
-    ui.comboBox_my_italic->setItemText(1, tr("On"));
-    ui.label_my_font->setText(tr("Font:"));
-    ui.label_my_color->setText(tr("Color:"));
-    ui.label_font_size->setText(tr("Font size:"));
-
     // page colors
     ui.tabWidget->setTabText(0,tr("Main window"));
     ui.tabWidget->setTabText(1,tr("Nicklist"));
@@ -159,11 +147,6 @@ void DlgOptions::createGui()
     adv->setText(0, tr("Advanced"));
     adv->setToolTip(0, tr("Advanced"));
 
-    QTreeWidgetItem *default_font = new QTreeWidgetItem(ui.treeWidget_options);
-    default_font->setIcon(0, QIcon(":/images/oxygen/16x16/format-text-color.png"));
-    default_font->setText(0, tr("Default font"));
-    default_font->setToolTip(0, tr("Default font"));
-
     QTreeWidgetItem *colors = new QTreeWidgetItem(ui.treeWidget_options);
     colors->setIcon(0, QIcon(":/images/oxygen/16x16/view-media-visualization.png"));
     colors->setText(0, tr("Colors"));
@@ -211,36 +194,6 @@ void DlgOptions::setDefaultValues()
     ui.comboBox_language->clear();
     ui.comboBox_language->addItems(strlLanguage);
 
-    // my font
-    QStringList strlMyFont;
-    strlMyFont << "Arial" << "Times" << "Verdana" << "Tahoma" << "Courier";
-    ui.comboBox_my_font->clear();
-    ui.comboBox_my_font->insertItems(0, strlMyFont);
-
-    // my color
-    ui.comboBox_my_color->setIconSize(QSize(50,10));
-
-    QStringList comboBoxMyColors;
-    comboBoxMyColors << "#000000" << "#623c00" << "#c86c00" << "#ff6500" << "#ff0000" << "#e40f0f" << "#990033" << "#8800ab" << "#ce00ff" << "#0f2ab1" << "#3030ce" << "#006699" << "#1a866e" << "#008100" << "#959595";
-
-    int iComboBoxMyColors = 0;
-    ui.comboBox_my_color->clear();
-    foreach (QString strColor, comboBoxMyColors)
-    {
-        QPixmap pixmap(50,10);
-        pixmap.fill(QColor(strColor));
-        ui.comboBox_my_color->insertItem(iComboBoxMyColors, pixmap, "");
-        iComboBoxMyColors++;
-    }
-
-    // font size
-    QStringList comboBoxFontSize;
-    comboBoxFontSize << "8" << "9" << "10" << "11" << "12" << "14" << "16" << "18" << "20" << "24";
-
-    ui.comboBox_font_size->clear();
-    foreach (QString strFontSize, comboBoxFontSize)
-        ui.comboBox_font_size->addItem(strFontSize);
-
     // sound beep
     ui.lineEdit_sound_beep->setText(Core::instance()->settings.value("sound_beep"));
     ui.lineEdit_sound_query->setText(Core::instance()->settings.value("sound_query"));
@@ -277,12 +230,6 @@ void DlgOptions::setDefaultValues()
     QString strDisableAvatars = Core::instance()->settings.value("disable_avatars");
     QString strDisableEmots = Core::instance()->settings.value("disable_emots");
     QString strDisableReplaces = Core::instance()->settings.value("disable_replaces");
-
-    QString strMyBold = Core::instance()->settings.value("my_bold");
-    QString strMyItalic = Core::instance()->settings.value("my_italic");
-    QString strMyFont = Core::instance()->settings.value("my_font");
-    QString strMyColor = Core::instance()->settings.value("my_color");
-    QString strFontSize = Core::instance()->settings.value("font_size");
 
     QString strSaveLogsByDate = Core::instance()->settings.value("save_logs_by_date");
     QString strDisableLogs = Core::instance()->settings.value("disable_logs");
@@ -362,62 +309,6 @@ void DlgOptions::setDefaultValues()
     else
         ui.checkBox_disable_replaces->setChecked(false);
 
-    // set my bold
-    if (strMyBold == "on")
-        ui.comboBox_my_bold->setCurrentIndex(1);
-    else
-        ui.comboBox_my_bold->setCurrentIndex(0);
-
-    // set my italic
-    if (strMyItalic == "on")
-        ui.comboBox_my_italic->setCurrentIndex(1);
-    else
-        ui.comboBox_my_italic->setCurrentIndex(0);
-
-    // set my font combobox
-    ui.comboBox_my_font->setCurrentIndex(ui.comboBox_my_font->findText(strMyFont));
-
-    // set my color combobox
-    int iMyColor;
-
-    if (strMyColor == "#000000") iMyColor = 0;
-    else if (strMyColor == "#623c00") iMyColor = 1;
-    else if (strMyColor == "#c86c00") iMyColor = 2;
-    else if (strMyColor == "#ff6500") iMyColor = 3;
-    else if (strMyColor == "#ff0000") iMyColor = 4;
-    else if (strMyColor == "#e40f0f") iMyColor = 5;
-    else if (strMyColor == "#990033") iMyColor = 6;
-    else if (strMyColor == "#8800ab") iMyColor = 7;
-    else if (strMyColor == "#ce00ff") iMyColor = 8;
-    else if (strMyColor == "#0f2ab1") iMyColor = 9;
-    else if (strMyColor == "#3030ce") iMyColor = 10;
-    else if (strMyColor == "#006699") iMyColor = 11;
-    else if (strMyColor == "#1a866e") iMyColor = 12;
-    else if (strMyColor == "#008100") iMyColor = 13;
-    else if (strMyColor == "#959595") iMyColor = 14;
-    else
-        iMyColor = 0;
-
-    ui.comboBox_my_color->setCurrentIndex(iMyColor);
-
-    // set font size combobox
-    int iFontSize;
-
-    if (strFontSize == "8px") iFontSize = 0;
-    else if (strFontSize == "9px") iFontSize = 1;
-    else if (strFontSize == "10px") iFontSize = 2;
-    else if (strFontSize == "11px") iFontSize = 3;
-    else if (strFontSize == "12px") iFontSize = 4;
-    else if (strFontSize == "14px") iFontSize = 5;
-    else if (strFontSize == "16px") iFontSize = 6;
-    else if (strFontSize == "18px") iFontSize = 7;
-    else if (strFontSize == "20px") iFontSize = 8;
-    else if (strFontSize == "24px") iFontSize = 9;
-    else
-        iFontSize = 0;
-
-    ui.comboBox_font_size->setCurrentIndex(iFontSize);
-
     // save logs by date
     if (strSaveLogsByDate == "on")
         ui.checkBox_save_logs_by_date->setChecked(true);
@@ -481,11 +372,6 @@ void DlgOptions::createSignals()
     QObject::connect(ui.checkBox_disable_avatars, SIGNAL(clicked(bool)), this, SLOT(disableAvatars(bool)));
     QObject::connect(ui.checkBox_disable_emots, SIGNAL(clicked(bool)), this, SLOT(disableEmots(bool)));
     QObject::connect(ui.checkBox_disable_replaces, SIGNAL(clicked(bool)), this, SLOT(disableReplaces(bool)));
-    QObject::connect(ui.comboBox_my_bold, SIGNAL(activated(int)), this, SLOT(setMyBold(int)));
-    QObject::connect(ui.comboBox_my_italic, SIGNAL(activated(int)), this, SLOT(setMyItalic(int)));
-    QObject::connect(ui.comboBox_my_font, SIGNAL(activated(QString)), this, SLOT(setMyFont(QString)));
-    QObject::connect(ui.comboBox_my_color, SIGNAL(activated(int)), this, SLOT(setMyColor(int)));
-    QObject::connect(ui.comboBox_font_size, SIGNAL(activated(QString)), this, SLOT(setFontSize(QString)));
     QObject::connect(ui.pushButton_background_color, SIGNAL(clicked()), this, SLOT(setBackgroundColor()));
     QObject::connect(ui.pushButton_default_font_color, SIGNAL(clicked()), this, SLOT(setDefaultFontColor()));
     QObject::connect(ui.pushButton_join_font_color, SIGNAL(clicked()), this, SLOT(setJoinFontColor()));
@@ -738,68 +624,6 @@ void DlgOptions::disableReplaces(bool bValue)
     Config *pConfig = new Config();
     pConfig->setValue("disable_replaces", strValue);
     Core::instance()->settings["disable_replaces"] = strValue;
-    delete pConfig;
-}
-
-void DlgOptions::setMyBold(int index)
-{
-    QString strValue = (index == 0 ? "off" : "on");
-
-    Config *pConfig = new Config();
-    pConfig->setValue("my_bold", strValue);
-    Core::instance()->settings["my_bold"] = strValue;
-    delete pConfig;
-}
-
-void DlgOptions::setMyItalic(int index)
-{
-    QString strValue = (index == 0 ? "off" : "on");
-
-    Config *pConfig = new Config();
-    pConfig->setValue("my_italic", strValue);
-    Core::instance()->settings["my_italic"] = strValue;
-    delete pConfig;
-}
-
-void DlgOptions::setMyFont(QString strFont)
-{
-    Config *pConfig = new Config();
-    pConfig->setValue("my_font", strFont);
-    Core::instance()->settings["my_font"] = strFont;
-    delete pConfig;
-}
-
-void DlgOptions::setMyColor(int index)
-{
-    QString strMyColor;
-    if (index == 0) strMyColor = "#000000";
-    else if (index == 1) strMyColor = "#623c00";
-    else if (index == 2) strMyColor = "#c86c00";
-    else if (index == 3) strMyColor = "#ff6500";
-    else if (index == 4) strMyColor = "#ff0000";
-    else if (index == 5) strMyColor = "#e40f0f";
-    else if (index == 6) strMyColor = "#990033";
-    else if (index == 7) strMyColor = "#8800ab";
-    else if (index == 8) strMyColor = "#ce00ff";
-    else if (index == 9) strMyColor = "#0f2ab1";
-    else if (index == 10) strMyColor = "#3030ce";
-    else if (index == 11) strMyColor = "#006699";
-    else if (index == 12) strMyColor = "#1a866e";
-    else if (index == 13) strMyColor = "#008100";
-    else if (index == 14) strMyColor = "#959595";
-    else strMyColor = "#000000";
-
-    Config *pConfig = new Config();
-    pConfig->setValue("my_color", strMyColor);
-    Core::instance()->settings["my_color"] = strMyColor;
-    delete pConfig;
-}
-
-void DlgOptions::setFontSize(QString strFontSize)
-{
-    Config *pConfig = new Config();
-    pConfig->setValue("font_size", strFontSize+"px");
-    Core::instance()->settings["font_size"] = strFontSize+"px";
     delete pConfig;
 }
 

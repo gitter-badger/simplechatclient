@@ -1455,30 +1455,6 @@
         <translation>Wyłącz zamianę emotikon</translation>
     </message>
     <message>
-        <source>Default font</source>
-        <translation>Domyślna czcionka</translation>
-    </message>
-    <message>
-        <source>Bold:</source>
-        <translation>Pogrubienie:</translation>
-    </message>
-    <message>
-        <source>Italic:</source>
-        <translation>Kursywa:</translation>
-    </message>
-    <message>
-        <source>Font:</source>
-        <translation>Czcionka:</translation>
-    </message>
-    <message>
-        <source>Color:</source>
-        <translation>Kolor:</translation>
-    </message>
-    <message>
-        <source>Font size:</source>
-        <translation>Wielkość czcionki:</translation>
-    </message>
-    <message>
         <source>Colors</source>
         <translation>Kolory</translation>
     </message>

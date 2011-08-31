@@ -60,11 +60,6 @@ private slots:
     void disableAvatars(bool);
     void disableEmots(bool);
     void disableReplaces(bool);
-    void setMyBold(int);
-    void setMyItalic(int);
-    void setMyFont(QString);
-    void setMyColor(int);
-    void setFontSize(QString);
     void setBackgroundColor();
     void setDefaultFontColor();
     void setJoinFontColor();

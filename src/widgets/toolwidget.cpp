@@ -23,6 +23,7 @@
 #include <QMenu>
 #include <QPushButton>
 #include "core.h"
+#include "config.h"
 #include "dlg_channel_settings.h"
 #include "dlg_emoticons.h"
 #include "dlg_moderation.h"
@@ -354,14 +355,24 @@ void ToolWidget::boldClicked()
         bold->setChecked(false);
         bMyBold = false;
         strMyFontWeight = "";
-        Core::instance()->settings["my_bold"] = "off";
+        QString strValue = "off";
+        Core::instance()->settings["my_bold"] = strValue;
+
+        Config *pConfig = new Config();
+        pConfig->setValue("my_bold", strValue);
+        delete pConfig;
     }
     else
     {
         bold->setChecked(true);
         bMyBold = true;
         strMyFontWeight = "bold";
-        Core::instance()->settings["my_bold"] = "on";
+        QString strValue = "on";
+        Core::instance()->settings["my_bold"] = strValue;
+
+        Config *pConfig = new Config();
+        pConfig->setValue("my_bold", strValue);
+        delete pConfig;
     }
 
     int iWeight = (bMyBold ? 75 : 50);
@@ -375,14 +386,24 @@ void ToolWidget::italicClicked()
         italic->setChecked(false);
         bMyItalic = false;
         strMyFontStyle = "";
-        Core::instance()->settings["my_italic"] = "off";
+        QString strValue = "off";
+        Core::instance()->settings["my_italic"] = strValue;
+
+        Config *pConfig = new Config();
+        pConfig->setValue("my_italic", strValue);
+        delete pConfig;
     }
     else
     {
         italic->setChecked(true);
         bMyItalic = true;
         strMyFontStyle = "italic";
+        QString strValue = "on";
         Core::instance()->settings["my_italic"] = "on";
+
+        Config *pConfig = new Config();
+        pConfig->setValue("my_italic", strValue);
+        delete pConfig;
     }
 
     int iWeight = (bMyBold ? 75 : 50);
@@ -394,6 +415,9 @@ void ToolWidget::arialTriggered()
     fontfamily->setText("Arial");
     strMyFontFamily = "Arial";
     Core::instance()->settings["my_font"] = strMyFontFamily;
+    Config *pConfig = new Config();
+    pConfig->setValue("my_font", strMyFontFamily);
+    delete pConfig;
 
     int iWeight = (bMyBold ? 75 : 50);
     pInputWidget->setFont(QFont(strMyFontFamily, -1, iWeight, bMyItalic));
@@ -404,6 +428,9 @@ void ToolWidget::timesTriggered()
     fontfamily->setText("Times");
     strMyFontFamily = "Times";
     Core::instance()->settings["my_font"] = strMyFontFamily;
+    Config *pConfig = new Config();
+    pConfig->setValue("my_font", strMyFontFamily);
+    delete pConfig;
 
     int iWeight = (bMyBold ? 75 : 50);
     pInputWidget->setFont(QFont(strMyFontFamily, -1, iWeight, bMyItalic));
@@ -414,6 +441,9 @@ void ToolWidget::verdanaTriggered()
     fontfamily->setText("Verdana");
     strMyFontFamily = "Verdana";
     Core::instance()->settings["my_font"] = strMyFontFamily;
+    Config *pConfig = new Config();
+    pConfig->setValue("my_font", strMyFontFamily);
+    delete pConfig;
 
     int iWeight = (bMyBold ? 75 : 50);
     pInputWidget->setFont(QFont(strMyFontFamily, -1, iWeight, bMyItalic));
@@ -424,6 +454,9 @@ void ToolWidget::tahomaTriggered()
     fontfamily->setText("Tahoma");
     strMyFontFamily = "Tahoma";
     Core::instance()->settings["my_font"] = strMyFontFamily;
+    Config *pConfig = new Config();
+    pConfig->setValue("my_font", strMyFontFamily);
+    delete pConfig;
 
     int iWeight = (bMyBold ? 75 : 50);
     pInputWidget->setFont(QFont(strMyFontFamily, -1, iWeight, bMyItalic));
@@ -434,6 +467,9 @@ void ToolWidget::courierTriggered()
     fontfamily->setText("Courier");
     strMyFontFamily = "Courier";
     Core::instance()->settings["my_font"] = strMyFontFamily;
+    Config *pConfig = new Config();
+    pConfig->setValue("my_font", strMyFontFamily);
+    delete pConfig;
 
     int iWeight = (bMyBold ? 75 : 50);
     pInputWidget->setFont(QFont(strMyFontFamily, -1, iWeight, bMyItalic));
@@ -441,52 +477,102 @@ void ToolWidget::courierTriggered()
 
 void ToolWidget::size8Triggered()
 {
-    emit changeFontSize("8px");
+    QString strValue = "8px";
+    emit changeFontSize(strValue);
+
+    Config *pConfig = new Config();
+    pConfig->setValue("font_size", strValue);
+    delete pConfig;
 }
 
 void ToolWidget::size9Triggered()
 {
-    emit changeFontSize("9px");
+    QString strValue = "9px";
+    emit changeFontSize(strValue);
+
+    Config *pConfig = new Config();
+    pConfig->setValue("font_size", strValue);
+    delete pConfig;
 }
 
 void ToolWidget::size10Triggered()
 {
-    emit changeFontSize("10px");
+    QString strValue = "10px";
+    emit changeFontSize(strValue);
+
+    Config *pConfig = new Config();
+    pConfig->setValue("font_size", strValue);
+    delete pConfig;
 }
 
 void ToolWidget::size11Triggered()
 {
-    emit changeFontSize("11px");
+    QString strValue = "11px";
+    emit changeFontSize(strValue);
+
+    Config *pConfig = new Config();
+    pConfig->setValue("font_size", strValue);
+    delete pConfig;
 }
 
 void ToolWidget::size12Triggered()
 {
-    emit changeFontSize("12px");
+    QString strValue = "12px";
+    emit changeFontSize(strValue);
+
+    Config *pConfig = new Config();
+    pConfig->setValue("font_size", strValue);
+    delete pConfig;
 }
 
 void ToolWidget::size14Triggered()
 {
-    emit changeFontSize("14px");
+    QString strValue = "14px";
+    emit changeFontSize(strValue);
+
+    Config *pConfig = new Config();
+    pConfig->setValue("font_size", strValue);
+    delete pConfig;
 }
 
 void ToolWidget::size16Triggered()
 {
-    emit changeFontSize("16px");
+    QString strValue = "16px";
+    emit changeFontSize(strValue);
+
+    Config *pConfig = new Config();
+    pConfig->setValue("font_size", strValue);
+    delete pConfig;
 }
 
 void ToolWidget::size18Triggered()
 {
-    emit changeFontSize("18px");
+    QString strValue = "18px";
+    emit changeFontSize(strValue);
+
+    Config *pConfig = new Config();
+    pConfig->setValue("font_size", strValue);
+    delete pConfig;
 }
 
 void ToolWidget::size20Triggered()
 {
-    emit changeFontSize("20px");
+    QString strValue = "20px";
+    emit changeFontSize(strValue);
+
+    Config *pConfig = new Config();
+    pConfig->setValue("font_size", strValue);
+    delete pConfig;
 }
 
 void ToolWidget::size24Triggered()
 {
-    emit changeFontSize("24px");
+    QString strValue = "24px";
+    emit changeFontSize(strValue);
+
+    Config *pConfig = new Config();
+    pConfig->setValue("font_size", strValue);
+    delete pConfig;
 }
 
 // color
@@ -511,6 +597,9 @@ void ToolWidget::colorClicked(int index)
     else strCurrentColor = "#000000";
 
     Core::instance()->settings["my_color"] = strCurrentColor;
+    Config *pConfig = new Config();
+    pConfig->setValue("my_color", strCurrentColor);
+    delete pConfig;
 
     pInputWidget->setColor(strCurrentColor);
 }
