@@ -62,10 +62,11 @@ private:
     QMenu *viewMenu;
     QMenu *optionsMenu;
     QMenu *helpMenu;
+    QAction *sccAct;
+    QAction *restoreMinimalizeAct;
     QAction *connectAct;
     QAction *closeAct;
     QAction *optionsAct;
-    QAction *showAct;
     QAction *aboutAct;
     QAction *awaylogAct;
     QAction *notesAct;
@@ -104,6 +105,7 @@ private:
     void createMenus();
     void createSignals();
     void showOptions();
+    void createTrayMenu();
     // nicklist
     void updateUsersCount();
     bool nicklistExist(QString, QString);
@@ -115,7 +117,7 @@ private slots:
     void openAwaylog();
     void openNotes();
     void openAbout();
-    void buttonShow();
+    void buttonRestoreMinimalize();
     void trayIconPressed(QSystemTrayIcon::ActivationReason);
     void ctrlTabPressed();
     void ctrlShiftTabPressed();

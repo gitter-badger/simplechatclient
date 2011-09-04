@@ -199,7 +199,11 @@ void MainWindow::createGui()
 void MainWindow::createActions()
 {
     // action
-    showAct = new QAction(QIcon(":/images/logo.png"), tr("Show"), this);
+    sccAct = new QAction(QIcon(":/images/logo.png"), "Simple Chat Client", this);
+    sccAct->setFont(QFont(this->font().family(), -1, 75, false));
+    sccAct->setEnabled(false);
+
+    restoreMinimalizeAct = new QAction(this);
     connectAct = new QAction(QIcon(":/images/oxygen/16x16/network-connect.png"), tr("&Connect"), this);
     closeAct = new QAction(QIcon(":/images/oxygen/16x16/application-exit.png"), tr("Close"), this);
     optionsAct = new QAction(QIcon(":/images/oxygen/16x16/preferences-system.png"), tr("Options"), this);
@@ -300,14 +304,26 @@ void MainWindow::createMenus()
 
     // tray
     trayMenu = new QMenu();
-    trayMenu->addAction(showAct);
-    trayMenu->addSeparator();
-    trayMenu->addAction(closeAct);
+    createTrayMenu();
 
     trayIcon = new QSystemTrayIcon(this);
     trayIcon->setIcon(QIcon(":/images/logo.png"));
     trayIcon->setContextMenu(trayMenu);
     trayIcon->show();
+}
+
+void MainWindow::createTrayMenu()
+{
+    if (this->isHidden())
+        restoreMinimalizeAct->setText(tr("Restore"));
+    else
+        restoreMinimalizeAct->setText(tr("Minimalize"));
+
+    trayMenu->clear();
+    trayMenu->addAction(sccAct);
+    trayMenu->addSeparator();
+    trayMenu->addAction(restoreMinimalizeAct);
+    trayMenu->addAction(closeAct);
 }
 
 void MainWindow::createSignals()
@@ -317,7 +333,7 @@ void MainWindow::createSignals()
     QObject::connect(closeAct, SIGNAL(triggered()), this, SLOT(buttonClose()));
     QObject::connect(optionsAct, SIGNAL(triggered()), this, SLOT(openOptions()));
     QObject::connect(aboutAct, SIGNAL(triggered()), this, SLOT(openAbout()));
-    QObject::connect(showAct, SIGNAL(triggered()), this, SLOT(buttonShow()));
+    QObject::connect(restoreMinimalizeAct, SIGNAL(triggered()), this, SLOT(buttonRestoreMinimalize()));
 
     // signals onet dialogs
     QObject::connect(channelListAct, SIGNAL(triggered()), this, SLOT(openChannelList()));
@@ -647,9 +663,12 @@ void MainWindow::buttonClose()
 }
 
 // tray button
-void MainWindow::buttonShow()
+void MainWindow::buttonRestoreMinimalize()
 {
-    this->showNormal();
+    if (this->isVisible())
+        this->hide();
+    else
+        this->showNormal();
 }
 
 // tray
@@ -662,6 +681,8 @@ void MainWindow::trayIconPressed(QSystemTrayIcon::ActivationReason activationRea
         else
             this->showNormal();
     }
+    else if (activationReason == QSystemTrayIcon::Context)
+        createTrayMenu();
 }
 
 // part tab

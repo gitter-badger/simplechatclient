@@ -304,8 +304,12 @@
         <translation>&amp;Rozłącz</translation>
     </message>
     <message>
-        <source>Show</source>
-        <translation>Pokaż</translation>
+        <source>Restore</source>
+        <translation>Przywróć</translation>
+    </message>
+    <message>
+        <source>Minimalize</source>
+        <translation>Minimalizuj</translation>
     </message>
     <message>
         <source>Close</source>
