@@ -54,6 +54,7 @@ set QT_PLUGINS_DIR="C:\Qt\4.7.3\plugins"
 set OPENSSL_DIR="C:\OpenSSL-Win32"
 set ZLIB_DIR="C:\zlib-1.2.5"
 set QCA2_DIR="C:\qca2\lib"
+set MINGW_BIN_DIR="C:\MinGW\bin"
 
 echo Removing destination folder
 rd %DESTINATION% /S /Q
@@ -77,6 +78,9 @@ xcopy %QT_DIR%\QtNetwork4.dll %DESTINATION%\ /C /H /R /Y /Q
 xcopy %QT_DIR%\QtWebKit4.dll %DESTINATION%\ /C /H /R /Y /Q
 xcopy %QT_DIR%\QtXml4.dll %DESTINATION%\ /C /H /R /Y /Q
 xcopy %QT_DIR%\QtXmlPatterns4.dll %DESTINATION%\ /C /H /R /Y /Q
+
+echo Copying MinGW files
+xcopy %MINGW_BIN_DIR%\libstdc++-6.dll %DESTINATION%\ /C /H /R /Y /Q
 
 echo Copying translations
 xcopy translations\*.qm %DESTINATION%\translations\ /C /H /R /Y /Q 
