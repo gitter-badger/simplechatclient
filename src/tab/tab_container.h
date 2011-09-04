@@ -44,8 +44,7 @@ public:
     void removeTab(QString);
     bool renameTab(QString, QString);
     void partTab(int);
-    void showMsg(QString &, QString &, QString &, MessageCategory);
-    void showMsg(QString &, QString &, MessageCategory);
+    void showMsg(QString &, QString &, MessageCategory, QString strTime = QString::null);
     void showMsgAll(QString &, MessageCategory);
     void showMsgActive(QString &, MessageCategory);
     void setTopic(QString &, QString &);
@@ -58,7 +57,6 @@ public slots:
     void slotShowMsgActive(QString &, MessageCategory);
     void slotShowMsgAll(QString &, MessageCategory);
     void slotDisplayMessage(QString &, QString &, MessageCategory);
-    void slotChangeFontSize(QString);
     void slotClearContent(QString);
     void refreshColors();
     void refreshBackgroundImage();

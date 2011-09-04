@@ -21,6 +21,7 @@
 #ifndef MAINTEXTEDIT_H
 #define MAINTEXTEDIT_H
 
+#include "defines.h"
 class DlgUserProfile;
 #include <QTextEdit>
 
@@ -29,7 +30,7 @@ class MainTextEdit : public QTextEdit
     Q_OBJECT
 public:
     MainTextEdit(QString, DlgUserProfile *);
-    virtual ~MainTextEdit();
+    void displayMessage(QString &, MessageCategory, QString strTime = QString::null);
     void updateBackgroundImage();
     inline QString getCurrentNick() { return strNick; }
 
@@ -79,7 +80,6 @@ private slots:
     void invite();
     void openWebbrowser();
     void sendToNotes();
-    void search();
 
 protected:
     virtual void contextMenuEvent(QContextMenuEvent *);

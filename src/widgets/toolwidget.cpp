@@ -478,8 +478,8 @@ void ToolWidget::courierTriggered()
 void ToolWidget::size8Triggered()
 {
     QString strValue = "8px";
-    emit changeFontSize(strValue);
 
+    Core::instance()->settings["font_size"] = strValue;
     Config *pConfig = new Config();
     pConfig->setValue("font_size", strValue);
     delete pConfig;
@@ -488,8 +488,8 @@ void ToolWidget::size8Triggered()
 void ToolWidget::size9Triggered()
 {
     QString strValue = "9px";
-    emit changeFontSize(strValue);
 
+    Core::instance()->settings["font_size"] = strValue;
     Config *pConfig = new Config();
     pConfig->setValue("font_size", strValue);
     delete pConfig;
@@ -498,8 +498,8 @@ void ToolWidget::size9Triggered()
 void ToolWidget::size10Triggered()
 {
     QString strValue = "10px";
-    emit changeFontSize(strValue);
 
+    Core::instance()->settings["font_size"] = strValue;
     Config *pConfig = new Config();
     pConfig->setValue("font_size", strValue);
     delete pConfig;
@@ -508,8 +508,8 @@ void ToolWidget::size10Triggered()
 void ToolWidget::size11Triggered()
 {
     QString strValue = "11px";
-    emit changeFontSize(strValue);
 
+    Core::instance()->settings["font_size"] = strValue;
     Config *pConfig = new Config();
     pConfig->setValue("font_size", strValue);
     delete pConfig;
@@ -518,8 +518,8 @@ void ToolWidget::size11Triggered()
 void ToolWidget::size12Triggered()
 {
     QString strValue = "12px";
-    emit changeFontSize(strValue);
 
+    Core::instance()->settings["font_size"] = strValue;
     Config *pConfig = new Config();
     pConfig->setValue("font_size", strValue);
     delete pConfig;
@@ -528,8 +528,8 @@ void ToolWidget::size12Triggered()
 void ToolWidget::size14Triggered()
 {
     QString strValue = "14px";
-    emit changeFontSize(strValue);
 
+    Core::instance()->settings["font_size"] = strValue;
     Config *pConfig = new Config();
     pConfig->setValue("font_size", strValue);
     delete pConfig;
@@ -538,8 +538,8 @@ void ToolWidget::size14Triggered()
 void ToolWidget::size16Triggered()
 {
     QString strValue = "16px";
-    emit changeFontSize(strValue);
 
+    Core::instance()->settings["font_size"] = strValue;
     Config *pConfig = new Config();
     pConfig->setValue("font_size", strValue);
     delete pConfig;
@@ -548,8 +548,8 @@ void ToolWidget::size16Triggered()
 void ToolWidget::size18Triggered()
 {
     QString strValue = "18px";
-    emit changeFontSize(strValue);
 
+    Core::instance()->settings["font_size"] = strValue;
     Config *pConfig = new Config();
     pConfig->setValue("font_size", strValue);
     delete pConfig;
@@ -558,8 +558,8 @@ void ToolWidget::size18Triggered()
 void ToolWidget::size20Triggered()
 {
     QString strValue = "20px";
-    emit changeFontSize(strValue);
 
+    Core::instance()->settings["font_size"] = strValue;
     Config *pConfig = new Config();
     pConfig->setValue("font_size", strValue);
     delete pConfig;
@@ -568,8 +568,8 @@ void ToolWidget::size20Triggered()
 void ToolWidget::size24Triggered()
 {
     QString strValue = "24px";
-    emit changeFontSize(strValue);
 
+    Core::instance()->settings["font_size"] = strValue;
     Config *pConfig = new Config();
     pConfig->setValue("font_size", strValue);
     delete pConfig;

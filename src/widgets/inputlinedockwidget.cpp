@@ -58,7 +58,6 @@ InputLineDockWidget::InputLineDockWidget(QWidget *parent, DlgChannelSettings *pa
     // signals
     QObject::connect(pInputWidget, SIGNAL(displayMessage(QString&,QString&,MessageCategory)), this, SLOT(slotDisplayMessage(QString&,QString&,MessageCategory)));
     QObject::connect(pInputWidget, SIGNAL(showMsg(QString&,QString&,MessageCategory)), this, SLOT(slotShowMsg(QString&,QString&,MessageCategory)));
-    QObject::connect(pToolWidget, SIGNAL(changeFontSize(QString)), this, SLOT(slotChangeFontSize(QString)));
     QObject::connect(pToolWidget, SIGNAL(clearContent(QString)), this, SLOT(slotClearContent(QString)));
     QObject::connect(pInputWidget, SIGNAL(showHideToolwidget()), this, SLOT(slotShowHideToolwidget()));
 
@@ -154,11 +153,6 @@ void InputLineDockWidget::slotCtrlShiftTabPressed()
 }
 
 // tool widget
-
-void InputLineDockWidget::slotChangeFontSize(QString strSize)
-{
-    emit changeFontSize(strSize);
-}
 
 void InputLineDockWidget::slotClearContent(QString strChannel)
 {

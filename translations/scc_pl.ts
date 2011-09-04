@@ -1034,45 +1034,6 @@
     </message>
 </context>
 <context>
-    <name>DlgFindText</name>
-    <message>
-        <source>Find</source>
-        <translation>Znajdź</translation>
-    </message>
-    <message>
-        <source>Find what:</source>
-        <translation>Znajdź tekst:</translation>
-    </message>
-    <message>
-        <source>Find next</source>
-        <translation>Znajdź</translation>
-    </message>
-    <message>
-        <source>Close</source>
-        <translation>Zamknij</translation>
-    </message>
-    <message>
-        <source>Match whole word only</source>
-        <translation>Znajdź tylko całe wyrazy</translation>
-    </message>
-    <message>
-        <source>Match case</source>
-        <translation>Uwzględniaj wielkość liter</translation>
-    </message>
-    <message>
-        <source>Direction</source>
-        <translation>Kierunek</translation>
-    </message>
-    <message>
-        <source>Up</source>
-        <translation>W górę</translation>
-    </message>
-    <message>
-        <source>Down</source>
-        <translation>W dół</translation>
-    </message>
-</context>
-<context>
     <name>DlgFriends</name>
     <message>
         <source>Friends list</source>
@@ -2774,17 +2735,6 @@
     </message>
 </context>
 <context>
-    <name>TabWidget</name>
-    <message>
-        <source>Topic:</source>
-        <translation>Temat:</translation>
-    </message>
-    <message>
-        <source>Topic set by %1</source>
-        <translation>Temat ustawiony przez %1</translation>
-    </message>
-</context>
-<context>
     <name>InputWidget</name>
     <message>
         <source>(Unregistered)</source>
@@ -2916,10 +2866,6 @@
     <message>
         <source>Send to notes</source>
         <translation>Wyślij do notatek</translation>
-    </message>
-    <message>
-        <source>Find...</source>
-        <translation>Znajdź...</translation>
     </message>
     <message>
         <source>Clear</source>
@@ -3067,6 +3013,17 @@
     <message>
         <source>IP Ban</source>
         <translation>Banuj IP</translation>
+    </message>
+</context>
+<context>
+    <name>TabContainer</name>
+    <message>
+        <source>Topic:</source>
+        <translation>Temat:</translation>
+    </message>
+    <message>
+        <source>Topic set by %1</source>
+        <translation>Temat ustawiony przez %1</translation>
     </message>
 </context>
 <context>

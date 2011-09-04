@@ -306,9 +306,9 @@ void MainWindow::createMenus()
     trayMenu = new QMenu();
     createTrayMenu();
 
-    trayIcon = new QSystemTrayIcon(this);
-    trayIcon->setIcon(QIcon(":/images/logo.png"));
+    trayIcon = new QSystemTrayIcon(QIcon(":/images/logo.png"), this);
     trayIcon->setContextMenu(trayMenu);
+    trayIcon->setToolTip("Simple Chat Client");
     trayIcon->show();
 }
 
@@ -371,7 +371,6 @@ void MainWindow::createSignals()
     // signals pInputLineDockWidget
     QObject::connect(pInputLineDockWidget, SIGNAL(showMsg(QString&,QString&,MessageCategory)), pTabC, SLOT(slotShowMsg(QString&,QString&,MessageCategory)));
     QObject::connect(pInputLineDockWidget, SIGNAL(displayMessage(QString&,QString&,MessageCategory)), pTabC, SLOT(slotDisplayMessage(QString&,QString&,MessageCategory)));
-    QObject::connect(pInputLineDockWidget, SIGNAL(changeFontSize(QString)), pTabC, SLOT(slotChangeFontSize(QString)));
     QObject::connect(pInputLineDockWidget, SIGNAL(clearContent(QString)), pTabC, SLOT(slotClearContent(QString)));
     QObject::connect(pInputLineDockWidget, SIGNAL(ctrlTabPressed()), this, SLOT(ctrlTabPressed()));
     QObject::connect(pInputLineDockWidget, SIGNAL(ctrlShiftTabPressed()), this, SLOT(ctrlShiftTabPressed()));

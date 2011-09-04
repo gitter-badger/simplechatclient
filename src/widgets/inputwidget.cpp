@@ -208,7 +208,7 @@ void InputWidget::sendMessage(QString strText, bool bModeration)
             }
 
             Core::instance()->pNetwork->send(QString("PRIVMSG %1 :%2").arg(strChannel).arg(strText));
-            QString strDisplay = QString("%1<%2> %3").arg(strDT).arg(strMe).arg(strText);
+            QString strDisplay = QString("<%1> %2").arg(strMe).arg(strText);
             emit displayMessage(strChannel, strDisplay, DefaultMessage);
         }
         // me
@@ -253,7 +253,7 @@ void InputWidget::sendMessage(QString strText, bool bModeration)
                 }
 
                 Core::instance()->pNetwork->send(strTextSend);
-                QString strDisplay = QString("%1<%2> %3ACTION %4%5").arg(strDT).arg(strMe).arg(QString(QByteArray("\x01"))).arg(strTextDisplay).arg(QString(QByteArray("\x01")));
+                QString strDisplay = QString("<%1> %2ACTION %3%4").arg(strMe).arg(QString(QByteArray("\x01"))).arg(strTextDisplay).arg(QString(QByteArray("\x01")));
                 emit displayMessage(strChannel, strDisplay, MeMessage);
             }
         }
@@ -303,7 +303,7 @@ void InputWidget::sendMessage(QString strText, bool bModeration)
 
             strText = QString("PRIVMSG %1 :%2").arg(strChannel).arg(strText);
             Core::instance()->pNetwork->send(strText);
-            QString strDisplay = QString("%1<%2> %3").arg(strDT).arg(strMe).arg(strText.right(strText.length()-10-strChannel.length()));
+            QString strDisplay = QString("<%1> %2").arg(strMe).arg(strText.right(strText.length()-10-strChannel.length()));
             emit displayMessage(strChannel, strDisplay, DefaultMessage);
         }
         // moder notice
@@ -319,7 +319,7 @@ void InputWidget::sendMessage(QString strText, bool bModeration)
 
             strText = QString("MODERNOTICE %1 :%2").arg(strChannel).arg(strText);
             Core::instance()->pNetwork->send(strText);
-            QString strDisplay = QString("%1*<%2> %3").arg(strDT).arg(strMe).arg(strText.right(strText.length()-14-strChannel.length()));
+            QString strDisplay = QString("*<%1> %2").arg(strMe).arg(strText.right(strText.length()-14-strChannel.length()));
             emit displayMessage(strChannel, strDisplay, NoticeMessage);
         }
     }

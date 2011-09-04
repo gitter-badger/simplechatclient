@@ -19,6 +19,7 @@
  ****************************************************************************/
 
 #include <QDateTime>
+#include "convert.h"
 #include "core.h"
 #include "log.h"
 #include "tab_manager.h"
@@ -165,92 +166,38 @@ void TabContainer::partTab(int index)
         removeTab(strChannel);
 }
 
-void TabContainer::showMsg(QString &strTime, QString &strChannel, QString &strData, MessageCategory eMessageCategory)
+void TabContainer::showMsg(QString &strChannel, QString &strData, MessageCategory eMessageCategory, QString strTime)
 {
     int i = getIndex(strChannel);
     if (i != -1)
     {
         // hilight
         QString strMe = Core::instance()->settings.value("nick");
+        QRegExp re;
+        if (strMe[0] == '~')
+            re.setPattern(strMe+"\\b");
+        else
+            re.setPattern("[^~]\\b"+strMe+"\\b");
+        bool bHilightMessage = strData.contains(re) ? true : false;
 
-        if (strData.contains(QRegExp("(\\s|\\W)"+strMe+"\\b")))
+        if (bHilightMessage)
         {
-            if (eMessageCategory == DefaultMessage)
-            {
-                tw[i]->displayMsg(strTime, strData, HilightMessage);
-                if (i != pTabM->currentIndex())
-                    pTabM->setHilight(i);
-            }
-            else
-            {
-                tw[i]->displayMsg(strTime, strData, eMessageCategory);
-                if (i != pTabM->currentIndex())
-                    pTabM->setAlert(i, QColor(0, 147, 0, 255)); // green
-            }
+            // awaylog
+            Core::instance()->addAwaylog(strChannel, strData);
 
             // update awaylog status
             emit updateAwaylogStatus();
-        }
-        else
-        {
-            tw[i]->displayMsg(strTime, strData, eMessageCategory);
+
+            // hilight
             if (i != pTabM->currentIndex())
-            {
-                if (eMessageCategory != DefaultMessage)
-                    pTabM->setAlert(i, QColor(0, 147, 0, 255)); // green
-                else
-                    pTabM->setAlert(i, QColor(255, 0, 0, 255)); // red
-            }
-        }
-    }
-}
+                pTabM->setHilight(i);
 
-void TabContainer::showMsg(QString &strChannel, QString &strData, MessageCategory eMessageCategory)
-{
-    int i = getIndex(strChannel);
-    if (i != -1)
-    {
-        // hilight
-        QString strMe = Core::instance()->settings.value("nick");
-
-        if (strData.contains(QRegExp("(\\s|\\W)"+strMe+"\\b")))
-        {
+            // update message category
             if (eMessageCategory == DefaultMessage)
-            {
-                tw[i]->displayMsg(strData, HilightMessage);
-                if (i != pTabM->currentIndex())
-                    pTabM->setHilight(i);
-            }
-            else
-            {
-                tw[i]->displayMsg(strData, eMessageCategory);
-                if (i != pTabM->currentIndex())
-                    pTabM->setAlert(i, QColor(0, 147, 0, 255)); // green
-            }
-
-            // update awaylog status
-            emit updateAwaylogStatus();
+                eMessageCategory = HilightMessage;
         }
-        else
-        {
-            tw[i]->displayMsg(strData, eMessageCategory);
-            if (i != pTabM->currentIndex())
-            {
-                if (eMessageCategory != DefaultMessage)
-                    pTabM->setAlert(i, QColor(0, 147, 0, 255)); // green
-                else
-                    pTabM->setAlert(i, QColor(255, 0, 0, 255)); // red
-            }
-        }
-    }
-}
 
-void TabContainer::showMsgAll(QString &strData, MessageCategory eMessageCategory)
-{
-    for (int i = 0; i < tw.size(); i++)
-    {
-        QString strDataAll = strData;
-        tw[i]->displayMsg(strDataAll, eMessageCategory);
+        // set color
         if (i != pTabM->currentIndex())
         {
             if (eMessageCategory != DefaultMessage)
@@ -258,6 +205,26 @@ void TabContainer::showMsgAll(QString &strData, MessageCategory eMessageCategory
             else
                 pTabM->setAlert(i, QColor(255, 0, 0, 255)); // red
         }
+
+        // display
+        tw[i]->pChatView->displayMessage(strData, eMessageCategory, strTime);
+    }
+}
+
+void TabContainer::showMsgAll(QString &strData, MessageCategory eMessageCategory)
+{
+    for (int i = 0; i < tw.size(); i++)
+    {
+        if (i != pTabM->currentIndex())
+        {
+            if (eMessageCategory != DefaultMessage)
+                pTabM->setAlert(i, QColor(0, 147, 0, 255)); // green
+            else
+                pTabM->setAlert(i, QColor(255, 0, 0, 255)); // red
+        }
+
+        QString strDataAll = strData;
+        tw[i]->pChatView->displayMessage(strDataAll, eMessageCategory);
     }
 }
 
@@ -267,7 +234,7 @@ void TabContainer::showMsgActive(QString &strData, MessageCategory eMessageCateg
     {
         if (i == pTabM->currentIndex())
         {
-            tw[i]->displayMsg(strData, eMessageCategory);
+            tw[i]->pChatView->displayMessage(strData, eMessageCategory);
             return;
         }
     }
@@ -277,14 +244,40 @@ void TabContainer::setTopic(QString &strChannel, QString &strTopic)
 {
     int i = getIndex(strChannel);
     if (i != -1)
-        tw[i]->setTopic(strTopic);
+    {
+        // replace
+        strTopic.replace("&", "&amp;");
+        strTopic.replace("<", "&lt;");
+        strTopic.replace(">", "&gt;");
+
+        QString strContent = strTopic;
+        QString strLastContent;
+
+        // convert emoticons, font
+        Convert *convertText = new Convert();
+        convertText->convertText(strContent,strLastContent);
+        delete convertText;
+
+        // set topic
+        tw[i]->topic->setText("<b>"+tr("Topic:")+"</b> "+strContent+strLastContent);
+
+        // tooltip
+        strTopic.remove(QRegExp("%C([a-zA-Z0-9]+)%"));
+        strTopic.remove(QRegExp("%F([a-zA-Z0-9:]+)%"));
+        strTopic.replace(QRegExp("%I([a-zA-Z0-9_-]+)%"),"<\\1>");
+
+        tw[i]->topic->setToolTip(strTopic);
+    }
 }
 
 void TabContainer::authorTopic(QString &strChannel, QString &strNick)
 {
     int i = getIndex(strChannel);
     if (i != -1)
-        tw[i]->authorTopic(strNick);
+    {
+        QString strTopicDetails = QString(tr("Topic set by %1")).arg(strNick);
+        tw[i]->topic->setToolTip(strTopicDetails);
+    }
 }
 
 void TabContainer::slotUpdateNickAvatar(QString strNick)
@@ -325,20 +318,14 @@ void TabContainer::slotDisplayMessage(QString &strChannel, QString &strData, Mes
 {
     int i = getIndex(strChannel);
     if (i != -1)
-        tw[i]->displayMessage(strData, eMessageCategory);
-}
-
-void TabContainer::slotChangeFontSize(QString strSize)
-{
-    for (int i = 0; i < tw.size(); i++)
-        tw[i]->changeFontSize(strSize);
+        tw[i]->pChatView->displayMessage(strData, eMessageCategory);
 }
 
 void TabContainer::slotClearContent(QString strChannel)
 {
     int i = getIndex(strChannel);
     if (i != -1)
-        tw[i]->clearContent();
+        tw[i]->pChatView->clear();
 }
 
 void TabContainer::refreshColors()
@@ -354,5 +341,5 @@ void TabContainer::refreshColors()
 void TabContainer::refreshBackgroundImage()
 {
     for (int i = 0; i < tw.size(); i++)
-        tw[i]->refreshBackgroundImage();
+        tw[i]->pChatView->updateBackgroundImage();
 }

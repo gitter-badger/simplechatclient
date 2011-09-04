@@ -4013,7 +4013,7 @@ void OnetKernel::raw_817()
 
     QString strDisplay = QString("<%1> %2").arg(strNick).arg(strMessage);
     if (!strMessage.isEmpty())
-        pTabC->showMsg(strTime, strChannel, strDisplay, DefaultMessage);
+        pTabC->showMsg(strChannel, strDisplay, DefaultMessage, strTime);
 }
 
 // SLIST

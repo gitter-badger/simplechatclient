@@ -18,29 +18,18 @@
  *                                                                          *
  ****************************************************************************/
 
-#ifndef DLG_FIND_TEXT_H
-#define DLG_FIND_TEXT_H
+#ifndef HTML_MESSAGES_RENDERER_H
+#define HTML_MESSAGES_RENDERER_H
 
-class MainWindow;
-class MainTextEdit;
-#include <QDialog>
-#include "ui_find_text.h"
+#include "defines.h"
+#include <QObject>
 
-class DlgFindText : public QDialog
+class HtmlMessagesRenderer : public QObject
 {
     Q_OBJECT
 public:
-    DlgFindText(MainWindow *, MainTextEdit *);
-
-private:
-    Ui::uiFindText ui;
-    MainTextEdit *textEdit;
-
-    void createGui();
-    void createSignals();
-
-private slots:
-    void buttonFindNext();
+    HtmlMessagesRenderer(QObject *parent = 0);
+    QString renderer(QString, MessageCategory);
 };
 
-#endif // DLG_FIND_TEXT_H
+#endif // HTML_MESSAGES_RENDERER_H

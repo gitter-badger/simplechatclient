@@ -116,7 +116,6 @@ private slots:
     void clearClicked();
 
 signals:
-    void changeFontSize(QString);
     void clearContent(QString);
 };
 

@@ -13,6 +13,7 @@ SOURCES += src/avatars/avatar.cpp \
     src/common/config.cpp \
     src/common/convert.cpp \
     src/common/crypt.cpp \
+    src/common/html_messages_renderer.cpp \
     src/common/kamerzysta.cpp \
     src/common/log.cpp \
     src/common/replace.cpp \
@@ -35,7 +36,6 @@ SOURCES += src/avatars/avatar.cpp \
     src/gui/dlg_channel_settings.cpp \
     src/gui/dlg_email.cpp \
     src/gui/dlg_emoticons.cpp \
-    src/gui/dlg_find_text.cpp \
     src/gui/dlg_friends.cpp \
     src/gui/dlg_ignore.cpp \
     src/gui/dlg_invite.cpp \
@@ -79,6 +79,7 @@ HEADERS += src/avatars/avatar.h \
     src/common/convert.h \
     src/common/crypt.h \
     src/common/log.h \
+    src/common/html_messages_renderer.h \
     src/common/kamerzysta.h \
     src/common/replace.h \
     src/common/webcam_engine.h \
@@ -150,7 +151,6 @@ FORMS += ui/about.ui \
     ui/channel_settings.ui \
     ui/email.ui \
     ui/emoticons.ui \
-    ui/find_text.ui \
     ui/friends.ui \
     ui/ignore.ui \
     ui/invite.ui \

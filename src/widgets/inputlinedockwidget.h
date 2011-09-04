@@ -46,7 +46,6 @@ public slots:
     void slotDisplayMessage(QString&, QString&, MessageCategory);
     void slotShowMsg(QString&, QString&, MessageCategory);
     void slotShowHideToolwidget();
-    void slotChangeFontSize(QString);
     void slotClearContent(QString);
     void slotCtrlTabPressed();
     void slotCtrlShiftTabPressed();
@@ -62,7 +61,6 @@ private:
 signals:
     void displayMessage(QString&,QString&,MessageCategory);
     void showMsg(QString&,QString&,MessageCategory);
-    void changeFontSize(QString);
     void clearContent(QString);
     void ctrlTabPressed();
     void ctrlShiftTabPressed();

@@ -21,17 +21,13 @@
 #ifndef TAB_WIDGET_H
 #define TAB_WIDGET_H
 
-#include "defines.h"
-class QLabel;
-class QVBoxLayout;
 class DlgUserProfile;
-class MainTextEdit;
-class MainWindow;
-class TabManager;
+#include "maintextedit.h"
+#include <QLabel>
 #include <QWidget>
 
 /**
- * Main widget used for displaying all text messages from users
+ * Main widget
  */
 class TabWidget : public QWidget
 {
@@ -40,33 +36,15 @@ public:
     TabWidget(QString, DlgUserProfile *);
     virtual ~TabWidget();
     inline QString getName() { return strName; }
-    void addslashes(QString &);
-    void displayMsg(QString &, QString &, MessageCategory);
-    void displayMsg(QString &, MessageCategory);
-    void displayMessage(QString &, MessageCategory); // private, exteption: inputlinewidget
-    void setTopic(QString &);
-    void authorTopic(QString &);
-    inline void changeFontSize(QString f) { strFontSize = f; }
-    void clearContent();
     void refreshColors();
-    void refreshBackgroundImage();
+
+    QLabel *topic;
+    MainTextEdit *pChatView;
 
 private:
     // params
     QString strName;
     DlgUserProfile *pDlgUserProfile;
-
-    // other
-    QString strFontSize;
-
-    QVBoxLayout *mainLayout;
-    QWidget *mainWidget;
-
-    QLabel *topic;
-    MainTextEdit *pMainTextEdit;
-
-    void convertEmots(QString &);
-    void replaceEmots(QString &);
 };
 
 #endif // TAB_WIDGET_H

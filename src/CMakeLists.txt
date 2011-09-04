@@ -10,7 +10,6 @@ set (scc_UIS
 	../ui/channel_settings.ui
 	../ui/email.ui
 	../ui/emoticons.ui
-	../ui/find_text.ui
 	../ui/friends.ui
 	../ui/ignore.ui
 	../ui/invite.ui
@@ -34,6 +33,7 @@ set (scc_SRCS
 	common/config.cpp
 	common/convert.cpp
 	common/crypt.cpp
+	common/html_messages_renderer.cpp
 	common/log.cpp
 	common/replace.cpp
 	core/core.cpp
@@ -51,7 +51,6 @@ set (scc_SRCS
 	gui/dlg_channel_settings.cpp
 	gui/dlg_email.cpp
 	gui/dlg_emoticons.cpp
-	gui/dlg_find_text.cpp
 	gui/dlg_friends.cpp
 	gui/dlg_ignore.cpp
 	gui/dlg_invite.cpp
@@ -93,6 +92,7 @@ set (scc_MOC_HDRS
 	common/config.h
 	common/convert.h
 	common/crypt.h
+	common/html_messages_renderer.h
 	common/log.h
 	common/replace.h
 	core/core.h
@@ -108,7 +108,6 @@ set (scc_MOC_HDRS
 	gui/dlg_channel_settings.h
 	gui/dlg_email.h
 	gui/dlg_emoticons.h
-	gui/dlg_find_text.h
 	gui/dlg_friends.h
 	gui/dlg_ignore.h
 	gui/dlg_invite.h

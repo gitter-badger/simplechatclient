@@ -19,6 +19,7 @@
  ****************************************************************************/
 
 #include <QContextMenuEvent>
+#include <QDateTime>
 #include <QDesktopServices>
 #include <QDir>
 #include <QFile>
@@ -27,8 +28,10 @@
 #include <QTextBlock>
 #include <QUrl>
 #include "core.h"
-#include "dlg_find_text.h"
 #include "dlg_user_profile.h"
+#include "html_messages_renderer.h"
+#include "log.h"
+#include "notify.h"
 #include "maintextedit.h"
 
 #ifdef Q_WS_WIN
@@ -47,8 +50,47 @@ MainTextEdit::MainTextEdit(QString param1, DlgUserProfile *param2)
     updateBackgroundImage();
 }
 
-MainTextEdit::~MainTextEdit()
+void MainTextEdit::displayMessage(QString &strData, MessageCategory eMessageCategory, QString strTime)
 {
+    QDateTime dt;
+    QString strDT;
+    if (!strTime.isEmpty())
+        dt = QDateTime::fromTime_t(strTime.toUInt());
+    else
+        dt = QDateTime::currentDateTime();
+    strDT = dt.toString("[hh:mm:ss] ");
+    strData = strDT+strData;
+
+    if (Core::instance()->settings.value("disable_logs") == "off")
+    {
+        Log *l = new Log();
+        l->save(strChannel, strData);
+        delete l;
+    }
+
+    if ((eMessageCategory == JoinMessage) || (eMessageCategory == PartMessage) || (eMessageCategory == QuitMessage))
+    {
+        if (Core::instance()->settings.value("hide_join_part") == "on")
+            return;
+
+        int iNickCount = Core::instance()->mChannelNicks[strChannel];
+        if ((Core::instance()->settings.value("hide_join_part_200") == "on") && (iNickCount > 200))
+            return;
+    }
+
+    HtmlMessagesRenderer *r = new HtmlMessagesRenderer();
+    QString strContent = r->renderer(strData, eMessageCategory);
+    delete r;
+
+    if (eMessageCategory == HilightMessage)
+    {
+        // sound
+        if (Core::instance()->settings.value("disable_sounds") == "off")
+            Notify::instance()->play(Beep);
+    }
+
+    // append
+    this->append(strContent);
 }
 
 void MainTextEdit::updateBackgroundImage()
@@ -251,11 +293,6 @@ void MainTextEdit::sendToNotes()
     f.close();
 }
 
-void MainTextEdit::search()
-{
-    DlgFindText(Core::instance()->sccWindow(), this).exec();
-}
-
 void MainTextEdit::menuChannel(QString strChannel, QContextMenuEvent *event)
 {
     QMenu menu(this);
@@ -404,10 +441,6 @@ void MainTextEdit::menuStandard(QContextMenuEvent *event)
         connect(sendToNotes, SIGNAL(triggered()), this, SLOT(sendToNotes()));
         menu.addAction(sendToNotes);
     }
-
-    QAction *search = new QAction(QIcon(":/images/oxygen/16x16/edit-find.png"), tr("Find..."), &menu);
-    connect(search, SIGNAL(triggered()), this, SLOT(search()));
-    menu.addAction(search);
 
     QAction *clear = new QAction(QIcon(":/images/oxygen/16x16/draw-eraser.png"), tr("Clear"), &menu);
     connect(clear, SIGNAL(triggered()), this, SLOT(clear()));

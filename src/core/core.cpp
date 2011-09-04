@@ -109,7 +109,7 @@ void Core::createGui()
 void Core::createSettings()
 {
     // default settings
-    settings["version"] = "1.1.2.986";
+    settings["version"] = "1.1.2.987";
     settings["logged"] = "off";
     settings["busy"] = "off";
     settings["away"] = "off";
@@ -279,6 +279,32 @@ void Core::refreshBackgroundImage()
 void Core::checkUpdate()
 {
     pUpdate->checkUpdate();
+}
+
+void Core::addAwaylog(QString strChannel, QString strAwayData)
+{
+    if (Core::instance()->settings.value("away") == "off")
+        return;
+
+    // if /me
+    if (strAwayData.contains((QString(QByteArray("\x01")))))
+    {
+        if (strAwayData.contains("ACTION "))
+        {
+            strAwayData.remove(QString(QByteArray("\x01")));
+            strAwayData.remove("ACTION ");
+
+            strAwayData.insert(11, "* ");
+            if (strAwayData.contains("<")) strAwayData = strAwayData.remove(strAwayData.indexOf("<"),1);
+            if (strAwayData.contains(">")) strAwayData = strAwayData.remove(strAwayData.indexOf(">"),1);
+        }
+    }
+    // remove color, font, emots
+    strAwayData.remove(QRegExp("%C([a-zA-Z0-9]+)%"));
+    strAwayData.remove(QRegExp("%F([a-zA-Z0-9:]+)%"));
+    strAwayData.replace(QRegExp("%I([a-zA-Z0-9_-]+)%"),"<\\1>");
+
+    lAwaylog.append(QString("%1\n%2").arg(strChannel).arg(strAwayData));
 }
 
 QString Core::getChannelNameFromIndex(int index)

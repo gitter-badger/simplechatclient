@@ -60,6 +60,8 @@ public:
     void refreshBackgroundImage();
     // update
     void checkUpdate();
+    // awaylog
+    void addAwaylog(QString, QString);
     // for window
     QString getChannelNameFromIndex(int index);
     QString getCurrentChannelName();
