@@ -18,19 +18,29 @@
  *                                                                          *
  ****************************************************************************/
 
-#ifndef WEBCAMDELEGATE_H
-#define WEBCAMDELEGATE_H
+#include "debug_block.h"
 
-#include <QAbstractItemDelegate>
+QMutex DebugBlock::sm_mutex;
 
-class WebcamDelegate : public QAbstractItemDelegate
+int s_colors[] = { 1, 2, 4, 5, 6 }; // no yellow and white for sanity
+int s_colorIndex = 0;
+
+QString colorize( const QString &text, int color = s_colorIndex )
 {
-    Q_OBJECT
-public:
-    WebcamDelegate(QObject *parent = 0);
+    return QString( "\x1b[00;3%1m%2\x1b[00;39m" ).arg( QString::number(s_colors[color]), text );
+}
 
-    void paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const;
-    QSize sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const;
-};
+DebugBlock::DebugBlock(const char* label): mp_label(label), m_color(s_colorIndex)
+{
+    sm_mutex.lock();
+    s_colorIndex = (s_colorIndex + 1) % 5;
 
-#endif // WEBCAMDELEGATE_H
+    qDebug() << qPrintable( colorize( QLatin1String( "BEGIN:" ), m_color ) ) << mp_label;
+
+    sm_mutex.unlock();
+}
+
+DebugBlock::~DebugBlock()
+{
+    qDebug() << qPrintable( colorize( QLatin1String( "END:" ), m_color ) ) << mp_label;
+}

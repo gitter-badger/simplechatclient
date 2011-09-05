@@ -20,7 +20,7 @@
 
 #include <QBrush>
 #include <QPainter>
-#include "webcamdelegate.h"
+#include "webcam_delegate.h"
 
 WebcamDelegate::WebcamDelegate(QObject *parent)
 {

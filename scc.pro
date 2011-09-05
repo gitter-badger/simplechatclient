@@ -22,7 +22,7 @@ SOURCES += src/avatars/avatar.cpp \
     src/common/winamp.cpp \
     src/core/core.cpp \
     src/core/debug.cpp \
-    src/core/debugblock.cpp \
+    src/core/debug_block.cpp \
     src/core/main.cpp \
     src/core/mainwindow.cpp \
     src/core/network.cpp \
@@ -63,16 +63,16 @@ SOURCES += src/avatars/avatar.cpp \
     src/tab/tab_container.cpp \
     src/tab/tab_manager.cpp \
     src/tab/tab_widget.cpp \
-    src/widgets/chatview.cpp \
-    src/widgets/inputwidget.cpp \
-    src/widgets/inputlinewidget.cpp \
-    src/widgets/inputlinedockwidget.cpp \
-    src/widgets/nicklistdelegate.cpp \
-    src/widgets/nicklistwidget.cpp \
-    src/widgets/simplerankwidget.cpp \
-    src/widgets/simplestatswidget.cpp \
-    src/widgets/toolwidget.cpp \
-    src/widgets/webcamdelegate.cpp
+    src/widgets/chat_view.cpp \
+    src/widgets/inputline_widget.cpp \
+    src/widgets/inputline_dock_widget.cpp \
+    src/widgets/input_widget.cpp \
+    src/widgets/nicklist_delegate.cpp \
+    src/widgets/nicklist_widget.cpp \
+    src/widgets/simple_rank_widget.cpp \
+    src/widgets/simple_stats_widget.cpp \
+    src/widgets/tool_widget.cpp \
+    src/widgets/webcam_delegate.cpp
 HEADERS += src/avatars/avatar.h \
     src/common/commands.h \
     src/common/config.h \
@@ -87,7 +87,7 @@ HEADERS += src/avatars/avatar.h \
     src/common/winamp.h \
     src/core/core.h \
     src/core/debug.h \
-    src/core/debugblock.h \
+    src/core/debug_block.h \
     src/core/defines.h \
     src/core/main.h \
     src/core/mainwindow.h \
@@ -131,16 +131,16 @@ HEADERS += src/avatars/avatar.h \
     src/tab/tab_container.h \
     src/tab/tab_manager.h \
     src/tab/tab_widget.h \
-    src/widgets/chatview.h \
-    src/widgets/inputwidget.h \
-    src/widgets/inputlinewidget.h \
-    src/widgets/inputlinedockwidget.h \
-    src/widgets/nicklistdelegate.h \
-    src/widgets/nicklistwidget.h \
-    src/widgets/simplerankwidget.h \
-    src/widgets/simplestatswidget.h \
-    src/widgets/toolwidget.h \
-    src/widgets/webcamdelegate.h
+    src/widgets/chat_view.h \
+    src/widgets/input_widget.h \
+    src/widgets/inputline_widget.h \
+    src/widgets/inputline_dock_widget.h \
+    src/widgets/nicklist_delegate.h \
+    src/widgets/nicklist_widget.h \
+    src/widgets/simple_rank_widget.h \
+    src/widgets/simple_stats_widget.h \
+    src/widgets/tool_widget.h \
+    src/widgets/webcam_delegate.h
 FORMS += ui/about.ui \
     ui/awaylog.ui \
     ui/captcha.ui \

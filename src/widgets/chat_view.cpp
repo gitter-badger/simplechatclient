@@ -32,7 +32,7 @@
 #include "html_messages_renderer.h"
 #include "log.h"
 #include "notify.h"
-#include "chatview.h"
+#include "chat_view.h"
 
 #ifdef Q_WS_WIN
     #include "kamerzysta.h"

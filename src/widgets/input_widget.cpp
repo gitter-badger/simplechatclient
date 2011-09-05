@@ -26,10 +26,10 @@
 #include <QPushButton>
 #include "commands.h"
 #include "core.h"
-#include "inputlinewidget.h"
+#include "inputline_widget.h"
 #include "log.h"
 #include "replace.h"
-#include "inputwidget.h"
+#include "input_widget.h"
 
 InputWidget::InputWidget(QWidget *parent) : QWidget(parent)
 {

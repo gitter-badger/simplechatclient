@@ -20,7 +20,7 @@
 
 #include <QPainter>
 #include "core.h"
-#include "nicklistdelegate.h"
+#include "nicklist_delegate.h"
 
 NickListDelegate::NickListDelegate(QObject *parent)
 {

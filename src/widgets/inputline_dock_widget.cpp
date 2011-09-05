@@ -22,10 +22,10 @@
 #include <QLabel>
 #include <QPushButton>
 #include "dlg_moderation.h"
-#include "inputwidget.h"
+#include "input_widget.h"
 #include "log.h"
-#include "toolwidget.h"
-#include "inputlinedockwidget.h"
+#include "tool_widget.h"
+#include "inputline_dock_widget.h"
 
 InputLineDockWidget::InputLineDockWidget(QWidget *parent, DlgChannelSettings *param1, DlgModeration *param2) : QWidget(parent)
 {

@@ -18,53 +18,71 @@
  *                                                                          *
  ****************************************************************************/
 
-#ifndef INPUTWIDGET_H
-#define INPUTWIDGET_H
+#ifndef CHAT_VIEW_H
+#define CHAT_VIEW_H
 
 #include "defines.h"
-class QHBoxLayout;
-class QLabel;
-class QPushButton;
-class InputLineWidget;
-#include <QWidget>
+class DlgUserProfile;
+#include <QTextEdit>
 
-class InputWidget : public QWidget
+class ChatView : public QTextEdit
 {
     Q_OBJECT
 public:
-    InputWidget(QWidget *);
-    virtual ~InputWidget();
-    void insertText(QString);
-    void setFont(QFont);
-    void setColor(QString);
-    void setModeration(bool);
-    void setToolwidgetIcon(bool);
-    void pasteMultiLine(QString, bool);
-    void sendMessage(QString, bool);
-    void updateNick(QString);
+    ChatView(QString, DlgUserProfile *);
+    void displayMessage(QString &, MessageCategory, QString strTime = QString::null);
+    void updateBackgroundImage();
+    inline QString getCurrentNick() { return strNick; }
 
 private:
-    // inputline widget
-    QHBoxLayout *mainLayout;
-    QPushButton *showHideToolWidget;
-    QLabel *nickLabel;
-    InputLineWidget *pInputLine;
-    QPushButton *sendButton;
-    QPushButton *moderSendButton;
+    // params
+    DlgUserProfile *pDlgUserProfile;
+    // other
+    QString strChannel;
+    QString strNick;
+    QString strWebsite;
+    enum { maxOpenChannels = 30 };
+    QAction *openChannelsActs[maxOpenChannels];
+
+    void menuNick(QString, QContextMenuEvent *);
+    void menuChannel(QString, QContextMenuEvent *);
+    void menuWebsite(QContextMenuEvent *);
+    void menuStandard(QContextMenuEvent *);
+
+    int getWordIndex(QString, int);
+    QString getWord(QTextCursor);
+    QString getWordN(QTextCursor, int);
+    int getWordPosIndex(QTextCursor);
+    bool isJoinPartQuit(QTextCursor);
 
 private slots:
-    void inputlineReturnPressed();
-    void moderButtonClicked();
-    void showHideToolwidgetClicked();
-    void slotCtrlTabPressed();
-    void slotCtrlShiftTabPressed();
+    void joinChannel();
+    void priv();
+    void whois();
+    void profile();
+    void cam();
+    void friendsAdd();
+    void friendsDel();
+    void ignoreAdd();
+    void ignoreDel();
+    void kick();
+    void ban();
+    void kban();
+    void ipban();
+    void opAdd();
+    void opDel();
+    void halfopAdd();
+    void halfopDel();
+    void moderatorAdd();
+    void moderatorDel();
+    void voiceAdd();
+    void voiceDel();
+    void invite();
+    void openWebbrowser();
+    void sendToNotes();
 
-signals:
-    void showMsg(QString&,QString&,MessageCategory);
-    void displayMessage(QString&,QString&,MessageCategory);
-    void showHideToolwidget();
-    void ctrlTabPressed();
-    void ctrlShiftTabPressed();
+protected:
+    virtual void contextMenuEvent(QContextMenuEvent *);
 };
 
-#endif // INPUTWIDGET_H
+#endif // CHAT_VIEW_H

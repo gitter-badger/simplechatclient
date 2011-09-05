@@ -18,20 +18,19 @@
  *                                                                          *
  ****************************************************************************/
 
-#ifndef NICKLISTDELEGATE_H
-#define NICKLISTDELEGATE_H
+#ifndef WEBCAM_DELEGATE_H
+#define WEBCAM_DELEGATE_H
 
 #include <QAbstractItemDelegate>
 
-class NickListDelegate : public QAbstractItemDelegate
+class WebcamDelegate : public QAbstractItemDelegate
 {
     Q_OBJECT
 public:
-    NickListDelegate(QObject *parent = 0);
-    virtual ~NickListDelegate();
+    WebcamDelegate(QObject *parent = 0);
 
     void paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const;
     QSize sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const;
 };
 
-#endif // NICKLISTDELEGATE_H
+#endif // WEBCAM_DELEGATE_H

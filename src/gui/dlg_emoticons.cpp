@@ -22,7 +22,7 @@
 #include <QDir>
 #include <QPixmap>
 #include "mainwindow.h"
-#include "inputwidget.h"
+#include "input_widget.h"
 #include "dlg_emoticons.h"
 
 ThreadEmoticonsStandard::ThreadEmoticonsStandard() {}

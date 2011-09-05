@@ -18,27 +18,56 @@
  *                                                                          *
  ****************************************************************************/
 
-#ifndef SIMPLERANKWIDGET_H
-#define SIMPLERANKWIDGET_H
+#ifndef NICKLIST_WIDGET_H
+#define NICKLIST_WIDGET_H
 
-#include <QWidget>
+#include "defines.h"
+class DlgUserProfile;
+#include <QListWidget>
 
-class SimpleRankWidget : public QWidget
+class NickListWidget : public QListWidget
 {
     Q_OBJECT
 public:
-    SimpleRankWidget(QWidget *parent = 0, int r = 0, int p1 = 250, int p2 = 15);
-    void setRank(int);
-
-    QSize sizeHint() const;
+    NickListWidget(DlgUserProfile *);
+    void setChannel(QString);
+    QString getChannel() { return strChannel; }
+    void add(QString);
+    void remove(QString);
 
 private:
-    int iWidth;
-    int iHeight;
-    int iRank;
+    // params
+    DlgUserProfile *pDlgUserProfile;
+    // other
+    QString strChannel;
+    enum { maxOpenChannels = 30 };
+    QAction *openChannelsActs[maxOpenChannels];
+
+private slots:
+    void priv();
+    void whois();
+    void profile();
+    void cam();
+    void friendsAdd();
+    void friendsDel();
+    void ignoreAdd();
+    void ignoreDel();
+    void kick();
+    void ban();
+    void kban();
+    void ipban();
+    void opAdd();
+    void opDel();
+    void halfopAdd();
+    void halfopDel();
+    void moderatorAdd();
+    void moderatorDel();
+    void voiceAdd();
+    void voiceDel();
+    void invite();
 
 protected:
-     void paintEvent(QPaintEvent *);
+    virtual void contextMenuEvent(QContextMenuEvent *);
 };
 
-#endif // SIMPLERANKWIDGET_H
+#endif // NICKLIST_WIDGET_H

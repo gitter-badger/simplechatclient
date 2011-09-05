@@ -37,7 +37,7 @@ set (scc_SRCS
 	common/log.cpp
 	common/replace.cpp
 	core/core.cpp
-	core/debugblock.cpp
+	core/debug_block.cpp
 	core/main.cpp
 	core/mainwindow.cpp
 	core/network.cpp
@@ -75,15 +75,15 @@ set (scc_SRCS
 	tab/tab_container.cpp
 	tab/tab_manager.cpp
 	tab/tab_widget.cpp
-	widgets/chatview.cpp
-	widgets/inputlinewidget.cpp
-	widgets/inputlinedockwidget.cpp
-	widgets/inputwidget.cpp
-	widgets/nicklistdelegate.cpp
-	widgets/nicklistwidget.cpp
-	widgets/simplerankwidget.cpp
-	widgets/simplestatswidget.cpp
-	widgets/toolwidget.cpp
+	widgets/chat_view.cpp
+	widgets/inputline_widget.cpp
+	widgets/inputline_dock_widget.cpp
+	widgets/input_widget.cpp
+	widgets/nicklist_delegate.cpp
+	widgets/nicklist_widget.cpp
+	widgets/simple_rank_widget.cpp
+	widgets/simple_stats_widget.cpp
+	widgets/tool_widget.cpp
 )
 
 set (scc_MOC_HDRS
@@ -132,20 +132,20 @@ set (scc_MOC_HDRS
 	tab/tab_container.h
 	tab/tab_manager.h
 	tab/tab_widget.h
-	widgets/chatview.h
-	widgets/inputlinewidget.h
-	widgets/inputlinedockwidget.h
-	widgets/inputwidget.h
-	widgets/nicklistdelegate.h
-	widgets/nicklistwidget.h
-	widgets/simplerankwidget.h
-	widgets/simplestatswidget.h
-	widgets/toolwidget.h
+	widgets/chat_view.h
+	widgets/inputline_widget.h
+	widgets/inputline_dock_widget.h
+	widgets/input_widget.h
+	widgets/nicklist_delegate.h
+	widgets/nicklist_widget.h
+	widgets/simple_rank_widget.h
+	widgets/simple_stats_widget.h
+	widgets/tool_widget.h
 )
 
 set (scc_HDRS
 	core/defines.h
-	core/debugblock.h
+	core/debug_block.h
 )
 
 # debug
@@ -187,7 +187,7 @@ else (WIN32)
 		gui/dlg_webcam.cpp
 		gui/dlg_webcam_standard.cpp
 		gui/dlg_webcam_mini.cpp
-		widgets/webcamdelegate.cpp
+		widgets/webcam_delegate.cpp
 	)
 	LIST (APPEND scc_MOC_HDRS
 		common/webcam_engine.h
@@ -195,7 +195,7 @@ else (WIN32)
 		gui/dlg_webcam.h
 		gui/dlg_webcam_standard.h
 		gui/dlg_webcam_mini.h
-		widgets/webcamdelegate.h
+		widgets/webcam_delegate.h
 	)
 endif (WIN32)
 

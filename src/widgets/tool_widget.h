@@ -18,8 +18,8 @@
  *                                                                          *
  ****************************************************************************/
 
-#ifndef TOOLWIDGET_H
-#define TOOLWIDGET_H
+#ifndef TOOL_WIDGET_H
+#define TOOL_WIDGET_H
 
 class QComboBox;
 class QFrame;
@@ -119,4 +119,4 @@ signals:
     void clearContent(QString);
 };
 
-#endif // TOOLWIDGET_H
+#endif // TOOL_WIDGET_H

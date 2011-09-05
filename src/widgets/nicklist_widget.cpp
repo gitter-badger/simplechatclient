@@ -25,7 +25,7 @@
 #include "core.h"
 #include "defines.h"
 #include "dlg_user_profile.h"
-#include "nicklistwidget.h"
+#include "nicklist_widget.h"
 
 #ifdef Q_WS_WIN
     #include "kamerzysta.h"

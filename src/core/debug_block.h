@@ -18,35 +18,29 @@
  *                                                                          *
  ****************************************************************************/
 
-#ifndef INPUTLINEWIDGET_H
-#define INPUTLINEWIDGET_H
+#ifndef DEBUG_BLOCK_H
+#define DEBUG_BLOCK_H
 
-#include <QLineEdit>
+#include <QMutex>
+#include <QtDebug>
 
-class InputLineWidget : public QLineEdit
+#ifdef _WIN32
+#define __PRETTY_FUNCTION__ __FUNCTION__
+#endif
+
+#define DEBUG_BLOCK DebugBlock uniquelyNamedStackAllocatedStandardBlock( __PRETTY_FUNCTION__ );
+
+class DebugBlock
 {
-    Q_OBJECT
 public:
-    InputLineWidget(QWidget*);
-    virtual ~InputLineWidget();
-    void insertText(QString);
+    DebugBlock(const char* label);
+    ~DebugBlock();
 
 private:
-    int index;
-    QString strLastWord;
-    QList<QString> find;
-    QString strLastMsg;
+    const char* mp_label;
+    int m_color;
 
-    QString getWord();
-    void setWord(QString);
-
-protected:
-    virtual bool event(QEvent *);
-
-signals:
-    void returnPressed();
-    void ctrlTabPressed();
-    void ctrlShiftTabPressed();
+    static QMutex sm_mutex;
 };
 
-#endif // INPUTLINEWIDGET_H
+#endif // DEBUG_BLOCK_H

@@ -18,52 +18,35 @@
  *                                                                          *
  ****************************************************************************/
 
-#ifndef INPUTLINEDOCKWIDGET_H
-#define INPUTLINEDOCKWIDGET_H
+#ifndef INPUTLINE_WIDGET_H
+#define INPUTLINE_WIDGET_H
 
-#include "defines.h"
-class DlgChannelSettings;
-class DlgModeration;
-class InputWidget;
-class ToolWidget;
-#include <QWidget>
+#include <QLineEdit>
 
-class InputLineDockWidget : public QWidget
+class InputLineWidget : public QLineEdit
 {
     Q_OBJECT
 public:
-    InputLineDockWidget(QWidget *, DlgChannelSettings *, DlgModeration *);
-    virtual ~InputLineDockWidget();
-    void enableModeration();
-    void disableModeration();
-    void hideToolwidget();
-    void showToolwidget();
-    void hideChannelSettings();
-    void showChannelSettings();
-
-public slots:
-    void slotUpdateNick(QString);
-    void slotDisplayMessage(QString&, QString&, MessageCategory);
-    void slotShowMsg(QString&, QString&, MessageCategory);
-    void slotShowHideToolwidget();
-    void slotClearContent(QString);
-    void slotCtrlTabPressed();
-    void slotCtrlShiftTabPressed();
+    InputLineWidget(QWidget*);
+    virtual ~InputLineWidget();
+    void insertText(QString);
 
 private:
-    // params
-    DlgChannelSettings *pDlgChannelSettings;
-    DlgModeration *pDlgModeration;
-    // other
-    InputWidget *pInputWidget;
-    ToolWidget *pToolWidget;
+    int index;
+    QString strLastWord;
+    QList<QString> find;
+    QString strLastMsg;
+
+    QString getWord();
+    void setWord(QString);
+
+protected:
+    virtual bool event(QEvent *);
 
 signals:
-    void displayMessage(QString&,QString&,MessageCategory);
-    void showMsg(QString&,QString&,MessageCategory);
-    void clearContent(QString);
+    void returnPressed();
     void ctrlTabPressed();
     void ctrlShiftTabPressed();
 };
 
-#endif // INPUTLINEDOCKWIDGET_H
+#endif // INPUTLINE_WIDGET_H

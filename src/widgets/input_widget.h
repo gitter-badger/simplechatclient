@@ -18,29 +18,53 @@
  *                                                                          *
  ****************************************************************************/
 
-#ifndef DEBUGBLOCK_H
-#define DEBUGBLOCK_H
+#ifndef INPUT_WIDGET_H
+#define INPUT_WIDGET_H
 
-#include <QMutex>
-#include <QtDebug>
+#include "defines.h"
+class QHBoxLayout;
+class QLabel;
+class QPushButton;
+class InputLineWidget;
+#include <QWidget>
 
-#ifdef _WIN32
-#define __PRETTY_FUNCTION__ __FUNCTION__
-#endif
-
-#define DEBUG_BLOCK DebugBlock uniquelyNamedStackAllocatedStandardBlock( __PRETTY_FUNCTION__ );
-
-class DebugBlock
+class InputWidget : public QWidget
 {
+    Q_OBJECT
 public:
-    DebugBlock(const char* label);
-    ~DebugBlock();
+    InputWidget(QWidget *);
+    virtual ~InputWidget();
+    void insertText(QString);
+    void setFont(QFont);
+    void setColor(QString);
+    void setModeration(bool);
+    void setToolwidgetIcon(bool);
+    void pasteMultiLine(QString, bool);
+    void sendMessage(QString, bool);
+    void updateNick(QString);
 
 private:
-    const char* mp_label;
-    int m_color;
+    // input widget
+    QHBoxLayout *mainLayout;
+    QPushButton *showHideToolWidget;
+    QLabel *nickLabel;
+    InputLineWidget *pInputLine;
+    QPushButton *sendButton;
+    QPushButton *moderSendButton;
 
-    static QMutex sm_mutex;
+private slots:
+    void inputlineReturnPressed();
+    void moderButtonClicked();
+    void showHideToolwidgetClicked();
+    void slotCtrlTabPressed();
+    void slotCtrlShiftTabPressed();
+
+signals:
+    void showMsg(QString&,QString&,MessageCategory);
+    void displayMessage(QString&,QString&,MessageCategory);
+    void showHideToolwidget();
+    void ctrlTabPressed();
+    void ctrlShiftTabPressed();
 };
 
-#endif // DEBUGBLOCK_H
+#endif // INPUT_WIDGET_H

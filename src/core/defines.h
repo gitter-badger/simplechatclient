@@ -27,7 +27,7 @@
 #include <QTableWidgetItem>
 #include <QTreeWidgetItem>
 
-#include "debugblock.h"
+#include "debug_block.h"
 
 enum MessageCategory {DefaultMessage, JoinMessage, PartMessage, QuitMessage, KickMessage, ModeMessage, NoticeMessage, InfoMessage, MeMessage, ErrorMessage, HilightMessage};
 

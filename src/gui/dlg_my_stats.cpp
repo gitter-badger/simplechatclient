@@ -21,7 +21,7 @@
 #include <QDesktopWidget>
 #include <QPushButton>
 #include "core.h"
-#include "simplestatswidget.h"
+#include "simple_stats_widget.h"
 #include "dlg_my_stats.h"
 
 DlgMyStats::DlgMyStats(QWidget *parent) : QDialog(parent)

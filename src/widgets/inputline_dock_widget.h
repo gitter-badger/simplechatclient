@@ -18,71 +18,52 @@
  *                                                                          *
  ****************************************************************************/
 
-#ifndef CHATVIEW_H
-#define CHATVIEW_H
+#ifndef INPUTLINE_DOCK_WIDGET_H
+#define INPUTLINE_DOCK_WIDGET_H
 
 #include "defines.h"
-class DlgUserProfile;
-#include <QTextEdit>
+class DlgChannelSettings;
+class DlgModeration;
+class InputWidget;
+class ToolWidget;
+#include <QWidget>
 
-class ChatView : public QTextEdit
+class InputLineDockWidget : public QWidget
 {
     Q_OBJECT
 public:
-    ChatView(QString, DlgUserProfile *);
-    void displayMessage(QString &, MessageCategory, QString strTime = QString::null);
-    void updateBackgroundImage();
-    inline QString getCurrentNick() { return strNick; }
+    InputLineDockWidget(QWidget *, DlgChannelSettings *, DlgModeration *);
+    virtual ~InputLineDockWidget();
+    void enableModeration();
+    void disableModeration();
+    void hideToolwidget();
+    void showToolwidget();
+    void hideChannelSettings();
+    void showChannelSettings();
+
+public slots:
+    void slotUpdateNick(QString);
+    void slotDisplayMessage(QString&, QString&, MessageCategory);
+    void slotShowMsg(QString&, QString&, MessageCategory);
+    void slotShowHideToolwidget();
+    void slotClearContent(QString);
+    void slotCtrlTabPressed();
+    void slotCtrlShiftTabPressed();
 
 private:
     // params
-    DlgUserProfile *pDlgUserProfile;
+    DlgChannelSettings *pDlgChannelSettings;
+    DlgModeration *pDlgModeration;
     // other
-    QString strChannel;
-    QString strNick;
-    QString strWebsite;
-    enum { maxOpenChannels = 30 };
-    QAction *openChannelsActs[maxOpenChannels];
+    InputWidget *pInputWidget;
+    ToolWidget *pToolWidget;
 
-    void menuNick(QString, QContextMenuEvent *);
-    void menuChannel(QString, QContextMenuEvent *);
-    void menuWebsite(QContextMenuEvent *);
-    void menuStandard(QContextMenuEvent *);
-
-    int getWordIndex(QString, int);
-    QString getWord(QTextCursor);
-    QString getWordN(QTextCursor, int);
-    int getWordPosIndex(QTextCursor);
-    bool isJoinPartQuit(QTextCursor);
-
-private slots:
-    void joinChannel();
-    void priv();
-    void whois();
-    void profile();
-    void cam();
-    void friendsAdd();
-    void friendsDel();
-    void ignoreAdd();
-    void ignoreDel();
-    void kick();
-    void ban();
-    void kban();
-    void ipban();
-    void opAdd();
-    void opDel();
-    void halfopAdd();
-    void halfopDel();
-    void moderatorAdd();
-    void moderatorDel();
-    void voiceAdd();
-    void voiceDel();
-    void invite();
-    void openWebbrowser();
-    void sendToNotes();
-
-protected:
-    virtual void contextMenuEvent(QContextMenuEvent *);
+signals:
+    void displayMessage(QString&,QString&,MessageCategory);
+    void showMsg(QString&,QString&,MessageCategory);
+    void clearContent(QString);
+    void ctrlTabPressed();
+    void ctrlShiftTabPressed();
 };
 
-#endif // CHATVIEW_H
+#endif // INPUTLINE_DOCK_WIDGET_H

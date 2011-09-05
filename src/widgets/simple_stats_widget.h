@@ -18,8 +18,8 @@
  *                                                                          *
  ****************************************************************************/
 
-#ifndef SIMPLESTATSWIDGET_H
-#define SIMPLESTATSWIDGET_H
+#ifndef SIMPLE_STATS_WIDGET_H
+#define SIMPLE_STATS_WIDGET_H
 
 #include <QWidget>
 
@@ -42,4 +42,4 @@ protected:
     void paintEvent(QPaintEvent *);
 };
 
-#endif // SIMPLESTATSWIDGET_H
+#endif // SIMPLE_STATS_WIDGET_H

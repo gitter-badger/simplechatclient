@@ -21,7 +21,7 @@
 #include <QEvent>
 #include <QKeyEvent>
 #include "core.h"
-#include "inputlinewidget.h"
+#include "inputline_widget.h"
 
 InputLineWidget::InputLineWidget(QWidget *parent) : QLineEdit(parent)
 {

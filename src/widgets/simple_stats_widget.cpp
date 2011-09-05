@@ -21,7 +21,7 @@
 #include <QBrush>
 #include <QPainter>
 #include <QPen>
-#include "simplestatswidget.h"
+#include "simple_stats_widget.h"
 
 SimpleStatsWidget::SimpleStatsWidget(QWidget *parent) : QWidget(parent)
 {

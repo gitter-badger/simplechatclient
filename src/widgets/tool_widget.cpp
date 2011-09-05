@@ -27,8 +27,8 @@
 #include "dlg_channel_settings.h"
 #include "dlg_emoticons.h"
 #include "dlg_moderation.h"
-#include "inputwidget.h"
-#include "toolwidget.h"
+#include "input_widget.h"
+#include "tool_widget.h"
 
 ToolWidget::ToolWidget(QWidget *parent, InputWidget *param1, DlgChannelSettings *param2, DlgModeration *param3) : QWidget(parent)
 {

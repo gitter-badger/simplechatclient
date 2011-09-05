@@ -22,7 +22,7 @@
 #define TAB_WIDGET_H
 
 class DlgUserProfile;
-#include "chatview.h"
+#include "chat_view.h"
 #include <QLabel>
 #include <QWidget>
 

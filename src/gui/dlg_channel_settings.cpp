@@ -26,7 +26,7 @@
 #include "core.h"
 #include "dlg_email.h"
 #include "dlg_channel_settings.h"
-#include "simplestatswidget.h"
+#include "simple_stats_widget.h"
 
 DlgChannelSettings::DlgChannelSettings(QWidget *parent) : QDialog(parent)
 {

@@ -18,56 +18,20 @@
  *                                                                          *
  ****************************************************************************/
 
-#ifndef NICKLISTTREEWIDGET_H
-#define NICKLISTTREEWIDGET_H
+#ifndef NICKLIST_DELEGATE_H
+#define NICKLIST_DELEGATE_H
 
-#include "defines.h"
-class DlgUserProfile;
-#include <QListWidget>
+#include <QAbstractItemDelegate>
 
-class NickListWidget : public QListWidget
+class NickListDelegate : public QAbstractItemDelegate
 {
     Q_OBJECT
 public:
-    NickListWidget(DlgUserProfile *);
-    void setChannel(QString);
-    QString getChannel() { return strChannel; }
-    void add(QString);
-    void remove(QString);
+    NickListDelegate(QObject *parent = 0);
+    virtual ~NickListDelegate();
 
-private:
-    // params
-    DlgUserProfile *pDlgUserProfile;
-    // other
-    QString strChannel;
-    enum { maxOpenChannels = 30 };
-    QAction *openChannelsActs[maxOpenChannels];
-
-private slots:
-    void priv();
-    void whois();
-    void profile();
-    void cam();
-    void friendsAdd();
-    void friendsDel();
-    void ignoreAdd();
-    void ignoreDel();
-    void kick();
-    void ban();
-    void kban();
-    void ipban();
-    void opAdd();
-    void opDel();
-    void halfopAdd();
-    void halfopDel();
-    void moderatorAdd();
-    void moderatorDel();
-    void voiceAdd();
-    void voiceDel();
-    void invite();
-
-protected:
-    virtual void contextMenuEvent(QContextMenuEvent *);
+    void paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const;
+    QSize sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const;
 };
 
-#endif // NICKLISTTREEWIDGET_H
+#endif // NICKLIST_DELEGATE_H

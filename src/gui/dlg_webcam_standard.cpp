@@ -21,8 +21,8 @@
 #include <QPushButton>
 #include <QTimer>
 #include "defines.h"
-#include "simplerankwidget.h"
-#include "webcamdelegate.h"
+#include "simple_rank_widget.h"
+#include "webcam_delegate.h"
 #include "dlg_webcam_standard.h"
 
 DlgWebcamStandard::DlgWebcamStandard()

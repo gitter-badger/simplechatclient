@@ -18,29 +18,27 @@
  *                                                                          *
  ****************************************************************************/
 
-#include "debugblock.h"
+#ifndef SIMPLE_RANK_WIDGET_H
+#define SIMPLE_RANK_WIDGET_H
 
-QMutex DebugBlock::sm_mutex;
+#include <QWidget>
 
-int s_colors[] = { 1, 2, 4, 5, 6 }; // no yellow and white for sanity
-int s_colorIndex = 0;
-
-QString colorize( const QString &text, int color = s_colorIndex )
+class SimpleRankWidget : public QWidget
 {
-    return QString( "\x1b[00;3%1m%2\x1b[00;39m" ).arg( QString::number(s_colors[color]), text );
-}
+    Q_OBJECT
+public:
+    SimpleRankWidget(QWidget *parent = 0, int r = 0, int p1 = 250, int p2 = 15);
+    void setRank(int);
 
-DebugBlock::DebugBlock(const char* label): mp_label(label), m_color(s_colorIndex)
-{
-    sm_mutex.lock();
-    s_colorIndex = (s_colorIndex + 1) % 5;
+    QSize sizeHint() const;
 
-    qDebug() << qPrintable( colorize( QLatin1String( "BEGIN:" ), m_color ) ) << mp_label;
+private:
+    int iWidth;
+    int iHeight;
+    int iRank;
 
-    sm_mutex.unlock();
-}
+protected:
+     void paintEvent(QPaintEvent *);
+};
 
-DebugBlock::~DebugBlock()
-{
-    qDebug() << qPrintable( colorize( QLatin1String( "END:" ), m_color ) ) << mp_label;
-}
+#endif // SIMPLE_RANK_WIDGET_H
