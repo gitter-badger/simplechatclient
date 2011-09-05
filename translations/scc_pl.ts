@@ -2754,7 +2754,7 @@
     </message>
 </context>
 <context>
-    <name>MainTextEdit</name>
+    <name>ChatView</name>
     <message>
         <source>Join channel</source>
         <translation>Wejdź do pokoju</translation>

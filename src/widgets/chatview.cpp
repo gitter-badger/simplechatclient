@@ -32,7 +32,7 @@
 #include "html_messages_renderer.h"
 #include "log.h"
 #include "notify.h"
-#include "maintextedit.h"
+#include "chatview.h"
 
 #ifdef Q_WS_WIN
     #include "kamerzysta.h"
@@ -40,7 +40,7 @@
     #include "dlg_webcam.h"
 #endif
 
-MainTextEdit::MainTextEdit(QString param1, DlgUserProfile *param2)
+ChatView::ChatView(QString param1, DlgUserProfile *param2)
 {
     strChannel = param1;
     pDlgUserProfile = param2;
@@ -50,7 +50,7 @@ MainTextEdit::MainTextEdit(QString param1, DlgUserProfile *param2)
     updateBackgroundImage();
 }
 
-void MainTextEdit::displayMessage(QString &strData, MessageCategory eMessageCategory, QString strTime)
+void ChatView::displayMessage(QString &strData, MessageCategory eMessageCategory, QString strTime)
 {
     QDateTime dt;
     QString strDT;
@@ -93,7 +93,7 @@ void MainTextEdit::displayMessage(QString &strData, MessageCategory eMessageCate
     this->append(strContent);
 }
 
-void MainTextEdit::updateBackgroundImage()
+void ChatView::updateBackgroundImage()
 {
     QString strBackgroundImage = Core::instance()->settings.value("background_image");
     QString strDisableBackgroundImage = Core::instance()->settings.value("disable_background_image");
@@ -104,22 +104,22 @@ void MainTextEdit::updateBackgroundImage()
         this->setStyleSheet("");
 }
 
-void MainTextEdit::joinChannel()
+void ChatView::joinChannel()
 {
     Core::instance()->pNetwork->send(QString("JOIN %1").arg(strChannel));
 }
 
-void MainTextEdit::priv()
+void ChatView::priv()
 {
     Core::instance()->pNetwork->send(QString("PRIV %1").arg(strNick));
 }
 
-void MainTextEdit::whois()
+void ChatView::whois()
 {
     Core::instance()->pNetwork->send(QString("WHOIS %1 :%1").arg(strNick));
 }
 
-void MainTextEdit::profile()
+void ChatView::profile()
 {
     if (strNick[0] != '~')
     {
@@ -128,7 +128,7 @@ void MainTextEdit::profile()
     }
 }
 
-void MainTextEdit::cam()
+void ChatView::cam()
 {
 #ifdef Q_WS_WIN
     (new Kamerzysta(Core::instance()->kamerzystaSocket))->show(strNick);
@@ -137,27 +137,27 @@ void MainTextEdit::cam()
 #endif
 }
 
-void MainTextEdit::friendsAdd()
+void ChatView::friendsAdd()
 {
     Core::instance()->pNetwork->send(QString("NS FRIENDS ADD %1").arg(strNick));
 }
 
-void MainTextEdit::friendsDel()
+void ChatView::friendsDel()
 {
     Core::instance()->pNetwork->send(QString("NS FRIENDS DEL %1").arg(strNick));
 }
 
-void MainTextEdit::ignoreAdd()
+void ChatView::ignoreAdd()
 {
     Core::instance()->pNetwork->send(QString("NS IGNORE ADD %1").arg(strNick));
 }
 
-void MainTextEdit::ignoreDel()
+void ChatView::ignoreDel()
 {
     Core::instance()->pNetwork->send(QString("NS IGNORE DEL %1").arg(strNick));
 }
 
-void MainTextEdit::kick()
+void ChatView::kick()
 {
     bool ok;
     QString strText = QInputDialog::getText(this, tr("Kick From Channel"), tr("Reason for kicking:"), QLineEdit::Normal, tr("No reason"), &ok);
@@ -166,12 +166,12 @@ void MainTextEdit::kick()
         Core::instance()->pNetwork->send(QString("KICK %1 %2 :%3").arg(strChannel).arg(strNick).arg(strText));
 }
 
-void MainTextEdit::ban()
+void ChatView::ban()
 {
     Core::instance()->pNetwork->send(QString("CS BAN %1 ADD %2").arg(strChannel).arg(strNick));
 }
 
-void MainTextEdit::kban()
+void ChatView::kban()
 {
     bool ok;
     QString strText = QInputDialog::getText(this, tr("Kick & Ban"), tr("Reason for kicking:"), QLineEdit::Normal, tr("No reason"), &ok);
@@ -183,52 +183,52 @@ void MainTextEdit::kban()
     }
 }
 
-void MainTextEdit::ipban()
+void ChatView::ipban()
 {
     Core::instance()->pNetwork->send(QString("CS BANIP %1 ADD %2").arg(strChannel).arg(strNick));
 }
 
-void MainTextEdit::opAdd()
+void ChatView::opAdd()
 {
     Core::instance()->pNetwork->send(QString("CS OP %1 ADD %2").arg(strChannel).arg(strNick));
 }
 
-void MainTextEdit::opDel()
+void ChatView::opDel()
 {
     Core::instance()->pNetwork->send(QString("CS OP %1 DEL %2").arg(strChannel).arg(strNick));
 }
 
-void MainTextEdit::halfopAdd()
+void ChatView::halfopAdd()
 {
     Core::instance()->pNetwork->send(QString("CS HALFOP %1 ADD %2").arg(strChannel).arg(strNick));
 }
 
-void MainTextEdit::halfopDel()
+void ChatView::halfopDel()
 {
     Core::instance()->pNetwork->send(QString("CS HALFOP %1 DEL %2").arg(strChannel).arg(strNick));
 }
 
-void MainTextEdit::moderatorAdd()
+void ChatView::moderatorAdd()
 {
     Core::instance()->pNetwork->send(QString("CS MODERATOR %1 ADD %2").arg(strChannel).arg(strNick));
 }
 
-void MainTextEdit::moderatorDel()
+void ChatView::moderatorDel()
 {
     Core::instance()->pNetwork->send(QString("CS MODERATOR %1 DEL %2").arg(strChannel).arg(strNick));
 }
 
-void MainTextEdit::voiceAdd()
+void ChatView::voiceAdd()
 {
     Core::instance()->pNetwork->send(QString("CS VOICE %1 ADD %2").arg(strChannel).arg(strNick));
 }
 
-void MainTextEdit::voiceDel()
+void ChatView::voiceDel()
 {
     Core::instance()->pNetwork->send(QString("CS VOICE %1 DEL %2").arg(strChannel).arg(strNick));
 }
 
-void MainTextEdit::invite()
+void ChatView::invite()
 {
     QAction *action = qobject_cast<QAction *>(sender());
     if (action)
@@ -238,12 +238,12 @@ void MainTextEdit::invite()
     }
 }
 
-void MainTextEdit::openWebbrowser()
+void ChatView::openWebbrowser()
 {
     QDesktopServices::openUrl(QUrl(strWebsite, QUrl::TolerantMode));
 }
 
-void MainTextEdit::sendToNotes()
+void ChatView::sendToNotes()
 {
     QString path;
 
@@ -293,7 +293,7 @@ void MainTextEdit::sendToNotes()
     f.close();
 }
 
-void MainTextEdit::menuChannel(QString strChannel, QContextMenuEvent *event)
+void ChatView::menuChannel(QString strChannel, QContextMenuEvent *event)
 {
     QMenu menu(this);
 
@@ -307,7 +307,7 @@ void MainTextEdit::menuChannel(QString strChannel, QContextMenuEvent *event)
     menu.exec(event->globalPos());
 }
 
-void MainTextEdit::menuNick(QString strNick, QContextMenuEvent *event)
+void ChatView::menuNick(QString strNick, QContextMenuEvent *event)
 {
     QString strMe = Core::instance()->settings.value("nick");
     QString strSelfModes = Core::instance()->getUserModes(strMe, strChannel);
@@ -413,7 +413,7 @@ void MainTextEdit::menuNick(QString strNick, QContextMenuEvent *event)
     menu.exec(event->globalPos());
 }
 
-void MainTextEdit::menuWebsite(QContextMenuEvent *event)
+void ChatView::menuWebsite(QContextMenuEvent *event)
 {
     QString strShortLink = strWebsite;
     if (strShortLink.size() > 40) strShortLink = strShortLink.left(20)+"..."+strShortLink.right(20);
@@ -431,7 +431,7 @@ void MainTextEdit::menuWebsite(QContextMenuEvent *event)
     menu.exec(event->globalPos());
 }
 
-void MainTextEdit::menuStandard(QContextMenuEvent *event)
+void ChatView::menuStandard(QContextMenuEvent *event)
 {
     QMenu menu(this);
 
@@ -464,7 +464,7 @@ void MainTextEdit::menuStandard(QContextMenuEvent *event)
     menu.exec(event->globalPos());
 }
 
-int MainTextEdit::getWordIndex(QString strLine, int iPos)
+int ChatView::getWordIndex(QString strLine, int iPos)
 {
     strLine +=" ";
     int iCount = strLine.count(" ");
@@ -481,7 +481,7 @@ int MainTextEdit::getWordIndex(QString strLine, int iPos)
     return -1;
 }
 
-QString MainTextEdit::getWord(QTextCursor cursor)
+QString ChatView::getWord(QTextCursor cursor)
 {
     // get pos
     int iPos = cursor.position() - cursor.block().position(); // cursor.positionInBlock()
@@ -497,7 +497,7 @@ QString MainTextEdit::getWord(QTextCursor cursor)
         return "";
 }
 
-QString MainTextEdit::getWordN(QTextCursor cursor, int n)
+QString ChatView::getWordN(QTextCursor cursor, int n)
 {
     // get line
     cursor.select(QTextCursor::BlockUnderCursor);
@@ -507,7 +507,7 @@ QString MainTextEdit::getWordN(QTextCursor cursor, int n)
     return strlBlock.at(n);
 }
 
-int MainTextEdit::getWordPosIndex(QTextCursor cursor)
+int ChatView::getWordPosIndex(QTextCursor cursor)
 {
     // get pos
     int iPos = cursor.position() - cursor.block().position(); // cursor.positionInBlock()
@@ -518,7 +518,7 @@ int MainTextEdit::getWordPosIndex(QTextCursor cursor)
     return getWordIndex(strBlock, iPos);
 }
 
-bool MainTextEdit::isJoinPartQuit(QTextCursor cursor)
+bool ChatView::isJoinPartQuit(QTextCursor cursor)
 {
     // get line
     cursor.select(QTextCursor::BlockUnderCursor);
@@ -530,7 +530,7 @@ bool MainTextEdit::isJoinPartQuit(QTextCursor cursor)
         return false;
 }
 
-void MainTextEdit::contextMenuEvent(QContextMenuEvent *event)
+void ChatView::contextMenuEvent(QContextMenuEvent *event)
 {
     if (this->textCursor().selectedText().isEmpty()) // if nothing selected
     {

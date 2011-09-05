@@ -22,7 +22,7 @@
 #define TAB_WIDGET_H
 
 class DlgUserProfile;
-#include "maintextedit.h"
+#include "chatview.h"
 #include <QLabel>
 #include <QWidget>
 
@@ -39,7 +39,7 @@ public:
     void refreshColors();
 
     QLabel *topic;
-    MainTextEdit *pChatView;
+    ChatView *pChatView;
 
 private:
     // params

@@ -40,7 +40,7 @@ TabWidget::TabWidget(QString param1, DlgUserProfile *param2)
     topic->setMinimumHeight(25);
     topic->show();
 
-    pChatView = new MainTextEdit(strName, pDlgUserProfile);
+    pChatView = new ChatView(strName, pDlgUserProfile);
     pChatView->document()->setMaximumBlockCount(1000);
     pChatView->setReadOnly(true);
     pChatView->setAcceptRichText(false);
@@ -96,6 +96,6 @@ void TabWidget::refreshColors()
     else
         this->setStyleSheet(QString::null);
 
-    // mainTextEdit
+    // chatview
     pChatView->setTextBackgroundColor(QColor(strBackgroundColor));
 }

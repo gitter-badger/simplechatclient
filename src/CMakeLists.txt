@@ -75,10 +75,10 @@ set (scc_SRCS
 	tab/tab_container.cpp
 	tab/tab_manager.cpp
 	tab/tab_widget.cpp
+	widgets/chatview.cpp
 	widgets/inputlinewidget.cpp
 	widgets/inputlinedockwidget.cpp
 	widgets/inputwidget.cpp
-	widgets/maintextedit.cpp
 	widgets/nicklistdelegate.cpp
 	widgets/nicklistwidget.cpp
 	widgets/simplerankwidget.cpp
@@ -132,10 +132,10 @@ set (scc_MOC_HDRS
 	tab/tab_container.h
 	tab/tab_manager.h
 	tab/tab_widget.h
+	widgets/chatview.h
 	widgets/inputlinewidget.h
 	widgets/inputlinedockwidget.h
 	widgets/inputwidget.h
-	widgets/maintextedit.h
 	widgets/nicklistdelegate.h
 	widgets/nicklistwidget.h
 	widgets/simplerankwidget.h

@@ -18,18 +18,18 @@
  *                                                                          *
  ****************************************************************************/
 
-#ifndef MAINTEXTEDIT_H
-#define MAINTEXTEDIT_H
+#ifndef CHATVIEW_H
+#define CHATVIEW_H
 
 #include "defines.h"
 class DlgUserProfile;
 #include <QTextEdit>
 
-class MainTextEdit : public QTextEdit
+class ChatView : public QTextEdit
 {
     Q_OBJECT
 public:
-    MainTextEdit(QString, DlgUserProfile *);
+    ChatView(QString, DlgUserProfile *);
     void displayMessage(QString &, MessageCategory, QString strTime = QString::null);
     void updateBackgroundImage();
     inline QString getCurrentNick() { return strNick; }
@@ -85,4 +85,4 @@ protected:
     virtual void contextMenuEvent(QContextMenuEvent *);
 };
 
-#endif // MAINTEXTEDIT_H
+#endif // CHATVIEW_H
