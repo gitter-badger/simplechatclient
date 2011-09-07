@@ -325,7 +325,7 @@ void TabContainer::slotClearContent(QString strChannel)
 {
     int i = getIndex(strChannel);
     if (i != -1)
-        tw[i]->pChatView->clear();
+        tw[i]->pChatView->clearMessages();
 }
 
 void TabContainer::refreshColors()

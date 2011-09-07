@@ -44,7 +44,33 @@ ChatView::ChatView(QString param1, DlgUserProfile *param2) : pDlgUserProfile(par
     settings()->setAttribute(QWebSettings::JavascriptEnabled, true);
     QObject::connect(this->page()->mainFrame(), SIGNAL(contentsSizeChanged(const QSize &)), this, SLOT(scrollToBottom()));
 
+    createBody();
     updateBackgroundImage();
+}
+
+void ChatView::createBody()
+{
+    QString strPath;
+#ifdef Q_WS_WIN
+    strPath = QCoreApplication::applicationDirPath();
+#else
+    strPath = "/usr/share/scc";
+#endif
+
+    QString jsCode;
+    QFile file(strPath+"/scripts/chat.js");
+    if (file.open(QIODevice::ReadOnly | QIODevice::Text))
+        jsCode = file.readAll();
+
+    QString strCss = "body{ margin: 0; padding: 0; }";
+    QString strHtml = "<html><head><style type=\"text/css\">"+strCss+"</style></head><body><div id=\"Chat\"></div></body></html>";
+    this->setHtml(strHtml);
+    this->page()->mainFrame()->evaluateJavaScript(jsCode);
+}
+
+void ChatView::clearMessages()
+{
+    this->page()->mainFrame()->evaluateJavaScript("clearMessages()");
 }
 
 void ChatView::displayMessage(QString &strData, MessageCategory eMessageCategory, QString strTime)
@@ -96,29 +122,6 @@ void ChatView::displayMessage(QString &strData, MessageCategory eMessageCategory
         // sound
         if (Core::instance()->settings.value("disable_sounds") == "off")
             Notify::instance()->play(Beep);
-    }
-
-    // create body
-    if (!bBodyCreated)
-    {
-        QString strPath;
-#ifdef Q_WS_WIN
-        strPath = QCoreApplication::applicationDirPath();
-#else
-        strPath = "/usr/share/scc";
-#endif
-
-        QString jsCode;
-        QFile file(strPath+"/scripts/chat.js");
-        if (file.open(QIODevice::ReadOnly | QIODevice::Text))
-            jsCode = file.readAll();
-
-        QString strCss = "body{ margin: 0; padding: 0; }";
-        QString strHtml = "<html><head><style type=\"text/css\">"+strCss+"</style></head><body><div id=\"Chat\"></div></body></html>";
-        this->setHtml(strHtml);
-        this->page()->mainFrame()->evaluateJavaScript(jsCode);
-
-        bBodyCreated = true;
     }
 
     // append

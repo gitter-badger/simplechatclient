@@ -31,6 +31,7 @@ class ChatView : public QWebView
     Q_OBJECT
 public:
     ChatView(QString, DlgUserProfile *);
+    void clearMessages();
     void displayMessage(QString &, MessageCategory, QString strTime = QString::null);
     void updateBackgroundImage();
     inline QString getCurrentNick() { return strNick; }
@@ -39,12 +40,13 @@ private:
     // params
     DlgUserProfile *pDlgUserProfile;
     // other
-    bool bBodyCreated;
     QString strChannel;
     QString strNick;
     QString strWebsite;
     enum { maxOpenChannels = 30 };
     QAction *openChannelsActs[maxOpenChannels];
+
+    void createBody();
 
     void menuNick(QString, QContextMenuEvent *);
     void menuChannel(QString, QContextMenuEvent *);
