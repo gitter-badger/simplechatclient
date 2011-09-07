@@ -19,6 +19,7 @@
  ****************************************************************************/
 
 #include <QContextMenuEvent>
+#include <QCoreApplication>
 #include <QDateTime>
 #include <QDesktopServices>
 #include <QDir>
@@ -39,7 +40,7 @@
     #include "dlg_webcam.h"
 #endif
 
-ChatView::ChatView(QString param1, DlgUserProfile *param2) : pDlgUserProfile(param2), bBodyCreated(false), strChannel(param1), strNick(QString::null)
+ChatView::ChatView(QString param1, DlgUserProfile *param2) : pDlgUserProfile(param2), strChannel(param1), strNick(QString::null)
 {
     settings()->setAttribute(QWebSettings::JavascriptEnabled, true);
     QObject::connect(this->page()->mainFrame(), SIGNAL(contentsSizeChanged(const QSize &)), this, SLOT(scrollToBottom()));
