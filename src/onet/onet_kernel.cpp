@@ -1694,10 +1694,7 @@ void OnetKernel::raw_161n()
     // avatar
     QString strAvatarUrl = mKeyValue.value("avatar");
     if (!strAvatarUrl.isEmpty())
-    {
-        if (Core::instance()->settings.value("style") == "modern")
-            avatar->getAvatar(strChannel, "channel", strAvatarUrl);
-    }
+        avatar->getAvatar(strChannel, "channel", strAvatarUrl);
 }
 
 // CS INFO #lunar

@@ -42,17 +42,20 @@ if (UNIX AND NOT APPLE)
 	install (FILES AUTHORS ChangeLog LICENSE README scc.png TODO DESTINATION ${SCC_DATA_DIR})
 	install (FILES scc.desktop DESTINATION ${SCC_SHARE_DIR}/applications)
 
-	file (GLOB SCC_GLOB_FILES1 images/wallpaper/*.jpg)
-	install (FILES ${SCC_GLOB_FILES1} DESTINATION ${SCC_DATA_DIR}/images/wallpaper)
+	file (GLOB SCC_GLOB_FILES1 scripts/*.js)
+	install (FILES ${SCC_GLOB_FILES1} DESTINATION ${SCC_DATA_DIR}/scripts)
+
+	file (GLOB SCC_GLOB_FILES2 images/wallpaper/*.jpg)
+	install (FILES ${SCC_GLOB_FILES2} DESTINATION ${SCC_DATA_DIR}/images/wallpaper)
 
 	install (FILES 3rdparty/LICENSE DESTINATION ${SCC_DATA_DIR}/3rdparty)
 
-	file (GLOB SCC_GLOB_FILES2 3rdparty/sounds/*.wav)
-	install (FILES ${SCC_GLOB_FILES2} DESTINATION ${SCC_DATA_DIR}/3rdparty/sounds)
+	file (GLOB SCC_GLOB_FILES3 3rdparty/sounds/*.wav)
+	install (FILES ${SCC_GLOB_FILES3} DESTINATION ${SCC_DATA_DIR}/3rdparty/sounds)
 
-	file (GLOB SCC_GLOB_FILES3 3rdparty/emoticons/*.gif)
-	install (FILES ${SCC_GLOB_FILES3} DESTINATION ${SCC_DATA_DIR}/3rdparty/emoticons)
+	file (GLOB SCC_GLOB_FILES4 3rdparty/emoticons/*.gif)
+	install (FILES ${SCC_GLOB_FILES4} DESTINATION ${SCC_DATA_DIR}/3rdparty/emoticons)
 
-	file (GLOB SCC_GLOB_FILES4 3rdparty/emoticons_other/*.gif)
-	install (FILES ${SCC_GLOB_FILES4} DESTINATION ${SCC_DATA_DIR}/3rdparty/emoticons_other)
+	file (GLOB SCC_GLOB_FILES5 3rdparty/emoticons_other/*.gif)
+	install (FILES ${SCC_GLOB_FILES5} DESTINATION ${SCC_DATA_DIR}/3rdparty/emoticons_other)
 endif (UNIX AND NOT APPLE)

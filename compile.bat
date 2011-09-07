@@ -82,6 +82,9 @@ xcopy %QT_DIR%\QtXmlPatterns4.dll %DESTINATION%\ /C /H /R /Y /Q
 echo Copying MinGW files
 xcopy %MINGW_BIN_DIR%\libstdc++-6.dll %DESTINATION%\ /C /H /R /Y /Q
 
+echo Copying scripts
+xcopy scripts\*.js %DESTINATION%\scripts\ /C /H /R /Y /Q 
+
 echo Copying translations
 xcopy translations\*.qm %DESTINATION%\translations\ /C /H /R /Y /Q 
 

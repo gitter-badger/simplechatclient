@@ -180,17 +180,15 @@ void Convert::convertText(QString &strData, QString &strLastContent)
                     QString strEmoticonFull2 = strPath+"/3rdparty/emoticons_other/"+strEmoticon+".gif";
                     QFile f1(strEmoticonFull1);
                     QFile f2(strEmoticonFull2);
-                    if ((f1.exists()) && (Core::instance()->settings.value("hide_formating") == "off") && (Core::instance()->settings.value("disable_emots") == "off"))
+                    if ((Core::instance()->settings.value("hide_formating") == "off") && (Core::instance()->settings.value("disable_emots") == "off"))
                     {
-                        strInsert = "<img src=\""+strEmoticonFull1+"\" alt=\""+strEmoticon+"\" />";
+                        if (f1.exists())
+                            strInsert = "<img src=\""+strEmoticonFull1+"\" alt=\""+strEmoticon+"\" />";
+                        if (f2.exists())
+                            strInsert = "<img src=\""+strEmoticonFull2+"\" alt=\""+strEmoticon+"\" />";
+                        if ((!f1.exists()) && (!f2.exists()))
+                            strInsert = "//"+strEmoticon;
                     }
-                    else if ((f2.exists()) && (Core::instance()->settings.value("hide_formating") == "off") && (Core::instance()->settings.value("disable_emots") == "off"))
-                    {
-                        strInsert = "<img src=\""+strEmoticonFull2+"\" alt=\""+strEmoticon+"\" />";
-                    }
-                    // emoticon not exist or hide formating or disabled emots
-                    else
-                        strInsert = "//"+strEmoticon;
 
                     strData.replace(strEmoticonFull, strInsert);
                 }

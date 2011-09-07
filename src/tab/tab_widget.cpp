@@ -41,9 +41,6 @@ TabWidget::TabWidget(QString param1, DlgUserProfile *param2)
     topic->show();
 
     pChatView = new ChatView(strName, pDlgUserProfile);
-    pChatView->document()->setMaximumBlockCount(1000);
-    pChatView->setReadOnly(true);
-    pChatView->setAcceptRichText(false);
     pChatView->setParent(this);
     pChatView->show();
 
@@ -80,7 +77,6 @@ TabWidget::TabWidget(QString param1, DlgUserProfile *param2)
 
 TabWidget::~TabWidget()
 {
-    pChatView->clear();
     delete pChatView;
 }
 
@@ -95,7 +91,4 @@ void TabWidget::refreshColors()
         this->setStyleSheet(QString("color:%1;background-color:%2;").arg(strDefaultFontColor).arg(strBackgroundColor));
     else
         this->setStyleSheet(QString::null);
-
-    // chatview
-    pChatView->setTextBackgroundColor(QColor(strBackgroundColor));
 }

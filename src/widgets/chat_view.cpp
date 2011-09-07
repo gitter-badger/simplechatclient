@@ -25,7 +25,6 @@
 #include <QFile>
 #include <QInputDialog>
 #include <QMenu>
-#include <QTextBlock>
 #include <QUrl>
 #include "core.h"
 #include "dlg_user_profile.h"
@@ -40,8 +39,11 @@
     #include "dlg_webcam.h"
 #endif
 
-ChatView::ChatView(QString param1, DlgUserProfile *param2) : pDlgUserProfile(param2), strChannel(param1), strNick(QString::null)
+ChatView::ChatView(QString param1, DlgUserProfile *param2) : pDlgUserProfile(param2), bBodyCreated(false), strChannel(param1), strNick(QString::null)
 {
+    settings()->setAttribute(QWebSettings::JavascriptEnabled, true);
+    QObject::connect(this->page()->mainFrame(), SIGNAL(contentsSizeChanged(const QSize &)), this, SLOT(scrollToBottom()));
+
     updateBackgroundImage();
 }
 
@@ -84,6 +86,11 @@ void ChatView::displayMessage(QString &strData, MessageCategory eMessageCategory
     QString strContent = r->renderer(strData, eMessageCategory);
     delete r;
 
+#ifndef Q_WS_WIN
+    // fix linux img src
+    strContent.replace("img src=\"", "img src=\"file://");
+#endif
+
     if (eMessageCategory == HilightMessage)
     {
         // sound
@@ -91,8 +98,31 @@ void ChatView::displayMessage(QString &strData, MessageCategory eMessageCategory
             Notify::instance()->play(Beep);
     }
 
+    // create body
+    if (!bBodyCreated)
+    {
+        QString strPath;
+#ifdef Q_WS_WIN
+        strPath = QCoreApplication::applicationDirPath();
+#else
+        strPath = "/usr/share/scc";
+#endif
+
+        QString jsCode;
+        QFile file(strPath+"/scripts/chat.js");
+        if (file.open(QIODevice::ReadOnly | QIODevice::Text))
+            jsCode = file.readAll();
+
+        QString strCss = "body{ margin: 0; padding: 0; }";
+        QString strHtml = "<html><head><style type=\"text/css\">"+strCss+"</style></head><body><div id=\"Chat\"></div></body></html>";
+        this->setHtml(strHtml);
+        this->page()->mainFrame()->evaluateJavaScript(jsCode);
+
+        bBodyCreated = true;
+    }
+
     // append
-    this->append(strContent);
+    this->page()->mainFrame()->evaluateJavaScript("appendMessage(\'"+strContent+"\')");
 }
 
 void ChatView::updateBackgroundImage()
@@ -283,7 +313,7 @@ void ChatView::sendToNotes()
     fr.close();
 
     // content
-    strContent += this->textCursor().selectedText();
+    strContent += this->selectedText();
 
     // save
     QFile f(strNotesFile);
@@ -437,7 +467,7 @@ void ChatView::menuStandard(QContextMenuEvent *event)
 {
     QMenu menu(this);
 
-    if (!this->textCursor().selectedText().isEmpty())
+    if (!this->selectedText().isEmpty())
     {
         QAction *sendToNotes = new QAction(QIcon(":/images/oxygen/16x16/story-editor.png"), tr("Send to notes"), &menu);
         connect(sendToNotes, SIGNAL(triggered()), this, SLOT(sendToNotes()));
@@ -450,7 +480,7 @@ void ChatView::menuStandard(QContextMenuEvent *event)
 
     menu.addSeparator();
 
-    if (!this->textCursor().selectedText().isEmpty())
+    if (!this->selectedText().isEmpty())
     {
         QAction *copy = new QAction(QIcon(":/images/oxygen/16x16/edit-copy.png"), tr("Copy"), &menu);
         copy->setShortcut(QKeySequence::Copy);
@@ -466,6 +496,7 @@ void ChatView::menuStandard(QContextMenuEvent *event)
     menu.exec(event->globalPos());
 }
 
+/*
 int ChatView::getWordIndex(QString strLine, int iPos)
 {
     strLine +=" ";
@@ -591,4 +622,11 @@ void ChatView::contextMenuEvent(QContextMenuEvent *event)
     }
 
     menuStandard(event);
+}
+
+*/
+
+void ChatView::scrollToBottom()
+{
+    page()->mainFrame()->setScrollBarValue(Qt::Vertical, page()->mainFrame()->scrollBarMaximum(Qt::Vertical));
 }

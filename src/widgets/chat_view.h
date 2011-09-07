@@ -23,9 +23,10 @@
 
 #include "defines.h"
 class DlgUserProfile;
-#include <QTextEdit>
+#include <QtWebKit/QWebFrame>
+#include <QtWebKit/QWebView>
 
-class ChatView : public QTextEdit
+class ChatView : public QWebView
 {
     Q_OBJECT
 public:
@@ -38,6 +39,7 @@ private:
     // params
     DlgUserProfile *pDlgUserProfile;
     // other
+    bool bBodyCreated;
     QString strChannel;
     QString strNick;
     QString strWebsite;
@@ -48,12 +50,13 @@ private:
     void menuChannel(QString, QContextMenuEvent *);
     void menuWebsite(QContextMenuEvent *);
     void menuStandard(QContextMenuEvent *);
-
+/*
     int getWordIndex(QString, int);
     QString getWord(QTextCursor);
     QString getWordN(QTextCursor, int);
     int getWordPosIndex(QTextCursor);
     bool isJoinPartQuit(QTextCursor);
+*/
 
 private slots:
     void joinChannel();
@@ -80,9 +83,12 @@ private slots:
     void invite();
     void openWebbrowser();
     void sendToNotes();
+    void scrollToBottom();
 
+/*
 protected:
     virtual void contextMenuEvent(QContextMenuEvent *);
+*/
 };
 
 #endif // CHAT_VIEW_H
