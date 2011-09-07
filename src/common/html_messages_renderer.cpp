@@ -26,6 +26,14 @@ HtmlMessagesRenderer::HtmlMessagesRenderer(QObject *parent) : QObject(parent)
 {
 }
 
+bool HtmlMessagesRenderer::isJoinPartQuit(QString strText)
+{
+    if ((strText.contains(tr("has joined"))) || (strText.contains(tr("has joined priv"))) || (strText.contains(tr("has left"))) || (strText.contains(tr("has left priv"))) || (strText.contains(tr("has quit"))) || (strText.contains(tr("has been kicked"))))
+        return true;
+    else
+        return false;
+}
+
 QString HtmlMessagesRenderer::renderer(QString strData, MessageCategory eMessageCategory)
 {
     // fix data
@@ -33,9 +41,27 @@ QString HtmlMessagesRenderer::renderer(QString strData, MessageCategory eMessage
     strData.replace("<", "&lt;");
     strData.replace(">", "&gt;");
 
-    // channels
+    // default font color
+    QString strFontSize = Core::instance()->settings.value("font_size");
+    QString strDefaultFontColor = Core::instance()->settings.value("default_font_color");
     QString strChannelFontColor = Core::instance()->settings.value("channel_font_color");
-    strData.replace(QRegExp("#([~-_a-zA-Z0-9\xa1\xaf\xa6\xac\xca\xc6\xd1\xd3\xa3\xb1\xbf\xb6\xbc\xea\xe6\xf1\xf3\xb3]+)"), "<span style=\"color:"+strChannelFontColor+";text-decoration:none;\">#\\1</span>");
+
+    // fix for context menu
+    QStringList strDataList = strData.split(" ");
+    for (int i = 0; i < strDataList.size(); i++)
+    {
+        QString strWord = strDataList[i];
+
+        if ((i == 1) && (strWord.contains("&lt;")) && (strWord.contains("&gt;")))
+            strDataList[i] = "<a href=\"#\" name=\"nick\" style=\"color:inherit;text-decoration:none;\">"+strDataList[i]+"</a>";
+        if ((i == 2) && (strDataList[i-1] == "*") && (isJoinPartQuit(strData)))
+            strDataList[i] = "<a href=\"#\" name=\"nick\" style=\"color:inherit;text-decoration:none;\">"+strDataList[i]+"</a>";
+        if (strWord[0] == '#')
+            strDataList[i] = "<a href=\"#\" name=\"channel\" style=\"color:"+strChannelFontColor+";text-decoration:none;\">"+strDataList[i]+"</a>";
+        if ((strWord.contains("http")) || (strWord.contains("www")))
+            strDataList[i] = "<a href=\"#\" name=\"website\" style=\"color:inherit;text-decoration:none;\">"+strDataList[i]+"</a>";
+    }
+    strData = strDataList.join(" ");
 
     // if /me
     if (strData.contains((QString(QByteArray("\x01")))))
@@ -99,10 +125,6 @@ QString HtmlMessagesRenderer::renderer(QString strData, MessageCategory eMessage
     QString strTextDecoration = "none";
     if (eMessageCategory == HilightMessage)
         strTextDecoration = "underline";
-
-    // default font color
-    QString strDefaultFontColor = Core::instance()->settings.value("default_font_color");
-    QString strFontSize = Core::instance()->settings.value("font_size");
 
     // init text
     QString strContent = "<span style=\"color:"+strDefaultFontColor+";font-size:"+strFontSize+";text-decoration:"+strTextDecoration+";\">";

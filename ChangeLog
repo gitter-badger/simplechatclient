@@ -3,6 +3,15 @@ ChangeLog for Simple Chat Client
 
 Version 1.1.2 (unknown date)
 ================================
+* Animated emoticons work again
+* Removed embedded styles
+* Removed find text dialog
+* Fixed cycle command
+* Fixed bug in connect
+* Fixed reconnecting
+* Removed detect already running
+* Fixed detect kamerzysta
+* Fixed linux webcam refresh
 * Many bugfixes
 
 Version 1.1.1 (21.07.2011)

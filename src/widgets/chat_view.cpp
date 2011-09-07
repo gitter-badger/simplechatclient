@@ -27,6 +27,8 @@
 #include <QInputDialog>
 #include <QMenu>
 #include <QUrl>
+#include <QtWebKit/QWebFrame>
+#include <QtWebKit/QWebElement>
 #include "core.h"
 #include "dlg_user_profile.h"
 #include "html_messages_renderer.h"
@@ -131,13 +133,15 @@ void ChatView::displayMessage(QString &strData, MessageCategory eMessageCategory
 
 void ChatView::updateBackgroundImage()
 {
+    /*
     QString strBackgroundImage = Core::instance()->settings.value("background_image");
     QString strDisableBackgroundImage = Core::instance()->settings.value("disable_background_image");
 
     if ((strDisableBackgroundImage == "off") && (!strBackgroundImage.isEmpty()))
-        this->setStyleSheet("QTextEdit{background-image: url("+strBackgroundImage+"); background-attachment: fixed; background-position: center; background-repeat: no-repeat; background-color: #ffffff; }");
+        this->setStyleSheet("background-image: url("+strBackgroundImage+"); background-attachment: fixed; background-position: center; background-repeat: no-repeat; background-color: #ffffff;");
     else
         this->setStyleSheet("");
+    */
 }
 
 void ChatView::joinChannel()
@@ -329,6 +333,11 @@ void ChatView::sendToNotes()
     f.close();
 }
 
+void ChatView::clear()
+{
+    clearMessages();
+}
+
 void ChatView::menuChannel(QString strChannel, QContextMenuEvent *event)
 {
     QMenu menu(this);
@@ -486,149 +495,57 @@ void ChatView::menuStandard(QContextMenuEvent *event)
 
     if (!this->selectedText().isEmpty())
     {
-        QAction *copy = new QAction(QIcon(":/images/oxygen/16x16/edit-copy.png"), tr("Copy"), &menu);
+        QAction *copy = this->pageAction(QWebPage::Copy);
+        copy->setIcon(QIcon(":/images/oxygen/16x16/edit-copy.png"));
         copy->setShortcut(QKeySequence::Copy);
-        connect(copy, SIGNAL(triggered()), this, SLOT(copy()));
         menu.addAction(copy);
     }
 
-    QAction *all = new QAction(QIcon(":/images/oxygen/16x16/edit-select-all.png"), tr("Select All"), &menu);
+    QAction *all = this->pageAction(QWebPage::SelectAll);
+    all->setIcon(QIcon(":/images/oxygen/16x16/edit-select-all.png"));
     all->setShortcut(QKeySequence::SelectAll);
-    connect(all, SIGNAL(triggered()), this, SLOT(selectAll()));
     menu.addAction(all);
 
     menu.exec(event->globalPos());
 }
 
-/*
-int ChatView::getWordIndex(QString strLine, int iPos)
-{
-    strLine +=" ";
-    int iCount = strLine.count(" ");
-    int iLast = 0;
-    for (int i = 0; i < iCount; i++)
-    {
-        int iCurrentPos = strLine.indexOf(" ", iLast);
-
-        if (iCurrentPos >= iPos)
-            return i;
-
-        iLast = iCurrentPos+1;
-    }
-    return -1;
-}
-
-QString ChatView::getWord(QTextCursor cursor)
-{
-    // get pos
-    int iPos = cursor.position() - cursor.block().position(); // cursor.positionInBlock()
-    // get line
-    cursor.select(QTextCursor::BlockUnderCursor);
-    QString strBlock = cursor.selectedText().trimmed();
-    QStringList strlBlock = strBlock.split(" ");
-
-    int index = getWordIndex(strBlock, iPos);
-    if (index != -1)
-        return strlBlock.at(index);
-    else
-        return "";
-}
-
-QString ChatView::getWordN(QTextCursor cursor, int n)
-{
-    // get line
-    cursor.select(QTextCursor::BlockUnderCursor);
-    QString strBlock = cursor.selectedText().trimmed();
-    QStringList strlBlock = strBlock.split(" ");
-
-    return strlBlock.at(n);
-}
-
-int ChatView::getWordPosIndex(QTextCursor cursor)
-{
-    // get pos
-    int iPos = cursor.position() - cursor.block().position(); // cursor.positionInBlock()
-    // get line
-    cursor.select(QTextCursor::BlockUnderCursor);
-    QString strBlock = cursor.selectedText().trimmed();
-
-    return getWordIndex(strBlock, iPos);
-}
-
-bool ChatView::isJoinPartQuit(QTextCursor cursor)
-{
-    // get line
-    cursor.select(QTextCursor::BlockUnderCursor);
-    QString strBlock = cursor.selectedText().trimmed();
-
-    if ((strBlock.contains(tr("has joined"))) || (strBlock.contains(tr("has joined priv"))) || (strBlock.contains(tr("has left"))) || (strBlock.contains(tr("has left priv"))) || (strBlock.contains(tr("has quit"))) || (strBlock.contains(tr("has been kicked"))))
-        return true;
-    else
-        return false;
-}
-
 void ChatView::contextMenuEvent(QContextMenuEvent *event)
 {
-    if (this->textCursor().selectedText().isEmpty()) // if nothing selected
+    QWebHitTestResult r = page()->mainFrame()->hitTestContent(event->pos());
+
+    if (r.linkUrl().isEmpty() == false)
     {
-        QTextCursor cursor = QTextEdit::cursorForPosition(event->pos());
-        cursor.select(QTextCursor::WordUnderCursor);
-        if (!cursor.selectedText().isEmpty())
+        QString strWord = r.linkText();
+        QString strCategory = r.linkElement().attribute("name");
+
+        // website
+        if (strCategory == "website")
         {
-            int iWordPos = getWordPosIndex(cursor);
-            QString strFirstWord = getWordN(cursor, 1);
-            QString strWord = getWord(cursor);
+            strWebsite = strWord;
+            menuWebsite(event);
+            return;
+        }
 
-            if ((!strFirstWord.isEmpty()) && (!strWord.isEmpty()))
-            {
-                // website
-                if ((strWord.contains("http")) || (strWord.contains("www.")))
-                {
-                    strWebsite = strWord;
-                    menuWebsite(event);
-                    return;
-                }
+        // channel
+        if (strCategory == "channel")
+        {
+            strChannel = strWord;
+            menuChannel(strChannel, event);
+            return;
+        }
 
-                // channel
-                if (strWord.at(0) == '#')
-                {
-                    strChannel = strWord;
-                    menuChannel(strChannel, event);
-                    return;
-                }
-
-                // <nick>
-                if (iWordPos == 1)
-                {
-                    if ((strWord.contains("<")) && (strWord.contains(">")))
-                    {
-                        strWord.remove("<"); strWord.remove(">");
-                        strNick = strWord;
-                        menuNick(strNick, event);
-                        return;
-                    }
-                }
-
-                // nick [join,part,quit,kick]
-                if (iWordPos == 2)
-                {
-                    QString strStar = getWordN(cursor, 1);
-
-                    if ((strStar == "*") && (isJoinPartQuit(cursor)))
-                    {
-                        strNick = strWord;
-                        menuNick(strNick, event);
-                        return;
-                    }
-                }
-            }
+        // nick
+        if (strCategory == "nick")
+        {
+            strWord.remove("<"); strWord.remove(">");
+            strNick = strWord;
+            menuNick(strNick, event);
+            return;
         }
     }
 
     menuStandard(event);
 }
-
-*/
 
 void ChatView::scrollToBottom()
 {
