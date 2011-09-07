@@ -40,13 +40,8 @@
     #include "dlg_webcam.h"
 #endif
 
-ChatView::ChatView(QString param1, DlgUserProfile *param2)
+ChatView::ChatView(QString param1, DlgUserProfile *param2) : pDlgUserProfile(param2), strChannel(param1), strNick(QString::null)
 {
-    strChannel = param1;
-    pDlgUserProfile = param2;
-
-    strNick = QString::null;
-
     updateBackgroundImage();
 }
 
@@ -63,8 +58,15 @@ void ChatView::displayMessage(QString &strData, MessageCategory eMessageCategory
 
     if (Core::instance()->settings.value("disable_logs") == "off")
     {
+        QString strSaveData = strData;
+
+        // fix /me
+        QString strRegExpMe = QString("%1ACTION %2%3").arg(QString(QByteArray("\x01"))).arg("(.*)").arg(QString(QByteArray("\x01")));
+        if (strSaveData.contains(QRegExp(strRegExpMe)))
+            strSaveData.replace(QRegExp(strRegExpMe), "\\1");
+
         Log *l = new Log();
-        l->save(strChannel, strData);
+        l->save(strChannel, strSaveData);
         delete l;
     }
 

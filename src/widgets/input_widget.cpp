@@ -27,7 +27,6 @@
 #include "commands.h"
 #include "core.h"
 #include "inputline_widget.h"
-#include "log.h"
 #include "replace.h"
 #include "input_widget.h"
 
@@ -196,17 +195,6 @@ void InputWidget::sendMessage(QString strText, bool bModeration)
             if ((!weight.isEmpty()) || (!font.isEmpty()))
                 strText = "%F"+weight+font+"%"+strText;
 
-            QDateTime dt = QDateTime::currentDateTime();
-            QString strDT = dt.toString("[hh:mm:ss] ");
-
-            if (Core::instance()->settings.value("disable_logs") == "off")
-            {
-                Log *l = new Log();
-                QString strSave = QString("%1<%2> %3").arg(strDT).arg(strMe).arg(strText);
-                l->save(strChannel, strSave);
-                delete l;
-            }
-
             Core::instance()->pNetwork->send(QString("PRIVMSG %1 :%2").arg(strChannel).arg(strText));
             QString strDisplay = QString("<%1> %2").arg(strMe).arg(strText);
             emit displayMessage(strChannel, strDisplay, DefaultMessage);
@@ -240,17 +228,6 @@ void InputWidget::sendMessage(QString strText, bool bModeration)
                 pReplace->convertAndReplaceEmots(strTextSend);
                 pReplace->convertAndReplaceEmots(strTextDisplay);
                 delete pReplace;
-
-                QDateTime dt = QDateTime::currentDateTime();
-                QString strDT = dt.toString("[hh:mm:ss] ");
-
-                if (Core::instance()->settings.value("disable_logs") == "off")
-                {
-                    Log *l = new Log();
-                    QString strSave = QString("%1<%2> %3").arg(strDT).arg(strMe).arg(strTextDisplay);
-                    l->save(strChannel, strSave);
-                    delete l;
-                }
 
                 Core::instance()->pNetwork->send(strTextSend);
                 QString strDisplay = QString("<%1> %2ACTION %3%4").arg(strMe).arg(QString(QByteArray("\x01"))).arg(strTextDisplay).arg(QString(QByteArray("\x01")));
@@ -287,20 +264,9 @@ void InputWidget::sendMessage(QString strText, bool bModeration)
         pReplace->convertAndReplaceEmots(strText);
         delete pReplace;
 
-        QDateTime dt = QDateTime::currentDateTime();
-        QString strDT = dt.toString("[hh:mm:ss] ");
-
         // standard text
         if (!bModeration)
         {
-            if (Core::instance()->settings.value("disable_logs") == "off")
-            {
-                Log *l = new Log();
-                QString strSave = QString("%1<%2> %3").arg(strDT).arg(strMe).arg(strText);
-                l->save(strChannel, strSave);
-                delete l;
-            }
-
             strText = QString("PRIVMSG %1 :%2").arg(strChannel).arg(strText);
             Core::instance()->pNetwork->send(strText);
             QString strDisplay = QString("<%1> %2").arg(strMe).arg(strText.right(strText.length()-10-strChannel.length()));
@@ -309,14 +275,6 @@ void InputWidget::sendMessage(QString strText, bool bModeration)
         // moder notice
         else if (bModeration)
         {
-            if (Core::instance()->settings.value("disable_logs") == "off")
-            {
-                Log *l = new Log();
-                QString strSave = QString("%1*<%2> %3").arg(strDT).arg(strMe).arg(strText);
-                l->save(strChannel, strSave);
-                delete l;
-            }
-
             strText = QString("MODERNOTICE %1 :%2").arg(strChannel).arg(strText);
             Core::instance()->pNetwork->send(strText);
             QString strDisplay = QString("*<%1> %2").arg(strMe).arg(strText.right(strText.length()-14-strChannel.length()));
