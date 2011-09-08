@@ -30,9 +30,6 @@ class HtmlMessagesRenderer : public QObject
 public:
     HtmlMessagesRenderer(QObject *parent = 0);
     QString renderer(QString, MessageCategory);
-
-private:
-    bool isJoinPartQuit(QString);
 };
 
 #endif // HTML_MESSAGES_RENDERER_H

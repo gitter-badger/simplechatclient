@@ -26,14 +26,6 @@ HtmlMessagesRenderer::HtmlMessagesRenderer(QObject *parent) : QObject(parent)
 {
 }
 
-bool HtmlMessagesRenderer::isJoinPartQuit(QString strText)
-{
-    if ((strText.contains(tr("has joined"))) || (strText.contains(tr("has joined priv"))) || (strText.contains(tr("has left"))) || (strText.contains(tr("has left priv"))) || (strText.contains(tr("has quit"))) || (strText.contains(tr("has been kicked"))))
-        return true;
-    else
-        return false;
-}
-
 QString HtmlMessagesRenderer::renderer(QString strData, MessageCategory eMessageCategory)
 {
     // fix data
@@ -54,7 +46,7 @@ QString HtmlMessagesRenderer::renderer(QString strData, MessageCategory eMessage
 
         if ((i == 1) && (strWord.contains("&lt;")) && (strWord.contains("&gt;")))
             strDataList[i] = "<a href=\"#\" name=\"nick\" style=\"color:inherit;text-decoration:none;\">"+strDataList[i]+"</a>";
-        if ((i == 2) && (strDataList[i-1] == "*") && (isJoinPartQuit(strData)))
+        if ((i == 2) && (strDataList[i-1] == "*") && ((eMessageCategory == JoinMessage) || (eMessageCategory == PartMessage) || (eMessageCategory == QuitMessage)  || (eMessageCategory == KickMessage)))
             strDataList[i] = "<a href=\"#\" name=\"nick\" style=\"color:inherit;text-decoration:none;\">"+strDataList[i]+"</a>";
         if (strWord[0] == '#')
             strDataList[i] = "<a href=\"#\" name=\"channel\" style=\"color:"+strChannelFontColor+";text-decoration:none;\">"+strDataList[i]+"</a>";

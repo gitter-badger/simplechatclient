@@ -109,7 +109,7 @@ void Core::createGui()
 void Core::createSettings()
 {
     // default settings
-    settings["version"] = "1.1.2.995";
+    settings["version"] = "1.1.2.996";
     settings["logged"] = "off";
     settings["busy"] = "off";
     settings["away"] = "off";
@@ -299,6 +299,7 @@ void Core::addAwaylog(QString strChannel, QString strAwayData)
             if (strAwayData.contains(">")) strAwayData = strAwayData.remove(strAwayData.indexOf(">"),1);
         }
     }
+
     // remove color, font, emots
     strAwayData.remove(QRegExp("%C([a-zA-Z0-9]+)%"));
     strAwayData.remove(QRegExp("%F([a-zA-Z0-9:]+)%"));
