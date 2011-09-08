@@ -459,12 +459,6 @@ void MainWindow::buttonConnect()
     }
 }
 
-// refresh background image
-void MainWindow::refreshBackgroundImage()
-{
-    pTabC->refreshBackgroundImage();
-}
-
 void MainWindow::setConnected()
 {
     connectAct->setText(tr("&Disconnect"));

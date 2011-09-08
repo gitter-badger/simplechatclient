@@ -340,9 +340,3 @@ void TabContainer::refreshColors()
         pTabM->setColor(i, QColor(Core::instance()->settings.value("default_font_color")));
     }
 }
-
-void TabContainer::refreshBackgroundImage()
-{
-    for (int i = 0; i < tw.size(); i++)
-        tw[i]->pChatView->updateBackgroundImage();
-}

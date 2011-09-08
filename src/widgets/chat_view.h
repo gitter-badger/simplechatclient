@@ -32,7 +32,6 @@ public:
     ChatView(QString, DlgUserProfile *);
     void clearMessages();
     void displayMessage(QString &, MessageCategory, QString strTime = QString::null);
-    void updateBackgroundImage();
 
 private:
     // params

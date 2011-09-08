@@ -52,7 +52,6 @@ public:
 
     // options
     void refreshColors();
-    void refreshBackgroundImage();
     // for core
     int getCurrentTabIndex();
 

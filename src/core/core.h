@@ -57,7 +57,6 @@ public:
     MainWindow *sccWindow();
     // from options
     void refreshColors();
-    void refreshBackgroundImage();
     // update
     void checkUpdate();
     // awaylog

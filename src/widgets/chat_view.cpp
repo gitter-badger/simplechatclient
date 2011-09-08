@@ -48,7 +48,6 @@ ChatView::ChatView(QString param1, DlgUserProfile *param2) : pDlgUserProfile(par
     QObject::connect(this->page()->mainFrame(), SIGNAL(contentsSizeChanged(const QSize &)), this, SLOT(scrollToBottom()));
 
     createBody();
-    updateBackgroundImage();
 }
 
 void ChatView::createBody()
@@ -65,7 +64,18 @@ void ChatView::createBody()
     if (file.open(QIODevice::ReadOnly | QIODevice::Text))
         jsCode = file.readAll();
 
-    QString strCss = "body{ margin: 0; padding: 0; }";
+    QString strBackgroundImage = Core::instance()->settings.value("background_image");
+    QString strDisableBackgroundImage = Core::instance()->settings.value("disable_background_image");
+
+#ifndef Q_WS_WIN
+    strBackgroundImage = "file://"+strBackgroundImage;
+#endif
+
+    QString strBackground;
+    if ((strDisableBackgroundImage == "off") && (!strBackgroundImage.isEmpty()))
+        strBackground = "background-image: url("+strBackgroundImage+"); background-attachment: fixed; background-position: center; background-repeat: no-repeat;";
+
+    QString strCss = "body{ margin: 0; padding: 0; "+strBackground+"}";
     QString strHtml = "<html><head><style type=\"text/css\">"+strCss+"</style></head><body><div id=\"Chat\"></div></body></html>";
     this->setHtml(strHtml);
     this->page()->mainFrame()->evaluateJavaScript(jsCode);
@@ -135,19 +145,6 @@ void ChatView::displayMessage(QString &strData, MessageCategory eMessageCategory
 
     // append
     this->page()->mainFrame()->evaluateJavaScript("appendMessage(\'"+strContent+"\')");
-}
-
-void ChatView::updateBackgroundImage()
-{
-    /*
-    QString strBackgroundImage = Core::instance()->settings.value("background_image");
-    QString strDisableBackgroundImage = Core::instance()->settings.value("disable_background_image");
-
-    if ((strDisableBackgroundImage == "off") && (!strBackgroundImage.isEmpty()))
-        this->setStyleSheet("background-image: url("+strBackgroundImage+"); background-attachment: fixed; background-position: center; background-repeat: no-repeat; background-color: #ffffff;");
-    else
-        this->setStyleSheet("");
-    */
 }
 
 void ChatView::joinChannel()
