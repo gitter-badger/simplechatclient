@@ -19,6 +19,7 @@
  ****************************************************************************/
 
 #include <QAction>
+#include <QDateTime>
 #include <QDir>
 #include <QFile>
 #include <QSettings>
@@ -109,7 +110,7 @@ void Core::createGui()
 void Core::createSettings()
 {
     // default settings
-    settings["version"] = "1.1.2.996";
+    settings["version"] = "1.1.2.997";
     settings["logged"] = "off";
     settings["busy"] = "off";
     settings["away"] = "off";
@@ -286,18 +287,14 @@ void Core::addAwaylog(QString strChannel, QString strAwayData)
     if (Core::instance()->settings.value("away") == "off")
         return;
 
-    // if /me
-    if (strAwayData.contains((QString(QByteArray("\x01")))))
+    // fix /me
+    QString strRegExpMe = QString("%1ACTION %2%3").arg(QString(QByteArray("\x01"))).arg("(.*)").arg(QString(QByteArray("\x01")));
+    if (strAwayData.contains(QRegExp(strRegExpMe)))
     {
-        if (strAwayData.contains("ACTION "))
-        {
-            strAwayData.remove(QString(QByteArray("\x01")));
-            strAwayData.remove("ACTION ");
-
-            strAwayData.insert(11, "* ");
-            if (strAwayData.contains("<")) strAwayData = strAwayData.remove(strAwayData.indexOf("<"),1);
-            if (strAwayData.contains(">")) strAwayData = strAwayData.remove(strAwayData.indexOf(">"),1);
-        }
+        strAwayData.replace(QRegExp(strRegExpMe), "\\1");
+        if (strAwayData.contains("<")) strAwayData = strAwayData.remove(strAwayData.indexOf("<"),1);
+        if (strAwayData.contains(">")) strAwayData = strAwayData.remove(strAwayData.indexOf(">"),1);
+        strAwayData = "*"+strAwayData;
     }
 
     // remove color, font, emots
@@ -305,7 +302,9 @@ void Core::addAwaylog(QString strChannel, QString strAwayData)
     strAwayData.remove(QRegExp("%F([a-zA-Z0-9:]+)%"));
     strAwayData.replace(QRegExp("%I([a-zA-Z0-9_-]+)%"),"<\\1>");
 
-    lAwaylog.append(QString("%1\n%2").arg(strChannel).arg(strAwayData));
+    QString strDT = QDateTime::currentDateTime().toString("[hh:mm:ss]");
+
+    lAwaylog.append(QString("%1\n%2 %3").arg(strChannel).arg(strDT).arg(strAwayData));
 }
 
 QString Core::getChannelNameFromIndex(int index)

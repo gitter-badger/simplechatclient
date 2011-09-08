@@ -182,11 +182,14 @@ void TabContainer::showMsg(QString &strChannel, QString &strData, MessageCategor
 
         if (bHilightMessage)
         {
-            // awaylog
-            Core::instance()->addAwaylog(strChannel, strData);
+            if (eMessageCategory == DefaultMessage)
+            {
+                // awaylog
+                Core::instance()->addAwaylog(strChannel, strData);
 
-            // update awaylog status
-            emit updateAwaylogStatus();
+                // update awaylog status
+                emit updateAwaylogStatus();
+            }
 
             // hilight
             if (i != pTabM->currentIndex())
