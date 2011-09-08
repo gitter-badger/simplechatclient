@@ -44,6 +44,7 @@ NickListWidget::NickListWidget(DlgUserProfile *param1)
 void NickListWidget::setChannel(QString param1)
 {
     strChannel = param1;
+    strSelectedNick = QString::null;
 }
 
 void NickListWidget::add(QString strNick)
@@ -71,196 +72,172 @@ void NickListWidget::remove(QString strNick)
 
 void NickListWidget::priv()
 {
-    if (this->selectedItems().size() == 0) return;
+    if (strSelectedNick.isEmpty()) return;
 
-    QString strNick = this->selectedItems().at(0)->text();
-    Core::instance()->pNetwork->send(QString("PRIV %1").arg(strNick));
+    Core::instance()->pNetwork->send(QString("PRIV %1").arg(strSelectedNick));
 }
 
 void NickListWidget::whois()
 {
-    if (this->selectedItems().size() == 0) return;
+    if (strSelectedNick.isEmpty()) return;
 
-    QString strNick = this->selectedItems().at(0)->text();
-    Core::instance()->pNetwork->send(QString("WHOIS %1 :%1").arg(strNick));
+    Core::instance()->pNetwork->send(QString("WHOIS %1 :%1").arg(strSelectedNick));
 }
 
 void NickListWidget::profile()
 {
-    if (this->selectedItems().size() == 0) return;
+    if (strSelectedNick.isEmpty()) return;
 
-    QString strNick = this->selectedItems().at(0)->text();
-
-    if (strNick[0] != '~')
+    if (strSelectedNick[0] != '~')
     {
-        pDlgUserProfile->setNick(strNick);
+        pDlgUserProfile->setNick(strSelectedNick);
         pDlgUserProfile->show();
     }
 }
 
 void NickListWidget::cam()
 {
-    if (this->selectedItems().size() == 0) return;
+    if (strSelectedNick.isEmpty()) return;
 
-    QString strNick = this->selectedItems().at(0)->text();
 #ifdef Q_WS_WIN
-    (new Kamerzysta(Core::instance()->kamerzystaSocket))->show(strNick);
+    (new Kamerzysta(Core::instance()->kamerzystaSocket))->show(strSelectedNick);
 #else
-    new DlgWebcam(strNick, true);
+    new DlgWebcam(strSelectedNick, true);
 #endif
 }
 
 void NickListWidget::friendsAdd()
 {
-    if (this->selectedItems().size() == 0) return;
+    if (strSelectedNick.isEmpty()) return;
 
-    QString strNick = this->selectedItems().at(0)->text();
-    Core::instance()->pNetwork->send(QString("NS FRIENDS ADD %1").arg(strNick));
+    Core::instance()->pNetwork->send(QString("NS FRIENDS ADD %1").arg(strSelectedNick));
 }
 
 void NickListWidget::friendsDel()
 {
-    if (this->selectedItems().size() == 0) return;
+    if (strSelectedNick.isEmpty()) return;
 
-    QString strNick = this->selectedItems().at(0)->text();
-    Core::instance()->pNetwork->send(QString("NS FRIENDS DEL %1").arg(strNick));
+    Core::instance()->pNetwork->send(QString("NS FRIENDS DEL %1").arg(strSelectedNick));
 }
 
 void NickListWidget::ignoreAdd()
 {
-    if (this->selectedItems().size() == 0) return;
+    if (strSelectedNick.isEmpty()) return;
 
-    QString strNick = this->selectedItems().at(0)->text();
-    Core::instance()->pNetwork->send(QString("NS IGNORE ADD %1").arg(strNick));
+    Core::instance()->pNetwork->send(QString("NS IGNORE ADD %1").arg(strSelectedNick));
 }
 
 void NickListWidget::ignoreDel()
 {
-    if (this->selectedItems().size() == 0) return;
+    if (strSelectedNick.isEmpty()) return;
 
-    QString strNick = this->selectedItems().at(0)->text();
-    Core::instance()->pNetwork->send(QString("NS IGNORE DEL %1").arg(strNick));
+    Core::instance()->pNetwork->send(QString("NS IGNORE DEL %1").arg(strSelectedNick));
 }
 
 void NickListWidget::kick()
 {
-    if (this->selectedItems().size() == 0) return;
-
-    QString strNick = this->selectedItems().at(0)->text();
+    if (strSelectedNick.isEmpty()) return;
 
     bool ok;
     QString strText = QInputDialog::getText(this, tr("Kick From Channel"), tr("Reason for kicking:"), QLineEdit::Normal, tr("No reason"), &ok);
 
     if ((ok) && (!strText.isEmpty()))
-        Core::instance()->pNetwork->send(QString("KICK %1 %2 :%3").arg(strChannel).arg(strNick).arg(strText));
+        Core::instance()->pNetwork->send(QString("KICK %1 %2 :%3").arg(strChannel).arg(strSelectedNick).arg(strText));
 }
 
 void NickListWidget::ban()
 {
-    if (this->selectedItems().size() == 0) return;
+    if (strSelectedNick.isEmpty()) return;
 
-    QString strNick = this->selectedItems().at(0)->text();
-    Core::instance()->pNetwork->send(QString("CS BAN %1 ADD %2").arg(strChannel).arg(strNick));
+    Core::instance()->pNetwork->send(QString("CS BAN %1 ADD %2").arg(strChannel).arg(strSelectedNick));
 }
 
 void NickListWidget::kban()
 {
-    if (this->selectedItems().size() == 0) return;
-
-    QString strNick = this->selectedItems().at(0)->text();
+    if (strSelectedNick.isEmpty()) return;
 
     bool ok;
     QString strText = QInputDialog::getText(this, tr("Kick & Ban"), tr("Reason for kicking:"), QLineEdit::Normal, tr("No reason"), &ok);
 
     if ((ok) && (!strText.isEmpty()))
     {
-        Core::instance()->pNetwork->send(QString("CS BAN %1 ADD %2").arg(strChannel).arg(strNick));
-        Core::instance()->pNetwork->send(QString("KICK %1 %2 :%3").arg(strChannel).arg(strNick).arg(strText));
+        Core::instance()->pNetwork->send(QString("CS BAN %1 ADD %2").arg(strChannel).arg(strSelectedNick));
+        Core::instance()->pNetwork->send(QString("KICK %1 %2 :%3").arg(strChannel).arg(strSelectedNick).arg(strText));
     }
 }
 
 void NickListWidget::ipban()
 {
-    if (this->selectedItems().size() == 0) return;
+    if (strSelectedNick.isEmpty()) return;
 
-    QString strNick = this->selectedItems().at(0)->text();
-    Core::instance()->pNetwork->send(QString("CS BANIP %1 ADD %2").arg(strChannel).arg(strNick));
+    Core::instance()->pNetwork->send(QString("CS BANIP %1 ADD %2").arg(strChannel).arg(strSelectedNick));
 }
 
 void NickListWidget::opAdd()
 {
-    if (this->selectedItems().size() == 0) return;
+    if (strSelectedNick.isEmpty()) return;
 
-    QString strNick = this->selectedItems().at(0)->text();
-    Core::instance()->pNetwork->send(QString("CS OP %1 ADD %2").arg(strChannel).arg(strNick));
+    Core::instance()->pNetwork->send(QString("CS OP %1 ADD %2").arg(strChannel).arg(strSelectedNick));
 }
 
 void NickListWidget::opDel()
 {
-    if (this->selectedItems().size() == 0) return;
+    if (strSelectedNick.isEmpty()) return;
 
-    QString strNick = this->selectedItems().at(0)->text();
-    Core::instance()->pNetwork->send(QString("CS OP %1 DEL %2").arg(strChannel).arg(strNick));
+    Core::instance()->pNetwork->send(QString("CS OP %1 DEL %2").arg(strChannel).arg(strSelectedNick));
 }
 
 void NickListWidget::halfopAdd()
 {
-    if (this->selectedItems().size() == 0) return;
+    if (strSelectedNick.isEmpty()) return;
 
-    QString strNick = this->selectedItems().at(0)->text();
-    Core::instance()->pNetwork->send(QString("CS HALFOP %1 ADD %2").arg(strChannel).arg(strNick));
+    Core::instance()->pNetwork->send(QString("CS HALFOP %1 ADD %2").arg(strChannel).arg(strSelectedNick));
 }
 
 void NickListWidget::halfopDel()
 {
-    if (this->selectedItems().size() == 0) return;
+    if (strSelectedNick.isEmpty()) return;
 
-    QString strNick = this->selectedItems().at(0)->text();
-    Core::instance()->pNetwork->send(QString("CS HALFOP %1 DEL %2").arg(strChannel).arg(strNick));
+    Core::instance()->pNetwork->send(QString("CS HALFOP %1 DEL %2").arg(strChannel).arg(strSelectedNick));
 }
 
 void NickListWidget::moderatorAdd()
 {
-    if (this->selectedItems().size() == 0) return;
+    if (strSelectedNick.isEmpty()) return;
 
-    QString strNick = this->selectedItems().at(0)->text();
-    Core::instance()->pNetwork->send(QString("CS MODERATOR %1 ADD %2").arg(strChannel).arg(strNick));
+    Core::instance()->pNetwork->send(QString("CS MODERATOR %1 ADD %2").arg(strChannel).arg(strSelectedNick));
 }
 
 void NickListWidget::moderatorDel()
 {
-    if (this->selectedItems().size() == 0) return;
+    if (strSelectedNick.isEmpty()) return;
 
-    QString strNick = this->selectedItems().at(0)->text();
-    Core::instance()->pNetwork->send(QString("CS MODERATOR %1 DEL %2").arg(strChannel).arg(strNick));
+    Core::instance()->pNetwork->send(QString("CS MODERATOR %1 DEL %2").arg(strChannel).arg(strSelectedNick));
 }
 
 void NickListWidget::voiceAdd()
 {
-    if (this->selectedItems().size() == 0) return;
+    if (strSelectedNick.isEmpty()) return;
 
-    QString strNick = this->selectedItems().at(0)->text();
-    Core::instance()->pNetwork->send(QString("CS VOICE %1 ADD %2").arg(strChannel).arg(strNick));
+    Core::instance()->pNetwork->send(QString("CS VOICE %1 ADD %2").arg(strChannel).arg(strSelectedNick));
 }
 
 void NickListWidget::voiceDel()
 {
-    if (this->selectedItems().size() == 0) return;
+    if (strSelectedNick.isEmpty()) return;
 
-    QString strNick = this->selectedItems().at(0)->text();
-    Core::instance()->pNetwork->send(QString("CS VOICE %1 DEL %2").arg(strChannel).arg(strNick));
+    Core::instance()->pNetwork->send(QString("CS VOICE %1 DEL %2").arg(strChannel).arg(strSelectedNick));
 }
 
 void NickListWidget::invite()
 {
-    if (this->selectedItems().size() == 0) return;
+    if (strSelectedNick.isEmpty()) return;
 
     QAction *action = qobject_cast<QAction *>(sender());
     if (action)
     {
         QString strInviteChannel = action->data().toString();
-        QString strNick = this->selectedItems().at(0)->text();
-        Core::instance()->pNetwork->send(QString("INVITE %1 %2").arg(strNick).arg(strInviteChannel));
+        Core::instance()->pNetwork->send(QString("INVITE %1 %2").arg(strSelectedNick).arg(strInviteChannel));
     }
 }
 
@@ -268,12 +245,12 @@ void NickListWidget::contextMenuEvent(QContextMenuEvent *e)
 {
     if (this->selectedItems().size() == 0) return;
 
-    QString strNick = this->selectedItems().at(0)->text();
+    strSelectedNick = this->selectedItems().at(0)->text();
 
     QString strMe = Core::instance()->settings.value("nick");
     QString strSelfModes = Core::instance()->getUserModes(strMe, strChannel);
     int iSelfMaxModes = Core::instance()->getUserMaxModes(strMe, strChannel);
-    QString strNickModes = Core::instance()->getUserModes(strNick, strChannel);
+    QString strNickModes = Core::instance()->getUserModes(strSelectedNick, strChannel);
 
     QMenu *minvite = new QMenu(tr("Invite"));
     minvite->setIcon(QIcon(":/images/oxygen/16x16/legalmoves.png"));
@@ -301,14 +278,14 @@ void NickListWidget::contextMenuEvent(QContextMenuEvent *e)
 
     QMenu *friends = new QMenu(tr("Friends list"));
     friends->setIcon(QIcon(":/images/oxygen/16x16/meeting-attending.png"));
-    if (Core::instance()->mFriends.contains(strNick))
+    if (Core::instance()->mFriends.contains(strSelectedNick))
         friends->addAction(QIcon(":/images/oxygen/16x16/list-remove.png"), tr("Remove from friends"), this, SLOT(friendsDel()));
     else
         friends->addAction(QIcon(":/images/oxygen/16x16/list-add.png"), tr("Add to friends"), this, SLOT(friendsAdd()));
 
     QMenu *ignore = new QMenu(tr("Ignore list"));
     ignore->setIcon(QIcon(":/images/oxygen/16x16/meeting-attending-tentative.png"));
-    if (Core::instance()->lIgnore.contains(strNick))
+    if (Core::instance()->lIgnore.contains(strSelectedNick))
         ignore->addAction(QIcon(":/images/oxygen/16x16/list-remove.png"), tr("Remove from Ignore list"), this, SLOT(ignoreDel()));
     else
         ignore->addAction(QIcon(":/images/oxygen/16x16/list-add.png"), tr("Add to Ignore list"), this, SLOT(ignoreAdd()));
@@ -316,36 +293,36 @@ void NickListWidget::contextMenuEvent(QContextMenuEvent *e)
     QMenu *privilege = new QMenu(tr("Actions"));
     privilege->setIcon(QIcon(":/images/oxygen/16x16/irc-operator.png"));
 
-    if ((strNickModes.contains("@")) && ((iSelfMaxModes >= 16) || (strNick == strMe)))
+    if ((strNickModes.contains("@")) && ((iSelfMaxModes >= 16) || (strSelectedNick == strMe)))
         privilege->addAction(QIcon(":/images/op.png"), tr("Take super operator status"), this, SLOT(opDel()));
     else if ((!strNickModes.contains("@")) && (iSelfMaxModes >= 16))
         privilege->addAction(QIcon(":/images/op.png"), tr("Give super operator status"), this, SLOT(opAdd()));
 
-    if ((strNickModes.contains("%")) && ((iSelfMaxModes >= 8) || (strNick == strMe)))
+    if ((strNickModes.contains("%")) && ((iSelfMaxModes >= 8) || (strSelectedNick == strMe)))
         privilege->addAction(QIcon(":/images/halfop.png"), tr("Take operator status"), this, SLOT(halfopDel()));
     else if ((!strNickModes.contains("%")) && (iSelfMaxModes >= 8))
         privilege->addAction(QIcon(":/images/halfop.png"), tr("Give operator status"), this, SLOT(halfopAdd()));
 
-    if ((strNickModes.contains("!")) && ((iSelfMaxModes >= 4) || (strNick == strMe)))
+    if ((strNickModes.contains("!")) && ((iSelfMaxModes >= 4) || (strSelectedNick == strMe)))
         privilege->addAction(QIcon(":/images/mod.png"), tr("Take moderator status"), this, SLOT(moderatorDel()));
     else if ((!strNickModes.contains("!")) && (iSelfMaxModes >= 4))
         privilege->addAction(QIcon(":/images/mod.png"), tr("Give moderator status"), this, SLOT(moderatorAdd()));
 
-    if ((strNickModes.contains("+")) && ((iSelfMaxModes >= 4) || (strNick == strMe)))
+    if ((strNickModes.contains("+")) && ((iSelfMaxModes >= 4) || (strSelectedNick == strMe)))
         privilege->addAction(QIcon(":/images/voice.png"), tr("Take guest status"), this, SLOT(voiceDel()));
     else if ((!strNickModes.contains("+")) && (iSelfMaxModes >= 4))
         privilege->addAction(QIcon(":/images/voice.png"), tr("Give guest status"), this, SLOT(voiceAdd()));
 
-    QAction *nickAct = new QAction(strNick, this);
+    QAction *nickAct = new QAction(strSelectedNick, this);
     nickAct->setIcon(QIcon(":/images/oxygen/16x16/user-identity.png"));
     nickAct->setDisabled(true);
 
-    QMenu *menu = new QMenu(strNick);
+    QMenu *menu = new QMenu(strSelectedNick);
     menu->addAction(nickAct);
     menu->addSeparator();
     menu->addAction(QIcon(":/images/oxygen/16x16/list-add-user.png"), tr("Priv"), this, SLOT(priv()));
     menu->addAction(QIcon(":/images/oxygen/16x16/text-field.png"), tr("Whois"), this, SLOT(whois()));
-    if (strNick[0] != '~')
+    if (strSelectedNick[0] != '~')
     {
         menu->addAction(QIcon(":/images/oxygen/16x16/view-pim-contacts.png"), tr("Profile"), this, SLOT(profile()));
         if ((strNickModes.contains("W")) || (strNickModes.contains("V")))

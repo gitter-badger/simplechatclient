@@ -42,6 +42,7 @@ private:
     QString strChannel;
     enum { maxOpenChannels = 30 };
     QAction *openChannelsActs[maxOpenChannels];
+    QString strSelectedNick;
 
 private slots:
     void priv();
