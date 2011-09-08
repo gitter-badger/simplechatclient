@@ -38,7 +38,6 @@ InputWidget::InputWidget(QWidget *parent) : QWidget(parent)
 
     pInputLine = new InputLineWidget(parent);
     pInputLine->setMinimumWidth(350);
-    pInputLine->setFont(QFont("Verdana", -1, -1, false));
     pInputLine->show();
 
     sendButton = new QPushButton(QIcon(":/images/oxygen/16x16/go-next.png"), tr("Send"), parent);

@@ -268,9 +268,7 @@ void ToolWidget::setDefault()
         strMyFontStyle = "";
     }
 
-    // refresh bold italic
     int iWeight = (bMyBold ? 75 : 50);
-    pInputWidget->setFont(QFont(strMyFontFamily, -1, iWeight, bMyItalic));
 
     // set default font
     QString strMyFont = Core::instance()->settings.value("my_font");
@@ -301,6 +299,10 @@ void ToolWidget::setDefault()
         iMyColor = 0;
 
     color->setCurrentIndex(iMyColor);
+
+    // refresh input widget
+    pInputWidget->setFont(QFont(strMyFontFamily, -1, iWeight, bMyItalic));
+    pInputWidget->setColor(strCurrentColor);
 
     // moderation default hidden
     moderation->hide();
