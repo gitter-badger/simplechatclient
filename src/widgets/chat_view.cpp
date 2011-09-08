@@ -75,7 +75,7 @@ void ChatView::createBody()
     if ((strDisableBackgroundImage == "off") && (!strBackgroundImage.isEmpty()))
         strBackground = "background-image: url("+strBackgroundImage+"); background-attachment: fixed; background-position: center; background-repeat: no-repeat;";
 
-    QString strCss = "body{ margin: 0; padding: 0; "+strBackground+"}";
+    QString strCss = "body{ margin: 0; padding: 0; font-family: sans; "+strBackground+"}";
     QString strHtml = "<html><head><style type=\"text/css\">"+strCss+"</style></head><body><div id=\"Chat\"></div></body></html>";
     this->setHtml(strHtml);
     this->page()->mainFrame()->evaluateJavaScript(jsCode);
