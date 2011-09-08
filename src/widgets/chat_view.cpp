@@ -127,6 +127,12 @@ void ChatView::displayMessage(QString &strData, MessageCategory eMessageCategory
             Notify::instance()->play(Beep);
     }
 
+    // remove first message
+    QWebElement document = this->page()->mainFrame()->documentElement();
+    QWebElementCollection allDiv = document.findAll("div");
+    if (allDiv.count() > 1000)
+        this->page()->mainFrame()->evaluateJavaScript("removeFirstMessage()");
+
     // append
     this->page()->mainFrame()->evaluateJavaScript("appendMessage(\'"+strContent+"\')");
 }
