@@ -210,16 +210,9 @@
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_13">
         <item>
-         <widget class="QRadioButton" name="radioButton_modern_avatars">
+         <widget class="QCheckBox" name="checkBox_show_avatars">
           <property name="text">
-           <string>Modern</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QRadioButton" name="radioButton_modern_no_avatars">
-          <property name="text">
-           <string>Modern without avatars</string>
+           <string>Show avatars in nicklist</string>
           </property>
          </widget>
         </item>
@@ -350,13 +343,6 @@
         <widget class="QCheckBox" name="checkBox_hide_join_part_200">
          <property name="text">
           <string>Hide join/part when number of nicks &gt; 200</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QCheckBox" name="checkBox_disable_avatars">
-         <property name="text">
-          <string>Disable avatars</string>
          </property>
         </widget>
        </item>

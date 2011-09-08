@@ -1364,12 +1364,8 @@
         <translation>Wygląd</translation>
     </message>
     <message>
-        <source>Modern</source>
-        <translation>Nowoczesny</translation>
-    </message>
-    <message>
-        <source>Modern without avatars</source>
-        <translation>Nowoczesny bez avatarów</translation>
+        <source>Show avatars in nicklist</source>
+        <translation>Wyświetlaj awatary na liście nicków</translation>
     </message>
     <message>
         <source>Language</source>
@@ -1406,10 +1402,6 @@
     <message>
         <source>Hide join/part on big channels</source>
         <translation>Ukryj wejścia/wyjścia osób w dużych pokojach</translation>
-    </message>
-    <message>
-        <source>Disable avatars</source>
-        <translation>Wyłącz avatary</translation>
     </message>
     <message>
         <source>Disable emoticons</source>

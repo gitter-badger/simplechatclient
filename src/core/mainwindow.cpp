@@ -189,8 +189,8 @@ void MainWindow::createGui()
     rightDockWidget->setWidget(pNickListWidget);
 
     // maximum size
-    QString strDisableAvatars = Core::instance()->settings.value("disable_avatars");
-    if (strDisableAvatars == "off") // with avatars
+    QString strShowAvatars = Core::instance()->settings.value("show_avatars");
+    if (strShowAvatars == "on") // with avatars
         rightDockWidget->setMaximumWidth(260);
     else // without avatars
         rightDockWidget->setMaximumWidth(230);

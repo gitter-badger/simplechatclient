@@ -48,8 +48,7 @@ private slots:
     void changePage(QModelIndex);
     void currentProfileChanged(int);
     void buttonProfiles();
-    void setModernStyleAvatars();
-    void setModernStyleNoAvatars();
+    void showAvatars(bool);
     void languageChanged(int);
     void autoBusy(bool);
     void disableAutojoinFavourites(bool);
@@ -57,7 +56,6 @@ private slots:
     void hideFormating(bool);
     void hideJoinPart(bool);
     void hideJoinPart200(bool);
-    void disableAvatars(bool);
     void disableEmots(bool);
     void disableReplaces(bool);
     void setBackgroundColor();

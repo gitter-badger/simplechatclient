@@ -41,7 +41,7 @@ void NickListDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opti
     QString strNicklistBusyNickColor = Core::instance()->settings.value("nicklist_busy_nick_color");
     QString strNicklistGradient1Color = Core::instance()->settings.value("nicklist_gradient_1_color");
     QString strNicklistGradient2Color = Core::instance()->settings.value("nicklist_gradient_2_color");
-    QString strDisableAvatars = Core::instance()->settings.value("disable_avatars");
+    QString strShowAvatars = Core::instance()->settings.value("show_avatars");
 
     QPen fontPen(QColor(strNicklistNickColor), 1, Qt::SolidLine);
     QPen selectedFontPen(QColor(strNicklistSelectedNickColor), 1, Qt::SolidLine);
@@ -94,7 +94,7 @@ void NickListDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opti
     if (modes.contains("O")) { icons << QIcon(":/images/dev.png"); }
 
     // avatar
-    if ((nick[0] != '~') && (strDisableAvatars == "off"))
+    if ((nick[0] != '~') && (strShowAvatars == "on"))
     {
         QPixmap pAvatar;
         pAvatar.loadFromData(Core::instance()->mNickAvatar.value(nick));
@@ -106,7 +106,7 @@ void NickListDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opti
     }
 
     // nick
-    if (strDisableAvatars == "off")
+    if (strShowAvatars == "on")
     {
         // with avatars
         if ((busy) && (!selected)) painter->setPen(busyPen); // gray
@@ -145,9 +145,9 @@ QSize NickListDelegate::sizeHint(const QStyleOptionViewItem &option, const QMode
     Q_UNUSED (option);
     Q_UNUSED (index);
 
-    QString strDisableAvatars = Core::instance()->settings.value("disable_avatars");
+    QString strShowAvatars = Core::instance()->settings.value("show_avatars");
 
-    if (strDisableAvatars == "off") // with avatars
+    if (strShowAvatars == "on") // with avatars
         return QSize(200, 35);
     else // without avatars
         return QSize(170, 16);

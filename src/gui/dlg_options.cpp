@@ -66,8 +66,7 @@ void DlgOptions::createGui()
     ui.label_profile->setText(tr("Current profile:"));
     ui.pushButton_profiles->setText(tr("Profiles"));
     ui.groupBox_skins->setTitle(tr("Skins"));
-    ui.radioButton_modern_avatars->setText(tr("Modern"));
-    ui.radioButton_modern_no_avatars->setText(tr("Modern without avatars"));
+    ui.checkBox_show_avatars->setText(tr("Show avatars in nicklist"));
     ui.groupBox_language->setTitle(tr("Language"));
 
     // page adv
@@ -77,7 +76,6 @@ void DlgOptions::createGui()
     ui.checkBox_hide_formating->setText(tr("Disable font size, color..."));
     ui.checkBox_hide_join_part->setText(tr("Hide join/part"));
     ui.checkBox_hide_join_part_200->setText(tr("Hide join/part on big channels"));
-    ui.checkBox_disable_avatars->setText(tr("Disable avatars"));
     ui.checkBox_disable_emots->setText(tr("Disable emoticons"));
     ui.checkBox_disable_replaces->setText(tr("Disable replaces"));
 
@@ -218,7 +216,7 @@ void DlgOptions::setDefaultValues()
     ui.lineEdit_background_image->setText(Core::instance()->settings.value("background_image"));
 
     // default values
-    QString strStyle = Core::instance()->settings.value("style");
+    QString strShowAvatars = Core::instance()->settings.value("show_avatars");
     QString strLanguage = Core::instance()->settings.value("language");
 
     QString strAutoBusy = Core::instance()->settings.value("auto_busy");
@@ -227,7 +225,6 @@ void DlgOptions::setDefaultValues()
     QString strHideFormating = Core::instance()->settings.value("hide_formating");
     QString strHideJoinPart = Core::instance()->settings.value("hide_join_part");
     QString strHideJoinPart200 = Core::instance()->settings.value("hide_join_part_200");
-    QString strDisableAvatars = Core::instance()->settings.value("disable_avatars");
     QString strDisableEmots = Core::instance()->settings.value("disable_emots");
     QString strDisableReplaces = Core::instance()->settings.value("disable_replaces");
 
@@ -239,13 +236,10 @@ void DlgOptions::setDefaultValues()
     QString strWinamp = Core::instance()->settings.value("winamp");
 
     // set style
-    if (strStyle == "modern")
-    {
-        if (strDisableAvatars == "off")
-            ui.radioButton_modern_avatars->setChecked(true);
-        else
-            ui.radioButton_modern_no_avatars->setChecked(true);
-    }
+    if (strShowAvatars == "on")
+        ui.checkBox_show_avatars->setChecked(true);
+    else
+        ui.checkBox_show_avatars->setChecked(false);
 
     // language
     if (strLanguage == "en")
@@ -290,12 +284,6 @@ void DlgOptions::setDefaultValues()
         ui.checkBox_hide_join_part_200->setChecked(true);
     else
         ui.checkBox_hide_join_part_200->setChecked(false);
-
-    // disable avatars
-    if (strDisableAvatars == "on")
-        ui.checkBox_disable_avatars->setChecked(true);
-    else
-        ui.checkBox_disable_avatars->setChecked(false);
 
     // disable emots
     if (strDisableEmots == "on")
@@ -360,8 +348,7 @@ void DlgOptions::createSignals()
     QObject::connect(ui.treeWidget_options, SIGNAL(clicked(QModelIndex)), this, SLOT(changePage(QModelIndex)));
     QObject::connect(ui.comboBox_profiles, SIGNAL(activated(int)), this, SLOT(currentProfileChanged(int)));
     QObject::connect(ui.pushButton_profiles, SIGNAL(clicked()), this, SLOT(buttonProfiles()));
-    QObject::connect(ui.radioButton_modern_avatars, SIGNAL(clicked()), this, SLOT(setModernStyleAvatars()));
-    QObject::connect(ui.radioButton_modern_no_avatars, SIGNAL(clicked()), this, SLOT(setModernStyleNoAvatars()));
+    QObject::connect(ui.checkBox_show_avatars, SIGNAL(clicked(bool)), this, SLOT(showAvatars(bool)));
     QObject::connect(ui.comboBox_language, SIGNAL(activated(int)), this, SLOT(languageChanged(int)));
     QObject::connect(ui.checkBox_auto_busy, SIGNAL(clicked(bool)), this, SLOT(autoBusy(bool)));
     QObject::connect(ui.checkBox_disable_autojoin_favourites, SIGNAL(clicked(bool)), this, SLOT(disableAutojoinFavourites(bool)));
@@ -369,7 +356,6 @@ void DlgOptions::createSignals()
     QObject::connect(ui.checkBox_hide_formating, SIGNAL(clicked(bool)), this, SLOT(hideFormating(bool)));
     QObject::connect(ui.checkBox_hide_join_part, SIGNAL(clicked(bool)), this, SLOT(hideJoinPart(bool)));
     QObject::connect(ui.checkBox_hide_join_part_200, SIGNAL(clicked(bool)), this, SLOT(hideJoinPart200(bool)));
-    QObject::connect(ui.checkBox_disable_avatars, SIGNAL(clicked(bool)), this, SLOT(disableAvatars(bool)));
     QObject::connect(ui.checkBox_disable_emots, SIGNAL(clicked(bool)), this, SLOT(disableEmots(bool)));
     QObject::connect(ui.checkBox_disable_replaces, SIGNAL(clicked(bool)), this, SLOT(disableReplaces(bool)));
     QObject::connect(ui.pushButton_background_color, SIGNAL(clicked()), this, SLOT(setBackgroundColor()));
@@ -485,27 +471,13 @@ void DlgOptions::buttonProfiles()
     DlgProfileManager(Core::instance()->sccWindow(), this).exec();
 }
 
-void DlgOptions::setModernStyleAvatars()
+void DlgOptions::showAvatars(bool bValue)
 {
-    // save style
-    Config *pConfig = new Config();
-    pConfig->setValue("style", "modern");
-    Core::instance()->settings["style"] = "modern";
-    pConfig->setValue("disable_avatars", "off");
-    Core::instance()->settings["disable_avatars"] = "off";
-    delete pConfig;
+    QString strValue = (bValue ? "on" : "off");
 
-    ui.label_skins_warning->setText(tr("Restart program to apply the changes."));
-}
-
-void DlgOptions::setModernStyleNoAvatars()
-{
-    // save style
     Config *pConfig = new Config();
-    pConfig->setValue("style", "modern");
-    Core::instance()->settings["style"] = "modern";
-    pConfig->setValue("disable_avatars", "on");
-    Core::instance()->settings["disable_avatars"] = "on";
+    pConfig->setValue("show_avatars", strValue);
+    Core::instance()->settings["show_avatars"] = strValue;
     delete pConfig;
 
     ui.label_skins_warning->setText(tr("Restart program to apply the changes."));
@@ -591,16 +563,6 @@ void DlgOptions::hideJoinPart200(bool bValue)
     Config *pConfig = new Config();
     pConfig->setValue("hide_join_part_200", strValue);
     Core::instance()->settings["hide_join_part_200"] = strValue;
-    delete pConfig;
-}
-
-void DlgOptions::disableAvatars(bool bValue)
-{
-    QString strValue = (bValue ? "on" : "off");
-
-    Config *pConfig = new Config();
-    pConfig->setValue("disable_avatars", strValue);
-    Core::instance()->settings["disable_avatars"] = strValue;
     delete pConfig;
 }
 

@@ -253,10 +253,9 @@ QMap<QString,QString> Config::getDefaultValues()
         mDefaultValues.insert("hide_formating", "off");
         mDefaultValues.insert("hide_join_part", "off");
         mDefaultValues.insert("hide_join_part_200", "on");
-        mDefaultValues.insert("disable_avatars", "on");
+        mDefaultValues.insert("show_avatars", "off");
         mDefaultValues.insert("disable_emots", "off");
         mDefaultValues.insert("disable_replaces", "off");
-        mDefaultValues.insert("style", "modern");
         mDefaultValues.insert("background_color", "#ffffff");
         mDefaultValues.insert("my_bold", "off");
         mDefaultValues.insert("my_italic", "off");

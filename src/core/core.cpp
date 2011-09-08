@@ -110,7 +110,7 @@ void Core::createGui()
 void Core::createSettings()
 {
     // default settings
-    settings["version"] = "1.1.2.1001";
+    settings["version"] = "1.1.2.1002";
     settings["logged"] = "off";
     settings["busy"] = "off";
     settings["away"] = "off";
@@ -136,15 +136,6 @@ void Core::createSettings()
     // clear old settings
     QSettings oldSettings;
     oldSettings.clear();
-
-    // fix config profile values
-    if (settings.value("style") == "classic")
-    {
-        Config *pConfig = new Config();
-        pConfig->setValue("style", "modern");
-        settings["style"] = "modern";
-        delete pConfig;
-    }
 
     // check settings
     checkSettings();

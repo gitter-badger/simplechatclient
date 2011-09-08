@@ -650,7 +650,7 @@ void OnetKernel::raw_join()
     // nick avatar
     if ((strNick[0] != '~') && (!Core::instance()->mNickAvatar.contains(strNick)))
     {
-        if (Core::instance()->settings.value("disable_avatars") == "off") // with avatars
+        if (Core::instance()->settings.value("show_avatars") == "on") // with avatars
             Core::instance()->pNetwork->send(QString("NS INFO %1 s").arg(strNick));
     }
 
@@ -2803,7 +2803,7 @@ void OnetKernel::raw_353()
             // nick avatar
             if ((strCleanNick[0] != '~') && (!Core::instance()->mNickAvatar.contains(strCleanNick)))
             {
-                if (Core::instance()->settings.value("disable_avatars") == "off") // with avatars
+                if (Core::instance()->settings.value("show_avatars") == "on") // with avatars
                     Core::instance()->pNetwork->send(QString("NS INFO %1 s").arg(strCleanNick));
             }
         }

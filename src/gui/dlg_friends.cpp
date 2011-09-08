@@ -87,7 +87,7 @@ void DlgFriends::refresh()
             item->setText(i.key());
             item->setIcon(QIcon(":/images/oxygen/16x16/meeting-attending.png"));
 
-            if (Core::instance()->settings.value("disable_avatars") == "off") // with avatars
+            if (Core::instance()->settings.value("show_avatars") == "on") // with avatars
                 Core::instance()->pNetwork->send(QString("NS INFO %1 s").arg(i.key()));
         }
 
