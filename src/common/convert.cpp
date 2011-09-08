@@ -189,6 +189,8 @@ void Convert::convertText(QString &strData, QString &strLastContent)
                         if ((!f1.exists()) && (!f2.exists()))
                             strInsert = "//"+strEmoticon;
                     }
+                    else
+                        strInsert = "//"+strEmoticon;
 
                     strData.replace(strEmoticonFull, strInsert);
                 }

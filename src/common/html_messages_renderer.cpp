@@ -32,6 +32,8 @@ QString HtmlMessagesRenderer::renderer(QString strData, MessageCategory eMessage
     strData.replace("&", "&amp;");
     strData.replace("<", "&lt;");
     strData.replace(">", "&gt;");
+    strData.replace("\"", "&quot;");
+    strData.replace("'", "&#039;");
 
     // default font color
     QString strFontSize = Core::instance()->settings.value("font_size");
