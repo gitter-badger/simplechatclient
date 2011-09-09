@@ -99,7 +99,7 @@ void InputWidget::setFont(QFont font)
 
 void InputWidget::setColor(QString color)
 {
-    pInputLine->setStyleSheet(QString("color:%1").arg(color));
+    pInputLine->setStyleSheet(QString("QLineEdit { color:%1 }").arg(color));
 }
 
 void InputWidget::setModeration(bool value)
