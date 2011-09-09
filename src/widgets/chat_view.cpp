@@ -44,6 +44,7 @@
 
 ChatView::ChatView(QString param1, DlgUserProfile *param2) : pDlgUserProfile(param2), strChannel(param1), strNick(QString::null)
 {
+    setFocusPolicy(Qt::NoFocus);
     settings()->setAttribute(QWebSettings::JavascriptEnabled, true);
     QObject::connect(this->page()->mainFrame(), SIGNAL(contentsSizeChanged(const QSize &)), this, SLOT(scrollToBottom()));
 

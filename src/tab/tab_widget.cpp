@@ -30,43 +30,27 @@ TabWidget::TabWidget(QString param1, DlgUserProfile *param2)
     QString strDefaultFontColor = Core::instance()->settings.value("default_font_color");
     QString strBackgroundColor = Core::instance()->settings.value("background_color");
 
-    QVBoxLayout *mainLayout = new QVBoxLayout();
-    mainLayout->setMargin(0);
-    QWidget *mainWidget = new QWidget(this);
-
     topic = new QLabel(this);
-    topic->setAlignment(Qt::AlignLeft | Qt::AlignVCenter);
     topic->setWordWrap(true);
     topic->setMinimumHeight(25);
+    topic->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
     topic->show();
 
     pChatView = new ChatView(strName, pDlgUserProfile);
     pChatView->setParent(this);
+    pChatView->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     pChatView->show();
 
-    if (strName[0] == '#')
-    {
-        mainLayout->addWidget(topic);
-        mainLayout->addWidget(pChatView);
-        mainWidget->setLayout(mainLayout);
-    }
-    else if (strName[0] == '^')
-    {
-        topic->hide();
-
-        mainLayout->addWidget(pChatView);
-        mainWidget->setLayout(mainLayout);
-    }
-    else
-    {
-        topic->hide();
-
-        mainLayout->addWidget(pChatView);
-        mainWidget->setLayout(mainLayout);
-    }
-
-    // show layout
+    QVBoxLayout *mainLayout = new QVBoxLayout();
+    mainLayout->setMargin(0);
+    mainLayout->addWidget(topic);
+    mainLayout->addWidget(pChatView);
     this->setLayout(mainLayout);
+
+    if (strName[0] == '^')
+        topic->hide();
+    if ((strName[0] != '^') && (strName[0] != '#'))
+        topic->hide();
 
     // set colors
     if ((strBackgroundColor.toLower() != "#ffffff") && (!strBackgroundColor.isEmpty()))
