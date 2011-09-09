@@ -47,13 +47,13 @@ QString HtmlMessagesRenderer::renderer(QString strData, MessageCategory eMessage
         QString strWord = strDataList[i];
 
         if ((i == 1) && (strWord.contains("&lt;")) && (strWord.contains("&gt;")))
-            strDataList[i] = "<a href=\"#\" name=\"nick\" style=\"color:inherit;text-decoration:none;\">"+strDataList[i]+"</a>";
+            strDataList[i] = "<a href=\"#\" onclick=\"return false\" name=\"nick\" style=\"color:inherit;text-decoration:none;\">"+strDataList[i]+"</a>";
         if ((i == 2) && (strDataList[i-1] == "*") && ((eMessageCategory == JoinMessage) || (eMessageCategory == PartMessage) || (eMessageCategory == QuitMessage)  || (eMessageCategory == KickMessage)))
-            strDataList[i] = "<a href=\"#\" name=\"nick\" style=\"color:inherit;text-decoration:none;\">"+strDataList[i]+"</a>";
+            strDataList[i] = "<a href=\"#\" onclick=\"return false\" name=\"nick\" style=\"color:inherit;text-decoration:none;\">"+strDataList[i]+"</a>";
         if (strWord[0] == '#')
-            strDataList[i] = "<a href=\"#\" name=\"channel\" style=\"color:"+strChannelFontColor+";text-decoration:none;\">"+strDataList[i]+"</a>";
+            strDataList[i] = "<a href=\"#\" onclick=\"return false\" name=\"channel\" style=\"color:"+strChannelFontColor+";text-decoration:none;\">"+strDataList[i]+"</a>";
         if ((strWord.contains("http")) || (strWord.contains("www")))
-            strDataList[i] = "<a href=\"#\" name=\"website\" style=\"color:inherit;text-decoration:none;\">"+strDataList[i]+"</a>";
+            strDataList[i] = "<a href=\"#\" onclick=\"return false\" name=\"website\" style=\"color:inherit;text-decoration:none;\">"+strDataList[i]+"</a>";
     }
     strData = strDataList.join(" ");
 
