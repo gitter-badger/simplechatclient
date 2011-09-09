@@ -76,7 +76,7 @@ void ChatView::createBody()
     if ((strDisableBackgroundImage == "off") && (!strBackgroundImage.isEmpty()))
         strBackground = "background-image: url("+strBackgroundImage+"); background-attachment: fixed; background-position: center; background-repeat: no-repeat;";
 
-    QString strCss = "body{ margin: 0; padding: 0; font-family: sans; "+strBackground+"}";
+    QString strCss = "body{ margin: 0; padding: 0; font-family: sans; word-wrap: break-word; "+strBackground+"}";
     QString strHtml = "<html><head><style type=\"text/css\">"+strCss+"</style></head><body><div id=\"Chat\"></div></body></html>";
     this->setHtml(strHtml);
     this->page()->mainFrame()->evaluateJavaScript(jsCode);
@@ -131,13 +131,6 @@ void ChatView::displayMessage(QString &strData, MessageCategory eMessageCategory
     strContent.replace("img src=\"", "img src=\"file://");
 #endif
 
-    if (eMessageCategory == HilightMessage)
-    {
-        // sound
-        if (Core::instance()->settings.value("disable_sounds") == "off")
-            Notify::instance()->play(Beep);
-    }
-
     // remove first message
     QWebElement document = this->page()->mainFrame()->documentElement();
     QWebElementCollection allDiv = document.findAll("div");
@@ -146,6 +139,21 @@ void ChatView::displayMessage(QString &strData, MessageCategory eMessageCategory
 
     // append
     this->page()->mainFrame()->evaluateJavaScript("appendMessage(\'"+strContent+"\')");
+
+    /* in Qt 4.6.3 / WebKit there is a bug making the following call not working */
+    /* according to: https://bugs.webkit.org/show_bug.cgi?id=35633 */
+    /* the proper refreshing behaviour should occur once the bug is fixed */
+    /* possible temporary solution: use QWebElements API to randomly change */
+    /* URLs in the HTML/CSS content. */
+    this->page()->triggerAction(QWebPage::ReloadAndBypassCache, false);
+
+    // hilight
+    if (eMessageCategory == HilightMessage)
+    {
+        // sound
+        if (Core::instance()->settings.value("disable_sounds") == "off")
+            Notify::instance()->play(Beep);
+    }
 }
 
 void ChatView::joinChannel()
@@ -344,7 +352,7 @@ void ChatView::clear()
 
 void ChatView::menuChannel(QString strChannel, QContextMenuEvent *event)
 {
-    QMenu menu(this);
+    QMenu menu;
 
     QAction *nameAct = new QAction(strChannel, &menu);
     nameAct->setIcon(QIcon(":/images/oxygen/16x16/irc-join-channel.png"));
@@ -428,7 +436,7 @@ void ChatView::menuNick(QString strNick, QContextMenuEvent *event)
     nickAct->setIcon(QIcon(":/images/oxygen/16x16/user-identity.png"));
     nickAct->setDisabled(true);
 
-    QMenu menu(this);
+    QMenu menu;
     menu.addAction(nickAct);
     menu.addSeparator();
     menu.addAction(QIcon(":/images/oxygen/16x16/list-add-user.png"), tr("Priv"), this, SLOT(priv()));
@@ -467,7 +475,7 @@ void ChatView::menuWebsite(QContextMenuEvent *event)
     QString strShortLink = strWebsite;
     if (strShortLink.size() > 40) strShortLink = strShortLink.left(20)+"..."+strShortLink.right(20);
 
-    QMenu menu(this);
+    QMenu menu;
 
     QAction *websiteLinkAct = new QAction(strShortLink, this);
     websiteLinkAct->setIcon(QIcon(":/images/oxygen/16x16/preferences-web-browser-shortcuts.png"));
@@ -482,7 +490,7 @@ void ChatView::menuWebsite(QContextMenuEvent *event)
 
 void ChatView::menuStandard(QContextMenuEvent *event)
 {
-    QMenu menu(this);
+    QMenu menu;
 
     if (!this->selectedText().isEmpty())
     {

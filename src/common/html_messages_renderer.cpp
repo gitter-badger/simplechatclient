@@ -34,6 +34,7 @@ QString HtmlMessagesRenderer::renderer(QString strData, MessageCategory eMessage
     strData.replace(">", "&gt;");
     strData.replace("\"", "&quot;");
     strData.replace("'", "&#039;");
+    strData.replace("\\", "&#92;");
 
     // default font color
     QString strFontSize = Core::instance()->settings.value("font_size");
@@ -116,12 +117,12 @@ QString HtmlMessagesRenderer::renderer(QString strData, MessageCategory eMessage
     delete convertText;
 
     // hilight
-    QString strTextDecoration = "none";
+    QString strTextDecoration;
     if (eMessageCategory == HilightMessage)
-        strTextDecoration = "underline";
+        strTextDecoration = "text-decoration:underline;";
 
     // init text
-    QString strContent = "<span style=\"color:"+strDefaultFontColor+";font-size:"+strFontSize+";text-decoration:"+strTextDecoration+";\">";
+    QString strContent = "<span style=\"color:"+strDefaultFontColor+";font-size:"+strFontSize+";"+strTextDecoration+"\">";
     strContent = strContent+strData+strContentLast+"</span>";
 
     return strContent;
