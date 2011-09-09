@@ -180,24 +180,20 @@ void TabContainer::showMsg(QString &strChannel, QString &strData, MessageCategor
             re.setPattern("[^~]\\b"+strMe+"\\b");
         bool bHilightMessage = strData.contains(re) ? true : false;
 
-        if (bHilightMessage)
+        if ((bHilightMessage) && (eMessageCategory == DefaultMessage))
         {
-            if (eMessageCategory == DefaultMessage)
-            {
-                // awaylog
-                Core::instance()->addAwaylog(strChannel, strData);
+            // awaylog
+            Core::instance()->addAwaylog(strChannel, strData);
 
-                // update awaylog status
-                emit updateAwaylogStatus();
-            }
+            // update awaylog status
+            emit updateAwaylogStatus();
 
             // hilight
             if (i != pTabM->currentIndex())
                 pTabM->setHilight(i);
 
             // update message category
-            if (eMessageCategory == DefaultMessage)
-                eMessageCategory = HilightMessage;
+            eMessageCategory = HilightMessage;
         }
 
         // set color
