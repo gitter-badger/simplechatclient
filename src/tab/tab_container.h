@@ -59,6 +59,7 @@ public slots:
     void slotDisplayMessage(QString &, QString &, MessageCategory);
     void slotClearContent(QString);
     void refreshColors();
+    void refreshBackgroundImage();
 
 private:
     // params

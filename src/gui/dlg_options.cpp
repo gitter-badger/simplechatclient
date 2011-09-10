@@ -464,6 +464,9 @@ void DlgOptions::currentProfileChanged(int row)
 
     // refresh colors
     Core::instance()->refreshColors();
+
+    // refresh background image
+    Core::instance()->refreshBackgroundImage();
 }
 
 void DlgOptions::buttonProfiles()
@@ -853,6 +856,9 @@ void DlgOptions::setBackgroundImage()
 
         delete pConfig;
         ui.lineEdit_background_image->setText(fileName);
+
+        // refresh background image
+        Core::instance()->refreshBackgroundImage();
     }
 }
 
@@ -864,6 +870,9 @@ void DlgOptions::disableBackgroundImage(bool bValue)
     pConfig->setValue("disable_background_image", strValue);
     Core::instance()->settings["disable_background_image"] = strValue;
     delete pConfig;
+
+    // refresh background image
+    Core::instance()->refreshBackgroundImage();
 }
 
 void DlgOptions::setWinamp()

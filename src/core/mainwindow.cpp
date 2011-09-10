@@ -431,6 +431,12 @@ void MainWindow::refreshColors()
     pTabC->refreshColors();
 }
 
+// refresh background image
+void MainWindow::refreshBackgroundImage()
+{
+    pTabC->refreshBackgroundImage();
+}
+
 // buttons
 void MainWindow::buttonConnect()
 {

@@ -76,10 +76,27 @@ void ChatView::createBody()
     if ((strDisableBackgroundImage == "off") && (!strBackgroundImage.isEmpty()))
         strBackground = "background-image: url("+strBackgroundImage+"); background-attachment: fixed; background-position: center; background-repeat: no-repeat;";
 
-    QString strCss = "body{ margin: 0; padding: 0; font-family: sans; word-wrap: break-word; "+strBackground+"}";
-    QString strHtml = "<html><head><style type=\"text/css\">"+strCss+"</style></head><body><div id=\"Chat\"></div></body></html>";
+    QString strCss = "body{ margin: 0; padding: 0; font-family: sans; word-wrap: break-word; }";
+    QString strHtml = "<html><head><style type=\"text/css\">"+strCss+"</style></head><body style=\""+strBackground+"\"><div id=\"Chat\"></div></body></html>";
     this->setHtml(strHtml);
     this->page()->mainFrame()->evaluateJavaScript(jsCode);
+}
+
+void ChatView::updateBackgroundImage()
+{
+    QString strBackgroundImage = Core::instance()->settings.value("background_image");
+    QString strDisableBackgroundImage = Core::instance()->settings.value("disable_background_image");
+
+#ifndef Q_WS_WIN
+    strBackgroundImage = "file://"+strBackgroundImage;
+#endif
+
+    QString strBackground;
+    if ((strDisableBackgroundImage == "off") && (!strBackgroundImage.isEmpty()))
+        strBackground = "background-image: url("+strBackgroundImage+"); background-attachment: fixed; background-position: center; background-repeat: no-repeat;";
+
+    QWebElement body = this->page()->mainFrame()->findFirstElement("body");
+    body.setAttribute("style", strBackground);
 }
 
 void ChatView::clearMessages()
