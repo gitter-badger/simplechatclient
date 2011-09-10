@@ -198,14 +198,14 @@ void DlgOptions::setDefaultValues()
 
     // logs
     QString strLogsPath;
-#ifdef Q_WS_X11
-    strLogsPath = QDir::homePath()+"/.scc/log";
-#else
+#ifdef Q_WS_WIN
     QString path = QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation);
     path += "/scc";
 
     strLogsPath = path+"/log";
     strLogsPath.replace("/", "\\");
+#else
+    strLogsPath = QDir::homePath()+"/.scc/log";
 #endif
     ui.lineEdit_logs_folder->setText(strLogsPath);
 
@@ -397,11 +397,11 @@ void DlgOptions::refreshProfilesList()
     ui.comboBox_profiles->clear();
 
     QString path;
-#ifdef Q_WS_X11
-    path = QDir::homePath()+"/.scc";
-#else
+#ifdef Q_WS_WIN
     path = QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation);
     path += "/scc";
+#else
+    path = QDir::homePath()+"/.scc";
 #endif
 
     // create dir if not exist

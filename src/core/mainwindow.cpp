@@ -360,7 +360,6 @@ void MainWindow::createSignals()
     // signals from tabc
     QObject::connect(pTabC, SIGNAL(clearNicklist(QString)), this, SLOT(clearNicklist(QString)));
     QObject::connect(pTabC, SIGNAL(clearChannelAllNickAvatars(QString)), this, SLOT(clearChannelAllNickAvatars(QString)));
-    QObject::connect(pTabC, SIGNAL(updateNickAvatar(QString)), this, SLOT(updateNickAvatar(QString)));
     QObject::connect(pTabC, SIGNAL(updateAwaylogStatus()), this, SLOT(updateAwaylogStatus()));
 
     // signals tab

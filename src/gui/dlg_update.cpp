@@ -118,11 +118,11 @@ void DlgUpdate::gotFile(QByteArray bData)
 {
     QString path;
 
-#ifdef Q_WS_X11
-    path = QDir::homePath()+"/.scc";
-#else
+#ifdef Q_WS_WIN
     path = QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation);
     path += "/scc";
+#else
+    path = QDir::homePath()+"/.scc";
 #endif
 
     // create scc dir if not exist

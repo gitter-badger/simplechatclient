@@ -47,7 +47,6 @@ public slots:
     void setAvatar(QString&, QString&, QByteArray&);
 
 signals:
-    void setNickAvatar(QString);
     void setChannelAvatar(QString);
 };
 

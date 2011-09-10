@@ -26,9 +26,8 @@
 #include "tab_widget.h"
 #include "tab_container.h"
 
-TabContainer::TabContainer(TabManager *param1)
+TabContainer::TabContainer(TabManager *param1) : pTabM(param1)
 {
-    pTabM = param1;
 }
 
 TabContainer::~TabContainer()
@@ -166,6 +165,16 @@ void TabContainer::partTab(int index)
         removeTab(strChannel);
 }
 
+void TabContainer::refreshColors()
+{
+    for (int i = 0; i < tw.size(); i++)
+    {
+        tw[i]->refreshColors();
+        // update tab name color
+        pTabM->setColor(i, QColor(Core::instance()->settings.value("default_font_color")));
+    }
+}
+
 void TabContainer::showMsg(QString &strChannel, QString &strData, MessageCategory eMessageCategory, QString strTime)
 {
     int i = getIndex(strChannel);
@@ -279,11 +288,6 @@ void TabContainer::authorTopic(QString &strChannel, QString &strNick)
     }
 }
 
-void TabContainer::slotUpdateNickAvatar(QString strNick)
-{
-    emit updateNickAvatar(strNick);
-}
-
 void TabContainer::slotUpdateChannelAvatar(QString strChannel)
 {
     int i = getIndex(strChannel);
@@ -325,14 +329,4 @@ void TabContainer::slotClearContent(QString strChannel)
     int i = getIndex(strChannel);
     if (i != -1)
         tw[i]->pChatView->clearMessages();
-}
-
-void TabContainer::refreshColors()
-{
-    for (int i = 0; i < tw.size(); i++)
-    {
-        tw[i]->refreshColors();
-        // update tab name color
-        pTabM->setColor(i, QColor(Core::instance()->settings.value("default_font_color")));
-    }
 }

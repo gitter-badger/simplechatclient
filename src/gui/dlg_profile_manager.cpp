@@ -108,11 +108,11 @@ bool DlgProfileManager::existProfile(QString strExistProfile)
 
 void DlgProfileManager::createPath()
 {
-#ifdef Q_WS_X11
-    path = QDir::homePath()+"/.scc";
-#else
+#ifdef Q_WS_WIN
     path = QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation);
     path += "/scc";
+#else
+    path = QDir::homePath()+"/.scc";
 #endif
 
     // create dir if not exist

@@ -44,6 +44,7 @@ public:
     void removeTab(QString);
     bool renameTab(QString, QString);
     void partTab(int);
+
     void showMsg(QString &, QString &, MessageCategory, QString strTime = QString::null);
     void showMsgAll(QString &, MessageCategory);
     void showMsgActive(QString &, MessageCategory);
@@ -51,7 +52,6 @@ public:
     void authorTopic(QString &, QString &);
 
 public slots:
-    void slotUpdateNickAvatar(QString);
     void slotUpdateChannelAvatar(QString);
     void slotShowMsg(QString &, QString &, MessageCategory);
     void slotShowMsgActive(QString &, MessageCategory);
@@ -74,7 +74,6 @@ private:
 signals:
     void clearChannelAllNickAvatars(QString);
     void clearNicklist(QString);
-    void updateNickAvatar(QString);
     void updateAwaylogStatus();
 };
 

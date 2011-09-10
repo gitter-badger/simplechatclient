@@ -26,10 +26,10 @@
 #include "core.h"
 #include "log.h"
 
-#ifdef Q_WS_X11
-    #include <QDebug>
-#else
+#ifdef Q_WS_WIN
     #include <QDesktopServices>
+#else
+    #include <QDebug>
 #endif
 
 Log::Log()
@@ -47,11 +47,11 @@ void Log::save(QString &strChannel, QString &strData)
 {
     QString path;
 
-#ifdef Q_WS_X11
-    path = QDir::homePath()+"/.scc";
-#else
+#ifdef Q_WS_WIN
     path = QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation);
     path += "/scc";
+#else
+    path = QDir::homePath()+"/.scc";
 #endif
 
     // create scc dir if not exist

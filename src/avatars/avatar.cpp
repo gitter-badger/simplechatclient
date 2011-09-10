@@ -29,7 +29,6 @@ Avatar::Avatar(TabContainer *param1)
 {
     tabc = param1;
 
-    QObject::connect(this, SIGNAL(setNickAvatar(QString)), tabc, SLOT(slotUpdateNickAvatar(QString)));
     QObject::connect(this, SIGNAL(setChannelAvatar(QString)), tabc, SLOT(slotUpdateChannelAvatar(QString)));
 
     accessManager = new QNetworkAccessManager;
@@ -83,7 +82,7 @@ void Avatar::setAvatar(QString &strNickOrChannel, QString &strCategory, QByteArr
             }
         }
 
-        emit setNickAvatar(strNickOrChannel);
+        Core::instance()->updateNickAvatar(strNickOrChannel);
     }
     else if (strCategory == "channel")
     {

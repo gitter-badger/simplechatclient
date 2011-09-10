@@ -59,6 +59,8 @@ public:
     void refreshColors();
     // update
     void checkUpdate();
+    // update nick avatar
+    void updateNickAvatar(QString);
     // awaylog
     void addAwaylog(QString, QString);
     // for window

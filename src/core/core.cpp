@@ -110,7 +110,7 @@ void Core::createGui()
 void Core::createSettings()
 {
     // default settings
-    settings["version"] = "1.1.2.1010";
+    settings["version"] = "1.1.2.1011";
     settings["logged"] = "off";
     settings["busy"] = "off";
     settings["away"] = "off";
@@ -176,11 +176,11 @@ void Core::configProfileValues()
 void Core::removeOldConfig()
 {
     QString path;
-#ifdef Q_WS_X11
-    path = QDir::homePath()+"/.scc";
-#else
+#ifdef Q_WS_WIN
     path = QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation);
     path += "/scc";
+#else
+    path = QDir::homePath()+"/.scc";
 #endif
 
     // create dir if not exist
@@ -267,9 +267,14 @@ void Core::checkUpdate()
     pUpdate->checkUpdate();
 }
 
+void Core::updateNickAvatar(QString strAvatar)
+{
+    window->updateNickAvatar(strAvatar);
+}
+
 void Core::addAwaylog(QString strChannel, QString strAwayData)
 {
-    if (Core::instance()->settings.value("away") == "off")
+    if (settings.value("away") == "off")
         return;
 
     // fix /me
@@ -294,12 +299,12 @@ void Core::addAwaylog(QString strChannel, QString strAwayData)
 
 QString Core::getChannelNameFromIndex(int index)
 {
-    QList<QString> lOpenChannels = Core::instance()->lOpenChannels;
-    lOpenChannels.insert(0, "Status");
+    QList<QString> lAllOpenChannels = lOpenChannels;
+    lAllOpenChannels.insert(0, "Status");
 
-    for (int i = 0; i < lOpenChannels.size(); i++)
+    for (int i = 0; i < lAllOpenChannels.size(); i++)
     {
-        QString strChannel = lOpenChannels.at(i);
+        QString strChannel = lAllOpenChannels.at(i);
         if (index == i)
             return strChannel;
     }
@@ -347,10 +352,10 @@ QList<QString> Core::getNicksFromChannel(QString strChannel)
 
 QString Core::getUserModes(QString strNick, QString strChannel)
 {
-    for (int i = 0; i < Core::instance()->lUsers.size(); i++)
+    for (int i = 0; i < lUsers.size(); i++)
     {
-        if ((Core::instance()->lUsers.at(i).nick == strNick) && (Core::instance()->lUsers.at(i).channel == strChannel))
-            return Core::instance()->lUsers.at(i).modes;
+        if ((lUsers.at(i).nick == strNick) && (lUsers.at(i).channel == strChannel))
+            return lUsers.at(i).modes;
     }
     return QString::null;
 }

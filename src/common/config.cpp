@@ -25,20 +25,20 @@
 #include "core.h"
 #include "config.h"
 
-#ifdef Q_WS_X11
-    #include <QDebug>
-#else
+#ifdef Q_WS_WIN
     #include <QDesktopServices>
+#else
+    #include <QDebug>
 #endif
 
 Config::Config(bool b, QString p) : bProfileConfig(b), strForceProfile(p)
 {
     QString path;
-#ifdef Q_WS_X11
-    path = QDir::homePath()+"/.scc";
-#else
+#ifdef Q_WS_WIN
     path = QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation);
     path += "/scc";
+#else
+    path = QDir::homePath()+"/.scc";
 #endif
 
     // create dir if not exist

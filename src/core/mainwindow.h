@@ -54,6 +54,8 @@ public:
     void refreshColors();
     // for core
     int getCurrentTabIndex();
+    // from core
+    void updateNickAvatar(QString);
 
 private:
     QToolBar *toolBar;
@@ -106,6 +108,7 @@ private:
     void showOptions();
     void createTrayMenu();
     // nicklist
+    void createNicklist(QString);
     void updateUsersCount();
     bool nicklistExist(QString, QString);
 
@@ -134,20 +137,6 @@ private slots:
     void openMyProfile();
     void openOfflinemsg();
 
-public slots:
-    void createNicklist(QString);
-    void addUser(QString, QString, QString, bool);
-    void delUser(QString, QString);
-    void nicklistRefresh(QString);
-    void quitUser(QString, QString);
-    void changeFlag(QString, QString, QString);
-    void changeFlag(QString, QString);
-    void clearNicklist(QString);
-    void clearAllNicklist();
-    void updateNickAvatar(QString);
-    void clearChannelAllNickAvatars(QString);
-
-private slots:
     void setConnected();
     void setDisconnected();
     void updateActions();
@@ -156,6 +145,16 @@ private slots:
     void tabCloseRequested(int);
     void currentTabChanged(int);
     void timeoutAutoaway();
+
+    void addUser(QString, QString, QString, bool);
+    void delUser(QString, QString);
+    void nicklistRefresh(QString);
+    void quitUser(QString, QString);
+    void changeFlag(QString, QString, QString);
+    void changeFlag(QString, QString);
+    void clearNicklist(QString);
+    void clearAllNicklist();
+    void clearChannelAllNickAvatars(QString);
 
 signals:
     void skernel(QString);

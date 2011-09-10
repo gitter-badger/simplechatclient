@@ -25,10 +25,10 @@
 #include <QTextStream>
 #include "dlg_notes.h"
 
-#ifdef Q_WS_X11
-    #include <QDebug>
-#else
+#ifdef Q_WS_WIN
     #include <QDesktopServices>
+#else
+    #include <QDebug>
 #endif
 
 DlgNotes::DlgNotes(QWidget *parent) : QDialog(parent)
@@ -63,11 +63,11 @@ void DlgNotes::createSignals()
 
 void DlgNotes::readPath()
 {
-#ifdef Q_WS_X11
-    path = QDir::homePath()+"/.scc";
-#else
+#ifdef Q_WS_WIN
     path = QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation);
     path += "/scc";
+#else
+    path = QDir::homePath()+"/.scc";
 #endif
 
     // create dir if not exist
