@@ -1,7 +1,7 @@
 call make clean
 
 rd /S /Q CMakeFiles
-del /S /Q /F /A CMakeCache.txt cmake_install.cmake Makefile scc.pro.user
+del /S /Q /F /A CMakeCache.txt cmake_install.cmake Makefile scc.pro.user scc-config.h
 
 cd translations
 rd /S /Q CMakeFiles
