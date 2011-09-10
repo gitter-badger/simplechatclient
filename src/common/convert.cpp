@@ -183,9 +183,15 @@ void Convert::convertText(QString &strData, QString &strLastContent)
                     if ((Core::instance()->settings.value("hide_formating") == "off") && (Core::instance()->settings.value("disable_emots") == "off"))
                     {
                         if (f1.exists())
-                            strInsert = "<img src=\""+strEmoticonFull1+"\" alt=\""+strEmoticon+"\" />";
+                        {
+                            QPixmap p(strEmoticonFull1);
+                            strInsert = "<img src=\""+strEmoticonFull1+"\" alt=\""+strEmoticon+"\" width=\""+QString::number(p.width())+"px\" height=\""+QString::number(p.height())+"px\" />";
+                        }
                         if (f2.exists())
-                            strInsert = "<img src=\""+strEmoticonFull2+"\" alt=\""+strEmoticon+"\" />";
+                        {
+                            QPixmap p(strEmoticonFull2);
+                            strInsert = "<img src=\""+strEmoticonFull2+"\" alt=\""+strEmoticon+"\" width=\""+QString::number(p.width())+"px\" height=\""+QString::number(p.height())+"px\" />";
+                        }
                         if ((!f1.exists()) && (!f2.exists()))
                             strInsert = "//"+strEmoticon;
                     }
