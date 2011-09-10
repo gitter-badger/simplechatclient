@@ -43,6 +43,7 @@ private:
     QString strWebsite;
     enum { maxOpenChannels = 30 };
     QAction *openChannelsActs[maxOpenChannels];
+    bool bScroll;
 
     void createBody();
     void menuNick(QString, QContextMenuEvent *);

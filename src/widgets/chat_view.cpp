@@ -42,7 +42,7 @@
     #include "dlg_webcam.h"
 #endif
 
-ChatView::ChatView(QString param1, DlgUserProfile *param2) : pDlgUserProfile(param2), strChannel(param1), strNick(QString::null)
+ChatView::ChatView(QString param1, DlgUserProfile *param2) : pDlgUserProfile(param2), strChannel(param1), strNick(QString::null), bScroll(true)
 {
     setFocusPolicy(Qt::NoFocus);
     settings()->setAttribute(QWebSettings::JavascriptEnabled, true);
@@ -147,6 +147,11 @@ void ChatView::displayMessage(QString &strData, MessageCategory eMessageCategory
     // fix linux img src
     strContent.replace("img src=\"", "img src=\"file://");
 #endif
+
+    if (this->page()->mainFrame()->scrollBarValue(Qt::Vertical) ==  this->page()->mainFrame()->scrollBarMaximum(Qt::Vertical))
+        bScroll = true;
+    else
+        bScroll = false;
 
     // remove first message
     QWebElement document = this->page()->mainFrame()->documentElement();
@@ -578,5 +583,6 @@ void ChatView::contextMenuEvent(QContextMenuEvent *event)
 
 void ChatView::scrollToBottom()
 {
-    page()->mainFrame()->setScrollBarValue(Qt::Vertical, page()->mainFrame()->scrollBarMaximum(Qt::Vertical));
+    if (bScroll)
+        page()->mainFrame()->setScrollBarValue(Qt::Vertical, page()->mainFrame()->scrollBarMaximum(Qt::Vertical));
 }
