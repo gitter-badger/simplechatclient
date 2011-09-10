@@ -806,6 +806,10 @@ void OnetKernel::raw_kick()
 
     if (strNick == strMe)
     {
+        strReason.remove(QRegExp("%C([a-zA-Z0-9]+)%"));
+        strReason.remove(QRegExp("%F([a-zA-Z0-9:]+)%"));
+        strReason.replace(QRegExp("%I([a-zA-Z0-9_-]+)%"),"//\\1");
+
         QMessageBox::information(0, "", QString(tr("You have been kicked from %1 by %2")+"<br>"+tr("Reason: %3")).arg(strWho).arg(strChannel).arg(strReason));
 
         pTabC->removeTab(strChannel);
