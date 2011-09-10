@@ -294,7 +294,7 @@ QString DlgUserProfile::convertDesc(QString strContent)
     strContent.replace(">", "&gt;");
 
     // convert
-    Convert *convertText = new Convert();
+    Convert *convertText = new Convert(false);
     convertText->convertText(strContent, strContentLast);
     delete convertText;
 

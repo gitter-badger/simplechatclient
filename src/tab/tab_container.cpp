@@ -268,7 +268,7 @@ void TabContainer::setTopic(QString &strChannel, QString &strTopic)
         QString strLastContent;
 
         // convert emoticons, font
-        Convert *convertText = new Convert();
+        Convert *convertText = new Convert(false);
         convertText->convertText(strContent,strLastContent);
         delete convertText;
 

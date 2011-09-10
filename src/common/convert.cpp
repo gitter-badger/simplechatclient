@@ -24,7 +24,7 @@
 #include "core.h"
 #include "convert.h"
 
-Convert::Convert() : bRemovedBold(false), bRemovedItalic(false), iRemovedColor(-1)
+Convert::Convert(bool param1) : bInsertWidthHeight(param1), bRemovedBold(false), bRemovedItalic(false), iRemovedColor(-1)
 {
 }
 
@@ -185,12 +185,18 @@ void Convert::convertText(QString &strData, QString &strLastContent)
                         if (f1.exists())
                         {
                             QPixmap p(strEmoticonFull1);
-                            strInsert = "<img src=\""+strEmoticonFull1+"\" alt=\""+strEmoticon+"\" width=\""+QString::number(p.width())+"px\" height=\""+QString::number(p.height())+"px\" />";
+                            QString strWidthHeight;
+                            if (bInsertWidthHeight)
+                                strWidthHeight = "width=\""+QString::number(p.width())+"px\" height=\""+QString::number(p.height())+"px\"";
+                            strInsert = "<img src=\""+strEmoticonFull1+"\" alt=\""+strEmoticon+"\" "+strWidthHeight+" />";
                         }
                         if (f2.exists())
                         {
                             QPixmap p(strEmoticonFull2);
-                            strInsert = "<img src=\""+strEmoticonFull2+"\" alt=\""+strEmoticon+"\" width=\""+QString::number(p.width())+"px\" height=\""+QString::number(p.height())+"px\" />";
+                            QString strWidthHeight;
+                            if (bInsertWidthHeight)
+                                strWidthHeight = "width=\""+QString::number(p.width())+"px\" height=\""+QString::number(p.height())+"px\"";
+                            strInsert = "<img src=\""+strEmoticonFull2+"\" alt=\""+strEmoticon+"\" "+strWidthHeight+" />";
                         }
                         if ((!f1.exists()) && (!f2.exists()))
                             strInsert = "//"+strEmoticon;
