@@ -1,5 +1,5 @@
 @if not exist C:\MinGW\bin\mingw32-make.exe (
-@echo Download MinGW from http://sourceforge.net/projects/mingw/files/Automated%20MinGW%20Installer/mingw-get-inst/mingw-get-inst-20110530/
+@echo Download MinGW from http://get.qt.nokia.com/misc/MinGW-gcc440_1.zip
 @pause
 @exit
 )
@@ -16,8 +16,8 @@ pause
 exit
 )
 
-if not exist C:\Qt\4.7.3 (
-echo Download Qt 4.7.3 from http://qt.nokia.com/downloads/windows-cpp
+if not exist C:\Qt\4.7.4 (
+echo Download Qt 4.7.4 from http://qt.nokia.com/downloads/windows-cpp
 pause
 exit
 )
@@ -49,8 +49,8 @@ cd C:\scc
 )
 
 set DESTINATION="C:\scc\release"
-set QT_DIR="C:\Qt\4.7.3\bin"
-set QT_PLUGINS_DIR="C:\Qt\4.7.3\plugins"
+set QT_DIR="C:\Qt\4.7.4\bin"
+set QT_PLUGINS_DIR="C:\Qt\4.7.4\plugins"
 set OPENSSL_DIR="C:\OpenSSL-Win32"
 set ZLIB_DIR="C:\zlib-1.2.5"
 set QCA2_DIR="C:\qca2\lib"

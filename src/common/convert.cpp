@@ -24,7 +24,7 @@
 #include "core.h"
 #include "convert.h"
 
-Convert::Convert(bool param1) : bInsertWidthHeight(param1), bRemovedBold(false), bRemovedItalic(false), iRemovedColor(-1)
+Convert::Convert(bool _bInsertWidthHeight) : bInsertWidthHeight(_bInsertWidthHeight), bRemovedBold(false), bRemovedItalic(false), iRemovedColor(-1)
 {
 }
 

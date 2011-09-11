@@ -112,7 +112,7 @@ QString HtmlMessagesRenderer::renderer(QString strData, MessageCategory eMessage
     strContentLast = "</span>"+strContentLast;
 
     // convert emoticons, font
-    Convert *convertText = new Convert();
+    Convert *convertText = new Convert(true);
     convertText->convertText(strData, strContentLast);
     delete convertText;
 
