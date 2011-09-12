@@ -735,24 +735,9 @@
          <item row="1" column="1">
           <layout class="QHBoxLayout" name="horizontalLayout_16">
            <item>
-            <widget class="QLineEdit" name="lineEdit_email"/>
-           </item>
-           <item>
-            <widget class="QPushButton" name="pushButton_set_email">
-             <property name="minimumSize">
-              <size>
-               <width>75</width>
-               <height>24</height>
-              </size>
-             </property>
-             <property name="maximumSize">
-              <size>
-               <width>75</width>
-               <height>24</height>
-              </size>
-             </property>
-             <property name="text">
-              <string>Apply</string>
+            <widget class="QLineEdit" name="lineEdit_email">
+             <property name="readOnly">
+              <bool>true</bool>
              </property>
             </widget>
            </item>

@@ -34,7 +34,6 @@ SOURCES += src/avatars/avatar.cpp \
     src/gui/dlg_channel_key.cpp \
     src/gui/dlg_channel_list.cpp \
     src/gui/dlg_channel_settings.cpp \
-    src/gui/dlg_email.cpp \
     src/gui/dlg_emoticons.cpp \
     src/gui/dlg_friends.cpp \
     src/gui/dlg_ignore.cpp \
@@ -100,7 +99,6 @@ HEADERS += src/avatars/avatar.h \
     src/gui/dlg_channel_key.h \
     src/gui/dlg_channel_list.h \
     src/gui/dlg_channel_settings.h \
-    src/gui/dlg_email.h \
     src/gui/dlg_emoticons.h \
     src/gui/dlg_find_text.h \
     src/gui/dlg_friends.h \
@@ -149,7 +147,6 @@ FORMS += ui/about.ui \
     ui/channel_key.ui \
     ui/channel_list.ui \
     ui/channel_settings.ui \
-    ui/email.ui \
     ui/emoticons.ui \
     ui/friends.ui \
     ui/ignore.ui \

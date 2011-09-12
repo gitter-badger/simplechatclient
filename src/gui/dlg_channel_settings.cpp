@@ -24,7 +24,6 @@
 #include <QMessageBox>
 #include "convert.h"
 #include "core.h"
-#include "dlg_email.h"
 #include "dlg_channel_settings.h"
 #include "simple_stats_widget.h"
 
@@ -47,7 +46,6 @@ void DlgChannelSettings::createGui()
 {
     ui.pushButton_transfer->setIcon(QIcon(":/images/oxygen/16x16/meeting-participant-request-response.png"));
     ui.pushButton_remove_channel->setIcon(QIcon(":/images/oxygen/16x16/meeting-participant-no-response.png"));
-    ui.pushButton_set_email->setIcon(QIcon(":/images/oxygen/16x16/dialog-ok-apply.png"));
     ui.pushButton_set_website->setIcon(QIcon(":/images/oxygen/16x16/dialog-ok-apply.png"));
     ui.pushButton_set_topic->setIcon(QIcon(":/images/oxygen/16x16/dialog-ok-apply.png"));
     ui.pushButton_bold->setIcon(QIcon(":/images/oxygen/16x16/format-text-bold.png"));
@@ -115,7 +113,6 @@ void DlgChannelSettings::createGui()
     ui.pushButton_transfer->setText(tr("Transfer"));
     ui.pushButton_remove_channel->setText(tr("Destroy"));
     ui.label_email->setText(tr("Email:"));
-    ui.pushButton_set_email->setText(tr("Apply"));
     ui.label_password->setText(tr("Password:"));
     ui.pushButton_set_password->setText(tr("Apply"));
     ui.label_limit->setText(tr("Limit:"));
@@ -191,7 +188,6 @@ void DlgChannelSettings::createSignals()
 {
     QObject::connect(ui.pushButton_transfer, SIGNAL(clicked()), this, SLOT(ownerChanged()));
     QObject::connect(ui.pushButton_remove_channel, SIGNAL(clicked()), this, SLOT(removeChannelClicked()));
-    QObject::connect(ui.pushButton_set_email, SIGNAL(clicked()), this, SLOT(emailChanged()));
     QObject::connect(ui.pushButton_set_website, SIGNAL(clicked()), this, SLOT(wwwChanged()));
     QObject::connect(ui.pushButton_set_topic, SIGNAL(clicked()), this, SLOT(topicChanged()));
     QObject::connect(ui.pushButton_set_desc, SIGNAL(clicked()), this, SLOT(descChanged()));
@@ -593,12 +589,6 @@ void DlgChannelSettings::removeChannelClicked()
     strChannel.clear();
     clear();
     this->hide();
-}
-
-void DlgChannelSettings::emailChanged()
-{
-    if (!ui.lineEdit_email->text().isEmpty())
-        DlgEmail(Core::instance()->sccWindow(), strChannel, ui.lineEdit_email->text()).exec();
 }
 
 void DlgChannelSettings::wwwChanged()

@@ -64,7 +64,6 @@ protected:
 private slots:
     void ownerChanged();
     void removeChannelClicked();
-    void emailChanged();
     void wwwChanged();
     void topicChanged();
     void descChanged();
