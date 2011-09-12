@@ -984,37 +984,6 @@
     </message>
 </context>
 <context>
-    <name>DlgEmail</name>
-    <message>
-        <source>Change email address</source>
-        <translation>Zmiana adresu e-mail</translation>
-    </message>
-    <message>
-        <source>Enter the characters you see:</source>
-        <translation>Przepisz kod z obrazka:</translation>
-    </message>
-    <message>
-        <source>OK</source>
-        <translation>OK</translation>
-    </message>
-    <message>
-        <source>Refresh</source>
-        <translation>Odśwież</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation>Anuluj</translation>
-    </message>
-    <message>
-        <source>Loading...</source>
-        <translation>Wczytywanie...</translation>
-    </message>
-    <message>
-        <source>Error</source>
-        <translation>Błąd</translation>
-    </message>
-</context>
-<context>
     <name>DlgEmoticons</name>
     <message>
         <source>Emoticons</source>
