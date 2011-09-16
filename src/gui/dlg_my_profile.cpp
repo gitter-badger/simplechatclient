@@ -142,9 +142,10 @@ void DlgMyProfile::refresh()
 {
     QString strMe = Core::instance()->settings.value("nick");
 
-    QMap<QString, QString>::const_iterator i = Core::instance()->mMyProfile.constBegin();
-    while (i != Core::instance()->mMyProfile.constEnd())
+    QMapIterator <QString, QString> i(Core::instance()->mMyProfile);
+    while (i.hasNext())
     {
+        i.next();
         QString strKey = i.key();
         QString strValue = i.value();
 
@@ -206,8 +207,6 @@ void DlgMyProfile::refresh()
             ui.label_type->setText(convertType(strValue));
         else if (strKey == "www")
             ui.lineEdit_www->setText(strValue);
-
-        ++i;
     }
 }
 

@@ -31,6 +31,8 @@
 
 enum MessageCategory {DefaultMessage, JoinMessage, PartMessage, QuitMessage, KickMessage, ModeMessage, NoticeMessage, InfoMessage, MeMessage, ErrorMessage, HilightMessage};
 
+enum { maxOpenChannels = 30 };
+
 struct User
 {
     QString nick;

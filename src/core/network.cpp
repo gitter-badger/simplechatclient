@@ -325,11 +325,8 @@ void Network::write(QString strData)
             qDebug() << "-> " << strData;
 #endif
         strData += "\r\n";
-        QByteArray qbaData;
-        for ( int i = 0; i < strData.size(); i++)
-            qbaData.insert(i, strData.at(i).toAscii());
 
-        if (socket->write(qbaData) == -1)
+        if (socket->write(strData.toAscii()) == -1)
         {
             if (socket->state() == QAbstractSocket::ConnectedState)
             {

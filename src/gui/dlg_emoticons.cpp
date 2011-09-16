@@ -38,11 +38,11 @@ void ThreadEmoticonsStandard::run()
 
     // standard
     QDir dStandardEmoticons = strPath+"/3rdparty/emoticons";
-    QStringList slFiles = dStandardEmoticons.entryList(QStringList("*.gif"), QDir::Files | QDir::NoSymLinks);
+    QStringList lFiles = dStandardEmoticons.entryList(QStringList("*.gif"), QDir::Files | QDir::NoSymLinks);
 
-    for (int i = 0; i < slFiles.size(); i++)
+    for (int i = 0; i < lFiles.size(); i++)
     {
-        QString strFileName = slFiles.at(i);
+        QString strFileName = lFiles.at(i);
         QString strEmoticon = strFileName;
         strEmoticon.remove(".gif");
 
@@ -70,11 +70,11 @@ void ThreadEmoticonsExtended::run()
 
     // extended
     QDir dExtendedEmoticons = strPath+"/3rdparty/emoticons_other";
-    QStringList slFiles = dExtendedEmoticons.entryList(QStringList("*.gif"), QDir::Files | QDir::NoSymLinks);
+    QStringList lFiles = dExtendedEmoticons.entryList(QStringList("*.gif"), QDir::Files | QDir::NoSymLinks);
 
-    for (int i = 0; i < slFiles.size(); i++)
+    for (int i = 0; i < lFiles.size(); i++)
     {
-        QString strFileName = slFiles.at(i);
+        QString strFileName = lFiles.at(i);
         QString strEmoticon = strFileName;
         strEmoticon.remove(".gif");
 

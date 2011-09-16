@@ -124,12 +124,12 @@ bool InputLineWidget::event(QEvent *e)
             if (strLastWord.isEmpty())
             {
                 find.clear();
-                for (int i = 0; i < usersList.size(); i++)
+                foreach (QString strUser, usersList)
                 {
-                    if (usersList.at(i).startsWith(strWord, Qt::CaseInsensitive))
-                        find.append(usersList.at(i));
-                    if (usersList.at(i).startsWith("~"+strWord, Qt::CaseInsensitive))
-                        find.append(usersList.at(i));
+                    if (strUser.startsWith(strWord, Qt::CaseInsensitive))
+                        find.append(strUser);
+                    if (strUser.startsWith("~"+strWord, Qt::CaseInsensitive))
+                        find.append(strUser);
                 }
 
                 strLastWord = strWord;

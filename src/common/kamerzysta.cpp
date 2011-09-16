@@ -271,13 +271,10 @@ void Kamerzysta::networkSend(QString strData)
     if ((socket->isValid()) && (socket->state() == QAbstractSocket::ConnectedState) && (socket->isWritable()))
     {
         strData += "\r\n";
-        QByteArray qbaData;
-        for ( int i = 0; i < strData.size(); i++)
-            qbaData.insert(i, strData.at(i).toAscii());
 
-        log("Send:"+QString(qbaData));
+        log("Send:"+strData);
 
-        socket->write(qbaData);
+        socket->write(strData.toAscii());
     }
 }
 

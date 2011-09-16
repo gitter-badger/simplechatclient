@@ -90,8 +90,8 @@ void DlgOfflineMsg::removeNick(QString strRemoveNick)
 
 void DlgOfflineMsg::refresh()
 {
-    for (int i = 0; i < Core::instance()->lOfflineNicks.size(); i++)
-        ui.listWidget_nicks->insertItem(ui.listWidget_nicks->count(), Core::instance()->lOfflineNicks.at(i));
+    foreach (QString strOfflineNick, Core::instance()->lOfflineNicks)
+        ui.listWidget_nicks->insertItem(ui.listWidget_nicks->count(), strOfflineNick);
 }
 
 bool DlgOfflineMsg::existNick()

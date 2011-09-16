@@ -59,10 +59,8 @@ void DlgIgnore::refresh()
 {
     ui.listWidget_nicks->clear();
 
-    for (int i = 0; i < Core::instance()->lIgnore.size(); ++i)
+    foreach (QString strNick, Core::instance()->lIgnore)
     {
-        QString strNick = Core::instance()->lIgnore.at(i);
-
         if (Core::instance()->mNickAvatar.contains(strNick))
         {
             QPixmap pixmap;

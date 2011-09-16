@@ -68,9 +68,10 @@ void DlgFriends::refresh()
     ui.listWidget_online->clear();
     ui.listWidget_offline->clear();
 
-    QMap<QString, bool>::const_iterator i = Core::instance()->mFriends.constBegin();
-    while (i != Core::instance()->mFriends.constEnd())
+    QMapIterator <QString, bool> i(Core::instance()->mFriends);
+    while (i.hasNext())
     {
+        i.next();
         SortedListWidgetItem *item = new SortedListWidgetItem();
         item->setData(Qt::UserRole+11, false); // is nicklist
 
@@ -95,8 +96,6 @@ void DlgFriends::refresh()
             ui.listWidget_online->addItem(item);
         else
             ui.listWidget_offline->addItem(item);
-
-        ++i;
     }
 }
 

@@ -73,9 +73,8 @@ void DlgChannelHomes::refresh()
 {
     ui.listWidget_channels->clear();
 
-    for (int i = 0; i < Core::instance()->lChannelHomes.size(); i++)
+    foreach (QString strChannel, Core::instance()->lChannelHomes)
     {
-        QString strChannel = Core::instance()->lChannelHomes.at(i);
         strChannel = strChannel.right(strChannel.length()-1); // remove status
 
         if (Core::instance()->mChannelAvatar.contains(strChannel))

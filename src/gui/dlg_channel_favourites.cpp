@@ -60,10 +60,8 @@ void DlgChannelFavourites::refresh()
 {
     ui.listWidget_channels->clear();
 
-    for (int i = 0; i < Core::instance()->lChannelFavourites.size(); i++)
+    foreach (QString strChannel, Core::instance()->lChannelFavourites)
     {
-        QString strChannel = Core::instance()->lChannelFavourites.at(i);
-
         if (Core::instance()->mChannelAvatar.contains(strChannel))
         {
             QPixmap pixmap;

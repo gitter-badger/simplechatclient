@@ -41,7 +41,6 @@ private:
     QString strChannel;
     QString strNick;
     QString strWebsite;
-    enum { maxOpenChannels = 30 };
     QAction *openChannelsActs[maxOpenChannels];
     bool bScroll;
 

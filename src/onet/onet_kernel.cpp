@@ -52,9 +52,10 @@ OnetKernel::~OnetKernel()
 
 void OnetKernel::timerRenameChannel()
 {
-    QMap<QString,QString>::const_iterator i = mOldNameNewName.begin();
-    while (i != mOldNameNewName.constEnd())
+    QMapIterator <QString, QString> i(mOldNameNewName);
+    while (i.hasNext())
     {
+        i.next();
         QString strOldName = i.key();
         QString strNewName = i.value();
         if (pTabC->existTab(strOldName))
@@ -67,8 +68,6 @@ void OnetKernel::timerRenameChannel()
         }
         else
             QTimer::singleShot(1000*5, this, SLOT(timerRenameChannel())); // 5 sec
-
-        ++i;
     }
 }
 
@@ -871,9 +870,11 @@ void OnetKernel::raw_mode()
             }
         }
 
-        QMultiHash<QString, QString>::const_iterator i = flag_nick.constBegin();
-        while (i != flag_nick.constEnd())
+        QHashIterator <QString, QString> i(flag_nick);
+        i.toBack();
+        while (i.hasPrevious())
         {
+            i.previous();
             QString strFlag = i.key();
             QString strNick = i.value();
             QString strDisplay;
@@ -965,8 +966,6 @@ void OnetKernel::raw_mode()
 
             pTabC->showMsg(strNickChannel, strDisplay, ModeMessage);
             emit changeFlag(strNick, strNickChannel, strFlag);
-
-            ++i;
         }
         flag_nick.clear();
     }
@@ -1314,12 +1313,11 @@ void OnetKernel::raw_001()
     Core::instance()->settings["age_check"] = "on";
 
     // auto rejoin
-    QList<QString> lOpenChannels = Core::instance()->lOpenChannels;
     QList<CaseIgnoreString> lOpenChannelsCaseIgnore;
 
     // copy to new list
-    for (int i = 0; i < lOpenChannels.size(); i++)
-        lOpenChannelsCaseIgnore.append(lOpenChannels[i]);
+    foreach (QString strChannel, Core::instance()->lOpenChannels)
+        lOpenChannelsCaseIgnore.append(strChannel);
 
     // sort
     qSort(lOpenChannelsCaseIgnore.begin(), lOpenChannelsCaseIgnore.end());

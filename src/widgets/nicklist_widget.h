@@ -40,7 +40,6 @@ private:
     DlgUserProfile *pDlgUserProfile;
     // other
     QString strChannel;
-    enum { maxOpenChannels = 30 };
     QAction *openChannelsActs[maxOpenChannels];
     QString strSelectedNick;
 

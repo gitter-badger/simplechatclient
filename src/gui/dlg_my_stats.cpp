@@ -87,9 +87,10 @@ int DlgMyStats::replaceValue(QString strValue)
 
 void DlgMyStats::refresh()
 {
-    QMap<QString, QString>::const_iterator i = Core::instance()->mMyStats.constBegin();
-    while (i != Core::instance()->mMyStats.constEnd())
+    QMapIterator <QString, QString> i(Core::instance()->mMyStats);
+    while (i.hasNext())
     {
+        i.next();
         QString strKey = i.key();
         QString strValue = i.value();
 
@@ -126,7 +127,5 @@ void DlgMyStats::refresh()
         {
             ui.label_stats_ignored->setText(strValue);
         }
-
-        ++i;
     }
 }

@@ -52,8 +52,8 @@ void DlgAwaylog::createSignals()
 
 void DlgAwaylog::refresh()
 {
-    for (int i = 0; i < Core::instance()->lAwaylog.size(); i++)
-        ui.listWidget->insertItem(ui.listWidget->count(),Core::instance()->lAwaylog.at(i));
+    foreach (QString strAwaylog, Core::instance()->lAwaylog)
+        ui.listWidget->insertItem(ui.listWidget->count(),strAwaylog);
 }
 
 void DlgAwaylog::buttons(QAbstractButton *button)

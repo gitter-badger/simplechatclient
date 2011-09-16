@@ -945,11 +945,8 @@ void MainWindow::changeFlag(QString strNick, QString strChannel, QString strNewF
 
 void MainWindow::changeFlag(QString strNick, QString strFlag)
 {
-    QList<QString> lOpenChannels = Core::instance()->lOpenChannels;
-    for (int i = 0; i < lOpenChannels.size(); i++)
+    foreach (QString strChannel, Core::instance()->lOpenChannels)
     {
-        QString strChannel = lOpenChannels.at(i);
-
         if (nicklistExist(strChannel, strNick))
             changeFlag(strNick, strChannel, strFlag);
     }
@@ -985,11 +982,8 @@ void MainWindow::clearAllNicklist()
     Core::instance()->mChannelAvatar.clear();
     pNickListWidget->clear();
 
-    QList<QString> lOpenChannels = Core::instance()->lOpenChannels;
-    for (int i = 0; i < lOpenChannels.size(); i++)
+    foreach (QString strChannel, Core::instance()->lOpenChannels)
     {
-        QString strChannel = lOpenChannels.at(i);
-
         // clear nick count for option hide join/part when > 200
         Core::instance()->mChannelNicks[strChannel] = 0;
 
@@ -1009,12 +1003,8 @@ void MainWindow::updateNickAvatar(QString strNick)
 // clear all channel avatars
 void MainWindow::clearChannelAllNickAvatars(QString strChannel)
 {
-    QList<QString> lNicks = Core::instance()->getNicksFromChannel(strChannel);
-
-    for (int i = 0; i < lNicks.size(); i++)
+    foreach (QString strNick, Core::instance()->getNicksFromChannel(strChannel))
     {
-        QString strNick = lNicks.at(i);
-
         // remove nick avatar if nick is only in current channel; must be 1 (current channel)
         if ((Core::instance()->mNickAvatar.contains(strNick)) && (Core::instance()->getNickChannels(strNick) == 1))
             Core::instance()->mNickAvatar.remove(strNick);
