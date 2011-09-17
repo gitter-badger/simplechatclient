@@ -32,7 +32,7 @@ class Convert : public QObject
     Q_OBJECT
 public:
     Convert(bool _bInsertWidthHeight = false);
-    void convertText(QString &, QString &);
+    void convertText(QString &);
     void removeFont(QString &);
     void removeColor(QString &);
 
@@ -47,6 +47,10 @@ private:
     bool bRemovedItalic;
     QString strRemovedFont;
     int iRemovedColor;
+
+    void convertColor(QString &);
+    void convertFont(QString &);
+    void convertEmoticons(QString &);
 };
 
 #endif // CONVERT_H

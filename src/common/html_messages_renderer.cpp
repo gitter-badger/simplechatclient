@@ -26,7 +26,7 @@ HtmlMessagesRenderer::HtmlMessagesRenderer(QObject *parent) : QObject(parent)
 {
 }
 
-QString HtmlMessagesRenderer::renderer(QString strData, MessageCategory eMessageCategory)
+QString HtmlMessagesRenderer::renderer(QString strDT, QString strData, MessageCategory eMessageCategory)
 {
     // fix data
     strData.replace("&", "&amp;");
@@ -47,9 +47,9 @@ QString HtmlMessagesRenderer::renderer(QString strData, MessageCategory eMessage
     {
         QString strWord = strDataList[i];
 
-        if ((i == 1) && (strWord.contains("&lt;")) && (strWord.contains("&gt;")))
+        if ((i == 0) && (strWord.contains("&lt;")) && (strWord.contains("&gt;")))
             strDataList[i] = "<a href=\"#\" onclick=\"return false\" name=\"nick\" style=\"color:inherit;text-decoration:none;\">"+strDataList[i]+"</a>";
-        if ((i == 2) && (strDataList[i-1] == "*") && ((eMessageCategory == JoinMessage) || (eMessageCategory == PartMessage) || (eMessageCategory == QuitMessage)  || (eMessageCategory == KickMessage)))
+        if ((i == 1) && (strDataList[i-1] == "*") && ((eMessageCategory == JoinMessage) || (eMessageCategory == PartMessage) || (eMessageCategory == QuitMessage)  || (eMessageCategory == KickMessage)))
             strDataList[i] = "<a href=\"#\" onclick=\"return false\" name=\"nick\" style=\"color:inherit;text-decoration:none;\">"+strDataList[i]+"</a>";
         if (strWord[0] == '#')
             strDataList[i] = "<a href=\"#\" onclick=\"return false\" name=\"channel\" style=\"color:"+strChannelFontColor+";text-decoration:none;\">"+strDataList[i]+"</a>";
@@ -66,16 +66,13 @@ QString HtmlMessagesRenderer::renderer(QString strData, MessageCategory eMessage
             strData.remove(QString(QByteArray("\x01")));
             strData.remove("ACTION ");
 
-            strData.insert(11, "* ");
+            strData.insert(0, "* ");
             if (strData.contains("&lt;")) strData = strData.remove(strData.indexOf("&lt;"),4);
             if (strData.contains("&gt;")) strData = strData.remove(strData.indexOf("&gt;"),4);
 
             eMessageCategory = MeMessage;
         }
     }
-
-    // content last
-    QString strContentLast;
 
     // colors
     QString strFontColor;
@@ -103,17 +100,13 @@ QString HtmlMessagesRenderer::renderer(QString strData, MessageCategory eMessage
     else if (eMessageCategory == HilightMessage) // hilight no color
         strFontColor = Core::instance()->settings.value("default_font_color"); // default black
     else
-    {
-        eMessageCategory = DefaultMessage;
         strFontColor = Core::instance()->settings.value("default_font_color"); // default black
-    }
 
-    strData.insert(11, "<span style=\"color:"+strFontColor+";\">");
-    strContentLast = "</span>"+strContentLast;
+    strData = QString("<span style=\"color:%1;\">%2</span>").arg(strFontColor).arg(strData);
 
     // convert emoticons, font
     Convert *convertText = new Convert(true);
-    convertText->convertText(strData, strContentLast);
+    convertText->convertText(strData);
     delete convertText;
 
     // hilight
@@ -121,9 +114,5 @@ QString HtmlMessagesRenderer::renderer(QString strData, MessageCategory eMessage
     if (eMessageCategory == HilightMessage)
         strTextDecoration = "text-decoration:underline;";
 
-    // init text
-    QString strContent = "<span style=\"color:"+strDefaultFontColor+";font-size:"+strFontSize+";"+strTextDecoration+"\">";
-    strContent = strContent+strData+strContentLast+"</span>";
-
-    return strContent;
+    return QString("<span style=\"color:%1;font-size:%2;%3\">%4%5</span>").arg(strDefaultFontColor).arg(strFontSize).arg(strTextDecoration).arg(strDT).arg(strData);
 }

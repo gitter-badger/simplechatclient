@@ -265,15 +265,14 @@ void TabContainer::setTopic(QString &strChannel, QString &strTopic)
         strTopic.replace(">", "&gt;");
 
         QString strContent = strTopic;
-        QString strLastContent;
 
         // convert emoticons, font
         Convert *convertText = new Convert();
-        convertText->convertText(strContent,strLastContent);
+        convertText->convertText(strContent);
         delete convertText;
 
         // set topic
-        tw[i]->topic->setText("<b>"+tr("Topic:")+"</b> "+strContent+strLastContent);
+        tw[i]->topic->setText(QString("<b>%1</b> %2").arg(tr("Topic:")).arg(strContent));
 
         // tooltip
         strTopic.remove(QRegExp("%C([a-zA-Z0-9]+)%"));

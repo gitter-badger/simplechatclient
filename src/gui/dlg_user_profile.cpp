@@ -284,10 +284,6 @@ void DlgUserProfile::clearInfo()
 
 QString DlgUserProfile::convertDesc(QString strContent)
 {
-    QString strContentStart = "<html><body style=\"background-color:white;font-size:12px;font-family:Verdana;\">";
-    QString strContentEnd = "</body></html>";
-    QString strContentLast;
-
     // replace
     strContent.replace("&", "&amp;");
     strContent.replace("<", "&lt;");
@@ -295,12 +291,10 @@ QString DlgUserProfile::convertDesc(QString strContent)
 
     // convert
     Convert *convertText = new Convert();
-    convertText->convertText(strContent, strContentLast);
+    convertText->convertText(strContent);
     delete convertText;
 
-    // return
-    strContent = strContent+strContentLast;
-    return (strContentStart+strContent+strContentEnd);
+    return QString("<html><body style=\"background-color:white;font-size:12px;font-family:Verdana;\">%1</body></html>").arg(strContent);
 }
 
 QString DlgUserProfile::convertSex(QString strSex)

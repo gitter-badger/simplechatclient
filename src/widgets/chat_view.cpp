@@ -107,17 +107,15 @@ void ChatView::clearMessages()
 void ChatView::displayMessage(QString &strData, MessageCategory eMessageCategory, QString strTime)
 {
     QDateTime dt;
-    QString strDT;
     if (!strTime.isEmpty())
         dt = QDateTime::fromTime_t(strTime.toUInt());
     else
         dt = QDateTime::currentDateTime();
-    strDT = dt.toString("[hh:mm:ss] ");
-    strData = strDT+strData;
+    QString strDT = dt.toString("[hh:mm:ss] ");
 
     if (Core::instance()->settings.value("disable_logs") == "off")
     {
-        QString strSaveData = strData;
+        QString strSaveData = strDT+strData;
 
         // fix /me
         QString strRegExpMe = QString("%1ACTION %2%3").arg(QString(QByteArray("\x01"))).arg("(.*)").arg(QString(QByteArray("\x01")));
@@ -140,7 +138,7 @@ void ChatView::displayMessage(QString &strData, MessageCategory eMessageCategory
     }
 
     HtmlMessagesRenderer *r = new HtmlMessagesRenderer();
-    QString strContent = r->renderer(strData, eMessageCategory);
+    QString strContent = r->renderer(strDT, strData, eMessageCategory);
     delete r;
 
 #ifndef Q_WS_WIN
@@ -148,6 +146,7 @@ void ChatView::displayMessage(QString &strData, MessageCategory eMessageCategory
     strContent.replace("img src=\"", "img src=\"file://");
 #endif
 
+    // scroll
     if (this->page()->mainFrame()->scrollBarValue(Qt::Vertical) ==  this->page()->mainFrame()->scrollBarMaximum(Qt::Vertical))
         bScroll = true;
     else
