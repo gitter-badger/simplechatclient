@@ -253,6 +253,7 @@ private:
     void raw_819();
     void raw_820();
     void raw_821();
+    void raw_942();
     void raw_950();
     void raw_951();
     void raw_952();

@@ -326,6 +326,8 @@ void OnetKernel::kernel(QString param1)
             raw_820();
         else if (strDataList[1].toLower() == "821")
             raw_821();
+        else if (strDataList[1].toLower() == "942")
+            raw_942();
         else if (strDataList[1].toLower() == "950")
             raw_950();
         else if (strDataList[1].toLower() == "951")
@@ -4133,6 +4135,18 @@ void OnetKernel::raw_821()
     QString strChannel = strDataList[3];
 
     QString strMessage = QString(tr("* Channel %1 is not moderated")).arg(strChannel);
+    pTabC->showMsgActive(strMessage, InfoMessage);
+}
+
+// :cf1f4.onet 942 Merovingian nick_porzucony.64131723 :Invalid nickname
+void OnetKernel::raw_942()
+{
+    if (strDataList.size() < 4) return;
+
+    QString strNick = strDataList[3];
+
+    QString strMessage = QString(tr("* %1 :Invalid nickname")).arg(strNick);
+
     pTabC->showMsgActive(strMessage, InfoMessage);
 }
 

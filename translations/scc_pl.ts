@@ -2679,6 +2679,10 @@
         <translation>* Pokój %1 nie jest moderowany</translation>
     </message>
     <message>
+        <source>* %1 :Invalid nickname</source>
+        <translation>* %1 :Nieprawidłowy nick</translation>
+    </message>
+    <message>
         <source>* Removed %1 from silence list</source>
         <translation>* Usunięto %1 z listy ignorowanych</translation>
     </message>
