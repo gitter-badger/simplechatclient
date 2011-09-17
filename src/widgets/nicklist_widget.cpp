@@ -37,6 +37,7 @@ NickListWidget::NickListWidget(DlgUserProfile *param1)
 {
     pDlgUserProfile = param1;
 
+    setFocusPolicy(Qt::NoFocus);
     setSortingEnabled(false);
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 }
