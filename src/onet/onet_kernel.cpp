@@ -1304,7 +1304,10 @@ void OnetKernel::raw_001()
         Core::instance()->pNetwork->send("BUSY 1");
 
     // ignore_raw_141
-    Core::instance()->settings["ignore_raw_141"] = "off";
+    if (Core::instance()->settings.value("disable_autojoin_favourites") == "on")
+        Core::instance()->settings["ignore_raw_141"] = "on";
+    else
+        Core::instance()->settings["ignore_raw_141"] = "off";
 
     // override off
     Core::instance()->settings["override"] = "off";
