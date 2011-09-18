@@ -27,9 +27,6 @@ TabWidget::TabWidget(QString param1, DlgUserProfile *param2)
     strName = param1;
     pDlgUserProfile = param2;
 
-    QString strDefaultFontColor = Core::instance()->settings.value("default_font_color");
-    QString strBackgroundColor = Core::instance()->settings.value("background_color");
-
     topic = new QLabel(this);
     topic->setWordWrap(true);
     topic->setMinimumHeight(25);
@@ -53,10 +50,15 @@ TabWidget::TabWidget(QString param1, DlgUserProfile *param2)
         topic->hide();
 
     // set colors
-    if ((strBackgroundColor.toLower() != "#ffffff") && (!strBackgroundColor.isEmpty()))
-        this->setStyleSheet(QString("color:%1;background-color:%2;").arg(strDefaultFontColor).arg(strBackgroundColor));
-    else
-        this->setStyleSheet(QString::null);
+    QString strBackgroundColor;
+    if (Core::instance()->settings.value("background_color").toLower() != "#ffffff")
+        strBackgroundColor = QString("background-color:%1;").arg(Core::instance()->settings.value("background_color"));
+
+    QString strDefaultFontColor;
+    if (Core::instance()->settings.value("default_font_color").toLower() != "#000000")
+        strDefaultFontColor = QString("color:%1;").arg(Core::instance()->settings.value("default_font_color"));
+
+    this->setStyleSheet(strDefaultFontColor+strBackgroundColor);
 }
 
 TabWidget::~TabWidget()
@@ -66,13 +68,13 @@ TabWidget::~TabWidget()
 
 void TabWidget::refreshColors()
 {
-    // get values
-    QString strBackgroundColor = Core::instance()->settings.value("background_color");
-    QString strDefaultFontColor = Core::instance()->settings.value("default_font_color");
+    QString strBackgroundColor;
+    if (Core::instance()->settings.value("background_color").toLower() != "#ffffff")
+        strBackgroundColor = QString("background-color:%1;").arg(Core::instance()->settings.value("background_color"));
 
-    // this
-    if (strBackgroundColor.toLower() != "#ffffff")
-        this->setStyleSheet(QString("color:%1;background-color:%2;").arg(strDefaultFontColor).arg(strBackgroundColor));
-    else
-        this->setStyleSheet(QString::null);
+    QString strDefaultFontColor;
+    if (Core::instance()->settings.value("default_font_color").toLower() != "#000000")
+        strDefaultFontColor = QString("color:%1;").arg(Core::instance()->settings.value("default_font_color"));
+
+    this->setStyleSheet(strDefaultFontColor+strBackgroundColor);
 }

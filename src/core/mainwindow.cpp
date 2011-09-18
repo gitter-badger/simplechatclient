@@ -420,13 +420,15 @@ void MainWindow::showOptions()
 // refresh colors
 void MainWindow::refreshColors()
 {
-    QString strBackgroundColor = Core::instance()->settings.value("background_color");
-    QString strDefaultFontColor = Core::instance()->settings.value("default_font_color");
+    QString strBackgroundColor;
+    if (Core::instance()->settings.value("background_color").toLower() != "#ffffff")
+        strBackgroundColor = QString("background-color:%1;").arg(Core::instance()->settings.value("background_color"));
 
-    if (strBackgroundColor.toLower() != "#ffffff")
-        this->setStyleSheet(QString("color:%1;background-color:%2;").arg(strDefaultFontColor).arg(strBackgroundColor));
-    else
-        this->setStyleSheet(QString::null);
+    QString strDefaultFontColor;
+    if (Core::instance()->settings.value("default_font_color").toLower() != "#000000")
+        strDefaultFontColor = QString("color:%1;").arg(Core::instance()->settings.value("default_font_color"));
+
+    this->setStyleSheet(strDefaultFontColor+strBackgroundColor);
 
     pTabC->refreshColors();
 }
