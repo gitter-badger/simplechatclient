@@ -158,3 +158,9 @@ void InputLineDockWidget::slotClearContent(QString strChannel)
 {
     emit clearContent(strChannel);
 }
+
+// from mainwindow/core/options
+void InputLineDockWidget::refreshToolWidgetValues()
+{
+    pToolWidget->setDefaultValues();
+}

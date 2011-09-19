@@ -38,6 +38,7 @@ public:
     ToolWidget(QWidget *, InputWidget *, DlgChannelSettings *, DlgModeration *);
     void setModeration(bool);
     void setChannelSettings(bool);
+    void setDefaultValues();
 
 private:
     // params
@@ -85,8 +86,6 @@ private:
     QAction *size18Act;
     QAction *size20Act;
     QAction *size24Act;
-
-    void setDefault();
 
 private slots:
     void showFontButtonsClicked();

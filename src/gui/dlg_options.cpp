@@ -467,6 +467,9 @@ void DlgOptions::currentProfileChanged(int row)
 
     // refresh background image
     Core::instance()->refreshBackgroundImage();
+
+    // refresh tool widget values
+    Core::instance()->refreshToolWidgetValues();
 }
 
 void DlgOptions::buttonProfiles()

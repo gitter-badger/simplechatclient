@@ -110,7 +110,7 @@ void Core::createGui()
 void Core::createSettings()
 {
     // default settings
-    settings["version"] = "1.1.3.1030";
+    settings["version"] = "1.1.3.1031";
     settings["logged"] = "off";
     settings["busy"] = "off";
     settings["away"] = "off";
@@ -265,6 +265,12 @@ void Core::refreshColors()
 void Core::refreshBackgroundImage()
 {
     window->refreshBackgroundImage();
+}
+
+// from options
+void Core::refreshToolWidgetValues()
+{
+    window->refreshToolWidgetValues();
 }
 
 // update

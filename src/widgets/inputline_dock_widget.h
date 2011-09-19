@@ -40,6 +40,7 @@ public:
     void showToolwidget();
     void hideChannelSettings();
     void showChannelSettings();
+    void refreshToolWidgetValues();
 
 public slots:
     void slotUpdateNick(QString);

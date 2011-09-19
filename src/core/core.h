@@ -58,6 +58,7 @@ public:
     // from options
     void refreshColors();
     void refreshBackgroundImage();
+    void refreshToolWidgetValues();
     // update
     void checkUpdate();
     // update nick avatar

@@ -195,8 +195,8 @@ ToolWidget::ToolWidget(QWidget *parent, InputWidget *param1, DlgChannelSettings 
     toolLayout->addWidget(clear);
     setLayout(toolLayout);
 
-    // set default
-    setDefault();
+    // set default values
+    setDefaultValues();
 
     // signals
     QObject::connect(showFontButtons, SIGNAL(clicked()), this, SLOT(showFontButtonsClicked()));
@@ -228,7 +228,7 @@ ToolWidget::ToolWidget(QWidget *parent, InputWidget *param1, DlgChannelSettings 
     QObject::connect(clear, SIGNAL(clicked()), this, SLOT(clearClicked()));
 }
 
-void ToolWidget::setDefault()
+void ToolWidget::setDefaultValues()
 {
     // font buttons
     bShowFontButtons = false;

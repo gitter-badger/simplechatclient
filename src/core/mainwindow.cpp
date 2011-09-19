@@ -439,6 +439,12 @@ void MainWindow::refreshBackgroundImage()
     pTabC->refreshBackgroundImage();
 }
 
+// refresh inputline color
+void MainWindow::refreshToolWidgetValues()
+{
+    pInputLineDockWidget->refreshToolWidgetValues();
+}
+
 // buttons
 void MainWindow::buttonConnect()
 {
