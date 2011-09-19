@@ -990,14 +990,6 @@
         <translation>Emotikony</translation>
     </message>
     <message>
-        <source>Standard</source>
-        <translation>Standardowe</translation>
-    </message>
-    <message>
-        <source>Extended</source>
-        <translation>Rozszerzone</translation>
-    </message>
-    <message>
         <source>Insert</source>
         <translation>Wstaw</translation>
     </message>

@@ -23,34 +23,21 @@
 
 class InputWidget;
 class MainWindow;
+class QListWidget;
 #include <QDialog>
-#include <QThread>
 #include "ui_emoticons.h"
 
-class ThreadEmoticonsStandard : public QThread
+class DlgEmoticonsTab : public QWidget
 {
     Q_OBJECT
 public:
-    ThreadEmoticonsStandard();
+    DlgEmoticonsTab(QString, QWidget *parent = 0);
+    QListWidget *listWidget;
 
-protected:
-    void run();
+private:
+    QString strDir;
 
-signals:
-    void insertEmoticonsStandard(QString, QByteArray);
-};
-
-class ThreadEmoticonsExtended : public QThread
-{
-    Q_OBJECT
-public:
-    ThreadEmoticonsExtended();
-
-protected:
-    void run();
-
-signals:
-    void insertEmoticonsExtended(QString, QByteArray);
+    void showEmoticons();
 };
 
 class DlgEmoticons : public QDialog
@@ -58,29 +45,16 @@ class DlgEmoticons : public QDialog
     Q_OBJECT
 public:
     DlgEmoticons(MainWindow *, InputWidget *);
-    ~DlgEmoticons();
 
 private:
     Ui::uiEmoticons ui;
     InputWidget *pInputWidget;
-    ThreadEmoticonsStandard pThreadEmoticonsStandard;
-    ThreadEmoticonsExtended pThreadEmoticonsExtended;
-    bool bDoneStandard;
-    bool bDoneExtended;
 
     void createGui();
     void setDefaultValues();
     void createSignals();
 
-    void getEmoticonsStandard();
-    void getEmoticonsExtended();
-
-private slots:
-    void insertEmoticonsStandard(QString, QByteArray);
-    void insertEmoticonsExtended(QString, QByteArray);
-    void currentTabChanged(int);
-    void clickedStandard(QModelIndex);
-    void clickedExtended(QModelIndex);
+public slots:
     void buttonInsert();
 };
 

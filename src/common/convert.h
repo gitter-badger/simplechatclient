@@ -51,6 +51,7 @@ private:
     void convertColor(QString &);
     void convertFont(QString &);
     void convertEmoticons(QString &);
+    QString findEmoticon(QString);
 };
 
 #endif // CONVERT_H

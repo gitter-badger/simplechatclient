@@ -19,6 +19,7 @@
  ****************************************************************************/
 
 #include <QCoreApplication>
+#include <QDir>
 #include <QFile>
 #include "core.h"
 #include "convert.h"
@@ -121,13 +122,6 @@ void Convert::convertFont(QString &strData)
 
 void Convert::convertEmoticons(QString &strData)
 {
-    QString strPath;
-#ifdef Q_WS_WIN
-    strPath = QCoreApplication::applicationDirPath();
-#else
-    strPath = "/usr/share/scc";
-#endif
-
     QStringList lData = strData.split(" ");
 
     for (int i = 0; i < lData.size(); i++)
@@ -140,12 +134,7 @@ void Convert::convertEmoticons(QString &strData)
             pos += rx.matchedLength();
 
             QString strEmoticon = rx.cap(1);
-
-            QString strEmoticonPath;
-            if (QFile::exists(strPath+"/3rdparty/emoticons/"+strEmoticon+".gif"))
-                strEmoticonPath = strPath+"/3rdparty/emoticons/"+strEmoticon+".gif";
-            else if (QFile::exists(strPath+"/3rdparty/emoticons_other/"+strEmoticon+".gif"))
-                strEmoticonPath = strPath+"/3rdparty/emoticons_other/"+strEmoticon+".gif";
+            QString strEmoticonPath = findEmoticon(strEmoticon);
 
             if (!strEmoticonPath.isEmpty())
             {
@@ -246,4 +235,38 @@ void Convert::removeColor(QString &strData)
         }
         iFontColor++;
     }
+}
+
+QString Convert::findEmoticon(QString strEmoticon)
+{
+    QString strPath;
+#ifdef Q_WS_WIN
+    strPath = QCoreApplication::applicationDirPath();
+#else
+    strPath = "/usr/share/scc";
+#endif
+
+    QDir dAllEmoticonsDirs = strPath+"/3rdparty/emoticons";
+    QStringList lDirs = dAllEmoticonsDirs.entryList(QStringList("*"), QDir::Dirs | QDir::NoSymLinks);
+
+    for (int i = 0; i < lDirs.size(); i++)
+    {
+        QString strDir = lDirs[i];
+        if ((strDir != ".") && (strDir != ".."))
+        {
+            QDir dEmoticonsDir = QString("%1/%2").arg(dAllEmoticonsDirs.path()).arg(strDir);
+            QStringList lFiles = dEmoticonsDir.entryList(QStringList("*.gif"), QDir::Files | QDir::NoSymLinks);
+
+            for (int i = 0; i < lFiles.size(); i++)
+            {
+                QString strFileName = lFiles.at(i);
+                QString strShortFileName = strFileName;
+                strShortFileName.remove(".gif");
+
+                if (strShortFileName == strEmoticon)
+                    return QString("%1/%2").arg(dEmoticonsDir.path()).arg(strFileName);
+            }
+        }
+    }
+    return QString::null;
 }

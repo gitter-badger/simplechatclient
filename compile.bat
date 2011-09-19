@@ -93,8 +93,7 @@ xcopy images\wallpaper\*.jpg %DESTINATION%\images\wallpaper\ /C /H /R /Y /Q
 
 echo Copying 3rdparty
 xcopy 3rdparty\LICENSE %DESTINATION%\3rdparty\ /C /H /R /Y /Q 
-xcopy 3rdparty\emoticons\*.gif %DESTINATION%\3rdparty\emoticons\ /C /H /R /Y /Q 
-xcopy 3rdparty\emoticons_other\*.gif %DESTINATION%\3rdparty\emoticons_other\ /C /H /R /Y /Q 
+xcopy 3rdparty\emoticons\*.gif %DESTINATION%\3rdparty\emoticons\ /C /H /R /Y /Q /S /exclude .svn
 xcopy 3rdparty\sounds\*.wav %DESTINATION%\3rdparty\sounds\ /C /H /R /Y /Q 
 
 echo Copying Qt plugins
