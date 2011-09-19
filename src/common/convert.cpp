@@ -70,50 +70,55 @@ void Convert::convertFont(QString &strData)
 
             if (!strFont.isEmpty())
             {
-                QString strFontStyle;
-                QString strFontName;
-                QString strFontWeight;
-                QString strShortFontWeight;
+                if (Core::instance()->settings.value("hide_formating") == "off")
+                {
+                    QString strFontStyle;
+                    QString strFontName;
+                    QString strFontWeight;
+                    QString strShortFontWeight;
 
-                if (strFont.contains(":"))
-                {
-                    strShortFontWeight = strFont.left(strFont.indexOf(":"));
-                    strFontName = strFont.right(strFont.size()-strFont.indexOf(":")-1);
-                }
-                else
-                {
-                    QRegExp rx("((b|i)?)((b|i)?)");
-                    if (rx.exactMatch(strFont))
-                        strShortFontWeight = strFont;
-                }
-
-                if (!strShortFontWeight.isEmpty())
-                {
-                    for (int fw = 0; fw < strShortFontWeight.size(); fw++)
+                    if (strFont.contains(":"))
                     {
-                        if (strShortFontWeight[fw] == 'b') strFontWeight = "bold";
-                        else if (strShortFontWeight[fw] == 'i') strFontStyle = "italic";
+                        strShortFontWeight = strFont.left(strFont.indexOf(":"));
+                        strFontName = strFont.right(strFont.size()-strFont.indexOf(":")-1);
+                    }
+                    else
+                    {
+                        QRegExp rx("((b|i)?)((b|i)?)");
+                        if (rx.exactMatch(strFont))
+                            strShortFontWeight = strFont;
+                    }
+
+                    if (!strShortFontWeight.isEmpty())
+                    {
+                        for (int fw = 0; fw < strShortFontWeight.size(); fw++)
+                        {
+                            if (strShortFontWeight[fw] == 'b') strFontWeight = "bold";
+                            else if (strShortFontWeight[fw] == 'i') strFontStyle = "italic";
+                        }
+                    }
+
+                    if ((!strFontName.isEmpty()) || (!strFontWeight.isEmpty()) || (!strFontStyle.isEmpty()))
+                    {
+                        QString strFontFamily;
+                        if (strFontName == "arial") strFontFamily = "Arial";
+                        else if (strFontName == "times") strFontFamily = "Times New Roman";
+                        else if (strFontName == "verdana") strFontFamily = "Verdana";
+                        else if (strFontName == "tahoma") strFontFamily = "Tahoma";
+                        else if (strFontName == "courier") strFontFamily = "Courier New";
+                        else strFontFamily = "Verdana";
+
+                        if (strFontWeight.isEmpty())
+                            strFontWeight = "normal";
+                        if (strFontStyle.isEmpty())
+                            strFontStyle = "normal";
+
+                        lData[i].replace(QString("%F%1%").arg(strFont), QString("<span style=\"font-weight:%1;font-style:%2;font-family:%3;\">").arg(strFontWeight).arg(strFontStyle).arg(strFontFamily));
+                        strSpans += "</span>";
                     }
                 }
-
-                if ((!strFontName.isEmpty()) || (!strFontWeight.isEmpty()) || (!strFontStyle.isEmpty()))
-                {
-                    QString strFontFamily;
-                    if (strFontName == "arial") strFontFamily = "Arial";
-                    else if (strFontName == "times") strFontFamily = "Times New Roman";
-                    else if (strFontName == "verdana") strFontFamily = "Verdana";
-                    else if (strFontName == "tahoma") strFontFamily = "Tahoma";
-                    else if (strFontName == "courier") strFontFamily = "Courier New";
-                    else strFontFamily = "Verdana";
-
-                    if (strFontWeight.isEmpty())
-                        strFontWeight = "normal";
-                    if (strFontStyle.isEmpty())
-                        strFontStyle = "normal";
-
-                    lData[i].replace(QString("%F%1%").arg(strFont), QString("<span style=\"font-weight:%1;font-style:%2;font-family:%3;\">").arg(strFontWeight).arg(strFontStyle).arg(strFontFamily));
-                    strSpans += "</span>";
-                }
+                else
+                    lData[i].remove(QString("%F%1%").arg(strFont));
             }
         }
     }
@@ -134,18 +139,24 @@ void Convert::convertEmoticons(QString &strData)
             pos += rx.matchedLength();
 
             QString strEmoticon = rx.cap(1);
-            QString strEmoticonPath = findEmoticon(strEmoticon);
 
-            if (!strEmoticonPath.isEmpty())
+            if (Core::instance()->settings.value("disable_emots") == "off")
             {
-                QString strWidthHeight;
-                if (bInsertWidthHeight)
-                {
-                    QPixmap p(strEmoticonPath);
-                    strWidthHeight = "width=\""+QString::number(p.width())+"px\" height=\""+QString::number(p.height())+"px\"";
-                }
+                QString strEmoticonPath = findEmoticon(strEmoticon);
 
-                lData[i].replace(QString("%I%1%").arg(strEmoticon), QString("<img src=\"%1\" alt=\"%2\" %3 />").arg(strEmoticonPath).arg(strEmoticon).arg(strWidthHeight));
+                if (!strEmoticonPath.isEmpty())
+                {
+                    QString strWidthHeight;
+                    if (bInsertWidthHeight)
+                    {
+                        QPixmap p(strEmoticonPath);
+                        strWidthHeight = "width=\""+QString::number(p.width())+"px\" height=\""+QString::number(p.height())+"px\"";
+                    }
+
+                    lData[i].replace(QString("%I%1%").arg(strEmoticon), QString("<img src=\"%1\" alt=\"%2\" %3 />").arg(strEmoticonPath).arg(strEmoticon).arg(strWidthHeight));
+                }
+                else
+                    lData[i].replace(QString("%I%1%").arg(strEmoticon), QString("//%1").arg(strEmoticon));
             }
             else
                 lData[i].replace(QString("%I%1%").arg(strEmoticon), QString("//%1").arg(strEmoticon));
