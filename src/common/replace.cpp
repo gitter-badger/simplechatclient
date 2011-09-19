@@ -34,9 +34,9 @@ void Replace::convertAndReplaceEmots(QString &strData)
 
 void Replace::convertEmots(QString &strData)
 {
-    strData.replace(QRegExp("(http:|https:)//"), "\\1\\\\"); // fix http/s
+    strData.replace(QRegExp("(ftp:|http:|https:)//"), "\\1\\\\"); // fix ftp http https
     strData.replace(QRegExp("//([a-zA-Z0-9_-]+)\\b"), "%I\\1%");
-    strData.replace(QRegExp("(http:|https:)\\\\\\\\"), "\\1//"); // fix http/s
+    strData.replace(QRegExp("(ftp:|http:|https:)\\\\\\\\"), "\\1//"); // fix ftp http https
 }
 
 void Replace::replaceEmots(QString &strData)
@@ -81,7 +81,7 @@ void Replace::replaceEmots(QString &strData)
     strData.replace(":<", "%Iumm%");
     strData.replace(";<", "%Ibuu%");
 
-    if ((!strData.contains("http://")) && (!strData.contains("https://")))
+    if (!strData.contains(QRegExp("(ftp:|http:|https:)//")))
         strData.replace(":/", "%Isceptyczny%");
     strData.replace(";/", "%Isceptyczny%");
     strData.replace(":\\", "%Isceptyczny%");

@@ -284,9 +284,9 @@ QString Commands::cmdMp3()
             strWinamp.replace("$length", strLength);
 
             // emots
-            strWinamp.replace(QRegExp("(http:|https:)//"), "\\1\\\\"); // fix http https
+            strWinamp.replace(QRegExp("(ftp:|http:|https:)//"), "\\1\\\\"); // fix ftp http https
             strWinamp.replace(QRegExp("//([a-zA-Z0-9_-]+)\\b"), "%I\\1%");
-            strWinamp.replace(QRegExp("(http:|https:)\\\\\\\\"), "\\1//"); // fix http https
+            strWinamp.replace(QRegExp("(ftp:|http:|https:)\\\\\\\\"), "\\1//"); // fix ftp http https
 
             return strWinamp;
         }

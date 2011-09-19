@@ -261,9 +261,9 @@ QString DlgMyProfile::convertTextToDesc(QString strContent)
 QString DlgMyProfile::convertDescToText(QString strContent)
 {
     strContent.remove(QRegExp("(\r|\n)"));
-    strContent.replace(QRegExp("(http:|https:)//"), "\\1\\\\"); // fix http https
+    strContent.replace(QRegExp("(ftp:|http:|https:)//"), "\\1\\\\"); // fix ftp http https
     strContent.replace(QRegExp("//([a-zA-Z0-9_-]+)\\b"), "%I\\1%");
-    strContent.replace(QRegExp("(http:|https:)\\\\\\\\"), "\\1//"); // fix http https
+    strContent.replace(QRegExp("(ftp:|http:|https:)\\\\\\\\"), "\\1//"); // fix ftp http https
 
     bool bBold = false;
     bool bItalic = false;

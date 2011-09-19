@@ -38,7 +38,6 @@ QString HtmlMessagesRenderer::renderer(QString strDT, QString strData, MessageCa
 
     // default font color
     QString strFontSize = Core::instance()->settings.value("font_size");
-    QString strDefaultFontColor = Core::instance()->settings.value("default_font_color");
     QString strChannelFontColor = Core::instance()->settings.value("channel_font_color");
 
     // fix for context menu
@@ -47,14 +46,19 @@ QString HtmlMessagesRenderer::renderer(QString strDT, QString strData, MessageCa
     {
         QString strWord = strDataList[i];
 
-        if ((i == 0) && (strWord.contains("&lt;")) && (strWord.contains("&gt;")))
+        if ((i == 0) && (strWord.startsWith("&lt;")) && (strWord.endsWith("&gt;")))
             strDataList[i] = "<a href=\"#\" onclick=\"return false\" name=\"nick\" style=\"color:inherit;text-decoration:none;\">"+strDataList[i]+"</a>";
         if ((i == 1) && (strDataList[i-1] == "*") && ((eMessageCategory == JoinMessage) || (eMessageCategory == PartMessage) || (eMessageCategory == QuitMessage)  || (eMessageCategory == KickMessage)))
             strDataList[i] = "<a href=\"#\" onclick=\"return false\" name=\"nick\" style=\"color:inherit;text-decoration:none;\">"+strDataList[i]+"</a>";
         if (strWord[0] == '#')
             strDataList[i] = "<a href=\"#\" onclick=\"return false\" name=\"channel\" style=\"color:"+strChannelFontColor+";text-decoration:none;\">"+strDataList[i]+"</a>";
-        if ((strWord.contains("http")) || (strWord.contains("www")))
-            strDataList[i] = "<a href=\"#\" onclick=\"return false\" name=\"website\" style=\"color:inherit;text-decoration:none;\">"+strDataList[i]+"</a>";
+        if ((strWord.contains(QRegExp("(ftp:|http:|https:)//"))) || (strWord.contains("www.")))
+        {
+            int pos = strWord.indexOf(QRegExp("(ftp:|http:|https:|www.)"));
+            QString strBeforeLink = strWord.left(pos);
+            strDataList[i].remove(0, pos);
+            strDataList[i] = strBeforeLink+"<a href=\"#\" onclick=\"return false\" name=\"website\" style=\"color:inherit;text-decoration:none;\">"+strDataList[i]+"</a>";
+        }
     }
     strData = strDataList.join(" ");
 
@@ -102,8 +106,6 @@ QString HtmlMessagesRenderer::renderer(QString strDT, QString strData, MessageCa
     else
         strFontColor = Core::instance()->settings.value("default_font_color"); // default black
 
-    strData = QString("<span style=\"color:%1;\">%2</span>").arg(strFontColor).arg(strData);
-
     // convert emoticons, font
     Convert *convertText = new Convert(true);
     convertText->convertText(strData);
@@ -114,5 +116,5 @@ QString HtmlMessagesRenderer::renderer(QString strDT, QString strData, MessageCa
     if (eMessageCategory == HilightMessage)
         strTextDecoration = "text-decoration:underline;";
 
-    return QString("<span style=\"color:%1;font-size:%2;%3\">%4%5</span>").arg(strDefaultFontColor).arg(strFontSize).arg(strTextDecoration).arg(strDT).arg(strData);
+    return QString("<span style=\"color:%1;font-size:%2;%3\">%4%5</span>").arg(strFontColor).arg(strFontSize).arg(strTextDecoration).arg(strDT).arg(strData);
 }
