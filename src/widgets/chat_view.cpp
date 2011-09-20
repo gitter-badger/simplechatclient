@@ -540,13 +540,11 @@ void ChatView::menuStandard(QContextMenuEvent *event)
     {
         QAction *copy = this->pageAction(QWebPage::Copy);
         copy->setIcon(QIcon(":/images/oxygen/16x16/edit-copy.png"));
-        //copy->setShortcut(QKeySequence::Copy);
         menu.addAction(copy);
     }
 
     QAction *all = this->pageAction(QWebPage::SelectAll);
     all->setIcon(QIcon(":/images/oxygen/16x16/edit-select-all.png"));
-    //all->setShortcut(QKeySequence::SelectAll);
     menu.addAction(all);
 
     menu.exec(event->globalPos());
