@@ -35,6 +35,7 @@ SOURCES += src/avatars/avatar.cpp \
     src/gui/dlg_channel_list.cpp \
     src/gui/dlg_channel_settings.cpp \
     src/gui/dlg_emoticons.cpp \
+    src/gui/dlg_find_text.cpp \
     src/gui/dlg_friends.cpp \
     src/gui/dlg_ignore.cpp \
     src/gui/dlg_invite.cpp \
@@ -148,6 +149,7 @@ FORMS += ui/about.ui \
     ui/channel_list.ui \
     ui/channel_settings.ui \
     ui/emoticons.ui \
+    ui/find_text.ui \
     ui/friends.ui \
     ui/ignore.ui \
     ui/invite.ui \

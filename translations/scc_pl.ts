@@ -2,6 +2,133 @@
 <!DOCTYPE TS>
 <TS version="2.0" language="pl">
 <context>
+    <name>ChatView</name>
+    <message>
+        <source>Join channel</source>
+        <translation>Wejdź do pokoju</translation>
+    </message>
+    <message>
+        <source>No reason</source>
+        <translation>Zachowuj się! Byle jak ale się zachowuj!</translation>
+    </message>
+    <message>
+        <source>Invite</source>
+        <translation>Zaproś</translation>
+    </message>
+    <message>
+        <source>Friends list</source>
+        <translation>Lista przyjaciół</translation>
+    </message>
+    <message>
+        <source>Add to friends</source>
+        <translation>Dodaj do listy przyjaciół</translation>
+    </message>
+    <message>
+        <source>Remove from friends</source>
+        <translation>Usuń z listy przyjaciół</translation>
+    </message>
+    <message>
+        <source>Ignore list</source>
+        <translation>Lista ignorowanych</translation>
+    </message>
+    <message>
+        <source>Add to Ignore list</source>
+        <translation>Dodaj do listy ignorowanych</translation>
+    </message>
+    <message>
+        <source>Remove from Ignore list</source>
+        <translation>Usuń z listy ignorowanych</translation>
+    </message>
+    <message>
+        <source>Actions</source>
+        <translation>Uprawnienia</translation>
+    </message>
+    <message>
+        <source>Give super operator status</source>
+        <translation>Nadaj prawa super operatora</translation>
+    </message>
+    <message>
+        <source>Take super operator status</source>
+        <translation>Odbierz prawa super operatora</translation>
+    </message>
+    <message>
+        <source>Give operator status</source>
+        <translation>Nadaj prawa operatora</translation>
+    </message>
+    <message>
+        <source>Take operator status</source>
+        <translation>Odbierz prawa operatora</translation>
+    </message>
+    <message>
+        <source>Give moderator status</source>
+        <translation>Nadaj prawa moderatora</translation>
+    </message>
+    <message>
+        <source>Take moderator status</source>
+        <translation>Odbierz prawa moderatora</translation>
+    </message>
+    <message>
+        <source>Give guest status</source>
+        <translation>Nadaj prawa gościa</translation>
+    </message>
+    <message>
+        <source>Take guest status</source>
+        <translation>Odbierz prawa gościa</translation>
+    </message>
+    <message>
+        <source>Priv</source>
+        <translation>Rozmowa prywatna</translation>
+    </message>
+    <message>
+        <source>Whois</source>
+        <translation>Whois</translation>
+    </message>
+    <message>
+        <source>Profile</source>
+        <translation>Wizytówka</translation>
+    </message>
+    <message>
+        <source>Webcam</source>
+        <translation>Kamerka</translation>
+    </message>
+    <message>
+        <source>Kick From Channel</source>
+        <translation>Wyrzuć</translation>
+    </message>
+    <message>
+        <source>Ban From Channel</source>
+        <translation>Cichy ban</translation>
+    </message>
+    <message>
+        <source>Kick &amp; Ban</source>
+        <translation>Banuj i wyrzuć</translation>
+    </message>
+    <message>
+        <source>IP Ban</source>
+        <translation>Banuj IP</translation>
+    </message>
+    <message>
+        <source>Reason for kicking:</source>
+        <translation>Podaj powód wyrzucenia:</translation>
+    </message>
+    <message>
+        <source>Send to notes</source>
+        <translation>Wyślij do notatek</translation>
+    </message>
+    <message>
+        <source>Clear</source>
+        <translation>Wyczyść</translation>
+    </message>
+    <message>
+        <source>Open link</source>
+        <translation>Otwórz w przeglądarce</translation>
+    </message>
+    <message>
+        <source>Find...</source>
+        <translation>Znajdź...</translation>
+    </message>
+</context>
+<context>
     <name>Commands</name>
     <message>
         <source>* Available commands:</source>
@@ -198,252 +325,6 @@
     </message>
 </context>
 <context>
-    <name>Kamerzysta</name>
-    <message>
-        <source>Error</source>
-        <translation>Błąd</translation>
-    </message>
-    <message>
-        <source>Kamerzysta not found!</source>
-        <translation>Nie znaleziono Kamerzysty!</translation>
-    </message>
-    <message>
-        <source>Kamerzysta is wrong installed!</source>
-        <translation>Program Kamerzysta jest nie poprawnie zainstalowany!</translation>
-    </message>
-</context>
-<context>
-    <name>Log</name>
-    <message>
-        <source>Error: log: Cannot open file </source>
-        <translation>Błąd: log: Nie można otworzyć pliku </translation>
-    </message>
-</context>
-<context>
-    <name>WebcamEngine</name>
-    <message>
-        <source>Starting the service webcams</source>
-        <translation>Uruchamianie obsługi kamerek</translation>
-    </message>
-    <message>
-        <source>Connected to server webcam.</source>
-        <translation>Połączono z serwerem kamerek.</translation>
-    </message>
-    <message>
-        <source>Please wait ...</source>
-        <translation>Proszę czekać...</translation>
-    </message>
-    <message>
-        <source>Disconnected from server webcams</source>
-        <translation>Rozłączono z serwerem kamerek</translation>
-    </message>
-    <message>
-        <source>Select user</source>
-        <translation>Wybierz użytkownika</translation>
-    </message>
-    <message>
-        <source>This user does not send data</source>
-        <translation>Podany użytkownik nie wysyła obrazu</translation>
-    </message>
-    <message>
-        <source>Setting mode for viewing only</source>
-        <translation>Ustawienie trybu tylko do oglądania</translation>
-    </message>
-    <message>
-        <source>The specified user has left the chat</source>
-        <translation>Podany użytkownik opuścił czat</translation>
-    </message>
-    <message>
-        <source>The specified user does not have a webcam enabled</source>
-        <translation>Podany użytkownik nie ma włączonej kamerki</translation>
-    </message>
-    <message>
-        <source>Failed to retrieve the image from the webcam</source>
-        <translation>Nie udało się pobrać obrazu z kamerki</translation>
-    </message>
-    <message>
-        <source>Invalid authorization key</source>
-        <translation>Nieprawidłowy klucz autoryzacji</translation>
-    </message>
-</context>
-<context>
-    <name>WebcamNetwork</name>
-    <message>
-        <source>Error: Failed to send data! [%1]</source>
-        <translation>Błąd: Nie udało się wysłać danych! [%1]</translation>
-    </message>
-    <message>
-        <source>Error: Failed to send data! [Not connected]</source>
-        <translation>Błąd: Nie udało się wysłać danych! [Not connected]</translation>
-    </message>
-</context>
-<context>
-    <name>MainWindow</name>
-    <message>
-        <source>Navigation bar</source>
-        <translation>Pasek nawigacji</translation>
-    </message>
-    <message>
-        <source>Typing messages</source>
-        <translation>Wpisywanie wiadomości</translation>
-    </message>
-    <message>
-        <source>Users</source>
-        <translation>Użytkownicy</translation>
-    </message>
-    <message>
-        <source>Users (%1)</source>
-        <translation>Użytkownicy (%1)</translation>
-    </message>
-    <message>
-        <source>&amp;Connect</source>
-        <translation>&amp;Połącz</translation>
-    </message>
-    <message>
-        <source>&amp;Disconnect</source>
-        <translation>&amp;Rozłącz</translation>
-    </message>
-    <message>
-        <source>Restore</source>
-        <translation>Przywróć</translation>
-    </message>
-    <message>
-        <source>Minimalize</source>
-        <translation>Minimalizuj</translation>
-    </message>
-    <message>
-        <source>Close</source>
-        <translation>Zakończ</translation>
-    </message>
-    <message>
-        <source>Options</source>
-        <translation>Opcje programu</translation>
-    </message>
-    <message>
-        <source>Channel list</source>
-        <translation>Lista pokoi</translation>
-    </message>
-    <message>
-        <source>My channels</source>
-        <translation>Moje pokoje</translation>
-    </message>
-    <message>
-        <source>Favorite channels</source>
-        <translation>Ulubione pokoje</translation>
-    </message>
-    <message>
-        <source>Friends</source>
-        <translation>Przyjaciele</translation>
-    </message>
-    <message>
-        <source>Ignored</source>
-        <translation>Ignorowani</translation>
-    </message>
-    <message>
-        <source>Offline messages</source>
-        <translation>Wiadomości offline</translation>
-    </message>
-    <message>
-        <source>Awaylog</source>
-        <translation>Awaylog</translation>
-    </message>
-    <message>
-        <source>Cams</source>
-        <translation>Kamerki</translation>
-    </message>
-    <message>
-        <source>My statistics</source>
-        <translation>Moje statystyki</translation>
-    </message>
-    <message>
-        <source>My profile</source>
-        <translation>Moja wizytówka</translation>
-    </message>
-    <message>
-        <source>About SCC ...</source>
-        <translation>O programie SCC...</translation>
-    </message>
-    <message>
-        <source>Notes</source>
-        <translation>Notatki</translation>
-    </message>
-    <message>
-        <source>&amp;File</source>
-        <translation>&amp;Plik</translation>
-    </message>
-    <message>
-        <source>&amp;View</source>
-        <translation>&amp;Widok</translation>
-    </message>
-    <message>
-        <source>&amp;Settings</source>
-        <translation>&amp;Ustawienia</translation>
-    </message>
-    <message>
-        <source>&amp;Chat</source>
-        <translation>&amp;Czat</translation>
-    </message>
-    <message>
-        <source>&amp;My</source>
-        <translation>&amp;Moje</translation>
-    </message>
-    <message>
-        <source>He&amp;lp</source>
-        <translation>Pomo&amp;c</translation>
-    </message>
-    <message>
-        <source>Welcome to the Simple Chat Client</source>
-        <translation>Witaj w programie Simple Chat Client</translation>
-    </message>
-    <message>
-        <source>Official website</source>
-        <translation>Oficjalna strona</translation>
-    </message>
-    <message>
-        <source>Not here right now</source>
-        <translation>Nie ma mnie</translation>
-    </message>
-</context>
-<context>
-    <name>Network</name>
-    <message>
-        <source>Error: Could not connect to the server - connection already exists!</source>
-        <translation>Błąd: Nie można się połączyć z serwerem - połączenie już istnieje!</translation>
-    </message>
-    <message>
-        <source>Reconnecting...</source>
-        <translation>Ponowne łączenie z serwerem...</translation>
-    </message>
-    <message>
-        <source>Error: Could not send data! [%1]</source>
-        <translation>Błąd: Nie udało się wysłać danych! [%1]</translation>
-    </message>
-    <message>
-        <source>Error: Could not send data! [Not connected]</source>
-        <translation>Błąd: Nie udało się wysłać danych! [Not connected]</translation>
-    </message>
-    <message>
-        <source>Connected to server</source>
-        <translation>Połączono z serwerem</translation>
-    </message>
-    <message>
-        <source>Disconnected from server [%1]</source>
-        <translation>Rozłączono z serwerem [%1]</translation>
-    </message>
-    <message>
-        <source>Disconnected from server</source>
-        <translation>Rozłączono z serwerem</translation>
-    </message>
-    <message>
-        <source>(Unregistered)</source>
-        <translation>(Niezalogowany)</translation>
-    </message>
-    <message>
-        <source>No PONG reply from server in 301 seconds. Disconnecting...</source>
-        <translation>Serwer nieaktywny od 301 sekund. Rozłączanie...</translation>
-    </message>
-</context>
-<context>
     <name>DlgAbout</name>
     <message>
         <source>About...</source>
@@ -495,37 +376,18 @@
     </message>
 </context>
 <context>
-    <name>DlgWebcamMini</name>
+    <name>DlgCaptcha</name>
     <message>
-        <source>Disconnected from server webcams</source>
-        <translation>Rozłączono z serwerem kamerek</translation>
-    </message>
-</context>
-<context>
-    <name>DlgWebcamStandard</name>
-    <message>
-        <source>Webcams</source>
-        <translation>Kamerki</translation>
+        <source>Captcha</source>
+        <translation>Captcha</translation>
     </message>
     <message>
-        <source>Nick</source>
-        <translation>Osoba</translation>
+        <source>Enter the characters you see:</source>
+        <translation>Przepisz kod z obrazka:</translation>
     </message>
     <message>
-        <source>Spectators</source>
-        <translation>Widzów</translation>
-    </message>
-    <message>
-        <source>Rank</source>
-        <translation>Ocena</translation>
-    </message>
-    <message>
-        <source>Disconnected from server webcams</source>
-        <translation>Rozłączono z serwerem kamerek</translation>
-    </message>
-    <message>
-        <source>Downloading image</source>
-        <translation>Pobieranie obrazu</translation>
+        <source>Loading...</source>
+        <translation>Wczytywanie...</translation>
     </message>
 </context>
 <context>
@@ -992,6 +854,45 @@
     <message>
         <source>Insert</source>
         <translation>Wstaw</translation>
+    </message>
+</context>
+<context>
+    <name>DlgFindText</name>
+    <message>
+        <source>Find</source>
+        <translation>Znajdź</translation>
+    </message>
+    <message>
+        <source>Find what:</source>
+        <translation>Znajdź tekst:</translation>
+    </message>
+    <message>
+        <source>Find next</source>
+        <translation>Znajdź</translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation>Zamknij</translation>
+    </message>
+    <message>
+        <source>Highlight all occurrences</source>
+        <translation>Podświetl znaleziony tekst</translation>
+    </message>
+    <message>
+        <source>Match case</source>
+        <translation>Uwzględnij wielkość liter</translation>
+    </message>
+    <message>
+        <source>Direction</source>
+        <translation>Kierunek</translation>
+    </message>
+    <message>
+        <source>Up</source>
+        <translation>W górę</translation>
+    </message>
+    <message>
+        <source>Down</source>
+        <translation>W dół</translation>
     </message>
 </context>
 <context>
@@ -1803,18 +1704,351 @@
     </message>
 </context>
 <context>
-    <name>DlgCaptcha</name>
+    <name>DlgWebcamMini</name>
     <message>
-        <source>Captcha</source>
-        <translation>Captcha</translation>
+        <source>Disconnected from server webcams</source>
+        <translation>Rozłączono z serwerem kamerek</translation>
+    </message>
+</context>
+<context>
+    <name>DlgWebcamStandard</name>
+    <message>
+        <source>Webcams</source>
+        <translation>Kamerki</translation>
     </message>
     <message>
-        <source>Enter the characters you see:</source>
-        <translation>Przepisz kod z obrazka:</translation>
+        <source>Nick</source>
+        <translation>Osoba</translation>
     </message>
     <message>
-        <source>Loading...</source>
-        <translation>Wczytywanie...</translation>
+        <source>Spectators</source>
+        <translation>Widzów</translation>
+    </message>
+    <message>
+        <source>Rank</source>
+        <translation>Ocena</translation>
+    </message>
+    <message>
+        <source>Disconnected from server webcams</source>
+        <translation>Rozłączono z serwerem kamerek</translation>
+    </message>
+    <message>
+        <source>Downloading image</source>
+        <translation>Pobieranie obrazu</translation>
+    </message>
+</context>
+<context>
+    <name>InputWidget</name>
+    <message>
+        <source>(Unregistered)</source>
+        <translation>(Niezalogowany)</translation>
+    </message>
+    <message>
+        <source>Send</source>
+        <translation>Wyślij</translation>
+    </message>
+    <message>
+        <source>Send to moderators</source>
+        <translation>Wyślij do moderatorów</translation>
+    </message>
+    <message>
+        <source>Show/Hide tool widget</source>
+	<translation>Pokaż/Ukryj pasek narzędzi</translation>
+    </message>
+</context>
+<context>
+    <name>Kamerzysta</name>
+    <message>
+        <source>Error</source>
+        <translation>Błąd</translation>
+    </message>
+    <message>
+        <source>Kamerzysta not found!</source>
+        <translation>Nie znaleziono Kamerzysty!</translation>
+    </message>
+    <message>
+        <source>Kamerzysta is wrong installed!</source>
+        <translation>Program Kamerzysta jest nie poprawnie zainstalowany!</translation>
+    </message>
+</context>
+<context>
+    <name>Log</name>
+    <message>
+        <source>Error: log: Cannot open file </source>
+        <translation>Błąd: log: Nie można otworzyć pliku </translation>
+    </message>
+</context>
+<context>
+    <name>MainWindow</name>
+    <message>
+        <source>Navigation bar</source>
+        <translation>Pasek nawigacji</translation>
+    </message>
+    <message>
+        <source>Typing messages</source>
+        <translation>Wpisywanie wiadomości</translation>
+    </message>
+    <message>
+        <source>Users</source>
+        <translation>Użytkownicy</translation>
+    </message>
+    <message>
+        <source>Users (%1)</source>
+        <translation>Użytkownicy (%1)</translation>
+    </message>
+    <message>
+        <source>&amp;Connect</source>
+        <translation>&amp;Połącz</translation>
+    </message>
+    <message>
+        <source>&amp;Disconnect</source>
+        <translation>&amp;Rozłącz</translation>
+    </message>
+    <message>
+        <source>Restore</source>
+        <translation>Przywróć</translation>
+    </message>
+    <message>
+        <source>Minimalize</source>
+        <translation>Minimalizuj</translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation>Zakończ</translation>
+    </message>
+    <message>
+        <source>Options</source>
+        <translation>Opcje programu</translation>
+    </message>
+    <message>
+        <source>Channel list</source>
+        <translation>Lista pokoi</translation>
+    </message>
+    <message>
+        <source>My channels</source>
+        <translation>Moje pokoje</translation>
+    </message>
+    <message>
+        <source>Favorite channels</source>
+        <translation>Ulubione pokoje</translation>
+    </message>
+    <message>
+        <source>Friends</source>
+        <translation>Przyjaciele</translation>
+    </message>
+    <message>
+        <source>Ignored</source>
+        <translation>Ignorowani</translation>
+    </message>
+    <message>
+        <source>Offline messages</source>
+        <translation>Wiadomości offline</translation>
+    </message>
+    <message>
+        <source>Awaylog</source>
+        <translation>Awaylog</translation>
+    </message>
+    <message>
+        <source>Cams</source>
+        <translation>Kamerki</translation>
+    </message>
+    <message>
+        <source>My statistics</source>
+        <translation>Moje statystyki</translation>
+    </message>
+    <message>
+        <source>My profile</source>
+        <translation>Moja wizytówka</translation>
+    </message>
+    <message>
+        <source>About SCC ...</source>
+        <translation>O programie SCC...</translation>
+    </message>
+    <message>
+        <source>Notes</source>
+        <translation>Notatki</translation>
+    </message>
+    <message>
+        <source>&amp;File</source>
+        <translation>&amp;Plik</translation>
+    </message>
+    <message>
+        <source>&amp;View</source>
+        <translation>&amp;Widok</translation>
+    </message>
+    <message>
+        <source>&amp;Settings</source>
+        <translation>&amp;Ustawienia</translation>
+    </message>
+    <message>
+        <source>&amp;Chat</source>
+        <translation>&amp;Czat</translation>
+    </message>
+    <message>
+        <source>&amp;My</source>
+        <translation>&amp;Moje</translation>
+    </message>
+    <message>
+        <source>He&amp;lp</source>
+        <translation>Pomo&amp;c</translation>
+    </message>
+    <message>
+        <source>Welcome to the Simple Chat Client</source>
+        <translation>Witaj w programie Simple Chat Client</translation>
+    </message>
+    <message>
+        <source>Official website</source>
+        <translation>Oficjalna strona</translation>
+    </message>
+    <message>
+        <source>Not here right now</source>
+        <translation>Nie ma mnie</translation>
+    </message>
+</context>
+<context>
+    <name>Network</name>
+    <message>
+        <source>Error: Could not connect to the server - connection already exists!</source>
+        <translation>Błąd: Nie można się połączyć z serwerem - połączenie już istnieje!</translation>
+    </message>
+    <message>
+        <source>Reconnecting...</source>
+        <translation>Ponowne łączenie z serwerem...</translation>
+    </message>
+    <message>
+        <source>Error: Could not send data! [%1]</source>
+        <translation>Błąd: Nie udało się wysłać danych! [%1]</translation>
+    </message>
+    <message>
+        <source>Error: Could not send data! [Not connected]</source>
+        <translation>Błąd: Nie udało się wysłać danych! [Not connected]</translation>
+    </message>
+    <message>
+        <source>Connected to server</source>
+        <translation>Połączono z serwerem</translation>
+    </message>
+    <message>
+        <source>Disconnected from server [%1]</source>
+        <translation>Rozłączono z serwerem [%1]</translation>
+    </message>
+    <message>
+        <source>Disconnected from server</source>
+        <translation>Rozłączono z serwerem</translation>
+    </message>
+    <message>
+        <source>(Unregistered)</source>
+        <translation>(Niezalogowany)</translation>
+    </message>
+    <message>
+        <source>No PONG reply from server in 301 seconds. Disconnecting...</source>
+        <translation>Serwer nieaktywny od 301 sekund. Rozłączanie...</translation>
+    </message>
+</context>
+<context>
+    <name>NickListWidget</name>
+    <message>
+        <source>Reason for kicking:</source>
+        <translation>Podaj powód wyrzucenia:</translation>
+    </message>
+    <message>
+        <source>No reason</source>
+        <translation>Zachowuj się! Byle jak ale się zachowuj!</translation>
+    </message>
+    <message>
+        <source>Invite</source>
+        <translation>Zaproś</translation>
+    </message>
+    <message>
+        <source>Friends list</source>
+        <translation>Lista przyjaciół</translation>
+    </message>
+    <message>
+        <source>Add to friends</source>
+        <translation>Dodaj do listy przyjaciół</translation>
+    </message>
+    <message>
+        <source>Remove from friends</source>
+        <translation>Usuń z listy przyjaciół</translation>
+    </message>
+    <message>
+        <source>Ignore list</source>
+        <translation>Lista ignorowanych</translation>
+    </message>
+    <message>
+        <source>Add to Ignore list</source>
+        <translation>Dodaj do listy ignorowanych</translation>
+    </message>
+    <message>
+        <source>Remove from Ignore list</source>
+        <translation>Usuń z listy ignorowanych</translation>
+    </message>
+    <message>
+        <source>Actions</source>
+        <translation>Uprawnienia</translation>
+    </message>
+    <message>
+        <source>Give super operator status</source>
+        <translation>Nadaj prawa super operatora</translation>
+    </message>
+    <message>
+        <source>Take super operator status</source>
+        <translation>Odbierz prawa super operatora</translation>
+    </message>
+    <message>
+        <source>Give operator status</source>
+        <translation>Nadaj prawa operatora</translation>
+    </message>
+    <message>
+        <source>Take operator status</source>
+        <translation>Odbierz prawa operatora</translation>
+    </message>
+    <message>
+        <source>Give moderator status</source>
+        <translation>Nadaj prawa moderatora</translation>
+    </message>
+    <message>
+        <source>Take moderator status</source>
+        <translation>Odbierz prawa moderatora</translation>
+    </message>
+    <message>
+        <source>Give guest status</source>
+        <translation>Nadaj prawa gościa</translation>
+    </message>
+    <message>
+        <source>Take guest status</source>
+        <translation>Odbierz prawa gościa</translation>
+    </message>
+    <message>
+        <source>Priv</source>
+        <translation>Rozmowa prywatna</translation>
+    </message>
+    <message>
+        <source>Whois</source>
+        <translation>Whois</translation>
+    </message>
+    <message>
+        <source>Profile</source>
+        <translation>Wizytówka</translation>
+    </message>
+    <message>
+        <source>Webcam</source>
+        <translation>Kamerka</translation>
+    </message>
+    <message>
+        <source>Kick From Channel</source>
+        <translation>Wyrzuć</translation>
+    </message>
+    <message>
+        <source>Ban From Channel</source>
+        <translation>Cichy ban</translation>
+    </message>
+    <message>
+        <source>Kick &amp; Ban</source>
+        <translation>Banuj i wyrzuć</translation>
+    </message>
+    <message>
+        <source>IP Ban</source>
+        <translation>Banuj IP</translation>
     </message>
 </context>
 <context>
@@ -2692,255 +2926,6 @@
     </message>
 </context>
 <context>
-    <name>InputWidget</name>
-    <message>
-        <source>(Unregistered)</source>
-        <translation>(Niezalogowany)</translation>
-    </message>
-    <message>
-        <source>Send</source>
-        <translation>Wyślij</translation>
-    </message>
-    <message>
-        <source>Send to moderators</source>
-        <translation>Wyślij do moderatorów</translation>
-    </message>
-    <message>
-        <source>Show/Hide tool widget</source>
-	<translation>Pokaż/Ukryj pasek narzędzi</translation>
-    </message>
-</context>
-<context>
-    <name>ChatView</name>
-    <message>
-        <source>Join channel</source>
-        <translation>Wejdź do pokoju</translation>
-    </message>
-    <message>
-        <source>No reason</source>
-        <translation>Zachowuj się! Byle jak ale się zachowuj!</translation>
-    </message>
-    <message>
-        <source>Invite</source>
-        <translation>Zaproś</translation>
-    </message>
-    <message>
-        <source>Friends list</source>
-        <translation>Lista przyjaciół</translation>
-    </message>
-    <message>
-        <source>Add to friends</source>
-        <translation>Dodaj do listy przyjaciół</translation>
-    </message>
-    <message>
-        <source>Remove from friends</source>
-        <translation>Usuń z listy przyjaciół</translation>
-    </message>
-    <message>
-        <source>Ignore list</source>
-        <translation>Lista ignorowanych</translation>
-    </message>
-    <message>
-        <source>Add to Ignore list</source>
-        <translation>Dodaj do listy ignorowanych</translation>
-    </message>
-    <message>
-        <source>Remove from Ignore list</source>
-        <translation>Usuń z listy ignorowanych</translation>
-    </message>
-    <message>
-        <source>Actions</source>
-        <translation>Uprawnienia</translation>
-    </message>
-    <message>
-        <source>Give super operator status</source>
-        <translation>Nadaj prawa super operatora</translation>
-    </message>
-    <message>
-        <source>Take super operator status</source>
-        <translation>Odbierz prawa super operatora</translation>
-    </message>
-    <message>
-        <source>Give operator status</source>
-        <translation>Nadaj prawa operatora</translation>
-    </message>
-    <message>
-        <source>Take operator status</source>
-        <translation>Odbierz prawa operatora</translation>
-    </message>
-    <message>
-        <source>Give moderator status</source>
-        <translation>Nadaj prawa moderatora</translation>
-    </message>
-    <message>
-        <source>Take moderator status</source>
-        <translation>Odbierz prawa moderatora</translation>
-    </message>
-    <message>
-        <source>Give guest status</source>
-        <translation>Nadaj prawa gościa</translation>
-    </message>
-    <message>
-        <source>Take guest status</source>
-        <translation>Odbierz prawa gościa</translation>
-    </message>
-    <message>
-        <source>Priv</source>
-        <translation>Rozmowa prywatna</translation>
-    </message>
-    <message>
-        <source>Whois</source>
-        <translation>Whois</translation>
-    </message>
-    <message>
-        <source>Profile</source>
-        <translation>Wizytówka</translation>
-    </message>
-    <message>
-        <source>Webcam</source>
-        <translation>Kamerka</translation>
-    </message>
-    <message>
-        <source>Kick From Channel</source>
-        <translation>Wyrzuć</translation>
-    </message>
-    <message>
-        <source>Ban From Channel</source>
-        <translation>Cichy ban</translation>
-    </message>
-    <message>
-        <source>Kick &amp; Ban</source>
-        <translation>Banuj i wyrzuć</translation>
-    </message>
-    <message>
-        <source>IP Ban</source>
-        <translation>Banuj IP</translation>
-    </message>
-    <message>
-        <source>Reason for kicking:</source>
-        <translation>Podaj powód wyrzucenia:</translation>
-    </message>
-    <message>
-        <source>Send to notes</source>
-        <translation>Wyślij do notatek</translation>
-    </message>
-    <message>
-        <source>Clear</source>
-        <translation>Wyczyść</translation>
-    </message>
-    <message>
-        <source>Open link</source>
-        <translation>Otwórz w przeglądarce</translation>
-    </message>
-</context>
-<context>
-    <name>NickListWidget</name>
-    <message>
-        <source>Reason for kicking:</source>
-        <translation>Podaj powód wyrzucenia:</translation>
-    </message>
-    <message>
-        <source>No reason</source>
-        <translation>Zachowuj się! Byle jak ale się zachowuj!</translation>
-    </message>
-    <message>
-        <source>Invite</source>
-        <translation>Zaproś</translation>
-    </message>
-    <message>
-        <source>Friends list</source>
-        <translation>Lista przyjaciół</translation>
-    </message>
-    <message>
-        <source>Add to friends</source>
-        <translation>Dodaj do listy przyjaciół</translation>
-    </message>
-    <message>
-        <source>Remove from friends</source>
-        <translation>Usuń z listy przyjaciół</translation>
-    </message>
-    <message>
-        <source>Ignore list</source>
-        <translation>Lista ignorowanych</translation>
-    </message>
-    <message>
-        <source>Add to Ignore list</source>
-        <translation>Dodaj do listy ignorowanych</translation>
-    </message>
-    <message>
-        <source>Remove from Ignore list</source>
-        <translation>Usuń z listy ignorowanych</translation>
-    </message>
-    <message>
-        <source>Actions</source>
-        <translation>Uprawnienia</translation>
-    </message>
-    <message>
-        <source>Give super operator status</source>
-        <translation>Nadaj prawa super operatora</translation>
-    </message>
-    <message>
-        <source>Take super operator status</source>
-        <translation>Odbierz prawa super operatora</translation>
-    </message>
-    <message>
-        <source>Give operator status</source>
-        <translation>Nadaj prawa operatora</translation>
-    </message>
-    <message>
-        <source>Take operator status</source>
-        <translation>Odbierz prawa operatora</translation>
-    </message>
-    <message>
-        <source>Give moderator status</source>
-        <translation>Nadaj prawa moderatora</translation>
-    </message>
-    <message>
-        <source>Take moderator status</source>
-        <translation>Odbierz prawa moderatora</translation>
-    </message>
-    <message>
-        <source>Give guest status</source>
-        <translation>Nadaj prawa gościa</translation>
-    </message>
-    <message>
-        <source>Take guest status</source>
-        <translation>Odbierz prawa gościa</translation>
-    </message>
-    <message>
-        <source>Priv</source>
-        <translation>Rozmowa prywatna</translation>
-    </message>
-    <message>
-        <source>Whois</source>
-        <translation>Whois</translation>
-    </message>
-    <message>
-        <source>Profile</source>
-        <translation>Wizytówka</translation>
-    </message>
-    <message>
-        <source>Webcam</source>
-        <translation>Kamerka</translation>
-    </message>
-    <message>
-        <source>Kick From Channel</source>
-        <translation>Wyrzuć</translation>
-    </message>
-    <message>
-        <source>Ban From Channel</source>
-        <translation>Cichy ban</translation>
-    </message>
-    <message>
-        <source>Kick &amp; Ban</source>
-        <translation>Banuj i wyrzuć</translation>
-    </message>
-    <message>
-        <source>IP Ban</source>
-        <translation>Banuj IP</translation>
-    </message>
-</context>
-<context>
     <name>TabContainer</name>
     <message>
         <source>Topic:</source>
@@ -2996,6 +2981,64 @@
     <message>
         <source>Scroll</source>
         <translation>Wstrzymaj/Wznów przewijanie</translation>
+    </message>
+</context>
+<context>
+    <name>WebcamEngine</name>
+    <message>
+        <source>Starting the service webcams</source>
+        <translation>Uruchamianie obsługi kamerek</translation>
+    </message>
+    <message>
+        <source>Connected to server webcam.</source>
+        <translation>Połączono z serwerem kamerek.</translation>
+    </message>
+    <message>
+        <source>Please wait ...</source>
+        <translation>Proszę czekać...</translation>
+    </message>
+    <message>
+        <source>Disconnected from server webcams</source>
+        <translation>Rozłączono z serwerem kamerek</translation>
+    </message>
+    <message>
+        <source>Select user</source>
+        <translation>Wybierz użytkownika</translation>
+    </message>
+    <message>
+        <source>This user does not send data</source>
+        <translation>Podany użytkownik nie wysyła obrazu</translation>
+    </message>
+    <message>
+        <source>Setting mode for viewing only</source>
+        <translation>Ustawienie trybu tylko do oglądania</translation>
+    </message>
+    <message>
+        <source>The specified user has left the chat</source>
+        <translation>Podany użytkownik opuścił czat</translation>
+    </message>
+    <message>
+        <source>The specified user does not have a webcam enabled</source>
+        <translation>Podany użytkownik nie ma włączonej kamerki</translation>
+    </message>
+    <message>
+        <source>Failed to retrieve the image from the webcam</source>
+        <translation>Nie udało się pobrać obrazu z kamerki</translation>
+    </message>
+    <message>
+        <source>Invalid authorization key</source>
+        <translation>Nieprawidłowy klucz autoryzacji</translation>
+    </message>
+</context>
+<context>
+    <name>WebcamNetwork</name>
+    <message>
+        <source>Error: Failed to send data! [%1]</source>
+        <translation>Błąd: Nie udało się wysłać danych! [%1]</translation>
+    </message>
+    <message>
+        <source>Error: Failed to send data! [Not connected]</source>
+        <translation>Błąd: Nie udało się wysłać danych! [Not connected]</translation>
     </message>
 </context>
 </TS>

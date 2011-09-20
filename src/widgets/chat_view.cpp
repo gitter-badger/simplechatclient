@@ -31,6 +31,7 @@
 #include <QtWebKit/QWebElement>
 #include "core.h"
 #include "dlg_user_profile.h"
+#include "dlg_find_text.h"
 #include "html_messages_renderer.h"
 #include "log.h"
 #include "notify.h"
@@ -366,6 +367,11 @@ void ChatView::sendToNotes()
     f.close();
 }
 
+void ChatView::search()
+{
+    DlgFindText(Core::instance()->sccWindow(), this).exec();
+}
+
 void ChatView::clear()
 {
     clearMessages();
@@ -519,6 +525,10 @@ void ChatView::menuStandard(QContextMenuEvent *event)
         connect(sendToNotes, SIGNAL(triggered()), this, SLOT(sendToNotes()));
         menu.addAction(sendToNotes);
     }
+
+    QAction *search = new QAction(QIcon(":/images/oxygen/16x16/edit-find.png"), tr("Find..."), &menu);
+    connect(search, SIGNAL(triggered()), this, SLOT(search()));
+    menu.addAction(search);
 
     QAction *clear = new QAction(QIcon(":/images/oxygen/16x16/draw-eraser.png"), tr("Clear"), &menu);
     connect(clear, SIGNAL(triggered()), this, SLOT(clear()));
