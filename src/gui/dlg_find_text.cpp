@@ -23,7 +23,7 @@
 #include "mainwindow.h"
 #include "dlg_find_text.h"
 
-DlgFindText::DlgFindText(MainWindow *parent, ChatView *param1) : QDialog(parent), chatView(param1)
+DlgFindText::DlgFindText(MainWindow *parent, ChatView *_chatView) : QDialog(parent), chatView(_chatView)
 {
     ui.setupUi(this);
     setWindowFlags(Qt::Dialog | Qt::WindowStaysOnTopHint);

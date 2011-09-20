@@ -43,7 +43,7 @@
     #include "dlg_webcam.h"
 #endif
 
-ChatView::ChatView(QString param1, DlgUserProfile *param2) : pDlgUserProfile(param2), strChannel(param1), strNick(QString::null), bScroll(true)
+ChatView::ChatView(QString _strChannel, DlgUserProfile *_pDlgUserProfile) : pDlgUserProfile(_pDlgUserProfile), strChannel(_strChannel), strNick(QString::null), bScroll(true)
 {
     setFocusPolicy(Qt::NoFocus);
     settings()->setAttribute(QWebSettings::JavascriptEnabled, true);

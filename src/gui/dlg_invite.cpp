@@ -23,7 +23,7 @@
 #include "mainwindow.h"
 #include "dlg_invite.h"
 
-DlgInvite::DlgInvite(MainWindow *parent, QString param1, QString param2) : QDialog(parent)
+DlgInvite::DlgInvite(MainWindow *parent, QString _strNick, QString _strChannel) : QDialog(parent), strNick(_strNick), strChannel(_strChannel)
 {
     ui.setupUi(this);
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
@@ -31,9 +31,6 @@ DlgInvite::DlgInvite(MainWindow *parent, QString param1, QString param2) : QDial
     setWindowTitle(tr("Invitation"));
     // center screen
     move(QApplication::desktop()->screen()->rect().center() - rect().center());
-
-    strNick = param1;
-    strChannel = param2;
 
     createGui();
     createSignals();

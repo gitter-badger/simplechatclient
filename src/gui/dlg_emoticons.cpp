@@ -26,7 +26,7 @@
 #include "input_widget.h"
 #include "dlg_emoticons.h"
 
-DlgEmoticonsTab::DlgEmoticonsTab(QString d, QWidget *parent) : QWidget(parent), strDir(d)
+DlgEmoticonsTab::DlgEmoticonsTab(QString _strDir, QWidget *parent) : QWidget(parent), strDir(_strDir)
 {
     listWidget = new QListWidget(this);
     listWidget->setEditTriggers(QAbstractItemView::NoEditTriggers);

@@ -29,11 +29,8 @@
 #include "tab_container.h"
 #include "onet_auth.h"
 
-OnetAuth::OnetAuth(TabContainer *param1)
+OnetAuth::OnetAuth(TabContainer *_pTabC) : pTabC(_pTabC), bAuthorizing(false)
 {
-    pTabC = param1;
-    bAuthorizing = false;
-
     accessManager = new QNetworkAccessManager;
     cookieJar = new QNetworkCookieJar();
     accessManager->setCookieJar(cookieJar);

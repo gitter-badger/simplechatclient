@@ -23,14 +23,10 @@
 #include <QPen>
 #include "simple_rank_widget.h"
 
-SimpleRankWidget::SimpleRankWidget(QWidget *parent, int param1, int param2, int param3) : QWidget(parent)
+SimpleRankWidget::SimpleRankWidget(QWidget *parent, int _iRank, int _iWidth, int _iHeight) : QWidget(parent), iWidth(_iWidth), iHeight(_iHeight), iRank(_iRank)
 {
     setBackgroundRole(QPalette::Base);
     setAutoFillBackground(true);
-
-    iRank = param1;
-    iWidth = param2;
-    iHeight = param3;
 
     setMaximumSize(iWidth, iHeight);
     setMinimumSize(iWidth, iHeight);

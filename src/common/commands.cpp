@@ -28,10 +28,8 @@
     #include "winamp.h"
 #endif
 
-Commands::Commands(QString param1, QString param2)
+Commands::Commands(QString _strChan, QString _strData) : strChan(_strChan), strData(_strData)
 {
-    strChan = param1;
-    strData = param2;
     strDataList = strData.split(" ");
 }
 

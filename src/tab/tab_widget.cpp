@@ -22,11 +22,8 @@
 #include "core.h"
 #include "tab_widget.h"
 
-TabWidget::TabWidget(QString param1, DlgUserProfile *param2)
+TabWidget::TabWidget(QString _strName, DlgUserProfile *_pDlgUserProfile) : strName(_strName), pDlgUserProfile(_pDlgUserProfile)
 {
-    strName = param1;
-    pDlgUserProfile = param2;
-
     topic = new QLabel(this);
     topic->setWordWrap(true);
     topic->setMinimumHeight(25);

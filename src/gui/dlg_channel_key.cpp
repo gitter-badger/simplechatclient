@@ -24,7 +24,7 @@
 #include "mainwindow.h"
 #include "dlg_channel_key.h"
 
-DlgChannelKey::DlgChannelKey(MainWindow *parent, QString param1) : QDialog(parent)
+DlgChannelKey::DlgChannelKey(MainWindow *parent, QString _strChannel) : QDialog(parent), strChannel(_strChannel)
 {
     ui.setupUi(this);
     setAttribute(Qt::WA_DeleteOnClose);
@@ -32,8 +32,6 @@ DlgChannelKey::DlgChannelKey(MainWindow *parent, QString param1) : QDialog(paren
     setWindowTitle(tr("Key required"));
     // center screen
     move(QApplication::desktop()->screen()->rect().center() - rect().center());
-
-    strChannel = param1;
 
     createGui();
     createSignals();

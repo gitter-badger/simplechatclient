@@ -26,15 +26,13 @@
 #include "mainwindow.h"
 #include "dlg_profile_edit.h"
 
-DlgProfileEdit::DlgProfileEdit(MainWindow *parent, QString n) : QDialog(parent)
+DlgProfileEdit::DlgProfileEdit(MainWindow *parent, QString _strNick) : QDialog(parent), strNick(_strNick)
 {
     ui.setupUi(this);
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
     setWindowTitle(tr("Edit profile"));
     // center screen
     move(QApplication::desktop()->screen()->rect().center() - rect().center());
-
-    strNick = n;
 
     createGui();
     setDefaultValues();

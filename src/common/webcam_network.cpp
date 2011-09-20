@@ -24,12 +24,8 @@
 #include "core.h"
 #include "webcam_network.h"
 
-WebcamNetwork::WebcamNetwork()
+WebcamNetwork::WebcamNetwork() : iLastActive(0), iLastKeepAlive(0), bReconnecting(true)
 {
-    iLastKeepAlive = 0;
-    iLastActive = 0;
-    bReconnecting = true;
-
     timerPingPong = new QTimer();
     timerPingPong->setInterval(1000*60*1); // 1 min
 

@@ -23,15 +23,13 @@
 #include "mainwindow.h"
 #include "dlg_user_avatar.h"
 
-DlgUserAvatar::DlgUserAvatar(MainWindow *parent, QPixmap param1) : QDialog(parent)
+DlgUserAvatar::DlgUserAvatar(MainWindow *parent, QPixmap _avatar) : QDialog(parent), avatar(_avatar)
 {
     ui.setupUi(this);
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
     setWindowTitle(tr("Avatar"));
     // center screen
     move(QApplication::desktop()->screen()->rect().center() - rect().center());
-
-    avatar = param1;
 
     createGui();
     setDefaultValues();

@@ -25,15 +25,13 @@
 #include "dlg_channel_settings.h"
 #include "dlg_channel_homes.h"
 
-DlgChannelHomes::DlgChannelHomes(QWidget *parent, DlgChannelSettings *param1) : QDialog(parent)
+DlgChannelHomes::DlgChannelHomes(QWidget *parent, DlgChannelSettings *_pDlgChannelSettings) : QDialog(parent), pDlgChannelSettings(_pDlgChannelSettings)
 {
     ui.setupUi(this);
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
     setWindowTitle(tr("Your channels"));
     // center screen
     move(QApplication::desktop()->screen()->rect().center() - rect().center());
-
-    pDlgChannelSettings = param1;
 
     createGui();
     createSignals();

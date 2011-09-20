@@ -33,10 +33,8 @@
     #include "dlg_webcam.h"
 #endif
 
-NickListWidget::NickListWidget(DlgUserProfile *param1)
+NickListWidget::NickListWidget(DlgUserProfile *_pDlgUserProfile) : pDlgUserProfile(_pDlgUserProfile)
 {
-    pDlgUserProfile = param1;
-
     setFocusPolicy(Qt::NoFocus);
     setSortingEnabled(false);
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);

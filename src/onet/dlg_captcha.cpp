@@ -27,16 +27,13 @@
 #include <QUrl>
 #include "dlg_captcha.h"
 
-DlgCaptcha::DlgCaptcha(QNetworkCookieJar *param1, QString *param2)
+DlgCaptcha::DlgCaptcha(QNetworkCookieJar *_cookieJar, QString *_strCaptcha) : strCaptcha(_strCaptcha), cookieJar(_cookieJar)
 {
     ui.setupUi(this);
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
     setWindowTitle(tr("Captcha"));
     // center screen
     move(QApplication::desktop()->screen()->rect().center() - rect().center());
-
-    cookieJar = param1;
-    strCaptcha = param2;
 
     createGui();
     createSignals();

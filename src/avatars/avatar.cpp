@@ -25,10 +25,8 @@
 #include "core.h"
 #include "tab_container.h"
 
-Avatar::Avatar(TabContainer *param1)
+Avatar::Avatar(TabContainer *_tabc) : tabc(_tabc)
 {
-    tabc = param1;
-
     QObject::connect(this, SIGNAL(setChannelAvatar(QString)), tabc, SLOT(slotUpdateChannelAvatar(QString)));
 
     accessManager = new QNetworkAccessManager;

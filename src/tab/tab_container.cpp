@@ -26,7 +26,7 @@
 #include "tab_widget.h"
 #include "tab_container.h"
 
-TabContainer::TabContainer(TabManager *param1) : pTabM(param1)
+TabContainer::TabContainer(TabManager *_pTabM) : pTabM(_pTabM)
 {
 }
 

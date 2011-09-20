@@ -27,13 +27,8 @@
 #include "crypt.h"
 #include "network.h"
 
-Network::Network(QString param1, int param2)
+Network::Network(QString _strServer, int _iPort) : strServer(_strServer), iPort(_iPort), iActive(0), bAuthorized(false)
 {
-    strServer = param1;
-    iPort = param2;
-
-    iActive = 0;
-    bAuthorized = false;
     timerReconnect = new QTimer();
     timerReconnect->setInterval(1000*30); // 30 sec
     Core::instance()->settings["reconnect"] = "true";

@@ -28,15 +28,13 @@
 #include "dlg_profile_manager.h"
 #include "dlg_profile_add.h"
 
-DlgProfileAdd::DlgProfileAdd(MainWindow *parent, DlgProfileManager *param1) : QDialog(parent)
+DlgProfileAdd::DlgProfileAdd(MainWindow *parent, DlgProfileManager *_profileManager) : QDialog(parent), profileManager(_profileManager)
 {
     ui.setupUi(this);
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
     setWindowTitle(tr("Add profile"));
     // center screen
     move(QApplication::desktop()->screen()->rect().center() - rect().center());
-
-    profileManager = param1;
 
     createGui();
     setDefaultValues();

@@ -23,10 +23,8 @@
 #include "core.h"
 #include "inputline_widget.h"
 
-InputLineWidget::InputLineWidget(QWidget *parent) : QLineEdit(parent)
+InputLineWidget::InputLineWidget(QWidget *parent) : QLineEdit(parent), index(0), strLastWord(QString::null)
 {
-    index = 0;
-    strLastWord = QString::null;
 }
 
 InputLineWidget::~InputLineWidget()

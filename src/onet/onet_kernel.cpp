@@ -35,13 +35,8 @@
 #include "tab_container.h"
 #include "onet_kernel.h"
 
-OnetKernel::OnetKernel(TabContainer *param1, DlgChannelSettings *param2, DlgModeration *param3,  DlgUserProfile *param4)
+OnetKernel::OnetKernel(TabContainer *_pTabC, DlgChannelSettings *_pDlgChannelSettings, DlgModeration *_pDlgModeration,  DlgUserProfile *_pDlgUserProfile) : pTabC(_pTabC), pDlgChannelSettings(_pDlgChannelSettings), pDlgModeration(_pDlgModeration), pDlgUserProfile(_pDlgUserProfile)
 {
-    pTabC = param1;
-    pDlgChannelSettings = param2;
-    pDlgModeration = param3;
-    pDlgUserProfile = param4;
-
     avatar = new Avatar(pTabC);
 }
 

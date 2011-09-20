@@ -38,7 +38,7 @@ public:
 
 private:
     Ui::uiRegisterNick ui;
-    DlgProfileAdd *profileAdd;
+    DlgProfileAdd *pDlgProfileAdd;
     QNetworkAccessManager *accessManager;
     QNetworkCookieJar *cookieJar;
     QMap<QString,QString> mCookies;

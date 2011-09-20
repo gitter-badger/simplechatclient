@@ -30,14 +30,8 @@
 #include "input_widget.h"
 #include "tool_widget.h"
 
-ToolWidget::ToolWidget(QWidget *parent, InputWidget *param1, DlgChannelSettings *param2, DlgModeration *param3) : QWidget(parent)
+ToolWidget::ToolWidget(QWidget *parent, InputWidget *_pInputWidget, DlgChannelSettings *_pDlgChannelSettings, DlgModeration *_pDlgModeration) : QWidget(parent), pInputWidget(_pInputWidget), pDlgChannelSettings(_pDlgChannelSettings), pDlgModeration(_pDlgModeration), strCurrentColor("#000000")
 {
-    pInputWidget = param1;
-    pDlgChannelSettings = param2;
-    pDlgModeration = param3;
-
-    strCurrentColor = "#000000";
-
     showFontButtons = new QPushButton(QIcon(":/images/oxygen/16x16/format-text-color.png"), "", this);
     showFontButtons->setToolTip(tr("Show/Hide font buttons"));
     showFontButtons->setMaximumWidth(25);

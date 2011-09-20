@@ -23,15 +23,13 @@
 #include "core.h"
 #include "dlg_awaylog.h"
 
-DlgAwaylog::DlgAwaylog(QWidget *parent, QAction *param1) : QDialog(parent)
+DlgAwaylog::DlgAwaylog(QWidget *parent, QAction *_awaylogAct) : QDialog(parent), awaylogAct(_awaylogAct)
 {
     ui.setupUi(this);
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
     setWindowTitle(tr("Awaylog"));
     // center screen
     move(QApplication::desktop()->screen()->rect().center() - rect().center());
-
-    awaylogAct = param1;
 
     createGui();
     createSignals();

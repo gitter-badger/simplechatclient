@@ -32,11 +32,9 @@
 #include "log.h"
 #include "kamerzysta.h"
 
-Kamerzysta::Kamerzysta(QTcpSocket *param1)
+Kamerzysta::Kamerzysta(QTcpSocket *_socket) : socket(_socket)
 {
     log("Like constructor");
-
-    socket = param1;
 
     timerGetPort = new QTimer();
     timerGetPort->setInterval(500);

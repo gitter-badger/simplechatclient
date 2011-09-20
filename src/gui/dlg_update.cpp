@@ -33,7 +33,7 @@
     #include <QDesktopServices>
 #endif
 
-DlgUpdate::DlgUpdate(MainWindow *parent, QString param1) : QDialog(parent)
+DlgUpdate::DlgUpdate(MainWindow *parent, QString _strVersion) : QDialog(parent), strVersion(_strVersion)
 {
     ui.setupUi(this);
     setWindowFlags(Qt::Dialog | Qt::WindowStaysOnTopHint);
@@ -41,8 +41,6 @@ DlgUpdate::DlgUpdate(MainWindow *parent, QString param1) : QDialog(parent)
     setWindowTitle(tr("Update"));
     // center screen
     move(QApplication::desktop()->screen()->rect().center() - rect().center());
-
-    strVersion = param1;
 
     createGui();
     setDefaultValues();

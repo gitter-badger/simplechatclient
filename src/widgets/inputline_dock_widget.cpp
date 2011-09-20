@@ -27,12 +27,8 @@
 #include "tool_widget.h"
 #include "inputline_dock_widget.h"
 
-InputLineDockWidget::InputLineDockWidget(QWidget *parent, DlgChannelSettings *param1, DlgModeration *param2) : QWidget(parent)
+InputLineDockWidget::InputLineDockWidget(QWidget *parent, DlgChannelSettings *_pDlgChannelSettings, DlgModeration *_pDlgModeration) : QWidget(parent), pDlgChannelSettings(_pDlgChannelSettings), pDlgModeration(_pDlgModeration)
 {
-    // params
-    pDlgChannelSettings = param1;
-    pDlgModeration = param2;
-
     // layout
     QVBoxLayout *mainLayout = new QVBoxLayout();
 

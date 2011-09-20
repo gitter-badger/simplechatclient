@@ -31,7 +31,7 @@
     #include <QDebug>
 #endif
 
-Config::Config(bool b, QString p) : bProfileConfig(b), strForceProfile(p)
+Config::Config(bool _bProfileConfig, QString _strForceProfile) : bProfileConfig(_bProfileConfig), strForceProfile(_strForceProfile)
 {
     QString path;
 #ifdef Q_WS_WIN

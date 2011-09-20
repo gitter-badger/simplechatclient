@@ -30,15 +30,13 @@
 #include "dlg_profile_add.h"
 #include "dlg_register_nick.h"
 
-DlgRegisterNick::DlgRegisterNick(MainWindow *parent, DlgProfileAdd *param1) : QDialog(parent)
+DlgRegisterNick::DlgRegisterNick(MainWindow *parent, DlgProfileAdd *_pDlgProfileAdd) : QDialog(parent), pDlgProfileAdd(_pDlgProfileAdd)
 {
     ui.setupUi(this);
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
     setWindowTitle(tr("Register nick"));
     // center screen
     move(QApplication::desktop()->screen()->rect().center() - rect().center());
-
-    profileAdd = param1;
 
     createGui();
     createSignals();
@@ -177,7 +175,7 @@ void DlgRegisterNick::parseResult(QString strResult)
         QString strNick = ui.lineEdit_nick->text();
         QString strPassword = ui.lineEdit_password->text();
 
-        profileAdd->setNickPass(strNick, strPassword);
+        pDlgProfileAdd->setNickPass(strNick, strPassword);
 
         // close
         this->close();

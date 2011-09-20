@@ -36,7 +36,7 @@ public:
 
 private:
     Ui::uiProfileManager ui;
-    DlgOptions *options;
+    DlgOptions *pDlgOptions;
     QString path;
 
     void createGui();

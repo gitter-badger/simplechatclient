@@ -32,15 +32,13 @@
     #include <QDesktopServices>
 #endif
 
-DlgProfileManager::DlgProfileManager(MainWindow *parent, DlgOptions *param1) : QDialog(parent)
+DlgProfileManager::DlgProfileManager(MainWindow *parent, DlgOptions *_pDlgOptions) : QDialog(parent), pDlgOptions(_pDlgOptions)
 {
     ui.setupUi(this);
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
     setWindowTitle(tr("Profile manager"));
     // center screen
     move(QApplication::desktop()->screen()->rect().center() - rect().center());
-
-    options = param1;
 
     createGui();
     setDefaultValues();
@@ -83,7 +81,7 @@ void DlgProfileManager::createSignals()
 void DlgProfileManager::refreshAllLists()
 {
     refreshProfilesList(); // here
-    options->refreshProfilesList(); // in options
+    pDlgOptions->refreshProfilesList(); // in options
 }
 
 bool DlgProfileManager::existProfile(QString strExistProfile)
@@ -186,6 +184,6 @@ void DlgProfileManager::removeProfile()
         refreshAllLists();
 
         if (profileName == Core::instance()->settings.value("current_profile"))
-            options->setCurrentProfile(0);
+            pDlgOptions->setCurrentProfile(0);
     }
 }

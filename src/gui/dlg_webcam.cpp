@@ -23,11 +23,8 @@
 #include "webcam_engine.h"
 #include "dlg_webcam.h"
 
-DlgWebcam::DlgWebcam(QString n, bool m)
+DlgWebcam::DlgWebcam(QString _strNick, bool _bMini) : strNick(_strNick), bMini(_bMini)
 {
-    strNick = n;
-    bMini = m;
-
     if (bMini)
     {
         pWebcamMini = new DlgWebcamMini(strNick);

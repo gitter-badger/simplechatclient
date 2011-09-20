@@ -24,11 +24,8 @@
 #include "webcam_network.h"
 #include "webcam_engine.h"
 
-WebcamEngine::WebcamEngine(QString n, bool m)
+WebcamEngine::WebcamEngine(QString _strNick, bool _bMini) : strNick(_strNick), bMini(_bMini)
 {
-    strNick = n;
-    bMini = m;
-
     pWebcamNetwork = new WebcamNetwork();
 
     createSignals();
