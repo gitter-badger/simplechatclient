@@ -116,5 +116,5 @@ QString HtmlMessagesRenderer::renderer(QString strDT, QString strData, MessageCa
     if (eMessageCategory == HilightMessage)
         strTextDecoration = "text-decoration:underline;";
 
-    return QString("<span style=\"color:%1;font-size:%2;%3\">%4%5</span>").arg(strFontColor).arg(strFontSize).arg(strTextDecoration).arg(strDT).arg(strData);
+    return QString("<span style=\"font-size:%1;%2\">%3<span style=\"color:%4\">%5</span></span>").arg(strFontSize).arg(strTextDecoration).arg(strDT).arg(strFontColor).arg(strData);
 }
