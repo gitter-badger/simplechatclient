@@ -41,12 +41,12 @@ InputWidget::InputWidget(QWidget *parent) : QWidget(parent)
     pInputLine->show();
 
     sendButton = new QToolButton(parent);
-    sendButton->setIcon(QIcon(":/images/oxygen/16x16/go-next.png"));
+    sendButton->setIcon(QIcon(":/images/oxygen/16x16/go-jump-locationbar.png"));
     sendButton->setToolTip(tr("Send"));
     sendButton->show();
 
     moderSendButton = new QToolButton(parent);
-    moderSendButton->setIcon(QIcon(":/images/oxygen/16x16/arrow-right.png"));
+    moderSendButton->setIcon(QIcon(":/images/oxygen/16x16/meeting-observer.png"));
     moderSendButton->setToolTip(tr("Send to moderators"));
     moderSendButton->show();
 
