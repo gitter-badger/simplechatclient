@@ -23,7 +23,7 @@
 #include <QHBoxLayout>
 #include <QKeyEvent>
 #include <QLabel>
-#include <QPushButton>
+#include <QToolButton>
 #include "commands.h"
 #include "core.h"
 #include "inputline_widget.h"
@@ -40,21 +40,19 @@ InputWidget::InputWidget(QWidget *parent) : QWidget(parent)
     pInputLine->setMinimumWidth(350);
     pInputLine->show();
 
-    sendButton = new QPushButton(QIcon(":/images/oxygen/16x16/go-next.png"), tr("Send"), parent);
+    sendButton = new QToolButton(parent);
+    sendButton->setIcon(QIcon(":/images/oxygen/16x16/go-next.png"));
     sendButton->setToolTip(tr("Send"));
-    sendButton->setMaximumWidth(85);
-    sendButton->setMaximumHeight(25);
     sendButton->show();
 
-    moderSendButton = new QPushButton(QIcon(":/images/oxygen/16x16/view-pim-tasks.png"), tr("Send to moderators"), parent);
+    moderSendButton = new QToolButton(parent);
+    moderSendButton->setIcon(QIcon(":/images/oxygen/16x16/arrow-right.png"));
     moderSendButton->setToolTip(tr("Send to moderators"));
-    moderSendButton->setMaximumHeight(25);
     moderSendButton->show();
 
-    showHideToolWidget = new QPushButton(QIcon(":/images/oxygen/16x16/text-frame-unlink.png"), "", parent);
+    showHideToolWidget = new QToolButton(parent);
+    showHideToolWidget->setIcon(QIcon(":/images/oxygen/16x16/text-frame-unlink.png"));
     showHideToolWidget->setToolTip(tr("Show/Hide tool widget"));
-    showHideToolWidget->setMaximumWidth(25);
-    showHideToolWidget->setMaximumHeight(25);
     showHideToolWidget->show();
 
     mainLayout = new QHBoxLayout();

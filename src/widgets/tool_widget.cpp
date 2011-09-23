@@ -21,7 +21,7 @@
 #include <QComboBox>
 #include <QHBoxLayout>
 #include <QMenu>
-#include <QPushButton>
+#include <QToolButton>
 #include "core.h"
 #include "config.h"
 #include "dlg_channel_settings.h"
@@ -32,10 +32,9 @@
 
 ToolWidget::ToolWidget(QWidget *parent, InputWidget *_pInputWidget, DlgChannelSettings *_pDlgChannelSettings, DlgModeration *_pDlgModeration) : QWidget(parent), pInputWidget(_pInputWidget), pDlgChannelSettings(_pDlgChannelSettings), pDlgModeration(_pDlgModeration), strCurrentColor("#000000")
 {
-    showFontButtons = new QPushButton(QIcon(":/images/oxygen/16x16/format-text-color.png"), "", this);
+    showFontButtons = new QToolButton(this);
+    showFontButtons->setIcon(QIcon(":/images/oxygen/16x16/format-text-color.png"));
     showFontButtons->setToolTip(tr("Show/Hide font buttons"));
-    showFontButtons->setMaximumWidth(25);
-    showFontButtons->setMaximumHeight(25);
     showFontButtons->show();
 
     separator1 = new QFrame(this);
@@ -43,21 +42,19 @@ ToolWidget::ToolWidget(QWidget *parent, InputWidget *_pInputWidget, DlgChannelSe
     separator1->setFrameShadow(QFrame::Sunken);
     separator1->show();
 
-    bold = new QPushButton(QIcon(":/images/oxygen/16x16/format-text-bold.png"), "", this);
+    bold = new QToolButton(this);
+    bold->setIcon(QIcon(":/images/oxygen/16x16/format-text-bold.png"));
     bold->setToolTip(tr("Bold"));
-    bold->setFlat(true);
     bold->setCheckable(true);
-    bold->setMaximumWidth(25);
-    bold->setMaximumHeight(25);
+    bold->setAutoRaise(true);
     bold->show();
     bMyBold = false;
 
-    italic = new QPushButton(QIcon(":/images/oxygen/16x16/format-text-italic.png"), "", this);
+    italic = new QToolButton(this);
+    italic->setIcon(QIcon(":/images/oxygen/16x16/format-text-italic.png"));
     italic->setToolTip(tr("Italic"));
-    italic->setFlat(true);
     italic->setCheckable(true);
-    italic->setMaximumWidth(25);
-    italic->setMaximumHeight(25);
+    italic->setAutoRaise(true);
     italic->show();
     bMyItalic = false;
 
@@ -79,12 +76,11 @@ ToolWidget::ToolWidget(QWidget *parent, InputWidget *_pInputWidget, DlgChannelSe
     fontMenu->addAction(tahomaAct);
     fontMenu->addAction(courierAct);
 
-    fontfamily = new QPushButton(this);
+    fontfamily = new QToolButton(this);
     fontfamily->setToolTip(tr("Font family"));
     fontfamily->setFont(QFont("Verdana", -1, -1, false));
     fontfamily->setText("Verdana");
-    fontfamily->setMaximumWidth(250);
-    fontfamily->setMaximumHeight(25);
+    fontfamily->setPopupMode(QToolButton::MenuButtonPopup);
     fontfamily->setMenu(fontMenu);
     fontfamily->show();
 
@@ -138,10 +134,11 @@ ToolWidget::ToolWidget(QWidget *parent, InputWidget *_pInputWidget, DlgChannelSe
     sizeMenu->addAction(size20Act);
     sizeMenu->addAction(size24Act);
 
-    size = new QPushButton(QIcon(":/images/oxygen/16x16/format-font-size-more.png"), "", this);
+    size = new QToolButton(this);
+    size->setIcon(QIcon(":/images/oxygen/16x16/format-font-size-more.png"));
     size->setToolTip(tr("Font size"));
     size->setFont(QFont("Times New Roman", -1, -1, false));
-    size->setMaximumHeight(25);
+    size->setPopupMode(QToolButton::MenuButtonPopup);
     size->setMenu(sizeMenu);
     size->show();
 
@@ -150,27 +147,25 @@ ToolWidget::ToolWidget(QWidget *parent, InputWidget *_pInputWidget, DlgChannelSe
     separator2->setFrameShadow(QFrame::Sunken);
     separator2->show();
 
-    emoticons = new QPushButton(QIcon(":/images/oxygen/16x16/face-smile.png"), "", this);
+    emoticons = new QToolButton(this);
+    emoticons->setIcon(QIcon(":/images/oxygen/16x16/face-smile.png"));
     emoticons->setToolTip(tr("Emoticons"));
-    emoticons->setMaximumWidth(25);
-    emoticons->setMaximumHeight(25);
     emoticons->show();
 
-    channel_settings = new QPushButton(QIcon(":/images/oxygen/16x16/configure.png"), "", this);
+    channel_settings = new QToolButton(this);
+    channel_settings->setIcon(QIcon(":/images/oxygen/16x16/configure.png"));
     channel_settings->setToolTip(tr("Channel settings"));
-    channel_settings->setMaximumWidth(25);
-    channel_settings->setMaximumHeight(25);
     channel_settings->show();
 
-    moderation = new QPushButton(QIcon(":/images/oxygen/16x16/go-last.png"), tr("Moderation"), this);
+    clear = new QToolButton(this);
+    clear->setIcon(QIcon(":/images/oxygen/16x16/draw-eraser.png"));
+    clear->setToolTip(tr("Clear"));
+    clear->show();
+
+    moderation = new QToolButton(this);
+    moderation->setIcon(QIcon(":/images/oxygen/16x16/layer-visible-on.png"));
     moderation->setToolTip(tr("Moderation"));
     moderation->show();
-
-    clear = new QPushButton(QIcon(":/images/oxygen/16x16/draw-eraser.png"), "", this);
-    clear->setToolTip(tr("Clear"));
-    clear->setMaximumWidth(25);
-    clear->setMaximumHeight(25);
-    clear->show();
 
     toolLayout = new QHBoxLayout();
     toolLayout->setMargin(0);
@@ -185,8 +180,8 @@ ToolWidget::ToolWidget(QWidget *parent, InputWidget *_pInputWidget, DlgChannelSe
     toolLayout->addWidget(separator2);
     toolLayout->addWidget(emoticons);
     toolLayout->addWidget(channel_settings);
-    toolLayout->addWidget(moderation);
     toolLayout->addWidget(clear);
+    toolLayout->addWidget(moderation);
     setLayout(toolLayout);
 
     // set default values

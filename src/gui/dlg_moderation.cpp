@@ -96,6 +96,10 @@ void DlgModeration::addMsg(QString strID, QString strChannel, QString strNick, Q
     if (ui.comboBox_channels->findText(strChannel) == -1)
         ui.comboBox_channels->addItem(strChannel);
 
+    strMessage.remove(QRegExp("%C([a-zA-Z0-9]+)%"));
+    strMessage.remove(QRegExp("%F([a-zA-Z0-9:]+)%"));
+    strMessage.replace(QRegExp("%I([a-zA-Z0-9_-]+)%"),"<\\1>");
+
     QDateTime dt = QDateTime::currentDateTime();
     QString strDT = dt.toString("hh:mm:ss");
 

@@ -48,8 +48,8 @@ void DlgChannelSettings::createGui()
     ui.pushButton_remove_channel->setIcon(QIcon(":/images/oxygen/16x16/meeting-participant-no-response.png"));
     ui.pushButton_set_website->setIcon(QIcon(":/images/oxygen/16x16/dialog-ok-apply.png"));
     ui.pushButton_set_topic->setIcon(QIcon(":/images/oxygen/16x16/dialog-ok-apply.png"));
-    ui.pushButton_bold->setIcon(QIcon(":/images/oxygen/16x16/format-text-bold.png"));
-    ui.pushButton_italic->setIcon(QIcon(":/images/oxygen/16x16/format-text-italic.png"));
+    ui.toolButton_bold->setIcon(QIcon(":/images/oxygen/16x16/format-text-bold.png"));
+    ui.toolButton_italic->setIcon(QIcon(":/images/oxygen/16x16/format-text-italic.png"));
     ui.pushButton_set_desc->setIcon(QIcon(":/images/oxygen/16x16/dialog-ok-apply.png"));
     ui.pushButton_set_password->setIcon(QIcon(":/images/oxygen/16x16/dialog-ok-apply.png"));
     ui.pushButton_set_limit->setIcon(QIcon(":/images/oxygen/16x16/dialog-ok-apply.png"));
@@ -84,8 +84,6 @@ void DlgChannelSettings::createGui()
     ui.label_website->setText(tr("Website:"));
     ui.pushButton_set_website->setText(tr("Apply"));
     ui.label_topic->setText(tr("Topic:"));
-    ui.pushButton_bold->setText("");
-    ui.pushButton_italic->setText("");
     ui.pushButton_set_topic->setText(tr("Apply"));
     ui.label_desc->setText(tr("Description:"));
     ui.pushButton_set_desc->setText(tr("Apply"));
@@ -134,12 +132,6 @@ void DlgChannelSettings::createGui()
     ui.label_stats_lwords->setText(tr("Average per day spoken words:"));
     ui.label_stats_lfavourites->setText(tr("Channel added in favourites:"));
     ui.label_stats_lexists_days->setText(tr("Channel exists days:"));
-
-    // bold
-    ui.pushButton_bold->setCheckable(true);
-
-    // italic
-    ui.pushButton_italic->setCheckable(true);
 
     // transparent summary topic
     QPalette paletteTopic = ui.plainTextEdit_summary_topic->palette();
@@ -433,8 +425,8 @@ void DlgChannelSettings::setTopic(QString strTopic)
     QString strRemovedFont = pConvertF->getRemovedFont();
     delete pConvertF;
 
-    if (bRemovedBold) ui.pushButton_bold->setChecked(true);
-    else if (bRemovedItalic) ui.pushButton_italic->setChecked(true);
+    if (bRemovedBold) ui.toolButton_bold->setChecked(true);
+    else if (bRemovedItalic) ui.toolButton_italic->setChecked(true);
 
     if (strRemovedFont == "arial") ui.comboBox_font->setCurrentIndex(0);
     else if (strRemovedFont == "times") ui.comboBox_font->setCurrentIndex(1);
@@ -612,10 +604,10 @@ void DlgChannelSettings::topicChanged()
     QString strFontWeight;
 
     // bold
-    if (ui.pushButton_bold->isChecked()) bBold = true;
+    if (ui.toolButton_bold->isChecked()) bBold = true;
 
     // italic
-    if (ui.pushButton_italic->isChecked()) bItalic = true;
+    if (ui.toolButton_italic->isChecked()) bItalic = true;
 
     // font name
     strFontName = ui.comboBox_font->currentText().toLower();
@@ -910,8 +902,8 @@ void DlgChannelSettings::clear()
     ui.label_owner_nick->clear();
     ui.lineEdit_website->clear();
     ui.plainTextEdit_topic->clear();
-    ui.pushButton_bold->setChecked(false);
-    ui.pushButton_italic->setChecked(false);
+    ui.toolButton_bold->setChecked(false);
+    ui.toolButton_italic->setChecked(false);
     ui.comboBox_font->setCurrentIndex(-1);
     ui.comboBox_color->setCurrentIndex(-1);
     ui.plainTextEdit_desc->clear();

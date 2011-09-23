@@ -24,7 +24,7 @@
 #include "defines.h"
 class QHBoxLayout;
 class QLabel;
-class QPushButton;
+class QToolButton;
 class InputLineWidget;
 #include <QWidget>
 
@@ -46,11 +46,11 @@ public:
 private:
     // input widget
     QHBoxLayout *mainLayout;
-    QPushButton *showHideToolWidget;
+    QToolButton *showHideToolWidget;
     QLabel *nickLabel;
     InputLineWidget *pInputLine;
-    QPushButton *sendButton;
-    QPushButton *moderSendButton;
+    QToolButton *sendButton;
+    QToolButton *moderSendButton;
 
 private slots:
     void inputlineReturnPressed();

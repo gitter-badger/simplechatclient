@@ -40,7 +40,6 @@
         <file>images/oxygen/16x16/format-text-italic.png</file>
         <file>images/oxygen/16x16/format-font-size-more.png</file>
         <file>images/oxygen/16x16/go-next.png</file>
-        <file>images/oxygen/16x16/go-last.png</file>
         <file>images/oxygen/16x16/view-pim-tasks.png</file>
         <file>images/oxygen/16x16/preferences-system.png</file>
         <file>images/oxygen/16x16/documentation.png</file>
@@ -91,5 +90,7 @@
         <file>images/oxygen/16x16/user-group-properties.png</file>
         <file>images/oxygen/16x16/meeting-participant-no-response.png</file>
         <file>images/oxygen/16x16/meeting-participant-request-response.png</file>
+        <file>images/oxygen/16x16/arrow-right.png</file>
+        <file>images/oxygen/16x16/layer-visible-on.png</file>
     </qresource>
 </RCC>

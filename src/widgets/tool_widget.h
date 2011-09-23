@@ -25,7 +25,7 @@ class QComboBox;
 class QFrame;
 class QHBoxLayout;
 class QMenu;
-class QPushButton;
+class QToolButton;
 class DlgChannelSettings;
 class DlgModeration;
 class InputWidget;
@@ -55,17 +55,17 @@ private:
     QString strCurrentColor;
 
     QHBoxLayout *toolLayout;
-    QPushButton *showFontButtons;
+    QToolButton *showFontButtons;
     QFrame *separator1;
-    QPushButton *bold;
-    QPushButton *italic;
-    QPushButton *fontfamily;
+    QToolButton *bold;
+    QToolButton *italic;
+    QToolButton *fontfamily;
     QComboBox *color;
-    QPushButton *emoticons;
+    QToolButton *emoticons;
     QFrame *separator2;
-    QPushButton *channel_settings;
-    QPushButton *moderation;
-    QPushButton *clear;
+    QToolButton *channel_settings;
+    QToolButton *moderation;
+    QToolButton *clear;
 
     QMenu *fontMenu;
     QAction *arialAct;
@@ -74,7 +74,7 @@ private:
     QAction *tahomaAct;
     QAction *courierAct;
 
-    QPushButton *size;
+    QToolButton *size;
     QMenu *sizeMenu;
     QAction *size8Act;
     QAction *size9Act;
