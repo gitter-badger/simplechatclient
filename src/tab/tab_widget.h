@@ -21,7 +21,6 @@
 #ifndef TAB_WIDGET_H
 #define TAB_WIDGET_H
 
-class DlgUserProfile;
 #include "chat_view.h"
 #include <QLabel>
 #include <QWidget>
@@ -33,7 +32,7 @@ class TabWidget : public QWidget
 {
     Q_OBJECT
 public:
-    TabWidget(QString, DlgUserProfile *);
+    TabWidget(QString);
     virtual ~TabWidget();
     inline QString getName() { return strName; }
     void refreshColors();
@@ -44,7 +43,6 @@ public:
 private:
     // params
     QString strName;
-    DlgUserProfile *pDlgUserProfile;
 };
 
 #endif // TAB_WIDGET_H

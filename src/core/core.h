@@ -80,6 +80,10 @@ public:
     QMap<QString,QString> settings;
     // network
     Network *pNetwork;
+    // user profile
+    QString strUserProfile;
+    QMap<QString,QString> mUserProfile;
+    bool bUserProfile;
 
     QAction *lagAct;
     QList<QString> lAwaylog;

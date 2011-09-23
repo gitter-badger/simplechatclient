@@ -38,13 +38,8 @@ class DlgUserProfile : public QDialog
 {
     Q_OBJECT
 public:
-    DlgUserProfile(QWidget *);
+    DlgUserProfile(QWidget *, QString);
     virtual ~DlgUserProfile();
-    void setNick(QString);
-    inline QString getNick() { return strNick; }
-
-public slots:
-    void setUserInfo(QString, QString);
 
 private:
     QPixmap avatar;
@@ -87,8 +82,6 @@ private:
     void createGui();
     void createSignals();
 
-    void clearInfo();
-    void showInfo();
     QString convertDesc(QString);
     QString convertSex(QString);
     QString convertAge(QString);
@@ -97,14 +90,10 @@ private:
     void showAvatar(QString);
 
 private slots:
+    void refreshUserInfo();
     void avatarFinished(QNetworkReply*);
     void buttonZoom();
     void buttonMore();
-
-protected:
-    virtual void showEvent(QShowEvent *);
-    virtual void hideEvent(QHideEvent *);
-    virtual void closeEvent(QCloseEvent *);
 };
 
 #endif // DLG_USER_PROFILE_H

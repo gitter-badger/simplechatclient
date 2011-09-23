@@ -22,22 +22,19 @@
 #define NICKLIST_WIDGET_H
 
 #include "defines.h"
-class DlgUserProfile;
 #include <QListWidget>
 
 class NickListWidget : public QListWidget
 {
     Q_OBJECT
 public:
-    NickListWidget(DlgUserProfile *);
+    NickListWidget();
     void setChannel(QString);
     QString getChannel() { return strChannel; }
     void add(QString);
     void remove(QString);
 
 private:
-    // params
-    DlgUserProfile *pDlgUserProfile;
     // other
     QString strChannel;
     QAction *openChannelsActs[maxOpenChannels];

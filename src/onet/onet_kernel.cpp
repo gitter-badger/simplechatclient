@@ -27,7 +27,6 @@
 #include "dlg_channel_settings.h"
 #include "dlg_invite.h"
 #include "dlg_moderation.h"
-#include "dlg_user_profile.h"
 #include "log.h"
 #include "notify.h"
 #include "onet_utils.h"
@@ -35,7 +34,7 @@
 #include "tab_container.h"
 #include "onet_kernel.h"
 
-OnetKernel::OnetKernel(TabContainer *_pTabC, DlgChannelSettings *_pDlgChannelSettings, DlgModeration *_pDlgModeration,  DlgUserProfile *_pDlgUserProfile) : pTabC(_pTabC), pDlgChannelSettings(_pDlgChannelSettings), pDlgModeration(_pDlgModeration), pDlgUserProfile(_pDlgUserProfile)
+OnetKernel::OnetKernel(TabContainer *_pTabC, DlgChannelSettings *_pDlgChannelSettings, DlgModeration *_pDlgModeration) : pTabC(_pTabC), pDlgChannelSettings(_pDlgChannelSettings), pDlgModeration(_pDlgModeration)
 {
     avatar = new Avatar(pTabC);
 }
@@ -1286,6 +1285,9 @@ void OnetKernel::raw_001()
     Core::instance()->lChannelHomes.clear();
     Core::instance()->lOfflineMsg.clear();
     Core::instance()->lOfflineNicks.clear();
+    Core::instance()->mUserProfile.clear();
+    Core::instance()->bUserProfile = false;
+    Core::instance()->strUserProfile.clear();
 
     // protocol
     Core::instance()->pNetwork->send("PROTOCTL ONETNAMESX");
@@ -1451,8 +1453,8 @@ void OnetKernel::raw_111n()
         strAvatarLink = strValue;
 
     // set user info
-    if (pDlgUserProfile->getNick() == strNick)
-        pDlgUserProfile->setUserInfo(strKey, strValue);
+    if (Core::instance()->strUserProfile == strNick)
+        Core::instance()->mUserProfile[strKey] = strValue;
 
     // set my profile
     if (strNick == strMe)
@@ -1472,6 +1474,12 @@ void OnetKernel::raw_111n()
 // :NickServ!service@service.onet NOTICE Merovingian :112 aleksa7 :end of user info
 void OnetKernel::raw_112n()
 {
+    if (strDataList.size() < 5) return;
+
+    QString strNick = strDataList[4];
+
+    if (Core::instance()->strUserProfile == strNick)
+        Core::instance()->bUserProfile = true;
 }
 
 // NS FRIENDS

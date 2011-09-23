@@ -29,7 +29,6 @@ class DlgAbout;
 class DlgChannelSettings;
 class DlgModeration;
 class DlgNotes;
-class DlgUserProfile;
 class InputLineDockWidget;
 class NickListWidget;
 class OnetAuth;
@@ -93,7 +92,6 @@ private:
     OnetKernel *pOnetKernel;
     OnetAuth *pOnetAuth;
     DlgChannelSettings *pDlgChannelSettings;
-    DlgUserProfile *pDlgUserProfile;
     DlgModeration *pDlgModeration;
 
     // gui

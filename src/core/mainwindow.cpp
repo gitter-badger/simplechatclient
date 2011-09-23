@@ -41,7 +41,6 @@
 #include "dlg_notes.h"
 #include "dlg_offlinemsg.h"
 #include "dlg_options.h"
-#include "dlg_user_profile.h"
 #include "inputline_dock_widget.h"
 #include "nicklist_delegate.h"
 #include "nicklist_widget.h"
@@ -75,12 +74,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
     pDlgChannelSettings = new DlgChannelSettings(this);
     pDlgModeration = new DlgModeration(this);
-    pDlgUserProfile = new DlgUserProfile(this);
 
-    pOnetKernel = new OnetKernel(pTabC, pDlgChannelSettings, pDlgModeration, pDlgUserProfile);
+    pOnetKernel = new OnetKernel(pTabC, pDlgChannelSettings, pDlgModeration);
     pOnetAuth = new OnetAuth(pTabC);
-
-    pTabC->setDlg(pDlgUserProfile);
 
     // auto-away
     Core::instance()->autoAwayTimer = new QTimer();
@@ -132,7 +128,6 @@ MainWindow::~MainWindow()
 
     delete pOnetAuth;
     delete pOnetKernel;
-    delete pDlgUserProfile;
     delete pDlgModeration;
     delete pDlgChannelSettings;
 
@@ -183,7 +178,7 @@ void MainWindow::createGui()
     bottomDockWidget->setWidget(pInputLineDockWidget);
 
     // nicklist
-    pNickListWidget = new NickListWidget(pDlgUserProfile);
+    pNickListWidget = new NickListWidget();
     pNickListWidget->setParent(rightDockWidget);
     pNickListWidget->setItemDelegate(new NickListDelegate(pNickListWidget));
     rightDockWidget->setWidget(pNickListWidget);

@@ -22,22 +22,18 @@
 #define CHAT_VIEW_H
 
 #include "defines.h"
-class DlgUserProfile;
 #include <QtWebKit/QWebView>
 
 class ChatView : public QWebView
 {
     Q_OBJECT
 public:
-    ChatView(QString, DlgUserProfile *);
+    ChatView(QString);
     void clearMessages();
     void displayMessage(QString &, MessageCategory, QString strTime = QString::null);
     void updateBackgroundImage();
 
 private:
-    // params
-    DlgUserProfile *pDlgUserProfile;
-    // other
     QString strChannel;
     QString strNick;
     QString strWebsite;

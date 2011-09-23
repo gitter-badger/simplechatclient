@@ -185,10 +185,7 @@ void DlgMyProfile::refresh()
         else if (strKey == "city")
             ui.lineEdit_city->setText(strValue);
         else if (strKey == "country")
-        {
-            QString strCountry = convertCodeToCountry(strValue);
-            ui.comboBox_country->setCurrentIndex(getIndex(ui.comboBox_country, strCountry));
-        }
+            ui.comboBox_country->setCurrentIndex(getIndex(ui.comboBox_country, convertCodeToCountry(strValue)));
         else if (strKey == "longDesc")
             ui.plainTextEdit_hobby->setPlainText(strValue);
         else if (strKey == "sex")
@@ -217,8 +214,6 @@ int DlgMyProfile::getIndex(QComboBox *comboBox, QString strCheck)
 
 QString DlgMyProfile::convertTextToDesc(QString strContent)
 {
-    strContent += " "; // fix convert algorithm
-
     // convert emoticons
     strContent.replace(QRegExp("%I([a-zA-Z0-9_-]+)%"), "//\\1");
 
@@ -344,7 +339,7 @@ QString DlgMyProfile::convertCodeToCountry(QString strCountryCode)
         }
     }
 
-    return "";
+    return QString::null;
 }
 
 QString DlgMyProfile::convertCountryToCode(QString strCountry)
@@ -388,7 +383,7 @@ QString DlgMyProfile::convertCountryToCode(QString strCountry)
         }
     }
 
-    return "";
+    return QString::null;
 }
 
 QString DlgMyProfile::convertIntToMonth(QString strCheckMonth)
@@ -402,7 +397,7 @@ QString DlgMyProfile::convertIntToMonth(QString strCheckMonth)
             return strlMonths.at(i);
     }
 
-    return "";
+    return QString::null;
 }
 
 QString DlgMyProfile::convertMonthToInt(QString strMonth)
@@ -417,7 +412,7 @@ QString DlgMyProfile::convertMonthToInt(QString strMonth)
             return strInt;
     }
 
-    return "";
+    return QString::null;
 }
 
 QString DlgMyProfile::convertType(QString strType)

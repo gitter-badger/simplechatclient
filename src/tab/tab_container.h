@@ -24,7 +24,6 @@
 #include "defines.h"
 class DlgChannelSettings;
 class DlgModeration;
-class DlgUserProfile;
 class TabManager;
 class TabWidget;
 #include <QObject>
@@ -38,7 +37,6 @@ class TabContainer : public QObject
 public:
     TabContainer(TabManager *);
     virtual ~TabContainer();
-    void setDlg(DlgUserProfile *);
     bool existTab(QString);
     void addTab(QString);
     void removeTab(QString);
@@ -66,7 +64,6 @@ private:
     TabManager *pTabM;
     DlgChannelSettings *pDlgChannelSettings;
     DlgModeration *pDlgModeration;
-    DlgUserProfile *pDlgUserProfile;
     // other
     QList<TabWidget*> tw;
 

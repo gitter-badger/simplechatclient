@@ -33,7 +33,7 @@
     #include "dlg_webcam.h"
 #endif
 
-NickListWidget::NickListWidget(DlgUserProfile *_pDlgUserProfile) : pDlgUserProfile(_pDlgUserProfile)
+NickListWidget::NickListWidget()
 {
     setFocusPolicy(Qt::NoFocus);
     setSortingEnabled(false);
@@ -88,10 +88,7 @@ void NickListWidget::profile()
     if (strSelectedNick.isEmpty()) return;
 
     if (strSelectedNick[0] != '~')
-    {
-        pDlgUserProfile->setNick(strSelectedNick);
-        pDlgUserProfile->show();
-    }
+        DlgUserProfile(this, strSelectedNick).exec();
 }
 
 void NickListWidget::cam()

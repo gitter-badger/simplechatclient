@@ -43,7 +43,7 @@
     #include "dlg_webcam.h"
 #endif
 
-ChatView::ChatView(QString _strChannel, DlgUserProfile *_pDlgUserProfile) : pDlgUserProfile(_pDlgUserProfile), strChannel(_strChannel), strNick(QString::null), bScroll(true)
+ChatView::ChatView(QString _strChannel) : strChannel(_strChannel), strNick(QString::null), bScroll(true)
 {
     setFocusPolicy(Qt::NoFocus);
     settings()->setAttribute(QWebSettings::JavascriptEnabled, true);
@@ -196,10 +196,7 @@ void ChatView::whois()
 void ChatView::profile()
 {
     if (strNick[0] != '~')
-    {
-        pDlgUserProfile->setNick(strNick);
-        pDlgUserProfile->show();
-    }
+        DlgUserProfile(this, strNick).exec();
 }
 
 void ChatView::cam()

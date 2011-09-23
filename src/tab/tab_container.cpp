@@ -60,11 +60,6 @@ TabContainer::~TabContainer()
     }
 }
 
-void TabContainer::setDlg(DlgUserProfile *param1)
-{
-    pDlgUserProfile = param1;
-}
-
 int TabContainer::getIndex(QString strName)
 {
     for (int i = 0; i < tw.size(); i++)
@@ -103,7 +98,7 @@ void TabContainer::addTab(QString strChannel)
         Core::instance()->mChannelNicks.insert(strChannel, 0);
 
         // create tab
-        tw.append(new TabWidget(strChannel, pDlgUserProfile));
+        tw.append(new TabWidget(strChannel));
         pTabM->addTab(tw.at(tw.size()-1), strChannel);
         pTabM->setCurrentIndex(tw.size()-1);
     }

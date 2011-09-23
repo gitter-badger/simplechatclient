@@ -22,7 +22,7 @@
 #include "core.h"
 #include "tab_widget.h"
 
-TabWidget::TabWidget(QString _strName, DlgUserProfile *_pDlgUserProfile) : strName(_strName), pDlgUserProfile(_pDlgUserProfile)
+TabWidget::TabWidget(QString _strName) : strName(_strName)
 {
     topic = new QLabel(this);
     topic->setWordWrap(true);
@@ -30,7 +30,7 @@ TabWidget::TabWidget(QString _strName, DlgUserProfile *_pDlgUserProfile) : strNa
     topic->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
     topic->show();
 
-    pChatView = new ChatView(strName, pDlgUserProfile);
+    pChatView = new ChatView(strName);
     pChatView->setParent(this);
     pChatView->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     pChatView->show();

@@ -32,22 +32,43 @@
 #include <QDesktopWidget>
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
+#include <QTimer>
 #include "convert.h"
 #include "core.h"
 #include "dlg_user_avatar.h"
 #include "dlg_user_profile.h"
 
-DlgUserProfile::DlgUserProfile(QWidget *parent) : QDialog(parent)
+DlgUserProfile::DlgUserProfile(QWidget *parent, QString _strNick) : QDialog(parent), strNick(_strNick)
 {
-    setAttribute(Qt::WA_DeleteOnClose);
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
     setWindowTitle(tr("Profile"));
 
     createGui();
     createSignals();
 
+    // max height
+    setMinimumSize(285, sizeHint().height());
+    setMaximumSize(285, sizeHint().height());
+
+    // center screen
+    move(QApplication::desktop()->screen()->rect().center() - rect().center());
+
     accessManager = new QNetworkAccessManager;
     QObject::connect(accessManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(avatarFinished(QNetworkReply*)));
+
+    // set nick
+    Core::instance()->strUserProfile = strNick;
+    Core::instance()->mUserProfile.clear();
+    Core::instance()->bUserProfile = false;
+
+    //set label
+    label_nick->setText(strNick);
+
+    // get new user info
+    Core::instance()->pNetwork->send(QString("NS INFO %1").arg(strNick));
+
+    // refresh
+    QTimer::singleShot(1000*1, this, SLOT(refreshUserInfo())); // 1 sec
 }
 
 DlgUserProfile::~DlgUserProfile()
@@ -160,6 +181,8 @@ void DlgUserProfile::createGui()
     label_age->setText(tr("Age:"));
     pushButton_more->setText(tr("More..."));
     pushButton_close->setText(tr("Close"));
+
+    moreWidget->setVisible(false);
 }
 
 void DlgUserProfile::createSignals()
@@ -169,53 +192,52 @@ void DlgUserProfile::createSignals()
     QObject::connect(pushButton_close, SIGNAL(clicked()), this, SLOT(hide()));
 }
 
-void DlgUserProfile::setNick(QString n)
+void DlgUserProfile::refreshUserInfo()
 {
-    // clear
-    clearInfo();
-
-    // set nick
-    strNick = n;
-
-    //set label
-    label_nick->setText(strNick);
-
-    // get new user info
-    Core::instance()->pNetwork->send(QString("NS INFO %1").arg(strNick));
-}
-
-void DlgUserProfile::setUserInfo(QString strKey, QString strValue)
-{
-    if (strKey == "avatar")
+    if (Core::instance()->bUserProfile == false)
     {
-        if (!strValue.isEmpty())
-            showAvatar(strValue);
-        else
-            label_avatar->setText(tr("No photo available"));
+        QTimer::singleShot(1000*1, this, SLOT(refreshUserInfo())); // 1 sec
+        return;
     }
-    else if (strKey == "birthdate")
-    {
-        lineEdit_age->setText(convertAge(strValue));
-        lineEdit_birthdate->setText(strValue);
-    }
-    else if (strKey == "city")
-        lineEdit_city->setText(strValue);
-    else if (strKey == "country")
-        lineEdit_country->setText(convertCodeToCountry(strValue));
-    else if (strKey == "longDesc")
-        plainTextEdit_hobby->setPlainText(strValue);
-    else if (strKey == "sex")
-        lineEdit_sex->setText(convertSex(strValue));
-    else if (strKey == "shortDesc")
-        textEdit_desc->setHtml(convertDesc(strValue));
-    else if (strKey == "type")
-        lineEdit_type->setText(convertType(strValue));
-    else if (strKey == "www")
-    {
-        QString strShortLink = strValue;
-        if (strShortLink.size() > 30) strShortLink = strShortLink.left(15)+"..."+strShortLink.right(15);
 
-        label_website_link->setText(QString("<a href=\"%1\">%2</a>").arg(strValue).arg(strShortLink));
+    QMapIterator<QString, QString> i(Core::instance()->mUserProfile);
+    while (i.hasNext())
+    {
+        i.next();
+        QString strKey = i.key();
+        QString strValue = i.value();
+
+        if (strKey == "avatar")
+        {
+            if (!strValue.isEmpty())
+                showAvatar(strValue);
+            else
+                label_avatar->setText(tr("No photo available"));
+        }
+        else if (strKey == "birthdate")
+        {
+            lineEdit_age->setText(convertAge(strValue));
+            lineEdit_birthdate->setText(strValue);
+        }
+        else if (strKey == "city")
+            lineEdit_city->setText(strValue);
+        else if (strKey == "country")
+            lineEdit_country->setText(convertCodeToCountry(strValue));
+        else if (strKey == "longDesc")
+            plainTextEdit_hobby->setPlainText(strValue);
+        else if (strKey == "sex")
+            lineEdit_sex->setText(convertSex(strValue));
+        else if (strKey == "shortDesc")
+            textEdit_desc->setHtml(convertDesc(strValue));
+        else if (strKey == "type")
+            lineEdit_type->setText(convertType(strValue));
+        else if (strKey == "www")
+        {
+            QString strShortLink = strValue;
+            if (strShortLink.size() > 30) strShortLink = strShortLink.left(15)+"..."+strShortLink.right(15);
+
+            label_website_link->setText(QString("<a href=\"%1\">%2</a>").arg(strValue).arg(strShortLink));
+        }
     }
 }
 
@@ -263,23 +285,6 @@ void DlgUserProfile::buttonMore()
 
     setMinimumSize(285, sizeHint().height());
     setMaximumSize(285, sizeHint().height());
-}
-
-void DlgUserProfile::clearInfo()
-{
-    strNick.clear();
-    label_avatar->clear();
-    toolButton_zoom->setEnabled(false);
-    label_nick->clear();
-    textEdit_desc->clear();
-    lineEdit_sex->clear();
-    lineEdit_age->clear();
-    lineEdit_birthdate->clear();
-    lineEdit_city->clear();
-    lineEdit_country->clear();
-    plainTextEdit_hobby->clear();
-    lineEdit_type->clear();
-    label_website_link->clear();
 }
 
 QString DlgUserProfile::convertDesc(QString strContent)
@@ -372,7 +377,7 @@ QString DlgUserProfile::convertCodeToCountry(QString strCountryCode)
         }
     }
 
-    return "";
+    return QString::null;
 }
 
 QString DlgUserProfile::convertType(QString strType)
@@ -401,38 +406,4 @@ void DlgUserProfile::showAvatar(QString strUrl)
 
     // get url
     accessManager->get(QNetworkRequest(QUrl(strUrl)));
-}
-
-void DlgUserProfile::showEvent(QShowEvent *event)
-{
-    event->accept();
-
-    // is visible
-    if (moreWidget->isVisible())
-    {
-        // change text
-        moreWidget->setVisible(false);
-        pushButton_more->setIcon(QIcon(":/images/oxygen/16x16/list-add.png"));
-        pushButton_more->setText(tr("More..."));
-    }
-
-    setMinimumSize(285, sizeHint().height());
-    setMaximumSize(285, sizeHint().height());
-
-    // center screen
-    move(QApplication::desktop()->screen()->rect().center() - rect().center());
-}
-
-void DlgUserProfile::hideEvent(QHideEvent *event)
-{
-    event->accept();
-
-    clearInfo();
-}
-
-void DlgUserProfile::closeEvent(QCloseEvent *event)
-{
-    event->ignore();
-
-    this->hide();
 }
