@@ -249,7 +249,7 @@ QMap<QString,QString> Config::getDefaultValues()
         mDefaultValues.insert("language", "pl");
         mDefaultValues.insert("auto_busy", "off");
         mDefaultValues.insert("disable_autojoin_favourites", "off");
-        mDefaultValues.insert("show_zuo", "off");
+        mDefaultValues.insert("show_zuo_and_ip", "off");
         mDefaultValues.insert("hide_formating", "off");
         mDefaultValues.insert("hide_join_part", "off");
         mDefaultValues.insert("hide_join_part_200", "on");

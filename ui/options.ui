@@ -319,9 +319,9 @@
         </widget>
        </item>
        <item>
-        <widget class="QCheckBox" name="checkBox_show_zuo">
+        <widget class="QCheckBox" name="checkBox_show_zuo_and_ip">
          <property name="text">
-          <string>Show ZUO</string>
+          <string>Show ZUO and IP</string>
          </property>
         </widget>
        </item>

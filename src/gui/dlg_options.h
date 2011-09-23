@@ -52,7 +52,7 @@ private slots:
     void languageChanged(int);
     void autoBusy(bool);
     void disableAutojoinFavourites(bool);
-    void showZuo(bool);
+    void showZuoAndIp(bool);
     void hideFormating(bool);
     void hideJoinPart(bool);
     void hideJoinPart200(bool);

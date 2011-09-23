@@ -72,7 +72,7 @@ void DlgOptions::createGui()
     // page adv
     ui.checkBox_auto_busy->setText(tr("Busy mode after you log in to chat"));
     ui.checkBox_disable_autojoin_favourites->setText(tr("Disable autojoin favourite channels"));
-    ui.checkBox_show_zuo->setText(tr("Show ZUO"));
+    ui.checkBox_show_zuo_and_ip->setText(tr("Show ZUO and IP"));
     ui.checkBox_hide_formating->setText(tr("Disable font size, color..."));
     ui.checkBox_hide_join_part->setText(tr("Hide join/part"));
     ui.checkBox_hide_join_part_200->setText(tr("Hide join/part on big channels"));
@@ -221,7 +221,7 @@ void DlgOptions::setDefaultValues()
 
     QString strAutoBusy = Core::instance()->settings.value("auto_busy");
     QString strDisableAutojoinFavourites = Core::instance()->settings.value("disable_autojoin_favourites");
-    QString strShowZuo = Core::instance()->settings.value("show_zuo");
+    QString strShowZuoAndIp = Core::instance()->settings.value("show_zuo_and_ip");
     QString strHideFormating = Core::instance()->settings.value("hide_formating");
     QString strHideJoinPart = Core::instance()->settings.value("hide_join_part");
     QString strHideJoinPart200 = Core::instance()->settings.value("hide_join_part_200");
@@ -262,10 +262,10 @@ void DlgOptions::setDefaultValues()
         ui.checkBox_disable_autojoin_favourites->setChecked(false);
 
     // show zuo
-    if (strShowZuo == "on")
-        ui.checkBox_show_zuo->setChecked(true);
+    if (strShowZuoAndIp == "on")
+        ui.checkBox_show_zuo_and_ip->setChecked(true);
     else
-        ui.checkBox_show_zuo->setChecked(false);
+        ui.checkBox_show_zuo_and_ip->setChecked(false);
 
     // hide formating
     if (strHideFormating == "on")
@@ -352,7 +352,7 @@ void DlgOptions::createSignals()
     QObject::connect(ui.comboBox_language, SIGNAL(activated(int)), this, SLOT(languageChanged(int)));
     QObject::connect(ui.checkBox_auto_busy, SIGNAL(clicked(bool)), this, SLOT(autoBusy(bool)));
     QObject::connect(ui.checkBox_disable_autojoin_favourites, SIGNAL(clicked(bool)), this, SLOT(disableAutojoinFavourites(bool)));
-    QObject::connect(ui.checkBox_show_zuo, SIGNAL(clicked(bool)), this, SLOT(showZuo(bool)));
+    QObject::connect(ui.checkBox_show_zuo_and_ip, SIGNAL(clicked(bool)), this, SLOT(showZuoAndIp(bool)));
     QObject::connect(ui.checkBox_hide_formating, SIGNAL(clicked(bool)), this, SLOT(hideFormating(bool)));
     QObject::connect(ui.checkBox_hide_join_part, SIGNAL(clicked(bool)), this, SLOT(hideJoinPart(bool)));
     QObject::connect(ui.checkBox_hide_join_part_200, SIGNAL(clicked(bool)), this, SLOT(hideJoinPart200(bool)));
@@ -532,13 +532,13 @@ void DlgOptions::disableAutojoinFavourites(bool bValue)
     delete pConfig;
 }
 
-void DlgOptions::showZuo(bool bValue)
+void DlgOptions::showZuoAndIp(bool bValue)
 {
     QString strValue = (bValue ? "on" : "off");
 
     Config *pConfig = new Config();
-    pConfig->setValue("show_zuo", strValue);
-    Core::instance()->settings["show_zuo"] = strValue;
+    pConfig->setValue("show_zuo_and_ip", strValue);
+    Core::instance()->settings["show_zuo_and_ip"] = strValue;
     delete pConfig;
 }
 

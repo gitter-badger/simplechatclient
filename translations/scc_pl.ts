@@ -1250,8 +1250,8 @@
         <translation>Wyłącz automatyczne wchodzenie do ulubionych pokoi</translation>
     </message>
     <message>
-        <source>Show ZUO</source>
-        <translation>Pokaż numer ZUO</translation>
+        <source>Show ZUO and IP</source>
+        <translation>Pokaż numer ZUO oraz IP</translation>
     </message>
     <message>
         <source>Disable font size, color...</source>
