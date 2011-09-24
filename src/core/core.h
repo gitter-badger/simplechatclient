@@ -76,14 +76,6 @@ public:
     QString getUserModes(QString, QString);
     // get user max modes - for sorting
     int getUserMaxModes(QString, QString);
-    // settings
-    QMap<QString,QString> settings;
-    // network
-    Network *pNetwork;
-    // user profile
-    QString strUserProfile;
-    QMap<QString,QString> mUserProfile;
-    bool bUserProfile;
 
     QAction *lagAct;
     QList<QString> lAwaylog;
@@ -111,6 +103,21 @@ public:
     QTimer *autoAwayTimer;
     // kamerzysta socket
     QTcpSocket *kamerzystaSocket;
+    // settings
+    QMap<QString,QString> settings;
+    // network
+    Network *pNetwork;
+    // user profile
+    QString strUserProfile;
+    QMap<QString,QString> mUserProfile;
+    bool bUserProfile;
+    // channel settings
+    QString strChannelSettings;
+    QMap<QString,QString> mChannelSettingsInfo;
+    QMultiMap<QString,QString> mChannelSettingsPermissions;
+    bool bChannelSettingsInfo;
+    QMap<QString,QString> mChannelSettingsStats;
+    bool bChannelSettingsStats;
 
 public slots:
     void quit();

@@ -22,16 +22,18 @@
 #include <QDesktopWidget>
 #include <QInputDialog>
 #include <QMessageBox>
+#include <QTimer>
 #include "convert.h"
 #include "core.h"
-#include "dlg_channel_settings.h"
 #include "simple_stats_widget.h"
+#include "dlg_channel_settings.h"
 
-DlgChannelSettings::DlgChannelSettings(QWidget *parent) : QDialog(parent)
+DlgChannelSettings::DlgChannelSettings(QWidget *parent, QString _strChannel) : QDialog(parent), strChannel(_strChannel)
 {
     ui.setupUi(this);
-    setAttribute(Qt::WA_DeleteOnClose);
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
+    // center screen
+    move(QApplication::desktop()->screen()->rect().center() - rect().center());
 
     pSimpleStatsWidget = new SimpleStatsWidget(this);
     pSimpleStatsWidget->show();
@@ -40,6 +42,8 @@ DlgChannelSettings::DlgChannelSettings(QWidget *parent) : QDialog(parent)
     createGui();
     setDefaultValues();
     createSignals();
+
+    refreshAll();
 }
 
 void DlgChannelSettings::createGui()
@@ -55,8 +59,7 @@ void DlgChannelSettings::createGui()
     ui.pushButton_set_limit->setIcon(QIcon(":/images/oxygen/16x16/dialog-ok-apply.png"));
     ui.pushButton_permission_add->setIcon(QIcon(":/images/oxygen/16x16/list-add.png"));
     ui.pushButton_permission_remove->setIcon(QIcon(":/images/oxygen/16x16/list-remove.png"));
-    ui.buttonBox->button(QDialogButtonBox::Ok)->setIcon(QIcon(":/images/oxygen/16x16/dialog-ok.png"));
-    ui.buttonBox->button(QDialogButtonBox::Cancel)->setIcon(QIcon(":/images/oxygen/16x16/dialog-cancel.png"));
+    ui.buttonBox->button(QDialogButtonBox::Close)->setIcon(QIcon(":/images/oxygen/16x16/dialog-close.png"));
 
     ui.tabWidget->setTabText(0, tr("Summary"));
     ui.tabWidget->setTabText(1, tr("General"));
@@ -148,6 +151,8 @@ void DlgChannelSettings::createGui()
 
 void DlgChannelSettings::setDefaultValues()
 {
+    ui.label_channel_name->setText(strChannel);
+
     // font
     QStringList comboBoxFont;
     comboBoxFont << "Arial" << "Times" << "Verdana" << "Tahoma" << "Courier";
@@ -200,24 +205,44 @@ void DlgChannelSettings::createSignals()
     QObject::connect(ui.pushButton_permission_remove, SIGNAL(clicked()), this, SLOT(buttonPermissionRemove()));
     QObject::connect(ui.listWidget_permissions, SIGNAL(clicked(QModelIndex)), this, SLOT(changePermissionList(QModelIndex)));
 
-    QObject::connect(ui.buttonBox, SIGNAL(accepted()), this, SLOT(buttonOk()));
-    QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(buttonCancel()));
+    QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(buttonClose()));
 }
 
-void DlgChannelSettings::setChannel(QString param1)
+void DlgChannelSettings::refreshAll()
 {
-    strChannel = param1;
+    // clear
+    clear();
+
+    // set channel
+    Core::instance()->strChannelSettings = strChannel;
+
+    // set label
+    ui.label_channel_name->setText(strChannel);
+
+    // get data
+    Core::instance()->pNetwork->send(QString("CS INFO %1").arg(strChannel));
+    Core::instance()->pNetwork->send(QString("RS INFO %1").arg(strChannel));
+
+    // refresh
+    QTimer::singleShot(200, this, SLOT(refreshChannelInfo())); // 0.2 sec
+    QTimer::singleShot(200, this, SLOT(refreshChannelStats())); // 0.2 sec
 }
 
-void DlgChannelSettings::setData(QMap<QString, QString> mData)
+void DlgChannelSettings::refreshChannelInfo()
 {
-    QMapIterator<QString, QString> i(mData);
-    while (i.hasNext())
+    if (Core::instance()->bChannelSettingsInfo == false)
     {
-        i.next();
+        QTimer::singleShot(200, this, SLOT(refreshChannelInfo())); // 0.5 sec
+        return;
+    }
 
-        QString strKey = i.key();
-        QString strValue = i.value();
+    QMapIterator<QString, QString> iSettingsInfo(Core::instance()->mChannelSettingsInfo);
+    while (iSettingsInfo.hasNext())
+    {
+        iSettingsInfo.next();
+
+        QString strKey = iSettingsInfo.key();
+        QString strValue = iSettingsInfo.value();
 
         if (strKey == "auditorium")
         {
@@ -358,12 +383,115 @@ void DlgChannelSettings::setData(QMap<QString, QString> mData)
                 ui.label_summary_website->setText(QString("<a href=\"%1\">%1</a>").arg(strValue));
             ui.lineEdit_website->setText(strValue);
         }
+        else if (strKey == "desc")
+        {
+            if (!strValue.isEmpty())
+            {
+                QString strDescriptionText = strValue;
+                strDescriptionText.remove(QRegExp("%C([a-zA-Z0-9]+)%"));
+                strDescriptionText.remove(QRegExp("%F([a-zA-Z0-9:]+)%"));
+                strDescriptionText.replace(QRegExp("%I([a-zA-Z0-9_-]+)%"),"//\\1");
+
+                ui.plainTextEdit_summary_desc->setPlainText(strDescriptionText);
+            }
+
+            // set description
+            ui.plainTextEdit_desc->setPlainText(strValue);
+        }
+        else if (strKey == "topic")
+        {
+            // convert emoticons
+            strValue.replace(QRegExp("%I([a-zA-Z0-9_-]+)%"), "//\\1");
+
+            // convert font
+            Convert *pConvertF = new Convert();
+            pConvertF->removeFont(strValue);
+            bool bRemovedBold = pConvertF->getRemovedBold();
+            bool bRemovedItalic = pConvertF->getRemovedItalic();
+            QString strRemovedFont = pConvertF->getRemovedFont();
+            delete pConvertF;
+
+            if (bRemovedBold) ui.toolButton_bold->setChecked(true);
+            else if (bRemovedItalic) ui.toolButton_italic->setChecked(true);
+
+            if (strRemovedFont == "arial") ui.comboBox_font->setCurrentIndex(0);
+            else if (strRemovedFont == "times") ui.comboBox_font->setCurrentIndex(1);
+            else if (strRemovedFont == "verdana") ui.comboBox_font->setCurrentIndex(2);
+            else if (strRemovedFont == "tahoma") ui.comboBox_font->setCurrentIndex(3);
+            else if (strRemovedFont == "courier") ui.comboBox_font->setCurrentIndex(4);
+            else ui.comboBox_font->setCurrentIndex(2);
+
+            // convert color
+            Convert *pConvertC = new Convert();
+            pConvertC->removeColor(strValue);
+            int iRemovedColor = pConvertC->getRemovedColor();
+            delete pConvertC;
+            ui.comboBox_color->setCurrentIndex(iRemovedColor);
+
+            // default #000000
+            if (ui.comboBox_color->currentIndex() == -1)
+                ui.comboBox_color->setCurrentIndex(0);
+
+            // default verdana
+            if (ui.comboBox_font->currentIndex() == -1)
+                ui.comboBox_font->setCurrentIndex(2);
+
+            // set summary topic
+            if (!strValue.isEmpty())
+                ui.plainTextEdit_summary_topic->setPlainText(strValue);
+
+            // set topic
+            ui.plainTextEdit_topic->setPlainText(strValue);
+        }
+    }
+
+    QMapIterator<QString, QString> iSettingsPermissions(Core::instance()->mChannelSettingsPermissions);
+    while (iSettingsPermissions.hasNext())
+    {
+        iSettingsPermissions.next();
+
+        QString strKey = iSettingsPermissions.key();
+        QString strValue = iSettingsPermissions.value();
+
+        if (strKey == "q")
+            setOwner(strValue);
+        else if (strKey == "o")
+            addOp(strValue);
+        else if (strKey == "h")
+            addHalfop(strValue);
+        else if (strKey == "b")
+        {
+            QStringList strDataList = strValue.split(";");
+            QString strNick = strDataList[0];
+            QString strWho = strDataList[1];
+            QString strDT = strDataList[2];
+            QString strIPNick = strDataList[3];
+
+            addBan(strNick, strWho, strDT, strIPNick);
+        }
+        else if (strKey == "I")
+        {
+            QStringList strDataList = strValue.split(";");
+            QString strNick = strDataList[0];
+            QString strWho = strDataList[1];
+            QString strDT = strDataList[2];
+            QString strIPNick = strDataList[3];
+            Q_UNUSED (strIPNick)
+
+            addInvite(strNick, strWho, strDT);
+        }
     }
 }
 
-void DlgChannelSettings::setStatsData(QMap<QString, QString> mData)
+void DlgChannelSettings::refreshChannelStats()
 {
-    QMapIterator<QString, QString> i(mData);
+    if (Core::instance()->bChannelSettingsStats == false)
+    {
+        QTimer::singleShot(200, this, SLOT(refreshChannelStats())); // 0.2 sec
+        return;
+    }
+
+    QMapIterator<QString, QString> i(Core::instance()->mChannelSettingsStats);
     while (i.hasNext())
     {
         i.next();
@@ -397,65 +525,15 @@ void DlgChannelSettings::setStatsData(QMap<QString, QString> mData)
             pSimpleStatsWidget->setStats(lWords);
         }
         else if (strKey == "relationsFavourite")
-        {
             ui.label_stats_favourites->setText(strValue);
-        }
     }
 }
 
-void DlgChannelSettings::enableTabs()
+void DlgChannelSettings::setTabs(bool b)
 {
-    ui.tabWidget->setTabEnabled(1, true);
-    ui.tabWidget->setTabEnabled(2, true);
-    ui.tabWidget->setTabEnabled(3, true);
-}
-
-void DlgChannelSettings::setTopic(QString strTopic)
-{
-    strTopic += " "; // fix convert algorithm
-
-    // convert emoticons
-    strTopic.replace(QRegExp("%I([a-zA-Z0-9_-]+)%"), "//\\1");
-
-    // convert font
-    Convert *pConvertF = new Convert();
-    pConvertF->removeFont(strTopic);
-    bool bRemovedBold = pConvertF->getRemovedBold();
-    bool bRemovedItalic = pConvertF->getRemovedItalic();
-    QString strRemovedFont = pConvertF->getRemovedFont();
-    delete pConvertF;
-
-    if (bRemovedBold) ui.toolButton_bold->setChecked(true);
-    else if (bRemovedItalic) ui.toolButton_italic->setChecked(true);
-
-    if (strRemovedFont == "arial") ui.comboBox_font->setCurrentIndex(0);
-    else if (strRemovedFont == "times") ui.comboBox_font->setCurrentIndex(1);
-    else if (strRemovedFont == "verdana") ui.comboBox_font->setCurrentIndex(2);
-    else if (strRemovedFont == "tahoma") ui.comboBox_font->setCurrentIndex(3);
-    else if (strRemovedFont == "courier") ui.comboBox_font->setCurrentIndex(4);
-    else ui.comboBox_font->setCurrentIndex(2);
-
-    // convert color
-    Convert *pConvertC = new Convert();
-    pConvertC->removeColor(strTopic);
-    int iRemovedColor = pConvertC->getRemovedColor();
-    delete pConvertC;
-    ui.comboBox_color->setCurrentIndex(iRemovedColor);
-
-    // default #000000
-    if (ui.comboBox_color->currentIndex() == -1)
-        ui.comboBox_color->setCurrentIndex(0);
-
-    // default verdana
-    if (ui.comboBox_font->currentIndex() == -1)
-        ui.comboBox_font->setCurrentIndex(2);
-
-    // set summary topic
-    if (!strTopic.isEmpty())
-        ui.plainTextEdit_summary_topic->setPlainText(strTopic);
-
-    // set topic
-    ui.plainTextEdit_topic->setPlainText(strTopic);
+    ui.tabWidget->setTabEnabled(1, b);
+    ui.tabWidget->setTabEnabled(2, b);
+    ui.tabWidget->setTabEnabled(3, b);
 }
 
 void DlgChannelSettings::setOwner(QString strNick)
@@ -468,91 +546,62 @@ void DlgChannelSettings::setOwner(QString strNick)
     // enable tabs
     QString strMe = Core::instance()->settings.value("nick");
     if (strNick == strMe)
-        enableTabs();
-}
-
-void DlgChannelSettings::setDescription(QString strDescription)
-{
-    // set summary description
-    if (!strDescription.isEmpty())
-    {
-        QString strDescriptionText = strDescription;
-        strDescriptionText.remove(QRegExp("%C([a-zA-Z0-9]+)%"));
-        strDescriptionText.remove(QRegExp("%F([a-zA-Z0-9:]+)%"));
-        strDescriptionText.replace(QRegExp("%I([a-zA-Z0-9_-]+)%"),"//\\1");
-
-        ui.plainTextEdit_summary_desc->setPlainText(strDescriptionText);
-    }
-
-    // set description
-    ui.plainTextEdit_desc->setPlainText(strDescription);
+        setTabs(true);
 }
 
 void DlgChannelSettings::addOp(QString strNick)
 {
-    if (!existItem(strNick, ui.listWidget_op))
-    {
-        SortedListWidgetItem *item = new SortedListWidgetItem();
-        item->setData(Qt::UserRole+11, false); // is nicklist
-        item->setText(strNick);
-        ui.listWidget_op->insertItem(ui.listWidget_op->count(), item);
-    }
+    SortedListWidgetItem *item = new SortedListWidgetItem();
+    item->setData(Qt::UserRole+11, false); // is nicklist
+    item->setText(strNick);
+    ui.listWidget_op->insertItem(ui.listWidget_op->count(), item);
 
     // enable tabs
     QString strMe = Core::instance()->settings.value("nick");
     if (strNick == strMe)
-        enableTabs();
+        setTabs(true);
 }
 
 void DlgChannelSettings::addHalfop(QString strNick)
 {
-    if (!existItem(strNick, ui.listWidget_halfop))
-    {
-        SortedListWidgetItem *item = new SortedListWidgetItem();
-        item->setData(Qt::UserRole+11, false); // is nicklist
-        item->setText(strNick);
-        ui.listWidget_halfop->insertItem(ui.listWidget_halfop->count(), item);
-    }
+    SortedListWidgetItem *item = new SortedListWidgetItem();
+    item->setData(Qt::UserRole+11, false); // is nicklist
+    item->setText(strNick);
+    ui.listWidget_halfop->insertItem(ui.listWidget_halfop->count(), item);
 
     // enable tabs
     QString strMe = Core::instance()->settings.value("nick");
     if (strNick == strMe)
-        enableTabs();
+        setTabs(true);
 }
 
 void DlgChannelSettings::addBan(QString strNick, QString strWho, QString strDT, QString strIPNick)
 {
-    if (!existItem(strNick, ui.listWidget_ban))
+    SortedListWidgetItem *item = new SortedListWidgetItem();
+    item->setData(Qt::UserRole+11, false); // is nicklist
+    if (strIPNick.isEmpty())
     {
-        SortedListWidgetItem *item = new SortedListWidgetItem();
-        item->setData(Qt::UserRole+11, false); // is nicklist
-        if (strIPNick.isEmpty())
-        {
-            item->setText(strNick);
-            item->setToolTip(QString("%1: %2 (%4)").arg(tr("Created by")).arg(strWho).arg(strDT));
-        }
-        else
-        {
-            item->setText(strIPNick);
-            item->setTextColor(QColor("#ff0000")); // set color
-            item->setData(Qt::UserRole, strNick); // set original ban mask
-            item->setToolTip(QString("%1: %2 (%3) [%4]").arg(tr("Created by")).arg(strWho).arg(strDT).arg(tr("IP Mask: %1")).arg(strNick.remove("*!*@")));
-        }
-        ui.listWidget_ban->insertItem(ui.listWidget_ban->count(), item);
+        item->setText(strNick);
+        item->setToolTip(QString("%1: %2 (%4)").arg(tr("Created by")).arg(strWho).arg(strDT));
     }
+    else
+    {
+        item->setText(strIPNick);
+        item->setTextColor(QColor("#ff0000")); // set color
+        item->setData(Qt::UserRole, strNick); // set original ban mask
+        item->setToolTip(QString("%1: %2 (%3) [%4]").arg(tr("Created by")).arg(strWho).arg(strDT).arg(tr("IP Mask: %1")).arg(strNick.remove("*!*@")));
+    }
+    ui.listWidget_ban->insertItem(ui.listWidget_ban->count(), item);
 }
 
 void DlgChannelSettings::addInvite(QString strNick, QString strWho, QString strDT)
 {
-    if (!existItem(strNick, ui.listWidget_invite))
-    {
-        SortedListWidgetItem *item = new SortedListWidgetItem();
-        item->setData(Qt::UserRole+11, false); // is nicklist
-        item->setText(strNick);
-        item->setToolTip(QString("%1: %2 (%3)").arg(tr("Created by")).arg(strWho).arg(strDT));
+    SortedListWidgetItem *item = new SortedListWidgetItem();
+    item->setData(Qt::UserRole+11, false); // is nicklist
+    item->setText(strNick);
+    item->setToolTip(QString("%1: %2 (%3)").arg(tr("Created by")).arg(strWho).arg(strDT));
 
-        ui.listWidget_invite->insertItem(ui.listWidget_invite->count(), item);
-    }
+    ui.listWidget_invite->insertItem(ui.listWidget_invite->count(), item);
 }
 
 void DlgChannelSettings::ownerChanged()
@@ -564,9 +613,7 @@ void DlgChannelSettings::ownerChanged()
     if ((ok) && (!strNick.isEmpty()))
         Core::instance()->pNetwork->send(QString("CS TRANSFER %1 %2").arg(strChannel).arg(strNick));
 
-    clear();
-    ui.label_channel_name->setText(strChannel);
-    Core::instance()->pNetwork->send(QString("CS INFO %1").arg(strChannel));
+    refreshAll();
 }
 
 void DlgChannelSettings::removeChannelClicked()
@@ -578,15 +625,14 @@ void DlgChannelSettings::removeChannelClicked()
     if ((ok) && (!strText.isEmpty()))
         Core::instance()->pNetwork->send(QString("CS DROP %1").arg(strText));
 
-    strChannel.clear();
-    clear();
-    this->hide();
+    buttonClose();
 }
 
 void DlgChannelSettings::wwwChanged()
 {
     Core::instance()->pNetwork->send(QString("CS SET %1 WWW %2").arg(strChannel).arg(ui.lineEdit_website->text()));
-    Core::instance()->pNetwork->send(QString("CS INFO %1").arg(strChannel));
+
+    refreshAll();
 }
 
 void DlgChannelSettings::topicChanged()
@@ -633,37 +679,43 @@ void DlgChannelSettings::topicChanged()
         strTopic = "%F"+strFontWeight+strFontName+"%"+strTopic;
 
     Core::instance()->pNetwork->send(QString("CS SET %1 TOPIC %2").arg(strChannel).arg(strTopic));
-    Core::instance()->pNetwork->send(QString("CS INFO %1").arg(strChannel));
+
+    refreshAll();
 }
 
 void DlgChannelSettings::descChanged()
 {
     Core::instance()->pNetwork->send(QString("CS SET %1 LONGDESC %2").arg(strChannel).arg(ui.plainTextEdit_desc->toPlainText().replace(QRegExp("(\r|\n)"), "")));
-    Core::instance()->pNetwork->send(QString("CS INFO %1").arg(strChannel));
+
+    refreshAll();
 }
 
 void DlgChannelSettings::statusPub()
 {
     Core::instance()->pNetwork->send(QString("CS SET %1 PRIVATE OFF").arg(strChannel));
-    Core::instance()->pNetwork->send(QString("CS INFO %1").arg(strChannel));
+
+    refreshAll();
 }
 
 void DlgChannelSettings::statusPriv()
 {
     Core::instance()->pNetwork->send(QString("CS SET %1 PRIVATE ON").arg(strChannel));
-    Core::instance()->pNetwork->send(QString("CS INFO %1").arg(strChannel));
+
+    refreshAll();
 }
 
 void DlgChannelSettings::categoryChanged(int index)
 {
     Core::instance()->pNetwork->send(QString("CS SET %1 CATMAJOR %2").arg(strChannel).arg(index+1));
-    Core::instance()->pNetwork->send(QString("CS INFO %1").arg(strChannel));
+
+    refreshAll();
 }
 
 void DlgChannelSettings::guardianInactive()
 {
     Core::instance()->pNetwork->send(QString("CS SET %1 GUARDIAN 0").arg(strChannel));
-    Core::instance()->pNetwork->send(QString("CS INFO %1").arg(strChannel));
+
+    refreshAll();
 }
 
 void DlgChannelSettings::guardianActive()
@@ -672,50 +724,58 @@ void DlgChannelSettings::guardianActive()
         Core::instance()->pNetwork->send(QString("CS SET %1 GUARDIAN %2").arg(strChannel).arg(ui.comboBox_guardian_level->currentIndex()));
     else
         Core::instance()->pNetwork->send(QString("CS SET %1 GUARDIAN 1").arg(strChannel));
-    Core::instance()->pNetwork->send(QString("CS INFO %1").arg(strChannel));
+
+    refreshAll();
 }
 
 void DlgChannelSettings::guardianClicked(int iLevel)
 {
     if (ui.radioButton_guardian_on->isChecked())
         Core::instance()->pNetwork->send(QString("CS SET %1 GUARDIAN %2").arg(strChannel).arg(iLevel+1));
-    Core::instance()->pNetwork->send(QString("CS INFO %1").arg(strChannel));
+
+    refreshAll();
 }
 
 void DlgChannelSettings::passwordChanged()
 {
     Core::instance()->pNetwork->send(QString("CS SET %1 PASSWORD %2").arg(strChannel).arg(ui.lineEdit_password->text()));
-    Core::instance()->pNetwork->send(QString("CS INFO %1").arg(strChannel));
+
+    refreshAll();
 }
 
 void DlgChannelSettings::limitChanged()
 {
     Core::instance()->pNetwork->send(QString("CS SET %1 LIMIT %2").arg(strChannel).arg(ui.spinBox_limit->value()));
-    Core::instance()->pNetwork->send(QString("CS INFO %1").arg(strChannel));
+
+    refreshAll();
 }
 
 void DlgChannelSettings::moderatedInactive()
 {
     Core::instance()->pNetwork->send(QString("CS SET %1 MODERATED OFF").arg(strChannel));
-    Core::instance()->pNetwork->send(QString("CS INFO %1").arg(strChannel));
+
+    refreshAll();
 }
 
 void DlgChannelSettings::moderatedActive()
 {
     Core::instance()->pNetwork->send(QString("CS SET %1 MODERATED ON").arg(strChannel));
-    Core::instance()->pNetwork->send(QString("CS INFO %1").arg(strChannel));
+
+    refreshAll();
 }
 
 void DlgChannelSettings::auditoriumInactive()
 {
     Core::instance()->pNetwork->send(QString("CS SET %1 AUDITORIUM OFF").arg(strChannel));
-    Core::instance()->pNetwork->send(QString("CS INFO %1").arg(strChannel));
+
+    refreshAll();
 }
 
 void DlgChannelSettings::auditoriumActive()
 {
     Core::instance()->pNetwork->send(QString("CS SET %1 AUDITORIUM ON").arg(strChannel));
-    Core::instance()->pNetwork->send(QString("CS INFO %1").arg(strChannel));
+
+    refreshAll();
 }
 
 void DlgChannelSettings::buttonPermissionAdd()
@@ -769,10 +829,8 @@ void DlgChannelSettings::buttonPermissionAdd()
     else if (tab == 3)
         Core::instance()->pNetwork->send(QString("CS INVITE %1 ADD %2").arg(strChannel).arg(strNick));
 
-    // clear
-    clear();
-    ui.label_channel_name->setText(strChannel);
-    Core::instance()->pNetwork->send(QString("CS INFO %1").arg(strChannel));
+    // refresh
+    refreshAll();
 }
 
 void DlgChannelSettings::buttonPermissionRemove()
@@ -852,10 +910,8 @@ void DlgChannelSettings::buttonPermissionRemove()
             Core::instance()->pNetwork->send(QString("CS INVITE %1 DEL %2").arg(strChannel).arg(lRemoveNicks.at(i)->text()));
     }
 
-    // clear
-    clear();
-    ui.label_channel_name->setText(strChannel);
-    Core::instance()->pNetwork->send(QString("CS INFO %1").arg(strChannel));
+    // refresh
+    refreshAll();
 }
 
 void DlgChannelSettings::changePermissionList(QModelIndex index)
@@ -864,27 +920,16 @@ void DlgChannelSettings::changePermissionList(QModelIndex index)
     ui.stackedWidget->setCurrentIndex(row);
 }
 
-void DlgChannelSettings::buttonOk()
-{
-    this->hide();
-}
-
-void DlgChannelSettings::buttonCancel()
-{
-    this->hide();
-}
-
-bool DlgChannelSettings::existItem(QString find, QListWidget *list)
-{
-    QList<QListWidgetItem *> items = list->findItems(find, Qt::MatchExactly);
-    if (items.size() != 0)
-        return true;
-    else
-        return false;
-}
-
 void DlgChannelSettings::clear()
 {
+    Core::instance()->strChannelSettings.clear();
+    Core::instance()->mChannelSettingsInfo.clear();
+    Core::instance()->mChannelSettingsPermissions.clear();
+    Core::instance()->bChannelSettingsInfo = false;
+    Core::instance()->mChannelSettingsStats.clear();
+    Core::instance()->bChannelSettingsStats = false;
+
+    // label
     ui.label_channel_name->clear();
 
     // summary
@@ -934,45 +979,18 @@ void DlgChannelSettings::clear()
     ui.label_stats_favourites->setText("-");
     ui.label_stats_words->setText("-");
     ui.label_stats_exists_days->setText("-");
-}
 
-void DlgChannelSettings::showEvent(QShowEvent *event)
+    // set tabs disabled
+    setTabs(false);}
+
+void DlgChannelSettings::buttonClose()
 {
-    event->accept();
-    // center screen
-    move(QApplication::desktop()->screen()->rect().center() - rect().center());
+    Core::instance()->strChannelSettings.clear();
+    Core::instance()->mChannelSettingsInfo.clear();
+    Core::instance()->mChannelSettingsPermissions.clear();
+    Core::instance()->bChannelSettingsInfo = false;
+    Core::instance()->mChannelSettingsStats.clear();
+    Core::instance()->bChannelSettingsStats = false;
 
-    ui.label_channel_name->setText(strChannel);
-
-    // disabled
-    ui.tabWidget->setTabEnabled(1, false);
-    ui.tabWidget->setTabEnabled(2, false);
-    ui.tabWidget->setTabEnabled(3, false);
-
-    // get data
-    Core::instance()->pNetwork->send(QString("CS INFO %1").arg(strChannel));
-    Core::instance()->pNetwork->send(QString("RS INFO %1").arg(strChannel));
-}
-
-void DlgChannelSettings::hideEvent(QHideEvent *event)
-{
-    event->accept();
-
-    // clear
-    strChannel.clear();
-    clear();
-    pSimpleStatsWidget->clearStats();
-    ui.label_owner->hide();
-    ui.label_owner_nick->hide();
-
-    // switch tab
-    ui.tabWidget->setCurrentIndex(0);
-    ui.stackedWidget->setCurrentIndex(0);
-}
-
-void DlgChannelSettings::closeEvent(QCloseEvent *event)
-{
-    event->ignore();
-
-    this->hide();
+    close();
 }

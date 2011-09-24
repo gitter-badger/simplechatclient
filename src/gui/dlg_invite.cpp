@@ -26,8 +26,8 @@
 DlgInvite::DlgInvite(MainWindow *parent, QString _strNick, QString _strChannel) : QDialog(parent), strNick(_strNick), strChannel(_strChannel)
 {
     ui.setupUi(this);
+    setAttribute(Qt::WA_DeleteOnClose); // require by show method - prevent hangup!
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
-    setAttribute(Qt::WA_DeleteOnClose);
     setWindowTitle(tr("Invitation"));
     // center screen
     move(QApplication::desktop()->screen()->rect().center() - rect().center());

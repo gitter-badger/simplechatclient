@@ -27,7 +27,7 @@
 #include "tool_widget.h"
 #include "inputline_dock_widget.h"
 
-InputLineDockWidget::InputLineDockWidget(QWidget *parent, DlgChannelSettings *_pDlgChannelSettings, DlgModeration *_pDlgModeration) : QWidget(parent), pDlgChannelSettings(_pDlgChannelSettings), pDlgModeration(_pDlgModeration)
+InputLineDockWidget::InputLineDockWidget(QWidget *parent, DlgModeration *_pDlgModeration) : QWidget(parent), pDlgModeration(_pDlgModeration)
 {
     // layout
     QVBoxLayout *mainLayout = new QVBoxLayout();
@@ -35,7 +35,7 @@ InputLineDockWidget::InputLineDockWidget(QWidget *parent, DlgChannelSettings *_p
     pInputWidget = new InputWidget(this);
     pInputWidget->show();
 
-    pToolWidget = new ToolWidget(this, pInputWidget, pDlgChannelSettings, pDlgModeration);
+    pToolWidget = new ToolWidget(this, pInputWidget, pDlgModeration);
     pToolWidget->show();
 
     mainLayout->addWidget(pToolWidget);

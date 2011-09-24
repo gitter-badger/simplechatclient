@@ -32,7 +32,6 @@
 #include "dlg_channel_favourites.h"
 #include "dlg_channel_homes.h"
 #include "dlg_channel_list.h"
-#include "dlg_channel_settings.h"
 #include "dlg_friends.h"
 #include "dlg_ignore.h"
 #include "dlg_moderation.h"
@@ -72,10 +71,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     // classes
     pTabC = new TabContainer(pTabM);
 
-    pDlgChannelSettings = new DlgChannelSettings(this);
+    // TODO remove moderation from here
     pDlgModeration = new DlgModeration(this);
 
-    pOnetKernel = new OnetKernel(pTabC, pDlgChannelSettings, pDlgModeration);
+    pOnetKernel = new OnetKernel(pTabC, pDlgModeration);
     pOnetAuth = new OnetAuth(pTabC);
 
     // auto-away
@@ -129,7 +128,6 @@ MainWindow::~MainWindow()
     delete pOnetAuth;
     delete pOnetKernel;
     delete pDlgModeration;
-    delete pDlgChannelSettings;
 
     QObject::disconnect(Core::instance()->pNetwork, SIGNAL(clearAllNicklist()), this, SLOT(clearAllNicklist()));
 
@@ -174,7 +172,7 @@ void MainWindow::createGui()
     viewMenu->addAction(rightDockWidget->toggleViewAction());
 
     // inputline
-    pInputLineDockWidget = new InputLineDockWidget(bottomDockWidget, pDlgChannelSettings, pDlgModeration);
+    pInputLineDockWidget = new InputLineDockWidget(bottomDockWidget, pDlgModeration);
     bottomDockWidget->setWidget(pInputLineDockWidget);
 
     // nicklist
@@ -549,7 +547,7 @@ void MainWindow::openChannelList()
 void MainWindow::openChannelHomes()
 {
     if ((Core::instance()->pNetwork->isConnected()) && (Core::instance()->pNetwork->isWritable()) && (Core::instance()->settings.value("logged") == "on"))
-        DlgChannelHomes(this, pDlgChannelSettings).exec();
+        DlgChannelHomes(this).exec();
 }
 
 void MainWindow::openChannelFavourites()

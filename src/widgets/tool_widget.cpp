@@ -30,7 +30,7 @@
 #include "input_widget.h"
 #include "tool_widget.h"
 
-ToolWidget::ToolWidget(QWidget *parent, InputWidget *_pInputWidget, DlgChannelSettings *_pDlgChannelSettings, DlgModeration *_pDlgModeration) : QWidget(parent), pInputWidget(_pInputWidget), pDlgChannelSettings(_pDlgChannelSettings), pDlgModeration(_pDlgModeration), strCurrentColor("#000000")
+ToolWidget::ToolWidget(QWidget *parent, InputWidget *_pInputWidget, DlgModeration *_pDlgModeration) : QWidget(parent), pInputWidget(_pInputWidget), pDlgModeration(_pDlgModeration), strCurrentColor("#000000")
 {
     showFontButtons = new QToolButton(this);
     showFontButtons->setIcon(QIcon(":/images/oxygen/16x16/format-text-color.png"));
@@ -607,10 +607,7 @@ void ToolWidget::emoticonsClicked()
 void ToolWidget::channelSettingsClicked()
 {
     if (Core::instance()->pNetwork->isConnected())
-    {
-        pDlgChannelSettings->setChannel(Core::instance()->getCurrentChannelName());
-        pDlgChannelSettings->show();
-    }
+        DlgChannelSettings(this, Core::instance()->getCurrentChannelName()).exec();
 }
 
 // moderation

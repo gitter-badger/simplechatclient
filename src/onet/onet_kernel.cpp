@@ -24,7 +24,6 @@
 #include "avatar.h"
 #include "core.h"
 #include "dlg_channel_key.h"
-#include "dlg_channel_settings.h"
 #include "dlg_invite.h"
 #include "dlg_moderation.h"
 #include "log.h"
@@ -34,7 +33,7 @@
 #include "tab_container.h"
 #include "onet_kernel.h"
 
-OnetKernel::OnetKernel(TabContainer *_pTabC, DlgChannelSettings *_pDlgChannelSettings, DlgModeration *_pDlgModeration) : pTabC(_pTabC), pDlgChannelSettings(_pDlgChannelSettings), pDlgModeration(_pDlgModeration)
+OnetKernel::OnetKernel(TabContainer *_pTabC, DlgModeration *_pDlgModeration) : pTabC(_pTabC), pDlgModeration(_pDlgModeration)
 {
     avatar = new Avatar(pTabC);
 }
@@ -1129,8 +1128,8 @@ void OnetKernel::raw_topic()
     pTabC->showMsg(strChannel, strDisplay, ModeMessage);
 
     // set topic in channel settings
-    if (pDlgChannelSettings->getChannel() == strChannel)
-        pDlgChannelSettings->setTopic(strTopic);
+    if (Core::instance()->strChannelSettings == strChannel)
+        Core::instance()->mChannelSettingsInfo["topic"] == strTopic;
 
     // set topic in widget
     pTabC->setTopic(strChannel, strTopic);
@@ -1285,9 +1284,17 @@ void OnetKernel::raw_001()
     Core::instance()->lChannelHomes.clear();
     Core::instance()->lOfflineMsg.clear();
     Core::instance()->lOfflineNicks.clear();
+    // user profile
     Core::instance()->mUserProfile.clear();
     Core::instance()->bUserProfile = false;
     Core::instance()->strUserProfile.clear();
+    // channel settings
+    Core::instance()->strChannelSettings.clear();
+    Core::instance()->mChannelSettingsInfo.clear();
+    Core::instance()->mChannelSettingsPermissions.clear();
+    Core::instance()->bChannelSettingsInfo = false;
+    Core::instance()->mChannelSettingsStats.clear();
+    Core::instance()->bChannelSettingsStats = false;
 
     // protocol
     Core::instance()->pNetwork->send("PROTOCTL ONETNAMESX");
@@ -1659,8 +1666,8 @@ void OnetKernel::raw_160n()
     if (strTopic[0] == ':') strTopic.remove(0,1);
 
     // set topic in channel settings
-    if (pDlgChannelSettings->getChannel() == strChannel)
-        pDlgChannelSettings->setTopic(strTopic);
+    if (Core::instance()->strChannelSettings == strChannel)
+        Core::instance()->mChannelSettingsInfo["topic"] = strTopic;
 
     // set topic in widget
     pTabC->setTopic(strChannel, strTopic);
@@ -1687,13 +1694,20 @@ void OnetKernel::raw_161n()
     }
 
     // set data
-    if (pDlgChannelSettings->getChannel() == strChannel)
-        pDlgChannelSettings->setData(mKeyValue);
+    if (Core::instance()->strChannelSettings == strChannel)
+    {
+        QMapIterator <QString, QString> i(mKeyValue);
+        while (i.hasNext())
+        {
+            i.next();
+            Core::instance()->mChannelSettingsInfo[i.key()] = i.value();
+        }
+    }
 
     // update topic author
     QString strTopicAuthor = mKeyValue.value("topicAuthor");
     QString strTopicDate = mKeyValue.value("topicDate");
-    if (!strTopicAuthor.isEmpty())
+    if ((!strTopicAuthor.isEmpty()) && (!strTopicDate.isEmpty()))
     {
         QDateTime dt = QDateTime::fromTime_t(strTopicDate.toInt());
         QString strDT = dt.toString("dd/MM/yy hh:mm:ss");
@@ -1724,15 +1738,8 @@ void OnetKernel::raw_162n()
 
         if ((!strKey.isEmpty()) && (!strValue.isEmpty()))
         {
-            if (pDlgChannelSettings->getChannel() == strChannel)
-            {
-                if (strKey == "q")
-                    pDlgChannelSettings->setOwner(strValue);
-                else if (strKey == "o")
-                    pDlgChannelSettings->addOp(strValue);
-                else if (strKey == "h")
-                    pDlgChannelSettings->addHalfop(strValue);
-            }
+            if (Core::instance()->strChannelSettings == strChannel)
+                Core::instance()->mChannelSettingsPermissions.insert(strKey, strValue);
         }
     }
 }
@@ -1756,19 +1763,20 @@ void OnetKernel::raw_163n()
     QDateTime dt = QDateTime::fromTime_t(strDT.toInt());
     strDT = dt.toString("dd/MM/yyyy hh:mm:ss");
 
-    if (pDlgChannelSettings->getChannel() == strChannel)
-    {
-        if (strFlag == "b")
-            pDlgChannelSettings->addBan(strNick, strWho, strDT, strIPNick);
-        else if (strFlag == "I")
-            pDlgChannelSettings->addInvite(strNick, strWho, strDT);
-    }
+    if (Core::instance()->strChannelSettings == strChannel)
+        Core::instance()->mChannelSettingsPermissions.insert(strFlag, QString("%1;%2;%3;%4").arg(strNick).arg(strWho).arg(strDT).arg(strIPNick));
 }
 
 // CS INFO #scc
 // :ChanServ!service@service.onet NOTICE scc_test :164 #scc :end of channel info
 void OnetKernel::raw_164n()
 {
+    if (strDataList.size() < 5) return;
+
+    QString strChannel = strDataList[4];
+
+    if (Core::instance()->strChannelSettings == strChannel)
+        Core::instance()->bChannelSettingsInfo = true;
 }
 
 // CS INFO #Relax
@@ -1783,8 +1791,8 @@ void OnetKernel::raw_165n()
     for (int i = 5; i < strDataList.size(); i++) { if (i != 5) strDescription += " "; strDescription += strDataList[i]; }
     if (strDescription[0] == ':') strDescription.remove(0,1);
 
-    if (pDlgChannelSettings->getChannel() == strChannel)
-        pDlgChannelSettings->setDescription(strDescription);
+    if (Core::instance()->strChannelSettings == strChannel)
+        Core::instance()->mChannelSettingsInfo["desc"] = strDescription;
 }
 
 // RS INFO Merovingian
@@ -1835,13 +1843,26 @@ void OnetKernel::raw_175n()
         mKeyValue.insert(strKey, strValue);
     }
 
-    if (pDlgChannelSettings->getChannel() == strChannel)
-        pDlgChannelSettings->setStatsData(mKeyValue);
+    if (Core::instance()->strChannelSettings == strChannel)
+    {
+        QMapIterator <QString, QString> i(mKeyValue);
+        while (i.hasNext())
+        {
+            i.next();
+            Core::instance()->mChannelSettingsStats[i.key()] = i.value();
+        }
+    }
 }
 
 // :RankServ!service@service.onet NOTICE Merovingian :176 #scc :end of channel stats
 void OnetKernel::raw_176n()
 {
+    if (strDataList.size() < 5) return;
+
+    QString strChannel = strDataList[4];
+
+    if (Core::instance()->strChannelSettings == strChannel)
+        Core::instance()->bChannelSettingsStats = true;
 }
 
 // NS SET city

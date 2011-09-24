@@ -25,7 +25,7 @@
 #include "dlg_channel_settings.h"
 #include "dlg_channel_homes.h"
 
-DlgChannelHomes::DlgChannelHomes(QWidget *parent, DlgChannelSettings *_pDlgChannelSettings) : QDialog(parent), pDlgChannelSettings(_pDlgChannelSettings)
+DlgChannelHomes::DlgChannelHomes(QWidget *parent) : QDialog(parent)
 {
     ui.setupUi(this);
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
@@ -94,10 +94,7 @@ void DlgChannelHomes::listClicked(QModelIndex index)
     int i = index.row();
     QString strChannel = ui.listWidget_channels->item(i)->text();
 
-    pDlgChannelSettings->setChannel(strChannel);
-    pDlgChannelSettings->show();
-
-    this->close();
+    DlgChannelSettings(this, strChannel).exec();
 }
 
 void DlgChannelHomes::itemClicked(QListWidgetItem *item)
@@ -149,9 +146,6 @@ void DlgChannelHomes::buttonSettings()
     {
         QString strChannel = ui.listWidget_channels->selectedItems().at(0)->text();
 
-        pDlgChannelSettings->setChannel(strChannel);
-        pDlgChannelSettings->show();
-
-        this->close();
+        DlgChannelSettings(this, strChannel).exec();
     }
 }

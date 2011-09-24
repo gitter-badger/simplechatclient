@@ -94,6 +94,7 @@ private slots:
     void avatarFinished(QNetworkReply*);
     void buttonZoom();
     void buttonMore();
+    void buttonClose();
 };
 
 #endif // DLG_USER_PROFILE_H

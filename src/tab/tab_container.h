@@ -22,7 +22,6 @@
 #define TAB_CONTAINER_H
 
 #include "defines.h"
-class DlgChannelSettings;
 class DlgModeration;
 class TabManager;
 class TabWidget;
@@ -62,7 +61,6 @@ public slots:
 private:
     // params
     TabManager *pTabM;
-    DlgChannelSettings *pDlgChannelSettings;
     DlgModeration *pDlgModeration;
     // other
     QList<TabWidget*> tw;

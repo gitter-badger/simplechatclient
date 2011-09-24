@@ -27,7 +27,7 @@
 DlgChannelKey::DlgChannelKey(MainWindow *parent, QString _strChannel) : QDialog(parent), strChannel(_strChannel)
 {
     ui.setupUi(this);
-    setAttribute(Qt::WA_DeleteOnClose);
+    setAttribute(Qt::WA_DeleteOnClose); // require by show method - prevent hangup!
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
     setWindowTitle(tr("Key required"));
     // center screen

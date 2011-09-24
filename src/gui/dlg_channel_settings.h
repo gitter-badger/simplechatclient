@@ -29,19 +29,7 @@ class DlgChannelSettings : public QDialog
 {
     Q_OBJECT
 public:
-    DlgChannelSettings(QWidget *);
-    void setChannel(QString);
-    inline QString getChannel() { return strChannel; }
-    void setData(QMap<QString, QString>);
-    void setStatsData(QMap<QString, QString>);
-
-    void setTopic(QString);
-    void setOwner(QString);
-    void setDescription(QString);
-    void addOp(QString);
-    void addHalfop(QString);
-    void addBan(QString, QString, QString, QString);
-    void addInvite(QString, QString, QString);
+    DlgChannelSettings(QWidget *, QString);
 
 private:
     Ui::uiChannelSettings ui;
@@ -52,16 +40,18 @@ private:
     void setDefaultValues();
     void createSignals();
 
-    void enableTabs();
-    bool existItem(QString, QListWidget *); // for permissions
+    void refreshAll();
+    void setTabs(bool);
+    void setOwner(QString);
+    void addOp(QString);
+    void addHalfop(QString);
+    void addBan(QString, QString, QString, QString);
+    void addInvite(QString, QString, QString);
     void clear();
 
-protected:
-    virtual void showEvent(QShowEvent *);
-    virtual void hideEvent(QHideEvent *);
-    virtual void closeEvent(QCloseEvent *);
-
 private slots:
+    void refreshChannelInfo();
+    void refreshChannelStats();
     void ownerChanged();
     void removeChannelClicked();
     void wwwChanged();
@@ -83,9 +73,7 @@ private slots:
     void buttonPermissionAdd();
     void buttonPermissionRemove();
     void changePermissionList(QModelIndex);
-
-    void buttonOk();
-    void buttonCancel();
+    void buttonClose();
 };
 
 #endif // DLG_CHANNEL_SETTINGS_H

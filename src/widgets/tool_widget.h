@@ -26,7 +26,6 @@ class QFrame;
 class QHBoxLayout;
 class QMenu;
 class QToolButton;
-class DlgChannelSettings;
 class DlgModeration;
 class InputWidget;
 #include <QWidget>
@@ -35,7 +34,7 @@ class ToolWidget : public QWidget
 {
     Q_OBJECT
 public:
-    ToolWidget(QWidget *, InputWidget *, DlgChannelSettings *, DlgModeration *);
+    ToolWidget(QWidget *, InputWidget *, DlgModeration *);
     void setModeration(bool);
     void setChannelSettings(bool);
     void setDefaultValues();
@@ -43,7 +42,6 @@ public:
 private:
     // params
     InputWidget *pInputWidget;
-    DlgChannelSettings *pDlgChannelSettings;
     DlgModeration *pDlgModeration;
     // other
     bool bShowFontButtons;

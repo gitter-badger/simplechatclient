@@ -22,7 +22,6 @@
 #define INPUTLINE_DOCK_WIDGET_H
 
 #include "defines.h"
-class DlgChannelSettings;
 class DlgModeration;
 class InputWidget;
 class ToolWidget;
@@ -32,7 +31,7 @@ class InputLineDockWidget : public QWidget
 {
     Q_OBJECT
 public:
-    InputLineDockWidget(QWidget *, DlgChannelSettings *, DlgModeration *);
+    InputLineDockWidget(QWidget *, DlgModeration *);
     virtual ~InputLineDockWidget();
     void enableModeration();
     void disableModeration();
@@ -53,7 +52,6 @@ public slots:
 
 private:
     // params
-    DlgChannelSettings *pDlgChannelSettings;
     DlgModeration *pDlgModeration;
     // other
     InputWidget *pInputWidget;

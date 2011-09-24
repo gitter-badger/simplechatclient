@@ -68,7 +68,7 @@ DlgUserProfile::DlgUserProfile(QWidget *parent, QString _strNick) : QDialog(pare
     Core::instance()->pNetwork->send(QString("NS INFO %1").arg(strNick));
 
     // refresh
-    QTimer::singleShot(1000*1, this, SLOT(refreshUserInfo())); // 1 sec
+    QTimer::singleShot(200, this, SLOT(refreshUserInfo())); // 0.2 sec
 }
 
 DlgUserProfile::~DlgUserProfile()
@@ -189,14 +189,14 @@ void DlgUserProfile::createSignals()
 {
     QObject::connect(toolButton_zoom, SIGNAL(clicked()), this, SLOT(buttonZoom()));
     QObject::connect(pushButton_more, SIGNAL(clicked()), this, SLOT(buttonMore()));
-    QObject::connect(pushButton_close, SIGNAL(clicked()), this, SLOT(hide()));
+    QObject::connect(pushButton_close, SIGNAL(clicked()), this, SLOT(buttonClose()));
 }
 
 void DlgUserProfile::refreshUserInfo()
 {
     if (Core::instance()->bUserProfile == false)
     {
-        QTimer::singleShot(1000*1, this, SLOT(refreshUserInfo())); // 1 sec
+        QTimer::singleShot(200, this, SLOT(refreshUserInfo())); // 0.2 sec
         return;
     }
 
@@ -285,6 +285,15 @@ void DlgUserProfile::buttonMore()
 
     setMinimumSize(285, sizeHint().height());
     setMaximumSize(285, sizeHint().height());
+}
+
+void DlgUserProfile::buttonClose()
+{
+    Core::instance()->strUserProfile.clear();
+    Core::instance()->mUserProfile.clear();
+    Core::instance()->bUserProfile = false;
+
+    close();
 }
 
 QString DlgUserProfile::convertDesc(QString strContent)
