@@ -147,6 +147,9 @@ void DlgChannelSettings::createGui()
     paletteDesc.setBrush(QPalette::Base, Qt::transparent);
     ui.plainTextEdit_summary_desc->setPalette(paletteDesc);
     ui.plainTextEdit_summary_desc->setAttribute(Qt::WA_OpaquePaintEvent, false);
+
+    // set tabs disabled
+    setTabs(false);
 }
 
 void DlgChannelSettings::setDefaultValues()
@@ -613,6 +616,9 @@ void DlgChannelSettings::ownerChanged()
     if ((ok) && (!strNick.isEmpty()))
         Core::instance()->pNetwork->send(QString("CS TRANSFER %1 %2").arg(strChannel).arg(strNick));
 
+    ui.tabWidget->setCurrentIndex(0);
+    setTabs(false);
+
     refreshAll();
 }
 
@@ -910,6 +916,18 @@ void DlgChannelSettings::buttonPermissionRemove()
             Core::instance()->pNetwork->send(QString("CS INVITE %1 DEL %2").arg(strChannel).arg(lRemoveNicks.at(i)->text()));
     }
 
+    // if me
+    QString strMe = Core::instance()->settings.value("nick");
+    for (int i = 0; i < lRemoveNicks.size(); i++)
+    {
+        if (lRemoveNicks.at(i)->text() == strMe)
+        {
+            ui.tabWidget->setCurrentIndex(0);
+            setTabs(false);
+            break;
+        }
+    }
+
     // refresh
     refreshAll();
 }
@@ -979,9 +997,7 @@ void DlgChannelSettings::clear()
     ui.label_stats_favourites->setText("-");
     ui.label_stats_words->setText("-");
     ui.label_stats_exists_days->setText("-");
-
-    // set tabs disabled
-    setTabs(false);}
+}
 
 void DlgChannelSettings::buttonClose()
 {
