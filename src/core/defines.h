@@ -39,7 +39,6 @@ struct User
     QString channel;
     QString modes;
 };
-typedef QList<User> sUsers;
 
 struct ChannelList
 {
@@ -48,17 +47,14 @@ struct ChannelList
     QString cat;
     QString type;
 };
-typedef QList<ChannelList> sChannelList;
 
 struct ModerateMsg
 {
-    QString datetime;
-    QString id;
     QString channel;
+    QString datetime;
     QString nick;
     QString message;
 };
-typedef QList<ModerateMsg> sModerateMsg;
 
 struct OfflineMsg
 {
@@ -67,7 +63,6 @@ struct OfflineMsg
     QString nick;
     QString message;
 };
-typedef QList<OfflineMsg> sOfflineMsg;
 
 class CaseIgnoreString : public QString
 {

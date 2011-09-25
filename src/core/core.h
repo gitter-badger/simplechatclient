@@ -82,7 +82,7 @@ public:
     QMap<QString, bool> mFriends;
     QList<QString> lIgnore;
     QList<QString> lChannelFavourites;
-    sChannelList lChannelList;
+    QList<ChannelList> lChannelList;
     QMap<QString, QByteArray> mNickAvatar;
     QMap<QString, QByteArray> mChannelAvatar;
     QMap<QString, QString> mMyStats;
@@ -91,13 +91,13 @@ public:
     QAction *busyAct;
     QAction *awayAct;
     // users
-    sUsers lUsers;
+    QList<User> lUsers;
     // channels
     QList<QString> lOpenChannels;
     QMap<QString, int> mChannelNicks;
     // offline
     QAction *offlineMsgAct;
-    sOfflineMsg lOfflineMsg;
+    QList<OfflineMsg> lOfflineMsg;
     QList<QString> lOfflineNicks;
     // auto-away
     QTimer *autoAwayTimer;
@@ -118,6 +118,8 @@ public:
     bool bChannelSettingsInfo;
     QMap<QString,QString> mChannelSettingsStats;
     bool bChannelSettingsStats;
+    // moderation
+    QMultiHash<QString,ModerateMsg> mModerateMessages;
 
 public slots:
     void quit();

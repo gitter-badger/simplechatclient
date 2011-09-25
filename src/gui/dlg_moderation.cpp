@@ -20,19 +20,23 @@
 
 #include <QDateTime>
 #include <QDesktopWidget>
-#include <QShowEvent>
+#include <QTimer>
 #include "core.h"
 #include "dlg_moderation.h"
 
-DlgModeration::DlgModeration(QWidget *parent) : QDialog(parent)
+DlgModeration::DlgModeration(QWidget *parent, QString _strCurrentChannel) : QDialog(parent), strCurrentChannel(_strCurrentChannel)
 {
     ui.setupUi(this);
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
-    setAttribute(Qt::WA_DeleteOnClose);
     setWindowTitle(tr("Moderation"));
+    // center screen
+    move(QApplication::desktop()->screen()->rect().center() - rect().center());
 
     createGui();
     createSignals();
+
+    // refresh
+    QTimer::singleShot(200, this, SLOT(refreshMessages())); // 0.2 sec
 }
 
 void DlgModeration::createGui()
@@ -41,149 +45,93 @@ void DlgModeration::createGui()
     ui.pushButton_remove->setIcon(QIcon(":/images/oxygen/16x16/list-remove.png"));
     ui.buttonBox->button(QDialogButtonBox::Close)->setIcon(QIcon(":/images/oxygen/16x16/dialog-close.png"));
 
-    ui.label_channel->setText(tr("Channel: "));
     ui.pushButton_accept->setText(tr("Accept"));
     ui.pushButton_remove->setText(tr("Remove"));
+
+    ui.label_channel->setText(strCurrentChannel);
 }
 
 void DlgModeration::createSignals()
 {
     QObject::connect(ui.pushButton_accept, SIGNAL(clicked()), this, SLOT(buttonAccept()));
     QObject::connect(ui.pushButton_remove, SIGNAL(clicked()), this, SLOT(buttonRemove()));
-    QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(hide()));
-    QObject::connect(ui.comboBox_channels, SIGNAL(activated(QString)), this, SLOT(comboChanged(QString)));
+    QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(close()));
 }
 
-void DlgModeration::refresh()
+void DlgModeration::refreshMessages()
 {
-    for (int i = 0; i < mModerateMessages.size(); i++)
+    ui.listWidget_msg->clear();
+
+    QHashIterator <QString, ModerateMsg> i(Core::instance()->mModerateMessages);
+    while (i.hasNext())
     {
-        ModerateMsg item = mModerateMessages.at(i);
-        QString strDT = item.datetime;
-        QString strID = item.id;
-        QString strChannel = item.channel;
-        QString strNick = item.nick;
-        QString strMessage = item.message;
+        i.next();
+
+        QString strID = i.key();
+        ModerateMsg msg = i.value();
+        QString strChannel = msg.channel;
+        QString strDT = msg.datetime;
+        QString strNick = msg.nick;
+        QString strMessage = msg.message;
 
         if (strChannel == strCurrentChannel)
         {
             QString strData = QString("[%1] <%2> %3").arg(strDT).arg(strNick).arg(strMessage);
 
             QListWidgetItem *item = new QListWidgetItem();
-            item->setData(Qt::UserRole, strDT);
-            item->setData(Qt::UserRole+1, strID);
-            item->setData(Qt::UserRole+2, strChannel);
+            item->setData(Qt::UserRole, strID);
+            item->setData(Qt::UserRole+1, strChannel);
+            item->setData(Qt::UserRole+2, strDT);
             item->setData(Qt::UserRole+3, strNick);
             item->setData(Qt::UserRole+4, strMessage);
             item->setText(strData);
 
-            ui.listWidget_msg->insertItem(ui.listWidget_msg->count()-1, item);
+            ui.listWidget_msg->addItem(item);
         }
     }
-}
 
-void DlgModeration::setCurrentChannel(QString strName)
-{
-    // set combobox
-    ui.comboBox_channels->setCurrentIndex(ui.comboBox_channels->findText(strName));
-
-    // combo changed
-    comboChanged(strName);
-}
-
-void DlgModeration::addMsg(QString strID, QString strChannel, QString strNick, QString strMessage)
-{
-    if (ui.comboBox_channels->findText(strChannel) == -1)
-        ui.comboBox_channels->addItem(strChannel);
-
-    strMessage.remove(QRegExp("%C([a-zA-Z0-9]+)%"));
-    strMessage.remove(QRegExp("%F([a-zA-Z0-9:]+)%"));
-    strMessage.replace(QRegExp("%I([a-zA-Z0-9_-]+)%"),"<\\1>");
-
-    QDateTime dt = QDateTime::currentDateTime();
-    QString strDT = dt.toString("hh:mm:ss");
-
-    ModerateMsg addItem;
-    addItem.datetime = strDT;
-    addItem.id = strID;
-    addItem.channel = strChannel;
-    addItem.nick = strNick;
-    addItem.message = strMessage;
-
-    mModerateMessages.append(addItem);
-
-    // active window - display
-    if (!this->isHidden())
-    {
-        QString strData = QString("[%1] <%2> %3").arg(strDT).arg(strNick).arg(strMessage);
-
-        QListWidgetItem *item = new QListWidgetItem();
-        item->setData(Qt::UserRole, strDT);
-        item->setData(Qt::UserRole+1, strID);
-        item->setData(Qt::UserRole+2, strChannel);
-        item->setData(Qt::UserRole+3, strNick);
-        item->setData(Qt::UserRole+4, strMessage);
-        item->setText(strData);
-
-        ui.listWidget_msg->insertItem(ui.listWidget_msg->count()-1, item);
-    }
-}
-
-void DlgModeration::comboChanged(QString strComboName)
-{
-    ui.listWidget_msg->clear();
-    strCurrentChannel = strComboName;
-
-    refresh();
+    // refresh
+    QTimer::singleShot(1000*10, this, SLOT(refreshMessages())); // 10 sec
 }
 
 void DlgModeration::removeSelected()
 {
-    QList<QListWidgetItem*> list = ui.listWidget_msg->selectedItems();
+    if (ui.listWidget_msg->selectedItems().isEmpty())
+        return;
 
-    // remove from display
-    for (int i = 0; i < list.size(); i++)
-    {
-        QListWidgetItem *item = list.at(i);
-        int row = ui.listWidget_msg->row(item);
-        ui.listWidget_msg->takeItem(row);
-    }
+    QList<QListWidgetItem*> list = ui.listWidget_msg->selectedItems();
 
     // remove from list
     for (int i = 0; i < list.size(); i++)
     {
         QListWidgetItem *item = list.at(i);
-        QString strID = item->data(Qt::UserRole+1).toString();
+        QString strID = item->data(Qt::UserRole).toString();
 
-        for (int x = 0; x < mModerateMessages.size(); x++)
-        {
-            if (strID == mModerateMessages.at(x).id)
-            {
-                mModerateMessages.takeAt(x);
-                break;
-            }
-        }
-
+        Core::instance()->mModerateMessages.remove(strID);
     }
 }
 
 void DlgModeration::buttonAccept()
 {
+    if (ui.listWidget_msg->selectedItems().isEmpty())
+        return;
+
     QList<QListWidgetItem*> list = ui.listWidget_msg->selectedItems();
 
     // display
     for (int i = 0; i < list.size(); i++)
     {
         QListWidgetItem *item = list.at(i);
-        QString strChannel = item->data(Qt::UserRole+2).toString();
+        QString strChannel = item->data(Qt::UserRole+1).toString();
         QString strNick = item->data(Qt::UserRole+3).toString();
         QString strMessage = item->data(Qt::UserRole+4).toString();
 
         QString strSend = QString("MODERMSG %1 - %2 :%3").arg(strNick).arg(strChannel).arg(strMessage);
         Core::instance()->pNetwork->send(strSend);
 
-        QString strDisplay = QString("<%1> %2").arg(strNick).arg(strMessage);
-        emit displayMsg(strChannel, strDisplay, DefaultMessage);
+        // TODO
+        //QString strDisplay = QString("<%1> %2").arg(strNick).arg(strMessage);
+        //emit displayMsg(strChannel, strDisplay, DefaultMessage);
     }
 
     // remove
@@ -194,27 +142,4 @@ void DlgModeration::buttonRemove()
 {
     // remove
     removeSelected();
-}
-
-void DlgModeration::showEvent(QShowEvent *event)
-{
-    event->accept();
-
-    // center screen
-    move(QApplication::desktop()->screen()->rect().center() - rect().center());
-}
-
-void DlgModeration::hideEvent(QHideEvent *event)
-{
-    event->accept();
-
-    ui.comboBox_channels->setCurrentIndex(-1);
-    ui.listWidget_msg->clear();
-    strCurrentChannel.clear();
-}
-
-void DlgModeration::closeEvent(QCloseEvent *event)
-{
-    event->ignore();
-    this->hide();
 }

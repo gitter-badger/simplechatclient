@@ -23,7 +23,7 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>Ustawienia kanałów</string>
+   <string>Channel settings</string>
   </property>
   <property name="windowIcon">
    <iconset resource="../scc.qrc">

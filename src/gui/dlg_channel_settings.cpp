@@ -32,6 +32,7 @@ DlgChannelSettings::DlgChannelSettings(QWidget *parent, QString _strChannel) : Q
 {
     ui.setupUi(this);
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
+    setWindowTitle(tr("Channel settings"));
     // center screen
     move(QApplication::desktop()->screen()->rect().center() - rect().center());
 

@@ -30,7 +30,7 @@
 #include "input_widget.h"
 #include "tool_widget.h"
 
-ToolWidget::ToolWidget(QWidget *parent, InputWidget *_pInputWidget, DlgModeration *_pDlgModeration) : QWidget(parent), pInputWidget(_pInputWidget), pDlgModeration(_pDlgModeration), strCurrentColor("#000000")
+ToolWidget::ToolWidget(QWidget *parent, InputWidget *_pInputWidget) : QWidget(parent), pInputWidget(_pInputWidget), strCurrentColor("#000000")
 {
     showFontButtons = new QToolButton(this);
     showFontButtons->setIcon(QIcon(":/images/oxygen/16x16/format-text-color.png"));
@@ -615,8 +615,8 @@ void ToolWidget::channelSettingsClicked()
 void ToolWidget::moderationClicked()
 {
     QString strChannel = Core::instance()->getCurrentChannelName();
-    pDlgModeration->setCurrentChannel(strChannel);
-    pDlgModeration->show();
+
+    DlgModeration(this, strChannel).exec();
 }
 
 // clear

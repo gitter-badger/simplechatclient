@@ -22,7 +22,6 @@
 #define ONET_KERNEL_H
 
 class Avatar;
-class DlgModeration;
 class TabContainer;
 #include <QMap>
 #include <QObject>
@@ -35,7 +34,7 @@ class OnetKernel : public QObject
 {
     Q_OBJECT
 public:
-    OnetKernel(TabContainer *, DlgModeration *);
+    OnetKernel(TabContainer *);
     virtual ~OnetKernel();
 
 public slots:
@@ -43,7 +42,6 @@ public slots:
 
 private:
     TabContainer *pTabC;
-    DlgModeration *pDlgModeration;
 
     Avatar *avatar;
     QString strData;

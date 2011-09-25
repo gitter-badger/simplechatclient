@@ -25,7 +25,6 @@
 class QDockWidget;
 class QMenuBar;
 class QToolBar;
-class DlgModeration;
 class InputLineDockWidget;
 class NickListWidget;
 class OnetAuth;
@@ -88,7 +87,6 @@ private:
     TabContainer *pTabC;
     OnetKernel *pOnetKernel;
     OnetAuth *pOnetAuth;
-    DlgModeration *pDlgModeration;
 
     // gui
     InputLineDockWidget *pInputLineDockWidget;

@@ -581,6 +581,10 @@
 <context>
     <name>DlgChannelSettings</name>
     <message>
+        <source>Channel settings</source>
+        <translation>Ustawienia pokoju</translation>
+    </message>
+    <message>
         <source>Summary</source>
         <translation>Podsumowanie</translation>
     </message>
@@ -989,10 +993,6 @@
     <message>
         <source>Moderation</source>
         <translation>Moderacja wiadomości</translation>
-    </message>
-    <message>
-        <source>Channel: </source>
-        <translation> Pokój: </translation>
     </message>
     <message>
         <source>Accept</source>

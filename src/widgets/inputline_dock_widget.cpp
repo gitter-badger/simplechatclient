@@ -21,13 +21,12 @@
 #include <QHBoxLayout>
 #include <QLabel>
 #include <QPushButton>
-#include "dlg_moderation.h"
 #include "input_widget.h"
 #include "log.h"
 #include "tool_widget.h"
 #include "inputline_dock_widget.h"
 
-InputLineDockWidget::InputLineDockWidget(QWidget *parent, DlgModeration *_pDlgModeration) : QWidget(parent), pDlgModeration(_pDlgModeration)
+InputLineDockWidget::InputLineDockWidget(QWidget *parent) : QWidget(parent)
 {
     // layout
     QVBoxLayout *mainLayout = new QVBoxLayout();
@@ -35,7 +34,7 @@ InputLineDockWidget::InputLineDockWidget(QWidget *parent, DlgModeration *_pDlgMo
     pInputWidget = new InputWidget(this);
     pInputWidget->show();
 
-    pToolWidget = new ToolWidget(this, pInputWidget, pDlgModeration);
+    pToolWidget = new ToolWidget(this, pInputWidget);
     pToolWidget->show();
 
     mainLayout->addWidget(pToolWidget);

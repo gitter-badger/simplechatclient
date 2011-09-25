@@ -25,7 +25,6 @@
 #include "core.h"
 #include "dlg_channel_key.h"
 #include "dlg_invite.h"
-#include "dlg_moderation.h"
 #include "log.h"
 #include "notify.h"
 #include "onet_utils.h"
@@ -33,7 +32,7 @@
 #include "tab_container.h"
 #include "onet_kernel.h"
 
-OnetKernel::OnetKernel(TabContainer *_pTabC, DlgModeration *_pDlgModeration) : pTabC(_pTabC), pDlgModeration(_pDlgModeration)
+OnetKernel::OnetKernel(TabContainer *_pTabC) : pTabC(_pTabC)
 {
     avatar = new Avatar(pTabC);
 }
@@ -1127,10 +1126,6 @@ void OnetKernel::raw_topic()
     // show msg
     pTabC->showMsg(strChannel, strDisplay, ModeMessage);
 
-    // set topic in channel settings
-    if (Core::instance()->strChannelSettings == strChannel)
-        Core::instance()->mChannelSettingsInfo["topic"] == strTopic;
-
     // set topic in widget
     pTabC->setTopic(strChannel, strTopic);
 
@@ -1221,7 +1216,7 @@ void OnetKernel::raw_modernotice()
     for (int i = 3; i < strDataList.size(); i++) { if (i != 3) strMessage += " "; strMessage += strDataList[i]; }
     if (strMessage[0] == ':') strMessage.remove(0,1);
 
-    QString strDisplay = "* <"+strNick+"> "+strMessage;
+    QString strDisplay = QString("* <%1> %2").arg(strNick).arg(strMessage);
 
     // display
     pTabC->showMsg(strChannel, strDisplay, NoticeMessage);
@@ -1240,7 +1235,20 @@ void OnetKernel::raw_moderate()
     for (int i = 6; i < strDataList.size(); i++) { if (i != 6) strMessage += " "; strMessage += strDataList[i]; }
     if (strMessage[0] == ':') strMessage.remove(0,1);
 
-    pDlgModeration->addMsg(strID, strChannel, strNick, strMessage);
+    strMessage.remove(QRegExp("%C([a-zA-Z0-9]+)%"));
+    strMessage.remove(QRegExp("%F([a-zA-Z0-9:]+)%"));
+    strMessage.replace(QRegExp("%I([a-zA-Z0-9_-]+)%"),"<\\1>");
+
+    QDateTime dt = QDateTime::currentDateTime();
+    QString strDT = dt.toString("hh:mm:ss");
+
+    ModerateMsg item;
+    item.channel = strChannel;
+    item.datetime = strDT;
+    item.nick = strNick;
+    item.message = strMessage;
+
+    Core::instance()->mModerateMessages.insert(strID, item);
 }
 
 // :cf1f4.onet KILL scc_test :cf1f4.onet (Killed (Nickname collision))
@@ -1295,6 +1303,8 @@ void OnetKernel::raw_001()
     Core::instance()->bChannelSettingsInfo = false;
     Core::instance()->mChannelSettingsStats.clear();
     Core::instance()->bChannelSettingsStats = false;
+    // moderate
+    Core::instance()->mModerateMessages.clear();
 
     // protocol
     Core::instance()->pNetwork->send("PROTOCTL ONETNAMESX");

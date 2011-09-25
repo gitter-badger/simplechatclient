@@ -34,7 +34,6 @@
 #include "dlg_channel_list.h"
 #include "dlg_friends.h"
 #include "dlg_ignore.h"
-#include "dlg_moderation.h"
 #include "dlg_my_profile.h"
 #include "dlg_my_stats.h"
 #include "dlg_notes.h"
@@ -71,10 +70,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     // classes
     pTabC = new TabContainer(pTabM);
 
-    // TODO remove moderation from here
-    pDlgModeration = new DlgModeration(this);
-
-    pOnetKernel = new OnetKernel(pTabC, pDlgModeration);
+    pOnetKernel = new OnetKernel(pTabC);
     pOnetAuth = new OnetAuth(pTabC);
 
     // auto-away
@@ -127,7 +123,6 @@ MainWindow::~MainWindow()
 
     delete pOnetAuth;
     delete pOnetKernel;
-    delete pDlgModeration;
 
     QObject::disconnect(Core::instance()->pNetwork, SIGNAL(clearAllNicklist()), this, SLOT(clearAllNicklist()));
 
@@ -172,7 +167,7 @@ void MainWindow::createGui()
     viewMenu->addAction(rightDockWidget->toggleViewAction());
 
     // inputline
-    pInputLineDockWidget = new InputLineDockWidget(bottomDockWidget, pDlgModeration);
+    pInputLineDockWidget = new InputLineDockWidget(bottomDockWidget);
     bottomDockWidget->setWidget(pInputLineDockWidget);
 
     // nicklist
@@ -358,7 +353,6 @@ void MainWindow::createSignals()
     // signals tab
     QObject::connect(pTabM, SIGNAL(tabCloseRequested(int)), this, SLOT(tabCloseRequested(int)));
     QObject::connect(pTabM, SIGNAL(currentChanged(int)), this, SLOT(currentTabChanged(int)));
-    QObject::connect(pDlgModeration, SIGNAL(displayMsg(QString&,QString&,MessageCategory)), pTabC, SLOT(slotShowMsg(QString&,QString&,MessageCategory)));
 
     // signals pInputLineDockWidget
     QObject::connect(pInputLineDockWidget, SIGNAL(showMsg(QString&,QString&,MessageCategory)), pTabC, SLOT(slotShowMsg(QString&,QString&,MessageCategory)));

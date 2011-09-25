@@ -176,6 +176,8 @@ void TabContainer::refreshBackgroundImage()
         tw[i]->pChatView->updateBackgroundImage();
 }
 
+// TODO
+
 void TabContainer::showMsg(QString &strChannel, QString &strData, MessageCategory eMessageCategory, QString strTime)
 {
     int i = getIndex(strChannel);

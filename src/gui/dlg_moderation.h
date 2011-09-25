@@ -21,7 +21,6 @@
 #ifndef DLG_MODERATION_H
 #define DLG_MODERATION_H
 
-#include "defines.h"
 #include <QDialog>
 #include "ui_moderation.h"
 
@@ -29,32 +28,21 @@ class DlgModeration : public QDialog
 {
     Q_OBJECT
 public:
-    DlgModeration(QWidget *);
-    void setCurrentChannel(QString);
-    void addMsg(QString, QString, QString, QString);
+    DlgModeration(QWidget *, QString);
 
 private:
     Ui::uiModeration ui;
     QString strCurrentChannel;
-    sModerateMsg mModerateMessages;
 
     void createGui();
     void createSignals();
-    void refresh();
+
     void removeSelected();
 
 private slots:
-    void comboChanged(QString);
+    void refreshMessages();
     void buttonAccept();
     void buttonRemove();
-
-protected:
-    virtual void showEvent(QShowEvent *);
-    virtual void hideEvent(QHideEvent *);
-    virtual void closeEvent(QCloseEvent *);
-
-signals:
-    void displayMsg(QString&, QString&, MessageCategory);
 };
 
 #endif // DLG_MODERATION_H
