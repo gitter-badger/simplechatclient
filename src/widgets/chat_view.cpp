@@ -43,7 +43,7 @@
     #include "webcam.h"
 #endif
 
-ChatView::ChatView(QString _strChannel) : strChannel(_strChannel), strNick(QString::null), bScroll(true)
+ChatView::ChatView(QString _strChatViewChannel) : strChatViewChannel(_strChatViewChannel), bScroll(true)
 {
     setFocusPolicy(Qt::NoFocus);
     settings()->setAttribute(QWebSettings::JavascriptEnabled, true);
@@ -124,7 +124,7 @@ void ChatView::displayMessage(QString &strData, MessageCategory eMessageCategory
             strSaveData.replace(QRegExp(strRegExpMe), "\\1");
 
         Log *l = new Log();
-        l->save(strChannel, strSaveData);
+        l->save(strChatViewChannel, strSaveData);
         delete l;
     }
 
@@ -133,7 +133,7 @@ void ChatView::displayMessage(QString &strData, MessageCategory eMessageCategory
         if (Core::instance()->settings.value("hide_join_part") == "on")
             return;
 
-        int iNickCount = Core::instance()->mChannelNicks[strChannel];
+        int iNickCount = Core::instance()->mChannelNicks[strChatViewChannel];
         if ((Core::instance()->settings.value("hide_join_part_200") == "on") && (iNickCount > 200))
             return;
     }
@@ -234,12 +234,12 @@ void ChatView::kick()
     QString strText = QInputDialog::getText(this, tr("Kick From Channel"), tr("Reason for kicking:"), QLineEdit::Normal, tr("No reason"), &ok);
 
     if ((ok) && (!strText.isEmpty()))
-        Core::instance()->pNetwork->send(QString("KICK %1 %2 :%3").arg(strChannel).arg(strNick).arg(strText));
+        Core::instance()->pNetwork->send(QString("KICK %1 %2 :%3").arg(strChatViewChannel).arg(strNick).arg(strText));
 }
 
 void ChatView::ban()
 {
-    Core::instance()->pNetwork->send(QString("CS BAN %1 ADD %2").arg(strChannel).arg(strNick));
+    Core::instance()->pNetwork->send(QString("CS BAN %1 ADD %2").arg(strChatViewChannel).arg(strNick));
 }
 
 void ChatView::kban()
@@ -249,54 +249,54 @@ void ChatView::kban()
 
     if ((ok) && (!strText.isEmpty()))
     {
-        Core::instance()->pNetwork->send(QString("CS BAN %1 ADD %2").arg(strChannel).arg(strNick));
-        Core::instance()->pNetwork->send(QString("KICK %1 %2 :%3").arg(strChannel).arg(strNick).arg(strText));
+        Core::instance()->pNetwork->send(QString("CS BAN %1 ADD %2").arg(strChatViewChannel).arg(strNick));
+        Core::instance()->pNetwork->send(QString("KICK %1 %2 :%3").arg(strChatViewChannel).arg(strNick).arg(strText));
     }
 }
 
 void ChatView::ipban()
 {
-    Core::instance()->pNetwork->send(QString("CS BANIP %1 ADD %2").arg(strChannel).arg(strNick));
+    Core::instance()->pNetwork->send(QString("CS BANIP %1 ADD %2").arg(strChatViewChannel).arg(strNick));
 }
 
 void ChatView::opAdd()
 {
-    Core::instance()->pNetwork->send(QString("CS OP %1 ADD %2").arg(strChannel).arg(strNick));
+    Core::instance()->pNetwork->send(QString("CS OP %1 ADD %2").arg(strChatViewChannel).arg(strNick));
 }
 
 void ChatView::opDel()
 {
-    Core::instance()->pNetwork->send(QString("CS OP %1 DEL %2").arg(strChannel).arg(strNick));
+    Core::instance()->pNetwork->send(QString("CS OP %1 DEL %2").arg(strChatViewChannel).arg(strNick));
 }
 
 void ChatView::halfopAdd()
 {
-    Core::instance()->pNetwork->send(QString("CS HALFOP %1 ADD %2").arg(strChannel).arg(strNick));
+    Core::instance()->pNetwork->send(QString("CS HALFOP %1 ADD %2").arg(strChatViewChannel).arg(strNick));
 }
 
 void ChatView::halfopDel()
 {
-    Core::instance()->pNetwork->send(QString("CS HALFOP %1 DEL %2").arg(strChannel).arg(strNick));
+    Core::instance()->pNetwork->send(QString("CS HALFOP %1 DEL %2").arg(strChatViewChannel).arg(strNick));
 }
 
 void ChatView::moderatorAdd()
 {
-    Core::instance()->pNetwork->send(QString("CS MODERATOR %1 ADD %2").arg(strChannel).arg(strNick));
+    Core::instance()->pNetwork->send(QString("CS MODERATOR %1 ADD %2").arg(strChatViewChannel).arg(strNick));
 }
 
 void ChatView::moderatorDel()
 {
-    Core::instance()->pNetwork->send(QString("CS MODERATOR %1 DEL %2").arg(strChannel).arg(strNick));
+    Core::instance()->pNetwork->send(QString("CS MODERATOR %1 DEL %2").arg(strChatViewChannel).arg(strNick));
 }
 
 void ChatView::voiceAdd()
 {
-    Core::instance()->pNetwork->send(QString("CS VOICE %1 ADD %2").arg(strChannel).arg(strNick));
+    Core::instance()->pNetwork->send(QString("CS VOICE %1 ADD %2").arg(strChatViewChannel).arg(strNick));
 }
 
 void ChatView::voiceDel()
 {
-    Core::instance()->pNetwork->send(QString("CS VOICE %1 DEL %2").arg(strChannel).arg(strNick));
+    Core::instance()->pNetwork->send(QString("CS VOICE %1 DEL %2").arg(strChatViewChannel).arg(strNick));
 }
 
 void ChatView::invite()
@@ -374,7 +374,7 @@ void ChatView::clear()
     clearMessages();
 }
 
-void ChatView::menuChannel(QString strChannel, QContextMenuEvent *event)
+void ChatView::menuChannel(QContextMenuEvent *event)
 {
     QMenu menu;
 
@@ -388,12 +388,12 @@ void ChatView::menuChannel(QString strChannel, QContextMenuEvent *event)
     menu.exec(event->globalPos());
 }
 
-void ChatView::menuNick(QString strNick, QContextMenuEvent *event)
+void ChatView::menuNick(QContextMenuEvent *event)
 {
     QString strMe = Core::instance()->settings.value("nick");
-    QString strSelfModes = Core::instance()->getUserModes(strMe, strChannel);
-    int iSelfMaxModes = Core::instance()->getUserMaxModes(strMe, strChannel);
-    QString strNickModes = Core::instance()->getUserModes(strNick, strChannel);
+    QString strSelfModes = Core::instance()->getUserModes(strMe, strChatViewChannel);
+    int iSelfMaxModes = Core::instance()->getUserMaxModes(strMe, strChatViewChannel);
+    QString strNickModes = Core::instance()->getUserModes(strNick, strChatViewChannel);
 
     QMenu *minvite = new QMenu(tr("Invite"));
     minvite->setIcon(QIcon(":/images/oxygen/16x16/legalmoves.png"));
@@ -568,16 +568,16 @@ void ChatView::contextMenuEvent(QContextMenuEvent *event)
         if (strCategory == "channel")
         {
             strChannel = strWord;
-            menuChannel(strChannel, event);
+            menuChannel(event);
             return;
         }
 
         // nick
         if (strCategory == "nick")
         {
-            strWord.remove("<"); strWord.remove(">");
             strNick = strWord;
-            menuNick(strNick, event);
+            strNick.remove("<"); strNick.remove(">");
+            menuNick(event);
             return;
         }
     }

@@ -34,6 +34,7 @@ public:
     void updateBackgroundImage();
 
 private:
+    QString strChatViewChannel;
     QString strChannel;
     QString strNick;
     QString strWebsite;
@@ -41,8 +42,8 @@ private:
     bool bScroll;
 
     void createBody();
-    void menuNick(QString, QContextMenuEvent *);
-    void menuChannel(QString, QContextMenuEvent *);
+    void menuNick(QContextMenuEvent *);
+    void menuChannel(QContextMenuEvent *);
     void menuWebsite(QContextMenuEvent *);
     void menuStandard(QContextMenuEvent *);
 
