@@ -27,7 +27,7 @@
 #include <QTimer>
 #include "config.h"
 #include "mainwindow.h"
-#include "update.h"
+#include "updates.h"
 #include "core.h"
 
 #ifdef Q_WS_WIN
@@ -49,7 +49,7 @@ Core * Core::instance()
 
 Core::Core() : window(0)
 {
-    pUpdate = new Update();
+    pUpdates = new Updates();
 
     // lag
     lagAct = new QAction("Lag: ?", this);
@@ -69,7 +69,7 @@ Core::Core() : window(0)
 
 Core::~Core()
 {
-    delete pUpdate;
+    delete pUpdates;
     delete window;
     window = 0;
 
@@ -110,7 +110,7 @@ void Core::createGui()
 void Core::createSettings()
 {
     // default settings
-    settings["version"] = "1.1.3.1046";
+    settings["version"] = "1.1.3.1047";
     settings["logged"] = "off";
     settings["busy"] = "off";
     settings["away"] = "off";
@@ -276,7 +276,7 @@ void Core::refreshToolWidgetValues()
 // update
 void Core::checkUpdate()
 {
-    pUpdate->checkUpdate();
+    pUpdates->checkUpdate();
 }
 
 void Core::updateNickAvatar(QString strAvatar)

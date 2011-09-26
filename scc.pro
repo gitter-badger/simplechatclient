@@ -26,37 +26,37 @@ SOURCES += src/avatars/avatar.cpp \
     src/core/main.cpp \
     src/core/mainwindow.cpp \
     src/core/network.cpp \
-    src/core/update.cpp \
-    src/gui/dlg_about.cpp \
-    src/gui/dlg_awaylog.cpp \
-    src/gui/dlg_channel_favourites.cpp \
-    src/gui/dlg_channel_homes.cpp \
-    src/gui/dlg_channel_key.cpp \
-    src/gui/dlg_channel_list.cpp \
-    src/gui/dlg_channel_settings.cpp \
-    src/gui/dlg_emoticons.cpp \
-    src/gui/dlg_find_text.cpp \
-    src/gui/dlg_friends.cpp \
-    src/gui/dlg_ignore.cpp \
-    src/gui/dlg_invite.cpp \
-    src/gui/dlg_moderation.cpp \
-    src/gui/dlg_my_profile.cpp \
-    src/gui/dlg_my_stats.cpp \
-    src/gui/dlg_notes.cpp \
-    src/gui/dlg_offlinemsg.cpp \
-    src/gui/dlg_options.cpp \
-    src/gui/dlg_profile_add.cpp \
-    src/gui/dlg_profile_edit.cpp \
-    src/gui/dlg_profile_manager.cpp \
-    src/gui/dlg_register_nick.cpp \
-    src/gui/dlg_update.cpp \
-    src/gui/dlg_user_avatar.cpp \
-    src/gui/dlg_user_profile.cpp \
-    src/gui/dlg_webcam.cpp \
-    src/gui/dlg_webcam_mini.cpp \
-    src/gui/dlg_webcam_standard.cpp \
+    src/core/updates.cpp \
+    src/gui/about.cpp \
+    src/gui/awaylog.cpp \
+    src/gui/channel_favourites.cpp \
+    src/gui/channel_homes.cpp \
+    src/gui/channel_key.cpp \
+    src/gui/channel_list.cpp \
+    src/gui/channel_settings.cpp \
+    src/gui/emoticons.cpp \
+    src/gui/find_text.cpp \
+    src/gui/friends.cpp \
+    src/gui/ignore.cpp \
+    src/gui/invite.cpp \
+    src/gui/moderation.cpp \
+    src/gui/my_profile.cpp \
+    src/gui/my_stats.cpp \
+    src/gui/notes.cpp \
+    src/gui/offlinemsg.cpp \
+    src/gui/options.cpp \
+    src/gui/profile_add.cpp \
+    src/gui/profile_edit.cpp \
+    src/gui/profile_manager.cpp \
+    src/gui/register_nick.cpp \
+    src/gui/update.cpp \
+    src/gui/user_avatar.cpp \
+    src/gui/user_profile.cpp \
+    src/gui/webcam.cpp \
+    src/gui/webcam_mini.cpp \
+    src/gui/webcam_standard.cpp \
     src/notify/notify.cpp \
-    src/onet/dlg_captcha.cpp \
+    src/onet/captcha.cpp \
     src/onet/onet_auth.cpp \
     src/onet/onet_kernel.cpp \
     src/onet/onet_utils.cpp \
@@ -92,38 +92,38 @@ HEADERS += src/avatars/avatar.h \
     src/core/main.h \
     src/core/mainwindow.h \
     src/core/network.h \
-    src/core/update.h \
-    src/gui/dlg_about.h \
-    src/gui/dlg_awaylog.h \
-    src/gui/dlg_channel_favourites.h \
-    src/gui/dlg_channel_homes.h \
-    src/gui/dlg_channel_key.h \
-    src/gui/dlg_channel_list.h \
-    src/gui/dlg_channel_settings.h \
-    src/gui/dlg_emoticons.h \
-    src/gui/dlg_find_text.h \
-    src/gui/dlg_friends.h \
-    src/gui/dlg_ignore.h \
-    src/gui/dlg_ignore_ad.h \
-    src/gui/dlg_invite.h \
-    src/gui/dlg_moderation.h \
-    src/gui/dlg_my_profile.h \
-    src/gui/dlg_my_stats.h \
-    src/gui/dlg_notes.h \
-    src/gui/dlg_offlinemsg.h \
-    src/gui/dlg_options.h \
-    src/gui/dlg_profile_add.h \
-    src/gui/dlg_profile_edit.h \
-    src/gui/dlg_profile_manager.h \
-    src/gui/dlg_register_nick.h \
-    src/gui/dlg_update.h \
-    src/gui/dlg_user_avatar.h \
-    src/gui/dlg_user_profile.h \
-    src/gui/dlg_webcam.h \
-    src/gui/dlg_webcam_mini.h \
-    src/gui/dlg_webcam_standard.h \
+    src/core/updates.h \
+    src/gui/about.h \
+    src/gui/awaylog.h \
+    src/gui/channel_favourites.h \
+    src/gui/channel_homes.h \
+    src/gui/channel_key.h \
+    src/gui/channel_list.h \
+    src/gui/channel_settings.h \
+    src/gui/emoticons.h \
+    src/gui/find_text.h \
+    src/gui/friends.h \
+    src/gui/ignore.h \
+    src/gui/ignore_ad.h \
+    src/gui/invite.h \
+    src/gui/moderation.h \
+    src/gui/my_profile.h \
+    src/gui/my_stats.h \
+    src/gui/notes.h \
+    src/gui/offlinemsg.h \
+    src/gui/options.h \
+    src/gui/profile_add.h \
+    src/gui/profile_edit.h \
+    src/gui/profile_manager.h \
+    src/gui/register_nick.h \
+    src/gui/update.h \
+    src/gui/user_avatar.h \
+    src/gui/user_profile.h \
+    src/gui/webcam.h \
+    src/gui/webcam_mini.h \
+    src/gui/webcam_standard.h \
     src/notify/notify.h \
-    src/onet/dlg_captcha.h \
+    src/onet/captcha.h \
     src/onet/onet_auth.h \
     src/onet/onet_kernel.h \
     src/onet/onet_utils.h \

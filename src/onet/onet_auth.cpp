@@ -25,7 +25,7 @@
 #include <QNetworkRequest>
 #include <QUrl>
 #include "core.h"
-#include "dlg_captcha.h"
+#include "captcha.h"
 #include "tab_container.h"
 #include "onet_auth.h"
 

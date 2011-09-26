@@ -30,8 +30,8 @@
 #include <QtWebKit/QWebFrame>
 #include <QtWebKit/QWebElement>
 #include "core.h"
-#include "dlg_user_profile.h"
-#include "dlg_find_text.h"
+#include "user_profile.h"
+#include "find_text.h"
 #include "html_messages_renderer.h"
 #include "log.h"
 #include "notify.h"
@@ -40,7 +40,7 @@
 #ifdef Q_WS_WIN
     #include "kamerzysta.h"
 #else
-    #include "dlg_webcam.h"
+    #include "webcam.h"
 #endif
 
 ChatView::ChatView(QString _strChannel) : strChannel(_strChannel), strNick(QString::null), bScroll(true)

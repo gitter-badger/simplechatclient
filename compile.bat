@@ -1,20 +1,4 @@
-@if not exist C:\MinGW\bin\mingw32-make.exe (
-@echo Download MinGW from http://get.qt.nokia.com/misc/MinGW-gcc440_1.zip
-@pause
-@exit
-)
-
-@del /Q /F /A src\scc.exe
-cmake . -G "MinGW Makefiles" -DWIN32_QCA2_DIR=C:\qca2
-mingw32-make
-
 @echo off 
-
-if not exist src\scc.exe (
-echo SCC is not compiled. Please compile program.
-pause
-exit
-)
 
 if not exist C:\Qt\4.7.4 (
 echo Download Qt 4.7.4 from http://qt.nokia.com/downloads/windows-cpp
@@ -22,14 +6,8 @@ pause
 exit
 )
 
-if not exist C:\OpenSSL-Win32 (
-echo Download OpenSSL from http://www.slproweb.com/download/Win32OpenSSL_Light-1_0_0d.exe
-pause
-exit
-)
-
-if not exist C:\zlib-1.2.5 (
-echo Download ZLib from http://zlib.net/zlib125-dll.zip
+if not exist C:\MinGW\bin\mingw32-make.exe (
+echo Download MinGW from http://get.qt.nokia.com/misc/MinGW-gcc440_1.zip
 pause
 exit
 )
@@ -41,11 +19,33 @@ exit
 )
 
 if not exist C:\qca2\lib\qca2.dll (
-echo Compiling qca2
+cho Compiling qca2
 cd C:\qca2
 configure.exe --release --disable-tests
 mingw32-make
 cd C:\scc
+)
+
+del /Q /F /A src\scc.exe
+cmake . -G "MinGW Makefiles" -DWIN32_QCA2_DIR=C:\qca2
+mingw32-make
+
+if not exist src\scc.exe (
+echo SCC is not compiled. Please compile program.
+pause
+exit
+)
+
+if not exist C:\OpenSSL-Win32 (
+echo Download OpenSSL from http://www.slproweb.com/download/Win32OpenSSL_Light-1_0_0e.exe
+pause
+exit
+)
+
+if not exist C:\zlib-1.2.5 (
+echo Download ZLib from http://zlib.net/zlib125-dll.zip
+pause
+exit
 )
 
 set DESTINATION="C:\scc\release"

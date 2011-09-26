@@ -41,34 +41,34 @@ set (scc_SRCS
 	core/main.cpp
 	core/mainwindow.cpp
 	core/network.cpp
-	core/update.cpp
-	gui/dlg_about.cpp
-	gui/dlg_awaylog.cpp
-	gui/dlg_channel_favourites.cpp
-	gui/dlg_channel_homes.cpp
-	gui/dlg_channel_key.cpp
-	gui/dlg_channel_list.cpp
-	gui/dlg_channel_settings.cpp
-	gui/dlg_emoticons.cpp
-	gui/dlg_find_text.cpp
-	gui/dlg_friends.cpp
-	gui/dlg_ignore.cpp
-	gui/dlg_invite.cpp
-	gui/dlg_moderation.cpp
-	gui/dlg_my_profile.cpp
-	gui/dlg_my_stats.cpp
-	gui/dlg_notes.cpp
-	gui/dlg_offlinemsg.cpp
-	gui/dlg_options.cpp
-	gui/dlg_profile_add.cpp
-	gui/dlg_profile_edit.cpp
-	gui/dlg_profile_manager.cpp
-	gui/dlg_register_nick.cpp
-	gui/dlg_update.cpp
-	gui/dlg_user_avatar.cpp
-	gui/dlg_user_profile.cpp
+	core/updates.cpp
+	gui/about.cpp
+	gui/awaylog.cpp
+	gui/channel_favourites.cpp
+	gui/channel_homes.cpp
+	gui/channel_key.cpp
+	gui/channel_list.cpp
+	gui/channel_settings.cpp
+	gui/emoticons.cpp
+	gui/find_text.cpp
+	gui/friends.cpp
+	gui/ignore.cpp
+	gui/invite.cpp
+	gui/moderation.cpp
+	gui/my_profile.cpp
+	gui/my_stats.cpp
+	gui/notes.cpp
+	gui/offlinemsg.cpp
+	gui/options.cpp
+	gui/profile_add.cpp
+	gui/profile_edit.cpp
+	gui/profile_manager.cpp
+	gui/register_nick.cpp
+	gui/update.cpp
+	gui/user_avatar.cpp
+	gui/user_profile.cpp
 	notify/notify.cpp
-	onet/dlg_captcha.cpp
+	onet/captcha.cpp
 	onet/onet_auth.cpp
 	onet/onet_kernel.cpp
 	onet/onet_utils.cpp
@@ -98,34 +98,34 @@ set (scc_MOC_HDRS
 	core/core.h
 	core/mainwindow.h
 	core/network.h
-	core/update.h
-	gui/dlg_about.h
-	gui/dlg_awaylog.h
-	gui/dlg_channel_favourites.h
-	gui/dlg_channel_homes.h
-	gui/dlg_channel_key.h
-	gui/dlg_channel_list.h
-	gui/dlg_channel_settings.h
-	gui/dlg_emoticons.h
-	gui/dlg_find_text.h
-	gui/dlg_friends.h
-	gui/dlg_ignore.h
-	gui/dlg_invite.h
-	gui/dlg_moderation.h
-	gui/dlg_my_profile.h
-	gui/dlg_my_stats.h
-	gui/dlg_notes.h
-	gui/dlg_offlinemsg.h
-	gui/dlg_options.h
-	gui/dlg_profile_add.h
-	gui/dlg_profile_edit.h
-	gui/dlg_profile_manager.h
-	gui/dlg_register_nick.h
-	gui/dlg_update.h
-	gui/dlg_user_avatar.h
-	gui/dlg_user_profile.h
+	core/updates.h
+	gui/about.h
+	gui/awaylog.h
+	gui/channel_favourites.h
+	gui/channel_homes.h
+	gui/channel_key.h
+	gui/channel_list.h
+	gui/channel_settings.h
+	gui/emoticons.h
+	gui/find_text.h
+	gui/friends.h
+	gui/ignore.h
+	gui/invite.h
+	gui/moderation.h
+	gui/my_profile.h
+	gui/my_stats.h
+	gui/notes.h
+	gui/offlinemsg.h
+	gui/options.h
+	gui/profile_add.h
+	gui/profile_edit.h
+	gui/profile_manager.h
+	gui/register_nick.h
+	gui/update.h
+	gui/user_avatar.h
+	gui/user_profile.h
 	notify/notify.h
-	onet/dlg_captcha.h
+	onet/captcha.h
 	onet/onet_auth.h
 	onet/onet_kernel.h
 	onet/onet_utils.h
@@ -184,17 +184,17 @@ else (WIN32)
 	LIST (APPEND scc_SRCS
 		common/webcam_engine.cpp
 		common/webcam_network.cpp
-		gui/dlg_webcam.cpp
-		gui/dlg_webcam_standard.cpp
-		gui/dlg_webcam_mini.cpp
+		gui/webcam.cpp
+		gui/webcam_standard.cpp
+		gui/webcam_mini.cpp
 		widgets/webcam_delegate.cpp
 	)
 	LIST (APPEND scc_MOC_HDRS
 		common/webcam_engine.h
 		common/webcam_network.h
-		gui/dlg_webcam.h
-		gui/dlg_webcam_standard.h
-		gui/dlg_webcam_mini.h
+		gui/webcam.h
+		gui/webcam_standard.h
+		gui/webcam_mini.h
 		widgets/webcam_delegate.h
 	)
 endif (WIN32)

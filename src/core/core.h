@@ -26,7 +26,7 @@ class QAction;
 class QTcpSocket;
 class QTimer;
 class MainWindow;
-class Update;
+class Updates;
 #include <QObject>
 #include "network.h"
 
@@ -126,7 +126,7 @@ public slots:
 
 private:
     MainWindow *window;
-    Update *pUpdate;
+    Updates *pUpdates;
 
     void init();
     void checkSettings();

@@ -24,9 +24,9 @@
 #include <QToolButton>
 #include "core.h"
 #include "config.h"
-#include "dlg_channel_settings.h"
-#include "dlg_emoticons.h"
-#include "dlg_moderation.h"
+#include "channel_settings.h"
+#include "emoticons.h"
+#include "moderation.h"
 #include "input_widget.h"
 #include "tool_widget.h"
 

@@ -23,8 +23,8 @@
 #include <QTimer>
 #include "avatar.h"
 #include "core.h"
-#include "dlg_channel_key.h"
-#include "dlg_invite.h"
+#include "channel_key.h"
+#include "invite.h"
 #include "log.h"
 #include "notify.h"
 #include "onet_utils.h"

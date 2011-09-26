@@ -27,18 +27,18 @@
 #include <QToolBar>
 #include "config.h"
 #include "core.h"
-#include "dlg_about.h"
-#include "dlg_awaylog.h"
-#include "dlg_channel_favourites.h"
-#include "dlg_channel_homes.h"
-#include "dlg_channel_list.h"
-#include "dlg_friends.h"
-#include "dlg_ignore.h"
-#include "dlg_my_profile.h"
-#include "dlg_my_stats.h"
-#include "dlg_notes.h"
-#include "dlg_offlinemsg.h"
-#include "dlg_options.h"
+#include "about.h"
+#include "awaylog.h"
+#include "channel_favourites.h"
+#include "channel_homes.h"
+#include "channel_list.h"
+#include "friends.h"
+#include "ignore.h"
+#include "my_profile.h"
+#include "my_stats.h"
+#include "notes.h"
+#include "offlinemsg.h"
+#include "options.h"
 #include "inputline_dock_widget.h"
 #include "nicklist_delegate.h"
 #include "nicklist_widget.h"
@@ -51,7 +51,7 @@
 #ifdef Q_WS_WIN
     #include "kamerzysta.h"
 #else
-    #include "dlg_webcam.h"
+    #include "webcam.h"
 #endif
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
