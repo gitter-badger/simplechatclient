@@ -67,10 +67,10 @@ void DlgChannelSettings::createGui()
     ui.tabWidget->setTabText(2, tr("Advanced"));
     ui.tabWidget->setTabText(3, tr("Permissions"));
     ui.tabWidget->setTabText(4, tr("Statistics"));
-    ui.listWidget_permissions->insertItem(0, tr("Operators"));
-    ui.listWidget_permissions->insertItem(1, tr("Half-operators"));
-    ui.listWidget_permissions->insertItem(2, tr("Banned"));
-    ui.listWidget_permissions->insertItem(3, tr("Invited"));
+    ui.listWidget_permissions->addItem(tr("Operators"));
+    ui.listWidget_permissions->addItem(tr("Half-operators"));
+    ui.listWidget_permissions->addItem(tr("Banned"));
+    ui.listWidget_permissions->addItem(tr("Invited"));
 
     // summary
     ui.label_created1->setText(tr("Created:"));
@@ -161,12 +161,8 @@ void DlgChannelSettings::setDefaultValues()
     QStringList comboBoxFont;
     comboBoxFont << "Arial" << "Times" << "Verdana" << "Tahoma" << "Courier";
 
-    int iComboBoxFont = 0;
     foreach (QString strFont, comboBoxFont)
-    {
-        ui.comboBox_font->insertItem(iComboBoxFont, strFont);
-        iComboBoxFont++;
-    }
+        ui.comboBox_font->addItem(strFont);
 
     // color
     ui.comboBox_color->setToolTip(tr("Font color"));
@@ -175,13 +171,11 @@ void DlgChannelSettings::setDefaultValues()
     QStringList comboBoxColors;
     comboBoxColors << "#000000" << "#623c00" << "#c86c00" << "#ff6500" << "#ff0000" << "#e40f0f" << "#990033" << "#8800ab" << "#ce00ff" << "#0f2ab1" << "#3030ce" << "#006699" << "#1a866e" << "#008100" << "#959595";
 
-    int iComboBoxColors = 0;
     foreach (QString strColor, comboBoxColors)
     {
         QPixmap pixmap(50,10);
         pixmap.fill(QColor(strColor));
-        ui.comboBox_color->insertItem(iComboBoxColors, pixmap, "");
-        iComboBoxColors++;
+        ui.comboBox_color->addItem(QIcon(pixmap), "");
     }
 }
 
@@ -558,7 +552,7 @@ void DlgChannelSettings::addOp(QString strNick)
     SortedListWidgetItem *item = new SortedListWidgetItem();
     item->setData(Qt::UserRole+11, false); // is nicklist
     item->setText(strNick);
-    ui.listWidget_op->insertItem(ui.listWidget_op->count(), item);
+    ui.listWidget_op->addItem(item);
 
     // enable tabs
     QString strMe = Core::instance()->settings.value("nick");
@@ -571,7 +565,7 @@ void DlgChannelSettings::addHalfop(QString strNick)
     SortedListWidgetItem *item = new SortedListWidgetItem();
     item->setData(Qt::UserRole+11, false); // is nicklist
     item->setText(strNick);
-    ui.listWidget_halfop->insertItem(ui.listWidget_halfop->count(), item);
+    ui.listWidget_halfop->addItem(item);
 
     // enable tabs
     QString strMe = Core::instance()->settings.value("nick");
@@ -595,7 +589,7 @@ void DlgChannelSettings::addBan(QString strNick, QString strWho, QString strDT, 
         item->setData(Qt::UserRole, strNick); // set original ban mask
         item->setToolTip(QString("%1: %2 (%3) [%4]").arg(tr("Created by")).arg(strWho).arg(strDT).arg(tr("IP Mask: %1")).arg(strNick.remove("*!*@")));
     }
-    ui.listWidget_ban->insertItem(ui.listWidget_ban->count(), item);
+    ui.listWidget_ban->addItem(item);
 }
 
 void DlgChannelSettings::addInvite(QString strNick, QString strWho, QString strDT)
@@ -605,7 +599,7 @@ void DlgChannelSettings::addInvite(QString strNick, QString strWho, QString strD
     item->setText(strNick);
     item->setToolTip(QString("%1: %2 (%3)").arg(tr("Created by")).arg(strWho).arg(strDT));
 
-    ui.listWidget_invite->insertItem(ui.listWidget_invite->count(), item);
+    ui.listWidget_invite->addItem(item);
 }
 
 void DlgChannelSettings::ownerChanged()

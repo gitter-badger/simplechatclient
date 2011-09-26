@@ -42,13 +42,11 @@ DlgMyProfile::DlgMyProfile(QWidget *parent) : QDialog(parent)
 
 void DlgMyProfile::createGui()
 {
-    ui.pushButton_bold->setIcon(QIcon(":/images/oxygen/16x16/format-text-bold.png"));
-    ui.pushButton_italic->setIcon(QIcon(":/images/oxygen/16x16/format-text-italic.png"));
+    ui.toolButton_bold->setIcon(QIcon(":/images/oxygen/16x16/format-text-bold.png"));
+    ui.toolButton_italic->setIcon(QIcon(":/images/oxygen/16x16/format-text-italic.png"));
     ui.buttonBox->button(QDialogButtonBox::Ok)->setIcon(QIcon(":/images/oxygen/16x16/dialog-ok.png"));
     ui.buttonBox->button(QDialogButtonBox::Cancel)->setIcon(QIcon(":/images/oxygen/16x16/dialog-cancel.png"));
 
-    ui.pushButton_bold->setText("");
-    ui.pushButton_italic->setText("");
     ui.label_ltype->setText(tr("Type:"));
     ui.label_sex->setText(tr("Sex:"));
     ui.label_birthdate->setText(tr("Birthdate:"));
@@ -56,12 +54,6 @@ void DlgMyProfile::createGui()
     ui.label_country->setText(tr("Country:"));
     ui.label_hobby->setText(tr("Hobby:"));
     ui.label_www->setText(tr("Website:"));
-
-    // bold
-    ui.pushButton_bold->setCheckable(true);
-
-    // italic
-    ui.pushButton_italic->setCheckable(true);
 }
 
 void DlgMyProfile::setDefaultValues()
@@ -70,12 +62,8 @@ void DlgMyProfile::setDefaultValues()
     QStringList comboBoxFont;
     comboBoxFont << "Arial" << "Times" << "Verdana" << "Tahoma" << "Courier";
 
-    int iComboBoxFont = 0;
     foreach (QString strFont, comboBoxFont)
-    {
-        ui.comboBox_font->insertItem(iComboBoxFont, strFont);
-        iComboBoxFont++;
-    }
+        ui.comboBox_font->addItem(strFont);
 
     // color
     ui.comboBox_color->setToolTip(tr("Font color"));
@@ -84,13 +72,11 @@ void DlgMyProfile::setDefaultValues()
     QStringList comboBoxColors;
     comboBoxColors << "#000000" << "#623c00" << "#c86c00" << "#ff6500" << "#ff0000" << "#e40f0f" << "#990033" << "#8800ab" << "#ce00ff" << "#0f2ab1" << "#3030ce" << "#006699" << "#1a866e" << "#008100" << "#959595";
 
-    int iComboBoxColors = 0;
     foreach (QString strColor, comboBoxColors)
     {
         QPixmap pixmap(50,10);
         pixmap.fill(QColor(strColor));
-        ui.comboBox_color->insertItem(iComboBoxColors, pixmap, "");
-        iComboBoxColors++;
+        ui.comboBox_color->addItem(QIcon(pixmap), "");
     }
 
     // sex
@@ -98,7 +84,7 @@ void DlgMyProfile::setDefaultValues()
     strlSex << "" << tr("Male") << tr("Female");
 
     for (int i = 0; i < strlSex.size(); i++)
-        ui.comboBox_sex->insertItem(i, strlSex.at(i));
+        ui.comboBox_sex->addItem(strlSex.at(i));
 
     // days
     QStringList strlDays;
@@ -107,13 +93,13 @@ void DlgMyProfile::setDefaultValues()
         strlDays << (i < 10 ? "0"+QString::number(i) : QString::number(i));
 
     for (int i = 0; i < strlDays.size(); i++)
-        ui.comboBox_day->insertItem(i, strlDays.at(i));
+        ui.comboBox_day->addItem(strlDays.at(i));
 
     // months
     QStringList strlMonths;
     strlMonths << "" << tr("January") << tr("February") << tr("March") << tr("April") << tr("May") << tr("June") << tr("July") << tr("August") << tr("September") << tr("October") << tr("November") << tr("December");
     for (int i = 0; i < strlMonths.size(); i++)
-        ui.comboBox_month->insertItem(i, strlMonths.at(i));
+        ui.comboBox_month->addItem(strlMonths.at(i));
 
     // years
     QStringList strlYears;
@@ -122,14 +108,14 @@ void DlgMyProfile::setDefaultValues()
         strlYears << QString::number(i);
 
     for (int i = 0; i < strlYears.size(); i++)
-        ui.comboBox_year->insertItem(i, strlYears.at(i));
+        ui.comboBox_year->addItem(strlYears.at(i));
 
     // country
     QString strCountries = tr("Afghanistan,Albania,Algeria,Andorra,Angola,Anguilla,Antarctica,Antigua and Barbuda,Netherlands Antilles,Saudi Arabia,Argentina,Armenia,Aruba,Australia,Austria,Azerbaijan,Bahamas,Bahrain,Bangladesh,Barbados,Belgium,Belize,Benin,Bermuda,Bhutan,Belarus,Bolivia,Bosnia and Herzegovina,Botswana,Brazil,Brunei,British Indian Ocean Territory,British Virgin Islands,Bulgaria,Burkina Faso,Burundi,Chile,China,Croatia,Cyprus,Chad,Czech Republic,Denmark,Dominica,Dominican Republic,Djibouti,Egypt,Ecuador,Eritrea,Estonia,Ethiopia,Falkland Islands,Russian Federation,Fiji,Philippines,Finland,France,Gambia,Gaon,South Georgia and South Sandwich Islands,Ghana,Gibraltar,Greece,Grenada,Greenland,Georgia,Guam,Guyana,French Guiana,Guadeloupe,Guatemala,Guinea,Guinea Bissau,Equatorial Guinea,Haiti,Heard,Spain,Holland,Honduras,Hong Kong,India,Indonesia,Iraq,Iran,Ireland,Iceland,Israel,Jamaica,Japan,Yemen,Jordan,Yugoslavia,Cayman Islands,Cambodia,Cameroon,Canada,Qatar,Kazakhstan,Kenya,Kyrgyzstan,Kiribati,Colombia,Comoros,Congo,South Korea,North Korea,Costa Rica,Cuba,Kuwait,Laos,Lesotho,Lebanon,Liberia,Libya,Liechtenstein,Lithuania,Latvia,Luxembourg,Macedonia,Madagascar,Mayotte,Macau,Malawi,Maldives,Malaysia,Mali,Malta,Marshall Islands,Morocco,Martinique,Mauritania,Mauritius,Mexico,Micronesia,Moldova,Monaco,Mongolia,Montserrat,Mozambique,Myanmar,Namibia,Nauru,Nepal,Germany,Niger,Nigeria,Nicaragua,Niue,Norway,New Caledonia,New Zealand,Oman,Pakistan,Palau,Panama,Papua New Guinea,Paraguay,Peru,Pitcairn,French Polynesia,Poland,Puerto Rico,Portugal,South Africa,Cape Verde,Reunion,Rwanda,Romania,Western Sahara,Saint Christopher and Nevis,Saint Lucia,Saint Vincent and the Grenadines,Saint-Perr and Miquelon,Salvador,Samoa,American Samoa,San Marino,Senegal,Seychelles,Sierra Leone,Singapore,Slovakia,Slovenia,Somalia,Sri Lanka,United States,Swaziland,Sudan,Suriname,Svalbard and Jan Mayen island,Syria,Switzerland,Sweden,Tajikistan,Thailand,Taiwan,Tanzania,Timor-Leste,Togo,Tokelau,Tonga,Trinidad and Tobago,Tunisia,Turkey,Turkmenistan,Turks and Caicos Islands,Tuvalu,Uganda,Ukraine,Uruguay,Uzbekistan,Vanuatu,Wallis and Futuna Islands,Vatican City,Venezuela,Hungary,Great Britain,United Kingdom,Vietnam,Italy,Ivory Coast,Bouvet Island,Christmas Island,Norfolk Island,Saint Helena,Cook Islands,U.S. Virgin Islands,Cocos Islands,Marshall Islands,Faroe Islands,Solomon Islands,Sao Tome and Principe,Zaire,Zambia,Zimbabwe,United Arab Emirates");
     QStringList strlCountries = strCountries.split(",");
     strlCountries.insert(0, "");
     for (int i = 0; i < strlCountries.size(); i++)
-        ui.comboBox_country->insertItem(i, strlCountries.at(i));
+        ui.comboBox_country->addItem(strlCountries.at(i));
 }
 
 void DlgMyProfile::createSignals()
@@ -225,8 +211,8 @@ QString DlgMyProfile::convertTextToDesc(QString strContent)
     QString strRemovedFont = pConvertF->getRemovedFont();
     delete pConvertF;
 
-    if (bRemovedBold) ui.pushButton_bold->setChecked(true);
-    else if (bRemovedItalic) ui.pushButton_italic->setChecked(true);
+    if (bRemovedBold) ui.toolButton_bold->setChecked(true);
+    else if (bRemovedItalic) ui.toolButton_italic->setChecked(true);
 
     if (strRemovedFont == "arial") ui.comboBox_font->setCurrentIndex(0);
     else if (strRemovedFont == "times") ui.comboBox_font->setCurrentIndex(1);
@@ -267,10 +253,10 @@ QString DlgMyProfile::convertDescToText(QString strContent)
     QString strFontWeight;
 
     // bold
-    if (ui.pushButton_bold->isChecked()) bBold = true;
+    if (ui.toolButton_bold->isChecked()) bBold = true;
 
     // italic
-    if (ui.pushButton_italic->isChecked()) bItalic = true;
+    if (ui.toolButton_italic->isChecked()) bItalic = true;
 
     // font name
     strFontName = ui.comboBox_font->currentText().toLower();

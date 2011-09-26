@@ -148,12 +148,11 @@ void DlgWebcamStandard::error(QString s)
 
 void DlgWebcamStandard::addUser(QString strNick, int iRank, QString strSpectators)
 {
-    int row = ui.listWidget_nicks->count();
     SortedListWidgetItem *item = new SortedListWidgetItem();
     item->setText(strNick);
     item->setData(Qt::UserRole, iRank);
     item->setData(Qt::UserRole+1, strSpectators);
-    ui.listWidget_nicks->insertItem(row,item);
+    ui.listWidget_nicks->addItem(item);
 }
 
 void DlgWebcamStandard::updateUser(QString strNick, int iRank, QString strSpectators)
@@ -163,12 +162,11 @@ void DlgWebcamStandard::updateUser(QString strNick, int iRank, QString strSpecta
         removeUser(strNick);
 
     /* add user */
-    int row = ui.listWidget_nicks->count();
     SortedListWidgetItem *item = new SortedListWidgetItem();
     item->setText(strNick);
     item->setData(Qt::UserRole, iRank);
     item->setData(Qt::UserRole+1, strSpectators);
-    ui.listWidget_nicks->insertItem(row,item);
+    ui.listWidget_nicks->addItem(item);
 }
 
 void DlgWebcamStandard::removeUser(QString strNick)
