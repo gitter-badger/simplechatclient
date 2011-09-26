@@ -19,7 +19,7 @@ exit
 )
 
 if not exist C:\qca2\lib\qca2.dll (
-cho Compiling qca2
+echo Compiling qca2
 cd C:\qca2
 configure.exe --release --disable-tests
 mingw32-make
