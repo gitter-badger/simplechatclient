@@ -25,12 +25,12 @@
 class QDockWidget;
 class QMenuBar;
 class QToolBar;
-class InputLineDockWidget;
 class NickListWidget;
 class OnetAuth;
 class OnetKernel;
 class TabContainer;
 class TabManager;
+class ToolWidget;
 #include <QSystemTrayIcon>
 #include <QMainWindow>
 
@@ -89,10 +89,9 @@ private:
     OnetAuth *pOnetAuth;
 
     // gui
-    InputLineDockWidget *pInputLineDockWidget;
     NickListWidget *pNickListWidget;
-    QDockWidget *bottomDockWidget;
     QDockWidget *rightDockWidget;
+    ToolWidget *pToolWidget;
 
     // other
     void setWindowGeometry();

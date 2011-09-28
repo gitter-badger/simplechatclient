@@ -39,13 +39,13 @@
 #include "notes.h"
 #include "offlinemsg.h"
 #include "options.h"
-#include "inputline_dock_widget.h"
 #include "nicklist_delegate.h"
 #include "nicklist_widget.h"
 #include "onet_auth.h"
 #include "onet_kernel.h"
 #include "tab_container.h"
 #include "tab_manager.h"
+#include "tool_widget.h"
 #include "mainwindow.h"
 
 #ifdef Q_WS_WIN
@@ -65,7 +65,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     createMenus();
 
     pTabM = new TabManager(this);
-    this->setCentralWidget(pTabM);
 
     // classes
     pTabC = new TabContainer(pTabM);
@@ -104,7 +103,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     showOptions();
 
     // focus
-    pInputLineDockWidget->setFocus();
+    pToolWidget->setFocus();
 }
 
 MainWindow::~MainWindow()
@@ -113,10 +112,9 @@ MainWindow::~MainWindow()
     clearAllNicklist();
 
     delete pNickListWidget;
-    delete pInputLineDockWidget;
-
     delete rightDockWidget;
-    delete bottomDockWidget;
+
+    delete pToolWidget;
 
     // auto-away
     Core::instance()->autoAwayTimer->stop();
@@ -152,13 +150,6 @@ void MainWindow::setWindowGeometry()
 
 void MainWindow::createGui()
 {
-    // inputlinewidget
-    bottomDockWidget = new QDockWidget(tr("Typing messages"), this);
-    bottomDockWidget->setFeatures(QDockWidget::DockWidgetMovable | QDockWidget::DockWidgetClosable | QDockWidget::DockWidgetFloatable);
-    bottomDockWidget->setAllowedAreas(Qt::TopDockWidgetArea | Qt::BottomDockWidgetArea); // top and bottom
-    this->addDockWidget(Qt::BottomDockWidgetArea, bottomDockWidget);
-    viewMenu->addAction(bottomDockWidget->toggleViewAction());
-
     // nicklistwidget
     rightDockWidget = new QDockWidget(tr("Users"), this);
     rightDockWidget->setFeatures(QDockWidget::DockWidgetMovable | QDockWidget::DockWidgetClosable | QDockWidget::DockWidgetFloatable);
@@ -166,15 +157,23 @@ void MainWindow::createGui()
     this->addDockWidget(Qt::RightDockWidgetArea, rightDockWidget);
     viewMenu->addAction(rightDockWidget->toggleViewAction());
 
-    // inputline
-    pInputLineDockWidget = new InputLineDockWidget(bottomDockWidget);
-    bottomDockWidget->setWidget(pInputLineDockWidget);
-
     // nicklist
     pNickListWidget = new NickListWidget();
     pNickListWidget->setParent(rightDockWidget);
     pNickListWidget->setItemDelegate(new NickListDelegate(pNickListWidget));
     rightDockWidget->setWidget(pNickListWidget);
+
+    pToolWidget = new ToolWidget(this);
+    pToolWidget->show();
+
+    QVBoxLayout *layout = new QVBoxLayout;
+    layout->setMargin(0);
+    layout->addWidget(pTabM);
+    layout->addWidget(pToolWidget);
+
+    QWidget *widget = new QWidget;
+    widget->setLayout(layout);
+    this->setCentralWidget(widget);
 
     // maximum size
     QString strShowAvatars = Core::instance()->settings.value("show_avatars");
@@ -354,12 +353,11 @@ void MainWindow::createSignals()
     QObject::connect(pTabM, SIGNAL(tabCloseRequested(int)), this, SLOT(tabCloseRequested(int)));
     QObject::connect(pTabM, SIGNAL(currentChanged(int)), this, SLOT(currentTabChanged(int)));
 
-    // signals pInputLineDockWidget
-    QObject::connect(pInputLineDockWidget, SIGNAL(showMsg(QString&,QString&,MessageCategory)), pTabC, SLOT(slotShowMsg(QString&,QString&,MessageCategory)));
-    QObject::connect(pInputLineDockWidget, SIGNAL(displayMessage(QString&,QString&,MessageCategory)), pTabC, SLOT(slotDisplayMessage(QString&,QString&,MessageCategory)));
-    QObject::connect(pInputLineDockWidget, SIGNAL(clearContent(QString)), pTabC, SLOT(slotClearContent(QString)));
-    QObject::connect(pInputLineDockWidget, SIGNAL(ctrlTabPressed()), this, SLOT(ctrlTabPressed()));
-    QObject::connect(pInputLineDockWidget, SIGNAL(ctrlShiftTabPressed()), this, SLOT(ctrlShiftTabPressed()));
+    // signals pToolWidget
+    QObject::connect(pToolWidget, SIGNAL(showMsg(QString&,QString&,MessageCategory)), pTabC, SLOT(slotShowMsg(QString&,QString&,MessageCategory)));
+    QObject::connect(pToolWidget, SIGNAL(displayMessage(QString&,QString&,MessageCategory)), pTabC, SLOT(slotDisplayMessage(QString&,QString&,MessageCategory)));
+    QObject::connect(pToolWidget, SIGNAL(ctrlTabPressed()), this, SLOT(ctrlTabPressed()));
+    QObject::connect(pToolWidget, SIGNAL(ctrlShiftTabPressed()), this, SLOT(ctrlShiftTabPressed()));
 
     // signals onet kernel
     QObject::connect(pOnetKernel, SIGNAL(clearNicklist(QString)), this, SLOT(clearNicklist(QString)));
@@ -381,7 +379,7 @@ void MainWindow::createSignals()
     QObject::connect(Core::instance()->pNetwork, SIGNAL(authorize(QString,QString,QString)), pOnetAuth, SLOT(authorize(QString,QString,QString)));
     QObject::connect(Core::instance()->pNetwork, SIGNAL(showMsgActive(QString&,MessageCategory)), pTabC, SLOT(slotShowMsgActive(QString&,MessageCategory)));
     QObject::connect(Core::instance()->pNetwork, SIGNAL(showMsgAll(QString&,MessageCategory)), pTabC, SLOT(slotShowMsgAll(QString&,MessageCategory)));
-    QObject::connect(Core::instance()->pNetwork, SIGNAL(updateNick(QString)), pInputLineDockWidget, SLOT(slotUpdateNick(QString)));
+    QObject::connect(Core::instance()->pNetwork, SIGNAL(updateNick(QString)), pToolWidget, SLOT(updateNick(QString)));
     QObject::connect(Core::instance()->pNetwork, SIGNAL(clearAllNicklist()), this, SLOT(clearAllNicklist()));
     QObject::connect(Core::instance()->pNetwork, SIGNAL(updateActions()), this, SLOT(updateActions()));
 
@@ -429,7 +427,7 @@ void MainWindow::refreshBackgroundImage()
 // refresh inputline color
 void MainWindow::refreshToolWidgetValues()
 {
-    pInputLineDockWidget->refreshToolWidgetValues();
+    pToolWidget->setDefaultValues();
 }
 
 // buttons
@@ -739,9 +737,9 @@ void MainWindow::currentTabChanged(int index)
 
     // hide/show settings on non channel
     if (strChannel[0] != '#')
-        pInputLineDockWidget->hideChannelSettings();
+        pToolWidget->setChannelSettings(false);
     else
-        pInputLineDockWidget->showChannelSettings();
+        pToolWidget->setChannelSettings(true);
 
     // set current channel
     pNickListWidget->setChannel(strChannel);
@@ -762,8 +760,8 @@ void MainWindow::currentTabChanged(int index)
     // moderation
     QString strMe = Core::instance()->settings.value("nick");
     QString strModes = Core::instance()->getUserModes(strMe, strChannel);
-    if (strModes.contains("!")) pInputLineDockWidget->enableModeration();
-    else pInputLineDockWidget->disableModeration();
+    if (strModes.contains("!")) pToolWidget->setModeration(true);
+    else pToolWidget->setModeration(false);
 }
 
 void MainWindow::createNicklist(QString strChannel)
@@ -933,8 +931,8 @@ void MainWindow::changeFlag(QString strNick, QString strChannel, QString strNewF
 
     if (strNick == strMe)
     {
-        if (strNewFlag == "+X") pInputLineDockWidget->enableModeration();
-        else if (strNewFlag == "-X") pInputLineDockWidget->disableModeration();
+        if (strNewFlag == "+X") pToolWidget->setModeration(true);
+        else if (strNewFlag == "-X") pToolWidget->setModeration(false);
     }
 }
 

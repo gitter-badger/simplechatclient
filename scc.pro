@@ -65,8 +65,6 @@ SOURCES += src/avatars/avatar.cpp \
     src/tab/tab_widget.cpp \
     src/widgets/chat_view.cpp \
     src/widgets/inputline_widget.cpp \
-    src/widgets/inputline_dock_widget.cpp \
-    src/widgets/input_widget.cpp \
     src/widgets/nicklist_delegate.cpp \
     src/widgets/nicklist_widget.cpp \
     src/widgets/simple_rank_widget.cpp \
@@ -131,9 +129,7 @@ HEADERS += src/avatars/avatar.h \
     src/tab/tab_manager.h \
     src/tab/tab_widget.h \
     src/widgets/chat_view.h \
-    src/widgets/input_widget.h \
     src/widgets/inputline_widget.h \
-    src/widgets/inputline_dock_widget.h \
     src/widgets/nicklist_delegate.h \
     src/widgets/nicklist_widget.h \
     src/widgets/simple_rank_widget.h \

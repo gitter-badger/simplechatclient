@@ -1738,25 +1738,6 @@
     </message>
 </context>
 <context>
-    <name>InputWidget</name>
-    <message>
-        <source>(Unregistered)</source>
-        <translation>(Niezalogowany)</translation>
-    </message>
-    <message>
-        <source>Send</source>
-        <translation>Wyślij</translation>
-    </message>
-    <message>
-        <source>Send to moderators</source>
-        <translation>Wyślij do moderatorów</translation>
-    </message>
-    <message>
-        <source>Show/Hide tool widget</source>
-	<translation>Pokaż/Ukryj pasek narzędzi</translation>
-    </message>
-</context>
-<context>
     <name>Kamerzysta</name>
     <message>
         <source>Error</source>
@@ -1783,10 +1764,6 @@
     <message>
         <source>Navigation bar</source>
         <translation>Pasek nawigacji</translation>
-    </message>
-    <message>
-        <source>Typing messages</source>
-        <translation>Wpisywanie wiadomości</translation>
     </message>
     <message>
         <source>Users</source>
@@ -2975,12 +2952,16 @@
         <translation>Moderacja</translation>
     </message>
     <message>
-        <source>Clear</source>
-        <translation>Wyczyść</translation>
+        <source>(Unregistered)</source>
+        <translation>(Niezalogowany)</translation>
     </message>
     <message>
-        <source>Scroll</source>
-        <translation>Wstrzymaj/Wznów przewijanie</translation>
+        <source>Send</source>
+        <translation>Wyślij</translation>
+    </message>
+    <message>
+        <source>Send to moderators</source>
+        <translation>Wyślij do moderatorów</translation>
     </message>
 </context>
 <context>

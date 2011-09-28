@@ -77,8 +77,6 @@ set (scc_SRCS
 	tab/tab_widget.cpp
 	widgets/chat_view.cpp
 	widgets/inputline_widget.cpp
-	widgets/inputline_dock_widget.cpp
-	widgets/input_widget.cpp
 	widgets/nicklist_delegate.cpp
 	widgets/nicklist_widget.cpp
 	widgets/simple_rank_widget.cpp
@@ -134,8 +132,6 @@ set (scc_MOC_HDRS
 	tab/tab_widget.h
 	widgets/chat_view.h
 	widgets/inputline_widget.h
-	widgets/inputline_dock_widget.h
-	widgets/input_widget.h
 	widgets/nicklist_delegate.h
 	widgets/nicklist_widget.h
 	widgets/simple_rank_widget.h

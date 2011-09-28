@@ -19,18 +19,21 @@
  ****************************************************************************/
 
 #include <QComboBox>
+#include <QDateTime>
 #include <QHBoxLayout>
 #include <QMenu>
 #include <QToolButton>
 #include "core.h"
+#include "commands.h"
 #include "config.h"
 #include "channel_settings.h"
 #include "emoticons.h"
 #include "moderation.h"
-#include "input_widget.h"
+#include "inputline_widget.h"
+#include "replace.h"
 #include "tool_widget.h"
 
-ToolWidget::ToolWidget(QWidget *parent, InputWidget *_pInputWidget) : QWidget(parent), pInputWidget(_pInputWidget), strCurrentColor("#000000")
+ToolWidget::ToolWidget(QWidget *parent) : QWidget(parent), strCurrentColor("#000000")
 {
     showFontButtons = new QToolButton(this);
     showFontButtons->setIcon(QIcon(":/images/oxygen/16x16/format-text-color.png"));
@@ -155,35 +158,65 @@ ToolWidget::ToolWidget(QWidget *parent, InputWidget *_pInputWidget) : QWidget(pa
     channel_settings->setToolTip(tr("Channel settings"));
     channel_settings->show();
 
-    clear = new QToolButton(this);
-    clear->setIcon(QIcon(":/images/oxygen/16x16/draw-eraser.png"));
-    clear->setToolTip(tr("Clear"));
-    clear->show();
-
     moderation = new QToolButton(this);
     moderation->setIcon(QIcon(":/images/oxygen/16x16/layer-visible-on.png"));
     moderation->setToolTip(tr("Moderation"));
     moderation->show();
 
-    toolLayout = new QHBoxLayout();
-    toolLayout->setMargin(0);
-    toolLayout->setAlignment(Qt::AlignLeft);
-    toolLayout->addWidget(showFontButtons);
-    toolLayout->addWidget(separator1);
-    toolLayout->addWidget(bold);
-    toolLayout->addWidget(italic);
-    toolLayout->addWidget(fontfamily);
-    toolLayout->addWidget(color);
-    toolLayout->addWidget(size);
-    toolLayout->addWidget(separator2);
-    toolLayout->addWidget(emoticons);
-    toolLayout->addWidget(channel_settings);
-    toolLayout->addWidget(clear);
-    toolLayout->addWidget(moderation);
-    setLayout(toolLayout);
+    nickLabel = new QLabel(parent);
+    nickLabel->setText(tr("(Unregistered)"));
+    nickLabel->setStyleSheet("font-weight:bold;");
+    nickLabel->show();
+
+    pInputLine = new InputLineWidget(this);
+    pInputLine->setMinimumWidth(350);
+    pInputLine->show();
+
+    sendButton = new QToolButton(this);
+    sendButton->setIcon(QIcon(":/images/oxygen/16x16/go-jump-locationbar.png"));
+    sendButton->setToolTip(tr("Send"));
+    sendButton->show();
+
+    moderSendButton = new QToolButton(this);
+    moderSendButton->setIcon(QIcon(":/images/oxygen/16x16/meeting-observer.png"));
+    moderSendButton->setToolTip(tr("Send to moderators"));
+    moderSendButton->show();
+
+    QHBoxLayout *topLayout = new QHBoxLayout;
+    topLayout->setMargin(0);
+    topLayout->setAlignment(Qt::AlignLeft);
+    topLayout->addWidget(showFontButtons);
+    topLayout->addWidget(separator1);
+    topLayout->addWidget(bold);
+    topLayout->addWidget(italic);
+    topLayout->addWidget(fontfamily);
+    topLayout->addWidget(color);
+    topLayout->addWidget(size);
+    topLayout->addWidget(separator2);
+    topLayout->addWidget(emoticons);
+    topLayout->addWidget(channel_settings);
+    topLayout->addWidget(moderation);
+
+    QHBoxLayout *bottomLayout = new QHBoxLayout;
+    bottomLayout->setMargin(0);
+    bottomLayout->setAlignment(Qt::AlignLeft);
+    bottomLayout->addWidget(nickLabel);
+    bottomLayout->addWidget(pInputLine);
+    bottomLayout->addWidget(sendButton);
+    bottomLayout->addWidget(moderSendButton);
+
+    QVBoxLayout *mainLayout = new QVBoxLayout;
+    mainLayout->setMargin(0);
+    mainLayout->addLayout(topLayout);
+    mainLayout->addLayout(bottomLayout);
+    this->setLayout(mainLayout);
 
     // set default values
     setDefaultValues();
+
+    // focus
+    setFocusPolicy(Qt::StrongFocus);
+    setFocusProxy(pInputLine);
 
     // signals
     QObject::connect(showFontButtons, SIGNAL(clicked()), this, SLOT(showFontButtonsClicked()));
@@ -212,7 +245,17 @@ ToolWidget::ToolWidget(QWidget *parent, InputWidget *_pInputWidget) : QWidget(pa
     QObject::connect(emoticons, SIGNAL(clicked()), this, SLOT(emoticonsClicked()));
     QObject::connect(channel_settings, SIGNAL(clicked()), this, SLOT(channelSettingsClicked()));
     QObject::connect(moderation, SIGNAL(clicked()), this, SLOT(moderationClicked()));
-    QObject::connect(clear, SIGNAL(clicked()), this, SLOT(clearClicked()));
+
+    QObject::connect(sendButton, SIGNAL(clicked()), this, SLOT(inputlineReturnPressed()));
+    QObject::connect(pInputLine, SIGNAL(returnPressed()), this, SLOT(inputlineReturnPressed()));
+    QObject::connect(moderSendButton, SIGNAL(clicked()), this, SLOT(moderButtonClicked()));
+    QObject::connect(pInputLine, SIGNAL(ctrlTabPressed()), this, SLOT(slotCtrlTabPressed()));
+    QObject::connect(pInputLine, SIGNAL(ctrlShiftTabPressed()), this, SLOT(slotCtrlShiftTabPressed()));
+}
+
+ToolWidget::~ToolWidget()
+{
+    delete pInputLine;
 }
 
 void ToolWidget::setDefaultValues()
@@ -288,19 +331,25 @@ void ToolWidget::setDefaultValues()
     color->setCurrentIndex(iMyColor);
 
     // refresh input widget
-    pInputWidget->setFont(QFont(strMyFontFamily, -1, iWeight, bMyItalic));
-    pInputWidget->setColor(strCurrentColor);
+    pInputLine->setFont(QFont(strMyFontFamily, -1, iWeight, bMyItalic));
+    pInputLine->setStyleSheet(QString("QLineEdit { color:%1 }").arg(strCurrentColor));
 
     // moderation default hidden
-    moderation->hide();
+    setModeration(false);
 }
 
 void ToolWidget::setModeration(bool bEnable)
 {
     if (bEnable)
+    {
         moderation->show();
+        moderSendButton->show();
+    }
     else
+    {
         moderation->hide();
+        moderSendButton->hide();
+    }
 }
 
 void ToolWidget::setChannelSettings(bool bEnable)
@@ -309,6 +358,11 @@ void ToolWidget::setChannelSettings(bool bEnable)
         channel_settings->show();
     else
         channel_settings->hide();
+}
+
+void ToolWidget::updateNick(QString strNick)
+{
+    nickLabel->setText(strNick);
 }
 
 void ToolWidget::showFontButtonsClicked()
@@ -365,7 +419,7 @@ void ToolWidget::boldClicked()
     }
 
     int iWeight = (bMyBold ? 75 : 50);
-    pInputWidget->setFont(QFont(strMyFontFamily, -1, iWeight, bMyItalic));
+    pInputLine->setFont(QFont(strMyFontFamily, -1, iWeight, bMyItalic));
 }
 
 void ToolWidget::italicClicked()
@@ -396,7 +450,7 @@ void ToolWidget::italicClicked()
     }
 
     int iWeight = (bMyBold ? 75 : 50);
-    pInputWidget->setFont(QFont(strMyFontFamily, -1, iWeight, bMyItalic));
+    pInputLine->setFont(QFont(strMyFontFamily, -1, iWeight, bMyItalic));
 }
 
 void ToolWidget::arialTriggered()
@@ -409,7 +463,7 @@ void ToolWidget::arialTriggered()
     delete pConfig;
 
     int iWeight = (bMyBold ? 75 : 50);
-    pInputWidget->setFont(QFont(strMyFontFamily, -1, iWeight, bMyItalic));
+    pInputLine->setFont(QFont(strMyFontFamily, -1, iWeight, bMyItalic));
 }
 
 void ToolWidget::timesTriggered()
@@ -422,7 +476,7 @@ void ToolWidget::timesTriggered()
     delete pConfig;
 
     int iWeight = (bMyBold ? 75 : 50);
-    pInputWidget->setFont(QFont(strMyFontFamily, -1, iWeight, bMyItalic));
+    pInputLine->setFont(QFont(strMyFontFamily, -1, iWeight, bMyItalic));
 }
 
 void ToolWidget::verdanaTriggered()
@@ -435,7 +489,7 @@ void ToolWidget::verdanaTriggered()
     delete pConfig;
 
     int iWeight = (bMyBold ? 75 : 50);
-    pInputWidget->setFont(QFont(strMyFontFamily, -1, iWeight, bMyItalic));
+    pInputLine->setFont(QFont(strMyFontFamily, -1, iWeight, bMyItalic));
 }
 
 void ToolWidget::tahomaTriggered()
@@ -448,7 +502,7 @@ void ToolWidget::tahomaTriggered()
     delete pConfig;
 
     int iWeight = (bMyBold ? 75 : 50);
-    pInputWidget->setFont(QFont(strMyFontFamily, -1, iWeight, bMyItalic));
+    pInputLine->setFont(QFont(strMyFontFamily, -1, iWeight, bMyItalic));
 }
 
 void ToolWidget::courierTriggered()
@@ -461,7 +515,7 @@ void ToolWidget::courierTriggered()
     delete pConfig;
 
     int iWeight = (bMyBold ? 75 : 50);
-    pInputWidget->setFont(QFont(strMyFontFamily, -1, iWeight, bMyItalic));
+    pInputLine->setFont(QFont(strMyFontFamily, -1, iWeight, bMyItalic));
 }
 
 void ToolWidget::size8Triggered()
@@ -564,8 +618,6 @@ void ToolWidget::size24Triggered()
     delete pConfig;
 }
 
-// color
-
 void ToolWidget::colorClicked(int index)
 {
     if (index == 0) strCurrentColor = "#000000";
@@ -590,25 +642,19 @@ void ToolWidget::colorClicked(int index)
     pConfig->setValue("my_color", strCurrentColor);
     delete pConfig;
 
-    pInputWidget->setColor(strCurrentColor);
+    pInputLine->setStyleSheet(QString("QLineEdit { color:%1 }").arg(strCurrentColor));
 }
-
-// emoticons
 
 void ToolWidget::emoticonsClicked()
 {
-    DlgEmoticons(Core::instance()->sccWindow(), pInputWidget).exec();
+    DlgEmoticons(Core::instance()->sccWindow(), pInputLine).exec();
 }
-
-// channel settings
 
 void ToolWidget::channelSettingsClicked()
 {
     if (Core::instance()->pNetwork->isConnected())
         DlgChannelSettings(this, Core::instance()->getCurrentChannelName()).exec();
 }
-
-// moderation
 
 void ToolWidget::moderationClicked()
 {
@@ -617,10 +663,212 @@ void ToolWidget::moderationClicked()
     DlgModeration(this, strChannel).exec();
 }
 
-// clear
-
-void ToolWidget::clearClicked()
+void ToolWidget::inputlineReturnPressed()
 {
+    // update last active
+    QDateTime cdt = QDateTime::currentDateTime();
+    int t = (int)cdt.toTime_t(); // seconds that have passed since 1970
+    Core::instance()->settings["last_active"] = QString::number(t);
+
+    // disable away
+    bool bAway = Core::instance()->settings.value("away") == "on" ? true : false;
+    if (bAway)
+        Core::instance()->pNetwork->send("AWAY :");
+
+    // text
+    QString strText = pInputLine->text().trimmed();
+    pasteMultiLine(strText, false);
+    pInputLine->clear();
+}
+
+void ToolWidget::moderButtonClicked()
+{
+    // update last active
+    QDateTime cdt = QDateTime::currentDateTime();
+    int t = (int)cdt.toTime_t(); // seconds that have passed since 1970
+    Core::instance()->settings["last_active"] = QString::number(t);
+
+    // disable away
+    bool bAway = Core::instance()->settings.value("away") == "on" ? true : false;
+    if (bAway)
+        Core::instance()->pNetwork->send("AWAY :");
+
+    // text
+    QString strText = pInputLine->text().trimmed();
+    pasteMultiLine(strText, true);
+    pInputLine->clear();
+}
+
+void ToolWidget::slotCtrlTabPressed()
+{
+    emit ctrlTabPressed();
+}
+
+void ToolWidget::slotCtrlShiftTabPressed()
+{
+    emit ctrlShiftTabPressed();
+}
+
+void ToolWidget::pasteMultiLine(QString strText, bool bModeration)
+{
+    QStringList list = strText.split(QRegExp("(\n|\r)"));
+    int len = 400;
+
+    for (int i = 0; i < list.size(); i++)
+    {
+        QString line = list.at(i);
+        if (line.size() > len)
+        {
+            while (line.size() > len)
+            {
+                QString short_line = line.left(len);
+                sendMessage(short_line, bModeration);
+                line.remove(0, len);
+            }
+        }
+        if ((line.size() < len) && (line.size() != 0))
+            sendMessage(line, bModeration);
+    }
+}
+
+void ToolWidget::sendMessage(QString strText, bool bModeration)
+{
+    if (strText.isEmpty()) return; // empty text!
     QString strChannel = Core::instance()->getCurrentChannelName();
-    emit clearContent(strChannel);
+
+    QString strTextOriginal = strText;
+
+    QString strMe = Core::instance()->settings.value("nick");
+    QString strCurrentColor = Core::instance()->settings.value("my_color");
+    QString strFontFamily = Core::instance()->settings.value("my_font");
+    bool bMyBold = Core::instance()->settings.value("my_bold") == "on" ? true : false;
+    bool bMyItalic = Core::instance()->settings.value("my_italic") == "on" ? true : false;
+
+    // if command
+    if ((strText[0] == '/') && (strText[1] != '/'))
+    {
+        if (strText[0] == '/')
+            strText = strText.right(strText.length()-1);
+        strTextOriginal = strText;
+        QStringList strTextList = strText.split(" ");
+
+        Commands *pCommands = new Commands(strChannel, strText);
+        strText = pCommands->execute();
+        delete pCommands;
+
+        // help
+        if ((strTextList[0] == "help") || (strTextList[0] == "pomoc"))
+        {
+            QStringList strlHelp = strText.split(";");
+            for (int i = 0; i < strlHelp.size(); i++)
+            {
+                QString strDisplay = strlHelp.at(i);
+                emit showMsg(strChannel, strDisplay, InfoMessage);
+            }
+        }
+        else if ((strTextList[0] == "mp3") || (strTextList[0] == "winamp"))
+        {
+            if (strChannel == "Status") return; // return if status
+
+            QString weight;
+            QString font = strFontFamily.toLower();
+
+            if (bMyBold) weight += "b";
+            if (bMyItalic) weight += "i";
+
+            if (font == "verdana")
+                font = "";
+            if ((strCurrentColor != "#000000") && (!strCurrentColor.isEmpty()))
+                strText = "%C"+strCurrentColor.right(6)+"%"+strText;
+            if (!font.isEmpty())
+                font = ":"+font;
+            if ((!weight.isEmpty()) || (!font.isEmpty()))
+                strText = "%F"+weight+font+"%"+strText;
+
+            Core::instance()->pNetwork->send(QString("PRIVMSG %1 :%2").arg(strChannel).arg(strText));
+            QString strDisplay = QString("<%1> %2").arg(strMe).arg(strText);
+            emit displayMessage(strChannel, strDisplay, DefaultMessage);
+        }
+        // me
+        else if (strTextList[0] == "me")
+        {
+            if (strChannel == "Status") return; // return if status
+
+            if (strTextOriginal.length() > 3)
+            {
+                QString strTextSend = strText;
+                QString strTextDisplay = strTextOriginal.right(strTextOriginal.length()-3);
+
+                QString weight;
+                QString font = strFontFamily.toLower();
+
+                if (bMyBold) weight += "b";
+                if (bMyItalic) weight += "i";
+
+                if (font == "verdana")
+                    font = "";
+                if ((strCurrentColor != "#000000") && (!strCurrentColor.isEmpty()))
+                    strTextDisplay = "%C"+strCurrentColor.right(6)+"%"+strTextDisplay;
+                if (!font.isEmpty())
+                    font = ":"+font;
+                if ((!weight.isEmpty()) || (!font.isEmpty()))
+                    strTextDisplay = "%F"+weight+font+"%"+strTextDisplay;
+
+                Replace *pReplace = new Replace();
+                pReplace->convertAndReplaceEmots(strTextSend);
+                pReplace->convertAndReplaceEmots(strTextDisplay);
+                delete pReplace;
+
+                Core::instance()->pNetwork->send(strTextSend);
+                QString strDisplay = QString("<%1> %2ACTION %3%4").arg(strMe).arg(QString(QByteArray("\x01"))).arg(strTextDisplay).arg(QString(QByteArray("\x01")));
+                emit displayMessage(strChannel, strDisplay, MeMessage);
+            }
+        }
+        // other command
+        else
+        {
+            if (strText.length() > 0)
+                Core::instance()->pNetwork->send(strText);
+        }
+    }
+    else
+    {
+        if (strChannel == "Status") return; // return if status
+
+        QString weight;
+        QString font = strFontFamily.toLower();
+
+        if (bMyBold) weight += "b";
+        if (bMyItalic) weight += "i";
+
+        if (font == "verdana")
+            font = "";
+        if ((strCurrentColor != "#000000") && (!strCurrentColor.isEmpty()))
+            strText = "%C"+strCurrentColor.right(6)+"%"+strText;
+        if (!font.isEmpty())
+            font = ":"+font;
+        if ((!weight.isEmpty()) || (!font.isEmpty()))
+            strText = "%F"+weight+font+"%"+strText;
+
+        Replace *pReplace = new Replace();
+        pReplace->convertAndReplaceEmots(strText);
+        delete pReplace;
+
+        // standard text
+        if (!bModeration)
+        {
+            strText = QString("PRIVMSG %1 :%2").arg(strChannel).arg(strText);
+            Core::instance()->pNetwork->send(strText);
+            QString strDisplay = QString("<%1> %2").arg(strMe).arg(strText.right(strText.length()-10-strChannel.length()));
+            emit displayMessage(strChannel, strDisplay, DefaultMessage);
+        }
+        // moder notice
+        else if (bModeration)
+        {
+            strText = QString("MODERNOTICE %1 :%2").arg(strChannel).arg(strText);
+            Core::instance()->pNetwork->send(strText);
+            QString strDisplay = QString("*<%1> %2").arg(strMe).arg(strText.right(strText.length()-14-strChannel.length()));
+            emit displayMessage(strChannel, strDisplay, NoticeMessage);
+        }
+    }
 }

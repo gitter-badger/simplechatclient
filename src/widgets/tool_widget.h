@@ -21,27 +21,29 @@
 #ifndef TOOL_WIDGET_H
 #define TOOL_WIDGET_H
 
+#include "defines.h"
 class QComboBox;
+class QLabel;
 class QFrame;
-class QHBoxLayout;
 class QMenu;
 class QToolButton;
-class InputWidget;
+class InputLineWidget;
 #include <QWidget>
 
 class ToolWidget : public QWidget
 {
     Q_OBJECT
 public:
-    ToolWidget(QWidget *, InputWidget *);
+    ToolWidget(QWidget *);
+    virtual ~ToolWidget();
     void setModeration(bool);
     void setChannelSettings(bool);
     void setDefaultValues();
 
+public slots:
+    void updateNick(QString);
+
 private:
-    // params
-    InputWidget *pInputWidget;
-    // other
     bool bShowFontButtons;
     bool bMyBold;
     bool bMyItalic;
@@ -50,7 +52,6 @@ private:
     QString strMyFontFamily;
     QString strCurrentColor;
 
-    QHBoxLayout *toolLayout;
     QToolButton *showFontButtons;
     QFrame *separator1;
     QToolButton *bold;
@@ -61,7 +62,10 @@ private:
     QFrame *separator2;
     QToolButton *channel_settings;
     QToolButton *moderation;
-    QToolButton *clear;
+    QLabel *nickLabel;
+    InputLineWidget *pInputLine;
+    QToolButton *sendButton;
+    QToolButton *moderSendButton;
 
     QMenu *fontMenu;
     QAction *arialAct;
@@ -82,6 +86,9 @@ private:
     QAction *size18Act;
     QAction *size20Act;
     QAction *size24Act;
+
+    void pasteMultiLine(QString, bool);
+    void sendMessage(QString, bool);
 
 private slots:
     void showFontButtonsClicked();
@@ -108,10 +115,17 @@ private slots:
     void emoticonsClicked();
     void channelSettingsClicked();
     void moderationClicked();
-    void clearClicked();
+
+    void inputlineReturnPressed();
+    void moderButtonClicked();
+    void slotCtrlTabPressed();
+    void slotCtrlShiftTabPressed();
 
 signals:
-    void clearContent(QString);
+    void ctrlTabPressed();
+    void ctrlShiftTabPressed();
+    void showMsg(QString&,QString&,MessageCategory);
+    void displayMessage(QString&,QString&,MessageCategory);
 };
 
 #endif // TOOL_WIDGET_H

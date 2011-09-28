@@ -23,7 +23,7 @@
 #include <QListWidget>
 #include <QPixmap>
 #include "mainwindow.h"
-#include "input_widget.h"
+#include "inputline_widget.h"
 #include "emoticons.h"
 
 DlgEmoticonsTab::DlgEmoticonsTab(QString _strDir, QWidget *parent) : QWidget(parent), strDir(_strDir)
@@ -77,7 +77,7 @@ void DlgEmoticonsTab::showEmoticons()
     }
 }
 
-DlgEmoticons::DlgEmoticons(MainWindow *parent, InputWidget *param1) : QDialog(parent), pInputWidget(param1)
+DlgEmoticons::DlgEmoticons(MainWindow *parent, InputLineWidget *_pInputLineWidget) : QDialog(parent), pInputLineWidget(_pInputLineWidget)
 {
     ui.setupUi(this);
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
@@ -142,7 +142,7 @@ void DlgEmoticons::buttonInsert()
         QString strEmoticon = tab->listWidget->selectedItems().at(0)->data(Qt::UserRole).toString();
 
         // insert
-        pInputWidget->insertText("//"+strEmoticon);
+        pInputLineWidget->insertText("//"+strEmoticon);
 
         // close
         this->close();
