@@ -148,10 +148,6 @@ private slots:
     void clearNicklist(QString);
     void clearAllNicklist();
     void clearChannelAllNickAvatars(QString);
-
-signals:
-    void skernel(QString);
-    void srequestUo(QString, QString, QString);
 };
 
 #endif // MAINWINDOW_H

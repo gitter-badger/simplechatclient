@@ -27,7 +27,7 @@
 
 Avatar::Avatar(TabContainer *_tabc) : tabc(_tabc)
 {
-    QObject::connect(this, SIGNAL(setChannelAvatar(QString)), tabc, SLOT(slotUpdateChannelAvatar(QString)));
+    QObject::connect(this, SIGNAL(setChannelAvatar(QString)), tabc, SLOT(updateChannelAvatar(QString)));
 
     accessManager = new QNetworkAccessManager;
     QObject::connect(accessManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(avatarFinished(QNetworkReply*)));

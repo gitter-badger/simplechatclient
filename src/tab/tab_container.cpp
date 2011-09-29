@@ -290,7 +290,14 @@ void TabContainer::authorTopic(QString &strChannel, QString &strNick)
     }
 }
 
-void TabContainer::slotUpdateChannelAvatar(QString strChannel)
+void TabContainer::displayMessage(QString &strChannel, QString &strData, MessageCategory eMessageCategory)
+{
+    int i = getIndex(strChannel);
+    if (i != -1)
+        tw[i]->pChatView->displayMessage(strData, eMessageCategory);
+}
+
+void TabContainer::updateChannelAvatar(QString strChannel)
 {
     int i = getIndex(strChannel);
     if (i != -1)
@@ -304,29 +311,7 @@ void TabContainer::slotUpdateChannelAvatar(QString strChannel)
     }
 }
 
-void TabContainer::slotShowMsg(QString &strChannel, QString &strData, MessageCategory eMessageCategory)
-{
-    showMsg(strChannel, strData, eMessageCategory);
-}
-
-void TabContainer::slotShowMsgActive(QString &strData, MessageCategory eMessageCategory)
-{
-    showMsgActive(strData, eMessageCategory);
-}
-
-void TabContainer::slotShowMsgAll(QString &strData, MessageCategory eMessageCategory)
-{
-    showMsgAll(strData, eMessageCategory);
-}
-
-void TabContainer::slotDisplayMessage(QString &strChannel, QString &strData, MessageCategory eMessageCategory)
-{
-    int i = getIndex(strChannel);
-    if (i != -1)
-        tw[i]->pChatView->displayMessage(strData, eMessageCategory);
-}
-
-void TabContainer::slotClearContent(QString strChannel)
+void TabContainer::clearContent(QString strChannel)
 {
     int i = getIndex(strChannel);
     if (i != -1)

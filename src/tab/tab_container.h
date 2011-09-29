@@ -41,21 +41,17 @@ public:
     bool renameTab(QString, QString);
     void partTab(int);
 
+public slots:
+    void refreshColors();
+    void refreshBackgroundImage();
     void showMsg(QString &, QString &, MessageCategory, QString strTime = QString::null);
     void showMsgAll(QString &, MessageCategory);
     void showMsgActive(QString &, MessageCategory);
     void setTopic(QString &, QString &);
     void authorTopic(QString &, QString &);
-
-public slots:
-    void slotUpdateChannelAvatar(QString);
-    void slotShowMsg(QString &, QString &, MessageCategory);
-    void slotShowMsgActive(QString &, MessageCategory);
-    void slotShowMsgAll(QString &, MessageCategory);
-    void slotDisplayMessage(QString &, QString &, MessageCategory);
-    void slotClearContent(QString);
-    void refreshColors();
-    void refreshBackgroundImage();
+    void displayMessage(QString &, QString &, MessageCategory);
+    void updateChannelAvatar(QString);
+    void clearContent(QString);
 
 private:
     // params
