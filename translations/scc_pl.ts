@@ -1612,6 +1612,10 @@
         <source>Cannot save file</source>
         <translation>Nie można zapisać pliku</translation>
     </message>
+    <message>
+        <source>Cannot open saved file</source>
+        <translation>Nie można otworzyć zapisanego pliku</translation>
+    </message>
 </context>
 <context>
     <name>DlgUserAvatar</name>

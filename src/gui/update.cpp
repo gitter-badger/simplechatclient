@@ -149,7 +149,13 @@ void DlgUpdate::gotFile(QByteArray bData)
     QProcess pProcess;
     pProcess.setWorkingDirectory(path);
     ui.label_msg->setText(pProcess.workingDirectory());
-    pProcess.startDetached("\""+path+fileName+"\"");
+    pProcess.start("\""+path+fileName+"\"");
+
+    if (!pProcess.waitForStarted())
+    {
+        QMessageBox::critical(0, "", tr("Cannot open saved file"));
+        return;
+    }
 
     exit(0);
 }
