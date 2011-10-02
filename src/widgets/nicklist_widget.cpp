@@ -33,40 +33,104 @@
     #include "webcam.h"
 #endif
 
-NickListWidget::NickListWidget()
+NickListWidget::NickListWidget(QString _strChannel) : strChannel(_strChannel), strSelectedNick(QString::null)
 {
     setFocusPolicy(Qt::NoFocus);
     setSortingEnabled(false);
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+// TODO
+/*
+    // maximum size
+    QString strShowAvatars = Core::instance()->settings.value("show_avatars");
+    if (strShowAvatars == "on") // with avatars
+        setMaximumWidth(260);
+    else // without avatars
+        setMaximumWidth(230);
+*/
 }
 
-void NickListWidget::setChannel(QString param1)
+void NickListWidget::addUser(QString strNick, QString strModes)
 {
-    strChannel = param1;
-    strSelectedNick = QString::null;
-}
+    // if owner remove op
+    if (strModes.contains("`")) strModes.remove("@");
+    QString strMaxModes; // TODO
 
-void NickListWidget::add(QString strNick)
-{
     SortedListWidgetItem *item = new SortedListWidgetItem();
     item->setText(strNick);
-    item->setData(Qt::UserRole+10, strChannel);
-    item->setData(Qt::UserRole+11, true); // is nicklist
-    item->setData(Qt::UserRole+12, Core::instance()->getUserMaxModes(strNick, strChannel));
+    item->setData(Qt::UserRole+10, true); // is nicklist
+    item->setData(Qt::UserRole+11, strMaxModes);
+    item->setData(Qt::UserRole+12, strModes);
+    item->setData(Qt::UserRole+13, QByteArray());
 
     this->addItem(item);
 }
 
-void NickListWidget::remove(QString strNick)
+void NickListWidget::delUser(QString strNick)
 {
-    for (int i = 0; i < this->count(); i++)
+    QList<QListWidgetItem*> items = this->findItems(strNick, Qt::MatchExactly);
+    foreach (QListWidgetItem *item, items)
+        this->takeItem(this->row(item));
+}
+
+bool NickListWidget::existUser(QString strNick)
+{
+    if (this->findItems(strNick, Qt::MatchExactly).isEmpty())
+        return false;
+    else
+        return true;
+}
+
+void NickListWidget::updateUserAvatar(QString strNick, QByteArray bData)
+{
+    QList<QListWidgetItem*> items = this->findItems(strNick, Qt::MatchExactly);
+    foreach (QListWidgetItem *item, items)
+        item->setData(Qt::UserRole+13, bData);
+}
+
+void NickListWidget::changeUserFlag(QString strNick, QString strFlag)
+{
+    QList<QListWidgetItem*> items = this->findItems(strNick, Qt::MatchExactly);
+    foreach (QListWidgetItem *item, items)
     {
-        if (this->item(i)->text() == strNick)
+        QString strModes = item->data(Qt::UserRole+12).toString();
+        QString plusminus = strFlag.at(0);
+        strFlag.remove(0, 1);
+
+        strFlag = convertFlag(strFlag);
+
+        if (plusminus == "+")
         {
-            this->takeItem(i);
-            break;
+            // fix webcam flags
+            if ((strFlag == "W") && (strModes.contains("V"))) strModes.remove("V");
+            if ((strFlag == "V") && (strModes.contains("W"))) strModes.remove("W");
+
+            if (!strModes.contains(strFlag))
+                strModes.append(strFlag);
         }
+        else
+        {
+            if (strModes.contains(strFlag))
+                strModes.remove(strFlag);
+        }
+
+        // if owner remove op
+        if ((strModes.contains("`")) && (strModes.contains("@"))) strModes.remove("@");
+
+        QString strMaxModes; // TODO
+        item->setData(Qt::UserRole+11, strMaxModes);
+        item->setData(Qt::UserRole+12, strModes);
     }
+}
+
+QString NickListWidget::convertFlag(QString strFlag)
+{
+    QString strConvertFrom = "qaohXYv";
+    QString strConvertTo = "`&@%!=+";
+
+    for (int i = 0; i < strConvertFrom.size(); i++)
+        strFlag.replace(strConvertFrom.at(i), strConvertTo.at(i));
+
+    return strFlag;
 }
 
 void NickListWidget::priv()

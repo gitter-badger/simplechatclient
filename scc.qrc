@@ -89,5 +89,6 @@
         <file>images/oxygen/16x16/layer-visible-on.png</file>
         <file>images/oxygen/16x16/go-jump-locationbar.png</file>
         <file>images/oxygen/16x16/meeting-observer.png</file>
+        <file>images/user_avatar.png</file>
     </qresource>
 </RCC>

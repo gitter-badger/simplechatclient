@@ -152,6 +152,7 @@ void DlgWebcamStandard::addUser(QString strNick, int iRank, QString strSpectator
     item->setText(strNick);
     item->setData(Qt::UserRole, iRank);
     item->setData(Qt::UserRole+1, strSpectators);
+    item->setData(Qt::UserRole+10, false); // is nicklist
     ui.listWidget_nicks->addItem(item);
 }
 
@@ -166,6 +167,7 @@ void DlgWebcamStandard::updateUser(QString strNick, int iRank, QString strSpecta
     item->setText(strNick);
     item->setData(Qt::UserRole, iRank);
     item->setData(Qt::UserRole+1, strSpectators);
+    item->setData(Qt::UserRole+10, false); // is nicklist
     ui.listWidget_nicks->addItem(item);
 }
 

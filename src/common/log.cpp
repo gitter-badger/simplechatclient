@@ -77,21 +77,16 @@ void Log::save(QString &strChannel, QString &strData)
     }
 
     QFile f(path+"/"+strChannel+".txt");
-    if (!f.open(QIODevice::Append))
+    if (f.open(QIODevice::Append))
     {
-#ifdef Q_WS_X11
-        qDebug() << tr("Error: log: Cannot open file ") << strChannel;
-#endif
-        return;
+        // convert
+        QString strSaveData = strData;
+        convert(strSaveData);
+
+        // save
+        QTextStream out(&f);
+        out << strSaveData << "\r\n";
+
+        f.close();
     }
-
-    // convert
-    QString strSaveData = strData;
-    convert(strSaveData);
-
-    // save
-    QTextStream out(&f);
-    out << strSaveData << "\r\n";
-    
-    f.close();
 }

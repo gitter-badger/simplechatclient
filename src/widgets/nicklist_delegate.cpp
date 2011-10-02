@@ -74,11 +74,10 @@ void NickListDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opti
     }
 
     QString nick = index.data(Qt::DisplayRole).toString();
-    QString channel = index.data(Qt::UserRole+10).toString();
+    QString modes = index.data(Qt::UserRole+12).toString();
+    QByteArray bAvatar = index.data(Qt::UserRole+13).toByteArray();
 
     bool busy = false;
-
-    QString modes = Core::instance()->getUserModes(nick, channel);
 
     QList<QIcon> icons;
     if (modes.contains("b")) { busy = true; }
@@ -94,10 +93,10 @@ void NickListDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opti
     if (modes.contains("O")) { icons << QIcon(":/images/dev.png"); }
 
     // avatar
-    if ((nick[0] != '~') && (strShowAvatars == "on"))
+    if ((nick[0] != '~') && (strShowAvatars == "on") && (!bAvatar.isEmpty()))
     {
         QPixmap pAvatar;
-        pAvatar.loadFromData(Core::instance()->mNickAvatar.value(nick));
+        pAvatar.loadFromData(bAvatar);
         QIcon avatar(pAvatar);
 
         int x = option.rect.left();

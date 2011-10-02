@@ -82,23 +82,23 @@ void DlgNotes::read()
     QFile f(strNotesFile);
     if (f.exists())
     {
-        if (!f.open(QIODevice::ReadOnly))
+        if (f.open(QIODevice::ReadOnly))
+        {
+            // read content
+            QTextStream in(&f);
+            QString strContent = in.readAll();
+            f.close();
+
+            // set content
+            ui.plainTextEdit->setPlainText(strContent);
+        }
+        else
         {
 #ifdef Q_WS_X11
             qDebug() << tr("Error: Cannot read notes file!");
 #endif
-            return;
         }
-
-        // read content
-        QTextStream in(&f);
-        QString strContent = in.readAll();
-
-        // set content
-        ui.plainTextEdit->setPlainText(strContent);
     }
-
-    f.close();
 }
 
 void DlgNotes::save()
@@ -108,12 +108,13 @@ void DlgNotes::save()
 
     // save
     QFile f(strNotesFile);
-    f.open(QIODevice::WriteOnly | QIODevice::Truncate);
+    if (f.open(QIODevice::WriteOnly | QIODevice::Truncate))
+    {
+        QTextStream out(&f);
+        out << strContent << "\r\n";
 
-    QTextStream out(&f);
-    out << strContent << "\r\n";
-
-    f.close();
+        f.close();
+    }
 }
 
 void DlgNotes::buttonOk()

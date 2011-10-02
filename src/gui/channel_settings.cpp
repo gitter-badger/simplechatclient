@@ -550,7 +550,7 @@ void DlgChannelSettings::setOwner(QString strNick)
 void DlgChannelSettings::addOp(QString strNick)
 {
     SortedListWidgetItem *item = new SortedListWidgetItem();
-    item->setData(Qt::UserRole+11, false); // is nicklist
+    item->setData(Qt::UserRole+10, false); // is nicklist
     item->setText(strNick);
     ui.listWidget_op->addItem(item);
 
@@ -563,7 +563,7 @@ void DlgChannelSettings::addOp(QString strNick)
 void DlgChannelSettings::addHalfop(QString strNick)
 {
     SortedListWidgetItem *item = new SortedListWidgetItem();
-    item->setData(Qt::UserRole+11, false); // is nicklist
+    item->setData(Qt::UserRole+10, false); // is nicklist
     item->setText(strNick);
     ui.listWidget_halfop->addItem(item);
 
@@ -576,7 +576,7 @@ void DlgChannelSettings::addHalfop(QString strNick)
 void DlgChannelSettings::addBan(QString strNick, QString strWho, QString strDT, QString strIPNick)
 {
     SortedListWidgetItem *item = new SortedListWidgetItem();
-    item->setData(Qt::UserRole+11, false); // is nicklist
+    item->setData(Qt::UserRole+10, false); // is nicklist
     if (strIPNick.isEmpty())
     {
         item->setText(strNick);
@@ -595,7 +595,7 @@ void DlgChannelSettings::addBan(QString strNick, QString strWho, QString strDT, 
 void DlgChannelSettings::addInvite(QString strNick, QString strWho, QString strDT)
 {
     SortedListWidgetItem *item = new SortedListWidgetItem();
-    item->setData(Qt::UserRole+11, false); // is nicklist
+    item->setData(Qt::UserRole+10, false); // is nicklist
     item->setText(strNick);
     item->setToolTip(QString("%1: %2 (%3)").arg(tr("Created by")).arg(strWho).arg(strDT));
 
@@ -982,7 +982,6 @@ void DlgChannelSettings::clear()
     ui.radioButton_auditorium_on->setChecked(false);
 
     // permissions
-    ui.listWidget_permissions->setCurrentRow(0);
     ui.listWidget_op->clear();
     ui.listWidget_halfop->clear();
     ui.listWidget_ban->clear();

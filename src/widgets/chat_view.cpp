@@ -64,7 +64,10 @@ void ChatView::createBody()
     QString jsCode;
     QFile file(strPath+"/scripts/chat.js");
     if (file.open(QIODevice::ReadOnly | QIODevice::Text))
+    {
         jsCode = file.readAll();
+        file.close();
+    }
 
     QString strBackgroundImage = Core::instance()->settings.value("background_image");
     QString strDisableBackgroundImage = Core::instance()->settings.value("disable_background_image");
@@ -133,9 +136,12 @@ void ChatView::displayMessage(QString &strData, MessageCategory eMessageCategory
         if (Core::instance()->settings.value("hide_join_part") == "on")
             return;
 
+        // TODO
+        /*
         int iNickCount = Core::instance()->mChannelNicks[strChatViewChannel];
         if ((Core::instance()->settings.value("hide_join_part_200") == "on") && (iNickCount > 200))
             return;
+        */
     }
 
     HtmlMessagesRenderer *r = new HtmlMessagesRenderer();
@@ -336,32 +342,34 @@ void ChatView::sendToNotes()
     QFile fr(strNotesFile);
     if (fr.exists())
     {
-        if (!fr.open(QIODevice::ReadOnly))
+        if (fr.open(QIODevice::ReadOnly))
+        {
+            // read content
+            QTextStream ts(&fr);
+            strContent = ts.readAll();
+            fr.close();
+        }
+        else
         {
 #ifdef Q_WS_X11
             qDebug() << tr("Error: Cannot read notes file!");
 #endif
             return;
         }
-
-        // read content
-        QTextStream ts(&fr);
-        strContent = ts.readAll();
     }
-
-    fr.close();
 
     // content
     strContent += this->selectedText();
 
     // save
     QFile f(strNotesFile);
-    f.open(QIODevice::WriteOnly | QIODevice::Truncate);
+    if (f.open(QIODevice::WriteOnly | QIODevice::Truncate))
+    {
+        QTextStream out(&f);
+        out << strContent << "\r\n";
 
-    QTextStream out(&f);
-    out << strContent << "\r\n";
-
-    f.close();
+        f.close();
+    }
 }
 
 void ChatView::search()

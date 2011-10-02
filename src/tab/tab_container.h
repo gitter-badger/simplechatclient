@@ -50,8 +50,17 @@ public slots:
     void setTopic(QString &, QString &);
     void authorTopic(QString &, QString &);
     void displayMessage(QString &, QString &, MessageCategory);
-    void updateChannelAvatar(QString);
+    void setChannelAvatar(QString);
     void clearContent(QString);
+    // nicklist
+    void addUser(QString, QString, QString, bool);
+    void delUser(QString, QString);
+    void quitUser(QString, QString);
+    void changeFlag(QString, QString, QString);
+    void changeFlag(QString, QString);
+    void nicklistRefresh(QString);
+    void clearAllNicklist();
+    void setUserAvatar(QString, QByteArray);
 
 private:
     // params
@@ -62,8 +71,7 @@ private:
     int getIndex(QString);
 
 signals:
-    void clearChannelAllNickAvatars(QString);
-    void clearNicklist(QString);
+    void setModeration(bool);
     void updateAwaylogStatus();
 };
 

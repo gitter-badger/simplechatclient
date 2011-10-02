@@ -39,7 +39,7 @@ public:
     void getAvatar(QString, QString, QString);
 
 private:
-    TabContainer *tabc;
+    TabContainer *pTabC;
     QNetworkAccessManager *accessManager;
 
 public slots:

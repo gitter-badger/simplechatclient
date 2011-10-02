@@ -22,10 +22,8 @@
 #define MAINWINDOW_H
 
 #include "defines.h"
-class QDockWidget;
 class QMenuBar;
 class QToolBar;
-class NickListWidget;
 class OnetAuth;
 class OnetKernel;
 class TabContainer;
@@ -51,13 +49,10 @@ public:
     void refreshToolWidgetValues();
     // for core
     int getCurrentTabIndex();
-    // from core
-    void updateNickAvatar(QString);
 
 private:
     QToolBar *toolBar;
     QMenu *fileMenu;
-    QMenu *viewMenu;
     QMenu *optionsMenu;
     QMenu *helpMenu;
     QAction *sccAct;
@@ -89,8 +84,6 @@ private:
     OnetAuth *pOnetAuth;
 
     // gui
-    NickListWidget *pNickListWidget;
-    QDockWidget *rightDockWidget;
     ToolWidget *pToolWidget;
 
     // other
@@ -100,10 +93,6 @@ private:
     void createSignals();
     void showOptions();
     void createTrayMenu();
-    // nicklist
-    void createNicklist(QString);
-    void updateUsersCount();
-    bool nicklistExist(QString, QString);
 
 private slots:
     void buttonConnect();
@@ -138,16 +127,6 @@ private slots:
     void tabCloseRequested(int);
     void currentTabChanged(int);
     void timeoutAutoaway();
-
-    void addUser(QString, QString, QString, bool);
-    void delUser(QString, QString);
-    void nicklistRefresh(QString);
-    void quitUser(QString, QString);
-    void changeFlag(QString, QString, QString);
-    void changeFlag(QString, QString);
-    void clearNicklist(QString);
-    void clearAllNicklist();
-    void clearChannelAllNickAvatars(QString);
 };
 
 #endif // MAINWINDOW_H

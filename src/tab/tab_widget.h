@@ -22,6 +22,7 @@
 #define TAB_WIDGET_H
 
 #include "chat_view.h"
+class NickListWidget;
 #include <QLabel>
 #include <QWidget>
 
@@ -39,6 +40,8 @@ public:
 
     QLabel *topic;
     ChatView *pChatView;
+    QLabel *users;
+    NickListWidget *pNickListWidget;
 
 private:
     // params

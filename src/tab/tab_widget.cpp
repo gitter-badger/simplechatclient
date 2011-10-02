@@ -19,7 +19,10 @@
  ****************************************************************************/
 
 #include <QVBoxLayout>
+#include <QSplitter>
 #include "core.h"
+#include "nicklist_delegate.h"
+#include "nicklist_widget.h"
 #include "tab_widget.h"
 
 TabWidget::TabWidget(QString _strName) : strName(_strName)
@@ -35,16 +38,53 @@ TabWidget::TabWidget(QString _strName) : strName(_strName)
     pChatView->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     pChatView->show();
 
-    QVBoxLayout *mainLayout = new QVBoxLayout();
-    mainLayout->setMargin(0);
-    mainLayout->addWidget(topic);
-    mainLayout->addWidget(pChatView);
-    this->setLayout(mainLayout);
+    users = new QLabel(this);
+    users->setWordWrap(true);
+    users->setMinimumHeight(25);
+    users->setAlignment(Qt::AlignCenter);
+    users->show();
+
+    pNickListWidget = new NickListWidget(strName);
+    pNickListWidget->setParent(this);
+    pNickListWidget->setItemDelegate(new NickListDelegate(pNickListWidget));
+    //pNickListWidget->setFrameShape(QFrame::NoFrame);
+    pNickListWidget->show();
+
+    QVBoxLayout *leftLayout = new QVBoxLayout();
+    leftLayout->setMargin(0);
+    leftLayout->addWidget(topic);
+    leftLayout->addWidget(pChatView);
+
+    QVBoxLayout *rightLayout = new QVBoxLayout();
+    rightLayout->setMargin(0);
+    rightLayout->addWidget(users);
+    rightLayout->addWidget(pNickListWidget);
+
+    QWidget *leftWidget = new QWidget(this);
+    leftWidget->setLayout(leftLayout);
+    leftWidget->show();
+
+    QWidget *rightWidget = new QWidget(this);
+    rightWidget->setLayout(rightLayout);
+    rightWidget->show();
+
+    QSplitter *splitter = new QSplitter(this);
+    splitter->addWidget(leftWidget);
+    splitter->addWidget(rightWidget);
+    splitter->show();
+
+    QVBoxLayout *l = new QVBoxLayout();
+    l->addWidget(splitter);
+    this->setLayout(l);
 
     if (strName[0] == '^')
         topic->hide();
     if ((strName[0] != '^') && (strName[0] != '#'))
+    {
         topic->hide();
+        users->hide();
+        pNickListWidget->hide();
+    }
 
     // set colors
     QString strBackgroundColor;
@@ -60,6 +100,7 @@ TabWidget::TabWidget(QString _strName) : strName(_strName)
 
 TabWidget::~TabWidget()
 {
+    delete pNickListWidget;
     delete pChatView;
 }
 

@@ -28,17 +28,20 @@ class NickListWidget : public QListWidget
 {
     Q_OBJECT
 public:
-    NickListWidget();
-    void setChannel(QString);
-    QString getChannel() { return strChannel; }
-    void add(QString);
-    void remove(QString);
+    NickListWidget(QString);
+    void addUser(QString, QString);
+    void delUser(QString);
+    bool existUser(QString);
+    void updateUserAvatar(QString, QByteArray);
+    void changeUserFlag(QString, QString);
 
 private:
     // other
     QString strChannel;
     QAction *openChannelsActs[maxOpenChannels];
     QString strSelectedNick;
+
+    QString convertFlag(QString);
 
 private slots:
     void priv();

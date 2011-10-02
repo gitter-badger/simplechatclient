@@ -61,30 +61,12 @@ void DlgIgnore::refresh()
 
     foreach (QString strNick, Core::instance()->lIgnore)
     {
-        if (Core::instance()->mNickAvatar.contains(strNick))
-        {
-            QPixmap pixmap;
-            pixmap.loadFromData(Core::instance()->mNickAvatar.value(strNick));
+        SortedListWidgetItem *item = new SortedListWidgetItem();
+        item->setData(Qt::UserRole+10, false); // is nicklist
+        item->setText(strNick);
+        item->setIcon(QIcon(":/images/oxygen/16x16/meeting-attending-tentative.png"));
 
-            SortedListWidgetItem *item = new SortedListWidgetItem();
-            item->setData(Qt::UserRole+11, false); // is nicklist
-            item->setText(strNick);
-            item->setIcon(QIcon(pixmap));
-
-            ui.listWidget_nicks->addItem(item);
-        }
-        else
-        {
-            SortedListWidgetItem *item = new SortedListWidgetItem();
-            item->setData(Qt::UserRole+11, false); // is nicklist
-            item->setText(strNick);
-            item->setIcon(QIcon(":/images/oxygen/16x16/meeting-attending-tentative.png"));
-
-            ui.listWidget_nicks->addItem(item);
-
-            if (Core::instance()->settings.value("show_avatars") == "on") // with avatars
-                Core::instance()->pNetwork->send(QString("NS INFO %1 s").arg(strNick));
-        }
+        ui.listWidget_nicks->addItem(item);
     }
 }
 

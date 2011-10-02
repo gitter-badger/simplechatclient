@@ -55,11 +55,13 @@ void DlgEmoticonsTab::showEmoticons()
         QString strEmoticon = strFileName;
         strEmoticon.remove(".gif");
 
+        QByteArray bData;
         QFile f(strDir+"/"+strFileName);
-        if (!f.open(QIODevice::ReadOnly))
-            break;
-        QByteArray bData = f.readAll();
-        f.close();
+        if (f.open(QIODevice::ReadOnly))
+        {
+            bData = f.readAll();
+            f.close();
+        }
 
         QPixmap pix;
         if (!bData.isEmpty())

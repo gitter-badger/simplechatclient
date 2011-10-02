@@ -22,6 +22,7 @@
 #include "convert.h"
 #include "core.h"
 #include "log.h"
+#include "nicklist_widget.h"
 #include "tab_manager.h"
 #include "tab_widget.h"
 #include "tab_container.h"
@@ -36,17 +37,8 @@ TabContainer::~TabContainer()
     {
         QString strChannel = tw[i]->getName();
 
-        // clear avatars
-        emit clearChannelAllNickAvatars(strChannel);
-
-        // clear nicklist
-        emit clearNicklist(strChannel);
-
         // remove from open channels
         Core::instance()->lOpenChannels.removeAll(strChannel);
-
-        // remove from nick count
-        Core::instance()->mChannelNicks.remove(strChannel);
 
         // remove tab
         delete tw.at(i);
@@ -94,9 +86,6 @@ void TabContainer::addTab(QString strChannel)
         if (strChannel != "Status")
             Core::instance()->lOpenChannels.append(strChannel);
 
-        // update nick count
-        Core::instance()->mChannelNicks.insert(strChannel, 0);
-
         // create tab
         tw.append(new TabWidget(strChannel));
         pTabM->addTab(tw.at(tw.size()-1), strChannel);
@@ -111,17 +100,8 @@ void TabContainer::removeTab(QString strChannel)
     int i = getIndex(strChannel);
     if (i != -1)
     {
-        // clear avatars
-        emit clearChannelAllNickAvatars(strChannel);
-
-        // clear nicklist
-        emit clearNicklist(strChannel);
-
         // remove from open channels
         Core::instance()->lOpenChannels.removeAll(strChannel);
-
-        // remove from nick count
-        Core::instance()->mChannelNicks.remove(strChannel);
 
         // remove tab
         delete tw.at(i);
@@ -175,8 +155,6 @@ void TabContainer::refreshBackgroundImage()
     for (int i = 0; i < tw.size(); i++)
         tw[i]->pChatView->updateBackgroundImage();
 }
-
-// TODO
 
 void TabContainer::showMsg(QString &strChannel, QString &strData, MessageCategory eMessageCategory, QString strTime)
 {
@@ -297,7 +275,7 @@ void TabContainer::displayMessage(QString &strChannel, QString &strData, Message
         tw[i]->pChatView->displayMessage(strData, eMessageCategory);
 }
 
-void TabContainer::updateChannelAvatar(QString strChannel)
+void TabContainer::setChannelAvatar(QString strChannel)
 {
     int i = getIndex(strChannel);
     if (i != -1)
@@ -316,4 +294,106 @@ void TabContainer::clearContent(QString strChannel)
     int i = getIndex(strChannel);
     if (i != -1)
         tw[i]->pChatView->clearMessages();
+}
+
+// nicklist
+
+void TabContainer::addUser(QString strChannel, QString strNick, QString strModes, bool bFastAdd)
+{
+    int i = getIndex(strChannel);
+    if (i != -1)
+    {
+        tw[i]->pNickListWidget->addUser(strNick, strModes);
+        tw[i]->users->setText(QString(tr("Users (%1)").arg(tw[i]->pNickListWidget->count())));
+
+        if (!bFastAdd)
+            tw[i]->pNickListWidget->sortItems(Qt::AscendingOrder);
+    }
+}
+
+void TabContainer::delUser(QString strChannel, QString strNick)
+{
+    int i = getIndex(strChannel);
+    if (i != -1)
+    {
+        tw[i]->pNickListWidget->delUser(strNick);
+        tw[i]->users->setText(QString(tr("Users (%1)").arg(tw[i]->pNickListWidget->count())));
+    }
+}
+
+void TabContainer::quitUser(QString strNick, QString strDisplay)
+{
+    for (int i = 0; i < tw.size(); i++)
+    {
+        if (tw[i]->pNickListWidget->existUser(strNick))
+        {
+            QString strChannel = tw[i]->getName();
+            QString strDisplayAll = strDisplay;
+
+            showMsg(strChannel, strDisplayAll, QuitMessage);
+            tw[i]->pNickListWidget->delUser(strNick);
+            tw[i]->users->setText(QString(tr("Users (%1)").arg(tw[i]->pNickListWidget->count())));
+
+            if (i != pTabM->currentIndex())
+                pTabM->setAlert(i, QColor(0, 147, 0, 255)); // green
+        }
+    }
+}
+
+void TabContainer::changeFlag(QString strNick, QString strChannel, QString strFlag)
+{
+    int i = getIndex(strChannel);
+    if (i != -1)
+    {
+        if (tw[i]->pNickListWidget->existUser(strNick))
+            tw[i]->pNickListWidget->changeUserFlag(strNick, strFlag);
+
+        // current
+        if (i == pTabM->currentIndex())
+        {
+            QString strMe = Core::instance()->settings.value("nick");
+            if (strNick == strMe)
+            {
+                if (strFlag == "+X") emit setModeration(true);
+                else if (strFlag == "-X") emit setModeration(false);
+            }
+        }
+    }
+}
+
+void TabContainer::changeFlag(QString strNick, QString strFlag)
+{
+    for (int i = 0; i < tw.size(); i++)
+    {
+        if (tw[i]->pNickListWidget->existUser(strNick))
+        {
+            QString strChannel = tw[i]->getName();
+            changeFlag(strNick, strChannel, strFlag);
+        }
+    }
+}
+
+void TabContainer::nicklistRefresh(QString strChannel)
+{
+    int i = getIndex(strChannel);
+    if (i != -1)
+        tw[i]->pNickListWidget->sortItems(Qt::AscendingOrder);
+}
+
+void TabContainer::clearAllNicklist()
+{
+    for (int i = 0; i < tw.size(); i++)
+    {
+        tw[i]->pNickListWidget->clear();
+        tw[i]->users->setText(QString(tr("Users (%1)").arg(tw[i]->pNickListWidget->count())));
+    }
+}
+
+void TabContainer::setUserAvatar(QString strNick, QByteArray bData)
+{
+    for (int i = 0; i < tw.size(); i++)
+    {
+        if (tw[i]->pNickListWidget->existUser(strNick))
+            tw[i]->pNickListWidget->updateUserAvatar(strNick, bData);
+    }
 }

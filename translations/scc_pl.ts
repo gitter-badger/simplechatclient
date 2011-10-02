@@ -1757,25 +1757,10 @@
     </message>
 </context>
 <context>
-    <name>Log</name>
-    <message>
-        <source>Error: log: Cannot open file </source>
-        <translation>Błąd: log: Nie można otworzyć pliku </translation>
-    </message>
-</context>
-<context>
     <name>MainWindow</name>
     <message>
         <source>Navigation bar</source>
         <translation>Pasek nawigacji</translation>
-    </message>
-    <message>
-        <source>Users</source>
-        <translation>Użytkownicy</translation>
-    </message>
-    <message>
-        <source>Users (%1)</source>
-        <translation>Użytkownicy (%1)</translation>
     </message>
     <message>
         <source>&amp;Connect</source>
@@ -1852,10 +1837,6 @@
     <message>
         <source>&amp;File</source>
         <translation>&amp;Plik</translation>
-    </message>
-    <message>
-        <source>&amp;View</source>
-        <translation>&amp;Widok</translation>
     </message>
     <message>
         <source>&amp;Settings</source>
@@ -2915,6 +2896,10 @@
     <message>
         <source>Topic set by %1</source>
         <translation>Temat ustawiony przez %1</translation>
+    </message>
+    <message>
+        <source>Users (%1)</source>
+        <translation>Użytkownicy (%1)</translation>
     </message>
 </context>
 <context>

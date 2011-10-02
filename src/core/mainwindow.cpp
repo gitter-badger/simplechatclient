@@ -39,8 +39,6 @@
 #include "notes.h"
 #include "offlinemsg.h"
 #include "options.h"
-#include "nicklist_delegate.h"
-#include "nicklist_widget.h"
 #include "onet_auth.h"
 #include "onet_kernel.h"
 #include "tab_container.h"
@@ -108,12 +106,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
 MainWindow::~MainWindow()
 {
-    // clear arrays
-    clearAllNicklist();
-
-    delete pNickListWidget;
-    delete rightDockWidget;
-
     delete pToolWidget;
 
     // auto-away
@@ -122,9 +114,7 @@ MainWindow::~MainWindow()
     delete pOnetAuth;
     delete pOnetKernel;
 
-    QObject::disconnect(Core::instance()->pNetwork, SIGNAL(clearAllNicklist()), this, SLOT(clearAllNicklist()));
-
-    QObject::disconnect(pTabC, SIGNAL(clearNicklist(QString)), this, SLOT(clearNicklist(QString)));
+    QObject::disconnect(Core::instance()->pNetwork, SIGNAL(clearAllNicklist()), pTabC, SLOT(clearAllNicklist()));
     QObject::disconnect(pTabM, SIGNAL(currentChanged(int)), this, SLOT(currentTabChanged(int)));
     delete pTabC;
     delete pTabM;
@@ -150,19 +140,6 @@ void MainWindow::setWindowGeometry()
 
 void MainWindow::createGui()
 {
-    // nicklistwidget
-    rightDockWidget = new QDockWidget(tr("Users"), this);
-    rightDockWidget->setFeatures(QDockWidget::DockWidgetMovable | QDockWidget::DockWidgetClosable | QDockWidget::DockWidgetFloatable);
-    rightDockWidget->setAllowedAreas(Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea); // left and right
-    this->addDockWidget(Qt::RightDockWidgetArea, rightDockWidget);
-    viewMenu->addAction(rightDockWidget->toggleViewAction());
-
-    // nicklist
-    pNickListWidget = new NickListWidget();
-    pNickListWidget->setParent(rightDockWidget);
-    pNickListWidget->setItemDelegate(new NickListDelegate(pNickListWidget));
-    rightDockWidget->setWidget(pNickListWidget);
-
     pToolWidget = new ToolWidget(this);
     pToolWidget->show();
 
@@ -174,13 +151,6 @@ void MainWindow::createGui()
     QWidget *widget = new QWidget;
     widget->setLayout(layout);
     this->setCentralWidget(widget);
-
-    // maximum size
-    QString strShowAvatars = Core::instance()->settings.value("show_avatars");
-    if (strShowAvatars == "on") // with avatars
-        rightDockWidget->setMaximumWidth(260);
-    else // without avatars
-        rightDockWidget->setMaximumWidth(230);
 }
 
 void MainWindow::createActions()
@@ -232,9 +202,6 @@ void MainWindow::createMenus()
     fileMenu->addAction(connectAct);
     fileMenu->addSeparator();
     fileMenu->addAction(closeAct);
-
-    // view menu
-    viewMenu = menuBar()->addMenu(tr("&View"));
 
     // options menu
     optionsMenu = menuBar()->addMenu(tr("&Settings"));
@@ -345,9 +312,8 @@ void MainWindow::createSignals()
     QObject::connect(trayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)), this, SLOT(trayIconPressed(QSystemTrayIcon::ActivationReason)));
 
     // signals from tabc
-    QObject::connect(pTabC, SIGNAL(clearNicklist(QString)), this, SLOT(clearNicklist(QString)));
-    QObject::connect(pTabC, SIGNAL(clearChannelAllNickAvatars(QString)), this, SLOT(clearChannelAllNickAvatars(QString)));
     QObject::connect(pTabC, SIGNAL(updateAwaylogStatus()), this, SLOT(updateAwaylogStatus()));
+    QObject::connect(pTabC, SIGNAL(setModeration(bool)), pToolWidget, SLOT(setModeration(bool)));
 
     // signals tab
     QObject::connect(pTabM, SIGNAL(tabCloseRequested(int)), this, SLOT(tabCloseRequested(int)));
@@ -360,16 +326,12 @@ void MainWindow::createSignals()
     QObject::connect(pToolWidget, SIGNAL(ctrlShiftTabPressed()), this, SLOT(ctrlShiftTabPressed()));
 
     // signals onet kernel
-    QObject::connect(pOnetKernel, SIGNAL(clearNicklist(QString)), this, SLOT(clearNicklist(QString)));
-
-    // signals from kernel to nicklist
-    QObject::connect(pOnetKernel, SIGNAL(addUser(QString,QString,QString,bool)), this, SLOT(addUser(QString,QString,QString,bool)));
-    QObject::connect(pOnetKernel, SIGNAL(delUser(QString,QString)), this, SLOT(delUser(QString,QString)));
-    QObject::connect(pOnetKernel, SIGNAL(nicklistRefresh(QString)), this, SLOT(nicklistRefresh(QString)));
-    QObject::connect(pOnetKernel, SIGNAL(quitUser(QString,QString)), this, SLOT(quitUser(QString,QString)));
-    QObject::connect(pOnetKernel, SIGNAL(changeFlag(QString,QString,QString)), this, SLOT(changeFlag(QString,QString,QString)));
-    QObject::connect(pOnetKernel, SIGNAL(changeFlag(QString,QString)), this, SLOT(changeFlag(QString,QString)));
-    QObject::connect(pOnetKernel, SIGNAL(clearChannelAllNickAvatars(QString)), this, SLOT(clearChannelAllNickAvatars(QString)));
+    QObject::connect(pOnetKernel, SIGNAL(addUser(QString,QString,QString,bool)), pTabC, SLOT(addUser(QString,QString,QString,bool)));
+    QObject::connect(pOnetKernel, SIGNAL(delUser(QString,QString)), pTabC, SLOT(delUser(QString,QString)));
+    QObject::connect(pOnetKernel, SIGNAL(quitUser(QString,QString)), pTabC, SLOT(quitUser(QString,QString)));
+    QObject::connect(pOnetKernel, SIGNAL(changeFlag(QString,QString,QString)), pTabC, SLOT(changeFlag(QString,QString,QString)));
+    QObject::connect(pOnetKernel, SIGNAL(changeFlag(QString,QString)), pTabC, SLOT(changeFlag(QString,QString)));
+    QObject::connect(pOnetKernel, SIGNAL(nicklistRefresh(QString)), pTabC, SLOT(nicklistRefresh(QString)));
 
     // signals from network
     QObject::connect(Core::instance()->pNetwork, SIGNAL(setConnected()), this, SLOT(setConnected()));
@@ -380,7 +342,7 @@ void MainWindow::createSignals()
     QObject::connect(Core::instance()->pNetwork, SIGNAL(showMsgActive(QString&,MessageCategory)), pTabC, SLOT(showMsgActive(QString&,MessageCategory)));
     QObject::connect(Core::instance()->pNetwork, SIGNAL(showMsgAll(QString&,MessageCategory)), pTabC, SLOT(showMsgAll(QString&,MessageCategory)));
     QObject::connect(Core::instance()->pNetwork, SIGNAL(updateNick(QString)), pToolWidget, SLOT(updateNick(QString)));
-    QObject::connect(Core::instance()->pNetwork, SIGNAL(clearAllNicklist()), this, SLOT(clearAllNicklist()));
+    QObject::connect(Core::instance()->pNetwork, SIGNAL(clearAllNicklist()), pTabC, SLOT(clearAllNicklist()));
     QObject::connect(Core::instance()->pNetwork, SIGNAL(updateActions()), this, SLOT(updateActions()));
 
     // auto-away
@@ -521,12 +483,6 @@ void MainWindow::updateAwaylogStatus()
 void MainWindow::openOptions()
 {
     DlgOptions(this).exec();
-}
-
-void MainWindow::updateUsersCount()
-{
-    QString strChannel = pNickListWidget->getChannel();
-    rightDockWidget->setWindowTitle(QString(tr("Users (%1)")).arg(Core::instance()->mChannelNicks[strChannel]));
 }
 
 // onet dialogs
@@ -729,277 +685,15 @@ void MainWindow::currentTabChanged(int index)
     // change tab color
     pTabM->setColor(index, QColor(Core::instance()->settings.value("default_font_color")));
 
-    // hide/show Status nicklist
-    if (index == 0)
-        rightDockWidget->hide();
-    else
-        rightDockWidget->show();
-
     // hide/show settings on non channel
     if (strChannel[0] != '#')
         pToolWidget->setChannelSettings(false);
     else
         pToolWidget->setChannelSettings(true);
 
-    // set current channel
-    pNickListWidget->setChannel(strChannel);
-
-    // clear users
-    Core::instance()->mChannelNicks[strChannel] = 0;
-
-    // clear nicklist
-    pNickListWidget->clear();
-
-    // nicklist
-    if (strChannel != "Status")
-        createNicklist(strChannel);
-
-    // update nick count
-    updateUsersCount();
-
     // moderation
     QString strMe = Core::instance()->settings.value("nick");
     QString strModes = Core::instance()->getUserModes(strMe, strChannel);
     if (strModes.contains("!")) pToolWidget->setModeration(true);
     else pToolWidget->setModeration(false);
-}
-
-void MainWindow::createNicklist(QString strChannel)
-{
-    // create nicklist
-    for (int i = 0; i < Core::instance()->lUsers.size(); i++)
-    {
-        if (Core::instance()->lUsers.at(i).channel == strChannel)
-        {
-            QString strNick = Core::instance()->lUsers.at(i).nick;
-
-            // add
-            pNickListWidget->add(strNick);
-
-            // update nick count for option hide join/part when > 200
-            Core::instance()->mChannelNicks[strChannel] = Core::instance()->mChannelNicks[strChannel]++;
-        }
-    }
-
-    // sort
-    pNickListWidget->sortItems(Qt::AscendingOrder);
-
-    // update nick count
-    updateUsersCount();
-}
-
-// nick list
-
-void MainWindow::addUser(QString strChannel, QString strNick, QString strModes, bool bFastAdd)
-{
-    // if owner remove op
-    if (strModes.contains("`")) strModes.remove("@");
-
-    // add
-    User add;
-    add.channel = strChannel;
-    add.nick = strNick;
-    add.modes = strModes;
-
-    // add to nick list
-    Core::instance()->lUsers.append(add);
-
-    // update widget
-    if (pNickListWidget->getChannel() == strChannel)
-    {
-        // add
-        pNickListWidget->add(strNick);
-
-        // fast add
-        if (!bFastAdd)
-        {
-            // sort
-            pNickListWidget->sortItems(Qt::AscendingOrder);
-        }
-
-        // update nick count for option hide join/part when > 200
-        Core::instance()->mChannelNicks[strChannel] = Core::instance()->mChannelNicks[strChannel]++;
-
-        // update nick count
-        updateUsersCount();
-    }
-}
-
-void MainWindow::delUser(QString strChannel, QString strNick)
-{
-    // remove from nick list
-    for (int i = 0; i < Core::instance()->lUsers.size(); i++)
-    {
-        if ((Core::instance()->lUsers.at(i).nick == strNick) && (Core::instance()->lUsers.at(i).channel == strChannel))
-        {
-            Core::instance()->lUsers.removeAt(i);
-            i--;
-        }
-    }
-
-    // update widget
-    if (pNickListWidget->getChannel() == strChannel)
-    {
-        pNickListWidget->remove(strNick);
-
-        // update nick count for option hide join/part when > 200
-        Core::instance()->mChannelNicks[strChannel] = Core::instance()->mChannelNicks[strChannel]--;
-
-        // update nick count
-        updateUsersCount();
-    }
-}
-
-void MainWindow::nicklistRefresh(QString strChannel)
-{
-    //raw 366: End of /NAMES list.
-    if (pNickListWidget->getChannel() == strChannel)
-    {
-        // sort
-        pNickListWidget->sortItems(Qt::AscendingOrder);
-    }
-}
-
-bool MainWindow::nicklistExist(QString strChannel, QString strNick)
-{
-    for (int i = 0; i < Core::instance()->lUsers.size(); i++)
-    {
-        if ((Core::instance()->lUsers.at(i).nick == strNick) && (Core::instance()->lUsers.at(i).channel == strChannel))
-            return true;
-    }
-    return false;
-}
-
-void MainWindow::quitUser(QString strNick, QString strDisplay)
-{
-    QList<QString> lOpenChannels = Core::instance()->lOpenChannels;
-    for (int i = 0; i < lOpenChannels.size(); i++)
-    {
-        QString strChannel = lOpenChannels.at(i);
-        if (nicklistExist(strChannel, strNick))
-        {
-            QString strDisplayAll = strDisplay;
-            pTabC->showMsg(strChannel, strDisplayAll, QuitMessage);
-            delUser(strChannel, strNick);
-
-            if (i+1 != pTabM->currentIndex())
-                pTabM->setAlert(i+1, QColor(0, 147, 0, 255)); // green
-
-            // update nick count
-            if (pNickListWidget->getChannel() == strChannel)
-                updateUsersCount();
-        }
-    }
-}
-
-void MainWindow::changeFlag(QString strNick, QString strChannel, QString strNewFlag)
-{
-    if (!nicklistExist(strChannel, strNick)) return; // nick not exist
-
-    QString strModes = Core::instance()->getUserModes(strNick, strChannel);
-
-    QString strConvertFrom = "qaohXYvObrWVx";
-    QString strConvertTo = "`&@%!=+ObrWVx";
-
-    for (int i = 0; i < strConvertFrom.size(); i++)
-    {
-        QString plusminus = strNewFlag.at(0);
-        QString strFlag = strNewFlag.at(1);
-
-        if (plusminus == "+")
-        {
-            // fix webcam flags
-            if ((strFlag == "W") && (strModes.contains("V"))) { strModes.remove("V"); }
-            if ((strFlag == "V") && (strModes.contains("W"))) { strModes.remove("W"); }
-
-            if ((strFlag == strConvertFrom.at(i)) && (!strModes.contains(strConvertTo.at(i))))
-                strModes.append(strConvertTo.at(i));
-        }
-        else
-        {
-            if ((strFlag == strConvertFrom.at(i)) && (strModes.contains(strConvertTo.at(i))))
-                strModes.remove(strConvertTo.at(i));
-        }
-    }
-
-    // change flag
-    delUser(strChannel, strNick);
-    addUser(strChannel, strNick, strModes, false);
-
-    // me ?
-    QString strMe = Core::instance()->settings.value("nick");
-
-    if (strNick == strMe)
-    {
-        if (strNewFlag == "+X") pToolWidget->setModeration(true);
-        else if (strNewFlag == "-X") pToolWidget->setModeration(false);
-    }
-}
-
-void MainWindow::changeFlag(QString strNick, QString strFlag)
-{
-    foreach (QString strChannel, Core::instance()->lOpenChannels)
-    {
-        if (nicklistExist(strChannel, strNick))
-            changeFlag(strNick, strChannel, strFlag);
-    }
-}
-
-void MainWindow::clearNicklist(QString strChannel)
-{
-    // clear
-    for (int i = 0; i < Core::instance()->lUsers.size(); i++)
-    {
-        if (Core::instance()->lUsers.at(i).channel == strChannel)
-        {
-            Core::instance()->lUsers.removeAt(i);
-            i--;
-        }
-    }
-
-    if (pNickListWidget->getChannel() == strChannel)
-        pNickListWidget->clear();
-
-    // clear nick count for option hide join/part when > 200
-    Core::instance()->mChannelNicks[strChannel] = 0;
-
-    // update nick count
-    if (pNickListWidget->getChannel() == strChannel)
-        updateUsersCount();
-}
-
-void MainWindow::clearAllNicklist()
-{
-    Core::instance()->lUsers.clear();
-    Core::instance()->mNickAvatar.clear();
-    Core::instance()->mChannelAvatar.clear();
-    pNickListWidget->clear();
-
-    foreach (QString strChannel, Core::instance()->lOpenChannels)
-    {
-        // clear nick count for option hide join/part when > 200
-        Core::instance()->mChannelNicks[strChannel] = 0;
-
-        // update nick count
-        if (pNickListWidget->getChannel() == strChannel)
-            updateUsersCount();
-    }
-}
-
-void MainWindow::updateNickAvatar(QString strNick)
-{
-    QString strChannel = pNickListWidget->getChannel();
-    if (nicklistExist(strChannel, strNick))
-        pNickListWidget->reset(); // like repaint
-}
-
-// clear all channel avatars
-void MainWindow::clearChannelAllNickAvatars(QString strChannel)
-{
-    foreach (QString strNick, Core::instance()->getNicksFromChannel(strChannel))
-    {
-        // remove nick avatar if nick is only in current channel; must be 1 (current channel)
-        if ((Core::instance()->mNickAvatar.contains(strNick)) && (Core::instance()->getNickChannels(strNick) == 1))
-            Core::instance()->mNickAvatar.remove(strNick);
-    }
 }

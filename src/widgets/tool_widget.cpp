@@ -165,7 +165,7 @@ ToolWidget::ToolWidget(QWidget *parent) : QWidget(parent), strCurrentColor("#000
 
     nickLabel = new QLabel(parent);
     nickLabel->setText(tr("(Unregistered)"));
-    nickLabel->setStyleSheet("font-weight:bold;");
+    nickLabel->setStyleSheet("font-weight:bold;margin-left:1px;");
     nickLabel->show();
 
     pInputLine = new InputLineWidget(this);

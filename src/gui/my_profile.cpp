@@ -20,6 +20,8 @@
 
 #include <QDate>
 #include <QDesktopWidget>
+#include <QNetworkAccessManager>
+#include <QNetworkReply>
 #include <QPushButton>
 #include "core.h"
 #include "convert.h"
@@ -37,7 +39,15 @@ DlgMyProfile::DlgMyProfile(QWidget *parent) : QDialog(parent)
     setDefaultValues();
     createSignals();
 
+    accessManager = new QNetworkAccessManager;
+    QObject::connect(accessManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(avatarFinished(QNetworkReply*)));
+
     refresh();
+}
+
+DlgMyProfile::~DlgMyProfile()
+{
+    accessManager->deleteLater();
 }
 
 void DlgMyProfile::createGui()
@@ -124,10 +134,27 @@ void DlgMyProfile::createSignals()
     QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(close()));
 }
 
+void DlgMyProfile::avatarFinished(QNetworkReply *pReply)
+{
+    pReply->deleteLater();
+
+    // if errors
+    if (pReply->error())
+        return;
+
+    QByteArray bData = pReply->readAll();
+
+    // show avatar
+    if (!bData.isEmpty())
+    {
+        QPixmap avatar;
+        avatar.loadFromData(bData);
+        ui.label_avatar->setPixmap(avatar.scaled(QSize(50,50)));
+    }
+}
+
 void DlgMyProfile::refresh()
 {
-    QString strMe = Core::instance()->settings.value("nick");
-
     QMapIterator <QString, QString> i(Core::instance()->mMyProfile);
     while (i.hasNext())
     {
@@ -137,12 +164,8 @@ void DlgMyProfile::refresh()
 
         if (strKey == "avatar")
         {
-            if ((!strValue.isEmpty()) && (Core::instance()->mNickAvatar.contains(strMe)))
-            {
-                QPixmap avatar;
-                avatar.loadFromData(Core::instance()->mNickAvatar.value(strMe));
-                ui.label_avatar->setPixmap(avatar.scaled(QSize(50,50)));
-            }
+            if (!strValue.isEmpty())
+                accessManager->get(QNetworkRequest(QUrl(strValue)));
             else
                 ui.label_avatar->setText(tr("No photo available"));
         }

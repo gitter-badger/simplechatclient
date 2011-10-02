@@ -73,24 +73,9 @@ void DlgFriends::refresh()
     {
         i.next();
         SortedListWidgetItem *item = new SortedListWidgetItem();
-        item->setData(Qt::UserRole+11, false); // is nicklist
-
-        if (Core::instance()->mNickAvatar.contains(i.key()))
-        {
-            QPixmap pixmap;
-            pixmap.loadFromData(Core::instance()->mNickAvatar.value(i.key()));
-
-            item->setText(i.key());
-            item->setIcon(QIcon(pixmap));
-        }
-        else
-        {
-            item->setText(i.key());
-            item->setIcon(QIcon(":/images/oxygen/16x16/meeting-attending.png"));
-
-            if (Core::instance()->settings.value("show_avatars") == "on") // with avatars
-                Core::instance()->pNetwork->send(QString("NS INFO %1 s").arg(i.key()));
-        }
+        item->setData(Qt::UserRole+10, false); // is nicklist
+        item->setText(i.key());
+        item->setIcon(QIcon(":/images/oxygen/16x16/meeting-attending.png"));
 
         if (i.value())
             ui.listWidget_online->addItem(item);

@@ -21,6 +21,8 @@
 #ifndef MY_PROFILE_H
 #define MY_PROFILE_H
 
+class QNetworkAccessManager;
+class QNetworkReply;
 #include <QDialog>
 #include "ui_my_profile.h"
 
@@ -29,9 +31,11 @@ class DlgMyProfile : public QDialog
     Q_OBJECT
 public:
     DlgMyProfile(QWidget *);
+    virtual ~DlgMyProfile();
 
 private:
     Ui::uiMyProfile ui;
+    QNetworkAccessManager *accessManager;
 
     void createGui();
     void setDefaultValues();
@@ -48,6 +52,7 @@ private:
     QString convertType(QString);
 
 private slots:
+    void avatarFinished(QNetworkReply*);
     void buttonOk();
 };
 

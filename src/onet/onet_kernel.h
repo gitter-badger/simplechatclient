@@ -258,12 +258,10 @@ private slots:
 signals:
     void addUser(QString,QString,QString,bool);
     void delUser(QString,QString);
-    void nicklistRefresh(QString);
     void quitUser(QString,QString);
     void changeFlag(QString,QString,QString);
     void changeFlag(QString,QString);
-    void clearNicklist(QString);
-    void clearChannelAllNickAvatars(QString);
+    void nicklistRefresh(QString);
 };
 
 #endif // ONET_KERNEL_H

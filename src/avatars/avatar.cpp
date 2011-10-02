@@ -25,9 +25,9 @@
 #include "core.h"
 #include "tab_container.h"
 
-Avatar::Avatar(TabContainer *_tabc) : tabc(_tabc)
+Avatar::Avatar(TabContainer *_pTabC) : pTabC(_pTabC)
 {
-    QObject::connect(this, SIGNAL(setChannelAvatar(QString)), tabc, SLOT(updateChannelAvatar(QString)));
+    QObject::connect(this, SIGNAL(setChannelAvatar(QString)), pTabC, SLOT(setChannelAvatar(QString)));
 
     accessManager = new QNetworkAccessManager;
     QObject::connect(accessManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(avatarFinished(QNetworkReply*)));
@@ -63,42 +63,13 @@ void Avatar::avatarFinished(QNetworkReply *reply)
 void Avatar::setAvatar(QString &strNickOrChannel, QString &strCategory, QByteArray &bAvatar)
 {
     if (strCategory == "nick")
-    {
-        // return if nick not exist any more
-        if (Core::instance()->getNickChannels(strNickOrChannel) == 0) return;
-
-        // insert
-        if (!Core::instance()->mNickAvatar.contains(strNickOrChannel))
-            Core::instance()->mNickAvatar.insert(strNickOrChannel, bAvatar);
-        else
-        {
-            // update
-            if (Core::instance()->mNickAvatar.value(strNickOrChannel) != bAvatar)
-            {
-                Core::instance()->mNickAvatar.remove(strNickOrChannel);
-                Core::instance()->mNickAvatar.insert(strNickOrChannel, bAvatar);
-            }
-        }
-
-        Core::instance()->updateNickAvatar(strNickOrChannel);
-    }
+        pTabC->setUserAvatar(strNickOrChannel, bAvatar);
     else if (strCategory == "channel")
     {
         // return if channel not exist any more
         if (!Core::instance()->lOpenChannels.contains(strNickOrChannel)) return;
 
-        // insert
-        if (!Core::instance()->mChannelAvatar.contains(strNickOrChannel))
-            Core::instance()->mChannelAvatar.insert(strNickOrChannel, bAvatar);
-        else
-        {
-            // update
-            if (Core::instance()->mChannelAvatar.value(strNickOrChannel) != bAvatar)
-            {
-                Core::instance()->mChannelAvatar.remove(strNickOrChannel);
-                Core::instance()->mChannelAvatar.insert(strNickOrChannel, bAvatar);
-            }
-        }
+        Core::instance()->mChannelAvatar[strNickOrChannel] = bAvatar;
 
         emit setChannelAvatar(strNickOrChannel);
     }

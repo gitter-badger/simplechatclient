@@ -36,11 +36,11 @@ class ToolWidget : public QWidget
 public:
     ToolWidget(QWidget *);
     virtual ~ToolWidget();
-    void setModeration(bool);
     void setChannelSettings(bool);
     void setDefaultValues();
 
 public slots:
+    void setModeration(bool);
     void updateNick(QString);
 
 private:

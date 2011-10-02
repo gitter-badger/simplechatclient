@@ -20,7 +20,6 @@
 
 #include <QCoreApplication>
 #include <QDir>
-#include <QFile>
 #include "core.h"
 #include "convert.h"
 

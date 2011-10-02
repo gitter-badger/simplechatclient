@@ -33,13 +33,6 @@ enum MessageCategory {DefaultMessage, JoinMessage, PartMessage, QuitMessage, Kic
 
 enum { maxOpenChannels = 30 };
 
-struct User
-{
-    QString nick;
-    QString channel;
-    QString modes;
-};
-
 struct ChannelList
 {
     QString name;
@@ -87,15 +80,15 @@ public:
     {
         QVariant my = data(Qt::DisplayRole); // compare value 1
         QVariant other = o.data(Qt::DisplayRole); // compare value 2
-        QVariant isNickList = data(Qt::UserRole+11); // compare value 2
+        QVariant isNickList = data(Qt::UserRole+10); // compare value 2
         if (!my.isValid() || !other.isValid() || my.type() != other.type()) // valid compare
             return QListWidgetItem::operator< (o);
         if (my.canConvert(QVariant::String)) // my compare
         {
             if (isNickList.toBool() == true) // sorting by status
             {
-                int mModes = data(Qt::UserRole+12).toInt();
-                int oModes = o.data(Qt::UserRole+12).toInt();
+                int mModes = data(Qt::UserRole+11).toInt();
+                int oModes = o.data(Qt::UserRole+11).toInt();
                 if (mModes != oModes)
                 {
                     if (mModes < oModes)

@@ -110,7 +110,7 @@ void Core::createGui()
 void Core::createSettings()
 {
     // default settings
-    settings["version"] = "1.1.3.1052";
+    settings["version"] = "1.1.3.1053";
     settings["logged"] = "off";
     settings["busy"] = "off";
     settings["away"] = "off";
@@ -200,21 +200,17 @@ void Core::checkSettings()
 
     Config *pConfig = new Config();
 
-    QFile fSoundBeep(strSoundBeep);
-    QFile fSoundQuery(strSoundQuery);
-    QFile fBackgroundImage(strBackgroundImage);
-
-    if (!fSoundBeep.exists())
+    if (!QFile::exists(strSoundBeep))
     {
         pConfig->setValue("sound_beep", "");
         settings["sound_beep"] = "";
     }
-    if (!fSoundQuery.exists())
+    if (!QFile::exists(strSoundQuery))
     {
         pConfig->setValue("sound_query", "");
         settings["sound_query"] = "";
     }
-    if (!fBackgroundImage.exists())
+    if (!QFile::exists(strBackgroundImage))
     {
         pConfig->setValue("background_image", "");
         settings["background_image"] = "";
@@ -279,11 +275,6 @@ void Core::checkUpdate()
     pUpdates->checkUpdate();
 }
 
-void Core::updateNickAvatar(QString strAvatar)
-{
-    window->updateNickAvatar(strAvatar);
-}
-
 void Core::addAwaylog(QString strChannel, QString strAwayData)
 {
     if (settings.value("away") == "off")
@@ -309,6 +300,7 @@ void Core::addAwaylog(QString strChannel, QString strAwayData)
     lAwaylog.append(QString("%1\n%2 %3").arg(strChannel).arg(strDT).arg(strAwayData));
 }
 
+// MainWindow::currentTabChanged
 QString Core::getChannelNameFromIndex(int index)
 {
     QList<QString> lAllOpenChannels = lOpenChannels;
@@ -329,28 +321,12 @@ QString Core::getCurrentChannelName()
     return getChannelNameFromIndex(index);
 }
 
-// for avatars (if nick not in any channels -> remove avatar)
-int Core::getNickChannels(QString strNick)
-{
-    int iResult = 0;
-
-    for (int i = 0; i < lUsers.size(); i++)
-    {
-        if (lUsers.at(i).nick == strNick)
-            iResult++;
-    }
-
-    // fix for self nick
-    QString strMe = settings.value("nick");
-    if (strNick == strMe)
-        iResult = 1;
-
-    return iResult;
-}
-
+// InputLineWidget::event
 QList<QString> Core::getNicksFromChannel(QString strChannel)
 {
     QList<QString> usersList;
+// TODO
+/*
     for (int i = 0; i < lUsers.size(); i++)
     {
         if (lUsers.at(i).channel == strChannel)
@@ -359,21 +335,27 @@ QList<QString> Core::getNicksFromChannel(QString strChannel)
             usersList.append(strUser);
         }
     }
+*/
     return usersList;
 }
 
 QString Core::getUserModes(QString strNick, QString strChannel)
 {
+    // TODO
+    /*
     for (int i = 0; i < lUsers.size(); i++)
     {
         if ((lUsers.at(i).nick == strNick) && (lUsers.at(i).channel == strChannel))
             return lUsers.at(i).modes;
     }
+    */
     return QString::null;
 }
 
 int Core::getUserMaxModes(QString strNick, QString strChannel)
 {
+// TODO
+/*
     QString modes = getUserModes(strNick, strChannel);
 
     if (modes.contains("O")) { return 64; }
@@ -384,6 +366,6 @@ int Core::getUserMaxModes(QString strNick, QString strChannel)
     if (modes.contains("!")) { return 2; }
     if (modes.contains("=")) { return 1; }
     if (modes.contains("+")) { return 0; }
-
+*/
     return -1;
 }

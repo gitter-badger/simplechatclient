@@ -70,24 +70,29 @@ Config::Config(bool _bProfileConfig, QString _strForceProfile) : bProfileConfig(
     // try read
     if (file.exists())
     {
-        if (!file.open(QIODevice::ReadOnly))
+        if (file.open(QIODevice::ReadOnly))
+        {
+            QTextStream ts(&file);
+            QString strData = ts.readAll();
+            file.close();
+
+            if (doc.setContent(strData))
+                fixConfig();
+            else
+            {
+    #ifdef Q_WS_X11
+                qDebug() << tr("Error: config: Cannot set content from file!");
+    #endif
+                return;
+            }
+        }
+        else
         {
 #ifdef Q_WS_X11
             qDebug() << tr("Error: config: Cannot read config file!");
 #endif
             return;
         }
-        QTextStream ts(&file);
-        QString strData = ts.readAll();
-        if (!doc.setContent(strData))
-        {
-#ifdef Q_WS_X11
-            qDebug() << tr("Error: config: Cannot set content from file!");
-#endif
-            return;
-        }
-        // fix config
-        fixConfig();
     }
     else
     {
@@ -96,7 +101,6 @@ Config::Config(bool _bProfileConfig, QString _strForceProfile) : bProfileConfig(
 #endif
         return;
     }
-    file.close();
 }
 
 QString Config::getValue(QString strKey)
@@ -328,10 +332,11 @@ void Config::save()
     QString xml = doc.toString();
 
     QFile f(strConfigFile);
-    f.open(QIODevice::WriteOnly | QIODevice::Truncate);
+    if (f.open(QIODevice::WriteOnly | QIODevice::Truncate))
+    {
+        QTextStream out(&f);
+        out << xml;
 
-    QTextStream out(&f);
-    out << xml;
-
-    f.close();
+        f.close();
+    }
 }

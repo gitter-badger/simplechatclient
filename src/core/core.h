@@ -61,15 +61,11 @@ public:
     void refreshToolWidgetValues();
     // update
     void checkUpdate();
-    // update nick avatar
-    void updateNickAvatar(QString);
     // awaylog
     void addAwaylog(QString, QString);
     // for window
     QString getChannelNameFromIndex(int index);
     QString getCurrentChannelName();
-    // for avatars
-    int getNickChannels(QString);
     // get users per channel
     QList<QString> getNicksFromChannel(QString);
     // get user modes
@@ -77,36 +73,32 @@ public:
     // get user max modes - for sorting
     int getUserMaxModes(QString, QString);
 
-    QAction *lagAct;
-    QList<QString> lAwaylog;
     QMap<QString, bool> mFriends;
     QList<QString> lIgnore;
     QList<QString> lChannelFavourites;
     QList<ChannelList> lChannelList;
-    QMap<QString, QByteArray> mNickAvatar;
-    QMap<QString, QByteArray> mChannelAvatar;
     QMap<QString, QString> mMyStats;
     QMap<QString, QString> mMyProfile;
     QList<QString> lChannelHomes;
+    QAction *lagAct;
+    QList<QString> lAwaylog;
     QAction *busyAct;
     QAction *awayAct;
-    // users
-    QList<User> lUsers;
     // channels
     QList<QString> lOpenChannels;
-    QMap<QString, int> mChannelNicks;
+    QMap<QString, QByteArray> mChannelAvatar;
     // offline
     QAction *offlineMsgAct;
     QList<OfflineMsg> lOfflineMsg;
     QList<QString> lOfflineNicks;
-    // auto-away
-    QTimer *autoAwayTimer;
     // kamerzysta socket
     QTcpSocket *kamerzystaSocket;
     // settings
     QMap<QString,QString> settings;
     // network
     Network *pNetwork;
+    // auto-away
+    QTimer *autoAwayTimer;
     // user profile
     QString strUserProfile;
     QMap<QString,QString> mUserProfile;

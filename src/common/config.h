@@ -22,7 +22,6 @@
 #define CONFIG_H
 
 class QDomElement;
-class QFile;
 #include <QMap>
 #include <QDomDocument>
 #include <QObject>
