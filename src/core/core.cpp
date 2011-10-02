@@ -110,7 +110,7 @@ void Core::createGui()
 void Core::createSettings()
 {
     // default settings
-    settings["version"] = "1.1.3.1053";
+    settings["version"] = "1.1.3.1054";
     settings["logged"] = "off";
     settings["busy"] = "off";
     settings["away"] = "off";
@@ -322,50 +322,32 @@ QString Core::getCurrentChannelName()
 }
 
 // InputLineWidget::event
-QList<QString> Core::getNicksFromChannel(QString strChannel)
+QList<QString> Core::getUserListFromChannel(QString strChannel)
 {
-    QList<QString> usersList;
-// TODO
-/*
-    for (int i = 0; i < lUsers.size(); i++)
-    {
-        if (lUsers.at(i).channel == strChannel)
-        {
-            QString strUser = lUsers.at(i).nick;
-            usersList.append(strUser);
-        }
-    }
-*/
-    return usersList;
+    return window->getUserList(strChannel);
 }
 
 QString Core::getUserModes(QString strNick, QString strChannel)
 {
-    // TODO
-    /*
-    for (int i = 0; i < lUsers.size(); i++)
-    {
-        if ((lUsers.at(i).nick == strNick) && (lUsers.at(i).channel == strChannel))
-            return lUsers.at(i).modes;
-    }
-    */
-    return QString::null;
+    return window->getUserModes(strNick, strChannel);
 }
 
-int Core::getUserMaxModes(QString strNick, QString strChannel)
+int Core::getUserMaxModes(QString strModes)
 {
-// TODO
-/*
-    QString modes = getUserModes(strNick, strChannel);
+    if (strModes.contains("O")) { return 64; }
+    if (strModes.contains("o")) { return 32; }
+    if (strModes.contains("`")) { return 16; }
+    if (strModes.contains("@")) { return 8; }
+    if (strModes.contains("%")) { return 4; }
+    if (strModes.contains("!")) { return 2; }
+    if (strModes.contains("=")) { return 1; }
+    if (strModes.contains("+")) { return 0; }
 
-    if (modes.contains("O")) { return 64; }
-    if (modes.contains("o")) { return 32; }
-    if (modes.contains("`")) { return 16; }
-    if (modes.contains("@")) { return 8; }
-    if (modes.contains("%")) { return 4; }
-    if (modes.contains("!")) { return 2; }
-    if (modes.contains("=")) { return 1; }
-    if (modes.contains("+")) { return 0; }
-*/
     return -1;
+}
+
+// ChatView::displayMessage
+int Core::getUserCount(QString strChannel)
+{
+    return window->getUserCount(strChannel);
 }

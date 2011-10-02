@@ -346,7 +346,10 @@ void TabContainer::changeFlag(QString strNick, QString strChannel, QString strFl
     if (i != -1)
     {
         if (tw[i]->pNickListWidget->existUser(strNick))
+        {
             tw[i]->pNickListWidget->changeUserFlag(strNick, strFlag);
+            tw[i]->pNickListWidget->sortItems(Qt::AscendingOrder);
+        }
 
         // current
         if (i == pTabM->currentIndex())
@@ -396,4 +399,38 @@ void TabContainer::setUserAvatar(QString strNick, QByteArray bData)
         if (tw[i]->pNickListWidget->existUser(strNick))
             tw[i]->pNickListWidget->updateUserAvatar(strNick, bData);
     }
+}
+
+int TabContainer::getUserCount(QString strChannel)
+{
+    int i = getIndex(strChannel);
+    if (i != -1)
+        return tw[i]->pNickListWidget->count();
+    else
+        return 0;
+}
+
+QString TabContainer::getUserModes(QString strNick, QString strChannel)
+{
+    QString strModes;
+
+    int i = getIndex(strChannel);
+    if (i != -1)
+    {
+        if (tw[i]->pNickListWidget->existUser(strNick))
+            strModes = tw[i]->pNickListWidget->getUserModes(strNick);
+    }
+
+    return strModes;
+}
+
+QList<QString> TabContainer::getUserList(QString strChannel)
+{
+    QList<QString> userList;
+
+    int i = getIndex(strChannel);
+    if (i != -1)
+        userList = tw[i]->pNickListWidget->getUserList();
+
+    return userList;
 }

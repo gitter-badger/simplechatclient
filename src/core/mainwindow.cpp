@@ -62,9 +62,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     createActions();
     createMenus();
 
-    pTabM = new TabManager(this);
-
     // classes
+    pTabM = new TabManager(this);
     pTabC = new TabContainer(pTabM);
 
     pOnetKernel = new OnetKernel(pTabC);
@@ -83,19 +82,14 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     // create signals
     createSignals();
 
-    // welcome
-    QString strStatus = "Status";
-    QString strWelcome = "%Fi:courier%"+tr("Welcome to the Simple Chat Client")+" %Ihehe%";
-    QString strWebsite = "%Fb:courier%%C008100%"+tr("Official website")+" SCC%C3030ce%: http://simplechatclien.sf.net/ %Izaskoczony%";
-    pTabC->addTab(strStatus);
-    pTabC->showMsg(strStatus, strWelcome, DefaultMessage);
-    pTabC->showMsg(strStatus, strWebsite, DefaultMessage);
-
     // hide offline messages
     Core::instance()->offlineMsgAct->setVisible(false);
 
     // hide awaylog
     awaylogAct->setVisible(false);
+
+    // show welcome
+    QTimer::singleShot(200, this, SLOT(showWelcome())); // 0.2 sec
 
     // show options if config not exist
     showOptions();
@@ -347,6 +341,16 @@ void MainWindow::createSignals()
 
     // auto-away
     QObject::connect(Core::instance()->autoAwayTimer, SIGNAL(timeout()), this, SLOT(timeoutAutoaway()));
+}
+
+void MainWindow::showWelcome()
+{
+    QString strStatus = "Status";
+    QString strWelcome = "%Fi:courier%"+tr("Welcome to the Simple Chat Client")+" %Ihehe%";
+    QString strWebsite = "%Fb:courier%%C008100%"+tr("Official website")+" SCC%C3030ce%: http://simplechatclien.sf.net/ %Izaskoczony%";
+    pTabC->addTab(strStatus);
+    pTabC->showMsg(strStatus, strWelcome, DefaultMessage);
+    pTabC->showMsg(strStatus, strWebsite, DefaultMessage);
 }
 
 void MainWindow::showOptions()
@@ -659,6 +663,21 @@ int MainWindow::getCurrentTabIndex()
         return pTabM->currentIndex();
     else
         return -1;
+}
+
+int MainWindow::getUserCount(QString strChannel)
+{
+    return pTabC->getUserCount(strChannel);
+}
+
+QString MainWindow::getUserModes(QString strNick, QString strChannel)
+{
+    return pTabC->getUserModes(strNick, strChannel);
+}
+
+QList<QString> MainWindow::getUserList(QString strChannel)
+{
+    return pTabC->getUserList(strChannel);
 }
 
 void MainWindow::timeoutAutoaway()

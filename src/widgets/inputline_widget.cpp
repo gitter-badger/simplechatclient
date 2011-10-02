@@ -109,7 +109,7 @@ bool InputLineWidget::event(QEvent *e)
         }
         else
         {
-            QList<QString> usersList = Core::instance()->getNicksFromChannel(Core::instance()->getCurrentChannelName());
+            QList<QString> usersList = Core::instance()->getUserListFromChannel(Core::instance()->getCurrentChannelName());
 
             if (usersList.size() == 0)
                 return true;

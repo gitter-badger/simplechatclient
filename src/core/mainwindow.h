@@ -49,6 +49,9 @@ public:
     void refreshToolWidgetValues();
     // for core
     int getCurrentTabIndex();
+    int getUserCount(QString);
+    QString getUserModes(QString, QString);
+    QList<QString> getUserList(QString);
 
 private:
     QToolBar *toolBar;
@@ -95,6 +98,7 @@ private:
     void createTrayMenu();
 
 private slots:
+    void showWelcome();
     void buttonConnect();
     void buttonClose();
     void openOptions();

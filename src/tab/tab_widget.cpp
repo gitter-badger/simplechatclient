@@ -29,7 +29,7 @@ TabWidget::TabWidget(QString _strName) : strName(_strName)
 {
     topic = new QLabel(this);
     topic->setWordWrap(true);
-    topic->setMinimumHeight(25);
+    topic->setMinimumHeight(20);
     topic->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
     topic->show();
 
@@ -39,8 +39,6 @@ TabWidget::TabWidget(QString _strName) : strName(_strName)
     pChatView->show();
 
     users = new QLabel(this);
-    users->setWordWrap(true);
-    users->setMinimumHeight(25);
     users->setAlignment(Qt::AlignCenter);
     users->show();
 

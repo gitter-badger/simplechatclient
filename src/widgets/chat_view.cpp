@@ -136,12 +136,9 @@ void ChatView::displayMessage(QString &strData, MessageCategory eMessageCategory
         if (Core::instance()->settings.value("hide_join_part") == "on")
             return;
 
-        // TODO
-        /*
-        int iNickCount = Core::instance()->mChannelNicks[strChatViewChannel];
+        int iNickCount = Core::instance()->getUserCount(strChatViewChannel);
         if ((Core::instance()->settings.value("hide_join_part_200") == "on") && (iNickCount > 200))
             return;
-        */
     }
 
     HtmlMessagesRenderer *r = new HtmlMessagesRenderer();
@@ -400,7 +397,7 @@ void ChatView::menuNick(QContextMenuEvent *event)
 {
     QString strMe = Core::instance()->settings.value("nick");
     QString strSelfModes = Core::instance()->getUserModes(strMe, strChatViewChannel);
-    int iSelfMaxModes = Core::instance()->getUserMaxModes(strMe, strChatViewChannel);
+    int iSelfMaxModes = Core::instance()->getUserMaxModes(strSelfModes);
     QString strNickModes = Core::instance()->getUserModes(strNick, strChatViewChannel);
 
     QMenu *minvite = new QMenu(tr("Invite"));

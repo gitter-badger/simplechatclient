@@ -53,12 +53,11 @@ void NickListWidget::addUser(QString strNick, QString strModes)
 {
     // if owner remove op
     if (strModes.contains("`")) strModes.remove("@");
-    QString strMaxModes; // TODO
 
     SortedListWidgetItem *item = new SortedListWidgetItem();
     item->setText(strNick);
     item->setData(Qt::UserRole+10, true); // is nicklist
-    item->setData(Qt::UserRole+11, strMaxModes);
+    item->setData(Qt::UserRole+11, Core::instance()->getUserMaxModes(strModes));
     item->setData(Qt::UserRole+12, strModes);
     item->setData(Qt::UserRole+13, QByteArray());
 
@@ -116,10 +115,31 @@ void NickListWidget::changeUserFlag(QString strNick, QString strFlag)
         // if owner remove op
         if ((strModes.contains("`")) && (strModes.contains("@"))) strModes.remove("@");
 
-        QString strMaxModes; // TODO
-        item->setData(Qt::UserRole+11, strMaxModes);
+        item->setData(Qt::UserRole+11, Core::instance()->getUserMaxModes(strModes));
         item->setData(Qt::UserRole+12, strModes);
     }
+}
+
+QString NickListWidget::getUserModes(QString strNick)
+{
+    QString strUserModes;
+
+    QList<QListWidgetItem*> items = this->findItems(strNick, Qt::MatchExactly);
+    foreach (QListWidgetItem *item, items)
+        strUserModes = item->data(Qt::UserRole+12).toString();
+
+    return strUserModes;
+}
+
+QList<QString> NickListWidget::getUserList()
+{
+    QList<QString> userList;
+
+    QList<QListWidgetItem*> items = this->findItems("*", Qt::MatchWrap | Qt::MatchWildcard);
+    foreach (QListWidgetItem *item, items)
+        userList.append(item->text());
+
+    return userList;
 }
 
 QString NickListWidget::convertFlag(QString strFlag)
@@ -309,7 +329,7 @@ void NickListWidget::contextMenuEvent(QContextMenuEvent *e)
 
     QString strMe = Core::instance()->settings.value("nick");
     QString strSelfModes = Core::instance()->getUserModes(strMe, strChannel);
-    int iSelfMaxModes = Core::instance()->getUserMaxModes(strMe, strChannel);
+    int iSelfMaxModes = Core::instance()->getUserMaxModes(strSelfModes);
     QString strNickModes = Core::instance()->getUserModes(strSelectedNick, strChannel);
 
     QMenu *minvite = new QMenu(tr("Invite"));

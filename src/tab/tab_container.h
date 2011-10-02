@@ -61,6 +61,9 @@ public slots:
     void nicklistRefresh(QString);
     void clearAllNicklist();
     void setUserAvatar(QString, QByteArray);
+    int getUserCount(QString);
+    QString getUserModes(QString, QString);
+    QList<QString> getUserList(QString);
 
 private:
     // params

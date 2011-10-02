@@ -67,11 +67,13 @@ public:
     QString getChannelNameFromIndex(int index);
     QString getCurrentChannelName();
     // get users per channel
-    QList<QString> getNicksFromChannel(QString);
+    QList<QString> getUserListFromChannel(QString);
     // get user modes
     QString getUserModes(QString, QString);
     // get user max modes - for sorting
-    int getUserMaxModes(QString, QString);
+    int getUserMaxModes(QString);
+    // get users count
+    int getUserCount(QString);
 
     QMap<QString, bool> mFriends;
     QList<QString> lIgnore;

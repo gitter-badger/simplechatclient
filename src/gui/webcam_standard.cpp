@@ -158,29 +158,19 @@ void DlgWebcamStandard::addUser(QString strNick, int iRank, QString strSpectator
 
 void DlgWebcamStandard::updateUser(QString strNick, int iRank, QString strSpectators)
 {
-    /* update */
-    if (existUser(strNick))
-        removeUser(strNick);
-
-    /* add user */
-    SortedListWidgetItem *item = new SortedListWidgetItem();
-    item->setText(strNick);
-    item->setData(Qt::UserRole, iRank);
-    item->setData(Qt::UserRole+1, strSpectators);
-    item->setData(Qt::UserRole+10, false); // is nicklist
-    ui.listWidget_nicks->addItem(item);
+    QList<QListWidgetItem*> items = ui.listWidget_nicks->findItems(strNick, Qt::MatchExactly);
+    foreach (QListWidgetItem *item, items)
+    {
+        item->setData(Qt::UserRole, iRank);
+        item->setData(Qt::UserRole+1, strSpectators);
+    }
 }
 
 void DlgWebcamStandard::removeUser(QString strNick)
 {
-    for (int i = 0; i < ui.listWidget_nicks->count(); i++)
-    {
-        if (ui.listWidget_nicks->item(i)->text() == strNick)
-        {
-            ui.listWidget_nicks->takeItem(i);
-            break;
-        }
-    }
+    QList<QListWidgetItem*> items = ui.listWidget_nicks->findItems(strNick, Qt::MatchExactly);
+    foreach (QListWidgetItem *item, items)
+        ui.listWidget_nicks->takeItem(ui.listWidget_nicks->row(item));
 }
 
 void DlgWebcamStandard::clearUsers()

@@ -34,6 +34,8 @@ public:
     bool existUser(QString);
     void updateUserAvatar(QString, QByteArray);
     void changeUserFlag(QString, QString);
+    QString getUserModes(QString);
+    QList<QString> getUserList();
 
 private:
     // other
