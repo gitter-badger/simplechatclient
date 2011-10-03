@@ -24,6 +24,7 @@
 #include "chat_view.h"
 class NickListWidget;
 #include <QLabel>
+#include <QSplitter>
 #include <QWidget>
 
 /**
@@ -42,10 +43,13 @@ public:
     ChatView *pChatView;
     QLabel *users;
     NickListWidget *pNickListWidget;
+    QSplitter *splitter;
 
 private:
-    // params
     QString strName;
+
+    void createGui();
+    void setDefaultValues();
 };
 
 #endif // TAB_WIDGET_H

@@ -131,6 +131,9 @@ private slots:
     void tabCloseRequested(int);
     void currentTabChanged(int);
     void timeoutAutoaway();
+
+protected:
+    void resizeEvent(QResizeEvent *);
 };
 
 #endif // MAINWINDOW_H

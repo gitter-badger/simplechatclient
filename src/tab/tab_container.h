@@ -40,6 +40,7 @@ public:
     void removeTab(QString);
     bool renameTab(QString, QString);
     void partTab(int);
+    void resizeMainWindow(QSize);
 
 public slots:
     void refreshColors();

@@ -434,3 +434,23 @@ QList<QString> TabContainer::getUserList(QString strChannel)
 
     return userList;
 }
+
+void TabContainer::resizeMainWindow(QSize s)
+{
+    for (int i = 0; i < tw.size(); i++)
+    {
+        if (!tw[i]->pNickListWidget->isHidden())
+        {
+            QList<int> currentSizes = tw[i]->splitter->sizes();
+
+            int width = s.width();
+            if (width > 250)
+            {
+                currentSizes[0] = width-200;
+                currentSizes[1] = 200;
+
+                tw[i]->splitter->setSizes(currentSizes);
+            }
+        }
+    }
+}

@@ -19,13 +19,24 @@
  ****************************************************************************/
 
 #include <QVBoxLayout>
-#include <QSplitter>
 #include "core.h"
 #include "nicklist_delegate.h"
 #include "nicklist_widget.h"
 #include "tab_widget.h"
 
 TabWidget::TabWidget(QString _strName) : strName(_strName)
+{
+    createGui();
+    setDefaultValues();
+}
+
+TabWidget::~TabWidget()
+{
+    delete pNickListWidget;
+    delete pChatView;
+}
+
+void TabWidget::createGui()
 {
     topic = new QLabel(this);
     topic->setWordWrap(true);
@@ -66,7 +77,7 @@ TabWidget::TabWidget(QString _strName) : strName(_strName)
     rightWidget->setLayout(rightLayout);
     rightWidget->show();
 
-    QSplitter *splitter = new QSplitter(this);
+    splitter = new QSplitter(this);
     splitter->addWidget(leftWidget);
     splitter->addWidget(rightWidget);
     splitter->show();
@@ -74,7 +85,10 @@ TabWidget::TabWidget(QString _strName) : strName(_strName)
     QVBoxLayout *l = new QVBoxLayout();
     l->addWidget(splitter);
     this->setLayout(l);
+}
 
+void TabWidget::setDefaultValues()
+{
     if (strName[0] == '^')
         topic->hide();
     if ((strName[0] != '^') && (strName[0] != '#'))
@@ -94,12 +108,6 @@ TabWidget::TabWidget(QString _strName) : strName(_strName)
         strDefaultFontColor = QString("color:%1;").arg(Core::instance()->settings.value("default_font_color"));
 
     this->setStyleSheet(strDefaultFontColor+strBackgroundColor);
-}
-
-TabWidget::~TabWidget()
-{
-    delete pNickListWidget;
-    delete pChatView;
 }
 
 void TabWidget::refreshColors()

@@ -716,3 +716,8 @@ void MainWindow::currentTabChanged(int index)
     if (strModes.contains("!")) pToolWidget->setModeration(true);
     else pToolWidget->setModeration(false);
 }
+
+void MainWindow::resizeEvent(QResizeEvent *e)
+{
+    pTabC->resizeMainWindow(e->size());
+}

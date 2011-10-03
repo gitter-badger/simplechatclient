@@ -38,15 +38,6 @@ NickListWidget::NickListWidget(QString _strChannel) : strChannel(_strChannel), s
     setFocusPolicy(Qt::NoFocus);
     setSortingEnabled(false);
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-// TODO
-/*
-    // maximum size
-    QString strShowAvatars = Core::instance()->settings.value("show_avatars");
-    if (strShowAvatars == "on") // with avatars
-        setMaximumWidth(260);
-    else // without avatars
-        setMaximumWidth(230);
-*/
 }
 
 void NickListWidget::addUser(QString strNick, QString strModes)
