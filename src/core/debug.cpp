@@ -120,10 +120,8 @@ void crashHandler()
     exit(1);
 }
 
-void gotSignal(int signal)
+void gotSignal(int)
 {
-    Q_UNUSED (signal);
-
     QString strCategory = "debug";
     QString strMessage = "Error: Got signal SIGSEGV";
 

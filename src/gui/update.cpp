@@ -188,8 +188,7 @@ void DlgUpdate::downloadProgress(qint64 bytesReceived,qint64 bytesTotal)
     ui.progressBar->setMaximum(bytesTotal);
 }
 
-void DlgUpdate::downloadError(QNetworkReply::NetworkError e)
+void DlgUpdate::downloadError(QNetworkReply::NetworkError)
 {
-    Q_UNUSED (e);
     QMessageBox::critical(0, "", tr("Cannot download file"));
 }

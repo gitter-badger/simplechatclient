@@ -126,9 +126,8 @@ void DlgNotes::buttonOk()
     this->close();
 }
 
-void DlgNotes::resizeEvent(QResizeEvent *e)
+void DlgNotes::resizeEvent(QResizeEvent *)
 {
-    Q_UNUSED (e);
     int iWidth = this->width();
     int iHeight = this->height();
     ui.plainTextEdit->setMinimumSize(QSize(iWidth, iHeight-30));

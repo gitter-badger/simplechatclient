@@ -97,10 +97,8 @@ void DlgChannelHomes::listClicked(QModelIndex index)
     DlgChannelSettings(this, strChannel).exec();
 }
 
-void DlgChannelHomes::itemClicked(QListWidgetItem *item)
+void DlgChannelHomes::itemClicked(QListWidgetItem *)
 {
-    Q_UNUSED (item);
-
     if (!ui.pushButton_join->isEnabled())
         ui.pushButton_join->setEnabled(true);
     if (!ui.pushButton_settings->isEnabled())

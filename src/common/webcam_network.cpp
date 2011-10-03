@@ -186,10 +186,8 @@ void WebcamNetwork::networkDisconnected()
         QTimer::singleShot(1000*10, this, SLOT(slotNetworkConnect())); // 10 sec
 }
 
-void WebcamNetwork::networkError(QAbstractSocket::SocketError err)
+void WebcamNetwork::networkError(QAbstractSocket::SocketError)
 {
-    Q_UNUSED (err);
-
     emit error(socket->errorString());
 
     if (socket->state() == QAbstractSocket::ConnectedState)

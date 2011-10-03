@@ -227,8 +227,7 @@ void DlgWebcamStandard::buttonClose()
     this->close();
 }
 
-void DlgWebcamStandard::closeEvent(QCloseEvent *e)
+void DlgWebcamStandard::closeEvent(QCloseEvent *)
 {
-    Q_UNUSED (e);
     emit closeCam();
 }

@@ -441,11 +441,11 @@ void TabContainer::resizeMainWindow(QSize s)
     {
         if (!tw[i]->pNickListWidget->isHidden())
         {
-            QList<int> currentSizes = tw[i]->splitter->sizes();
-
             int width = s.width();
             if (width > 250)
             {
+                QList<int> currentSizes = tw[i]->splitter->sizes();
+
                 currentSizes[0] = width-200;
                 currentSizes[1] = 200;
 

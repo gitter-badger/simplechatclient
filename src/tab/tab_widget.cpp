@@ -122,3 +122,20 @@ void TabWidget::refreshColors()
 
     this->setStyleSheet(strDefaultFontColor+strBackgroundColor);
 }
+
+void TabWidget::showEvent(QShowEvent *)
+{
+    if (!pNickListWidget->isHidden())
+    {
+        int width = this->width();
+        if (width > 250)
+        {
+            QList<int> currentSizes = splitter->sizes();
+
+            currentSizes[0] = width-200;
+            currentSizes[1] = 200;
+
+            splitter->setSizes(currentSizes);
+        }
+    }
+}

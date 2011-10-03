@@ -20,7 +20,6 @@
 
 #include <QDesktopWidget>
 #include <QInputDialog>
-#include <QShowEvent>
 #include <QTimer>
 #include "core.h"
 #include "friends.h"
@@ -94,10 +93,8 @@ void DlgFriends::tabChanged(int index)
         ui.pushButton_whois->setHidden(true);
 }
 
-void DlgFriends::itemClicked(QListWidgetItem *item)
+void DlgFriends::itemClicked(QListWidgetItem *)
 {
-    Q_UNUSED (item);
-
     if (!ui.pushButton_whois->isEnabled())
         ui.pushButton_whois->setEnabled(true);
 }

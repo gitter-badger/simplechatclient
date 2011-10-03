@@ -89,7 +89,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     awaylogAct->setVisible(false);
 
     // show welcome
-    QTimer::singleShot(200, this, SLOT(showWelcome())); // 0.2 sec
+    QTimer::singleShot(0, this, SLOT(showWelcome())); // 0 sec
 
     // show options if config not exist
     showOptions();

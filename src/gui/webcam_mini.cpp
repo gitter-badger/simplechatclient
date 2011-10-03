@@ -46,8 +46,7 @@ void DlgWebcamMini::error(QString s)
     updateText(s);
 }
 
-void DlgWebcamMini::closeEvent(QCloseEvent *e)
+void DlgWebcamMini::closeEvent(QCloseEvent *)
 {
-    Q_UNUSED (e);
     emit closeCam();
 }

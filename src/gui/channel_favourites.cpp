@@ -20,7 +20,6 @@
 
 #include <QDesktopWidget>
 #include <QInputDialog>
-#include <QShowEvent>
 #include <QTimer>
 #include "core.h"
 #include "channel_favourites.h"

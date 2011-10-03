@@ -1006,10 +1006,8 @@ void DlgChannelList::showAdvOptions()
     }
 }
 
-void DlgChannelList::resizeEvent(QResizeEvent *event)
+void DlgChannelList::resizeEvent(QResizeEvent *)
 {
-    Q_UNUSED (event);
-
     ui.verticalLayoutWidget->setGeometry(QRect(0, 0, this->width(), this->height()));
     ui.tabWidget->setGeometry(QRect(205, 1, this->width()-205, this->height()-30));
     ui.tableWidget_all->setGeometry(QRect(0, 0, ui.tabWidget->width()-10, ui.tabWidget->height()-30));

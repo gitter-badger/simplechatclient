@@ -60,10 +60,8 @@ QSize SimpleStatsWidget::sizeHint() const
     return QSize(400, 100);
 }
 
-void SimpleStatsWidget::paintEvent(QPaintEvent *e)
+void SimpleStatsWidget::paintEvent(QPaintEvent *)
 {
-    Q_UNUSED(e);
-
     QPainter painter(this);
 
     // clear

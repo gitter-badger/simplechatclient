@@ -110,7 +110,7 @@ void Core::createGui()
 void Core::createSettings()
 {
     // default settings
-    settings["version"] = "1.1.3.1055";
+    settings["version"] = "1.1.3.1056";
     settings["logged"] = "off";
     settings["busy"] = "off";
     settings["away"] = "off";

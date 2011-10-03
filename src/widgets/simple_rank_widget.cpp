@@ -43,10 +43,8 @@ QSize SimpleRankWidget::sizeHint() const
     return QSize(iWidth, iHeight);
 }
 
-void SimpleRankWidget::paintEvent(QPaintEvent *e)
+void SimpleRankWidget::paintEvent(QPaintEvent *)
 {
-    Q_UNUSED(e);
-
     QPainter painter(this);
 
     // clear

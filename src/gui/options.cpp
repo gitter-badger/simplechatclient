@@ -22,7 +22,6 @@
 #include <QDesktopWidget>
 #include <QFileDialog>
 #include <QProcess>
-#include <QShowEvent>
 #include "config.h"
 #include "core.h"
 #include "profile_manager.h"

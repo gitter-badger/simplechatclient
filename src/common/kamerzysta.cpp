@@ -300,10 +300,8 @@ void Kamerzysta::networkRead()
     }
 }
 
-void Kamerzysta::error(QAbstractSocket::SocketError err)
+void Kamerzysta::error(QAbstractSocket::SocketError)
 {
-    Q_UNUSED (err);
-
     log("Error:"+socket->errorString());
 
     if (socket->state() == QAbstractSocket::ConnectedState)

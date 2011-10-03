@@ -50,6 +50,9 @@ private:
 
     void createGui();
     void setDefaultValues();
+
+protected:
+    void showEvent(QShowEvent *);
 };
 
 #endif // TAB_WIDGET_H
