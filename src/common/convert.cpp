@@ -62,7 +62,9 @@ void Convert::convertFont(QString &strData)
         int pos = 0;
         while ((pos = rx.indexIn(lData[i], pos)) != -1)
         {
+            int first = pos;
             pos += rx.matchedLength();
+            int second = pos;
 
             QString strFont = rx.cap(0);
             strFont = strFont.mid(2,strFont.size()-3);
@@ -112,12 +114,14 @@ void Convert::convertFont(QString &strData)
                         if (strFontStyle.isEmpty())
                             strFontStyle = "normal";
 
-                        lData[i].replace(QString("%F%1%").arg(strFont), QString("<span style=\"font-weight:%1;font-style:%2;font-family:%3;\">").arg(strFontWeight).arg(strFontStyle).arg(strFontFamily));
+                        lData[i].replace(first, second-first, QString("<span style=\"font-weight:%1;font-style:%2;font-family:%3;\">").arg(strFontWeight).arg(strFontStyle).arg(strFontFamily));
                         strSpans += "</span>";
                     }
                 }
                 else
-                    lData[i].remove(QString("%F%1%").arg(strFont));
+                    lData[i].remove(first, second-first);
+
+                pos--;
             }
         }
     }
@@ -135,7 +139,9 @@ void Convert::convertEmoticons(QString &strData)
         int pos = 0;
         while ((pos = rx.indexIn(lData[i], pos)) != -1)
         {
+            int first = pos;
             pos += rx.matchedLength();
+            int second = pos;
 
             QString strEmoticon = rx.cap(1);
 
@@ -152,13 +158,15 @@ void Convert::convertEmoticons(QString &strData)
                         strWidthHeight = "width=\""+QString::number(p.width())+"px\" height=\""+QString::number(p.height())+"px\"";
                     }
 
-                    lData[i].replace(QString("%I%1%").arg(strEmoticon), QString("<img src=\"%1\" alt=\"%2\" %3 />").arg(strEmoticonPath).arg(strEmoticon).arg(strWidthHeight));
+                    lData[i].replace(first, second-first, QString("<img src=\"%1\" alt=\"%2\" %3 />").arg(strEmoticonPath).arg(strEmoticon).arg(strWidthHeight));
                 }
                 else
-                    lData[i].replace(QString("%I%1%").arg(strEmoticon), QString("//%1").arg(strEmoticon));
+                    lData[i].replace(first, second-first, QString("//%1").arg(strEmoticon));
             }
             else
-                lData[i].replace(QString("%I%1%").arg(strEmoticon), QString("//%1").arg(strEmoticon));
+                lData[i].replace(first, second-first, QString("//%1").arg(strEmoticon));
+
+            pos--;
         }
     }
     strData = lData.join(" ");
@@ -182,7 +190,9 @@ void Convert::removeFont(QString &strData)
         int pos = 0;
         while ((pos = rx.indexIn(lData[i], pos)) != -1)
         {
+            int first = pos;
             pos += rx.matchedLength();
+            int second = pos;
 
             QString strFont = rx.cap(0);
             strFont = strFont.mid(2,strFont.size()-3);
@@ -223,7 +233,7 @@ void Convert::removeFont(QString &strData)
                     else strRemovedFont = "verdana";
                 }
 
-                lData[i].remove(QString("%F%1%").arg(strFont));
+                lData[i].remove(first, second-first);
             }
         }
     }
