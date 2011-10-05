@@ -110,7 +110,7 @@ void Core::createGui()
 void Core::createSettings()
 {
     // default settings
-    settings["version"] = "1.1.3.1057";
+    settings["version"] = "1.1.3.1058";
     settings["logged"] = "off";
     settings["busy"] = "off";
     settings["away"] = "off";
@@ -350,4 +350,10 @@ int Core::getUserMaxModes(QString strModes)
 int Core::getUserCount(QString strChannel)
 {
     return window->getUserCount(strChannel);
+}
+
+// DlgModeration::buttonAccept
+void Core::displayMessage(QString &strChannel, QString &strData, MessageCategory eMessageCategory)
+{
+    window->displayMessage(strChannel, strData, eMessageCategory);
 }

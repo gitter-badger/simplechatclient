@@ -74,6 +74,8 @@ public:
     int getUserMaxModes(QString);
     // get users count
     int getUserCount(QString);
+    // display message
+    void displayMessage(QString&,QString&,MessageCategory);
 
     QMap<QString, bool> mFriends;
     QList<QString> lIgnore;

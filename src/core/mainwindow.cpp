@@ -721,3 +721,8 @@ void MainWindow::resizeEvent(QResizeEvent *e)
 {
     pTabC->resizeMainWindow(e->size());
 }
+
+void MainWindow::displayMessage(QString &strChannel, QString &strData, MessageCategory eMessageCategory)
+{
+    pTabC->displayMessage(strChannel, strData, eMessageCategory);
+}

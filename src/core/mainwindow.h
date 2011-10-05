@@ -52,6 +52,8 @@ public:
     int getUserCount(QString);
     QString getUserModes(QString, QString);
     QList<QString> getUserList(QString);
+    // for core
+    void displayMessage(QString&,QString&,MessageCategory);
 
 private:
     QToolBar *toolBar;
