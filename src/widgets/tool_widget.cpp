@@ -332,7 +332,11 @@ void ToolWidget::setDefaultValues()
 
     // refresh input widget
     pInputLine->setFont(QFont(strMyFontFamily, -1, iWeight, bMyItalic));
-    pInputLine->setStyleSheet(QString("QLineEdit { color:%1 }").arg(strCurrentColor));
+
+    // refresh input line text color
+    QPalette pal;
+    pal.setColor(QPalette::Text, QColor(strCurrentColor));
+    pInputLine->setPalette(pal);
 
     // moderation default hidden
     setModeration(false);

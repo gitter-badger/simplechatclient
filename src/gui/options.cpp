@@ -49,7 +49,9 @@ DlgOptions::DlgOptions(QWidget *parent) : QDialog(parent)
 void DlgOptions::createGui()
 {
     ui.pushButton_profiles->setIcon(QIcon(":/images/oxygen/16x16/preferences-activities.png"));
+    ui.pushButton_mainwindow_reverse_colors->setIcon(QIcon(":/images/oxygen/16x16/format-stroke-color.png"));
     ui.pushButton_mainwindow_restore_default->setIcon(QIcon(":/images/oxygen/16x16/edit-undo.png"));
+    ui.pushButton_nicklist_reverse_colors->setIcon(QIcon(":/images/oxygen/16x16/format-stroke-color.png"));
     ui.pushButton_nicklist_restore_default->setIcon(QIcon(":/images/oxygen/16x16/edit-undo.png"));
     ui.pushButton_play_beep->setIcon(QIcon(":/images/oxygen/16x16/media-playback-start.png"));
     ui.pushButton_play_query->setIcon(QIcon(":/images/oxygen/16x16/media-playback-start.png"));
@@ -94,6 +96,7 @@ void DlgOptions::createGui()
     ui.label_me_font_color->setText(tr("Me color:"));
     ui.label_error_font_color->setText(tr("Error color:"));
     ui.label_channel_font_color->setText(tr("Channel color:"));
+    ui.pushButton_mainwindow_reverse_colors->setText(tr("Reverse colors"));
     ui.pushButton_mainwindow_restore_default->setText(tr("Restore default"));
 
     ui.label_nicklist_nick_color->setText(tr("Nick color:"));
@@ -101,6 +104,7 @@ void DlgOptions::createGui()
     ui.label_nicklist_busy_nick_color->setText(tr("Busy nick color:"));
     ui.label_nicklist_gradient_1_color->setText(tr("Gradient 1:"));
     ui.label_nicklist_gradient_2_color->setText(tr("Gradient 2:"));
+    ui.pushButton_nicklist_reverse_colors->setText(tr("Reverse colors"));
     ui.pushButton_nicklist_restore_default->setText(tr("Restore default"));
 
     // page sounds
@@ -369,12 +373,14 @@ void DlgOptions::createSignals()
     QObject::connect(ui.pushButton_me_font_color, SIGNAL(clicked()), this, SLOT(setMeFontColor()));
     QObject::connect(ui.pushButton_error_font_color, SIGNAL(clicked()), this, SLOT(setErrorFontColor()));
     QObject::connect(ui.pushButton_channel_font_color, SIGNAL(clicked()), this, SLOT(setChannelFontColor()));
+    QObject::connect(ui.pushButton_mainwindow_reverse_colors, SIGNAL(clicked()), this, SLOT(mainwindowReverseColors()));
     QObject::connect(ui.pushButton_mainwindow_restore_default, SIGNAL(clicked()), this, SLOT(mainwindowRestoreDefault()));
     QObject::connect(ui.pushButton_nicklist_nick_color, SIGNAL(clicked()), this, SLOT(setNicklistNickColor()));
     QObject::connect(ui.pushButton_nicklist_selected_nick_color, SIGNAL(clicked()), this, SLOT(setNicklistSelectedNickColor()));
     QObject::connect(ui.pushButton_nicklist_busy_nick_color, SIGNAL(clicked()), this, SLOT(setNicklistBusyNickColor()));
     QObject::connect(ui.pushButton_nicklist_gradient_1_color, SIGNAL(clicked()), this, SLOT(setNicklistGradient1Color()));
     QObject::connect(ui.pushButton_nicklist_gradient_2_color, SIGNAL(clicked()), this, SLOT(setNicklistGradient2Color()));
+    QObject::connect(ui.pushButton_nicklist_reverse_colors, SIGNAL(clicked()), this, SLOT(nicklistReverseColors()));
     QObject::connect(ui.pushButton_nicklist_restore_default, SIGNAL(clicked()), this, SLOT(nicklistRestoreDefault()));
     QObject::connect(ui.pushButton_play_beep, SIGNAL(clicked()), this, SLOT(tryPlayBeep()));
     QObject::connect(ui.pushButton_play_query, SIGNAL(clicked()), this, SLOT(tryPlayQuery()));
@@ -651,6 +657,61 @@ void DlgOptions::setChannelFontColor()
     setColor("channel_font_color");
 }
 
+void DlgOptions::mainwindowReverseColors()
+{
+    Config *pConfig = new Config();
+
+    pConfig->setValue("background_color", reverseColor(Core::instance()->settings["background_color"]));
+    Core::instance()->settings["background_color"] = reverseColor(Core::instance()->settings["background_color"]);
+
+    pConfig->setValue("default_font_color", reverseColor(Core::instance()->settings["default_font_color"]));
+    Core::instance()->settings["default_font_color"] = reverseColor(Core::instance()->settings["default_font_color"]);
+
+    pConfig->setValue("font_color_level_1", reverseColor(Core::instance()->settings["font_color_level_1"]));
+    Core::instance()->settings["font_color_level_1"] = reverseColor(Core::instance()->settings["font_color_level_1"]);
+
+    pConfig->setValue("font_color_level_2", reverseColor(Core::instance()->settings["font_color_level_2"]));
+    Core::instance()->settings["font_color_level_2"] = reverseColor(Core::instance()->settings["font_color_level_2"]);
+
+    pConfig->setValue("font_color_level_3", reverseColor(Core::instance()->settings["font_color_level_3"]));
+    Core::instance()->settings["font_color_level_3"] = reverseColor(Core::instance()->settings["font_color_level_3"]);
+
+    pConfig->setValue("font_color_level_4", reverseColor(Core::instance()->settings["font_color_level_4"]));
+    Core::instance()->settings["font_color_level_4"] = reverseColor(Core::instance()->settings["font_color_level_4"]);
+
+    pConfig->setValue("font_color_level_5", reverseColor(Core::instance()->settings["font_color_level_5"]));
+    Core::instance()->settings["font_color_level_5"] = reverseColor(Core::instance()->settings["font_color_level_5"]);
+
+    pConfig->setValue("font_color_level_6", reverseColor(Core::instance()->settings["font_color_level_6"]));
+    Core::instance()->settings["font_color_level_6"] = reverseColor(Core::instance()->settings["font_color_level_6"]);
+
+    pConfig->setValue("font_color_level_7", reverseColor(Core::instance()->settings["font_color_level_7"]));
+    Core::instance()->settings["font_color_level_7"] = reverseColor(Core::instance()->settings["font_color_level_7"]);
+
+    pConfig->setValue("font_color_level_8", reverseColor(Core::instance()->settings["font_color_level_8"]));
+    Core::instance()->settings["font_color_level_8"] = reverseColor(Core::instance()->settings["font_color_level_8"]);
+
+    pConfig->setValue("font_color_level_9", reverseColor(Core::instance()->settings["font_color_level_9"]));
+    Core::instance()->settings["font_color_level_9"] = reverseColor(Core::instance()->settings["font_color_level_9"]);
+
+    pConfig->setValue("channel_font_color", reverseColor(Core::instance()->settings["channel_font_color"]));
+    Core::instance()->settings["channel_font_color"] = reverseColor(Core::instance()->settings["channel_font_color"]);
+
+    delete pConfig;
+
+    // set
+    setMainwindowColors();
+
+    // refresh tabs
+    Core::instance()->refreshColors();
+
+    // refresh
+    Core::instance()->refreshCSS();
+
+    // refresh tool widget values
+    Core::instance()->refreshToolWidgetValues();
+}
+
 void DlgOptions::mainwindowRestoreDefault()
 {
     Config *pConfig = new Config();
@@ -701,6 +762,9 @@ void DlgOptions::mainwindowRestoreDefault()
 
     // refresh
     Core::instance()->refreshCSS();
+
+    // refresh tool widget values
+    Core::instance()->refreshToolWidgetValues();
 }
 
 void DlgOptions::setNicklistNickColor()
@@ -726,6 +790,31 @@ void DlgOptions::setNicklistGradient1Color()
 void DlgOptions::setNicklistGradient2Color()
 {
     setColor("nicklist_gradient_2_color");
+}
+
+void DlgOptions::nicklistReverseColors()
+{
+    Config *pConfig = new Config();
+
+    pConfig->setValue("nicklist_nick_color", reverseColor(Core::instance()->settings["nicklist_nick_color"]));
+    Core::instance()->settings["nicklist_nick_color"] = reverseColor(Core::instance()->settings["nicklist_nick_color"]);
+
+    pConfig->setValue("nicklist_selected_nick_color", reverseColor(Core::instance()->settings["nicklist_selected_nick_color"]));
+    Core::instance()->settings["nicklist_selected_nick_color"] = reverseColor(Core::instance()->settings["nicklist_selected_nick_color"]);
+
+    pConfig->setValue("nicklist_busy_nick_color", reverseColor(Core::instance()->settings["nicklist_busy_nick_color"]));
+    Core::instance()->settings["nicklist_busy_nick_color"] = reverseColor(Core::instance()->settings["nicklist_busy_nick_color"]);
+
+    pConfig->setValue("nicklist_gradient_1_color", reverseColor(Core::instance()->settings["nicklist_gradient_1_color"]));
+    Core::instance()->settings["nicklist_gradient_1_color"] = reverseColor(Core::instance()->settings["nicklist_gradient_1_color"]);
+
+    pConfig->setValue("nicklist_gradient_2_color", reverseColor(Core::instance()->settings["nicklist_gradient_2_color"]));
+    Core::instance()->settings["nicklist_gradient_2_color"] = reverseColor(Core::instance()->settings["nicklist_gradient_2_color"]);
+
+    delete pConfig;
+
+    // set
+    setNicklistColors();
 }
 
 void DlgOptions::nicklistRestoreDefault()
@@ -955,6 +1044,9 @@ void DlgOptions::setColor(QString strKey)
 
         // refresh
         Core::instance()->refreshCSS();
+
+        // refresh tool widget values
+        Core::instance()->refreshToolWidgetValues();
     }
 }
 
@@ -1066,4 +1158,23 @@ void DlgOptions::setNicklistColors()
     QPixmap ng2color(50,15);
     ng2color.fill(QColor(strNicklistGradient2Color));
     ui.pushButton_nicklist_gradient_2_color->setIcon(QIcon(ng2color));
+}
+
+QString DlgOptions::reverseColor(QString strColor)
+{
+    if (strColor.size() != 8)
+    {
+        strColor.remove(0,1);
+        int r = 255 - (strColor.mid(0, 2).toInt(0, 16));
+        int g = 255 - (strColor.mid(2, 2).toInt(0, 16));
+        int b = 255 - (strColor.mid(4, 2).toInt(0, 16));
+
+        QString sr = QString::number(r, 16).size() != 2 ? "0"+QString::number(r, 16) : QString::number(r, 16);
+        QString sg = QString::number(g, 16).size() != 2 ? "0"+QString::number(g, 16) : QString::number(g, 16);
+        QString sb = QString::number(b, 16).size() != 2 ? "0"+QString::number(b, 16) : QString::number(b, 16);
+
+        return QString("#%1%2%3").arg(sr).arg(sg).arg(sb);
+    }
+    else
+        return "#000000";
 }

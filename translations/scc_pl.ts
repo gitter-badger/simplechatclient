@@ -1198,6 +1198,10 @@
         <translation>Wyłączony</translation>
     </message>
     <message>
+        <source>Reverse colors</source>
+        <translation>Odwróć kolory</translation>
+    </message>
+    <message>
         <source>Restore default</source>
         <translation>Przywróć domyślne</translation>
     </message>

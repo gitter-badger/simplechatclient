@@ -647,13 +647,26 @@
         <property name="geometry">
          <rect>
           <x>130</x>
-          <y>200</y>
+          <y>230</y>
           <width>180</width>
           <height>24</height>
          </rect>
         </property>
         <property name="text">
          <string>Restore default</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="pushButton_mainwindow_reverse_colors">
+        <property name="geometry">
+         <rect>
+          <x>130</x>
+          <y>200</y>
+          <width>181</width>
+          <height>24</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Reverse colors</string>
         </property>
        </widget>
       </widget>
@@ -791,13 +804,26 @@
         <property name="geometry">
          <rect>
           <x>130</x>
-          <y>200</y>
+          <y>230</y>
           <width>180</width>
           <height>24</height>
          </rect>
         </property>
         <property name="text">
          <string>Restore default</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="pushButton_nicklist_reverse_colors">
+        <property name="geometry">
+         <rect>
+          <x>130</x>
+          <y>200</y>
+          <width>181</width>
+          <height>24</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Reverse colors</string>
         </property>
        </widget>
       </widget>

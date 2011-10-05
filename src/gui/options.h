@@ -44,6 +44,8 @@ private:
     void setMainwindowColors();
     void setNicklistColors();
 
+    QString reverseColor(QString);
+
 private slots:
     void changePage(QModelIndex);
     void currentProfileChanged(int);
@@ -70,12 +72,14 @@ private slots:
     void setMeFontColor();
     void setErrorFontColor();
     void setChannelFontColor();
+    void mainwindowReverseColors();
     void mainwindowRestoreDefault();
     void setNicklistNickColor();
     void setNicklistSelectedNickColor();
     void setNicklistBusyNickColor();
     void setNicklistGradient1Color();
     void setNicklistGradient2Color();
+    void nicklistReverseColors();
     void nicklistRestoreDefault();
     void tryPlayBeep();
     void tryPlayQuery();
