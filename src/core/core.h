@@ -57,7 +57,7 @@ public:
     MainWindow *sccWindow();
     // from options
     void refreshColors();
-    void refreshBackgroundImage();
+    void refreshCSS();
     void refreshToolWidgetValues();
     // update
     void checkUpdate();

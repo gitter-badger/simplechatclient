@@ -45,7 +45,7 @@ public:
 
     // options
     void refreshColors();
-    void refreshBackgroundImage();
+    void refreshCSS();
     void refreshToolWidgetValues();
     // for core
     int getCurrentTabIndex();

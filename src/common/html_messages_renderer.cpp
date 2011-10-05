@@ -36,10 +36,6 @@ QString HtmlMessagesRenderer::renderer(QString strDT, QString strData, MessageCa
     strData.replace("'", "&#039;");
     strData.replace("\\", "&#92;");
 
-    // default font color
-    QString strFontSize = Core::instance()->settings.value("font_size");
-    QString strChannelFontColor = Core::instance()->settings.value("channel_font_color");
-
     // fix for context menu
     QStringList strDataList = strData.split(" ");
     for (int i = 0; i < strDataList.size(); i++)
@@ -51,7 +47,7 @@ QString HtmlMessagesRenderer::renderer(QString strDT, QString strData, MessageCa
         if ((i == 1) && (strDataList[i-1] == "*") && ((eMessageCategory == JoinMessage) || (eMessageCategory == PartMessage) || (eMessageCategory == QuitMessage)  || (eMessageCategory == KickMessage)))
             strDataList[i] = "<a href=\"#\" onclick=\"return false\" name=\"nick\" style=\"color:inherit;text-decoration:none;\">"+strDataList[i]+"</a>";
         if (strWord[0] == '#')
-            strDataList[i] = "<a href=\"#\" onclick=\"return false\" name=\"channel\" style=\"color:"+strChannelFontColor+";text-decoration:none;\">"+strDataList[i]+"</a>";
+            strDataList[i] = "<a href=\"#\" onclick=\"return false\" name=\"channel\" class=\"ChannelFontColor\" style=\"text-decoration:none;\">"+strDataList[i]+"</a>";
         if ((strWord.contains(QRegExp("(ftp:|http:|https:)//"))) || (strWord.contains("www.")))
         {
             int pos = strWord.indexOf(QRegExp("(ftp:|http:|https:|www.)"));
@@ -79,32 +75,32 @@ QString HtmlMessagesRenderer::renderer(QString strDT, QString strData, MessageCa
     }
 
     // colors
-    QString strFontColor;
+    QString strFontClass;
 
     if (eMessageCategory == DefaultMessage)
-        strFontColor = Core::instance()->settings.value("default_font_color"); // default black
-    else if (eMessageCategory == JoinMessage) // join
-        strFontColor = Core::instance()->settings.value("font_color_level_1"); // default green
-    else if (eMessageCategory == PartMessage) // part
-        strFontColor = Core::instance()->settings.value("font_color_level_2"); // default light blue
-    else if (eMessageCategory == QuitMessage) // quit
-        strFontColor = Core::instance()->settings.value("font_color_level_3"); // default dark blue
-    else if (eMessageCategory == KickMessage) // kick
-        strFontColor = Core::instance()->settings.value("font_color_level_4"); // default dark blue
-    else if (eMessageCategory == ModeMessage) // mode
-        strFontColor = Core::instance()->settings.value("font_color_level_5"); // default green
-    else if (eMessageCategory == NoticeMessage) // notice
-        strFontColor = Core::instance()->settings.value("font_color_level_6"); // default blue
-    else if (eMessageCategory == InfoMessage) // info
-        strFontColor = Core::instance()->settings.value("font_color_level_7"); // default gray
-    else if (eMessageCategory == MeMessage) // me
-        strFontColor = Core::instance()->settings.value("font_color_level_8"); // default violet
-    else if (eMessageCategory == ErrorMessage) // error
-        strFontColor = Core::instance()->settings.value("font_color_level_9"); // default red
-    else if (eMessageCategory == HilightMessage) // hilight no color
-        strFontColor = Core::instance()->settings.value("default_font_color"); // default black
+        strFontClass = "DefaultFontColor";
+    else if (eMessageCategory == JoinMessage)
+        strFontClass = "JoinFontColor";
+    else if (eMessageCategory == PartMessage)
+        strFontClass = "PartFontColor";
+    else if (eMessageCategory == QuitMessage)
+        strFontClass = "QuitFontColor";
+    else if (eMessageCategory == KickMessage)
+        strFontClass = "KickFontColor";
+    else if (eMessageCategory == ModeMessage)
+        strFontClass = "ModeFontColor";
+    else if (eMessageCategory == NoticeMessage)
+        strFontClass = "NoticeFontColor";
+    else if (eMessageCategory == InfoMessage)
+        strFontClass = "InfoFontColor";
+    else if (eMessageCategory == MeMessage)
+        strFontClass = "MeFontColor";
+    else if (eMessageCategory == ErrorMessage)
+        strFontClass = "ErrorFontColor";
+    else if (eMessageCategory == HilightMessage)
+        strFontClass = "DefaultFontColor";
     else
-        strFontColor = Core::instance()->settings.value("default_font_color"); // default black
+        strFontClass = "DefaultFontColor";
 
     // convert emoticons, font
     Convert *convertText = new Convert(true);
@@ -114,7 +110,7 @@ QString HtmlMessagesRenderer::renderer(QString strDT, QString strData, MessageCa
     // hilight
     QString strTextDecoration;
     if (eMessageCategory == HilightMessage)
-        strTextDecoration = "text-decoration:underline;";
+        strTextDecoration = "style=\"text-decoration:underline;\"";
 
-    return QString("<span style=\"font-size:%1;%2\">%3<span style=\"color:%4\">%5</span></span>").arg(strFontSize).arg(strTextDecoration).arg(strDT).arg(strFontColor).arg(strData);
+    return QString("<span class=\"DefaultFontColor\" %1>%2<span class=\"%3\">%4</span></span>").arg(strTextDecoration).arg(strDT).arg(strFontClass).arg(strData);
 }

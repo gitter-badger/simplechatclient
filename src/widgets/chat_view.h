@@ -31,7 +31,7 @@ public:
     ChatView(QString);
     void clearMessages();
     void displayMessage(QString &, MessageCategory, QString strTime = QString::null);
-    void updateBackgroundImage();
+    void refreshCSS();
 
 private:
     QString strChatViewChannel;

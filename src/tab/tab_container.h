@@ -44,7 +44,7 @@ public:
 
 public slots:
     void refreshColors();
-    void refreshBackgroundImage();
+    void refreshCSS();
     void showMsg(QString &, QString &, MessageCategory, QString strTime = QString::null);
     void showMsgAll(QString &, MessageCategory);
     void showMsgActive(QString &, MessageCategory);

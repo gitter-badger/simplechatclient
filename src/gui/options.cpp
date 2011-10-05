@@ -465,7 +465,7 @@ void DlgOptions::currentProfileChanged(int row)
     Core::instance()->refreshColors();
 
     // refresh background image
-    Core::instance()->refreshBackgroundImage();
+    Core::instance()->refreshCSS();
 
     // refresh tool widget values
     Core::instance()->refreshToolWidgetValues();
@@ -698,6 +698,9 @@ void DlgOptions::mainwindowRestoreDefault()
 
     // refresh tabs
     Core::instance()->refreshColors();
+
+    // refresh
+    Core::instance()->refreshCSS();
 }
 
 void DlgOptions::setNicklistNickColor()
@@ -860,7 +863,7 @@ void DlgOptions::setBackgroundImage()
         ui.lineEdit_background_image->setText(fileName);
 
         // refresh background image
-        Core::instance()->refreshBackgroundImage();
+        Core::instance()->refreshCSS();
     }
 }
 
@@ -874,7 +877,7 @@ void DlgOptions::disableBackgroundImage(bool bValue)
     delete pConfig;
 
     // refresh background image
-    Core::instance()->refreshBackgroundImage();
+    Core::instance()->refreshCSS();
 }
 
 void DlgOptions::setWinamp()
@@ -949,6 +952,9 @@ void DlgOptions::setColor(QString strKey)
 
         // refresh
         Core::instance()->refreshColors();
+
+        // refresh
+        Core::instance()->refreshCSS();
     }
 }
 

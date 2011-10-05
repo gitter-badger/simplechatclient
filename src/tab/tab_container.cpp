@@ -150,10 +150,10 @@ void TabContainer::refreshColors()
     }
 }
 
-void TabContainer::refreshBackgroundImage()
+void TabContainer::refreshCSS()
 {
     for (int i = 0; i < tw.size(); i++)
-        tw[i]->pChatView->updateBackgroundImage();
+        tw[i]->pChatView->refreshCSS();
 }
 
 void TabContainer::showMsg(QString &strChannel, QString &strData, MessageCategory eMessageCategory, QString strTime)

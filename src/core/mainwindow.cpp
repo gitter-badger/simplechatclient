@@ -384,10 +384,10 @@ void MainWindow::refreshColors()
     pTabC->refreshColors();
 }
 
-// refresh background image
-void MainWindow::refreshBackgroundImage()
+// refresh CSS
+void MainWindow::refreshCSS()
 {
-    pTabC->refreshBackgroundImage();
+    pTabC->refreshCSS();
 }
 
 // refresh inputline color
