@@ -163,5 +163,6 @@ FORMS += ui/about.ui \
     ui/register_nick.ui \
     ui/update.ui \
     ui/user_avatar.ui \
+    ui/webbrowser.ui \
     ui/webcam_mini.ui \
     ui/webcam_standard.ui

@@ -18,47 +18,32 @@
  *                                                                          *
  ****************************************************************************/
 
-#include <QApplication>
 #include <QDesktopWidget>
-#include <QDialogButtonBox>
 #include <QPushButton>
-#include <QVBoxLayout>
 #include "webbrowser.h"
 
 DlgWebBrowser::DlgWebBrowser(QWidget *parent, QUrl url) : QDialog(parent)
 {
+    ui.setupUi(this);
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
     setWindowTitle("YouTube.com");
+    // center screen
+    move(QApplication::desktop()->screen()->rect().center() - rect().center());
 
-    view = new QWebView(this);
-    view->settings()->setAttribute(QWebSettings::PluginsEnabled, true);
-    view->settings()->setAttribute(QWebSettings::AutoLoadImages, true);
-    view->show();
+    ui.webView->settings()->setAttribute(QWebSettings::PluginsEnabled, true);
+    ui.webView->settings()->setAttribute(QWebSettings::AutoLoadImages, true);
 
-    QDialogButtonBox *box = new QDialogButtonBox(this);
-    box->setStandardButtons(QDialogButtonBox::Close);
-    box->show();
-
-    QVBoxLayout *l = new QVBoxLayout();
-    l->addWidget(view);
-    l->addWidget(box);
-    this->setLayout(l);
-
-    box->button(QDialogButtonBox::Close)->setIcon(QIcon(":/images/oxygen/16x16/dialog-close.png"));
+    ui.buttonBox->button(QDialogButtonBox::Close)->setIcon(QIcon(":/images/oxygen/16x16/dialog-close.png"));
 
     // signals
-    QObject::connect(view, SIGNAL(loadFinished(bool)), this, SLOT(loadFinished()));
-    QObject::connect(box, SIGNAL(rejected()), this, SLOT(close()));
+    QObject::connect(ui.webView, SIGNAL(loadFinished(bool)), this, SLOT(loadFinished()));
+    QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(close()));
 
     // load
-    view->load(url);
+    ui.webView->load(url);
 }
 
 void DlgWebBrowser::loadFinished()
 {
-    // set title
-    setWindowTitle(view->title());
-
-    // center screen
-    move(QApplication::desktop()->screen()->rect().center() - rect().center());
+    setWindowTitle(ui.webView->title());
 }

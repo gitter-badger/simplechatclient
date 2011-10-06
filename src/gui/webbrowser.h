@@ -22,8 +22,8 @@
 #define WEBBROWSER_H
 
 #include <QUrl>
-#include <QtWebKit/QWebView>
 #include <QDialog>
+#include "ui_webbrowser.h"
 
 class DlgWebBrowser : public QDialog
 {
@@ -32,7 +32,7 @@ public:
     DlgWebBrowser(QWidget *, QUrl);
 
 private:
-    QWebView *view;
+    Ui::uiWebBrowser ui;
 
 private slots:
     void loadFinished();
