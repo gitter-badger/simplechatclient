@@ -18,6 +18,8 @@
  *                                                                          *
  ****************************************************************************/
 
+#include <QApplication>
+#include <QDesktopWidget>
 #include <QDialogButtonBox>
 #include <QVBoxLayout>
 #include "webbrowser.h"
@@ -26,7 +28,6 @@ DlgWebBrowser::DlgWebBrowser(QWidget *parent, QUrl url) : QDialog(parent)
 {
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
     setWindowTitle("YouTube.com");
-    setFocusPolicy(Qt::NoFocus);
 
     view = new QWebView(this);
     view->settings()->setAttribute(QWebSettings::PluginsEnabled, true);
@@ -52,5 +53,9 @@ DlgWebBrowser::DlgWebBrowser(QWidget *parent, QUrl url) : QDialog(parent)
 
 void DlgWebBrowser::loadFinished()
 {
+    // set title
     setWindowTitle(view->title());
+
+    // center screen
+    move(QApplication::desktop()->screen()->rect().center() - rect().center());
 }
