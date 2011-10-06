@@ -21,6 +21,7 @@
 #include <QApplication>
 #include <QDesktopWidget>
 #include <QDialogButtonBox>
+#include <QPushButton>
 #include <QVBoxLayout>
 #include "webbrowser.h"
 
@@ -43,7 +44,9 @@ DlgWebBrowser::DlgWebBrowser(QWidget *parent, QUrl url) : QDialog(parent)
     l->addWidget(box);
     this->setLayout(l);
 
-    // close button
+    box->button(QDialogButtonBox::Close)->setIcon(QIcon(":/images/oxygen/16x16/dialog-close.png"));
+
+    // signals
     QObject::connect(view, SIGNAL(loadFinished(bool)), this, SLOT(loadFinished()));
     QObject::connect(box, SIGNAL(rejected()), this, SLOT(close()));
 
