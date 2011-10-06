@@ -18,67 +18,39 @@
  *                                                                          *
  ****************************************************************************/
 
-#ifndef CHAT_VIEW_H
-#define CHAT_VIEW_H
+#include <QDialogButtonBox>
+#include <QVBoxLayout>
+#include "webbrowser.h"
 
-#include "defines.h"
-#include <QtWebKit/QWebView>
-
-class ChatView : public QWebView
+DlgWebBrowser::DlgWebBrowser(QWidget *parent, QUrl url) : QDialog(parent)
 {
-    Q_OBJECT
-public:
-    ChatView(QString);
-    void clearMessages();
-    void displayMessage(QString &, MessageCategory, QString strTime = QString::null);
-    void refreshCSS();
+    setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
+    setWindowTitle("YouTube.com");
+    setFocusPolicy(Qt::NoFocus);
 
-private:
-    QString strChatViewChannel;
-    QString strChannel;
-    QString strNick;
-    QString strWebsite;
-    QAction *openChannelsActs[maxOpenChannels];
-    bool bScroll;
+    view = new QWebView(this);
+    view->settings()->setAttribute(QWebSettings::PluginsEnabled, true);
+    view->settings()->setAttribute(QWebSettings::AutoLoadImages, true);
+    view->show();
 
-    void createBody();
-    void menuNick(QContextMenuEvent *);
-    void menuChannel(QContextMenuEvent *);
-    void menuWebsite(QContextMenuEvent *);
-    void menuStandard(QContextMenuEvent *);
+    QDialogButtonBox *box = new QDialogButtonBox(this);
+    box->setStandardButtons(QDialogButtonBox::Close);
+    box->show();
 
-private slots:
-    void joinChannel();
-    void priv();
-    void whois();
-    void profile();
-    void cam();
-    void friendsAdd();
-    void friendsDel();
-    void ignoreAdd();
-    void ignoreDel();
-    void kick();
-    void ban();
-    void kban();
-    void ipban();
-    void opAdd();
-    void opDel();
-    void halfopAdd();
-    void halfopDel();
-    void moderatorAdd();
-    void moderatorDel();
-    void voiceAdd();
-    void voiceDel();
-    void invite();
-    void watchVideo();
-    void openWebbrowser();
-    void sendToNotes();
-    void search();
-    void clear();
-    void scrollToBottom();
+    QVBoxLayout *l = new QVBoxLayout();
+    l->addWidget(view);
+    l->addWidget(box);
+    this->setLayout(l);
 
-protected:
-    virtual void contextMenuEvent(QContextMenuEvent *);
-};
+    // close button
+    QObject::connect(view, SIGNAL(loadFinished(bool)), this, SLOT(loadFinished()));
+    QObject::connect(box, SIGNAL(rejected()), this, SLOT(close()));
 
-#endif // CHAT_VIEW_H
+    // load
+    view->load(url);
+}
+
+void DlgWebBrowser::loadFinished()
+{
+    setWindowTitle(view->title());
+}

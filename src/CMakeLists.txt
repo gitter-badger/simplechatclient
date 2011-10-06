@@ -67,6 +67,7 @@ set (scc_SRCS
 	gui/update.cpp
 	gui/user_avatar.cpp
 	gui/user_profile.cpp
+	gui/webbrowser.cpp
 	notify/notify.cpp
 	onet/captcha.cpp
 	onet/onet_auth.cpp
@@ -122,6 +123,7 @@ set (scc_MOC_HDRS
 	gui/update.h
 	gui/user_avatar.h
 	gui/user_profile.h
+	gui/webbrowser.h
 	notify/notify.h
 	onet/captcha.h
 	onet/onet_auth.h

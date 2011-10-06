@@ -35,6 +35,7 @@
 #include "html_messages_renderer.h"
 #include "log.h"
 #include "notify.h"
+#include "webbrowser.h"
 #include "chat_view.h"
 
 #ifdef Q_WS_WIN
@@ -333,6 +334,25 @@ void ChatView::invite()
     }
 }
 
+void ChatView::watchVideo()
+{
+    QString strYoutubeLink;
+
+    QRegExp exYoutube_1("youtube.com/watch\\?v=([a-zA-Z0-9_-]{11})");
+    QRegExp exYoutube_2("youtube.com/v/([a-zA-Z0-9_-]{11})");
+    QRegExp exYoutube_3("youtu.be/([a-zA-Z0-9_-]{11})");
+
+    if (exYoutube_1.indexIn(strWebsite) > -1)
+        strYoutubeLink = "http://www.youtube.com/embed/"+exYoutube_1.cap(1);
+    if (exYoutube_2.indexIn(strWebsite) > -1)
+        strYoutubeLink = "http://www.youtube.com/embed/"+exYoutube_2.cap(1);
+    if (exYoutube_3.indexIn(strWebsite) > -1)
+        strYoutubeLink = "http://www.youtube.com/embed/"+exYoutube_3.cap(1);
+
+    if (QUrl(strYoutubeLink).isValid())
+        DlgWebBrowser(this, QUrl(strYoutubeLink)).exec();
+}
+
 void ChatView::openWebbrowser()
 {
     QDesktopServices::openUrl(QUrl(strWebsite, QUrl::TolerantMode));
@@ -533,6 +553,14 @@ void ChatView::menuWebsite(QContextMenuEvent *event)
 
     menu.addAction(websiteLinkAct);
     menu.addSeparator();
+
+    QRegExp exYoutube_1("youtube.com/watch\\?v=([a-zA-Z0-9_-]{11})");
+    QRegExp exYoutube_2("youtube.com/v/([a-zA-Z0-9_-]{11})");
+    QRegExp exYoutube_3("youtu.be/([a-zA-Z0-9_-]{11})");
+
+    if ((strWebsite.contains(exYoutube_1)) || (strWebsite.contains(exYoutube_2)) || (strWebsite.contains(exYoutube_3)))
+        menu.addAction(QIcon(":/images/oxygen/16x16/tool-animator.png"), tr("Watch video"), this, SLOT(watchVideo()));
+
     menu.addAction(QIcon(":/images/oxygen/16x16/applications-internet.png"), tr("Open link"), this, SLOT(openWebbrowser()));
 
     menu.exec(event->globalPos());

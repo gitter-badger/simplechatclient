@@ -52,6 +52,7 @@ SOURCES += src/avatars/avatar.cpp \
     src/gui/update.cpp \
     src/gui/user_avatar.cpp \
     src/gui/user_profile.cpp \
+    src/gui/webbrowser.cpp \
     src/gui/webcam.cpp \
     src/gui/webcam_mini.cpp \
     src/gui/webcam_standard.cpp \
@@ -117,6 +118,7 @@ HEADERS += src/avatars/avatar.h \
     src/gui/update.h \
     src/gui/user_avatar.h \
     src/gui/user_profile.h \
+    src/gui/webbrowser.h \
     src/gui/webcam.h \
     src/gui/webcam_mini.h \
     src/gui/webcam_standard.h \

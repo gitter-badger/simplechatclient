@@ -18,67 +18,24 @@
  *                                                                          *
  ****************************************************************************/
 
-#ifndef CHAT_VIEW_H
-#define CHAT_VIEW_H
+#ifndef WEBBROWSER_H
+#define WEBBROWSER_H
 
-#include "defines.h"
+#include <QUrl>
 #include <QtWebKit/QWebView>
+#include <QDialog>
 
-class ChatView : public QWebView
+class DlgWebBrowser : public QDialog
 {
     Q_OBJECT
 public:
-    ChatView(QString);
-    void clearMessages();
-    void displayMessage(QString &, MessageCategory, QString strTime = QString::null);
-    void refreshCSS();
+    DlgWebBrowser(QWidget *, QUrl);
 
 private:
-    QString strChatViewChannel;
-    QString strChannel;
-    QString strNick;
-    QString strWebsite;
-    QAction *openChannelsActs[maxOpenChannels];
-    bool bScroll;
-
-    void createBody();
-    void menuNick(QContextMenuEvent *);
-    void menuChannel(QContextMenuEvent *);
-    void menuWebsite(QContextMenuEvent *);
-    void menuStandard(QContextMenuEvent *);
+    QWebView *view;
 
 private slots:
-    void joinChannel();
-    void priv();
-    void whois();
-    void profile();
-    void cam();
-    void friendsAdd();
-    void friendsDel();
-    void ignoreAdd();
-    void ignoreDel();
-    void kick();
-    void ban();
-    void kban();
-    void ipban();
-    void opAdd();
-    void opDel();
-    void halfopAdd();
-    void halfopDel();
-    void moderatorAdd();
-    void moderatorDel();
-    void voiceAdd();
-    void voiceDel();
-    void invite();
-    void watchVideo();
-    void openWebbrowser();
-    void sendToNotes();
-    void search();
-    void clear();
-    void scrollToBottom();
-
-protected:
-    virtual void contextMenuEvent(QContextMenuEvent *);
+    void loadFinished();
 };
 
-#endif // CHAT_VIEW_H
+#endif // WEBBROWSER_H
