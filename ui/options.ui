@@ -370,7 +370,7 @@
         <x>0</x>
         <y>0</y>
         <width>441</width>
-        <height>371</height>
+        <height>231</height>
        </rect>
       </property>
       <property name="currentIndex">
@@ -643,32 +643,6 @@
          </item>
         </layout>
        </widget>
-       <widget class="QPushButton" name="pushButton_mainwindow_restore_default">
-        <property name="geometry">
-         <rect>
-          <x>130</x>
-          <y>230</y>
-          <width>180</width>
-          <height>24</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Restore default</string>
-        </property>
-       </widget>
-       <widget class="QPushButton" name="pushButton_mainwindow_reverse_colors">
-        <property name="geometry">
-         <rect>
-          <x>130</x>
-          <y>200</y>
-          <width>181</width>
-          <height>24</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Reverse colors</string>
-        </property>
-       </widget>
       </widget>
       <widget class="QWidget" name="tabWidgetPage2">
        <attribute name="title">
@@ -800,33 +774,33 @@
          </item>
         </layout>
        </widget>
-       <widget class="QPushButton" name="pushButton_nicklist_restore_default">
-        <property name="geometry">
-         <rect>
-          <x>130</x>
-          <y>230</y>
-          <width>180</width>
-          <height>24</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Restore default</string>
-        </property>
-       </widget>
-       <widget class="QPushButton" name="pushButton_nicklist_reverse_colors">
-        <property name="geometry">
-         <rect>
-          <x>130</x>
-          <y>200</y>
-          <width>181</width>
-          <height>24</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Reverse colors</string>
-        </property>
-       </widget>
       </widget>
+     </widget>
+     <widget class="QPushButton" name="pushButton_restore_default_colors">
+      <property name="geometry">
+       <rect>
+        <x>130</x>
+        <y>270</y>
+        <width>180</width>
+        <height>24</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Restore default</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pushButton_reverse_colors">
+      <property name="geometry">
+       <rect>
+        <x>130</x>
+        <y>240</y>
+        <width>181</width>
+        <height>24</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Reverse colors</string>
+      </property>
      </widget>
     </widget>
     <widget class="QWidget" name="page_6">

@@ -60,6 +60,8 @@ private slots:
     void hideJoinPart200(bool);
     void disableEmots(bool);
     void disableReplaces(bool);
+    void reverseColors();
+    void restoreDefaultColors();
     void setBackgroundColor();
     void setDefaultFontColor();
     void setJoinFontColor();
@@ -72,15 +74,11 @@ private slots:
     void setMeFontColor();
     void setErrorFontColor();
     void setChannelFontColor();
-    void mainwindowReverseColors();
-    void mainwindowRestoreDefault();
     void setNicklistNickColor();
     void setNicklistSelectedNickColor();
     void setNicklistBusyNickColor();
     void setNicklistGradient1Color();
     void setNicklistGradient2Color();
-    void nicklistReverseColors();
-    void nicklistRestoreDefault();
     void tryPlayBeep();
     void tryPlayQuery();
     void setSoundBeep();
