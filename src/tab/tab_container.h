@@ -45,12 +45,11 @@ public:
 public slots:
     void refreshColors();
     void refreshCSS();
-    void showMsg(QString &, QString &, MessageCategory, QString strTime = QString::null);
-    void showMsgAll(QString &, MessageCategory);
-    void showMsgActive(QString &, MessageCategory);
+    void showMessage(QString &, QString &, MessageCategory, QString strTime = QString::null, QString strNick = QString::null);
+    void showMessageAll(QString &, MessageCategory);
+    void showMessageActive(QString &, MessageCategory);
     void setTopic(QString &, QString &);
     void authorTopic(QString &, QString &);
-    void displayMessage(QString &, QString &, MessageCategory);
     void setChannelAvatar(QString);
     void clearContent(QString);
     // nicklist
@@ -62,6 +61,8 @@ public slots:
     void nicklistRefresh(QString);
     void clearAllNicklist();
     void setUserAvatar(QString, QByteArray);
+    void setUserAvatarLink(QString, QString);
+    QString getUserAvatarLink(QString);
     int getUserCount(QString);
     QString getUserModes(QString, QString);
     QList<QString> getUserList(QString);
@@ -73,6 +74,7 @@ private:
     QList<TabWidget*> tw;
 
     int getIndex(QString);
+    bool isHilightMessage(QString);
 
 signals:
     void setModeration(bool);

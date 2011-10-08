@@ -33,6 +33,8 @@ public:
     void delUser(QString);
     bool existUser(QString);
     void updateUserAvatar(QString, QByteArray);
+    void updateUserAvatarLink(QString, QString);
+    QString getUserAvatarLink(QString);
     void changeUserFlag(QString, QString);
     QString getUserModes(QString);
     QList<QString> getUserList();

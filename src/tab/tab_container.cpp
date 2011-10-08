@@ -52,6 +52,19 @@ TabContainer::~TabContainer()
     }
 }
 
+bool TabContainer::isHilightMessage(QString strData)
+{
+    QString strMe = Core::instance()->settings["nick"];
+    QStringList lData = strData.split(" ");
+
+    for (int i = 0; i < lData.size(); i++)
+    {
+        if (lData[i] == strMe)
+            return true;
+    }
+    return false;
+}
+
 int TabContainer::getIndex(QString strName)
 {
     for (int i = 0; i < tw.size(); i++)
@@ -156,19 +169,13 @@ void TabContainer::refreshCSS()
         tw[i]->pChatView->refreshCSS();
 }
 
-void TabContainer::showMsg(QString &strChannel, QString &strData, MessageCategory eMessageCategory, QString strTime)
+void TabContainer::showMessage(QString &strChannel, QString &strData, MessageCategory eMessageCategory, QString strTime, QString strNick)
 {
     int i = getIndex(strChannel);
     if (i != -1)
     {
         // hilight
-        QString strMe = Core::instance()->settings.value("nick");
-        QRegExp re;
-        if (strMe[0] == '~')
-            re.setPattern(strMe+"\\b");
-        else
-            re.setPattern("[^~]\\b"+strMe+"\\b");
-        bool bHilightMessage = strData.contains(re) ? true : false;
+        bool bHilightMessage = isHilightMessage(strData);
 
         if ((bHilightMessage) && (eMessageCategory == DefaultMessage))
         {
@@ -196,11 +203,11 @@ void TabContainer::showMsg(QString &strChannel, QString &strData, MessageCategor
         }
 
         // display
-        tw[i]->pChatView->displayMessage(strData, eMessageCategory, strTime);
+        tw[i]->pChatView->displayMessage(strData, eMessageCategory, strTime, strNick);
     }
 }
 
-void TabContainer::showMsgAll(QString &strData, MessageCategory eMessageCategory)
+void TabContainer::showMessageAll(QString &strData, MessageCategory eMessageCategory)
 {
     for (int i = 0; i < tw.size(); i++)
     {
@@ -217,7 +224,7 @@ void TabContainer::showMsgAll(QString &strData, MessageCategory eMessageCategory
     }
 }
 
-void TabContainer::showMsgActive(QString &strData, MessageCategory eMessageCategory)
+void TabContainer::showMessageActive(QString &strData, MessageCategory eMessageCategory)
 {
     for (int i = 0; i < tw.size(); i++)
     {
@@ -266,13 +273,6 @@ void TabContainer::authorTopic(QString &strChannel, QString &strNick)
         QString strTopicDetails = QString(tr("Topic set by %1")).arg(strNick);
         tw[i]->topic->setToolTip(strTopicDetails);
     }
-}
-
-void TabContainer::displayMessage(QString &strChannel, QString &strData, MessageCategory eMessageCategory)
-{
-    int i = getIndex(strChannel);
-    if (i != -1)
-        tw[i]->pChatView->displayMessage(strData, eMessageCategory);
 }
 
 void TabContainer::setChannelAvatar(QString strChannel)
@@ -330,7 +330,7 @@ void TabContainer::quitUser(QString strNick, QString strDisplay)
             QString strChannel = tw[i]->getName();
             QString strDisplayAll = strDisplay;
 
-            showMsg(strChannel, strDisplayAll, QuitMessage);
+            showMessage(strChannel, strDisplayAll, QuitMessage);
             tw[i]->pNickListWidget->delUser(strNick);
             tw[i]->users->setText(QString(tr("Users (%1)").arg(tw[i]->pNickListWidget->count())));
 
@@ -399,6 +399,25 @@ void TabContainer::setUserAvatar(QString strNick, QByteArray bData)
         if (tw[i]->pNickListWidget->existUser(strNick))
             tw[i]->pNickListWidget->updateUserAvatar(strNick, bData);
     }
+}
+
+void TabContainer::setUserAvatarLink(QString strNick, QString strValue)
+{
+    for (int i = 0; i < tw.size(); i++)
+    {
+        if (tw[i]->pNickListWidget->existUser(strNick))
+            tw[i]->pNickListWidget->updateUserAvatarLink(strNick, strValue);
+    }
+}
+
+QString TabContainer::getUserAvatarLink(QString strNick)
+{
+    for (int i = 0; i < tw.size(); i++)
+    {
+        if (tw[i]->pNickListWidget->existUser(strNick))
+            return tw[i]->pNickListWidget->getUserAvatarLink(strNick);
+    }
+    return QString::null;
 }
 
 int TabContainer::getUserCount(QString strChannel)

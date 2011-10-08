@@ -499,28 +499,28 @@ void DlgChannelSettings::refreshChannelStats()
 
         if (strKey == "histWords")
         {
-            QStringList strlWords = strValue.split(",");
-            QList<int> lWords;
+            QStringList lWords = strValue.split(",");
+            QList<int> lIWords;
 
             int iWords = 0;
-            for (int i = 0; i < strlWords.size(); i++)
+            for (int i = 0; i < lWords.size(); i++)
             {
                 bool ok;
-                int iWord = strlWords.at(i).toInt(&ok, 16);
+                int iWord = lWords.at(i).toInt(&ok, 16);
 
                 // add to list
-                lWords.append(iWord);
+                lIWords.append(iWord);
 
                 // add to average words
                 iWords += iWord;
             }
 
             // average words
-            iWords /= strlWords.size();
+            iWords /= lWords.size();
             ui.label_stats_words->setText(QString::number(iWords));
 
             // simple stats widget
-            pSimpleStatsWidget->setStats(lWords);
+            pSimpleStatsWidget->setStats(lIWords);
         }
         else if (strKey == "relationsFavourite")
             ui.label_stats_favourites->setText(strValue);
@@ -660,11 +660,11 @@ void DlgChannelSettings::topicChanged()
     strFontName = ui.comboBox_font->currentText().toLower();
 
     // font color
-    QStringList strlFontColors;
-    strlFontColors << "#000000" << "#623c00" << "#c86c00" << "#ff6500" << "#ff0000" << "#e40f0f" << "#990033" << "#8800ab" << "#ce00ff" << "#0f2ab1" << "#3030ce" << "#006699" << "#1a866e" << "#008100" << "#959595";
+    QStringList lFontColors;
+    lFontColors << "#000000" << "#623c00" << "#c86c00" << "#ff6500" << "#ff0000" << "#e40f0f" << "#990033" << "#8800ab" << "#ce00ff" << "#0f2ab1" << "#3030ce" << "#006699" << "#1a866e" << "#008100" << "#959595";
 
     if (ui.comboBox_color->currentIndex() != -1)
-        strFontColor = strlFontColors.at(ui.comboBox_color->currentIndex());
+        strFontColor = lFontColors.at(ui.comboBox_color->currentIndex());
 
     // set topic
     if (bBold) strFontWeight += "b";

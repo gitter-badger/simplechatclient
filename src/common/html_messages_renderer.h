@@ -29,7 +29,7 @@ class HtmlMessagesRenderer : public QObject
     Q_OBJECT
 public:
     HtmlMessagesRenderer(QObject *parent = 0);
-    QString renderer(QString, QString, MessageCategory);
+    QString renderer(QString, QString, MessageCategory, QString strShortDT = QString::null, QString strNick = QString::null);
 };
 
 #endif // HTML_MESSAGES_RENDERER_H

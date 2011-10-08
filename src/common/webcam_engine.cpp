@@ -144,16 +144,16 @@ void WebcamEngine::raw_250b(QByteArray &data)
             if (!strChannelsParams.isEmpty())
             {
                 QString strAllChannels;
-                QStringList strlChannelsParams = strChannelsParams.split(",");
-                foreach (QString strChannelParams, strlChannelsParams)
+                QStringList lChannelsParams = strChannelsParams.split(",");
+                foreach (QString strChannelParams, lChannelsParams)
                 {
-                    QStringList strlChannelParams = strChannelParams.split("/");
-                    if (strlChannelParams.size() == 4)
+                    QStringList lChannelParams = strChannelParams.split("/");
+                    if (lChannelParams.size() == 4)
                     {
-                        QString strChannelCategory = strlChannelParams[0];
-                        QString strUnknown = strlChannelParams[1]; // always 0 (?)
-                        QString strChannelName = strlChannelParams[2];
-                        QString strCamPubPriv = strlChannelParams[3]; // 0 = public; 1 = private
+                        QString strChannelCategory = lChannelParams[0];
+                        QString strUnknown = lChannelParams[1]; // always 0 (?)
+                        QString strChannelName = lChannelParams[2];
+                        QString strCamPubPriv = lChannelParams[3]; // 0 = public; 1 = private
 
                         if ((strChannelName[0] == '#') || (strChannelName[0] == '^'))
                             strAllChannels += strChannelName+" ";
@@ -196,16 +196,16 @@ void WebcamEngine::raw_251b(QByteArray &data)
             {
                 QString strAllChannels;
 
-                QStringList strlChannelsParams = strChannelsParams.split(",");
-                foreach (QString strChannelParams, strlChannelsParams)
+                QStringList lChannelsParams = strChannelsParams.split(",");
+                foreach (QString strChannelParams, lChannelsParams)
                 {
-                    QStringList strlChannelParams = strChannelParams.split("/");
-                    if (strlChannelParams.size() == 4)
+                    QStringList lChannelParams = strChannelParams.split("/");
+                    if (lChannelParams.size() == 4)
                     {
-                        QString strChannelCategory = strlChannelParams[0];
-                        QString strUnknown = strlChannelParams[1]; // always 0 (?)
-                        QString strChannelName = strlChannelParams[2];
-                        QString strCamPubPriv = strlChannelParams[3]; // 0 = public; 1 = private
+                        QString strChannelCategory = lChannelParams[0];
+                        QString strUnknown = lChannelParams[1]; // always 0 (?)
+                        QString strChannelName = lChannelParams[2];
+                        QString strCamPubPriv = lChannelParams[3]; // 0 = public; 1 = private
 
                         if ((strChannelName[0] == '#') || (strChannelName[0] == '^'))
                             strAllChannels += strChannelName+" ";

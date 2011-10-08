@@ -18,6 +18,7 @@
  *                                                                          *
  ****************************************************************************/
 
+#include <QFile>
 #include "convert.h"
 #include "core.h"
 #include "html_messages_renderer.h"
@@ -26,7 +27,7 @@ HtmlMessagesRenderer::HtmlMessagesRenderer(QObject *parent) : QObject(parent)
 {
 }
 
-QString HtmlMessagesRenderer::renderer(QString strDT, QString strData, MessageCategory eMessageCategory)
+QString HtmlMessagesRenderer::renderer(QString strDT, QString strData, MessageCategory eMessageCategory, QString strShortDT, QString strNick)
 {
     // fix data
     strData.replace("&", "&amp;");
@@ -42,9 +43,7 @@ QString HtmlMessagesRenderer::renderer(QString strDT, QString strData, MessageCa
     {
         QString strWord = strDataList[i];
 
-        if ((i == 0) && (strWord.startsWith("&lt;")) && (strWord.endsWith("&gt;")))
-            strDataList[i] = "<a href=\"#\" onclick=\"return false\" name=\"nick\" style=\"color:inherit;text-decoration:none;\">"+strDataList[i]+"</a>";
-        if ((i == 1) && (strDataList[i-1] == "*") && ((eMessageCategory == JoinMessage) || (eMessageCategory == PartMessage) || (eMessageCategory == QuitMessage)  || (eMessageCategory == KickMessage)))
+        if ((i == 1) && (strDataList[0] == "*") && ((eMessageCategory == JoinMessage) || (eMessageCategory == PartMessage) || (eMessageCategory == QuitMessage)  || (eMessageCategory == KickMessage)))
             strDataList[i] = "<a href=\"#\" onclick=\"return false\" name=\"nick\" style=\"color:inherit;text-decoration:none;\">"+strDataList[i]+"</a>";
         if (strWord[0] == '#')
             strDataList[i] = "<a href=\"#\" onclick=\"return false\" name=\"channel\" class=\"ChannelFontColor\" style=\"text-decoration:none;\">"+strDataList[i]+"</a>";
@@ -107,10 +106,47 @@ QString HtmlMessagesRenderer::renderer(QString strDT, QString strData, MessageCa
     convertText->convertText(strData);
     delete convertText;
 
+#ifndef Q_WS_WIN
+    // fix linux img src
+    strData.replace("img src=\"", "img src=\"file://");
+#endif
+
     // hilight
     QString strTextDecoration;
     if (eMessageCategory == HilightMessage)
         strTextDecoration = "style=\"text-decoration:underline;\"";
 
-    return QString("<span class=\"DefaultFontColor\" %1>%2<span class=\"%3\">%4</span></span>").arg(strTextDecoration).arg(strDT).arg(strFontClass).arg(strData);
+    QString strThemes = Core::instance()->settings["themes"];
+// NoticeMessage MeMessage
+    if (!strNick.isEmpty())
+    {
+        if (strThemes == "Adara")
+        {
+            QString strUserAvatarImg;
+            QString strUserAvatarLink = Core::instance()->getUserAvatarLink(strNick);
+            if (strUserAvatarLink.isEmpty())
+            {
+                QFile file(":/images/user_avatar.png");
+                if (file.open(QIODevice::ReadOnly))
+                {
+                    strUserAvatarLink = QString("data:image/png;base64,%1").arg(QString(file.readAll().toBase64()));
+                    strUserAvatarImg = QString("<img src=\"%1\" alt=\"avatar\" width=\"30px\" height=\"30px\" class=\"avatar\" />").arg(strUserAvatarLink);
+                    file.close();
+                }
+            }
+            else
+                strUserAvatarImg = QString("<img src=\"%1\" alt=\"avatar\" width=\"30px\" height=\"30px\" class=\"avatar\" />").arg(strUserAvatarLink);
+
+            return QString("%1<span class=\"DefaultFontColor\"><a href=\"#\" onclick=\"return false\" name=\"nick\" style=\"color:inherit;text-decoration:none;\">%2</a>: </span><span class=\"%3\" %4>%5</span><span class=\"time\">%6</span>").arg(strUserAvatarImg).arg(strNick).arg(strFontClass).arg(strTextDecoration).arg(strData).arg(strShortDT);
+        }
+        else
+            return QString("<span class=\"DefaultFontColor\">%1 &lt;<a href=\"#\" onclick=\"return false\" name=\"nick\" style=\"color:inherit;text-decoration:none;\">%2</a>&gt; <span class=\"%3\" %4>%5</span></span>").arg(strDT).arg(strNick).arg(strFontClass).arg(strTextDecoration).arg(strData);
+    }
+    else
+    {
+        if (strThemes == "Adara")
+            return QString("&nbsp;<span class=\"%1\">%2</span><span class=\"time\">%3</span>").arg(strFontClass).arg(strData).arg(strShortDT);
+        else
+            return QString("<span class=\"DefaultFontColor\">%1 <span class=\"%2\">%3</span></span>").arg(strDT).arg(strFontClass).arg(strData);
+    }
 }

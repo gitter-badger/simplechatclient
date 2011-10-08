@@ -783,11 +783,11 @@ void ToolWidget::sendMessage(QString strText, bool bModeration)
         // help
         if ((strTextList[0] == "help") || (strTextList[0] == "pomoc"))
         {
-            QStringList strlHelp = strText.split(";");
-            for (int i = 0; i < strlHelp.size(); i++)
+            QStringList lHelp = strText.split(";");
+            for (int i = 0; i < lHelp.size(); i++)
             {
-                QString strDisplay = strlHelp.at(i);
-                emit showMsg(strChannel, strDisplay, InfoMessage);
+                QString strDisplay = lHelp.at(i);
+                emit showMessage(strChannel, strDisplay, InfoMessage);
             }
         }
         else if ((strTextList[0] == "mp3") || (strTextList[0] == "winamp"))
@@ -810,8 +810,7 @@ void ToolWidget::sendMessage(QString strText, bool bModeration)
                 strText = "%F"+weight+font+"%"+strText;
 
             Core::instance()->pNetwork->send(QString("PRIVMSG %1 :%2").arg(strChannel).arg(strText));
-            QString strDisplay = QString("<%1> %2").arg(strMe).arg(strText);
-            emit displayMessage(strChannel, strDisplay, DefaultMessage);
+            emit showMessage(strChannel, strText, DefaultMessage, QString::null, strMe);
         }
         // me
         else if (strTextList[0] == "me")
@@ -844,8 +843,8 @@ void ToolWidget::sendMessage(QString strText, bool bModeration)
                 delete pReplace;
 
                 Core::instance()->pNetwork->send(strTextSend);
-                QString strDisplay = QString("<%1> %2ACTION %3%4").arg(strMe).arg(QString(QByteArray("\x01"))).arg(strTextDisplay).arg(QString(QByteArray("\x01")));
-                emit displayMessage(strChannel, strDisplay, MeMessage);
+                QString strDisplay = QString("%1ACTION %2%3").arg(QString(QByteArray("\x01"))).arg(strTextDisplay).arg(QString(QByteArray("\x01")));
+                emit showMessage(strChannel, strDisplay, MeMessage, QString::null, strMe);
             }
         }
         // other command
@@ -883,16 +882,16 @@ void ToolWidget::sendMessage(QString strText, bool bModeration)
         {
             strText = QString("PRIVMSG %1 :%2").arg(strChannel).arg(strText);
             Core::instance()->pNetwork->send(strText);
-            QString strDisplay = QString("<%1> %2").arg(strMe).arg(strText.right(strText.length()-10-strChannel.length()));
-            emit displayMessage(strChannel, strDisplay, DefaultMessage);
+            QString strDisplay = strText.right(strText.length()-10-strChannel.length());
+            emit showMessage(strChannel, strDisplay, DefaultMessage, QString::null, strMe);
         }
         // moder notice
         else if (bModeration)
         {
             strText = QString("MODERNOTICE %1 :%2").arg(strChannel).arg(strText);
             Core::instance()->pNetwork->send(strText);
-            QString strDisplay = QString("*<%1> %2").arg(strMe).arg(strText.right(strText.length()-14-strChannel.length()));
-            emit displayMessage(strChannel, strDisplay, NoticeMessage);
+            QString strDisplay = strText.right(strText.length()-14-strChannel.length());
+            emit showMessage(strChannel, strDisplay, NoticeMessage, QString::null, strMe);
         }
     }
 }

@@ -314,8 +314,8 @@ void MainWindow::createSignals()
     QObject::connect(pTabM, SIGNAL(currentChanged(int)), this, SLOT(currentTabChanged(int)));
 
     // signals pToolWidget
-    QObject::connect(pToolWidget, SIGNAL(showMsg(QString&,QString&,MessageCategory)), pTabC, SLOT(showMsg(QString&,QString&,MessageCategory)));
-    QObject::connect(pToolWidget, SIGNAL(displayMessage(QString&,QString&,MessageCategory)), pTabC, SLOT(displayMessage(QString&,QString&,MessageCategory)));
+    QObject::connect(pToolWidget, SIGNAL(showMessage(QString&,QString&,MessageCategory)), pTabC, SLOT(showMessage(QString&,QString&,MessageCategory)));
+    QObject::connect(pToolWidget, SIGNAL(showMessage(QString&,QString&,MessageCategory,QString,QString)), pTabC, SLOT(showMessage(QString&,QString&,MessageCategory,QString,QString)));
     QObject::connect(pToolWidget, SIGNAL(ctrlTabPressed()), this, SLOT(ctrlTabPressed()));
     QObject::connect(pToolWidget, SIGNAL(ctrlShiftTabPressed()), this, SLOT(ctrlShiftTabPressed()));
 
@@ -333,8 +333,8 @@ void MainWindow::createSignals()
     QObject::connect(Core::instance()->pNetwork, SIGNAL(setConnectEnabled(bool)), this, SLOT(setConnectEnabled(bool)));
     QObject::connect(Core::instance()->pNetwork, SIGNAL(kernel(QString)), pOnetKernel, SLOT(kernel(QString)));
     QObject::connect(Core::instance()->pNetwork, SIGNAL(authorize(QString,QString,QString)), pOnetAuth, SLOT(authorize(QString,QString,QString)));
-    QObject::connect(Core::instance()->pNetwork, SIGNAL(showMsgActive(QString&,MessageCategory)), pTabC, SLOT(showMsgActive(QString&,MessageCategory)));
-    QObject::connect(Core::instance()->pNetwork, SIGNAL(showMsgAll(QString&,MessageCategory)), pTabC, SLOT(showMsgAll(QString&,MessageCategory)));
+    QObject::connect(Core::instance()->pNetwork, SIGNAL(showMessageActive(QString&,MessageCategory)), pTabC, SLOT(showMessageActive(QString&,MessageCategory)));
+    QObject::connect(Core::instance()->pNetwork, SIGNAL(showMessageAll(QString&,MessageCategory)), pTabC, SLOT(showMessageAll(QString&,MessageCategory)));
     QObject::connect(Core::instance()->pNetwork, SIGNAL(updateNick(QString)), pToolWidget, SLOT(updateNick(QString)));
     QObject::connect(Core::instance()->pNetwork, SIGNAL(clearAllNicklist()), pTabC, SLOT(clearAllNicklist()));
     QObject::connect(Core::instance()->pNetwork, SIGNAL(updateActions()), this, SLOT(updateActions()));
@@ -349,8 +349,8 @@ void MainWindow::showWelcome()
     QString strWelcome = "%Fi:courier%"+tr("Welcome to the Simple Chat Client")+" %Ihehe%";
     QString strWebsite = "%Fb:courier%%C008100%"+tr("Official website")+" SCC%C3030ce%: http://simplechatclien.sf.net/ %Izaskoczony%";
     pTabC->addTab(strStatus);
-    pTabC->showMsg(strStatus, strWelcome, DefaultMessage);
-    pTabC->showMsg(strStatus, strWebsite, DefaultMessage);
+    pTabC->showMessage(strStatus, strWelcome, DefaultMessage);
+    pTabC->showMessage(strStatus, strWebsite, DefaultMessage);
 }
 
 void MainWindow::showOptions()
@@ -688,6 +688,11 @@ QList<QString> MainWindow::getUserList(QString strChannel)
     return pTabC->getUserList(strChannel);
 }
 
+QString MainWindow::getUserAvatarLink(QString strNick)
+{
+    return pTabC->getUserAvatarLink(strNick);
+}
+
 void MainWindow::timeoutAutoaway()
 {
     if ((Core::instance()->pNetwork->isConnected()) && (Core::instance()->pNetwork->isWritable()) && (Core::instance()->settings.value("logged") == "on"))
@@ -730,7 +735,7 @@ void MainWindow::resizeEvent(QResizeEvent *e)
     pTabC->resizeMainWindow(e->size());
 }
 
-void MainWindow::displayMessage(QString &strChannel, QString &strData, MessageCategory eMessageCategory)
+void MainWindow::showMessage(QString &strChannel, QString &strData, MessageCategory eMessageCategory, QString strTime, QString strNick)
 {
-    pTabC->displayMessage(strChannel, strData, eMessageCategory);
+    pTabC->showMessage(strChannel, strData, eMessageCategory, strTime, strNick);
 }

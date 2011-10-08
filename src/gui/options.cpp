@@ -64,8 +64,7 @@ void DlgOptions::createGui()
     ui.groupBox_profiles->setTitle(tr("Profiles"));
     ui.label_profile->setText(tr("Current profile:"));
     ui.pushButton_profiles->setText(tr("Profiles"));
-    ui.groupBox_skins->setTitle(tr("Skins"));
-    ui.checkBox_show_avatars->setText(tr("Show avatars in nicklist"));
+    ui.groupBox_themes->setTitle(tr("Themes"));
     ui.groupBox_language->setTitle(tr("Language"));
 
     // page adv
@@ -185,11 +184,17 @@ void DlgOptions::setDefaultValues()
     // current option
     ui.treeWidget_options->setCurrentItem(ui.treeWidget_options->itemAt(0,0));
 
+    // themes
+    QStringList lThemes;
+    lThemes << "Standard" << "Origin" << "Adara";
+    ui.comboBox_themes->clear();
+    ui.comboBox_themes->addItems(lThemes);
+
     // language
-    QStringList strlLanguage;
-    strlLanguage << tr("English") << tr("Polish");
+    QStringList lLanguage;
+    lLanguage << tr("English") << tr("Polish");
     ui.comboBox_language->clear();
-    ui.comboBox_language->addItems(strlLanguage);
+    ui.comboBox_language->addItems(lLanguage);
 
     // sound beep
     ui.lineEdit_sound_beep->setText(Core::instance()->settings.value("sound_beep"));
@@ -215,7 +220,7 @@ void DlgOptions::setDefaultValues()
     ui.lineEdit_background_image->setText(Core::instance()->settings.value("background_image"));
 
     // default values
-    QString strShowAvatars = Core::instance()->settings.value("show_avatars");
+    QString strThemes = Core::instance()->settings.value("themes");
     QString strLanguage = Core::instance()->settings.value("language");
 
     QString strAutoBusy = Core::instance()->settings.value("auto_busy");
@@ -234,11 +239,15 @@ void DlgOptions::setDefaultValues()
 
     QString strWinamp = Core::instance()->settings.value("winamp");
 
-    // set style
-    if (strShowAvatars == "on")
-        ui.checkBox_show_avatars->setChecked(true);
+    // themes
+    if (strThemes == "Standard")
+        ui.comboBox_themes->setCurrentIndex(0);
+    else if (strThemes == "Origin")
+        ui.comboBox_themes->setCurrentIndex(1);
+    else if (strThemes == "Adara")
+        ui.comboBox_themes->setCurrentIndex(2);
     else
-        ui.checkBox_show_avatars->setChecked(false);
+        ui.comboBox_themes->setCurrentIndex(1);
 
     // language
     if (strLanguage == "en")
@@ -333,12 +342,12 @@ void DlgOptions::setDefaultValues()
     if (Core::instance()->settings.value("logged") == "on")
     {
         ui.groupBox_profiles->setDisabled(true);
-        ui.groupBox_skins->setDisabled(true);
+        ui.groupBox_themes->setDisabled(true);
     }
     else
     {
         ui.groupBox_profiles->setDisabled(false);
-        ui.groupBox_skins->setDisabled(false);
+        ui.groupBox_themes->setDisabled(false);
     }
 }
 
@@ -347,7 +356,7 @@ void DlgOptions::createSignals()
     QObject::connect(ui.treeWidget_options, SIGNAL(clicked(QModelIndex)), this, SLOT(changePage(QModelIndex)));
     QObject::connect(ui.comboBox_profiles, SIGNAL(activated(int)), this, SLOT(currentProfileChanged(int)));
     QObject::connect(ui.pushButton_profiles, SIGNAL(clicked()), this, SLOT(buttonProfiles()));
-    QObject::connect(ui.checkBox_show_avatars, SIGNAL(clicked(bool)), this, SLOT(showAvatars(bool)));
+    QObject::connect(ui.comboBox_themes, SIGNAL(activated(int)), this, SLOT(themesChanged(int)));
     QObject::connect(ui.comboBox_language, SIGNAL(activated(int)), this, SLOT(languageChanged(int)));
     QObject::connect(ui.checkBox_auto_busy, SIGNAL(clicked(bool)), this, SLOT(autoBusy(bool)));
     QObject::connect(ui.checkBox_disable_autojoin_favourites, SIGNAL(clicked(bool)), this, SLOT(disableAutojoinFavourites(bool)));
@@ -476,16 +485,30 @@ void DlgOptions::buttonProfiles()
     DlgProfileManager(Core::instance()->sccWindow(), this).exec();
 }
 
-void DlgOptions::showAvatars(bool bValue)
+void DlgOptions::themesChanged(int index)
 {
-    QString strValue = (bValue ? "on" : "off");
-
     Config *pConfig = new Config();
-    pConfig->setValue("show_avatars", strValue);
-    Core::instance()->settings["show_avatars"] = strValue;
+    if (index == 0)
+    {
+        pConfig->setValue("themes", "Standard");
+        Core::instance()->settings["themes"] = "Standard";
+    }
+    else if (index == 1)
+    {
+        pConfig->setValue("themes", "Origin");
+        Core::instance()->settings["themes"] = "Origin";
+    }
+    else if (index == 2)
+    {
+        pConfig->setValue("themes", "Adara");
+        Core::instance()->settings["themes"] = "Adara";
+    }
+    else
+    {
+        pConfig->setValue("themes", "Standard");
+        Core::instance()->settings["themes"] = "Standard";
+    }
     delete pConfig;
-
-    ui.label_skins_warning->setText(tr("Restart program to apply the changes."));
 }
 
 void DlgOptions::languageChanged(int index)

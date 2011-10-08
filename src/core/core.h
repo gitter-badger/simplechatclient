@@ -74,8 +74,10 @@ public:
     int getUserMaxModes(QString);
     // get users count
     int getUserCount(QString);
-    // display message
-    void displayMessage(QString&,QString&,MessageCategory);
+    // show message
+    void showMessage(QString&,QString&,MessageCategory, QString strTime = QString::null, QString strNick = QString::null);
+    // get user avatar link
+    QString getUserAvatarLink(QString);
 
     QMap<QString, bool> mFriends;
     QList<QString> lIgnore;

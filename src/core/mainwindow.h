@@ -52,8 +52,9 @@ public:
     int getUserCount(QString);
     QString getUserModes(QString, QString);
     QList<QString> getUserList(QString);
+    QString getUserAvatarLink(QString);
     // for core
-    void displayMessage(QString&,QString&,MessageCategory);
+    void showMessage(QString&,QString&,MessageCategory, QString strTime = QString::null, QString strNick = QString::null);
 
 private:
     QToolBar *toolBar;

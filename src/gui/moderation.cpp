@@ -129,8 +129,9 @@ void DlgModeration::buttonAccept()
         QString strSend = QString("MODERMSG %1 - %2 :%3").arg(strNick).arg(strChannel).arg(strMessage);
         Core::instance()->pNetwork->send(strSend);
 
-        QString strDisplay = QString("<%1> %2").arg(strNick).arg(strMessage);
-        Core::instance()->displayMessage(strChannel, strDisplay, DefaultMessage);
+        QString strMe = Core::instance()->settings.value("nick");
+        QString strDisplay = QString("%1 [%2 %3]").arg(strMessage).arg(tr("Moderated by")).arg(strMe);
+        Core::instance()->showMessage(strChannel, strDisplay, DefaultMessage, QString::null, strNick);
     }
 
     // remove

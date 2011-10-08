@@ -187,7 +187,7 @@
        </layout>
       </widget>
      </widget>
-     <widget class="QGroupBox" name="groupBox_skins">
+     <widget class="QGroupBox" name="groupBox_themes">
       <property name="geometry">
        <rect>
         <x>0</x>
@@ -197,7 +197,7 @@
        </rect>
       </property>
       <property name="title">
-       <string>Skins</string>
+       <string>Themes</string>
       </property>
       <widget class="QWidget" name="verticalLayoutWidget_13">
        <property name="geometry">
@@ -205,40 +205,44 @@
          <x>10</x>
          <y>20</y>
          <width>421</width>
-         <height>61</height>
+         <height>71</height>
         </rect>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_13">
         <item>
-         <widget class="QCheckBox" name="checkBox_show_avatars">
-          <property name="text">
-           <string>Show avatars in nicklist</string>
-          </property>
-         </widget>
+         <layout class="QHBoxLayout" name="horizontalLayout_10">
+          <item>
+           <spacer name="horizontalSpacer_4">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QComboBox" name="comboBox_themes"/>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer_3">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
         </item>
        </layout>
-      </widget>
-      <widget class="QLabel" name="label_skins_warning">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>80</y>
-         <width>421</width>
-         <height>21</height>
-        </rect>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">font-weight:bold;</string>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignCenter</set>
-       </property>
-       <property name="wordWrap">
-        <bool>true</bool>
-       </property>
       </widget>
      </widget>
      <widget class="QGroupBox" name="groupBox_language">

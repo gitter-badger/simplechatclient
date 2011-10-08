@@ -30,7 +30,7 @@ class ChatView : public QWebView
 public:
     ChatView(QString);
     void clearMessages();
-    void displayMessage(QString &, MessageCategory, QString strTime = QString::null);
+    void displayMessage(QString &, MessageCategory, QString strTime = QString::null, QString strNick = QString::null);
     void refreshCSS();
 
 private:

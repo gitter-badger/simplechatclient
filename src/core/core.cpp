@@ -110,7 +110,8 @@ void Core::createGui()
 void Core::createSettings()
 {
     // default settings
-    settings["version"] = "1.1.3.1068";
+    settings.clear();
+    settings["version"] = "1.1.3.1069";
     settings["logged"] = "off";
     settings["busy"] = "off";
     settings["away"] = "off";
@@ -214,6 +215,11 @@ void Core::checkSettings()
     {
         pConfig->setValue("background_image", "");
         settings["background_image"] = "";
+    }
+    if ((settings.value("themes") != "Standard") && (settings.value("themes") != "Origin") && (settings.value("themes") != "Adara"))
+    {
+        pConfig->setValue("themes", "Standard");
+        settings["themes"] = "Standard";
     }
 
     delete pConfig;
@@ -353,7 +359,12 @@ int Core::getUserCount(QString strChannel)
 }
 
 // DlgModeration::buttonAccept
-void Core::displayMessage(QString &strChannel, QString &strData, MessageCategory eMessageCategory)
+void Core::showMessage(QString &strChannel, QString &strData, MessageCategory eMessageCategory, QString strTime, QString strNick)
 {
-    window->displayMessage(strChannel, strData, eMessageCategory);
+    window->showMessage(strChannel, strData, eMessageCategory, strTime, strNick);
+}
+
+QString Core::getUserAvatarLink(QString strNick)
+{
+    return window->getUserAvatarLink(strNick);
 }

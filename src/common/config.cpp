@@ -250,6 +250,7 @@ QMap<QString,QString> Config::getDefaultValues()
     {
         mDefaultValues.insert("nick", "~test");
         mDefaultValues.insert("pass", "");
+        mDefaultValues.insert("themes", "Standard");
         mDefaultValues.insert("language", "pl");
         mDefaultValues.insert("auto_busy", "off");
         mDefaultValues.insert("disable_autojoin_favourites", "off");
@@ -257,7 +258,6 @@ QMap<QString,QString> Config::getDefaultValues()
         mDefaultValues.insert("hide_formating", "off");
         mDefaultValues.insert("hide_join_part", "off");
         mDefaultValues.insert("hide_join_part_200", "on");
-        mDefaultValues.insert("show_avatars", "off");
         mDefaultValues.insert("disable_emots", "off");
         mDefaultValues.insert("disable_replaces", "off");
         mDefaultValues.insert("background_color", "#ffffff");

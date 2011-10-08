@@ -1006,6 +1006,10 @@
         <source>Remove</source>
         <translation>Usuń</translation>
     </message>
+    <message>
+        <source>Moderated by</source>
+        <translation>Zmoderowany przez</translation>
+    </message>
 </context>
 <context>
     <name>DlgMyProfile</name>
@@ -1230,12 +1234,8 @@
         <translation>Profile</translation>
     </message>
     <message>
-        <source>Skins</source>
-        <translation>Wygląd</translation>
-    </message>
-    <message>
-        <source>Show avatars in nicklist</source>
-        <translation>Wyświetlaj awatary na liście nicków</translation>
+        <source>Themes</source>
+        <translation>Kompozycje</translation>
     </message>
     <message>
         <source>Language</source>

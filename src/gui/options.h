@@ -50,7 +50,7 @@ private slots:
     void changePage(QModelIndex);
     void currentProfileChanged(int);
     void buttonProfiles();
-    void showAvatars(bool);
+    void themesChanged(int);
     void languageChanged(int);
     void autoBusy(bool);
     void disableAutojoinFavourites(bool);

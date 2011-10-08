@@ -108,6 +108,8 @@ void ChatView::refreshCSS()
     body.setAttribute("style", strBodyCSS);
 
     QString strHeadCSS = "div{margin-bottom: 2px;}";
+    strHeadCSS.append(QString(".time{font-weight:normal;text-decoration:none;color:%1;float:right;clear:right;margin-right:5px;}").arg(strDefaultFontColor));
+    strHeadCSS.append(QString(".avatar{border-radius:5px;vertical-align:middle;margin-left:4px;margin-right:4px;}"));
     strHeadCSS.append(QString(".DefaultFontColor{color:%1;}").arg(strDefaultFontColor));
     strHeadCSS.append(QString(".JoinFontColor{color:%1;}").arg(strJoinFontColor));
     strHeadCSS.append(QString(".PartFontColor{color:%1;}").arg(strPartFontColor));
@@ -130,18 +132,23 @@ void ChatView::clearMessages()
     this->page()->mainFrame()->evaluateJavaScript("clearMessages()");
 }
 
-void ChatView::displayMessage(QString &strData, MessageCategory eMessageCategory, QString strTime)
+void ChatView::displayMessage(QString &strData, MessageCategory eMessageCategory, QString strTime, QString strNick)
 {
     QDateTime dt;
     if (!strTime.isEmpty())
         dt = QDateTime::fromTime_t(strTime.toUInt());
     else
         dt = QDateTime::currentDateTime();
-    QString strDT = dt.toString("[hh:mm:ss] ");
+    QString strDT = dt.toString("[hh:mm:ss]");
+    QString strShortDT = dt.toString("hh:mm");
 
     if (Core::instance()->settings.value("disable_logs") == "off")
     {
-        QString strSaveData = strDT+strData;
+        QString strSaveData;
+        if (!strNick.isEmpty())
+            strSaveData = QString("%1 <%2> %3").arg(strDT).arg(strNick).arg(strData);
+        else
+            strSaveData = QString("%1 %2").arg(strDT).arg(strData);
 
         // fix /me
         QString strRegExpMe = QString("%1ACTION %2%3").arg(QString(QByteArray("\x01"))).arg("(.*)").arg(QString(QByteArray("\x01")));
@@ -164,13 +171,8 @@ void ChatView::displayMessage(QString &strData, MessageCategory eMessageCategory
     }
 
     HtmlMessagesRenderer *r = new HtmlMessagesRenderer();
-    QString strContent = r->renderer(strDT, strData, eMessageCategory);
+    QString strContent = r->renderer(strDT, strData, eMessageCategory, strShortDT, strNick);
     delete r;
-
-#ifndef Q_WS_WIN
-    // fix linux img src
-    strContent.replace("img src=\"", "img src=\"file://");
-#endif
 
     // scroll
     if (this->page()->mainFrame()->scrollBarValue(Qt::Vertical) ==  this->page()->mainFrame()->scrollBarMaximum(Qt::Vertical))
@@ -629,7 +631,6 @@ void ChatView::contextMenuEvent(QContextMenuEvent *event)
         if (strCategory == "nick")
         {
             strNick = strWord;
-            strNick.remove("<"); strNick.remove(">");
             menuNick(event);
             return;
         }
