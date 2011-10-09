@@ -111,7 +111,7 @@ void Core::createSettings()
 {
     // default settings
     settings.clear();
-    settings["version"] = "1.1.3.1070";
+    settings["version"] = "1.1.3.1071";
     settings["logged"] = "off";
     settings["busy"] = "off";
     settings["away"] = "off";

@@ -262,6 +262,10 @@ void TabContainer::setTopic(QString &strChannel, QString &strTopic)
         convertText->convertText(strContent);
         delete convertText;
 
+        // fix length bug
+        if (strContent.contains(QRegExp("\\S{100}")))
+            strContent.replace(QRegExp("(\\S{100})"), "\\1 ");
+
         // set topic
         tw[i]->topic->setText(QString("<b>%1</b> %2").arg(tr("Topic:")).arg(strContent));
 
