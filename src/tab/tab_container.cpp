@@ -52,14 +52,19 @@ TabContainer::~TabContainer()
     }
 }
 
-bool TabContainer::isHilightMessage(QString strData)
+bool TabContainer::isHilightMessage(QString strMessage)
 {
     QString strMe = Core::instance()->settings["nick"];
-    QStringList lData = strData.split(" ");
+    QStringList lData = strMessage.split(" ");
 
     for (int i = 0; i < lData.size(); i++)
     {
-        if (lData[i] == strMe)
+        QString strData = lData[i];
+        strData.remove(QRegExp("%C([a-zA-Z0-9]+)%"));
+        strData.remove(QRegExp("%F([a-zA-Z0-9:]+)%"));
+        strData.replace(QRegExp("%I([a-zA-Z0-9_-]+)%"),"<\\1>");
+
+        if (strData == strMe)
             return true;
     }
     return false;
@@ -179,8 +184,12 @@ void TabContainer::showMessage(QString &strChannel, QString &strData, MessageCat
 
         if ((bHilightMessage) && (eMessageCategory == DefaultMessage))
         {
+            QString strAwaylogData = strData;
+            if (!strNick.isEmpty())
+                strAwaylogData = QString("<%1> %2").arg(strNick).arg(strData);
+
             // awaylog
-            Core::instance()->addAwaylog(strChannel, strData);
+            Core::instance()->addAwaylog(strChannel, strAwaylogData);
 
             // update awaylog status
             emit updateAwaylogStatus();
