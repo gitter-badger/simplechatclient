@@ -23,7 +23,6 @@
 
 class Avatar;
 class TabContainer;
-#include <QMap>
 #include <QObject>
 #include <QStringList>
 
@@ -46,7 +45,6 @@ private:
     Avatar *avatar;
     QString strData;
     QStringList strDataList;
-    QMap<QString,QString> mOldNameNewName; // rename channels
 
     void raw_error();
     void raw_ping();
@@ -251,9 +249,6 @@ private:
     void raw_950();
     void raw_951();
     void raw_952();
-
-private slots:
-    void timerRenameChannel();
 
 signals:
     void addUser(QString,QString,QString,bool);

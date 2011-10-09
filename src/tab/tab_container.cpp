@@ -108,6 +108,10 @@ void TabContainer::addTab(QString strChannel)
         tw.append(new TabWidget(strChannel));
         pTabM->addTab(tw.at(tw.size()-1), strChannel);
         pTabM->setCurrentIndex(tw.size()-1);
+
+        // if priv
+        if ((strChannel[0] == '^') && (Core::instance()->mPrivNames.contains(strChannel)))
+            pTabM->setTabText(tw.size()-1, Core::instance()->convertPrivName(strChannel));
     }
 }
 

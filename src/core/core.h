@@ -78,6 +78,8 @@ public:
     void showMessage(QString&,QString&,MessageCategory, QString strTime = QString::null, QString strNick = QString::null);
     // get user avatar link
     QString getUserAvatarLink(QString);
+    // priv
+    QString convertPrivName(QString);
 
     QMap<QString, bool> mFriends;
     QList<QString> lIgnore;
@@ -118,6 +120,8 @@ public:
     bool bChannelSettingsStats;
     // moderation
     QMultiHash<QString,ModerateMsg> mModerateMessages;
+    // priv
+    QMap<QString,QString> mPrivNames;
 
 public slots:
     void quit();

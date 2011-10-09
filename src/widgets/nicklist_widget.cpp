@@ -356,7 +356,11 @@ void NickListWidget::contextMenuEvent(QContextMenuEvent *e)
     QList<QString> lOpenChannels = Core::instance()->lOpenChannels;
     for (int i = 0; i < lOpenChannels.size(); ++i)
     {
-        openChannelsActs[i]->setText(lOpenChannels[i]);
+        QString strOpenChannel = lOpenChannels[i];
+        if (strOpenChannel[0] == '^')
+            strOpenChannel = Core::instance()->convertPrivName(strOpenChannel);
+
+        openChannelsActs[i]->setText(strOpenChannel);
         openChannelsActs[i]->setData(lOpenChannels[i]);
         openChannelsActs[i]->setVisible(true);
     }

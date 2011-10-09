@@ -109,9 +109,13 @@ void Core::createGui()
 
 void Core::createSettings()
 {
-    // default settings
+    // debug
+    QString strDebug = settings["debug"];
     settings.clear();
-    settings["version"] = "1.1.3.1071";
+    settings["debug"] = strDebug;
+
+    // default settings
+    settings["version"] = "1.1.3.1072";
     settings["logged"] = "off";
     settings["busy"] = "off";
     settings["away"] = "off";
@@ -367,4 +371,12 @@ void Core::showMessage(QString &strChannel, QString &strData, MessageCategory eM
 QString Core::getUserAvatarLink(QString strNick)
 {
     return window->getUserAvatarLink(strNick);
+}
+
+QString Core::convertPrivName(QString strChannel)
+{
+    if (mPrivNames.contains(strChannel))
+        strChannel = mPrivNames.value(strChannel);
+
+    return strChannel;
 }

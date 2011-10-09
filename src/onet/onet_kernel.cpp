@@ -43,27 +43,6 @@ OnetKernel::~OnetKernel()
     delete avatar;
 }
 
-void OnetKernel::timerRenameChannel()
-{
-    QMapIterator <QString, QString> i(mOldNameNewName);
-    while (i.hasNext())
-    {
-        i.next();
-        QString strOldName = i.key();
-        QString strNewName = i.value();
-        if (pTabC->existTab(strOldName))
-        {
-            bool bRenamed = pTabC->renameTab(strOldName, strNewName);
-            if (bRenamed)
-                mOldNameNewName.remove(strOldName);
-            else
-                QTimer::singleShot(1000*5, this, SLOT(timerRenameChannel())); // 5 sec
-        }
-        else
-            QTimer::singleShot(1000*5, this, SLOT(timerRenameChannel())); // 5 sec
-    }
-}
-
 void OnetKernel::kernel(QString param1)
 {
     strData = param1;
@@ -1099,6 +1078,10 @@ void OnetKernel::raw_invite()
 
     Notify::instance()->play(Query);
 
+    // priv name
+    if (strWhere[0] == '^')
+        Core::instance()->mPrivNames[strWhere] = strWho;
+
     (new DlgInvite(Core::instance()->sccWindow(), strWho, strWhere))->show(); // should be show - prevent hangup!
 }
 
@@ -1299,6 +1282,8 @@ void OnetKernel::raw_001()
     Core::instance()->bChannelSettingsStats = false;
     // moderate
     Core::instance()->mModerateMessages.clear();
+    // priv
+    Core::instance()->mPrivNames.clear();
 
     // protocol
     Core::instance()->pNetwork->send("PROTOCTL ONETNAMESX");
@@ -2751,8 +2736,8 @@ void OnetKernel::raw_341()
 
     if (strChannel[0] == '^')
     {
-        mOldNameNewName.insert(strChannel, strNick);
-        QTimer::singleShot(1000*3, this, SLOT(timerRenameChannel())); // 3 sec
+        Core::instance()->mPrivNames[strChannel] = strNick;
+        pTabC->renameTab(strChannel, strNick);
     }
 }
 
@@ -2827,18 +2812,6 @@ void OnetKernel::raw_353()
 
             QString strModes = strPrefix+strSuffix;
             emit addUser(strChannel, strCleanNick, strModes, true);
-
-            // if ^ rename channel
-            if (strChannel[0] == '^')
-            {
-                QString strMe = Core::instance()->settings.value("nick");
-
-                if (strCleanNick != strMe)
-                {
-                    mOldNameNewName.insert(strChannel, strCleanNick);
-                    QTimer::singleShot(1000*3, this, SLOT(timerRenameChannel())); // 3 sec
-                }
-            }
 
             // nick avatar
             if (strCleanNick[0] != '~')

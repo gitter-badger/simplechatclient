@@ -76,7 +76,13 @@ void Log::save(QString &strChannel, QString &strData)
             QDir().mkdir(path);
     }
 
-    QFile f(path+"/"+strChannel+".txt");
+    QString strFileName = strChannel;
+
+    // fixed priv name
+    if (strFileName[0] == '^')
+        strFileName = Core::instance()->convertPrivName(strFileName);
+
+    QFile f(path+"/"+strFileName+".txt");
     if (f.open(QIODevice::Append))
     {
         // convert
