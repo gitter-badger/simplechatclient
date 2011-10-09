@@ -18,7 +18,6 @@
  *                                                                          *
  ****************************************************************************/
 
-#include <QFile>
 #include "convert.h"
 #include "core.h"
 #include "html_messages_renderer.h"
@@ -125,15 +124,7 @@ QString HtmlMessagesRenderer::renderer(QString strDT, QString strData, MessageCa
             QString strUserAvatarImg;
             QString strUserAvatarLink = Core::instance()->getUserAvatarLink(strNick);
             if (strUserAvatarLink.isEmpty())
-            {
-                QFile file(":/images/user_avatar.png");
-                if (file.open(QIODevice::ReadOnly))
-                {
-                    strUserAvatarLink = QString("data:image/png;base64,%1").arg(QString(file.readAll().toBase64()));
-                    strUserAvatarImg = QString("<img src=\"%1\" alt=\"avatar\" width=\"30px\" height=\"30px\" class=\"avatar\" />").arg(strUserAvatarLink);
-                    file.close();
-                }
-            }
+                strUserAvatarImg = QString("<img src=\"data:image/png;base64,%1\" alt=\"avatar\" width=\"30px\" height=\"30px\" class=\"avatar\" />").arg(Core::instance()->strEmptyUserAvatar);
             else
                 strUserAvatarImg = QString("<img src=\"%1\" alt=\"avatar\" width=\"30px\" height=\"30px\" class=\"avatar\" />").arg(strUserAvatarLink);
 

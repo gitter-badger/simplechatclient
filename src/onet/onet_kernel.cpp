@@ -1467,16 +1467,7 @@ void OnetKernel::raw_111n()
                 avatar->getAvatar(strNick, "nick", strValue);
         }
         else
-        {
-            QFile file(":/images/user_avatar.png");
-            if (file.open(QIODevice::ReadOnly))
-            {
-                QByteArray bData = file.readAll();
-                file.close();
-
-                pTabC->setUserAvatar(strNick, bData);
-            }
-        }
+            pTabC->setUserAvatar(strNick, Core::instance()->bEmptyUserAvatar);
     }
 }
 

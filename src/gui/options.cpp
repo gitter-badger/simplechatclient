@@ -867,11 +867,10 @@ void DlgOptions::setSoundBeep()
     if (!fileName.isEmpty())
     {
         Config *pConfig = new Config();
-
         pConfig->setValue("sound_beep", fileName);
         Core::instance()->settings["sound_beep"] = fileName;
-
         delete pConfig;
+
         ui.lineEdit_sound_beep->setText(fileName);
     }
 }
@@ -888,11 +887,10 @@ void DlgOptions::setSoundQuery()
     if (!fileName.isEmpty())
     {
         Config *pConfig = new Config();
-
         pConfig->setValue("sound_query", fileName);
         Core::instance()->settings["sound_query"] = fileName;
-
         delete pConfig;
+
         ui.lineEdit_sound_query->setText(fileName);
     }
 }
@@ -947,11 +945,10 @@ void DlgOptions::setBackgroundImage()
     if (!fileName.isEmpty())
     {
         Config *pConfig = new Config();
-
         pConfig->setValue("background_image", fileName);
         Core::instance()->settings["background_image"] = fileName;
-
         delete pConfig;
+
         ui.lineEdit_background_image->setText(fileName);
 
         // refresh background image

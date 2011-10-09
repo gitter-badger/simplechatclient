@@ -87,12 +87,25 @@ Core::~Core()
 
 void Core::init()
 {
+    // create settings
     createSettings();
 
+    // read empty user avatar
+    readEmptyUserAvatar();
+
+    // remove old config
+    removeOldConfig();
+
+    // clear old settings
+    QSettings oldSettings;
+    oldSettings.clear();
+
+    // kamerzysta
     kamerzystaSocket = new QTcpSocket();
     kamerzystaSocket->setSocketOption(QAbstractSocket::LowDelayOption, 1);
     kamerzystaSocket->setSocketOption(QAbstractSocket::KeepAliveOption, 0);
 
+    // network
     QString strServer = "czat-app.onet.pl";
     int iPort = 5015;
     pNetwork = new Network(strServer, iPort);
@@ -115,7 +128,7 @@ void Core::createSettings()
     settings["debug"] = strDebug;
 
     // default settings
-    settings["version"] = "1.1.3.1072";
+    settings["version"] = "1.1.3.1073";
     settings["logged"] = "off";
     settings["busy"] = "off";
     settings["away"] = "off";
@@ -135,12 +148,6 @@ void Core::createSettings()
     // config
     configValues();
     configProfileValues();
-
-    // remove old config
-    removeOldConfig();
-    // clear old settings
-    QSettings oldSettings;
-    oldSettings.clear();
 
     // check settings
     checkSettings();
@@ -227,6 +234,20 @@ void Core::checkSettings()
     }
 
     delete pConfig;
+}
+
+void Core::readEmptyUserAvatar()
+{
+    strEmptyUserAvatar.clear();
+    bEmptyUserAvatar.clear();
+
+    QFile file(":/images/user_avatar.png");
+    if (file.open(QIODevice::ReadOnly))
+    {
+        bEmptyUserAvatar = file.readAll();
+        strEmptyUserAvatar = QString(bEmptyUserAvatar.toBase64());
+        file.close();
+    }
 }
 
 QString Core::version()

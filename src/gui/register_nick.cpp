@@ -25,7 +25,6 @@
 #include <QNetworkCookieJar>
 #include <QNetworkReply>
 #include <QUrl>
-#include "config.h"
 #include "mainwindow.h"
 #include "profile_add.h"
 #include "register_nick.h"

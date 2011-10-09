@@ -122,6 +122,9 @@ public:
     QMultiHash<QString,ModerateMsg> mModerateMessages;
     // priv
     QMap<QString,QString> mPrivNames;
+    // empty user avatar
+    QString strEmptyUserAvatar;
+    QByteArray bEmptyUserAvatar;
 
 public slots:
     void quit();
@@ -132,6 +135,7 @@ private:
 
     void init();
     void checkSettings();
+    void readEmptyUserAvatar();
 };
 
 #endif // CORE_H
