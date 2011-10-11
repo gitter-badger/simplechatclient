@@ -26,6 +26,10 @@
 #include "core.h"
 #include "tab_container.h"
 
+#ifdef Q_WS_WIN
+    #include <QDesktopServices>
+#endif
+
 Avatar::Avatar(TabContainer *_pTabC) : pTabC(_pTabC)
 {
     QObject::connect(this, SIGNAL(setChannelAvatar(QString)), pTabC, SLOT(setChannelAvatar(QString)));
