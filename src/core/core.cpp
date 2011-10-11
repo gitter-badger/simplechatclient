@@ -91,9 +91,6 @@ void Core::init()
     QSettings oldSettings;
     oldSettings.clear();
 
-    // create settings
-    createSettings();
-
     // remove old config
     removeOldConfig();
 
@@ -102,6 +99,9 @@ void Core::init()
 
     // remove old emoticons
     removeOldEmoticons();
+
+    // create settings
+    createSettings();
 
     // read empty user avatar
     readEmptyUserAvatar();
@@ -134,7 +134,7 @@ void Core::createSettings()
     settings["debug"] = strDebug;
 
     // default settings
-    settings["version"] = "1.1.3.1080";
+    settings["version"] = "1.1.3.1081";
     settings["logged"] = "off";
     settings["busy"] = "off";
     settings["away"] = "off";
