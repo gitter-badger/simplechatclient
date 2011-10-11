@@ -201,16 +201,26 @@ void DlgOptions::setDefaultValues()
     ui.lineEdit_sound_query->setText(Core::instance()->settings.value("sound_query"));
 
     // logs
+    QString strCurrentProfile = Core::instance()->settings.value("current_profile");
     QString strLogsPath;
 #ifdef Q_WS_WIN
-    QString path = QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation);
-    path += "/scc";
+    strLogsPath = QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation);
+    strLogsPath += "/scc/profiles/"+strCurrentProfile+"/log";
 
-    strLogsPath = path+"/log";
+    // create dir if not exist
+    if (!QDir().exists(strLogsPath))
+        QDir().mkpath(strLogsPath);
+
     strLogsPath.replace("/", "\\");
 #else
-    strLogsPath = QDir::homePath()+"/.scc/log";
+    strLogsPath = QDir::homePath();
+    strLogsPath += "/.scc/profiles/"+strCurrentProfile+"/log";
+
+    // create dir if not exist
+    if (!QDir().exists(strLogsPath))
+        QDir().mkpath(strLogsPath);
 #endif
+
     ui.lineEdit_logs_folder->setText(strLogsPath);
 
     if (strOpenFolderCommand.isEmpty())
