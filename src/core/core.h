@@ -45,6 +45,10 @@ public:
     virtual ~Core();
     void createGui();
     void createSettings();
+    // old
+    void removeOldConfig();
+    void removeOldEmoticons();
+    void convertOldProfiles();
     // config
     void configValues();
     void configProfileValues();
@@ -79,6 +83,8 @@ public:
     QString getUserAvatarPath(QString);
     // priv
     QString convertPrivName(QString);
+    // remove dir
+    bool removeDir(const QString &);
 
     QMap<QString, bool> mFriends;
     QList<QString> lIgnore;

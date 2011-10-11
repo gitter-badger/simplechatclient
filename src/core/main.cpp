@@ -79,20 +79,20 @@ int main(int argc, char *argv[])
     delete pConfig;
 
     // set translate
-    QString strPath;
+    QString path;
 #ifdef Q_WS_WIN
-    strPath = QCoreApplication::applicationDirPath();
+    path = QCoreApplication::applicationDirPath();
 #else
-    strPath = "/usr/share/scc";
+    path = "/usr/share/scc";
 #endif
 
     // load translate
     QTranslator qtTranslator;
-    qtTranslator.load(QString("%1/translations/qt_%2").arg(strPath).arg(strLanguage));
+    qtTranslator.load(QString("%1/translations/qt_%2").arg(path).arg(strLanguage));
     app.installTranslator(&qtTranslator);
 
     QTranslator sccTranslator;
-    sccTranslator.load(QString("%1/translations/scc_%2").arg(strPath).arg(strLanguage));
+    sccTranslator.load(QString("%1/translations/scc_%2").arg(path).arg(strLanguage));
     app.installTranslator(&sccTranslator);
 
     // args

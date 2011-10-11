@@ -259,14 +259,14 @@ void Convert::removeColor(QString &strData)
 
 QString Convert::findEmoticon(QString strEmoticon)
 {
-    QString strPath;
+    QString path;
 #ifdef Q_WS_WIN
-    strPath = QCoreApplication::applicationDirPath();
+    path = QCoreApplication::applicationDirPath();
 #else
-    strPath = "/usr/share/scc";
+    path = "/usr/share/scc";
 #endif
 
-    QDir dAllEmoticonsDirs = strPath+"/3rdparty/emoticons";
+    QDir dAllEmoticonsDirs = path+"/3rdparty/emoticons";
     QStringList lDirs = dAllEmoticonsDirs.entryList(QStringList("*"), QDir::Dirs | QDir::NoDotAndDotDot | QDir::NoSymLinks);
 
     for (int i = 0; i < lDirs.size(); i++)

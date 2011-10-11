@@ -87,15 +87,24 @@ Core::~Core()
 
 void Core::init()
 {
-    // create settings
-    createSettings();
-
-    // read empty user avatar
-    readEmptyUserAvatar();
-
     // clear old settings
     QSettings oldSettings;
     oldSettings.clear();
+
+    // create settings
+    createSettings();
+
+    // remove old config
+    removeOldConfig();
+
+    // convert old profiles
+    convertOldProfiles();
+
+    // remove old emoticons
+    removeOldEmoticons();
+
+    // read empty user avatar
+    readEmptyUserAvatar();
 
     // kamerzysta
     kamerzystaSocket = new QTcpSocket();
@@ -125,7 +134,7 @@ void Core::createSettings()
     settings["debug"] = strDebug;
 
     // default settings
-    settings["version"] = "1.1.3.1079";
+    settings["version"] = "1.1.3.1080";
     settings["logged"] = "off";
     settings["busy"] = "off";
     settings["away"] = "off";
@@ -148,6 +157,72 @@ void Core::createSettings()
 
     // check settings
     checkSettings();
+}
+
+void Core::removeOldConfig()
+{
+    QString path;
+#ifdef Q_WS_WIN
+    path = QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation);
+    path += "/scc";
+#else
+    path = QDir::homePath()+"/.scc";
+#endif
+
+    // create dir if not exist
+    if (!QDir().exists(path))
+        QDir().mkpath(path);
+
+    // remove file
+    if (QFile::exists(path+"/scc.conf"))
+        QFile::remove(path+"/scc.conf");
+}
+
+void Core::removeOldEmoticons()
+{
+    QString path;
+#ifdef Q_WS_WIN
+    path = QCoreApplication::applicationDirPath();
+#else
+    path = "/usr/share/scc";
+#endif
+
+    path += "/3rdparty";
+
+    if (QDir().exists(path+"/emoticons_other"))
+        removeDir(path+"/emoticons_other");
+
+    QDir dOldEmoticons = path+"/emoticons";
+    QStringList list = dOldEmoticons.entryList(QStringList("*.gif"), QDir::Files | QDir::NoSymLinks);
+    for (int i = 0; i < list.size(); ++i)
+        QFile::remove(path+"/emoticons/"+list.at(i));
+}
+
+void Core::convertOldProfiles()
+{
+    QString path;
+#ifdef Q_WS_WIN
+    path = QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation);
+    path += "/scc";
+#else
+    path = QDir::homePath()+"/.scc";
+#endif
+
+    path += "/profiles";
+
+    QDir dir(path);
+    QFileInfoList list = dir.entryInfoList(QStringList("*.xml"), QDir::Files | QDir::NoSymLinks);
+    for (int i = 0; i < list.size(); ++i)
+    {
+        QString profile = list.at(i).fileName().remove(".xml");
+        if (!QDir().exists(path+"/"+profile))
+        {
+            QDir().mkpath(path+"/"+profile);
+            QFile::rename(path+"/"+profile+".xml", path+"/"+profile+"/profile.xml");
+        }
+        else
+            QFile::remove(path+"/"+profile+".xml");
+    }
 }
 
 void Core::configValues()
@@ -376,4 +451,27 @@ QString Core::convertPrivName(QString strChannel)
         strChannel = mPrivNames.value(strChannel);
 
     return strChannel;
+}
+
+bool Core::removeDir(const QString &dirName)
+{
+    bool result = true;
+    QDir dir(dirName);
+
+    if (dir.exists(dirName))
+    {
+        Q_FOREACH(QFileInfo info, dir.entryInfoList(QDir::NoDotAndDotDot | QDir::System | QDir::Hidden  | QDir::AllDirs | QDir::Files, QDir::DirsFirst))
+        {
+            if (info.isDir())
+                result = removeDir(info.absoluteFilePath());
+            else
+                result = QFile::remove(info.absoluteFilePath());
+
+            if (!result)
+                return result;
+        }
+        result = dir.rmdir(dirName);
+    }
+
+    return result;
 }

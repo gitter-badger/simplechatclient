@@ -56,15 +56,15 @@ ChatView::ChatView(QString _strChatViewChannel) : strChatViewChannel(_strChatVie
 
 void ChatView::createBody()
 {
-    QString strPath;
+    QString path;
 #ifdef Q_WS_WIN
-    strPath = QCoreApplication::applicationDirPath();
+    path = QCoreApplication::applicationDirPath();
 #else
-    strPath = "/usr/share/scc";
+    path = "/usr/share/scc";
 #endif
 
     QString jsCode;
-    QFile file(strPath+"/scripts/chat.js");
+    QFile file(path+"/scripts/chat.js");
     if (file.open(QIODevice::ReadOnly | QIODevice::Text))
     {
         jsCode = file.readAll();
