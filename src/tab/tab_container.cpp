@@ -409,30 +409,21 @@ void TabContainer::clearAllNicklist()
     }
 }
 
-void TabContainer::setUserAvatar(QString strNick, QByteArray bData)
+void TabContainer::setUserAvatarPath(QString strNick, QString strValue)
 {
     for (int i = 0; i < tw.size(); i++)
     {
         if (tw[i]->pNickListWidget->existUser(strNick))
-            tw[i]->pNickListWidget->updateUserAvatar(strNick, bData);
+            tw[i]->pNickListWidget->setUserAvatarPath(strNick, strValue);
     }
 }
 
-void TabContainer::setUserAvatarLink(QString strNick, QString strValue)
+QString TabContainer::getUserAvatarPath(QString strNick)
 {
     for (int i = 0; i < tw.size(); i++)
     {
         if (tw[i]->pNickListWidget->existUser(strNick))
-            tw[i]->pNickListWidget->updateUserAvatarLink(strNick, strValue);
-    }
-}
-
-QString TabContainer::getUserAvatarLink(QString strNick)
-{
-    for (int i = 0; i < tw.size(); i++)
-    {
-        if (tw[i]->pNickListWidget->existUser(strNick))
-            return tw[i]->pNickListWidget->getUserAvatarLink(strNick);
+            return tw[i]->pNickListWidget->getUserAvatarPath(strNick);
     }
     return QString::null;
 }

@@ -41,6 +41,7 @@ add_subdirectory (translations)
 if (UNIX AND NOT APPLE)
 	install (FILES AUTHORS ChangeLog LICENSE README scc.png TODO DESTINATION ${SCC_DATA_DIR})
 	install (FILES scc.desktop DESTINATION ${SCC_SHARE_DIR}/applications)
+	install (FILES images/user_avatar.png DESTINATION ${SCC_DATA_DIR}/images)
 	install (FILES 3rdparty/LICENSE DESTINATION ${SCC_DATA_DIR}/3rdparty)
 
 	install (DIRECTORY scripts DESTINATION ${SCC_DATA_DIR} PATTERN ".svn" EXCLUDE)

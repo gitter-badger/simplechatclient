@@ -183,7 +183,7 @@ void ChatView::displayMessage(QString &strData, MessageCategory eMessageCategory
     // remove first message
     QWebElement document = this->page()->mainFrame()->documentElement();
     QWebElementCollection allDiv = document.findAll("div");
-    if (allDiv.count() > 1000)
+    if (allDiv.count() > 500)
         this->page()->mainFrame()->evaluateJavaScript("removeFirstMessage()");
 
     // append

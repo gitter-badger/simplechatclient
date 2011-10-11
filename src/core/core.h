@@ -75,8 +75,8 @@ public:
     int getUserCount(QString);
     // show message
     void showMessage(QString&,QString&,MessageCategory, QString strTime = QString::null, QString strNick = QString::null);
-    // get user avatar link
-    QString getUserAvatarLink(QString);
+    // get user avatar path
+    QString getUserAvatarPath(QString);
     // priv
     QString convertPrivName(QString);
 
@@ -122,8 +122,7 @@ public:
     // priv
     QMap<QString,QString> mPrivNames;
     // empty user avatar
-    QString strEmptyUserAvatar;
-    QByteArray bEmptyUserAvatar;
+    QString strEmptyUserAvatarPath;
 
 public slots:
     void quit();

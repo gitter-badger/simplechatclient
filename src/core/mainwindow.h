@@ -52,7 +52,7 @@ public:
     int getUserCount(QString);
     QString getUserModes(QString, QString);
     QList<QString> getUserList(QString);
-    QString getUserAvatarLink(QString);
+    QString getUserAvatarPath(QString);
     // for core
     void showMessage(QString&,QString&,MessageCategory, QString strTime = QString::null, QString strNick = QString::null);
 

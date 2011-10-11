@@ -42,9 +42,11 @@ private:
     TabContainer *pTabC;
     QNetworkAccessManager *accessManager;
 
+    void saveAvatar(QString&, QByteArray);
+
 public slots:
     void avatarFinished(QNetworkReply*);
-    void setAvatar(QString&, QString&, QByteArray&);
+    void setAvatar(QString&, QString&, QString&, QByteArray&);
 
 signals:
     void setChannelAvatar(QString);

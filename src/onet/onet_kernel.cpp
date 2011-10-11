@@ -1459,15 +1459,11 @@ void OnetKernel::raw_111n()
     // get avatar
     if (strKey == "avatar")
     {
-        pTabC->setUserAvatarLink(strNick, strValue);
-
-        if (!strValue.isEmpty())
+        if ((Core::instance()->settings.value("themes") == "Origin") || (Core::instance()->settings.value("themes") == "Adara"))
         {
-            if (Core::instance()->settings.value("themes") == "Origin")
+            if (!strValue.isEmpty())
                 avatar->getAvatar(strNick, "nick", strValue);
         }
-        else
-            pTabC->setUserAvatar(strNick, Core::instance()->bEmptyUserAvatar);
     }
 }
 

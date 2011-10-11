@@ -688,9 +688,9 @@ QList<QString> MainWindow::getUserList(QString strChannel)
     return pTabC->getUserList(strChannel);
 }
 
-QString MainWindow::getUserAvatarLink(QString strNick)
+QString MainWindow::getUserAvatarPath(QString strNick)
 {
-    return pTabC->getUserAvatarLink(strNick);
+    return pTabC->getUserAvatarPath(strNick);
 }
 
 void MainWindow::timeoutAutoaway()

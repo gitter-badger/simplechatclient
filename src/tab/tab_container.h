@@ -60,9 +60,8 @@ public slots:
     void changeFlag(QString, QString);
     void nicklistRefresh(QString);
     void clearAllNicklist();
-    void setUserAvatar(QString, QByteArray);
-    void setUserAvatarLink(QString, QString);
-    QString getUserAvatarLink(QString);
+    void setUserAvatarPath(QString, QString);
+    QString getUserAvatarPath(QString);
     int getUserCount(QString);
     QString getUserModes(QString, QString);
     QList<QString> getUserList(QString);

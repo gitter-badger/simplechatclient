@@ -121,13 +121,11 @@ QString HtmlMessagesRenderer::renderer(QString strDT, QString strData, MessageCa
     {
         if (strThemes == "Adara")
         {
-            QString strUserAvatarImg;
-            QString strUserAvatarLink = Core::instance()->getUserAvatarLink(strNick);
-            if (strUserAvatarLink.isEmpty())
-                strUserAvatarImg = QString("<img src=\"data:image/png;base64,%1\" alt=\"avatar\" class=\"avatar\" />").arg(Core::instance()->strEmptyUserAvatar);
-            else
-                strUserAvatarImg = QString("<img src=\"%1\" alt=\"avatar\" class=\"avatar\" />").arg(strUserAvatarLink);
-
+            QString strUserAvatarPath = Core::instance()->getUserAvatarPath(strNick);
+#ifndef Q_WS_WIN
+            strUserAvatarPath = "file://"+strUserAvatarPath;
+#endif
+            QString strUserAvatarImg = QString("<img src=\"%1\" alt=\"avatar\" class=\"avatar\" />").arg(strUserAvatarPath);
             return QString("%1<span class=\"DefaultFontColor\"><a href=\"#\" onclick=\"return false\" name=\"nick\" style=\"color:inherit;text-decoration:none;\">%2</a>: </span><span class=\"%3\" %4>%5</span><span class=\"time\">%6</span>").arg(strUserAvatarImg).arg(strNick).arg(strFontClass).arg(strTextDecoration).arg(strData).arg(strShortDT);
         }
         else

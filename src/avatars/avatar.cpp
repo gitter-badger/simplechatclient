@@ -18,6 +18,7 @@
  *                                                                          *
  ****************************************************************************/
 
+#include <QDir>
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
 #include <QStringList>
@@ -54,16 +55,21 @@ void Avatar::avatarFinished(QNetworkReply *reply)
 
     QString strNickOrChannel = reply->property("nickorchannel").toString();
     QString strCategory = reply->property("category").toString();
+    QFileInfo fi(reply->url().toString());
+    QString strAvatarPath = fi.fileName();
     QByteArray bData = reply->readAll();
 
     if (!bData.isEmpty())
-        setAvatar(strNickOrChannel, strCategory, bData);
+        setAvatar(strNickOrChannel, strCategory, strAvatarPath, bData);
 }
 
-void Avatar::setAvatar(QString &strNickOrChannel, QString &strCategory, QByteArray &bAvatar)
+void Avatar::setAvatar(QString &strNickOrChannel, QString &strCategory, QString &strAvatarPath, QByteArray &bAvatar)
 {
     if (strCategory == "nick")
-        pTabC->setUserAvatar(strNickOrChannel, bAvatar);
+    {
+        saveAvatar(strAvatarPath, bAvatar);
+        pTabC->setUserAvatarPath(strNickOrChannel, strAvatarPath);
+    }
     else if (strCategory == "channel")
     {
         // return if channel not exist any more
@@ -72,5 +78,33 @@ void Avatar::setAvatar(QString &strNickOrChannel, QString &strCategory, QByteArr
         Core::instance()->mChannelAvatar[strNickOrChannel] = bAvatar;
 
         emit setChannelAvatar(strNickOrChannel);
+    }
+}
+
+void Avatar::saveAvatar(QString &strAvatarPath, QByteArray bAvatar)
+{
+    QString path;
+
+#ifdef Q_WS_WIN
+    path = QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation);
+    path += "/scc";
+#else
+    path = QDir::homePath()+"/.scc";
+#endif
+
+    QString strCurrentProfile = Core::instance()->settings.value("current_profile");
+    path += "/profiles/"+strCurrentProfile+"/avatars";
+
+    // create dir if not exist
+    if (!QDir().exists(path))
+        QDir().mkpath(path);
+
+    strAvatarPath = path+"/"+strAvatarPath;
+
+    QFile f(strAvatarPath);
+    if (f.open(QIODevice::WriteOnly))
+    {
+        f.write(bAvatar);
+        f.close();
     }
 }

@@ -75,7 +75,7 @@ void NickListDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opti
 
     QString nick = index.data(Qt::DisplayRole).toString();
     QString modes = index.data(Qt::UserRole+12).toString();
-    QByteArray bAvatar = index.data(Qt::UserRole+13).toByteArray();
+    QString userAvatarPath = index.data(Qt::UserRole+13).toString();
 
     bool busy = false;
 
@@ -93,11 +93,9 @@ void NickListDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opti
     if (modes.contains("O")) { icons << QIcon(":/images/dev.png"); }
 
     // avatar
-    if ((nick[0] != '~') && (strThemes == "Origin") && (!bAvatar.isEmpty()))
+    if ((nick[0] != '~') && (strThemes == "Origin"))
     {
-        QPixmap pAvatar;
-        pAvatar.loadFromData(bAvatar);
-        QIcon avatar(pAvatar);
+        QIcon avatar(userAvatarPath);
 
         int x = option.rect.left();
         int y = option.rect.top();

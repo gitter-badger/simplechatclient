@@ -48,10 +48,9 @@ void NickListWidget::addUser(QString strNick, QString strModes)
     SortedListWidgetItem *item = new SortedListWidgetItem();
     item->setText(strNick);
     item->setData(Qt::UserRole+10, true); // is nicklist
-    item->setData(Qt::UserRole+11, Core::instance()->getUserMaxModes(strModes));
-    item->setData(Qt::UserRole+12, strModes);
-    item->setData(Qt::UserRole+13, QByteArray()); // avatar
-    item->setData(Qt::UserRole+14, QString()); // avatar link
+    item->setData(Qt::UserRole+11, Core::instance()->getUserMaxModes(strModes)); // max modes
+    item->setData(Qt::UserRole+12, strModes); // modes
+    item->setData(Qt::UserRole+13, Core::instance()->strEmptyUserAvatarPath); // avatar url
 
     this->addItem(item);
 }
@@ -71,25 +70,18 @@ bool NickListWidget::existUser(QString strNick)
         return true;
 }
 
-void NickListWidget::updateUserAvatar(QString strNick, QByteArray bData)
+void NickListWidget::setUserAvatarPath(QString strNick, QString strValue)
 {
     QList<QListWidgetItem*> items = this->findItems(strNick, Qt::MatchExactly);
     foreach (QListWidgetItem *item, items)
-        item->setData(Qt::UserRole+13, bData);
+        item->setData(Qt::UserRole+13, strValue);
 }
 
-void NickListWidget::updateUserAvatarLink(QString strNick, QString strValue)
+QString NickListWidget::getUserAvatarPath(QString strNick)
 {
     QList<QListWidgetItem*> items = this->findItems(strNick, Qt::MatchExactly);
     foreach (QListWidgetItem *item, items)
-        item->setData(Qt::UserRole+14, strValue);
-}
-
-QString NickListWidget::getUserAvatarLink(QString strNick)
-{
-    QList<QListWidgetItem*> items = this->findItems(strNick, Qt::MatchExactly);
-    foreach (QListWidgetItem *item, items)
-        return item->data(Qt::UserRole+14).toString();
+        return item->data(Qt::UserRole+13).toString();
     return QString::null;
 }
 

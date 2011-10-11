@@ -21,7 +21,6 @@
 #include <QAction>
 #include <QDateTime>
 #include <QDir>
-#include <QFile>
 #include <QSettings>
 #include <QTcpSocket>
 #include <QTimer>
@@ -125,7 +124,7 @@ void Core::createSettings()
     settings["debug"] = strDebug;
 
     // default settings
-    settings["version"] = "1.1.3.1074";
+    settings["version"] = "1.1.3.1075";
     settings["logged"] = "off";
     settings["busy"] = "off";
     settings["away"] = "off";
@@ -216,16 +215,14 @@ void Core::checkSettings()
 
 void Core::readEmptyUserAvatar()
 {
-    strEmptyUserAvatar.clear();
-    bEmptyUserAvatar.clear();
+    QString path;
+#ifdef Q_WS_WIN
+    path = QCoreApplication::applicationDirPath();
+#else
+    path = "/usr/share/scc";
+#endif
 
-    QFile file(":/images/user_avatar.png");
-    if (file.open(QIODevice::ReadOnly))
-    {
-        bEmptyUserAvatar = file.readAll();
-        strEmptyUserAvatar = QString(bEmptyUserAvatar.toBase64());
-        file.close();
-    }
+    strEmptyUserAvatarPath = path+"/images/user_avatar.png";
 }
 
 QString Core::version()
@@ -367,9 +364,9 @@ void Core::showMessage(QString &strChannel, QString &strData, MessageCategory eM
     window->showMessage(strChannel, strData, eMessageCategory, strTime, strNick);
 }
 
-QString Core::getUserAvatarLink(QString strNick)
+QString Core::getUserAvatarPath(QString strNick)
 {
-    return window->getUserAvatarLink(strNick);
+    return window->getUserAvatarPath(strNick);
 }
 
 QString Core::convertPrivName(QString strChannel)
