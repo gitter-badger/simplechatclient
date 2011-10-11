@@ -30,6 +30,7 @@
 #include "core.h"
 
 #ifdef Q_WS_WIN
+    #include <QCoreApplication>
     #include <QDesktopServices>
 #endif
 
@@ -124,7 +125,7 @@ void Core::createSettings()
     settings["debug"] = strDebug;
 
     // default settings
-    settings["version"] = "1.1.3.1077";
+    settings["version"] = "1.1.3.1078";
     settings["logged"] = "off";
     settings["busy"] = "off";
     settings["away"] = "off";
