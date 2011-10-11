@@ -54,27 +54,20 @@ void Log::save(QString &strChannel, QString &strData)
     path = QDir::homePath()+"/.scc";
 #endif
 
-    // create scc dir if not exist
-    if (!QDir().exists(path))
-        QDir().mkdir(path);
-
-    // create logs dir if not exist
-    path += "/log";
-    if (!QDir().exists(path))
-        QDir().mkdir(path);
+    QString strCurrentProfile = Core::instance()->settings.value("current_profile");
+    path += "/profiles/"+strCurrentProfile+"/log";
 
     // save logs by date
     bool bSaveLogsByDate = Core::instance()->settings.value("save_logs_by_date") == "on" ? true : false;
-
     if (bSaveLogsByDate)
     {
         QString strDate = QDate().currentDate().toString("yyyy-MM");
-
-        // create logs dir if not exist
         path += "/"+strDate;
-        if (!QDir().exists(path))
-            QDir().mkdir(path);
     }
+
+    // create dir if not exist
+    if (!QDir().exists(path))
+        QDir().mkpath(path);
 
     QString strFileName = strChannel;
 

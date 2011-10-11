@@ -48,7 +48,6 @@ public:
     // config
     void configValues();
     void configProfileValues();
-    void removeOldConfig();
     // from main
     QString version();
     void setDebug(bool);

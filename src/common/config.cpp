@@ -41,25 +41,20 @@ Config::Config(bool _bProfileConfig, QString _strForceProfile) : bProfileConfig(
     path = QDir::homePath()+"/.scc";
 #endif
 
-    // create dir if not exist
-    if (!QDir().exists(path))
-        QDir().mkdir(path);
-
     if (bProfileConfig)
     {
-        path += "/profiles";
-
-        // create dir if not exist
-        if (!QDir().exists(path))
-            QDir().mkdir(path);
-
         QString user = (strForceProfile.isEmpty() ? Core::instance()->settings.value("current_profile") : strForceProfile);
         if (user.isEmpty()) user = "~test";
 
-        strConfigFile = path+"/"+user+".xml";
+        path += "/profiles/"+user;
+        strConfigFile = path+"/profile.xml";
     }
     else
         strConfigFile = path+"/scc.xml";
+
+    // create dir if not exist
+    if (!QDir().exists(path))
+        QDir().mkpath(path);
 
     QFile file(strConfigFile);
 

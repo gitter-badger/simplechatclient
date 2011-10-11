@@ -110,16 +110,13 @@ void DlgEmoticons::setDefaultValues()
 #endif
 
     QDir dAllEmoticonsDirs = strPath+"/3rdparty/emoticons";
-    QStringList lDirs = dAllEmoticonsDirs.entryList(QStringList("*"), QDir::Dirs | QDir::NoSymLinks);
+    QStringList lDirs = dAllEmoticonsDirs.entryList(QStringList("*"), QDir::Dirs | QDir::NoDotAndDotDot | QDir::NoSymLinks);
 
     for (int i = 0; i < lDirs.size(); i++)
     {
         QString strDir = lDirs[i];
-        if ((strDir != ".") && (strDir != ".."))
-        {
-            QString strFullPath = QString("%1/%2").arg(dAllEmoticonsDirs.path()).arg(strDir);
-            ui.tabWidget->addTab(new DlgEmoticonsTab(strFullPath), strDir);
-        }
+        QString strFullPath = QString("%1/%2").arg(dAllEmoticonsDirs.path()).arg(strDir);
+        ui.tabWidget->addTab(new DlgEmoticonsTab(strFullPath), strDir);
     }
 }
 

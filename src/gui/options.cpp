@@ -412,28 +412,20 @@ void DlgOptions::refreshProfilesList()
     path = QDir::homePath()+"/.scc";
 #endif
 
-    // create dir if not exist
-    if (!QDir().exists(path))
-        QDir().mkdir(path);
-
     path += "/profiles";
 
     // create dir if not exist
     if (!QDir().exists(path))
-        QDir().mkdir(path);
+        QDir().mkpath(path);
 
     QDir dir(path);
-    dir.setFilter(QDir::Files | QDir::Hidden | QDir::NoSymLinks);
     dir.setSorting(QDir::Name);
 
-    QStringList nameFilters;
-    nameFilters << "*.xml";
-    QFileInfoList list = dir.entryInfoList(nameFilters);
+    QFileInfoList list = dir.entryInfoList(QStringList("*"), QDir::Dirs | QDir::NoDotAndDotDot | QDir::NoSymLinks);
     for (int i = 0; i < list.size(); ++i)
     {
-        QString fileName = list.at(i).fileName();
-        fileName.remove(".xml");
-        ui.comboBox_profiles->addItem(fileName);
+        QString strName = list.at(i).fileName();
+        ui.comboBox_profiles->addItem(strName);
     }
 
     // set current profile

@@ -23,6 +23,7 @@
 #include <QFile>
 #include <QPushButton>
 #include <QTextStream>
+#include "core.h"
 #include "notes.h"
 
 #ifdef Q_WS_WIN
@@ -70,9 +71,12 @@ void DlgNotes::readPath()
     path = QDir::homePath()+"/.scc";
 #endif
 
+    QString strCurrentProfile = Core::instance()->settings.value("current_profile");
+    path += "/profiles/"+strCurrentProfile;
+
     // create dir if not exist
     if (!QDir().exists(path))
-        QDir().mkdir(path);
+        QDir().mkpath(path);
 
     strNotesFile = path+"/notes.txt";
 }

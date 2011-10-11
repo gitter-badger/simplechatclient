@@ -44,6 +44,7 @@ private:
     void createSignals();
     void createPath();
     void refreshProfilesList();
+    bool removeDir(const QString &);
 
 private slots:
     void itemClicked();

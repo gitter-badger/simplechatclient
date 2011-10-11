@@ -109,7 +109,7 @@ void ChatView::refreshCSS()
 
     QString strHeadCSS = "div{margin-bottom: 2px;}";
     strHeadCSS.append(QString(".time{font-weight:normal;text-decoration:none;color:%1;float:right;clear:right;margin-right:5px;}").arg(strDefaultFontColor));
-    strHeadCSS.append(QString(".avatar{border-radius:5px;vertical-align:middle;margin-left:4px;margin-right:4px;}"));
+    strHeadCSS.append(QString(".avatar{border-radius:5px;vertical-align:middle;margin-left:4px;margin-right:4px;width:30px;height:30px;}"));
     strHeadCSS.append(QString(".DefaultFontColor{color:%1;}").arg(strDefaultFontColor));
     strHeadCSS.append(QString(".JoinFontColor{color:%1;}").arg(strJoinFontColor));
     strHeadCSS.append(QString(".PartFontColor{color:%1;}").arg(strPartFontColor));
@@ -371,9 +371,12 @@ void ChatView::sendToNotes()
     path = QDir::homePath()+"/.scc";
 #endif
 
+    QString strCurrentProfile = Core::instance()->settings.value("current_profile");
+    path += "/profiles/"+strCurrentProfile;
+
     // create dir if not exist
     if (!QDir().exists(path))
-        QDir().mkdir(path);
+        QDir().mkpath(path);
 
     QString strNotesFile = path+"/notes.txt";
     QString strContent;

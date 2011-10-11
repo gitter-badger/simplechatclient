@@ -129,13 +129,10 @@ void NickListWidget::changeUserFlag(QString strNick, QString strFlag)
 
 QString NickListWidget::getUserModes(QString strNick)
 {
-    QString strUserModes;
-
     QList<QListWidgetItem*> items = this->findItems(strNick, Qt::MatchExactly);
     foreach (QListWidgetItem *item, items)
-        strUserModes = item->data(Qt::UserRole+12).toString();
-
-    return strUserModes;
+        return item->data(Qt::UserRole+12).toString();
+    return QString::null;
 }
 
 QList<QString> NickListWidget::getUserList()

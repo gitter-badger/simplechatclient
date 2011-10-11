@@ -267,25 +267,22 @@ QString Convert::findEmoticon(QString strEmoticon)
 #endif
 
     QDir dAllEmoticonsDirs = strPath+"/3rdparty/emoticons";
-    QStringList lDirs = dAllEmoticonsDirs.entryList(QStringList("*"), QDir::Dirs | QDir::NoSymLinks);
+    QStringList lDirs = dAllEmoticonsDirs.entryList(QStringList("*"), QDir::Dirs | QDir::NoDotAndDotDot | QDir::NoSymLinks);
 
     for (int i = 0; i < lDirs.size(); i++)
     {
         QString strDir = lDirs[i];
-        if ((strDir != ".") && (strDir != ".."))
+        QDir dEmoticonsDir = QString("%1/%2").arg(dAllEmoticonsDirs.path()).arg(strDir);
+        QStringList lFiles = dEmoticonsDir.entryList(QStringList("*.gif"), QDir::Files | QDir::NoSymLinks);
+
+        for (int i = 0; i < lFiles.size(); i++)
         {
-            QDir dEmoticonsDir = QString("%1/%2").arg(dAllEmoticonsDirs.path()).arg(strDir);
-            QStringList lFiles = dEmoticonsDir.entryList(QStringList("*.gif"), QDir::Files | QDir::NoSymLinks);
+            QString strFileName = lFiles.at(i);
+            QString strShortFileName = strFileName;
+            strShortFileName.remove(".gif");
 
-            for (int i = 0; i < lFiles.size(); i++)
-            {
-                QString strFileName = lFiles.at(i);
-                QString strShortFileName = strFileName;
-                strShortFileName.remove(".gif");
-
-                if (strShortFileName == strEmoticon)
-                    return QString("%1/%2").arg(dEmoticonsDir.path()).arg(strFileName);
-            }
+            if (strShortFileName == strEmoticon)
+                return QString("%1/%2").arg(dEmoticonsDir.path()).arg(strFileName);
         }
     }
     return QString::null;

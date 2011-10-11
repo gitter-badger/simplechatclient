@@ -123,14 +123,11 @@ void DlgUpdate::gotFile(QByteArray bData)
     path = QDir::homePath()+"/.scc";
 #endif
 
-    // create scc dir if not exist
-    if (!QDir().exists(path))
-        QDir().mkdir(path);
-
-    // create update dir if not exist
     path += "/update";
+
+    // create dir if not exist
     if (!QDir().exists(path))
-        QDir().mkdir(path);
+        QDir().mkpath(path);
 
     // save
     QString fileName = "/scc-"+strVersion+".exe";

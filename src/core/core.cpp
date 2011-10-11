@@ -93,9 +93,6 @@ void Core::init()
     // read empty user avatar
     readEmptyUserAvatar();
 
-    // remove old config
-    removeOldConfig();
-
     // clear old settings
     QSettings oldSettings;
     oldSettings.clear();
@@ -128,7 +125,7 @@ void Core::createSettings()
     settings["debug"] = strDebug;
 
     // default settings
-    settings["version"] = "1.1.3.1073";
+    settings["version"] = "1.1.3.1074";
     settings["logged"] = "off";
     settings["busy"] = "off";
     settings["away"] = "off";
@@ -183,25 +180,6 @@ void Core::configProfileValues()
         ip.next();
         settings[ip.key()] = ip.value();
     }
-}
-
-void Core::removeOldConfig()
-{
-    QString path;
-#ifdef Q_WS_WIN
-    path = QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation);
-    path += "/scc";
-#else
-    path = QDir::homePath()+"/.scc";
-#endif
-
-    // create dir if not exist
-    if (!QDir().exists(path))
-        QDir().mkdir(path);
-
-    // remove file
-    if (QFile::exists(path+"/scc.conf"))
-        QFile::remove(path+"/scc.conf");
 }
 
 void Core::checkSettings()

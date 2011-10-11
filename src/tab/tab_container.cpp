@@ -448,16 +448,13 @@ int TabContainer::getUserCount(QString strChannel)
 
 QString TabContainer::getUserModes(QString strNick, QString strChannel)
 {
-    QString strModes;
-
     int i = getIndex(strChannel);
     if (i != -1)
     {
         if (tw[i]->pNickListWidget->existUser(strNick))
-            strModes = tw[i]->pNickListWidget->getUserModes(strNick);
+            return tw[i]->pNickListWidget->getUserModes(strNick);
     }
-
-    return strModes;
+    return QString::null;
 }
 
 QList<QString> TabContainer::getUserList(QString strChannel)

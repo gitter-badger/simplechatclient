@@ -21,6 +21,7 @@
 #include <QCoreApplication>
 #include <QDir>
 #include <QProcess>
+#include "core.h"
 #include "log.h"
 
 // for abort()
@@ -100,18 +101,18 @@ void crashHandler()
 {
     QString path = QDir::homePath()+"/.scc";
 
+    QString strCurrentProfile = Core::instance()->settings.value("current_profile");
+    path += "/profiles/"+strCurrentProfile+"/log";
+
     // create dir if not exist
     if (!QDir().exists(path))
-        QDir().mkdir(path);
-
-    if (!QDir().exists(path+"/log"))
-        QDir().mkdir(path+"/log");
+        QDir().mkpath(path);
 
     int pid = QCoreApplication::applicationPid();
     QString strPid = QString::number(pid);
     QString strRandom = createRandom6();
 
-    QString strCommand = "gdb --pid "+ strPid +" -ex \"set logging overwrite on\" -ex \"set logging file "+ path +"/log/crash-"+ strRandom +".txt\" -ex \"set logging on\" -ex \"backtrace\" -ex \"info registers\" -ex \"x/16i $pc\" -ex \"thread apply all backtrace\" -ex \"up\" -ex \"list\" -ex \"quit\"";
+    QString strCommand = "gdb --pid "+ strPid +" -ex \"set logging overwrite on\" -ex \"set logging file "+ path +"/crash-"+ strRandom +".txt\" -ex \"set logging on\" -ex \"backtrace\" -ex \"up\" -ex \"list\" -ex \"quit\"";
 
     QProcess pProcess;
     pProcess.start(strCommand);

@@ -87,16 +87,12 @@ void DlgProfileManager::refreshAllLists()
 bool DlgProfileManager::existProfile(QString strExistProfile)
 {
     QDir dir(path);
-    dir.setFilter(QDir::Files | QDir::Hidden | QDir::NoSymLinks);
     dir.setSorting(QDir::Name);
 
-    QStringList nameFilters;
-    nameFilters << "*.xml";
-    QFileInfoList list = dir.entryInfoList(nameFilters);
+    QFileInfoList list = dir.entryInfoList(QStringList("*"), QDir::Dirs | QDir::NoDotAndDotDot | QDir::NoSymLinks);
     for (int i = 0; i < list.size(); ++i)
     {
         QString profileName = list.at(i).fileName();
-        profileName.remove(".xml");
 
         if (profileName == strExistProfile)
             return true;
@@ -113,15 +109,11 @@ void DlgProfileManager::createPath()
     path = QDir::homePath()+"/.scc";
 #endif
 
-    // create dir if not exist
-    if (!QDir().exists(path))
-        QDir().mkdir(path);
-
     path += "/profiles";
 
     // create dir if not exist
     if (!QDir().exists(path))
-        QDir().mkdir(path);
+        QDir().mkpath(path);
 }
 
 void DlgProfileManager::refreshProfilesList()
@@ -130,16 +122,12 @@ void DlgProfileManager::refreshProfilesList()
     ui.listWidget->clear();
 
     QDir dir(path);
-    dir.setFilter(QDir::Files | QDir::Hidden | QDir::NoSymLinks);
     dir.setSorting(QDir::Name);
 
-    QStringList nameFilters;
-    nameFilters << "*.xml";
-    QFileInfoList list = dir.entryInfoList(nameFilters);
+    QFileInfoList list = dir.entryInfoList(QStringList("*"), QDir::Dirs | QDir::NoDotAndDotDot | QDir::NoSymLinks);
     for (int i = 0; i < list.size(); ++i)
     {
         QString profileName = list.at(i).fileName();
-        profileName.remove(".xml");
         ui.listWidget->addItem(profileName);
     }
 }
@@ -177,13 +165,36 @@ void DlgProfileManager::removeProfile()
 
     QString profileName = ui.listWidget->selectedItems().at(0)->text();
 
-    if (QFile::exists(path+"/"+profileName+".xml"))
+    if (QDir().exists(path+"/"+profileName))
     {
-        QFile::remove(path+"/"+profileName+".xml");
+        removeDir(path+"/"+profileName);
 
         refreshAllLists();
 
         if (profileName == Core::instance()->settings.value("current_profile"))
             pDlgOptions->setCurrentProfile(0);
     }
+}
+
+bool DlgProfileManager::removeDir(const QString &dirName)
+{
+    bool result = true;
+    QDir dir(dirName);
+
+    if (dir.exists(dirName))
+    {
+        Q_FOREACH(QFileInfo info, dir.entryInfoList(QDir::NoDotAndDotDot | QDir::System | QDir::Hidden  | QDir::AllDirs | QDir::Files, QDir::DirsFirst))
+        {
+            if (info.isDir())
+                result = removeDir(info.absoluteFilePath());
+            else
+                result = QFile::remove(info.absoluteFilePath());
+
+            if (!result)
+                return result;
+        }
+        result = dir.rmdir(dirName);
+    }
+
+    return result;
 }
