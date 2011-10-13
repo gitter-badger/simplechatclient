@@ -116,7 +116,10 @@ QString HtmlMessagesRenderer::renderer(QString strDT, QString strData, MessageCa
         strTextDecoration = "style=\"text-decoration:underline;\"";
 
     QString strThemes = Core::instance()->settings["themes"];
+
+// TODO
 // NoticeMessage MeMessage
+
     if (!strNick.isEmpty())
     {
         if (strThemes == "Adara")
@@ -126,7 +129,7 @@ QString HtmlMessagesRenderer::renderer(QString strDT, QString strData, MessageCa
             strUserAvatarPath = "file://"+strUserAvatarPath;
 #endif
             QString strUserAvatarImg = QString("<img src=\"%1\" alt=\"avatar\" class=\"avatar\" />").arg(strUserAvatarPath);
-            return QString("%1<span class=\"DefaultFontColor\"><a href=\"#\" onclick=\"return false\" name=\"nick\" style=\"color:inherit;text-decoration:none;\">%2</a>: </span><span class=\"%3\" %4>%5</span><span class=\"time\">%6</span>").arg(strUserAvatarImg).arg(strNick).arg(strFontClass).arg(strTextDecoration).arg(strData).arg(strShortDT);
+            return QString("<table><td class=\"TableText\">%1<span class=\"DefaultFontColor\"><a href=\"#\" onclick=\"return false\" name=\"nick\" style=\"color:inherit;text-decoration:none;\">%2</a>: </span><span class=\"%3\" %4>%5</span></td><td class=\"time\">%6</td></table>").arg(strUserAvatarImg).arg(strNick).arg(strFontClass).arg(strTextDecoration).arg(strData).arg(strShortDT);
         }
         else
             return QString("<span class=\"DefaultFontColor\">%1 &lt;<a href=\"#\" onclick=\"return false\" name=\"nick\" style=\"color:inherit;text-decoration:none;\">%2</a>&gt; <span class=\"%3\" %4>%5</span></span>").arg(strDT).arg(strNick).arg(strFontClass).arg(strTextDecoration).arg(strData);
@@ -134,7 +137,7 @@ QString HtmlMessagesRenderer::renderer(QString strDT, QString strData, MessageCa
     else
     {
         if (strThemes == "Adara")
-            return QString("&nbsp;<span class=\"%1\">%2</span><span class=\"time\">%3</span>").arg(strFontClass).arg(strData).arg(strShortDT);
+            return QString("<table><td class=\"TableText\">&nbsp;<span class=\"%1\">%2</span></td><td class=\"time\">%3</td></table>").arg(strFontClass).arg(strData).arg(strShortDT);
         else
             return QString("<span class=\"DefaultFontColor\">%1 <span class=\"%2\">%3</span></span>").arg(strDT).arg(strFontClass).arg(strData);
     }

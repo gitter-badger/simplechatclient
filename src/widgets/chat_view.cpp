@@ -99,6 +99,10 @@ void ChatView::refreshCSS()
     strBackgroundImage = "file://"+strBackgroundImage;
 #endif
 
+/*
+    Cannot use float, clear, and border-radius !!!
+*/
+
     QString strBackground;
     if ((strDisableBackgroundImage == "off") && (!strBackgroundImage.isEmpty()))
         strBackground = "background-image: url("+strBackgroundImage+"); background-attachment: fixed; background-position: center; background-repeat: no-repeat;";
@@ -108,8 +112,9 @@ void ChatView::refreshCSS()
     body.setAttribute("style", strBodyCSS);
 
     QString strHeadCSS = "div{margin-bottom: 2px;}";
-    strHeadCSS.append(QString(".time{font-weight:normal;text-decoration:none;color:%1;float:right;clear:right;margin-right:5px;}").arg(strDefaultFontColor));
-    strHeadCSS.append(QString(".avatar{border-radius:5px;vertical-align:middle;margin-left:4px;margin-right:4px;width:30px;height:30px;}"));
+    strHeadCSS.append(QString("table{border-spacing: 0; margin: 0; padding: 0; font-family: sans; word-wrap: break-word; font-size:%1;}.TableText{width:100%;}").arg(strFontSize));
+    strHeadCSS.append(QString(".time{font-weight:normal; text-decoration:none; color:%1; padding-right:5px;}").arg(strDefaultFontColor));
+    strHeadCSS.append(QString(".avatar{vertical-align:middle; margin-left:4px; margin-right:4px; width:30px; height:30px;}"));
     strHeadCSS.append(QString(".DefaultFontColor{color:%1;}").arg(strDefaultFontColor));
     strHeadCSS.append(QString(".JoinFontColor{color:%1;}").arg(strJoinFontColor));
     strHeadCSS.append(QString(".PartFontColor{color:%1;}").arg(strPartFontColor));
@@ -183,7 +188,7 @@ void ChatView::displayMessage(QString &strData, MessageCategory eMessageCategory
     // remove first message
     QWebElement document = this->page()->mainFrame()->documentElement();
     QWebElementCollection allDiv = document.findAll("div");
-    if (allDiv.count() > 500)
+    if (allDiv.count() > 350)
         this->page()->mainFrame()->evaluateJavaScript("removeFirstMessage()");
 
     // append
