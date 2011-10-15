@@ -38,8 +38,10 @@ private:
 
 private slots:
     void refresh();
+    void itemClicked(QListWidgetItem*);
     void buttonAdd();
     void buttonRemove();
+    void buttonJoin();
 };
 
 #endif // CHANNEL_FAVOURITES_H

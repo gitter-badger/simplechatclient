@@ -40,19 +40,25 @@ DlgChannelFavourites::DlgChannelFavourites(QWidget *parent) : QDialog(parent)
 
 void DlgChannelFavourites::createGui()
 {
+    ui.pushButton_join->setEnabled(false);
+
     ui.pushButton_add->setIcon(QIcon(":/images/oxygen/16x16/irc-join-channel.png"));
     ui.pushButton_remove->setIcon(QIcon(":/images/oxygen/16x16/irc-close-channel.png"));
+    ui.pushButton_join->setIcon(QIcon(":/images/oxygen/16x16/legalmoves.png"));
     ui.buttonBox->button(QDialogButtonBox::Close)->setIcon(QIcon(":/images/oxygen/16x16/dialog-close.png"));
 
     ui.pushButton_add->setText(tr("Add"));
     ui.pushButton_remove->setText(tr("Remove"));
+    ui.pushButton_join->setText(tr("Join"));
 }
 
 void DlgChannelFavourites::createSignals()
 {
     QObject::connect(ui.pushButton_add, SIGNAL(clicked()), this, SLOT(buttonAdd()));
     QObject::connect(ui.pushButton_remove, SIGNAL(clicked()), this, SLOT(buttonRemove()));
+    QObject::connect(ui.pushButton_join, SIGNAL(clicked()), this, SLOT(buttonJoin()));
     QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(close()));
+    QObject::connect(ui.listWidget_channels, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(itemClicked(QListWidgetItem*)));
 }
 
 void DlgChannelFavourites::refresh()
@@ -73,6 +79,12 @@ void DlgChannelFavourites::refresh()
             Core::instance()->pNetwork->send(QString("CS INFO %1 i").arg(strChannel));
         }
     }
+}
+
+void DlgChannelFavourites::itemClicked(QListWidgetItem *)
+{
+    if (!ui.pushButton_join->isEnabled())
+        ui.pushButton_join->setEnabled(true);
 }
 
 void DlgChannelFavourites::buttonAdd()
@@ -100,5 +112,14 @@ void DlgChannelFavourites::buttonRemove()
     {
         Core::instance()->pNetwork->send(QString("NS FAVOURITES DEL %1").arg(strText));
         QTimer::singleShot(1000*2, this, SLOT(refresh())); // 2 sec
+    }
+}
+
+void DlgChannelFavourites::buttonJoin()
+{
+    if (ui.listWidget_channels->selectedItems().size() != 0)
+    {
+        QString strChannel = ui.listWidget_channels->selectedItems().at(0)->text();
+        Core::instance()->pNetwork->send(QString("JOIN %1").arg(strChannel));
     }
 }

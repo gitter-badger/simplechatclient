@@ -409,6 +409,10 @@
         <translation>Usuń</translation>
     </message>
     <message>
+        <source>Join</source>
+        <translation>Wejdź</translation>
+    </message>
+    <message>
         <source>Change your favorite channels</source>
         <translation>Zmiana ulubionych pokoi</translation>
     </message>
