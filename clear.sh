@@ -17,7 +17,7 @@ clean_all()
 	rm -rdf CMakeFiles CMakeCache.txt cmake_install.cmake cmake_uninstall.cmake Makefile scc.pro.user scc-config.h install_manifest.txt
 	cd translations && rm -rdf CMakeFiles cmake_install.cmake Makefile
 	cd ..
-	cd src && rm -rdf CMakeFiles scc.dir cmake_install.cmake Makefile
+	cd src && rm -rdf CMakeFiles scc.dir cmake_install.cmake Makefile __
 	cd ..
 }
 

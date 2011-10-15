@@ -233,17 +233,19 @@ include_directories (${QCA2_INCLUDE_DIRS})
 link_directories (${QCA2_LIBRARY_DIRS})
 add_definitions (${QCA2_CFLAGS_OTHER})
 
+find_package (Phonon)
+if (PHONON_FOUND)
+	include_directories (${PHONON_INCLUDE_DIR})
+endif (PHONON_FOUND)
+
 # qt
 find_package (Qt4 REQUIRED)
 
 # xml
 set (QT_USE_QTXML TRUE)
 
-# phonon
-set (QT_USE_PHONON TRUE)
-
 # webkit
-set(QT_USE_QTWEBKIT TRUE)
+set (QT_USE_QTWEBKIT TRUE)
 
 # rest
 include (${QT_USE_FILE})
@@ -291,7 +293,7 @@ else (MSVC) # mingw or linux
 		add_executable (scc ${scc_SRCS} ${MOC_FILES} ${scc_HDRS} ${scc_QRC_SRCS} ${scc_UIS_H})
 	endif (MINGW)
 
-	target_link_libraries (scc ${QT_LIBRARIES} ${QT_QTNETWORK_LIBRARIES} ${QCA2_LIBRARIES})
+	target_link_libraries (scc ${QT_LIBRARIES} ${QT_QTNETWORK_LIBRARIES} ${QCA2_LIBRARIES} ${PHONON_LIBRARY})
 endif (MSVC)
 
 # install

@@ -4044,7 +4044,7 @@ void OnetKernel::raw_819()
             bool flag1 = false;
             //bool flag2 = false;
             //bool flag3 = false;
-            bool flag4 = false;
+            //bool flag4 = false;
 
             QString s1 = strChannelParameters[1];
             int c;
@@ -4060,7 +4060,7 @@ void OnetKernel::raw_819()
             c++;
             int k = c & 7;
             int l = (c & 0x38) >> 3;
-            flag4 = l == 3;
+            //flag4 = l == 3;
 
             switch(l)
             {

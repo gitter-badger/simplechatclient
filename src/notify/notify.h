@@ -21,7 +21,7 @@
 #ifndef NOTIFY_H
 #define NOTIFY_H
 
-#include <Phonon/MediaObject>
+#include <phonon/MediaObject>
 #include <QObject>
 
 enum NotifyCategory {Beep, Query};
