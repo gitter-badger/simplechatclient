@@ -56,25 +56,16 @@ QString HtmlMessagesRenderer::renderer(QString strDT, QString strData, MessageCa
     }
     strData = strDataList.join(" ");
 
-    // if /me
-    if (strData.contains((QString(QByteArray("\x01")))))
+    // /me
+    QString strRegExpMe = QString("%1ACTION %2%3").arg(QString(QByteArray("\x01"))).arg("(.*)").arg(QString(QByteArray("\x01")));
+    if (strData.contains(QRegExp(strRegExpMe)))
     {
-        if (strData.contains("ACTION "))
-        {
-            strData.remove(QString(QByteArray("\x01")));
-            strData.remove("ACTION ");
-
-            strData.insert(0, "* ");
-            if (strData.contains("&lt;")) strData = strData.remove(strData.indexOf("&lt;"),4);
-            if (strData.contains("&gt;")) strData = strData.remove(strData.indexOf("&gt;"),4);
-
-            eMessageCategory = MeMessage;
-        }
+        strData.replace(QRegExp(strRegExpMe), "\\1");
+        eMessageCategory = MeMessage;
     }
 
     // colors
     QString strFontClass;
-
     if (eMessageCategory == DefaultMessage)
         strFontClass = "DefaultFontColor";
     else if (eMessageCategory == JoinMessage)
@@ -97,8 +88,13 @@ QString HtmlMessagesRenderer::renderer(QString strDT, QString strData, MessageCa
         strFontClass = "ErrorFontColor";
     else if (eMessageCategory == HilightMessage)
         strFontClass = "DefaultFontColor";
+    else if (eMessageCategory == ModerNoticeMessage)
+        strFontClass = "NoticeFontColor";
     else
         strFontClass = "DefaultFontColor";
+
+    // themes
+    QString strThemes = Core::instance()->settings["themes"];
 
     // convert emoticons, font
     Convert *convertText = new Convert(true);
@@ -115,10 +111,21 @@ QString HtmlMessagesRenderer::renderer(QString strDT, QString strData, MessageCa
     if (eMessageCategory == HilightMessage)
         strTextDecoration = "style=\"text-decoration:underline;\"";
 
-    QString strThemes = Core::instance()->settings["themes"];
-
-// TODO
-// NoticeMessage MeMessage
+    // me & modernotice
+    QString strBeforeNick;
+    QString strAfterNick;
+    if ((eMessageCategory == MeMessage) || (eMessageCategory == ModerNoticeMessage))
+        strBeforeNick = "* ";
+    else
+    {
+        if (strThemes == "Adara")
+            strAfterNick = ":";
+        else
+        {
+            strBeforeNick = "&lt;";
+            strAfterNick = "&gt;";
+        }
+    }
 
     if (!strNick.isEmpty())
     {
@@ -129,10 +136,10 @@ QString HtmlMessagesRenderer::renderer(QString strDT, QString strData, MessageCa
             strUserAvatarPath = "file://"+strUserAvatarPath;
 #endif
             QString strUserAvatarImg = QString("<img src=\"%1\" alt=\"avatar\" class=\"avatar\" />").arg(strUserAvatarPath);
-            return QString("<table><tr><td class=\"TableText\">%1<span class=\"DefaultFontColor\"><a href=\"#\" onclick=\"return false\" name=\"nick\" style=\"color:inherit;text-decoration:none;\">%2</a>: </span><span class=\"%3\" %4>%5</span></td><td class=\"time\">%6</td></tr></table>").arg(strUserAvatarImg).arg(strNick).arg(strFontClass).arg(strTextDecoration).arg(strData).arg(strShortDT);
+            return QString("<table><tr><td class=\"TableText\">%1<span class=\"DefaultFontColor\">%2<a href=\"#\" onclick=\"return false\" name=\"nick\" style=\"color:inherit;text-decoration:none;\">%3</a>%4 </span><span class=\"%5\" %6>%7</span></td><td class=\"time\">%8</td></tr></table>").arg(strUserAvatarImg).arg(strBeforeNick).arg(strNick).arg(strAfterNick).arg(strFontClass).arg(strTextDecoration).arg(strData).arg(strShortDT);
         }
         else
-            return QString("<span class=\"DefaultFontColor\">%1 &lt;<a href=\"#\" onclick=\"return false\" name=\"nick\" style=\"color:inherit;text-decoration:none;\">%2</a>&gt; <span class=\"%3\" %4>%5</span></span>").arg(strDT).arg(strNick).arg(strFontClass).arg(strTextDecoration).arg(strData);
+            return QString("<span class=\"DefaultFontColor\">%1 %2<a href=\"#\" onclick=\"return false\" name=\"nick\" style=\"color:inherit;text-decoration:none;\">%3</a>%4 <span class=\"%5\" %6>%7</span></span>").arg(strDT).arg(strBeforeNick).arg(strNick).arg(strAfterNick).arg(strFontClass).arg(strTextDecoration).arg(strData);
     }
     else
     {

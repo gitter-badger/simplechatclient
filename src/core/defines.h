@@ -29,7 +29,7 @@
 
 #include "debug_block.h"
 
-enum MessageCategory {DefaultMessage, JoinMessage, PartMessage, QuitMessage, KickMessage, ModeMessage, NoticeMessage, InfoMessage, MeMessage, ErrorMessage, HilightMessage};
+enum MessageCategory {DefaultMessage, JoinMessage, PartMessage, QuitMessage, KickMessage, ModeMessage, NoticeMessage, InfoMessage, MeMessage, ErrorMessage, HilightMessage, ModerNoticeMessage};
 
 enum { maxOpenChannels = 30 };
 

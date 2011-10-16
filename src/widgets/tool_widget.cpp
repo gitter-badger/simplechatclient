@@ -891,7 +891,7 @@ void ToolWidget::sendMessage(QString strText, bool bModeration)
             strText = QString("MODERNOTICE %1 :%2").arg(strChannel).arg(strText);
             Core::instance()->pNetwork->send(strText);
             QString strDisplay = strText.right(strText.length()-14-strChannel.length());
-            emit showMessage(strChannel, strDisplay, NoticeMessage, QString::null, strMe);
+            emit showMessage(strChannel, strDisplay, ModerNoticeMessage, QString::null, strMe);
         }
     }
 }

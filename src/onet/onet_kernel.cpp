@@ -1196,7 +1196,7 @@ void OnetKernel::raw_modernotice()
     if (strMessage[0] == ':') strMessage.remove(0,1);
 
     // display
-    pTabC->showMessage(strChannel, strMessage, NoticeMessage, QString::null, strNick);
+    pTabC->showMessage(strChannel, strMessage, ModerNoticeMessage, QString::null, strNick);
 }
 
 // :cf1f1.onet MODERATE ~testa opnick #channel cf1f44c3b4b870f8a :%F:verdana%ladnie to tak
