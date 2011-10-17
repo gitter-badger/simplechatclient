@@ -345,7 +345,7 @@ void ChatView::watchVideo()
 {
     QString strYoutubeLink;
 
-    QRegExp exYoutube_1("youtube.com/watch\\?v=([a-zA-Z0-9_-]{11})");
+    QRegExp exYoutube_1("youtube.com/watch\\?.*v=([a-zA-Z0-9_-]{11})");
     QRegExp exYoutube_2("youtube.com/v/([a-zA-Z0-9_-]{11})");
     QRegExp exYoutube_3("youtu.be/([a-zA-Z0-9_-]{11})");
 
@@ -569,7 +569,7 @@ void ChatView::menuWebsite(QContextMenuEvent *event)
     menu.addSeparator();
     menu.addAction(QIcon(":/images/oxygen/16x16/applications-internet.png"), tr("Open link"), this, SLOT(openWebbrowser()));
 
-    QRegExp exYoutube_1("youtube.com/watch\\?v=([a-zA-Z0-9_-]{11})");
+    QRegExp exYoutube_1("youtube.com/watch\\?.*v=([a-zA-Z0-9_-]{11})");
     QRegExp exYoutube_2("youtube.com/v/([a-zA-Z0-9_-]{11})");
     QRegExp exYoutube_3("youtu.be/([a-zA-Z0-9_-]{11})");
 

@@ -161,7 +161,7 @@ void messageHandler(QtMsgType type, const char *msg)
     delete l;
 
     // backtrace
-    if (type == QtWarningMsg) printBacktrace("warning from Qt");
+    if (type == QtWarningMsg) fprintf(stderr, "\nwarning from Qt: ('%s')\n", qPrintable(strMessage));
     else if (type == QtCriticalMsg) printBacktrace("critical error from Qt");
     else if (type == QtFatalMsg) printBacktrace("fatal error from Qt");
 }
