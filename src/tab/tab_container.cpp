@@ -33,16 +33,15 @@ TabContainer::TabContainer(TabManager *_pTabM) : pTabM(_pTabM)
 
 TabContainer::~TabContainer()
 {
-    for (int i = 0; i < tw.size(); i++)
+    while (!tw.isEmpty())
     {
-        QString strChannel = tw[i]->getName();
+        QString strChannel = tw.first()->getName();
 
         // remove from open channels
         Core::instance()->lOpenChannels.removeAll(strChannel);
 
         // remove tab
-        delete tw.at(i);
-        tw.removeAt(i);
+        delete tw.takeFirst();
 
         // log
         logClosed(strChannel);
@@ -142,8 +141,7 @@ void TabContainer::removeTab(QString strChannel)
         Core::instance()->lOpenChannels.removeAll(strChannel);
 
         // remove tab
-        delete tw.at(i);
-        tw.removeAt(i);
+        delete tw.takeAt(i);
 
         // log
         logClosed(strChannel);
