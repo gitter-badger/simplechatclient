@@ -38,7 +38,7 @@ public:
     bool existTab(QString);
     void addTab(QString);
     void removeTab(QString);
-    bool renameTab(QString, QString);
+    void renameTab(QString, QString);
     void partTab(int);
     void resizeMainWindow(QSize);
 
@@ -72,6 +72,8 @@ private:
     // other
     QList<TabWidget*> tw;
 
+    void logOpened(QString);
+    void logClosed(QString);
     int getIndex(QString);
     bool isHilightMessage(QString);
 

@@ -45,11 +45,24 @@ TabContainer::~TabContainer()
         tw.removeAt(i);
 
         // log
-        QString strData = "--- Log closed "+QDateTime::currentDateTime().toString(Qt::TextDate);
-        Log *l = new Log();
-        l->save(strChannel, strData);
-        delete l;
+        logClosed(strChannel);
     }
+}
+
+void TabContainer::logOpened(QString strChannel)
+{
+    QString strData = "--- Log opened "+QDateTime::currentDateTime().toString(Qt::TextDate);
+    Log *l = new Log();
+    l->save(strChannel, strData);
+    delete l;
+}
+
+void TabContainer::logClosed(QString strChannel)
+{
+    QString strData = "--- Log closed "+QDateTime::currentDateTime().toString(Qt::TextDate);
+    Log *l = new Log();
+    l->save(strChannel, strData);
+    delete l;
 }
 
 bool TabContainer::isHilightMessage(QString strMessage)
@@ -94,12 +107,6 @@ void TabContainer::addTab(QString strChannel)
 {
     if (!existTab(strChannel))
     {
-        // log
-        QString strData = "--- Log opened "+QDateTime::currentDateTime().toString(Qt::TextDate);
-        Log *l = new Log();
-        l->save(strChannel, strData);
-        delete l;
-
         // update open channels
         if (strChannel != "Status")
             Core::instance()->lOpenChannels.append(strChannel);
@@ -110,8 +117,17 @@ void TabContainer::addTab(QString strChannel)
         pTabM->setCurrentIndex(tw.size()-1);
 
         // if priv
-        if ((strChannel[0] == '^') && (Core::instance()->mPrivNames.contains(strChannel)))
-            pTabM->setTabText(tw.size()-1, Core::instance()->convertPrivName(strChannel));
+        if (strChannel[0] == '^')
+        {
+            if (Core::instance()->mPrivNames.contains(strChannel))
+            {
+                pTabM->setTabText(tw.size()-1, Core::instance()->convertPrivName(strChannel));
+
+                logOpened(strChannel);
+            }
+        }
+        else
+            logOpened(strChannel);
     }
 }
 
@@ -130,14 +146,11 @@ void TabContainer::removeTab(QString strChannel)
         tw.removeAt(i);
 
         // log
-        QString strData = "--- Log closed "+QDateTime::currentDateTime().toString(Qt::TextDate);
-        Log *l = new Log();
-        l->save(strChannel, strData);
-        delete l;
+        logClosed(strChannel);
     }
 }
 
-bool TabContainer::renameTab(QString strChannel, QString strNewName)
+void TabContainer::renameTab(QString strChannel, QString strNewName)
 {
     int i = getIndex(strChannel);
     if (i != -1)
@@ -146,10 +159,10 @@ bool TabContainer::renameTab(QString strChannel, QString strNewName)
         {
             pTabM->setTabText(i, strNewName);
 
-            return true;
+            // log
+            logOpened(strChannel);
         }
     }
-    return false;
 }
 
 void TabContainer::partTab(int index)
@@ -258,6 +271,9 @@ void TabContainer::setTopic(QString &strChannel, QString &strTopic)
         strTopic.replace("&", "&amp;");
         strTopic.replace("<", "&lt;");
         strTopic.replace(">", "&gt;");
+        strTopic.replace("\"", "&quot;");
+        strTopic.replace("'", "&#039;");
+        strTopic.replace("\\", "&#92;");
 
         QString strContent = strTopic;
 

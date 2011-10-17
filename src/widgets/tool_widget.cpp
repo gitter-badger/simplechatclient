@@ -334,9 +334,10 @@ void ToolWidget::setDefaultValues()
     pInputLine->setFont(QFont(strMyFontFamily, -1, iWeight, bMyItalic));
 
     // refresh input line text color
-    QPalette pal;
-    pal.setColor(QPalette::Text, QColor(strCurrentColor));
-    pInputLine->setPalette(pal);
+    if ((Core::instance()->settings["background_color"] == "#000000") && (strCurrentColor == "#000000"))
+        pInputLine->setStyleSheet(QString("QLineEdit { color:#ffffff; }"));
+    else
+        pInputLine->setStyleSheet(QString("QLineEdit { color:%1; }").arg(strCurrentColor));
 
     // moderation default hidden
     setModeration(false);
@@ -666,7 +667,11 @@ void ToolWidget::colorClicked(int index)
     pConfig->setValue("my_color", strCurrentColor);
     delete pConfig;
 
-    pInputLine->setStyleSheet(QString("QLineEdit { color:%1 }").arg(strCurrentColor));
+    // refresh input line text color
+    if ((Core::instance()->settings["background_color"] == "#000000") && (strCurrentColor == "#000000"))
+        pInputLine->setStyleSheet(QString("QLineEdit { color:#ffffff; }"));
+    else
+        pInputLine->setStyleSheet(QString("QLineEdit { color:%1; }").arg(strCurrentColor));
 }
 
 void ToolWidget::emoticonsClicked()

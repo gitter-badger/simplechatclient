@@ -234,9 +234,7 @@ link_directories (${QCA2_LIBRARY_DIRS})
 add_definitions (${QCA2_CFLAGS_OTHER})
 
 find_package (Phonon)
-if (PHONON_FOUND)
-	include_directories (${PHONON_INCLUDE_DIR})
-endif (PHONON_FOUND)
+include_directories (${PHONON_INCLUDE_DIR})
 
 # qt
 find_package (Qt4 REQUIRED)

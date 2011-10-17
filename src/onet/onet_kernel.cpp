@@ -612,8 +612,17 @@ void OnetKernel::raw_join()
             strDisplay = QString(tr("* %1 has joined priv")).arg(strNick);
     }
 
+    // add tab
     pTabC->addTab(strChannel);
-    pTabC->showMessage(strChannel, strDisplay, JoinMessage);
+
+    // show message
+    if (strChannel[0] == '^')
+    {
+        if (Core::instance()->mPrivNames.contains(strChannel))
+            pTabC->showMessage(strChannel, strDisplay, JoinMessage);
+    }
+    else
+        pTabC->showMessage(strChannel, strDisplay, JoinMessage);
 
     QString strMe = Core::instance()->settings.value("nick");
 
