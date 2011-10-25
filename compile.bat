@@ -1,5 +1,11 @@
 @echo off 
 
+if not exist "C:\Program Files\CMake 2.8" (
+echo Download CMake from http://www.cmake.org/files/v2.8/cmake-2.8.6-win32-x86.exe
+pause
+exit
+)
+
 if not exist C:\Qt\4.7.4 (
 echo Download Qt 4.7.4 from http://qt.nokia.com/downloads/windows-cpp
 pause
