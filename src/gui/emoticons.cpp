@@ -26,25 +26,14 @@
 #include "inputline_widget.h"
 #include "emoticons.h"
 
-DlgEmoticonsTab::DlgEmoticonsTab(QString _strDir, QWidget *parent) : QWidget(parent), strDir(_strDir)
+DlgEmoticonsThread::DlgEmoticonsThread() {}
+
+void DlgEmoticonsThread::setDir(QString _strDir)
 {
-    listWidget = new QListWidget(this);
-    listWidget->setEditTriggers(QAbstractItemView::NoEditTriggers);
-    listWidget->setDragDropMode(QAbstractItemView::NoDragDrop);
-    listWidget->setViewMode(QListView::IconMode);
-    listWidget->setMovement(QListView::Static);
-    listWidget->setResizeMode(QListView::Adjust);
-    listWidget->show();
-
-    QVBoxLayout *mainLayout = new QVBoxLayout;
-    mainLayout->addWidget(listWidget);
-    setLayout(mainLayout);
-
-    showEmoticons();
-    listWidget->setSortingEnabled(true);
+    strDir = _strDir;
 }
 
-void DlgEmoticonsTab::showEmoticons()
+void DlgEmoticonsThread::run()
 {
     QDir dEmoticonsDir = strDir;
     QStringList lFiles = dEmoticonsDir.entryList(QStringList("*.gif"), QDir::Files | QDir::NoSymLinks);
@@ -63,20 +52,52 @@ void DlgEmoticonsTab::showEmoticons()
             f.close();
         }
 
-        QPixmap pix;
         if (!bData.isEmpty())
-            pix.loadFromData(bData);
-
-        if (!pix.isNull())
-        {
-            QListWidgetItem *item = new QListWidgetItem;
-            item->setIcon(QIcon(pix));
-            item->setData(Qt::UserRole, strEmoticon);
-            item->setToolTip(strEmoticon);
-
-            listWidget->addItem(item);
-        }
+            emit addEmoticon(strEmoticon, bData);
     }
+    emit sortEmoticons();
+
+    exec();
+}
+
+DlgEmoticonsTab::DlgEmoticonsTab(QString _strDir, QWidget *parent) : QWidget(parent)
+{
+    listWidget = new QListWidget(this);
+    listWidget->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    listWidget->setDragDropMode(QAbstractItemView::NoDragDrop);
+    listWidget->setViewMode(QListView::IconMode);
+    listWidget->setMovement(QListView::Static);
+    listWidget->setResizeMode(QListView::Adjust);
+    listWidget->show();
+
+    QVBoxLayout *mainLayout = new QVBoxLayout;
+    mainLayout->addWidget(listWidget);
+    setLayout(mainLayout);
+
+    QObject::connect(&thread, SIGNAL(addEmoticon(QString, QByteArray)), this, SLOT(addEmoticon(QString, QByteArray)));
+    QObject::connect(&thread, SIGNAL(sortEmoticons()), this, SLOT(sortEmoticons()));
+
+    thread.setDir(_strDir);
+    thread.start();
+}
+
+void DlgEmoticonsTab::addEmoticon(QString strEmoticon, QByteArray bData)
+{
+    QPixmap pix;
+    if (!bData.isEmpty())
+        pix.loadFromData(bData);
+
+    QListWidgetItem *item = new QListWidgetItem;
+    item->setIcon(QIcon(pix));
+    item->setData(Qt::UserRole, strEmoticon);
+    item->setToolTip(strEmoticon);
+
+    listWidget->addItem(item);
+}
+
+void DlgEmoticonsTab::sortEmoticons()
+{
+    listWidget->setSortingEnabled(true);
 }
 
 DlgEmoticons::DlgEmoticons(MainWindow *parent, InputLineWidget *_pInputLineWidget) : QDialog(parent), pInputLineWidget(_pInputLineWidget)
@@ -129,6 +150,17 @@ void DlgEmoticons::createSignals()
     {
         DlgEmoticonsTab *tab = (DlgEmoticonsTab *)ui.tabWidget->widget(i);
         QObject::connect(tab->listWidget, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(buttonInsert()));
+    }
+}
+
+DlgEmoticons::~DlgEmoticons()
+{
+    for (int i = 0; i < ui.tabWidget->count(); i++)
+    {
+        DlgEmoticonsTab *tab = (DlgEmoticonsTab *)ui.tabWidget->widget(i);
+        tab->thread.quit();
+        tab->thread.wait();
+        tab->thread.deleteLater();
     }
 }
 

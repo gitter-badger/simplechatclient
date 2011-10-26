@@ -25,7 +25,27 @@ class InputLineWidget;
 class MainWindow;
 class QListWidget;
 #include <QDialog>
+#include <QListWidgetItem>
+#include <QThread>
 #include "ui_emoticons.h"
+
+class DlgEmoticonsThread : public QThread
+{
+    Q_OBJECT
+public:
+    DlgEmoticonsThread();
+    void setDir(QString);
+
+private:
+    QString strDir;
+
+protected:
+    void run();
+
+signals:
+    void addEmoticon(QString, QByteArray);
+    void sortEmoticons();
+};
 
 class DlgEmoticonsTab : public QWidget
 {
@@ -33,11 +53,11 @@ class DlgEmoticonsTab : public QWidget
 public:
     DlgEmoticonsTab(QString, QWidget *parent = 0);
     QListWidget *listWidget;
+    DlgEmoticonsThread thread;
 
-private:
-    QString strDir;
-
-    void showEmoticons();
+public slots:
+    void addEmoticon(QString, QByteArray);
+    void sortEmoticons();
 };
 
 class DlgEmoticons : public QDialog
@@ -45,6 +65,7 @@ class DlgEmoticons : public QDialog
     Q_OBJECT
 public:
     DlgEmoticons(MainWindow *, InputLineWidget *);
+    virtual ~DlgEmoticons();
 
 private:
     Ui::uiEmoticons ui;
