@@ -989,11 +989,11 @@
     </message>
     <message>
         <source>%1 invites you to channel %2</source>
-        <translation>%1 zaprasza Cie do pokoju %2</translation>
+        <translation>%1 zaprasza do pokoju %2</translation>
     </message>
     <message>
         <source>%1 invites you to priv</source>
-        <translation>%1 zaprasza Cie do rozmowy prywatnej</translation>
+        <translation>%1 zaprasza do rozmowy prywatnej</translation>
     </message>
 </context>
 <context>
@@ -1142,11 +1142,11 @@
     </message>
     <message>
         <source>Added you as a friend:</source>
-        <translation>Osoby które dodały Cie do przyjaciół:</translation>
+        <translation>Osoby które dodały Ciebie do przyjaciół:</translation>
     </message>
     <message>
         <source>Added you to ignore:</source>
-        <translation>Osoby które dodały Cie do ignorowanych:</translation>
+        <translation>Osoby które dodały Ciebie do ignorowanych:</translation>
     </message>
     <message>
         <source>Average time:</source>
@@ -2092,7 +2092,7 @@
     </message>
     <message>
         <source>You have been kicked from %1 by %2</source>
-        <translation>%1 wyrzuca Cie z pokoju %2</translation>
+        <translation>%1 wyrzuca Ciebie z pokoju %2</translation>
     </message>
     <message>
         <source>Reason: %3</source>
