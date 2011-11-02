@@ -1400,7 +1400,7 @@ void OnetKernel::raw_100n()
     QString strChannel = strDataList[4];
     QString strTime = strDataList[5];
     QDateTime dt = QDateTime::fromTime_t(strTime.toInt());
-    QString strDateTime = dt.toString("hh:mm");
+    QString strDateTime = dt.toString("hh:mm (dddd)");
 
     int iTime = strTime.toInt();
     QDateTime dta = QDateTime::currentDateTime();
