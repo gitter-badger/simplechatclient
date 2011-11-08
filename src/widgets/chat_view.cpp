@@ -141,7 +141,7 @@ void ChatView::displayMessage(QString &strData, MessageCategory eMessageCategory
 {
     QDateTime dt;
     if (!strTime.isEmpty())
-        dt = QDateTime::fromTime_t(strTime.toUInt());
+        dt = QDateTime::fromTime_t(strTime.toInt());
     else
         dt = QDateTime::currentDateTime();
     QString strDT = dt.toString("[hh:mm:ss]");

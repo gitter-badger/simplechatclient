@@ -2638,31 +2638,31 @@ void OnetKernel::raw_317()
     if (strDataList.size() < 6) return;
 
     QString strNick = strDataList[3];
-    QString strIdle = strDataList[4];
+    int iIdle = strDataList[4].toInt();
     QString strTime = strDataList[5];
+    QString strIdle;
 
-    QDateTime dt_idle = QDateTime::fromTime_t(strIdle.toInt());
-    int iDT_d = dt_idle.toString("dd").toInt();;
-    int iDT_h = dt_idle.toString("hh").toInt();
-    int iDT_m = dt_idle.toString("mm").toInt();
-    int iDT_s = dt_idle.toString("ss").toInt();
+    const int HOURS_IN_DAY = 24;
+    const int MINUTES_IN_HOUR = 60;
+    const int SECONDS_IN_MINUTE = 60;
 
-    if (iDT_d > 1) iDT_d--;
-    else iDT_d = 0;
-    if (iDT_h > 1) iDT_h--;
-    else iDT_h = 0;
+    int iSeconds = iIdle % SECONDS_IN_MINUTE ;
+    int iInMinutes = iIdle / SECONDS_IN_MINUTE ;
+    int iMinutes = iInMinutes % MINUTES_IN_HOUR ;
+    int iInHours = iInMinutes / MINUTES_IN_HOUR ;
+    int iHours = iInHours % HOURS_IN_DAY ;
+    int iDays = iInHours / HOURS_IN_DAY ;
 
-    QString strDT_idle;
-    if (iDT_d > 0)
-        strDT_idle = QString("%1d %2h %3m %4s").arg(iDT_d).arg(iDT_h).arg(iDT_m).arg(iDT_s);
-    else if ((iDT_d == 0) && (iDT_h > 0))
-        strDT_idle = QString("%1h %2m %3s").arg(iDT_h).arg(iDT_m).arg(iDT_s);
-    else if ((iDT_d == 0) && (iDT_h == 0) && (iDT_m > 0))
-        strDT_idle = QString("%1m %2s").arg(iDT_m).arg(iDT_s);
-    else if ((iDT_d == 0) && (iDT_h == 0) && (iDT_m == 0) && (iDT_s >= 0))
-        strDT_idle = QString("%1s").arg(iDT_s);
+    if (iDays > 0)
+        strIdle += QString("%1d ").arg(iDays);
+    if (iHours > 0)
+        strIdle += QString("%1h ").arg(iHours);
+    if (iMinutes > 0)
+        strIdle += QString("%1m ").arg(iMinutes);
+    if (iSeconds > 0)
+        strIdle += QString("%1s ").arg(iSeconds);
 
-    QString strDisplayIdle = QString(tr("* %1 is away %2")).arg(strNick).arg(strDT_idle);
+    QString strDisplayIdle = QString(tr("* %1 is away %2")).arg(strNick).arg(strIdle);
     pTabC->showMessageActive(strDisplayIdle, InfoMessage);
 
     QDateTime dt_time = QDateTime::fromTime_t(strTime.toInt());
