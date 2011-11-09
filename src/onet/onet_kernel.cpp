@@ -2659,7 +2659,7 @@ void OnetKernel::raw_317()
         strIdle += QString("%1h ").arg(iHours);
     if (iMinutes > 0)
         strIdle += QString("%1m ").arg(iMinutes);
-    if (iSeconds > 0)
+    if (iSeconds >= 0)
         strIdle += QString("%1s ").arg(iSeconds);
 
     QString strDisplayIdle = QString(tr("* %1 is away %2")).arg(strNick).arg(strIdle);
