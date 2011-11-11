@@ -26,7 +26,7 @@ DlgWebBrowser::DlgWebBrowser(QWidget *parent, QUrl url) : QDialog(parent)
 {
     ui.setupUi(this);
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
-    setWindowTitle("YouTube.com");
+    setWindowTitle("YouTube");
     // center screen
     move(QApplication::desktop()->screen()->rect().center() - rect().center());
 
