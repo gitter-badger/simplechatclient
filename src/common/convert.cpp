@@ -272,18 +272,11 @@ QString Convert::findEmoticon(QString strEmoticon)
     for (int i = 0; i < lDirs.size(); i++)
     {
         QString strDir = lDirs[i];
-        QDir dEmoticonsDir = QString("%1/%2").arg(dAllEmoticonsDirs.path()).arg(strDir);
-        QStringList lFiles = dEmoticonsDir.entryList(QStringList("*.gif"), QDir::Files | QDir::NoSymLinks);
+        QString strFullPath = QString("%1/%2").arg(dAllEmoticonsDirs.path()).arg(strDir);
 
-        for (int i = 0; i < lFiles.size(); i++)
-        {
-            QString strFileName = lFiles.at(i);
-            QString strShortFileName = strFileName;
-            strShortFileName.remove(".gif");
-
-            if (strShortFileName == strEmoticon)
-                return QString("%1/%2").arg(dEmoticonsDir.path()).arg(strFileName);
-        }
+        QString strEmoticonCheck = QString("%1/%2.gif").arg(strFullPath).arg(strEmoticon);
+        if (QFile::exists(strEmoticonCheck))
+            return strEmoticonCheck;
     }
     return QString::null;
 }
