@@ -30,10 +30,21 @@ QString colorize( const QString &text, int color = s_colorIndex )
     return QString( "\x1b[00;3%1m%2\x1b[00;39m" ).arg( QString::number(s_colors[color]), text );
 }
 
+static QString reverseColorize( const QString &text, int color )
+{
+    return QString( "\x1b[07;3%1m%2\x1b[00;39m" ).arg( QString::number(color), text );
+}
+
 DebugBlock::DebugBlock(const char* label): mp_label(label), m_color(s_colorIndex)
 {
     sm_mutex.lock();
     s_colorIndex = (s_colorIndex + 1) % 5;
+
+#if QT_VERSION >= 0x040700
+    m_startTime.start();
+#else
+    m_startTime = QTime::currentTime();
+#endif
 
     qDebug() << qPrintable( colorize( QLatin1String( "BEGIN:" ), m_color ) ) << mp_label;
 
@@ -42,5 +53,14 @@ DebugBlock::DebugBlock(const char* label): mp_label(label), m_color(s_colorIndex
 
 DebugBlock::~DebugBlock()
 {
-    qDebug() << qPrintable( colorize( QLatin1String( "END:" ), m_color ) ) << mp_label;
+#if QT_VERSION >= 0x040700
+    const double duration = m_startTime.elapsed() / 1000.0;
+#else
+    const double duration = (double)m_startTime.msecsTo( QTime::currentTime() ) / 1000.0;
+#endif
+
+    if( duration < 5.0 )
+        qDebug() << qPrintable( colorize( QLatin1String( "END:" ), m_color ) ) << mp_label << qPrintable( colorize( QString( "[Took: %3s]").arg( QString::number(duration, 'g', 2) ), m_color ) );
+    else
+        qDebug() << qPrintable( colorize( QLatin1String( "END:" ), m_color ) ) << mp_label << qPrintable( reverseColorize( QString( "[DELAY Took (quite long) %3s]").arg( QString::number(duration, 'g', 2) ), 3 ) );
 }

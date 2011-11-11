@@ -24,6 +24,12 @@
 #include <QMutex>
 #include <QtDebug>
 
+#if QT_VERSION >= 0x040700
+    #include <QElapsedTimer>
+#else
+    #include <QTime>
+#endif
+
 #ifdef _WIN32
 #define __PRETTY_FUNCTION__ __FUNCTION__
 #endif
@@ -41,6 +47,12 @@ private:
     int m_color;
 
     static QMutex sm_mutex;
+
+#if QT_VERSION >= 0x040700
+    QElapsedTimer m_startTime;
+#else
+    QTime m_startTime;
+#endif
 };
 
 #endif // DEBUG_BLOCK_H
