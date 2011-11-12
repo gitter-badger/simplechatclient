@@ -132,6 +132,11 @@ QString HtmlMessagesRenderer::renderer(QString strDT, QString strData, MessageCa
         if (strThemes == "Adara")
         {
             QString strUserAvatarPath = Core::instance()->getUserAvatarPath(strNick);
+
+            // is valid avatar
+            if ((strUserAvatarPath != Core::instance()->strEmptyUserAvatarPath) && (QImage(strUserAvatarPath).isNull()))
+                strUserAvatarPath = Core::instance()->strEmptyUserAvatarPath;
+
 #ifndef Q_WS_WIN
             strUserAvatarPath = "file://"+strUserAvatarPath;
 #endif
