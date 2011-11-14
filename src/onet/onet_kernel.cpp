@@ -168,6 +168,8 @@ void OnetKernel::kernel(QString param1)
             raw_332();
         else if (strDataList[1].toLower() == "333")
             raw_333();
+        else if (strDataList[1].toLower() == "335")
+            raw_335();
         else if (strDataList[1].toLower() == "341")
             raw_341();
         else if (strDataList[1].toLower() == "352")
@@ -2559,6 +2561,8 @@ void OnetKernel::raw_313()
         strDisplay = QString(tr("* %1 is a GlobalOp on OnetCzat")).arg(strNick);
     else if (strMessage == "is a NetAdmin on OnetCzat")
         strDisplay = QString(tr("* %1 is a NetAdmin on OnetCzat")).arg(strNick);
+    else if (strMessage == "is a Service on OnetCzat")
+        strDisplay = QString(tr("* %1 is a Service on OnetCzat")).arg(strNick);
     else
         strDisplay = strMessage;
 
@@ -2735,6 +2739,26 @@ void OnetKernel::raw_341()
         Core::instance()->mPrivNames[strChannel] = strNick;
         pTabC->renameTab(strChannel, strNick);
     }
+}
+
+// :cf1f4.onet 335 Merovingian Onet-KaOwiec :is a bot on OnetCzat
+void OnetKernel::raw_335()
+{
+    if (strDataList.size() < 4) return;
+
+    QString strNick = strDataList[3];
+
+    QString strMessage;
+    for (int i = 4; i < strDataList.size(); i++) { if (i != 4) strMessage += " "; strMessage += strDataList[i]; }
+    if (strMessage[0] == ':') strMessage.remove(0,1);
+
+    QString strDisplay;
+    if (strMessage == "is a bot on OnetCzat")
+        strDisplay = QString(tr("* %1 is a bot on OnetCzat")).arg(strNick);
+    else
+        strDisplay = strMessage;
+
+    pTabC->showMessageActive(strDisplay, InfoMessage);
 }
 
 // WHO

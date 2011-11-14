@@ -2499,6 +2499,10 @@
         <translation>* %1 jest głównym administratorem czata</translation>
     </message>
     <message>
+        <source>* %1 is a Service on OnetCzat</source>
+        <translation>* %1 jest usługą czata</translation>
+    </message>
+    <message>
         <source>Too many results</source>
         <translation>Zbyt wiele wyników</translation>
     </message>
@@ -2513,6 +2517,10 @@
     <message>
         <source>* %1 is on channels: %2</source>
         <translation>* %1 jest na pokojach: %2</translation>
+    </message>
+    <message>
+        <source>* %1 is a bot on OnetCzat</source>
+        <translation>* %1 jest botem czata</translation>
     </message>
     <message>
         <source>Message Of The Day:</source>
