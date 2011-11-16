@@ -97,7 +97,7 @@ QString HtmlMessagesRenderer::renderer(QString strDT, QString strData, MessageCa
     QString strThemes = Core::instance()->settings["themes"];
 
     // convert emoticons, font
-    Convert *convertText = new Convert();
+    Convert *convertText = new Convert(true);
     convertText->convertText(strData);
     delete convertText;
 

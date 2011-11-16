@@ -23,7 +23,7 @@
 #include "core.h"
 #include "convert.h"
 
-Convert::Convert() : bRemovedBold(false), bRemovedItalic(false), iRemovedColor(-1)
+Convert::Convert(bool _bInsertWidthHeight) : bInsertWidthHeight(_bInsertWidthHeight), bRemovedBold(false), bRemovedItalic(false), iRemovedColor(-1)
 {
 }
 
@@ -108,7 +108,16 @@ void Convert::convertEmoticons(QString &strData)
             QString strEmoticonPath = findEmoticon(strEmoticon);
 
             if (!strEmoticonPath.isEmpty())
-                strData.replace(first, second-first, QString("<img src=\"%1\" alt=\"%2\" />").arg(strEmoticonPath).arg(strEmoticon));
+            {
+                QString strWidthHeight;
+                if (bInsertWidthHeight)
+                {
+                    QPixmap p(strEmoticonPath);
+                    strWidthHeight = "width=\""+QString::number(p.width())+"px\" height=\""+QString::number(p.height())+"px\"";
+                }
+
+                strData.replace(first, second-first, QString("<img src=\"%1\" alt=\"%2\" %3 />").arg(strEmoticonPath).arg(strEmoticon).arg(strWidthHeight));
+            }
             else
                 strData.replace(first, second-first, QString("//%1").arg(strEmoticon));
         }
