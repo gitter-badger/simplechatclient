@@ -192,7 +192,8 @@ QString Convert::findEmoticon(QString strEmoticon)
     for (int i = 0; i < lDirs.size(); i++)
     {
         QString strDir = lDirs[i];
-        QString strEmoticonCheck = QString("%1/%2/%3.gif").arg(dAllEmoticonsDirs.path()).arg(strDir).arg(strEmoticon);
+        QString strEmoticonCheck = QString("%1/3rdparty/emoticons/%2/%3.gif").arg(path).arg(strDir).arg(strEmoticon);
+        strEmoticonCheck = QFileInfo(strEmoticonCheck).absoluteFilePath();
 
         if (QFile::exists(strEmoticonCheck))
             return strEmoticonCheck;

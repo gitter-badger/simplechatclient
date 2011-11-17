@@ -106,8 +106,7 @@ void Avatar::saveAvatar(QString &strAvatarPath, QByteArray bAvatar)
     strAvatarPath = path+"/"+strAvatarPath;
 
     // absolute path
-    QFileInfo fi(strAvatarPath);
-    strAvatarPath = fi.absoluteFilePath();
+    strAvatarPath = QFileInfo(strAvatarPath).absoluteFilePath();
 
     QFile f(strAvatarPath);
     if (f.open(QIODevice::WriteOnly))

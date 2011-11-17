@@ -230,9 +230,9 @@ QMap<QString,QString> Config::getDefaultValues()
 #else
     path = "/usr/share/scc";
 #endif
-    QString strSoundBeep = path+"/3rdparty/sounds/beep.wav";
-    QString strSoundQuery = path+"/3rdparty/sounds/query.wav";
-    QString strBackgroundImage = path+"/images/wallpaper/default.jpg";
+    QString strSoundBeep = QFileInfo(path+"/3rdparty/sounds/beep.wav").absoluteFilePath();
+    QString strSoundQuery = QFileInfo(path+"/3rdparty/sounds/query.wav").absoluteFilePath();
+    QString strBackgroundImage = QFileInfo(path+"/images/wallpaper/default.jpg").absoluteFilePath();
 
     QMap<QString,QString> mDefaultValues;
 

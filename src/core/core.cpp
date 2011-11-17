@@ -134,7 +134,7 @@ void Core::createSettings()
     settings["debug"] = strDebug;
 
     // default settings
-    settings["version"] = "1.1.3.1104";
+    settings["version"] = "1.1.3.1105";
     settings["logged"] = "off";
     settings["busy"] = "off";
     settings["away"] = "off";
@@ -298,11 +298,7 @@ void Core::readEmptyUserAvatar()
     path = "/usr/share/scc";
 #endif
 
-    strEmptyUserAvatarPath = path+"/images/user_avatar.png";
-
-    // absolute path
-    QFileInfo fi(strEmptyUserAvatarPath);
-    strEmptyUserAvatarPath = fi.absoluteFilePath();
+    strEmptyUserAvatarPath = QFileInfo(path+"/images/user_avatar.png").absoluteFilePath();
 }
 
 QString Core::version()
