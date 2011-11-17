@@ -210,6 +210,8 @@ void DlgOptions::setDefaultValues()
     // create dir if not exist
     if (!QDir().exists(strLogsPath))
         QDir().mkpath(strLogsPath);
+
+    strLogsPath.replace("/", "\\");
 #else
     strLogsPath = QDir::homePath();
     strLogsPath += "/.scc/profiles/"+strCurrentProfile+"/log";
@@ -218,7 +220,6 @@ void DlgOptions::setDefaultValues()
     if (!QDir().exists(strLogsPath))
         QDir().mkpath(strLogsPath);
 #endif
-    strLogsPath = QFileInfo(strLogsPath).absolutePath();
 
     ui.lineEdit_logs_folder->setText(strLogsPath);
 
