@@ -97,11 +97,10 @@ void Convert::convertEmoticons(QString &strData)
     int pos = 0;
     while ((pos = rx.indexIn(strData, pos)) != -1)
     {
-        int first = pos;
         pos += rx.matchedLength();
-        int second = pos;
 
         QString strEmoticon = rx.cap(1);
+        QString strEmoticonFull = "%I"+strEmoticon+"%";
 
         if (Core::instance()->settings.value("disable_emots") == "off")
         {
@@ -116,13 +115,13 @@ void Convert::convertEmoticons(QString &strData)
                     strWidthHeight = "width=\""+QString::number(p.width())+"px\" height=\""+QString::number(p.height())+"px\"";
                 }
 
-                strData.replace(first, second-first, QString("<img src=\"%1\" alt=\"%2\" title=\"%2\" %3 />").arg(strEmoticonPath).arg(strEmoticon).arg(strWidthHeight));
+                strData.replace(strEmoticonFull, QString("<img src=\"%1\" alt=\"%2\" title=\"%2\" %3 />").arg(strEmoticonPath).arg(strEmoticon).arg(strWidthHeight));
             }
             else
-                strData.replace(first, second-first, QString("//%1").arg(strEmoticon));
+                strData.replace(strEmoticonFull, QString("//%1").arg(strEmoticon));
         }
         else
-            strData.replace(first, second-first, QString("//%1").arg(strEmoticon));
+            strData.replace(strEmoticonFull, QString("//%1").arg(strEmoticon));
 
         pos--;
     }
