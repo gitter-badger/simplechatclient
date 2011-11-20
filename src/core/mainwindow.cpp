@@ -723,6 +723,9 @@ void MainWindow::currentTabChanged(int index)
     else
         pToolWidget->setChannelSettings(true);
 
+    // clear input line
+    pToolWidget->clearInputLine();
+
     // moderation
     QString strMe = Core::instance()->settings.value("nick");
     QString strModes = Core::instance()->getUserModes(strMe, strChannel);

@@ -343,6 +343,11 @@ void ToolWidget::setDefaultValues()
     setModeration(false);
 }
 
+void ToolWidget::clearInputLine()
+{
+    pInputLine->clear();
+}
+
 void ToolWidget::setModeration(bool bEnable)
 {
     if (bEnable)

@@ -38,6 +38,7 @@ public:
     virtual ~ToolWidget();
     void setChannelSettings(bool);
     void setDefaultValues();
+    void clearInputLine();
 
 public slots:
     void setModeration(bool);
