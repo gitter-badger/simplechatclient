@@ -47,7 +47,6 @@ public:
     void createSettings();
     // old
     void removeOldConfig();
-    void removeOldEmoticons();
     void convertOldProfiles();
     // config
     void configValues();

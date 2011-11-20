@@ -97,9 +97,6 @@ void Core::init()
     // convert old profiles
     convertOldProfiles();
 
-    // remove old emoticons
-    removeOldEmoticons();
-
     // create settings
     createSettings();
 
@@ -134,7 +131,7 @@ void Core::createSettings()
     settings["debug"] = strDebug;
 
     // default settings
-    settings["version"] = "1.1.3.1109";
+    settings["version"] = "1.1.3.1110";
     settings["logged"] = "off";
     settings["busy"] = "off";
     settings["away"] = "off";
@@ -176,26 +173,6 @@ void Core::removeOldConfig()
     // remove file
     if (QFile::exists(path+"/scc.conf"))
         QFile::remove(path+"/scc.conf");
-}
-
-void Core::removeOldEmoticons()
-{
-    QString path;
-#ifdef Q_WS_WIN
-    path = QCoreApplication::applicationDirPath();
-#else
-    path = "/usr/share/scc";
-#endif
-
-    path += "/3rdparty";
-
-    if (QDir().exists(path+"/emoticons_other"))
-        removeDir(path+"/emoticons_other");
-
-    QDir dOldEmoticons = path+"/emoticons";
-    QStringList list = dOldEmoticons.entryList(QStringList("*.gif"), QDir::Files | QDir::NoSymLinks);
-    for (int i = 0; i < list.size(); ++i)
-        QFile::remove(path+"/emoticons/"+list.at(i));
 }
 
 void Core::convertOldProfiles()
