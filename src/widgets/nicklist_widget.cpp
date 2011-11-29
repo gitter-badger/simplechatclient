@@ -35,7 +35,6 @@
 
 NickListWidget::NickListWidget(QString _strChannel) : strChannel(_strChannel), strSelectedNick(QString::null)
 {
-    setFocusPolicy(Qt::NoFocus);
     setSortingEnabled(false);
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 }
