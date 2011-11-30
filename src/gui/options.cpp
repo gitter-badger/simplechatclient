@@ -186,7 +186,7 @@ void DlgOptions::setDefaultValues()
 
     // themes
     QStringList lThemes;
-    lThemes << "Standard" << "Origin" << "Adara";
+    lThemes << "Standard" << "Origin" << "Alhena" << "Adara";
     ui.comboBox_themes->clear();
     ui.comboBox_themes->addItems(lThemes);
 
@@ -254,8 +254,10 @@ void DlgOptions::setDefaultValues()
         ui.comboBox_themes->setCurrentIndex(0);
     else if (strThemes == "Origin")
         ui.comboBox_themes->setCurrentIndex(1);
-    else if (strThemes == "Adara")
+    else if (strThemes == "Alhena")
         ui.comboBox_themes->setCurrentIndex(2);
+    else if (strThemes == "Adara")
+        ui.comboBox_themes->setCurrentIndex(3);
     else
         ui.comboBox_themes->setCurrentIndex(1);
 
@@ -501,6 +503,11 @@ void DlgOptions::themesChanged(int index)
         Core::instance()->settings["themes"] = "Origin";
     }
     else if (index == 2)
+    {
+        pConfig->setValue("themes", "Alhena");
+        Core::instance()->settings["themes"] = "Alhena";
+    }
+    else if (index == 3)
     {
         pConfig->setValue("themes", "Adara");
         Core::instance()->settings["themes"] = "Adara";

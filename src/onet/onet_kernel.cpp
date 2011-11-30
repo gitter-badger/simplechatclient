@@ -1025,15 +1025,7 @@ void OnetKernel::raw_privmsg()
     pReplace->convertAndReplaceEmots(strMessage);
     delete pReplace;
 
-    if ((strChannel[0] == '#') || (strChannel[0] == '^'))
-    {
-        if (Core::instance()->settings["themes"] == "Adara")
-            pTabC->showMessage(strChannel, strMessage, DefaultMessage, QString::null, strNick);
-        else
-            pTabC->showMessage(strChannel, strMessage, DefaultMessage, QString::null, strNick);
-    }
-    else
-        pTabC->showMessage(strChannel, strMessage, DefaultMessage, QString::null, strNick);
+    pTabC->showMessage(strChannel, strMessage, DefaultMessage, QString::null, strNick);
 }
 
 // :cf1f2.onet NOTICE scc_test :Your message has been filtered and opers notified: spam #2480

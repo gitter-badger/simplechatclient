@@ -131,7 +131,7 @@ void Core::createSettings()
     settings["debug"] = strDebug;
 
     // default settings
-    settings["version"] = "1.1.3.1112";
+    settings["version"] = "1.1.3.1113";
     settings["logged"] = "off";
     settings["busy"] = "off";
     settings["away"] = "off";
@@ -257,7 +257,7 @@ void Core::checkSettings()
         pConfig->setValue("background_image", "");
         settings["background_image"] = "";
     }
-    if ((settings.value("themes") != "Standard") && (settings.value("themes") != "Origin") && (settings.value("themes") != "Adara"))
+    if ((settings.value("themes") != "Standard") && (settings.value("themes") != "Origin") && (settings.value("themes") != "Alhena") && (settings.value("themes") != "Adara"))
     {
         pConfig->setValue("themes", "Standard");
         settings["themes"] = "Standard";

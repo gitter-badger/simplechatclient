@@ -22,6 +22,7 @@
 #define HTML_MESSAGES_RENDERER_H
 
 #include "defines.h"
+#include <QDateTime>
 #include <QObject>
 
 class HtmlMessagesRenderer : public QObject
@@ -29,7 +30,7 @@ class HtmlMessagesRenderer : public QObject
     Q_OBJECT
 public:
     HtmlMessagesRenderer(QObject *parent = 0);
-    QString renderer(QString, QString, MessageCategory, QString strShortDT = QString::null, QString strNick = QString::null);
+    QString renderer(QDateTime, QString, MessageCategory, QString strNick = QString::null);
 };
 
 #endif // HTML_MESSAGES_RENDERER_H

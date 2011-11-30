@@ -144,16 +144,14 @@ void ChatView::displayMessage(QString &strData, MessageCategory eMessageCategory
         dt = QDateTime::fromTime_t(strTime.toInt());
     else
         dt = QDateTime::currentDateTime();
-    QString strDT = dt.toString("[hh:mm:ss]");
-    QString strShortDT = dt.toString("hh:mm");
 
     if (Core::instance()->settings.value("disable_logs") == "off")
     {
         QString strSaveData;
         if (!strNick.isEmpty())
-            strSaveData = QString("%1 <%2> %3").arg(strDT).arg(strNick).arg(strData);
+            strSaveData = QString("%1 <%2> %3").arg(dt.toString("[hh:mm:ss]")).arg(strNick).arg(strData);
         else
-            strSaveData = QString("%1 %2").arg(strDT).arg(strData);
+            strSaveData = QString("%1 %2").arg(dt.toString("[hh:mm:ss]")).arg(strData);
 
         // fix /me
         QString strRegExpMe = QString("%1ACTION %2%3").arg(QString(QByteArray("\x01"))).arg("(.*)").arg(QString(QByteArray("\x01")));
@@ -176,7 +174,7 @@ void ChatView::displayMessage(QString &strData, MessageCategory eMessageCategory
     }
 
     HtmlMessagesRenderer *r = new HtmlMessagesRenderer();
-    QString strContent = r->renderer(strDT, strData, eMessageCategory, strShortDT, strNick);
+    QString strContent = r->renderer(dt, strData, eMessageCategory, strNick);
     delete r;
 
     // scroll
