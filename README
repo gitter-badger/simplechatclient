@@ -2,7 +2,7 @@ SCC Requirements:
 
 Windows:
 Microsoft Visual C++ 2008 SP1 Redistributable Package (x86)
-http://www.microsoft.com/downloads/details.aspx?familyid=A5C84275-3B97-4AB7-A40D-3802B2AF5FC2&displaylang=en 
+http://www.microsoft.com/download/en/details.aspx?displaylang=en&id=5582
 
 Linux:
 libssl-dev libqca2-dev libqca2-plugin-ossl libphonon-dev g++ cmake

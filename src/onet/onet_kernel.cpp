@@ -1285,8 +1285,6 @@ void OnetKernel::raw_001()
     Core::instance()->bChannelSettingsStats = false;
     // moderate
     Core::instance()->mModerateMessages.clear();
-    // priv
-    Core::instance()->mPrivNames.clear();
 
     // protocol
     Core::instance()->pNetwork->send("PROTOCTL ONETNAMESX");
