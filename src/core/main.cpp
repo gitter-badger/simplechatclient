@@ -27,6 +27,10 @@
 #endif
 #include "core.h"
 
+#ifdef Q_WS_WIN
+#include <windows.h>
+#endif
+
 void displayVersion()
 {
     printf("Simple Chat Client %s\n\n"
@@ -46,6 +50,19 @@ void displayOptions()
 
 int main(int argc, char *argv[])
 {
+#ifdef Q_WS_WIN
+    /* Call SetProcessDEPPolicy to permanently enable DEP.
+       The function will not resolve on earlier versions of Windows,
+       and failure is not dangerous. */
+    HMODULE hMod = GetModuleHandleA("Kernel32.dll");
+    if (hMod)
+    {
+        typedef BOOL (WINAPI *PSETDEP)(DWORD);
+        PSETDEP setdeppolicy = (PSETDEP)GetProcAddress(hMod, "SetProcessDEPPolicy");
+        if (setdeppolicy) setdeppolicy(1); /* PROCESS_DEP_ENABLE */
+    }
+#endif
+
     Q_INIT_RESOURCE(scc);
 
     // linux crash handler

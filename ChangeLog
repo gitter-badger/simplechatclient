@@ -1,6 +1,11 @@
 ChangeLog for Simple Chat Client
 ========================= 
 
+Version 1.1.4 (unknown)
+================================
+* Enabled DEP (permanent) and ASLR on windows
+* Many bugfixes
+
 Version 1.1.3 (05.12.2011)
 ================================
 * Fixed priv logs

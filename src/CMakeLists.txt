@@ -272,27 +272,27 @@ qt4_wrap_ui (scc_UIS_H ${scc_UIS})
 
 include_directories (${CMAKE_SOURCE_DIR}/ui)
 
+# enable ASLR
+if (MINGW)
+	set (CMAKE_CXX_LINK_FLAGS "${CMAKE_CXX_LINK_FLAGS} -Wl,--dynamicbase -Wl,--nxcompat")
+endif (MINGW)
+
 # disable console on windows mingw
 if (MINGW)
-	SET (CMAKE_CXX_LINK_FLAGS "${CMAKE_CXX_LINK_FLAGS} -mwindows")
+	set (CMAKE_CXX_LINK_FLAGS "${CMAKE_CXX_LINK_FLAGS} -mwindows")
 endif (MINGW)
 
 # moc
 qt_wrap_cpp (scc MOC_FILES ${scc_MOC_HDRS})
 
 # link
-if (MSVC) # windows
-	add_executable (scc WIN32 ${scc_SRCS} ${MOC_FILES} ${scc_HDRS} ${scc_QRC_SRCS} ${scc_UIS_H})
-	target_link_libraries (scc ${QT_LIBRARIES} ${QT_QTNETWORK_LIBRARIES} ${QCA2_LIBRARIES})
-else (MSVC) # mingw or linux
-	if (MINGW) # mingw
-		add_executable (scc ${scc_SRCS} ${MOC_FILES} ${scc_HDRS} ${scc_QRC_SRCS} ${scc_UIS_H})
-	else (MINGW) # linux
-		add_executable (scc ${scc_SRCS} ${MOC_FILES} ${scc_HDRS} ${scc_QRC_SRCS} ${scc_UIS_H})
-	endif (MINGW)
+if (MINGW) # mingw
+	add_executable (scc ${scc_SRCS} ${MOC_FILES} ${scc_HDRS} ${scc_QRC_SRCS} ${scc_UIS_H})
+else (MINGW) # linux
+	add_executable (scc ${scc_SRCS} ${MOC_FILES} ${scc_HDRS} ${scc_QRC_SRCS} ${scc_UIS_H})
+endif (MINGW)
 
-	target_link_libraries (scc ${QT_LIBRARIES} ${QT_QTNETWORK_LIBRARIES} ${QCA2_LIBRARIES} ${PHONON_LIBRARY})
-endif (MSVC)
+target_link_libraries (scc ${QT_LIBRARIES} ${QT_QTNETWORK_LIBRARIES} ${QCA2_LIBRARIES} ${PHONON_LIBRARY})
 
 # install
 if (UNIX AND NOT APPLE)
