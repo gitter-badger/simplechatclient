@@ -131,7 +131,7 @@ void Core::createSettings()
     settings["debug"] = strDebug;
 
     // default settings
-    settings["version"] = "1.1.4.1116";
+    settings["version"] = "1.1.4.1117";
     settings["logged"] = "off";
     settings["busy"] = "off";
     settings["away"] = "off";
@@ -160,7 +160,7 @@ void Core::removeOldConfig()
 {
     QString path;
 #ifdef Q_WS_WIN
-    path = QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation);
+    path = QFileInfo(QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation)).absoluteFilePath();
     path += "/scc";
 #else
     path = QDir::homePath()+"/.scc";
@@ -179,7 +179,7 @@ void Core::convertOldProfiles()
 {
     QString path;
 #ifdef Q_WS_WIN
-    path = QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation);
+    path = QFileInfo(QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation)).absoluteFilePath();
     path += "/scc";
 #else
     path = QDir::homePath()+"/.scc";
@@ -275,7 +275,7 @@ void Core::readEmptyUserAvatar()
     path = "/usr/share/scc";
 #endif
 
-    strEmptyUserAvatarPath = QFileInfo(path+"/images/user_avatar.png").absoluteFilePath();
+    strEmptyUserAvatarPath = path+"/images/user_avatar.png";
 }
 
 QString Core::version()

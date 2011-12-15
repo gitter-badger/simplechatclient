@@ -368,7 +368,7 @@ void ChatView::sendToNotes()
     QString path;
 
 #ifdef Q_WS_WIN
-    path = QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation);
+    path = QFileInfo(QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation)).absoluteFilePath();
     path += "/scc";
 #else
     path = QDir::homePath()+"/.scc";

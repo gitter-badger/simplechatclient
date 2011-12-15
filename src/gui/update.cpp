@@ -117,7 +117,7 @@ void DlgUpdate::gotFile(QByteArray bData)
     QString path;
 
 #ifdef Q_WS_WIN
-    path = QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation);
+    path = QFileInfo(QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation)).absoluteFilePath();
     path += "/scc";
 #else
     path = QDir::homePath()+"/.scc";
@@ -130,9 +130,9 @@ void DlgUpdate::gotFile(QByteArray bData)
         QDir().mkpath(path);
 
     // save
-    QString fileName = "/scc-"+strVersion+".exe";
+    QString fileName = path+"/scc-"+strVersion+".exe";
 
-    QFile file(path+fileName);
+    QFile file(fileName);
     if (file.exists()) file.remove();
     if (!file.open(QIODevice::WriteOnly))
     {
@@ -146,7 +146,7 @@ void DlgUpdate::gotFile(QByteArray bData)
     QProcess pProcess;
     pProcess.setWorkingDirectory(path);
     ui.label_msg->setText(pProcess.workingDirectory());
-    pProcess.start("\""+path+fileName+"\"");
+    pProcess.start("\""+fileName+"\"");
 
     if (!pProcess.waitForStarted())
     {

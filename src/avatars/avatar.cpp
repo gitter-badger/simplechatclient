@@ -90,7 +90,7 @@ void Avatar::saveAvatar(QString &strAvatarPath, QByteArray bAvatar)
     QString path;
 
 #ifdef Q_WS_WIN
-    path = QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation);
+    path = QFileInfo(QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation)).absoluteFilePath();
     path += "/scc";
 #else
     path = QDir::homePath()+"/.scc";
@@ -104,9 +104,6 @@ void Avatar::saveAvatar(QString &strAvatarPath, QByteArray bAvatar)
         QDir().mkpath(path);
 
     strAvatarPath = path+"/"+strAvatarPath;
-
-    // absolute path
-    strAvatarPath = QFileInfo(strAvatarPath).absoluteFilePath();
 
     QFile f(strAvatarPath);
     if (f.open(QIODevice::WriteOnly))

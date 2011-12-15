@@ -21,7 +21,7 @@
 #include <QColorDialog>
 #include <QDesktopWidget>
 #include <QFileDialog>
-#include <QProcess>
+#include <QUrl>
 #include "config.h"
 #include "core.h"
 #include "profile_manager.h"
@@ -171,16 +171,6 @@ void DlgOptions::createGui()
 
 void DlgOptions::setDefaultValues()
 {
-    // open folder command
-#ifdef Q_WS_X11
-    if (QFile::exists("/usr/bin/nautilus"))
-        strOpenFolderCommand = "nautilus";
-    else if (QFile::exists("/usr/bin/dolphin"))
-        strOpenFolderCommand = "dolphin";
-#else
-    strOpenFolderCommand = "explorer.exe";
-#endif
-
     // current option
     ui.treeWidget_options->setCurrentItem(ui.treeWidget_options->itemAt(0,0));
 
@@ -197,21 +187,19 @@ void DlgOptions::setDefaultValues()
     ui.comboBox_language->addItems(lLanguage);
 
     // sound beep
-    ui.lineEdit_sound_beep->setText(Core::instance()->settings.value("sound_beep"));
-    ui.lineEdit_sound_query->setText(Core::instance()->settings.value("sound_query"));
+    ui.lineEdit_sound_beep->setText(QDir::toNativeSeparators(Core::instance()->settings.value("sound_beep")));
+    ui.lineEdit_sound_query->setText(QDir::toNativeSeparators(Core::instance()->settings.value("sound_query")));
 
     // logs
     QString strCurrentProfile = Core::instance()->settings.value("current_profile");
     QString strLogsPath;
 #ifdef Q_WS_WIN
-    strLogsPath = QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation);
+    strLogsPath = QFileInfo(QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation)).absoluteFilePath();
     strLogsPath += "/scc/profiles/"+strCurrentProfile+"/log";
 
     // create dir if not exist
     if (!QDir().exists(strLogsPath))
         QDir().mkpath(strLogsPath);
-
-    strLogsPath.replace("/", "\\");
 #else
     strLogsPath = QDir::homePath();
     strLogsPath += "/.scc/profiles/"+strCurrentProfile+"/log";
@@ -221,13 +209,10 @@ void DlgOptions::setDefaultValues()
         QDir().mkpath(strLogsPath);
 #endif
 
-    ui.lineEdit_logs_folder->setText(strLogsPath);
-
-    if (strOpenFolderCommand.isEmpty())
-        ui.pushButton_logs_open_folder->setEnabled(false);
+    ui.lineEdit_logs_folder->setText(QDir::toNativeSeparators(strLogsPath));
 
     // background image
-    ui.lineEdit_background_image->setText(Core::instance()->settings.value("background_image"));
+    ui.lineEdit_background_image->setText(QDir::toNativeSeparators(Core::instance()->settings.value("background_image")));
 
     // default values
     QString strThemes = Core::instance()->settings.value("themes");
@@ -418,7 +403,7 @@ void DlgOptions::refreshProfilesList()
 
     QString path;
 #ifdef Q_WS_WIN
-    path = QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation);
+    path = QFileInfo(QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation)).absoluteFilePath();
     path += "/scc";
 #else
     path = QDir::homePath()+"/.scc";
@@ -880,7 +865,7 @@ void DlgOptions::setSoundBeep()
         Core::instance()->settings["sound_beep"] = fileName;
         delete pConfig;
 
-        ui.lineEdit_sound_beep->setText(fileName);
+        ui.lineEdit_sound_beep->setText(QDir::toNativeSeparators(fileName));
     }
 }
 
@@ -900,7 +885,7 @@ void DlgOptions::setSoundQuery()
         Core::instance()->settings["sound_query"] = fileName;
         delete pConfig;
 
-        ui.lineEdit_sound_query->setText(fileName);
+        ui.lineEdit_sound_query->setText(QDir::toNativeSeparators(fileName));
     }
 }
 
@@ -916,10 +901,9 @@ void DlgOptions::disableSounds(bool bValue)
 
 void DlgOptions::openLogsFolder()
 {
-    QString strLogsPath = ui.lineEdit_logs_folder->text();
+    QString strLogsPath = QDir::toNativeSeparators(ui.lineEdit_logs_folder->text());
 
-    QProcess pProcess;
-    pProcess.execute(strOpenFolderCommand+" "+strLogsPath);
+    QDesktopServices::openUrl(QUrl::fromLocalFile(strLogsPath));
 }
 
 void DlgOptions::setSaveLogsByDate(bool bValue)
@@ -958,7 +942,7 @@ void DlgOptions::setBackgroundImage()
         Core::instance()->settings["background_image"] = fileName;
         delete pConfig;
 
-        ui.lineEdit_background_image->setText(fileName);
+        ui.lineEdit_background_image->setText(QDir::toNativeSeparators(fileName));
 
         // refresh background image
         Core::instance()->refreshCSS();

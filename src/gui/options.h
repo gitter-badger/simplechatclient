@@ -34,7 +34,6 @@ public:
 
 private:
     Ui::uiOptions ui;
-    QString strOpenFolderCommand;
 
     void createGui();
     void setDefaultValues();
