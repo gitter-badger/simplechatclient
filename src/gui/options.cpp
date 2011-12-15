@@ -19,6 +19,7 @@
  ****************************************************************************/
 
 #include <QColorDialog>
+#include <QDesktopServices>
 #include <QDesktopWidget>
 #include <QFileDialog>
 #include <QUrl>
@@ -27,10 +28,6 @@
 #include "profile_manager.h"
 #include "notify.h"
 #include "options.h"
-
-#ifdef Q_WS_WIN
-    #include <QDesktopServices>
-#endif
 
 DlgOptions::DlgOptions(QWidget *parent) : QDialog(parent)
 {
