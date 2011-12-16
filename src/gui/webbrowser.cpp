@@ -28,7 +28,7 @@ DlgWebBrowser::DlgWebBrowser(QWidget *parent, QUrl url) : QDialog(parent)
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
     setWindowTitle("YouTube");
     // center screen
-    move(QApplication::desktop()->screen()->rect().center() - rect().center());
+    move(QApplication::desktop()->screenGeometry(QApplication::desktop()->screenNumber(parent)).center()  - rect().center());
 
     ui.webView->settings()->setAttribute(QWebSettings::PluginsEnabled, true);
     ui.webView->settings()->setAttribute(QWebSettings::AutoLoadImages, true);

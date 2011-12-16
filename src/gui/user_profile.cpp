@@ -51,7 +51,7 @@ DlgUserProfile::DlgUserProfile(QWidget *parent, QString _strNick) : QDialog(pare
     setMaximumSize(285, sizeHint().height());
 
     // center screen
-    move(QApplication::desktop()->screen()->rect().center() - rect().center());
+    move(QApplication::desktop()->screenGeometry(QApplication::desktop()->screenNumber(parent)).center()  - rect().center());
 
     accessManager = new QNetworkAccessManager;
     QObject::connect(accessManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(avatarFinished(QNetworkReply*)));

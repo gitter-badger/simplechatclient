@@ -30,7 +30,7 @@ DlgMyStats::DlgMyStats(QWidget *parent) : QDialog(parent)
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
     setWindowTitle(tr("My statistics"));
     // center screen
-    move(QApplication::desktop()->screen()->rect().center() - rect().center());
+    move(QApplication::desktop()->screenGeometry(QApplication::desktop()->screenNumber(parent)).center()  - rect().center());
 
     pSimpleStatsWidget = new SimpleStatsWidget(this);
     pSimpleStatsWidget->show();

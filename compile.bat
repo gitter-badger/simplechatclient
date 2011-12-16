@@ -1,19 +1,21 @@
 @echo off 
 
 if not exist "C:\Program Files\CMake 2.8" (
+if not exist "C:\Program Files (x86)\CMake 2.8" (
 echo Download CMake from http://www.cmake.org/files/v2.8/cmake-2.8.6-win32-x86.exe
 pause
 exit
 )
+)
 
-if not exist C:\Qt\4.7.4 (
-echo Download Qt 4.7.4 from http://qt.nokia.com/downloads/windows-cpp
+if not exist C:\Qt\4.8.0 (
+echo Download Qt 4.8.0 from http://qt.nokia.com/downloads/windows-cpp
 pause
 exit
 )
 
 if not exist C:\MinGW\bin\mingw32-make.exe (
-echo Download MinGW from http://get.qt.nokia.com/misc/MinGW-gcc440_1.zip
+echo Download MinGW from http://sourceforge.net/projects/mingw/files/
 pause
 exit
 )
@@ -32,7 +34,9 @@ mingw32-make
 cd C:\scc
 )
 
+if exist src\scc.exe (
 del /Q /F /A src\scc.exe
+)
 cmake . -G "MinGW Makefiles" -DWIN32_QCA2_DIR=C:\qca2
 mingw32-make
 
@@ -55,15 +59,17 @@ exit
 )
 
 set DESTINATION="C:\scc\release"
-set QT_DIR="C:\Qt\4.7.4\bin"
-set QT_PLUGINS_DIR="C:\Qt\4.7.4\plugins"
+set QT_DIR="C:\Qt\4.8.0\bin"
+set QT_PLUGINS_DIR="C:\Qt\4.8.0\plugins"
 set OPENSSL_DIR="C:\OpenSSL-Win32"
 set ZLIB_DIR="C:\zlib-1.2.5"
 set QCA2_DIR="C:\qca2\lib"
 set MINGW_BIN_DIR="C:\MinGW\bin"
 
 echo Removing destination folder
+if exist %DESTINATION% (
 rd %DESTINATION% /S /Q
+)
 
 echo Copying main files
 xcopy AUTHORS %DESTINATION%\ /R /Y /Q

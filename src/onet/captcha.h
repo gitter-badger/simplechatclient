@@ -21,6 +21,7 @@
 #ifndef CAPTCHA_H
 #define CAPTCHA_H
 
+class MainWindow;
 class QNetworkAccessManager;
 class QNetworkCookieJar;
 class QNetworkReply;
@@ -31,7 +32,7 @@ class DlgCaptcha : public QDialog
 {
     Q_OBJECT
 public:
-    DlgCaptcha(QNetworkCookieJar *, QString *);
+    DlgCaptcha(MainWindow *, QNetworkCookieJar *, QString *);
 
 private:
     Ui::uiCaptcha ui;

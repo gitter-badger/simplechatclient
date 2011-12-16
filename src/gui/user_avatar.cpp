@@ -29,7 +29,7 @@ DlgUserAvatar::DlgUserAvatar(MainWindow *parent, QPixmap _avatar) : QDialog(pare
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
     setWindowTitle(tr("Avatar"));
     // center screen
-    move(QApplication::desktop()->screen()->rect().center() - rect().center());
+    move(QApplication::desktop()->screenGeometry(QApplication::desktop()->screenNumber(parent)).center()  - rect().center());
 
     createGui();
     setDefaultValues();

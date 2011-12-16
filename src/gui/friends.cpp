@@ -30,7 +30,7 @@ DlgFriends::DlgFriends(QWidget *parent) : QDialog(parent)
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
     setWindowTitle(tr("Friends list"));
     // center screen
-    move(QApplication::desktop()->screen()->rect().center() - rect().center());
+    move(QApplication::desktop()->screenGeometry(QApplication::desktop()->screenNumber(parent)).center()  - rect().center());
 
     createGui();
     createSignals();

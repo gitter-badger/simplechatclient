@@ -26,6 +26,7 @@ DlgWebcamMini::DlgWebcamMini(QString nick)
     setWindowFlags(Qt::Dialog | Qt::WindowStaysOnTopHint);
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
     setWindowTitle(nick);
+    move(QApplication::desktop()->screenGeometry(QApplication::desktop()->screenNumber(parent)).center()  - rect().center());
 }
 
 void DlgWebcamMini::updateImage(QByteArray b)

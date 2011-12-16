@@ -25,15 +25,16 @@
 #include <QNetworkRequest>
 #include <QPushButton>
 #include <QUrl>
+#include "mainwindow.h"
 #include "captcha.h"
 
-DlgCaptcha::DlgCaptcha(QNetworkCookieJar *_cookieJar, QString *_strCaptcha) : strCaptcha(_strCaptcha), cookieJar(_cookieJar)
+DlgCaptcha::DlgCaptcha(MainWindow *parent, QNetworkCookieJar *_cookieJar, QString *_strCaptcha) : QDialog(parent), strCaptcha(_strCaptcha), cookieJar(_cookieJar)
 {
     ui.setupUi(this);
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
     setWindowTitle(tr("Captcha"));
     // center screen
-    move(QApplication::desktop()->screen()->rect().center() - rect().center());
+    move(QApplication::desktop()->screenGeometry(QApplication::desktop()->screenNumber(parent)).center()  - rect().center());
 
     createGui();
     createSignals();

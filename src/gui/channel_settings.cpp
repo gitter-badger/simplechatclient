@@ -34,7 +34,7 @@ DlgChannelSettings::DlgChannelSettings(QWidget *parent, QString _strChannel) : Q
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
     setWindowTitle(tr("Channel settings"));
     // center screen
-    move(QApplication::desktop()->screen()->rect().center() - rect().center());
+    move(QApplication::desktop()->screenGeometry(QApplication::desktop()->screenNumber(parent)).center()  - rect().center());
 
     pSimpleStatsWidget = new SimpleStatsWidget(this);
     pSimpleStatsWidget->show();

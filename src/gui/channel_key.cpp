@@ -31,7 +31,7 @@ DlgChannelKey::DlgChannelKey(MainWindow *parent, QString _strChannel) : QDialog(
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
     setWindowTitle(tr("Key required"));
     // center screen
-    move(QApplication::desktop()->screen()->rect().center() - rect().center());
+    move(QApplication::desktop()->screenGeometry(QApplication::desktop()->screenNumber(parent)).center()  - rect().center());
 
     createGui();
     createSignals();

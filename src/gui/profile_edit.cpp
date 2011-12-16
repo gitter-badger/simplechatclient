@@ -32,7 +32,7 @@ DlgProfileEdit::DlgProfileEdit(MainWindow *parent, QString _strNick) : QDialog(p
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
     setWindowTitle(tr("Edit profile"));
     // center screen
-    move(QApplication::desktop()->screen()->rect().center() - rect().center());
+    move(QApplication::desktop()->screenGeometry(QApplication::desktop()->screenNumber(parent)).center()  - rect().center());
 
     createGui();
     setDefaultValues();

@@ -38,7 +38,7 @@ DlgProfileManager::DlgProfileManager(MainWindow *parent, DlgOptions *_pDlgOption
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
     setWindowTitle(tr("Profile manager"));
     // center screen
-    move(QApplication::desktop()->screen()->rect().center() - rect().center());
+    move(QApplication::desktop()->screenGeometry(QApplication::desktop()->screenNumber(parent)).center()  - rect().center());
 
     createGui();
     setDefaultValues();
