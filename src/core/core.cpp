@@ -131,7 +131,7 @@ void Core::createSettings()
     settings["debug"] = strDebug;
 
     // default settings
-    settings["version"] = "1.1.4.1120";
+    settings["version"] = "1.1.4.1121";
     settings["logged"] = "off";
     settings["busy"] = "off";
     settings["away"] = "off";
@@ -340,7 +340,7 @@ void Core::addAwaylog(QString strChannel, QString strAwayData)
         return;
 
     // fix /me
-    QString strRegExpMe = QString("%1ACTION %2%3").arg(QString(QByteArray("\x01"))).arg("(.*)").arg(QString(QByteArray("\x01")));
+    QString strRegExpMe = QString("%1ACTION %2%3").arg(QString(QByteArray("\x01")), "(.*)", QString(QByteArray("\x01")));
     if (strAwayData.contains(QRegExp(strRegExpMe)))
     {
         strAwayData.replace(QRegExp(strRegExpMe), "\\1");
@@ -356,7 +356,7 @@ void Core::addAwaylog(QString strChannel, QString strAwayData)
 
     QString strDT = QDateTime::currentDateTime().toString("[hh:mm:ss]");
 
-    lAwaylog.append(QString("%1\n%2 %3").arg(strChannel).arg(strDT).arg(strAwayData));
+    lAwaylog.append(QString("%1\n%2 %3").arg(strChannel, strDT, strAwayData));
 }
 
 // MainWindow::currentTabChanged

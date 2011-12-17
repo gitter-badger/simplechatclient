@@ -105,11 +105,11 @@ int main(int argc, char *argv[])
 
     // load translate
     QTranslator qtTranslator;
-    qtTranslator.load(QString("%1/translations/qt_%2").arg(path).arg(strLanguage));
+    qtTranslator.load(QString("%1/translations/qt_%2").arg(path, strLanguage));
     app.installTranslator(&qtTranslator);
 
     QTranslator sccTranslator;
-    sccTranslator.load(QString("%1/translations/scc_%2").arg(path).arg(strLanguage));
+    sccTranslator.load(QString("%1/translations/scc_%2").arg(path, strLanguage));
     app.installTranslator(&sccTranslator);
 
     // args

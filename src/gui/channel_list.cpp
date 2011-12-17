@@ -741,7 +741,7 @@ void DlgChannelList::allCellDoubleClicked(int row, int column)
             msgBox.setIcon(QMessageBox::Warning);
             msgBox.setWindowIcon(QIcon(":/images/logo.png"));
             msgBox.setWindowTitle(tr("Warning"));
-            msgBox.setText(QString("%1\n%2").arg(tr("Erotic category may contain content intended only for adults.")).arg(tr("To enter you must be over 18 years.")));
+            msgBox.setText(QString("%1\n%2").arg(tr("Erotic category may contain content intended only for adults."), tr("To enter you must be over 18 years.")));
             QPushButton *exitButton = msgBox.addButton(tr("Exit"), QMessageBox::AcceptRole);
             exitButton->setIcon(QIcon(":/images/oxygen/16x16/dialog-cancel.png"));
             QPushButton *enterButton = msgBox.addButton(tr("Enter"), QMessageBox::RejectRole);
@@ -788,7 +788,7 @@ void DlgChannelList::eroticCellDoubleClicked(int row, int column)
             msgBox.setIcon(QMessageBox::Warning);
             msgBox.setWindowIcon(QIcon(":/images/logo.png"));
             msgBox.setWindowTitle(tr("Warning"));
-            msgBox.setText(QString("%1\n%2").arg(tr("Erotic category may contain content intended only for adults.")).arg(tr("To enter you must be over 18 years.")));
+            msgBox.setText(QString("%1\n%2").arg(tr("Erotic category may contain content intended only for adults."), tr("To enter you must be over 18 years.")));
             QPushButton *exitButton = msgBox.addButton(tr("Exit"), QMessageBox::AcceptRole);
             exitButton->setIcon(QIcon(":/images/oxygen/16x16/dialog-cancel.png"));
             QPushButton *enterButton = msgBox.addButton(tr("Enter"), QMessageBox::RejectRole);

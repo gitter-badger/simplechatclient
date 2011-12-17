@@ -174,7 +174,7 @@ void OnetAuth::getSecureMlogin()
     if (Core::instance()->settings.value("debug") == "on") { qDebug() << "Request: secure login"; }
 #endif
     // secure login
-    QString strContent = QString("r=&url=&login=%1&haslo=%2&app_id=20&ssl=1&ok=1").arg(strNick).arg(strPass);
+    QString strContent = QString("r=&url=&login=%1&haslo=%2&app_id=20&ssl=1&ok=1").arg(strNick, strPass);
     QString strUrl = "https://secure.onet.pl/mlogin.html";
 
     QNetworkReply *pReply = accessManager->post(QNetworkRequest(QUrl(strUrl)), strContent.toAscii());
@@ -188,7 +188,7 @@ void OnetAuth::getOverride()
     if (Core::instance()->settings.value("debug") == "on") { qDebug() << "Request: override"; }
 #endif
     // override
-    QString strContent = QString("api_function=userOverride&params=a:1:{s:4:\"nick\";s:%1:\"%2\";}").arg(strNickLen).arg(strNick);
+    QString strContent = QString("api_function=userOverride&params=a:1:{s:4:\"nick\";s:%1:\"%2\";}").arg(strNickLen, strNick);
     QString strUrl = "http://czat.onet.pl/include/ajaxapi.xml.php3";
 
     QNetworkReply *pReply = accessManager->post(QNetworkRequest(QUrl(strUrl)), strContent.toAscii());
@@ -203,7 +203,7 @@ void OnetAuth::getUo()
 #endif
     // getuo
     QString strRegistered = bRegisteredNick == true ? "0" : "1";
-    QString strContent = QString("api_function=getUoKey&params=a:3:{s:4:\"nick\";s:%1:\"%2\";s:8:\"tempNick\";i:%3;s:7:\"version\";s:%4:\"%5\";}").arg(strNickLen).arg(strNick).arg(strRegistered).arg(strVersionLen).arg(strVersion);
+    QString strContent = QString("api_function=getUoKey&params=a:3:{s:4:\"nick\";s:%1:\"%2\";s:8:\"tempNick\";i:%3;s:7:\"version\";s:%4:\"%5\";}").arg(strNickLen, strNick, strRegistered, strVersionLen, strVersion);
     QString strUrl = "http://czat.onet.pl/include/ajaxapi.xml.php3";
 
     QNetworkReply *pReply = accessManager->post(QNetworkRequest(QUrl(strUrl)), strContent.toAscii());
@@ -223,7 +223,8 @@ void OnetAuth::getCheckCode()
     if (Core::instance()->settings.value("debug") == "on") { qDebug() << "Request: check code"; }
 #endif
     // check code
-    QString strContent = QString("api_function=checkCode&params=a:1:{s:4:\"code\";s:%1:\"%2\";}").arg(strCaptcha.size()).arg(strCaptcha);
+    QString strCaptchaSize = QString::number(strCaptcha.size());
+    QString strContent = QString("api_function=checkCode&params=a:1:{s:4:\"code\";s:%1:\"%2\";}").arg(strCaptchaSize, strCaptcha);
     QString strUrl = "http://czat.onet.pl/include/ajaxapi.xml.php3";
 
     QNetworkReply *pReply = accessManager->post(QNetworkRequest(QUrl(strUrl)), strContent.toAscii());

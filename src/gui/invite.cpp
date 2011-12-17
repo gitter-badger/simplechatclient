@@ -38,7 +38,7 @@ DlgInvite::DlgInvite(MainWindow *parent, QString _strNick, QString _strChannel) 
     if (strChannel[0] == '^')
         ui.label_msg->setText(QString(tr("%1 invites you to priv")).arg(strNick));
     else
-        ui.label_msg->setText(QString(tr("%1 invites you to channel %2")).arg(strNick).arg(strChannel));
+        ui.label_msg->setText(QString(tr("%1 invites you to channel %2")).arg(strNick, strChannel));
 }
 
 void DlgInvite::createGui()
@@ -69,13 +69,13 @@ void DlgInvite::buttonWhois()
 
 void DlgInvite::buttonReject()
 {
-    Core::instance()->pNetwork->send(QString("INVREJECT %1 %2").arg(strNick).arg(strChannel));
+    Core::instance()->pNetwork->send(QString("INVREJECT %1 %2").arg(strNick, strChannel));
     this->close();
 }
 
 void DlgInvite::buttonIgnore()
 {
-    Core::instance()->pNetwork->send(QString("INVIGNORE %1 %2").arg(strNick).arg(strChannel));
+    Core::instance()->pNetwork->send(QString("INVIGNORE %1 %2").arg(strNick, strChannel));
     this->close();
 }
 

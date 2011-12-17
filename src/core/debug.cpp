@@ -153,7 +153,7 @@ void messageHandler(QtMsgType type, const char *msg)
     fprintf(stderr, "%s: %s\n", strCategory.c_str(), msg);
 
     QString strDebug = "debug";
-    QString strMessage = QString("%1: %2").arg(strCategory.c_str()).arg(msg);
+    QString strMessage = QString("%1: %2").arg(strCategory.c_str(), msg);
 
     // save
     Log *l = new Log();

@@ -210,13 +210,13 @@ void Kamerzysta::authorize()
     QString strMe = Core::instance()->settings.value("nick");
     QString strUOKey = Core::instance()->settings.value("uokey");
 
-    networkSend(QString("d%1|%2").arg(strMe).arg(strUOKey));
+    networkSend(QString("d%1|%2").arg(strMe, strUOKey));
 
     if (strNick.isEmpty())
         log("Nick empty!");
 
     if ((strNick != strMe) && (!strNick.isEmpty()))
-        networkSend(QString("e%1").arg(strNick).arg(strUOKey));
+        networkSend(QString("e%1").arg(strNick, strUOKey));
 }
 
 void Kamerzysta::invite(QString strInviteNick)

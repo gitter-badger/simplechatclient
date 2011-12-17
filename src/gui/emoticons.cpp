@@ -136,7 +136,7 @@ void DlgEmoticons::setDefaultValues()
     for (int i = 0; i < lDirs.size(); i++)
     {
         QString strDir = lDirs[i];
-        QString strFullPath = QString("%1/%2").arg(dAllEmoticonsDirs.path()).arg(strDir);
+        QString strFullPath = QString("%1/%2").arg(dAllEmoticonsDirs.path(), strDir);
         ui.tabWidget->addTab(new DlgEmoticonsTab(strFullPath), strDir);
     }
 }

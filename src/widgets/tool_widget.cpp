@@ -819,7 +819,7 @@ void ToolWidget::sendMessage(QString strText, bool bModeration)
             if ((!weight.isEmpty()) || (!font.isEmpty()))
                 strText = "%F"+weight+font+"%"+strText;
 
-            Core::instance()->pNetwork->send(QString("PRIVMSG %1 :%2").arg(strChannel).arg(strText));
+            Core::instance()->pNetwork->send(QString("PRIVMSG %1 :%2").arg(strChannel, strText));
             emit showMessage(strChannel, strText, DefaultMessage, QString::null, strMe);
         }
         // me
@@ -853,7 +853,7 @@ void ToolWidget::sendMessage(QString strText, bool bModeration)
                 delete pReplace;
 
                 Core::instance()->pNetwork->send(strTextSend);
-                QString strDisplay = QString("%1ACTION %2%3").arg(QString(QByteArray("\x01"))).arg(strTextDisplay).arg(QString(QByteArray("\x01")));
+                QString strDisplay = QString("%1ACTION %2%3").arg(QString(QByteArray("\x01")), strTextDisplay, QString(QByteArray("\x01")));
                 emit showMessage(strChannel, strDisplay, MeMessage, QString::null, strMe);
             }
         }
@@ -890,7 +890,7 @@ void ToolWidget::sendMessage(QString strText, bool bModeration)
         // standard text
         if (!bModeration)
         {
-            strText = QString("PRIVMSG %1 :%2").arg(strChannel).arg(strText);
+            strText = QString("PRIVMSG %1 :%2").arg(strChannel, strText);
             Core::instance()->pNetwork->send(strText);
             QString strDisplay = strText.right(strText.length()-10-strChannel.length());
             emit showMessage(strChannel, strDisplay, DefaultMessage, QString::null, strMe);
@@ -898,7 +898,7 @@ void ToolWidget::sendMessage(QString strText, bool bModeration)
         // moder notice
         else if (bModeration)
         {
-            strText = QString("MODERNOTICE %1 :%2").arg(strChannel).arg(strText);
+            strText = QString("MODERNOTICE %1 :%2").arg(strChannel, strText);
             Core::instance()->pNetwork->send(strText);
             QString strDisplay = strText.right(strText.length()-14-strChannel.length());
             emit showMessage(strChannel, strDisplay, ModerNoticeMessage, QString::null, strMe);

@@ -223,7 +223,7 @@ void WebcamEngine::raw_251b(QByteArray &data)
                 emit updateRank(iRank);
 
                 // update channels
-                //ui.textEdit_channels->setText(QString("<b>%1</b><br><font color=\"#0000ff\">%2</font>").arg(tr("Is on channels:")).arg(mNickChannels[strUser]));
+                //ui.textEdit_channels->setText(QString("<b>%1</b><br><font color=\"#0000ff\">%2</font>").arg(tr("Is on channels:"), mNickChannels[strUser]));
             }
 
             // cam off

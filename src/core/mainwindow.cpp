@@ -378,7 +378,7 @@ void MainWindow::refreshColors()
     {
 #ifdef Q_WS_WIN
         QString strMidColor = this->palette().midlight().color().name();
-        strTabBackgroundColor = QString("QTabBar::tab { padding: 4px; margin-right: 3px; border: 1px solid %1; border-top-left-radius: 6px; border-top-right-radius: 6px; min-width: 8ex; background-color: %2;}").arg(strMidColor).arg(Core::instance()->settings.value("background_color"));
+        strTabBackgroundColor = QString("QTabBar::tab { padding: 4px; margin-right: 3px; border: 1px solid %1; border-top-left-radius: 6px; border-top-right-radius: 6px; min-width: 8ex; background-color: %2;}").arg(strMidColor, Core::instance()->settings.value("background_color"));
 #endif
         strBackgroundColor = QString("background-color:%1;").arg(Core::instance()->settings.value("background_color"));
     }
@@ -387,7 +387,7 @@ void MainWindow::refreshColors()
     if (Core::instance()->settings.value("default_font_color").toLower() != "#000000")
         strDefaultFontColor = QString("color:%1;").arg(Core::instance()->settings.value("default_font_color"));
 
-    this->setStyleSheet(QString("*{%1}%2").arg(strDefaultFontColor+strBackgroundColor).arg(strTabBackgroundColor));
+    this->setStyleSheet(QString("*{%1}%2").arg(strDefaultFontColor+strBackgroundColor, strTabBackgroundColor));
 
     pTabC->refreshColors();
 }

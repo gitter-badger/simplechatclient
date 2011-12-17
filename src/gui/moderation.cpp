@@ -76,7 +76,7 @@ void DlgModeration::refreshMessages()
 
         if (strChannel == strCurrentChannel)
         {
-            QString strData = QString("[%1] <%2> %3").arg(strDT).arg(strNick).arg(strMessage);
+            QString strData = QString("[%1] <%2> %3").arg(strDT, strNick, strMessage);
 
             QListWidgetItem *item = new QListWidgetItem();
             item->setData(Qt::UserRole, strID);
@@ -126,11 +126,11 @@ void DlgModeration::buttonAccept()
         QString strNick = item->data(Qt::UserRole+3).toString();
         QString strMessage = item->data(Qt::UserRole+4).toString();
 
-        QString strSend = QString("MODERMSG %1 - %2 :%3").arg(strNick).arg(strChannel).arg(strMessage);
+        QString strSend = QString("MODERMSG %1 - %2 :%3").arg(strNick, strChannel, strMessage);
         Core::instance()->pNetwork->send(strSend);
 
         QString strMe = Core::instance()->settings.value("nick");
-        QString strDisplay = QString("%1 [%2 %3]").arg(strMessage).arg(tr("Moderated by")).arg(strMe);
+        QString strDisplay = QString("%1 [%2 %3]").arg(strMessage, tr("Moderated by"), strMe);
         Core::instance()->showMessage(strChannel, strDisplay, DefaultMessage, QString::null, strNick);
     }
 

@@ -148,7 +148,7 @@ void DlgOfflineMsg::refreshMsg()
 
                 QString strMe = Core::instance()->settings.value("nick");
 
-                strMessage = QString("%1 <%2> %3").arg(strDT).arg(strMe).arg(strMessage);
+                strMessage = QString("%1 <%2> %3").arg(strDT, strMe, strMessage);
                 ui.listWidget_msg->addItem(strMessage);
             }
             else if (strType == "reply")
@@ -159,12 +159,12 @@ void DlgOfflineMsg::refreshMsg()
                     ui.listWidget_msg->addItem(strDisplay);
                     messagesReplied.append(strNick);
                 }
-                strMessage = QString("%1 <%2> %3").arg(strDT).arg(strNick).arg(strMessage);
+                strMessage = QString("%1 <%2> %3").arg(strDT, strNick, strMessage);
                 ui.listWidget_msg->addItem(strMessage);
             }
             else if (strType == "msg")
             {
-                strMessage = QString("%1 <%2> %3").arg(strDT).arg(strNick).arg(strMessage);
+                strMessage = QString("%1 <%2> %3").arg(strDT, strNick, strMessage);
                 ui.listWidget_msg->addItem(strMessage);
             }
         }
@@ -215,7 +215,7 @@ void DlgOfflineMsg::buttonReply()
     }
 
     // reply
-    Core::instance()->pNetwork->send(QString("NS OFFLINE REPLY %1 %2").arg(strNick).arg(strMessage));
+    Core::instance()->pNetwork->send(QString("NS OFFLINE REPLY %1 %2").arg(strNick, strMessage));
 
     // clear
     ui.lineEdit_reply->clear();
@@ -224,7 +224,7 @@ void DlgOfflineMsg::buttonReply()
     QString strMe = Core::instance()->settings.value("nick");
     QDateTime dt = QDateTime::currentDateTime();
     QString strDT = dt.toString("[hh:mm:ss]");
-    strMessage = QString("%1 <%2> %3").arg(strDT).arg(strMe).arg(strMessage);
+    strMessage = QString("%1 <%2> %3").arg(strDT, strMe, strMessage);
     ui.listWidget_msg->addItem(strMessage);
 }
 

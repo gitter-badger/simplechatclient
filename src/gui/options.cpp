@@ -1163,7 +1163,7 @@ QString DlgOptions::reverseColor(QString strColor)
         QString sg = QString::number(g, 16).size() != 2 ? "0"+QString::number(g, 16) : QString::number(g, 16);
         QString sb = QString::number(b, 16).size() != 2 ? "0"+QString::number(b, 16) : QString::number(b, 16);
 
-        return QString("#%1%2%3").arg(sr).arg(sg).arg(sb);
+        return QString("#%1%2%3").arg(sr, sg, sb);
     }
     else
         return "#000000";

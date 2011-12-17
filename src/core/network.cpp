@@ -452,10 +452,11 @@ void Network::timeoutPing()
 {
     QDateTime dta = QDateTime::currentDateTime();
     int i1 = (int)dta.toTime_t(); // seconds that have passed since 1970
+    QString t1 = QString::number(i1);
     QString t2 = dta.toString("zzz"); // miliseconds
 
     if ((isConnected()) && (isWritable()) && (Core::instance()->settings.value("logged") == "on"))
-        emit send(QString("PING :%1.%2").arg(i1).arg(t2));
+        emit send(QString("PING :%1.%2").arg(t1, t2));
 }
 
 void Network::timeoutQueue()

@@ -219,7 +219,7 @@ void DlgWebcamStandard::changeUser(QListWidgetItem *item)
     emit setUser(strNick);
 
     // update channels
-    //ui.textEdit_channels->setText(QString("<b>%1</b><br><font color=\"#0000ff\">%2</font>").arg(tr("Is on channels:")).arg(mNickChannels[strNick]));
+    //ui.textEdit_channels->setText(QString("<b>%1</b><br><font color=\"#0000ff\">%2</font>").arg(tr("Is on channels:"), mNickChannels[strNick]));
 }
 
 void DlgWebcamStandard::buttonClose()

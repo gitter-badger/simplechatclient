@@ -139,7 +139,7 @@ QString Commands::cmdJoin()
             msgBox.setIcon(QMessageBox::Warning);
             msgBox.setWindowIcon(QIcon(":/images/logo.png"));
             msgBox.setWindowTitle(tr("Warning"));
-            msgBox.setText(QString("%1\n%2").arg(tr("Erotic category may contain content intended only for adults.")).arg(tr("To enter you must be over 18 years.")));
+            msgBox.setText(QString("%1\n%2").arg(tr("Erotic category may contain content intended only for adults."), tr("To enter you must be over 18 years.")));
             QPushButton *exitButton = msgBox.addButton(tr("Exit"), QMessageBox::AcceptRole);
             exitButton->setIcon(QIcon(":/images/oxygen/16x16/dialog-cancel.png"));
             QPushButton *enterButton = msgBox.addButton(tr("Enter"), QMessageBox::RejectRole);
@@ -154,7 +154,7 @@ QString Commands::cmdJoin()
     }
 
     if (!strKey.isEmpty())
-        return QString("JOIN %1 %2").arg(strChannel).arg(strKey);
+        return QString("JOIN %1 %2").arg(strChannel, strKey);
     else
         return QString("JOIN %1").arg(strChannel);
 }
@@ -249,7 +249,7 @@ QString Commands::cmdOffmsg()
     QString strMessage;
     for (int i = 2; i < strDataList.size(); i++) { if (i != 2) strMessage += " "; strMessage += strDataList[i]; }
 
-    return QString("NS OFFLINE MSG %1 %2").arg(strNick).arg(strMessage);
+    return QString("NS OFFLINE MSG %1 %2").arg(strNick, strMessage);
 }
 
 QString Commands::cmdQuit()
@@ -352,7 +352,7 @@ QString Commands::cmdCycle()
     for (int i = 1; i < strDataList.size(); i++) { if (i != 1) strMessage += " "; strMessage += strDataList[i]; }
 
     if (!strMessage.isEmpty())
-        return QString("PART %1 :%2\nJOIN %1").arg(strChannel).arg(strMessage);
+        return QString("PART %1 :%2\nJOIN %1").arg(strChannel, strMessage);
     else
         return QString("PART %1\nJOIN %1").arg(strChannel);
 }
@@ -364,7 +364,7 @@ QString Commands::cmdMe()
     QString strMessage;
     for (int i = 1; i < strDataList.size(); i++) { if (i != 1) strMessage += " "; strMessage += strDataList[i]; }
 
-    return QString("PRIVMSG %1 :%2ACTION %3%4").arg(strChannel).arg(QString(QByteArray("\x01"))).arg(strMessage).arg(QString(QByteArray("\x01")));
+    return QString("PRIVMSG %1 :%2ACTION %3%4").arg(strChannel, QString(QByteArray("\x01")), strMessage, QString(QByteArray("\x01")));
 }
 
 QString Commands::cmdTopic()
@@ -377,7 +377,7 @@ QString Commands::cmdTopic()
     // convert emoticons
     strMessage.replace(QRegExp("//([a-zA-Z0-9_-]+)"), "%I\\1%");
 
-    return QString("CS SET %1 TOPIC %2").arg(strChannel).arg(strMessage);
+    return QString("CS SET %1 TOPIC %2").arg(strChannel, strMessage);
 }
 
 QString Commands::cmdPart()
@@ -388,7 +388,7 @@ QString Commands::cmdPart()
     for (int i = 1; i < strDataList.size(); i++) { if (i != 1) strMessage += " "; strMessage += strDataList[i]; }
 
     if (!strMessage.isEmpty())
-        return QString("PART %1 :%2").arg(strChannel).arg(strMessage);
+        return QString("PART %1 :%2").arg(strChannel, strMessage);
     else
         return QString("PART %1").arg(strChannel);
 }
@@ -400,7 +400,7 @@ QString Commands::cmdInvite()
     QString strNick = strDataList[1];
     QString strChannel = strChan;
 
-    return QString("INVITE %1 %2").arg(strNick).arg(strChannel);
+    return QString("INVITE %1 %2").arg(strNick, strChannel);
 }
 
 QString Commands::cmdKick()
@@ -416,7 +416,7 @@ QString Commands::cmdKick()
     if (strReason.isEmpty())
         strReason = tr("No reason");
 
-    return QString("KICK %1 %2 :%3").arg(strChannel).arg(strNick).arg(strReason);
+    return QString("KICK %1 %2 :%3").arg(strChannel, strNick, strReason);
 }
 
 QString Commands::cmdBan()
@@ -445,15 +445,15 @@ QString Commands::cmdBan()
         int iResult = msgBox.exec();
 
         if (iResult == QMessageBox::Ok)
-            return QString("CS BAN %1 ADD %2").arg(strChannel).arg(strNick);
+            return QString("CS BAN %1 ADD %2").arg(strChannel, strNick);
         else
             return QString::null;
     }
 
     if (cPlusMinus == '+')
-        return QString("CS BAN %1 ADD %2").arg(strChannel).arg(strNick);
+        return QString("CS BAN %1 ADD %2").arg(strChannel, strNick);
     else if (cPlusMinus == '-')
-        return QString("CS BAN %1 DEL %2").arg(strChannel).arg(strNick);
+        return QString("CS BAN %1 DEL %2").arg(strChannel, strNick);
     else
         return QString::null;
 }
@@ -474,9 +474,9 @@ QString Commands::cmdBanip()
     }
 
     if (cPlusMinus == '+')
-        return QString("CS BANIP %1 ADD %2").arg(strChannel).arg(strNick);
+        return QString("CS BANIP %1 ADD %2").arg(strChannel, strNick);
     else if (cPlusMinus == '-')
-        return QString("CS BANIP %1 DEL %2").arg(strChannel).arg(strNick);
+        return QString("CS BANIP %1 DEL %2").arg(strChannel, strNick);
     else
         return QString::null;
 }
@@ -496,9 +496,9 @@ QString Commands::cmdSop()
     }
 
     if (cPlusMinus == '+')
-        return QString("CS OP %1 ADD %2").arg(strChannel).arg(strNick);
+        return QString("CS OP %1 ADD %2").arg(strChannel, strNick);
     else if (cPlusMinus == '-')
-        return QString("CS OP %1 DEL %2").arg(strChannel).arg(strNick);
+        return QString("CS OP %1 DEL %2").arg(strChannel, strNick);
     else
         return QString::null;
 }
@@ -518,9 +518,9 @@ QString Commands::cmdOp()
     }
 
     if (cPlusMinus == '+')
-        return QString("CS HALFOP %1 ADD %2").arg(strChannel).arg(strNick);
+        return QString("CS HALFOP %1 ADD %2").arg(strChannel, strNick);
     else if (cPlusMinus == '-')
-        return QString("CS HALFOP %1 DEL %2").arg(strChannel).arg(strNick);
+        return QString("CS HALFOP %1 DEL %2").arg(strChannel, strNick);
     else
         return QString::null;
 }
@@ -540,9 +540,9 @@ QString Commands::cmdModer()
     }
 
     if (cPlusMinus == '+')
-        return QString("CS MODERATOR %1 ADD %2").arg(strChannel).arg(strNick);
+        return QString("CS MODERATOR %1 ADD %2").arg(strChannel, strNick);
     else if (cPlusMinus == '-')
-        return QString("CS MODERATOR %1 DEL %2").arg(strChannel).arg(strNick);
+        return QString("CS MODERATOR %1 DEL %2").arg(strChannel, strNick);
     else
         return QString::null;
 }
@@ -562,9 +562,9 @@ QString Commands::cmdVip()
     }
 
     if (cPlusMinus == '+')
-        return QString("CS VOICE %1 ADD %2").arg(strChannel).arg(strNick);
+        return QString("CS VOICE %1 ADD %2").arg(strChannel, strNick);
     else if (cPlusMinus == '-')
-        return QString("CS VOICE %1 DEL %2").arg(strChannel).arg(strNick);
+        return QString("CS VOICE %1 DEL %2").arg(strChannel, strNick);
     else
         return QString::null;
 }

@@ -107,7 +107,7 @@ void ChatView::refreshCSS()
     if ((strDisableBackgroundImage == "off") && (!strBackgroundImage.isEmpty()))
         strBackground = "background-image: url("+strBackgroundImage+"); background-attachment: fixed; background-position: center; background-repeat: no-repeat;";
 
-    QString strBodyCSS = QString("margin: 0; padding: 0; font-family: sans; word-wrap: break-word; font-size:%1; %2").arg(strFontSize).arg(strBackground);
+    QString strBodyCSS = QString("margin: 0; padding: 0; font-family: sans; word-wrap: break-word; font-size:%1; %2").arg(strFontSize, strBackground);
     QWebElement body = this->page()->mainFrame()->findFirstElement("body");
     body.setAttribute("style", strBodyCSS);
 
@@ -149,12 +149,12 @@ void ChatView::displayMessage(QString &strData, MessageCategory eMessageCategory
     {
         QString strSaveData;
         if (!strNick.isEmpty())
-            strSaveData = QString("%1 <%2> %3").arg(dt.toString("[hh:mm:ss]")).arg(strNick).arg(strData);
+            strSaveData = QString("%1 <%2> %3").arg(dt.toString("[hh:mm:ss]"), strNick, strData);
         else
-            strSaveData = QString("%1 %2").arg(dt.toString("[hh:mm:ss]")).arg(strData);
+            strSaveData = QString("%1 %2").arg(dt.toString("[hh:mm:ss]"), strData);
 
         // fix /me
-        QString strRegExpMe = QString("%1ACTION %2%3").arg(QString(QByteArray("\x01"))).arg("(.*)").arg(QString(QByteArray("\x01")));
+        QString strRegExpMe = QString("%1ACTION %2%3").arg(QString(QByteArray("\x01")), "(.*)", QString(QByteArray("\x01")));
         if (strSaveData.contains(QRegExp(strRegExpMe)))
             strSaveData.replace(QRegExp(strRegExpMe), "\\1");
 
@@ -264,12 +264,12 @@ void ChatView::kick()
     QString strText = QInputDialog::getText(this, tr("Kick From Channel"), tr("Reason for kicking:"), QLineEdit::Normal, tr("No reason"), &ok);
 
     if ((ok) && (!strText.isEmpty()))
-        Core::instance()->pNetwork->send(QString("KICK %1 %2 :%3").arg(strChatViewChannel).arg(strNick).arg(strText));
+        Core::instance()->pNetwork->send(QString("KICK %1 %2 :%3").arg(strChatViewChannel, strNick, strText));
 }
 
 void ChatView::ban()
 {
-    Core::instance()->pNetwork->send(QString("CS BAN %1 ADD %2").arg(strChatViewChannel).arg(strNick));
+    Core::instance()->pNetwork->send(QString("CS BAN %1 ADD %2").arg(strChatViewChannel, strNick));
 }
 
 void ChatView::kban()
@@ -279,54 +279,54 @@ void ChatView::kban()
 
     if ((ok) && (!strText.isEmpty()))
     {
-        Core::instance()->pNetwork->send(QString("CS BAN %1 ADD %2").arg(strChatViewChannel).arg(strNick));
-        Core::instance()->pNetwork->send(QString("KICK %1 %2 :%3").arg(strChatViewChannel).arg(strNick).arg(strText));
+        Core::instance()->pNetwork->send(QString("CS BAN %1 ADD %2").arg(strChatViewChannel, strNick));
+        Core::instance()->pNetwork->send(QString("KICK %1 %2 :%3").arg(strChatViewChannel, strNick, strText));
     }
 }
 
 void ChatView::ipban()
 {
-    Core::instance()->pNetwork->send(QString("CS BANIP %1 ADD %2").arg(strChatViewChannel).arg(strNick));
+    Core::instance()->pNetwork->send(QString("CS BANIP %1 ADD %2").arg(strChatViewChannel, strNick));
 }
 
 void ChatView::opAdd()
 {
-    Core::instance()->pNetwork->send(QString("CS OP %1 ADD %2").arg(strChatViewChannel).arg(strNick));
+    Core::instance()->pNetwork->send(QString("CS OP %1 ADD %2").arg(strChatViewChannel, strNick));
 }
 
 void ChatView::opDel()
 {
-    Core::instance()->pNetwork->send(QString("CS OP %1 DEL %2").arg(strChatViewChannel).arg(strNick));
+    Core::instance()->pNetwork->send(QString("CS OP %1 DEL %2").arg(strChatViewChannel, strNick));
 }
 
 void ChatView::halfopAdd()
 {
-    Core::instance()->pNetwork->send(QString("CS HALFOP %1 ADD %2").arg(strChatViewChannel).arg(strNick));
+    Core::instance()->pNetwork->send(QString("CS HALFOP %1 ADD %2").arg(strChatViewChannel, strNick));
 }
 
 void ChatView::halfopDel()
 {
-    Core::instance()->pNetwork->send(QString("CS HALFOP %1 DEL %2").arg(strChatViewChannel).arg(strNick));
+    Core::instance()->pNetwork->send(QString("CS HALFOP %1 DEL %2").arg(strChatViewChannel, strNick));
 }
 
 void ChatView::moderatorAdd()
 {
-    Core::instance()->pNetwork->send(QString("CS MODERATOR %1 ADD %2").arg(strChatViewChannel).arg(strNick));
+    Core::instance()->pNetwork->send(QString("CS MODERATOR %1 ADD %2").arg(strChatViewChannel, strNick));
 }
 
 void ChatView::moderatorDel()
 {
-    Core::instance()->pNetwork->send(QString("CS MODERATOR %1 DEL %2").arg(strChatViewChannel).arg(strNick));
+    Core::instance()->pNetwork->send(QString("CS MODERATOR %1 DEL %2").arg(strChatViewChannel, strNick));
 }
 
 void ChatView::voiceAdd()
 {
-    Core::instance()->pNetwork->send(QString("CS VOICE %1 ADD %2").arg(strChatViewChannel).arg(strNick));
+    Core::instance()->pNetwork->send(QString("CS VOICE %1 ADD %2").arg(strChatViewChannel, strNick));
 }
 
 void ChatView::voiceDel()
 {
-    Core::instance()->pNetwork->send(QString("CS VOICE %1 DEL %2").arg(strChatViewChannel).arg(strNick));
+    Core::instance()->pNetwork->send(QString("CS VOICE %1 DEL %2").arg(strChatViewChannel, strNick));
 }
 
 void ChatView::invite()
@@ -335,7 +335,7 @@ void ChatView::invite()
     if (action)
     {
         QString strInviteChannel = action->data().toString();
-        Core::instance()->pNetwork->send(QString("INVITE %1 %2").arg(strNick).arg(strInviteChannel));
+        Core::instance()->pNetwork->send(QString("INVITE %1 %2").arg(strNick, strInviteChannel));
     }
 }
 

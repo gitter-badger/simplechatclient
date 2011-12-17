@@ -459,7 +459,7 @@ void DlgMyProfile::buttonOk()
     QString strYear = ui.comboBox_year->currentText();
     QString strBirthdate;
     if ((!strDay.isEmpty()) && (!strMonth.isEmpty()) && (!strYear.isEmpty()))
-        strBirthdate = QString("%1-%2-%3").arg(strYear).arg(strMonth).arg(strDay);
+        strBirthdate = QString("%1-%2-%3").arg(strYear, strMonth, strDay);
     if (strBirthdate != Core::instance()->mMyProfile.value("birthdate"))
         Core::instance()->pNetwork->send(QString("NS SET birthdate %1").arg(strBirthdate));
 

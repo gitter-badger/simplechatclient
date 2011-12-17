@@ -115,7 +115,7 @@ void Convert::convertEmoticons(QString &strData)
                     strWidthHeight = "width=\""+QString::number(p.width())+"px\" height=\""+QString::number(p.height())+"px\"";
                 }
 
-                strData.replace(strEmoticonFull, QString("<img src=\"%1\" alt=\"%2\" title=\"%2\" %3 />").arg(strEmoticonPath).arg(strEmoticon).arg(strWidthHeight));
+                strData.replace(strEmoticonFull, QString("<img src=\"%1\" alt=\"%2\" title=\"%2\" %3 />").arg(strEmoticonPath, strEmoticon, strWidthHeight));
             }
             else
                 strData.replace(strEmoticonFull, QString("//%1").arg(strEmoticon));
@@ -191,7 +191,7 @@ QString Convert::findEmoticon(QString strEmoticon)
     for (int i = 0; i < lDirs.size(); i++)
     {
         QString strDir = lDirs[i];
-        QString strEmoticonCheck = QString("%1/3rdparty/emoticons/%2/%3.gif").arg(path).arg(strDir).arg(strEmoticon);
+        QString strEmoticonCheck = QString("%1/3rdparty/emoticons/%2/%3.gif").arg(path, strDir, strEmoticon);
 
         if (QFile::exists(strEmoticonCheck))
             return strEmoticonCheck;

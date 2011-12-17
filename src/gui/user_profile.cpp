@@ -236,7 +236,7 @@ void DlgUserProfile::refreshUserInfo()
             QString strShortLink = strValue;
             if (strShortLink.size() > 30) strShortLink = strShortLink.left(15)+"..."+strShortLink.right(15);
 
-            label_website_link->setText(QString("<a href=\"%1\">%2</a>").arg(strValue).arg(strShortLink));
+            label_website_link->setText(QString("<a href=\"%1\">%2</a>").arg(strValue, strShortLink));
         }
     }
 }

@@ -201,7 +201,7 @@ void TabContainer::showMessage(QString &strChannel, QString &strData, MessageCat
         {
             QString strAwaylogData = strData;
             if (!strNick.isEmpty())
-                strAwaylogData = QString("<%1> %2").arg(strNick).arg(strData);
+                strAwaylogData = QString("<%1> %2").arg(strNick, strData);
 
             // awaylog
             Core::instance()->addAwaylog(strChannel, strAwaylogData);
@@ -285,7 +285,7 @@ void TabContainer::setTopic(QString &strChannel, QString &strTopic)
             strContent.replace(QRegExp("(\\S{100})"), "\\1 ");
 
         // set topic
-        tw[i]->topic->setText(QString("<b>%1</b> %2").arg(tr("Topic:")).arg(strContent));
+        tw[i]->topic->setText(QString("<b>%1</b> %2").arg(tr("Topic:"), strContent));
 
         // tooltip
         strTopic.remove(QRegExp("%C([a-zA-Z0-9]+)%"));

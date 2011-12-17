@@ -602,14 +602,14 @@ void OnetKernel::raw_join()
     if (strChannel[0] != '^')
     {
         if (Core::instance()->settings.value("show_zuo_and_ip") == "on")
-            strDisplay = QString(tr("* %1 [%2@%3] has joined %4")).arg(strNick).arg(strZUO).arg(strIP).arg(strChannel);
+            strDisplay = QString(tr("* %1 [%2@%3] has joined %4")).arg(strNick, strZUO, strIP, strChannel);
         else
-            strDisplay = QString(tr("* %1 has joined %2")).arg(strNick).arg(strChannel);
+            strDisplay = QString(tr("* %1 has joined %2")).arg(strNick, strChannel);
     }
     else
     {
         if (Core::instance()->settings.value("show_zuo_and_ip") == "on")
-            strDisplay = QString(tr("* %1 [%2@%3] has joined priv")).arg(strNick).arg(strZUO).arg(strIP);
+            strDisplay = QString(tr("* %1 [%2@%3] has joined priv")).arg(strNick, strZUO, strIP);
         else
             strDisplay = QString(tr("* %1 has joined priv")).arg(strNick);
     }
@@ -672,22 +672,22 @@ void OnetKernel::raw_part()
         if (!strReason.isEmpty())
         {
             if (Core::instance()->settings.value("show_zuo_and_ip") == "on")
-                strDisplay = QString(tr("* %1 [%2@%3] has left %4 [%5]")).arg(strNick).arg(strZUO).arg(strIP).arg(strChannel).arg(strReason);
+                strDisplay = QString(tr("* %1 [%2@%3] has left %4 [%5]")).arg(strNick, strZUO, strIP, strChannel, strReason);
             else
-                strDisplay = QString(tr("* %1 has left %2 [%3]")).arg(strNick).arg(strChannel).arg(strReason);
+                strDisplay = QString(tr("* %1 has left %2 [%3]")).arg(strNick, strChannel, strReason);
         }
         else
         {
             if (Core::instance()->settings.value("show_zuo_and_ip") == "on")
-                strDisplay = QString(tr("* %1 [%2@%3] has left %4")).arg(strNick).arg(strZUO).arg(strIP).arg(strChannel);
+                strDisplay = QString(tr("* %1 [%2@%3] has left %4")).arg(strNick, strZUO, strIP, strChannel);
             else
-                strDisplay = QString(tr("* %1 has left %2")).arg(strNick).arg(strChannel);
+                strDisplay = QString(tr("* %1 has left %2")).arg(strNick, strChannel);
         }
     }
     else
     {
         if (Core::instance()->settings.value("show_zuo_and_ip") == "on")
-            strDisplay = QString(tr("* %1 [%2@%3] has left priv")).arg(strNick).arg(strZUO).arg(strIP);
+            strDisplay = QString(tr("* %1 [%2@%3] has left priv")).arg(strNick, strZUO, strIP);
         else
             strDisplay = QString(tr("* %1 has left priv")).arg(strNick);
     }
@@ -729,9 +729,9 @@ void OnetKernel::raw_quit()
 
     QString strDisplay;
     if (Core::instance()->settings.value("show_zuo_and_ip") == "on")
-        strDisplay = QString(tr("* %1 [%2@%3] has quit [%4]")).arg(strNick).arg(strZUO).arg(strIP).arg(strReason);
+        strDisplay = QString(tr("* %1 [%2@%3] has quit [%4]")).arg(strNick, strZUO, strIP, strReason);
     else
-        strDisplay = QString(tr("* %1 has quit [%2]")).arg(strNick).arg(strReason);
+        strDisplay = QString(tr("* %1 has quit [%2]")).arg(strNick, strReason);
 
     emit quitUser(strNick, strDisplay);
 }
@@ -764,7 +764,7 @@ void OnetKernel::raw_kick()
     if (strReason[0] == ':') strReason.remove(0,1);
 
     QString strDisplay;
-    strDisplay = QString(tr("* %1 has been kicked from channel %2 by %3 Reason: %4")).arg(strNick).arg(strChannel).arg(strWho).arg(strReason);
+    strDisplay = QString(tr("* %1 has been kicked from channel %2 by %3 Reason: %4")).arg(strNick, strChannel, strWho, strReason);
 
     pTabC->showMessage(strChannel, strDisplay, KickMessage);
 
@@ -777,7 +777,7 @@ void OnetKernel::raw_kick()
         strReason.remove(QRegExp("%F([a-zA-Z0-9:]+)%"));
         strReason.replace(QRegExp("%I([a-zA-Z0-9_-]+)%"),"//\\1");
 
-        QMessageBox::information(0, "", QString(tr("You have been kicked from %1 by %2")+"<br>"+tr("Reason: %3")).arg(strWho).arg(strChannel).arg(strReason));
+        QMessageBox::information(0, "", QString(tr("You have been kicked from %1 by %2")+"<br>"+tr("Reason: %3")).arg(strWho, strChannel, strReason));
 
         pTabC->removeTab(strChannel);
     }
@@ -849,53 +849,53 @@ void OnetKernel::raw_mode()
             QString strDisplay;
             bool bNickFlag = false;
 
-            if (strFlag == "+q") { strDisplay = QString(tr("* %1 is now the owner of the channel %2 (set by %3)")).arg(strValue).arg(strChannel).arg(strWho); bNickFlag = true; }
-            else if (strFlag == "-q") { strDisplay = QString(tr("* %1 is no longer the owner of the channel %2 (set by %3)")).arg(strValue).arg(strChannel).arg(strWho); bNickFlag = true; }
-            else if (strFlag == "+o") { strDisplay = QString(tr("* %1 is now super-operator on the channel %2 (set by %3)")).arg(strValue).arg(strChannel).arg(strWho); bNickFlag = true; }
-            else if (strFlag == "-o") { strDisplay = QString(tr("* %1 is no longer super-operator on the channel %2 (set by %3)")).arg(strValue).arg(strChannel).arg(strWho); bNickFlag = true; }
-            else if (strFlag == "+h") { strDisplay = QString(tr("* %1 is now the operator of the channel %2 (set by %3)")).arg(strValue).arg(strChannel).arg(strWho); bNickFlag = true; }
-            else if (strFlag == "-h") { strDisplay = QString(tr("* %1 is no longer the operator of the channel %2 (set by %3)")).arg(strValue).arg(strChannel).arg(strWho); bNickFlag = true; }
-            else if (strFlag == "+v") { strDisplay = QString(tr("* %1 is now a guest of channel %2 (set by %3)")).arg(strValue).arg(strChannel).arg(strWho); bNickFlag = true; }
-            else if (strFlag == "-v") { strDisplay = QString(tr("* %1 is no longer a guest of channel %2 (set by %3)")).arg(strValue).arg(strChannel).arg(strWho); bNickFlag = true; }
-            else if (strFlag == "+X") { strDisplay = QString(tr("* %1 is now moderator of the channel %2 (set by %3)")).arg(strValue).arg(strChannel).arg(strWho); bNickFlag = true; }
-            else if (strFlag == "-X") { strDisplay = QString(tr("* %1 is no longer moderating channel %2 (set by %3)")).arg(strValue).arg(strChannel).arg(strWho); bNickFlag = true; }
-            else if (strFlag == "+Y") { strDisplay = QString(tr("* %1 is now screener channel %2 (set by %3)")).arg(strValue).arg(strChannel).arg(strWho); bNickFlag = true; }
-            else if (strFlag == "-Y") { strDisplay = QString(tr("* %1 is no longer a screener channel %2 (set by %3)")).arg(strValue).arg(strChannel).arg(strWho); bNickFlag = true; }
-            else if (strFlag == "+b") { strDisplay = QString(tr("* %1 is now on the banned list in %2 (set by %3)")).arg(strValue).arg(strChannel).arg(strWho); bNickFlag = true; }
-            else if (strFlag == "-b") { strDisplay = QString(tr("* %1 is no longer on the banned list in %2 (set by %3)")).arg(strValue).arg(strChannel).arg(strWho); bNickFlag = true; }
-            else if (strFlag == "+I") { strDisplay = QString(tr("* %1 is now on the list of invitees in %2 (set by %3)")).arg(strValue).arg(strChannel).arg(strWho); bNickFlag = true; }
-            else if (strFlag == "-I") { strDisplay = QString(tr("* %1 is no longer on the list of invitees in %2 (set by %3)")).arg(strValue).arg(strChannel).arg(strWho); bNickFlag = true; }
-            else if (strFlag == "+e") { strDisplay = QString(tr("* %1 now has ban exception flag in %2 (set by %3)")).arg(strValue).arg(strChannel).arg(strWho); bNickFlag = true; }
-            else if (strFlag == "-e") { strDisplay = QString(tr("* %1 no longer has a ban exception flag in %2 (set by %3)")).arg(strValue).arg(strChannel).arg(strWho); bNickFlag = true; }
+            if (strFlag == "+q") { strDisplay = QString(tr("* %1 is now the owner of the channel %2 (set by %3)")).arg(strValue, strChannel, strWho); bNickFlag = true; }
+            else if (strFlag == "-q") { strDisplay = QString(tr("* %1 is no longer the owner of the channel %2 (set by %3)")).arg(strValue, strChannel, strWho); bNickFlag = true; }
+            else if (strFlag == "+o") { strDisplay = QString(tr("* %1 is now super-operator on the channel %2 (set by %3)")).arg(strValue, strChannel, strWho); bNickFlag = true; }
+            else if (strFlag == "-o") { strDisplay = QString(tr("* %1 is no longer super-operator on the channel %2 (set by %3)")).arg(strValue, strChannel, strWho); bNickFlag = true; }
+            else if (strFlag == "+h") { strDisplay = QString(tr("* %1 is now the operator of the channel %2 (set by %3)")).arg(strValue, strChannel, strWho); bNickFlag = true; }
+            else if (strFlag == "-h") { strDisplay = QString(tr("* %1 is no longer the operator of the channel %2 (set by %3)")).arg(strValue, strChannel, strWho); bNickFlag = true; }
+            else if (strFlag == "+v") { strDisplay = QString(tr("* %1 is now a guest of channel %2 (set by %3)")).arg(strValue, strChannel, strWho); bNickFlag = true; }
+            else if (strFlag == "-v") { strDisplay = QString(tr("* %1 is no longer a guest of channel %2 (set by %3)")).arg(strValue, strChannel, strWho); bNickFlag = true; }
+            else if (strFlag == "+X") { strDisplay = QString(tr("* %1 is now moderator of the channel %2 (set by %3)")).arg(strValue, strChannel, strWho); bNickFlag = true; }
+            else if (strFlag == "-X") { strDisplay = QString(tr("* %1 is no longer moderating channel %2 (set by %3)")).arg(strValue, strChannel, strWho); bNickFlag = true; }
+            else if (strFlag == "+Y") { strDisplay = QString(tr("* %1 is now screener channel %2 (set by %3)")).arg(strValue, strChannel, strWho); bNickFlag = true; }
+            else if (strFlag == "-Y") { strDisplay = QString(tr("* %1 is no longer a screener channel %2 (set by %3)")).arg(strValue, strChannel, strWho); bNickFlag = true; }
+            else if (strFlag == "+b") { strDisplay = QString(tr("* %1 is now on the banned list in %2 (set by %3)")).arg(strValue, strChannel, strWho); bNickFlag = true; }
+            else if (strFlag == "-b") { strDisplay = QString(tr("* %1 is no longer on the banned list in %2 (set by %3)")).arg(strValue, strChannel, strWho); bNickFlag = true; }
+            else if (strFlag == "+I") { strDisplay = QString(tr("* %1 is now on the list of invitees in %2 (set by %3)")).arg(strValue, strChannel, strWho); bNickFlag = true; }
+            else if (strFlag == "-I") { strDisplay = QString(tr("* %1 is no longer on the list of invitees in %2 (set by %3)")).arg(strValue, strChannel, strWho); bNickFlag = true; }
+            else if (strFlag == "+e") { strDisplay = QString(tr("* %1 now has ban exception flag in %2 (set by %3)")).arg(strValue, strChannel, strWho); bNickFlag = true; }
+            else if (strFlag == "-e") { strDisplay = QString(tr("* %1 no longer has a ban exception flag in %2 (set by %3)")).arg(strValue, strChannel, strWho); bNickFlag = true; }
 
-            else if (strFlag == "+k") strDisplay = QString(tr("* Channel %1 now has key set to %2 (set by %3)")).arg(strChannel).arg(strValue).arg(strWho);
-            else if (strFlag == "-k") strDisplay = QString(tr("* Channel %1 no longer has key set (set by %2)")).arg(strChannel).arg(strWho);
-            else if (strFlag == "+n") strDisplay = QString(tr("* Channel %1 will now have no external messages sent to the channel (set by %2)")).arg(strChannel).arg(strWho);
-            else if (strFlag == "-n") strDisplay = QString(tr("* Channel %1 will now allow external messages sent to the channel (set by %2)")).arg(strChannel).arg(strWho);
-            else if (strFlag == "+t") strDisplay = QString(tr("* Only channel operators can now change the topic in %1 channel (set by %2)")).arg(strChannel).arg(strWho);
-            else if (strFlag == "-t") strDisplay = QString(tr("* Anyone can now change the topic in %1 channel (set by %2)")).arg(strChannel).arg(strWho);
-            else if (strFlag == "+i") strDisplay = QString(tr("* Channel %1 is now a hidden channel (set by %2)")).arg(strChannel).arg(strWho);
-            else if (strFlag == "-i") strDisplay = QString(tr("* Channel %1 is no longer hidden channel (set by %2)")).arg(strChannel).arg(strWho);
-            else if (strFlag == "+p") strDisplay = QString(tr("* Channel %1 is now a private channel (set by %2)")).arg(strChannel).arg(strWho);
-            else if (strFlag == "-p") strDisplay = QString(tr("* Channel %1 is no longer a private channel (set by %2)")).arg(strChannel).arg(strWho);
-            else if (strFlag == "+s") strDisplay = QString(tr("* Channel %1 is now a secret channel (set by %2)")).arg(strChannel).arg(strWho);
-            else if (strFlag == "-s") strDisplay = QString(tr("* Channel %1 is no longer a secret channel (set by %2)")).arg(strChannel).arg(strWho);
-            else if (strFlag == "+m") strDisplay = QString(tr("* Channel %1 is now moderated channel (set by %2)")).arg(strChannel).arg(strWho);
-            else if (strFlag == "-m") strDisplay = QString(tr("* Channel %1 is no longer moderated channel (set by %2)")).arg(strChannel).arg(strWho);
-            else if (strFlag == "+u") strDisplay = QString(tr("* Channel %1 now has enabled auditorium mode (set by %2)")).arg(strChannel).arg(strWho);
-            else if (strFlag == "-u") strDisplay = QString(tr("* Channel %1 no longer has enabled auditorium mode (set by %2)")).arg(strChannel).arg(strWho);
-            else if (strFlag == "+l") strDisplay = QString(tr("* Channel %1 now has max number of users set to %2 (set by %3)")).arg(strChannel).arg(strValue).arg(strWho);
-            else if (strFlag == "-l") strDisplay = QString(tr("* Channel %1 no longer has max number of users set (set by %2)")).arg(strChannel).arg(strWho);
-            else if (strFlag == "+G") strDisplay = QString(tr("* Channel %1 now has word censoring enabled (set by %2)")).arg(strChannel).arg(strWho);
-            else if (strFlag == "-G") strDisplay = QString(tr("* Channel %1 no longer has word censoring enabled (set by %2)")).arg(strChannel).arg(strWho);
-            else if (strFlag == "+Q") strDisplay = QString(tr("* Channel %1 now has blocked kick (set by %2)")).arg(strChannel).arg(strWho);
-            else if (strFlag == "-Q") strDisplay = QString(tr("* Channel %1 no longer has blocked kick (set by %2)")).arg(strChannel).arg(strWho);
-            else if (strFlag == "+V") strDisplay = QString(tr("* Channel %1 now has blocked invites for 1 hour (set by %2)")).arg(strChannel).arg(strWho);
-            else if (strFlag == "-V") strDisplay = QString(tr("* Channel %1 no longer has blocked invites (set by %2)")).arg(strChannel).arg(strWho);
-            else if (strFlag == "+L") strDisplay = QString(tr("* Channel %1 now has limit redirection to %2 channel (set by %3)")).arg(strChannel).arg(strValue).arg(strWho);
-            else if (strFlag == "-L") strDisplay = QString(tr("* Channel %1 no longer has limit redirection (set by %2)")).arg(strChannel).arg(strWho);
-            else if (strFlag == "+J") strDisplay = QString(tr("* Channel %1 now prevents users from automatically rejoining the channel when they are kicked. Limit is set to %2 sec. (set by %3)")).arg(strChannel).arg(strValue).arg(strWho);
-            else if (strFlag == "-J") strDisplay = QString(tr("* Channel %1 no longer prevents users from automatically rejoining the channel when they are kicked (set by %2)")).arg(strChannel).arg(strWho);
+            else if (strFlag == "+k") strDisplay = QString(tr("* Channel %1 now has key set to %2 (set by %3)")).arg(strChannel, strValue, strWho);
+            else if (strFlag == "-k") strDisplay = QString(tr("* Channel %1 no longer has key set (set by %2)")).arg(strChannel, strWho);
+            else if (strFlag == "+n") strDisplay = QString(tr("* Channel %1 will now have no external messages sent to the channel (set by %2)")).arg(strChannel, strWho);
+            else if (strFlag == "-n") strDisplay = QString(tr("* Channel %1 will now allow external messages sent to the channel (set by %2)")).arg(strChannel, strWho);
+            else if (strFlag == "+t") strDisplay = QString(tr("* Only channel operators can now change the topic in %1 channel (set by %2)")).arg(strChannel, strWho);
+            else if (strFlag == "-t") strDisplay = QString(tr("* Anyone can now change the topic in %1 channel (set by %2)")).arg(strChannel, strWho);
+            else if (strFlag == "+i") strDisplay = QString(tr("* Channel %1 is now a hidden channel (set by %2)")).arg(strChannel, strWho);
+            else if (strFlag == "-i") strDisplay = QString(tr("* Channel %1 is no longer hidden channel (set by %2)")).arg(strChannel, strWho);
+            else if (strFlag == "+p") strDisplay = QString(tr("* Channel %1 is now a private channel (set by %2)")).arg(strChannel, strWho);
+            else if (strFlag == "-p") strDisplay = QString(tr("* Channel %1 is no longer a private channel (set by %2)")).arg(strChannel, strWho);
+            else if (strFlag == "+s") strDisplay = QString(tr("* Channel %1 is now a secret channel (set by %2)")).arg(strChannel, strWho);
+            else if (strFlag == "-s") strDisplay = QString(tr("* Channel %1 is no longer a secret channel (set by %2)")).arg(strChannel, strWho);
+            else if (strFlag == "+m") strDisplay = QString(tr("* Channel %1 is now moderated channel (set by %2)")).arg(strChannel, strWho);
+            else if (strFlag == "-m") strDisplay = QString(tr("* Channel %1 is no longer moderated channel (set by %2)")).arg(strChannel, strWho);
+            else if (strFlag == "+u") strDisplay = QString(tr("* Channel %1 now has enabled auditorium mode (set by %2)")).arg(strChannel, strWho);
+            else if (strFlag == "-u") strDisplay = QString(tr("* Channel %1 no longer has enabled auditorium mode (set by %2)")).arg(strChannel, strWho);
+            else if (strFlag == "+l") strDisplay = QString(tr("* Channel %1 now has max number of users set to %2 (set by %3)")).arg(strChannel, strValue, strWho);
+            else if (strFlag == "-l") strDisplay = QString(tr("* Channel %1 no longer has max number of users set (set by %2)")).arg(strChannel, strWho);
+            else if (strFlag == "+G") strDisplay = QString(tr("* Channel %1 now has word censoring enabled (set by %2)")).arg(strChannel, strWho);
+            else if (strFlag == "-G") strDisplay = QString(tr("* Channel %1 no longer has word censoring enabled (set by %2)")).arg(strChannel, strWho);
+            else if (strFlag == "+Q") strDisplay = QString(tr("* Channel %1 now has blocked kick (set by %2)")).arg(strChannel, strWho);
+            else if (strFlag == "-Q") strDisplay = QString(tr("* Channel %1 no longer has blocked kick (set by %2)")).arg(strChannel, strWho);
+            else if (strFlag == "+V") strDisplay = QString(tr("* Channel %1 now has blocked invites for 1 hour (set by %2)")).arg(strChannel, strWho);
+            else if (strFlag == "-V") strDisplay = QString(tr("* Channel %1 no longer has blocked invites (set by %2)")).arg(strChannel, strWho);
+            else if (strFlag == "+L") strDisplay = QString(tr("* Channel %1 now has limit redirection to %2 channel (set by %3)")).arg(strChannel, strValue, strWho);
+            else if (strFlag == "-L") strDisplay = QString(tr("* Channel %1 no longer has limit redirection (set by %2)")).arg(strChannel, strWho);
+            else if (strFlag == "+J") strDisplay = QString(tr("* Channel %1 now prevents users from automatically rejoining the channel when they are kicked. Limit is set to %2 sec. (set by %3)")).arg(strChannel, strValue, strWho);
+            else if (strFlag == "-J") strDisplay = QString(tr("* Channel %1 no longer prevents users from automatically rejoining the channel when they are kicked (set by %2)")).arg(strChannel, strWho);
 
             else if (strFlag.at(1) == QChar('F'))
             {
@@ -906,9 +906,9 @@ void OnetKernel::raw_mode()
                 else strStatus = tr("unknown");
 
                 if (strFlag.at(0) == QChar('+'))
-                    strDisplay = QString(tr("* Channel %1 now has status %2 (set by %3)")).arg(strChannel).arg(strStatus).arg(strWho);
+                    strDisplay = QString(tr("* Channel %1 now has status %2 (set by %3)")).arg(strChannel, strStatus, strWho);
                 else if (strFlag.at(0) == QChar('-'))
-                    strDisplay = QString(tr("* Channel %1 no longer has status %2 (set by %3)")).arg(strChannel).arg(strStatus).arg(strWho);
+                    strDisplay = QString(tr("* Channel %1 no longer has status %2 (set by %3)")).arg(strChannel, strStatus, strWho);
             }
             else if (strFlag.at(1) == QChar('c'))
             {
@@ -921,18 +921,18 @@ void OnetKernel::raw_mode()
                 else strCategory = tr("unknown");
 
                 if (strFlag.at(0) == QChar('+'))
-                    strDisplay = QString(tr("* Channel %1 now belongs to a category %2 (set by %3)")).arg(strChannel).arg(strCategory).arg(strWho);
+                    strDisplay = QString(tr("* Channel %1 now belongs to a category %2 (set by %3)")).arg(strChannel, strCategory, strWho);
                 else if (strFlag.at(0) == QChar('-'))
-                    strDisplay = QString(tr("* Channel %1 is no longer category %2 (set by %3)")).arg(strChannel).arg(strCategory).arg(strWho);
+                    strDisplay = QString(tr("* Channel %1 is no longer category %2 (set by %3)")).arg(strChannel, strCategory, strWho);
             }
 
             else
             {
                 if (strValue.isEmpty())
-                    strDisplay = QString(tr("* Channel %1 now has a flag %2 (set by %3)")).arg(strChannel).arg(strFlag).arg(strWho);
+                    strDisplay = QString(tr("* Channel %1 now has a flag %2 (set by %3)")).arg(strChannel, strFlag, strWho);
                 else
                 {
-                    strDisplay = QString(tr("* %1 now has a flag %2 (set by %3)")).arg(strValue).arg(strFlag).arg(strWho);
+                    strDisplay = QString(tr("* %1 now has a flag %2 (set by %3)")).arg(strValue, strFlag, strWho);
                     bNickFlag = true;
                 }
             }
@@ -980,7 +980,7 @@ void OnetKernel::raw_mode()
             else if (strFlag == "+r") strDisplay = QString(tr("* %1 is marked as registered and identified")).arg(strNick);
             else if (strFlag == "-r") strDisplay = QString(tr("* %1 is no longer marked as registered and identified")).arg(strNick);
             else
-                strDisplay = QString(tr("* %1 now has a flag %2")).arg(strNick).arg(strFlag);
+                strDisplay = QString(tr("* %1 now has a flag %2")).arg(strNick, strFlag);
 
             if ((strFlag.contains("r")) || (strFlag.contains("x")))
             {
@@ -1055,7 +1055,7 @@ void OnetKernel::raw_notice()
     }
 
     // display
-    QString strDisplay = QString("-%1- %2").arg(strWho).arg(strMessage);
+    QString strDisplay = QString("-%1- %2").arg(strWho, strMessage);
     if (strNick[0] == '#')
         pTabC->showMessage(strNick, strDisplay, NoticeMessage);
     else
@@ -1103,7 +1103,7 @@ void OnetKernel::raw_topic()
     for (int i = 3; i < strDataList.size(); i++) { if (i != 3) strTopic += " "; strTopic += strDataList[i]; }
     if (strTopic[0] == ':') strTopic.remove(0,1);
 
-    QString strDisplay = QString(tr("* %1 changed the topic to: %2")).arg(strWho).arg(strTopic);
+    QString strDisplay = QString(tr("* %1 changed the topic to: %2")).arg(strWho, strTopic);
 
     // show msg
     pTabC->showMessage(strChannel, strDisplay, ModeMessage);
@@ -1131,7 +1131,7 @@ void OnetKernel::raw_invreject()
     if (strChannel[0] == '^')
         strDisplay = QString(tr("* %1 rejected an invitation to priv")).arg(strWho);
     else
-        strDisplay = QString(tr("* %1 rejected an invitation to channel %2")).arg(strWho).arg(strChannel);
+        strDisplay = QString(tr("* %1 rejected an invitation to channel %2")).arg(strWho, strChannel);
 
     pTabC->showMessage(strChannel, strDisplay, InfoMessage);
 }
@@ -1152,7 +1152,7 @@ void OnetKernel::raw_invignore()
     if (strChannel[0] == '^')
         strDisplay = QString(tr("* %1 ignored your invitation to the priv")).arg(strWho);
     else
-        strDisplay = QString(tr("* %1 ignored your invitation to the channel %2")).arg(strWho).arg(strChannel);
+        strDisplay = QString(tr("* %1 ignored your invitation to the channel %2")).arg(strWho, strChannel);
 
     // display
     pTabC->showMessage(strChannel, strDisplay, InfoMessage);
@@ -1177,7 +1177,7 @@ void OnetKernel::raw_modermsg()
     for (int i = 5; i < strDataList.size(); i++) { if (i != 5) strMessage += " "; strMessage += strDataList[i]; }
     if (strMessage[0] == ':') strMessage.remove(0,1);
 
-    QString strDisplay = QString("%1 [%2 %3]").arg(strMessage).arg(tr("Moderated by")).arg(strModerator);
+    QString strDisplay = QString("%1 [%2 %3]").arg(strMessage, tr("Moderated by"), strModerator);
 
     // display
     pTabC->showMessage(strChannel, strDisplay, DefaultMessage, QString::null, strNick);
@@ -1250,7 +1250,7 @@ void OnetKernel::raw_kill()
     QString strReason;
     for (int i = 4; i < strDataList.size(); i++) { if (i != 4) strReason += " "; strReason += strDataList[i]; }
 
-    QString strDisplay = QString(tr("* You were killed by %1 %2")).arg(strWho).arg(strReason);
+    QString strDisplay = QString(tr("* You were killed by %1 %2")).arg(strWho, strReason);
 
     // display
     pTabC->showMessageAll(strDisplay, ErrorMessage);
@@ -1404,9 +1404,9 @@ void OnetKernel::raw_100n()
 
     QString strDisplay;
     if (iTime < iCurrentTime)
-        strDisplay = QString(tr("* %1 In progress on channel %2")).arg(strMessage).arg(strChannel);
+        strDisplay = QString(tr("* %1 In progress on channel %2")).arg(strMessage, strChannel);
     else
-        strDisplay = QString(tr("* %1 Starting at %2 on channel %3")).arg(strMessage).arg(strDateTime).arg(strChannel);
+        strDisplay = QString(tr("* %1 Starting at %2 on channel %3")).arg(strMessage, strDateTime, strChannel);
 
     pTabC->showMessageActive(strDisplay, NoticeMessage);
 }
@@ -1512,7 +1512,7 @@ void OnetKernel::raw_123n()
     QString strNewNick = strDataList[5];
     if (strNewNick[0] == ':') strNewNick.remove(0,1);
 
-    QString strDisplay = QString(tr("* %1 changed nickname to %2 from your friend list")).arg(strOldNick).arg(strNewNick);
+    QString strDisplay = QString(tr("* %1 changed nickname to %2 from your friend list")).arg(strOldNick, strNewNick);
     pTabC->showMessageActive(strDisplay, InfoMessage);
 }
 
@@ -1549,7 +1549,7 @@ void OnetKernel::raw_133n()
     QString strNewNick = strDataList[5];
     if (strNewNick[0] == ':') strNewNick.remove(0,1);
 
-    QString strDisplay = QString(tr("* %1 changed nickname to %2 from your ignored list")).arg(strOldNick).arg(strNewNick);
+    QString strDisplay = QString(tr("* %1 changed nickname to %2 from your ignored list")).arg(strOldNick, strNewNick);
     pTabC->showMessageActive(strDisplay, InfoMessage);
 }
 
@@ -1702,7 +1702,7 @@ void OnetKernel::raw_161n()
     {
         QDateTime dt = QDateTime::fromTime_t(strTopicDate.toInt());
         QString strDT = dt.toString("dd/MM/yy hh:mm:ss");
-        QString strTopicDetails = QString("%1 (%2)").arg(strTopicAuthor).arg(strDT);
+        QString strTopicDetails = QString("%1 (%2)").arg(strTopicAuthor, strDT);
         pTabC->authorTopic(strChannel, strTopicDetails);
     }
 
@@ -1755,7 +1755,7 @@ void OnetKernel::raw_163n()
     strDT = dt.toString("dd/MM/yyyy hh:mm:ss");
 
     if (Core::instance()->strChannelSettings == strChannel)
-        Core::instance()->mChannelSettingsPermissions.insert(strFlag, QString("%1;%2;%3;%4").arg(strNick).arg(strWho).arg(strDT).arg(strIPNick));
+        Core::instance()->mChannelSettingsPermissions.insert(strFlag, QString("%1;%2;%3;%4").arg(strNick, strWho, strDT, strIPNick));
 }
 
 // CS INFO #scc
@@ -2107,7 +2107,7 @@ void OnetKernel::raw_253n()
         QString strWho = strDataList[2];
         QString strNick = strDataList[5];
 
-        QString strDisplay = QString(tr("* %1 is now the owner of the channel %2 (set by %3)")).arg(strNick).arg(strChannel).arg(strWho);
+        QString strDisplay = QString(tr("* %1 is now the owner of the channel %2 (set by %3)")).arg(strNick, strChannel, strWho);
 
         // display
         pTabC->showMessage(strChannel, strDisplay, ModeMessage);
@@ -2133,7 +2133,7 @@ void OnetKernel::raw_254n()
     QString strWho = strDataList[4];
     QString strNick = strDataList[5];
 
-    QString strDisplay = QString(tr("* %1 is now the owner of the channel %2 (set by %3)")).arg(strNick).arg(strChannel).arg(strWho);
+    QString strDisplay = QString(tr("* %1 is now the owner of the channel %2 (set by %3)")).arg(strNick, strChannel, strWho);
 
     // display
     pTabC->showMessage(strChannel, strDisplay, ModeMessage);
@@ -2154,7 +2154,7 @@ void OnetKernel::raw_255n()
     QString strChannel = strDataList[4];
     QString strNick = strDataList[6];
 
-    QString strDisplay = QString(tr("* Changing privileges confirmed for %1 at %2")).arg(strNick).arg(strChannel);
+    QString strDisplay = QString(tr("* Changing privileges confirmed for %1 at %2")).arg(strNick, strChannel);
     pTabC->showMessageActive(strDisplay, ModeMessage);
 }
 
@@ -2184,24 +2184,24 @@ void OnetKernel::raw_256n()
     QString strNick = strDataList[6];
     QString strDisplay;
 
-    if (strFlag == "+q") strDisplay = QString(tr("* %1 is now the owner of the channel %2 (set by %3)")).arg(strNick).arg(strChannel).arg(strWho);
-    else if (strFlag == "-q") strDisplay = QString(tr("* %1 is no longer the owner of the channel %2 (set by %3)")).arg(strNick).arg(strChannel).arg(strWho);
-    else if (strFlag == "+o") strDisplay = QString(tr("* %1 is now super-operator on the channel %2 (set by %3)")).arg(strNick).arg(strChannel).arg(strWho);
-    else if (strFlag == "-o") strDisplay = QString(tr("* %1 is no longer super-operator on the channel %2 (set by %3)")).arg(strNick).arg(strChannel).arg(strWho);
-    else if (strFlag == "+h") strDisplay = QString(tr("* %1 is now the operator of the channel %2 (set by %3)")).arg(strNick).arg(strChannel).arg(strWho);
-    else if (strFlag == "-h") strDisplay = QString(tr("* %1 is no longer the operator of the channel %2 (set by %3)")).arg(strNick).arg(strChannel).arg(strWho);
-    else if (strFlag == "+v") strDisplay = QString(tr("* %1 is now a guest of channel %2 (set by %3)")).arg(strNick).arg(strChannel).arg(strWho);
-    else if (strFlag == "-v") strDisplay = QString(tr("* %1 is no longer a guest of channel %2 (set by %3)")).arg(strNick).arg(strChannel).arg(strWho);
-    else if (strFlag == "+X") strDisplay = QString(tr("* %1 is now moderator of the channel %2 (set by %3)")).arg(strNick).arg(strChannel).arg(strWho);
-    else if (strFlag == "-X") strDisplay = QString(tr("* %1 is no longer moderating channel %2 (set by %3)")).arg(strNick).arg(strChannel).arg(strWho);
-    else if (strFlag == "+Y") strDisplay = QString(tr("* %1 is now screener channel %2 (set by %3)")).arg(strNick).arg(strChannel).arg(strWho);
-    else if (strFlag == "-Y") strDisplay = QString(tr("* %1 is no longer a screener channel %2 (set by %3)")).arg(strNick).arg(strChannel).arg(strWho);
-    else if (strFlag == "+b") strDisplay = QString(tr("* %1 is now on the banned list in %2 (set by %3)")).arg(strNick).arg(strChannel).arg(strWho);
-    else if (strFlag == "-b") strDisplay = QString(tr("* %1 is no longer on the banned list in %2 (set by %3)")).arg(strNick).arg(strChannel).arg(strWho);
-    else if (strFlag == "+I") strDisplay = QString(tr("* %1 is now on the list of invitees in %2 (set by %3)")).arg(strNick).arg(strChannel).arg(strWho);
-    else if (strFlag == "-I") strDisplay = QString(tr("* %1 is no longer on the list of invitees in %2 (set by %3)")).arg(strNick).arg(strChannel).arg(strWho);
+    if (strFlag == "+q") strDisplay = QString(tr("* %1 is now the owner of the channel %2 (set by %3)")).arg(strNick, strChannel, strWho);
+    else if (strFlag == "-q") strDisplay = QString(tr("* %1 is no longer the owner of the channel %2 (set by %3)")).arg(strNick, strChannel, strWho);
+    else if (strFlag == "+o") strDisplay = QString(tr("* %1 is now super-operator on the channel %2 (set by %3)")).arg(strNick, strChannel, strWho);
+    else if (strFlag == "-o") strDisplay = QString(tr("* %1 is no longer super-operator on the channel %2 (set by %3)")).arg(strNick, strChannel, strWho);
+    else if (strFlag == "+h") strDisplay = QString(tr("* %1 is now the operator of the channel %2 (set by %3)")).arg(strNick, strChannel, strWho);
+    else if (strFlag == "-h") strDisplay = QString(tr("* %1 is no longer the operator of the channel %2 (set by %3)")).arg(strNick, strChannel, strWho);
+    else if (strFlag == "+v") strDisplay = QString(tr("* %1 is now a guest of channel %2 (set by %3)")).arg(strNick, strChannel, strWho);
+    else if (strFlag == "-v") strDisplay = QString(tr("* %1 is no longer a guest of channel %2 (set by %3)")).arg(strNick, strChannel, strWho);
+    else if (strFlag == "+X") strDisplay = QString(tr("* %1 is now moderator of the channel %2 (set by %3)")).arg(strNick, strChannel, strWho);
+    else if (strFlag == "-X") strDisplay = QString(tr("* %1 is no longer moderating channel %2 (set by %3)")).arg(strNick, strChannel, strWho);
+    else if (strFlag == "+Y") strDisplay = QString(tr("* %1 is now screener channel %2 (set by %3)")).arg(strNick, strChannel, strWho);
+    else if (strFlag == "-Y") strDisplay = QString(tr("* %1 is no longer a screener channel %2 (set by %3)")).arg(strNick, strChannel, strWho);
+    else if (strFlag == "+b") strDisplay = QString(tr("* %1 is now on the banned list in %2 (set by %3)")).arg(strNick, strChannel, strWho);
+    else if (strFlag == "-b") strDisplay = QString(tr("* %1 is no longer on the banned list in %2 (set by %3)")).arg(strNick, strChannel, strWho);
+    else if (strFlag == "+I") strDisplay = QString(tr("* %1 is now on the list of invitees in %2 (set by %3)")).arg(strNick, strChannel, strWho);
+    else if (strFlag == "-I") strDisplay = QString(tr("* %1 is no longer on the list of invitees in %2 (set by %3)")).arg(strNick, strChannel, strWho);
     else
-        strDisplay = QString(tr("* %1 now has a flag %2 (set by %3)")).arg(strNick).arg(strFlag).arg(strWho);
+        strDisplay = QString(tr("* %1 now has a flag %2 (set by %3)")).arg(strNick, strFlag, strWho);
 
     // display
     pTabC->showMessage(strChannel, strDisplay, ModeMessage);
@@ -2256,7 +2256,7 @@ void OnetKernel::raw_258n()
     QString strChannel = strDataList[2];
     QString strNick = strDataList[4];
 
-    QString strDisplay = QString(tr("* %1 changed channel %2 settings")).arg(strNick).arg(strChannel);
+    QString strDisplay = QString(tr("* %1 changed channel %2 settings")).arg(strNick, strChannel);
 
     // display
     pTabC->showMessage(strChannel, strDisplay, InfoMessage);
@@ -2302,24 +2302,24 @@ void OnetKernel::raw_260n()
     QString strNick = strDataList[2];
     QString strDisplay;
 
-    if (strFlag == "+q") strDisplay = QString(tr("* %1 is now the owner of the channel %2 (set by %3)")).arg(strNick).arg(strChannel).arg(strWho);
-    else if (strFlag == "-q") strDisplay = QString(tr("* %1 is no longer the owner of the channel %2 (set by %3)")).arg(strNick).arg(strChannel).arg(strWho);
-    else if (strFlag == "+o") strDisplay = QString(tr("* %1 is now super-operator on the channel %2 (set by %3)")).arg(strNick).arg(strChannel).arg(strWho);
-    else if (strFlag == "-o") strDisplay = QString(tr("* %1 is no longer super-operator on the channel %2 (set by %3)")).arg(strNick).arg(strChannel).arg(strWho);
-    else if (strFlag == "+h") strDisplay = QString(tr("* %1 is now the operator of the channel %2 (set by %3)")).arg(strNick).arg(strChannel).arg(strWho);
-    else if (strFlag == "-h") strDisplay = QString(tr("* %1 is no longer the operator of the channel %2 (set by %3)")).arg(strNick).arg(strChannel).arg(strWho);
-    else if (strFlag == "+v") strDisplay = QString(tr("* %1 is now a guest of channel %2 (set by %3)")).arg(strNick).arg(strChannel).arg(strWho);
-    else if (strFlag == "-v") strDisplay = QString(tr("* %1 is no longer a guest of channel %2 (set by %3)")).arg(strNick).arg(strChannel).arg(strWho);
-    else if (strFlag == "+X") strDisplay = QString(tr("* %1 is now moderator of the channel %2 (set by %3)")).arg(strNick).arg(strChannel).arg(strWho);
-    else if (strFlag == "-X") strDisplay = QString(tr("* %1 is no longer moderating channel %2 (set by %3)")).arg(strNick).arg(strChannel).arg(strWho);
-    else if (strFlag == "+Y") strDisplay = QString(tr("* %1 is now screener channel %2 (set by %3)")).arg(strNick).arg(strChannel).arg(strWho);
-    else if (strFlag == "-Y") strDisplay = QString(tr("* %1 is no longer a screener channel %2 (set by %3)")).arg(strNick).arg(strChannel).arg(strWho);
-    else if (strFlag == "+b") strDisplay = QString(tr("* %1 is now on the banned list in %2 (set by %3)")).arg(strNick).arg(strChannel).arg(strWho);
-    else if (strFlag == "-b") strDisplay = QString(tr("* %1 is no longer on the banned list in %2 (set by %3)")).arg(strNick).arg(strChannel).arg(strWho);
-    else if (strFlag == "+I") strDisplay = QString(tr("* %1 is now on the list of invitees in %2 (set by %3)")).arg(strNick).arg(strChannel).arg(strWho);
-    else if (strFlag == "-I") strDisplay = QString(tr("* %1 is no longer on the list of invitees in %2 (set by %3)")).arg(strNick).arg(strChannel).arg(strWho);
+    if (strFlag == "+q") strDisplay = QString(tr("* %1 is now the owner of the channel %2 (set by %3)")).arg(strNick, strChannel, strWho);
+    else if (strFlag == "-q") strDisplay = QString(tr("* %1 is no longer the owner of the channel %2 (set by %3)")).arg(strNick, strChannel, strWho);
+    else if (strFlag == "+o") strDisplay = QString(tr("* %1 is now super-operator on the channel %2 (set by %3)")).arg(strNick, strChannel, strWho);
+    else if (strFlag == "-o") strDisplay = QString(tr("* %1 is no longer super-operator on the channel %2 (set by %3)")).arg(strNick, strChannel, strWho);
+    else if (strFlag == "+h") strDisplay = QString(tr("* %1 is now the operator of the channel %2 (set by %3)")).arg(strNick, strChannel, strWho);
+    else if (strFlag == "-h") strDisplay = QString(tr("* %1 is no longer the operator of the channel %2 (set by %3)")).arg(strNick, strChannel, strWho);
+    else if (strFlag == "+v") strDisplay = QString(tr("* %1 is now a guest of channel %2 (set by %3)")).arg(strNick, strChannel, strWho);
+    else if (strFlag == "-v") strDisplay = QString(tr("* %1 is no longer a guest of channel %2 (set by %3)")).arg(strNick, strChannel, strWho);
+    else if (strFlag == "+X") strDisplay = QString(tr("* %1 is now moderator of the channel %2 (set by %3)")).arg(strNick, strChannel, strWho);
+    else if (strFlag == "-X") strDisplay = QString(tr("* %1 is no longer moderating channel %2 (set by %3)")).arg(strNick, strChannel, strWho);
+    else if (strFlag == "+Y") strDisplay = QString(tr("* %1 is now screener channel %2 (set by %3)")).arg(strNick, strChannel, strWho);
+    else if (strFlag == "-Y") strDisplay = QString(tr("* %1 is no longer a screener channel %2 (set by %3)")).arg(strNick, strChannel, strWho);
+    else if (strFlag == "+b") strDisplay = QString(tr("* %1 is now on the banned list in %2 (set by %3)")).arg(strNick, strChannel, strWho);
+    else if (strFlag == "-b") strDisplay = QString(tr("* %1 is no longer on the banned list in %2 (set by %3)")).arg(strNick, strChannel, strWho);
+    else if (strFlag == "+I") strDisplay = QString(tr("* %1 is now on the list of invitees in %2 (set by %3)")).arg(strNick, strChannel, strWho);
+    else if (strFlag == "-I") strDisplay = QString(tr("* %1 is no longer on the list of invitees in %2 (set by %3)")).arg(strNick, strChannel, strWho);
     else
-        strDisplay = QString(tr("* %1 now has a flag %2 (set by %3)")).arg(strNick).arg(strFlag).arg(strWho);
+        strDisplay = QString(tr("* %1 now has a flag %2 (set by %3)")).arg(strNick, strFlag, strWho);
 
     // display
     pTabC->showMessage(strChannel, strDisplay, ModeMessage);
@@ -2407,7 +2407,7 @@ void OnetKernel::raw_301()
     for (int i = 4; i < strDataList.size(); i++) { if (i != 4) strMessage += " "; strMessage += strDataList[i]; }
     if (strMessage[0] == ':') strMessage.remove(0,1);
 
-    QString strDisplay = QString(tr("* %1 is away: %2")).arg(strNick).arg(strMessage);
+    QString strDisplay = QString(tr("* %1 is away: %2")).arg(strNick, strMessage);
     pTabC->showMessageActive(strDisplay, InfoMessage);
 }
 
@@ -2491,7 +2491,7 @@ void OnetKernel::raw_307()
     if (strMessage == "is a registered nick")
         strMessage = tr("is a registered nick");
 
-    QString strDisplay = QString("* %1 %2").arg(strNick).arg(strMessage);
+    QString strDisplay = QString("* %1 %2").arg(strNick, strMessage);
     pTabC->showMessageActive(strDisplay, InfoMessage);
 }
 
@@ -2509,10 +2509,10 @@ void OnetKernel::raw_311()
     for (int i = 7; i < strDataList.size(); i++) { if (i != 7) strIrcname += " "; strIrcname += strDataList[i]; }
     if (strIrcname[0] == ':') strIrcname.remove(0,1);
 
-    QString strDisplayNick = QString(tr("* %1 is %2@%3")).arg(strNick).arg(strZUO).arg(strIP);
+    QString strDisplayNick = QString(tr("* %1 is %2@%3")).arg(strNick, strZUO, strIP);
     pTabC->showMessageActive(strDisplayNick, InfoMessage);
 
-    QString strDisplayIrcname = QString(tr("* %1 ircname: %2")).arg(strNick).arg(strIrcname);
+    QString strDisplayIrcname = QString(tr("* %1 ircname: %2")).arg(strNick, strIrcname);
     pTabC->showMessageActive(strDisplayIrcname, InfoMessage);
 }
 
@@ -2529,7 +2529,7 @@ void OnetKernel::raw_312()
     QString strServer;
     for (int i = 4; i < strDataList.size(); i++) { if (i != 4) strServer += " "; strServer += strDataList[i]; }
 
-    QString strDisplay = QString(tr("* %1 is online via %2")).arg(strNick).arg(strServer);
+    QString strDisplay = QString(tr("* %1 is online via %2")).arg(strNick, strServer);
     pTabC->showMessageActive(strDisplay, InfoMessage);
 }
 
@@ -2574,10 +2574,10 @@ void OnetKernel::raw_314()
     for (int i = 7; i < strDataList.size(); i++) { if (i != 7) strIrcname += " "; strIrcname += strDataList[i]; }
     if (strIrcname[0] == ':') strIrcname.remove(0,1);
 
-    QString strDisplayNick = QString(tr("* %1 is %2@%3")).arg(strNick).arg(strZUO).arg(strIP);
+    QString strDisplayNick = QString(tr("* %1 is %2@%3")).arg(strNick, strZUO, strIP);
     pTabC->showMessageActive(strDisplayNick, InfoMessage);
 
-    QString strDisplayIrcname = QString(tr("* %1 ircname: %2")).arg(strNick).arg(strIrcname);
+    QString strDisplayIrcname = QString(tr("* %1 ircname: %2")).arg(strNick, strIrcname);
     pTabC->showMessageActive(strDisplayIrcname, InfoMessage);
 }
 
@@ -2599,7 +2599,7 @@ void OnetKernel::raw_315()
     else if (strMessage == "Too many results")
         strMessage = tr("Too many results");
 
-    QString strDisplay = QString("* %1 :%2").arg(strNickChannel).arg(strMessage);
+    QString strDisplay = QString("* %1 :%2").arg(strNickChannel, strMessage);
     pTabC->showMessageActive(strDisplay, InfoMessage);
 }
 
@@ -2618,10 +2618,10 @@ void OnetKernel::raw_316()
     for (int i = 7; i < strDataList.size(); i++) { if (i != 7) strIrcname += " "; strIrcname += strDataList[i]; }
     if (strIrcname[0] == ':') strIrcname.remove(0,1);
 
-    QString strDisplayNick = QString(tr("* %1 is %2@%3")).arg(strNick).arg(strZUO).arg(strIP);
+    QString strDisplayNick = QString(tr("* %1 is %2@%3")).arg(strNick, strZUO, strIP);
     pTabC->showMessageActive(strDisplayNick, InfoMessage);
 
-    QString strDisplayIrcname = QString(tr("* %1 ircname: %2")).arg(strNick).arg(strIrcname);
+    QString strDisplayIrcname = QString(tr("* %1 ircname: %2")).arg(strNick, strIrcname);
     pTabC->showMessageActive(strDisplayIrcname, InfoMessage);
 }
 
@@ -2656,13 +2656,13 @@ void OnetKernel::raw_317()
     if (iSeconds >= 0)
         strIdle += QString("%1s ").arg(iSeconds);
 
-    QString strDisplayIdle = QString(tr("* %1 is away %2")).arg(strNick).arg(strIdle);
+    QString strDisplayIdle = QString(tr("* %1 is away %2")).arg(strNick, strIdle);
     pTabC->showMessageActive(strDisplayIdle, InfoMessage);
 
     QDateTime dt_time = QDateTime::fromTime_t(strTime.toInt());
     QString strDT_time = dt_time.toString("dd/MM/yyyy hh:mm:ss");
 
-    QString strDisplaySignon = QString(tr("* %1 is logged in since %2")).arg(strNick).arg(strDT_time);
+    QString strDisplaySignon = QString(tr("* %1 is logged in since %2")).arg(strNick, strDT_time);
     pTabC->showMessageActive(strDisplaySignon, InfoMessage);
 }
 
@@ -2690,7 +2690,7 @@ void OnetKernel::raw_319()
         strChannels += strChannel;
     }
 
-    QString strDisplay = QString(tr("* %1 is on channels: %2")).arg(strNick).arg(strChannels);
+    QString strDisplay = QString(tr("* %1 is on channels: %2")).arg(strNick, strChannels);
     pTabC->showMessageActive(strDisplay, InfoMessage);
 }
 
@@ -2916,7 +2916,7 @@ void OnetKernel::raw_378()
     QString strZuoIP = strDataList[7];
     QString strIP = strDataList[8];
 
-    QString strMessage = QString(tr("* %1 is connecting from %2 %3")).arg(strNick).arg(strZuoIP).arg(strIP);
+    QString strMessage = QString(tr("* %1 is connecting from %2 %3")).arg(strNick, strZuoIP, strIP);
     pTabC->showMessageActive(strMessage, InfoMessage);
 }
 
@@ -2932,7 +2932,7 @@ void OnetKernel::raw_391()
     for (int i = 4; i < strDataList.size(); i++) { if (i != 4) strDateTime += " "; strDateTime += strDataList[i]; }
     if (strDateTime[0] == ':') strDateTime.remove(0,1);
 
-    QString strMessage = QString(tr("* Date and time of the server %1: %2")).arg(strServer).arg(strDateTime);
+    QString strMessage = QString(tr("* Date and time of the server %1: %2")).arg(strServer, strDateTime);
 
     pTabC->showMessageActive(strMessage, InfoMessage);
 }
@@ -3096,7 +3096,7 @@ void OnetKernel::raw_404()
     if (strReason == "+m")
         strReason = tr("No moderator on the channel!");
 
-    QString strMessage = QString(tr("* Unable to send a message to %1: %2")).arg(strChannel).arg(strReason);
+    QString strMessage = QString(tr("* Unable to send a message to %1: %2")).arg(strChannel, strReason);
 
     pTabC->showMessageActive(strMessage, InfoMessage);
 }
@@ -3248,7 +3248,7 @@ void OnetKernel::raw_421()
     else if (strReason == "This command has been disabled.")
         strReason = tr("This command has been disabled.");
 
-    QString strMessage = QString("* %1 :%2").arg(strCmd).arg(strReason);
+    QString strMessage = QString("* %1 :%2").arg(strCmd, strReason);
 
     pTabC->showMessageActive(strMessage, InfoMessage);
 }
@@ -3343,7 +3343,7 @@ void OnetKernel::raw_441()
     QString strNick = strDataList[3];
     QString strChannel = strDataList[4];
 
-    QString strMessage = QString(tr("* %1 is not on %2 channel")).arg(strNick).arg(strChannel);
+    QString strMessage = QString(tr("* %1 is not on %2 channel")).arg(strNick, strChannel);
 
     pTabC->showMessageActive(strMessage, InfoMessage);
 }
@@ -3381,7 +3381,7 @@ void OnetKernel::raw_443()
     QString strNick = strDataList[3];
     QString strChannel = strDataList[4];
 
-    QString strMessage = QString(tr("* %1 is already on channel %2")).arg(strNick).arg(strChannel);
+    QString strMessage = QString(tr("* %1 is already on channel %2")).arg(strNick, strChannel);
 
     pTabC->showMessageActive(strMessage, InfoMessage);
 }
@@ -3545,7 +3545,7 @@ void OnetKernel::raw_460n()
     else if (strFlag == "I")
         strFlag = tr("invite");
 
-    QString strMessage = QString(tr("* Cannot %1 %2. Channel list is full")).arg(strFlag).arg(strNick);
+    QString strMessage = QString(tr("* Cannot %1 %2. Channel list is full")).arg(strFlag, strNick);
 
     // display
     pTabC->showMessage(strChannel, strMessage, InfoMessage);
@@ -3593,7 +3593,7 @@ void OnetKernel::raw_463n()
     QString strChannel = strDataList[4];
     QString strCommand = strDataList[5];
 
-    QString strMessage = QString(tr("* %1 :Permission denied, insufficient privileges in %2 channel")).arg(strCommand).arg(strChannel);
+    QString strMessage = QString(tr("* %1 :Permission denied, insufficient privileges in %2 channel")).arg(strCommand, strChannel);
     pTabC->showMessageActive(strMessage, InfoMessage);
 }
 
@@ -3651,7 +3651,7 @@ void OnetKernel::raw_470()
 
     QString strLinked = strDataList[strDataList.size()-1];
 
-    QString strMessage = QString(tr("* %1 has become full, so you are automatically being transferred to the linked channel %2")).arg(strChannel).arg(strLinked);
+    QString strMessage = QString(tr("* %1 has become full, so you are automatically being transferred to the linked channel %2")).arg(strChannel, strLinked);
 
     QString strStatus = "Status";
     pTabC->showMessage(strStatus, strMessage, InfoMessage);
@@ -3919,7 +3919,7 @@ void OnetKernel::raw_801()
         QString strUOKey = Core::instance()->settings.value("uokey");
         QString strNickUo = Core::instance()->settings.value("uo_nick");
         if ((!strUOKey.isEmpty()) && (!strNickUo.isEmpty()))
-            Core::instance()->pNetwork->send(QString("USER * %1 czat-app.onet.pl :%2").arg(strUOKey).arg(strNickUo));
+            Core::instance()->pNetwork->send(QString("USER * %1 czat-app.onet.pl :%2").arg(strUOKey, strNickUo));
     }
     else
     {
@@ -4001,7 +4001,7 @@ void OnetKernel::raw_812()
     if (strChannel[0] == '^')
         strMessage = QString(tr("* Rejected priv from %1")).arg(strNick);
     else
-        strMessage = QString(tr("* Rejected invite to %1 from %2")).arg(strChannel).arg(strNick);
+        strMessage = QString(tr("* Rejected invite to %1 from %2")).arg(strChannel, strNick);
 
     pTabC->showMessageActive(strMessage, InfoMessage);
 }

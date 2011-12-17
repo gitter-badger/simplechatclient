@@ -217,14 +217,14 @@ void NickListWidget::kick()
     QString strText = QInputDialog::getText(this, tr("Kick From Channel"), tr("Reason for kicking:"), QLineEdit::Normal, tr("No reason"), &ok);
 
     if ((ok) && (!strText.isEmpty()))
-        Core::instance()->pNetwork->send(QString("KICK %1 %2 :%3").arg(strChannel).arg(strSelectedNick).arg(strText));
+        Core::instance()->pNetwork->send(QString("KICK %1 %2 :%3").arg(strChannel, strSelectedNick, strText));
 }
 
 void NickListWidget::ban()
 {
     if (strSelectedNick.isEmpty()) return;
 
-    Core::instance()->pNetwork->send(QString("CS BAN %1 ADD %2").arg(strChannel).arg(strSelectedNick));
+    Core::instance()->pNetwork->send(QString("CS BAN %1 ADD %2").arg(strChannel, strSelectedNick));
 }
 
 void NickListWidget::kban()
@@ -236,8 +236,8 @@ void NickListWidget::kban()
 
     if ((ok) && (!strText.isEmpty()))
     {
-        Core::instance()->pNetwork->send(QString("CS BAN %1 ADD %2").arg(strChannel).arg(strSelectedNick));
-        Core::instance()->pNetwork->send(QString("KICK %1 %2 :%3").arg(strChannel).arg(strSelectedNick).arg(strText));
+        Core::instance()->pNetwork->send(QString("CS BAN %1 ADD %2").arg(strChannel, strSelectedNick));
+        Core::instance()->pNetwork->send(QString("KICK %1 %2 :%3").arg(strChannel, strSelectedNick, strText));
     }
 }
 
@@ -245,63 +245,63 @@ void NickListWidget::ipban()
 {
     if (strSelectedNick.isEmpty()) return;
 
-    Core::instance()->pNetwork->send(QString("CS BANIP %1 ADD %2").arg(strChannel).arg(strSelectedNick));
+    Core::instance()->pNetwork->send(QString("CS BANIP %1 ADD %2").arg(strChannel, strSelectedNick));
 }
 
 void NickListWidget::opAdd()
 {
     if (strSelectedNick.isEmpty()) return;
 
-    Core::instance()->pNetwork->send(QString("CS OP %1 ADD %2").arg(strChannel).arg(strSelectedNick));
+    Core::instance()->pNetwork->send(QString("CS OP %1 ADD %2").arg(strChannel, strSelectedNick));
 }
 
 void NickListWidget::opDel()
 {
     if (strSelectedNick.isEmpty()) return;
 
-    Core::instance()->pNetwork->send(QString("CS OP %1 DEL %2").arg(strChannel).arg(strSelectedNick));
+    Core::instance()->pNetwork->send(QString("CS OP %1 DEL %2").arg(strChannel, strSelectedNick));
 }
 
 void NickListWidget::halfopAdd()
 {
     if (strSelectedNick.isEmpty()) return;
 
-    Core::instance()->pNetwork->send(QString("CS HALFOP %1 ADD %2").arg(strChannel).arg(strSelectedNick));
+    Core::instance()->pNetwork->send(QString("CS HALFOP %1 ADD %2").arg(strChannel, strSelectedNick));
 }
 
 void NickListWidget::halfopDel()
 {
     if (strSelectedNick.isEmpty()) return;
 
-    Core::instance()->pNetwork->send(QString("CS HALFOP %1 DEL %2").arg(strChannel).arg(strSelectedNick));
+    Core::instance()->pNetwork->send(QString("CS HALFOP %1 DEL %2").arg(strChannel, strSelectedNick));
 }
 
 void NickListWidget::moderatorAdd()
 {
     if (strSelectedNick.isEmpty()) return;
 
-    Core::instance()->pNetwork->send(QString("CS MODERATOR %1 ADD %2").arg(strChannel).arg(strSelectedNick));
+    Core::instance()->pNetwork->send(QString("CS MODERATOR %1 ADD %2").arg(strChannel, strSelectedNick));
 }
 
 void NickListWidget::moderatorDel()
 {
     if (strSelectedNick.isEmpty()) return;
 
-    Core::instance()->pNetwork->send(QString("CS MODERATOR %1 DEL %2").arg(strChannel).arg(strSelectedNick));
+    Core::instance()->pNetwork->send(QString("CS MODERATOR %1 DEL %2").arg(strChannel, strSelectedNick));
 }
 
 void NickListWidget::voiceAdd()
 {
     if (strSelectedNick.isEmpty()) return;
 
-    Core::instance()->pNetwork->send(QString("CS VOICE %1 ADD %2").arg(strChannel).arg(strSelectedNick));
+    Core::instance()->pNetwork->send(QString("CS VOICE %1 ADD %2").arg(strChannel, strSelectedNick));
 }
 
 void NickListWidget::voiceDel()
 {
     if (strSelectedNick.isEmpty()) return;
 
-    Core::instance()->pNetwork->send(QString("CS VOICE %1 DEL %2").arg(strChannel).arg(strSelectedNick));
+    Core::instance()->pNetwork->send(QString("CS VOICE %1 DEL %2").arg(strChannel, strSelectedNick));
 }
 
 void NickListWidget::invite()
@@ -312,7 +312,7 @@ void NickListWidget::invite()
     if (action)
     {
         QString strInviteChannel = action->data().toString();
-        Core::instance()->pNetwork->send(QString("INVITE %1 %2").arg(strSelectedNick).arg(strInviteChannel));
+        Core::instance()->pNetwork->send(QString("INVITE %1 %2").arg(strSelectedNick, strInviteChannel));
     }
 }
 

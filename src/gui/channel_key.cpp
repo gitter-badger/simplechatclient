@@ -56,7 +56,7 @@ void DlgChannelKey::buttonOk()
     QString strKey = ui.lineEdit_key->text();
     if (!strKey.isEmpty())
     {
-        Core::instance()->pNetwork->send(QString("JOIN %1 %2").arg(strChannel).arg(strKey));
+        Core::instance()->pNetwork->send(QString("JOIN %1 %2").arg(strChannel, strKey));
         this->close();
     }
 }

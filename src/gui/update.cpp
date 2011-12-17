@@ -77,7 +77,7 @@ void DlgUpdate::setDefaultValues()
     strLink += QString("<a href=\"http://simplechatclien.sourceforge.net/download/\">%1</a>").arg(tr("download"));
 #endif
 
-    QString strDisplay = QString(tr("A new version %1 is available. Please %2 an installer and upgrade.")).arg(strVersion).arg(strLink);
+    QString strDisplay = QString(tr("A new version %1 is available. Please %2 an installer and upgrade.")).arg(strVersion, strLink);
     ui.label_msg->setText(strDisplay);
 }
 
