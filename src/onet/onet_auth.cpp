@@ -91,7 +91,10 @@ void OnetAuth::getChat()
     QString strUrl = "http://czat.onet.pl/chat.html";
     QString strContent = "ch=&n=&p=&category=0";
 
-    QNetworkReply *pReply = accessManager->post(QNetworkRequest(QUrl(strUrl)), strContent.toAscii());
+    QNetworkRequest request;
+    request.setUrl(QUrl(strUrl));
+    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
+    QNetworkReply *pReply = accessManager->post(request, strContent.toAscii());
     pReply->setProperty("category", "get_chat");
     pReply->ignoreSslErrors();
 }
@@ -177,7 +180,10 @@ void OnetAuth::getSecureMlogin()
     QString strContent = QString("r=&url=&login=%1&haslo=%2&app_id=20&ssl=1&ok=1").arg(strNick, strPass);
     QString strUrl = "https://secure.onet.pl/mlogin.html";
 
-    QNetworkReply *pReply = accessManager->post(QNetworkRequest(QUrl(strUrl)), strContent.toAscii());
+    QNetworkRequest request;
+    request.setUrl(QUrl(strUrl));
+    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
+    QNetworkReply *pReply = accessManager->post(request, strContent.toAscii());
     pReply->setProperty("category", "get_secure_mlogin");
     pReply->ignoreSslErrors();
 }
@@ -191,7 +197,10 @@ void OnetAuth::getOverride()
     QString strContent = QString("api_function=userOverride&params=a:1:{s:4:\"nick\";s:%1:\"%2\";}").arg(strNickLen, strNick);
     QString strUrl = "http://czat.onet.pl/include/ajaxapi.xml.php3";
 
-    QNetworkReply *pReply = accessManager->post(QNetworkRequest(QUrl(strUrl)), strContent.toAscii());
+    QNetworkRequest request;
+    request.setUrl(QUrl(strUrl));
+    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
+    QNetworkReply *pReply = accessManager->post(request, strContent.toAscii());
     pReply->setProperty("category", "get_override");
     pReply->ignoreSslErrors();
 }
@@ -206,7 +215,10 @@ void OnetAuth::getUo()
     QString strContent = QString("api_function=getUoKey&params=a:3:{s:4:\"nick\";s:%1:\"%2\";s:8:\"tempNick\";i:%3;s:7:\"version\";s:%4:\"%5\";}").arg(strNickLen, strNick, strRegistered, strVersionLen, strVersion);
     QString strUrl = "http://czat.onet.pl/include/ajaxapi.xml.php3";
 
-    QNetworkReply *pReply = accessManager->post(QNetworkRequest(QUrl(strUrl)), strContent.toAscii());
+    QNetworkRequest request;
+    request.setUrl(QUrl(strUrl));
+    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
+    QNetworkReply *pReply = accessManager->post(request, strContent.toAscii());
     pReply->setProperty("category", "get_uo");
     pReply->ignoreSslErrors();
 }
@@ -227,7 +239,10 @@ void OnetAuth::getCheckCode()
     QString strContent = QString("api_function=checkCode&params=a:1:{s:4:\"code\";s:%1:\"%2\";}").arg(strCaptchaSize, strCaptcha);
     QString strUrl = "http://czat.onet.pl/include/ajaxapi.xml.php3";
 
-    QNetworkReply *pReply = accessManager->post(QNetworkRequest(QUrl(strUrl)), strContent.toAscii());
+    QNetworkRequest request;
+    request.setUrl(QUrl(strUrl));
+    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
+    QNetworkReply *pReply = accessManager->post(request, strContent.toAscii());
     pReply->setProperty("category", "get_check_code");
     pReply->ignoreSslErrors();
 }

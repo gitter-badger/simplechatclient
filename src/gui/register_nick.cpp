@@ -150,8 +150,13 @@ void DlgRegisterNick::registerNick()
     accessManager->cookieJar()->setCookiesFromUrl(cookieList, QUrl("http://czat.onet.pl"));
 
     // request
-    QString strData = QString("api_function=registerNick&params=a:3:{s:4:\"nick\";s:%1:\"%2\";s:4:\"pass\";s:%3:\"%4\";s:4:\"code\";s:%5:\"%6\";}").arg(strNickLength, strNick, strPasswordLength, strPassword, strCodeLength, strCode);
-    QNetworkReply *pReply = accessManager->post(QNetworkRequest(QUrl("http://czat.onet.pl/include/ajaxapi.xml.php3")), strData.toAscii());
+    QString strUrl = "http://czat.onet.pl/include/ajaxapi.xml.php3";
+    QString strContent = QString("api_function=registerNick&params=a:3:{s:4:\"nick\";s:%1:\"%2\";s:4:\"pass\";s:%3:\"%4\";s:4:\"code\";s:%5:\"%6\";}").arg(strNickLength, strNick, strPasswordLength, strPassword, strCodeLength, strCode);
+
+    QNetworkRequest request;
+    request.setUrl(QUrl(strUrl));
+    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
+    QNetworkReply *pReply = accessManager->post(request, strContent.toAscii());
     pReply->setProperty("category", "register_nick");
 }
 
