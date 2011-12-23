@@ -22,7 +22,6 @@
 #include <QDir>
 #include <QMessageBox>
 #include <QNetworkAccessManager>
-#include <QProcess>
 #include <QPushButton>
 #include <QUrl>
 #include "core.h"
@@ -74,7 +73,7 @@ void DlgUpdate::setDefaultValues()
     strLink = tr("download");
 #endif
 #ifdef Q_WS_X11
-    strLink += QString("<a href=\"http://simplechatclien.sourceforge.net/download/\">%1</a>").arg(tr("download"));
+    strLink = QString("<a href=\"http://simplechatclien.sourceforge.net/download/\">%1</a>").arg(tr("download"));
 #endif
 
     QString strDisplay = QString(tr("A new version %1 is available. Please %2 an installer and upgrade.")).arg(strVersion, strLink);
@@ -143,12 +142,10 @@ void DlgUpdate::gotFile(QByteArray bData)
     file.close();
 
     // execute
-    QProcess pProcess;
-    pProcess.setWorkingDirectory(path);
-    ui.label_msg->setText(pProcess.workingDirectory());
-    pProcess.start("\""+fileName+"\"");
+    QString strExecute = QDir::toNativeSeparators(fileName);
+    bool bExecute = QDesktopServices::openUrl(QUrl::fromLocalFile(strExecute));
 
-    if (!pProcess.waitForStarted())
+    if (!bExecute)
     {
         QMessageBox::critical(0, "", tr("Cannot open saved file"));
         return;
