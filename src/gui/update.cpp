@@ -18,6 +18,7 @@
  *                                                                          *
  ****************************************************************************/
 
+#include <QDesktopServices>
 #include <QDesktopWidget>
 #include <QDir>
 #include <QMessageBox>
@@ -27,10 +28,6 @@
 #include "core.h"
 #include "mainwindow.h"
 #include "update.h"
-
-#ifdef Q_WS_WIN
-    #include <QDesktopServices>
-#endif
 
 DlgUpdate::DlgUpdate(MainWindow *parent, QString _strVersion) : QDialog(parent), strVersion(_strVersion)
 {
