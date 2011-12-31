@@ -22,6 +22,7 @@
 #include <QDir>
 #include <QListWidget>
 #include <QPixmap>
+#include "config.h"
 #include "mainwindow.h"
 #include "inputline_widget.h"
 #include "emoticons.h"
@@ -127,7 +128,7 @@ void DlgEmoticons::setDefaultValues()
 #ifdef Q_WS_WIN
     path = QCoreApplication::applicationDirPath();
 #else
-    path = "/usr/share/scc";
+    path = SCC_DATA_DIR;
 #endif
 
     QDir dAllEmoticonsDirs = path+"/3rdparty/emoticons";

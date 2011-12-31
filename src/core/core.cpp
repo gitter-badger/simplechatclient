@@ -131,7 +131,7 @@ void Core::createSettings()
     settings["debug"] = strDebug;
 
     // default settings
-    settings["version"] = "1.1.4.1126";
+    settings["version"] = "1.1.4.1127";
     settings["logged"] = "off";
     settings["busy"] = "off";
     settings["away"] = "off";
@@ -272,7 +272,7 @@ void Core::readEmptyUserAvatar()
 #ifdef Q_WS_WIN
     path = QCoreApplication::applicationDirPath();
 #else
-    path = "/usr/share/scc";
+    path = SCC_DATA_DIR;
 #endif
 
     strEmptyUserAvatarPath = path+"/images/user_avatar.png";

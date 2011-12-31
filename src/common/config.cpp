@@ -228,7 +228,7 @@ QMap<QString,QString> Config::getDefaultValues()
 #ifdef Q_WS_WIN
     path = QCoreApplication::applicationDirPath();
 #else
-    path = "/usr/share/scc";
+    path = SCC_DATA_DIR;
 #endif
     QString strSoundBeep = path+"/3rdparty/sounds/beep.wav";
     QString strSoundQuery = path+"/3rdparty/sounds/query.wav";

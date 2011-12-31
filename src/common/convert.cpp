@@ -20,6 +20,7 @@
 
 #include <QCoreApplication>
 #include <QDir>
+#include "config.h"
 #include "core.h"
 #include "convert.h"
 
@@ -182,7 +183,7 @@ QString Convert::findEmoticon(QString strEmoticon)
 #ifdef Q_WS_WIN
     path = QCoreApplication::applicationDirPath();
 #else
-    path = "/usr/share/scc";
+    path = SCC_DATA_DIR;
 #endif
 
     QDir dAllEmoticonsDirs = path+"/3rdparty/emoticons";

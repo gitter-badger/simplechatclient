@@ -29,6 +29,7 @@
 #include <QUrl>
 #include <QtWebKit/QWebFrame>
 #include <QtWebKit/QWebElement>
+#include "config.h"
 #include "core.h"
 #include "user_profile.h"
 #include "find_text.h"
@@ -60,7 +61,7 @@ void ChatView::createBody()
 #ifdef Q_WS_WIN
     path = QCoreApplication::applicationDirPath();
 #else
-    path = "/usr/share/scc";
+    path = SCC_DATA_DIR;
 #endif
 
     QString jsCode;

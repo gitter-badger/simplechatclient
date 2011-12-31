@@ -100,7 +100,7 @@ int main(int argc, char *argv[])
 #ifdef Q_WS_WIN
     path = QCoreApplication::applicationDirPath();
 #else
-    path = "/usr/share/scc";
+    path = SCC_DATA_DIR;
 #endif
 
     // load translate
