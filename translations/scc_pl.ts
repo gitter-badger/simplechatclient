@@ -2039,6 +2039,10 @@
 <context>
     <name>OnetKernel</name>
     <message>
+        <source>Information</source>
+        <translation>Informacja</translation>
+    </message>
+    <message>
         <source>* %1 [%2@%3] has joined %4</source>
         <translation>* %1 [%2@%3] wchodzi do pokoju %4</translation>
     </message>

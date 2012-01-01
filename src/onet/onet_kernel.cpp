@@ -777,7 +777,12 @@ void OnetKernel::raw_kick()
         strReason.remove(QRegExp("%F([a-zA-Z0-9:]+)%"));
         strReason.replace(QRegExp("%I([a-zA-Z0-9_-]+)%"),"//\\1");
 
-        QMessageBox::information(0, "", QString(tr("You have been kicked from %1 by %2")+"<br>"+tr("Reason: %3")).arg(strWho, strChannel, strReason));
+        QMessageBox *msgBox = new QMessageBox();
+        msgBox->setIcon(QMessageBox::Information);
+        msgBox->setWindowIcon(QIcon(":/images/logo.png"));
+        msgBox->setWindowTitle(tr("Information"));
+        msgBox->setText(QString(tr("You have been kicked from %1 by %2")+"<br>"+tr("Reason: %3")).arg(strWho, strChannel, strReason));
+        msgBox->show();
 
         pTabC->removeTab(strChannel);
     }
@@ -1984,7 +1989,12 @@ void OnetKernel::raw_250n()
     {
         QString strChannel = strDataList[4];
 
-        QMessageBox::information(0, "", QString(tr("Successfully created a channel %1")).arg(strChannel));
+        QMessageBox *msgBox = new QMessageBox();
+        msgBox->setIcon(QMessageBox::Information);
+        msgBox->setWindowIcon(QIcon(":/images/logo.png"));
+        msgBox->setWindowTitle(tr("Information"));
+        msgBox->setText(QString(tr("Successfully created a channel %1")).arg(strChannel));
+        msgBox->show();
 
         // add to list
         if (!Core::instance()->lChannelHomes.contains(strChannel))
@@ -2341,7 +2351,12 @@ void OnetKernel::raw_261n()
     {
         QString strChannel = strDataList[5];
 
-        QMessageBox::information(0, "", QString(tr("Successfully removed channel %1")).arg(strChannel));
+        QMessageBox *msgBox = new QMessageBox();
+        msgBox->setIcon(QMessageBox::Information);
+        msgBox->setWindowIcon(QIcon(":/images/logo.png"));
+        msgBox->setWindowTitle(tr("Information"));
+        msgBox->setText(QString(tr("Successfully removed channel %1")).arg(strChannel));
+        msgBox->show();
 
         // remove from list
         if (Core::instance()->lChannelHomes.contains(strChannel))
