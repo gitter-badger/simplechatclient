@@ -801,7 +801,7 @@
         <translation>Usunięcie pokoju jest operacją nieodwracalną!</translation>
     </message>
     <message>
-        <source>Add super-operator:</source>
+        <source>Add the super-operator:</source>
         <translation>Dodaj super operatora:</translation>
     </message>
     <message>
@@ -1210,6 +1210,14 @@
         <translation>Wyłączony</translation>
     </message>
     <message>
+        <source>Add</source>
+        <translation>Dodaj</translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation>Usuń</translation>
+    </message>
+    <message>
         <source>Reverse colors</source>
         <translation>Odwróć kolory</translation>
     </message>
@@ -1220,6 +1228,10 @@
     <message>
         <source>Basic</source>
         <translation>Ogólne</translation>
+    </message>
+    <message>
+        <source>Highlight</source>
+        <translation>Podświetlanie</translation>
     </message>
     <message>
         <source>Advanced</source>
@@ -1252,6 +1264,22 @@
     <message>
         <source>Polish</source>
         <translation>Polski</translation>
+    </message>
+    <message>
+        <source>Highlight text</source>
+        <translation>Podświetlany tekst</translation>
+    </message>
+    <message>
+        <source>Changing highlight text</source>
+        <translation>Zmiana podświetlanego tekstu</translation>
+    </message>
+    <message>
+        <source>Add highlight text:</source>
+        <translation>Dodaj podświetlany tekst:</translation>
+    </message>
+    <message>
+        <source>Remove highlight text:</source>
+        <translation>Usuń podświetlany tekst:</translation>
     </message>
     <message>
         <source>Busy mode after you log in to chat</source>

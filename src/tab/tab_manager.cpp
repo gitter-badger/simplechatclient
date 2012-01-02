@@ -28,14 +28,14 @@ TabManager::TabManager(QWidget *parent) : QTabWidget(parent)
     setIconSize(QSize(22,22));
 }
 
-void TabManager::setHilight(int index)
+void TabManager::setHighlight(int index)
 {
     tab->setTabTextColor(index, QColor(138, 0, 184, 255));
 }
 
 void TabManager::setAlert(int index, QColor color)
 {
-    // if not hilighted and not current color
+    // if not highlighted and not current color
     if ((tab->tabTextColor(index) != QColor(138, 0, 184, 255)) && (tab->tabTextColor(index) != color))
         tab->setTabTextColor(index, color);
 }

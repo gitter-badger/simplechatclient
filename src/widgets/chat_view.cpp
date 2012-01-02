@@ -200,8 +200,8 @@ void ChatView::displayMessage(QString &strData, MessageCategory eMessageCategory
     /* URLs in the HTML/CSS content. */
     this->page()->triggerAction(QWebPage::ReloadAndBypassCache, false);
 
-    // hilight
-    if (eMessageCategory == HilightMessage)
+    // highlight
+    if (eMessageCategory == HighlightMessage)
     {
         // sound
         if (Core::instance()->settings.value("disable_sounds") == "off")
@@ -263,6 +263,7 @@ void ChatView::kick()
 {
     bool ok;
     QString strText = QInputDialog::getText(this, tr("Kick From Channel"), tr("Reason for kicking:"), QLineEdit::Normal, tr("No reason"), &ok);
+    strText = strText.trimmed();
 
     if ((ok) && (!strText.isEmpty()))
         Core::instance()->pNetwork->send(QString("KICK %1 %2 :%3").arg(strChatViewChannel, strNick, strText));
@@ -277,6 +278,7 @@ void ChatView::kban()
 {
     bool ok;
     QString strText = QInputDialog::getText(this, tr("Kick & Ban"), tr("Reason for kicking:"), QLineEdit::Normal, tr("No reason"), &ok);
+    strText = strText.trimmed();
 
     if ((ok) && (!strText.isEmpty()))
     {
@@ -610,9 +612,9 @@ void ChatView::menuStandard(QContextMenuEvent *event)
         menu.addAction(copy);
     }
 
-    QAction *all = this->pageAction(QWebPage::SelectAll);
-    all->setIcon(QIcon(":/images/oxygen/16x16/edit-select-all.png"));
-    menu.addAction(all);
+    QAction *selectAll = this->pageAction(QWebPage::SelectAll);
+    selectAll->setIcon(QIcon(":/images/oxygen/16x16/edit-select-all.png"));
+    menu.addAction(selectAll);
 
     menu.exec(event->globalPos());
 }

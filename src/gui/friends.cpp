@@ -103,6 +103,7 @@ void DlgFriends::buttonAdd()
 {
     bool ok;
     QString strText = QInputDialog::getText(this, tr("Changing your friends list"), tr("Enter a nickname to be added:"), QLineEdit::Normal, QString::null, &ok);
+    strText = strText.trimmed();
 
     if ((ok) && (!strText.isEmpty()))
     {
@@ -127,6 +128,7 @@ void DlgFriends::buttonRemove()
 
     bool ok;
     QString strText = QInputDialog::getText(this, tr("Changing your friends list"), tr("Enter a nickname for removal:"), QLineEdit::Normal, strSelected, &ok);
+    strText = strText.trimmed();
 
     if ((ok) && (!strText.isEmpty()))
     {

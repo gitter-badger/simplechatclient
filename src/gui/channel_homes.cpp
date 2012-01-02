@@ -109,6 +109,7 @@ void DlgChannelHomes::buttonCreate()
 {
     bool ok;
     QString strText = QInputDialog::getText(this, tr("Changing channels"), tr("Enter the name of the new channel:"), QLineEdit::Normal, QString::null, &ok);
+    strText = strText.trimmed();
 
     if ((ok) && (!strText.isEmpty()))
     {
@@ -121,6 +122,7 @@ void DlgChannelHomes::buttonRemove()
 {
     bool ok;
     QString strText = QInputDialog::getText(this, tr("Changing channels"), "<p style=\"font-weight:bold;\">"+tr("The removal of the channel operation is irreversible!")+"</p><p>"+tr("Enter the name of the channel to remove:")+"</p>", QLineEdit::Normal, QString::null, &ok);
+    strText = strText.trimmed();
 
     if ((ok) && (!strText.isEmpty()))
     {

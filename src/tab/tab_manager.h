@@ -25,14 +25,14 @@ class QTabBar;
 #include <QTabWidget>
 
 /**
- * TabBar with hilight support
+ * TabBar with highlight support
  */
 class TabManager : public QTabWidget
 {
     Q_OBJECT
 public:
     TabManager(QWidget *);
-    void setHilight(int);
+    void setHighlight(int);
     void setAlert(int, QColor);
     void setColor(int, QColor);
 

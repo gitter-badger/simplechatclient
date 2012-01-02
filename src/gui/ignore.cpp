@@ -74,6 +74,7 @@ void DlgIgnore::buttonAdd()
 {
     bool ok;
     QString strText = QInputDialog::getText(this, tr("Change your ignore list"), tr("Enter a nickname to be added:"), QLineEdit::Normal, QString::null, &ok);
+    strText = strText.trimmed();
 
     if ((ok) && (!strText.isEmpty()))
     {
@@ -90,6 +91,7 @@ void DlgIgnore::buttonRemove()
 
     bool ok;
     QString strText = QInputDialog::getText(this, tr("Change your ignore list"), tr("Enter a nickname for removal:"), QLineEdit::Normal, strSelected, &ok);
+    strText = strText.trimmed();
 
     if ((ok) && (!strText.isEmpty()))
     {

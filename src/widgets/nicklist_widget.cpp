@@ -215,6 +215,7 @@ void NickListWidget::kick()
 
     bool ok;
     QString strText = QInputDialog::getText(this, tr("Kick From Channel"), tr("Reason for kicking:"), QLineEdit::Normal, tr("No reason"), &ok);
+    strText = strText.trimmed();
 
     if ((ok) && (!strText.isEmpty()))
         Core::instance()->pNetwork->send(QString("KICK %1 %2 :%3").arg(strChannel, strSelectedNick, strText));
@@ -233,6 +234,7 @@ void NickListWidget::kban()
 
     bool ok;
     QString strText = QInputDialog::getText(this, tr("Kick & Ban"), tr("Reason for kicking:"), QLineEdit::Normal, tr("No reason"), &ok);
+    strText = strText.trimmed();
 
     if ((ok) && (!strText.isEmpty()))
     {

@@ -247,6 +247,7 @@ QMap<QString,QString> Config::getDefaultValues()
         mDefaultValues.insert("pass", "");
         mDefaultValues.insert("themes", "Standard");
         mDefaultValues.insert("language", "pl");
+        mDefaultValues.insert("highlight", "");
         mDefaultValues.insert("auto_busy", "off");
         mDefaultValues.insert("disable_autojoin_favourites", "off");
         mDefaultValues.insert("show_zuo_and_ip", "off");

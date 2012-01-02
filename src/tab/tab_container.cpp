@@ -64,10 +64,12 @@ void TabContainer::logClosed(QString strChannel)
     delete l;
 }
 
-bool TabContainer::isHilightMessage(QString strMessage)
+bool TabContainer::isHighlightMessage(QString strMessage)
 {
     QString strMe = Core::instance()->settings["nick"];
     QStringList lData = strMessage.split(" ");
+    QStringList lHighlight = Core::instance()->settings["highlight"].split(";", QString::SkipEmptyParts);
+    lHighlight.append(strMe);
 
     for (int i = 0; i < lData.size(); i++)
     {
@@ -76,8 +78,12 @@ bool TabContainer::isHilightMessage(QString strMessage)
         strData.remove(QRegExp("%F([a-zA-Z0-9:]+)%"));
         strData.replace(QRegExp("%I([a-zA-Z0-9_-]+)%"),"<\\1>");
 
-        if (strData == strMe)
-            return true;
+        QStringListIterator lHighlightIterator(lHighlight);
+        while (lHighlightIterator.hasNext())
+        {
+            if (strData.toLower() == lHighlightIterator.next().toLower())
+                return true;
+        }
     }
     return false;
 }
@@ -194,10 +200,10 @@ void TabContainer::showMessage(QString &strChannel, QString &strData, MessageCat
     int i = getIndex(strChannel);
     if (i != -1)
     {
-        // hilight
-        bool bHilightMessage = isHilightMessage(strData);
+        // highlight
+        bool bHighlightMessage = isHighlightMessage(strData);
 
-        if ((bHilightMessage) && (eMessageCategory == DefaultMessage))
+        if ((bHighlightMessage) && (eMessageCategory == DefaultMessage))
         {
             QString strAwaylogData = strData;
             if (!strNick.isEmpty())
@@ -209,12 +215,12 @@ void TabContainer::showMessage(QString &strChannel, QString &strData, MessageCat
             // update awaylog status
             emit updateAwaylogStatus();
 
-            // hilight
+            // highlight
             if (i != pTabM->currentIndex())
-                pTabM->setHilight(i);
+                pTabM->setHighlight(i);
 
             // update message category
-            eMessageCategory = HilightMessage;
+            eMessageCategory = HighlightMessage;
         }
 
         // set color

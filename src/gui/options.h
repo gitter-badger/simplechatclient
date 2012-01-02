@@ -51,6 +51,8 @@ private slots:
     void buttonProfiles();
     void themesChanged(int);
     void languageChanged(int);
+    void highlightAdd();
+    void highlightRemove();
     void autoBusy(bool);
     void disableAutojoinFavourites(bool);
     void showZuoAndIp(bool);

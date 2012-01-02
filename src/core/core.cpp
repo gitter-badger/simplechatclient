@@ -131,7 +131,7 @@ void Core::createSettings()
     settings["debug"] = strDebug;
 
     // default settings
-    settings["version"] = "1.1.4.1129";
+    settings["version"] = "1.1.4.1130";
     settings["logged"] = "off";
     settings["busy"] = "off";
     settings["away"] = "off";
@@ -261,6 +261,20 @@ void Core::checkSettings()
     {
         pConfig->setValue("themes", "Standard");
         settings["themes"] = "Standard";
+    }
+
+    QStringList lHighlight;
+    lHighlight << "&" << "<" << ">" << "\"" << "'" << "\\";
+    QStringListIterator lHighlightIterator(lHighlight);
+    while (lHighlightIterator.hasNext())
+    {
+        QString strChar = lHighlightIterator.next();
+
+        if (settings["highlight"].contains(strChar))
+        {
+            settings["highlight"].remove(strChar);
+            pConfig->setValue("highlight", settings["highlight"]);
+        }
     }
 
     delete pConfig;

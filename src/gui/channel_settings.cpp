@@ -575,7 +575,8 @@ void DlgChannelSettings::addBan(QString strNick, QString strWho, QString strDT, 
         item->setText(strIPNick);
         item->setTextColor(QColor("#ff0000")); // set color
         item->setData(Qt::UserRole, strNick); // set original ban mask
-        item->setToolTip(QString("%1: %2 (%3) [%4]").arg(tr("Created by"), strWho, strDT, tr("IP Mask: %1"), strNick.remove("*!*@")));
+        QString strIPHint = tr("IP Mask: %1").arg(strNick.remove("*!*@"));
+        item->setToolTip(QString("%1: %2 (%3) [%4]").arg(tr("Created by"), strWho, strDT, strIPHint));
     }
     ui.listWidget_ban->addItem(item);
 }
@@ -594,10 +595,11 @@ void DlgChannelSettings::ownerChanged()
 {
     QString strMsg = "<p style=\"font-weight:bold;\">"+tr("The owner of the channel can be only one!")+"</p><p>"+tr("Enter the nickname of the new owner:")+"</p>";
     bool ok;
-    QString strNick = QInputDialog::getText(this, tr("Changing privileges"), strMsg, QLineEdit::Normal, QString::null, &ok);
+    QString strText = QInputDialog::getText(this, tr("Changing privileges"), strMsg, QLineEdit::Normal, QString::null, &ok);
+    strText = strText.trimmed();
 
-    if ((ok) && (!strNick.isEmpty()))
-        Core::instance()->pNetwork->send(QString("CS TRANSFER %1 %2").arg(strChannel, strNick));
+    if ((ok) && (!strText.isEmpty()))
+        Core::instance()->pNetwork->send(QString("CS TRANSFER %1 %2").arg(strChannel, strText));
 
     ui.tabWidget->setCurrentIndex(0);
     setTabs(false);
@@ -610,6 +612,7 @@ void DlgChannelSettings::removeChannelClicked()
     QString strMsg = "<p style=\"font-weight:bold;\">"+tr("The removal of the channel operation is irreversible!")+"</p>";
     bool ok;
     QString strText = QInputDialog::getText(this, tr("Changing privileges"), strMsg, QLineEdit::Normal, strChannel, &ok);
+    strText = strText.trimmed();
 
     if ((ok) && (!strText.isEmpty()))
         Core::instance()->pNetwork->send(QString("CS DROP %1").arg(strText));
@@ -783,11 +786,12 @@ void DlgChannelSettings::buttonPermissionAdd()
         strLabel = tr("Add invitation:");
 
     bool ok;
-    QString strResult = QInputDialog::getText(this, tr("Changing privileges"), strLabel, QLineEdit::Normal, QString::null, &ok);
+    QString strText = QInputDialog::getText(this, tr("Changing privileges"), strLabel, QLineEdit::Normal, QString::null, &ok);
+    strText = strText.trimmed();
 
-    if ((ok) && (!strResult.isEmpty()))
+    if ((ok) && (!strText.isEmpty()))
     {
-        if ((tab == 2) && (strResult.contains("*")))
+        if ((tab == 2) && (strText.contains("*")))
         {
             QMessageBox msgBox;
             msgBox.setIcon(QMessageBox::Warning);
@@ -798,10 +802,10 @@ void DlgChannelSettings::buttonPermissionAdd()
             int iResult = msgBox.exec();
 
             if (iResult == QMessageBox::Ok)
-                strNick = strResult;
+                strNick = strText;
         }
         else
-            strNick = strResult;
+            strNick = strText;
     }
 
     // if empty
@@ -862,10 +866,11 @@ void DlgChannelSettings::buttonPermissionRemove()
             strLabel = tr("Delete invitation:");
 
         bool ok;
-        QString strNick = QInputDialog::getText(this, tr("Changing privileges"), strLabel, QLineEdit::Normal, QString::null, &ok);
+        QString strText = QInputDialog::getText(this, tr("Changing privileges"), strLabel, QLineEdit::Normal, QString::null, &ok);
+        strText = strText.trimmed();
 
-        if ((ok) && (!strNick.isEmpty()))
-            lRemoveNicks.append(new QListWidgetItem(strNick));
+        if ((ok) && (!strText.isEmpty()))
+            lRemoveNicks.append(new QListWidgetItem(strText));
     }
 
     // if empty

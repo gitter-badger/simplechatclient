@@ -75,7 +75,7 @@ private:
     void logOpened(QString);
     void logClosed(QString);
     int getIndex(QString);
-    bool isHilightMessage(QString);
+    bool isHighlightMessage(QString);
 
 signals:
     void setModeration(bool);

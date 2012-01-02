@@ -95,7 +95,7 @@
     <property name="currentIndex">
      <number>0</number>
     </property>
-    <widget class="QWidget" name="page">
+    <widget class="QWidget" name="page_basic">
      <widget class="QGroupBox" name="groupBox_profiles">
       <property name="geometry">
        <rect>
@@ -297,7 +297,88 @@
       </widget>
      </widget>
     </widget>
-    <widget class="QWidget" name="page_2">
+    <widget class="QWidget" name="page_highlight">
+     <widget class="QGroupBox" name="groupBox_highlight">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>10</y>
+        <width>441</width>
+        <height>351</height>
+       </rect>
+      </property>
+      <property name="title">
+       <string>Highlight text</string>
+      </property>
+      <widget class="QWidget" name="verticalLayoutWidget_6">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>30</y>
+         <width>421</width>
+         <height>321</height>
+        </rect>
+       </property>
+       <layout class="QVBoxLayout" name="verticalLayout_6">
+        <item>
+         <widget class="QListWidget" name="listWidget_highlight">
+          <property name="editTriggers">
+           <set>QAbstractItemView::NoEditTriggers</set>
+          </property>
+          <property name="sortingEnabled">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_11">
+          <item>
+           <spacer name="horizontalSpacer_6">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QPushButton" name="pushButton_highlight_add">
+            <property name="text">
+             <string>Add</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="pushButton_highlight_remove">
+            <property name="text">
+             <string>Remove</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer_5">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="page_adv">
      <widget class="QWidget" name="verticalLayoutWidget_11">
       <property name="geometry">
        <rect>
@@ -367,7 +448,7 @@
       </layout>
      </widget>
     </widget>
-    <widget class="QWidget" name="page_4">
+    <widget class="QWidget" name="page_colors">
      <widget class="QTabWidget" name="tabWidget">
       <property name="geometry">
        <rect>
@@ -807,7 +888,7 @@
       </property>
      </widget>
     </widget>
-    <widget class="QWidget" name="page_6">
+    <widget class="QWidget" name="page_sounds">
      <widget class="QGroupBox" name="groupBox_sounds">
       <property name="geometry">
        <rect>
@@ -905,7 +986,7 @@
       </widget>
      </widget>
     </widget>
-    <widget class="QWidget" name="page_7">
+    <widget class="QWidget" name="page_logs">
      <widget class="QGroupBox" name="groupBox_logs">
       <property name="geometry">
        <rect>
@@ -971,7 +1052,7 @@
       </widget>
      </widget>
     </widget>
-    <widget class="QWidget" name="page_8">
+    <widget class="QWidget" name="page_background_image">
      <widget class="QGroupBox" name="groupBox_background_image">
       <property name="geometry">
        <rect>
@@ -1030,7 +1111,7 @@
       </widget>
      </widget>
     </widget>
-    <widget class="QWidget" name="page_9">
+    <widget class="QWidget" name="page_winamp">
      <widget class="QGroupBox" name="groupBox_winamp">
       <property name="geometry">
        <rect>

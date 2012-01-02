@@ -22,6 +22,7 @@
 #include <QDesktopServices>
 #include <QDesktopWidget>
 #include <QFileDialog>
+#include <QInputDialog>
 #include <QUrl>
 #include "config.h"
 #include "core.h"
@@ -46,6 +47,8 @@ DlgOptions::DlgOptions(QWidget *parent) : QDialog(parent)
 void DlgOptions::createGui()
 {
     ui.pushButton_profiles->setIcon(QIcon(":/images/oxygen/16x16/preferences-activities.png"));
+    ui.pushButton_highlight_add->setIcon(QIcon(":/images/oxygen/16x16/list-add.png"));
+    ui.pushButton_highlight_remove->setIcon(QIcon(":/images/oxygen/16x16/list-remove.png"));
     ui.pushButton_reverse_colors->setIcon(QIcon(":/images/oxygen/16x16/format-stroke-color.png"));
     ui.pushButton_restore_default_colors->setIcon(QIcon(":/images/oxygen/16x16/edit-undo.png"));
     ui.pushButton_play_beep->setIcon(QIcon(":/images/oxygen/16x16/media-playback-start.png"));
@@ -63,6 +66,11 @@ void DlgOptions::createGui()
     ui.pushButton_profiles->setText(tr("Profiles"));
     ui.groupBox_themes->setTitle(tr("Themes"));
     ui.groupBox_language->setTitle(tr("Language"));
+
+    // page highlight
+    ui.groupBox_highlight->setTitle(tr("Highlight text"));
+    ui.pushButton_highlight_add->setText(tr("Add"));
+    ui.pushButton_highlight_remove->setText(tr("Remove"));
 
     // page adv
     ui.checkBox_auto_busy->setText(tr("Busy mode after you log in to chat"));
@@ -135,6 +143,11 @@ void DlgOptions::createGui()
     basic->setText(0, tr("Basic"));
     basic->setToolTip(0, tr("Basic"));
 
+    QTreeWidgetItem *highlight = new QTreeWidgetItem(ui.treeWidget_options);
+    highlight->setIcon(0, QIcon(":/images/oxygen/16x16/feed-subscribe.png"));
+    highlight->setText(0, tr("Highlight"));
+    highlight->setToolTip(0, tr("Highlight"));
+
     QTreeWidgetItem *adv = new QTreeWidgetItem(ui.treeWidget_options);
     adv->setIcon(0, QIcon(":/images/oxygen/16x16/dialog-warning.png"));
     adv->setText(0, tr("Advanced"));
@@ -182,6 +195,16 @@ void DlgOptions::setDefaultValues()
     lLanguage << tr("English") << tr("Polish");
     ui.comboBox_language->clear();
     ui.comboBox_language->addItems(lLanguage);
+
+    // highlight
+    ui.listWidget_highlight->clear();
+    if (!Core::instance()->settings["highlight"].isEmpty())
+    {
+        QStringList lHighlight = Core::instance()->settings["highlight"].split(";", QString::SkipEmptyParts);
+        QStringListIterator lHighlightIterator(lHighlight);
+        while (lHighlightIterator.hasNext())
+            ui.listWidget_highlight->addItem(lHighlightIterator.next());
+    }
 
     // sound beep
     ui.lineEdit_sound_beep->setText(QDir::toNativeSeparators(Core::instance()->settings.value("sound_beep")));
@@ -352,6 +375,8 @@ void DlgOptions::createSignals()
     QObject::connect(ui.pushButton_profiles, SIGNAL(clicked()), this, SLOT(buttonProfiles()));
     QObject::connect(ui.comboBox_themes, SIGNAL(activated(int)), this, SLOT(themesChanged(int)));
     QObject::connect(ui.comboBox_language, SIGNAL(activated(int)), this, SLOT(languageChanged(int)));
+    QObject::connect(ui.pushButton_highlight_add, SIGNAL(clicked()), this, SLOT(highlightAdd()));
+    QObject::connect(ui.pushButton_highlight_remove, SIGNAL(clicked()), this, SLOT(highlightRemove()));
     QObject::connect(ui.checkBox_auto_busy, SIGNAL(clicked(bool)), this, SLOT(autoBusy(bool)));
     QObject::connect(ui.checkBox_disable_autojoin_favourites, SIGNAL(clicked(bool)), this, SLOT(disableAutojoinFavourites(bool)));
     QObject::connect(ui.checkBox_show_zuo_and_ip, SIGNAL(clicked(bool)), this, SLOT(showZuoAndIp(bool)));
@@ -523,6 +548,76 @@ void DlgOptions::languageChanged(int index)
     delete pConfig;
 
     ui.label_language_warning->setText(tr("Restart program to apply the changes."));
+}
+
+void DlgOptions::highlightAdd()
+{
+    bool ok;
+    QString strText = QInputDialog::getText(this, tr("Changing highlight text"), tr("Add highlight text:"), QLineEdit::Normal, QString::null, &ok);
+    strText = strText.trimmed();
+
+    if ((ok) && (!strText.isEmpty()))
+    {
+        QStringList lHighlightChars;
+        lHighlightChars << "&" << "<" << ">" << "\"" << "'" << "\\" << ";";
+        QStringListIterator lHighlightCharsIterator(lHighlightChars);
+        while (lHighlightCharsIterator.hasNext())
+        {
+            QString strChar = lHighlightCharsIterator.next();
+
+            if (strText.contains(strChar))
+                strText.remove(strChar);
+        }
+
+        if (!Core::instance()->settings["highlight"].contains(strText+";"))
+        {
+            Core::instance()->settings["highlight"] += strText+";";
+
+            Config *pConfig = new Config();
+            pConfig->setValue("highlight", Core::instance()->settings["highlight"]);
+            delete pConfig;
+
+            ui.listWidget_highlight->addItem(strText);
+        }
+    }
+}
+
+void DlgOptions::highlightRemove()
+{
+    QString strRemove;
+    if (ui.listWidget_highlight->selectedItems().size() != 0)
+        strRemove = ui.listWidget_highlight->selectedItems().at(0)->text();
+
+    bool ok;
+    QString strText = QInputDialog::getText(this, tr("Changing highlight text"), tr("Remove highlight text:"), QLineEdit::Normal, strRemove, &ok);
+    strText = strText.trimmed();
+
+    if ((ok) && (!strText.isEmpty()))
+    {
+        QStringList lHighlight;
+        lHighlight << "&" << "<" << ">" << "\"" << "'" << "\\" << ";";
+        QStringListIterator lHighlightIterator(lHighlight);
+        while (lHighlightIterator.hasNext())
+        {
+            QString strChar = lHighlightIterator.next();
+
+            if (strText.contains(strChar))
+                strText.remove(strChar);
+        }
+
+        if (Core::instance()->settings["highlight"].contains(strText+";"))
+        {
+            Core::instance()->settings["highlight"].remove(strText+";");
+
+            Config *pConfig = new Config();
+            pConfig->setValue("highlight", Core::instance()->settings["highlight"]);
+            delete pConfig;
+        }
+
+        QList<QListWidgetItem*> items = ui.listWidget_highlight->findItems(strText, Qt::MatchExactly);
+        foreach (QListWidgetItem *item, items)
+            ui.listWidget_highlight->takeItem(ui.listWidget_highlight->row(item));
+    }
 }
 
 void DlgOptions::autoBusy(bool bValue)

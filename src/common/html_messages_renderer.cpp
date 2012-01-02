@@ -86,7 +86,7 @@ QString HtmlMessagesRenderer::renderer(QDateTime dt, QString strData, MessageCat
         strFontClass = "MeFontColor";
     else if (eMessageCategory == ErrorMessage)
         strFontClass = "ErrorFontColor";
-    else if (eMessageCategory == HilightMessage)
+    else if (eMessageCategory == HighlightMessage)
         strFontClass = "DefaultFontColor";
     else if (eMessageCategory == ModerNoticeMessage)
         strFontClass = "NoticeFontColor";
@@ -106,9 +106,9 @@ QString HtmlMessagesRenderer::renderer(QDateTime dt, QString strData, MessageCat
     strData.replace("img src=\"", "img src=\"file://");
 #endif
 
-    // hilight
+    // highlight
     QString strTextDecoration;
-    if (eMessageCategory == HilightMessage)
+    if (eMessageCategory == HighlightMessage)
         strTextDecoration = "style=\"text-decoration:underline;\"";
 
     // me & modernotice
