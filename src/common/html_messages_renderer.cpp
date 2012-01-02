@@ -51,7 +51,7 @@ QString HtmlMessagesRenderer::renderer(QDateTime dt, QString strData, MessageCat
             int pos = strWord.indexOf(QRegExp("(ftp:|http:|https:|www.)"));
             QString strBeforeLink = strWord.left(pos);
             strDataList[i].remove(0, pos);
-            strDataList[i] = strBeforeLink+"<a href=\"#\" onclick=\"return false\" name=\"website\" style=\"color:inherit;text-decoration:none;\">"+strDataList[i]+"</a>";
+            strDataList[i] = strBeforeLink+"<a href=\""+strDataList[i]+"\" onclick=\"return false\" name=\"website\" style=\"color:inherit;text-decoration:none;\">"+strDataList[i]+"</a>";
         }
     }
     strData = strDataList.join(" ");

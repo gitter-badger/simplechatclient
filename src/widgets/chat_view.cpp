@@ -575,6 +575,10 @@ void ChatView::menuWebsite(QContextMenuEvent *event)
     if ((strWebsite.contains(exYoutube_1)) || (strWebsite.contains(exYoutube_2)) || (strWebsite.contains(exYoutube_3)))
         menu.addAction(QIcon(":/images/oxygen/16x16/tool-animator.png"), tr("Watch video"), this, SLOT(watchVideo()));
 
+    QAction *copyLinkToClipboard = this->pageAction(QWebPage::CopyLinkToClipboard);
+    copyLinkToClipboard->setIcon(QIcon(":/images/oxygen/16x16/edit-copy.png"));
+    menu.addAction(copyLinkToClipboard);
+
     menu.exec(event->globalPos());
 }
 
