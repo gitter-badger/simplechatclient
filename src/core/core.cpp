@@ -25,6 +25,7 @@
 #include <QTcpSocket>
 #include <QTimer>
 #include "config.h"
+#include "log.h"
 #include "mainwindow.h"
 #include "updates.h"
 #include "core.h"
@@ -131,7 +132,7 @@ void Core::createSettings()
     settings["debug"] = strDebug;
 
     // default settings
-    settings["version"] = "1.1.4.1130";
+    settings["version"] = "1.1.4.1131";
     settings["logged"] = "off";
     settings["busy"] = "off";
     settings["away"] = "off";
@@ -348,10 +349,27 @@ void Core::checkUpdate()
     pUpdates->checkUpdate();
 }
 
-void Core::addAwaylog(QString strChannel, QString strAwayData)
+void Core::addAwaylog(QString strTime, QString strChannel, QString strAwayData)
 {
     if (settings.value("away") == "off")
         return;
+
+    // save awaylog
+    if (Core::instance()->settings.value("disable_logs") == "off")
+    {
+        QDateTime dt;
+        if (!strTime.isEmpty())
+            dt = QDateTime::fromTime_t(strTime.toInt());
+        else
+            dt = QDateTime::currentDateTime();
+
+        QString strAwaylogFileName = "awaylog";
+        QString strAwaylogFileData = QString("%1 %2 %3").arg(dt.toString("[dd/MM/yyyy] [hh:mm:ss]"), strChannel, strAwayData);
+
+        Log *l = new Log();
+        l->save(strAwaylogFileName, strAwaylogFileData);
+        delete l;
+    }
 
     // fix /me
     QString strRegExpMe = QString("%1ACTION %2%3").arg(QString(QByteArray("\x01")), "(.*)", QString(QByteArray("\x01")));

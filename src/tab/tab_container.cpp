@@ -210,7 +210,7 @@ void TabContainer::showMessage(QString &strChannel, QString &strData, MessageCat
                 strAwaylogData = QString("<%1> %2").arg(strNick, strData);
 
             // awaylog
-            Core::instance()->addAwaylog(strChannel, strAwaylogData);
+            Core::instance()->addAwaylog(strTime, strChannel, strAwaylogData);
 
             // update awaylog status
             emit updateAwaylogStatus();

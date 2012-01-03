@@ -64,7 +64,7 @@ public:
     // update
     void checkUpdate();
     // awaylog
-    void addAwaylog(QString, QString);
+    void addAwaylog(QString, QString, QString);
     // for window
     QString getChannelNameFromIndex(int index);
     QString getCurrentChannelName();
