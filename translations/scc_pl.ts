@@ -81,7 +81,7 @@
     </message>
     <message>
         <source>Whois</source>
-        <translation>Whois</translation>
+        <translation>Gdzie jest</translation>
     </message>
     <message>
         <source>Profile</source>
@@ -2026,7 +2026,7 @@
     </message>
     <message>
         <source>Whois</source>
-        <translation>Whois</translation>
+        <translation>Gdzie jest</translation>
     </message>
     <message>
         <source>Profile</source>
