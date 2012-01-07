@@ -106,11 +106,11 @@ bool Commands::isErotic(QString strChannel)
     {
         ChannelList channel = Core::instance()->lChannelList.at(i);
         QString strName = channel.name;
-        QString strType = channel.type;
+        int iType = channel.type;
 
         if (strName.toLower() == strChannel.toLower())
         {
-            if (strType == tr("Erotic"))
+            if (iType == 3)
                 return true;
             else
                 return false;

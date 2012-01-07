@@ -74,16 +74,6 @@ void DlgChannelList::createGui()
     ui.tabWidget->setTabText(3, tr("Erotic"));
     ui.tabWidget->setTabText(4, tr("Thematic"));
     ui.tabWidget->setTabText(5, tr("Regional"));
-
-    QStringList lLabels;
-    lLabels << tr("Channel name") << tr("Number of persons") << tr("Category") << tr("Type");
-
-    ui.tableWidget_all->setHorizontalHeaderLabels(lLabels);
-    ui.tableWidget_teen->setHorizontalHeaderLabels(lLabels);
-    ui.tableWidget_common->setHorizontalHeaderLabels(lLabels);
-    ui.tableWidget_erotic->setHorizontalHeaderLabels(lLabels);
-    ui.tableWidget_thematic->setHorizontalHeaderLabels(lLabels);
-    ui.tableWidget_regional->setHorizontalHeaderLabels(lLabels);
 }
 
 void DlgChannelList::setDefaultValues()
@@ -119,11 +109,25 @@ void DlgChannelList::createSignals()
     QObject::connect(ui.tableWidget_regional, SIGNAL(cellDoubleClicked(int,int)), this, SLOT(regionalCellDoubleClicked(int,int)));
     QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(close()));
 
-    QObject::connect(ui.lineEdit_search, SIGNAL(returnPressed()), this, SLOT(buttonSearch()));
-    QObject::connect(ui.pushButton_search, SIGNAL(clicked()), this, SLOT(buttonSearch()));
+    QObject::connect(ui.lineEdit_search, SIGNAL(returnPressed()), this, SLOT(createList()));
+    QObject::connect(ui.lineEdit_search, SIGNAL(textChanged(QString)), this, SLOT(createList()));
+    QObject::connect(ui.pushButton_search, SIGNAL(clicked()), this, SLOT(createList()));
     QObject::connect(ui.pushButton_clear, SIGNAL(clicked()), this, SLOT(buttonClear()));
-    QObject::connect(ui.checkBox_hide_empty_channels, SIGNAL(clicked()), this, SLOT(hideEmptyChannels()));
+    QObject::connect(ui.checkBox_hide_empty_channels, SIGNAL(clicked()), this, SLOT(createList()));
     QObject::connect(ui.checkBox_show_adv_options, SIGNAL(clicked()), this, SLOT(showAdvOptions()));
+
+    QObject::connect(ui.checkBox_teen, SIGNAL(clicked()), this, SLOT(createList()));
+    QObject::connect(ui.checkBox_common, SIGNAL(clicked()), this, SLOT(createList()));
+    QObject::connect(ui.checkBox_erotic, SIGNAL(clicked()), this, SLOT(createList()));
+    QObject::connect(ui.checkBox_thematic, SIGNAL(clicked()), this, SLOT(createList()));
+    QObject::connect(ui.checkBox_regional, SIGNAL(clicked()), this, SLOT(createList()));
+
+    QObject::connect(ui.checkBox_wild, SIGNAL(clicked()), this, SLOT(createList()));
+    QObject::connect(ui.checkBox_tame, SIGNAL(clicked()), this, SLOT(createList()));
+    QObject::connect(ui.checkBox_with_class, SIGNAL(clicked()), this, SLOT(createList()));
+    QObject::connect(ui.checkBox_cult, SIGNAL(clicked()), this, SLOT(createList()));
+    QObject::connect(ui.checkBox_moderated, SIGNAL(clicked()), this, SLOT(createList()));
+    QObject::connect(ui.checkBox_recommended, SIGNAL(clicked()), this, SLOT(createList()));
 }
 
 bool DlgChannelList::isErotic(QString strChannel)
@@ -132,11 +136,11 @@ bool DlgChannelList::isErotic(QString strChannel)
     {
         ChannelList channel = Core::instance()->lChannelList.at(i);
         QString strName = channel.name;
-        QString strType = channel.type;
+        int iType = channel.type;
 
         if (strName == strChannel)
         {
-            if (strType == tr("Erotic"))
+            if (iType == 3)
                 return true;
             else
                 return false;
@@ -145,8 +149,121 @@ bool DlgChannelList::isErotic(QString strChannel)
     return false;
 }
 
+QString DlgChannelList::channelTypeToString(int type)
+{
+    if (type == 1)
+        return tr("Teen");
+    else if (type == 2)
+        return tr("Common");
+    else if (type == 3)
+        return tr("Erotic");
+    else if (type == 4)
+        return tr("Thematic");
+    else if (type == 5)
+        return tr("Regional");
+    else
+        return QString::null;
+}
+
+QString DlgChannelList::channelCatToString(int cat, bool moderated, bool recommended)
+{
+    QString strResult;
+
+    if (cat == 0)
+        strResult = tr("Wild");
+    else if (cat == 1)
+        strResult = tr("Tame");
+    else if (cat == 2)
+        strResult = tr("With class");
+    else if (cat == 3)
+        strResult = tr("Cult");
+
+    if (moderated)
+        strResult += " "+tr("Moderated");
+    if (recommended)
+        strResult += " "+tr("Recommended");
+
+    return strResult;
+}
+
+bool DlgChannelList::showChannel(QString name, int people, int cat, int type, bool moderated, bool recommended)
+{
+    if ((people == 0) && (bHideEmpty))
+        return false;
+
+    if ((type == 1) && (!bShowTeen))
+        return false;
+    if ((type == 2) && (!bShowCommon))
+        return false;
+    if ((type == 3) && (!bShowErotic))
+        return false;
+    if ((type == 4) && (!bShowThematic))
+        return false;
+    if ((type == 5) && (!bShowRegional))
+        return false;
+
+    if ((cat == 0) && (!bShowWild))
+    {
+        if (!(((bShowModerated) && (moderated)) || ((bShowRecommended) && (recommended))))
+            return false;
+    }
+    if ((cat == 1) && (!bShowTame))
+    {
+        if (!(((bShowModerated) && (moderated)) || ((bShowRecommended) && (recommended))))
+            return false;
+    }
+    if ((cat == 2) && (!bShowWithClass))
+    {
+        if (!(((bShowModerated) && (moderated)) || ((bShowRecommended) && (recommended))))
+            return false;
+    }
+    if ((cat == 3) && (!bShowCult))
+    {
+        if (!(((bShowModerated) && (moderated)) || ((bShowRecommended) && (recommended))))
+            return false;
+    }
+
+    if (!strSearch.isEmpty())
+    {
+        if (name.toLower().contains(strSearch.toLower()))
+            return true;
+        else
+            return false;
+    }
+    else
+        return true;
+}
+
 void DlgChannelList::createList()
 {
+    // get options
+    getOptions();
+
+    // clear
+    ui.tableWidget_all->clear();
+    ui.tableWidget_all->setRowCount(0);
+    ui.tableWidget_teen->clear();
+    ui.tableWidget_teen->setRowCount(0);
+    ui.tableWidget_common->clear();
+    ui.tableWidget_common->setRowCount(0);
+    ui.tableWidget_erotic->clear();
+    ui.tableWidget_erotic->setRowCount(0);
+    ui.tableWidget_thematic->clear();
+    ui.tableWidget_thematic->setRowCount(0);
+    ui.tableWidget_regional->clear();
+    ui.tableWidget_regional->setRowCount(0);
+
+    // set labels
+    QStringList lLabels;
+    lLabels << tr("Channel name") << tr("Number of persons") << tr("Category") << tr("Type");
+
+    ui.tableWidget_all->setHorizontalHeaderLabels(lLabels);
+    ui.tableWidget_teen->setHorizontalHeaderLabels(lLabels);
+    ui.tableWidget_common->setHorizontalHeaderLabels(lLabels);
+    ui.tableWidget_erotic->setHorizontalHeaderLabels(lLabels);
+    ui.tableWidget_thematic->setHorizontalHeaderLabels(lLabels);
+    ui.tableWidget_regional->setHorizontalHeaderLabels(lLabels);
+
     // count rows
     int iAllCount = 0;
     int iTeenCount = 0;
@@ -158,19 +275,29 @@ void DlgChannelList::createList()
     for (int i = 0; i < Core::instance()->lChannelList.size(); i++)
     {
         ChannelList channel = Core::instance()->lChannelList.at(i);
-        QString strType = channel.type;
+        QString strName = channel.name;
+        int iPeople = channel.people;
+        int iCat = channel.cat;
+        int iType = channel.type;
+        bool bModerated = channel.moderated;
+        bool bRecommended = channel.recommended;
 
-        iAllCount++;
-        if (strType == tr("Teen"))
-            iTeenCount++;
-        else if (strType == tr("Common"))
-            iCommonCount++;
-        else if (strType == tr("Erotic"))
-            iEroticCount++;
-        else if (strType == tr("Thematic"))
-            iThematicCount++;
-        else if (strType == tr("Regional"))
-            iRegionalCount++;
+        bool bShow = showChannel(strName, iPeople, iCat, iType, bModerated, bRecommended);
+
+        if (bShow)
+        {
+            iAllCount++;
+            if (iType == 1)
+                iTeenCount++;
+            else if (iType == 2)
+                iCommonCount++;
+            else if (iType == 3)
+                iEroticCount++;
+            else if (iType == 4)
+                iThematicCount++;
+            else if (iType == 5)
+                iRegionalCount++;
+        }
     }
 
     ui.tableWidget_all->setRowCount(iAllCount);
@@ -192,56 +319,62 @@ void DlgChannelList::createList()
     {
         ChannelList channel = Core::instance()->lChannelList.at(i);
         QString strName = channel.name;
-        QString strPeople = channel.people;
-        QString strCat = channel.cat;
-        QString strType = channel.type;
+        int iPeople = channel.people;
+        int iCat = channel.cat;
+        int iType = channel.type;
+        bool bModerated = channel.moderated;
+        bool bRecommended = channel.recommended;
 
-        ui.tableWidget_all->setItem(iAllRow, 0, new SortedChannelListTableWidgetItem(strName));
-        ui.tableWidget_all->setItem(iAllRow, 1, new SortedChannelListTableWidgetItem(strPeople));
-        ui.tableWidget_all->setItem(iAllRow, 2, new SortedChannelListTableWidgetItem(strCat));
-        ui.tableWidget_all->setItem(iAllRow, 3, new SortedChannelListTableWidgetItem(strType));
+        bool bShow = showChannel(strName, iPeople, iCat, iType, bModerated, bRecommended);
 
-        iAllRow++;
+        if (bShow)
+        {
+            ui.tableWidget_all->setItem(iAllRow, 0, new SortedChannelListTableWidgetItem(strName));
+            ui.tableWidget_all->setItem(iAllRow, 1, new SortedChannelListTableWidgetItem(QString::number(iPeople)));
+            ui.tableWidget_all->setItem(iAllRow, 2, new SortedChannelListTableWidgetItem(channelCatToString(iCat, bModerated, bRecommended)));
+            ui.tableWidget_all->setItem(iAllRow, 3, new SortedChannelListTableWidgetItem(channelTypeToString(iType)));
+            iAllRow++;
 
-        if (strType == tr("Teen"))
-        {
-            ui.tableWidget_teen->setItem(iTeenRow, 0, new SortedChannelListTableWidgetItem(strName));
-            ui.tableWidget_teen->setItem(iTeenRow, 1, new SortedChannelListTableWidgetItem(strPeople));
-            ui.tableWidget_teen->setItem(iTeenRow, 2, new SortedChannelListTableWidgetItem(strCat));
-            ui.tableWidget_teen->setItem(iTeenRow, 3, new SortedChannelListTableWidgetItem(strType));
-            iTeenRow++;
-        }
-        else if (strType == tr("Common"))
-        {
-            ui.tableWidget_common->setItem(iCommonRow, 0, new SortedChannelListTableWidgetItem(strName));
-            ui.tableWidget_common->setItem(iCommonRow, 1, new SortedChannelListTableWidgetItem(strPeople));
-            ui.tableWidget_common->setItem(iCommonRow, 2, new SortedChannelListTableWidgetItem(strCat));
-            ui.tableWidget_common->setItem(iCommonRow, 3, new SortedChannelListTableWidgetItem(strType));
-            iCommonRow++;
-        }
-        else if (strType == tr("Erotic"))
-        {
-            ui.tableWidget_erotic->setItem(iEroticRow, 0, new SortedChannelListTableWidgetItem(strName));
-            ui.tableWidget_erotic->setItem(iEroticRow, 1, new SortedChannelListTableWidgetItem(strPeople));
-            ui.tableWidget_erotic->setItem(iEroticRow, 2, new SortedChannelListTableWidgetItem(strCat));
-            ui.tableWidget_erotic->setItem(iEroticRow, 3, new SortedChannelListTableWidgetItem(strType));
-            iEroticRow++;
-        }
-        else if (strType == tr("Thematic"))
-        {
-            ui.tableWidget_thematic->setItem(iThematicRow, 0, new SortedChannelListTableWidgetItem(strName));
-            ui.tableWidget_thematic->setItem(iThematicRow, 1, new SortedChannelListTableWidgetItem(strPeople));
-            ui.tableWidget_thematic->setItem(iThematicRow, 2, new SortedChannelListTableWidgetItem(strCat));
-            ui.tableWidget_thematic->setItem(iThematicRow, 3, new SortedChannelListTableWidgetItem(strType));
-            iThematicRow++;
-        }
-        else if (strType == tr("Regional"))
-        {
-            ui.tableWidget_regional->setItem(iRegionalRow, 0, new SortedChannelListTableWidgetItem(strName));
-            ui.tableWidget_regional->setItem(iRegionalRow, 1, new SortedChannelListTableWidgetItem(strPeople));
-            ui.tableWidget_regional->setItem(iRegionalRow, 2, new SortedChannelListTableWidgetItem(strCat));
-            ui.tableWidget_regional->setItem(iRegionalRow, 3, new SortedChannelListTableWidgetItem(strType));
-            iRegionalRow++;
+            if (iType == 1)
+            {
+                ui.tableWidget_teen->setItem(iTeenRow, 0, new SortedChannelListTableWidgetItem(strName));
+                ui.tableWidget_teen->setItem(iTeenRow, 1, new SortedChannelListTableWidgetItem(QString::number(iPeople)));
+                ui.tableWidget_teen->setItem(iTeenRow, 2, new SortedChannelListTableWidgetItem(channelCatToString(iCat, bModerated, bRecommended)));
+                ui.tableWidget_teen->setItem(iTeenRow, 3, new SortedChannelListTableWidgetItem(channelTypeToString(iType)));
+                iTeenRow++;
+            }
+            else if (iType == 2)
+            {
+                ui.tableWidget_common->setItem(iCommonRow, 0, new SortedChannelListTableWidgetItem(strName));
+                ui.tableWidget_common->setItem(iCommonRow, 1, new SortedChannelListTableWidgetItem(QString::number(iPeople)));
+                ui.tableWidget_common->setItem(iCommonRow, 2, new SortedChannelListTableWidgetItem(channelCatToString(iCat, bModerated, bRecommended)));
+                ui.tableWidget_common->setItem(iCommonRow, 3, new SortedChannelListTableWidgetItem(channelTypeToString(iType)));
+                iCommonRow++;
+            }
+            else if (iType == 3)
+            {
+                ui.tableWidget_erotic->setItem(iEroticRow, 0, new SortedChannelListTableWidgetItem(strName));
+                ui.tableWidget_erotic->setItem(iEroticRow, 1, new SortedChannelListTableWidgetItem(QString::number(iPeople)));
+                ui.tableWidget_erotic->setItem(iEroticRow, 2, new SortedChannelListTableWidgetItem(channelCatToString(iCat, bModerated, bRecommended)));
+                ui.tableWidget_erotic->setItem(iEroticRow, 3, new SortedChannelListTableWidgetItem(channelTypeToString(iType)));
+                iEroticRow++;
+            }
+            else if (iType == 4)
+            {
+                ui.tableWidget_thematic->setItem(iThematicRow, 0, new SortedChannelListTableWidgetItem(strName));
+                ui.tableWidget_thematic->setItem(iThematicRow, 1, new SortedChannelListTableWidgetItem(QString::number(iPeople)));
+                ui.tableWidget_thematic->setItem(iThematicRow, 2, new SortedChannelListTableWidgetItem(channelCatToString(iCat, bModerated, bRecommended)));
+                ui.tableWidget_thematic->setItem(iThematicRow, 3, new SortedChannelListTableWidgetItem(channelTypeToString(iType)));
+                iThematicRow++;
+            }
+            else if (iType == 5)
+            {
+                ui.tableWidget_regional->setItem(iRegionalRow, 0, new SortedChannelListTableWidgetItem(strName));
+                ui.tableWidget_regional->setItem(iRegionalRow, 1, new SortedChannelListTableWidgetItem(QString::number(iPeople)));
+                ui.tableWidget_regional->setItem(iRegionalRow, 2, new SortedChannelListTableWidgetItem(channelCatToString(iCat, bModerated, bRecommended)));
+                ui.tableWidget_regional->setItem(iRegionalRow, 3, new SortedChannelListTableWidgetItem(channelTypeToString(iType)));
+                iRegionalRow++;
+            }
         }
     }
 
@@ -253,47 +386,10 @@ void DlgChannelList::createList()
     ui.tableWidget_regional->sortByColumn(1);
 }
 
-void DlgChannelList::showAllChannels()
+void DlgChannelList::getOptions()
 {
-    // all
-    for (int i = 0; i < ui.tableWidget_all->rowCount()-1; i++)
-        ui.tableWidget_all->showRow(i);
-
-    // teen
-    for (int i = 0; i < ui.tableWidget_teen->rowCount()-1; i++)
-        ui.tableWidget_teen->showRow(i);
-
-    // common
-    for (int i = 0; i < ui.tableWidget_common->rowCount()-1; i++)
-        ui.tableWidget_common->showRow(i);
-
-    // erotic
-    for (int i = 0; i < ui.tableWidget_erotic->rowCount()-1; i++)
-        ui.tableWidget_erotic->showRow(i);
-
-    // thematic
-    for (int i = 0; i < ui.tableWidget_thematic->rowCount()-1; i++)
-        ui.tableWidget_thematic->showRow(i);
-
-    // regional
-    for (int i = 0; i < ui.tableWidget_regional->rowCount()-1; i++)
-        ui.tableWidget_regional->showRow(i);
-}
-
-void DlgChannelList::applyCheckboxes()
-{
-    bool bShowTeen;
-    bool bShowCommon;
-    bool bShowErotic;
-    bool bShowThematic;
-    bool bShowRegional;
-
-    bool bShowWild;
-    bool bShowTame;
-    bool bShowWithClass;
-    bool bShowCult;
-    bool bShowModerated;
-    bool bShowRecommended;
+    // search
+    strSearch = ui.lineEdit_search->text();
 
     // teen
     if (ui.checkBox_teen->isChecked())
@@ -361,369 +457,11 @@ void DlgChannelList::applyCheckboxes()
     else
         bShowRecommended = false;
 
-    // all
-    for (int i = 0; i < ui.tableWidget_all->rowCount(); i++)
-    {
-        QString strCat = ui.tableWidget_all->item(i, 2)->text();
-        QString strType = ui.tableWidget_all->item(i, 3)->text();
-
-        if ((!bShowTeen) && (strType == tr("Teen")))
-            ui.tableWidget_all->hideRow(i);
-
-        if ((!bShowCommon) && (strType == tr("Common")))
-            ui.tableWidget_all->hideRow(i);
-
-        if ((!bShowErotic) && (strType == tr("Erotic")))
-            ui.tableWidget_all->hideRow(i);
-
-        if ((!bShowThematic) && (strType == tr("Thematic")))
-            ui.tableWidget_all->hideRow(i);
-
-        if ((!bShowRegional) && (strType == tr("Regional")))
-            ui.tableWidget_all->hideRow(i);
-
-        if ((!bShowWild) && (strCat.contains(tr("Wild"))))
-        {
-            // moderated
-            if ((bShowModerated) && (strCat.contains(tr("Moderated"))))
-                ui.tableWidget_all->showRow(i);
-            // recommended
-            else if ((bShowRecommended) && (strCat.contains(tr("Recommended"))))
-                ui.tableWidget_all->showRow(i);
-            // rest
-            else
-                ui.tableWidget_all->hideRow(i);
-        }
-
-        if ((!bShowTame) && (strCat.contains(tr("Tame"))))
-        {
-            // moderated
-            if ((bShowModerated) && (strCat.contains(tr("Moderated"))))
-                ui.tableWidget_all->showRow(i);
-            // recommended
-            else if ((bShowRecommended) && (strCat.contains(tr("Recommended"))))
-                ui.tableWidget_all->showRow(i);
-            // rest
-            else
-                ui.tableWidget_all->hideRow(i);
-        }
-
-        if ((!bShowWithClass) && (strCat.contains(tr("With class"))))
-        {
-            // moderated
-            if ((bShowModerated) && (strCat.contains(tr("Moderated"))))
-                ui.tableWidget_all->showRow(i);
-            // recommended
-            else if ((bShowRecommended) && (strCat.contains(tr("Recommended"))))
-                ui.tableWidget_all->showRow(i);
-            // rest
-            else
-                ui.tableWidget_all->hideRow(i);
-        }
-
-        if ((!bShowCult) && (strCat.contains(tr("Cult"))))
-        {
-            // moderated
-            if ((bShowModerated) && (strCat.contains(tr("Moderated"))))
-                ui.tableWidget_all->showRow(i);
-            // recommended
-            else if ((bShowRecommended) && (strCat.contains(tr("Recommended"))))
-                ui.tableWidget_all->showRow(i);
-            // rest
-            else
-                ui.tableWidget_all->hideRow(i);
-        }
-    }
-
-    // teen
-    for (int i = 0; i < ui.tableWidget_teen->rowCount(); i++)
-    {
-        QString strCat = ui.tableWidget_teen->item(i, 2)->text();
-
-        if ((!bShowWild) && (strCat.contains(tr("Wild"))))
-        {
-            // moderated
-            if ((bShowModerated) && (strCat.contains(tr("Moderated"))))
-                ui.tableWidget_teen->showRow(i);
-            // recommended
-            else if ((bShowRecommended) && (strCat.contains(tr("Recommended"))))
-                ui.tableWidget_teen->showRow(i);
-            // rest
-            else
-                ui.tableWidget_teen->hideRow(i);
-        }
-
-        if ((!bShowTame) && (strCat.contains(tr("Tame"))))
-        {
-            // moderated
-            if ((bShowModerated) && (strCat.contains(tr("Moderated"))))
-                ui.tableWidget_teen->showRow(i);
-            // recommended
-            else if ((bShowRecommended) && (strCat.contains(tr("Recommended"))))
-                ui.tableWidget_teen->showRow(i);
-            // rest
-            else
-                ui.tableWidget_teen->hideRow(i);
-        }
-
-        if ((!bShowWithClass) && (strCat.contains(tr("With class"))))
-        {
-            // moderated
-            if ((bShowModerated) && (strCat.contains(tr("Moderated"))))
-                ui.tableWidget_teen->showRow(i);
-            // recommended
-            else if ((bShowRecommended) && (strCat.contains(tr("Recommended"))))
-                ui.tableWidget_teen->showRow(i);
-            // rest
-            else
-                ui.tableWidget_teen->hideRow(i);
-        }
-
-        if ((!bShowCult) && (strCat.contains(tr("Cult"))))
-        {
-            // moderated
-            if ((bShowModerated) && (strCat.contains(tr("Moderated"))))
-                ui.tableWidget_teen->showRow(i);
-            // recommended
-            else if ((bShowRecommended) && (strCat.contains(tr("Recommended"))))
-                ui.tableWidget_teen->showRow(i);
-            // rest
-            else
-                ui.tableWidget_teen->hideRow(i);
-        }
-    }
-
-    // common
-    for (int i = 0; i < ui.tableWidget_common->rowCount(); i++)
-    {
-        QString strCat = ui.tableWidget_common->item(i, 2)->text();
-
-        if ((!bShowWild) && (strCat.contains(tr("Wild"))))
-        {
-            // moderated
-            if ((bShowModerated) && (strCat.contains(tr("Moderated"))))
-                ui.tableWidget_common->showRow(i);
-            // recommended
-            else if ((bShowRecommended) && (strCat.contains(tr("Recommended"))))
-                ui.tableWidget_common->showRow(i);
-            // rest
-            else
-                ui.tableWidget_common->hideRow(i);
-        }
-
-        if ((!bShowTame) && (strCat.contains(tr("Tame"))))
-        {
-            // moderated
-            if ((bShowModerated) && (strCat.contains(tr("Moderated"))))
-                ui.tableWidget_common->showRow(i);
-            // recommended
-            else if ((bShowRecommended) && (strCat.contains(tr("Recommended"))))
-                ui.tableWidget_common->showRow(i);
-            // rest
-            else
-                ui.tableWidget_common->hideRow(i);
-        }
-
-        if ((!bShowWithClass) && (strCat.contains(tr("With class"))))
-        {
-            // moderated
-            if ((bShowModerated) && (strCat.contains(tr("Moderated"))))
-                ui.tableWidget_common->showRow(i);
-            // recommended
-            else if ((bShowRecommended) && (strCat.contains(tr("Recommended"))))
-                ui.tableWidget_common->showRow(i);
-            // rest
-            else
-                ui.tableWidget_common->hideRow(i);
-        }
-
-        if ((!bShowCult) && (strCat.contains(tr("Cult"))))
-        {
-            // moderated
-            if ((bShowModerated) && (strCat.contains(tr("Moderated"))))
-                ui.tableWidget_common->showRow(i);
-            // recommended
-            else if ((bShowRecommended) && (strCat.contains(tr("Recommended"))))
-                ui.tableWidget_common->showRow(i);
-            // rest
-            else
-                ui.tableWidget_common->hideRow(i);
-        }
-    }
-
-    // erotic
-    for (int i = 0; i < ui.tableWidget_erotic->rowCount(); i++)
-    {
-        QString strCat = ui.tableWidget_erotic->item(i, 2)->text();
-
-        if ((!bShowWild) && (strCat.contains(tr("Wild"))))
-        {
-            // moderated
-            if ((bShowModerated) && (strCat.contains(tr("Moderated"))))
-                ui.tableWidget_erotic->showRow(i);
-            // recommended
-            else if ((bShowRecommended) && (strCat.contains(tr("Recommended"))))
-                ui.tableWidget_erotic->showRow(i);
-            // rest
-            else
-                ui.tableWidget_erotic->hideRow(i);
-        }
-
-        if ((!bShowTame) && (strCat.contains(tr("Tame"))))
-        {
-            // moderated
-            if ((bShowModerated) && (strCat.contains(tr("Moderated"))))
-                ui.tableWidget_erotic->showRow(i);
-            // recommended
-            else if ((bShowRecommended) && (strCat.contains(tr("Recommended"))))
-                ui.tableWidget_erotic->showRow(i);
-            // rest
-            else
-                ui.tableWidget_erotic->hideRow(i);
-        }
-
-        if ((!bShowWithClass) && (strCat.contains(tr("With class"))))
-        {
-            // moderated
-            if ((bShowModerated) && (strCat.contains(tr("Moderated"))))
-                ui.tableWidget_erotic->showRow(i);
-            // recommended
-            else if ((bShowRecommended) && (strCat.contains(tr("Recommended"))))
-                ui.tableWidget_erotic->showRow(i);
-            // rest
-            else
-                ui.tableWidget_erotic->hideRow(i);
-        }
-
-        if ((!bShowCult) && (strCat.contains(tr("Cult"))))
-        {
-            // moderated
-            if ((bShowModerated) && (strCat.contains(tr("Moderated"))))
-                ui.tableWidget_erotic->showRow(i);
-            // recommended
-            else if ((bShowRecommended) && (strCat.contains(tr("Recommended"))))
-                ui.tableWidget_erotic->showRow(i);
-            // rest
-            else
-                ui.tableWidget_erotic->hideRow(i);
-        }
-    }
-
-    // thematic
-    for (int i = 0; i < ui.tableWidget_thematic->rowCount(); i++)
-    {
-        QString strCat = ui.tableWidget_thematic->item(i, 2)->text();
-
-        if ((!bShowWild) && (strCat.contains(tr("Wild"))))
-        {
-            // moderated
-            if ((bShowModerated) && (strCat.contains(tr("Moderated"))))
-                ui.tableWidget_thematic->showRow(i);
-            // recommended
-            else if ((bShowRecommended) && (strCat.contains(tr("Recommended"))))
-                ui.tableWidget_thematic->showRow(i);
-            // rest
-            else
-                ui.tableWidget_thematic->hideRow(i);
-        }
-
-        if ((!bShowTame) && (strCat.contains(tr("Tame"))))
-        {
-            // moderated
-            if ((bShowModerated) && (strCat.contains(tr("Moderated"))))
-                ui.tableWidget_thematic->showRow(i);
-            // recommended
-            else if ((bShowRecommended) && (strCat.contains(tr("Recommended"))))
-                ui.tableWidget_thematic->showRow(i);
-            // rest
-            else
-                ui.tableWidget_thematic->hideRow(i);
-        }
-
-        if ((!bShowWithClass) && (strCat.contains(tr("With class"))))
-        {
-            // moderated
-            if ((bShowModerated) && (strCat.contains(tr("Moderated"))))
-                ui.tableWidget_thematic->showRow(i);
-            // recommended
-            else if ((bShowRecommended) && (strCat.contains(tr("Recommended"))))
-                ui.tableWidget_thematic->showRow(i);
-            // rest
-            else
-                ui.tableWidget_thematic->hideRow(i);
-        }
-
-        if ((!bShowCult) && (strCat.contains(tr("Cult"))))
-        {
-            // moderated
-            if ((bShowModerated) && (strCat.contains(tr("Moderated"))))
-                ui.tableWidget_thematic->showRow(i);
-            // recommended
-            else if ((bShowRecommended) && (strCat.contains(tr("Recommended"))))
-                ui.tableWidget_thematic->showRow(i);
-            // rest
-            else
-                ui.tableWidget_thematic->hideRow(i);
-        }
-    }
-
-    // regional
-    for (int i = 0; i < ui.tableWidget_regional->rowCount(); i++)
-    {
-        QString strCat = ui.tableWidget_regional->item(i, 2)->text();
-
-        if ((!bShowWild) && (strCat.contains(tr("Wild"))))
-        {
-            // moderated
-            if ((bShowModerated) && (strCat.contains(tr("Moderated"))))
-                ui.tableWidget_regional->showRow(i);
-            // recommended
-            else if ((bShowRecommended) && (strCat.contains(tr("Recommended"))))
-                ui.tableWidget_regional->showRow(i);
-            // rest
-            else
-                ui.tableWidget_regional->hideRow(i);
-        }
-
-        if ((!bShowTame) && (strCat.contains(tr("Tame"))))
-        {
-            // moderated
-            if ((bShowModerated) && (strCat.contains(tr("Moderated"))))
-                ui.tableWidget_regional->showRow(i);
-            // recommended
-            else if ((bShowRecommended) && (strCat.contains(tr("Recommended"))))
-                ui.tableWidget_regional->showRow(i);
-            // rest
-            else
-                ui.tableWidget_regional->hideRow(i);
-        }
-
-        if ((!bShowWithClass) && (strCat.contains(tr("With class"))))
-        {
-            // moderated
-            if ((bShowModerated) && (strCat.contains(tr("Moderated"))))
-                ui.tableWidget_regional->showRow(i);
-            // recommended
-            else if ((bShowRecommended) && (strCat.contains(tr("Recommended"))))
-                ui.tableWidget_regional->showRow(i);
-            // rest
-            else
-                ui.tableWidget_regional->hideRow(i);
-        }
-
-        if ((!bShowCult) && (strCat.contains(tr("Cult"))))
-        {
-            // moderated
-            if ((bShowModerated) && (strCat.contains(tr("Moderated"))))
-                ui.tableWidget_regional->showRow(i);
-            // recommended
-            else if ((bShowRecommended) && (strCat.contains(tr("Recommended"))))
-                ui.tableWidget_regional->showRow(i);
-            // rest
-            else
-                ui.tableWidget_regional->hideRow(i);
-        }
-    }
+    // hide empty
+    if (ui.checkBox_hide_empty_channels->isChecked())
+        bHideEmpty = true;
+    else
+        bHideEmpty = false;
 }
 
 void DlgChannelList::allCellDoubleClicked(int row, int column)
@@ -824,68 +562,8 @@ void DlgChannelList::regionalCellDoubleClicked(int row, int column)
     Core::instance()->pNetwork->send(QString("JOIN %1").arg(strChannel));
 }
 
-void DlgChannelList::buttonSearch()
-{
-    // show all channels
-    showAllChannels();
-
-    // apply checkboxes - hide selected channels
-    applyCheckboxes();
-
-    // find channel
-    // all
-    for (int i = 0; i < ui.tableWidget_all->rowCount(); i++)
-    {
-        QString strChannelName = ui.tableWidget_all->item(i, 0)->text();
-        if (!strChannelName.toLower().contains(ui.lineEdit_search->text().toLower()))
-            ui.tableWidget_all->hideRow(i);
-    }
-
-    // teen
-    for (int i = 0; i < ui.tableWidget_teen->rowCount(); i++)
-    {
-        QString strChannelName = ui.tableWidget_teen->item(i, 0)->text();
-        if (!strChannelName.toLower().contains(ui.lineEdit_search->text().toLower()))
-            ui.tableWidget_teen->hideRow(i);
-    }
-
-    // common
-    for (int i = 0; i < ui.tableWidget_common->rowCount(); i++)
-    {
-        QString strChannelName = ui.tableWidget_common->item(i, 0)->text();
-        if (!strChannelName.toLower().contains(ui.lineEdit_search->text().toLower()))
-            ui.tableWidget_common->hideRow(i);
-    }
-
-    // erotic
-    for (int i = 0; i < ui.tableWidget_erotic->rowCount(); i++)
-    {
-        QString strChannelName = ui.tableWidget_erotic->item(i, 0)->text();
-        if (!strChannelName.toLower().contains(ui.lineEdit_search->text().toLower()))
-            ui.tableWidget_erotic->hideRow(i);
-    }
-
-    // thematic
-    for (int i = 0; i < ui.tableWidget_thematic->rowCount(); i++)
-    {
-        QString strChannelName = ui.tableWidget_thematic->item(i, 0)->text();
-        if (!strChannelName.toLower().contains(ui.lineEdit_search->text().toLower()))
-            ui.tableWidget_thematic->hideRow(i);
-    }
-
-    // regional
-    for (int i = 0; i < ui.tableWidget_regional->rowCount(); i++)
-    {
-        QString strChannelName = ui.tableWidget_regional->item(i, 0)->text();
-        if (!strChannelName.toLower().contains(ui.lineEdit_search->text().toLower()))
-            ui.tableWidget_regional->hideRow(i);
-    }
-}
-
 void DlgChannelList::buttonClear()
 {
-    ui.lineEdit_search->setText("");
-
     ui.checkBox_teen->setChecked(true);
     ui.checkBox_common->setChecked(true);
     ui.checkBox_erotic->setChecked(true);
@@ -901,95 +579,9 @@ void DlgChannelList::buttonClear()
 
     ui.checkBox_hide_empty_channels->setChecked(false);
 
-    showAllChannels();
-}
+    ui.lineEdit_search->clear();
 
-void DlgChannelList::hideEmptyChannels()
-{
-    bool bHide;
-
-    if (ui.checkBox_hide_empty_channels->isChecked())
-        bHide = true;
-    else
-        bHide = false;
-
-    // all
-    for (int i = 0; i < ui.tableWidget_all->rowCount(); i++)
-    {
-        QString strPeople = ui.tableWidget_all->item(i, 1)->text();
-        if (strPeople == "0")
-        {
-            if (bHide)
-                ui.tableWidget_all->hideRow(i);
-            else
-                ui.tableWidget_all->showRow(i);
-        }
-    }
-
-    // teen
-    for (int i = 0; i < ui.tableWidget_teen->rowCount(); i++)
-    {
-        QString strPeople = ui.tableWidget_teen->item(i, 1)->text();
-        if (strPeople == "0")
-        {
-            if (bHide)
-                ui.tableWidget_teen->hideRow(i);
-            else
-                ui.tableWidget_teen->showRow(i);
-        }
-    }
-
-    // common
-    for (int i = 0; i < ui.tableWidget_common->rowCount(); i++)
-    {
-        QString strPeople = ui.tableWidget_common->item(i, 1)->text();
-        if (strPeople == "0")
-        {
-            if (bHide)
-                ui.tableWidget_common->hideRow(i);
-            else
-                ui.tableWidget_common->showRow(i);
-        }
-    }
-
-    // erotic
-    for (int i = 0; i < ui.tableWidget_erotic->rowCount(); i++)
-    {
-        QString strPeople = ui.tableWidget_erotic->item(i, 1)->text();
-        if (strPeople == "0")
-        {
-            if (bHide)
-                ui.tableWidget_erotic->hideRow(i);
-            else
-                ui.tableWidget_erotic->showRow(i);
-        }
-    }
-
-    // thematic
-    for (int i = 0; i < ui.tableWidget_thematic->rowCount(); i++)
-    {
-        QString strPeople = ui.tableWidget_thematic->item(i, 1)->text();
-        if (strPeople == "0")
-        {
-            if (bHide)
-                ui.tableWidget_thematic->hideRow(i);
-            else
-                ui.tableWidget_thematic->showRow(i);
-        }
-    }
-
-    // regional
-    for (int i = 0; i < ui.tableWidget_regional->rowCount(); i++)
-    {
-        QString strPeople = ui.tableWidget_regional->item(i, 1)->text();
-        if (strPeople == "0")
-        {
-            if (bHide)
-                ui.tableWidget_regional->hideRow(i);
-            else
-                ui.tableWidget_regional->showRow(i);
-        }
-    }
+    createList();
 }
 
 void DlgChannelList::showAdvOptions()
@@ -1024,7 +616,7 @@ void DlgChannelList::keyPressEvent(QKeyEvent *event)
     {
         case Qt::Key_Enter:
         case Qt::Key_Return:
-            buttonSearch();
+            createList();
             break;
         default:
             QDialog::keyPressEvent(event);

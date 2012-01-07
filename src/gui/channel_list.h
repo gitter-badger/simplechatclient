@@ -38,9 +38,26 @@ private:
     void createSignals();
 
     bool isErotic(QString);
-    void createList();
-    void showAllChannels();
-    void applyCheckboxes();
+    void getOptions();
+    QString channelTypeToString(int);
+    QString channelCatToString(int, bool, bool);
+    bool showChannel(QString, int, int, int, bool, bool);
+
+    QString strSearch;
+    bool bShowTeen;
+    bool bShowCommon;
+    bool bShowErotic;
+    bool bShowThematic;
+    bool bShowRegional;
+
+    bool bShowWild;
+    bool bShowTame;
+    bool bShowWithClass;
+    bool bShowCult;
+    bool bShowModerated;
+    bool bShowRecommended;
+
+    bool bHideEmpty;
 
 protected:
     virtual void resizeEvent(QResizeEvent *);
@@ -53,9 +70,8 @@ private slots:
     void eroticCellDoubleClicked(int, int);
     void thematicCellDoubleClicked(int, int);
     void regionalCellDoubleClicked(int, int);
-    void buttonSearch();
+    void createList();
     void buttonClear();
-    void hideEmptyChannels();
     void showAdvOptions();
 };
 

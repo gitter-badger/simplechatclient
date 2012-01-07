@@ -4074,9 +4074,11 @@ void OnetKernel::raw_819()
         if (strChannelParameters.size() == 3)
         {
             QString strChannelName = strChannelParameters[0];
-            QString strChannelPeople = strChannelParameters[2];
-            QString strChannelCat = QString::null;
-            QString strChannelType = QString::null;
+            int iChannelPeople = QString(strChannelParameters[2]).toInt();
+            int iChannelCat = 0;
+            int iChannelType = 0;
+            bool bChannelModerated = false;
+            bool bChannelRecommended = false;
 
             bool flag = false;
             bool flag1 = false;
@@ -4100,51 +4102,21 @@ void OnetKernel::raw_819()
             int l = (c & 0x38) >> 3;
             //flag4 = l == 3;
 
-            switch(l)
-            {
-                case 1:
-                    strChannelType = tr("Teen");
-                    break;
-                case 2:
-                    strChannelType = tr("Common");
-                    break;
-                case 3:
-                    strChannelType = tr("Erotic");
-                    break;
-                case 4:
-                    strChannelType = tr("Thematic");
-                    break;
-                case 5:
-                    strChannelType = tr("Regional");
-                    break;
-            }
+            iChannelType = l;
+            iChannelCat = k;
 
             if (flag)
-                strChannelCat += tr("Moderated")+" ";
+                bChannelModerated = true;
             if (flag1)
-                strChannelCat += tr("Recommended")+" ";
-
-            switch(k)
-            {
-                case 0:
-                    strChannelCat = tr("Wild")+" "+ strChannelCat;
-                    break;
-                case 1:
-                    strChannelCat = tr("Tame")+" "+ strChannelCat;
-                    break;
-                case 2:
-                    strChannelCat = tr("With class")+" "+ strChannelCat;
-                    break;
-                case 3:
-                    strChannelCat = tr("Cult")+" "+ strChannelCat;
-                    break;
-            }
+                bChannelRecommended = true;
 
             ChannelList add;
             add.name = strChannelName;
-            add.people = strChannelPeople;
-            add.cat = strChannelCat;
-            add.type = strChannelType;
+            add.people = iChannelPeople;
+            add.cat = iChannelCat;
+            add.type = iChannelType;
+            add.moderated = bChannelModerated;
+            add.recommended = bChannelRecommended;
 
             Core::instance()->lChannelList.append(add);
         }

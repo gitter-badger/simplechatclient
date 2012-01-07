@@ -36,9 +36,11 @@ enum { maxOpenChannels = 30 };
 struct ChannelList
 {
     QString name;
-    QString people;
-    QString cat;
-    QString type;
+    int people;
+    int cat;
+    int type;
+    bool moderated;
+    bool recommended;
 };
 
 struct ModerateMsg
