@@ -280,7 +280,7 @@ endif (MINGW)
 
 # disable console on windows mingw
 if (MINGW)
-	set (CMAKE_CXX_LINK_FLAGS "${CMAKE_CXX_LINK_FLAGS} -mwindows")
+	set (CMAKE_CXX_LINK_FLAGS "${CMAKE_CXX_LINK_FLAGS} -mwindows -static-libgcc -static-libstdc++")
 endif (MINGW)
 
 # moc
