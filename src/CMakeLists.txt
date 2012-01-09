@@ -14,6 +14,7 @@ set (scc_UIS
 	../ui/ignore.ui
 	../ui/invite.ui
 	../ui/moderation.ui
+	../ui/my_avatar.ui
 	../ui/my_profile.ui
 	../ui/my_stats.ui
 	../ui/notes.ui
@@ -56,6 +57,7 @@ set (scc_SRCS
 	gui/ignore.cpp
 	gui/invite.cpp
 	gui/moderation.cpp
+	gui/my_avatar.cpp
 	gui/my_profile.cpp
 	gui/my_stats.cpp
 	gui/notes.cpp
@@ -70,6 +72,7 @@ set (scc_SRCS
 	gui/user_profile.cpp
 	gui/webbrowser.cpp
 	notify/notify.cpp
+	onet/avatar_client.cpp
 	onet/captcha.cpp
 	onet/onet_auth.cpp
 	onet/onet_kernel.cpp
@@ -112,6 +115,7 @@ set (scc_MOC_HDRS
 	gui/ignore.h
 	gui/invite.h
 	gui/moderation.h
+	gui/my_avatar.h
 	gui/my_profile.h
 	gui/my_stats.h
 	gui/notes.h
@@ -126,6 +130,7 @@ set (scc_MOC_HDRS
 	gui/user_profile.h
 	gui/webbrowser.h
 	notify/notify.h
+	onet/avatar_client.h
 	onet/captcha.h
 	onet/onet_auth.h
 	onet/onet_kernel.h

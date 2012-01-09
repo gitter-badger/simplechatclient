@@ -21,11 +21,13 @@
 #ifndef ONET_AUTH_H
 #define ONET_AUTH_H
 
+#include <QObject>
+
 class QNetworkAccessManager;
 class QNetworkCookieJar;
 class QNetworkReply;
+class QTimer;
 class TabContainer;
-#include <QObject>
 
 /**
  * Authorize class for onet
@@ -44,6 +46,8 @@ private:
     TabContainer *pTabC;
     QNetworkAccessManager *accessManager;
     QNetworkCookieJar *cookieJar;
+
+    QTimer *timerSk;
 
     QString strNick;
     QString strNickAuth;
@@ -77,6 +81,7 @@ private:
 
 private slots:
     void networkFinished(QNetworkReply*);
+    void refreshSk();
 
 };
 

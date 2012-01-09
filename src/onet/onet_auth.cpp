@@ -23,24 +23,34 @@
 #include <QNetworkCookieJar>
 #include <QNetworkReply>
 #include <QNetworkRequest>
+#include <QObject>
+#include <QTimer>
 #include <QUrl>
-#include "core.h"
+
 #include "captcha.h"
-#include "tab_container.h"
+#include "core.h"
 #include "onet_auth.h"
+#include "tab_container.h"
 
 OnetAuth::OnetAuth(TabContainer *_pTabC) : pTabC(_pTabC), bAuthorizing(false)
 {
     accessManager = new QNetworkAccessManager;
     cookieJar = new QNetworkCookieJar();
     accessManager->setCookieJar(cookieJar);
-    QObject::connect(accessManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(networkFinished(QNetworkReply*)));
+    connect(accessManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(networkFinished(QNetworkReply*)));
+
+    timerSk = new QTimer();
+    timerSk->setInterval(1000*60*9); // 9 min
+    connect(timerSk, SIGNAL(timeout()), this, SLOT(refreshSk()));
+    timerSk->start();
 }
 
 OnetAuth::~OnetAuth()
 {
-    delete cookieJar;
+    timerSk->stop();
+    delete timerSk;
     accessManager->deleteLater();
+    cookieJar->deleteLater();
 }
 
 void OnetAuth::authorize(QString p1, QString p2, QString p3)
@@ -96,7 +106,6 @@ void OnetAuth::getChat()
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
     QNetworkReply *pReply = accessManager->post(request, strContent.toAscii());
     pReply->setProperty("category", "get_chat");
-    pReply->ignoreSslErrors();
 }
 
 void OnetAuth::getDeploy()
@@ -109,7 +118,6 @@ void OnetAuth::getDeploy()
 
     QNetworkReply *pReply = accessManager->get(QNetworkRequest(QUrl(strUrl)));
     pReply->setProperty("category", "get_deploy");
-    pReply->ignoreSslErrors();
 }
 
 void OnetAuth::gotDeploy(QString strData)
@@ -129,7 +137,6 @@ void OnetAuth::getKropka()
 
     QNetworkReply *pReply = accessManager->get(QNetworkRequest(QUrl(strUrl)));
     pReply->setProperty("category", "get_kropka");
-    pReply->ignoreSslErrors();
 }
 
 void OnetAuth::getKropkaFull()
@@ -142,7 +149,6 @@ void OnetAuth::getKropkaFull()
 
     QNetworkReply *pReply = accessManager->get(QNetworkRequest(QUrl(strUrl)));
     pReply->setProperty("category", "get_kropka_full");
-    pReply->ignoreSslErrors();
 }
 
 void OnetAuth::getSk()
@@ -155,7 +161,6 @@ void OnetAuth::getSk()
 
     QNetworkReply *pReply = accessManager->get(QNetworkRequest(QUrl(strUrl)));
     pReply->setProperty("category", "get_sk");
-    pReply->ignoreSslErrors();
 }
 
 void OnetAuth::getSecureKropka()
@@ -168,7 +173,6 @@ void OnetAuth::getSecureKropka()
 
     QNetworkReply *pReply = accessManager->get(QNetworkRequest(QUrl(strUrl)));
     pReply->setProperty("category", "get_secure_kropka");
-    pReply->ignoreSslErrors();
 }
 
 void OnetAuth::getSecureMlogin()
@@ -202,7 +206,6 @@ void OnetAuth::getOverride()
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
     QNetworkReply *pReply = accessManager->post(request, strContent.toAscii());
     pReply->setProperty("category", "get_override");
-    pReply->ignoreSslErrors();
 }
 
 void OnetAuth::getUo()
@@ -220,7 +223,6 @@ void OnetAuth::getUo()
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
     QNetworkReply *pReply = accessManager->post(request, strContent.toAscii());
     pReply->setProperty("category", "get_uo");
-    pReply->ignoreSslErrors();
 }
 
 void OnetAuth::showCaptchaDialog()
@@ -244,7 +246,6 @@ void OnetAuth::getCheckCode()
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
     QNetworkReply *pReply = accessManager->post(request, strContent.toAscii());
     pReply->setProperty("category", "get_check_code");
-    pReply->ignoreSslErrors();
 }
 
 void OnetAuth::networkFinished(QNetworkReply *reply)
@@ -305,6 +306,10 @@ void OnetAuth::networkFinished(QNetworkReply *reply)
 
             saveCookies();
         }
+    }
+    else if (strCategory == "refresh_sk")
+    {
+        saveCookies();
     }
 }
 
@@ -391,3 +396,19 @@ void OnetAuth::requestFinished(QString strData)
         pTabC->showMessageActive(strError, ErrorMessage);
     }
 }
+
+void OnetAuth::refreshSk()
+{
+    if (Core::instance()->pNetwork->isConnected() && bRegisteredNick)
+    {
+#ifdef Q_WS_X11
+        if (Core::instance()->settings.value("debug") == "on") { qDebug() << "Request: refresh_sk"; }
+#endif
+        // sk
+        QString strUrl = "http://czat.onet.pl/sk.gif";
+
+        QNetworkReply *pReply = accessManager->get(QNetworkRequest(QUrl(strUrl)));
+        pReply->setProperty("category", "refresh_sk");
+    }
+}
+

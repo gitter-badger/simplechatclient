@@ -34,6 +34,7 @@
 #include "channel_list.h"
 #include "friends.h"
 #include "ignore.h"
+#include "my_avatar.h"
 #include "my_profile.h"
 #include "my_stats.h"
 #include "notes.h"
@@ -172,6 +173,7 @@ void MainWindow::createActions()
     camsAct = new QAction(QIcon(":/images/oxygen/16x16/camera-web.png"),tr("Cams"), this);
     myStatsAct = new QAction(QIcon(":/images/oxygen/16x16/office-chart-bar.png"),tr("My statistics"), this);
     myProfileAct = new QAction(QIcon(":/images/oxygen/16x16/view-pim-contacts.png"),tr("My profile"), this);
+    myAvatarAct = new QAction(QIcon(":/images/oxygen/16x16/preferences-desktop-user.png"),tr("My avatar"), this);
 
     // shortcut
     connectAct->setShortcuts(QKeySequence::New);
@@ -219,6 +221,7 @@ void MainWindow::createMenus()
     myMenu = menuBar()->addMenu(tr("&My"));
     myMenu->addAction(myStatsAct);
     myMenu->addAction(myProfileAct);
+    //myMenu->addAction(myAvatarAct);
     myMenu->addAction(notesAct);
 
     // help menu
@@ -293,6 +296,7 @@ void MainWindow::createSignals()
     QObject::connect(Core::instance()->awayAct, SIGNAL(triggered()), this, SLOT(buttonSetAway()));
     QObject::connect(myStatsAct, SIGNAL(triggered()), this, SLOT(openMyStats()));
     QObject::connect(myProfileAct, SIGNAL(triggered()), this, SLOT(openMyProfile()));
+    QObject::connect(myAvatarAct, SIGNAL(triggered()), this, SLOT(openMyAvatar()));
 
     // offlinemsg
     QObject::connect(Core::instance()->offlineMsgAct, SIGNAL(triggered()), this, SLOT(openOfflinemsg()));
@@ -466,6 +470,7 @@ void MainWindow::updateActions()
         ignoreAct->setEnabled(true);
         myStatsAct->setEnabled(true);
         myProfileAct->setEnabled(true);
+        myAvatarAct->setEnabled(true);
     }
     else
     {
@@ -475,6 +480,7 @@ void MainWindow::updateActions()
         ignoreAct->setEnabled(false);
         myStatsAct->setEnabled(false);
         myProfileAct->setEnabled(false);
+        myAvatarAct->setEnabled(false);
     }
 }
 
@@ -604,6 +610,12 @@ void MainWindow::openMyProfile()
 {
     if ((Core::instance()->pNetwork->isConnected()) && (Core::instance()->pNetwork->isWritable()) && (Core::instance()->settings.value("logged") == "on"))
         DlgMyProfile(this).exec();
+}
+
+void MainWindow::openMyAvatar()
+{
+    if ((Core::instance()->pNetwork->isConnected()) && (Core::instance()->pNetwork->isWritable()) && (Core::instance()->settings.value("logged") == "on"))
+        DlgMyAvatar(this).exec();
 }
 
 void MainWindow::openNotes()

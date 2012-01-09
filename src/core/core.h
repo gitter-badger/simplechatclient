@@ -22,7 +22,6 @@
 #define CORE_H
 
 #include "defines.h"
-class QAction;
 class QTcpSocket;
 class QTimer;
 class MainWindow;

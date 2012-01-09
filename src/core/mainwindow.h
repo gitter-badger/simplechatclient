@@ -83,6 +83,7 @@ private:
     QMenu *myMenu;
     QAction *myStatsAct;
     QAction *myProfileAct;
+    QAction *myAvatarAct;
 
     TabManager *pTabM;
     TabContainer *pTabC;
@@ -122,6 +123,7 @@ private slots:
     void openCams();
     void buttonSetBusy();
     void buttonSetAway();
+    void openMyAvatar();
     void openMyStats();
     void openMyProfile();
     void openOfflinemsg();

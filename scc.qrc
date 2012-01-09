@@ -67,6 +67,7 @@
         <file>images/oxygen/16x16/irc-operator.png</file>
         <file>images/oxygen/16x16/im-user-busy.png</file>
         <file>images/oxygen/16x16/user-identity.png</file>
+        <file>images/oxygen/16x16/preferences-desktop-user.png</file>
         <file>images/oxygen/16x16/user-properties.png</file>
         <file>images/oxygen/16x16/camera-web.png</file>
         <file>images/logo.png</file>
@@ -92,5 +93,6 @@
         <file>images/oxygen/16x16/format-stroke-color.png</file>
         <file>images/oxygen/16x16/tool-animator.png</file>
         <file>images/oxygen/16x16/feed-subscribe.png</file>
+        <file>images/oxygen/16x16/image-missing.png</file>
     </qresource>
 </RCC>

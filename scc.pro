@@ -40,6 +40,7 @@ SOURCES += src/avatars/avatar.cpp \
     src/gui/ignore.cpp \
     src/gui/invite.cpp \
     src/gui/moderation.cpp \
+    src/gui/my_avatar.cpp \
     src/gui/my_profile.cpp \
     src/gui/my_stats.cpp \
     src/gui/notes.cpp \
@@ -57,6 +58,7 @@ SOURCES += src/avatars/avatar.cpp \
     src/gui/webcam_mini.cpp \
     src/gui/webcam_standard.cpp \
     src/notify/notify.cpp \
+    src/onet/avatar_client.cpp \
     src/onet/captcha.cpp \
     src/onet/onet_auth.cpp \
     src/onet/onet_kernel.cpp \
@@ -106,6 +108,7 @@ HEADERS += src/avatars/avatar.h \
     src/gui/ignore_ad.h \
     src/gui/invite.h \
     src/gui/moderation.h \
+    src/gui/my_avatar.h \
     src/gui/my_profile.h \
     src/gui/my_stats.h \
     src/gui/notes.h \
@@ -123,6 +126,7 @@ HEADERS += src/avatars/avatar.h \
     src/gui/webcam_mini.h \
     src/gui/webcam_standard.h \
     src/notify/notify.h \
+    src/onet/avatar_client.h \
     src/onet/captcha.h \
     src/onet/onet_auth.h \
     src/onet/onet_kernel.h \
@@ -152,6 +156,7 @@ FORMS += ui/about.ui \
     ui/ignore.ui \
     ui/invite.ui \
     ui/moderation.ui \
+    ui/my_avatar.ui \
     ui/my_profile.ui \
     ui/my_stats.ui \
     ui/notes.ui \
