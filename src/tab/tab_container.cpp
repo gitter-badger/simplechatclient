@@ -81,7 +81,7 @@ bool TabContainer::isHighlightMessage(QString strMessage)
         QStringListIterator lHighlightIterator(lHighlight);
         while (lHighlightIterator.hasNext())
         {
-            if (strData.toLower() == lHighlightIterator.next().toLower())
+            if (strData.toLower().contains(lHighlightIterator.next().toLower()))
                 return true;
         }
     }

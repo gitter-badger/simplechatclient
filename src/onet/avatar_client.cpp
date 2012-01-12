@@ -30,8 +30,9 @@
 #include <QUrl>
 #include <QUuid>
 
-#include "avatar_client.h"
 #include "core.h"
+
+#include "avatar_client.h"
 
 #define AVATAR_API "http://czat.onet.pl/_x/ludzie/avatars/api.php3"
 
@@ -89,7 +90,7 @@ void AvatarClient::requestGetCollections()
 
     //qDebug() << request.url().toString() << postData.toAscii();
 
-    QNetworkReply *pReply = this->post(request, postData.toAscii());
+    this->post(request, postData.toAscii());
 }
 
 void AvatarClient::requestGetCollectionAvatars(int iId)
@@ -103,7 +104,7 @@ void AvatarClient::requestGetCollectionAvatars(int iId)
 
     //qDebug() << request.url().toString() << postData.toAscii();
 
-    QNetworkReply *pReply = this->post(request, postData.toAscii());
+    this->post(request, postData.toAscii());
 }
 
 void AvatarClient::requestGetMyAvatars()
@@ -116,7 +117,7 @@ void AvatarClient::requestGetMyAvatars()
 
     //qDebug() << request.url().toString() << postData.toAscii();
 
-    QNetworkReply *pReply = this->post(request, postData.toAscii());
+    this->post(request, postData.toAscii());
 }
 
 void AvatarClient::requestSetAvatar(int iImgId, int iAlbumId)
@@ -135,7 +136,7 @@ void AvatarClient::requestSetAvatar(int iImgId, int iAlbumId)
 
     //qDebug() << request.url().toString() << postData.toAscii();
 
-    QNetworkReply *pReply = this->post(request, postData.toAscii());
+    this->post(request, postData.toAscii());
 }
 
 void AvatarClient::requestUploadImage(QString strFileName, QByteArray bData)
@@ -199,7 +200,7 @@ void AvatarClient::requestUpdatePhoto(MyAvatarMeta avatar)
 
     //qDebug() << request.url().toString() << postData.toAscii();
 
-    QNetworkReply *pReply = this->post(request, postData.toAscii());
+    this->post(request, postData.toAscii());
 }
 
 void AvatarClient::requestAddPhoto(MyAvatarMeta avatar)
@@ -225,7 +226,7 @@ void AvatarClient::requestAddPhoto(MyAvatarMeta avatar)
 
     //qDebug() << request.url().toString() << postData.toAscii();
 
-    QNetworkReply *pReply = this->post(request, postData.toAscii());
+    this->post(request, postData.toAscii());
 }
 
 void AvatarClient::requestDeletePhoto(QString strImgId)
@@ -239,7 +240,7 @@ void AvatarClient::requestDeletePhoto(QString strImgId)
 
     //qDebug() << request.url().toString() << postData.toAscii();
 
-    QNetworkReply *pReply = this->post(request, postData.toAscii());
+    this->post(request, postData.toAscii());
 }
 
 void AvatarClient::requestGetAvatar(QString strUrl, AvatarType type)
@@ -261,7 +262,7 @@ void AvatarClient::requestGetAvatar(QString strUrl, AvatarType type)
 
     //qDebug() << request.url().toString();
 
-    QNetworkReply *pReply = this->get(request);
+    this->get(request);
 }
 
 void AvatarClient::replyFinished(QNetworkReply *pReply)

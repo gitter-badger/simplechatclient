@@ -29,6 +29,7 @@
 
 #include "avatar_client.h"
 #include "core.h"
+
 #include "my_avatar.h"
 
 DlgMyAvatar::DlgMyAvatar(QWidget *parent) : QDialog(parent)
@@ -480,6 +481,8 @@ void DlgMyAvatar::refreshAvatar()
 
 void DlgMyAvatar::drawCurrentAvatar(QString strUrl, QByteArray bData)
 {
+    Q_UNUSED(strUrl);
+
     QPixmap pixmap;
     pixmap.loadFromData(bData);
 
@@ -493,7 +496,11 @@ void DlgMyAvatar::drawMyAvatar(QString strUrl, QByteArray bData)
         return;
 
     QPixmap pixmap;
-    bool status = pixmap.loadFromData(bData);
+    if (!pixmap.loadFromData(bData))
+    {
+        qDebug() << "Unable to load image from " << strUrl;
+        return;
+    }
 
     QListWidgetItem *item = ui.listWidget_my_avatars->item(index);
     if (item != 0)
@@ -515,7 +522,11 @@ void DlgMyAvatar::drawAvatarFromCollection(QString strUrl, QByteArray bData)
         return;
 
     QPixmap pixmap;
-    bool status = pixmap.loadFromData(bData);
+    if (!pixmap.loadFromData(bData))
+    {
+        qDebug() << "Unable to load image from " << strUrl;
+        return;
+    }
 
     QListWidgetItem *item = ui.listWidget_collections->item(index);
     if (item != 0)
