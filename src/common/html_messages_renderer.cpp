@@ -43,16 +43,11 @@ QString HtmlMessagesRenderer::renderer(QDateTime dt, QString strData, MessageCat
         QString strWord = strDataList[i];
 
         if ((i == 1) && (strDataList[0] == "*") && ((eMessageCategory == JoinMessage) || (eMessageCategory == PartMessage) || (eMessageCategory == QuitMessage)  || (eMessageCategory == KickMessage)))
-            strDataList[i] = "<a href=\"#\" onclick=\"return false\" name=\"nick\" style=\"color:inherit;text-decoration:none;\">"+strDataList[i]+"</a>";
+            strDataList[i] = QString("<a href=\"#\" onclick=\"return false\" name=\"nick\" style=\"color:inherit;text-decoration:none;\">%1</a>").arg(strWord);
         if (strWord[0] == '#')
-            strDataList[i] = "<a href=\"#\" onclick=\"return false\" name=\"channel\" class=\"ChannelFontColor\" style=\"text-decoration:none;\">"+strDataList[i]+"</a>";
+            strDataList[i] = QString("<a href=\"#\" onclick=\"return false\" name=\"channel\" class=\"ChannelFontColor\" style=\"text-decoration:none;\">%1</a>").arg(strWord);
         if ((strWord.contains(QRegExp("(ftp:|http:|https:)//"))) || (strWord.contains("www.")))
-        {
-            int pos = strWord.indexOf(QRegExp("(ftp:|http:|https:|www.)"));
-            QString strBeforeLink = strWord.left(pos);
-            strDataList[i].remove(0, pos);
-            strDataList[i] = strBeforeLink+"<a href=\""+strDataList[i]+"\" onclick=\"return false\" name=\"website\" style=\"color:inherit;text-decoration:none;\">"+strDataList[i]+"</a>";
-        }
+            strDataList[i] = QString("<a onclick=\"return false\" name=\"website\" style=\"color:inherit;text-decoration:none;\" href=\"%1\">%2</a>").arg(strWord, strWord);
     }
     strData = strDataList.join(" ");
 
