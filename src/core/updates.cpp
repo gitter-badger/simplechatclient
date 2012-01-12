@@ -47,6 +47,8 @@ void Updates::checkUpdate()
 
 void Updates::version(QString strAvailableVersion)
 {
+    Core::instance()->settings["available_version"] = strAvailableVersion;
+
     QString strCurrentVersion = Core::instance()->settings.value("version");
 
     QStringList lCurrentVersion = strCurrentVersion.split(".");

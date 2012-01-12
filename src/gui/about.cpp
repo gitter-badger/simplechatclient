@@ -46,10 +46,32 @@ void DlgAbout::createGui()
 
 void DlgAbout::setDefaultValues()
 {
-    QString version = Core::instance()->settings.value("version");
+    QString strVersion;
+    QString strCurrentVersion = Core::instance()->settings.value("version");
 
-    QString strVersion = "<p style=\"font-size:16px;\"><b>Simple Chat Client</b></p>";
-    strVersion += "<p><b>"+tr("Version")+" "+version+"</b></p>";
+    QStringList lCurrentVersion = strCurrentVersion.split(".");
+    QString strCurrentShortVersion = QString("%1.%2.%3").arg(lCurrentVersion[0], lCurrentVersion[1], lCurrentVersion[2]);
+    QString strCurrentRev = lCurrentVersion.last();
+    int iCurrentRev = strCurrentRev.toInt();
+
+    QString strAvailableVersion = Core::instance()->settings.value("available_version");
+
+    if (!strAvailableVersion.isEmpty())
+    {
+        QStringList lAvailableVersion = strAvailableVersion.split(".");
+        QString strAvailableRev = lAvailableVersion.last();
+        int iAvailableRev = strAvailableRev.toInt();
+
+        if (iCurrentRev == iAvailableRev)
+            strVersion = tr("Up-to-date version");
+        else if (iCurrentRev > iAvailableRev)
+            strVersion = QString("%1 (%2)").arg(tr("Unstable version"), strCurrentRev);
+        else if (iCurrentRev < iAvailableRev)
+            strVersion = QString("<span style=\"color:#ff0000\">%1</span>").arg(tr("A new version is available"));
+    }
+
+    QString strTitle = QString("<p style=\"font-size:16px;\"><b>Simple Chat Client %1</b></p>").arg(strCurrentShortVersion);
+    strTitle += "<p>"+strVersion+"</p>";
 
     QString strAbout = "<p>"+tr("Simple chat client")+"</p>";
     strAbout += "<p>&copy; 2011 by the Simple Chat Client Project</p>";
@@ -65,7 +87,7 @@ void DlgAbout::setDefaultValues()
     QString strThanksTo = "<p>"+tr("Thanks to <b>ovo_</b> for creating graphics, to all persons who actively support the development of the project and special thanks to <b>Darom</b>.")+"</p>";
 
     ui.label_logo->setPixmap(QPixmap(":/images/logo.png").scaled(QSize(64,64)));
-    ui.label_version->setText(strVersion);
+    ui.label_version->setText(strTitle);
     ui.label_about->setText(strAbout);
     ui.label_authors->setText(strAuthors);
     ui.label_thanks_to->setText(strThanksTo);

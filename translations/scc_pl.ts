@@ -351,8 +351,16 @@
         <translation>Prosty klient czatowy</translation>
     </message>
     <message>
-        <source>Version</source>
-        <translation>Wersja</translation>
+        <source>Up-to-date version</source>
+        <translation>Wersja stabilna</translation>
+    </message>
+    <message>
+        <source>Unstable version</source>
+        <translation>Wersja niestabilna</translation>
+    </message>
+    <message>
+        <source>A new version is available</source>
+        <translation>Nowa wersja programu jest dostępna</translation>
     </message>
     <message>
         <source>Home page</source>
