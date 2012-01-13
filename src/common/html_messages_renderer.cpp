@@ -47,7 +47,16 @@ QString HtmlMessagesRenderer::renderer(QDateTime dt, QString strData, MessageCat
         if (strWord[0] == '#')
             strDataList[i] = QString("<a href=\"#\" onclick=\"return false\" name=\"channel\" class=\"ChannelFontColor\" style=\"text-decoration:none;\">%1</a>").arg(strWord);
         if ((strWord.contains(QRegExp("(ftp:|http:|https:)//"))) || (strWord.contains("www.")))
-            strDataList[i] = QString("<a onclick=\"return false\" name=\"website\" style=\"color:inherit;text-decoration:none;\" href=\"%1\">%2</a>").arg(strWord, strWord);
+        {
+            QString strBeforeLink;
+            int pos = strWord.indexOf(QRegExp("(ftp:|http:|https:|www.)"));
+            if (pos != -1)
+            {
+                strBeforeLink = strWord.left(pos);
+                strWord.remove(0, pos);
+            }
+            strDataList[i] = QString("%1<a onclick=\"return false\" name=\"website\" style=\"color:inherit;text-decoration:none;\" href=\"%2\">%3</a>").arg(strBeforeLink, strWord, strWord);
+        }
     }
     strData = strDataList.join(" ");
 
