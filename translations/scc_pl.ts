@@ -363,6 +363,10 @@
         <translation>Nowa wersja programu jest dostępna</translation>
     </message>
     <message>
+        <source>Version</source>
+        <translation>Wersja</translation>
+    </message>
+    <message>
         <source>Home page</source>
         <translation>Strona domowa</translation>
     </message>

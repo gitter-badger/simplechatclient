@@ -69,6 +69,8 @@ void DlgAbout::setDefaultValues()
         else if (iCurrentRev < iAvailableRev)
             strVersion = QString("<span style=\"color:#ff0000\">%1</span>").arg(tr("A new version is available"));
     }
+    else
+        strVersion = QString("%1 %2").arg(tr("Version"), strCurrentVersion);
 
     QString strTitle = QString("<p style=\"font-size:16px;\"><b>Simple Chat Client %1</b></p>").arg(strCurrentShortVersion);
     strTitle += "<p>"+strVersion+"</p>";
