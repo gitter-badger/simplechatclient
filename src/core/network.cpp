@@ -164,17 +164,6 @@ void Network::authorize()
         delete pCrypt;
     }
 
-    // correct nick
-    if ((strPass.isEmpty()) && (strNick[0] != '~'))
-        strNick = "~"+strNick;
-    if ((!strPass.isEmpty()) && (strNick[0] == '~'))
-        strNick = strNick.right(strNick.length()-1);
-
-    Config *pConfig = new Config();
-    pConfig->setValue("nick", strNick);
-    Core::instance()->settings["nick"] = strNick;
-    delete pConfig;
-
     // update nick
     emit updateNick(strNick);
     // update actions
@@ -182,8 +171,8 @@ void Network::authorize()
 
     // set current nick
     QString strCurrentNick = strNick;
-        if (strCurrentNick[0] == '~')
-    strCurrentNick = strNick.right(strNick.length()-1);
+    if (strCurrentNick[0] == '~')
+        strCurrentNick = strNick.right(strNick.length()-1);
 
     // request uo key
     emit authorize(strCurrentNick, strNick, strPass);
