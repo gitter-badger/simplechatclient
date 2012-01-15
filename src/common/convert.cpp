@@ -130,8 +130,8 @@ void Convert::convertEmoticons(QString &strData)
 
 void Convert::convertText(QString &strData)
 {
-    convertFont(strData);
     convertColor(strData);
+    convertFont(strData);
     convertEmoticons(strData);
 }
 
