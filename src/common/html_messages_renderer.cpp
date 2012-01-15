@@ -49,13 +49,42 @@ QString HtmlMessagesRenderer::renderer(QDateTime dt, QString strData, MessageCat
         if ((strWord.contains(QRegExp("(ftp:|http:|https:)//"))) || (strWord.contains("www.")))
         {
             QString strBeforeLink;
-            int pos = strWord.indexOf(QRegExp("(ftp:|http:|https:|www.)"));
+            QString strAfterLink;
+            int pos;
+
+            pos = strWord.indexOf(QRegExp("(ftp:|http:|https:|www.)"));
             if (pos != -1)
             {
                 strBeforeLink = strWord.left(pos);
                 strWord.remove(0, pos);
             }
-            strDataList[i] = QString("%1<a onclick=\"return false\" name=\"website\" style=\"color:inherit;text-decoration:none;\" href=\"%2\">%3</a>").arg(strBeforeLink, strWord, strWord);
+
+            QRegExp rxC("%C(000000|623c00|c86c00|ff6500|ff0000|e40f0f|990033|8800ab|ce00ff|0f2ab1|3030ce|006699|1a866e|008100|959595)?%");
+            QRegExp rxF("%F(b|i|bi)?:?(arial|times|verdana|tahoma|courier)?%");
+            QRegExp rxI("%I([a-zA-Z0-9_-]+)%");
+
+            pos = 0;
+            if ((pos = rxC.indexIn(strWord, pos)) != -1)
+            {
+                strAfterLink = strWord.right(strWord.length()-pos);
+                strWord.remove(pos, strWord.length()-pos);
+            }
+
+            pos = 0;
+            if ((pos = rxF.indexIn(strWord, pos)) != -1)
+            {
+                strAfterLink = strWord.right(strWord.length()-pos);
+                strWord.remove(pos, strWord.length()-pos);
+            }
+
+            pos = 0;
+            if ((pos = rxI.indexIn(strWord, pos)) != -1)
+            {
+                strAfterLink = strWord.right(strWord.length()-pos);
+                strWord.remove(pos, strWord.length()-pos);
+            }
+
+            strDataList[i] = QString("%1<a onclick=\"return false\" name=\"website\" style=\"color:inherit;text-decoration:none;\" href=\"%2\">%3</a>%4").arg(strBeforeLink, strWord, strWord, strAfterLink);
         }
     }
     strData = strDataList.join(" ");
