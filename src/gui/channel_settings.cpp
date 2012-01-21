@@ -698,7 +698,8 @@ void DlgChannelSettings::statusPriv()
 
 void DlgChannelSettings::categoryChanged(int index)
 {
-    Core::instance()->pNetwork->send(QString("CS SET %1 CATMAJOR %2").arg(strChannel, index+1));
+    QString strCatMajor = QString::number(index+1);
+    Core::instance()->pNetwork->send(QString("CS SET %1 CATMAJOR %2").arg(strChannel, strCatMajor));
 
     refreshAll();
 }
@@ -713,7 +714,10 @@ void DlgChannelSettings::guardianInactive()
 void DlgChannelSettings::guardianActive()
 {
     if (ui.comboBox_guardian_level->currentIndex() != -1)
-        Core::instance()->pNetwork->send(QString("CS SET %1 GUARDIAN %2").arg(strChannel, ui.comboBox_guardian_level->currentIndex()));
+    {
+        QString strLevel = QString::number(ui.comboBox_guardian_level->currentIndex());
+        Core::instance()->pNetwork->send(QString("CS SET %1 GUARDIAN %2").arg(strChannel, strLevel));
+    }
     else
         Core::instance()->pNetwork->send(QString("CS SET %1 GUARDIAN 1").arg(strChannel));
 
@@ -723,7 +727,10 @@ void DlgChannelSettings::guardianActive()
 void DlgChannelSettings::guardianClicked(int iLevel)
 {
     if (ui.radioButton_guardian_on->isChecked())
-        Core::instance()->pNetwork->send(QString("CS SET %1 GUARDIAN %2").arg(strChannel, iLevel+1));
+    {
+        QString strLevel = QString::number(iLevel+1);
+        Core::instance()->pNetwork->send(QString("CS SET %1 GUARDIAN %2").arg(strChannel, strLevel));
+    }
 
     refreshAll();
 }
@@ -737,7 +744,8 @@ void DlgChannelSettings::passwordChanged()
 
 void DlgChannelSettings::limitChanged()
 {
-    Core::instance()->pNetwork->send(QString("CS SET %1 LIMIT %2").arg(strChannel, ui.spinBox_limit->value()));
+    QString strLimit = QString::number(ui.spinBox_limit->value());
+    Core::instance()->pNetwork->send(QString("CS SET %1 LIMIT %2").arg(strChannel, strLimit));
 
     refreshAll();
 }
