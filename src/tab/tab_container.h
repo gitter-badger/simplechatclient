@@ -70,11 +70,10 @@ private:
     // params
     TabManager *pTabM;
     // other
-    QList<TabWidget*> tw;
+    QMap<QString, TabWidget*> tw;
 
     void logOpened(QString);
     void logClosed(QString);
-    int getIndex(QString);
     bool isHighlightMessage(QString);
 
 signals:

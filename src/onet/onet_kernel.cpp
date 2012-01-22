@@ -1320,7 +1320,9 @@ void OnetKernel::raw_001()
     QList<CaseIgnoreString> lOpenChannelsCaseIgnore;
 
     // copy to new list
-    foreach (QString strChannel, Core::instance()->lOpenChannels)
+    QList<QString> lOpenChannels = Core::instance()->lOpenChannels;
+    lOpenChannels.removeOne("Status");
+    foreach (QString strChannel, lOpenChannels)
         lOpenChannelsCaseIgnore.append(strChannel);
 
     // sort

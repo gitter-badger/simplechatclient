@@ -316,6 +316,7 @@ void MainWindow::createSignals()
     // signals tab
     QObject::connect(pTabM, SIGNAL(tabCloseRequested(int)), this, SLOT(tabCloseRequested(int)));
     QObject::connect(pTabM, SIGNAL(currentChanged(int)), this, SLOT(currentTabChanged(int)));
+    QObject::connect(pTabM, SIGNAL(tabMoved(int,int)), this, SLOT(tabMoved(int,int)));
 
     // signals pToolWidget
     QObject::connect(pToolWidget, SIGNAL(showMessage(QString&,QString&,MessageCategory)), pTabC, SLOT(showMessage(QString&,QString&,MessageCategory)));
@@ -656,13 +657,6 @@ void MainWindow::trayIconPressed(QSystemTrayIcon::ActivationReason activationRea
         createTrayMenu();
 }
 
-// part tab
-void MainWindow::tabCloseRequested(int index)
-{
-    if (index != 0)
-        pTabC->partTab(index);
-}
-
 // ctrl+tab pressed in inputline
 void MainWindow::ctrlTabPressed()
 {
@@ -721,6 +715,12 @@ void MainWindow::timeoutAutoaway()
     }
 }
 
+// part tab
+void MainWindow::tabCloseRequested(int index)
+{
+    pTabC->partTab(index);
+}
+
 // tab changed
 void MainWindow::currentTabChanged(int index)
 {
@@ -743,6 +743,12 @@ void MainWindow::currentTabChanged(int index)
     QString strModes = Core::instance()->getUserModes(strMe, strChannel);
     if (strModes.contains("!")) pToolWidget->setModeration(true);
     else pToolWidget->setModeration(false);
+}
+
+// tab moved
+void MainWindow::tabMoved(int from, int to)
+{
+    Core::instance()->lOpenChannels.move(from, to);
 }
 
 void MainWindow::resizeEvent(QResizeEvent *e)

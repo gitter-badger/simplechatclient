@@ -135,6 +135,7 @@ private slots:
     void setConnectEnabled(bool);
     void tabCloseRequested(int);
     void currentTabChanged(int);
+    void tabMoved(int, int);
     void timeoutAutoaway();
 
 protected:

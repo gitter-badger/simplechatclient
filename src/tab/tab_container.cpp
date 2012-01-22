@@ -33,15 +33,17 @@ TabContainer::TabContainer(TabManager *_pTabM) : pTabM(_pTabM)
 
 TabContainer::~TabContainer()
 {
-    while (!tw.isEmpty())
+    QMapIterator<QString, TabWidget*> i(tw);
+    while (i.hasNext())
     {
-        QString strChannel = tw.first()->getName();
+        i.next();
+        QString strChannel = i.key();
 
         // remove from open channels
-        Core::instance()->lOpenChannels.removeAll(strChannel);
+        Core::instance()->lOpenChannels.removeOne(strChannel);
 
         // remove tab
-        delete tw.takeFirst();
+        delete tw.take(strChannel);
 
         // log
         logClosed(strChannel);
@@ -88,412 +90,421 @@ bool TabContainer::isHighlightMessage(QString strMessage)
     return false;
 }
 
-int TabContainer::getIndex(QString strName)
-{
-    for (int i = 0; i < tw.size(); i++)
-    {
-        if (tw[i]->getName() == strName)
-            return i;
-    }
-    return -1;
-}
 
 bool TabContainer::existTab(QString strChannel)
 {
-    for (int i = 0; i < tw.size(); i++)
-    {
-        if (tw[i]->getName() == strChannel)
-            return true;
-    }
-    return false;
+    return tw.contains(strChannel);
 }
 
 void TabContainer::addTab(QString strChannel)
 {
-    if (!existTab(strChannel))
+    if (existTab(strChannel))
+        return;
+
+    // update open channels
+    Core::instance()->lOpenChannels.append(strChannel);
+
+    // create tab
+    tw.insert(strChannel, new TabWidget(strChannel));
+    pTabM->addTab(tw[strChannel], strChannel);
+    pTabM->setCurrentIndex(tw.size()-1);
+
+    // if priv
+    if (strChannel[0] == '^')
     {
-        // update open channels
-        if (strChannel != "Status")
-            Core::instance()->lOpenChannels.append(strChannel);
-
-        // create tab
-        tw.append(new TabWidget(strChannel));
-        pTabM->addTab(tw.at(tw.size()-1), strChannel);
-        pTabM->setCurrentIndex(tw.size()-1);
-
-        // if priv
-        if (strChannel[0] == '^')
+        if (Core::instance()->mPrivNames.contains(strChannel))
         {
-            if (Core::instance()->mPrivNames.contains(strChannel))
-            {
-                pTabM->setTabText(tw.size()-1, Core::instance()->convertPrivName(strChannel));
+            pTabM->setTabText(tw.size()-1, Core::instance()->convertPrivName(strChannel));
 
-                logOpened(strChannel);
-            }
-        }
-        else
             logOpened(strChannel);
+        }
     }
+    else
+        logOpened(strChannel);
 }
 
 void TabContainer::removeTab(QString strChannel)
 {
-    if (strChannel == "Status") return;
+    if ((!existTab(strChannel)) || (strChannel == "Status"))
+        return;
 
-    int i = getIndex(strChannel);
-    if (i != -1)
-    {
-        // remove from open channels
-        Core::instance()->lOpenChannels.removeAll(strChannel);
+    // remove from open channels
+    Core::instance()->lOpenChannels.removeOne(strChannel);
 
-        // remove tab
-        delete tw.takeAt(i);
+    // remove tab
+    delete tw.take(strChannel);
 
-        // log
-        logClosed(strChannel);
-    }
+    // log
+    logClosed(strChannel);
 }
 
 void TabContainer::renameTab(QString strChannel, QString strNewName)
 {
-    int i = getIndex(strChannel);
-    if (i != -1)
-    {
-        if (pTabM->tabText(i)[0] == '^')
-        {
-            pTabM->setTabText(i, strNewName);
+    int index = Core::instance()->getIndexFromChannelName(strChannel);
 
-            // log
-            logOpened(strChannel);
-        }
+    if ((index != -1) && (pTabM->tabText(index)[0] == '^'))
+    {
+        pTabM->setTabText(index, strNewName);
+
+        // log
+        logOpened(strChannel);
     }
 }
 
 void TabContainer::partTab(int index)
 {
-    QString strChannel = tw[index]->getName();
+    QString strChannel = Core::instance()->getChannelNameFromIndex(index);
 
-    if (Core::instance()->pNetwork->isConnected())
-        Core::instance()->pNetwork->send(QString("PART %1").arg(strChannel));
-    else
-        removeTab(strChannel);
+    if (!strChannel.isEmpty())
+    {
+        if (Core::instance()->pNetwork->isConnected())
+            Core::instance()->pNetwork->send(QString("PART %1").arg(strChannel));
+        else
+            removeTab(strChannel);
+    }
 }
 
 void TabContainer::refreshColors()
 {
-    for (int i = 0; i < tw.size(); i++)
+    QMapIterator<QString, TabWidget*> i(tw);
+    while (i.hasNext())
     {
-        tw[i]->refreshColors();
+        i.next();
+        QString strChannel = i.key();
+
+        tw[strChannel]->refreshColors();
+
         // update tab name color
-        pTabM->setColor(i, QColor(Core::instance()->settings.value("default_font_color")));
+        int index = Core::instance()->getIndexFromChannelName(strChannel);
+        if (index != -1)
+            pTabM->setColor(index, QColor(Core::instance()->settings.value("default_font_color")));
     }
 }
 
 void TabContainer::refreshCSS()
 {
-    for (int i = 0; i < tw.size(); i++)
-        tw[i]->pChatView->refreshCSS();
+    QMapIterator<QString, TabWidget*> i(tw);
+    while (i.hasNext())
+    {
+        i.next();
+        QString strChannel = i.key();
+
+        tw[strChannel]->pChatView->refreshCSS();
+    }
 }
 
 void TabContainer::showMessage(QString &strChannel, QString &strData, MessageCategory eMessageCategory, QString strTime, QString strNick)
 {
-    int i = getIndex(strChannel);
-    if (i != -1)
+    if (!existTab(strChannel))
+        return;
+
+    int index = Core::instance()->getIndexFromChannelName(strChannel);
+
+    // highlight
+    bool bHighlightMessage = isHighlightMessage(strData);
+
+    if ((bHighlightMessage) && (eMessageCategory == DefaultMessage))
     {
+        QString strAwaylogData = strData;
+        if (!strNick.isEmpty())
+            strAwaylogData = QString("<%1> %2").arg(strNick, strData);
+
+        // awaylog
+        Core::instance()->addAwaylog(strTime, strChannel, strAwaylogData);
+
+        // update awaylog status
+        emit updateAwaylogStatus();
+
+        // update message category
+        eMessageCategory = HighlightMessage;
+
         // highlight
-        bool bHighlightMessage = isHighlightMessage(strData);
-
-        if ((bHighlightMessage) && (eMessageCategory == DefaultMessage))
-        {
-            QString strAwaylogData = strData;
-            if (!strNick.isEmpty())
-                strAwaylogData = QString("<%1> %2").arg(strNick, strData);
-
-            // awaylog
-            Core::instance()->addAwaylog(strTime, strChannel, strAwaylogData);
-
-            // update awaylog status
-            emit updateAwaylogStatus();
-
-            // highlight
-            if (i != pTabM->currentIndex())
-                pTabM->setHighlight(i);
-
-            // update message category
-            eMessageCategory = HighlightMessage;
-        }
-
-        // set color
-        if (i != pTabM->currentIndex())
-        {
-            if (eMessageCategory != DefaultMessage)
-                pTabM->setAlert(i, QColor(0, 147, 0, 255)); // green
-            else
-                pTabM->setAlert(i, QColor(255, 0, 0, 255)); // red
-        }
-
-        // display
-        tw[i]->pChatView->displayMessage(strData, eMessageCategory, strTime, strNick);
+        if ((index != -1) && (index != pTabM->currentIndex()))
+            pTabM->setAlert(index, ChannelHighlight);
     }
+
+    // set color
+    if ((index != -1) && (index != pTabM->currentIndex()))
+    {
+        if (eMessageCategory != DefaultMessage)
+            pTabM->setAlert(index, ChannelGreen); // green
+        else
+            pTabM->setAlert(index, ChannelRed); // red
+    }
+
+    // display
+    tw[strChannel]->pChatView->displayMessage(strData, eMessageCategory, strTime, strNick);
 }
 
 void TabContainer::showMessageAll(QString &strData, MessageCategory eMessageCategory)
 {
-    for (int i = 0; i < tw.size(); i++)
+    QMapIterator<QString, TabWidget*> i(tw);
+    while (i.hasNext())
     {
-        if (i != pTabM->currentIndex())
+        i.next();
+        QString strChannel = i.key();
+
+        int index = Core::instance()->getIndexFromChannelName(strChannel);
+        if ((index != -1) && (index != pTabM->currentIndex()))
         {
             if (eMessageCategory != DefaultMessage)
-                pTabM->setAlert(i, QColor(0, 147, 0, 255)); // green
+                pTabM->setAlert(index, ChannelGreen); // green
             else
-                pTabM->setAlert(i, QColor(255, 0, 0, 255)); // red
+                pTabM->setAlert(index, ChannelRed); // red
         }
 
         QString strDataAll = strData;
-        tw[i]->pChatView->displayMessage(strDataAll, eMessageCategory);
+        tw[strChannel]->pChatView->displayMessage(strDataAll, eMessageCategory);
     }
 }
 
 void TabContainer::showMessageActive(QString &strData, MessageCategory eMessageCategory)
 {
-    for (int i = 0; i < tw.size(); i++)
-    {
-        if (i == pTabM->currentIndex())
-        {
-            tw[i]->pChatView->displayMessage(strData, eMessageCategory);
-            return;
-        }
-    }
+    QString strChannel = Core::instance()->getCurrentChannelName();
+
+    if (!strChannel.isEmpty())
+        tw[strChannel]->pChatView->displayMessage(strData, eMessageCategory);
 }
 
 void TabContainer::setTopic(QString &strChannel, QString &strTopic)
 {
-    int i = getIndex(strChannel);
-    if (i != -1)
-    {
-        // replace
-        strTopic.replace("&", "&amp;");
-        strTopic.replace("<", "&lt;");
-        strTopic.replace(">", "&gt;");
-        strTopic.replace("\"", "&quot;");
-        strTopic.replace("'", "&#039;");
-        strTopic.replace("\\", "&#92;");
+    if (!existTab(strChannel))
+        return;
 
-        QString strContent = strTopic;
+    // replace
+    strTopic.replace("&", "&amp;");
+    strTopic.replace("<", "&lt;");
+    strTopic.replace(">", "&gt;");
+    strTopic.replace("\"", "&quot;");
+    strTopic.replace("'", "&#039;");
+    strTopic.replace("\\", "&#92;");
 
-        // convert emoticons, font
-        Convert *convertText = new Convert();
-        convertText->convertText(strContent);
-        delete convertText;
+    QString strContent = strTopic;
 
-        // fix length bug
-        if (strContent.contains(QRegExp("\\S{100}")))
-            strContent.replace(QRegExp("(\\S{100})"), "\\1 ");
+    // convert emoticons, font
+    Convert *convertText = new Convert();
+    convertText->convertText(strContent);
+    delete convertText;
 
-        // set topic
-        tw[i]->topic->setText(QString("<b>%1</b> %2").arg(tr("Topic:"), strContent));
+    // fix length bug
+    if (strContent.contains(QRegExp("\\S{100}")))
+        strContent.replace(QRegExp("(\\S{100})"), "\\1 ");
 
-        // tooltip
-        strTopic.remove(QRegExp("%C([a-zA-Z0-9]+)%"));
-        strTopic.remove(QRegExp("%F([a-zA-Z0-9:]+)%"));
-        strTopic.replace(QRegExp("%I([a-zA-Z0-9_-]+)%"),"<\\1>");
+    // set topic
+    tw[strChannel]->topic->setText(QString("<b>%1</b> %2").arg(tr("Topic:"), strContent));
 
-        tw[i]->topic->setToolTip(strTopic);
-    }
+    // tooltip
+    strTopic.remove(QRegExp("%C([a-zA-Z0-9]+)%"));
+    strTopic.remove(QRegExp("%F([a-zA-Z0-9:]+)%"));
+    strTopic.replace(QRegExp("%I([a-zA-Z0-9_-]+)%"),"<\\1>");
+
+    tw[strChannel]->topic->setToolTip(strTopic);
 }
 
 void TabContainer::authorTopic(QString &strChannel, QString &strNick)
 {
-    int i = getIndex(strChannel);
-    if (i != -1)
-    {
-        QString strTopicDetails = QString(tr("Topic set by %1")).arg(strNick);
-        tw[i]->topic->setToolTip(strTopicDetails);
-    }
+    if (!existTab(strChannel))
+        return;
+
+    QString strTopicDetails = QString(tr("Topic set by %1")).arg(strNick);
+    tw[strChannel]->topic->setToolTip(strTopicDetails);
 }
 
 void TabContainer::setChannelAvatar(QString strChannel)
 {
-    int i = getIndex(strChannel);
-    if (i != -1)
-    {
-        QByteArray bAvatar = Core::instance()->mChannelAvatar.value(strChannel);
-        QPixmap pixmap;
-        pixmap.loadFromData(bAvatar);
+    if (!existTab(strChannel))
+        return;
 
-        QIcon icon(pixmap);
-        pTabM->setTabIcon(i, icon);
-    }
+    QByteArray bAvatar = Core::instance()->mChannelAvatar.value(strChannel);
+    QPixmap pixmap;
+    pixmap.loadFromData(bAvatar);
+
+    QIcon icon(pixmap);
+    int index = Core::instance()->getIndexFromChannelName(strChannel);
+    if (index != -1)
+        pTabM->setTabIcon(index, icon);
 }
 
 void TabContainer::clearContent(QString strChannel)
 {
-    int i = getIndex(strChannel);
-    if (i != -1)
-        tw[i]->pChatView->clearMessages();
+    if (existTab(strChannel))
+        tw[strChannel]->pChatView->clearMessages();
 }
 
 // nicklist
 
 void TabContainer::addUser(QString strChannel, QString strNick, QString strModes, bool bFastAdd)
 {
-    int i = getIndex(strChannel);
-    if (i != -1)
-    {
-        tw[i]->pNickListWidget->addUser(strNick, strModes);
-        tw[i]->users->setText(QString(tr("Users (%1)").arg(tw[i]->pNickListWidget->count())));
+    if (!existTab(strChannel))
+        return;
 
-        if (!bFastAdd)
-            tw[i]->pNickListWidget->sortItems(Qt::AscendingOrder);
-    }
+    tw[strChannel]->pNickListWidget->addUser(strNick, strModes);
+    tw[strChannel]->users->setText(QString(tr("Users (%1)").arg(tw[strChannel]->pNickListWidget->count())));
+
+    if (!bFastAdd)
+        tw[strChannel]->pNickListWidget->sortItems(Qt::AscendingOrder);
 }
 
 void TabContainer::delUser(QString strChannel, QString strNick)
 {
-    int i = getIndex(strChannel);
-    if (i != -1)
-    {
-        tw[i]->pNickListWidget->delUser(strNick);
-        tw[i]->users->setText(QString(tr("Users (%1)").arg(tw[i]->pNickListWidget->count())));
-    }
+    if (!existTab(strChannel))
+        return;
+
+    tw[strChannel]->pNickListWidget->delUser(strNick);
+    tw[strChannel]->users->setText(QString(tr("Users (%1)").arg(tw[strChannel]->pNickListWidget->count())));
 }
 
 void TabContainer::quitUser(QString strNick, QString strDisplay)
 {
-    for (int i = 0; i < tw.size(); i++)
+    QMapIterator<QString, TabWidget*> i(tw);
+    while (i.hasNext())
     {
-        if (tw[i]->pNickListWidget->existUser(strNick))
+        i.next();
+        QString strChannel = i.key();
+
+        if (tw[strChannel]->pNickListWidget->existUser(strNick))
         {
-            QString strChannel = tw[i]->getName();
             QString strDisplayAll = strDisplay;
 
             showMessage(strChannel, strDisplayAll, QuitMessage);
-            tw[i]->pNickListWidget->delUser(strNick);
-            tw[i]->users->setText(QString(tr("Users (%1)").arg(tw[i]->pNickListWidget->count())));
+            tw[strChannel]->pNickListWidget->delUser(strNick);
+            tw[strChannel]->users->setText(QString(tr("Users (%1)").arg(tw[strChannel]->pNickListWidget->count())));
 
-            if (i != pTabM->currentIndex())
-                pTabM->setAlert(i, QColor(0, 147, 0, 255)); // green
+            int index = Core::instance()->getIndexFromChannelName(strChannel);
+            if (index != pTabM->currentIndex())
+                pTabM->setAlert(index, ChannelGreen); // green
         }
     }
 }
 
 void TabContainer::changeFlag(QString strNick, QString strChannel, QString strFlag)
 {
-    int i = getIndex(strChannel);
-    if (i != -1)
-    {
-        if (tw[i]->pNickListWidget->existUser(strNick))
-        {
-            tw[i]->pNickListWidget->changeUserFlag(strNick, strFlag);
-            tw[i]->pNickListWidget->sortItems(Qt::AscendingOrder);
-        }
+    if (!existTab(strChannel))
+        return;
 
-        // current
-        if (i == pTabM->currentIndex())
+    if (tw[strChannel]->pNickListWidget->existUser(strNick))
+    {
+        tw[strChannel]->pNickListWidget->changeUserFlag(strNick, strFlag);
+        tw[strChannel]->pNickListWidget->sortItems(Qt::AscendingOrder);
+    }
+
+    QString strCurrentChannel = Core::instance()->getCurrentChannelName();
+
+    if ((!strCurrentChannel.isEmpty()) && (strCurrentChannel == strChannel))
+    {
+        QString strMe = Core::instance()->settings.value("nick");
+        if (strNick == strMe)
         {
-            QString strMe = Core::instance()->settings.value("nick");
-            if (strNick == strMe)
-            {
-                if (strFlag == "+X") emit setModeration(true);
-                else if (strFlag == "-X") emit setModeration(false);
-            }
+            if (strFlag == "+X") emit setModeration(true);
+            else if (strFlag == "-X") emit setModeration(false);
         }
     }
 }
 
 void TabContainer::changeFlag(QString strNick, QString strFlag)
 {
-    for (int i = 0; i < tw.size(); i++)
+    QMapIterator<QString, TabWidget*> i(tw);
+    while (i.hasNext())
     {
-        if (tw[i]->pNickListWidget->existUser(strNick))
-        {
-            QString strChannel = tw[i]->getName();
+        i.next();
+        QString strChannel = i.key();
+
+        if (tw[strChannel]->pNickListWidget->existUser(strNick))
             changeFlag(strNick, strChannel, strFlag);
-        }
     }
 }
 
 void TabContainer::nicklistRefresh(QString strChannel)
 {
-    int i = getIndex(strChannel);
-    if (i != -1)
-        tw[i]->pNickListWidget->sortItems(Qt::AscendingOrder);
+    if (existTab(strChannel))
+        tw[strChannel]->pNickListWidget->sortItems(Qt::AscendingOrder);
 }
 
 void TabContainer::clearAllNicklist()
 {
-    for (int i = 0; i < tw.size(); i++)
+    QMapIterator<QString, TabWidget*> i(tw);
+    while (i.hasNext())
     {
-        tw[i]->pNickListWidget->clear();
-        tw[i]->users->setText(QString(tr("Users (%1)").arg(tw[i]->pNickListWidget->count())));
+        i.next();
+        QString strChannel = i.key();
+
+        tw[strChannel]->pNickListWidget->clear();
+        tw[strChannel]->users->setText(QString(tr("Users (%1)").arg(tw[strChannel]->pNickListWidget->count())));
     }
 }
 
 void TabContainer::setUserAvatarPath(QString strNick, QString strValue)
 {
-    for (int i = 0; i < tw.size(); i++)
+    QMapIterator<QString, TabWidget*> i(tw);
+    while (i.hasNext())
     {
-        if (tw[i]->pNickListWidget->existUser(strNick))
-            tw[i]->pNickListWidget->setUserAvatarPath(strNick, strValue);
+        i.next();
+        QString strChannel = i.key();
+
+        if (tw[strChannel]->pNickListWidget->existUser(strNick))
+            tw[strChannel]->pNickListWidget->setUserAvatarPath(strNick, strValue);
     }
 }
 
 QString TabContainer::getUserAvatarPath(QString strNick)
 {
-    for (int i = 0; i < tw.size(); i++)
+    QMapIterator<QString, TabWidget*> i(tw);
+    while (i.hasNext())
     {
-        if (tw[i]->pNickListWidget->existUser(strNick))
-            return tw[i]->pNickListWidget->getUserAvatarPath(strNick);
+        i.next();
+        QString strChannel = i.key();
+
+        if (tw[strChannel]->pNickListWidget->existUser(strNick))
+            return tw[strChannel]->pNickListWidget->getUserAvatarPath(strNick);
     }
     return QString::null;
 }
 
 int TabContainer::getUserCount(QString strChannel)
 {
-    int i = getIndex(strChannel);
-    if (i != -1)
-        return tw[i]->pNickListWidget->count();
+    if (existTab(strChannel))
+        return tw[strChannel]->pNickListWidget->count();
     else
         return 0;
 }
 
 QString TabContainer::getUserModes(QString strNick, QString strChannel)
 {
-    int i = getIndex(strChannel);
-    if (i != -1)
-    {
-        if (tw[i]->pNickListWidget->existUser(strNick))
-            return tw[i]->pNickListWidget->getUserModes(strNick);
-    }
-    return QString::null;
+    if ((existTab(strChannel)) && (tw[strChannel]->pNickListWidget->existUser(strNick)))
+        return tw[strChannel]->pNickListWidget->getUserModes(strNick);
+    else
+        return QString::null;
 }
 
 QList<QString> TabContainer::getUserList(QString strChannel)
 {
     QList<QString> userList;
 
-    int i = getIndex(strChannel);
-    if (i != -1)
-        userList = tw[i]->pNickListWidget->getUserList();
+    if (existTab(strChannel))
+        userList = tw[strChannel]->pNickListWidget->getUserList();
 
     return userList;
 }
 
 void TabContainer::resizeMainWindow(QSize s)
 {
-    for (int i = 0; i < tw.size(); i++)
+    QMapIterator<QString, TabWidget*> i(tw);
+    while (i.hasNext())
     {
-        if (!tw[i]->pNickListWidget->isHidden())
+        i.next();
+        QString strChannel = i.key();
+
+        if (!tw[strChannel]->pNickListWidget->isHidden())
         {
             int width = s.width();
             if (width > 250)
             {
-                QList<int> currentSizes = tw[i]->splitter->sizes();
+                QList<int> currentSizes = tw[strChannel]->splitter->sizes();
 
                 currentSizes[0] = width-200;
                 currentSizes[1] = 200;
 
-                tw[i]->splitter->setSizes(currentSizes);
+                tw[strChannel]->splitter->setSizes(currentSizes);
             }
         }
     }

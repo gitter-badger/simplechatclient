@@ -132,7 +132,7 @@ void Core::createSettings()
     settings["debug"] = strDebug;
 
     // default settings
-    settings["version"] = "1.1.4.1146";
+    settings["version"] = "1.1.4.1147";
     settings["available_version"] = "";
     settings["logged"] = "off";
     settings["busy"] = "off";
@@ -392,19 +392,24 @@ void Core::addAwaylog(QString strTime, QString strChannel, QString strAwayData)
     lAwaylog.append(QString("%1\n%2 %3").arg(strChannel, strDT, strAwayData));
 }
 
-// MainWindow::currentTabChanged
 QString Core::getChannelNameFromIndex(int index)
 {
-    QList<QString> lAllOpenChannels = lOpenChannels;
-    lAllOpenChannels.insert(0, "Status");
+    if (index < lOpenChannels.size())
+        return lOpenChannels.at(index);
+    else
+        return QString::null;
+}
 
-    for (int i = 0; i < lAllOpenChannels.size(); i++)
+int Core::getIndexFromChannelName(QString strChannel)
+{
+    for (int i = 0; i < lOpenChannels.size(); i++)
     {
-        QString strChannel = lAllOpenChannels.at(i);
-        if (index == i)
-            return strChannel;
+        QString strOpenChannel = lOpenChannels.at(i);
+        if (strOpenChannel == strChannel)
+            return i;
     }
-    return QString::null;
+
+    return -1;
 }
 
 QString Core::getCurrentChannelName()

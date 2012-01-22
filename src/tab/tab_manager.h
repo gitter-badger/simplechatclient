@@ -21,6 +21,7 @@
 #ifndef TAB_MANAGER_H
 #define TAB_MANAGER_H
 
+#include "defines.h"
 class QTabBar;
 #include <QTabWidget>
 
@@ -32,17 +33,25 @@ class TabManager : public QTabWidget
     Q_OBJECT
 public:
     TabManager(QWidget *);
-    void setHighlight(int);
-    void setAlert(int, QColor);
+    void setAlert(int, ChannelColor);
     void setColor(int, QColor);
 
 private:
     QTabBar *tab;
+    QColor cRed;
+    QColor cGreen;
+    QColor cHighlight;
 
     void hideCloseButton(int);
 
+private slots:
+    void tabMovedSlot(int, int);
+
 protected:
     virtual void tabInserted(int);
+
+signals:
+    void tabMoved(int, int);
 };
 
 #endif // TAB_MANAGER_H

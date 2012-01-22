@@ -31,6 +31,8 @@
 
 enum MessageCategory {DefaultMessage, JoinMessage, PartMessage, QuitMessage, KickMessage, ModeMessage, NoticeMessage, InfoMessage, MeMessage, ErrorMessage, HighlightMessage, ModerNoticeMessage};
 
+enum ChannelColor {ChannelGreen, ChannelRed, ChannelHighlight};
+
 enum { maxOpenChannels = 30 };
 
 const int HOURS_IN_DAY = 24;

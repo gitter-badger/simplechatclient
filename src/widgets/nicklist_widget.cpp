@@ -344,6 +344,7 @@ void NickListWidget::contextMenuEvent(QContextMenuEvent *e)
         minvite->addAction(openChannelsActs[i]);
 
     QList<QString> lOpenChannels = Core::instance()->lOpenChannels;
+    lOpenChannels.removeOne("Status");
     for (int i = 0; i < lOpenChannels.size(); ++i)
     {
         QString strOpenChannel = lOpenChannels[i];

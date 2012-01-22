@@ -65,7 +65,8 @@ public:
     // awaylog
     void addAwaylog(QString, QString, QString);
     // for window
-    QString getChannelNameFromIndex(int index);
+    QString getChannelNameFromIndex(int);
+    int getIndexFromChannelName(QString);
     QString getCurrentChannelName();
     // get users per channel
     QList<QString> getUserListFromChannel(QString);

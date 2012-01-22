@@ -25,18 +25,28 @@ TabManager::TabManager(QWidget *parent) : QTabWidget(parent)
 {
     tab = tabBar();
     setTabsClosable(true);
+    setMovable(true);
     setIconSize(QSize(22,22));
+
+    cRed = QColor(255, 0, 0, 255);
+    cGreen = QColor(0, 147, 0, 255);
+    cHighlight = QColor(138, 0, 184, 255);
+
+    connect(tab, SIGNAL(tabMoved(int,int)), this, SLOT(tabMovedSlot(int, int)));
 }
 
-void TabManager::setHighlight(int index)
+void TabManager::setAlert(int index, ChannelColor c)
 {
-    tab->setTabTextColor(index, QColor(138, 0, 184, 255));
-}
+    QColor color;
+    if (c == ChannelRed)
+        color = cRed;
+    else if (c == ChannelGreen)
+        color = cGreen;
+    else if (c == ChannelHighlight)
+        color = cHighlight;
 
-void TabManager::setAlert(int index, QColor color)
-{
     // if not highlighted and not current color
-    if ((tab->tabTextColor(index) != QColor(138, 0, 184, 255)) && (tab->tabTextColor(index) != color))
+    if ((tab->tabTextColor(index) != cHighlight) && (tab->tabTextColor(index) != color))
         tab->setTabTextColor(index, color);
 }
 
@@ -54,4 +64,9 @@ void TabManager::tabInserted(int index)
 {
     if (index == 0) // hide close on status
         hideCloseButton(index);
+}
+
+void TabManager::tabMovedSlot(int from, int to)
+{
+    emit tabMoved(from, to);
 }
