@@ -1396,12 +1396,28 @@ void OnetKernel::raw_100n()
 
     QString strChannel = strDataList[4];
     QString strTime = strDataList[5];
-    QDateTime dt = QDateTime::fromTime_t(strTime.toInt());
-    QString strDateTime = dt.toString("hh:mm (dddd)");
 
     int iTime = strTime.toInt();
     QDateTime dta = QDateTime::currentDateTime();
     int iCurrentTime = (int)dta.toTime_t();
+    int iTimeResult = iTime - iCurrentTime;
+    QString strTimeResult;
+
+    int iSeconds = iTimeResult % SECONDS_IN_MINUTE ;
+    int iInMinutes = iTimeResult / SECONDS_IN_MINUTE ;
+    int iMinutes = iInMinutes % MINUTES_IN_HOUR ;
+    int iInHours = iInMinutes / MINUTES_IN_HOUR ;
+    int iHours = iInHours % HOURS_IN_DAY ;
+    int iDays = iInHours / HOURS_IN_DAY ;
+
+    if (iDays > 0)
+        strTimeResult += QString("%1d ").arg(iDays);
+    if (iHours > 0)
+        strTimeResult += QString("%1h ").arg(iHours);
+    if (iMinutes > 0)
+        strTimeResult += QString("%1m ").arg(iMinutes);
+    if (iSeconds >= 0)
+        strTimeResult += QString("%1s ").arg(iSeconds);
 
     QString strMessage;
     for (int i = 6; i < strDataList.size(); i++) { if (i != 6) strMessage += " "; strMessage += strDataList[i]; }
@@ -1411,7 +1427,7 @@ void OnetKernel::raw_100n()
     if (iTime < iCurrentTime)
         strDisplay = QString(tr("* %1 In progress on channel %2")).arg(strMessage, strChannel);
     else
-        strDisplay = QString(tr("* %1 Starting at %2 on channel %3")).arg(strMessage, strDateTime, strChannel);
+        strDisplay = QString(tr("* %1 Starting in %2 on channel %3")).arg(strMessage, strTimeResult, strChannel);
 
     pTabC->showMessageActive(strDisplay, NoticeMessage);
 }
@@ -2650,10 +2666,6 @@ void OnetKernel::raw_317()
     int iIdle = strDataList[4].toInt();
     QString strTime = strDataList[5];
     QString strIdle;
-
-    const int HOURS_IN_DAY = 24;
-    const int MINUTES_IN_HOUR = 60;
-    const int SECONDS_IN_MINUTE = 60;
 
     int iSeconds = iIdle % SECONDS_IN_MINUTE ;
     int iInMinutes = iIdle / SECONDS_IN_MINUTE ;

@@ -33,6 +33,10 @@ enum MessageCategory {DefaultMessage, JoinMessage, PartMessage, QuitMessage, Kic
 
 enum { maxOpenChannels = 30 };
 
+const int HOURS_IN_DAY = 24;
+const int MINUTES_IN_HOUR = 60;
+const int SECONDS_IN_MINUTE = 60;
+
 struct ChannelList
 {
     QString name;

@@ -2474,8 +2474,8 @@
         <translation>* %1 Właśnie trwa w pokoju %2</translation>
     </message>
     <message>
-        <source>* %1 Starting at %2 on channel %3</source>
-        <translation>* %1 Rozpoczęcie o %2 w pokoju %3</translation>
+        <source>* %1 Starting in %2 on channel %3</source>
+        <translation>* %1 Rozpoczęcie za %2 w pokoju %3</translation>
     </message>
     <message>
         <source>* %1 changed nickname to %2 from your friend list</source>
