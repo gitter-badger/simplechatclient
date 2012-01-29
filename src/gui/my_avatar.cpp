@@ -97,15 +97,15 @@ void DlgMyAvatar::setDefaultValues()
 
 void DlgMyAvatar::createSignals()
 {
-    QObject::connect(ui.pushButton_add_avatar, SIGNAL(clicked()), this, SLOT(addAvatarClicked()));
-    QObject::connect(ui.pushButton_apply_collection_avatar, SIGNAL(clicked()), this, SLOT(applyCollectionAvatarClicked()));
-    QObject::connect(ui.pushButton_apply_avatar, SIGNAL(clicked()), this, SLOT(applyAvatarClicked()));
-    QObject::connect(ui.pushButton_remove_avatar, SIGNAL(clicked()), this, SLOT(removeAvatarClicked()));
-    QObject::connect(ui.pushButton_set_empty_avatar1, SIGNAL(clicked()), this, SLOT(setEmptyAvatarClicked()));
-    QObject::connect(ui.pushButton_set_empty_avatar2, SIGNAL(clicked()), this, SLOT(setEmptyAvatarClicked()));
-    QObject::connect(ui.tabWidget, SIGNAL(currentChanged(int)), this, SLOT(tabChanged(int)));
-    QObject::connect(ui.listWidget_list_collections, SIGNAL(currentTextChanged(QString)), this, SLOT(collectionChanged(QString)));
-    QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(close()));
+    connect(ui.pushButton_add_avatar, SIGNAL(clicked()), this, SLOT(addAvatarClicked()));
+    connect(ui.pushButton_apply_collection_avatar, SIGNAL(clicked()), this, SLOT(applyCollectionAvatarClicked()));
+    connect(ui.pushButton_apply_avatar, SIGNAL(clicked()), this, SLOT(applyAvatarClicked()));
+    connect(ui.pushButton_remove_avatar, SIGNAL(clicked()), this, SLOT(removeAvatarClicked()));
+    connect(ui.pushButton_set_empty_avatar1, SIGNAL(clicked()), this, SLOT(setEmptyAvatarClicked()));
+    connect(ui.pushButton_set_empty_avatar2, SIGNAL(clicked()), this, SLOT(setEmptyAvatarClicked()));
+    connect(ui.tabWidget, SIGNAL(currentChanged(int)), this, SLOT(tabChanged(int)));
+    connect(ui.listWidget_list_collections, SIGNAL(currentTextChanged(QString)), this, SLOT(collectionChanged(QString)));
+    connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(close()));
 }
 
 // <root><error><code>1</code><text><![CDATA[Not logged]]></text></error><reqId><![CDATA[{d1f76dc3-d939-4389-aa5c-4bb428a62363}]]></reqId></root>

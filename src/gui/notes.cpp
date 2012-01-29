@@ -58,8 +58,8 @@ void DlgNotes::createGui()
 
 void DlgNotes::createSignals()
 {
-    QObject::connect(ui.buttonBox, SIGNAL(accepted()), this, SLOT(buttonOk()));
-    QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(close()));
+    connect(ui.buttonBox, SIGNAL(accepted()), this, SLOT(buttonOk()));
+    connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(close()));
 }
 
 void DlgNotes::readPath()

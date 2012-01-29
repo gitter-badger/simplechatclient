@@ -53,9 +53,9 @@ void DlgModeration::createGui()
 
 void DlgModeration::createSignals()
 {
-    QObject::connect(ui.pushButton_accept, SIGNAL(clicked()), this, SLOT(buttonAccept()));
-    QObject::connect(ui.pushButton_remove, SIGNAL(clicked()), this, SLOT(buttonRemove()));
-    QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(close()));
+    connect(ui.pushButton_accept, SIGNAL(clicked()), this, SLOT(buttonAccept()));
+    connect(ui.pushButton_remove, SIGNAL(clicked()), this, SLOT(buttonRemove()));
+    connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(close()));
 }
 
 void DlgModeration::refreshMessages()

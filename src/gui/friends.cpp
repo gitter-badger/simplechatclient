@@ -54,12 +54,12 @@ void DlgFriends::createGui()
 
 void DlgFriends::createSignals()
 {
-    QObject::connect(ui.tabWidget, SIGNAL(currentChanged(int)), this, SLOT(tabChanged(int)));
-    QObject::connect(ui.listWidget_online, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(itemClicked(QListWidgetItem*)));
-    QObject::connect(ui.pushButton_add, SIGNAL(clicked()), this, SLOT(buttonAdd()));
-    QObject::connect(ui.pushButton_remove, SIGNAL(clicked()), this, SLOT(buttonRemove()));
-    QObject::connect(ui.pushButton_whois, SIGNAL(clicked()), this, SLOT(buttonWhois()));
-    QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(close()));
+    connect(ui.tabWidget, SIGNAL(currentChanged(int)), this, SLOT(tabChanged(int)));
+    connect(ui.listWidget_online, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(itemClicked(QListWidgetItem*)));
+    connect(ui.pushButton_add, SIGNAL(clicked()), this, SLOT(buttonAdd()));
+    connect(ui.pushButton_remove, SIGNAL(clicked()), this, SLOT(buttonRemove()));
+    connect(ui.pushButton_whois, SIGNAL(clicked()), this, SLOT(buttonWhois()));
+    connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(close()));
 }
 
 void DlgFriends::refresh()

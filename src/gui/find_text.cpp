@@ -55,8 +55,8 @@ void DlgFindText::createGui()
 
 void DlgFindText::createSignals()
 {
-    QObject::connect(ui.pushButton_find_next, SIGNAL(clicked()), this, SLOT(buttonFindNext()));
-    QObject::connect(ui.pushButton_close, SIGNAL(clicked()), this, SLOT(close()));
+    connect(ui.pushButton_find_next, SIGNAL(clicked()), this, SLOT(buttonFindNext()));
+    connect(ui.pushButton_close, SIGNAL(clicked()), this, SLOT(close()));
 }
 
 void DlgFindText::buttonFindNext()

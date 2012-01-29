@@ -75,8 +75,8 @@ DlgEmoticonsTab::DlgEmoticonsTab(QString _strDir, QWidget *parent) : QWidget(par
     mainLayout->addWidget(listWidget);
     setLayout(mainLayout);
 
-    QObject::connect(&thread, SIGNAL(addEmoticon(QString, QByteArray)), this, SLOT(addEmoticon(QString, QByteArray)));
-    QObject::connect(&thread, SIGNAL(sortEmoticons()), this, SLOT(sortEmoticons()));
+    connect(&thread, SIGNAL(addEmoticon(QString, QByteArray)), this, SLOT(addEmoticon(QString, QByteArray)));
+    connect(&thread, SIGNAL(sortEmoticons()), this, SLOT(sortEmoticons()));
 
     thread.setDir(_strDir);
     thread.start();
@@ -144,13 +144,13 @@ void DlgEmoticons::setDefaultValues()
 
 void DlgEmoticons::createSignals()
 {
-    QObject::connect(ui.pushButton_insert, SIGNAL(clicked()), this, SLOT(buttonInsert()));
-    QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(close()));
+    connect(ui.pushButton_insert, SIGNAL(clicked()), this, SLOT(buttonInsert()));
+    connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(close()));
 
     for (int i = 0; i < ui.tabWidget->count(); i++)
     {
         DlgEmoticonsTab *tab = (DlgEmoticonsTab *)ui.tabWidget->widget(i);
-        QObject::connect(tab->listWidget, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(buttonInsert()));
+        connect(tab->listWidget, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(buttonInsert()));
     }
 }
 

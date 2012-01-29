@@ -71,11 +71,11 @@ void DlgProfileManager::setDefaultValues()
 
 void DlgProfileManager::createSignals()
 {
-    QObject::connect(ui.listWidget, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(itemClicked()));
-    QObject::connect(ui.pushButton_add, SIGNAL(clicked()), this, SLOT(addProfile()));
-    QObject::connect(ui.pushButton_edit, SIGNAL(clicked()), this, SLOT(editProfile()));
-    QObject::connect(ui.pushButton_remove, SIGNAL(clicked()), this, SLOT(removeProfile()));
-    QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(close()));
+    connect(ui.listWidget, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(itemClicked()));
+    connect(ui.pushButton_add, SIGNAL(clicked()), this, SLOT(addProfile()));
+    connect(ui.pushButton_edit, SIGNAL(clicked()), this, SLOT(editProfile()));
+    connect(ui.pushButton_remove, SIGNAL(clicked()), this, SLOT(removeProfile()));
+    connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(close()));
 }
 
 void DlgProfileManager::refreshAllLists()

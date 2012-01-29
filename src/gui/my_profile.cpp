@@ -40,7 +40,7 @@ DlgMyProfile::DlgMyProfile(QWidget *parent) : QDialog(parent)
     createSignals();
 
     accessManager = new QNetworkAccessManager;
-    QObject::connect(accessManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(avatarFinished(QNetworkReply*)));
+    connect(accessManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(avatarFinished(QNetworkReply*)));
 
     refresh();
 }
@@ -130,8 +130,8 @@ void DlgMyProfile::setDefaultValues()
 
 void DlgMyProfile::createSignals()
 {
-    QObject::connect(ui.buttonBox, SIGNAL(accepted()), this, SLOT(buttonOk()));
-    QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(close()));
+    connect(ui.buttonBox, SIGNAL(accepted()), this, SLOT(buttonOk()));
+    connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(close()));
 }
 
 void DlgMyProfile::avatarFinished(QNetworkReply *pReply)

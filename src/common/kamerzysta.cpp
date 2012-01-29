@@ -39,11 +39,11 @@ Kamerzysta::Kamerzysta(QTcpSocket *_socket) : socket(_socket)
     timerGetPort = new QTimer();
     timerGetPort->setInterval(500);
 
-    QObject::connect(socket, SIGNAL(connected()), this, SLOT(networkConnected()));
-    QObject::connect(socket, SIGNAL(disconnected()), this, SLOT(networkDisconnected()));
-    QObject::connect(socket, SIGNAL(error(QAbstractSocket::SocketError)), this, SLOT(error(QAbstractSocket::SocketError)));
-    QObject::connect(socket, SIGNAL(readyRead()), this, SLOT(networkRead()));
-    QObject::connect(timerGetPort, SIGNAL(timeout()), this, SLOT(getPort()));
+    connect(socket, SIGNAL(connected()), this, SLOT(networkConnected()));
+    connect(socket, SIGNAL(disconnected()), this, SLOT(networkDisconnected()));
+    connect(socket, SIGNAL(error(QAbstractSocket::SocketError)), this, SLOT(error(QAbstractSocket::SocketError)));
+    connect(socket, SIGNAL(readyRead()), this, SLOT(networkRead()));
+    connect(timerGetPort, SIGNAL(timeout()), this, SLOT(getPort()));
 }
 
 void Kamerzysta::close()

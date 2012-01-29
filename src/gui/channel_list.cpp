@@ -101,33 +101,33 @@ void DlgChannelList::setDefaultValues()
 
 void DlgChannelList::createSignals()
 {
-    QObject::connect(ui.tableWidget_all, SIGNAL(cellDoubleClicked(int,int)), this, SLOT(allCellDoubleClicked(int,int)));
-    QObject::connect(ui.tableWidget_teen, SIGNAL(cellDoubleClicked(int,int)), this, SLOT(teenCellDoubleClicked(int,int)));
-    QObject::connect(ui.tableWidget_common, SIGNAL(cellDoubleClicked(int,int)), this, SLOT(commonCellDoubleClicked(int,int)));
-    QObject::connect(ui.tableWidget_erotic, SIGNAL(cellDoubleClicked(int,int)), this, SLOT(eroticCellDoubleClicked(int,int)));
-    QObject::connect(ui.tableWidget_thematic, SIGNAL(cellDoubleClicked(int,int)), this, SLOT(thematicCellDoubleClicked(int,int)));
-    QObject::connect(ui.tableWidget_regional, SIGNAL(cellDoubleClicked(int,int)), this, SLOT(regionalCellDoubleClicked(int,int)));
-    QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(close()));
+    connect(ui.tableWidget_all, SIGNAL(cellDoubleClicked(int,int)), this, SLOT(allCellDoubleClicked(int,int)));
+    connect(ui.tableWidget_teen, SIGNAL(cellDoubleClicked(int,int)), this, SLOT(teenCellDoubleClicked(int,int)));
+    connect(ui.tableWidget_common, SIGNAL(cellDoubleClicked(int,int)), this, SLOT(commonCellDoubleClicked(int,int)));
+    connect(ui.tableWidget_erotic, SIGNAL(cellDoubleClicked(int,int)), this, SLOT(eroticCellDoubleClicked(int,int)));
+    connect(ui.tableWidget_thematic, SIGNAL(cellDoubleClicked(int,int)), this, SLOT(thematicCellDoubleClicked(int,int)));
+    connect(ui.tableWidget_regional, SIGNAL(cellDoubleClicked(int,int)), this, SLOT(regionalCellDoubleClicked(int,int)));
+    connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(close()));
 
-    QObject::connect(ui.lineEdit_search, SIGNAL(returnPressed()), this, SLOT(createList()));
-    QObject::connect(ui.lineEdit_search, SIGNAL(textChanged(QString)), this, SLOT(createList()));
-    QObject::connect(ui.pushButton_search, SIGNAL(clicked()), this, SLOT(createList()));
-    QObject::connect(ui.pushButton_clear, SIGNAL(clicked()), this, SLOT(buttonClear()));
-    QObject::connect(ui.checkBox_hide_empty_channels, SIGNAL(clicked()), this, SLOT(createList()));
-    QObject::connect(ui.checkBox_show_adv_options, SIGNAL(clicked()), this, SLOT(showAdvOptions()));
+    connect(ui.lineEdit_search, SIGNAL(returnPressed()), this, SLOT(createList()));
+    connect(ui.lineEdit_search, SIGNAL(textChanged(QString)), this, SLOT(createList()));
+    connect(ui.pushButton_search, SIGNAL(clicked()), this, SLOT(createList()));
+    connect(ui.pushButton_clear, SIGNAL(clicked()), this, SLOT(buttonClear()));
+    connect(ui.checkBox_hide_empty_channels, SIGNAL(clicked()), this, SLOT(createList()));
+    connect(ui.checkBox_show_adv_options, SIGNAL(clicked()), this, SLOT(showAdvOptions()));
 
-    QObject::connect(ui.checkBox_teen, SIGNAL(clicked()), this, SLOT(createList()));
-    QObject::connect(ui.checkBox_common, SIGNAL(clicked()), this, SLOT(createList()));
-    QObject::connect(ui.checkBox_erotic, SIGNAL(clicked()), this, SLOT(createList()));
-    QObject::connect(ui.checkBox_thematic, SIGNAL(clicked()), this, SLOT(createList()));
-    QObject::connect(ui.checkBox_regional, SIGNAL(clicked()), this, SLOT(createList()));
+    connect(ui.checkBox_teen, SIGNAL(clicked()), this, SLOT(createList()));
+    connect(ui.checkBox_common, SIGNAL(clicked()), this, SLOT(createList()));
+    connect(ui.checkBox_erotic, SIGNAL(clicked()), this, SLOT(createList()));
+    connect(ui.checkBox_thematic, SIGNAL(clicked()), this, SLOT(createList()));
+    connect(ui.checkBox_regional, SIGNAL(clicked()), this, SLOT(createList()));
 
-    QObject::connect(ui.checkBox_wild, SIGNAL(clicked()), this, SLOT(createList()));
-    QObject::connect(ui.checkBox_tame, SIGNAL(clicked()), this, SLOT(createList()));
-    QObject::connect(ui.checkBox_with_class, SIGNAL(clicked()), this, SLOT(createList()));
-    QObject::connect(ui.checkBox_cult, SIGNAL(clicked()), this, SLOT(createList()));
-    QObject::connect(ui.checkBox_moderated, SIGNAL(clicked()), this, SLOT(createList()));
-    QObject::connect(ui.checkBox_recommended, SIGNAL(clicked()), this, SLOT(createList()));
+    connect(ui.checkBox_wild, SIGNAL(clicked()), this, SLOT(createList()));
+    connect(ui.checkBox_tame, SIGNAL(clicked()), this, SLOT(createList()));
+    connect(ui.checkBox_with_class, SIGNAL(clicked()), this, SLOT(createList()));
+    connect(ui.checkBox_cult, SIGNAL(clicked()), this, SLOT(createList()));
+    connect(ui.checkBox_moderated, SIGNAL(clicked()), this, SLOT(createList()));
+    connect(ui.checkBox_recommended, SIGNAL(clicked()), this, SLOT(createList()));
 }
 
 bool DlgChannelList::isErotic(QString strChannel)

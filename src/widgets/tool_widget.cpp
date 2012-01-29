@@ -219,38 +219,38 @@ ToolWidget::ToolWidget(QWidget *parent) : QWidget(parent), strCurrentColor("#000
     setFocusProxy(pInputLine);
 
     // signals
-    QObject::connect(showFontButtons, SIGNAL(clicked()), this, SLOT(showFontButtonsClicked()));
+    connect(showFontButtons, SIGNAL(clicked()), this, SLOT(showFontButtonsClicked()));
 
-    QObject::connect(bold, SIGNAL(clicked()), this, SLOT(boldClicked()));
-    QObject::connect(italic, SIGNAL(clicked()), this, SLOT(italicClicked()));
+    connect(bold, SIGNAL(clicked()), this, SLOT(boldClicked()));
+    connect(italic, SIGNAL(clicked()), this, SLOT(italicClicked()));
 
-    QObject::connect(arialAct, SIGNAL(triggered()), this, SLOT(arialTriggered()));
-    QObject::connect(timesAct, SIGNAL(triggered()), this, SLOT(timesTriggered()));
-    QObject::connect(verdanaAct, SIGNAL(triggered()), this, SLOT(verdanaTriggered()));
-    QObject::connect(tahomaAct, SIGNAL(triggered()), this, SLOT(tahomaTriggered()));
-    QObject::connect(courierAct, SIGNAL(triggered()), this, SLOT(courierTriggered()));
+    connect(arialAct, SIGNAL(triggered()), this, SLOT(arialTriggered()));
+    connect(timesAct, SIGNAL(triggered()), this, SLOT(timesTriggered()));
+    connect(verdanaAct, SIGNAL(triggered()), this, SLOT(verdanaTriggered()));
+    connect(tahomaAct, SIGNAL(triggered()), this, SLOT(tahomaTriggered()));
+    connect(courierAct, SIGNAL(triggered()), this, SLOT(courierTriggered()));
 
-    QObject::connect(size8Act, SIGNAL(triggered()), this, SLOT(size8Triggered()));
-    QObject::connect(size9Act, SIGNAL(triggered()), this, SLOT(size9Triggered()));
-    QObject::connect(size10Act, SIGNAL(triggered()), this, SLOT(size10Triggered()));
-    QObject::connect(size11Act, SIGNAL(triggered()), this, SLOT(size11Triggered()));
-    QObject::connect(size12Act, SIGNAL(triggered()), this, SLOT(size12Triggered()));
-    QObject::connect(size14Act, SIGNAL(triggered()), this, SLOT(size14Triggered()));
-    QObject::connect(size16Act, SIGNAL(triggered()), this, SLOT(size16Triggered()));
-    QObject::connect(size18Act, SIGNAL(triggered()), this, SLOT(size18Triggered()));
-    QObject::connect(size20Act, SIGNAL(triggered()), this, SLOT(size20Triggered()));
-    QObject::connect(size24Act, SIGNAL(triggered()), this, SLOT(size24Triggered()));
+    connect(size8Act, SIGNAL(triggered()), this, SLOT(size8Triggered()));
+    connect(size9Act, SIGNAL(triggered()), this, SLOT(size9Triggered()));
+    connect(size10Act, SIGNAL(triggered()), this, SLOT(size10Triggered()));
+    connect(size11Act, SIGNAL(triggered()), this, SLOT(size11Triggered()));
+    connect(size12Act, SIGNAL(triggered()), this, SLOT(size12Triggered()));
+    connect(size14Act, SIGNAL(triggered()), this, SLOT(size14Triggered()));
+    connect(size16Act, SIGNAL(triggered()), this, SLOT(size16Triggered()));
+    connect(size18Act, SIGNAL(triggered()), this, SLOT(size18Triggered()));
+    connect(size20Act, SIGNAL(triggered()), this, SLOT(size20Triggered()));
+    connect(size24Act, SIGNAL(triggered()), this, SLOT(size24Triggered()));
 
-    QObject::connect(color, SIGNAL(activated(int)), this, SLOT(colorClicked(int)));
-    QObject::connect(emoticons, SIGNAL(clicked()), this, SLOT(emoticonsClicked()));
-    QObject::connect(channel_settings, SIGNAL(clicked()), this, SLOT(channelSettingsClicked()));
-    QObject::connect(moderation, SIGNAL(clicked()), this, SLOT(moderationClicked()));
+    connect(color, SIGNAL(activated(int)), this, SLOT(colorClicked(int)));
+    connect(emoticons, SIGNAL(clicked()), this, SLOT(emoticonsClicked()));
+    connect(channel_settings, SIGNAL(clicked()), this, SLOT(channelSettingsClicked()));
+    connect(moderation, SIGNAL(clicked()), this, SLOT(moderationClicked()));
 
-    QObject::connect(sendButton, SIGNAL(clicked()), this, SLOT(inputlineReturnPressed()));
-    QObject::connect(pInputLine, SIGNAL(returnPressed()), this, SLOT(inputlineReturnPressed()));
-    QObject::connect(moderSendButton, SIGNAL(clicked()), this, SLOT(moderButtonClicked()));
-    QObject::connect(pInputLine, SIGNAL(ctrlTabPressed()), this, SLOT(slotCtrlTabPressed()));
-    QObject::connect(pInputLine, SIGNAL(ctrlShiftTabPressed()), this, SLOT(slotCtrlShiftTabPressed()));
+    connect(sendButton, SIGNAL(clicked()), this, SLOT(inputlineReturnPressed()));
+    connect(pInputLine, SIGNAL(returnPressed()), this, SLOT(inputlineReturnPressed()));
+    connect(moderSendButton, SIGNAL(clicked()), this, SLOT(moderButtonClicked()));
+    connect(pInputLine, SIGNAL(ctrlTabPressed()), this, SLOT(slotCtrlTabPressed()));
+    connect(pInputLine, SIGNAL(ctrlShiftTabPressed()), this, SLOT(slotCtrlShiftTabPressed()));
 }
 
 ToolWidget::~ToolWidget()

@@ -64,10 +64,10 @@ void DlgWebcamStandard::createGui()
 
 void DlgWebcamStandard::createSignals()
 {
-    QObject::connect(ui.listWidget_nicks, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(changeUser(QListWidgetItem*)));
-    QObject::connect(ui.toolButton_vote_minus, SIGNAL(clicked()), this, SLOT(voteMinus()));
-    QObject::connect(ui.toolButton_vote_plus, SIGNAL(clicked()), this, SLOT(votePlus()));
-    QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(buttonClose()));
+    connect(ui.listWidget_nicks, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(changeUser(QListWidgetItem*)));
+    connect(ui.toolButton_vote_minus, SIGNAL(clicked()), this, SLOT(voteMinus()));
+    connect(ui.toolButton_vote_plus, SIGNAL(clicked()), this, SLOT(votePlus()));
+    connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(buttonClose()));
 }
 
 void DlgWebcamStandard::updateImage(QByteArray b)

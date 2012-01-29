@@ -280,72 +280,72 @@ void MainWindow::createTrayMenu()
 void MainWindow::createSignals()
 {
     // signals buttons
-    QObject::connect(connectAct, SIGNAL(triggered()), this, SLOT(buttonConnect()));
-    QObject::connect(closeAct, SIGNAL(triggered()), this, SLOT(buttonClose()));
-    QObject::connect(optionsAct, SIGNAL(triggered()), this, SLOT(openOptions()));
-    QObject::connect(aboutAct, SIGNAL(triggered()), this, SLOT(openAbout()));
-    QObject::connect(restoreMinimalizeAct, SIGNAL(triggered()), this, SLOT(buttonRestoreMinimalize()));
+    connect(connectAct, SIGNAL(triggered()), this, SLOT(buttonConnect()));
+    connect(closeAct, SIGNAL(triggered()), this, SLOT(buttonClose()));
+    connect(optionsAct, SIGNAL(triggered()), this, SLOT(openOptions()));
+    connect(aboutAct, SIGNAL(triggered()), this, SLOT(openAbout()));
+    connect(restoreMinimalizeAct, SIGNAL(triggered()), this, SLOT(buttonRestoreMinimalize()));
 
     // signals onet dialogs
-    QObject::connect(channelListAct, SIGNAL(triggered()), this, SLOT(openChannelList()));
-    QObject::connect(channelHomesAct, SIGNAL(triggered()), this, SLOT(openChannelHomes()));
-    QObject::connect(channelFavouritesAct, SIGNAL(triggered()), this, SLOT(openChannelFavourites()));
-    QObject::connect(friendsAct, SIGNAL(triggered()), this, SLOT(openFriends()));
-    QObject::connect(ignoreAct, SIGNAL(triggered()), this, SLOT(openIgnore()));
-    QObject::connect(Core::instance()->busyAct, SIGNAL(triggered()), this, SLOT(buttonSetBusy()));
-    QObject::connect(Core::instance()->awayAct, SIGNAL(triggered()), this, SLOT(buttonSetAway()));
-    QObject::connect(myStatsAct, SIGNAL(triggered()), this, SLOT(openMyStats()));
-    QObject::connect(myProfileAct, SIGNAL(triggered()), this, SLOT(openMyProfile()));
-    QObject::connect(myAvatarAct, SIGNAL(triggered()), this, SLOT(openMyAvatar()));
+    connect(channelListAct, SIGNAL(triggered()), this, SLOT(openChannelList()));
+    connect(channelHomesAct, SIGNAL(triggered()), this, SLOT(openChannelHomes()));
+    connect(channelFavouritesAct, SIGNAL(triggered()), this, SLOT(openChannelFavourites()));
+    connect(friendsAct, SIGNAL(triggered()), this, SLOT(openFriends()));
+    connect(ignoreAct, SIGNAL(triggered()), this, SLOT(openIgnore()));
+    connect(Core::instance()->busyAct, SIGNAL(triggered()), this, SLOT(buttonSetBusy()));
+    connect(Core::instance()->awayAct, SIGNAL(triggered()), this, SLOT(buttonSetAway()));
+    connect(myStatsAct, SIGNAL(triggered()), this, SLOT(openMyStats()));
+    connect(myProfileAct, SIGNAL(triggered()), this, SLOT(openMyProfile()));
+    connect(myAvatarAct, SIGNAL(triggered()), this, SLOT(openMyAvatar()));
 
     // offlinemsg
-    QObject::connect(Core::instance()->offlineMsgAct, SIGNAL(triggered()), this, SLOT(openOfflinemsg()));
+    connect(Core::instance()->offlineMsgAct, SIGNAL(triggered()), this, SLOT(openOfflinemsg()));
     // awaylog
-    QObject::connect(awaylogAct, SIGNAL(triggered()), this, SLOT(openAwaylog()));
+    connect(awaylogAct, SIGNAL(triggered()), this, SLOT(openAwaylog()));
     // onet cams
-    QObject::connect(camsAct, SIGNAL(triggered()), this, SLOT(openCams()));
+    connect(camsAct, SIGNAL(triggered()), this, SLOT(openCams()));
     // notes
-    QObject::connect(notesAct, SIGNAL(triggered()), this, SLOT(openNotes()));
+    connect(notesAct, SIGNAL(triggered()), this, SLOT(openNotes()));
     // tray connect
-    QObject::connect(trayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)), this, SLOT(trayIconPressed(QSystemTrayIcon::ActivationReason)));
+    connect(trayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)), this, SLOT(trayIconPressed(QSystemTrayIcon::ActivationReason)));
 
     // signals from tabc
-    QObject::connect(pTabC, SIGNAL(updateAwaylogStatus()), this, SLOT(updateAwaylogStatus()));
-    QObject::connect(pTabC, SIGNAL(setModeration(bool)), pToolWidget, SLOT(setModeration(bool)));
+    connect(pTabC, SIGNAL(updateAwaylogStatus()), this, SLOT(updateAwaylogStatus()));
+    connect(pTabC, SIGNAL(setModeration(bool)), pToolWidget, SLOT(setModeration(bool)));
 
     // signals tab
-    QObject::connect(pTabM, SIGNAL(tabCloseRequested(int)), this, SLOT(tabCloseRequested(int)));
-    QObject::connect(pTabM, SIGNAL(currentChanged(int)), this, SLOT(currentTabChanged(int)));
-    QObject::connect(pTabM, SIGNAL(tabMoved(int,int)), this, SLOT(tabMoved(int,int)));
+    connect(pTabM, SIGNAL(tabCloseRequested(int)), this, SLOT(tabCloseRequested(int)));
+    connect(pTabM, SIGNAL(currentChanged(int)), this, SLOT(currentTabChanged(int)));
+    connect(pTabM, SIGNAL(tabMoved(int,int)), this, SLOT(tabMoved(int,int)));
 
     // signals pToolWidget
-    QObject::connect(pToolWidget, SIGNAL(showMessage(QString&,QString&,MessageCategory)), pTabC, SLOT(showMessage(QString&,QString&,MessageCategory)));
-    QObject::connect(pToolWidget, SIGNAL(showMessage(QString&,QString&,MessageCategory,QString,QString)), pTabC, SLOT(showMessage(QString&,QString&,MessageCategory,QString,QString)));
-    QObject::connect(pToolWidget, SIGNAL(ctrlTabPressed()), this, SLOT(ctrlTabPressed()));
-    QObject::connect(pToolWidget, SIGNAL(ctrlShiftTabPressed()), this, SLOT(ctrlShiftTabPressed()));
+    connect(pToolWidget, SIGNAL(showMessage(QString&,QString&,MessageCategory)), pTabC, SLOT(showMessage(QString&,QString&,MessageCategory)));
+    connect(pToolWidget, SIGNAL(showMessage(QString&,QString&,MessageCategory,QString,QString)), pTabC, SLOT(showMessage(QString&,QString&,MessageCategory,QString,QString)));
+    connect(pToolWidget, SIGNAL(ctrlTabPressed()), this, SLOT(ctrlTabPressed()));
+    connect(pToolWidget, SIGNAL(ctrlShiftTabPressed()), this, SLOT(ctrlShiftTabPressed()));
 
     // signals onet kernel
-    QObject::connect(pOnetKernel, SIGNAL(addUser(QString,QString,QString,bool)), pTabC, SLOT(addUser(QString,QString,QString,bool)));
-    QObject::connect(pOnetKernel, SIGNAL(delUser(QString,QString)), pTabC, SLOT(delUser(QString,QString)));
-    QObject::connect(pOnetKernel, SIGNAL(quitUser(QString,QString)), pTabC, SLOT(quitUser(QString,QString)));
-    QObject::connect(pOnetKernel, SIGNAL(changeFlag(QString,QString,QString)), pTabC, SLOT(changeFlag(QString,QString,QString)));
-    QObject::connect(pOnetKernel, SIGNAL(changeFlag(QString,QString)), pTabC, SLOT(changeFlag(QString,QString)));
-    QObject::connect(pOnetKernel, SIGNAL(nicklistRefresh(QString)), pTabC, SLOT(nicklistRefresh(QString)));
+    connect(pOnetKernel, SIGNAL(addUser(QString,QString,QString,bool)), pTabC, SLOT(addUser(QString,QString,QString,bool)));
+    connect(pOnetKernel, SIGNAL(delUser(QString,QString)), pTabC, SLOT(delUser(QString,QString)));
+    connect(pOnetKernel, SIGNAL(quitUser(QString,QString)), pTabC, SLOT(quitUser(QString,QString)));
+    connect(pOnetKernel, SIGNAL(changeFlag(QString,QString,QString)), pTabC, SLOT(changeFlag(QString,QString,QString)));
+    connect(pOnetKernel, SIGNAL(changeFlag(QString,QString)), pTabC, SLOT(changeFlag(QString,QString)));
+    connect(pOnetKernel, SIGNAL(nicklistRefresh(QString)), pTabC, SLOT(nicklistRefresh(QString)));
 
     // signals from network
-    QObject::connect(Core::instance()->pNetwork, SIGNAL(setConnected()), this, SLOT(setConnected()));
-    QObject::connect(Core::instance()->pNetwork, SIGNAL(setDisconnected()), this, SLOT(setDisconnected()));
-    QObject::connect(Core::instance()->pNetwork, SIGNAL(setConnectEnabled(bool)), this, SLOT(setConnectEnabled(bool)));
-    QObject::connect(Core::instance()->pNetwork, SIGNAL(kernel(QString)), pOnetKernel, SLOT(kernel(QString)));
-    QObject::connect(Core::instance()->pNetwork, SIGNAL(authorize(QString,QString,QString)), pOnetAuth, SLOT(authorize(QString,QString,QString)));
-    QObject::connect(Core::instance()->pNetwork, SIGNAL(showMessageActive(QString&,MessageCategory)), pTabC, SLOT(showMessageActive(QString&,MessageCategory)));
-    QObject::connect(Core::instance()->pNetwork, SIGNAL(showMessageAll(QString&,MessageCategory)), pTabC, SLOT(showMessageAll(QString&,MessageCategory)));
-    QObject::connect(Core::instance()->pNetwork, SIGNAL(updateNick(QString)), pToolWidget, SLOT(updateNick(QString)));
-    QObject::connect(Core::instance()->pNetwork, SIGNAL(clearAllNicklist()), pTabC, SLOT(clearAllNicklist()));
-    QObject::connect(Core::instance()->pNetwork, SIGNAL(updateActions()), this, SLOT(updateActions()));
+    connect(Core::instance()->pNetwork, SIGNAL(setConnected()), this, SLOT(setConnected()));
+    connect(Core::instance()->pNetwork, SIGNAL(setDisconnected()), this, SLOT(setDisconnected()));
+    connect(Core::instance()->pNetwork, SIGNAL(setConnectEnabled(bool)), this, SLOT(setConnectEnabled(bool)));
+    connect(Core::instance()->pNetwork, SIGNAL(kernel(QString)), pOnetKernel, SLOT(kernel(QString)));
+    connect(Core::instance()->pNetwork, SIGNAL(authorize(QString,QString,QString)), pOnetAuth, SLOT(authorize(QString,QString,QString)));
+    connect(Core::instance()->pNetwork, SIGNAL(showMessageActive(QString&,MessageCategory)), pTabC, SLOT(showMessageActive(QString&,MessageCategory)));
+    connect(Core::instance()->pNetwork, SIGNAL(showMessageAll(QString&,MessageCategory)), pTabC, SLOT(showMessageAll(QString&,MessageCategory)));
+    connect(Core::instance()->pNetwork, SIGNAL(updateNick(QString)), pToolWidget, SLOT(updateNick(QString)));
+    connect(Core::instance()->pNetwork, SIGNAL(clearAllNicklist()), pTabC, SLOT(clearAllNicklist()));
+    connect(Core::instance()->pNetwork, SIGNAL(updateActions()), this, SLOT(updateActions()));
 
     // auto-away
-    QObject::connect(Core::instance()->autoAwayTimer, SIGNAL(timeout()), this, SLOT(timeoutAutoaway()));
+    connect(Core::instance()->autoAwayTimer, SIGNAL(timeout()), this, SLOT(timeoutAutoaway()));
 }
 
 void MainWindow::showWelcome()

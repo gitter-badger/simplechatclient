@@ -54,11 +54,11 @@ void DlgChannelFavourites::createGui()
 
 void DlgChannelFavourites::createSignals()
 {
-    QObject::connect(ui.pushButton_add, SIGNAL(clicked()), this, SLOT(buttonAdd()));
-    QObject::connect(ui.pushButton_remove, SIGNAL(clicked()), this, SLOT(buttonRemove()));
-    QObject::connect(ui.pushButton_join, SIGNAL(clicked()), this, SLOT(buttonJoin()));
-    QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(close()));
-    QObject::connect(ui.listWidget_channels, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(itemClicked(QListWidgetItem*)));
+    connect(ui.pushButton_add, SIGNAL(clicked()), this, SLOT(buttonAdd()));
+    connect(ui.pushButton_remove, SIGNAL(clicked()), this, SLOT(buttonRemove()));
+    connect(ui.pushButton_join, SIGNAL(clicked()), this, SLOT(buttonJoin()));
+    connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(close()));
+    connect(ui.listWidget_channels, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(itemClicked(QListWidgetItem*)));
 }
 
 void DlgChannelFavourites::refresh()

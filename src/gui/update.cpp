@@ -43,7 +43,7 @@ DlgUpdate::DlgUpdate(MainWindow *parent, QString _strVersion) : QDialog(parent),
     createSignals();
 
     accessManager = new QNetworkAccessManager;
-    QObject::connect(accessManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(networkFinished(QNetworkReply*)));
+    connect(accessManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(networkFinished(QNetworkReply*)));
 }
 
 DlgUpdate::~DlgUpdate()
@@ -82,8 +82,8 @@ void DlgUpdate::setDefaultValues()
 
 void DlgUpdate::createSignals()
 {
-    QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(close()));
-    QObject::connect(ui.pushButton_download, SIGNAL(clicked()), this, SLOT(buttonDownload()));
+    connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(close()));
+    connect(ui.pushButton_download, SIGNAL(clicked()), this, SLOT(buttonDownload()));
 }
 
 void DlgUpdate::buttonDownload()
@@ -104,8 +104,8 @@ void DlgUpdate::gotSite(QString site)
     {
         QNetworkReply *pReply = accessManager->get(QNetworkRequest(QUrl(site)));
         pReply->setProperty("category", "file");
-        QObject::connect(pReply, SIGNAL(downloadProgress(qint64,qint64)), this, SLOT(downloadProgress(qint64,qint64)));
-        QObject::connect(pReply, SIGNAL(error(QNetworkReply::NetworkError)), this, SLOT(downloadError(QNetworkReply::NetworkError)));
+        connect(pReply, SIGNAL(downloadProgress(qint64,qint64)), this, SLOT(downloadProgress(qint64,qint64)));
+        connect(pReply, SIGNAL(error(QNetworkReply::NetworkError)), this, SLOT(downloadError(QNetworkReply::NetworkError)));
     }
     else
         QMessageBox::critical(0, "", tr("Cannot download file"));

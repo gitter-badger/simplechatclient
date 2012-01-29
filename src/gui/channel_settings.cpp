@@ -169,29 +169,29 @@ void DlgChannelSettings::setDefaultValues()
 
 void DlgChannelSettings::createSignals()
 {
-    QObject::connect(ui.pushButton_transfer, SIGNAL(clicked()), this, SLOT(ownerChanged()));
-    QObject::connect(ui.pushButton_remove_channel, SIGNAL(clicked()), this, SLOT(removeChannelClicked()));
-    QObject::connect(ui.pushButton_set_website, SIGNAL(clicked()), this, SLOT(wwwChanged()));
-    QObject::connect(ui.pushButton_set_topic, SIGNAL(clicked()), this, SLOT(topicChanged()));
-    QObject::connect(ui.pushButton_set_desc, SIGNAL(clicked()), this, SLOT(descChanged()));
-    QObject::connect(ui.radioButton_status_pub, SIGNAL(clicked()), this, SLOT(statusPub()));
-    QObject::connect(ui.radioButton_status_priv, SIGNAL(clicked()), this, SLOT(statusPriv()));
-    QObject::connect(ui.comboBox_category, SIGNAL(activated(int)), this, SLOT(categoryChanged(int)));
-    QObject::connect(ui.radioButton_guardian_off, SIGNAL(clicked()), this, SLOT(guardianInactive()));
-    QObject::connect(ui.radioButton_guardian_on, SIGNAL(clicked()), this, SLOT(guardianActive()));
-    QObject::connect(ui.comboBox_guardian_level, SIGNAL(activated(int)), this, SLOT(guardianClicked(int)));
-    QObject::connect(ui.pushButton_set_password, SIGNAL(clicked()), this, SLOT(passwordChanged()));
-    QObject::connect(ui.pushButton_set_limit, SIGNAL(clicked()), this, SLOT(limitChanged()));
-    QObject::connect(ui.radioButton_moderation_off, SIGNAL(clicked()), this, SLOT(moderatedInactive()));
-    QObject::connect(ui.radioButton_moderation_on, SIGNAL(clicked()), this, SLOT(moderatedActive()));
-    QObject::connect(ui.radioButton_auditorium_off, SIGNAL(clicked()), this, SLOT(auditoriumInactive()));
-    QObject::connect(ui.radioButton_auditorium_on, SIGNAL(clicked()), this, SLOT(auditoriumActive()));
+    connect(ui.pushButton_transfer, SIGNAL(clicked()), this, SLOT(ownerChanged()));
+    connect(ui.pushButton_remove_channel, SIGNAL(clicked()), this, SLOT(removeChannelClicked()));
+    connect(ui.pushButton_set_website, SIGNAL(clicked()), this, SLOT(wwwChanged()));
+    connect(ui.pushButton_set_topic, SIGNAL(clicked()), this, SLOT(topicChanged()));
+    connect(ui.pushButton_set_desc, SIGNAL(clicked()), this, SLOT(descChanged()));
+    connect(ui.radioButton_status_pub, SIGNAL(clicked()), this, SLOT(statusPub()));
+    connect(ui.radioButton_status_priv, SIGNAL(clicked()), this, SLOT(statusPriv()));
+    connect(ui.comboBox_category, SIGNAL(activated(int)), this, SLOT(categoryChanged(int)));
+    connect(ui.radioButton_guardian_off, SIGNAL(clicked()), this, SLOT(guardianInactive()));
+    connect(ui.radioButton_guardian_on, SIGNAL(clicked()), this, SLOT(guardianActive()));
+    connect(ui.comboBox_guardian_level, SIGNAL(activated(int)), this, SLOT(guardianClicked(int)));
+    connect(ui.pushButton_set_password, SIGNAL(clicked()), this, SLOT(passwordChanged()));
+    connect(ui.pushButton_set_limit, SIGNAL(clicked()), this, SLOT(limitChanged()));
+    connect(ui.radioButton_moderation_off, SIGNAL(clicked()), this, SLOT(moderatedInactive()));
+    connect(ui.radioButton_moderation_on, SIGNAL(clicked()), this, SLOT(moderatedActive()));
+    connect(ui.radioButton_auditorium_off, SIGNAL(clicked()), this, SLOT(auditoriumInactive()));
+    connect(ui.radioButton_auditorium_on, SIGNAL(clicked()), this, SLOT(auditoriumActive()));
 
-    QObject::connect(ui.pushButton_permission_add, SIGNAL(clicked()), this, SLOT(buttonPermissionAdd()));
-    QObject::connect(ui.pushButton_permission_remove, SIGNAL(clicked()), this, SLOT(buttonPermissionRemove()));
-    QObject::connect(ui.listWidget_permissions, SIGNAL(clicked(QModelIndex)), this, SLOT(changePermissionList(QModelIndex)));
+    connect(ui.pushButton_permission_add, SIGNAL(clicked()), this, SLOT(buttonPermissionAdd()));
+    connect(ui.pushButton_permission_remove, SIGNAL(clicked()), this, SLOT(buttonPermissionRemove()));
+    connect(ui.listWidget_permissions, SIGNAL(clicked(QModelIndex)), this, SLOT(changePermissionList(QModelIndex)));
 
-    QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(buttonClose()));
+    connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(buttonClose()));
 }
 
 void DlgChannelSettings::refreshAll()

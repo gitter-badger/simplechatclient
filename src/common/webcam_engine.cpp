@@ -42,10 +42,10 @@ WebcamEngine::~WebcamEngine()
 
 void WebcamEngine::createSignals()
 {
-    QObject::connect(pWebcamNetwork, SIGNAL(connected()), this, SLOT(connected()));
-    QObject::connect(pWebcamNetwork, SIGNAL(dataKernel(QByteArray)), this, SLOT(dataKernel(QByteArray)));
-    QObject::connect(pWebcamNetwork, SIGNAL(textKernel(QString)), this, SLOT(textKernel(QString)));
-    QObject::connect(pWebcamNetwork, SIGNAL(error(QString)), this, SLOT(slotError(QString)));
+    connect(pWebcamNetwork, SIGNAL(connected()), this, SLOT(connected()));
+    connect(pWebcamNetwork, SIGNAL(dataKernel(QByteArray)), this, SLOT(dataKernel(QByteArray)));
+    connect(pWebcamNetwork, SIGNAL(textKernel(QString)), this, SLOT(textKernel(QString)));
+    connect(pWebcamNetwork, SIGNAL(error(QString)), this, SLOT(slotError(QString)));
 }
 
 void WebcamEngine::closeEngine()

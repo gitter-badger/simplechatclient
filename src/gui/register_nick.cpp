@@ -43,7 +43,7 @@ DlgRegisterNick::DlgRegisterNick(MainWindow *parent, DlgProfileAdd *_pDlgProfile
     accessManager = new QNetworkAccessManager;
     cookieJar = new QNetworkCookieJar();
     accessManager->setCookieJar(cookieJar);
-    QObject::connect(accessManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(networkFinished(QNetworkReply*)));
+    connect(accessManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(networkFinished(QNetworkReply*)));
 
     getCookies();
     getImg();
@@ -70,9 +70,9 @@ void DlgRegisterNick::createGui()
 
 void DlgRegisterNick::createSignals()
 {
-    QObject::connect(ui.pushButton_refresh, SIGNAL(clicked()), this, SLOT(buttonRefresh()));
-    QObject::connect(ui.buttonBox, SIGNAL(accepted()), this, SLOT(buttonOk()));
-    QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(close()));
+    connect(ui.pushButton_refresh, SIGNAL(clicked()), this, SLOT(buttonRefresh()));
+    connect(ui.buttonBox, SIGNAL(accepted()), this, SLOT(buttonOk()));
+    connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(close()));
 }
 
 void DlgRegisterNick::getCookies()

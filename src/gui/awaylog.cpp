@@ -45,7 +45,7 @@ void DlgAwaylog::createGui()
 
 void DlgAwaylog::createSignals()
 {
-    QObject::connect(ui.buttonBox, SIGNAL(clicked(QAbstractButton*)), this, SLOT(buttons(QAbstractButton*)));
+    connect(ui.buttonBox, SIGNAL(clicked(QAbstractButton*)), this, SLOT(buttons(QAbstractButton*)));
 }
 
 void DlgAwaylog::refresh()

@@ -56,10 +56,10 @@ void DlgInvite::createGui()
 
 void DlgInvite::createSignals()
 {
-    QObject::connect(ui.pushButton_whois, SIGNAL(clicked()), this, SLOT(buttonWhois()));
-    QObject::connect(ui.pushButton_reject, SIGNAL(clicked()), this, SLOT(buttonReject()));
-    QObject::connect(ui.pushButton_ignore, SIGNAL(clicked()), this, SLOT(buttonIgnore()));
-    QObject::connect(ui.pushButton_accept, SIGNAL(clicked()), this, SLOT(buttonAccept()));
+    connect(ui.pushButton_whois, SIGNAL(clicked()), this, SLOT(buttonWhois()));
+    connect(ui.pushButton_reject, SIGNAL(clicked()), this, SLOT(buttonReject()));
+    connect(ui.pushButton_ignore, SIGNAL(clicked()), this, SLOT(buttonIgnore()));
+    connect(ui.pushButton_accept, SIGNAL(clicked()), this, SLOT(buttonAccept()));
 }
 
 void DlgInvite::buttonWhois()

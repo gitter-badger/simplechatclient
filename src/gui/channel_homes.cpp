@@ -58,13 +58,13 @@ void DlgChannelHomes::createGui()
 
 void DlgChannelHomes::createSignals()
 {
-    QObject::connect(ui.listWidget_channels, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(listClicked(QModelIndex)));
-    QObject::connect(ui.listWidget_channels, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(itemClicked(QListWidgetItem*)));
-    QObject::connect(ui.pushButton_create, SIGNAL(clicked()), this, SLOT(buttonCreate()));
-    QObject::connect(ui.pushButton_remove, SIGNAL(clicked()), this, SLOT(buttonRemove()));
-    QObject::connect(ui.pushButton_join, SIGNAL(clicked()), this, SLOT(buttonJoin()));
-    QObject::connect(ui.pushButton_settings, SIGNAL(clicked()), this, SLOT(buttonSettings()));
-    QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(close()));
+    connect(ui.listWidget_channels, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(listClicked(QModelIndex)));
+    connect(ui.listWidget_channels, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(itemClicked(QListWidgetItem*)));
+    connect(ui.pushButton_create, SIGNAL(clicked()), this, SLOT(buttonCreate()));
+    connect(ui.pushButton_remove, SIGNAL(clicked()), this, SLOT(buttonRemove()));
+    connect(ui.pushButton_join, SIGNAL(clicked()), this, SLOT(buttonJoin()));
+    connect(ui.pushButton_settings, SIGNAL(clicked()), this, SLOT(buttonSettings()));
+    connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(close()));
 }
 
 void DlgChannelHomes::refresh()

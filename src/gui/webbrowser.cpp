@@ -37,8 +37,8 @@ DlgWebBrowser::DlgWebBrowser(QWidget *parent, QUrl url) : QDialog(parent)
     ui.buttonBox->button(QDialogButtonBox::Close)->setIcon(QIcon(":/images/oxygen/16x16/dialog-close.png"));
 
     // signals
-    QObject::connect(ui.webView, SIGNAL(loadFinished(bool)), this, SLOT(loadFinished()));
-    QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(close()));
+    connect(ui.webView, SIGNAL(loadFinished(bool)), this, SLOT(loadFinished()));
+    connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(close()));
 
     // load
     ui.webView->load(url);

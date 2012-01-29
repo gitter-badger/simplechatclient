@@ -51,10 +51,10 @@ void DlgUserAvatar::setDefaultValues()
 
 void DlgUserAvatar::createSignals()
 {
-    QObject::connect(ui.toolButton_zoom_out, SIGNAL(clicked()), this, SLOT(buttonZoomOut()));
-    QObject::connect(ui.horizontalSlider, SIGNAL(valueChanged(int)), this, SLOT(sliderValueChanged(int)));
-    QObject::connect(ui.toolButton_zoom_in, SIGNAL(clicked()), this, SLOT(buttonZoomIn()));
-    QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(close()));
+    connect(ui.toolButton_zoom_out, SIGNAL(clicked()), this, SLOT(buttonZoomOut()));
+    connect(ui.horizontalSlider, SIGNAL(valueChanged(int)), this, SLOT(sliderValueChanged(int)));
+    connect(ui.toolButton_zoom_in, SIGNAL(clicked()), this, SLOT(buttonZoomIn()));
+    connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(close()));
 }
 
 void DlgUserAvatar::buttonZoomOut()

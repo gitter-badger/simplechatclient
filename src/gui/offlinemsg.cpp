@@ -57,11 +57,11 @@ void DlgOfflineMsg::createGui()
 
 void DlgOfflineMsg::createSignals()
 {
-    QObject::connect(ui.pushButton_read, SIGNAL(clicked()), this, SLOT(buttonRead()));
-    QObject::connect(ui.pushButton_reject, SIGNAL(clicked()), this, SLOT(buttonReject()));
-    QObject::connect(ui.pushButton_reply, SIGNAL(clicked()), this, SLOT(buttonReply()));
-    QObject::connect(ui.lineEdit_reply, SIGNAL(returnPressed()), this, SLOT(buttonReply()));
-    QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(buttonClose()));
+    connect(ui.pushButton_read, SIGNAL(clicked()), this, SLOT(buttonRead()));
+    connect(ui.pushButton_reject, SIGNAL(clicked()), this, SLOT(buttonReject()));
+    connect(ui.pushButton_reply, SIGNAL(clicked()), this, SLOT(buttonReply()));
+    connect(ui.lineEdit_reply, SIGNAL(returnPressed()), this, SLOT(buttonReply()));
+    connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(buttonClose()));
 }
 
 void DlgOfflineMsg::removeNick(QString strRemoveNick)

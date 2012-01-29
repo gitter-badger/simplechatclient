@@ -59,7 +59,7 @@ void DlgMyStats::createGui()
 
 void DlgMyStats::createSignals()
 {
-    QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(close()));
+    connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(close()));
 }
 
 int DlgMyStats::replaceValue(QString strValue)

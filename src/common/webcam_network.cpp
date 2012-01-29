@@ -33,11 +33,11 @@ WebcamNetwork::WebcamNetwork() : iLastActive(0), iLastKeepAlive(0), bReconnectin
     socket->setSocketOption(QAbstractSocket::LowDelayOption, 1);
     socket->setSocketOption(QAbstractSocket::KeepAliveOption, 0);
 
-    QObject::connect(socket, SIGNAL(connected()), this, SLOT(networkConnected()));
-    QObject::connect(socket, SIGNAL(disconnected()), this, SLOT(networkDisconnected()));
-    QObject::connect(socket, SIGNAL(error(QAbstractSocket::SocketError)), this, SLOT(networkError(QAbstractSocket::SocketError)));
-    QObject::connect(socket, SIGNAL(readyRead()), this, SLOT(networkRead()));
-    QObject::connect(timerPingPong, SIGNAL(timeout()), this, SLOT(timeoutPingpong()));
+    connect(socket, SIGNAL(connected()), this, SLOT(networkConnected()));
+    connect(socket, SIGNAL(disconnected()), this, SLOT(networkDisconnected()));
+    connect(socket, SIGNAL(error(QAbstractSocket::SocketError)), this, SLOT(networkError(QAbstractSocket::SocketError)));
+    connect(socket, SIGNAL(readyRead()), this, SLOT(networkRead()));
+    connect(timerPingPong, SIGNAL(timeout()), this, SLOT(timeoutPingpong()));
 }
 
 WebcamNetwork::~WebcamNetwork()

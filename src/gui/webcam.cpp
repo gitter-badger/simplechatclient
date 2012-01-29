@@ -55,30 +55,30 @@ void DlgWebcam::createSignals()
 {
     if (bMini)
     {
-        QObject::connect(pWebcamEngine, SIGNAL(updateImage(QByteArray)), pWebcamMini, SLOT(updateImage(QByteArray)));
-        QObject::connect(pWebcamEngine, SIGNAL(updateText(QString)), pWebcamMini, SLOT(updateText(QString)));
-        QObject::connect(pWebcamEngine, SIGNAL(userError(QString)), this, SLOT(userError(QString)));
-        QObject::connect(pWebcamEngine, SIGNAL(error(QString)), pWebcamMini, SLOT(error(QString)));
+        connect(pWebcamEngine, SIGNAL(updateImage(QByteArray)), pWebcamMini, SLOT(updateImage(QByteArray)));
+        connect(pWebcamEngine, SIGNAL(updateText(QString)), pWebcamMini, SLOT(updateText(QString)));
+        connect(pWebcamEngine, SIGNAL(userError(QString)), this, SLOT(userError(QString)));
+        connect(pWebcamEngine, SIGNAL(error(QString)), pWebcamMini, SLOT(error(QString)));
 
-        QObject::connect(pWebcamMini, SIGNAL(closeCam()), this, SLOT(closeCam()));
+        connect(pWebcamMini, SIGNAL(closeCam()), this, SLOT(closeCam()));
     }
     else
     {
-        QObject::connect(pWebcamEngine, SIGNAL(updateImage(QByteArray)), pWebcamStandard, SLOT(updateImage(QByteArray)));
-        QObject::connect(pWebcamEngine, SIGNAL(updateText(QString)), pWebcamStandard, SLOT(updateText(QString)));
-        QObject::connect(pWebcamEngine, SIGNAL(updateRank(int)), pWebcamStandard, SLOT(updateRank(int)));
-        QObject::connect(pWebcamEngine, SIGNAL(updateStatus(QString)), pWebcamStandard, SLOT(updateStatus(QString)));
-        QObject::connect(pWebcamEngine, SIGNAL(voteOk()), pWebcamStandard, SLOT(voteOk()));
-        QObject::connect(pWebcamEngine, SIGNAL(userError(QString)), pWebcamStandard, SLOT(userError(QString)));
-        QObject::connect(pWebcamEngine, SIGNAL(error(QString)), pWebcamStandard, SLOT(error(QString)));
-        QObject::connect(pWebcamEngine, SIGNAL(addUser(QString,int,QString)), pWebcamStandard, SLOT(addUser(QString,int,QString)));
-        QObject::connect(pWebcamEngine, SIGNAL(updateUser(QString,int,QString)), pWebcamStandard, SLOT(updateUser(QString,int,QString)));
-        QObject::connect(pWebcamEngine, SIGNAL(removeUser(QString)), pWebcamStandard, SLOT(removeUser(QString)));
-        QObject::connect(pWebcamEngine, SIGNAL(clearUsers()), pWebcamStandard, SLOT(clearUsers()));
+        connect(pWebcamEngine, SIGNAL(updateImage(QByteArray)), pWebcamStandard, SLOT(updateImage(QByteArray)));
+        connect(pWebcamEngine, SIGNAL(updateText(QString)), pWebcamStandard, SLOT(updateText(QString)));
+        connect(pWebcamEngine, SIGNAL(updateRank(int)), pWebcamStandard, SLOT(updateRank(int)));
+        connect(pWebcamEngine, SIGNAL(updateStatus(QString)), pWebcamStandard, SLOT(updateStatus(QString)));
+        connect(pWebcamEngine, SIGNAL(voteOk()), pWebcamStandard, SLOT(voteOk()));
+        connect(pWebcamEngine, SIGNAL(userError(QString)), pWebcamStandard, SLOT(userError(QString)));
+        connect(pWebcamEngine, SIGNAL(error(QString)), pWebcamStandard, SLOT(error(QString)));
+        connect(pWebcamEngine, SIGNAL(addUser(QString,int,QString)), pWebcamStandard, SLOT(addUser(QString,int,QString)));
+        connect(pWebcamEngine, SIGNAL(updateUser(QString,int,QString)), pWebcamStandard, SLOT(updateUser(QString,int,QString)));
+        connect(pWebcamEngine, SIGNAL(removeUser(QString)), pWebcamStandard, SLOT(removeUser(QString)));
+        connect(pWebcamEngine, SIGNAL(clearUsers()), pWebcamStandard, SLOT(clearUsers()));
 
-        QObject::connect(pWebcamStandard, SIGNAL(closeCam()), this, SLOT(closeCam()));
-        QObject::connect(pWebcamStandard, SIGNAL(networkSend(QString)), pWebcamEngine, SLOT(networkSend(QString)));
-        QObject::connect(pWebcamStandard, SIGNAL(setUser(QString)), pWebcamEngine, SLOT(setUser(QString)));
+        connect(pWebcamStandard, SIGNAL(closeCam()), this, SLOT(closeCam()));
+        connect(pWebcamStandard, SIGNAL(networkSend(QString)), pWebcamEngine, SLOT(networkSend(QString)));
+        connect(pWebcamStandard, SIGNAL(setUser(QString)), pWebcamEngine, SLOT(setUser(QString)));
     }
 }
 

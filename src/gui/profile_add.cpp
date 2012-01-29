@@ -64,11 +64,11 @@ void DlgProfileAdd::setDefaultValues()
 
 void DlgProfileAdd::createSignals()
 {
-    QObject::connect(ui.radioButton_unregistered_nick, SIGNAL(clicked()), this, SLOT(hidePass()));
-    QObject::connect(ui.radioButton_registered_nick, SIGNAL(clicked()), this, SLOT(showPass()));
-    QObject::connect(ui.pushButton_register_nick, SIGNAL(clicked()), this, SLOT(buttonRegisterNick()));
-    QObject::connect(ui.buttonBox, SIGNAL(accepted()), this, SLOT(buttonOk()));
-    QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(close()));
+    connect(ui.radioButton_unregistered_nick, SIGNAL(clicked()), this, SLOT(hidePass()));
+    connect(ui.radioButton_registered_nick, SIGNAL(clicked()), this, SLOT(showPass()));
+    connect(ui.pushButton_register_nick, SIGNAL(clicked()), this, SLOT(buttonRegisterNick()));
+    connect(ui.buttonBox, SIGNAL(accepted()), this, SLOT(buttonOk()));
+    connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(close()));
 }
 
 void DlgProfileAdd::setNickPass(QString n, QString p)

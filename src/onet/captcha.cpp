@@ -41,7 +41,7 @@ DlgCaptcha::DlgCaptcha(MainWindow *parent, QNetworkCookieJar *_cookieJar, QStrin
 
     accessManager = new QNetworkAccessManager;
     accessManager->setCookieJar(cookieJar);
-    QObject::connect(accessManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(networkFinished(QNetworkReply*)));
+    connect(accessManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(networkFinished(QNetworkReply*)));
 
     getImg();
 }
@@ -55,7 +55,7 @@ void DlgCaptcha::createGui()
 
 void DlgCaptcha::createSignals()
 {
-    QObject::connect(ui.buttonBox, SIGNAL(accepted()), this, SLOT(buttonOk()));
+    connect(ui.buttonBox, SIGNAL(accepted()), this, SLOT(buttonOk()));
 }
 
 void DlgCaptcha::getImg()

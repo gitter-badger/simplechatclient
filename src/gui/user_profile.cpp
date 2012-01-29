@@ -54,7 +54,7 @@ DlgUserProfile::DlgUserProfile(QWidget *parent, QString _strNick) : QDialog(pare
     move(QApplication::desktop()->screenGeometry(QApplication::desktop()->screenNumber(parent)).center()  - rect().center());
 
     accessManager = new QNetworkAccessManager;
-    QObject::connect(accessManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(avatarFinished(QNetworkReply*)));
+    connect(accessManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(avatarFinished(QNetworkReply*)));
 
     // set nick
     Core::instance()->strUserProfile = strNick;
@@ -187,9 +187,9 @@ void DlgUserProfile::createGui()
 
 void DlgUserProfile::createSignals()
 {
-    QObject::connect(toolButton_zoom, SIGNAL(clicked()), this, SLOT(buttonZoom()));
-    QObject::connect(pushButton_more, SIGNAL(clicked()), this, SLOT(buttonMore()));
-    QObject::connect(pushButton_close, SIGNAL(clicked()), this, SLOT(buttonClose()));
+    connect(toolButton_zoom, SIGNAL(clicked()), this, SLOT(buttonZoom()));
+    connect(pushButton_more, SIGNAL(clicked()), this, SLOT(buttonMore()));
+    connect(pushButton_close, SIGNAL(clicked()), this, SLOT(buttonClose()));
 }
 
 void DlgUserProfile::refreshUserInfo()

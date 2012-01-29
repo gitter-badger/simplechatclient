@@ -50,9 +50,9 @@ void DlgIgnore::createGui()
 
 void DlgIgnore::createSignals()
 {
-    QObject::connect(ui.pushButton_add, SIGNAL(clicked()), this, SLOT(buttonAdd()));
-    QObject::connect(ui.pushButton_remove, SIGNAL(clicked()), this, SLOT(buttonRemove()));
-    QObject::connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(close()));
+    connect(ui.pushButton_add, SIGNAL(clicked()), this, SLOT(buttonAdd()));
+    connect(ui.pushButton_remove, SIGNAL(clicked()), this, SLOT(buttonRemove()));
+    connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(close()));
 }
 
 void DlgIgnore::refresh()
