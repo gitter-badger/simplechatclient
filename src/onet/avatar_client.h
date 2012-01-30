@@ -73,7 +73,7 @@ private:
         RT_getCollectionAvatar,
         RT_getAvatar,
 
-        RT_undefined,
+        RT_undefined
     };
 
     void getCookies();

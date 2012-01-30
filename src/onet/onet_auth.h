@@ -43,6 +43,21 @@ public slots:
     void authorize(QString, QString, QString);
 
 private:
+    enum AuthType
+    {
+        AT_chat,
+        AT_deploy,
+        AT_kropka,
+        AT_kropkaFull,
+        AT_sk,
+        AT_secureKropka,
+        AT_secureLogin,
+        AT_override,
+        AT_checkCode,
+        AT_uo,
+        AT_refreshSk,
+        AT_undefined
+    };
     TabContainer *pTabC;
     QNetworkAccessManager *accessManager;
     QNetworkCookieJar *cookieJar;
@@ -69,7 +84,7 @@ private:
     void getKropkaFull();
     void getSk();
     void getSecureKropka();
-    void getSecureMlogin();
+    void getSecureLogin();
     void getOverride();
     void getUo();
     void showCaptchaDialog();
