@@ -75,6 +75,7 @@ void DlgOptions::createGui()
     // page adv
     ui.checkBox_auto_busy->setText(tr("Busy mode after you log in to chat"));
     ui.checkBox_disable_autojoin_favourites->setText(tr("Disable autojoin favourite channels"));
+    ui.checkBox_minimize_to_tray->setText(tr("Minimize to tray"));
     ui.checkBox_show_zuo_and_ip->setText(tr("Show ZUO and IP"));
     ui.checkBox_hide_formating->setText(tr("Disable font size, color..."));
     ui.checkBox_hide_join_part->setText(tr("Hide join/part"));
@@ -240,6 +241,7 @@ void DlgOptions::setDefaultValues()
 
     QString strAutoBusy = Core::instance()->settings.value("auto_busy");
     QString strDisableAutojoinFavourites = Core::instance()->settings.value("disable_autojoin_favourites");
+    QString strMinimizeToTray = Core::instance()->settings.value("minimize_to_tray");
     QString strShowZuoAndIp = Core::instance()->settings.value("show_zuo_and_ip");
     QString strHideFormating = Core::instance()->settings.value("hide_formating");
     QString strHideJoinPart = Core::instance()->settings.value("hide_join_part");
@@ -280,11 +282,17 @@ void DlgOptions::setDefaultValues()
     else
         ui.checkBox_auto_busy->setChecked(false);
 
-    // auto busy
+    // auto join favourites
     if (strDisableAutojoinFavourites == "on")
         ui.checkBox_disable_autojoin_favourites->setChecked(true);
     else
         ui.checkBox_disable_autojoin_favourites->setChecked(false);
+
+    // minimize to tray
+    if (strMinimizeToTray == "on")
+        ui.checkBox_minimize_to_tray->setChecked(true);
+    else
+        ui.checkBox_minimize_to_tray->setChecked(false);
 
     // show zuo
     if (strShowZuoAndIp == "on")
@@ -379,6 +387,7 @@ void DlgOptions::createSignals()
     connect(ui.pushButton_highlight_remove, SIGNAL(clicked()), this, SLOT(highlightRemove()));
     connect(ui.checkBox_auto_busy, SIGNAL(clicked(bool)), this, SLOT(autoBusy(bool)));
     connect(ui.checkBox_disable_autojoin_favourites, SIGNAL(clicked(bool)), this, SLOT(disableAutojoinFavourites(bool)));
+    connect(ui.checkBox_minimize_to_tray, SIGNAL(clicked(bool)), this, SLOT(minimizeToTray(bool)));
     connect(ui.checkBox_show_zuo_and_ip, SIGNAL(clicked(bool)), this, SLOT(showZuoAndIp(bool)));
     connect(ui.checkBox_hide_formating, SIGNAL(clicked(bool)), this, SLOT(hideFormating(bool)));
     connect(ui.checkBox_hide_join_part, SIGNAL(clicked(bool)), this, SLOT(hideJoinPart(bool)));
@@ -637,6 +646,16 @@ void DlgOptions::disableAutojoinFavourites(bool bValue)
     Config *pConfig = new Config();
     pConfig->setValue("disable_autojoin_favourites", strValue);
     Core::instance()->settings["disable_autojoin_favourites"] = strValue;
+    delete pConfig;
+}
+
+void DlgOptions::minimizeToTray(bool bValue)
+{
+    QString strValue = (bValue ? "on" : "off");
+
+    Config *pConfig = new Config();
+    pConfig->setValue("minimize_to_tray", strValue);
+    Core::instance()->settings["minimize_to_tray"] = strValue;
     delete pConfig;
 }
 

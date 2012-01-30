@@ -751,12 +751,31 @@ void MainWindow::tabMoved(int from, int to)
     Core::instance()->lOpenChannels.move(from, to);
 }
 
+void MainWindow::showMessage(QString &strChannel, QString &strData, MessageCategory eMessageCategory, QString strTime, QString strNick)
+{
+    pTabC->showMessage(strChannel, strData, eMessageCategory, strTime, strNick);
+}
+
 void MainWindow::resizeEvent(QResizeEvent *e)
 {
     pTabC->resizeMainWindow(e->size());
 }
 
-void MainWindow::showMessage(QString &strChannel, QString &strData, MessageCategory eMessageCategory, QString strTime, QString strNick)
+void MainWindow::changeEvent(QEvent *event)
 {
-    pTabC->showMessage(strChannel, strData, eMessageCategory, strTime, strNick);
+    QMainWindow::changeEvent(event);
+
+    if (event->type() == QEvent::WindowStateChange)
+    {
+        QWindowStateChangeEvent *e = (QWindowStateChangeEvent*)event;
+        // make sure we only do this for minimize events
+        if ((e->oldState() != Qt::WindowMinimized) && isMinimized())
+        {
+            if (Core::instance()->settings["minimize_to_tray"] == "on")
+            {
+                QTimer::singleShot(0, this, SLOT(hide()));
+                event->ignore();
+            }
+        }
+    }
 }

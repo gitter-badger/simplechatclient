@@ -1337,6 +1337,10 @@
         <translation>Wyłącz automatyczne wchodzenie do ulubionych pokoi</translation>
     </message>
     <message>
+        <source>Minimize to tray</source>
+        <translation>Minimalizacja do zasobnika</translation>
+    </message>
+    <message>
         <source>Show ZUO and IP</source>
         <translation>Pokaż numer ZUO oraz IP</translation>
     </message>

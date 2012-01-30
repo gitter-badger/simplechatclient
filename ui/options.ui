@@ -404,6 +404,13 @@
         </widget>
        </item>
        <item>
+        <widget class="QCheckBox" name="checkBox_minimize_to_tray">
+         <property name="text">
+          <string>Minimize to tray</string>
+         </property>
+        </widget>
+       </item>
+       <item>
         <widget class="QCheckBox" name="checkBox_show_zuo_and_ip">
          <property name="text">
           <string>Show ZUO and IP</string>

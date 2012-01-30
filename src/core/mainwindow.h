@@ -140,6 +140,7 @@ private slots:
 
 protected:
     void resizeEvent(QResizeEvent *);
+    void changeEvent(QEvent *);
 };
 
 #endif // MAINWINDOW_H

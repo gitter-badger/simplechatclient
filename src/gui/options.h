@@ -55,6 +55,7 @@ private slots:
     void highlightRemove();
     void autoBusy(bool);
     void disableAutojoinFavourites(bool);
+    void minimizeToTray(bool);
     void showZuoAndIp(bool);
     void hideFormating(bool);
     void hideJoinPart(bool);
