@@ -29,6 +29,8 @@
 #include "profile_add.h"
 #include "register_nick.h"
 
+#define AJAX_API "http://czat.onet.pl/include/ajaxapi.xml.php3"
+
 DlgRegisterNick::DlgRegisterNick(MainWindow *parent, DlgProfileAdd *_pDlgProfileAdd) : QDialog(parent), pDlgProfileAdd(_pDlgProfileAdd)
 {
     ui.setupUi(this);
@@ -78,7 +80,7 @@ void DlgRegisterNick::createSignals()
 void DlgRegisterNick::getCookies()
 {
     QNetworkReply *pReply = accessManager->get(QNetworkRequest(QUrl("http://kropka.onet.pl/_s/kropka/1?DV=czat%2Findex")));
-    pReply->setProperty("category", "get_cookies");
+    pReply->setProperty("category", RT_cookies);
 }
 
 void DlgRegisterNick::gotCookies()
@@ -104,7 +106,7 @@ void DlgRegisterNick::getImg()
 
     // request
     QNetworkReply *pReply = accessManager->get(QNetworkRequest(QUrl("http://czat.onet.pl/myimg.gif")));
-    pReply->setProperty("category", "get_img");
+    pReply->setProperty("category", RT_img);
 }
 
 void DlgRegisterNick::gotImg(QByteArray bData)
@@ -150,14 +152,14 @@ void DlgRegisterNick::registerNick()
     accessManager->cookieJar()->setCookiesFromUrl(cookieList, QUrl("http://czat.onet.pl"));
 
     // request
-    QString strUrl = "http://czat.onet.pl/include/ajaxapi.xml.php3";
+    QString strUrl = AJAX_API;
     QString strContent = QString("api_function=registerNick&params=a:3:{s:4:\"nick\";s:%1:\"%2\";s:4:\"pass\";s:%3:\"%4\";s:4:\"code\";s:%5:\"%6\";}").arg(strNickLength, strNick, strPasswordLength, strPassword, strCodeLength, strCode);
 
     QNetworkRequest request;
     request.setUrl(QUrl(strUrl));
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
     QNetworkReply *pReply = accessManager->post(request, strContent.toAscii());
-    pReply->setProperty("category", "register_nick");
+    pReply->setProperty("category", RT_register);
 }
 
 // <?xml version="1.0" encoding="ISO-8859-2"?><root><status>-104</status><error err_code="0"  err_text="OK" ></error></root>
@@ -212,18 +214,24 @@ void DlgRegisterNick::networkFinished(QNetworkReply *reply)
     if (reply->error())
         return;
 
-    QString strCategory = reply->property("category").toString();
+    int category = reply->property("category").toInt();
     QByteArray bData = reply->readAll();
 
     if (bData.isEmpty())
         return;
 
-    if (strCategory == "get_img")
-        gotImg(bData);
-    else if (strCategory == "get_cookies")
-        gotCookies();
-    else if (strCategory == "register_nick")
-        parseResult(QString(bData));
+    switch (category)
+    {
+        case RT_img:
+            gotImg(bData);
+            break;
+        case RT_cookies:
+            gotCookies();
+            break;
+        case RT_register:
+            parseResult(QString(bData));
+            break;
+    }
 }
 
 void DlgRegisterNick::buttonOk()

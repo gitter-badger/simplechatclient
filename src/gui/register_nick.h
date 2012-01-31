@@ -37,6 +37,13 @@ public:
     virtual ~DlgRegisterNick();
 
 private:
+    enum RegisterType
+    {
+        RT_img,
+        RT_cookies,
+        RT_register
+    };
+
     Ui::uiRegisterNick ui;
     DlgProfileAdd *pDlgProfileAdd;
     QNetworkAccessManager *accessManager;
