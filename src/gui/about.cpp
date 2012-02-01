@@ -50,7 +50,6 @@ void DlgAbout::setDefaultValues()
     QString strCurrentVersion = Core::instance()->settings.value("version");
 
     QStringList lCurrentVersion = strCurrentVersion.split(".");
-    QString strCurrentShortVersion = QString("%1.%2.%3").arg(lCurrentVersion[0], lCurrentVersion[1], lCurrentVersion[2]);
     QString strCurrentRev = lCurrentVersion.last();
     int iCurrentRev = strCurrentRev.toInt();
 
@@ -72,7 +71,7 @@ void DlgAbout::setDefaultValues()
     else
         strVersion = QString("%1 %2").arg(tr("Version"), strCurrentVersion);
 
-    QString strTitle = QString("<p style=\"font-size:16px;\"><b>Simple Chat Client %1</b></p>").arg(strCurrentShortVersion);
+    QString strTitle = QString("<p style=\"font-size:16px;\"><b>Simple Chat Client</b></p>");
     strTitle += "<p>"+strVersion+"</p>";
 
     QString strAbout = "<p>"+tr("Simple chat client")+"</p>";
