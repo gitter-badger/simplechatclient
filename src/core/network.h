@@ -83,8 +83,8 @@ signals:
     void setConnectEnabled(bool);
     void kernel(QString);
     void authorize(QString, QString, QString);
-    void showMessageAll(QString&, MessageCategory);
-    void showMessageActive(QString&, MessageCategory);
+    void showMessageAll(QString, MessageCategory);
+    void showMessageActive(QString, MessageCategory);
     void updateNick(QString);
     void updateActions();
     void clearAllNicklist();

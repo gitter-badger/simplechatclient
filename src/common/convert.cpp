@@ -33,7 +33,7 @@ void Convert::convertColor(QString &strData)
     QList<QString> lColors;
     lColors << "000000" << "623c00" << "c86c00" << "ff6500" << "ff0000" << "e40f0f" << "990033" << "8800ab" << "ce00ff" << "0f2ab1" << "3030ce" << "006699" << "1a866e" << "008100" << "959595";
 
-    if (Core::instance()->settings.value("hide_formating") == "off")
+    if (Core::instance()->settings.value("hide_formating") == "false")
     {
         foreach (QString strColor, lColors)
         {
@@ -62,7 +62,7 @@ void Convert::convertFont(QString &strData)
         pos += rx.matchedLength();
         int second = pos;
 
-        if (Core::instance()->settings.value("hide_formating") == "off")
+        if (Core::instance()->settings.value("hide_formating") == "false")
         {
             QString strAtributes;
             QString strFontStyle = rx.cap(1);
@@ -103,7 +103,7 @@ void Convert::convertEmoticons(QString &strData)
         QString strEmoticon = rx.cap(1);
         QString strEmoticonFull = "%I"+strEmoticon+"%";
 
-        if (Core::instance()->settings.value("disable_emots") == "off")
+        if (Core::instance()->settings.value("disable_emots") == "false")
         {
             QString strEmoticonPath = findEmoticon(strEmoticon);
 

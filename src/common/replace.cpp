@@ -42,7 +42,7 @@ void Replace::convertEmots(QString &strData)
 void Replace::replaceEmots(QString &strData)
 {
     // return if disable replaces == on
-    if (Core::instance()->settings.value("disable_replaces") == "on") return;
+    if (Core::instance()->settings.value("disable_replaces") == "true") return;
 
     strData.replace(":))", "%Ihaha%");
     strData.replace(";))", "%Ioczko%");

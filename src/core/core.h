@@ -47,6 +47,7 @@ public:
     // old
     void removeOldConfig();
     void convertOldProfiles();
+    void convertOldConfig();
     // config
     void configValues();
     void configProfileValues();
@@ -77,7 +78,7 @@ public:
     // get users count
     int getUserCount(QString);
     // show message
-    void showMessage(QString&,QString&,MessageCategory, QString strTime = QString::null, QString strNick = QString::null);
+    void showMessage(QString, QString, MessageCategory, QString strTime = QString::null, QString strNick = QString::null);
     // get user avatar path
     QString getUserAvatarPath(QString);
     // priv

@@ -248,18 +248,18 @@ QMap<QString,QString> Config::getDefaultValues()
         mDefaultValues.insert("themes", "Standard");
         mDefaultValues.insert("language", "pl");
         mDefaultValues.insert("highlight", "");
-        mDefaultValues.insert("auto_busy", "off");
-        mDefaultValues.insert("minimize_to_tray", "off");
-        mDefaultValues.insert("disable_autojoin_favourites", "off");
-        mDefaultValues.insert("show_zuo_and_ip", "off");
-        mDefaultValues.insert("hide_formating", "off");
-        mDefaultValues.insert("hide_join_part", "off");
-        mDefaultValues.insert("hide_join_part_200", "on");
-        mDefaultValues.insert("disable_emots", "off");
-        mDefaultValues.insert("disable_replaces", "off");
+        mDefaultValues.insert("auto_busy", "false");
+        mDefaultValues.insert("minimize_to_tray", "false");
+        mDefaultValues.insert("disable_autojoin_favourites", "false");
+        mDefaultValues.insert("show_zuo_and_ip", "false");
+        mDefaultValues.insert("hide_formating", "false");
+        mDefaultValues.insert("hide_join_part", "false");
+        mDefaultValues.insert("hide_join_part_200", "true");
+        mDefaultValues.insert("disable_emots", "false");
+        mDefaultValues.insert("disable_replaces", "false");
         mDefaultValues.insert("background_color", "#ffffff");
-        mDefaultValues.insert("my_bold", "off");
-        mDefaultValues.insert("my_italic", "off");
+        mDefaultValues.insert("my_bold", "false");
+        mDefaultValues.insert("my_italic", "false");
         mDefaultValues.insert("my_font", "Verdana");
         mDefaultValues.insert("my_color", "#000000");
         mDefaultValues.insert("font_size", "11px");
@@ -279,13 +279,13 @@ QMap<QString,QString> Config::getDefaultValues()
         mDefaultValues.insert("nicklist_busy_nick_color", "#a0a0a4");
         mDefaultValues.insert("nicklist_gradient_1_color", "#77d5f7");
         mDefaultValues.insert("nicklist_gradient_2_color", "#1b86b7");
-        mDefaultValues.insert("save_logs_by_date", "on");
-        mDefaultValues.insert("disable_logs", "off");
+        mDefaultValues.insert("save_logs_by_date", "true");
+        mDefaultValues.insert("disable_logs", "false");
         mDefaultValues.insert("sound_beep", strSoundBeep);
         mDefaultValues.insert("sound_query", strSoundQuery);
-        mDefaultValues.insert("disable_sounds", "off");
+        mDefaultValues.insert("disable_sounds", "false");
         mDefaultValues.insert("background_image", strBackgroundImage);
-        mDefaultValues.insert("disable_background_image", "off");
+        mDefaultValues.insert("disable_background_image", "false");
         mDefaultValues.insert("winamp", "$song [$position/$length] //muzyka");
     }
 

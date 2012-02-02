@@ -73,7 +73,7 @@ void Kamerzysta::show(QString n)
 
 void Kamerzysta::log(QString strData)
 {
-    if (Core::instance()->settings.value("debug") == "on")
+    if (Core::instance()->settings.value("debug") == "true")
     {
         Log *l = new Log();
         QString strKamerzysta = "kamerzysta";

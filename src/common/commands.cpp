@@ -66,7 +66,7 @@ QString Commands::execute()
         else
             strResult = strData;
 
-        if ((strChan != "Status") && (strResult == strData))
+        if ((strChan != STATUS) && (strResult == strData))
         {
             if ((strCmd == "cycle") || (strCmd == "hop"))
                 strResult = cmdCycle();
@@ -132,7 +132,7 @@ QString Commands::cmdJoin()
 
     if (isErotic(strChannel))
     {
-        if (Core::instance()->settings.value("age_check") == "on")
+        if (Core::instance()->settings.value("age_check") == "true")
         {
             QMessageBox msgBox;
             msgBox.setStyleSheet("background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:0.557, stop:0 rgba(198, 0, 0, 255), stop:1 rgba(255, 0, 0, 255));");
@@ -147,7 +147,7 @@ QString Commands::cmdJoin()
             msgBox.exec();
 
             if (msgBox.clickedButton() == enterButton)
-                Core::instance()->settings["age_check"] =  "off";
+                Core::instance()->settings["age_check"] =  "false";
             else
                 return QString::null;
         }
@@ -223,9 +223,9 @@ QString Commands::cmdBusy()
 {
     QString strBusy = Core::instance()->settings.value("busy");
 
-    if (strBusy == "on")
+    if (strBusy == "true")
         return "BUSY 0";
-    else if (strBusy == "off")
+    else if (strBusy == "false")
         return "BUSY 1";
     else
         return QString::null;

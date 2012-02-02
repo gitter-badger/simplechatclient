@@ -125,7 +125,7 @@ void TabContainer::addTab(QString strChannel)
 
 void TabContainer::removeTab(QString strChannel)
 {
-    if ((!existTab(strChannel)) || (strChannel == "Status"))
+    if ((!existTab(strChannel)) || (strChannel == STATUS))
         return;
 
     // remove from open channels
@@ -193,7 +193,7 @@ void TabContainer::refreshCSS()
     }
 }
 
-void TabContainer::showMessage(QString &strChannel, QString &strData, MessageCategory eMessageCategory, QString strTime, QString strNick)
+void TabContainer::showMessage(QString strChannel, QString strData, MessageCategory eMessageCategory, QString strTime, QString strNick)
 {
     if (!existTab(strChannel))
         return;
@@ -236,7 +236,7 @@ void TabContainer::showMessage(QString &strChannel, QString &strData, MessageCat
     tw[strChannel]->pChatView->displayMessage(strData, eMessageCategory, strTime, strNick);
 }
 
-void TabContainer::showMessageAll(QString &strData, MessageCategory eMessageCategory)
+void TabContainer::showMessageAll(QString strData, MessageCategory eMessageCategory)
 {
     QMapIterator<QString, TabWidget*> i(tw);
     while (i.hasNext())
@@ -253,12 +253,11 @@ void TabContainer::showMessageAll(QString &strData, MessageCategory eMessageCate
                 pTabM->setAlert(index, ChannelRed); // red
         }
 
-        QString strDataAll = strData;
-        tw[strChannel]->pChatView->displayMessage(strDataAll, eMessageCategory);
+        tw[strChannel]->pChatView->displayMessage(strData, eMessageCategory);
     }
 }
 
-void TabContainer::showMessageActive(QString &strData, MessageCategory eMessageCategory)
+void TabContainer::showMessageActive(QString strData, MessageCategory eMessageCategory)
 {
     QString strChannel = Core::instance()->getCurrentChannelName();
 
@@ -266,7 +265,7 @@ void TabContainer::showMessageActive(QString &strData, MessageCategory eMessageC
         tw[strChannel]->pChatView->displayMessage(strData, eMessageCategory);
 }
 
-void TabContainer::setTopic(QString &strChannel, QString &strTopic)
+void TabContainer::setTopic(QString strChannel, QString strTopic)
 {
     if (!existTab(strChannel))
         return;
@@ -301,7 +300,7 @@ void TabContainer::setTopic(QString &strChannel, QString &strTopic)
     tw[strChannel]->topic->setToolTip(strTopic);
 }
 
-void TabContainer::authorTopic(QString &strChannel, QString &strNick)
+void TabContainer::authorTopic(QString strChannel, QString strNick)
 {
     if (!existTab(strChannel))
         return;
@@ -364,9 +363,7 @@ void TabContainer::quitUser(QString strNick, QString strDisplay)
 
         if (tw[strChannel]->pNickListWidget->existUser(strNick))
         {
-            QString strDisplayAll = strDisplay;
-
-            showMessage(strChannel, strDisplayAll, QuitMessage);
+            showMessage(strChannel, strDisplay, QuitMessage);
             tw[strChannel]->pNickListWidget->delUser(strNick);
             tw[strChannel]->users->setText(QString(tr("Users (%1)").arg(tw[strChannel]->pNickListWidget->count())));
 

@@ -91,7 +91,7 @@ bool Network::isWritable()
 void Network::clearAll()
 {
 #ifdef Q_WS_X11
-    if (Core::instance()->settings.value("debug") == "on")
+    if (Core::instance()->settings.value("debug") == "true")
         DEBUG_BLOCK
 #endif
 
@@ -118,7 +118,7 @@ void Network::clearAll()
     emit clearAllNicklist();
 
     // state
-    Core::instance()->settings["logged"] = "off";
+    Core::instance()->settings["logged"] = "false";
 
     // timer
     timerPong->stop();
@@ -181,7 +181,7 @@ void Network::authorize()
 void Network::connect()
 {
 #ifdef Q_WS_X11
-    if (Core::instance()->settings.value("debug") == "on")
+    if (Core::instance()->settings.value("debug") == "true")
         DEBUG_BLOCK
 #endif
 
@@ -213,7 +213,7 @@ void Network::connect()
 void Network::connected()
 {
 #ifdef Q_WS_X11
-    if (Core::instance()->settings.value("debug") == "on")
+    if (Core::instance()->settings.value("debug") == "true")
         DEBUG_BLOCK
 #endif
 
@@ -231,7 +231,7 @@ void Network::connected()
 void Network::disconnect()
 {
 #ifdef Q_WS_X11
-    if (Core::instance()->settings.value("debug") == "on")
+    if (Core::instance()->settings.value("debug") == "true")
         DEBUG_BLOCK
 #endif
 
@@ -257,7 +257,7 @@ void Network::disconnect()
 void Network::disconnected()
 {
 #ifdef Q_WS_X11
-    if (Core::instance()->settings.value("debug") == "on")
+    if (Core::instance()->settings.value("debug") == "true")
         DEBUG_BLOCK
 #endif
 
@@ -283,7 +283,7 @@ void Network::disconnected()
 void Network::reconnect()
 {
 #ifdef Q_WS_X11
-    if (Core::instance()->settings.value("debug") == "on")
+    if (Core::instance()->settings.value("debug") == "true")
         DEBUG_BLOCK
 #endif
 
@@ -291,7 +291,7 @@ void Network::reconnect()
 
     if (Core::instance()->settings.value("reconnect") == "true")
     {
-        if ((!this->isConnected()) && (Core::instance()->settings.value("logged") == "off"))
+        if ((!this->isConnected()) && (Core::instance()->settings.value("logged") == "false"))
         {
             QString strDisplay = tr("Reconnecting...");
             emit showMessageAll(strDisplay, InfoMessage);
@@ -305,7 +305,7 @@ void Network::write(QString strData)
     if ((socket->isValid()) && (socket->state() == QAbstractSocket::ConnectedState) && (socket->isWritable()))
     {
 #ifdef Q_WS_X11
-        if (Core::instance()->settings.value("debug") == "on")
+        if (Core::instance()->settings.value("debug") == "true")
             qDebug() << "-> " << strData;
 #endif
         strData += "\r\n";
@@ -366,7 +366,7 @@ void Network::recv()
 void Network::error(QAbstractSocket::SocketError error)
 {
 #ifdef Q_WS_X11
-    if (Core::instance()->settings.value("debug") == "on")
+    if (Core::instance()->settings.value("debug") == "true")
         DEBUG_BLOCK
 #endif
 
@@ -389,7 +389,7 @@ void Network::error(QAbstractSocket::SocketError error)
 void Network::stateChanged(QAbstractSocket::SocketState socketState)
 {
 #ifdef Q_WS_X11
-    if (Core::instance()->settings.value("debug") == "on")
+    if (Core::instance()->settings.value("debug") == "true")
     {
         DEBUG_BLOCK
         qDebug() << "Network socket state changed to: " << socketState;
@@ -421,7 +421,7 @@ void Network::timeoutPong()
     if (iActive+301 < iCurrent)
     {
 #ifdef Q_WS_X11
-        if (Core::instance()->settings.value("debug") == "on")
+        if (Core::instance()->settings.value("debug") == "true")
             DEBUG_BLOCK
 #endif
 
@@ -444,7 +444,7 @@ void Network::timeoutPing()
     QString t1 = QString::number(i1);
     QString t2 = dta.toString("zzz"); // miliseconds
 
-    if ((isConnected()) && (isWritable()) && (Core::instance()->settings.value("logged") == "on"))
+    if ((isConnected()) && (isWritable()) && (Core::instance()->settings.value("logged") == "true"))
         emit send(QString("PING :%1.%2").arg(t1, t2));
 }
 

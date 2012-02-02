@@ -45,11 +45,11 @@ public:
 public slots:
     void refreshColors();
     void refreshCSS();
-    void showMessage(QString &, QString &, MessageCategory, QString strTime = QString::null, QString strNick = QString::null);
-    void showMessageAll(QString &, MessageCategory);
-    void showMessageActive(QString &, MessageCategory);
-    void setTopic(QString &, QString &);
-    void authorTopic(QString &, QString &);
+    void showMessage(QString, QString, MessageCategory, QString strTime = QString::null, QString strNick = QString::null);
+    void showMessageAll(QString, MessageCategory);
+    void showMessageActive(QString, MessageCategory);
+    void setTopic(QString, QString);
+    void authorTopic(QString, QString);
     void setChannelAvatar(QString);
     void clearContent(QString);
     // nicklist

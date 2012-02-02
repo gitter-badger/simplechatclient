@@ -54,7 +54,7 @@ public:
     QList<QString> getUserList(QString);
     QString getUserAvatarPath(QString);
     // for core
-    void showMessage(QString&,QString&,MessageCategory, QString strTime = QString::null, QString strNick = QString::null);
+    void showMessage(QString ,QString, MessageCategory, QString strTime = QString::null, QString strNick = QString::null);
 
 private:
     QToolBar *toolBar;

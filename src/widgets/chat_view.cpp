@@ -105,7 +105,7 @@ void ChatView::refreshCSS()
 */
 
     QString strBackground;
-    if ((strDisableBackgroundImage == "off") && (!strBackgroundImage.isEmpty()))
+    if ((strDisableBackgroundImage == "false") && (!strBackgroundImage.isEmpty()))
         strBackground = "background-image: url("+strBackgroundImage+"); background-attachment: fixed; background-position: center; background-repeat: no-repeat;";
 
     QString strBodyCSS = QString("margin: 0; padding: 0; font-family: sans; word-wrap: break-word; font-size:%1; %2").arg(strFontSize, strBackground);
@@ -138,7 +138,7 @@ void ChatView::clearMessages()
     this->page()->mainFrame()->evaluateJavaScript("clearMessages()");
 }
 
-void ChatView::displayMessage(QString &strData, MessageCategory eMessageCategory, QString strTime, QString strNick)
+void ChatView::displayMessage(QString strData, MessageCategory eMessageCategory, QString strTime, QString strNick)
 {
     QDateTime dt;
     if (!strTime.isEmpty())
@@ -146,7 +146,7 @@ void ChatView::displayMessage(QString &strData, MessageCategory eMessageCategory
     else
         dt = QDateTime::currentDateTime();
 
-    if (Core::instance()->settings.value("disable_logs") == "off")
+    if (Core::instance()->settings.value("disable_logs") == "false")
     {
         QString strSaveData;
         if (!strNick.isEmpty())
@@ -166,11 +166,11 @@ void ChatView::displayMessage(QString &strData, MessageCategory eMessageCategory
 
     if ((eMessageCategory == JoinMessage) || (eMessageCategory == PartMessage) || (eMessageCategory == QuitMessage))
     {
-        if (Core::instance()->settings.value("hide_join_part") == "on")
+        if (Core::instance()->settings.value("hide_join_part") == "true")
             return;
 
         int iNickCount = Core::instance()->getUserCount(strChatViewChannel);
-        if ((Core::instance()->settings.value("hide_join_part_200") == "on") && (iNickCount > 200))
+        if ((Core::instance()->settings.value("hide_join_part_200") == "true") && (iNickCount > 200))
             return;
     }
 
@@ -204,7 +204,7 @@ void ChatView::displayMessage(QString &strData, MessageCategory eMessageCategory
     if (eMessageCategory == HighlightMessage)
     {
         // sound
-        if (Core::instance()->settings.value("disable_sounds") == "off")
+        if (Core::instance()->settings.value("disable_sounds") == "false")
             Notify::instance()->play(Beep);
     }
 }
@@ -467,7 +467,7 @@ void ChatView::menuNick(QContextMenuEvent *event)
         minvite->addAction(openChannelsActs[i]);
 
     QList<QString> lOpenChannels = Core::instance()->lOpenChannels;
-    lOpenChannels.removeOne("Status");
+    lOpenChannels.removeOne(STATUS);
     for (int i = 0; i < lOpenChannels.size(); ++i)
     {
         QString strOpenChannel = lOpenChannels[i];

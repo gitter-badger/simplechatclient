@@ -132,14 +132,14 @@ void Core::createSettings()
     settings["debug"] = strDebug;
 
     // default settings
-    settings["version"] = "1.1.4.1155";
+    settings["version"] = "1.1.4.1156";
     settings["available_version"] = "";
-    settings["logged"] = "off";
-    settings["busy"] = "off";
-    settings["away"] = "off";
-    settings["override"] = "off";
-    settings["ignore_raw_141"] = "off";
-    settings["age_check"] = "on";
+    settings["logged"] = "false";
+    settings["busy"] = "false";
+    settings["away"] = "false";
+    settings["override"] = "false";
+    settings["ignore_raw_141"] = "false";
+    settings["age_check"] = "true";
     settings["first_run"] = "true";
     settings["uokey"] = "";
     settings["uo_nick"] = "";
@@ -149,9 +149,15 @@ void Core::createSettings()
     settings["onet_uid"] = "";
     settings["onetzuo_ticket"] = "";
     settings["last_active"] = "0";
+    settings["reconnect"] = "true";
 
-    // config
+    // read config
     configValues();
+
+    // convert old config profile
+    convertOldConfig();
+
+    // read config profile
     configProfileValues();
 
     // check settings
@@ -202,6 +208,27 @@ void Core::convertOldProfiles()
         else
             QFile::remove(path+"/"+profile+".xml");
     }
+}
+
+void Core::convertOldConfig()
+{
+    Config *pConfig = new Config();
+
+    // change on off -> true false
+    QMap<QString,QString> mConfigValues = pConfig->readConfig();
+
+    QMapIterator <QString, QString> i(mConfigValues);
+    while (i.hasNext())
+    {
+        i.next();
+
+        if (i.value() == "on")
+            pConfig->setValue(i.key(), "true");
+        else if (i.value() == "off")
+            pConfig->setValue(i.key(), "false");
+   }
+
+    delete pConfig;
 }
 
 void Core::configValues()
@@ -302,9 +329,9 @@ QString Core::version()
 void Core::setDebug(bool b)
 {
     if (b == true)
-        settings["debug"] = "on";
+        settings["debug"] = "true";
     else
-        settings["debug"] = "off";
+        settings["debug"] = "false";
 }
 
 void Core::showSccWindow()
@@ -352,11 +379,11 @@ void Core::checkUpdate()
 
 void Core::addAwaylog(QString strTime, QString strChannel, QString strAwayData)
 {
-    if (settings.value("away") == "off")
+    if (settings.value("away") == "false")
         return;
 
     // save awaylog
-    if (Core::instance()->settings.value("disable_logs") == "off")
+    if (Core::instance()->settings.value("disable_logs") == "false")
     {
         QDateTime dt;
         if (!strTime.isEmpty())
@@ -450,7 +477,7 @@ int Core::getUserCount(QString strChannel)
 }
 
 // DlgModeration::buttonAccept
-void Core::showMessage(QString &strChannel, QString &strData, MessageCategory eMessageCategory, QString strTime, QString strNick)
+void Core::showMessage(QString strChannel, QString strData, MessageCategory eMessageCategory, QString strTime, QString strNick)
 {
     window->showMessage(strChannel, strData, eMessageCategory, strTime, strNick);
 }

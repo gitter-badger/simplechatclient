@@ -277,79 +277,79 @@ void DlgOptions::setDefaultValues()
         ui.comboBox_language->setCurrentIndex(1);
 
     // auto busy
-    if (strAutoBusy == "on")
+    if (strAutoBusy == "true")
         ui.checkBox_auto_busy->setChecked(true);
     else
         ui.checkBox_auto_busy->setChecked(false);
 
     // auto join favourites
-    if (strDisableAutojoinFavourites == "on")
+    if (strDisableAutojoinFavourites == "true")
         ui.checkBox_disable_autojoin_favourites->setChecked(true);
     else
         ui.checkBox_disable_autojoin_favourites->setChecked(false);
 
     // minimize to tray
-    if (strMinimizeToTray == "on")
+    if (strMinimizeToTray == "true")
         ui.checkBox_minimize_to_tray->setChecked(true);
     else
         ui.checkBox_minimize_to_tray->setChecked(false);
 
     // show zuo
-    if (strShowZuoAndIp == "on")
+    if (strShowZuoAndIp == "true")
         ui.checkBox_show_zuo_and_ip->setChecked(true);
     else
         ui.checkBox_show_zuo_and_ip->setChecked(false);
 
     // hide formating
-    if (strHideFormating == "on")
+    if (strHideFormating == "true")
         ui.checkBox_hide_formating->setChecked(true);
     else
         ui.checkBox_hide_formating->setChecked(false);
 
     // hide join part
-    if (strHideJoinPart == "on")
+    if (strHideJoinPart == "true")
         ui.checkBox_hide_join_part->setChecked(true);
     else
         ui.checkBox_hide_join_part->setChecked(false);
 
     // hide join part
-    if (strHideJoinPart200 == "on")
+    if (strHideJoinPart200 == "true")
         ui.checkBox_hide_join_part_200->setChecked(true);
     else
         ui.checkBox_hide_join_part_200->setChecked(false);
 
     // disable emots
-    if (strDisableEmots == "on")
+    if (strDisableEmots == "true")
         ui.checkBox_disable_emots->setChecked(true);
     else
         ui.checkBox_disable_emots->setChecked(false);
 
     // disable replaces
-    if (strDisableReplaces == "on")
+    if (strDisableReplaces == "true")
         ui.checkBox_disable_replaces->setChecked(true);
     else
         ui.checkBox_disable_replaces->setChecked(false);
 
     // save logs by date
-    if (strSaveLogsByDate == "on")
+    if (strSaveLogsByDate == "true")
         ui.checkBox_save_logs_by_date->setChecked(true);
     else
         ui.checkBox_save_logs_by_date->setChecked(false);
 
     // disable logs
-    if (strDisableLogs == "on")
+    if (strDisableLogs == "true")
         ui.checkBox_disable_logs->setChecked(true);
     else
         ui.checkBox_disable_logs->setChecked(false);
 
     // disable sounds
-    if (strDisableSounds == "on")
+    if (strDisableSounds == "true")
         ui.checkBox_disable_sounds->setChecked(true);
     else
         ui.checkBox_disable_sounds->setChecked(false);
 
     // disable background image
-    if (strDisableBackgroundImage == "on")
+    if (strDisableBackgroundImage == "true")
         ui.checkBox_disable_background_image->setChecked(true);
     else
         ui.checkBox_disable_background_image->setChecked(false);
@@ -364,7 +364,7 @@ void DlgOptions::setDefaultValues()
     setNicklistColors();
 
     // disable change nick if connected
-    if (Core::instance()->settings.value("logged") == "on")
+    if (Core::instance()->settings.value("logged") == "true")
     {
         ui.groupBox_profiles->setDisabled(true);
         ui.groupBox_themes->setDisabled(true);
@@ -631,7 +631,7 @@ void DlgOptions::highlightRemove()
 
 void DlgOptions::autoBusy(bool bValue)
 {
-    QString strValue = (bValue ? "on" : "off");
+    QString strValue = (bValue ? "true" : "false");
 
     Config *pConfig = new Config();
     pConfig->setValue("auto_busy", strValue);
@@ -641,7 +641,7 @@ void DlgOptions::autoBusy(bool bValue)
 
 void DlgOptions::disableAutojoinFavourites(bool bValue)
 {
-    QString strValue = (bValue ? "on" : "off");
+    QString strValue = (bValue ? "true" : "false");
 
     Config *pConfig = new Config();
     pConfig->setValue("disable_autojoin_favourites", strValue);
@@ -651,7 +651,7 @@ void DlgOptions::disableAutojoinFavourites(bool bValue)
 
 void DlgOptions::minimizeToTray(bool bValue)
 {
-    QString strValue = (bValue ? "on" : "off");
+    QString strValue = (bValue ? "true" : "false");
 
     Config *pConfig = new Config();
     pConfig->setValue("minimize_to_tray", strValue);
@@ -661,7 +661,7 @@ void DlgOptions::minimizeToTray(bool bValue)
 
 void DlgOptions::showZuoAndIp(bool bValue)
 {
-    QString strValue = (bValue ? "on" : "off");
+    QString strValue = (bValue ? "true" : "false");
 
     Config *pConfig = new Config();
     pConfig->setValue("show_zuo_and_ip", strValue);
@@ -671,7 +671,7 @@ void DlgOptions::showZuoAndIp(bool bValue)
 
 void DlgOptions::hideFormating(bool bValue)
 {
-    QString strValue = (bValue ? "on" : "off");
+    QString strValue = (bValue ? "true" : "false");
 
     Config *pConfig = new Config();
     pConfig->setValue("hide_formating", strValue);
@@ -681,7 +681,7 @@ void DlgOptions::hideFormating(bool bValue)
 
 void DlgOptions::hideJoinPart(bool bValue)
 {
-    QString strValue = (bValue ? "on" : "off");
+    QString strValue = (bValue ? "true" : "false");
 
     Config *pConfig = new Config();
     pConfig->setValue("hide_join_part", strValue);
@@ -691,7 +691,7 @@ void DlgOptions::hideJoinPart(bool bValue)
 
 void DlgOptions::hideJoinPart200(bool bValue)
 {
-    QString strValue = (bValue ? "on" : "off");
+    QString strValue = (bValue ? "true" : "false");
 
     Config *pConfig = new Config();
     pConfig->setValue("hide_join_part_200", strValue);
@@ -701,7 +701,7 @@ void DlgOptions::hideJoinPart200(bool bValue)
 
 void DlgOptions::disableEmots(bool bValue)
 {
-    QString strValue = (bValue ? "on" : "off");
+    QString strValue = (bValue ? "true" : "false");
 
     Config *pConfig = new Config();
     pConfig->setValue("disable_emots", strValue);
@@ -711,7 +711,7 @@ void DlgOptions::disableEmots(bool bValue)
 
 void DlgOptions::disableReplaces(bool bValue)
 {
-    QString strValue = (bValue ? "on" : "off");
+    QString strValue = (bValue ? "true" : "false");
 
     Config *pConfig = new Config();
     pConfig->setValue("disable_replaces", strValue);
@@ -1002,7 +1002,7 @@ void DlgOptions::setSoundQuery()
 
 void DlgOptions::disableSounds(bool bValue)
 {
-    QString strValue = (bValue ? "on" : "off");
+    QString strValue = (bValue ? "true" : "false");
 
     Config *pConfig = new Config();
     pConfig->setValue("disable_sounds", strValue);
@@ -1019,7 +1019,7 @@ void DlgOptions::openLogsFolder()
 
 void DlgOptions::setSaveLogsByDate(bool bValue)
 {
-    QString strValue = (bValue ? "on" : "off");
+    QString strValue = (bValue ? "true" : "false");
 
     Config *pConfig = new Config();
     pConfig->setValue("save_logs_by_date", strValue);
@@ -1029,7 +1029,7 @@ void DlgOptions::setSaveLogsByDate(bool bValue)
 
 void DlgOptions::disableLogs(bool bValue)
 {
-    QString strValue = (bValue ? "on" : "off");
+    QString strValue = (bValue ? "true" : "false");
 
     Config *pConfig = new Config();
     pConfig->setValue("disable_logs", strValue);
@@ -1062,7 +1062,7 @@ void DlgOptions::setBackgroundImage()
 
 void DlgOptions::disableBackgroundImage(bool bValue)
 {
-    QString strValue = (bValue ? "on" : "off");
+    QString strValue = (bValue ? "true" : "false");
 
     Config *pConfig = new Config();
     pConfig->setValue("disable_background_image", strValue);

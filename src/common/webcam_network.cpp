@@ -117,7 +117,7 @@ void WebcamNetwork::networkSendb(QByteArray qbaData)
         else
         {
 #ifdef Q_WS_X11
-            if (Core::instance()->settings.value("debug") == "on")
+            if (Core::instance()->settings.value("debug") == "true")
                 qDebug() << "CAM -> " << QString(qbaData);
 #endif
         }

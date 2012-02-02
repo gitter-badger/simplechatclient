@@ -58,7 +58,7 @@ void Log::save(QString &strChannel, QString &strData)
     path += "/profiles/"+strCurrentProfile+"/log";
 
     // save logs by date
-    bool bSaveLogsByDate = Core::instance()->settings.value("save_logs_by_date") == "on" ? true : false;
+    bool bSaveLogsByDate = Core::instance()->settings.value("save_logs_by_date") == "true" ? true : false;
     if (bSaveLogsByDate)
     {
         QString strDate = QDate().currentDate().toString("yyyy-MM");

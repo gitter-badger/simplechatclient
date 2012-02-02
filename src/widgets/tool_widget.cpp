@@ -271,7 +271,7 @@ void ToolWidget::setDefaultValues()
     separator2->hide();
 
     // set default bold
-    if (Core::instance()->settings.value("my_bold") == "on")
+    if (Core::instance()->settings.value("my_bold") == "true")
     {
         bold->setChecked(true);
         bMyBold = true;
@@ -285,7 +285,7 @@ void ToolWidget::setDefaultValues()
     }
 
     // set default italic
-    if (Core::instance()->settings.value("my_italic") == "on")
+    if (Core::instance()->settings.value("my_italic") == "true")
     {
         italic->setChecked(true);
         bMyItalic = true;
@@ -408,7 +408,7 @@ void ToolWidget::boldClicked()
         bold->setChecked(false);
         bMyBold = false;
         strMyFontWeight = "";
-        QString strValue = "off";
+        QString strValue = "false";
         Core::instance()->settings["my_bold"] = strValue;
 
         Config *pConfig = new Config();
@@ -420,7 +420,7 @@ void ToolWidget::boldClicked()
         bold->setChecked(true);
         bMyBold = true;
         strMyFontWeight = "bold";
-        QString strValue = "on";
+        QString strValue = "true";
         Core::instance()->settings["my_bold"] = strValue;
 
         Config *pConfig = new Config();
@@ -439,7 +439,7 @@ void ToolWidget::italicClicked()
         italic->setChecked(false);
         bMyItalic = false;
         strMyFontStyle = "";
-        QString strValue = "off";
+        QString strValue = "false";
         Core::instance()->settings["my_italic"] = strValue;
 
         Config *pConfig = new Config();
@@ -451,8 +451,8 @@ void ToolWidget::italicClicked()
         italic->setChecked(true);
         bMyItalic = true;
         strMyFontStyle = "italic";
-        QString strValue = "on";
-        Core::instance()->settings["my_italic"] = "on";
+        QString strValue = "true";
+        Core::instance()->settings["my_italic"] = "true";
 
         Config *pConfig = new Config();
         pConfig->setValue("my_italic", strValue);
@@ -705,7 +705,7 @@ void ToolWidget::inputlineReturnPressed()
     Core::instance()->settings["last_active"] = QString::number(t);
 
     // disable away
-    bool bAway = Core::instance()->settings.value("away") == "on" ? true : false;
+    bool bAway = Core::instance()->settings.value("away") == "true" ? true : false;
     if (bAway)
         Core::instance()->pNetwork->send("AWAY :");
 
@@ -723,7 +723,7 @@ void ToolWidget::moderButtonClicked()
     Core::instance()->settings["last_active"] = QString::number(t);
 
     // disable away
-    bool bAway = Core::instance()->settings.value("away") == "on" ? true : false;
+    bool bAway = Core::instance()->settings.value("away") == "true" ? true : false;
     if (bAway)
         Core::instance()->pNetwork->send("AWAY :");
 
@@ -775,8 +775,8 @@ void ToolWidget::sendMessage(QString strText, bool bModeration)
     QString strMe = Core::instance()->settings.value("nick");
     QString strCurrentColor = Core::instance()->settings.value("my_color");
     QString strFontFamily = Core::instance()->settings.value("my_font");
-    bool bMyBold = Core::instance()->settings.value("my_bold") == "on" ? true : false;
-    bool bMyItalic = Core::instance()->settings.value("my_italic") == "on" ? true : false;
+    bool bMyBold = Core::instance()->settings.value("my_bold") == "true" ? true : false;
+    bool bMyItalic = Core::instance()->settings.value("my_italic") == "true" ? true : false;
 
     // if command
     if ((strText[0] == '/') && (strText[1] != '/'))
@@ -802,7 +802,7 @@ void ToolWidget::sendMessage(QString strText, bool bModeration)
         }
         else if ((strTextList[0] == "mp3") || (strTextList[0] == "winamp"))
         {
-            if (strChannel == "Status") return; // return if status
+            if (strChannel == STATUS) return; // return if status
 
             QString weight;
             QString font = strFontFamily.toLower();
@@ -825,7 +825,7 @@ void ToolWidget::sendMessage(QString strText, bool bModeration)
         // me
         else if (strTextList[0] == "me")
         {
-            if (strChannel == "Status") return; // return if status
+            if (strChannel == STATUS) return; // return if status
 
             if (strTextOriginal.length() > 3)
             {
@@ -866,7 +866,7 @@ void ToolWidget::sendMessage(QString strText, bool bModeration)
     }
     else
     {
-        if (strChannel == "Status") return; // return if status
+        if (strChannel == STATUS) return; // return if status
 
         QString weight;
         QString font = strFontFamily.toLower();

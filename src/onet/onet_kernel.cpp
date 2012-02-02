@@ -49,7 +49,7 @@ void OnetKernel::kernel(QString param1)
     strDataList = strData.split(" ");
 
 #ifdef Q_WS_X11
-    if (Core::instance()->settings.value("debug") == "on")
+    if (Core::instance()->settings.value("debug") == "true")
         qDebug() << "<- " << strData;
 #endif
 
@@ -601,14 +601,14 @@ void OnetKernel::raw_join()
 
     if (strChannel[0] != '^')
     {
-        if (Core::instance()->settings.value("show_zuo_and_ip") == "on")
+        if (Core::instance()->settings.value("show_zuo_and_ip") == "true")
             strDisplay = QString(tr("* %1 [%2@%3] has joined %4")).arg(strNick, strZUO, strIP, strChannel);
         else
             strDisplay = QString(tr("* %1 has joined %2")).arg(strNick, strChannel);
     }
     else
     {
-        if (Core::instance()->settings.value("show_zuo_and_ip") == "on")
+        if (Core::instance()->settings.value("show_zuo_and_ip") == "true")
             strDisplay = QString(tr("* %1 [%2@%3] has joined priv")).arg(strNick, strZUO, strIP);
         else
             strDisplay = QString(tr("* %1 has joined priv")).arg(strNick);
@@ -671,14 +671,14 @@ void OnetKernel::raw_part()
     {
         if (!strReason.isEmpty())
         {
-            if (Core::instance()->settings.value("show_zuo_and_ip") == "on")
+            if (Core::instance()->settings.value("show_zuo_and_ip") == "true")
                 strDisplay = QString(tr("* %1 [%2@%3] has left %4 [%5]")).arg(strNick, strZUO, strIP, strChannel, strReason);
             else
                 strDisplay = QString(tr("* %1 has left %2 [%3]")).arg(strNick, strChannel, strReason);
         }
         else
         {
-            if (Core::instance()->settings.value("show_zuo_and_ip") == "on")
+            if (Core::instance()->settings.value("show_zuo_and_ip") == "true")
                 strDisplay = QString(tr("* %1 [%2@%3] has left %4")).arg(strNick, strZUO, strIP, strChannel);
             else
                 strDisplay = QString(tr("* %1 has left %2")).arg(strNick, strChannel);
@@ -686,7 +686,7 @@ void OnetKernel::raw_part()
     }
     else
     {
-        if (Core::instance()->settings.value("show_zuo_and_ip") == "on")
+        if (Core::instance()->settings.value("show_zuo_and_ip") == "true")
             strDisplay = QString(tr("* %1 [%2@%3] has left priv")).arg(strNick, strZUO, strIP);
         else
             strDisplay = QString(tr("* %1 has left priv")).arg(strNick);
@@ -702,7 +702,7 @@ void OnetKernel::raw_part()
     if (strNick == strMe)
     {
         // close channel
-        if (strChannel != "Status")
+        if (strChannel != STATUS)
             pTabC->removeTab(strChannel);
     }
 }
@@ -728,7 +728,7 @@ void OnetKernel::raw_quit()
     if (strReason[0] == ':') strReason.remove(0,1);
 
     QString strDisplay;
-    if (Core::instance()->settings.value("show_zuo_and_ip") == "on")
+    if (Core::instance()->settings.value("show_zuo_and_ip") == "true")
         strDisplay = QString(tr("* %1 [%2@%3] has quit [%4]")).arg(strNick, strZUO, strIP, strReason);
     else
         strDisplay = QString(tr("* %1 has quit [%2]")).arg(strNick, strReason);
@@ -988,10 +988,7 @@ void OnetKernel::raw_mode()
                 strDisplay = QString(tr("* %1 now has a flag %2")).arg(strNick, strFlag);
 
             if ((strFlag.contains("r")) || (strFlag.contains("x")))
-            {
-                QString strStatus = "Status";
-                pTabC->showMessage(strStatus, strDisplay, ModeMessage);
-            }
+                pTabC->showMessage(STATUS, strDisplay, ModeMessage);
 
             if (!strFlag.isEmpty())
                 emit changeFlag(strNick, strFlag);
@@ -1265,7 +1262,7 @@ void OnetKernel::raw_kill()
 void OnetKernel::raw_001()
 {
     // logged
-    Core::instance()->settings["logged"] = "on";
+    Core::instance()->settings["logged"] = "true";
 
     // clear
     Core::instance()->mFriends.clear();
@@ -1295,33 +1292,33 @@ void OnetKernel::raw_001()
     Core::instance()->pNetwork->send("PROTOCTL ONETNAMESX");
 
     // busy
-    Core::instance()->settings["busy"] = "off";
+    Core::instance()->settings["busy"] = "false";
 
     // away
-    Core::instance()->settings["away"] = "off";
+    Core::instance()->settings["away"] = "false";
 
     // auto busy
-    if (Core::instance()->settings.value("auto_busy") == "on")
+    if (Core::instance()->settings.value("auto_busy") == "true")
         Core::instance()->pNetwork->send("BUSY 1");
 
     // ignore_raw_141
-    if (Core::instance()->settings.value("disable_autojoin_favourites") == "on")
-        Core::instance()->settings["ignore_raw_141"] = "on";
+    if (Core::instance()->settings.value("disable_autojoin_favourites") == "true")
+        Core::instance()->settings["ignore_raw_141"] = "true";
     else
-        Core::instance()->settings["ignore_raw_141"] = "off";
+        Core::instance()->settings["ignore_raw_141"] = "false";
 
     // override off
-    Core::instance()->settings["override"] = "off";
+    Core::instance()->settings["override"] = "false";
 
     // age check on
-    Core::instance()->settings["age_check"] = "on";
+    Core::instance()->settings["age_check"] = "true";
 
     // auto rejoin
     QList<CaseIgnoreString> lOpenChannelsCaseIgnore;
 
     // copy to new list
     QList<QString> lOpenChannels = Core::instance()->lOpenChannels;
-    lOpenChannels.removeOne("Status");
+    lOpenChannels.removeOne(STATUS);
     foreach (QString strChannel, lOpenChannels)
         lOpenChannelsCaseIgnore.append(strChannel);
 
@@ -1596,7 +1593,7 @@ void OnetKernel::raw_141n()
     }
 
     // join
-    if (Core::instance()->settings.value("ignore_raw_141") == "off")
+    if (Core::instance()->settings.value("ignore_raw_141") == "false")
     {
         qSort(lList.begin(), lList.end());
         for (int i = 0; i < lList.size(); i++)
@@ -1608,8 +1605,8 @@ void OnetKernel::raw_141n()
     }
 
     // turn on ignore_raw_141
-    if (Core::instance()->settings.value("ignore_raw_141") == "off")
-        Core::instance()->settings["ignore_raw_141"] = "on";
+    if (Core::instance()->settings.value("ignore_raw_141") == "false")
+        Core::instance()->settings["ignore_raw_141"] = "true";
 }
 
 // NS FAVOURITES
@@ -2197,8 +2194,7 @@ void OnetKernel::raw_256()
     if (strMessage[0] == ':') strMessage.remove(0,1);
     strMessage = "* "+strMessage;
 
-    QString strStatus = "Status";
-    pTabC->showMessage(strStatus, strMessage, InfoMessage);
+    pTabC->showMessage(STATUS, strMessage, InfoMessage);
 }
 
 // :ChanServ!service@service.onet NOTICE #scc :256 Merovingian +o scc_test :channel privilege changed
@@ -2246,8 +2242,7 @@ void OnetKernel::raw_257()
     if (strMessage[0] == ':') strMessage.remove(0,1);
     strMessage = "* "+strMessage;
 
-    QString strStatus = "Status";
-    pTabC->showMessage(strStatus, strMessage, InfoMessage);
+    pTabC->showMessage(STATUS, strMessage, InfoMessage);
 }
 
 // :ChanServ!service@service.onet NOTICE scc_test :257 #scc * :settings changed
@@ -2271,8 +2266,7 @@ void OnetKernel::raw_258()
     if (strMessage[0] == ':') strMessage.remove(0,1);
     strMessage = "* "+strMessage;
 
-    QString strStatus = "Status";
-    pTabC->showMessage(strStatus, strMessage, InfoMessage);
+    pTabC->showMessage(STATUS, strMessage, InfoMessage);
 }
 
 // :ChanServ!service@service.onet NOTICE #glupia_nazwa :258 ovo_ d :channel settings changed
@@ -2303,8 +2297,7 @@ void OnetKernel::raw_259()
     if (strMessage[0] == ':') strMessage.remove(0,1);
     strMessage = "* "+strMessage;
 
-    QString strStatus = "Status";
-    pTabC->showMessage(strStatus, strMessage, InfoMessage);
+    pTabC->showMessage(STATUS, strMessage, InfoMessage);
 }
 
 // :ChanServ!service@service.onet NOTICE scc_test :259 #scc :nothing changed
@@ -2491,7 +2484,7 @@ void OnetKernel::raw_304()
 // :cf1f3.onet 305 scc_test :You are no longer marked as being away
 void OnetKernel::raw_305()
 {
-    Core::instance()->settings["away"] = "off";
+    Core::instance()->settings["away"] = "false";
     Core::instance()->awayAct->setChecked(false);
 
     QString strDisplay = tr("* You are no longer marked as being away");
@@ -2502,7 +2495,7 @@ void OnetKernel::raw_305()
 // :cf1f3.onet 306 scc_test :You have been marked as being away
 void OnetKernel::raw_306()
 {
-    Core::instance()->settings["away"] = "on";
+    Core::instance()->settings["away"] = "true";
     Core::instance()->awayAct->setChecked(true);
 
     QString strDisplay = tr("* You have been marked as being away");
@@ -2895,8 +2888,7 @@ void OnetKernel::raw_371()
     if (strMessage[0] == ':') strMessage.remove(0,1);
     strMessage = "* "+strMessage;
 
-    QString strStatus = "Status";
-    pTabC->showMessage(strStatus, strMessage, InfoMessage);
+    pTabC->showMessage(STATUS, strMessage, InfoMessage);
 }
 
 // MOTD
@@ -2909,8 +2901,7 @@ void OnetKernel::raw_372()
     for (int i = 3; i < strDataList.size(); i++) { if (i != 3) strMessage += " "; strMessage += strDataList[i]; }
     if (strMessage[0] == ':') strMessage.remove(0,1);
 
-    QString strStatus = "Status";
-    pTabC->showMessage(strStatus, strMessage, DefaultMessage);
+    pTabC->showMessage(STATUS, strMessage, DefaultMessage);
 }
 
 // INFO
@@ -2925,8 +2916,7 @@ void OnetKernel::raw_375()
 {
     QString strDisplay = tr("Message Of The Day:");
 
-    QString strStatus = "Status";
-    pTabC->showMessage(strStatus, strDisplay, DefaultMessage);
+    pTabC->showMessage(STATUS, strDisplay, DefaultMessage);
 }
 
 // MOTD
@@ -3341,7 +3331,7 @@ void OnetKernel::raw_433()
 
     pTabC->showMessageAll(strMessage, ErrorMessage);
 
-    Core::instance()->settings["override"] = "on";
+    Core::instance()->settings["override"] = "true";
 
     // reconnect
     if (strNick[0] != '~')
@@ -3682,8 +3672,7 @@ void OnetKernel::raw_470()
 
     QString strMessage = QString(tr("* %1 has become full, so you are automatically being transferred to the linked channel %2")).arg(strChannel, strLinked);
 
-    QString strStatus = "Status";
-    pTabC->showMessage(strStatus, strMessage, InfoMessage);
+    pTabC->showMessage(STATUS, strMessage, InfoMessage);
 }
 
 // :cf1f2.onet 471 ~Merovingian #testy :Cannot join channel (Channel is full)
@@ -3952,9 +3941,8 @@ void OnetKernel::raw_801()
     }
     else
     {
-        QString strStatus = "Status";
         QString strError = tr("Error: Invalid auth key");
-        pTabC->showMessage(strStatus, strError, ErrorMessage);
+        pTabC->showMessage(STATUS, strError, ErrorMessage);
     }
 }
 
@@ -3969,7 +3957,7 @@ void OnetKernel::raw_802()
 // :cf1f2.onet 807 scc_test :You are marked as busy
 void OnetKernel::raw_807()
 {
-    Core::instance()->settings["busy"] = "on";
+    Core::instance()->settings["busy"] = "true";
     Core::instance()->busyAct->setChecked(true);
 
     QString strDisplay = tr("* You are marked as busy");
@@ -3980,7 +3968,7 @@ void OnetKernel::raw_807()
 // :cf1f2.onet 808 scc_test :You are no longer marked busy
 void OnetKernel::raw_808()
 {
-    Core::instance()->settings["busy"] = "off";
+    Core::instance()->settings["busy"] = "false";
     Core::instance()->busyAct->setChecked(false);
 
     QString strDisplay = tr("* You are no longer marked busy");

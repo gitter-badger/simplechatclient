@@ -85,7 +85,7 @@ void WebcamEngine::disconnected()
 void WebcamEngine::dataKernel(QByteArray bData)
 {
 #ifdef Q_WS_X11
-    if (Core::instance()->settings.value("debug") == "on")
+    if (Core::instance()->settings.value("debug") == "true")
         qDebug() << "CAM byte <- " << bData;
 #endif
 
@@ -252,7 +252,7 @@ void WebcamEngine::raw_252b(QByteArray &data)
     if (strStatus.left(9) == "SETSTATUS")
     {
 #ifdef Q_WS_X11
-        if (Core::instance()->settings.value("debug") == "on")
+        if (Core::instance()->settings.value("debug") == "true")
             qDebug() << "CAM <- " << strStatus;
 #endif
         strStatus.remove("SETSTATUS ");
@@ -301,7 +301,7 @@ void WebcamEngine::raw_403b(QByteArray &data)
 {
     QString strError = data;
 #ifdef Q_WS_X11
-    if (Core::instance()->settings.value("debug") == "on")
+    if (Core::instance()->settings.value("debug") == "true")
         qDebug() << "CAM <- " << strError;
 #endif
     emit error(strError);
@@ -310,7 +310,7 @@ void WebcamEngine::raw_403b(QByteArray &data)
 void WebcamEngine::textKernel(QString strData)
 {
 #ifdef Q_WS_X11
-    if (Core::instance()->settings.value("debug") == "on")
+    if (Core::instance()->settings.value("debug") == "true")
         qDebug() << "CAM <- " << strData;
 #endif
 

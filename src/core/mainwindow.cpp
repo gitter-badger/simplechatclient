@@ -319,8 +319,8 @@ void MainWindow::createSignals()
     connect(pTabM, SIGNAL(tabMoved(int,int)), this, SLOT(tabMoved(int,int)));
 
     // signals pToolWidget
-    connect(pToolWidget, SIGNAL(showMessage(QString&,QString&,MessageCategory)), pTabC, SLOT(showMessage(QString&,QString&,MessageCategory)));
-    connect(pToolWidget, SIGNAL(showMessage(QString&,QString&,MessageCategory,QString,QString)), pTabC, SLOT(showMessage(QString&,QString&,MessageCategory,QString,QString)));
+    connect(pToolWidget, SIGNAL(showMessage(QString,QString,MessageCategory)), pTabC, SLOT(showMessage(QString,QString,MessageCategory)));
+    connect(pToolWidget, SIGNAL(showMessage(QString,QString,MessageCategory,QString,QString)), pTabC, SLOT(showMessage(QString,QString,MessageCategory,QString,QString)));
     connect(pToolWidget, SIGNAL(ctrlTabPressed()), this, SLOT(ctrlTabPressed()));
     connect(pToolWidget, SIGNAL(ctrlShiftTabPressed()), this, SLOT(ctrlShiftTabPressed()));
 
@@ -338,8 +338,8 @@ void MainWindow::createSignals()
     connect(Core::instance()->pNetwork, SIGNAL(setConnectEnabled(bool)), this, SLOT(setConnectEnabled(bool)));
     connect(Core::instance()->pNetwork, SIGNAL(kernel(QString)), pOnetKernel, SLOT(kernel(QString)));
     connect(Core::instance()->pNetwork, SIGNAL(authorize(QString,QString,QString)), pOnetAuth, SLOT(authorize(QString,QString,QString)));
-    connect(Core::instance()->pNetwork, SIGNAL(showMessageActive(QString&,MessageCategory)), pTabC, SLOT(showMessageActive(QString&,MessageCategory)));
-    connect(Core::instance()->pNetwork, SIGNAL(showMessageAll(QString&,MessageCategory)), pTabC, SLOT(showMessageAll(QString&,MessageCategory)));
+    connect(Core::instance()->pNetwork, SIGNAL(showMessageActive(QString,MessageCategory)), pTabC, SLOT(showMessageActive(QString,MessageCategory)));
+    connect(Core::instance()->pNetwork, SIGNAL(showMessageAll(QString,MessageCategory)), pTabC, SLOT(showMessageAll(QString,MessageCategory)));
     connect(Core::instance()->pNetwork, SIGNAL(updateNick(QString)), pToolWidget, SLOT(updateNick(QString)));
     connect(Core::instance()->pNetwork, SIGNAL(clearAllNicklist()), pTabC, SLOT(clearAllNicklist()));
     connect(Core::instance()->pNetwork, SIGNAL(updateActions()), this, SLOT(updateActions()));
@@ -350,12 +350,11 @@ void MainWindow::createSignals()
 
 void MainWindow::showWelcome()
 {
-    QString strStatus = "Status";
     QString strWelcome = "%Fi:courier%"+tr("Welcome to the Simple Chat Client")+" %Ihehe%";
     QString strWebsite = "%Fb:courier%%C008100%"+tr("Official website")+" SCC%C3030ce%: http://simplechatclien.sf.net/ %Izaskoczony%";
-    pTabC->addTab(strStatus);
-    pTabC->showMessage(strStatus, strWelcome, DefaultMessage);
-    pTabC->showMessage(strStatus, strWebsite, DefaultMessage);
+    pTabC->addTab(STATUS);
+    pTabC->showMessage(STATUS, strWelcome, DefaultMessage);
+    pTabC->showMessage(STATUS, strWebsite, DefaultMessage);
 }
 
 void MainWindow::showOptions()
@@ -423,13 +422,13 @@ void MainWindow::buttonConnect()
     else
     {
         Core::instance()->settings["reconnect"] = "false";
-        Core::instance()->settings["logged"] = "off";
+        Core::instance()->settings["logged"] = "false";
         connectAct->setText(tr("&Connect"));
         connectAct->setIconText(tr("&Connect"));
         connectAct->setIcon(QIcon(":/images/oxygen/16x16/network-connect.png"));
         Core::instance()->pNetwork->disconnect();
 #ifdef Q_WS_X11
-        if (Core::instance()->settings.value("debug") == "on")
+        if (Core::instance()->settings.value("debug") == "true")
             qDebug() << "Set timerReconnect: stop";
 #endif
         Core::instance()->pNetwork->timerReconnect->stop();
@@ -507,31 +506,31 @@ void MainWindow::openOptions()
 // onet dialogs
 void MainWindow::openChannelList()
 {
-    if ((Core::instance()->pNetwork->isConnected()) && (Core::instance()->pNetwork->isWritable()) && (Core::instance()->settings.value("logged") == "on"))
+    if ((Core::instance()->pNetwork->isConnected()) && (Core::instance()->pNetwork->isWritable()) && (Core::instance()->settings.value("logged") == "true"))
         DlgChannelList(this).exec();
 }
 
 void MainWindow::openChannelHomes()
 {
-    if ((Core::instance()->pNetwork->isConnected()) && (Core::instance()->pNetwork->isWritable()) && (Core::instance()->settings.value("logged") == "on"))
+    if ((Core::instance()->pNetwork->isConnected()) && (Core::instance()->pNetwork->isWritable()) && (Core::instance()->settings.value("logged") == "true"))
         DlgChannelHomes(this).exec();
 }
 
 void MainWindow::openChannelFavourites()
 {
-    if ((Core::instance()->pNetwork->isConnected()) && (Core::instance()->pNetwork->isWritable()) && (Core::instance()->settings.value("logged") == "on"))
+    if ((Core::instance()->pNetwork->isConnected()) && (Core::instance()->pNetwork->isWritable()) && (Core::instance()->settings.value("logged") == "true"))
         DlgChannelFavourites(this).exec();
 }
 
 void MainWindow::openFriends()
 {
-    if ((Core::instance()->pNetwork->isConnected()) && (Core::instance()->pNetwork->isWritable()) && (Core::instance()->settings.value("logged") == "on"))
+    if ((Core::instance()->pNetwork->isConnected()) && (Core::instance()->pNetwork->isWritable()) && (Core::instance()->settings.value("logged") == "true"))
         DlgFriends(this).exec();
 }
 
 void MainWindow::openIgnore()
 {
-    if ((Core::instance()->pNetwork->isConnected()) && (Core::instance()->pNetwork->isWritable()) && (Core::instance()->settings.value("logged") == "on"))
+    if ((Core::instance()->pNetwork->isConnected()) && (Core::instance()->pNetwork->isWritable()) && (Core::instance()->settings.value("logged") == "true"))
         DlgIgnore(this).exec();
 }
 
@@ -543,9 +542,9 @@ void MainWindow::buttonSetBusy()
     else
         Core::instance()->busyAct->setChecked(true);
 
-    if ((Core::instance()->pNetwork->isConnected()) && (Core::instance()->pNetwork->isWritable()) && (Core::instance()->settings.value("logged") == "on"))
+    if ((Core::instance()->pNetwork->isConnected()) && (Core::instance()->pNetwork->isWritable()) && (Core::instance()->settings.value("logged") == "true"))
     {
-        bool bBusy = Core::instance()->settings.value("busy") == "on" ? true : false;
+        bool bBusy = Core::instance()->settings.value("busy") == "true" ? true : false;
 
         if (bBusy)
             Core::instance()->pNetwork->send("BUSY 0");
@@ -562,9 +561,9 @@ void MainWindow::buttonSetAway()
     else
         Core::instance()->awayAct->setChecked(true);
 
-    if ((Core::instance()->pNetwork->isConnected()) && (Core::instance()->pNetwork->isWritable()) && (Core::instance()->settings.value("logged") == "on"))
+    if ((Core::instance()->pNetwork->isConnected()) && (Core::instance()->pNetwork->isWritable()) && (Core::instance()->settings.value("logged") == "true"))
     {
-        bool bAway = Core::instance()->settings.value("away") == "on" ? true : false;
+        bool bAway = Core::instance()->settings.value("away") == "true" ? true : false;
 
         QString strReason;
         if (bAway)
@@ -578,7 +577,7 @@ void MainWindow::buttonSetAway()
 
 void MainWindow::openOfflinemsg()
 {
-    if ((Core::instance()->pNetwork->isConnected()) && (Core::instance()->pNetwork->isWritable()) && (Core::instance()->settings.value("logged") == "on"))
+    if ((Core::instance()->pNetwork->isConnected()) && (Core::instance()->pNetwork->isWritable()) && (Core::instance()->settings.value("logged") == "true"))
         DlgOfflineMsg(this).exec();
 }
 
@@ -590,32 +589,32 @@ void MainWindow::openAwaylog()
 void MainWindow::openCams()
 {
 #ifdef Q_WS_WIN
-    if ((Core::instance()->pNetwork->isConnected()) && (Core::instance()->pNetwork->isWritable()) && (Core::instance()->settings.value("logged") == "on"))
+    if ((Core::instance()->pNetwork->isConnected()) && (Core::instance()->pNetwork->isWritable()) && (Core::instance()->settings.value("logged") == "true"))
     {
         QString strMe = Core::instance()->settings.value("nick");
         (new Kamerzysta(Core::instance()->kamerzystaSocket))->show(strMe);
     }
 #else
-    if ((Core::instance()->pNetwork->isConnected()) && (Core::instance()->pNetwork->isWritable()) && (Core::instance()->settings.value("logged") == "on"))
+    if ((Core::instance()->pNetwork->isConnected()) && (Core::instance()->pNetwork->isWritable()) && (Core::instance()->settings.value("logged") == "true"))
         new DlgWebcam();
 #endif
 }
 
 void MainWindow::openMyStats()
 {
-    if ((Core::instance()->pNetwork->isConnected()) && (Core::instance()->pNetwork->isWritable()) && (Core::instance()->settings.value("logged") == "on"))
+    if ((Core::instance()->pNetwork->isConnected()) && (Core::instance()->pNetwork->isWritable()) && (Core::instance()->settings.value("logged") == "true"))
         DlgMyStats(this).exec();
 }
 
 void MainWindow::openMyProfile()
 {
-    if ((Core::instance()->pNetwork->isConnected()) && (Core::instance()->pNetwork->isWritable()) && (Core::instance()->settings.value("logged") == "on"))
+    if ((Core::instance()->pNetwork->isConnected()) && (Core::instance()->pNetwork->isWritable()) && (Core::instance()->settings.value("logged") == "true"))
         DlgMyProfile(this).exec();
 }
 
 void MainWindow::openMyAvatar()
 {
-    if ((Core::instance()->pNetwork->isConnected()) && (Core::instance()->pNetwork->isWritable()) && (Core::instance()->settings.value("logged") == "on"))
+    if ((Core::instance()->pNetwork->isConnected()) && (Core::instance()->pNetwork->isWritable()) && (Core::instance()->settings.value("logged") == "true"))
         DlgMyAvatar(this).exec();
 }
 
@@ -701,14 +700,14 @@ QString MainWindow::getUserAvatarPath(QString strNick)
 
 void MainWindow::timeoutAutoaway()
 {
-    if ((Core::instance()->pNetwork->isConnected()) && (Core::instance()->pNetwork->isWritable()) && (Core::instance()->settings.value("logged") == "on"))
+    if ((Core::instance()->pNetwork->isConnected()) && (Core::instance()->pNetwork->isWritable()) && (Core::instance()->settings.value("logged") == "true"))
     {
         QDateTime cdt = QDateTime::currentDateTime();
         int t = (int)cdt.toTime_t(); // seconds that have passed since 1970
 
         int iLastActive = Core::instance()->settings.value("last_active").toInt();
 
-        bool bAway = Core::instance()->settings.value("away") == "on" ? true : false;
+        bool bAway = Core::instance()->settings.value("away") == "true" ? true : false;
 
         if ((!bAway) && (iLastActive != 0) && (t-iLastActive > 300))
             Core::instance()->pNetwork->send(QString("AWAY :%1").arg(tr("Not here right now")));
@@ -751,7 +750,7 @@ void MainWindow::tabMoved(int from, int to)
     Core::instance()->lOpenChannels.move(from, to);
 }
 
-void MainWindow::showMessage(QString &strChannel, QString &strData, MessageCategory eMessageCategory, QString strTime, QString strNick)
+void MainWindow::showMessage(QString strChannel, QString strData, MessageCategory eMessageCategory, QString strTime, QString strNick)
 {
     pTabC->showMessage(strChannel, strData, eMessageCategory, strTime, strNick);
 }
@@ -771,7 +770,7 @@ void MainWindow::changeEvent(QEvent *event)
         // make sure we only do this for minimize events
         if ((e->oldState() != Qt::WindowMinimized) && isMinimized())
         {
-            if (Core::instance()->settings["minimize_to_tray"] == "on")
+            if (Core::instance()->settings["minimize_to_tray"] == "true")
             {
                 QTimer::singleShot(0, this, SLOT(hide()));
                 event->ignore();
