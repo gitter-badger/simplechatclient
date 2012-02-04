@@ -452,34 +452,28 @@ void ChatView::menuNick(QContextMenuEvent *event)
     int iSelfMaxModes = Core::instance()->getUserMaxModes(strSelfModes);
     QString strNickModes = Core::instance()->getUserModes(strNick, strChatViewChannel);
 
+    QList<QString> lOpenChannels = Core::instance()->lOpenChannels;
+    lOpenChannels.removeOne(STATUS);
+
     QMenu *minvite = new QMenu(tr("Invite"));
     minvite->setIcon(QIcon(":/images/oxygen/16x16/legalmoves.png"));
 
-    for (int i = 0; i < maxOpenChannels; ++i)
-    {
-        openChannelsActs[i] = new QAction(this);
-        openChannelsActs[i]->setIcon(QIcon(":/images/oxygen/16x16/irc-join-channel.png"));
-        openChannelsActs[i]->setVisible(false);
-        connect(openChannelsActs[i], SIGNAL(triggered()), this, SLOT(invite()));
-     }
-
-    for (int i = 0; i < maxOpenChannels; ++i)
-        minvite->addAction(openChannelsActs[i]);
-
-    QList<QString> lOpenChannels = Core::instance()->lOpenChannels;
-    lOpenChannels.removeOne(STATUS);
     for (int i = 0; i < lOpenChannels.size(); ++i)
     {
         QString strOpenChannel = lOpenChannels[i];
         if (strOpenChannel[0] == '^')
             strOpenChannel = Core::instance()->convertPrivName(strOpenChannel);
 
+        openChannelsActs[i] = new QAction(this);
+        openChannelsActs[i]->setIcon(QIcon(":/images/oxygen/16x16/irc-join-channel.png"));
+        openChannelsActs[i]->setVisible(false);
         openChannelsActs[i]->setText(strOpenChannel);
         openChannelsActs[i]->setData(lOpenChannels[i]);
         openChannelsActs[i]->setVisible(true);
-    }
-    for (int j = lOpenChannels.size(); j < maxOpenChannels; ++j)
-        openChannelsActs[j]->setVisible(false);
+
+        connect(openChannelsActs[i], SIGNAL(triggered()), this, SLOT(invite()));
+        minvite->addAction(openChannelsActs[i]);
+     }
 
     QMenu *friends = new QMenu(tr("Friends list"));
     friends->setIcon(QIcon(":/images/oxygen/16x16/meeting-attending.png"));
