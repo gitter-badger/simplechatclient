@@ -61,12 +61,14 @@ SOURCES += src/avatars/avatar.cpp \
     src/notify/notify.cpp \
     src/onet/avatar_client.cpp \
     src/onet/captcha.cpp \
+    src/onet/my_avatar_model.cpp \
     src/onet/onet_auth.cpp \
     src/onet/onet_kernel.cpp \
     src/onet/onet_utils.cpp \
     src/tab/tab_container.cpp \
     src/tab/tab_manager.cpp \
     src/tab/tab_widget.cpp \
+    src/widgets/avatar_edit_scene.cpp \
     src/widgets/chat_view.cpp \
     src/widgets/inputline_widget.cpp \
     src/widgets/nicklist_delegate.cpp \
@@ -130,12 +132,14 @@ HEADERS += src/avatars/avatar.h \
     src/notify/notify.h \
     src/onet/avatar_client.h \
     src/onet/captcha.h \
+    src/onet/my_avatar_model.h \
     src/onet/onet_auth.h \
     src/onet/onet_kernel.h \
     src/onet/onet_utils.h \
     src/tab/tab_container.h \
     src/tab/tab_manager.h \
     src/tab/tab_widget.h \
+    src/widgets/avatar_edit_scene.h \
     src/widgets/chat_view.h \
     src/widgets/inputline_widget.h \
     src/widgets/nicklist_delegate.h \

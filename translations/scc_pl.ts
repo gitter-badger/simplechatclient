@@ -954,7 +954,7 @@
     </message>
     <message>
         <source>Whois</source>
-        <translation>Whois</translation>
+        <translation>Gdzie jest</translation>
     </message>
     <message>
         <source>Changing your friends list</source>
@@ -1004,7 +1004,7 @@
     </message>
     <message>
         <source>Whois</source>
-        <translation>Whois</translation>
+        <translation>Gdzie jest</translation>
     </message>
     <message>
         <source>Reject</source>
