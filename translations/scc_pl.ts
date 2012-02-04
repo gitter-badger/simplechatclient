@@ -387,8 +387,27 @@
         <translation>Główny programista</translation>
     </message>
     <message>
+        <source>Developer</source>
+        <translation>Programista</translation>
+    </message>
+    <message>
         <source>Thanks to &lt;b&gt;ovo_&lt;/b&gt; for creating graphics, to all persons who actively support the development of the project and special thanks to &lt;b&gt;Darom&lt;/b&gt;.</source>
         <translation> Podziękowania dla &lt;b&gt;ovo_&lt;/b&gt; za wykonanie elementów grafiki, dla wszystkich, którzy aktywnie wsparli rozwój projektu oraz szczególne podziękowania dla &lt;b&gt;Darom&lt;/b&gt;.</translation>
+    </message>
+</context>
+<context>
+    <name>DlgAvatarEdit</name>
+    <message>
+        <source>Edit Avatar</source>
+        <translation>Edycja awataru</translation>
+    </message>
+    <message>
+        <source>Filename:</source>
+        <translation>Nazwa pliku:</translation>
+    </message>
+    <message>
+        <source>Size:</source>
+        <translation>Wielkość:</translation>
     </message>
 </context>
 <context>
@@ -1044,6 +1063,10 @@
     <message>
         <source>Add</source>
         <translation>Dodaj</translation>
+    </message>
+    <message>
+        <source>Edit</source>
+        <translation>Edycja</translation>
     </message>
     <message>
         <source>Remove</source>

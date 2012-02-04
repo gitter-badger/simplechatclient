@@ -27,10 +27,12 @@
 #include <QNetworkRequest>
 #include <QNetworkCookieJar>
 #include <QObject>
+#include <QStringList>
 #include <QUrl>
 #include <QUuid>
 
 #include "core.h"
+#include "my_avatar_model.h"
 
 #include "avatar_client.h"
 
@@ -61,7 +63,7 @@ void AvatarClient::getCookies()
     QList<QNetworkCookie> cookieList;
     QNetworkCookie cookie;
 
-    QList<QString> lNames;
+    QStringList lNames;
     lNames << "onet_ubi" << "onet_cid" << "onet_sid" << "onet_uid" << "onetzuo_ticket";
     foreach (QString strName, lNames)
     {
@@ -139,7 +141,7 @@ void AvatarClient::requestSetAvatar(int iImgId, int iAlbumId)
     this->post(request, postData.toAscii());
 }
 
-void AvatarClient::requestUploadImage(QString strFileName, QByteArray bData)
+void AvatarClient::requestUploadImage(const QString &strFileName, const QByteArray &bData)
 {
     qsrand(QDateTime::currentDateTime().toTime_t());
     QByteArray bBoundary = QByteArray("boundary_.oOo._")
@@ -179,20 +181,20 @@ void AvatarClient::requestUploadImage(QString strFileName, QByteArray bData)
     pReply->setProperty("fileName", info.fileName());
 }
 
-void AvatarClient::requestUpdatePhoto(MyAvatarMeta avatar)
+void AvatarClient::requestUpdatePhoto(const MyAvatarModel &avatar)
 {
     QString postData = QString("fnc=updatePhoto&rdr=xml&rid=%1").arg(createRid());
     postData += QString("&envelope=a:7:{s:5:\"imgId\";i:%1;s:5:\"mHash\";s:%2:\"%3\";s:5:\"angle\";i:%4;s:4:\"crop\";s:%5:\"%6\";s:4:\"desc\";s:%7:\"%8\";s:5:\"width\";i:%9;s:6:\"height\";i:%10;}")
-        .arg(avatar.imgId)
-        .arg(avatar.img.size())
-        .arg(avatar.img)
-        .arg(avatar.angle)
-        .arg(avatar.crop.size())
-        .arg(avatar.crop)
-        .arg(avatar.desc.size())
-        .arg(QString(avatar.desc))
-        .arg(avatar.width)
-        .arg(avatar.height);
+        .arg(avatar.imgId())
+        .arg(avatar.img().size())
+        .arg(avatar.img())
+        .arg(avatar.angle())
+        .arg(avatar.crop().size())
+        .arg(avatar.crop())
+        .arg(avatar.desc().size())
+        .arg(QString(avatar.desc()))
+        .arg(avatar.width())
+        .arg(avatar.height());
 
     QNetworkRequest request(basicRequest);
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
@@ -203,22 +205,22 @@ void AvatarClient::requestUpdatePhoto(MyAvatarMeta avatar)
     this->post(request, postData.toAscii());
 }
 
-void AvatarClient::requestAddPhoto(MyAvatarMeta avatar)
+void AvatarClient::requestAddPhoto(const MyAvatarModel &avatar)
 {
     QString strImgId = createRid();
     QString postData = QString("fnc=addPhoto&rdr=xml&rid=%1").arg(createRid());
     postData += QString("&envelope=a:7:{s:5:\"imgId\";s:%1:\"%2\";s:5:\"mHash\";s:%3:\"%4\";s:5:\"angle\";i:%5;s:4:\"crop\";s:%6:\"%7\";s:4:\"desc\";s:%8:\"%9\";s:5:\"width\";i:%10;s:6:\"height\";i:%11;}")
         .arg(strImgId.size())
         .arg(strImgId)
-        .arg(avatar.img.size())
-        .arg(avatar.img)
-        .arg(avatar.angle)
-        .arg(avatar.crop.size())
-        .arg(avatar.crop)
-        .arg(avatar.desc.size())
-        .arg(QString(avatar.desc))
-        .arg(avatar.width)
-        .arg(avatar.height);
+        .arg(avatar.img().size())
+        .arg(avatar.img())
+        .arg(avatar.angle())
+        .arg(avatar.crop().size())
+        .arg(avatar.crop())
+        .arg(avatar.desc().size())
+        .arg(QString(avatar.desc()))
+        .arg(avatar.width())
+        .arg(avatar.height());
 
     QNetworkRequest request(basicRequest);
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
@@ -229,7 +231,7 @@ void AvatarClient::requestAddPhoto(MyAvatarMeta avatar)
     this->post(request, postData.toAscii());
 }
 
-void AvatarClient::requestDeletePhoto(QString strImgId)
+void AvatarClient::requestDeletePhoto(const QString &strImgId)
 {
     QString postData = QString("fnc=deletePhoto&rdr=xml&rid=%1").arg(createRid());
     postData += QString("&envelope=a:1:{s:5:\"imgId\";i:%1;}").arg(strImgId);
@@ -243,7 +245,7 @@ void AvatarClient::requestDeletePhoto(QString strImgId)
     this->post(request, postData.toAscii());
 }
 
-void AvatarClient::requestGetAvatar(QString strUrl, AvatarType type)
+void AvatarClient::requestGetAvatar(const QString &strUrl, AvatarType type)
 {
     QNetworkRequest request(basicRequest);
     request.setUrl(QUrl(strUrl));
@@ -251,6 +253,9 @@ void AvatarClient::requestGetAvatar(QString strUrl, AvatarType type)
     {
         case AT_my:
             request.setAttribute(QNetworkRequest::User,RT_getMyAvatar);
+            break;
+        case AT_myRaw:
+            request.setAttribute(QNetworkRequest::User,RT_getMyRawAvatar);
             break;
         case AT_collection:
             request.setAttribute(QNetworkRequest::User,RT_getCollectionAvatar);
@@ -311,6 +316,10 @@ void AvatarClient::replyFinished(QNetworkReply *pReply)
         case RT_getMyAvatar:
             strUrl = pReply->url().toString();
             emit getAvatarReady(strUrl, bData, AT_my);
+            break;
+        case RT_getMyRawAvatar:
+            strUrl = pReply->url().toString();
+            emit getAvatarReady(strUrl, bData, AT_myRaw);
             break;
         case RT_getCollectionAvatar:
             strUrl = pReply->url().toString();

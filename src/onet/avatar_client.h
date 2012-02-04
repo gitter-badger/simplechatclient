@@ -27,34 +27,47 @@
 #include <QNetworkReply>
 
 class QNetworkCookieJar;
-class QObject;
-
-enum AvatarType
-{
-    AT_my,
-    AT_collection,
-    AT_other
-};
-
-struct MyAvatarMeta
-{
-    int angle;
-    QString crop;
-    int height;
-    QString img;
-    int imgId;
-    int width;
-    QString desc;
-    int mApp;
-    QString mSrv;
-    //QString exif; // unused; returned after upload photo
-    MyAvatarMeta() : angle(-1), crop(), height(-1), img(),
-        imgId(-1), width(-1), desc(), mApp(-1), mSrv() {}
-};
+class MyAvatarModel;
 
 class AvatarClient : public QNetworkAccessManager
 {
     Q_OBJECT
+public:
+    enum AvatarType
+    {
+        AT_my,
+        AT_myRaw,
+        AT_collection,
+        AT_other
+    };
+
+    AvatarClient();
+    virtual ~AvatarClient();
+
+    void requestGetCollections();
+    void requestGetCollectionAvatars(int iId);
+    void requestGetMyAvatars();
+    void requestSetAvatar(int iImgId, int iAlbumId);
+    void requestUploadImage(const QString &strFileName, const QByteArray &bData);
+    void requestUpdatePhoto(const MyAvatarModel &avatar);
+    void requestAddPhoto(const MyAvatarModel &avatar);
+    void requestDeletePhoto(const QString &strImgId);
+    void requestGetAvatar(const QString &strUrl, AvatarType type);
+
+signals:
+    void getCollectionsReady(const QString &strResult);
+    void getCollectionAvatarsReady(const QString &strResult);
+    void getMyAvatarsReady(const QString &strResult);
+    void setAvatarReady(const QString &strResult);
+    void uploadImageReady(const QString &strResult, const QString &strFileName);
+    void updatePhotoReady(const QString &strResult);
+    void addPhotoReady(const QString &strResult);
+    void deletePhotoReady(const QString &strResult);
+    void getAvatarReady(const QString &strUrl, const QByteArray &bData, AvatarClient::AvatarType type);
+    void errorOccured(QNetworkReply::NetworkError error);
+
+protected slots:
+    void replyFinished(QNetworkReply *pReply);
 
 private:
     // Names here intentionally similar to Onet Avatar API
@@ -70,6 +83,7 @@ private:
         RT_deletePhoto,
 
         RT_getMyAvatar,
+        RT_getMyRawAvatar,
         RT_getCollectionAvatar,
         RT_getAvatar,
 
@@ -82,34 +96,6 @@ private:
     QNetworkRequest basicRequest;
     QNetworkCookieJar *pCookies;
 
-protected slots:
-    void replyFinished(QNetworkReply *pReply);
-
-signals:
-    void getCollectionsReady(QString strResult);
-    void getCollectionAvatarsReady(QString strResult);
-    void getMyAvatarsReady(QString strResult);
-    void setAvatarReady(QString strResult);
-    void uploadImageReady(QString strResult, QString strFileName);
-    void updatePhotoReady(QString strResult);
-    void addPhotoReady(QString strResult);
-    void deletePhotoReady(QString strResult);
-    void getAvatarReady(QString strUrl, QByteArray bData, AvatarType type);
-    void errorOccured(QNetworkReply::NetworkError error);
-
-public:
-    AvatarClient();
-    virtual ~AvatarClient();
-
-    void requestGetCollections();
-    void requestGetCollectionAvatars(int iId);
-    void requestGetMyAvatars();
-    void requestSetAvatar(int iImgId, int iAlbumId);
-    void requestUploadImage(QString strFileName, QByteArray bData);
-    void requestUpdatePhoto(MyAvatarMeta avatar);
-    void requestAddPhoto(MyAvatarMeta avatar);
-    void requestDeletePhoto(QString strImgId);
-    void requestGetAvatar(QString strUrl, AvatarType type);
 };
 
 #endif /* AVATAR_CLIENT_H */

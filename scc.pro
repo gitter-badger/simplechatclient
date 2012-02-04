@@ -28,6 +28,7 @@ SOURCES += src/avatars/avatar.cpp \
     src/core/network.cpp \
     src/core/updates.cpp \
     src/gui/about.cpp \
+    src/gui/avatar_edit.cpp \
     src/gui/awaylog.cpp \
     src/gui/channel_favourites.cpp \
     src/gui/channel_homes.cpp \
@@ -95,6 +96,7 @@ HEADERS += src/avatars/avatar.h \
     src/core/network.h \
     src/core/updates.h \
     src/gui/about.h \
+    src/gui/avatar_edit.h \
     src/gui/awaylog.h \
     src/gui/channel_favourites.h \
     src/gui/channel_homes.h \
@@ -143,6 +145,7 @@ HEADERS += src/avatars/avatar.h \
     src/widgets/tool_widget.h \
     src/widgets/webcam_delegate.h
 FORMS += ui/about.ui \
+    ui/avatar_edit.ui \
     ui/awaylog.ui \
     ui/captcha.ui \
     ui/channel_favourites.ui \

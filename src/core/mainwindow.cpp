@@ -221,7 +221,7 @@ void MainWindow::createMenus()
     myMenu = menuBar()->addMenu(tr("&My"));
     myMenu->addAction(myStatsAct);
     myMenu->addAction(myProfileAct);
-    //myMenu->addAction(myAvatarAct);
+    myMenu->addAction(myAvatarAct);
     myMenu->addAction(notesAct);
 
     // help menu

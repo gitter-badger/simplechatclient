@@ -6,19 +6,19 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>430</width>
+    <width>492</width>
     <height>362</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>430</width>
+    <width>492</width>
     <height>362</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>430</width>
+    <width>492</width>
     <height>362</height>
    </size>
   </property>
@@ -34,7 +34,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>431</width>
+     <width>491</width>
      <height>361</height>
     </rect>
    </property>
@@ -89,7 +89,7 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>421</width>
+          <width>481</width>
           <height>241</height>
          </rect>
         </property>
@@ -119,6 +119,13 @@
             <widget class="QPushButton" name="pushButton_add_avatar">
              <property name="text">
               <string>Add</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="pushButton_edit_avatar">
+             <property name="text">
+              <string>Edit</string>
              </property>
             </widget>
            </item>
@@ -157,7 +164,7 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>421</width>
+          <width>481</width>
           <height>241</height>
          </rect>
         </property>

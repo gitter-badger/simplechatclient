@@ -1,6 +1,7 @@
 
 set (scc_UIS
 	../ui/about.ui
+	../ui/avatar_edit.ui
 	../ui/awaylog.ui
 	../ui/captcha.ui
 	../ui/channel_favourites.ui
@@ -45,6 +46,7 @@ set (scc_SRCS
 	core/network.cpp
 	core/updates.cpp
 	gui/about.cpp
+	gui/avatar_edit.cpp
 	gui/awaylog.cpp
 	gui/channel_favourites.cpp
 	gui/channel_homes.cpp
@@ -74,12 +76,14 @@ set (scc_SRCS
 	notify/notify.cpp
 	onet/avatar_client.cpp
 	onet/captcha.cpp
+	onet/my_avatar_model.cpp
 	onet/onet_auth.cpp
 	onet/onet_kernel.cpp
 	onet/onet_utils.cpp
 	tab/tab_container.cpp
 	tab/tab_manager.cpp
 	tab/tab_widget.cpp
+	widgets/avatar_edit_scene.cpp
 	widgets/chat_view.cpp
 	widgets/inputline_widget.cpp
 	widgets/nicklist_delegate.cpp
@@ -103,6 +107,7 @@ set (scc_MOC_HDRS
 	core/network.h
 	core/updates.h
 	gui/about.h
+	gui/avatar_edit.h
 	gui/awaylog.h
 	gui/channel_favourites.h
 	gui/channel_homes.h
@@ -138,6 +143,7 @@ set (scc_MOC_HDRS
 	tab/tab_container.h
 	tab/tab_manager.h
 	tab/tab_widget.h
+	widgets/avatar_edit_scene.h
 	widgets/chat_view.h
 	widgets/inputline_widget.h
 	widgets/nicklist_delegate.h

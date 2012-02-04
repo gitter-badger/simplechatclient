@@ -83,6 +83,9 @@ void DlgAbout::setDefaultValues()
     strAuthors += "<dt><b>"+tr("Piotr Luczko")+"</b></dt>";
     strAuthors += "<dd><a href=\"mailto:piotr.luczko@gmail.com\">piotr.luczko@gmail.com</a></dd>";
     strAuthors += "<dd>"+tr("Project Founder")+", "+tr("Lead Developer")+"</dd>";
+    strAuthors += "<dt><b>Dariusz Markowicz</b></dt>";
+    strAuthors += "<dd><a href=\"mailto:dmarkowicz@alari.pl\">dmarkowicz@alari.pl</a></dd>";
+    strAuthors += "<dd>"+tr("Developer")+"</dd>";
     strAuthors += "</dl>";
 
     QString strThanksTo = "<p>"+tr("Thanks to <b>ovo_</b> for creating graphics, to all persons who actively support the development of the project and special thanks to <b>Darom</b>.")+"</p>";
