@@ -6,19 +6,19 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>252</width>
+    <width>272</width>
     <height>272</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>252</width>
+    <width>272</width>
     <height>272</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>252</width>
+    <width>272</width>
     <height>272</height>
    </size>
   </property>
@@ -26,7 +26,7 @@
    <string>Ignore list</string>
   </property>
   <property name="windowIcon">
-   <iconset>
+   <iconset resource="../scc.qrc">
     <normaloff>:/images/logo.png</normaloff>:/images/logo.png</iconset>
   </property>
   <widget class="QWidget" name="verticalLayoutWidget">
@@ -34,7 +34,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>251</width>
+     <width>271</width>
      <height>271</height>
     </rect>
    </property>
@@ -83,6 +83,8 @@
    </layout>
   </widget>
  </widget>
- <resources/>
+ <resources>
+  <include location="../scc.qrc"/>
+ </resources>
  <connections/>
 </ui>

@@ -6,20 +6,20 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>570</width>
-    <height>434</height>
+    <width>579</width>
+    <height>458</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>570</width>
-    <height>434</height>
+    <width>579</width>
+    <height>458</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>570</width>
-    <height>434</height>
+    <width>579</width>
+    <height>458</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -33,9 +33,9 @@
    <property name="geometry">
     <rect>
      <x>12</x>
-     <y>410</y>
-     <width>551</width>
-     <height>25</height>
+     <y>430</y>
+     <width>561</width>
+     <height>27</height>
     </rect>
    </property>
    <property name="standardButtons">
@@ -47,8 +47,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>571</width>
-     <height>411</height>
+     <width>576</width>
+     <height>425</height>
     </rect>
    </property>
    <layout class="QHBoxLayout" name="horizontalLayout">
@@ -103,6 +103,19 @@
           </property>
          </widget>
         </item>
+        <item>
+         <spacer name="horizontalSpacer_7">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
        </layout>
       </item>
       <item>
@@ -115,6 +128,9 @@
         </property>
         <property name="frameShadow">
          <enum>QFrame::Plain</enum>
+        </property>
+        <property name="verticalScrollBarPolicy">
+         <enum>Qt::ScrollBarAlwaysOn</enum>
         </property>
         <property name="horizontalScrollBarPolicy">
          <enum>Qt::ScrollBarAlwaysOff</enum>

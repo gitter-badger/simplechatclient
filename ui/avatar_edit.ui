@@ -54,9 +54,9 @@
   <widget class="QLabel" name="label_fileName">
    <property name="geometry">
     <rect>
-     <x>109</x>
+     <x>119</x>
      <y>400</y>
-     <width>301</width>
+     <width>291</width>
      <height>20</height>
     </rect>
    </property>
@@ -64,30 +64,30 @@
   <widget class="QToolButton" name="toolButton_rotate_left">
    <property name="geometry">
     <rect>
-     <x>440</x>
+     <x>450</x>
      <y>400</y>
-     <width>25</width>
-     <height>19</height>
+     <width>22</width>
+     <height>24</height>
     </rect>
    </property>
   </widget>
   <widget class="QToolButton" name="toolButton_rotate_right">
    <property name="geometry">
     <rect>
-     <x>470</x>
+     <x>480</x>
      <y>400</y>
-     <width>25</width>
-     <height>19</height>
+     <width>22</width>
+     <height>24</height>
     </rect>
    </property>
   </widget>
   <widget class="QLabel" name="label_size">
    <property name="geometry">
     <rect>
-     <x>110</x>
+     <x>119</x>
      <y>420</y>
-     <width>100</width>
-     <height>13</height>
+     <width>111</width>
+     <height>16</height>
     </rect>
    </property>
    <property name="text">
@@ -97,10 +97,10 @@
   <widget class="QDialogButtonBox" name="buttonBox">
    <property name="geometry">
     <rect>
-     <x>10</x>
+     <x>20</x>
      <y>440</y>
-     <width>611</width>
-     <height>23</height>
+     <width>491</width>
+     <height>27</height>
     </rect>
    </property>
    <property name="standardButtons">
@@ -115,7 +115,7 @@
     <rect>
      <x>20</x>
      <y>400</y>
-     <width>81</width>
+     <width>91</width>
      <height>16</height>
     </rect>
    </property>
@@ -128,7 +128,7 @@
     <rect>
      <x>20</x>
      <y>420</y>
-     <width>81</width>
+     <width>91</width>
      <height>16</height>
     </rect>
    </property>

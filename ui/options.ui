@@ -16,12 +16,6 @@
     <height>407</height>
    </size>
   </property>
-  <property name="maximumSize">
-   <size>
-    <width>634</width>
-    <height>407</height>
-   </size>
-  </property>
   <property name="windowTitle">
    <string>Options</string>
   </property>
@@ -251,49 +245,72 @@
         <x>0</x>
         <y>260</y>
         <width>441</width>
-        <height>81</height>
+        <height>101</height>
        </rect>
       </property>
       <property name="title">
        <string>Language</string>
       </property>
-      <widget class="QComboBox" name="comboBox_language">
-       <property name="geometry">
-        <rect>
-         <x>170</x>
-         <y>30</y>
-         <width>91</width>
-         <height>21</height>
-        </rect>
-       </property>
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-      </widget>
-      <widget class="QLabel" name="label_language_warning">
+      <widget class="QWidget" name="verticalLayoutWidget_7">
        <property name="geometry">
         <rect>
          <x>10</x>
-         <y>50</y>
+         <y>20</y>
          <width>421</width>
-         <height>21</height>
+         <height>71</height>
         </rect>
        </property>
-       <property name="styleSheet">
-        <string notr="true">font-weight:bold;</string>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignCenter</set>
-       </property>
-       <property name="wordWrap">
-        <bool>true</bool>
-       </property>
+       <layout class="QVBoxLayout" name="verticalLayout_7">
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_12">
+          <item>
+           <spacer name="horizontalSpacer_8">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QComboBox" name="comboBox_language"/>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer_7">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <widget class="QLabel" name="label_language_warning">
+          <property name="styleSheet">
+           <string notr="true">font-weight:bold;</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+          <property name="wordWrap">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+       </layout>
       </widget>
      </widget>
     </widget>
@@ -462,7 +479,7 @@
         <x>0</x>
         <y>0</y>
         <width>441</width>
-        <height>231</height>
+        <height>241</height>
        </rect>
       </property>
       <property name="currentIndex">
@@ -478,7 +495,7 @@
           <x>10</x>
           <y>10</y>
           <width>421</width>
-          <height>181</height>
+          <height>196</height>
          </rect>
         </property>
         <layout class="QHBoxLayout" name="horizontalLayout_6">
@@ -746,7 +763,7 @@
           <x>10</x>
           <y>10</y>
           <width>421</width>
-          <height>181</height>
+          <height>191</height>
          </rect>
         </property>
         <layout class="QHBoxLayout" name="horizontalLayout_7">
@@ -872,7 +889,7 @@
       <property name="geometry">
        <rect>
         <x>130</x>
-        <y>270</y>
+        <y>280</y>
         <width>180</width>
         <height>24</height>
        </rect>
@@ -885,7 +902,7 @@
       <property name="geometry">
        <rect>
         <x>130</x>
-        <y>240</y>
+        <y>250</y>
         <width>181</width>
         <height>24</height>
        </rect>
@@ -1183,7 +1200,7 @@
          <x>9</x>
          <y>20</y>
          <width>421</width>
-         <height>81</height>
+         <height>88</height>
         </rect>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_5">
