@@ -59,10 +59,8 @@ void Updates::version(QString strAvailableVersion)
     QString strAvailableRev = lAvailableVersion.last();
     int iAvailableRev = strAvailableRev.toInt();
 
-#ifdef Q_WS_X11
-        if (Core::instance()->settings.value("debug") == "true")
-            qDebug() << "Current rev: " << strCurrentRev << " Available rev: " << strAvailableRev;
-#endif
+    if (Core::instance()->settings.value("debug") == "true")
+        qDebug() << "Current rev: " << strCurrentRev << " Available rev: " << strAvailableRev;
 
     if (iCurrentRev < iAvailableRev)
         DlgUpdate(Core::instance()->sccWindow(), strAvailableVersion).exec();

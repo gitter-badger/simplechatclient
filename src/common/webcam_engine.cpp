@@ -23,10 +23,10 @@
 #include <QTextCodec>
 
 #include "core.h"
-#include "webcam_network.h"
 #include "webcam_engine.h"
+#include "webcam_network.h"
 
-WebcamEngine::WebcamEngine(QString _strNick, bool _bMini) : strNick(_strNick), bMini(_bMini)
+WebcamEngine::WebcamEngine(const QString &_strNick, bool _bMini) : strNick(_strNick), bMini(_bMini)
 {
     codec_cp1250 = QTextCodec::codecForName("CP1250");
 
@@ -47,9 +47,9 @@ WebcamEngine::~WebcamEngine()
 void WebcamEngine::createSignals()
 {
     connect(pWebcamNetwork, SIGNAL(connected()), this, SLOT(connected()));
-    connect(pWebcamNetwork, SIGNAL(dataKernel(QByteArray)), this, SLOT(dataKernel(QByteArray)));
-    connect(pWebcamNetwork, SIGNAL(textKernel(QString)), this, SLOT(textKernel(QString)));
-    connect(pWebcamNetwork, SIGNAL(error(QString)), this, SLOT(slotError(QString)));
+    connect(pWebcamNetwork, SIGNAL(dataKernel(const QByteArray&)), this, SLOT(dataKernel(const QByteArray&)));
+    connect(pWebcamNetwork, SIGNAL(textKernel(const QString&)), this, SLOT(textKernel(const QString&)));
+    connect(pWebcamNetwork, SIGNAL(error(const QString&)), this, SLOT(slotError(const QString&)));
 }
 
 void WebcamEngine::closeEngine()
@@ -57,18 +57,18 @@ void WebcamEngine::closeEngine()
     pWebcamNetwork->networkDisconnect();
 }
 
-void WebcamEngine::networkSend(QString s)
+void WebcamEngine::networkSend(const QString &s)
 {
     pWebcamNetwork->networkSend(s);
 }
 
-void WebcamEngine::setUser(QString s)
+void WebcamEngine::setUser(const QString &s)
 {
     strNick = s;
 }
 
 /* from WebcamNetwork to DlgWebcam */
-void WebcamEngine::slotError(QString s)
+void WebcamEngine::slotError(const QString &s)
 {
     emit error(s);
 }
@@ -86,25 +86,34 @@ void WebcamEngine::disconnected()
     emit updateText(tr("Disconnected from server webcams"));
 }
 
-void WebcamEngine::dataKernel(QByteArray bData)
+void WebcamEngine::dataKernel(const QByteArray &bData)
 {
 #ifdef Q_WS_X11
     if (Core::instance()->settings.value("debug") == "true")
         qDebug() << "CAM byte <- " << bData;
 #endif
 
-    if (iCamCmd == 202)
+    switch (iCamCmd)
+    {
+    case 202:
         raw_202b(bData);
-    else if (iCamCmd == 250)
+        break;
+    case 250:
         raw_250b(bData);
-    else if (iCamCmd == 251)
+        break;
+    case 251:
         raw_251b(bData);
-    else if (iCamCmd == 252)
+        break;
+    case 252:
         raw_252b(bData);
-    else if (iCamCmd == 254)
+        break;
+    case 254:
         raw_254b(bData);
-    else if (iCamCmd == 403)
+        break;
+    case 403:
         raw_403b(bData);
+        break;
+    }
 
     iCamCmd = 0;
 }
@@ -112,7 +121,7 @@ void WebcamEngine::dataKernel(QByteArray bData)
 /*
 202 14283 IMAGE_UPDATE_BIG psotnica2603
 */
-void WebcamEngine::raw_202b(QByteArray &data)
+void WebcamEngine::raw_202b(const QByteArray &data)
 {
     emit updateImage(data);
 }
@@ -124,7 +133,7 @@ ToWiemTylkoJa:1:2/0/#Relax/0,-2/-2/ToWiemTylkoJa/1:2::13
 scc_test:1:2/0/#Quiz/0,2/0/#Relax/0,2/0/#Scrabble/0,4/0/#scc/0:0::0
 */
 /* multiline */
-void WebcamEngine::raw_250b(QByteArray &data)
+void WebcamEngine::raw_250b(const QByteArray &data)
 {
     // init data
     QString strData(data);
@@ -181,7 +190,7 @@ osa1987:1:-2/-2/osa1987/1:0::0
 ToWiemTylkoJa:1:2/0/#Relax/0,-2/-2/ToWiemTylkoJa/1:2::13
 scc_test:1:2/0/#Quiz/0,2/0/#Relax/0,2/0/#Scrabble/0,4/0/#scc/0:0::0
 */
-void WebcamEngine::raw_251b(QByteArray &data)
+void WebcamEngine::raw_251b(const QByteArray &data)
 {
     QString strLine(data);
     if (!strLine.isEmpty())
@@ -250,7 +259,7 @@ void WebcamEngine::raw_251b(QByteArray &data)
 /*
 SETSTATUS //panda
 */
-void WebcamEngine::raw_252b(QByteArray &data)
+void WebcamEngine::raw_252b(const QByteArray &data)
 {
     if (data.indexOf("SETSTATUS ") == 0)
     {
@@ -267,7 +276,7 @@ void WebcamEngine::raw_252b(QByteArray &data)
 scc_test 2 0
 */
 /* multi-line */
-void WebcamEngine::raw_254b(QByteArray &data)
+void WebcamEngine::raw_254b(const QByteArray &data)
 {
     QString strData(data);
     QStringList strDataList = strData.split("\n");
@@ -300,7 +309,7 @@ void WebcamEngine::raw_254b(QByteArray &data)
 /*
 Invalid key
 */
-void WebcamEngine::raw_403b(QByteArray &data)
+void WebcamEngine::raw_403b(const QByteArray &data)
 {
     QString strError = data;
 #ifdef Q_WS_X11
@@ -310,7 +319,7 @@ void WebcamEngine::raw_403b(QByteArray &data)
     emit error(strError);
 }
 
-void WebcamEngine::textKernel(QString strData)
+void WebcamEngine::textKernel(const QString &strData)
 {
 #ifdef Q_WS_X11
     if (Core::instance()->settings.value("debug") == "true")
@@ -318,76 +327,113 @@ void WebcamEngine::textKernel(QString strData)
 #endif
 
     QStringList strDataList = strData.split(" ");
-    QString strCmd = strDataList[0];
+    int cmd = strDataList[0].toInt();
 
-    if (strCmd == "200")
+    switch (cmd)
+    {
+    case 200:
         raw_200();
-    else if (strCmd == "202")
+        break;
+    case 202:
         raw_202(strDataList);
-    else if (strCmd == "211")
+        break;
+    case 211:
         raw_211(strDataList);
-    else if (strCmd == "221")
+        break;
+    case 221:
         raw_221();
-    else if (strCmd == "231")
+        break;
+    case 231:
         raw_231();
-    else if (strCmd == "232")
+        break;
+    case 232:
         raw_232();
-    else if (strCmd == "233")
+        break;
+    case 233:
         raw_233();
-    else if (strCmd == "250")
+        break;
+    case 250:
         raw_250(strDataList);
-    else if (strCmd == "251")
+        break;
+    case 251:
         raw_251(strDataList);
-    else if (strCmd == "252")
+        break;
+    case 252:
         raw_252(strDataList);
-    else if (strCmd == "253")
+        break;
+    case 253:
         raw_253(strDataList);
-    else if (strCmd == "254")
+        break;
+    case 254:
         raw_254(strDataList);
-    else if (strCmd == "264")
+        break;
+    case 264:
         raw_264();
-    else if (strCmd == "261")
+        break;
+    case 261:
         raw_261();
-    else if (strCmd == "262")
+        break;
+    case 262:
         raw_262();
-    else if (strCmd == "263")
+        break;
+    case 263:
         raw_263();
-    else if (strCmd == "267")
+        break;
+    case 267:
         raw_267();
-    else if (strCmd == "268")
+        break;
+    case 268:
         raw_268();
-    else if (strCmd == "403")
+        break;
+    case 403:
         raw_403(strDataList);
-    else if (strCmd == "405")
+        break;
+    case 405:
         raw_405(strDataList);
-    else if (strCmd == "406")
+        break;
+    case 406:
         raw_406();
-    else if (strCmd == "408")
+        break;
+    case 408:
         raw_408(strDataList);
-    else if (strCmd == "410")
+        break;
+    case 410:
         raw_410();
-    else if (strCmd == "412")
+        break;
+    case 411:
         raw_411();
-    else if (strCmd == "412")
+        break;
+    case 412:
         raw_412(strDataList);
-    else if (strCmd == "413")
+        break;
+    case 413:
         raw_413(strDataList);
-    else if (strCmd == "418")
+        break;
+    case 418:
         raw_418();
-    else if (strCmd == "501")
+        break;
+    case 501:
         raw_501();
-    else if (strCmd == "502")
+        break;
+    case 502:
         raw_502();
-    else if (strCmd == "504")
+        break;
+    case 504:
         raw_504();
-    else if (strCmd == "508")
+        break;
+    case 508:
         raw_508();
-    else if (strCmd == "515")
+        break;
+    case 515:
         raw_515();
-    else if (strCmd == "520")
+        break;
+    case 520:
         raw_520();
-    else
+        break;
+    default:
         qDebug() << "Unknown CAM RAW:" << strData;
+        break;
+    }
 }
 
 /*
@@ -401,9 +447,10 @@ void WebcamEngine::raw_200()
 /*
 202 17244 IMAGE_UPDATE_BIG Ekscentryk
 */
-void WebcamEngine::raw_202(QStringList &strDataList)
+void WebcamEngine::raw_202(const QStringList &strDataList)
 {
-    if (strDataList.size() < 4) return;
+    if (strDataList.size() < 4)
+        return;
 
     QString strUser = strDataList[3];
 
@@ -441,9 +488,10 @@ void WebcamEngine::raw_202(QStringList &strDataList)
 211 29 my_dwoje@4
 211 17 myszka29brunetka@5
 */
-void WebcamEngine::raw_211(QStringList &strDataList)
+void WebcamEngine::raw_211(const QStringList &strDataList)
 {
-    if (strDataList.size() < 3) return;
+    if (strDataList.size() < 3)
+        return;
 
     if (strDataList[1].toInt() > 0)
     {
@@ -484,9 +532,10 @@ void WebcamEngine::raw_233()
 /*
 250 12519 OK
 */
-void WebcamEngine::raw_250(QStringList &strDataList)
+void WebcamEngine::raw_250(const QStringList &strDataList)
 {
-    if (strDataList.size() < 3) return;
+    if (strDataList.size() < 3)
+        return;
 
     // initial read users status
     pWebcamNetwork->setBText(false);
@@ -497,9 +546,10 @@ void WebcamEngine::raw_250(QStringList &strDataList)
 /*
 251 52 UPDATE
 */
-void WebcamEngine::raw_251(QStringList &strDataList)
+void WebcamEngine::raw_251(const QStringList &strDataList)
 {
-    if (strDataList.size() < 3) return;
+    if (strDataList.size() < 3)
+        return;
 
     pWebcamNetwork->setBText(false);
     pWebcamNetwork->setBytesNeed(strDataList[1].toInt());
@@ -509,9 +559,10 @@ void WebcamEngine::raw_251(QStringList &strDataList)
 /*
 252 41 USER_STATUS pati28ash
 */
-void WebcamEngine::raw_252(QStringList &strDataList)
+void WebcamEngine::raw_252(const QStringList &strDataList)
 {
-    if (strDataList.size() < 4) return;
+    if (strDataList.size() < 4)
+        return;
 
     if (strDataList[1].toInt() > 0)
     {
@@ -529,9 +580,10 @@ void WebcamEngine::raw_252(QStringList &strDataList)
 /*
 253 0 USER_VOTES Delikatna 38
 */
-void WebcamEngine::raw_253(QStringList &strDataList)
+void WebcamEngine::raw_253(const QStringList &strDataList)
 {
-    if (strDataList.size() < 5) return;
+    if (strDataList.size() < 5)
+        return;
 
     QString strUser = strDataList[3];
     int iRank = strDataList[4].toInt();
@@ -543,9 +595,10 @@ void WebcamEngine::raw_253(QStringList &strDataList)
 /*
 254 1489 USER_COUNT_UPDATE
 */
-void WebcamEngine::raw_254(QStringList &strDataList)
+void WebcamEngine::raw_254(const QStringList &strDataList)
 {
-    if (strDataList.size() < 3) return;
+    if (strDataList.size() < 3)
+        return;
 
     pWebcamNetwork->setBText(false);
     pWebcamNetwork->setBytesNeed(strDataList[1].toInt());
@@ -621,9 +674,10 @@ void WebcamEngine::raw_268()
 403 11 ACCESS_DENIED
 Invalid key
 */
-void WebcamEngine::raw_403(QStringList &strDataList)
+void WebcamEngine::raw_403(const QStringList &strDataList)
 {
-    if (strDataList.size() < 3) return;
+    if (strDataList.size() < 3)
+        return;
 
     pWebcamNetwork->setBText(false);
     pWebcamNetwork->setBytesNeed(strDataList[1].toInt());
@@ -633,9 +687,10 @@ void WebcamEngine::raw_403(QStringList &strDataList)
 /*
 405 0 USER_GONE Restonka
 */
-void WebcamEngine::raw_405(QStringList &strDataList)
+void WebcamEngine::raw_405(const QStringList &strDataList)
 {
-    if (strDataList.size() < 4) return;
+    if (strDataList.size() < 4)
+        return;
 
     QString strUser = strDataList[3];
     if (strUser == strNick)
@@ -652,9 +707,10 @@ void WebcamEngine::raw_406()
 /*
 408 0 NO_SUCH_USER_SUBSCRIBE LOLexx
 */
-void WebcamEngine::raw_408(QStringList &strDataList)
+void WebcamEngine::raw_408(const QStringList &strDataList)
 {
-    if (strDataList.size() < 4) return;
+    if (strDataList.size() < 4)
+        return;
 
     QString strUser = strDataList[3];
     if (strUser == strNick)
@@ -678,9 +734,10 @@ void WebcamEngine::raw_411()
 /*
 412 0 SUBSCRIBE_FAILED olgusia32
 */
-void WebcamEngine::raw_412(QStringList &strDataList)
+void WebcamEngine::raw_412(const QStringList &strDataList)
 {
-    if (strDataList.size() < 4) return;
+    if (strDataList.size() < 4)
+        return;
 
     QString strUser = strDataList[3];
     if (strUser == strNick)
@@ -690,9 +747,10 @@ void WebcamEngine::raw_412(QStringList &strDataList)
 /*
 413 0 SUBSCRIBE_DENIED aliina
 */
-void WebcamEngine::raw_413(QStringList &strDataList)
+void WebcamEngine::raw_413(const QStringList &strDataList)
 {
-    if (strDataList.size() < 4) return;
+    if (strDataList.size() < 4)
+        return;
 
     QString strUser = strDataList[3];
     if (strUser == strNick)

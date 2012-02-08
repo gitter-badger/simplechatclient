@@ -87,7 +87,7 @@ int DlgMyStats::replaceValue(QString strValue)
 
 void DlgMyStats::refresh()
 {
-    QMapIterator <QString, QString> i(Core::instance()->mMyStats);
+    QHashIterator <QString, QString> i(Core::instance()->mMyStats);
     while (i.hasNext())
     {
         i.next();

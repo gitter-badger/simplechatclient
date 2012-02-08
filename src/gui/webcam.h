@@ -44,7 +44,7 @@ private:
 
 private slots:
     void closeCam();
-    void userError(QString);
+    void userError(const QString&);
 };
 
 #endif // WEBCAM_H

@@ -183,8 +183,8 @@ void Config::removeValue(QString strKey)
 
 void Config::fixConfig()
 {
-    QMap<QString,QString> mDefaultValues = getDefaultValues();
-    QMapIterator<QString, QString> i(mDefaultValues);
+    QHash<QString,QString> mDefaultValues = getDefaultValues();
+    QHashIterator<QString, QString> i(mDefaultValues);
     while (i.hasNext())
     {
         i.next();
@@ -207,8 +207,8 @@ void Config::createNewConfig()
     QDomElement root = doc.createElement(strRootName);
     doc.appendChild(root);
 
-    QMap<QString,QString> mDefaultValues = getDefaultValues();
-    QMapIterator<QString, QString> i(mDefaultValues);
+    QHash<QString,QString> mDefaultValues = getDefaultValues();
+    QHashIterator<QString, QString> i(mDefaultValues);
     while (i.hasNext())
     {
         i.next();
@@ -222,7 +222,7 @@ void Config::createNewConfig()
     save();
 }
 
-QMap<QString,QString> Config::getDefaultValues()
+QHash<QString,QString> Config::getDefaultValues()
 {
     QString path;
 #ifdef Q_WS_WIN
@@ -234,7 +234,7 @@ QMap<QString,QString> Config::getDefaultValues()
     QString strSoundQuery = path+"/3rdparty/sounds/query.wav";
     QString strBackgroundImage = path+"/images/wallpaper/default.jpg";
 
-    QMap<QString,QString> mDefaultValues;
+    QHash<QString,QString> mDefaultValues;
 
     if (!bProfileConfig)
     {
@@ -292,9 +292,9 @@ QMap<QString,QString> Config::getDefaultValues()
     return mDefaultValues;
 }
 
-QMap<QString,QString> Config::readConfig()
+QHash<QString,QString> Config::readConfig()
 {
-    QMap<QString, QString> mResult;
+    QHash<QString, QString> mResult;
 
     if (!doc.isNull())
     {

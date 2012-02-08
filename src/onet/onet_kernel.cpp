@@ -48,10 +48,8 @@ void OnetKernel::kernel(QString param1)
     strData = param1;
     strDataList = strData.split(" ");
 
-#ifdef Q_WS_X11
     if (Core::instance()->settings.value("debug") == "true")
         qDebug() << "<- " << strData;
-#endif
 
     bool bUnknownRaw1 = false;
     bool bUnknownRaw2 = false;
@@ -59,424 +57,237 @@ void OnetKernel::kernel(QString param1)
 
     if (!strDataList.value(1).isEmpty())
     {
-        if (strDataList[0].toLower() == "ping")
-            raw_ping();
-        else if (strDataList[0].toLower() == "error")
-            raw_error();
-        else if (strDataList[1].toLower() == "pong")
-            raw_pong();
-        else if (strDataList[1].toLower() == "join")
-            raw_join();
-        else if (strDataList[1].toLower() == "part")
-            raw_part();
-        else if (strDataList[1].toLower() == "quit")
-            raw_quit();
-        else if (strDataList[1].toLower() == "kick")
-            raw_kick();
-        else if (strDataList[1].toLower() == "mode")
-            raw_mode();
-        else if (strDataList[1].toLower() == "privmsg")
-            raw_privmsg();
-        else if (strDataList[1].toLower() == "invite")
-            raw_invite();
-        else if (strDataList[1].toLower() == "topic")
-            raw_topic();
-        else if (strDataList[1].toLower() == "invreject")
-            raw_invreject();
-        else if (strDataList[1].toLower() == "invignore")
-            raw_invignore();
-        else if (strDataList[1].toLower() == "modermsg")
-            raw_modermsg();
-        else if (strDataList[1].toLower() == "modernotice")
-            raw_modernotice();
-        else if (strDataList[1].toLower() == "moderate")
-            raw_moderate();
-        else if (strDataList[1].toLower() == "kill")
-            raw_kill();
+        QString strCmd0 = strDataList[0];
+        QString strCmd1 = strDataList[1];
+
+        if (strCmd0 == "PING") raw_ping();
+        else if (strCmd0 == "ERROR") raw_error();
+        else if (strCmd1 == "PONG") raw_pong();
+        else if (strCmd1 == "JOIN") raw_join();
+        else if (strCmd1 == "PART") raw_part();
+        else if (strCmd1 == "QUIT") raw_quit();
+        else if (strCmd1 == "KICK") raw_kick();
+        else if (strCmd1 == "MODE") raw_mode();
+        else if (strCmd1 == "PRIVMSG") raw_privmsg();
+        else if (strCmd1 == "INVITE") raw_invite();
+        else if (strCmd1 == "TOPIC") raw_topic();
+        else if (strCmd1 == "INVREJECT") raw_invreject();
+        else if (strCmd1 == "INVIGNORE") raw_invignore();
+        else if (strCmd1 == "MODERMSG") raw_modermsg();
+        else if (strCmd1 == "MODERNOTICE") raw_modernotice();
+        else if (strCmd1 == "MODERATE") raw_moderate();
+        else if (strCmd1 == "KILL") raw_kill();
         else
             bUnknownRaw1 = true;
 
-        if (strDataList[1].toLower() == "001")
-            raw_001();
-        else if (strDataList[1].toLower() == "002")
-            raw_002();
-        else if (strDataList[1].toLower() == "003")
-            raw_003();
-        else if (strDataList[1].toLower() == "004")
-            raw_004();
-        else if (strDataList[1].toLower() == "005")
-            raw_005();
-        else if (strDataList[1].toLower() == "251")
-            raw_251();
-        else if (strDataList[1].toLower() == "252")
-            raw_252();
-        else if (strDataList[1].toLower() == "253")
-            raw_253();
-        else if (strDataList[1].toLower() == "254")
-            raw_254();
-        else if (strDataList[1].toLower() == "255")
-            raw_255();
-        else if (strDataList[1].toLower() == "256")
-            raw_256();
-        else if (strDataList[1].toLower() == "257")
-            raw_257();
-        else if (strDataList[1].toLower() == "258")
-            raw_258();
-        else if (strDataList[1].toLower() == "259")
-            raw_259();
-        else if (strDataList[1].toLower() == "265")
-            raw_265();
-        else if (strDataList[1].toLower() == "266")
-            raw_266();
-        else if (strDataList[1].toLower() == "271")
-            raw_271();
-        else if (strDataList[1].toLower() == "272")
-            raw_272();
-        else if (strDataList[1].toLower() == "301")
-            raw_301();
-        else if (strDataList[1].toLower() == "302")
-            raw_302();
-        else if (strDataList[1].toLower() == "303")
-            raw_303();
-        else if (strDataList[1].toLower() == "304")
-            raw_304();
-        else if (strDataList[1].toLower() == "305")
-            raw_305();
-        else if (strDataList[1].toLower() == "306")
-            raw_306();
-        else if (strDataList[1].toLower() == "307")
-            raw_307();
-        else if (strDataList[1].toLower() == "311")
-            raw_311();
-        else if (strDataList[1].toLower() == "312")
-            raw_312();
-        else if (strDataList[1].toLower() == "313")
-            raw_313();
-        else if (strDataList[1].toLower() == "314")
-            raw_314();
-        else if (strDataList[1].toLower() == "315")
-            raw_315();
-        else if (strDataList[1].toLower() == "316")
-            raw_316();
-        else if (strDataList[1].toLower() == "317")
-            raw_317();
-        else if (strDataList[1].toLower() == "318")
-            raw_318();
-        else if (strDataList[1].toLower() == "319")
-            raw_319();
-        else if (strDataList[1].toLower() == "332")
-            raw_332();
-        else if (strDataList[1].toLower() == "333")
-            raw_333();
-        else if (strDataList[1].toLower() == "335")
-            raw_335();
-        else if (strDataList[1].toLower() == "341")
-            raw_341();
-        else if (strDataList[1].toLower() == "352")
-            raw_352();
-        else if (strDataList[1].toLower() == "353")
-            raw_353();
-        else if (strDataList[1].toLower() == "355")
-            raw_355();
-        else if (strDataList[1].toLower() == "366")
-            raw_366();
-        else if (strDataList[1].toLower() == "369")
-            raw_369();
-        else if (strDataList[1].toLower() == "371")
-            raw_371();
-        else if (strDataList[1].toLower() == "372")
-            raw_372();
-        else if (strDataList[1].toLower() == "374")
-            raw_374();
-        else if (strDataList[1].toLower() == "375")
-            raw_375();
-        else if (strDataList[1].toLower() == "376")
-            raw_376();
-        else if (strDataList[1].toLower() == "378")
-            raw_378();
-        else if (strDataList[1].toLower() == "391")
-            raw_391();
-        else if (strDataList[1].toLower() == "396")
-            raw_396();
-        else if (strDataList[1].toLower() == "401")
-            raw_401();
-        else if (strDataList[1].toLower() == "402")
-            raw_402();
-        else if (strDataList[1].toLower() == "403")
-            raw_403();
-        else if (strDataList[1].toLower() == "404")
-            raw_404();
-        else if (strDataList[1].toLower() == "405")
-            raw_405();
-        else if (strDataList[1].toLower() == "406")
-            raw_406();
-        else if (strDataList[1].toLower() == "421")
-            raw_421();
-        else if (strDataList[1].toLower() == "432")
-            raw_432();
-        else if (strDataList[1].toLower() == "433")
-            raw_433();
-        else if (strDataList[1].toLower() == "441")
-            raw_441();
-        else if (strDataList[1].toLower() == "442")
-            raw_442();
-        else if (strDataList[1].toLower() == "443")
-            raw_443();
-        else if (strDataList[1].toLower() == "445")
-            raw_445();
-        else if (strDataList[1].toLower() == "446")
-            raw_446();
-        else if (strDataList[1].toLower() == "451")
-            raw_451();
-        else if (strDataList[1].toLower() == "461")
-            raw_461();
-        else if (strDataList[1].toLower() == "462")
-            raw_462();
-        else if (strDataList[1].toLower() == "470")
-            raw_470();
-        else if (strDataList[1].toLower() == "471")
-            raw_471();
-        else if (strDataList[1].toLower() == "473")
-            raw_473();
-        else if (strDataList[1].toLower() == "474")
-            raw_474();
-        else if (strDataList[1].toLower() == "475")
-            raw_475();
-        else if (strDataList[1].toLower() == "481")
-            raw_481();
-        else if (strDataList[1].toLower() == "482")
-            raw_482();
-        else if (strDataList[1].toLower() == "484")
-            raw_484();
-        else if (strDataList[1].toLower() == "491")
-            raw_491();
-        else if (strDataList[1].toLower() == "530")
-            raw_530();
-        else if (strDataList[1].toLower() == "531")
-            raw_531();
-        else if (strDataList[1].toLower() == "600")
-            raw_600();
-        else if (strDataList[1].toLower() == "601")
-            raw_601();
-        else if (strDataList[1].toLower() == "602")
-            raw_602();
-        else if (strDataList[1].toLower() == "604")
-            raw_604();
-        else if (strDataList[1].toLower() == "605")
-            raw_605();
-        else if (strDataList[1].toLower() == "607")
-            raw_607();
-        else if (strDataList[1].toLower() == "666")
-            raw_666();
-        else if (strDataList[1].toLower() == "702")
-            raw_702();
-        else if (strDataList[1].toLower() == "703")
-            raw_703();
-        else if (strDataList[1].toLower() == "704")
-            raw_704();
-        else if (strDataList[1].toLower() == "801")
-            raw_801();
-        else if (strDataList[1].toLower() == "802")
-            raw_802();
-        else if (strDataList[1].toLower() == "807")
-            raw_807();
-        else if (strDataList[1].toLower() == "808")
-            raw_808();
-        else if (strDataList[1].toLower() == "809")
-            raw_809();
-        else if (strDataList[1].toLower() == "811")
-            raw_811();
-        else if (strDataList[1].toLower() == "812")
-            raw_812();
-        else if (strDataList[1].toLower() == "815")
-            raw_815();
-        else if (strDataList[1].toLower() == "817")
-            raw_817();
-        else if (strDataList[1].toLower() == "818")
-            raw_818();
-        else if (strDataList[1].toLower() == "819")
-            raw_819();
-        else if (strDataList[1].toLower() == "820")
-            raw_820();
-        else if (strDataList[1].toLower() == "821")
-            raw_821();
-        else if (strDataList[1].toLower() == "942")
-            raw_942();
-        else if (strDataList[1].toLower() == "950")
-            raw_950();
-        else if (strDataList[1].toLower() == "951")
-            raw_951();
-        else if (strDataList[1].toLower() == "952")
-            raw_952();
-        else
-            bUnknownRaw2 = true;
+        int iCmd1 = strDataList[1].toInt();
+        switch (iCmd1)
+        {
+            case 001: raw_001(); break;
+            case 002: raw_002(); break;
+            case 003: raw_003(); break;
+            case 004: raw_004(); break;
+            case 005: raw_005(); break;
+            case 251: raw_251(); break;
+            case 252: raw_252(); break;
+            case 253: raw_253(); break;
+            case 254: raw_254(); break;
+            case 255: raw_255(); break;
+            case 256: raw_256(); break;
+            case 257: raw_257(); break;
+            case 258: raw_258(); break;
+            case 259: raw_259(); break;
+            case 265: raw_265(); break;
+            case 266: raw_266(); break;
+            case 271: raw_271(); break;
+            case 272: raw_272(); break;
+            case 301: raw_301(); break;
+            case 302: raw_302(); break;
+            case 303: raw_303(); break;
+            case 304: raw_304(); break;
+            case 305: raw_305(); break;
+            case 306: raw_306(); break;
+            case 307: raw_307(); break;
+            case 311: raw_311(); break;
+            case 312: raw_312(); break;
+            case 313: raw_313(); break;
+            case 314: raw_314(); break;
+            case 315: raw_315(); break;
+            case 316: raw_316(); break;
+            case 317: raw_317(); break;
+            case 318: raw_318(); break;
+            case 319: raw_319(); break;
+            case 332: raw_332(); break;
+            case 333: raw_333(); break;
+            case 335: raw_335(); break;
+            case 341: raw_341(); break;
+            case 352: raw_352(); break;
+            case 353: raw_353(); break;
+            case 355: raw_355(); break;
+            case 366: raw_366(); break;
+            case 369: raw_369(); break;
+            case 371: raw_371(); break;
+            case 372: raw_372(); break;
+            case 374: raw_374(); break;
+            case 375: raw_375(); break;
+            case 376: raw_376(); break;
+            case 378: raw_378(); break;
+            case 391: raw_391(); break;
+            case 396: raw_396(); break;
+            case 401: raw_401(); break;
+            case 402: raw_402(); break;
+            case 403: raw_403(); break;
+            case 404: raw_404(); break;
+            case 405: raw_405(); break;
+            case 406: raw_406(); break;
+            case 421: raw_421(); break;
+            case 432: raw_432(); break;
+            case 433: raw_433(); break;
+            case 441: raw_441(); break;
+            case 442: raw_442(); break;
+            case 443: raw_443(); break;
+            case 445: raw_445(); break;
+            case 446: raw_446(); break;
+            case 451: raw_451(); break;
+            case 461: raw_461(); break;
+            case 462: raw_462(); break;
+            case 470: raw_470(); break;
+            case 471: raw_471(); break;
+            case 473: raw_473(); break;
+            case 474: raw_474(); break;
+            case 475: raw_475(); break;
+            case 481: raw_481(); break;
+            case 482: raw_482(); break;
+            case 484: raw_484(); break;
+            case 491: raw_491(); break;
+            case 530: raw_530(); break;
+            case 531: raw_531(); break;
+            case 600: raw_600(); break;
+            case 601: raw_601(); break;
+            case 602: raw_602(); break;
+            case 604: raw_604(); break;
+            case 605: raw_605(); break;
+            case 607: raw_607(); break;
+            case 666: raw_666(); break;
+            case 702: raw_702(); break;
+            case 703: raw_703(); break;
+            case 704: raw_704(); break;
+            case 801: raw_801(); break;
+            case 802: raw_802(); break;
+            case 807: raw_807(); break;
+            case 808: raw_808(); break;
+            case 809: raw_809(); break;
+            case 811: raw_811(); break;
+            case 812: raw_812(); break;
+            case 815: raw_815(); break;
+            case 817: raw_817(); break;
+            case 818: raw_818(); break;
+            case 819: raw_819(); break;
+            case 820: raw_820(); break;
+            case 821: raw_821(); break;
+            case 942: raw_942(); break;
+            case 950: raw_950(); break;
+            case 951: raw_951(); break;
+            case 952: raw_952(); break;
+            default:
+                bUnknownRaw2 = true;
+                break;
+        }
 
         if ((strDataList[1].toLower() == "notice") && (!strDataList.value(3).isEmpty()))
         {
-            if (strDataList[3].toLower() == ":100")
-                raw_100n();
-            else if (strDataList[3].toLower() == ":109")
-                raw_109n();
-            else if (strDataList[3].toLower() == ":111")
-                raw_111n();
-            else if (strDataList[3].toLower() == ":112")
-                raw_112n();
-            else if (strDataList[3].toLower() == ":121")
-                raw_121n();
-            else if (strDataList[3].toLower() == ":122")
-                raw_122n();
-            else if (strDataList[3].toLower() == ":123")
-                raw_123n();
-            else if (strDataList[3].toLower() == ":131")
-                raw_131n();
-            else if (strDataList[3].toLower() == ":132")
-                raw_132n();
-            else if (strDataList[3].toLower() == ":133")
-                raw_133n();
-            else if (strDataList[3].toLower() == ":141")
-                raw_141n();
-            else if (strDataList[3].toLower() == ":142")
-                raw_142n();
-            else if (strDataList[3].toLower() == ":151")
-                raw_151n();
-            else if (strDataList[3].toLower() == ":152")
-                raw_152n();
-            else if (strDataList[3].toLower() == ":160")
-                raw_160n();
-            else if (strDataList[3].toLower() == ":161")
-                raw_161n();
-            else if (strDataList[3].toLower() == ":162")
-                raw_162n();
-            else if (strDataList[3].toLower() == ":163")
-                raw_163n();
-            else if (strDataList[3].toLower() == ":164")
-                raw_164n();
-            else if (strDataList[3].toLower() == ":165")
-                raw_165n();
-            else if (strDataList[3].toLower() == ":170")
-                raw_170n();
-            else if (strDataList[3].toLower() == ":171")
-                raw_171n();
-            else if (strDataList[3].toLower() == ":175")
-                raw_175n();
-            else if (strDataList[3].toLower() == ":176")
-                raw_176n();
-            else if (strDataList[3].toLower() == ":210")
-                raw_210n();
-            else if (strDataList[3].toLower() == ":211")
-                raw_211n();
-            else if (strDataList[3].toLower() == ":220")
-                raw_220n();
-            else if (strDataList[3].toLower() == ":221")
-                raw_221n();
-            else if (strDataList[3].toLower() == ":230")
-                raw_230n();
-            else if (strDataList[3].toLower() == ":231")
-                raw_231n();
-            else if (strDataList[3].toLower() == ":240")
-                raw_240n();
-            else if (strDataList[3].toLower() == ":241")
-                raw_241n();
-            else if (strDataList[3].toLower() == ":250")
-                raw_250n();
-            else if (strDataList[3].toLower() == ":251")
-                raw_251n();
-            else if (strDataList[3].toLower() == ":252")
-                raw_252n();
-            else if (strDataList[3].toLower() == ":253")
-                raw_253n();
-            else if (strDataList[3].toLower() == ":254")
-                raw_254n();
-            else if (strDataList[3].toLower() == ":255")
-                raw_255n();
-            else if (strDataList[3].toLower() == ":256")
-                raw_256n();
-            else if (strDataList[3].toLower() == ":257")
-                raw_257n();
-            else if (strDataList[3].toLower() == ":258")
-                raw_258n();
-            else if (strDataList[3].toLower() == ":259")
-                raw_259n();
-            else if (strDataList[3].toLower() == ":260")
-                raw_260n();
-            else if (strDataList[3].toLower() == ":261")
-                raw_261n();
-            else if (strDataList[3].toLower() == ":262")
-                raw_262n();
-            else if (strDataList[3].toLower() == ":263")
-                raw_263n();
-            else if (strDataList[3].toLower() == ":400")
-                raw_400n();
-            else if (strDataList[3].toLower() == ":401")
-                raw_401n();
-            else if (strDataList[3].toLower() == ":402")
-                raw_402n();
-            else if (strDataList[3].toLower() == ":403")
-                raw_403n();
-            else if (strDataList[3].toLower() == ":404")
-                raw_404n();
-            else if (strDataList[3].toLower() == ":406")
-                raw_406n();
-            else if (strDataList[3].toLower() == ":407")
-                raw_407n();
-            else if (strDataList[3].toLower() == ":408")
-                raw_408n();
-            else if (strDataList[3].toLower() == ":409")
-                raw_409n();
-            else if (strDataList[3].toLower() == ":412")
-                raw_412n();
-            else if (strDataList[3].toLower() == ":413")
-                raw_413n();
-            else if (strDataList[3].toLower() == ":414")
-                raw_414n();
-            else if (strDataList[3].toLower() == ":415")
-                raw_415n();
-            else if (strDataList[3].toLower() == ":416")
-                raw_416n();
-            else if (strDataList[3].toLower() == ":420")
-                raw_420n();
-            else if (strDataList[3].toLower() == ":421")
-                raw_421n();
-            else if (strDataList[3].toLower() == ":430")
-                raw_430n();
-            else if (strDataList[3].toLower() == ":431")
-                raw_431n();
-            else if (strDataList[3].toLower() == ":440")
-                raw_440n();
-            else if (strDataList[3].toLower() == ":441")
-                raw_441n();
-            else if (strDataList[3].toLower() == ":452")
-                raw_452n();
-            else if (strDataList[3].toLower() == ":454")
-                raw_454n();
-            else if (strDataList[3].toLower() == ":455")
-                raw_455n();
-            else if (strDataList[3].toLower() == ":456")
-                raw_456n();
-            else if (strDataList[3].toLower() == ":458")
-                raw_458n();
-            else if (strDataList[3].toLower() == ":459")
-                raw_459n();
-            else if (strDataList[3].toLower() == ":460")
-                raw_460n();
-            else if (strDataList[3].toLower() == ":461")
-                raw_461n();
-            else if (strDataList[3].toLower() == ":463")
-                raw_463n();
-            else if (strDataList[3].toLower() == ":464")
-                raw_464n();
-            else if (strDataList[3].toLower() == ":467")
-                raw_467n();
-            else if (strDataList[3].toLower() == ":468")
-                raw_468n();
-            else if (strDataList[3].toLower() == ":469")
-                raw_469n();
-            else if (strDataList[3].toLower() == ":472")
-                raw_472n();
-            else if ((strDataList[3].length() != 4) || (strDataList[3].toLower() == ":***"))
+            int iCmd3 = strDataList[3].mid(1).toInt();
+            switch (iCmd3)
+            {
+                case 100: raw_100n(); break;
+                case 109: raw_109n(); break;
+                case 111: raw_111n(); break;
+                case 112: raw_112n(); break;
+                case 121: raw_121n(); break;
+                case 122: raw_122n(); break;
+                case 123: raw_123n(); break;
+                case 131: raw_131n(); break;
+                case 132: raw_132n(); break;
+                case 133: raw_133n(); break;
+                case 141: raw_141n(); break;
+                case 142: raw_142n(); break;
+                case 151: raw_151n(); break;
+                case 152: raw_152n(); break;
+                case 160: raw_160n(); break;
+                case 161: raw_161n(); break;
+                case 162: raw_162n(); break;
+                case 163: raw_163n(); break;
+                case 164: raw_164n(); break;
+                case 165: raw_165n(); break;
+                case 170: raw_170n(); break;
+                case 171: raw_171n(); break;
+                case 175: raw_175n(); break;
+                case 176: raw_176n(); break;
+                case 210: raw_210n(); break;
+                case 211: raw_211n(); break;
+                case 220: raw_220n(); break;
+                case 221: raw_221n(); break;
+                case 230: raw_230n(); break;
+                case 231: raw_231n(); break;
+                case 240: raw_240n(); break;
+                case 241: raw_241n(); break;
+                case 250: raw_250n(); break;
+                case 251: raw_251n(); break;
+                case 252: raw_252n(); break;
+                case 253: raw_253n(); break;
+                case 254: raw_254n(); break;
+                case 255: raw_255n(); break;
+                case 256: raw_256n(); break;
+                case 257: raw_257n(); break;
+                case 258: raw_258n(); break;
+                case 259: raw_259n(); break;
+                case 260: raw_260n(); break;
+                case 261: raw_261n(); break;
+                case 262: raw_262n(); break;
+                case 263: raw_263n(); break;
+                case 400: raw_400n(); break;
+                case 401: raw_401n(); break;
+                case 402: raw_402n(); break;
+                case 403: raw_403n(); break;
+                case 404: raw_404n(); break;
+                case 406: raw_406n(); break;
+                case 407: raw_407n(); break;
+                case 408: raw_408n(); break;
+                case 409: raw_409n(); break;
+                case 412: raw_412n(); break;
+                case 413: raw_413n(); break;
+                case 414: raw_414n(); break;
+                case 415: raw_415n(); break;
+                case 416: raw_416n(); break;
+                case 420: raw_420n(); break;
+                case 421: raw_421n(); break;
+                case 430: raw_430n(); break;
+                case 431: raw_431n(); break;
+                case 440: raw_440n(); break;
+                case 441: raw_441n(); break;
+                case 452: raw_452n(); break;
+                case 454: raw_454n(); break;
+                case 455: raw_455n(); break;
+                case 456: raw_456n(); break;
+                case 458: raw_458n(); break;
+                case 459: raw_459n(); break;
+                case 460: raw_460n(); break;
+                case 461: raw_461n(); break;
+                case 463: raw_463n(); break;
+                case 464: raw_464n(); break;
+                case 467: raw_467n(); break;
+                case 468: raw_468n(); break;
+                case 469: raw_469n(); break;
+                case 472: raw_472n(); break;
+                default:
+                    bUnknownRaw3 = true;
+            }
+
+            if ((strDataList[3].length() != 4) || (strDataList[3].toLower() == ":***"))
+            {
                 raw_notice();
-            else
-                bUnknownRaw3 = true;
+                bUnknownRaw3 = false;
+            }
         }
         else
             bUnknownRaw3 = true;
@@ -1372,7 +1183,7 @@ void OnetKernel::raw_004()
 // :cf1f4.onet 005 Merovingian WATCH=200 INVIGNORE=100 USERIP ESILENCE SILENCE=100 NAMESX :are supported by this server
 void OnetKernel::raw_005()
 {
-    QMap<QString,QString> mKeyValue;
+    QHash<QString,QString> mKeyValue;
 
     for (int i = 0; i < strDataList.size(); i++)
     {
@@ -1692,7 +1503,7 @@ void OnetKernel::raw_161n()
     if (strDataList.size() < 5) return;
 
     QString strChannel = strDataList[4];
-    QMap<QString,QString> mKeyValue;
+    QHash<QString,QString> mKeyValue;
 
     for (int i = 5; i < strDataList.size(); i++)
     {
@@ -1707,7 +1518,7 @@ void OnetKernel::raw_161n()
     // set data
     if (Core::instance()->strChannelSettings == strChannel)
     {
-        QMapIterator <QString, QString> i(mKeyValue);
+        QHashIterator <QString, QString> i(mKeyValue);
         while (i.hasNext())
         {
             i.next();
@@ -1843,7 +1654,7 @@ void OnetKernel::raw_175n()
 
     QString strChannel = strDataList[4];
 
-    QMap<QString,QString> mKeyValue;
+    QHash<QString,QString> mKeyValue;
     for (int i = 5; i < strDataList.size(); i++)
     {
         QString strLine = strDataList[i];
@@ -1856,7 +1667,7 @@ void OnetKernel::raw_175n()
 
     if (Core::instance()->strChannelSettings == strChannel)
     {
-        QMapIterator <QString, QString> i(mKeyValue);
+        QHashIterator <QString, QString> i(mKeyValue);
         while (i.hasNext())
         {
             i.next();

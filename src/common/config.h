@@ -22,7 +22,7 @@
 #define CONFIG_H
 
 class QDomElement;
-#include <QMap>
+#include <QHash>
 #include <QDomDocument>
 #include <QObject>
 
@@ -50,10 +50,10 @@ public:
      */
     void setValue(QString, QString);
     /**
-     * Read config to QMap
-     * @return QMap all keys,values
+     * Read config to QHash
+     * @return QHash all keys,values
      */
-    QMap<QString,QString> readConfig();
+    QHash<QString,QString> readConfig();
 
 private:
     QString strConfigFile;
@@ -64,7 +64,7 @@ private:
     void removeValue(QString);
     void fixConfig();
     void createNewConfig();
-    QMap<QString,QString> getDefaultValues();
+    QHash<QString,QString> getDefaultValues();
     void addConfigValue(QDomDocument *, QDomElement *, QString, QString);
     void save();
 };

@@ -67,7 +67,7 @@ void DlgFriends::refresh()
     ui.listWidget_online->clear();
     ui.listWidget_offline->clear();
 
-    QMapIterator <QString, bool> i(Core::instance()->mFriends);
+    QHashIterator <QString, bool> i(Core::instance()->mFriends);
     while (i.hasNext())
     {
         i.next();

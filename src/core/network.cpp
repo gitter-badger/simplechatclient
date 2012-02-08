@@ -304,10 +304,9 @@ void Network::write(QString strData)
 {
     if ((socket->isValid()) && (socket->state() == QAbstractSocket::ConnectedState) && (socket->isWritable()))
     {
-#ifdef Q_WS_X11
         if (Core::instance()->settings.value("debug") == "true")
             qDebug() << "-> " << strData;
-#endif
+
         strData += "\r\n";
 
         if (socket->write(strData.toAscii()) == -1)

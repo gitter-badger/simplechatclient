@@ -55,30 +55,30 @@ void DlgWebcam::createSignals()
 {
     if (bMini)
     {
-        connect(pWebcamEngine, SIGNAL(updateImage(QByteArray)), pWebcamMini, SLOT(updateImage(QByteArray)));
-        connect(pWebcamEngine, SIGNAL(updateText(QString)), pWebcamMini, SLOT(updateText(QString)));
-        connect(pWebcamEngine, SIGNAL(userError(QString)), this, SLOT(userError(QString)));
-        connect(pWebcamEngine, SIGNAL(error(QString)), pWebcamMini, SLOT(error(QString)));
+        connect(pWebcamEngine, SIGNAL(updateImage(const QByteArray&)), pWebcamMini, SLOT(updateImage(const QByteArray&)));
+        connect(pWebcamEngine, SIGNAL(updateText(const QString&)), pWebcamMini, SLOT(updateText(const QString&)));
+        connect(pWebcamEngine, SIGNAL(userError(const QString&)), this, SLOT(userError(const QString&)));
+        connect(pWebcamEngine, SIGNAL(error(const QString&)), pWebcamMini, SLOT(error(const QString&)));
 
         connect(pWebcamMini, SIGNAL(closeCam()), this, SLOT(closeCam()));
     }
     else
     {
-        connect(pWebcamEngine, SIGNAL(updateImage(QByteArray)), pWebcamStandard, SLOT(updateImage(QByteArray)));
-        connect(pWebcamEngine, SIGNAL(updateText(QString)), pWebcamStandard, SLOT(updateText(QString)));
+        connect(pWebcamEngine, SIGNAL(updateImage(const QByteArray&)), pWebcamStandard, SLOT(updateImage(const QByteArray&)));
+        connect(pWebcamEngine, SIGNAL(updateText(const QString&)), pWebcamStandard, SLOT(updateText(const QString&)));
         connect(pWebcamEngine, SIGNAL(updateRank(int)), pWebcamStandard, SLOT(updateRank(int)));
-        connect(pWebcamEngine, SIGNAL(updateStatus(QString)), pWebcamStandard, SLOT(updateStatus(QString)));
+        connect(pWebcamEngine, SIGNAL(updateStatus(const QString&)), pWebcamStandard, SLOT(updateStatus(const QString&)));
         connect(pWebcamEngine, SIGNAL(voteOk()), pWebcamStandard, SLOT(voteOk()));
-        connect(pWebcamEngine, SIGNAL(userError(QString)), pWebcamStandard, SLOT(userError(QString)));
-        connect(pWebcamEngine, SIGNAL(error(QString)), pWebcamStandard, SLOT(error(QString)));
-        connect(pWebcamEngine, SIGNAL(addUser(QString,int,QString)), pWebcamStandard, SLOT(addUser(QString,int,QString)));
-        connect(pWebcamEngine, SIGNAL(updateUser(QString,int,QString)), pWebcamStandard, SLOT(updateUser(QString,int,QString)));
-        connect(pWebcamEngine, SIGNAL(removeUser(QString)), pWebcamStandard, SLOT(removeUser(QString)));
+        connect(pWebcamEngine, SIGNAL(userError(const QString&)), pWebcamStandard, SLOT(userError(const QString&)));
+        connect(pWebcamEngine, SIGNAL(error(const QString&)), pWebcamStandard, SLOT(error(const QString&)));
+        connect(pWebcamEngine, SIGNAL(addUser(const QString&,int,const QString&)), pWebcamStandard, SLOT(addUser(const QString&,int,const QString&)));
+        connect(pWebcamEngine, SIGNAL(updateUser(const QString&,int,const QString&)), pWebcamStandard, SLOT(updateUser(const QString&,int,const QString&)));
+        connect(pWebcamEngine, SIGNAL(removeUser(const QString&)), pWebcamStandard, SLOT(removeUser(const QString&)));
         connect(pWebcamEngine, SIGNAL(clearUsers()), pWebcamStandard, SLOT(clearUsers()));
 
         connect(pWebcamStandard, SIGNAL(closeCam()), this, SLOT(closeCam()));
-        connect(pWebcamStandard, SIGNAL(networkSend(QString)), pWebcamEngine, SLOT(networkSend(QString)));
-        connect(pWebcamStandard, SIGNAL(setUser(QString)), pWebcamEngine, SLOT(setUser(QString)));
+        connect(pWebcamStandard, SIGNAL(networkSend(const QString&)), pWebcamEngine, SLOT(networkSend(const QString&)));
+        connect(pWebcamStandard, SIGNAL(setUser(const QString&)), pWebcamEngine, SLOT(setUser(const QString&)));
     }
 }
 
@@ -88,7 +88,7 @@ void DlgWebcam::closeCam()
     this->deleteLater();
 }
 
-void DlgWebcam::userError(QString s)
+void DlgWebcam::userError(const QString &s)
 {
     /* mini */
     pWebcamMini->updateText(s);

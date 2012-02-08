@@ -136,7 +136,7 @@ void DlgRegisterNick::registerNick()
     QList<QNetworkCookie> cookieList;
     QNetworkCookie cookie;
 
-    QMapIterator <QString, QString> i(mCookies);
+    QHashIterator <QString, QString> i(mCookies);
     while (i.hasNext())
     {
          i.next();

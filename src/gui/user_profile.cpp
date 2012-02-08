@@ -200,7 +200,7 @@ void DlgUserProfile::refreshUserInfo()
         return;
     }
 
-    QMapIterator<QString, QString> i(Core::instance()->mUserProfile);
+    QHashIterator<QString, QString> i(Core::instance()->mUserProfile);
     while (i.hasNext())
     {
         i.next();

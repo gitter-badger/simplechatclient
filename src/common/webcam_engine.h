@@ -30,13 +30,13 @@ class WebcamEngine : public QObject
 {
     Q_OBJECT
 public:
-    WebcamEngine(QString, bool);
+    WebcamEngine(const QString&, bool);
     virtual ~WebcamEngine();
     void closeEngine();
 
 public slots:
-    void networkSend(QString);
-    void setUser(QString);
+    void networkSend(const QString &);
+    void setUser(const QString &);
 
 private:
     QString strNick;
@@ -44,44 +44,44 @@ private:
     WebcamNetwork *pWebcamNetwork;
 
     QTextCodec *codec_cp1250;
-    QString cp2unicode(const QByteArray &);
+    QString cp2unicode(const QByteArray&);
 
     void createSignals();
     int iCamCmd;
     // data
-    void raw_202b(QByteArray&);
-    void raw_250b(QByteArray&);
-    void raw_251b(QByteArray&);
-    void raw_252b(QByteArray&);
-    void raw_254b(QByteArray&);
-    void raw_403b(QByteArray&);
+    void raw_202b(const QByteArray&);
+    void raw_250b(const QByteArray&);
+    void raw_251b(const QByteArray&);
+    void raw_252b(const QByteArray&);
+    void raw_254b(const QByteArray&);
+    void raw_403b(const QByteArray&);
     // text
     void raw_200();
-    void raw_202(QStringList&);
-    void raw_211(QStringList&);
+    void raw_202(const QStringList&);
+    void raw_211(const QStringList&);
     void raw_221();
     void raw_231();
     void raw_232();
     void raw_233();
-    void raw_250(QStringList&);
-    void raw_251(QStringList&);
-    void raw_252(QStringList&);
-    void raw_253(QStringList&);
-    void raw_254(QStringList&);
+    void raw_250(const QStringList&);
+    void raw_251(const QStringList&);
+    void raw_252(const QStringList&);
+    void raw_253(const QStringList&);
+    void raw_254(const QStringList&);
     void raw_264();
     void raw_261();
     void raw_262();
     void raw_263();
     void raw_267();
     void raw_268();
-    void raw_403(QStringList&);
-    void raw_405(QStringList&);
+    void raw_403(const QStringList&);
+    void raw_405(const QStringList&);
     void raw_406();
-    void raw_408(QStringList&);
+    void raw_408(const QStringList&);
     void raw_410();
     void raw_411();
-    void raw_412(QStringList&);
-    void raw_413(QStringList&);
+    void raw_412(const QStringList&);
+    void raw_413(const QStringList&);
     void raw_418();
     void raw_501();
     void raw_502();
@@ -93,21 +93,21 @@ private:
 private slots:
     void connected();
     void disconnected();
-    void dataKernel(QByteArray);
-    void textKernel(QString);
-    void slotError(QString);
+    void dataKernel(const QByteArray&);
+    void textKernel(const QString&);
+    void slotError(const QString&);
 
 signals:
-    void updateImage(QByteArray);
-    void updateText(QString);
+    void updateImage(const QByteArray&);
+    void updateText(const QString&);
     void updateRank(int);
-    void updateStatus(QString);
-    void userError(QString);
+    void updateStatus(const QString&);
+    void userError(const QString&);
     void voteOk();
-    void error(QString);
-    void addUser(QString,int,QString);
-    void updateUser(QString,int,QString);
-    void removeUser(QString);
+    void error(const QString&);
+    void addUser(const QString&,int,const QString&);
+    void updateUser(const QString&,int,const QString&);
+    void removeUser(const QString&);
     void clearUsers();
 };
 

@@ -155,7 +155,7 @@ void DlgMyProfile::avatarFinished(QNetworkReply *pReply)
 
 void DlgMyProfile::refresh()
 {
-    QMapIterator <QString, QString> i(Core::instance()->mMyProfile);
+    QHashIterator <QString, QString> i(Core::instance()->mMyProfile);
     while (i.hasNext())
     {
         i.next();

@@ -222,7 +222,7 @@ void DlgChannelSettings::refreshChannelInfo()
         return;
     }
 
-    QMapIterator<QString, QString> iSettingsInfo(Core::instance()->mChannelSettingsInfo);
+    QHashIterator<QString, QString> iSettingsInfo(Core::instance()->mChannelSettingsInfo);
     while (iSettingsInfo.hasNext())
     {
         iSettingsInfo.next();
@@ -431,7 +431,7 @@ void DlgChannelSettings::refreshChannelInfo()
         }
     }
 
-    QMapIterator<QString, QString> iSettingsPermissions(Core::instance()->mChannelSettingsPermissions);
+    QHashIterator<QString, QString> iSettingsPermissions(Core::instance()->mChannelSettingsPermissions);
     while (iSettingsPermissions.hasNext())
     {
         iSettingsPermissions.next();
@@ -477,7 +477,7 @@ void DlgChannelSettings::refreshChannelStats()
         return;
     }
 
-    QMapIterator<QString, QString> i(Core::instance()->mChannelSettingsStats);
+    QHashIterator<QString, QString> i(Core::instance()->mChannelSettingsStats);
     while (i.hasNext())
     {
         i.next();

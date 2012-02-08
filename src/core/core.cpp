@@ -132,7 +132,7 @@ void Core::createSettings()
     settings["debug"] = strDebug;
 
     // default settings
-    settings["version"] = "1.1.4.1162";
+    settings["version"] = "1.1.4.1163";
     settings["available_version"] = "";
     settings["logged"] = "false";
     settings["busy"] = "false";
@@ -215,9 +215,9 @@ void Core::convertOldConfig()
     Config *pConfig = new Config();
 
     // change on off -> true false
-    QMap<QString,QString> mConfigValues = pConfig->readConfig();
+    QHash<QString,QString> mConfigValues = pConfig->readConfig();
 
-    QMapIterator <QString, QString> i(mConfigValues);
+    QHashIterator <QString, QString> i(mConfigValues);
     while (i.hasNext())
     {
         i.next();
@@ -235,11 +235,11 @@ void Core::configValues()
 {
     // config values
     Config *pConfig = new Config(false);
-    QMap<QString,QString> mConfigValues = pConfig->readConfig();
+    QHash<QString,QString> mConfigValues = pConfig->readConfig();
     delete pConfig;
 
     // set settings
-    QMapIterator <QString, QString> i(mConfigValues);
+    QHashIterator <QString, QString> i(mConfigValues);
     while (i.hasNext())
     {
         i.next();
@@ -251,11 +251,11 @@ void Core::configProfileValues()
 {
     // config profile values
     Config *pConfigProfile = new Config();
-    QMap<QString,QString> mConfigProfileValues = pConfigProfile->readConfig();
+    QHash<QString,QString> mConfigProfileValues = pConfigProfile->readConfig();
     delete pConfigProfile;
 
     // set profile settings
-    QMapIterator <QString, QString> ip(mConfigProfileValues);
+    QHashIterator <QString, QString> ip(mConfigProfileValues);
     while (ip.hasNext())
     {
         ip.next();

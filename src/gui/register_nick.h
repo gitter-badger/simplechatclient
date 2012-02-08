@@ -48,7 +48,7 @@ private:
     DlgProfileAdd *pDlgProfileAdd;
     QNetworkAccessManager *accessManager;
     QNetworkCookieJar *cookieJar;
-    QMap<QString,QString> mCookies;
+    QHash<QString,QString> mCookies;
 
     void createGui();
     void createSignals();

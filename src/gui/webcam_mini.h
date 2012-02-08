@@ -31,9 +31,9 @@ public:
     DlgWebcamMini(QString);
 
 public slots:
-    void updateImage(QByteArray);
-    void updateText(QString);
-    void error(QString);
+    void updateImage(const QByteArray&);
+    void updateText(const QString&);
+    void error(const QString&);
 
 private:
     Ui::uiWebcamMini ui;

@@ -70,7 +70,7 @@ private:
     // params
     TabManager *pTabM;
     // other
-    QMap<QString, TabWidget*> tw;
+    QHash<QString, TabWidget*> tw;
 
     void logOpened(QString);
     void logClosed(QString);

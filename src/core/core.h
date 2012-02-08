@@ -86,12 +86,12 @@ public:
     // remove dir
     bool removeDir(const QString &);
 
-    QMap<QString, bool> mFriends;
+    QHash<QString, bool> mFriends;
     QList<QString> lIgnore;
     QList<QString> lChannelFavourites;
     QList<ChannelList> lChannelList;
-    QMap<QString, QString> mMyStats;
-    QMap<QString, QString> mMyProfile;
+    QHash<QString, QString> mMyStats;
+    QHash<QString, QString> mMyProfile;
     QList<QString> lChannelHomes;
     QAction *lagAct;
     QList<QString> lAwaylog;
@@ -99,7 +99,7 @@ public:
     QAction *awayAct;
     // channels
     QList<QString> lOpenChannels;
-    QMap<QString, QByteArray> mChannelAvatar;
+    QHash<QString, QByteArray> mChannelAvatar;
     // offline
     QAction *offlineMsgAct;
     QList<OfflineMsg> lOfflineMsg;
@@ -107,26 +107,26 @@ public:
     // kamerzysta socket
     QTcpSocket *kamerzystaSocket;
     // settings
-    QMap<QString,QString> settings;
+    QHash<QString,QString> settings;
     // network
     Network *pNetwork;
     // auto-away
     QTimer *autoAwayTimer;
     // user profile
     QString strUserProfile;
-    QMap<QString,QString> mUserProfile;
+    QHash<QString,QString> mUserProfile;
     bool bUserProfile;
     // channel settings
     QString strChannelSettings;
-    QMap<QString,QString> mChannelSettingsInfo;
-    QMultiMap<QString,QString> mChannelSettingsPermissions;
+    QHash<QString,QString> mChannelSettingsInfo;
+    QMultiHash<QString,QString> mChannelSettingsPermissions;
     bool bChannelSettingsInfo;
-    QMap<QString,QString> mChannelSettingsStats;
+    QHash<QString,QString> mChannelSettingsStats;
     bool bChannelSettingsStats;
     // moderation
     QMultiHash<QString,ModerateMsg> mModerateMessages;
     // priv
-    QMap<QString,QString> mPrivNames;
+    QHash<QString,QString> mPrivNames;
     // empty user avatar
     QString strEmptyUserAvatarPath;
 

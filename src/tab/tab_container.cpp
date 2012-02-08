@@ -33,7 +33,7 @@ TabContainer::TabContainer(TabManager *_pTabM) : pTabM(_pTabM)
 
 TabContainer::~TabContainer()
 {
-    QMapIterator<QString, TabWidget*> i(tw);
+    QHashIterator<QString, TabWidget*> i(tw);
     while (i.hasNext())
     {
         i.next();
@@ -166,7 +166,7 @@ void TabContainer::partTab(int index)
 
 void TabContainer::refreshColors()
 {
-    QMapIterator<QString, TabWidget*> i(tw);
+    QHashIterator<QString, TabWidget*> i(tw);
     while (i.hasNext())
     {
         i.next();
@@ -183,7 +183,7 @@ void TabContainer::refreshColors()
 
 void TabContainer::refreshCSS()
 {
-    QMapIterator<QString, TabWidget*> i(tw);
+    QHashIterator<QString, TabWidget*> i(tw);
     while (i.hasNext())
     {
         i.next();
@@ -238,7 +238,7 @@ void TabContainer::showMessage(QString strChannel, QString strData, MessageCateg
 
 void TabContainer::showMessageAll(QString strData, MessageCategory eMessageCategory)
 {
-    QMapIterator<QString, TabWidget*> i(tw);
+    QHashIterator<QString, TabWidget*> i(tw);
     while (i.hasNext())
     {
         i.next();
@@ -355,7 +355,7 @@ void TabContainer::delUser(QString strChannel, QString strNick)
 
 void TabContainer::quitUser(QString strNick, QString strDisplay)
 {
-    QMapIterator<QString, TabWidget*> i(tw);
+    QHashIterator<QString, TabWidget*> i(tw);
     while (i.hasNext())
     {
         i.next();
@@ -400,7 +400,7 @@ void TabContainer::changeFlag(QString strNick, QString strChannel, QString strFl
 
 void TabContainer::changeFlag(QString strNick, QString strFlag)
 {
-    QMapIterator<QString, TabWidget*> i(tw);
+    QHashIterator<QString, TabWidget*> i(tw);
     while (i.hasNext())
     {
         i.next();
@@ -419,7 +419,7 @@ void TabContainer::nicklistRefresh(QString strChannel)
 
 void TabContainer::clearAllNicklist()
 {
-    QMapIterator<QString, TabWidget*> i(tw);
+    QHashIterator<QString, TabWidget*> i(tw);
     while (i.hasNext())
     {
         i.next();
@@ -432,7 +432,7 @@ void TabContainer::clearAllNicklist()
 
 void TabContainer::setUserAvatarPath(QString strNick, QString strValue)
 {
-    QMapIterator<QString, TabWidget*> i(tw);
+    QHashIterator<QString, TabWidget*> i(tw);
     while (i.hasNext())
     {
         i.next();
@@ -445,7 +445,7 @@ void TabContainer::setUserAvatarPath(QString strNick, QString strValue)
 
 QString TabContainer::getUserAvatarPath(QString strNick)
 {
-    QMapIterator<QString, TabWidget*> i(tw);
+    QHashIterator<QString, TabWidget*> i(tw);
     while (i.hasNext())
     {
         i.next();
@@ -485,7 +485,7 @@ QList<QString> TabContainer::getUserList(QString strChannel)
 
 void TabContainer::resizeMainWindow(QSize s)
 {
-    QMapIterator<QString, TabWidget*> i(tw);
+    QHashIterator<QString, TabWidget*> i(tw);
     while (i.hasNext())
     {
         i.next();
