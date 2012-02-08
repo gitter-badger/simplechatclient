@@ -20,12 +20,16 @@
 
 #include <QDateTime>
 #include <QStringList>
+#include <QTextCodec>
+
 #include "core.h"
 #include "webcam_network.h"
 #include "webcam_engine.h"
 
 WebcamEngine::WebcamEngine(QString _strNick, bool _bMini) : strNick(_strNick), bMini(_bMini)
 {
+    codec_cp1250 = QTextCodec::codecForName("CP1250");
+
     pWebcamNetwork = new WebcamNetwork();
 
     createSignals();
@@ -248,14 +252,13 @@ SETSTATUS //panda
 */
 void WebcamEngine::raw_252b(QByteArray &data)
 {
-    QString strStatus = data;
-    if (strStatus.left(9) == "SETSTATUS")
+    if (data.indexOf("SETSTATUS ") == 0)
     {
+        QString strStatus = cp2unicode(data.mid(10));
 #ifdef Q_WS_X11
         if (Core::instance()->settings.value("debug") == "true")
-            qDebug() << "CAM <- " << strStatus;
+            qDebug() << "CAM <- SETSTATUS " << strStatus;
 #endif
-        strStatus.remove("SETSTATUS ");
         emit updateStatus(strStatus);
     }
 }
@@ -748,4 +751,9 @@ void WebcamEngine::raw_520()
 {
     emit error(tr("Invalid authorization key"));
     pWebcamNetwork->networkDisconnect();
+}
+
+QString WebcamEngine::cp2unicode(const QByteArray &buf)
+{
+    return codec_cp1250->toUnicode(buf);
 }

@@ -21,8 +21,10 @@
 #ifndef WEBCAM_ENGINE_H
 #define WEBCAM_ENGINE_H
 
-class WebcamNetwork;
 #include <QObject>
+#include <QTextCodec>
+
+class WebcamNetwork;
 
 class WebcamEngine : public QObject
 {
@@ -40,6 +42,9 @@ private:
     QString strNick;
     bool bMini;
     WebcamNetwork *pWebcamNetwork;
+
+    QTextCodec *codec_cp1250;
+    QString cp2unicode(const QByteArray &);
 
     void createSignals();
     int iCamCmd;
