@@ -766,15 +766,7 @@ void MainWindow::changeEvent(QEvent *event)
 
     if (event->type() == QEvent::WindowStateChange)
     {
-        QWindowStateChangeEvent *e = (QWindowStateChangeEvent*)event;
-        // make sure we only do this for minimize events
-        if ((e->oldState() != Qt::WindowMinimized) && isMinimized())
-        {
-            if (Core::instance()->settings["minimize_to_tray"] == "true")
-            {
-                QTimer::singleShot(0, this, SLOT(hide()));
-                event->ignore();
-            }
-        }
+        if (isMinimized() && Core::instance()->settings["minimize_to_tray"] == "true")
+            QMetaObject::invokeMethod(this, "hide", Qt::QueuedConnection);
     }
 }

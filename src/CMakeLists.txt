@@ -163,10 +163,9 @@ if (UNIX)
 	set (CMAKE_CXX_FLAGS "-ggdb ${CMAKE_CXX_FLAGS}")
 endif (UNIX)
 
-if (UNIX AND NOT APPLE)
-	set (CMAKE_C_FLAGS "-W -Wall ${CMAKE_C_FLAGS}")
-	set (CMAKE_CXX_FLAGS "-W -Wall ${CMAKE_CXX_FLAGS}")
-endif (UNIX AND NOT APPLE)
+# wall
+set (CMAKE_C_FLAGS "-W -Wall ${CMAKE_C_FLAGS}")
+set (CMAKE_CXX_FLAGS "-W -Wall ${CMAKE_CXX_FLAGS}")
 
 # debug
 if (UNIX)
