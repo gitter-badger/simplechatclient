@@ -98,6 +98,7 @@ set (scc_MOC_HDRS
 	common/commands.h
 	common/config.h
 	common/convert.h
+	common/crypt.h
 	core/core.h
 	core/mainwindow.h
 	core/network.h

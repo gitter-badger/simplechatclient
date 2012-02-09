@@ -21,11 +21,14 @@
 #ifndef CRYPT_H
 #define CRYPT_H
 
+#include <QObject>
+
 /**
  * Crypt class
  */
-class Crypt
+class Crypt : public QObject
 {
+    Q_OBJECT
 public:
     Crypt();
     /**
