@@ -276,14 +276,20 @@ qt4_wrap_ui (scc_UIS_H ${scc_UIS})
 
 include_directories (${CMAKE_SOURCE_DIR}/ui)
 
-# enable ASLR
 if (MINGW)
-	set (CMAKE_CXX_LINK_FLAGS "${CMAKE_CXX_LINK_FLAGS} -Wl,--dynamicbase -Wl,--nxcompat")
-endif (MINGW)
+	execute_process(COMMAND ${CMAKE_C_COMPILER} -dumpversion OUTPUT_VARIABLE GCC_VERSION)
 
-# disable console on windows mingw
-if (MINGW)
-	set (CMAKE_CXX_LINK_FLAGS "${CMAKE_CXX_LINK_FLAGS} -mwindows -static-libgcc -static-libstdc++")
+	if (GCC_VERSION VERSION_GREATER 4.5 OR GCC_VERSION VERSION_EQUAL 4.5)
+		# enable ASLR
+		set (CMAKE_CXX_LINK_FLAGS "${CMAKE_CXX_LINK_FLAGS} -Wl,--dynamicbase -Wl,--nxcompat")
+		set (CMAKE_CXX_LINK_FLAGS "${CMAKE_CXX_LINK_FLAGS} -static-libgcc -static-libstdc++")
+	else (GCC_VERSION VERSION_GREATER 4.5 OR GCC_VERSION VERSION_EQUAL 4.5)
+		message(STATUS "DEP and ASLR not supported. Use GCC 4.5 or greater.")
+		message(STATUS "-static-libgcc and -static-libstdc++ not supported. Use GCC 4.5 or greater.")
+	endif (GCC_VERSION VERSION_GREATER 4.5 OR GCC_VERSION VERSION_EQUAL 4.5)
+
+	# disable console on windows mingw
+	set (CMAKE_CXX_LINK_FLAGS "${CMAKE_CXX_LINK_FLAGS} -mwindows")
 endif (MINGW)
 
 # moc
