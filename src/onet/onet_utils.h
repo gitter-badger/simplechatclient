@@ -21,14 +21,12 @@
 #ifndef ONET_UTILS_H
 #define ONET_UTILS_H
 
-#include <QObject>
+#include <QString>
 
-class OnetUtils : public QObject
+class OnetUtils
 {
-    Q_OBJECT
 public:
-    OnetUtils();
-    QString transformKey(QString);
+    static QString transformKey(QString);
 };
 
 #endif // ONET_UTILS_H

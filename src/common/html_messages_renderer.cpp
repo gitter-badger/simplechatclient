@@ -20,11 +20,8 @@
 
 #include "convert.h"
 #include "core.h"
-#include "html_messages_renderer.h"
 
-HtmlMessagesRenderer::HtmlMessagesRenderer(QObject *parent) : QObject(parent)
-{
-}
+#include "html_messages_renderer.h"
 
 QString HtmlMessagesRenderer::renderer(QDateTime dt, QString strData, MessageCategory eMessageCategory, QString strNick)
 {

@@ -75,10 +75,7 @@ void Kamerzysta::log(QString strData)
 {
     if (Core::instance()->settings.value("debug") == "true")
     {
-        Log *l = new Log();
-        QString strKamerzysta = "kamerzysta";
-        l->save(strKamerzysta, strData);
-        delete l;
+        Log::save("kamerzysta", strData);
     }
 }
 

@@ -21,12 +21,12 @@
 #ifndef WINAMP_H
 #define WINAMP_H
 
-#include <QObject>
+#include <QString>
+
 #include <windows.h>
 
-class Winamp : public QObject
+class Winamp
 {
-    Q_OBJECT
 public:
     Winamp();
 

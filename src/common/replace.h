@@ -21,19 +21,15 @@
 #ifndef REPLACE_H
 #define REPLACE_H
 
-#include <QObject>
-
 /**
  * Replace emots like ;) to %Ihehe%
  */
-class Replace : public QObject
+class Replace
 {
-    Q_OBJECT
 public:
-    Replace();
-    void convertAndReplaceEmots(QString &);
-    void convertEmots(QString &);
-    void replaceEmots(QString &);
+    static void convertAndReplaceEmots(QString &);
+    static void convertEmots(QString &);
+    static void replaceEmots(QString &);
 };
 
 #endif // REPLACE_H

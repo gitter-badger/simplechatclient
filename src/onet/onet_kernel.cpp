@@ -194,7 +194,7 @@ void OnetKernel::kernel(QString param1)
                 break;
         }
 
-        if ((strDataList[1].toLower() == "notice") && (!strDataList.value(3).isEmpty()))
+        if ((strDataList[1] == "NOTICE") && (!strDataList.value(3).isEmpty()))
         {
             int iCmd3 = strDataList[3].mid(1).toInt();
             switch (iCmd3)
@@ -302,10 +302,7 @@ void OnetKernel::kernel(QString param1)
     // detect unknown raw
     if (bUnknownRaw1 && bUnknownRaw2 && bUnknownRaw3)
     {
-        Log *l = new Log();
-        QString strUnknown = "unknown_raw";
-        l->save(strUnknown, strData);
-        delete l;
+        Log::save("unknown_raw", strData);
     }
 }
 
@@ -834,9 +831,7 @@ void OnetKernel::raw_privmsg()
     if (strMessage[0] == ':') strMessage.remove(0,1);
 
     // fix emots
-    Replace *pReplace = new Replace();
-    pReplace->convertAndReplaceEmots(strMessage);
-    delete pReplace;
+    Replace::convertAndReplaceEmots(strMessage);
 
     pTabC->showMessage(strChannel, strMessage, DefaultMessage, QString::null, strNick);
 }
@@ -3738,10 +3733,7 @@ void OnetKernel::raw_801()
     QString strKey = strDataList[3];
     if (strKey[0] == ':') strKey.remove(0,1);
 
-    OnetUtils *pOnetUtils = new OnetUtils();
-    QString strAuthKey = pOnetUtils->transformKey(strKey);
-    delete pOnetUtils;
-
+    QString strAuthKey = OnetUtils::transformKey(strKey);
     if (strAuthKey.length() == 16)
     {
         Core::instance()->pNetwork->send(QString("AUTHKEY %1").arg(strAuthKey));

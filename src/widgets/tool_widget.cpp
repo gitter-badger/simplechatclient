@@ -847,10 +847,8 @@ void ToolWidget::sendMessage(QString strText, bool bModeration)
                 if ((!weight.isEmpty()) || (!font.isEmpty()))
                     strTextDisplay = "%F"+weight+font+"%"+strTextDisplay;
 
-                Replace *pReplace = new Replace();
-                pReplace->convertAndReplaceEmots(strTextSend);
-                pReplace->convertAndReplaceEmots(strTextDisplay);
-                delete pReplace;
+                Replace::convertAndReplaceEmots(strTextSend);
+                Replace::convertAndReplaceEmots(strTextDisplay);
 
                 Core::instance()->pNetwork->send(strTextSend);
                 QString strDisplay = QString("%1ACTION %2%3").arg(QString(QByteArray("\x01")), strTextDisplay, QString(QByteArray("\x01")));
@@ -883,9 +881,7 @@ void ToolWidget::sendMessage(QString strText, bool bModeration)
         if ((!weight.isEmpty()) || (!font.isEmpty()))
             strText = "%F"+weight+font+"%"+strText;
 
-        Replace *pReplace = new Replace();
-        pReplace->convertAndReplaceEmots(strText);
-        delete pReplace;
+        Replace::convertAndReplaceEmots(strText);
 
         // standard text
         if (!bModeration)

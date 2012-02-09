@@ -159,9 +159,7 @@ void ChatView::displayMessage(QString strData, MessageCategory eMessageCategory,
         if (strSaveData.contains(QRegExp(strRegExpMe)))
             strSaveData.replace(QRegExp(strRegExpMe), "\\1");
 
-        Log *l = new Log();
-        l->save(strChatViewChannel, strSaveData);
-        delete l;
+        Log::save(strChatViewChannel, strSaveData);
     }
 
     if ((eMessageCategory == JoinMessage) || (eMessageCategory == PartMessage) || (eMessageCategory == QuitMessage))
@@ -174,9 +172,7 @@ void ChatView::displayMessage(QString strData, MessageCategory eMessageCategory,
             return;
     }
 
-    HtmlMessagesRenderer *r = new HtmlMessagesRenderer();
-    QString strContent = r->renderer(dt, strData, eMessageCategory, strNick);
-    delete r;
+    QString strContent = HtmlMessagesRenderer::renderer(dt, strData, eMessageCategory, strNick);
 
     // scroll
     if (this->page()->mainFrame()->scrollBarValue(Qt::Vertical) ==  this->page()->mainFrame()->scrollBarMaximum(Qt::Vertical))

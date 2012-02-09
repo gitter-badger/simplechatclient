@@ -132,7 +132,7 @@ void Core::createSettings()
     settings["debug"] = strDebug;
 
     // default settings
-    settings["version"] = "1.1.4.1163";
+    settings["version"] = "1.1.4.1164";
     settings["available_version"] = "";
     settings["logged"] = "false";
     settings["busy"] = "false";
@@ -391,12 +391,8 @@ void Core::addAwaylog(QString strTime, QString strChannel, QString strAwayData)
         else
             dt = QDateTime::currentDateTime();
 
-        QString strAwaylogFileName = "awaylog";
         QString strAwaylogFileData = QString("%1 %2 %3").arg(dt.toString("[dd/MM/yyyy] [hh:mm:ss]"), strChannel, strAwayData);
-
-        Log *l = new Log();
-        l->save(strAwaylogFileName, strAwaylogFileData);
-        delete l;
+        Log::save("awaylog", strAwaylogFileData);
     }
 
     // fix /me

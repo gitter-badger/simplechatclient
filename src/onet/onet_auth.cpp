@@ -36,7 +36,7 @@
 
 OnetAuth::OnetAuth(TabContainer *_pTabC) : pTabC(_pTabC), bAuthorizing(false)
 {
-    accessManager = new QNetworkAccessManager;
+    accessManager = new QNetworkAccessManager();
     cookieJar = new QNetworkCookieJar();
     accessManager->setCookieJar(cookieJar);
     connect(accessManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(networkFinished(QNetworkReply*)));

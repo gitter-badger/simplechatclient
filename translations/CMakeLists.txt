@@ -17,4 +17,6 @@ add_custom_target (translations DEPENDS ${TRANSLATION_FILES})
 add_dependencies (scc translations)
 
 # install
-install (FILES ${TRANSLATION_QM} DESTINATION ${SCC_DATA_DIR}/translations)
+if (UNIX AND NOT APPLE)
+	install (FILES ${TRANSLATION_QM} DESTINATION ${SCC_DATA_DIR}/translations)
+endif (UNIX AND NOT APPLE)

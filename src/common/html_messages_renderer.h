@@ -23,14 +23,12 @@
 
 #include "defines.h"
 #include <QDateTime>
-#include <QObject>
+#include <QString>
 
-class HtmlMessagesRenderer : public QObject
+class HtmlMessagesRenderer
 {
-    Q_OBJECT
 public:
-    HtmlMessagesRenderer(QObject *parent = 0);
-    QString renderer(QDateTime, QString, MessageCategory, QString strNick = QString::null);
+    static QString renderer(QDateTime, QString, MessageCategory, QString strNick = QString::null);
 };
 
 #endif // HTML_MESSAGES_RENDERER_H

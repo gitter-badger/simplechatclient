@@ -53,17 +53,13 @@ TabContainer::~TabContainer()
 void TabContainer::logOpened(QString strChannel)
 {
     QString strData = "--- Log opened "+QDateTime::currentDateTime().toString(Qt::TextDate);
-    Log *l = new Log();
-    l->save(strChannel, strData);
-    delete l;
+    Log::save(strChannel, strData);
 }
 
 void TabContainer::logClosed(QString strChannel)
 {
     QString strData = "--- Log closed "+QDateTime::currentDateTime().toString(Qt::TextDate);
-    Log *l = new Log();
-    l->save(strChannel, strData);
-    delete l;
+    Log::save(strChannel, strData);
 }
 
 bool TabContainer::isHighlightMessage(QString strMessage)

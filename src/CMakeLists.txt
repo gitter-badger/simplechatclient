@@ -98,10 +98,6 @@ set (scc_MOC_HDRS
 	common/commands.h
 	common/config.h
 	common/convert.h
-	common/crypt.h
-	common/html_messages_renderer.h
-	common/log.h
-	common/replace.h
 	core/core.h
 	core/mainwindow.h
 	core/network.h
@@ -139,7 +135,6 @@ set (scc_MOC_HDRS
 	onet/captcha.h
 	onet/onet_auth.h
 	onet/onet_kernel.h
-	onet/onet_utils.h
 	tab/tab_container.h
 	tab/tab_manager.h
 	tab/tab_widget.h
@@ -212,9 +207,6 @@ endif (WIN32)
 if (WIN32)
 	LIST (APPEND scc_SRCS
 		common/winamp.cpp
-	)
-	LIST (APPEND scc_MOC_HDRS
-		common/winamp.h
 	)
 endif (WIN32)
 

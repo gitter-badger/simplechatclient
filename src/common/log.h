@@ -21,25 +21,24 @@
 #ifndef LOG_H
 #define LOG_H
 
-#include <QObject>
+#include <QString>
 
 /**
  * Save log to file
  */
-class Log : public QObject
+class Log
 {
-    Q_OBJECT
 public:
-    Log();
     /**
      * Save text to file name
      * @param QString file name
      * @param QString data
      */
-    void save(QString &, QString &);
+    static void save(const QString &, const QString &);
 
 private:
-    void convert(QString &);
+    Log();
+    static void convert(QString &);
 };
 
 #endif // LOG_H

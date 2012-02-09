@@ -22,10 +22,6 @@
 #include "core.h"
 #include "replace.h"
 
-Replace::Replace()
-{
-}
-
 void Replace::convertAndReplaceEmots(QString &strData)
 {
     convertEmots(strData);

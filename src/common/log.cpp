@@ -32,10 +32,6 @@
     #include <QDebug>
 #endif
 
-Log::Log()
-{
-}
-
 void Log::convert(QString &strData)
 {
     strData.remove(QRegExp("%C([a-zA-Z0-9]+)%"));
@@ -43,7 +39,7 @@ void Log::convert(QString &strData)
     strData.replace(QRegExp("%I([a-zA-Z0-9_-]+)%"),"<\\1>");
 }
 
-void Log::save(QString &strChannel, QString &strData)
+void Log::save(const QString &strChannel, const QString &strData)
 {
     QString path;
 

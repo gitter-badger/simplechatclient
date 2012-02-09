@@ -123,13 +123,10 @@ void crashHandler()
 
 void gotSignal(int)
 {
-    QString strCategory = "debug";
     QString strMessage = "Error: Got signal SIGSEGV";
 
     // save
-    Log *l = new Log();
-    l->save(strCategory, strMessage);
-    delete l;
+    Log::save("debug", strMessage);
 
     // handler
     crashHandler();
@@ -152,13 +149,10 @@ void messageHandler(QtMsgType type, const char *msg)
     // display
     fprintf(stderr, "%s: %s\n", strCategory.c_str(), msg);
 
-    QString strDebug = "debug";
     QString strMessage = QString("%1: %2").arg(strCategory.c_str(), msg);
 
     // save
-    Log *l = new Log();
-    l->save(strDebug, strMessage);
-    delete l;
+    Log::save("debug", strMessage);
 
     // backtrace
     if (type == QtWarningMsg) fprintf(stderr, "\nwarning from Qt: ('%s')\n", qPrintable(strMessage));
