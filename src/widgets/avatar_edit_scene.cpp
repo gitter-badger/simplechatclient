@@ -18,7 +18,6 @@
  *                                                                          *
  ****************************************************************************/
 
-#include <QDebug>
 #include <QtGui>
 #include <QPainter>
 #include <QRubberBand>

@@ -370,7 +370,7 @@ void ToolWidget::setChannelSettings(bool bEnable)
         channel_settings->hide();
 }
 
-void ToolWidget::updateNick(QString strNick)
+void ToolWidget::updateNick(const QString &strNick)
 {
     nickLabel->setText(strNick);
 }
@@ -743,7 +743,7 @@ void ToolWidget::slotCtrlShiftTabPressed()
     emit ctrlShiftTabPressed();
 }
 
-void ToolWidget::pasteMultiLine(QString strText, bool bModeration)
+void ToolWidget::pasteMultiLine(const QString &strText, bool bModeration)
 {
     QStringList list = strText.split(QRegExp("(\n|\r)"));
     int len = 400;

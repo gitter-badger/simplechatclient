@@ -28,9 +28,9 @@ class ChatView : public QWebView
 {
     Q_OBJECT
 public:
-    ChatView(QString);
+    ChatView(const QString&);
     void clearMessages();
-    void displayMessage(QString, MessageCategory, QString strTime = QString::null, QString strNick = QString::null);
+    void displayMessage(const QString&, MessageCategory, QString strTime = QString::null, QString strNick = QString::null);
     void refreshCSS();
 
 private:

@@ -29,7 +29,7 @@ class InputLineWidget : public QLineEdit
 public:
     InputLineWidget(QWidget*);
     virtual ~InputLineWidget();
-    void insertText(QString);
+    void insertText(const QString&);
 
 private:
     int index;
@@ -38,7 +38,7 @@ private:
     QString strLastMsg;
 
     QString getWord();
-    void setWord(QString);
+    void setWord(const QString&);
 
 protected:
     virtual bool event(QEvent *);

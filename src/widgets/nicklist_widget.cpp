@@ -33,13 +33,13 @@
     #include "webcam.h"
 #endif
 
-NickListWidget::NickListWidget(QString _strChannel) : strChannel(_strChannel), strSelectedNick(QString::null)
+NickListWidget::NickListWidget(const QString &_strChannel) : strChannel(_strChannel), strSelectedNick(QString::null)
 {
     setSortingEnabled(false);
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 }
 
-void NickListWidget::addUser(QString strNick, QString strModes)
+void NickListWidget::addUser(const QString &strNick, QString strModes)
 {
     // if owner remove op
     if (strModes.contains("`")) strModes.remove("@");
@@ -54,14 +54,14 @@ void NickListWidget::addUser(QString strNick, QString strModes)
     this->addItem(item);
 }
 
-void NickListWidget::delUser(QString strNick)
+void NickListWidget::delUser(const QString &strNick)
 {
     QList<QListWidgetItem*> items = this->findItems(strNick, Qt::MatchExactly);
     foreach (QListWidgetItem *item, items)
         this->takeItem(this->row(item));
 }
 
-bool NickListWidget::existUser(QString strNick)
+bool NickListWidget::existUser(const QString &strNick)
 {
     if (this->findItems(strNick, Qt::MatchExactly).isEmpty())
         return false;
@@ -69,14 +69,14 @@ bool NickListWidget::existUser(QString strNick)
         return true;
 }
 
-void NickListWidget::setUserAvatarPath(QString strNick, QString strValue)
+void NickListWidget::setUserAvatarPath(const QString &strNick, const QString &strValue)
 {
     QList<QListWidgetItem*> items = this->findItems(strNick, Qt::MatchExactly);
     foreach (QListWidgetItem *item, items)
         item->setData(Qt::UserRole+13, strValue);
 }
 
-QString NickListWidget::getUserAvatarPath(QString strNick)
+QString NickListWidget::getUserAvatarPath(const QString &strNick)
 {
     QList<QListWidgetItem*> items = this->findItems(strNick, Qt::MatchExactly);
     foreach (QListWidgetItem *item, items)
@@ -84,7 +84,7 @@ QString NickListWidget::getUserAvatarPath(QString strNick)
     return QString::null;
 }
 
-void NickListWidget::changeUserFlag(QString strNick, QString strFlag)
+void NickListWidget::changeUserFlag(const QString &strNick, QString strFlag)
 {
     QList<QListWidgetItem*> items = this->findItems(strNick, Qt::MatchExactly);
     foreach (QListWidgetItem *item, items)
@@ -93,7 +93,7 @@ void NickListWidget::changeUserFlag(QString strNick, QString strFlag)
         QString plusminus = strFlag.at(0);
         strFlag.remove(0, 1);
 
-        strFlag = convertFlag(strFlag);
+        convertFlag(strFlag);
 
         if (plusminus == "+")
         {
@@ -118,7 +118,7 @@ void NickListWidget::changeUserFlag(QString strNick, QString strFlag)
     }
 }
 
-QString NickListWidget::getUserModes(QString strNick)
+QString NickListWidget::getUserModes(const QString &strNick)
 {
     QList<QListWidgetItem*> items = this->findItems(strNick, Qt::MatchExactly);
     foreach (QListWidgetItem *item, items)
@@ -137,15 +137,13 @@ QList<QString> NickListWidget::getUserList()
     return userList;
 }
 
-QString NickListWidget::convertFlag(QString strFlag)
+void NickListWidget::convertFlag(QString &strFlag)
 {
     QString strConvertFrom = "qaohXYv";
     QString strConvertTo = "`&@%!=+";
 
     for (int i = 0; i < strConvertFrom.size(); i++)
         strFlag.replace(strConvertFrom.at(i), strConvertTo.at(i));
-
-    return strFlag;
 }
 
 void NickListWidget::priv()

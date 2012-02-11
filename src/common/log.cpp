@@ -28,8 +28,6 @@
 
 #ifdef Q_WS_WIN
     #include <QDesktopServices>
-#else
-    #include <QDebug>
 #endif
 
 void Log::convert(QString &strData)

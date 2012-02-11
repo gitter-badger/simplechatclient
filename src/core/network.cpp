@@ -387,13 +387,13 @@ void Network::error(QAbstractSocket::SocketError error)
  */
 void Network::stateChanged(QAbstractSocket::SocketState socketState)
 {
-#ifdef Q_WS_X11
     if (Core::instance()->settings.value("debug") == "true")
     {
+#ifdef Q_WS_X11
         DEBUG_BLOCK
+#endif
         qDebug() << "Network socket state changed to: " << socketState;
     }
-#endif
 
     if ((socketState != QAbstractSocket::UnconnectedState) && (socketState != QAbstractSocket::ConnectedState))
         emit setConnectEnabled(false);

@@ -88,10 +88,8 @@ void WebcamEngine::disconnected()
 
 void WebcamEngine::dataKernel(const QByteArray &bData)
 {
-#ifdef Q_WS_X11
     if (Core::instance()->settings.value("debug") == "true")
         qDebug() << "CAM byte <- " << bData;
-#endif
 
     switch (iCamCmd)
     {
@@ -264,10 +262,10 @@ void WebcamEngine::raw_252b(const QByteArray &data)
     if (data.indexOf("SETSTATUS ") == 0)
     {
         QString strStatus = cp2unicode(data.mid(10));
-#ifdef Q_WS_X11
+
         if (Core::instance()->settings.value("debug") == "true")
             qDebug() << "CAM <- SETSTATUS " << strStatus;
-#endif
+
         emit updateStatus(strStatus);
     }
 }
@@ -312,19 +310,17 @@ Invalid key
 void WebcamEngine::raw_403b(const QByteArray &data)
 {
     QString strError = data;
-#ifdef Q_WS_X11
+
     if (Core::instance()->settings.value("debug") == "true")
         qDebug() << "CAM <- " << strError;
-#endif
+
     emit error(strError);
 }
 
 void WebcamEngine::textKernel(const QString &strData)
 {
-#ifdef Q_WS_X11
     if (Core::instance()->settings.value("debug") == "true")
         qDebug() << "CAM <- " << strData;
-#endif
 
     QStringList strDataList = strData.split(" ");
     int cmd = strDataList[0].toInt();

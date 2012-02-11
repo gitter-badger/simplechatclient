@@ -427,10 +427,8 @@ void MainWindow::buttonConnect()
         connectAct->setIconText(tr("&Connect"));
         connectAct->setIcon(QIcon(":/images/oxygen/16x16/network-connect.png"));
         Core::instance()->pNetwork->disconnect();
-#ifdef Q_WS_X11
         if (Core::instance()->settings.value("debug") == "true")
             qDebug() << "Set timerReconnect: stop";
-#endif
         Core::instance()->pNetwork->timerReconnect->stop();
     }
 }

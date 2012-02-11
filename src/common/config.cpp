@@ -75,25 +75,19 @@ Config::Config(bool _bProfileConfig, QString _strForceProfile) : bProfileConfig(
                 fixConfig();
             else
             {
-    #ifdef Q_WS_X11
                 qDebug() << tr("Error: config: Cannot set content from file!");
-    #endif
                 return;
             }
         }
         else
         {
-#ifdef Q_WS_X11
             qDebug() << tr("Error: config: Cannot read config file!");
-#endif
             return;
         }
     }
     else
     {
-#ifdef Q_WS_X11
         qDebug() << tr("Error: config: Cannot open config file!");
-#endif
         return;
     }
 }
@@ -102,9 +96,7 @@ QString Config::getValue(QString strKey)
 {
     if (doc.isNull())
     {
-#ifdef Q_WS_X11
         qDebug() << tr("Error: config: Cannot get value: ") << strKey;
-#endif
         return QString::null;
     }
 
@@ -129,9 +121,7 @@ void Config::setValue(QString strKey, QString strValue)
 {
     if (doc.isNull())
     {
-#ifdef Q_WS_X11
         qDebug() << tr("Error: config: Cannot set value: ") << strKey;
-#endif
         return;
     }
 
@@ -153,9 +143,7 @@ void Config::removeValue(QString strKey)
 {
     if (doc.isNull())
     {
-#ifdef Q_WS_X11
         qDebug() << tr("Error: config: Cannot remove value: ") << strKey;
-#endif
         return;
     }
 

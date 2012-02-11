@@ -42,7 +42,7 @@ public:
 
 public slots:
     void setModeration(bool);
-    void updateNick(QString);
+    void updateNick(const QString&);
 
 private:
     bool bShowFontButtons;
@@ -88,7 +88,7 @@ private:
     QAction *size20Act;
     QAction *size24Act;
 
-    void pasteMultiLine(QString, bool);
+    void pasteMultiLine(const QString&, bool);
     void sendMessage(QString, bool);
 
 private slots:

@@ -32,7 +32,7 @@ InputLineWidget::~InputLineWidget()
     strLastWord = QString::null;
 }
 
-void InputLineWidget::insertText(QString strText)
+void InputLineWidget::insertText(const QString &strText)
 {
     // pos
     int iPos = this->cursorPosition();
@@ -65,7 +65,7 @@ QString InputLineWidget::getWord()
     return strWord;
 }
 
-void InputLineWidget::setWord(QString strSetWord)
+void InputLineWidget::setWord(const QString &strSetWord)
 {
     QString strWord = this->text();
     if (!strWord.isEmpty())
@@ -82,14 +82,14 @@ void InputLineWidget::setWord(QString strSetWord)
         iLength = this->cursorPosition()-iStart;
         strWord = strWord.mid(iStart, iLength);
 
-        strSetWord += " ";
+        QString strFixedSetWord = strSetWord+" ";
 
         QString strNewLine = this->text();
-        strNewLine = strNewLine.replace(iStart, iLength, strSetWord);
+        strNewLine = strNewLine.replace(iStart, iLength, strFixedSetWord);
         this->setText(strNewLine);
 
         // set cursor
-        this->setCursorPosition(iStart+strSetWord.length());
+        this->setCursorPosition(iStart+strFixedSetWord.length());
     }
 }
 

@@ -45,7 +45,7 @@
     #include "webcam.h"
 #endif
 
-ChatView::ChatView(QString _strChatViewChannel) : strChatViewChannel(_strChatViewChannel), bScroll(true)
+ChatView::ChatView(const QString &_strChatViewChannel) : strChatViewChannel(_strChatViewChannel), bScroll(true)
 {
     setFocusPolicy(Qt::NoFocus);
     settings()->setAttribute(QWebSettings::JavascriptEnabled, true);
@@ -138,7 +138,7 @@ void ChatView::clearMessages()
     this->page()->mainFrame()->evaluateJavaScript("clearMessages()");
 }
 
-void ChatView::displayMessage(QString strData, MessageCategory eMessageCategory, QString strTime, QString strNick)
+void ChatView::displayMessage(const QString &strData, MessageCategory eMessageCategory, QString strTime, QString strNick)
 {
     QDateTime dt;
     if (!strTime.isEmpty())
@@ -396,9 +396,7 @@ void ChatView::sendToNotes()
         }
         else
         {
-#ifdef Q_WS_X11
             qDebug() << tr("Error: Cannot read notes file!");
-#endif
             return;
         }
     }
