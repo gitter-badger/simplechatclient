@@ -319,18 +319,18 @@ void MainWindow::createSignals()
     connect(pTabM, SIGNAL(tabMoved(int,int)), this, SLOT(tabMoved(int,int)));
 
     // signals pToolWidget
-    connect(pToolWidget, SIGNAL(showMessage(QString,QString,MessageCategory)), pTabC, SLOT(showMessage(QString,QString,MessageCategory)));
-    connect(pToolWidget, SIGNAL(showMessage(QString,QString,MessageCategory,QString,QString)), pTabC, SLOT(showMessage(QString,QString,MessageCategory,QString,QString)));
+    connect(pToolWidget, SIGNAL(showMessage(const QString&,const QString&,MessageCategory)), pTabC, SLOT(showMessage(const QString&,const QString&,MessageCategory)));
+    connect(pToolWidget, SIGNAL(showMessage(const QString&,const QString&,MessageCategory,QString,QString)), pTabC, SLOT(showMessage(const QString&,const QString&,MessageCategory,QString,QString)));
     connect(pToolWidget, SIGNAL(ctrlTabPressed()), this, SLOT(ctrlTabPressed()));
     connect(pToolWidget, SIGNAL(ctrlShiftTabPressed()), this, SLOT(ctrlShiftTabPressed()));
 
     // signals onet kernel
-    connect(pOnetKernel, SIGNAL(addUser(QString,QString,QString,bool)), pTabC, SLOT(addUser(QString,QString,QString,bool)));
-    connect(pOnetKernel, SIGNAL(delUser(QString,QString)), pTabC, SLOT(delUser(QString,QString)));
-    connect(pOnetKernel, SIGNAL(quitUser(QString,QString)), pTabC, SLOT(quitUser(QString,QString)));
-    connect(pOnetKernel, SIGNAL(changeFlag(QString,QString,QString)), pTabC, SLOT(changeFlag(QString,QString,QString)));
-    connect(pOnetKernel, SIGNAL(changeFlag(QString,QString)), pTabC, SLOT(changeFlag(QString,QString)));
-    connect(pOnetKernel, SIGNAL(nicklistRefresh(QString)), pTabC, SLOT(nicklistRefresh(QString)));
+    connect(pOnetKernel, SIGNAL(addUser(const QString&,const QString&,const QString&,bool)), pTabC, SLOT(addUser(const QString&,const QString&,const QString&,bool)));
+    connect(pOnetKernel, SIGNAL(delUser(const QString&,const QString&)), pTabC, SLOT(delUser(const QString&,const QString&)));
+    connect(pOnetKernel, SIGNAL(quitUser(const QString&,const QString&)), pTabC, SLOT(quitUser(const QString&,const QString&)));
+    connect(pOnetKernel, SIGNAL(changeFlag(const QString&,const QString&,const QString&)), pTabC, SLOT(changeFlag(const QString&,const QString&,const QString&)));
+    connect(pOnetKernel, SIGNAL(changeFlag(const QString&,const QString&)), pTabC, SLOT(changeFlag(const QString&,const QString&)));
+    connect(pOnetKernel, SIGNAL(nicklistRefresh(const QString&)), pTabC, SLOT(nicklistRefresh(const QString&)));
 
     // signals from network
     connect(Core::instance()->pNetwork, SIGNAL(setConnected()), this, SLOT(setConnected()));
@@ -338,9 +338,9 @@ void MainWindow::createSignals()
     connect(Core::instance()->pNetwork, SIGNAL(setConnectEnabled(bool)), this, SLOT(setConnectEnabled(bool)));
     connect(Core::instance()->pNetwork, SIGNAL(kernel(QString)), pOnetKernel, SLOT(kernel(QString)));
     connect(Core::instance()->pNetwork, SIGNAL(authorize(QString,QString,QString)), pOnetAuth, SLOT(authorize(QString,QString,QString)));
-    connect(Core::instance()->pNetwork, SIGNAL(showMessageActive(QString,MessageCategory)), pTabC, SLOT(showMessageActive(QString,MessageCategory)));
-    connect(Core::instance()->pNetwork, SIGNAL(showMessageAll(QString,MessageCategory)), pTabC, SLOT(showMessageAll(QString,MessageCategory)));
-    connect(Core::instance()->pNetwork, SIGNAL(updateNick(QString)), pToolWidget, SLOT(updateNick(QString)));
+    connect(Core::instance()->pNetwork, SIGNAL(showMessageActive(const QString&,MessageCategory)), pTabC, SLOT(showMessageActive(const QString&,MessageCategory)));
+    connect(Core::instance()->pNetwork, SIGNAL(showMessageAll(const QString&,MessageCategory)), pTabC, SLOT(showMessageAll(const QString&,MessageCategory)));
+    connect(Core::instance()->pNetwork, SIGNAL(updateNick(const QString&)), pToolWidget, SLOT(updateNick(const QString&)));
     connect(Core::instance()->pNetwork, SIGNAL(clearAllNicklist()), pTabC, SLOT(clearAllNicklist()));
     connect(Core::instance()->pNetwork, SIGNAL(updateActions()), this, SLOT(updateActions()));
 

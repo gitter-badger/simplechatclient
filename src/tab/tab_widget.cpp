@@ -24,7 +24,7 @@
 #include "nicklist_widget.h"
 #include "tab_widget.h"
 
-TabWidget::TabWidget(QString _strName) : strName(_strName)
+TabWidget::TabWidget(const QString &_strName) : strName(_strName)
 {
     createGui();
     setDefaultValues();

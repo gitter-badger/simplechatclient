@@ -43,7 +43,7 @@ OnetKernel::~OnetKernel()
     delete avatar;
 }
 
-void OnetKernel::kernel(QString param1)
+void OnetKernel::kernel(const QString &param1)
 {
     strData = param1;
     strDataList = strData.split(" ");

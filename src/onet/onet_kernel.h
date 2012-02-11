@@ -37,7 +37,7 @@ public:
     virtual ~OnetKernel();
 
 public slots:
-    void kernel(QString);
+    void kernel(const QString&);
 
 private:
     TabContainer *pTabC;
@@ -252,12 +252,12 @@ private:
     void raw_952();
 
 signals:
-    void addUser(QString,QString,QString,bool);
-    void delUser(QString,QString);
-    void quitUser(QString,QString);
-    void changeFlag(QString,QString,QString);
-    void changeFlag(QString,QString);
-    void nicklistRefresh(QString);
+    void addUser(const QString&,const QString&,const QString&,bool);
+    void delUser(const QString&,const QString&);
+    void quitUser(const QString&,const QString&);
+    void changeFlag(const QString&,const QString&,const QString&);
+    void changeFlag(const QString&,const QString&);
+    void nicklistRefresh(const QString&);
 };
 
 #endif // ONET_KERNEL_H

@@ -35,36 +35,36 @@ class TabContainer : public QObject
 public:
     TabContainer(TabManager *);
     virtual ~TabContainer();
-    bool existTab(QString);
-    void addTab(QString);
-    void removeTab(QString);
-    void renameTab(QString, QString);
+    bool existTab(const QString&);
+    void addTab(const QString&);
+    void removeTab(const QString&);
+    void renameTab(const QString&, const QString&);
     void partTab(int);
     void resizeMainWindow(QSize);
 
 public slots:
     void refreshColors();
     void refreshCSS();
-    void showMessage(QString, QString, MessageCategory, QString strTime = QString::null, QString strNick = QString::null);
-    void showMessageAll(QString, MessageCategory);
-    void showMessageActive(QString, MessageCategory);
-    void setTopic(QString, QString);
-    void authorTopic(QString, QString);
-    void setChannelAvatar(QString);
-    void clearContent(QString);
+    void showMessage(const QString&, const QString&, MessageCategory, QString strTime = QString::null, QString strNick = QString::null);
+    void showMessageAll(const QString&, MessageCategory);
+    void showMessageActive(const QString&, MessageCategory);
+    void setTopic(const QString&, const QString&);
+    void authorTopic(const QString&, const QString&);
+    void setChannelAvatar(const QString&);
+    void clearContent(const QString&);
     // nicklist
-    void addUser(QString, QString, QString, bool);
-    void delUser(QString, QString);
-    void quitUser(QString, QString);
-    void changeFlag(QString, QString, QString);
-    void changeFlag(QString, QString);
-    void nicklistRefresh(QString);
+    void addUser(const QString&, const QString&, const QString&, bool);
+    void delUser(const QString&, const QString&);
+    void quitUser(const QString&, const QString&);
+    void changeFlag(const QString&, const QString&, const QString&);
+    void changeFlag(const QString&, const QString&);
+    void nicklistRefresh(const QString&);
     void clearAllNicklist();
-    void setUserAvatarPath(QString, QString);
-    QString getUserAvatarPath(QString);
-    int getUserCount(QString);
-    QString getUserModes(QString, QString);
-    QList<QString> getUserList(QString);
+    void setUserAvatarPath(const QString&, const QString&);
+    QString getUserAvatarPath(const QString&);
+    int getUserCount(const QString&);
+    QString getUserModes(const QString&, const QString&);
+    QList<QString> getUserList(const QString&);
 
 private:
     // params
@@ -72,9 +72,9 @@ private:
     // other
     QHash<QString, TabWidget*> tw;
 
-    void logOpened(QString);
-    void logClosed(QString);
-    bool isHighlightMessage(QString);
+    void logOpened(const QString&);
+    void logClosed(const QString&);
+    bool isHighlightMessage(const QString&);
 
 signals:
     void setModeration(bool);

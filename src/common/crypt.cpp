@@ -18,6 +18,7 @@
  *                                                                          *
  ****************************************************************************/
 
+#include <QDebug>
 #include <QtCrypto>
 // in OpenSuSE 11 try this:
 //#include <QtCrypto/QtCrypto>
@@ -27,7 +28,6 @@
     #include <windows.h>
 #else
     #include <unistd.h>
-    #include <QDebug>
 #endif
 
 Crypt::Crypt()
