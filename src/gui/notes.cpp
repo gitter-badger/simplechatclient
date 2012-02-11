@@ -97,7 +97,10 @@ void DlgNotes::read()
             ui.plainTextEdit->setPlainText(strContent);
         }
         else
-            qDebug() << tr("Error: Cannot read notes file!");
+        {
+            if (Core::instance()->settings.value("debug") == "true")
+                qDebug() << tr("Error: Cannot read notes file!");
+        }
     }
 }
 

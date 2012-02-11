@@ -75,19 +75,22 @@ Config::Config(bool _bProfileConfig, QString _strForceProfile) : bProfileConfig(
                 fixConfig();
             else
             {
-                qDebug() << tr("Error: config: Cannot set content from file!");
+                if (Core::instance()->settings.value("debug") == "true")
+                    qDebug() << tr("Error: config: Cannot set content from file!");
                 return;
             }
         }
         else
         {
-            qDebug() << tr("Error: config: Cannot read config file!");
+            if (Core::instance()->settings.value("debug") == "true")
+                qDebug() << tr("Error: config: Cannot read config file!");
             return;
         }
     }
     else
     {
-        qDebug() << tr("Error: config: Cannot open config file!");
+        if (Core::instance()->settings.value("debug") == "true")
+            qDebug() << tr("Error: config: Cannot open config file!");
         return;
     }
 }
@@ -96,7 +99,8 @@ QString Config::getValue(QString strKey)
 {
     if (doc.isNull())
     {
-        qDebug() << tr("Error: config: Cannot get value: ") << strKey;
+        if (Core::instance()->settings.value("debug") == "true")
+            qDebug() << tr("Error: config: Cannot get value: ") << strKey;
         return QString::null;
     }
 
@@ -121,7 +125,8 @@ void Config::setValue(QString strKey, QString strValue)
 {
     if (doc.isNull())
     {
-        qDebug() << tr("Error: config: Cannot set value: ") << strKey;
+        if (Core::instance()->settings.value("debug") == "true")
+            qDebug() << tr("Error: config: Cannot set value: ") << strKey;
         return;
     }
 
@@ -143,7 +148,8 @@ void Config::removeValue(QString strKey)
 {
     if (doc.isNull())
     {
-        qDebug() << tr("Error: config: Cannot remove value: ") << strKey;
+        if (Core::instance()->settings.value("debug") == "true")
+            qDebug() << tr("Error: config: Cannot remove value: ") << strKey;
         return;
     }
 

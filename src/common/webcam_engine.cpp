@@ -427,7 +427,8 @@ void WebcamEngine::textKernel(const QString &strData)
         raw_520();
         break;
     default:
-        qDebug() << "Unknown CAM RAW:" << strData;
+        if (Core::instance()->settings.value("debug") == "true")
+            qDebug() << "Unknown CAM RAW:" << strData;
         break;
     }
 }
