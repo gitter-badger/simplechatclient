@@ -41,8 +41,8 @@ public:
     void clearAll();
     bool isConnected();
     void networkConnect();
-    void networkSend(QString);
-    void networkSendb(QByteArray);
+    void networkSend(const QString&);
+    void networkSendb(const QByteArray&);
     void networkDisconnect();
 
 private:
@@ -66,9 +66,9 @@ private slots:
     void timeoutPingpong();
 
 signals:
-    void dataKernel(QByteArray);
-    void textKernel(QString);
-    void error(QString);
+    void dataKernel(const QByteArray&);
+    void textKernel(const QString&);
+    void error(const QString&);
     void connected();
     void disconnected();
 };

@@ -34,9 +34,11 @@ void WebcamDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option
     int rank = index.data(Qt::UserRole).toInt();
     QString spectators = index.data(Qt::UserRole+1).toString();
 
+/*
     // state
     if (option.state & QStyle::State_MouseOver)
         painter->fillRect(option.rect, option.palette.highlight());
+*/
 
     // draw nick
     painter->drawText(option.rect, nick);

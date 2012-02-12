@@ -94,15 +94,14 @@ void WebcamNetwork::networkDisconnect()
         socket->disconnectFromHost();
 }
 
-void WebcamNetwork::networkSend(QString strData)
+void WebcamNetwork::networkSend(const QString &strData)
 {
-    strData += "\n";
-    QByteArray qbaData = strData.toAscii();
+    QByteArray qbaData = (strData+"\n").toAscii();
 
     networkSendb(qbaData);
 }
 
-void WebcamNetwork::networkSendb(QByteArray qbaData)
+void WebcamNetwork::networkSendb(const QByteArray &qbaData)
 {
     if ((socket->isValid()) && (socket->state() == QAbstractSocket::ConnectedState) && (socket->isWritable()))
     {

@@ -59,6 +59,7 @@ void NickListDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opti
         painter->setPen(selectedFontPen);
         selected = true;
     }
+/*
 #ifndef Q_WS_WIN
     else if (option.state & QStyle::State_MouseOver)
     {
@@ -67,6 +68,7 @@ void NickListDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opti
         selected = true;
     }
 #endif
+*/
     else
     {
         painter->setPen(fontPen);

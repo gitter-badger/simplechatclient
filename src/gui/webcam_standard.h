@@ -66,8 +66,8 @@ protected:
 
 signals:
     void closeCam();
-    void networkSend(QString);
-    void setUser(QString);
+    void networkSend(const QString&);
+    void setUser(const QString&);
 };
 
 #endif // WEBCAM_STANDARD_H

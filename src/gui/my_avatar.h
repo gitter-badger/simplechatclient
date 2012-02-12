@@ -36,14 +36,14 @@ public:
     virtual ~DlgMyAvatar();
 
 public slots:
-    void getCollectionsReady(const QString &strResult);
-    void getCollectionAvatarsReady(const QString &strResult);
-    void getMyAvatarsReady(const QString &strResult);
-    void uploadImageReady(const QString &strResult, const QString &strFileName);
-    void updatePhotoReady(const QString &strResult);
-    void addPhotoReady(const QString &strResult);
-    void deletePhotoReady(const QString &strResult);
-    void getAvatarReady(const QString &strUrl, const QByteArray &bData, AvatarClient::AvatarType type);
+    void getCollectionsReady(const QString &);
+    void getCollectionAvatarsReady(const QString &);
+    void getMyAvatarsReady(const QString &);
+    void uploadImageReady(const QString &, const QString &);
+    void updatePhotoReady(const QString &);
+    void addPhotoReady(const QString &);
+    void deletePhotoReady(const QString &);
+    void getAvatarReady(const QString &, const QByteArray &, AvatarClient::AvatarType);
 
 private:
     Ui::uiMyAvatar ui;
@@ -54,9 +54,9 @@ private:
     void setDefaultValues();
     void createSignals();
 
-    void drawMyAvatar(const QString &strUrl, const QByteArray &bData);
-    void drawAvatarFromCollection(const QString &strUrl, const QByteArray &bData);
-    void drawCurrentAvatar(const QString &strUrl, const QByteArray &bData);
+    void drawMyAvatar(const QString &, const QByteArray &);
+    void drawAvatarFromCollection(const QString &, const QByteArray &);
+    void drawCurrentAvatar(const QString &, const QByteArray &);
 
     class MyAvatarListWidgetItem : public QListWidgetItem
     {

@@ -32,11 +32,11 @@ public:
 
     QString getUrl() const;
     QString getRawUrl() const;
-    QString getRawUrl(int angle) const;
+    QString getRawUrl(int) const;
     int rotateLeft();
     int rotateRight();
-    static QString scaledCropToString(QRect crop, QSize scaled, QSize original, int angle, bool rotate = false);
-    static QRect stringToScaledCrop(QString s, QSize scaled, QSize original, int angle, bool rotate = false);
+    static QString scaledCropToString(QRect, QSize, QSize, int, bool rotate = false);
+    static QRect stringToScaledCrop(QString, QSize, QSize, int, bool rotate = false);
     QSize size() const;
     void debug(QString title = 0) const;
 
@@ -50,15 +50,15 @@ public:
     QString mSrv() const;
     int width() const;
 
-    void setAngle(int angle);
-    void setMApp(int mApp);
-    void setCrop(QString crop);
-    void setDesc(QString desc);
-    void setHeight(int height);
-    void setImg(QString img);
-    void setImgId(int imgId);
-    void setMSrv(QString mSrv);
-    void setWidth(int width);
+    void setAngle(int);
+    void setMApp(int);
+    void setCrop(QString);
+    void setDesc(QString);
+    void setHeight(int);
+    void setImg(QString);
+    void setImgId(int);
+    void setMSrv(QString);
+    void setWidth(int);
 
 private:
     enum Rotate
@@ -71,7 +71,7 @@ private:
         A_0 = 0, A_90 = 1, A_180 = 2, A_270 = 3
     };
 
-    int rotate(Rotate i);
+    int rotate(Rotate);
 
     int _angle;
     QString _crop;
