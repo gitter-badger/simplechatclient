@@ -32,25 +32,25 @@ class WebcamNetwork : public QObject
 public:
     WebcamNetwork();
     virtual ~WebcamNetwork();
-    inline void setBytesNeed(int i) { iBytes_need = i; }
-    inline void setBText(bool b) { bText = b; }
-    inline void setLastKeepAlive(int i) { iLastKeepAlive = i; }
+    inline void setBytesNeed(int _iBytesNeed) { iBytesNeed = _iBytesNeed; }
+    inline void setBText(bool _bText) { bText = _bText; }
+    inline void setLastKeepAlive(int _iLastKeepAlive) { iLastKeepAlive = _iLastKeepAlive; }
     inline int getLastKeepAlive() { return iLastKeepAlive; }
-    inline void setReconnect(bool b) { bReconnecting = b; }
+    inline void setReconnect(bool _bReconnecting) { bReconnecting = _bReconnecting; }
 
     void clearAll();
     bool isConnected();
     void networkConnect();
-    void networkSend(const QString&);
-    void networkSendb(const QByteArray&);
+    void networkSend(const QString &strData);
+    void networkSendb(const QByteArray &bData);
     void networkDisconnect();
 
 private:
     QTcpSocket *socket;
     QString strData;
     QByteArray bData;
-    int iBytes_need;
-    int iBytes_recv;
+    int iBytesNeed;
+    int iBytesRecv;
     QTimer *timerPingPong;
     int iLastActive;
     int iLastKeepAlive;
@@ -66,9 +66,9 @@ private slots:
     void timeoutPingpong();
 
 signals:
-    void dataKernel(const QByteArray&);
-    void textKernel(const QString&);
-    void error(const QString&);
+    void dataKernel(const QByteArray &bData);
+    void textKernel(const QString &strData);
+    void error(const QString &strError);
     void connected();
     void disconnected();
 };

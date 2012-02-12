@@ -29,7 +29,7 @@ class DlgMyStats : public QDialog
 {
     Q_OBJECT
 public:
-    DlgMyStats(QWidget *);
+    DlgMyStats(QWidget *parent = 0);
     virtual ~DlgMyStats();
 
 private:
@@ -39,7 +39,7 @@ private:
     void createGui();
     void createSignals();
 
-    int replaceValue(const QString&);
+    int replaceValue(const QString &strValue);
     void refresh();
 };
 

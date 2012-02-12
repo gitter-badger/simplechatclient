@@ -28,7 +28,7 @@
 class HtmlMessagesRenderer
 {
 public:
-    static QString renderer(QDateTime, QString, MessageCategory, QString strNick = QString::null);
+    static QString renderer(QDateTime dt, QString strData, MessageCategory eMessageCategory, QString strNick = QString::null);
 };
 
 #endif // HTML_MESSAGES_RENDERER_H

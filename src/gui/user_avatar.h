@@ -29,7 +29,7 @@ class DlgUserAvatar : public QDialog
 {
     Q_OBJECT
 public:
-    DlgUserAvatar(MainWindow *, const QPixmap&);
+    DlgUserAvatar(MainWindow *parent, const QPixmap &_avatar);
 
 private:
     Ui::uiUserAvatar ui;
@@ -41,7 +41,7 @@ private:
 
 private slots:
     void buttonZoomOut();
-    void sliderValueChanged(int);
+    void sliderValueChanged(int iValue);
     void buttonZoomIn();
 };
 

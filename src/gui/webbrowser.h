@@ -29,7 +29,7 @@ class DlgWebBrowser : public QDialog
 {
     Q_OBJECT
 public:
-    DlgWebBrowser(QWidget *, const QUrl&);
+    DlgWebBrowser(QWidget *parent, const QUrl &url);
 
 private:
     Ui::uiWebBrowser ui;

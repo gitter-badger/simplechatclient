@@ -28,7 +28,7 @@ class DlgAbout : public QDialog
 {
     Q_OBJECT
 public:
-    DlgAbout(QWidget *);
+    DlgAbout(QWidget *parent = 0);
 
 private:
     Ui::uiAbout ui;

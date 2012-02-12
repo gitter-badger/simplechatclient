@@ -28,7 +28,7 @@ class DlgOfflineMsg : public QDialog
 {
     Q_OBJECT
 public:
-    DlgOfflineMsg(QWidget *);
+    DlgOfflineMsg(QWidget *parent = 0);
 
 private:
     Ui::uiOfflineMsg ui;
@@ -40,7 +40,7 @@ private:
     void createGui();
     void createSignals();
     void refresh();
-    void removeNick(const QString&);
+    void removeNick(const QString &strRemoveNick);
     bool existNick();
 
 private slots:

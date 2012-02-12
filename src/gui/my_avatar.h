@@ -32,18 +32,18 @@ class DlgMyAvatar : public QDialog
 {
     Q_OBJECT
 public:
-    DlgMyAvatar(QWidget *);
+    DlgMyAvatar(QWidget *parent = 0);
     virtual ~DlgMyAvatar();
 
 public slots:
-    void getCollectionsReady(const QString &);
-    void getCollectionAvatarsReady(const QString &);
-    void getMyAvatarsReady(const QString &);
-    void uploadImageReady(const QString &, const QString &);
-    void updatePhotoReady(const QString &);
-    void addPhotoReady(const QString &);
-    void deletePhotoReady(const QString &);
-    void getAvatarReady(const QString &, const QByteArray &, AvatarClient::AvatarType);
+    void getCollectionsReady(const QString &strResult);
+    void getCollectionAvatarsReady(const QString &strResult);
+    void getMyAvatarsReady(const QString &strResult);
+    void uploadImageReady(const QString &strResult, const QString &strFileName);
+    void updatePhotoReady(const QString &strResult);
+    void addPhotoReady(const QString &strResult);
+    void deletePhotoReady(const QString &strResult);
+    void getAvatarReady(const QString &strUrl, const QByteArray &bData, AvatarClient::AvatarType type);
 
 private:
     Ui::uiMyAvatar ui;
@@ -54,9 +54,9 @@ private:
     void setDefaultValues();
     void createSignals();
 
-    void drawMyAvatar(const QString &, const QByteArray &);
-    void drawAvatarFromCollection(const QString &, const QByteArray &);
-    void drawCurrentAvatar(const QString &, const QByteArray &);
+    void drawMyAvatar(const QString &strUrl, const QByteArray &bData);
+    void drawAvatarFromCollection(const QString &strUrl, const QByteArray &bData);
+    void drawCurrentAvatar(const QString &strUrl, const QByteArray &bData);
 
     class MyAvatarListWidgetItem : public QListWidgetItem
     {
@@ -67,8 +67,8 @@ private:
 
 private slots:
     void refreshAvatar();
-    void tabChanged(int);
-    void collectionChanged(QString);
+    void tabChanged(int index);
+    void collectionChanged(QString strName);
     void addAvatarClicked();
     void editAvatarClicked();
     void applyAvatarClicked();

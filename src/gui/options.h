@@ -28,8 +28,8 @@ class DlgOptions : public QDialog
 {
     Q_OBJECT
 public:
-    DlgOptions(QWidget *);
-    void setCurrentProfile(int);
+    DlgOptions(QWidget *parent = 0);
+    void setCurrentProfile(int row);
     void refreshProfilesList();
 
 private:
@@ -39,29 +39,29 @@ private:
     void setDefaultValues();
     void createSignals();
 
-    void setColor(const QString&);
+    void setColor(const QString &strKey);
     void setMainwindowColors();
     void setNicklistColors();
 
-    QString reverseColor(QString);
+    QString reverseColor(QString strColor);
 
 private slots:
-    void changePage(QModelIndex);
-    void currentProfileChanged(int);
+    void changePage(QModelIndex index);
+    void currentProfileChanged(int row);
     void buttonProfiles();
-    void themesChanged(int);
-    void languageChanged(int);
+    void themesChanged(int index);
+    void languageChanged(int index);
     void highlightAdd();
     void highlightRemove();
-    void autoBusy(bool);
-    void disableAutojoinFavourites(bool);
-    void minimizeToTray(bool);
-    void showZuoAndIp(bool);
-    void hideFormating(bool);
-    void hideJoinPart(bool);
-    void hideJoinPart200(bool);
-    void disableEmots(bool);
-    void disableReplaces(bool);
+    void autoBusy(bool bValue);
+    void disableAutojoinFavourites(bool bValue);
+    void minimizeToTray(bool bValue);
+    void showZuoAndIp(bool bValue);
+    void hideFormating(bool bValue);
+    void hideJoinPart(bool bValue);
+    void hideJoinPart200(bool bValue);
+    void disableEmots(bool bValue);
+    void disableReplaces(bool bValue);
     void reverseColors();
     void restoreDefaultColors();
     void setBackgroundColor();
@@ -85,12 +85,12 @@ private slots:
     void tryPlayQuery();
     void setSoundBeep();
     void setSoundQuery();
-    void setSaveLogsByDate(bool);
-    void disableSounds(bool);
+    void setSaveLogsByDate(bool bValue);
+    void disableSounds(bool bValue);
     void openLogsFolder();
-    void disableLogs(bool);
+    void disableLogs(bool bValue);
     void setBackgroundImage();
-    void disableBackgroundImage(bool);
+    void disableBackgroundImage(bool bValue);
     void setWinamp();
 };
 

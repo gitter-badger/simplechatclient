@@ -28,7 +28,7 @@ class DlgChannelHomes : public QDialog
 {
     Q_OBJECT
 public:
-    DlgChannelHomes(QWidget *);
+    DlgChannelHomes(QWidget *parent = 0);
 
 private:
     Ui::uiChannelHomes ui;
@@ -38,7 +38,7 @@ private:
 
 private slots:
     void refresh();
-    void listClicked(QModelIndex);
+    void listClicked(QModelIndex index);
     void itemClicked(QListWidgetItem*);
     void buttonCreate();
     void buttonRemove();

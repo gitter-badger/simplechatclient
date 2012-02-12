@@ -32,9 +32,9 @@ class Convert : public QObject
     Q_OBJECT
 public:
     Convert(bool _bInsertWidthHeight = false);
-    void convertText(QString &);
-    void removeFont(QString &);
-    void removeColor(QString &);
+    void convertText(QString &strData);
+    void removeFont(QString &strData);
+    void removeColor(QString &strData);
 
     bool getRemovedBold() { return bRemovedBold; }
     bool getRemovedItalic() { return bRemovedItalic; }
@@ -48,10 +48,10 @@ private:
     QString strRemovedFont;
     int iRemovedColor;
 
-    void convertColor(QString &);
-    void convertFont(QString &);
-    void convertEmoticons(QString &);
-    QString findEmoticon(const QString&);
+    void convertColor(QString &strData);
+    void convertFont(QString &strData);
+    void convertEmoticons(QString &strData);
+    QString findEmoticon(const QString &strEmoticon);
 };
 
 #endif // CONVERT_H

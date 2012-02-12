@@ -28,7 +28,7 @@ class DlgChannelList : public QDialog
 {
     Q_OBJECT
 public:
-    DlgChannelList(QWidget *);
+    DlgChannelList(QWidget *parent = 0);
 
 private:
     Ui::uiChannelList ui;
@@ -37,11 +37,11 @@ private:
     void setDefaultValues();
     void createSignals();
 
-    bool isErotic(const QString&);
+    bool isErotic(const QString &strChannel);
     void getOptions();
-    QString channelTypeToString(int);
-    QString channelCatToString(int, bool, bool);
-    bool showChannel(const QString&, int, int, int, bool, bool);
+    QString channelTypeToString(int type);
+    QString channelCatToString(int cat, bool moderated, bool recommended);
+    bool showChannel(const QString &name, int people, int cat, int type, bool moderated, bool recommended);
 
     QString strSearch;
     bool bShowTeen;
@@ -61,15 +61,15 @@ private:
 
 protected:
     virtual void resizeEvent(QResizeEvent *);
-    virtual void keyPressEvent(QKeyEvent *);
+    virtual void keyPressEvent(QKeyEvent *event);
 
 private slots:
-    void allCellDoubleClicked(int, int);
-    void teenCellDoubleClicked(int, int);
-    void commonCellDoubleClicked(int, int);
-    void eroticCellDoubleClicked(int, int);
-    void thematicCellDoubleClicked(int, int);
-    void regionalCellDoubleClicked(int, int);
+    void allCellDoubleClicked(int row, int column);
+    void teenCellDoubleClicked(int row, int column);
+    void commonCellDoubleClicked(int row, int column);
+    void eroticCellDoubleClicked(int row, int column);
+    void thematicCellDoubleClicked(int row, int column);
+    void regionalCellDoubleClicked(int row, int column);
     void createList();
     void buttonClear();
     void showAdvOptions();

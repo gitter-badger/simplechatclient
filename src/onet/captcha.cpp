@@ -68,7 +68,7 @@ void DlgCaptcha::getImg()
     pReply->setProperty("category", "get_captcha");
 }
 
-void DlgCaptcha::gotImg(QByteArray bData)
+void DlgCaptcha::gotImg(const QByteArray &bData)
 {
     // show img
     QPixmap pixmap;

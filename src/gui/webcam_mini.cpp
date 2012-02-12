@@ -28,21 +28,21 @@ DlgWebcamMini::DlgWebcamMini(QString nick)
     setWindowTitle(nick);
 }
 
-void DlgWebcamMini::updateImage(const QByteArray &b)
+void DlgWebcamMini::updateImage(const QByteArray &data)
 {
     QPixmap pixmap;
-    pixmap.loadFromData(b);
+    pixmap.loadFromData(data);
     ui.label_img->setPixmap(pixmap);
 }
 
-void DlgWebcamMini::updateText(const QString &s)
+void DlgWebcamMini::updateText(const QString &text)
 {
-    ui.label_img->setText(s);
+    ui.label_img->setText(text);
 }
 
 void DlgWebcamMini::error(const QString &s)
 {
-    updateText(s + "<br>"+tr("Disconnected from server webcams"));
+    updateText(s + "<br/>"+tr("Disconnected from server webcams"));
 }
 
 void DlgWebcamMini::closeEvent(QCloseEvent *)

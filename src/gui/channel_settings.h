@@ -29,7 +29,7 @@ class DlgChannelSettings : public QDialog
 {
     Q_OBJECT
 public:
-    DlgChannelSettings(QWidget *, const QString&);
+    DlgChannelSettings(QWidget *parent, const QString &_strChannel);
 
 private:
     Ui::uiChannelSettings ui;
@@ -41,12 +41,12 @@ private:
     void createSignals();
 
     void refreshAll();
-    void setTabs(bool);
-    void setOwner(const QString&);
-    void addOp(const QString&);
-    void addHalfop(const QString&);
-    void addBan(const QString&, const QString&, const QString&, const QString&);
-    void addInvite(const QString&, const QString&, const QString&);
+    void setTabs(bool b);
+    void setOwner(const QString &strNick);
+    void addOp(const QString &strNick);
+    void addHalfop(const QString &strNick);
+    void addBan(const QString &strNick, const QString &strWho, const QString &strDT, const QString &strIPNick);
+    void addInvite(const QString &strNick, const QString &strWho, const QString &strDT);
     void clear();
 
 private slots:
@@ -59,10 +59,10 @@ private slots:
     void descChanged();
     void statusPub();
     void statusPriv();
-    void categoryChanged(int);
+    void categoryChanged(int index);
     void guardianInactive();
     void guardianActive();
-    void guardianClicked(int);
+    void guardianClicked(int iLevel);
     void passwordChanged();
     void limitChanged();
     void moderatedInactive();
@@ -72,7 +72,7 @@ private slots:
 
     void buttonPermissionAdd();
     void buttonPermissionRemove();
-    void changePermissionList(QModelIndex);
+    void changePermissionList(QModelIndex index);
     void buttonClose();
 };
 

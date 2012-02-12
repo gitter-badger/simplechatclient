@@ -28,7 +28,7 @@ class DlgIgnore : public QDialog
 {
     Q_OBJECT
 public:
-    DlgIgnore(QWidget *);
+    DlgIgnore(QWidget *parent = 0);
 
 private:
     Ui::uiIgnore ui;

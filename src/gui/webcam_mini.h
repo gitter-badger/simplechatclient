@@ -28,12 +28,12 @@ class DlgWebcamMini : public QDialog
 {
     Q_OBJECT
 public:
-    DlgWebcamMini(QString);
+    DlgWebcamMini(QString nick);
 
 public slots:
-    void updateImage(const QByteArray&);
-    void updateText(const QString&);
-    void error(const QString&);
+    void updateImage(const QByteArray &data);
+    void updateText(const QString &text);
+    void error(const QString &s);
 
 private:
     Ui::uiWebcamMini ui;

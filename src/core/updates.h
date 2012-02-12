@@ -39,10 +39,10 @@ public:
 private:
     QNetworkAccessManager *accessManager;
 
-    void version(const QString&);
+    void version(const QString &strVersion);
 
 private slots:
-    void updateFinished(QNetworkReply*);
+    void updateFinished(QNetworkReply *reply);
 };
 
 #endif // UPDATES_H

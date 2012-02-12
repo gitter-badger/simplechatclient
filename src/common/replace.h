@@ -27,9 +27,9 @@
 class Replace
 {
 public:
-    static void convertAndReplaceEmots(QString &);
-    static void convertEmots(QString &);
-    static void replaceEmots(QString &);
+    static void convertAndReplaceEmots(QString &strData);
+    static void convertEmots(QString &strData);
+    static void replaceEmots(QString &strData);
 };
 
 #endif // REPLACE_H

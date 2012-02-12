@@ -28,7 +28,7 @@ class DlgNotes : public QDialog
 {
     Q_OBJECT
 public:
-    DlgNotes(QWidget *);
+    DlgNotes(QWidget *parent = 0);
 
 private:
     Ui::uiNotes ui;

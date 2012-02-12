@@ -32,9 +32,9 @@ class TabManager : public QTabWidget
 {
     Q_OBJECT
 public:
-    TabManager(QWidget *);
-    void setAlert(int, ChannelColor);
-    void setColor(int, QColor);
+    TabManager(QWidget *parent = 0);
+    void setAlert(int index, ChannelColor c);
+    void setColor(int index, QColor color);
 
 private:
     QTabBar *tab;
@@ -42,13 +42,13 @@ private:
     QColor cGreen;
     QColor cHighlight;
 
-    void hideCloseButton(int);
+    void hideCloseButton(int index);
 
 private slots:
-    void tabMovedSlot(int, int);
+    void tabMovedSlot(int from, int to);
 
 protected:
-    virtual void tabInserted(int);
+    virtual void tabInserted(int index);
 
 signals:
     void tabMoved(int, int);

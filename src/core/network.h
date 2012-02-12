@@ -34,10 +34,9 @@ class Network : public QThread
 {
     Q_OBJECT
 public:
-    Network(const QString&, int);
+    Network(const QString &_strServer, int _iPort);
     virtual ~Network();
     void run();
-    void setReconnect(bool);
     bool isConnected();
     bool isWritable();
     QTimer *timerReconnect;
@@ -45,8 +44,8 @@ public:
 public slots:
     void connect();
     void disconnect();
-    void send(const QString&);
-    void sendQueue(const QString&);
+    void send(const QString &strData);
+    void sendQueue(const QString &strData);
 
 private:
     QString strServer;
@@ -63,15 +62,15 @@ private:
 
     void authorize();
     void clearAll();
-    void write(const QString&);
+    void write(const QString &strData);
 
 private slots:
     void connected();
     void disconnected();
     void reconnect();
     void recv();
-    void error(QAbstractSocket::SocketError);
-    void stateChanged(QAbstractSocket::SocketState);
+    void error(QAbstractSocket::SocketError error);
+    void stateChanged(QAbstractSocket::SocketState socketState);
     void timeoutPong();
     void timeoutPing();
     void timeoutLag();
@@ -81,11 +80,11 @@ signals:
     void setConnected();
     void setDisconnected();
     void setConnectEnabled(bool);
-    void kernel(const QString&);
-    void authorize(QString, QString, QString);
-    void showMessageAll(const QString&, MessageCategory);
-    void showMessageActive(const QString&, MessageCategory);
-    void updateNick(const QString&);
+    void kernel(const QString &strData);
+    void authorize(QString strCurrentNick, QString strNick, QString strPass);
+    void showMessageAll(const QString &strMessage, MessageCategory eMessageCategory);
+    void showMessageActive(const QString &strMessage, MessageCategory eMessageCategory);
+    void updateNick(const QString &strNick);
     void updateActions();
     void clearAllNicklist();
 };

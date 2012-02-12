@@ -35,20 +35,20 @@ class Config : public QObject
 {
     Q_OBJECT
 public:
-    Config(bool b = true, QString p = QString::null);
+    Config(bool _bProfileConfig = true, QString _strForceProfile = QString::null);
 
     /**
      * Get config value
      * @param QString key
      * @return QString value
      */
-    QString getValue(const QString&);
+    QString getValue(const QString &strKey);
     /**
      * Set config key value
      * @param QString key
      * @param QString value
      */
-    void setValue(const QString&, const QString&);
+    void setValue(const QString &strKey, const QString &strValue);
     /**
      * Read config to QHash
      * @return QHash all keys,values
@@ -61,11 +61,11 @@ private:
     bool bProfileConfig;
     QString strForceProfile;
 
-    void removeValue(const QString&);
+    void removeValue(const QString &strKey);
     void fixConfig();
     void createNewConfig();
     QHash<QString,QString> getDefaultValues();
-    void addConfigValue(QDomDocument *, QDomElement *, const QString&, const QString&);
+    void addConfigValue(QDomDocument *doc, QDomElement *root, const QString &strKey, const QString &strValue);
     void save();
 };
 

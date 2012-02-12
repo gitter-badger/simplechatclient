@@ -34,11 +34,10 @@ public:
      * @param QString file name
      * @param QString data
      */
-    static void save(const QString &, const QString &);
+    static void save(const QString &strChannel, const QString &strData);
 
 private:
-    Log();
-    static void convert(QString &);
+    static void convert(QString &strData);
 };
 
 #endif // LOG_H

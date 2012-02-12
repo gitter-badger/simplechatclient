@@ -30,7 +30,7 @@ class DlgWebcam : public QObject
 {
     Q_OBJECT
 public:
-    DlgWebcam(QString n = "", bool m = false);
+    DlgWebcam(QString _strNick = QString::null, bool _bMini = false);
     virtual ~DlgWebcam();
 
 private:

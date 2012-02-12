@@ -30,7 +30,7 @@ class DlgFindText : public QDialog
 {
     Q_OBJECT
 public:
-    DlgFindText(MainWindow *, ChatView *);
+    DlgFindText(MainWindow *parent, ChatView *_chatView);
 
 private:
     Ui::uiFindText ui;

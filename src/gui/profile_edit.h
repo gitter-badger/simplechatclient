@@ -29,7 +29,8 @@ class DlgProfileEdit : public QDialog
 {
     Q_OBJECT
 public:
-    DlgProfileEdit(MainWindow *, const QString&);
+    DlgProfileEdit(MainWindow *parent, const QString &_strNick);
+
 private:
     Ui::uiProfileEdit ui;
     QString strNick;

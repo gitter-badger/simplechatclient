@@ -34,15 +34,15 @@ public:
     AvatarEditScene(QObject *parent = 0);
     virtual ~AvatarEditScene();
 
-    void setPhoto(const QPixmap &, const QRect &);
+    void setPhoto(const QPixmap &pixPhoto, const QRect &crop);
 
 signals:
     void cropChanged(const QRect &);
 
 protected:
-    void mousePressEvent(QGraphicsSceneMouseEvent *);
-    void mouseMoveEvent(QGraphicsSceneMouseEvent *);
-    void mouseReleaseEvent(QGraphicsSceneMouseEvent *);
+    void mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent);
+    void mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent);
+    void mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent);
 
 private:
     QGraphicsTextItem *cursor;

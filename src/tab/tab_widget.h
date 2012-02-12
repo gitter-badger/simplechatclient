@@ -34,7 +34,7 @@ class TabWidget : public QWidget
 {
     Q_OBJECT
 public:
-    TabWidget(const QString&);
+    TabWidget(const QString &_strName);
     virtual ~TabWidget();
     inline QString getName() { return strName; }
     void refreshColors();

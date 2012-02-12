@@ -57,8 +57,8 @@ bool WebcamNetwork::isConnected()
 void WebcamNetwork::clearAll()
 {
     bText = true;
-    iBytes_need = 0;
-    iBytes_recv = 0;
+    iBytesNeed = 0;
+    iBytesRecv = 0;
 
     // timer
     if (timerPingPong->isActive())
@@ -96,16 +96,16 @@ void WebcamNetwork::networkDisconnect()
 
 void WebcamNetwork::networkSend(const QString &strData)
 {
-    QByteArray qbaData = (strData+"\n").toAscii();
+    QByteArray bData = (strData+"\n").toAscii();
 
-    networkSendb(qbaData);
+    networkSendb(bData);
 }
 
-void WebcamNetwork::networkSendb(const QByteArray &qbaData)
+void WebcamNetwork::networkSendb(const QByteArray &bData)
 {
     if ((socket->isValid()) && (socket->state() == QAbstractSocket::ConnectedState) && (socket->isWritable()))
     {
-        int ret = socket->write(qbaData);
+        int ret = socket->write(bData);
         if (ret == -1)
         {
             if (socket->state() == QAbstractSocket::ConnectedState)
@@ -142,22 +142,22 @@ void WebcamNetwork::networkRead()
     {
         for (int i = 0; i < socket->bytesAvailable(); i++)
         {
-            if (iBytes_recv < iBytes_need)
+            if (iBytesRecv < iBytesNeed)
             {
                 bData += socket->read(1);
-                iBytes_recv++;
+                iBytesRecv++;
             }
         }
 
-        if (iBytes_recv == iBytes_need)
+        if (iBytesRecv == iBytesNeed)
         {
             emit dataKernel(bData);
 
             // clear bdata
             bData.clear();
             bText = true;
-            iBytes_recv = 0;
-            iBytes_need = 0;
+            iBytesRecv = 0;
+            iBytesNeed = 0;
         }
     }
 

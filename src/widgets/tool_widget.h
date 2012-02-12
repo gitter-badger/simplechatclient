@@ -34,7 +34,7 @@ class ToolWidget : public QWidget
 {
     Q_OBJECT
 public:
-    ToolWidget(QWidget *);
+    ToolWidget(QWidget *parent = 0);
     virtual ~ToolWidget();
     void setChannelSettings(bool);
     void setDefaultValues();
@@ -42,7 +42,7 @@ public:
 
 public slots:
     void setModeration(bool);
-    void updateNick(const QString&);
+    void updateNick(const QString &strNick);
 
 private:
     bool bShowFontButtons;
@@ -88,8 +88,8 @@ private:
     QAction *size20Act;
     QAction *size24Act;
 
-    void pasteMultiLine(const QString&, bool);
-    void sendMessage(QString, bool);
+    void pasteMultiLine(const QString &strText, bool bModeration);
+    void sendMessage(QString strText, bool bModeration);
 
 private slots:
     void showFontButtonsClicked();

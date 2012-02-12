@@ -216,9 +216,9 @@ void DlgMyProfile::refresh()
     }
 }
 
-int DlgMyProfile::getIndex(QComboBox *comboBox, const QString &strCheck)
+int DlgMyProfile::getIndex(QComboBox *comboBox, const QString &strFindText)
 {
-    return comboBox->findText(strCheck);
+    return comboBox->findText(strFindText);
 }
 
 QString DlgMyProfile::convertTextToDesc(QString strContent)
@@ -389,14 +389,14 @@ QString DlgMyProfile::convertCountryToCode(const QString &strCountry)
     return QString::null;
 }
 
-QString DlgMyProfile::convertIntToMonth(const QString &strCheckMonth)
+QString DlgMyProfile::convertIntToMonth(const QString &strConvertMonth)
 {
     QStringList lMonths;
     lMonths << "" << tr("January") << tr("February") << tr("March") << tr("April") << tr("May") << tr("June") << tr("July") << tr("August") << tr("September") << tr("October") << tr("November") << tr("December");
     for (int i = 0; i < lMonths.size(); i++)
     {
         QString strMonth = (i < 10 ? "0"+QString::number(i) : QString::number(i));
-        if (strMonth == strCheckMonth)
+        if (strMonth == strConvertMonth)
             return lMonths.at(i);
     }
 

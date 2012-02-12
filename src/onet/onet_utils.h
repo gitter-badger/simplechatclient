@@ -26,7 +26,7 @@
 class OnetUtils
 {
 public:
-    static QString transformKey(QString);
+    static QString transformKey(QString s);
 };
 
 #endif // ONET_UTILS_H

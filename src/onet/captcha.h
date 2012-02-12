@@ -32,7 +32,7 @@ class DlgCaptcha : public QDialog
 {
     Q_OBJECT
 public:
-    DlgCaptcha(MainWindow *, QNetworkCookieJar *, QString *);
+    DlgCaptcha(MainWindow *parent, QNetworkCookieJar *_cookieJar, QString *_strCaptcha);
 
 private:
     Ui::uiCaptcha ui;
@@ -44,10 +44,10 @@ private:
     void createGui();
     void createSignals();
     void getImg();
-    void gotImg(QByteArray);
+    void gotImg(const QByteArray &bData);
 
 private slots:
-    void networkFinished(QNetworkReply *);
+    void networkFinished(QNetworkReply *reply);
     void buttonOk();
 };
 

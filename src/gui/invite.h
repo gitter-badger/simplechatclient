@@ -29,7 +29,7 @@ class DlgInvite : public QDialog
 {
     Q_OBJECT
 public:
-    DlgInvite(MainWindow *, const QString&, const QString&);
+    DlgInvite(MainWindow *parent, const QString &_strNick, const QString &_strChannel);
 
 private:
     Ui::uiInvite ui;

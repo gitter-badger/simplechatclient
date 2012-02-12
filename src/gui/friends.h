@@ -28,7 +28,7 @@ class DlgFriends : public QDialog
 {
     Q_OBJECT
 public:
-    DlgFriends(QWidget *);
+    DlgFriends(QWidget *parent = 0);
 
 private:
     Ui::uiFriends ui;
@@ -38,7 +38,7 @@ private:
 
 private slots:
     void refresh();
-    void tabChanged(int);
+    void tabChanged(int index);
     void itemClicked(QListWidgetItem*);
     void buttonAdd();
     void buttonRemove();

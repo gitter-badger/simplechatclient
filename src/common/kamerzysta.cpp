@@ -59,9 +59,9 @@ void Kamerzysta::close()
     delete timerGetPort;
 }
 
-void Kamerzysta::show(const QString &n)
+void Kamerzysta::show(const QString &_strNick)
 {
-    strNick = n;
+    strNick = _strNick;
 
     QString strUOKey = Core::instance()->settings.value("uokey");
 

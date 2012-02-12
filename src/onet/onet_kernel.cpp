@@ -43,9 +43,9 @@ OnetKernel::~OnetKernel()
     delete avatar;
 }
 
-void OnetKernel::kernel(const QString &param1)
+void OnetKernel::kernel(const QString &_strData)
 {
-    strData = param1;
+    strData = _strData;
     strDataList = strData.split(" ");
 
     if (Core::instance()->settings.value("debug") == "true")
@@ -589,7 +589,7 @@ void OnetKernel::raw_kick()
         msgBox->setIcon(QMessageBox::Information);
         msgBox->setWindowIcon(QIcon(":/images/logo.png"));
         msgBox->setWindowTitle(tr("Information"));
-        msgBox->setText(QString(tr("You have been kicked from %1 by %2")+"<br>"+tr("Reason: %3")).arg(strWho, strChannel, strReason));
+        msgBox->setText(QString(tr("You have been kicked from %1 by %2")+"<br/>"+tr("Reason: %3")).arg(strWho, strChannel, strReason));
         msgBox->show();
 
         pTabC->removeTab(strChannel);

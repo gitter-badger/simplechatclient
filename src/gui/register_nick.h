@@ -33,7 +33,7 @@ class DlgRegisterNick : public QDialog
 {
     Q_OBJECT
 public:
-    DlgRegisterNick(MainWindow *, DlgProfileAdd *);
+    DlgRegisterNick(MainWindow *parent, DlgProfileAdd *_pDlgProfileAdd);
     virtual ~DlgRegisterNick();
 
 private:
@@ -56,12 +56,12 @@ private:
     void getCookies();
     void gotCookies();
     void getImg();
-    void gotImg(const QByteArray&);
+    void gotImg(const QByteArray &bData);
     void registerNick();
-    void parseResult(const QString&);
+    void parseResult(const QString &strResult);
 
 private slots:
-    void networkFinished(QNetworkReply*);
+    void networkFinished(QNetworkReply *reply);
     void buttonRefresh();
     void buttonOk();
 };

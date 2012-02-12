@@ -34,7 +34,7 @@ class DlgEmoticonsThread : public QThread
     Q_OBJECT
 public:
     DlgEmoticonsThread();
-    void setDir(const QString&);
+    void setDir(const QString &_strDir);
 
 private:
     QString strDir;
@@ -43,7 +43,7 @@ protected:
     void run();
 
 signals:
-    void addEmoticon(const QString&, const QByteArray&);
+    void addEmoticon(const QString &strEmoticon, const QByteArray &bData);
     void sortEmoticons();
 };
 
@@ -51,12 +51,12 @@ class DlgEmoticonsTab : public QWidget
 {
     Q_OBJECT
 public:
-    DlgEmoticonsTab(const QString&, QWidget *parent = 0);
+    DlgEmoticonsTab(const QString &_strDir, QWidget *parent = 0);
     QListWidget *listWidget;
     DlgEmoticonsThread thread;
 
 public slots:
-    void addEmoticon(const QString&, const QByteArray&);
+    void addEmoticon(const QString &strEmoticon, const QByteArray &bData);
     void sortEmoticons();
 };
 
@@ -64,7 +64,7 @@ class DlgEmoticons : public QDialog
 {
     Q_OBJECT
 public:
-    DlgEmoticons(MainWindow *, InputLineWidget *);
+    DlgEmoticons(MainWindow *parent, InputLineWidget *_pInputLineWidget);
     virtual ~DlgEmoticons();
 
 private:

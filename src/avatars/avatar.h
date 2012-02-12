@@ -34,23 +34,23 @@ class Avatar : public QObject
 {
     Q_OBJECT
 public:
-    Avatar(TabContainer *);
+    Avatar(TabContainer *_pTabC);
     virtual ~Avatar();
-    void getAvatar(const QString&, const QString&, const QString&);
+    void getAvatar(const QString &strNickOrChannel, const QString &strCategory, const QString &strUrl);
 
 private:
     TabContainer *pTabC;
     QNetworkAccessManager *accessManager;
 
-    void getAvatarPath(QString&);
-    void saveAvatar(const QString&, const QByteArray&);
+    void getAvatarPath(QString &strAvatarPath);
+    void saveAvatar(const QString &strAvatarPath, const QByteArray &bAvatar);
 
 public slots:
-    void avatarFinished(QNetworkReply*);
-    void setAvatar(const QString&, const QString&, QString&, const QByteArray&);
+    void avatarFinished(QNetworkReply *reply);
+    void setAvatar(const QString &strNickOrChannel, const QString &strCategory, QString &strAvatarPath, const QByteArray &bAvatar);
 
 signals:
-    void setChannelAvatar(const QString&);
+    void setChannelAvatar(const QString &strNickOrChannel);
 };
 
 #endif // AVATAR_H

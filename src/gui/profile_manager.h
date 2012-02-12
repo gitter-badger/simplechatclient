@@ -30,9 +30,9 @@ class DlgProfileManager : public QDialog
 {
     Q_OBJECT
 public:
-    DlgProfileManager(MainWindow *, DlgOptions *);
+    DlgProfileManager(MainWindow *parent, DlgOptions *_pDlgOptions);
     void refreshAllLists();
-    bool existProfile(const QString&);
+    bool existProfile(const QString &strExistProfile);
 
 private:
     Ui::uiProfileManager ui;

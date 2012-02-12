@@ -30,7 +30,7 @@ class DlgMyProfile : public QDialog
 {
     Q_OBJECT
 public:
-    DlgMyProfile(QWidget *);
+    DlgMyProfile(QWidget *parent = 0);
     virtual ~DlgMyProfile();
 
 private:
@@ -42,17 +42,17 @@ private:
     void createSignals();
 
     void refresh();
-    int getIndex(QComboBox *, const QString&);
-    QString convertTextToDesc(QString);
-    QString convertDescToText(QString);
-    QString convertCodeToCountry(const QString&);
-    QString convertCountryToCode(const QString&);
-    QString convertIntToMonth(const QString&);
-    QString convertMonthToInt(const QString&);
-    QString convertType(const QString&);
+    int getIndex(QComboBox *comboBox, const QString &strFindText);
+    QString convertTextToDesc(QString strContent);
+    QString convertDescToText(QString strContent);
+    QString convertCodeToCountry(const QString &strCountryCode);
+    QString convertCountryToCode(const QString &strCountry);
+    QString convertIntToMonth(const QString &strConvertMonth);
+    QString convertMonthToInt(const QString &strMonth);
+    QString convertType(const QString &strType);
 
 private slots:
-    void avatarFinished(QNetworkReply*);
+    void avatarFinished(QNetworkReply *reply);
     void buttonOk();
 };
 

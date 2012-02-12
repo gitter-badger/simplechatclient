@@ -33,11 +33,11 @@ class OnetKernel : public QObject
 {
     Q_OBJECT
 public:
-    OnetKernel(TabContainer *);
+    OnetKernel(TabContainer *_pTabC);
     virtual ~OnetKernel();
 
 public slots:
-    void kernel(const QString&);
+    void kernel(const QString &_strData);
 
 private:
     TabContainer *pTabC;

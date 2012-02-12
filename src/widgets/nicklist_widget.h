@@ -28,14 +28,14 @@ class NickListWidget : public QListWidget
 {
     Q_OBJECT
 public:
-    NickListWidget(const QString&);
-    void addUser(const QString&, QString);
-    void delUser(const QString&);
-    bool existUser(const QString&);
-    void setUserAvatarPath(const QString&, const QString&);
-    QString getUserAvatarPath(const QString&);
-    void changeUserFlag(const QString&, QString);
-    QString getUserModes(const QString&);
+    NickListWidget(const QString &_strChannel);
+    void addUser(const QString &strNick, QString strModes);
+    void delUser(const QString &strNick);
+    bool existUser(const QString &strNick);
+    void setUserAvatarPath(const QString &strNick, const QString &strValue);
+    QString getUserAvatarPath(const QString &strNick);
+    void changeUserFlag(const QString &strNick, QString strFlag);
+    QString getUserModes(const QString &strNick);
     QList<QString> getUserList();
 
 private:
@@ -44,7 +44,7 @@ private:
     QAction *openChannelsActs[maxOpenChannels];
     QString strSelectedNick;
 
-    void convertFlag(QString&);
+    void convertFlag(QString &strFlag);
 
 private slots:
     void priv();
@@ -70,7 +70,7 @@ private slots:
     void invite();
 
 protected:
-    virtual void contextMenuEvent(QContextMenuEvent *);
+    virtual void contextMenuEvent(QContextMenuEvent *e);
 };
 
 #endif // NICKLIST_WIDGET_H

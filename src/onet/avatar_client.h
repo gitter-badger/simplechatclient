@@ -45,29 +45,29 @@ public:
     virtual ~AvatarClient();
 
     void requestGetCollections();
-    void requestGetCollectionAvatars(int);
+    void requestGetCollectionAvatars(int iId);
     void requestGetMyAvatars();
-    void requestSetAvatar(int, int);
-    void requestUploadImage(const QString &, const QByteArray &);
-    void requestUpdatePhoto(const MyAvatarModel &);
-    void requestAddPhoto(const MyAvatarModel &);
-    void requestDeletePhoto(const QString &);
-    void requestGetAvatar(const QString &, AvatarType);
+    void requestSetAvatar(int iImgId, int iAlbumId);
+    void requestUploadImage(const QString &strFileName, const QByteArray &bData);
+    void requestUpdatePhoto(const MyAvatarModel &avatar);
+    void requestAddPhoto(const MyAvatarModel &avatar);
+    void requestDeletePhoto(const QString &strImgId);
+    void requestGetAvatar(const QString &strUrl, AvatarType type);
 
 signals:
-    void getCollectionsReady(const QString &);
-    void getCollectionAvatarsReady(const QString &);
-    void getMyAvatarsReady(const QString &);
-    void setAvatarReady(const QString &);
-    void uploadImageReady(const QString &, const QString &);
-    void updatePhotoReady(const QString &);
-    void addPhotoReady(const QString &);
-    void deletePhotoReady(const QString &);
-    void getAvatarReady(const QString &, const QByteArray &, AvatarClient::AvatarType);
-    void errorOccured(QNetworkReply::NetworkError);
+    void getCollectionsReady(const QString &strResult);
+    void getCollectionAvatarsReady(const QString &strResult);
+    void getMyAvatarsReady(const QString &strResult);
+    void setAvatarReady(const QString &strResult);
+    void uploadImageReady(const QString &strResult, const QString &strFileName);
+    void updatePhotoReady(const QString &strResult);
+    void addPhotoReady(const QString &strResult);
+    void deletePhotoReady(const QString &strResult);
+    void getAvatarReady(const QString &strUrl, const QByteArray &bData, AvatarClient::AvatarType type);
+    void errorOccured(QNetworkReply::NetworkError error);
 
 protected slots:
-    void replyFinished(QNetworkReply *);
+    void replyFinished(QNetworkReply *pReply);
 
 private:
     // Names here intentionally similar to Onet Avatar API

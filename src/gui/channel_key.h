@@ -29,7 +29,7 @@ class DlgChannelKey : public QDialog
 {
     Q_OBJECT
 public:
-    DlgChannelKey(MainWindow *, const QString&);
+    DlgChannelKey(MainWindow *parent, const QString &_strChannel);
 
 private:
     Ui::uiChannelKey ui;

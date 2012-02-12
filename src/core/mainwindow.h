@@ -49,12 +49,12 @@ public:
     void refreshToolWidgetValues();
     // for core
     int getCurrentTabIndex();
-    int getUserCount(const QString&);
-    QString getUserModes(const QString&, const QString&);
-    QList<QString> getUserList(const QString&);
-    QString getUserAvatarPath(const QString&);
+    int getUserCount(const QString &strChannel);
+    QString getUserModes(const QString &strNick, const QString &strChannel);
+    QList<QString> getUserList(const QString &strChannel);
+    QString getUserAvatarPath(const QString &strNick);
     // for core
-    void showMessage(const QString& ,const QString&, MessageCategory, QString strTime = QString::null, QString strNick = QString::null);
+    void showMessage(const QString &strChannel ,const QString &strData, MessageCategory eMessageCategory, QString strTime = QString::null, QString strNick = QString::null);
 
 private:
     QToolBar *toolBar;
@@ -109,7 +109,7 @@ private slots:
     void openNotes();
     void openAbout();
     void buttonRestoreMinimalize();
-    void trayIconPressed(QSystemTrayIcon::ActivationReason);
+    void trayIconPressed(QSystemTrayIcon::ActivationReason activationReason);
     void ctrlTabPressed();
     void ctrlShiftTabPressed();
 
@@ -131,10 +131,10 @@ private slots:
     void setDisconnected();
     void updateActions();
     void updateAwaylogStatus();
-    void setConnectEnabled(bool);
-    void tabCloseRequested(int);
-    void currentTabChanged(int);
-    void tabMoved(int, int);
+    void setConnectEnabled(bool bSet);
+    void tabCloseRequested(int index);
+    void currentTabChanged(int index);
+    void tabMoved(int from, int to);
     void timeoutAutoaway();
 
 protected:

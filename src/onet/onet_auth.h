@@ -36,11 +36,11 @@ class OnetAuth : public QObject
 {
     Q_OBJECT
 public:
-    OnetAuth(TabContainer *);
+    OnetAuth(TabContainer *_pTabC);
     virtual ~OnetAuth();
 
 public slots:
-    void authorize(QString, QString, QString);
+    void authorize(QString _strNick, QString _strNickAuth, QString _strPass);
 
 private:
     enum AuthType
@@ -79,7 +79,7 @@ private:
 
     void getChat();
     void getDeploy();
-    void gotDeploy(const QString&);
+    void gotDeploy(const QString &strData);
     void getKropka();
     void getKropkaFull();
     void getSk();
@@ -90,12 +90,12 @@ private:
     void showCaptchaDialog();
     void getCheckCode();
 
-    QString getVersion(const QString&);
+    QString getVersion(const QString &strData);
     void saveCookies();
-    void requestFinished(const QString&);
+    void requestFinished(const QString &strData);
 
 private slots:
-    void networkFinished(QNetworkReply*);
+    void networkFinished(QNetworkReply *reply);
     void refreshSk();
 
 };

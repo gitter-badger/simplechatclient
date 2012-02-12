@@ -28,7 +28,7 @@ class DlgChannelFavourites : public QDialog
 {
     Q_OBJECT
 public:
-    DlgChannelFavourites(QWidget *);
+    DlgChannelFavourites(QWidget *parent = 0);
 
 private:
     Ui::uiChannelFavourites ui;

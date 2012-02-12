@@ -37,14 +37,14 @@ public:
      * @param QString data
      * @return QString encrypted data
      */
-    QString encrypt(QString, const QString&);
+    QString encrypt(QString strKey, const QString &strData);
     /**
      * Decrypt
      * @param QString key
      * @param QString data
      * @return QString decrypted data
      */
-    QString decrypt(QString, const QString&);
+    QString decrypt(QString strKey, const QString &strData);
 
 private:
     QString strIv;

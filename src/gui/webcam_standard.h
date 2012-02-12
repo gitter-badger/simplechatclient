@@ -33,16 +33,16 @@ public:
     virtual ~DlgWebcamStandard();
 
 public slots:
-    void updateImage(const QByteArray&);
-    void updateText(const QString&);
-    void updateRank(int);
-    void userError(const QString&);
-    void updateStatus(const QString&);
+    void updateImage(const QByteArray &image);
+    void updateText(const QString &text);
+    void updateRank(int rank);
+    void userError(const QString &error);
+    void updateStatus(const QString &status);
     void voteOk();
-    void error(const QString&);
-    void addUser(const QString&,int,const QString&);
-    void updateUser(const QString&,int,const QString&);
-    void removeUser(const QString&);
+    void error(const QString &error);
+    void addUser(const QString &strNick, int iRank, const QString &strSpectators);
+    void updateUser(const QString &strNick, int iRank, const QString &strSpectators);
+    void removeUser(const QString &strNick);
     void clearUsers();
 
 private:
@@ -55,7 +55,7 @@ private:
     bool existUser(QString);
 
 private slots:
-    void changeUser(QListWidgetItem *);
+    void changeUser(QListWidgetItem *item);
     void voteMinus();
     void votePlus();
     void enableVote();

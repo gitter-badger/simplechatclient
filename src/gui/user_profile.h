@@ -38,7 +38,7 @@ class DlgUserProfile : public QDialog
 {
     Q_OBJECT
 public:
-    DlgUserProfile(QWidget *, const QString&);
+    DlgUserProfile(QWidget *parent, const QString &_strNick);
     virtual ~DlgUserProfile();
 
 private:
@@ -82,16 +82,16 @@ private:
     void createGui();
     void createSignals();
 
-    QString convertDesc(QString);
-    QString convertSex(const QString&);
-    QString convertAge(const QString&);
-    QString convertCodeToCountry(const QString&);
-    QString convertType(const QString&);
-    void showAvatar(const QString&);
+    QString convertDesc(QString strContent);
+    QString convertSex(const QString &strSex);
+    QString convertAge(const QString &strDate);
+    QString convertCodeToCountry(const QString &strCountryCode);
+    QString convertType(const QString &strType);
+    void showAvatar(const QString &strUrl);
 
 private slots:
     void refreshUserInfo();
-    void avatarFinished(QNetworkReply*);
+    void avatarFinished(QNetworkReply *pReply);
     void buttonZoom();
     void buttonMore();
     void buttonClose();

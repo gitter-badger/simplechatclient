@@ -34,8 +34,8 @@ class Kamerzysta : public QObject
 {
     Q_OBJECT
 public:
-    Kamerzysta(QTcpSocket *);
-    void show(const QString&);
+    Kamerzysta(QTcpSocket *_socket);
+    void show(const QString &_strNick);
     void close();
 
 private:
@@ -47,10 +47,10 @@ private:
     int iTryGetPort;
     QTimer *timerGetPort;
 
-    void log(const QString&);
+    void log(const QString &strData);
     void getPath();
     void authorize();
-    void invite(QString);
+    void invite(QString strInviteNick);
     void kamerzystaNotRunning();
     void kamerzystaRunning();
 
@@ -60,7 +60,7 @@ private slots:
     void networkConnected();
     void networkDisconnect();
     void networkDisconnected();
-    void networkSend(const QString&);
+    void networkSend(const QString &strData);
     void networkRead();
     void error(QAbstractSocket::SocketError);
 };

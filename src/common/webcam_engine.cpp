@@ -57,25 +57,25 @@ void WebcamEngine::closeEngine()
     pWebcamNetwork->networkDisconnect();
 }
 
-void WebcamEngine::networkSend(const QString &s)
+void WebcamEngine::networkSend(const QString &_strData)
 {
-    pWebcamNetwork->networkSend(s);
+    pWebcamNetwork->networkSend(_strData);
 }
 
-void WebcamEngine::setUser(const QString &s)
+void WebcamEngine::setUser(const QString &_strNick)
 {
-    strNick = s;
+    strNick = _strNick;
 }
 
 /* from WebcamNetwork to DlgWebcam */
-void WebcamEngine::slotError(const QString &s)
+void WebcamEngine::slotError(const QString &strError)
 {
-    emit error(s);
+    emit error(strError);
 }
 
 void WebcamEngine::connected()
 {
-    emit updateText(tr("Connected to server webcam.")+"<br>"+tr("Please wait ..."));
+    emit updateText(tr("Connected to server webcam.")+"<br/>"+tr("Please wait ..."));
 
     QString strCAUTH = "1234567890123456";
     pWebcamNetwork->networkSend(QString("CAUTH %1 3.00.159").arg(strCAUTH));
@@ -93,24 +93,24 @@ void WebcamEngine::dataKernel(const QByteArray &bData)
 
     switch (iCamCmd)
     {
-    case 202:
-        raw_202b(bData);
-        break;
-    case 250:
-        raw_250b(bData);
-        break;
-    case 251:
-        raw_251b(bData);
-        break;
-    case 252:
-        raw_252b(bData);
-        break;
-    case 254:
-        raw_254b(bData);
-        break;
-    case 403:
-        raw_403b(bData);
-        break;
+        case 202:
+            raw_202b(bData);
+            break;
+        case 250:
+            raw_250b(bData);
+            break;
+        case 251:
+            raw_251b(bData);
+            break;
+        case 252:
+            raw_252b(bData);
+            break;
+        case 254:
+            raw_254b(bData);
+            break;
+        case 403:
+            raw_403b(bData);
+            break;
     }
 
     iCamCmd = 0;
@@ -234,7 +234,7 @@ void WebcamEngine::raw_251b(const QByteArray &data)
                 emit updateRank(iRank);
 
                 // update channels
-                //ui.textEdit_channels->setText(QString("<b>%1</b><br><font color=\"#0000ff\">%2</font>").arg(tr("Is on channels:"), mNickChannels[strUser]));
+                //ui.textEdit_channels->setText(QString("<b>%1</b><br/><font color=\"#0000ff\">%2</font>").arg(tr("Is on channels:"), mNickChannels[strUser]));
             }
 
             // cam off
@@ -327,109 +327,109 @@ void WebcamEngine::textKernel(const QString &strData)
 
     switch (cmd)
     {
-    case 200:
-        raw_200();
-        break;
-    case 202:
-        raw_202(strDataList);
-        break;
-    case 211:
-        raw_211(strDataList);
-        break;
-    case 221:
-        raw_221();
-        break;
-    case 231:
-        raw_231();
-        break;
-    case 232:
-        raw_232();
-        break;
-    case 233:
-        raw_233();
-        break;
-    case 250:
-        raw_250(strDataList);
-        break;
-    case 251:
-        raw_251(strDataList);
-        break;
-    case 252:
-        raw_252(strDataList);
-        break;
-    case 253:
-        raw_253(strDataList);
-        break;
-    case 254:
-        raw_254(strDataList);
-        break;
-    case 264:
-        raw_264();
-        break;
-    case 261:
-        raw_261();
-        break;
-    case 262:
-        raw_262();
-        break;
-    case 263:
-        raw_263();
-        break;
-    case 267:
-        raw_267();
-        break;
-    case 268:
-        raw_268();
-        break;
-    case 403:
-        raw_403(strDataList);
-        break;
-    case 405:
-        raw_405(strDataList);
-        break;
-    case 406:
-        raw_406();
-        break;
-    case 408:
-        raw_408(strDataList);
-        break;
-    case 410:
-        raw_410();
-        break;
-    case 411:
-        raw_411();
-        break;
-    case 412:
-        raw_412(strDataList);
-        break;
-    case 413:
-        raw_413(strDataList);
-        break;
-    case 418:
-        raw_418();
-        break;
-    case 501:
-        raw_501();
-        break;
-    case 502:
-        raw_502();
-        break;
-    case 504:
-        raw_504();
-        break;
-    case 508:
-        raw_508();
-        break;
-    case 515:
-        raw_515();
-        break;
-    case 520:
-        raw_520();
-        break;
-    default:
-        if (Core::instance()->settings.value("debug") == "true")
-            qDebug() << "Unknown CAM RAW:" << strData;
-        break;
+        case 200:
+            raw_200();
+            break;
+        case 202:
+            raw_202(strDataList);
+            break;
+        case 211:
+            raw_211(strDataList);
+            break;
+        case 221:
+            raw_221();
+            break;
+        case 231:
+            raw_231();
+            break;
+        case 232:
+            raw_232();
+            break;
+        case 233:
+            raw_233();
+            break;
+        case 250:
+            raw_250(strDataList);
+            break;
+        case 251:
+            raw_251(strDataList);
+            break;
+        case 252:
+            raw_252(strDataList);
+            break;
+        case 253:
+            raw_253(strDataList);
+            break;
+        case 254:
+            raw_254(strDataList);
+            break;
+        case 264:
+            raw_264();
+            break;
+        case 261:
+            raw_261();
+            break;
+        case 262:
+            raw_262();
+            break;
+        case 263:
+            raw_263();
+            break;
+        case 267:
+            raw_267();
+            break;
+        case 268:
+            raw_268();
+            break;
+        case 403:
+            raw_403(strDataList);
+            break;
+        case 405:
+            raw_405(strDataList);
+            break;
+        case 406:
+            raw_406();
+            break;
+        case 408:
+            raw_408(strDataList);
+            break;
+        case 410:
+            raw_410();
+            break;
+        case 411:
+            raw_411();
+            break;
+        case 412:
+            raw_412(strDataList);
+            break;
+        case 413:
+            raw_413(strDataList);
+            break;
+        case 418:
+            raw_418();
+            break;
+        case 501:
+            raw_501();
+            break;
+        case 502:
+            raw_502();
+            break;
+        case 504:
+            raw_504();
+            break;
+        case 508:
+            raw_508();
+            break;
+        case 515:
+            raw_515();
+            break;
+        case 520:
+            raw_520();
+            break;
+        default:
+            if (Core::instance()->settings.value("debug") == "true")
+                qDebug() << "Unknown CAM RAW:" << strData;
+            break;
     }
 }
 

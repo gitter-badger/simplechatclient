@@ -55,21 +55,21 @@ OnetAuth::~OnetAuth()
     cookieJar->deleteLater();
 }
 
-void OnetAuth::authorize(QString p1, QString p2, QString p3)
+void OnetAuth::authorize(QString _strNick, QString _strNickAuth, QString _strPass)
 {
     // fix too long registered nick
-    if ((p1.size() > 32))
-        p1 = p1.left(32);
+    if ((_strNick.size() > 32))
+        _strNick = _strNick.left(32);
     // fix too long unregistered nick
-    if ((p3.isEmpty()) && (p1.size() > 31))
-        p1 = p1.left(31);
+    if ((_strPass.isEmpty()) && (_strNick.size() > 31))
+        _strNick = _strNick.left(31);
     // fix too long auth nick
-    if ((p2.size() > 32))
-        p2 = p2.left(32);
+    if ((_strNickAuth.size() > 32))
+        _strNickAuth = _strNickAuth.left(32);
 
-    strNick = p1;
-    strNickAuth = p2;
-    strPass = p3;
+    strNick = _strNick;
+    strNickAuth = _strNickAuth;
+    strPass = _strPass;
     strNickLen = QString("%1").arg(strNick.length());
     bRegisteredNick = strPass.isEmpty() ? false : true;
     bOverride = Core::instance()->settings.value("override") == "true" ? true : false;

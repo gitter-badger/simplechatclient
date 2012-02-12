@@ -28,9 +28,9 @@ class ChatView : public QWebView
 {
     Q_OBJECT
 public:
-    ChatView(const QString&);
+    ChatView(const QString &_strChatViewChannel);
     void clearMessages();
-    void displayMessage(const QString&, MessageCategory, QString strTime = QString::null, QString strNick = QString::null);
+    void displayMessage(const QString &strData, MessageCategory eMessageCategory, QString strTime = QString::null, QString strNick = QString::null);
     void refreshCSS();
 
 private:
@@ -42,10 +42,10 @@ private:
     bool bScroll;
 
     void createBody();
-    void menuNick(QContextMenuEvent *);
-    void menuChannel(QContextMenuEvent *);
-    void menuWebsite(QContextMenuEvent *);
-    void menuStandard(QContextMenuEvent *);
+    void menuNick(QContextMenuEvent *event);
+    void menuChannel(QContextMenuEvent *event);
+    void menuWebsite(QContextMenuEvent *event);
+    void menuStandard(QContextMenuEvent *event);
 
 private slots:
     void joinChannel();
@@ -78,7 +78,7 @@ private slots:
     void scrollToBottom();
 
 protected:
-    virtual void contextMenuEvent(QContextMenuEvent *);
+    virtual void contextMenuEvent(QContextMenuEvent *event);
 };
 
 #endif // CHAT_VIEW_H
