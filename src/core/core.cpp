@@ -1,7 +1,7 @@
 /****************************************************************************
  *                                                                          *
  *   This file is part of Simple Chat Client                                *
- *   Copyright (C) 2011 Piotr Łuczko <piotr.luczko@gmail.com>               *
+ *   Copyright (C) 2012 Piotr Łuczko <piotr.luczko@gmail.com>               *
  *                                                                          *
  *   This program is free software: you can redistribute it and/or modify   *
  *   it under the terms of the GNU General Public License as published by   *
@@ -132,7 +132,7 @@ void Core::createSettings()
     settings["debug"] = strDebug;
 
     // default settings
-    settings["version"] = "1.1.4.1172";
+    settings["version"] = "1.1.4.1173";
     settings["available_version"] = "";
     settings["logged"] = "false";
     settings["busy"] = "false";

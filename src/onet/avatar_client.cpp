@@ -1,7 +1,7 @@
 /****************************************************************************
  *                                                                          *
  *   This file is part of Simple Chat Client                                *
- *   Copyright (C) 2011 Piotr Łuczko <piotr.luczko@gmail.com>               *
+ *   Copyright (C) 2012 Piotr Łuczko <piotr.luczko@gmail.com>               *
  *   Copyright (C) 2012 Dariusz Markowicz <dmarkowicz@alari.pl>             *
  *                                                                          *
  *   This program is free software: you can redistribute it and/or modify   *
