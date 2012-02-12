@@ -274,6 +274,12 @@ qt4_add_resources (scc_QRC_SRCS ${scc_QRC})
 # ui
 qt4_wrap_ui (scc_UIS_H ${scc_UIS})
 
+# moc
+qt_wrap_cpp (scc MOC_FILES ${scc_MOC_HDRS})
+
+# resource
+set (scc_RESOURCE ../scc_mingw.rc)
+
 include_directories (${CMAKE_SOURCE_DIR}/ui)
 
 if (MINGW)
@@ -292,12 +298,9 @@ if (MINGW)
 	set (CMAKE_CXX_LINK_FLAGS "${CMAKE_CXX_LINK_FLAGS} -mwindows")
 endif (MINGW)
 
-# moc
-qt_wrap_cpp (scc MOC_FILES ${scc_MOC_HDRS})
-
 # link
 if (MINGW) # mingw
-	add_executable (scc ${scc_SRCS} ${MOC_FILES} ${scc_HDRS} ${scc_QRC_SRCS} ${scc_UIS_H})
+	add_executable (scc ${scc_SRCS} ${MOC_FILES} ${scc_HDRS} ${scc_QRC_SRCS} ${scc_UIS_H} ${scc_RESOURCE})
 else (MINGW) # linux
 	add_executable (scc ${scc_SRCS} ${MOC_FILES} ${scc_HDRS} ${scc_QRC_SRCS} ${scc_UIS_H})
 endif (MINGW)
