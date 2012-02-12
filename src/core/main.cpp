@@ -77,6 +77,7 @@ int main(int argc, char *argv[])
 
     // app
     QApplication app(argc, argv);
+    QApplication::setQuitOnLastWindowClosed(false);
 
     // set codec
     QTextCodec::setCodecForCStrings(QTextCodec::codecForName("ISO-8859-2"));

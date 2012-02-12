@@ -260,7 +260,6 @@ void MainWindow::createMenus()
     trayIcon = new QSystemTrayIcon(QIcon(":/images/logo.png"), this);
     trayIcon->setContextMenu(trayMenu);
     trayIcon->setToolTip("Simple Chat Client");
-    trayIcon->show();
 }
 
 void MainWindow::createTrayMenu()
@@ -281,7 +280,7 @@ void MainWindow::createSignals()
 {
     // signals buttons
     connect(connectAct, SIGNAL(triggered()), this, SLOT(buttonConnect()));
-    connect(closeAct, SIGNAL(triggered()), this, SLOT(buttonClose()));
+    connect(closeAct, SIGNAL(triggered()), qApp, SLOT(quit()));
     connect(optionsAct, SIGNAL(triggered()), this, SLOT(openOptions()));
     connect(aboutAct, SIGNAL(triggered()), this, SLOT(openAbout()));
     connect(restoreMinimalizeAct, SIGNAL(triggered()), this, SLOT(buttonRestoreMinimalize()));
@@ -626,18 +625,19 @@ void MainWindow::openAbout()
     DlgAbout(this).exec();
 }
 
-void MainWindow::buttonClose()
-{
-    this->close();
-}
-
 // tray button
 void MainWindow::buttonRestoreMinimalize()
 {
     if (this->isVisible())
+    {
+        trayIcon->setVisible(true);
         this->hide();
+    }
     else
+    {
+        trayIcon->setVisible(false);
         this->showNormal();
+    }
 }
 
 // tray
@@ -646,9 +646,15 @@ void MainWindow::trayIconPressed(QSystemTrayIcon::ActivationReason activationRea
     if (activationReason == QSystemTrayIcon::Trigger)
     {
         if (this->isVisible())
+        {
+            trayIcon->setVisible(true);
             this->hide();
+        }
         else
+        {
+            trayIcon->setVisible(false);
             this->showNormal();
+        }
     }
     else if (activationReason == QSystemTrayIcon::Context)
         createTrayMenu();
@@ -758,13 +764,14 @@ void MainWindow::resizeEvent(QResizeEvent *e)
     pTabC->resizeMainWindow(e->size());
 }
 
-void MainWindow::changeEvent(QEvent *event)
+void MainWindow::closeEvent(QCloseEvent *event)
 {
-    QMainWindow::changeEvent(event);
-
-    if (event->type() == QEvent::WindowStateChange)
+    if (isVisible() && Core::instance()->settings["minimize_to_tray"] == "true")
     {
-        if (isMinimized() && Core::instance()->settings["minimize_to_tray"] == "true")
-            QMetaObject::invokeMethod(this, "hide", Qt::QueuedConnection);
+        trayIcon->setVisible(true);
+        hide();
+        event->ignore();
     }
+    else
+        qApp->quit();
 }

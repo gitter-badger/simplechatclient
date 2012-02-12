@@ -104,7 +104,6 @@ private:
 private slots:
     void showWelcome();
     void buttonConnect();
-    void buttonClose();
     void openOptions();
     void openAwaylog();
     void openNotes();
@@ -140,7 +139,7 @@ private slots:
 
 protected:
     void resizeEvent(QResizeEvent *);
-    void changeEvent(QEvent *);
+    void closeEvent(QCloseEvent *);
 };
 
 #endif // MAINWINDOW_H
