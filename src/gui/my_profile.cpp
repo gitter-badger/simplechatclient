@@ -216,7 +216,7 @@ void DlgMyProfile::refresh()
     }
 }
 
-int DlgMyProfile::getIndex(QComboBox *comboBox, QString strCheck)
+int DlgMyProfile::getIndex(QComboBox *comboBox, const QString &strCheck)
 {
     return comboBox->findText(strCheck);
 }
@@ -307,7 +307,7 @@ QString DlgMyProfile::convertDescToText(QString strContent)
     return strContent;
 }
 
-QString DlgMyProfile::convertCodeToCountry(QString strCountryCode)
+QString DlgMyProfile::convertCodeToCountry(const QString &strCountryCode)
 {
     QStringList lCodes =  (QStringList() <<
        "AF" << "AL" << "DZ" << "AD" << "AO" << "AI" << "AQ" << "AG" << "AN" <<
@@ -342,16 +342,13 @@ QString DlgMyProfile::convertCodeToCountry(QString strCountryCode)
     for (int i = 0; i < lCodes.size(); i++)
     {
         if (strCountryCode == lCodes.at(i))
-        {
-            QString strCountry = lCountries.at(i);
-            return strCountry;
-        }
+            return lCountries.at(i);
     }
 
     return QString::null;
 }
 
-QString DlgMyProfile::convertCountryToCode(QString strCountry)
+QString DlgMyProfile::convertCountryToCode(const QString &strCountry)
 {
     QStringList lCodes =  (QStringList() <<
        "AF" << "AL" << "DZ" << "AD" << "AO" << "AI" << "AQ" << "AG" << "AN" <<
@@ -386,16 +383,13 @@ QString DlgMyProfile::convertCountryToCode(QString strCountry)
     for (int i = 0; i < lCountries.size(); i++)
     {
         if (strCountry == lCountries.at(i))
-        {
-            QString strCountryCode = lCodes.at(i);
-            return strCountryCode;
-        }
+            return lCodes.at(i);
     }
 
     return QString::null;
 }
 
-QString DlgMyProfile::convertIntToMonth(QString strCheckMonth)
+QString DlgMyProfile::convertIntToMonth(const QString &strCheckMonth)
 {
     QStringList lMonths;
     lMonths << "" << tr("January") << tr("February") << tr("March") << tr("April") << tr("May") << tr("June") << tr("July") << tr("August") << tr("September") << tr("October") << tr("November") << tr("December");
@@ -409,7 +403,7 @@ QString DlgMyProfile::convertIntToMonth(QString strCheckMonth)
     return QString::null;
 }
 
-QString DlgMyProfile::convertMonthToInt(QString strMonth)
+QString DlgMyProfile::convertMonthToInt(const QString &strMonth)
 {
     QStringList lMonths;
     lMonths << "" << tr("January") << tr("February") << tr("March") << tr("April") << tr("May") << tr("June") << tr("July") << tr("August") << tr("September") << tr("October") << tr("November") << tr("December");
@@ -424,18 +418,18 @@ QString DlgMyProfile::convertMonthToInt(QString strMonth)
     return QString::null;
 }
 
-QString DlgMyProfile::convertType(QString strType)
+QString DlgMyProfile::convertType(const QString &strType)
 {
     if (strType == "0")
-        strType = tr("Novice");
+        return tr("Novice");
     else if (strType == "1")
-        strType = tr("Beginner");
+        return tr("Beginner");
     else if (strType == "2")
-        strType = tr("Master");
+        return tr("Master");
     else if (strType == "3")
-        strType = tr("Guru");
-
-    return strType;
+        return tr("Guru");
+    else
+        return strType;
 }
 
 void DlgMyProfile::buttonOk()

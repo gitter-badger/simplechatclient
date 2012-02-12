@@ -40,7 +40,7 @@ private:
     void createGui();
     void createSignals();
     void refresh();
-    void removeNick(QString);
+    void removeNick(const QString&);
     bool existNick();
 
 private slots:

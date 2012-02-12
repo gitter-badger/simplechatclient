@@ -29,7 +29,7 @@ class DlgChannelSettings : public QDialog
 {
     Q_OBJECT
 public:
-    DlgChannelSettings(QWidget *, QString);
+    DlgChannelSettings(QWidget *, const QString&);
 
 private:
     Ui::uiChannelSettings ui;
@@ -42,11 +42,11 @@ private:
 
     void refreshAll();
     void setTabs(bool);
-    void setOwner(QString);
-    void addOp(QString);
-    void addHalfop(QString);
-    void addBan(QString, QString, QString, QString);
-    void addInvite(QString, QString, QString);
+    void setOwner(const QString&);
+    void addOp(const QString&);
+    void addHalfop(const QString&);
+    void addBan(const QString&, const QString&, const QString&, const QString&);
+    void addInvite(const QString&, const QString&, const QString&);
     void clear();
 
 private slots:

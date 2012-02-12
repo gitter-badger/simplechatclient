@@ -22,7 +22,7 @@
 #include <QPushButton>
 #include "webbrowser.h"
 
-DlgWebBrowser::DlgWebBrowser(QWidget *parent, QUrl url) : QDialog(parent)
+DlgWebBrowser::DlgWebBrowser(QWidget *parent, const QUrl &url) : QDialog(parent)
 {
     ui.setupUi(this);
     setAttribute(Qt::WA_DeleteOnClose); // require by show method - prevent hangup!

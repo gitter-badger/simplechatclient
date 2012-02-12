@@ -32,7 +32,7 @@ class DlgProfileManager : public QDialog
 public:
     DlgProfileManager(MainWindow *, DlgOptions *);
     void refreshAllLists();
-    bool existProfile(QString);
+    bool existProfile(const QString&);
 
 private:
     Ui::uiProfileManager ui;

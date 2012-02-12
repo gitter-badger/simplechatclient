@@ -29,7 +29,7 @@
 #include "mainwindow.h"
 #include "update.h"
 
-DlgUpdate::DlgUpdate(MainWindow *parent, QString _strVersion) : QDialog(parent), strVersion(_strVersion)
+DlgUpdate::DlgUpdate(MainWindow *parent, const QString &_strVersion) : QDialog(parent), strVersion(_strVersion)
 {
     ui.setupUi(this);
     setWindowFlags(Qt::Dialog | Qt::WindowStaysOnTopHint);
@@ -111,7 +111,7 @@ void DlgUpdate::gotSite(QString site)
         QMessageBox::critical(0, "", tr("Cannot download file"));
 }
 
-void DlgUpdate::gotFile(QByteArray bData)
+void DlgUpdate::gotFile(const QByteArray &bData)
 {
     QString path;
 

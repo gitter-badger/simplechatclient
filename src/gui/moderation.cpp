@@ -24,7 +24,7 @@
 #include "core.h"
 #include "moderation.h"
 
-DlgModeration::DlgModeration(QWidget *parent, QString _strCurrentChannel) : QDialog(parent), strCurrentChannel(_strCurrentChannel)
+DlgModeration::DlgModeration(QWidget *parent, const QString &_strCurrentChannel) : QDialog(parent), strCurrentChannel(_strCurrentChannel)
 {
     ui.setupUi(this);
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);

@@ -23,7 +23,7 @@
 #include "mainwindow.h"
 #include "user_avatar.h"
 
-DlgUserAvatar::DlgUserAvatar(MainWindow *parent, QPixmap _avatar) : QDialog(parent), avatar(_avatar)
+DlgUserAvatar::DlgUserAvatar(MainWindow *parent, const QPixmap &_avatar) : QDialog(parent), avatar(_avatar)
 {
     ui.setupUi(this);
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);

@@ -31,7 +31,7 @@ class DlgUpdate : public QDialog
 {
     Q_OBJECT
 public:
-    DlgUpdate(MainWindow *, QString);
+    DlgUpdate(MainWindow *, const QString&);
     virtual ~DlgUpdate();
 
 private:
@@ -43,7 +43,7 @@ private:
     void setDefaultValues();
     void createSignals();
     void gotSite(QString);
-    void gotFile(QByteArray);
+    void gotFile(const QByteArray&);
 
 private slots:
     void buttonDownload();

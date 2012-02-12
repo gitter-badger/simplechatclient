@@ -26,7 +26,7 @@
 #include "mainwindow.h"
 #include "profile_edit.h"
 
-DlgProfileEdit::DlgProfileEdit(MainWindow *parent, QString _strNick) : QDialog(parent), strNick(_strNick)
+DlgProfileEdit::DlgProfileEdit(MainWindow *parent, const QString &_strNick) : QDialog(parent), strNick(_strNick)
 {
     ui.setupUi(this);
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);

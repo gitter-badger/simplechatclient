@@ -64,7 +64,7 @@ void DlgOfflineMsg::createSignals()
     connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(buttonClose()));
 }
 
-void DlgOfflineMsg::removeNick(QString strRemoveNick)
+void DlgOfflineMsg::removeNick(const QString &strRemoveNick)
 {
     // list
     Core::instance()->lOfflineNicks.removeOne(strRemoveNick);

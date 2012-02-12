@@ -23,7 +23,7 @@
 #include "mainwindow.h"
 #include "invite.h"
 
-DlgInvite::DlgInvite(MainWindow *parent, QString _strNick, QString _strChannel) : QDialog(parent), strNick(_strNick), strChannel(_strChannel)
+DlgInvite::DlgInvite(MainWindow *parent, const QString &_strNick, const QString &_strChannel) : QDialog(parent), strNick(_strNick), strChannel(_strChannel)
 {
     ui.setupUi(this);
     setAttribute(Qt::WA_DeleteOnClose); // require by show method - prevent hangup!

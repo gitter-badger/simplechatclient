@@ -1083,7 +1083,7 @@ void DlgOptions::setWinamp()
     delete pConfig;
 }
 
-void DlgOptions::setColor(QString strKey)
+void DlgOptions::setColor(const QString &strKey)
 {
     // get current value
     QString strDefaultColor = Core::instance()->settings.value(strKey);

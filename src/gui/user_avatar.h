@@ -29,7 +29,7 @@ class DlgUserAvatar : public QDialog
 {
     Q_OBJECT
 public:
-    DlgUserAvatar(MainWindow *, QPixmap);
+    DlgUserAvatar(MainWindow *, const QPixmap&);
 
 private:
     Ui::uiUserAvatar ui;

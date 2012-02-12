@@ -29,7 +29,7 @@
 
 DlgEmoticonsThread::DlgEmoticonsThread() {}
 
-void DlgEmoticonsThread::setDir(QString _strDir)
+void DlgEmoticonsThread::setDir(const QString &_strDir)
 {
     strDir = _strDir;
 }
@@ -61,7 +61,7 @@ void DlgEmoticonsThread::run()
     exec();
 }
 
-DlgEmoticonsTab::DlgEmoticonsTab(QString _strDir, QWidget *parent) : QWidget(parent)
+DlgEmoticonsTab::DlgEmoticonsTab(const QString &_strDir, QWidget *parent) : QWidget(parent)
 {
     listWidget = new QListWidget(this);
     listWidget->setEditTriggers(QAbstractItemView::NoEditTriggers);
@@ -75,14 +75,14 @@ DlgEmoticonsTab::DlgEmoticonsTab(QString _strDir, QWidget *parent) : QWidget(par
     mainLayout->addWidget(listWidget);
     setLayout(mainLayout);
 
-    connect(&thread, SIGNAL(addEmoticon(QString, QByteArray)), this, SLOT(addEmoticon(QString, QByteArray)));
+    connect(&thread, SIGNAL(addEmoticon(const QString&, const QByteArray&)), this, SLOT(addEmoticon(const QString&, const QByteArray&)));
     connect(&thread, SIGNAL(sortEmoticons()), this, SLOT(sortEmoticons()));
 
     thread.setDir(_strDir);
     thread.start();
 }
 
-void DlgEmoticonsTab::addEmoticon(QString strEmoticon, QByteArray bData)
+void DlgEmoticonsTab::addEmoticon(const QString &strEmoticon, const QByteArray &bData)
 {
     QPixmap pix;
     if (!bData.isEmpty())

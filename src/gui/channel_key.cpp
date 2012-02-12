@@ -24,7 +24,7 @@
 #include "mainwindow.h"
 #include "channel_key.h"
 
-DlgChannelKey::DlgChannelKey(MainWindow *parent, QString _strChannel) : QDialog(parent), strChannel(_strChannel)
+DlgChannelKey::DlgChannelKey(MainWindow *parent, const QString &_strChannel) : QDialog(parent), strChannel(_strChannel)
 {
     ui.setupUi(this);
     setAttribute(Qt::WA_DeleteOnClose); // require by show method - prevent hangup!

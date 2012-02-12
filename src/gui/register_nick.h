@@ -56,9 +56,9 @@ private:
     void getCookies();
     void gotCookies();
     void getImg();
-    void gotImg(QByteArray);
+    void gotImg(const QByteArray&);
     void registerNick();
-    void parseResult(QString);
+    void parseResult(const QString&);
 
 private slots:
     void networkFinished(QNetworkReply*);

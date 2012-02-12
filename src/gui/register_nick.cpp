@@ -109,7 +109,7 @@ void DlgRegisterNick::getImg()
     pReply->setProperty("category", RT_img);
 }
 
-void DlgRegisterNick::gotImg(QByteArray bData)
+void DlgRegisterNick::gotImg(const QByteArray &bData)
 {
     // show img
     QPixmap pixmap;
@@ -167,7 +167,7 @@ void DlgRegisterNick::registerNick()
 // <?xml version="1.0" encoding="ISO-8859-2"?><root><status>-2</status><error err_code="0"  err_text="OK" ></error></root>
 // <?xml version="1.0" encoding="ISO-8859-2"?><root><status>-1</status><error err_code="0"  err_text="OK" ></error></root>
 // <?xml version="1.0" encoding="ISO-8859-2"?><root><status>1</status><error err_code="0"  err_text="OK" ></error></root>
-void DlgRegisterNick::parseResult(QString strResult)
+void DlgRegisterNick::parseResult(const QString &strResult)
 {
     QDomDocument doc;
     doc.setContent(strResult);

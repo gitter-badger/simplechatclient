@@ -42,14 +42,14 @@ private:
     void createSignals();
 
     void refresh();
-    int getIndex(QComboBox *, QString);
+    int getIndex(QComboBox *, const QString&);
     QString convertTextToDesc(QString);
     QString convertDescToText(QString);
-    QString convertCodeToCountry(QString);
-    QString convertCountryToCode(QString);
-    QString convertIntToMonth(QString);
-    QString convertMonthToInt(QString);
-    QString convertType(QString);
+    QString convertCodeToCountry(const QString&);
+    QString convertCountryToCode(const QString&);
+    QString convertIntToMonth(const QString&);
+    QString convertMonthToInt(const QString&);
+    QString convertType(const QString&);
 
 private slots:
     void avatarFinished(QNetworkReply*);

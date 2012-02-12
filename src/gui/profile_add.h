@@ -31,7 +31,7 @@ class DlgProfileAdd : public QDialog
     Q_OBJECT
 public:
     DlgProfileAdd(MainWindow *, DlgProfileManager *);
-    void setNickPass(QString, QString);
+    void setNickPass(const QString&, const QString&);
 
 private:
     Ui::uiProfileAdd ui;

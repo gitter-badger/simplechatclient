@@ -62,7 +62,7 @@ void DlgMyStats::createSignals()
     connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(close()));
 }
 
-int DlgMyStats::replaceValue(QString strValue)
+int DlgMyStats::replaceValue(const QString &strValue)
 {
     int iValue = 0;
 

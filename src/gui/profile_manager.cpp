@@ -84,7 +84,7 @@ void DlgProfileManager::refreshAllLists()
     pDlgOptions->refreshProfilesList(); // in options
 }
 
-bool DlgProfileManager::existProfile(QString strExistProfile)
+bool DlgProfileManager::existProfile(const QString &strExistProfile)
 {
     QDir dir(path);
     dir.setSorting(QDir::Name);

@@ -130,7 +130,7 @@ void DlgChannelList::createSignals()
     connect(ui.checkBox_recommended, SIGNAL(clicked()), this, SLOT(createList()));
 }
 
-bool DlgChannelList::isErotic(QString strChannel)
+bool DlgChannelList::isErotic(const QString &strChannel)
 {
     for (int i = 0; i < Core::instance()->lChannelList.size(); i++)
     {
@@ -186,7 +186,7 @@ QString DlgChannelList::channelCatToString(int cat, bool moderated, bool recomme
     return strResult;
 }
 
-bool DlgChannelList::showChannel(QString name, int people, int cat, int type, bool moderated, bool recommended)
+bool DlgChannelList::showChannel(const QString &name, int people, int cat, int type, bool moderated, bool recommended)
 {
     if ((people == 0) && (bHideEmpty))
         return false;

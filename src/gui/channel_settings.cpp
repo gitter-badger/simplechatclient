@@ -28,7 +28,7 @@
 #include "simple_stats_widget.h"
 #include "channel_settings.h"
 
-DlgChannelSettings::DlgChannelSettings(QWidget *parent, QString _strChannel) : QDialog(parent), strChannel(_strChannel)
+DlgChannelSettings::DlgChannelSettings(QWidget *parent, const QString &_strChannel) : QDialog(parent), strChannel(_strChannel)
 {
     ui.setupUi(this);
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
@@ -522,7 +522,7 @@ void DlgChannelSettings::setTabs(bool b)
     ui.tabWidget->setTabEnabled(3, b);
 }
 
-void DlgChannelSettings::setOwner(QString strNick)
+void DlgChannelSettings::setOwner(const QString &strNick)
 {
     ui.label_owner->show();
     ui.label_owner_nick->show();
@@ -535,7 +535,7 @@ void DlgChannelSettings::setOwner(QString strNick)
         setTabs(true);
 }
 
-void DlgChannelSettings::addOp(QString strNick)
+void DlgChannelSettings::addOp(const QString &strNick)
 {
     SortedListWidgetItem *item = new SortedListWidgetItem();
     item->setData(Qt::UserRole+10, false); // is nicklist
@@ -548,7 +548,7 @@ void DlgChannelSettings::addOp(QString strNick)
         setTabs(true);
 }
 
-void DlgChannelSettings::addHalfop(QString strNick)
+void DlgChannelSettings::addHalfop(const QString &strNick)
 {
     SortedListWidgetItem *item = new SortedListWidgetItem();
     item->setData(Qt::UserRole+10, false); // is nicklist
@@ -561,7 +561,7 @@ void DlgChannelSettings::addHalfop(QString strNick)
         setTabs(true);
 }
 
-void DlgChannelSettings::addBan(QString strNick, QString strWho, QString strDT, QString strIPNick)
+void DlgChannelSettings::addBan(const QString &strNick, const QString &strWho, const QString &strDT, const QString &strIPNick)
 {
     SortedListWidgetItem *item = new SortedListWidgetItem();
     item->setData(Qt::UserRole+10, false); // is nicklist
@@ -572,16 +572,18 @@ void DlgChannelSettings::addBan(QString strNick, QString strWho, QString strDT, 
     }
     else
     {
+
         item->setText(strIPNick);
         item->setTextColor(QColor("#ff0000")); // set color
         item->setData(Qt::UserRole, strNick); // set original ban mask
-        QString strIPHint = tr("IP Mask: %1").arg(strNick.remove("*!*@"));
+        QString strFixedNick = strNick; strFixedNick.remove("*!*@");
+        QString strIPHint = tr("IP Mask: %1").arg(strFixedNick);
         item->setToolTip(QString("%1: %2 (%3) [%4]").arg(tr("Created by"), strWho, strDT, strIPHint));
     }
     ui.listWidget_ban->addItem(item);
 }
 
-void DlgChannelSettings::addInvite(QString strNick, QString strWho, QString strDT)
+void DlgChannelSettings::addInvite(const QString &strNick, const QString &strWho, const QString &strDT)
 {
     SortedListWidgetItem *item = new SortedListWidgetItem();
     item->setData(Qt::UserRole+10, false); // is nicklist

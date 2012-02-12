@@ -39,7 +39,7 @@ private:
     void setDefaultValues();
     void createSignals();
 
-    void setColor(QString);
+    void setColor(const QString&);
     void setMainwindowColors();
     void setNicklistColors();
 

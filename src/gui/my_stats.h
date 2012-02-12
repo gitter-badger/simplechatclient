@@ -39,7 +39,7 @@ private:
     void createGui();
     void createSignals();
 
-    int replaceValue(QString);
+    int replaceValue(const QString&);
     void refresh();
 };
 

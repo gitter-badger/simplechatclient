@@ -37,11 +37,11 @@ private:
     void setDefaultValues();
     void createSignals();
 
-    bool isErotic(QString);
+    bool isErotic(const QString&);
     void getOptions();
     QString channelTypeToString(int);
     QString channelCatToString(int, bool, bool);
-    bool showChannel(QString, int, int, int, bool, bool);
+    bool showChannel(const QString&, int, int, int, bool, bool);
 
     QString strSearch;
     bool bShowTeen;

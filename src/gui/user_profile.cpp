@@ -38,7 +38,7 @@
 #include "user_avatar.h"
 #include "user_profile.h"
 
-DlgUserProfile::DlgUserProfile(QWidget *parent, QString _strNick) : QDialog(parent), strNick(_strNick)
+DlgUserProfile::DlgUserProfile(QWidget *parent, const QString &_strNick) : QDialog(parent), strNick(_strNick)
 {
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
     setWindowTitle(tr("Profile"));
@@ -311,17 +311,17 @@ QString DlgUserProfile::convertDesc(QString strContent)
     return QString("<html><body style=\"background-color:white;font-size:12px;font-family:Verdana;\">%1</body></html>").arg(strContent);
 }
 
-QString DlgUserProfile::convertSex(QString strSex)
+QString DlgUserProfile::convertSex(const QString &strSex)
 {
     if (strSex == "F")
-        strSex = tr("Female");
+        return tr("Female");
     else if (strSex == "M")
-        strSex = tr("Male");
-
-    return strSex;
+        return tr("Male");
+    else
+        return strSex;
 }
 
-QString DlgUserProfile::convertAge(QString strDate)
+QString DlgUserProfile::convertAge(const QString &strDate)
 {
     if (strDate.isEmpty()) return QString::null; // empty date
     QStringList lDate = strDate.split("-");
@@ -345,7 +345,7 @@ QString DlgUserProfile::convertAge(QString strDate)
     return QString::number(iAge);
 }
 
-QString DlgUserProfile::convertCodeToCountry(QString strCountryCode)
+QString DlgUserProfile::convertCodeToCountry(const QString &strCountryCode)
 {
     QStringList lCodes =  (QStringList() <<
        "AF" << "AL" << "DZ" << "AD" << "AO" << "AI" << "AQ" << "AG" << "AN" <<
@@ -380,30 +380,27 @@ QString DlgUserProfile::convertCodeToCountry(QString strCountryCode)
     for (int i = 0; i < lCodes.size(); i++)
     {
         if (strCountryCode == lCodes.at(i))
-        {
-            QString strCountry = lCountries.at(i);
-            return strCountry;
-        }
+            return lCountries.at(i);
     }
 
     return QString::null;
 }
 
-QString DlgUserProfile::convertType(QString strType)
+QString DlgUserProfile::convertType(const QString &strType)
 {
     if (strType == "0")
-        strType = tr("Novice");
+        return tr("Novice");
     else if (strType == "1")
-        strType = tr("Beginner");
+        return tr("Beginner");
     else if (strType == "2")
-        strType = tr("Master");
+        return tr("Master");
     else if (strType == "3")
-        strType = tr("Guru");
-
-    return strType;
+        return tr("Guru");
+    else
+        return strType;
 }
 
-void DlgUserProfile::showAvatar(QString strUrl)
+void DlgUserProfile::showAvatar(const QString &strUrl)
 {
     if (!strUrl.contains(",")) return; // wrong url
 
@@ -411,8 +408,8 @@ void DlgUserProfile::showAvatar(QString strUrl)
     QStringList lUrl = strUrl.split(",");
     lUrl[1] = "10"; // 10 = zoom; 0 = get real image
     //lUrl[3] = "0.jpg"; // 0 = get real image
-    strUrl = lUrl.join(",");
+    QString strNewUrl = lUrl.join(",");
 
     // get url
-    accessManager->get(QNetworkRequest(QUrl(strUrl)));
+    accessManager->get(QNetworkRequest(QUrl(strNewUrl)));
 }

@@ -71,7 +71,7 @@ void DlgProfileAdd::createSignals()
     connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(close()));
 }
 
-void DlgProfileAdd::setNickPass(QString n, QString p)
+void DlgProfileAdd::setNickPass(const QString &n, const QString &p)
 {
     ui.radioButton_registered_nick->setChecked(true);
     showPass();
