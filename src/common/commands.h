@@ -33,7 +33,7 @@ class Commands : public QObject
 {
     Q_OBJECT
 public:
-    Commands(QString, QString);
+    Commands(const QString&, const QString&);
     QString execute();
 
 private:
@@ -41,7 +41,7 @@ private:
     QString strData;
     QStringList strDataList;
 
-    bool isErotic(QString);
+    bool isErotic(const QString&);
 
     QString cmdJoin();
     QString cmdPriv();

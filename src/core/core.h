@@ -64,27 +64,27 @@ public:
     // update
     void checkUpdate();
     // awaylog
-    void addAwaylog(QString, QString, QString);
+    void addAwaylog(const QString&, const QString&, const QString&);
     // for window
     QString getChannelNameFromIndex(int);
-    int getIndexFromChannelName(QString);
+    int getIndexFromChannelName(const QString&);
     QString getCurrentChannelName();
     // get users per channel
-    QList<QString> getUserListFromChannel(QString);
+    QList<QString> getUserListFromChannel(const QString&);
     // get user modes
-    QString getUserModes(QString, QString);
+    QString getUserModes(const QString&, const QString&);
     // get user max modes - for sorting
-    int getUserMaxModes(QString);
+    int getUserMaxModes(const QString&);
     // get users count
-    int getUserCount(QString);
+    int getUserCount(const QString&);
     // show message
-    void showMessage(QString, QString, MessageCategory, QString strTime = QString::null, QString strNick = QString::null);
+    void showMessage(const QString&, const QString&, MessageCategory, QString strTime = QString::null, QString strNick = QString::null);
     // get user avatar path
-    QString getUserAvatarPath(QString);
+    QString getUserAvatarPath(const QString&);
     // priv
-    QString convertPrivName(QString);
+    QString convertPrivName(const QString&);
     // remove dir
-    bool removeDir(const QString &);
+    bool removeDir(const QString&);
 
     QHash<QString, bool> mFriends;
     QList<QString> lIgnore;

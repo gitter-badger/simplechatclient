@@ -28,79 +28,73 @@
     #include "winamp.h"
 #endif
 
-Commands::Commands(QString _strChan, QString _strData) : strChan(_strChan), strData(_strData)
+Commands::Commands(const QString &_strChan, const QString &_strData) : strChan(_strChan), strData(_strData)
 {
     strDataList = strData.split(" ");
 }
 
 QString Commands::execute()
 {
-    QString strResult = QString::null;
+    if (strDataList.value(0).isEmpty())
+        return strData;
 
-    if (!strDataList.value(0).isEmpty())
+    QString strCmd = strDataList[0].toLower();
+
+    if ((strCmd == "join") || (strCmd == "j"))
+        return cmdJoin();
+    else if (strCmd == "priv")
+        return cmdPriv();
+    else if (strCmd == "ignore")
+        return cmdIgnore();
+    else if (strCmd == "friend")
+        return cmdFriend();
+    else if ((strCmd == "whereis") || (strCmd == "whois")  || (strCmd == "wi")  || (strCmd == "wii"))
+        return cmdWhereis();
+    else if (strCmd == "busy")
+        return cmdBusy();
+    else if (strCmd == "away")
+        return cmdAway();
+    else if (strCmd == "offmsg")
+        return cmdOffmsg();
+    else if ((strCmd == "logout") || (strCmd == "quit") || (strCmd == "q"))
+        return cmdQuit();
+    else if ((strCmd == "mp3") || (strCmd == "winamp"))
+        return cmdMp3();
+    else if ((strCmd == "help") || (strCmd == "pomoc"))
+        return cmdHelp();
+
+    if (strChan != STATUS)
     {
-        QString strCmd = strDataList[0].toLower();
-
-        if ((strCmd == "join") || (strCmd == "j"))
-            strResult = cmdJoin();
-        else if (strCmd == "priv")
-            strResult = cmdPriv();
-        else if (strCmd == "ignore")
-            strResult = cmdIgnore();
-        else if (strCmd == "friend")
-            strResult = cmdFriend();
-        else if ((strCmd == "whereis") || (strCmd == "whois")  || (strCmd == "wi")  || (strCmd == "wii"))
-            strResult = cmdWhereis();
-        else if (strCmd == "busy")
-            strResult = cmdBusy();
-        else if (strCmd == "away")
-            strResult = cmdAway();
-        else if (strCmd == "offmsg")
-            strResult = cmdOffmsg();
-        else if ((strCmd == "logout") || (strCmd == "quit") || (strCmd == "q"))
-            strResult = cmdQuit();
-        else if ((strCmd == "mp3") || (strCmd == "winamp"))
-            strResult = cmdMp3();
-        else if ((strCmd == "help") || (strCmd == "pomoc"))
-            strResult = cmdHelp();
-        else
-            strResult = strData;
-
-        if ((strChan != STATUS) && (strResult == strData))
-        {
-            if ((strCmd == "cycle") || (strCmd == "hop"))
-                strResult = cmdCycle();
-            else if (strCmd == "me")
-                strResult = cmdMe();
-            else if (strCmd == "topic")
-                strResult = cmdTopic();
-            else if ((strCmd == "part") || (strCmd == "p"))
-                strResult = cmdPart();
-            else if (strCmd == "invite")
-                strResult = cmdInvite();
-            else if ((strCmd == "kick") || (strCmd == "k"))
-                strResult = cmdKick();
-            else if (strCmd == "ban")
-                strResult = cmdBan();
-            else if (strCmd == "banip")
-                strResult = cmdBanip();
-            else if (strCmd == "sop")
-                strResult = cmdSop();
-            else if (strCmd == "op")
-                strResult = cmdOp();
-            else if ((strCmd == "moder") || (strCmd == "moderator"))
-                strResult = cmdModer();
-            else if (strCmd == "vip")
-                strResult = cmdVip();
-            else
-                strResult = strData;
-        }
+        if ((strCmd == "cycle") || (strCmd == "hop"))
+            return cmdCycle();
+        else if (strCmd == "me")
+            return cmdMe();
+        else if (strCmd == "topic")
+            return cmdTopic();
+        else if ((strCmd == "part") || (strCmd == "p"))
+            return cmdPart();
+        else if (strCmd == "invite")
+            return cmdInvite();
+        else if ((strCmd == "kick") || (strCmd == "k"))
+            return cmdKick();
+        else if (strCmd == "ban")
+            return cmdBan();
+        else if (strCmd == "banip")
+            return cmdBanip();
+        else if (strCmd == "sop")
+            return cmdSop();
+        else if (strCmd == "op")
+            return cmdOp();
+        else if ((strCmd == "moder") || (strCmd == "moderator"))
+            return cmdModer();
+        else if (strCmd == "vip")
+            return cmdVip();
     }
 
-    return strResult;
+    return strData;
 }
 
-bool Commands::isErotic(QString strChannel)
+bool Commands::isErotic(const QString &strChannel)
 {
     for (int i = 0; i < Core::instance()->lChannelList.size(); i++)
     {

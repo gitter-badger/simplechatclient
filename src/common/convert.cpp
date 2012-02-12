@@ -177,7 +177,7 @@ void Convert::removeColor(QString &strData)
     }
 }
 
-QString Convert::findEmoticon(QString strEmoticon)
+QString Convert::findEmoticon(const QString &strEmoticon)
 {
     QString path;
 #ifdef Q_WS_WIN

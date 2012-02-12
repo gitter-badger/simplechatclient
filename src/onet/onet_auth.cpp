@@ -115,7 +115,7 @@ void OnetAuth::getDeploy()
     pReply->setProperty("category", AT_deploy);
 }
 
-void OnetAuth::gotDeploy(QString strData)
+void OnetAuth::gotDeploy(const QString &strData)
 {
     strVersion = this->getVersion(strData);
     strVersion = QString("1.1(%1 - R)").arg(strVersion);
@@ -327,7 +327,7 @@ void OnetAuth::saveCookies()
     }
 }
 
-QString OnetAuth::getVersion(QString strData)
+QString OnetAuth::getVersion(const QString &strData)
 {
     if (!strData.isEmpty())
     {
@@ -347,7 +347,7 @@ QString OnetAuth::getVersion(QString strData)
     return "20111013-1222";
 }
 
-void OnetAuth::requestFinished(QString strData)
+void OnetAuth::requestFinished(const QString &strData)
 {
     if (!strData.isEmpty())
     {

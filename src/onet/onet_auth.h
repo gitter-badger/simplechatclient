@@ -79,7 +79,7 @@ private:
 
     void getChat();
     void getDeploy();
-    void gotDeploy(QString);
+    void gotDeploy(const QString&);
     void getKropka();
     void getKropkaFull();
     void getSk();
@@ -90,9 +90,9 @@ private:
     void showCaptchaDialog();
     void getCheckCode();
 
-    QString getVersion(QString);
+    QString getVersion(const QString&);
     void saveCookies();
-    void requestFinished(QString);
+    void requestFinished(const QString&);
 
 private slots:
     void networkFinished(QNetworkReply*);

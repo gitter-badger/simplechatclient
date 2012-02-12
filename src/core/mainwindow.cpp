@@ -336,7 +336,7 @@ void MainWindow::createSignals()
     connect(Core::instance()->pNetwork, SIGNAL(setConnected()), this, SLOT(setConnected()));
     connect(Core::instance()->pNetwork, SIGNAL(setDisconnected()), this, SLOT(setDisconnected()));
     connect(Core::instance()->pNetwork, SIGNAL(setConnectEnabled(bool)), this, SLOT(setConnectEnabled(bool)));
-    connect(Core::instance()->pNetwork, SIGNAL(kernel(QString)), pOnetKernel, SLOT(kernel(QString)));
+    connect(Core::instance()->pNetwork, SIGNAL(kernel(const QString&)), pOnetKernel, SLOT(kernel(const QString&)));
     connect(Core::instance()->pNetwork, SIGNAL(authorize(QString,QString,QString)), pOnetAuth, SLOT(authorize(QString,QString,QString)));
     connect(Core::instance()->pNetwork, SIGNAL(showMessageActive(const QString&,MessageCategory)), pTabC, SLOT(showMessageActive(const QString&,MessageCategory)));
     connect(Core::instance()->pNetwork, SIGNAL(showMessageAll(const QString&,MessageCategory)), pTabC, SLOT(showMessageAll(const QString&,MessageCategory)));
@@ -676,22 +676,22 @@ int MainWindow::getCurrentTabIndex()
         return -1;
 }
 
-int MainWindow::getUserCount(QString strChannel)
+int MainWindow::getUserCount(const QString &strChannel)
 {
     return pTabC->getUserCount(strChannel);
 }
 
-QString MainWindow::getUserModes(QString strNick, QString strChannel)
+QString MainWindow::getUserModes(const QString &strNick, const QString &strChannel)
 {
     return pTabC->getUserModes(strNick, strChannel);
 }
 
-QList<QString> MainWindow::getUserList(QString strChannel)
+QList<QString> MainWindow::getUserList(const QString &strChannel)
 {
     return pTabC->getUserList(strChannel);
 }
 
-QString MainWindow::getUserAvatarPath(QString strNick)
+QString MainWindow::getUserAvatarPath(const QString &strNick)
 {
     return pTabC->getUserAvatarPath(strNick);
 }
@@ -748,7 +748,7 @@ void MainWindow::tabMoved(int from, int to)
     Core::instance()->lOpenChannels.move(from, to);
 }
 
-void MainWindow::showMessage(QString strChannel, QString strData, MessageCategory eMessageCategory, QString strTime, QString strNick)
+void MainWindow::showMessage(const QString &strChannel, const QString &strData, MessageCategory eMessageCategory, QString strTime, QString strNick)
 {
     pTabC->showMessage(strChannel, strData, eMessageCategory, strTime, strNick);
 }

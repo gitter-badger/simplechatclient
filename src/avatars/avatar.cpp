@@ -32,7 +32,7 @@
 
 Avatar::Avatar(TabContainer *_pTabC) : pTabC(_pTabC)
 {
-    connect(this, SIGNAL(setChannelAvatar(QString)), pTabC, SLOT(setChannelAvatar(QString)));
+    connect(this, SIGNAL(setChannelAvatar(const QString&)), pTabC, SLOT(setChannelAvatar(const QString&)));
 
     accessManager = new QNetworkAccessManager;
     connect(accessManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(avatarFinished(QNetworkReply*)));
@@ -43,7 +43,7 @@ Avatar::~Avatar()
     accessManager->deleteLater();
 }
 
-void Avatar::getAvatar(QString strNickOrChannel, QString strCategory, QString strUrl)
+void Avatar::getAvatar(const QString &strNickOrChannel, const QString &strCategory, const QString &strUrl)
 {
     QNetworkReply *reply = accessManager->get(QNetworkRequest(strUrl));
     reply->setProperty("nickorchannel", strNickOrChannel);
@@ -67,10 +67,11 @@ void Avatar::avatarFinished(QNetworkReply *reply)
         setAvatar(strNickOrChannel, strCategory, strAvatarPath, bData);
 }
 
-void Avatar::setAvatar(QString &strNickOrChannel, QString &strCategory, QString &strAvatarPath, QByteArray &bAvatar)
+void Avatar::setAvatar(const QString &strNickOrChannel, const QString &strCategory, QString &strAvatarPath, const QByteArray &bAvatar)
 {
     if (strCategory == "nick")
     {
+        getAvatarPath(strAvatarPath);
         saveAvatar(strAvatarPath, bAvatar);
         pTabC->setUserAvatarPath(strNickOrChannel, strAvatarPath);
     }
@@ -85,7 +86,7 @@ void Avatar::setAvatar(QString &strNickOrChannel, QString &strCategory, QString 
     }
 }
 
-void Avatar::saveAvatar(QString &strAvatarPath, QByteArray bAvatar)
+void Avatar::getAvatarPath(QString &strAvatarPath)
 {
     QString path;
 
@@ -104,7 +105,10 @@ void Avatar::saveAvatar(QString &strAvatarPath, QByteArray bAvatar)
         QDir().mkpath(path);
 
     strAvatarPath = path+"/"+strAvatarPath;
+}
 
+void Avatar::saveAvatar(const QString &strAvatarPath, const QByteArray &bAvatar)
+{
     QFile f(strAvatarPath);
     if (f.open(QIODevice::WriteOnly))
     {

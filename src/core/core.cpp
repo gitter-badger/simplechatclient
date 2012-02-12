@@ -132,7 +132,7 @@ void Core::createSettings()
     settings["debug"] = strDebug;
 
     // default settings
-    settings["version"] = "1.1.4.1170";
+    settings["version"] = "1.1.4.1171";
     settings["available_version"] = "";
     settings["logged"] = "false";
     settings["busy"] = "false";
@@ -377,7 +377,7 @@ void Core::checkUpdate()
     pUpdates->checkUpdate();
 }
 
-void Core::addAwaylog(QString strTime, QString strChannel, QString strAwayData)
+void Core::addAwaylog(const QString &strTime, const QString &strChannel, const QString &strAwayData)
 {
     if (settings.value("away") == "false")
         return;
@@ -395,24 +395,26 @@ void Core::addAwaylog(QString strTime, QString strChannel, QString strAwayData)
         Log::save("awaylog", strAwaylogFileData);
     }
 
+    QString strAwayLogData = strAwayData;
+
     // fix /me
     QString strRegExpMe = QString("%1ACTION %2%3").arg(QString(QByteArray("\x01")), "(.*)", QString(QByteArray("\x01")));
-    if (strAwayData.contains(QRegExp(strRegExpMe)))
+    if (strAwayLogData.contains(QRegExp(strRegExpMe)))
     {
-        strAwayData.replace(QRegExp(strRegExpMe), "\\1");
-        if (strAwayData.contains("<")) strAwayData = strAwayData.remove(strAwayData.indexOf("<"),1);
-        if (strAwayData.contains(">")) strAwayData = strAwayData.remove(strAwayData.indexOf(">"),1);
-        strAwayData = "*"+strAwayData;
+        strAwayLogData.replace(QRegExp(strRegExpMe), "\\1");
+        if (strAwayLogData.contains("<")) strAwayLogData = strAwayLogData.remove(strAwayLogData.indexOf("<"),1);
+        if (strAwayLogData.contains(">")) strAwayLogData = strAwayLogData.remove(strAwayLogData.indexOf(">"),1);
+        strAwayLogData = "*"+strAwayLogData;
     }
 
     // remove color, font, emots
-    strAwayData.remove(QRegExp("%C([a-zA-Z0-9]+)%"));
-    strAwayData.remove(QRegExp("%F([a-zA-Z0-9:]+)%"));
-    strAwayData.replace(QRegExp("%I([a-zA-Z0-9_-]+)%"),"<\\1>");
+    strAwayLogData.remove(QRegExp("%C([a-zA-Z0-9]+)%"));
+    strAwayLogData.remove(QRegExp("%F([a-zA-Z0-9:]+)%"));
+    strAwayLogData.replace(QRegExp("%I([a-zA-Z0-9_-]+)%"),"<\\1>");
 
     QString strDT = QDateTime::currentDateTime().toString("[hh:mm:ss]");
 
-    lAwaylog.append(QString("%1\n%2 %3").arg(strChannel, strDT, strAwayData));
+    lAwaylog.append(QString("%1\n%2 %3").arg(strChannel, strDT, strAwayLogData));
 }
 
 QString Core::getChannelNameFromIndex(int index)
@@ -423,7 +425,7 @@ QString Core::getChannelNameFromIndex(int index)
         return QString::null;
 }
 
-int Core::getIndexFromChannelName(QString strChannel)
+int Core::getIndexFromChannelName(const QString &strChannel)
 {
     for (int i = 0; i < lOpenChannels.size(); i++)
     {
@@ -442,17 +444,17 @@ QString Core::getCurrentChannelName()
 }
 
 // InputLineWidget::event
-QList<QString> Core::getUserListFromChannel(QString strChannel)
+QList<QString> Core::getUserListFromChannel(const QString &strChannel)
 {
     return window->getUserList(strChannel);
 }
 
-QString Core::getUserModes(QString strNick, QString strChannel)
+QString Core::getUserModes(const QString &strNick, const QString &strChannel)
 {
     return window->getUserModes(strNick, strChannel);
 }
 
-int Core::getUserMaxModes(QString strModes)
+int Core::getUserMaxModes(const QString &strModes)
 {
     if (strModes.contains("O")) { return 64; }
     if (strModes.contains("o")) { return 32; }
@@ -467,28 +469,28 @@ int Core::getUserMaxModes(QString strModes)
 }
 
 // ChatView::displayMessage
-int Core::getUserCount(QString strChannel)
+int Core::getUserCount(const QString &strChannel)
 {
     return window->getUserCount(strChannel);
 }
 
 // DlgModeration::buttonAccept
-void Core::showMessage(QString strChannel, QString strData, MessageCategory eMessageCategory, QString strTime, QString strNick)
+void Core::showMessage(const QString &strChannel, const QString &strData, MessageCategory eMessageCategory, QString strTime, QString strNick)
 {
     window->showMessage(strChannel, strData, eMessageCategory, strTime, strNick);
 }
 
-QString Core::getUserAvatarPath(QString strNick)
+QString Core::getUserAvatarPath(const QString &strNick)
 {
     return window->getUserAvatarPath(strNick);
 }
 
-QString Core::convertPrivName(QString strChannel)
+QString Core::convertPrivName(const QString &strChannel)
 {
     if (mPrivNames.contains(strChannel))
-        strChannel = mPrivNames.value(strChannel);
-
-    return strChannel;
+        return mPrivNames.value(strChannel);
+    else
+        return strChannel;
 }
 
 bool Core::removeDir(const QString &dirName)

@@ -48,7 +48,7 @@ Crypt::Crypt()
 #endif
 }
 
-QString Crypt::encrypt(QString strKey, QString strData)
+QString Crypt::encrypt(QString strKey, const QString &strData)
 {
     if ((strKey.isEmpty()) || (strData.isEmpty()) || (strIv.isEmpty()))
     {
@@ -81,7 +81,7 @@ QString Crypt::encrypt(QString strKey, QString strData)
     return QString::null;
 }
 
-QString Crypt::decrypt(QString strKey, QString strData)
+QString Crypt::decrypt(QString strKey, const QString &strData)
 {
     if ((strKey.isEmpty()) || (strData.isEmpty()) || (strIv.isEmpty()))
     {

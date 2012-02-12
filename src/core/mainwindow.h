@@ -49,12 +49,12 @@ public:
     void refreshToolWidgetValues();
     // for core
     int getCurrentTabIndex();
-    int getUserCount(QString);
-    QString getUserModes(QString, QString);
-    QList<QString> getUserList(QString);
-    QString getUserAvatarPath(QString);
+    int getUserCount(const QString&);
+    QString getUserModes(const QString&, const QString&);
+    QList<QString> getUserList(const QString&);
+    QString getUserAvatarPath(const QString&);
     // for core
-    void showMessage(QString ,QString, MessageCategory, QString strTime = QString::null, QString strNick = QString::null);
+    void showMessage(const QString& ,const QString&, MessageCategory, QString strTime = QString::null, QString strNick = QString::null);
 
 private:
     QToolBar *toolBar;

@@ -45,7 +45,7 @@ void Updates::checkUpdate()
     accessManager->get(QNetworkRequest(url));
 }
 
-void Updates::version(QString strAvailableVersion)
+void Updates::version(const QString &strAvailableVersion)
 {
     Core::instance()->settings["available_version"] = strAvailableVersion;
 

@@ -34,7 +34,7 @@ class Network : public QThread
 {
     Q_OBJECT
 public:
-    Network(QString, int);
+    Network(const QString&, int);
     virtual ~Network();
     void run();
     void setReconnect(bool);
@@ -45,8 +45,8 @@ public:
 public slots:
     void connect();
     void disconnect();
-    void send(QString);
-    void sendQueue(QString);
+    void send(const QString&);
+    void sendQueue(const QString&);
 
 private:
     QString strServer;
@@ -63,7 +63,7 @@ private:
 
     void authorize();
     void clearAll();
-    void write(QString);
+    void write(const QString&);
 
 private slots:
     void connected();
@@ -81,7 +81,7 @@ signals:
     void setConnected();
     void setDisconnected();
     void setConnectEnabled(bool);
-    void kernel(QString);
+    void kernel(const QString&);
     void authorize(QString, QString, QString);
     void showMessageAll(const QString&, MessageCategory);
     void showMessageActive(const QString&, MessageCategory);

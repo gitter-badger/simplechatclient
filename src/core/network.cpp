@@ -27,7 +27,7 @@
 #include "crypt.h"
 #include "network.h"
 
-Network::Network(QString _strServer, int _iPort) : strServer(_strServer), iPort(_iPort), iActive(0), bAuthorized(false)
+Network::Network(const QString &_strServer, int _iPort) : strServer(_strServer), iPort(_iPort), iActive(0), bAuthorized(false)
 {
     timerReconnect = new QTimer();
     timerReconnect->setInterval(1000*30); // 30 sec
@@ -300,16 +300,14 @@ void Network::reconnect()
     }
 }
 
-void Network::write(QString strData)
+void Network::write(const QString &strData)
 {
     if ((socket->isValid()) && (socket->state() == QAbstractSocket::ConnectedState) && (socket->isWritable()))
     {
         if (Core::instance()->settings.value("debug") == "true")
             qDebug() << "-> " << strData;
 
-        strData += "\r\n";
-
-        if (socket->write(strData.toAscii()) == -1)
+        if (socket->write((strData+"\r\n").toAscii()) == -1)
         {
             if (socket->state() == QAbstractSocket::ConnectedState)
             {
@@ -330,7 +328,7 @@ void Network::write(QString strData)
     }
 }
 
-void Network::send(QString strData)
+void Network::send(const QString &strData)
 {
     if (strData.startsWith("NS"))
         msgSendQueueNS.append(strData);
@@ -338,7 +336,7 @@ void Network::send(QString strData)
         write(strData);
 }
 
-void Network::sendQueue(QString strData)
+void Network::sendQueue(const QString &strData)
 {
     if (strData.startsWith("NS"))
         msgSendQueueNS.append(strData);

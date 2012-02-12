@@ -42,13 +42,13 @@ public:
      * @param QString key
      * @return QString value
      */
-    QString getValue(QString);
+    QString getValue(const QString&);
     /**
      * Set config key value
      * @param QString key
      * @param QString value
      */
-    void setValue(QString, QString);
+    void setValue(const QString&, const QString&);
     /**
      * Read config to QHash
      * @return QHash all keys,values
@@ -61,11 +61,11 @@ private:
     bool bProfileConfig;
     QString strForceProfile;
 
-    void removeValue(QString);
+    void removeValue(const QString&);
     void fixConfig();
     void createNewConfig();
     QHash<QString,QString> getDefaultValues();
-    void addConfigValue(QDomDocument *, QDomElement *, QString, QString);
+    void addConfigValue(QDomDocument *, QDomElement *, const QString&, const QString&);
     void save();
 };
 

@@ -36,20 +36,21 @@ class Avatar : public QObject
 public:
     Avatar(TabContainer *);
     virtual ~Avatar();
-    void getAvatar(QString, QString, QString);
+    void getAvatar(const QString&, const QString&, const QString&);
 
 private:
     TabContainer *pTabC;
     QNetworkAccessManager *accessManager;
 
-    void saveAvatar(QString&, QByteArray);
+    void getAvatarPath(QString&);
+    void saveAvatar(const QString&, const QByteArray&);
 
 public slots:
     void avatarFinished(QNetworkReply*);
-    void setAvatar(QString&, QString&, QString&, QByteArray&);
+    void setAvatar(const QString&, const QString&, QString&, const QByteArray&);
 
 signals:
-    void setChannelAvatar(QString);
+    void setChannelAvatar(const QString&);
 };
 
 #endif // AVATAR_H

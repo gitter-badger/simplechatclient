@@ -59,7 +59,7 @@ void Kamerzysta::close()
     delete timerGetPort;
 }
 
-void Kamerzysta::show(QString n)
+void Kamerzysta::show(const QString &n)
 {
     strNick = n;
 
@@ -71,12 +71,10 @@ void Kamerzysta::show(QString n)
     getPath();
 }
 
-void Kamerzysta::log(QString strData)
+void Kamerzysta::log(const QString &strData)
 {
     if (Core::instance()->settings.value("debug") == "true")
-    {
         Log::save("kamerzysta", strData);
-    }
 }
 
 void Kamerzysta::getPath()
@@ -261,15 +259,13 @@ void Kamerzysta::networkDisconnected()
     close();
 }
 
-void Kamerzysta::networkSend(QString strData)
+void Kamerzysta::networkSend(const QString &strData)
 {
     if ((socket->isValid()) && (socket->state() == QAbstractSocket::ConnectedState) && (socket->isWritable()))
     {
-        strData += "\r\n";
-
         log("Send:"+strData);
 
-        socket->write(strData.toAscii());
+        socket->write((strData+"\r\n").toAscii());
     }
 }
 

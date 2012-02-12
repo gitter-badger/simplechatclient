@@ -95,7 +95,7 @@ Config::Config(bool _bProfileConfig, QString _strForceProfile) : bProfileConfig(
     }
 }
 
-QString Config::getValue(QString strKey)
+QString Config::getValue(const QString &strKey)
 {
     if (doc.isNull())
     {
@@ -121,7 +121,7 @@ QString Config::getValue(QString strKey)
     return QString::null;
 }
 
-void Config::setValue(QString strKey, QString strValue)
+void Config::setValue(const QString &strKey, const QString &strValue)
 {
     if (doc.isNull())
     {
@@ -144,7 +144,7 @@ void Config::setValue(QString strKey, QString strValue)
     save();
 }
 
-void Config::removeValue(QString strKey)
+void Config::removeValue(const QString &strKey)
 {
     if (doc.isNull())
     {
@@ -310,7 +310,7 @@ QHash<QString,QString> Config::readConfig()
     return mResult;
 }
 
-void Config::addConfigValue(QDomDocument *doc, QDomElement *root, QString strKey, QString strValue)
+void Config::addConfigValue(QDomDocument *doc, QDomElement *root, const QString &strKey, const QString &strValue)
 {
     QDomElement eKey = doc->createElement(strKey);
     root->appendChild(eKey);
