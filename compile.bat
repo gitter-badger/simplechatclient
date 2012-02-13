@@ -89,7 +89,6 @@ xcopy %QT_DIR%\QtGui4.dll %DESTINATION%\ /C /H /R /Y /Q
 xcopy %QT_DIR%\QtNetwork4.dll %DESTINATION%\ /C /H /R /Y /Q
 xcopy %QT_DIR%\QtWebKit4.dll %DESTINATION%\ /C /H /R /Y /Q
 xcopy %QT_DIR%\QtXml4.dll %DESTINATION%\ /C /H /R /Y /Q
-xcopy %QT_DIR%\QtXmlPatterns4.dll %DESTINATION%\ /C /H /R /Y /Q
 
 echo Copying MinGW files
 xcopy %MINGW_BIN_DIR%\libstdc++-6.dll %DESTINATION%\ /C /H /R /Y /Q
