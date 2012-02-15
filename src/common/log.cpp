@@ -30,7 +30,7 @@
     #include <QDesktopServices>
 #endif
 
-void Log::convert(QString &strData)
+void convert(QString &strData)
 {
     strData.remove(QRegExp("%C([a-zA-Z0-9]+)%"));
     strData.remove(QRegExp("%F([a-zA-Z0-9:]+)%"));

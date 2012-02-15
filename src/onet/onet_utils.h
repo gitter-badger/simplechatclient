@@ -23,10 +23,9 @@
 
 #include <QString>
 
-class OnetUtils
+namespace OnetUtils
 {
-public:
-    static QString transformKey(QString s);
+    QString transformKey(QString s);
 };
 
 #endif // ONET_UTILS_H

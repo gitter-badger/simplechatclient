@@ -26,18 +26,14 @@
 /**
  * Save log to file
  */
-class Log
+namespace Log
 {
-public:
     /**
      * Save text to file name
      * @param QString file name
      * @param QString data
      */
-    static void save(const QString &strChannel, const QString &strData);
-
-private:
-    static void convert(QString &strData);
+    void save(const QString &strChannel, const QString &strData);
 };
 
 #endif // LOG_H
