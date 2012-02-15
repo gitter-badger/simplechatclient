@@ -359,7 +359,7 @@ void ChatView::watchVideo()
 
 void ChatView::openWebbrowser()
 {
-    QDesktopServices::openUrl(QUrl(strWebsite, QUrl::TolerantMode));
+    QDesktopServices::openUrl(QUrl::fromEncoded(strWebsite.toAscii()));
 }
 
 void ChatView::sendToNotes()

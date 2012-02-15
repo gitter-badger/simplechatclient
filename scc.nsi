@@ -6,7 +6,7 @@
 !define PROGRAM_NAME "SimpleChatClient"
 !define PUBLISHER "Simple Chat Client Project"
 !define CONTACT "piotr.luczko@gmail.com"
-!define VERSION "1.1.3"
+!define VERSION "1.4.0"
 !define PROGRAM_FILENAME "scc"
 !define PROGRAM_SIZE "65000"
 !define MUI_ICON "scc.ico"

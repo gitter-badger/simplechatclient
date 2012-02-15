@@ -1,8 +1,13 @@
 ChangeLog for Simple Chat Client
 ========================= 
 
-Version 1.1.4 (unknown)
+Version 1.4.0 (unknown)
 ================================
+* Added avatars support
+* Added minimize to tray
+* Movable tabs
+* Added highlight
+* Added copy link to clipboard
 * Enabled DEP (permanent) and ASLR on windows
 * Many bugfixes
 

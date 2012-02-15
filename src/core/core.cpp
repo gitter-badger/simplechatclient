@@ -132,7 +132,7 @@ void Core::createSettings()
     settings["debug"] = strDebug;
 
     // default settings
-    settings["version"] = "1.1.4.1179";
+    settings["version"] = "1.4.0.1180";
     settings["available_version"] = "";
     settings["logged"] = "false";
     settings["busy"] = "false";
