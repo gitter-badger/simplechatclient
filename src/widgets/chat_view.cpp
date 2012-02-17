@@ -106,7 +106,7 @@ void ChatView::refreshCSS()
 
     QString strBackground;
     if ((strDisableBackgroundImage == "false") && (!strBackgroundImage.isEmpty()))
-        strBackground = "background-image: url("+strBackgroundImage+"); background-attachment: fixed; background-position: center; background-repeat: no-repeat;";
+        strBackground = QString("background-image: url('%1'); background-attachment: fixed; background-position: center; background-repeat: no-repeat;").arg(strBackgroundImage);
 
     QString strBodyCSS = QString("margin: 0; padding: 0; font-family: sans; word-wrap: break-word; font-size:%1; %2").arg(strFontSize, strBackground);
     QWebElement body = this->page()->mainFrame()->findFirstElement("body");
