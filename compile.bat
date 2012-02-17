@@ -66,6 +66,9 @@ set ZLIB_DIR="C:\zlib-1.2.5"
 set QCA2_DIR="C:\qca2\lib"
 set MINGW_BIN_DIR="C:\MinGW\bin"
 
+echo Killing scc
+taskkill /F /IM scc.exe
+
 echo Removing destination folder
 if exist %DESTINATION% (
 rd %DESTINATION% /S /Q

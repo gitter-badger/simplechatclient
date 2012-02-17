@@ -1977,10 +1977,6 @@
         <translation>Witaj w programie Simple Chat Client</translation>
     </message>
     <message>
-        <source>Official website</source>
-        <translation>Oficjalna strona</translation>
-    </message>
-    <message>
         <source>Not here right now</source>
         <translation>Nie ma mnie</translation>
     </message>
@@ -3081,6 +3077,13 @@
     <message>
         <source>Send to moderators</source>
         <translation>Wyślij do moderatorów</translation>
+    </message>
+</context>
+<context>
+    <name>Updates</name>
+    <message>
+        <source>Message Of The Day:</source>
+        <translation>Wiadomość dnia:</translation>
     </message>
 </context>
 <context>

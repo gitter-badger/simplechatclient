@@ -40,29 +40,31 @@ Updates::~Updates()
 void Updates::checkUpdate()
 {
     QString strSendVersion = Core::instance()->settings.value("version");
-    QUrl url = QUrl(QString("http://simplechatclien.sourceforge.net/update.php?version=%1").arg(strSendVersion));
+    QUrl url = QUrl(QString("http://simplechatclien.sourceforge.net/update.php?v=%1").arg(strSendVersion));
 
     accessManager->get(QNetworkRequest(url));
 }
 
-void Updates::version(const QString &strAvailableVersion)
+void Updates::compareVersion()
 {
-    Core::instance()->settings["available_version"] = strAvailableVersion;
-
     QString strCurrentVersion = Core::instance()->settings.value("version");
-
     QStringList lCurrentVersion = strCurrentVersion.split(".");
-    QString strCurrentRev = lCurrentVersion.last();
-    int iCurrentRev = strCurrentRev.toInt();
+    int iCurrentMajor = lCurrentVersion[0].toInt();
+    int iCurrentMinor = lCurrentVersion[1].toInt();
+    int iCurrentPatch = lCurrentVersion[2].toInt();
+    int iCurrentVersion = (QString("%1%2%3").arg(iCurrentMajor).arg(iCurrentMinor).arg(iCurrentPatch)).toInt();
 
+    QString strAvailableVersion = Core::instance()->settings.value("available_version");
     QStringList lAvailableVersion = strAvailableVersion.split(".");
-    QString strAvailableRev = lAvailableVersion.last();
-    int iAvailableRev = strAvailableRev.toInt();
+    int iAvailableMajor = lAvailableVersion[0].toInt();
+    int iAvailableMinor = lAvailableVersion[1].toInt();
+    int iAvailablePatch = lAvailableVersion[2].toInt();
+    int iAvailableVersion = (QString("%1%2%3").arg(iAvailableMajor).arg(iAvailableMinor).arg(iAvailablePatch)).toInt();
 
     if (Core::instance()->settings.value("debug") == "true")
-        qDebug() << "Current rev: " << strCurrentRev << " Available rev: " << strAvailableRev;
+        qDebug() << "Current version: " << strCurrentVersion << " Available version: " << strAvailableVersion;
 
-    if (iCurrentRev < iAvailableRev)
+    if (iAvailableVersion > iCurrentVersion)
         DlgUpdate(Core::instance()->sccWindow(), strAvailableVersion).exec();
 }
 
@@ -81,9 +83,24 @@ void Updates::updateFinished(QNetworkReply *reply)
         QDomDocument doc;
         doc.setContent(strSite);
 
-        QString strVersion = doc.elementsByTagName("currentVersion").item(0).toElement().text();
+        QString strAvailableVersion = doc.elementsByTagName("version").item(0).toElement().text();
+        QString strWhatsNew = doc.elementsByTagName("whats_new").item(0).toElement().text();
+        QString strMOTD = doc.elementsByTagName("motd").item(0).toElement().text();
 
-        if (!strVersion.isEmpty())
-            version(strVersion);
+        if (!strWhatsNew.isEmpty())
+            Core::instance()->settings["whats_new"] = strWhatsNew;
+
+        if (!strMOTD.isEmpty())
+        {
+            Core::instance()->settings["motd"] = strMOTD;
+            QString strMessageOfTheDay = QString("%Fb%%1 %2").arg(tr("Message Of The Day:"), strMOTD);
+            Core::instance()->showMessage(STATUS, strMessageOfTheDay, DefaultMessage);
+        }
+
+        if (!strAvailableVersion.isEmpty())
+        {
+            Core::instance()->settings["available_version"] = strAvailableVersion;
+            compareVersion();
+        }
     }
 }

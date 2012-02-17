@@ -349,11 +349,9 @@ void MainWindow::createSignals()
 
 void MainWindow::showWelcome()
 {
-    QString strWelcome = "%Fi:courier%"+tr("Welcome to the Simple Chat Client")+" %Ihehe%";
-    QString strWebsite = "%Fb:courier%%C008100%"+tr("Official website")+" SCC%C3030ce%: http://simplechatclien.sf.net/ %Izaskoczony%";
     pTabC->addTab(STATUS);
+    QString strWelcome = "%Fi:courier%"+tr("Welcome to the Simple Chat Client")+" %Ihehe%";
     pTabC->showMessage(STATUS, strWelcome, DefaultMessage);
-    pTabC->showMessage(STATUS, strWebsite, DefaultMessage);
 }
 
 void MainWindow::showOptions()
