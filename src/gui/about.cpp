@@ -90,7 +90,7 @@ void DlgAbout::setDefaultValues()
 
     QString strThanksTo = "<p>"+tr("Thanks to <b>ovo_</b> for creating graphics, to all persons who actively support the development of the project and special thanks to <b>Darom</b>.")+"</p>";
 
-    ui.label_logo->setPixmap(QPixmap(":/images/logo.png").scaled(QSize(64,64)));
+    ui.label_logo->setPixmap(QPixmap(":/images/logo64x64.png"));
     ui.label_version->setText(strTitle);
     ui.label_about->setText(strAbout);
     ui.label_authors->setText(strAuthors);

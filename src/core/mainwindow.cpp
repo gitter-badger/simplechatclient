@@ -57,7 +57,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 {
     // init
     setWindowTitle("Simple Chat Client");
-    setWindowIcon(QIcon(":/images/logo.png"));
+    setWindowIcon(QIcon(":/images/logo32x32.png"));
 
     setWindowGeometry();
     createActions();
@@ -151,7 +151,7 @@ void MainWindow::createGui()
 void MainWindow::createActions()
 {
     // action
-    sccAct = new QAction(QIcon(":/images/logo.png"), "Simple Chat Client", this);
+    sccAct = new QAction(QIcon(":/images/logo16x16.png"), "Simple Chat Client", this);
     sccAct->setFont(QFont(this->font().family(), -1, 75, false));
     sccAct->setEnabled(false);
 
@@ -159,7 +159,7 @@ void MainWindow::createActions()
     connectAct = new QAction(QIcon(":/images/oxygen/16x16/network-connect.png"), tr("&Connect"), this);
     closeAct = new QAction(QIcon(":/images/oxygen/16x16/application-exit.png"), tr("Close"), this);
     optionsAct = new QAction(QIcon(":/images/oxygen/16x16/preferences-system.png"), tr("Options"), this);
-    aboutAct = new QAction(QIcon(":/images/logo.png"), tr("About SCC ..."), this);
+    aboutAct = new QAction(QIcon(":/images/logo16x16.png"), tr("About SCC ..."), this);
     awaylogAct = new QAction(QIcon(":/images/oxygen/16x16/view-pim-tasks.png"), tr("Awaylog"), this);
     notesAct = new QAction(QIcon(":/images/oxygen/16x16/story-editor.png"), tr("Notes"), this);
 
@@ -257,7 +257,7 @@ void MainWindow::createMenus()
     trayMenu = new QMenu();
     createTrayMenu();
 
-    trayIcon = new QSystemTrayIcon(QIcon(":/images/logo.png"), this);
+    trayIcon = new QSystemTrayIcon(QIcon(":/images/logo16x16.png"), this);
     trayIcon->setContextMenu(trayMenu);
     trayIcon->setToolTip("Simple Chat Client");
 }

@@ -477,7 +477,7 @@ void DlgChannelList::allCellDoubleClicked(int row, int column)
             QMessageBox msgBox;
             msgBox.setStyleSheet("background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:0.557, stop:0 rgba(198, 0, 0, 255), stop:1 rgba(255, 0, 0, 255));");
             msgBox.setIcon(QMessageBox::Warning);
-            msgBox.setWindowIcon(QIcon(":/images/logo.png"));
+            msgBox.setWindowIcon(QIcon(":/images/logo16x16.png"));
             msgBox.setWindowTitle(tr("Warning"));
             msgBox.setText(QString("%1\n%2").arg(tr("Erotic category may contain content intended only for adults."), tr("To enter you must be over 18 years.")));
             QPushButton *exitButton = msgBox.addButton(tr("Exit"), QMessageBox::AcceptRole);
@@ -524,7 +524,7 @@ void DlgChannelList::eroticCellDoubleClicked(int row, int column)
             QMessageBox msgBox;
             msgBox.setStyleSheet("background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:0.557, stop:0 rgba(198, 0, 0, 255), stop:1 rgba(255, 0, 0, 255));");
             msgBox.setIcon(QMessageBox::Warning);
-            msgBox.setWindowIcon(QIcon(":/images/logo.png"));
+            msgBox.setWindowIcon(QIcon(":/images/logo16x16.png"));
             msgBox.setWindowTitle(tr("Warning"));
             msgBox.setText(QString("%1\n%2").arg(tr("Erotic category may contain content intended only for adults."), tr("To enter you must be over 18 years.")));
             QPushButton *exitButton = msgBox.addButton(tr("Exit"), QMessageBox::AcceptRole);

@@ -805,7 +805,7 @@ void DlgChannelSettings::buttonPermissionAdd()
         {
             QMessageBox msgBox;
             msgBox.setIcon(QMessageBox::Warning);
-            msgBox.setWindowIcon(QIcon(":/images/logo.png"));
+            msgBox.setWindowIcon(QIcon(":/images/logo16x16.png"));
             msgBox.setStandardButtons(QMessageBox::Ok | QMessageBox::Cancel);
             msgBox.setWindowTitle(tr("Warning"));
             msgBox.setText(tr("This ban will ban large numbers of people. Are you sure you want to use this ban?"));

@@ -70,7 +70,6 @@
         <file>images/oxygen/16x16/preferences-desktop-user.png</file>
         <file>images/oxygen/16x16/user-properties.png</file>
         <file>images/oxygen/16x16/camera-web.png</file>
-        <file>images/logo.png</file>
         <file>images/oxygen/16x16/mail-mark-junk.png</file>
         <file>images/oxygen/16x16/mail-mark-read.png</file>
         <file>images/oxygen/16x16/mail-mark-unread.png</file>
@@ -98,5 +97,11 @@
         <file>images/oxygen/16x16/object_rotate_right.png</file>
         <file>images/transparent.png</file>
         <file>images/crop.png</file>
+        <file>images/logo16x16.png</file>
+        <file>images/logo22x22.png</file>
+        <file>images/logo32x32.png</file>
+        <file>images/logo48x48.png</file>
+        <file>images/logo64x64.png</file>
+        <file>images/logo128x128.png</file>
     </qresource>
 </RCC>

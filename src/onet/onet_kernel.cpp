@@ -587,7 +587,7 @@ void OnetKernel::raw_kick()
 
         QMessageBox *msgBox = new QMessageBox();
         msgBox->setIcon(QMessageBox::Information);
-        msgBox->setWindowIcon(QIcon(":/images/logo.png"));
+        msgBox->setWindowIcon(QIcon(":/images/logo16x16.png"));
         msgBox->setWindowTitle(tr("Information"));
         msgBox->setText(QString(tr("You have been kicked from %1 by %2")+"<br/>"+tr("Reason: %3")).arg(strWho, strChannel, strReason));
         msgBox->show();
@@ -1812,7 +1812,7 @@ void OnetKernel::raw_250n()
 
         QMessageBox *msgBox = new QMessageBox();
         msgBox->setIcon(QMessageBox::Information);
-        msgBox->setWindowIcon(QIcon(":/images/logo.png"));
+        msgBox->setWindowIcon(QIcon(":/images/logo16x16.png"));
         msgBox->setWindowTitle(tr("Information"));
         msgBox->setText(QString(tr("Successfully created a channel %1")).arg(strChannel));
         msgBox->show();
@@ -2170,7 +2170,7 @@ void OnetKernel::raw_261n()
 
         QMessageBox *msgBox = new QMessageBox();
         msgBox->setIcon(QMessageBox::Information);
-        msgBox->setWindowIcon(QIcon(":/images/logo.png"));
+        msgBox->setWindowIcon(QIcon(":/images/logo16x16.png"));
         msgBox->setWindowTitle(tr("Information"));
         msgBox->setText(QString(tr("Successfully removed channel %1")).arg(strChannel));
         msgBox->show();
