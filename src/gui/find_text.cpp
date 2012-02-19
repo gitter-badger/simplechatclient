@@ -71,5 +71,6 @@ void DlgFindText::buttonFindNext()
     if (bMatchCase) findFlags |= QWebPage::FindCaseSensitively;
     if (bDirectionUp) findFlags |= QWebPage::FindBackward;
 
+    chatView->findText(QString(), QWebPage::HighlightAllOccurrences);
     chatView->findText(strText, findFlags);
 }
