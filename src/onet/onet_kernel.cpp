@@ -713,7 +713,8 @@ void OnetKernel::raw_mode()
             else if (strFlag.at(1) == QChar('F'))
             {
                 QString strStatus;
-                if (strValue == "1") strStatus = tr("Tame");
+                if (strValue == "0") strStatus = tr("Wild");
+                else if (strValue == "1") strStatus = tr("Tame");
                 else if (strValue == "2") strStatus = tr("With class");
                 else if (strValue == "3") strStatus = tr("Cult");
                 else strStatus = tr("unknown");
@@ -721,7 +722,7 @@ void OnetKernel::raw_mode()
                 if (strFlag.at(0) == QChar('+'))
                     strDisplay = QString(tr("* Channel %1 now has status %2 (set by %3)")).arg(strChannel, strStatus, strWho);
                 else if (strFlag.at(0) == QChar('-'))
-                    strDisplay = QString(tr("* Channel %1 no longer has status %2 (set by %3)")).arg(strChannel, strStatus, strWho);
+                    strDisplay = QString(tr("* %1 changed channel %2 status")).arg(strWho, strChannel);
             }
             else if (strFlag.at(1) == QChar('c'))
             {
@@ -736,7 +737,7 @@ void OnetKernel::raw_mode()
                 if (strFlag.at(0) == QChar('+'))
                     strDisplay = QString(tr("* Channel %1 now belongs to a category %2 (set by %3)")).arg(strChannel, strCategory, strWho);
                 else if (strFlag.at(0) == QChar('-'))
-                    strDisplay = QString(tr("* Channel %1 is no longer category %2 (set by %3)")).arg(strChannel, strCategory, strWho);
+                    strDisplay = QString(tr("* %1 changed channel %2 category")).arg(strWho, strChannel);
             }
 
             else

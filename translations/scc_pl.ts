@@ -2393,16 +2393,16 @@
         <translation>* Pokój %1 ma teraz status %2 (Ustawił %3)</translation>
     </message>
     <message>
-        <source>* Channel %1 no longer has status %2 (set by %3)</source>
-        <translation>* Pokój %1 nie ma już statusu %2 (Ustawił %3)</translation>
+        <source>* %1 changed channel %2 status</source>
+        <translation>* %1 zmienił/a status pokoju %2</translation>
     </message>
     <message>
         <source>* Channel %1 now belongs to a category %2 (set by %3)</source>
         <translation>* Pokój %1 należy teraz do kategorii %2 (Ustawił %3)</translation>
     </message>
     <message>
-        <source>* Channel %1 is no longer category %2 (set by %3)</source>
-        <translation>* Pokój %1 nie należy już do kategorii %2 (Ustawił %3)</translation>
+        <source>* %1 changed channel %2 category</source>
+        <translation>* %1 zmienił/a kategorie pokoju %2</translation>
     </message>
     <message>
         <source>* Channel %1 now has a flag %2 (set by %3)</source>
