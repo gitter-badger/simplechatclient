@@ -13,4 +13,11 @@ cd src
 rd /S /Q CMakeFiles scc.dir __
 del /S /Q /F /A cmake_install.cmake Makefile moc_* ui_* qrc_* scc.*
 cd ..
+
+cd 3rdparty/qca-ossl-2.0.0-beta3
+call make clean
+rd /S /Q debug lib release
+del /S /Q /F /A Makefile* qca-ossl_resource.rc conf_win.pri
+cd ../..
+
 cls
