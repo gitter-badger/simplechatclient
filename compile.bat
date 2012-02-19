@@ -109,6 +109,9 @@ xcopy %QT_DIR%\bin\QtNetwork4.dll     %DESTINATION%\ /C /H /R /Y /Q
 xcopy %QT_DIR%\bin\QtWebKit4.dll      %DESTINATION%\ /C /H /R /Y /Q
 xcopy %QT_DIR%\bin\QtXml4.dll         %DESTINATION%\ /C /H /R /Y /Q
 
+echo Copying MinGW files 
+xcopy %MINGW_DIR%\bin\libstdc++-6.dll %DESTINATION%\ /C /H /R /Y /Q
+
 echo Copying scripts
 xcopy scripts\*.js %DESTINATION%\scripts\ /C /H /R /Y /Q 
 
