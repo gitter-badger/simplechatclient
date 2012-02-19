@@ -1980,6 +1980,26 @@
         <source>Not here right now</source>
         <translation>Nie ma mnie</translation>
     </message>
+    <message>
+        <source>Quit program</source>
+        <translation>Zamknięcie programu</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to quit?</source>
+        <translation>Czy na pewno chcesz zakończyć?</translation>
+    </message>
+    <message>
+        <source>Do not prompt again</source>
+        <translation>Nie pytaj więcej</translation>
+    </message>
+    <message>
+        <source>Quit</source>
+        <translation>Zamknij</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Anuluj</translation>
+    </message>
 </context>
 <context>
     <name>Network</name>

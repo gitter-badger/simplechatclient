@@ -22,6 +22,7 @@
 #include <QDesktopWidget>
 #include <QDockWidget>
 #include <QMenuBar>
+#include <QMessageBox>
 #include <QSystemTrayIcon>
 #include <QTimer>
 #include <QToolBar>
@@ -771,5 +772,42 @@ void MainWindow::closeEvent(QCloseEvent *event)
         event->ignore();
     }
     else
-        qApp->quit();
+    {
+        if (Core::instance()->settings["always_quit"] == "true")
+        {
+            qApp->quit();
+            return;
+        }
+
+        QMessageBox msgBox;
+        msgBox.setIcon(QMessageBox::Warning);
+        msgBox.setWindowIcon(QIcon(":/images/logo16x16.png"));
+        msgBox.setWindowTitle(tr("Quit program"));
+        msgBox.setText(tr("Are you sure you want to quit?"));
+
+        QCheckBox dontPrompt(tr("Do not prompt again"), &msgBox);
+        msgBox.addButton(&dontPrompt, QMessageBox::ActionRole);
+
+        QPushButton *quitButton = msgBox.addButton(tr("Quit"), QMessageBox::ActionRole);
+        QPushButton *cancelButton = msgBox.addButton(tr("Cancel"), QMessageBox::ActionRole);
+
+        dontPrompt.blockSignals(true); // hack: blocking singals so QMessageBox won't close
+        Q_UNUSED(cancelButton);
+        msgBox.exec();
+
+        if (msgBox.clickedButton() == quitButton)
+        {
+            if (dontPrompt.checkState() == Qt::Checked)
+            {
+                Config *pConfig = new Config();
+                pConfig->setValue("always_quit", "true");
+                Core::instance()->settings["always_quit"] = "true";
+                delete pConfig;
+            }
+
+            qApp->quit();
+        }
+        else
+            event->ignore();
+    }
 }
