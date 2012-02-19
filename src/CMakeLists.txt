@@ -288,10 +288,8 @@ if (MINGW)
 	if (GCC_VERSION VERSION_GREATER 4.5 OR GCC_VERSION VERSION_EQUAL 4.5)
 		# enable ASLR
 		set (CMAKE_CXX_LINK_FLAGS "${CMAKE_CXX_LINK_FLAGS} -Wl,--dynamicbase -Wl,--nxcompat")
-		set (CMAKE_CXX_LINK_FLAGS "${CMAKE_CXX_LINK_FLAGS} -static-libgcc -static-libstdc++")
 	else (GCC_VERSION VERSION_GREATER 4.5 OR GCC_VERSION VERSION_EQUAL 4.5)
 		message(STATUS "DEP and ASLR not supported. Use GCC 4.5 or greater.")
-		message(STATUS "-static-libgcc and -static-libstdc++ not supported. Use GCC 4.5 or greater.")
 	endif (GCC_VERSION VERSION_GREATER 4.5 OR GCC_VERSION VERSION_EQUAL 4.5)
 
 	# disable console on windows mingw
