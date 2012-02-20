@@ -131,7 +131,7 @@ void DlgOfflineMsg::refreshMsg()
         if (strNick == strCurrentNick)
         {
             QDateTime dt = QDateTime::fromTime_t(strTime.toInt());
-            QString strDT = dt.toString("[dd MMMM yyyy] [hh:mm:ss]");
+            QString strDT = dt.toString("[dd MMM yyyy] [hh:mm:ss]");
 
             strMessage.remove(QRegExp("%C([a-zA-Z0-9]+)%"));
             strMessage.remove(QRegExp("%F([a-zA-Z0-9:]+)%"));

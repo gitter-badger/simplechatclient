@@ -1528,7 +1528,7 @@ void OnetKernel::raw_161n()
     if ((!strTopicAuthor.isEmpty()) && (!strTopicDate.isEmpty()))
     {
         QDateTime dt = QDateTime::fromTime_t(strTopicDate.toInt());
-        QString strDT = dt.toString("dd MMMM yyyy hh:mm:ss");
+        QString strDT = dt.toString("dd MMM yyyy hh:mm:ss");
         QString strTopicDetails = QString("%1 (%2)").arg(strTopicAuthor, strDT);
         pTabC->authorTopic(strChannel, strTopicDetails);
     }
@@ -1579,7 +1579,7 @@ void OnetKernel::raw_163n()
     if (strIPNick[0] == ':') strIPNick.remove(0,1);
 
     QDateTime dt = QDateTime::fromTime_t(strDT.toInt());
-    strDT = dt.toString("dd MMMM yyyy hh:mm:ss");
+    strDT = dt.toString("dd MMM yyyy hh:mm:ss");
 
     if (Core::instance()->strChannelSettings == strChannel)
         Core::instance()->mChannelSettingsPermissions.insert(strFlag, QString("%1;%2;%3;%4").arg(strNick, strWho, strDT, strIPNick));
@@ -2489,7 +2489,7 @@ void OnetKernel::raw_317()
     pTabC->showMessageActive(strDisplayIdle, InfoMessage);
 
     QDateTime dt_time = QDateTime::fromTime_t(strTime.toInt());
-    QString strDT_time = dt_time.toString("dd MMMM yyyy hh:mm:ss");
+    QString strDT_time = dt_time.toString("dd MMM yyyy hh:mm:ss");
 
     QString strDisplaySignon = QString(tr("* %1 is logged in since %2")).arg(strNick, strDT_time);
     pTabC->showMessageActive(strDisplaySignon, InfoMessage);
