@@ -271,7 +271,7 @@ void DlgChannelSettings::refreshChannelInfo()
         {
             // label created date/time
             QDateTime dt = QDateTime::fromTime_t(strValue.toInt());
-            QString strDT = dt.toString("dd/MM/yyyy hh:mm:ss");
+            QString strDT = dt.toString("dd MMMM yyyy hh:mm:ss");
             ui.label_summary_datetime->setText(strDT);
 
             // stats

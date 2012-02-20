@@ -132,7 +132,7 @@ void Core::createSettings()
     settings["debug"] = strDebug;
 
     // default settings
-    settings["version"] = "1.4.0.1191";
+    settings["version"] = "1.4.0.1192";
     settings["available_version"] = "";
     settings["whats_new"] = "";
     settings["motd"] = "";
@@ -393,7 +393,7 @@ void Core::addAwaylog(const QString &strTime, const QString &strChannel, const Q
         else
             dt = QDateTime::currentDateTime();
 
-        QString strAwaylogFileData = QString("%1 %2 %3").arg(dt.toString("[dd/MM/yyyy] [hh:mm:ss]"), strChannel, strAwayData);
+        QString strAwaylogFileData = QString("%1 %2 %3").arg(dt.toString("[yyyy-MM-dd] [hh:mm:ss]"), strChannel, strAwayData);
         Log::save("awaylog", strAwaylogFileData);
     }
 
