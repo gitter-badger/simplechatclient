@@ -86,6 +86,44 @@ bool TabContainer::isHighlightMessage(const QString &strMessage)
     return false;
 }
 
+void TabContainer::saveMessage(const QString &strChannel, const QString &strData, QString strTime, QString strNick)
+{
+    QDateTime dt;
+    if (!strTime.isEmpty())
+        dt = QDateTime::fromTime_t(strTime.toInt());
+    else
+        dt = QDateTime::currentDateTime();
+
+    if (Core::instance()->settings.value("disable_logs") == "false")
+    {
+        QString strSaveData;
+        if (!strNick.isEmpty())
+            strSaveData = QString("%1 <%2> %3").arg(dt.toString("[hh:mm:ss]"), strNick, strData);
+        else
+            strSaveData = QString("%1 %2").arg(dt.toString("[hh:mm:ss]"), strData);
+
+        // fix /me
+        QString strRegExpMe = QString("%1ACTION %2%3").arg(QString(QByteArray("\x01")), "(.*)", QString(QByteArray("\x01")));
+        if (strSaveData.contains(QRegExp(strRegExpMe)))
+            strSaveData.replace(QRegExp(strRegExpMe), "\\1");
+
+        Log::save(strChannel, strSaveData);
+    }
+}
+
+bool TabContainer::hideJoinPart(const QString &strChannel, MessageCategory eMessageCategory)
+{
+    if ((eMessageCategory == JoinMessage) || (eMessageCategory == PartMessage) || (eMessageCategory == QuitMessage))
+    {
+        if (Core::instance()->settings.value("hide_join_part") == "true")
+            return true;
+
+        int iNickCount = Core::instance()->getUserCount(strChannel);
+        if ((Core::instance()->settings.value("hide_join_part_200") == "true") && (iNickCount > 200))
+            return true;
+    }
+    return false;
+}
 
 bool TabContainer::existTab(const QString &strChannel)
 {
@@ -138,7 +176,7 @@ void TabContainer::renameTab(const QString &strChannel, const QString &strNewNam
 {
     int index = Core::instance()->getIndexFromChannelName(strChannel);
 
-    if ((index != -1) && (pTabM->tabText(index)[0] == '^'))
+    if ((index >= 0 && index <= pTabM->count()) && (pTabM->tabText(index)[0] == '^'))
     {
         pTabM->setTabText(index, strNewName);
 
@@ -172,8 +210,7 @@ void TabContainer::refreshColors()
 
         // update tab name color
         int index = Core::instance()->getIndexFromChannelName(strChannel);
-        if (index != -1)
-            pTabM->setColor(index, QColor(Core::instance()->settings.value("default_font_color")));
+        pTabM->setColor(index, QColor(Core::instance()->settings.value("default_font_color")));
     }
 }
 
@@ -192,6 +229,10 @@ void TabContainer::refreshCSS()
 void TabContainer::showMessage(const QString &strChannel, const QString &strData, MessageCategory eMessageCategory, QString strTime, QString strNick)
 {
     if (!existTab(strChannel))
+        return;
+
+    // hide join part
+    if (hideJoinPart(strChannel, eMessageCategory))
         return;
 
     int index = Core::instance()->getIndexFromChannelName(strChannel);
@@ -215,18 +256,17 @@ void TabContainer::showMessage(const QString &strChannel, const QString &strData
         eMessageCategory = HighlightMessage;
 
         // highlight
-        if ((index != -1) && (index != pTabM->currentIndex()))
-            pTabM->setAlert(index, ChannelHighlight);
+        pTabM->setAlert(index, ChannelHighlight);
     }
 
     // set color
-    if ((index != -1) && (index != pTabM->currentIndex()))
-    {
-        if (eMessageCategory != DefaultMessage)
-            pTabM->setAlert(index, ChannelGreen); // green
-        else
-            pTabM->setAlert(index, ChannelRed); // red
-    }
+    if (eMessageCategory != DefaultMessage)
+        pTabM->setAlert(index, ChannelGreen);
+    else
+        pTabM->setAlert(index, ChannelRed);
+
+    // save message
+    saveMessage(strChannel, strData, strTime, strNick);
 
     // display
     tw[strChannel]->pChatView->displayMessage(strData, eMessageCategory, strTime, strNick);
@@ -240,16 +280,22 @@ void TabContainer::showMessageAll(const QString &strData, MessageCategory eMessa
         i.next();
         QString strChannel = i.key();
 
-        int index = Core::instance()->getIndexFromChannelName(strChannel);
-        if ((index != -1) && (index != pTabM->currentIndex()))
+        // hide join part
+        if (!hideJoinPart(strChannel, eMessageCategory))
         {
-            if (eMessageCategory != DefaultMessage)
-                pTabM->setAlert(index, ChannelGreen); // green
-            else
-                pTabM->setAlert(index, ChannelRed); // red
-        }
+            int index = Core::instance()->getIndexFromChannelName(strChannel);
 
-        tw[strChannel]->pChatView->displayMessage(strData, eMessageCategory);
+            if (eMessageCategory != DefaultMessage)
+                pTabM->setAlert(index, ChannelGreen);
+            else
+                pTabM->setAlert(index, ChannelRed);
+
+            // save message
+            saveMessage(strChannel, strData);
+
+            // display
+            tw[strChannel]->pChatView->displayMessage(strData, eMessageCategory);
+        }
     }
 }
 
@@ -257,8 +303,18 @@ void TabContainer::showMessageActive(const QString &strData, MessageCategory eMe
 {
     QString strChannel = Core::instance()->getCurrentChannelName();
 
-    if (!strChannel.isEmpty())
-        tw[strChannel]->pChatView->displayMessage(strData, eMessageCategory);
+    if (strChannel.isEmpty())
+        return;
+
+    // hide join part
+    if (hideJoinPart(strChannel, eMessageCategory))
+        return;
+
+    // save message
+    saveMessage(strChannel, strData);
+
+    // display
+    tw[strChannel]->pChatView->displayMessage(strData, eMessageCategory);
 }
 
 void TabContainer::setTopic(const QString &strChannel, const QString &strTopic)
@@ -318,7 +374,7 @@ void TabContainer::setChannelAvatar(const QString &strChannel)
 
     QIcon icon(pixmap);
     int index = Core::instance()->getIndexFromChannelName(strChannel);
-    if (index != -1)
+    if (index >= 0 && index <= pTabM->count())
         pTabM->setTabIcon(index, icon);
 }
 
@@ -353,6 +409,8 @@ void TabContainer::delUser(const QString &strChannel, const QString &strNick)
 
 void TabContainer::quitUser(const QString &strNick, const QString &strDisplay)
 {
+    MessageCategory eMessageCategory = QuitMessage;
+
     QHashIterator<QString, TabWidget*> i(tw);
     while (i.hasNext())
     {
@@ -361,13 +419,14 @@ void TabContainer::quitUser(const QString &strNick, const QString &strDisplay)
 
         if (tw[strChannel]->pNickListWidget->existUser(strNick))
         {
-            showMessage(strChannel, strDisplay, QuitMessage);
+            showMessage(strChannel, strDisplay, eMessageCategory);
             tw[strChannel]->pNickListWidget->delUser(strNick);
             tw[strChannel]->users->setText(QString(tr("Users (%1)").arg(tw[strChannel]->pNickListWidget->count())));
 
             int index = Core::instance()->getIndexFromChannelName(strChannel);
-            if (index != pTabM->currentIndex())
-                pTabM->setAlert(index, ChannelGreen); // green
+
+            if (!hideJoinPart(strChannel, eMessageCategory))
+                pTabM->setAlert(index, ChannelGreen);
         }
     }
 }

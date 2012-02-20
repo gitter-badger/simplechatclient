@@ -37,27 +37,52 @@ TabManager::TabManager(QWidget *parent) : QTabWidget(parent)
 
 void TabManager::setAlert(int index, ChannelColor c)
 {
-    QColor color;
-    if (c == ChannelRed)
-        color = cRed;
-    else if (c == ChannelGreen)
-        color = cGreen;
-    else if (c == ChannelHighlight)
-        color = cHighlight;
+    if ((index < 0) || (index >= count()) || (index == currentIndex()))
+        return;
 
-    // if not highlighted and not current color
-    if ((tab->tabTextColor(index) != cHighlight) && (tab->tabTextColor(index) != color))
+    QColor color;
+    int colorPriority = 0;
+
+    if (c == ChannelGreen)
+    {
+        color = cGreen;
+        colorPriority = 1;
+    }
+    else if (c == ChannelRed)
+    {
+        color = cRed;
+        colorPriority = 2;
+    }
+    else if (c == ChannelHighlight)
+    {
+        color = cHighlight;
+        colorPriority = 3;
+    }
+
+    QColor currentColor = tab->tabTextColor(index);
+    int currentPriority = 0;
+
+    if (currentColor == cGreen)
+        currentPriority = 1;
+    else if (currentColor == cRed)
+        currentPriority = 2;
+    else if (currentColor == cHighlight)
+        currentPriority = 3;
+
+    if (colorPriority > currentPriority)
         tab->setTabTextColor(index, color);
 }
 
 void TabManager::setColor(int index, QColor color)
 {
-    tab->setTabTextColor(index, color);
+    if ((index >= 0) && (index < count()))
+        tab->setTabTextColor(index, color);
 }
 
 void TabManager::hideCloseButton(int index)
 {
-    tab->setTabButton(index, QTabBar::RightSide, 0);
+    if ((index >= 0) && (index < count()))
+        tab->setTabButton(index, QTabBar::RightSide, 0);
 }
 
 void TabManager::tabInserted(int index)

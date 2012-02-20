@@ -116,6 +116,7 @@ void ChatView::refreshCSS()
     strHeadCSS.append(QString("table{border-spacing: 0; margin: 0; padding: 0; font-family: sans; word-wrap: break-word; font-size:%1;}.TableText{width:100%;}").arg(strFontSize));
     strHeadCSS.append(QString(".time{font-weight:normal; text-decoration:none; color:%1; padding-right:5px;}").arg(strDefaultFontColor));
     strHeadCSS.append(QString(".avatar{vertical-align:middle; margin-left:4px; margin-right:4px; width:30px; height:30px;}"));
+
     strHeadCSS.append(QString(".DefaultFontColor{color:%1;}").arg(strDefaultFontColor));
     strHeadCSS.append(QString(".JoinFontColor{color:%1;}").arg(strJoinFontColor));
     strHeadCSS.append(QString(".PartFontColor{color:%1;}").arg(strPartFontColor));
@@ -145,32 +146,6 @@ void ChatView::displayMessage(const QString &strData, MessageCategory eMessageCa
         dt = QDateTime::fromTime_t(strTime.toInt());
     else
         dt = QDateTime::currentDateTime();
-
-    if (Core::instance()->settings.value("disable_logs") == "false")
-    {
-        QString strSaveData;
-        if (!strNick.isEmpty())
-            strSaveData = QString("%1 <%2> %3").arg(dt.toString("[hh:mm:ss]"), strNick, strData);
-        else
-            strSaveData = QString("%1 %2").arg(dt.toString("[hh:mm:ss]"), strData);
-
-        // fix /me
-        QString strRegExpMe = QString("%1ACTION %2%3").arg(QString(QByteArray("\x01")), "(.*)", QString(QByteArray("\x01")));
-        if (strSaveData.contains(QRegExp(strRegExpMe)))
-            strSaveData.replace(QRegExp(strRegExpMe), "\\1");
-
-        Log::save(strChatViewChannel, strSaveData);
-    }
-
-    if ((eMessageCategory == JoinMessage) || (eMessageCategory == PartMessage) || (eMessageCategory == QuitMessage))
-    {
-        if (Core::instance()->settings.value("hide_join_part") == "true")
-            return;
-
-        int iNickCount = Core::instance()->getUserCount(strChatViewChannel);
-        if ((Core::instance()->settings.value("hide_join_part_200") == "true") && (iNickCount > 200))
-            return;
-    }
 
     QString strContent = HtmlMessagesRenderer::renderer(dt, strData, eMessageCategory, strNick);
 

@@ -74,6 +74,8 @@ private:
 
     void logOpened(const QString &strChannel);
     void logClosed(const QString &strChannel);
+    void saveMessage(const QString &strChannel, const QString &strData, QString strTime = QString::null, QString strNick = QString::null);
+    bool hideJoinPart(const QString &strChannel, MessageCategory eMessageCategory);
     bool isHighlightMessage(const QString &strMessage);
 
 signals:
