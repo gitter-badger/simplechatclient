@@ -103,25 +103,54 @@ ToolWidget::ToolWidget(QWidget *parent) : QWidget(parent), strCurrentColor("#000
     color->show();
 
     size8Act = new QAction("8", this);
-    size8Act->setFont(QFont("Verdana", 8, -1, false));
+    QFont size8Font(size8Act->font());
+    size8Font.setPixelSize(8);
+    size8Act->setFont(size8Font);
+
     size9Act = new QAction("9", this);
-    size9Act->setFont(QFont("Verdana", 9, -1, false));
+    QFont size9Font(size9Act->font());
+    size9Font.setPixelSize(9);
+    size9Act->setFont(size9Font);
+
     size10Act = new QAction("10", this);
-    size10Act->setFont(QFont("Verdana", 10, -1, false));
+    QFont size10Font(size10Act->font());
+    size10Font.setPixelSize(10);
+    size10Act->setFont(size10Font);
+
     size11Act = new QAction("11", this);
-    size11Act->setFont(QFont("Verdana", 11, -1, false));
+    QFont size11Font(size11Act->font());
+    size11Font.setPixelSize(11);
+    size11Act->setFont(size11Font);
+
     size12Act = new QAction("12", this);
-    size12Act->setFont(QFont("Verdana", 12, -1, false));
+    QFont size12Font(size12Act->font());
+    size12Font.setPixelSize(12);
+    size12Act->setFont(size12Font);
+
     size14Act = new QAction("14", this);
-    size14Act->setFont(QFont("Verdana", 14, -1, false));
+    QFont size14Font = size14Act->font();
+    size14Font.setPixelSize(14);
+    size14Act->setFont(size14Font);
+
     size16Act = new QAction("16", this);
-    size16Act->setFont(QFont("Verdana", 16, -1, false));
+    QFont size16Font(size16Act->font());
+    size16Font.setPixelSize(16);
+    size16Act->setFont(size16Font);
+
     size18Act = new QAction("18", this);
-    size18Act->setFont(QFont("Verdana", 18, -1, false));
+    QFont size18Font(size18Act->font());
+    size18Font.setPixelSize(18);
+    size18Act->setFont(size18Font);
+
     size20Act = new QAction("20", this);
-    size20Act->setFont(QFont("Verdana", 20, -1, false));
+    QFont size20Font(size20Act->font());
+    size20Font.setPixelSize(20);
+    size20Act->setFont(size20Font);
+
     size24Act = new QAction("24", this);
-    size24Act->setFont(QFont("Verdana", 24, -1, false));
+    QFont size24Font(size24Act->font());
+    size24Font.setPixelSize(24);
+    size24Act->setFont(size24Font);
 
     sizeMenu = new QMenu(this);
     sizeMenu->addAction(size8Act);
