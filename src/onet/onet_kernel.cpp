@@ -1229,13 +1229,22 @@ void OnetKernel::raw_100n()
     for (int i = 6; i < strDataList.size(); i++) { if (i != 6) strMessage += " "; strMessage += strDataList[i]; }
     if (strMessage[0] == ':') strMessage.remove(0,1);
 
+    strMessage.replace("&#8211;", "-");
+    strMessage.replace("&#8212;", "-");
+    strMessage.replace("&#8216;", "`");
+    strMessage.replace("&#8217;", "`");
+    strMessage.replace("&#8218;", ",");
+    strMessage.replace("&#8220;", "\"");
+    strMessage.replace("&#8221;", "\"");
+    strMessage.replace("&#8222;", "\"");
+
     QString strDisplay;
     if (iTime < iCurrentTime)
         strDisplay = QString(tr("* %1 In progress on channel %2")).arg(strMessage, strChannel);
     else
         strDisplay = QString(tr("* %1 Starting in %2 on channel %3")).arg(strMessage, strTimeResult, strChannel);
 
-    pTabC->showMessageActive(strDisplay, NoticeMessage);
+    pTabC->showMessage(STATUS, strDisplay, NoticeMessage);
 }
 
 // :GuardServ!service@service.onet NOTICE scc_test :109 #scc :rzucanie mięsem nie będzie tolerowane
