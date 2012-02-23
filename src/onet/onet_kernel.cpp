@@ -3667,8 +3667,11 @@ void OnetKernel::raw_604()
 
     QString strNick = strDataList[3];
 
+    /*
+    hidden
     QString strMessage = QString(tr("* Your friend %1 is now on-line")).arg(strNick);
     pTabC->showMessageActive(strMessage, InfoMessage);
+    */
 
     if (Core::instance()->mFriends.contains(strNick))
         Core::instance()->mFriends[strNick] = true;
@@ -3683,8 +3686,11 @@ void OnetKernel::raw_605()
 
     QString strNick = strDataList[3];
 
+    /*
+    hidden
     QString strMessage = QString(tr("* Your friend %1 is now off-line")).arg(strNick);
     pTabC->showMessageActive(strMessage, InfoMessage);
+    */
 
     if (Core::instance()->mFriends.contains(strNick))
         Core::instance()->mFriends[strNick] = false;
