@@ -25,14 +25,12 @@
 DlgWebBrowser::DlgWebBrowser(QWidget *parent, const QUrl &url) : QDialog(parent)
 {
     ui.setupUi(this);
-    setAttribute(Qt::WA_DeleteOnClose); // require by show method - prevent hangup!
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
     setWindowTitle("YouTube");
     // center screen
     move(QApplication::desktop()->screenGeometry(QApplication::desktop()->screenNumber(parent)).center()  - rect().center());
 
     ui.webView->settings()->setAttribute(QWebSettings::PluginsEnabled, true);
-    ui.webView->settings()->setAttribute(QWebSettings::AutoLoadImages, true);
 
     ui.buttonBox->button(QDialogButtonBox::Close)->setIcon(QIcon(":/images/oxygen/16x16/dialog-close.png"));
 
