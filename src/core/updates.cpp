@@ -65,7 +65,7 @@ void Updates::compareVersion()
         qDebug() << "Current version: " << strCurrentVersion << " Available version: " << strAvailableVersion;
 
     if (iAvailableVersion > iCurrentVersion)
-        DlgUpdate(Core::instance()->sccWindow(), strAvailableVersion).exec();
+        DlgUpdate(Core::instance()->sccWindow()).exec();
 }
 
 void Updates::updateFinished(QNetworkReply *reply)

@@ -29,7 +29,7 @@
 #include "mainwindow.h"
 #include "update.h"
 
-DlgUpdate::DlgUpdate(MainWindow *parent, const QString &_strVersion) : QDialog(parent), strVersion(_strVersion)
+DlgUpdate::DlgUpdate(MainWindow *parent) : QDialog(parent)
 {
     ui.setupUi(this);
     setWindowFlags(Qt::Dialog | Qt::WindowStaysOnTopHint);
@@ -55,34 +55,24 @@ void DlgUpdate::createGui()
 {
 #ifndef Q_WS_WIN
     ui.progressBar->hide();
-    ui.pushButton_download->hide();
 #endif
     ui.pushButton_download->setIcon(QIcon(":/images/oxygen/16x16/download.png"));
-    ui.buttonBox->button(QDialogButtonBox::Close)->setIcon(QIcon(":/images/oxygen/16x16/dialog-close.png"));
-
     ui.pushButton_download->setText(tr("Download"));
 }
 
 void DlgUpdate::setDefaultValues()
 {
-    QString strLink;
-#ifdef Q_WS_WIN
-    strLink = tr("download");
-#endif
-#ifdef Q_WS_X11
-    strLink = QString("<a href=\"http://simplechatclien.sourceforge.net/download/\">%1</a>").arg(tr("download"));
-#endif
+    strVersion = Core::instance()->settings.value("available_version");
 
     QStringList lVersion = strVersion.split(".");
     QString strShortVersion = QString("%1.%2.%3").arg(lVersion[0], lVersion[1], lVersion[2]);
 
-    QString strDisplay = QString(tr("A new version %1 is available. Please %2 an installer and upgrade.")).arg(strShortVersion, strLink);
-    ui.label_msg->setText(strDisplay);
+    ui.label_title->setText(QString("Simple Chat Client %1").arg(strShortVersion));
+    ui.label_whatsnew->setText(Core::instance()->settings.value("whats_new"));
 }
 
 void DlgUpdate::createSignals()
 {
-    connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(close()));
     connect(ui.pushButton_download, SIGNAL(clicked()), this, SLOT(buttonDownload()));
 }
 
@@ -90,8 +80,13 @@ void DlgUpdate::buttonDownload()
 {
     ui.pushButton_download->setEnabled(false);
 
+#ifdef Q_WS_WIN
     QNetworkReply *pReply = accessManager->get(QNetworkRequest(QUrl("http://sourceforge.net/projects/simplechatclien/files/scc-"+strVersion+".exe/download")));
     pReply->setProperty("category", "site");
+#else
+    QString strUrl = "http://simplechatclien.sourceforge.net/download/";
+    QDesktopServices::openUrl(QUrl(strUrl));
+#endif
 }
 
 // <a href="http://downloads.sourceforge.net..." class="direct-download">

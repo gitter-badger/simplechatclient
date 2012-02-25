@@ -31,7 +31,7 @@ class DlgUpdate : public QDialog
 {
     Q_OBJECT
 public:
-    DlgUpdate(MainWindow *parent, const QString &_strVersion);
+    DlgUpdate(MainWindow *parent);
     virtual ~DlgUpdate();
 
 private:
