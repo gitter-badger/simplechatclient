@@ -1672,20 +1672,36 @@
         <translation>Wczytywanie...</translation>
     </message>
     <message>
-        <source>Invalid password. Password must be at least 6 characters including at least one number.</source>
-        <translation>Niepoprawne hasło. Hasło musie mieć przynajmniej 6 znaków w tym co najmniej jedną cyfrę.</translation>
+        <source>Password must be at least 6 characters including at least one number.</source>
+        <translation>Hasło musie mieć przynajmniej 6 znaków w tym co najmniej jedną cyfrę.</translation>
     </message>
     <message>
         <source>Nick already exist</source>
         <translation>Podany nick już istnieje</translation>
     </message>
     <message>
-        <source>Invalid code</source>
-        <translation>Nieprawidłowy kod</translation>
+        <source>Invalid nick</source>
+        <translation>Nieprawidłowy nick. Nick musi mieć co najmniej 3 znaki i zaczynać się od litery</translation>
     </message>
     <message>
-        <source>Invalid nick</source>
-        <translation>Nieprawidłowy nick</translation>
+        <source>Given nickname is unavailable</source>
+        <translation>Podany nick jest niedostępny</translation>
+    </message>
+    <message>
+        <source>Unknown error. Please try again later.</source>
+        <translation>Wystąpił nieznany błąd. Spróbuj ponownie za chwilę.</translation>
+    </message>
+    <message>
+        <source>Unable to connect to the server. Please try again later.</source>
+        <translation>Nie udało się połączyć z serwerem. Spróbuj ponownie za chwilę.</translation>
+    </message>
+    <message>
+        <source>Server Error. Please try again later.</source>
+        <translation>Błąd serwera. Spróbuj ponownie za chwilę.</translation>
+    </message>
+    <message>
+        <source>Invalid code</source>
+        <translation>Nieprawidłowy kod</translation>
     </message>
     <message>
         <source>Unknown error: %1</source>

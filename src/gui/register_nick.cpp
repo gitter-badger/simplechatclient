@@ -163,6 +163,7 @@ void DlgRegisterNick::registerNick()
 }
 
 // <?xml version="1.0" encoding="ISO-8859-2"?><root><status>-104</status><error err_code="0"  err_text="OK" ></error></root>
+// <?xml version="1.0" encoding="ISO-8859-2"?><root><status>-99</status><error err_code="0"  err_text="OK" ></error></root>
 // <?xml version="1.0" encoding="ISO-8859-2"?><root><status>-3</status><error err_code="0"  err_text="OK" ></error></root>
 // <?xml version="1.0" encoding="ISO-8859-2"?><root><status>-2</status><error err_code="0"  err_text="OK" ></error></root>
 // <?xml version="1.0" encoding="ISO-8859-2"?><root><status>-1</status><error err_code="0"  err_text="OK" ></error></root>
@@ -172,10 +173,10 @@ void DlgRegisterNick::parseResult(const QString &strResult)
     QDomDocument doc;
     doc.setContent(strResult);
 
-    QString strErrCode = doc.elementsByTagName("status").item(0).toElement().text();
+    int iErrCode = doc.elementsByTagName("status").item(0).toElement().text().toInt();
 
     // correct
-    if (strErrCode == "1")
+    if (iErrCode == 1)
     {
         // encrypt pass
         QString strNick = ui.lineEdit_nick->text();
@@ -189,18 +190,38 @@ void DlgRegisterNick::parseResult(const QString &strResult)
     else
     {
         ui.lineEdit_code->clear();
-
         QString strErrText;
-        if (strErrCode == "-1")
-            strErrText = tr("Invalid password. Password must be at least 6 characters including at least one number.");
-        else if (strErrCode == "-2")
-            strErrText = tr("Nick already exist");
-        else if (strErrCode == "-3")
-            strErrText = tr("Invalid nick");
-        else if (strErrCode == "-104")
-            strErrText = tr("Invalid code");
-        else
-            strErrText = QString(tr("Unknown error: %1")).arg(strErrCode);
+
+        switch(iErrCode)
+        {
+            case -1:
+                strErrText = tr("Password must be at least 6 characters including at least one number.");
+                break;
+            case -2:
+                strErrText = tr("Nick already exist");
+                break;
+            case -3:
+                strErrText = tr("Invalid nick");
+                break;
+            case -4:
+                strErrText = tr("Given nickname is unavailable");
+                break;
+            case -99:
+                strErrText = tr("Unknown error. Please try again later.");
+                break;
+            case -101:
+                strErrText = tr("Unable to connect to the server. Please try again later.");
+                break;
+            case -102:
+                strErrText = tr("Server Error. Please try again later.");
+                break;
+            case -104:
+                strErrText = tr("Invalid code");
+                break;
+            default:
+                strErrText = QString(tr("Unknown error: %1")).arg(iErrCode);
+                break;
+        }
 
         QMessageBox::critical(0, tr("Error"), strErrText);
         getImg();
