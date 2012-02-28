@@ -162,10 +162,6 @@ void DlgRegisterNick::registerNick()
     pReply->setProperty("category", RT_register);
 }
 
-// <?xml version="1.0" encoding="ISO-8859-2"?><root><status>-104</status><error err_code="0"  err_text="OK" ></error></root>
-// <?xml version="1.0" encoding="ISO-8859-2"?><root><status>-99</status><error err_code="0"  err_text="OK" ></error></root>
-// <?xml version="1.0" encoding="ISO-8859-2"?><root><status>-3</status><error err_code="0"  err_text="OK" ></error></root>
-// <?xml version="1.0" encoding="ISO-8859-2"?><root><status>-2</status><error err_code="0"  err_text="OK" ></error></root>
 // <?xml version="1.0" encoding="ISO-8859-2"?><root><status>-1</status><error err_code="0"  err_text="OK" ></error></root>
 // <?xml version="1.0" encoding="ISO-8859-2"?><root><status>1</status><error err_code="0"  err_text="OK" ></error></root>
 void DlgRegisterNick::parseResult(const QString &strResult)

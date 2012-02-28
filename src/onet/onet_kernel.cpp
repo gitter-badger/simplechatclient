@@ -3026,8 +3026,12 @@ void OnetKernel::raw_412n()
     if (strDataList.size() < 5) return;
 
     QString strNick = strDataList[4];
+    QString strMe = Core::instance()->settings.value("nick");
 
-    Core::instance()->pNetwork->send(QString("RS INFO %1").arg(strNick));
+    if (strNick == strMe)
+        Core::instance()->pNetwork->send(QString("RS INFO %1").arg(strNick));
+    else
+        Core::instance()->pNetwork->send(QString("NS INFO %1 s").arg(strNick));
 }
 
 // RS INFO istota_bezduszna
