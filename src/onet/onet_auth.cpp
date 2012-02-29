@@ -240,13 +240,25 @@ void OnetAuth::networkFinished(QNetworkReply *reply)
     reply->deleteLater();
 
     if (reply->error())
+    {
+        if (Core::instance()->settings.value("debug") == "true")
+            qDebug() << "Error OnetAuth network: " << reply->errorString();
+
+        bAuthorizing = false;
         return;
+    }
 
     int category = reply->property("category").toInt();
     QByteArray bData = reply->readAll();
 
     if (bData.isEmpty())
+    {
+        if (Core::instance()->settings.value("debug") == "true")
+            qDebug() << "Error OnetAuth data empty";
+
+        bAuthorizing = false;
         return;
+    }
 
     switch (category)
     {
@@ -301,6 +313,11 @@ void OnetAuth::networkFinished(QNetworkReply *reply)
             }
         case AT_refreshSk:
             saveCookies();
+            break;
+        default:
+            if (Core::instance()->settings.value("debug") == "true")
+                qDebug() << "Error OnetAuth undefined category";
+            bAuthorizing = false;
             break;
     }
 }
