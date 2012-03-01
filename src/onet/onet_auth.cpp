@@ -361,7 +361,7 @@ QString OnetAuth::getVersion(const QString &strData)
         }
     }
 
-    return "20111013-1222";
+    return "20111108-1525";
 }
 
 void OnetAuth::requestFinished(const QString &strData)
