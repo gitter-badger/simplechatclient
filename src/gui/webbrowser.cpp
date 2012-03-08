@@ -20,11 +20,13 @@
 
 #include <QDesktopWidget>
 #include <QPushButton>
+#include "mainwindow.h"
 #include "webbrowser.h"
 
-DlgWebBrowser::DlgWebBrowser(QWidget *parent, const QUrl &url) : QDialog(parent)
+DlgWebBrowser::DlgWebBrowser(MainWindow *parent, const QUrl &url) : QDialog(parent)
 {
     ui.setupUi(this);
+    setAttribute(Qt::WA_DeleteOnClose); // require by show method - prevent hangup!
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
     setWindowTitle("YouTube");
     // center screen
@@ -46,3 +48,12 @@ void DlgWebBrowser::loadFinished()
 {
     setWindowTitle(ui.webView->title());
 }
+
+void DlgWebBrowser::closeEvent(QCloseEvent *event)
+{
+    ui.webView->triggerPageAction(QWebPage::Stop);
+
+    event->accept();
+    deleteLater();
+}
+

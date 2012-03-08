@@ -21,21 +21,26 @@
 #ifndef WEBBROWSER_H
 #define WEBBROWSER_H
 
+class MainWindow;
 #include <QUrl>
 #include <QDialog>
+#include <QCloseEvent>
 #include "ui_webbrowser.h"
 
 class DlgWebBrowser : public QDialog
 {
     Q_OBJECT
 public:
-    DlgWebBrowser(QWidget *parent, const QUrl &url);
+    DlgWebBrowser(MainWindow *parent, const QUrl &url);
 
 private:
     Ui::uiWebBrowser ui;
 
 private slots:
     void loadFinished();
+
+protected:
+    void closeEvent(QCloseEvent *event);
 };
 
 #endif // WEBBROWSER_H
