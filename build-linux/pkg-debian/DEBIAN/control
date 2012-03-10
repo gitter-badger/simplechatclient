@@ -1,0 +1,13 @@
+Package: simplechatclient
+Version: 1.4.0.1204
+Section: net
+Maintainer: Piotr Luczko <piotr.luczko@gmail.com>
+Homepage: http://simplechatclien.sf.net
+Priority: standard
+Installed-Size: 22000
+Architecture: i386
+Depends: libphonon4 (>=4.7), libc6 (>=2.11), libqca2-plugin-ossl (>=0.1~20070904), libqca2-dev (>=2.0.2), libssl-dev (>=0.9.8)
+Description: Simple Chat Client
+ Simple Chat Client is a lightweight and simple program which allows
+ talking in the chat onet.pl without using a browser or java.
+
