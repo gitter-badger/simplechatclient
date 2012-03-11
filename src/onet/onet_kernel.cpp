@@ -3671,11 +3671,9 @@ void OnetKernel::raw_604()
 
     QString strNick = strDataList[3];
 
-    /*
-    hidden
-    QString strMessage = QString(tr("* Your friend %1 is now on-line")).arg(strNick);
-    pTabC->showMessageActive(strMessage, InfoMessage);
-    */
+//    hidden
+//    QString strMessage = QString(tr("* Your friend %1 is now on-line")).arg(strNick);
+//    pTabC->showMessageActive(strMessage, InfoMessage);
 
     if (Core::instance()->mFriends.contains(strNick))
         Core::instance()->mFriends[strNick] = true;
@@ -3690,11 +3688,9 @@ void OnetKernel::raw_605()
 
     QString strNick = strDataList[3];
 
-    /*
-    hidden
-    QString strMessage = QString(tr("* Your friend %1 is now off-line")).arg(strNick);
-    pTabC->showMessageActive(strMessage, InfoMessage);
-    */
+//    hidden
+//    QString strMessage = QString(tr("* Your friend %1 is now off-line")).arg(strNick);
+//    pTabC->showMessageActive(strMessage, InfoMessage);
 
     if (Core::instance()->mFriends.contains(strNick))
         Core::instance()->mFriends[strNick] = false;
@@ -3985,8 +3981,9 @@ void OnetKernel::raw_950()
 
     QString strNick = strDataList[5];
 
-    QString strDisplay = QString(tr("* Removed %1 from silence list")).arg(strNick);
-    pTabC->showMessageActive(strDisplay, InfoMessage);
+//    hidden
+//    QString strDisplay = QString(tr("* Removed %1 from silence list")).arg(strNick);
+//    pTabC->showMessageActive(strDisplay, InfoMessage);
 }
 
 // NS IGNORE ADD nick
@@ -3997,8 +3994,9 @@ void OnetKernel::raw_951()
 
     QString strNick = strDataList[5];
 
-    QString strMessage = QString(tr("* Added %1 to silence list")).arg(strNick);
-    pTabC->showMessageActive(strMessage, InfoMessage);
+//    hidden
+//    QString strMessage = QString(tr("* Added %1 to silence list")).arg(strNick);
+//    pTabC->showMessageActive(strMessage, InfoMessage);
 }
 
 // :cf1f4.onet 952 Merovingian Merovingian :Succubi!*@* <privatemessages,channelmessages,invites> is already on your silence list
