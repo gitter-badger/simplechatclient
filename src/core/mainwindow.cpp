@@ -791,8 +791,10 @@ void MainWindow::closeEvent(QCloseEvent *event)
         QPushButton *quitButton = msgBox.addButton(tr("Quit"), QMessageBox::ActionRole);
         QPushButton *cancelButton = msgBox.addButton(tr("Cancel"), QMessageBox::ActionRole);
 
+        quitButton->setIcon(QIcon(":/images/oxygen/16x16/dialog-ok.png"));
+        cancelButton->setIcon(QIcon(":/images/oxygen/16x16/dialog-cancel.png"));
+
         dontPrompt.blockSignals(true); // hack: blocking singals so QMessageBox won't close
-        Q_UNUSED(cancelButton);
         msgBox.exec();
 
         if (msgBox.clickedButton() == quitButton)
