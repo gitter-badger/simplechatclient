@@ -108,16 +108,7 @@ void DlgUpdate::gotSite(QString site)
 
 void DlgUpdate::gotFile(const QByteArray &bData)
 {
-    QString path;
-
-#ifdef Q_WS_WIN
-    path = QFileInfo(QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation)).absoluteFilePath();
-    path += "/scc";
-#else
-    path = QDir::homePath()+"/.scc";
-#endif
-
-    path += "/update";
+    QString path = QFileInfo(QDesktopServices::storageLocation(QDesktopServices::TempLocation)).absoluteFilePath();
 
     // create dir if not exist
     if (!QDir().exists(path))

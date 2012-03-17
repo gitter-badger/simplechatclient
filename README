@@ -5,4 +5,4 @@ Microsoft Visual C++ 2008 SP1 Redistributable Package (x86)
 http://www.microsoft.com/download/en/details.aspx?displaylang=en&id=5582
 
 Linux:
-libssl-dev libqca2-dev libqca2-plugin-ossl libphonon-dev g++ cmake
+libssl-dev libqca2-dev libqca2-plugin-ossl libphonon-dev g++ cmake make
