@@ -132,7 +132,7 @@ void Core::createSettings()
     settings["debug"] = strDebug;
 
     // default settings
-    settings["version"] = "1.5.0.1214";
+    settings["version"] = "1.5.0.1215";
     settings["available_version"] = "";
     settings["whats_new"] = "";
     settings["motd"] = "";
