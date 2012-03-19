@@ -110,10 +110,6 @@ void DlgUpdate::gotFile(const QByteArray &bData)
 {
     QString path = QFileInfo(QDesktopServices::storageLocation(QDesktopServices::TempLocation)).absoluteFilePath();
 
-    // create dir if not exist
-    if (!QDir().exists(path))
-        QDir().mkpath(path);
-
     // save
     QString fileName = path+"/scc-"+strVersion+".exe";
 

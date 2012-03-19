@@ -73,11 +73,12 @@ void Log::save(const QString &strChannel, const QString &strData)
     if (f.open(QIODevice::Append))
     {
         // convert
-        convert(strData);
+        QString strSaveData = strData; 
+        convert(strSaveData);
 
         // save
         QTextStream out(&f);
-        out << strData << "\r\n";
+        out << strSaveData << "\r\n";
 
         f.close();
     }

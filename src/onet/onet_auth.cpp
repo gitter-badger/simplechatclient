@@ -331,16 +331,8 @@ void OnetAuth::saveCookies()
         QString strKey = i->name();
         QString strValue = i->value();
 
-        if (strKey == "onet_ubi")
-            Core::instance()->settings["onet_ubi"] = strValue;
-        else if (strKey == "onet_cid")
-            Core::instance()->settings["onet_cid"] = strValue;
-        else if (strKey == "onet_sid")
-            Core::instance()->settings["onet_sid"] = strValue;
-        else if (strKey == "onet_uid")
-            Core::instance()->settings["onet_uid"] = strValue;
-        else if (strKey == "onetzuo_ticket")
-            Core::instance()->settings["onetzuo_ticket"] = strValue;
+        if ((strKey == "onet_ubi") || (strKey == "onet_cid") || (strKey == "onet_sid") || (strKey == "onet_uid") || (strKey == "onetzuo_ticket"))
+            Core::instance()->settings[strKey] = strValue;
     }
 }
 
