@@ -1,0 +1,7 @@
+/__/
+/CMakeFiles/
+/*.cxx
+/ui_*.h
+/cmake_install.cmake
+/scc.exe
+/Makefile

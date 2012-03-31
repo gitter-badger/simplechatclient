@@ -64,8 +64,12 @@ void DlgUpdate::setDefaultValues()
 {
     strVersion = Core::instance()->settings.value("available_version");
 
-    QStringList lVersion = strVersion.split(".");
-    QString strShortVersion = QString("%1.%2.%3").arg(lVersion[0], lVersion[1], lVersion[2]);
+    QStringList lAvailableVersion = strVersion.split(".");
+    QString strCurrentMajor = lAvailableVersion[0];
+    QString strCurrentMinor = lAvailableVersion[1];
+    QString strCurrentPatch = lAvailableVersion[2];
+
+    QString strShortVersion = QString("%1.%2.%3").arg(strCurrentMajor).arg(strCurrentMinor).arg(strCurrentPatch);
 
     ui.label_title->setText(QString("Simple Chat Client %1").arg(strShortVersion));
     ui.label_whatsnew->setText(Core::instance()->settings.value("whats_new"));

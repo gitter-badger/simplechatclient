@@ -132,10 +132,11 @@ void Core::createSettings()
     settings["debug"] = strDebug;
 
     // default settings
-    settings["version"] = "1.5.0.1216";
+    settings["version"] = "1.5.0.git";
     settings["available_version"] = "";
     settings["whats_new"] = "";
     settings["motd"] = "";
+    settings["version_status"] = "unknown";
     settings["logged"] = "false";
     settings["busy"] = "false";
     settings["away"] = "false";

@@ -48,26 +48,14 @@ void DlgAbout::setDefaultValues()
 {
     QString strVersion;
     QString strCurrentVersion = Core::instance()->settings.value("version");
+    QString strVersionStatus = Core::instance()->settings.value("version_status");
 
-    QStringList lCurrentVersion = strCurrentVersion.split(".");
-    QString strCurrentRev = lCurrentVersion.last();
-    int iCurrentRev = strCurrentRev.toInt();
-
-    QString strAvailableVersion = Core::instance()->settings.value("available_version");
-
-    if (!strAvailableVersion.isEmpty())
-    {
-        QStringList lAvailableVersion = strAvailableVersion.split(".");
-        QString strAvailableRev = lAvailableVersion.last();
-        int iAvailableRev = strAvailableRev.toInt();
-
-        if (iCurrentRev == iAvailableRev)
-            strVersion = tr("Up-to-date version");
-        else if (iCurrentRev > iAvailableRev)
-            strVersion = QString("%1 (%2)").arg(tr("Unstable version"), strCurrentRev);
-        else if (iCurrentRev < iAvailableRev)
-            strVersion = QString("<span style=\"color:#ff0000\">%1</span>").arg(tr("A new version is available"));
-    }
+    if (strVersionStatus == "uptodate")
+        strVersion = tr("Up-to-date version");
+    else if (strVersionStatus == "beta")
+        strVersion = tr("Unstable version");
+    else if (strVersionStatus == "outofdate")
+         strVersion = QString("<span style=\"color:#ff0000\">%1</span>").arg(tr("A new version is available"));
     else
         strVersion = QString("%1 %2").arg(tr("Version"), strCurrentVersion);
 

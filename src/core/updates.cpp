@@ -61,11 +61,22 @@ void Updates::compareVersion()
     int iAvailablePatch = lAvailableVersion[2].toInt();
     int iAvailableVersion = (QString("%1%2%3").arg(iAvailableMajor).arg(iAvailableMinor).arg(iAvailablePatch)).toInt();
 
-    if (Core::instance()->settings.value("debug") == "true")
-        qDebug() << "Current version: " << strCurrentVersion << " Available version: " << strAvailableVersion;
+    QString strVersionStatus = "unknown";
 
-    if (iAvailableVersion > iCurrentVersion)
-        DlgUpdate(Core::instance()->sccWindow()).exec();
+    if (iAvailableVersion == iCurrentVersion)
+        strVersionStatus = "uptodate";
+    else if (iAvailableVersion < iCurrentVersion)
+        strVersionStatus = "beta";
+    else if (iAvailableVersion > iCurrentVersion)
+        strVersionStatus = "outofdate";
+    else
+        strVersionStatus = "unknown";
+
+    // save status
+    Core::instance()->settings["version_status"] = strVersionStatus;
+
+    if (Core::instance()->settings.value("debug") == "true")
+        qDebug() << "Current version: " << strCurrentVersion << " Available version: " << strAvailableVersion << " Status: " << strVersionStatus;
 }
 
 void Updates::updateFinished(QNetworkReply *reply)
@@ -100,7 +111,11 @@ void Updates::updateFinished(QNetworkReply *reply)
         if (!strAvailableVersion.isEmpty())
         {
             Core::instance()->settings["available_version"] = strAvailableVersion;
+
             compareVersion();
+
+            if (Core::instance()->settings["version_status"] == "outofdate")
+                DlgUpdate(Core::instance()->sccWindow()).exec();
         }
     }
 }
