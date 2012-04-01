@@ -139,7 +139,7 @@ int main(int argc, char *argv[])
 
     // core
     Core::instance()->createGui();
-    Core::instance()->showSccWindow();
+    Core::instance()->showMainWindow();
     Core::instance()->checkUpdate();
 
     int ret = app.exec();

@@ -146,13 +146,13 @@ void DlgProfileManager::itemClicked()
 
 void DlgProfileManager::addProfile()
 {
-    DlgProfileAdd(Core::instance()->sccWindow(), this).exec();
+    DlgProfileAdd(Core::instance()->mainWindow(), this).exec();
 }
 
 void DlgProfileManager::editProfile()
 {
     QString strNick = ui.listWidget->selectedItems().at(0)->text();
-    DlgProfileEdit(Core::instance()->sccWindow(), strNick).exec();
+    DlgProfileEdit(Core::instance()->mainWindow(), strNick).exec();
 }
 
 void DlgProfileManager::removeProfile()

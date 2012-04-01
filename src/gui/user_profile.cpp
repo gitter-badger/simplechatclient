@@ -265,7 +265,7 @@ void DlgUserProfile::avatarFinished(QNetworkReply *pReply)
 
 void DlgUserProfile::buttonZoom()
 {
-    DlgUserAvatar(Core::instance()->sccWindow(), avatar).exec();
+    DlgUserAvatar(Core::instance()->mainWindow(), avatar).exec();
 }
 
 void DlgUserProfile::buttonMore()

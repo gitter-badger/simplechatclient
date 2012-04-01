@@ -329,7 +329,7 @@ void ChatView::watchVideo()
         strYoutubeLink = "http://www.youtube.com/embed/"+exYoutube_3.cap(1);
 
     if (QUrl(strYoutubeLink).isValid())
-        (new DlgWebBrowser(Core::instance()->sccWindow(), QUrl(strYoutubeLink)))->show();
+        (new DlgWebBrowser(Core::instance()->mainWindow(), QUrl(strYoutubeLink)))->show();
 }
 
 void ChatView::openWebbrowser()
@@ -392,7 +392,7 @@ void ChatView::sendToNotes()
 
 void ChatView::search()
 {
-    DlgFindText(Core::instance()->sccWindow(), this).exec();
+    DlgFindText(Core::instance()->mainWindow(), this).exec();
 }
 
 void ChatView::clear()

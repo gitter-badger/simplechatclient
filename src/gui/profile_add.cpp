@@ -110,7 +110,7 @@ void DlgProfileAdd::showPass()
 
 void DlgProfileAdd::buttonRegisterNick()
 {
-    DlgRegisterNick(Core::instance()->sccWindow(), this).exec();
+    DlgRegisterNick(Core::instance()->mainWindow(), this).exec();
 }
 
 void DlgProfileAdd::buttonOk()

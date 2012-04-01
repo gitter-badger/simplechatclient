@@ -502,7 +502,7 @@ void DlgOptions::currentProfileChanged(int row)
 
 void DlgOptions::buttonProfiles()
 {
-    DlgProfileManager(Core::instance()->sccWindow(), this).exec();
+    DlgProfileManager(Core::instance()->mainWindow(), this).exec();
 }
 
 void DlgOptions::themesChanged(int index)

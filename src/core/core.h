@@ -55,8 +55,8 @@ public:
     QString version();
     void setDebug(bool b);
     // window
-    void showSccWindow();
-    MainWindow *sccWindow();
+    void showMainWindow();
+    MainWindow *mainWindow();
     // from options
     void refreshColors();
     void refreshCSS();

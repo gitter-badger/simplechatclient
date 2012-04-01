@@ -115,7 +115,7 @@ void Updates::updateFinished(QNetworkReply *reply)
             compareVersion();
 
             if (Core::instance()->settings["version_status"] == "outofdate")
-                DlgUpdate(Core::instance()->sccWindow()).exec();
+                DlgUpdate(Core::instance()->mainWindow()).exec();
         }
     }
 }

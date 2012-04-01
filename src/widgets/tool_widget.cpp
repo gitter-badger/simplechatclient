@@ -710,7 +710,7 @@ void ToolWidget::colorClicked(int index)
 
 void ToolWidget::emoticonsClicked()
 {
-    DlgEmoticons(Core::instance()->sccWindow(), pInputLine).exec();
+    DlgEmoticons(Core::instance()->mainWindow(), pInputLine).exec();
 }
 
 void ToolWidget::channelSettingsClicked()

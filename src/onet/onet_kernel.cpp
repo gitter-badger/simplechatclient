@@ -894,7 +894,7 @@ void OnetKernel::raw_invite()
     if (strWhere[0] == '^')
         Core::instance()->mPrivNames[strWhere] = strWho;
 
-    (new DlgInvite(Core::instance()->sccWindow(), strWho, strWhere))->show(); // should be show - prevent hangup!
+    (new DlgInvite(Core::instance()->mainWindow(), strWho, strWhere))->show(); // should be show - prevent hangup!
 }
 
 // :cf1f3.onet TOPIC #scc :Simple Chat Client; current version: beta;
@@ -3552,7 +3552,7 @@ void OnetKernel::raw_475()
     QString strMessage = QString(tr("* Cannot join channel %1 - Incorrect channel key")).arg(strChannel);
     pTabC->showMessageActive(strMessage, InfoMessage);
 
-    (new DlgChannelKey(Core::instance()->sccWindow(), strChannel))->show(); // should be show - prevent hangup!
+    (new DlgChannelKey(Core::instance()->mainWindow(), strChannel))->show(); // should be show - prevent hangup!
 }
 
 // :cf1f4.onet 481 Merovingian :Permission Denied - You do not have the required operator privileges

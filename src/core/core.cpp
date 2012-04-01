@@ -337,12 +337,12 @@ void Core::setDebug(bool b)
         settings["debug"] = "false";
 }
 
-void Core::showSccWindow()
+void Core::showMainWindow()
 {
     window->show();
 }
 
-MainWindow *Core::sccWindow()
+MainWindow *Core::mainWindow()
 {
     return window;
 }
