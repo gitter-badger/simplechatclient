@@ -62,7 +62,6 @@ void Updates::compareVersion()
     int iAvailableVersion = (QString("%1%2%3").arg(iAvailableMajor).arg(iAvailableMinor).arg(iAvailablePatch)).toInt();
 
     QString strVersionStatus = "unknown";
-
     if (iAvailableVersion == iCurrentVersion)
         strVersionStatus = "uptodate";
     else if (iAvailableVersion < iCurrentVersion)

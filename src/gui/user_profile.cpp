@@ -230,7 +230,7 @@ void DlgUserProfile::refreshUserInfo()
         else if (strKey == "shortDesc")
             textEdit_desc->setHtml(convertDesc(strValue));
         else if (strKey == "type")
-            lineEdit_type->setText(convertNumberToType(strValue.toInt()));
+            lineEdit_type->setText(convertCharToType(strValue));
         else if (strKey == "www")
         {
             QString strShortLink = strValue;
@@ -386,21 +386,18 @@ QString DlgUserProfile::convertCodeToCountry(const QString &strCountryCode)
     return QString::null;
 }
 
-QString DlgUserProfile::convertNumberToType(int iType)
+QString DlgUserProfile::convertCharToType(const QString &strType)
 {
-    switch (iType)
-    {
-        case 0:
-            return tr("Novice");
-        case 1:
-            return tr("Beginner");
-        case 2:
-            return tr("Master");
-        case 3:
-            return tr("Guru");
-        default:
-            return tr("Unknown");
-    }
+    if (strType == "0")
+        return tr("Novice");
+    else if (strType == "1")
+        return tr("Beginner");
+    else if (strType == "2")
+        return tr("Master");
+    else if (strType == "3")
+        return tr("Guru");
+    else
+        return tr("Unknown");
 }
 
 void DlgUserProfile::showAvatar(const QString &strUrl)
