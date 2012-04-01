@@ -114,7 +114,7 @@ void DlgChannelHomes::buttonCreate()
     if ((ok) && (!strText.isEmpty()))
     {
         Core::instance()->pNetwork->send(QString("CS REGISTER %1").arg(strText));
-        QTimer::singleShot(1000*2, this, SLOT(refresh())); // 2 sec
+        QTimer::singleShot(1000*4, this, SLOT(refresh())); // 4 sec
     }
 }
 
@@ -127,7 +127,7 @@ void DlgChannelHomes::buttonRemove()
     if ((ok) && (!strText.isEmpty()))
     {
         Core::instance()->pNetwork->send(QString("CS DROP %1").arg(strText));
-        QTimer::singleShot(1000*2, this, SLOT(refresh())); // 2 sec
+        QTimer::singleShot(1000*4, this, SLOT(refresh())); // 4 sec
     }
 }
 

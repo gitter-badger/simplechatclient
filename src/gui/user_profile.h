@@ -86,7 +86,7 @@ private:
     QString convertSex(const QString &strSex);
     QString convertAge(const QString &strDate);
     QString convertCodeToCountry(const QString &strCountryCode);
-    QString convertType(const QString &strType);
+    QString convertNumberToType(const QString &strType);
     void showAvatar(const QString &strUrl);
 
 private slots:

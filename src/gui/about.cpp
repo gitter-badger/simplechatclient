@@ -46,10 +46,10 @@ void DlgAbout::createGui()
 
 void DlgAbout::setDefaultValues()
 {
-    QString strVersion;
     QString strCurrentVersion = Core::instance()->settings.value("version");
     QString strVersionStatus = Core::instance()->settings.value("version_status");
 
+    QString strVersion;
     if (strVersionStatus == "uptodate")
         strVersion = tr("Up-to-date version");
     else if (strVersionStatus == "beta")

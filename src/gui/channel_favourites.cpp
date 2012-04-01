@@ -96,7 +96,7 @@ void DlgChannelFavourites::buttonAdd()
     if ((ok) && (!strText.isEmpty()))
     {
         Core::instance()->pNetwork->send(QString("NS FAVOURITES ADD %1").arg(strText));
-        QTimer::singleShot(1000*2, this, SLOT(refresh())); // 2 sec
+        QTimer::singleShot(1000*4, this, SLOT(refresh())); // 4 sec
     }
 }
 
@@ -113,7 +113,7 @@ void DlgChannelFavourites::buttonRemove()
     if ((ok) && (!strText.isEmpty()))
     {
         Core::instance()->pNetwork->send(QString("NS FAVOURITES DEL %1").arg(strText));
-        QTimer::singleShot(1000*2, this, SLOT(refresh())); // 2 sec
+        QTimer::singleShot(1000*4, this, SLOT(refresh())); // 4 sec
     }
 }
 
