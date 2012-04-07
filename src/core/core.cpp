@@ -126,11 +126,6 @@ void Core::createGui()
 
 void Core::createSettings()
 {
-    // debug
-    QString strDebug = settings["debug"];
-    settings.clear();
-    settings["debug"] = strDebug;
-
     // default settings
     settings["version"] = "1.5.0.git";
     settings["available_version"] = "";
@@ -312,18 +307,6 @@ void Core::checkSettings()
     delete pConfig;
 }
 
-void Core::readEmptyUserAvatar()
-{
-    QString path;
-#ifdef Q_WS_WIN
-    path = QCoreApplication::applicationDirPath();
-#else
-    path = SCC_DATA_DIR;
-#endif
-
-    strEmptyUserAvatarPath = path+"/images/user_avatar.png";
-}
-
 QString Core::version()
 {
     return settings.value("version");
@@ -354,6 +337,18 @@ void Core::quit()
 
     delete Instance;
     Instance = 0;
+}
+
+void Core::readEmptyUserAvatar()
+{
+    QString path;
+#ifdef Q_WS_WIN
+    path = QCoreApplication::applicationDirPath();
+#else
+    path = SCC_DATA_DIR;
+#endif
+
+    strEmptyUserAvatarPath = path+"/images/user_avatar.png";
 }
 
 // from options

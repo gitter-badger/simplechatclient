@@ -48,7 +48,7 @@ void displayOptions()
            "  --debug                    Enable debug output\n\n");
 }
 
-int main(int argc, char *argv[])
+void enableDEP()
 {
 #ifdef Q_WS_WIN
     /* Call SetProcessDEPPolicy to permanently enable DEP.
@@ -62,6 +62,12 @@ int main(int argc, char *argv[])
         if (setdeppolicy) setdeppolicy(1); /* PROCESS_DEP_ENABLE */
     }
 #endif
+}
+
+int main(int argc, char *argv[])
+{
+    // enable DEP
+    enableDEP();
 
     Q_INIT_RESOURCE(scc);
 
@@ -77,6 +83,7 @@ int main(int argc, char *argv[])
 
     // app
     QApplication app(argc, argv);
+    // minimize to tray
     QApplication::setQuitOnLastWindowClosed(false);
 
     // set codec
