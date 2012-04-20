@@ -276,6 +276,7 @@ void OnetKernel::kernel(const QString &_strData)
                 case 461: raw_461n(); break;
                 case 463: raw_463n(); break;
                 case 464: raw_464n(); break;
+                case 466: raw_466n(); break;
                 case 467: raw_467n(); break;
                 case 468: raw_468n(); break;
                 case 469: raw_469n(); break;
@@ -3448,6 +3449,17 @@ void OnetKernel::raw_464n()
     pTabC->showMessageActive(strMessage, InfoMessage);
 }
 
+// :ChanServ!service@service.onet NOTICE Merovingian :466 #Sex_Randki :channel is blocked
+void OnetKernel::raw_466n()
+{
+    if (strDataList.size() < 5) return;
+
+    QString strChannel = strDataList[4];
+
+    QString strMessage = QString(tr("* %1 :channel is blocked")).arg(strChannel);
+    pTabC->showMessageActive(strMessage, InfoMessage);
+}
+
 // :ChanServ!service@service.onet NOTICE scc_test :467 #scc :permission denied, you are not a channel owner
 void OnetKernel::raw_467n()
 {
@@ -3605,8 +3617,12 @@ void OnetKernel::raw_492()
     if (strDataList.size() < 10) return;
 
     QString strChannel = strDataList[3];
+
     QString strNick = strDataList[6];
-    QString strReason = strDataList[9]+" "+strDataList[10];
+
+    QString strReason;
+    for (int i = 9; i < strDataList.size(); i++) { if (i != 9) strReason += " "; strReason += strDataList[i]; }
+
     strReason.remove("(");
     strReason.remove(")");
 

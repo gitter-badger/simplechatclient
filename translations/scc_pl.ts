@@ -2857,6 +2857,10 @@
         <translation>* %1 :Nieprawidłowy argument</translation>
     </message>
     <message>
+        <source>* %1 :channel is blocked</source>
+        <translation>* %1 :Pokój jest zablokowany</translation>
+    </message>
+    <message>
         <source>* %1 :Permission denied, you are not a channel owner</source>
         <translation>* %1 :Dostęp zabroniony, nie jesteś właścicielem pokoju</translation>
     </message>
