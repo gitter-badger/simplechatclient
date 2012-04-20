@@ -221,6 +221,7 @@ private:
     void raw_482();
     void raw_484();
     void raw_491();
+    void raw_492();
     void raw_530();
     void raw_531();
     void raw_600();

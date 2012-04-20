@@ -2905,6 +2905,14 @@
         <translation>* Nieprawidłowe poświadczenia Operatora</translation>
     </message>
     <message>
+        <source>* Can't invite %1 to channel (%2)</source>
+        <translation>* Nie możesz zaprosić %1 do pokoju (%2)</translation>
+    </message>
+    <message>
+        <source>+V set</source>
+        <translation>blokada zaproszeń</translation>
+    </message>
+    <message>
         <source>* %1 :Only IRC operators may create new channels</source>
         <translation>* %1 :Tylko Administratorzy mogą tworzyć nowe pokoje</translation>
     </message>

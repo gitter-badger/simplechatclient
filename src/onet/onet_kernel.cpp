@@ -160,6 +160,7 @@ void OnetKernel::kernel(const QString &_strData)
             case 482: raw_482(); break;
             case 484: raw_484(); break;
             case 491: raw_491(); break;
+            case 492: raw_492(); break;
             case 530: raw_530(); break;
             case 531: raw_531(); break;
             case 600: raw_600(); break;
@@ -3596,6 +3597,25 @@ void OnetKernel::raw_491()
     QString strMessage = QString(tr("* Invalid oper credentials"));
 
     pTabC->showMessageActive(strMessage, InfoMessage);
+}
+
+// :cf1f3.onet 492 Merovingian ^cf1f3954674 :Can't invite bezduszna_istota to channel (+V set)
+void OnetKernel::raw_492()
+{
+    if (strDataList.size() < 10) return;
+
+    QString strChannel = strDataList[3];
+    QString strNick = strDataList[6];
+    QString strReason = strDataList[9]+" "+strDataList[10];
+    strReason.remove("(");
+    strReason.remove(")");
+
+    if (strReason == "+V set")
+        strReason = tr("+V set");
+
+    QString strMessage = QString(tr("* Can't invite %1 to channel (%2)").arg(strNick, strReason));
+
+    pTabC->showMessage(strChannel, strMessage, InfoMessage);
 }
 
 //:cf1f2.onet 530 Merovingian #f :Only IRC operators may create new channels
