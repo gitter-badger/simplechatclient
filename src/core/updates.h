@@ -25,13 +25,14 @@ class QNetworkAccessManager;
 class QNetworkReply;
 #include <QObject>
 
-/**
- * Update class. If there is update it show dialog from update.
- */
 class Updates : public QObject
 {
     Q_OBJECT
+    Q_DISABLE_COPY(Updates)
+    static Updates *Instance;
 public:
+    static Updates *instance();
+
     Updates();
     virtual ~Updates();
     void checkUpdate();
@@ -39,7 +40,10 @@ public:
 private:
     QNetworkAccessManager *accessManager;
 
+    void init();
     void compareVersion();
+    void saveSettings(QString strUpdateXml);
+    void readSettings();
 
 private slots:
     void updateFinished(QNetworkReply *reply);

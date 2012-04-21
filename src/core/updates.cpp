@@ -26,6 +26,21 @@
 #include "update.h"
 #include "updates.h"
 
+#define UPDATE_URL "http://simplechatclien.sourceforge.net/update.php"
+
+Updates * Updates::Instance = 0;
+
+Updates * Updates::instance()
+{
+    if (!Instance)
+    {
+        Instance = new Updates();
+        Instance->init();
+    }
+
+    return Instance;
+}
+
 Updates::Updates()
 {
     accessManager = new QNetworkAccessManager;
@@ -37,10 +52,14 @@ Updates::~Updates()
     accessManager->deleteLater();
 }
 
+void Updates::init()
+{
+}
+
 void Updates::checkUpdate()
 {
     QString strSendVersion = Core::instance()->settings.value("version");
-    QUrl url = QUrl(QString("http://simplechatclien.sourceforge.net/update.php?v=%1").arg(strSendVersion));
+    QUrl url = QUrl(QString("%1?v=%2").arg(UPDATE_URL, strSendVersion));
 
     accessManager->get(QNetworkRequest(url));
 }
@@ -78,43 +97,63 @@ void Updates::compareVersion()
         qDebug() << "Current version: " << strCurrentVersion << " Available version: " << strAvailableVersion << " Status: " << strVersionStatus;
 }
 
+void Updates::saveSettings(QString strUpdateXml)
+{
+    QDomDocument doc;
+    doc.setContent(strUpdateXml);
+
+    QString strAvailableVersion = doc.elementsByTagName("version").item(0).toElement().text();
+    QString strWhatsNew = doc.elementsByTagName("whats_new").item(0).toElement().text();
+    QString strMOTD = doc.elementsByTagName("motd").item(0).toElement().text();
+
+    if (!strWhatsNew.isEmpty())
+        Core::instance()->settings["whats_new"] = strWhatsNew;
+
+    if (!strMOTD.isEmpty())
+        Core::instance()->settings["motd"] = strMOTD;
+
+    if (!strAvailableVersion.isEmpty())
+        Core::instance()->settings["available_version"] = strAvailableVersion;
+}
+
+void Updates::readSettings()
+{
+    QString strMOTD = Core::instance()->settings["motd"];
+    QString strAvailableVersion = Core::instance()->settings["available_version"];
+
+    if (!strMOTD.isEmpty())
+    {
+        QString strMessageOfTheDay = QString("%Fb%%1 %2").arg(tr("Message Of The Day:"), strMOTD);
+        Core::instance()->showMessage(STATUS, strMessageOfTheDay, DefaultMessage);
+    }
+
+    if (!strAvailableVersion.isEmpty())
+    {
+        compareVersion();
+
+        if (Core::instance()->settings["version_status"] == "outofdate")
+            DlgUpdate(Core::instance()->mainWindow()).exec();
+    }
+}
+
 void Updates::updateFinished(QNetworkReply *reply)
 {
     reply->deleteLater();
 
     // if errors
     if (reply->error())
-        return;
-
-    QString strSite = reply->readAll();
-
-    if (!strSite.isEmpty())
     {
-        QDomDocument doc;
-        doc.setContent(strSite);
+        if (Core::instance()->settings.value("debug") == "true")
+            qDebug() << "Cannot get update xml";
 
-        QString strAvailableVersion = doc.elementsByTagName("version").item(0).toElement().text();
-        QString strWhatsNew = doc.elementsByTagName("whats_new").item(0).toElement().text();
-        QString strMOTD = doc.elementsByTagName("motd").item(0).toElement().text();
+        return;
+    }
 
-        if (!strWhatsNew.isEmpty())
-            Core::instance()->settings["whats_new"] = strWhatsNew;
+    QString strUpdateXml = reply->readAll();
 
-        if (!strMOTD.isEmpty())
-        {
-            Core::instance()->settings["motd"] = strMOTD;
-            QString strMessageOfTheDay = QString("%Fb%%1 %2").arg(tr("Message Of The Day:"), strMOTD);
-            Core::instance()->showMessage(STATUS, strMessageOfTheDay, DefaultMessage);
-        }
-
-        if (!strAvailableVersion.isEmpty())
-        {
-            Core::instance()->settings["available_version"] = strAvailableVersion;
-
-            compareVersion();
-
-            if (Core::instance()->settings["version_status"] == "outofdate")
-                DlgUpdate(Core::instance()->mainWindow()).exec();
-        }
+    if (!strUpdateXml.isEmpty())
+    {
+        saveSettings(strUpdateXml);
+        readSettings();
     }
 }

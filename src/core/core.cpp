@@ -50,8 +50,6 @@ Core * Core::instance()
 
 Core::Core() : window(0)
 {
-    pUpdates = new Updates();
-
     // lag
     lagAct = new QAction("Lag: ?", this);
     lagAct->setEnabled(false);
@@ -70,7 +68,6 @@ Core::Core() : window(0)
 
 Core::~Core()
 {
-    delete pUpdates;
     delete window;
     window = 0;
 
@@ -116,12 +113,16 @@ void Core::init()
     pNetwork->start(QThread::InheritPriority);
 }
 
-void Core::createGui()
+void Core::createAndShowGui()
 {
     busyAct->setText(tr("Mark as busy"));
     awayAct->setText(tr("Mark as away"));
 
     window = new MainWindow(0);
+    window->show();
+
+    // updates
+    Updates::instance()->checkUpdate();
 }
 
 void Core::createSettings()
@@ -320,11 +321,6 @@ void Core::setDebug(bool b)
         settings["debug"] = "false";
 }
 
-void Core::showMainWindow()
-{
-    window->show();
-}
-
 MainWindow *Core::mainWindow()
 {
     return window;
@@ -367,12 +363,6 @@ void Core::refreshCSS()
 void Core::refreshToolWidgetValues()
 {
     window->refreshToolWidgetValues();
-}
-
-// update
-void Core::checkUpdate()
-{
-    pUpdates->checkUpdate();
 }
 
 void Core::addAwaylog(const QString &strTime, const QString &strChannel, const QString &strAwayData)

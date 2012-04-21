@@ -32,17 +32,17 @@ class Updates;
 /**
  * Core
  */
-class Core: public QObject
+class Core : public QObject
 {
     Q_OBJECT
-    Q_DISABLE_COPY(Core);
+    Q_DISABLE_COPY(Core)
     static Core *Instance;
 public:
     static Core *instance();
 
     Core();
     virtual ~Core();
-    void createGui();
+    void createAndShowGui();
     void createSettings();
     // old
     void removeOldConfig();
@@ -55,7 +55,6 @@ public:
     QString version();
     void setDebug(bool b);
     // window
-    void showMainWindow();
     MainWindow *mainWindow();
     // from options
     void refreshColors();
@@ -135,7 +134,6 @@ public slots:
 
 private:
     MainWindow *window;
-    Updates *pUpdates;
 
     void init();
     void checkSettings();

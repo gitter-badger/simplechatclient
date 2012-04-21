@@ -145,9 +145,7 @@ int main(int argc, char *argv[])
     }
 
     // core
-    Core::instance()->createGui();
-    Core::instance()->showMainWindow();
-    Core::instance()->checkUpdate();
+    Core::instance()->createAndShowGui();
 
     int ret = app.exec();
     Core::instance()->quit();
