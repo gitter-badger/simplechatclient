@@ -206,8 +206,6 @@ void TabContainer::refreshColors()
         i.next();
         QString strChannel = i.key();
 
-        tw[strChannel]->refreshColors();
-
         // update tab name color
         int index = Core::instance()->getIndexFromChannelName(strChannel);
         pTabM->setColor(index, QColor(Core::instance()->settings.value("default_font_color")));

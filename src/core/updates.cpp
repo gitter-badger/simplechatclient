@@ -144,7 +144,7 @@ void Updates::updateFinished(QNetworkReply *reply)
     if (reply->error())
     {
         if (Core::instance()->settings.value("debug") == "true")
-            qDebug() << "Cannot get update xml";
+            qDebug() << "Error: Cannot get update xml";
 
         return;
     }

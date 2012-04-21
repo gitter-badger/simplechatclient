@@ -37,7 +37,6 @@ public:
     TabWidget(const QString &_strName);
     virtual ~TabWidget();
     inline QString getName() { return strName; }
-    void refreshColors();
 
     QLabel *topic;
     ChatView *pChatView;

@@ -97,30 +97,6 @@ void TabWidget::setDefaultValues()
         users->hide();
         pNickListWidget->hide();
     }
-
-    // set colors
-    QString strBackgroundColor;
-    if (Core::instance()->settings.value("background_color").toLower() != "#ffffff")
-        strBackgroundColor = QString("background-color:%1;").arg(Core::instance()->settings.value("background_color"));
-
-    QString strDefaultFontColor;
-    if (Core::instance()->settings.value("default_font_color").toLower() != "#000000")
-        strDefaultFontColor = QString("color:%1;").arg(Core::instance()->settings.value("default_font_color"));
-
-    this->setStyleSheet(strDefaultFontColor+strBackgroundColor);
-}
-
-void TabWidget::refreshColors()
-{
-    QString strBackgroundColor;
-    if (Core::instance()->settings.value("background_color").toLower() != "#ffffff")
-        strBackgroundColor = QString("background-color:%1;").arg(Core::instance()->settings.value("background_color"));
-
-    QString strDefaultFontColor;
-    if (Core::instance()->settings.value("default_font_color").toLower() != "#000000")
-        strDefaultFontColor = QString("color:%1;").arg(Core::instance()->settings.value("default_font_color"));
-
-    this->setStyleSheet(strDefaultFontColor+strBackgroundColor);
 }
 
 void TabWidget::showEvent(QShowEvent *)
