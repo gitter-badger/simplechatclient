@@ -55,7 +55,6 @@ void TabWidget::createGui()
     pNickListWidget = new NickListWidget(strName);
     pNickListWidget->setParent(this);
     pNickListWidget->setItemDelegate(new NickListDelegate(pNickListWidget));
-    //pNickListWidget->setFrameShape(QFrame::NoFrame);
     pNickListWidget->show();
 
     QVBoxLayout *leftLayout = new QVBoxLayout();
