@@ -19,7 +19,6 @@
  ****************************************************************************/
 
 #include <QVBoxLayout>
-#include "core.h"
 #include "nicklist_delegate.h"
 #include "nicklist_widget.h"
 #include "tab_widget.h"
