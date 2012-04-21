@@ -80,9 +80,9 @@ void TabWidget::createGui()
     splitter->addWidget(rightWidget);
     splitter->show();
 
-    QVBoxLayout *l = new QVBoxLayout();
-    l->addWidget(splitter);
-    this->setLayout(l);
+    QVBoxLayout *layout = new QVBoxLayout();
+    layout->addWidget(splitter);
+    this->setLayout(layout);
 }
 
 void TabWidget::setDefaultValues()
