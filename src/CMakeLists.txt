@@ -32,6 +32,7 @@ set (scc_UIS
 
 set (scc_SRCS
 	avatars/avatar.cpp
+	common/awaylogs.cpp
 	common/commands.cpp
 	common/config.cpp
 	common/convert.cpp
@@ -95,6 +96,7 @@ set (scc_SRCS
 
 set (scc_MOC_HDRS
 	avatars/avatar.h
+	common/awaylogs.h
 	common/commands.h
 	common/config.h
 	common/convert.h

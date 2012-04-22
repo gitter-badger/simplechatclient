@@ -365,46 +365,6 @@ void Core::refreshToolWidgetValues()
     window->refreshToolWidgetValues();
 }
 
-void Core::addAwaylog(const QString &strTime, const QString &strChannel, const QString &strAwayData)
-{
-    if (settings.value("away") == "false")
-        return;
-
-    // save awaylog
-    if (Core::instance()->settings.value("disable_logs") == "false")
-    {
-        QDateTime dt;
-        if (!strTime.isEmpty())
-            dt = QDateTime::fromTime_t(strTime.toInt());
-        else
-            dt = QDateTime::currentDateTime();
-
-        QString strAwaylogFileData = QString("%1 %2 %3").arg(dt.toString("[yyyy-MM-dd] [hh:mm:ss]"), strChannel, strAwayData);
-        Log::save("awaylog", strAwaylogFileData);
-    }
-
-    QString strAwayLogData = strAwayData;
-
-    // fix /me
-    QString strRegExpMe = QString("%1ACTION %2%3").arg(QString(QByteArray("\x01")), "(.*)", QString(QByteArray("\x01")));
-    if (strAwayLogData.contains(QRegExp(strRegExpMe)))
-    {
-        strAwayLogData.replace(QRegExp(strRegExpMe), "\\1");
-        if (strAwayLogData.contains("<")) strAwayLogData = strAwayLogData.remove(strAwayLogData.indexOf("<"),1);
-        if (strAwayLogData.contains(">")) strAwayLogData = strAwayLogData.remove(strAwayLogData.indexOf(">"),1);
-        strAwayLogData = "*"+strAwayLogData;
-    }
-
-    // remove color, font, emots
-    strAwayLogData.remove(QRegExp("%C([a-zA-Z0-9]+)%"));
-    strAwayLogData.remove(QRegExp("%F([a-zA-Z0-9:]+)%"));
-    strAwayLogData.replace(QRegExp("%I([a-zA-Z0-9_-]+)%"),"<\\1>");
-
-    QString strDT = QDateTime::currentDateTime().toString("[hh:mm:ss]");
-
-    lAwaylog.append(QString("%1\n%2 %3").arg(strChannel, strDT, strAwayLogData));
-}
-
 QString Core::getChannelNameFromIndex(int index)
 {
     if (index < lOpenChannels.size())

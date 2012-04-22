@@ -20,6 +20,7 @@
 
 #include <QDesktopWidget>
 #include <QPushButton>
+#include "awaylogs.h"
 #include "core.h"
 #include "awaylog.h"
 
@@ -50,7 +51,7 @@ void DlgAwaylog::createSignals()
 
 void DlgAwaylog::refresh()
 {
-    foreach (QString strAwaylog, Core::instance()->lAwaylog)
+    foreach (QString strAwaylog, Awaylog::instance()->get())
         ui.listWidget->addItem(strAwaylog);
 }
 
@@ -64,7 +65,7 @@ void DlgAwaylog::buttons(QAbstractButton *button)
 
 void DlgAwaylog::buttonReset()
 {
-    Core::instance()->lAwaylog.clear();
+    Awaylog::instance()->clear();
     ui.listWidget->clear();
 
     // hide

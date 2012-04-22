@@ -19,6 +19,7 @@
  ****************************************************************************/
 
 #include <QDateTime>
+#include "awaylogs.h"
 #include "convert.h"
 #include "core.h"
 #include "log.h"
@@ -245,7 +246,7 @@ void TabContainer::showMessage(const QString &strChannel, const QString &strData
             strAwaylogData = QString("<%1> %2").arg(strNick, strData);
 
         // awaylog
-        Core::instance()->addAwaylog(strTime, strChannel, strAwaylogData);
+        Awaylog::instance()->add(strTime, strChannel, strAwaylogData);
 
         // update awaylog status
         emit updateAwaylogStatus();

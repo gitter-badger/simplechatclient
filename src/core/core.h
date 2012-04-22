@@ -60,10 +60,6 @@ public:
     void refreshColors();
     void refreshCSS();
     void refreshToolWidgetValues();
-    // update
-    void checkUpdate();
-    // awaylog
-    void addAwaylog(const QString &strTime, const QString &strChannel, const QString &strAwayData);
     // for window
     QString getChannelNameFromIndex(int index);
     int getIndexFromChannelName(const QString &strChannel);
@@ -93,7 +89,6 @@ public:
     QHash<QString, QString> mMyProfile;
     QList<QString> lChannelHomes;
     QAction *lagAct;
-    QList<QString> lAwaylog;
     QAction *busyAct;
     QAction *awayAct;
     // channels

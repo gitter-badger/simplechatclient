@@ -2,7 +2,7 @@
 
 set SCC_DIR=%CD%
 set DESTINATION="C:\scc\release"
-set QT_DIR="C:\Qt\4.8.0"
+set QT_DIR="C:\Qt\4.8.1"
 set QCA2_DIR="C:\qca2"
 set OPENSSL_DIR="C:\OpenSSL-Win32"
 set QCA_OSSL_DIR=%SCC_DIR%\3rdparty\qca-ossl-2.0.0-beta3
@@ -17,14 +17,14 @@ set QTDIR=%QT_DIR%
 
 if not exist %CMAKE_DIR%\bin\cmake.exe (
 if not exist %CMAKE32_DIR%\bin\cmake.exe (
-echo Download CMake from http://www.cmake.org/files/v2.8/cmake-2.8.6-win32-x86.exe
+echo Download CMake from http://www.cmake.org/files/v2.8/cmake-2.8.8-win32-x86.exe
 pause
 exit
 )
 )
 
 if not exist %QT_DIR%\bin\qtvars.bat (
-echo Download Qt 4.8.0 from http://qt.nokia.com/downloads/windows-cpp
+echo Download Qt 4.8.1 from http://qt.nokia.com/downloads/windows-cpp
 pause
 exit
 )

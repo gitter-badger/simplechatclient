@@ -29,6 +29,7 @@
 #include "config.h"
 #include "core.h"
 #include "about.h"
+#include "awaylogs.h"
 #include "awaylog.h"
 #include "channel_favourites.h"
 #include "channel_homes.h"
@@ -482,7 +483,7 @@ void MainWindow::updateActions()
 
 void MainWindow::updateAwaylogStatus()
 {
-    if (Core::instance()->lAwaylog.size() == 0)
+    if (Awaylog::instance()->get().size() == 0)
     {
         if (awaylogAct->isVisible())
             awaylogAct->setVisible(false);
