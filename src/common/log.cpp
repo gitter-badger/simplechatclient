@@ -30,11 +30,23 @@
     #include <QDesktopServices>
 #endif
 
-void convert(QString &strData)
+void Log::convert(QString &strData)
 {
     strData.remove(QRegExp("%C([a-zA-Z0-9]+)%"));
     strData.remove(QRegExp("%F([a-zA-Z0-9:]+)%"));
     strData.replace(QRegExp("%I([a-zA-Z0-9_-]+)%"),"<\\1>");
+}
+
+void Log::logOpened(const QString &strChannel)
+{
+    QString strData = "--- Log opened "+QDateTime::currentDateTime().toString(Qt::TextDate);
+    Log::save(strChannel, strData);
+}
+
+void Log::logClosed(const QString &strChannel)
+{
+    QString strData = "--- Log closed "+QDateTime::currentDateTime().toString(Qt::TextDate);
+    Log::save(strChannel, strData);
 }
 
 void Log::save(const QString &strChannel, const QString &strData)
@@ -74,7 +86,7 @@ void Log::save(const QString &strChannel, const QString &strData)
     {
         // convert
         QString strSaveData = strData; 
-        convert(strSaveData);
+        Log::convert(strSaveData);
 
         // save
         QTextStream out(&f);

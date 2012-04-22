@@ -28,12 +28,10 @@
  */
 namespace Log
 {
-    /**
-     * Save text to file name
-     * @param QString file name
-     * @param QString data
-     */
+    void convert(QString &strData);
+    void logOpened(const QString &strChannel);
+    void logClosed(const QString &strChannel);
     void save(const QString &strChannel, const QString &strData);
-};
+}
 
 #endif // LOG_H

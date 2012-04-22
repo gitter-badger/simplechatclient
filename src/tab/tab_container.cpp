@@ -47,20 +47,8 @@ TabContainer::~TabContainer()
         delete tw.take(strChannel);
 
         // log
-        logClosed(strChannel);
+        Log::logClosed(strChannel);
     }
-}
-
-void TabContainer::logOpened(const QString &strChannel)
-{
-    QString strData = "--- Log opened "+QDateTime::currentDateTime().toString(Qt::TextDate);
-    Log::save(strChannel, strData);
-}
-
-void TabContainer::logClosed(const QString &strChannel)
-{
-    QString strData = "--- Log closed "+QDateTime::currentDateTime().toString(Qt::TextDate);
-    Log::save(strChannel, strData);
 }
 
 bool TabContainer::isHighlightMessage(const QString &strMessage)
@@ -151,11 +139,11 @@ void TabContainer::addTab(const QString &strChannel)
         {
             pTabM->setTabText(tw.size()-1, Core::instance()->convertPrivName(strChannel));
 
-            logOpened(strChannel);
+            Log::logOpened(strChannel);
         }
     }
     else
-        logOpened(strChannel);
+        Log::logOpened(strChannel);
 }
 
 void TabContainer::removeTab(const QString &strChannel)
@@ -170,7 +158,7 @@ void TabContainer::removeTab(const QString &strChannel)
     delete tw.take(strChannel);
 
     // log
-    logClosed(strChannel);
+    Log::logClosed(strChannel);
 }
 
 void TabContainer::renameTab(const QString &strChannel, const QString &strNewName)
@@ -182,7 +170,7 @@ void TabContainer::renameTab(const QString &strChannel, const QString &strNewNam
         pTabM->setTabText(index, strNewName);
 
         // log
-        logOpened(strChannel);
+        Log::logOpened(strChannel);
     }
 }
 
