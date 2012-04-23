@@ -18,39 +18,34 @@
  *                                                                          *
  ****************************************************************************/
 
-#ifndef CONFIG_H
-#define CONFIG_H
+#ifndef XML_H
+#define XML_H
 
-class Xml;
 class QDomElement;
 #include <QHash>
+#include <QDomDocument>
 #include <QObject>
 
-#include "scc-config.h"
-
-/**
- * Class for config read/write
- */
-class Config : public QObject
+class Xml : public QObject
 {
     Q_OBJECT
 public:
-    Config(bool _bProfileConfig = true, QString _strForceProfile = QString::null);
-    virtual ~Config();
-
+    Xml(const QString &_strFile, const QString &_strRootName, const QHash<QString, QString> &_lDefaultValues);
     QString getValue(const QString &strKey);
     void setValue(const QString &strKey, const QString &strValue);
     QHash<QString,QString> readToHash();
 
 private:
-    QString strConfigFile;
-    bool bProfileConfig;
-    QString strForceProfile;
-    QHash<QString,QString> lDefaultValues;
-    Xml *xml;
+    QString strFile;
+    QString strRootName;
+    QHash<QString, QString> lDefaultValues;
+    QDomDocument doc;
 
-    void fixConfig();
-    QHash<QString,QString> getDefaultValues();
+    void createNewFile();
+    void removeKey(const QString &strKey);
+    void addKeyValue(QDomDocument *doc, QDomElement *root, const QString &strKey, const QString &strValue);
+    void save();
+
 };
 
-#endif // CONFIG_H
+#endif // XML_H

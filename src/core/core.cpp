@@ -214,9 +214,9 @@ void Core::convertOldConfig()
     Config *pConfig = new Config();
 
     // change on off -> true false
-    QHash<QString,QString> mConfigValues = pConfig->readConfig();
+    QHash<QString,QString> lConfigValues = pConfig->readToHash();
 
-    QHashIterator <QString, QString> i(mConfigValues);
+    QHashIterator <QString, QString> i(lConfigValues);
     while (i.hasNext())
     {
         i.next();
@@ -234,11 +234,11 @@ void Core::configValues()
 {
     // config values
     Config *pConfig = new Config(false);
-    QHash<QString,QString> mConfigValues = pConfig->readConfig();
+    QHash<QString,QString> lConfigValues = pConfig->readToHash();
     delete pConfig;
 
     // set settings
-    QHashIterator <QString, QString> i(mConfigValues);
+    QHashIterator <QString, QString> i(lConfigValues);
     while (i.hasNext())
     {
         i.next();
@@ -250,11 +250,11 @@ void Core::configProfileValues()
 {
     // config profile values
     Config *pConfigProfile = new Config();
-    QHash<QString,QString> mConfigProfileValues = pConfigProfile->readConfig();
+    QHash<QString,QString> lConfigProfileValues = pConfigProfile->readToHash();
     delete pConfigProfile;
 
     // set profile settings
-    QHashIterator <QString, QString> ip(mConfigProfileValues);
+    QHashIterator <QString, QString> ip(lConfigProfileValues);
     while (ip.hasNext())
     {
         ip.next();

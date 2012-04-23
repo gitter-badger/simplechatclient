@@ -280,29 +280,6 @@
     </message>
 </context>
 <context>
-    <name>Config</name>
-    <message>
-        <source>Error: config: Cannot read config file!</source>
-        <translation>Błąd: config: Nie można odczytać pliku konfiguracji!</translation>
-    </message>
-    <message>
-        <source>Error: config: Cannot set content from file!</source>
-        <translation>Błąd: config: Nie można ustawić zawartości pliku!</translation>
-    </message>
-    <message>
-        <source>Error: config: Cannot open config file!</source>
-        <translation>Błąd: config: Nie można otworzyć pliku konfiguracji!</translation>
-    </message>
-    <message>
-        <source>Error: config: Cannot get value: </source>
-        <translation>Błąd: config: Nie można pobrać wartości: </translation>
-    </message>
-    <message>
-        <source>Error: config: Cannot set value: </source>
-        <translation>Błąd: config: Nie można ustawić wartości: </translation>
-    </message>
-</context>
-<context>
     <name>Core</name>
     <message>
         <source>Mark as busy</source>
@@ -3182,6 +3159,37 @@
     <message>
         <source>Error: Failed to send data! [Not connected]</source>
         <translation>Błąd: Nie udało się wysłać danych! [Not connected]</translation>
+    </message>
+</context>
+<context>
+    <name>Xml</name>
+    <message>
+        <source>Error: Cannot set content from xml file %1</source>
+        <translation>Błąd: Nie można ustawić zawartości z pliku xml %1</translation>
+    </message>
+    <message>
+        <source>Error: Cannot read xml file %1</source>
+        <translation>Błąd: Nie można odczytać pliku %1</translation>
+    </message>
+    <message>
+        <source>Error: Cannot open xml file %1</source>
+        <translation>Błąd: Nie można otworzyć pliku xml %1</translation>
+    </message>
+    <message>
+        <source>Error: Cannot get xml value for key %1 from file %2</source>
+        <translation>Błąd: Nie można pobrać wartości dla klucza %1 z pliku %2</translation>
+    </message>
+    <message>
+        <source>Error: Cannot set xml value for key %1 from file %2</source>
+        <translation>Błąd: Nie można ustawić wartości dla klucza %1 z pliku %2</translation>
+    </message>
+    <message>
+        <source>Error: Cannot remove xml value for key %1 from file %2</source>
+        <translation>Błąd: Nie można usunąć wartości dla klucza %1 z pliku %2</translation>
+    </message>
+    <message>
+        <source>Error: Cannot save xml file %1</source>
+        <translation>Błąd: Nie można zapisać pliku xml %1</translation>
     </message>
 </context>
 </TS>

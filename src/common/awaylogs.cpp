@@ -40,7 +40,7 @@ Awaylog::Awaylog()
 {
 }
 
-void Awaylog::add(const QString &strTime, const QString &strChannel, const QString &strAwayData)
+void Awaylog::add(const QString &strTime, const QString &strChannel, const QString &strData)
 {
     if (Core::instance()->settings.value("away") == "false")
         return;
@@ -54,11 +54,11 @@ void Awaylog::add(const QString &strTime, const QString &strChannel, const QStri
         else
             dt = QDateTime::currentDateTime();
 
-        QString strAwaylogFileData = QString("%1 %2 %3").arg(dt.toString("[yyyy-MM-dd] [hh:mm:ss]"), strChannel, strAwayData);
+        QString strAwaylogFileData = QString("%1 %2 %3").arg(dt.toString("[yyyy-MM-dd] [hh:mm:ss]"), strChannel, strData);
         Log::save("awaylog", strAwaylogFileData);
     }
 
-    QString strAwayLogData = strAwayData;
+    QString strAwayLogData = strData;
 
     // fix /me
     QString strRegExpMe = QString("%1ACTION %2%3").arg(QString(QByteArray("\x01")), "(.*)", QString(QByteArray("\x01")));

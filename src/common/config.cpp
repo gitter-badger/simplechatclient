@@ -20,9 +20,8 @@
 
 #include <QCoreApplication>
 #include <QDir>
-#include <QFile>
-#include <QTextStream>
 #include "core.h"
+#include "xml.h"
 #include "config.h"
 
 #ifdef Q_WS_WIN
@@ -56,164 +55,55 @@ Config::Config(bool _bProfileConfig, QString _strForceProfile) : bProfileConfig(
     if (!QDir().exists(path))
         QDir().mkpath(path);
 
-    QFile file(strConfigFile);
+    // root name
+    QString strRootName = (bProfileConfig  == true ? "profile" : "settings");
 
-    // if not exist - create new
-    if (!file.exists())
-        createNewConfig();
+    // default values
+    lDefaultValues = getDefaultValues();
 
-    // try read
-    if (file.exists())
-    {
-        if (file.open(QIODevice::ReadOnly))
-        {
-            QTextStream ts(&file);
-            QString strData = ts.readAll();
-            file.close();
+    // open
+    xml = new Xml(strConfigFile, strRootName, lDefaultValues);
 
-            if (doc.setContent(strData))
-                fixConfig();
-            else
-            {
-                if (Core::instance()->settings.value("debug") == "true")
-                    qDebug() << tr("Error: config: Cannot set content from file!");
-                return;
-            }
-        }
-        else
-        {
-            if (Core::instance()->settings.value("debug") == "true")
-                qDebug() << tr("Error: config: Cannot read config file!");
-            return;
-        }
-    }
-    else
-    {
-        if (Core::instance()->settings.value("debug") == "true")
-            qDebug() << tr("Error: config: Cannot open config file!");
-        return;
-    }
+    // fix
+    fixConfig();
+}
+
+Config::~Config()
+{
+    delete xml;
 }
 
 QString Config::getValue(const QString &strKey)
 {
-    if (doc.isNull())
-    {
-        if (Core::instance()->settings.value("debug") == "true")
-            qDebug() << tr("Error: config: Cannot get value: ") << strKey;
-        return QString::null;
-    }
-
-    QDomElement docElem = doc.documentElement();
-    QDomNode n = docElem.firstChild();
-
-    while (!n.isNull())
-    {
-        QDomElement e = n.toElement();
-        if (!e.isNull())
-        {
-            if (e.tagName() == strKey)
-                return e.text();
-        }
-        n = n.nextSibling();
-    }
-
-    return QString::null;
+    return xml->getValue(strKey);
 }
 
 void Config::setValue(const QString &strKey, const QString &strValue)
 {
-    if (doc.isNull())
-    {
-        if (Core::instance()->settings.value("debug") == "true")
-            qDebug() << tr("Error: config: Cannot set value: ") << strKey;
-        return;
-    }
-
-    // remove
-    removeValue(strKey);
-
-    // add value
-    QDomElement docElem = doc.documentElement();
-    QDomElement eSetKey = doc.createElement(strKey);
-    docElem.appendChild(eSetKey);
-    QDomText tSetValue = doc.createTextNode(strValue);
-    eSetKey.appendChild(tSetValue);
-
-    // save
-    save();
+    xml->setValue(strKey, strValue);
 }
 
-void Config::removeValue(const QString &strKey)
+QHash<QString, QString> Config::readToHash()
 {
-    if (doc.isNull())
-    {
-        if (Core::instance()->settings.value("debug") == "true")
-            qDebug() << tr("Error: config: Cannot remove value: ") << strKey;
-        return;
-    }
-
-    QDomElement docElem = doc.documentElement();
-    QDomNode n = docElem.firstChild();
-
-    // remove if exist
-    while (!n.isNull())
-    {
-        QDomElement e = n.toElement();
-        if (!e.isNull())
-        {
-            if (e.tagName() == strKey)
-            {
-                docElem.removeChild(e);
-                docElem.removeChild(e);
-            }
-        }
-        n = n.nextSibling();
-    }
-
-    // save
-    save();
+    return xml->readToHash();
 }
 
 void Config::fixConfig()
 {
-    QHash<QString,QString> mDefaultValues = getDefaultValues();
-    QHashIterator<QString, QString> i(mDefaultValues);
+    QHashIterator<QString, QString> i(lDefaultValues);
     while (i.hasNext())
     {
         i.next();
         QString strDefaultKey = i.key();
         QString strDefaultValue = i.value();
 
-        QString strValue = getValue(strDefaultKey);
+        QString strValue = xml->getValue(strDefaultKey);
         if (strValue.isEmpty())
         {
             if (strDefaultKey != "pass") // ignore pass
-                setValue(strDefaultKey, strDefaultValue);
+                xml->setValue(strDefaultKey, strDefaultValue);
         }
     }
-}
-
-void Config::createNewConfig()
-{
-    doc.clear();
-    QString strRootName = (bProfileConfig  == true ? "profile" : "settings");
-    QDomElement root = doc.createElement(strRootName);
-    doc.appendChild(root);
-
-    QHash<QString,QString> mDefaultValues = getDefaultValues();
-    QHashIterator<QString, QString> i(mDefaultValues);
-    while (i.hasNext())
-    {
-        i.next();
-        QString strDefaultKey = i.key();
-        QString strDefaultValue = i.value();
-
-        addConfigValue(&doc, &root, strDefaultKey, strDefaultValue);
-    }
-
-    // save
-    save();
 }
 
 QHash<QString,QString> Config::getDefaultValues()
@@ -224,111 +114,67 @@ QHash<QString,QString> Config::getDefaultValues()
 #else
     path = SCC_DATA_DIR;
 #endif
+
     QString strSoundBeep = path+"/3rdparty/sounds/beep.wav";
     QString strSoundQuery = path+"/3rdparty/sounds/query.wav";
     QString strBackgroundImage = path+"/images/wallpaper/default.jpg";
 
-    QHash<QString,QString> mDefaultValues;
+    QHash<QString,QString> lDefaultValues;
 
     if (!bProfileConfig)
     {
-        mDefaultValues.insert("first_run", "true");
-        mDefaultValues.insert("current_profile", "~test");
+        lDefaultValues.insert("first_run", "true");
+        lDefaultValues.insert("current_profile", "~test");
     }
     else
     {
-        mDefaultValues.insert("nick", "~test");
-        mDefaultValues.insert("pass", "");
-        mDefaultValues.insert("themes", "Standard");
-        mDefaultValues.insert("language", "pl");
-        mDefaultValues.insert("highlight", "");
-        mDefaultValues.insert("auto_busy", "false");
-        mDefaultValues.insert("minimize_to_tray", "false");
-        mDefaultValues.insert("disable_autojoin_favourites", "false");
-        mDefaultValues.insert("show_zuo_and_ip", "false");
-        mDefaultValues.insert("hide_formating", "false");
-        mDefaultValues.insert("hide_join_part", "false");
-        mDefaultValues.insert("hide_join_part_200", "true");
-        mDefaultValues.insert("disable_emots", "false");
-        mDefaultValues.insert("disable_replaces", "false");
-        mDefaultValues.insert("background_color", "#ffffff");
-        mDefaultValues.insert("my_bold", "false");
-        mDefaultValues.insert("my_italic", "false");
-        mDefaultValues.insert("my_font", "Verdana");
-        mDefaultValues.insert("my_color", "#000000");
-        mDefaultValues.insert("font_size", "11px");
-        mDefaultValues.insert("default_font_color", "#000000");
-        mDefaultValues.insert("font_color_level_1", "#009300");
-        mDefaultValues.insert("font_color_level_2", "#4733FF");
-        mDefaultValues.insert("font_color_level_3", "#00007F");
-        mDefaultValues.insert("font_color_level_4", "#00007F");
-        mDefaultValues.insert("font_color_level_5", "#009300");
-        mDefaultValues.insert("font_color_level_6", "#0066FF");
-        mDefaultValues.insert("font_color_level_7", "#666666");
-        mDefaultValues.insert("font_color_level_8", "#800080");
-        mDefaultValues.insert("font_color_level_9", "#ff0000");
-        mDefaultValues.insert("channel_font_color", "#0000ff");
-        mDefaultValues.insert("nicklist_nick_color", "#333333");
-        mDefaultValues.insert("nicklist_selected_nick_color", "#ffffff");
-        mDefaultValues.insert("nicklist_busy_nick_color", "#a0a0a4");
-        mDefaultValues.insert("nicklist_gradient_1_color", "#77d5f7");
-        mDefaultValues.insert("nicklist_gradient_2_color", "#1b86b7");
-        mDefaultValues.insert("save_logs_by_date", "true");
-        mDefaultValues.insert("disable_logs", "false");
-        mDefaultValues.insert("sound_beep", strSoundBeep);
-        mDefaultValues.insert("sound_query", strSoundQuery);
-        mDefaultValues.insert("disable_sounds", "false");
-        mDefaultValues.insert("background_image", strBackgroundImage);
-        mDefaultValues.insert("disable_background_image", "false");
-        mDefaultValues.insert("winamp", "$song [$position/$length] //muzyka");
-        mDefaultValues.insert("always_quit", "false");
+        lDefaultValues.insert("nick", "~test");
+        lDefaultValues.insert("pass", "");
+        lDefaultValues.insert("themes", "Standard");
+        lDefaultValues.insert("language", "pl");
+        lDefaultValues.insert("highlight", "");
+        lDefaultValues.insert("auto_busy", "false");
+        lDefaultValues.insert("minimize_to_tray", "false");
+        lDefaultValues.insert("disable_autojoin_favourites", "false");
+        lDefaultValues.insert("show_zuo_and_ip", "false");
+        lDefaultValues.insert("hide_formating", "false");
+        lDefaultValues.insert("hide_join_part", "false");
+        lDefaultValues.insert("hide_join_part_200", "true");
+        lDefaultValues.insert("disable_emots", "false");
+        lDefaultValues.insert("disable_replaces", "false");
+        lDefaultValues.insert("background_color", "#ffffff");
+        lDefaultValues.insert("my_bold", "false");
+        lDefaultValues.insert("my_italic", "false");
+        lDefaultValues.insert("my_font", "Verdana");
+        lDefaultValues.insert("my_color", "#000000");
+        lDefaultValues.insert("font_size", "11px");
+        lDefaultValues.insert("default_font_color", "#000000");
+        lDefaultValues.insert("font_color_level_1", "#009300");
+        lDefaultValues.insert("font_color_level_2", "#4733FF");
+        lDefaultValues.insert("font_color_level_3", "#00007F");
+        lDefaultValues.insert("font_color_level_4", "#00007F");
+        lDefaultValues.insert("font_color_level_5", "#009300");
+        lDefaultValues.insert("font_color_level_6", "#0066FF");
+        lDefaultValues.insert("font_color_level_7", "#666666");
+        lDefaultValues.insert("font_color_level_8", "#800080");
+        lDefaultValues.insert("font_color_level_9", "#ff0000");
+        lDefaultValues.insert("channel_font_color", "#0000ff");
+        lDefaultValues.insert("nicklist_nick_color", "#333333");
+        lDefaultValues.insert("nicklist_selected_nick_color", "#ffffff");
+        lDefaultValues.insert("nicklist_busy_nick_color", "#a0a0a4");
+        lDefaultValues.insert("nicklist_gradient_1_color", "#77d5f7");
+        lDefaultValues.insert("nicklist_gradient_2_color", "#1b86b7");
+        lDefaultValues.insert("save_logs_by_date", "true");
+        lDefaultValues.insert("disable_logs", "false");
+        lDefaultValues.insert("sound_beep", strSoundBeep);
+        lDefaultValues.insert("sound_query", strSoundQuery);
+        lDefaultValues.insert("disable_sounds", "false");
+        lDefaultValues.insert("background_image", strBackgroundImage);
+        lDefaultValues.insert("disable_background_image", "false");
+        lDefaultValues.insert("winamp", "$song [$position/$length] //muzyka");
+        lDefaultValues.insert("always_quit", "false");
     }
 
-    return mDefaultValues;
+    return lDefaultValues;
 }
 
-QHash<QString,QString> Config::readConfig()
-{
-    QHash<QString, QString> mResult;
-
-    if (!doc.isNull())
-    {
-        QDomElement docElem = doc.documentElement();
-        QDomNode n = docElem.firstChild();
-
-        while (!n.isNull())
-        {
-            QDomElement e = n.toElement();
-
-            // save to map
-            if (!e.isNull())
-                mResult.insert(e.tagName(), e.text());
-
-            n = n.nextSibling();
-        }
-    }
-
-    return mResult;
-}
-
-void Config::addConfigValue(QDomDocument *doc, QDomElement *root, const QString &strKey, const QString &strValue)
-{
-    QDomElement eKey = doc->createElement(strKey);
-    root->appendChild(eKey);
-    QDomText tValue = doc->createTextNode(strValue);
-    eKey.appendChild(tValue);
-}
-
-void Config::save()
-{
-    QString xml = doc.toString();
-
-    QFile f(strConfigFile);
-    if (f.open(QIODevice::WriteOnly | QIODevice::Truncate))
-    {
-        QTextStream out(&f);
-        out << xml;
-
-        f.close();
-    }
-}

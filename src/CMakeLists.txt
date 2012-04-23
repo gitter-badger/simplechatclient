@@ -40,6 +40,7 @@ set (scc_SRCS
 	common/html_messages_renderer.cpp
 	common/log.cpp
 	common/replace.cpp
+	common/xml.cpp
 	core/core.cpp
 	core/debug_block.cpp
 	core/main.cpp
@@ -101,6 +102,7 @@ set (scc_MOC_HDRS
 	common/config.h
 	common/convert.h
 	common/crypt.h
+	common/xml.h
 	core/core.h
 	core/mainwindow.h
 	core/network.h
