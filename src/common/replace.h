@@ -26,7 +26,9 @@
  */
 namespace Replace
 {
+    void convertEmots(QString &strData);
+    void replaceEmots(QString &strData);
     void convertAndReplaceEmots(QString &strData);
-};
+}
 
 #endif // REPLACE_H

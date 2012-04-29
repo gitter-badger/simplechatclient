@@ -22,14 +22,14 @@
 #include "core.h"
 #include "replace.h"
 
-void convertEmots(QString &strData)
+void Replace::convertEmots(QString &strData)
 {
     strData.replace(QRegExp("(ftp:|http:|https:)//"), "\\1\\\\"); // fix ftp http https
     strData.replace(QRegExp("//([a-zA-Z0-9_-]+)\\b"), "%I\\1%");
     strData.replace(QRegExp("(ftp:|http:|https:)\\\\\\\\"), "\\1//"); // fix ftp http https
 }
 
-void replaceEmots(QString &strData)
+void Replace::replaceEmots(QString &strData)
 {
     // return if disable replaces == on
     if (Core::instance()->settings.value("disable_replaces") == "true") return;
