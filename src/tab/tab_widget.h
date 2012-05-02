@@ -36,7 +36,6 @@ class TabWidget : public QWidget
 public:
     TabWidget(const QString &_strName);
     virtual ~TabWidget();
-    inline QString getName() { return strName; }
 
     QLabel *topic;
     ChatView *pChatView;
