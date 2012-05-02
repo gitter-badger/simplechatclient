@@ -449,7 +449,7 @@ void OnetKernel::raw_join()
     }
 
     if (strNick != strMe)
-        emit addUser(strChannel, strNick, strSuffix, false);
+        emit addUser(strChannel, strNick, strSuffix);
 }
 
 // :scc_test!51976824@3DE379.B7103A.6CF799.6902F4 PART #scc
@@ -2661,7 +2661,7 @@ void OnetKernel::raw_353()
             if (strCleanNick.contains("+")) { strCleanNick.remove("+"); strPrefix.append("+"); }
 
             QString strModes = strPrefix+strSuffix;
-            emit addUser(strChannel, strCleanNick, strModes, true);
+            emit addUser(strChannel, strCleanNick, strModes);
 
             // nick avatar
             if (strCleanNick[0] != '~')
@@ -2682,11 +2682,6 @@ void OnetKernel::raw_355()
 // :cf1f2.onet 366 scc_test #scc :End of /NAMES list.
 void OnetKernel::raw_366()
 {
-    if (strDataList.size() < 4) return;
-
-    QString strChannel = strDataList[3];
-
-    emit nicklistRefresh(strChannel);
 }
 
 // WHOWAS

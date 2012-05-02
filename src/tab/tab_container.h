@@ -53,12 +53,11 @@ public slots:
     void setChannelAvatar(const QString &strChannel);
     void clearContent(const QString &strChannel);
     // nicklist
-    void addUser(const QString &strChannel, const QString &strNick, const QString &strModes, bool bFastAdd);
+    void addUser(const QString &strChannel, const QString &strNick, const QString &strModes);
     void delUser(const QString &strChannel, const QString &strNick);
     void quitUser(const QString &strNick, const QString &strDisplay);
     void changeFlag(const QString &strNick, const QString &strChannel, const QString &strFlag);
     void changeFlag(const QString &strNick, const QString &strFlag);
-    void nicklistRefresh(const QString &strChannel);
     void clearAllNicklist();
     void setUserAvatarPath(const QString &strNick, const QString &strValue);
     QString getUserAvatarPath(const QString &strNick);

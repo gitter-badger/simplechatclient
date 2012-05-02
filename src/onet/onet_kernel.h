@@ -254,12 +254,11 @@ private:
     void raw_952();
 
 signals:
-    void addUser(const QString&,const QString&,const QString&,bool);
+    void addUser(const QString&,const QString&,const QString&);
     void delUser(const QString&,const QString&);
     void quitUser(const QString&,const QString&);
     void changeFlag(const QString&,const QString&,const QString&);
     void changeFlag(const QString&,const QString&);
-    void nicklistRefresh(const QString&);
 };
 
 #endif // ONET_KERNEL_H

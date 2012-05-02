@@ -373,16 +373,13 @@ void TabContainer::clearContent(const QString &strChannel)
 
 // nicklist
 
-void TabContainer::addUser(const QString &strChannel, const QString &strNick, const QString &strModes, bool bFastAdd)
+void TabContainer::addUser(const QString &strChannel, const QString &strNick, const QString &strModes)
 {
     if (!existTab(strChannel))
         return;
 
     tw[strChannel]->pNickListWidget->addUser(strNick, strModes);
     tw[strChannel]->users->setText(QString(tr("Users (%1)").arg(tw[strChannel]->pNickListWidget->count())));
-
-    if (!bFastAdd)
-        tw[strChannel]->pNickListWidget->sortItems(Qt::AscendingOrder);
 }
 
 void TabContainer::delUser(const QString &strChannel, const QString &strNick)
@@ -424,10 +421,7 @@ void TabContainer::changeFlag(const QString &strNick, const QString &strChannel,
         return;
 
     if (tw[strChannel]->pNickListWidget->existUser(strNick))
-    {
         tw[strChannel]->pNickListWidget->changeUserFlag(strNick, strFlag);
-        tw[strChannel]->pNickListWidget->sortItems(Qt::AscendingOrder);
-    }
 
     QString strCurrentChannel = Core::instance()->getCurrentChannelName();
 
@@ -453,12 +447,6 @@ void TabContainer::changeFlag(const QString &strNick, const QString &strFlag)
         if (tw[strChannel]->pNickListWidget->existUser(strNick))
             changeFlag(strNick, strChannel, strFlag);
     }
-}
-
-void TabContainer::nicklistRefresh(const QString &strChannel)
-{
-    if (existTab(strChannel))
-        tw[strChannel]->pNickListWidget->sortItems(Qt::AscendingOrder);
 }
 
 void TabContainer::clearAllNicklist()

@@ -326,12 +326,11 @@ void MainWindow::createSignals()
     connect(pToolWidget, SIGNAL(ctrlShiftTabPressed()), this, SLOT(ctrlShiftTabPressed()));
 
     // signals onet kernel
-    connect(pOnetKernel, SIGNAL(addUser(const QString&,const QString&,const QString&,bool)), pTabC, SLOT(addUser(const QString&,const QString&,const QString&,bool)));
+    connect(pOnetKernel, SIGNAL(addUser(const QString&,const QString&,const QString&)), pTabC, SLOT(addUser(const QString&,const QString&,const QString&)));
     connect(pOnetKernel, SIGNAL(delUser(const QString&,const QString&)), pTabC, SLOT(delUser(const QString&,const QString&)));
     connect(pOnetKernel, SIGNAL(quitUser(const QString&,const QString&)), pTabC, SLOT(quitUser(const QString&,const QString&)));
     connect(pOnetKernel, SIGNAL(changeFlag(const QString&,const QString&,const QString&)), pTabC, SLOT(changeFlag(const QString&,const QString&,const QString&)));
     connect(pOnetKernel, SIGNAL(changeFlag(const QString&,const QString&)), pTabC, SLOT(changeFlag(const QString&,const QString&)));
-    connect(pOnetKernel, SIGNAL(nicklistRefresh(const QString&)), pTabC, SLOT(nicklistRefresh(const QString&)));
 
     // signals from network
     connect(Core::instance()->pNetwork, SIGNAL(setConnected()), this, SLOT(setConnected()));
