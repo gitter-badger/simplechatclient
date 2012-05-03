@@ -2089,12 +2089,14 @@ void OnetKernel::raw_258()
 
 // :ChanServ!service@service.onet NOTICE #glupia_nazwa :258 ovo_ d :channel settings changed
 // :ChanServ!service@service.onet NOTICE #scc :258 Merovingian * :channel settings changed
+// *tdisa
 void OnetKernel::raw_258n()
 {
     if (strDataList.size() < 5) return;
 
     QString strChannel = strDataList[2];
     QString strNick = strDataList[4];
+    //QString strGroup = strDataList[5];
 
     QString strDisplay = QString(tr("* %1 changed channel %2 settings")).arg(strNick, strChannel);
 
