@@ -68,8 +68,6 @@ public slots:
 private:
     // params
     TabManager *pTabM;
-    // other
-    QHash<QString, TabWidget*> tw;
 
     void saveMessage(const QString &strChannel, const QString &strData, QString strTime = QString::null, QString strNick = QString::null);
     bool hideJoinPart(const QString &strChannel, MessageCategory eMessageCategory);

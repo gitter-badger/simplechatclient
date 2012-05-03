@@ -28,6 +28,7 @@
 #include "log.h"
 #include "mainwindow.h"
 #include "updates.h"
+#include "tab_widget.h"
 #include "core.h"
 
 #ifdef Q_WS_WIN

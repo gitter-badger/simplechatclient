@@ -26,6 +26,7 @@ class QTcpSocket;
 class QTimer;
 class MainWindow;
 class Updates;
+class TabWidget;
 #include <QObject>
 #include "network.h"
 
@@ -123,6 +124,9 @@ public:
     QHash<QString,QString> mPrivNames;
     // empty user avatar
     QString strEmptyUserAvatarPath;
+
+    // TW (important!!!)
+    QHash<QString, TabWidget*> tw;
 
 public slots:
     void quit();
