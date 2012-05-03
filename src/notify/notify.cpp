@@ -34,6 +34,12 @@ Notify * Notify::instance()
     return Instance;
 }
 
+void Notify::init()
+{
+    QString strSoundBeep = Core::instance()->settings.value("sound_beep");
+    music = Phonon::createPlayer(Phonon::NotificationCategory, Phonon::MediaSource(strSoundBeep));
+}
+
 Notify::Notify()
 {
     eCurrentCategory = Beep;
@@ -42,12 +48,6 @@ Notify::Notify()
 Notify::~Notify()
 {
     delete music;
-}
-
-void Notify::init()
-{
-    QString strSoundBeep = Core::instance()->settings.value("sound_beep");
-    music = Phonon::createPlayer(Phonon::NotificationCategory, Phonon::MediaSource(strSoundBeep));
 }
 
 void Notify::play(NotifyCategory eCategory)
