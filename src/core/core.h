@@ -26,7 +26,8 @@ class QTcpSocket;
 class QTimer;
 class MainWindow;
 class Updates;
-class TabWidget;
+#include "nicklist_widget.h"
+#include "tab_widget.h"
 #include <QObject>
 #include "network.h"
 
@@ -65,18 +66,6 @@ public:
     QString getChannelNameFromIndex(int index);
     int getIndexFromChannelName(const QString &strChannel);
     QString getCurrentChannelName();
-    // get users per channel
-    QList<QString> getUserListFromChannel(const QString &strChannel);
-    // get user modes
-    QString getUserModes(const QString &strNick, const QString &strChannel);
-    // get user max modes - for sorting
-    int getUserMaxModes(const QString &strModes);
-    // get users count
-    int getUserCount(const QString &strChannel);
-    // show message
-    void showMessage(const QString &strChannel, const QString &strData, MessageCategory eMessageCategory, QString strTime = QString::null, QString strNick = QString::null);
-    // get user avatar path
-    QString getUserAvatarPath(const QString &strNick);
     // priv
     QString convertPrivName(const QString &strChannel);
     // remove dir

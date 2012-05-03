@@ -29,12 +29,12 @@
 
 #include "captcha.h"
 #include "core.h"
+#include "message.h"
 #include "onet_auth.h"
-#include "tab_container.h"
 
 #define AJAX_API "http://czat.onet.pl/include/ajaxapi.xml.php3"
 
-OnetAuth::OnetAuth(TabContainer *_pTabC) : pTabC(_pTabC), bAuthorizing(false)
+OnetAuth::OnetAuth() : bAuthorizing(false)
 {
     accessManager = new QNetworkAccessManager();
     cookieJar = new QNetworkCookieJar();
@@ -388,13 +388,13 @@ void OnetAuth::requestFinished(const QString &strData)
         else
         {
             QString strError = QString(tr("Error: Authentication error [%1]")).arg(strErrorText);
-            pTabC->showMessageActive(strError, ErrorMessage);
+            Message::instance()->showMessageActive(strError, ErrorMessage);
         }
     }
     else
     {
         QString strError = tr("Error: Authorization Failed.");
-        pTabC->showMessageActive(strError, ErrorMessage);
+        Message::instance()->showMessageActive(strError, ErrorMessage);
     }
 }
 

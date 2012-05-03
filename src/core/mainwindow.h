@@ -49,12 +49,6 @@ public:
     void refreshToolWidgetValues();
     // for core
     int getCurrentTabIndex();
-    int getUserCount(const QString &strChannel);
-    QString getUserModes(const QString &strNick, const QString &strChannel);
-    QList<QString> getUserList(const QString &strChannel);
-    QString getUserAvatarPath(const QString &strNick);
-    // for core
-    void showMessage(const QString &strChannel ,const QString &strData, MessageCategory eMessageCategory, QString strTime = QString::null, QString strNick = QString::null);
 
 private:
     QToolBar *toolBar;

@@ -36,6 +36,7 @@
 #include "html_messages_renderer.h"
 #include "log.h"
 #include "notify.h"
+#include "nicklist.h"
 #include "webbrowser.h"
 #include "chat_view.h"
 
@@ -417,9 +418,9 @@ void ChatView::menuChannel(QContextMenuEvent *event)
 void ChatView::menuNick(QContextMenuEvent *event)
 {
     QString strMe = Core::instance()->settings.value("nick");
-    QString strSelfModes = Core::instance()->getUserModes(strMe, strChatViewChannel);
-    int iSelfMaxModes = Core::instance()->getUserMaxModes(strSelfModes);
-    QString strNickModes = Core::instance()->getUserModes(strNick, strChatViewChannel);
+    QString strSelfModes = Nicklist::instance()->getUserModes(strMe, strChatViewChannel);
+    int iSelfMaxModes = Nicklist::instance()->getUserMaxModes(strSelfModes);
+    QString strNickModes = Nicklist::instance()->getUserModes(strNick, strChatViewChannel);
 
     QList<QString> lOpenChannels = Core::instance()->lOpenChannels;
     lOpenChannels.removeOne(STATUS);

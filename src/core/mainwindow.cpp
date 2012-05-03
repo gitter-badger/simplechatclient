@@ -36,9 +36,11 @@
 #include "channel_list.h"
 #include "friends.h"
 #include "ignore.h"
+#include "message.h"
 #include "my_avatar.h"
 #include "my_profile.h"
 #include "my_stats.h"
+#include "nicklist.h"
 #include "notes.h"
 #include "offlinemsg.h"
 #include "options.h"
@@ -70,7 +72,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     pTabC = new TabContainer(pTabM);
 
     pOnetKernel = new OnetKernel(pTabC);
-    pOnetAuth = new OnetAuth(pTabC);
+    pOnetAuth = new OnetAuth();
 
     // auto-away
     Core::instance()->autoAwayTimer = new QTimer();
@@ -311,8 +313,8 @@ void MainWindow::createSignals()
     connect(trayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)), this, SLOT(trayIconPressed(QSystemTrayIcon::ActivationReason)));
 
     // signals from tabc
-    connect(pTabC, SIGNAL(updateAwaylogStatus()), this, SLOT(updateAwaylogStatus()));
-    connect(pTabC, SIGNAL(setModeration(bool)), pToolWidget, SLOT(setModeration(bool)));
+//    connect(pTabC, SIGNAL(updateAwaylogStatus()), this, SLOT(updateAwaylogStatus()));
+//    connect(pTabC, SIGNAL(setModeration(bool)), pToolWidget, SLOT(setModeration(bool)));
 
     // signals tab
     connect(pTabM, SIGNAL(tabCloseRequested(int)), this, SLOT(tabCloseRequested(int)));
@@ -320,17 +322,8 @@ void MainWindow::createSignals()
     connect(pTabM, SIGNAL(tabMoved(int,int)), this, SLOT(tabMoved(int,int)));
 
     // signals pToolWidget
-    connect(pToolWidget, SIGNAL(showMessage(const QString&,const QString&,MessageCategory)), pTabC, SLOT(showMessage(const QString&,const QString&,MessageCategory)));
-    connect(pToolWidget, SIGNAL(showMessage(const QString&,const QString&,MessageCategory,QString,QString)), pTabC, SLOT(showMessage(const QString&,const QString&,MessageCategory,QString,QString)));
     connect(pToolWidget, SIGNAL(ctrlTabPressed()), this, SLOT(ctrlTabPressed()));
     connect(pToolWidget, SIGNAL(ctrlShiftTabPressed()), this, SLOT(ctrlShiftTabPressed()));
-
-    // signals onet kernel
-    connect(pOnetKernel, SIGNAL(addUser(const QString&,const QString&,const QString&)), pTabC, SLOT(addUser(const QString&,const QString&,const QString&)));
-    connect(pOnetKernel, SIGNAL(delUser(const QString&,const QString&)), pTabC, SLOT(delUser(const QString&,const QString&)));
-    connect(pOnetKernel, SIGNAL(quitUser(const QString&,const QString&)), pTabC, SLOT(quitUser(const QString&,const QString&)));
-    connect(pOnetKernel, SIGNAL(changeFlag(const QString&,const QString&,const QString&)), pTabC, SLOT(changeFlag(const QString&,const QString&,const QString&)));
-    connect(pOnetKernel, SIGNAL(changeFlag(const QString&,const QString&)), pTabC, SLOT(changeFlag(const QString&,const QString&)));
 
     // signals from network
     connect(Core::instance()->pNetwork, SIGNAL(setConnected()), this, SLOT(setConnected()));
@@ -338,10 +331,7 @@ void MainWindow::createSignals()
     connect(Core::instance()->pNetwork, SIGNAL(setConnectEnabled(bool)), this, SLOT(setConnectEnabled(bool)));
     connect(Core::instance()->pNetwork, SIGNAL(kernel(const QString&)), pOnetKernel, SLOT(kernel(const QString&)));
     connect(Core::instance()->pNetwork, SIGNAL(authorize(QString,QString,QString)), pOnetAuth, SLOT(authorize(QString,QString,QString)));
-    connect(Core::instance()->pNetwork, SIGNAL(showMessageActive(const QString&,MessageCategory)), pTabC, SLOT(showMessageActive(const QString&,MessageCategory)));
-    connect(Core::instance()->pNetwork, SIGNAL(showMessageAll(const QString&,MessageCategory)), pTabC, SLOT(showMessageAll(const QString&,MessageCategory)));
     connect(Core::instance()->pNetwork, SIGNAL(updateNick(const QString&)), pToolWidget, SLOT(updateNick(const QString&)));
-    connect(Core::instance()->pNetwork, SIGNAL(clearAllNicklist()), pTabC, SLOT(clearAllNicklist()));
     connect(Core::instance()->pNetwork, SIGNAL(updateActions()), this, SLOT(updateActions()));
 
     // auto-away
@@ -352,7 +342,7 @@ void MainWindow::showWelcome()
 {
     pTabC->addTab(STATUS);
     QString strWelcome = "%Fi:courier%"+tr("Welcome to the Simple Chat Client")+" %Ihehe%";
-    pTabC->showMessage(STATUS, strWelcome, DefaultMessage);
+    Message::instance()->showMessage(STATUS, strWelcome, DefaultMessage);
 }
 
 void MainWindow::showOptions()
@@ -681,26 +671,6 @@ int MainWindow::getCurrentTabIndex()
         return -1;
 }
 
-int MainWindow::getUserCount(const QString &strChannel)
-{
-    return pTabC->getUserCount(strChannel);
-}
-
-QString MainWindow::getUserModes(const QString &strNick, const QString &strChannel)
-{
-    return pTabC->getUserModes(strNick, strChannel);
-}
-
-QList<QString> MainWindow::getUserList(const QString &strChannel)
-{
-    return pTabC->getUserList(strChannel);
-}
-
-QString MainWindow::getUserAvatarPath(const QString &strNick)
-{
-    return pTabC->getUserAvatarPath(strNick);
-}
-
 void MainWindow::timeoutAutoaway()
 {
     if ((Core::instance()->pNetwork->isConnected()) && (Core::instance()->pNetwork->isWritable()) && (Core::instance()->settings.value("logged") == "true"))
@@ -742,7 +712,7 @@ void MainWindow::currentTabChanged(int index)
 
     // moderation
     QString strMe = Core::instance()->settings.value("nick");
-    QString strModes = Core::instance()->getUserModes(strMe, strChannel);
+    QString strModes = Nicklist::instance()->getUserModes(strMe, strChannel);
     if (strModes.contains("!")) pToolWidget->setModeration(true);
     else pToolWidget->setModeration(false);
 }
@@ -751,11 +721,6 @@ void MainWindow::currentTabChanged(int index)
 void MainWindow::tabMoved(int from, int to)
 {
     Core::instance()->lOpenChannels.move(from, to);
-}
-
-void MainWindow::showMessage(const QString &strChannel, const QString &strData, MessageCategory eMessageCategory, QString strTime, QString strNick)
-{
-    pTabC->showMessage(strChannel, strData, eMessageCategory, strTime, strNick);
 }
 
 void MainWindow::resizeEvent(QResizeEvent *e)

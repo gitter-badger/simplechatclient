@@ -18,72 +18,33 @@
  *                                                                          *
  ****************************************************************************/
 
-#ifndef NETWORK_H
-#define NETWORK_H
+#ifndef NICKLIST_H
+#define NICKLIST_H
 
-#include "defines.h"
-class QTimer;
-class QTcpSocket;
-#include <QAbstractSocket>
-#include <QThread>
+#include <QObject>
 
-/**
- * Network thread class
- */
-class Network : public QThread
+class Nicklist : public QObject
 {
     Q_OBJECT
+    Q_DISABLE_COPY(Nicklist)
+    static Nicklist *Instance;
 public:
-    Network(const QString &_strServer, int _iPort);
-    virtual ~Network();
-    void run();
-    bool isConnected();
-    bool isWritable();
-    QTimer *timerReconnect;
+    static Nicklist *instance();
 
-public slots:
-    void connect();
-    void disconnect();
-    void send(const QString &strData);
-    void sendQueue(const QString &strData);
-
-private:
-    QString strServer;
-    int iPort;
-    QTcpSocket *socket;
-    QTimer *timerPong;
-    QTimer *timerPing;
-    QTimer *timerLag;
-    QTimer *timerQueue;
-    int iActive;
-    QList<QString> msgSendQueue;
-    QList<QString> msgSendQueueNS;
-    bool bAuthorized;
-
-    void authorize();
-    void clearAll();
-    void write(const QString &strData);
-
-private slots:
-    void connected();
-    void disconnected();
-    void reconnect();
-    void recv();
-    void error(QAbstractSocket::SocketError error);
-    void stateChanged(QAbstractSocket::SocketState socketState);
-    void timeoutPong();
-    void timeoutPing();
-    void timeoutLag();
-    void timeoutQueue();
-
-signals:
-    void setConnected();
-    void setDisconnected();
-    void setConnectEnabled(bool);
-    void kernel(const QString &strData);
-    void authorize(QString strCurrentNick, QString strNick, QString strPass);
-    void updateNick(const QString &strNick);
-    void updateActions();
+    Nicklist();
+    void init();
+    int getUserMaxModes(const QString &strModes);
+    void addUser(const QString &strChannel, const QString &strNick, const QString &strModes);
+    void delUser(const QString &strChannel, const QString &strNick);
+    void quitUser(const QString &strNick, const QString &strDisplay);
+    void changeFlag(const QString &strNick, const QString &strChannel, const QString &strFlag);
+    void changeFlag(const QString &strNick, const QString &strFlag);
+    void clearAllNicklist();
+    void setUserAvatarPath(const QString &strNick, const QString &strValue);
+    QString getUserAvatarPath(const QString &strNick);
+    int getUserCount(const QString &strChannel);
+    QString getUserModes(const QString &strNick, const QString &strChannel);
+    QList<QString> getUserList(const QString &strChannel);
 };
 
-#endif // NETWORK_H
+#endif // NICKLIST_H

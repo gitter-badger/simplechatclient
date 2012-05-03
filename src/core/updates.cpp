@@ -24,6 +24,7 @@
 #include <QStringList>
 #include "core.h"
 #include "update.h"
+#include "message.h"
 #include "updates.h"
 
 #define UPDATE_URL "http://simplechatclien.sourceforge.net/update.php"
@@ -124,7 +125,7 @@ void Updates::readSettings()
     if (!strMOTD.isEmpty())
     {
         QString strMessageOfTheDay = QString("%Fb%%1 %2").arg(tr("Message Of The Day:"), strMOTD);
-        Core::instance()->showMessage(STATUS, strMessageOfTheDay, DefaultMessage);
+        Message::instance()->showMessage(STATUS, strMessageOfTheDay, DefaultMessage);
     }
 
     if (!strAvailableVersion.isEmpty())

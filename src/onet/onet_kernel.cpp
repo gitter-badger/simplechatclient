@@ -27,6 +27,8 @@
 #include "channel_key.h"
 #include "invite.h"
 #include "log.h"
+#include "message.h"
+#include "nicklist.h"
 #include "notify.h"
 #include "onet_utils.h"
 #include "replace.h"
@@ -377,7 +379,7 @@ void OnetKernel::raw_error()
     for (int i = 0; i < strDataList.size(); i++) { if (i != 0) strMessage += " "; strMessage += strDataList[i]; }
     if (strMessage[0] == ':') strMessage.remove(0,1);
 
-    pTabC->showMessageAll(strMessage, InfoMessage);
+    Message::instance()->showMessageAll(strMessage, InfoMessage);
 }
 
 // :scc_test!51976824@3DE379.B7103A.6CF799.6902F4 JOIN #Quiz :rx,0
@@ -431,10 +433,10 @@ void OnetKernel::raw_join()
     if (strChannel[0] == '^')
     {
         if (Core::instance()->mPrivNames.contains(strChannel))
-            pTabC->showMessage(strChannel, strDisplay, JoinMessage);
+            Message::instance()->showMessage(strChannel, strDisplay, JoinMessage);
     }
     else
-        pTabC->showMessage(strChannel, strDisplay, JoinMessage);
+        Message::instance()->showMessage(strChannel, strDisplay, JoinMessage);
 
     QString strMe = Core::instance()->settings.value("nick");
 
@@ -449,7 +451,7 @@ void OnetKernel::raw_join()
     }
 
     if (strNick != strMe)
-        emit addUser(strChannel, strNick, strSuffix);
+        Nicklist::instance()->addUser(strChannel, strNick, strSuffix);
 }
 
 // :scc_test!51976824@3DE379.B7103A.6CF799.6902F4 PART #scc
@@ -502,9 +504,9 @@ void OnetKernel::raw_part()
             strDisplay = QString(tr("* %1 has left priv")).arg(strNick);
     }
 
-    pTabC->showMessage(strChannel, strDisplay, PartMessage);
+    Message::instance()->showMessage(strChannel, strDisplay, PartMessage);
 
-    emit delUser(strChannel, strNick);
+    Nicklist::instance()->delUser(strChannel, strNick);
 
     // if self part
     QString strMe = Core::instance()->settings.value("nick");
@@ -543,7 +545,7 @@ void OnetKernel::raw_quit()
     else
         strDisplay = QString(tr("* %1 has quit [%2]")).arg(strNick, strReason);
 
-    emit quitUser(strNick, strDisplay);
+    Nicklist::instance()->quitUser(strNick, strDisplay);
 }
 
 // :scc_test!51976824@3DE379.B7103A.6CF799.6902F4 KICK #scc Moment_w_atmosferze :sio
@@ -576,9 +578,9 @@ void OnetKernel::raw_kick()
     QString strDisplay;
     strDisplay = QString(tr("* %1 has been kicked from channel %2 by %3 Reason: %4")).arg(strNick, strChannel, strWho, strReason);
 
-    pTabC->showMessage(strChannel, strDisplay, KickMessage);
+    Message::instance()->showMessage(strChannel, strDisplay, KickMessage);
 
-    emit delUser(strChannel, strNick);
+    Nicklist::instance()->delUser(strChannel, strNick);
 
     QString strMe = Core::instance()->settings.value("nick");
     if (strNick == strMe)
@@ -753,10 +755,10 @@ void OnetKernel::raw_mode()
                 }
             }
 
-            pTabC->showMessage(strChannel, strDisplay, ModeMessage);
+            Message::instance()->showMessage(strChannel, strDisplay, ModeMessage);
 
             if ((bNickFlag) && (!strFlag.isEmpty()))
-                emit changeFlag(strValue, strChannel, strFlag);
+                Nicklist::instance()->changeFlag(strValue, strChannel, strFlag);
         }
         flag_value.clear();
     }
@@ -799,10 +801,10 @@ void OnetKernel::raw_mode()
                 strDisplay = QString(tr("* %1 now has a flag %2")).arg(strNick, strFlag);
 
             if ((strFlag.contains("r")) || (strFlag.contains("x")))
-                pTabC->showMessage(STATUS, strDisplay, ModeMessage);
+                Message::instance()->showMessage(STATUS, strDisplay, ModeMessage);
 
             if (!strFlag.isEmpty())
-                emit changeFlag(strNick, strFlag);
+                Nicklist::instance()->changeFlag(strNick, strFlag);
 
             // registered nick
             if ((strNick == Core::instance()->settings.value("nick")) && (strFlag == "+r"))
@@ -836,7 +838,7 @@ void OnetKernel::raw_privmsg()
     // fix emots
     Replace::convertAndReplaceEmots(strMessage);
 
-    pTabC->showMessage(strChannel, strMessage, DefaultMessage, QString::null, strNick);
+    Message::instance()->showMessage(strChannel, strMessage, DefaultMessage, QString::null, strNick);
 }
 
 // :cf1f2.onet NOTICE scc_test :Your message has been filtered and opers notified: spam #2480
@@ -868,9 +870,9 @@ void OnetKernel::raw_notice()
     // display
     QString strDisplay = QString("-%1- %2").arg(strWho, strMessage);
     if (strNick[0] == '#')
-        pTabC->showMessage(strNick, strDisplay, NoticeMessage);
+        Message::instance()->showMessage(strNick, strDisplay, NoticeMessage);
     else
-        pTabC->showMessageActive(strDisplay, NoticeMessage);
+        Message::instance()->showMessageActive(strDisplay, NoticeMessage);
 }
 
 // :osa1987!47751777@F4C727.DA810F.7E1789.E71ED5 INVITE scc_test :^cf1f41437962
@@ -917,7 +919,7 @@ void OnetKernel::raw_topic()
     QString strDisplay = QString(tr("* %1 changed the topic to: %2")).arg(strWho, strTopic);
 
     // show msg
-    pTabC->showMessage(strChannel, strDisplay, ModeMessage);
+    Message::instance()->showMessage(strChannel, strDisplay, ModeMessage);
 
     // set topic in widget
     pTabC->setTopic(strChannel, strTopic);
@@ -944,7 +946,7 @@ void OnetKernel::raw_invreject()
     else
         strDisplay = QString(tr("* %1 rejected an invitation to channel %2")).arg(strWho, strChannel);
 
-    pTabC->showMessage(strChannel, strDisplay, InfoMessage);
+    Message::instance()->showMessage(strChannel, strDisplay, InfoMessage);
 }
 
 // :~test34534!anonymous@2294E8.94913F.A00186.1A3C28 INVIGNORE Merovingian #Scrabble
@@ -966,7 +968,7 @@ void OnetKernel::raw_invignore()
         strDisplay = QString(tr("* %1 ignored your invitation to the channel %2")).arg(strWho, strChannel);
 
     // display
-    pTabC->showMessage(strChannel, strDisplay, InfoMessage);
+    Message::instance()->showMessage(strChannel, strDisplay, InfoMessage);
 
     // rename
     pTabC->renameTab(strChannel, strWho);
@@ -991,7 +993,7 @@ void OnetKernel::raw_modermsg()
     QString strDisplay = QString("%1 [%2 %3]").arg(strMessage, tr("Moderated by"), strModerator);
 
     // display
-    pTabC->showMessage(strChannel, strDisplay, DefaultMessage, QString::null, strNick);
+    Message::instance()->showMessage(strChannel, strDisplay, DefaultMessage, QString::null, strNick);
 }
 
 // :~testa!anonymous@3DE379.B7103A.6CF799.6902F4 MODERNOTICE #Scrabble :a
@@ -1010,7 +1012,7 @@ void OnetKernel::raw_modernotice()
     if (strMessage[0] == ':') strMessage.remove(0,1);
 
     // display
-    pTabC->showMessage(strChannel, strMessage, ModerNoticeMessage, QString::null, strNick);
+    Message::instance()->showMessage(strChannel, strMessage, ModerNoticeMessage, QString::null, strNick);
 }
 
 // :cf1f1.onet MODERATE ~testa opnick #channel cf1f44c3b4b870f8a :%F:verdana%ladnie to tak
@@ -1064,7 +1066,7 @@ void OnetKernel::raw_kill()
     QString strDisplay = QString(tr("* You were killed by %1 %2")).arg(strWho, strReason);
 
     // display
-    pTabC->showMessageAll(strDisplay, ErrorMessage);
+    Message::instance()->showMessageAll(strDisplay, ErrorMessage);
 }
 
 // :cf1f4.onet 001 scc_test :Welcome to the OnetCzat IRC Network scc_test!51976824@83.28.35.219
@@ -1246,7 +1248,7 @@ void OnetKernel::raw_100n()
     else
         strDisplay = QString(tr("* %1 Starting in %2 on channel %3")).arg(strMessage, strTimeResult, strChannel);
 
-    pTabC->showMessage(STATUS, strDisplay, NoticeMessage);
+    Message::instance()->showMessage(STATUS, strDisplay, NoticeMessage);
 }
 
 // :GuardServ!service@service.onet NOTICE scc_test :109 #scc :rzucanie mięsem nie będzie tolerowane
@@ -1264,7 +1266,7 @@ void OnetKernel::raw_109n()
     strMessage = QString("* %1").arg(strMessage);
 
     // display
-    pTabC->showMessage(strChannel, strMessage, NoticeMessage);
+    Message::instance()->showMessage(strChannel, strMessage, NoticeMessage);
 }
 
 // NS INFO aleksa7
@@ -1351,7 +1353,7 @@ void OnetKernel::raw_123n()
     if (strNewNick[0] == ':') strNewNick.remove(0,1);
 
     QString strDisplay = QString(tr("* %1 changed nickname to %2 from your friend list")).arg(strOldNick, strNewNick);
-    pTabC->showMessageActive(strDisplay, InfoMessage);
+    Message::instance()->showMessageActive(strDisplay, InfoMessage);
 }
 
 // NS IGNORE
@@ -1388,7 +1390,7 @@ void OnetKernel::raw_133n()
     if (strNewNick[0] == ':') strNewNick.remove(0,1);
 
     QString strDisplay = QString(tr("* %1 changed nickname to %2 from your ignored list")).arg(strOldNick, strNewNick);
-    pTabC->showMessageActive(strDisplay, InfoMessage);
+    Message::instance()->showMessageActive(strDisplay, InfoMessage);
 }
 
 // NS FAVOURITES
@@ -1731,7 +1733,7 @@ void OnetKernel::raw_220n()
     QString strNick = strDataList[4];
 
     QString strDisplay = QString(tr("* Added the nickname %1 to a friends list")).arg(strNick);
-    pTabC->showMessageActive(strDisplay, InfoMessage);
+    Message::instance()->showMessageActive(strDisplay, InfoMessage);
 }
 
 // NS FRIENDS DEL aaa
@@ -1743,7 +1745,7 @@ void OnetKernel::raw_221n()
     QString strNick = strDataList[4];
 
     QString strDisplay = QString(tr("* Removed the nickname %1 from your friends list")).arg(strNick);
-    pTabC->showMessageActive(strDisplay, InfoMessage);
+    Message::instance()->showMessageActive(strDisplay, InfoMessage);
 }
 
 // NS IGNORE ADD ~test
@@ -1755,7 +1757,7 @@ void OnetKernel::raw_230n()
     QString strNick = strDataList[4];
 
     QString strDisplay = QString(tr("* Added %1 to your ignore list")).arg(strNick);
-    pTabC->showMessageActive(strDisplay, InfoMessage);
+    Message::instance()->showMessageActive(strDisplay, InfoMessage);
 
     if (!Core::instance()->lIgnore.contains(strNick))
         Core::instance()->lIgnore.append(strNick);
@@ -1770,7 +1772,7 @@ void OnetKernel::raw_231n()
     QString strNick = strDataList[4];
 
     QString strDisplay = QString(tr("* Removed %1 from your ignore list")).arg(strNick);
-    pTabC->showMessageActive(strDisplay, InfoMessage);
+    Message::instance()->showMessageActive(strDisplay, InfoMessage);
 
     if (Core::instance()->lIgnore.contains(strNick))
         Core::instance()->lIgnore.removeOne(strNick);
@@ -1785,7 +1787,7 @@ void OnetKernel::raw_240n()
     QString strChannel = strDataList[4];
 
     QString strDisplay = QString(tr("* Added %1 channel to your favorites list")).arg(strChannel);
-    pTabC->showMessageActive(strDisplay, InfoMessage);
+    Message::instance()->showMessageActive(strDisplay, InfoMessage);
 
     if (!Core::instance()->lChannelFavourites.contains(strChannel))
         Core::instance()->lChannelFavourites.append(strChannel);
@@ -1800,7 +1802,7 @@ void OnetKernel::raw_241n()
     QString strChannel = strDataList[4];
 
     QString strDisplay = QString(tr("* Removed channel %1 from your favorites list")).arg(strChannel);
-    pTabC->showMessageActive(strDisplay, InfoMessage);
+    Message::instance()->showMessageActive(strDisplay, InfoMessage);
 
     if (Core::instance()->lChannelFavourites.contains(strChannel))
         Core::instance()->lChannelFavourites.removeOne(strChannel);
@@ -1841,7 +1843,7 @@ void OnetKernel::raw_250n()
         QString strNick = strDataList[4];
 
         QString strDisplay = QString(tr("* Offline message sent to %1")).arg(strNick);
-        pTabC->showMessageActive(strDisplay, InfoMessage);
+        Message::instance()->showMessageActive(strDisplay, InfoMessage);
     }
 }
 
@@ -1870,7 +1872,7 @@ void OnetKernel::raw_251n()
         QString strChannel = strDataList[4];
 
         QString strDisplay = QString(tr("* Channel %1 has been removed")).arg(strChannel);
-        pTabC->showMessageActive(strDisplay, ModeMessage);
+        Message::instance()->showMessageActive(strDisplay, ModeMessage);
     }
     else if (strNick.toLower() == "nickserv")
     {
@@ -1915,14 +1917,14 @@ void OnetKernel::raw_252n()
         QString strChannel = strDataList[2];
 
         QString strDisplay = QString(tr("* Confirmed the removal of the channel %1")).arg(strChannel);
-        pTabC->showMessageActive(strDisplay, ModeMessage);
+        Message::instance()->showMessageActive(strDisplay, ModeMessage);
     }
     else if (strNick.toLower() == "nickserv")
     {
         QString strNick = strDataList[4];
 
         QString strDisplay = QString(tr("* Offline messages rejected from %1")).arg(strNick);
-        pTabC->showMessageActive(strDisplay, InfoMessage);
+        Message::instance()->showMessageActive(strDisplay, InfoMessage);
     }
 }
 
@@ -1953,7 +1955,7 @@ void OnetKernel::raw_253n()
         QString strDisplay = QString(tr("* %1 is now the owner of the channel %2 (set by %3)")).arg(strNick, strChannel, strWho);
 
         // display
-        pTabC->showMessage(strChannel, strDisplay, ModeMessage);
+        Message::instance()->showMessage(strChannel, strDisplay, ModeMessage);
     }
     else if (strNick.toLower() == "nickserv")
     {
@@ -1979,7 +1981,7 @@ void OnetKernel::raw_254n()
     QString strDisplay = QString(tr("* %1 is now the owner of the channel %2 (set by %3)")).arg(strNick, strChannel, strWho);
 
     // display
-    pTabC->showMessage(strChannel, strDisplay, ModeMessage);
+    Message::instance()->showMessage(strChannel, strDisplay, ModeMessage);
 }
 
 // LUSERS
@@ -1998,7 +2000,7 @@ void OnetKernel::raw_255n()
     QString strNick = strDataList[6];
 
     QString strDisplay = QString(tr("* Changing privileges confirmed for %1 at %2")).arg(strNick, strChannel);
-    pTabC->showMessageActive(strDisplay, ModeMessage);
+    Message::instance()->showMessageActive(strDisplay, ModeMessage);
 }
 
 // ADMIN
@@ -2012,7 +2014,7 @@ void OnetKernel::raw_256()
     if (strMessage[0] == ':') strMessage.remove(0,1);
     strMessage = "* "+strMessage;
 
-    pTabC->showMessage(STATUS, strMessage, InfoMessage);
+    Message::instance()->showMessage(STATUS, strMessage, InfoMessage);
 }
 
 // :ChanServ!service@service.onet NOTICE #scc :256 Merovingian +o scc_test :channel privilege changed
@@ -2046,7 +2048,7 @@ void OnetKernel::raw_256n()
         strDisplay = QString(tr("* %1 now has a flag %2 (set by %3)")).arg(strNick, strFlag, strWho);
 
     // display
-    pTabC->showMessage(strChannel, strDisplay, ModeMessage);
+    Message::instance()->showMessage(strChannel, strDisplay, ModeMessage);
 }
 
 // ADMIN
@@ -2060,7 +2062,7 @@ void OnetKernel::raw_257()
     if (strMessage[0] == ':') strMessage.remove(0,1);
     strMessage = "* "+strMessage;
 
-    pTabC->showMessage(STATUS, strMessage, InfoMessage);
+    Message::instance()->showMessage(STATUS, strMessage, InfoMessage);
 }
 
 // :ChanServ!service@service.onet NOTICE scc_test :257 #scc * :settings changed
@@ -2084,7 +2086,7 @@ void OnetKernel::raw_258()
     if (strMessage[0] == ':') strMessage.remove(0,1);
     strMessage = "* "+strMessage;
 
-    pTabC->showMessage(STATUS, strMessage, InfoMessage);
+    Message::instance()->showMessage(STATUS, strMessage, InfoMessage);
 }
 
 // :ChanServ!service@service.onet NOTICE #glupia_nazwa :258 ovo_ d :channel settings changed
@@ -2101,7 +2103,7 @@ void OnetKernel::raw_258n()
     QString strDisplay = QString(tr("* %1 changed channel %2 settings")).arg(strNick, strChannel);
 
     // display
-    pTabC->showMessage(strChannel, strDisplay, InfoMessage);
+    Message::instance()->showMessage(strChannel, strDisplay, InfoMessage);
 
     Core::instance()->pNetwork->send(QString("CS INFO %1 i").arg(strChannel));
 }
@@ -2117,7 +2119,7 @@ void OnetKernel::raw_259()
     if (strMessage[0] == ':') strMessage.remove(0,1);
     strMessage = "* "+strMessage;
 
-    pTabC->showMessage(STATUS, strMessage, InfoMessage);
+    Message::instance()->showMessage(STATUS, strMessage, InfoMessage);
 }
 
 // :ChanServ!service@service.onet NOTICE scc_test :259 #scc :nothing changed
@@ -2128,7 +2130,7 @@ void OnetKernel::raw_259n()
     QString strChannel = strDataList[4];
 
     QString strDisplay = QString(tr("* Nothing changed in %1")).arg(strChannel);
-    pTabC->showMessageActive(strDisplay, InfoMessage);
+    Message::instance()->showMessageActive(strDisplay, InfoMessage);
 }
 
 // :ChanServ!service@service.onet NOTICE scc_test :260 Merovingian #scc +o :channel privilege changed
@@ -2163,7 +2165,7 @@ void OnetKernel::raw_260n()
         strDisplay = QString(tr("* %1 now has a flag %2 (set by %3)")).arg(strNick, strFlag, strWho);
 
     // display
-    pTabC->showMessage(strChannel, strDisplay, ModeMessage);
+    Message::instance()->showMessage(strChannel, strDisplay, ModeMessage);
 }
 
 // CS DROP #czesctoja
@@ -2254,7 +2256,7 @@ void OnetKernel::raw_301()
     if (strMessage[0] == ':') strMessage.remove(0,1);
 
     QString strDisplay = QString(tr("* %1 is away: %2")).arg(strNick, strMessage);
-    pTabC->showMessageActive(strDisplay, InfoMessage);
+    Message::instance()->showMessageActive(strDisplay, InfoMessage);
 }
 
 // USERHOST a
@@ -2270,7 +2272,7 @@ void OnetKernel::raw_302()
     if (strMessage[0] == ':') strMessage.remove(0,1);
     strMessage = "* "+strMessage;
 
-    pTabC->showMessageActive(strMessage, InfoMessage);
+    Message::instance()->showMessageActive(strMessage, InfoMessage);
 }
 
 // ISON
@@ -2283,7 +2285,7 @@ void OnetKernel::raw_303()
     if (strNick[0] == ':') strNick.remove(0,1);
 
     QString strDisplay = QString("* ISON: %1").arg(strNick);
-    pTabC->showMessageActive(strDisplay, InfoMessage);
+    Message::instance()->showMessageActive(strDisplay, InfoMessage);
 }
 
 // OPER
@@ -2297,7 +2299,7 @@ void OnetKernel::raw_304()
     if (strMessage[0] == ':') strMessage.remove(0,1);
     strMessage = "* "+strMessage;
 
-    pTabC->showMessageActive(strMessage, InfoMessage);
+    Message::instance()->showMessageActive(strMessage, InfoMessage);
 }
 
 // AWAY :
@@ -2308,7 +2310,7 @@ void OnetKernel::raw_305()
     Core::instance()->awayAct->setChecked(false);
 
     QString strDisplay = tr("* You are no longer marked as being away");
-    pTabC->showMessageActive(strDisplay, InfoMessage);
+    Message::instance()->showMessageActive(strDisplay, InfoMessage);
 }
 
 // AWAY :reason
@@ -2319,7 +2321,7 @@ void OnetKernel::raw_306()
     Core::instance()->awayAct->setChecked(true);
 
     QString strDisplay = tr("* You have been marked as being away");
-    pTabC->showMessageActive(strDisplay, InfoMessage);
+    Message::instance()->showMessageActive(strDisplay, InfoMessage);
 }
 
 // WHOIS
@@ -2338,7 +2340,7 @@ void OnetKernel::raw_307()
         strMessage = tr("is a registered nick");
 
     QString strDisplay = QString("* %1 %2").arg(strNick, strMessage);
-    pTabC->showMessageActive(strDisplay, InfoMessage);
+    Message::instance()->showMessageActive(strDisplay, InfoMessage);
 }
 
 // WHOIS
@@ -2356,10 +2358,10 @@ void OnetKernel::raw_311()
     if (strIrcname[0] == ':') strIrcname.remove(0,1);
 
     QString strDisplayNick = QString(tr("* %1 is %2@%3")).arg(strNick, strZUO, strIP);
-    pTabC->showMessageActive(strDisplayNick, InfoMessage);
+    Message::instance()->showMessageActive(strDisplayNick, InfoMessage);
 
     QString strDisplayIrcname = QString(tr("* %1 ircname: %2")).arg(strNick, strIrcname);
-    pTabC->showMessageActive(strDisplayIrcname, InfoMessage);
+    Message::instance()->showMessageActive(strDisplayIrcname, InfoMessage);
 }
 
 // WHOIS
@@ -2376,7 +2378,7 @@ void OnetKernel::raw_312()
     for (int i = 4; i < strDataList.size(); i++) { if (i != 4) strServer += " "; strServer += strDataList[i]; }
 
     QString strDisplay = QString(tr("* %1 is online via %2")).arg(strNick, strServer);
-    pTabC->showMessageActive(strDisplay, InfoMessage);
+    Message::instance()->showMessageActive(strDisplay, InfoMessage);
 }
 
 // WHOIS
@@ -2402,7 +2404,7 @@ void OnetKernel::raw_313()
     else
         strDisplay = strMessage;
 
-    pTabC->showMessageActive(strDisplay, InfoMessage);
+    Message::instance()->showMessageActive(strDisplay, InfoMessage);
 }
 
 // WHOWAS
@@ -2421,10 +2423,10 @@ void OnetKernel::raw_314()
     if (strIrcname[0] == ':') strIrcname.remove(0,1);
 
     QString strDisplayNick = QString(tr("* %1 is %2@%3")).arg(strNick, strZUO, strIP);
-    pTabC->showMessageActive(strDisplayNick, InfoMessage);
+    Message::instance()->showMessageActive(strDisplayNick, InfoMessage);
 
     QString strDisplayIrcname = QString(tr("* %1 ircname: %2")).arg(strNick, strIrcname);
-    pTabC->showMessageActive(strDisplayIrcname, InfoMessage);
+    Message::instance()->showMessageActive(strDisplayIrcname, InfoMessage);
 }
 
 // WHO
@@ -2446,7 +2448,7 @@ void OnetKernel::raw_315()
         strMessage = tr("Too many results");
 
     QString strDisplay = QString("* %1 :%2").arg(strNickChannel, strMessage);
-    pTabC->showMessageActive(strDisplay, InfoMessage);
+    Message::instance()->showMessageActive(strDisplay, InfoMessage);
 }
 
 // WHOWAS
@@ -2465,10 +2467,10 @@ void OnetKernel::raw_316()
     if (strIrcname[0] == ':') strIrcname.remove(0,1);
 
     QString strDisplayNick = QString(tr("* %1 is %2@%3")).arg(strNick, strZUO, strIP);
-    pTabC->showMessageActive(strDisplayNick, InfoMessage);
+    Message::instance()->showMessageActive(strDisplayNick, InfoMessage);
 
     QString strDisplayIrcname = QString(tr("* %1 ircname: %2")).arg(strNick, strIrcname);
-    pTabC->showMessageActive(strDisplayIrcname, InfoMessage);
+    Message::instance()->showMessageActive(strDisplayIrcname, InfoMessage);
 }
 
 // WHOIS
@@ -2499,13 +2501,13 @@ void OnetKernel::raw_317()
         strIdle += QString("%1s ").arg(iSeconds);
 
     QString strDisplayIdle = QString(tr("* %1 is away %2")).arg(strNick, strIdle);
-    pTabC->showMessageActive(strDisplayIdle, InfoMessage);
+    Message::instance()->showMessageActive(strDisplayIdle, InfoMessage);
 
     QDateTime dt_time = QDateTime::fromTime_t(strTime.toInt());
     QString strDT_time = dt_time.toString("dd MMM yyyy hh:mm:ss");
 
     QString strDisplaySignon = QString(tr("* %1 is logged in since %2")).arg(strNick, strDT_time);
-    pTabC->showMessageActive(strDisplaySignon, InfoMessage);
+    Message::instance()->showMessageActive(strDisplaySignon, InfoMessage);
 }
 
 // WHOIS
@@ -2533,7 +2535,7 @@ void OnetKernel::raw_319()
     }
 
     QString strDisplay = QString(tr("* %1 is on channels: %2")).arg(strNick, strChannels);
-    pTabC->showMessageActive(strDisplay, InfoMessage);
+    Message::instance()->showMessageActive(strDisplay, InfoMessage);
 }
 
 // :cf1f4.onet 332 scc_test #scc :Simple Chat Client; current version: beta;
@@ -2590,7 +2592,7 @@ void OnetKernel::raw_335()
     else
         strDisplay = strMessage;
 
-    pTabC->showMessageActive(strDisplay, InfoMessage);
+    Message::instance()->showMessageActive(strDisplay, InfoMessage);
 }
 
 // WHO
@@ -2607,7 +2609,7 @@ void OnetKernel::raw_352()
     for (int i = 3; i < strDataList.size(); i++) { if (i != 3) strMessage += " "; strMessage += strDataList[i]; }
     strMessage = "* "+strMessage;
 
-    pTabC->showMessageActive(strMessage, InfoMessage);
+    Message::instance()->showMessageActive(strMessage, InfoMessage);
 }
 
 // NAMES
@@ -2663,7 +2665,7 @@ void OnetKernel::raw_353()
             if (strCleanNick.contains("+")) { strCleanNick.remove("+"); strPrefix.append("+"); }
 
             QString strModes = strPrefix+strSuffix;
-            emit addUser(strChannel, strCleanNick, strModes);
+            Nicklist::instance()->addUser(strChannel, strCleanNick, strModes);
 
             // nick avatar
             if (strCleanNick[0] != '~')
@@ -2703,7 +2705,7 @@ void OnetKernel::raw_371()
     if (strMessage[0] == ':') strMessage.remove(0,1);
     strMessage = "* "+strMessage;
 
-    pTabC->showMessage(STATUS, strMessage, InfoMessage);
+    Message::instance()->showMessage(STATUS, strMessage, InfoMessage);
 }
 
 // MOTD
@@ -2716,7 +2718,7 @@ void OnetKernel::raw_372()
     for (int i = 3; i < strDataList.size(); i++) { if (i != 3) strMessage += " "; strMessage += strDataList[i]; }
     if (strMessage[0] == ':') strMessage.remove(0,1);
 
-    pTabC->showMessage(STATUS, strMessage, DefaultMessage);
+    Message::instance()->showMessage(STATUS, strMessage, DefaultMessage);
 }
 
 // INFO
@@ -2731,7 +2733,7 @@ void OnetKernel::raw_375()
 {
     QString strDisplay = tr("Message Of The Day:");
 
-    pTabC->showMessage(STATUS, strDisplay, DefaultMessage);
+    Message::instance()->showMessage(STATUS, strDisplay, DefaultMessage);
 }
 
 // MOTD
@@ -2751,7 +2753,7 @@ void OnetKernel::raw_378()
     QString strIP = strDataList[8];
 
     QString strMessage = QString(tr("* %1 is connecting from %2 %3")).arg(strNick, strZuoIP, strIP);
-    pTabC->showMessageActive(strMessage, InfoMessage);
+    Message::instance()->showMessageActive(strMessage, InfoMessage);
 }
 
 // TIME
@@ -2768,7 +2770,7 @@ void OnetKernel::raw_391()
 
     QString strMessage = QString(tr("* Date and time of the server %1: %2")).arg(strServer, strDateTime);
 
-    pTabC->showMessageActive(strMessage, InfoMessage);
+    Message::instance()->showMessageActive(strMessage, InfoMessage);
 }
 
 // :cf1f2.onet 396 ~scc_test 3DE379.B7103A.6CF799.6902F4 :is now your displayed host
@@ -2780,7 +2782,7 @@ void OnetKernel::raw_396()
 
     QString strMessage = QString(tr("* %1 is now your displayed host")).arg(strHost);
 
-    pTabC->showMessageActive(strMessage, InfoMessage);
+    Message::instance()->showMessageActive(strMessage, InfoMessage);
 }
 
 // :ChanServ!service@service.onet NOTICE ~scc_test :400 :you are not registred
@@ -2792,7 +2794,7 @@ void OnetKernel::raw_400n()
 
     QString strMessage = QString(tr("* %1 :Nick is not registered")).arg(strNick);
 
-    pTabC->showMessageActive(strMessage, InfoMessage);
+    Message::instance()->showMessageActive(strMessage, InfoMessage);
 }
 
 // :cf1f4.onet 401 ~Merovingian ~Merovingian1 :No such nick
@@ -2819,7 +2821,7 @@ void OnetKernel::raw_401()
         strMessage = QString(tr("* %1 is currently unavailable. Please try again later.")).arg(strNickChannel);
 
     // display
-    pTabC->showMessageActive(strMessage, InfoMessage);
+    Message::instance()->showMessageActive(strMessage, InfoMessage);
 
     // close inactive priv
     if (strNickChannel[0] == '^')
@@ -2839,7 +2841,7 @@ void OnetKernel::raw_401n()
 
     QString strMessage = QString(tr("* %1 :Nick does not exist")).arg(strNick);
 
-    pTabC->showMessageActive(strMessage, InfoMessage);
+    Message::instance()->showMessageActive(strMessage, InfoMessage);
 }
 
 // :cf1f4.onet 402 Merovingian a :No such server
@@ -2851,7 +2853,7 @@ void OnetKernel::raw_402()
 
     QString strMessage = QString(tr("* %1 :No such server")).arg(strServer);
 
-    pTabC->showMessageActive(strMessage, InfoMessage);
+    Message::instance()->showMessageActive(strMessage, InfoMessage);
 }
 
 // :ChanServ!service@service.onet NOTICE Merovingian :402 !*@*aa :invalid mask
@@ -2863,7 +2865,7 @@ void OnetKernel::raw_402n()
 
     QString strMessage = QString(tr("* %1 :Invalid mask")).arg(strMask);
 
-    pTabC->showMessageActive(strMessage, InfoMessage);
+    Message::instance()->showMessageActive(strMessage, InfoMessage);
 }
 
 // :cf1f1.onet 403 ~testa #^cf1f41568 :Invalid channel name
@@ -2876,7 +2878,7 @@ void OnetKernel::raw_403()
     QString strMessage = QString(tr("* %1 :Invalid channel name")).arg(strChannel);
 
     // display
-    pTabC->showMessageActive(strMessage, InfoMessage);
+    Message::instance()->showMessageActive(strMessage, InfoMessage);
 
     // close inactive priv
     if (strChannel[0] == '^')
@@ -2902,13 +2904,13 @@ void OnetKernel::raw_403n()
     {
         QString strNick = strDataList[4];
         QString strMessage = QString(tr("* %1 :User is not on-line")).arg(strNick);
-        pTabC->showMessageActive(strMessage, InfoMessage);
+        Message::instance()->showMessageActive(strMessage, InfoMessage);
     }
     else if (strNick.toLower() == "nickserv")
     {
         QString strNick = strDataList[4];
         QString strMessage = QString(tr("* %1 :User is not on-line")).arg(strNick);
-        pTabC->showMessageActive(strMessage, InfoMessage);
+        Message::instance()->showMessageActive(strMessage, InfoMessage);
     }
 }
 
@@ -2932,7 +2934,7 @@ void OnetKernel::raw_404()
 
     QString strMessage = QString(tr("* Unable to send a message to %1: %2")).arg(strChannel, strReason);
 
-    pTabC->showMessageActive(strMessage, InfoMessage);
+    Message::instance()->showMessageActive(strMessage, InfoMessage);
 }
 
 // :ChanServ!service@service.onet NOTICE scc_test :404 ~zwariowany_zdzich0 :user is not registred
@@ -2944,7 +2946,7 @@ void OnetKernel::raw_404n()
 
     QString strMessage = QString(tr("* %1 :User is not registred")).arg(strNick);
 
-    pTabC->showMessageActive(strMessage, InfoMessage);
+    Message::instance()->showMessageActive(strMessage, InfoMessage);
 }
 
 // :cf1f2.onet 405 Merovingian #Warszawa :You are on too many channels
@@ -2954,7 +2956,7 @@ void OnetKernel::raw_405()
 
     QString strMessage = QString(tr("* You are on too many channels"));
 
-    pTabC->showMessageActive(strMessage, InfoMessage);
+    Message::instance()->showMessageActive(strMessage, InfoMessage);
 }
 
 // WHOWAS a
@@ -2967,7 +2969,7 @@ void OnetKernel::raw_406()
 
     QString strMessage = QString(tr("* %1 :There was no such nickname")).arg(strNick);
 
-    pTabC->showMessageActive(strMessage, InfoMessage);
+    Message::instance()->showMessageActive(strMessage, InfoMessage);
 }
 
 // :ChanServ!service@service.onet NOTICE ~test :406 VHOST :unknown command
@@ -2979,7 +2981,7 @@ void OnetKernel::raw_406n()
 
     QString strMessage = QString(tr("* %1 :Unknown command")).arg(strCmd);
 
-    pTabC->showMessageActive(strMessage, InfoMessage);
+    Message::instance()->showMessageActive(strMessage, InfoMessage);
 }
 
 // :ChanServ!service@service.onet NOTICE scc_test :407 VOICE :not enough parameters
@@ -2992,7 +2994,7 @@ void OnetKernel::raw_407n()
 
     QString strMessage = QString(tr("* %1 :Not enough parameters")).arg(strCmd);
 
-    pTabC->showMessageActive(strMessage, InfoMessage);
+    Message::instance()->showMessageActive(strMessage, InfoMessage);
 }
 
 // :ChanServ!service@service.onet NOTICE scc_test :408 dsfdsf :no such channel
@@ -3005,7 +3007,7 @@ void OnetKernel::raw_408n()
 
     QString strMessage = QString(tr("* %1 :No such channel")).arg(strChannel);
 
-    pTabC->showMessageActive(strMessage, InfoMessage);
+    Message::instance()->showMessageActive(strMessage, InfoMessage);
 }
 
 // :NickServ!service@service.onet NOTICE Merovingian :409 WWW :invalid argument
@@ -3016,7 +3018,7 @@ void OnetKernel::raw_409n()
     QString strCommand = strDataList[4];
 
     QString strMessage = QString(tr("* %1 :Invalid argument")).arg(strCommand);
-    pTabC->showMessageActive(strMessage, InfoMessage);
+    Message::instance()->showMessageActive(strMessage, InfoMessage);
 }
 
 // :NickServ!service@service.onet NOTICE ~Merovingian :412 admi :user's data is not ready
@@ -3066,7 +3068,7 @@ void OnetKernel::raw_420n()
 
     QString strMessage = QString(tr("* Nick %1 is already on your friend list")).arg(strNick);
 
-    pTabC->showMessageActive(strMessage, InfoMessage);
+    Message::instance()->showMessageActive(strMessage, InfoMessage);
 }
 
 // :cf1f2.onet 421 ~test VERSION :This command has been disabled.
@@ -3088,7 +3090,7 @@ void OnetKernel::raw_421()
 
     QString strMessage = QString("* %1 :%2").arg(strCmd, strReason);
 
-    pTabC->showMessageActive(strMessage, InfoMessage);
+    Message::instance()->showMessageActive(strMessage, InfoMessage);
 }
 
 // :NickServ!service@service.onet NOTICE scc_test :421 aaa :is not on your friend list
@@ -3100,7 +3102,7 @@ void OnetKernel::raw_421n()
 
     QString strMessage = QString(tr("* Nick %1 is not on your friend list")).arg(strNick);
 
-    pTabC->showMessageActive(strMessage, InfoMessage);
+    Message::instance()->showMessageActive(strMessage, InfoMessage);
 }
 
 // :NickServ!service@service.onet NOTICE scc_test :430 wilk :is already on your ignore list
@@ -3112,7 +3114,7 @@ void OnetKernel::raw_430n()
 
     QString strMessage = QString(tr("* %1 is already on your ignore list")).arg(strNick);
 
-    pTabC->showMessageActive(strMessage, InfoMessage);
+    Message::instance()->showMessageActive(strMessage, InfoMessage);
 }
 
 // :NickServ!service@service.onet NOTICE scc_test :431 a :is not on your ignore list
@@ -3124,7 +3126,7 @@ void OnetKernel::raw_431n()
 
     QString strMessage = QString(tr("* %1 is not on your ignore list")).arg(strNick);
 
-    pTabC->showMessageActive(strMessage, InfoMessage);
+    Message::instance()->showMessageActive(strMessage, InfoMessage);
 }
 
 // :cf1f4.onet 432 1501-unknown ~?o? :Erroneous Nickname
@@ -3136,7 +3138,7 @@ void OnetKernel::raw_432()
 
     QString strMessage = QString(tr("* %1 :Erroneous Nickname")).arg(strNick);
 
-    pTabC->showMessageAll(strMessage, ErrorMessage);
+    Message::instance()->showMessageAll(strMessage, ErrorMessage);
 }
 
 // :cf1f1.onet 433 * scc_test :Nickname is already in use.
@@ -3148,7 +3150,7 @@ void OnetKernel::raw_433()
 
     QString strMessage = QString(tr("* Nickname %1 is already in use.")).arg(strNick);
 
-    pTabC->showMessageAll(strMessage, ErrorMessage);
+    Message::instance()->showMessageAll(strMessage, ErrorMessage);
 
     Core::instance()->settings["override"] = "true";
 
@@ -3169,7 +3171,7 @@ void OnetKernel::raw_440n()
 
     QString strMessage = QString(tr("* Channel %1 is already on your favourite list")).arg(strChannel);
 
-    pTabC->showMessageActive(strMessage, InfoMessage);
+    Message::instance()->showMessageActive(strMessage, InfoMessage);
 }
 
 // KICK #kusicielki ~prawdziwa
@@ -3183,7 +3185,7 @@ void OnetKernel::raw_441()
 
     QString strMessage = QString(tr("* %1 is not on %2 channel")).arg(strNick, strChannel);
 
-    pTabC->showMessageActive(strMessage, InfoMessage);
+    Message::instance()->showMessageActive(strMessage, InfoMessage);
 }
 
 // :NickServ!service@service.onet NOTICE scc_test :441 #scc :is not on your favourite list
@@ -3195,7 +3197,7 @@ void OnetKernel::raw_441n()
 
     QString strMessage = QString(tr("* Channel %1 is not on your favourite list")).arg(strChannel);
 
-    pTabC->showMessageActive(strMessage, InfoMessage);
+    Message::instance()->showMessageActive(strMessage, InfoMessage);
 }
 
 // KICK #rozrywka ~test
@@ -3208,7 +3210,7 @@ void OnetKernel::raw_442()
 
     QString strMessage = QString(tr("* You're not on %1 channel!")).arg(strChannel);
 
-    pTabC->showMessageActive(strMessage, InfoMessage);
+    Message::instance()->showMessageActive(strMessage, InfoMessage);
 }
 
 // :cf1f4.onet 443 Merovingian scc #Scrabble :is already on channel
@@ -3221,7 +3223,7 @@ void OnetKernel::raw_443()
 
     QString strMessage = QString(tr("* %1 is already on channel %2")).arg(strNick, strChannel);
 
-    pTabC->showMessageActive(strMessage, InfoMessage);
+    Message::instance()->showMessageActive(strMessage, InfoMessage);
 }
 
 // SUMMON
@@ -3235,7 +3237,7 @@ void OnetKernel::raw_445()
     if (strMessage[0] == ':') strMessage.remove(0,1);
     strMessage = "* "+strMessage;
 
-    pTabC->showMessageActive(strMessage, InfoMessage);
+    Message::instance()->showMessageActive(strMessage, InfoMessage);
 }
 
 // USERS
@@ -3249,7 +3251,7 @@ void OnetKernel::raw_446()
     if (strMessage[0] == ':') strMessage.remove(0,1);
     strMessage = "* "+strMessage;
 
-    pTabC->showMessageActive(strMessage, InfoMessage);
+    Message::instance()->showMessageActive(strMessage, InfoMessage);
 }
 
 // :cf1f3.onet 451 SLIST :You have not registered
@@ -3260,7 +3262,7 @@ void OnetKernel::raw_451()
     QString strCommand = strDataList[2];
 
     QString strMessage = QString(tr("* You have not registered to perform operation %1")).arg(strCommand);
-    pTabC->showMessageActive(strMessage, InfoMessage);
+    Message::instance()->showMessageActive(strMessage, InfoMessage);
 }
 
 // :ChanServ!service@service.onet NOTICE scc_test :452 #aaa :channel name already in use
@@ -3271,7 +3273,7 @@ void OnetKernel::raw_452n()
     QString strChannel = strDataList[4];
 
     QString strMessage = QString(tr("* %1 :Channel name already in use")).arg(strChannel);
-    pTabC->showMessageActive(strMessage, InfoMessage);
+    Message::instance()->showMessageActive(strMessage, InfoMessage);
 }
 
 // :ChanServ!service@service.onet NOTICE scc_test :454 #aaaaaaaaaaaaaaaaaaaaaa :not enough unique channel name
@@ -3290,14 +3292,14 @@ void OnetKernel::raw_454n()
         QString strChannel = strDataList[4];
 
         QString strMessage = QString(tr("* %1 :Not enough unique channel name")).arg(strChannel);
-        pTabC->showMessageActive(strMessage, InfoMessage);
+        Message::instance()->showMessageActive(strMessage, InfoMessage);
     }
     else if (strNick.toLower() == "nickserv")
     {
         QString strNick = strDataList[4];
 
         QString strDisplay = QString(tr("* No offline messages from %1")).arg(strNick);
-        pTabC->showMessageActive(strDisplay, InfoMessage);
+        Message::instance()->showMessageActive(strDisplay, InfoMessage);
     }
 }
 
@@ -3309,7 +3311,7 @@ void OnetKernel::raw_455n()
     QString strNick = strDataList[4];
 
     QString strDisplay = QString(tr("* Offline message cannot be sent. %1 ignores offline messages from you")).arg(strNick);
-    pTabC->showMessageActive(strDisplay, InfoMessage);
+    Message::instance()->showMessageActive(strDisplay, InfoMessage);
 }
 
 // :ChanServ!service@service.onet NOTICE Merovingian :456 #test2 Merovingian :is already channel owner
@@ -3330,14 +3332,14 @@ void OnetKernel::raw_456n()
         QString strMessage = QString(tr("* %1 is already channel owner")).arg(strNick);
 
         // display
-        pTabC->showMessageActive(strMessage, InfoMessage);
+        Message::instance()->showMessageActive(strMessage, InfoMessage);
     }
     else if (strNick.toLower() == "nickserv")
     {
         QString strNick = strDataList[4];
 
         QString strDisplay = QString(tr("* Offline message cannot be sent. %1 is online")).arg(strNick);
-        pTabC->showMessageActive(strDisplay, InfoMessage);
+        Message::instance()->showMessageActive(strDisplay, InfoMessage);
     }
 }
 
@@ -3352,7 +3354,7 @@ void OnetKernel::raw_458n()
     QString strMessage = QString(tr("* %1 :Unable to remove non-existent privilege")).arg(strWho);
 
     // display
-    pTabC->showMessage(strChannel, strMessage, InfoMessage);
+    Message::instance()->showMessage(strChannel, strMessage, InfoMessage);
 }
 
 // :ChanServ!service@service.onet NOTICE scc_test :459 #scc b test :channel privilege already given
@@ -3366,7 +3368,7 @@ void OnetKernel::raw_459n()
     QString strMessage = QString(tr("* %1 :Channel privilege already given")).arg(strWho);
 
     // display
-    pTabC->showMessage(strChannel, strMessage, InfoMessage);
+    Message::instance()->showMessage(strChannel, strMessage, InfoMessage);
 }
 
 // :ChanServ!service@service.onet NOTICE Merovingian :460 #scc b abc193!*@* :channel list is full
@@ -3386,7 +3388,7 @@ void OnetKernel::raw_460n()
     QString strMessage = QString(tr("* Cannot %1 %2. Channel list is full")).arg(strFlag, strNick);
 
     // display
-    pTabC->showMessage(strChannel, strMessage, InfoMessage);
+    Message::instance()->showMessage(strChannel, strMessage, InfoMessage);
 }
 
 // :cf1f2.onet 461 ~test OPER :Not enough parameters.
@@ -3398,7 +3400,7 @@ void OnetKernel::raw_461()
 
     QString strMessage = QString(tr("* %1 :Not enough parameters")).arg(strCmd);
 
-    pTabC->showMessageActive(strMessage, InfoMessage);
+    Message::instance()->showMessageActive(strMessage, InfoMessage);
 }
 
 // :ChanServ!service@service.onet NOTICE scc_test :461 #scc scc :channel operators cannot be banned
@@ -3412,7 +3414,7 @@ void OnetKernel::raw_461n()
     QString strMessage = QString(tr("* %1 :Channel operators cannot be banned")).arg(strWho);
 
     // display
-    pTabC->showMessage(strChannel, strMessage, InfoMessage);
+    Message::instance()->showMessage(strChannel, strMessage, InfoMessage);
 }
 
 // PASS
@@ -3420,7 +3422,7 @@ void OnetKernel::raw_461n()
 void OnetKernel::raw_462()
 {
     QString strMessage = QString(tr("* You may not reregister"));
-    pTabC->showMessageActive(strMessage, InfoMessage);
+    Message::instance()->showMessageActive(strMessage, InfoMessage);
 }
 
 // :ChanServ!service@service.onet NOTICE scc_test :463 #lunar AUDITORIUM :permission denied, insufficient privileges
@@ -3432,7 +3434,7 @@ void OnetKernel::raw_463n()
     QString strCommand = strDataList[5];
 
     QString strMessage = QString(tr("* %1 :Permission denied, insufficient privileges in %2 channel")).arg(strCommand, strChannel);
-    pTabC->showMessageActive(strMessage, InfoMessage);
+    Message::instance()->showMessageActive(strMessage, InfoMessage);
 }
 
 // :ChanServ!service@service.onet NOTICE Merovingian :464 TOPIC :invalid argument
@@ -3443,7 +3445,7 @@ void OnetKernel::raw_464n()
     QString strCommand = strDataList[4];
 
     QString strMessage = QString(tr("* %1 :Invalid argument")).arg(strCommand);
-    pTabC->showMessageActive(strMessage, InfoMessage);
+    Message::instance()->showMessageActive(strMessage, InfoMessage);
 }
 
 // :ChanServ!service@service.onet NOTICE Merovingian :466 #Sex_Randki :channel is blocked
@@ -3454,7 +3456,7 @@ void OnetKernel::raw_466n()
     QString strChannel = strDataList[4];
 
     QString strMessage = QString(tr("* %1 :channel is blocked")).arg(strChannel);
-    pTabC->showMessageActive(strMessage, InfoMessage);
+    Message::instance()->showMessageActive(strMessage, InfoMessage);
 }
 
 // :ChanServ!service@service.onet NOTICE scc_test :467 #scc :permission denied, you are not a channel owner
@@ -3465,7 +3467,7 @@ void OnetKernel::raw_467n()
     QString strChannel = strDataList[4];
 
     QString strMessage = QString(tr("* %1 :Permission denied, you are not a channel owner")).arg(strChannel);
-    pTabC->showMessageActive(strMessage, InfoMessage);
+    Message::instance()->showMessageActive(strMessage, InfoMessage);
 }
 
 // :ChanServ!service@service.onet NOTICE scc_test :468 #scc :permission denied, insufficient privileges
@@ -3476,7 +3478,7 @@ void OnetKernel::raw_468n()
     QString strChannel = strDataList[4];
 
     QString strMessage = QString(tr("* Permission denied, insufficient privileges in %1 channel")).arg(strChannel);
-    pTabC->showMessageActive(strMessage, InfoMessage);
+    Message::instance()->showMessageActive(strMessage, InfoMessage);
 }
 
 // :ChanServ!service@service.onet NOTICE Merovingian :469 #Czat :channel is private
@@ -3487,7 +3489,7 @@ void OnetKernel::raw_469n()
     QString strChannel = strDataList[4];
 
     QString strMessage = QString(tr("* Channel %1 is private")).arg(strChannel);
-    pTabC->showMessageActive(strMessage, InfoMessage);
+    Message::instance()->showMessageActive(strMessage, InfoMessage);
 }
 
 // :cf1f3.onet 470 ~Merovingian :#testy has become full, so you are automatically being transferred to the linked channel #Awaria
@@ -3502,7 +3504,7 @@ void OnetKernel::raw_470()
 
     QString strMessage = QString(tr("* %1 has become full, so you are automatically being transferred to the linked channel %2")).arg(strChannel, strLinked);
 
-    pTabC->showMessage(STATUS, strMessage, InfoMessage);
+    Message::instance()->showMessage(STATUS, strMessage, InfoMessage);
 }
 
 // :cf1f2.onet 471 ~Merovingian #testy :Cannot join channel (Channel is full)
@@ -3513,14 +3515,14 @@ void OnetKernel::raw_471()
     QString strChannel = strDataList[3];
 
     QString strMessage = QString(tr("* Cannot join channel %1 - channel is full")).arg(strChannel);
-    pTabC->showMessageActive(strMessage, InfoMessage);
+    Message::instance()->showMessageActive(strMessage, InfoMessage);
 }
 
 // :ChanServ!service@service.onet NOTICE scc_test :472 #aaaaaaaaaaaaaaaaaaaaaaaaaaaaa :wait 60 seconds before next REGISTER
 void OnetKernel::raw_472n()
 {
     QString strMessage = QString(tr("* Wait 60 seconds before creating next channel"));
-    pTabC->showMessageActive(strMessage, InfoMessage);
+    Message::instance()->showMessageActive(strMessage, InfoMessage);
 }
 
 // :cf1f3.onet 473 ~scc_test #lunar :Cannot join channel (Invite only)
@@ -3531,7 +3533,7 @@ void OnetKernel::raw_473()
     QString strChannel = strDataList[3];
 
     QString strMessage = QString(tr("* Cannot join channel %1 - Invite only")).arg(strChannel);
-    pTabC->showMessageActive(strMessage, InfoMessage);
+    Message::instance()->showMessageActive(strMessage, InfoMessage);
 
     // close inactive priv
     if (strChannel[0] == '^')
@@ -3549,7 +3551,7 @@ void OnetKernel::raw_474()
     QString strChannel = strDataList[3];
 
     QString strMessage = QString(tr("* Cannot join channel %1 - You're banned")).arg(strChannel);
-    pTabC->showMessageActive(strMessage, InfoMessage);
+    Message::instance()->showMessageActive(strMessage, InfoMessage);
 }
 
 // :cf1f4.onet 475 Merovingian #glupia_nazwa :Cannot join channel (Incorrect channel key)
@@ -3560,7 +3562,7 @@ void OnetKernel::raw_475()
     QString strChannel = strDataList[3];
 
     QString strMessage = QString(tr("* Cannot join channel %1 - Incorrect channel key")).arg(strChannel);
-    pTabC->showMessageActive(strMessage, InfoMessage);
+    Message::instance()->showMessageActive(strMessage, InfoMessage);
 
     (new DlgChannelKey(Core::instance()->mainWindow(), strChannel))->show(); // should be show - prevent hangup!
 }
@@ -3569,7 +3571,7 @@ void OnetKernel::raw_475()
 void OnetKernel::raw_481()
 {
     QString strMessage = QString(tr("* Permission Denied - You do not have the required operator privileges"));
-    pTabC->showMessageActive(strMessage, InfoMessage);
+    Message::instance()->showMessageActive(strMessage, InfoMessage);
 }
 
 // :cf1f1.onet 482 Merovingian #Scrabble :Only a u-line may kick a u-line from a channel.
@@ -3581,7 +3583,7 @@ void OnetKernel::raw_482()
 
     QString strMessage = QString(tr("* Only a u-line may kick a u-line from a channel."));
 
-    pTabC->showMessage(strChannel, strMessage, InfoMessage);
+    Message::instance()->showMessage(strChannel, strMessage, InfoMessage);
 }
 
 // :cf1f4.onet 484 Merovingian #testy :Can't kick user advocato000 from channel (+Q set)
@@ -3597,7 +3599,7 @@ void OnetKernel::raw_484()
     if (strMessage[0] == ':') strMessage.remove(0,1);
     strMessage = "* "+strMessage;
 
-    pTabC->showMessage(strChannel, strMessage, InfoMessage);
+    Message::instance()->showMessage(strChannel, strMessage, InfoMessage);
 }
 
 // :cf1f3.onet 491 ~test :Invalid oper credentials
@@ -3605,7 +3607,7 @@ void OnetKernel::raw_491()
 {
     QString strMessage = QString(tr("* Invalid oper credentials"));
 
-    pTabC->showMessageActive(strMessage, InfoMessage);
+    Message::instance()->showMessageActive(strMessage, InfoMessage);
 }
 
 // :cf1f3.onet 492 Merovingian ^cf1f3954674 :Can't invite bezduszna_istota to channel (+V set)
@@ -3628,7 +3630,7 @@ void OnetKernel::raw_492()
 
     QString strMessage = QString(tr("* Can't invite %1 to channel (%2)").arg(strNick, strReason));
 
-    pTabC->showMessage(strChannel, strMessage, InfoMessage);
+    Message::instance()->showMessage(strChannel, strMessage, InfoMessage);
 }
 
 //:cf1f2.onet 530 Merovingian #f :Only IRC operators may create new channels
@@ -3639,7 +3641,7 @@ void OnetKernel::raw_530()
     QString strChannel = strDataList[3];
 
     QString strMessage = QString(tr("* %1 :Only IRC operators may create new channels")).arg(strChannel);
-    pTabC->showMessageActive(strMessage, InfoMessage);
+    Message::instance()->showMessageActive(strMessage, InfoMessage);
 }
 
 // PRIVMSG a
@@ -3651,7 +3653,7 @@ void OnetKernel::raw_531()
     QString strNick = strDataList[3];
 
     QString strMessage = QString(tr("* %1 :You are not permitted to send private messages to this user")).arg(strNick);
-    pTabC->showMessageActive(strMessage, InfoMessage);
+    Message::instance()->showMessageActive(strMessage, InfoMessage);
 }
 
 // :cf1f4.onet 600 scc_test Radowsky 16172032 690A6F.A8219B.7F5EC1.35E57C 1267055769 :arrived online
@@ -3662,7 +3664,7 @@ void OnetKernel::raw_600()
     QString strNick = strDataList[3];
 
     QString strMessage = QString(tr("* Your friend %1 arrived online")).arg(strNick);
-    pTabC->showMessageActive(strMessage, InfoMessage);
+    Message::instance()->showMessageActive(strMessage, InfoMessage);
 
     if (Core::instance()->mFriends.contains(strNick))
         Core::instance()->mFriends[strNick] = true;
@@ -3678,7 +3680,7 @@ void OnetKernel::raw_601()
     QString strNick = strDataList[3];
 
     QString strMessage = QString(tr("* Your friend %1 went offline")).arg(strNick);
-    pTabC->showMessageActive(strMessage, InfoMessage);
+    Message::instance()->showMessageActive(strMessage, InfoMessage);
 
     if (Core::instance()->mFriends.contains(strNick))
         Core::instance()->mFriends[strNick] = false;
@@ -3706,7 +3708,7 @@ void OnetKernel::raw_604()
 
 //    hidden
 //    QString strMessage = QString(tr("* Your friend %1 is now on-line")).arg(strNick);
-//    pTabC->showMessageActive(strMessage, InfoMessage);
+//    Message::instance()->showMessageActive(strMessage, InfoMessage);
 
     if (Core::instance()->mFriends.contains(strNick))
         Core::instance()->mFriends[strNick] = true;
@@ -3723,7 +3725,7 @@ void OnetKernel::raw_605()
 
 //    hidden
 //    QString strMessage = QString(tr("* Your friend %1 is now off-line")).arg(strNick);
-//    pTabC->showMessageActive(strMessage, InfoMessage);
+//    Message::instance()->showMessageActive(strMessage, InfoMessage);
 
     if (Core::instance()->mFriends.contains(strNick))
         Core::instance()->mFriends[strNick] = false;
@@ -3743,7 +3745,7 @@ void OnetKernel::raw_666()
 {
     QString strMessage = QString(tr("* You cannot identify as a server, you are a USER. IRC Operators informed."));
 
-    pTabC->showMessageActive(strMessage, InfoMessage);
+    Message::instance()->showMessageActive(strMessage, InfoMessage);
 }
 
 // COMMANDS
@@ -3759,7 +3761,7 @@ void OnetKernel::raw_702()
     if (strMessage[0] == ':') strMessage.remove(0,1);
     strMessage = "* "+strMessage;
 
-    pTabC->showMessageActive(strMessage, InfoMessage);
+    Message::instance()->showMessageActive(strMessage, InfoMessage);
 }
 
 // MODULES
@@ -3794,7 +3796,7 @@ void OnetKernel::raw_801()
     else
     {
         QString strError = tr("Error: Invalid auth key");
-        pTabC->showMessage(STATUS, strError, ErrorMessage);
+        Message::instance()->showMessage(STATUS, strError, ErrorMessage);
     }
 }
 
@@ -3802,7 +3804,7 @@ void OnetKernel::raw_801()
 void OnetKernel::raw_802()
 {
     QString strMessage = QString(tr("* Corrupted Nickname"));
-    pTabC->showMessageActive(strMessage, ErrorMessage);
+    Message::instance()->showMessageActive(strMessage, ErrorMessage);
 }
 
 // BUSY 1
@@ -3813,7 +3815,7 @@ void OnetKernel::raw_807()
     Core::instance()->busyAct->setChecked(true);
 
     QString strDisplay = tr("* You are marked as busy");
-    pTabC->showMessageActive(strDisplay, InfoMessage);
+    Message::instance()->showMessageActive(strDisplay, InfoMessage);
 }
 
 // BUSY 0
@@ -3824,7 +3826,7 @@ void OnetKernel::raw_808()
     Core::instance()->busyAct->setChecked(false);
 
     QString strDisplay = tr("* You are no longer marked busy");
-    pTabC->showMessageActive(strDisplay, InfoMessage);
+    Message::instance()->showMessageActive(strDisplay, InfoMessage);
 }
 
 // WHOIS
@@ -3836,7 +3838,7 @@ void OnetKernel::raw_809()
     QString strNick = strDataList[3];
 
     QString strMessage = QString(tr("* %1 is busy")).arg(strNick);
-    pTabC->showMessageActive(strMessage, InfoMessage);
+    Message::instance()->showMessageActive(strMessage, InfoMessage);
 }
 
 // :cf1f2.onet 811 scc_test Merovingian :Ignore invites
@@ -3853,7 +3855,7 @@ void OnetKernel::raw_811()
     else
         strMessage = QString(tr("* Ignored invite from %1")).arg(strNick);
 
-    pTabC->showMessageActive(strMessage, InfoMessage);
+    Message::instance()->showMessageActive(strMessage, InfoMessage);
 }
 
 // :cf1f2.onet 812 scc_test Merovingian ^cf1f41284615 :Invite rejected
@@ -3872,7 +3874,7 @@ void OnetKernel::raw_812()
     else
         strMessage = QString(tr("* Rejected invite to %1 from %2")).arg(strChannel, strNick);
 
-    pTabC->showMessageActive(strMessage, InfoMessage);
+    Message::instance()->showMessageActive(strMessage, InfoMessage);
 }
 
 // WHOIS
@@ -3884,7 +3886,7 @@ void OnetKernel::raw_815()
     QString strNick = strDataList[3];
 
     QString strDisplay = QString(tr("* %1 has public webcam")).arg(strNick);
-    pTabC->showMessageActive(strDisplay, InfoMessage);
+    Message::instance()->showMessageActive(strDisplay, InfoMessage);
 }
 
 // :cf1f2.onet 817 scc_test #scc 1253216797 mikefear - :%Fb:arial%%Ce40f0f%re
@@ -3901,7 +3903,7 @@ void OnetKernel::raw_817()
     if (strMessage[0] == ':') strMessage.remove(0,1);
 
     if (!strMessage.isEmpty())
-        pTabC->showMessage(strChannel, strMessage, DefaultMessage, strTime, strNick);
+        Message::instance()->showMessage(strChannel, strMessage, DefaultMessage, strTime, strNick);
 }
 
 // SLIST
@@ -3991,7 +3993,7 @@ void OnetKernel::raw_821()
     QString strChannel = strDataList[3];
 
     QString strMessage = QString(tr("* Channel %1 is not moderated")).arg(strChannel);
-    pTabC->showMessageActive(strMessage, InfoMessage);
+    Message::instance()->showMessageActive(strMessage, InfoMessage);
 }
 
 // :cf1f4.onet 942 Merovingian nick_porzucony.64131723 :Invalid nickname
@@ -4003,7 +4005,7 @@ void OnetKernel::raw_942()
 
     QString strMessage = QString(tr("* %1 :Invalid nickname")).arg(strNick);
 
-    pTabC->showMessageActive(strMessage, InfoMessage);
+    Message::instance()->showMessageActive(strMessage, InfoMessage);
 }
 
 // NS IGNORE DEL nick
@@ -4016,7 +4018,7 @@ void OnetKernel::raw_950()
 
 //    hidden
 //    QString strDisplay = QString(tr("* Removed %1 from silence list")).arg(strNick);
-//    pTabC->showMessageActive(strDisplay, InfoMessage);
+//    Message::instance()->showMessageActive(strDisplay, InfoMessage);
 }
 
 // NS IGNORE ADD nick
@@ -4029,7 +4031,7 @@ void OnetKernel::raw_951()
 
 //    hidden
 //    QString strMessage = QString(tr("* Added %1 to silence list")).arg(strNick);
-//    pTabC->showMessageActive(strMessage, InfoMessage);
+//    Message::instance()->showMessageActive(strMessage, InfoMessage);
 }
 
 // :cf1f4.onet 952 Merovingian Merovingian :Succubi!*@* <privatemessages,channelmessages,invites> is already on your silence list
@@ -4041,5 +4043,5 @@ void OnetKernel::raw_952()
     if (strNick[0] == ':') strNick.remove(0,1);
 
     QString strMessage = QString(tr("* %1 is already on your silence list")).arg(strNick);
-    pTabC->showMessageActive(strMessage, InfoMessage);
+    Message::instance()->showMessageActive(strMessage, InfoMessage);
 }

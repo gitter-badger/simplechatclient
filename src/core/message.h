@@ -18,72 +18,32 @@
  *                                                                          *
  ****************************************************************************/
 
-#ifndef NETWORK_H
-#define NETWORK_H
+#ifndef MESSAGE_H
+#define MESSAGE_H
 
 #include "defines.h"
-class QTimer;
-class QTcpSocket;
-#include <QAbstractSocket>
-#include <QThread>
+#include <QObject>
 
-/**
- * Network thread class
- */
-class Network : public QThread
+class Message : public QObject
 {
     Q_OBJECT
+    Q_DISABLE_COPY(Message)
+    static Message *Instance;
 public:
-    Network(const QString &_strServer, int _iPort);
-    virtual ~Network();
-    void run();
-    bool isConnected();
-    bool isWritable();
-    QTimer *timerReconnect;
+    static Message *instance();
 
-public slots:
-    void connect();
-    void disconnect();
-    void send(const QString &strData);
-    void sendQueue(const QString &strData);
+    Message();
+    void init();
+
+    void showMessage(const QString &strChannel, const QString &strData, MessageCategory eMessageCategory, QString strTime = QString::null, QString strNick = QString::null);
+    void showMessageAll(const QString &strData, MessageCategory eMessageCategory);
+    void showMessageActive(const QString &strData, MessageCategory eMessageCategory);
 
 private:
-    QString strServer;
-    int iPort;
-    QTcpSocket *socket;
-    QTimer *timerPong;
-    QTimer *timerPing;
-    QTimer *timerLag;
-    QTimer *timerQueue;
-    int iActive;
-    QList<QString> msgSendQueue;
-    QList<QString> msgSendQueueNS;
-    bool bAuthorized;
+    void saveMessage(const QString &strChannel, const QString &strData, QString strTime = QString::null, QString strNick = QString::null);
+    bool hideJoinPart(const QString &strChannel, MessageCategory eMessageCategory);
+    bool isHighlightMessage(const QString &strMessage);
 
-    void authorize();
-    void clearAll();
-    void write(const QString &strData);
-
-private slots:
-    void connected();
-    void disconnected();
-    void reconnect();
-    void recv();
-    void error(QAbstractSocket::SocketError error);
-    void stateChanged(QAbstractSocket::SocketState socketState);
-    void timeoutPong();
-    void timeoutPing();
-    void timeoutLag();
-    void timeoutQueue();
-
-signals:
-    void setConnected();
-    void setDisconnected();
-    void setConnectEnabled(bool);
-    void kernel(const QString &strData);
-    void authorize(QString strCurrentNick, QString strNick, QString strPass);
-    void updateNick(const QString &strNick);
-    void updateActions();
 };
 
-#endif // NETWORK_H
+#endif // MESSAGE_H

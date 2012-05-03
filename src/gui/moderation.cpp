@@ -22,6 +22,7 @@
 #include <QDesktopWidget>
 #include <QTimer>
 #include "core.h"
+#include "message.h"
 #include "moderation.h"
 
 DlgModeration::DlgModeration(QWidget *parent, const QString &_strCurrentChannel) : QDialog(parent), strCurrentChannel(_strCurrentChannel)
@@ -131,7 +132,7 @@ void DlgModeration::buttonAccept()
 
         QString strMe = Core::instance()->settings.value("nick");
         QString strDisplay = QString("%1 [%2 %3]").arg(strMessage, tr("Moderated by"), strMe);
-        Core::instance()->showMessage(strChannel, strDisplay, DefaultMessage, QString::null, strNick);
+        Message::instance()->showMessage(strChannel, strDisplay, DefaultMessage, QString::null, strNick);
     }
 
     // remove

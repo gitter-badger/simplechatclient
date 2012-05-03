@@ -24,6 +24,7 @@
 #include <QStringList>
 #include "avatar.h"
 #include "core.h"
+#include "nicklist.h"
 #include "tab_container.h"
 
 #ifdef Q_WS_WIN
@@ -73,7 +74,7 @@ void Avatar::setAvatar(const QString &strNickOrChannel, const QString &strCatego
     {
         getAvatarPath(strAvatarPath);
         saveAvatar(strAvatarPath, bAvatar);
-        pTabC->setUserAvatarPath(strNickOrChannel, strAvatarPath);
+        Nicklist::instance()->setUserAvatarPath(strNickOrChannel, strAvatarPath);
     }
     else if (strCategory == "channel")
     {

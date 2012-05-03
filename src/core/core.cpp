@@ -28,7 +28,6 @@
 #include "log.h"
 #include "mainwindow.h"
 #include "updates.h"
-#include "tab_widget.h"
 #include "core.h"
 
 #ifdef Q_WS_WIN
@@ -390,48 +389,6 @@ QString Core::getCurrentChannelName()
 {
     int index = window->getCurrentTabIndex();
     return getChannelNameFromIndex(index);
-}
-
-// InputLineWidget::event
-QList<QString> Core::getUserListFromChannel(const QString &strChannel)
-{
-    return window->getUserList(strChannel);
-}
-
-QString Core::getUserModes(const QString &strNick, const QString &strChannel)
-{
-    return window->getUserModes(strNick, strChannel);
-}
-
-int Core::getUserMaxModes(const QString &strModes)
-{
-    if (strModes.contains("O")) { return 64; }
-    if (strModes.contains("o")) { return 32; }
-    if (strModes.contains("`")) { return 16; }
-    if (strModes.contains("@")) { return 8; }
-    if (strModes.contains("%")) { return 4; }
-    if (strModes.contains("!")) { return 2; }
-    if (strModes.contains("=")) { return 1; }
-    if (strModes.contains("+")) { return 0; }
-
-    return -1;
-}
-
-// ChatView::displayMessage
-int Core::getUserCount(const QString &strChannel)
-{
-    return window->getUserCount(strChannel);
-}
-
-// DlgModeration::buttonAccept
-void Core::showMessage(const QString &strChannel, const QString &strData, MessageCategory eMessageCategory, QString strTime, QString strNick)
-{
-    window->showMessage(strChannel, strData, eMessageCategory, strTime, strNick);
-}
-
-QString Core::getUserAvatarPath(const QString &strNick)
-{
-    return window->getUserAvatarPath(strNick);
 }
 
 QString Core::convertPrivName(const QString &strChannel)

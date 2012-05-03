@@ -20,6 +20,7 @@
 
 #include "convert.h"
 #include "core.h"
+#include "nicklist.h"
 
 #include "html_messages_renderer.h"
 
@@ -161,7 +162,7 @@ QString HtmlMessagesRenderer::renderer(QDateTime dt, QString strData, MessageCat
     {
         if (!strNick.isEmpty())
         {
-            QString strUserAvatarPath = Core::instance()->getUserAvatarPath(strNick);
+            QString strUserAvatarPath = Nicklist::instance()->getUserAvatarPath(strNick);
 
             // is valid avatar
             if ((strUserAvatarPath != Core::instance()->strEmptyUserAvatarPath) && (QImage(strUserAvatarPath).isNull()))

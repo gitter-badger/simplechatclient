@@ -27,7 +27,6 @@ class QNetworkAccessManager;
 class QNetworkCookieJar;
 class QNetworkReply;
 class QTimer;
-class TabContainer;
 
 /**
  * Authorize class for onet
@@ -36,7 +35,7 @@ class OnetAuth : public QObject
 {
     Q_OBJECT
 public:
-    OnetAuth(TabContainer *_pTabC);
+    OnetAuth();
     virtual ~OnetAuth();
 
 public slots:
@@ -58,7 +57,6 @@ private:
         AT_refreshSk,
         AT_undefined
     };
-    TabContainer *pTabC;
     QNetworkAccessManager *accessManager;
     QNetworkCookieJar *cookieJar;
 

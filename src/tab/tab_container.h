@@ -23,7 +23,7 @@
 
 #include "defines.h"
 class TabManager;
-class TabWidget;
+class NickListWidget;
 #include <QObject>
 
 /**
@@ -45,37 +45,14 @@ public:
 public slots:
     void refreshColors();
     void refreshCSS();
-    void showMessage(const QString &strChannel, const QString &strData, MessageCategory eMessageCategory, QString strTime = QString::null, QString strNick = QString::null);
-    void showMessageAll(const QString &strData, MessageCategory eMessageCategory);
-    void showMessageActive(const QString &strData, MessageCategory eMessageCategory);
     void setTopic(const QString &strChannel, const QString &strTopic);
     void authorTopic(const QString &strChannel, const QString &strNick);
     void setChannelAvatar(const QString &strChannel);
     void clearContent(const QString &strChannel);
-    // nicklist
-    void addUser(const QString &strChannel, const QString &strNick, const QString &strModes);
-    void delUser(const QString &strChannel, const QString &strNick);
-    void quitUser(const QString &strNick, const QString &strDisplay);
-    void changeFlag(const QString &strNick, const QString &strChannel, const QString &strFlag);
-    void changeFlag(const QString &strNick, const QString &strFlag);
-    void clearAllNicklist();
-    void setUserAvatarPath(const QString &strNick, const QString &strValue);
-    QString getUserAvatarPath(const QString &strNick);
-    int getUserCount(const QString &strChannel);
-    QString getUserModes(const QString &strNick, const QString &strChannel);
-    QList<QString> getUserList(const QString &strChannel);
 
 private:
     // params
     TabManager *pTabM;
-
-    void saveMessage(const QString &strChannel, const QString &strData, QString strTime = QString::null, QString strNick = QString::null);
-    bool hideJoinPart(const QString &strChannel, MessageCategory eMessageCategory);
-    bool isHighlightMessage(const QString &strMessage);
-
-signals:
-    void setModeration(bool);
-    void updateAwaylogStatus();
 };
 
 #endif // TAB_CONTAINER_H

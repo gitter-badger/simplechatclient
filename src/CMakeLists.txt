@@ -45,7 +45,9 @@ set (scc_SRCS
 	core/debug_block.cpp
 	core/main.cpp
 	core/mainwindow.cpp
+	core/message.cpp
 	core/network.cpp
+	core/nicklist.cpp
 	core/updates.cpp
 	gui/about.cpp
 	gui/avatar_edit.cpp
@@ -105,7 +107,9 @@ set (scc_MOC_HDRS
 	common/xml.h
 	core/core.h
 	core/mainwindow.h
+	core/message.h
 	core/network.h
+	core/nicklist.h
 	core/updates.h
 	gui/about.h
 	gui/avatar_edit.h

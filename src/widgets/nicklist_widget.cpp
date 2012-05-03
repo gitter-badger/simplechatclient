@@ -24,6 +24,7 @@
 #include <QMenu>
 #include "core.h"
 #include "defines.h"
+#include "nicklist.h"
 #include "user_profile.h"
 #include "nicklist_widget.h"
 
@@ -47,7 +48,7 @@ void NickListWidget::addUser(const QString &strNick, QString strModes)
     SortedListWidgetItem *item = new SortedListWidgetItem();
     item->setText(strNick);
     item->setData(Qt::UserRole+10, true); // is nicklist
-    item->setData(Qt::UserRole+11, Core::instance()->getUserMaxModes(strModes)); // max modes
+    item->setData(Qt::UserRole+11, Nicklist::instance()->getUserMaxModes(strModes)); // max modes
     item->setData(Qt::UserRole+12, strModes); // modes
     item->setData(Qt::UserRole+13, Core::instance()->strEmptyUserAvatarPath); // avatar url
 
@@ -113,7 +114,7 @@ void NickListWidget::changeUserFlag(const QString &strNick, QString strFlag)
         // if owner remove op
         if ((strModes.contains("`")) && (strModes.contains("@"))) strModes.remove("@");
 
-        item->setData(Qt::UserRole+11, Core::instance()->getUserMaxModes(strModes));
+        item->setData(Qt::UserRole+11, Nicklist::instance()->getUserMaxModes(strModes));
         item->setData(Qt::UserRole+12, strModes);
     }
 }
@@ -323,9 +324,9 @@ void NickListWidget::contextMenuEvent(QContextMenuEvent *e)
     strSelectedNick = this->selectedItems().at(0)->text();
 
     QString strMe = Core::instance()->settings.value("nick");
-    QString strSelfModes = Core::instance()->getUserModes(strMe, strChannel);
-    int iSelfMaxModes = Core::instance()->getUserMaxModes(strSelfModes);
-    QString strNickModes = Core::instance()->getUserModes(strSelectedNick, strChannel);
+    QString strSelfModes = Nicklist::instance()->getUserModes(strMe, strChannel);
+    int iSelfMaxModes = Nicklist::instance()->getUserMaxModes(strSelfModes);
+    QString strNickModes = Nicklist::instance()->getUserModes(strSelectedNick, strChannel);
 
     QList<QString> lOpenChannels = Core::instance()->lOpenChannels;
     lOpenChannels.removeOne(STATUS);

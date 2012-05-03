@@ -78,7 +78,9 @@ SOURCES += src/avatars/avatar.cpp \
     src/widgets/tool_widget.cpp \
     src/widgets/webcam_delegate.cpp \
     src/common/awaylogs.cpp \
-    src/common/xml.cpp
+    src/common/xml.cpp \
+    src/core/nicklist.cpp \
+    src/core/message.cpp
 HEADERS += src/avatars/avatar.h \
     src/common/commands.h \
     src/common/config.h \
@@ -151,7 +153,9 @@ HEADERS += src/avatars/avatar.h \
     src/widgets/tool_widget.h \
     src/widgets/webcam_delegate.h \
     src/common/awaylogs.h \
-    src/common/xml.h
+    src/common/xml.h \
+    src/core/nicklist.h \
+    src/core/message.h
 FORMS += ui/about.ui \
     ui/avatar_edit.ui \
     ui/awaylog.ui \

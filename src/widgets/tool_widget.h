@@ -125,8 +125,6 @@ private slots:
 signals:
     void ctrlTabPressed();
     void ctrlShiftTabPressed();
-    void showMessage(const QString&,const QString&,MessageCategory);
-    void showMessage(const QString&,const QString&,MessageCategory,QString,QString);
 };
 
 #endif // TOOL_WIDGET_H

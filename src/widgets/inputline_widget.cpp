@@ -21,6 +21,7 @@
 #include <QEvent>
 #include <QKeyEvent>
 #include "core.h"
+#include "nicklist.h"
 #include "inputline_widget.h"
 
 InputLineWidget::InputLineWidget(QWidget *parent) : QLineEdit(parent), index(0), strLastWord(QString::null)
@@ -109,7 +110,7 @@ bool InputLineWidget::event(QEvent *e)
         }
         else
         {
-            QList<QString> usersList = Core::instance()->getUserListFromChannel(Core::instance()->getCurrentChannelName());
+            QList<QString> usersList = Nicklist::instance()->getUserList(Core::instance()->getCurrentChannelName());
 
             if (usersList.size() == 0)
                 return true;
