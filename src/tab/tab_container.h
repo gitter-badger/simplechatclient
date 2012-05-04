@@ -23,7 +23,6 @@
 
 #include "defines.h"
 class TabManager;
-class NickListWidget;
 #include <QObject>
 
 /**
