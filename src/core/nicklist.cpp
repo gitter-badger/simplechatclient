@@ -22,6 +22,10 @@
 #include "message.h"
 #include "nicklist.h"
 
+#ifdef Q_WS_WIN
+    #include <QCoreApplication>
+#endif
+
 Nicklist * Nicklist::Instance = 0;
 
 Nicklist * Nicklist::instance()
@@ -55,6 +59,26 @@ int Nicklist::getUserMaxModes(const QString &strModes)
     if (strModes.contains("+")) { return 0; }
 
     return -1;
+}
+
+void Nicklist::readEmptyUserAvatar()
+{
+    QString path;
+#ifdef Q_WS_WIN
+    path = QCoreApplication::applicationDirPath();
+#else
+    path = SCC_DATA_DIR;
+#endif
+
+    strEmptyUserAvatarPath = path+"/images/user_avatar.png";
+}
+
+QString Nicklist::getEmptyUserAvatarPath()
+{
+    if (strEmptyUserAvatarPath.isEmpty())
+        readEmptyUserAvatar();
+
+    return strEmptyUserAvatarPath;
 }
 
 void Nicklist::addUser(const QString &strChannel, const QString &strNick, const QString &strModes)

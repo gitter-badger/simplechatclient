@@ -165,8 +165,8 @@ QString HtmlMessagesRenderer::renderer(QDateTime dt, QString strData, MessageCat
             QString strUserAvatarPath = Nicklist::instance()->getUserAvatarPath(strNick);
 
             // is valid avatar
-            if ((strUserAvatarPath != Core::instance()->strEmptyUserAvatarPath) && (QImage(strUserAvatarPath).isNull()))
-                strUserAvatarPath = Core::instance()->strEmptyUserAvatarPath;
+            if ((strUserAvatarPath != Nicklist::instance()->getEmptyUserAvatarPath()) && (QImage(strUserAvatarPath).isNull()))
+                strUserAvatarPath = Nicklist::instance()->getEmptyUserAvatarPath();
 
 #ifndef Q_WS_WIN
             strUserAvatarPath = "file://"+strUserAvatarPath;

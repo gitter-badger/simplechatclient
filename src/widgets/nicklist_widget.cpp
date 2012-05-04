@@ -50,7 +50,7 @@ void NickListWidget::addUser(const QString &strNick, QString strModes)
     item->setData(Qt::UserRole+10, true); // is nicklist
     item->setData(Qt::UserRole+11, Nicklist::instance()->getUserMaxModes(strModes)); // max modes
     item->setData(Qt::UserRole+12, strModes); // modes
-    item->setData(Qt::UserRole+13, Core::instance()->strEmptyUserAvatarPath); // avatar url
+    item->setData(Qt::UserRole+13, Nicklist::instance()->getEmptyUserAvatarPath()); // avatar url
 
     this->addItem(item);
 }

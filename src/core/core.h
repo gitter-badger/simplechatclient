@@ -111,8 +111,6 @@ public:
     QMultiHash<QString,ModerateMsg> mModerateMessages;
     // priv
     QHash<QString,QString> mPrivNames;
-    // empty user avatar
-    QString strEmptyUserAvatarPath;
 
     // TW (important!!!)
     QHash<QString, TabWidget*> tw;
@@ -125,7 +123,6 @@ private:
 
     void init();
     void checkSettings();
-    void readEmptyUserAvatar();
 };
 
 #endif // CORE_H

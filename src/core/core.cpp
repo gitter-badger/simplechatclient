@@ -31,7 +31,6 @@
 #include "core.h"
 
 #ifdef Q_WS_WIN
-    #include <QCoreApplication>
     #include <QDesktopServices>
 #endif
 
@@ -97,9 +96,6 @@ void Core::init()
 
     // create settings
     createSettings();
-
-    // read empty user avatar
-    readEmptyUserAvatar();
 
     // kamerzysta
     kamerzystaSocket = new QTcpSocket();
@@ -333,18 +329,6 @@ void Core::quit()
 
     delete Instance;
     Instance = 0;
-}
-
-void Core::readEmptyUserAvatar()
-{
-    QString path;
-#ifdef Q_WS_WIN
-    path = QCoreApplication::applicationDirPath();
-#else
-    path = SCC_DATA_DIR;
-#endif
-
-    strEmptyUserAvatarPath = path+"/images/user_avatar.png";
 }
 
 // from options
