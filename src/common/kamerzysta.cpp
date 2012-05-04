@@ -211,7 +211,7 @@ void Kamerzysta::authorize()
         log("Nick empty!");
 
     if ((strNick != strMe) && (!strNick.isEmpty()))
-        networkSend(QString("e%1").arg(strNick, strUOKey));
+        networkSend(QString("e%1").arg(strNick));
 }
 
 void Kamerzysta::invite(QString strInviteNick)
