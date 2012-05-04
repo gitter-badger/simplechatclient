@@ -113,7 +113,6 @@ MainWindow::~MainWindow()
     delete pOnetAuth;
     delete pOnetKernel;
 
-    QObject::disconnect(Core::instance()->pNetwork, SIGNAL(clearAllNicklist()), pTabC, SLOT(clearAllNicklist()));
     QObject::disconnect(pTabM, SIGNAL(currentChanged(int)), this, SLOT(currentTabChanged(int)));
     delete pTabC;
     delete pTabM;
