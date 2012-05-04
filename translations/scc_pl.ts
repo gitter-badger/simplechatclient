@@ -2026,6 +2026,13 @@
     </message>
 </context>
 <context>
+    <name>Nicklist</name>
+    <message>
+        <source>Users (%1)</source>
+        <translation>Użytkownicy (%1)</translation>
+    </message>
+</context>
+<context>
     <name>NickListWidget</name>
     <message>
         <source>Reason for kicking:</source>
@@ -3039,10 +3046,6 @@
     <message>
         <source>Topic set by %1</source>
         <translation>Temat ustawiony przez %1</translation>
-    </message>
-    <message>
-        <source>Users (%1)</source>
-        <translation>Użytkownicy (%1)</translation>
     </message>
 </context>
 <context>
