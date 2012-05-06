@@ -409,8 +409,7 @@ void DlgChannelSettings::refreshChannelInfo()
                 ui.comboBox_font->setCurrentIndex(2);
 
             // convert emoticons
-            strValue.replace(QRegExp("%I([a-zA-Z0-9_-]+)%"), "//\\1");
-            Convert::removeStyles(strValue);
+            Convert::simpleConvert(strValue);
 
             // set summary topic
             if (!strValue.isEmpty())

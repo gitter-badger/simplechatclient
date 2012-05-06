@@ -20,6 +20,7 @@
 
 #include "awaylogs.h"
 #include "core.h"
+#include "convert.h"
 #include "log.h"
 #include "nicklist.h"
 #include "tray.h"
@@ -58,9 +59,7 @@ bool Message::isHighlightMessage(const QString &strMessage)
     for (int i = 0; i < lData.size(); i++)
     {
         QString strData = lData[i];
-        strData.remove(QRegExp("%C([a-zA-Z0-9]+)%"));
-        strData.remove(QRegExp("%F([a-zA-Z0-9:]+)%"));
-        strData.replace(QRegExp("%I([a-zA-Z0-9_-]+)%"),"<\\1>");
+        Convert::simpleConvert(strData);
 
         QStringListIterator lHighlightIterator(lHighlight);
         while (lHighlightIterator.hasNext())

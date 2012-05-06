@@ -20,6 +20,7 @@
 
 #include <QDateTime>
 #include "core.h"
+#include "convert.h"
 #include "log.h"
 #include "awaylogs.h"
 
@@ -70,10 +71,7 @@ void Awaylog::add(const QString &strTime, const QString &strChannel, const QStri
         strAwayLogData = "*"+strAwayLogData;
     }
 
-    // remove color, font, emots
-    strAwayLogData.remove(QRegExp("%C([a-zA-Z0-9]+)%"));
-    strAwayLogData.remove(QRegExp("%F([a-zA-Z0-9:]+)%"));
-    strAwayLogData.replace(QRegExp("%I([a-zA-Z0-9_-]+)%"),"<\\1>");
+    Convert::simpleConvert(strAwayLogData);
 
     QString strDT = QDateTime::currentDateTime().toString("[hh:mm:ss]");
 

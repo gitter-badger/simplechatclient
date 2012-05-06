@@ -250,8 +250,7 @@ QString DlgMyProfile::convertTextToDesc(QString strContent)
         ui.comboBox_font->setCurrentIndex(2);
 
     // convert emoticons
-    strContent.replace(QRegExp("%I([a-zA-Z0-9_-]+)%"), "//\\1");
-    Convert::removeStyles(strContent);
+    Convert::simpleConvert(strContent);
 
     return strContent;
 }

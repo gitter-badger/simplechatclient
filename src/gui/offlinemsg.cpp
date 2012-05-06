@@ -23,6 +23,7 @@
 #include <QPushButton>
 #include <QTimer>
 #include "core.h"
+#include "convert.h"
 #include "offlinemsg.h"
 
 DlgOfflineMsg::DlgOfflineMsg(QWidget *parent) : QDialog(parent)
@@ -133,9 +134,7 @@ void DlgOfflineMsg::refreshMsg()
             QDateTime dt = QDateTime::fromTime_t(strTime.toInt());
             QString strDT = dt.toString("[dd MMM yyyy] [hh:mm:ss]");
 
-            strMessage.remove(QRegExp("%C([a-zA-Z0-9]+)%"));
-            strMessage.remove(QRegExp("%F([a-zA-Z0-9:]+)%"));
-            strMessage.replace(QRegExp("%I([a-zA-Z0-9_-]+)%"),"<\\1>");
+            Convert::simpleConvert(strMessage);
 
             if (strType == "quote")
             {

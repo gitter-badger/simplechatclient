@@ -24,18 +24,12 @@
 #include <QFile>
 #include <QTextStream>
 #include "core.h"
+#include "convert.h"
 #include "log.h"
 
 #ifdef Q_WS_WIN
     #include <QDesktopServices>
 #endif
-
-void Log::convert(QString &strData)
-{
-    strData.remove(QRegExp("%C([a-zA-Z0-9]+)%"));
-    strData.remove(QRegExp("%F([a-zA-Z0-9:]+)%"));
-    strData.replace(QRegExp("%I([a-zA-Z0-9_-]+)%"),"<\\1>");
-}
 
 void Log::logOpened(const QString &strChannel)
 {
@@ -86,7 +80,7 @@ void Log::save(const QString &strChannel, const QString &strData)
     {
         // convert
         QString strSaveData = strData; 
-        Log::convert(strSaveData);
+        Convert::simpleConvert(strSaveData);
 
         // save
         QTextStream out(&f);

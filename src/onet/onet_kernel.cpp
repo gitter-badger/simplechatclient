@@ -24,6 +24,7 @@
 #include <QTimer>
 #include "avatar.h"
 #include "core.h"
+#include "convert.h"
 #include "channel_key.h"
 #include "invite.h"
 #include "log.h"
@@ -585,9 +586,7 @@ void OnetKernel::raw_kick()
     QString strMe = Core::instance()->settings.value("nick");
     if (strNick == strMe)
     {
-        strReason.remove(QRegExp("%C([a-zA-Z0-9]+)%"));
-        strReason.remove(QRegExp("%F([a-zA-Z0-9:]+)%"));
-        strReason.replace(QRegExp("%I([a-zA-Z0-9_-]+)%"),"//\\1");
+        Convert::simpleConvert(strReason);
 
         QMessageBox *msgBox = new QMessageBox();
         msgBox->setIcon(QMessageBox::Information);
@@ -1028,9 +1027,7 @@ void OnetKernel::raw_moderate()
     for (int i = 6; i < strDataList.size(); i++) { if (i != 6) strMessage += " "; strMessage += strDataList[i]; }
     if (strMessage[0] == ':') strMessage.remove(0,1);
 
-    strMessage.remove(QRegExp("%C([a-zA-Z0-9]+)%"));
-    strMessage.remove(QRegExp("%F([a-zA-Z0-9:]+)%"));
-    strMessage.replace(QRegExp("%I([a-zA-Z0-9_-]+)%"),"<\\1>");
+    Convert::simpleConvert(strMessage);
 
     QDateTime dt = QDateTime::currentDateTime();
     QString strDT = dt.toString("hh:mm:ss");
