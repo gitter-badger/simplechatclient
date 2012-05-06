@@ -21,37 +21,23 @@
 #ifndef CONVERT_H
 #define CONVERT_H
 
-#include <QObject>
-
 /**
  * Convert text
  * %Fbi%%C008100%%Ihehe%
  */
-class Convert : public QObject
+
+#include <QString>
+
+namespace Convert
 {
-    Q_OBJECT
-public:
-    Convert(bool _bInsertWidthHeight = false);
-    void convertText(QString &strData);
-    void removeFont(QString &strData);
-    void removeColor(QString &strData);
+    void simpleConvert(QString &strData);
+    void removeStyles(QString &strData);
+    void convertText(QString &strData, bool bInsertWidthHeight = false);
 
-    bool getRemovedBold() { return bRemovedBold; }
-    bool getRemovedItalic() { return bRemovedItalic; }
-    QString getRemovedFont() { return strRemovedFont; }
-    int getRemovedColor() { return iRemovedColor; }
-
-private:
-    bool bInsertWidthHeight;
-    bool bRemovedBold;
-    bool bRemovedItalic;
-    QString strRemovedFont;
-    int iRemovedColor;
-
-    void convertColor(QString &strData);
-    void convertFont(QString &strData);
-    void convertEmoticons(QString &strData);
-    QString findEmoticon(const QString &strEmoticon);
-};
+    bool isBold(const QString &strData);
+    bool isItalic(const QString &strData);
+    QString getFont(const QString &strData);
+    int getColor(const QString &strData);
+}
 
 #endif // CONVERT_H

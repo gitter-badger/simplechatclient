@@ -44,7 +44,7 @@ public:
 public slots:
     void refreshColors();
     void refreshCSS();
-    void setTopic(const QString &strChannel, const QString &strTopic);
+    void setTopic(const QString &strChannel, const QString &strTopicContent);
     void authorTopic(const QString &strChannel, const QString &strNick);
     void setChannelAvatar(const QString &strChannel);
     void clearContent(const QString &strChannel);

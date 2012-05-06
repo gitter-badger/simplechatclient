@@ -147,41 +147,35 @@ void TabContainer::refreshCSS()
     }
 }
 
-void TabContainer::setTopic(const QString &strChannel, const QString &strTopic)
+void TabContainer::setTopic(const QString &strChannel, const QString &strTopicContent)
 {
     if (!existTab(strChannel))
         return;
 
-    QString strTopicOriginal = strTopic;
-
-    // replace
-    strTopicOriginal.replace("&", "&amp;");
-    strTopicOriginal.replace("<", "&lt;");
-    strTopicOriginal.replace(">", "&gt;");
-    strTopicOriginal.replace("\"", "&quot;");
-    strTopicOriginal.replace("'", "&#039;");
-    strTopicOriginal.replace("\\", "&#92;");
-
-    QString strContent = strTopic;
+    QString strTooltip = strTopicContent;
+    QString strTopic = strTopicContent;
 
     // convert emoticons, font
-    Convert *convertText = new Convert();
-    convertText->convertText(strContent);
-    delete convertText;
+    Convert::convertText(strTopic);
 
     // fix length bug
-    if (strContent.contains(QRegExp("\\S{100}")))
-        strContent.replace(QRegExp("(\\S{100})"), "\\1 ");
+    if (strTopic.contains(QRegExp("\\S{100}")))
+        strTopic.replace(QRegExp("(\\S{100})"), "\\1 ");
 
     // set topic
-    Core::instance()->tw[strChannel]->topic->setText(QString("<b>%1</b> %2").arg(tr("Topic:"), strContent));
+    Core::instance()->tw[strChannel]->topic->setText(QString("<b>%1</b> %2").arg(tr("Topic:"), strTopic));
 
     // tooltip
-    strTopicOriginal.remove(QRegExp("%C([a-zA-Z0-9]+)%"));
-    strTopicOriginal.remove(QRegExp("%F([a-zA-Z0-9:]+)%"));
-    strTopicOriginal.replace(QRegExp("%I([a-zA-Z0-9_-]+)%"),"<\\1>");
+    strTooltip.replace("&", "&amp;");
+    strTooltip.replace("<", "&lt;");
+    strTooltip.replace(">", "&gt;");
+    strTooltip.replace("\"", "&quot;");
+    strTooltip.replace("'", "&#039;");
+    strTooltip.replace("\\", "&#92;");
 
-    Core::instance()->tw[strChannel]->topic->setToolTip(strTopicOriginal);
+    Convert::simpleConvert(strTooltip);
+
+    Core::instance()->tw[strChannel]->topic->setToolTip(strTooltip);
 }
 
 void TabContainer::authorTopic(const QString &strChannel, const QString &strNick)

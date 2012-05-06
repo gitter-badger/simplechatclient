@@ -373,12 +373,8 @@ void DlgChannelSettings::refreshChannelInfo()
         {
             if (!strValue.isEmpty())
             {
-                QString strDescriptionText = strValue;
-                strDescriptionText.remove(QRegExp("%C([a-zA-Z0-9]+)%"));
-                strDescriptionText.remove(QRegExp("%F([a-zA-Z0-9:]+)%"));
-                strDescriptionText.replace(QRegExp("%I([a-zA-Z0-9_-]+)%"),"//\\1");
-
-                ui.plainTextEdit_summary_desc->setPlainText(strDescriptionText);
+                Convert::simpleConvert(strValue);
+                ui.plainTextEdit_summary_desc->setPlainText(strValue);
             }
 
             // set description
@@ -386,33 +382,23 @@ void DlgChannelSettings::refreshChannelInfo()
         }
         else if (strKey == "topic")
         {
-            // convert emoticons
-            strValue.replace(QRegExp("%I([a-zA-Z0-9_-]+)%"), "//\\1");
-
             // convert font
-            Convert *pConvertF = new Convert();
-            pConvertF->removeFont(strValue);
-            bool bRemovedBold = pConvertF->getRemovedBold();
-            bool bRemovedItalic = pConvertF->getRemovedItalic();
-            QString strRemovedFont = pConvertF->getRemovedFont();
-            delete pConvertF;
+            bool bBold = Convert::isBold(strValue);
+            bool bItalic = Convert::isItalic(strValue);
+            QString strFont = Convert::getFont(strValue);
+            int iColor = Convert::getColor(strValue);
 
-            if (bRemovedBold) ui.toolButton_bold->setChecked(true);
-            else if (bRemovedItalic) ui.toolButton_italic->setChecked(true);
+            if (bBold) ui.toolButton_bold->setChecked(true);
+            else if (bItalic) ui.toolButton_italic->setChecked(true);
 
-            if (strRemovedFont == "arial") ui.comboBox_font->setCurrentIndex(0);
-            else if (strRemovedFont == "times") ui.comboBox_font->setCurrentIndex(1);
-            else if (strRemovedFont == "verdana") ui.comboBox_font->setCurrentIndex(2);
-            else if (strRemovedFont == "tahoma") ui.comboBox_font->setCurrentIndex(3);
-            else if (strRemovedFont == "courier") ui.comboBox_font->setCurrentIndex(4);
+            if (strFont == "arial") ui.comboBox_font->setCurrentIndex(0);
+            else if (strFont == "times") ui.comboBox_font->setCurrentIndex(1);
+            else if (strFont == "verdana") ui.comboBox_font->setCurrentIndex(2);
+            else if (strFont == "tahoma") ui.comboBox_font->setCurrentIndex(3);
+            else if (strFont == "courier") ui.comboBox_font->setCurrentIndex(4);
             else ui.comboBox_font->setCurrentIndex(2);
 
-            // convert color
-            Convert *pConvertC = new Convert();
-            pConvertC->removeColor(strValue);
-            int iRemovedColor = pConvertC->getRemovedColor();
-            delete pConvertC;
-            ui.comboBox_color->setCurrentIndex(iRemovedColor);
+            ui.comboBox_color->setCurrentIndex(iColor);
 
             // default #000000
             if (ui.comboBox_color->currentIndex() == -1)
@@ -421,6 +407,10 @@ void DlgChannelSettings::refreshChannelInfo()
             // default verdana
             if (ui.comboBox_font->currentIndex() == -1)
                 ui.comboBox_font->setCurrentIndex(2);
+
+            // convert emoticons
+            strValue.replace(QRegExp("%I([a-zA-Z0-9_-]+)%"), "//\\1");
+            Convert::removeStyles(strValue);
 
             // set summary topic
             if (!strValue.isEmpty())

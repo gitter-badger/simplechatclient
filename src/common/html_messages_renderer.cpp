@@ -128,9 +128,7 @@ QString HtmlMessagesRenderer::renderer(QDateTime dt, QString strData, MessageCat
     QString strThemes = Core::instance()->settings["themes"];
 
     // convert emoticons, font
-    Convert *convertText = new Convert(true);
-    convertText->convertText(strData);
-    delete convertText;
+    Convert::convertText(strData, true);
 
 #ifndef Q_WS_WIN
     // fix linux img src

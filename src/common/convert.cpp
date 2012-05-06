@@ -20,15 +20,33 @@
 
 #include <QCoreApplication>
 #include <QDir>
-#include "config.h"
 #include "core.h"
 #include "convert.h"
 
-Convert::Convert(bool _bInsertWidthHeight) : bInsertWidthHeight(_bInsertWidthHeight), bRemovedBold(false), bRemovedItalic(false), iRemovedColor(-1)
+QString findEmoticon(const QString &strEmoticon)
 {
+    QString path;
+#ifdef Q_WS_WIN
+    path = QCoreApplication::applicationDirPath();
+#else
+    path = SCC_DATA_DIR;
+#endif
+
+    QDir dAllEmoticonsDirs = path+"/3rdparty/emoticons";
+    QStringList lDirs = dAllEmoticonsDirs.entryList(QStringList("*"), QDir::Dirs | QDir::NoDotAndDotDot | QDir::NoSymLinks);
+
+    for (int i = 0; i < lDirs.size(); i++)
+    {
+        QString strDir = lDirs[i];
+        QString strEmoticonCheck = QString("%1/3rdparty/emoticons/%2/%3.gif").arg(path, strDir, strEmoticon);
+
+        if (QFile::exists(strEmoticonCheck))
+            return strEmoticonCheck;
+    }
+    return QString::null;
 }
 
-void Convert::convertColor(QString &strData)
+void convertColor(QString &strData)
 {
     QList<QString> lColors;
     lColors << "000000" << "623c00" << "c86c00" << "ff6500" << "ff0000" << "e40f0f" << "990033" << "8800ab" << "ce00ff" << "0f2ab1" << "3030ce" << "006699" << "1a866e" << "008100" << "959595";
@@ -51,7 +69,7 @@ void Convert::convertColor(QString &strData)
     }
 }
 
-void Convert::convertFont(QString &strData)
+void convertFont(QString &strData)
 {
     QRegExp rx("%F(b|i|bi)?:?(arial|times|verdana|tahoma|courier)?%");
 
@@ -91,7 +109,7 @@ void Convert::convertFont(QString &strData)
     }
 }
 
-void Convert::convertEmoticons(QString &strData)
+void convertEmoticons(QString &strData, bool bInsertWidthHeight)
 {
     QRegExp rx("%I([a-zA-Z0-9_-]+)%");
 
@@ -128,39 +146,82 @@ void Convert::convertEmoticons(QString &strData)
     }
 }
 
-void Convert::convertText(QString &strData)
+void Convert::simpleConvert(QString &strData)
+{
+    strData.remove(QRegExp("%C([a-zA-Z0-9]+)%"));
+    strData.remove(QRegExp("%F([a-zA-Z0-9:]+)%"));
+    strData.replace(QRegExp("%I([a-zA-Z0-9_-]+)%"),"//\\1");
+}
+
+void Convert::removeStyles(QString &strData)
+{
+    strData.remove(QRegExp("%C([a-zA-Z0-9]+)%"));
+    strData.remove(QRegExp("%F([a-zA-Z0-9:]+)%"));
+    strData.remove(QRegExp("%I([a-zA-Z0-9_-]+)%"));
+}
+
+void Convert::convertText(QString &strData, bool bInsertWidthHeight)
 {
     convertColor(strData);
     convertFont(strData);
-    convertEmoticons(strData);
+    convertEmoticons(strData, bInsertWidthHeight);
 }
 
-void Convert::removeFont(QString &strData)
+bool Convert::isBold(const QString &strData)
 {
     QRegExp rx("%F(b|i|bi)?:?(arial|times|verdana|tahoma|courier)?%");
 
     int pos = 0;
-    while ((pos = rx.indexIn(strData, pos)) != -1)
+    if ((pos = rx.indexIn(strData, pos)) != -1)
     {
-        int first = pos;
         pos += rx.matchedLength();
-        int second = pos;
 
         QString strFontStyle = rx.cap(1);
-        QString strFontName = rx.cap(2);
 
-        if (strFontStyle.contains("b")) bRemovedBold = true;
-        if (strFontStyle.contains("i")) bRemovedItalic = true;
-
-        strRemovedFont = strFontName;
-
-        strData.remove(first, second-first);
-
-        pos--;
+        if (strFontStyle.contains("b"))
+            return true;
+        else
+            return false;
     }
+    return false;
 }
 
-void Convert::removeColor(QString &strData)
+bool Convert::isItalic(const QString &strData)
+{
+    QRegExp rx("%F(b|i|bi)?:?(arial|times|verdana|tahoma|courier)?%");
+
+    int pos = 0;
+    if ((pos = rx.indexIn(strData, pos)) != -1)
+    {
+        pos += rx.matchedLength();
+
+        QString strFontStyle = rx.cap(1);
+
+        if (strFontStyle.contains("i"))
+            return true;
+        else
+            return false;
+    }
+    return false;
+}
+
+QString Convert::getFont(const QString &strData)
+{
+    QRegExp rx("%F(b|i|bi)?:?(arial|times|verdana|tahoma|courier)?%");
+
+    int pos = 0;
+    if ((pos = rx.indexIn(strData, pos)) != -1)
+    {
+        pos += rx.matchedLength();
+
+        QString strFontName = rx.cap(2);
+
+        return strFontName;
+    }
+    return QString::null;
+}
+
+int Convert::getColor(const QString &strData)
 {
     QList<QString> lColors;
     lColors << "000000" << "623c00" << "c86c00" << "ff6500" << "ff0000" << "e40f0f" << "990033" << "8800ab" << "ce00ff" << "0f2ab1" << "3030ce" << "006699" << "1a866e" << "008100" << "959595";
@@ -169,33 +230,8 @@ void Convert::removeColor(QString &strData)
     foreach (QString strColor, lColors)
     {
         if (strData.contains(QString("%C%1%").arg(strColor)))
-        {
-            strData.remove(QString("%C%1%").arg(strColor));
-            iRemovedColor = iFontColor;
-        }
+            return iFontColor;
         iFontColor++;
     }
-}
-
-QString Convert::findEmoticon(const QString &strEmoticon)
-{
-    QString path;
-#ifdef Q_WS_WIN
-    path = QCoreApplication::applicationDirPath();
-#else
-    path = SCC_DATA_DIR;
-#endif
-
-    QDir dAllEmoticonsDirs = path+"/3rdparty/emoticons";
-    QStringList lDirs = dAllEmoticonsDirs.entryList(QStringList("*"), QDir::Dirs | QDir::NoDotAndDotDot | QDir::NoSymLinks);
-
-    for (int i = 0; i < lDirs.size(); i++)
-    {
-        QString strDir = lDirs[i];
-        QString strEmoticonCheck = QString("%1/3rdparty/emoticons/%2/%3.gif").arg(path, strDir, strEmoticon);
-
-        if (QFile::exists(strEmoticonCheck))
-            return strEmoticonCheck;
-    }
-    return QString::null;
+    return -1;
 }

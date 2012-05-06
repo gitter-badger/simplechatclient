@@ -304,9 +304,7 @@ QString DlgUserProfile::convertDesc(QString strContent)
     strContent.replace(">", "&gt;");
 
     // convert
-    Convert *convertText = new Convert();
-    convertText->convertText(strContent);
-    delete convertText;
+    Convert::convertText(strContent);
 
     return QString("<html><body style=\"background-color:white;font-size:12px;font-family:Verdana;\">%1</body></html>").arg(strContent);
 }
