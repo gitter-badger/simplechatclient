@@ -20,6 +20,7 @@
 
 #include "core.h"
 #include "mainwindow.h"
+#include "convert.h"
 #include "tray.h"
 
 Tray * Tray::Instance = 0;
@@ -45,5 +46,7 @@ void Tray::init()
 
 void Tray::showMessage(const QString &strMessage)
 {
-    Core::instance()->mainWindow()->getTrayIcon()->showMessage(QString::null, strMessage);
+    QString strShowMessage = strMessage;
+    Convert::simpleConvert(strShowMessage);
+    Core::instance()->mainWindow()->getTrayIcon()->showMessage(QString::null, strShowMessage);
 }
