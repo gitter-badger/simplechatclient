@@ -22,6 +22,7 @@
 #include "core.h"
 #include "log.h"
 #include "nicklist.h"
+#include "tray.h"
 #include "message.h"
 
 #include <QDateTime>
@@ -122,9 +123,7 @@ void Message::showMessage(const QString &strChannel, const QString &strData, Mes
 //    int index = Core::instance()->getIndexFromChannelName(strChannel);
 
     // highlight
-    bool bHighlightMessage = isHighlightMessage(strData);
-
-    if ((bHighlightMessage) && (eMessageCategory == DefaultMessage))
+    if ((isHighlightMessage(strData)) && (eMessageCategory == DefaultMessage))
     {
         QString strAwaylogData = strData;
         if (!strNick.isEmpty())
@@ -141,6 +140,9 @@ void Message::showMessage(const QString &strChannel, const QString &strData, Mes
 
         // highlight
 //        pTabM->setAlert(index, ChannelHighlight);
+
+        // tray
+        //Tray::instance()->showMessage(strAwaylogData);
     }
 
     // set color

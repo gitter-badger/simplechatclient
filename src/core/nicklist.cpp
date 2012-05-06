@@ -114,11 +114,6 @@ void Nicklist::quitUser(const QString &strNick, const QString &strDisplay)
             Message::instance()->showMessage(strChannel, strDisplay, eMessageCategory);
             Core::instance()->tw[strChannel]->pNickListWidget->delUser(strNick);
             Core::instance()->tw[strChannel]->users->setText(QString(tr("Users (%1)").arg(Core::instance()->tw[strChannel]->pNickListWidget->count())));
-
-            //int index = Core::instance()->getIndexFromChannelName(strChannel);
-
-            //if (!hideJoinPart(strChannel, eMessageCategory))
-                //pTabM->setAlert(index, ChannelGreen);
         }
     }
 }

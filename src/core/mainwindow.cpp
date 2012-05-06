@@ -263,6 +263,7 @@ void MainWindow::createMenus()
     trayIcon = new QSystemTrayIcon(QIcon(":/images/logo16x16.png"), this);
     trayIcon->setContextMenu(trayMenu);
     trayIcon->setToolTip("Simple Chat Client");
+    trayIcon->setVisible(true);
 }
 
 void MainWindow::createTrayMenu()
@@ -617,15 +618,9 @@ void MainWindow::openAbout()
 void MainWindow::buttonRestoreMinimalize()
 {
     if (this->isVisible())
-    {
-        trayIcon->setVisible(true);
         this->hide();
-    }
     else
-    {
-        trayIcon->setVisible(false);
         this->showNormal();
-    }
 }
 
 // tray
@@ -634,15 +629,9 @@ void MainWindow::trayIconPressed(QSystemTrayIcon::ActivationReason activationRea
     if (activationReason == QSystemTrayIcon::Trigger)
     {
         if (this->isVisible())
-        {
-            trayIcon->setVisible(true);
             this->hide();
-        }
         else
-        {
-            trayIcon->setVisible(false);
             this->showNormal();
-        }
     }
     else if (activationReason == QSystemTrayIcon::Context)
         createTrayMenu();
@@ -668,6 +657,11 @@ int MainWindow::getCurrentTabIndex()
         return pTabM->currentIndex();
     else
         return -1;
+}
+
+QSystemTrayIcon *MainWindow::getTrayIcon()
+{
+    return trayIcon;
 }
 
 void MainWindow::timeoutAutoaway()
@@ -731,7 +725,6 @@ void MainWindow::closeEvent(QCloseEvent *event)
 {
     if (isVisible() && Core::instance()->settings["minimize_to_tray"] == "true")
     {
-        trayIcon->setVisible(true);
         hide();
         event->ignore();
     }

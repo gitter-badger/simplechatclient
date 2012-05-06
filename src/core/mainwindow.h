@@ -49,6 +49,7 @@ public:
     void refreshToolWidgetValues();
     // for core
     int getCurrentTabIndex();
+    QSystemTrayIcon *getTrayIcon();
 
 private:
     QToolBar *toolBar;

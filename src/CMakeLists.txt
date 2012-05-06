@@ -48,6 +48,7 @@ set (scc_SRCS
 	core/message.cpp
 	core/network.cpp
 	core/nicklist.cpp
+	core/tray.cpp
 	core/updates.cpp
 	gui/about.cpp
 	gui/avatar_edit.cpp
@@ -110,6 +111,7 @@ set (scc_MOC_HDRS
 	core/message.h
 	core/network.h
 	core/nicklist.h
+	core/tray.h
 	core/updates.h
 	gui/about.h
 	gui/avatar_edit.h

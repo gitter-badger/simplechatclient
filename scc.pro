@@ -80,7 +80,8 @@ SOURCES += src/avatars/avatar.cpp \
     src/common/awaylogs.cpp \
     src/common/xml.cpp \
     src/core/nicklist.cpp \
-    src/core/message.cpp
+    src/core/message.cpp \
+    src/core/tray.cpp
 HEADERS += src/avatars/avatar.h \
     src/common/commands.h \
     src/common/config.h \
@@ -155,7 +156,8 @@ HEADERS += src/avatars/avatar.h \
     src/common/awaylogs.h \
     src/common/xml.h \
     src/core/nicklist.h \
-    src/core/message.h
+    src/core/message.h \
+    src/core/tray.h
 FORMS += ui/about.ui \
     ui/avatar_edit.ui \
     ui/awaylog.ui \
