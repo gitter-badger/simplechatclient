@@ -26,8 +26,6 @@ class QDomElement;
 #include <QHash>
 #include <QObject>
 
-#include "scc-config.h"
-
 /**
  * Class for config read/write
  */

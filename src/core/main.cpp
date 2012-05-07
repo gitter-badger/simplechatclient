@@ -22,9 +22,11 @@
 #include <QTextCodec>
 #include <QTranslator>
 #include "config.h"
+
 #ifdef Q_WS_X11
 #include "debug.h"
 #endif
+
 #include "core.h"
 
 #ifdef Q_WS_WIN

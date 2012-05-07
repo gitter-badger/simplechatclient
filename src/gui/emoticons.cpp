@@ -22,6 +22,7 @@
 #include <QDir>
 #include <QListWidget>
 #include <QPixmap>
+#include "core.h" // require by SCC_DATA_DIR
 #include "config.h"
 #include "mainwindow.h"
 #include "inputline_widget.h"
