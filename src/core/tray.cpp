@@ -46,6 +46,9 @@ void Tray::init()
 
 void Tray::showMessage(const QString &strMessage)
 {
+    if (Core::instance()->mainWindow()->isVisible())
+        return;
+
     QString strShowMessage = strMessage;
     Convert::simpleConvert(strShowMessage);
     Core::instance()->mainWindow()->getTrayIcon()->showMessage(QString::null, strShowMessage);
