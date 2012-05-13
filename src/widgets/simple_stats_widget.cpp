@@ -38,8 +38,6 @@ void SimpleStatsWidget::clearStats()
 {
     fForceMax = 0;
     lStats.clear();
-    for (int i = 0; i < 30; i++)
-        lStats.append(0);
 
     update();
 }
