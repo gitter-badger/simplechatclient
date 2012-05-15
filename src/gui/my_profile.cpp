@@ -258,6 +258,7 @@ QString DlgMyProfile::convertTextToDesc(QString strContent)
 QString DlgMyProfile::convertDescToText(QString strContent)
 {
     strContent.remove(QRegExp("(\r|\n)"));
+    // TODO Issue #192
     strContent.replace(QRegExp("(ftp:|http:|https:)//"), "\\1\\\\"); // fix ftp http https
     strContent.replace(QRegExp("//([a-zA-Z0-9_-]+)\\b"), "%I\\1%");
     strContent.replace(QRegExp("(ftp:|http:|https:)\\\\\\\\"), "\\1//"); // fix ftp http https
