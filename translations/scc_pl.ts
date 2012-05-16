@@ -1874,11 +1874,19 @@
         <translation>Przywróć</translation>
     </message>
     <message>
-        <source>Minimalize</source>
-        <translation>Minimalizuj</translation>
+        <source>Mi&amp;nimize</source>
+        <translation>Mi&amp;nimalizuj</translation>
     </message>
     <message>
-        <source>Close</source>
+        <source>Ma&amp;ximize</source>
+        <translation>Ma&amp;ksymalizuj</translation>
+    </message>
+    <message>
+        <source>&amp;Restore</source>
+        <translation>&amp;Przywróć</translation>
+    </message>
+    <message>
+        <source>&amp;Quit</source>
         <translation>Zakończ</translation>
     </message>
     <message>
