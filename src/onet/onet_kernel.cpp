@@ -370,7 +370,7 @@ void OnetKernel::raw_pong()
     QString strLag = sec+"."+msec;
     strLag = "Lag: "+strLag+"s";
 
-    Core::instance()->lagAct->setText(strLag);
+    Core::instance()->lagAction->setText(strLag);
 }
 
 // ERROR :Closing link (unknown@95.48.183.154) [Registration timeout]
@@ -1458,8 +1458,8 @@ void OnetKernel::raw_151n()
     else if (strNick.toLower() == "nickserv")
     {
         // visible
-        if (!Core::instance()->offlineMsgAct->isVisible())
-            Core::instance()->offlineMsgAct->setVisible(true);
+        if (!Core::instance()->offlineMsgAction->isVisible())
+            Core::instance()->offlineMsgAction->setVisible(true);
 
         // nicks
         for (int i = 4; i < strDataList.size(); i++)
@@ -2304,7 +2304,7 @@ void OnetKernel::raw_304()
 void OnetKernel::raw_305()
 {
     Core::instance()->settings["away"] = "false";
-    Core::instance()->awayAct->setChecked(false);
+    Core::instance()->awayAction->setChecked(false);
 
     QString strDisplay = tr("* You are no longer marked as being away");
     Message::instance()->showMessageActive(strDisplay, InfoMessage);
@@ -2315,7 +2315,7 @@ void OnetKernel::raw_305()
 void OnetKernel::raw_306()
 {
     Core::instance()->settings["away"] = "true";
-    Core::instance()->awayAct->setChecked(true);
+    Core::instance()->awayAction->setChecked(true);
 
     QString strDisplay = tr("* You have been marked as being away");
     Message::instance()->showMessageActive(strDisplay, InfoMessage);
@@ -3809,7 +3809,7 @@ void OnetKernel::raw_802()
 void OnetKernel::raw_807()
 {
     Core::instance()->settings["busy"] = "true";
-    Core::instance()->busyAct->setChecked(true);
+    Core::instance()->busyAction->setChecked(true);
 
     QString strDisplay = tr("* You are marked as busy");
     Message::instance()->showMessageActive(strDisplay, InfoMessage);
@@ -3820,7 +3820,7 @@ void OnetKernel::raw_807()
 void OnetKernel::raw_808()
 {
     Core::instance()->settings["busy"] = "false";
-    Core::instance()->busyAct->setChecked(false);
+    Core::instance()->busyAction->setChecked(false);
 
     QString strDisplay = tr("* You are no longer marked busy");
     Message::instance()->showMessageActive(strDisplay, InfoMessage);

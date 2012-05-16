@@ -50,19 +50,19 @@ Core * Core::instance()
 Core::Core() : window(0)
 {
     // lag
-    lagAct = new QAction("Lag: ?", this);
-    lagAct->setEnabled(false);
+    lagAction = new QAction("Lag: ?", this);
+    lagAction->setEnabled(false);
 
-    busyAct = new QAction(this);
-    busyAct->setIcon(QIcon(":/images/oxygen/16x16/im-user-offline.png"));
-    awayAct = new QAction(this);
-    awayAct->setIcon(QIcon(":/images/oxygen/16x16/im-user-away.png"));
+    busyAction = new QAction(this);
+    busyAction->setIcon(QIcon(":/images/oxygen/16x16/im-user-offline.png"));
+    awayAction = new QAction(this);
+    awayAction->setIcon(QIcon(":/images/oxygen/16x16/im-user-away.png"));
 
     // checkable
-    busyAct->setCheckable(true);
-    awayAct->setCheckable(true);
-    busyAct->setChecked(false);
-    awayAct->setChecked(false);
+    busyAction->setCheckable(true);
+    awayAction->setCheckable(true);
+    busyAction->setChecked(false);
+    awayAction->setChecked(false);
 }
 
 Core::~Core()
@@ -111,8 +111,8 @@ void Core::init()
 
 void Core::createAndShowGui()
 {
-    busyAct->setText(tr("Mark as busy"));
-    awayAct->setText(tr("Mark as away"));
+    busyAction->setText(tr("Mark as busy"));
+    awayAction->setText(tr("Mark as away"));
 
     window = new MainWindow(0);
     window->show();

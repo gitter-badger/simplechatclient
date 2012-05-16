@@ -103,5 +103,8 @@
         <file>images/logo48x48.png</file>
         <file>images/logo64x64.png</file>
         <file>images/logo128x128.png</file>
+        <file>images/oxygen/16x16/view-fullscreen.png</file>
+        <file>images/oxygen/16x16/view-restore.png</file>
+        <file>images/oxygen/16x16/view-close.png</file>
     </qresource>
 </RCC>

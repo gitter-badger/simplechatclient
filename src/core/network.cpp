@@ -105,13 +105,13 @@ void Network::clearAll()
     emit setDisconnected();
 
     // set lag
-    Core::instance()->lagAct->setText("Lag: ?");
+    Core::instance()->lagAction->setText("Lag: ?");
 
     // update busy button
-    Core::instance()->busyAct->setChecked(false);
+    Core::instance()->busyAction->setChecked(false);
 
     // update away button
-    Core::instance()->awayAct->setChecked(false);
+    Core::instance()->awayAction->setChecked(false);
 
     // update nick
     emit updateNick(tr("(Unregistered)"));
@@ -220,7 +220,7 @@ void Network::connected()
 #endif
 
     emit setConnected();
-    Core::instance()->lagAct->setText("Lag: ?");
+    Core::instance()->lagAction->setText("Lag: ?");
 
     QString strDisplay = tr("Connected to server");
     Message::instance()->showMessageAll(strDisplay, ErrorMessage);
@@ -408,7 +408,7 @@ void Network::timeoutLag()
 
     // update lag
     if (iCurrent-iActive > 30+10)
-        Core::instance()->lagAct->setText(QString("Lag: %1s").arg(iCurrent-iActive));
+        Core::instance()->lagAction->setText(QString("Lag: %1s").arg(iCurrent-iActive));
 }
 
 void Network::timeoutPong()

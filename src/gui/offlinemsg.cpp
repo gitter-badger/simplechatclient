@@ -231,7 +231,7 @@ void DlgOfflineMsg::buttonClose()
 {
     // hide if no messages
     if (Core::instance()->lOfflineNicks.size() == 0)
-        Core::instance()->offlineMsgAct->setVisible(false);
+        Core::instance()->offlineMsgAction->setVisible(false);
 
     // close
     this->close();

@@ -88,10 +88,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     createSignals();
 
     // hide offline messages
-    Core::instance()->offlineMsgAct->setVisible(false);
+    Core::instance()->offlineMsgAction->setVisible(false);
 
     // hide awaylog
-    awaylogAct->setVisible(false);
+    awaylogAction->setVisible(false);
 
     // show welcome
     QTimer::singleShot(0, this, SLOT(showWelcome())); // 0 sec
@@ -122,7 +122,7 @@ MainWindow::~MainWindow()
 
     // delete teray
     delete trayIcon;
-    delete trayMenu;
+    delete trayIconMenu;
 }
 
 void MainWindow::setWindowGeometry()
@@ -154,163 +154,166 @@ void MainWindow::createGui()
 void MainWindow::createActions()
 {
     // action
-    sccAct = new QAction(QIcon(":/images/logo16x16.png"), "Simple Chat Client", this);
-    sccAct->setFont(QFont(this->font().family(), -1, 75, false));
-    sccAct->setEnabled(false);
+    sccAction = new QAction(QIcon(":/images/logo16x16.png"), "Simple Chat Client", this);
+    sccAction->setFont(QFont(this->font().family(), -1, 75, false));
+    sccAction->setEnabled(false);
 
-    restoreMinimalizeAct = new QAction(this);
-    connectAct = new QAction(QIcon(":/images/oxygen/16x16/network-connect.png"), tr("&Connect"), this);
-    closeAct = new QAction(QIcon(":/images/oxygen/16x16/application-exit.png"), tr("Close"), this);
-    optionsAct = new QAction(QIcon(":/images/oxygen/16x16/preferences-system.png"), tr("Options"), this);
-    aboutAct = new QAction(QIcon(":/images/logo16x16.png"), tr("About SCC ..."), this);
-    awaylogAct = new QAction(QIcon(":/images/oxygen/16x16/view-pim-tasks.png"), tr("Awaylog"), this);
-    notesAct = new QAction(QIcon(":/images/oxygen/16x16/story-editor.png"), tr("Notes"), this);
+    connectAction = new QAction(QIcon(":/images/oxygen/16x16/network-connect.png"), tr("&Connect"), this);
+    optionsAction = new QAction(QIcon(":/images/oxygen/16x16/preferences-system.png"), tr("Options"), this);
+    aboutAction = new QAction(QIcon(":/images/logo16x16.png"), tr("About SCC ..."), this);
+    awaylogAction = new QAction(QIcon(":/images/oxygen/16x16/view-pim-tasks.png"), tr("Awaylog"), this);
+    notesAction = new QAction(QIcon(":/images/oxygen/16x16/story-editor.png"), tr("Notes"), this);
 
     // onet action
-    channelListAct = new QAction(QIcon(":/images/oxygen/16x16/documentation.png"), tr("Channel list"), this);
-    channelHomesAct = new QAction(QIcon(":/images/oxygen/16x16/configure.png"), tr("My channels"), this);
-    channelFavouritesAct = new QAction(QIcon(":/images/oxygen/16x16/emblem-favorite.png"), tr("Favorite channels"), this);
-    friendsAct = new QAction(QIcon(":/images/oxygen/16x16/meeting-attending.png"), tr("Friends"), this);
-    ignoreAct = new QAction(QIcon(":/images/oxygen/16x16/meeting-attending-tentative.png"), tr("Ignored"), this);
-    Core::instance()->offlineMsgAct = new QAction(QIcon(":/images/oxygen/16x16/mail-mark-unread.png") , tr("Offline messages"), this);
-    camsAct = new QAction(QIcon(":/images/oxygen/16x16/camera-web.png"),tr("Cams"), this);
-    myStatsAct = new QAction(QIcon(":/images/oxygen/16x16/office-chart-bar.png"),tr("My statistics"), this);
-    myProfileAct = new QAction(QIcon(":/images/oxygen/16x16/view-pim-contacts.png"),tr("My profile"), this);
-    myAvatarAct = new QAction(QIcon(":/images/oxygen/16x16/preferences-desktop-user.png"),tr("My avatar"), this);
+    channelListAction = new QAction(QIcon(":/images/oxygen/16x16/documentation.png"), tr("Channel list"), this);
+    channelHomesAction = new QAction(QIcon(":/images/oxygen/16x16/configure.png"), tr("My channels"), this);
+    channelFavouritesAction = new QAction(QIcon(":/images/oxygen/16x16/emblem-favorite.png"), tr("Favorite channels"), this);
+    friendsAction = new QAction(QIcon(":/images/oxygen/16x16/meeting-attending.png"), tr("Friends"), this);
+    ignoreAction = new QAction(QIcon(":/images/oxygen/16x16/meeting-attending-tentative.png"), tr("Ignored"), this);
+    Core::instance()->offlineMsgAction = new QAction(QIcon(":/images/oxygen/16x16/mail-mark-unread.png") , tr("Offline messages"), this);
+    camsAction = new QAction(QIcon(":/images/oxygen/16x16/camera-web.png"),tr("Cams"), this);
+    myStatsAction = new QAction(QIcon(":/images/oxygen/16x16/office-chart-bar.png"),tr("My statistics"), this);
+    myProfileAction = new QAction(QIcon(":/images/oxygen/16x16/view-pim-contacts.png"),tr("My profile"), this);
+    myAvatarAction = new QAction(QIcon(":/images/oxygen/16x16/preferences-desktop-user.png"),tr("My avatar"), this);
+
+    minimizeAction = new QAction(QIcon(":/images/oxygen/16x16/view-close.png"), tr("Mi&nimize"), this);
+    maximizeAction = new QAction(QIcon(":/images/oxygen/16x16/view-fullscreen.png"), tr("Ma&ximize"), this);
+    restoreAction = new QAction(QIcon(":/images/oxygen/16x16/view-restore.png"), tr("&Restore"), this);
+    quitAction = new QAction(QIcon(":/images/oxygen/16x16/application-exit.png"), tr("&Quit"), this);
 
     // shortcut
-    connectAct->setShortcuts(QKeySequence::New);
-    closeAct->setShortcut(tr("Ctrl+Q"));
-    optionsAct->setShortcut(tr("Ctrl+O"));
+    connectAction->setShortcuts(QKeySequence::New);
+    quitAction->setShortcut(tr("Ctrl+Q"));
+    optionsAction->setShortcut(tr("Ctrl+O"));
 
     // onet shortcut
-    channelListAct->setShortcut(tr("Ctrl+L"));
-    channelHomesAct->setShortcut(tr("Ctrl+M"));
-    channelFavouritesAct->setShortcut(tr("Ctrl+U"));
-    friendsAct->setShortcut(tr("Ctrl+P"));
-    ignoreAct->setShortcut(tr("Ctrl+I"));
-    Core::instance()->offlineMsgAct->setShortcut(tr("Ctrl+M"));
-    awaylogAct->setShortcut(tr("Ctrl+J"));
-    camsAct->setShortcut(tr("Ctrl+K"));
+    channelListAction->setShortcut(tr("Ctrl+L"));
+    channelHomesAction->setShortcut(tr("Ctrl+M"));
+    channelFavouritesAction->setShortcut(tr("Ctrl+U"));
+    friendsAction->setShortcut(tr("Ctrl+P"));
+    ignoreAction->setShortcut(tr("Ctrl+I"));
+    Core::instance()->offlineMsgAction->setShortcut(tr("Ctrl+M"));
+    awaylogAction->setShortcut(tr("Ctrl+J"));
+    camsAction->setShortcut(tr("Ctrl+K"));
 }
 
 void MainWindow::createMenus()
 {
     // main menu
     fileMenu = menuBar()->addMenu(tr("&File"));
-    fileMenu->addAction(connectAct);
+    fileMenu->addAction(connectAction);
     fileMenu->addSeparator();
-    fileMenu->addAction(closeAct);
+    fileMenu->addAction(quitAction);
 
     // options menu
     optionsMenu = menuBar()->addMenu(tr("&Settings"));
-    optionsMenu->addAction(optionsAct);
+    optionsMenu->addAction(optionsAction);
 
     // onet menu
     chatMenu = menuBar()->addMenu(tr("&Chat"));
-    chatMenu->addAction(channelListAct);
-    chatMenu->addAction(channelHomesAct);
-    chatMenu->addAction(channelFavouritesAct);
-    chatMenu->addAction(friendsAct);
-    chatMenu->addAction(ignoreAct);
-    chatMenu->addAction(Core::instance()->offlineMsgAct);
-    chatMenu->addAction(awaylogAct);
-    chatMenu->addAction(camsAct);
+    chatMenu->addAction(channelListAction);
+    chatMenu->addAction(channelHomesAction);
+    chatMenu->addAction(channelFavouritesAction);
+    chatMenu->addAction(friendsAction);
+    chatMenu->addAction(ignoreAction);
+    chatMenu->addAction(Core::instance()->offlineMsgAction);
+    chatMenu->addAction(awaylogAction);
+    chatMenu->addAction(camsAction);
     chatMenu->addSeparator();
-    chatMenu->addAction(Core::instance()->busyAct);
-    chatMenu->addAction(Core::instance()->awayAct);
+    chatMenu->addAction(Core::instance()->busyAction);
+    chatMenu->addAction(Core::instance()->awayAction);
 
     // onet my menu
     myMenu = menuBar()->addMenu(tr("&My"));
-    myMenu->addAction(myStatsAct);
-    myMenu->addAction(myProfileAct);
-    myMenu->addAction(myAvatarAct);
-    myMenu->addAction(notesAct);
+    myMenu->addAction(myStatsAction);
+    myMenu->addAction(myProfileAction);
+    myMenu->addAction(myAvatarAction);
+    myMenu->addAction(notesAction);
 
     // help menu
     helpMenu = menuBar()->addMenu(tr("He&lp"));
-    helpMenu->addAction(aboutAct);
+    helpMenu->addAction(aboutAction);
 
     // toolbar
     toolBar = new QToolBar();
     toolBar = addToolBar(tr("Navigation bar"));
     toolBar->setIconSize(QSize(16,16));
     toolBar->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
-    toolBar->addAction(connectAct);
-    toolBar->addAction(optionsAct);
+    toolBar->addAction(connectAction);
+    toolBar->addAction(optionsAction);
 
     // onet toolbar
-    toolBar->addAction(channelListAct);
-    toolBar->addAction(channelHomesAct);
-    toolBar->addAction(friendsAct);
+    toolBar->addAction(channelListAction);
+    toolBar->addAction(channelHomesAction);
+    toolBar->addAction(friendsAction);
 
     // offline messages
-    toolBar->addAction(Core::instance()->offlineMsgAct);
+    toolBar->addAction(Core::instance()->offlineMsgAction);
     // awaylog
-    toolBar->addAction(awaylogAct);
+    toolBar->addAction(awaylogAction);
     // onet cams
-    toolBar->addAction(camsAct);
+    toolBar->addAction(camsAction);
     // notes
-    toolBar->addAction(notesAct);
+    toolBar->addAction(notesAction);
     // lag
     toolBar->addSeparator();
-    toolBar->addAction(Core::instance()->lagAct);
+    toolBar->addAction(Core::instance()->lagAction);
+
+    // tray menu
+    trayIconMenu = new QMenu();
+    trayIconMenu->addAction(sccAction);
+    trayIconMenu->addSeparator();
+    trayIconMenu->addAction(minimizeAction);
+    trayIconMenu->addAction(maximizeAction);
+    trayIconMenu->addAction(restoreAction);
+    trayIconMenu->addSeparator();
+    trayIconMenu->addAction(quitAction);
 
     // tray
-    trayMenu = new QMenu();
-    createTrayMenu();
-
     trayIcon = new QSystemTrayIcon(QIcon(":/images/logo16x16.png"), this);
-    trayIcon->setContextMenu(trayMenu);
+    trayIcon->setContextMenu(trayIconMenu);
     trayIcon->setToolTip("Simple Chat Client");
     trayIcon->setVisible(true);
 }
 
-void MainWindow::createTrayMenu()
+void MainWindow::setTrayMenuVisible(bool visible)
 {
-    if (this->isHidden())
-        restoreMinimalizeAct->setText(tr("Restore"));
-    else
-        restoreMinimalizeAct->setText(tr("Minimalize"));
-
-    trayMenu->clear();
-    trayMenu->addAction(sccAct);
-    trayMenu->addSeparator();
-    trayMenu->addAction(restoreMinimalizeAct);
-    trayMenu->addAction(closeAct);
+    minimizeAction->setEnabled(visible);
+    maximizeAction->setEnabled(!isMaximized());
+    restoreAction->setEnabled(isMaximized() || !visible);
+    setVisible(visible);
 }
 
 void MainWindow::createSignals()
 {
     // signals buttons
-    connect(connectAct, SIGNAL(triggered()), this, SLOT(buttonConnect()));
-    connect(closeAct, SIGNAL(triggered()), qApp, SLOT(quit()));
-    connect(optionsAct, SIGNAL(triggered()), this, SLOT(openOptions()));
-    connect(aboutAct, SIGNAL(triggered()), this, SLOT(openAbout()));
-    connect(restoreMinimalizeAct, SIGNAL(triggered()), this, SLOT(buttonRestoreMinimalize()));
+    connect(connectAction, SIGNAL(triggered()), this, SLOT(buttonConnect()));
+    connect(optionsAction, SIGNAL(triggered()), this, SLOT(openOptions()));
+    connect(aboutAction, SIGNAL(triggered()), this, SLOT(openAbout()));
 
     // signals onet dialogs
-    connect(channelListAct, SIGNAL(triggered()), this, SLOT(openChannelList()));
-    connect(channelHomesAct, SIGNAL(triggered()), this, SLOT(openChannelHomes()));
-    connect(channelFavouritesAct, SIGNAL(triggered()), this, SLOT(openChannelFavourites()));
-    connect(friendsAct, SIGNAL(triggered()), this, SLOT(openFriends()));
-    connect(ignoreAct, SIGNAL(triggered()), this, SLOT(openIgnore()));
-    connect(Core::instance()->busyAct, SIGNAL(triggered()), this, SLOT(buttonSetBusy()));
-    connect(Core::instance()->awayAct, SIGNAL(triggered()), this, SLOT(buttonSetAway()));
-    connect(myStatsAct, SIGNAL(triggered()), this, SLOT(openMyStats()));
-    connect(myProfileAct, SIGNAL(triggered()), this, SLOT(openMyProfile()));
-    connect(myAvatarAct, SIGNAL(triggered()), this, SLOT(openMyAvatar()));
+    connect(channelListAction, SIGNAL(triggered()), this, SLOT(openChannelList()));
+    connect(channelHomesAction, SIGNAL(triggered()), this, SLOT(openChannelHomes()));
+    connect(channelFavouritesAction, SIGNAL(triggered()), this, SLOT(openChannelFavourites()));
+    connect(friendsAction, SIGNAL(triggered()), this, SLOT(openFriends()));
+    connect(ignoreAction, SIGNAL(triggered()), this, SLOT(openIgnore()));
+    connect(Core::instance()->busyAction, SIGNAL(triggered()), this, SLOT(buttonSetBusy()));
+    connect(Core::instance()->awayAction, SIGNAL(triggered()), this, SLOT(buttonSetAway()));
+    connect(myStatsAction, SIGNAL(triggered()), this, SLOT(openMyStats()));
+    connect(myProfileAction, SIGNAL(triggered()), this, SLOT(openMyProfile()));
+    connect(myAvatarAction, SIGNAL(triggered()), this, SLOT(openMyAvatar()));
 
-    // offlinemsg
-    connect(Core::instance()->offlineMsgAct, SIGNAL(triggered()), this, SLOT(openOfflinemsg()));
-    // awaylog
-    connect(awaylogAct, SIGNAL(triggered()), this, SLOT(openAwaylog()));
-    // onet cams
-    connect(camsAct, SIGNAL(triggered()), this, SLOT(openCams()));
-    // notes
-    connect(notesAct, SIGNAL(triggered()), this, SLOT(openNotes()));
-    // tray connect
-    connect(trayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)), this, SLOT(trayIconPressed(QSystemTrayIcon::ActivationReason)));
+    connect(Core::instance()->offlineMsgAction, SIGNAL(triggered()), this, SLOT(openOfflinemsg()));
+    connect(awaylogAction, SIGNAL(triggered()), this, SLOT(openAwaylog()));
+    connect(camsAction, SIGNAL(triggered()), this, SLOT(openCams()));
+    connect(notesAction, SIGNAL(triggered()), this, SLOT(openNotes()));
+
+    connect(trayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)), this, SLOT(trayIconActivated(QSystemTrayIcon::ActivationReason)));
+
+    connect(minimizeAction, SIGNAL(triggered()), this, SLOT(hide()));
+    connect(maximizeAction, SIGNAL(triggered()), this, SLOT(showMaximized()));
+    connect(restoreAction, SIGNAL(triggered()), this, SLOT(showNormal()));
+    connect(quitAction, SIGNAL(triggered()), qApp, SLOT(quit()));
 
     // signals from tabc
 //    connect(pTabC, SIGNAL(updateAwaylogStatus()), this, SLOT(updateAwaylogStatus()));
@@ -401,9 +404,9 @@ void MainWindow::buttonConnect()
 {
     if (!Core::instance()->pNetwork->isConnected())
     {
-        connectAct->setText(tr("&Disconnect"));
-        connectAct->setIconText(tr("&Disconnect"));
-        connectAct->setIcon(QIcon(":/images/oxygen/16x16/network-disconnect.png"));
+        connectAction->setText(tr("&Disconnect"));
+        connectAction->setIconText(tr("&Disconnect"));
+        connectAction->setIcon(QIcon(":/images/oxygen/16x16/network-disconnect.png"));
         Core::instance()->settings["reconnect"] = "true";
         Core::instance()->pNetwork->connect();
     }
@@ -411,9 +414,9 @@ void MainWindow::buttonConnect()
     {
         Core::instance()->settings["reconnect"] = "false";
         Core::instance()->settings["logged"] = "false";
-        connectAct->setText(tr("&Connect"));
-        connectAct->setIconText(tr("&Connect"));
-        connectAct->setIcon(QIcon(":/images/oxygen/16x16/network-connect.png"));
+        connectAction->setText(tr("&Connect"));
+        connectAction->setIconText(tr("&Connect"));
+        connectAction->setIcon(QIcon(":/images/oxygen/16x16/network-connect.png"));
         Core::instance()->pNetwork->disconnect();
         if (Core::instance()->settings.value("debug") == "true")
             qDebug() << "Set timerReconnect: stop";
@@ -423,21 +426,21 @@ void MainWindow::buttonConnect()
 
 void MainWindow::setConnected()
 {
-    connectAct->setText(tr("&Disconnect"));
-    connectAct->setIconText(tr("&Disconnect"));
-    connectAct->setIcon(QIcon(":/images/oxygen/16x16/network-disconnect.png"));
+    connectAction->setText(tr("&Disconnect"));
+    connectAction->setIconText(tr("&Disconnect"));
+    connectAction->setIcon(QIcon(":/images/oxygen/16x16/network-disconnect.png"));
 }
 
 void MainWindow::setDisconnected()
 {
-    connectAct->setText(tr("&Connect"));
-    connectAct->setIconText(tr("&Connect"));
-    connectAct->setIcon(QIcon(":/images/oxygen/16x16/network-connect.png"));
+    connectAction->setText(tr("&Connect"));
+    connectAction->setIconText(tr("&Connect"));
+    connectAction->setIcon(QIcon(":/images/oxygen/16x16/network-connect.png"));
 }
 
 void MainWindow::setConnectEnabled(bool bSet)
 {
-    connectAct->setEnabled(bSet);
+    connectAction->setEnabled(bSet);
 }
 
 void MainWindow::updateActions()
@@ -450,23 +453,23 @@ void MainWindow::updateActions()
 
     if (bRegistered)
     {
-        channelHomesAct->setEnabled(true);
-        channelFavouritesAct->setEnabled(true);
-        friendsAct->setEnabled(true);
-        ignoreAct->setEnabled(true);
-        myStatsAct->setEnabled(true);
-        myProfileAct->setEnabled(true);
-        myAvatarAct->setEnabled(true);
+        channelHomesAction->setEnabled(true);
+        channelFavouritesAction->setEnabled(true);
+        friendsAction->setEnabled(true);
+        ignoreAction->setEnabled(true);
+        myStatsAction->setEnabled(true);
+        myProfileAction->setEnabled(true);
+        myAvatarAction->setEnabled(true);
     }
     else
     {
-        channelHomesAct->setEnabled(false);
-        channelFavouritesAct->setEnabled(false);
-        friendsAct->setEnabled(false);
-        ignoreAct->setEnabled(false);
-        myStatsAct->setEnabled(false);
-        myProfileAct->setEnabled(false);
-        myAvatarAct->setEnabled(false);
+        channelHomesAction->setEnabled(false);
+        channelFavouritesAction->setEnabled(false);
+        friendsAction->setEnabled(false);
+        ignoreAction->setEnabled(false);
+        myStatsAction->setEnabled(false);
+        myProfileAction->setEnabled(false);
+        myAvatarAction->setEnabled(false);
     }
 }
 
@@ -474,13 +477,13 @@ void MainWindow::updateAwaylogStatus()
 {
     if (Awaylog::instance()->get().size() == 0)
     {
-        if (awaylogAct->isVisible())
-            awaylogAct->setVisible(false);
+        if (awaylogAction->isVisible())
+            awaylogAction->setVisible(false);
     }
     else
     {
-        if (!awaylogAct->isVisible())
-            awaylogAct->setVisible(true);
+        if (!awaylogAction->isVisible())
+            awaylogAction->setVisible(true);
     }
 }
 
@@ -523,10 +526,10 @@ void MainWindow::openIgnore()
 void MainWindow::buttonSetBusy()
 {
     // do not change status
-    if (Core::instance()->busyAct->isChecked())
-        Core::instance()->busyAct->setChecked(false);
+    if (Core::instance()->busyAction->isChecked())
+        Core::instance()->busyAction->setChecked(false);
     else
-        Core::instance()->busyAct->setChecked(true);
+        Core::instance()->busyAction->setChecked(true);
 
     if ((Core::instance()->pNetwork->isConnected()) && (Core::instance()->pNetwork->isWritable()) && (Core::instance()->settings.value("logged") == "true"))
     {
@@ -542,10 +545,10 @@ void MainWindow::buttonSetBusy()
 void MainWindow::buttonSetAway()
 {
     // do not change status
-    if (Core::instance()->awayAct->isChecked())
-        Core::instance()->awayAct->setChecked(false);
+    if (Core::instance()->awayAction->isChecked())
+        Core::instance()->awayAction->setChecked(false);
     else
-        Core::instance()->awayAct->setChecked(true);
+        Core::instance()->awayAction->setChecked(true);
 
     if ((Core::instance()->pNetwork->isConnected()) && (Core::instance()->pNetwork->isWritable()) && (Core::instance()->settings.value("logged") == "true"))
     {
@@ -569,7 +572,7 @@ void MainWindow::openOfflinemsg()
 
 void MainWindow::openAwaylog()
 {
-    DlgAwaylog(this, awaylogAct).exec();
+    DlgAwaylog(this, awaylogAction).exec();
 }
 
 void MainWindow::openCams()
@@ -614,27 +617,24 @@ void MainWindow::openAbout()
     DlgAbout(this).exec();
 }
 
-// tray button
-void MainWindow::buttonRestoreMinimalize()
-{
-    if (this->isVisible())
-        this->hide();
-    else
-        this->showNormal();
-}
-
 // tray
-void MainWindow::trayIconPressed(QSystemTrayIcon::ActivationReason activationReason)
+void MainWindow::trayIconActivated(QSystemTrayIcon::ActivationReason reason)
 {
-    if (activationReason == QSystemTrayIcon::Trigger)
+    switch (reason)
     {
-        if (this->isVisible())
-            this->hide();
-        else
-            this->showNormal();
+        case QSystemTrayIcon::Trigger:
+        case QSystemTrayIcon::DoubleClick:
+            if (this->isVisible())
+                this->hide();
+            else
+                this->showNormal();
+            break;
+        case QSystemTrayIcon::Context:
+            setTrayMenuVisible(this->isVisible());
+            break;
+        default:
+            break;
     }
-    else if (activationReason == QSystemTrayIcon::Context)
-        createTrayMenu();
 }
 
 // ctrl+tab pressed in inputline

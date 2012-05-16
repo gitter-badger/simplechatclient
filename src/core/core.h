@@ -79,14 +79,14 @@ public:
     QHash<QString, QString> mMyStats;
     QHash<QString, QString> mMyProfile;
     QList<QString> lChannelHomes;
-    QAction *lagAct;
-    QAction *busyAct;
-    QAction *awayAct;
+    QAction *lagAction;
+    QAction *busyAction;
+    QAction *awayAction;
     // channels
     QList<QString> lOpenChannels;
     QHash<QString, QByteArray> mChannelAvatar;
     // offline
-    QAction *offlineMsgAct;
+    QAction *offlineMsgAction;
     QList<OfflineMsg> lOfflineMsg;
     QList<QString> lOfflineNicks;
     // kamerzysta socket

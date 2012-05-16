@@ -56,29 +56,32 @@ private:
     QMenu *fileMenu;
     QMenu *optionsMenu;
     QMenu *helpMenu;
-    QAction *sccAct;
-    QAction *restoreMinimalizeAct;
-    QAction *connectAct;
-    QAction *closeAct;
-    QAction *optionsAct;
-    QAction *aboutAct;
-    QAction *awaylogAct;
-    QAction *notesAct;
-    QMenu *trayMenu;
+    QAction *sccAction;
+    QAction *connectAction;
+    QAction *optionsAction;
+    QAction *aboutAction;
+    QAction *awaylogAction;
+    QAction *notesAction;
+    QMenu *trayIconMenu;
     QSystemTrayIcon *trayIcon;
+
+    QAction *minimizeAction;
+    QAction *maximizeAction;
+    QAction *restoreAction;
+    QAction *quitAction;
 
     // onet actions
     QMenu *chatMenu;
-    QAction *channelListAct;
-    QAction *channelHomesAct;
-    QAction *channelFavouritesAct;
-    QAction *friendsAct;
-    QAction *ignoreAct;
-    QAction *camsAct;
+    QAction *channelListAction;
+    QAction *channelHomesAction;
+    QAction *channelFavouritesAction;
+    QAction *friendsAction;
+    QAction *ignoreAction;
+    QAction *camsAction;
     QMenu *myMenu;
-    QAction *myStatsAct;
-    QAction *myProfileAct;
-    QAction *myAvatarAct;
+    QAction *myStatsAction;
+    QAction *myProfileAction;
+    QAction *myAvatarAction;
 
     TabManager *pTabM;
     TabContainer *pTabC;
@@ -94,7 +97,7 @@ private:
     void createMenus();
     void createSignals();
     void showOptions();
-    void createTrayMenu();
+    void setTrayMenuVisible(bool visible);
 
 private slots:
     void showWelcome();
@@ -103,8 +106,7 @@ private slots:
     void openAwaylog();
     void openNotes();
     void openAbout();
-    void buttonRestoreMinimalize();
-    void trayIconPressed(QSystemTrayIcon::ActivationReason activationReason);
+    void trayIconActivated(QSystemTrayIcon::ActivationReason activationReason);
     void ctrlTabPressed();
     void ctrlShiftTabPressed();
 
