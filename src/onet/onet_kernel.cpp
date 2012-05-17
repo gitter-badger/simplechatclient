@@ -1238,6 +1238,7 @@ void OnetKernel::raw_100n()
     strMessage.replace("&#8220;", "\"");
     strMessage.replace("&#8221;", "\"");
     strMessage.replace("&#8222;", "\"");
+    strMessage.replace("&#8230;", "...");
 
     QString strDisplay;
     if (iTime < iCurrentTime)
