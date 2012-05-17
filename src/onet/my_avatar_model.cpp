@@ -215,10 +215,10 @@ QString MyAvatarModel::scaledCropToString(QRect crop, QSize scaled, QSize origin
         }
     }
 
-    crop.moveLeft((int) (crop.x() * scale));
-    crop.moveTop((int) (crop.y() * scale));
-    crop.setWidth((int) (crop.width() * scale));
-    crop.setHeight((int) (crop.height() * scale));
+    crop.moveLeft(qRound(crop.x() * scale));
+    crop.moveTop(qRound(crop.y() * scale));
+    crop.setWidth(qRound(crop.width() * scale));
+    crop.setHeight(qRound(crop.height() * scale));
 
     QString s = QString("%1-%2-%3-%4").arg(QString::number(crop.x()), QString::number(crop.y()),
         QString::number(crop.width()), QString::number(crop.height()));
@@ -272,10 +272,10 @@ QRect MyAvatarModel::stringToScaledCrop(QString s, QSize scaled, QSize original,
         }
     }
 
-    crop.moveLeft((int) (crop.x() * scale));
-    crop.moveTop((int) (crop.y() * scale));
-    crop.setWidth((int) (crop.width() * scale));
-    crop.setHeight((int) (crop.height() * scale));
+    crop.moveLeft(qRound(crop.x() * scale));
+    crop.moveTop(qRound(crop.y() * scale));
+    crop.setWidth(qRound(crop.width() * scale));
+    crop.setHeight(qRound(crop.height() * scale));
 
     //qDebug() << "stringToScaledCrop: string:" << s << "crop:" << crop << "scale:" << scale
     //    << "orgW:" << original.width() << "orgH:" << original.height() << "scaledW:"
