@@ -33,7 +33,7 @@ public:
 
     Tray();
     void init();
-    void showMessage(const QString &strMessage);
+    void showMessage(const QString &strTrayTitle, const QString &strTrayMessage);
 };
 
 #endif // TRAY_H

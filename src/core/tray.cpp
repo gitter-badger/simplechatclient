@@ -44,12 +44,16 @@ void Tray::init()
 {
 }
 
-void Tray::showMessage(const QString &strMessage)
+void Tray::showMessage(const QString &strTitle, const QString &strMessage)
 {
     if (Core::instance()->mainWindow()->isVisible())
         return;
 
-    QString strShowMessage = strMessage;
-    Convert::simpleConvert(strShowMessage);
-    Core::instance()->mainWindow()->getTrayIcon()->showMessage(QString::null, strShowMessage);
+    QString strTrayTitle = strTitle;
+    Convert::simpleConvert(strTrayTitle);
+
+    QString strTrayMessage = strMessage;
+    Convert::simpleConvert(strTrayMessage);
+
+    Core::instance()->mainWindow()->getTrayIcon()->showMessage(strTrayTitle, strTrayMessage);
 }

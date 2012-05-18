@@ -141,7 +141,7 @@ void Message::showMessage(const QString &strChannel, const QString &strData, Mes
 //        pTabM->setAlert(index, ChannelHighlight);
 
         // tray
-        Tray::instance()->showMessage(strAwaylogData);
+        Tray::instance()->showMessage(strChannel, strAwaylogData);
     }
 
     // set color
