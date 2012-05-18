@@ -22,7 +22,6 @@
 #include <QCoreApplication>
 #include <QDateTime>
 #include <QDesktopServices>
-#include <QDir>
 #include <QFile>
 #include <QInputDialog>
 #include <QMenu>
@@ -36,6 +35,7 @@
 #include "html_messages_renderer.h"
 #include "log.h"
 #include "notify.h"
+#include "notes_model.h"
 #include "nicklist.h"
 #include "webbrowser.h"
 #include "chat_view.h"
@@ -340,55 +340,9 @@ void ChatView::openWebbrowser()
 
 void ChatView::sendToNotes()
 {
-    QString path;
-
-#ifdef Q_WS_WIN
-    path = QFileInfo(QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation)).absoluteFilePath();
-    path += "/scc";
-#else
-    path = QDir::homePath()+"/.scc";
-#endif
-
-    QString strCurrentProfile = Core::instance()->settings.value("current_profile");
-    path += "/profiles/"+strCurrentProfile;
-
-    // create dir if not exist
-    if (!QDir().exists(path))
-        QDir().mkpath(path);
-
-    QString strNotesFile = path+"/notes.txt";
-    QString strContent;
-
-    // read
-    QFile fr(strNotesFile);
-    if (fr.exists())
-    {
-        if (fr.open(QIODevice::ReadOnly))
-        {
-            // read content
-            QTextStream ts(&fr);
-            strContent = ts.readAll();
-            fr.close();
-        }
-        else
-        {
-            qDebug() << tr("Error: Cannot read notes file!");
-            return;
-        }
-    }
-
-    // content
-    strContent += this->selectedText();
-
-    // save
-    QFile f(strNotesFile);
-    if (f.open(QIODevice::WriteOnly | QIODevice::Truncate))
-    {
-        QTextStream out(&f);
-        out << strContent << "\r\n";
-
-        f.close();
-    }
+    QString strNotesContent = Notes::instance()->get();
+    strNotesContent += this->selectedText();
+    Notes::instance()->set(strNotesContent);
 }
 
 void ChatView::search()

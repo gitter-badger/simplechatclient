@@ -18,8 +18,8 @@
  *                                                                          *
  ****************************************************************************/
 
-#ifndef AWAYLOGS_H
-#define AWAYLOGS_H
+#ifndef AWAYLOG_MODEL_H
+#define AWAYLOG_MODEL_H
 
 #include <QObject>
 
@@ -41,4 +41,4 @@ private:
 
 };
 
-#endif // AWAYLOGS_H
+#endif // AWAYLOG_MODEL_H

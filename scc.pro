@@ -20,13 +20,13 @@ SOURCES += src/avatars/avatar.cpp \
     src/common/webcam_network.cpp \
     src/common/webcam_engine.cpp \
     src/common/winamp.cpp \
+    src/common/xml.cpp \
     src/core/core.cpp \
     src/core/debug.cpp \
     src/core/debug_block.cpp \
     src/core/main.cpp \
     src/core/mainwindow.cpp \
     src/core/network.cpp \
-    src/core/updates.cpp \
     src/gui/about.cpp \
     src/gui/avatar_edit.cpp \
     src/gui/awaylog.cpp \
@@ -58,13 +58,19 @@ SOURCES += src/avatars/avatar.cpp \
     src/gui/webcam.cpp \
     src/gui/webcam_mini.cpp \
     src/gui/webcam_standard.cpp \
-    src/notify/notify.cpp \
     src/onet/avatar_client.cpp \
     src/onet/captcha.cpp \
     src/onet/my_avatar_model.cpp \
     src/onet/onet_auth.cpp \
     src/onet/onet_kernel.cpp \
-    src/onet/onet_utils.cpp \
+    src/onet/onet_utils.cpp \	
+	src/singleton/awaylog_model.cpp \
+	src/singleton/message.cpp \
+	src/singleton/nicklist.cpp \
+	src/singleton/notes_model.cpp \
+	src/singleton/notify.cpp \
+	src/singleton/tray.cpp \
+	src/singleton/updates.cpp \
     src/tab/tab_container.cpp \
     src/tab/tab_manager.cpp \
     src/tab/tab_widget.cpp \
@@ -76,12 +82,7 @@ SOURCES += src/avatars/avatar.cpp \
     src/widgets/simple_rank_widget.cpp \
     src/widgets/simple_stats_widget.cpp \
     src/widgets/tool_widget.cpp \
-    src/widgets/webcam_delegate.cpp \
-    src/common/awaylogs.cpp \
-    src/common/xml.cpp \
-    src/core/nicklist.cpp \
-    src/core/message.cpp \
-    src/core/tray.cpp
+    src/widgets/webcam_delegate.cpp
 HEADERS += src/avatars/avatar.h \
     src/common/commands.h \
     src/common/config.h \
@@ -94,6 +95,7 @@ HEADERS += src/avatars/avatar.h \
     src/common/webcam_engine.h \
     src/common/webcam_network.h \
     src/common/winamp.h \
+    src/common/xml.h \
     src/core/core.h \
     src/core/debug.h \
     src/core/debug_block.h \
@@ -101,7 +103,6 @@ HEADERS += src/avatars/avatar.h \
     src/core/main.h \
     src/core/mainwindow.h \
     src/core/network.h \
-    src/core/updates.h \
     src/gui/about.h \
     src/gui/avatar_edit.h \
     src/gui/awaylog.h \
@@ -134,13 +135,19 @@ HEADERS += src/avatars/avatar.h \
     src/gui/webcam.h \
     src/gui/webcam_mini.h \
     src/gui/webcam_standard.h \
-    src/notify/notify.h \
     src/onet/avatar_client.h \
     src/onet/captcha.h \
     src/onet/my_avatar_model.h \
     src/onet/onet_auth.h \
     src/onet/onet_kernel.h \
     src/onet/onet_utils.h \
+	src/singleton/awaylog_model.h \
+	src/singleton/message.h \
+	src/singleton/nicklist.h \
+	src/singleton/notes_model.h \
+	src/singleton/notify.h \
+	src/singleton/tray.h \
+	src/singleton/updates.h \
     src/tab/tab_container.h \
     src/tab/tab_manager.h \
     src/tab/tab_widget.h \
@@ -152,12 +159,7 @@ HEADERS += src/avatars/avatar.h \
     src/widgets/simple_rank_widget.h \
     src/widgets/simple_stats_widget.h \
     src/widgets/tool_widget.h \
-    src/widgets/webcam_delegate.h \
-    src/common/awaylogs.h \
-    src/common/xml.h \
-    src/core/nicklist.h \
-    src/core/message.h \
-    src/core/tray.h
+    src/widgets/webcam_delegate.h
 FORMS += ui/about.ui \
     ui/avatar_edit.ui \
     ui/awaylog.ui \

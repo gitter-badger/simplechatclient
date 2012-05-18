@@ -19,18 +19,9 @@
  ****************************************************************************/
 
 #include <QDesktopWidget>
-#include <QDir>
-#include <QFile>
 #include <QPushButton>
-#include <QTextStream>
-#include "core.h"
+#include "notes_model.h"
 #include "notes.h"
-
-#ifdef Q_WS_WIN
-    #include <QDesktopServices>
-#else
-    #include <QDebug>
-#endif
 
 DlgNotes::DlgNotes(QWidget *parent) : QDialog(parent)
 {
@@ -42,8 +33,6 @@ DlgNotes::DlgNotes(QWidget *parent) : QDialog(parent)
 
     createGui();
 
-    // read path
-    readPath();
     // read notes
     read();
 
@@ -62,62 +51,16 @@ void DlgNotes::createSignals()
     connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(close()));
 }
 
-void DlgNotes::readPath()
-{
-#ifdef Q_WS_WIN
-    path = QFileInfo(QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation)).absoluteFilePath();
-    path += "/scc";
-#else
-    path = QDir::homePath()+"/.scc";
-#endif
-
-    QString strCurrentProfile = Core::instance()->settings.value("current_profile");
-    path += "/profiles/"+strCurrentProfile;
-
-    // create dir if not exist
-    if (!QDir().exists(path))
-        QDir().mkpath(path);
-
-    strNotesFile = path+"/notes.txt";
-}
-
 void DlgNotes::read()
 {
-    QFile f(strNotesFile);
-    if (f.exists())
-    {
-        if (f.open(QIODevice::ReadOnly))
-        {
-            // read content
-            QTextStream in(&f);
-            QString strContent = in.readAll();
-            f.close();
-
-            // set content
-            ui.plainTextEdit->setPlainText(strContent);
-        }
-        else
-        {
-            if (Core::instance()->settings.value("debug") == "true")
-                qDebug() << tr("Error: Cannot read notes file!");
-        }
-    }
+    QString strNotesContent = Notes::instance()->get();
+    ui.plainTextEdit->setPlainText(strNotesContent);
 }
 
 void DlgNotes::save()
 {
-    // get content
-    QString strContent = ui.plainTextEdit->toPlainText();
-
-    // save
-    QFile f(strNotesFile);
-    if (f.open(QIODevice::WriteOnly | QIODevice::Truncate))
-    {
-        QTextStream out(&f);
-        out << strContent << "\r\n";
-
-        f.close();
-    }
+    QString strNotesContent = ui.plainTextEdit->toPlainText();
+    Notes::instance()->set(strNotesContent);
 }
 
 void DlgNotes::buttonOk()

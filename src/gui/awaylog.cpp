@@ -20,7 +20,7 @@
 
 #include <QDesktopWidget>
 #include <QPushButton>
-#include "awaylogs.h"
+#include "awaylog_model.h"
 #include "core.h"
 #include "awaylog.h"
 

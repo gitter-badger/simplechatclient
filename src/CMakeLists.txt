@@ -32,7 +32,7 @@ set (scc_UIS
 
 set (scc_SRCS
 	avatars/avatar.cpp
-	common/awaylogs.cpp
+
 	common/commands.cpp
 	common/config.cpp
 	common/convert.cpp
@@ -41,15 +41,13 @@ set (scc_SRCS
 	common/log.cpp
 	common/replace.cpp
 	common/xml.cpp
+
 	core/core.cpp
 	core/debug_block.cpp
 	core/main.cpp
 	core/mainwindow.cpp
-	core/message.cpp
 	core/network.cpp
-	core/nicklist.cpp
-	core/tray.cpp
-	core/updates.cpp
+
 	gui/about.cpp
 	gui/avatar_edit.cpp
 	gui/awaylog.cpp
@@ -78,16 +76,26 @@ set (scc_SRCS
 	gui/user_avatar.cpp
 	gui/user_profile.cpp
 	gui/webbrowser.cpp
-	notify/notify.cpp
+
 	onet/avatar_client.cpp
 	onet/captcha.cpp
 	onet/my_avatar_model.cpp
 	onet/onet_auth.cpp
 	onet/onet_kernel.cpp
 	onet/onet_utils.cpp
+
+	singleton/awaylog_model.cpp
+	singleton/message.cpp
+	singleton/nicklist.cpp
+	singleton/notes_model.cpp
+	singleton/notify.cpp
+	singleton/tray.cpp
+	singleton/updates.cpp
+
 	tab/tab_container.cpp
 	tab/tab_manager.cpp
 	tab/tab_widget.cpp
+
 	widgets/avatar_edit_scene.cpp
 	widgets/chat_view.cpp
 	widgets/inputline_widget.cpp
@@ -100,19 +108,17 @@ set (scc_SRCS
 
 set (scc_MOC_HDRS
 	avatars/avatar.h
-	common/awaylogs.h
+
 	common/commands.h
 	common/config.h
 	common/convert.h
 	common/crypt.h
 	common/xml.h
+
 	core/core.h
 	core/mainwindow.h
-	core/message.h
 	core/network.h
-	core/nicklist.h
-	core/tray.h
-	core/updates.h
+
 	gui/about.h
 	gui/avatar_edit.h
 	gui/awaylog.h
@@ -141,14 +147,24 @@ set (scc_MOC_HDRS
 	gui/user_avatar.h
 	gui/user_profile.h
 	gui/webbrowser.h
-	notify/notify.h
+
 	onet/avatar_client.h
 	onet/captcha.h
 	onet/onet_auth.h
 	onet/onet_kernel.h
+
+	singleton/awaylog_model.h
+	singleton/message.h
+	singleton/nicklist.h
+	singleton/notes_model.h
+	singleton/notify.h
+	singleton/tray.h
+	singleton/updates.h
+
 	tab/tab_container.h
 	tab/tab_manager.h
 	tab/tab_widget.h
+
 	widgets/avatar_edit_scene.h
 	widgets/chat_view.h
 	widgets/inputline_widget.h
@@ -271,8 +287,8 @@ include_directories (
 	${CMAKE_CURRENT_SOURCE_DIR}/common
 	${CMAKE_CURRENT_SOURCE_DIR}/core
 	${CMAKE_CURRENT_SOURCE_DIR}/gui
-	${CMAKE_CURRENT_SOURCE_DIR}/notify
 	${CMAKE_CURRENT_SOURCE_DIR}/onet
+	${CMAKE_CURRENT_SOURCE_DIR}/singleton
 	${CMAKE_CURRENT_SOURCE_DIR}/tab
 	${CMAKE_CURRENT_SOURCE_DIR}/widgets
 )

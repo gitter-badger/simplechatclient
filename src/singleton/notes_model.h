@@ -18,32 +18,31 @@
  *                                                                          *
  ****************************************************************************/
 
-#ifndef NOTES_H
-#define NOTES_H
+#ifndef NOTES_MODEL_H
+#define NOTES_MODEL_H
 
-#include <QDialog>
-#include "ui_notes.h"
+#include <QObject>
 
-class DlgNotes : public QDialog
+class Notes : public QObject
 {
     Q_OBJECT
+    Q_DISABLE_COPY(Notes)
+    static Notes *Instance;
 public:
-    DlgNotes(QWidget *parent = 0);
+    static Notes *instance();
+
+    Notes();
+    void init();
+    QString get();
+    void set(const QString &strContent);
 
 private:
-    Ui::uiNotes ui;
-
-    void createGui();
-    void createSignals();
-
+    void getNotesPath();
     void read();
     void save();
 
-private slots:
-    void buttonOk();
-
-protected:
-    virtual void resizeEvent(QResizeEvent *);
+    QString strNotesContent;
+    QString strNotesFile;
 };
 
-#endif // NOTES_H
+#endif // NOTES_MODEL_H

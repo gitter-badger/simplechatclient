@@ -18,7 +18,7 @@
  *                                                                          *
  ****************************************************************************/
 
-#include "awaylogs.h"
+#include "awaylog_model.h"
 #include "core.h"
 #include "convert.h"
 #include "log.h"

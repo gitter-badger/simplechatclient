@@ -22,7 +22,7 @@
 #include "core.h"
 #include "convert.h"
 #include "log.h"
-#include "awaylogs.h"
+#include "awaylog_model.h"
 
 Awaylog * Awaylog::Instance = 0;
 

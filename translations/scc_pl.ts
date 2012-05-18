@@ -1206,10 +1206,6 @@
         <source>Notes</source>
         <translation>Notatki</translation>
     </message>
-    <message>
-        <source>Error: Cannot read notes file!</source>
-        <translation>Błąd: Nie można odczytać pliku notatek!</translation>
-    </message>
 </context>
 <context>
     <name>DlgOfflineMsg</name>
@@ -2145,6 +2141,13 @@
     <message>
         <source>IP Ban</source>
         <translation>Banuj IP</translation>
+    </message>
+</context>
+<context>
+    <name>Notes</name>
+    <message>
+        <source>Error: Cannot read notes file!</source>
+        <translation>Błąd: Nie można odczytać pliku notatek!</translation>
     </message>
 </context>
 <context>

@@ -29,7 +29,7 @@
 #include "config.h"
 #include "core.h"
 #include "about.h"
-#include "awaylogs.h"
+#include "awaylog_model.h"
 #include "awaylog.h"
 #include "channel_favourites.h"
 #include "channel_homes.h"
