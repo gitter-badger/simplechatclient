@@ -49,3 +49,7 @@ if (UNIX AND NOT APPLE)
 	install (DIRECTORY 3rdparty/sounds DESTINATION ${SCC_DATA_DIR}/3rdparty PATTERN ".svn" EXCLUDE)
 	install (DIRECTORY 3rdparty/emoticons DESTINATION ${SCC_DATA_DIR}/3rdparty PATTERN ".svn" EXCLUDE)
 endif (UNIX AND NOT APPLE)
+
+if (MINGW)
+	install (FILES src/scc.exe DESTINATION ${CMAKE_SOURCE_DIR}/release)
+endif (MINGW)
