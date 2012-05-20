@@ -47,7 +47,7 @@ void Awaylog::init()
     lAwaylog.clear();
 }
 
-void Awaylog::add(const QString &strTime, const QString &strChannel, const QString &strData)
+void Awaylog::add(int iTime, const QString &strChannel, const QString &strData)
 {
     if (Core::instance()->settings.value("away") == "false")
         return;
@@ -55,13 +55,7 @@ void Awaylog::add(const QString &strTime, const QString &strChannel, const QStri
     // save awaylog
     if (Core::instance()->settings.value("disable_logs") == "false")
     {
-        QDateTime dt;
-        if (!strTime.isEmpty())
-            dt = QDateTime::fromTime_t(strTime.toInt());
-        else
-            dt = QDateTime::currentDateTime();
-
-        QString strAwaylogFileData = QString("%1 %2 %3").arg(dt.toString("[yyyy-MM-dd] [hh:mm:ss]"), strChannel, strData);
+        QString strAwaylogFileData = QString("%1 %2 %3").arg(QDateTime::fromTime_t(iTime).toString("[yyyy-MM-dd] [hh:mm:ss]"), strChannel, strData);
         Log::save("awaylog", strAwaylogFileData);
     }
 
@@ -79,9 +73,7 @@ void Awaylog::add(const QString &strTime, const QString &strChannel, const QStri
 
     Convert::simpleConvert(strAwayLogData);
 
-    QString strDT = QDateTime::currentDateTime().toString("[hh:mm:ss]");
-
-    lAwaylog.append(QString("%1\n%2 %3").arg(strChannel, strDT, strAwayLogData));
+    lAwaylog.append(QString("%1\n%2 %3").arg(strChannel, QDateTime::fromTime_t(iTime).toString("[hh:mm:ss]"), strAwayLogData));
     awaylogAction->setVisible(true);
 }
 

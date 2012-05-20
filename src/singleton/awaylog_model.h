@@ -34,7 +34,7 @@ public:
 
     Awaylog();
     void init();
-    void add(const QString &strTime, const QString &strChannel, const QString &strAwayData);
+    void add(int iTime, const QString &strChannel, const QString &strAwayData);
     QList<QString> get();
     void clear();
 

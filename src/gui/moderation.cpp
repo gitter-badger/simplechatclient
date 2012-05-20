@@ -71,18 +71,18 @@ void DlgModeration::refreshMessages()
         QString strID = i.key();
         ModerateMsg msg = i.value();
         QString strChannel = msg.channel;
-        QString strDT = msg.datetime;
+        int iTime = msg.datetime;
         QString strNick = msg.nick;
         QString strMessage = msg.message;
 
         if (strChannel == strCurrentChannel)
         {
-            QString strData = QString("[%1] <%2> %3").arg(strDT, strNick, strMessage);
+            QString strData = QString("[%1] <%2> %3").arg(QDateTime::fromTime_t(iTime).toString("hh:mm:ss"), strNick, strMessage);
 
             QListWidgetItem *item = new QListWidgetItem();
             item->setData(Qt::UserRole, strID);
             item->setData(Qt::UserRole+1, strChannel);
-            item->setData(Qt::UserRole+2, strDT);
+            item->setData(Qt::UserRole+2, iTime);
             item->setData(Qt::UserRole+3, strNick);
             item->setData(Qt::UserRole+4, strMessage);
             item->setText(strData);
@@ -124,6 +124,7 @@ void DlgModeration::buttonAccept()
     {
         QListWidgetItem *item = list.at(i);
         QString strChannel = item->data(Qt::UserRole+1).toString();
+        int iTime = item->data(Qt::UserRole+2).toInt();
         QString strNick = item->data(Qt::UserRole+3).toString();
         QString strMessage = item->data(Qt::UserRole+4).toString();
 
@@ -132,7 +133,7 @@ void DlgModeration::buttonAccept()
 
         QString strMe = Core::instance()->settings.value("nick");
         QString strDisplay = QString("%1 [%2 %3]").arg(strMessage, tr("Moderated by"), strMe);
-        Message::instance()->showMessage(strChannel, strDisplay, DefaultMessage, QString::null, strNick);
+        Message::instance()->showMessage(strChannel, strDisplay, DefaultMessage, strNick, iTime);
     }
 
     // remove

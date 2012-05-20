@@ -837,7 +837,7 @@ void OnetKernel::raw_privmsg()
     // fix emots
     Replace::convertAndReplaceEmots(strMessage);
 
-    Message::instance()->showMessage(strChannel, strMessage, DefaultMessage, QString::null, strNick);
+    Message::instance()->showMessage(strChannel, strMessage, DefaultMessage, strNick);
 }
 
 // :cf1f2.onet NOTICE scc_test :Your message has been filtered and opers notified: spam #2480
@@ -992,7 +992,7 @@ void OnetKernel::raw_modermsg()
     QString strDisplay = QString("%1 [%2 %3]").arg(strMessage, tr("Moderated by"), strModerator);
 
     // display
-    Message::instance()->showMessage(strChannel, strDisplay, DefaultMessage, QString::null, strNick);
+    Message::instance()->showMessage(strChannel, strDisplay, DefaultMessage, strNick);
 }
 
 // :~testa!anonymous@3DE379.B7103A.6CF799.6902F4 MODERNOTICE #Scrabble :a
@@ -1011,7 +1011,7 @@ void OnetKernel::raw_modernotice()
     if (strMessage[0] == ':') strMessage.remove(0,1);
 
     // display
-    Message::instance()->showMessage(strChannel, strMessage, ModerNoticeMessage, QString::null, strNick);
+    Message::instance()->showMessage(strChannel, strMessage, ModerNoticeMessage, strNick);
 }
 
 // :cf1f1.onet MODERATE ~testa opnick #channel cf1f44c3b4b870f8a :%F:verdana%ladnie to tak
@@ -1029,12 +1029,11 @@ void OnetKernel::raw_moderate()
 
     Convert::simpleConvert(strMessage);
 
-    QDateTime dt = QDateTime::currentDateTime();
-    QString strDT = dt.toString("hh:mm:ss");
+    int iTime = (int)QDateTime::currentDateTime().toTime_t();
 
     ModerateMsg item;
     item.channel = strChannel;
-    item.datetime = strDT;
+    item.datetime = iTime;
     item.nick = strNick;
     item.message = strMessage;
 
@@ -1875,7 +1874,7 @@ void OnetKernel::raw_251n()
     else if (strNick.toLower() == "nickserv")
     {
         QString strNick = strDataList[4];
-        QString strDT = strDataList[5];
+        int iTime = strDataList[5].toInt();
         QString strType = strDataList[6];
 
         QString strMessage;
@@ -1883,7 +1882,7 @@ void OnetKernel::raw_251n()
         if (strMessage[0] == ':') strMessage.remove(0,1);
 
         OfflineMsg add;
-        add.datetime = strDT;
+        add.datetime = iTime;
         add.type = strType;
         add.nick = strNick;
         add.message = strMessage;
@@ -3893,7 +3892,7 @@ void OnetKernel::raw_817()
     if (strDataList.size() < 6) return;
 
     QString strChannel = strDataList[3];
-    QString strTime = strDataList[4];
+    int iTime = strDataList[4].toInt();
     QString strNick = strDataList[5];
 
     QString strMessage;
@@ -3901,7 +3900,7 @@ void OnetKernel::raw_817()
     if (strMessage[0] == ':') strMessage.remove(0,1);
 
     if (!strMessage.isEmpty())
-        Message::instance()->showMessage(strChannel, strMessage, DefaultMessage, strTime, strNick);
+        Message::instance()->showMessage(strChannel, strMessage, DefaultMessage, strNick, iTime);
 }
 
 // SLIST

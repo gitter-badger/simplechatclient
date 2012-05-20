@@ -24,8 +24,10 @@
 
 #include "html_messages_renderer.h"
 
-QString HtmlMessagesRenderer::renderer(QDateTime dt, QString strData, MessageCategory eMessageCategory, QString strNick)
+QString HtmlMessagesRenderer::renderer(QString strData, MessageCategory eMessageCategory, int iTime, QString strNick)
 {
+    QDateTime dt = QDateTime::fromTime_t(iTime);
+
     // fix data
     strData.replace("&", "&amp;");
     strData.replace("<", "&lt;");

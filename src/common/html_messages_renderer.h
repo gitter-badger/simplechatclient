@@ -28,7 +28,7 @@
 
 namespace HtmlMessagesRenderer
 {
-    QString renderer(QDateTime dt, QString strData, MessageCategory eMessageCategory, QString strNick = QString::null);
+    QString renderer(QString strData, MessageCategory eMessageCategory, int iTime, QString strNick = QString::null);
 };
 
 #endif // HTML_MESSAGES_RENDERER_H

@@ -71,29 +71,23 @@ bool Message::isHighlightMessage(const QString &strMessage)
     return false;
 }
 
-void Message::saveMessage(const QString &strChannel, const QString &strData, QString strTime, QString strNick)
+void Message::saveMessage(const QString &strChannel, const QString &strData, int iTime, QString strNick)
 {
-    QDateTime dt;
-    if (!strTime.isEmpty())
-        dt = QDateTime::fromTime_t(strTime.toInt());
+    if (Core::instance()->settings.value("disable_logs") == "true")
+        return;
+
+    QString strSaveData;
+    if (!strNick.isEmpty())
+        strSaveData = QString("%1 <%2> %3").arg(QDateTime::fromTime_t(iTime).toString("[hh:mm:ss]"), strNick, strData);
     else
-        dt = QDateTime::currentDateTime();
+        strSaveData = QString("%1 %2").arg(QDateTime::fromTime_t(iTime).toString("[hh:mm:ss]"), strData);
 
-    if (Core::instance()->settings.value("disable_logs") == "false")
-    {
-        QString strSaveData;
-        if (!strNick.isEmpty())
-            strSaveData = QString("%1 <%2> %3").arg(dt.toString("[hh:mm:ss]"), strNick, strData);
-        else
-            strSaveData = QString("%1 %2").arg(dt.toString("[hh:mm:ss]"), strData);
+    // fix /me
+    QString strRegExpMe = QString("%1ACTION %2%3").arg(QString(QByteArray("\x01")), "(.*)", QString(QByteArray("\x01")));
+    if (strSaveData.contains(QRegExp(strRegExpMe)))
+        strSaveData.replace(QRegExp(strRegExpMe), "\\1");
 
-        // fix /me
-        QString strRegExpMe = QString("%1ACTION %2%3").arg(QString(QByteArray("\x01")), "(.*)", QString(QByteArray("\x01")));
-        if (strSaveData.contains(QRegExp(strRegExpMe)))
-            strSaveData.replace(QRegExp(strRegExpMe), "\\1");
-
-        Log::save(strChannel, strSaveData);
-    }
+    Log::save(strChannel, strSaveData);
 }
 
 bool Message::hideJoinPart(const QString &strChannel, MessageCategory eMessageCategory)
@@ -110,7 +104,7 @@ bool Message::hideJoinPart(const QString &strChannel, MessageCategory eMessageCa
     return false;
 }
 
-void Message::showMessage(const QString &strChannel, const QString &strData, MessageCategory eMessageCategory, QString strTime, QString strNick)
+void Message::showMessage(const QString &strChannel, const QString &strData, MessageCategory eMessageCategory, QString strNick, int iTime)
 {
     if (!Core::instance()->tw.contains(strChannel))
         return;
@@ -118,6 +112,10 @@ void Message::showMessage(const QString &strChannel, const QString &strData, Mes
     // hide join part
     if (hideJoinPart(strChannel, eMessageCategory))
         return;
+
+    // time
+    if (iTime == 0)
+        iTime = (int)QDateTime::currentDateTime().toTime_t();
 
 //    int index = Core::instance()->getIndexFromChannelName(strChannel);
 
@@ -129,7 +127,7 @@ void Message::showMessage(const QString &strChannel, const QString &strData, Mes
             strAwaylogData = QString("<%1> %2").arg(strNick, strData);
 
         // awaylog
-        Awaylog::instance()->add(strTime, strChannel, strAwaylogData);
+        Awaylog::instance()->add(iTime, strChannel, strAwaylogData);
 
         // update message category
         eMessageCategory = HighlightMessage;
@@ -148,10 +146,10 @@ void Message::showMessage(const QString &strChannel, const QString &strData, Mes
 //        pTabM->setAlert(index, ChannelRed);
 
     // save message
-    saveMessage(strChannel, strData, strTime, strNick);
+    saveMessage(strChannel, strData, iTime, strNick);
 
     // display
-    Core::instance()->tw[strChannel]->pChatView->displayMessage(strData, eMessageCategory, strTime, strNick);
+    Core::instance()->tw[strChannel]->pChatView->displayMessage(strData, eMessageCategory, iTime, strNick);
 }
 
 void Message::showMessageAll(const QString &strData, MessageCategory eMessageCategory)
@@ -162,22 +160,7 @@ void Message::showMessageAll(const QString &strData, MessageCategory eMessageCat
         i.next();
         QString strChannel = i.key();
 
-        // hide join part
-        if (!hideJoinPart(strChannel, eMessageCategory))
-        {
-//            int index = Core::instance()->getIndexFromChannelName(strChannel);
-
-//            if (eMessageCategory != DefaultMessage)
-//                pTabM->setAlert(index, ChannelGreen);
-//            else
-//                pTabM->setAlert(index, ChannelRed);
-
-            // save message
-            saveMessage(strChannel, strData);
-
-            // display
-            Core::instance()->tw[strChannel]->pChatView->displayMessage(strData, eMessageCategory);
-        }
+        showMessage(strChannel, strData, eMessageCategory);
     }
 }
 
@@ -185,16 +168,5 @@ void Message::showMessageActive(const QString &strData, MessageCategory eMessage
 {
     QString strChannel = Core::instance()->getCurrentChannelName();
 
-    if (strChannel.isEmpty())
-        return;
-
-    // hide join part
-    if (hideJoinPart(strChannel, eMessageCategory))
-        return;
-
-    // save message
-    saveMessage(strChannel, strData);
-
-    // display
-    Core::instance()->tw[strChannel]->pChatView->displayMessage(strData, eMessageCategory);
+    showMessage(strChannel, strData, eMessageCategory);
 }

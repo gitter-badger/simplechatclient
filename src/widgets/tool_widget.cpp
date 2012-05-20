@@ -850,7 +850,7 @@ void ToolWidget::sendMessage(QString strText, bool bModeration)
                 strText = "%F"+weight+font+"%"+strText;
 
             Core::instance()->pNetwork->send(QString("PRIVMSG %1 :%2").arg(strChannel, strText));
-            Message::instance()->showMessage(strChannel, strText, DefaultMessage, QString::null, strMe);
+            Message::instance()->showMessage(strChannel, strText, DefaultMessage, strMe);
         }
         // me
         else if (strTextList[0] == "me")
@@ -882,7 +882,7 @@ void ToolWidget::sendMessage(QString strText, bool bModeration)
 
                 Core::instance()->pNetwork->send(strTextSend);
                 QString strDisplay = QString("%1ACTION %2%3").arg(QString(QByteArray("\x01")), strTextDisplay, QString(QByteArray("\x01")));
-                Message::instance()->showMessage(strChannel, strDisplay, MeMessage, QString::null, strMe);
+                Message::instance()->showMessage(strChannel, strDisplay, MeMessage, strMe);
             }
         }
         // other command
@@ -919,7 +919,7 @@ void ToolWidget::sendMessage(QString strText, bool bModeration)
             strText = QString("PRIVMSG %1 :%2").arg(strChannel, strText);
             Core::instance()->pNetwork->send(strText);
             QString strDisplay = strText.right(strText.length()-10-strChannel.length());
-            Message::instance()->showMessage(strChannel, strDisplay, DefaultMessage, QString::null, strMe);
+            Message::instance()->showMessage(strChannel, strDisplay, DefaultMessage, strMe);
         }
         // moder notice
         else if (bModeration)
@@ -927,7 +927,7 @@ void ToolWidget::sendMessage(QString strText, bool bModeration)
             strText = QString("MODERNOTICE %1 :%2").arg(strChannel, strText);
             Core::instance()->pNetwork->send(strText);
             QString strDisplay = strText.right(strText.length()-14-strChannel.length());
-            Message::instance()->showMessage(strChannel, strDisplay, ModerNoticeMessage, QString::null, strMe);
+            Message::instance()->showMessage(strChannel, strDisplay, ModerNoticeMessage, strMe);
         }
     }
 }

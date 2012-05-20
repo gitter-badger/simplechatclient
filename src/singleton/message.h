@@ -35,12 +35,12 @@ public:
     Message();
     void init();
 
-    void showMessage(const QString &strChannel, const QString &strData, MessageCategory eMessageCategory, QString strTime = QString::null, QString strNick = QString::null);
+    void showMessage(const QString &strChannel, const QString &strData, MessageCategory eMessageCategory, QString strNick = QString::null, int iTime = 0);
     void showMessageAll(const QString &strData, MessageCategory eMessageCategory);
     void showMessageActive(const QString &strData, MessageCategory eMessageCategory);
 
 private:
-    void saveMessage(const QString &strChannel, const QString &strData, QString strTime = QString::null, QString strNick = QString::null);
+    void saveMessage(const QString &strChannel, const QString &strData, int iTime, QString strNick = QString::null);
     bool hideJoinPart(const QString &strChannel, MessageCategory eMessageCategory);
     bool isHighlightMessage(const QString &strMessage);
 

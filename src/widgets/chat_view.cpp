@@ -140,15 +140,9 @@ void ChatView::clearMessages()
     this->page()->mainFrame()->evaluateJavaScript("clearMessages()");
 }
 
-void ChatView::displayMessage(const QString &strData, MessageCategory eMessageCategory, QString strTime, QString strNick)
+void ChatView::displayMessage(const QString &strData, MessageCategory eMessageCategory, int iTime, QString strNick)
 {
-    QDateTime dt;
-    if (!strTime.isEmpty())
-        dt = QDateTime::fromTime_t(strTime.toInt());
-    else
-        dt = QDateTime::currentDateTime();
-
-    QString strContent = HtmlMessagesRenderer::renderer(dt, strData, eMessageCategory, strNick);
+    QString strContent = HtmlMessagesRenderer::renderer(strData, eMessageCategory, iTime, strNick);
 
     // scroll
     if (this->page()->mainFrame()->scrollBarValue(Qt::Vertical) ==  this->page()->mainFrame()->scrollBarMaximum(Qt::Vertical))

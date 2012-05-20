@@ -124,15 +124,14 @@ void DlgOfflineMsg::refreshMsg()
     for (int i = 0; i < Core::instance()->lOfflineMsg.size(); i++)
     {
         OfflineMsg msg = Core::instance()->lOfflineMsg.at(i);
-        QString strTime = msg.datetime;
+        int iTime = msg.datetime;
         QString strType = msg.type;
         QString strNick = msg.nick;
         QString strMessage = msg.message;
 
         if (strNick == strCurrentNick)
         {
-            QDateTime dt = QDateTime::fromTime_t(strTime.toInt());
-            QString strDT = dt.toString("[dd MMM yyyy] [hh:mm:ss]");
+            QString strDT = QDateTime::fromTime_t(iTime).toString("[dd MMM yyyy] [hh:mm:ss]");
 
             Convert::simpleConvert(strMessage);
 

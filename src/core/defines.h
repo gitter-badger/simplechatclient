@@ -54,14 +54,14 @@ struct ChannelList
 struct ModerateMsg
 {
     QString channel;
-    QString datetime;
+    int datetime;
     QString nick;
     QString message;
 };
 
 struct OfflineMsg
 {
-    QString datetime;
+    int datetime;
     QString type;
     QString nick;
     QString message;
