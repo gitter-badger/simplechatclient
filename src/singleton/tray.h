@@ -34,6 +34,12 @@ public:
     Tray();
     void init();
     void showMessage(const QString &strTrayTitle, const QString &strTrayMessage);
+
+private:
+    QString strLastMessageTitle;
+
+private slots:
+    void messageClicked();
 };
 
 #endif // TRAY_H

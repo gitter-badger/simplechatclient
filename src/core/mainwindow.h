@@ -49,6 +49,7 @@ public:
     void refreshToolWidgetValues();
     // for core
     int getCurrentTabIndex();
+    void changeCurrentTab(const QString &strChannel);
     QSystemTrayIcon *getTrayIcon();
 
 private:

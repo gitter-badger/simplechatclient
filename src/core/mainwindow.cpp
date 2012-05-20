@@ -686,6 +686,13 @@ void MainWindow::tabCloseRequested(int index)
     pTabC->partTab(index);
 }
 
+// change tab
+void MainWindow::changeCurrentTab(const QString &strChannel)
+{
+    int index = Core::instance()->getIndexFromChannelName(strChannel);
+    pTabM->setCurrentIndex(index);
+}
+
 // tab changed
 void MainWindow::currentTabChanged(int index)
 {

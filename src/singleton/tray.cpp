@@ -42,6 +42,7 @@ Tray::Tray()
 
 void Tray::init()
 {
+    connect(Core::instance()->mainWindow()->getTrayIcon(), SIGNAL(messageClicked()), this, SLOT(messageClicked()));
 }
 
 void Tray::showMessage(const QString &strTitle, const QString &strMessage)
@@ -55,5 +56,15 @@ void Tray::showMessage(const QString &strTitle, const QString &strMessage)
     QString strTrayMessage = strMessage;
     Convert::simpleConvert(strTrayMessage);
 
+    strLastMessageTitle = strTrayTitle;
+
     Core::instance()->mainWindow()->getTrayIcon()->showMessage(strTrayTitle, strTrayMessage);
+}
+
+void Tray::messageClicked()
+{
+    if (!Core::instance()->mainWindow()->isVisible())
+        Core::instance()->mainWindow()->showNormal();
+
+    Core::instance()->mainWindow()->changeCurrentTab(strLastMessageTitle);
 }
