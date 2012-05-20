@@ -18,6 +18,7 @@
  *                                                                          *
  ****************************************************************************/
 
+#include <QAction>
 #include <QDateTime>
 #include "core.h"
 #include "convert.h"
@@ -43,7 +44,7 @@ Awaylog::Awaylog()
 
 void Awaylog::init()
 {
-    clear();
+    lAwaylog.clear();
 }
 
 void Awaylog::add(const QString &strTime, const QString &strChannel, const QString &strData)
@@ -81,6 +82,7 @@ void Awaylog::add(const QString &strTime, const QString &strChannel, const QStri
     QString strDT = QDateTime::currentDateTime().toString("[hh:mm:ss]");
 
     lAwaylog.append(QString("%1\n%2 %3").arg(strChannel, strDT, strAwayLogData));
+    awaylogAction->setVisible(true);
 }
 
 QList<QString> Awaylog::get()
@@ -91,4 +93,5 @@ QList<QString> Awaylog::get()
 void Awaylog::clear()
 {
     lAwaylog.clear();
+    awaylogAction->setVisible(false);
 }

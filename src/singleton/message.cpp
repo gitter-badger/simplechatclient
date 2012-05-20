@@ -131,9 +131,6 @@ void Message::showMessage(const QString &strChannel, const QString &strData, Mes
         // awaylog
         Awaylog::instance()->add(strTime, strChannel, strAwaylogData);
 
-        // update awaylog status
-//        emit updateAwaylogStatus();
-
         // update message category
         eMessageCategory = HighlightMessage;
 

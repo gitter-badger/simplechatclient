@@ -21,6 +21,7 @@
 #ifndef AWAYLOG_MODEL_H
 #define AWAYLOG_MODEL_H
 
+class QAction;
 #include <QObject>
 
 class Awaylog : public QObject
@@ -36,6 +37,8 @@ public:
     void add(const QString &strTime, const QString &strChannel, const QString &strAwayData);
     QList<QString> get();
     void clear();
+
+    QAction *awaylogAction;
 
 private:
     QList<QString> lAwaylog;

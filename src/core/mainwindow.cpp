@@ -91,7 +91,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     Core::instance()->offlineMsgAction->setVisible(false);
 
     // hide awaylog
-    awaylogAction->setVisible(false);
+    Awaylog::instance()->awaylogAction->setVisible(false);
 
     // show welcome
     QTimer::singleShot(0, this, SLOT(showWelcome())); // 0 sec
@@ -161,7 +161,7 @@ void MainWindow::createActions()
     connectAction = new QAction(QIcon(":/images/oxygen/16x16/network-connect.png"), tr("&Connect"), this);
     optionsAction = new QAction(QIcon(":/images/oxygen/16x16/preferences-system.png"), tr("Options"), this);
     aboutAction = new QAction(QIcon(":/images/logo16x16.png"), tr("About SCC ..."), this);
-    awaylogAction = new QAction(QIcon(":/images/oxygen/16x16/view-pim-tasks.png"), tr("Awaylog"), this);
+    Awaylog::instance()->awaylogAction = new QAction(QIcon(":/images/oxygen/16x16/view-pim-tasks.png"), tr("Awaylog"), this);
     notesAction = new QAction(QIcon(":/images/oxygen/16x16/story-editor.png"), tr("Notes"), this);
 
     // onet action
@@ -193,7 +193,7 @@ void MainWindow::createActions()
     friendsAction->setShortcut(tr("Ctrl+P"));
     ignoreAction->setShortcut(tr("Ctrl+I"));
     Core::instance()->offlineMsgAction->setShortcut(tr("Ctrl+M"));
-    awaylogAction->setShortcut(tr("Ctrl+J"));
+    Awaylog::instance()->awaylogAction->setShortcut(tr("Ctrl+J"));
     camsAction->setShortcut(tr("Ctrl+K"));
 }
 
@@ -217,7 +217,7 @@ void MainWindow::createMenus()
     chatMenu->addAction(friendsAction);
     chatMenu->addAction(ignoreAction);
     chatMenu->addAction(Core::instance()->offlineMsgAction);
-    chatMenu->addAction(awaylogAction);
+    chatMenu->addAction(Awaylog::instance()->awaylogAction);
     chatMenu->addAction(camsAction);
     chatMenu->addSeparator();
     chatMenu->addAction(Core::instance()->busyAction);
@@ -250,7 +250,7 @@ void MainWindow::createMenus()
     // offline messages
     toolBar->addAction(Core::instance()->offlineMsgAction);
     // awaylog
-    toolBar->addAction(awaylogAction);
+    toolBar->addAction(Awaylog::instance()->awaylogAction);
     // onet cams
     toolBar->addAction(camsAction);
     // notes
@@ -304,7 +304,7 @@ void MainWindow::createSignals()
     connect(myAvatarAction, SIGNAL(triggered()), this, SLOT(openMyAvatar()));
 
     connect(Core::instance()->offlineMsgAction, SIGNAL(triggered()), this, SLOT(openOfflinemsg()));
-    connect(awaylogAction, SIGNAL(triggered()), this, SLOT(openAwaylog()));
+    connect(Awaylog::instance()->awaylogAction, SIGNAL(triggered()), this, SLOT(openAwaylog()));
     connect(camsAction, SIGNAL(triggered()), this, SLOT(openCams()));
     connect(notesAction, SIGNAL(triggered()), this, SLOT(openNotes()));
 
@@ -316,7 +316,6 @@ void MainWindow::createSignals()
     connect(quitAction, SIGNAL(triggered()), qApp, SLOT(quit()));
 
     // signals from tabc
-//    connect(pTabC, SIGNAL(updateAwaylogStatus()), this, SLOT(updateAwaylogStatus()));
 //    connect(pTabC, SIGNAL(setModeration(bool)), pToolWidget, SLOT(setModeration(bool)));
 
     // signals tab
@@ -473,20 +472,6 @@ void MainWindow::updateActions()
     }
 }
 
-void MainWindow::updateAwaylogStatus()
-{
-    if (Awaylog::instance()->get().size() == 0)
-    {
-        if (awaylogAction->isVisible())
-            awaylogAction->setVisible(false);
-    }
-    else
-    {
-        if (!awaylogAction->isVisible())
-            awaylogAction->setVisible(true);
-    }
-}
-
 void MainWindow::openOptions()
 {
     DlgOptions(this).exec();
@@ -572,7 +557,7 @@ void MainWindow::openOfflinemsg()
 
 void MainWindow::openAwaylog()
 {
-    DlgAwaylog(this, awaylogAction).exec();
+    DlgAwaylog(this).exec();
 }
 
 void MainWindow::openCams()

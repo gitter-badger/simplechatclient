@@ -61,7 +61,6 @@ private:
     QAction *connectAction;
     QAction *optionsAction;
     QAction *aboutAction;
-    QAction *awaylogAction;
     QAction *notesAction;
     QMenu *trayIconMenu;
     QSystemTrayIcon *trayIcon;
@@ -128,7 +127,6 @@ private slots:
     void setConnected();
     void setDisconnected();
     void updateActions();
-    void updateAwaylogStatus();
     void setConnectEnabled(bool bSet);
     void tabCloseRequested(int index);
     void currentTabChanged(int index);

@@ -24,7 +24,7 @@
 #include "core.h"
 #include "awaylog.h"
 
-DlgAwaylog::DlgAwaylog(QWidget *parent, QAction *_awaylogAct) : QDialog(parent), awaylogAct(_awaylogAct)
+DlgAwaylog::DlgAwaylog(QWidget *parent) : QDialog(parent)
 {
     ui.setupUi(this);
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
@@ -67,10 +67,6 @@ void DlgAwaylog::buttonReset()
 {
     Awaylog::instance()->clear();
     ui.listWidget->clear();
-
-    // hide
-    if (awaylogAct->isVisible())
-        awaylogAct->setVisible(false);
 }
 
 void DlgAwaylog::buttonClose()
