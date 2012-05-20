@@ -118,8 +118,6 @@ void Message::showMessage(const QString &strChannel, const QString &strData, Mes
     if (iTime == 0)
         iTime = (int)QDateTime::currentDateTime().toTime_t();
 
-//    int index = Core::instance()->getIndexFromChannelName(strChannel);
-
     // highlight
     if ((isHighlightMessage(strData)) && (eMessageCategory == DefaultMessage))
     {
