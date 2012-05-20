@@ -90,7 +90,7 @@ void Message::saveMessage(const QString &strChannel, const QString &strData, int
     Log::save(strChannel, strSaveData);
 }
 
-bool Message::hideJoinPart(const QString &strChannel, MessageCategory eMessageCategory)
+bool Message::isHideJoinPart(const QString &strChannel, MessageCategory eMessageCategory)
 {
     if ((eMessageCategory == JoinMessage) || (eMessageCategory == PartMessage) || (eMessageCategory == QuitMessage))
     {
@@ -110,7 +110,7 @@ void Message::showMessage(const QString &strChannel, const QString &strData, Mes
         return;
 
     // hide join part
-    if (hideJoinPart(strChannel, eMessageCategory))
+    if (isHideJoinPart(strChannel, eMessageCategory))
         return;
 
     // time
