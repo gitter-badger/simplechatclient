@@ -124,7 +124,7 @@ void Core::createAndShowGui()
 void Core::createSettings()
 {
     // default settings
-    settings["version"] = "1.5.0.git";
+    settings["version"] = "1.5.0.git"+QDate::currentDate().toString("yyyyMMdd");
     settings["available_version"] = "";
     settings["whats_new"] = "";
     settings["motd"] = "";
