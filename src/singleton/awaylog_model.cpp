@@ -31,7 +31,7 @@ Awaylog * Awaylog::instance()
     if (!Instance)
     {
         Instance = new Awaylog();
-        Instance->clear();
+        Instance->init();
     }
 
     return Instance;
@@ -39,6 +39,11 @@ Awaylog * Awaylog::instance()
 
 Awaylog::Awaylog()
 {
+}
+
+void Awaylog::init()
+{
+    clear();
 }
 
 void Awaylog::add(const QString &strTime, const QString &strChannel, const QString &strData)

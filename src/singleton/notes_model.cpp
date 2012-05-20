@@ -48,10 +48,10 @@ Notes::Notes()
 
 void Notes::init()
 {
-    getNotesPath();
+    refreshPath();
 }
 
-void Notes::getNotesPath()
+void Notes::refreshPath()
 {
     QString path;
 
@@ -70,10 +70,16 @@ void Notes::getNotesPath()
         QDir().mkpath(path);
 
     strNotesFile = path+"/notes.txt";
+    strNotesUserProfile = strCurrentProfile;
 }
 
 void Notes::read()
 {
+    if (Core::instance()->settings.value("current_profile") != strNotesUserProfile)
+        refreshPath();
+
+    strNotesContent.clear(); // clear before read
+
     QFile f(strNotesFile);
     if (f.exists())
     {
@@ -94,6 +100,9 @@ void Notes::read()
 
 void Notes::save()
 {
+    if (Core::instance()->settings.value("current_profile") != strNotesUserProfile)
+        refreshPath();
+
     QFile f(strNotesFile);
     if (f.open(QIODevice::WriteOnly | QIODevice::Truncate))
     {

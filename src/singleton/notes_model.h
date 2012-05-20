@@ -37,12 +37,13 @@ public:
     void set(const QString &strContent);
 
 private:
-    void getNotesPath();
+    void refreshPath();
     void read();
     void save();
 
     QString strNotesContent;
     QString strNotesFile;
+    QString strNotesUserProfile;
 };
 
 #endif // NOTES_MODEL_H
