@@ -1236,6 +1236,34 @@
       </widget>
      </widget>
     </widget>
+    <widget class="QWidget" name="page">
+     <widget class="QGroupBox" name="groupBox_notification">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>20</y>
+        <width>441</width>
+        <height>111</height>
+       </rect>
+      </property>
+      <property name="title">
+       <string>Notification</string>
+      </property>
+      <widget class="QCheckBox" name="checkBox_tray_message">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>50</y>
+         <width>421</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Show tray notification</string>
+       </property>
+      </widget>
+     </widget>
+    </widget>
    </widget>
   </widget>
  </widget>

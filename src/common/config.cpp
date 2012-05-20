@@ -172,6 +172,7 @@ QHash<QString,QString> Config::getDefaultValues()
         lDefaultValues.insert("background_image", strBackgroundImage);
         lDefaultValues.insert("disable_background_image", "false");
         lDefaultValues.insert("winamp", "$song [$position/$length] //muzyka");
+        lDefaultValues.insert("tray_message", "true");
         lDefaultValues.insert("always_quit", "false");
     }
 

@@ -138,6 +138,10 @@ void DlgOptions::createGui()
     ui.label_winamp_length->setText(tr("$length - length"));
     ui.pushButton_set_winamp->setText(tr("Set"));
 
+    // page notification
+    ui.groupBox_notification->setTitle(tr("Notification"));
+    ui.checkBox_tray_message->setText(tr("Show tray notification"));
+
     // options list
     QTreeWidgetItem *basic = new QTreeWidgetItem(ui.treeWidget_options);
     basic->setIcon(0, QIcon(":/images/oxygen/16x16/view-media-artist.png"));
@@ -178,6 +182,11 @@ void DlgOptions::createGui()
     winamp->setIcon(0, QIcon(":/images/winamp.png"));
     winamp->setText(0, tr("Winamp"));
     winamp->setToolTip(0, tr("Winamp"));
+
+    QTreeWidgetItem *notification = new QTreeWidgetItem(ui.treeWidget_options);
+    notification->setIcon(0, QIcon(":/images/oxygen/16x16/help-hint.png"));
+    notification->setText(0, tr("Notification"));
+    notification->setToolTip(0, tr("Notification"));
 }
 
 void DlgOptions::setDefaultValues()
@@ -255,6 +264,8 @@ void DlgOptions::setDefaultValues()
     QString strDisableBackgroundImage = Core::instance()->settings.value("disable_background_image");
 
     QString strWinamp = Core::instance()->settings.value("winamp");
+
+    QString strTrayMessage = Core::instance()->settings.value("tray_message");
 
     // themes
     if (strThemes == "Standard")
@@ -357,6 +368,12 @@ void DlgOptions::setDefaultValues()
     // winamp
     ui.lineEdit_winamp->setText(strWinamp);
 
+    // tray message
+    if (strTrayMessage == "true")
+        ui.checkBox_tray_message->setChecked(true);
+    else
+        ui.checkBox_tray_message->setChecked(false);
+
     // set mainwindow colors
     setMainwindowColors();
 
@@ -424,6 +441,7 @@ void DlgOptions::createSignals()
     connect(ui.pushButton_set_background_image, SIGNAL(clicked()), this, SLOT(setBackgroundImage()));
     connect(ui.checkBox_disable_background_image, SIGNAL(clicked(bool)), this, SLOT(disableBackgroundImage(bool)));
     connect(ui.pushButton_set_winamp, SIGNAL(clicked()), this, SLOT(setWinamp()));
+    connect(ui.checkBox_tray_message, SIGNAL(clicked(bool)), this, SLOT(trayMessage(bool)));
     connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(close()));
 }
 
@@ -1080,6 +1098,16 @@ void DlgOptions::setWinamp()
     Config *pConfig = new Config();
     pConfig->setValue("winamp", strValue);
     Core::instance()->settings["winamp"] = strValue;
+    delete pConfig;
+}
+
+void DlgOptions::trayMessage(bool bValue)
+{
+    QString strValue = (bValue ? "true" : "false");
+
+    Config *pConfig = new Config();
+    pConfig->setValue("tray_message", strValue);
+    Core::instance()->settings["tray_message"] = strValue;
     delete pConfig;
 }
 

@@ -1536,6 +1536,14 @@
         <source>Inactive</source>
         <translation>Nieaktywne</translation>
     </message>
+    <message>
+        <source>Notification</source>
+        <translation>Powiadomienia</translation>
+    </message>
+    <message>
+        <source>Show tray notification</source>
+        <translation>Pokaż powiadomienia w zasobniku</translation>
+    </message>
 </context>
 <context>
     <name>DlgProfileAdd</name>

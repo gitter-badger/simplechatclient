@@ -92,6 +92,7 @@ private slots:
     void setBackgroundImage();
     void disableBackgroundImage(bool bValue);
     void setWinamp();
+    void trayMessage(bool);
 };
 
 #endif // OPTIONS_H
