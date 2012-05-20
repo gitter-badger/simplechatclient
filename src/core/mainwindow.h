@@ -50,6 +50,7 @@ public:
     // for core
     int getCurrentTabIndex();
     void changeCurrentTab(const QString &strChannel);
+    void setTabColor(const QString &strChannel, MessageCategory eMessageCategory);
     QSystemTrayIcon *getTrayIcon();
 
 private:

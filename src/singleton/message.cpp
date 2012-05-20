@@ -22,6 +22,7 @@
 #include "core.h"
 #include "convert.h"
 #include "log.h"
+#include "mainwindow.h"
 #include "nicklist.h"
 #include "tray.h"
 #include "message.h"
@@ -122,6 +123,10 @@ void Message::showMessage(const QString &strChannel, const QString &strData, Mes
     // highlight
     if ((isHighlightMessage(strData)) && (eMessageCategory == DefaultMessage))
     {
+        // update message category
+        eMessageCategory = HighlightMessage;
+
+        // awaylog
         QString strAwaylogData = strData;
         if (!strNick.isEmpty())
             strAwaylogData = QString("<%1> %2").arg(strNick, strData);
@@ -129,21 +134,12 @@ void Message::showMessage(const QString &strChannel, const QString &strData, Mes
         // awaylog
         Awaylog::instance()->add(iTime, strChannel, strAwaylogData);
 
-        // update message category
-        eMessageCategory = HighlightMessage;
-
-        // highlight
-//        pTabM->setAlert(index, ChannelHighlight);
-
         // tray
         Tray::instance()->showMessage(strChannel, strAwaylogData);
     }
 
-    // set color
-//    if (eMessageCategory != DefaultMessage)
-//        pTabM->setAlert(index, ChannelGreen);
-//    else
-//        pTabM->setAlert(index, ChannelRed);
+    // change tab color
+    Core::instance()->mainWindow()->setTabColor(strChannel, eMessageCategory);
 
     // save message
     saveMessage(strChannel, strData, iTime, strNick);

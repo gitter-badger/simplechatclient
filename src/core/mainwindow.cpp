@@ -671,6 +671,18 @@ void MainWindow::tabCloseRequested(int index)
     pTabC->partTab(index);
 }
 
+void MainWindow::setTabColor(const QString &strChannel, MessageCategory eMessageCategory)
+{
+    int index = Core::instance()->getIndexFromChannelName(strChannel);
+
+    if (eMessageCategory == HighlightMessage)
+        pTabM->setAlert(index, ChannelHighlight);
+    else if (eMessageCategory != DefaultMessage)
+        pTabM->setAlert(index, ChannelGreen);
+    else
+        pTabM->setAlert(index, ChannelRed);
+}
+
 // change tab
 void MainWindow::changeCurrentTab(const QString &strChannel)
 {
