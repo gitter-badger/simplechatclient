@@ -47,7 +47,7 @@ void Tray::init()
 
 void Tray::showMessage(const QString &strTitle, const QString &strMessage)
 {
-    if ((Core::instance()->mainWindow()->isVisible()) || (Core::instance()->settings.value("tray_message") == "false"))
+    if ((Core::instance()->mainWindow()->isActiveWindow()) || (Core::instance()->settings.value("tray_message") == "false"))
         return;
 
     QString strTrayTitle = strTitle;
@@ -63,8 +63,7 @@ void Tray::showMessage(const QString &strTitle, const QString &strMessage)
 
 void Tray::messageClicked()
 {
-    if (!Core::instance()->mainWindow()->isVisible())
-        Core::instance()->mainWindow()->showNormal();
-
+    Core::instance()->mainWindow()->showNormal();
+    Core::instance()->mainWindow()->activateWindow();
     Core::instance()->mainWindow()->changeCurrentTab(strLastMessageTitle);
 }
