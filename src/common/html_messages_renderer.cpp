@@ -132,11 +132,6 @@ QString HtmlMessagesRenderer::renderer(QString strData, MessageCategory eMessage
     // convert emoticons, font
     Convert::convertText(strData, true);
 
-#ifndef Q_WS_WIN
-    // fix linux img src
-    strData.replace("img src=\"", "img src=\"file://");
-#endif
-
     // highlight
     QString strTextDecoration;
     if (eMessageCategory == HighlightMessage)

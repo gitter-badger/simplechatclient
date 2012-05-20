@@ -132,6 +132,9 @@ void convertEmoticons(QString &strData, bool bInsertWidthHeight)
                 {
                     QPixmap p(strEmoticonPath);
                     strWidthHeight = "width=\""+QString::number(p.width())+"px\" height=\""+QString::number(p.height())+"px\"";
+#ifndef Q_WS_WIN
+                    strEmoticonPath = "file://"+strEmoticonPath;
+#endif
                 }
 
                 strData.replace(strEmoticonFull, QString("<img src=\"%1\" alt=\"%2\" title=\"%2\" %3 />").arg(strEmoticonPath, strEmoticon, strWidthHeight));
