@@ -9,3 +9,6 @@ libssl-dev libqca2-dev libqca2-plugin-ossl libphonon-dev g++ cmake make
 
 To compile without Phonon use -DWITH_PHONON=OFF option, i.e.:
 cmake . -DWITH_PHONON=OFF
+
+To compile with non-standard libQCA path use -DWIN32_QCA2_DIR=DIR option, i.e.:
+cmake . -DWIN32_QCA2_DIR=C:\QCA2
