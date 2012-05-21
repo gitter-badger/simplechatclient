@@ -168,6 +168,9 @@ DlgEmoticons::~DlgEmoticons()
 
 void DlgEmoticons::buttonInsert()
 {
+    if (ui.tabWidget->count() == 0) // not found tabs
+        return;
+
     DlgEmoticonsTab *tab = (DlgEmoticonsTab *)ui.tabWidget->currentWidget();
 
     if (!tab->listWidget->selectedItems().isEmpty())
