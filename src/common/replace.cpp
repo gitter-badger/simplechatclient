@@ -25,10 +25,12 @@
 
 void Replace::replaceEmots(QString &strData)
 {
-    // return if disable replaces == on
-    if (Core::instance()->settings.value("disable_replaces") == "true") return;
-
+    // simple reverse convert
     Convert::simpleReverseConvert(strData);
+
+    // return if disable replaces == on
+    if (Core::instance()->settings.value("disable_replaces") == "true")
+        return;
 
     // replace
     strData.replace(":))", "%Ihaha%");

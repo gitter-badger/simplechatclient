@@ -197,8 +197,6 @@ bool Convert::isBold(const QString &strData)
     int pos = 0;
     if ((pos = rx.indexIn(strData, pos)) != -1)
     {
-        pos += rx.matchedLength();
-
         QString strFontStyle = rx.cap(1);
 
         if (strFontStyle.contains("b"))
@@ -216,8 +214,6 @@ bool Convert::isItalic(const QString &strData)
     int pos = 0;
     if ((pos = rx.indexIn(strData, pos)) != -1)
     {
-        pos += rx.matchedLength();
-
         QString strFontStyle = rx.cap(1);
 
         if (strFontStyle.contains("i"))
@@ -235,10 +231,7 @@ QString Convert::getFont(const QString &strData)
     int pos = 0;
     if ((pos = rx.indexIn(strData, pos)) != -1)
     {
-        pos += rx.matchedLength();
-
         QString strFontName = rx.cap(2);
-
         return strFontName;
     }
     return QString::null;
