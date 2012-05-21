@@ -1,7 +1,6 @@
 /****************************************************************************
  *                                                                          *
  *   This file is part of Simple Chat Client                                *
- *   Copyright (C) 2012 Piotr Łuczko <piotr.luczko@gmail.com>               *
  *   Copyright (C) 2012 Dariusz Markowicz <dmarkowicz@alari.pl>             *
  *                                                                          *
  *   This program is free software: you can redistribute it and/or modify   *
@@ -19,84 +18,70 @@
  *                                                                          *
  ****************************************************************************/
 
-#ifndef AVATAR_CLIENT_H
-#define AVATAR_CLIENT_H
+#ifndef AVATAR_LIST_WIDGET_H
+#define AVATAR_LIST_WIDGET_H
 
-#include <QByteArray>
-#include <QNetworkAccessManager>
-#include <QNetworkReply>
+#include <QWidget>
 
-class QNetworkCookieJar;
-class MyAvatarModel;
+#include "avatar_client.h"
+#include "my_avatar_model.h"
 
-class AvatarClient : public QNetworkAccessManager
+#include "ui_avatar_list_widget.h"
+
+class AvatarListWidget : public QWidget
 {
     Q_OBJECT
+    
 public:
-    typedef QMap<QString, int> AvatarCollection;
+    typedef QMap<QString, int> AvatarCollections;
 
-    enum AvatarType
-    {
-        AT_my,
-        AT_myRaw,
-        AT_collection,
-        AT_other
-    };
+    AvatarListWidget(QWidget *parent = 0);
+    ~AvatarListWidget();
 
-    AvatarClient();
-    virtual ~AvatarClient();
-
-    void requestGetCollections();
-    void requestGetCollectionAvatars(int id);
-    void requestGetMyAvatars();
-    void requestSetAvatar(int imgId, int albumId);
-    void requestUploadImage(const QString &fileName, const QByteArray &data);
-    void requestUpdatePhoto(const MyAvatarModel &avatar);
-    void requestAddPhoto(const MyAvatarModel &avatar);
-    void requestDeletePhoto(int imgId);
-    void requestGetAvatar(const QString &avatarUrl, AvatarType type);
+    void initialize(AvatarClient *avatarClient);
+    bool isInitialized() const;
 
 signals:
+    void avatarSelected(const QString &avatarUrl);
+
+public slots:
     void getCollectionsReady(const QByteArray &content);
     void getCollectionAvatarsReady(const QByteArray &content);
     void getMyAvatarsReady(const QByteArray &content);
-    void setAvatarReady(const QByteArray &content);
     void uploadImageReady(const QByteArray &content, const QString &fileName);
     void updatePhotoReady(const QByteArray &content);
     void addPhotoReady(const QByteArray &content);
     void deletePhotoReady(const QByteArray &content);
     void getAvatarReady(const QByteArray &content, const QString &avatarUrl, AvatarClient::AvatarType type);
-    void errorOccured(QNetworkReply::NetworkError error);
-
-protected slots:
-    void replyFinished(QNetworkReply *reply);
 
 private:
-    // Names here intentionally similar to Onet Avatar API
-    enum RequestType
+    Ui::AvatarListWidget ui;
+
+    AvatarClient *avatarClient;
+    AvatarCollections collections; // name, id
+
+    void createGui();
+    void createSignals();
+
+    void drawMyAvatar(const QPixmap &pixmap, const QString &avatarUrl);
+    void drawAvatarFromCollection(const QPixmap &pixmap, const QString &avatarUrl);
+
+    class MyAvatarListWidgetItem : public QListWidgetItem
     {
-        RT_getCollections,
-        RT_getAvatarsFromCollect,
-        RT_loadFAvatars,
-        RT_setAvatar,
-        RT_uploadImage,
-        RT_updatePhoto,
-        RT_addPhoto,
-        RT_deletePhoto,
-
-        RT_getMyAvatar,
-        RT_getMyRawAvatar,
-        RT_getCollectionAvatar,
-        RT_getAvatar,
-
-        RT_undefined
+    public:
+        MyAvatarListWidgetItem(const MyAvatarModel &avatar) : avatar(avatar) {}
+        MyAvatarModel avatar;
     };
 
-    void getCookies();
-    QString createRid();
-
-    QNetworkRequest basicRequest;
-
+private slots:
+    void tabChanged(int index);
+    void collectionChanged(QString strName);
+    void addAvatarClicked();
+    void editAvatarClicked();
+    void setMyAvatarClicked();
+    void removeAvatarClicked();
+    void setEmptyAvatarClicked();
+    void setCollectionAvatarClicked();
 };
 
-#endif /* AVATAR_CLIENT_H */
+#endif // AVATAR_LIST_WIDGET_H

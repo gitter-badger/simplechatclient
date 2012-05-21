@@ -73,15 +73,15 @@ private:
 
     int rotate(Rotate);
 
-    int _angle;
-    QString _crop;
-    int _height;
-    QString _img;
-    int _imgId;
-    int _width;
-    QString _desc;
-    int _mApp;
-    QString _mSrv;
+    int m_angle;
+    QString m_crop;
+    int m_height;
+    QString m_img;
+    int m_imgId;
+    int m_width;
+    QString m_desc;
+    int m_mApp;
+    QString m_mSrv;
 
 };
 

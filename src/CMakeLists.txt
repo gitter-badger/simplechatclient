@@ -2,6 +2,7 @@
 set (scc_UIS
 	../ui/about.ui
 	../ui/avatar_edit.ui
+	../ui/avatar_list_widget.ui
 	../ui/awaylog.ui
 	../ui/captcha.ui
 	../ui/channel_favourites.ui
@@ -97,6 +98,7 @@ set (scc_SRCS
 	tab/tab_widget.cpp
 
 	widgets/avatar_edit_scene.cpp
+	widgets/avatar_list_widget.cpp
 	widgets/chat_view.cpp
 	widgets/inputline_widget.cpp
 	widgets/nicklist_delegate.cpp
@@ -166,6 +168,7 @@ set (scc_MOC_HDRS
 	tab/tab_widget.h
 
 	widgets/avatar_edit_scene.h
+	widgets/avatar_list_widget.h
 	widgets/chat_view.h
 	widgets/inputline_widget.h
 	widgets/nicklist_delegate.h

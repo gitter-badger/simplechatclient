@@ -34,7 +34,7 @@ public:
     AvatarEditScene(QObject *parent = 0);
     virtual ~AvatarEditScene();
 
-    void setPhoto(const QPixmap &pixPhoto, const QRect &crop);
+    void setPhoto(const QPixmap &photo, const QRect &crop);
 
 signals:
     void cropChanged(const QRect &);
@@ -45,21 +45,20 @@ protected:
     void mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent);
 
 private:
-    QGraphicsTextItem *cursor;
-    QGraphicsPixmapItem *gpiPhoto;
-    QGraphicsRectItem *griPhotoBlur;
-    QGraphicsPixmapItem *gpiCrop;
-    QGraphicsPixmapItem *gpiCropper;
+    QGraphicsPixmapItem *photoItem;
+    QGraphicsRectItem *photoBlurItem;
+    QGraphicsPixmapItem *cropItem;
+    QGraphicsPixmapItem *cropperItem;
 
     QRect crop;
     QRect cropper;
-    QPixmap pixCropper;
-    QPixmap pixPhoto;
+    QPixmap photo;
 
     QPoint origin;
     bool isSizing;
     bool isDragged;
 
+    QPixmap getCropper();
     void redraw();
 };
 

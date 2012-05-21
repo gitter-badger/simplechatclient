@@ -26,10 +26,10 @@
 
 MyAvatarModel::MyAvatarModel()
 {
-    _angle = -1;
-    _height = -1;
-    _imgId = -1;
-    _mApp = -1;
+    m_angle = -1;
+    m_height = -1;
+    m_imgId = -1;
+    m_mApp = -1;
 }
 
 MyAvatarModel::~MyAvatarModel()
@@ -38,9 +38,9 @@ MyAvatarModel::~MyAvatarModel()
 
 QString MyAvatarModel::getUrl() const
 {
-    if ((!_mSrv.isEmpty()) && (!_img.isEmpty()) && (_mApp >= 0) && (_angle >= 0) && (_imgId >= 0))
+    if ((!m_mSrv.isEmpty()) && (!m_img.isEmpty()) && (m_mApp >= 0) && (m_angle >= 0) && (m_imgId >= 0))
     {
-        return QString("%1%2,1,%3,%4%5%6.jpg").arg(_mSrv, _img, QString::number(_mApp), _crop, _crop.isEmpty()?"":"-", QString::number(_angle));
+        return QString("%1%2,1,%3,%4%5%6.jpg").arg(m_mSrv, m_img, QString::number(m_mApp), m_crop, m_crop.isEmpty()?"":"-", QString::number(m_angle));
     }
     else
     {
@@ -50,14 +50,14 @@ QString MyAvatarModel::getUrl() const
 
 QString MyAvatarModel::getRawUrl() const
 {
-    return getRawUrl(_angle);
+    return getRawUrl(m_angle);
 }
 
 QString MyAvatarModel::getRawUrl(int angle) const
 {
-    if ((!_mSrv.isEmpty()) && (!_img.isEmpty()) && (_mApp >= 0) && (_angle >= 0) && (_imgId >= 0))
+    if ((!m_mSrv.isEmpty()) && (!m_img.isEmpty()) && (m_mApp >= 0) && (m_angle >= 0) && (m_imgId >= 0))
     {
-        return QString("%1%2,8,%3,%4.jpg").arg(_mSrv, _img, QString::number(_mApp), QString::number(angle));
+        return QString("%1%2,8,%3,%4.jpg").arg(m_mSrv, m_img, QString::number(m_mApp), QString::number(angle));
     }
     else
     {
@@ -77,105 +77,105 @@ int MyAvatarModel::rotateRight()
 
 int MyAvatarModel::angle() const
 {
-    return _angle;
+    return m_angle;
 }
 
 int MyAvatarModel::mApp() const
 {
-    return _mApp;
+    return m_mApp;
 }
 
 QString MyAvatarModel::crop() const
 {
-    return _crop;
+    return m_crop;
 }
 
 QString MyAvatarModel::desc() const
 {
-    return _desc;
+    return m_desc;
 }
 
 int MyAvatarModel::height() const
 {
-    return _height;
+    return m_height;
 }
 
 QString MyAvatarModel::img() const
 {
-    return _img;
+    return m_img;
 }
 
 int MyAvatarModel::imgId() const
 {
-    return _imgId;
+    return m_imgId;
 }
 
 QString MyAvatarModel::mSrv() const
 {
-    return _mSrv;
+    return m_mSrv;
 }
 
 int MyAvatarModel::width() const
 {
-    return _width;
+    return m_width;
 }
 
 void MyAvatarModel::setAngle(int angle)
 {
-    _angle = angle;
+    m_angle = angle;
 }
 
 void MyAvatarModel::setMApp(int mApp)
 {
-    _mApp = mApp;
+    m_mApp = mApp;
 }
 
 void MyAvatarModel::setCrop(QString crop)
 {
-    _crop = crop;
+    m_crop = crop;
 }
 
 void MyAvatarModel::setDesc(QString desc)
 {
-    _desc = desc;
+    m_desc = desc;
 }
 
 void MyAvatarModel::setHeight(int height)
 {
-    _height = height;
+    m_height = height;
 }
 
 void MyAvatarModel::setImg(QString img)
 {
-    _img = img;
+    m_img = img;
 }
 
 void MyAvatarModel::setImgId(int imgId)
 {
-    _imgId = imgId;
+    m_imgId = imgId;
 }
 
 void MyAvatarModel::setMSrv(QString mSrv)
 {
-    _mSrv = mSrv;
+    m_mSrv = mSrv;
 }
 
 void MyAvatarModel::setWidth(int width)
 {
-    _width = width;
+    m_width = width;
 }
 
 
 int MyAvatarModel::rotate(Rotate i)
 {
-    _angle += i;
+    m_angle += i;
 
-    if (_angle > 3)
-        _angle = 0;
-    if (_angle < 0)
-        _angle = 3;
+    if (m_angle > 3)
+        m_angle = 0;
+    if (m_angle < 0)
+        m_angle = 3;
 
-    return _angle;
+    return m_angle;
 }
 
 QString MyAvatarModel::scaledCropToString(QRect crop, QSize scaled, QSize original, int angle, bool rotate)
@@ -286,7 +286,7 @@ QRect MyAvatarModel::stringToScaledCrop(QString s, QSize scaled, QSize original,
 
 QSize MyAvatarModel::size() const
 {
-    return QSize(_width, _height);
+    return QSize(m_width, m_height);
 }
 
 void MyAvatarModel::debug(QString title) const

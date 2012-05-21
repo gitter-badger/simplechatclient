@@ -20,7 +20,6 @@
 
 #include <QtGui>
 #include <QPainter>
-#include <QRubberBand>
 
 #include "avatar_edit_scene.h"
 
@@ -36,41 +35,44 @@ AvatarEditScene::AvatarEditScene(QObject *parent)
 
     crop = QRect(0, 0, 100, 100);
 
-    // cropper image
-    QPixmap c = QPixmap(":/images/crop.png");
-    pixCropper = QPixmap(c.size());
-    pixCropper.fill(Qt::white);
-    QPainter painter(&pixCropper);
-    painter.drawPixmap(c.rect(), c);
-    // cropper position
-    cropper = pixCropper.rect();
-
     // background
     setBackgroundBrush(QPixmap(":/images/transparent.png"));
     // scaled photo
-    gpiPhoto = addPixmap(QPixmap());
+    photoItem = addPixmap(QPixmap());
     // gray it down
-    griPhotoBlur = addRect(QRect(), Qt::NoPen, QBrush(QColor(255, 255, 255, 127)));
+    photoBlurItem = addRect(QRect(), Qt::NoPen, QBrush(QColor(255, 255, 255, 127)));
     // crop
-    gpiCrop = addPixmap(QPixmap());
+    cropItem = addPixmap(QPixmap());
     // cropper
-    gpiCropper = addPixmap(pixCropper);
-    gpiCropper->setOpacity(0.5);
+    QPixmap pixmap = getCropper();
+    cropper = pixmap.rect();
+    cropperItem = addPixmap(pixmap);
+    cropperItem->setOpacity(0.5);
 }
 
 AvatarEditScene::~AvatarEditScene()
 {
 }
 
-void AvatarEditScene::setPhoto(const QPixmap &pixPhoto, const QRect &crop)
+QPixmap AvatarEditScene::getCropper()
+{
+    QPixmap foreground = QPixmap(":/images/crop.png");
+    QPixmap pixmap = QPixmap(foreground.size());
+    pixmap.fill(Qt::white);
+    QPainter p(&pixmap);
+    p.drawPixmap(foreground.rect(), foreground);
+    return pixmap;
+}
+
+void AvatarEditScene::setPhoto(const QPixmap &photo, const QRect &crop)
 {
     this->crop = crop;
-    this->pixPhoto = pixPhoto;
+    this->photo = photo;
 
     // scaled photo
-    gpiPhoto->setPixmap(this->pixPhoto);
+    photoItem->setPixmap(this->photo);
     // gray it down
-    griPhotoBlur->setRect(gpiPhoto->boundingRect());
+    photoBlurItem->setRect(photoItem->boundingRect());
 
     redraw();
 }
@@ -78,17 +80,17 @@ void AvatarEditScene::setPhoto(const QPixmap &pixPhoto, const QRect &crop)
 void AvatarEditScene::redraw()
 {
     // crop
-    QPixmap c = pixPhoto.copy(crop);
+    QPixmap c = photo.copy(crop);
     // crop border
     QPainter cp(&c);
     cp.setPen(Qt::DotLine);
     cp.setCompositionMode(QPainter::CompositionMode_Clear);
     cp.drawRect(0, 0, crop.width() - 1, crop.height() - 1);
-    gpiCrop->setPixmap(c);
-    gpiCrop->setPos(crop.topLeft());
+    cropItem->setPixmap(c);
+    cropItem->setPos(crop.topLeft());
     // cropper
     cropper.moveCenter(crop.bottomRight());
-    gpiCropper->setPos(cropper.topLeft());
+    cropperItem->setPos(cropper.topLeft());
 }
 
 void AvatarEditScene::mousePressEvent(QGraphicsSceneMouseEvent *event)
@@ -127,8 +129,8 @@ void AvatarEditScene::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
     {
         crop.moveLeft(qMax(0, crop.x() + (p.x() - origin.x())));
         crop.moveTop(qMax(0, crop.y() + (p.y() - origin.y())));
-        crop.moveLeft(qMin(pixPhoto.width() - crop.width(), crop.x()));
-        crop.moveTop(qMin(pixPhoto.height() - crop.height(), crop.y()));
+        crop.moveLeft(qMin(photo.width() - crop.width(), crop.x()));
+        crop.moveTop(qMin(photo.height() - crop.height(), crop.y()));
         origin = p;
 
         redraw();
@@ -138,7 +140,7 @@ void AvatarEditScene::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
     {
         crop.setWidth(qMax(1, p.x() - crop.x()));
         crop.setWidth(
-            qMin(qMin(pixPhoto.width() - crop.x(), pixPhoto.height() - crop.y()), crop.width()));
+            qMin(qMin(photo.width() - crop.x(), photo.height() - crop.y()), crop.width()));
         crop.setHeight(crop.width());
 
         redraw();

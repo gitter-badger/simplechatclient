@@ -376,7 +376,7 @@
     <name>DlgAvatarEdit</name>
     <message>
         <source>Edit Avatar</source>
-        <translation>Edycja awataru</translation>
+        <translation>Edycja awatara</translation>
     </message>
     <message>
         <source>Filename:</source>
@@ -615,6 +615,10 @@
     <message>
         <source>Permissions</source>
         <translation>Uprawnienia</translation>
+    </message>
+    <message>
+        <source>Avatar</source>
+        <translation>Awatar</translation>
     </message>
     <message>
         <source>Statistics</source>
@@ -1029,6 +1033,9 @@
         <source>My avatar</source>
         <translation>Mój awatar</translation>
     </message>
+</context>
+<context>
+    <name>AvatarListWidget</name>
     <message>
         <source>My avatars</source>
         <translation>Moje awatary</translation>

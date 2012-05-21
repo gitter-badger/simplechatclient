@@ -40,11 +40,6 @@
 
 AvatarClient::AvatarClient() : QNetworkAccessManager(), basicRequest(QUrl(AVATAR_API))
 {
-    // Creation of the cookies manager
-    pCookies = new QNetworkCookieJar(this);
-
-    this->setCookieJar(pCookies);
-
     // Connection to the normal replyFinished function
     connect(this, SIGNAL(finished(QNetworkReply*)), this, SLOT(replyFinished(QNetworkReply*)));
 
@@ -53,33 +48,32 @@ AvatarClient::AvatarClient() : QNetworkAccessManager(), basicRequest(QUrl(AVATAR
 
 AvatarClient::~AvatarClient()
 {
-    pCookies->deleteLater();
 }
 
 void AvatarClient::getCookies()
 {
     /* TODO: replace with central cookies storage */
 
-    QList<QNetworkCookie> cookieList;
+    QList<QNetworkCookie> cookies;
     QNetworkCookie cookie;
 
-    QStringList lNames;
-    lNames << "onet_ubi" << "onet_cid" << "onet_sid" << "onet_uid" << "onetzuo_ticket";
-    foreach (QString strName, lNames)
+    QStringList names;
+    names << "onet_ubi" << "onet_cid" << "onet_sid" << "onet_uid" << "onetzuo_ticket";
+    foreach (QString name, names)
     {
-        cookie.setName(strName.toAscii());
-        cookie.setValue(Core::instance()->settings.value(strName).toAscii());
-        cookieList.append(cookie);
+        cookie.setName(name.toAscii());
+        cookie.setValue(Core::instance()->settings.value(name).toAscii());
+        cookies.append(cookie);
     }
 
-    this->cookieJar()->setCookiesFromUrl(cookieList, QUrl("http://czat.onet.pl"));
+    this->cookieJar()->setCookiesFromUrl(cookies, QUrl("http://czat.onet.pl"));
 }
 
 QString AvatarClient::createRid()
 {
-    QString strUuid = QUuid::createUuid().toString();
-    strUuid.remove("{"); strUuid.remove("}");
-    return strUuid;
+    QString uuidStr = QUuid::createUuid().toString();
+    uuidStr.remove("{"); uuidStr.remove("}");
+    return uuidStr;
 }
 
 void AvatarClient::requestGetCollections()
@@ -95,10 +89,10 @@ void AvatarClient::requestGetCollections()
     this->post(request, postData.toAscii());
 }
 
-void AvatarClient::requestGetCollectionAvatars(int iId)
+void AvatarClient::requestGetCollectionAvatars(int id)
 {
     QString postData = QString("fnc=getAvatarsFromCollect&rdr=xml&rid=%1").arg(createRid());
-    postData += QString("&envelope=a:1:{s:10:\"collectIds\";i:%1;}").arg(iId);
+    postData += QString("&envelope=a:1:{s:10:\"collectIds\";i:%1;}").arg(id);
 
     QNetworkRequest request(basicRequest);
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
@@ -122,15 +116,15 @@ void AvatarClient::requestGetMyAvatars()
     this->post(request, postData.toAscii());
 }
 
-void AvatarClient::requestSetAvatar(int iImgId, int iAlbumId)
+void AvatarClient::requestSetAvatar(int imgId, int albumId)
 {
     QString postData = QString("fnc=setAvatar&rdr=xml&rid=%1").arg(createRid());
-    if (iAlbumId == 0)
+    if (albumId == 0)
         postData += QString("&envelope=a:2:{s:7:\"avImgId\";i:%1;s:9:\"avAlbumId\";N;}")
-            .arg(iImgId);
+            .arg(imgId);
     else
         postData += QString("&envelope=a:2:{s:7:\"avImgId\";i:%1;s:9:\"avAlbumId\";i;%2}")
-            .arg(iImgId, iAlbumId);
+            .arg(imgId, albumId);
 
     QNetworkRequest request(basicRequest);
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
@@ -141,7 +135,7 @@ void AvatarClient::requestSetAvatar(int iImgId, int iAlbumId)
     this->post(request, postData.toAscii());
 }
 
-void AvatarClient::requestUploadImage(const QString &strFileName, const QByteArray &bData)
+void AvatarClient::requestUploadImage(const QString &fileName, const QByteArray &data)
 {
     qsrand(QDateTime::currentDateTime().toTime_t());
     QByteArray bBoundary = QByteArray("boundary_.oOo._")
@@ -157,15 +151,15 @@ void AvatarClient::requestUploadImage(const QString &strFileName, const QByteArr
 
     QByteArray bBody;
     QString strFileFormName = createRid();
-    QString strEnvelope = QString("a:1:{s:14:\"imageInputName\";s:%1:\"%2\";}").arg(QString::number(strFileFormName.size()), strFileFormName);
+    QString strEnvelope = QString("a:1:{s:14:\"imageInputName\";s:%1:\"%2\";}").arg(strFileFormName.size()).arg(strFileFormName);
 
     bBody += QString("--%1\r\nContent-Disposition: form-data; name=\"%2\"\r\n\r\n%3\r\n").arg(strBoundary, "fnc", "uploadImage");
     bBody += QString("--%1\r\nContent-Disposition: form-data; name=\"%2\"\r\n\r\n%3\r\n").arg(strBoundary, "rdr", "xml");
     bBody += QString("--%1\r\nContent-Disposition: form-data; name=\"%2\"\r\n\r\n%3\r\n").arg(strBoundary, "rid", createRid());
     bBody += QString("--%1\r\nContent-Disposition: form-data; name=\"%2\"\r\n\r\n%3\r\n").arg(strBoundary, "envelope", strEnvelope);
-    bBody += QString("--%1\r\nContent-Disposition: form-data; name=\"%2\"; filename=\"%3\"\r\n").arg(strBoundary, strFileFormName, strFileName);
+    bBody += QString("--%1\r\nContent-Disposition: form-data; name=\"%2\"; filename=\"%3\"\r\n").arg(strBoundary, strFileFormName, fileName);
     bBody += QString("Content-Type: image/jpeg\r\n\r\n");
-    bBody += bData;
+    bBody += data;
     bBody += QString("\r\n");
     bBody += QString("--%1--\r\n").arg(strBoundary);
 
@@ -174,10 +168,10 @@ void AvatarClient::requestUploadImage(const QString &strFileName, const QByteArr
     request.setHeader(QNetworkRequest::ContentLengthHeader, bBody.size());
     request.setAttribute(QNetworkRequest::User, RT_uploadImage);
 
-    //qDebug() << request.url().toString() << strFileName << strBoundary << bBody.size();
+    qDebug() << request.url().toString() << fileName << strBoundary << bBody.size();
 
     QNetworkReply *pReply = this->post(request, bBody);
-    QFileInfo info = QFile(strFileName);
+    QFileInfo info = QFile(fileName);
     pReply->setProperty("fileName", info.fileName());
 }
 
@@ -231,10 +225,10 @@ void AvatarClient::requestAddPhoto(const MyAvatarModel &avatar)
     this->post(request, postData.toAscii());
 }
 
-void AvatarClient::requestDeletePhoto(const QString &strImgId)
+void AvatarClient::requestDeletePhoto(int imgId)
 {
     QString postData = QString("fnc=deletePhoto&rdr=xml&rid=%1").arg(createRid());
-    postData += QString("&envelope=a:1:{s:5:\"imgId\";i:%1;}").arg(strImgId);
+    postData += QString("&envelope=a:1:{s:5:\"imgId\";i:%1;}").arg(imgId);
 
     QNetworkRequest request(basicRequest);
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
@@ -245,10 +239,10 @@ void AvatarClient::requestDeletePhoto(const QString &strImgId)
     this->post(request, postData.toAscii());
 }
 
-void AvatarClient::requestGetAvatar(const QString &strUrl, AvatarType type)
+void AvatarClient::requestGetAvatar(const QString &avatarUrl, AvatarType type)
 {
     QNetworkRequest request(basicRequest);
-    request.setUrl(QUrl(strUrl));
+    request.setUrl(QUrl(avatarUrl));
     switch (type)
     {
         case AT_my:
@@ -270,64 +264,55 @@ void AvatarClient::requestGetAvatar(const QString &strUrl, AvatarType type)
     this->get(request);
 }
 
-void AvatarClient::replyFinished(QNetworkReply *pReply)
+void AvatarClient::replyFinished(QNetworkReply *reply)
 {
-    QNetworkRequest request = pReply->request();
+    QNetworkRequest request = reply->request();
     RequestType requestType = (RequestType) request.attribute(QNetworkRequest::User,RT_undefined).toInt();
 
-    if (pReply->error() != 0)
+    if (reply->error() != 0)
     {
-        qDebug() << "An error occured during the Avatar request (" << pReply->error() << " :: Request: " << requestType << ")" ;
-        emit errorOccured(pReply->error());
+        qDebug() << "An error occured during the Avatar request (" << reply->error() << " :: Request: " << requestType << ")" ;
+        emit errorOccured(reply->error());
     }
     else
     {
-        QByteArray bData = pReply->readAll();
-        QString strUrl;
-        QString strFileName;
-
         switch (requestType)
         {
         case RT_getCollections:
-            emit getCollectionsReady(QString(bData));
+            emit getCollectionsReady(reply->readAll());
             break;
         case RT_getAvatarsFromCollect:
-            emit getCollectionAvatarsReady(QString(bData));
+            emit getCollectionAvatarsReady(reply->readAll());
             break;
         case RT_loadFAvatars:
-            emit getMyAvatarsReady(QString(bData));
+            emit getMyAvatarsReady(reply->readAll());
             break;
         case RT_setAvatar:
-            emit setAvatarReady(QString(bData));
+            emit setAvatarReady(reply->readAll());
             break;
         case RT_uploadImage:
-            strFileName = pReply->property("fileName").toString();
-            emit uploadImageReady(QString(bData), strFileName);
+            emit uploadImageReady(reply->readAll(), reply->property("fileName").toString());
             break;
         case RT_updatePhoto:
-            emit updatePhotoReady(QString(bData));
+            emit updatePhotoReady(reply->readAll());
             break;
         case RT_addPhoto:
-            emit addPhotoReady(QString(bData));
+            emit addPhotoReady(reply->readAll());
             break;
         case RT_deletePhoto:
-            emit deletePhotoReady(QString(bData));
+            emit deletePhotoReady(reply->readAll());
             break;
         case RT_getMyAvatar:
-            strUrl = pReply->url().toString();
-            emit getAvatarReady(strUrl, bData, AT_my);
+            emit getAvatarReady(reply->readAll(), reply->url().toString(), AT_my);
             break;
         case RT_getMyRawAvatar:
-            strUrl = pReply->url().toString();
-            emit getAvatarReady(strUrl, bData, AT_myRaw);
+            emit getAvatarReady(reply->readAll(), reply->url().toString(), AT_myRaw);
             break;
         case RT_getCollectionAvatar:
-            strUrl = pReply->url().toString();
-            emit getAvatarReady(strUrl, bData, AT_collection);
+            emit getAvatarReady(reply->readAll(), reply->url().toString(), AT_collection);
             break;
         case RT_getAvatar:
-            strUrl = pReply->url().toString();
-            emit getAvatarReady(strUrl, bData, AT_other);
+            emit getAvatarReady(reply->readAll(), reply->url().toString(), AT_other);
             break;
         case RT_undefined:
             //qDebug() << "RequestType: RT_undefined";
@@ -335,6 +320,6 @@ void AvatarClient::replyFinished(QNetworkReply *pReply)
         }
     }
 
-    pReply->deleteLater();
+    reply->deleteLater();
 }
 

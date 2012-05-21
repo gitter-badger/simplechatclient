@@ -23,6 +23,9 @@
 #include <QInputDialog>
 #include <QMessageBox>
 #include <QTimer>
+
+#include "avatar_client.h"
+#include "avatar_list_widget.h"
 #include "convert.h"
 #include "core.h"
 #include "simple_stats_widget.h"
@@ -44,7 +47,15 @@ DlgChannelSettings::DlgChannelSettings(QWidget *parent, const QString &_strChann
     setDefaultValues();
     createSignals();
 
+    avatarClient = new AvatarClient();
+    connect(avatarClient, SIGNAL(getAvatarReady(const QByteArray &,const QString &,AvatarClient::AvatarType)), this, SLOT(getAvatarReady(const QByteArray &,const QString &,AvatarClient::AvatarType)));
+
     refreshAll();
+}
+
+DlgChannelSettings::~DlgChannelSettings()
+{
+    delete avatarClient;
 }
 
 void DlgChannelSettings::createGui()
@@ -66,7 +77,8 @@ void DlgChannelSettings::createGui()
     ui.tabWidget->setTabText(1, tr("General"));
     ui.tabWidget->setTabText(2, tr("Advanced"));
     ui.tabWidget->setTabText(3, tr("Permissions"));
-    ui.tabWidget->setTabText(4, tr("Statistics"));
+    ui.tabWidget->setTabText(4, tr("Avatar"));
+    ui.tabWidget->setTabText(5, tr("Statistics"));
     ui.listWidget_permissions->addItem(tr("Operators"));
     ui.listWidget_permissions->addItem(tr("Half-operators"));
     ui.listWidget_permissions->addItem(tr("Banned"));
@@ -191,7 +203,12 @@ void DlgChannelSettings::createSignals()
     connect(ui.pushButton_permission_remove, SIGNAL(clicked()), this, SLOT(buttonPermissionRemove()));
     connect(ui.listWidget_permissions, SIGNAL(clicked(QModelIndex)), this, SLOT(changePermissionList(QModelIndex)));
 
+    connect(ui.avatarListWidget, SIGNAL(avatarSelected(const QString &)), this, SLOT(avatarSelected(const QString &)));
+
     connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(buttonClose()));
+
+    Q_ASSERT(ui.tabWidget->currentIndex() == 0); // due to lazy initialization of avatars
+    connect(ui.tabWidget, SIGNAL(currentChanged(int)), this, SLOT(tabChanged(int)));
 }
 
 void DlgChannelSettings::refreshAll()
@@ -237,7 +254,12 @@ void DlgChannelSettings::refreshChannelInfo()
             else if (strValue.toInt() == 1)
                 ui.radioButton_auditorium_on->setChecked(true);
         }
-        if (strKey == "catMajor")
+        else if (strKey == "avatar")
+        {
+            avatarUrl = strValue;
+            refreshAvatar();
+        }
+        else if (strKey == "catMajor")
         {
             if (strValue.toInt() == 1) // teen
             {
@@ -993,4 +1015,49 @@ void DlgChannelSettings::buttonClose()
     Core::instance()->bChannelSettingsStats = false;
 
     close();
+}
+
+void DlgChannelSettings::getAvatarReady(const QByteArray &content, const QString &avatarUrl, AvatarClient::AvatarType type)
+{
+    QPixmap pixmap;
+    if (!pixmap.loadFromData(content))
+    {
+        qDebug() << "Unable to load image from " << avatarUrl;
+        return;
+    }
+
+    if (type == AvatarClient::AT_other)
+        drawCurrentAvatar(pixmap);
+}
+
+void DlgChannelSettings::refreshAvatar()
+{
+    if (!avatarUrl.isEmpty())
+    {
+        avatarClient->requestGetAvatar(avatarUrl, AvatarClient::AT_other);
+        return;
+    }
+
+    ui.label_channel_avatar->setText(tr("No photo available"));
+}
+
+void DlgChannelSettings::drawCurrentAvatar(const QPixmap &pixmap)
+{
+    ui.label_channel_avatar->setPixmap(pixmap);
+}
+
+void DlgChannelSettings::avatarSelected(const QString &avatarUrl)
+{
+    Core::instance()->pNetwork->send(QString("CS SET %1 AVATAR %2").arg(strChannel, avatarUrl));
+
+    refreshAll();
+}
+
+void DlgChannelSettings::tabChanged(int index)
+{
+    if (index == 4 && !ui.avatarListWidget->isInitialized())
+    {
+        // lazy initialization
+        ui.avatarListWidget->initialize(avatarClient);
+    }
 }

@@ -25,7 +25,6 @@
 #include <QDialog>
 
 #include "avatar_client.h"
-#include "my_avatar_model.h"
 #include "ui_my_avatar.h"
 
 class DlgMyAvatar : public QDialog
@@ -36,46 +35,21 @@ public:
     virtual ~DlgMyAvatar();
 
 public slots:
-    void getCollectionsReady(const QString &strResult);
-    void getCollectionAvatarsReady(const QString &strResult);
-    void getMyAvatarsReady(const QString &strResult);
-    void uploadImageReady(const QString &strResult, const QString &strFileName);
-    void updatePhotoReady(const QString &strResult);
-    void addPhotoReady(const QString &strResult);
-    void deletePhotoReady(const QString &strResult);
-    void getAvatarReady(const QString &strUrl, const QByteArray &bData, AvatarClient::AvatarType type);
+    void avatarSelected(const QString &url);
+    void getAvatarReady(const QByteArray &content, const QString &avatarUrl, AvatarClient::AvatarType type);
 
 private:
     Ui::uiMyAvatar ui;
-    AvatarClient *pAvatarClient;
-    QMap<QString, int> mCollectionId; // name, id
+    AvatarClient *avatarClient;
 
     void createGui();
     void setDefaultValues();
     void createSignals();
 
-    void drawMyAvatar(const QString &strUrl, const QByteArray &bData);
-    void drawAvatarFromCollection(const QString &strUrl, const QByteArray &bData);
-    void drawCurrentAvatar(const QString &strUrl, const QByteArray &bData);
-
-    class MyAvatarListWidgetItem : public QListWidgetItem
-    {
-    public:
-        MyAvatarListWidgetItem(const MyAvatarModel &avatar) : avatar(avatar) {}
-        MyAvatarModel avatar;
-    };
+    void drawCurrentAvatar(const QPixmap &pixmap);
 
 private slots:
     void refreshAvatar();
-    void tabChanged(int index);
-    void collectionChanged(QString strName);
-    void addAvatarClicked();
-    void editAvatarClicked();
-    void applyAvatarClicked();
-    void removeAvatarClicked();
-    void setEmptyAvatarClicked();
-    void applyCollectionAvatarClicked();
-
 };
 
 #endif // DLG_MY_AVATAR_H

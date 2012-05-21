@@ -21,20 +21,31 @@
 #ifndef CHANNEL_SETTINGS_H
 #define CHANNEL_SETTINGS_H
 
-class SimpleStatsWidget;
 #include <QDialog>
+
+#include "avatar_client.h"
+
 #include "ui_channel_settings.h"
+
+class SimpleStatsWidget;
 
 class DlgChannelSettings : public QDialog
 {
     Q_OBJECT
 public:
     DlgChannelSettings(QWidget *parent, const QString &_strChannel);
+    ~DlgChannelSettings();
+
+public slots:
+    void avatarSelected(const QString &avatarUrl);
+    void getAvatarReady(const QByteArray &content, const QString &avatarUrl, AvatarClient::AvatarType type);
 
 private:
     Ui::uiChannelSettings ui;
     QString strChannel;
     SimpleStatsWidget *pSimpleStatsWidget;
+    AvatarClient *avatarClient;
+    QString avatarUrl;
 
     void createGui();
     void setDefaultValues();
@@ -48,6 +59,7 @@ private:
     void addBan(const QString &strNick, const QString &strWho, const QString &strDT, const QString &strIPNick);
     void addInvite(const QString &strNick, const QString &strWho, const QString &strDT);
     void clear();
+    void drawCurrentAvatar(const QPixmap &pixmap);
 
 private slots:
     void refreshChannelInfo();
@@ -74,6 +86,9 @@ private slots:
     void buttonPermissionRemove();
     void changePermissionList(QModelIndex index);
     void buttonClose();
+
+    void refreshAvatar();
+    void tabChanged(int index);
 };
 
 #endif // CHANNEL_SETTINGS_H

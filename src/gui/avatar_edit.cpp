@@ -30,7 +30,8 @@
 
 #include "avatar_edit.h"
 
-DlgAvatarEdit::DlgAvatarEdit(QWidget *parent, MyAvatarModel avatar, AvatarClient *pAvatarClient) : QDialog(parent), avatar(avatar), pAvatarClient(pAvatarClient)
+DlgAvatarEdit::DlgAvatarEdit(QWidget *parent, MyAvatarModel avatar, AvatarClient *avatarClient) :
+    QDialog(parent), avatar(avatar), avatarClient(avatarClient)
 {
     //avatar.debug("DlgAvatarEdit");
 
@@ -40,16 +41,24 @@ DlgAvatarEdit::DlgAvatarEdit(QWidget *parent, MyAvatarModel avatar, AvatarClient
     // center screen
     move(QApplication::desktop()->screenGeometry(QApplication::desktop()->screenNumber(parent)).center()  - rect().center());
 
+    Q_ASSERT(avatarClient);
+
     angle = avatar.angle();
 
     createGui();
     setDefaultValues();
     createSignals();
 
-    connect(pAvatarClient, SIGNAL(getAvatarReady(const QString &,const QByteArray &,AvatarClient::AvatarType)), this, SLOT(getAvatarReady(const QString &,const QByteArray &,AvatarClient::AvatarType)));
+    connect(avatarClient, SIGNAL(getAvatarReady(const QByteArray &,const QString &,AvatarClient::AvatarType)), this, SLOT(getAvatarReady(const QByteArray &,const QString &,AvatarClient::AvatarType)));
     connect(editScene, SIGNAL(cropChanged(const QRect &)), this, SLOT(cropChanged(const QRect &)));
 
-    pAvatarClient->requestGetAvatar(avatar.getRawUrl(), AvatarClient::AT_myRaw);
+    avatarClient->requestGetAvatar(avatar.getRawUrl(), AvatarClient::AT_myRaw);
+}
+
+DlgAvatarEdit::~DlgAvatarEdit()
+{
+    delete editScene;
+    delete previewScene;
 }
 
 void DlgAvatarEdit::createGui()
@@ -65,7 +74,7 @@ void DlgAvatarEdit::createGui()
     editScene = new AvatarEditScene(this);
     ui.graphicsView_edit->setScene(editScene);
     previewScene = new QGraphicsScene(this);
-    gpiCrop = previewScene->addPixmap(QPixmap());
+    cropItem = previewScene->addPixmap(QPixmap());
     ui.graphicsView_preview->setScene(previewScene);
 }
 
@@ -85,45 +94,43 @@ void DlgAvatarEdit::createSignals()
 
 void DlgAvatarEdit::rotateLeftClicked()
 {
-    avatar.setCrop(MyAvatarModel::scaledCropToString(crop, pixPhoto.size(), avatar.size(), avatar.angle(), true));
+    avatar.setCrop(MyAvatarModel::scaledCropToString(crop, photo.size(), avatar.size(), avatar.angle(), true));
     avatar.rotateLeft();
-    pAvatarClient->requestGetAvatar(avatar.getRawUrl(), AvatarClient::AT_myRaw);
+    avatarClient->requestGetAvatar(avatar.getRawUrl(), AvatarClient::AT_myRaw);
 }
 
 void DlgAvatarEdit::rotateRightClicked()
 {
-    avatar.setCrop(MyAvatarModel::scaledCropToString(crop, pixPhoto.size(), avatar.size(), avatar.angle(), true));
+    avatar.setCrop(MyAvatarModel::scaledCropToString(crop, photo.size(), avatar.size(), avatar.angle(), true));
     avatar.rotateRight();
-    pAvatarClient->requestGetAvatar(avatar.getRawUrl(), AvatarClient::AT_myRaw);
+    avatarClient->requestGetAvatar(avatar.getRawUrl(), AvatarClient::AT_myRaw);
 }
 
-void DlgAvatarEdit::getAvatarReady(const QString &strUrl, const QByteArray &bData, AvatarClient::AvatarType type)
+void DlgAvatarEdit::getAvatarReady(const QByteArray &content, const QString &avatarUrl, AvatarClient::AvatarType type)
 {
     if (type != AvatarClient::AT_myRaw)
         return;
 
-    //qDebug() << strUrl;
-
-    if (!pixPhoto.loadFromData(bData))
+    if (!photo.loadFromData(content))
     {
-        qDebug() << "Unable to load image from " << strUrl;
+        qDebug() << "Unable to load image from " << avatarUrl;
         return;
     }
 
     if (avatar.crop().isEmpty())
     {
-        int cropSize = qMin(pixPhoto.width(), pixPhoto.height());
+        int cropSize = qMin(photo.width(), photo.height());
         crop.setRect(0, 0, cropSize, cropSize);
     }
     else
     {
-        crop = MyAvatarModel::stringToScaledCrop(avatar.crop(), pixPhoto.size(), avatar.size(), avatar.angle(), angle != avatar.angle());
+        crop = MyAvatarModel::stringToScaledCrop(avatar.crop(), photo.size(), avatar.size(), avatar.angle(), angle != avatar.angle());
     }
     angle = avatar.angle();
 
-    editScene->setPhoto(pixPhoto, crop);
-    previewScene->setSceneRect(pixPhoto.rect());
-    gpiCrop->setPixmap(pixPhoto);
+    editScene->setPhoto(photo, crop);
+    previewScene->setSceneRect(photo.rect());
+    cropItem->setPixmap(photo);
     ui.graphicsView_preview->fitInView(crop);
 }
 
@@ -140,7 +147,7 @@ MyAvatarModel DlgAvatarEdit::getAvatar() const
 
 void DlgAvatarEdit::okClicked()
 {
-    avatar.setCrop(MyAvatarModel::scaledCropToString(crop, pixPhoto.size(), avatar.size(), avatar.angle()));
+    avatar.setCrop(MyAvatarModel::scaledCropToString(crop, photo.size(), avatar.size(), avatar.angle()));
     accept();
 }
 

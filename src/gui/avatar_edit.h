@@ -32,11 +32,12 @@ class DlgAvatarEdit : public QDialog
 {
     Q_OBJECT
 public:
-    DlgAvatarEdit(QWidget *, MyAvatarModel avatar, AvatarClient *pAvatarClient);
+    DlgAvatarEdit(QWidget *parent, MyAvatarModel avatar, AvatarClient *avatarClient);
+    ~DlgAvatarEdit();
     MyAvatarModel getAvatar() const;
 
 public slots:
-    void getAvatarReady(const QString &strUrl, const QByteArray &bData, AvatarClient::AvatarType type);
+    void getAvatarReady(const QByteArray &content, const QString &avatarUrl, AvatarClient::AvatarType type);
     void cropChanged(const QRect &crop);
 
 private:
@@ -44,13 +45,13 @@ private:
     MyAvatarModel avatar;
     AvatarEditScene *editScene;
     QGraphicsScene *previewScene;
-    QGraphicsPixmapItem *gpiCrop;
+    QGraphicsPixmapItem *cropItem;
 
-    AvatarClient *pAvatarClient;
+    AvatarClient *avatarClient;
 
     QRect crop;
     int angle;
-    QPixmap pixPhoto;
+    QPixmap photo;
 
     void createGui();
     void setDefaultValues();
