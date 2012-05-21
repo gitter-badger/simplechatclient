@@ -525,53 +525,34 @@ void DlgOptions::buttonProfiles()
 
 void DlgOptions::themesChanged(int index)
 {
+    QString strTheme = "Standard";
+
+    switch (index)
+    {
+        case 0: strTheme = "Standard"; break;
+        case 1: strTheme = "Origin"; break;
+        case 2: strTheme = "Alhena"; break;
+        case 3: strTheme = "Adara"; break;
+    }
+
     Config *pConfig = new Config();
-    if (index == 0)
-    {
-        pConfig->setValue("themes", "Standard");
-        Core::instance()->settings["themes"] = "Standard";
-    }
-    else if (index == 1)
-    {
-        pConfig->setValue("themes", "Origin");
-        Core::instance()->settings["themes"] = "Origin";
-    }
-    else if (index == 2)
-    {
-        pConfig->setValue("themes", "Alhena");
-        Core::instance()->settings["themes"] = "Alhena";
-    }
-    else if (index == 3)
-    {
-        pConfig->setValue("themes", "Adara");
-        Core::instance()->settings["themes"] = "Adara";
-    }
-    else
-    {
-        pConfig->setValue("themes", "Standard");
-        Core::instance()->settings["themes"] = "Standard";
-    }
-    delete pConfig;
+    pConfig->setValue("themes", strTheme);
+    Core::instance()->settings["themes"] = strTheme;
 }
 
 void DlgOptions::languageChanged(int index)
 {
+    QString strLanguage = "pl";
+
+    switch (index)
+    {
+        case 0: strLanguage = "en"; break;
+        case 1: strLanguage = "pl"; break;
+    }
+
     Config *pConfig = new Config();
-    if (index == 0) // english
-    {
-        pConfig->setValue("language", "en");
-        Core::instance()->settings["language"] = "en";
-    }
-    else if (index == 1) // polish
-    {
-        pConfig->setValue("language", "pl");
-        Core::instance()->settings["language"] = "pl";
-    }
-    else // polish
-    {
-        pConfig->setValue("language", "pl");
-        Core::instance()->settings["language"] = "pl";
-    }
+    pConfig->setValue("language", strLanguage);
+    Core::instance()->settings["language"] = strLanguage;
     delete pConfig;
 
     ui.label_language_warning->setText(tr("Restart program to apply the changes."));
