@@ -44,7 +44,9 @@ void Notify::init()
 
 Notify::Notify()
 {
+#if WITH_PHONON
     eCurrentCategory = Beep;
+#endif
 }
 
 Notify::~Notify()
@@ -79,6 +81,8 @@ void Notify::play(NotifyCategory eCategory)
     }
 
     music->play();
+#else
+    Q_UNUSED(eCategory)
 #endif
 }
 
