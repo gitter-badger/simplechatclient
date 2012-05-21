@@ -115,12 +115,12 @@ int main(int argc, char *argv[])
 
     // load translate
     QTranslator qtTranslator;
-    qtTranslator.load(QString("%1/translations/qt_%2").arg(path, strLanguage));
-    app.installTranslator(&qtTranslator);
+    if (qtTranslator.load(QString("%1/translations/qt_%2").arg(path, strLanguage)))
+        app.installTranslator(&qtTranslator);
 
     QTranslator sccTranslator;
-    sccTranslator.load(QString("%1/translations/scc_%2").arg(path, strLanguage));
-    app.installTranslator(&sccTranslator);
+    if (sccTranslator.load(QString("%1/translations/scc_%2").arg(path, strLanguage)))
+        app.installTranslator(&sccTranslator);
 
     // args
     for (int i = 1; i < app.argc(); i++)
