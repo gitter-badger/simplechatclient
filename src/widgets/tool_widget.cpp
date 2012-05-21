@@ -841,13 +841,15 @@ void ToolWidget::sendMessage(QString strText, bool bModeration)
             if (bMyItalic) weight += "i";
 
             if (font == "verdana")
-                font = "";
+                font = QString::null;
             if ((strCurrentColor != "#000000") && (!strCurrentColor.isEmpty()))
                 strText = "%C"+strCurrentColor.right(6)+"%"+strText;
             if (!font.isEmpty())
                 font = ":"+font;
             if ((!weight.isEmpty()) || (!font.isEmpty()))
                 strText = "%F"+weight+font+"%"+strText;
+
+            Replace::replaceEmots(strText);
 
             Core::instance()->pNetwork->send(QString("PRIVMSG %1 :%2").arg(strChannel, strText));
             Message::instance()->showMessage(strChannel, strText, DefaultMessage, strMe);
@@ -869,7 +871,7 @@ void ToolWidget::sendMessage(QString strText, bool bModeration)
                 if (bMyItalic) weight += "i";
 
                 if (font == "verdana")
-                    font = "";
+                    font = QString::null;
                 if ((strCurrentColor != "#000000") && (!strCurrentColor.isEmpty()))
                     strTextDisplay = "%C"+strCurrentColor.right(6)+"%"+strTextDisplay;
                 if (!font.isEmpty())
@@ -877,8 +879,8 @@ void ToolWidget::sendMessage(QString strText, bool bModeration)
                 if ((!weight.isEmpty()) || (!font.isEmpty()))
                     strTextDisplay = "%F"+weight+font+"%"+strTextDisplay;
 
-                Replace::convertAndReplaceEmots(strTextSend);
-                Replace::convertAndReplaceEmots(strTextDisplay);
+                Replace::replaceEmots(strTextSend);
+                Replace::replaceEmots(strTextDisplay);
 
                 Core::instance()->pNetwork->send(strTextSend);
                 QString strDisplay = QString("%1ACTION %2%3").arg(QString(QByteArray("\x01")), strTextDisplay, QString(QByteArray("\x01")));
@@ -911,7 +913,7 @@ void ToolWidget::sendMessage(QString strText, bool bModeration)
         if ((!weight.isEmpty()) || (!font.isEmpty()))
             strText = "%F"+weight+font+"%"+strText;
 
-        Replace::convertAndReplaceEmots(strText);
+        Replace::replaceEmots(strText);
 
         // standard text
         if (!bModeration)

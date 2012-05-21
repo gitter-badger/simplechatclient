@@ -20,21 +20,17 @@
 
 #include <QRegExp>
 #include "core.h"
+#include "convert.h"
 #include "replace.h"
 
-void convertEmots(QString &strData)
-{
-    // TODO Issue #192
-    strData.replace(QRegExp("(ftp:|http:|https:)//"), "\\1\\\\"); // fix ftp http https
-    strData.replace(QRegExp("//([a-zA-Z0-9_-]+)\\b"), "%I\\1%");
-    strData.replace(QRegExp("(ftp:|http:|https:)\\\\\\\\"), "\\1//"); // fix ftp http https
-}
-
-void replaceEmots(QString &strData)
+void Replace::replaceEmots(QString &strData)
 {
     // return if disable replaces == on
     if (Core::instance()->settings.value("disable_replaces") == "true") return;
 
+    Convert::simpleReverseConvert(strData);
+
+    // replace
     strData.replace(":))", "%Ihaha%");
     strData.replace(";))", "%Ioczko%");
 
@@ -101,10 +97,4 @@ void replaceEmots(QString &strData)
     strData.replace("??", "%Ipytanie%");
     strData.replace("!!", "%Iwykrzyknik%");
     strData.replace("?!", "%Ipytanie%%Iwykrzyknik%");
-}
-
-void Replace::convertAndReplaceEmots(QString &strData)
-{
-    convertEmots(strData);
-    replaceEmots(strData);
 }

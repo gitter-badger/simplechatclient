@@ -149,11 +149,31 @@ void convertEmoticons(QString &strData, bool bInsertWidthHeight)
     }
 }
 
+void Convert::simpleReverseConvert(QString &strData)
+{
+    QRegExp rx("//([a-zA-Z0-9_-]+)");
+
+    int pos = 0;
+    while ((pos = rx.indexIn(strData, pos)) != -1)
+    {
+        int first = pos;
+        pos += rx.matchedLength();
+        int second = pos;
+
+        QString strEmoticon = rx.cap(1);
+
+        if (!findEmoticon(strEmoticon).isEmpty())
+            strData.replace(first, second-first, "%I"+strEmoticon+"%");
+
+        pos--;
+    }
+}
+
 void Convert::simpleConvert(QString &strData)
 {
     strData.remove(QRegExp("%C([a-zA-Z0-9]+)%"));
     strData.remove(QRegExp("%F([a-zA-Z0-9:]+)%"));
-    strData.replace(QRegExp("%I([a-zA-Z0-9_-]+)%"),"//\\1");
+    strData.replace(QRegExp("%I([a-zA-Z0-9_-]+)%"), "//\\1");
 }
 
 void Convert::removeStyles(QString &strData)

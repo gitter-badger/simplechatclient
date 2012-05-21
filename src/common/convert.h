@@ -30,6 +30,7 @@
 
 namespace Convert
 {
+    void simpleReverseConvert(QString &strData);
     void simpleConvert(QString &strData);
     void removeStyles(QString &strData);
     void convertText(QString &strData, bool bInsertWidthHeight = false);

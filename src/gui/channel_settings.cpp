@@ -622,10 +622,7 @@ void DlgChannelSettings::topicChanged()
 {
     QString strTopic = ui.plainTextEdit_topic->toPlainText();
     strTopic.remove(QRegExp("(\r|\n)"));
-    // TODO Issue #192
-    strTopic.replace(QRegExp("(ftp:|http:|https:)//"), "\\1\\\\"); // fix ftp http https
-    strTopic.replace(QRegExp("//([a-zA-Z0-9_-]+)\\b"), "%I\\1%");
-    strTopic.replace(QRegExp("(ftp:|http:|https:)\\\\\\\\"), "\\1//"); // fix ftp http https
+    Convert::simpleReverseConvert(strTopic);
 
     bool bBold = false;
     bool bItalic = false;
@@ -654,7 +651,7 @@ void DlgChannelSettings::topicChanged()
     if (bItalic) strFontWeight += "i";
 
     if (strFontName == "verdana")
-        strFontName = "";
+        strFontName = QString::null;
     if ((strFontColor != "#000000") && (!strFontColor.isEmpty()))
         strTopic = "%C"+strFontColor.right(6)+"%"+strTopic;
     if (!strFontName.isEmpty())
