@@ -19,7 +19,6 @@
  ****************************************************************************/
 
 #include <QDateTime>
-#include <QFile>
 #include <QMessageBox>
 #include <QTimer>
 #include "avatar.h"
