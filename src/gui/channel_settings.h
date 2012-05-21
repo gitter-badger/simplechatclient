@@ -36,10 +36,6 @@ public:
     DlgChannelSettings(QWidget *parent, const QString &_strChannel);
     ~DlgChannelSettings();
 
-public slots:
-    void avatarSelected(const QString &avatarUrl);
-    void getAvatarReady(const QByteArray &content, const QString &avatarUrl, AvatarClient::AvatarType type);
-
 private:
     Ui::uiChannelSettings ui;
     QString strChannel;
@@ -59,7 +55,6 @@ private:
     void addBan(const QString &strNick, const QString &strWho, const QString &strDT, const QString &strIPNick);
     void addInvite(const QString &strNick, const QString &strWho, const QString &strDT);
     void clear();
-    void drawCurrentAvatar(const QPixmap &pixmap);
 
 private slots:
     void refreshChannelInfo();
@@ -87,6 +82,8 @@ private slots:
     void changePermissionList(QModelIndex index);
     void buttonClose();
 
+    void avatarSelected(const QString &avatarUrl);
+    void getAvatarReady(const QByteArray &content, const QString &avatarUrl, AvatarClient::AvatarType type);
     void refreshAvatar();
     void tabChanged(int index);
 };

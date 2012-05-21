@@ -46,10 +46,6 @@ AvatarClient::AvatarClient() : QNetworkAccessManager(), basicRequest(QUrl(AVATAR
     getCookies();
 }
 
-AvatarClient::~AvatarClient()
-{
-}
-
 void AvatarClient::getCookies()
 {
     /* TODO: replace with central cookies storage */

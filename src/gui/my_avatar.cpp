@@ -82,7 +82,7 @@ void DlgMyAvatar::getAvatarReady(const QByteArray &content, const QString &avata
     }
 
     if (type == AvatarClient::AT_other)
-        drawCurrentAvatar(pixmap);
+        ui.label_my_avatar->setPixmap(pixmap);
 }
 
 void DlgMyAvatar::refreshAvatar()
@@ -98,11 +98,6 @@ void DlgMyAvatar::refreshAvatar()
     }
 
     ui.label_my_avatar->setText(tr("No photo available"));
-}
-
-void DlgMyAvatar::drawCurrentAvatar(const QPixmap &pixmap)
-{
-    ui.label_my_avatar->setPixmap(pixmap);
 }
 
 void DlgMyAvatar::avatarSelected(const QString &avatarUrl)

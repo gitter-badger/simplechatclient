@@ -36,23 +36,12 @@ public:
     typedef QMap<QString, int> AvatarCollections;
 
     AvatarListWidget(QWidget *parent = 0);
-    ~AvatarListWidget();
 
     void initialize(AvatarClient *avatarClient);
     bool isInitialized() const;
 
 signals:
     void avatarSelected(const QString &avatarUrl);
-
-public slots:
-    void getCollectionsReady(const QByteArray &content);
-    void getCollectionAvatarsReady(const QByteArray &content);
-    void getMyAvatarsReady(const QByteArray &content);
-    void uploadImageReady(const QByteArray &content, const QString &fileName);
-    void updatePhotoReady(const QByteArray &content);
-    void addPhotoReady(const QByteArray &content);
-    void deletePhotoReady(const QByteArray &content);
-    void getAvatarReady(const QByteArray &content, const QString &avatarUrl, AvatarClient::AvatarType type);
 
 private:
     Ui::AvatarListWidget ui;
@@ -74,6 +63,16 @@ private:
     };
 
 private slots:
+    void getCollectionsReady(const QByteArray &content);
+    void getCollectionAvatarsReady(const QByteArray &content);
+    void getMyAvatarsReady(const QByteArray &content);
+    void uploadImageReady(const QByteArray &content, const QString &fileName);
+    void updatePhotoReady(const QByteArray &content);
+    void addPhotoReady(const QByteArray &content);
+    void deletePhotoReady(const QByteArray &content);
+    void getAvatarReady(const QByteArray &content, const QString &avatarUrl,
+        AvatarClient::AvatarType type);
+
     void tabChanged(int index);
     void collectionChanged(QString strName);
     void addAvatarClicked();

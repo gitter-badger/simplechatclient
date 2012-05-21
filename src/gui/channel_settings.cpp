@@ -531,6 +531,7 @@ void DlgChannelSettings::setTabs(bool b)
     ui.tabWidget->setTabEnabled(1, b);
     ui.tabWidget->setTabEnabled(2, b);
     ui.tabWidget->setTabEnabled(3, b);
+    ui.tabWidget->setTabEnabled(4, b);
 }
 
 void DlgChannelSettings::setOwner(const QString &strNick)
@@ -1027,7 +1028,7 @@ void DlgChannelSettings::getAvatarReady(const QByteArray &content, const QString
     }
 
     if (type == AvatarClient::AT_other)
-        drawCurrentAvatar(pixmap);
+        ui.label_channel_avatar->setPixmap(pixmap);
 }
 
 void DlgChannelSettings::refreshAvatar()
@@ -1039,11 +1040,6 @@ void DlgChannelSettings::refreshAvatar()
     }
 
     ui.label_channel_avatar->setText(tr("No photo available"));
-}
-
-void DlgChannelSettings::drawCurrentAvatar(const QPixmap &pixmap)
-{
-    ui.label_channel_avatar->setPixmap(pixmap);
 }
 
 void DlgChannelSettings::avatarSelected(const QString &avatarUrl)

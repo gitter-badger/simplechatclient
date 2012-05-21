@@ -34,10 +34,6 @@ public:
     DlgMyAvatar(QWidget *parent = 0);
     virtual ~DlgMyAvatar();
 
-public slots:
-    void avatarSelected(const QString &url);
-    void getAvatarReady(const QByteArray &content, const QString &avatarUrl, AvatarClient::AvatarType type);
-
 private:
     Ui::uiMyAvatar ui;
     AvatarClient *avatarClient;
@@ -46,9 +42,9 @@ private:
     void setDefaultValues();
     void createSignals();
 
-    void drawCurrentAvatar(const QPixmap &pixmap);
-
 private slots:
+    void avatarSelected(const QString &url);
+    void getAvatarReady(const QByteArray &content, const QString &avatarUrl, AvatarClient::AvatarType type);
     void refreshAvatar();
 };
 

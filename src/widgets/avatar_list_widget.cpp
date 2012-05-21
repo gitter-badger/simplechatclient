@@ -35,10 +35,6 @@ AvatarListWidget::AvatarListWidget(QWidget *parent) : QWidget(parent), avatarCli
     createGui();
 }
 
-AvatarListWidget::~AvatarListWidget()
-{
-}
-
 void AvatarListWidget::initialize(AvatarClient *avatarClient)
 {
     // let's make it simple, you can init widget only once
@@ -49,14 +45,22 @@ void AvatarListWidget::initialize(AvatarClient *avatarClient)
 
     this->avatarClient = avatarClient;
 
-    connect(avatarClient, SIGNAL(getCollectionsReady(const QByteArray &)), this, SLOT(getCollectionsReady(const QByteArray &)));
-    connect(avatarClient, SIGNAL(getCollectionAvatarsReady(const QByteArray &)), this, SLOT(getCollectionAvatarsReady(const QByteArray &)));
-    connect(avatarClient, SIGNAL(getMyAvatarsReady(const QByteArray &)), this, SLOT(getMyAvatarsReady(const QByteArray &)));
-    connect(avatarClient, SIGNAL(uploadImageReady(const QByteArray &, const QString &)), this, SLOT(uploadImageReady(const QByteArray &, const QString &)));
-    connect(avatarClient, SIGNAL(updatePhotoReady(const QByteArray &)), this, SLOT(updatePhotoReady(const QByteArray &)));
-    connect(avatarClient, SIGNAL(addPhotoReady(const QByteArray &)), this, SLOT(addPhotoReady(const QByteArray &)));
-    connect(avatarClient, SIGNAL(deletePhotoReady(const QByteArray &)), this, SLOT(deletePhotoReady(const QByteArray &)));
-    connect(avatarClient, SIGNAL(getAvatarReady(const QByteArray &,const QString &,AvatarClient::AvatarType)), this, SLOT(getAvatarReady(const QByteArray &,const QString &,AvatarClient::AvatarType)));
+    connect(avatarClient, SIGNAL(getCollectionsReady(const QByteArray &)),
+            this, SLOT(getCollectionsReady(const QByteArray &)));
+    connect(avatarClient, SIGNAL(getCollectionAvatarsReady(const QByteArray &)),
+            this, SLOT(getCollectionAvatarsReady(const QByteArray &)));
+    connect(avatarClient, SIGNAL(getMyAvatarsReady(const QByteArray &)),
+            this, SLOT(getMyAvatarsReady(const QByteArray &)));
+    connect(avatarClient, SIGNAL(uploadImageReady(const QByteArray &, const QString &)),
+            this, SLOT(uploadImageReady(const QByteArray &, const QString &)));
+    connect(avatarClient, SIGNAL(updatePhotoReady(const QByteArray &)),
+            this, SLOT(updatePhotoReady(const QByteArray &)));
+    connect(avatarClient, SIGNAL(addPhotoReady(const QByteArray &)),
+            this, SLOT(addPhotoReady(const QByteArray &)));
+    connect(avatarClient, SIGNAL(deletePhotoReady(const QByteArray &)),
+            this, SLOT(deletePhotoReady(const QByteArray &)));
+    connect(avatarClient, SIGNAL(getAvatarReady(const QByteArray &,const QString &,AvatarClient::AvatarType)),
+            this, SLOT(getAvatarReady(const QByteArray &,const QString &,AvatarClient::AvatarType)));
 
     // load my avatars
     avatarClient->requestGetMyAvatars();
@@ -101,8 +105,38 @@ void AvatarListWidget::createSignals()
     connect(ui.listWidget_list_collections, SIGNAL(currentTextChanged(QString)), this, SLOT(collectionChanged(QString)));
 }
 
-// <root><error><code>1</code><text><![CDATA[Not logged]]></text></error><reqId><![CDATA[{d1f76dc3-d939-4389-aa5c-4bb428a62363}]]></reqId></root>
-// <root><error><code>0</code><text><![CDATA[OK]]></text></error><data><id>5</id><name><![CDATA[Zestaw 1]]></name></data><data><id>6</id><name><![CDATA[Zestaw 2]]></name></data><count>2</count><reqId><![CDATA[{5ed3b996-6faa-4bcb-903d-d4a394235795}]]></reqId></root>
+/*!
+    OK response:
+    \code
+        <root>
+            <error>
+                <code>0</code>
+                <text><![CDATA[OK]]></text>
+            </error>
+            <data>
+                <id>5</id>
+                <name><![CDATA[Zestaw 1]]></name>
+            </data>
+            <data>
+                <id>6</id>
+                <name><![CDATA[Zestaw 2]]></name>
+            </data>
+            <count>2</count>
+            <reqId><![CDATA[{5ed3b996-6faa-4bcb-903d-d4a394235795}]]></reqId>
+        </root>
+    \endcode
+
+    Error response:
+    \code
+        <root>
+            <error>
+                <code>1</code>
+                <text><![CDATA[Not logged]]></text>
+            </error>
+            <reqId><![CDATA[{d1f76dc3-d939-4389-aa5c-4bb428a62363}]]></reqId>
+        </root>
+    \endcode
+*/
 void AvatarListWidget::getCollectionsReady(const QByteArray &content)
 {
     collections.clear();
@@ -151,8 +185,47 @@ void AvatarListWidget::getCollectionsReady(const QByteArray &content)
     ui.listWidget_list_collections->insertItems(0, collections.keys());
 }
 
-// <root><error><code>-1</code><text><![CDATA[getAvatarsFromCollect: -2|Nie istnieje kolekcja o Id: 1]]></text></error><data><![CDATA[]]></data><reqId><![CDATA[{52bb1aab-c1b0-4e5a-9b06-e46285374251}]]></reqId></root>
-// <root><error><code>0</code><text><![CDATA[OK]]></text></error><data><avatars><avatarId>110</avatarId><collectId>5</collectId><fileName><![CDATA[9f78f599c34c97336ae3a501fe29395e]]></fileName><avType>4</avType><server><![CDATA[http://foto2.m.onet.pl/_m/]]></server><img><![CDATA[9f78f599c34c97336ae3a501fe29395e]]></img><crop><![CDATA[]]></crop><angle>0</angle><bbox>0</bbox><mApp>27</mApp><ext><![CDATA[jpg]]></ext></avatars><avatarsCnt>27</avatarsCnt><collectId>5</collectId></data><reqId><![CDATA[eae58d2a-f090-4439-9f97-a109a5e2e6f4]]></reqId></root>
+/*!
+    OK response:
+    \code
+        <root>
+            <error>
+                <code>0</code>
+                <text><![CDATA[OK]]></text>
+            </error>
+            <data>
+                <avatars>
+                    <avatarId>110</avatarId>
+                    <collectId>5</collectId>
+                    <fileName><![CDATA[9f78f599c34c97336ae3a501fe29395e]]></fileName>
+                    <avType>4</avType>
+                    <server><![CDATA[http://foto2.m.onet.pl/_m/]]></server>
+                    <img><![CDATA[9f78f599c34c97336ae3a501fe29395e]]></img>
+                    <crop><![CDATA[]]></crop>
+                    <angle>0</angle>
+                    <bbox>0</bbox>
+                    <mApp>27</mApp>
+                    <ext><![CDATA[jpg]]></ext>
+                </avatars>
+                <avatarsCnt>27</avatarsCnt>
+                <collectId>5</collectId>
+            </data>
+            <reqId><![CDATA[eae58d2a-f090-4439-9f97-a109a5e2e6f4]]></reqId>
+        </root>
+    \endcode
+
+    Error response:
+    \code
+        <root>
+            <error>
+                <code>-1</code>
+                <text><![CDATA[getAvatarsFromCollect: -2|Nie istnieje kolekcja o Id: 1]]></text>
+            </error>
+            <data><![CDATA[]]></data>
+            <reqId><![CDATA[{52bb1aab-c1b0-4e5a-9b06-e46285374251}]]></reqId>
+        </root>
+    \endcode
+*/
 void AvatarListWidget::getCollectionAvatarsReady(const QByteArray &content)
 {
     QList<QString> lCollectionAvatars;
@@ -235,7 +308,32 @@ void AvatarListWidget::getCollectionAvatarsReady(const QByteArray &content)
     }
 }
 
-// <root><error><code>0</code><text><![CDATA[OK]]></text></error><data><count>1</count><images><angle>0</angle><crop><![CDATA[0-0-675-675]]></crop><height>677</height><img><![CDATA[9250d9265e492780cc1bb46e955ed21d]]></img><imgId>44231885</imgId><width>1016</width><desc><![CDATA[100_3893.jpg]]></desc><mApp>19</mApp><mSrv><![CDATA[http://foto1.m.onet.pl/_m/]]></mSrv></images></data><reqId><![CDATA[3722766d-737e-41e8-9c26-5fff7b0e5e3b]]></reqId></root>
+/*!
+    OK response:
+    \code
+        <root>
+            <error>
+                <code>0</code>
+                <text><![CDATA[OK]]></text>
+            </error>
+            <data>
+                <count>1</count>
+                <images>
+                    <angle>0</angle>
+                    <crop><![CDATA[0-0-675-675]]></crop>
+                    <height>677</height>
+                    <img><![CDATA[9250d9265e492780cc1bb46e955ed21d]]></img>
+                    <imgId>44231885</imgId>
+                    <width>1016</width>
+                    <desc><![CDATA[100_3893.jpg]]></desc>
+                    <mApp>19</mApp>
+                    <mSrv><![CDATA[http://foto1.m.onet.pl/_m/]]></mSrv>
+                </images>
+            </data>
+            <reqId><![CDATA[3722766d-737e-41e8-9c26-5fff7b0e5e3b]]></reqId>
+        </root>
+    \endcode
+*/
 void AvatarListWidget::getMyAvatarsReady(const QByteArray &content)
 {
     QList<MyAvatarModel> lMyAvatars;
@@ -309,7 +407,22 @@ void AvatarListWidget::getMyAvatarsReady(const QByteArray &content)
     }
 }
 
-// <root><data><mHash><![CDATA[7ec5873b8e5a0b735c2b4e217c2a5d90]]></mHash><width>1200</width><height>750</height><exif><![CDATA[]]></exif><fotoSrv><![CDATA[http://foto0.m.onet.pl/_m/]]></fotoSrv><mApp>19</mApp></data><reqId><![CDATA[7cdd9f84-0f9d-49f7-99bc-951c1e537f2f]]></reqId></root>
+/*!
+    OK response:
+    \code
+        <root>
+            <data>
+                <mHash><![CDATA[7ec5873b8e5a0b735c2b4e217c2a5d90]]></mHash>
+                <width>1200</width>
+                <height>750</height>
+                <exif><![CDATA[]]></exif>
+                <fotoSrv><![CDATA[http://foto0.m.onet.pl/_m/]]></fotoSrv>
+                <mApp>19</mApp>
+            </data>
+            <reqId><![CDATA[7cdd9f84-0f9d-49f7-99bc-951c1e537f2f]]></reqId>
+        </root>
+    \endcode
+*/
 void AvatarListWidget::uploadImageReady(const QByteArray &content, const QString &fileName)
 {
     QDomDocument doc;
@@ -357,7 +470,8 @@ void AvatarListWidget::uploadImageReady(const QByteArray &content, const QString
             pEntries = pEntries.nextSibling();
         }
 
-        if ((!avatar.img().isEmpty()) && (avatar.width() > 0) && (avatar.height() > 0) && (!avatar.mSrv().isEmpty()) && (avatar.mApp() > 0))
+        if ((!avatar.img().isEmpty()) && (avatar.width() > 0) && (avatar.height() > 0)
+            && (!avatar.mSrv().isEmpty()) && (avatar.mApp() > 0))
         {
             avatar.setAngle(0);
             avatar.setDesc(fileName);
@@ -367,7 +481,21 @@ void AvatarListWidget::uploadImageReady(const QByteArray &content, const QString
     }
 }
 
-//<root><error><code>0</code><text><![CDATA[OK]]></text></error><data><functionName><![CDATA[updatePhoto]]></functionName></data><reqId><![CDATA[28891280-12ce-4462-8abc-62d0bf690d3d]]></reqId></root>
+/*!
+    OK response:
+    \code
+        <root>
+            <error>
+                <code>0</code>
+                <text><![CDATA[OK]]></text>
+            </error>
+            <data>
+                <functionName><![CDATA[updatePhoto]]></functionName>
+            </data>
+            <reqId><![CDATA[28891280-12ce-4462-8abc-62d0bf690d3d]]></reqId>
+        </root>
+    \endcode
+*/
 void AvatarListWidget::updatePhotoReady(const QByteArray &content)
 {
     QDomDocument doc;
@@ -389,8 +517,34 @@ void AvatarListWidget::updatePhotoReady(const QByteArray &content)
     avatarClient->requestGetMyAvatars();
 }
 
-// a:2:{s:5:"error";a:2:{s:4:"code";i:-500;s:4:"text";s:10:"Bad params";}s:5:"reqId";i:0;}
-// <root><data><mHash><![CDATA[7bec84066455a12e87e7bea1decc58a1]]></mHash><width>200</width><height>200</height><exif><![CDATA[]]></exif><fotoSrv><![CDATA[http://foto1.m.onet.pl/_m/]]></fotoSrv><mApp>19</mApp></data><reqId><![CDATA[37bebcec-da81-4a17-85aa-8b1205e4b0d9]]></reqId></root>
+/*!
+    OK response:
+    \code
+        <root>
+            <data>
+                <mHash><![CDATA[7bec84066455a12e87e7bea1decc58a1]]></mHash>
+                <width>200</width>
+                <height>200</height>
+                <exif><![CDATA[]]></exif>
+                <fotoSrv><![CDATA[http://foto1.m.onet.pl/_m/]]></fotoSrv>
+                <mApp>19</mApp>
+            </data>
+            <reqId><![CDATA[37bebcec-da81-4a17-85aa-8b1205e4b0d9]]></reqId>
+        </root>
+    \endcode
+
+    Error response:
+    \code
+        <root>
+            <error>
+                <code>-500</code>
+                <text><![CDATA[Bad params]]></text>
+            </error>
+            <data><![CDATA[]]></data>
+            <reqId><![CDATA[37bebcec-da81-4a17-85aa-8b1205e4b0d9]]></reqId>
+        </root>
+    \endcode
+*/
 void AvatarListWidget::addPhotoReady(const QByteArray &content)
 {
     QDomDocument doc;
@@ -415,7 +569,19 @@ void AvatarListWidget::addPhotoReady(const QByteArray &content)
     avatarClient->requestGetMyAvatars();
 }
 
-// <root><error><code>0</code><text><![CDATA[OK]]></text></error><data><![CDATA[]]></data><reqId><![CDATA[3dba2705-f507-43d7-ae75-a677457f027f]]></reqId></root>
+/*!
+    OK response:
+    \code
+        <root>
+            <error>
+                <code>0</code>
+                <text><![CDATA[OK]]></text>
+            </error>
+            <data><![CDATA[]]></data>
+            <reqId><![CDATA[3dba2705-f507-43d7-ae75-a677457f027f]]></reqId>
+        </root>
+    \endcode
+*/
 void AvatarListWidget::deletePhotoReady(const QByteArray &content)
 {
     QDomDocument doc;
@@ -437,7 +603,8 @@ void AvatarListWidget::deletePhotoReady(const QByteArray &content)
     avatarClient->requestGetMyAvatars();
 }
 
-void AvatarListWidget::getAvatarReady(const QByteArray &content, const QString &avatarUrl, AvatarClient::AvatarType type)
+void AvatarListWidget::getAvatarReady(const QByteArray &content, const QString &avatarUrl,
+    AvatarClient::AvatarType type)
 {
     QPixmap pixmap;
     if (!pixmap.loadFromData(content))

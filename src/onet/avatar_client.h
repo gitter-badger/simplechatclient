@@ -26,15 +26,12 @@
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
 
-class QNetworkCookieJar;
 class MyAvatarModel;
 
 class AvatarClient : public QNetworkAccessManager
 {
     Q_OBJECT
 public:
-    typedef QMap<QString, int> AvatarCollection;
-
     enum AvatarType
     {
         AT_my,
@@ -44,7 +41,6 @@ public:
     };
 
     AvatarClient();
-    virtual ~AvatarClient();
 
     void requestGetCollections();
     void requestGetCollectionAvatars(int id);
@@ -96,7 +92,6 @@ private:
     QString createRid();
 
     QNetworkRequest basicRequest;
-
 };
 
 #endif /* AVATAR_CLIENT_H */
