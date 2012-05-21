@@ -6,3 +6,6 @@ http://www.microsoft.com/download/en/details.aspx?displaylang=en&id=5582
 
 Linux:
 libssl-dev libqca2-dev libqca2-plugin-ossl libphonon-dev g++ cmake make
+
+To compile without Phonon use -DWITH_PHONON=OFF option, i.e.:
+cmake . -DWITH_PHONON=OFF

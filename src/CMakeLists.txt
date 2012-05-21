@@ -265,8 +265,13 @@ include_directories (${QCA2_INCLUDE_DIRS})
 link_directories (${QCA2_LIBRARY_DIRS})
 add_definitions (${QCA2_CFLAGS_OTHER})
 
-find_package (Phonon)
-include_directories (${PHONON_INCLUDE_DIR})
+option (WITH_PHONON "Compile with Phonon support" ON)
+if (WITH_PHONON)
+	find_package (Phonon)
+	include_directories (${PHONON_INCLUDE_DIR})
+else (WITH_PHONON)
+	message (STATUS "Phonon disabled")
+endif (WITH_PHONON)
 
 # qt
 find_package (Qt4 REQUIRED)

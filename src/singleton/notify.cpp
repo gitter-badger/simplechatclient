@@ -36,8 +36,10 @@ Notify * Notify::instance()
 
 void Notify::init()
 {
+#if WITH_PHONON
     QString strSoundBeep = Core::instance()->settings.value("sound_beep");
     music = Phonon::createPlayer(Phonon::NotificationCategory, Phonon::MediaSource(strSoundBeep));
+#endif
 }
 
 Notify::Notify()
@@ -47,11 +49,14 @@ Notify::Notify()
 
 Notify::~Notify()
 {
+#if WITH_PHONON
     delete music;
+#endif
 }
 
 void Notify::play(NotifyCategory eCategory)
 {
+#if WITH_PHONON
     music->stop();
 
     if (eCategory == Query)
@@ -74,6 +79,7 @@ void Notify::play(NotifyCategory eCategory)
     }
 
     music->play();
+#endif
 }
 
 void Notify::quit()

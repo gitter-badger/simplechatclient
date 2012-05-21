@@ -21,7 +21,9 @@
 #ifndef NOTIFY_H
 #define NOTIFY_H
 
+#if WITH_PHONON
 #include <phonon/MediaObject>
+#endif
 #include <QObject>
 
 enum NotifyCategory {Beep, Query};
@@ -47,7 +49,9 @@ public slots:
 
 private:
     QString apath;
+#if WITH_PHONON
     Phonon::MediaObject *music;
+#endif
     NotifyCategory eCurrentCategory;
 
     void init();
