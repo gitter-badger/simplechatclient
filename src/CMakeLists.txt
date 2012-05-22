@@ -1,7 +1,7 @@
 if (WIN32)
 	option (WITH_KAMERZYSTA "Compile with Kamerzysta" ON)
 else (WIN32)
-	option (WITH_KAMERZYSTA "Compile with internal Webcam window" OFF)
+	option (WITH_KAMERZYSTA "Compile with Kamerzysta" OFF)
 endif (WIN32)
 
 set (scc_UIS
@@ -209,6 +209,7 @@ endif (UNIX)
 
 # kamerzysta/cam
 if (WITH_KAMERZYSTA)
+	message (STATUS "Kamerzysta support enabled.")
 	LIST (APPEND scc_SRCS
 		common/kamerzysta.cpp
 	)
@@ -216,6 +217,7 @@ if (WITH_KAMERZYSTA)
 		common/kamerzysta.h
 	)
 else (WITH_KAMERZYSTA)
+	message (STATUS "Kamerzysta support disabled. Using internal Webcam window")
 	LIST (APPEND scc_UIS
 		../ui/webcam_standard.ui
 		../ui/webcam_mini.ui

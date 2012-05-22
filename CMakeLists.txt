@@ -1,6 +1,4 @@
-
 # init
-
 project (scc)
 cmake_minimum_required (VERSION 2.8.1 FATAL_ERROR)
 set (QT_MIN_VERSION "4.6.2")
@@ -13,16 +11,13 @@ set (SCC_SHARE_DIR ${CMAKE_INSTALL_PREFIX}/share)
 set (SCC_DATA_DIR ${CMAKE_INSTALL_PREFIX}/share/scc)
 
 # modules
-
 set (CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake/modules)
 
 # include
-
 include (FindPkgConfig)
 include (CheckIncludeFiles)
 
 # sub dir
-
 add_subdirectory (src)
 add_subdirectory (translations)
 
@@ -30,7 +25,6 @@ add_subdirectory (translations)
 configure_file (${CMAKE_SOURCE_DIR}/scc-config.h.cmake ${CMAKE_BINARY_DIR}/scc-config.h)
 
 # install
-
 if (UNIX AND NOT APPLE)
 	install (FILES AUTHORS ChangeLog LICENSE README scc.png TODO DESTINATION ${SCC_DATA_DIR})
 	install (FILES scc.desktop DESTINATION ${SCC_SHARE_DIR}/applications)
@@ -48,7 +42,6 @@ if (MINGW)
 endif (MINGW)
 
 # uninstall
-
 if (UNIX AND NOT APPLE)
 	configure_file ("${CMAKE_CURRENT_SOURCE_DIR}/cmake_uninstall.cmake.in" "${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake" IMMEDIATE @ONLY)
 	add_custom_target (uninstall "${CMAKE_COMMAND}" -P "${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake")
