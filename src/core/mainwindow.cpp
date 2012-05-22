@@ -52,9 +52,9 @@
 #include "tool_widget.h"
 
 #if WITH_KAMERZYSTA
-#include "kamerzysta.h"
+    #include "kamerzysta.h"
 #else
-#include "webcam.h"
+    #include "webcam.h"
 #endif
 
 #include "mainwindow.h"
