@@ -40,7 +40,7 @@
 #include "webbrowser.h"
 #include "chat_view.h"
 
-#ifdef Q_WS_WIN
+#if WITH_KAMERZYSTA
     #include "kamerzysta.h"
 #else
     #include "webcam.h"
@@ -206,7 +206,7 @@ void ChatView::profile()
 
 void ChatView::cam()
 {
-#ifdef Q_WS_WIN
+#if WITH_KAMERZYSTA
     (new Kamerzysta(Core::instance()->kamerzystaSocket))->show(strNick);
 #else
     new DlgWebcam(strNick, true);

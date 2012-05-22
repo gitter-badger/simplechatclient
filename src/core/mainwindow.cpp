@@ -26,6 +26,7 @@
 #include <QSystemTrayIcon>
 #include <QTimer>
 #include <QToolBar>
+
 #include "config.h"
 #include "core.h"
 #include "about.h"
@@ -49,13 +50,14 @@
 #include "tab_container.h"
 #include "tab_manager.h"
 #include "tool_widget.h"
-#include "mainwindow.h"
 
-#ifdef Q_WS_WIN
-    #include "kamerzysta.h"
+#if WITH_KAMERZYSTA
+#include "kamerzysta.h"
 #else
-    #include "webcam.h"
+#include "webcam.h"
 #endif
+
+#include "mainwindow.h"
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 {
@@ -562,7 +564,7 @@ void MainWindow::openAwaylog()
 
 void MainWindow::openCams()
 {
-#ifdef Q_WS_WIN
+#if WITH_KAMERZYSTA
     if ((Core::instance()->pNetwork->isConnected()) && (Core::instance()->pNetwork->isWritable()) && (Core::instance()->settings.value("logged") == "true"))
     {
         QString strMe = Core::instance()->settings.value("nick");

@@ -28,7 +28,7 @@
 #include "user_profile.h"
 #include "nicklist_widget.h"
 
-#ifdef Q_WS_WIN
+#if WITH_KAMERZYSTA
     #include "kamerzysta.h"
 #else
     #include "webcam.h"
@@ -173,7 +173,7 @@ void NickListWidget::cam()
 {
     if (strSelectedNick.isEmpty()) return;
 
-#ifdef Q_WS_WIN
+#if WITH_KAMERZYSTA
     (new Kamerzysta(Core::instance()->kamerzystaSocket))->show(strSelectedNick);
 #else
     new DlgWebcam(strSelectedNick, true);

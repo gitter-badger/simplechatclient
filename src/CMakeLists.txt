@@ -1,3 +1,8 @@
+if (WIN32)
+	option (WITH_KAMERZYSTA "Compile with Kamerzysta" ON)
+else (WIN32)
+	option (WITH_KAMERZYSTA "Compile with internal Webcam window" OFF)
+endif (WIN32)
 
 set (scc_UIS
 	../ui/about.ui
@@ -203,14 +208,14 @@ if (UNIX)
 endif (UNIX)
 
 # kamerzysta/cam
-if (WIN32)
+if (WITH_KAMERZYSTA)
 	LIST (APPEND scc_SRCS
 		common/kamerzysta.cpp
 	)
 	LIST (APPEND scc_MOC_HDRS
 		common/kamerzysta.h
 	)
-else (WIN32)
+else (WITH_KAMERZYSTA)
 	LIST (APPEND scc_UIS
 		../ui/webcam_standard.ui
 		../ui/webcam_mini.ui
@@ -231,7 +236,7 @@ else (WIN32)
 		gui/webcam_mini.h
 		widgets/webcam_delegate.h
 	)
-endif (WIN32)
+endif (WITH_KAMERZYSTA)
 
 # winamp
 if (WIN32)
