@@ -81,66 +81,21 @@ void ChatView::createBody()
             qDebug() << "Error: chat.js does not exist!";
     }
 
-    QString strHtml = "<html><head><style type=\"text/css\"></style></head><body><div id=\"Chat\"></div></body></html>";
-    this->setHtml(strHtml);
+    QString strMainHtml = "<html><head><style type=\"text/css\"></style></head><body><div id=\"Chat\"></div></body></html>";
+    this->setHtml(strMainHtml);
     this->page()->mainFrame()->evaluateJavaScript(jsCode);
 }
 
 void ChatView::refreshCSS()
 {
-    QString strDefaultFontColor = Core::instance()->settings.value("default_font_color");
-    QString strJoinFontColor = Core::instance()->settings.value("font_color_level_1");
-    QString strPartFontColor = Core::instance()->settings.value("font_color_level_2");
-    QString strQuitFontColor = Core::instance()->settings.value("font_color_level_3");
-    QString strKickFontColor = Core::instance()->settings.value("font_color_level_4");
-    QString strModeFontColor = Core::instance()->settings.value("font_color_level_5");
-    QString strNoticeFontColor = Core::instance()->settings.value("font_color_level_6");
-    QString strInfoFontColor = Core::instance()->settings.value("font_color_level_7");
-    QString strMeFontColor = Core::instance()->settings.value("font_color_level_8");
-    QString strErrorFontColor = Core::instance()->settings.value("font_color_level_9");
-    QString strChannelFontColor = Core::instance()->settings.value("channel_font_color");
-
-    QString strFontSize = Core::instance()->settings.value("font_size");
-
-    QString strBackgroundImage = Core::instance()->settings.value("background_image");
-    QString strDisableBackgroundImage = Core::instance()->settings.value("disable_background_image");
-
-#ifndef Q_WS_WIN
-    strBackgroundImage = "file://"+strBackgroundImage;
-#endif
-
-/*
-    Cannot use float, clear, and border-radius !!!
-*/
-
-    QString strBackground;
-    if ((strDisableBackgroundImage == "false") && (!strBackgroundImage.isEmpty()))
-        strBackground = QString("background-image: url('%1'); background-attachment: fixed; background-position: center; background-repeat: no-repeat;").arg(strBackgroundImage);
-
-    QString strBodyCSS = QString("margin: 0; padding: 0; font-family: sans; word-wrap: break-word; font-size:%1; %2").arg(strFontSize, strBackground);
-    QWebElement body = this->page()->mainFrame()->findFirstElement("body");
-    body.setAttribute("style", strBodyCSS);
-
-    QString strHeadCSS = "div{margin-bottom: 2px;}";
-    strHeadCSS.append(QString("table{border-spacing: 0; margin: 0; padding: 0; font-family: sans; word-wrap: break-word; font-size:%1;}.TableText{width:100%;}").arg(strFontSize));
-    strHeadCSS.append(QString(".time{font-weight:normal; text-decoration:none; color:%1; padding-right:5px;}").arg(strDefaultFontColor));
-    strHeadCSS.append(QString(".avatar{vertical-align:middle; margin-left:4px; margin-right:4px; width:30px; height:30px;}"));
-
-    strHeadCSS.append(QString(".DefaultFontColor{color:%1;}").arg(strDefaultFontColor));
-    strHeadCSS.append(QString(".JoinFontColor{color:%1;}").arg(strJoinFontColor));
-    strHeadCSS.append(QString(".PartFontColor{color:%1;}").arg(strPartFontColor));
-    strHeadCSS.append(QString(".QuitFontColor{color:%1;}").arg(strQuitFontColor));
-    strHeadCSS.append(QString(".KickFontColor{color:%1;}").arg(strKickFontColor));
-    strHeadCSS.append(QString(".ModeFontColor{color:%1;}").arg(strModeFontColor));
-    strHeadCSS.append(QString(".NoticeFontColor{color:%1;}").arg(strNoticeFontColor));
-    strHeadCSS.append(QString(".InfoFontColor{color:%1;}").arg(strInfoFontColor));
-    strHeadCSS.append(QString(".MeFontColor{color:%1;}").arg(strMeFontColor));
-    strHeadCSS.append(QString(".ErrorFontColor{color:%1;}").arg(strErrorFontColor));
-    strHeadCSS.append(QString(".ChannelFontColor{color:%1;}").arg(strChannelFontColor));
-
+    QString strHeadCSS = HtmlMessagesRenderer::headCSS();
     QWebElement head = this->page()->mainFrame()->findFirstElement("head");
     QWebElement headStyle = head.findFirst("style");
     headStyle.setPlainText(strHeadCSS);
+
+    QString strBodyCSS = HtmlMessagesRenderer::bodyCSS();
+    QWebElement body = this->page()->mainFrame()->findFirstElement("body");
+    body.setAttribute("style", strBodyCSS);
 }
 
 void ChatView::clearMessages()
