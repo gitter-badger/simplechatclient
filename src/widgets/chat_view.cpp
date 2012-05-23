@@ -20,7 +20,6 @@
 
 #include <QContextMenuEvent>
 #include <QCoreApplication>
-#include <QDateTime>
 #include <QDesktopServices>
 #include <QFile>
 #include <QInputDialog>
@@ -28,13 +27,10 @@
 #include <QUrl>
 #include <QtWebKit/QWebFrame>
 #include <QtWebKit/QWebElement>
-#include "config.h"
 #include "core.h"
 #include "user_profile.h"
 #include "find_text.h"
 #include "html_messages_renderer.h"
-#include "log.h"
-#include "notify.h"
 #include "notes_model.h"
 #include "nicklist.h"
 #include "webbrowser.h"
@@ -128,14 +124,6 @@ void ChatView::displayMessage(const QString &strData, MessageCategory eMessageCa
     /* possible temporary solution: use QWebElements API to randomly change */
     /* URLs in the HTML/CSS content. */
     this->page()->triggerAction(QWebPage::ReloadAndBypassCache, false);
-
-    // highlight
-    if (eMessageCategory == HighlightMessage)
-    {
-        // sound
-        if (Core::instance()->settings.value("disable_sounds") == "false")
-            Notify::instance()->play(Beep);
-    }
 }
 
 void ChatView::joinChannel()
