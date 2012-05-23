@@ -834,6 +834,7 @@ void OnetKernel::raw_privmsg()
     if (strMessage[0] == ':') strMessage.remove(0,1);
 
     // fix emots
+    Convert::simpleReverseConvert(strMessage);
     Replace::replaceEmots(strMessage);
 
     Message::instance()->showMessage(strChannel, strMessage, DefaultMessage, strNick);

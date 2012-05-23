@@ -26,6 +26,7 @@
 #include "core.h"
 #include "commands.h"
 #include "config.h"
+#include "convert.h"
 #include "channel_settings.h"
 #include "emoticons.h"
 #include "message.h"
@@ -849,6 +850,7 @@ void ToolWidget::sendMessage(QString strText, bool bModeration)
             if ((!weight.isEmpty()) || (!font.isEmpty()))
                 strText = "%F"+weight+font+"%"+strText;
 
+            Convert::simpleReverseConvert(strText);
             Replace::replaceEmots(strText);
 
             Core::instance()->pNetwork->send(QString("PRIVMSG %1 :%2").arg(strChannel, strText));
@@ -878,6 +880,9 @@ void ToolWidget::sendMessage(QString strText, bool bModeration)
                     font = ":"+font;
                 if ((!weight.isEmpty()) || (!font.isEmpty()))
                     strTextDisplay = "%F"+weight+font+"%"+strTextDisplay;
+
+                Convert::simpleReverseConvert(strTextSend);
+                Convert::simpleReverseConvert(strTextDisplay);
 
                 Replace::replaceEmots(strTextSend);
                 Replace::replaceEmots(strTextDisplay);
@@ -913,6 +918,7 @@ void ToolWidget::sendMessage(QString strText, bool bModeration)
         if ((!weight.isEmpty()) || (!font.isEmpty()))
             strText = "%F"+weight+font+"%"+strText;
 
+        Convert::simpleReverseConvert(strText);
         Replace::replaceEmots(strText);
 
         // standard text

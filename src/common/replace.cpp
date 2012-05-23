@@ -20,14 +20,10 @@
 
 #include <QRegExp>
 #include "core.h"
-#include "convert.h"
 #include "replace.h"
 
 void Replace::replaceEmots(QString &strData)
 {
-    // simple reverse convert
-    Convert::simpleReverseConvert(strData);
-
     // return if disable replaces == on
     if (Core::instance()->settings.value("disable_replaces") == "true")
         return;
