@@ -22,6 +22,9 @@
 #include <QMessageBox>
 #include <QPushButton>
 #include "core.h"
+#include "convert.h"
+#include "message.h"
+#include "replace.h"
 #include "commands.h"
 
 #ifdef Q_WS_WIN
@@ -230,6 +233,9 @@ QString Commands::cmdAway()
     QString strMessage;
     for (int i = 1; i < strDataList.size(); i++) { if (i != 1) strMessage += " "; strMessage += strDataList[i]; }
 
+    Convert::simpleReverseConvert(strMessage);
+    Replace::replaceEmots(strMessage);
+
     return QString("AWAY :%1").arg(strMessage);
 }
 
@@ -243,6 +249,9 @@ QString Commands::cmdOffmsg()
     QString strMessage;
     for (int i = 2; i < strDataList.size(); i++) { if (i != 2) strMessage += " "; strMessage += strDataList[i]; }
 
+    Convert::simpleReverseConvert(strMessage);
+    Replace::replaceEmots(strMessage);
+
     return QString("NS OFFLINE MSG %1 %2").arg(strNick, strMessage);
 }
 
@@ -254,7 +263,12 @@ QString Commands::cmdQuit()
     Core::instance()->settings["reconnect"] = "false";
 
     if (!strReason.isEmpty())
+    {
+        Convert::simpleReverseConvert(strReason);
+        Replace::replaceEmots(strReason);
+
         return QString("QUIT :%1").arg(strReason);
+    }
     else
         return "QUIT";
 }
@@ -266,6 +280,8 @@ QString Commands::cmdMp3()
     bool bIsRunning = pWinamp->isRunning();
     int iState = pWinamp->state();
     delete pWinamp;
+
+    QString strMessage;
 
     if (bIsRunning)
     {
@@ -285,52 +301,61 @@ QString Commands::cmdMp3()
             strWinamp.replace("$position", strPosition);
             strWinamp.replace("$length", strLength);
 
-            return strWinamp;
+            strMessage = strWinamp;
         }
         else if (iState == 3)
-            return tr("Winamp is paused");
+            strMessage = tr("Winamp is paused");
         else if (iState == 0)
-            return tr("Winamp is not playing");
+            strMessage = tr("Winamp is not playing");
         else
-            return tr("Winamp is not running");
+            strMessage = tr("Winamp is not running");
     }
     else
-        return tr("Winamp is not running");
+        strMessage = tr("Winamp is not running");
 #else
-    return tr("This command is only for Windows");
+    strMessage = tr("This command is only for Windows");
 #endif
+
+    return strMessage;
 }
 
 QString Commands::cmdHelp()
 {
-    QString strResult;
+    QString strHelp;
 
-    strResult = (tr("* Available commands:")+";");
-    strResult.append(tr("/cycle [text] or /hop [text]")+";");
-    strResult.append(tr("/me [text]")+";");
-    strResult.append(tr("/topic [text]")+";");
-    strResult.append(tr("/join [channel] [key] or /j [channel] [key]")+";");
-    strResult.append(tr("/part [text] or /p [text]")+";");
-    strResult.append(tr("/priv [nick]")+";");
-    strResult.append(tr("/ignore [[+|-]nick]")+";");
-    strResult.append(tr("/friend [[+|-]nick]")+";");
-    strResult.append(tr("/whereis [nick] or /whois [nick] or /wi [nick] or /wii [nick]")+";");
-    strResult.append(tr("/busy")+";");
-    strResult.append(tr("/away [text]")+";");
-    strResult.append(tr("/invite [nick]")+";");
-    strResult.append(tr("/offmsg [nick] [text]")+";");
-    strResult.append(tr("/logout [text] or /quit [text] or /q [text]")+";");
-    strResult.append(tr("/kick [nick] [reason] or /k [nick] [reason]")+";");
-    strResult.append(tr("/ban [[+|-]nick]")+";");
-    strResult.append(tr("/banip [[+|-]nick]")+";");
-    strResult.append(tr("/sop [[+|-]nick]")+";");
-    strResult.append(tr("/op [[+|-]nick]")+";");
-    strResult.append(tr("/moder [[+|-]nick] or /moderator [[+|-]nick]")+";");
-    strResult.append(tr("/vip [[+|-]nick]")+";");
-    strResult.append(tr("/mp3 or /winamp")+";");
-    strResult.append(tr("/help"));
+    strHelp = (tr("* Available commands:")+";");
+    strHelp.append(tr("/cycle [text] or /hop [text]")+";");
+    strHelp.append(tr("/me [text]")+";");
+    strHelp.append(tr("/topic [text]")+";");
+    strHelp.append(tr("/join [channel] [key] or /j [channel] [key]")+";");
+    strHelp.append(tr("/part [text] or /p [text]")+";");
+    strHelp.append(tr("/priv [nick]")+";");
+    strHelp.append(tr("/ignore [[+|-]nick]")+";");
+    strHelp.append(tr("/friend [[+|-]nick]")+";");
+    strHelp.append(tr("/whereis [nick] or /whois [nick] or /wi [nick] or /wii [nick]")+";");
+    strHelp.append(tr("/busy")+";");
+    strHelp.append(tr("/away [text]")+";");
+    strHelp.append(tr("/invite [nick]")+";");
+    strHelp.append(tr("/offmsg [nick] [text]")+";");
+    strHelp.append(tr("/logout [text] or /quit [text] or /q [text]")+";");
+    strHelp.append(tr("/kick [nick] [reason] or /k [nick] [reason]")+";");
+    strHelp.append(tr("/ban [[+|-]nick]")+";");
+    strHelp.append(tr("/banip [[+|-]nick]")+";");
+    strHelp.append(tr("/sop [[+|-]nick]")+";");
+    strHelp.append(tr("/op [[+|-]nick]")+";");
+    strHelp.append(tr("/moder [[+|-]nick] or /moderator [[+|-]nick]")+";");
+    strHelp.append(tr("/vip [[+|-]nick]")+";");
+    strHelp.append(tr("/mp3 or /winamp")+";");
+    strHelp.append(tr("/help"));
 
-    return strResult;
+    QStringList lHelp = strHelp.split(";");
+    for (int i = 0; i < lHelp.size(); i++)
+    {
+        QString strDisplay = lHelp.at(i);
+        Message::instance()->showMessage(strChan, strDisplay, InfoMessage);
+    }
+
+    return QString::null;
 }
 
 QString Commands::cmdCycle()
@@ -353,6 +378,10 @@ QString Commands::cmdMe()
     QString strMessage;
     for (int i = 1; i < strDataList.size(); i++) { if (i != 1) strMessage += " "; strMessage += strDataList[i]; }
 
+    Convert::createText(strMessage);
+    Convert::simpleReverseConvert(strMessage);
+    Replace::replaceEmots(strMessage);
+
     return QString("PRIVMSG %1 :%2ACTION %3%4").arg(strChannel, QString(QByteArray("\x01")), strMessage, QString(QByteArray("\x01")));
 }
 
@@ -363,8 +392,9 @@ QString Commands::cmdTopic()
     QString strMessage;
     for (int i = 1; i < strDataList.size(); i++) { if (i != 1) strMessage += " "; strMessage += strDataList[i]; }
 
-    // convert emoticons
-    strMessage.replace(QRegExp("//([a-zA-Z0-9_-]+)"), "%I\\1%");
+    Convert::createText(strMessage);
+    Convert::simpleReverseConvert(strMessage);
+    Replace::replaceEmots(strMessage);
 
     return QString("CS SET %1 TOPIC %2").arg(strChannel, strMessage);
 }

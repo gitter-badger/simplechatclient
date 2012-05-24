@@ -800,142 +800,82 @@ void ToolWidget::sendMessage(QString strText, bool bModeration)
 {
     if (strText.isEmpty()) return; // empty text!
     QString strChannel = Core::instance()->getCurrentChannelName();
+    QString strMe = Core::instance()->settings.value("nick");
+    QString strCommand;
+
+    // is command
+    if ((strText[0] == '/') && (strText[1] != '/'))
+    {
+        QStringList strTextList = strText.split(" ");
+        strCommand = ((QString)strTextList[0]).remove(0,1);
+        strText.remove(0,1);
+    }
 
     QString strTextOriginal = strText;
 
-    QString strMe = Core::instance()->settings.value("nick");
-    QString strCurrentColor = Core::instance()->settings.value("my_color");
-    QString strFontFamily = Core::instance()->settings.value("my_font");
-    bool bMyBold = Core::instance()->settings.value("my_bold") == "true" ? true : false;
-    bool bMyItalic = Core::instance()->settings.value("my_italic") == "true" ? true : false;
+    Commands *pCommands = new Commands(strChannel, strText);
+    strText = pCommands->execute();
+    delete pCommands;
 
-    // if command
-    if ((strText[0] == '/') && (strText[1] != '/'))
+    // is empty
+    if (strText.isEmpty())
+        return;
+
+    if (strCommand == "me")
     {
-        if (strText[0] == '/')
-            strText = strText.right(strText.length()-1);
-        strTextOriginal = strText;
-        QStringList strTextList = strText.split(" ");
-
-        Commands *pCommands = new Commands(strChannel, strText);
-        strText = pCommands->execute();
-        delete pCommands;
-
-        // help
-        if ((strTextList[0] == "help") || (strTextList[0] == "pomoc"))
+        if (strChannel != STATUS)
         {
-            QStringList lHelp = strText.split(";");
-            for (int i = 0; i < lHelp.size(); i++)
-            {
-                QString strDisplay = lHelp.at(i);
-                Message::instance()->showMessage(strChannel, strDisplay, InfoMessage);
-            }
+            Core::instance()->pNetwork->send(strText);
+
+            if (strTextOriginal.length() > 3) strTextOriginal.remove(0,3);
+
+            Convert::createText(strTextOriginal);
+            Convert::simpleReverseConvert(strTextOriginal);
+            Replace::replaceEmots(strTextOriginal);
+
+            QString strDisplay = QString("%1ACTION %2%3").arg(QString(QByteArray("\x01")), strTextOriginal, QString(QByteArray("\x01")));
+            Message::instance()->showMessage(strChannel, strDisplay, MeMessage, strMe);
         }
-        else if ((strTextList[0] == "mp3") || (strTextList[0] == "winamp"))
+        return;
+    }
+    else if ((strCommand == "mp3") || (strCommand == "winamp"))
+    {
+        if (strChannel != STATUS)
         {
-            if (strChannel == STATUS) return; // return if status
-
-            QString weight;
-            QString font = strFontFamily.toLower();
-
-            if (bMyBold) weight += "b";
-            if (bMyItalic) weight += "i";
-
-            if (font == "verdana")
-                font = QString::null;
-            if ((strCurrentColor != "#000000") && (!strCurrentColor.isEmpty()))
-                strText = "%C"+strCurrentColor.right(6)+"%"+strText;
-            if (!font.isEmpty())
-                font = ":"+font;
-            if ((!weight.isEmpty()) || (!font.isEmpty()))
-                strText = "%F"+weight+font+"%"+strText;
-
+            Convert::createText(strText);
             Convert::simpleReverseConvert(strText);
             Replace::replaceEmots(strText);
 
             Core::instance()->pNetwork->send(QString("PRIVMSG %1 :%2").arg(strChannel, strText));
             Message::instance()->showMessage(strChannel, strText, DefaultMessage, strMe);
         }
-        // me
-        else if (strTextList[0] == "me")
-        {
-            if (strChannel == STATUS) return; // return if status
-
-            if (strTextOriginal.length() > 3)
-            {
-                QString strTextSend = strText;
-                QString strTextDisplay = strTextOriginal.right(strTextOriginal.length()-3);
-
-                QString weight;
-                QString font = strFontFamily.toLower();
-
-                if (bMyBold) weight += "b";
-                if (bMyItalic) weight += "i";
-
-                if (font == "verdana")
-                    font = QString::null;
-                if ((strCurrentColor != "#000000") && (!strCurrentColor.isEmpty()))
-                    strTextDisplay = "%C"+strCurrentColor.right(6)+"%"+strTextDisplay;
-                if (!font.isEmpty())
-                    font = ":"+font;
-                if ((!weight.isEmpty()) || (!font.isEmpty()))
-                    strTextDisplay = "%F"+weight+font+"%"+strTextDisplay;
-
-                Convert::simpleReverseConvert(strTextSend);
-                Convert::simpleReverseConvert(strTextDisplay);
-
-                Replace::replaceEmots(strTextSend);
-                Replace::replaceEmots(strTextDisplay);
-
-                Core::instance()->pNetwork->send(strTextSend);
-                QString strDisplay = QString("%1ACTION %2%3").arg(QString(QByteArray("\x01")), strTextDisplay, QString(QByteArray("\x01")));
-                Message::instance()->showMessage(strChannel, strDisplay, MeMessage, strMe);
-            }
-        }
-        // other command
-        else
-        {
-            if (strText.length() > 0)
-                Core::instance()->pNetwork->send(strText);
-        }
+        return;
     }
-    else
+    else if (!strCommand.isEmpty())
     {
-        if (strChannel == STATUS) return; // return if status
+        Core::instance()->pNetwork->send(strText);
+        return;
+    }
 
-        QString weight;
-        QString font = strFontFamily.toLower();
+    // not status
+    if (strChannel == STATUS)
+        return;
 
-        if (bMyBold) weight += "b";
-        if (bMyItalic) weight += "i";
+    // convert
+    Convert::createText(strText);
+    Convert::simpleReverseConvert(strText);
+    Replace::replaceEmots(strText);
 
-        if (font == "verdana")
-            font = "";
-        if ((strCurrentColor != "#000000") && (!strCurrentColor.isEmpty()))
-            strText = "%C"+strCurrentColor.right(6)+"%"+strText;
-        if (!font.isEmpty())
-            font = ":"+font;
-        if ((!weight.isEmpty()) || (!font.isEmpty()))
-            strText = "%F"+weight+font+"%"+strText;
-
-        Convert::simpleReverseConvert(strText);
-        Replace::replaceEmots(strText);
-
-        // standard text
-        if (!bModeration)
-        {
-            strText = QString("PRIVMSG %1 :%2").arg(strChannel, strText);
-            Core::instance()->pNetwork->send(strText);
-            QString strDisplay = strText.right(strText.length()-10-strChannel.length());
-            Message::instance()->showMessage(strChannel, strDisplay, DefaultMessage, strMe);
-        }
-        // moder notice
-        else if (bModeration)
-        {
-            strText = QString("MODERNOTICE %1 :%2").arg(strChannel, strText);
-            Core::instance()->pNetwork->send(strText);
-            QString strDisplay = strText.right(strText.length()-14-strChannel.length());
-            Message::instance()->showMessage(strChannel, strDisplay, ModerNoticeMessage, strMe);
-        }
+    // moder notice
+    if (bModeration)
+    {
+        Core::instance()->pNetwork->send(QString("MODERNOTICE %1 :%2").arg(strChannel, strText));
+        Message::instance()->showMessage(strChannel, strText, ModerNoticeMessage, strMe);
+    }
+    // standard text
+    else if (!bModeration)
+    {
+        Core::instance()->pNetwork->send(QString("PRIVMSG %1 :%2").arg(strChannel, strText));
+        Message::instance()->showMessage(strChannel, strText, DefaultMessage, strMe);
     }
 }

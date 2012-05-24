@@ -149,6 +149,29 @@ void convertEmoticons(QString &strData, bool bInsertWidthHeight)
     }
 }
 
+void Convert::createText(QString &strText)
+{
+    QString strMyColor = Core::instance()->settings.value("my_color");
+    QString strMyFont = Core::instance()->settings.value("my_font");
+    bool bMyBold = Core::instance()->settings.value("my_bold") == "true" ? true : false;
+    bool bMyItalic = Core::instance()->settings.value("my_italic") == "true" ? true : false;
+
+    QString font = strMyFont.toLower();
+    QString weight;
+
+    if (bMyBold) weight += "b";
+    if (bMyItalic) weight += "i";
+
+    if (font == "verdana")
+        font = QString::null;
+    if ((strMyColor != "#000000") && (!strMyColor.isEmpty()))
+        strText = "%C"+strMyColor.right(6)+"%"+strText;
+    if (!font.isEmpty())
+        font = ":"+font;
+    if ((!weight.isEmpty()) || (!font.isEmpty()))
+        strText = "%F"+weight+font+"%"+strText;
+}
+
 void Convert::simpleReverseConvert(QString &strData)
 {
     QRegExp rx("//([a-zA-Z0-9_-]+)");
