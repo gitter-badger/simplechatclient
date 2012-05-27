@@ -274,13 +274,13 @@ QString Commands::cmdQuit()
 
 QString Commands::cmdMp3()
 {
+    QString strMessage = QString::null;
+
 #ifdef Q_WS_WIN
     Winamp *pWinamp = new Winamp();
     bool bIsRunning = pWinamp->isRunning();
     int iState = pWinamp->state();
     delete pWinamp;
-
-    QString strMessage;
 
     if (bIsRunning)
     {
