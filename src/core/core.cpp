@@ -286,20 +286,6 @@ void Core::checkSettings()
         settings["themes"] = "Standard";
     }
 
-    QStringList lHighlight;
-    lHighlight << "&" << "<" << ">" << "\"" << "'" << "\\";
-    QStringListIterator lHighlightIterator(lHighlight);
-    while (lHighlightIterator.hasNext())
-    {
-        QString strChar = lHighlightIterator.next();
-
-        if (settings["highlight"].contains(strChar))
-        {
-            settings["highlight"].remove(strChar);
-            pConfig->setValue("highlight", settings["highlight"]);
-        }
-    }
-
     delete pConfig;
 }
 

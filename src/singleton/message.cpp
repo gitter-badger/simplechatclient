@@ -20,6 +20,7 @@
 #include "awaylog_model.h"
 #include "core.h"
 #include "convert.h"
+#include "highlight.h"
 #include "log.h"
 #include "mainwindow.h"
 #include "nicklist.h"
@@ -54,21 +55,21 @@ bool Message::isHighlightMessage(const QString &strMessage)
 {
     QString strMe = Core::instance()->settings["nick"];
     QStringList lData = strMessage.split(" ");
-    QStringList lHighlight = Core::instance()->settings["highlight"].split(";", QString::SkipEmptyParts);
+
+    QStringList lHighlight = Highlight::instance()->get();
     lHighlight.append(strMe);
 
-    for (int i = 0; i < lData.size(); i++)
+    foreach (QString strData, lData)
     {
-        QString strData = lData[i];
         Convert::simpleConvert(strData);
 
-        QStringListIterator lHighlightIterator(lHighlight);
-        while (lHighlightIterator.hasNext())
+        foreach (QString strHighlight, lHighlight)
         {
-            if (strData.toLower().contains(lHighlightIterator.next().toLower()))
+            if (strData.toLower().contains(strHighlight.toLower()))
                 return true;
         }
     }
+
     return false;
 }
 

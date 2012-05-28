@@ -25,6 +25,7 @@
 #include <QUrl>
 #include "config.h"
 #include "core.h"
+#include "highlight.h"
 #include "profile_manager.h"
 #include "notify.h"
 #include "options.h"
@@ -206,14 +207,11 @@ void DlgOptions::setDefaultValues()
     ui.comboBox_language->addItems(lLanguage);
 
     // highlight
+    Highlight::instance()->init();
+
     ui.listWidget_highlight->clear();
-    if (!Core::instance()->settings["highlight"].isEmpty())
-    {
-        QStringList lHighlight = Core::instance()->settings["highlight"].split(";", QString::SkipEmptyParts);
-        QStringListIterator lHighlightIterator(lHighlight);
-        while (lHighlightIterator.hasNext())
-            ui.listWidget_highlight->addItem(lHighlightIterator.next());
-    }
+    foreach (const QString &strHighlight, Highlight::instance()->get())
+        ui.listWidget_highlight->addItem(strHighlight);
 
     // sound beep
     ui.lineEdit_sound_beep->setText(QDir::toNativeSeparators(Core::instance()->settings.value("sound_beep")));
@@ -565,24 +563,9 @@ void DlgOptions::highlightAdd()
 
     if ((ok) && (!strText.isEmpty()))
     {
-        QStringList lHighlightChars;
-        lHighlightChars << "&" << "<" << ">" << "\"" << "'" << "\\" << ";";
-        QStringListIterator lHighlightCharsIterator(lHighlightChars);
-        while (lHighlightCharsIterator.hasNext())
+        if (!Highlight::instance()->contains(strText))
         {
-            QString strChar = lHighlightCharsIterator.next();
-
-            if (strText.contains(strChar))
-                strText.remove(strChar);
-        }
-
-        if (!Core::instance()->settings["highlight"].contains(strText+";"))
-        {
-            Core::instance()->settings["highlight"] += strText+";";
-
-            Config *pConfig = new Config();
-            pConfig->setValue("highlight", Core::instance()->settings["highlight"]);
-            delete pConfig;
+            Highlight::instance()->add(strText);
 
             ui.listWidget_highlight->addItem(strText);
         }
@@ -601,25 +584,7 @@ void DlgOptions::highlightRemove()
 
     if ((ok) && (!strText.isEmpty()))
     {
-        QStringList lHighlight;
-        lHighlight << "&" << "<" << ">" << "\"" << "'" << "\\" << ";";
-        QStringListIterator lHighlightIterator(lHighlight);
-        while (lHighlightIterator.hasNext())
-        {
-            QString strChar = lHighlightIterator.next();
-
-            if (strText.contains(strChar))
-                strText.remove(strChar);
-        }
-
-        if (Core::instance()->settings["highlight"].contains(strText+";"))
-        {
-            Core::instance()->settings["highlight"].remove(strText+";");
-
-            Config *pConfig = new Config();
-            pConfig->setValue("highlight", Core::instance()->settings["highlight"]);
-            delete pConfig;
-        }
+        Highlight::instance()->remove(strText);
 
         QList<QListWidgetItem*> items = ui.listWidget_highlight->findItems(strText, Qt::MatchExactly);
         foreach (QListWidgetItem *item, items)
