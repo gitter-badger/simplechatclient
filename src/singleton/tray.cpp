@@ -62,12 +62,8 @@ void Tray::showMessage(const QString &strTitle, const QString &strMessage)
 
 void Tray::messageClicked()
 {
-    if (Core::instance()->mainWindow()->isMinimized())
-        Core::instance()->mainWindow()->showNormal();
-    else
-        Core::instance()->mainWindow()->show();
-
-    Core::instance()->mainWindow()->activateWindow();
-
+    Core::instance()->mainWindow()->setWindowState(Core::instance()->mainWindow()->windowState() & ~Qt::WindowMinimized);
+    Core::instance()->mainWindow()->setWindowState(Core::instance()->mainWindow()->windowState() | Qt::WindowActive);
+    Core::instance()->mainWindow()->show();
     Core::instance()->mainWindow()->changeCurrentTab(strLastMessageTitle);
 }

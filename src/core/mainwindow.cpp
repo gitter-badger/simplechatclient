@@ -313,7 +313,7 @@ void MainWindow::createSignals()
 
     connect(minimizeAction, SIGNAL(triggered()), this, SLOT(hide()));
     connect(maximizeAction, SIGNAL(triggered()), this, SLOT(showMaximized()));
-    connect(restoreAction, SIGNAL(triggered()), this, SLOT(showNormal()));
+    connect(restoreAction, SIGNAL(triggered()), this, SLOT(show()));
     connect(quitAction, SIGNAL(triggered()), qApp, SLOT(quit()));
 
     // signals from tabc
@@ -613,7 +613,7 @@ void MainWindow::trayIconActivated(QSystemTrayIcon::ActivationReason reason)
             if (this->isVisible())
                 this->hide();
             else
-                this->showNormal();
+                this->show();
             break;
         case QSystemTrayIcon::Context:
             setTrayMenuVisible(this->isVisible());
