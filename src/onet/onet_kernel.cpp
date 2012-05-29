@@ -29,6 +29,7 @@
 #include "message.h"
 #include "nicklist.h"
 #include "notify.h"
+#include "offline.h"
 #include "onet_utils.h"
 #include "replace.h"
 #include "tab_container.h"
@@ -1078,8 +1079,6 @@ void OnetKernel::raw_001()
     Core::instance()->mMyStats.clear();
     Core::instance()->mMyProfile.clear();
     Core::instance()->lChannelHomes.clear();
-    Core::instance()->lOfflineMsg.clear();
-    Core::instance()->lOfflineNicks.clear();
     // user profile
     Core::instance()->mUserProfile.clear();
     Core::instance()->bUserProfile = false;
@@ -1456,18 +1455,12 @@ void OnetKernel::raw_151n()
     }
     else if (strNick.toLower() == "nickserv")
     {
-        // visible
-        if (!Core::instance()->offlineMsgAction->isVisible())
-            Core::instance()->offlineMsgAction->setVisible(true);
-
-        // nicks
         for (int i = 4; i < strDataList.size(); i++)
         {
             QString strNick = strDataList[i];
             if (strNick[0] == ':') strNick.remove(0,1);
 
-            if (!Core::instance()->lOfflineNicks.contains(strNick))
-                Core::instance()->lOfflineNicks.append(strNick);
+            Offline::instance()->addNick(strNick);
         }
     }
 }
@@ -1880,13 +1873,7 @@ void OnetKernel::raw_251n()
         for (int i = 7; i < strDataList.size(); i++) { if (i != 7) strMessage += " "; strMessage += strDataList[i]; }
         if (strMessage[0] == ':') strMessage.remove(0,1);
 
-        OfflineMsg add;
-        add.datetime = iTime;
-        add.type = strType;
-        add.nick = strNick;
-        add.message = strMessage;
-
-        Core::instance()->lOfflineMsg.append(add);
+        Offline::instance()->addMsg(iTime, strType, strNick, strMessage);
     }
 }
 

@@ -41,6 +41,7 @@ TabContainer::~TabContainer()
 
         // remove tab
         delete Core::instance()->tw.take(strChannel);
+        //delete Core::instance()->tw[strChannel];
 
         // log
         Log::logClosed(strChannel);
@@ -89,6 +90,7 @@ void TabContainer::removeTab(const QString &strChannel)
 
     // remove tab
     delete Core::instance()->tw.take(strChannel);
+    //delete Core::instance()->tw[strChannel];
 
     // log
     Log::logClosed(strChannel);

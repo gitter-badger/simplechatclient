@@ -64,13 +64,15 @@ SOURCES += src/avatars/avatar.cpp \
     src/onet/onet_auth.cpp \
     src/onet/onet_kernel.cpp \
     src/onet/onet_utils.cpp \	
-	src/singleton/awaylog_model.cpp \
-	src/singleton/message.cpp \
-	src/singleton/nicklist.cpp \
-	src/singleton/notes_model.cpp \
-	src/singleton/notify.cpp \
-	src/singleton/tray.cpp \
-	src/singleton/updates.cpp \
+    src/singleton/awaylog_model.cpp \
+    src/singleton/highlight.cpp \
+    src/singleton/message.cpp \
+    src/singleton/nicklist.cpp \
+    src/singleton/notes_model.cpp \
+    src/singleton/notify.cpp \
+    src/singleton/offline.cpp \
+    src/singleton/tray.cpp \
+    src/singleton/updates.cpp \
     src/tab/tab_container.cpp \
     src/tab/tab_manager.cpp \
     src/tab/tab_widget.cpp \
@@ -82,8 +84,7 @@ SOURCES += src/avatars/avatar.cpp \
     src/widgets/simple_rank_widget.cpp \
     src/widgets/simple_stats_widget.cpp \
     src/widgets/tool_widget.cpp \
-    src/widgets/webcam_delegate.cpp \
-    src/singleton/highlight.cpp
+    src/widgets/webcam_delegate.cpp
 HEADERS += src/avatars/avatar.h \
     src/common/commands.h \
     src/common/config.h \
@@ -142,13 +143,15 @@ HEADERS += src/avatars/avatar.h \
     src/onet/onet_auth.h \
     src/onet/onet_kernel.h \
     src/onet/onet_utils.h \
-	src/singleton/awaylog_model.h \
-	src/singleton/message.h \
-	src/singleton/nicklist.h \
-	src/singleton/notes_model.h \
-	src/singleton/notify.h \
-	src/singleton/tray.h \
-	src/singleton/updates.h \
+    src/singleton/awaylog_model.h \
+    src/singleton/highlight.h \
+    src/singleton/message.h \
+    src/singleton/nicklist.h \
+    src/singleton/notes_model.h \
+    src/singleton/notify.h \
+    src/singleton/offline.h \
+    src/singleton/tray.h \
+    src/singleton/updates.h \
     src/tab/tab_container.h \
     src/tab/tab_manager.h \
     src/tab/tab_widget.h \
@@ -160,8 +163,7 @@ HEADERS += src/avatars/avatar.h \
     src/widgets/simple_rank_widget.h \
     src/widgets/simple_stats_widget.h \
     src/widgets/tool_widget.h \
-    src/widgets/webcam_delegate.h \
-    src/singleton/highlight.h
+    src/widgets/webcam_delegate.h
 FORMS += ui/about.ui \
     ui/avatar_edit.ui \
     ui/awaylog.ui \

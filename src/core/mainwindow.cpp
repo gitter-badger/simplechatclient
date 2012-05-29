@@ -42,6 +42,7 @@
 #include "my_stats.h"
 #include "nicklist.h"
 #include "notes.h"
+#include "offline.h"
 #include "offlinemsg.h"
 #include "options.h"
 #include "onet_auth.h"
@@ -89,7 +90,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     createSignals();
 
     // hide offline messages
-    Core::instance()->offlineMsgAction->setVisible(false);
+    Offline::instance()->offlineMsgAction->setVisible(false);
 
     // hide awaylog
     Awaylog::instance()->awaylogAction->setVisible(false);
@@ -171,7 +172,7 @@ void MainWindow::createActions()
     channelFavouritesAction = new QAction(QIcon(":/images/oxygen/16x16/emblem-favorite.png"), tr("Favorite channels"), this);
     friendsAction = new QAction(QIcon(":/images/oxygen/16x16/meeting-attending.png"), tr("Friends"), this);
     ignoreAction = new QAction(QIcon(":/images/oxygen/16x16/meeting-attending-tentative.png"), tr("Ignored"), this);
-    Core::instance()->offlineMsgAction = new QAction(QIcon(":/images/oxygen/16x16/mail-mark-unread.png") , tr("Offline messages"), this);
+    Offline::instance()->offlineMsgAction = new QAction(QIcon(":/images/oxygen/16x16/mail-mark-unread.png") , tr("Offline messages"), this);
     camsAction = new QAction(QIcon(":/images/oxygen/16x16/camera-web.png"),tr("Cams"), this);
     myStatsAction = new QAction(QIcon(":/images/oxygen/16x16/office-chart-bar.png"),tr("My statistics"), this);
     myProfileAction = new QAction(QIcon(":/images/oxygen/16x16/view-pim-contacts.png"),tr("My profile"), this);
@@ -193,7 +194,7 @@ void MainWindow::createActions()
     channelFavouritesAction->setShortcut(tr("Ctrl+U"));
     friendsAction->setShortcut(tr("Ctrl+P"));
     ignoreAction->setShortcut(tr("Ctrl+I"));
-    Core::instance()->offlineMsgAction->setShortcut(tr("Ctrl+M"));
+    Offline::instance()->offlineMsgAction->setShortcut(tr("Ctrl+M"));
     Awaylog::instance()->awaylogAction->setShortcut(tr("Ctrl+J"));
     camsAction->setShortcut(tr("Ctrl+K"));
 }
@@ -217,7 +218,7 @@ void MainWindow::createMenus()
     chatMenu->addAction(channelFavouritesAction);
     chatMenu->addAction(friendsAction);
     chatMenu->addAction(ignoreAction);
-    chatMenu->addAction(Core::instance()->offlineMsgAction);
+    chatMenu->addAction(Offline::instance()->offlineMsgAction);
     chatMenu->addAction(Awaylog::instance()->awaylogAction);
     chatMenu->addAction(camsAction);
     chatMenu->addSeparator();
@@ -249,7 +250,7 @@ void MainWindow::createMenus()
     toolBar->addAction(friendsAction);
 
     // offline messages
-    toolBar->addAction(Core::instance()->offlineMsgAction);
+    toolBar->addAction(Offline::instance()->offlineMsgAction);
     // awaylog
     toolBar->addAction(Awaylog::instance()->awaylogAction);
     // onet cams
@@ -304,7 +305,7 @@ void MainWindow::createSignals()
     connect(myProfileAction, SIGNAL(triggered()), this, SLOT(openMyProfile()));
     connect(myAvatarAction, SIGNAL(triggered()), this, SLOT(openMyAvatar()));
 
-    connect(Core::instance()->offlineMsgAction, SIGNAL(triggered()), this, SLOT(openOfflinemsg()));
+    connect(Offline::instance()->offlineMsgAction, SIGNAL(triggered()), this, SLOT(openOfflinemsg()));
     connect(Awaylog::instance()->awaylogAction, SIGNAL(triggered()), this, SLOT(openAwaylog()));
     connect(camsAction, SIGNAL(triggered()), this, SLOT(openCams()));
     connect(notesAction, SIGNAL(triggered()), this, SLOT(openNotes()));

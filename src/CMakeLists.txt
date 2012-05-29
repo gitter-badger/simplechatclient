@@ -96,6 +96,7 @@ set (scc_SRCS
 	singleton/nicklist.cpp
 	singleton/notes_model.cpp
 	singleton/notify.cpp
+	singleton/offline.cpp
 	singleton/tray.cpp
 	singleton/updates.cpp
 
@@ -167,6 +168,7 @@ set (scc_MOC_HDRS
 	singleton/nicklist.h
 	singleton/notes_model.h
 	singleton/notify.h
+	singleton/offline.h
 	singleton/tray.h
 	singleton/updates.h
 

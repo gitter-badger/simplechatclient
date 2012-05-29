@@ -23,6 +23,7 @@
 #include <QTimer>
 #include "core.h"
 #include "convert.h"
+#include "offline.h"
 #include "offlinemsg.h"
 
 DlgOfflineMsg::DlgOfflineMsg(QWidget *parent) : QDialog(parent)
@@ -61,56 +62,33 @@ void DlgOfflineMsg::createSignals()
     connect(ui.pushButton_reject, SIGNAL(clicked()), this, SLOT(buttonReject()));
     connect(ui.pushButton_reply, SIGNAL(clicked()), this, SLOT(buttonReply()));
     connect(ui.lineEdit_reply, SIGNAL(returnPressed()), this, SLOT(buttonReply()));
-    connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(buttonClose()));
+    connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(close()));
 }
 
-void DlgOfflineMsg::removeNick(const QString &strRemoveNick)
+void DlgOfflineMsg::removeNick(const QString &strNick)
 {
     // list
-    Core::instance()->lOfflineNicks.removeOne(strRemoveNick);
+    Offline::instance()->removeNick(strNick);
 
     // widget
-    for (int i = 0; i < ui.listWidget_nicks->count(); i++)
-    {
-        if (ui.listWidget_nicks->item(i)->text() == strRemoveNick)
-        {
-            ui.listWidget_nicks->takeItem(i);
-            break;
-        }
-    }
-
-    // remove from core
-    for (int i = 0; i < Core::instance()->lOfflineMsg.size(); i++)
-    {
-        OfflineMsg msg = Core::instance()->lOfflineMsg.at(i);
-        if (msg.nick == strRemoveNick)
-            Core::instance()->lOfflineMsg.takeAt(i);
-    }
+    QList<QListWidgetItem*> items = ui.listWidget_nicks->findItems(strNick, Qt::MatchExactly);
+    foreach (QListWidgetItem *item, items)
+        ui.listWidget_nicks->takeItem(ui.listWidget_nicks->row(item));
 }
 
 void DlgOfflineMsg::refresh()
 {
-    foreach (QString strOfflineNick, Core::instance()->lOfflineNicks)
-        ui.listWidget_nicks->addItem(strOfflineNick);
-}
+    ui.listWidget_nicks->clear();
 
-bool DlgOfflineMsg::existNick()
-{
-    for (int i = 0; i < Core::instance()->lOfflineMsg.size(); i++)
-    {
-        OfflineMsg msg = Core::instance()->lOfflineMsg.at(i);
-        QString strNick = msg.nick;
-        if (strNick == strCurrentNick)
-            return true;
-    }
-    return false;
+    foreach (QString strOfflineNick, Offline::instance()->getNicks())
+        ui.listWidget_nicks->addItem(strOfflineNick);
 }
 
 void DlgOfflineMsg::refreshMsg()
 {
-    if (!existNick())
+    if (Offline::instance()->isEmptyMsg())
     {
-        QTimer::singleShot(1000*4, this, SLOT(refreshMsg())); // 3 sec
+        QTimer::singleShot(1000*4, this, SLOT(refreshMsg())); // 4 sec
         return;
     }
 
@@ -120,9 +98,8 @@ void DlgOfflineMsg::refreshMsg()
     ui.lineEdit_reply->setEnabled(true);
     ui.pushButton_reply->setEnabled(true);
 
-    for (int i = 0; i < Core::instance()->lOfflineMsg.size(); i++)
+    foreach (OfflineMsg msg, Offline::instance()->getMsg())
     {
-        OfflineMsg msg = Core::instance()->lOfflineMsg.at(i);
         int iTime = msg.datetime;
         QString strType = msg.type;
         QString strNick = msg.nick;
@@ -177,13 +154,15 @@ void DlgOfflineMsg::buttonRead()
 
     strCurrentNick = strNick;
     ui.label_nick->setText(QString(tr("Offline messages from %1")).arg(strNick));
+
     // remove nick
     removeNick(strNick);
+
     // clear
     ui.listWidget_msg->clear();
     ui.lineEdit_reply->clear();
 
-    QTimer::singleShot(1000*4, this, SLOT(refreshMsg())); // 3 sec
+    QTimer::singleShot(1000*4, this, SLOT(refreshMsg())); // 4 sec
 }
 
 void DlgOfflineMsg::buttonReject()
@@ -219,18 +198,7 @@ void DlgOfflineMsg::buttonReply()
 
     // show
     QString strMe = Core::instance()->settings.value("nick");
-    QDateTime dt = QDateTime::currentDateTime();
-    QString strDT = dt.toString("[hh:mm:ss]");
+    QString strDT = QDateTime::currentDateTime().toString("[hh:mm:ss]");
     strMessage = QString("%1 <%2> %3").arg(strDT, strMe, strMessage);
     ui.listWidget_msg->addItem(strMessage);
-}
-
-void DlgOfflineMsg::buttonClose()
-{
-    // hide if no messages
-    if (Core::instance()->lOfflineNicks.size() == 0)
-        Core::instance()->offlineMsgAction->setVisible(false);
-
-    // close
-    this->close();
 }

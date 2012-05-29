@@ -17,35 +17,39 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef OFFLINEMSG_H
-#define OFFLINEMSG_H
+#ifndef OFFLINE_H
+#define OFFLINE_H
 
-#include <QDialog>
-#include "ui_offlinemsg.h"
+#include "defines.h"
+#include <QAction>
+#include <QObject>
 
-class DlgOfflineMsg : public QDialog
+class Offline : public QObject
 {
     Q_OBJECT
+    Q_DISABLE_COPY(Offline)
+    static Offline *Instance;
 public:
-    DlgOfflineMsg(QWidget *parent = 0);
+    static Offline *instance();
+
+    Offline();
+    void init();
+    void addMsg(int iTime, const QString &strType, const QString &strNick, const QString &strMessage);
+    void removeMsg(const QString &strNick);
+    void clearMsg();
+    QList<OfflineMsg> getMsg();
+    bool isEmptyMsg();
+
+    void addNick(const QString &strNick);
+    void removeNick(const QString &strNick);
+    void clearNicks();
+    QList<QString> getNicks();
+
+    QAction *offlineMsgAction;
 
 private:
-    Ui::uiOfflineMsg ui;
-    QString strCurrentNick;
-    QList<QString> messagesQuoted;
-    QList<QString> messagesReplied;
-    QList<QString> messagesQuotedToSender;
-
-    void createGui();
-    void createSignals();
-    void refresh();
-    void removeNick(const QString &strRemoveNick);
-
-private slots:
-    void refreshMsg();
-    void buttonRead();
-    void buttonReject();
-    void buttonReply();
+    QList<OfflineMsg> lOfflineMsg;
+    QList<QString> lOfflineNicks;
 };
 
-#endif // OFFLINEMSG_H
+#endif // OFFLINE_H

@@ -84,10 +84,6 @@ public:
     // channels
     QList<QString> lOpenChannels;
     QHash<QString, QByteArray> mChannelAvatar;
-    // offline
-    QAction *offlineMsgAction;
-    QList<OfflineMsg> lOfflineMsg;
-    QList<QString> lOfflineNicks;
     // kamerzysta socket
     QTcpSocket *kamerzystaSocket;
     // settings
