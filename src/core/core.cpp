@@ -22,7 +22,6 @@
 #include <QDir>
 #include <QSettings>
 #include <QTcpSocket>
-#include <QTimer>
 #include "config.h"
 #include "log.h"
 #include "mainwindow.h"

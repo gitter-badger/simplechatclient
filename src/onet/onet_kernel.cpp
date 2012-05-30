@@ -19,8 +19,8 @@
 
 #include <QDateTime>
 #include <QMessageBox>
-#include <QTimer>
 #include "avatar.h"
+#include "autoaway.h"
 #include "core.h"
 #include "convert.h"
 #include "channel_key.h"
@@ -1153,8 +1153,7 @@ void OnetKernel::raw_001()
     Core::instance()->settings["last_active"] = QString::number(t);
 
     // auto-away
-    if (!Core::instance()->autoAwayTimer->isActive())
-        Core::instance()->autoAwayTimer->start();
+    Autoaway::instance()->start();
 }
 
 // :cf1f4.onet 002 Merovingian :Your host is cf1f4.onet, running version InspIRCd-1.1

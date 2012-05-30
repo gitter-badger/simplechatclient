@@ -21,6 +21,7 @@
 #include <QDateTime>
 #include <QTcpSocket>
 #include <QTimer>
+#include "autoaway.h"
 #include "config.h"
 #include "core.h"
 #include "crypt.h"
@@ -68,7 +69,7 @@ Network::~Network()
     timerPing->stop();
     timerPong->stop();
     timerReconnect->stop();
-    Core::instance()->autoAwayTimer->stop();
+    Autoaway::instance()->stop();
 }
 
 void Network::run()
@@ -131,7 +132,7 @@ void Network::clearAll()
     timerReconnect->stop();
 
     // auto-away
-    Core::instance()->autoAwayTimer->stop();
+    Autoaway::instance()->stop();
 
     // last active
     Core::instance()->settings["last_active"] = "0";

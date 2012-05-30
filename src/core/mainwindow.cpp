@@ -26,14 +26,15 @@
 #include <QTimer>
 #include <QToolBar>
 
-#include "config.h"
-#include "core.h"
 #include "about.h"
+#include "autoaway.h"
 #include "awaylog_model.h"
 #include "awaylog.h"
 #include "channel_favourites.h"
 #include "channel_homes.h"
 #include "channel_list.h"
+#include "config.h"
+#include "core.h"
 #include "friends.h"
 #include "ignore.h"
 #include "message.h"
@@ -76,10 +77,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     pOnetKernel = new OnetKernel(pTabC);
     pOnetAuth = new OnetAuth();
 
-    // auto-away
-    Core::instance()->autoAwayTimer = new QTimer();
-    Core::instance()->autoAwayTimer->setInterval(1000*60*1); // 1 min
-
     // gui
     createGui();
 
@@ -109,8 +106,7 @@ MainWindow::~MainWindow()
 {
     delete pToolWidget;
 
-    // auto-away
-    Core::instance()->autoAwayTimer->stop();
+    Autoaway::instance()->stop();
 
     delete pOnetAuth;
     delete pOnetKernel;
@@ -337,9 +333,6 @@ void MainWindow::createSignals()
     connect(Core::instance()->pNetwork, SIGNAL(authorize(QString,QString,QString)), pOnetAuth, SLOT(authorize(QString,QString,QString)));
     connect(Core::instance()->pNetwork, SIGNAL(updateNick(const QString&)), pToolWidget, SLOT(updateNick(const QString&)));
     connect(Core::instance()->pNetwork, SIGNAL(updateActions()), this, SLOT(updateActions()));
-
-    // auto-away
-    connect(Core::instance()->autoAwayTimer, SIGNAL(timeout()), this, SLOT(timeoutAutoaway()));
 }
 
 void MainWindow::showWelcome()
@@ -649,22 +642,6 @@ int MainWindow::getCurrentTabIndex()
 QSystemTrayIcon *MainWindow::getTrayIcon()
 {
     return trayIcon;
-}
-
-void MainWindow::timeoutAutoaway()
-{
-    if ((Core::instance()->pNetwork->isConnected()) && (Core::instance()->pNetwork->isWritable()) && (Core::instance()->settings.value("logged") == "true"))
-    {
-        QDateTime cdt = QDateTime::currentDateTime();
-        int t = (int)cdt.toTime_t(); // seconds that have passed since 1970
-
-        int iLastActive = Core::instance()->settings.value("last_active").toInt();
-
-        bool bAway = Core::instance()->settings.value("away") == "true" ? true : false;
-
-        if ((!bAway) && (iLastActive != 0) && (t-iLastActive > 300))
-            Core::instance()->pNetwork->send(QString("AWAY :%1").arg(tr("Not here right now")));
-    }
 }
 
 // part tab

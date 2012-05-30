@@ -2,6 +2,13 @@
 <!DOCTYPE TS>
 <TS version="2.0" language="pl">
 <context>
+    <name>Autoaway</name>
+    <message>
+        <source>Not here right now</source>
+        <translation>Nie ma mnie</translation>
+    </message>
+</context>
+<context>
     <name>ChatView</name>
     <message>
         <source>Join channel</source>
@@ -1979,10 +1986,6 @@
     <message>
         <source>Welcome to the Simple Chat Client</source>
         <translation>Witaj w programie Simple Chat Client</translation>
-    </message>
-    <message>
-        <source>Not here right now</source>
-        <translation>Nie ma mnie</translation>
     </message>
     <message>
         <source>Quit program</source>

@@ -23,7 +23,6 @@
 #include "defines.h"
 #include "scc-config.h"
 class QTcpSocket;
-class QTimer;
 class MainWindow;
 class Updates;
 #include "nicklist_widget.h"
@@ -90,8 +89,6 @@ public:
     QHash<QString,QString> settings;
     // network
     Network *pNetwork;
-    // auto-away
-    QTimer *autoAwayTimer;
     // user profile
     QString strUserProfile;
     QHash<QString,QString> mUserProfile;

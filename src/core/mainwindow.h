@@ -131,7 +131,6 @@ private slots:
     void tabCloseRequested(int index);
     void currentTabChanged(int index);
     void tabMoved(int from, int to);
-    void timeoutAutoaway();
 
 protected:
     void resizeEvent(QResizeEvent *);
