@@ -89,9 +89,9 @@ bool DlgProfileManager::existProfile(const QString &strExistProfile)
     dir.setSorting(QDir::Name);
 
     QFileInfoList list = dir.entryInfoList(QStringList("*"), QDir::Dirs | QDir::NoDotAndDotDot | QDir::NoSymLinks);
-    for (int i = 0; i < list.size(); ++i)
+    foreach (QFileInfo info, list)
     {
-        QString profileName = list.at(i).fileName();
+        QString profileName = info.fileName();
 
         if (profileName == strExistProfile)
             return true;
@@ -124,9 +124,9 @@ void DlgProfileManager::refreshProfilesList()
     dir.setSorting(QDir::Name);
 
     QFileInfoList list = dir.entryInfoList(QStringList("*"), QDir::Dirs | QDir::NoDotAndDotDot | QDir::NoSymLinks);
-    for (int i = 0; i < list.size(); ++i)
+    foreach (QFileInfo info, list)
     {
-        QString profileName = list.at(i).fileName();
+        QString profileName = info.fileName();
         ui.listWidget->addItem(profileName);
     }
 }

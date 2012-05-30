@@ -899,35 +899,35 @@ void DlgChannelSettings::buttonPermissionRemove()
     // remove permission
     if (tab == 0)
     {
-        for (int i = 0; i < lRemoveNicks.size(); i++)
-            Core::instance()->pNetwork->send(QString("CS OP %1 DEL %2").arg(strChannel, lRemoveNicks.at(i)->text()));
+        foreach (QListWidgetItem *removeNick, lRemoveNicks)
+            Core::instance()->pNetwork->send(QString("CS OP %1 DEL %2").arg(strChannel, removeNick->text()));
     }
     else if (tab == 1)
     {
-        for (int i = 0; i < lRemoveNicks.size(); i++)
-            Core::instance()->pNetwork->send(QString("CS HALFOP %1 DEL %2").arg(strChannel, lRemoveNicks.at(i)->text()));
+        foreach (QListWidgetItem *removeNick, lRemoveNicks)
+            Core::instance()->pNetwork->send(QString("CS HALFOP %1 DEL %2").arg(strChannel, removeNick->text()));
     }
     else if (tab == 2)
     {
-        for (int i = 0; i < lRemoveNicks.size(); i++)
+        foreach (QListWidgetItem *removeNick, lRemoveNicks)
         {
-            if (!lRemoveNicks.at(i)->data(Qt::UserRole).isNull())
-                Core::instance()->pNetwork->send(QString("CS BANIP %1 DEL %2").arg(strChannel, lRemoveNicks.at(i)->text()));
+            if (!removeNick->data(Qt::UserRole).isNull())
+                Core::instance()->pNetwork->send(QString("CS BANIP %1 DEL %2").arg(strChannel, removeNick->text()));
             else
-                Core::instance()->pNetwork->send(QString("CS BAN %1 DEL %2").arg(strChannel, lRemoveNicks.at(i)->text()));
+                Core::instance()->pNetwork->send(QString("CS BAN %1 DEL %2").arg(strChannel, removeNick->text()));
         }
     }
     else if (tab == 3)
     {
-        for (int i = 0; i < lRemoveNicks.size(); i++)
-            Core::instance()->pNetwork->send(QString("CS INVITE %1 DEL %2").arg(strChannel, lRemoveNicks.at(i)->text()));
+        foreach (QListWidgetItem *removeNick, lRemoveNicks)
+            Core::instance()->pNetwork->send(QString("CS INVITE %1 DEL %2").arg(strChannel, removeNick->text()));
     }
 
     // if me
     QString strMe = Core::instance()->settings.value("nick");
-    for (int i = 0; i < lRemoveNicks.size(); i++)
+    foreach (QListWidgetItem *removeNick, lRemoveNicks)
     {
-        if (lRemoveNicks.at(i)->text() == strMe)
+        if (removeNick->text() == strMe)
         {
             ui.tabWidget->setCurrentIndex(0);
             setTabs(false);

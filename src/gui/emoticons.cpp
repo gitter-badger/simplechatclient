@@ -39,9 +39,8 @@ void DlgEmoticonsThread::run()
     QDir dEmoticonsDir = strDir;
     QStringList lFiles = dEmoticonsDir.entryList(QStringList("*.gif"), QDir::Files | QDir::NoSymLinks);
 
-    for (int i = 0; i < lFiles.size(); i++)
+    foreach (QString strFileName, lFiles)
     {
-        QString strFileName = lFiles.at(i);
         QString strEmoticon = strFileName;
         strEmoticon.remove(".gif");
 
@@ -134,9 +133,8 @@ void DlgEmoticons::setDefaultValues()
     QDir dAllEmoticonsDirs = path+"/3rdparty/emoticons";
     QStringList lDirs = dAllEmoticonsDirs.entryList(QStringList("*"), QDir::Dirs | QDir::NoDotAndDotDot | QDir::NoSymLinks);
 
-    for (int i = 0; i < lDirs.size(); i++)
+    foreach (QString strDir, lDirs)
     {
-        QString strDir = lDirs[i];
         QString strFullPath = QString("%1/%2").arg(dAllEmoticonsDirs.path(), strDir);
         ui.tabWidget->addTab(new DlgEmoticonsTab(strFullPath), strDir);
     }

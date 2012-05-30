@@ -92,8 +92,8 @@ void DlgMyProfile::setDefaultValues()
     QStringList lSex;
     lSex << "" << tr("Male") << tr("Female");
 
-    for (int i = 0; i < lSex.size(); i++)
-        ui.comboBox_sex->addItem(lSex.at(i));
+    foreach (QString strSex, lSex)
+        ui.comboBox_sex->addItem(strSex);
 
     // days
     QStringList lDays;
@@ -101,14 +101,14 @@ void DlgMyProfile::setDefaultValues()
     for (int i = 1; i <= 31; i++)
         lDays << (i < 10 ? "0"+QString::number(i) : QString::number(i));
 
-    for (int i = 0; i < lDays.size(); i++)
-        ui.comboBox_day->addItem(lDays.at(i));
+    foreach (QString strDay, lDays)
+        ui.comboBox_day->addItem(strDay);
 
     // months
     QStringList lMonths;
     lMonths << "" << tr("January") << tr("February") << tr("March") << tr("April") << tr("May") << tr("June") << tr("July") << tr("August") << tr("September") << tr("October") << tr("November") << tr("December");
-    for (int i = 0; i < lMonths.size(); i++)
-        ui.comboBox_month->addItem(lMonths.at(i));
+    foreach (QString strMonth, lMonths)
+        ui.comboBox_month->addItem(strMonth);
 
     // years
     QStringList lYears;
@@ -116,15 +116,15 @@ void DlgMyProfile::setDefaultValues()
     for (int i = 1900; i <= QDate::currentDate().year()-5; i++)
         lYears << QString::number(i);
 
-    for (int i = 0; i < lYears.size(); i++)
-        ui.comboBox_year->addItem(lYears.at(i));
+    foreach (QString strYear, lYears)
+        ui.comboBox_year->addItem(strYear);
 
     // country
     QString strCountries = tr("Afghanistan,Albania,Algeria,Andorra,Angola,Anguilla,Antarctica,Antigua and Barbuda,Netherlands Antilles,Saudi Arabia,Argentina,Armenia,Aruba,Australia,Austria,Azerbaijan,Bahamas,Bahrain,Bangladesh,Barbados,Belgium,Belize,Benin,Bermuda,Bhutan,Belarus,Bolivia,Bosnia and Herzegovina,Botswana,Brazil,Brunei,British Indian Ocean Territory,British Virgin Islands,Bulgaria,Burkina Faso,Burundi,Chile,China,Croatia,Cyprus,Chad,Czech Republic,Denmark,Dominica,Dominican Republic,Djibouti,Egypt,Ecuador,Eritrea,Estonia,Ethiopia,Falkland Islands,Russian Federation,Fiji,Philippines,Finland,France,Gambia,Gaon,South Georgia and South Sandwich Islands,Ghana,Gibraltar,Greece,Grenada,Greenland,Georgia,Guam,Guyana,French Guiana,Guadeloupe,Guatemala,Guinea,Guinea Bissau,Equatorial Guinea,Haiti,Heard,Spain,Holland,Honduras,Hong Kong,India,Indonesia,Iraq,Iran,Ireland,Iceland,Israel,Jamaica,Japan,Yemen,Jordan,Yugoslavia,Cayman Islands,Cambodia,Cameroon,Canada,Qatar,Kazakhstan,Kenya,Kyrgyzstan,Kiribati,Colombia,Comoros,Congo,South Korea,North Korea,Costa Rica,Cuba,Kuwait,Laos,Lesotho,Lebanon,Liberia,Libya,Liechtenstein,Lithuania,Latvia,Luxembourg,Macedonia,Madagascar,Mayotte,Macau,Malawi,Maldives,Malaysia,Mali,Malta,Marshall Islands,Morocco,Martinique,Mauritania,Mauritius,Mexico,Micronesia,Moldova,Monaco,Mongolia,Montserrat,Mozambique,Myanmar,Namibia,Nauru,Nepal,Germany,Niger,Nigeria,Nicaragua,Niue,Norway,New Caledonia,New Zealand,Oman,Pakistan,Palau,Panama,Papua New Guinea,Paraguay,Peru,Pitcairn,French Polynesia,Poland,Puerto Rico,Portugal,South Africa,Cape Verde,Reunion,Rwanda,Romania,Western Sahara,Saint Christopher and Nevis,Saint Lucia,Saint Vincent and the Grenadines,Saint-Perr and Miquelon,Salvador,Samoa,American Samoa,San Marino,Senegal,Seychelles,Sierra Leone,Singapore,Slovakia,Slovenia,Somalia,Sri Lanka,United States,Swaziland,Sudan,Suriname,Svalbard and Jan Mayen island,Syria,Switzerland,Sweden,Tajikistan,Thailand,Taiwan,Tanzania,Timor-Leste,Togo,Tokelau,Tonga,Trinidad and Tobago,Tunisia,Turkey,Turkmenistan,Turks and Caicos Islands,Tuvalu,Uganda,Ukraine,Uruguay,Uzbekistan,Vanuatu,Wallis and Futuna Islands,Vatican City,Venezuela,Hungary,Great Britain,United Kingdom,Vietnam,Italy,Ivory Coast,Bouvet Island,Christmas Island,Norfolk Island,Saint Helena,Cook Islands,U.S. Virgin Islands,Cocos Islands,Marshall Islands,Faroe Islands,Solomon Islands,Sao Tome and Principe,Zaire,Zambia,Zimbabwe,United Arab Emirates");
     QStringList lCountries = strCountries.split(",");
     lCountries.insert(0, "");
-    for (int i = 0; i < lCountries.size(); i++)
-        ui.comboBox_country->addItem(lCountries.at(i));
+    foreach (QString strCountry, lCountries)
+        ui.comboBox_country->addItem(strCountry);
 }
 
 void DlgMyProfile::createSignals()

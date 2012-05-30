@@ -98,9 +98,8 @@ QString Commands::execute()
 
 bool Commands::isErotic(const QString &strChannel)
 {
-    for (int i = 0; i < Core::instance()->lChannelList.size(); i++)
+    foreach (ChannelList channel, Core::instance()->lChannelList)
     {
-        ChannelList channel = Core::instance()->lChannelList.at(i);
         QString strName = channel.name;
         int iType = channel.type;
 
@@ -348,11 +347,8 @@ QString Commands::cmdHelp()
     strHelp.append(tr("/help"));
 
     QStringList lHelp = strHelp.split(";");
-    for (int i = 0; i < lHelp.size(); i++)
-    {
-        QString strDisplay = lHelp.at(i);
+    foreach (QString strDisplay, lHelp)
         Message::instance()->showMessage(strChan, strDisplay, InfoMessage);
-    }
 
     return QString::null;
 }

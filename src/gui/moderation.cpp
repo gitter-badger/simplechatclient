@@ -102,9 +102,8 @@ void DlgModeration::removeSelected()
     QList<QListWidgetItem*> list = ui.listWidget_msg->selectedItems();
 
     // remove from list
-    for (int i = 0; i < list.size(); i++)
+    foreach (QListWidgetItem *item, list)
     {
-        QListWidgetItem *item = list.at(i);
         QString strID = item->data(Qt::UserRole).toString();
 
         Core::instance()->mModerateMessages.remove(strID);
@@ -119,9 +118,8 @@ void DlgModeration::buttonAccept()
     QList<QListWidgetItem*> list = ui.listWidget_msg->selectedItems();
 
     // display
-    for (int i = 0; i < list.size(); i++)
+    foreach (QListWidgetItem *item, list)
     {
-        QListWidgetItem *item = list.at(i);
         QString strChannel = item->data(Qt::UserRole+1).toString();
         int iTime = item->data(Qt::UserRole+2).toInt();
         QString strNick = item->data(Qt::UserRole+3).toString();

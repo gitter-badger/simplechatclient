@@ -34,9 +34,8 @@ QString findEmoticon(const QString &strEmoticon)
     QDir dAllEmoticonsDirs = path+"/3rdparty/emoticons";
     QStringList lDirs = dAllEmoticonsDirs.entryList(QStringList("*"), QDir::Dirs | QDir::NoDotAndDotDot | QDir::NoSymLinks);
 
-    for (int i = 0; i < lDirs.size(); i++)
+    foreach (QString strDir, lDirs)
     {
-        QString strDir = lDirs[i];
         QString strEmoticonCheck = QString("%1/3rdparty/emoticons/%2/%3.gif").arg(path, strDir, strEmoticon);
 
         if (QFile::exists(strEmoticonCheck))

@@ -190,9 +190,9 @@ void Core::convertOldProfiles()
 
     QDir dir(path);
     QFileInfoList list = dir.entryInfoList(QStringList("*.xml"), QDir::Files | QDir::NoSymLinks);
-    for (int i = 0; i < list.size(); ++i)
+    foreach (QFileInfo info, list)
     {
-        QString profile = list.at(i).fileName().remove(".xml");
+        QString profile = info.fileName().remove(".xml");
         if (!QDir().exists(path+"/"+profile))
         {
             QDir().mkpath(path+"/"+profile);
@@ -374,7 +374,7 @@ bool Core::removeDir(const QString &dirName)
 
     if (dir.exists(dirName))
     {
-        Q_FOREACH(QFileInfo info, dir.entryInfoList(QDir::NoDotAndDotDot | QDir::System | QDir::Hidden  | QDir::AllDirs | QDir::Files, QDir::DirsFirst))
+        foreach(QFileInfo info, dir.entryInfoList(QDir::NoDotAndDotDot | QDir::System | QDir::Hidden  | QDir::AllDirs | QDir::Files, QDir::DirsFirst))
         {
             if (info.isDir())
                 result = removeDir(info.absoluteFilePath());

@@ -1131,18 +1131,12 @@ void OnetKernel::raw_001()
     qSort(lOpenChannelsCaseIgnore.begin(), lOpenChannelsCaseIgnore.end());
 
     // remove all channels
-    for (int i = 0; i < lOpenChannelsCaseIgnore.size(); i++)
-    {
-        QString strChannel = lOpenChannelsCaseIgnore.at(i);
+    foreach (QString strChannel, lOpenChannelsCaseIgnore)
         pTabC->removeTab(strChannel);
-    }
 
     // join channels
-    for (int i = 0; i < lOpenChannelsCaseIgnore.size(); i++)
-    {
-        QString strChannel = lOpenChannelsCaseIgnore.at(i);
+    foreach (QString strChannel, lOpenChannelsCaseIgnore)
         Core::instance()->pNetwork->sendQueue(QString("JOIN %1").arg(strChannel));
-    }
 
     // channel list
     Core::instance()->pNetwork->send("SLIST  R- 0 0 100 null");
@@ -1178,11 +1172,10 @@ void OnetKernel::raw_005()
 {
     QHash<QString,QString> mKeyValue;
 
-    for (int i = 0; i < strDataList.size(); i++)
+    foreach (QString strData, strDataList)
     {
-        if (strDataList.at(i).contains("="))
+        if (strData.contains("="))
         {
-            QString strData = strDataList.at(i);
             QString strKey = strData.mid(0, strData.indexOf('='));
             QString strValue = strData.mid(strData.indexOf('=')+1, strData.length() - strData.indexOf('='));
 
@@ -1410,9 +1403,8 @@ void OnetKernel::raw_141n()
     if (Core::instance()->settings.value("ignore_raw_141") == "false")
     {
         qSort(lList.begin(), lList.end());
-        for (int i = 0; i < lList.size(); i++)
+        foreach (QString strChannel, lList)
         {
-            QString strChannel = lList[i];
             if (!Core::instance()->lOpenChannels.contains(strChannel))
                 Core::instance()->pNetwork->sendQueue(QString("JOIN %1").arg(strChannel));
         }

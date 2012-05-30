@@ -465,9 +465,9 @@ void DlgOptions::refreshProfilesList()
     dir.setSorting(QDir::Name);
 
     QFileInfoList list = dir.entryInfoList(QStringList("*"), QDir::Dirs | QDir::NoDotAndDotDot | QDir::NoSymLinks);
-    for (int i = 0; i < list.size(); ++i)
+    foreach (QFileInfo info, list)
     {
-        QString strName = list.at(i).fileName();
+        QString strName = info.fileName();
         ui.comboBox_profiles->addItem(strName);
     }
 

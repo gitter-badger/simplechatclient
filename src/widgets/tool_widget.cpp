@@ -778,9 +778,8 @@ void ToolWidget::pasteMultiLine(const QString &strText, bool bModeration)
     QStringList list = strText.split(QRegExp("(\n|\r)"));
     int len = 400;
 
-    for (int i = 0; i < list.size(); i++)
+    foreach (QString line, list)
     {
-        QString line = list.at(i);
         if (line.size() > len)
         {
             while (line.size() > len)
