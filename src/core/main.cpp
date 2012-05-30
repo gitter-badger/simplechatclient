@@ -35,7 +35,6 @@
 void displayVersion()
 {
     printf("Simple Chat Client %s\n\n"
-           "Copyright (C) 2012 Piotr Łuczko <piotr.luczko@gmail.com>\n"
            "License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>\n"
            "This is free software: you are free to change and redistribute it.\n\n",
            qPrintable(Core::instance()->version()));
