@@ -91,6 +91,7 @@ set (scc_SRCS
 	onet/onet_utils.cpp
 
 	singleton/autoaway.cpp
+	singleton/away.cpp
 	singleton/awaylog_model.cpp
 	singleton/highlight.cpp
 	singleton/message.cpp
@@ -164,6 +165,7 @@ set (scc_MOC_HDRS
 	onet/onet_kernel.h
 
 	singleton/autoaway.h
+	singleton/away.h
 	singleton/awaylog_model.h
 	singleton/highlight.h
 	singleton/message.h

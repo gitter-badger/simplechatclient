@@ -28,6 +28,7 @@
 
 #include "about.h"
 #include "autoaway.h"
+#include "away.h"
 #include "awaylog_model.h"
 #include "awaylog.h"
 #include "channel_favourites.h"
@@ -219,7 +220,7 @@ void MainWindow::createMenus()
     chatMenu->addAction(camsAction);
     chatMenu->addSeparator();
     chatMenu->addAction(Core::instance()->busyAction);
-    chatMenu->addAction(Core::instance()->awayAction);
+    chatMenu->addAction(Away::instance()->awayAction);
 
     // onet my menu
     myMenu = menuBar()->addMenu(tr("&My"));
@@ -296,7 +297,6 @@ void MainWindow::createSignals()
     connect(friendsAction, SIGNAL(triggered()), this, SLOT(openFriends()));
     connect(ignoreAction, SIGNAL(triggered()), this, SLOT(openIgnore()));
     connect(Core::instance()->busyAction, SIGNAL(triggered()), this, SLOT(buttonSetBusy()));
-    connect(Core::instance()->awayAction, SIGNAL(triggered()), this, SLOT(buttonSetAway()));
     connect(myStatsAction, SIGNAL(triggered()), this, SLOT(openMyStats()));
     connect(myProfileAction, SIGNAL(triggered()), this, SLOT(openMyProfile()));
     connect(myAvatarAction, SIGNAL(triggered()), this, SLOT(openMyAvatar()));
@@ -519,28 +519,6 @@ void MainWindow::buttonSetBusy()
             Core::instance()->pNetwork->send("BUSY 0");
         else
             Core::instance()->pNetwork->send("BUSY 1");
-    }
-}
-
-void MainWindow::buttonSetAway()
-{
-    // do not change status
-    if (Core::instance()->awayAction->isChecked())
-        Core::instance()->awayAction->setChecked(false);
-    else
-        Core::instance()->awayAction->setChecked(true);
-
-    if ((Core::instance()->pNetwork->isConnected()) && (Core::instance()->pNetwork->isWritable()) && (Core::instance()->settings.value("logged") == "true"))
-    {
-        bool bAway = Core::instance()->settings.value("away") == "true" ? true : false;
-
-        QString strReason;
-        if (bAway)
-            strReason = "";
-        else
-            strReason = tr("Not here right now");
-
-        Core::instance()->pNetwork->send(QString("AWAY :%1").arg(strReason));
     }
 }
 

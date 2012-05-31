@@ -9,6 +9,17 @@
     </message>
 </context>
 <context>
+    <name>Away</name>
+    <message>
+        <source>Mark as away</source>
+        <translation>Oznacz jako nieobecny</translation>
+    </message>
+    <message>
+        <source>Not here right now</source>
+        <translation>Nie ma mnie</translation>
+    </message>
+</context>
+<context>
     <name>ChatView</name>
     <message>
         <source>Join channel</source>
@@ -291,10 +302,6 @@
     <message>
         <source>Mark as busy</source>
         <translation>Oznacz jako zajęty</translation>
-    </message>
-    <message>
-        <source>Mark as away</source>
-        <translation>Oznacz jako nieobecny</translation>
     </message>
 </context>
 <context>

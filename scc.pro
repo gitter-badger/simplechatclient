@@ -65,6 +65,7 @@ SOURCES += src/avatars/avatar.cpp \
     src/onet/onet_kernel.cpp \
     src/onet/onet_utils.cpp \	
     src/singleton/autoaway.cpp \
+    src/singleton/away.cpp \
     src/singleton/awaylog_model.cpp \
     src/singleton/highlight.cpp \
     src/singleton/message.cpp \
@@ -145,6 +146,7 @@ HEADERS += src/avatars/avatar.h \
     src/onet/onet_kernel.h \
     src/onet/onet_utils.h \
     src/singleton/autoaway.h \
+    src/singleton/away.h \
     src/singleton/awaylog_model.h \
     src/singleton/highlight.h \
     src/singleton/message.h \
