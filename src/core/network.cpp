@@ -22,6 +22,7 @@
 #include <QTcpSocket>
 #include <QTimer>
 #include "autoaway.h"
+#include "away.h"
 #include "config.h"
 #include "core.h"
 #include "crypt.h"
@@ -111,7 +112,7 @@ void Network::clearAll()
     Core::instance()->busyAction->setChecked(false);
 
     // update away button
-    Core::instance()->awayAction->setChecked(false);
+    Away::instance()->stop();
 
     // update nick
     emit updateNick(tr("(Unregistered)"));

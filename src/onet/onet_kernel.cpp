@@ -19,8 +19,9 @@
 
 #include <QDateTime>
 #include <QMessageBox>
-#include "avatar.h"
 #include "autoaway.h"
+#include "avatar.h"
+#include "away.h"
 #include "core.h"
 #include "convert.h"
 #include "channel_key.h"
@@ -2280,8 +2281,7 @@ void OnetKernel::raw_304()
 // :cf1f3.onet 305 scc_test :You are no longer marked as being away
 void OnetKernel::raw_305()
 {
-    Core::instance()->settings["away"] = "false";
-    Core::instance()->awayAction->setChecked(false);
+    Away::instance()->stop();
 
     QString strDisplay = tr("* You are no longer marked as being away");
     Message::instance()->showMessageActive(strDisplay, InfoMessage);
@@ -2291,8 +2291,7 @@ void OnetKernel::raw_305()
 // :cf1f3.onet 306 scc_test :You have been marked as being away
 void OnetKernel::raw_306()
 {
-    Core::instance()->settings["away"] = "true";
-    Core::instance()->awayAction->setChecked(true);
+    Away::instance()->start();
 
     QString strDisplay = tr("* You have been marked as being away");
     Message::instance()->showMessageActive(strDisplay, InfoMessage);

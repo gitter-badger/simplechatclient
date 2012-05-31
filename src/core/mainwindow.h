@@ -118,7 +118,6 @@ private slots:
     void openIgnore();
     void openCams();
     void buttonSetBusy();
-    void buttonSetAway();
     void openMyAvatar();
     void openMyStats();
     void openMyProfile();

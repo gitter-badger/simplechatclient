@@ -79,7 +79,6 @@ public:
     QList<QString> lChannelHomes;
     QAction *lagAction;
     QAction *busyAction;
-    QAction *awayAction;
     // channels
     QList<QString> lOpenChannels;
     QHash<QString, QByteArray> mChannelAvatar;
