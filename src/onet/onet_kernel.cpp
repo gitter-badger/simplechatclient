@@ -27,6 +27,7 @@
 #include "convert.h"
 #include "channel_key.h"
 #include "invite.h"
+#include "lag.h"
 #include "log.h"
 #include "message.h"
 #include "nicklist.h"
@@ -323,55 +324,19 @@ void OnetKernel::raw_ping()
         Core::instance()->pNetwork->send(QString("PONG %1").arg(strServer));
 }
 
-// :cf1f4.onet PONG cf1f4.onet :1279652441.189
+// :cf1f4.onet PONG cf1f4.onet :1279652441189
 void OnetKernel::raw_pong()
 {
     if (strDataList.size() < 4) return;
 
-    QString strServerTime = strDataList[3];
-    if (strServerTime[0] == ':') strServerTime.remove(0,1);
+    QString strServerMSecs = strDataList[3];
+    if (strServerMSecs[0] == ':') strServerMSecs.remove(0,1);
 
     // check correct pong
-    if (!strServerTime.contains(QRegExp("(\\d+)\\.(\\d+)")))
+    if (!strServerMSecs.contains(QRegExp("(\\d+)")))
         return; // incorrect
 
-    // get time from pong
-    QStringList strTimeAll = strServerTime.split(".");
-    int iTime1 = strTimeAll.at(0).toInt();
-    int iTime2 = strTimeAll.at(1).toInt();
-
-    // get current time
-    QDateTime dt = QDateTime::currentDateTime();
-    int iCurrent1 = (int)dt.toTime_t(); // seconds that have passed since 1970
-    int iCurrent2 = (dt.toString("zzz")).toInt(); // miliseconds
-
-    // calculate
-    int iCTime1 = iCurrent1-iTime1;
-    int iCTime2 = iCurrent2-iTime2;
-
-    // correct miliseconds
-    if (iCTime2 < 0)
-        iCTime2 += 1000;
-
-    // if not correct
-    if (((iCTime1 < 0) || (iCTime1 > 301)) || ((iCTime2 < 0) || (iCTime2 > 1001)))
-        return;
-
-    QString sec = QString::number(iCTime1);
-    QString msec = QString::number(iCTime2);
-
-    // display lag
-    if (msec.size() > 3)
-        msec = msec.left(3);
-    else if (msec.size() == 2)
-        msec = "0"+msec;
-    else if (msec.size() == 1)
-        msec = "00"+msec;
-
-    QString strLag = sec+"."+msec;
-    strLag = "Lag: "+strLag+"s";
-
-    Core::instance()->lagAction->setText(strLag);
+    Lag::instance()->calculate(strServerMSecs);
 }
 
 // ERROR :Closing link (unknown@95.48.183.154) [Registration timeout]

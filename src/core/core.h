@@ -77,7 +77,6 @@ public:
     QHash<QString, QString> mMyStats;
     QHash<QString, QString> mMyProfile;
     QList<QString> lChannelHomes;
-    QAction *lagAction;
     // channels
     QList<QString> lOpenChannels;
     QHash<QString, QByteArray> mChannelAvatar;

@@ -27,6 +27,7 @@
 #include "config.h"
 #include "core.h"
 #include "crypt.h"
+#include "lag.h"
 #include "nicklist.h"
 #include "message.h"
 #include "network.h"
@@ -107,7 +108,7 @@ void Network::clearAll()
     emit setDisconnected();
 
     // set lag
-    Core::instance()->lagAction->setText("Lag: ?");
+    Lag::instance()->reset();
 
     // update busy button
     Busy::instance()->stop();
@@ -222,7 +223,7 @@ void Network::connected()
 #endif
 
     emit setConnected();
-    Core::instance()->lagAction->setText("Lag: ?");
+    Lag::instance()->reset();
 
     QString strDisplay = tr("Connected to server");
     Message::instance()->showMessageAll(strDisplay, ErrorMessage);
@@ -410,7 +411,7 @@ void Network::timeoutLag()
 
     // update lag
     if (iCurrent-iActive > 30+10)
-        Core::instance()->lagAction->setText(QString("Lag: %1s").arg(iCurrent-iActive));
+        Lag::instance()->update(QString("%1s").arg(iCurrent-iActive));
 }
 
 void Network::timeoutPong()
@@ -440,13 +441,10 @@ void Network::timeoutPong()
 
 void Network::timeoutPing()
 {
-    QDateTime dta = QDateTime::currentDateTime();
-    int i1 = (int)dta.toTime_t(); // seconds that have passed since 1970
-    QString t1 = QString::number(i1);
-    QString t2 = dta.toString("zzz"); // miliseconds
+    QString strMSecs = QString::number(QDateTime::currentMSecsSinceEpoch());
 
     if ((isConnected()) && (isWritable()) && (Core::instance()->settings.value("logged") == "true"))
-        emit send(QString("PING :%1.%2").arg(t1, t2));
+        emit send(QString("PING :%1").arg(strMSecs));
 }
 
 void Network::timeoutQueue()

@@ -47,9 +47,6 @@ Core * Core::instance()
 
 Core::Core() : window(0)
 {
-    // lag
-    lagAction = new QAction("Lag: ?", this);
-    lagAction->setEnabled(false);
 }
 
 Core::~Core()

@@ -39,6 +39,7 @@
 #include "core.h"
 #include "friends.h"
 #include "ignore.h"
+#include "lag.h"
 #include "message.h"
 #include "my_avatar.h"
 #include "my_profile.h"
@@ -253,7 +254,7 @@ void MainWindow::createMenus()
     toolBar->addAction(notesAction);
     // lag
     toolBar->addSeparator();
-    toolBar->addAction(Core::instance()->lagAction);
+    toolBar->addAction(Lag::instance()->lagAction);
 
     // tray menu
     trayIconMenu = new QMenu();
