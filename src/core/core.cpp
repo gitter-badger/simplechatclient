@@ -50,11 +50,6 @@ Core::Core() : window(0)
     // lag
     lagAction = new QAction("Lag: ?", this);
     lagAction->setEnabled(false);
-
-    busyAction = new QAction(this);
-    busyAction->setIcon(QIcon(":/images/oxygen/16x16/im-user-offline.png"));
-    busyAction->setCheckable(true);
-    busyAction->setChecked(false);
 }
 
 Core::~Core()
@@ -103,8 +98,6 @@ void Core::init()
 
 void Core::createAndShowGui()
 {
-    busyAction->setText(tr("Mark as busy"));
-
     window = new MainWindow(0);
     window->show();
 

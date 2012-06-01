@@ -23,6 +23,7 @@
 #include <QTimer>
 #include "autoaway.h"
 #include "away.h"
+#include "busy.h"
 #include "config.h"
 #include "core.h"
 #include "crypt.h"
@@ -109,7 +110,7 @@ void Network::clearAll()
     Core::instance()->lagAction->setText("Lag: ?");
 
     // update busy button
-    Core::instance()->busyAction->setChecked(false);
+    Busy::instance()->stop();
 
     // update away button
     Away::instance()->stop();

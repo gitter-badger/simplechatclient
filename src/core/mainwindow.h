@@ -117,7 +117,6 @@ private slots:
     void openFriends();
     void openIgnore();
     void openCams();
-    void buttonSetBusy();
     void openMyAvatar();
     void openMyStats();
     void openMyProfile();

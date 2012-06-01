@@ -20,6 +20,13 @@
     </message>
 </context>
 <context>
+    <name>Busy</name>
+    <message>
+        <source>Mark as busy</source>
+        <translation>Oznacz jako zajęty</translation>
+    </message>
+</context>
+<context>
     <name>ChatView</name>
     <message>
         <source>Join channel</source>
@@ -295,13 +302,6 @@
     <message>
         <source>This command is only for Windows</source>
         <translation>Ta komenda jest tylko pod Windows</translation>
-    </message>
-</context>
-<context>
-    <name>Core</name>
-    <message>
-        <source>Mark as busy</source>
-        <translation>Oznacz jako zajęty</translation>
     </message>
 </context>
 <context>

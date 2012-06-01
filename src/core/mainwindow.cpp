@@ -31,6 +31,7 @@
 #include "away.h"
 #include "awaylog_model.h"
 #include "awaylog.h"
+#include "busy.h"
 #include "channel_favourites.h"
 #include "channel_homes.h"
 #include "channel_list.h"
@@ -219,7 +220,7 @@ void MainWindow::createMenus()
     chatMenu->addAction(Awaylog::instance()->awaylogAction);
     chatMenu->addAction(camsAction);
     chatMenu->addSeparator();
-    chatMenu->addAction(Core::instance()->busyAction);
+    chatMenu->addAction(Busy::instance()->busyAction);
     chatMenu->addAction(Away::instance()->awayAction);
 
     // onet my menu
@@ -296,7 +297,6 @@ void MainWindow::createSignals()
     connect(channelFavouritesAction, SIGNAL(triggered()), this, SLOT(openChannelFavourites()));
     connect(friendsAction, SIGNAL(triggered()), this, SLOT(openFriends()));
     connect(ignoreAction, SIGNAL(triggered()), this, SLOT(openIgnore()));
-    connect(Core::instance()->busyAction, SIGNAL(triggered()), this, SLOT(buttonSetBusy()));
     connect(myStatsAction, SIGNAL(triggered()), this, SLOT(openMyStats()));
     connect(myProfileAction, SIGNAL(triggered()), this, SLOT(openMyProfile()));
     connect(myAvatarAction, SIGNAL(triggered()), this, SLOT(openMyAvatar()));
@@ -501,25 +501,6 @@ void MainWindow::openIgnore()
 {
     if ((Core::instance()->pNetwork->isConnected()) && (Core::instance()->pNetwork->isWritable()) && (Core::instance()->settings.value("logged") == "true"))
         DlgIgnore(this).exec();
-}
-
-void MainWindow::buttonSetBusy()
-{
-    // do not change status
-    if (Core::instance()->busyAction->isChecked())
-        Core::instance()->busyAction->setChecked(false);
-    else
-        Core::instance()->busyAction->setChecked(true);
-
-    if ((Core::instance()->pNetwork->isConnected()) && (Core::instance()->pNetwork->isWritable()) && (Core::instance()->settings.value("logged") == "true"))
-    {
-        bool bBusy = Core::instance()->settings.value("busy") == "true" ? true : false;
-
-        if (bBusy)
-            Core::instance()->pNetwork->send("BUSY 0");
-        else
-            Core::instance()->pNetwork->send("BUSY 1");
-    }
 }
 
 void MainWindow::openOfflinemsg()

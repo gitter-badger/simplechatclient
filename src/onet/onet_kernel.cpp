@@ -22,6 +22,7 @@
 #include "autoaway.h"
 #include "avatar.h"
 #include "away.h"
+#include "busy.h"
 #include "core.h"
 #include "convert.h"
 #include "channel_key.h"
@@ -3784,8 +3785,7 @@ void OnetKernel::raw_802()
 // :cf1f2.onet 807 scc_test :You are marked as busy
 void OnetKernel::raw_807()
 {
-    Core::instance()->settings["busy"] = "true";
-    Core::instance()->busyAction->setChecked(true);
+    Busy::instance()->start();
 
     QString strDisplay = tr("* You are marked as busy");
     Message::instance()->showMessageActive(strDisplay, InfoMessage);
@@ -3795,8 +3795,7 @@ void OnetKernel::raw_807()
 // :cf1f2.onet 808 scc_test :You are no longer marked busy
 void OnetKernel::raw_808()
 {
-    Core::instance()->settings["busy"] = "false";
-    Core::instance()->busyAction->setChecked(false);
+    Busy::instance()->stop();
 
     QString strDisplay = tr("* You are no longer marked busy");
     Message::instance()->showMessageActive(strDisplay, InfoMessage);

@@ -93,6 +93,7 @@ set (scc_SRCS
 	singleton/autoaway.cpp
 	singleton/away.cpp
 	singleton/awaylog_model.cpp
+	singleton/busy.cpp
 	singleton/highlight.cpp
 	singleton/message.cpp
 	singleton/nicklist.cpp
@@ -167,6 +168,7 @@ set (scc_MOC_HDRS
 	singleton/autoaway.h
 	singleton/away.h
 	singleton/awaylog_model.h
+	singleton/busy.h
 	singleton/highlight.h
 	singleton/message.h
 	singleton/nicklist.h
