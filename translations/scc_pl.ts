@@ -20,6 +20,13 @@
     </message>
 </context>
 <context>
+    <name>Awaylog</name>
+    <message>
+        <source>Awaylog</source>
+        <translation>Awaylog</translation>
+    </message>
+</context>
+<context>
     <name>Busy</name>
     <message>
         <source>Mark as busy</source>
@@ -1939,14 +1946,6 @@
         <translation>Ignorowani</translation>
     </message>
     <message>
-        <source>Offline messages</source>
-        <translation>Wiadomości offline</translation>
-    </message>
-    <message>
-        <source>Awaylog</source>
-        <translation>Awaylog</translation>
-    </message>
-    <message>
         <source>Cams</source>
         <translation>Kamerki</translation>
     </message>
@@ -2173,6 +2172,13 @@
     <message>
         <source>Error: Cannot read notes file!</source>
         <translation>Błąd: Nie można odczytać pliku notatek!</translation>
+    </message>
+</context>
+<context>
+    <name>Offline</name>
+    <message>
+        <source>Offline messages</source>
+        <translation>Wiadomości offline</translation>
     </message>
 </context>
 <context>

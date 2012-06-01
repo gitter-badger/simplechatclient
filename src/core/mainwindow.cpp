@@ -161,7 +161,6 @@ void MainWindow::createActions()
     connectAction = new QAction(QIcon(":/images/oxygen/16x16/network-connect.png"), tr("&Connect"), this);
     optionsAction = new QAction(QIcon(":/images/oxygen/16x16/preferences-system.png"), tr("Options"), this);
     aboutAction = new QAction(QIcon(":/images/logo16x16.png"), tr("About SCC ..."), this);
-    Awaylog::instance()->awaylogAction = new QAction(QIcon(":/images/oxygen/16x16/view-pim-tasks.png"), tr("Awaylog"), this);
     notesAction = new QAction(QIcon(":/images/oxygen/16x16/story-editor.png"), tr("Notes"), this);
 
     // onet action
@@ -170,7 +169,6 @@ void MainWindow::createActions()
     channelFavouritesAction = new QAction(QIcon(":/images/oxygen/16x16/emblem-favorite.png"), tr("Favorite channels"), this);
     friendsAction = new QAction(QIcon(":/images/oxygen/16x16/meeting-attending.png"), tr("Friends"), this);
     ignoreAction = new QAction(QIcon(":/images/oxygen/16x16/meeting-attending-tentative.png"), tr("Ignored"), this);
-    Offline::instance()->offlineMsgAction = new QAction(QIcon(":/images/oxygen/16x16/mail-mark-unread.png") , tr("Offline messages"), this);
     camsAction = new QAction(QIcon(":/images/oxygen/16x16/camera-web.png"),tr("Cams"), this);
     myStatsAction = new QAction(QIcon(":/images/oxygen/16x16/office-chart-bar.png"),tr("My statistics"), this);
     myProfileAction = new QAction(QIcon(":/images/oxygen/16x16/view-pim-contacts.png"),tr("My profile"), this);
@@ -192,8 +190,6 @@ void MainWindow::createActions()
     channelFavouritesAction->setShortcut(tr("Ctrl+U"));
     friendsAction->setShortcut(tr("Ctrl+P"));
     ignoreAction->setShortcut(tr("Ctrl+I"));
-    Offline::instance()->offlineMsgAction->setShortcut(tr("Ctrl+M"));
-    Awaylog::instance()->awaylogAction->setShortcut(tr("Ctrl+J"));
     camsAction->setShortcut(tr("Ctrl+K"));
 }
 

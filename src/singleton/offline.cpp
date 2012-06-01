@@ -34,6 +34,8 @@ Offline * Offline::instance()
 
 Offline::Offline()
 {
+    offlineMsgAction = new QAction(QIcon(":/images/oxygen/16x16/mail-mark-unread.png") , tr("Offline messages"), this);
+    offlineMsgAction->setShortcut(tr("Ctrl+M"));
 }
 
 void Offline::init()
@@ -58,7 +60,7 @@ void Offline::removeMsg(const QString &strNick)
     for (int i = 0; i < lOfflineMsg.size(); i++)
     {
         QString strOfflineNick = lOfflineMsg.at(i).nick;
-        if (strOfflineNick == strNick);
+        if (strOfflineNick == strNick)
             lOfflineMsg.takeAt(i);
     }
 //    foreach (OfflineMsg msg, lOfflineMsg)
