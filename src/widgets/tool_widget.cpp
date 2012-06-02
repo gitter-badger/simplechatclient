@@ -730,9 +730,8 @@ void ToolWidget::moderationClicked()
 void ToolWidget::inputlineReturnPressed()
 {
     // update last active
-    QDateTime cdt = QDateTime::currentDateTime();
-    int t = (int)cdt.toTime_t(); // seconds that have passed since 1970
-    Core::instance()->settings["last_active"] = QString::number(t);
+    int iCurrentTime = QDateTime::currentDateTime().toTime_t();
+    Core::instance()->settings["last_active"] = QString::number(iCurrentTime);
 
     // disable away
     bool bAway = Core::instance()->settings.value("away") == "true" ? true : false;
@@ -748,9 +747,8 @@ void ToolWidget::inputlineReturnPressed()
 void ToolWidget::moderButtonClicked()
 {
     // update last active
-    QDateTime cdt = QDateTime::currentDateTime();
-    int t = (int)cdt.toTime_t(); // seconds that have passed since 1970
-    Core::instance()->settings["last_active"] = QString::number(t);
+    int iCurrentTime = QDateTime::currentDateTime().toTime_t();
+    Core::instance()->settings["last_active"] = QString::number(iCurrentTime);
 
     // disable away
     bool bAway = Core::instance()->settings.value("away") == "true" ? true : false;

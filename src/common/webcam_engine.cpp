@@ -456,8 +456,7 @@ void WebcamEngine::raw_202(const QStringList &strDataList)
         // re-send
         if (strUser == strNick)
         {
-            QDateTime dt = QDateTime::currentDateTime();
-            int iCurrentTime = (int)dt.toTime_t(); // seconds that have passed since 1970
+            int iCurrentTime = QDateTime::currentDateTime().toTime_t();
             pWebcamNetwork->setLastKeepAlive(iCurrentTime);
 
             pWebcamNetwork->networkSend(QString("KEEPALIVE_BIG %1").arg(strNick));
@@ -601,8 +600,7 @@ void WebcamEngine::raw_254(const QStringList &strDataList)
     iCamCmd = 254;
 
     // check keepalive
-    QDateTime dt = QDateTime::currentDateTime();
-    int iCurrentTime = (int)dt.toTime_t(); // seconds that have passed since 1970
+    int iCurrentTime = QDateTime::currentDateTime().toTime_t();
 
     if (iCurrentTime - pWebcamNetwork->getLastKeepAlive() > 30) // 30 sec
     {

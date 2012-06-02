@@ -1109,9 +1109,8 @@ void OnetKernel::raw_001()
     Core::instance()->pNetwork->send("SLIST  R- 0 0 100 null");
 
     // update last active
-    QDateTime cdt = QDateTime::currentDateTime();
-    int t = (int)cdt.toTime_t(); // seconds that have passed since 1970
-    Core::instance()->settings["last_active"] = QString::number(t);
+    int iCurrentTime = QDateTime::currentDateTime().toTime_t();
+    Core::instance()->settings["last_active"] = QString::number(iCurrentTime);
 
     // auto-away
     Autoaway::instance()->start();
@@ -1161,8 +1160,7 @@ void OnetKernel::raw_100n()
     QString strTime = strDataList[5];
 
     int iTime = strTime.toInt();
-    QDateTime dta = QDateTime::currentDateTime();
-    int iCurrentTime = (int)dta.toTime_t();
+    int iCurrentTime = QDateTime::currentDateTime().toTime_t();
     int iTimeResult = iTime - iCurrentTime;
     QString strTimeResult;
 

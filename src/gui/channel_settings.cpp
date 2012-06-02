@@ -297,9 +297,7 @@ void DlgChannelSettings::refreshChannelInfo()
 
             // stats
             int iCreatedDate = strValue.toInt();
-
-            QDateTime cdt = QDateTime::currentDateTime();
-            int iCurrentDate = (int)cdt.toTime_t(); // seconds that have passed since 1970
+            int iCurrentDate = QDateTime::currentDateTime().toTime_t();
 
             int iSeconds = iCurrentDate - iCreatedDate;
             int iMinutes = iSeconds / 60;

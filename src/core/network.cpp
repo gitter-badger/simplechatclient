@@ -196,8 +196,7 @@ void Network::connect()
         clearAll();
 
         // set active
-        QDateTime dt = QDateTime::currentDateTime();
-        iActive = (int)dt.toTime_t();
+        iActive = QDateTime::currentDateTime().toTime_t();
 
         // connect
         socket->connectToHost(strServer, iPort);
@@ -357,8 +356,7 @@ void Network::recv()
         QByteArray data = socket->readLine().trimmed();
 
         // set active
-        QDateTime dt = QDateTime::currentDateTime();
-        iActive = (int)dt.toTime_t();
+        iActive = QDateTime::currentDateTime().toTime_t();
 
         // process to kernel
         emit kernel(QString(data));
@@ -406,21 +404,19 @@ void Network::stateChanged(QAbstractSocket::SocketState socketState)
 
 void Network::timeoutLag()
 {
-    QDateTime dt = QDateTime::currentDateTime();
-    int iCurrent = (int)dt.toTime_t();
+    int iCurrentTime = QDateTime::currentDateTime().toTime_t();
 
     // update lag
-    if (iCurrent-iActive > 30+10)
-        Lag::instance()->update(QString("%1s").arg(iCurrent-iActive));
+    if (iCurrentTime-iActive > 30+10)
+        Lag::instance()->update(QString("%1s").arg(iCurrentTime-iActive));
 }
 
 void Network::timeoutPong()
 {
-    QDateTime dt = QDateTime::currentDateTime();
-    int iCurrent = (int)dt.toTime_t();
+    int iCurrentTime = QDateTime::currentDateTime().toTime_t();
 
     // check timeout
-    if (iActive+301 < iCurrent)
+    if (iActive+301 < iCurrentTime)
     {
 #ifdef Q_WS_X11
         if (Core::instance()->settings.value("debug") == "true")
@@ -435,7 +431,7 @@ void Network::timeoutPong()
             // disconnect
             disconnect();
         }
-        iActive = iCurrent;
+        iActive = iCurrentTime;
     }
 }
 
