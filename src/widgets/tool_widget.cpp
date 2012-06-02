@@ -819,7 +819,7 @@ void ToolWidget::sendMessage(QString strText, bool bModeration)
 
     if (strCommand == "me")
     {
-        if (strChannel != STATUS)
+        if ((strChannel != DEBUG) && (strChannel != STATUS))
         {
             Core::instance()->pNetwork->send(strText);
 
@@ -836,7 +836,7 @@ void ToolWidget::sendMessage(QString strText, bool bModeration)
     }
     else if ((strCommand == "mp3") || (strCommand == "winamp"))
     {
-        if (strChannel != STATUS)
+        if ((strChannel != DEBUG) && (strChannel != STATUS))
         {
             Convert::createText(strText);
             Convert::simpleReverseConvert(strText);
@@ -854,7 +854,7 @@ void ToolWidget::sendMessage(QString strText, bool bModeration)
     }
 
     // not status
-    if (strChannel == STATUS)
+    if ((strChannel == DEBUG) || (strChannel == STATUS))
         return;
 
     // convert

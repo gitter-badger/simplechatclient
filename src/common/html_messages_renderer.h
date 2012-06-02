@@ -28,6 +28,7 @@
 namespace HtmlMessagesRenderer
 {
     QString renderer(QString strData, MessageCategory eMessageCategory, int iTime, QString strNick = QString::null);
+    QString rendererDebug(const QString &strData, int iTime);
     QString headCSS();
     QString bodyCSS();
 }

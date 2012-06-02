@@ -65,7 +65,7 @@ QString Commands::execute()
     else if ((strCmd == "help") || (strCmd == "pomoc"))
         return cmdHelp();
 
-    if (strChan != STATUS)
+    if ((strChan != DEBUG) && (strChan != STATUS))
     {
         if ((strCmd == "cycle") || (strCmd == "hop"))
             return cmdCycle();

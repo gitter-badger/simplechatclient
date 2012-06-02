@@ -39,6 +39,7 @@ const int MINUTES_IN_HOUR = 60;
 const int SECONDS_IN_MINUTE = 60;
 
 #define STATUS "Status"
+#define DEBUG "Debug"
 
 struct ChannelList
 {

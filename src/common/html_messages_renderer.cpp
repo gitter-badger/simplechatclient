@@ -189,6 +189,12 @@ QString HtmlMessagesRenderer::renderer(QString strData, MessageCategory eMessage
     }
 }
 
+QString HtmlMessagesRenderer::rendererDebug(const QString &strData, int iTime)
+{
+    QString strTime = QDateTime::fromTime_t(iTime).toString("[hh:mm:ss]");
+    return QString("%1 %2").arg(strTime, strData);
+}
+
 QString HtmlMessagesRenderer::headCSS()
 {
     QString strDefaultFontColor = Core::instance()->settings.value("default_font_color");

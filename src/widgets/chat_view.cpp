@@ -100,7 +100,11 @@ void ChatView::clearMessages()
 
 void ChatView::displayMessage(const QString &strData, MessageCategory eMessageCategory, int iTime, QString strNick)
 {
-    QString strContent = HtmlMessagesRenderer::renderer(strData, eMessageCategory, iTime, strNick);
+    QString strContent;
+    if (strChatViewChannel == DEBUG)
+        strContent = HtmlMessagesRenderer::rendererDebug(strData, iTime);
+    else
+        strContent = HtmlMessagesRenderer::renderer(strData, eMessageCategory, iTime, strNick);
 
     // scroll
     if (this->page()->mainFrame()->scrollBarValue(Qt::Vertical) ==  this->page()->mainFrame()->scrollBarMaximum(Qt::Vertical))
@@ -321,6 +325,7 @@ void ChatView::menuNick(QContextMenuEvent *event)
     QString strNickModes = Nicklist::instance()->getUserModes(strNick, strChatViewChannel);
 
     QList<QString> lOpenChannels = Core::instance()->lOpenChannels;
+    lOpenChannels.removeOne(DEBUG);
     lOpenChannels.removeOne(STATUS);
 
     QMenu *minvite = new QMenu(tr("Invite"));

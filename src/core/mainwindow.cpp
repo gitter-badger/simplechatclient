@@ -96,7 +96,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     Awaylog::instance()->awaylogAction->setVisible(false);
 
     // show welcome
-    QTimer::singleShot(0, this, SLOT(showWelcome())); // 0 sec
+    QTimer::singleShot(0, this, SLOT(initShowWindow())); // 0 sec
 
     // show options if config not exist
     showOptions();
@@ -332,8 +332,13 @@ void MainWindow::createSignals()
     connect(Core::instance()->pNetwork, SIGNAL(updateActions()), this, SLOT(updateActions()));
 }
 
-void MainWindow::showWelcome()
+void MainWindow::initShowWindow()
 {
+    // debug
+    if (Core::instance()->settings.value("debug") == "true")
+        pTabC->addTab(DEBUG);
+
+    // status
     pTabC->addTab(STATUS);
     QString strWelcome = "%Fi:courier%"+tr("Welcome to the Simple Chat Client")+" %Ihehe%";
     Message::instance()->showMessage(STATUS, strWelcome, MessageDefault);

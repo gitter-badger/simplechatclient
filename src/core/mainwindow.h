@@ -100,7 +100,7 @@ private:
     void setTrayMenuVisible(bool visible);
 
 private slots:
-    void showWelcome();
+    void initShowWindow();
     void buttonConnect();
     void openOptions();
     void openAwaylog();

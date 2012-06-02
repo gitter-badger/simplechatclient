@@ -81,7 +81,7 @@ void TabContainer::addTab(const QString &strChannel)
 
 void TabContainer::removeTab(const QString &strChannel)
 {
-    if ((!existTab(strChannel)) || (strChannel == STATUS))
+    if ((!existTab(strChannel)) || (strChannel == DEBUG) || (strChannel == STATUS))
         return;
 
     // remove from open channels

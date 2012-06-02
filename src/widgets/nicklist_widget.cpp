@@ -328,6 +328,7 @@ void NickListWidget::contextMenuEvent(QContextMenuEvent *e)
     QString strNickModes = Nicklist::instance()->getUserModes(strSelectedNick, strChannel);
 
     QList<QString> lOpenChannels = Core::instance()->lOpenChannels;
+    lOpenChannels.removeOne(DEBUG);
     lOpenChannels.removeOne(STATUS);
 
     QMenu *minvite = new QMenu(tr("Invite"));

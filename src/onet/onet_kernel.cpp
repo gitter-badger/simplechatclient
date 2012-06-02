@@ -55,7 +55,7 @@ void OnetKernel::kernel(const QString &_strData)
     strDataList = strData.split(" ");
 
     if (Core::instance()->settings.value("debug") == "true")
-        qDebug() << "<- " << strData;
+        Message::instance()->showMessage(DEBUG, "<- "+strData, MessageDefault);
 
     bool bUnknownRaw1 = false;
     bool bUnknownRaw2 = false;
@@ -482,7 +482,7 @@ void OnetKernel::raw_part()
     if (strNick == strMe)
     {
         // close channel
-        if (strChannel != STATUS)
+        if ((strChannel != DEBUG) && (strChannel != STATUS))
             pTabC->removeTab(strChannel);
     }
 }
@@ -1092,6 +1092,7 @@ void OnetKernel::raw_001()
 
     // copy to new list
     QList<QString> lOpenChannels = Core::instance()->lOpenChannels;
+    lOpenChannels.removeOne(DEBUG);
     lOpenChannels.removeOne(STATUS);
     foreach (QString strChannel, lOpenChannels)
         lOpenChannelsCaseIgnore.append(strChannel);

@@ -18,6 +18,7 @@
  */
 
 #include <QTabBar>
+#include "defines.h"
 #include "tab_manager.h"
 
 TabManager::TabManager(QWidget *parent) : QTabWidget(parent)
@@ -86,7 +87,9 @@ void TabManager::hideCloseButton(int index)
 
 void TabManager::tabInserted(int index)
 {
-    if (index == 0) // hide close on status
+    if (tabText(index) == STATUS) // hide close on status
+        hideCloseButton(index);
+    else if (tabText(index) == DEBUG) // hide close on debug
         hideCloseButton(index);
 }
 
