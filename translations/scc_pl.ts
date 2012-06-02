@@ -2195,10 +2195,6 @@
 <context>
     <name>OnetKernel</name>
     <message>
-        <source>Information</source>
-        <translation>Informacja</translation>
-    </message>
-    <message>
         <source>* %1 [%2@%3] has joined %4</source>
         <translation>* %1 [%2@%3] wchodzi do pokoju %4</translation>
     </message>
@@ -2251,12 +2247,8 @@
         <translation>* %1 zostaje wyrzucony z pokoju %2 przez %3. Powód: %4</translation>
     </message>
     <message>
-        <source>You have been kicked from %1 by %2</source>
-        <translation>%1 wyrzuca Ciebie z pokoju %2</translation>
-    </message>
-    <message>
-        <source>Reason: %3</source>
-        <translation>Powód: %3</translation>
+        <source>* You have been kicked from channel %1 by %2 Reason: %3</source>
+        <translation>* %2 wyrzuca Ciebie z pokoju %1. Powód: %3</translation>
     </message>
     <message>
         <source>* %1 is now the owner of the channel %2 (set by %3)</source>
@@ -2587,8 +2579,8 @@
         <translation>* Usunięto pokój %1 z listy ulubionych</translation>
     </message>
     <message>
-        <source>Successfully created a channel %1</source>
-        <translation>Pomyślnie utworzono pokój %1</translation>
+        <source>* Successfully created a channel %1</source>
+        <translation>* Pomyślnie utworzono pokój %1</translation>
     </message>
     <message>
         <source>* Offline message sent to %1</source>
@@ -2619,8 +2611,8 @@
         <translation>* Nic nie zmieniono w %1</translation>
     </message>
     <message>
-        <source>Successfully removed channel %1</source>
-        <translation>Pomyślnie usunięto pokój %1</translation>
+        <source>* Successfully removed channel %1</source>
+        <translation>* Pomyślnie usunięto pokój %1</translation>
     </message>
     <message>
         <source>* %1 is away: %2</source>

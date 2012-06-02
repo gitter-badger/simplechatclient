@@ -18,7 +18,6 @@
  */
 
 #include <QDateTime>
-#include <QMessageBox>
 #include "autoaway.h"
 #include "avatar.h"
 #include "away.h"
@@ -29,6 +28,7 @@
 #include "invite.h"
 #include "lag.h"
 #include "log.h"
+#include "mainwindow.h"
 #include "message.h"
 #include "nicklist.h"
 #include "notify.h"
@@ -36,6 +36,7 @@
 #include "onet_utils.h"
 #include "replace.h"
 #include "tab_container.h"
+#include "tray.h"
 #include "onet_kernel.h"
 
 OnetKernel::OnetKernel(TabContainer *_pTabC) : pTabC(_pTabC)
@@ -542,26 +543,27 @@ void OnetKernel::raw_kick()
     for (int i = 4; i < strDataList.size(); i++) { if (i != 4) strReason += " "; strReason += strDataList[i]; }
     if (strReason[0] == ':') strReason.remove(0,1);
 
-    QString strDisplay;
-    strDisplay = QString(tr("* %1 has been kicked from channel %2 by %3 Reason: %4")).arg(strNick, strChannel, strWho, strReason);
+    QString strDisplay = QString(tr("* %1 has been kicked from channel %2 by %3 Reason: %4")).arg(strNick, strChannel, strWho, strReason);
 
     Message::instance()->showMessage(strChannel, strDisplay, KickMessage);
-
     Nicklist::instance()->delUser(strChannel, strNick);
 
     QString strMe = Core::instance()->settings.value("nick");
     if (strNick == strMe)
     {
+        pTabC->removeTab(strChannel);
         Convert::simpleConvert(strReason);
 
-        QMessageBox *msgBox = new QMessageBox();
-        msgBox->setIcon(QMessageBox::Information);
-        msgBox->setWindowIcon(QIcon(":/images/logo16x16.png"));
-        msgBox->setWindowTitle(tr("Information"));
-        msgBox->setText(QString(tr("You have been kicked from %1 by %2")+"<br/>"+tr("Reason: %3")).arg(strWho, strChannel, strReason));
-        msgBox->show();
-
-        pTabC->removeTab(strChannel);
+        if ((Core::instance()->mainWindow()->isActiveWindow()) || (Core::instance()->settings.value("tray_message") == "false"))
+        {
+            QString strDisplay = QString(tr("* You have been kicked from channel %1 by %2 Reason: %3")).arg(strChannel, strWho, strReason);
+            Message::instance()->showMessage(STATUS, strDisplay, KickMessage);
+        }
+        else
+        {
+            QString strDisplay = QString(tr("* You have been kicked from channel %1 by %2 Reason: %3")).arg(strChannel, strWho, strReason);
+            Tray::instance()->showMessage(strChannel, strDisplay);
+        }
     }
 }
 
@@ -1769,12 +1771,8 @@ void OnetKernel::raw_250n()
     {
         QString strChannel = strDataList[4];
 
-        QMessageBox *msgBox = new QMessageBox();
-        msgBox->setIcon(QMessageBox::Information);
-        msgBox->setWindowIcon(QIcon(":/images/logo16x16.png"));
-        msgBox->setWindowTitle(tr("Information"));
-        msgBox->setText(QString(tr("Successfully created a channel %1")).arg(strChannel));
-        msgBox->show();
+        QString strDisplay = QString(tr("* Successfully created a channel %1")).arg(strChannel);
+        Message::instance()->showMessageActive(strDisplay, InfoMessage);
 
         // add to list
         if (!Core::instance()->lChannelHomes.contains(strChannel))
@@ -2123,12 +2121,8 @@ void OnetKernel::raw_261n()
     {
         QString strChannel = strDataList[5];
 
-        QMessageBox *msgBox = new QMessageBox();
-        msgBox->setIcon(QMessageBox::Information);
-        msgBox->setWindowIcon(QIcon(":/images/logo16x16.png"));
-        msgBox->setWindowTitle(tr("Information"));
-        msgBox->setText(QString(tr("Successfully removed channel %1")).arg(strChannel));
-        msgBox->show();
+        QString strDisplay = QString(tr("* Successfully removed channel %1")).arg(strChannel);
+        Message::instance()->showMessageActive(strDisplay, InfoMessage);
 
         // remove from list
         if (Core::instance()->lChannelHomes.contains(strChannel))
