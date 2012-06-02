@@ -28,7 +28,7 @@
 
 #include "debug_block.h"
 
-enum MessageCategory {DefaultMessage, JoinMessage, PartMessage, QuitMessage, KickMessage, ModeMessage, NoticeMessage, InfoMessage, MeMessage, ErrorMessage, HighlightMessage, ModerNoticeMessage};
+enum MessageCategory {MessageDefault, MessageJoin, MessagePart, MessageQuit, MessageKick, MessageMode, MessageNotice, MessageInfo, MessageMe, MessageError, MessageHighlight, MessageModerNotice};
 
 enum ChannelColor {ChannelGreen, ChannelRed, ChannelHighlight};
 

@@ -830,7 +830,7 @@ void ToolWidget::sendMessage(QString strText, bool bModeration)
             Replace::replaceEmots(strTextOriginal);
 
             QString strDisplay = QString("%1ACTION %2%3").arg(QString(QByteArray("\x01")), strTextOriginal, QString(QByteArray("\x01")));
-            Message::instance()->showMessage(strChannel, strDisplay, MeMessage, strMe);
+            Message::instance()->showMessage(strChannel, strDisplay, MessageMe, strMe);
         }
         return;
     }
@@ -843,7 +843,7 @@ void ToolWidget::sendMessage(QString strText, bool bModeration)
             Replace::replaceEmots(strText);
 
             Core::instance()->pNetwork->send(QString("PRIVMSG %1 :%2").arg(strChannel, strText));
-            Message::instance()->showMessage(strChannel, strText, DefaultMessage, strMe);
+            Message::instance()->showMessage(strChannel, strText, MessageDefault, strMe);
         }
         return;
     }
@@ -866,12 +866,12 @@ void ToolWidget::sendMessage(QString strText, bool bModeration)
     if (bModeration)
     {
         Core::instance()->pNetwork->send(QString("MODERNOTICE %1 :%2").arg(strChannel, strText));
-        Message::instance()->showMessage(strChannel, strText, ModerNoticeMessage, strMe);
+        Message::instance()->showMessage(strChannel, strText, MessageModerNotice, strMe);
     }
     // standard text
     else if (!bModeration)
     {
         Core::instance()->pNetwork->send(QString("PRIVMSG %1 :%2").arg(strChannel, strText));
-        Message::instance()->showMessage(strChannel, strText, DefaultMessage, strMe);
+        Message::instance()->showMessage(strChannel, strText, MessageDefault, strMe);
     }
 }

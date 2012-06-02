@@ -130,7 +130,7 @@ void DlgModeration::buttonAccept()
 
         QString strMe = Core::instance()->settings.value("nick");
         QString strDisplay = QString("%1 [%2 %3]").arg(strMessage, tr("Moderated by"), strMe);
-        Message::instance()->showMessage(strChannel, strDisplay, DefaultMessage, strNick, iTime);
+        Message::instance()->showMessage(strChannel, strDisplay, MessageDefault, strNick, iTime);
     }
 
     // remove

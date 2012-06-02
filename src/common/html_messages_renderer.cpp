@@ -41,7 +41,7 @@ QString HtmlMessagesRenderer::renderer(QString strData, MessageCategory eMessage
     {
         QString strWord = strDataList[i];
 
-        if ((i == 1) && (strDataList[0] == "*") && ((eMessageCategory == JoinMessage) || (eMessageCategory == PartMessage) || (eMessageCategory == QuitMessage)  || (eMessageCategory == KickMessage)))
+        if ((i == 1) && (strDataList[0] == "*") && ((eMessageCategory == MessageJoin) || (eMessageCategory == MessagePart) || (eMessageCategory == MessageQuit)  || (eMessageCategory == MessageKick)))
             strDataList[i] = QString("<a href=\"#\" onclick=\"return false\" name=\"nick\" style=\"color:inherit;text-decoration:none;\">%1</a>").arg(strWord);
         if (strWord[0] == '#')
             strDataList[i] = QString("<a href=\"#\" onclick=\"return false\" name=\"channel\" class=\"ChannelFontColor\" style=\"text-decoration:none;\">%1</a>").arg(strWord);
@@ -93,34 +93,34 @@ QString HtmlMessagesRenderer::renderer(QString strData, MessageCategory eMessage
     if (strData.contains(QRegExp(strRegExpMe)))
     {
         strData.replace(QRegExp(strRegExpMe), "\\1");
-        eMessageCategory = MeMessage;
+        eMessageCategory = MessageMe;
     }
 
     // colors
     QString strFontClass;
-    if (eMessageCategory == DefaultMessage)
+    if (eMessageCategory == MessageDefault)
         strFontClass = "DefaultFontColor";
-    else if (eMessageCategory == JoinMessage)
+    else if (eMessageCategory == MessageJoin)
         strFontClass = "JoinFontColor";
-    else if (eMessageCategory == PartMessage)
+    else if (eMessageCategory == MessagePart)
         strFontClass = "PartFontColor";
-    else if (eMessageCategory == QuitMessage)
+    else if (eMessageCategory == MessageQuit)
         strFontClass = "QuitFontColor";
-    else if (eMessageCategory == KickMessage)
+    else if (eMessageCategory == MessageKick)
         strFontClass = "KickFontColor";
-    else if (eMessageCategory == ModeMessage)
+    else if (eMessageCategory == MessageMode)
         strFontClass = "ModeFontColor";
-    else if (eMessageCategory == NoticeMessage)
+    else if (eMessageCategory == MessageNotice)
         strFontClass = "NoticeFontColor";
-    else if (eMessageCategory == InfoMessage)
+    else if (eMessageCategory == MessageInfo)
         strFontClass = "InfoFontColor";
-    else if (eMessageCategory == MeMessage)
+    else if (eMessageCategory == MessageMe)
         strFontClass = "MeFontColor";
-    else if (eMessageCategory == ErrorMessage)
+    else if (eMessageCategory == MessageError)
         strFontClass = "ErrorFontColor";
-    else if (eMessageCategory == HighlightMessage)
+    else if (eMessageCategory == MessageHighlight)
         strFontClass = "DefaultFontColor";
-    else if (eMessageCategory == ModerNoticeMessage)
+    else if (eMessageCategory == MessageModerNotice)
         strFontClass = "NoticeFontColor";
     else
         strFontClass = "DefaultFontColor";
@@ -133,13 +133,13 @@ QString HtmlMessagesRenderer::renderer(QString strData, MessageCategory eMessage
 
     // highlight
     QString strTextDecoration;
-    if (eMessageCategory == HighlightMessage)
+    if (eMessageCategory == MessageHighlight)
         strTextDecoration = "style=\"text-decoration:underline;\"";
 
     // me & modernotice
     QString strBeforeNick;
     QString strAfterNick;
-    if ((eMessageCategory == MeMessage) || (eMessageCategory == ModerNoticeMessage))
+    if ((eMessageCategory == MessageMe) || (eMessageCategory == MessageModerNotice))
         strBeforeNick = "* ";
     else
     {

@@ -100,7 +100,7 @@ void Nicklist::delUser(const QString &strChannel, const QString &strNick)
 
 void Nicklist::quitUser(const QString &strNick, const QString &strDisplay)
 {
-    MessageCategory eMessageCategory = QuitMessage;
+    MessageCategory eMessageCategory = MessageQuit;
 
     QHashIterator<QString, TabWidget*> i(Core::instance()->tw);
     while (i.hasNext())

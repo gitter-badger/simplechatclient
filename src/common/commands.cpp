@@ -348,7 +348,7 @@ QString Commands::cmdHelp()
 
     QStringList lHelp = strHelp.split(";");
     foreach (QString strDisplay, lHelp)
-        Message::instance()->showMessage(strChan, strDisplay, InfoMessage);
+        Message::instance()->showMessage(strChan, strDisplay, MessageInfo);
 
     return QString::null;
 }

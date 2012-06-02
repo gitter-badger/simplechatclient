@@ -94,7 +94,7 @@ void Message::saveMessage(const QString &strChannel, const QString &strData, int
 
 bool Message::isHideJoinPart(const QString &strChannel, MessageCategory eMessageCategory)
 {
-    if ((eMessageCategory == JoinMessage) || (eMessageCategory == PartMessage) || (eMessageCategory == QuitMessage))
+    if ((eMessageCategory == MessageJoin) || (eMessageCategory == MessagePart) || (eMessageCategory == MessageQuit))
     {
         if (Core::instance()->settings.value("hide_join_part") == "true")
             return true;
@@ -120,10 +120,10 @@ void Message::showMessage(const QString &strChannel, const QString &strData, Mes
         iTime = (int)QDateTime::currentDateTime().toTime_t();
 
     // highlight
-    if ((isHighlightMessage(strData)) && (eMessageCategory == DefaultMessage))
+    if ((isHighlightMessage(strData)) && (eMessageCategory == MessageDefault))
     {
         // update message category
-        eMessageCategory = HighlightMessage;
+        eMessageCategory = MessageHighlight;
 
         // awaylog
         QString strAwaylogData = strData;

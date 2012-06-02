@@ -336,7 +336,7 @@ void MainWindow::showWelcome()
 {
     pTabC->addTab(STATUS);
     QString strWelcome = "%Fi:courier%"+tr("Welcome to the Simple Chat Client")+" %Ihehe%";
-    Message::instance()->showMessage(STATUS, strWelcome, DefaultMessage);
+    Message::instance()->showMessage(STATUS, strWelcome, MessageDefault);
 }
 
 void MainWindow::showOptions()
@@ -610,9 +610,9 @@ void MainWindow::setTabColor(const QString &strChannel, MessageCategory eMessage
 {
     int index = Core::instance()->getIndexFromChannelName(strChannel);
 
-    if (eMessageCategory == HighlightMessage)
+    if (eMessageCategory == MessageHighlight)
         pTabM->setAlert(index, ChannelHighlight);
-    else if (eMessageCategory != DefaultMessage)
+    else if (eMessageCategory != MessageDefault)
         pTabM->setAlert(index, ChannelGreen);
     else
         pTabM->setAlert(index, ChannelRed);

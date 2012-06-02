@@ -210,7 +210,7 @@ void Network::connect()
     else
     {
         QString strError = tr("Error: Could not connect to the server - connection already exists!");
-        Message::instance()->showMessageAll(strError, ErrorMessage);
+        Message::instance()->showMessageAll(strError, MessageError);
     }
 }
 
@@ -225,7 +225,7 @@ void Network::connected()
     Lag::instance()->reset();
 
     QString strDisplay = tr("Connected to server");
-    Message::instance()->showMessageAll(strDisplay, ErrorMessage);
+    Message::instance()->showMessageAll(strDisplay, MessageError);
 
     // authorize
     if (!bAuthorized)
@@ -268,12 +268,12 @@ void Network::disconnected()
     if (socket->error() != QAbstractSocket::UnknownSocketError)
     {
         QString strError = QString(tr("Disconnected from server [%1]")).arg(socket->errorString());
-        Message::instance()->showMessageAll(strError, ErrorMessage);
+        Message::instance()->showMessageAll(strError, MessageError);
     }
     else
     {
         QString strError = tr("Disconnected from server");
-        Message::instance()->showMessageAll(strError, ErrorMessage);
+        Message::instance()->showMessageAll(strError, MessageError);
     }
 
     // clear all
@@ -298,7 +298,7 @@ void Network::reconnect()
         if ((!this->isConnected()) && (Core::instance()->settings.value("logged") == "false"))
         {
             QString strDisplay = tr("Reconnecting...");
-            Message::instance()->showMessageAll(strDisplay, InfoMessage);
+            Message::instance()->showMessageAll(strDisplay, MessageInfo);
             connect();
         }
     }
@@ -316,19 +316,19 @@ void Network::write(const QString &strData)
             if (socket->state() == QAbstractSocket::ConnectedState)
             {
                 QString strError = QString(tr("Error: Could not send data! [%1]")).arg(socket->errorString());
-                Message::instance()->showMessageActive(strError, ErrorMessage);
+                Message::instance()->showMessageActive(strError, MessageError);
             }
             else if (socket->state() == QAbstractSocket::UnconnectedState)
             {
                 QString strError = tr("Error: Could not send data! [Not connected]");
-                Message::instance()->showMessageActive(strError, ErrorMessage);
+                Message::instance()->showMessageActive(strError, MessageError);
             }
         }
     }
     else
     {
         QString strError = tr("Error: Could not send data! [Not Connected]");
-        Message::instance()->showMessageActive(strError, ErrorMessage);
+        Message::instance()->showMessageActive(strError, MessageError);
     }
 }
 
@@ -373,7 +373,7 @@ void Network::error(QAbstractSocket::SocketError error)
     if (error == QAbstractSocket::RemoteHostClosedError) return; // supported by disconnected
 
     QString strError = QString(tr("Disconnected from server [%1]")).arg(socket->errorString());
-    Message::instance()->showMessageAll(strError, ErrorMessage);
+    Message::instance()->showMessageAll(strError, MessageError);
 
     // clear all
     clearAll();
@@ -426,7 +426,7 @@ void Network::timeoutPong()
         if (socket->state() == QAbstractSocket::ConnectedState)
         {
             QString strDisplay = tr("No PONG reply from server in 301 seconds. Disconnecting...");
-            Message::instance()->showMessageAll(strDisplay, ErrorMessage);
+            Message::instance()->showMessageAll(strDisplay, MessageError);
 
             // disconnect
             disconnect();

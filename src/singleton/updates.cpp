@@ -124,7 +124,7 @@ void Updates::readSettings()
     if (!strMOTD.isEmpty())
     {
         QString strMessageOfTheDay = QString("%Fb%%1 %2").arg(tr("Message Of The Day:"), strMOTD);
-        Message::instance()->showMessage(STATUS, strMessageOfTheDay, DefaultMessage);
+        Message::instance()->showMessage(STATUS, strMessageOfTheDay, MessageDefault);
     }
 
     if (!strAvailableVersion.isEmpty())

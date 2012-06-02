@@ -387,13 +387,13 @@ void OnetAuth::requestFinished(const QString &strData)
         else
         {
             QString strError = QString(tr("Error: Authentication error [%1]")).arg(strErrorText);
-            Message::instance()->showMessageActive(strError, ErrorMessage);
+            Message::instance()->showMessageActive(strError, MessageError);
         }
     }
     else
     {
         QString strError = tr("Error: Authorization Failed.");
-        Message::instance()->showMessageActive(strError, ErrorMessage);
+        Message::instance()->showMessageActive(strError, MessageError);
     }
 }
 
