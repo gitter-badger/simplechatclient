@@ -98,12 +98,15 @@ void TabContainer::renameTab(const QString &strChannel, const QString &strNewNam
 {
     int index = Core::instance()->getIndexFromChannelName(strChannel);
 
-    if ((index >= 0 && index <= pTabM->count()) && (pTabM->tabText(index)[0] == '^'))
+    if (index >= 0 && index <= pTabM->count())
     {
-        pTabM->setTabText(index, strNewName);
+        if (pTabM->tabText(index)[0] == '^')
+        {
+            pTabM->setTabText(index, strNewName);
 
-        // log
-        Log::logOpened(strChannel);
+            // log
+            Log::logOpened(strChannel);
+        }
     }
 }
 
