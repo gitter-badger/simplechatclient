@@ -65,5 +65,6 @@ void Tray::messageClicked()
     Core::instance()->mainWindow()->setWindowState(Core::instance()->mainWindow()->windowState() & ~Qt::WindowMinimized);
     Core::instance()->mainWindow()->setWindowState(Core::instance()->mainWindow()->windowState() | Qt::WindowActive);
     Core::instance()->mainWindow()->show();
+    Core::instance()->mainWindow()->activateWindow();
     Core::instance()->mainWindow()->changeCurrentTab(strLastMessageTitle);
 }
