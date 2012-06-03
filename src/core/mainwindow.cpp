@@ -605,6 +605,24 @@ QSystemTrayIcon *MainWindow::getTrayIcon()
     return trayIcon;
 }
 
+void MainWindow::refreshToolButtons(const QString &strChannel)
+{
+    QString strMe = Core::instance()->settings.value("nick");
+
+    // hide/show settings on non channel
+    if (strChannel[0] != '#')
+        pToolWidget->setChannelSettings(false);
+    else
+        pToolWidget->setChannelSettings(true);
+
+    // moderation
+    QString strModes = Nicklist::instance()->getUserModes(strMe, strChannel);
+    if (strModes.contains("!"))
+        pToolWidget->setModeration(true);
+    else
+        pToolWidget->setModeration(false);
+}
+
 // part tab
 void MainWindow::tabCloseRequested(int index)
 {
@@ -633,25 +651,15 @@ void MainWindow::changeCurrentTab(const QString &strChannel)
 // tab changed
 void MainWindow::currentTabChanged(int index)
 {
-    QString strChannel = Core::instance()->getChannelNameFromIndex(index);
-
     // change tab color
     pTabM->setColor(index, QColor(Core::instance()->settings.value("default_font_color")));
-
-    // hide/show settings on non channel
-    if (strChannel[0] != '#')
-        pToolWidget->setChannelSettings(false);
-    else
-        pToolWidget->setChannelSettings(true);
 
     // clear input line
     pToolWidget->clearInputLine();
 
-    // moderation
-    QString strMe = Core::instance()->settings.value("nick");
-    QString strModes = Nicklist::instance()->getUserModes(strMe, strChannel);
-    if (strModes.contains("!")) pToolWidget->setModeration(true);
-    else pToolWidget->setModeration(false);
+    // refresh tool buttons
+    QString strChannel = Core::instance()->getChannelNameFromIndex(index);
+    refreshToolButtons(strChannel);
 }
 
 // tab moved

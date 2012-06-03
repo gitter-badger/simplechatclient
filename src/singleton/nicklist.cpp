@@ -18,6 +18,7 @@
  */
 
 #include "core.h"
+#include "mainwindow.h"
 #include "message.h"
 #include "nicklist.h"
 
@@ -125,17 +126,11 @@ void Nicklist::changeFlag(const QString &strNick, const QString &strChannel, con
     if (Core::instance()->tw[strChannel]->pNickListWidget->existUser(strNick))
         Core::instance()->tw[strChannel]->pNickListWidget->changeUserFlag(strNick, strFlag);
 
+    QString strMe = Core::instance()->settings.value("nick");
     QString strCurrentChannel = Core::instance()->getCurrentChannelName();
 
-    if ((!strCurrentChannel.isEmpty()) && (strCurrentChannel == strChannel))
-    {
-        QString strMe = Core::instance()->settings.value("nick");
-        if (strNick == strMe)
-        {
-//            if (strFlag == "+X") emit setModeration(true);
-//            else if (strFlag == "-X") emit setModeration(false);
-        }
-    }
+    if ((!strCurrentChannel.isEmpty()) && (strCurrentChannel == strChannel) && (strNick == strMe))
+        Core::instance()->mainWindow()->refreshToolButtons(strChannel);
 }
 
 void Nicklist::changeFlag(const QString &strNick, const QString &strFlag)
