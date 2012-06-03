@@ -204,12 +204,6 @@ void TabContainer::setChannelAvatar(const QString &strChannel)
         pTabM->setTabIcon(index, icon);
 }
 
-void TabContainer::clearContent(const QString &strChannel)
-{
-    if (existTab(strChannel))
-        Core::instance()->tw[strChannel]->pChatView->clearMessages();
-}
-
 void TabContainer::resizeMainWindow(QSize s)
 {
     QHashIterator<QString, TabWidget*> i(Core::instance()->tw);

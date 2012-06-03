@@ -46,7 +46,6 @@ public slots:
     void setTopic(const QString &strChannel, const QString &strTopicContent);
     void authorTopic(const QString &strChannel, const QString &strNick);
     void setChannelAvatar(const QString &strChannel);
-    void clearContent(const QString &strChannel);
 
 private:
     // params
