@@ -50,7 +50,7 @@ void DlgProfileEdit::createGui()
 void DlgProfileEdit::setDefaultValues()
 {
     Config *pConfig = new Config(true, strNick);
-    QString strPassword = pConfig->getValue("pass");
+    QString strPassword = pConfig->get("pass");
     delete pConfig;
 
     // decrypt pass
@@ -88,7 +88,7 @@ void DlgProfileEdit::buttonOk()
     delete pCrypt;
 
     Config *pConfig = new Config(true, strNick);
-    pConfig->setValue("pass", strPassword);
+    pConfig->set("pass", strPassword);
     delete pConfig;
 
     // close

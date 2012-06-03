@@ -168,8 +168,8 @@ void DlgProfileAdd::buttonOk()
 
     // save
     Config *pConfig = new Config(true, strNick);
-    pConfig->setValue("nick", strNick);
-    pConfig->setValue("pass", strPassword);
+    pConfig->set("nick", strNick);
+    pConfig->set("pass", strPassword);
     delete pConfig;
 
     // refresh

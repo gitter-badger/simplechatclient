@@ -442,7 +442,7 @@ void ToolWidget::boldClicked()
         Core::instance()->settings["my_bold"] = strValue;
 
         Config *pConfig = new Config();
-        pConfig->setValue("my_bold", strValue);
+        pConfig->set("my_bold", strValue);
         delete pConfig;
     }
     else
@@ -454,7 +454,7 @@ void ToolWidget::boldClicked()
         Core::instance()->settings["my_bold"] = strValue;
 
         Config *pConfig = new Config();
-        pConfig->setValue("my_bold", strValue);
+        pConfig->set("my_bold", strValue);
         delete pConfig;
     }
 
@@ -473,7 +473,7 @@ void ToolWidget::italicClicked()
         Core::instance()->settings["my_italic"] = strValue;
 
         Config *pConfig = new Config();
-        pConfig->setValue("my_italic", strValue);
+        pConfig->set("my_italic", strValue);
         delete pConfig;
     }
     else
@@ -485,7 +485,7 @@ void ToolWidget::italicClicked()
         Core::instance()->settings["my_italic"] = "true";
 
         Config *pConfig = new Config();
-        pConfig->setValue("my_italic", strValue);
+        pConfig->set("my_italic", strValue);
         delete pConfig;
     }
 
@@ -499,7 +499,7 @@ void ToolWidget::arialTriggered()
     strMyFontFamily = "Arial";
     Core::instance()->settings["my_font"] = strMyFontFamily;
     Config *pConfig = new Config();
-    pConfig->setValue("my_font", strMyFontFamily);
+    pConfig->set("my_font", strMyFontFamily);
     delete pConfig;
 
     int iWeight = (bMyBold ? 75 : 50);
@@ -512,7 +512,7 @@ void ToolWidget::timesTriggered()
     strMyFontFamily = "Times";
     Core::instance()->settings["my_font"] = strMyFontFamily;
     Config *pConfig = new Config();
-    pConfig->setValue("my_font", strMyFontFamily);
+    pConfig->set("my_font", strMyFontFamily);
     delete pConfig;
 
     int iWeight = (bMyBold ? 75 : 50);
@@ -525,7 +525,7 @@ void ToolWidget::verdanaTriggered()
     strMyFontFamily = "Verdana";
     Core::instance()->settings["my_font"] = strMyFontFamily;
     Config *pConfig = new Config();
-    pConfig->setValue("my_font", strMyFontFamily);
+    pConfig->set("my_font", strMyFontFamily);
     delete pConfig;
 
     int iWeight = (bMyBold ? 75 : 50);
@@ -538,7 +538,7 @@ void ToolWidget::tahomaTriggered()
     strMyFontFamily = "Tahoma";
     Core::instance()->settings["my_font"] = strMyFontFamily;
     Config *pConfig = new Config();
-    pConfig->setValue("my_font", strMyFontFamily);
+    pConfig->set("my_font", strMyFontFamily);
     delete pConfig;
 
     int iWeight = (bMyBold ? 75 : 50);
@@ -551,7 +551,7 @@ void ToolWidget::courierTriggered()
     strMyFontFamily = "Courier";
     Core::instance()->settings["my_font"] = strMyFontFamily;
     Config *pConfig = new Config();
-    pConfig->setValue("my_font", strMyFontFamily);
+    pConfig->set("my_font", strMyFontFamily);
     delete pConfig;
 
     int iWeight = (bMyBold ? 75 : 50);
@@ -564,7 +564,7 @@ void ToolWidget::size8Triggered()
 
     Core::instance()->settings["font_size"] = strValue;
     Config *pConfig = new Config();
-    pConfig->setValue("font_size", strValue);
+    pConfig->set("font_size", strValue);
     delete pConfig;
 
     Core::instance()->refreshCSS();
@@ -576,7 +576,7 @@ void ToolWidget::size9Triggered()
 
     Core::instance()->settings["font_size"] = strValue;
     Config *pConfig = new Config();
-    pConfig->setValue("font_size", strValue);
+    pConfig->set("font_size", strValue);
     delete pConfig;
 
     Core::instance()->refreshCSS();
@@ -588,7 +588,7 @@ void ToolWidget::size10Triggered()
 
     Core::instance()->settings["font_size"] = strValue;
     Config *pConfig = new Config();
-    pConfig->setValue("font_size", strValue);
+    pConfig->set("font_size", strValue);
     delete pConfig;
 
     Core::instance()->refreshCSS();
@@ -600,7 +600,7 @@ void ToolWidget::size11Triggered()
 
     Core::instance()->settings["font_size"] = strValue;
     Config *pConfig = new Config();
-    pConfig->setValue("font_size", strValue);
+    pConfig->set("font_size", strValue);
     delete pConfig;
 
     Core::instance()->refreshCSS();
@@ -612,7 +612,7 @@ void ToolWidget::size12Triggered()
 
     Core::instance()->settings["font_size"] = strValue;
     Config *pConfig = new Config();
-    pConfig->setValue("font_size", strValue);
+    pConfig->set("font_size", strValue);
     delete pConfig;
 
     Core::instance()->refreshCSS();
@@ -624,7 +624,7 @@ void ToolWidget::size14Triggered()
 
     Core::instance()->settings["font_size"] = strValue;
     Config *pConfig = new Config();
-    pConfig->setValue("font_size", strValue);
+    pConfig->set("font_size", strValue);
     delete pConfig;
 
     Core::instance()->refreshCSS();
@@ -636,7 +636,7 @@ void ToolWidget::size16Triggered()
 
     Core::instance()->settings["font_size"] = strValue;
     Config *pConfig = new Config();
-    pConfig->setValue("font_size", strValue);
+    pConfig->set("font_size", strValue);
     delete pConfig;
 
     Core::instance()->refreshCSS();
@@ -648,7 +648,7 @@ void ToolWidget::size18Triggered()
 
     Core::instance()->settings["font_size"] = strValue;
     Config *pConfig = new Config();
-    pConfig->setValue("font_size", strValue);
+    pConfig->set("font_size", strValue);
     delete pConfig;
 
     Core::instance()->refreshCSS();
@@ -660,7 +660,7 @@ void ToolWidget::size20Triggered()
 
     Core::instance()->settings["font_size"] = strValue;
     Config *pConfig = new Config();
-    pConfig->setValue("font_size", strValue);
+    pConfig->set("font_size", strValue);
     delete pConfig;
 
     Core::instance()->refreshCSS();
@@ -672,7 +672,7 @@ void ToolWidget::size24Triggered()
 
     Core::instance()->settings["font_size"] = strValue;
     Config *pConfig = new Config();
-    pConfig->setValue("font_size", strValue);
+    pConfig->set("font_size", strValue);
     delete pConfig;
 
     Core::instance()->refreshCSS();
@@ -699,7 +699,7 @@ void ToolWidget::colorClicked(int index)
 
     Core::instance()->settings["my_color"] = strCurrentColor;
     Config *pConfig = new Config();
-    pConfig->setValue("my_color", strCurrentColor);
+    pConfig->set("my_color", strCurrentColor);
     delete pConfig;
 
     // refresh input line text color

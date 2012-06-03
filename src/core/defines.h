@@ -28,9 +28,26 @@
 
 #include "debug_block.h"
 
-enum MessageCategory {MessageDefault, MessageJoin, MessagePart, MessageQuit, MessageKick, MessageMode, MessageNotice, MessageInfo, MessageMe, MessageError, MessageHighlight, MessageModerNotice};
+enum MessageCategory {
+    MessageDefault,
+    MessageJoin,
+    MessagePart,
+    MessageQuit,
+    MessageKick,
+    MessageMode,
+    MessageNotice,
+    MessageInfo,
+    MessageMe,
+    MessageError,
+    MessageHighlight,
+    MessageModerNotice
+};
 
-enum ChannelColor {ChannelGreen, ChannelRed, ChannelHighlight};
+enum ChannelColor {
+    ChannelGreen,
+    ChannelRed,
+    ChannelHighlight
+};
 
 enum { maxOpenChannels = 30 };
 

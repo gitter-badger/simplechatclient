@@ -112,7 +112,7 @@ private:
     MainWindow *window;
 
     void init();
-    void checkSettings();
+    void fixSettings();
 };
 
 #endif // CORE_H

@@ -80,7 +80,7 @@ void Highlight::read()
     QString strHighlight;
 
     Config *pConfig = new Config();
-    strHighlight = pConfig->getValue("highlight");
+    strHighlight = pConfig->get("highlight");
     delete pConfig;
 
     lHighlight = strHighlight.split(";", QString::SkipEmptyParts);
@@ -94,7 +94,7 @@ void Highlight::save()
         strHighlight.append(strNewHighlight+";");
 
     Config *pConfig = new Config();
-    pConfig->setValue("highlight", strHighlight);
+    pConfig->set("highlight", strHighlight);
     delete pConfig;
 }
 

@@ -351,7 +351,7 @@ void MainWindow::showOptions()
     if (strFirstRun == "true")
     {
         Config *pConfig = new Config(false);
-        pConfig->setValue("first_run", "false");
+        pConfig->set("first_run", "false");
         Core::instance()->settings["first_run"] = "false";
         delete pConfig;
 
@@ -711,7 +711,7 @@ void MainWindow::closeEvent(QCloseEvent *event)
             if (dontPrompt.checkState() == Qt::Checked)
             {
                 Config *pConfig = new Config();
-                pConfig->setValue("always_quit", "true");
+                pConfig->set("always_quit", "true");
                 Core::instance()->settings["always_quit"] = "true";
                 delete pConfig;
             }

@@ -496,7 +496,7 @@ void DlgOptions::currentProfileChanged(int row)
     Core::instance()->settings["current_profile"] = profileName; // must be before config !
 
     Config *pConfig = new Config(false);
-    pConfig->setValue("current_profile", profileName);
+    pConfig->set("current_profile", profileName);
     delete pConfig;
 
     // refresh settings
@@ -533,7 +533,7 @@ void DlgOptions::themesChanged(int index)
     }
 
     Config *pConfig = new Config();
-    pConfig->setValue("themes", strTheme);
+    pConfig->set("themes", strTheme);
     Core::instance()->settings["themes"] = strTheme;
 }
 
@@ -548,7 +548,7 @@ void DlgOptions::languageChanged(int index)
     }
 
     Config *pConfig = new Config();
-    pConfig->setValue("language", strLanguage);
+    pConfig->set("language", strLanguage);
     Core::instance()->settings["language"] = strLanguage;
     delete pConfig;
 
@@ -597,7 +597,7 @@ void DlgOptions::autoBusy(bool bValue)
     QString strValue = (bValue ? "true" : "false");
 
     Config *pConfig = new Config();
-    pConfig->setValue("auto_busy", strValue);
+    pConfig->set("auto_busy", strValue);
     Core::instance()->settings["auto_busy"] = strValue;
     delete pConfig;
 }
@@ -607,7 +607,7 @@ void DlgOptions::disableAutojoinFavourites(bool bValue)
     QString strValue = (bValue ? "true" : "false");
 
     Config *pConfig = new Config();
-    pConfig->setValue("disable_autojoin_favourites", strValue);
+    pConfig->set("disable_autojoin_favourites", strValue);
     Core::instance()->settings["disable_autojoin_favourites"] = strValue;
     delete pConfig;
 }
@@ -617,7 +617,7 @@ void DlgOptions::minimizeToTray(bool bValue)
     QString strValue = (bValue ? "true" : "false");
 
     Config *pConfig = new Config();
-    pConfig->setValue("minimize_to_tray", strValue);
+    pConfig->set("minimize_to_tray", strValue);
     Core::instance()->settings["minimize_to_tray"] = strValue;
     delete pConfig;
 }
@@ -627,7 +627,7 @@ void DlgOptions::showZuoAndIp(bool bValue)
     QString strValue = (bValue ? "true" : "false");
 
     Config *pConfig = new Config();
-    pConfig->setValue("show_zuo_and_ip", strValue);
+    pConfig->set("show_zuo_and_ip", strValue);
     Core::instance()->settings["show_zuo_and_ip"] = strValue;
     delete pConfig;
 }
@@ -637,7 +637,7 @@ void DlgOptions::hideFormating(bool bValue)
     QString strValue = (bValue ? "true" : "false");
 
     Config *pConfig = new Config();
-    pConfig->setValue("hide_formating", strValue);
+    pConfig->set("hide_formating", strValue);
     Core::instance()->settings["hide_formating"] = strValue;
     delete pConfig;
 }
@@ -647,7 +647,7 @@ void DlgOptions::hideJoinPart(bool bValue)
     QString strValue = (bValue ? "true" : "false");
 
     Config *pConfig = new Config();
-    pConfig->setValue("hide_join_part", strValue);
+    pConfig->set("hide_join_part", strValue);
     Core::instance()->settings["hide_join_part"] = strValue;
     delete pConfig;
 }
@@ -657,7 +657,7 @@ void DlgOptions::hideJoinPart200(bool bValue)
     QString strValue = (bValue ? "true" : "false");
 
     Config *pConfig = new Config();
-    pConfig->setValue("hide_join_part_200", strValue);
+    pConfig->set("hide_join_part_200", strValue);
     Core::instance()->settings["hide_join_part_200"] = strValue;
     delete pConfig;
 }
@@ -667,7 +667,7 @@ void DlgOptions::disableEmots(bool bValue)
     QString strValue = (bValue ? "true" : "false");
 
     Config *pConfig = new Config();
-    pConfig->setValue("disable_emots", strValue);
+    pConfig->set("disable_emots", strValue);
     Core::instance()->settings["disable_emots"] = strValue;
     delete pConfig;
 }
@@ -677,7 +677,7 @@ void DlgOptions::disableReplaces(bool bValue)
     QString strValue = (bValue ? "true" : "false");
 
     Config *pConfig = new Config();
-    pConfig->setValue("disable_replaces", strValue);
+    pConfig->set("disable_replaces", strValue);
     Core::instance()->settings["disable_replaces"] = strValue;
     delete pConfig;
 }
@@ -694,47 +694,47 @@ void DlgOptions::setDefaultFontColor()
 
 void DlgOptions::setJoinFontColor()
 {
-    setColor("font_color_level_1");
+    setColor("message_join_color");
 }
 
 void DlgOptions::setPartFontColor()
 {
-    setColor("font_color_level_2");
+    setColor("message_part_color");
 }
 
 void DlgOptions::setQuitFontColor()
 {
-    setColor("font_color_level_3");
+    setColor("message_quit_color");
 }
 
 void DlgOptions::setKickFontColor()
 {
-    setColor("font_color_level_4");
+    setColor("message_kick_color");
 }
 
 void DlgOptions::setModeFontColor()
 {
-    setColor("font_color_level_5");
+    setColor("message_mode_color");
 }
 
 void DlgOptions::setNoticeFontColor()
 {
-    setColor("font_color_level_6");
+    setColor("message_notice_color");
 }
 
 void DlgOptions::setInfoFontColor()
 {
-    setColor("font_color_level_7");
+    setColor("message_info_color");
 }
 
 void DlgOptions::setMeFontColor()
 {
-    setColor("font_color_level_8");
+    setColor("message_me_color");
 }
 
 void DlgOptions::setErrorFontColor()
 {
-    setColor("font_color_level_9");
+    setColor("message_error_color");
 }
 
 void DlgOptions::setChannelFontColor()
@@ -746,55 +746,55 @@ void DlgOptions::reverseColors()
 {
     Config *pConfig = new Config();
 
-    pConfig->setValue("background_color", reverseColor(Core::instance()->settings["background_color"]));
+    pConfig->set("background_color", reverseColor(Core::instance()->settings["background_color"]));
     Core::instance()->settings["background_color"] = reverseColor(Core::instance()->settings["background_color"]);
 
-    pConfig->setValue("default_font_color", reverseColor(Core::instance()->settings["default_font_color"]));
+    pConfig->set("default_font_color", reverseColor(Core::instance()->settings["default_font_color"]));
     Core::instance()->settings["default_font_color"] = reverseColor(Core::instance()->settings["default_font_color"]);
 
-    pConfig->setValue("font_color_level_1", reverseColor(Core::instance()->settings["font_color_level_1"]));
-    Core::instance()->settings["font_color_level_1"] = reverseColor(Core::instance()->settings["font_color_level_1"]);
+    pConfig->set("message_join_color", reverseColor(Core::instance()->settings["message_join_color"]));
+    Core::instance()->settings["message_join_color"] = reverseColor(Core::instance()->settings["message_join_color"]);
 
-    pConfig->setValue("font_color_level_2", reverseColor(Core::instance()->settings["font_color_level_2"]));
-    Core::instance()->settings["font_color_level_2"] = reverseColor(Core::instance()->settings["font_color_level_2"]);
+    pConfig->set("message_part_color", reverseColor(Core::instance()->settings["message_part_color"]));
+    Core::instance()->settings["message_part_color"] = reverseColor(Core::instance()->settings["message_part_color"]);
 
-    pConfig->setValue("font_color_level_3", reverseColor(Core::instance()->settings["font_color_level_3"]));
-    Core::instance()->settings["font_color_level_3"] = reverseColor(Core::instance()->settings["font_color_level_3"]);
+    pConfig->set("message_quit_color", reverseColor(Core::instance()->settings["message_quit_color"]));
+    Core::instance()->settings["message_quit_color"] = reverseColor(Core::instance()->settings["message_quit_color"]);
 
-    pConfig->setValue("font_color_level_4", reverseColor(Core::instance()->settings["font_color_level_4"]));
-    Core::instance()->settings["font_color_level_4"] = reverseColor(Core::instance()->settings["font_color_level_4"]);
+    pConfig->set("message_kick_color", reverseColor(Core::instance()->settings["message_kick_color"]));
+    Core::instance()->settings["message_kick_color"] = reverseColor(Core::instance()->settings["message_kick_color"]);
 
-    pConfig->setValue("font_color_level_5", reverseColor(Core::instance()->settings["font_color_level_5"]));
-    Core::instance()->settings["font_color_level_5"] = reverseColor(Core::instance()->settings["font_color_level_5"]);
+    pConfig->set("message_mode_color", reverseColor(Core::instance()->settings["message_mode_color"]));
+    Core::instance()->settings["message_mode_color"] = reverseColor(Core::instance()->settings["message_mode_color"]);
 
-    pConfig->setValue("font_color_level_6", reverseColor(Core::instance()->settings["font_color_level_6"]));
-    Core::instance()->settings["font_color_level_6"] = reverseColor(Core::instance()->settings["font_color_level_6"]);
+    pConfig->set("message_notice_color", reverseColor(Core::instance()->settings["message_notice_color"]));
+    Core::instance()->settings["message_notice_color"] = reverseColor(Core::instance()->settings["message_notice_color"]);
 
-    pConfig->setValue("font_color_level_7", reverseColor(Core::instance()->settings["font_color_level_7"]));
-    Core::instance()->settings["font_color_level_7"] = reverseColor(Core::instance()->settings["font_color_level_7"]);
+    pConfig->set("message_info_color", reverseColor(Core::instance()->settings["message_info_color"]));
+    Core::instance()->settings["message_info_color"] = reverseColor(Core::instance()->settings["message_info_color"]);
 
-    pConfig->setValue("font_color_level_8", reverseColor(Core::instance()->settings["font_color_level_8"]));
-    Core::instance()->settings["font_color_level_8"] = reverseColor(Core::instance()->settings["font_color_level_8"]);
+    pConfig->set("message_me_color", reverseColor(Core::instance()->settings["message_me_color"]));
+    Core::instance()->settings["message_me_color"] = reverseColor(Core::instance()->settings["message_me_color"]);
 
-    pConfig->setValue("font_color_level_9", reverseColor(Core::instance()->settings["font_color_level_9"]));
-    Core::instance()->settings["font_color_level_9"] = reverseColor(Core::instance()->settings["font_color_level_9"]);
+    pConfig->set("message_error_color", reverseColor(Core::instance()->settings["message_error_color"]));
+    Core::instance()->settings["message_error_color"] = reverseColor(Core::instance()->settings["message_error_color"]);
 
-    pConfig->setValue("channel_font_color", reverseColor(Core::instance()->settings["channel_font_color"]));
+    pConfig->set("channel_font_color", reverseColor(Core::instance()->settings["channel_font_color"]));
     Core::instance()->settings["channel_font_color"] = reverseColor(Core::instance()->settings["channel_font_color"]);
 
-    pConfig->setValue("nicklist_nick_color", reverseColor(Core::instance()->settings["nicklist_nick_color"]));
+    pConfig->set("nicklist_nick_color", reverseColor(Core::instance()->settings["nicklist_nick_color"]));
     Core::instance()->settings["nicklist_nick_color"] = reverseColor(Core::instance()->settings["nicklist_nick_color"]);
 
-    pConfig->setValue("nicklist_selected_nick_color", reverseColor(Core::instance()->settings["nicklist_selected_nick_color"]));
+    pConfig->set("nicklist_selected_nick_color", reverseColor(Core::instance()->settings["nicklist_selected_nick_color"]));
     Core::instance()->settings["nicklist_selected_nick_color"] = reverseColor(Core::instance()->settings["nicklist_selected_nick_color"]);
 
-    pConfig->setValue("nicklist_busy_nick_color", reverseColor(Core::instance()->settings["nicklist_busy_nick_color"]));
+    pConfig->set("nicklist_busy_nick_color", reverseColor(Core::instance()->settings["nicklist_busy_nick_color"]));
     Core::instance()->settings["nicklist_busy_nick_color"] = reverseColor(Core::instance()->settings["nicklist_busy_nick_color"]);
 
-    pConfig->setValue("nicklist_gradient_1_color", reverseColor(Core::instance()->settings["nicklist_gradient_1_color"]));
+    pConfig->set("nicklist_gradient_1_color", reverseColor(Core::instance()->settings["nicklist_gradient_1_color"]));
     Core::instance()->settings["nicklist_gradient_1_color"] = reverseColor(Core::instance()->settings["nicklist_gradient_1_color"]);
 
-    pConfig->setValue("nicklist_gradient_2_color", reverseColor(Core::instance()->settings["nicklist_gradient_2_color"]));
+    pConfig->set("nicklist_gradient_2_color", reverseColor(Core::instance()->settings["nicklist_gradient_2_color"]));
     Core::instance()->settings["nicklist_gradient_2_color"] = reverseColor(Core::instance()->settings["nicklist_gradient_2_color"]);
 
     delete pConfig;
@@ -819,55 +819,55 @@ void DlgOptions::restoreDefaultColors()
 {
     Config *pConfig = new Config();
 
-    pConfig->setValue("background_color", "#ffffff");
+    pConfig->set("background_color", "#ffffff");
     Core::instance()->settings["background_color"] = "#ffffff";
 
-    pConfig->setValue("default_font_color", "#000000");
+    pConfig->set("default_font_color", "#000000");
     Core::instance()->settings["default_font_color"] = "#000000";
 
-    pConfig->setValue("font_color_level_1", "#009300");
-    Core::instance()->settings["font_color_level_1"] = "#009300";
+    pConfig->set("message_join_color", "#009300");
+    Core::instance()->settings["message_join_color"] = "#009300";
 
-    pConfig->setValue("font_color_level_2", "#4733FF");
-    Core::instance()->settings["font_color_level_2"] = "#4733FF";
+    pConfig->set("message_part_color", "#4733FF");
+    Core::instance()->settings["message_part_color"] = "#4733FF";
 
-    pConfig->setValue("font_color_level_3", "#00007F");
-    Core::instance()->settings["font_color_level_3"] = "#00007F";
+    pConfig->set("message_quit_color", "#00007F");
+    Core::instance()->settings["message_quit_color"] = "#00007F";
 
-    pConfig->setValue("font_color_level_4", "#00007F");
-    Core::instance()->settings["font_color_level_4"] = "#00007F";
+    pConfig->set("message_kick_color", "#00007F");
+    Core::instance()->settings["message_kick_color"] = "#00007F";
 
-    pConfig->setValue("font_color_level_5", "#009300");
-    Core::instance()->settings["font_color_level_5"] = "#009300";
+    pConfig->set("message_mode_color", "#009300");
+    Core::instance()->settings["message_mode_color"] = "#009300";
 
-    pConfig->setValue("font_color_level_6", "#0066FF");
-    Core::instance()->settings["font_color_level_6"] = "#0066FF";
+    pConfig->set("message_notice_color", "#0066FF");
+    Core::instance()->settings["message_notice_color"] = "#0066FF";
 
-    pConfig->setValue("font_color_level_7", "#666666");
-    Core::instance()->settings["font_color_level_7"] = "#666666";
+    pConfig->set("message_info_color", "#666666");
+    Core::instance()->settings["message_info_color"] = "#666666";
 
-    pConfig->setValue("font_color_level_8", "#800080");
-    Core::instance()->settings["font_color_level_8"] = "#800080";
+    pConfig->set("message_me_color", "#800080");
+    Core::instance()->settings["message_me_color"] = "#800080";
 
-    pConfig->setValue("font_color_level_9", "#ff0000");
-    Core::instance()->settings["font_color_level_9"] = "#ff0000";
+    pConfig->set("message_error_color", "#ff0000");
+    Core::instance()->settings["message_error_color"] = "#ff0000";
 
-    pConfig->setValue("channel_font_color", "#0000ff");
+    pConfig->set("channel_font_color", "#0000ff");
     Core::instance()->settings["channel_font_color"] = "#0000ff";
 
-    pConfig->setValue("nicklist_nick_color", "#333333");
+    pConfig->set("nicklist_nick_color", "#333333");
     Core::instance()->settings["nicklist_nick_color"] = "#333333";
 
-    pConfig->setValue("nicklist_selected_nick_color", "#ffffff");
+    pConfig->set("nicklist_selected_nick_color", "#ffffff");
     Core::instance()->settings["nicklist_selected_nick_color"] = "#ffffff";
 
-    pConfig->setValue("nicklist_busy_nick_color", "#a0a0a4");
+    pConfig->set("nicklist_busy_nick_color", "#a0a0a4");
     Core::instance()->settings["nicklist_busy_nick_color"] = "#a0a0a4";
 
-    pConfig->setValue("nicklist_gradient_1_color", "#77d5f7");
+    pConfig->set("nicklist_gradient_1_color", "#77d5f7");
     Core::instance()->settings["nicklist_gradient_1_color"] = "#77d5f7";
 
-    pConfig->setValue("nicklist_gradient_2_color", "#1b86b7");
+    pConfig->set("nicklist_gradient_2_color", "#1b86b7");
     Core::instance()->settings["nicklist_gradient_2_color"] = "#1b86b7";
 
     delete pConfig;
@@ -935,7 +935,7 @@ void DlgOptions::setSoundBeep()
     if (!fileName.isEmpty())
     {
         Config *pConfig = new Config();
-        pConfig->setValue("sound_beep", fileName);
+        pConfig->set("sound_beep", fileName);
         Core::instance()->settings["sound_beep"] = fileName;
         delete pConfig;
 
@@ -955,7 +955,7 @@ void DlgOptions::setSoundQuery()
     if (!fileName.isEmpty())
     {
         Config *pConfig = new Config();
-        pConfig->setValue("sound_query", fileName);
+        pConfig->set("sound_query", fileName);
         Core::instance()->settings["sound_query"] = fileName;
         delete pConfig;
 
@@ -968,7 +968,7 @@ void DlgOptions::disableSounds(bool bValue)
     QString strValue = (bValue ? "true" : "false");
 
     Config *pConfig = new Config();
-    pConfig->setValue("disable_sounds", strValue);
+    pConfig->set("disable_sounds", strValue);
     Core::instance()->settings["disable_sounds"] = strValue;
     delete pConfig;
 }
@@ -985,7 +985,7 @@ void DlgOptions::setSaveLogsByDate(bool bValue)
     QString strValue = (bValue ? "true" : "false");
 
     Config *pConfig = new Config();
-    pConfig->setValue("save_logs_by_date", strValue);
+    pConfig->set("save_logs_by_date", strValue);
     Core::instance()->settings["save_logs_by_date"] = strValue;
     delete pConfig;
 }
@@ -995,7 +995,7 @@ void DlgOptions::disableLogs(bool bValue)
     QString strValue = (bValue ? "true" : "false");
 
     Config *pConfig = new Config();
-    pConfig->setValue("disable_logs", strValue);
+    pConfig->set("disable_logs", strValue);
     Core::instance()->settings["disable_logs"] = strValue;
     delete pConfig;
 }
@@ -1012,7 +1012,7 @@ void DlgOptions::setBackgroundImage()
     if (!fileName.isEmpty())
     {
         Config *pConfig = new Config();
-        pConfig->setValue("background_image", fileName);
+        pConfig->set("background_image", fileName);
         Core::instance()->settings["background_image"] = fileName;
         delete pConfig;
 
@@ -1028,7 +1028,7 @@ void DlgOptions::disableBackgroundImage(bool bValue)
     QString strValue = (bValue ? "true" : "false");
 
     Config *pConfig = new Config();
-    pConfig->setValue("disable_background_image", strValue);
+    pConfig->set("disable_background_image", strValue);
     Core::instance()->settings["disable_background_image"] = strValue;
     delete pConfig;
 
@@ -1041,7 +1041,7 @@ void DlgOptions::setWinamp()
     QString strValue = ui.lineEdit_winamp->text();
 
     Config *pConfig = new Config();
-    pConfig->setValue("winamp", strValue);
+    pConfig->set("winamp", strValue);
     Core::instance()->settings["winamp"] = strValue;
     delete pConfig;
 }
@@ -1051,7 +1051,7 @@ void DlgOptions::trayMessage(bool bValue)
     QString strValue = (bValue ? "true" : "false");
 
     Config *pConfig = new Config();
-    pConfig->setValue("tray_message", strValue);
+    pConfig->set("tray_message", strValue);
     Core::instance()->settings["tray_message"] = strValue;
     delete pConfig;
 }
@@ -1071,7 +1071,7 @@ void DlgOptions::setColor(const QString &strKey)
 
         // save
         Config *pConfig = new Config();
-        pConfig->setValue(strKey, strColor);
+        pConfig->set(strKey, strColor);
         Core::instance()->settings[strKey] = strColor;
         delete pConfig;
 
@@ -1085,23 +1085,23 @@ void DlgOptions::setColor(const QString &strKey)
             ui.pushButton_background_color->setIcon(QIcon(color));
         else if (strKey == "default_font_color")
             ui.pushButton_default_font_color->setIcon(QIcon(color));
-        else if (strKey == "font_color_level_1")
+        else if (strKey == "message_join_color")
             ui.pushButton_join_font_color->setIcon(QIcon(color));
-        else if (strKey == "font_color_level_2")
+        else if (strKey == "message_part_color")
             ui.pushButton_part_font_color->setIcon(QIcon(color));
-        else if (strKey == "font_color_level_3")
+        else if (strKey == "message_quit_color")
             ui.pushButton_quit_font_color->setIcon(QIcon(color));
-        else if (strKey == "font_color_level_4")
+        else if (strKey == "message_kick_color")
             ui.pushButton_kick_font_color->setIcon(QIcon(color));
-        else if (strKey == "font_color_level_5")
+        else if (strKey == "message_mode_color")
             ui.pushButton_mode_font_color->setIcon(QIcon(color));
-        else if (strKey == "font_color_level_6")
+        else if (strKey == "message_notice_color")
             ui.pushButton_notice_font_color->setIcon(QIcon(color));
-        else if (strKey == "font_color_level_7")
+        else if (strKey == "message_info_color")
             ui.pushButton_info_font_color->setIcon(QIcon(color));
-        else if (strKey == "font_color_level_8")
+        else if (strKey == "message_me_color")
             ui.pushButton_me_font_color->setIcon(QIcon(color));
-        else if (strKey == "font_color_level_9")
+        else if (strKey == "message_error_color")
             ui.pushButton_error_font_color->setIcon(QIcon(color));
         else if (strKey == "channel_font_color")
             ui.pushButton_channel_font_color->setIcon(QIcon(color));
@@ -1131,15 +1131,15 @@ void DlgOptions::setMainwindowColors()
 {
     QString strBackgroundColor = Core::instance()->settings.value("background_color");
     QString strDefaultFontColor = Core::instance()->settings.value("default_font_color");
-    QString strJoinFontColor = Core::instance()->settings.value("font_color_level_1");
-    QString strPartFontColor = Core::instance()->settings.value("font_color_level_2");
-    QString strQuitFontColor = Core::instance()->settings.value("font_color_level_3");
-    QString strKickFontColor = Core::instance()->settings.value("font_color_level_4");
-    QString strModeFontColor = Core::instance()->settings.value("font_color_level_5");
-    QString strNoticeFontColor = Core::instance()->settings.value("font_color_level_6");
-    QString strInfoFontColor = Core::instance()->settings.value("font_color_level_7");
-    QString strMeFontColor = Core::instance()->settings.value("font_color_level_8");
-    QString strErrorFontColor = Core::instance()->settings.value("font_color_level_9");
+    QString strJoinFontColor = Core::instance()->settings.value("message_join_color");
+    QString strPartFontColor = Core::instance()->settings.value("message_part_color");
+    QString strQuitFontColor = Core::instance()->settings.value("message_quit_color");
+    QString strKickFontColor = Core::instance()->settings.value("message_kick_color");
+    QString strModeFontColor = Core::instance()->settings.value("message_mode_color");
+    QString strNoticeFontColor = Core::instance()->settings.value("message_notice_color");
+    QString strInfoFontColor = Core::instance()->settings.value("message_info_color");
+    QString strMeFontColor = Core::instance()->settings.value("message_me_color");
+    QString strErrorFontColor = Core::instance()->settings.value("message_error_color");
     QString strChannelFontColor = Core::instance()->settings.value("channel_font_color");
 
     // set background color

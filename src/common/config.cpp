@@ -64,7 +64,7 @@ Config::Config(bool _bProfileConfig, QString _strForceProfile) : bProfileConfig(
     xml = new Xml(strConfigFile, strRootName, lDefaultValues);
 
     // fix
-    fixConfig();
+    fix();
 }
 
 Config::~Config()
@@ -72,22 +72,27 @@ Config::~Config()
     delete xml;
 }
 
-QString Config::getValue(const QString &strKey)
+QString Config::get(const QString &strKey)
 {
-    return xml->getValue(strKey);
+    return xml->get(strKey);
 }
 
-void Config::setValue(const QString &strKey, const QString &strValue)
+void Config::set(const QString &strKey, const QString &strValue)
 {
-    xml->setValue(strKey, strValue);
+    xml->set(strKey, strValue);
 }
 
-QHash<QString, QString> Config::readToHash()
+void Config::remove(const QString &strKey)
 {
-    return xml->readToHash();
+    xml->remove(strKey);
 }
 
-void Config::fixConfig()
+QHash<QString, QString> Config::read()
+{
+    return xml->read();
+}
+
+void Config::fix()
 {
     QHashIterator<QString, QString> i(lDefaultValues);
     while (i.hasNext())
@@ -96,11 +101,11 @@ void Config::fixConfig()
         QString strDefaultKey = i.key();
         QString strDefaultValue = i.value();
 
-        QString strValue = xml->getValue(strDefaultKey);
+        QString strValue = xml->get(strDefaultKey);
         if (strValue.isEmpty())
         {
             if (strDefaultKey != "pass") // ignore pass
-                xml->setValue(strDefaultKey, strDefaultValue);
+                xml->set(strDefaultKey, strDefaultValue);
         }
     }
 }
@@ -148,15 +153,15 @@ QHash<QString,QString> Config::getDefaultValues()
         lDefaultValues.insert("my_color", "#000000");
         lDefaultValues.insert("font_size", "11px");
         lDefaultValues.insert("default_font_color", "#000000");
-        lDefaultValues.insert("font_color_level_1", "#009300");
-        lDefaultValues.insert("font_color_level_2", "#4733FF");
-        lDefaultValues.insert("font_color_level_3", "#00007F");
-        lDefaultValues.insert("font_color_level_4", "#00007F");
-        lDefaultValues.insert("font_color_level_5", "#009300");
-        lDefaultValues.insert("font_color_level_6", "#0066FF");
-        lDefaultValues.insert("font_color_level_7", "#666666");
-        lDefaultValues.insert("font_color_level_8", "#800080");
-        lDefaultValues.insert("font_color_level_9", "#ff0000");
+        lDefaultValues.insert("message_join_color", "#009300");
+        lDefaultValues.insert("message_part_color", "#4733FF");
+        lDefaultValues.insert("message_quit_color", "#00007F");
+        lDefaultValues.insert("message_kick_color", "#00007F");
+        lDefaultValues.insert("message_mode_color", "#009300");
+        lDefaultValues.insert("message_notice_color", "#0066FF");
+        lDefaultValues.insert("message_info_color", "#666666");
+        lDefaultValues.insert("message_me_color", "#800080");
+        lDefaultValues.insert("message_error_color", "#ff0000");
         lDefaultValues.insert("channel_font_color", "#0000ff");
         lDefaultValues.insert("nicklist_nick_color", "#333333");
         lDefaultValues.insert("nicklist_selected_nick_color", "#ffffff");

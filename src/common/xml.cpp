@@ -59,7 +59,7 @@ Xml::Xml(const QString &_strFile, const QString &_strRootName, const QHash<QStri
     }
 }
 
-QString Xml::getValue(const QString &strKey)
+QString Xml::get(const QString &strKey)
 {
     if (doc.isNull())
     {
@@ -85,7 +85,7 @@ QString Xml::getValue(const QString &strKey)
     return QString::null;
 }
 
-void Xml::setValue(const QString &strKey, const QString &strValue)
+void Xml::set(const QString &strKey, const QString &strValue)
 {
     if (doc.isNull())
     {
@@ -95,7 +95,7 @@ void Xml::setValue(const QString &strKey, const QString &strValue)
     }
 
     // remove
-    removeKey(strKey);
+    remove(strKey);
 
     // add value
     QDomElement docElem = doc.documentElement();
@@ -108,7 +108,7 @@ void Xml::setValue(const QString &strKey, const QString &strValue)
     save();
 }
 
-QHash<QString,QString> Xml::readToHash()
+QHash<QString,QString> Xml::read()
 {
     QHash<QString, QString> lResult;
 
@@ -152,7 +152,7 @@ void Xml::createNewFile()
     save();
 }
 
-void Xml::removeKey(const QString &strKey)
+void Xml::remove(const QString &strKey)
 {
     if (doc.isNull())
     {

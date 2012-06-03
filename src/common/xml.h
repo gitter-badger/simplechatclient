@@ -30,9 +30,10 @@ class Xml : public QObject
     Q_OBJECT
 public:
     Xml(const QString &_strFile, const QString &_strRootName, const QHash<QString, QString> &_lDefaultValues);
-    QString getValue(const QString &strKey);
-    void setValue(const QString &strKey, const QString &strValue);
-    QHash<QString,QString> readToHash();
+    QString get(const QString &strKey);
+    void set(const QString &strKey, const QString &strValue);
+    void remove(const QString &strKey);
+    QHash<QString,QString> read();
 
 private:
     QString strFile;
@@ -41,7 +42,6 @@ private:
     QDomDocument doc;
 
     void createNewFile();
-    void removeKey(const QString &strKey);
     void addKeyValue(QDomDocument *doc, QDomElement *root, const QString &strKey, const QString &strValue);
     void save();
 

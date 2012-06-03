@@ -100,7 +100,7 @@ int main(int argc, char *argv[])
 
     // get language
     Config *pConfig = new Config();
-    QString strLanguage = pConfig->getValue("language");
+    QString strLanguage = pConfig->get("language");
     delete pConfig;
 
     // set translate

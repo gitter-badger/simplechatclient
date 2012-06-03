@@ -35,9 +35,10 @@ public:
     Config(bool _bProfileConfig = true, QString _strForceProfile = QString::null);
     virtual ~Config();
 
-    QString getValue(const QString &strKey);
-    void setValue(const QString &strKey, const QString &strValue);
-    QHash<QString,QString> readToHash();
+    QString get(const QString &strKey);
+    void set(const QString &strKey, const QString &strValue);
+    void remove(const QString &strKey);
+    QHash<QString,QString> read();
 
 private:
     QString strConfigFile;
@@ -46,7 +47,7 @@ private:
     QHash<QString,QString> lDefaultValues;
     Xml *xml;
 
-    void fixConfig();
+    void fix();
     QHash<QString,QString> getDefaultValues();
 };
 

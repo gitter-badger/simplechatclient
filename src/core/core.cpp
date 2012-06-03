@@ -137,7 +137,7 @@ void Core::createSettings()
     configProfileValues();
 
     // check settings
-    checkSettings();
+    fixSettings();
 }
 
 void Core::removeOldConfig()
@@ -149,10 +149,6 @@ void Core::removeOldConfig()
 #else
     path = QDir::homePath()+"/.scc";
 #endif
-
-    // create dir if not exist
-    if (!QDir().exists(path))
-        QDir().mkpath(path);
 
     // remove file
     if (QFile::exists(path+"/scc.conf"))
@@ -188,20 +184,33 @@ void Core::convertOldProfiles()
 
 void Core::convertOldConfig()
 {
+//    QHash<QString, QString> lOldMessageColor;
+//    lOldMessageColor.insert("font_color_level_1", "message_join_color");
+//    lOldMessageColor.insert("font_color_level_2", "message_part_color");
+//    lOldMessageColor.insert("font_color_level_3", "message_quit_color");
+//    lOldMessageColor.insert("font_color_level_4", "message_kick_color");
+//    lOldMessageColor.insert("font_color_level_5", "message_mode_color");
+//    lOldMessageColor.insert("font_color_level_6", "message_notice_color");
+//    lOldMessageColor.insert("font_color_level_7", "message_info_color");
+//    lOldMessageColor.insert("font_color_level_8", "message_me_color");
+//    lOldMessageColor.insert("font_color_level_9", "message_error_color");
+
     Config *pConfig = new Config();
 
     // change on off -> true false
-    QHash<QString,QString> lConfigValues = pConfig->readToHash();
+    QHash<QString,QString> lConfigValues = pConfig->read();
 
     QHashIterator <QString, QString> i(lConfigValues);
     while (i.hasNext())
     {
         i.next();
+        QString strKey = i.key();
+        QString strValue = i.value();
 
-        if (i.value() == "on")
-            pConfig->setValue(i.key(), "true");
-        else if (i.value() == "off")
-            pConfig->setValue(i.key(), "false");
+        if (strValue == "on")
+            pConfig->set(strKey, "true");
+        else if (strValue == "off")
+            pConfig->set(strKey, "false");
    }
 
     delete pConfig;
@@ -211,7 +220,7 @@ void Core::configValues()
 {
     // config values
     Config *pConfig = new Config(false);
-    QHash<QString,QString> lConfigValues = pConfig->readToHash();
+    QHash<QString,QString> lConfigValues = pConfig->read();
     delete pConfig;
 
     // set settings
@@ -227,7 +236,7 @@ void Core::configProfileValues()
 {
     // config profile values
     Config *pConfigProfile = new Config();
-    QHash<QString,QString> lConfigProfileValues = pConfigProfile->readToHash();
+    QHash<QString,QString> lConfigProfileValues = pConfigProfile->read();
     delete pConfigProfile;
 
     // set profile settings
@@ -239,32 +248,28 @@ void Core::configProfileValues()
     }
 }
 
-void Core::checkSettings()
+void Core::fixSettings()
 {
-    QString strSoundBeep = settings.value("sound_beep");
-    QString strSoundQuery = settings.value("sound_query");
-    QString strBackgroundImage = settings.value("background_image");
-
     Config *pConfig = new Config();
 
-    if (!QFile::exists(strSoundBeep))
+    if (!QFile::exists(settings.value("sound_beep")))
     {
-        pConfig->setValue("sound_beep", "");
+        pConfig->set("sound_beep", "");
         settings["sound_beep"] = "";
     }
-    if (!QFile::exists(strSoundQuery))
+    if (!QFile::exists(settings.value("sound_query")))
     {
-        pConfig->setValue("sound_query", "");
+        pConfig->set("sound_query", "");
         settings["sound_query"] = "";
     }
-    if (!QFile::exists(strBackgroundImage))
+    if (!QFile::exists(settings.value("background_image")))
     {
-        pConfig->setValue("background_image", "");
+        pConfig->set("background_image", "");
         settings["background_image"] = "";
     }
     if ((settings.value("themes") != "Standard") && (settings.value("themes") != "Origin") && (settings.value("themes") != "Alhena") && (settings.value("themes") != "Adara"))
     {
-        pConfig->setValue("themes", "Standard");
+        pConfig->set("themes", "Standard");
         settings["themes"] = "Standard";
     }
 
