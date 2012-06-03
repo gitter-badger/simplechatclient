@@ -374,11 +374,11 @@ void MainWindow::refreshColors()
         strBackgroundColor = QString("background-color:%1;").arg(Core::instance()->settings.value("background_color"));
     }
 
-    QString strDefaultFontColor;
-    if (Core::instance()->settings.value("default_font_color").toLower() != "#000000")
-        strDefaultFontColor = QString("color:%1;").arg(Core::instance()->settings.value("default_font_color"));
+    QString strDefaultColor;
+    if (Core::instance()->settings.value("default_color").toLower() != "#000000")
+        strDefaultColor = QString("color:%1;").arg(Core::instance()->settings.value("default_color"));
 
-    this->setStyleSheet(QString("*{%1}%2").arg(strDefaultFontColor+strBackgroundColor, strTabBackgroundColor));
+    this->setStyleSheet(QString("*{%1}%2").arg(strDefaultColor+strBackgroundColor, strTabBackgroundColor));
 
     pTabC->refreshColors();
 }
@@ -652,7 +652,7 @@ void MainWindow::changeCurrentTab(const QString &strChannel)
 void MainWindow::currentTabChanged(int index)
 {
     // change tab color
-    pTabM->setColor(index, QColor(Core::instance()->settings.value("default_font_color")));
+    pTabM->setColor(index, QColor(Core::instance()->settings.value("default_color")));
 
     // clear input line
     pToolWidget->clearInputLine();

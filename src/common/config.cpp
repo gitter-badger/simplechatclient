@@ -152,7 +152,7 @@ QHash<QString,QString> Config::getDefaultValues()
         lDefaultValues.insert("my_font", "Verdana");
         lDefaultValues.insert("my_color", "#000000");
         lDefaultValues.insert("font_size", "11px");
-        lDefaultValues.insert("default_font_color", "#000000");
+        lDefaultValues.insert("default_color", "#000000");
         lDefaultValues.insert("message_join_color", "#009300");
         lDefaultValues.insert("message_part_color", "#4733FF");
         lDefaultValues.insert("message_quit_color", "#00007F");
@@ -162,7 +162,7 @@ QHash<QString,QString> Config::getDefaultValues()
         lDefaultValues.insert("message_info_color", "#666666");
         lDefaultValues.insert("message_me_color", "#800080");
         lDefaultValues.insert("message_error_color", "#ff0000");
-        lDefaultValues.insert("channel_font_color", "#0000ff");
+        lDefaultValues.insert("channel_color", "#0000ff");
         lDefaultValues.insert("nicklist_nick_color", "#333333");
         lDefaultValues.insert("nicklist_selected_nick_color", "#ffffff");
         lDefaultValues.insert("nicklist_busy_nick_color", "#a0a0a4");

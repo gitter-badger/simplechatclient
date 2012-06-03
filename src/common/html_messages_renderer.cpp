@@ -32,7 +32,7 @@ QString fixContextMenu(QString strData, MessageCategory eMessageCategory)
         if ((i == 1) && (strDataList[0] == "*") && ((eMessageCategory == MessageJoin) || (eMessageCategory == MessagePart) || (eMessageCategory == MessageQuit)  || (eMessageCategory == MessageKick)))
             strDataList[i] = QString("<a href=\"#\" onclick=\"return false\" name=\"nick\" style=\"color:inherit;text-decoration:none;\">%1</a>").arg(strWord);
         if (strWord[0] == '#')
-            strDataList[i] = QString("<a href=\"#\" onclick=\"return false\" name=\"channel\" class=\"ChannelFontColor\" style=\"text-decoration:none;\">%1</a>").arg(strWord);
+            strDataList[i] = QString("<a href=\"#\" onclick=\"return false\" name=\"channel\" class=\"ChannelColor\" style=\"text-decoration:none;\">%1</a>").arg(strWord);
         if ((strWord.contains(QRegExp("(ftp:|http:|https:)//"))) || (strWord.contains("www.")))
         {
             QString strBeforeLink;
@@ -106,7 +106,7 @@ QString HtmlMessagesRenderer::renderer(QString strData, MessageCategory eMessage
 
     // font class
     QString strFontClass;
-    if (eMessageCategory == MessageDefault) strFontClass = "DefaultFontColor";
+    if (eMessageCategory == MessageDefault) strFontClass = "DefaultColor";
     else if (eMessageCategory == MessageJoin) strFontClass = "MessageJoin";
     else if (eMessageCategory == MessagePart) strFontClass = "MessagePart";
     else if (eMessageCategory == MessageQuit) strFontClass = "MessageQuit";
@@ -116,8 +116,8 @@ QString HtmlMessagesRenderer::renderer(QString strData, MessageCategory eMessage
     else if (eMessageCategory == MessageInfo) strFontClass = "MessageInfo";
     else if (eMessageCategory == MessageMe) strFontClass = "MessageMe";
     else if (eMessageCategory == MessageError) strFontClass = "MessageError";
-    else if (eMessageCategory == MessageHighlight) strFontClass = "DefaultFontColor";
-    else if (eMessageCategory == MessageModerNotice) strFontClass = "NoticeFontColor";
+    else if (eMessageCategory == MessageHighlight) strFontClass = "DefaultColor";
+    else if (eMessageCategory == MessageModerNotice) strFontClass = "NoticeColor";
 
     // themes
     QString strThemes = Core::instance()->settings["themes"];
@@ -157,7 +157,7 @@ QString HtmlMessagesRenderer::renderer(QString strData, MessageCategory eMessage
             strUserAvatarPath = "file://"+strUserAvatarPath;
 #endif
             QString strUserAvatarImg = QString("<img src=\"%1\" alt=\"avatar\" class=\"avatar\" />").arg(strUserAvatarPath);
-            return QString("<table><tr><td class=\"TableText\">%1<span class=\"DefaultFontColor\">%2<a href=\"#\" onclick=\"return false\" name=\"nick\" style=\"color:inherit;text-decoration:none;\">%3</a>%4 </span><span class=\"%5\" %6>%7</span></td><td class=\"time\">%8</td></tr></table>").arg(strUserAvatarImg, strBeforeNick, strNick, strAfterNick, strFontClass, strTextDecoration, strData, dt.toString("hh:mm"));
+            return QString("<table><tr><td class=\"TableText\">%1<span class=\"DefaultColor\">%2<a href=\"#\" onclick=\"return false\" name=\"nick\" style=\"color:inherit;text-decoration:none;\">%3</a>%4 </span><span class=\"%5\" %6>%7</span></td><td class=\"time\">%8</td></tr></table>").arg(strUserAvatarImg, strBeforeNick, strNick, strAfterNick, strFontClass, strTextDecoration, strData, dt.toString("hh:mm"));
         }
         else
         {
@@ -167,16 +167,16 @@ QString HtmlMessagesRenderer::renderer(QString strData, MessageCategory eMessage
     else if (strThemes == "Alhena")
     {
         if (!strNick.isEmpty())
-            return QString("<table><tr><td class=\"TableText\"><span class=\"DefaultFontColor\">%1<a href=\"#\" onclick=\"return false\" name=\"nick\" style=\"color:inherit;text-decoration:none;\">%2</a>%3 </span><span class=\"%4\" %5>%6</span></td><td class=\"time\">%7</td></tr></table>").arg(strBeforeNick, strNick, strAfterNick, strFontClass, strTextDecoration, strData, dt.toString("hh:mm:ss"));
+            return QString("<table><tr><td class=\"TableText\"><span class=\"DefaultColor\">%1<a href=\"#\" onclick=\"return false\" name=\"nick\" style=\"color:inherit;text-decoration:none;\">%2</a>%3 </span><span class=\"%4\" %5>%6</span></td><td class=\"time\">%7</td></tr></table>").arg(strBeforeNick, strNick, strAfterNick, strFontClass, strTextDecoration, strData, dt.toString("hh:mm:ss"));
         else
             return QString("<table><tr><td class=\"TableText\">&nbsp;<span class=\"%1\">%2</span></td><td class=\"time\">%3</td></tr></table>").arg(strFontClass, strData, dt.toString("hh:mm:ss"));
     }
     else
     {
         if (!strNick.isEmpty())
-            return QString("<span class=\"DefaultFontColor\">%1 %2<a href=\"#\" onclick=\"return false\" name=\"nick\" style=\"color:inherit;text-decoration:none;\">%3</a>%4 <span class=\"%5\" %6>%7</span></span>").arg(dt.toString("[hh:mm:ss]"), strBeforeNick, strNick, strAfterNick, strFontClass, strTextDecoration, strData);
+            return QString("<span class=\"DefaultColor\">%1 %2<a href=\"#\" onclick=\"return false\" name=\"nick\" style=\"color:inherit;text-decoration:none;\">%3</a>%4 <span class=\"%5\" %6>%7</span></span>").arg(dt.toString("[hh:mm:ss]"), strBeforeNick, strNick, strAfterNick, strFontClass, strTextDecoration, strData);
         else
-            return QString("<span class=\"DefaultFontColor\">%1 <span class=\"%2\">%3</span></span>").arg(dt.toString("[hh:mm:ss]"), strFontClass, strData);
+            return QString("<span class=\"DefaultColor\">%1 <span class=\"%2\">%3</span></span>").arg(dt.toString("[hh:mm:ss]"), strFontClass, strData);
     }
 }
 
@@ -188,8 +188,8 @@ QString HtmlMessagesRenderer::rendererDebug(const QString &strData, int iTime)
 
 QString HtmlMessagesRenderer::headCSS()
 {
-    QString strDefaultFontColor = Core::instance()->settings.value("default_font_color");
-    QString strChannelFontColor = Core::instance()->settings.value("channel_font_color");
+    QString strDefaultColor = Core::instance()->settings.value("default_color");
+    QString strChannelColor = Core::instance()->settings.value("channel_color");
     QString strFontSize = Core::instance()->settings.value("font_size");
 
     QString strMessageJoin = Core::instance()->settings.value("message_join_color");
@@ -204,12 +204,13 @@ QString HtmlMessagesRenderer::headCSS()
 
     QString strHeadCSS = "div{margin-bottom: 2px;}";
     strHeadCSS.append(QString("table{border-spacing: 0; margin: 0; padding: 0; font-family: sans; word-wrap: break-word; font-size:%1;}.TableText{width:100%;}").arg(strFontSize));
-    strHeadCSS.append(QString(".time{font-weight:normal; text-decoration:none; color:%1; padding-right:5px;}").arg(strDefaultFontColor));
+    strHeadCSS.append(QString(".time{font-weight:normal; text-decoration:none; color:%1; padding-right:5px;}").arg(strDefaultColor));
     strHeadCSS.append(QString(".avatar{vertical-align:middle; margin-left:4px; margin-right:4px; width:30px; height:30px;}"));
-    strHeadCSS.append(QString(".DefaultFontColor{color:%1;}").arg(strDefaultFontColor));
-    strHeadCSS.append(QString(".ChannelFontColor{color:%1;}").arg(strChannelFontColor));
 
-    strHeadCSS.append(QString(".MessageDefault{color:%1;}").arg(strDefaultFontColor));
+    strHeadCSS.append(QString(".DefaultColor{color:%1;}").arg(strDefaultColor));
+    strHeadCSS.append(QString(".ChannelColor{color:%1;}").arg(strChannelColor));
+
+    strHeadCSS.append(QString(".MessageDefault{color:%1;}").arg(strDefaultColor));
     strHeadCSS.append(QString(".MessageJoin{color:%1;}").arg(strMessageJoin));
     strHeadCSS.append(QString(".MessagePart{color:%1;}").arg(strMessagePart));
     strHeadCSS.append(QString(".MessageQuit{color:%1;}").arg(strMessageQuit));
@@ -219,8 +220,8 @@ QString HtmlMessagesRenderer::headCSS()
     strHeadCSS.append(QString(".MessageInfo{color:%1;}").arg(strMessageInfo));
     strHeadCSS.append(QString(".MessageMe{color:%1;}").arg(strMessageMe));
     strHeadCSS.append(QString(".MessageError{color:%1;}").arg(strMessageError));
-    strHeadCSS.append(QString(".MessageHighlight{color:%1;}").arg(strDefaultFontColor));
-    strHeadCSS.append(QString(".MessageModerNotice{color:%1;}").arg(strDefaultFontColor));
+    strHeadCSS.append(QString(".MessageHighlight{color:%1;}").arg(strDefaultColor));
+    strHeadCSS.append(QString(".MessageModerNotice{color:%1;}").arg(strDefaultColor));
 
     return strHeadCSS;
 }

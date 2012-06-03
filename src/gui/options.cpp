@@ -90,17 +90,17 @@ void DlgOptions::createGui()
     ui.tabWidget->setTabText(1,tr("Nicklist"));
 
     ui.label_background_color->setText(tr("Background color:"));
-    ui.label_default_font_color->setText(tr("Default font color:"));
-    ui.label_join_font_color->setText(tr("Join color:"));
-    ui.label_part_font_color->setText(tr("Part color:"));
-    ui.label_quit_font_color->setText(tr("Quit color:"));
-    ui.label_kick_font_color->setText(tr("Kick color:"));
-    ui.label_mode_font_color->setText(tr("Mode color:"));
-    ui.label_notice_font_color->setText(tr("Notice color:"));
-    ui.label_info_font_color->setText(tr("Info color:"));
-    ui.label_me_font_color->setText(tr("Me color:"));
-    ui.label_error_font_color->setText(tr("Error color:"));
-    ui.label_channel_font_color->setText(tr("Channel color:"));
+    ui.label_default_color->setText(tr("Default font color:"));
+    ui.label_join_color->setText(tr("Join color:"));
+    ui.label_part_color->setText(tr("Part color:"));
+    ui.label_quit_color->setText(tr("Quit color:"));
+    ui.label_kick_color->setText(tr("Kick color:"));
+    ui.label_mode_color->setText(tr("Mode color:"));
+    ui.label_notice_color->setText(tr("Notice color:"));
+    ui.label_info_color->setText(tr("Info color:"));
+    ui.label_me_color->setText(tr("Me color:"));
+    ui.label_error_color->setText(tr("Error color:"));
+    ui.label_channel_color->setText(tr("Channel color:"));
 
     ui.label_nicklist_nick_color->setText(tr("Nick color:"));
     ui.label_nicklist_selected_nick_color->setText(tr("Selected nick color:"));
@@ -411,17 +411,17 @@ void DlgOptions::createSignals()
     connect(ui.pushButton_reverse_colors, SIGNAL(clicked()), this, SLOT(reverseColors()));
     connect(ui.pushButton_restore_default_colors, SIGNAL(clicked()), this, SLOT(restoreDefaultColors()));
     connect(ui.pushButton_background_color, SIGNAL(clicked()), this, SLOT(setBackgroundColor()));
-    connect(ui.pushButton_default_font_color, SIGNAL(clicked()), this, SLOT(setDefaultFontColor()));
-    connect(ui.pushButton_join_font_color, SIGNAL(clicked()), this, SLOT(setJoinFontColor()));
-    connect(ui.pushButton_part_font_color, SIGNAL(clicked()), this, SLOT(setPartFontColor()));
-    connect(ui.pushButton_quit_font_color, SIGNAL(clicked()), this, SLOT(setQuitFontColor()));
-    connect(ui.pushButton_kick_font_color, SIGNAL(clicked()), this, SLOT(setKickFontColor()));
-    connect(ui.pushButton_mode_font_color, SIGNAL(clicked()), this, SLOT(setModeFontColor()));
-    connect(ui.pushButton_notice_font_color, SIGNAL(clicked()), this, SLOT(setNoticeFontColor()));
-    connect(ui.pushButton_info_font_color, SIGNAL(clicked()), this, SLOT(setInfoFontColor()));
-    connect(ui.pushButton_me_font_color, SIGNAL(clicked()), this, SLOT(setMeFontColor()));
-    connect(ui.pushButton_error_font_color, SIGNAL(clicked()), this, SLOT(setErrorFontColor()));
-    connect(ui.pushButton_channel_font_color, SIGNAL(clicked()), this, SLOT(setChannelFontColor()));
+    connect(ui.pushButton_default_color, SIGNAL(clicked()), this, SLOT(setDefaultColor()));
+    connect(ui.pushButton_join_color, SIGNAL(clicked()), this, SLOT(setJoinColor()));
+    connect(ui.pushButton_part_color, SIGNAL(clicked()), this, SLOT(setPartColor()));
+    connect(ui.pushButton_quit_color, SIGNAL(clicked()), this, SLOT(setQuitColor()));
+    connect(ui.pushButton_kick_color, SIGNAL(clicked()), this, SLOT(setKickColor()));
+    connect(ui.pushButton_mode_color, SIGNAL(clicked()), this, SLOT(setModeColor()));
+    connect(ui.pushButton_notice_color, SIGNAL(clicked()), this, SLOT(setNoticeColor()));
+    connect(ui.pushButton_info_color, SIGNAL(clicked()), this, SLOT(setInfoColor()));
+    connect(ui.pushButton_me_color, SIGNAL(clicked()), this, SLOT(setMeColor()));
+    connect(ui.pushButton_error_color, SIGNAL(clicked()), this, SLOT(setErrorColor()));
+    connect(ui.pushButton_channel_color, SIGNAL(clicked()), this, SLOT(setChannelColor()));
     connect(ui.pushButton_nicklist_nick_color, SIGNAL(clicked()), this, SLOT(setNicklistNickColor()));
     connect(ui.pushButton_nicklist_selected_nick_color, SIGNAL(clicked()), this, SLOT(setNicklistSelectedNickColor()));
     connect(ui.pushButton_nicklist_busy_nick_color, SIGNAL(clicked()), this, SLOT(setNicklistBusyNickColor()));
@@ -687,59 +687,59 @@ void DlgOptions::setBackgroundColor()
     setColor("background_color");
 }
 
-void DlgOptions::setDefaultFontColor()
+void DlgOptions::setDefaultColor()
 {
-    setColor("default_font_color");
+    setColor("default_color");
 }
 
-void DlgOptions::setJoinFontColor()
+void DlgOptions::setJoinColor()
 {
     setColor("message_join_color");
 }
 
-void DlgOptions::setPartFontColor()
+void DlgOptions::setPartColor()
 {
     setColor("message_part_color");
 }
 
-void DlgOptions::setQuitFontColor()
+void DlgOptions::setQuitColor()
 {
     setColor("message_quit_color");
 }
 
-void DlgOptions::setKickFontColor()
+void DlgOptions::setKickColor()
 {
     setColor("message_kick_color");
 }
 
-void DlgOptions::setModeFontColor()
+void DlgOptions::setModeColor()
 {
     setColor("message_mode_color");
 }
 
-void DlgOptions::setNoticeFontColor()
+void DlgOptions::setNoticeColor()
 {
     setColor("message_notice_color");
 }
 
-void DlgOptions::setInfoFontColor()
+void DlgOptions::setInfoColor()
 {
     setColor("message_info_color");
 }
 
-void DlgOptions::setMeFontColor()
+void DlgOptions::setMeColor()
 {
     setColor("message_me_color");
 }
 
-void DlgOptions::setErrorFontColor()
+void DlgOptions::setErrorColor()
 {
     setColor("message_error_color");
 }
 
-void DlgOptions::setChannelFontColor()
+void DlgOptions::setChannelColor()
 {
-    setColor("channel_font_color");
+    setColor("channel_color");
 }
 
 void DlgOptions::reverseColors()
@@ -749,8 +749,8 @@ void DlgOptions::reverseColors()
     pConfig->set("background_color", reverseColor(Core::instance()->settings["background_color"]));
     Core::instance()->settings["background_color"] = reverseColor(Core::instance()->settings["background_color"]);
 
-    pConfig->set("default_font_color", reverseColor(Core::instance()->settings["default_font_color"]));
-    Core::instance()->settings["default_font_color"] = reverseColor(Core::instance()->settings["default_font_color"]);
+    pConfig->set("default_color", reverseColor(Core::instance()->settings["default_color"]));
+    Core::instance()->settings["default_color"] = reverseColor(Core::instance()->settings["default_color"]);
 
     pConfig->set("message_join_color", reverseColor(Core::instance()->settings["message_join_color"]));
     Core::instance()->settings["message_join_color"] = reverseColor(Core::instance()->settings["message_join_color"]);
@@ -779,8 +779,8 @@ void DlgOptions::reverseColors()
     pConfig->set("message_error_color", reverseColor(Core::instance()->settings["message_error_color"]));
     Core::instance()->settings["message_error_color"] = reverseColor(Core::instance()->settings["message_error_color"]);
 
-    pConfig->set("channel_font_color", reverseColor(Core::instance()->settings["channel_font_color"]));
-    Core::instance()->settings["channel_font_color"] = reverseColor(Core::instance()->settings["channel_font_color"]);
+    pConfig->set("channel_color", reverseColor(Core::instance()->settings["channel_color"]));
+    Core::instance()->settings["channel_color"] = reverseColor(Core::instance()->settings["channel_color"]);
 
     pConfig->set("nicklist_nick_color", reverseColor(Core::instance()->settings["nicklist_nick_color"]));
     Core::instance()->settings["nicklist_nick_color"] = reverseColor(Core::instance()->settings["nicklist_nick_color"]);
@@ -822,8 +822,8 @@ void DlgOptions::restoreDefaultColors()
     pConfig->set("background_color", "#ffffff");
     Core::instance()->settings["background_color"] = "#ffffff";
 
-    pConfig->set("default_font_color", "#000000");
-    Core::instance()->settings["default_font_color"] = "#000000";
+    pConfig->set("default_color", "#000000");
+    Core::instance()->settings["default_color"] = "#000000";
 
     pConfig->set("message_join_color", "#009300");
     Core::instance()->settings["message_join_color"] = "#009300";
@@ -852,8 +852,8 @@ void DlgOptions::restoreDefaultColors()
     pConfig->set("message_error_color", "#ff0000");
     Core::instance()->settings["message_error_color"] = "#ff0000";
 
-    pConfig->set("channel_font_color", "#0000ff");
-    Core::instance()->settings["channel_font_color"] = "#0000ff";
+    pConfig->set("channel_color", "#0000ff");
+    Core::instance()->settings["channel_color"] = "#0000ff";
 
     pConfig->set("nicklist_nick_color", "#333333");
     Core::instance()->settings["nicklist_nick_color"] = "#333333";
@@ -1083,28 +1083,28 @@ void DlgOptions::setColor(const QString &strKey)
             ui.pushButton_background_color->setIcon(QIcon(color));
         else if (strKey == "background_color")
             ui.pushButton_background_color->setIcon(QIcon(color));
-        else if (strKey == "default_font_color")
-            ui.pushButton_default_font_color->setIcon(QIcon(color));
+        else if (strKey == "default_color")
+            ui.pushButton_default_color->setIcon(QIcon(color));
         else if (strKey == "message_join_color")
-            ui.pushButton_join_font_color->setIcon(QIcon(color));
+            ui.pushButton_join_color->setIcon(QIcon(color));
         else if (strKey == "message_part_color")
-            ui.pushButton_part_font_color->setIcon(QIcon(color));
+            ui.pushButton_part_color->setIcon(QIcon(color));
         else if (strKey == "message_quit_color")
-            ui.pushButton_quit_font_color->setIcon(QIcon(color));
+            ui.pushButton_quit_color->setIcon(QIcon(color));
         else if (strKey == "message_kick_color")
-            ui.pushButton_kick_font_color->setIcon(QIcon(color));
+            ui.pushButton_kick_color->setIcon(QIcon(color));
         else if (strKey == "message_mode_color")
-            ui.pushButton_mode_font_color->setIcon(QIcon(color));
+            ui.pushButton_mode_color->setIcon(QIcon(color));
         else if (strKey == "message_notice_color")
-            ui.pushButton_notice_font_color->setIcon(QIcon(color));
+            ui.pushButton_notice_color->setIcon(QIcon(color));
         else if (strKey == "message_info_color")
-            ui.pushButton_info_font_color->setIcon(QIcon(color));
+            ui.pushButton_info_color->setIcon(QIcon(color));
         else if (strKey == "message_me_color")
-            ui.pushButton_me_font_color->setIcon(QIcon(color));
+            ui.pushButton_me_color->setIcon(QIcon(color));
         else if (strKey == "message_error_color")
-            ui.pushButton_error_font_color->setIcon(QIcon(color));
-        else if (strKey == "channel_font_color")
-            ui.pushButton_channel_font_color->setIcon(QIcon(color));
+            ui.pushButton_error_color->setIcon(QIcon(color));
+        else if (strKey == "channel_color")
+            ui.pushButton_channel_color->setIcon(QIcon(color));
         else if (strKey == "nicklist_nick_color")
             ui.pushButton_nicklist_nick_color->setIcon(QIcon(color));
         else if (strKey == "nicklist_selected_nick_color")
@@ -1130,17 +1130,17 @@ void DlgOptions::setColor(const QString &strKey)
 void DlgOptions::setMainwindowColors()
 {
     QString strBackgroundColor = Core::instance()->settings.value("background_color");
-    QString strDefaultFontColor = Core::instance()->settings.value("default_font_color");
-    QString strJoinFontColor = Core::instance()->settings.value("message_join_color");
-    QString strPartFontColor = Core::instance()->settings.value("message_part_color");
-    QString strQuitFontColor = Core::instance()->settings.value("message_quit_color");
-    QString strKickFontColor = Core::instance()->settings.value("message_kick_color");
-    QString strModeFontColor = Core::instance()->settings.value("message_mode_color");
-    QString strNoticeFontColor = Core::instance()->settings.value("message_notice_color");
-    QString strInfoFontColor = Core::instance()->settings.value("message_info_color");
-    QString strMeFontColor = Core::instance()->settings.value("message_me_color");
-    QString strErrorFontColor = Core::instance()->settings.value("message_error_color");
-    QString strChannelFontColor = Core::instance()->settings.value("channel_font_color");
+    QString strDefaultColor = Core::instance()->settings.value("default_color");
+    QString strJoinColor = Core::instance()->settings.value("message_join_color");
+    QString strPartColor = Core::instance()->settings.value("message_part_color");
+    QString strQuitColor = Core::instance()->settings.value("message_quit_color");
+    QString strKickColor = Core::instance()->settings.value("message_kick_color");
+    QString strModeColor = Core::instance()->settings.value("message_mode_color");
+    QString strNoticeColor = Core::instance()->settings.value("message_notice_color");
+    QString strInfoColor = Core::instance()->settings.value("message_info_color");
+    QString strMeColor = Core::instance()->settings.value("message_me_color");
+    QString strErrorColor = Core::instance()->settings.value("message_error_color");
+    QString strChannelColor = Core::instance()->settings.value("channel_color");
 
     // set background color
     QPixmap bcolor(50,15);
@@ -1149,58 +1149,58 @@ void DlgOptions::setMainwindowColors()
 
     // set default font color
     QPixmap dfcolor(50,15);
-    dfcolor.fill(QColor(strDefaultFontColor));
-    ui.pushButton_default_font_color->setIcon(QIcon(dfcolor));
+    dfcolor.fill(QColor(strDefaultColor));
+    ui.pushButton_default_color->setIcon(QIcon(dfcolor));
 
     // set join font color
     QPixmap jfcolor(50,15);
-    jfcolor.fill(QColor(strJoinFontColor));
-    ui.pushButton_join_font_color->setIcon(QIcon(jfcolor));
+    jfcolor.fill(QColor(strJoinColor));
+    ui.pushButton_join_color->setIcon(QIcon(jfcolor));
 
     // set part font color
     QPixmap pfcolor(50,15);
-    pfcolor.fill(QColor(strPartFontColor));
-    ui.pushButton_part_font_color->setIcon(QIcon(pfcolor));
+    pfcolor.fill(QColor(strPartColor));
+    ui.pushButton_part_color->setIcon(QIcon(pfcolor));
 
     // set quit font color
     QPixmap qfcolor(50,15);
-    qfcolor.fill(QColor(strQuitFontColor));
-    ui.pushButton_quit_font_color->setIcon(QIcon(qfcolor));
+    qfcolor.fill(QColor(strQuitColor));
+    ui.pushButton_quit_color->setIcon(QIcon(qfcolor));
 
     // set kick font color
     QPixmap kfcolor(50,15);
-    kfcolor.fill(QColor(strKickFontColor));
-    ui.pushButton_kick_font_color->setIcon(QIcon(kfcolor));
+    kfcolor.fill(QColor(strKickColor));
+    ui.pushButton_kick_color->setIcon(QIcon(kfcolor));
 
     // set mode font color
     QPixmap mfcolor(50,15);
-    mfcolor.fill(QColor(strModeFontColor));
-    ui.pushButton_mode_font_color->setIcon(QIcon(mfcolor));
+    mfcolor.fill(QColor(strModeColor));
+    ui.pushButton_mode_color->setIcon(QIcon(mfcolor));
 
     // set notice font color
     QPixmap nfcolor(50,15);
-    nfcolor.fill(QColor(strNoticeFontColor));
-    ui.pushButton_notice_font_color->setIcon(QIcon(nfcolor));
+    nfcolor.fill(QColor(strNoticeColor));
+    ui.pushButton_notice_color->setIcon(QIcon(nfcolor));
 
     // set info font color
     QPixmap ifcolor(50,15);
-    ifcolor.fill(QColor(strInfoFontColor));
-    ui.pushButton_info_font_color->setIcon(QIcon(ifcolor));
+    ifcolor.fill(QColor(strInfoColor));
+    ui.pushButton_info_color->setIcon(QIcon(ifcolor));
 
     // set me font color
     QPixmap mecolor(50,15);
-    mecolor.fill(QColor(strMeFontColor));
-    ui.pushButton_me_font_color->setIcon(QIcon(mecolor));
+    mecolor.fill(QColor(strMeColor));
+    ui.pushButton_me_color->setIcon(QIcon(mecolor));
 
     // set error font color
     QPixmap efcolor(50,15);
-    efcolor.fill(QColor(strErrorFontColor));
-    ui.pushButton_error_font_color->setIcon(QIcon(efcolor));
+    efcolor.fill(QColor(strErrorColor));
+    ui.pushButton_error_color->setIcon(QIcon(efcolor));
 
     // set channel font color
     QPixmap cfcolor(50,15);
-    cfcolor.fill(QColor(strChannelFontColor));
-    ui.pushButton_channel_font_color->setIcon(QIcon(cfcolor));
+    cfcolor.fill(QColor(strChannelColor));
+    ui.pushButton_channel_color->setIcon(QIcon(cfcolor));
 }
 
 void DlgOptions::setNicklistColors()

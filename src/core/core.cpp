@@ -184,17 +184,6 @@ void Core::convertOldProfiles()
 
 void Core::convertOldConfig()
 {
-//    QHash<QString, QString> lOldMessageColor;
-//    lOldMessageColor.insert("font_color_level_1", "message_join_color");
-//    lOldMessageColor.insert("font_color_level_2", "message_part_color");
-//    lOldMessageColor.insert("font_color_level_3", "message_quit_color");
-//    lOldMessageColor.insert("font_color_level_4", "message_kick_color");
-//    lOldMessageColor.insert("font_color_level_5", "message_mode_color");
-//    lOldMessageColor.insert("font_color_level_6", "message_notice_color");
-//    lOldMessageColor.insert("font_color_level_7", "message_info_color");
-//    lOldMessageColor.insert("font_color_level_8", "message_me_color");
-//    lOldMessageColor.insert("font_color_level_9", "message_error_color");
-
     Config *pConfig = new Config();
 
     // change on off -> true false

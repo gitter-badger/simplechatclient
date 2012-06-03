@@ -263,12 +263,12 @@ int Convert::getColor(const QString &strData)
     QList<QString> lColors;
     lColors << "000000" << "623c00" << "c86c00" << "ff6500" << "ff0000" << "e40f0f" << "990033" << "8800ab" << "ce00ff" << "0f2ab1" << "3030ce" << "006699" << "1a866e" << "008100" << "959595";
 
-    int iFontColor = 0;
+    int iColor = 0;
     foreach (QString strColor, lColors)
     {
         if (strData.contains(QString("%C%1%").arg(strColor)))
-            return iFontColor;
-        iFontColor++;
+            return iColor;
+        iColor++;
     }
     return -1;
 }

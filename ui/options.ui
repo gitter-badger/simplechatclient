@@ -522,14 +522,14 @@
             </widget>
            </item>
            <item row="1" column="0">
-            <widget class="QLabel" name="label_default_font_color">
+            <widget class="QLabel" name="label_default_color">
              <property name="text">
               <string>Default font color:</string>
              </property>
             </widget>
            </item>
            <item row="1" column="1">
-            <widget class="QPushButton" name="pushButton_default_font_color">
+            <widget class="QPushButton" name="pushButton_default_color">
              <property name="text">
               <string/>
              </property>
@@ -542,14 +542,14 @@
             </widget>
            </item>
            <item row="2" column="0">
-            <widget class="QLabel" name="label_channel_font_color">
+            <widget class="QLabel" name="label_channel_color">
              <property name="text">
               <string>Channel font color:</string>
              </property>
             </widget>
            </item>
            <item row="2" column="1">
-            <widget class="QPushButton" name="pushButton_channel_font_color">
+            <widget class="QPushButton" name="pushButton_channel_color">
              <property name="text">
               <string/>
              </property>
@@ -562,14 +562,14 @@
             </widget>
            </item>
            <item row="3" column="0">
-            <widget class="QLabel" name="label_join_font_color">
+            <widget class="QLabel" name="label_join_color">
              <property name="text">
               <string>Join font color:</string>
              </property>
             </widget>
            </item>
            <item row="3" column="1">
-            <widget class="QPushButton" name="pushButton_join_font_color">
+            <widget class="QPushButton" name="pushButton_join_color">
              <property name="text">
               <string/>
              </property>
@@ -582,14 +582,14 @@
             </widget>
            </item>
            <item row="4" column="0">
-            <widget class="QLabel" name="label_part_font_color">
+            <widget class="QLabel" name="label_part_color">
              <property name="text">
               <string>Part font color:</string>
              </property>
             </widget>
            </item>
            <item row="4" column="1">
-            <widget class="QPushButton" name="pushButton_part_font_color">
+            <widget class="QPushButton" name="pushButton_part_color">
              <property name="text">
               <string/>
              </property>
@@ -602,14 +602,14 @@
             </widget>
            </item>
            <item row="5" column="0">
-            <widget class="QLabel" name="label_quit_font_color">
+            <widget class="QLabel" name="label_quit_color">
              <property name="text">
               <string>Quit font color:</string>
              </property>
             </widget>
            </item>
            <item row="5" column="1">
-            <widget class="QPushButton" name="pushButton_quit_font_color">
+            <widget class="QPushButton" name="pushButton_quit_color">
              <property name="text">
               <string/>
              </property>
@@ -629,14 +629,14 @@
             <enum>QFormLayout::ExpandingFieldsGrow</enum>
            </property>
            <item row="0" column="0">
-            <widget class="QLabel" name="label_kick_font_color">
+            <widget class="QLabel" name="label_kick_color">
              <property name="text">
               <string>Kick font color:</string>
              </property>
             </widget>
            </item>
            <item row="0" column="1">
-            <widget class="QPushButton" name="pushButton_kick_font_color">
+            <widget class="QPushButton" name="pushButton_kick_color">
              <property name="text">
               <string/>
              </property>
@@ -649,14 +649,14 @@
             </widget>
            </item>
            <item row="1" column="0">
-            <widget class="QLabel" name="label_mode_font_color">
+            <widget class="QLabel" name="label_mode_color">
              <property name="text">
               <string>Mode font color:</string>
              </property>
             </widget>
            </item>
            <item row="1" column="1">
-            <widget class="QPushButton" name="pushButton_mode_font_color">
+            <widget class="QPushButton" name="pushButton_mode_color">
              <property name="text">
               <string/>
              </property>
@@ -669,14 +669,14 @@
             </widget>
            </item>
            <item row="2" column="0">
-            <widget class="QLabel" name="label_notice_font_color">
+            <widget class="QLabel" name="label_notice_color">
              <property name="text">
               <string>Notice font color:</string>
              </property>
             </widget>
            </item>
            <item row="2" column="1">
-            <widget class="QPushButton" name="pushButton_notice_font_color">
+            <widget class="QPushButton" name="pushButton_notice_color">
              <property name="text">
               <string/>
              </property>
@@ -689,14 +689,14 @@
             </widget>
            </item>
            <item row="3" column="0">
-            <widget class="QLabel" name="label_info_font_color">
+            <widget class="QLabel" name="label_info_color">
              <property name="text">
               <string>Info font color:</string>
              </property>
             </widget>
            </item>
            <item row="3" column="1">
-            <widget class="QPushButton" name="pushButton_info_font_color">
+            <widget class="QPushButton" name="pushButton_info_color">
              <property name="text">
               <string/>
              </property>
@@ -709,14 +709,14 @@
             </widget>
            </item>
            <item row="5" column="0">
-            <widget class="QLabel" name="label_error_font_color">
+            <widget class="QLabel" name="label_error_color">
              <property name="text">
               <string>Error font color:</string>
              </property>
             </widget>
            </item>
            <item row="5" column="1">
-            <widget class="QPushButton" name="pushButton_error_font_color">
+            <widget class="QPushButton" name="pushButton_error_color">
              <property name="text">
               <string/>
              </property>
@@ -729,14 +729,14 @@
             </widget>
            </item>
            <item row="4" column="0">
-            <widget class="QLabel" name="label_me_font_color">
+            <widget class="QLabel" name="label_me_color">
              <property name="text">
               <string>Me font color:</string>
              </property>
             </widget>
            </item>
            <item row="4" column="1">
-            <widget class="QPushButton" name="pushButton_me_font_color">
+            <widget class="QPushButton" name="pushButton_me_color">
              <property name="text">
               <string/>
              </property>
