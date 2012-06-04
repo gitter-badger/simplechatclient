@@ -180,10 +180,33 @@ QString HtmlMessagesRenderer::renderer(QString strData, MessageCategory eMessage
     }
 }
 
-QString HtmlMessagesRenderer::rendererDebug(const QString &strData, int iTime)
+QString HtmlMessagesRenderer::rendererDebug(QString strData, int iTime)
 {
+    QString strColor = "#000000";
+    if (strData.startsWith("<- "))
+    {
+        strColor = "#ee0000";
+        strData.remove(0,3);
+    }
+    else if (strData.startsWith("-> "))
+    {
+        strColor = "#0000ee";
+        strData.remove(0,3);
+    }
+
+    // fix data
+    strData.replace("&", "&amp;");
+    strData.replace("<", "&lt;");
+    strData.replace(">", "&gt;");
+    strData.replace("\"", "&quot;");
+    strData.replace("'", "&#039;");
+    strData.replace("\\", "&#92;");
+
+    // time
     QString strTime = QDateTime::fromTime_t(iTime).toString("[hh:mm:ss]");
-    return QString("%1 %2").arg(strTime, strData);
+
+    // display
+    return QString("%1 <span style=\"color:%2;\">%3</span>").arg(strTime, strColor, strData);
 }
 
 QString HtmlMessagesRenderer::headCSS()
