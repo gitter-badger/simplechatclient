@@ -812,7 +812,7 @@ void ToolWidget::sendMessage(QString strText, bool bModeration)
 
         if (!strCommand.isEmpty())
         {
-            Commands *pCommands = new Commands(strChannel, strCommand);
+            Commands *pCommands = new Commands(strChannel, strText);
             strText = pCommands->execute();
             delete pCommands;
         }
