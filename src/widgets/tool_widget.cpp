@@ -798,24 +798,29 @@ void ToolWidget::sendMessage(QString strText, bool bModeration)
     QString strChannel = Core::instance()->getCurrentChannelName();
     QString strMe = Core::instance()->settings.value("nick");
     QString strCommand;
+    QString strTextOriginal;
 
     // is command
     if ((strText[0] == '/') && (strText[1] != '/'))
     {
-        QStringList strTextList = strText.split(" ");
-        strCommand = ((QString)strTextList[0]).remove(0,1);
         strText.remove(0,1);
+        strTextOriginal = strText;
+
+        QStringList lText = strText.split(" ");
+        if (lText.size() != 0)
+            strCommand = lText.at(0);
+
+        if (!strCommand.isEmpty())
+        {
+            Commands *pCommands = new Commands(strChannel, strCommand);
+            strText = pCommands->execute();
+            delete pCommands;
+        }
+
+        // is empty
+        if (strText.isEmpty())
+            return;
     }
-
-    QString strTextOriginal = strText;
-
-    Commands *pCommands = new Commands(strChannel, strText);
-    strText = pCommands->execute();
-    delete pCommands;
-
-    // is empty
-    if (strText.isEmpty())
-        return;
 
     if (strCommand == "me")
     {

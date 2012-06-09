@@ -37,7 +37,7 @@ Commands::Commands(const QString &_strChan, const QString &_strData) : strChan(_
 
 QString Commands::execute()
 {
-    if (strDataList.value(0).isEmpty())
+    if (strDataList.size() == 0)
         return strData;
 
     QString strCmd = strDataList[0].toLower();
