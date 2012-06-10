@@ -21,7 +21,7 @@
 #include <QtCrypto>
 // in OpenSuSE 11 try this:
 //#include <QtCrypto/QtCrypto>
-#include "crypt.h"
+#include "simple_crypt.h"
 
 #ifdef Q_WS_WIN
     #include <windows.h>
@@ -29,7 +29,7 @@
     #include <unistd.h>
 #endif
 
-Crypt::Crypt()
+SimpleCrypt::SimpleCrypt()
 {
 #ifdef Q_WS_WIN
     char volName[256];
@@ -47,7 +47,7 @@ Crypt::Crypt()
 #endif
 }
 
-QString Crypt::encrypt(QString strKey, const QString &strData)
+QString SimpleCrypt::encrypt(QString strKey, const QString &strData)
 {
     if ((strKey.isEmpty()) || (strData.isEmpty()) || (strIv.isEmpty()))
     {
@@ -80,7 +80,7 @@ QString Crypt::encrypt(QString strKey, const QString &strData)
     return QString::null;
 }
 
-QString Crypt::decrypt(QString strKey, const QString &strData)
+QString SimpleCrypt::decrypt(QString strKey, const QString &strData)
 {
     if ((strKey.isEmpty()) || (strData.isEmpty()) || (strIv.isEmpty()))
     {

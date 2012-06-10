@@ -79,7 +79,9 @@ void Log::save(const QString &strChannel, const QString &strData)
     {
         // convert
         QString strSaveData = strData; 
-        Convert::simpleConvert(strSaveData);
+
+        if (strChannel != DEBUG)
+            Convert::simpleConvert(strSaveData);
 
         // save
         QTextStream out(&f);

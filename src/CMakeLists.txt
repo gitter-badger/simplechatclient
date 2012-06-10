@@ -42,10 +42,10 @@ set (scc_SRCS
 	common/commands.cpp
 	common/config.cpp
 	common/convert.cpp
-	common/crypt.cpp
 	common/html_messages_renderer.cpp
 	common/log.cpp
 	common/replace.cpp
+	common/simple_crypt.cpp
 	common/xml.cpp
 
 	core/core.cpp
@@ -125,7 +125,7 @@ set (scc_MOC_HDRS
 	common/commands.h
 	common/config.h
 	common/convert.h
-	common/crypt.h
+	common/simple_crypt.h
 	common/xml.h
 
 	core/core.h

@@ -17,19 +17,19 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef CRYPT_H
-#define CRYPT_H
+#ifndef SIMPLE_CRYPT_H
+#define SIMPLE_CRYPT_H
 
 #include <QObject>
 
 /**
- * Crypt class
+ * Simple crypt class
  */
-class Crypt : public QObject
+class SimpleCrypt : public QObject
 {
     Q_OBJECT
 public:
-    Crypt();
+    SimpleCrypt();
     /**
      * Encrypt
      * @param QString key
@@ -49,4 +49,4 @@ private:
     QString strIv;
 };
 
-#endif // CRYPT_H
+#endif // SIMPLE_CRYPT_H

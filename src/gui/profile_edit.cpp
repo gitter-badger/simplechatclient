@@ -21,7 +21,7 @@
 #include <QMessageBox>
 #include <QPushButton>
 #include "config.h"
-#include "crypt.h"
+#include "simple_crypt.h"
 #include "mainwindow.h"
 #include "profile_edit.h"
 
@@ -56,9 +56,9 @@ void DlgProfileEdit::setDefaultValues()
     // decrypt pass
     if (!strPassword.isEmpty())
     {
-        Crypt *pCrypt = new Crypt();
-        strPassword = pCrypt->decrypt(strNick, strPassword);
-        delete pCrypt;
+        SimpleCrypt *pSimpleCrypt = new SimpleCrypt();
+        strPassword = pSimpleCrypt->decrypt(strNick, strPassword);
+        delete pSimpleCrypt;
     }
 
     ui.lineEdit_nick->setText(strNick);
@@ -83,9 +83,9 @@ void DlgProfileEdit::buttonOk()
     }
 
     // encrypt pass
-    Crypt *pCrypt = new Crypt();
-    strPassword = pCrypt->encrypt(strNick, strPassword);
-    delete pCrypt;
+    SimpleCrypt *pSimpleCrypt = new SimpleCrypt();
+    strPassword = pSimpleCrypt->encrypt(strNick, strPassword);
+    delete pSimpleCrypt;
 
     Config *pConfig = new Config(true, strNick);
     pConfig->set("pass", strPassword);

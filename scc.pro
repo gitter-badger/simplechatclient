@@ -12,7 +12,6 @@ SOURCES += src/avatars/avatar.cpp \
     src/common/commands.cpp \
     src/common/config.cpp \
     src/common/convert.cpp \
-    src/common/crypt.cpp \
     src/common/html_messages_renderer.cpp \
     src/common/kamerzysta.cpp \
     src/common/log.cpp \
@@ -88,12 +87,12 @@ SOURCES += src/avatars/avatar.cpp \
     src/widgets/simple_rank_widget.cpp \
     src/widgets/simple_stats_widget.cpp \
     src/widgets/tool_widget.cpp \
-    src/widgets/webcam_delegate.cpp
+    src/widgets/webcam_delegate.cpp \
+    src/common/simple_crypt.cpp
 HEADERS += src/avatars/avatar.h \
     src/common/commands.h \
     src/common/config.h \
     src/common/convert.h \
-    src/common/crypt.h \
     src/common/log.h \
     src/common/html_messages_renderer.h \
     src/common/kamerzysta.h \
@@ -171,7 +170,8 @@ HEADERS += src/avatars/avatar.h \
     src/widgets/simple_rank_widget.h \
     src/widgets/simple_stats_widget.h \
     src/widgets/tool_widget.h \
-    src/widgets/webcam_delegate.h
+    src/widgets/webcam_delegate.h \
+    src/common/simple_crypt.h
 FORMS += ui/about.ui \
     ui/avatar_edit.ui \
     ui/awaylog.ui \

@@ -26,7 +26,7 @@
 #include "busy.h"
 #include "config.h"
 #include "core.h"
-#include "crypt.h"
+#include "simple_crypt.h"
 #include "lag.h"
 #include "nicklist.h"
 #include "message.h"
@@ -164,9 +164,9 @@ void Network::authorize()
     // decrypt pass
     if (!strPass.isEmpty())
     {
-        Crypt *pCrypt = new Crypt();
-        strPass = pCrypt->decrypt(strNick, strPass);
-        delete pCrypt;
+        SimpleCrypt *pSimpleCrypt = new SimpleCrypt();
+        strPass = pSimpleCrypt->decrypt(strNick, strPass);
+        delete pSimpleCrypt;
     }
 
     // update nick

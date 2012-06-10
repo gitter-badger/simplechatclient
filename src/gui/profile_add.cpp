@@ -21,7 +21,7 @@
 #include <QMessageBox>
 #include "core.h"
 #include "config.h"
-#include "crypt.h"
+#include "simple_crypt.h"
 #include "mainwindow.h"
 #include "register_nick.h"
 #include "profile_manager.h"
@@ -161,9 +161,9 @@ void DlgProfileAdd::buttonOk()
     // encrypt pass
     if (!strPass.isEmpty())
     {
-        Crypt *pCrypt = new Crypt();
-        strPassword = pCrypt->encrypt(strNick, strPassword);
-        delete pCrypt;
+        SimpleCrypt *pSimpleCrypt = new SimpleCrypt();
+        strPassword = pSimpleCrypt->encrypt(strNick, strPassword);
+        delete pSimpleCrypt;
     }
 
     // save
