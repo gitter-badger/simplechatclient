@@ -46,7 +46,8 @@ SimpleCrypt::SimpleCrypt()
     strIv = QString::number(lSerialNumber, 10);
 #endif
 
-    QCA::Initializer init;
+    if (strIv.isEmpty())
+        strIv = "69193462";
 }
 
 QString SimpleCrypt::encrypt(QString strKey, const QString &strData)
@@ -57,7 +58,9 @@ QString SimpleCrypt::encrypt(QString strKey, const QString &strData)
         return QString::null;
     }
 
-    if ((!QCA::isSupported("aes256-cbc-pkcs7")) || (!QCA::isSupported("blowfish-cbc")))
+    QCA::Initializer init;
+
+    if ((!QCA::isSupported("aes256-cbc-pkcs7")) && (!QCA::isSupported("blowfish-cbc")))
     {
         qDebug() << tr("Warning: AES and Blowfish is not supported!");
         return strData;
@@ -87,7 +90,7 @@ QString SimpleCrypt::encrypt(QString strKey, const QString &strData)
         return QCA::arrayToHex(QCA::SecureArray(cipher.process(arg)).toByteArray());
     }
     else
-        return QString::null;
+        return strData;
 }
 
 QString SimpleCrypt::decrypt(QString strKey, const QString &strData)
@@ -98,7 +101,9 @@ QString SimpleCrypt::decrypt(QString strKey, const QString &strData)
         return QString::null;
     }
 
-    if ((!QCA::isSupported("aes256-cbc-pkcs7")) || (!QCA::isSupported("blowfish-cbc")))
+    QCA::Initializer init;
+
+    if ((!QCA::isSupported("aes256-cbc-pkcs7")) && (!QCA::isSupported("blowfish-cbc")))
     {
         qDebug() << tr("Warning: AES and Blowfish is not supported!");
         return strData;
@@ -128,5 +133,5 @@ QString SimpleCrypt::decrypt(QString strKey, const QString &strData)
         return QCA::SecureArray(cipher.process(arg)).data();
     }
     else
-        return QString::null;
+        return strData;
 }
