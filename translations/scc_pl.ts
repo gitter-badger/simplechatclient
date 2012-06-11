@@ -312,21 +312,6 @@
     </message>
 </context>
 <context>
-    <name>Crypt</name>
-    <message>
-        <source>Error: crypt: Cannot encrypt - empty argument</source>
-        <translation>Błąd: crypt: Nie można zaszyfrować danych - pusty parametr</translation>
-    </message>
-    <message>
-        <source>Error: AES256-CBC not supported!</source>
-        <translation>Błąd: AES256-CBC jest nie obsługiwany!</translation>
-    </message>
-    <message>
-        <source>Error: crypt: Cannot decrypt - empty argument</source>
-        <translation>Błąd: crypt: Nie można odszyfrować danych - pusty parametr</translation>
-    </message>
-</context>
-<context>
     <name>DlgAbout</name>
     <message>
         <source>About...</source>
@@ -3069,6 +3054,21 @@
     <message>
         <source>unknown</source>
         <translation>nieznany</translation>
+    </message>
+</context>
+<context>
+    <name>SimpleCrypt</name>
+    <message>
+        <source>Error: crypt: Cannot encrypt - empty argument</source>
+        <translation>Błąd: crypt: Nie można zaszyfrować danych - pusty parametr</translation>
+    </message>
+    <message>
+        <source>Error: crypt: Cannot decrypt - empty argument</source>
+        <translation>Błąd: crypt: Nie można odszyfrować danych - pusty parametr</translation>
+    </message>
+    <message>
+        <source>Warning: AES and Blowfish is not supported!</source>
+        <translation>Ostrzeżenie: AES oraz Blowfish nie są obsługiwane!</translation>
     </message>
 </context>
 <context>
