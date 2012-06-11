@@ -124,7 +124,6 @@ set (scc_MOC_HDRS
 
 	common/commands.h
 	common/config.h
-	common/convert.h
 	common/simple_crypt.h
 	common/xml.h
 
@@ -196,6 +195,10 @@ set (scc_MOC_HDRS
 )
 
 set (scc_HDRS
+	common/convert.h
+	common/html_messages_renderer.cpp
+	common/log.cpp
+	common/replace.h
 	core/defines.h
 	core/debug_block.h
 )
@@ -286,8 +289,20 @@ add_definitions (${QCA2_CFLAGS_OTHER})
 
 option (WITH_PHONON "Compile with Phonon support" ON)
 if (WITH_PHONON)
-	find_package (Phonon)
-	include_directories (${PHONON_INCLUDE_DIR})
+	pkg_search_module (PHONON phonon)
+	if (PHONON_FOUND)
+		set (LIBRARIES ${PHONON_LIBRARIES})
+		link_directories (${PHONON_LIBRARY_DIRS})
+		include_directories (${PHONON_INCLUDE_DIRS})
+	else (PHONON_FOUND)
+		if (QT_PHONON_FOUND)
+			set (LIBRARIES ${QT_PHONON_LIBRARY})
+			include_directories (${QT_PHONON_INCLUDE_DIR})
+		else (QT_PHONON_FOUND)
+			message (FATAL_ERROR "Could not find Phonon library")
+		endif (QT_PHONON_FOUND)
+	endif (PHONON_FOUND)
+	message (STATUS "Found Phonon library: ${LIBRARIES}") 
 else (WITH_PHONON)
 	message (STATUS "Phonon disabled")
 endif (WITH_PHONON)
