@@ -26,7 +26,8 @@
 #include "message.h"
 #include "updates.h"
 
-#define UPDATE_URL "http://simplechatclien.sourceforge.net/update.php"
+#define UPDATE_URL_1 "http://simplechatclien.sourceforge.net/update.php"
+#define UPDATE_URL_2 "http://simplechatclient.github.com/update.xml"
 
 Updates * Updates::Instance = 0;
 
@@ -59,9 +60,10 @@ void Updates::init()
 void Updates::checkUpdate()
 {
     QString strSendVersion = Core::instance()->settings.value("version");
-    QUrl url = QUrl(QString("%1?v=%2").arg(UPDATE_URL, strSendVersion));
+    QUrl url = QUrl(QString("%1?v=%2").arg(UPDATE_URL_1, strSendVersion));
 
-    accessManager->get(QNetworkRequest(url));
+    QNetworkReply *pReply = accessManager->get(QNetworkRequest(url));
+    pReply->setProperty("category", "1");
 }
 
 void Updates::compareVersion()
@@ -140,11 +142,21 @@ void Updates::updateFinished(QNetworkReply *reply)
 {
     reply->deleteLater();
 
+    int category = reply->property("category").toInt();
+
     // if errors
     if (reply->error())
     {
-        if (Core::instance()->settings.value("debug") == "true")
-            qDebug() << "Error: Cannot get update xml";
+        if (category == 1)
+        {
+            QNetworkReply *pReply = accessManager->get(QNetworkRequest(QUrl(UPDATE_URL_2)));
+            pReply->setProperty("category", "2");
+        }
+        else
+        {
+            if (Core::instance()->settings.value("debug") == "true")
+                qDebug() << "Error: Cannot get update xml";
+        }
 
         return;
     }
