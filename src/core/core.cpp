@@ -110,6 +110,7 @@ void Core::createSettings()
     settings["whats_new"] = "";
     settings["motd"] = "";
     settings["version_status"] = "unknown";
+    settings["update_url"] = "";
     settings["logged"] = "false";
     settings["busy"] = "false";
     settings["away"] = "false";

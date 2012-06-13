@@ -60,7 +60,7 @@ void Updates::init()
 void Updates::checkUpdate()
 {
     QNetworkReply *pReply = accessManager->get(QNetworkRequest(QUrl(UPDATE_URL_1)));
-    pReply->setProperty("category", "1");
+    pReply->setProperty("update_url", "1");
 }
 
 void Updates::compareVersion()
@@ -139,15 +139,15 @@ void Updates::updateFinished(QNetworkReply *reply)
 {
     reply->deleteLater();
 
-    int category = reply->property("category").toInt();
+    int update_url = reply->property("update_url").toInt();
 
     // if errors
     if (reply->error())
     {
-        if (category == 1)
+        if (update_url == 1)
         {
             QNetworkReply *pReply = accessManager->get(QNetworkRequest(QUrl(UPDATE_URL_2)));
-            pReply->setProperty("category", "2");
+            pReply->setProperty("update_url", "2");
         }
         else
         {
@@ -157,6 +157,8 @@ void Updates::updateFinished(QNetworkReply *reply)
 
         return;
     }
+
+    Core::instance()->settings["update_url"] = QString::number(update_url);
 
     QString strUpdateXml = reply->readAll();
 

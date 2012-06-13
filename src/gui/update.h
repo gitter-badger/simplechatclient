@@ -41,7 +41,7 @@ private:
     void createGui();
     void setDefaultValues();
     void createSignals();
-    void gotSite(QString site);
+    void gotSFSite(QString site);
     void gotFile(const QByteArray &bData);
 
 private slots:

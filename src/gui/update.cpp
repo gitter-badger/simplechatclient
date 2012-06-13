@@ -28,6 +28,12 @@
 #include "mainwindow.h"
 #include "update.h"
 
+#define UPDATE_LINK_1 "http://simplechatclien.sourceforge.net/download/"
+#define UPDATE_LINK_2 "https://github.com/simplechatclient/simplechatclient/downloads"
+
+#define UPDATE_DOWNLOAD_LINK_1 "http://sourceforge.net/projects/simplechatclien/files/"
+#define UPDATE_DOWNLOAD_LINK_2 "http://cloud.github.com/downloads/simplechatclient/simplechatclient/"
+
 DlgUpdate::DlgUpdate(MainWindow *parent) : QDialog(parent)
 {
     ui.setupUi(this);
@@ -83,18 +89,33 @@ void DlgUpdate::buttonDownload()
 {
     ui.pushButton_download->setEnabled(false);
 
+    int update_url = Core::instance()->settings["update_url"].toInt();
+
 #ifdef Q_WS_WIN
-    QNetworkReply *pReply = accessManager->get(QNetworkRequest(QUrl("http://sourceforge.net/projects/simplechatclien/files/scc-"+strVersion+".exe/download")));
-    pReply->setProperty("category", "site");
+    if (update_url == 1)
+    {
+        QNetworkReply *pReply = accessManager->get(QNetworkRequest(QUrl(QString("%1scc-%2.exe/download").arg(UPDATE_DOWNLOAD_LINK_1, strVersion))));
+        pReply->setProperty("category", "sfsite");
+    }
+    else if (update_url == 2)
+    {
+        QNetworkReply *pReply = accessManager->get(QNetworkRequest(QUrl(QString("%1scc-%2.exe").arg(UPDATE_DOWNLOAD_LINK_2, strVersion))));
+        pReply->setProperty("category", "file");
+        connect(pReply, SIGNAL(downloadProgress(qint64,qint64)), this, SLOT(downloadProgress(qint64,qint64)));
+        connect(pReply, SIGNAL(error(QNetworkReply::NetworkError)), this, SLOT(downloadError(QNetworkReply::NetworkError)));
+    }
 #else
-    QString strUrl = "http://simplechatclien.sourceforge.net/download/";
+    QString strUrl;
+    if (update_url == 1) strUrl = UPDATE_LINK_1;
+    else if (update_url == 2) strUrl = UPDATE_LINK_2;
+
     QDesktopServices::openUrl(QUrl(strUrl));
 #endif
 }
 
 // <a href="http://downloads.sourceforge.net..." class="direct-download">
 // http://leaseweb.dl.sourceforge.net/project/simplechatclien/scc-1.0.13.917.exe
-void DlgUpdate::gotSite(QString site)
+void DlgUpdate::gotSFSite(QString site)
 {
     site.replace(QRegExp(".*<a href=\"http://downloads.sourceforge.net.*use_mirror=(.*)\" class=\"direct-download\">.*"), "http://\\1.dl.sourceforge.net/project/simplechatclien/scc-"+strVersion+".exe");
 
@@ -155,8 +176,8 @@ void DlgUpdate::networkFinished(QNetworkReply *reply)
         return;
     }
 
-    if (strCategory == "site")
-        gotSite(QString(bData));
+    if (strCategory == "sfsite")
+        gotSFSite(QString(bData));
     else if (strCategory == "file")
         gotFile(bData);
 }
