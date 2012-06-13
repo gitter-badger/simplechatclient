@@ -26,8 +26,8 @@
 #include "message.h"
 #include "updates.h"
 
-#define UPDATE_URL_1 "http://simplechatclient.github.com/update.xml"
-#define UPDATE_URL_2 "http://simplechatclien.sourceforge.net/update.php"
+#define UPDATE_URL_1 "http://simplechatclien.sourceforge.net/update.php"
+#define UPDATE_URL_2 "http://simplechatclient.github.com/update.xml"
 
 Updates * Updates::Instance = 0;
 
@@ -146,10 +146,7 @@ void Updates::updateFinished(QNetworkReply *reply)
     {
         if (category == 1)
         {
-            QString strSendVersion = Core::instance()->settings.value("version");
-            QUrl url = QUrl(QString("%1?v=%2").arg(UPDATE_URL_2, strSendVersion));
-
-            QNetworkReply *pReply = accessManager->get(QNetworkRequest(url));
+            QNetworkReply *pReply = accessManager->get(QNetworkRequest(QUrl(UPDATE_URL_2)));
             pReply->setProperty("category", "2");
         }
         else
