@@ -2,7 +2,7 @@
 
 set SCC_DIR=%CD%
 set DESTINATION="C:\scc\release"
-set QT_DIR="C:\Qt\4.8.1"
+set QT_DIR="C:\Qt\4.8.2"
 set QCA2_DIR="C:\qca2"
 set OPENSSL_DIR="C:\OpenSSL-Win32"
 set QCA_OSSL_DIR=%SCC_DIR%\3rdparty\qca-ossl-2.0.0-beta3
@@ -24,7 +24,7 @@ exit
 )
 
 if not exist %QT_DIR%\bin\qtvars.bat (
-echo Download Qt 4.8.1 from http://qt.nokia.com/downloads/windows-cpp
+echo Download Qt 4.8.2 from http://qt.nokia.com/downloads/windows-cpp
 pause
 exit
 )
