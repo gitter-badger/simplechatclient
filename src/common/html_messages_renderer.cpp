@@ -22,10 +22,21 @@
 #include "nicklist.h"
 #include "html_messages_renderer.h"
 
+void fixHtmlChars(QString &strData)
+{
+    strData.replace("&", "&amp;");
+    strData.replace("<", "&lt;");
+    strData.replace(">", "&gt;");
+    strData.replace("\"", "&quot;");
+    strData.replace("'", "&#039;");
+    strData.replace("\\", "&#92;");
+}
+
 QString fixContextMenu(QString strData, MessageCategory eMessageCategory)
 {
     QStringList strDataList = strData.split(" ");
 
+    // nick
     if ((strDataList[0] == "*") && ((eMessageCategory == MessageJoin) || (eMessageCategory == MessagePart) || (eMessageCategory == MessageQuit)  || (eMessageCategory == MessageKick)))
         strDataList[1] = QString("<a onclick=\"return false\" name=\"nick\" style=\"color:inherit;text-decoration:none;\" href=\"#\">%1</a>").arg(strDataList[1]);
 
@@ -33,9 +44,11 @@ QString fixContextMenu(QString strData, MessageCategory eMessageCategory)
     {
         QString strWord = strDataList[i];
 
+        // channel
         if (strWord.startsWith('#'))
             strDataList[i] = QString("<a onclick=\"return false\" name=\"channel\" style=\"text-decoration:none;\" href=\"#\" class=\"ChannelColor\">%1</a>").arg(strWord);
 
+        // web
         if ((strWord.startsWith("http")) || (strWord.startsWith("www.")))
             strDataList[i] = QString("<a onclick=\"return false\" name=\"website\" style=\"color:inherit;text-decoration:none;\" href=\"%1\">%2</a>").arg(strWord, strWord);
     }
@@ -48,13 +61,8 @@ QString HtmlMessagesRenderer::renderer(QString strData, MessageCategory eMessage
 {
     QDateTime dt = QDateTime::fromTime_t(iTime);
 
-    // fix data
-    strData.replace("&", "&amp;");
-    strData.replace("<", "&lt;");
-    strData.replace(">", "&gt;");
-    strData.replace("\"", "&quot;");
-    strData.replace("'", "&#039;");
-    strData.replace("\\", "&#92;");
+    // fix html chars
+    fixHtmlChars(strData);
 
     // fix for context menu
     strData = fixContextMenu(strData, eMessageCategory);
@@ -160,13 +168,8 @@ QString HtmlMessagesRenderer::rendererDebug(QString strData, int iTime)
         strData.remove(0,3);
     }
 
-    // fix data
-    strData.replace("&", "&amp;");
-    strData.replace("<", "&lt;");
-    strData.replace(">", "&gt;");
-    strData.replace("\"", "&quot;");
-    strData.replace("'", "&#039;");
-    strData.replace("\\", "&#92;");
+    // fix html chars
+    fixHtmlChars(strData);
 
     // time
     QString strTime = QDateTime::fromTime_t(iTime).toString("[hh:mm:ss]");
