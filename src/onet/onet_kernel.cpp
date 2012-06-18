@@ -1529,7 +1529,7 @@ void OnetKernel::raw_162n()
 // :ChanServ!service@service.onet NOTICE Merovingian :163 #scc b *!*@haxgu3xx7ptcn4u72yrkbp4daq Merovingian 1289497781 :Tony_Montana
 void OnetKernel::raw_163n()
 {
-    if (strDataList.size() < 9) return;
+    if (strDataList.size() < 10) return;
 
     QString strChannel = strDataList[4];
     QString strFlag = strDataList[5];
