@@ -173,7 +173,7 @@ void MainWindow::createActions()
     camsAction = new QAction(QIcon(":/images/oxygen/16x16/camera-web.png"),tr("Cams"), this);
     myStatsAction = new QAction(QIcon(":/images/oxygen/16x16/office-chart-bar.png"),tr("My statistics"), this);
     myProfileAction = new QAction(QIcon(":/images/oxygen/16x16/view-pim-contacts.png"),tr("My profile"), this);
-    myAvatarAction = new QAction(QIcon(":/images/oxygen/16x16/preferences-desktop-user.png"),tr("My avatar"), this);
+    myAvatarAction = new QAction(QIcon(":/images/oxygen/16x16/edit-image-face-show.png"),tr("My avatar"), this);
 
     minimizeAction = new QAction(QIcon(":/images/oxygen/16x16/view-close.png"), tr("Mi&nimize"), this);
     maximizeAction = new QAction(QIcon(":/images/oxygen/16x16/view-fullscreen.png"), tr("Ma&ximize"), this);

@@ -1338,6 +1338,22 @@
         <translation>Usuń podświetlany tekst:</translation>
     </message>
     <message>
+        <source>Punish reason</source>
+        <translation>Powody wyrzucenia</translation>
+    </message>
+    <message>
+        <source>Changing punish reason</source>
+        <translation>Zmiana powodu wyrzucenia</translation>
+    </message>
+    <message>
+        <source>Add punish reason:</source>
+        <translation>Dodaj powód wyrzucenia:</translation>
+    </message>
+    <message>
+        <source>Remove punish reason:</source>
+        <translation>Usuń powód wyrzucenia:</translation>
+    </message>
+    <message>
         <source>Busy mode after you log in to chat</source>
         <translation>Tryb zajętości po zalogowaniu</translation>
     </message>

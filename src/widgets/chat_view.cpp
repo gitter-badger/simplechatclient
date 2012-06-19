@@ -363,7 +363,7 @@ void ChatView::menuNick(QContextMenuEvent *event)
         QString strPunishReasons = lPunishReasons[i];
 
         punishReasonActs[i] = new QAction(this);
-        //punishReasonActs[i]->setIcon(QIcon(":/images/oxygen/16x16/irc-join-channel.png"));
+        punishReasonActs[i]->setIcon(QIcon(":/images/oxygen/16x16/preferences-desktop-user.png"));
         punishReasonActs[i]->setVisible(false);
         punishReasonActs[i]->setText(strPunishReasons);
         punishReasonActs[i]->setData(lPunishReasons[i]);

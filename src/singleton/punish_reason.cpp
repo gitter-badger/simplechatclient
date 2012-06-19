@@ -94,7 +94,7 @@ void PunishReason::save()
         strPunishReason.append(strNewPunishReason+";");
 
     Config *pConfig = new Config();
-    pConfig->set("highlight", strPunishReason);
+    pConfig->set("punish_reason", strPunishReason);
     delete pConfig;
 }
 

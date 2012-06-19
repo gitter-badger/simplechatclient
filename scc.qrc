@@ -107,5 +107,6 @@
         <file>images/oxygen/16x16/view-restore.png</file>
         <file>images/oxygen/16x16/view-close.png</file>
         <file>images/oxygen/16x16/help-hint.png</file>
+        <file>images/oxygen/16x16/edit-image-face-show.png</file>
     </qresource>
 </RCC>

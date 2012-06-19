@@ -27,6 +27,7 @@
 #include "core.h"
 #include "highlight.h"
 #include "profile_manager.h"
+#include "punish_reason.h"
 #include "notify.h"
 #include "options.h"
 
@@ -49,6 +50,8 @@ void DlgOptions::createGui()
     ui.pushButton_profiles->setIcon(QIcon(":/images/oxygen/16x16/preferences-activities.png"));
     ui.pushButton_highlight_add->setIcon(QIcon(":/images/oxygen/16x16/list-add.png"));
     ui.pushButton_highlight_remove->setIcon(QIcon(":/images/oxygen/16x16/list-remove.png"));
+    ui.pushButton_punish_reason_add->setIcon(QIcon(":/images/oxygen/16x16/list-add.png"));
+    ui.pushButton_punish_reason_remove->setIcon(QIcon(":/images/oxygen/16x16/list-remove.png"));
     ui.pushButton_reverse_colors->setIcon(QIcon(":/images/oxygen/16x16/format-stroke-color.png"));
     ui.pushButton_restore_default_colors->setIcon(QIcon(":/images/oxygen/16x16/edit-undo.png"));
     ui.pushButton_play_beep->setIcon(QIcon(":/images/oxygen/16x16/media-playback-start.png"));
@@ -71,6 +74,11 @@ void DlgOptions::createGui()
     ui.groupBox_highlight->setTitle(tr("Highlight text"));
     ui.pushButton_highlight_add->setText(tr("Add"));
     ui.pushButton_highlight_remove->setText(tr("Remove"));
+
+    // page punish reason
+    ui.groupBox_punish_reason->setTitle(tr("Punish reason"));
+    ui.pushButton_punish_reason_add->setText(tr("Add"));
+    ui.pushButton_punish_reason_remove->setText(tr("Remove"));
 
     // page adv
     ui.checkBox_auto_busy->setText(tr("Busy mode after you log in to chat"));
@@ -153,6 +161,11 @@ void DlgOptions::createGui()
     highlight->setText(0, tr("Highlight"));
     highlight->setToolTip(0, tr("Highlight"));
 
+    QTreeWidgetItem *punish_reason = new QTreeWidgetItem(ui.treeWidget_options);
+    punish_reason->setIcon(0, QIcon(":/images/oxygen/16x16/preferences-desktop-user.png"));
+    punish_reason->setText(0, tr("Punish reason"));
+    punish_reason->setToolTip(0, tr("Punish reason"));
+
     QTreeWidgetItem *adv = new QTreeWidgetItem(ui.treeWidget_options);
     adv->setIcon(0, QIcon(":/images/oxygen/16x16/dialog-warning.png"));
     adv->setText(0, tr("Advanced"));
@@ -212,6 +225,13 @@ void DlgOptions::setDefaultValues()
     ui.listWidget_highlight->clear();
     foreach (const QString &strHighlight, Highlight::instance()->get())
         ui.listWidget_highlight->addItem(strHighlight);
+
+    // punish reason
+    PunishReason::instance()->init();
+
+    ui.listWidget_punish_reason->clear();
+    foreach (const QString &strPunishReason, PunishReason::instance()->get())
+        ui.listWidget_punish_reason->addItem(strPunishReason);
 
     // sound beep
     ui.lineEdit_sound_beep->setText(QDir::toNativeSeparators(Core::instance()->settings.value("sound_beep")));
@@ -399,6 +419,8 @@ void DlgOptions::createSignals()
     connect(ui.comboBox_language, SIGNAL(activated(int)), this, SLOT(languageChanged(int)));
     connect(ui.pushButton_highlight_add, SIGNAL(clicked()), this, SLOT(highlightAdd()));
     connect(ui.pushButton_highlight_remove, SIGNAL(clicked()), this, SLOT(highlightRemove()));
+    connect(ui.pushButton_punish_reason_add, SIGNAL(clicked()), this, SLOT(punishReasonAdd()));
+    connect(ui.pushButton_punish_reason_remove, SIGNAL(clicked()), this, SLOT(punishReasonRemove()));
     connect(ui.checkBox_auto_busy, SIGNAL(clicked(bool)), this, SLOT(autoBusy(bool)));
     connect(ui.checkBox_disable_autojoin_favourites, SIGNAL(clicked(bool)), this, SLOT(disableAutojoinFavourites(bool)));
     connect(ui.checkBox_minimize_to_tray, SIGNAL(clicked(bool)), this, SLOT(minimizeToTray(bool)));
@@ -589,6 +611,43 @@ void DlgOptions::highlightRemove()
         QList<QListWidgetItem*> items = ui.listWidget_highlight->findItems(strText, Qt::MatchExactly);
         foreach (QListWidgetItem *item, items)
             ui.listWidget_highlight->takeItem(ui.listWidget_highlight->row(item));
+    }
+}
+
+void DlgOptions::punishReasonAdd()
+{
+    bool ok;
+    QString strText = QInputDialog::getText(this, tr("Changing punish reason"), tr("Add punish reason:"), QLineEdit::Normal, QString::null, &ok);
+    strText = strText.trimmed();
+
+    if ((ok) && (!strText.isEmpty()))
+    {
+        if (!PunishReason::instance()->contains(strText))
+        {
+            PunishReason::instance()->add(strText);
+
+            ui.listWidget_punish_reason->addItem(strText);
+        }
+    }
+}
+
+void DlgOptions::punishReasonRemove()
+{
+    QString strRemove;
+    if (ui.listWidget_punish_reason->selectedItems().size() != 0)
+        strRemove = ui.listWidget_punish_reason->selectedItems().at(0)->text();
+
+    bool ok;
+    QString strText = QInputDialog::getText(this, tr("Changing punish reason"), tr("Remove punish reason:"), QLineEdit::Normal, strRemove, &ok);
+    strText = strText.trimmed();
+
+    if ((ok) && (!strText.isEmpty()))
+    {
+        PunishReason::instance()->remove(strText);
+
+        QList<QListWidgetItem*> items = ui.listWidget_punish_reason->findItems(strText, Qt::MatchExactly);
+        foreach (QListWidgetItem *item, items)
+            ui.listWidget_punish_reason->takeItem(ui.listWidget_punish_reason->row(item));
     }
 }
 

@@ -52,6 +52,8 @@ private slots:
     void languageChanged(int index);
     void highlightAdd();
     void highlightRemove();
+    void punishReasonAdd();
+    void punishReasonRemove();
     void autoBusy(bool bValue);
     void disableAutojoinFavourites(bool bValue);
     void minimizeToTray(bool bValue);
