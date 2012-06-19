@@ -16,6 +16,7 @@ SOURCES += src/avatars/avatar.cpp \
     src/common/kamerzysta.cpp \
     src/common/log.cpp \
     src/common/replace.cpp \
+    src/common/simple_crypt.cpp \
     src/common/webcam_network.cpp \
     src/common/webcam_engine.cpp \
     src/common/winamp.cpp \
@@ -74,6 +75,7 @@ SOURCES += src/avatars/avatar.cpp \
     src/singleton/notes_model.cpp \
     src/singleton/notify.cpp \
     src/singleton/offline.cpp \
+    src/singleton/punish_reason.cpp \
     src/singleton/tray.cpp \
     src/singleton/updates.cpp \
     src/tab/tab_container.cpp \
@@ -87,8 +89,7 @@ SOURCES += src/avatars/avatar.cpp \
     src/widgets/simple_rank_widget.cpp \
     src/widgets/simple_stats_widget.cpp \
     src/widgets/tool_widget.cpp \
-    src/widgets/webcam_delegate.cpp \
-    src/common/simple_crypt.cpp
+    src/widgets/webcam_delegate.cpp
 HEADERS += src/avatars/avatar.h \
     src/common/commands.h \
     src/common/config.h \
@@ -97,6 +98,7 @@ HEADERS += src/avatars/avatar.h \
     src/common/html_messages_renderer.h \
     src/common/kamerzysta.h \
     src/common/replace.h \
+    src/common/simple_crypt.h \
     src/common/webcam_engine.h \
     src/common/webcam_network.h \
     src/common/winamp.h \
@@ -157,6 +159,7 @@ HEADERS += src/avatars/avatar.h \
     src/singleton/notes_model.h \
     src/singleton/notify.h \
     src/singleton/offline.h \
+    src/singleton/punish_reason.h \
     src/singleton/tray.h \
     src/singleton/updates.h \
     src/tab/tab_container.h \
@@ -170,8 +173,7 @@ HEADERS += src/avatars/avatar.h \
     src/widgets/simple_rank_widget.h \
     src/widgets/simple_stats_widget.h \
     src/widgets/tool_widget.h \
-    src/widgets/webcam_delegate.h \
-    src/common/simple_crypt.h
+    src/widgets/webcam_delegate.h
 FORMS += ui/about.ui \
     ui/avatar_edit.ui \
     ui/awaylog.ui \

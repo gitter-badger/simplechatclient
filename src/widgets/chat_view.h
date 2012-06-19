@@ -37,7 +37,8 @@ private:
     QString strChannel;
     QString strNick;
     QString strWebsite;
-    QAction *openChannelsActs[maxOpenChannels];
+    QAction *openChannelsActs[MAX_OPEN_CHANNELS];
+    QAction *punishReasonActs[MAX_PUNISH_REASONS];
     bool bScroll;
 
     void createBody();
@@ -57,6 +58,7 @@ private slots:
     void ignoreAdd();
     void ignoreDel();
     void kick();
+    void kickWithReason();
     void ban();
     void kban();
     void ipban();

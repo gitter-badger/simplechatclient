@@ -49,7 +49,8 @@ enum ChannelColor {
     ChannelHighlight
 };
 
-enum { maxOpenChannels = 30 };
+const int MAX_OPEN_CHANNELS = 30;
+const int MAX_PUNISH_REASONS = 255;
 
 const int HOURS_IN_DAY = 24;
 const int MINUTES_IN_HOUR = 60;

@@ -40,7 +40,8 @@ public:
 private:
     // other
     QString strChannel;
-    QAction *openChannelsActs[maxOpenChannels];
+    QAction *openChannelsActs[MAX_OPEN_CHANNELS];
+    QAction *punishReasonActs[MAX_PUNISH_REASONS];
     QString strSelectedNick;
 
     void convertFlag(QString &strFlag);
@@ -55,6 +56,7 @@ private slots:
     void ignoreAdd();
     void ignoreDel();
     void kick();
+    void kickWithReason();
     void ban();
     void kban();
     void ipban();

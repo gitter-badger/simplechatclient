@@ -123,6 +123,8 @@ QHash<QString,QString> Config::getDefaultValues()
     QString strSoundQuery = path+"/3rdparty/sounds/query.wav";
     QString strBackgroundImage = path+"/images/wallpaper/default.jpg";
 
+    QString strPunishReason = "Bluzg;Flood;";
+
     QHash<QString,QString> lDefaultValues;
 
     if (!bProfileConfig)
@@ -178,6 +180,7 @@ QHash<QString,QString> Config::getDefaultValues()
         lDefaultValues.insert("winamp", "$song [$position/$length] //muzyka");
         lDefaultValues.insert("tray_message", "true");
         lDefaultValues.insert("always_quit", "false");
+        lDefaultValues.insert("punish_reason", strPunishReason);
     }
 
     return lDefaultValues;
