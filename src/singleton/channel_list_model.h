@@ -17,39 +17,35 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef OFFLINE_H
-#define OFFLINE_H
+#ifndef CHANNEL_LIST_MODEL_H
+#define CHANNEL_LIST_MODEL_H
 
 #include "defines.h"
-#include <QAction>
 #include <QObject>
 
-class Offline : public QObject
+class ChannelList : public QObject
 {
     Q_OBJECT
-    Q_DISABLE_COPY(Offline)
-    static Offline *Instance;
+    Q_DISABLE_COPY(ChannelList)
+    static ChannelList *Instance;
 public:
-    static Offline *instance();
+    static ChannelList *instance();
 
-    Offline();
+    ChannelList();
     void init();
-    void addMsg(int iTime, const QString &strType, const QString &strNick, const QString &strMessage);
-    void removeMsg(const QString &strNick);
-    void clearMsg();
-    QList<OnetOfflineMessage> getMsg();
-    bool isEmptyMsg();
-
-    void addNick(const QString &strNick);
-    void removeNick(const QString &strNick);
-    void clearNicks();
-    QList<QString> getNicks();
-
-    QAction *offlineMsgAction;
+    void clear();
+    void add(const OnetChannelList &channel);
+    QList<OnetChannelList> get();
+    void setTime(qint64 time);
+    qint64 getTime();
+    void setReady(bool ready);
+    bool getReady();
 
 private:
-    QList<OnetOfflineMessage> lOfflineMsg;
-    QList<QString> lOfflineNicks;
+    QList<OnetChannelList> lChannelList;
+    qint64 iChannelListTime;
+    bool bChannelListReady;
+
 };
 
-#endif // OFFLINE_H
+#endif // CHANNEL_LIST_MODEL_H

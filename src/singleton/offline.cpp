@@ -46,7 +46,7 @@ void Offline::init()
 
 void Offline::addMsg(int iTime, const QString &strType, const QString &strNick, const QString &strMessage)
 {
-    OfflineMsg add;
+    OnetOfflineMessage add;
     add.datetime = iTime;
     add.type = strType;
     add.nick = strNick;
@@ -75,7 +75,7 @@ void Offline::clearMsg()
     lOfflineNicks.clear();
 }
 
-QList<OfflineMsg> Offline::getMsg()
+QList<OnetOfflineMessage> Offline::getMsg()
 {
     return lOfflineMsg;
 }

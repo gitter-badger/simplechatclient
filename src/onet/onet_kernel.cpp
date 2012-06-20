@@ -25,6 +25,7 @@
 #include "core.h"
 #include "convert.h"
 #include "channel_key.h"
+#include "channel_list_model.h"
 #include "invite.h"
 #include "lag.h"
 #include "log.h"
@@ -1000,7 +1001,7 @@ void OnetKernel::raw_moderate()
 
     int iTime = (int)QDateTime::currentDateTime().toTime_t();
 
-    ModerateMsg item;
+    OnetModerateMessage item;
     item.channel = strChannel;
     item.datetime = iTime;
     item.nick = strNick;
@@ -1044,8 +1045,7 @@ void OnetKernel::raw_001()
     Core::instance()->mFriends.clear();
     Core::instance()->lIgnore.clear();
     Core::instance()->lChannelFavourites.clear();
-    Core::instance()->lChannelList.clear();
-    Core::instance()->bChannelListReady = false;
+    ChannelList::instance()->clear();
     Core::instance()->mMyStats.clear();
     Core::instance()->mMyProfile.clear();
     Core::instance()->lChannelHomes.clear();
@@ -3841,8 +3841,8 @@ void OnetKernel::raw_817()
 // :cf1f3.onet 818 scc_test :Start of simple channels list.
 void OnetKernel::raw_818()
 {
-    Core::instance()->lChannelList.clear();
-    Core::instance()->bChannelListReady = false;
+    ChannelList::instance()->clear();
+    ChannelList::instance()->setReady(false);
 }
 
 // SLIST
@@ -3898,7 +3898,7 @@ void OnetKernel::raw_819()
             if (flag1)
                 bChannelRecommended = true;
 
-            ChannelList add;
+            OnetChannelList add;
             add.name = strChannelName;
             add.people = iChannelPeople;
             add.cat = iChannelCat;
@@ -3906,7 +3906,7 @@ void OnetKernel::raw_819()
             add.moderated = bChannelModerated;
             add.recommended = bChannelRecommended;
 
-            Core::instance()->lChannelList.append(add);
+            ChannelList::instance()->add(add);
         }
     }
 }
@@ -3915,8 +3915,8 @@ void OnetKernel::raw_819()
 // :cf1f3.onet 820 scc_test :End of simple channel list.
 void OnetKernel::raw_820()
 {
-    Core::instance()->bChannelListReady = true;
-    Core::instance()->iChannelListTime = QDateTime::currentDateTime().toTime_t();
+    ChannelList::instance()->setReady(true);
+    ChannelList::instance()->setTime(QDateTime::currentDateTime().toTime_t());
 }
 
 // :cf1f3.onet 821 scc_test #scc :Channel is not moderated

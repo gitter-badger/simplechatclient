@@ -20,6 +20,7 @@
 #include <QIcon>
 #include <QMessageBox>
 #include <QPushButton>
+#include "channel_list_model.h"
 #include "core.h"
 #include "convert.h"
 #include "message.h"
@@ -98,7 +99,7 @@ QString Commands::execute()
 
 bool Commands::isErotic(const QString &strChannel)
 {
-    foreach (ChannelList channel, Core::instance()->lChannelList)
+    foreach (OnetChannelList channel, ChannelList::instance()->get())
     {
         QString strName = channel.name;
         int iType = channel.type;

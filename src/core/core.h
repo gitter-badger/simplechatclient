@@ -73,9 +73,6 @@ public:
     QHash<QString, bool> mFriends;
     QList<QString> lIgnore;
     QList<QString> lChannelFavourites;
-    QList<ChannelList> lChannelList;
-    qint64 iChannelListTime;
-    bool bChannelListReady;
     QHash<QString, QString> mMyStats;
     QHash<QString, QString> mMyProfile;
     QList<QString> lChannelHomes;
@@ -100,7 +97,7 @@ public:
     QHash<QString,QString> mChannelSettingsStats;
     bool bChannelSettingsStats;
     // moderation
-    QMultiHash<QString,ModerateMsg> mModerateMessages;
+    QMultiHash<QString,OnetModerateMessage> mModerateMessages;
     // priv
     QHash<QString,QString> mPrivNames;
 

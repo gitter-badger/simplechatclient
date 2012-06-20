@@ -59,7 +59,7 @@ const int SECONDS_IN_MINUTE = 60;
 #define STATUS "Status"
 #define DEBUG "Debug"
 
-struct ChannelList
+struct OnetChannelList
 {
     QString name;
     int people;
@@ -69,7 +69,7 @@ struct ChannelList
     bool recommended;
 };
 
-struct ModerateMsg
+struct OnetModerateMessage
 {
     QString channel;
     int datetime;
@@ -77,7 +77,7 @@ struct ModerateMsg
     QString message;
 };
 
-struct OfflineMsg
+struct OnetOfflineMessage
 {
     int datetime;
     QString type;

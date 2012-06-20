@@ -23,6 +23,7 @@
 #include <QMessageBox>
 #include <QTimer>
 #include "core.h"
+#include "channel_list_model.h"
 #include "channel_list.h"
 
 DlgChannelList::DlgChannelList(QWidget *parent) : QDialog(parent)
@@ -107,8 +108,8 @@ void DlgChannelList::setDefaultValues()
     ui.groupBox_category->hide();
 
     // need refresh
-    int iCheckRefresh = QDateTime::currentDateTime().toTime_t() - Core::instance()->iChannelListTime;
-    if ((Core::instance()->bChannelListReady) && (iCheckRefresh > 3600))
+    int iCheckRefresh = QDateTime::currentDateTime().toTime_t() - ChannelList::instance()->getTime();
+    if ((ChannelList::instance()->getReady()) && (iCheckRefresh > 3600))
         Core::instance()->pNetwork->send("SLIST  R- 0 0 100 null");
 }
 
@@ -145,7 +146,7 @@ void DlgChannelList::createSignals()
 
 bool DlgChannelList::isErotic(const QString &strChannel)
 {
-    foreach (ChannelList channel, Core::instance()->lChannelList)
+    foreach (OnetChannelList channel, ChannelList::instance()->get())
     {
         QString strName = channel.name;
         int iType = channel.type;
@@ -249,7 +250,7 @@ bool DlgChannelList::showChannel(const QString &name, int people, int cat, int t
 void DlgChannelList::createList()
 {
     // ready
-    if (!Core::instance()->bChannelListReady)
+    if (!ChannelList::instance()->getReady())
     {
         QTimer::singleShot(1000, this, SLOT(createList())); // 1 sec
         return;
@@ -291,7 +292,7 @@ void DlgChannelList::createList()
     int iThematicCount = 0;
     int iRegionalCount = 0;
 
-    foreach (ChannelList channel, Core::instance()->lChannelList)
+    foreach (OnetChannelList channel, ChannelList::instance()->get())
     {
         QString strName = channel.name;
         int iPeople = channel.people;
@@ -333,7 +334,7 @@ void DlgChannelList::createList()
     int iThematicRow = 0;
     int iRegionalRow = 0;
 
-    foreach (ChannelList channel, Core::instance()->lChannelList)
+    foreach (OnetChannelList channel, ChannelList::instance()->get())
     {
         QString strName = channel.name;
         int iPeople = channel.people;

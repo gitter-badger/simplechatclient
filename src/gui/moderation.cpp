@@ -62,13 +62,13 @@ void DlgModeration::refreshMessages()
 {
     ui.listWidget_msg->clear();
 
-    QHashIterator <QString, ModerateMsg> i(Core::instance()->mModerateMessages);
+    QHashIterator <QString, OnetModerateMessage> i(Core::instance()->mModerateMessages);
     while (i.hasNext())
     {
         i.next();
 
         QString strID = i.key();
-        ModerateMsg msg = i.value();
+        OnetModerateMessage msg = i.value();
         QString strChannel = msg.channel;
         int iTime = msg.datetime;
         QString strNick = msg.nick;

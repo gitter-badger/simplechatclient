@@ -68,6 +68,7 @@ SOURCES += src/avatars/avatar.cpp \
     src/singleton/away.cpp \
     src/singleton/awaylog_model.cpp \
     src/singleton/busy.cpp \
+    src/singleton/channel_list_model.cpp \
     src/singleton/highlight.cpp \
     src/singleton/lag.cpp \
     src/singleton/message.cpp \
@@ -152,6 +153,7 @@ HEADERS += src/avatars/avatar.h \
     src/singleton/away.h \
     src/singleton/awaylog_model.h \
     src/singleton/busy.h \
+    src/singleton/channel_list_model.h \
     src/singleton/highlight.h \
     src/singleton/lag.h \
     src/singleton/message.h \

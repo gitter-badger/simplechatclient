@@ -98,7 +98,7 @@ void DlgOfflineMsg::refreshMsg()
     ui.lineEdit_reply->setEnabled(true);
     ui.pushButton_reply->setEnabled(true);
 
-    foreach (OfflineMsg msg, Offline::instance()->getMsg())
+    foreach (OnetOfflineMessage msg, Offline::instance()->getMsg())
     {
         int iTime = msg.datetime;
         QString strType = msg.type;
