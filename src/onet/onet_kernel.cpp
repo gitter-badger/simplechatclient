@@ -1045,6 +1045,7 @@ void OnetKernel::raw_001()
     Core::instance()->lIgnore.clear();
     Core::instance()->lChannelFavourites.clear();
     Core::instance()->lChannelList.clear();
+    Core::instance()->bChannelListReady = false;
     Core::instance()->mMyStats.clear();
     Core::instance()->mMyProfile.clear();
     Core::instance()->lChannelHomes.clear();
@@ -3841,6 +3842,7 @@ void OnetKernel::raw_817()
 void OnetKernel::raw_818()
 {
     Core::instance()->lChannelList.clear();
+    Core::instance()->bChannelListReady = false;
 }
 
 // SLIST
@@ -3913,6 +3915,8 @@ void OnetKernel::raw_819()
 // :cf1f3.onet 820 scc_test :End of simple channel list.
 void OnetKernel::raw_820()
 {
+    Core::instance()->bChannelListReady = true;
+    Core::instance()->iChannelListTime = QDateTime::currentDateTime().toTime_t();
 }
 
 // :cf1f3.onet 821 scc_test #scc :Channel is not moderated

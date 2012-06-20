@@ -10,7 +10,7 @@
     <x>0</x>
     <y>0</y>
     <width>773</width>
-    <height>597</height>
+    <height>610</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -35,7 +35,7 @@
      <x>0</x>
      <y>0</y>
      <width>771</width>
-     <height>591</height>
+     <height>601</height>
     </rect>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout">
@@ -61,7 +61,7 @@
            <x>0</x>
            <y>0</y>
            <width>191</width>
-           <height>171</height>
+           <height>151</height>
           </rect>
          </property>
          <property name="title">
@@ -73,12 +73,15 @@
             <x>10</x>
             <y>20</y>
             <width>180</width>
-            <height>151</height>
+            <height>121</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_2">
            <item>
             <widget class="QLabel" name="label_channel_name">
+             <property name="styleSheet">
+              <string notr="true">font-weight:bold;</string>
+             </property>
              <property name="text">
               <string>Channel name:</string>
              </property>
@@ -126,9 +129,9 @@
          <property name="geometry">
           <rect>
            <x>0</x>
-           <y>180</y>
+           <y>160</y>
            <width>191</width>
-           <height>161</height>
+           <height>171</height>
           </rect>
          </property>
          <property name="title">
@@ -186,9 +189,9 @@
          <property name="geometry">
           <rect>
            <x>0</x>
-           <y>350</y>
+           <y>340</y>
            <width>191</width>
-           <height>201</height>
+           <height>191</height>
           </rect>
          </property>
          <property name="title">
@@ -198,7 +201,7 @@
           <property name="geometry">
            <rect>
             <x>10</x>
-            <y>30</y>
+            <y>20</y>
             <width>171</width>
             <height>164</height>
            </rect>

@@ -234,7 +234,7 @@ void DlgChannelSettings::refreshChannelInfo()
 {
     if (Core::instance()->bChannelSettingsInfo == false)
     {
-        QTimer::singleShot(200, this, SLOT(refreshChannelInfo())); // 0.5 sec
+        QTimer::singleShot(200, this, SLOT(refreshChannelInfo())); // 0.2 sec
         return;
     }
 

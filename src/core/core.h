@@ -74,6 +74,8 @@ public:
     QList<QString> lIgnore;
     QList<QString> lChannelFavourites;
     QList<ChannelList> lChannelList;
+    qint64 iChannelListTime;
+    bool bChannelListReady;
     QHash<QString, QString> mMyStats;
     QHash<QString, QString> mMyProfile;
     QList<QString> lChannelHomes;

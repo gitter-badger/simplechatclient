@@ -17,9 +17,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <QDateTime>
 #include <QDesktopWidget>
 #include <QKeyEvent>
 #include <QMessageBox>
+#include <QTimer>
 #include "core.h"
 #include "channel_list.h"
 
@@ -103,6 +105,11 @@ void DlgChannelList::setDefaultValues()
     // hide adv options
     ui.groupBox_type->hide();
     ui.groupBox_category->hide();
+
+    // need refresh
+    int iCheckRefresh = QDateTime::currentDateTime().toTime_t() - Core::instance()->iChannelListTime;
+    if ((Core::instance()->bChannelListReady) && (iCheckRefresh > 3600))
+        Core::instance()->pNetwork->send("SLIST  R- 0 0 100 null");
 }
 
 void DlgChannelList::createSignals()
@@ -241,6 +248,13 @@ bool DlgChannelList::showChannel(const QString &name, int people, int cat, int t
 
 void DlgChannelList::createList()
 {
+    // ready
+    if (!Core::instance()->bChannelListReady)
+    {
+        QTimer::singleShot(1000, this, SLOT(createList())); // 1 sec
+        return;
+    }
+
     // get options
     getOptions();
 
