@@ -73,6 +73,13 @@ void DlgChannelList::createGui()
     ui.tabWidget->setTabText(3, tr("Erotic"));
     ui.tabWidget->setTabText(4, tr("Thematic"));
     ui.tabWidget->setTabText(5, tr("Regional"));
+
+    ui.tabWidget->setTabIcon(0, QIcon(":/images/oxygen/16x16/accessories-dictionary.png"));
+    ui.tabWidget->setTabIcon(1, QIcon(":/images/oxygen/16x16/applications-education-university.png"));
+    ui.tabWidget->setTabIcon(2, QIcon(":/images/oxygen/16x16/system-users.png"));
+    ui.tabWidget->setTabIcon(3, QIcon(":/images/oxygen/16x16/emblem-favorite.png"));
+    ui.tabWidget->setTabIcon(4, QIcon(":/images/oxygen/16x16/karbon.png"));
+    ui.tabWidget->setTabIcon(5, QIcon(":/images/oxygen/16x16/applications-education-language.png"));
 }
 
 void DlgChannelList::setDefaultValues()

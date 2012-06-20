@@ -325,7 +325,7 @@ void OnetKernel::raw_ping()
         Core::instance()->pNetwork->send(QString("PONG %1").arg(strServer));
 }
 
-// :cf1f4.onet PONG cf1f4.onet :1279652441189
+// :cf1f4.onet PONG cf1f4.onet :1340185644095
 void OnetKernel::raw_pong()
 {
     if (strDataList.size() < 4) return;

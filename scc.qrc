@@ -108,5 +108,10 @@
         <file>images/oxygen/16x16/view-close.png</file>
         <file>images/oxygen/16x16/help-hint.png</file>
         <file>images/oxygen/16x16/edit-image-face-show.png</file>
+        <file>images/oxygen/16x16/applications-education-language.png</file>
+        <file>images/oxygen/16x16/system-users.png</file>
+        <file>images/oxygen/16x16/applications-education-university.png</file>
+        <file>images/oxygen/16x16/karbon.png</file>
+        <file>images/oxygen/16x16/accessories-dictionary.png</file>
     </qresource>
 </RCC>
