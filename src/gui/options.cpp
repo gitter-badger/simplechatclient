@@ -162,7 +162,7 @@ void DlgOptions::createGui()
     highlight->setToolTip(0, tr("Highlight"));
 
     QTreeWidgetItem *punish_reason = new QTreeWidgetItem(ui.treeWidget_options);
-    punish_reason->setIcon(0, QIcon(":/images/oxygen/16x16/preferences-desktop-user.png"));
+    punish_reason->setIcon(0, QIcon(":/images/oxygen/16x16/view-conversation-balloon.png"));
     punish_reason->setText(0, tr("Punish reason"));
     punish_reason->setToolTip(0, tr("Punish reason"));
 

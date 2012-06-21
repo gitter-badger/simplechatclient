@@ -67,7 +67,6 @@
         <file>images/oxygen/16x16/irc-operator.png</file>
         <file>images/oxygen/16x16/im-user-busy.png</file>
         <file>images/oxygen/16x16/user-identity.png</file>
-        <file>images/oxygen/16x16/preferences-desktop-user.png</file>
         <file>images/oxygen/16x16/user-properties.png</file>
         <file>images/oxygen/16x16/camera-web.png</file>
         <file>images/oxygen/16x16/mail-mark-junk.png</file>
@@ -113,5 +112,6 @@
         <file>images/oxygen/16x16/applications-education-university.png</file>
         <file>images/oxygen/16x16/karbon.png</file>
         <file>images/oxygen/16x16/accessories-dictionary.png</file>
+        <file>images/oxygen/16x16/view-conversation-balloon.png</file>
     </qresource>
 </RCC>

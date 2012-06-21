@@ -368,7 +368,7 @@ void NickListWidget::contextMenuEvent(QContextMenuEvent *e)
         QString strPunishReasons = lPunishReasons[i];
 
         punishReasonActs[i] = new QAction(this);
-        punishReasonActs[i]->setIcon(QIcon(":/images/oxygen/16x16/preferences-desktop-user.png"));
+        punishReasonActs[i]->setIcon(QIcon(":/images/oxygen/16x16/view-conversation-balloon.png"));
         punishReasonActs[i]->setVisible(false);
         punishReasonActs[i]->setText(strPunishReasons);
         punishReasonActs[i]->setData(lPunishReasons[i]);
