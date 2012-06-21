@@ -28,7 +28,7 @@
 #include "highlight.h"
 #include "profile_manager.h"
 #include "punish_reason.h"
-#include "notify.h"
+#include "sound_notify.h"
 #include "options.h"
 
 DlgOptions::DlgOptions(QWidget *parent) : QDialog(parent)
@@ -974,12 +974,12 @@ void DlgOptions::setNicklistGradient2Color()
 
 void DlgOptions::tryPlayBeep()
 {
-    Notify::instance()->play(Beep);
+    SoundNotify::instance()->play(Beep);
 }
 
 void DlgOptions::tryPlayQuery()
 {
-    Notify::instance()->play(Query);
+    SoundNotify::instance()->play(Query);
 }
 
 void DlgOptions::setSoundBeep()

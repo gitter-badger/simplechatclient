@@ -68,15 +68,16 @@ SOURCES += src/avatars/avatar.cpp \
     src/singleton/away.cpp \
     src/singleton/awaylog_model.cpp \
     src/singleton/busy.cpp \
+    src/singleton/channel.cpp \
     src/singleton/channel_list_model.cpp \
     src/singleton/highlight.cpp \
     src/singleton/lag.cpp \
     src/singleton/message.cpp \
     src/singleton/nicklist.cpp \
     src/singleton/notes_model.cpp \
-    src/singleton/notify.cpp \
     src/singleton/offline.cpp \
     src/singleton/punish_reason.cpp \
+    src/singleton/sound_notify.cpp \
     src/singleton/tray.cpp \
     src/singleton/updates.cpp \
     src/tab/tab_container.cpp \
@@ -90,8 +91,7 @@ SOURCES += src/avatars/avatar.cpp \
     src/widgets/simple_rank_widget.cpp \
     src/widgets/simple_stats_widget.cpp \
     src/widgets/tool_widget.cpp \
-    src/widgets/webcam_delegate.cpp \
-    src/singleton/channel.cpp
+    src/widgets/webcam_delegate.cpp
 HEADERS += src/avatars/avatar.h \
     src/common/commands.h \
     src/common/config.h \
@@ -154,15 +154,16 @@ HEADERS += src/avatars/avatar.h \
     src/singleton/away.h \
     src/singleton/awaylog_model.h \
     src/singleton/busy.h \
+    src/singleton/channel.h \
     src/singleton/channel_list_model.h \
     src/singleton/highlight.h \
     src/singleton/lag.h \
     src/singleton/message.h \
     src/singleton/nicklist.h \
     src/singleton/notes_model.h \
-    src/singleton/notify.h \
     src/singleton/offline.h \
     src/singleton/punish_reason.h \
+    src/singleton/sound_notify.h \
     src/singleton/tray.h \
     src/singleton/updates.h \
     src/tab/tab_container.h \
@@ -176,8 +177,7 @@ HEADERS += src/avatars/avatar.h \
     src/widgets/simple_rank_widget.h \
     src/widgets/simple_stats_widget.h \
     src/widgets/tool_widget.h \
-    src/widgets/webcam_delegate.h \
-    src/singleton/channel.h
+    src/widgets/webcam_delegate.h
 FORMS += ui/about.ui \
     ui/avatar_edit.ui \
     ui/awaylog.ui \

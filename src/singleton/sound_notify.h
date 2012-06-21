@@ -31,17 +31,17 @@ enum NotifyCategory {Beep, Query};
 /**
  * Notify using Phonon
  */
-class Notify : public QObject
+class SoundNotify : public QObject
 {
     Q_OBJECT
-    Q_DISABLE_COPY(Notify)
-    static Notify *Instance;
+    Q_DISABLE_COPY(SoundNotify)
+    static SoundNotify *Instance;
 
 public:
-    static Notify *instance();
+    static SoundNotify *instance();
 
-    Notify();
-    virtual ~Notify();
+    SoundNotify();
+    virtual ~SoundNotify();
     void play(NotifyCategory);
 
 public slots:

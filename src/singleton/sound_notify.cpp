@@ -18,22 +18,22 @@
  */
 
 #include "core.h"
-#include "notify.h"
+#include "sound_notify.h"
 
-Notify * Notify::Instance = 0;
+SoundNotify * SoundNotify::Instance = 0;
 
-Notify * Notify::instance()
+SoundNotify * SoundNotify::instance()
 {
     if (!Instance)
     {
-        Instance = new Notify();
+        Instance = new SoundNotify();
         Instance->init();
     }
 
     return Instance;
 }
 
-void Notify::init()
+void SoundNotify::init()
 {
 #if WITH_PHONON
     QString strSoundBeep = Core::instance()->settings.value("sound_beep");
@@ -41,21 +41,21 @@ void Notify::init()
 #endif
 }
 
-Notify::Notify()
+SoundNotify::SoundNotify()
 {
 #if WITH_PHONON
     eCurrentCategory = Beep;
 #endif
 }
 
-Notify::~Notify()
+SoundNotify::~SoundNotify()
 {
 #if WITH_PHONON
     delete music;
 #endif
 }
 
-void Notify::play(NotifyCategory eCategory)
+void SoundNotify::play(NotifyCategory eCategory)
 {
 #if WITH_PHONON
     music->stop();
@@ -85,7 +85,7 @@ void Notify::play(NotifyCategory eCategory)
 #endif
 }
 
-void Notify::quit()
+void SoundNotify::quit()
 {
     if (!Instance)
         return;

@@ -32,10 +32,10 @@
 #include "mainwindow.h"
 #include "message.h"
 #include "nicklist.h"
-#include "notify.h"
 #include "offline.h"
 #include "onet_utils.h"
 #include "replace.h"
+#include "sound_notify.h"
 #include "tab_container.h"
 #include "tray.h"
 #include "onet_kernel.h"
@@ -861,7 +861,7 @@ void OnetKernel::raw_invite()
     QString strWhere = strDataList[3];
     if (strWhere[0] == ':') strWhere.remove(0,1);
 
-    Notify::instance()->play(Query);
+    SoundNotify::instance()->play(Query);
 
     // priv name
     if (strWhere[0] == '^')

@@ -101,9 +101,9 @@ set (scc_SRCS
 	singleton/message.cpp
 	singleton/nicklist.cpp
 	singleton/notes_model.cpp
-	singleton/notify.cpp
 	singleton/offline.cpp
 	singleton/punish_reason.cpp
+	singleton/sound_notify.cpp
 	singleton/tray.cpp
 	singleton/updates.cpp
 
@@ -179,9 +179,9 @@ set (scc_MOC_HDRS
 	singleton/message.h
 	singleton/nicklist.h
 	singleton/notes_model.h
-	singleton/notify.h
 	singleton/offline.h
 	singleton/punish_reason.h
+	singleton/sound_notify.h
 	singleton/tray.h
 	singleton/updates.h
 

@@ -24,7 +24,7 @@
 #include "log.h"
 #include "mainwindow.h"
 #include "nicklist.h"
-#include "notify.h"
+#include "sound_notify.h"
 #include "tray.h"
 #include "message.h"
 
@@ -138,7 +138,7 @@ void Message::showMessage(const QString &strChannel, const QString &strData, Mes
 
         // sound
         if (Core::instance()->settings.value("disable_sounds") == "false")
-            Notify::instance()->play(Beep);
+            SoundNotify::instance()->play(Beep);
     }
 
     // change tab color
