@@ -3519,6 +3519,7 @@ void OnetKernel::raw_482()
     Message::instance()->showMessage(strChannel, strMessage, MessageInfo);
 }
 
+// :cf1f4.onet 484 Merovingian #scc :Can't kick Merovingian as they're a channel founder
 // :cf1f4.onet 484 Merovingian #testy :Can't kick user advocato000 from channel (+Q set)
 // :cf1f4.onet 484 scc_test #scc :Can't kick scc as your spells are not good enough
 void OnetKernel::raw_484()
