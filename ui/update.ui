@@ -29,7 +29,7 @@
    <iconset resource="../scc.qrc">
     <normaloff>:/images/logo16x16.png</normaloff>:/images/logo16x16.png</iconset>
   </property>
-  <widget class="QLabel" name="label_whatsnew">
+  <widget class="QLabel" name="label_content">
    <property name="geometry">
     <rect>
      <x>10</x>

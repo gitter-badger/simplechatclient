@@ -1737,6 +1737,10 @@
         <translation>Pobierz</translation>
     </message>
     <message>
+        <source>Error</source>
+        <translation>Błąd</translation>
+    </message>
+    <message>
         <source>Cannot download file</source>
         <translation>Nie można pobrać pliku</translation>
     </message>

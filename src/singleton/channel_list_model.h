@@ -45,7 +45,6 @@ private:
     QList<OnetChannelList> lChannelList;
     qint64 iChannelListTime;
     bool bChannelListReady;
-
 };
 
 #endif // CHANNEL_LIST_MODEL_H

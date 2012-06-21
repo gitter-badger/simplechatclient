@@ -20,7 +20,6 @@
 #include <QDesktopServices>
 #include <QDesktopWidget>
 #include <QDir>
-#include <QMessageBox>
 #include <QNetworkAccessManager>
 #include <QPushButton>
 #include <QUrl>
@@ -77,7 +76,7 @@ void DlgUpdate::setDefaultValues()
     QString strShortVersion = QString("%1.%2.%3").arg(strCurrentMajor).arg(strCurrentMinor).arg(strCurrentPatch);
 
     ui.label_title->setText(QString("Simple Chat Client %1").arg(strShortVersion));
-    ui.label_whatsnew->setText(Core::instance()->settings.value("whats_new"));
+    ui.label_content->setText(Core::instance()->settings.value("whats_new"));
 }
 
 void DlgUpdate::createSignals()
@@ -127,7 +126,7 @@ void DlgUpdate::gotSFSite(QString site)
         connect(pReply, SIGNAL(error(QNetworkReply::NetworkError)), this, SLOT(downloadError(QNetworkReply::NetworkError)));
     }
     else
-        QMessageBox::critical(0, "", tr("Cannot download file"));
+        showError(tr("Cannot download file"));
 }
 
 void DlgUpdate::gotFile(const QByteArray &bData)
@@ -141,7 +140,7 @@ void DlgUpdate::gotFile(const QByteArray &bData)
     if (file.exists()) file.remove();
     if (!file.open(QIODevice::WriteOnly))
     {
-        QMessageBox::critical(0, "", tr("Cannot save file"));
+        showError(tr("Cannot save file"));
         return;
     }
     file.write(bData);
@@ -153,7 +152,7 @@ void DlgUpdate::gotFile(const QByteArray &bData)
 
     if (!bExecute)
     {
-        QMessageBox::critical(0, "", tr("Cannot open saved file"));
+        showError(tr("Cannot open saved file"));
         return;
     }
 
@@ -172,7 +171,7 @@ void DlgUpdate::networkFinished(QNetworkReply *reply)
 
     if (bData.isEmpty())
     {
-        QMessageBox::critical(0, "", tr("Cannot download file"));
+        showError(tr("Cannot download file"));
         return;
     }
 
@@ -190,5 +189,11 @@ void DlgUpdate::downloadProgress(qint64 bytesReceived,qint64 bytesTotal)
 
 void DlgUpdate::downloadError(QNetworkReply::NetworkError)
 {
-    QMessageBox::critical(0, "", tr("Cannot download file"));
+    showError(tr("Cannot download file"));
+}
+
+void DlgUpdate::showError(const QString &strError)
+{
+    ui.label_title->setText(tr("Error"));
+    ui.label_content->setText(QString("<center><b>%1</b></center>").arg(strError));
 }

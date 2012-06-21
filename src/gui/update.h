@@ -43,6 +43,7 @@ private:
     void createSignals();
     void gotSFSite(QString site);
     void gotFile(const QByteArray &bData);
+    void showError(const QString &strError);
 
 private slots:
     void buttonDownload();
