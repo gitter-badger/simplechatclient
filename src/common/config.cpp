@@ -138,7 +138,11 @@ QHash<QString,QString> Config::getDefaultValues()
         lDefaultValues.insert("pass", "");
         lDefaultValues.insert("themes", "Standard");
         lDefaultValues.insert("language", "pl");
+
         lDefaultValues.insert("highlight", "");
+
+        lDefaultValues.insert("punish_reason", strPunishReason);
+
         lDefaultValues.insert("auto_busy", "false");
         lDefaultValues.insert("minimize_to_tray", "false");
         lDefaultValues.insert("disable_autojoin_favourites", "false");
@@ -148,6 +152,7 @@ QHash<QString,QString> Config::getDefaultValues()
         lDefaultValues.insert("hide_join_part_200", "true");
         lDefaultValues.insert("disable_emots", "false");
         lDefaultValues.insert("disable_replaces", "false");
+
         lDefaultValues.insert("background_color", "#ffffff");
         lDefaultValues.insert("my_bold", "false");
         lDefaultValues.insert("my_italic", "false");
@@ -164,23 +169,28 @@ QHash<QString,QString> Config::getDefaultValues()
         lDefaultValues.insert("message_info_color", "#666666");
         lDefaultValues.insert("message_me_color", "#800080");
         lDefaultValues.insert("message_error_color", "#ff0000");
+
         lDefaultValues.insert("channel_color", "#0000ff");
         lDefaultValues.insert("nicklist_nick_color", "#333333");
         lDefaultValues.insert("nicklist_selected_nick_color", "#ffffff");
         lDefaultValues.insert("nicklist_busy_nick_color", "#a0a0a4");
         lDefaultValues.insert("nicklist_gradient_1_color", "#77d5f7");
         lDefaultValues.insert("nicklist_gradient_2_color", "#1b86b7");
+
         lDefaultValues.insert("save_logs_by_date", "true");
         lDefaultValues.insert("disable_logs", "false");
+
         lDefaultValues.insert("sound_beep", strSoundBeep);
         lDefaultValues.insert("sound_query", strSoundQuery);
         lDefaultValues.insert("disable_sounds", "false");
+
         lDefaultValues.insert("background_image", strBackgroundImage);
         lDefaultValues.insert("disable_background_image", "false");
+
         lDefaultValues.insert("winamp", "$song [$position/$length] //muzyka");
+
         lDefaultValues.insert("tray_message", "true");
         lDefaultValues.insert("always_quit", "false");
-        lDefaultValues.insert("punish_reason", strPunishReason);
     }
 
     return lDefaultValues;
