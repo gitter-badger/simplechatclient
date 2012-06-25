@@ -1829,7 +1829,7 @@ void OnetKernel::raw_251n()
         for (int i = 7; i < strDataList.size(); i++) { if (i != 7) strMessage += " "; strMessage += strDataList[i]; }
         if (strMessage[0] == ':') strMessage.remove(0,1);
 
-        Offline::instance()->addMsg(iTime, strType, strNick, strMessage);
+        Offline::instance()->addMessage(iTime, strType, strNick, strMessage);
     }
 }
 

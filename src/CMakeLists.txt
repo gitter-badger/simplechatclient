@@ -25,7 +25,7 @@ set (scc_UIS
 	../ui/my_profile.ui
 	../ui/my_stats.ui
 	../ui/notes.ui
-	../ui/offlinemsg.ui
+	../ui/offline_messages.ui
 	../ui/options.ui
 	../ui/profile_add.ui
 	../ui/profile_edit.ui
@@ -72,7 +72,7 @@ set (scc_SRCS
 	gui/my_profile.cpp
 	gui/my_stats.cpp
 	gui/notes.cpp
-	gui/offlinemsg.cpp
+	gui/offline_messages.cpp
 	gui/options.cpp
 	gui/profile_add.cpp
 	gui/profile_edit.cpp
@@ -101,6 +101,7 @@ set (scc_SRCS
 	singleton/message.cpp
 	singleton/nicklist.cpp
 	singleton/notes_model.cpp
+	singleton/notification.cpp
 	singleton/offline.cpp
 	singleton/punish_reason.cpp
 	singleton/sound_notify.cpp
@@ -152,7 +153,7 @@ set (scc_MOC_HDRS
 	gui/my_profile.h
 	gui/my_stats.h
 	gui/notes.h
-	gui/offlinemsg.h
+	gui/offline_messages.h
 	gui/options.h
 	gui/profile_add.h
 	gui/profile_edit.h
@@ -179,6 +180,7 @@ set (scc_MOC_HDRS
 	singleton/message.h
 	singleton/nicklist.h
 	singleton/notes_model.h
+	singleton/notification.h
 	singleton/offline.h
 	singleton/punish_reason.h
 	singleton/sound_notify.h

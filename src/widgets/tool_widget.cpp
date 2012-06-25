@@ -29,6 +29,7 @@
 #include "channel_settings.h"
 #include "emoticons.h"
 #include "message.h"
+#include "mainwindow.h"
 #include "moderation.h"
 #include "inputline_widget.h"
 #include "replace.h"
@@ -567,7 +568,7 @@ void ToolWidget::size8Triggered()
     pConfig->set("font_size", strValue);
     delete pConfig;
 
-    Core::instance()->refreshCSS();
+    Core::instance()->mainWindow()->refreshCSS();
 }
 
 void ToolWidget::size9Triggered()
@@ -579,7 +580,7 @@ void ToolWidget::size9Triggered()
     pConfig->set("font_size", strValue);
     delete pConfig;
 
-    Core::instance()->refreshCSS();
+    Core::instance()->mainWindow()->refreshCSS();
 }
 
 void ToolWidget::size10Triggered()
@@ -591,7 +592,7 @@ void ToolWidget::size10Triggered()
     pConfig->set("font_size", strValue);
     delete pConfig;
 
-    Core::instance()->refreshCSS();
+    Core::instance()->mainWindow()->refreshCSS();
 }
 
 void ToolWidget::size11Triggered()
@@ -603,7 +604,7 @@ void ToolWidget::size11Triggered()
     pConfig->set("font_size", strValue);
     delete pConfig;
 
-    Core::instance()->refreshCSS();
+    Core::instance()->mainWindow()->refreshCSS();
 }
 
 void ToolWidget::size12Triggered()
@@ -615,7 +616,7 @@ void ToolWidget::size12Triggered()
     pConfig->set("font_size", strValue);
     delete pConfig;
 
-    Core::instance()->refreshCSS();
+    Core::instance()->mainWindow()->refreshCSS();
 }
 
 void ToolWidget::size14Triggered()
@@ -627,7 +628,7 @@ void ToolWidget::size14Triggered()
     pConfig->set("font_size", strValue);
     delete pConfig;
 
-    Core::instance()->refreshCSS();
+    Core::instance()->mainWindow()->refreshCSS();
 }
 
 void ToolWidget::size16Triggered()
@@ -639,7 +640,7 @@ void ToolWidget::size16Triggered()
     pConfig->set("font_size", strValue);
     delete pConfig;
 
-    Core::instance()->refreshCSS();
+    Core::instance()->mainWindow()->refreshCSS();
 }
 
 void ToolWidget::size18Triggered()
@@ -651,7 +652,7 @@ void ToolWidget::size18Triggered()
     pConfig->set("font_size", strValue);
     delete pConfig;
 
-    Core::instance()->refreshCSS();
+    Core::instance()->mainWindow()->refreshCSS();
 }
 
 void ToolWidget::size20Triggered()
@@ -663,7 +664,7 @@ void ToolWidget::size20Triggered()
     pConfig->set("font_size", strValue);
     delete pConfig;
 
-    Core::instance()->refreshCSS();
+    Core::instance()->mainWindow()->refreshCSS();
 }
 
 void ToolWidget::size24Triggered()
@@ -675,7 +676,7 @@ void ToolWidget::size24Triggered()
     pConfig->set("font_size", strValue);
     delete pConfig;
 
-    Core::instance()->refreshCSS();
+    Core::instance()->mainWindow()->refreshCSS();
 }
 
 void ToolWidget::colorClicked(int index)

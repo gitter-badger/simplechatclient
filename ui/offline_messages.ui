@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>uiOfflineMsg</class>
- <widget class="QDialog" name="uiOfflineMsg">
+ <class>uiOfflineMessages</class>
+ <widget class="QDialog" name="uiOfflineMessages">
   <property name="geometry">
    <rect>
     <x>0</x>

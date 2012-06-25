@@ -17,6 +17,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include "notification.h"
 #include "offline.h"
 
 Offline * Offline::Instance = 0;
@@ -34,17 +35,18 @@ Offline * Offline::instance()
 
 Offline::Offline()
 {
-    offlineMsgAction = new QAction(QIcon(":/images/oxygen/16x16/mail-mark-unread.png") , tr("Offline messages"), this);
-    offlineMsgAction->setShortcut(tr("Ctrl+M"));
+    offlineMessagesAction = new QAction(QIcon(":/images/oxygen/16x16/mail-mark-unread.png") , tr("Offline messages"), this);
+    offlineMessagesAction->setShortcut(tr("Ctrl+M"));
+    offlineMessagesAction->setVisible(false);
 }
 
 void Offline::init()
 {
     lOfflineNicks.clear();
-    lOfflineMsg.clear();
+    lOfflineMessages.clear();
 }
 
-void Offline::addMsg(int iTime, const QString &strType, const QString &strNick, const QString &strMessage)
+void Offline::addMessage(int iTime, const QString &strType, const QString &strNick, const QString &strMessage)
 {
     OnetOfflineMessage add;
     add.datetime = iTime;
@@ -52,16 +54,16 @@ void Offline::addMsg(int iTime, const QString &strType, const QString &strNick, 
     add.nick = strNick;
     add.message = strMessage;
 
-    lOfflineMsg.append(add);
+    lOfflineMessages.append(add);
 }
 
-void Offline::removeMsg(const QString &strNick)
+void Offline::removeMessage(const QString &strNick)
 {
-    for (int i = 0; i < lOfflineMsg.size(); i++)
+    for (int i = 0; i < lOfflineMessages.size(); i++)
     {
-        QString strOfflineNick = lOfflineMsg.at(i).nick;
+        QString strOfflineNick = lOfflineMessages.at(i).nick;
         if (strOfflineNick == strNick)
-            lOfflineMsg.takeAt(i);
+            lOfflineMessages.takeAt(i);
     }
 //    foreach (OfflineMsg msg, lOfflineMsg)
 //    {
@@ -70,46 +72,45 @@ void Offline::removeMsg(const QString &strNick)
 //    }
 }
 
-void Offline::clearMsg()
+void Offline::clearMessages()
 {
     lOfflineNicks.clear();
 }
 
-QList<OnetOfflineMessage> Offline::getMsg()
+QList<OnetOfflineMessage> Offline::getMessages()
 {
-    return lOfflineMsg;
+    return lOfflineMessages;
 }
 
-bool Offline::isEmptyMsg()
+bool Offline::isEmptyMessages()
 {
-    return lOfflineMsg.isEmpty();
+    return lOfflineMessages.isEmpty();
 }
 
 void Offline::addNick(const QString &strNick)
 {
     lOfflineNicks.append(strNick);
-
-    // show
-    if (!offlineMsgAction->isVisible())
-        offlineMsgAction->setVisible(true);
+    Notification::instance()->refreshOffline();
 }
 
 void Offline::removeNick(const QString &strNick)
 {
     lOfflineNicks.removeAll(strNick);
-
-    // hide if no messages
-    if (lOfflineNicks.size() == 0)
-        offlineMsgAction->setVisible(false);
+    Notification::instance()->refreshOffline();
 }
 
 void Offline::clearNicks()
 {
     lOfflineNicks.clear();
-    offlineMsgAction->setVisible(false);
+    Notification::instance()->refreshOffline();
 }
 
 QList<QString> Offline::getNicks()
 {
     return lOfflineNicks;
+}
+
+bool Offline::isEmptyNicks()
+{
+    return lOfflineNicks.isEmpty();
 }

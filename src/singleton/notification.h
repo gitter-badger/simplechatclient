@@ -17,32 +17,29 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef AWAYLOG_MODEL_H
-#define AWAYLOG_MODEL_H
+#ifndef NOTIFICATION_H
+#define NOTIFICATION_H
 
-class QAction;
+#include <QMenu>
 #include <QObject>
 
-class Awaylog : public QObject
+class Notification : public QObject
 {
     Q_OBJECT
-    Q_DISABLE_COPY(Awaylog)
-    static Awaylog *Instance;
+    Q_DISABLE_COPY(Notification)
+    static Notification *Instance;
 public:
-    static Awaylog *instance();
+    static Notification *instance();
 
-    Awaylog();
+    Notification();
     void init();
-    void add(int iTime, const QString &strChannel, const QString &strAwayData);
-    bool isEmpty();
-    QList<QString> get();
-    void clear();
-
-    QAction *awaylogAction;
+    QMenu *getNotificationMenu();
+    void refreshOffline();
+    void refreshAwaylog();
+    void refreshMenu();
 
 private:
-    QList<QString> lAwaylog;
-
+    QMenu *notificationMenu;
 };
 
-#endif // AWAYLOG_MODEL_H
+#endif // NOTIFICATION_H

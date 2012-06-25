@@ -2180,6 +2180,13 @@
     </message>
 </context>
 <context>
+    <name>Notification</name>
+    <message>
+        <source>N&amp;otification</source>
+        <translation>Powiadomienia</translation>
+    </message>
+</context>
+<context>
     <name>Offline</name>
     <message>
         <source>Offline messages</source>

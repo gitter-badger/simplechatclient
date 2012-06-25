@@ -22,6 +22,7 @@
 #include "core.h"
 #include "convert.h"
 #include "log.h"
+#include "notification.h"
 #include "awaylog_model.h"
 
 Awaylog * Awaylog::Instance = 0;
@@ -41,6 +42,7 @@ Awaylog::Awaylog()
 {
     awaylogAction = new QAction(QIcon(":/images/oxygen/16x16/view-pim-tasks.png"), tr("Awaylog"), this);
     awaylogAction->setShortcut(tr("Ctrl+J"));
+    awaylogAction->setVisible(false);
 }
 
 void Awaylog::init()
@@ -75,7 +77,12 @@ void Awaylog::add(int iTime, const QString &strChannel, const QString &strData)
     Convert::simpleConvert(strAwayLogData);
 
     lAwaylog.append(QString("%1\n%2 %3").arg(strChannel, QDateTime::fromTime_t(iTime).toString("[hh:mm:ss]"), strAwayLogData));
-    awaylogAction->setVisible(true);
+    Notification::instance()->refreshAwaylog();
+}
+
+bool Awaylog::isEmpty()
+{
+    return lAwaylog.isEmpty();
 }
 
 QList<QString> Awaylog::get()
@@ -86,5 +93,5 @@ QList<QString> Awaylog::get()
 void Awaylog::clear()
 {
     lAwaylog.clear();
-    awaylogAction->setVisible(false);
+    Notification::instance()->refreshAwaylog();
 }

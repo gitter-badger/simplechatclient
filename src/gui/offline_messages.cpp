@@ -24,9 +24,9 @@
 #include "core.h"
 #include "convert.h"
 #include "offline.h"
-#include "offlinemsg.h"
+#include "offline_messages.h"
 
-DlgOfflineMsg::DlgOfflineMsg(QWidget *parent) : QDialog(parent)
+DlgOfflineMessages::DlgOfflineMessages(QWidget *parent) : QDialog(parent)
 {
     ui.setupUi(this);
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
@@ -40,7 +40,7 @@ DlgOfflineMsg::DlgOfflineMsg(QWidget *parent) : QDialog(parent)
     refresh();
 }
 
-void DlgOfflineMsg::createGui()
+void DlgOfflineMessages::createGui()
 {
     ui.pushButton_read->setIcon(QIcon(":/images/oxygen/16x16/mail-mark-read.png"));
     ui.pushButton_reject->setIcon(QIcon(":/images/oxygen/16x16/mail-mark-junk.png"));
@@ -56,7 +56,7 @@ void DlgOfflineMsg::createGui()
     ui.pushButton_reply->setEnabled(false);
 }
 
-void DlgOfflineMsg::createSignals()
+void DlgOfflineMessages::createSignals()
 {
     connect(ui.pushButton_read, SIGNAL(clicked()), this, SLOT(buttonRead()));
     connect(ui.pushButton_reject, SIGNAL(clicked()), this, SLOT(buttonReject()));
@@ -65,7 +65,7 @@ void DlgOfflineMsg::createSignals()
     connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(close()));
 }
 
-void DlgOfflineMsg::removeNick(const QString &strNick)
+void DlgOfflineMessages::removeNick(const QString &strNick)
 {
     // list
     Offline::instance()->removeNick(strNick);
@@ -76,7 +76,7 @@ void DlgOfflineMsg::removeNick(const QString &strNick)
         ui.listWidget_nicks->takeItem(ui.listWidget_nicks->row(item));
 }
 
-void DlgOfflineMsg::refresh()
+void DlgOfflineMessages::refresh()
 {
     ui.listWidget_nicks->clear();
 
@@ -84,11 +84,11 @@ void DlgOfflineMsg::refresh()
         ui.listWidget_nicks->addItem(strOfflineNick);
 }
 
-void DlgOfflineMsg::refreshMsg()
+void DlgOfflineMessages::refreshMessages()
 {
-    if (Offline::instance()->isEmptyMsg())
+    if (Offline::instance()->isEmptyMessages())
     {
-        QTimer::singleShot(1000*4, this, SLOT(refreshMsg())); // 4 sec
+        QTimer::singleShot(1000*4, this, SLOT(refreshMessages())); // 4 sec
         return;
     }
 
@@ -98,7 +98,7 @@ void DlgOfflineMsg::refreshMsg()
     ui.lineEdit_reply->setEnabled(true);
     ui.pushButton_reply->setEnabled(true);
 
-    foreach (OnetOfflineMessage msg, Offline::instance()->getMsg())
+    foreach (OnetOfflineMessage msg, Offline::instance()->getMessages())
     {
         int iTime = msg.datetime;
         QString strType = msg.type;
@@ -145,7 +145,7 @@ void DlgOfflineMsg::refreshMsg()
     }
 }
 
-void DlgOfflineMsg::buttonRead()
+void DlgOfflineMessages::buttonRead()
 {
     if (ui.listWidget_nicks->selectedItems().size() == 0) return; // nothing selected
 
@@ -162,10 +162,10 @@ void DlgOfflineMsg::buttonRead()
     ui.listWidget_msg->clear();
     ui.lineEdit_reply->clear();
 
-    QTimer::singleShot(1000*4, this, SLOT(refreshMsg())); // 4 sec
+    QTimer::singleShot(1000*4, this, SLOT(refreshMessages())); // 4 sec
 }
 
-void DlgOfflineMsg::buttonReject()
+void DlgOfflineMessages::buttonReject()
 {
     if (ui.listWidget_nicks->selectedItems().size() == 0) return; // nothing selected
 
@@ -176,7 +176,7 @@ void DlgOfflineMsg::buttonReject()
     removeNick(strNick);
 }
 
-void DlgOfflineMsg::buttonReply()
+void DlgOfflineMessages::buttonReply()
 {
     if (strCurrentNick.isEmpty()) return; // wrong nick
 

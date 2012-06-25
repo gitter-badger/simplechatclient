@@ -57,10 +57,6 @@ public:
     void setDebug(bool b);
     // window
     MainWindow *mainWindow();
-    // from options
-    void refreshColors();
-    void refreshCSS();
-    void refreshToolWidgetValues();
     // for window
     QString getChannelNameFromIndex(int index);
     int getIndexFromChannelName(const QString &strChannel);

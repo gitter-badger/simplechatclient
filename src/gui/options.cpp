@@ -26,6 +26,7 @@
 #include "config.h"
 #include "core.h"
 #include "highlight.h"
+#include "mainwindow.h"
 #include "profile_manager.h"
 #include "punish_reason.h"
 #include "sound_notify.h"
@@ -528,13 +529,13 @@ void DlgOptions::currentProfileChanged(int row)
     setDefaultValues();
 
     // refresh colors
-    Core::instance()->refreshColors();
+    Core::instance()->mainWindow()->refreshColors();
 
     // refresh background image
-    Core::instance()->refreshCSS();
+    Core::instance()->mainWindow()->refreshCSS();
 
     // refresh tool widget values
-    Core::instance()->refreshToolWidgetValues();
+    Core::instance()->mainWindow()->refreshToolWidgetValues();
 }
 
 void DlgOptions::buttonProfiles()
@@ -865,13 +866,13 @@ void DlgOptions::reverseColors()
     setNicklistColors();
 
     // refresh tabs
-    Core::instance()->refreshColors();
+    Core::instance()->mainWindow()->refreshColors();
 
     // refresh
-    Core::instance()->refreshCSS();
+    Core::instance()->mainWindow()->refreshCSS();
 
     // refresh tool widget values
-    Core::instance()->refreshToolWidgetValues();
+    Core::instance()->mainWindow()->refreshToolWidgetValues();
 }
 
 void DlgOptions::restoreDefaultColors()
@@ -938,13 +939,13 @@ void DlgOptions::restoreDefaultColors()
     setNicklistColors();
 
     // refresh tabs
-    Core::instance()->refreshColors();
+    Core::instance()->mainWindow()->refreshColors();
 
     // refresh
-    Core::instance()->refreshCSS();
+    Core::instance()->mainWindow()->refreshCSS();
 
     // refresh tool widget values
-    Core::instance()->refreshToolWidgetValues();
+    Core::instance()->mainWindow()->refreshToolWidgetValues();
 }
 
 void DlgOptions::setNicklistNickColor()
@@ -1078,7 +1079,7 @@ void DlgOptions::setBackgroundImage()
         ui.lineEdit_background_image->setText(QDir::toNativeSeparators(fileName));
 
         // refresh background image
-        Core::instance()->refreshCSS();
+        Core::instance()->mainWindow()->refreshCSS();
     }
 }
 
@@ -1092,7 +1093,7 @@ void DlgOptions::disableBackgroundImage(bool bValue)
     delete pConfig;
 
     // refresh background image
-    Core::instance()->refreshCSS();
+    Core::instance()->mainWindow()->refreshCSS();
 }
 
 void DlgOptions::setWinamp()
@@ -1176,13 +1177,13 @@ void DlgOptions::setColor(const QString &strKey)
             ui.pushButton_nicklist_gradient_2_color->setIcon(QIcon(color));
 
         // refresh
-        Core::instance()->refreshColors();
+        Core::instance()->mainWindow()->refreshColors();
 
         // refresh
-        Core::instance()->refreshCSS();
+        Core::instance()->mainWindow()->refreshCSS();
 
         // refresh tool widget values
-        Core::instance()->refreshToolWidgetValues();
+        Core::instance()->mainWindow()->refreshToolWidgetValues();
     }
 }
 

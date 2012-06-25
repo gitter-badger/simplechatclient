@@ -293,24 +293,6 @@ void Core::quit()
     Instance = 0;
 }
 
-// from options
-void Core::refreshColors()
-{
-    window->refreshColors();
-}
-
-// from options
-void Core::refreshCSS()
-{
-    window->refreshCSS();
-}
-
-// from options
-void Core::refreshToolWidgetValues()
-{
-    window->refreshToolWidgetValues();
-}
-
 QString Core::getChannelNameFromIndex(int index)
 {
     if (index < lOpenChannels.size())

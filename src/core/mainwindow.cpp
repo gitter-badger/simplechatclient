@@ -46,8 +46,9 @@
 #include "my_stats.h"
 #include "nicklist.h"
 #include "notes.h"
+#include "notification.h"
 #include "offline.h"
-#include "offlinemsg.h"
+#include "offline_messages.h"
 #include "options.h"
 #include "onet_auth.h"
 #include "onet_kernel.h"
@@ -88,12 +89,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
     // create signals
     createSignals();
-
-    // hide offline messages
-    Offline::instance()->offlineMsgAction->setVisible(false);
-
-    // hide awaylog
-    Awaylog::instance()->awaylogAction->setVisible(false);
 
     // show welcome
     QTimer::singleShot(0, this, SLOT(initShowWindow())); // 0 sec
@@ -161,8 +156,6 @@ void MainWindow::createActions()
 
     connectAction = new QAction(QIcon(":/images/oxygen/16x16/network-connect.png"), tr("&Connect"), this);
     optionsAction = new QAction(QIcon(":/images/oxygen/16x16/preferences-system.png"), tr("Options"), this);
-    aboutAction = new QAction(QIcon(":/images/logo16x16.png"), tr("About SCC ..."), this);
-    notesAction = new QAction(QIcon(":/images/oxygen/16x16/story-editor.png"), tr("Notes"), this);
 
     // onet action
     channelListAction = new QAction(QIcon(":/images/oxygen/16x16/documentation.png"), tr("Channel list"), this);
@@ -170,10 +163,14 @@ void MainWindow::createActions()
     channelFavouritesAction = new QAction(QIcon(":/images/oxygen/16x16/emblem-favorite.png"), tr("Favorite channels"), this);
     friendsAction = new QAction(QIcon(":/images/oxygen/16x16/meeting-attending.png"), tr("Friends"), this);
     ignoreAction = new QAction(QIcon(":/images/oxygen/16x16/meeting-attending-tentative.png"), tr("Ignored"), this);
-    camsAction = new QAction(QIcon(":/images/oxygen/16x16/camera-web.png"),tr("Cams"), this);
+
     myStatsAction = new QAction(QIcon(":/images/oxygen/16x16/office-chart-bar.png"),tr("My statistics"), this);
     myProfileAction = new QAction(QIcon(":/images/oxygen/16x16/view-pim-contacts.png"),tr("My profile"), this);
     myAvatarAction = new QAction(QIcon(":/images/oxygen/16x16/edit-image-face-show.png"),tr("My avatar"), this);
+
+    camsAction = new QAction(QIcon(":/images/oxygen/16x16/camera-web.png"),tr("Cams"), this);
+    notesAction = new QAction(QIcon(":/images/oxygen/16x16/story-editor.png"), tr("Notes"), this);
+    aboutAction = new QAction(QIcon(":/images/logo16x16.png"), tr("About SCC ..."), this);
 
     minimizeAction = new QAction(QIcon(":/images/oxygen/16x16/view-close.png"), tr("Mi&nimize"), this);
     maximizeAction = new QAction(QIcon(":/images/oxygen/16x16/view-fullscreen.png"), tr("Ma&ximize"), this);
@@ -213,8 +210,6 @@ void MainWindow::createMenus()
     chatMenu->addAction(channelFavouritesAction);
     chatMenu->addAction(friendsAction);
     chatMenu->addAction(ignoreAction);
-    chatMenu->addAction(Offline::instance()->offlineMsgAction);
-    chatMenu->addAction(Awaylog::instance()->awaylogAction);
     chatMenu->addAction(camsAction);
     chatMenu->addSeparator();
     chatMenu->addAction(Busy::instance()->busyAction);
@@ -227,6 +222,10 @@ void MainWindow::createMenus()
     myMenu->addAction(myAvatarAction);
     myMenu->addAction(notesAction);
 
+    // notification action menu
+    notificationMenuAction = menuBar()->addMenu(Notification::instance()->getNotificationMenu());
+    notificationMenuAction->setVisible(false);
+
     // help menu
     helpMenu = menuBar()->addMenu(tr("He&lp"));
     helpMenu->addAction(aboutAction);
@@ -238,21 +237,11 @@ void MainWindow::createMenus()
     toolBar->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
     toolBar->addAction(connectAction);
     toolBar->addAction(optionsAction);
-
-    // onet toolbar
     toolBar->addAction(channelListAction);
     toolBar->addAction(channelHomesAction);
     toolBar->addAction(friendsAction);
-
-    // offline messages
-    toolBar->addAction(Offline::instance()->offlineMsgAction);
-    // awaylog
-    toolBar->addAction(Awaylog::instance()->awaylogAction);
-    // onet cams
     toolBar->addAction(camsAction);
-    // notes
     toolBar->addAction(notesAction);
-    // lag
     toolBar->addSeparator();
     toolBar->addAction(Lag::instance()->lagAction);
 
@@ -298,7 +287,7 @@ void MainWindow::createSignals()
     connect(myProfileAction, SIGNAL(triggered()), this, SLOT(openMyProfile()));
     connect(myAvatarAction, SIGNAL(triggered()), this, SLOT(openMyAvatar()));
 
-    connect(Offline::instance()->offlineMsgAction, SIGNAL(triggered()), this, SLOT(openOfflinemsg()));
+    connect(Offline::instance()->offlineMessagesAction, SIGNAL(triggered()), this, SLOT(openOfflineMessages()));
     connect(Awaylog::instance()->awaylogAction, SIGNAL(triggered()), this, SLOT(openAwaylog()));
     connect(camsAction, SIGNAL(triggered()), this, SLOT(openCams()));
     connect(notesAction, SIGNAL(triggered()), this, SLOT(openNotes()));
@@ -309,9 +298,6 @@ void MainWindow::createSignals()
     connect(maximizeAction, SIGNAL(triggered()), this, SLOT(showMaximized()));
     connect(restoreAction, SIGNAL(triggered()), this, SLOT(show()));
     connect(quitAction, SIGNAL(triggered()), qApp, SLOT(quit()));
-
-    // signals from tabc
-//    connect(pTabC, SIGNAL(setModeration(bool)), pToolWidget, SLOT(setModeration(bool)));
 
     // signals tab
     connect(pTabM, SIGNAL(tabCloseRequested(int)), this, SLOT(tabCloseRequested(int)));
@@ -505,10 +491,10 @@ void MainWindow::openIgnore()
         DlgIgnore(this).exec();
 }
 
-void MainWindow::openOfflinemsg()
+void MainWindow::openOfflineMessages()
 {
     if ((Core::instance()->pNetwork->isConnected()) && (Core::instance()->pNetwork->isWritable()) && (Core::instance()->settings.value("logged") == "true"))
-        DlgOfflineMsg(this).exec();
+        DlgOfflineMessages(this).exec();
 }
 
 void MainWindow::openAwaylog()
@@ -603,6 +589,11 @@ int MainWindow::getCurrentTabIndex()
 QSystemTrayIcon *MainWindow::getTrayIcon()
 {
     return trayIcon;
+}
+
+QAction *MainWindow::getNotificationMenuAction()
+{
+    return notificationMenuAction;
 }
 
 void MainWindow::refreshToolButtons(const QString &strChannel)

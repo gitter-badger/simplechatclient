@@ -52,11 +52,13 @@ public:
     void refreshToolButtons(const QString &strChannel);
     void setTabColor(const QString &strChannel, MessageCategory eMessageCategory);
     QSystemTrayIcon *getTrayIcon();
+    QAction *getNotificationMenuAction();
 
 private:
     QToolBar *toolBar;
     QMenu *fileMenu;
     QMenu *optionsMenu;
+    QAction *notificationMenuAction;
     QMenu *helpMenu;
     QAction *sccAction;
     QAction *connectAction;
@@ -121,7 +123,7 @@ private slots:
     void openMyAvatar();
     void openMyStats();
     void openMyProfile();
-    void openOfflinemsg();
+    void openOfflineMessages();
 
     void setConnected();
     void setDisconnected();

@@ -34,21 +34,22 @@ public:
 
     Offline();
     void init();
-    void addMsg(int iTime, const QString &strType, const QString &strNick, const QString &strMessage);
-    void removeMsg(const QString &strNick);
-    void clearMsg();
-    QList<OnetOfflineMessage> getMsg();
-    bool isEmptyMsg();
+    void addMessage(int iTime, const QString &strType, const QString &strNick, const QString &strMessage);
+    void removeMessage(const QString &strNick);
+    void clearMessages();
+    QList<OnetOfflineMessage> getMessages();
+    bool isEmptyMessages();
 
     void addNick(const QString &strNick);
     void removeNick(const QString &strNick);
     void clearNicks();
     QList<QString> getNicks();
+    bool isEmptyNicks();
 
-    QAction *offlineMsgAction;
+    QAction *offlineMessagesAction;
 
 private:
-    QList<OnetOfflineMessage> lOfflineMsg;
+    QList<OnetOfflineMessage> lOfflineMessages;
     QList<QString> lOfflineNicks;
 };
 

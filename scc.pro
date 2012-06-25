@@ -45,7 +45,6 @@ SOURCES += src/avatars/avatar.cpp \
     src/gui/my_profile.cpp \
     src/gui/my_stats.cpp \
     src/gui/notes.cpp \
-    src/gui/offlinemsg.cpp \
     src/gui/options.cpp \
     src/gui/profile_add.cpp \
     src/gui/profile_edit.cpp \
@@ -75,6 +74,7 @@ SOURCES += src/avatars/avatar.cpp \
     src/singleton/message.cpp \
     src/singleton/nicklist.cpp \
     src/singleton/notes_model.cpp \
+    src/singleton/notification.cpp \
     src/singleton/offline.cpp \
     src/singleton/punish_reason.cpp \
     src/singleton/sound_notify.cpp \
@@ -91,7 +91,8 @@ SOURCES += src/avatars/avatar.cpp \
     src/widgets/simple_rank_widget.cpp \
     src/widgets/simple_stats_widget.cpp \
     src/widgets/tool_widget.cpp \
-    src/widgets/webcam_delegate.cpp
+    src/widgets/webcam_delegate.cpp \
+    src/gui/offline_messages.cpp
 HEADERS += src/avatars/avatar.h \
     src/common/commands.h \
     src/common/config.h \
@@ -131,7 +132,6 @@ HEADERS += src/avatars/avatar.h \
     src/gui/my_profile.h \
     src/gui/my_stats.h \
     src/gui/notes.h \
-    src/gui/offlinemsg.h \
     src/gui/options.h \
     src/gui/profile_add.h \
     src/gui/profile_edit.h \
@@ -161,6 +161,7 @@ HEADERS += src/avatars/avatar.h \
     src/singleton/message.h \
     src/singleton/nicklist.h \
     src/singleton/notes_model.h \
+    src/singleton/notification.h \
     src/singleton/offline.h \
     src/singleton/punish_reason.h \
     src/singleton/sound_notify.h \
@@ -177,7 +178,8 @@ HEADERS += src/avatars/avatar.h \
     src/widgets/simple_rank_widget.h \
     src/widgets/simple_stats_widget.h \
     src/widgets/tool_widget.h \
-    src/widgets/webcam_delegate.h
+    src/widgets/webcam_delegate.h \
+    src/gui/offline_messages.h
 FORMS += ui/about.ui \
     ui/avatar_edit.ui \
     ui/awaylog.ui \
@@ -197,7 +199,6 @@ FORMS += ui/about.ui \
     ui/my_profile.ui \
     ui/my_stats.ui \
     ui/notes.ui \
-    ui/offlinemsg.ui \
     ui/options.ui \
     ui/profile_add.ui \
     ui/profile_edit.ui \
@@ -207,4 +208,5 @@ FORMS += ui/about.ui \
     ui/user_avatar.ui \
     ui/webbrowser.ui \
     ui/webcam_mini.ui \
-    ui/webcam_standard.ui
+    ui/webcam_standard.ui \
+    ui/offline_messages.ui
