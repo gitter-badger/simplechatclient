@@ -96,6 +96,8 @@ public:
     QMultiHash<QString,OnetModerateMessage> mModerateMessages;
     // priv
     QHash<QString,QString> mPrivNames;
+    // channel info
+    QList<QString> lChannelInfo;
 
     // TW (important!!!)
     QHash<QString, TabWidget*> tw;

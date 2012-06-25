@@ -407,8 +407,10 @@ void OnetKernel::raw_join()
     else
         Message::instance()->showMessage(strChannel, strDisplay, MessageJoin);
 
-    QString strMe = Core::instance()->settings.value("nick");
+    // channel info
+    Core::instance()->lChannelInfo.removeOne(strChannel);
 
+    QString strMe = Core::instance()->settings.value("nick");
     if ((strNick == strMe) && (strChannel[0] != '^'))
         Core::instance()->pNetwork->send(QString("CS INFO %1 i").arg(strChannel));
 
@@ -419,6 +421,7 @@ void OnetKernel::raw_join()
             Core::instance()->pNetwork->send(QString("NS INFO %1 s").arg(strNick));
     }
 
+    // nicklist
     if (strNick != strMe)
         Nicklist::instance()->addUser(strChannel, strNick, strSuffix);
 }
@@ -482,6 +485,9 @@ void OnetKernel::raw_part()
 
     if (strNick == strMe)
     {
+        // channel info
+        Core::instance()->lChannelInfo.removeOne(strChannel);
+
         // close channel
         if ((strChannel != DEBUG) && (strChannel != STATUS))
             pTabC->removeTab(strChannel);
@@ -552,7 +558,13 @@ void OnetKernel::raw_kick()
     QString strMe = Core::instance()->settings.value("nick");
     if (strNick == strMe)
     {
+        // channel info
+        Core::instance()->lChannelInfo.removeOne(strChannel);
+
+        // remove tab
         pTabC->removeTab(strChannel);
+
+        // reason
         Convert::simpleConvert(strReason);
 
         if ((Core::instance()->mainWindow()->isActiveWindow()) || (Core::instance()->settings.value("tray_message") == "false"))
@@ -1082,6 +1094,9 @@ void OnetKernel::raw_001()
     else
         Core::instance()->settings["ignore_raw_141"] = "false";
 
+    // channel info
+    Core::instance()->lChannelInfo.clear();
+
     // override off
     Core::instance()->settings["override"] = "false";
 
@@ -1482,6 +1497,17 @@ void OnetKernel::raw_161n()
             i.next();
             Core::instance()->mChannelSettingsInfo[i.key()] = i.value();
         }
+    }
+
+    // channel info
+    if (!Core::instance()->lChannelInfo.contains(strChannel))
+    {
+        if (mKeyValue.value("moderated") == "1")
+        {
+            QString strDisplay = QString(tr("* Channel %1 is moderated").arg(strChannel));
+            Message::instance()->showMessage(strChannel, strDisplay, MessageInfo);
+        }
+        Core::instance()->lChannelInfo.append(strChannel);
     }
 
     // update topic author

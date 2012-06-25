@@ -2567,6 +2567,10 @@
         <translation>* %1 zmienił/a nick na %2 z Twojej listy ignorowanych</translation>
     </message>
     <message>
+        <source>* Channel %1 is moderated</source>
+        <translation>* Pokój %1 jest pokojem moderowanym</translation>
+    </message>
+    <message>
         <source>* Added the nickname %1 to a friends list</source>
         <translation>* Dodano nick %1 do listy przyjaciół</translation>
     </message>
