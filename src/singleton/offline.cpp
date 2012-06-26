@@ -36,7 +36,6 @@ Offline * Offline::instance()
 Offline::Offline()
 {
     offlineMessagesAction = new QAction(QIcon(":/images/oxygen/16x16/mail-mark-unread.png") , tr("Offline messages"), this);
-    offlineMessagesAction->setShortcut(tr("Ctrl+M"));
     offlineMessagesAction->setVisible(false);
 }
 
@@ -113,4 +112,9 @@ QList<QString> Offline::getNicks()
 bool Offline::isEmptyNicks()
 {
     return lOfflineNicks.isEmpty();
+}
+
+int Offline::countNicks()
+{
+    return lOfflineNicks.size();
 }

@@ -75,7 +75,15 @@ void Notification::refreshAwaylog()
 void Notification::refreshMenu()
 {
     if ((!Offline::instance()->isEmptyNicks()) || (!Awaylog::instance()->isEmpty()))
+    {
+        int iNotificationCount = 0;
+        iNotificationCount += Offline::instance()->countNicks();
+        iNotificationCount += Awaylog::instance()->count();
+
+        notificationMenu->setTitle(tr("N&otification (%1)").arg(iNotificationCount));
+
         Core::instance()->mainWindow()->getNotificationMenuAction()->setVisible(true);
+    }
     else
         Core::instance()->mainWindow()->getNotificationMenuAction()->setVisible(false);
 }

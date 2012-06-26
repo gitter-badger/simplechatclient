@@ -1899,14 +1899,6 @@
         <translation>Pasek nawigacji</translation>
     </message>
     <message>
-        <source>&amp;Connect</source>
-        <translation>&amp;Połącz</translation>
-    </message>
-    <message>
-        <source>&amp;Disconnect</source>
-        <translation>&amp;Rozłącz</translation>
-    </message>
-    <message>
         <source>Restore</source>
         <translation>Przywróć</translation>
     </message>
@@ -1925,6 +1917,14 @@
     <message>
         <source>&amp;Quit</source>
         <translation>Zakończ</translation>
+    </message>
+    <message>
+        <source>&amp;Connect</source>
+        <translation>&amp;Połącz</translation>
+    </message>
+    <message>
+        <source>&amp;Disconnect</source>
+        <translation>&amp;Rozłącz</translation>
     </message>
     <message>
         <source>Options</source>
@@ -1967,12 +1967,16 @@
         <translation>Mój awatar</translation>
     </message>
     <message>
-        <source>About SCC ...</source>
-        <translation>O programie SCC...</translation>
-    </message>
-    <message>
         <source>Notes</source>
         <translation>Notatki</translation>
+    </message>
+    <message>
+        <source>N&amp;otification</source>
+        <translation>Powiadomienia</translation>
+    </message>
+    <message>
+        <source>About SCC ...</source>
+        <translation>O programie SCC...</translation>
     </message>
     <message>
         <source>&amp;File</source>
@@ -2184,6 +2188,10 @@
     <message>
         <source>N&amp;otification</source>
         <translation>Powiadomienia</translation>
+    </message>
+    <message>
+        <source>N&amp;otification (%1)</source>
+        <translation>Powiadomienia (%1)</translation>
     </message>
 </context>
 <context>

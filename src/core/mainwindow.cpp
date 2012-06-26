@@ -222,13 +222,14 @@ void MainWindow::createMenus()
     myMenu->addAction(myAvatarAction);
     myMenu->addAction(notesAction);
 
-    // notification action menu
-    notificationMenuAction = menuBar()->addMenu(Notification::instance()->getNotificationMenu());
-    notificationMenuAction->setVisible(false);
-
     // help menu
     helpMenu = menuBar()->addMenu(tr("He&lp"));
     helpMenu->addAction(aboutAction);
+
+    // notification action menu
+    notificationMenuAction = new QAction(QIcon(":/images/oxygen/16x16/dialog-warning.png"), tr("N&otification"), this);
+    notificationMenuAction->setMenu(Notification::instance()->getNotificationMenu());
+    notificationMenuAction->setVisible(false);
 
     // toolbar
     toolBar = new QToolBar();
@@ -242,6 +243,7 @@ void MainWindow::createMenus()
     toolBar->addAction(friendsAction);
     toolBar->addAction(camsAction);
     toolBar->addAction(notesAction);
+    toolBar->addAction(notificationMenuAction);
     toolBar->addSeparator();
     toolBar->addAction(Lag::instance()->lagAction);
 

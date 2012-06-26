@@ -41,7 +41,6 @@ Awaylog * Awaylog::instance()
 Awaylog::Awaylog()
 {
     awaylogAction = new QAction(QIcon(":/images/oxygen/16x16/view-pim-tasks.png"), tr("Awaylog"), this);
-    awaylogAction->setShortcut(tr("Ctrl+J"));
     awaylogAction->setVisible(false);
 }
 
@@ -80,11 +79,6 @@ void Awaylog::add(int iTime, const QString &strChannel, const QString &strData)
     Notification::instance()->refreshAwaylog();
 }
 
-bool Awaylog::isEmpty()
-{
-    return lAwaylog.isEmpty();
-}
-
 QList<QString> Awaylog::get()
 {
     return lAwaylog;
@@ -94,4 +88,14 @@ void Awaylog::clear()
 {
     lAwaylog.clear();
     Notification::instance()->refreshAwaylog();
+}
+
+bool Awaylog::isEmpty()
+{
+    return lAwaylog.isEmpty();
+}
+
+int Awaylog::count()
+{
+    return lAwaylog.size();
 }

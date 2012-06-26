@@ -45,6 +45,7 @@ public:
     void clearNicks();
     QList<QString> getNicks();
     bool isEmptyNicks();
+    int countNicks();
 
     QAction *offlineMessagesAction;
 
