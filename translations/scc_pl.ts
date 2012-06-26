@@ -2193,6 +2193,14 @@
         <source>N&amp;otification (%1)</source>
         <translation>Powiadomienia (%1)</translation>
     </message>
+    <message>
+        <source>Awaylog (%1)</source>
+        <translation>Awaylog (%1)</translation>
+    </message>
+    <message>
+        <source>Offline messages (%1)</source>
+        <translation>Wiadomości offline (%1)</translation>
+    </message>
 </context>
 <context>
     <name>Offline</name>
