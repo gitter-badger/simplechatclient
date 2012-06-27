@@ -113,5 +113,6 @@
         <file>images/oxygen/16x16/karbon.png</file>
         <file>images/oxygen/16x16/accessories-dictionary.png</file>
         <file>images/oxygen/16x16/view-conversation-balloon.png</file>
+        <file>images/oxygen/16x16/emblem-important.png</file>
     </qresource>
 </RCC>

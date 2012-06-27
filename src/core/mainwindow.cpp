@@ -227,7 +227,7 @@ void MainWindow::createMenus()
     helpMenu->addAction(aboutAction);
 
     // notification action menu
-    notificationMenuAction = new QAction(QIcon(":/images/oxygen/16x16/dialog-warning.png"), tr("N&otification"), this);
+    notificationMenuAction = new QAction(QIcon(":/images/oxygen/16x16/emblem-important.png"), tr("N&otification"), this);
     notificationMenuAction->setMenu(Notification::instance()->getNotificationMenu());
     notificationMenuAction->setVisible(false);
 
