@@ -19,6 +19,7 @@
 
 #include "awaylog_model.h"
 #include "core.h"
+#include "invite_model.h"
 #include "mainwindow.h"
 #include "offline.h"
 #include "notification.h"
@@ -39,8 +40,9 @@ Notification * Notification::instance()
 Notification::Notification()
 {
     notificationMenu = new QMenu(tr("N&otification"));
-    notificationMenu->addAction(Offline::instance()->offlineMessagesAction);
     notificationMenu->addAction(Awaylog::instance()->awaylogAction);
+    notificationMenu->addAction(Invite::instance()->inviteAction);
+    notificationMenu->addAction(Offline::instance()->offlineMessagesAction);
 }
 
 void Notification::init()
@@ -50,16 +52,6 @@ void Notification::init()
 QMenu *Notification::getNotificationMenu()
 {
     return notificationMenu;
-}
-
-void Notification::refreshOffline()
-{
-    refreshMenu();
-
-    if (Offline::instance()->isEmptyNicks())
-        Offline::instance()->offlineMessagesAction->setVisible(false);
-    else
-        Offline::instance()->offlineMessagesAction->setVisible(true);
 }
 
 void Notification::refreshAwaylog()
@@ -72,15 +64,37 @@ void Notification::refreshAwaylog()
         Awaylog::instance()->awaylogAction->setVisible(true);
 }
 
+void Notification::refreshInvite()
+{
+    refreshMenu();
+
+    if (Invite::instance()->isEmpty())
+        Invite::instance()->inviteAction->setVisible(false);
+    else
+        Invite::instance()->inviteAction->setVisible(true);
+}
+
+void Notification::refreshOffline()
+{
+    refreshMenu();
+
+    if (Offline::instance()->isEmptyNicks())
+        Offline::instance()->offlineMessagesAction->setVisible(false);
+    else
+        Offline::instance()->offlineMessagesAction->setVisible(true);
+}
+
 void Notification::refreshMenu()
 {
     if ((!Offline::instance()->isEmptyNicks()) || (!Awaylog::instance()->isEmpty()))
     {
         int iAwayCount = Awaylog::instance()->count();
+        int iInviteCount = Invite::instance()->count();
         int iOfflineMessagesCount = Offline::instance()->countNicks();
-        int iNotificationCount = iAwayCount + iOfflineMessagesCount;
+        int iNotificationCount = iAwayCount + iInviteCount + iOfflineMessagesCount;
 
         Awaylog::instance()->awaylogAction->setText(tr("Awaylog (%1)").arg(iAwayCount));
+        Invite::instance()->inviteAction->setText(tr("Invite (%1)").arg(iInviteCount));
         Offline::instance()->offlineMessagesAction->setText(tr("Offline messages (%1)").arg(iOfflineMessagesCount));
 
         notificationMenu->setTitle(tr("N&otification (%1)").arg(iNotificationCount));

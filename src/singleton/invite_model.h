@@ -17,30 +17,35 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef NOTIFICATION_H
-#define NOTIFICATION_H
+#ifndef INVITE_MODEL_H
+#define INVITE_MODEL_H
 
-#include <QMenu>
+#include <QAction>
+#include <QMultiHash>
 #include <QObject>
 
-class Notification : public QObject
+class Invite : public QObject
 {
     Q_OBJECT
-    Q_DISABLE_COPY(Notification)
-    static Notification *Instance;
+    Q_DISABLE_COPY(Invite)
+    static Invite *Instance;
 public:
-    static Notification *instance();
+    static Invite *instance();
 
-    Notification();
+    Invite();
     void init();
-    QMenu *getNotificationMenu();
-    void refreshAwaylog();
-    void refreshInvite();
-    void refreshOffline();
-    void refreshMenu();
+    void add(const QString &nick, const QString &channel);
+    void remove(const QString &nick, const QString &channel);
+    void clear();
+    bool isEmpty();
+    int count();
+    QMultiHash<QString,QString> get();
+
+    QAction *inviteAction;
 
 private:
-    QMenu *notificationMenu;
+    QMultiHash<QString,QString> lInvite;
+
 };
 
-#endif // NOTIFICATION_H
+#endif // INVITE_MODEL_H

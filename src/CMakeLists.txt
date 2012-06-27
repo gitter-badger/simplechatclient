@@ -97,6 +97,7 @@ set (scc_SRCS
 	singleton/channel.cpp
 	singleton/channel_list_model.cpp
 	singleton/highlight.cpp
+	singleton/invite_model.cpp
 	singleton/lag.cpp
 	singleton/message.cpp
 	singleton/nicklist.cpp
@@ -176,6 +177,7 @@ set (scc_MOC_HDRS
 	singleton/channel.h
 	singleton/channel_list_model.h
 	singleton/highlight.h
+	singleton/invite_model.h
 	singleton/lag.h
 	singleton/message.h
 	singleton/nicklist.h

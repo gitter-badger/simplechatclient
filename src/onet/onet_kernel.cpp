@@ -27,6 +27,7 @@
 #include "channel_key.h"
 #include "channel_list_model.h"
 #include "invite.h"
+#include "invite_model.h"
 #include "lag.h"
 #include "log.h"
 #include "mainwindow.h"
@@ -862,24 +863,30 @@ void OnetKernel::raw_invite()
 {
     if (strDataList.size() < 4) return;
 
-    QString strWho = strDataList[0];
-    if (strWho[0] == ':') strWho.remove(0,1);
-    strWho = strWho.left(strWho.indexOf('!'));
+    QString strNick = strDataList[0];
+    if (strNick[0] == ':') strNick.remove(0,1);
+    strNick = strNick.left(strNick.indexOf('!'));
 
     QString strIP = strDataList[0];
     if (strIP[0] == ':') strIP.remove(0,1);
     strIP = strIP.right(strIP.length()-strIP.indexOf('@')-1);
 
-    QString strWhere = strDataList[3];
-    if (strWhere[0] == ':') strWhere.remove(0,1);
-
-    SoundNotify::instance()->play(Query);
+    QString strChannel = strDataList[3];
+    if (strChannel[0] == ':') strChannel.remove(0,1);
 
     // priv name
-    if (strWhere[0] == '^')
-        Core::instance()->mPrivNames[strWhere] = strWho;
+    if (strChannel[0] == '^')
+        Core::instance()->mPrivNames[strChannel] = strNick;
 
-    (new DlgInvite(Core::instance()->mainWindow(), strWho, strWhere))->show(); // should be show - prevent hangup!
+    // is active window
+//    if (Core::instance()->mainWindow()->isActiveWindow())
+//    {
+        SoundNotify::instance()->play(Query);
+
+        (new DlgInvite(Core::instance()->mainWindow(), strNick, strChannel))->show(); // should be show - prevent hangup!
+//    }
+//    else
+//        Invite::instance()->add(strNick, strChannel);
 }
 
 // :cf1f3.onet TOPIC #scc :Simple Chat Client; current version: beta;

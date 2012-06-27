@@ -2198,6 +2198,10 @@
         <translation>Awaylog (%1)</translation>
     </message>
     <message>
+        <source>Invite (%1)</source>
+        <translation>Zaproszenia (%1)</translation>
+    </message>
+    <message>
         <source>Offline messages (%1)</source>
         <translation>Wiadomości offline (%1)</translation>
     </message>
