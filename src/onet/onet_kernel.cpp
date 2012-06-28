@@ -878,6 +878,8 @@ void OnetKernel::raw_invite()
     if (strChannel[0] == '^')
         Core::instance()->mPrivNames[strChannel] = strNick;
 
+    Invite::instance()->add(strNick, strChannel);
+
     // is active window
 //    if (Core::instance()->mainWindow()->isActiveWindow())
 //    {
@@ -885,8 +887,6 @@ void OnetKernel::raw_invite()
 
         (new DlgInvite(Core::instance()->mainWindow(), strNick, strChannel))->show(); // should be show - prevent hangup!
 //    }
-//    else
-//        Invite::instance()->add(strNick, strChannel);
 }
 
 // :cf1f3.onet TOPIC #scc :Simple Chat Client; current version: beta;

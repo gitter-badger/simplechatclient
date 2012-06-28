@@ -20,6 +20,7 @@
 #include <QDesktopWidget>
 #include "core.h"
 #include "mainwindow.h"
+#include "invite_model.h"
 #include "invite.h"
 
 DlgInvite::DlgInvite(MainWindow *parent, const QString &_strNick, const QString &_strChannel) : QDialog(parent), strNick(_strNick), strChannel(_strChannel)
@@ -69,17 +70,20 @@ void DlgInvite::buttonWhois()
 void DlgInvite::buttonReject()
 {
     Core::instance()->pNetwork->send(QString("INVREJECT %1 %2").arg(strNick, strChannel));
+    Invite::instance()->remove(strNick, strChannel);
     this->close();
 }
 
 void DlgInvite::buttonIgnore()
 {
     Core::instance()->pNetwork->send(QString("INVIGNORE %1 %2").arg(strNick, strChannel));
+    Invite::instance()->remove(strNick, strChannel);
     this->close();
 }
 
 void DlgInvite::buttonAccept()
 {
     Core::instance()->pNetwork->send(QString("JOIN %1").arg(strChannel));
+    Invite::instance()->remove(strNick, strChannel);
     this->close();
 }
