@@ -39,6 +39,7 @@
 #include "core.h"
 #include "friends.h"
 #include "ignore.h"
+#include "invite_model.h"
 #include "lag.h"
 #include "message.h"
 #include "my_avatar.h"
@@ -288,11 +289,12 @@ void MainWindow::createSignals()
     connect(myStatsAction, SIGNAL(triggered()), this, SLOT(openMyStats()));
     connect(myProfileAction, SIGNAL(triggered()), this, SLOT(openMyProfile()));
     connect(myAvatarAction, SIGNAL(triggered()), this, SLOT(openMyAvatar()));
-
-    connect(Offline::instance()->offlineMessagesAction, SIGNAL(triggered()), this, SLOT(openOfflineMessages()));
-    connect(Awaylog::instance()->awaylogAction, SIGNAL(triggered()), this, SLOT(openAwaylog()));
     connect(camsAction, SIGNAL(triggered()), this, SLOT(openCams()));
     connect(notesAction, SIGNAL(triggered()), this, SLOT(openNotes()));
+
+    connect(Awaylog::instance()->awaylogAction, SIGNAL(triggered()), this, SLOT(openAwaylog()));
+    //connect(Invite::instance()->inviteAction, SIGNAL(triggered()), this, SLOT(openInvite()));
+    connect(Offline::instance()->offlineMessagesAction, SIGNAL(triggered()), this, SLOT(openOfflineMessages()));
 
     connect(trayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)), this, SLOT(trayIconActivated(QSystemTrayIcon::ActivationReason)));
 
