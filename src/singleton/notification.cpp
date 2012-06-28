@@ -86,7 +86,7 @@ void Notification::refreshOffline()
 
 void Notification::refreshMenu()
 {
-    if ((!Offline::instance()->isEmptyNicks()) || (!Awaylog::instance()->isEmpty()))
+    if ((!Awaylog::instance()->isEmpty()) || (!Invite::instance()->isEmpty()) || (!Offline::instance()->isEmptyNicks()))
     {
         int iAwayCount = Awaylog::instance()->count();
         int iInviteCount = Invite::instance()->count();

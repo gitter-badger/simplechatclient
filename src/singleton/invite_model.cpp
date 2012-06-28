@@ -17,6 +17,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include "notification.h"
 #include "invite_model.h"
 
 Invite * Invite::Instance = 0;
@@ -46,16 +47,19 @@ void Invite::init()
 void Invite::add(const QString &nick, const QString &channel)
 {
     lInvite.insert(nick, channel);
+    Notification::instance()->refreshInvite();
 }
 
 void Invite::remove(const QString &nick, const QString &channel)
 {
     lInvite.remove(nick, channel);
+    Notification::instance()->refreshInvite();
 }
 
 void Invite::clear()
 {
     lInvite.clear();
+    Notification::instance()->refreshInvite();
 }
 
 bool Invite::isEmpty()
