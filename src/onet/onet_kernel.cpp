@@ -884,7 +884,8 @@ void OnetKernel::raw_invite()
     // is active window
     if (Core::instance()->mainWindow()->isActiveWindow())
     {
-        SoundNotify::instance()->play(Query);
+        if (Core::instance()->settings.value("disable_sounds") == "false")
+            SoundNotify::instance()->play(Query);
 
         (new DlgInvite(Core::instance()->mainWindow(), strNick, strChannel))->show(); // should be show - prevent hangup!
     }
