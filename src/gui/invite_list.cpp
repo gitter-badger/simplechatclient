@@ -19,11 +19,10 @@
 
 #include <QDesktopWidget>
 #include "core.h"
-#include "mainwindow.h"
 #include "invite_model.h"
 #include "invite_list.h"
 
-DlgInviteList::DlgInviteList(MainWindow *parent) : QDialog(parent)
+DlgInviteList::DlgInviteList(QWidget *parent) : QDialog(parent)
 {
     ui.setupUi(this);
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);

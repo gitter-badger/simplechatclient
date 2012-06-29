@@ -20,7 +20,6 @@
 #ifndef INVITE_LIST_H
 #define INVITE_LIST_H
 
-class MainWindow;
 #include <QDialog>
 #include "ui_invite_list.h"
 
@@ -28,7 +27,7 @@ class DlgInviteList : public QDialog
 {
     Q_OBJECT
 public:
-    DlgInviteList(MainWindow *parent);
+    DlgInviteList(QWidget *parent = 0);
 
 private:
     Ui::uiInviteList ui;   
