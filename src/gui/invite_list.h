@@ -1,7 +1,7 @@
 /*
  * Simple Chat Client
  *
- *   Copyright (C) 2012 Piotr Łuczko <piotr.luczko@gmail.com>
+ *   Copyright (C) 2012 Piotr Łuczko <piotr.luczko@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,26 +17,25 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef INVITE_H
-#define INVITE_H
+#ifndef INVITE_LIST_H
+#define INVITE_LIST_H
 
 class MainWindow;
 #include <QDialog>
-#include "ui_invite.h"
+#include "ui_invite_list.h"
 
-class DlgInvite : public QDialog
+class DlgInviteList : public QDialog
 {
     Q_OBJECT
 public:
-    DlgInvite(MainWindow *parent, const QString &_strNick, const QString &_strChannel);
+    DlgInviteList(MainWindow *parent);
 
 private:
-    Ui::uiInvite ui;
-    QString strNick;
-    QString strChannel;
+    Ui::uiInviteList ui;   
 
     void createGui();
     void createSignals();
+    void createList();
 
 private slots:
     void buttonWhois();
@@ -45,4 +44,4 @@ private slots:
     void buttonAccept();
 };
 
-#endif // INVITE_H
+#endif // INVITE_LIST_H

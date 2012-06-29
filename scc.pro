@@ -40,6 +40,7 @@ SOURCES += src/avatars/avatar.cpp \
     src/gui/friends.cpp \
     src/gui/ignore.cpp \
     src/gui/invite.cpp \
+    src/gui/invite_list.cpp \
     src/gui/moderation.cpp \
     src/gui/my_avatar.cpp \
     src/gui/my_profile.cpp \
@@ -126,8 +127,8 @@ HEADERS += src/avatars/avatar.h \
     src/gui/find_text.h \
     src/gui/friends.h \
     src/gui/ignore.h \
-    src/gui/ignore_ad.h \
     src/gui/invite.h \
+    src/gui/invite_list.h \
     src/gui/moderation.h \
     src/gui/my_avatar.h \
     src/gui/my_profile.h \
@@ -196,6 +197,7 @@ FORMS += ui/about.ui \
     ui/friends.ui \
     ui/ignore.ui \
     ui/invite.ui \
+    ui/invite_list.ui \
     ui/moderation.ui \
     ui/my_avatar.ui \
     ui/my_profile.ui \

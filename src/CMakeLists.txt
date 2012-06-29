@@ -20,6 +20,7 @@ set (scc_UIS
 	../ui/friends.ui
 	../ui/ignore.ui
 	../ui/invite.ui
+	../ui/invite_list.ui
 	../ui/moderation.ui
 	../ui/my_avatar.ui
 	../ui/my_profile.ui
@@ -67,6 +68,7 @@ set (scc_SRCS
 	gui/friends.cpp
 	gui/ignore.cpp
 	gui/invite.cpp
+	gui/invite_list.cpp
 	gui/moderation.cpp
 	gui/my_avatar.cpp
 	gui/my_profile.cpp
@@ -149,6 +151,7 @@ set (scc_MOC_HDRS
 	gui/friends.h
 	gui/ignore.h
 	gui/invite.h
+	gui/invite_list.h
 	gui/moderation.h
 	gui/my_avatar.h
 	gui/my_profile.h

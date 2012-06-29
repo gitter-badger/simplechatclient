@@ -39,6 +39,7 @@
 #include "core.h"
 #include "friends.h"
 #include "ignore.h"
+#include "invite_list.h"
 #include "invite_model.h"
 #include "lag.h"
 #include "message.h"
@@ -293,7 +294,7 @@ void MainWindow::createSignals()
     connect(notesAction, SIGNAL(triggered()), this, SLOT(openNotes()));
 
     connect(Awaylog::instance()->awaylogAction, SIGNAL(triggered()), this, SLOT(openAwaylog()));
-    //connect(Invite::instance()->inviteAction, SIGNAL(triggered()), this, SLOT(openInvite()));
+    connect(Invite::instance()->inviteAction, SIGNAL(triggered()), this, SLOT(openInviteList()));
     connect(Offline::instance()->offlineMessagesAction, SIGNAL(triggered()), this, SLOT(openOfflineMessages()));
 
     connect(trayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)), this, SLOT(trayIconActivated(QSystemTrayIcon::ActivationReason)));
@@ -495,17 +496,6 @@ void MainWindow::openIgnore()
         DlgIgnore(this).exec();
 }
 
-void MainWindow::openOfflineMessages()
-{
-    if ((Core::instance()->pNetwork->isConnected()) && (Core::instance()->pNetwork->isWritable()) && (Core::instance()->settings.value("logged") == "true"))
-        DlgOfflineMessages(this).exec();
-}
-
-void MainWindow::openAwaylog()
-{
-    DlgAwaylog(this).exec();
-}
-
 void MainWindow::openCams()
 {
 #if WITH_KAMERZYSTA
@@ -546,6 +536,23 @@ void MainWindow::openNotes()
 void MainWindow::openAbout()
 {
     DlgAbout(this).exec();
+}
+
+void MainWindow::openAwaylog()
+{
+    DlgAwaylog(this).exec();
+}
+
+void MainWindow::openInviteList()
+{
+    if ((Core::instance()->pNetwork->isConnected()) && (Core::instance()->pNetwork->isWritable()) && (Core::instance()->settings.value("logged") == "true"))
+        DlgInviteList(this).exec();
+}
+
+void MainWindow::openOfflineMessages()
+{
+    if ((Core::instance()->pNetwork->isConnected()) && (Core::instance()->pNetwork->isWritable()) && (Core::instance()->settings.value("logged") == "true"))
+        DlgOfflineMessages(this).exec();
 }
 
 // tray

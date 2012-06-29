@@ -106,14 +106,12 @@ private slots:
     void initShowWindow();
     void buttonConnect();
     void openOptions();
-    void openAwaylog();
     void openNotes();
     void openAbout();
     void trayIconActivated(QSystemTrayIcon::ActivationReason activationReason);
     void ctrlTabPressed();
     void ctrlShiftTabPressed();
 
-    // onet dialogs
     void openChannelList();
     void openChannelHomes();
     void openChannelFavourites();
@@ -123,6 +121,9 @@ private slots:
     void openMyAvatar();
     void openMyStats();
     void openMyProfile();
+
+    void openAwaylog();
+    void openInviteList();
     void openOfflineMessages();
 
     void setConnected();

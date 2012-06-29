@@ -1015,6 +1015,37 @@
     </message>
 </context>
 <context>
+    <name>DlgInviteList</name>
+    <message>
+        <source>Invitations</source>
+        <translation>Zaproszenia</translation>
+    </message>
+    <message>
+        <source>Whois</source>
+        <translation>Gdzie jest</translation>
+    </message>
+    <message>
+        <source>Reject</source>
+        <translation>Odrzuć</translation>
+    </message>
+    <message>
+        <source>Ignore</source>
+        <translation>Ignoruj</translation>
+    </message>
+    <message>
+        <source>Accept</source>
+        <translation>Akceptuj</translation>
+    </message>
+    <message>
+        <source>%1 invites you to channel %2</source>
+        <translation>%1 zaprasza do pokoju %2</translation>
+    </message>
+    <message>
+        <source>%1 invites you to priv</source>
+        <translation>%1 zaprasza do rozmowy prywatnej</translation>
+    </message>
+</context>
+<context>
     <name>DlgModeration</name>
     <message>
         <source>Moderation</source>
