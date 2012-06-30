@@ -3067,7 +3067,11 @@
     </message>
     <message>
         <source>* %1 has public webcam</source>
-        <translation>* %1 ma włączoną kamerę</translation>
+        <translation>* %1 ma włączoną kamerę publicznie</translation>
+    </message>
+    <message>
+        <source>* %1 has private webcam</source>
+        <translation>* %1 ma włączoną kamerę prywatnie</translation>
     </message>
     <message>
         <source>Teen</source>

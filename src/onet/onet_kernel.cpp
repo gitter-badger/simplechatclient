@@ -189,6 +189,7 @@ void OnetKernel::kernel(const QString &_strData)
             case 811: raw_811(); break;
             case 812: raw_812(); break;
             case 815: raw_815(); break;
+            case 816: raw_816(); break;
             case 817: raw_817(); break;
             case 818: raw_818(); break;
             case 819: raw_819(); break;
@@ -3854,6 +3855,18 @@ void OnetKernel::raw_815()
     QString strNick = strDataList[3];
 
     QString strDisplay = QString(tr("* %1 has public webcam")).arg(strNick);
+    Message::instance()->showMessageActive(strDisplay, MessageInfo);
+}
+
+// WHOIS
+// :cf1f4.onet 816 ~test testnick :Private webcam
+void OnetKernel::raw_816()
+{
+    if (strDataList.size() < 4) return;
+
+    QString strNick = strDataList[3];
+
+    QString strDisplay = QString(tr("* %1 has private webcam")).arg(strNick);
     Message::instance()->showMessageActive(strDisplay, MessageInfo);
 }
 
