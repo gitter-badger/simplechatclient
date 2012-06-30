@@ -884,11 +884,12 @@ void OnetKernel::raw_invite()
     // is active window
     if (Core::instance()->mainWindow()->isActiveWindow())
     {
-        if (Core::instance()->settings.value("disable_sounds") == "false")
-            SoundNotify::instance()->play(Query);
-
         (new DlgInvite(Core::instance()->mainWindow(), strNick, strChannel))->show(); // should be show - prevent hangup!
     }
+
+    // sound
+    if (Core::instance()->settings.value("disable_sounds") == "false")
+        SoundNotify::instance()->play(Query);
 }
 
 // :cf1f3.onet TOPIC #scc :Simple Chat Client; current version: beta;
