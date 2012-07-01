@@ -32,13 +32,16 @@ void fixHtmlChars(QString &strData)
     strData.replace("\\", "&#92;");
 }
 
-QString fixContextMenu(QString strData, MessageCategory eMessageCategory)
+void fixContextMenu(QString &strData, MessageCategory eMessageCategory)
 {
     QStringList strDataList = strData.split(" ");
 
     // nick
     if ((strDataList[0] == "*") && ((eMessageCategory == MessageJoin) || (eMessageCategory == MessagePart) || (eMessageCategory == MessageQuit)  || (eMessageCategory == MessageKick)))
-        strDataList[1] = QString("<a onclick=\"return false\" name=\"nick\" style=\"color:inherit;text-decoration:none;\" href=\"#\">%1</a>").arg(strDataList[1]);
+    {
+        QString strWord = strDataList[1]; Convert::removeStyles(strWord);
+        strDataList[1] = QString("<a onclick=\"return false\" name=\"nick\" style=\"color:inherit;text-decoration:none;\" href=\"#\">%1</a>").arg(strWord);
+    }
 
     for (int i = 0; i < strDataList.size(); i++)
     {
@@ -46,15 +49,20 @@ QString fixContextMenu(QString strData, MessageCategory eMessageCategory)
 
         // channel
         if (strWord.startsWith('#'))
+        {
+            Convert::removeStyles(strWord);
             strDataList[i] = QString("<a onclick=\"return false\" name=\"channel\" style=\"text-decoration:none;\" href=\"#\" class=\"ChannelColor\">%1</a>").arg(strWord);
+        }
 
         // web
         if ((strWord.startsWith("http")) || (strWord.startsWith("www.")))
+        {
+            Convert::removeStyles(strWord);
             strDataList[i] = QString("<a onclick=\"return false\" name=\"website\" style=\"color:inherit;text-decoration:none;\" href=\"%1\">%2</a>").arg(strWord, strWord);
+        }
     }
 
     strData = strDataList.join(" ");
-    return strData;
 }
 
 QString HtmlMessagesRenderer::renderer(QString strData, MessageCategory eMessageCategory, int iTime, QString strNick)
@@ -65,7 +73,7 @@ QString HtmlMessagesRenderer::renderer(QString strData, MessageCategory eMessage
     fixHtmlChars(strData);
 
     // fix for context menu
-    strData = fixContextMenu(strData, eMessageCategory);
+    fixContextMenu(strData, eMessageCategory);
 
     // /me
     QString strRegExpMe = QString("%1ACTION %2%3").arg(QString(QByteArray("\x01")), "(.*)", QString(QByteArray("\x01")));
