@@ -56,6 +56,7 @@ private:
     void clear();
 
 private slots:
+    void changePage(QModelIndex index);
     void refreshChannelInfo();
     void refreshChannelStats();
     void ownerChanged();
@@ -84,7 +85,6 @@ private slots:
     void avatarSelected(const QString &avatarUrl);
     void getAvatarReady(const QByteArray &content, const QString &avatarUrl, AvatarClient::AvatarType type);
     void refreshAvatar();
-    void tabChanged(int index);
 };
 
 #endif // CHANNEL_SETTINGS_H

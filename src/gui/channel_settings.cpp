@@ -72,17 +72,6 @@ void DlgChannelSettings::createGui()
     ui.pushButton_permission_remove->setIcon(QIcon(":/images/oxygen/16x16/list-remove.png"));
     ui.buttonBox->button(QDialogButtonBox::Close)->setIcon(QIcon(":/images/oxygen/16x16/dialog-close.png"));
 
-    ui.tabWidget->setTabText(0, tr("Summary"));
-    ui.tabWidget->setTabText(1, tr("General"));
-    ui.tabWidget->setTabText(2, tr("Advanced"));
-    ui.tabWidget->setTabText(3, tr("Permissions"));
-    ui.tabWidget->setTabText(4, tr("Avatar"));
-    ui.tabWidget->setTabText(5, tr("Statistics"));
-    ui.listWidget_permissions->addItem(tr("Operators"));
-    ui.listWidget_permissions->addItem(tr("Half-operators"));
-    ui.listWidget_permissions->addItem(tr("Banned"));
-    ui.listWidget_permissions->addItem(tr("Invited"));
-
     // summary
     ui.label_created1->setText(tr("Created:"));
     ui.label_website1->setText(tr("Website:"));
@@ -135,6 +124,10 @@ void DlgChannelSettings::createGui()
     ui.radioButton_auditorium_on->setText(tr("On"));
 
     // permissions
+    ui.listWidget_permissions->addItem(tr("Operators"));
+    ui.listWidget_permissions->addItem(tr("Half-operators"));
+    ui.listWidget_permissions->addItem(tr("Banned"));
+    ui.listWidget_permissions->addItem(tr("Invited"));
     ui.label_permission_op->setText(tr("Operators"));
     ui.label_permission_halfop->setText(tr("Half-operators"));
     ui.label_permission_ban->setText(tr("Banned"));
@@ -148,13 +141,44 @@ void DlgChannelSettings::createGui()
     ui.label_stats_lfavourites->setText(tr("Channel added in favourites:"));
     ui.label_stats_lexists_days->setText(tr("Channel exists days:"));
 
+    // channel settings list
+    QTreeWidgetItem *summary = new QTreeWidgetItem(ui.treeWidget_channel_settings);
+    summary->setIcon(0, QIcon());
+    summary->setText(0, tr("Summary"));
+    summary->setToolTip(0, tr("Summary"));
+
+    QTreeWidgetItem *general = new QTreeWidgetItem(ui.treeWidget_channel_settings);
+    general->setIcon(0, QIcon());
+    general->setText(0, tr("General"));
+    general->setToolTip(0, tr("General"));
+
+    QTreeWidgetItem *advanced = new QTreeWidgetItem(ui.treeWidget_channel_settings);
+    advanced->setIcon(0, QIcon());
+    advanced->setText(0, tr("Advanced"));
+    advanced->setToolTip(0, tr("Advanced"));
+
+    QTreeWidgetItem *permissions = new QTreeWidgetItem(ui.treeWidget_channel_settings);
+    permissions->setIcon(0, QIcon(":/images/oxygen/16x16/irc-operator.png"));
+    permissions->setText(0, tr("Permissions"));
+    permissions->setToolTip(0, tr("Permissions"));
+
+    QTreeWidgetItem *avatar = new QTreeWidgetItem(ui.treeWidget_channel_settings);
+    avatar->setIcon(0, QIcon(":/images/oxygen/16x16/edit-image-face-show.png"));
+    avatar->setText(0, tr("Avatar"));
+    avatar->setToolTip(0, tr("Avatar"));
+
+    QTreeWidgetItem *statistics = new QTreeWidgetItem(ui.treeWidget_channel_settings);
+    statistics->setIcon(0, QIcon(":/images/oxygen/16x16/office-chart-bar.png"));
+    statistics->setText(0, tr("Statistics"));
+    statistics->setToolTip(0, tr("Statistics"));
+
     // set tabs disabled
-    setTabs(false);
+    setTabs(true);
 }
 
 void DlgChannelSettings::setDefaultValues()
 {
-    ui.label_channel_name->setText(strChannel);
+    //ui.label_channel_name->setText(strChannel);
 
     // font
     QStringList comboBoxFont;
@@ -206,8 +230,18 @@ void DlgChannelSettings::createSignals()
 
     connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(buttonClose()));
 
-    Q_ASSERT(ui.tabWidget->currentIndex() == 0); // due to lazy initialization of avatars
-    connect(ui.tabWidget, SIGNAL(currentChanged(int)), this, SLOT(tabChanged(int)));
+    connect(ui.treeWidget_channel_settings, SIGNAL(clicked(QModelIndex)), this, SLOT(changePage(QModelIndex)));
+}
+
+void DlgChannelSettings::changePage(QModelIndex index)
+{
+    ui.stackedWidget_channel_settings->setCurrentIndex(index.row());
+
+    if (index.row() == 4 && !ui.avatarListWidget->isInitialized())
+    {
+        // lazy initialization
+        ui.avatarListWidget->initialize(avatarClient);
+    }
 }
 
 void DlgChannelSettings::refreshAll()
@@ -219,7 +253,7 @@ void DlgChannelSettings::refreshAll()
     Core::instance()->strChannelSettings = strChannel;
 
     // set label
-    ui.label_channel_name->setText(strChannel);
+    //ui.label_channel_name->setText(strChannel);
 
     // get data
     Core::instance()->pNetwork->send(QString("CS INFO %1").arg(strChannel));
@@ -525,10 +559,10 @@ void DlgChannelSettings::refreshChannelStats()
 
 void DlgChannelSettings::setTabs(bool b)
 {
-    ui.tabWidget->setTabEnabled(1, b);
-    ui.tabWidget->setTabEnabled(2, b);
-    ui.tabWidget->setTabEnabled(3, b);
-    ui.tabWidget->setTabEnabled(4, b);
+    ui.treeWidget_channel_settings->itemAt(1,0)->setDisabled(b);
+    ui.treeWidget_channel_settings->itemAt(2,0)->setDisabled(b);
+    ui.treeWidget_channel_settings->itemAt(3,0)->setDisabled(b);
+    ui.treeWidget_channel_settings->itemAt(4,0)->setDisabled(b);
 }
 
 void DlgChannelSettings::setOwner(const QString &strNick)
@@ -541,7 +575,7 @@ void DlgChannelSettings::setOwner(const QString &strNick)
     // enable tabs
     QString strMe = Core::instance()->settings.value("nick");
     if (strNick == strMe)
-        setTabs(true);
+        setTabs(false);
 }
 
 void DlgChannelSettings::addOp(const QString &strNick)
@@ -554,7 +588,7 @@ void DlgChannelSettings::addOp(const QString &strNick)
     // enable tabs
     QString strMe = Core::instance()->settings.value("nick");
     if (strNick == strMe)
-        setTabs(true);
+        setTabs(false);
 }
 
 void DlgChannelSettings::addHalfop(const QString &strNick)
@@ -567,7 +601,7 @@ void DlgChannelSettings::addHalfop(const QString &strNick)
     // enable tabs
     QString strMe = Core::instance()->settings.value("nick");
     if (strNick == strMe)
-        setTabs(true);
+        setTabs(false);
 }
 
 void DlgChannelSettings::addBan(const QString &strNick, const QString &strWho, const QString &strDT, const QString &strIPNick)
@@ -612,8 +646,8 @@ void DlgChannelSettings::ownerChanged()
     if ((ok) && (!strText.isEmpty()))
         Core::instance()->pNetwork->send(QString("CS TRANSFER %1 %2").arg(strChannel, strText));
 
-    ui.tabWidget->setCurrentIndex(0);
-    setTabs(false);
+    ui.treeWidget_channel_settings->setCurrentItem(ui.treeWidget_channel_settings->itemAt(0,0));
+    setTabs(true);
 
     refreshAll();
 }
@@ -927,8 +961,8 @@ void DlgChannelSettings::buttonPermissionRemove()
     {
         if (removeNick->text() == strMe)
         {
-            ui.tabWidget->setCurrentIndex(0);
-            setTabs(false);
+            ui.treeWidget_channel_settings->setCurrentItem(ui.treeWidget_channel_settings->itemAt(0,0));
+            setTabs(true);
             break;
         }
     }
@@ -953,7 +987,7 @@ void DlgChannelSettings::clear()
     Core::instance()->bChannelSettingsStats = false;
 
     // label
-    ui.label_channel_name->clear();
+    //ui.label_channel_name->clear();
 
     // summary
     ui.label_summary_datetime->setText("-");
@@ -1044,13 +1078,4 @@ void DlgChannelSettings::avatarSelected(const QString &avatarUrl)
     Core::instance()->pNetwork->send(QString("CS SET %1 AVATAR %2").arg(strChannel, avatarUrl));
 
     refreshAll();
-}
-
-void DlgChannelSettings::tabChanged(int index)
-{
-    if (index == 4 && !ui.avatarListWidget->isInitialized())
-    {
-        // lazy initialization
-        ui.avatarListWidget->initialize(avatarClient);
-    }
 }
