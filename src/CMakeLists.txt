@@ -285,15 +285,7 @@ if (WIN32)
 		set (QCA2_LIBRARIES ${WIN32_QCA2_DIR}/lib/qca2.lib)
 	endif (MINGW)
 else (WIN32)
-# check for qca2
-	find_package (QCA2)
-	if (QCA2_FOUND)
-		set (QCA2_INCLUDE_DIRS ${QT_INCLUDE_DIR}/../QtCrypto)
-		set (QCA2_LIBRARY_DIRS ${QT_LIBRARY_DIR})
-		set (QCA2_LIBRARIES -lqca)
-	endif (QCA2_FOUND)
-# if not working try:
-# pkg_search_module (QCA2 REQUIRED qca2)
+	pkg_search_module (QCA2 REQUIRED qca2)
 endif (WIN32)
 
 include_directories (${QCA2_INCLUDE_DIRS})
