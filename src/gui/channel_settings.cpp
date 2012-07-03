@@ -175,6 +175,9 @@ void DlgChannelSettings::createGui()
 
 void DlgChannelSettings::setDefaultValues()
 {
+    // current option
+    ui.listWidget_channel_settings->setCurrentRow(0);
+
     // font
     QStringList comboBoxFont;
     comboBoxFont << "Arial" << "Times" << "Verdana" << "Tahoma" << "Courier";

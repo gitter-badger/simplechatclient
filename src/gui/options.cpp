@@ -206,7 +206,7 @@ void DlgOptions::createGui()
 void DlgOptions::setDefaultValues()
 {
     // current option
-    ui.listWidget_options->setCurrentItem(ui.listWidget_options->itemAt(0,0));
+    ui.listWidget_options->setCurrentRow(0);
 
     // themes
     QStringList lThemes;
