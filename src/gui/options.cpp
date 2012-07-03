@@ -152,61 +152,61 @@ void DlgOptions::createGui()
     ui.checkBox_tray_message->setText(tr("Show tray notification"));
 
     // options list
-    QTreeWidgetItem *basic = new QTreeWidgetItem(ui.treeWidget_options);
-    basic->setIcon(0, QIcon(":/images/oxygen/16x16/view-media-artist.png"));
-    basic->setText(0, tr("Basic"));
-    basic->setToolTip(0, tr("Basic"));
+    QListWidgetItem *basic = new QListWidgetItem(ui.listWidget_options);
+    basic->setIcon(QIcon(":/images/oxygen/16x16/view-media-artist.png"));
+    basic->setText(tr("Basic"));
+    basic->setToolTip(tr("Basic"));
 
-    QTreeWidgetItem *highlight = new QTreeWidgetItem(ui.treeWidget_options);
-    highlight->setIcon(0, QIcon(":/images/oxygen/16x16/feed-subscribe.png"));
-    highlight->setText(0, tr("Highlight"));
-    highlight->setToolTip(0, tr("Highlight"));
+    QListWidgetItem *highlight = new QListWidgetItem(ui.listWidget_options);
+    highlight->setIcon(QIcon(":/images/oxygen/16x16/feed-subscribe.png"));
+    highlight->setText(tr("Highlight"));
+    highlight->setToolTip(tr("Highlight"));
 
-    QTreeWidgetItem *punish_reason = new QTreeWidgetItem(ui.treeWidget_options);
-    punish_reason->setIcon(0, QIcon(":/images/oxygen/16x16/view-conversation-balloon.png"));
-    punish_reason->setText(0, tr("Punish reason"));
-    punish_reason->setToolTip(0, tr("Punish reason"));
+    QListWidgetItem *punish_reason = new QListWidgetItem(ui.listWidget_options);
+    punish_reason->setIcon(QIcon(":/images/oxygen/16x16/view-conversation-balloon.png"));
+    punish_reason->setText(tr("Punish reason"));
+    punish_reason->setToolTip(tr("Punish reason"));
 
-    QTreeWidgetItem *adv = new QTreeWidgetItem(ui.treeWidget_options);
-    adv->setIcon(0, QIcon(":/images/oxygen/16x16/dialog-warning.png"));
-    adv->setText(0, tr("Advanced"));
-    adv->setToolTip(0, tr("Advanced"));
+    QListWidgetItem *adv = new QListWidgetItem(ui.listWidget_options);
+    adv->setIcon(QIcon(":/images/oxygen/16x16/dialog-warning.png"));
+    adv->setText(tr("Advanced"));
+    adv->setToolTip(tr("Advanced"));
 
-    QTreeWidgetItem *colors = new QTreeWidgetItem(ui.treeWidget_options);
-    colors->setIcon(0, QIcon(":/images/oxygen/16x16/view-media-visualization.png"));
-    colors->setText(0, tr("Colors"));
-    colors->setToolTip(0, tr("Colors"));
+    QListWidgetItem *colors = new QListWidgetItem(ui.listWidget_options);
+    colors->setIcon(QIcon(":/images/oxygen/16x16/view-media-visualization.png"));
+    colors->setText(tr("Colors"));
+    colors->setToolTip(tr("Colors"));
 
-    QTreeWidgetItem *sounds = new QTreeWidgetItem(ui.treeWidget_options);
-    sounds->setIcon(0, QIcon(":/images/oxygen/16x16/media-playback-start.png"));
-    sounds->setText(0, tr("Sounds"));
-    sounds->setToolTip(0, tr("Sounds"));
+    QListWidgetItem *sounds = new QListWidgetItem(ui.listWidget_options);
+    sounds->setIcon(QIcon(":/images/oxygen/16x16/media-playback-start.png"));
+    sounds->setText(tr("Sounds"));
+    sounds->setToolTip(tr("Sounds"));
 
-    QTreeWidgetItem *logs = new QTreeWidgetItem(ui.treeWidget_options);
-    logs->setIcon(0, QIcon(":/images/oxygen/16x16/text-field.png"));
-    logs->setText(0, tr("Logs"));
-    logs->setToolTip(0, tr("Logs"));
+    QListWidgetItem *logs = new QListWidgetItem(ui.listWidget_options);
+    logs->setIcon(QIcon(":/images/oxygen/16x16/text-field.png"));
+    logs->setText(tr("Logs"));
+    logs->setToolTip(tr("Logs"));
 
-    QTreeWidgetItem *background_image = new QTreeWidgetItem(ui.treeWidget_options);
-    background_image->setIcon(0, QIcon(":/images/oxygen/16x16/games-config-background.png"));
-    background_image->setText(0, tr("Background image"));
-    background_image->setToolTip(0, tr("Background image"));
+    QListWidgetItem *background_image = new QListWidgetItem(ui.listWidget_options);
+    background_image->setIcon(QIcon(":/images/oxygen/16x16/games-config-background.png"));
+    background_image->setText(tr("Background image"));
+    background_image->setToolTip(tr("Background image"));
 
-    QTreeWidgetItem *winamp = new QTreeWidgetItem(ui.treeWidget_options);
-    winamp->setIcon(0, QIcon(":/images/winamp.png"));
-    winamp->setText(0, tr("Winamp"));
-    winamp->setToolTip(0, tr("Winamp"));
+    QListWidgetItem *winamp = new QListWidgetItem(ui.listWidget_options);
+    winamp->setIcon(QIcon(":/images/winamp.png"));
+    winamp->setText(tr("Winamp"));
+    winamp->setToolTip(tr("Winamp"));
 
-    QTreeWidgetItem *notification = new QTreeWidgetItem(ui.treeWidget_options);
-    notification->setIcon(0, QIcon(":/images/oxygen/16x16/help-hint.png"));
-    notification->setText(0, tr("Notification"));
-    notification->setToolTip(0, tr("Notification"));
+    QListWidgetItem *notification = new QListWidgetItem(ui.listWidget_options);
+    notification->setIcon(QIcon(":/images/oxygen/16x16/help-hint.png"));
+    notification->setText(tr("Notification"));
+    notification->setToolTip(tr("Notification"));
 }
 
 void DlgOptions::setDefaultValues()
 {
     // current option
-    ui.treeWidget_options->setCurrentItem(ui.treeWidget_options->itemAt(0,0));
+    ui.listWidget_options->setCurrentItem(ui.listWidget_options->itemAt(0,0));
 
     // themes
     QStringList lThemes;
@@ -413,7 +413,7 @@ void DlgOptions::setDefaultValues()
 
 void DlgOptions::createSignals()
 {
-    connect(ui.treeWidget_options, SIGNAL(clicked(QModelIndex)), this, SLOT(changePage(QModelIndex)));
+    connect(ui.listWidget_options, SIGNAL(clicked(QModelIndex)), this, SLOT(changePage(QModelIndex)));
     connect(ui.comboBox_profiles, SIGNAL(activated(int)), this, SLOT(currentProfileChanged(int)));
     connect(ui.pushButton_profiles, SIGNAL(clicked()), this, SLOT(buttonProfiles()));
     connect(ui.comboBox_themes, SIGNAL(activated(int)), this, SLOT(themesChanged(int)));

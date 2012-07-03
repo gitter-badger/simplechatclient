@@ -47,7 +47,7 @@ private:
     void createSignals();
 
     void refreshAll();
-    void setTabs(bool b);
+    void setSettingsTabsStatus(bool b);
     void setOwner(const QString &strNick);
     void addOp(const QString &strNick);
     void addHalfop(const QString &strNick);
@@ -56,7 +56,7 @@ private:
     void clear();
 
 private slots:
-    void changePage(QModelIndex index);
+    void changePage(QModelIndex modelIndex);
     void refreshChannelInfo();
     void refreshChannelStats();
     void ownerChanged();
@@ -79,7 +79,7 @@ private slots:
 
     void buttonPermissionAdd();
     void buttonPermissionRemove();
-    void changePermissionList(QModelIndex index);
+    void refreshPermissionList(int index);
     void buttonClose();
 
     void avatarSelected(const QString &avatarUrl);

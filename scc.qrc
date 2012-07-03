@@ -114,5 +114,6 @@
         <file>images/oxygen/16x16/accessories-dictionary.png</file>
         <file>images/oxygen/16x16/view-conversation-balloon.png</file>
         <file>images/oxygen/16x16/emblem-important.png</file>
+        <file>images/oxygen/16x16/edit-image-face-detect.png</file>
     </qresource>
 </RCC>

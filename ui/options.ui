@@ -48,7 +48,7 @@
    <property name="orientation">
     <enum>Qt::Horizontal</enum>
    </property>
-   <widget class="QTreeWidget" name="treeWidget_options">
+   <widget class="QListWidget" name="listWidget_options">
     <property name="maximumSize">
      <size>
       <width>180</width>
@@ -76,14 +76,6 @@
     <property name="textElideMode">
      <enum>Qt::ElideMiddle</enum>
     </property>
-    <attribute name="headerVisible">
-     <bool>false</bool>
-    </attribute>
-    <column>
-     <property name="text">
-      <string notr="true">1</string>
-     </property>
-    </column>
    </widget>
    <widget class="QStackedWidget" name="stackedWidget">
     <property name="currentIndex">

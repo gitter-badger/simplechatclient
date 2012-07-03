@@ -24,7 +24,6 @@
 #include <QListWidgetItem>
 #include <QString>
 #include <QTableWidgetItem>
-#include <QTreeWidgetItem>
 
 #include "debug_block.h"
 
