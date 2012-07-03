@@ -541,11 +541,6 @@ void DlgChannelSettings::setOwner(const QString &strNick)
     ui.label_owner_nick->show();
 
     ui.label_owner_nick->setText(strNick);
-
-    // enable tabs
-    QString strMe = Core::instance()->settings.value("nick");
-    if (strNick == strMe)
-        setSettingsTabsStatus(true);
 }
 
 void DlgChannelSettings::addOp(const QString &strNick)
@@ -554,11 +549,6 @@ void DlgChannelSettings::addOp(const QString &strNick)
     item->setData(Qt::UserRole+10, false); // is nicklist
     item->setText(strNick);
     ui.listWidget_permission->addItem(item);
-
-    // enable tabs
-    QString strMe = Core::instance()->settings.value("nick");
-    if (strNick == strMe)
-        setSettingsTabsStatus(true);
 }
 
 void DlgChannelSettings::addHalfop(const QString &strNick)
@@ -567,11 +557,6 @@ void DlgChannelSettings::addHalfop(const QString &strNick)
     item->setData(Qt::UserRole+10, false); // is nicklist
     item->setText(strNick);
     ui.listWidget_permission->addItem(item);
-
-    // enable tabs
-    QString strMe = Core::instance()->settings.value("nick");
-    if (strNick == strMe)
-        setSettingsTabsStatus(true);
 }
 
 void DlgChannelSettings::addBan(const QString &strNick, const QString &strWho, const QString &strDT, const QString &strIPNick)
@@ -615,9 +600,6 @@ void DlgChannelSettings::ownerChanged()
 
     if ((ok) && (!strText.isEmpty()))
         Core::instance()->pNetwork->send(QString("CS TRANSFER %1 %2").arg(strChannel, strText));
-
-    ui.listWidget_channel_settings->setCurrentItem(ui.listWidget_channel_settings->itemAt(0,0));
-    setSettingsTabsStatus(false);
 
     refreshAll();
 }
@@ -907,18 +889,6 @@ void DlgChannelSettings::buttonPermissionRemove()
             Core::instance()->pNetwork->send(QString("CS INVITE %1 DEL %2").arg(strChannel, removeNick->text()));
     }
 
-    // if me
-    QString strMe = Core::instance()->settings.value("nick");
-    foreach (QListWidgetItem *removeNick, lRemoveNicks)
-    {
-        if (removeNick->text() == strMe)
-        {
-            ui.listWidget_channel_settings->setCurrentItem(ui.listWidget_channel_settings->itemAt(0,0));
-            setSettingsTabsStatus(false);
-            break;
-        }
-    }
-
     // refresh
     refreshAll();
 }
@@ -927,6 +897,14 @@ void DlgChannelSettings::refreshPermissionList(int index)
 {
     ui.listWidget_permission->clear();
 
+    // enable tabs
+    QString strMe = Core::instance()->settings.value("nick");
+    if (Core::instance()->mChannelSettingsPermissions.contains("q", strMe) || Core::instance()->mChannelSettingsPermissions.contains("o", strMe) || Core::instance()->mChannelSettingsPermissions.contains("h", strMe))
+        setSettingsTabsStatus(true);
+    else
+        setSettingsTabsStatus(false);
+
+    // refresh permissions
     QHashIterator<QString, QString> iSettingsPermissions(Core::instance()->mChannelSettingsPermissions);
     while (iSettingsPermissions.hasNext())
     {
