@@ -132,6 +132,7 @@ void DlgChannelSettings::createGui()
     ui.pushButton_permission_remove->setText(tr("Remove"));
 
     // statistics
+    ui.label_permissions->setText(tr("Permissions:"));
     ui.groupBox_stats->setTitle(tr("Statistics"));
     ui.label_stats_lwords->setText(tr("Average per day spoken words:"));
     ui.label_stats_lfavourites->setText(tr("Channel added in favourites:"));

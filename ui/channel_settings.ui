@@ -911,6 +911,13 @@
        <item>
         <layout class="QHBoxLayout" name="horizontalLayout_23">
          <item>
+          <widget class="QLabel" name="label_permissions">
+           <property name="text">
+            <string>Permissions:</string>
+           </property>
+          </widget>
+         </item>
+         <item>
           <widget class="QComboBox" name="comboBox_permissions_list"/>
          </item>
          <item>

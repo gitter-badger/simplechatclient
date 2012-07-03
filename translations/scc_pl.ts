@@ -779,6 +779,10 @@
         <translation>Utworzone przez</translation>
     </message>
     <message>
+        <source>Permissions:</source>
+        <translation>Uprawnienia:</translation>
+    </message>
+    <message>
         <source>Operators</source>
         <translation>Super operatorzy</translation>
     </message>
