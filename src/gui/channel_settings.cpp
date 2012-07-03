@@ -139,12 +139,12 @@ void DlgChannelSettings::createGui()
 
     // channel settings list
     QListWidgetItem *summary = new QListWidgetItem(ui.listWidget_channel_settings);
-    summary->setIcon(QIcon());
+    summary->setIcon(QIcon(":/images/oxygen/16x16/view-list-details.png"));
     summary->setText(tr("Summary"));
     summary->setToolTip(tr("Summary"));
 
     QListWidgetItem *general = new QListWidgetItem(ui.listWidget_channel_settings);
-    general->setIcon(QIcon());
+    general->setIcon(QIcon(":/images/oxygen/16x16/preferences-other.png"));
     general->setText(tr("General"));
     general->setToolTip(tr("General"));
 
