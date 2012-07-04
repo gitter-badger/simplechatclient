@@ -60,9 +60,7 @@ void DlgMyAvatar::createGui()
 
 void DlgMyAvatar::setDefaultValues()
 {
-    // nick
-    QString me = Core::instance()->settings.value("nick");
-    ui.label_my_nick->setText(me);
+    ui.label_current_avatar->setText(tr("Current avatar:"));
 }
 
 void DlgMyAvatar::createSignals()

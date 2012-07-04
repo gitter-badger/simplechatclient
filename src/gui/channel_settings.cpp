@@ -132,6 +132,9 @@ void DlgChannelSettings::createGui()
     ui.pushButton_permission_add->setText(tr("Add"));
     ui.pushButton_permission_remove->setText(tr("Remove"));
 
+    // avatar
+    ui.label_current_avatar->setText(tr("Current avatar:"));
+
     // statistics
     ui.label_permissions->setText(tr("Permissions:"));
     ui.groupBox_stats->setTitle(tr("Statistics"));

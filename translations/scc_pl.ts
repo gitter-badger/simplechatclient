@@ -867,6 +867,10 @@
         <translation>Maska IP: %1</translation>
     </message>
     <message>
+        <source>Current avatar:</source>
+        <translation>Aktualny awatar:</translation>
+    </message>
+    <message>
         <source>Channel added in favourites:</source>
         <translation>Dodało pokój do ulubionych:</translation>
     </message>
@@ -1073,6 +1077,10 @@
     <message>
         <source>My avatar</source>
         <translation>Mój awatar</translation>
+    </message>
+    <message>
+        <source>Current avatar:</source>
+        <translation>Aktualny awatar:</translation>
     </message>
 </context>
 <context>
