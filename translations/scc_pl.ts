@@ -2790,6 +2790,10 @@
         <translation>* %1 :Nieprawidłowa maska</translation>
     </message>
     <message>
+        <source>* Invalid priv with %1</source>
+        <translation>* Rozmowa prywatna z %1 została zakończona</translation>
+    </message>
+    <message>
         <source>* %1 :Invalid channel name</source>
         <translation>* %1 :Nieprawidłowa nazwa pokoju</translation>
     </message>

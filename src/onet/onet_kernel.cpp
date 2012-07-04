@@ -2845,7 +2845,11 @@ void OnetKernel::raw_403()
 
     QString strChannel = strDataList[3];
 
-    QString strMessage = QString(tr("* %1 :Invalid channel name")).arg(strChannel);
+    QString strMessage;
+    if ((strChannel[0] == '^') && (Core::instance()->mPrivNames.contains(strChannel)))
+        strMessage = QString(tr("* Invalid priv with %1").arg(Core::instance()->convertPrivName(strChannel)));
+    else
+        strMessage = QString(tr("* %1 :Invalid channel name")).arg(strChannel);
 
     // display
     Message::instance()->showMessageActive(strMessage, MessageInfo);
