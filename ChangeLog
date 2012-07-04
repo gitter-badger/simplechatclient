@@ -3,6 +3,11 @@ ChangeLog for Simple Chat Client
 
 Version 1.5.0 (unknown)
 ================================
+* Changed channel settings layout
+* Added tray notification
+* Added punish reason
+* Added channel avatars
+* Added debug window
 * Many bugfixes
 
 Version 1.4.0 (10.03.2012)
