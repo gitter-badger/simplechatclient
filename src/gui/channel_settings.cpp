@@ -27,6 +27,7 @@
 #include "avatar_list_widget.h"
 #include "convert.h"
 #include "core.h"
+#include "nicklist.h"
 #include "simple_stats_widget.h"
 #include "channel_settings.h"
 
@@ -902,10 +903,17 @@ void DlgChannelSettings::refreshPermissionList(int index)
 
     // enable tabs
     QString strMe = Core::instance()->settings.value("nick");
-    if (Core::instance()->mChannelSettingsPermissions.contains("q", strMe) || Core::instance()->mChannelSettingsPermissions.contains("o", strMe) || Core::instance()->mChannelSettingsPermissions.contains("h", strMe))
+    QString strSelfModes = Nicklist::instance()->getUserModes(strMe, strChannel);
+    int iSelfMaxModes = Nicklist::instance()->getUserMaxModes(strSelfModes);
+
+    if (Core::instance()->mChannelSettingsPermissions.contains("q", strMe) || Core::instance()->mChannelSettingsPermissions.contains("o", strMe) || Core::instance()->mChannelSettingsPermissions.contains("h", strMe) || (iSelfMaxModes > 16))
         setSettingsTabsStatus(true);
     else
+    {
+        ui.stackedWidget_channel_settings->setCurrentIndex(0);
+        ui.listWidget_channel_settings->setCurrentRow(0);
         setSettingsTabsStatus(false);
+    }
 
     // refresh permissions
     QHashIterator<QString, QString> iSettingsPermissions(Core::instance()->mChannelSettingsPermissions);
