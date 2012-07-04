@@ -2470,8 +2470,11 @@ void OnetKernel::raw_317()
     if (iSeconds >= 0)
         strIdle += QString("%1s ").arg(iSeconds);
 
-    QString strDisplayIdle = QString(tr("* %1 is away %2")).arg(strNick, strIdle);
-    Message::instance()->showMessageActive(strDisplayIdle, MessageInfo);
+    if (!((iDays == 0) && (iHours == 0) && (iMinutes == 0) && (iSeconds == 0)))
+    {
+        QString strDisplayIdle = QString(tr("* %1 is away %2")).arg(strNick, strIdle);
+        Message::instance()->showMessageActive(strDisplayIdle, MessageInfo);
+    }
 
     QDateTime dt_time = QDateTime::fromTime_t(strTime.toInt());
     QString strDT_time = dt_time.toString("dd MMM yyyy hh:mm:ss");
