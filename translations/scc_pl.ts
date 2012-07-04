@@ -374,8 +374,8 @@
         <translation>Programista</translation>
     </message>
     <message>
-        <source>Thanks to &lt;b&gt;ovo_&lt;/b&gt; for creating graphics, to all persons who actively support the development of the project and special thanks to &lt;b&gt;Darom&lt;/b&gt;.</source>
-        <translation> Podziękowania dla &lt;b&gt;ovo_&lt;/b&gt; za wykonanie elementów grafiki, dla wszystkich, którzy aktywnie wsparli rozwój projektu oraz szczególne podziękowania dla &lt;b&gt;Darom&lt;/b&gt;.</translation>
+        <source>Thanks to &lt;b&gt;ovo_&lt;/b&gt; for creating graphics and to all persons who actively support the development of the project.</source>
+        <translation> Podziękowania dla &lt;b&gt;ovo_&lt;/b&gt; za wykonanie elementów grafiki oraz dla wszystkich, którzy aktywnie wsparli rozwój projektu.</translation>
     </message>
 </context>
 <context>
