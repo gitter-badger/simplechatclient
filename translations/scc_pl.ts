@@ -2323,7 +2323,7 @@
     </message>
     <message>
         <source>* You have been kicked from channel %1 by %2 Reason: %3</source>
-        <translation>* %2 wyrzuca Ciebie z pokoju %1. Powód: %3</translation>
+        <translation>* %2 wyrzuca Ciebie z pokoju %1 Powód: %3</translation>
     </message>
     <message>
         <source>* %1 is now the owner of the channel %2 (set by %3)</source>
