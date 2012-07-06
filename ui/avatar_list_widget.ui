@@ -168,16 +168,16 @@
             </spacer>
            </item>
            <item>
-            <widget class="QPushButton" name="pushButton_set_empty_avatar2">
+            <widget class="QPushButton" name="pushButton_apply_collection_avatar">
              <property name="text">
-              <string>Apply empty</string>
+              <string>Apply avatar</string>
              </property>
             </widget>
            </item>
            <item>
-            <widget class="QPushButton" name="pushButton_apply_collection_avatar">
+            <widget class="QPushButton" name="pushButton_set_empty_avatar2">
              <property name="text">
-              <string>Apply avatar</string>
+              <string>Apply empty</string>
              </property>
             </widget>
            </item>
