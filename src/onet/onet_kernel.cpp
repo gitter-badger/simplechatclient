@@ -1456,10 +1456,10 @@ void OnetKernel::raw_151n()
     }
 }
 
-// NS OFFLINE
-// :NickServ!service@service.onet NOTICE Merovingian :152 :end of offline senders list
 // CS HOMES
 // :ChanServ!service@service.onet NOTICE scc_test :152 :end of homes list
+// NS OFFLINE
+// :NickServ!service@service.onet NOTICE Merovingian :152 :end of offline senders list
 void OnetKernel::raw_152n()
 {
     if (strDataList.size() < 1) return;

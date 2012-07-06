@@ -162,7 +162,7 @@ void DlgOfflineMessages::buttonRead()
     ui.listWidget_msg->clear();
     ui.lineEdit_reply->clear();
 
-    QTimer::singleShot(1000*4, this, SLOT(refreshMessages())); // 4 sec
+    QTimer::singleShot(200, this, SLOT(refreshMessages())); // 0.2 sec
 }
 
 void DlgOfflineMessages::buttonReject()
