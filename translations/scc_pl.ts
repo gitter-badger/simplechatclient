@@ -3106,11 +3106,11 @@
     </message>
     <message>
         <source>* %1 has public webcam</source>
-        <translation>* %1 ma włączoną kamerę publicznie</translation>
+        <translation>* %1 ma włączona publiczną kamerę</translation>
     </message>
     <message>
         <source>* %1 has private webcam</source>
-        <translation>* %1 ma włączoną kamerę prywatnie</translation>
+        <translation>* %1 ma włączoną prywatną kamerę</translation>
     </message>
     <message>
         <source>Teen</source>
