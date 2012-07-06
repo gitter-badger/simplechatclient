@@ -16,6 +16,7 @@ set (scc_UIS
 	../ui/channel_list.ui
 	../ui/channel_settings.ui
 	../ui/emoticons.ui
+	../ui/find_nick.ui
 	../ui/find_text.ui
 	../ui/friends.ui
 	../ui/ignore.ui
@@ -64,6 +65,7 @@ set (scc_SRCS
 	gui/channel_list.cpp
 	gui/channel_settings.cpp
 	gui/emoticons.cpp
+	gui/find_nick.cpp
 	gui/find_text.cpp
 	gui/friends.cpp
 	gui/ignore.cpp
@@ -98,6 +100,7 @@ set (scc_SRCS
 	singleton/busy.cpp
 	singleton/channel.cpp
 	singleton/channel_list_model.cpp
+	singleton/find_nick_model.cpp
 	singleton/highlight.cpp
 	singleton/invite_model.cpp
 	singleton/lag.cpp
@@ -147,6 +150,7 @@ set (scc_MOC_HDRS
 	gui/channel_list.h
 	gui/channel_settings.h
 	gui/emoticons.h
+	gui/find_nick.h
 	gui/find_text.h
 	gui/friends.h
 	gui/ignore.h
@@ -179,6 +183,7 @@ set (scc_MOC_HDRS
 	singleton/busy.h
 	singleton/channel.h
 	singleton/channel_list_model.h
+	singleton/find_nick_model.h
 	singleton/highlight.h
 	singleton/invite_model.h
 	singleton/lag.h

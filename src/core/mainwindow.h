@@ -80,6 +80,7 @@ private:
     QAction *channelFavouritesAction;
     QAction *friendsAction;
     QAction *ignoreAction;
+    QAction *findNickAction;
     QAction *camsAction;
     QMenu *myMenu;
     QAction *myStatsAction;
@@ -116,6 +117,7 @@ private slots:
     void openChannelHomes();
     void openChannelFavourites();
     void openFriends();
+    void openFindNick();
     void openIgnore();
     void openCams();
     void openMyAvatar();

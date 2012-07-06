@@ -36,6 +36,7 @@ SOURCES += src/avatars/avatar.cpp \
     src/gui/channel_list.cpp \
     src/gui/channel_settings.cpp \
     src/gui/emoticons.cpp \
+    src/gui/find_nick.cpp \
     src/gui/find_text.cpp \
     src/gui/friends.cpp \
     src/gui/ignore.cpp \
@@ -71,6 +72,7 @@ SOURCES += src/avatars/avatar.cpp \
     src/singleton/busy.cpp \
     src/singleton/channel.cpp \
     src/singleton/channel_list_model.cpp \
+    src/singleton/find_nick_model.cpp \
     src/singleton/highlight.cpp \
     src/singleton/invite_model.cpp \
     src/singleton/lag.cpp \
@@ -124,6 +126,7 @@ HEADERS += src/avatars/avatar.h \
     src/gui/channel_list.h \
     src/gui/channel_settings.h \
     src/gui/emoticons.h \
+    src/gui/find_nick.h \
     src/gui/find_text.h \
     src/gui/friends.h \
     src/gui/ignore.h \
@@ -159,6 +162,7 @@ HEADERS += src/avatars/avatar.h \
     src/singleton/busy.h \
     src/singleton/channel.h \
     src/singleton/channel_list_model.h \
+    src/singleton/find_nick_model.h \
     src/singleton/highlight.h \
     src/singleton/invite_model.h \
     src/singleton/lag.h \
@@ -193,6 +197,7 @@ FORMS += ui/about.ui \
     ui/channel_list.ui \
     ui/channel_settings.ui \
     ui/emoticons.ui \
+    ui/find_nick.ui \
     ui/find_text.ui \
     ui/friends.ui \
     ui/ignore.ui \

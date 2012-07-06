@@ -884,6 +884,25 @@
     </message>
 </context>
 <context>
+    <name>DlgFindNick</name>
+    <message>
+        <source>Find nick</source>
+        <translation>Znajdź nick</translation>
+    </message>
+    <message>
+        <source>Find nick:</source>
+        <translation>Znajdź nick:</translation>
+    </message>
+    <message>
+        <source>Search</source>
+        <translation>Szukaj</translation>
+    </message>
+    <message>
+        <source>Clear</source>
+        <translation>Wyczyść</translation>
+    </message>
+</context>
+<context>
     <name>DlgEmoticons</name>
     <message>
         <source>Emoticons</source>
@@ -1992,6 +2011,10 @@
     <message>
         <source>Ignored</source>
         <translation>Ignorowani</translation>
+    </message>
+    <message>
+        <source>Find nick</source>
+        <translation>Znajdź nick</translation>
     </message>
     <message>
         <source>Cams</source>

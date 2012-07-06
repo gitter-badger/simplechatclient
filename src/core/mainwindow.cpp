@@ -37,6 +37,7 @@
 #include "channel_list.h"
 #include "config.h"
 #include "core.h"
+#include "find_nick.h"
 #include "friends.h"
 #include "ignore.h"
 #include "invite_list.h"
@@ -165,6 +166,7 @@ void MainWindow::createActions()
     channelFavouritesAction = new QAction(QIcon(":/images/oxygen/16x16/emblem-favorite.png"), tr("Favorite channels"), this);
     friendsAction = new QAction(QIcon(":/images/oxygen/16x16/meeting-attending.png"), tr("Friends"), this);
     ignoreAction = new QAction(QIcon(":/images/oxygen/16x16/meeting-attending-tentative.png"), tr("Ignored"), this);
+    findNickAction = new QAction(QIcon(":/images/oxygen/16x16/edit-find-user.png"), tr("Find nick"), this);
 
     myStatsAction = new QAction(QIcon(":/images/oxygen/16x16/office-chart-bar.png"),tr("My statistics"), this);
     myProfileAction = new QAction(QIcon(":/images/oxygen/16x16/view-pim-contacts.png"),tr("My profile"), this);
@@ -190,6 +192,7 @@ void MainWindow::createActions()
     channelFavouritesAction->setShortcut(tr("Ctrl+U"));
     friendsAction->setShortcut(tr("Ctrl+P"));
     ignoreAction->setShortcut(tr("Ctrl+I"));
+    findNickAction->setShortcut(tr("Ctrl+G"));
     camsAction->setShortcut(tr("Ctrl+K"));
 }
 
@@ -212,6 +215,7 @@ void MainWindow::createMenus()
     chatMenu->addAction(channelFavouritesAction);
     chatMenu->addAction(friendsAction);
     chatMenu->addAction(ignoreAction);
+    chatMenu->addAction(findNickAction);
     chatMenu->addAction(camsAction);
     chatMenu->addSeparator();
     chatMenu->addAction(Busy::instance()->busyAction);
@@ -290,6 +294,7 @@ void MainWindow::createSignals()
     connect(myStatsAction, SIGNAL(triggered()), this, SLOT(openMyStats()));
     connect(myProfileAction, SIGNAL(triggered()), this, SLOT(openMyProfile()));
     connect(myAvatarAction, SIGNAL(triggered()), this, SLOT(openMyAvatar()));
+    connect(findNickAction, SIGNAL(triggered()), this, SLOT(openFindNick()));
     connect(camsAction, SIGNAL(triggered()), this, SLOT(openCams()));
     connect(notesAction, SIGNAL(triggered()), this, SLOT(openNotes()));
 
@@ -494,6 +499,12 @@ void MainWindow::openIgnore()
 {
     if ((Core::instance()->pNetwork->isConnected()) && (Core::instance()->pNetwork->isWritable()) && (Core::instance()->settings.value("logged") == "true"))
         DlgIgnore(this).exec();
+}
+
+void MainWindow::openFindNick()
+{
+    if ((Core::instance()->pNetwork->isConnected()) && (Core::instance()->pNetwork->isWritable()) && (Core::instance()->settings.value("logged") == "true"))
+        DlgFindNick(this).exec();
 }
 
 void MainWindow::openCams()

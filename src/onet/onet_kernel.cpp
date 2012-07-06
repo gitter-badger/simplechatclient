@@ -26,6 +26,7 @@
 #include "convert.h"
 #include "channel_key.h"
 #include "channel_list_model.h"
+#include "find_nick_model.h"
 #include "invite.h"
 #include "invite_model.h"
 #include "lag.h"
@@ -2173,21 +2174,22 @@ void OnetKernel::raw_261n()
     }
     else if (strNick.toLower() == "nickserv")
     {
-        // FEATURE
+        for (int i = 4; i < strDataList.size(); i++)
+            FindNick::instance()->add(strDataList[i]);
     }
 }
 
 // :NickServ!service@service.onet NOTICE Merovingian :262 aa :end of list
 void OnetKernel::raw_262n()
 {
-// FEATURE
+    FindNick::instance()->setReady(true);
 }
 
 // NS LIST #scc
 // :NickServ!service@service.onet NOTICE Merovingian :263 #scc :no users found
 void OnetKernel::raw_263n()
 {
-// FEATURE
+    FindNick::instance()->setReady(true);
 }
 
 // LUSERS
