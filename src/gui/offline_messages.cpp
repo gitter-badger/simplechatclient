@@ -80,7 +80,8 @@ void DlgOfflineMessages::refresh()
 {
     ui.listWidget_nicks->clear();
 
-    foreach (QString strOfflineNick, Offline::instance()->getNicks())
+    QList<QString> list = Offline::instance()->getNicks();
+    foreach (const QString &strOfflineNick, list)
         ui.listWidget_nicks->addItem(strOfflineNick);
 }
 
@@ -98,7 +99,8 @@ void DlgOfflineMessages::refreshMessages()
     ui.lineEdit_reply->setEnabled(true);
     ui.pushButton_reply->setEnabled(true);
 
-    foreach (OnetOfflineMessage msg, Offline::instance()->getMessages())
+    QList<OnetOfflineMessage> list = Offline::instance()->getMessages();
+    foreach (OnetOfflineMessage msg, list)
     {
         int iTime = msg.datetime;
         QString strType = msg.type;

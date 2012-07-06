@@ -224,14 +224,16 @@ void DlgOptions::setDefaultValues()
     Highlight::instance()->init();
 
     ui.listWidget_highlight->clear();
-    foreach (const QString &strHighlight, Highlight::instance()->get())
+    QList<QString> highlightList = Highlight::instance()->get();
+    foreach (const QString &strHighlight, highlightList)
         ui.listWidget_highlight->addItem(strHighlight);
 
     // punish reason
     PunishReason::instance()->init();
 
     ui.listWidget_punish_reason->clear();
-    foreach (const QString &strPunishReason, PunishReason::instance()->get())
+    QList<QString> punishList = PunishReason::instance()->get();
+    foreach (const QString &strPunishReason, punishList)
         ui.listWidget_punish_reason->addItem(strPunishReason);
 
     // sound beep

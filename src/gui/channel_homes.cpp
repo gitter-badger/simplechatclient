@@ -78,7 +78,8 @@ void DlgChannelHomes::refresh()
 
     ui.listWidget_channels->clear();
 
-    foreach (QString strChannel, ChannelHomes::instance()->get())
+    QList<QString> list = ChannelHomes::instance()->get();
+    foreach (QString strChannel, list)
     {
         if (strChannel[0] != '#')
             strChannel = strChannel.right(strChannel.length()-1); // remove status

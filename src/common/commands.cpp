@@ -99,7 +99,8 @@ QString Commands::execute()
 
 bool Commands::isErotic(const QString &strChannel)
 {
-    foreach (OnetChannelList channel, ChannelList::instance()->get())
+    QList<OnetChannelList> list = ChannelList::instance()->get();
+    foreach (OnetChannelList channel, list)
     {
         QString strName = channel.name;
         int iType = channel.type;

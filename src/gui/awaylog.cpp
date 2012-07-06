@@ -50,7 +50,8 @@ void DlgAwaylog::createSignals()
 
 void DlgAwaylog::refresh()
 {
-    foreach (QString strAwaylog, Awaylog::instance()->get())
+    QList<QString> list = Awaylog::instance()->get();
+    foreach (const QString &strAwaylog, list)
         ui.listWidget->addItem(strAwaylog);
 }
 

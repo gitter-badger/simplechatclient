@@ -146,7 +146,8 @@ void DlgChannelList::createSignals()
 
 bool DlgChannelList::isErotic(const QString &strChannel)
 {
-    foreach (OnetChannelList channel, ChannelList::instance()->get())
+    QList<OnetChannelList> list = ChannelList::instance()->get();
+    foreach (OnetChannelList channel, list)
     {
         QString strName = channel.name;
         int iType = channel.type;
@@ -292,7 +293,8 @@ void DlgChannelList::createList()
     int iThematicCount = 0;
     int iRegionalCount = 0;
 
-    foreach (OnetChannelList channel, ChannelList::instance()->get())
+    QList<OnetChannelList> list1 = ChannelList::instance()->get();
+    foreach (OnetChannelList channel, list1)
     {
         QString strName = channel.name;
         int iPeople = channel.people;
@@ -334,7 +336,8 @@ void DlgChannelList::createList()
     int iThematicRow = 0;
     int iRegionalRow = 0;
 
-    foreach (OnetChannelList channel, ChannelList::instance()->get())
+    QList<OnetChannelList> list2 = ChannelList::instance()->get();
+    foreach (OnetChannelList channel, list2)
     {
         QString strName = channel.name;
         int iPeople = channel.people;

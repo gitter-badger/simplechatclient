@@ -91,7 +91,8 @@ void DlgFindNick::refreshList()
 
     ui.listWidget_nicks->clear();
 
-    foreach (QString nick, FindNick::instance()->get())
+    QList<QString> list = FindNick::instance()->get();
+    foreach (const QString &nick, list)
     {
         SortedListWidgetItem *item = new SortedListWidgetItem();
         item->setData(Qt::UserRole+10, false); // is nicklist
