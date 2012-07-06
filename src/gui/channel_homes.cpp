@@ -72,7 +72,8 @@ void DlgChannelHomes::refresh()
 
     foreach (QString strChannel, Core::instance()->lChannelHomes)
     {
-        strChannel = strChannel.right(strChannel.length()-1); // remove status
+        if (strChannel[0] != '#')
+            strChannel = strChannel.right(strChannel.length()-1); // remove status
 
         if (Core::instance()->mChannelAvatar.contains(strChannel))
         {
