@@ -79,7 +79,7 @@ private slots:
 
     void buttonPermissionAdd();
     void buttonPermissionRemove();
-    void refreshPermissionList(int index);
+    void refreshPermissionList();
     void buttonClose();
 
     void avatarSelected(const QString &avatarUrl);

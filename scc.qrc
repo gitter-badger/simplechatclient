@@ -118,5 +118,6 @@
         <file>images/oxygen/16x16/preferences-other.png</file>
         <file>images/oxygen/16x16/view-list-details.png</file>
         <file>images/oxygen/16x16/edit-find-user.png</file>
+        <file>images/oxygen/16x16/im-user.png</file>
     </qresource>
 </RCC>

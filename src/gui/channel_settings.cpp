@@ -125,10 +125,11 @@ void DlgChannelSettings::createGui()
     ui.radioButton_auditorium_on->setText(tr("On"));
 
     // permissions
-    ui.comboBox_permissions_list->addItem(tr("Operators"));
-    ui.comboBox_permissions_list->addItem(tr("Half-operators"));
-    ui.comboBox_permissions_list->addItem(tr("Banned"));
-    ui.comboBox_permissions_list->addItem(tr("Invited"));
+    ui.tabWidget_permissions->addTab(new QListWidget, QIcon(":/images/op.png"), tr("Operators"));
+    ui.tabWidget_permissions->addTab(new QListWidget, QIcon(":/images/halfop.png"), tr("Half-operators"));
+    ui.tabWidget_permissions->addTab(new QListWidget, QIcon(":/images/oxygen/16x16/im-kick-user.png"), tr("Banned"));
+    ui.tabWidget_permissions->addTab(new QListWidget, QIcon(":/images/oxygen/16x16/im-user.png"), tr("Invited"));
+
     ui.pushButton_permission_add->setText(tr("Add"));
     ui.pushButton_permission_remove->setText(tr("Remove"));
 
@@ -136,7 +137,6 @@ void DlgChannelSettings::createGui()
     ui.label_current_avatar->setText(tr("Current avatar:"));
 
     // statistics
-    ui.label_permissions->setText(tr("Permissions:"));
     ui.groupBox_stats->setTitle(tr("Statistics"));
     ui.label_stats_lwords->setText(tr("Average per day spoken words:"));
     ui.label_stats_lfavourites->setText(tr("Channel added in favourites:"));
@@ -182,6 +182,17 @@ void DlgChannelSettings::setDefaultValues()
     // current option
     ui.listWidget_channel_settings->setCurrentRow(0);
 
+    // permissions
+    ((QListWidget*)ui.tabWidget_permissions->widget(0))->setSortingEnabled(true);
+    ((QListWidget*)ui.tabWidget_permissions->widget(1))->setSortingEnabled(true);
+    ((QListWidget*)ui.tabWidget_permissions->widget(2))->setSortingEnabled(true);
+    ((QListWidget*)ui.tabWidget_permissions->widget(3))->setSortingEnabled(true);
+
+    ((QListWidget*)ui.tabWidget_permissions->widget(0))->setSelectionMode(QAbstractItemView::ExtendedSelection);
+    ((QListWidget*)ui.tabWidget_permissions->widget(1))->setSelectionMode(QAbstractItemView::ExtendedSelection);
+    ((QListWidget*)ui.tabWidget_permissions->widget(2))->setSelectionMode(QAbstractItemView::ExtendedSelection);
+    ((QListWidget*)ui.tabWidget_permissions->widget(3))->setSelectionMode(QAbstractItemView::ExtendedSelection);
+
     // font
     QStringList comboBoxFont;
     comboBoxFont << "Arial" << "Times" << "Verdana" << "Tahoma" << "Courier";
@@ -226,7 +237,6 @@ void DlgChannelSettings::createSignals()
 
     connect(ui.pushButton_permission_add, SIGNAL(clicked()), this, SLOT(buttonPermissionAdd()));
     connect(ui.pushButton_permission_remove, SIGNAL(clicked()), this, SLOT(buttonPermissionRemove()));
-    connect(ui.comboBox_permissions_list, SIGNAL(activated(int)), this, SLOT(refreshPermissionList(int)));
 
     connect(ui.avatarListWidget, SIGNAL(avatarSelected(const QString &)), this, SLOT(avatarSelected(const QString &)));
 
@@ -481,7 +491,7 @@ void DlgChannelSettings::refreshChannelInfo()
     }
 
     // permissions
-    refreshPermissionList(ui.comboBox_permissions_list->currentIndex());
+    refreshPermissionList();
 }
 
 void DlgChannelSettings::refreshChannelStats()
@@ -555,7 +565,8 @@ void DlgChannelSettings::addOp(const QString &strNick)
     SortedListWidgetItem *item = new SortedListWidgetItem();
     item->setData(Qt::UserRole+10, false); // is nicklist
     item->setText(strNick);
-    ui.listWidget_permission->addItem(item);
+
+    ((QListWidget*)ui.tabWidget_permissions->widget(0))->addItem(item);
 }
 
 void DlgChannelSettings::addHalfop(const QString &strNick)
@@ -563,7 +574,8 @@ void DlgChannelSettings::addHalfop(const QString &strNick)
     SortedListWidgetItem *item = new SortedListWidgetItem();
     item->setData(Qt::UserRole+10, false); // is nicklist
     item->setText(strNick);
-    ui.listWidget_permission->addItem(item);
+
+    ((QListWidget*)ui.tabWidget_permissions->widget(1))->addItem(item);
 }
 
 void DlgChannelSettings::addBan(const QString &strNick, const QString &strWho, const QString &strDT, const QString &strIPNick)
@@ -585,7 +597,8 @@ void DlgChannelSettings::addBan(const QString &strNick, const QString &strWho, c
         QString strIPHint = tr("IP Mask: %1").arg(strFixedNick);
         item->setToolTip(QString("%1: %2 (%3) [%4]").arg(tr("Created by"), strWho, strDT, strIPHint));
     }
-    ui.listWidget_permission->addItem(item);
+
+    ((QListWidget*)ui.tabWidget_permissions->widget(2))->addItem(item);
 }
 
 void DlgChannelSettings::addInvite(const QString &strNick, const QString &strWho, const QString &strDT)
@@ -595,7 +608,7 @@ void DlgChannelSettings::addInvite(const QString &strNick, const QString &strWho
     item->setText(strNick);
     item->setToolTip(QString("%1: %2 (%3)").arg(tr("Created by"), strWho, strDT));
 
-    ui.listWidget_permission->addItem(item);
+    ((QListWidget*)ui.tabWidget_permissions->widget(3))->addItem(item);
 }
 
 void DlgChannelSettings::ownerChanged()
@@ -782,7 +795,7 @@ void DlgChannelSettings::auditoriumActive()
 
 void DlgChannelSettings::buttonPermissionAdd()
 {
-    int index = ui.comboBox_permissions_list->currentIndex();
+    int index = ui.tabWidget_permissions->currentIndex();
     QString strNick;
 
     QString strLabel;
@@ -838,11 +851,29 @@ void DlgChannelSettings::buttonPermissionAdd()
 
 void DlgChannelSettings::buttonPermissionRemove()
 {
-    int index = ui.comboBox_permissions_list->currentIndex();
+    int index = ui.tabWidget_permissions->currentIndex();
     QList<QListWidgetItem*> lRemoveNicks;
 
-    if (!ui.listWidget_permission->selectedItems().isEmpty())
-        lRemoveNicks = ui.listWidget_permission->selectedItems();
+    if (index == 0)
+    {
+        if (!((QListWidget*)ui.tabWidget_permissions->widget(0))->selectedItems().isEmpty())
+            lRemoveNicks = ((QListWidget*)ui.tabWidget_permissions->widget(0))->selectedItems();
+    }
+    else if (index == 1)
+    {
+        if (!((QListWidget*)ui.tabWidget_permissions->widget(1))->selectedItems().isEmpty())
+            lRemoveNicks = ((QListWidget*)ui.tabWidget_permissions->widget(1))->selectedItems();
+    }
+    else if (index == 2)
+    {
+        if (!((QListWidget*)ui.tabWidget_permissions->widget(2))->selectedItems().isEmpty())
+            lRemoveNicks = ((QListWidget*)ui.tabWidget_permissions->widget(2))->selectedItems();
+    }
+    else if (index == 3)
+    {
+        if (!((QListWidget*)ui.tabWidget_permissions->widget(3))->selectedItems().isEmpty())
+            lRemoveNicks = ((QListWidget*)ui.tabWidget_permissions->widget(3))->selectedItems();
+    }
 
     // get nick if empty
     if (lRemoveNicks.size() == 0)
@@ -900,9 +931,12 @@ void DlgChannelSettings::buttonPermissionRemove()
     refreshAll();
 }
 
-void DlgChannelSettings::refreshPermissionList(int index)
+void DlgChannelSettings::refreshPermissionList()
 {
-    ui.listWidget_permission->clear();
+    ((QListWidget*)ui.tabWidget_permissions->widget(0))->clear();
+    ((QListWidget*)ui.tabWidget_permissions->widget(1))->clear();
+    ((QListWidget*)ui.tabWidget_permissions->widget(2))->clear();
+    ((QListWidget*)ui.tabWidget_permissions->widget(3))->clear();
 
     // enable tabs
     QString strMe = Core::instance()->settings.value("nick");
@@ -929,11 +963,11 @@ void DlgChannelSettings::refreshPermissionList(int index)
 
         if (strKey == "q")
             setOwner(strValue);
-        else if ((strKey == "o") && (index == 0))
+        else if (strKey == "o")
             addOp(strValue);
-        else if ((strKey == "h") && (index == 1))
+        else if (strKey == "h")
             addHalfop(strValue);
-        else if ((strKey == "b") && (index == 2))
+        else if (strKey == "b")
         {
             QStringList strDataList = strValue.split(";");
             QString strNick = strDataList[0];
@@ -943,7 +977,7 @@ void DlgChannelSettings::refreshPermissionList(int index)
 
             addBan(strNick, strWho, strDT, strIPNick);
         }
-        else if ((strKey == "I") && (index == 3))
+        else if (strKey == "I")
         {
             QStringList strDataList = strValue.split(";");
             QString strNick = strDataList[0];
@@ -1003,7 +1037,10 @@ void DlgChannelSettings::clear()
     ui.radioButton_auditorium_on->setChecked(false);
 
     // permissions
-    ui.listWidget_permission->clear();
+    ((QListWidget*)ui.tabWidget_permissions->widget(0))->clear();
+    ((QListWidget*)ui.tabWidget_permissions->widget(1))->clear();
+    ((QListWidget*)ui.tabWidget_permissions->widget(2))->clear();
+    ((QListWidget*)ui.tabWidget_permissions->widget(3))->clear();
 
     // statistics
     ui.label_stats_favourites->setText("-");
