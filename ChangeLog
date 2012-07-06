@@ -3,6 +3,7 @@ ChangeLog for Simple Chat Client
 
 Version 1.5.0 (unknown)
 ================================
+* Added find nick
 * Changed channel settings layout
 * Added tray notification
 * Added punish reason
