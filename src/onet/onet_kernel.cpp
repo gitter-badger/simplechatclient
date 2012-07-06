@@ -1423,7 +1423,7 @@ void OnetKernel::raw_142n()
 // :NickServ!service@service.onet NOTICE Merovingian :151 :jubee_blue
 void OnetKernel::raw_151n()
 {
-    if (strDataList.size() < 5) return;
+    if (strDataList.size() < 1) return;
 
     QString strNick = strDataList[0];
     if (strNick[0] == ':') strNick.remove(0,1);
@@ -1431,6 +1431,8 @@ void OnetKernel::raw_151n()
 
     if (strNick.toLower() == "chanserv")
     {
+        if (strDataList.size() < 4) return;
+
         for (int i = 4; i < strDataList.size(); i++)
         {
             QString strChannel = strDataList[i];
@@ -1442,6 +1444,8 @@ void OnetKernel::raw_151n()
     }
     else if (strNick.toLower() == "nickserv")
     {
+        if (strDataList.size() < 4) return;
+
         for (int i = 4; i < strDataList.size(); i++)
         {
             QString strNick = strDataList[i];
@@ -1801,7 +1805,7 @@ void OnetKernel::raw_241n()
 // :NickServ!service@service.onet NOTICE Merovingian :250 scc_test :offline message sent
 void OnetKernel::raw_250n()
 {
-    if (strDataList.size() < 5) return;
+    if (strDataList.size() < 1) return;
 
     QString strNick = strDataList[0];
     if (strNick[0] == ':') strNick.remove(0,1);
@@ -1809,6 +1813,8 @@ void OnetKernel::raw_250n()
 
     if (strNick.toLower() == "chanserv")
     {
+        if (strDataList.size() < 5) return;
+
         QString strChannel = strDataList[4];
 
         QString strDisplay = QString(tr("* Successfully created a channel %1")).arg(strChannel);
@@ -1823,6 +1829,8 @@ void OnetKernel::raw_250n()
     }
     else if (strNick.toLower() == "nickserv")
     {
+        if (strDataList.size() < 5) return;
+
         QString strNick = strDataList[4];
 
         QString strDisplay = QString(tr("* Offline message sent to %1")).arg(strNick);
@@ -1844,7 +1852,7 @@ void OnetKernel::raw_251()
 // :NickServ!service@service.onet NOTICE scc_test :251 Merovingian 1308924406 reply :spoko
 void OnetKernel::raw_251n()
 {
-    if (strDataList.size() < 5) return;
+    if (strDataList.size() < 1) return;
 
     QString strNick = strDataList[0];
     if (strNick[0] == ':') strNick.remove(0,1);
@@ -1852,6 +1860,8 @@ void OnetKernel::raw_251n()
 
     if (strNick.toLower() == "chanserv")
     {
+        if (strDataList.size() < 5) return;
+
         QString strChannel = strDataList[4];
 
         QString strDisplay = QString(tr("* Channel %1 has been removed")).arg(strChannel);
@@ -1859,6 +1869,8 @@ void OnetKernel::raw_251n()
     }
     else if (strNick.toLower() == "nickserv")
     {
+        if (strDataList.size() < 5) return;
+
         QString strNick = strDataList[4];
         int iTime = strDataList[5].toInt();
         QString strType = strDataList[6];
@@ -1883,7 +1895,7 @@ void OnetKernel::raw_252()
 // :NickServ!service@service.onet NOTICE Merovingian :252 scc_test :offline messages rejected
 void OnetKernel::raw_252n()
 {
-    if (strDataList.size() < 5) return;
+    if (strDataList.size() < 1) return;
 
     QString strNick = strDataList[0];
     if (strNick[0] == ':') strNick.remove(0,1);
@@ -1891,6 +1903,8 @@ void OnetKernel::raw_252n()
 
     if (strNick.toLower() == "chanserv")
     {
+        if (strDataList.size() < 5) return;
+
         QString strChannel = strDataList[2];
 
         QString strDisplay = QString(tr("* Confirmed the removal of the channel %1")).arg(strChannel);
@@ -1898,6 +1912,8 @@ void OnetKernel::raw_252n()
     }
     else if (strNick.toLower() == "nickserv")
     {
+        if (strDataList.size() < 5) return;
+
         QString strNick = strDataList[4];
 
         QString strDisplay = QString(tr("* Offline messages rejected from %1")).arg(strNick);
@@ -1917,7 +1933,7 @@ void OnetKernel::raw_253()
 // :NickServ!service@service.onet NOTICE scc_test :253 merovingian :offline messages quoted to sender
 void OnetKernel::raw_253n()
 {
-    if (strDataList.size() < 6) return;
+    if (strDataList.size() < 1) return;
 
     QString strNick = strDataList[0];
     if (strNick[0] == ':') strNick.remove(0,1);
@@ -1925,6 +1941,8 @@ void OnetKernel::raw_253n()
 
     if (strNick.toLower() == "chanserv")
     {
+        if (strDataList.size() < 6) return;
+
         QString strChannel = strDataList[4];
         QString strWho = strDataList[2];
         QString strNick = strDataList[5];
@@ -2151,7 +2169,7 @@ void OnetKernel::raw_260n()
 // :NickServ!service@service.onet NOTICE Merovingian :261 aa_PrezesCiemnosci gaafa7 jaanka9 Naatasza23 zaak_333 Agaaaaaaaa ~Faajny25 kubaaa19 ~Amaadeusz_x misiaa_40
 void OnetKernel::raw_261n()
 {
-    if (strDataList.size() < 6) return;
+    if (strDataList.size() < 1) return;
 
     QString strNick = strDataList[0];
     if (strNick[0] == ':') strNick.remove(0,1);
@@ -2159,6 +2177,8 @@ void OnetKernel::raw_261n()
 
     if (strNick.toLower() == "chanserv")
     {
+        if (strDataList.size() < 6) return;
+
         QString strChannel = strDataList[5];
 
         QString strDisplay = QString(tr("* Successfully removed channel %1")).arg(strChannel);
@@ -2174,6 +2194,8 @@ void OnetKernel::raw_261n()
     }
     else if (strNick.toLower() == "nickserv")
     {
+        if (strDataList.size() < 4) return;
+
         for (int i = 4; i < strDataList.size(); i++)
             FindNick::instance()->add(strDataList[i]);
     }
@@ -2873,7 +2895,7 @@ void OnetKernel::raw_403()
 // :NickServ!service@service.onet NOTICE Merovingian :403 msg :user is not on-line
 void OnetKernel::raw_403n()
 {
-    if (strDataList.size() < 4) return;
+    if (strDataList.size() < 1) return;
 
     QString strNick = strDataList[0];
     if (strNick[0] == ':') strNick.remove(0,1);
@@ -2881,12 +2903,16 @@ void OnetKernel::raw_403n()
 
     if (strNick.toLower() == "chanserv")
     {
+        if (strDataList.size() < 5) return;
+
         QString strNick = strDataList[4];
         QString strMessage = QString(tr("* %1 :User is not on-line")).arg(strNick);
         Message::instance()->showMessageActive(strMessage, MessageInfo);
     }
     else if (strNick.toLower() == "nickserv")
     {
+        if (strDataList.size() < 5) return;
+
         QString strNick = strDataList[4];
         QString strMessage = QString(tr("* %1 :User is not on-line")).arg(strNick);
         Message::instance()->showMessageActive(strMessage, MessageInfo);
@@ -3260,7 +3286,7 @@ void OnetKernel::raw_452n()
 // :NickServ!service@service.onet NOTICE Merovingian :454 a :no messages
 void OnetKernel::raw_454n()
 {
-    if (strDataList.size() < 5) return;
+    if (strDataList.size() < 1) return;
 
     QString strNick = strDataList[0];
     if (strNick[0] == ':') strNick.remove(0,1);
@@ -3268,6 +3294,8 @@ void OnetKernel::raw_454n()
 
     if (strNick.toLower() == "chanserv")
     {
+        if (strDataList.size() < 5) return;
+
         QString strChannel = strDataList[4];
 
         QString strMessage = QString(tr("* %1 :Not enough unique channel name")).arg(strChannel);
@@ -3275,6 +3303,8 @@ void OnetKernel::raw_454n()
     }
     else if (strNick.toLower() == "nickserv")
     {
+        if (strDataList.size() < 5) return;
+
         QString strNick = strDataList[4];
 
         QString strDisplay = QString(tr("* No offline messages from %1")).arg(strNick);
@@ -3298,7 +3328,7 @@ void OnetKernel::raw_455n()
 // :NickServ!service@service.onet NOTICE Merovingian :456 Merovingian :is online
 void OnetKernel::raw_456n()
 {
-    if (strDataList.size() < 6) return;
+    if (strDataList.size() < 1) return;
 
     QString strNick = strDataList[0];
     if (strNick[0] == ':') strNick.remove(0,1);
@@ -3306,6 +3336,8 @@ void OnetKernel::raw_456n()
 
     if (strNick.toLower() == "chanserv")
     {
+        if (strDataList.size() < 6) return;
+
         QString strNick = strDataList[5];
 
         QString strMessage = QString(tr("* %1 is already channel owner")).arg(strNick);
@@ -3315,6 +3347,8 @@ void OnetKernel::raw_456n()
     }
     else if (strNick.toLower() == "nickserv")
     {
+        if (strDataList.size() < 5) return;
+
         QString strNick = strDataList[4];
 
         QString strDisplay = QString(tr("* Offline message cannot be sent. %1 is online")).arg(strNick);
