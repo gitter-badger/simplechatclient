@@ -66,6 +66,20 @@
          <item>
           <layout class="QHBoxLayout" name="horizontalLayout_4">
            <item>
+            <widget class="QPushButton" name="pushButton_apply_avatar">
+             <property name="text">
+              <string>Apply avatar</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="pushButton_set_empty_avatar1">
+             <property name="text">
+              <string>Apply empty</string>
+             </property>
+            </widget>
+           </item>
+           <item>
             <widget class="QPushButton" name="pushButton_add_avatar">
              <property name="text">
               <string>Add</string>
@@ -83,20 +97,6 @@
             <widget class="QPushButton" name="pushButton_remove_avatar">
              <property name="text">
               <string>Remove</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QPushButton" name="pushButton_set_empty_avatar1">
-             <property name="text">
-              <string>Apply empty</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QPushButton" name="pushButton_apply_avatar">
-             <property name="text">
-              <string>Apply avatar</string>
              </property>
             </widget>
            </item>

@@ -191,6 +191,7 @@ HEADERS += src/avatars/avatar.h \
     src/widgets/webcam_delegate.h
 FORMS += ui/about.ui \
     ui/avatar_edit.ui \
+	ui/avatar_list_widget.ui \
     ui/awaylog.ui \
     ui/captcha.ui \
     ui/channel_favourites.ui \
