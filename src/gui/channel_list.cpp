@@ -257,6 +257,9 @@ void DlgChannelList::createList()
         return;
     }
 
+    // focus
+    ui.lineEdit_search->setFocus();
+
     // get options
     getOptions();
 

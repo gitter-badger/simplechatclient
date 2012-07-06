@@ -125,10 +125,10 @@ void DlgChannelSettings::createGui()
     ui.radioButton_auditorium_on->setText(tr("On"));
 
     // permissions
-    ui.tabWidget_permissions->addTab(new QListWidget, QIcon(":/images/op.png"), tr("Operators"));
-    ui.tabWidget_permissions->addTab(new QListWidget, QIcon(":/images/halfop.png"), tr("Half-operators"));
-    ui.tabWidget_permissions->addTab(new QListWidget, QIcon(":/images/oxygen/16x16/im-kick-user.png"), tr("Banned"));
-    ui.tabWidget_permissions->addTab(new QListWidget, QIcon(":/images/oxygen/16x16/im-user.png"), tr("Invited"));
+    ui.tabWidget_permissions->addTab(new QListWidget(), QIcon(":/images/op.png"), tr("Operators"));
+    ui.tabWidget_permissions->addTab(new QListWidget(), QIcon(":/images/halfop.png"), tr("Half-operators"));
+    ui.tabWidget_permissions->addTab(new QListWidget(), QIcon(":/images/oxygen/16x16/im-kick-user.png"), tr("Banned"));
+    ui.tabWidget_permissions->addTab(new QListWidget(), QIcon(":/images/oxygen/16x16/im-user.png"), tr("Invited"));
 
     ui.pushButton_permission_add->setText(tr("Add"));
     ui.pushButton_permission_remove->setText(tr("Remove"));
