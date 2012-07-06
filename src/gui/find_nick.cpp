@@ -58,6 +58,8 @@ void DlgFindNick::createSignals()
 
 void DlgFindNick::buttonFind()
 {
+    ui.lineEdit_search->setFocus();
+
     FindNick::instance()->clear();
     FindNick::instance()->setReady(false);
 
@@ -73,6 +75,8 @@ void DlgFindNick::buttonFind()
 
 void DlgFindNick::buttonClear()
 {
+    ui.lineEdit_search->setFocus();
+
     ui.lineEdit_search->clear();
     ui.listWidget_nicks->clear();
 }
