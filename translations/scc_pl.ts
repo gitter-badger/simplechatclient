@@ -3106,7 +3106,7 @@
     </message>
     <message>
         <source>* %1 has public webcam</source>
-        <translation>* %1 ma włączona publiczną kamerę</translation>
+        <translation>* %1 ma włączoną publiczną kamerę</translation>
     </message>
     <message>
         <source>* %1 has private webcam</source>
