@@ -17,52 +17,30 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "find_nick_model.h"
+#ifndef CHANNEL_HOMES_MODEL_H
+#define CHANNEL_HOMES_MODEL_H
 
-FindNick * FindNick::Instance = 0;
+#include <QObject>
 
-FindNick * FindNick::instance()
+class ChannelHomes : public QObject
 {
-    if (!Instance)
-    {
-        Instance = new FindNick();
-        Instance->init();
-    }
+    Q_OBJECT
+    Q_DISABLE_COPY(ChannelHomes)
+    static ChannelHomes *Instance;
+public:
+    static ChannelHomes *instance();
 
-    return Instance;
-}
+    ChannelHomes();
+    void init();
+    void clear();
+    void add(const QString &channel);
+    QList<QString> get();
+    void setReady(bool ready);
+    bool getReady();
 
-FindNick::FindNick()
-{
-}
+private:
+    QList<QString> lChannelHomes;
+    bool bChannelHomesReady;
+};
 
-void FindNick::init()
-{
-    clear();
-}
-
-void FindNick::add(const QString &nick)
-{
-    lNickList.append(nick);
-}
-
-QList<QString> FindNick::get()
-{
-    return lNickList;
-}
-
-void FindNick::clear()
-{
-    lNickList.clear();
-    bNickListReady = false;
-}
-
-void FindNick::setReady(bool ready)
-{
-    bNickListReady = ready;
-}
-
-bool FindNick::getReady()
-{
-    return bNickListReady;
-}
+#endif // CHANNEL_HOMES_MODEL_H

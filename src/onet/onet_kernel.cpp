@@ -24,6 +24,7 @@
 #include "busy.h"
 #include "core.h"
 #include "convert.h"
+#include "channel_homes_model.h"
 #include "channel_key.h"
 #include "channel_list_model.h"
 #include "find_nick_model.h"
@@ -1072,7 +1073,7 @@ void OnetKernel::raw_001()
     ChannelList::instance()->clear();
     Core::instance()->mMyStats.clear();
     Core::instance()->mMyProfile.clear();
-    Core::instance()->lChannelHomes.clear();
+    ChannelHomes::instance()->clear();
     // user profile
     Core::instance()->mUserProfile.clear();
     Core::instance()->bUserProfile = false;
@@ -1438,8 +1439,7 @@ void OnetKernel::raw_151n()
             QString strChannel = strDataList[i];
             if (strChannel[0] == ':') strChannel.remove(0,1);
 
-            if (!Core::instance()->lChannelHomes.contains(strChannel))
-                Core::instance()->lChannelHomes.append(strChannel);
+            ChannelHomes::instance()->add(strChannel);
         }
     }
     else if (strNick.toLower() == "nickserv")
@@ -1462,6 +1462,21 @@ void OnetKernel::raw_151n()
 // :ChanServ!service@service.onet NOTICE scc_test :152 :end of homes list
 void OnetKernel::raw_152n()
 {
+    if (strDataList.size() < 1) return;
+
+    QString strNick = strDataList[0];
+    if (strNick[0] == ':') strNick.remove(0,1);
+    strNick = strNick.left(strNick.indexOf('!'));
+
+    if (strNick.toLower() == "chanserv")
+    {
+        if (strDataList.size() < 4) return;
+
+        ChannelHomes::instance()->setReady(true);
+    }
+    else if (strNick.toLower() == "nickserv")
+    {
+    }
 }
 
 // CS INFO #scc
@@ -1820,9 +1835,8 @@ void OnetKernel::raw_250n()
         QString strDisplay = QString(tr("* Successfully created a channel %1")).arg(strChannel);
         Message::instance()->showMessageActive(strDisplay, MessageInfo);
 
-        // add to list
-        if (!Core::instance()->lChannelHomes.contains(strChannel))
-            Core::instance()->lChannelHomes.append(strChannel);
+        // homes
+        Core::instance()->pNetwork->sendQueue(QString("CS HOMES"));
 
         // join
         Core::instance()->pNetwork->sendQueue(QString("JOIN %1").arg(strChannel));
@@ -2184,9 +2198,8 @@ void OnetKernel::raw_261n()
         QString strDisplay = QString(tr("* Successfully removed channel %1")).arg(strChannel);
         Message::instance()->showMessageActive(strDisplay, MessageInfo);
 
-        // remove from list
-        if (Core::instance()->lChannelHomes.contains(strChannel))
-            Core::instance()->lChannelHomes.removeOne(strChannel);
+        // homes
+        Core::instance()->pNetwork->sendQueue(QString("CS HOMES"));
 
         // part
         if (pTabC->existTab(strChannel))
@@ -3935,7 +3948,6 @@ void OnetKernel::raw_817()
 void OnetKernel::raw_818()
 {
     ChannelList::instance()->clear();
-    ChannelList::instance()->setReady(false);
 }
 
 // SLIST

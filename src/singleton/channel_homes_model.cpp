@@ -17,52 +17,52 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "find_nick_model.h"
+#include "channel_homes_model.h"
 
-FindNick * FindNick::Instance = 0;
+ChannelHomes * ChannelHomes::Instance = 0;
 
-FindNick * FindNick::instance()
+ChannelHomes * ChannelHomes::instance()
 {
     if (!Instance)
     {
-        Instance = new FindNick();
+        Instance = new ChannelHomes();
         Instance->init();
     }
 
     return Instance;
 }
 
-FindNick::FindNick()
+ChannelHomes::ChannelHomes()
 {
 }
 
-void FindNick::init()
+void ChannelHomes::init()
 {
     clear();
 }
 
-void FindNick::add(const QString &nick)
+void ChannelHomes::clear()
 {
-    lNickList.append(nick);
+    lChannelHomes.clear();
+    bChannelHomesReady = false;
 }
 
-QList<QString> FindNick::get()
+void ChannelHomes::add(const QString &channel)
 {
-    return lNickList;
+    lChannelHomes.append(channel);
 }
 
-void FindNick::clear()
+QList<QString> ChannelHomes::get()
 {
-    lNickList.clear();
-    bNickListReady = false;
+    return lChannelHomes;
 }
 
-void FindNick::setReady(bool ready)
+void ChannelHomes::setReady(bool ready)
 {
-    bNickListReady = ready;
+    bChannelHomesReady = ready;
 }
 
-bool FindNick::getReady()
+bool ChannelHomes::getReady()
 {
-    return bNickListReady;
+    return bChannelHomesReady;
 }

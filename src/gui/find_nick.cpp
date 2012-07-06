@@ -61,7 +61,6 @@ void DlgFindNick::buttonFind()
     ui.lineEdit_search->setFocus();
 
     FindNick::instance()->clear();
-    FindNick::instance()->setReady(false);
 
     QString search = ui.lineEdit_search->text();
     if (!search.isEmpty())

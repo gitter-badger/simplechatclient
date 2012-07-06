@@ -71,7 +71,6 @@ public:
     QList<QString> lChannelFavourites;
     QHash<QString, QString> mMyStats;
     QHash<QString, QString> mMyProfile;
-    QList<QString> lChannelHomes;
     // channels
     QList<QString> lOpenChannels;
     QHash<QString, QByteArray> mChannelAvatar;

@@ -22,6 +22,7 @@
 #include <QTimer>
 #include "core.h"
 #include "channel_settings.h"
+#include "channel_homes_model.h"
 #include "channel_homes.h"
 
 DlgChannelHomes::DlgChannelHomes(QWidget *parent) : QDialog(parent)
@@ -68,9 +69,16 @@ void DlgChannelHomes::createSignals()
 
 void DlgChannelHomes::refresh()
 {
+    // ready
+    if (!ChannelHomes::instance()->getReady())
+    {
+        QTimer::singleShot(200, this, SLOT(refresh())); // 0.2 sec
+        return;
+    }
+
     ui.listWidget_channels->clear();
 
-    foreach (QString strChannel, Core::instance()->lChannelHomes)
+    foreach (QString strChannel, ChannelHomes::instance()->get())
     {
         if (strChannel[0] != '#')
             strChannel = strChannel.right(strChannel.length()-1); // remove status
@@ -113,8 +121,11 @@ void DlgChannelHomes::buttonCreate()
 
     if ((ok) && (!strText.isEmpty()))
     {
+        ChannelHomes::instance()->clear();
+
         Core::instance()->pNetwork->send(QString("CS REGISTER %1").arg(strText));
-        QTimer::singleShot(1000*4, this, SLOT(refresh())); // 4 sec
+
+        QTimer::singleShot(200, this, SLOT(refresh())); // 0.2 sec
     }
 }
 
@@ -126,8 +137,11 @@ void DlgChannelHomes::buttonRemove()
 
     if ((ok) && (!strText.isEmpty()))
     {
+        ChannelHomes::instance()->clear();
+
         Core::instance()->pNetwork->send(QString("CS DROP %1").arg(strText));
-        QTimer::singleShot(1000*4, this, SLOT(refresh())); // 4 sec
+
+        QTimer::singleShot(200, this, SLOT(refresh())); // 0.2 sec
     }
 }
 
