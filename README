@@ -6,6 +6,7 @@ Windows:
 
 Linux Debian/Ubuntu packages:
    libssl-dev libqca2-dev libqca2-plugin-ossl libphonon-dev g++ cmake make
+   pkg-config
 
 If you want to use "cmake" with custom options, type:
 
@@ -17,14 +18,15 @@ On Windows "make install" does not fully work. Edit cmake options in compile.bat
 
 Available options:
 
-   -DWITH_KAMERZYSTA=OFF 
-      to compile without Kamerzysta connection (default OFF on Unix/Linux)
+   -DWITH_KAMERZYSTA=ON|OFF
+      ON - compile with Kamerzysta connection (default=ON on Windows)
+      OFF - compile with internal webcam window (default=OFF on Unix/Linux)
 
-   -DWITH_PHONON=OFF
-      to compile without Phonon
+   -DWITH_PHONON=ON|OFF
+      compile with Phonon (default=ON)
 
    -DWIN32_QCA2_DIR=DIR
-      to compile with non-standard libQCA path i.e.: -DWIN32_QCA2_DIR=C:\QCA2
+      compile with custom libQCA path i.e.: -DWIN32_QCA2_DIR=C:\QCA2
 
    -DCMAKE_BUILD_TYPE=Debug
-      to compile with full debug
+      compile with full debug
