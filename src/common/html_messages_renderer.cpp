@@ -60,6 +60,21 @@ void fixContextMenu(QString &strData, MessageCategory eMessageCategory)
             Convert::removeStyles(strWord);
             strDataList[i] = QString("<a onclick=\"return false\" name=\"website\" style=\"color:inherit;text-decoration:none;\" href=\"%1\">%2</a>").arg(strWord, strWord);
         }
+        else if (((strWord.contains("http")) && (!strWord.startsWith("http"))) || ((strWord.contains("www.")) && (!strWord.startsWith("www."))))
+        {
+            strWord.replace("http", " http");
+            strWord.replace("www.", " www.");
+            QStringList strWords = strWord.split(" ");
+            if (strWords.size() == 2)
+            {
+                QString strBeforeLink = strWords[0];
+                QString strAfterLink = strWords[1];
+
+                Convert::removeStyles(strAfterLink);
+                strAfterLink = QString("<a onclick=\"return false\" name=\"website\" style=\"color:inherit;text-decoration:none;\" href=\"%1\">%2</a>").arg(strAfterLink, strAfterLink);
+                strDataList[i] = strBeforeLink+strAfterLink;
+            }
+        }
     }
 
     strData = strDataList.join(" ");
