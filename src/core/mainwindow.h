@@ -22,6 +22,7 @@
 
 #include "defines.h"
 class QMenuBar;
+class QMovie;
 class QToolBar;
 class OnetAuth;
 class OnetKernel;
@@ -53,6 +54,8 @@ public:
     void setTabColor(const QString &strChannel, MessageCategory eMessageCategory);
     QSystemTrayIcon *getTrayIcon();
     QAction *getNotificationMenuAction();
+    void startAnimatedTrayIcon();
+    void stopAnimatedTrayIcon();
 
 private:
     QToolBar *toolBar;
@@ -67,6 +70,7 @@ private:
     QAction *notesAction;
     QMenu *trayIconMenu;
     QSystemTrayIcon *trayIcon;
+    QMovie *movieTrayIcon;
 
     QAction *minimizeAction;
     QAction *maximizeAction;
@@ -109,6 +113,7 @@ private slots:
     void openOptions();
     void openNotes();
     void openAbout();
+    void updateTrayIcon();
     void trayIconActivated(QSystemTrayIcon::ActivationReason activationReason);
     void ctrlTabPressed();
     void ctrlShiftTabPressed();

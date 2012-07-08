@@ -22,6 +22,7 @@
 #include <QDockWidget>
 #include <QMenuBar>
 #include <QMessageBox>
+#include <QMovie>
 #include <QSystemTrayIcon>
 #include <QTimer>
 #include <QToolBar>
@@ -115,6 +116,10 @@ MainWindow::~MainWindow()
     QObject::disconnect(pTabM, SIGNAL(currentChanged(int)), this, SLOT(currentTabChanged(int)));
     delete pTabC;
     delete pTabM;
+
+    // stop tray
+    stopAnimatedTrayIcon();
+    delete movieTrayIcon;
 
     // hide tray
     trayIcon->hide();
@@ -268,6 +273,9 @@ void MainWindow::createMenus()
     trayIcon->setContextMenu(trayIconMenu);
     trayIcon->setToolTip("Simple Chat Client");
     trayIcon->setVisible(true);
+
+    // movie tray icon
+    movieTrayIcon = new QMovie(":/images/logo16x16.gif");
 }
 
 void MainWindow::setTrayMenuVisible(bool visible)
@@ -302,6 +310,7 @@ void MainWindow::createSignals()
     connect(Invite::instance()->inviteAction, SIGNAL(triggered()), this, SLOT(openInviteList()));
     connect(Offline::instance()->offlineMessagesAction, SIGNAL(triggered()), this, SLOT(openOfflineMessages()));
 
+    connect(movieTrayIcon, SIGNAL(frameChanged(int)), this, SLOT(updateTrayIcon()));
     connect(trayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)), this, SLOT(trayIconActivated(QSystemTrayIcon::ActivationReason)));
 
     connect(minimizeAction, SIGNAL(triggered()), this, SLOT(hide()));
@@ -564,6 +573,24 @@ void MainWindow::openOfflineMessages()
 {
     if ((Core::instance()->pNetwork->isConnected()) && (Core::instance()->pNetwork->isWritable()) && (Core::instance()->settings.value("logged") == "true"))
         DlgOfflineMessages(this).exec();
+}
+
+// animated tray icon
+void MainWindow::startAnimatedTrayIcon()
+{
+    movieTrayIcon->start();
+}
+
+void MainWindow::stopAnimatedTrayIcon()
+{
+    movieTrayIcon->stop();
+    trayIcon->setIcon(QIcon(":/images/logo16x16.png"));
+}
+
+void MainWindow::updateTrayIcon()
+{
+    QIcon icon(movieTrayIcon->currentPixmap());
+    trayIcon->setIcon(icon);
 }
 
 // tray

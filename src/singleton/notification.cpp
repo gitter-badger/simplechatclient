@@ -99,7 +99,11 @@ void Notification::refreshMenu()
 
         notificationMenu->setTitle(tr("N&otification (%1)").arg(iNotificationCount));
         Core::instance()->mainWindow()->getNotificationMenuAction()->setVisible(true);
+        Core::instance()->mainWindow()->startAnimatedTrayIcon();
     }
     else
+    {
         Core::instance()->mainWindow()->getNotificationMenuAction()->setVisible(false);
+        Core::instance()->mainWindow()->stopAnimatedTrayIcon();
+    }
 }
