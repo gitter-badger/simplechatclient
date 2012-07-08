@@ -167,11 +167,6 @@ void DlgOptions::createGui()
     punish_reason->setText(tr("Punish reason"));
     punish_reason->setToolTip(tr("Punish reason"));
 
-    QListWidgetItem *adv = new QListWidgetItem(ui.listWidget_options);
-    adv->setIcon(QIcon(":/images/oxygen/16x16/dialog-warning.png"));
-    adv->setText(tr("Advanced"));
-    adv->setToolTip(tr("Advanced"));
-
     QListWidgetItem *colors = new QListWidgetItem(ui.listWidget_options);
     colors->setIcon(QIcon(":/images/oxygen/16x16/view-media-visualization.png"));
     colors->setText(tr("Colors"));
@@ -201,6 +196,11 @@ void DlgOptions::createGui()
     notification->setIcon(QIcon(":/images/oxygen/16x16/help-hint.png"));
     notification->setText(tr("Notification"));
     notification->setToolTip(tr("Notification"));
+
+    QListWidgetItem *adv = new QListWidgetItem(ui.listWidget_options);
+    adv->setIcon(QIcon(":/images/oxygen/16x16/dialog-warning.png"));
+    adv->setText(tr("Advanced"));
+    adv->setToolTip(tr("Advanced"));
 }
 
 void DlgOptions::setDefaultValues()

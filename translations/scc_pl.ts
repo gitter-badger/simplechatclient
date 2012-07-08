@@ -1629,7 +1629,7 @@
     </message>
     <message>
         <source>Show tray notification</source>
-        <translation>Pokaż powiadomienia w zasobniku</translation>
+        <translation>Pokaż powiadomienia w zasobniku (dymki)</translation>
     </message>
 </context>
 <context>

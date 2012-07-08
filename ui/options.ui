@@ -468,83 +468,6 @@
       </widget>
      </widget>
     </widget>
-    <widget class="QWidget" name="page_adv">
-     <widget class="QWidget" name="verticalLayoutWidget_11">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>10</y>
-        <width>431</width>
-        <height>351</height>
-       </rect>
-      </property>
-      <layout class="QVBoxLayout" name="verticalLayout_11">
-       <item>
-        <widget class="QCheckBox" name="checkBox_auto_busy">
-         <property name="text">
-          <string>Busy mode after you log in to chat</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QCheckBox" name="checkBox_disable_autojoin_favourites">
-         <property name="text">
-          <string>Disable autojoin favourite channels</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QCheckBox" name="checkBox_minimize_to_tray">
-         <property name="text">
-          <string>Minimize to tray</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QCheckBox" name="checkBox_show_zuo_and_ip">
-         <property name="text">
-          <string>Show ZUO and IP</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QCheckBox" name="checkBox_hide_formating">
-         <property name="text">
-          <string>Disable formatting messages</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QCheckBox" name="checkBox_hide_join_part">
-         <property name="text">
-          <string>Hide join/part</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QCheckBox" name="checkBox_hide_join_part_200">
-         <property name="text">
-          <string>Hide join/part when number of nicks &gt; 200</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QCheckBox" name="checkBox_disable_emots">
-         <property name="text">
-          <string>Disable emoticons</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QCheckBox" name="checkBox_disable_replaces">
-         <property name="text">
-          <string>Disable replaces</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-    </widget>
     <widget class="QWidget" name="page_colors">
      <widget class="QTabWidget" name="tabWidget">
       <property name="geometry">
@@ -1335,6 +1258,83 @@
         <string>Show tray notification</string>
        </property>
       </widget>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="page_adv">
+     <widget class="QWidget" name="verticalLayoutWidget_11">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>10</y>
+        <width>431</width>
+        <height>351</height>
+       </rect>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout_11">
+       <item>
+        <widget class="QCheckBox" name="checkBox_auto_busy">
+         <property name="text">
+          <string>Busy mode after you log in to chat</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="checkBox_disable_autojoin_favourites">
+         <property name="text">
+          <string>Disable autojoin favourite channels</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="checkBox_minimize_to_tray">
+         <property name="text">
+          <string>Minimize to tray</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="checkBox_show_zuo_and_ip">
+         <property name="text">
+          <string>Show ZUO and IP</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="checkBox_hide_formating">
+         <property name="text">
+          <string>Disable formatting messages</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="checkBox_hide_join_part">
+         <property name="text">
+          <string>Hide join/part</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="checkBox_hide_join_part_200">
+         <property name="text">
+          <string>Hide join/part when number of nicks &gt; 200</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="checkBox_disable_emots">
+         <property name="text">
+          <string>Disable emoticons</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="checkBox_disable_replaces">
+         <property name="text">
+          <string>Disable replaces</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
      </widget>
     </widget>
    </widget>
