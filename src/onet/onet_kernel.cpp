@@ -1287,7 +1287,7 @@ void OnetKernel::raw_111n()
         if ((Core::instance()->settings.value("themes") == "Origin") || (Core::instance()->settings.value("themes") == "Adara"))
         {
             if (!strValue.isEmpty())
-                avatar->getAvatar(strNick, "nick", strValue);
+                avatar->get(strNick, "nick", strValue);
         }
     }
 }
@@ -1555,7 +1555,7 @@ void OnetKernel::raw_161n()
     // avatar
     QString strAvatarUrl = mKeyValue.value("avatar");
     if (!strAvatarUrl.isEmpty())
-        avatar->getAvatar(strChannel, "channel", strAvatarUrl);
+        avatar->get(strChannel, "channel", strAvatarUrl);
 }
 
 // CS INFO #lunar

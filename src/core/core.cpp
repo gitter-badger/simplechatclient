@@ -18,7 +18,6 @@
  */
 
 #include <QAction>
-#include <QDateTime>
 #include <QDir>
 #include <QSettings>
 #include <QTcpSocket>
@@ -105,7 +104,7 @@ void Core::createAndShowGui()
 void Core::createSettings()
 {
     // default settings
-    settings["version"] = "1.5.0.git"+QDate::currentDate().toString("yyyyMMdd");
+    settings["version"] = "1.5.0.0";
     settings["available_version"] = "";
     settings["whats_new"] = "";
     settings["motd"] = "";

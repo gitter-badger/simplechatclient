@@ -194,14 +194,11 @@ void TabContainer::setChannelAvatar(const QString &strChannel)
     if (!existTab(strChannel))
         return;
 
-    QByteArray bAvatar = Core::instance()->mChannelAvatar.value(strChannel);
-    QPixmap pixmap;
-    pixmap.loadFromData(bAvatar);
+    QString strAvatarpath = Core::instance()->mChannelAvatar.value(strChannel);
 
-    QIcon icon(pixmap);
     int index = Core::instance()->getIndexFromChannelName(strChannel);
     if (index >= 0 && index <= pTabM->count())
-        pTabM->setTabIcon(index, icon);
+        pTabM->setTabIcon(index, QIcon(strAvatarpath));
 }
 
 void TabContainer::resizeMainWindow(QSize s)

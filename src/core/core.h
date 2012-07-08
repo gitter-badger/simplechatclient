@@ -73,7 +73,7 @@ public:
     QHash<QString, QString> mMyProfile;
     // channels
     QList<QString> lOpenChannels;
-    QHash<QString, QByteArray> mChannelAvatar;
+    QHash<QString, QString> mChannelAvatar;
     // kamerzysta socket
     QTcpSocket *kamerzystaSocket;
     // settings

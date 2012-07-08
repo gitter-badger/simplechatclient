@@ -68,9 +68,7 @@ void DlgChannelFavourites::refresh()
     {
         if (Core::instance()->mChannelAvatar.contains(strChannel))
         {
-            QPixmap pixmap;
-            pixmap.loadFromData(Core::instance()->mChannelAvatar.value(strChannel));
-            ui.listWidget_channels->addItem(new QListWidgetItem(QIcon(pixmap), strChannel));
+            ui.listWidget_channels->addItem(new QListWidgetItem(QIcon(Core::instance()->mChannelAvatar.value(strChannel)), strChannel));
         }
         else
         {

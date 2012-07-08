@@ -32,10 +32,8 @@
 
 Avatar::Avatar(TabContainer *_pTabC) : pTabC(_pTabC)
 {
-    connect(this, SIGNAL(setChannelAvatar(const QString&)), pTabC, SLOT(setChannelAvatar(const QString&)));
-
     accessManager = new QNetworkAccessManager;
-    connect(accessManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(avatarFinished(QNetworkReply*)));
+    connect(accessManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(httpFinished(QNetworkReply*)));
 }
 
 Avatar::~Avatar()
@@ -43,50 +41,44 @@ Avatar::~Avatar()
     accessManager->deleteLater();
 }
 
-void Avatar::getAvatar(const QString &strNickOrChannel, const QString &strCategory, const QString &strUrl)
+void Avatar::get(const QString &strNickOrChannel, const QString &strCategory, const QString &strUrl)
 {
     QNetworkReply *reply = accessManager->get(QNetworkRequest(strUrl));
     reply->setProperty("nickorchannel", strNickOrChannel);
     reply->setProperty("category", strCategory);
 }
 
-void Avatar::avatarFinished(QNetworkReply *reply)
+void Avatar::httpFinished(QNetworkReply *reply)
 {
     reply->deleteLater();
 
     if (reply->error())
         return;
 
-    QString strNickOrChannel = reply->property("nickorchannel").toString();
-    QString strCategory = reply->property("category").toString();
-    QFileInfo fi(reply->url().toString());
-    QString strAvatarPath = fi.fileName();
-    QByteArray bData = reply->readAll();
-
-    if (!bData.isEmpty())
-        setAvatar(strNickOrChannel, strCategory, strAvatarPath, bData);
-}
-
-void Avatar::setAvatar(const QString &strNickOrChannel, const QString &strCategory, QString &strAvatarPath, const QByteArray &bAvatar)
-{
-    if (strCategory == "nick")
+    QByteArray bAvatar = reply->readAll();
+    if (!bAvatar.isEmpty())
     {
-        getAvatarPath(strAvatarPath);
+        QString strNickOrChannel = reply->property("nickorchannel").toString();
+        QString strCategory = reply->property("category").toString();
+        QFileInfo fi(reply->url().toString());
+        QString strAvatarPath = getAvatarPath(fi.fileName());
+
         saveAvatar(strAvatarPath, bAvatar);
-        Nicklist::instance()->setUserAvatarPath(strNickOrChannel, strAvatarPath);
-    }
-    else if (strCategory == "channel")
-    {
-        // return if channel not exist any more
-        if (!Core::instance()->lOpenChannels.contains(strNickOrChannel)) return;
 
-        Core::instance()->mChannelAvatar[strNickOrChannel] = bAvatar;
+        if (strCategory == "nick")
+        {
+            Nicklist::instance()->setUserAvatarPath(strNickOrChannel, strAvatarPath);
+        }
+        else if (strCategory == "channel")
+        {
+            Core::instance()->mChannelAvatar[strNickOrChannel] = strAvatarPath;
 
-        emit setChannelAvatar(strNickOrChannel);
+            pTabC->setChannelAvatar(strNickOrChannel);
+        }
     }
 }
 
-void Avatar::getAvatarPath(QString &strAvatarPath)
+QString Avatar::getAvatarPath(const QString &strAvatarPath)
 {
     QString path;
 
@@ -104,7 +96,7 @@ void Avatar::getAvatarPath(QString &strAvatarPath)
     if (!QDir().exists(path))
         QDir().mkpath(path);
 
-    strAvatarPath = path+"/"+strAvatarPath;
+    return path+"/"+strAvatarPath;
 }
 
 void Avatar::saveAvatar(const QString &strAvatarPath, const QByteArray &bAvatar)
