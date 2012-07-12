@@ -1279,7 +1279,7 @@
     </message>
 </context>
 <context>
-    <name>DlgOfflineMsg</name>
+    <name>DlgOfflineMessages</name>
     <message>
         <source>Offline messages</source>
         <translation>Wiadomości offline</translation>
