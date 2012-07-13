@@ -1,8 +1,8 @@
 Package: simplechatclient
-Version: 1.5.0.unknown
+Version: 1.5.0
 Section: net
 Maintainer: Piotr Luczko <piotr.luczko@gmail.com>
-Homepage: http://simplechatclien.sf.net
+Homepage: http://simplechatclien.sourceforge.net/
 Priority: standard
 Installed-Size: 22000
 Architecture: i386
