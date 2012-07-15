@@ -17,6 +17,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <QToolButton>
 #include "awaylog_model.h"
 #include "core.h"
 #include "invite_model.h"
@@ -97,13 +98,13 @@ void Notification::refreshMenu()
         Invite::instance()->inviteAction->setText(tr("Invite (%1)").arg(iInviteCount));
         Offline::instance()->offlineMessagesAction->setText(tr("Offline messages (%1)").arg(iOfflineMessagesCount));
 
-        notificationMenu->setTitle(tr("N&otification (%1)").arg(iNotificationCount));
-        Core::instance()->mainWindow()->getNotificationMenuAction()->setVisible(true);
+        Core::instance()->mainWindow()->getNotificationToolButton()->setText(tr("N&otification (%1)").arg(iNotificationCount));
+        Core::instance()->mainWindow()->getNotificationAction()->setVisible(true);
         Core::instance()->mainWindow()->startAnimatedTrayIcon();
     }
     else
     {
-        Core::instance()->mainWindow()->getNotificationMenuAction()->setVisible(false);
+        Core::instance()->mainWindow()->getNotificationAction()->setVisible(false);
         Core::instance()->mainWindow()->stopAnimatedTrayIcon();
     }
 }

@@ -21,6 +21,7 @@
 #define MAINWINDOW_H
 
 #include "defines.h"
+class QToolButton;
 class QMenuBar;
 class QMovie;
 class QToolBar;
@@ -53,7 +54,8 @@ public:
     void refreshToolButtons(const QString &strChannel);
     void setTabColor(const QString &strChannel, MessageCategory eMessageCategory);
     QSystemTrayIcon *getTrayIcon();
-    QAction *getNotificationMenuAction();
+    QToolButton *getNotificationToolButton();
+    QAction *getNotificationAction();
     void startAnimatedTrayIcon();
     void stopAnimatedTrayIcon();
 
@@ -61,7 +63,9 @@ private:
     QToolBar *toolBar;
     QMenu *fileMenu;
     QMenu *optionsMenu;
-    QAction *notificationMenuAction;
+
+    QAction *notificationAction;
+    QToolButton *notificationToolButton;
     QMenu *helpMenu;
     QAction *sccAction;
     QAction *connectAction;

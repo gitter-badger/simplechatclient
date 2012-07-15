@@ -26,6 +26,7 @@
 #include <QSystemTrayIcon>
 #include <QTimer>
 #include <QToolBar>
+#include <QToolButton>
 
 #include "about.h"
 #include "autoaway.h"
@@ -237,13 +238,16 @@ void MainWindow::createMenus()
     helpMenu = menuBar()->addMenu(tr("He&lp"));
     helpMenu->addAction(aboutAction);
 
-    // notification action menu
-    notificationMenuAction = new QAction(QIcon(":/images/oxygen/16x16/emblem-important.png"), tr("N&otification"), this);
-    notificationMenuAction->setMenu(Notification::instance()->getNotificationMenu());
-    notificationMenuAction->setVisible(false);
+    // notification
+    notificationToolButton = new QToolButton(this);
+    notificationToolButton->setIcon(QIcon(":/images/oxygen/16x16/emblem-important.png"));
+    notificationToolButton->setText(tr("N&otification"));
+    notificationToolButton->setMenu(Notification::instance()->getNotificationMenu());
+    notificationToolButton->setPopupMode(QToolButton::InstantPopup);
+    notificationToolButton->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
+    notificationToolButton->setVisible(false);
 
     // toolbar
-    toolBar = new QToolBar();
     toolBar = addToolBar(tr("Navigation bar"));
     toolBar->setIconSize(QSize(16,16));
     toolBar->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
@@ -254,7 +258,7 @@ void MainWindow::createMenus()
     toolBar->addAction(friendsAction);
     toolBar->addAction(camsAction);
     toolBar->addAction(notesAction);
-    toolBar->addAction(notificationMenuAction);
+    notificationAction = toolBar->addWidget(notificationToolButton);
     toolBar->addSeparator();
     toolBar->addAction(Lag::instance()->lagAction);
 
@@ -640,9 +644,14 @@ QSystemTrayIcon *MainWindow::getTrayIcon()
     return trayIcon;
 }
 
-QAction *MainWindow::getNotificationMenuAction()
+QToolButton *MainWindow::getNotificationToolButton()
 {
-    return notificationMenuAction;
+    return notificationToolButton;
+}
+
+QAction *MainWindow::getNotificationAction()
+{
+    return notificationAction;
 }
 
 void MainWindow::refreshToolButtons(const QString &strChannel)

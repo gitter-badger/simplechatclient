@@ -85,7 +85,7 @@ ToolWidget::ToolWidget(QWidget *parent) : QWidget(parent), strCurrentColor("#000
     fontfamily->setToolTip(tr("Font family"));
     fontfamily->setFont(QFont("Verdana", -1, -1, false));
     fontfamily->setText("Verdana");
-    fontfamily->setPopupMode(QToolButton::MenuButtonPopup);
+    fontfamily->setPopupMode(QToolButton::InstantPopup);
     fontfamily->setMenu(fontMenu);
     fontfamily->show();
 
@@ -170,7 +170,7 @@ ToolWidget::ToolWidget(QWidget *parent) : QWidget(parent), strCurrentColor("#000
     size->setIcon(QIcon(":/images/oxygen/16x16/format-font-size-more.png"));
     size->setToolTip(tr("Font size"));
     size->setFont(QFont("Times New Roman", -1, -1, false));
-    size->setPopupMode(QToolButton::MenuButtonPopup);
+    size->setPopupMode(QToolButton::InstantPopup);
     size->setMenu(sizeMenu);
     size->show();
 
