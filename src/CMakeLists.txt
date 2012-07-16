@@ -224,9 +224,9 @@ set (scc_HDRS
 )
 
 # debug
-if (UNIX)
-	set (CMAKE_CXX_FLAGS "-ggdb ${CMAKE_CXX_FLAGS}")
-endif (UNIX)
+#if (UNIX)
+#	set (CMAKE_CXX_FLAGS "-ggdb ${CMAKE_CXX_FLAGS}")
+#endif (UNIX)
 
 # wall
 set (CMAKE_C_FLAGS "-W -Wall ${CMAKE_C_FLAGS}")
