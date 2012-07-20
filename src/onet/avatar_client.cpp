@@ -22,6 +22,7 @@
 #include <QDateTime>
 #include <QDebug>
 #include <QFileInfo>
+#include <QHttpMultiPart>
 #include <QNetworkReply>
 #include <QNetworkRequest>
 #include <QNetworkCookieJar>
@@ -132,40 +133,44 @@ void AvatarClient::requestSetAvatar(int imgId, int albumId)
 
 void AvatarClient::requestUploadImage(const QString &fileName, const QByteArray &data)
 {
-    qsrand(QDateTime::currentDateTime().toTime_t());
-    QByteArray bBoundary = QByteArray("boundary_.oOo._")
-               + QByteArray::number(qrand()).toBase64()
-               + QByteArray::number(qrand()).toBase64()
-               + QByteArray::number(qrand()).toBase64();
+    QHttpMultiPart *multiPart = new QHttpMultiPart(QHttpMultiPart::FormDataType);
 
-    // boundary must not be longer than 70 characters, see RFC 2046, section 5.1.1
-    if (bBoundary.count() > 70)
-        bBoundary = bBoundary.left(70);
-
-    QString strBoundary = QString(bBoundary);
-
-    QByteArray bBody;
     QString strFileFormName = createRid();
-    QString strEnvelope = QString("a:1:{s:14:\"imageInputName\";s:%1:\"%2\";}").arg(strFileFormName.size()).arg(strFileFormName);
 
-    bBody += QString("--%1\r\nContent-Disposition: form-data; name=\"%2\"\r\n\r\n%3\r\n").arg(strBoundary, "fnc", "uploadImage");
-    bBody += QString("--%1\r\nContent-Disposition: form-data; name=\"%2\"\r\n\r\n%3\r\n").arg(strBoundary, "rdr", "xml");
-    bBody += QString("--%1\r\nContent-Disposition: form-data; name=\"%2\"\r\n\r\n%3\r\n").arg(strBoundary, "rid", createRid());
-    bBody += QString("--%1\r\nContent-Disposition: form-data; name=\"%2\"\r\n\r\n%3\r\n").arg(strBoundary, "envelope", strEnvelope);
-    bBody += QString("--%1\r\nContent-Disposition: form-data; name=\"%2\"; filename=\"%3\"\r\n").arg(strBoundary, strFileFormName, fileName);
-    bBody += QString("Content-Type: image/jpeg\r\n\r\n");
-    bBody += data;
-    bBody += QString("\r\n");
-    bBody += QString("--%1--\r\n").arg(strBoundary);
+    QHttpPart fncPart;
+    fncPart.setHeader(QNetworkRequest::ContentDispositionHeader, QVariant("form-data; name=\"fnc\""));
+    fncPart.setBody("uploadImage");
+
+    QHttpPart rdrPart;
+    rdrPart.setHeader(QNetworkRequest::ContentDispositionHeader, QVariant("form-data; name=\"rdr\""));
+    rdrPart.setBody("xml");
+
+    QHttpPart ridPart;
+    ridPart.setHeader(QNetworkRequest::ContentDispositionHeader, QVariant("form-data; name=\"rid\""));
+    ridPart.setBody(createRid().toAscii());
+
+    QHttpPart envelopePart;
+    envelopePart.setHeader(QNetworkRequest::ContentDispositionHeader, QVariant("form-data; name=\"envelope\""));
+    envelopePart.setBody(QString("a:1:{s:14:\"imageInputName\";s:%1:\"%2\";}").arg(strFileFormName.size()).arg(strFileFormName).toAscii());
+
+    QHttpPart imagePart;
+    imagePart.setHeader(QNetworkRequest::ContentTypeHeader, QVariant("image/jpeg"));
+    imagePart.setHeader(QNetworkRequest::ContentDispositionHeader, QString("form-data; name=\"%1\"; filename=\"%2\"").arg(strFileFormName, fileName));
+    imagePart.setBody(data);
+
+    multiPart->append(fncPart);
+    multiPart->append(rdrPart);
+    multiPart->append(ridPart);
+    multiPart->append(envelopePart);
+    multiPart->append(imagePart);
 
     QNetworkRequest request(basicRequest);
-    request.setHeader(QNetworkRequest::ContentTypeHeader, QString("multipart/form-data; boundary=%1").arg(strBoundary));
-    request.setHeader(QNetworkRequest::ContentLengthHeader, bBody.size());
     request.setAttribute(QNetworkRequest::User, RT_uploadImage);
 
-    qDebug() << request.url().toString() << fileName << strBoundary << bBody.size();
+    //qDebug() << request.url().toString() << fileName;
 
-    QNetworkReply *pReply = this->post(request, bBody);
+    QNetworkReply *pReply = this->post(request, multiPart);
+    multiPart->setParent(pReply);
     QFileInfo info = QFile(fileName);
     pReply->setProperty("fileName", info.fileName());
 }
