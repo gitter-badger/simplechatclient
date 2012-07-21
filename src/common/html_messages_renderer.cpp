@@ -22,16 +22,6 @@
 #include "nicklist.h"
 #include "html_messages_renderer.h"
 
-void fixHtmlChars(QString &strData)
-{
-    strData.replace("&", "&amp;");
-    strData.replace("<", "&lt;");
-    strData.replace(">", "&gt;");
-    strData.replace("\"", "&quot;");
-    strData.replace("'", "&#039;");
-    strData.replace("\\", "&#92;");
-}
-
 void fixContextMenu(QString &strData, MessageCategory eMessageCategory)
 {
     QStringList strDataList = strData.split(" ");
@@ -85,7 +75,7 @@ QString HtmlMessagesRenderer::renderer(QString strData, MessageCategory eMessage
     QDateTime dt = QDateTime::fromTime_t(iTime);
 
     // fix html chars
-    fixHtmlChars(strData);
+    Convert::fixHtmlChars(strData);
 
     // fix for context menu
     fixContextMenu(strData, eMessageCategory);
@@ -192,7 +182,7 @@ QString HtmlMessagesRenderer::rendererDebug(QString strData, int iTime)
     }
 
     // fix html chars
-    fixHtmlChars(strData);
+    Convert::fixHtmlChars(strData);
 
     // time
     QString strTime = QDateTime::fromTime_t(iTime).toString("[hh:mm:ss]");

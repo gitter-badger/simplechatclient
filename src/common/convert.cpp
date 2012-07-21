@@ -147,6 +147,16 @@ void convertEmoticons(QString &strData, bool bInsertWidthHeight)
     }
 }
 
+void Convert::fixHtmlChars(QString &strData)
+{
+    strData.replace("&", "&amp;");
+    strData.replace("<", "&lt;");
+    strData.replace(">", "&gt;");
+    strData.replace("\"", "&quot;");
+    strData.replace("'", "&#039;");
+    strData.replace("\\", "&#92;");
+}
+
 void Convert::createText(QString &strText)
 {
     QString strMyColor = Core::instance()->settings.value("my_color");

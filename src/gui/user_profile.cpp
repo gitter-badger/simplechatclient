@@ -297,12 +297,8 @@ void DlgUserProfile::buttonClose()
 
 QString DlgUserProfile::convertDesc(QString strContent)
 {
-    // replace
-    strContent.replace("&", "&amp;");
-    strContent.replace("<", "&lt;");
-    strContent.replace(">", "&gt;");
-
     // convert
+    Convert::fixHtmlChars(strContent);
     Convert::convertText(strContent);
 
     return QString("<html><body style=\"background-color:white;font-size:12px;font-family:Verdana;\">%1</body></html>").arg(strContent);

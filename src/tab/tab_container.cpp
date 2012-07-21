@@ -154,6 +154,10 @@ void TabContainer::setTopic(const QString &strChannel, const QString &strTopicCo
     if (!existTab(strChannel))
         return;
 
+    // fix html chars
+    Convert::fixHtmlChars(strTopicContent);
+
+    // tooltip and topic
     QString strTooltip = strTopicContent;
     QString strTopic = strTopicContent;
 
@@ -168,15 +172,7 @@ void TabContainer::setTopic(const QString &strChannel, const QString &strTopicCo
     Core::instance()->tw[strChannel]->topic->setText(QString("<b>%1</b> %2").arg(tr("Topic:"), strTopic));
 
     // tooltip
-    strTooltip.replace("&", "&amp;");
-    strTooltip.replace("<", "&lt;");
-    strTooltip.replace(">", "&gt;");
-    strTooltip.replace("\"", "&quot;");
-    strTooltip.replace("'", "&#039;");
-    strTooltip.replace("\\", "&#92;");
-
     Convert::simpleConvert(strTooltip);
-
     Core::instance()->tw[strChannel]->topic->setToolTip(strTooltip);
 }
 
