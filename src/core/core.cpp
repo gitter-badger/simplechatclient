@@ -104,7 +104,7 @@ void Core::createAndShowGui()
 void Core::createSettings()
 {
     // default settings
-    settings["version"] = "1.5.0.0";
+    settings["version"] = "1.6.0.dev";
     settings["available_version"] = "";
     settings["whats_new"] = "";
     settings["motd"] = "";
