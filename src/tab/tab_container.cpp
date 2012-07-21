@@ -154,14 +154,11 @@ void TabContainer::setTopic(const QString &strChannel, const QString &strTopicCo
     if (!existTab(strChannel))
         return;
 
-    // fix html chars
-    Convert::fixHtmlChars(strTopicContent);
-
-    // tooltip and topic
-    QString strTooltip = strTopicContent;
     QString strTopic = strTopicContent;
+    QString strTooltip = strTopicContent;
 
     // convert emoticons, font
+    Convert::fixHtmlChars(strTopic);
     Convert::convertText(strTopic);
 
     // fix length bug
@@ -172,7 +169,9 @@ void TabContainer::setTopic(const QString &strChannel, const QString &strTopicCo
     Core::instance()->tw[strChannel]->topic->setText(QString("<b>%1</b> %2").arg(tr("Topic:"), strTopic));
 
     // tooltip
+    Convert::fixHtmlChars(strTooltip);
     Convert::simpleConvert(strTooltip);
+
     Core::instance()->tw[strChannel]->topic->setToolTip(strTooltip);
 }
 
