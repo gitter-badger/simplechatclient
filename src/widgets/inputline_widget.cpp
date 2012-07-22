@@ -152,7 +152,7 @@ bool InputLineWidget::event(QEvent *e)
             return true;
         }
     }
-    else if ((k->key() == Qt::Key_Backtab) && (k->modifiers() == (Qt::ControlModifier | Qt::ShiftModifier)))
+    else if ((k->key() == Qt::Key_Backtab) && (k->modifiers() & (Qt::ControlModifier | Qt::ShiftModifier)))
     {
         emit ctrlShiftTabPressed();
         return true;
