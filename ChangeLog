@@ -78,7 +78,6 @@ Version 1.0.12 (20.05.2011)
 
 Version 1.0.11 (29.04.2011)
 ================================
-
 * Fixed auth
 * Added menu "open link"
 * Added offline messages support
@@ -86,7 +85,6 @@ Version 1.0.11 (29.04.2011)
 
 Version 1.0.10 (14.04.2011)
 ================================
-
 * Fixed pasting multi-line
 * Fixed lag
 * Fixed classic style
@@ -106,3 +104,15 @@ Version 1.0.10 (14.04.2011)
 * Added awaylog
 * Added basic cam support for linux
 * Many bugfixes
+
+Version 1.0.9 (03.12.2010)
+Version 1.0.8 (06.09.2010)
+Version 1.0.7 (04.09.2010)
+Version 1.0.6 (02.08.2010)
+Version 1.0.5 (04.07.2010)
+Version 1.0.4 (03.05.2010)
+Version 1.0.3 (23.04.2010)
+Version 1.0.2 (06.04.2010)
+Version 1.0.1 (31.03.2010)
+Version 1.0.0 (24.03.2010)
+Version 1.0 alpha (19.12.2009)
