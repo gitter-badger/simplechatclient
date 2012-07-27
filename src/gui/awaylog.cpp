@@ -17,6 +17,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <QClipboard>
 #include <QDesktopWidget>
 #include <QPushButton>
 #include "awaylog_model.h"
@@ -39,13 +40,20 @@ DlgAwaylog::DlgAwaylog(QWidget *parent) : QDialog(parent)
 
 void DlgAwaylog::createGui()
 {
-    ui.buttonBox->button(QDialogButtonBox::Reset)->setIcon(QIcon(":/images/oxygen/16x16/document-revert.png"));
-    ui.buttonBox->button(QDialogButtonBox::Close)->setIcon(QIcon(":/images/oxygen/16x16/dialog-close.png"));
+    ui.pushButton_clear->setIcon(QIcon(":/images/oxygen/16x16/document-revert.png"));
+    ui.pushButton_copy->setIcon(QIcon(":/images/oxygen/16x16/edit-copy.png"));
+    ui.pushButton_close->setIcon(QIcon(":/images/oxygen/16x16/dialog-close.png"));
+
+    ui.pushButton_clear->setText(tr("Clear"));
+    ui.pushButton_copy->setText(tr("Copy"));
+    ui.pushButton_close->setText(tr("Close"));
 }
 
 void DlgAwaylog::createSignals()
 {
-    connect(ui.buttonBox, SIGNAL(clicked(QAbstractButton*)), this, SLOT(buttons(QAbstractButton*)));
+    connect(ui.pushButton_clear, SIGNAL(clicked()), this, SLOT(buttonClear()));
+    connect(ui.pushButton_copy, SIGNAL(clicked()), this, SLOT(buttonCopy()));
+    connect(ui.pushButton_close, SIGNAL(clicked()), this, SLOT(close()));
 }
 
 void DlgAwaylog::refresh()
@@ -55,18 +63,21 @@ void DlgAwaylog::refresh()
         ui.listWidget->addItem(strAwaylog);
 }
 
-void DlgAwaylog::buttons(QAbstractButton *button)
-{
-    if (ui.buttonBox->button(QDialogButtonBox::Reset) == button)
-        buttonReset();
-    else if (ui.buttonBox->button(QDialogButtonBox::Close) == button)
-        buttonClose();
-}
-
-void DlgAwaylog::buttonReset()
+void DlgAwaylog::buttonClear()
 {
     Awaylog::instance()->clear();
     ui.listWidget->clear();
+}
+
+void DlgAwaylog::buttonCopy()
+{
+    if (ui.listWidget->selectedItems().size() != 0)
+    {
+        QString strText = ui.listWidget->selectedItems().at(0)->text();
+
+        QApplication::clipboard()->setText(strText, QClipboard::Selection);
+        QApplication::clipboard()->setText(strText, QClipboard::Clipboard);
+    }
 }
 
 void DlgAwaylog::buttonClose()

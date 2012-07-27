@@ -394,6 +394,21 @@
     </message>
 </context>
 <context>
+    <name>DlgAwaylog</name>
+    <message>
+        <source>Clear</source>
+        <translation>Wyczyść</translation>
+    </message>
+    <message>
+        <source>Copy</source>
+        <translation>Skopiuj</translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation>Zamknij</translation>
+    </message>
+</context>
+<context>
     <name>DlgCaptcha</name>
     <message>
         <source>Captcha</source>

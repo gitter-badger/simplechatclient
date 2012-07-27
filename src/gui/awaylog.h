@@ -36,11 +36,11 @@ private:
     void createSignals();
 
     void refresh();
-    void buttonReset();
-    void buttonClose();
 
 private slots:
-    void buttons(QAbstractButton*);
+    void buttonClear();
+    void buttonCopy();
+    void buttonClose();
 };
 
 #endif // AWAYLOG_H
