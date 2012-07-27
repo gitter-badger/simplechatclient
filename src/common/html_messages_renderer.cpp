@@ -52,8 +52,11 @@ void fixContextMenu(QString &strData, MessageCategory eMessageCategory)
         }
         else if (((strWord.contains("http")) && (!strWord.startsWith("http"))) || ((strWord.contains("www.")) && (!strWord.startsWith("www."))))
         {
-            strWord.replace("http", " http");
-            strWord.replace("www.", " www.");
+            if (strWord.contains("http"))
+                strWord.replace("http", " http");
+            else
+                strWord.replace("www.", " www.");
+
             QStringList strWords = strWord.split(" ");
             if (strWords.size() == 2)
             {
