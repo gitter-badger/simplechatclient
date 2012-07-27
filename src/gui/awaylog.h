@@ -40,7 +40,7 @@ private:
 private slots:
     void buttonClear();
     void buttonCopy();
-    void buttonClose();
+    void itemClicked(QListWidgetItem*);
 };
 
 #endif // AWAYLOG_H

@@ -40,6 +40,8 @@ DlgAwaylog::DlgAwaylog(QWidget *parent) : QDialog(parent)
 
 void DlgAwaylog::createGui()
 {
+    ui.pushButton_copy->setEnabled(false);
+
     ui.pushButton_clear->setIcon(QIcon(":/images/oxygen/16x16/document-revert.png"));
     ui.pushButton_copy->setIcon(QIcon(":/images/oxygen/16x16/edit-copy.png"));
     ui.pushButton_close->setIcon(QIcon(":/images/oxygen/16x16/dialog-close.png"));
@@ -51,6 +53,7 @@ void DlgAwaylog::createGui()
 
 void DlgAwaylog::createSignals()
 {
+    connect(ui.listWidget, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(itemClicked(QListWidgetItem*)));
     connect(ui.pushButton_clear, SIGNAL(clicked()), this, SLOT(buttonClear()));
     connect(ui.pushButton_copy, SIGNAL(clicked()), this, SLOT(buttonCopy()));
     connect(ui.pushButton_close, SIGNAL(clicked()), this, SLOT(close()));
@@ -80,7 +83,8 @@ void DlgAwaylog::buttonCopy()
     }
 }
 
-void DlgAwaylog::buttonClose()
+void DlgAwaylog::itemClicked(QListWidgetItem *)
 {
-    this->close();
+    if (!ui.pushButton_copy->isEnabled())
+        ui.pushButton_copy->setEnabled(true);
 }
