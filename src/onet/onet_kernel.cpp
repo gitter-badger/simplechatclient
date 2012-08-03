@@ -803,6 +803,9 @@ void OnetKernel::raw_mode()
     }
 }
 
+// :Merovingian!26269559@2294E8.94913F.2EAEC9.11F26D PRIVMSG @#scc :hello
+// :Merovingian!26269559@2294E8.94913F.2EAEC9.11F26D PRIVMSG %#scc :hello
+// :Merovingian!26269559@2294E8.94913F.2EAEC9.11F26D PRIVMSG +#scc :hello
 // :Merovingian!26269559@2294E8.94913F.2EAEC9.11F26D PRIVMSG #scc :hello
 void OnetKernel::raw_privmsg()
 {
@@ -812,9 +815,6 @@ void OnetKernel::raw_privmsg()
     if (strNick[0] == ':') strNick.remove(0,1);
     strNick = strNick.left(strNick.indexOf('!'));
 
-    QString strChannel = strDataList[2];
-    if (strChannel[0] == ':') strChannel.remove(0,1);
-
     QString strMessage;
     for (int i = 3; i < strDataList.size(); i++) { if (i != 3) strMessage += " "; strMessage += strDataList[i]; }
     if (strMessage[0] == ':') strMessage.remove(0,1);
@@ -823,9 +823,26 @@ void OnetKernel::raw_privmsg()
     Convert::simpleReverseConvert(strMessage);
     Replace::replaceEmots(strMessage);
 
-    Message::instance()->showMessage(strChannel, strMessage, MessageDefault, strNick);
+    QString strNickOrChannel = strDataList[2];
+
+    // channel
+    if (strNickOrChannel.contains('#'))
+    {
+        QString strFullChannel = strNickOrChannel;
+        QString strGroup = strFullChannel.left(strFullChannel.indexOf('#'));
+        QString strChannel = strFullChannel.right(strFullChannel.length()-strFullChannel.indexOf('#'));
+        Q_UNUSED (strGroup);
+
+        Message::instance()->showMessage(strChannel, strMessage, MessageDefault, strNick);
+    }
+    else // nick
+    {
+        QString strDisplay = QString("-%1- %2").arg(strNick, strMessage);
+        Message::instance()->showMessageActive(strDisplay, MessageNotice);
+    }
 }
 
+// :Llanero!43347263@admin.onet NOTICE #channel :test
 // :cf1f2.onet NOTICE scc_test :Your message has been filtered and opers notified: spam #2480
 // :Llanero!43347263@admin.onet NOTICE $* :458852 * * :%Fb%%C008100%Weź udział w Konkursie Mikołajkowym - skompletuj zaprzęg Świetego Mikołaja! Więcej info w Wieściach z Czata ! http://czat.onet.pl/1632594,wiesci.html
 void OnetKernel::raw_notice()
@@ -836,28 +853,42 @@ void OnetKernel::raw_notice()
     if (strWho[0] == ':') strWho.remove(0,1);
     strWho = strWho.left(strWho.indexOf('!'));
 
-    QString strNick = strDataList[2];
+    QString strNickOrChannel = strDataList[2];
     QString strMessage;
 
-    // special notice
-    if ((!strDataList.value(4).isEmpty()) && (strDataList[4] == "*") && (!strDataList.value(5).isEmpty()) && (strDataList[5] == "*"))
+    // channel
+    if (strNickOrChannel.contains('#'))
     {
-        for (int i = 6; i < strDataList.size(); i++) { if (i != 6) strMessage += " "; strMessage += strDataList[i]; }
-        if (strMessage[0] == ':') strMessage.remove(0,1);
-    }
-    // standard notice
-    else
-    {
+        QString strFullChannel = strNickOrChannel;
+        QString strGroup = strFullChannel.left(strFullChannel.indexOf('#'));
+        QString strChannel = strFullChannel.right(strFullChannel.length()-strFullChannel.indexOf('#'));
+        Q_UNUSED (strGroup);
+
         for (int i = 3; i < strDataList.size(); i++) { if (i != 3) strMessage += " "; strMessage += strDataList[i]; }
         if (strMessage[0] == ':') strMessage.remove(0,1);
-    }
 
-    // display
-    QString strDisplay = QString("-%1- %2").arg(strWho, strMessage);
-    if (strNick[0] == '#')
-        Message::instance()->showMessage(strNick, strDisplay, MessageNotice);
-    else
+        QString strDisplay = QString("-%1- %2").arg(strWho, strMessage);
+        Message::instance()->showMessage(strChannel, strDisplay, MessageNotice);
+    }
+    else // nick
+    {
+        // special notice
+        if (strNickOrChannel[0] == '$')
+        {
+            for (int i = 6; i < strDataList.size(); i++) { if (i != 6) strMessage += " "; strMessage += strDataList[i]; }
+            if (strMessage[0] == ':') strMessage.remove(0,1);
+        }
+        // standard notice
+        else
+        {
+            for (int i = 3; i < strDataList.size(); i++) { if (i != 3) strMessage += " "; strMessage += strDataList[i]; }
+            if (strMessage[0] == ':') strMessage.remove(0,1);
+        }
+
+        // display
+        QString strDisplay = QString("-%1- %2").arg(strWho, strMessage);
         Message::instance()->showMessageActive(strDisplay, MessageNotice);
+    }
 }
 
 // :osa1987!47751777@F4C727.DA810F.7E1789.E71ED5 INVITE scc_test :^cf1f41437962
