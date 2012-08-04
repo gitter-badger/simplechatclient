@@ -825,17 +825,27 @@ void OnetKernel::raw_privmsg()
 
     QString strNickOrChannel = strDataList[2];
 
-    // channel
-    if (strNickOrChannel.contains('#'))
+    // channel or priv
+    if (strNickOrChannel.contains(QRegExp("(#|^)")))
     {
-        QString strFullChannel = strNickOrChannel;
-        QString strGroup = strFullChannel.left(strFullChannel.indexOf('#'));
-        QString strChannel = strFullChannel.right(strFullChannel.length()-strFullChannel.indexOf('#'));
-        Q_UNUSED (strGroup);
+        QString strChannel;
+
+        //channel
+        if (strNickOrChannel.contains('#'))
+        {
+            QString strFullChannel = strNickOrChannel;
+            QString strGroup = strFullChannel.left(strFullChannel.indexOf('#'));
+            Q_UNUSED (strGroup);
+            strChannel = strFullChannel.right(strFullChannel.length()-strFullChannel.indexOf('#'));
+        }
+        // priv
+        else
+            strChannel = strNickOrChannel;
 
         Message::instance()->showMessage(strChannel, strMessage, MessageDefault, strNick);
     }
-    else // nick
+    // nick
+    else
     {
         QString strDisplay = QString("-%1- %2").arg(strNick, strMessage);
         Message::instance()->showMessageActive(strDisplay, MessageNotice);
@@ -856,13 +866,22 @@ void OnetKernel::raw_notice()
     QString strNickOrChannel = strDataList[2];
     QString strMessage;
 
-    // channel
-    if (strNickOrChannel.contains('#'))
+    // channel or priv
+    if (strNickOrChannel.contains(QRegExp("(#|^)")))
     {
-        QString strFullChannel = strNickOrChannel;
-        QString strGroup = strFullChannel.left(strFullChannel.indexOf('#'));
-        QString strChannel = strFullChannel.right(strFullChannel.length()-strFullChannel.indexOf('#'));
-        Q_UNUSED (strGroup);
+        QString strChannel;
+
+        // channel
+        if (strNickOrChannel.contains('#'))
+        {
+            QString strFullChannel = strNickOrChannel;
+            QString strGroup = strFullChannel.left(strFullChannel.indexOf('#'));
+            Q_UNUSED (strGroup);
+            strChannel = strFullChannel.right(strFullChannel.length()-strFullChannel.indexOf('#'));
+        }
+        // priv
+        else
+            strChannel = strNickOrChannel;
 
         for (int i = 3; i < strDataList.size(); i++) { if (i != 3) strMessage += " "; strMessage += strDataList[i]; }
         if (strMessage[0] == ':') strMessage.remove(0,1);
@@ -870,7 +889,8 @@ void OnetKernel::raw_notice()
         QString strDisplay = QString("-%1- %2").arg(strWho, strMessage);
         Message::instance()->showMessage(strChannel, strDisplay, MessageNotice);
     }
-    else // nick
+    // nick
+    else
     {
         // special notice
         if (strNickOrChannel[0] == '$')
