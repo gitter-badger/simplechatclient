@@ -147,6 +147,13 @@ void convertEmoticons(QString &strData, bool bInsertWidthHeight)
     }
 }
 
+void Convert::fixMeAction(QString &strData)
+{
+    QString strRegExpMe = QString("%1ACTION %2%3").arg(QString(QByteArray("\x01")), "(.*)", QString(QByteArray("\x01")));
+    if (strData.contains(QRegExp(strRegExpMe)))
+        strData.replace(QRegExp(strRegExpMe), "\\1");
+}
+
 void Convert::fixHtmlChars(QString &strData)
 {
     strData.replace("&", "&amp;");

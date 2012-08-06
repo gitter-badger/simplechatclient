@@ -29,6 +29,7 @@
 
 namespace Convert
 {
+    void fixMeAction(QString &strData);
     void fixHtmlChars(QString &strData);
     void createText(QString &strData);
     void simpleReverseConvert(QString &strData);

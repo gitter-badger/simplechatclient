@@ -85,9 +85,7 @@ void Message::saveMessage(const QString &strChannel, const QString &strData, int
         strSaveData = QString("%1 %2").arg(QDateTime::fromTime_t(iTime).toString("[hh:mm:ss]"), strData);
 
     // fix /me
-    QString strRegExpMe = QString("%1ACTION %2%3").arg(QString(QByteArray("\x01")), "(.*)", QString(QByteArray("\x01")));
-    if (strSaveData.contains(QRegExp(strRegExpMe)))
-        strSaveData.replace(QRegExp(strRegExpMe), "\\1");
+    Convert::fixMeAction(strSaveData);
 
     Log::save(strChannel, strSaveData);
 }

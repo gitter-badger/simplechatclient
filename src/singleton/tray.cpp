@@ -53,6 +53,7 @@ void Tray::showMessage(const QString &strTitle, const QString &strMessage)
     Convert::simpleConvert(strTrayTitle);
 
     QString strTrayMessage = strMessage;
+    Convert::fixMeAction(strTrayMessage);
     Convert::simpleConvert(strTrayMessage);
 
     strLastMessageTitle = strTrayTitle;
