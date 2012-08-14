@@ -408,7 +408,7 @@ void Network::timeoutLag()
 
     // update lag
     if (iCurrentTime-iActive > 30+10)
-        Lag::instance()->update(QString("%1s").arg(iCurrentTime-iActive));
+        Lag::instance()->update(iCurrentTime-iActive);
 }
 
 void Network::timeoutPong()

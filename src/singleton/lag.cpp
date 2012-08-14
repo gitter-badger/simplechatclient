@@ -44,14 +44,31 @@ void Lag::init()
 {
 }
 
-void Lag::update(const QString &lag)
+void Lag::update(qint64 iLag)
 {
+    QString lag = createLagText(iLag);
     lagAction->setText("Lag: "+lag);
 }
 
 void Lag::reset()
 {
-    update("?");
+    update(0);
+}
+
+QString Lag::createLagText(qint64 iLag)
+{
+    QString lag = QString::number(iLag);
+
+    if (lag.size() > 3)
+        lag.insert(lag.size()-3,".");
+    else if (lag.size() == 3)
+        lag = "0."+lag;
+    else if (lag.size() == 2)
+        lag = "0.0"+lag;
+    else if (lag.size() == 1)
+        lag = "0.00"+lag;
+
+    return lag+"s";
 }
 
 void Lag::calculate(const QString &strServerMSecs)
@@ -60,19 +77,9 @@ void Lag::calculate(const QString &strServerMSecs)
     qint64 iCurrentMSecs = QDateTime::currentMSecsSinceEpoch();
 
     qint64 iLag = iCurrentMSecs - iServerMSecs;
-    QString strLag = QString::number(iLag);
 
     if ((iLag < 0) || (iLag > 301000))
         return;
-
-    if (strLag.size() > 3)
-        strLag.insert(strLag.size()-3,".");
-    else if (strLag.size() == 3)
-        strLag = "0."+strLag;
-    else if (strLag.size() == 2)
-        strLag = "0.0"+strLag;
-    else if (strLag.size() == 1)
-        strLag = "0.00"+strLag;
-
-    update(strLag+"s");
+    else
+        update(iLag);
 }
