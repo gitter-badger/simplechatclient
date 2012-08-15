@@ -615,17 +615,29 @@ void MainWindow::trayIconActivated(QSystemTrayIcon::ActivationReason reason)
 
 void MainWindow::inputLineKeyEvent(QKeyEvent *k)
 {
+    // ctrl+tab pressed in inputline
     if ((k->key() == Qt::Key_Tab) && (k->modifiers() == Qt::ControlModifier))
     {
-        // ctrl+tab pressed in inputline
         int index = pTabM->currentIndex();
         pTabM->setCurrentIndex(index+1);
     }
+    // ctrl+shift+tab pressed in inputline
     else if ((k->key() == Qt::Key_Backtab) && (k->modifiers() & (Qt::ControlModifier | Qt::ShiftModifier)))
     {
-        // ctrl+shift+tab pressed in inputline
         int index = pTabM->currentIndex();
         pTabM->setCurrentIndex(index-1);
+    }
+    // alt + F
+    else if ((k->key() == Qt::Key_Alt) && (k->modifiers() == Qt::Key_F))
+    {
+    }
+    // alt + A
+    else if ((k->key() == Qt::Key_Alt) && (k->modifiers() == Qt::Key_A))
+    {
+    }
+    // alt + C
+    else if ((k->key() == Qt::Key_Alt) && (k->modifiers() == Qt::Key_C))
+    {
     }
 }
 
