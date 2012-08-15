@@ -58,6 +58,7 @@ public:
     QAction *getNotificationAction();
     void startAnimatedTrayIcon();
     void stopAnimatedTrayIcon();
+    void inputLineKeyEvent(QKeyEvent *k);
 
 private:
     QToolBar *toolBar;
@@ -119,8 +120,6 @@ private slots:
     void openAbout();
     void updateTrayIcon();
     void trayIconActivated(QSystemTrayIcon::ActivationReason activationReason);
-    void ctrlTabPressed();
-    void ctrlShiftTabPressed();
 
     void openChannelList();
     void openChannelHomes();

@@ -118,12 +118,6 @@ private slots:
 
     void inputlineReturnPressed();
     void moderButtonClicked();
-    void slotCtrlTabPressed();
-    void slotCtrlShiftTabPressed();
-
-signals:
-    void ctrlTabPressed();
-    void ctrlShiftTabPressed();
 };
 
 #endif // TOOL_WIDGET_H

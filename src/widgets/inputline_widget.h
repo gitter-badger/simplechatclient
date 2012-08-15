@@ -44,8 +44,6 @@ protected:
 
 signals:
     void returnPressed();
-    void ctrlTabPressed();
-    void ctrlShiftTabPressed();
 };
 
 #endif // INPUTLINE_WIDGET_H

@@ -327,10 +327,6 @@ void MainWindow::createSignals()
     connect(pTabM, SIGNAL(currentChanged(int)), this, SLOT(currentTabChanged(int)));
     connect(pTabM, SIGNAL(tabMoved(int,int)), this, SLOT(tabMoved(int,int)));
 
-    // signals pToolWidget
-    connect(pToolWidget, SIGNAL(ctrlTabPressed()), this, SLOT(ctrlTabPressed()));
-    connect(pToolWidget, SIGNAL(ctrlShiftTabPressed()), this, SLOT(ctrlShiftTabPressed()));
-
     // signals from network
     connect(Core::instance()->pNetwork, SIGNAL(setConnected()), this, SLOT(setConnected()));
     connect(Core::instance()->pNetwork, SIGNAL(setDisconnected()), this, SLOT(setDisconnected()));
@@ -617,18 +613,20 @@ void MainWindow::trayIconActivated(QSystemTrayIcon::ActivationReason reason)
     }
 }
 
-// ctrl+tab pressed in inputline
-void MainWindow::ctrlTabPressed()
+void MainWindow::inputLineKeyEvent(QKeyEvent *k)
 {
-    int index = pTabM->currentIndex();
-    pTabM->setCurrentIndex(index+1);
-}
-
-// ctrl+shift+tab pressed in inputline
-void MainWindow::ctrlShiftTabPressed()
-{
-    int index = pTabM->currentIndex();
-    pTabM->setCurrentIndex(index-1);
+    if ((k->key() == Qt::Key_Tab) && (k->modifiers() == Qt::ControlModifier))
+    {
+        // ctrl+tab pressed in inputline
+        int index = pTabM->currentIndex();
+        pTabM->setCurrentIndex(index+1);
+    }
+    else if ((k->key() == Qt::Key_Backtab) && (k->modifiers() & (Qt::ControlModifier | Qt::ShiftModifier)))
+    {
+        // ctrl+shift+tab pressed in inputline
+        int index = pTabM->currentIndex();
+        pTabM->setCurrentIndex(index-1);
+    }
 }
 
 int MainWindow::getCurrentTabIndex()

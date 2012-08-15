@@ -280,8 +280,6 @@ ToolWidget::ToolWidget(QWidget *parent) : QWidget(parent), strCurrentColor("#000
     connect(sendButton, SIGNAL(clicked()), this, SLOT(inputlineReturnPressed()));
     connect(pInputLine, SIGNAL(returnPressed()), this, SLOT(inputlineReturnPressed()));
     connect(moderSendButton, SIGNAL(clicked()), this, SLOT(moderButtonClicked()));
-    connect(pInputLine, SIGNAL(ctrlTabPressed()), this, SLOT(slotCtrlTabPressed()));
-    connect(pInputLine, SIGNAL(ctrlShiftTabPressed()), this, SLOT(slotCtrlShiftTabPressed()));
 }
 
 ToolWidget::~ToolWidget()
@@ -760,16 +758,6 @@ void ToolWidget::moderButtonClicked()
     QString strText = pInputLine->text().trimmed();
     pasteMultiLine(strText, true);
     pInputLine->clear();
-}
-
-void ToolWidget::slotCtrlTabPressed()
-{
-    emit ctrlTabPressed();
-}
-
-void ToolWidget::slotCtrlShiftTabPressed()
-{
-    emit ctrlShiftTabPressed();
 }
 
 void ToolWidget::pasteMultiLine(const QString &strText, bool bModeration)
