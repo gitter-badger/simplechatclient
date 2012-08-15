@@ -811,7 +811,29 @@ void ToolWidget::sendMessage(QString strText, bool bModeration)
             return;
     }
 
-    if (strCommand == "me")
+    if (strCommand == "raw")
+    {
+        Core::instance()->pNetwork->send(strText);
+        return;
+    }
+    else if (strCommand == "all")
+    {
+        Convert::createText(strText);
+        Convert::simpleReverseConvert(strText);
+        Replace::replaceEmots(strText);
+
+        QList<QString> lOpenChannels = Core::instance()->lOpenChannels;
+        lOpenChannels.removeOne(DEBUG);
+        lOpenChannels.removeOne(STATUS);
+        foreach (QString strChannel, lOpenChannels)
+        {
+            Core::instance()->pNetwork->send(QString("PRIVMSG %1 :%2").arg(strChannel, strText));
+            Message::instance()->showMessage(strChannel, strText, MessageDefault, strMe);
+        }
+
+        return;
+    }
+    else if (strCommand == "me")
     {
         if ((strChannel != DEBUG) && (strChannel != STATUS))
         {

@@ -171,6 +171,14 @@
         <translation>* Dostępne komendy:</translation>
     </message>
     <message>
+        <source>/raw [text]</source>
+        <translation>/raw [tekst]</translation>
+    </message>
+    <message>
+        <source>/all [text]</source>
+        <translation>/all [tekst]</translation>
+    </message>
+    <message>
         <source>/cycle [text] or /hop [text]</source>
         <translation>/cycle [tekst] lub /hop [tekst]</translation>
     </message>
@@ -305,10 +313,6 @@
     <message>
         <source>Winamp is not running</source>
         <translation>Winamp nie jest uruchomiony</translation>
-    </message>
-    <message>
-        <source>This command is only for Windows</source>
-        <translation>Ta komenda jest tylko pod Windows</translation>
     </message>
 </context>
 <context>

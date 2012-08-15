@@ -43,7 +43,11 @@ QString Commands::execute()
 
     QString strCmd = strDataList[0].toLower();
 
-    if ((strCmd == "join") || (strCmd == "j"))
+    if (strCmd == "raw")
+        return cmdRaw();
+    else if (strCmd == "all")
+        return cmdAll();
+    else if ((strCmd == "join") || (strCmd == "j"))
         return cmdJoin();
     else if (strCmd == "priv")
         return cmdPriv();
@@ -114,6 +118,26 @@ bool Commands::isErotic(const QString &strChannel)
         }
     }
     return false;
+}
+
+QString Commands::cmdRaw()
+{
+    if (strDataList.value(1).isEmpty()) return QString::null;
+
+    QString strCommand;
+    for (int i = 1; i < strDataList.size(); i++) { if (i != 1) strCommand += " "; strCommand += strDataList[i]; }
+
+    return strCommand;
+}
+
+QString Commands::cmdAll()
+{
+    if (strDataList.value(1).isEmpty()) return QString::null;
+
+    QString strMessage;
+    for (int i = 1; i < strDataList.size(); i++) { if (i != 1) strMessage += " "; strMessage += strDataList[i]; }
+
+    return strMessage;
 }
 
 QString Commands::cmdJoin()
@@ -313,7 +337,7 @@ QString Commands::cmdMp3()
     else
         strMessage = tr("Winamp is not running");
 #else
-    strMessage = tr("This command is only for Windows");
+    strMessage = QString::null;
 #endif
 
     return strMessage;
@@ -324,6 +348,8 @@ QString Commands::cmdHelp()
     QString strHelp;
 
     strHelp = (tr("* Available commands:")+";");
+    strHelp.append(tr("/raw [text]")+";");
+    strHelp.append(tr("/all [text]")+";");
     strHelp.append(tr("/cycle [text] or /hop [text]")+";");
     strHelp.append(tr("/me [text]")+";");
     strHelp.append(tr("/topic [text]")+";");

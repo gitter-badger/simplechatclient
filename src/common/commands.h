@@ -42,6 +42,8 @@ private:
 
     bool isErotic(const QString &strChannel);
 
+    QString cmdRaw();
+    QString cmdAll();
     QString cmdJoin();
     QString cmdPriv();
     QString cmdIgnore();
