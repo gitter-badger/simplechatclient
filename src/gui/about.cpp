@@ -45,7 +45,6 @@ void DlgAbout::createGui()
 
 void DlgAbout::setDefaultValues()
 {
-    QString strCurrentVersion = Core::instance()->settings.value("version");
     QString strVersionStatus = Core::instance()->settings.value("version_status");
 
     QString strVersion;
@@ -56,7 +55,10 @@ void DlgAbout::setDefaultValues()
     else if (strVersionStatus == "outofdate")
          strVersion = QString("<span style=\"color:#ff0000\">%1</span>").arg(tr("A new version is available"));
     else
+    {
+        QString strCurrentVersion = Core::instance()->settings.value("version");
         strVersion = QString("%1 %2").arg(tr("Version"), strCurrentVersion);
+    }
 
     QString strTitle = QString("<p style=\"font-size:16px;\"><b>Simple Chat Client</b></p>");
     strTitle += "<p>"+strVersion+"</p>";

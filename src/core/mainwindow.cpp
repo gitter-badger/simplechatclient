@@ -627,17 +627,21 @@ void MainWindow::inputLineKeyEvent(QKeyEvent *k)
         int index = pTabM->currentIndex();
         pTabM->setCurrentIndex(index-1);
     }
-    // alt + F
-    else if ((k->key() == Qt::Key_Alt) && (k->modifiers() == Qt::Key_F))
+    // alt
+    else if (k->key() == Qt::Key_Alt)
     {
-    }
-    // alt + A
-    else if ((k->key() == Qt::Key_Alt) && (k->modifiers() == Qt::Key_A))
-    {
-    }
-    // alt + C
-    else if ((k->key() == Qt::Key_Alt) && (k->modifiers() == Qt::Key_C))
-    {
+        // alt + F
+        if (k->modifiers() == Qt::Key_F)
+        {
+        }
+        // alt + A
+        else if (k->modifiers() == Qt::Key_A)
+        {
+        }
+        // alt + C
+        else if (k->modifiers() == Qt::Key_C)
+        {
+        }
     }
 }
 
