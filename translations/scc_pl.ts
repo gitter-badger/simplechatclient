@@ -1946,6 +1946,10 @@
         <translation>Ocena</translation>
     </message>
     <message>
+        <source>Is on channels</source>
+        <translation>Jest w pokojach</translation>
+    </message>
+    <message>
         <source>Disconnected from server webcams</source>
         <translation>Rozłączono z serwerem kamerek</translation>
     </message>

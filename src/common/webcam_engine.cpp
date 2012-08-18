@@ -124,6 +124,10 @@ void WebcamEngine::raw_202b(const QByteArray &data)
 }
 
 /*
+250 4892 OK
+A_R_B:1:5/0/#DEUTSCHLAND/0,3/0/#EROTICA/0,3/0/#BDSM_BDSM/0:0::0
+aaa__sia:1:3/0/#n_o_g_i/0:15:0123:0
+
 ja31:-
 osa1987:1:-2/-2/osa1987/1:0::0
 ToWiemTylkoJa:1:2/0/#Relax/0,-2/-2/ToWiemTylkoJa/1:2::13
@@ -134,6 +138,11 @@ void WebcamEngine::raw_250b(const QByteArray &data)
 {
     // init data
     QString strData(data);
+
+    // is empty
+    if (strData.isEmpty())
+        return;
+
     QStringList strDataList = strData.split("\n");
 
     /* clear users */
@@ -145,43 +154,47 @@ void WebcamEngine::raw_250b(const QByteArray &data)
         if (strLineList.size() == 6)
         {
             QString strUser = strLineList[0];
-            QString strCamOnOff = strLineList[1]; // 1 = on; 2 = off
+            int iCamOnOff = strLineList[1].toInt(); // 1 = on; 2 = off
             QString strChannelsParams = strLineList[2];
-            QString strSpectators = strLineList[3];
+            int iSpectators = strLineList[3].toInt();
             QString strUdget = strLineList[4]; // udget (012345)
             int iRank = strLineList[5].toInt(); // -500 to 500
 
+            QStringList lUserChannels;
             if (!strChannelsParams.isEmpty())
             {
-                QString strAllChannels;
+                // 2/0/#Quiz/0,2/0/#Relax/0,2/0/#Scrabble/0,4/0/#scc/0
                 QStringList lChannelsParams = strChannelsParams.split(",");
                 foreach (QString strChannelParams, lChannelsParams)
                 {
                     QStringList lChannelParams = strChannelParams.split("/");
                     if (lChannelParams.size() == 4)
                     {
-                        QString strChannelCategory = lChannelParams[0];
+                        int iChannelCategory = lChannelParams[0].toInt();
                         QString strUnknown = lChannelParams[1]; // always 0 (?)
                         QString strChannelName = lChannelParams[2];
-                        QString strCamPubPriv = lChannelParams[3]; // 0 = public; 1 = private
+                        int iCamPubPriv = lChannelParams[3].toInt(); // 0 = public; 1 = private
 
-                        if ((strChannelName[0] == '#') || (strChannelName[0] == '^'))
-                            strAllChannels += strChannelName+" ";
+                        Q_UNUSED(iChannelCategory);
+                        Q_UNUSED(strUnknown);
+                        Q_UNUSED(iCamPubPriv);
+
+                        lUserChannels.append(strChannelName);
                     }
                 }
-
-                // insert into map
-                //mNickChannels[strUser] = strAllChannels;
             }
 
-            // add user
-            emit addUser(strUser, iRank, strSpectators);
+            emit updateUser(strUser, iSpectators, iRank, iCamOnOff, strUdget, lUserChannels);
         }
     }
+
     emit updateText(tr("Select user"));
 }
 
 /*
+251 57 UPDATE
+kriss89:0:5/0/#Pozna./0,2/0/#sex/0,2/0/#Towarzyski/0:0::0
+
 ja31:-
 osa1987:1:-2/-2/osa1987/1:0::0
 ToWiemTylkoJa:1:2/0/#Relax/0,-2/-2/ToWiemTylkoJa/1:2::13
@@ -190,67 +203,48 @@ scc_test:1:2/0/#Quiz/0,2/0/#Relax/0,2/0/#Scrabble/0,4/0/#scc/0:0::0
 void WebcamEngine::raw_251b(const QByteArray &data)
 {
     QString strLine(data);
-    if (!strLine.isEmpty())
+
+    // is empty
+    if (strLine.isEmpty())
+        return;
+
+    QStringList strLineList = strLine.split(":");
+
+    // invalid parameters
+    if (strLineList.size() != 6)
+        return;
+
+    QString strUser = strLineList[0];
+    int iCamOnOff = strLineList[1].toInt(); // 1 = on; 2 = off
+    QString strChannelsParams = strLineList[2];
+    int iSpectators = strLineList[3].toInt();
+    QString strUdget = strLineList[4]; // udget (012345)
+    int iRank = strLineList[5].toInt(); // -500 to 500
+
+    QStringList lUserChannels;
+    if (!strChannelsParams.isEmpty())
     {
-        QStringList strLineList = strLine.split(":");
-        if (strLineList.size() == 6)
+        QStringList lChannelsParams = strChannelsParams.split(",");
+        foreach (QString strChannelParams, lChannelsParams)
         {
-            QString strUser = strLineList[0];
-            int iCamOnOff = strLineList[1].toInt(); // 1 = on; 2 = off
-            QString strChannelsParams = strLineList[2];
-            QString strSpectators = strLineList[3];
-            QString strUdget = strLineList[4]; // udget (012345)
-            int iRank = strLineList[5].toInt(); // -500 to 500
-
-            if (!strChannelsParams.isEmpty())
+            QStringList lChannelParams = strChannelParams.split("/");
+            if (lChannelParams.size() == 4)
             {
-                QString strAllChannels;
+                int iChannelCategory = lChannelParams[0].toInt();
+                QString strUnknown = lChannelParams[1]; // always 0 (?)
+                QString strChannelName = lChannelParams[2];
+                int iCamPubPriv = lChannelParams[3].toInt(); // 0 = public; 1 = private
 
-                QStringList lChannelsParams = strChannelsParams.split(",");
-                foreach (QString strChannelParams, lChannelsParams)
-                {
-                    QStringList lChannelParams = strChannelParams.split("/");
-                    if (lChannelParams.size() == 4)
-                    {
-                        QString strChannelCategory = lChannelParams[0];
-                        QString strUnknown = lChannelParams[1]; // always 0 (?)
-                        QString strChannelName = lChannelParams[2];
-                        QString strCamPubPriv = lChannelParams[3]; // 0 = public; 1 = private
+                Q_UNUSED(iChannelCategory);
+                Q_UNUSED(strUnknown);
+                Q_UNUSED(iCamPubPriv);
 
-                        if ((strChannelName[0] == '#') || (strChannelName[0] == '^'))
-                            strAllChannels += strChannelName+" ";
-                    }
-                }
-
-                // update map
-                //mNickChannels[strUser] = strAllChannels;
-            }
-
-            // if current nick
-            if (strUser == strNick)
-            {
-                // update rank
-                emit updateRank(iRank);
-
-                // update channels
-                //ui.textEdit_channels->setText(QString("<b>%1</b><br/><font color=\"#0000ff\">%2</font>").arg(tr("Is on channels:"), mNickChannels[strUser]));
-            }
-
-            // cam off
-            if (iCamOnOff == 0)
-            {
-                //mNickChannels.remove(strUser);
-                // remove user
-                //emit removeUser(strUser);
-            }
-            // cam on
-            else
-            {
-                // add user or update user
-                //emit updateUser(strUser, iRank, strSpectators);
+                lUserChannels.append(strChannelName);
             }
         }
     }
+
+    emit updateUser(strUser, iSpectators, iRank, iCamOnOff, strUdget, lUserChannels);
 }
 
 /*
@@ -270,35 +264,33 @@ void WebcamEngine::raw_252b(const QByteArray &data)
 }
 
 /*
+254 519 USER_COUNT_UPDATE
 scc_test 2 0
+Aniolek___ 12 0
+bluemn 1 0
+Bluesky 2 0
 */
 /* multi-line */
 void WebcamEngine::raw_254b(const QByteArray &data)
 {
     QString strData(data);
-    QStringList strDataList = strData.split("\n");
 
-    /* clear users */
-    emit clearUsers();
+    // is empty
+    if (strData.isEmpty())
+        return;
+
+    QStringList strDataList = strData.split("\n");
 
     foreach (QString strLine, strDataList)
     {
-        if (!strLine.isEmpty())
+        QStringList strLineList = strLine.split(" ");
+        if (strLineList.size() == 3) // is correct ?
         {
-            QStringList strLineList = strLine.split(" ");
-            if (strLineList.size() == 3) // is correct ?
-            {
-                QString strUser = strLineList[0];
-                QString strSpectators = strLineList[1];
-                int iRank = strLineList[2].toInt();
+            QString strUser = strLineList[0];
+            int iSpectators = strLineList[1].toInt();
+            int iRank = strLineList[2].toInt();
 
-                // add to table
-                emit addUser(strUser, iRank, strSpectators);
-
-                // if current nick
-                if (strUser == strNick)
-                    emit updateRank(iRank);
-            }
+            emit updateUserCount(strUser, iRank, iSpectators);
         }
     }
 }

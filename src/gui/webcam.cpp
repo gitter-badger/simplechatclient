@@ -70,9 +70,8 @@ void DlgWebcam::createSignals()
         connect(pWebcamEngine, SIGNAL(voteOk()), pWebcamStandard, SLOT(voteOk()));
         connect(pWebcamEngine, SIGNAL(userError(const QString&)), pWebcamStandard, SLOT(userError(const QString&)));
         connect(pWebcamEngine, SIGNAL(error(const QString&)), pWebcamStandard, SLOT(error(const QString&)));
-        connect(pWebcamEngine, SIGNAL(addUser(const QString&,int,const QString&)), pWebcamStandard, SLOT(addUser(const QString&,int,const QString&)));
-        connect(pWebcamEngine, SIGNAL(updateUser(const QString&,int,const QString&)), pWebcamStandard, SLOT(updateUser(const QString&,int,const QString&)));
-        connect(pWebcamEngine, SIGNAL(removeUser(const QString&)), pWebcamStandard, SLOT(removeUser(const QString&)));
+        connect(pWebcamEngine, SIGNAL(updateUser(const QString&,int,int,int,const QString&, QStringList)), pWebcamStandard, SLOT(updateUser(const QString&,int,int,int,const QString&, const QStringList&)));
+        connect(pWebcamEngine, SIGNAL(updateUserCount(const QString&,int,int)), pWebcamStandard, SLOT(updateUserCount(const QString&,int,int)));
         connect(pWebcamEngine, SIGNAL(clearUsers()), pWebcamStandard, SLOT(clearUsers()));
 
         connect(pWebcamStandard, SIGNAL(closeCam()), this, SLOT(closeCam()));

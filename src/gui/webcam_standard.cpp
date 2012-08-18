@@ -144,23 +144,51 @@ void DlgWebcamStandard::error(const QString &s)
     ui.textEdit_channels->clear();
 }
 
-void DlgWebcamStandard::addUser(const QString &strNick, int iRank, const QString &strSpectators)
+void DlgWebcamStandard::updateUser(const QString &strNick, int iSpectators, int iRank, int iCamOnOff, const QString &strUdget, const QStringList &lUserChannels)
 {
-    SortedListWidgetItem *item = new SortedListWidgetItem();
-    item->setText(strNick);
-    item->setData(Qt::UserRole, iRank);
-    item->setData(Qt::UserRole+1, strSpectators);
-    item->setData(Qt::UserRole+10, false); // is nicklist
-    ui.listWidget_nicks->addItem(item);
+    if (iCamOnOff == 1)
+    {
+        if (!existUser(strNick))
+            addUser(strNick, iSpectators, iRank, strUdget, lUserChannels);
+        else
+            updateUser(strNick, iSpectators, iRank, strUdget, lUserChannels);
+    }
+    else
+        removeUser(strNick);
 }
 
-void DlgWebcamStandard::updateUser(const QString &strNick, int iRank, const QString &strSpectators)
+void DlgWebcamStandard::updateUserCount(const QString &strNick, int iSpectators, int iRank)
 {
     QList<QListWidgetItem*> items = ui.listWidget_nicks->findItems(strNick, Qt::MatchExactly);
     foreach (QListWidgetItem *item, items)
     {
-        item->setData(Qt::UserRole, iRank);
-        item->setData(Qt::UserRole+1, strSpectators);
+        item->setData(Qt::UserRole+1, iSpectators);
+        item->setData(Qt::UserRole+2, iRank);
+    }
+}
+
+void DlgWebcamStandard::addUser(const QString &strNick, int iSpectators, int iRank, const QString &strUdget, const QStringList &lUserChannels)
+{
+    SortedListWidgetItem *item = new SortedListWidgetItem();
+    item->setText(strNick);
+    item->setData(Qt::UserRole+1, iSpectators);
+    item->setData(Qt::UserRole+2, iRank);
+    item->setData(Qt::UserRole+3, strUdget);
+    item->setData(Qt::UserRole+4, lUserChannels);
+
+    item->setData(Qt::UserRole+10, false); // is nicklist
+    ui.listWidget_nicks->addItem(item);
+}
+
+void DlgWebcamStandard::updateUser(const QString &strNick, int iSpectators, int iRank, const QString &strUdget, const QStringList &lUserChannels)
+{
+    QList<QListWidgetItem*> items = ui.listWidget_nicks->findItems(strNick, Qt::MatchExactly);
+    foreach (QListWidgetItem *item, items)
+    {
+        item->setData(Qt::UserRole+1, iSpectators);
+        item->setData(Qt::UserRole+2, iRank);
+        item->setData(Qt::UserRole+3, strUdget);
+        item->setData(Qt::UserRole+4, lUserChannels);
     }
 }
 
@@ -176,7 +204,7 @@ void DlgWebcamStandard::clearUsers()
     ui.listWidget_nicks->clear();
 }
 
-bool DlgWebcamStandard::existUser(QString strNick)
+bool DlgWebcamStandard::existUser(const QString &strNick)
 {
     QList<QListWidgetItem*> items = ui.listWidget_nicks->findItems(strNick, Qt::MatchCaseSensitive);
 
@@ -200,6 +228,7 @@ void DlgWebcamStandard::changeUser(QListWidgetItem *item)
 
     // read nick
     QString strNewNick = item->text();
+    QStringList lNewNickChannels = item->data(Qt::UserRole+4).toStringList();
 
     // change user
     if (strNick.isEmpty())
@@ -217,7 +246,10 @@ void DlgWebcamStandard::changeUser(QListWidgetItem *item)
     emit setUser(strNick);
 
     // update channels
-    //ui.textEdit_channels->setText(QString("<b>%1</b><br/><font color=\"#0000ff\">%2</font>").arg(tr("Is on channels:"), mNickChannels[strNick]));
+    QString strNewNickChannels;
+    foreach (QString strNewNickChannel, lNewNickChannels) strNewNickChannels += strNewNickChannel+" ";
+
+    ui.textEdit_channels->setText(QString("<b>%1:</b><br/><font color=\"#0000ff\">%2</font>").arg(tr("Is on channels"), strNewNickChannels));
 }
 
 void DlgWebcamStandard::buttonClose()

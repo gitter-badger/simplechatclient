@@ -39,8 +39,11 @@ public slots:
     void updateStatus(const QString &status);
     void voteOk();
     void error(const QString &error);
-    void addUser(const QString &strNick, int iRank, const QString &strSpectators);
-    void updateUser(const QString &strNick, int iRank, const QString &strSpectators);
+    void updateUser(const QString &strNick, int iSpectators, int iRank, int iCamOnOff, const QString &strUdget, const QStringList &lUserChannels);
+    void updateUserCount(const QString &strNick, int iSpectators, int iRank);
+
+    void addUser(const QString &strNick, int iSpectators, int iRank, const QString &strUdget, const QStringList &lUserChannels);
+    void updateUser(const QString &strNick, int iSpectators, int iRank, const QString &strUdget, const QStringList &lUserChannels);
     void removeUser(const QString &strNick);
     void clearUsers();
 
@@ -51,7 +54,7 @@ private:
 
     void createGui();
     void createSignals();
-    bool existUser(QString);
+    bool existUser(const QString &strNick);
 
 private slots:
     void changeUser(QListWidgetItem *item);
@@ -66,7 +69,7 @@ protected:
 signals:
     void closeCam();
     void networkSend(const QString&);
-    void setUser(const QString&);
+    void setUser(const QString &strNewNick);
 };
 
 #endif // WEBCAM_STANDARD_H

@@ -21,6 +21,7 @@
 #define WEBCAM_ENGINE_H
 
 #include <QObject>
+#include <QStringList>
 #include <QTextCodec>
 
 class WebcamNetwork;
@@ -104,9 +105,8 @@ signals:
     void userError(const QString &error);
     void voteOk();
     void error(const QString &error);
-    void addUser(const QString &strUser, int iRank, const QString &strSpectators);
-    void updateUser(const QString &strUser, int iRank, const QString &strSpectators);
-    void removeUser(const QString &strUser);
+    void updateUser(const QString &strUser, int iSpectators, int iRank, int iCamOnOff, const QString &strUdget, const QStringList &lUserChannels);
+    void updateUserCount(const QString &strUser, int iSpectators, int iRank);
     void clearUsers();
 };
 
