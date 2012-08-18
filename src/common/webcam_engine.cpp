@@ -290,7 +290,7 @@ void WebcamEngine::raw_254b(const QByteArray &data)
             int iSpectators = strLineList[1].toInt();
             int iRank = strLineList[2].toInt();
 
-            emit updateUserCount(strUser, iRank, iSpectators);
+            emit updateUserCount(strUser, iSpectators, iRank);
         }
     }
 }
