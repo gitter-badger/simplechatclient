@@ -32,8 +32,6 @@ void WebcamDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option
     int spectators = index.data(Qt::UserRole+1).toInt();
     int rank = index.data(Qt::UserRole+2).toInt();
 
-    nick = nick.left(19); // short nick
-
 /*
     // state
     if (option.state & QStyle::State_MouseOver)
@@ -91,5 +89,5 @@ QSize WebcamDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelI
     Q_UNUSED (option);
     Q_UNUSED (index);
 
-    return QSize(230,16);
+    return QSize(270,16);
 }
