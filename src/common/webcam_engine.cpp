@@ -160,6 +160,10 @@ void WebcamEngine::raw_250b(const QByteArray &data)
             QString strUdget = strLineList[4]; // udget (012345)
             int iRank = strLineList[5].toInt(); // -500 to 500
 
+            // NO_SUCH_USER / Spectators and Rank unknown
+            if ((strLineList[3] == "-") && (strLineList[5] == "-"))
+                iCamOnOff = 0; // off
+
             QStringList lUserChannels;
             if (!strChannelsParams.isEmpty())
             {
@@ -171,12 +175,12 @@ void WebcamEngine::raw_250b(const QByteArray &data)
                     if (lChannelParams.size() == 4)
                     {
                         int iChannelCategory = lChannelParams[0].toInt();
-                        QString strUnknown = lChannelParams[1]; // always 0 (?)
+                        int iUnknown = lChannelParams[1].toInt(); // always 0 (?)
                         QString strChannelName = lChannelParams[2];
                         int iCamPubPriv = lChannelParams[3].toInt(); // 0 = public; 1 = private
 
                         Q_UNUSED(iChannelCategory);
-                        Q_UNUSED(strUnknown);
+                        Q_UNUSED(iUnknown);
                         Q_UNUSED(iCamPubPriv);
 
                         lUserChannels.append(strChannelName);
@@ -221,6 +225,10 @@ void WebcamEngine::raw_251b(const QByteArray &data)
     QString strUdget = strLineList[4]; // udget (012345)
     int iRank = strLineList[5].toInt(); // -500 to 500
 
+    // NO_SUCH_USER / Spectators and Rank unknown
+    if ((strLineList[3] == "-") && (strLineList[5] == "-"))
+        iCamOnOff = 0; // off
+
     QStringList lUserChannels;
     if (!strChannelsParams.isEmpty())
     {
@@ -231,12 +239,12 @@ void WebcamEngine::raw_251b(const QByteArray &data)
             if (lChannelParams.size() == 4)
             {
                 int iChannelCategory = lChannelParams[0].toInt();
-                QString strUnknown = lChannelParams[1]; // always 0 (?)
+                int iUnknown = lChannelParams[1].toInt(); // always 0 (?)
                 QString strChannelName = lChannelParams[2];
                 int iCamPubPriv = lChannelParams[3].toInt(); // 0 = public; 1 = private
 
                 Q_UNUSED(iChannelCategory);
-                Q_UNUSED(strUnknown);
+                Q_UNUSED(iUnknown);
                 Q_UNUSED(iCamPubPriv);
 
                 lUserChannels.append(strChannelName);

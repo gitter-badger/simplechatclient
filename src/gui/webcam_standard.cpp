@@ -146,15 +146,16 @@ void DlgWebcamStandard::error(const QString &s)
 
 void DlgWebcamStandard::updateUser(const QString &strNick, int iSpectators, int iRank, int iCamOnOff, const QString &strUdget, const QStringList &lUserChannels)
 {
-    if (iCamOnOff == 1)
+    // cam off or private cam
+    if ((iCamOnOff == 0) || (lUserChannels.isEmpty()))
+        removeUser(strNick);
+    else
     {
         if (!existUser(strNick))
             addUser(strNick, iSpectators, iRank, strUdget, lUserChannels);
         else
             updateUser(strNick, iSpectators, iRank, strUdget, lUserChannels);
     }
-    else
-        removeUser(strNick);
 }
 
 void DlgWebcamStandard::updateUserCount(const QString &strNick, int iSpectators, int iRank)
