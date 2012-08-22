@@ -24,7 +24,7 @@
 #include "nicklist.h"
 #include "inputline_widget.h"
 
-InputLineWidget::InputLineWidget(QWidget *parent) : QLineEdit(parent), index(0), strLastWord(QString::null), iLastMessage(-1), iLastMessageLimit(20)
+InputLineWidget::InputLineWidget(QWidget *parent) : QLineEdit(parent), index(0), strLastWord(QString::null), iLastMessage(-1), iLastMessageLimit(30)
 {
 }
 
@@ -140,7 +140,7 @@ bool InputLineWidget::event(QEvent *e)
 
             if (!find.isEmpty())
             {
-                QString strSetWord = find.at(index);
+                QString strSetWord = find.value(index, QString::null);
                 setWord(strSetWord);
             }
 

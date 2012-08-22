@@ -295,7 +295,7 @@ void Core::quit()
 QString Core::getChannelNameFromIndex(int index)
 {
     if (index < lOpenChannels.size())
-        return lOpenChannels.at(index);
+        return lOpenChannels.value(index, QString::null);
     else
         return QString::null;
 }
@@ -304,7 +304,7 @@ int Core::getIndexFromChannelName(const QString &strChannel)
 {
     for (int i = 0; i < lOpenChannels.size(); i++)
     {
-        QString strOpenChannel = lOpenChannels.at(i);
+        QString strOpenChannel = lOpenChannels.value(i, QString::null);
         if (strOpenChannel == strChannel)
             return i;
     }

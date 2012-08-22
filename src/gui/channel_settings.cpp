@@ -519,7 +519,7 @@ void DlgChannelSettings::refreshChannelStats()
             for (int i = 0; i < lWords.size(); i++)
             {
                 bool ok;
-                int iWord = lWords.at(i).toInt(&ok, 16);
+                int iWord = lWords.value(i, 0).toInt(&ok, 16);
 
                 // add to list
                 lIWords.append(iWord);

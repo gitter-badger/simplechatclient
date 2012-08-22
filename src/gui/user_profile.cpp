@@ -319,9 +319,9 @@ QString DlgUserProfile::convertAge(const QString &strDate)
     if (strDate.isEmpty()) return QString::null; // empty date
     QStringList lDate = strDate.split("-");
 
-    QString strYear = lDate.at(0);
-    QString strMonth = lDate.at(1);
-    QString strDay = lDate.at(2);
+    QString strYear = lDate.value(0, 0);
+    QString strMonth = lDate.value(1, 0);
+    QString strDay = lDate.value(2, 0);
 
     QDate dDate = QDate::currentDate();
     QString strCurrentYear = QString::number(dDate.year());
@@ -372,8 +372,8 @@ QString DlgUserProfile::convertCodeToCountry(const QString &strCountryCode)
     // replace if found
     for (int i = 0; i < lCodes.size(); i++)
     {
-        if (strCountryCode == lCodes.at(i))
-            return lCountries.at(i);
+        if (strCountryCode == lCodes.value(i, QString::null))
+            return lCountries.value(i, QString::null);
     }
 
     return QString::null;

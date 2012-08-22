@@ -173,9 +173,9 @@ void DlgMyProfile::refresh()
             if (!strValue.isEmpty())
             {
                 QStringList lDate = strValue.split("-");
-                QString strYear = lDate.at(0);
-                QString strMonth = lDate.at(1);
-                QString strDay = lDate.at(2);
+                QString strYear = lDate.value(0, 0);
+                QString strMonth = lDate.value(1, 0);
+                QString strDay = lDate.value(2, 0);
 
                 strMonth = convertIntToMonth(strMonth);
 
@@ -331,8 +331,8 @@ QString DlgMyProfile::convertCodeToCountry(const QString &strCountryCode)
     // replace if found
     for (int i = 0; i < lCodes.size(); i++)
     {
-        if (strCountryCode == lCodes.at(i))
-            return lCountries.at(i);
+        if (strCountryCode == lCodes.value(i, QString::null))
+            return lCountries.value(i, QString::null);
     }
 
     return QString::null;
@@ -372,8 +372,8 @@ QString DlgMyProfile::convertCountryToCode(const QString &strCountry)
     // replace if found
     for (int i = 0; i < lCountries.size(); i++)
     {
-        if (strCountry == lCountries.at(i))
-            return lCodes.at(i);
+        if (strCountry == lCountries.value(i, QString::null))
+            return lCodes.value(i, QString::null);
     }
 
     return QString::null;
@@ -387,7 +387,7 @@ QString DlgMyProfile::convertIntToMonth(const QString &strConvertMonth)
     {
         QString strMonth = (i < 10 ? "0"+QString::number(i) : QString::number(i));
         if (strMonth == strConvertMonth)
-            return lMonths.at(i);
+            return lMonths.value(i, QString::null);
     }
 
     return QString::null;
@@ -401,7 +401,7 @@ QString DlgMyProfile::convertMonthToInt(const QString &strMonth)
     {
         QString strInt = (i < 10 ? "0"+QString::number(i) : QString::number(i));
         if (strInt == "00") strInt = ""; // fix 0 month
-        if (strMonth == lMonths.at(i))
+        if (strMonth == lMonths.value(i, QString::null))
             return strInt;
     }
 

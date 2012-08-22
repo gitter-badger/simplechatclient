@@ -100,8 +100,8 @@ void SimpleStatsWidget::paintEvent(QPaintEvent *)
         {
             QBrush brush(Qt::green);
 
-            if (lStatsF.at(i) != 100)
-                painter.fillRect(5+i*(400/30), 100-lStatsF.at(i), 10, lStatsF.at(i), brush);
+            if (lStatsF.value(i, 0) != 100)
+                painter.fillRect(5+i*(400/30), 100-lStatsF.value(i, 0), 10, lStatsF.value(i, 0), brush);
             else // draw 100%
                 painter.fillRect(5+i*(400/30), 0, 10, 100, brush);
         }

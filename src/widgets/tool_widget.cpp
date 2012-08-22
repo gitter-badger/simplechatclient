@@ -797,7 +797,7 @@ void ToolWidget::sendMessage(QString strText, bool bModeration)
 
         QStringList lText = strText.split(" ");
         if (lText.size() != 0)
-            strCommand = lText.at(0);
+            strCommand = lText.value(0, QString::null);
 
         if (!strCommand.isEmpty())
         {
