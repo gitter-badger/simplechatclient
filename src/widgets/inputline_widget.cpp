@@ -24,7 +24,7 @@
 #include "nicklist.h"
 #include "inputline_widget.h"
 
-InputLineWidget::InputLineWidget(QWidget *parent) : QLineEdit(parent), index(0), strLastWord(QString::null)
+InputLineWidget::InputLineWidget(QWidget *parent) : QLineEdit(parent), index(0), strLastWord(QString::null), iLastMessage(-1), iLastMessageLimit(20)
 {
 }
 
@@ -107,6 +107,8 @@ bool InputLineWidget::event(QEvent *e)
     // key event
     if (k->key() == Qt::Key_Tab)
     {
+        iLastMessage = -1;
+
         QList<QString> usersList = Nicklist::instance()->getUserList(Core::instance()->getCurrentChannelName());
 
         if (usersList.size() == 0)
@@ -151,27 +153,54 @@ bool InputLineWidget::event(QEvent *e)
     }
     else if ((k->key() == Qt::Key_Enter) || (k->key() == Qt::Key_Return))
     {
-        strLastMsg = this->text().simplified();
+        if (lLastMessages.size() >= iLastMessageLimit)
+            lLastMessages.removeLast();
+
+        lLastMessages.push_front(this->text().simplified());
+
+        iLastMessage = -1;
+
         emit returnPressed();
         return true;
     }
     else if (k->key() == Qt::Key_Up)
     {
+        iLastMessage++;
+        if (iLastMessage > iLastMessageLimit)
+            iLastMessage = iLastMessageLimit;
+
+        if (iLastMessage > lLastMessages.size()-1)
+            iLastMessage = lLastMessages.size()-1;
+
+        QString strLastMessage = lLastMessages.value(iLastMessage, QString::null);
+
         // text
-        this->setText(strLastMsg);
+        this->setText(strLastMessage);
 
         // cursor
-        this->setCursorPosition(strLastMsg.size());
+        this->setCursorPosition(strLastMessage.size());
 
         return true;
     }
     else if (k->key() == Qt::Key_Down)
     {
-        clear();
+        iLastMessage--;
+        if (iLastMessage < -1)
+            iLastMessage = -1;
+
+        QString strLastMessage = lLastMessages.value(iLastMessage, QString::null);
+
+        // text
+        this->setText(strLastMessage);
+
+        // cursor
+        this->setCursorPosition(strLastMessage.size());
+
         return true;
     }
     else
     {
+        iLastMessage = -1;
         index = 0;
         strLastWord = QString::null;
         return QLineEdit::event(e);

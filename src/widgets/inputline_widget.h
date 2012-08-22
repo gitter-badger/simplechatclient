@@ -34,7 +34,9 @@ private:
     int index;
     QString strLastWord;
     QList<QString> find;
-    QString strLastMsg;
+    QList<QString> lLastMessages;
+    int iLastMessage;
+    int iLastMessageLimit;
 
     QString getWord();
     void setWord(const QString &strSetWord);
