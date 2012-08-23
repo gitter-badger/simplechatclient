@@ -3061,7 +3061,7 @@
     </message>
     <message>
         <source>* %1 :Only IRC operators may create new channels</source>
-        <translation>* %1 :Tylko Administratorzy mogą tworzyć nowe pokoje</translation>
+        <translation>* %1 :Nie ma takiego pokoju</translation>
     </message>
     <message>
         <source>* %1 :You are not permitted to send private messages to this user</source>
