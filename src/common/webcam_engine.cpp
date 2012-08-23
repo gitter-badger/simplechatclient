@@ -175,7 +175,7 @@ void WebcamEngine::raw_250b(const QByteArray &data)
                     if (lChannelParams.size() == 4)
                     {
                         int iChannelCategory = lChannelParams[0].toInt();
-                        int iUnknown = lChannelParams[1].toInt(); // always 0 (?)
+                        int iUnknown = lChannelParams[1].toInt(); // always 0 or -2
                         QString strChannelName = lChannelParams[2];
                         int iCamPubPriv = lChannelParams[3].toInt(); // 0 = public; 1 = private
 
@@ -239,7 +239,7 @@ void WebcamEngine::raw_251b(const QByteArray &data)
             if (lChannelParams.size() == 4)
             {
                 int iChannelCategory = lChannelParams[0].toInt();
-                int iUnknown = lChannelParams[1].toInt(); // always 0 (?)
+                int iUnknown = lChannelParams[1].toInt(); // always 0 or -2
                 QString strChannelName = lChannelParams[2];
                 int iCamPubPriv = lChannelParams[3].toInt(); // 0 = public; 1 = private
 
@@ -253,6 +253,9 @@ void WebcamEngine::raw_251b(const QByteArray &data)
     }
 
     emit updateUser(strUser, iSpectators, iRank, iCamOnOff, strUdget, lUserChannels);
+
+    if ((strUser == strNick) && (iCamOnOff == 0))
+        emit userError(tr("No such user"));
 }
 
 /*
@@ -688,7 +691,7 @@ void WebcamEngine::raw_405(const QStringList &strDataList)
 
     QString strUser = strDataList[3];
     if (strUser == strNick)
-        emit userError(tr("The specified user has left the chat"));
+        emit userError(tr("User gone"));
 }
 
 /*

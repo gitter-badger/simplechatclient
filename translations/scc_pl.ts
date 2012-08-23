@@ -3315,8 +3315,12 @@
         <translation>Ustawienie trybu tylko do oglądania</translation>
     </message>
     <message>
-        <source>The specified user has left the chat</source>
-        <translation>Podany użytkownik opuścił czat</translation>
+        <source>No such user</source>
+        <translation>Podany użytkownik nie ma włączonej kamerki</translation>
+    </message>
+    <message>
+        <source>User gone</source>
+        <translation>Podany użytkownik nie ma włączonej kamerki</translation>
     </message>
     <message>
         <source>The specified user does not have a webcam enabled</source>
