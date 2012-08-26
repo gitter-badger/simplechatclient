@@ -112,21 +112,6 @@ xcopy %QT_DIR%\bin\QtXml4.dll         %DESTINATION%\ /C /H /R /Y /Q
 echo Copying MinGW files 
 xcopy %MINGW_DIR%\bin\libstdc++-6.dll %DESTINATION%\ /C /H /R /Y /Q
 
-echo Copying scripts
-xcopy scripts\*.js %DESTINATION%\scripts\ /C /H /R /Y /Q 
-
-echo Copying translations
-xcopy translations\*.qm %DESTINATION%\translations\ /C /H /R /Y /Q 
-
-echo Copying images
-xcopy images\user_avatar.png %DESTINATION%\images\           /C /H /R /Y /Q 
-xcopy images\wallpaper\*.jpg %DESTINATION%\images\wallpaper\ /C /H /R /Y /Q 
-
-echo Copying 3rdparty
-xcopy 3rdparty\LICENSE         %DESTINATION%\3rdparty\           /C /H /R /Y /Q 
-xcopy 3rdparty\emoticons\*.gif %DESTINATION%\3rdparty\emoticons\ /C /H /R /Y /Q /S
-xcopy 3rdparty\sounds\*.wav    %DESTINATION%\3rdparty\sounds\    /C /H /R /Y /Q 
-
 echo Copying Qt plugins
 xcopy %QT_DIR%\plugins\imageformats\qgif4.dll         %DESTINATION%\plugins\imageformats\   /C /H /R /Y /Q
 xcopy %QT_DIR%\plugins\imageformats\qjpeg4.dll        %DESTINATION%\plugins\imageformats\   /C /H /R /Y /Q
@@ -146,6 +131,21 @@ xcopy %QCA2_DIR%\lib\qca2.dll %DESTINATION%\ /C /H /R /Y /Q
 
 echo Copying crypto plugin
 xcopy %QT_DIR%\plugins\crypto\qca-ossl2.dll           %DESTINATION%\plugins\crypto\         /C /H /R /Y /Q
+
+echo Copying scripts
+xcopy scripts\*.js %DESTINATION%\scripts\ /C /H /R /Y /Q 
+
+echo Copying translations
+xcopy translations\*.qm %DESTINATION%\translations\ /C /H /R /Y /Q 
+
+echo Copying images
+xcopy images\user_avatar.png %DESTINATION%\images\           /C /H /R /Y /Q 
+xcopy images\wallpaper\*.jpg %DESTINATION%\images\wallpaper\ /C /H /R /Y /Q 
+
+echo Copying 3rdparty
+xcopy 3rdparty\LICENSE         %DESTINATION%\3rdparty\           /C /H /R /Y /Q 
+xcopy 3rdparty\emoticons\*.gif %DESTINATION%\3rdparty\emoticons\ /C /H /R /Y /Q /S
+xcopy 3rdparty\sounds\*.wav    %DESTINATION%\3rdparty\sounds\    /C /H /R /Y /Q 
 
 echo Done!
 pause

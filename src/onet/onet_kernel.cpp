@@ -1075,7 +1075,7 @@ void OnetKernel::raw_moderate()
 
     Convert::simpleConvert(strMessage);
 
-    int iTime = (int)QDateTime::currentDateTime().toTime_t();
+    qint64 iTime = QDateTime::currentMSecsSinceEpoch();
 
     OnetModerateMessage item;
     item.channel = strChannel;

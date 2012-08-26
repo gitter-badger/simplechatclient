@@ -70,13 +70,13 @@ void DlgModeration::refreshMessages()
         QString strID = i.key();
         OnetModerateMessage msg = i.value();
         QString strChannel = msg.channel;
-        int iTime = msg.datetime;
+        qint64 iTime = msg.datetime;
         QString strNick = msg.nick;
         QString strMessage = msg.message;
 
         if (strChannel == strCurrentChannel)
         {
-            QString strData = QString("[%1] <%2> %3").arg(QDateTime::fromTime_t(iTime).toString("hh:mm:ss"), strNick, strMessage);
+            QString strData = QString("[%1] <%2> %3").arg(QDateTime::fromMSecsSinceEpoch(iTime).toString("hh:mm:ss"), strNick, strMessage);
 
             QListWidgetItem *item = new QListWidgetItem();
             item->setData(Qt::UserRole, strID);
@@ -121,7 +121,7 @@ void DlgModeration::buttonAccept()
     foreach (QListWidgetItem *item, list)
     {
         QString strChannel = item->data(Qt::UserRole+1).toString();
-        int iTime = item->data(Qt::UserRole+2).toInt();
+        qint64 iTime = item->data(Qt::UserRole+2).toLongLong();
         QString strNick = item->data(Qt::UserRole+3).toString();
         QString strMessage = item->data(Qt::UserRole+4).toString();
 
