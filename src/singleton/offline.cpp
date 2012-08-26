@@ -45,7 +45,7 @@ void Offline::init()
     lOfflineMessages.clear();
 }
 
-void Offline::addMessage(int iTime, const QString &strType, const QString &strNick, const QString &strMessage)
+void Offline::addMessage(qint64 iTime, const QString &strType, const QString &strNick, const QString &strMessage)
 {
     OnetOfflineMessage add;
     add.datetime = iTime;

@@ -102,14 +102,14 @@ void DlgOfflineMessages::refreshMessages()
     QList<OnetOfflineMessage> list = Offline::instance()->getMessages();
     foreach (OnetOfflineMessage msg, list)
     {
-        int iTime = msg.datetime;
+        qint64 iTime = msg.datetime;
         QString strType = msg.type;
         QString strNick = msg.nick;
         QString strMessage = msg.message;
 
         if (strNick == strCurrentNick)
         {
-            QString strDT = QDateTime::fromTime_t(iTime).toString("[dd MMM yyyy] [hh:mm:ss]");
+            QString strDT = QDateTime::fromMSecsSinceEpoch(iTime).toString("[dd MMM yyyy] [hh:mm:ss]");
 
             Convert::simpleConvert(strMessage);
 

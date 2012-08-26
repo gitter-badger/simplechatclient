@@ -1937,7 +1937,9 @@ void OnetKernel::raw_251n()
         if (strDataList.size() < 5) return;
 
         QString strNick = strDataList[4];
-        int iTime = strDataList[5].toInt();
+        // fix onet time
+        qint64 iTime = QDateTime::fromTime_t(strDataList[5].toInt()).toMSecsSinceEpoch();
+        //qint64 iTime = strDataList[5].toLongLong();
         QString strType = strDataList[6];
 
         QString strMessage;

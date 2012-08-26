@@ -78,7 +78,7 @@ struct OnetModerateMessage
 
 struct OnetOfflineMessage
 {
-    int datetime;
+    qint64 datetime;
     QString type;
     QString nick;
     QString message;

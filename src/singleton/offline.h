@@ -34,7 +34,7 @@ public:
 
     Offline();
     void init();
-    void addMessage(int iTime, const QString &strType, const QString &strNick, const QString &strMessage);
+    void addMessage(qint64 iTime, const QString &strType, const QString &strNick, const QString &strMessage);
     void removeMessage(const QString &strNick);
     void clearMessages();
     QList<OnetOfflineMessage> getMessages();
