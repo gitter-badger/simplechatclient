@@ -19,7 +19,6 @@
  */
 
 #include <QByteArray>
-#include <QDateTime>
 #include <QDebug>
 #include <QFileInfo>
 #include <QHttpMultiPart>

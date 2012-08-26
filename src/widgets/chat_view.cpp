@@ -99,7 +99,7 @@ void ChatView::clearMessages()
     this->page()->mainFrame()->evaluateJavaScript("clearMessages()");
 }
 
-void ChatView::displayMessage(const QString &strData, MessageCategory eMessageCategory, int iTime, QString strNick)
+void ChatView::displayMessage(const QString &strData, MessageCategory eMessageCategory, qint64 iTime, QString strNick)
 {
     QString strContent;
     if (strChatViewChannel == DEBUG)

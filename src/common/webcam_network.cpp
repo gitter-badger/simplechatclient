@@ -75,7 +75,7 @@ void WebcamNetwork::networkConnect()
         bReconnecting = true;
 
         // set last active
-        iLastActive = QDateTime::currentDateTime().toTime_t();
+        iLastActive = QDateTime::currentMSecsSinceEpoch();
 
         // connect
         socket->connectToHost("czat-s.onet.pl", 5008);
@@ -124,7 +124,7 @@ void WebcamNetwork::networkSendb(const QByteArray &bData)
 void WebcamNetwork::networkRead()
 {
     // set last active
-    iLastActive = QDateTime::currentDateTime().toTime_t();
+    iLastActive = QDateTime::currentMSecsSinceEpoch();
 
     // read text
     if (bText)
@@ -204,9 +204,9 @@ void WebcamNetwork::slotNetworkConnect()
 
 void WebcamNetwork::timeoutPingpong()
 {
-    int iCurrent = QDateTime::currentDateTime().toTime_t();
+    qint64 iCurrent = QDateTime::currentMSecsSinceEpoch();
 
-    if (iLastActive+301 < iCurrent)
+    if (iLastActive+301000 < iCurrent)
     {
         networkDisconnect();
         iLastActive = iCurrent;

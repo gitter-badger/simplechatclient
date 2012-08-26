@@ -20,15 +20,14 @@
 #ifndef HTML_MESSAGES_RENDERER_H
 #define HTML_MESSAGES_RENDERER_H
 
-#include <QDateTime>
 #include <QString>
 
 #include "defines.h"
 
 namespace HtmlMessagesRenderer
 {
-    QString renderer(QString strData, MessageCategory eMessageCategory, int iTime, QString strNick = QString::null);
-    QString rendererDebug(QString strData, int iTime);
+    QString renderer(QString strData, MessageCategory eMessageCategory, qint64 iTime, QString strNick = QString::null);
+    QString rendererDebug(QString strData, qint64 iTime);
     QString headCSS();
     QString bodyCSS();
 }

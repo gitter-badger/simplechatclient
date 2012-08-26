@@ -729,7 +729,7 @@ void ToolWidget::moderationClicked()
 void ToolWidget::inputlineReturnPressed()
 {
     // update last active
-    int iCurrentTime = QDateTime::currentDateTime().toTime_t();
+    qint64 iCurrentTime = QDateTime::currentMSecsSinceEpoch();
     Core::instance()->settings["last_active"] = QString::number(iCurrentTime);
 
     // disable away
@@ -746,7 +746,7 @@ void ToolWidget::inputlineReturnPressed()
 void ToolWidget::moderButtonClicked()
 {
     // update last active
-    int iCurrentTime = QDateTime::currentDateTime().toTime_t();
+    qint64 iCurrentTime = QDateTime::currentMSecsSinceEpoch();
     Core::instance()->settings["last_active"] = QString::number(iCurrentTime);
 
     // disable away

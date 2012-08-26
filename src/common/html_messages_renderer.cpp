@@ -17,6 +17,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <QDateTime>
 #include "convert.h"
 #include "core.h"
 #include "nicklist.h"
@@ -73,9 +74,9 @@ void fixContextMenu(QString &strData, MessageCategory eMessageCategory)
     strData = strDataList.join(" ");
 }
 
-QString HtmlMessagesRenderer::renderer(QString strData, MessageCategory eMessageCategory, int iTime, QString strNick)
+QString HtmlMessagesRenderer::renderer(QString strData, MessageCategory eMessageCategory, qint64 iTime, QString strNick)
 {
-    QDateTime dt = QDateTime::fromTime_t(iTime);
+    QDateTime dt = QDateTime::fromMSecsSinceEpoch(iTime);
 
     // fix html chars
     Convert::fixHtmlChars(strData);
@@ -170,7 +171,7 @@ QString HtmlMessagesRenderer::renderer(QString strData, MessageCategory eMessage
     }
 }
 
-QString HtmlMessagesRenderer::rendererDebug(QString strData, int iTime)
+QString HtmlMessagesRenderer::rendererDebug(QString strData, qint64 iTime)
 {
     QString strColor = "#000000";
     if (strData.startsWith("<- "))
@@ -188,7 +189,7 @@ QString HtmlMessagesRenderer::rendererDebug(QString strData, int iTime)
     Convert::fixHtmlChars(strData);
 
     // time
-    QString strTime = QDateTime::fromTime_t(iTime).toString("[hh:mm:ss]");
+    QString strTime = QDateTime::fromMSecsSinceEpoch(iTime).toString("[hh:mm:ss]");
 
     // display
     return QString("%1 <span style=\"color:%2;\">%3</span>").arg(strTime, strColor, strData);

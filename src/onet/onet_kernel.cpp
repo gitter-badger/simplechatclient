@@ -1192,7 +1192,7 @@ void OnetKernel::raw_001()
     Core::instance()->pNetwork->send("SLIST  R- 0 0 100 null");
 
     // update last active
-    int iCurrentTime = QDateTime::currentDateTime().toTime_t();
+    qint64 iCurrentTime = QDateTime::currentMSecsSinceEpoch();
     Core::instance()->settings["last_active"] = QString::number(iCurrentTime);
 
     // auto-away
@@ -1242,9 +1242,9 @@ void OnetKernel::raw_100n()
     QString strChannel = strDataList[4];
     QString strTime = strDataList[5];
 
-    int iTime = strTime.toInt();
-    int iCurrentTime = QDateTime::currentDateTime().toTime_t();
-    int iTimeResult = iTime - iCurrentTime;
+    qint64 iTime = QDateTime::fromTime_t(strTime.toInt()).toMSecsSinceEpoch();
+    qint64 iCurrentTime = QDateTime::currentMSecsSinceEpoch();
+    int iTimeResult = (iTime - iCurrentTime)/1000;
     QString strTimeResult;
 
     int iSeconds = iTimeResult % SECONDS_IN_MINUTE ;
@@ -1597,8 +1597,7 @@ void OnetKernel::raw_161n()
     QString strTopicDate = mKeyValue.value("topicDate");
     if ((!strTopicAuthor.isEmpty()) && (!strTopicDate.isEmpty()))
     {
-        QDateTime dt = QDateTime::fromTime_t(strTopicDate.toInt());
-        QString strDT = dt.toString("dd MMM yyyy hh:mm:ss");
+        QString strDT = QDateTime::fromTime_t(strTopicDate.toInt()).toString("dd MMM yyyy hh:mm:ss");
         QString strTopicDetails = QString("%1 (%2)").arg(strTopicAuthor, strDT);
         pTabC->authorTopic(strChannel, strTopicDetails);
     }
@@ -1648,8 +1647,7 @@ void OnetKernel::raw_163n()
     QString strIPNick = strDataList[9];
     if (strIPNick[0] == ':') strIPNick.remove(0,1);
 
-    QDateTime dt = QDateTime::fromTime_t(strDT.toInt());
-    strDT = dt.toString("dd MMM yyyy hh:mm:ss");
+    strDT = QDateTime::fromTime_t(strDT.toInt()).toString("dd MMM yyyy hh:mm:ss");
 
     if (Core::instance()->strChannelSettings == strChannel)
         Core::instance()->mChannelSettingsPermissions.insert(strFlag, QString("%1;%2;%3;%4").arg(strNick, strWho, strDT, strIPNick));
@@ -1937,9 +1935,7 @@ void OnetKernel::raw_251n()
         if (strDataList.size() < 5) return;
 
         QString strNick = strDataList[4];
-        // fix onet time
         qint64 iTime = QDateTime::fromTime_t(strDataList[5].toInt()).toMSecsSinceEpoch();
-        //qint64 iTime = strDataList[5].toLongLong();
         QString strType = strDataList[6];
 
         QString strMessage;
@@ -2566,10 +2562,9 @@ void OnetKernel::raw_317()
         Message::instance()->showMessageActive(strDisplayIdle, MessageInfo);
     }
 
-    QDateTime dt_time = QDateTime::fromTime_t(strTime.toInt());
-    QString strDT_time = dt_time.toString("dd MMM yyyy hh:mm:ss");
+    QString strDateTime = QDateTime::fromTime_t(strTime.toInt()).toString("dd MMM yyyy hh:mm:ss");
 
-    QString strDisplaySignon = QString(tr("* %1 is logged in since %2")).arg(strNick, strDT_time);
+    QString strDisplaySignon = QString(tr("* %1 is logged in since %2")).arg(strNick, strDateTime);
     Message::instance()->showMessageActive(strDisplaySignon, MessageInfo);
 }
 
@@ -3985,7 +3980,7 @@ void OnetKernel::raw_817()
     if (strDataList.size() < 6) return;
 
     QString strChannel = strDataList[3];
-    int iTime = strDataList[4].toInt();
+    qint64 iTime = QDateTime::fromTime_t(strDataList[4].toInt()).toMSecsSinceEpoch();
     QString strNick = strDataList[5];
 
     QString strMessage;
@@ -4074,7 +4069,7 @@ void OnetKernel::raw_819()
 void OnetKernel::raw_820()
 {
     ChannelList::instance()->setReady(true);
-    ChannelList::instance()->setTime(QDateTime::currentDateTime().toTime_t());
+    ChannelList::instance()->setTime(QDateTime::currentMSecsSinceEpoch());
 }
 
 // :cf1f3.onet 821 scc_test #scc :Channel is not moderated

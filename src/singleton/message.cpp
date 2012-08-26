@@ -73,16 +73,16 @@ bool Message::isHighlightMessage(const QString &strMessage)
     return false;
 }
 
-void Message::saveMessage(const QString &strChannel, const QString &strData, int iTime, QString strNick)
+void Message::saveMessage(const QString &strChannel, const QString &strData, qint64 iTime, QString strNick)
 {
     if (Core::instance()->settings.value("disable_logs") == "true")
         return;
 
     QString strSaveData;
     if (!strNick.isEmpty())
-        strSaveData = QString("%1 <%2> %3").arg(QDateTime::fromTime_t(iTime).toString("[hh:mm:ss]"), strNick, strData);
+        strSaveData = QString("%1 <%2> %3").arg(QDateTime::fromMSecsSinceEpoch(iTime).toString("[hh:mm:ss]"), strNick, strData);
     else
-        strSaveData = QString("%1 %2").arg(QDateTime::fromTime_t(iTime).toString("[hh:mm:ss]"), strData);
+        strSaveData = QString("%1 %2").arg(QDateTime::fromMSecsSinceEpoch(iTime).toString("[hh:mm:ss]"), strData);
 
     // fix /me
     Convert::fixMeAction(strSaveData);
@@ -104,7 +104,7 @@ bool Message::isHideJoinPart(const QString &strChannel, MessageCategory eMessage
     return false;
 }
 
-void Message::showMessage(const QString &strChannel, const QString &strData, MessageCategory eMessageCategory, QString strNick, int iTime)
+void Message::showMessage(const QString &strChannel, const QString &strData, MessageCategory eMessageCategory, QString strNick, qint64 iTime)
 {
     if (!Core::instance()->tw.contains(strChannel))
         return;
@@ -115,7 +115,7 @@ void Message::showMessage(const QString &strChannel, const QString &strData, Mes
 
     // time
     if (iTime == 0)
-        iTime = (int)QDateTime::currentDateTime().toTime_t();
+        iTime = QDateTime::currentMSecsSinceEpoch();
 
     // highlight
     if ((isHighlightMessage(strData)) && (eMessageCategory == MessageDefault) && (strChannel != DEBUG))

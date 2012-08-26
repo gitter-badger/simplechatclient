@@ -196,7 +196,7 @@ void Network::connect()
         clearAll();
 
         // set active
-        iActive = QDateTime::currentDateTime().toTime_t();
+        iActive = QDateTime::currentMSecsSinceEpoch();
 
         // connect
         socket->connectToHost(strServer, iPort);
@@ -356,7 +356,7 @@ void Network::recv()
         QByteArray data = socket->readLine().trimmed();
 
         // set active
-        iActive = QDateTime::currentDateTime().toTime_t();
+        iActive = QDateTime::currentMSecsSinceEpoch();
 
         // process to kernel
         emit kernel(QString(data));
@@ -404,19 +404,19 @@ void Network::stateChanged(QAbstractSocket::SocketState socketState)
 
 void Network::timeoutLag()
 {
-    int iCurrentTime = QDateTime::currentDateTime().toTime_t();
+    qint64 iCurrentTime = QDateTime::currentMSecsSinceEpoch();
 
     // update lag
-    if (iCurrentTime-iActive > 30+10)
+    if (iCurrentTime-iActive > 40000) // 40 sec
         Lag::instance()->update(iCurrentTime-iActive);
 }
 
 void Network::timeoutPong()
 {
-    int iCurrentTime = QDateTime::currentDateTime().toTime_t();
+    qint64 iCurrentTime = QDateTime::currentMSecsSinceEpoch();
 
     // check timeout
-    if (iActive+301 < iCurrentTime)
+    if (iActive+301000 < iCurrentTime) // 301 sec
     {
 #ifdef Q_WS_X11
         if (Core::instance()->settings.value("debug") == "true")

@@ -54,7 +54,7 @@ private:
     QTimer *timerPing;
     QTimer *timerLag;
     QTimer *timerQueue;
-    int iActive;
+    qint64 iActive;
     QList<QString> msgSendQueue;
     QList<QString> msgSendQueueNS;
     bool bAuthorized;

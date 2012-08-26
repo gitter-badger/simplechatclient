@@ -347,13 +347,13 @@ void DlgChannelSettings::refreshChannelInfo()
             ui.label_summary_datetime->setText(strDT);
 
             // stats
-            int iCreatedDate = strValue.toInt();
-            int iCurrentDate = QDateTime::currentDateTime().toTime_t();
+            qint64 iCreatedDate = dt.toMSecsSinceEpoch();
+            qint64 iCurrentDate = QDateTime::currentMSecsSinceEpoch();
 
-            int iSeconds = iCurrentDate - iCreatedDate;
-            int iMinutes = iSeconds / 60;
-            int iHours = iMinutes / 60;
-            int iDays = iHours / 24;
+            int iSeconds = (iCurrentDate - iCreatedDate)/1000;
+            int iMinutes = iSeconds / SECONDS_IN_MINUTE;
+            int iHours = iMinutes / MINUTES_IN_HOUR;
+            int iDays = iHours / HOURS_IN_DAY;
 
             ui.label_stats_exists_days->setText(QString::number(iDays));
         }

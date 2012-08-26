@@ -33,8 +33,8 @@ public:
     virtual ~WebcamNetwork();
     inline void setBytesNeed(int _iBytesNeed) { iBytesNeed = _iBytesNeed; }
     inline void setBText(bool _bText) { bText = _bText; }
-    inline void setLastKeepAlive(int _iLastKeepAlive) { iLastKeepAlive = _iLastKeepAlive; }
-    inline int getLastKeepAlive() { return iLastKeepAlive; }
+    inline void setLastKeepAlive(qint64 _iLastKeepAlive) { iLastKeepAlive = _iLastKeepAlive; }
+    inline qint64 getLastKeepAlive() { return iLastKeepAlive; }
     inline void setReconnect(bool _bReconnecting) { bReconnecting = _bReconnecting; }
 
     void clearAll();
@@ -51,8 +51,8 @@ private:
     int iBytesNeed;
     int iBytesRecv;
     QTimer *timerPingPong;
-    int iLastActive;
-    int iLastKeepAlive;
+    qint64 iLastActive;
+    qint64 iLastKeepAlive;
     bool bText;
     bool bReconnecting;
 

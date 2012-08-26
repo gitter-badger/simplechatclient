@@ -108,8 +108,8 @@ void DlgChannelList::setDefaultValues()
     ui.groupBox_category->hide();
 
     // need refresh
-    int iCheckRefresh = QDateTime::currentDateTime().toTime_t() - ChannelList::instance()->getTime();
-    if ((ChannelList::instance()->getReady()) && (iCheckRefresh > 3600))
+    qint64 iCheckRefresh = QDateTime::currentMSecsSinceEpoch() - ChannelList::instance()->getTime();
+    if ((ChannelList::instance()->getReady()) && (iCheckRefresh > 3600000)) // 3600
         Core::instance()->pNetwork->send("SLIST  R- 0 0 100 null");
 }
 

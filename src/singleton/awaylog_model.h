@@ -33,7 +33,7 @@ public:
 
     Awaylog();
     void init();
-    void add(int iTime, const QString &strChannel, const QString &strAwayData);
+    void add(qint64 iTime, const QString &strChannel, const QString &strAwayData);
     QList<QString> get();
     void clear();
     bool isEmpty();

@@ -65,13 +65,13 @@ void Autoaway::timeoutAutoaway()
 {
     if ((Core::instance()->pNetwork->isConnected()) && (Core::instance()->pNetwork->isWritable()) && (Core::instance()->settings.value("logged") == "true"))
     {
-        int iCurrentTime = QDateTime::currentDateTime().toTime_t();
+        qint64 iCurrentTime = QDateTime::currentMSecsSinceEpoch();
 
-        int iLastActive = Core::instance()->settings.value("last_active").toInt();
+        qint64 iLastActive = Core::instance()->settings.value("last_active").toLongLong();
 
         bool bAway = Core::instance()->settings.value("away") == "true" ? true : false;
 
-        if ((!bAway) && (iLastActive != 0) && (iCurrentTime-iLastActive > 300))
+        if ((!bAway) && (iLastActive != 0) && (iCurrentTime-iLastActive > 300000))
             Core::instance()->pNetwork->send(QString("AWAY :%1").arg(tr("Not here right now")));
     }
 }
