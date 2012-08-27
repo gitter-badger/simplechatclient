@@ -260,7 +260,7 @@ void Kamerzysta::networkDisconnected()
 
 void Kamerzysta::networkSend(const QString &strData)
 {
-    if ((socket->isValid()) && (socket->state() == QAbstractSocket::ConnectedState) && (socket->isWritable()))
+    if ((socket->isValid()) && (socket->state() == QAbstractSocket::ConnectedState))
     {
         log("Send:"+strData);
 

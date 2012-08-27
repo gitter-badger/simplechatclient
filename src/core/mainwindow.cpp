@@ -481,69 +481,69 @@ void MainWindow::openOptions()
 // onet dialogs
 void MainWindow::openChannelList()
 {
-    if ((Core::instance()->pNetwork->isConnected()) && (Core::instance()->pNetwork->isWritable()) && (Core::instance()->settings.value("logged") == "true"))
+    if ((Core::instance()->pNetwork->isConnected()) && (Core::instance()->settings.value("logged") == "true"))
         DlgChannelList(this).exec();
 }
 
 void MainWindow::openChannelHomes()
 {
-    if ((Core::instance()->pNetwork->isConnected()) && (Core::instance()->pNetwork->isWritable()) && (Core::instance()->settings.value("logged") == "true"))
+    if ((Core::instance()->pNetwork->isConnected()) && (Core::instance()->settings.value("logged") == "true"))
         DlgChannelHomes(this).exec();
 }
 
 void MainWindow::openChannelFavourites()
 {
-    if ((Core::instance()->pNetwork->isConnected()) && (Core::instance()->pNetwork->isWritable()) && (Core::instance()->settings.value("logged") == "true"))
+    if ((Core::instance()->pNetwork->isConnected()) && (Core::instance()->settings.value("logged") == "true"))
         DlgChannelFavourites(this).exec();
 }
 
 void MainWindow::openFriends()
 {
-    if ((Core::instance()->pNetwork->isConnected()) && (Core::instance()->pNetwork->isWritable()) && (Core::instance()->settings.value("logged") == "true"))
+    if ((Core::instance()->pNetwork->isConnected()) && (Core::instance()->settings.value("logged") == "true"))
         DlgFriends(this).exec();
 }
 
 void MainWindow::openIgnore()
 {
-    if ((Core::instance()->pNetwork->isConnected()) && (Core::instance()->pNetwork->isWritable()) && (Core::instance()->settings.value("logged") == "true"))
+    if ((Core::instance()->pNetwork->isConnected()) && (Core::instance()->settings.value("logged") == "true"))
         DlgIgnore(this).exec();
 }
 
 void MainWindow::openFindNick()
 {
-    if ((Core::instance()->pNetwork->isConnected()) && (Core::instance()->pNetwork->isWritable()) && (Core::instance()->settings.value("logged") == "true"))
+    if ((Core::instance()->pNetwork->isConnected()) && (Core::instance()->settings.value("logged") == "true"))
         DlgFindNick(this).exec();
 }
 
 void MainWindow::openCams()
 {
 #if WITH_KAMERZYSTA
-    if ((Core::instance()->pNetwork->isConnected()) && (Core::instance()->pNetwork->isWritable()) && (Core::instance()->settings.value("logged") == "true"))
+    if ((Core::instance()->pNetwork->isConnected()) && (Core::instance()->settings.value("logged") == "true"))
     {
         QString strMe = Core::instance()->settings.value("nick");
         (new Kamerzysta(Core::instance()->kamerzystaSocket))->show(strMe);
     }
 #else
-    if ((Core::instance()->pNetwork->isConnected()) && (Core::instance()->pNetwork->isWritable()) && (Core::instance()->settings.value("logged") == "true"))
+    if ((Core::instance()->pNetwork->isConnected()) && (Core::instance()->settings.value("logged") == "true"))
         new DlgWebcam();
 #endif
 }
 
 void MainWindow::openMyStats()
 {
-    if ((Core::instance()->pNetwork->isConnected()) && (Core::instance()->pNetwork->isWritable()) && (Core::instance()->settings.value("logged") == "true"))
+    if ((Core::instance()->pNetwork->isConnected()) && (Core::instance()->settings.value("logged") == "true"))
         DlgMyStats(this).exec();
 }
 
 void MainWindow::openMyProfile()
 {
-    if ((Core::instance()->pNetwork->isConnected()) && (Core::instance()->pNetwork->isWritable()) && (Core::instance()->settings.value("logged") == "true"))
+    if ((Core::instance()->pNetwork->isConnected()) && (Core::instance()->settings.value("logged") == "true"))
         DlgMyProfile(this).exec();
 }
 
 void MainWindow::openMyAvatar()
 {
-    if ((Core::instance()->pNetwork->isConnected()) && (Core::instance()->pNetwork->isWritable()) && (Core::instance()->settings.value("logged") == "true"))
+    if ((Core::instance()->pNetwork->isConnected()) && (Core::instance()->settings.value("logged") == "true"))
         DlgMyAvatar(this).exec();
 }
 
@@ -564,13 +564,13 @@ void MainWindow::openAwaylog()
 
 void MainWindow::openInviteList()
 {
-    if ((Core::instance()->pNetwork->isConnected()) && (Core::instance()->pNetwork->isWritable()) && (Core::instance()->settings.value("logged") == "true"))
+    if ((Core::instance()->pNetwork->isConnected()) && (Core::instance()->settings.value("logged") == "true"))
         DlgInviteList(this).exec();
 }
 
 void MainWindow::openOfflineMessages()
 {
-    if ((Core::instance()->pNetwork->isConnected()) && (Core::instance()->pNetwork->isWritable()) && (Core::instance()->settings.value("logged") == "true"))
+    if ((Core::instance()->pNetwork->isConnected()) && (Core::instance()->settings.value("logged") == "true"))
         DlgOfflineMessages(this).exec();
 }
 

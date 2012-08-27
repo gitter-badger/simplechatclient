@@ -63,7 +63,7 @@ void Autoaway::stop()
 
 void Autoaway::timeoutAutoaway()
 {
-    if ((Core::instance()->pNetwork->isConnected()) && (Core::instance()->pNetwork->isWritable()) && (Core::instance()->settings.value("logged") == "true"))
+    if ((Core::instance()->pNetwork->isConnected()) && (Core::instance()->settings.value("logged") == "true"))
     {
         qint64 iCurrentTime = QDateTime::currentMSecsSinceEpoch();
 

@@ -37,7 +37,6 @@ public:
     virtual ~Network();
     void run();
     bool isConnected();
-    bool isWritable();
     QTimer *timerReconnect;
 
 public slots:

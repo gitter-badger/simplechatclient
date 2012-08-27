@@ -101,7 +101,7 @@ void WebcamNetwork::networkSend(const QString &strData)
 
 void WebcamNetwork::networkSendb(const QByteArray &bData)
 {
-    if ((socket->isValid()) && (socket->state() == QAbstractSocket::ConnectedState) && (socket->isWritable()))
+    if ((socket->isValid()) && (socket->state() == QAbstractSocket::ConnectedState))
     {
         int ret = socket->write(bData);
         if (ret == -1)

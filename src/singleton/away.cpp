@@ -62,7 +62,7 @@ void Away::stop()
 
 void Away::awayTriggered()
 {
-    if ((Core::instance()->pNetwork->isConnected()) && (Core::instance()->pNetwork->isWritable()) && (Core::instance()->settings.value("logged") == "true"))
+    if ((Core::instance()->pNetwork->isConnected()) && (Core::instance()->settings.value("logged") == "true"))
     {
         bool bAway = Core::instance()->settings.value("away") == "true" ? true : false;
 

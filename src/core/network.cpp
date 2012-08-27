@@ -88,11 +88,6 @@ bool Network::isConnected()
         return false;
 }
 
-bool Network::isWritable()
-{
-    return socket->isWritable();
-}
-
 void Network::clearAll()
 {
 #ifdef Q_WS_X11
@@ -244,7 +239,7 @@ void Network::disconnect()
     msgSendQueueNS.clear();
 
     // send quit
-    if ((socket->isValid()) && (socket->state() == QAbstractSocket::ConnectedState) && (socket->isWritable()))
+    if ((socket->isValid()) && (socket->state() == QAbstractSocket::ConnectedState))
     {
         socket->write("QUIT\r\n");
         socket->waitForBytesWritten();
@@ -306,7 +301,7 @@ void Network::reconnect()
 
 void Network::write(const QString &strData)
 {
-    if ((socket->isValid()) && (socket->state() == QAbstractSocket::ConnectedState) && (socket->isWritable()))
+    if ((socket->isValid()) && (socket->state() == QAbstractSocket::ConnectedState))
     {
         if (Core::instance()->settings.value("debug") == "true")
             Message::instance()->showMessage(DEBUG, "-> "+strData, MessageDefault);
@@ -439,7 +434,7 @@ void Network::timeoutPing()
 {
     QString strMSecs = QString::number(QDateTime::currentMSecsSinceEpoch());
 
-    if ((isConnected()) && (isWritable()) && (Core::instance()->settings.value("logged") == "true"))
+    if ((isConnected()) && (Core::instance()->settings.value("logged") == "true"))
         emit send(QString("PING :%1").arg(strMSecs));
 }
 
