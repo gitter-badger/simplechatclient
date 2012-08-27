@@ -51,7 +51,6 @@ private:
     QTcpSocket *socket;
     QTimer *timerPong;
     QTimer *timerPing;
-    QTimer *timerLag;
     QTimer *timerQueue;
     qint64 iActive;
     QList<QString> msgSendQueue;
@@ -71,7 +70,6 @@ private slots:
     void stateChanged(QAbstractSocket::SocketState socketState);
     void timeoutPong();
     void timeoutPing();
-    void timeoutLag();
     void timeoutQueue();
 
 signals:

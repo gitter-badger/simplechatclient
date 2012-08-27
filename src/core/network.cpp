@@ -41,8 +41,6 @@ Network::Network(const QString &_strServer, int _iPort) : strServer(_strServer),
     timerPong->setInterval(1000*60*1); // 1 min
     timerPing = new QTimer();
     timerPing->setInterval(1000*30); // 30 sec
-    timerLag = new QTimer();
-    timerLag->setInterval(1000*10); // 10 sec
     timerQueue = new QTimer();
     timerQueue->setInterval(300); // 0.3 sec
 
@@ -58,7 +56,6 @@ Network::Network(const QString &_strServer, int _iPort) : strServer(_strServer),
 
     QObject::connect(timerPong, SIGNAL(timeout()), this, SLOT(timeoutPong()));
     QObject::connect(timerPing, SIGNAL(timeout()), this, SLOT(timeoutPing()));
-    QObject::connect(timerLag, SIGNAL(timeout()), this, SLOT(timeoutLag()));
     QObject::connect(timerQueue, SIGNAL(timeout()), this, SLOT(timeoutQueue()));
 
     QObject::connect(timerReconnect, SIGNAL(timeout()), this, SLOT(reconnect()));
@@ -68,7 +65,6 @@ Network::~Network()
 {
     socket->deleteLater();
     timerQueue->stop();
-    timerLag->stop();
     timerPing->stop();
     timerPong->stop();
     timerReconnect->stop();
@@ -123,7 +119,6 @@ void Network::clearAll()
     // timer
     timerPong->stop();
     timerPing->stop();
-    timerLag->stop();
     timerQueue->stop();
 
     // reconnect
@@ -199,7 +194,6 @@ void Network::connect()
         // start timers
         timerPong->start();
         timerPing->start();
-        timerLag->start();
         timerQueue->start();
     }
     else
@@ -397,20 +391,15 @@ void Network::stateChanged(QAbstractSocket::SocketState socketState)
         emit setConnectEnabled(true);
 }
 
-void Network::timeoutLag()
-{
-    qint64 iCurrentTime = QDateTime::currentMSecsSinceEpoch();
-
-    // update lag
-    if (iCurrentTime-iActive > 40000) // 40 sec
-        Lag::instance()->update(iCurrentTime-iActive);
-}
-
 void Network::timeoutPong()
 {
     qint64 iCurrentTime = QDateTime::currentMSecsSinceEpoch();
 
-    // check timeout
+    // update lag
+    if (iActive+60000 < iCurrentTime)
+        Lag::instance()->update(iCurrentTime-iActive);
+
+    // check pong timeout
     if (iActive+301000 < iCurrentTime) // 301 sec
     {
 #ifdef Q_WS_X11
