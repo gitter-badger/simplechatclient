@@ -295,7 +295,7 @@ void ChatView::openWebbrowser()
 void ChatView::sendToNotes()
 {
     QString strNotesContent = Notes::instance()->get();
-    strNotesContent += this->selectedText();
+    strNotesContent += this->selectedText()+"\r\n";
     Notes::instance()->set(strNotesContent);
 }
 

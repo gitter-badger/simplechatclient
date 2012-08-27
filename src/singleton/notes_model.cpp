@@ -82,7 +82,7 @@ void Notes::read()
     QFile f(strNotesFile);
     if (f.exists())
     {
-        if (f.open(QIODevice::ReadOnly))
+        if (f.open(QIODevice::ReadOnly | QIODevice::Text))
         {
             // read content
             QTextStream in(&f);
@@ -103,10 +103,10 @@ void Notes::save()
         refreshPath();
 
     QFile f(strNotesFile);
-    if (f.open(QIODevice::WriteOnly | QIODevice::Truncate))
+    if (f.open(QIODevice::WriteOnly | QIODevice::Truncate | QIODevice::Text))
     {
         QTextStream out(&f);
-        out << strNotesContent << "\r\n";
+        out << strNotesContent;
         f.close();
     }
 }
