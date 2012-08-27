@@ -2913,7 +2913,19 @@
     </message>
     <message>
         <source>* Nickname %1 is already in use.</source>
-        <translation>* Nick %1 jest już w użyciu</translation>
+        <translation>* Nick %1 jest już w użyciu.</translation>
+    </message>
+    <message>
+        <source>Warning</source>
+        <translation>Ostrzeżenie</translation>
+    </message>
+    <message>
+        <source>Nickname %1 is already in use.</source>
+        <translation>Nick %1 jest już w użyciu.</translation>
+    </message>
+    <message>
+        <source>Do you want to take over session?</source>
+        <translation>Czy chcesz przejąć sesje?</translation>
     </message>
     <message>
         <source>* Channel %1 is already on your favourite list</source>

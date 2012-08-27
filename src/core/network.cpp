@@ -316,7 +316,7 @@ void Network::write(const QString &strData)
     }
     else
     {
-        QString strError = tr("Error: Could not send data! [Not Connected]");
+        QString strError = tr("Error: Could not send data! [Not connected]");
         Message::instance()->showMessageActive(strError, MessageError);
     }
 }

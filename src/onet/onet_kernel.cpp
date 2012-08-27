@@ -18,6 +18,7 @@
  */
 
 #include <QDateTime>
+#include <QMessageBox> // raw 433
 #include "autoaway.h"
 #include "avatar.h"
 #include "away.h"
@@ -3214,17 +3215,39 @@ void OnetKernel::raw_433()
 
     QString strNick = strDataList[3];
 
-    QString strMessage = QString(tr("* Nickname %1 is already in use.")).arg(strNick);
+    // disconnect
+    Core::instance()->settings["reconnect"] = "false";
+    Core::instance()->pNetwork->disconnect();
 
-    Message::instance()->showMessageAll(strMessage, MessageError);
-
-    Core::instance()->settings["override"] = "true";
-
-    // reconnect
     if (strNick[0] != '~')
     {
-        Core::instance()->pNetwork->disconnect();
-        Core::instance()->pNetwork->connect();
+        QString strMessage =
+            QString("%1\r\n%2").arg(
+                    QString(tr("Nickname %1 is already in use.").arg(strNick)),
+                    QString(tr("Do you want to take over session?").arg(strNick))
+            );
+
+        QMessageBox msgBox;
+        msgBox.setIcon(QMessageBox::Warning);
+        msgBox.setWindowIcon(QIcon(":/images/logo16x16.png"));
+        msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
+        msgBox.setWindowTitle(tr("Warning"));
+        msgBox.setText(strMessage);
+        int iSelectedButton = msgBox.exec();
+
+        if (iSelectedButton == QMessageBox::Yes)
+        {
+            // override
+            Core::instance()->settings["override"] = "true";
+            Core::instance()->settings["reconnect"] = "true";
+
+            Core::instance()->pNetwork->connect();
+        }
+    }
+    else
+    {
+        QString strMessage = QString(tr("* Nickname %1 is already in use.")).arg(strNick);
+        Message::instance()->showMessageAll(strMessage, MessageError);
     }
 }
 
@@ -3851,10 +3874,14 @@ void OnetKernel::raw_704()
 {
 }
 
-//:cf1f3.onet 801 scc_test :q5VMy1wl6hKL5ZUt
+// :cf1f3.onet 801 scc_test :q5VMy1wl6hKL5ZUt
+// :cf1f2.onet 801 384-unknown :mIGlbZP0R056xedZ
 void OnetKernel::raw_801()
 {
     if (strDataList.size() < 4) return;
+
+    if (!Core::instance()->pNetwork->isConnected())
+        return;
 
     QString strKey = strDataList[3];
     if (strKey[0] == ':') strKey.remove(0,1);
