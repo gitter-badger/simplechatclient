@@ -248,7 +248,7 @@ void Kamerzysta::networkDisconnected()
     log("Disconnected");
 
     // clear nick
-    strNick = "";
+    strNick.clear();
 
     // stop timer
     if (timerGetPort->isActive())
@@ -301,7 +301,7 @@ void Kamerzysta::error(QAbstractSocket::SocketError)
     else
     {
         // clear nick
-        strNick = "";
+        strNick.clear();
 
         // stop timer
         if (timerGetPort->isActive())

@@ -153,14 +153,20 @@ bool InputLineWidget::event(QEvent *e)
     }
     else if ((k->key() == Qt::Key_Enter) || (k->key() == Qt::Key_Return))
     {
-        if (lLastMessages.size() >= iLastMessageLimit)
-            lLastMessages.removeLast();
+        QString strText = this->text().simplified();
 
-        lLastMessages.push_front(this->text().simplified());
+        if (!strText.isEmpty())
+        {
+            if (lLastMessages.size() >= iLastMessageLimit)
+                lLastMessages.removeLast();
 
-        iLastMessage = -1;
+            lLastMessages.push_front(strText);
 
-        emit returnPressed();
+            iLastMessage = -1;
+
+            emit returnPressed();
+        }
+
         return true;
     }
     else if (k->key() == Qt::Key_Up)
