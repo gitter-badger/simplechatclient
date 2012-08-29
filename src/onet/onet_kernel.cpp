@@ -3223,8 +3223,8 @@ void OnetKernel::raw_433()
     {
         QString strMessage =
             QString("%1\r\n%2").arg(
-                    QString(tr("Nickname %1 is already in use.").arg(strNick)),
-                    QString(tr("Do you want to take over session?").arg(strNick))
+                    tr("Nickname %1 is already in use.").arg(strNick),
+                    tr("Do you want to take over session?")
             );
 
         QMessageBox msgBox;
