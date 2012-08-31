@@ -563,12 +563,6 @@ void OnetKernel::raw_kick()
     QString strMe = Core::instance()->settings.value("nick");
     if (strNick == strMe)
     {
-        // channel info
-        Core::instance()->lChannelInfo.removeOne(strChannel);
-
-        // remove tab
-        pTabC->removeTab(strChannel);
-
         // reason
         Convert::simpleConvert(strReason);
 
@@ -582,6 +576,12 @@ void OnetKernel::raw_kick()
             QString strDisplay = QString(tr("* You have been kicked from channel %1 by %2 Reason: %3")).arg(strChannel, strWho, strReason);
             Tray::instance()->showMessage(strChannel, strDisplay);
         }
+
+        // channel info
+        Core::instance()->lChannelInfo.removeOne(strChannel);
+
+        // remove tab
+        pTabC->removeTab(strChannel);
     }
 }
 
