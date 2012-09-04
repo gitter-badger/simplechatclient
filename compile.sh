@@ -2,8 +2,12 @@
 
 make_install()
 {
-	if [ "$(lsb_release -i | awk '{print $3}')" = "Ubuntu" ]; then
-		sudo make install
+	if [ -e /etc/lsb-release ]; then
+		if [ "$(lsb_release -i | awk '{print $3}')" = "Ubuntu" ]; then
+			sudo make install
+		else
+			su -c 'make install'
+		fi
 	else
 		su -c 'make install'
 	fi
