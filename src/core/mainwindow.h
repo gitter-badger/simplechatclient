@@ -142,7 +142,6 @@ private slots:
     void setConnectEnabled(bool bSet);
     void tabCloseRequested(int index);
     void currentTabChanged(int index);
-    void tabMoved(int from, int to);
 
 protected:
     void resizeEvent(QResizeEvent *);

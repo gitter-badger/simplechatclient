@@ -325,7 +325,6 @@ void MainWindow::createSignals()
     // signals tab
     connect(pTabM, SIGNAL(tabCloseRequested(int)), this, SLOT(tabCloseRequested(int)));
     connect(pTabM, SIGNAL(currentChanged(int)), this, SLOT(currentTabChanged(int)));
-    connect(pTabM, SIGNAL(tabMoved(int,int)), this, SLOT(tabMoved(int,int)));
 
     // signals from network
     connect(Core::instance()->pNetwork, SIGNAL(setConnected()), this, SLOT(setConnected()));
@@ -723,12 +722,6 @@ void MainWindow::currentTabChanged(int index)
     // refresh tool buttons
     QString strChannel = Channel::instance()->getFromIndex(index);
     refreshToolButtons(strChannel);
-}
-
-// tab moved
-void MainWindow::tabMoved(int from, int to)
-{
-    Channel::instance()->move(from, to);
 }
 
 void MainWindow::resizeEvent(QResizeEvent *e)

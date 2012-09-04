@@ -48,9 +48,6 @@ private slots:
 
 protected:
     virtual void tabInserted(int index);
-
-signals:
-    void tabMoved(int, int);
 };
 
 #endif // TAB_MANAGER_H

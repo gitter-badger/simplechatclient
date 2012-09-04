@@ -18,6 +18,7 @@
  */
 
 #include <QTabBar>
+#include "channel.h"
 #include "defines.h"
 #include "tab_manager.h"
 
@@ -95,5 +96,5 @@ void TabManager::tabInserted(int index)
 
 void TabManager::tabMovedSlot(int from, int to)
 {
-    emit tabMoved(from, to);
+    Channel::instance()->move(from, to);
 }

@@ -60,17 +60,22 @@ public:
     // remove dir
     bool removeDir(const QString &dirName);
 
-    QHash<QString, bool> mFriends;
-    QList<QString> lIgnore;
-    QList<QString> lChannelFavourites;
-    QHash<QString, QString> mMyStats;
-    QHash<QString, QString> mMyProfile;
     // kamerzysta socket
     QTcpSocket *kamerzystaSocket;
     // settings
     QHash<QString,QString> settings;
     // network
     Network *pNetwork;
+    // TW (important!!!)
+    QHash<QString, TabWidget*> tw;
+
+    // TODO remove this
+    // gui
+    QHash<QString, bool> mFriends;
+    QList<QString> lIgnore;
+    QList<QString> lChannelFavourites;
+    QHash<QString, QString> mMyStats;
+    QHash<QString, QString> mMyProfile;
     // user profile
     QString strUserProfile;
     QHash<QString,QString> mUserProfile;
@@ -85,10 +90,7 @@ public:
     // moderation
     QMultiHash<QString,OnetModerateMessage> mModerateMessages;
     // channel info
-    QList<QString> lChannelInfo;
-
-    // TW (important!!!)
-    QHash<QString, TabWidget*> tw;
+    QList<QString> lChannelInfo; // moderated
 
 public slots:
     void quit();
