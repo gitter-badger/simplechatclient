@@ -17,6 +17,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include "channel.h"
 #include "core.h"
 #include "mainwindow.h"
 #include "convert.h"
@@ -59,8 +60,8 @@ void Tray::showMessage(const QString &strTitle, const QString &strMessage)
     strLastMessageTitle = strTrayTitle;
 
     // fix priv
-    if ((strTrayTitle[0] == '^') && (Core::instance()->mPrivNames.contains(strTrayTitle)))
-        strTrayTitle = Core::instance()->convertPrivName(strTrayTitle);
+    if ((strTrayTitle[0] == '^') && (Channel::instance()->containsPriv(strTrayTitle)))
+        strTrayTitle = Channel::instance()->getPriv(strTrayTitle);
 
     Core::instance()->mainWindow()->getTrayIcon()->showMessage(strTrayTitle, strTrayMessage);
 }

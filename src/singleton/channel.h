@@ -20,7 +20,9 @@
 #ifndef CHANNEL_H
 #define CHANNEL_H
 
+#include <QHash>
 #include <QObject>
+#include "defines.h"
 
 class Channel : public QObject
 {
@@ -32,6 +34,30 @@ public:
 
     Channel();
     void init();
+
+    void add(const QString &channel);
+    void remove(const QString &channel);
+    QList<QString> get();
+    QList<QString> getCleared();
+    void move(int from, int to);
+    bool contains(const QString &channel);
+    QString getFromIndex(int index);
+    int getIndex(const QString &channel);
+    QString getCurrent();
+    QList<CaseIgnoreString> getSorted();
+    // avatar
+    QString getAvatar(const QString &channel);
+    void setAvatar(const QString &channel, const QString &path);
+    // priv
+    void setPriv(const QString &channel, const QString &name);
+    QString getPriv(const QString &channel);
+    bool containsPriv(const QString &channel);
+
+private:
+    QList<QString> lChannels;
+    QHash<QString,QString> lAvatar;
+    QHash<QString,QString> lPriv;
+
 };
 
 #endif // CHANNEL_H

@@ -33,6 +33,7 @@
 #include "awaylog_model.h"
 #include "awaylog.h"
 #include "busy.h"
+#include "channel.h"
 #include "channel_favourites.h"
 #include "channel_homes.h"
 #include "channel_list.h"
@@ -693,7 +694,7 @@ void MainWindow::tabCloseRequested(int index)
 
 void MainWindow::setTabColor(const QString &strChannel, MessageCategory eMessageCategory)
 {
-    int index = Core::instance()->getIndexFromChannelName(strChannel);
+    int index = Channel::instance()->getIndex(strChannel);
 
     if (eMessageCategory == MessageHighlight)
         pTabM->setAlert(index, ChannelHighlight);
@@ -706,7 +707,7 @@ void MainWindow::setTabColor(const QString &strChannel, MessageCategory eMessage
 // change tab
 void MainWindow::changeCurrentTab(const QString &strChannel)
 {
-    int index = Core::instance()->getIndexFromChannelName(strChannel);
+    int index = Channel::instance()->getIndex(strChannel);
     pTabM->setCurrentIndex(index);
 }
 
@@ -720,14 +721,14 @@ void MainWindow::currentTabChanged(int index)
     pToolWidget->clearInputLine();
 
     // refresh tool buttons
-    QString strChannel = Core::instance()->getChannelNameFromIndex(index);
+    QString strChannel = Channel::instance()->getFromIndex(index);
     refreshToolButtons(strChannel);
 }
 
 // tab moved
 void MainWindow::tabMoved(int from, int to)
 {
-    Core::instance()->lOpenChannels.move(from, to);
+    Channel::instance()->move(from, to);
 }
 
 void MainWindow::resizeEvent(QResizeEvent *e)

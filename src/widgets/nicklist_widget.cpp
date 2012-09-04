@@ -21,6 +21,7 @@
 #include <QInputDialog>
 #include <QListWidgetItem>
 #include <QMenu>
+#include "channel.h"
 #include "core.h"
 #include "defines.h"
 #include "nicklist.h"
@@ -335,24 +336,21 @@ void NickListWidget::contextMenuEvent(QContextMenuEvent *e)
     int iSelfMaxModes = Nicklist::instance()->getUserMaxModes(strSelfModes);
     QString strNickModes = Nicklist::instance()->getUserModes(strSelectedNick, strChannel);
 
-    QList<QString> lOpenChannels = Core::instance()->lOpenChannels;
-    lOpenChannels.removeOne(DEBUG);
-    lOpenChannels.removeOne(STATUS);
-
     QMenu *mInvite = new QMenu(tr("Invite"));
     mInvite->setIcon(QIcon(":/images/oxygen/16x16/legalmoves.png"));
 
-    for (int i = 0; i < lOpenChannels.size(); ++i)
+    QList<QString> lChannelsCleared = Channel::instance()->getCleared();
+    for (int i = 0; i < lChannelsCleared.size(); ++i)
     {
-        QString strOpenChannel = lOpenChannels[i];
+        QString strOpenChannel = lChannelsCleared[i];
         if (strOpenChannel[0] == '^')
-            strOpenChannel = Core::instance()->convertPrivName(strOpenChannel);
+            strOpenChannel = Channel::instance()->getPriv(strOpenChannel);
 
         openChannelsActs[i] = new QAction(this);
         openChannelsActs[i]->setIcon(QIcon(":/images/oxygen/16x16/irc-join-channel.png"));
         openChannelsActs[i]->setVisible(false);
         openChannelsActs[i]->setText(strOpenChannel);
-        openChannelsActs[i]->setData(lOpenChannels[i]);
+        openChannelsActs[i]->setData(lChannelsCleared[i]);
         openChannelsActs[i]->setVisible(true);
 
         connect(openChannelsActs[i], SIGNAL(triggered()), this, SLOT(invite()));

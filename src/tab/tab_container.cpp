@@ -17,6 +17,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include "channel.h"
 #include "convert.h"
 #include "core.h"
 #include "log.h"
@@ -36,7 +37,7 @@ TabContainer::~TabContainer()
         QString strChannel = i.key();
 
         // remove from open channels
-        Core::instance()->lOpenChannels.removeOne(strChannel);
+        Channel::instance()->remove(strChannel);
 
         // remove tab
         delete Core::instance()->tw.take(strChannel);
@@ -57,7 +58,7 @@ void TabContainer::addTab(const QString &strChannel)
         return;
 
     // update open channels
-    Core::instance()->lOpenChannels.append(strChannel);
+    Channel::instance()->add(strChannel);
 
     // create tab
     Core::instance()->tw.insert(strChannel, new TabWidget(strChannel));
@@ -67,9 +68,11 @@ void TabContainer::addTab(const QString &strChannel)
     // if priv
     if (strChannel[0] == '^')
     {
-        if (Core::instance()->mPrivNames.contains(strChannel))
+        QString strPrivName = Channel::instance()->getPriv(strChannel);
+
+        if (strPrivName != strChannel)
         {
-            pTabM->setTabText(Core::instance()->tw.size()-1, Core::instance()->convertPrivName(strChannel));
+            pTabM->setTabText(Core::instance()->tw.size()-1, strPrivName);
 
             Log::logOpened(strChannel);
         }
@@ -84,7 +87,7 @@ void TabContainer::removeTab(const QString &strChannel)
         return;
 
     // remove from open channels
-    Core::instance()->lOpenChannels.removeOne(strChannel);
+    Channel::instance()->remove(strChannel);
 
     // remove tab
     delete Core::instance()->tw.take(strChannel);
@@ -95,7 +98,7 @@ void TabContainer::removeTab(const QString &strChannel)
 
 void TabContainer::renameTab(const QString &strChannel, const QString &strNewName)
 {
-    int index = Core::instance()->getIndexFromChannelName(strChannel);
+    int index = Channel::instance()->getIndex(strChannel);
 
     if (index >= 0 && index <= pTabM->count())
     {
@@ -111,7 +114,7 @@ void TabContainer::renameTab(const QString &strChannel, const QString &strNewNam
 
 void TabContainer::partTab(int index)
 {
-    QString strChannel = Core::instance()->getChannelNameFromIndex(index);
+    QString strChannel = Channel::instance()->getFromIndex(index);
 
     if (!strChannel.isEmpty())
     {
@@ -131,7 +134,7 @@ void TabContainer::refreshColors()
         QString strChannel = i.key();
 
         // update tab name color
-        int index = Core::instance()->getIndexFromChannelName(strChannel);
+        int index = Channel::instance()->getIndex(strChannel);
         pTabM->setColor(index, QColor(Core::instance()->settings.value("default_color")));
     }
 }
@@ -188,11 +191,14 @@ void TabContainer::setChannelAvatar(const QString &strChannel)
     if (!existTab(strChannel))
         return;
 
-    QString strAvatarpath = Core::instance()->mChannelAvatar.value(strChannel);
+    int index = Channel::instance()->getIndex(strChannel);
 
-    int index = Core::instance()->getIndexFromChannelName(strChannel);
     if (index >= 0 && index <= pTabM->count())
-        pTabM->setTabIcon(index, QIcon(strAvatarpath));
+    {
+        QString strAvatar = Channel::instance()->getAvatar(strChannel);
+
+        pTabM->setTabIcon(index, QIcon(strAvatar));
+    }
 }
 
 void TabContainer::resizeMainWindow(QSize s)

@@ -20,6 +20,7 @@
 #include <QDesktopWidget>
 #include <QInputDialog>
 #include <QTimer>
+#include "channel.h"
 #include "core.h"
 #include "channel_settings.h"
 #include "channel_homes_model.h"
@@ -84,9 +85,10 @@ void DlgChannelHomes::refresh()
         if (strChannel[0] != '#')
             strChannel = strChannel.right(strChannel.length()-1); // remove status
 
-        if (Core::instance()->mChannelAvatar.contains(strChannel))
+        QString strAvatar = Channel::instance()->getAvatar(strChannel);
+        if (!strAvatar.isEmpty())
         {
-            ui.listWidget_channels->addItem(new QListWidgetItem(QIcon(Core::instance()->mChannelAvatar.value(strChannel)), strChannel));
+            ui.listWidget_channels->addItem(new QListWidgetItem(QIcon(strAvatar), strChannel));
         }
         else
         {

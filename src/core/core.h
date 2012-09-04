@@ -57,12 +57,6 @@ public:
     void setDebug(bool b);
     // window
     MainWindow *mainWindow();
-    // for window
-    QString getChannelNameFromIndex(int index);
-    int getIndexFromChannelName(const QString &strChannel);
-    QString getCurrentChannelName();
-    // priv
-    QString convertPrivName(const QString &strChannel);
     // remove dir
     bool removeDir(const QString &dirName);
 
@@ -71,9 +65,6 @@ public:
     QList<QString> lChannelFavourites;
     QHash<QString, QString> mMyStats;
     QHash<QString, QString> mMyProfile;
-    // channels
-    QList<QString> lOpenChannels;
-    QHash<QString, QString> mChannelAvatar;
     // kamerzysta socket
     QTcpSocket *kamerzystaSocket;
     // settings
@@ -93,8 +84,6 @@ public:
     bool bChannelSettingsStats;
     // moderation
     QMultiHash<QString,OnetModerateMessage> mModerateMessages;
-    // priv
-    QHash<QString,QString> mPrivNames;
     // channel info
     QList<QString> lChannelInfo;
 

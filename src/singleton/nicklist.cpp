@@ -17,6 +17,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include "channel.h"
 #include "core.h"
 #include "mainwindow.h"
 #include "message.h"
@@ -127,7 +128,7 @@ void Nicklist::changeFlag(const QString &strNick, const QString &strChannel, con
         Core::instance()->tw[strChannel]->pNickListWidget->changeUserFlag(strNick, strFlag);
 
     QString strMe = Core::instance()->settings.value("nick");
-    QString strCurrentChannel = Core::instance()->getCurrentChannelName();
+    QString strCurrentChannel = Channel::instance()->getCurrent();
 
     if ((!strCurrentChannel.isEmpty()) && (strCurrentChannel == strChannel) && (strNick == strMe))
         Core::instance()->mainWindow()->refreshToolButtons(strChannel);

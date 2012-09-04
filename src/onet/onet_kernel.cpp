@@ -23,11 +23,12 @@
 #include "avatar.h"
 #include "away.h"
 #include "busy.h"
-#include "core.h"
-#include "convert.h"
+#include "channel.h"
 #include "channel_homes_model.h"
 #include "channel_key.h"
 #include "channel_list_model.h"
+#include "convert.h"
+#include "core.h"
 #include "find_nick_model.h"
 #include "invite.h"
 #include "invite_model.h"
@@ -406,7 +407,7 @@ void OnetKernel::raw_join()
     // show message
     if (strChannel[0] == '^')
     {
-        if (Core::instance()->mPrivNames.contains(strChannel))
+        if (Channel::instance()->containsPriv(strChannel))
             Message::instance()->showMessage(strChannel, strDisplay, MessageJoin);
     }
     else
@@ -931,7 +932,7 @@ void OnetKernel::raw_invite()
 
     // priv name
     if (strChannel[0] == '^')
-        Core::instance()->mPrivNames[strChannel] = strNick;
+        Channel::instance()->setPriv(strChannel, strNick);
 
     // add invite notification
     Invite::instance()->add(strNick, strChannel);
@@ -1169,32 +1170,19 @@ void OnetKernel::raw_001()
     Core::instance()->settings["age_check"] = "true";
 
     // auto rejoin
-    QList<CaseIgnoreString> lOpenChannelsCaseIgnore;
+    QList<CaseIgnoreString> lChannelsCaseIgnore = Channel::instance()->getSorted();
 
-    // copy to new list
-    QList<QString> lOpenChannels = Core::instance()->lOpenChannels;
-    lOpenChannels.removeOne(DEBUG);
-    lOpenChannels.removeOne(STATUS);
-    foreach (QString strChannel, lOpenChannels)
-        lOpenChannelsCaseIgnore.append(strChannel);
-
-    // sort
-    qSort(lOpenChannelsCaseIgnore.begin(), lOpenChannelsCaseIgnore.end());
-
-    // remove all channels
-    foreach (QString strChannel, lOpenChannelsCaseIgnore)
+    foreach (QString strChannel, lChannelsCaseIgnore)
         pTabC->removeTab(strChannel);
 
-    // join channels
-    foreach (QString strChannel, lOpenChannelsCaseIgnore)
+    foreach (QString strChannel, lChannelsCaseIgnore)
         Core::instance()->pNetwork->sendQueue(QString("JOIN %1").arg(strChannel));
 
     // channel list
     Core::instance()->pNetwork->send("SLIST  R- 0 0 100 null");
 
     // update last active
-    qint64 iCurrentTime = QDateTime::currentMSecsSinceEpoch();
-    Core::instance()->settings["last_active"] = QString::number(iCurrentTime);
+    Core::instance()->settings["last_active"] = QString::number(QDateTime::currentMSecsSinceEpoch());
 
     // auto-away
     Autoaway::instance()->start();
@@ -1454,7 +1442,7 @@ void OnetKernel::raw_141n()
         qSort(lList.begin(), lList.end());
         foreach (QString strChannel, lList)
         {
-            if (!Core::instance()->lOpenChannels.contains(strChannel))
+            if (!Channel::instance()->contains(strChannel))
                 Core::instance()->pNetwork->sendQueue(QString("JOIN %1").arg(strChannel));
         }
     }
@@ -2629,7 +2617,8 @@ void OnetKernel::raw_341()
 
     if (strChannel[0] == '^')
     {
-        Core::instance()->mPrivNames[strChannel] = strNick;
+        Channel::instance()->setPriv(strChannel, strNick);
+
         pTabC->renameTab(strChannel, strNick);
     }
 }
@@ -2935,8 +2924,8 @@ void OnetKernel::raw_403()
     QString strChannel = strDataList[3];
 
     QString strMessage;
-    if ((strChannel[0] == '^') && (Core::instance()->mPrivNames.contains(strChannel)))
-        strMessage = QString(tr("* Invalid priv with %1").arg(Core::instance()->convertPrivName(strChannel)));
+    if ((strChannel[0] == '^') && (Channel::instance()->containsPriv(strChannel)))
+        strMessage = QString(tr("* Invalid priv with %1").arg(Channel::instance()->getPriv(strChannel)));
     else
         strMessage = QString(tr("* %1 :Invalid channel name")).arg(strChannel);
 

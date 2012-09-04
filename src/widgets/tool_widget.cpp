@@ -22,6 +22,7 @@
 #include <QHBoxLayout>
 #include <QMenu>
 #include <QToolButton>
+#include "channel.h"
 #include "core.h"
 #include "commands.h"
 #include "config.h"
@@ -716,12 +717,12 @@ void ToolWidget::emoticonsClicked()
 void ToolWidget::channelSettingsClicked()
 {
     if (Core::instance()->pNetwork->isConnected())
-        DlgChannelSettings(this, Core::instance()->getCurrentChannelName()).exec();
+        DlgChannelSettings(this, Channel::instance()->getCurrent()).exec();
 }
 
 void ToolWidget::moderationClicked()
 {
-    QString strChannel = Core::instance()->getCurrentChannelName();
+    QString strChannel = Channel::instance()->getCurrent();
 
     DlgModeration(this, strChannel).exec();
 }
@@ -784,7 +785,7 @@ void ToolWidget::pasteMultiLine(const QString &strText, bool bModeration)
 void ToolWidget::sendMessage(QString strText, bool bModeration)
 {
     if (strText.isEmpty()) return; // empty text!
-    QString strChannel = Core::instance()->getCurrentChannelName();
+    QString strChannel = Channel::instance()->getCurrent();
     QString strMe = Core::instance()->settings.value("nick");
     QString strCommand;
     QString strTextOriginal;
@@ -822,10 +823,8 @@ void ToolWidget::sendMessage(QString strText, bool bModeration)
         Convert::simpleReverseConvert(strText);
         Replace::replaceEmots(strText);
 
-        QList<QString> lOpenChannels = Core::instance()->lOpenChannels;
-        lOpenChannels.removeOne(DEBUG);
-        lOpenChannels.removeOne(STATUS);
-        foreach (QString strChannel, lOpenChannels)
+        QList<QString> lChannelsCleared = Channel::instance()->getCleared();
+        foreach (QString strChannel, lChannelsCleared)
         {
             Core::instance()->pNetwork->send(QString("PRIVMSG %1 :%2").arg(strChannel, strText));
             Message::instance()->showMessage(strChannel, strText, MessageDefault, strMe);

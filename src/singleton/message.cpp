@@ -18,6 +18,7 @@
  */
 
 #include "awaylog_model.h"
+#include "channel.h"
 #include "core.h"
 #include "convert.h"
 #include "highlight.h"
@@ -164,7 +165,7 @@ void Message::showMessageAll(const QString &strData, MessageCategory eMessageCat
 
 void Message::showMessageActive(const QString &strData, MessageCategory eMessageCategory)
 {
-    QString strChannel = Core::instance()->getCurrentChannelName();
+    QString strChannel = Channel::instance()->getCurrent();
 
     showMessage(strChannel, strData, eMessageCategory);
 }

@@ -22,6 +22,7 @@
 #include <QDir>
 #include <QFile>
 #include <QTextStream>
+#include "channel.h"
 #include "core.h"
 #include "convert.h"
 #include "log.h"
@@ -72,7 +73,7 @@ void Log::save(const QString &strChannel, const QString &strData)
 
     // fixed priv name
     if (strFileName[0] == '^')
-        strFileName = Core::instance()->convertPrivName(strFileName);
+        strFileName = Channel::instance()->getPriv(strFileName);
 
     QFile f(path+"/"+strFileName+".txt");
     if (f.open(QIODevice::Append))

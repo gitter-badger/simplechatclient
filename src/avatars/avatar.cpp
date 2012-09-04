@@ -22,6 +22,7 @@
 #include <QNetworkReply>
 #include <QStringList>
 #include "avatar.h"
+#include "channel.h"
 #include "core.h"
 #include "nicklist.h"
 #include "tab_container.h"
@@ -71,7 +72,7 @@ void Avatar::httpFinished(QNetworkReply *reply)
         }
         else if (strCategory == "channel")
         {
-            Core::instance()->mChannelAvatar[strNickOrChannel] = strAvatarPath;
+            Channel::instance()->setAvatar(strNickOrChannel, strAvatarPath);
 
             pTabC->setChannelAvatar(strNickOrChannel);
         }

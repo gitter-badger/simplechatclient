@@ -292,40 +292,6 @@ void Core::quit()
     Instance = 0;
 }
 
-QString Core::getChannelNameFromIndex(int index)
-{
-    if (index < lOpenChannels.size())
-        return lOpenChannels.value(index, QString::null);
-    else
-        return QString::null;
-}
-
-int Core::getIndexFromChannelName(const QString &strChannel)
-{
-    for (int i = 0; i < lOpenChannels.size(); i++)
-    {
-        QString strOpenChannel = lOpenChannels.value(i, QString::null);
-        if (strOpenChannel == strChannel)
-            return i;
-    }
-
-    return -1;
-}
-
-QString Core::getCurrentChannelName()
-{
-    int index = window->getCurrentTabIndex();
-    return getChannelNameFromIndex(index);
-}
-
-QString Core::convertPrivName(const QString &strChannel)
-{
-    if (mPrivNames.contains(strChannel))
-        return mPrivNames.value(strChannel);
-    else
-        return strChannel;
-}
-
 bool Core::removeDir(const QString &dirName)
 {
     bool result = true;

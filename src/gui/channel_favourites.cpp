@@ -20,6 +20,7 @@
 #include <QDesktopWidget>
 #include <QInputDialog>
 #include <QTimer>
+#include "channel.h"
 #include "core.h"
 #include "channel_favourites.h"
 
@@ -66,9 +67,11 @@ void DlgChannelFavourites::refresh()
 
     foreach (QString strChannel, Core::instance()->lChannelFavourites)
     {
-        if (Core::instance()->mChannelAvatar.contains(strChannel))
+        QString strAvatar = Channel::instance()->getAvatar(strChannel);
+
+        if (!strAvatar.isEmpty())
         {
-            ui.listWidget_channels->addItem(new QListWidgetItem(QIcon(Core::instance()->mChannelAvatar.value(strChannel)), strChannel));
+            ui.listWidget_channels->addItem(new QListWidgetItem(QIcon(strAvatar), strChannel));
         }
         else
         {
