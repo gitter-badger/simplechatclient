@@ -388,24 +388,24 @@ void ChatView::menuNick(QContextMenuEvent *event)
     QMenu *privilege = new QMenu(tr("Actions"));
     privilege->setIcon(QIcon(":/images/oxygen/16x16/irc-operator.png"));
 
-    if ((strNickModes.contains("@")) && ((iSelfMaxModes >= 16) || (strNick == strMe)))
+    if ((strNickModes.contains(FLAG_OP)) && ((iSelfMaxModes >= 16) || (strNick == strMe)))
         privilege->addAction(QIcon(":/images/op.png"), tr("Take super operator status"), this, SLOT(opDel()));
-    else if ((!strNickModes.contains("@")) && (iSelfMaxModes >= 16))
+    else if ((!strNickModes.contains(FLAG_OP)) && (iSelfMaxModes >= 16))
         privilege->addAction(QIcon(":/images/op.png"), tr("Give super operator status"), this, SLOT(opAdd()));
 
-    if ((strNickModes.contains("%")) && ((iSelfMaxModes >= 8) || (strNick == strMe)))
+    if ((strNickModes.contains(FLAG_HALFOP)) && ((iSelfMaxModes >= 8) || (strNick == strMe)))
         privilege->addAction(QIcon(":/images/halfop.png"), tr("Take operator status"), this, SLOT(halfopDel()));
-    else if ((!strNickModes.contains("%")) && (iSelfMaxModes >= 8))
+    else if ((!strNickModes.contains(FLAG_HALFOP)) && (iSelfMaxModes >= 8))
         privilege->addAction(QIcon(":/images/halfop.png"), tr("Give operator status"), this, SLOT(halfopAdd()));
 
-    if ((strNickModes.contains("!")) && ((iSelfMaxModes >= 4) || (strNick == strMe)))
+    if ((strNickModes.contains(FLAG_MOD)) && ((iSelfMaxModes >= 4) || (strNick == strMe)))
         privilege->addAction(QIcon(":/images/mod.png"), tr("Take moderator status"), this, SLOT(moderatorDel()));
-    else if ((!strNickModes.contains("!")) && (iSelfMaxModes >= 4))
+    else if ((!strNickModes.contains(FLAG_MOD)) && (iSelfMaxModes >= 4))
         privilege->addAction(QIcon(":/images/mod.png"), tr("Give moderator status"), this, SLOT(moderatorAdd()));
 
-    if ((strNickModes.contains("+")) && ((iSelfMaxModes >= 4) || (strNick == strMe)))
+    if ((strNickModes.contains(FLAG_VOICE)) && ((iSelfMaxModes >= 4) || (strNick == strMe)))
         privilege->addAction(QIcon(":/images/voice.png"), tr("Take guest status"), this, SLOT(voiceDel()));
-    else if ((!strNickModes.contains("+")) && (iSelfMaxModes >= 4))
+    else if ((!strNickModes.contains(FLAG_VOICE)) && (iSelfMaxModes >= 4))
         privilege->addAction(QIcon(":/images/voice.png"), tr("Give guest status"), this, SLOT(voiceAdd()));
 
     QAction *nickAct = new QAction(strNick, this);
@@ -420,11 +420,11 @@ void ChatView::menuNick(QContextMenuEvent *event)
     if (strNick[0] != '~')
     {
         menu.addAction(QIcon(":/images/oxygen/16x16/view-pim-contacts.png"), tr("Profile"), this, SLOT(profile()));
-        if ((strNickModes.contains("W")) || (strNickModes.contains("V")))
+        if ((strNickModes.contains(FLAG_CAM_PUB)) || (strNickModes.contains(FLAG_CAM_PRIV)))
             menu.addAction(QIcon(":/images/pubcam.png"), tr("Webcam"), this, SLOT(cam()));
     }
     menu.addMenu(mInvite);
-    if (strSelfModes.contains("r"))
+    if (strSelfModes.contains(FLAG_REGISTERED))
     {
         menu.addMenu(friends);
         menu.addMenu(ignore);

@@ -50,14 +50,14 @@ void Nicklist::init()
 
 int Nicklist::getUserMaxModes(const QString &strModes)
 {
-    if (strModes.contains("O")) { return 64; }
-    if (strModes.contains("o")) { return 32; }
-    if (strModes.contains("`")) { return 16; }
-    if (strModes.contains("@")) { return 8; }
-    if (strModes.contains("%")) { return 4; }
-    if (strModes.contains("!")) { return 2; }
-    if (strModes.contains("=")) { return 1; }
-    if (strModes.contains("+")) { return 0; }
+    if (strModes.contains(FLAG_DEV)) { return 64; }
+    if (strModes.contains(FLAG_ADMIN)) { return 32; }
+    if (strModes.contains(FLAG_OWNER)) { return 16; }
+    if (strModes.contains(FLAG_OP)) { return 8; }
+    if (strModes.contains(FLAG_HALFOP)) { return 4; }
+    if (strModes.contains(FLAG_MOD)) { return 2; }
+    if (strModes.contains(FLAG_SCREENER)) { return 1; }
+    if (strModes.contains(FLAG_VOICE)) { return 0; }
 
     return -1;
 }

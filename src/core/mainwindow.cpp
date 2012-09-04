@@ -94,15 +94,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
     // create signals
     createSignals();
-
-    // show welcome
-    QTimer::singleShot(0, this, SLOT(initShowWindow())); // 0 sec
-
-    // show options if config not exist
-    showOptions();
-
-    // focus
-    pToolWidget->setFocus();
 }
 
 MainWindow::~MainWindow()
@@ -282,14 +273,6 @@ void MainWindow::createMenus()
     movieTrayIcon = new QMovie(":/images/logo16x16.gif");
 }
 
-void MainWindow::setTrayMenuVisible(bool visible)
-{
-    minimizeAction->setEnabled(visible);
-    maximizeAction->setEnabled(!isMaximized());
-    restoreAction->setEnabled(isMaximized() || !visible);
-    setVisible(visible);
-}
-
 void MainWindow::createSignals()
 {
     // signals buttons
@@ -336,7 +319,19 @@ void MainWindow::createSignals()
     connect(Core::instance()->pNetwork, SIGNAL(updateActions()), this, SLOT(updateActions()));
 }
 
-void MainWindow::initShowWindow()
+void MainWindow::init()
+{
+    // focus
+    pToolWidget->setFocus();
+
+    // show welcome
+    showWelcome();
+
+    // show options if config not exist
+    showOptions();
+}
+
+void MainWindow::showWelcome()
 {
     // debug
     if (Core::instance()->settings.value("debug") == "true")
@@ -361,6 +356,14 @@ void MainWindow::showOptions()
 
         QTimer::singleShot(1000*1, this, SLOT(openOptions())); // 1 sec
     }
+}
+
+void MainWindow::setTrayMenuVisible(bool visible)
+{
+    minimizeAction->setEnabled(visible);
+    maximizeAction->setEnabled(!isMaximized());
+    restoreAction->setEnabled(isMaximized() || !visible);
+    setVisible(visible);
 }
 
 // refresh colors
@@ -478,7 +481,6 @@ void MainWindow::openOptions()
     DlgOptions(this).exec();
 }
 
-// onet dialogs
 void MainWindow::openChannelList()
 {
     if ((Core::instance()->pNetwork->isConnected()) && (Core::instance()->settings.value("logged") == "true"))
@@ -646,10 +648,7 @@ void MainWindow::inputLineKeyEvent(QKeyEvent *k)
 
 int MainWindow::getCurrentTabIndex()
 {
-    if (pTabM->count() != 0)
-        return pTabM->currentIndex();
-    else
-        return -1;
+    return pTabM->currentIndex();
 }
 
 QSystemTrayIcon *MainWindow::getTrayIcon()
@@ -679,7 +678,7 @@ void MainWindow::refreshToolButtons(const QString &strChannel)
 
     // moderation
     QString strModes = Nicklist::instance()->getUserModes(strMe, strChannel);
-    if (strModes.contains("!"))
+    if (strModes.contains(FLAG_MOD))
         pToolWidget->setModeration(true);
     else
         pToolWidget->setModeration(false);

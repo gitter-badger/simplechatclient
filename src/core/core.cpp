@@ -96,6 +96,7 @@ void Core::createAndShowGui()
 {
     window = new MainWindow(0);
     window->show();
+    window->init();
 
     // updates
     Updates::instance()->checkUpdate();

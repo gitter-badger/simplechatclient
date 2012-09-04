@@ -42,6 +42,7 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = 0);
     virtual ~MainWindow();
+    void init();
     void createGui();
 
     // options
@@ -113,7 +114,7 @@ private:
     void setTrayMenuVisible(bool visible);
 
 private slots:
-    void initShowWindow();
+    void showWelcome();
     void buttonConnect();
     void openOptions();
     void openNotes();

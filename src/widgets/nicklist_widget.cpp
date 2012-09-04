@@ -44,7 +44,7 @@ NickListWidget::NickListWidget(const QString &_strChannel) : strChannel(_strChan
 void NickListWidget::addUser(const QString &strNick, QString strModes)
 {
     // if owner remove op
-    if (strModes.contains("`")) strModes.remove("@");
+    if ((strModes.contains(FLAG_OWNER)) && (strModes.contains(FLAG_OP))) strModes.remove(FLAG_OP);
 
     SortedListWidgetItem *item = new SortedListWidgetItem();
     item->setText(strNick);
@@ -113,7 +113,7 @@ void NickListWidget::changeUserFlag(const QString &strNick, QString strFlag)
         }
 
         // if owner remove op
-        if ((strModes.contains("`")) && (strModes.contains("@"))) strModes.remove("@");
+        if ((strModes.contains(FLAG_OWNER)) && (strModes.contains(FLAG_OP))) strModes.remove(FLAG_OP);
 
         item->setData(Qt::UserRole+11, Nicklist::instance()->getUserMaxModes(strModes));
         item->setData(Qt::UserRole+12, strModes);
@@ -393,24 +393,24 @@ void NickListWidget::contextMenuEvent(QContextMenuEvent *e)
     QMenu *privilege = new QMenu(tr("Actions"));
     privilege->setIcon(QIcon(":/images/oxygen/16x16/irc-operator.png"));
 
-    if ((strNickModes.contains("@")) && ((iSelfMaxModes >= 16) || (strSelectedNick == strMe)))
+    if ((strNickModes.contains(FLAG_OP)) && ((iSelfMaxModes >= 16) || (strSelectedNick == strMe)))
         privilege->addAction(QIcon(":/images/op.png"), tr("Take super operator status"), this, SLOT(opDel()));
-    else if ((!strNickModes.contains("@")) && (iSelfMaxModes >= 16))
+    else if ((!strNickModes.contains(FLAG_OP)) && (iSelfMaxModes >= 16))
         privilege->addAction(QIcon(":/images/op.png"), tr("Give super operator status"), this, SLOT(opAdd()));
 
-    if ((strNickModes.contains("%")) && ((iSelfMaxModes >= 8) || (strSelectedNick == strMe)))
+    if ((strNickModes.contains(FLAG_HALFOP)) && ((iSelfMaxModes >= 8) || (strSelectedNick == strMe)))
         privilege->addAction(QIcon(":/images/halfop.png"), tr("Take operator status"), this, SLOT(halfopDel()));
-    else if ((!strNickModes.contains("%")) && (iSelfMaxModes >= 8))
+    else if ((!strNickModes.contains(FLAG_HALFOP)) && (iSelfMaxModes >= 8))
         privilege->addAction(QIcon(":/images/halfop.png"), tr("Give operator status"), this, SLOT(halfopAdd()));
 
-    if ((strNickModes.contains("!")) && ((iSelfMaxModes >= 4) || (strSelectedNick == strMe)))
+    if ((strNickModes.contains(FLAG_MOD)) && ((iSelfMaxModes >= 4) || (strSelectedNick == strMe)))
         privilege->addAction(QIcon(":/images/mod.png"), tr("Take moderator status"), this, SLOT(moderatorDel()));
-    else if ((!strNickModes.contains("!")) && (iSelfMaxModes >= 4))
+    else if ((!strNickModes.contains(FLAG_MOD)) && (iSelfMaxModes >= 4))
         privilege->addAction(QIcon(":/images/mod.png"), tr("Give moderator status"), this, SLOT(moderatorAdd()));
 
-    if ((strNickModes.contains("+")) && ((iSelfMaxModes >= 4) || (strSelectedNick == strMe)))
+    if ((strNickModes.contains(FLAG_VOICE)) && ((iSelfMaxModes >= 4) || (strSelectedNick == strMe)))
         privilege->addAction(QIcon(":/images/voice.png"), tr("Take guest status"), this, SLOT(voiceDel()));
-    else if ((!strNickModes.contains("+")) && (iSelfMaxModes >= 4))
+    else if ((!strNickModes.contains(FLAG_VOICE)) && (iSelfMaxModes >= 4))
         privilege->addAction(QIcon(":/images/voice.png"), tr("Give guest status"), this, SLOT(voiceAdd()));
 
     QAction *nickAct = new QAction(strSelectedNick, this);
@@ -425,11 +425,11 @@ void NickListWidget::contextMenuEvent(QContextMenuEvent *e)
     if (strSelectedNick[0] != '~')
     {
         menu->addAction(QIcon(":/images/oxygen/16x16/view-pim-contacts.png"), tr("Profile"), this, SLOT(profile()));
-        if ((strNickModes.contains("W")) || (strNickModes.contains("V")))
+        if ((strNickModes.contains(FLAG_CAM_PUB)) || (strNickModes.contains(FLAG_CAM_PRIV)))
             menu->addAction(QIcon(":/images/pubcam.png"), tr("Webcam"), this, SLOT(cam()));
     }
     menu->addMenu(mInvite);
-    if (strSelfModes.contains("r"))
+    if (strSelfModes.contains(FLAG_REGISTERED))
     {
         menu->addMenu(friends);
         menu->addMenu(ignore);

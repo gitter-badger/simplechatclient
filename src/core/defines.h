@@ -58,6 +58,20 @@ const int SECONDS_IN_MINUTE = 60;
 #define STATUS "Status"
 #define DEBUG "Debug"
 
+#define FLAG_REGISTERED "r"
+#define FLAG_AWAY "a"
+#define FLAG_BUSY "b"
+#define FLAG_CAM_PRIV "V"
+#define FLAG_CAM_PUB "W"
+#define FLAG_VOICE "+"
+#define FLAG_SCREENER "="
+#define FLAG_MOD "!"
+#define FLAG_HALFOP "%"
+#define FLAG_OP "@"
+#define FLAG_OWNER "`"
+#define FLAG_ADMIN "o"
+#define FLAG_DEV "O"
+
 struct OnetChannelList
 {
     QString name;

@@ -81,17 +81,17 @@ void NickListDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opti
     bool busy = false;
 
     QList<QIcon> icons;
-    if (modes.contains("b")) { busy = true; }
-    if (modes.contains("V")) { icons << QIcon(":/images/privcam.png"); }
-    if (modes.contains("W")) { icons << QIcon(":/images/pubcam.png"); }
-    if (modes.contains("+")) { icons << QIcon(":/images/voice.png"); }
-    if (modes.contains("=")) { icons << QIcon(":/images/screener.png"); }
-    if (modes.contains("!")) { icons << QIcon(":/images/mod.png"); }
-    if (modes.contains("%")) { icons << QIcon(":/images/halfop.png"); }
-    if (modes.contains("@")) { icons << QIcon(":/images/op.png"); }
-    if (modes.contains("`")) { icons << QIcon(":/images/owner.png"); }
-    if (modes.contains("o")) { icons << QIcon(":/images/admin.png"); }
-    if (modes.contains("O")) { icons << QIcon(":/images/dev.png"); }
+    if (modes.contains(FLAG_BUSY)) { busy = true; }
+    if (modes.contains(FLAG_CAM_PRIV)) { icons << QIcon(":/images/privcam.png"); }
+    if (modes.contains(FLAG_CAM_PUB)) { icons << QIcon(":/images/pubcam.png"); }
+    if (modes.contains(FLAG_VOICE)) { icons << QIcon(":/images/voice.png"); }
+    if (modes.contains(FLAG_SCREENER)) { icons << QIcon(":/images/screener.png"); }
+    if (modes.contains(FLAG_MOD)) { icons << QIcon(":/images/mod.png"); }
+    if (modes.contains(FLAG_HALFOP)) { icons << QIcon(":/images/halfop.png"); }
+    if (modes.contains(FLAG_OP)) { icons << QIcon(":/images/op.png"); }
+    if (modes.contains(FLAG_OWNER)) { icons << QIcon(":/images/owner.png"); }
+    if (modes.contains(FLAG_ADMIN)) { icons << QIcon(":/images/admin.png"); }
+    if (modes.contains(FLAG_DEV)) { icons << QIcon(":/images/dev.png"); }
 
     // avatar
     if ((nick[0] != '~') && (strThemes == "Origin"))

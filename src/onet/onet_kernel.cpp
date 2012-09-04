@@ -2705,12 +2705,12 @@ void OnetKernel::raw_353()
             QString strCleanNick = strNick;
 
             QString strPrefix;
-            if (strCleanNick.contains("`")) { strCleanNick.remove("`"); strPrefix.append("`"); }
-            if (strCleanNick.contains("@")) { strCleanNick.remove("@"); strPrefix.append("@"); }
-            if (strCleanNick.contains("%")) { strCleanNick.remove("%"); strPrefix.append("%"); }
-            if (strCleanNick.contains("!")) { strCleanNick.remove("!"); strPrefix.append("!"); }
-            if (strCleanNick.contains("=")) { strCleanNick.remove("="); strPrefix.append("="); }
-            if (strCleanNick.contains("+")) { strCleanNick.remove("+"); strPrefix.append("+"); }
+            if (strCleanNick.contains(FLAG_OWNER)) { strCleanNick.remove(FLAG_OWNER); strPrefix.append(FLAG_OWNER); }
+            if (strCleanNick.contains(FLAG_OP)) { strCleanNick.remove(FLAG_OP); strPrefix.append(FLAG_OP); }
+            if (strCleanNick.contains(FLAG_HALFOP)) { strCleanNick.remove(FLAG_HALFOP); strPrefix.append(FLAG_HALFOP); }
+            if (strCleanNick.contains(FLAG_MOD)) { strCleanNick.remove(FLAG_MOD); strPrefix.append(FLAG_MOD); }
+            if (strCleanNick.contains(FLAG_SCREENER)) { strCleanNick.remove(FLAG_SCREENER); strPrefix.append(FLAG_SCREENER); }
+            if (strCleanNick.contains(FLAG_VOICE)) { strCleanNick.remove(FLAG_VOICE); strPrefix.append(FLAG_VOICE); }
 
             QString strModes = strPrefix+strSuffix;
             Nicklist::instance()->addUser(strChannel, strCleanNick, strModes);
