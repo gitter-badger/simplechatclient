@@ -30,6 +30,7 @@ class OnetKernel;
 class TabContainer;
 class TabManager;
 class ToolWidget;
+#include <QAbstractSocket>
 #include <QSystemTrayIcon>
 #include <QMainWindow>
 
@@ -137,10 +138,7 @@ private slots:
     void openInviteList();
     void openOfflineMessages();
 
-    void setConnected();
-    void setDisconnected();
-    void updateActions();
-    void setConnectEnabled(bool bSet);
+    void networkStateChanged(QAbstractSocket::SocketState socketState);
     void tabCloseRequested(int index);
     void currentTabChanged(int index);
 

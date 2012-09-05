@@ -310,13 +310,10 @@ void MainWindow::createSignals()
     connect(pTabM, SIGNAL(currentChanged(int)), this, SLOT(currentTabChanged(int)));
 
     // signals from network
-    connect(Core::instance()->pNetwork, SIGNAL(setConnected()), this, SLOT(setConnected()));
-    connect(Core::instance()->pNetwork, SIGNAL(setDisconnected()), this, SLOT(setDisconnected()));
-    connect(Core::instance()->pNetwork, SIGNAL(setConnectEnabled(bool)), this, SLOT(setConnectEnabled(bool)));
+    connect(Core::instance()->pNetwork, SIGNAL(socketStateChanged(QAbstractSocket::SocketState)), this, SLOT(networkStateChanged(QAbstractSocket::SocketState)));
     connect(Core::instance()->pNetwork, SIGNAL(kernel(const QString&)), pOnetKernel, SLOT(kernel(const QString&)));
     connect(Core::instance()->pNetwork, SIGNAL(authorize(QString,QString,QString)), pOnetAuth, SLOT(authorize(QString,QString,QString)));
     connect(Core::instance()->pNetwork, SIGNAL(updateNick(const QString&)), pToolWidget, SLOT(updateNick(const QString&)));
-    connect(Core::instance()->pNetwork, SIGNAL(updateActions()), this, SLOT(updateActions()));
 }
 
 void MainWindow::init()
@@ -407,9 +404,6 @@ void MainWindow::buttonConnect()
 {
     if (!Core::instance()->pNetwork->isConnected())
     {
-        connectAction->setText(tr("&Disconnect"));
-        connectAction->setIconText(tr("&Disconnect"));
-        connectAction->setIcon(QIcon(":/images/oxygen/16x16/network-disconnect.png"));
         Core::instance()->settings["reconnect"] = "true";
         Core::instance()->pNetwork->connect();
     }
@@ -417,62 +411,68 @@ void MainWindow::buttonConnect()
     {
         Core::instance()->settings["reconnect"] = "false";
         Core::instance()->settings["logged"] = "false";
-        connectAction->setText(tr("&Connect"));
-        connectAction->setIconText(tr("&Connect"));
-        connectAction->setIcon(QIcon(":/images/oxygen/16x16/network-connect.png"));
         Core::instance()->pNetwork->disconnect();
+
         if (Core::instance()->settings.value("debug") == "true")
             qDebug() << "Set timerReconnect: stop";
         Core::instance()->pNetwork->timerReconnect->stop();
     }
 }
 
-void MainWindow::setConnected()
+void MainWindow::networkStateChanged(QAbstractSocket::SocketState socketState)
 {
-    connectAction->setText(tr("&Disconnect"));
-    connectAction->setIconText(tr("&Disconnect"));
-    connectAction->setIcon(QIcon(":/images/oxygen/16x16/network-disconnect.png"));
-}
+    bool bUpdateMenu = false;
 
-void MainWindow::setDisconnected()
-{
-    connectAction->setText(tr("&Connect"));
-    connectAction->setIconText(tr("&Connect"));
-    connectAction->setIcon(QIcon(":/images/oxygen/16x16/network-connect.png"));
-}
-
-void MainWindow::setConnectEnabled(bool bSet)
-{
-    connectAction->setEnabled(bSet);
-}
-
-void MainWindow::updateActions()
-{
-    QString strNick = Core::instance()->settings.value("nick");
-
-    bool bRegistered = false;
-    if (strNick[0] != '~')
-        bRegistered = true;
-
-    if (bRegistered)
+    if (socketState == QAbstractSocket::UnconnectedState)
     {
-        channelHomesAction->setEnabled(true);
-        channelFavouritesAction->setEnabled(true);
-        friendsAction->setEnabled(true);
-        ignoreAction->setEnabled(true);
-        myStatsAction->setEnabled(true);
-        myProfileAction->setEnabled(true);
-        myAvatarAction->setEnabled(true);
+        bUpdateMenu = true;
+        connectAction->setEnabled(true);
+        connectAction->setText(tr("&Connect"));
+        connectAction->setIconText(tr("&Connect"));
+        connectAction->setIcon(QIcon(":/images/oxygen/16x16/network-connect.png"));
+    }
+    else if (socketState == QAbstractSocket::ConnectedState)
+    {
+        bUpdateMenu = true;
+        connectAction->setEnabled(true);
+        connectAction->setText(tr("&Disconnect"));
+        connectAction->setIconText(tr("&Disconnect"));
+        connectAction->setIcon(QIcon(":/images/oxygen/16x16/network-disconnect.png"));
     }
     else
     {
-        channelHomesAction->setEnabled(false);
-        channelFavouritesAction->setEnabled(false);
-        friendsAction->setEnabled(false);
-        ignoreAction->setEnabled(false);
-        myStatsAction->setEnabled(false);
-        myProfileAction->setEnabled(false);
-        myAvatarAction->setEnabled(false);
+        bUpdateMenu = false;
+        connectAction->setEnabled(false);
+    }
+
+    if (bUpdateMenu)
+    {
+        QString strNick = Core::instance()->settings.value("nick");
+
+        bool bRegistered = false;
+        if (strNick[0] != '~')
+            bRegistered = true;
+
+        if (bRegistered)
+        {
+            channelHomesAction->setEnabled(true);
+            channelFavouritesAction->setEnabled(true);
+            friendsAction->setEnabled(true);
+            ignoreAction->setEnabled(true);
+            myStatsAction->setEnabled(true);
+            myProfileAction->setEnabled(true);
+            myAvatarAction->setEnabled(true);
+        }
+        else
+        {
+            channelHomesAction->setEnabled(false);
+            channelFavouritesAction->setEnabled(false);
+            friendsAction->setEnabled(false);
+            ignoreAction->setEnabled(false);
+            myStatsAction->setEnabled(false);
+            myProfileAction->setEnabled(false);
+            myAvatarAction->setEnabled(false);
+        }
     }
 }
 

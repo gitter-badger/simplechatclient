@@ -73,13 +73,10 @@ private slots:
     void timeoutQueue();
 
 signals:
-    void setConnected();
-    void setDisconnected();
-    void setConnectEnabled(bool);
+    void socketStateChanged(QAbstractSocket::SocketState socketState);
     void kernel(const QString &strData);
     void authorize(QString strCurrentNick, QString strNick, QString strPass);
     void updateNick(const QString &strNick);
-    void updateActions();
 };
 
 #endif // NETWORK_H

@@ -20,9 +20,9 @@
 #ifndef CHANNEL_H
 #define CHANNEL_H
 
+#include "defines.h"
 #include <QHash>
 #include <QObject>
-#include "defines.h"
 
 class Channel : public QObject
 {

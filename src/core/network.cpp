@@ -95,9 +95,6 @@ void Network::clearAll()
     if (Core::instance()->kamerzystaSocket->state() == QAbstractSocket::ConnectedState)
         Core::instance()->kamerzystaSocket->disconnectFromHost();
 
-    // set button
-    emit setDisconnected();
-
     // set lag
     Lag::instance()->reset();
 
@@ -161,8 +158,6 @@ void Network::authorize()
 
     // update nick
     emit updateNick(strNick);
-    // update actions
-    emit updateActions();
 
     // set current nick
     QString strCurrentNick = strNick;
@@ -210,7 +205,6 @@ void Network::connected()
         DEBUG_BLOCK
 #endif
 
-    emit setConnected();
     Lag::instance()->reset();
 
     QString strDisplay = tr("Connected to server");
@@ -385,10 +379,7 @@ void Network::stateChanged(QAbstractSocket::SocketState socketState)
         qDebug() << "Network socket state changed to: " << socketState;
     }
 
-    if ((socketState != QAbstractSocket::UnconnectedState) && (socketState != QAbstractSocket::ConnectedState))
-        emit setConnectEnabled(false);
-    else
-        emit setConnectEnabled(true);
+    emit socketStateChanged(socketState);
 }
 
 void Network::timeoutPong()
