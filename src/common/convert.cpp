@@ -19,7 +19,8 @@
 
 #include <QCoreApplication>
 #include <QDir>
-#include "core.h"
+#include <QPixmap>
+#include "settings.h"
 #include "convert.h"
 
 QString findEmoticon(const QString &strEmoticon)

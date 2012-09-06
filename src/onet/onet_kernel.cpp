@@ -40,6 +40,7 @@
 #include "offline.h"
 #include "onet_utils.h"
 #include "replace.h"
+#include "settings.h"
 #include "sound_notify.h"
 #include "tab_container.h"
 #include "tray.h"

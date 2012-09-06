@@ -24,6 +24,7 @@
 #include <QTimer>
 #include "core.h"
 #include "channel_list_model.h"
+#include "settings.h"
 #include "channel_list.h"
 
 DlgChannelList::DlgChannelList(QWidget *parent) : QDialog(parent)

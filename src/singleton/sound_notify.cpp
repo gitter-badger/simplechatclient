@@ -17,7 +17,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "core.h"
+#include "settings.h"
 #include "sound_notify.h"
 
 SoundNotify * SoundNotify::Instance = 0;

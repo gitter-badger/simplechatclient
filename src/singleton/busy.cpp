@@ -19,6 +19,7 @@
 
 #include <QAction>
 #include "core.h"
+#include "settings.h"
 #include "busy.h"
 
 Busy * Busy::Instance = 0;

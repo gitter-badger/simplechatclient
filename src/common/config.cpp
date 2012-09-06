@@ -19,7 +19,7 @@
 
 #include <QCoreApplication>
 #include <QDir>
-#include "core.h"
+#include "settings.h"
 #include "xml.h"
 #include "config.h"
 

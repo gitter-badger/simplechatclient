@@ -27,6 +27,7 @@
 #endif
 
 #include "core.h"
+#include "settings.h"
 
 #ifdef Q_WS_WIN
 #include <windows.h>
@@ -37,7 +38,7 @@ void displayVersion()
     printf("Simple Chat Client %s\n\n"
            "License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>\n"
            "This is free software: you are free to change and redistribute it.\n\n",
-           qPrintable(Settings::instance()->get("version"));
+           qPrintable(Settings::instance()->get("version")));
 }
 
 void displayOptions()

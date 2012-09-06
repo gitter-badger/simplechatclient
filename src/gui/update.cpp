@@ -23,8 +23,8 @@
 #include <QNetworkAccessManager>
 #include <QPushButton>
 #include <QUrl>
-#include "core.h"
 #include "mainwindow.h"
+#include "settings.h"
 #include "update.h"
 
 #define UPDATE_LINK_1 "http://simplechatclien.sourceforge.net/download/"

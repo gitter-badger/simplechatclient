@@ -30,6 +30,7 @@
 #include "lag.h"
 #include "nicklist.h"
 #include "message.h"
+#include "settings.h"
 #include "network.h"
 
 Network::Network(const QString &_strServer, int _iPort) : strServer(_strServer), iPort(_iPort), iActive(0), bAuthorized(false)

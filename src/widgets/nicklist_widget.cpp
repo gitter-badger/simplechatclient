@@ -26,6 +26,7 @@
 #include "defines.h"
 #include "nicklist.h"
 #include "punish_reason.h"
+#include "settings.h"
 #include "user_profile.h"
 #include "nicklist_widget.h"
 

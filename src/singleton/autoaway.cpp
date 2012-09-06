@@ -20,6 +20,7 @@
 #include <QDateTime>
 #include <QTimer>
 #include "core.h"
+#include "settings.h"
 #include "autoaway.h"
 
 Autoaway * Autoaway::Instance = 0;

@@ -29,6 +29,7 @@
 #include "mainwindow.h"
 #include "profile_manager.h"
 #include "punish_reason.h"
+#include "settings.h"
 #include "sound_notify.h"
 #include "options.h"
 

@@ -28,6 +28,7 @@
 #include "convert.h"
 #include "core.h"
 #include "nicklist.h"
+#include "settings.h"
 #include "simple_stats_widget.h"
 #include "channel_settings.h"
 

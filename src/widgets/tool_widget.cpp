@@ -34,6 +34,7 @@
 #include "moderation.h"
 #include "inputline_widget.h"
 #include "replace.h"
+#include "settings.h"
 #include "tool_widget.h"
 
 ToolWidget::ToolWidget(QWidget *parent) : QWidget(parent), strCurrentColor("#000000")

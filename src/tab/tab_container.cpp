@@ -21,6 +21,7 @@
 #include "convert.h"
 #include "core.h"
 #include "log.h"
+#include "settings.h"
 #include "tab_manager.h"
 #include "tab_container.h"
 

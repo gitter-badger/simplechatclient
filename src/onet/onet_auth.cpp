@@ -29,6 +29,7 @@
 #include "captcha.h"
 #include "core.h"
 #include "message.h"
+#include "settings.h"
 #include "onet_auth.h"
 
 #define AJAX_API "http://czat.onet.pl/include/ajaxapi.xml.php3"

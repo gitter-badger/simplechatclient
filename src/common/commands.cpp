@@ -21,10 +21,10 @@
 #include <QMessageBox>
 #include <QPushButton>
 #include "channel_list_model.h"
-#include "core.h"
 #include "convert.h"
 #include "message.h"
 #include "replace.h"
+#include "settings.h"
 #include "commands.h"
 
 #ifdef Q_WS_WIN
@@ -284,7 +284,7 @@ QString Commands::cmdQuit()
     QString strReason;
     for (int i = 1; i < strDataList.size(); i++) { if (i != 1) strReason += " "; strReason += strDataList[i]; }
 
-    Settings::instance()->set("reconnect"], "false");
+    Settings::instance()->set("reconnect", "false");
 
     if (!strReason.isEmpty())
     {

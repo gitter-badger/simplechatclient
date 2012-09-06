@@ -18,7 +18,7 @@
  */
 
 #include <QRegExp>
-#include "core.h"
+#include "settings.h"
 #include "replace.h"
 
 void Replace::replaceEmots(QString &strData)

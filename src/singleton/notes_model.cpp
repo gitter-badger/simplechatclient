@@ -21,7 +21,7 @@
 #include <QDir>
 #include <QFile>
 #include <QTextStream>
-#include "core.h"
+#include "settings.h"
 #include "notes_model.h"
 
 #ifdef Q_WS_WIN

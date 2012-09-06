@@ -25,6 +25,7 @@
 #include "options.h"
 #include "profile_add.h"
 #include "profile_edit.h"
+#include "settings.h"
 #include "profile_manager.h"
 
 #ifdef Q_WS_WIN

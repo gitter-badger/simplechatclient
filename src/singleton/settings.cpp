@@ -32,7 +32,7 @@ Settings * Settings::instance()
     return Instance;
 }
 
-void Settings::Settings()
+Settings::Settings()
 {
 }
 

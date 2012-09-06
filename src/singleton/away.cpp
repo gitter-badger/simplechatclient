@@ -19,6 +19,7 @@
 
 #include <QAction>
 #include "core.h"
+#include "settings.h"
 #include "away.h"
 
 Away * Away::Instance = 0;

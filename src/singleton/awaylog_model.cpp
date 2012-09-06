@@ -19,10 +19,10 @@
 
 #include <QAction>
 #include <QDateTime>
-#include "core.h"
 #include "convert.h"
 #include "log.h"
 #include "notification.h"
+#include "settings.h"
 #include "awaylog_model.h"
 
 Awaylog * Awaylog::Instance = 0;

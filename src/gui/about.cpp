@@ -19,7 +19,7 @@
 
 #include <QDesktopWidget>
 #include <QPushButton>
-#include "core.h"
+#include "settings.h"
 #include "about.h"
 
 DlgAbout::DlgAbout(QWidget *parent) : QDialog(parent)

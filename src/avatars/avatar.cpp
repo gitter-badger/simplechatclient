@@ -23,8 +23,8 @@
 #include <QStringList>
 #include "avatar.h"
 #include "channel.h"
-#include "core.h"
 #include "nicklist.h"
+#include "settings.h"
 #include "tab_container.h"
 
 #ifdef Q_WS_WIN

@@ -24,6 +24,7 @@
 #include "config.h"
 #include "log.h"
 #include "mainwindow.h"
+#include "settings.h"
 #include "updates.h"
 #include "core.h"
 

@@ -24,6 +24,7 @@
 #include "core.h"
 #include "convert.h"
 #include "offline.h"
+#include "settings.h"
 #include "offline_messages.h"
 
 DlgOfflineMessages::DlgOfflineMessages(QWidget *parent) : QDialog(parent)

@@ -18,9 +18,10 @@
  */
 
 #include <QDir>
+#include <QDebug>
 #include <QFile>
 #include <QTextStream>
-#include "core.h"
+#include "settings.h"
 #include "xml.h"
 
 Xml::Xml(const QString &_strFile, const QString &_strRootName, const QHash<QString,QString> &_lDefaultValues) : strFile(_strFile), strRootName(_strRootName), lDefaultValues(_lDefaultValues)
@@ -201,17 +202,17 @@ void Xml::save()
     }
 
     QString xml = doc.toString();
+    if (xml.isEmpty())
+    {
+        qDebug() << QString(tr("Error: Cannot save xml file %1")).arg(strFile);
+        return;
+    }
 
     QFile f(strFile);
     if (f.open(QIODevice::WriteOnly | QIODevice::Truncate))
     {
-        if (!xml.isEmpty())
-        {
-            QTextStream out(&f);
-            out << xml;
-        }
-        else
-            qDebug() << QString(tr("Error: Cannot save xml file %1")).arg(strFile);
+        QTextStream out(&f);
+        out << xml;
 
         f.close();
     }

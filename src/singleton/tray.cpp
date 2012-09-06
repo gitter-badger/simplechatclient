@@ -18,9 +18,10 @@
  */
 
 #include "channel.h"
+#include "convert.h"
 #include "core.h"
 #include "mainwindow.h"
-#include "convert.h"
+#include "settings.h"
 #include "tray.h"
 
 Tray * Tray::Instance = 0;

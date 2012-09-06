@@ -57,6 +57,7 @@
 #include "options.h"
 #include "onet_auth.h"
 #include "onet_kernel.h"
+#include "settings.h"
 #include "tab_container.h"
 #include "tab_manager.h"
 #include "tool_widget.h"

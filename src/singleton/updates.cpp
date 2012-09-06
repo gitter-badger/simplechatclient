@@ -24,6 +24,7 @@
 #include "core.h"
 #include "update.h"
 #include "message.h"
+#include "settings.h"
 #include "updates.h"
 
 #define UPDATE_URL_1 "http://simplechatclien.sourceforge.net/update.php"

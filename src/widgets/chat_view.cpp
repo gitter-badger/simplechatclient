@@ -34,6 +34,7 @@
 #include "notes_model.h"
 #include "nicklist.h"
 #include "punish_reason.h"
+#include "settings.h"
 #include "webbrowser.h"
 #include "chat_view.h"
 

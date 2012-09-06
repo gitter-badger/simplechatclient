@@ -20,7 +20,7 @@
 #include <QDateTime>
 #include <QTcpSocket>
 #include <QTimer>
-#include "core.h"
+#include "settings.h"
 #include "webcam_network.h"
 
 WebcamNetwork::WebcamNetwork() : iLastActive(0), iLastKeepAlive(0), bReconnecting(true)

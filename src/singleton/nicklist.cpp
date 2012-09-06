@@ -21,6 +21,7 @@
 #include "core.h"
 #include "mainwindow.h"
 #include "message.h"
+#include "settings.h"
 #include "nicklist.h"
 
 #ifdef Q_WS_WIN

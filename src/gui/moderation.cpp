@@ -22,6 +22,7 @@
 #include <QTimer>
 #include "core.h"
 #include "message.h"
+#include "settings.h"
 #include "moderation.h"
 
 DlgModeration::DlgModeration(QWidget *parent, const QString &_strCurrentChannel) : QDialog(parent), strCurrentChannel(_strCurrentChannel)

@@ -19,8 +19,8 @@
 
 #include <QDateTime>
 #include "convert.h"
-#include "core.h"
 #include "nicklist.h"
+#include "settings.h"
 #include "html_messages_renderer.h"
 
 void fixContextMenu(QString &strData, MessageCategory eMessageCategory)

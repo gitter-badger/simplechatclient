@@ -25,6 +25,7 @@
 #include "log.h"
 #include "mainwindow.h"
 #include "nicklist.h"
+#include "settings.h"
 #include "sound_notify.h"
 #include "tray.h"
 #include "message.h"

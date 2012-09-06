@@ -30,7 +30,7 @@
 #include <QUrl>
 #include <QUuid>
 
-#include "core.h"
+#include "settings.h"
 #include "my_avatar_model.h"
 
 #include "avatar_client.h"

@@ -20,8 +20,8 @@
 #include <QCoreApplication>
 #include <QDir>
 #include <QProcess>
-#include "core.h"
 #include "log.h"
+#include "settings.h"
 
 // for abort()
 #include <stdio.h>

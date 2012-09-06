@@ -23,8 +23,8 @@
 #include <QFile>
 #include <QTextStream>
 #include "channel.h"
-#include "core.h"
 #include "convert.h"
+#include "settings.h"
 #include "log.h"
 
 #ifdef Q_WS_WIN
