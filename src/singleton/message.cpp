@@ -76,7 +76,7 @@ bool Message::isHighlightMessage(const QString &strMessage)
 
 void Message::saveMessage(const QString &strChannel, const QString &strData, qint64 iTime, QString strNick)
 {
-    if (Core::instance()->settings.value("disable_logs") == "true")
+    if (Settings::instance()->get("disable_logs") == "true")
         return;
 
     QString strSaveData;
@@ -95,11 +95,11 @@ bool Message::isHideJoinPart(const QString &strChannel, MessageCategory eMessage
 {
     if ((eMessageCategory == MessageJoin) || (eMessageCategory == MessagePart) || (eMessageCategory == MessageQuit))
     {
-        if (Core::instance()->settings.value("hide_join_part") == "true")
+        if (Settings::instance()->get("hide_join_part") == "true")
             return true;
 
         int iNickCount = Nicklist::instance()->getUserCount(strChannel);
-        if ((Core::instance()->settings.value("hide_join_part_200") == "true") && (iNickCount > 200))
+        if ((Settings::instance()->get("hide_join_part_200") == "true") && (iNickCount > 200))
             return true;
     }
     return false;
@@ -136,7 +136,7 @@ void Message::showMessage(const QString &strChannel, const QString &strData, Mes
         Tray::instance()->showMessage(strChannel, strAwaylogData);
 
         // sound
-        if (Core::instance()->settings.value("disable_sounds") == "false")
+        if (Settings::instance()->get("disable_sounds") == "false")
             SoundNotify::instance()->play(Beep);
     }
 

@@ -65,14 +65,14 @@ void Updates::checkUpdate()
 
 void Updates::compareVersion()
 {
-    QString strCurrentVersion = Core::instance()->settings.value("version");
+    QString strCurrentVersion = Settings::instance()->get("version");
     QStringList lCurrentVersion = strCurrentVersion.split(".");
     int iCurrentMajor = lCurrentVersion[0].toInt();
     int iCurrentMinor = lCurrentVersion[1].toInt();
     int iCurrentPatch = lCurrentVersion[2].toInt();
     int iCurrentVersion = (QString("%1%2%3").arg(iCurrentMajor).arg(iCurrentMinor).arg(iCurrentPatch)).toInt();
 
-    QString strAvailableVersion = Core::instance()->settings.value("available_version");
+    QString strAvailableVersion = Settings::instance()->get("available_version");
     QStringList lAvailableVersion = strAvailableVersion.split(".");
     int iAvailableMajor = lAvailableVersion[0].toInt();
     int iAvailableMinor = lAvailableVersion[1].toInt();
@@ -92,7 +92,7 @@ void Updates::compareVersion()
     // save status
     Core::instance()->settings["version_status"] = strVersionStatus;
 
-    if (Core::instance()->settings.value("debug") == "true")
+    if (Settings::instance()->get("debug") == "true")
         qDebug() << "Current version: " << strCurrentVersion << " Available version: " << strAvailableVersion << " Status: " << strVersionStatus;
 }
 
@@ -151,7 +151,7 @@ void Updates::updateFinished(QNetworkReply *reply)
         }
         else
         {
-            if (Core::instance()->settings.value("debug") == "true")
+            if (Settings::instance()->get("debug") == "true")
                 qDebug() << "Error: Cannot get update xml";
         }
 

@@ -170,7 +170,7 @@ void DlgProfileManager::removeProfile()
 
         refreshAllLists();
 
-        if (profileName == Core::instance()->settings.value("current_profile"))
+        if (profileName == Settings::instance()->get("current_profile"))
             pDlgOptions->setCurrentProfile(0);
     }
 }

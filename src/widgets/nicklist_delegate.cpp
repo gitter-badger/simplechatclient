@@ -35,12 +35,12 @@ void NickListDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opti
     // save
     painter->save();
 
-    QString strNicklistNickColor = Core::instance()->settings.value("nicklist_nick_color");
-    QString strNicklistSelectedNickColor = Core::instance()->settings.value("nicklist_selected_nick_color");
-    QString strNicklistBusyNickColor = Core::instance()->settings.value("nicklist_busy_nick_color");
-    QString strNicklistGradient1Color = Core::instance()->settings.value("nicklist_gradient_1_color");
-    QString strNicklistGradient2Color = Core::instance()->settings.value("nicklist_gradient_2_color");
-    QString strThemes = Core::instance()->settings.value("themes");
+    QString strNicklistNickColor = Settings::instance()->get("nicklist_nick_color");
+    QString strNicklistSelectedNickColor = Settings::instance()->get("nicklist_selected_nick_color");
+    QString strNicklistBusyNickColor = Settings::instance()->get("nicklist_busy_nick_color");
+    QString strNicklistGradient1Color = Settings::instance()->get("nicklist_gradient_1_color");
+    QString strNicklistGradient2Color = Settings::instance()->get("nicklist_gradient_2_color");
+    QString strThemes = Settings::instance()->get("themes");
 
     QPen fontPen(QColor(strNicklistNickColor), 1, Qt::SolidLine);
     QPen selectedFontPen(QColor(strNicklistSelectedNickColor), 1, Qt::SolidLine);
@@ -143,7 +143,7 @@ QSize NickListDelegate::sizeHint(const QStyleOptionViewItem &option, const QMode
     Q_UNUSED (option);
     Q_UNUSED (index);
 
-    QString strThemes = Core::instance()->settings.value("themes");
+    QString strThemes = Settings::instance()->get("themes");
 
     if (strThemes == "Origin") // with avatars
         return QSize(200, 35);

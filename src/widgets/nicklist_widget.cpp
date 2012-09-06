@@ -331,7 +331,7 @@ void NickListWidget::contextMenuEvent(QContextMenuEvent *e)
 
     strSelectedNick = this->selectedItems().at(0)->text();
 
-    QString strMe = Core::instance()->settings.value("nick");
+    QString strMe = Settings::instance()->get("nick");
     QString strSelfModes = Nicklist::instance()->getUserModes(strMe, strChannel);
     int iSelfMaxModes = Nicklist::instance()->getUserMaxModes(strSelfModes);
     QString strNickModes = Nicklist::instance()->getUserModes(strSelectedNick, strChannel);

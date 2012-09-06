@@ -90,7 +90,7 @@ QString Avatar::getAvatarPath(const QString &strAvatarPath)
     path = QDir::homePath()+"/.scc";
 #endif
 
-    QString strCurrentProfile = Core::instance()->settings.value("current_profile");
+    QString strCurrentProfile = Settings::instance()->get("current_profile");
     path += "/profiles/"+strCurrentProfile+"/avatars";
 
     // create dir if not exist

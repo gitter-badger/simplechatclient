@@ -100,7 +100,7 @@ void crashHandler()
 {
     QString path = QDir::homePath()+"/.scc";
 
-    QString strCurrentProfile = Core::instance()->settings.value("current_profile");
+    QString strCurrentProfile = Settings::instance()->get("current_profile");
     path += "/profiles/"+strCurrentProfile+"/log";
 
     // create dir if not exist

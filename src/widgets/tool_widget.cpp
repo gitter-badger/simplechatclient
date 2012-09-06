@@ -301,7 +301,7 @@ void ToolWidget::setDefaultValues()
     separator2->hide();
 
     // set default bold
-    if (Core::instance()->settings.value("my_bold") == "true")
+    if (Settings::instance()->get("my_bold") == "true")
     {
         bold->setChecked(true);
         bMyBold = true;
@@ -315,7 +315,7 @@ void ToolWidget::setDefaultValues()
     }
 
     // set default italic
-    if (Core::instance()->settings.value("my_italic") == "true")
+    if (Settings::instance()->get("my_italic") == "true")
     {
         italic->setChecked(true);
         bMyItalic = true;
@@ -331,12 +331,12 @@ void ToolWidget::setDefaultValues()
     int iWeight = (bMyBold ? 75 : 50);
 
     // set default font
-    QString strMyFont = Core::instance()->settings.value("my_font");
+    QString strMyFont = Settings::instance()->get("my_font");
     fontfamily->setText(strMyFont);
     strMyFontFamily = strMyFont;
 
     // set default color
-    QString strMyColor = Core::instance()->settings.value("my_color");
+    QString strMyColor = Settings::instance()->get("my_color");
     strCurrentColor = strMyColor;
 
     int iMyColor;
@@ -734,7 +734,7 @@ void ToolWidget::inputlineReturnPressed()
     Core::instance()->settings["last_active"] = QString::number(iCurrentTime);
 
     // disable away
-    bool bAway = Core::instance()->settings.value("away") == "true" ? true : false;
+    bool bAway = Settings::instance()->get("away") == "true" ? true : false;
     if (bAway)
         Core::instance()->pNetwork->send("AWAY :");
 
@@ -751,7 +751,7 @@ void ToolWidget::moderButtonClicked()
     Core::instance()->settings["last_active"] = QString::number(iCurrentTime);
 
     // disable away
-    bool bAway = Core::instance()->settings.value("away") == "true" ? true : false;
+    bool bAway = Settings::instance()->get("away") == "true" ? true : false;
     if (bAway)
         Core::instance()->pNetwork->send("AWAY :");
 
@@ -786,7 +786,7 @@ void ToolWidget::sendMessage(QString strText, bool bModeration)
 {
     if (strText.isEmpty()) return; // empty text!
     QString strChannel = Channel::instance()->getCurrent();
-    QString strMe = Core::instance()->settings.value("nick");
+    QString strMe = Settings::instance()->get("nick");
     QString strCommand;
     QString strTextOriginal;
 

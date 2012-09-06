@@ -62,9 +62,9 @@ void Busy::stop()
 
 void Busy::busyTriggered()
 {
-    if ((Core::instance()->pNetwork->isConnected()) && (Core::instance()->settings.value("logged") == "true"))
+    if ((Core::instance()->pNetwork->isConnected()) && (Settings::instance()->get("logged") == "true"))
     {
-        bool bBusy = Core::instance()->settings.value("busy") == "true" ? true : false;
+        bool bBusy = Settings::instance()->get("busy") == "true" ? true : false;
 
         if (bBusy)
             Core::instance()->pNetwork->send("BUSY 0");

@@ -54,11 +54,11 @@ void Log::save(const QString &strChannel, const QString &strData)
     path = QDir::homePath()+"/.scc";
 #endif
 
-    QString strCurrentProfile = Core::instance()->settings.value("current_profile");
+    QString strCurrentProfile = Settings::instance()->get("current_profile");
     path += "/profiles/"+strCurrentProfile+"/log";
 
     // save logs by date
-    bool bSaveLogsByDate = Core::instance()->settings.value("save_logs_by_date") == "true" ? true : false;
+    bool bSaveLogsByDate = Settings::instance()->get("save_logs_by_date") == "true" ? true : false;
     if (bSaveLogsByDate)
     {
         QString strDate = QDate().currentDate().toString("yyyy-MM");

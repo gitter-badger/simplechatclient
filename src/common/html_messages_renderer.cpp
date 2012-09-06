@@ -197,19 +197,19 @@ QString HtmlMessagesRenderer::rendererDebug(QString strData, qint64 iTime)
 
 QString HtmlMessagesRenderer::headCSS()
 {
-    QString strDefaultColor = Core::instance()->settings.value("default_color");
-    QString strChannelColor = Core::instance()->settings.value("channel_color");
-    QString strFontSize = Core::instance()->settings.value("font_size");
+    QString strDefaultColor = Settings::instance()->get("default_color");
+    QString strChannelColor = Settings::instance()->get("channel_color");
+    QString strFontSize = Settings::instance()->get("font_size");
 
-    QString strMessageJoin = Core::instance()->settings.value("message_join_color");
-    QString strMessagePart = Core::instance()->settings.value("message_part_color");
-    QString strMessageQuit = Core::instance()->settings.value("message_quit_color");
-    QString strMessageKick = Core::instance()->settings.value("message_kick_color");
-    QString strMessageMode = Core::instance()->settings.value("message_mode_color");
-    QString strMessageNotice = Core::instance()->settings.value("message_notice_color");
-    QString strMessageInfo = Core::instance()->settings.value("message_info_color");
-    QString strMessageMe = Core::instance()->settings.value("message_me_color");
-    QString strMessageError = Core::instance()->settings.value("message_error_color");
+    QString strMessageJoin = Settings::instance()->get("message_join_color");
+    QString strMessagePart = Settings::instance()->get("message_part_color");
+    QString strMessageQuit = Settings::instance()->get("message_quit_color");
+    QString strMessageKick = Settings::instance()->get("message_kick_color");
+    QString strMessageMode = Settings::instance()->get("message_mode_color");
+    QString strMessageNotice = Settings::instance()->get("message_notice_color");
+    QString strMessageInfo = Settings::instance()->get("message_info_color");
+    QString strMessageMe = Settings::instance()->get("message_me_color");
+    QString strMessageError = Settings::instance()->get("message_error_color");
 
     QString strHeadCSS = "div{margin-bottom: 2px;}";
     strHeadCSS.append(QString("table{border-spacing: 0; margin: 0; padding: 0; font-family: sans; word-wrap: break-word; font-size:%1;}.TableText{width:100%;}").arg(strFontSize));
@@ -237,9 +237,9 @@ QString HtmlMessagesRenderer::headCSS()
 
 QString HtmlMessagesRenderer::bodyCSS()
 {
-    QString strFontSize = Core::instance()->settings.value("font_size");
-    QString strBackgroundImage = Core::instance()->settings.value("background_image");
-    QString strDisableBackgroundImage = Core::instance()->settings.value("disable_background_image");
+    QString strFontSize = Settings::instance()->get("font_size");
+    QString strBackgroundImage = Settings::instance()->get("background_image");
+    QString strDisableBackgroundImage = Settings::instance()->get("disable_background_image");
 
 #ifndef Q_WS_WIN
     strBackgroundImage = "file://"+strBackgroundImage;

@@ -939,7 +939,7 @@ void DlgChannelSettings::refreshPermissionList()
     ((QListWidget*)ui.tabWidget_permissions->widget(3))->clear();
 
     // enable tabs
-    QString strMe = Core::instance()->settings.value("nick");
+    QString strMe = Settings::instance()->get("nick");
     QString strSelfModes = Nicklist::instance()->getUserModes(strMe, strChannel);
     int iSelfMaxModes = Nicklist::instance()->getUserMaxModes(strSelfModes);
 

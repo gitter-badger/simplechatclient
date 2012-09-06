@@ -113,7 +113,7 @@ void WebcamNetwork::networkSendb(const QByteArray &bData)
         }
         else
         {
-            if (Core::instance()->settings.value("debug") == "true")
+            if (Settings::instance()->get("debug") == "true")
                 qDebug() << "CAM -> " << QString(bData);
         }
     }

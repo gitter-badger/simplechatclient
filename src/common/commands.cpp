@@ -153,7 +153,7 @@ QString Commands::cmdJoin()
 
     if (isErotic(strChannel))
     {
-        if (Core::instance()->settings.value("age_check") == "true")
+        if (Settings::instance()->get("age_check") == "true")
         {
             QMessageBox msgBox;
             msgBox.setStyleSheet("background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:0.557, stop:0 rgba(198, 0, 0, 255), stop:1 rgba(255, 0, 0, 255));");
@@ -242,7 +242,7 @@ QString Commands::cmdWhereis()
 
 QString Commands::cmdBusy()
 {
-    QString strBusy = Core::instance()->settings.value("busy");
+    QString strBusy = Settings::instance()->get("busy");
 
     if (strBusy == "true")
         return "BUSY 0";
@@ -318,7 +318,7 @@ QString Commands::cmdMp3()
             QString strLength = pWinamp->length();
             delete pWinamp;
 
-            QString strWinamp = Core::instance()->settings.value("winamp");
+            QString strWinamp = Settings::instance()->get("winamp");
 
             strWinamp.replace("$version", strVersion);
             strWinamp.replace("$song", strSong);

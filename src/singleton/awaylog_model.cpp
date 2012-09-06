@@ -51,11 +51,11 @@ void Awaylog::init()
 
 void Awaylog::add(qint64 iTime, const QString &strChannel, const QString &strData)
 {
-    if (Core::instance()->settings.value("away") == "false")
+    if (Settings::instance()->get("away") == "false")
         return;
 
     // save awaylog
-    if (Core::instance()->settings.value("disable_logs") == "false")
+    if (Settings::instance()->get("disable_logs") == "false")
     {
         QString strAwaylogFileData = QString("%1 %2 %3").arg(QDateTime::fromMSecsSinceEpoch(iTime).toString("[yyyy-MM-dd] [hh:mm:ss]"), strChannel, strData);
         Log::save("awaylog", strAwaylogFileData);

@@ -122,7 +122,7 @@ void DlgOfflineMessages::refreshMessages()
                     messagesQuoted.append(strNick);
                 }
 
-                QString strMe = Core::instance()->settings.value("nick");
+                QString strMe = Settings::instance()->get("nick");
 
                 strMessage = QString("%1 <%2> %3").arg(strDT, strMe, strMessage);
                 ui.listWidget_msg->addItem(strMessage);
@@ -199,7 +199,7 @@ void DlgOfflineMessages::buttonReply()
     ui.lineEdit_reply->clear();
 
     // show
-    QString strMe = Core::instance()->settings.value("nick");
+    QString strMe = Settings::instance()->get("nick");
     QString strDT = QDateTime::currentDateTime().toString("[hh:mm:ss]");
     strMessage = QString("%1 <%2> %3").arg(strDT, strMe, strMessage);
     ui.listWidget_msg->addItem(strMessage);

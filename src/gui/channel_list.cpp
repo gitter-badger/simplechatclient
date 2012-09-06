@@ -496,7 +496,7 @@ void DlgChannelList::allCellDoubleClicked(int row, int column)
 
     if (isErotic(strChannel))
     {
-        if (Core::instance()->settings.value("age_check") == "true")
+        if (Settings::instance()->get("age_check") == "true")
         {
             QMessageBox msgBox;
             msgBox.setStyleSheet("background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:0.557, stop:0 rgba(198, 0, 0, 255), stop:1 rgba(255, 0, 0, 255));");
@@ -543,7 +543,7 @@ void DlgChannelList::eroticCellDoubleClicked(int row, int column)
 
     if (isErotic(strChannel))
     {
-        if (Core::instance()->settings.value("age_check") == "true")
+        if (Settings::instance()->get("age_check") == "true")
         {
             QMessageBox msgBox;
             msgBox.setStyleSheet("background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:0.557, stop:0 rgba(198, 0, 0, 255), stop:1 rgba(255, 0, 0, 255));");

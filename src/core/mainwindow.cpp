@@ -331,7 +331,7 @@ void MainWindow::init()
 void MainWindow::showWelcome()
 {
     // debug
-    if (Core::instance()->settings.value("debug") == "true")
+    if (Settings::instance()->get("debug") == "true")
         pTabC->addTab(DEBUG);
 
     // status
@@ -342,7 +342,7 @@ void MainWindow::showWelcome()
 
 void MainWindow::showOptions()
 {
-    QString strFirstRun = Core::instance()->settings.value("first_run");
+    QString strFirstRun = Settings::instance()->get("first_run");
 
     if (strFirstRun == "true")
     {
@@ -369,18 +369,18 @@ void MainWindow::refreshColors()
     QString strTabBackgroundColor;
     QString strBackgroundColor;
 
-    if (Core::instance()->settings.value("background_color").toLower() != "#ffffff")
+    if (Settings::instance()->get("background_color").toLower() != "#ffffff")
     {
 #ifdef Q_WS_WIN
         QString strMidColor = this->palette().midlight().color().name();
-        strTabBackgroundColor = QString("QTabBar::tab { padding: 4px; margin-right: 3px; border: 1px solid %1; border-top-left-radius: 6px; border-top-right-radius: 6px; min-width: 8ex; background-color: %2;}").arg(strMidColor, Core::instance()->settings.value("background_color"));
+        strTabBackgroundColor = QString("QTabBar::tab { padding: 4px; margin-right: 3px; border: 1px solid %1; border-top-left-radius: 6px; border-top-right-radius: 6px; min-width: 8ex; background-color: %2;}").arg(strMidColor, Settings::instance()->get("background_color"));
 #endif
-        strBackgroundColor = QString("background-color:%1;").arg(Core::instance()->settings.value("background_color"));
+        strBackgroundColor = QString("background-color:%1;").arg(Settings::instance()->get("background_color"));
     }
 
     QString strDefaultColor;
-    if (Core::instance()->settings.value("default_color").toLower() != "#000000")
-        strDefaultColor = QString("color:%1;").arg(Core::instance()->settings.value("default_color"));
+    if (Settings::instance()->get("default_color").toLower() != "#000000")
+        strDefaultColor = QString("color:%1;").arg(Settings::instance()->get("default_color"));
 
     this->setStyleSheet(QString("*{%1}%2").arg(strDefaultColor+strBackgroundColor, strTabBackgroundColor));
 
@@ -413,7 +413,7 @@ void MainWindow::buttonConnect()
         Core::instance()->settings["logged"] = "false";
         Core::instance()->pNetwork->disconnect();
 
-        if (Core::instance()->settings.value("debug") == "true")
+        if (Settings::instance()->get("debug") == "true")
             qDebug() << "Set timerReconnect: stop";
         Core::instance()->pNetwork->timerReconnect->stop();
     }
@@ -447,7 +447,7 @@ void MainWindow::networkStateChanged(QAbstractSocket::SocketState socketState)
 
     if (bUpdateMenu)
     {
-        QString strNick = Core::instance()->settings.value("nick");
+        QString strNick = Settings::instance()->get("nick");
 
         bool bRegistered = false;
         if (strNick[0] != '~')
@@ -483,69 +483,69 @@ void MainWindow::openOptions()
 
 void MainWindow::openChannelList()
 {
-    if ((Core::instance()->pNetwork->isConnected()) && (Core::instance()->settings.value("logged") == "true"))
+    if ((Core::instance()->pNetwork->isConnected()) && (Settings::instance()->get("logged") == "true"))
         DlgChannelList(this).exec();
 }
 
 void MainWindow::openChannelHomes()
 {
-    if ((Core::instance()->pNetwork->isConnected()) && (Core::instance()->settings.value("logged") == "true"))
+    if ((Core::instance()->pNetwork->isConnected()) && (Settings::instance()->get("logged") == "true"))
         DlgChannelHomes(this).exec();
 }
 
 void MainWindow::openChannelFavourites()
 {
-    if ((Core::instance()->pNetwork->isConnected()) && (Core::instance()->settings.value("logged") == "true"))
+    if ((Core::instance()->pNetwork->isConnected()) && (Settings::instance()->get("logged") == "true"))
         DlgChannelFavourites(this).exec();
 }
 
 void MainWindow::openFriends()
 {
-    if ((Core::instance()->pNetwork->isConnected()) && (Core::instance()->settings.value("logged") == "true"))
+    if ((Core::instance()->pNetwork->isConnected()) && (Settings::instance()->get("logged") == "true"))
         DlgFriends(this).exec();
 }
 
 void MainWindow::openIgnore()
 {
-    if ((Core::instance()->pNetwork->isConnected()) && (Core::instance()->settings.value("logged") == "true"))
+    if ((Core::instance()->pNetwork->isConnected()) && (Settings::instance()->get("logged") == "true"))
         DlgIgnore(this).exec();
 }
 
 void MainWindow::openFindNick()
 {
-    if ((Core::instance()->pNetwork->isConnected()) && (Core::instance()->settings.value("logged") == "true"))
+    if ((Core::instance()->pNetwork->isConnected()) && (Settings::instance()->get("logged") == "true"))
         DlgFindNick(this).exec();
 }
 
 void MainWindow::openCams()
 {
 #if WITH_KAMERZYSTA
-    if ((Core::instance()->pNetwork->isConnected()) && (Core::instance()->settings.value("logged") == "true"))
+    if ((Core::instance()->pNetwork->isConnected()) && (Settings::instance()->get("logged") == "true"))
     {
-        QString strMe = Core::instance()->settings.value("nick");
+        QString strMe = Settings::instance()->get("nick");
         (new Kamerzysta(Core::instance()->kamerzystaSocket))->show(strMe);
     }
 #else
-    if ((Core::instance()->pNetwork->isConnected()) && (Core::instance()->settings.value("logged") == "true"))
+    if ((Core::instance()->pNetwork->isConnected()) && (Settings::instance()->get("logged") == "true"))
         new DlgWebcam();
 #endif
 }
 
 void MainWindow::openMyStats()
 {
-    if ((Core::instance()->pNetwork->isConnected()) && (Core::instance()->settings.value("logged") == "true"))
+    if ((Core::instance()->pNetwork->isConnected()) && (Settings::instance()->get("logged") == "true"))
         DlgMyStats(this).exec();
 }
 
 void MainWindow::openMyProfile()
 {
-    if ((Core::instance()->pNetwork->isConnected()) && (Core::instance()->settings.value("logged") == "true"))
+    if ((Core::instance()->pNetwork->isConnected()) && (Settings::instance()->get("logged") == "true"))
         DlgMyProfile(this).exec();
 }
 
 void MainWindow::openMyAvatar()
 {
-    if ((Core::instance()->pNetwork->isConnected()) && (Core::instance()->settings.value("logged") == "true"))
+    if ((Core::instance()->pNetwork->isConnected()) && (Settings::instance()->get("logged") == "true"))
         DlgMyAvatar(this).exec();
 }
 
@@ -566,13 +566,13 @@ void MainWindow::openAwaylog()
 
 void MainWindow::openInviteList()
 {
-    if ((Core::instance()->pNetwork->isConnected()) && (Core::instance()->settings.value("logged") == "true"))
+    if ((Core::instance()->pNetwork->isConnected()) && (Settings::instance()->get("logged") == "true"))
         DlgInviteList(this).exec();
 }
 
 void MainWindow::openOfflineMessages()
 {
-    if ((Core::instance()->pNetwork->isConnected()) && (Core::instance()->settings.value("logged") == "true"))
+    if ((Core::instance()->pNetwork->isConnected()) && (Settings::instance()->get("logged") == "true"))
         DlgOfflineMessages(this).exec();
 }
 
@@ -668,7 +668,7 @@ QAction *MainWindow::getNotificationAction()
 
 void MainWindow::refreshToolButtons(const QString &strChannel)
 {
-    QString strMe = Core::instance()->settings.value("nick");
+    QString strMe = Settings::instance()->get("nick");
 
     // hide/show settings on non channel
     if (strChannel[0] != '#')
@@ -713,7 +713,7 @@ void MainWindow::changeCurrentTab(const QString &strChannel)
 void MainWindow::currentTabChanged(int index)
 {
     // change tab color
-    pTabM->setColor(index, QColor(Core::instance()->settings.value("default_color")));
+    pTabM->setColor(index, QColor(Settings::instance()->get("default_color")));
 
     // clear input line
     pToolWidget->clearInputLine();

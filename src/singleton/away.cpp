@@ -62,9 +62,9 @@ void Away::stop()
 
 void Away::awayTriggered()
 {
-    if ((Core::instance()->pNetwork->isConnected()) && (Core::instance()->settings.value("logged") == "true"))
+    if ((Core::instance()->pNetwork->isConnected()) && (Settings::instance()->get("logged") == "true"))
     {
-        bool bAway = Core::instance()->settings.value("away") == "true" ? true : false;
+        bool bAway = Settings::instance()->get("away") == "true" ? true : false;
 
         QString strReason;
         if (bAway)

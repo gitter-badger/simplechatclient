@@ -111,6 +111,7 @@ set (scc_SRCS
 	singleton/notification.cpp
 	singleton/offline.cpp
 	singleton/punish_reason.cpp
+	singleton/settings.cpp
 	singleton/sound_notify.cpp
 	singleton/tray.cpp
 	singleton/updates.cpp
@@ -195,6 +196,7 @@ set (scc_MOC_HDRS
 	singleton/notification.h
 	singleton/offline.h
 	singleton/punish_reason.h
+	singleton/settings.h
 	singleton/sound_notify.h
 	singleton/tray.h
 	singleton/updates.h

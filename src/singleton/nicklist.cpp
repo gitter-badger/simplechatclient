@@ -127,7 +127,7 @@ void Nicklist::changeFlag(const QString &strNick, const QString &strChannel, con
     if (Core::instance()->tw[strChannel]->pNickListWidget->existUser(strNick))
         Core::instance()->tw[strChannel]->pNickListWidget->changeUserFlag(strNick, strFlag);
 
-    QString strMe = Core::instance()->settings.value("nick");
+    QString strMe = Settings::instance()->get("nick");
     QString strCurrentChannel = Channel::instance()->getCurrent();
 
     if ((!strCurrentChannel.isEmpty()) && (strCurrentChannel == strChannel) && (strNick == strMe))

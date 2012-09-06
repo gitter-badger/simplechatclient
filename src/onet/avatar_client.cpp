@@ -57,7 +57,7 @@ void AvatarClient::getCookies()
     foreach (QString name, names)
     {
         cookie.setName(name.toAscii());
-        cookie.setValue(Core::instance()->settings.value(name).toAscii());
+        cookie.setValue(Settings::instance()->get(name).toAscii());
         cookies.append(cookie);
     }
 

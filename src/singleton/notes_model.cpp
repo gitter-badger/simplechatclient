@@ -61,7 +61,7 @@ void Notes::refreshPath()
     path = QDir::homePath()+"/.scc";
 #endif
 
-    QString strCurrentProfile = Core::instance()->settings.value("current_profile");
+    QString strCurrentProfile = Settings::instance()->get("current_profile");
     path += "/profiles/"+strCurrentProfile;
 
     // create dir if not exist
@@ -74,7 +74,7 @@ void Notes::refreshPath()
 
 void Notes::read()
 {
-    if (Core::instance()->settings.value("current_profile") != strNotesUserProfile)
+    if (Settings::instance()->get("current_profile") != strNotesUserProfile)
         refreshPath();
 
     strNotesContent.clear(); // clear before read
@@ -91,7 +91,7 @@ void Notes::read()
         }
         else
         {
-            if (Core::instance()->settings.value("debug") == "true")
+            if (Settings::instance()->get("debug") == "true")
                 qDebug() << tr("Error: Cannot read notes file!");
         }
     }
@@ -99,7 +99,7 @@ void Notes::read()
 
 void Notes::save()
 {
-    if (Core::instance()->settings.value("current_profile") != strNotesUserProfile)
+    if (Settings::instance()->get("current_profile") != strNotesUserProfile)
         refreshPath();
 
     QFile f(strNotesFile);

@@ -36,7 +36,7 @@ SoundNotify * SoundNotify::instance()
 void SoundNotify::init()
 {
 #if WITH_PHONON
-    QString strSoundBeep = Core::instance()->settings.value("sound_beep");
+    QString strSoundBeep = Settings::instance()->get("sound_beep");
     music = Phonon::createPlayer(Phonon::NotificationCategory, Phonon::MediaSource(strSoundBeep));
 #endif
 }
@@ -64,7 +64,7 @@ void SoundNotify::play(NotifyCategory eCategory)
     {
         if (eCurrentCategory != Query)
         {
-            QString strSoundQuery = Core::instance()->settings.value("sound_query");
+            QString strSoundQuery = Settings::instance()->get("sound_query");
             music->setCurrentSource(strSoundQuery);
             eCurrentCategory = Query;
         }
@@ -73,7 +73,7 @@ void SoundNotify::play(NotifyCategory eCategory)
     {
         if (eCurrentCategory != Beep)
         {
-            QString strSoundBeep = Core::instance()->settings.value("sound_beep");
+            QString strSoundBeep = Settings::instance()->get("sound_beep");
             music->setCurrentSource(strSoundBeep);
             eCurrentCategory = Beep;
         }

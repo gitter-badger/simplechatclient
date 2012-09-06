@@ -45,7 +45,7 @@ void DlgAbout::createGui()
 
 void DlgAbout::setDefaultValues()
 {
-    QString strVersionStatus = Core::instance()->settings.value("version_status");
+    QString strVersionStatus = Settings::instance()->get("version_status");
 
     QString strVersion;
     if (strVersionStatus == "uptodate")
@@ -56,7 +56,7 @@ void DlgAbout::setDefaultValues()
          strVersion = QString("<span style=\"color:#ff0000\">%1</span>").arg(tr("A new version is available"));
     else
     {
-        QString strCurrentVersion = Core::instance()->settings.value("version");
+        QString strCurrentVersion = Settings::instance()->get("version");
         strVersion = QString("%1 %2").arg(tr("Version"), strCurrentVersion);
     }
 

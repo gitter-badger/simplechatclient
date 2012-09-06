@@ -135,7 +135,7 @@ void TabContainer::refreshColors()
 
         // update tab name color
         int index = Channel::instance()->getIndex(strChannel);
-        pTabM->setColor(index, QColor(Core::instance()->settings.value("default_color")));
+        pTabM->setColor(index, QColor(Settings::instance()->get("default_color")));
     }
 }
 

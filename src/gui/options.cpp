@@ -237,11 +237,11 @@ void DlgOptions::setDefaultValues()
         ui.listWidget_punish_reason->addItem(strPunishReason);
 
     // sound beep
-    ui.lineEdit_sound_beep->setText(QDir::toNativeSeparators(Core::instance()->settings.value("sound_beep")));
-    ui.lineEdit_sound_query->setText(QDir::toNativeSeparators(Core::instance()->settings.value("sound_query")));
+    ui.lineEdit_sound_beep->setText(QDir::toNativeSeparators(Settings::instance()->get("sound_beep")));
+    ui.lineEdit_sound_query->setText(QDir::toNativeSeparators(Settings::instance()->get("sound_query")));
 
     // logs
-    QString strCurrentProfile = Core::instance()->settings.value("current_profile");
+    QString strCurrentProfile = Settings::instance()->get("current_profile");
     QString strLogsPath;
 #ifdef Q_WS_WIN
     strLogsPath = QFileInfo(QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation)).absoluteFilePath();
@@ -262,30 +262,30 @@ void DlgOptions::setDefaultValues()
     ui.lineEdit_logs_folder->setText(QDir::toNativeSeparators(strLogsPath));
 
     // background image
-    ui.lineEdit_background_image->setText(QDir::toNativeSeparators(Core::instance()->settings.value("background_image")));
+    ui.lineEdit_background_image->setText(QDir::toNativeSeparators(Settings::instance()->get("background_image")));
 
     // default values
-    QString strThemes = Core::instance()->settings.value("themes");
-    QString strLanguage = Core::instance()->settings.value("language");
+    QString strThemes = Settings::instance()->get("themes");
+    QString strLanguage = Settings::instance()->get("language");
 
-    QString strAutoBusy = Core::instance()->settings.value("auto_busy");
-    QString strDisableAutojoinFavourites = Core::instance()->settings.value("disable_autojoin_favourites");
-    QString strMinimizeToTray = Core::instance()->settings.value("minimize_to_tray");
-    QString strShowZuoAndIp = Core::instance()->settings.value("show_zuo_and_ip");
-    QString strHideFormating = Core::instance()->settings.value("hide_formating");
-    QString strHideJoinPart = Core::instance()->settings.value("hide_join_part");
-    QString strHideJoinPart200 = Core::instance()->settings.value("hide_join_part_200");
-    QString strDisableEmots = Core::instance()->settings.value("disable_emots");
-    QString strDisableReplaces = Core::instance()->settings.value("disable_replaces");
+    QString strAutoBusy = Settings::instance()->get("auto_busy");
+    QString strDisableAutojoinFavourites = Settings::instance()->get("disable_autojoin_favourites");
+    QString strMinimizeToTray = Settings::instance()->get("minimize_to_tray");
+    QString strShowZuoAndIp = Settings::instance()->get("show_zuo_and_ip");
+    QString strHideFormating = Settings::instance()->get("hide_formating");
+    QString strHideJoinPart = Settings::instance()->get("hide_join_part");
+    QString strHideJoinPart200 = Settings::instance()->get("hide_join_part_200");
+    QString strDisableEmots = Settings::instance()->get("disable_emots");
+    QString strDisableReplaces = Settings::instance()->get("disable_replaces");
 
-    QString strSaveLogsByDate = Core::instance()->settings.value("save_logs_by_date");
-    QString strDisableLogs = Core::instance()->settings.value("disable_logs");
-    QString strDisableSounds = Core::instance()->settings.value("disable_sounds");
-    QString strDisableBackgroundImage = Core::instance()->settings.value("disable_background_image");
+    QString strSaveLogsByDate = Settings::instance()->get("save_logs_by_date");
+    QString strDisableLogs = Settings::instance()->get("disable_logs");
+    QString strDisableSounds = Settings::instance()->get("disable_sounds");
+    QString strDisableBackgroundImage = Settings::instance()->get("disable_background_image");
 
-    QString strWinamp = Core::instance()->settings.value("winamp");
+    QString strWinamp = Settings::instance()->get("winamp");
 
-    QString strTrayMessage = Core::instance()->settings.value("tray_message");
+    QString strTrayMessage = Settings::instance()->get("tray_message");
 
     // themes
     if (strThemes == "Standard")
@@ -401,7 +401,7 @@ void DlgOptions::setDefaultValues()
     setNicklistColors();
 
     // disable change nick if connected
-    if (Core::instance()->settings.value("logged") == "true")
+    if (Settings::instance()->get("logged") == "true")
     {
         ui.groupBox_profiles->setDisabled(true);
         ui.groupBox_themes->setDisabled(true);
@@ -497,7 +497,7 @@ void DlgOptions::refreshProfilesList()
     }
 
     // set current profile
-    ui.comboBox_profiles->setCurrentIndex(ui.comboBox_profiles->findText(Core::instance()->settings.value("current_profile")));
+    ui.comboBox_profiles->setCurrentIndex(ui.comboBox_profiles->findText(Settings::instance()->get("current_profile")));
 }
 
 void DlgOptions::changePage(QModelIndex index)
@@ -1121,7 +1121,7 @@ void DlgOptions::trayMessage(bool bValue)
 void DlgOptions::setColor(const QString &strKey)
 {
     // get current value
-    QString strDefaultColor = Core::instance()->settings.value(strKey);
+    QString strDefaultColor = Settings::instance()->get(strKey);
 
     // color dialog
     QColor cColor = QColorDialog::getColor(QColor(strDefaultColor), this);
@@ -1191,18 +1191,18 @@ void DlgOptions::setColor(const QString &strKey)
 
 void DlgOptions::setMainwindowColors()
 {
-    QString strBackgroundColor = Core::instance()->settings.value("background_color");
-    QString strDefaultColor = Core::instance()->settings.value("default_color");
-    QString strJoinColor = Core::instance()->settings.value("message_join_color");
-    QString strPartColor = Core::instance()->settings.value("message_part_color");
-    QString strQuitColor = Core::instance()->settings.value("message_quit_color");
-    QString strKickColor = Core::instance()->settings.value("message_kick_color");
-    QString strModeColor = Core::instance()->settings.value("message_mode_color");
-    QString strNoticeColor = Core::instance()->settings.value("message_notice_color");
-    QString strInfoColor = Core::instance()->settings.value("message_info_color");
-    QString strMeColor = Core::instance()->settings.value("message_me_color");
-    QString strErrorColor = Core::instance()->settings.value("message_error_color");
-    QString strChannelColor = Core::instance()->settings.value("channel_color");
+    QString strBackgroundColor = Settings::instance()->get("background_color");
+    QString strDefaultColor = Settings::instance()->get("default_color");
+    QString strJoinColor = Settings::instance()->get("message_join_color");
+    QString strPartColor = Settings::instance()->get("message_part_color");
+    QString strQuitColor = Settings::instance()->get("message_quit_color");
+    QString strKickColor = Settings::instance()->get("message_kick_color");
+    QString strModeColor = Settings::instance()->get("message_mode_color");
+    QString strNoticeColor = Settings::instance()->get("message_notice_color");
+    QString strInfoColor = Settings::instance()->get("message_info_color");
+    QString strMeColor = Settings::instance()->get("message_me_color");
+    QString strErrorColor = Settings::instance()->get("message_error_color");
+    QString strChannelColor = Settings::instance()->get("channel_color");
 
     // set background color
     QPixmap bcolor(50,15);
@@ -1267,11 +1267,11 @@ void DlgOptions::setMainwindowColors()
 
 void DlgOptions::setNicklistColors()
 {
-    QString strNicklistNickColor = Core::instance()->settings.value("nicklist_nick_color");
-    QString strNicklistSelectedNickColor = Core::instance()->settings.value("nicklist_selected_nick_color");
-    QString strNicklistBusyNickColor = Core::instance()->settings.value("nicklist_busy_nick_color");
-    QString strNicklistGradient1Color = Core::instance()->settings.value("nicklist_gradient_1_color");
-    QString strNicklistGradient2Color = Core::instance()->settings.value("nicklist_gradient_2_color");
+    QString strNicklistNickColor = Settings::instance()->get("nicklist_nick_color");
+    QString strNicklistSelectedNickColor = Settings::instance()->get("nicklist_selected_nick_color");
+    QString strNicklistBusyNickColor = Settings::instance()->get("nicklist_busy_nick_color");
+    QString strNicklistGradient1Color = Settings::instance()->get("nicklist_gradient_1_color");
+    QString strNicklistGradient2Color = Settings::instance()->get("nicklist_gradient_2_color");
 
     // set nicklist nick color
     QPixmap nncolor(50,15);

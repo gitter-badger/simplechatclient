@@ -24,7 +24,7 @@
 void Replace::replaceEmots(QString &strData)
 {
     // return if disable replaces == on
-    if (Core::instance()->settings.value("disable_replaces") == "true")
+    if (Settings::instance()->get("disable_replaces") == "true")
         return;
 
     // replace

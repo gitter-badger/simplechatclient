@@ -60,7 +60,7 @@ void OnetKernel::kernel(const QString &_strData)
     strData = _strData;
     strDataList = strData.split(" ");
 
-    if (Core::instance()->settings.value("debug") == "true")
+    if (Settings::instance()->get("debug") == "true")
         Message::instance()->showMessage(DEBUG, "<- "+strData, MessageDefault);
 
     bool bUnknownRaw1 = false;
@@ -388,14 +388,14 @@ void OnetKernel::raw_join()
 
     if (strChannel[0] != '^')
     {
-        if (Core::instance()->settings.value("show_zuo_and_ip") == "true")
+        if (Settings::instance()->get("show_zuo_and_ip") == "true")
             strDisplay = QString(tr("* %1 [%2@%3] has joined %4")).arg(strNick, strZUO, strIP, strChannel);
         else
             strDisplay = QString(tr("* %1 has joined %2")).arg(strNick, strChannel);
     }
     else
     {
-        if (Core::instance()->settings.value("show_zuo_and_ip") == "true")
+        if (Settings::instance()->get("show_zuo_and_ip") == "true")
             strDisplay = QString(tr("* %1 [%2@%3] has joined priv")).arg(strNick, strZUO, strIP);
         else
             strDisplay = QString(tr("* %1 has joined priv")).arg(strNick);
@@ -416,14 +416,14 @@ void OnetKernel::raw_join()
     // channel info
     Core::instance()->lChannelInfo.removeOne(strChannel);
 
-    QString strMe = Core::instance()->settings.value("nick");
+    QString strMe = Settings::instance()->get("nick");
     if ((strNick == strMe) && (strChannel[0] != '^'))
         Core::instance()->pNetwork->send(QString("CS INFO %1 i").arg(strChannel));
 
     // nick avatar
     if (strNick[0] != '~')
     {
-        if ((Core::instance()->settings.value("themes") == "Origin") || (Core::instance()->settings.value("themes") == "Adara")) // with avatars
+        if ((Settings::instance()->get("themes") == "Origin") || (Settings::instance()->get("themes") == "Adara")) // with avatars
             Core::instance()->pNetwork->send(QString("NS INFO %1 s").arg(strNick));
     }
 
@@ -461,14 +461,14 @@ void OnetKernel::raw_part()
     {
         if (!strReason.isEmpty())
         {
-            if (Core::instance()->settings.value("show_zuo_and_ip") == "true")
+            if (Settings::instance()->get("show_zuo_and_ip") == "true")
                 strDisplay = QString(tr("* %1 [%2@%3] has left %4 [%5]")).arg(strNick, strZUO, strIP, strChannel, strReason);
             else
                 strDisplay = QString(tr("* %1 has left %2 [%3]")).arg(strNick, strChannel, strReason);
         }
         else
         {
-            if (Core::instance()->settings.value("show_zuo_and_ip") == "true")
+            if (Settings::instance()->get("show_zuo_and_ip") == "true")
                 strDisplay = QString(tr("* %1 [%2@%3] has left %4")).arg(strNick, strZUO, strIP, strChannel);
             else
                 strDisplay = QString(tr("* %1 has left %2")).arg(strNick, strChannel);
@@ -476,7 +476,7 @@ void OnetKernel::raw_part()
     }
     else
     {
-        if (Core::instance()->settings.value("show_zuo_and_ip") == "true")
+        if (Settings::instance()->get("show_zuo_and_ip") == "true")
             strDisplay = QString(tr("* %1 [%2@%3] has left priv")).arg(strNick, strZUO, strIP);
         else
             strDisplay = QString(tr("* %1 has left priv")).arg(strNick);
@@ -487,7 +487,7 @@ void OnetKernel::raw_part()
     Nicklist::instance()->delUser(strChannel, strNick);
 
     // if self part
-    QString strMe = Core::instance()->settings.value("nick");
+    QString strMe = Settings::instance()->get("nick");
 
     if (strNick == strMe)
     {
@@ -521,7 +521,7 @@ void OnetKernel::raw_quit()
     if (strReason[0] == ':') strReason.remove(0,1);
 
     QString strDisplay;
-    if (Core::instance()->settings.value("show_zuo_and_ip") == "true")
+    if (Settings::instance()->get("show_zuo_and_ip") == "true")
         strDisplay = QString(tr("* %1 [%2@%3] has quit [%4]")).arg(strNick, strZUO, strIP, strReason);
     else
         strDisplay = QString(tr("* %1 has quit [%2]")).arg(strNick, strReason);
@@ -561,13 +561,13 @@ void OnetKernel::raw_kick()
     Message::instance()->showMessage(strChannel, strDisplay, MessageKick);
     Nicklist::instance()->delUser(strChannel, strNick);
 
-    QString strMe = Core::instance()->settings.value("nick");
+    QString strMe = Settings::instance()->get("nick");
     if (strNick == strMe)
     {
         // reason
         Convert::simpleConvert(strReason);
 
-        if ((Core::instance()->mainWindow()->isActiveWindow()) || (Core::instance()->settings.value("tray_message") == "false"))
+        if ((Core::instance()->mainWindow()->isActiveWindow()) || (Settings::instance()->get("tray_message") == "false"))
         {
             QString strDisplay = QString(tr("* You have been kicked from channel %1 by %2 Reason: %3")).arg(strChannel, strWho, strReason);
             Message::instance()->showMessage(STATUS, strDisplay, MessageKick);
@@ -793,10 +793,10 @@ void OnetKernel::raw_mode()
                 Nicklist::instance()->changeFlag(strNick, strFlag);
 
             // registered nick
-            if ((strNick == Core::instance()->settings.value("nick")) && (strFlag == "+r"))
+            if ((strNick == Settings::instance()->get("nick")) && (strFlag == "+r"))
             {
                 // get my stats
-                Core::instance()->pNetwork->send(QString("RS INFO %1").arg(Core::instance()->settings.value("nick")));
+                Core::instance()->pNetwork->send(QString("RS INFO %1").arg(Settings::instance()->get("nick")));
 
                 // channel homes
                 Core::instance()->pNetwork->send("CS HOMES");
@@ -944,7 +944,7 @@ void OnetKernel::raw_invite()
     }
 
     // sound
-    if (Core::instance()->settings.value("disable_sounds") == "false")
+    if (Settings::instance()->get("disable_sounds") == "false")
         SoundNotify::instance()->play(Query);
 }
 
@@ -1151,11 +1151,11 @@ void OnetKernel::raw_001()
     Core::instance()->settings["away"] = "false";
 
     // auto busy
-    if (Core::instance()->settings.value("auto_busy") == "true")
+    if (Settings::instance()->get("auto_busy") == "true")
         Core::instance()->pNetwork->send("BUSY 1");
 
     // ignore_raw_141
-    if (Core::instance()->settings.value("disable_autojoin_favourites") == "true")
+    if (Settings::instance()->get("disable_autojoin_favourites") == "true")
         Core::instance()->settings["ignore_raw_141"] = "true";
     else
         Core::instance()->settings["ignore_raw_141"] = "false";
@@ -1306,7 +1306,7 @@ void OnetKernel::raw_111n()
     for (int i = 6; i < strDataList.size(); i++) { if (i != 6) strValue += " "; strValue += strDataList[i]; }
     if (strValue[0] == ':') strValue.remove(0,1);
 
-    QString strMe = Core::instance()->settings.value("nick");
+    QString strMe = Settings::instance()->get("nick");
 
     // set user info
     if (Core::instance()->strUserProfile == strNick)
@@ -1324,7 +1324,7 @@ void OnetKernel::raw_111n()
     // get avatar
     if (strKey == "avatar")
     {
-        if ((Core::instance()->settings.value("themes") == "Origin") || (Core::instance()->settings.value("themes") == "Adara"))
+        if ((Settings::instance()->get("themes") == "Origin") || (Settings::instance()->get("themes") == "Adara"))
         {
             if (!strValue.isEmpty())
                 avatar->get(strNick, "nick", strValue);
@@ -1437,7 +1437,7 @@ void OnetKernel::raw_141n()
     }
 
     // join
-    if (Core::instance()->settings.value("ignore_raw_141") == "false")
+    if (Settings::instance()->get("ignore_raw_141") == "false")
     {
         qSort(lList.begin(), lList.end());
         foreach (QString strChannel, lList)
@@ -1448,7 +1448,7 @@ void OnetKernel::raw_141n()
     }
 
     // turn on ignore_raw_141
-    if (Core::instance()->settings.value("ignore_raw_141") == "false")
+    if (Settings::instance()->get("ignore_raw_141") == "false")
         Core::instance()->settings["ignore_raw_141"] = "true";
 }
 
@@ -1678,7 +1678,7 @@ void OnetKernel::raw_170n()
 
     QString strNick = strDataList[4];
 
-    if (strNick != Core::instance()->settings.value("nick")) return; // not my nick
+    if (strNick != Settings::instance()->get("nick")) return; // not my nick
 
     for (int i = 5; i < strDataList.size(); i++)
     {
@@ -1755,7 +1755,7 @@ void OnetKernel::raw_211n()
     QString strNick = strDataList[2];
     QString strKey = strDataList[4];
 
-    QString strMe = Core::instance()->settings.value("nick");
+    QString strMe = Settings::instance()->get("nick");
 
     // set my profile
     if (strNick == strMe)
@@ -2718,7 +2718,7 @@ void OnetKernel::raw_353()
             // nick avatar
             if (strCleanNick[0] != '~')
             {
-                if ((Core::instance()->settings.value("themes") == "Origin") || (Core::instance()->settings.value("themes") == "Adara")) // with avatars
+                if ((Settings::instance()->get("themes") == "Origin") || (Settings::instance()->get("themes") == "Adara")) // with avatars
                     Core::instance()->pNetwork->send(QString("NS INFO %1 s").arg(strCleanNick));
             }
         }
@@ -3083,7 +3083,7 @@ void OnetKernel::raw_412n()
     if (strDataList.size() < 5) return;
 
     QString strNick = strDataList[4];
-    QString strMe = Core::instance()->settings.value("nick");
+    QString strMe = Settings::instance()->get("nick");
 
     if (strNick == strMe)
         Core::instance()->pNetwork->send(QString("RS INFO %1").arg(strNick));
@@ -3879,8 +3879,8 @@ void OnetKernel::raw_801()
     if (strAuthKey.length() == 16)
     {
         Core::instance()->pNetwork->send(QString("AUTHKEY %1").arg(strAuthKey));
-        QString strUOKey = Core::instance()->settings.value("uokey");
-        QString strNickUo = Core::instance()->settings.value("uo_nick");
+        QString strUOKey = Settings::instance()->get("uokey");
+        QString strNickUo = Settings::instance()->get("uo_nick");
         if ((!strUOKey.isEmpty()) && (!strNickUo.isEmpty()))
             Core::instance()->pNetwork->send(QString("USER * %1 czat-app.onet.pl :%2").arg(strUOKey, strNickUo));
     }

@@ -87,7 +87,7 @@ void WebcamEngine::disconnected()
 
 void WebcamEngine::dataKernel(const QByteArray &bData)
 {
-    if (Core::instance()->settings.value("debug") == "true")
+    if (Settings::instance()->get("debug") == "true")
         qDebug() << "CAM byte <- " << bData;
 
     switch (iCamCmd)
@@ -267,7 +267,7 @@ void WebcamEngine::raw_252b(const QByteArray &data)
     {
         QString strStatus = cp2unicode(data.mid(10));
 
-        if (Core::instance()->settings.value("debug") == "true")
+        if (Settings::instance()->get("debug") == "true")
             qDebug() << "CAM <- SETSTATUS " << strStatus;
 
         emit updateStatus(strStatus);
@@ -313,7 +313,7 @@ void WebcamEngine::raw_403b(const QByteArray &data)
 {
     QString strError = data;
 
-    if (Core::instance()->settings.value("debug") == "true")
+    if (Settings::instance()->get("debug") == "true")
         qDebug() << "CAM <- " << strError;
 
     emit error(strError);
@@ -321,7 +321,7 @@ void WebcamEngine::raw_403b(const QByteArray &data)
 
 void WebcamEngine::textKernel(const QString &strData)
 {
-    if (Core::instance()->settings.value("debug") == "true")
+    if (Settings::instance()->get("debug") == "true")
         qDebug() << "CAM <- " << strData;
 
     QStringList strDataList = strData.split(" ");
@@ -429,7 +429,7 @@ void WebcamEngine::textKernel(const QString &strData)
             raw_520();
             break;
         default:
-            if (Core::instance()->settings.value("debug") == "true")
+            if (Settings::instance()->get("debug") == "true")
                 qDebug() << "Unknown CAM RAW:" << strData;
             break;
     }
@@ -663,7 +663,7 @@ void WebcamEngine::raw_267()
 void WebcamEngine::raw_268()
 {
     // CAUTH ok
-    QString strUOKey = Core::instance()->settings.value("uokey");
+    QString strUOKey = Settings::instance()->get("uokey");
     pWebcamNetwork->networkSend(QString("AUTH %1 3.00.159").arg(strUOKey));
 }
 

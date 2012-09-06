@@ -41,7 +41,7 @@ Config::Config(bool _bProfileConfig, QString _strForceProfile) : bProfileConfig(
 
     if (bProfileConfig)
     {
-        QString user = (strForceProfile.isEmpty() ? Core::instance()->settings.value("current_profile") : strForceProfile);
+        QString user = (strForceProfile.isEmpty() ? Settings::instance()->get("current_profile") : strForceProfile);
         if (user.isEmpty()) user = "~test";
 
         path += "/profiles/"+user;
