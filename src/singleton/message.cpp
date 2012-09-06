@@ -54,7 +54,7 @@ void Message::init()
 
 bool Message::isHighlightMessage(const QString &strMessage)
 {
-    QString strMe = Core::instance()->settings["nick"];
+    QString strMe = Settings::instance()->get("nick");
     QStringList lData = strMessage.split(" ");
 
     QStringList lHighlight = Highlight::instance()->get();

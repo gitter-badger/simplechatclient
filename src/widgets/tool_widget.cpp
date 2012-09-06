@@ -364,7 +364,7 @@ void ToolWidget::setDefaultValues()
     pInputLine->setFont(QFont(strMyFontFamily, -1, iWeight, bMyItalic));
 
     // refresh input line text color
-    if ((Core::instance()->settings["background_color"] == "#000000") && (strCurrentColor == "#000000"))
+    if ((Settings::instance()->get("background_color") == "#000000") && (strCurrentColor == "#000000"))
         pInputLine->setStyleSheet(QString("QLineEdit { color:#ffffff; }"));
     else
         pInputLine->setStyleSheet(QString("QLineEdit { color:%1; }").arg(strCurrentColor));
@@ -439,7 +439,7 @@ void ToolWidget::boldClicked()
         bMyBold = false;
         strMyFontWeight = "";
         QString strValue = "false";
-        Core::instance()->settings["my_bold"] = strValue;
+        Settings::instance()->set("my_bold", strValue);
 
         Config *pConfig = new Config();
         pConfig->set("my_bold", strValue);
@@ -451,7 +451,7 @@ void ToolWidget::boldClicked()
         bMyBold = true;
         strMyFontWeight = "bold";
         QString strValue = "true";
-        Core::instance()->settings["my_bold"] = strValue;
+        Settings::instance()->set("my_bold", strValue);
 
         Config *pConfig = new Config();
         pConfig->set("my_bold", strValue);
@@ -470,7 +470,7 @@ void ToolWidget::italicClicked()
         bMyItalic = false;
         strMyFontStyle = "";
         QString strValue = "false";
-        Core::instance()->settings["my_italic"] = strValue;
+        Settings::instance()->set("my_italic", strValue);
 
         Config *pConfig = new Config();
         pConfig->set("my_italic", strValue);
@@ -482,7 +482,7 @@ void ToolWidget::italicClicked()
         bMyItalic = true;
         strMyFontStyle = "italic";
         QString strValue = "true";
-        Core::instance()->settings["my_italic"] = "true";
+        Settings::instance()->set("my_italic", "true");
 
         Config *pConfig = new Config();
         pConfig->set("my_italic", strValue);
@@ -497,7 +497,7 @@ void ToolWidget::arialTriggered()
 {
     fontfamily->setText("Arial");
     strMyFontFamily = "Arial";
-    Core::instance()->settings["my_font"] = strMyFontFamily;
+    Settings::instance()->set("my_font", strMyFontFamily);
     Config *pConfig = new Config();
     pConfig->set("my_font", strMyFontFamily);
     delete pConfig;
@@ -510,7 +510,7 @@ void ToolWidget::timesTriggered()
 {
     fontfamily->setText("Times");
     strMyFontFamily = "Times";
-    Core::instance()->settings["my_font"] = strMyFontFamily;
+    Settings::instance()->set("my_font", strMyFontFamily);
     Config *pConfig = new Config();
     pConfig->set("my_font", strMyFontFamily);
     delete pConfig;
@@ -523,7 +523,7 @@ void ToolWidget::verdanaTriggered()
 {
     fontfamily->setText("Verdana");
     strMyFontFamily = "Verdana";
-    Core::instance()->settings["my_font"] = strMyFontFamily;
+    Settings::instance()->set("my_font", strMyFontFamily);
     Config *pConfig = new Config();
     pConfig->set("my_font", strMyFontFamily);
     delete pConfig;
@@ -536,7 +536,7 @@ void ToolWidget::tahomaTriggered()
 {
     fontfamily->setText("Tahoma");
     strMyFontFamily = "Tahoma";
-    Core::instance()->settings["my_font"] = strMyFontFamily;
+    Settings::instance()->set("my_font", strMyFontFamily);
     Config *pConfig = new Config();
     pConfig->set("my_font", strMyFontFamily);
     delete pConfig;
@@ -549,7 +549,7 @@ void ToolWidget::courierTriggered()
 {
     fontfamily->setText("Courier");
     strMyFontFamily = "Courier";
-    Core::instance()->settings["my_font"] = strMyFontFamily;
+    Settings::instance()->set("my_font", strMyFontFamily);
     Config *pConfig = new Config();
     pConfig->set("my_font", strMyFontFamily);
     delete pConfig;
@@ -562,7 +562,7 @@ void ToolWidget::size8Triggered()
 {
     QString strValue = "8px";
 
-    Core::instance()->settings["font_size"] = strValue;
+    Settings::instance()->set("font_size", strValue);
     Config *pConfig = new Config();
     pConfig->set("font_size", strValue);
     delete pConfig;
@@ -574,7 +574,7 @@ void ToolWidget::size9Triggered()
 {
     QString strValue = "9px";
 
-    Core::instance()->settings["font_size"] = strValue;
+    Settings::instance()->set("font_size", strValue);
     Config *pConfig = new Config();
     pConfig->set("font_size", strValue);
     delete pConfig;
@@ -586,7 +586,7 @@ void ToolWidget::size10Triggered()
 {
     QString strValue = "10px";
 
-    Core::instance()->settings["font_size"] = strValue;
+    Settings::instance()->set("font_size", strValue);
     Config *pConfig = new Config();
     pConfig->set("font_size", strValue);
     delete pConfig;
@@ -598,7 +598,7 @@ void ToolWidget::size11Triggered()
 {
     QString strValue = "11px";
 
-    Core::instance()->settings["font_size"] = strValue;
+    Settings::instance()->set("font_size", strValue);
     Config *pConfig = new Config();
     pConfig->set("font_size", strValue);
     delete pConfig;
@@ -610,7 +610,7 @@ void ToolWidget::size12Triggered()
 {
     QString strValue = "12px";
 
-    Core::instance()->settings["font_size"] = strValue;
+    Settings::instance()->set("font_size", strValue);
     Config *pConfig = new Config();
     pConfig->set("font_size", strValue);
     delete pConfig;
@@ -622,7 +622,7 @@ void ToolWidget::size14Triggered()
 {
     QString strValue = "14px";
 
-    Core::instance()->settings["font_size"] = strValue;
+    Settings::instance()->set("font_size", strValue);
     Config *pConfig = new Config();
     pConfig->set("font_size", strValue);
     delete pConfig;
@@ -634,7 +634,7 @@ void ToolWidget::size16Triggered()
 {
     QString strValue = "16px";
 
-    Core::instance()->settings["font_size"] = strValue;
+    Settings::instance()->set("font_size", strValue);
     Config *pConfig = new Config();
     pConfig->set("font_size", strValue);
     delete pConfig;
@@ -646,7 +646,7 @@ void ToolWidget::size18Triggered()
 {
     QString strValue = "18px";
 
-    Core::instance()->settings["font_size"] = strValue;
+    Settings::instance()->set("font_size", strValue);
     Config *pConfig = new Config();
     pConfig->set("font_size", strValue);
     delete pConfig;
@@ -658,7 +658,7 @@ void ToolWidget::size20Triggered()
 {
     QString strValue = "20px";
 
-    Core::instance()->settings["font_size"] = strValue;
+    Settings::instance()->set("font_size", strValue);
     Config *pConfig = new Config();
     pConfig->set("font_size", strValue);
     delete pConfig;
@@ -670,7 +670,7 @@ void ToolWidget::size24Triggered()
 {
     QString strValue = "24px";
 
-    Core::instance()->settings["font_size"] = strValue;
+    Settings::instance()->set("font_size", strValue);
     Config *pConfig = new Config();
     pConfig->set("font_size", strValue);
     delete pConfig;
@@ -697,13 +697,13 @@ void ToolWidget::colorClicked(int index)
     else if (index == 14) strCurrentColor = "#959595";
     else strCurrentColor = "#000000";
 
-    Core::instance()->settings["my_color"] = strCurrentColor;
+    Settings::instance()->set("my_color", strCurrentColor);
     Config *pConfig = new Config();
     pConfig->set("my_color", strCurrentColor);
     delete pConfig;
 
     // refresh input line text color
-    if ((Core::instance()->settings["background_color"] == "#000000") && (strCurrentColor == "#000000"))
+    if ((Settings::instance()->get("background_color") == "#000000") && (strCurrentColor == "#000000"))
         pInputLine->setStyleSheet(QString("QLineEdit { color:#ffffff; }"));
     else
         pInputLine->setStyleSheet(QString("QLineEdit { color:%1; }").arg(strCurrentColor));
@@ -731,7 +731,7 @@ void ToolWidget::inputlineReturnPressed()
 {
     // update last active
     qint64 iCurrentTime = QDateTime::currentMSecsSinceEpoch();
-    Core::instance()->settings["last_active"] = QString::number(iCurrentTime);
+    Settings::instance()->set("last_active", QString::number(iCurrentTime));
 
     // disable away
     bool bAway = Settings::instance()->get("away") == "true" ? true : false;
@@ -748,7 +748,7 @@ void ToolWidget::moderButtonClicked()
 {
     // update last active
     qint64 iCurrentTime = QDateTime::currentMSecsSinceEpoch();
-    Core::instance()->settings["last_active"] = QString::number(iCurrentTime);
+    Settings::instance()->set("last_active", QString::number(iCurrentTime));
 
     // disable away
     bool bAway = Settings::instance()->get("away") == "true" ? true : false;

@@ -37,7 +37,7 @@ void displayVersion()
     printf("Simple Chat Client %s\n\n"
            "License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>\n"
            "This is free software: you are free to change and redistribute it.\n\n",
-           qPrintable(Core::instance()->version()));
+           qPrintable(Settings::instance()->get("version"));
 }
 
 void displayOptions()
@@ -96,7 +96,7 @@ int main(int argc, char *argv[])
     QCoreApplication::setApplicationName("scc");
 
     // debug off
-    Core::instance()->setDebug(false);
+    Settings::instance()->set("debug", "false");
 
     // get language
     Config *pConfig = new Config();
@@ -127,7 +127,7 @@ int main(int argc, char *argv[])
         if (param == "--debug")
         {
             printf("Debug enabled\n\n");
-            Core::instance()->setDebug(true);
+            Settings::instance()->set("debug", "true");
         }
         else if (param == "--version")
         {

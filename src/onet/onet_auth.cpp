@@ -331,7 +331,7 @@ void OnetAuth::saveCookies()
         QString strValue = i->value();
 
         if ((strKey == "onet_ubi") || (strKey == "onet_cid") || (strKey == "onet_sid") || (strKey == "onet_uid") || (strKey == "onetzuo_ticket"))
-            Core::instance()->settings[strKey] = strValue;
+            Settings::instance()->set(strKey, strValue);
     }
 }
 
@@ -374,8 +374,8 @@ void OnetAuth::requestFinished(const QString &strData)
             QString strUOKey = doc.elementsByTagName("uoKey").item(0).toElement().text();
             QString strNick = doc.elementsByTagName("zuoUsername").item(0).toElement().text();
 
-            Core::instance()->settings["uokey"] = strUOKey;
-            Core::instance()->settings["uo_nick"] = strNick;
+            Settings::instance()->set("uokey", strUOKey);
+            Settings::instance()->set("uo_nick", strNick);
 
             // send auth
             if (Core::instance()->pNetwork->isConnected())

@@ -50,13 +50,13 @@ void Away::init()
 
 void Away::start()
 {
-    Core::instance()->settings["away"] = "true";
+    Settings::instance()->set("away", "true");
     awayAction->setChecked(true);
 }
 
 void Away::stop()
 {
-    Core::instance()->settings["away"] = "false";
+    Settings::instance()->set("away", "false");
     awayAction->setChecked(false);
 }
 

@@ -52,9 +52,6 @@ public:
     // config
     void configValues();
     void configProfileValues();
-    // from main
-    QString version();
-    void setDebug(bool b);
     // window
     MainWindow *mainWindow();
     // remove dir
@@ -62,8 +59,6 @@ public:
 
     // kamerzysta socket
     QTcpSocket *kamerzystaSocket;
-    // settings
-    QHash<QString,QString> settings;
     // network
     Network *pNetwork;
     // TW (important!!!)

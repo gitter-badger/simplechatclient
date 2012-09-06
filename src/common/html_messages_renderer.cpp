@@ -111,7 +111,7 @@ QString HtmlMessagesRenderer::renderer(QString strData, MessageCategory eMessage
     else if (eMessageCategory == MessageModerNotice) strFontClass = "NoticeColor";
 
     // themes
-    QString strThemes = Core::instance()->settings["themes"];
+    QString strThemes = Settings::instance()->get("themes");
 
     // highlight
     QString strTextDecoration;

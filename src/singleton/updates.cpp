@@ -90,7 +90,7 @@ void Updates::compareVersion()
         strVersionStatus = "unknown";
 
     // save status
-    Core::instance()->settings["version_status"] = strVersionStatus;
+    Settings::instance()->set("version_status", strVersionStatus);
 
     if (Settings::instance()->get("debug") == "true")
         qDebug() << "Current version: " << strCurrentVersion << " Available version: " << strAvailableVersion << " Status: " << strVersionStatus;
@@ -106,19 +106,19 @@ void Updates::saveSettings(QString strUpdateXml)
     QString strMOTD = doc.elementsByTagName("motd").item(0).toElement().text();
 
     if (!strWhatsNew.isEmpty())
-        Core::instance()->settings["whats_new"] = strWhatsNew;
+        Settings::instance()->set("whats_new", strWhatsNew);
 
     if (!strMOTD.isEmpty())
-        Core::instance()->settings["motd"] = strMOTD;
+        Settings::instance()->set("motd", strMOTD);
 
     if (!strAvailableVersion.isEmpty())
-        Core::instance()->settings["available_version"] = strAvailableVersion;
+        Settings::instance()->set("available_version", strAvailableVersion);
 }
 
 void Updates::readSettings()
 {
-    QString strMOTD = Core::instance()->settings["motd"];
-    QString strAvailableVersion = Core::instance()->settings["available_version"];
+    QString strMOTD = Settings::instance()->get("motd");
+    QString strAvailableVersion = Settings::instance()->get("available_version");
 
     if (!strMOTD.isEmpty())
     {
@@ -130,7 +130,7 @@ void Updates::readSettings()
     {
         compareVersion();
 
-        if (Core::instance()->settings["version_status"] == "outofdate")
+        if (Settings::instance()->get("version_status") == "outofdate")
             DlgUpdate(Core::instance()->mainWindow()).exec();
     }
 }
@@ -158,7 +158,7 @@ void Updates::updateFinished(QNetworkReply *reply)
         return;
     }
 
-    Core::instance()->settings["update_url"] = QString::number(update_url);
+    Settings::instance()->set("update_url", QString::number(update_url));
 
     QString strUpdateXml = reply->readAll();
 

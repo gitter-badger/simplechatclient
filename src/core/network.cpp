@@ -34,9 +34,10 @@
 
 Network::Network(const QString &_strServer, int _iPort) : strServer(_strServer), iPort(_iPort), iActive(0), bAuthorized(false)
 {
+    Settings::instance()->set("reconnect", "true");
+
     timerReconnect = new QTimer();
     timerReconnect->setInterval(1000*30); // 30 sec
-    Core::instance()->settings["reconnect"] = "true";
     timerPong = new QTimer();
     timerPong->setInterval(1000*60*1); // 1 min
     timerPing = new QTimer();
@@ -111,7 +112,7 @@ void Network::clearAll()
     Nicklist::instance()->clearAllNicklist();
 
     // state
-    Core::instance()->settings["logged"] = "false";
+    Settings::instance()->set("logged", "false");
 
     // timer
     timerPong->stop();
@@ -125,7 +126,7 @@ void Network::clearAll()
     Autoaway::instance()->stop();
 
     // last active
-    Core::instance()->settings["last_active"] = "0";
+    Settings::instance()->set("last_active", "0");
 
     // clear queue
     msgSendQueue.clear();

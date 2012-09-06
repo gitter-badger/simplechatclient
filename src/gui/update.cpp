@@ -88,7 +88,7 @@ void DlgUpdate::buttonDownload()
 {
     ui.pushButton_download->setEnabled(false);
 
-    int update_url = Core::instance()->settings["update_url"].toInt();
+    int update_url = Settings::instance()->get("update_url").toInt();
 
 #ifdef Q_WS_WIN
     if (update_url == 1)

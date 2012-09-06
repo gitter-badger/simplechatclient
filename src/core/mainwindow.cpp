@@ -348,7 +348,7 @@ void MainWindow::showOptions()
     {
         Config *pConfig = new Config(false);
         pConfig->set("first_run", "false");
-        Core::instance()->settings["first_run"] = "false";
+        Settings::instance()->set("first_run", "false");
         delete pConfig;
 
         QTimer::singleShot(1000*1, this, SLOT(openOptions())); // 1 sec
@@ -404,13 +404,13 @@ void MainWindow::buttonConnect()
 {
     if (!Core::instance()->pNetwork->isConnected())
     {
-        Core::instance()->settings["reconnect"] = "true";
+        Settings::instance()->set("reconnect", "true");
         Core::instance()->pNetwork->connect();
     }
     else
     {
-        Core::instance()->settings["reconnect"] = "false";
-        Core::instance()->settings["logged"] = "false";
+        Settings::instance()->set("reconnect", "false");
+        Settings::instance()->set("logged", "false");
         Core::instance()->pNetwork->disconnect();
 
         if (Settings::instance()->get("debug") == "true")
@@ -730,14 +730,14 @@ void MainWindow::resizeEvent(QResizeEvent *e)
 
 void MainWindow::closeEvent(QCloseEvent *event)
 {
-    if (isVisible() && Core::instance()->settings["minimize_to_tray"] == "true")
+    if (isVisible() && Settings::instance()->get("minimize_to_tray") == "true")
     {
         hide();
         event->ignore();
     }
     else
     {
-        if (Core::instance()->settings["always_quit"] == "true")
+        if (Settings::instance()->get("always_quit") == "true")
         {
             qApp->quit();
             return;
@@ -767,7 +767,7 @@ void MainWindow::closeEvent(QCloseEvent *event)
             {
                 Config *pConfig = new Config();
                 pConfig->set("always_quit", "true");
-                Core::instance()->settings["always_quit"] = "true";
+                Settings::instance()->set("always_quit", "true");
                 delete pConfig;
             }
 

@@ -168,7 +168,7 @@ QString Commands::cmdJoin()
             msgBox.exec();
 
             if (msgBox.clickedButton() == enterButton)
-                Core::instance()->settings["age_check"] =  "false";
+                Settings::instance()->set("age_check",  "false");
             else
                 return QString::null;
         }
@@ -284,7 +284,7 @@ QString Commands::cmdQuit()
     QString strReason;
     for (int i = 1; i < strDataList.size(); i++) { if (i != 1) strReason += " "; strReason += strDataList[i]; }
 
-    Core::instance()->settings["reconnect"] = "false";
+    Settings::instance()->set("reconnect"], "false");
 
     if (!strReason.isEmpty())
     {

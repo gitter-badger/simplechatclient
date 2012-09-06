@@ -50,13 +50,13 @@ void Busy::init()
 
 void Busy::start()
 {
-    Core::instance()->settings["busy"] = "true";
+    Settings::instance()->set("busy", "true");
     busyAction->setChecked(true);
 }
 
 void Busy::stop()
 {
-    Core::instance()->settings["busy"] = "false";
+    Settings::instance()->set("busy", "false");
     busyAction->setChecked(false);
 }
 

@@ -511,7 +511,7 @@ void DlgChannelList::allCellDoubleClicked(int row, int column)
             msgBox.exec();
 
             if (msgBox.clickedButton() == enterButton)
-                Core::instance()->settings["age_check"] = "false";
+                Settings::instance()->set("age_check", "false");
             else
                 return;
         }
@@ -559,7 +559,7 @@ void DlgChannelList::eroticCellDoubleClicked(int row, int column)
 
             if (msgBox.clickedButton() == enterButton)
             {
-                Core::instance()->settings["age_check"] = "false";
+                Settings::instance()->set("age_check", "false");
                 Core::instance()->pNetwork->send(QString("JOIN %1").arg(strChannel));
             }
         }

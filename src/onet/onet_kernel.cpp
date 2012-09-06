@@ -1117,7 +1117,7 @@ void OnetKernel::raw_kill()
 void OnetKernel::raw_001()
 {
     // logged
-    Core::instance()->settings["logged"] = "true";
+    Settings::instance()->set("logged", "true");
 
     // clear
     Core::instance()->mFriends.clear();
@@ -1145,10 +1145,10 @@ void OnetKernel::raw_001()
     Core::instance()->pNetwork->send("PROTOCTL ONETNAMESX");
 
     // busy
-    Core::instance()->settings["busy"] = "false";
+    Settings::instance()->set("busy", "false");
 
     // away
-    Core::instance()->settings["away"] = "false";
+    Settings::instance()->set("away", "false");
 
     // auto busy
     if (Settings::instance()->get("auto_busy") == "true")
@@ -1156,18 +1156,18 @@ void OnetKernel::raw_001()
 
     // ignore_raw_141
     if (Settings::instance()->get("disable_autojoin_favourites") == "true")
-        Core::instance()->settings["ignore_raw_141"] = "true";
+        Settings::instance()->set("ignore_raw_141", "true");
     else
-        Core::instance()->settings["ignore_raw_141"] = "false";
+        Settings::instance()->set("ignore_raw_141", "false");
 
     // channel info
     Core::instance()->lChannelInfo.clear();
 
     // override off
-    Core::instance()->settings["override"] = "false";
+    Settings::instance()->set("override", "false");
 
     // age check on
-    Core::instance()->settings["age_check"] = "true";
+    Settings::instance()->set("age_check", "true");
 
     // auto rejoin
     QList<CaseIgnoreString> lChannelsCaseIgnore = Channel::instance()->getSorted();
@@ -1182,7 +1182,7 @@ void OnetKernel::raw_001()
     Core::instance()->pNetwork->send("SLIST  R- 0 0 100 null");
 
     // update last active
-    Core::instance()->settings["last_active"] = QString::number(QDateTime::currentMSecsSinceEpoch());
+    Settings::instance()->set("last_active", QString::number(QDateTime::currentMSecsSinceEpoch()));
 
     // auto-away
     Autoaway::instance()->start();
@@ -1449,7 +1449,7 @@ void OnetKernel::raw_141n()
 
     // turn on ignore_raw_141
     if (Settings::instance()->get("ignore_raw_141") == "false")
-        Core::instance()->settings["ignore_raw_141"] = "true";
+        Settings::instance()->set("ignore_raw_141", "true");
 }
 
 // NS FAVOURITES
@@ -3205,7 +3205,7 @@ void OnetKernel::raw_433()
     QString strNick = strDataList[3];
 
     // disconnect
-    Core::instance()->settings["reconnect"] = "false";
+    Settings::instance()->set("reconnect", "false");
     Core::instance()->pNetwork->disconnect();
 
     if (strNick[0] != '~')
@@ -3227,8 +3227,8 @@ void OnetKernel::raw_433()
         if (iSelectedButton == QMessageBox::Yes)
         {
             // override
-            Core::instance()->settings["override"] = "true";
-            Core::instance()->settings["reconnect"] = "true";
+            Settings::instance()->set("override", "true");
+            Settings::instance()->set("reconnect", "true");
 
             Core::instance()->pNetwork->connect();
         }
