@@ -193,13 +193,25 @@ void Xml::addKeyValue(QDomDocument *doc, QDomElement *root, const QString &strKe
 
 void Xml::save()
 {
+    if (doc.isNull())
+    {
+        if (Core::instance()->settings.value("debug") == "true")
+            qDebug() << QString(tr("Error: Cannot save xml file %1")).arg(strFile);
+        return;
+    }
+
     QString xml = doc.toString();
 
     QFile f(strFile);
     if (f.open(QIODevice::WriteOnly | QIODevice::Truncate))
     {
-        QTextStream out(&f);
-        out << xml;
+        if (!xml.isEmpty())
+        {
+            QTextStream out(&f);
+            out << xml;
+        }
+        else
+            qDebug() << QString(tr("Error: Cannot save xml file %1")).arg(strFile);
 
         f.close();
     }
