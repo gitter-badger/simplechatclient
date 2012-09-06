@@ -558,9 +558,10 @@ void DlgOptions::themesChanged(int index)
         case 3: strTheme = "Adara"; break;
     }
 
+    Settings::instance()->set("themes", strTheme);
+
     Config *pConfig = new Config();
     pConfig->set("themes", strTheme);
-    Settings::instance()->set("themes", strTheme);
     delete pConfig;
 }
 
@@ -574,9 +575,10 @@ void DlgOptions::languageChanged(int index)
         case 1: strLanguage = "pl"; break;
     }
 
+    Settings::instance()->set("language", strLanguage);
+
     Config *pConfig = new Config();
     pConfig->set("language", strLanguage);
-    Settings::instance()->set("language", strLanguage);
     delete pConfig;
 
     ui.label_language_warning->setText(tr("Restart program to apply the changes."));
@@ -660,9 +662,10 @@ void DlgOptions::autoBusy(bool bValue)
 {
     QString strValue = (bValue ? "true" : "false");
 
+    Settings::instance()->set("auto_busy", strValue);
+
     Config *pConfig = new Config();
     pConfig->set("auto_busy", strValue);
-    Settings::instance()->set("auto_busy", strValue);
     delete pConfig;
 }
 
@@ -670,9 +673,10 @@ void DlgOptions::disableAutojoinFavourites(bool bValue)
 {
     QString strValue = (bValue ? "true" : "false");
 
+    Settings::instance()->set("disable_autojoin_favourites", strValue);
+
     Config *pConfig = new Config();
     pConfig->set("disable_autojoin_favourites", strValue);
-    Settings::instance()->set("disable_autojoin_favourites", strValue);
     delete pConfig;
 }
 
@@ -680,9 +684,10 @@ void DlgOptions::minimizeToTray(bool bValue)
 {
     QString strValue = (bValue ? "true" : "false");
 
+    Settings::instance()->set("minimize_to_tray", strValue);
+
     Config *pConfig = new Config();
     pConfig->set("minimize_to_tray", strValue);
-    Settings::instance()->set("minimize_to_tray", strValue);
     delete pConfig;
 }
 
@@ -690,9 +695,10 @@ void DlgOptions::showZuoAndIp(bool bValue)
 {
     QString strValue = (bValue ? "true" : "false");
 
+    Settings::instance()->set("show_zuo_and_ip", strValue);
+
     Config *pConfig = new Config();
     pConfig->set("show_zuo_and_ip", strValue);
-    Settings::instance()->set("show_zuo_and_ip", strValue);
     delete pConfig;
 }
 
@@ -700,9 +706,10 @@ void DlgOptions::hideFormating(bool bValue)
 {
     QString strValue = (bValue ? "true" : "false");
 
+    Settings::instance()->set("hide_formating", strValue);
+
     Config *pConfig = new Config();
     pConfig->set("hide_formating", strValue);
-    Settings::instance()->set("hide_formating", strValue);
     delete pConfig;
 }
 
@@ -710,9 +717,10 @@ void DlgOptions::hideJoinPart(bool bValue)
 {
     QString strValue = (bValue ? "true" : "false");
 
+    Settings::instance()->set("hide_join_part", strValue);
+
     Config *pConfig = new Config();
     pConfig->set("hide_join_part", strValue);
-    Settings::instance()->set("hide_join_part", strValue);
     delete pConfig;
 }
 
@@ -720,9 +728,10 @@ void DlgOptions::hideJoinPart200(bool bValue)
 {
     QString strValue = (bValue ? "true" : "false");
 
+    Settings::instance()->set("hide_join_part_200", strValue);
+
     Config *pConfig = new Config();
     pConfig->set("hide_join_part_200", strValue);
-    Settings::instance()->set("hide_join_part_200", strValue);
     delete pConfig;
 }
 
@@ -730,9 +739,10 @@ void DlgOptions::disableEmots(bool bValue)
 {
     QString strValue = (bValue ? "true" : "false");
 
+    Settings::instance()->set("disable_emots", strValue);
+
     Config *pConfig = new Config();
     pConfig->set("disable_emots", strValue);
-    Settings::instance()->set("disable_emots", strValue);
     delete pConfig;
 }
 
@@ -740,9 +750,10 @@ void DlgOptions::disableReplaces(bool bValue)
 {
     QString strValue = (bValue ? "true" : "false");
 
+    Settings::instance()->set("disable_replaces", strValue);
+
     Config *pConfig = new Config();
     pConfig->set("disable_replaces", strValue);
-    Settings::instance()->set("disable_replaces", strValue);
     delete pConfig;
 }
 
@@ -1015,9 +1026,10 @@ void DlgOptions::setSoundBeep()
                                      0);
     if (!fileName.isEmpty())
     {
+        Settings::instance()->set("sound_beep", fileName);
+
         Config *pConfig = new Config();
         pConfig->set("sound_beep", fileName);
-        Settings::instance()->set("sound_beep", fileName);
         delete pConfig;
 
         ui.lineEdit_sound_beep->setText(QDir::toNativeSeparators(fileName));
@@ -1035,9 +1047,10 @@ void DlgOptions::setSoundQuery()
                                      0);
     if (!fileName.isEmpty())
     {
+        Settings::instance()->set("sound_query", fileName);
+
         Config *pConfig = new Config();
         pConfig->set("sound_query", fileName);
-        Settings::instance()->set("sound_query", fileName);
         delete pConfig;
 
         ui.lineEdit_sound_query->setText(QDir::toNativeSeparators(fileName));
@@ -1048,9 +1061,10 @@ void DlgOptions::disableSounds(bool bValue)
 {
     QString strValue = (bValue ? "true" : "false");
 
+    Settings::instance()->set("disable_sounds", strValue);
+
     Config *pConfig = new Config();
     pConfig->set("disable_sounds", strValue);
-    Settings::instance()->set("disable_sounds", strValue);
     delete pConfig;
 }
 
@@ -1065,9 +1079,10 @@ void DlgOptions::setSaveLogsByDate(bool bValue)
 {
     QString strValue = (bValue ? "true" : "false");
 
+    Settings::instance()->set("save_logs_by_date", strValue);
+
     Config *pConfig = new Config();
     pConfig->set("save_logs_by_date", strValue);
-    Settings::instance()->set("save_logs_by_date", strValue);
     delete pConfig;
 }
 
@@ -1075,9 +1090,10 @@ void DlgOptions::disableLogs(bool bValue)
 {
     QString strValue = (bValue ? "true" : "false");
 
+    Settings::instance()->set("disable_logs", strValue);
+
     Config *pConfig = new Config();
     pConfig->set("disable_logs", strValue);
-    Settings::instance()->set("disable_logs", strValue);
     delete pConfig;
 }
 
@@ -1092,9 +1108,10 @@ void DlgOptions::setBackgroundImage()
                                      0);
     if (!fileName.isEmpty())
     {
+        Settings::instance()->set("background_image", fileName);
+
         Config *pConfig = new Config();
         pConfig->set("background_image", fileName);
-        Settings::instance()->set("background_image", fileName);
         delete pConfig;
 
         ui.lineEdit_background_image->setText(QDir::toNativeSeparators(fileName));
@@ -1108,9 +1125,10 @@ void DlgOptions::disableBackgroundImage(bool bValue)
 {
     QString strValue = (bValue ? "true" : "false");
 
+    Settings::instance()->set("disable_background_image", strValue);
+
     Config *pConfig = new Config();
     pConfig->set("disable_background_image", strValue);
-    Settings::instance()->set("disable_background_image", strValue);
     delete pConfig;
 
     // refresh background image
@@ -1121,9 +1139,10 @@ void DlgOptions::setWinamp()
 {
     QString strValue = ui.lineEdit_winamp->text();
 
+    Settings::instance()->set("winamp", strValue);
+
     Config *pConfig = new Config();
     pConfig->set("winamp", strValue);
-    Settings::instance()->set("winamp", strValue);
     delete pConfig;
 }
 
@@ -1131,9 +1150,10 @@ void DlgOptions::trayMessage(bool bValue)
 {
     QString strValue = (bValue ? "true" : "false");
 
+    Settings::instance()->set("tray_message", strValue);
+
     Config *pConfig = new Config();
     pConfig->set("tray_message", strValue);
-    Settings::instance()->set("tray_message", strValue);
     delete pConfig;
 }
 
@@ -1151,9 +1171,10 @@ void DlgOptions::setColor(const QString &strKey)
         QString strColor = cColor.name();
 
         // save
+        Settings::instance()->set(strKey, strColor);
+
         Config *pConfig = new Config();
         pConfig->set(strKey, strColor);
-        Settings::instance()->set(strKey, strColor);
         delete pConfig;
 
         // save to pushbutton
