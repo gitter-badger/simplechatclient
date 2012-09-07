@@ -442,6 +442,10 @@
         <translation>Usuń</translation>
     </message>
     <message>
+        <source>Options</source>
+        <translation>Opcje</translation>
+    </message>
+    <message>
         <source>Join</source>
         <translation>Wejdź</translation>
     </message>

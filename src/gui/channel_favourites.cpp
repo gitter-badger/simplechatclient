@@ -19,6 +19,7 @@
 
 #include <QDesktopWidget>
 #include <QInputDialog>
+#include <QMenu>
 #include <QTimer>
 #include "channel.h"
 #include "core.h"
@@ -40,23 +41,30 @@ DlgChannelFavourites::DlgChannelFavourites(QWidget *parent) : QDialog(parent)
 
 void DlgChannelFavourites::createGui()
 {
-    ui.pushButton_join->setEnabled(false);
+    ui.toolButton_options->setEnabled(false);
 
     ui.pushButton_add->setIcon(QIcon(":/images/oxygen/16x16/irc-join-channel.png"));
     ui.pushButton_remove->setIcon(QIcon(":/images/oxygen/16x16/irc-close-channel.png"));
-    ui.pushButton_join->setIcon(QIcon(":/images/oxygen/16x16/legalmoves.png"));
+    ui.toolButton_options->setIcon(QIcon(":/images/oxygen/16x16/applications-system.png"));
     ui.buttonBox->button(QDialogButtonBox::Close)->setIcon(QIcon(":/images/oxygen/16x16/dialog-close.png"));
 
     ui.pushButton_add->setText(tr("Add"));
     ui.pushButton_remove->setText(tr("Remove"));
-    ui.pushButton_join->setText(tr("Join"));
+    ui.toolButton_options->setText(tr("Options"));
+
+    joinAction = new QAction(QIcon(":/images/oxygen/16x16/legalmoves.png"), tr("Join"), this);
+
+    optionsMenu = new QMenu(this);
+    optionsMenu->addAction(joinAction);
+
+    ui.toolButton_options->setMenu(optionsMenu);
 }
 
 void DlgChannelFavourites::createSignals()
 {
     connect(ui.pushButton_add, SIGNAL(clicked()), this, SLOT(buttonAdd()));
     connect(ui.pushButton_remove, SIGNAL(clicked()), this, SLOT(buttonRemove()));
-    connect(ui.pushButton_join, SIGNAL(clicked()), this, SLOT(buttonJoin()));
+    connect(joinAction, SIGNAL(triggered()), this, SLOT(buttonJoin()));
     connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(close()));
     connect(ui.listWidget_channels, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(itemClicked(QListWidgetItem*)));
 }
@@ -83,8 +91,8 @@ void DlgChannelFavourites::refresh()
 
 void DlgChannelFavourites::itemClicked(QListWidgetItem *)
 {
-    if (!ui.pushButton_join->isEnabled())
-        ui.pushButton_join->setEnabled(true);
+    if (!ui.toolButton_options->isEnabled())
+        ui.toolButton_options->setEnabled(true);
 }
 
 void DlgChannelFavourites::buttonAdd()
