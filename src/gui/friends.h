@@ -31,6 +31,9 @@ public:
 
 private:
     Ui::uiFriends ui;
+    QMenu *optionsMenu;
+    QAction *privAction;
+    QAction *whoisAction;
 
     void createGui();
     void createSignals();
@@ -41,6 +44,7 @@ private slots:
     void itemClicked(QListWidgetItem*);
     void buttonAdd();
     void buttonRemove();
+    void buttonPriv();
     void buttonWhois();
 };
 

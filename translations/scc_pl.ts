@@ -990,6 +990,14 @@
         <translation>Usuń</translation>
     </message>
     <message>
+        <source>Options</source>
+        <translation>Opcje</translation>
+    </message>
+    <message>
+        <source>Priv</source>
+        <translation>Rozmowa prywatna</translation>
+    </message>
+    <message>
         <source>Whois</source>
         <translation>Gdzie jest</translation>
     </message>

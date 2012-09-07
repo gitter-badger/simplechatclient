@@ -19,6 +19,7 @@
 
 #include <QDesktopWidget>
 #include <QInputDialog>
+#include <QMenu>
 #include <QTimer>
 #include "core.h"
 #include "friends.h"
@@ -39,16 +40,25 @@ DlgFriends::DlgFriends(QWidget *parent) : QDialog(parent)
 
 void DlgFriends::createGui()
 {
-    ui.pushButton_whois->setEnabled(false);
+    ui.toolButton_options->setEnabled(false);
 
     ui.pushButton_add->setIcon(QIcon(":/images/oxygen/16x16/list-add-user.png"));
     ui.pushButton_remove->setIcon(QIcon(":/images/oxygen/16x16/list-remove-user.png"));
-    ui.pushButton_whois->setIcon(QIcon(":/images/oxygen/16x16/user-properties.png"));
+    ui.toolButton_options->setIcon(QIcon(":/images/oxygen/16x16/applications-system.png"));
     ui.buttonBox->button(QDialogButtonBox::Close)->setIcon(QIcon(":/images/oxygen/16x16/dialog-close.png"));
 
     ui.pushButton_add->setText(tr("Add"));
     ui.pushButton_remove->setText(tr("Remove"));
-    ui.pushButton_whois->setText(tr("Whois"));
+    ui.toolButton_options->setText(tr("Options"));
+
+    privAction = new QAction(QIcon(":/images/oxygen/16x16/list-add-user.png"), tr("Priv"), this);
+    whoisAction = new QAction(QIcon(":/images/oxygen/16x16/user-properties.png"), tr("Whois"), this);
+
+    optionsMenu = new QMenu(this);
+    optionsMenu->addAction(privAction);
+    optionsMenu->addAction(whoisAction);
+
+    ui.toolButton_options->setMenu(optionsMenu);
 }
 
 void DlgFriends::createSignals()
@@ -57,7 +67,8 @@ void DlgFriends::createSignals()
     connect(ui.listWidget_online, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(itemClicked(QListWidgetItem*)));
     connect(ui.pushButton_add, SIGNAL(clicked()), this, SLOT(buttonAdd()));
     connect(ui.pushButton_remove, SIGNAL(clicked()), this, SLOT(buttonRemove()));
-    connect(ui.pushButton_whois, SIGNAL(clicked()), this, SLOT(buttonWhois()));
+    connect(privAction, SIGNAL(triggered()), this, SLOT(buttonPriv()));
+    connect(whoisAction, SIGNAL(triggered()), this, SLOT(buttonWhois()));
     connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(close()));
 }
 
@@ -84,18 +95,18 @@ void DlgFriends::refresh()
 
 void DlgFriends::tabChanged(int index)
 {
-    // online - show whois
-    if ((index == 0) && (ui.pushButton_whois->isHidden()))
-        ui.pushButton_whois->setHidden(false);
-    // offline - hide whois
-    else if ((index == 1) && (!ui.pushButton_whois->isHidden()))
-        ui.pushButton_whois->setHidden(true);
+    // online - show options
+    if ((index == 0) && (ui.toolButton_options->isHidden()))
+        ui.toolButton_options->setHidden(false);
+    // offline - hide options
+    else if ((index == 1) && (!ui.toolButton_options->isHidden()))
+        ui.toolButton_options->setHidden(true);
 }
 
 void DlgFriends::itemClicked(QListWidgetItem *)
 {
-    if (!ui.pushButton_whois->isEnabled())
-        ui.pushButton_whois->setEnabled(true);
+    if (!ui.toolButton_options->isEnabled())
+        ui.toolButton_options->setEnabled(true);
 }
 
 void DlgFriends::buttonAdd()
@@ -134,6 +145,24 @@ void DlgFriends::buttonRemove()
         Core::instance()->pNetwork->send(QString("NS FRIENDS DEL %1").arg(strText));
         QTimer::singleShot(1000*4, this, SLOT(refresh())); // 4 sec
     }
+}
+
+void DlgFriends::buttonPriv()
+{
+    QString strSelected;
+    if (ui.tabWidget->currentIndex() == 0)
+    {
+        if (ui.listWidget_online->selectedItems().size() != 0)
+            strSelected = ui.listWidget_online->selectedItems().at(0)->text();
+    }
+    else if (ui.tabWidget->currentIndex() == 1)
+    {
+        if (ui.listWidget_offline->selectedItems().size() != 0)
+            strSelected = ui.listWidget_offline->selectedItems().at(0)->text();
+    }
+
+    if (!strSelected.isEmpty())
+        Core::instance()->pNetwork->send(QString("PRIV %1").arg(strSelected));
 }
 
 void DlgFriends::buttonWhois()
