@@ -31,6 +31,9 @@ public:
 
 private:
     Ui::uiChannelHomes ui;
+    QMenu *optionsMenu;
+    QAction *joinAction;
+    QAction *settingsAction;
 
     void createGui();
     void createSignals();

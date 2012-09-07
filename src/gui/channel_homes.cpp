@@ -19,6 +19,7 @@
 
 #include <QDesktopWidget>
 #include <QInputDialog>
+#include <QMenu>
 #include <QTimer>
 #include "channel.h"
 #include "core.h"
@@ -42,19 +43,25 @@ DlgChannelHomes::DlgChannelHomes(QWidget *parent) : QDialog(parent)
 
 void DlgChannelHomes::createGui()
 {
-    ui.pushButton_join->setEnabled(false);
-    ui.pushButton_settings->setEnabled(false);
+    ui.toolButton_options->setEnabled(false);
 
     ui.pushButton_create->setIcon(QIcon(":/images/oxygen/16x16/irc-join-channel.png"));
     ui.pushButton_remove->setIcon(QIcon(":/images/oxygen/16x16/irc-close-channel.png"));
-    ui.pushButton_join->setIcon(QIcon(":/images/oxygen/16x16/legalmoves.png"));
-    ui.pushButton_settings->setIcon(QIcon(":/images/oxygen/16x16/configure.png"));
+    ui.toolButton_options->setIcon(QIcon(":/images/oxygen/16x16/applications-system.png"));
     ui.buttonBox->button(QDialogButtonBox::Close)->setIcon(QIcon(":/images/oxygen/16x16/dialog-close.png"));
 
     ui.pushButton_create->setText(tr("Create"));
     ui.pushButton_remove->setText(tr("Remove"));
-    ui.pushButton_join->setText(tr("Join"));
-    ui.pushButton_settings->setText(tr("Settings"));
+    ui.toolButton_options->setText(tr("Options"));
+
+    joinAction = new QAction(QIcon(":/images/oxygen/16x16/legalmoves.png"), tr("Join"), this);
+    settingsAction = new QAction(QIcon(":/images/oxygen/16x16/configure.png"), tr("Settings"), this);
+
+    optionsMenu = new QMenu(this);
+    optionsMenu->addAction(joinAction);
+    optionsMenu->addAction(settingsAction);
+
+    ui.toolButton_options->setMenu(optionsMenu);
 }
 
 void DlgChannelHomes::createSignals()
@@ -63,8 +70,8 @@ void DlgChannelHomes::createSignals()
     connect(ui.listWidget_channels, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(itemClicked(QListWidgetItem*)));
     connect(ui.pushButton_create, SIGNAL(clicked()), this, SLOT(buttonCreate()));
     connect(ui.pushButton_remove, SIGNAL(clicked()), this, SLOT(buttonRemove()));
-    connect(ui.pushButton_join, SIGNAL(clicked()), this, SLOT(buttonJoin()));
-    connect(ui.pushButton_settings, SIGNAL(clicked()), this, SLOT(buttonSettings()));
+    connect(joinAction, SIGNAL(triggered()), this, SLOT(buttonJoin()));
+    connect(settingsAction, SIGNAL(triggered()), this, SLOT(buttonSettings()));
     connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(close()));
 }
 
@@ -108,10 +115,8 @@ void DlgChannelHomes::listClicked(QModelIndex index)
 
 void DlgChannelHomes::itemClicked(QListWidgetItem *)
 {
-    if (!ui.pushButton_join->isEnabled())
-        ui.pushButton_join->setEnabled(true);
-    if (!ui.pushButton_settings->isEnabled())
-        ui.pushButton_settings->setEnabled(true);
+    if (!ui.toolButton_options->isEnabled())
+        ui.toolButton_options->setEnabled(true);
 }
 
 void DlgChannelHomes::buttonCreate()

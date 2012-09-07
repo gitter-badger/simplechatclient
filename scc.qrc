@@ -120,5 +120,6 @@
         <file>images/oxygen/16x16/edit-find-user.png</file>
         <file>images/oxygen/16x16/im-user.png</file>
         <file>images/logo16x16.gif</file>
+        <file>images/oxygen/16x16/applications-system.png</file>
     </qresource>
 </RCC>

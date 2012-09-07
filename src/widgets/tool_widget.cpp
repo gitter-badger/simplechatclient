@@ -89,6 +89,7 @@ ToolWidget::ToolWidget(QWidget *parent) : QWidget(parent), strCurrentColor("#000
     fontfamily->setText("Verdana");
     fontfamily->setPopupMode(QToolButton::InstantPopup);
     fontfamily->setMenu(fontMenu);
+    fontfamily->setArrowType(Qt::NoArrow);
     fontfamily->show();
 
     color = new QComboBox(this);
@@ -174,6 +175,7 @@ ToolWidget::ToolWidget(QWidget *parent) : QWidget(parent), strCurrentColor("#000
     size->setFont(QFont("Times New Roman", -1, -1, false));
     size->setPopupMode(QToolButton::InstantPopup);
     size->setMenu(sizeMenu);
+    size->setArrowType(Qt::NoArrow);
     size->show();
 
     separator2 = new QFrame(this);
