@@ -47,7 +47,7 @@
     #include "webcam.h"
 #endif
 
-ChatView::ChatView(const QString &_strChatViewChannel) : strChatViewChannel(_strChatViewChannel)
+ChatView::ChatView(const QString &_strChatViewChannel) : strChatViewChannel(_strChatViewChannel), bAtBottom(true)
 {
     setFocusPolicy(Qt::NoFocus);
     settings()->setAttribute(QWebSettings::JavascriptEnabled, true);
@@ -102,6 +102,8 @@ void ChatView::refreshCSS()
 void ChatView::clearMessages()
 {
     this->page()->mainFrame()->evaluateJavaScript("clearMessages()");
+
+    bAtBottom = true;
 }
 
 void ChatView::displayMessage(const QString &strData, MessageCategory eMessageCategory, qint64 iTime, QString strNick)
