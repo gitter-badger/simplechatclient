@@ -39,7 +39,7 @@ private:
     QString strWebsite;
     QAction *openChannelsActs[MAX_OPEN_CHANNELS];
     QAction *punishReasonActs[MAX_PUNISH_REASONS];
-    bool bScroll;
+    bool bAtBottom;
 
     void createBody();
     void menuNick(QContextMenuEvent *event);

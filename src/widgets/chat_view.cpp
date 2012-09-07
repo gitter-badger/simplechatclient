@@ -47,7 +47,7 @@
     #include "webcam.h"
 #endif
 
-ChatView::ChatView(const QString &_strChatViewChannel) : strChatViewChannel(_strChatViewChannel), bScroll(true)
+ChatView::ChatView(const QString &_strChatViewChannel) : strChatViewChannel(_strChatViewChannel)
 {
     setFocusPolicy(Qt::NoFocus);
     settings()->setAttribute(QWebSettings::JavascriptEnabled, true);
@@ -113,10 +113,7 @@ void ChatView::displayMessage(const QString &strData, MessageCategory eMessageCa
         strContent = HtmlMessagesRenderer::renderer(strData, eMessageCategory, iTime, strNick);
 
     // scroll
-    if (this->page()->mainFrame()->scrollBarValue(Qt::Vertical) ==  this->page()->mainFrame()->scrollBarMaximum(Qt::Vertical))
-        bScroll = true;
-    else
-        bScroll = false;
+    bAtBottom = (this->page()->mainFrame()->scrollBarValue(Qt::Vertical) >= this->page()->mainFrame()->scrollBarMaximum(Qt::Vertical));
 
     // remove first message
     QWebElement document = this->page()->mainFrame()->documentElement();
@@ -554,6 +551,6 @@ void ChatView::contextMenuEvent(QContextMenuEvent *event)
 
 void ChatView::scrollToBottom()
 {
-    if (bScroll)
+    if (bAtBottom)
         page()->mainFrame()->setScrollBarValue(Qt::Vertical, page()->mainFrame()->scrollBarMaximum(Qt::Vertical));
 }
