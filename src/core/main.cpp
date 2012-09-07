@@ -23,14 +23,14 @@
 #include "config.h"
 
 #ifdef Q_WS_X11
-#include "debug.h"
+    #include "debug.h"
 #endif
 
 #include "core.h"
 #include "settings.h"
 
 #ifdef Q_WS_WIN
-#include <windows.h>
+    #include <windows.h>
 #endif
 
 void displayVersion()

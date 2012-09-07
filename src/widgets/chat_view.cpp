@@ -18,6 +18,7 @@
  */
 
 #include <QContextMenuEvent>
+#include <QDesktopServices>
 #include <QFile>
 #include <QInputDialog>
 #include <QMenu>
@@ -38,7 +39,6 @@
 
 #ifdef Q_WS_WIN
     #include <QCoreApplication>
-    #include <QDesktopServices>
 #endif
 
 #if WITH_KAMERZYSTA
