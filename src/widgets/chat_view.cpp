@@ -18,8 +18,6 @@
  */
 
 #include <QContextMenuEvent>
-#include <QCoreApplication>
-#include <QDesktopServices>
 #include <QFile>
 #include <QInputDialog>
 #include <QMenu>
@@ -37,6 +35,11 @@
 #include "settings.h"
 #include "webbrowser.h"
 #include "chat_view.h"
+
+#ifdef Q_WS_WIN
+    #include <QCoreApplication>
+    #include <QDesktopServices>
+#endif
 
 #if WITH_KAMERZYSTA
     #include "kamerzysta.h"

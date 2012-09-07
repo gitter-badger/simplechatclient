@@ -17,11 +17,16 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <QCoreApplication>
 #include <QDir>
 #include <QPixmap>
 #include "settings.h"
 #include "convert.h"
+
+#ifdef Q_WS_WIN
+    #include <QCoreApplication>
+#else
+    #include "scc-config.h"
+#endif
 
 QString findEmoticon(const QString &strEmoticon)
 {

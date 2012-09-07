@@ -21,10 +21,13 @@
 #include <QDir>
 #include <QListWidget>
 #include <QPixmap>
-#include "core.h" // require by SCC_DATA_DIR
 #include "config.h"
 #include "inputline_widget.h"
 #include "emoticons.h"
+
+#ifndef Q_WS_WIN
+    #include "scc-config.h"
+#endif
 
 DlgEmoticonsThread::DlgEmoticonsThread() {}
 

@@ -17,16 +17,16 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <QCoreApplication>
 #include <QDir>
 #include "settings.h"
 #include "xml.h"
 #include "config.h"
 
 #ifdef Q_WS_WIN
+    #include <QCoreApplication>
     #include <QDesktopServices>
 #else
-    #include <QDebug>
+    #include "scc-config.h"
 #endif
 
 Config::Config(bool _bProfileConfig, QString _strForceProfile) : bProfileConfig(_bProfileConfig), strForceProfile(_strForceProfile)
