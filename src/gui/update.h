@@ -21,7 +21,6 @@
 #define UPDATE_H
 
 class QNetworkAccessManager;
-class MainWindow;
 #include <QDialog>
 #include <QNetworkReply>
 #include "ui_update.h"
@@ -30,7 +29,7 @@ class DlgUpdate : public QDialog
 {
     Q_OBJECT
 public:
-    DlgUpdate(MainWindow *parent);
+    DlgUpdate(QWidget *parent = 0);
     virtual ~DlgUpdate();
 
 private:

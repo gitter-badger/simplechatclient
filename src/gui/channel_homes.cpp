@@ -103,7 +103,7 @@ void DlgChannelHomes::listClicked(QModelIndex index)
     int i = index.row();
     QString strChannel = ui.listWidget_channels->item(i)->text();
 
-    DlgChannelSettings(this, strChannel).exec();
+    DlgChannelSettings(strChannel).exec();
 }
 
 void DlgChannelHomes::itemClicked(QListWidgetItem *)
@@ -161,6 +161,6 @@ void DlgChannelHomes::buttonSettings()
     {
         QString strChannel = ui.listWidget_channels->selectedItems().at(0)->text();
 
-        DlgChannelSettings(this, strChannel).exec();
+        DlgChannelSettings(strChannel).exec();
     }
 }

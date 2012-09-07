@@ -21,7 +21,6 @@
 #define EMOTICONS_H
 
 class InputLineWidget;
-class MainWindow;
 class QListWidget;
 #include <QDialog>
 #include <QListWidgetItem>
@@ -63,7 +62,7 @@ class DlgEmoticons : public QDialog
 {
     Q_OBJECT
 public:
-    DlgEmoticons(MainWindow *parent, InputLineWidget *_pInputLineWidget);
+    DlgEmoticons(InputLineWidget *_pInputLineWidget, QWidget *parent = 0);
     virtual ~DlgEmoticons();
 
 private:

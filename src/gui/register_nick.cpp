@@ -24,13 +24,12 @@
 #include <QNetworkCookieJar>
 #include <QNetworkReply>
 #include <QUrl>
-#include "mainwindow.h"
 #include "profile_add.h"
 #include "register_nick.h"
 
 #define AJAX_API "http://czat.onet.pl/include/ajaxapi.xml.php3"
 
-DlgRegisterNick::DlgRegisterNick(MainWindow *parent, DlgProfileAdd *_pDlgProfileAdd) : QDialog(parent), pDlgProfileAdd(_pDlgProfileAdd)
+DlgRegisterNick::DlgRegisterNick(DlgProfileAdd *_pDlgProfileAdd, QWidget *parent) : QDialog(parent), pDlgProfileAdd(_pDlgProfileAdd)
 {
     ui.setupUi(this);
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);

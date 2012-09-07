@@ -23,7 +23,6 @@
 #include <QPixmap>
 #include "core.h" // require by SCC_DATA_DIR
 #include "config.h"
-#include "mainwindow.h"
 #include "inputline_widget.h"
 #include "emoticons.h"
 
@@ -100,7 +99,7 @@ void DlgEmoticonsTab::sortEmoticons()
     listWidget->setSortingEnabled(true);
 }
 
-DlgEmoticons::DlgEmoticons(MainWindow *parent, InputLineWidget *_pInputLineWidget) : QDialog(parent), pInputLineWidget(_pInputLineWidget)
+DlgEmoticons::DlgEmoticons(InputLineWidget *_pInputLineWidget, QWidget *parent) : QDialog(parent), pInputLineWidget(_pInputLineWidget)
 {
     ui.setupUi(this);
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);

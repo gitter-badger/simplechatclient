@@ -27,7 +27,7 @@ class DlgAwaylog : public QDialog
 {
     Q_OBJECT
 public:
-    DlgAwaylog(QWidget *parent);
+    DlgAwaylog(QWidget *parent = 0);
 
 private:
     Ui::uiAwaylog ui;

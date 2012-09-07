@@ -543,7 +543,7 @@ void DlgOptions::currentProfileChanged(int row)
 
 void DlgOptions::buttonProfiles()
 {
-    DlgProfileManager(Core::instance()->mainWindow(), this).exec();
+    DlgProfileManager(this).exec();
 }
 
 void DlgOptions::themesChanged(int index)

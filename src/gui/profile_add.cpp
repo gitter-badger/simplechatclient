@@ -22,12 +22,11 @@
 #include "core.h"
 #include "config.h"
 #include "simple_crypt.h"
-#include "mainwindow.h"
 #include "register_nick.h"
 #include "profile_manager.h"
 #include "profile_add.h"
 
-DlgProfileAdd::DlgProfileAdd(MainWindow *parent, DlgProfileManager *_profileManager) : QDialog(parent), profileManager(_profileManager)
+DlgProfileAdd::DlgProfileAdd(DlgProfileManager *_profileManager, QWidget *parent) : QDialog(parent), profileManager(_profileManager)
 {
     ui.setupUi(this);
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
@@ -109,7 +108,7 @@ void DlgProfileAdd::showPass()
 
 void DlgProfileAdd::buttonRegisterNick()
 {
-    DlgRegisterNick(Core::instance()->mainWindow(), this).exec();
+    DlgRegisterNick(this).exec();
 }
 
 void DlgProfileAdd::buttonOk()

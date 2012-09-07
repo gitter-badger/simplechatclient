@@ -20,7 +20,6 @@
 #ifndef WEBBROWSER_H
 #define WEBBROWSER_H
 
-class MainWindow;
 #include <QUrl>
 #include <QDialog>
 #include <QCloseEvent>
@@ -30,7 +29,7 @@ class DlgWebBrowser : public QDialog
 {
     Q_OBJECT
 public:
-    DlgWebBrowser(MainWindow *parent, const QUrl &url);
+    DlgWebBrowser(const QUrl &url, QWidget *parent = 0);
 
 private:
     Ui::uiWebBrowser ui;

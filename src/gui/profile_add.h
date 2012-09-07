@@ -21,7 +21,6 @@
 #define PROFILE_ADD_H
 
 class DlgProfileManager;
-class MainWindow;
 #include <QDialog>
 #include "ui_profile_add.h"
 
@@ -29,7 +28,7 @@ class DlgProfileAdd : public QDialog
 {
     Q_OBJECT
 public:
-    DlgProfileAdd(MainWindow *parent, DlgProfileManager *_profileManager);
+    DlgProfileAdd(DlgProfileManager *_profileManager, QWidget *parent = 0);
     void setNickPass(const QString &n, const QString &p);
 
 private:

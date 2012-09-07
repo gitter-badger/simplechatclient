@@ -20,7 +20,6 @@
 #ifndef PROFILE_EDIT_H
 #define PROFILE_EDIT_H
 
-class MainWindow;
 #include <QDialog>
 #include "ui_profile_edit.h"
 
@@ -28,7 +27,7 @@ class DlgProfileEdit : public QDialog
 {
     Q_OBJECT
 public:
-    DlgProfileEdit(MainWindow *parent, const QString &_strNick);
+    DlgProfileEdit(const QString &_strNick, QWidget *parent = 0);
 
 private:
     Ui::uiProfileEdit ui;

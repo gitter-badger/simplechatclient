@@ -712,20 +712,23 @@ void ToolWidget::colorClicked(int index)
 
 void ToolWidget::emoticonsClicked()
 {
-    DlgEmoticons(Core::instance()->mainWindow(), pInputLine).exec();
+    DlgEmoticons(pInputLine).exec();
 }
 
 void ToolWidget::channelSettingsClicked()
 {
     if (Core::instance()->pNetwork->isConnected())
-        DlgChannelSettings(this, Channel::instance()->getCurrent()).exec();
+    {
+        QString strChannel = Channel::instance()->getCurrent();
+        DlgChannelSettings(strChannel).exec();
+    }
 }
 
 void ToolWidget::moderationClicked()
 {
     QString strChannel = Channel::instance()->getCurrent();
 
-    DlgModeration(this, strChannel).exec();
+    DlgModeration(strChannel).exec();
 }
 
 void ToolWidget::inputlineReturnPressed()

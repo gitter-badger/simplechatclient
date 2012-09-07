@@ -168,7 +168,7 @@ void NickListWidget::profile()
     if (strSelectedNick.isEmpty()) return;
 
     if (strSelectedNick[0] != '~')
-        DlgUserProfile(this, strSelectedNick).exec();
+        DlgUserProfile(strSelectedNick).exec();
 }
 
 void NickListWidget::cam()

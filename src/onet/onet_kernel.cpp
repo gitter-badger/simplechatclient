@@ -941,7 +941,7 @@ void OnetKernel::raw_invite()
     // is active window
     if (Core::instance()->mainWindow()->isActiveWindow())
     {
-        (new DlgInvite(Core::instance()->mainWindow(), strNick, strChannel))->show(); // should be show - prevent hangup!
+        (new DlgInvite(strNick, strChannel))->show(); // should be show - prevent hangup!
     }
 
     // sound
@@ -3651,7 +3651,7 @@ void OnetKernel::raw_475()
     QString strMessage = QString(tr("* Cannot join channel %1 - Incorrect channel key")).arg(strChannel);
     Message::instance()->showMessageActive(strMessage, MessageInfo);
 
-    (new DlgChannelKey(Core::instance()->mainWindow(), strChannel))->show(); // should be show - prevent hangup!
+    (new DlgChannelKey(strChannel))->show(); // should be show - prevent hangup!
 }
 
 // :cf1f4.onet 481 Merovingian :Permission Denied - You do not have the required operator privileges

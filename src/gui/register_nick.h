@@ -24,7 +24,6 @@ class QNetworkAccessManager;
 class QNetworkCookieJar;
 class QNetworkReply;
 class DlgProfileAdd;
-class MainWindow;
 #include <QDialog>
 #include "ui_register_nick.h"
 
@@ -32,7 +31,7 @@ class DlgRegisterNick : public QDialog
 {
     Q_OBJECT
 public:
-    DlgRegisterNick(MainWindow *parent, DlgProfileAdd *_pDlgProfileAdd);
+    DlgRegisterNick(DlgProfileAdd *_pDlgProfileAdd, QWidget *parent = 0);
     virtual ~DlgRegisterNick();
 
 private:

@@ -150,7 +150,7 @@ void ChatView::whois()
 void ChatView::profile()
 {
     if (strNick[0] != '~')
-        DlgUserProfile(this, strNick).exec();
+        DlgUserProfile(strNick).exec();
 }
 
 void ChatView::cam()
@@ -286,7 +286,7 @@ void ChatView::watchVideo()
         strYoutubeLink = "http://www.youtube.com/embed/"+exYoutube_3.cap(1);
 
     if (QUrl(strYoutubeLink).isValid())
-        (new DlgWebBrowser(Core::instance()->mainWindow(), QUrl(strYoutubeLink)))->show();
+        (new DlgWebBrowser(QUrl(strYoutubeLink)))->show();
 }
 
 void ChatView::openWebbrowser()
@@ -303,7 +303,7 @@ void ChatView::sendToNotes()
 
 void ChatView::search()
 {
-    DlgFindText(Core::instance()->mainWindow(), this).exec();
+    DlgFindText(this).exec();
 }
 
 void ChatView::clear()

@@ -20,7 +20,6 @@
 #ifndef INVITE_H
 #define INVITE_H
 
-class MainWindow;
 #include <QDialog>
 #include "ui_invite.h"
 
@@ -28,7 +27,7 @@ class DlgInvite : public QDialog
 {
     Q_OBJECT
 public:
-    DlgInvite(MainWindow *parent, const QString &_strNick, const QString &_strChannel);
+    DlgInvite(const QString &_strNick, const QString &_strChannel, QWidget *parent = 0);
 
 private:
     Ui::uiInvite ui;

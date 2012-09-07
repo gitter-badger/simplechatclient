@@ -216,7 +216,7 @@ void OnetAuth::getUo()
 void OnetAuth::showCaptchaDialog()
 {
     // captcha dialog
-    DlgCaptcha(Core::instance()->mainWindow(), cookieJar, &strCaptcha).exec();
+    DlgCaptcha(cookieJar, &strCaptcha).exec();
 }
 
 void OnetAuth::getCheckCode()

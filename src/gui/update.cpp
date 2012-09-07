@@ -23,7 +23,6 @@
 #include <QNetworkAccessManager>
 #include <QPushButton>
 #include <QUrl>
-#include "mainwindow.h"
 #include "settings.h"
 #include "update.h"
 
@@ -33,7 +32,7 @@
 #define UPDATE_DOWNLOAD_LINK_1 "http://sourceforge.net/projects/simplechatclien/files/"
 #define UPDATE_DOWNLOAD_LINK_2 "http://cloud.github.com/downloads/simplechatclient/simplechatclient/"
 
-DlgUpdate::DlgUpdate(MainWindow *parent) : QDialog(parent)
+DlgUpdate::DlgUpdate(QWidget *parent) : QDialog(parent)
 {
     ui.setupUi(this);
     setWindowFlags(Qt::Dialog | Qt::WindowStaysOnTopHint);

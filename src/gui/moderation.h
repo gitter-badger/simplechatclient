@@ -27,7 +27,7 @@ class DlgModeration : public QDialog
 {
     Q_OBJECT
 public:
-    DlgModeration(QWidget *parent, const QString &_strCurrentChannel);
+    DlgModeration(const QString &_strCurrentChannel, QWidget *parent = 0);
 
 private:
     Ui::uiModeration ui;

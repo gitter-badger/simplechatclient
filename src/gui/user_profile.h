@@ -37,7 +37,7 @@ class DlgUserProfile : public QDialog
 {
     Q_OBJECT
 public:
-    DlgUserProfile(QWidget *parent, const QString &_strNick);
+    DlgUserProfile(const QString &_strNick, QWidget *parent = 0);
     virtual ~DlgUserProfile();
 
 private:

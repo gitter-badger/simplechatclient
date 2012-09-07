@@ -22,10 +22,9 @@
 #include <QPushButton>
 #include "config.h"
 #include "simple_crypt.h"
-#include "mainwindow.h"
 #include "profile_edit.h"
 
-DlgProfileEdit::DlgProfileEdit(MainWindow *parent, const QString &_strNick) : QDialog(parent), strNick(_strNick)
+DlgProfileEdit::DlgProfileEdit(const QString &_strNick, QWidget *parent) : QDialog(parent), strNick(_strNick)
 {
     ui.setupUi(this);
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);

@@ -20,7 +20,6 @@
 #ifndef CHANNEL_KEY_H
 #define CHANNEL_KEY_H
 
-class MainWindow;
 #include <QDialog>
 #include "ui_channel_key.h"
 
@@ -28,7 +27,7 @@ class DlgChannelKey : public QDialog
 {
     Q_OBJECT
 public:
-    DlgChannelKey(MainWindow *parent, const QString &_strChannel);
+    DlgChannelKey(const QString &_strChannel, QWidget *parent = 0);
 
 private:
     Ui::uiChannelKey ui;

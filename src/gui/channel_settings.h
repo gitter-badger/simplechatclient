@@ -21,9 +21,7 @@
 #define CHANNEL_SETTINGS_H
 
 #include <QDialog>
-
 #include "avatar_client.h"
-
 #include "ui_channel_settings.h"
 
 class SimpleStatsWidget;
@@ -32,7 +30,7 @@ class DlgChannelSettings : public QDialog
 {
     Q_OBJECT
 public:
-    DlgChannelSettings(QWidget *parent, const QString &_strChannel);
+    DlgChannelSettings(const QString &_strChannel, QWidget *parent = 0);
     ~DlgChannelSettings();
 
 private:

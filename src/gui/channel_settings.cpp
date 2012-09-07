@@ -32,7 +32,7 @@
 #include "simple_stats_widget.h"
 #include "channel_settings.h"
 
-DlgChannelSettings::DlgChannelSettings(QWidget *parent, const QString &_strChannel) : QDialog(parent), strChannel(_strChannel)
+DlgChannelSettings::DlgChannelSettings(const QString &_strChannel, QWidget *parent) : QDialog(parent), strChannel(_strChannel)
 {
     ui.setupUi(this);
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);

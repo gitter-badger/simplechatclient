@@ -19,10 +19,9 @@
 
 #include <QDesktopWidget>
 #include <QPushButton>
-#include "mainwindow.h"
 #include "webbrowser.h"
 
-DlgWebBrowser::DlgWebBrowser(MainWindow *parent, const QUrl &url) : QDialog(parent)
+DlgWebBrowser::DlgWebBrowser(const QUrl &url, QWidget *parent) : QDialog(parent)
 {
     ui.setupUi(this);
     setAttribute(Qt::WA_DeleteOnClose); // require by show method - prevent hangup!

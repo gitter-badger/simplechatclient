@@ -21,7 +21,6 @@
 #include <QDir>
 #include <QMessageBox>
 #include "core.h"
-#include "mainwindow.h"
 #include "options.h"
 #include "profile_add.h"
 #include "profile_edit.h"
@@ -32,7 +31,7 @@
     #include <QDesktopServices>
 #endif
 
-DlgProfileManager::DlgProfileManager(MainWindow *parent, DlgOptions *_pDlgOptions) : QDialog(parent), pDlgOptions(_pDlgOptions)
+DlgProfileManager::DlgProfileManager(DlgOptions *_pDlgOptions, QWidget *parent) : QDialog(parent), pDlgOptions(_pDlgOptions)
 {
     ui.setupUi(this);
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
@@ -146,13 +145,13 @@ void DlgProfileManager::itemClicked()
 
 void DlgProfileManager::addProfile()
 {
-    DlgProfileAdd(Core::instance()->mainWindow(), this).exec();
+    DlgProfileAdd(this).exec();
 }
 
 void DlgProfileManager::editProfile()
 {
     QString strNick = ui.listWidget->selectedItems().at(0)->text();
-    DlgProfileEdit(Core::instance()->mainWindow(), strNick).exec();
+    DlgProfileEdit(strNick).exec();
 }
 
 void DlgProfileManager::removeProfile()

@@ -20,7 +20,6 @@
 #ifndef USER_AVATAR_H
 #define USER_AVATAR_H
 
-class MainWindow;
 #include <QDialog>
 #include "ui_user_avatar.h"
 
@@ -28,7 +27,7 @@ class DlgUserAvatar : public QDialog
 {
     Q_OBJECT
 public:
-    DlgUserAvatar(MainWindow *parent, const QPixmap &_avatar);
+    DlgUserAvatar(const QPixmap &_avatar, QWidget *parent = 0);
 
 private:
     Ui::uiUserAvatar ui;

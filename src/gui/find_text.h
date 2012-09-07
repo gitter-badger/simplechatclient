@@ -20,7 +20,6 @@
 #ifndef FIND_TEXT_H
 #define FIND_TEXT_H
 
-class MainWindow;
 class ChatView;
 #include <QDialog>
 #include "ui_find_text.h"
@@ -29,7 +28,7 @@ class DlgFindText : public QDialog
 {
     Q_OBJECT
 public:
-    DlgFindText(MainWindow *parent, ChatView *_chatView);
+    DlgFindText(ChatView *_chatView, QWidget *parent = 0);
 
 private:
     Ui::uiFindText ui;

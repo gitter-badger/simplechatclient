@@ -37,7 +37,7 @@
 #include "user_avatar.h"
 #include "user_profile.h"
 
-DlgUserProfile::DlgUserProfile(QWidget *parent, const QString &_strNick) : QDialog(parent), strNick(_strNick)
+DlgUserProfile::DlgUserProfile(const QString &_strNick, QWidget *parent) : QDialog(parent), strNick(_strNick)
 {
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
     setWindowTitle(tr("Profile"));
@@ -264,7 +264,7 @@ void DlgUserProfile::avatarFinished(QNetworkReply *pReply)
 
 void DlgUserProfile::buttonZoom()
 {
-    DlgUserAvatar(Core::instance()->mainWindow(), avatar).exec();
+    DlgUserAvatar(avatar).exec();
 }
 
 void DlgUserProfile::buttonMore()

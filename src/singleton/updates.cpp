@@ -132,7 +132,7 @@ void Updates::readSettings()
         compareVersion();
 
         if (Settings::instance()->get("version_status") == "outofdate")
-            DlgUpdate(Core::instance()->mainWindow()).exec();
+            DlgUpdate().exec();
     }
 }
 

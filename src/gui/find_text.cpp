@@ -19,10 +19,9 @@
 
 #include <QDesktopWidget>
 #include "chat_view.h"
-#include "mainwindow.h"
 #include "find_text.h"
 
-DlgFindText::DlgFindText(MainWindow *parent, ChatView *_chatView) : QDialog(parent), chatView(_chatView)
+DlgFindText::DlgFindText(ChatView *_chatView, QWidget *parent) : QDialog(parent), chatView(_chatView)
 {
     ui.setupUi(this);
     setWindowFlags(Qt::Dialog | Qt::WindowStaysOnTopHint);

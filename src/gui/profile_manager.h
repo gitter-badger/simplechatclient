@@ -21,7 +21,6 @@
 #define PROFILE_MANAGER_H
 
 class DlgOptions;
-class MainWindow;
 #include <QDialog>
 #include "ui_profile_manager.h"
 
@@ -29,7 +28,7 @@ class DlgProfileManager : public QDialog
 {
     Q_OBJECT
 public:
-    DlgProfileManager(MainWindow *parent, DlgOptions *_pDlgOptions);
+    DlgProfileManager(DlgOptions *_pDlgOptions, QWidget *parent = 0);
     void refreshAllLists();
     bool existProfile(const QString &strExistProfile);
 

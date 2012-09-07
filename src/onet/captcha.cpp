@@ -24,10 +24,9 @@
 #include <QNetworkRequest>
 #include <QPushButton>
 #include <QUrl>
-#include "mainwindow.h"
 #include "captcha.h"
 
-DlgCaptcha::DlgCaptcha(MainWindow *parent, QNetworkCookieJar *_cookieJar, QString *_strCaptcha) : QDialog(parent), strCaptcha(_strCaptcha), cookieJar(_cookieJar)
+DlgCaptcha::DlgCaptcha(QNetworkCookieJar *_cookieJar, QString *_strCaptcha, QWidget *parent) : QDialog(parent), strCaptcha(_strCaptcha), cookieJar(_cookieJar)
 {
     ui.setupUi(this);
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
