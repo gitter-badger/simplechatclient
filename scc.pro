@@ -30,6 +30,7 @@ SOURCES += src/avatars/avatar.cpp \
     src/gui/about.cpp \
     src/gui/avatar_edit.cpp \
     src/gui/awaylog.cpp \
+    src/gui/captcha.cpp \
     src/gui/channel_favourites.cpp \
     src/gui/channel_homes.cpp \
     src/gui/channel_key.cpp \
@@ -61,7 +62,6 @@ SOURCES += src/avatars/avatar.cpp \
     src/gui/webcam_mini.cpp \
     src/gui/webcam_standard.cpp \
     src/onet/avatar_client.cpp \
-    src/onet/captcha.cpp \
     src/onet/my_avatar_model.cpp \
     src/onet/onet_auth.cpp \
     src/onet/onet_kernel.cpp \
@@ -83,6 +83,7 @@ SOURCES += src/avatars/avatar.cpp \
     src/singleton/notification.cpp \
     src/singleton/offline.cpp \
     src/singleton/punish_reason.cpp \
+    src/singleton/settings.cpp \
     src/singleton/sound_notify.cpp \
     src/singleton/tray.cpp \
     src/singleton/updates.cpp \
@@ -97,8 +98,7 @@ SOURCES += src/avatars/avatar.cpp \
     src/widgets/simple_rank_widget.cpp \
     src/widgets/simple_stats_widget.cpp \
     src/widgets/tool_widget.cpp \
-    src/widgets/webcam_delegate.cpp \
-    src/singleton/settings.cpp
+    src/widgets/webcam_delegate.cpp
 HEADERS += src/avatars/avatar.h \
     src/common/commands.h \
     src/common/config.h \
@@ -122,6 +122,7 @@ HEADERS += src/avatars/avatar.h \
     src/gui/about.h \
     src/gui/avatar_edit.h \
     src/gui/awaylog.h \
+    src/gui/captcha.h \
     src/gui/channel_favourites.h \
     src/gui/channel_homes.h \
     src/gui/channel_key.h \
@@ -153,7 +154,6 @@ HEADERS += src/avatars/avatar.h \
     src/gui/webcam_mini.h \
     src/gui/webcam_standard.h \
     src/onet/avatar_client.h \
-    src/onet/captcha.h \
     src/onet/my_avatar_model.h \
     src/onet/onet_auth.h \
     src/onet/onet_kernel.h \
@@ -175,6 +175,7 @@ HEADERS += src/avatars/avatar.h \
     src/singleton/notification.h \
     src/singleton/offline.h \
     src/singleton/punish_reason.h \
+    src/singleton/settings.h \
     src/singleton/sound_notify.h \
     src/singleton/tray.h \
     src/singleton/updates.h \
@@ -189,11 +190,10 @@ HEADERS += src/avatars/avatar.h \
     src/widgets/simple_rank_widget.h \
     src/widgets/simple_stats_widget.h \
     src/widgets/tool_widget.h \
-    src/widgets/webcam_delegate.h \
-    src/singleton/settings.h
+    src/widgets/webcam_delegate.h
 FORMS += ui/about.ui \
     ui/avatar_edit.ui \
-	ui/avatar_list_widget.ui \
+    ui/avatar_list_widget.ui \
     ui/awaylog.ui \
     ui/captcha.ui \
     ui/channel_favourites.ui \

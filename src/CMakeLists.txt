@@ -59,6 +59,7 @@ set (scc_SRCS
 	gui/about.cpp
 	gui/avatar_edit.cpp
 	gui/awaylog.cpp
+	gui/captcha.cpp
 	gui/channel_favourites.cpp
 	gui/channel_homes.cpp
 	gui/channel_key.cpp
@@ -88,7 +89,6 @@ set (scc_SRCS
 	gui/webbrowser.cpp
 
 	onet/avatar_client.cpp
-	onet/captcha.cpp
 	onet/my_avatar_model.cpp
 	onet/onet_auth.cpp
 	onet/onet_kernel.cpp
@@ -146,6 +146,7 @@ set (scc_MOC_HDRS
 	gui/about.h
 	gui/avatar_edit.h
 	gui/awaylog.h
+	gui/captcha.h
 	gui/channel_favourites.h
 	gui/channel_homes.h
 	gui/channel_key.h
@@ -175,7 +176,6 @@ set (scc_MOC_HDRS
 	gui/webbrowser.h
 
 	onet/avatar_client.h
-	onet/captcha.h
 	onet/onet_auth.h
 	onet/onet_kernel.h
 

@@ -125,13 +125,6 @@ void ChatView::displayMessage(const QString &strData, MessageCategory eMessageCa
 
     // append
     this->page()->mainFrame()->evaluateJavaScript("appendMessage(\'"+strContent+"\')");
-
-    /* in Qt 4.6.3 / WebKit there is a bug making the following call not working */
-    /* according to: https://bugs.webkit.org/show_bug.cgi?id=35633 */
-    /* the proper refreshing behaviour should occur once the bug is fixed */
-    /* possible temporary solution: use QWebElements API to randomly change */
-    /* URLs in the HTML/CSS content. */
-    this->page()->triggerAction(QWebPage::ReloadAndBypassCache, false);
 }
 
 void ChatView::joinChannel()
@@ -151,8 +144,7 @@ void ChatView::whois()
 
 void ChatView::profile()
 {
-    if (strNick[0] != '~')
-        DlgUserProfile(strNick).exec();
+    DlgUserProfile(strNick).exec();
 }
 
 void ChatView::cam()

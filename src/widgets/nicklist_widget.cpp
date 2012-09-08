@@ -101,8 +101,8 @@ void NickListWidget::changeUserFlag(const QString &strNick, QString strFlag)
         if (plusminus == "+")
         {
             // fix webcam flags
-            if ((strFlag == "W") && (strModes.contains("V"))) strModes.remove("V");
-            if ((strFlag == "V") && (strModes.contains("W"))) strModes.remove("W");
+            if ((strFlag == FLAG_CAM_PUB) && (strModes.contains(FLAG_CAM_PRIV))) strModes.remove(FLAG_CAM_PRIV);
+            if ((strFlag == FLAG_CAM_PRIV) && (strModes.contains(FLAG_CAM_PUB))) strModes.remove(FLAG_CAM_PUB);
 
             if (!strModes.contains(strFlag))
                 strModes.append(strFlag);
@@ -167,8 +167,7 @@ void NickListWidget::profile()
 {
     if (strSelectedNick.isEmpty()) return;
 
-    if (strSelectedNick[0] != '~')
-        DlgUserProfile(strSelectedNick).exec();
+    DlgUserProfile(strSelectedNick).exec();
 }
 
 void NickListWidget::cam()
