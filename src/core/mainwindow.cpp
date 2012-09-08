@@ -333,12 +333,12 @@ void MainWindow::showWelcome()
 {
     // debug
     if (Settings::instance()->get("debug") == "true")
-        pTabC->addTab(DEBUG);
+        pTabC->addTab(DEBUG_WINDOW);
 
     // status
-    pTabC->addTab(STATUS);
+    pTabC->addTab(STATUS_WINDOW);
     QString strWelcome = "%Fi:courier%"+tr("Welcome to the Simple Chat Client")+" %Ihehe%";
-    Message::instance()->showMessage(STATUS, strWelcome, MessageDefault);
+    Message::instance()->showMessage(STATUS_WINDOW, strWelcome, MessageDefault);
 }
 
 void MainWindow::showOptions()
@@ -673,16 +673,16 @@ void MainWindow::refreshToolButtons(const QString &strChannel)
 
     // hide/show settings on non channel
     if (strChannel[0] != '#')
-        pToolWidget->setChannelSettings(false);
+        pToolWidget->showChannelSettings(false);
     else
-        pToolWidget->setChannelSettings(true);
+        pToolWidget->showChannelSettings(true);
 
     // moderation
     QString strModes = Nicklist::instance()->getUserModes(strMe, strChannel);
     if (strModes.contains(FLAG_MOD))
-        pToolWidget->setModeration(true);
+        pToolWidget->showModeration(true);
     else
-        pToolWidget->setModeration(false);
+        pToolWidget->showModeration(false);
 }
 
 // part tab

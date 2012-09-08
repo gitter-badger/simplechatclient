@@ -294,7 +294,7 @@ void Network::write(const QString &strData)
     if ((socket->isValid()) && (socket->state() == QAbstractSocket::ConnectedState))
     {
         if (Settings::instance()->get("debug") == "true")
-            Message::instance()->showMessage(DEBUG, "-> "+strData, MessageDefault);
+            Message::instance()->showMessage(DEBUG_WINDOW, "-> "+strData, MessageDefault);
 
         if (socket->write((strData+"\r\n").toAscii()) == -1)
         {

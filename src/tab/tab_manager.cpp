@@ -88,9 +88,9 @@ void TabManager::hideCloseButton(int index)
 
 void TabManager::tabInserted(int index)
 {
-    if (tabText(index) == STATUS) // hide close on status
+    if (tabText(index) == STATUS_WINDOW) // hide close on status
         hideCloseButton(index);
-    else if (tabText(index) == DEBUG) // hide close on debug
+    else if (tabText(index) == DEBUG_WINDOW) // hide close on debug
         hideCloseButton(index);
 }
 

@@ -62,7 +62,7 @@ void OnetKernel::kernel(const QString &_strData)
     strDataList = strData.split(" ");
 
     if (Settings::instance()->get("debug") == "true")
-        Message::instance()->showMessage(DEBUG, "<- "+strData, MessageDefault);
+        Message::instance()->showMessage(DEBUG_WINDOW, "<- "+strData, MessageDefault);
 
     bool bUnknownRaw1 = false;
     bool bUnknownRaw2 = false;
@@ -496,7 +496,7 @@ void OnetKernel::raw_part()
         Core::instance()->lChannelInfo.removeOne(strChannel);
 
         // close channel
-        if ((strChannel != DEBUG) && (strChannel != STATUS))
+        if ((strChannel != DEBUG_WINDOW) && (strChannel != STATUS_WINDOW))
             pTabC->removeTab(strChannel);
     }
 }
@@ -571,7 +571,7 @@ void OnetKernel::raw_kick()
         if ((Core::instance()->mainWindow()->isActiveWindow()) || (Settings::instance()->get("tray_message") == "false"))
         {
             QString strDisplay = QString(tr("* You have been kicked from channel %1 by %2 Reason: %3")).arg(strChannel, strWho, strReason);
-            Message::instance()->showMessage(STATUS, strDisplay, MessageKick);
+            Message::instance()->showMessage(STATUS_WINDOW, strDisplay, MessageKick);
         }
         else
         {
@@ -788,7 +788,7 @@ void OnetKernel::raw_mode()
                 strDisplay = QString(tr("* %1 now has a flag %2")).arg(strNick, strFlag);
 
             if ((strFlag.contains("r")) || (strFlag.contains("x")))
-                Message::instance()->showMessage(STATUS, strDisplay, MessageMode);
+                Message::instance()->showMessage(STATUS_WINDOW, strDisplay, MessageMode);
 
             if (!strFlag.isEmpty())
                 Nicklist::instance()->changeFlag(strNick, strFlag);
@@ -1273,7 +1273,7 @@ void OnetKernel::raw_100n()
     else
         strDisplay = QString(tr("* %1 Starting in %2 on channel %3")).arg(strMessage, strTimeResult, strChannel);
 
-    Message::instance()->showMessage(STATUS, strDisplay, MessageNotice);
+    Message::instance()->showMessage(STATUS_WINDOW, strDisplay, MessageNotice);
 }
 
 // :GuardServ!service@service.onet NOTICE scc_test :109 #scc :rzucanie mięsem nie będzie tolerowane
@@ -2062,7 +2062,7 @@ void OnetKernel::raw_256()
     if (strMessage[0] == ':') strMessage.remove(0,1);
     strMessage = "* "+strMessage;
 
-    Message::instance()->showMessage(STATUS, strMessage, MessageInfo);
+    Message::instance()->showMessage(STATUS_WINDOW, strMessage, MessageInfo);
 }
 
 // :ChanServ!service@service.onet NOTICE #scc :256 Merovingian +o scc_test :channel privilege changed
@@ -2110,7 +2110,7 @@ void OnetKernel::raw_257()
     if (strMessage[0] == ':') strMessage.remove(0,1);
     strMessage = "* "+strMessage;
 
-    Message::instance()->showMessage(STATUS, strMessage, MessageInfo);
+    Message::instance()->showMessage(STATUS_WINDOW, strMessage, MessageInfo);
 }
 
 // :ChanServ!service@service.onet NOTICE scc_test :257 #scc * :settings changed
@@ -2134,7 +2134,7 @@ void OnetKernel::raw_258()
     if (strMessage[0] == ':') strMessage.remove(0,1);
     strMessage = "* "+strMessage;
 
-    Message::instance()->showMessage(STATUS, strMessage, MessageInfo);
+    Message::instance()->showMessage(STATUS_WINDOW, strMessage, MessageInfo);
 }
 
 // :ChanServ!service@service.onet NOTICE #glupia_nazwa :258 ovo_ d :channel settings changed
@@ -2167,7 +2167,7 @@ void OnetKernel::raw_259()
     if (strMessage[0] == ':') strMessage.remove(0,1);
     strMessage = "* "+strMessage;
 
-    Message::instance()->showMessage(STATUS, strMessage, MessageInfo);
+    Message::instance()->showMessage(STATUS_WINDOW, strMessage, MessageInfo);
 }
 
 // :ChanServ!service@service.onet NOTICE scc_test :259 #scc :nothing changed
@@ -2754,7 +2754,7 @@ void OnetKernel::raw_371()
     if (strMessage[0] == ':') strMessage.remove(0,1);
     strMessage = "* "+strMessage;
 
-    Message::instance()->showMessage(STATUS, strMessage, MessageInfo);
+    Message::instance()->showMessage(STATUS_WINDOW, strMessage, MessageInfo);
 }
 
 // MOTD
@@ -2767,7 +2767,7 @@ void OnetKernel::raw_372()
     for (int i = 3; i < strDataList.size(); i++) { if (i != 3) strMessage += " "; strMessage += strDataList[i]; }
     if (strMessage[0] == ':') strMessage.remove(0,1);
 
-    Message::instance()->showMessage(STATUS, strMessage, MessageDefault);
+    Message::instance()->showMessage(STATUS_WINDOW, strMessage, MessageDefault);
 }
 
 // INFO
@@ -2782,7 +2782,7 @@ void OnetKernel::raw_375()
 {
     QString strDisplay = tr("Message Of The Day:");
 
-    Message::instance()->showMessage(STATUS, strDisplay, MessageDefault);
+    Message::instance()->showMessage(STATUS_WINDOW, strDisplay, MessageDefault);
 }
 
 // MOTD
@@ -3591,7 +3591,7 @@ void OnetKernel::raw_470()
 
     QString strMessage = QString(tr("* %1 has become full, so you are automatically being transferred to the linked channel %2")).arg(strChannel, strLinked);
 
-    Message::instance()->showMessage(STATUS, strMessage, MessageInfo);
+    Message::instance()->showMessage(STATUS_WINDOW, strMessage, MessageInfo);
 }
 
 // :cf1f2.onet 471 ~Merovingian #testy :Cannot join channel (Channel is full)
@@ -3888,7 +3888,7 @@ void OnetKernel::raw_801()
     else
     {
         QString strError = tr("Error: Invalid auth key");
-        Message::instance()->showMessage(STATUS, strError, MessageError);
+        Message::instance()->showMessage(STATUS_WINDOW, strError, MessageError);
     }
 }
 

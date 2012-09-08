@@ -73,8 +73,8 @@ bool Channel::contains(const QString &channel)
 QList<QString> Channel::getCleared()
 {
     QList<QString> lChannelsCleared = lChannels;
-    lChannelsCleared.removeOne(DEBUG);
-    lChannelsCleared.removeOne(STATUS);
+    lChannelsCleared.removeOne(DEBUG_WINDOW);
+    lChannelsCleared.removeOne(STATUS_WINDOW);
     return lChannelsCleared;
 }
 

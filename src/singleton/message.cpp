@@ -112,7 +112,7 @@ void Message::showMessage(const QString &strChannel, const QString &strData, Mes
         return;
 
     // hide join part
-    if ((isHideJoinPart(strChannel, eMessageCategory)) && (strChannel != DEBUG))
+    if ((isHideJoinPart(strChannel, eMessageCategory)) && (strChannel != DEBUG_WINDOW))
         return;
 
     // time
@@ -120,7 +120,7 @@ void Message::showMessage(const QString &strChannel, const QString &strData, Mes
         iTime = QDateTime::currentMSecsSinceEpoch();
 
     // highlight
-    if ((isHighlightMessage(strData)) && (eMessageCategory == MessageDefault) && (strChannel != DEBUG))
+    if ((isHighlightMessage(strData)) && (eMessageCategory == MessageDefault) && (strChannel != DEBUG_WINDOW))
     {
         // update message category
         eMessageCategory = MessageHighlight;
@@ -142,7 +142,7 @@ void Message::showMessage(const QString &strChannel, const QString &strData, Mes
     }
 
     // change tab color
-    if (strChannel != DEBUG)
+    if (strChannel != DEBUG_WINDOW)
         Core::instance()->mainWindow()->setTabColor(strChannel, eMessageCategory);
 
     // save message

@@ -55,8 +55,8 @@ const int HOURS_IN_DAY = 24;
 const int MINUTES_IN_HOUR = 60;
 const int SECONDS_IN_MINUTE = 60;
 
-#define STATUS "Status"
-#define DEBUG "Debug"
+#define STATUS_WINDOW "Status"
+#define DEBUG_WINDOW "Debug"
 
 #define FLAG_REGISTERED "r"
 #define FLAG_AWAY "a"

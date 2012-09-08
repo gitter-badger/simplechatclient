@@ -35,12 +35,12 @@ class ToolWidget : public QWidget
 public:
     ToolWidget(QWidget *parent = 0);
     virtual ~ToolWidget();
-    void setChannelSettings(bool);
+    void showChannelSettings(bool bShow);
     void setDefaultValues();
     void clearInputLine();
 
 public slots:
-    void setModeration(bool);
+    void showModeration(bool bShow);
     void updateNick(const QString &strNick);
 
 private:

@@ -81,7 +81,7 @@ void Log::save(const QString &strChannel, const QString &strData)
         // convert
         QString strSaveData = strData; 
 
-        if (strChannel != DEBUG)
+        if (strChannel != DEBUG_WINDOW)
             Convert::simpleConvert(strSaveData);
 
         // save

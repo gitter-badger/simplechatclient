@@ -109,7 +109,7 @@ void ChatView::clearMessages()
 void ChatView::displayMessage(const QString &strData, MessageCategory eMessageCategory, qint64 iTime, QString strNick)
 {
     QString strContent;
-    if (strChatViewChannel == DEBUG)
+    if (strChatViewChannel == DEBUG_WINDOW)
         strContent = HtmlMessagesRenderer::rendererDebug(strData, iTime);
     else
         strContent = HtmlMessagesRenderer::renderer(strData, eMessageCategory, iTime, strNick);

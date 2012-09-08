@@ -70,7 +70,7 @@ QString Commands::execute()
     else if ((strCmd == "help") || (strCmd == "pomoc"))
         return cmdHelp();
 
-    if ((strChan != DEBUG) && (strChan != STATUS))
+    if ((strChan != DEBUG_WINDOW) && (strChan != STATUS_WINDOW))
     {
         if ((strCmd == "cycle") || (strCmd == "hop"))
             return cmdCycle();

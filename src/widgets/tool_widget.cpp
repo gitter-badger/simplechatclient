@@ -373,7 +373,7 @@ void ToolWidget::setDefaultValues()
         pInputLine->setStyleSheet(QString("QLineEdit { color:%1; }").arg(strCurrentColor));
 
     // moderation default hidden
-    setModeration(false);
+    showModeration(false);
 }
 
 void ToolWidget::clearInputLine()
@@ -381,9 +381,9 @@ void ToolWidget::clearInputLine()
     pInputLine->clear();
 }
 
-void ToolWidget::setModeration(bool bEnable)
+void ToolWidget::showModeration(bool bShow)
 {
-    if (bEnable)
+    if (bShow)
     {
         moderation->show();
         moderSendButton->show();
@@ -395,9 +395,9 @@ void ToolWidget::setModeration(bool bEnable)
     }
 }
 
-void ToolWidget::setChannelSettings(bool bEnable)
+void ToolWidget::showChannelSettings(bool bShow)
 {
-    if (bEnable)
+    if (bShow)
         channel_settings->show();
     else
         channel_settings->hide();
@@ -840,7 +840,7 @@ void ToolWidget::sendMessage(QString strText, bool bModeration)
     }
     else if (strCommand == "me")
     {
-        if ((strChannel != DEBUG) && (strChannel != STATUS))
+        if ((strChannel != DEBUG_WINDOW) && (strChannel != STATUS_WINDOW))
         {
             Core::instance()->pNetwork->send(strText);
 
@@ -857,7 +857,7 @@ void ToolWidget::sendMessage(QString strText, bool bModeration)
     }
     else if ((strCommand == "mp3") || (strCommand == "winamp"))
     {
-        if ((strChannel != DEBUG) && (strChannel != STATUS))
+        if ((strChannel != DEBUG_WINDOW) && (strChannel != STATUS_WINDOW))
         {
             Convert::createText(strText);
             Convert::simpleReverseConvert(strText);
@@ -875,7 +875,7 @@ void ToolWidget::sendMessage(QString strText, bool bModeration)
     }
 
     // not status
-    if ((strChannel == DEBUG) || (strChannel == STATUS))
+    if ((strChannel == DEBUG_WINDOW) || (strChannel == STATUS_WINDOW))
         return;
 
     // convert
