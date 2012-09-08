@@ -41,8 +41,8 @@ private slots:
     void itemClicked(QListWidgetItem*);
     void buttonCreate();
     void buttonRemove();
-    void buttonJoin();
-    void buttonSettings();
+    void join();
+    void settings();
 };
 
 #endif // CHANNEL_HOMES_H

@@ -22,6 +22,7 @@
 #include <QMenu>
 #include <QTimer>
 #include "core.h"
+#include "channel.h"
 #include "friends.h"
 
 DlgFriends::DlgFriends(QWidget *parent) : QDialog(parent)
@@ -52,8 +53,30 @@ void DlgFriends::createGui()
     ui.toolButton_options->setText(tr("Options"));
 
     QMenu *optionsMenu = new QMenu(this);
-    optionsMenu->addAction(QIcon(":/images/oxygen/16x16/list-add-user.png"), tr("Priv"), this, SLOT(buttonPriv()));
-    optionsMenu->addAction(QIcon(":/images/oxygen/16x16/user-properties.png"), tr("Whois"), this, SLOT(buttonWhois()));
+    optionsMenu->addAction(QIcon(":/images/oxygen/16x16/list-add-user.png"), tr("Priv"), this, SLOT(priv()));
+    optionsMenu->addAction(QIcon(":/images/oxygen/16x16/user-properties.png"), tr("Whois"), this, SLOT(whois()));
+
+    QMenu *mInvite = new QMenu(tr("Invite"));
+    mInvite->setIcon(QIcon(":/images/oxygen/16x16/legalmoves.png"));
+
+    QList<QString> lChannelsCleared = Channel::instance()->getCleared();
+    for (int i = 0; i < lChannelsCleared.size(); ++i)
+    {
+        QString strOpenChannel = lChannelsCleared[i];
+        if (strOpenChannel[0] == '^')
+            strOpenChannel = Channel::instance()->getPriv(strOpenChannel);
+
+        openChannelsActs[i] = new QAction(this);
+        openChannelsActs[i]->setIcon(QIcon(":/images/oxygen/16x16/irc-join-channel.png"));
+        openChannelsActs[i]->setVisible(false);
+        openChannelsActs[i]->setText(strOpenChannel);
+        openChannelsActs[i]->setData(lChannelsCleared[i]);
+        openChannelsActs[i]->setVisible(true);
+
+        connect(openChannelsActs[i], SIGNAL(triggered()), this, SLOT(invite()));
+        mInvite->addAction(openChannelsActs[i]);
+    }
+    optionsMenu->addMenu(mInvite);
 
     ui.toolButton_options->setMenu(optionsMenu);
 }
@@ -142,7 +165,7 @@ void DlgFriends::buttonRemove()
     }
 }
 
-void DlgFriends::buttonPriv()
+void DlgFriends::priv()
 {
     QString strSelected;
     if (ui.tabWidget->currentIndex() == 0)
@@ -160,7 +183,7 @@ void DlgFriends::buttonPriv()
         Core::instance()->pNetwork->send(QString("PRIV %1").arg(strSelected));
 }
 
-void DlgFriends::buttonWhois()
+void DlgFriends::whois()
 {
     QString strSelected;
     if (ui.tabWidget->currentIndex() == 0)
@@ -176,4 +199,29 @@ void DlgFriends::buttonWhois()
 
     if (!strSelected.isEmpty())
         Core::instance()->pNetwork->send(QString("WHOIS %1 :%1").arg(strSelected));
+}
+
+void DlgFriends::invite()
+{
+    QString strSelected;
+    if (ui.tabWidget->currentIndex() == 0)
+    {
+        if (ui.listWidget_online->selectedItems().size() != 0)
+            strSelected = ui.listWidget_online->selectedItems().at(0)->text();
+    }
+    else if (ui.tabWidget->currentIndex() == 1)
+    {
+        if (ui.listWidget_offline->selectedItems().size() != 0)
+            strSelected = ui.listWidget_offline->selectedItems().at(0)->text();
+    }
+
+    if (!strSelected.isEmpty())
+    {
+        QAction *action = qobject_cast<QAction *>(sender());
+        if (action)
+        {
+            QString strInviteChannel = action->data().toString();
+            Core::instance()->pNetwork->send(QString("INVITE %1 %2").arg(strSelected, strInviteChannel));
+        }
+    }
 }

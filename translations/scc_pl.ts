@@ -1002,6 +1002,10 @@
         <translation>Gdzie jest</translation>
     </message>
     <message>
+        <source>Invite</source>
+        <translation>Zaproś</translation>
+    </message>
+    <message>
         <source>Changing your friends list</source>
         <translation>Zmiana listy przyjaciół</translation>
     </message>

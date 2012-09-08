@@ -53,7 +53,7 @@ void DlgChannelFavourites::createGui()
     ui.toolButton_options->setText(tr("Options"));
 
     QMenu *optionsMenu = new QMenu(this);
-    optionsMenu->addAction(QIcon(":/images/oxygen/16x16/legalmoves.png"), tr("Join"), this, SLOT(buttonJoin()));
+    optionsMenu->addAction(QIcon(":/images/oxygen/16x16/legalmoves.png"), tr("Join"), this, SLOT(join()));
 
     ui.toolButton_options->setMenu(optionsMenu);
 }
@@ -122,7 +122,7 @@ void DlgChannelFavourites::buttonRemove()
     }
 }
 
-void DlgChannelFavourites::buttonJoin()
+void DlgChannelFavourites::join()
 {
     if (ui.listWidget_channels->selectedItems().size() != 0)
     {

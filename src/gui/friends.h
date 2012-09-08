@@ -20,6 +20,7 @@
 #ifndef FRIENDS_H
 #define FRIENDS_H
 
+#include "defines.h"
 #include <QDialog>
 #include "ui_friends.h"
 
@@ -31,6 +32,7 @@ public:
 
 private:
     Ui::uiFriends ui;
+    QAction *openChannelsActs[MAX_OPEN_CHANNELS];
 
     void createGui();
     void createSignals();
@@ -41,8 +43,9 @@ private slots:
     void itemClicked(QListWidgetItem*);
     void buttonAdd();
     void buttonRemove();
-    void buttonPriv();
-    void buttonWhois();
+    void priv();
+    void whois();
+    void invite();
 };
 
 #endif // FRIENDS_H

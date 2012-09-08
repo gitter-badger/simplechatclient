@@ -55,8 +55,8 @@ void DlgChannelHomes::createGui()
     ui.toolButton_options->setText(tr("Options"));
 
     QMenu *optionsMenu = new QMenu(this);
-    optionsMenu->addAction(QIcon(":/images/oxygen/16x16/legalmoves.png"), tr("Join"), this, SLOT(buttonJoin()));
-    optionsMenu->addAction(QIcon(":/images/oxygen/16x16/configure.png"), tr("Settings"), this, SLOT(buttonSettings()));
+    optionsMenu->addAction(QIcon(":/images/oxygen/16x16/legalmoves.png"), tr("Join"), this, SLOT(join()));
+    optionsMenu->addAction(QIcon(":/images/oxygen/16x16/configure.png"), tr("Settings"), this, SLOT(settings()));
 
     ui.toolButton_options->setMenu(optionsMenu);
 }
@@ -146,7 +146,7 @@ void DlgChannelHomes::buttonRemove()
     }
 }
 
-void DlgChannelHomes::buttonJoin()
+void DlgChannelHomes::join()
 {
     if (ui.listWidget_channels->selectedItems().size() != 0)
     {
@@ -155,7 +155,7 @@ void DlgChannelHomes::buttonJoin()
     }
 }
 
-void DlgChannelHomes::buttonSettings()
+void DlgChannelHomes::settings()
 {
     if (ui.listWidget_channels->selectedItems().size() != 0)
     {

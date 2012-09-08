@@ -40,7 +40,7 @@ private slots:
     void itemClicked(QListWidgetItem*);
     void buttonAdd();
     void buttonRemove();
-    void buttonJoin();
+    void join();
 };
 
 #endif // CHANNEL_FAVOURITES_H
