@@ -115,6 +115,7 @@ set (scc_SRCS
 	singleton/sound_notify.cpp
 	singleton/tray.cpp
 	singleton/updates.cpp
+	singleton/user_profile_model.cpp
 
 	tab/tab_container.cpp
 	tab/tab_manager.cpp
@@ -200,6 +201,7 @@ set (scc_MOC_HDRS
 	singleton/sound_notify.h
 	singleton/tray.h
 	singleton/updates.h
+	singleton/user_profile_model.h
 
 	tab/tab_container.h
 	tab/tab_manager.h

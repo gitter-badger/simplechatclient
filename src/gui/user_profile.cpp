@@ -35,6 +35,7 @@
 #include "convert.h"
 #include "core.h"
 #include "user_avatar.h"
+#include "user_profile_model.h"
 #include "user_profile.h"
 
 DlgUserProfile::DlgUserProfile(const QString &_strNick, QWidget *parent) : QDialog(parent), strNick(_strNick)
@@ -56,9 +57,7 @@ DlgUserProfile::DlgUserProfile(const QString &_strNick, QWidget *parent) : QDial
     connect(accessManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(avatarFinished(QNetworkReply*)));
 
     // set nick
-    Core::instance()->strUserProfile = strNick;
-    Core::instance()->mUserProfile.clear();
-    Core::instance()->bUserProfile = false;
+    UserProfileModel::instance()->setNick(strNick);
 
     //set label
     label_nick->setText(strNick);
@@ -193,13 +192,13 @@ void DlgUserProfile::createSignals()
 
 void DlgUserProfile::refreshUserInfo()
 {
-    if (Core::instance()->bUserProfile == false)
+    if (UserProfileModel::instance()->getReady() == false)
     {
         QTimer::singleShot(200, this, SLOT(refreshUserInfo())); // 0.2 sec
         return;
     }
 
-    QHashIterator<QString, QString> i(Core::instance()->mUserProfile);
+    QHashIterator<QString, QString> i(UserProfileModel::instance()->getAll());
     while (i.hasNext())
     {
         i.next();
@@ -288,9 +287,7 @@ void DlgUserProfile::buttonMore()
 
 void DlgUserProfile::buttonClose()
 {
-    Core::instance()->strUserProfile.clear();
-    Core::instance()->mUserProfile.clear();
-    Core::instance()->bUserProfile = false;
+    UserProfileModel::instance()->clear();
 
     close();
 }

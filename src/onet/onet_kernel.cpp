@@ -44,6 +44,7 @@
 #include "sound_notify.h"
 #include "tab_container.h"
 #include "tray.h"
+#include "user_profile_model.h"
 #include "onet_kernel.h"
 
 OnetKernel::OnetKernel(TabContainer *_pTabC) : pTabC(_pTabC)
@@ -1129,9 +1130,7 @@ void OnetKernel::raw_001()
     Core::instance()->mMyProfile.clear();
     ChannelHomes::instance()->clear();
     // user profile
-    Core::instance()->mUserProfile.clear();
-    Core::instance()->bUserProfile = false;
-    Core::instance()->strUserProfile.clear();
+    UserProfileModel::instance()->clear();
     // channel settings
     Core::instance()->strChannelSettings.clear();
     Core::instance()->mChannelSettingsInfo.clear();
@@ -1310,8 +1309,8 @@ void OnetKernel::raw_111n()
     QString strMe = Settings::instance()->get("nick");
 
     // set user info
-    if (Core::instance()->strUserProfile == strNick)
-        Core::instance()->mUserProfile[strKey] = strValue;
+    if (UserProfileModel::instance()->getNick() == strNick)
+        UserProfileModel::instance()->set(strKey, strValue);
 
     // set my profile
     if (strNick == strMe)
@@ -1341,8 +1340,8 @@ void OnetKernel::raw_112n()
 
     QString strNick = strDataList[4];
 
-    if (Core::instance()->strUserProfile == strNick)
-        Core::instance()->bUserProfile = true;
+    if (UserProfileModel::instance()->getNick() == strNick)
+        UserProfileModel::instance()->setReady(true);
 }
 
 // NS FRIENDS

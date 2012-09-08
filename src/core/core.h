@@ -74,10 +74,6 @@ public:
     QList<QString> lChannelFavourites;
     QHash<QString, QString> mMyStats;
     QHash<QString, QString> mMyProfile;
-    // user profile
-    QString strUserProfile;
-    QHash<QString,QString> mUserProfile;
-    bool bUserProfile;
     // channel settings
     QString strChannelSettings;
     QHash<QString,QString> mChannelSettingsInfo;
