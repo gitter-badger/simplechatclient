@@ -31,9 +31,6 @@ public:
 
 private:
     Ui::uiFriends ui;
-    QMenu *optionsMenu;
-    QAction *privAction;
-    QAction *whoisAction;
 
     void createGui();
     void createSignals();

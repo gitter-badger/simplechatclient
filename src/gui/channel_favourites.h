@@ -31,8 +31,6 @@ public:
 
 private:
     Ui::uiChannelFavourites ui;
-    QMenu *optionsMenu;
-    QAction *joinAction;
 
     void createGui();
     void createSignals();

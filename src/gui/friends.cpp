@@ -51,12 +51,9 @@ void DlgFriends::createGui()
     ui.pushButton_remove->setText(tr("Remove"));
     ui.toolButton_options->setText(tr("Options"));
 
-    privAction = new QAction(QIcon(":/images/oxygen/16x16/list-add-user.png"), tr("Priv"), this);
-    whoisAction = new QAction(QIcon(":/images/oxygen/16x16/user-properties.png"), tr("Whois"), this);
-
-    optionsMenu = new QMenu(this);
-    optionsMenu->addAction(privAction);
-    optionsMenu->addAction(whoisAction);
+    QMenu *optionsMenu = new QMenu(this);
+    optionsMenu->addAction(QIcon(":/images/oxygen/16x16/list-add-user.png"), tr("Priv"), this, SLOT(buttonPriv()));
+    optionsMenu->addAction(QIcon(":/images/oxygen/16x16/user-properties.png"), tr("Whois"), this, SLOT(buttonWhois()));
 
     ui.toolButton_options->setMenu(optionsMenu);
 }
@@ -67,8 +64,6 @@ void DlgFriends::createSignals()
     connect(ui.listWidget_online, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(itemClicked(QListWidgetItem*)));
     connect(ui.pushButton_add, SIGNAL(clicked()), this, SLOT(buttonAdd()));
     connect(ui.pushButton_remove, SIGNAL(clicked()), this, SLOT(buttonRemove()));
-    connect(privAction, SIGNAL(triggered()), this, SLOT(buttonPriv()));
-    connect(whoisAction, SIGNAL(triggered()), this, SLOT(buttonWhois()));
     connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(close()));
 }
 

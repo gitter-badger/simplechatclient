@@ -52,10 +52,8 @@ void DlgChannelFavourites::createGui()
     ui.pushButton_remove->setText(tr("Remove"));
     ui.toolButton_options->setText(tr("Options"));
 
-    joinAction = new QAction(QIcon(":/images/oxygen/16x16/legalmoves.png"), tr("Join"), this);
-
-    optionsMenu = new QMenu(this);
-    optionsMenu->addAction(joinAction);
+    QMenu *optionsMenu = new QMenu(this);
+    optionsMenu->addAction(QIcon(":/images/oxygen/16x16/legalmoves.png"), tr("Join"), this, SLOT(buttonJoin()));
 
     ui.toolButton_options->setMenu(optionsMenu);
 }
@@ -64,7 +62,6 @@ void DlgChannelFavourites::createSignals()
 {
     connect(ui.pushButton_add, SIGNAL(clicked()), this, SLOT(buttonAdd()));
     connect(ui.pushButton_remove, SIGNAL(clicked()), this, SLOT(buttonRemove()));
-    connect(joinAction, SIGNAL(triggered()), this, SLOT(buttonJoin()));
     connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(close()));
     connect(ui.listWidget_channels, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(itemClicked(QListWidgetItem*)));
 }

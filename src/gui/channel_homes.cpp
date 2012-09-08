@@ -54,12 +54,9 @@ void DlgChannelHomes::createGui()
     ui.pushButton_remove->setText(tr("Remove"));
     ui.toolButton_options->setText(tr("Options"));
 
-    joinAction = new QAction(QIcon(":/images/oxygen/16x16/legalmoves.png"), tr("Join"), this);
-    settingsAction = new QAction(QIcon(":/images/oxygen/16x16/configure.png"), tr("Settings"), this);
-
-    optionsMenu = new QMenu(this);
-    optionsMenu->addAction(joinAction);
-    optionsMenu->addAction(settingsAction);
+    QMenu *optionsMenu = new QMenu(this);
+    optionsMenu->addAction(QIcon(":/images/oxygen/16x16/legalmoves.png"), tr("Join"), this, SLOT(buttonJoin()));
+    optionsMenu->addAction(QIcon(":/images/oxygen/16x16/configure.png"), tr("Settings"), this, SLOT(buttonSettings()));
 
     ui.toolButton_options->setMenu(optionsMenu);
 }
@@ -70,8 +67,6 @@ void DlgChannelHomes::createSignals()
     connect(ui.listWidget_channels, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(itemClicked(QListWidgetItem*)));
     connect(ui.pushButton_create, SIGNAL(clicked()), this, SLOT(buttonCreate()));
     connect(ui.pushButton_remove, SIGNAL(clicked()), this, SLOT(buttonRemove()));
-    connect(joinAction, SIGNAL(triggered()), this, SLOT(buttonJoin()));
-    connect(settingsAction, SIGNAL(triggered()), this, SLOT(buttonSettings()));
     connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(close()));
 }
 
