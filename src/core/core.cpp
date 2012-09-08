@@ -18,6 +18,7 @@
  */
 
 #include <QAction>
+#include <QCoreApplication>
 #include <QDir>
 #include <QSettings>
 #include <QTcpSocket>
@@ -80,6 +81,9 @@ void Core::init()
 
     // create settings
     createSettings();
+
+    // language
+    refreshLanguage();
 
     // kamerzysta
     kamerzystaSocket = new QTcpSocket();
@@ -202,7 +206,7 @@ void Core::convertOldConfig()
             pConfig->set(strKey, "true");
         else if (strValue == "off")
             pConfig->set(strKey, "false");
-   }
+    }
 
     delete pConfig;
 }
@@ -279,6 +283,27 @@ void Core::quit()
 
     delete Instance;
     Instance = 0;
+}
+
+void Core::refreshLanguage()
+{
+    // get language
+    QString strLanguage = Settings::instance()->get("language");
+
+    // set translate
+    QString path;
+#ifdef Q_WS_WIN
+    path = QCoreApplication::applicationDirPath();
+#else
+    path = SCC_DATA_DIR;
+#endif
+
+    // load translate
+    if (qtTranslator.load(QString("%1/translations/qt_%2").arg(path, strLanguage)))
+        qApp->installTranslator(&qtTranslator);
+
+    if (sccTranslator.load(QString("%1/translations/scc_%2").arg(path, strLanguage)))
+        qApp->installTranslator(&sccTranslator);
 }
 
 bool Core::removeDir(const QString &dirName)

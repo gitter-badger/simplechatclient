@@ -19,7 +19,6 @@
 
 #include <QtGui/QApplication>
 #include <QTextCodec>
-#include <QTranslator>
 #include "config.h"
 
 #ifdef Q_WS_X11
@@ -97,28 +96,6 @@ int main(int argc, char *argv[])
 
     // debug off
     Settings::instance()->set("debug", "false");
-
-    // get language
-    Config *pConfig = new Config();
-    QString strLanguage = pConfig->get("language");
-    delete pConfig;
-
-    // set translate
-    QString path;
-#ifdef Q_WS_WIN
-    path = QCoreApplication::applicationDirPath();
-#else
-    path = SCC_DATA_DIR;
-#endif
-
-    // load translate
-    QTranslator qtTranslator;
-    if (qtTranslator.load(QString("%1/translations/qt_%2").arg(path, strLanguage)))
-        app.installTranslator(&qtTranslator);
-
-    QTranslator sccTranslator;
-    if (sccTranslator.load(QString("%1/translations/scc_%2").arg(path, strLanguage)))
-        app.installTranslator(&sccTranslator);
 
     // args
     for (int i = 1; i < app.argc(); i++)

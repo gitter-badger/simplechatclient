@@ -28,6 +28,7 @@ class Updates;
 #include "nicklist_widget.h"
 #include "tab_widget.h"
 #include <QObject>
+#include <QTranslator>
 #include "network.h"
 
 /**
@@ -54,6 +55,8 @@ public:
     void configProfileValues();
     // window
     MainWindow *mainWindow();
+    // language
+    void refreshLanguage();
     // remove dir
     bool removeDir(const QString &dirName);
 
@@ -92,6 +95,8 @@ public slots:
 
 private:
     MainWindow *window;
+    QTranslator qtTranslator;
+    QTranslator sccTranslator;
 
     void init();
     void fixSettings();
