@@ -36,6 +36,8 @@
 #include "log.h"
 #include "mainwindow.h"
 #include "message.h"
+#include "my_profile_model.h"
+#include "my_stats_model.h"
 #include "nicklist.h"
 #include "offline.h"
 #include "onet_utils.h"
@@ -1126,8 +1128,8 @@ void OnetKernel::raw_001()
     Core::instance()->lIgnore.clear();
     Core::instance()->lChannelFavourites.clear();
     ChannelList::instance()->clear();
-    Core::instance()->mMyStats.clear();
-    Core::instance()->mMyProfile.clear();
+    MyStatsModel::instance()->clear();
+    MyProfileModel::instance()->clear();
     ChannelHomes::instance()->clear();
     // user profile
     UserProfileModel::instance()->clear();
@@ -1314,12 +1316,7 @@ void OnetKernel::raw_111n()
 
     // set my profile
     if (strNick == strMe)
-    {
-        if (Core::instance()->mMyProfile.contains(strKey))
-            Core::instance()->mMyProfile[strKey] = strValue;
-        else
-            Core::instance()->mMyProfile.insert(strKey, strValue);
-    }
+        MyProfileModel::instance()->set(strKey, strValue);
 
     // get avatar
     if (strKey == "avatar")
@@ -1687,7 +1684,7 @@ void OnetKernel::raw_170n()
         QString strKey = strLine.left(strLine.indexOf("="));
         QString strValue = strLine.right(strLine.length() - strLine.indexOf("=")-1);
 
-        Core::instance()->mMyStats.insert(strKey, strValue);
+        MyStatsModel::instance()->set(strKey, strValue);
     }
 }
 
@@ -1759,13 +1756,7 @@ void OnetKernel::raw_211n()
 
     // set my profile
     if (strNick == strMe)
-    {
-        // my profile
-        if (Core::instance()->mMyProfile.contains(strKey))
-            Core::instance()->mMyProfile[strKey] = "";
-        else
-            Core::instance()->mMyProfile.insert(strKey, "");
-    }
+        MyProfileModel::instance()->set(strKey, QString::null);
 }
 
 // NS FRIENDS ADD aaa

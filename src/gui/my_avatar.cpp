@@ -24,6 +24,7 @@
 
 #include "avatar_client.h"
 #include "avatar_list_widget.h"
+#include "my_profile_model.h"
 #include "core.h"
 
 #include "my_avatar.h"
@@ -84,17 +85,12 @@ void DlgMyAvatar::getAvatarReady(const QByteArray &content, const QString &avata
 
 void DlgMyAvatar::refreshAvatar()
 {
-    if (Core::instance()->mMyProfile.contains("avatar"))
-    {
-        QString avatarUrl = Core::instance()->mMyProfile.value("avatar");
-        if (!avatarUrl.isEmpty())
-        {
-            avatarClient->requestGetAvatar(avatarUrl, AvatarClient::AT_other);
-            return;
-        }
-    }
+    QString avatarUrl = MyProfileModel::instance()->get("avatar");
 
-    ui.label_my_avatar->setText(tr("No photo available"));
+    if (!avatarUrl.isEmpty())
+        avatarClient->requestGetAvatar(avatarUrl, AvatarClient::AT_other);
+    else
+        ui.label_my_avatar->setText(tr("No photo available"));
 }
 
 void DlgMyAvatar::avatarSelected(const QString &avatarUrl)

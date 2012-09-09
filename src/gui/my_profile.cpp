@@ -24,6 +24,7 @@
 #include <QPushButton>
 #include "core.h"
 #include "convert.h"
+#include "my_profile_model.h"
 #include "my_profile.h"
 
 DlgMyProfile::DlgMyProfile(QWidget *parent) : QDialog(parent)
@@ -154,7 +155,7 @@ void DlgMyProfile::avatarFinished(QNetworkReply *pReply)
 
 void DlgMyProfile::refresh()
 {
-    QHashIterator <QString, QString> i(Core::instance()->mMyProfile);
+    QHashIterator <QString, QString> i(MyProfileModel::instance()->getAll());
     while (i.hasNext())
     {
         i.next();
@@ -426,7 +427,7 @@ void DlgMyProfile::buttonOk()
 {
     // set desc - shortDesc
     QString strDesc = convertDescToText(ui.plainTextEdit_desc->toPlainText());
-    if (strDesc != Core::instance()->mMyProfile.value("shortDesc"))
+    if (strDesc != MyProfileModel::instance()->get("shortDesc"))
         Core::instance()->pNetwork->send(QString("NS SET shortDesc %1").arg(strDesc));
 
     // set sex
@@ -434,7 +435,7 @@ void DlgMyProfile::buttonOk()
     QString strSexChar;
     if (iSex == 1) strSexChar = "M";
     else if (iSex == 2) strSexChar = "F";
-    if (strSexChar != Core::instance()->mMyProfile.value("sex"))
+    if (strSexChar != MyProfileModel::instance()->get("sex"))
         Core::instance()->pNetwork->send(QString("NS SET sex %1").arg(strSexChar));
 
     // set birthdate
@@ -444,28 +445,28 @@ void DlgMyProfile::buttonOk()
     QString strBirthdate;
     if ((!strDay.isEmpty()) && (!strMonth.isEmpty()) && (!strYear.isEmpty()))
         strBirthdate = QString("%1-%2-%3").arg(strYear, strMonth, strDay);
-    if (strBirthdate != Core::instance()->mMyProfile.value("birthdate"))
+    if (strBirthdate != MyProfileModel::instance()->get("birthdate"))
         Core::instance()->pNetwork->send(QString("NS SET birthdate %1").arg(strBirthdate));
 
     // set city
     QString strCity = ui.lineEdit_city->text();
-    if (strCity != Core::instance()->mMyProfile.value("city"))
+    if (strCity != MyProfileModel::instance()->get("city"))
         Core::instance()->pNetwork->send(QString("NS SET city %1").arg(strCity));
 
     // set country
     QString strCountry = ui.comboBox_country->currentText();
     QString strCountryCode = convertCountryToCode(strCountry);
-    if (strCountryCode != Core::instance()->mMyProfile.value("country"))
+    if (strCountryCode != MyProfileModel::instance()->get("country"))
         Core::instance()->pNetwork->send(QString("NS SET country %1").arg(strCountryCode));
 
     // set hobby - longDesc
     QString strHobby = ui.plainTextEdit_hobby->toPlainText();
-    if (strHobby != Core::instance()->mMyProfile.value("longDesc"))
+    if (strHobby != MyProfileModel::instance()->get("longDesc"))
         Core::instance()->pNetwork->send(QString("NS SET longDesc %1").arg(strHobby));
 
     // set www
     QString strWWW = ui.lineEdit_www->text();
-    if (strWWW != Core::instance()->mMyProfile.value("www"))
+    if (strWWW != MyProfileModel::instance()->get("www"))
         Core::instance()->pNetwork->send(QString("NS SET www %1").arg(strWWW));
 
     // close

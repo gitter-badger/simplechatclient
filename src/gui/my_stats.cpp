@@ -20,6 +20,7 @@
 #include <QDesktopWidget>
 #include <QPushButton>
 #include "core.h"
+#include "my_stats_model.h"
 #include "simple_stats_widget.h"
 #include "my_stats.h"
 
@@ -86,7 +87,7 @@ int DlgMyStats::replaceValue(const QString &strValue)
 
 void DlgMyStats::refresh()
 {
-    QHashIterator <QString, QString> i(Core::instance()->mMyStats);
+    QHashIterator <QString, QString> i(MyStatsModel::instance()->getAll());
     while (i.hasNext())
     {
         i.next();

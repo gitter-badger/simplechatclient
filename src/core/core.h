@@ -72,8 +72,6 @@ public:
     QHash<QString, bool> mFriends;
     QList<QString> lIgnore;
     QList<QString> lChannelFavourites;
-    QHash<QString, QString> mMyStats;
-    QHash<QString, QString> mMyProfile;
     // channel settings
     QString strChannelSettings;
     QHash<QString,QString> mChannelSettingsInfo;
