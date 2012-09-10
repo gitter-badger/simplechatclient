@@ -106,6 +106,7 @@ set (scc_SRCS
 	singleton/invite_model.cpp
 	singleton/lag.cpp
 	singleton/message.cpp
+	singleton/moderation_model.cpp
 	singleton/my_profile_model.cpp
 	singleton/my_stats_model.cpp
 	singleton/nicklist.cpp
@@ -194,6 +195,7 @@ set (scc_MOC_HDRS
 	singleton/invite_model.h
 	singleton/lag.h
 	singleton/message.h
+	singleton/moderation_model.h
 	singleton/my_profile_model.h
 	singleton/my_stats_model.h
 	singleton/nicklist.h

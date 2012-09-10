@@ -78,6 +78,7 @@ SOURCES += src/avatars/avatar.cpp \
     src/singleton/invite_model.cpp \
     src/singleton/lag.cpp \
     src/singleton/message.cpp \
+    src/singleton/moderation_model.cpp \
     src/singleton/my_profile_model.cpp \
     src/singleton/my_stats_model.cpp \\
     src/singleton/nicklist.cpp \
@@ -173,6 +174,7 @@ HEADERS += src/avatars/avatar.h \
     src/singleton/invite_model.h \
     src/singleton/lag.h \
     src/singleton/message.h \
+    src/singleton/moderation_model.h \
     src/singleton/my_profile_model.h \
     src/singleton/my_stats_model.h \
     src/singleton/nicklist.h \

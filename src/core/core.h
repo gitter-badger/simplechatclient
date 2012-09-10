@@ -20,7 +20,6 @@
 #ifndef CORE_H
 #define CORE_H
 
-#include "defines.h"
 #include "scc-config.h"
 class QTcpSocket;
 class MainWindow;
@@ -79,8 +78,6 @@ public:
     bool bChannelSettingsInfo;
     QHash<QString,QString> mChannelSettingsStats;
     bool bChannelSettingsStats;
-    // moderation
-    QMultiHash<QString,OnetModerateMessage> mModerateMessages;
     // channel info
     QList<QString> lChannelInfo; // moderated
 

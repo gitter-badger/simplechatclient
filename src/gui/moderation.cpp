@@ -22,6 +22,7 @@
 #include <QTimer>
 #include "core.h"
 #include "message.h"
+#include "moderation_model.h"
 #include "settings.h"
 #include "moderation.h"
 
@@ -63,7 +64,7 @@ void DlgModeration::refreshMessages()
 {
     ui.listWidget_msg->clear();
 
-    QHashIterator <QString, OnetModerateMessage> i(Core::instance()->mModerateMessages);
+    QHashIterator <QString, OnetModerateMessage> i(ModerationModel::instance()->getAll());
     while (i.hasNext())
     {
         i.next();
@@ -107,7 +108,7 @@ void DlgModeration::removeSelected()
     {
         QString strID = item->data(Qt::UserRole).toString();
 
-        Core::instance()->mModerateMessages.remove(strID);
+        ModerationModel::instance()->remove(strID);
     }
 }
 
