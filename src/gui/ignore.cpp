@@ -21,6 +21,7 @@
 #include <QInputDialog>
 #include <QTimer>
 #include "core.h"
+#include "ignore_model.h"
 #include "ignore.h"
 
 DlgIgnore::DlgIgnore(QWidget *parent) : QDialog(parent)
@@ -58,7 +59,7 @@ void DlgIgnore::refresh()
 {
     ui.listWidget_nicks->clear();
 
-    foreach (QString strNick, Core::instance()->lIgnore)
+    foreach (QString strNick, IgnoreModel::instance()->getAll())
     {
         SortedListWidgetItem *item = new SortedListWidgetItem();
         item->setData(Qt::UserRole+10, false); // is nicklist

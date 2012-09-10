@@ -25,6 +25,7 @@
 #include "core.h"
 #include "defines.h"
 #include "friends_model.h"
+#include "ignore_model.h"
 #include "nicklist.h"
 #include "punish_reason.h"
 #include "settings.h"
@@ -386,7 +387,7 @@ void NickListWidget::contextMenuEvent(QContextMenuEvent *e)
 
     QMenu *ignore = new QMenu(tr("Ignore list"));
     ignore->setIcon(QIcon(":/images/oxygen/16x16/meeting-attending-tentative.png"));
-    if (Core::instance()->lIgnore.contains(strSelectedNick))
+    if (IgnoreModel::instance()->contains(strSelectedNick))
         ignore->addAction(QIcon(":/images/oxygen/16x16/list-remove.png"), tr("Remove from Ignore list"), this, SLOT(ignoreDel()));
     else
         ignore->addAction(QIcon(":/images/oxygen/16x16/list-add.png"), tr("Add to Ignore list"), this, SLOT(ignoreAdd()));

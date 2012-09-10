@@ -17,7 +17,7 @@ set QTDIR=%QT_DIR%
 
 if not exist %CMAKE_DIR%\bin\cmake.exe (
 if not exist %CMAKE32_DIR%\bin\cmake.exe (
-echo Download CMake from http://www.cmake.org/files/v2.8/cmake-2.8.8-win32-x86.exe
+echo Download CMake from http://www.cmake.org/files/v2.8/cmake-2.8.9-win32-x86.exe
 pause
 exit
 )

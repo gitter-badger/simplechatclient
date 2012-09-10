@@ -31,6 +31,7 @@
 #include "core.h"
 #include "find_nick_model.h"
 #include "friends_model.h"
+#include "ignore_model.h"
 #include "invite.h"
 #include "invite_model.h"
 #include "lag.h"
@@ -1121,7 +1122,7 @@ void OnetKernel::raw_001()
 
     // clear
     FriendsModel::instance()->clear();
-    Core::instance()->lIgnore.clear();
+    IgnoreModel::instance()->clear();
     Core::instance()->lChannelFavourites.clear();
     ChannelList::instance()->clear();
     MyStatsModel::instance()->clear();
@@ -1384,8 +1385,7 @@ void OnetKernel::raw_131n()
         QString strNick = strDataList[i];
         if (strNick[0] == ':') strNick.remove(0,1);
 
-        if (!Core::instance()->lIgnore.contains(strNick))
-            Core::instance()->lIgnore.append(strNick);
+        IgnoreModel::instance()->add(strNick);
     }
 }
 
@@ -1790,8 +1790,7 @@ void OnetKernel::raw_230n()
     QString strDisplay = QString(tr("* Added %1 to your ignore list")).arg(strNick);
     Message::instance()->showMessageActive(strDisplay, MessageInfo);
 
-    if (!Core::instance()->lIgnore.contains(strNick))
-        Core::instance()->lIgnore.append(strNick);
+    IgnoreModel::instance()->add(strNick);
 }
 
 // NS IGNORE DEL aaa
@@ -1805,8 +1804,7 @@ void OnetKernel::raw_231n()
     QString strDisplay = QString(tr("* Removed %1 from your ignore list")).arg(strNick);
     Message::instance()->showMessageActive(strDisplay, MessageInfo);
 
-    if (Core::instance()->lIgnore.contains(strNick))
-        Core::instance()->lIgnore.removeOne(strNick);
+    IgnoreModel::instance()->remove(strNick);
 }
 
 // NS FAVOURITES ADD scc

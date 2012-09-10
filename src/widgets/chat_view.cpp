@@ -30,6 +30,7 @@
 #include "find_text.h"
 #include "friends_model.h"
 #include "html_messages_renderer.h"
+#include "ignore_model.h"
 #include "notes_model.h"
 #include "nicklist.h"
 #include "punish_reason.h"
@@ -376,7 +377,7 @@ void ChatView::menuNick(QContextMenuEvent *event)
 
     QMenu *ignore = new QMenu(tr("Ignore list"));
     ignore->setIcon(QIcon(":/images/oxygen/16x16/meeting-attending-tentative.png"));
-    if (Core::instance()->lIgnore.contains(strNick))
+    if (IgnoreModel::instance()->contains(strNick))
         ignore->addAction(QIcon(":/images/oxygen/16x16/list-remove.png"), tr("Remove from Ignore list"), this, SLOT(ignoreDel()));
     else
         ignore->addAction(QIcon(":/images/oxygen/16x16/list-add.png"), tr("Add to Ignore list"), this, SLOT(ignoreAdd()));

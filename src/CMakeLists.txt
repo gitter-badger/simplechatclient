@@ -104,6 +104,7 @@ set (scc_SRCS
 	singleton/find_nick_model.cpp
 	singleton/friends_model.cpp
 	singleton/highlight.cpp
+	singleton/ignore_model.cpp
 	singleton/invite_model.cpp
 	singleton/lag.cpp
 	singleton/message.cpp
@@ -194,6 +195,7 @@ set (scc_MOC_HDRS
 	singleton/find_nick_model.h
 	singleton/friends_model.h
 	singleton/highlight.h
+	singleton/ignore_model.h
 	singleton/invite_model.h
 	singleton/lag.h
 	singleton/message.h
