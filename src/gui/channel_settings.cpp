@@ -944,7 +944,7 @@ void DlgChannelSettings::refreshPermissionList()
     QString strSelfModes = Nicklist::instance()->getUserModes(strMe, strChannel);
     int iSelfMaxModes = Nicklist::instance()->getUserMaxModes(strSelfModes);
 
-    if (Core::instance()->mChannelSettingsPermissions.contains("q", strMe) || Core::instance()->mChannelSettingsPermissions.contains("o", strMe) || Core::instance()->mChannelSettingsPermissions.contains("h", strMe) || (iSelfMaxModes > 16))
+    if (Core::instance()->mChannelSettingsPermissions.contains(PERMISSION_OWNER, strMe) || Core::instance()->mChannelSettingsPermissions.contains(PERMISSION_OP, strMe) || Core::instance()->mChannelSettingsPermissions.contains(PERMISSION_HALFOP, strMe) || (iSelfMaxModes > 16))
         setSettingsTabsStatus(true);
     else
     {
@@ -962,13 +962,13 @@ void DlgChannelSettings::refreshPermissionList()
         QString strKey = iSettingsPermissions.key();
         QString strValue = iSettingsPermissions.value();
 
-        if (strKey == "q")
+        if (strKey == PERMISSION_OWNER)
             setOwner(strValue);
-        else if (strKey == "o")
+        else if (strKey == PERMISSION_OP)
             addOp(strValue);
-        else if (strKey == "h")
+        else if (strKey == PERMISSION_HALFOP)
             addHalfop(strValue);
-        else if (strKey == "b")
+        else if (strKey == PERMISSION_BAN)
         {
             QStringList strDataList = strValue.split(";");
             QString strNick = strDataList[0];
@@ -978,7 +978,7 @@ void DlgChannelSettings::refreshPermissionList()
 
             addBan(strNick, strWho, strDT, strIPNick);
         }
-        else if (strKey == "I")
+        else if (strKey == PERMISSION_INVITE)
         {
             QStringList strDataList = strValue.split(";");
             QString strNick = strDataList[0];

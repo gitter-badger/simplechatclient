@@ -72,6 +72,12 @@ const int SECONDS_IN_MINUTE = 60;
 #define FLAG_ADMIN "o"
 #define FLAG_DEV "O"
 
+#define PERMISSION_OWNER "q"
+#define PERMISSION_OP "o"
+#define PERMISSION_HALFOP "h"
+#define PERMISSION_BAN "b"
+#define PERMISSION_INVITE "I"
+
 struct OnetChannelList
 {
     QString name;
