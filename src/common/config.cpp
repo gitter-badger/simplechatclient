@@ -135,11 +135,11 @@ QHash<QString,QString> Config::getDefaultValues()
     else
     {
         lDefaultValues.insert("nick", "~test");
-        lDefaultValues.insert("pass", "");
+        lDefaultValues.insert("pass", QString::null);
         lDefaultValues.insert("themes", "Standard");
         lDefaultValues.insert("language", "pl");
 
-        lDefaultValues.insert("highlight", "");
+        lDefaultValues.insert("highlight", QString::null);
 
         lDefaultValues.insert("punish_reason", strPunishReason);
 

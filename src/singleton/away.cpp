@@ -69,7 +69,7 @@ void Away::awayTriggered()
 
         QString strReason;
         if (bAway)
-            strReason = "";
+            strReason = QString::null;
         else
             strReason = tr("Not here right now");
 

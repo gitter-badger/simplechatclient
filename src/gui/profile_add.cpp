@@ -119,7 +119,7 @@ void DlgProfileAdd::buttonOk()
     // empty
     if (strNick.isEmpty())
     {
-        QMessageBox::critical(0, "", tr("Nick is empty!"));
+        QMessageBox::critical(0, QString::null, tr("Nick is empty!"));
         return;
     }
 
@@ -131,7 +131,7 @@ void DlgProfileAdd::buttonOk()
         if (strNick[0] != '~')
             strNick = "~"+strNick;
 
-        strPass = "";
+        strPass = QString::null;
     }
     else if (ui.radioButton_registered_nick->isChecked())
     {
@@ -153,7 +153,7 @@ void DlgProfileAdd::buttonOk()
     // exist profile
     if (profileManager->existProfile(strNick))
     {
-        QMessageBox::critical(0, "", tr("Profile already exists!"));
+        QMessageBox::critical(0, QString::null, tr("Profile already exists!"));
         return;
     }
 

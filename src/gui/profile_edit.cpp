@@ -77,7 +77,7 @@ void DlgProfileEdit::buttonOk()
     // empty
     if (strPassword.isEmpty())
     {
-        QMessageBox::critical(0, "", tr("Password is empty!"));
+        QMessageBox::critical(0, QString::null, tr("Password is empty!"));
         return;
     }
 

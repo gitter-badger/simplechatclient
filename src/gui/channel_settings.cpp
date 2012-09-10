@@ -212,7 +212,7 @@ void DlgChannelSettings::setDefaultValues()
     {
         QPixmap pixmap(50,10);
         pixmap.fill(QColor(strColor));
-        ui.comboBox_color->addItem(QIcon(pixmap), "");
+        ui.comboBox_color->addItem(QIcon(pixmap), QString::null);
     }
 }
 
@@ -693,7 +693,7 @@ void DlgChannelSettings::topicChanged()
 
 void DlgChannelSettings::descChanged()
 {
-    Core::instance()->pNetwork->send(QString("CS SET %1 LONGDESC %2").arg(strChannel, ui.plainTextEdit_desc->toPlainText().replace(QRegExp("(\r|\n)"), "")));
+    Core::instance()->pNetwork->send(QString("CS SET %1 LONGDESC %2").arg(strChannel, ui.plainTextEdit_desc->toPlainText().replace(QRegExp("(\r|\n)"), QString::null)));
 
     refreshAll();
 }

@@ -43,7 +43,7 @@ QString MyAvatarModel::getUrl() const
     }
     else
     {
-        return QString();
+        return QString::null;
     }
 }
 
@@ -60,7 +60,7 @@ QString MyAvatarModel::getRawUrl(int angle) const
     }
     else
     {
-        return QString();
+        return QString::null;
     }
 }
 
@@ -180,7 +180,7 @@ int MyAvatarModel::rotate(Rotate i)
 QString MyAvatarModel::scaledCropToString(QRect crop, QSize scaled, QSize original, int angle, bool rotate)
 {
     if (crop.isNull() || (crop.x() == 0 && crop.y() == 0 && crop.size() == scaled))
-        return "";
+        return QString::null;
 
     qreal scale = 1.0;
     if (angle % 2 == 0)

@@ -158,7 +158,7 @@ void DlgProfileManager::removeProfile()
 {
     if (ui.listWidget->count() <= 1)
     {
-        QMessageBox::critical(0, "", tr("Cannot remove last profile"));
+        QMessageBox::critical(0, QString::null, tr("Cannot remove last profile"));
         return;
     }
 

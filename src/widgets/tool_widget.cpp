@@ -103,7 +103,7 @@ ToolWidget::ToolWidget(QWidget *parent) : QWidget(parent), strCurrentColor("#000
     {
         QPixmap pixmap(20,10);
         pixmap.fill(QColor(strColor));
-        color->addItem(QIcon(pixmap), "");
+        color->addItem(QIcon(pixmap), QString::null);
     }
     color->show();
 
@@ -314,7 +314,7 @@ void ToolWidget::setDefaultValues()
     {
         bold->setChecked(false);
         bMyBold = false;
-        strMyFontWeight = "";
+        strMyFontWeight = QString::null;
     }
 
     // set default italic
@@ -328,7 +328,7 @@ void ToolWidget::setDefaultValues()
     {
         italic->setChecked(false);
         bMyItalic = false;
-        strMyFontStyle = "";
+        strMyFontStyle = QString::null;
     }
 
     int iWeight = (bMyBold ? 75 : 50);
@@ -440,7 +440,7 @@ void ToolWidget::boldClicked()
     {
         bold->setChecked(false);
         bMyBold = false;
-        strMyFontWeight = "";
+        strMyFontWeight = QString::null;
         QString strValue = "false";
         Settings::instance()->set("my_bold", strValue);
 
@@ -471,7 +471,7 @@ void ToolWidget::italicClicked()
     {
         italic->setChecked(false);
         bMyItalic = false;
-        strMyFontStyle = "";
+        strMyFontStyle = QString::null;
         QString strValue = "false";
         Settings::instance()->set("my_italic", strValue);
 

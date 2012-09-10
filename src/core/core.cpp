@@ -111,11 +111,11 @@ void Core::createSettings()
 {
     // default settings
     Settings::instance()->set("version", "1.6.0.dev");
-    Settings::instance()->set("available_version", "");
-    Settings::instance()->set("whats_new", "");
-    Settings::instance()->set("motd", "");
+    Settings::instance()->set("available_version", QString::null);
+    Settings::instance()->set("whats_new", QString::null);
+    Settings::instance()->set("motd", QString::null);
     Settings::instance()->set("version_status", "unknown");
-    Settings::instance()->set("update_url", "");
+    Settings::instance()->set("update_url", QString::null);
     Settings::instance()->set("logged", "false");
     Settings::instance()->set("busy", "false");
     Settings::instance()->set("away", "false");
@@ -123,13 +123,13 @@ void Core::createSettings()
     Settings::instance()->set("ignore_raw_141", "false");
     Settings::instance()->set("age_check", "true");
     Settings::instance()->set("first_run", "true");
-    Settings::instance()->set("uokey", "");
-    Settings::instance()->set("uo_nick", "");
-    Settings::instance()->set("onet_ubi", "");
-    Settings::instance()->set("onet_cid", "");
-    Settings::instance()->set("onet_sid", "");
-    Settings::instance()->set("onet_uid", "");
-    Settings::instance()->set("onetzuo_ticket", "");
+    Settings::instance()->set("uokey", QString::null);
+    Settings::instance()->set("uo_nick", QString::null);
+    Settings::instance()->set("onet_ubi", QString::null);
+    Settings::instance()->set("onet_cid", QString::null);
+    Settings::instance()->set("onet_sid", QString::null);
+    Settings::instance()->set("onet_uid", QString::null);
+    Settings::instance()->set("onetzuo_ticket", QString::null);
     Settings::instance()->set("last_active", "0");
     Settings::instance()->set("reconnect", "true");
 
@@ -249,18 +249,18 @@ void Core::fixSettings()
 
     if (!QFile::exists(Settings::instance()->get("sound_beep")))
     {
-        pConfig->set("sound_beep", "");
-        Settings::instance()->set("sound_beep", "");
+        pConfig->set("sound_beep", QString::null);
+        Settings::instance()->set("sound_beep", QString::null);
     }
     if (!QFile::exists(Settings::instance()->get("sound_query")))
     {
-        pConfig->set("sound_query", "");
-        Settings::instance()->set("sound_query", "");
+        pConfig->set("sound_query", QString::null);
+        Settings::instance()->set("sound_query", QString::null);
     }
     if (!QFile::exists(Settings::instance()->get("background_image")))
     {
-        pConfig->set("background_image", "");
-        Settings::instance()->set("background_image", "");
+        pConfig->set("background_image", QString::null);
+        Settings::instance()->set("background_image", QString::null);
     }
     if ((Settings::instance()->get("themes") != "Standard") && (Settings::instance()->get("themes") != "Origin") && (Settings::instance()->get("themes") != "Alhena") && (Settings::instance()->get("themes") != "Adara"))
     {
