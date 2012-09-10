@@ -23,6 +23,7 @@
 #include <QTimer>
 #include "channel.h"
 #include "core.h"
+#include "channel_favourites_model.h"
 #include "channel_favourites.h"
 
 DlgChannelFavourites::DlgChannelFavourites(QWidget *parent) : QDialog(parent)
@@ -70,7 +71,7 @@ void DlgChannelFavourites::refresh()
 {
     ui.listWidget_channels->clear();
 
-    foreach (QString strChannel, Core::instance()->lChannelFavourites)
+    foreach (QString strChannel, ChannelFavouritesModel::instance()->getAll())
     {
         QString strAvatar = Channel::instance()->getAvatar(strChannel);
 

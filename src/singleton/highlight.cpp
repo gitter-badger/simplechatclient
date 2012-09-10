@@ -56,6 +56,9 @@ void Highlight::add(QString &strHighlight)
 
 void Highlight::remove(const QString &strHighlight)
 {
+    if (!lHighlight.contains(strHighlight))
+        return;
+
     lHighlight.removeOne(strHighlight);
     save();
 }

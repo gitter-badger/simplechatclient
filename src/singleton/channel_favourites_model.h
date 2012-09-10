@@ -17,53 +17,29 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "find_nick_model.h"
+#ifndef CHANNEL_FAVOURITES_MODEL_H
+#define CHANNEL_FAVOURITES_MODEL_H
 
-FindNick * FindNick::Instance = 0;
+#include <QObject>
 
-FindNick * FindNick::instance()
+class ChannelFavouritesModel : public QObject
 {
-    if (!Instance)
-    {
-        Instance = new FindNick();
-        Instance->init();
-    }
+    Q_OBJECT
+    Q_DISABLE_COPY(ChannelFavouritesModel)
+    static ChannelFavouritesModel *Instance;
+public:
+    static ChannelFavouritesModel *instance();
 
-    return Instance;
-}
+    ChannelFavouritesModel();
+    void init();
+    void clear();
+    QList<QString> getAll();
+    void add(const QString &key);
+    void remove(const QString &key);
+    bool contains(const QString &key);
 
-FindNick::FindNick()
-{
-}
+private:
+    QList<QString> favourites;
+};
 
-void FindNick::init()
-{
-    clear();
-}
-
-void FindNick::add(const QString &nick)
-{
-    if (!lNickList.contains(nick))
-        lNickList.append(nick);
-}
-
-QList<QString> FindNick::get()
-{
-    return lNickList;
-}
-
-void FindNick::clear()
-{
-    lNickList.clear();
-    bNickListReady = false;
-}
-
-void FindNick::setReady(bool ready)
-{
-    bNickListReady = ready;
-}
-
-bool FindNick::getReady()
-{
-    return bNickListReady;
-}
+#endif // CHANNEL_FAVOURITES_MODEL_H

@@ -99,6 +99,7 @@ set (scc_SRCS
 	singleton/awaylog_model.cpp
 	singleton/busy.cpp
 	singleton/channel.cpp
+	singleton/channel_favourites_model.cpp
 	singleton/channel_homes_model.cpp
 	singleton/channel_list_model.cpp
 	singleton/find_nick_model.cpp
@@ -190,6 +191,7 @@ set (scc_MOC_HDRS
 	singleton/awaylog_model.h
 	singleton/busy.h
 	singleton/channel.h
+	singleton/channel_favourites_model.h
 	singleton/channel_homes_model.h
 	singleton/channel_list_model.h
 	singleton/find_nick_model.h

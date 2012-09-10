@@ -24,6 +24,7 @@
 #include "away.h"
 #include "busy.h"
 #include "channel.h"
+#include "channel_favourites_model.h"
 #include "channel_homes_model.h"
 #include "channel_key.h"
 #include "channel_list_model.h"
@@ -1123,7 +1124,7 @@ void OnetKernel::raw_001()
     // clear
     FriendsModel::instance()->clear();
     IgnoreModel::instance()->clear();
-    Core::instance()->lChannelFavourites.clear();
+    ChannelFavouritesModel::instance()->clear();
     ChannelList::instance()->clear();
     MyStatsModel::instance()->clear();
     MyProfileModel::instance()->clear();
@@ -1423,8 +1424,7 @@ void OnetKernel::raw_141n()
         QString strChannel = strDataList[i];
         if (strChannel[0] == ':') strChannel.remove(0,1);
 
-        if (!Core::instance()->lChannelFavourites.contains(strChannel))
-            Core::instance()->lChannelFavourites.append(strChannel);
+        ChannelFavouritesModel::instance()->add(strChannel);
 
         lList.append(strChannel);
     }
@@ -1818,8 +1818,7 @@ void OnetKernel::raw_240n()
     QString strDisplay = QString(tr("* Added %1 channel to your favorites list")).arg(strChannel);
     Message::instance()->showMessageActive(strDisplay, MessageInfo);
 
-    if (!Core::instance()->lChannelFavourites.contains(strChannel))
-        Core::instance()->lChannelFavourites.append(strChannel);
+    ChannelFavouritesModel::instance()->add(strChannel);
 }
 
 // NS FAVOURITES DEL scc
@@ -1833,8 +1832,7 @@ void OnetKernel::raw_241n()
     QString strDisplay = QString(tr("* Removed channel %1 from your favorites list")).arg(strChannel);
     Message::instance()->showMessageActive(strDisplay, MessageInfo);
 
-    if (Core::instance()->lChannelFavourites.contains(strChannel))
-        Core::instance()->lChannelFavourites.removeOne(strChannel);
+    ChannelFavouritesModel::instance()->remove(strChannel);
 }
 
 // CS REGISTER czesctoja

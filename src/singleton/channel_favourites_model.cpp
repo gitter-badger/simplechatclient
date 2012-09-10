@@ -17,53 +17,53 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "channel_homes_model.h"
+#include "channel_favourites_model.h"
 
-ChannelHomes * ChannelHomes::Instance = 0;
+ChannelFavouritesModel * ChannelFavouritesModel::Instance = 0;
 
-ChannelHomes * ChannelHomes::instance()
+ChannelFavouritesModel * ChannelFavouritesModel::instance()
 {
     if (!Instance)
     {
-        Instance = new ChannelHomes();
+        Instance = new ChannelFavouritesModel();
         Instance->init();
     }
 
     return Instance;
 }
 
-ChannelHomes::ChannelHomes()
+ChannelFavouritesModel::ChannelFavouritesModel()
 {
 }
 
-void ChannelHomes::init()
+void ChannelFavouritesModel::init()
 {
     clear();
 }
 
-void ChannelHomes::clear()
+void ChannelFavouritesModel::clear()
 {
-    lChannelHomes.clear();
-    bChannelHomesReady = false;
+    favourites.clear();
 }
 
-void ChannelHomes::add(const QString &channel)
+QList<QString> ChannelFavouritesModel::getAll()
 {
-    if (!lChannelHomes.contains(channel))
-        lChannelHomes.append(channel);
+    return favourites;
 }
 
-QList<QString> ChannelHomes::get()
+void ChannelFavouritesModel::add(const QString &key)
 {
-    return lChannelHomes;
+    if (!favourites.contains(key))
+        favourites.append(key);
 }
 
-void ChannelHomes::setReady(bool ready)
+void ChannelFavouritesModel::remove(const QString &key)
 {
-    bChannelHomesReady = ready;
+    if (favourites.contains(key))
+        favourites.removeOne(key);
 }
 
-bool ChannelHomes::getReady()
+bool ChannelFavouritesModel::contains(const QString &key)
 {
-    return bChannelHomesReady;
+    return favourites.contains(key);
 }

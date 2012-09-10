@@ -68,7 +68,6 @@ public:
 
     // TODO remove this
     // gui
-    QList<QString> lChannelFavourites;
     // channel settings
     QString strChannelSettings;
     QHash<QString,QString> mChannelSettingsInfo;

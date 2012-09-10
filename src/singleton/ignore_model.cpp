@@ -53,12 +53,14 @@ QList<QString> IgnoreModel::getAll()
 
 void IgnoreModel::add(const QString &key)
 {
-    ignore.append(key);
+    if (!ignore.contains(key))
+        ignore.append(key);
 }
 
 void IgnoreModel::remove(const QString &key)
 {
-    ignore.removeOne(key);
+    if (ignore.contains(key))
+        ignore.removeOne(key);
 }
 
 bool IgnoreModel::contains(const QString &key)
