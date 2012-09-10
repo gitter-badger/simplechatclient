@@ -78,6 +78,7 @@ void DlgFindNick::buttonClear()
 
     ui.lineEdit_search->clear();
     ui.listWidget_nicks->clear();
+    ui.listWidget_nicks->setEnabled(false);
 }
 
 void DlgFindNick::refreshList()
@@ -100,4 +101,9 @@ void DlgFindNick::refreshList()
 
         ui.listWidget_nicks->addItem(item);
     }
+
+    if (!list.isEmpty())
+        ui.listWidget_nicks->setEnabled(true);
+    else
+        ui.listWidget_nicks->setEnabled(false);
 }
