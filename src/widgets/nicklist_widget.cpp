@@ -24,6 +24,7 @@
 #include "channel.h"
 #include "core.h"
 #include "defines.h"
+#include "friends_model.h"
 #include "nicklist.h"
 #include "punish_reason.h"
 #include "settings.h"
@@ -378,7 +379,7 @@ void NickListWidget::contextMenuEvent(QContextMenuEvent *e)
 
     QMenu *friends = new QMenu(tr("Friends list"));
     friends->setIcon(QIcon(":/images/oxygen/16x16/meeting-attending.png"));
-    if (Core::instance()->mFriends.contains(strSelectedNick))
+    if (FriendsModel::instance()->contains(strSelectedNick))
         friends->addAction(QIcon(":/images/oxygen/16x16/list-remove.png"), tr("Remove from friends"), this, SLOT(friendsDel()));
     else
         friends->addAction(QIcon(":/images/oxygen/16x16/list-add.png"), tr("Add to friends"), this, SLOT(friendsAdd()));

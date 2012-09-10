@@ -30,6 +30,7 @@
 #include "convert.h"
 #include "core.h"
 #include "find_nick_model.h"
+#include "friends_model.h"
 #include "invite.h"
 #include "invite_model.h"
 #include "lag.h"
@@ -1119,7 +1120,7 @@ void OnetKernel::raw_001()
     Settings::instance()->set("logged", "true");
 
     // clear
-    Core::instance()->mFriends.clear();
+    FriendsModel::instance()->clear();
     Core::instance()->lIgnore.clear();
     Core::instance()->lChannelFavourites.clear();
     ChannelList::instance()->clear();
@@ -3739,10 +3740,7 @@ void OnetKernel::raw_600()
     QString strMessage = QString(tr("* Your friend %1 arrived online")).arg(strNick);
     Message::instance()->showMessageActive(strMessage, MessageInfo);
 
-    if (Core::instance()->mFriends.contains(strNick))
-        Core::instance()->mFriends[strNick] = true;
-    else
-        Core::instance()->mFriends.insert(strNick, true);
+    FriendsModel::instance()->set(strNick, true);
 }
 
 // :cf1f4.onet 601 scc_test Radowsky 16172032 690A6F.A8219B.7F5EC1.35E57C 1267055692 :went offline
@@ -3755,10 +3753,7 @@ void OnetKernel::raw_601()
     QString strMessage = QString(tr("* Your friend %1 went offline")).arg(strNick);
     Message::instance()->showMessageActive(strMessage, MessageInfo);
 
-    if (Core::instance()->mFriends.contains(strNick))
-        Core::instance()->mFriends[strNick] = false;
-    else
-        Core::instance()->mFriends.insert(strNick, false);
+    FriendsModel::instance()->set(strNick, false);
 }
 
 // NS FRIENDS DEL nick
@@ -3769,7 +3764,7 @@ void OnetKernel::raw_602()
 
     QString strNick = strDataList[3];
 
-    Core::instance()->mFriends.remove(strNick);
+    FriendsModel::instance()->remove(strNick);
 }
 
 //:cf1f1.onet 604 scc_test scc_test 51976824 3DE379.B7103A.6CF799.6902F4 1267054441 :is online
@@ -3783,10 +3778,7 @@ void OnetKernel::raw_604()
 //    QString strMessage = QString(tr("* Your friend %1 is now on-line")).arg(strNick);
 //    Message::instance()->showMessageActive(strMessage, InfoMessage);
 
-    if (Core::instance()->mFriends.contains(strNick))
-        Core::instance()->mFriends[strNick] = true;
-    else
-        Core::instance()->mFriends.insert(strNick, true);
+    FriendsModel::instance()->set(strNick, true);
 }
 
 // :cf1f1.onet 605 scc_test Radowsky * * 0 :is offline
@@ -3800,10 +3792,7 @@ void OnetKernel::raw_605()
 //    QString strMessage = QString(tr("* Your friend %1 is now off-line")).arg(strNick);
 //    Message::instance()->showMessageActive(strMessage, InfoMessage);
 
-    if (Core::instance()->mFriends.contains(strNick))
-        Core::instance()->mFriends[strNick] = false;
-    else
-        Core::instance()->mFriends.insert(strNick, false);
+    FriendsModel::instance()->set(strNick, false);
 }
 
 // WATCH

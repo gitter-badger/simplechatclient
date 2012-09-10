@@ -23,6 +23,7 @@
 #include <QTimer>
 #include "core.h"
 #include "channel.h"
+#include "friends_model.h"
 #include "friends.h"
 
 DlgFriends::DlgFriends(QWidget *parent) : QDialog(parent)
@@ -95,7 +96,7 @@ void DlgFriends::refresh()
     ui.listWidget_online->clear();
     ui.listWidget_offline->clear();
 
-    QHashIterator <QString, bool> i(Core::instance()->mFriends);
+    QHashIterator <QString, bool> i(FriendsModel::instance()->getAll());
     while (i.hasNext())
     {
         i.next();

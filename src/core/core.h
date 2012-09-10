@@ -68,7 +68,6 @@ public:
 
     // TODO remove this
     // gui
-    QHash<QString, bool> mFriends;
     QList<QString> lIgnore;
     QList<QString> lChannelFavourites;
     // channel settings

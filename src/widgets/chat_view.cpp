@@ -27,13 +27,14 @@
 #include <QtWebKit/QWebElement>
 #include "channel.h"
 #include "core.h"
-#include "user_profile.h"
 #include "find_text.h"
+#include "friends_model.h"
 #include "html_messages_renderer.h"
 #include "notes_model.h"
 #include "nicklist.h"
 #include "punish_reason.h"
 #include "settings.h"
+#include "user_profile.h"
 #include "webbrowser.h"
 #include "chat_view.h"
 
@@ -368,7 +369,7 @@ void ChatView::menuNick(QContextMenuEvent *event)
 
     QMenu *friends = new QMenu(tr("Friends list"));
     friends->setIcon(QIcon(":/images/oxygen/16x16/meeting-attending.png"));
-    if (Core::instance()->mFriends.contains(strNick))
+    if (FriendsModel::instance()->contains(strNick))
         friends->addAction(QIcon(":/images/oxygen/16x16/list-remove.png"), tr("Remove from friends"), this, SLOT(friendsDel()));
     else
         friends->addAction(QIcon(":/images/oxygen/16x16/list-add.png"), tr("Add to friends"), this, SLOT(friendsAdd()));
