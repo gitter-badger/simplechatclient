@@ -67,7 +67,6 @@ public:
     QHash<QString, TabWidget*> tw;
 
     // TODO remove this
-    // gui
     // channel info
     QList<QString> lChannelInfo; // moderated
 
