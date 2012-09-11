@@ -27,6 +27,7 @@
 #include "avatar_list_widget.h"
 #include "convert.h"
 #include "core.h"
+#include "channel_settings_model.h"
 #include "nicklist.h"
 #include "settings.h"
 #include "simple_stats_widget.h"
@@ -271,7 +272,7 @@ void DlgChannelSettings::refreshAll()
     clear();
 
     // set channel
-    Core::instance()->strChannelSettings = strChannel;
+    ChannelSettingsModel::instance()->setChannel(strChannel);
 
     // get data
     Core::instance()->pNetwork->send(QString("CS INFO %1").arg(strChannel));
@@ -284,13 +285,13 @@ void DlgChannelSettings::refreshAll()
 
 void DlgChannelSettings::refreshChannelInfo()
 {
-    if (Core::instance()->bChannelSettingsInfo == false)
+    if (ChannelSettingsModel::instance()->getReadyInfo() == false)
     {
         QTimer::singleShot(200, this, SLOT(refreshChannelInfo())); // 0.2 sec
         return;
     }
 
-    QHashIterator<QString, QString> iSettingsInfo(Core::instance()->mChannelSettingsInfo);
+    QHashIterator<QString, QString> iSettingsInfo(ChannelSettingsModel::instance()->getAllInfo());
     while (iSettingsInfo.hasNext())
     {
         iSettingsInfo.next();
@@ -497,13 +498,13 @@ void DlgChannelSettings::refreshChannelInfo()
 
 void DlgChannelSettings::refreshChannelStats()
 {
-    if (Core::instance()->bChannelSettingsStats == false)
+    if (ChannelSettingsModel::instance()->getReadyStats() == false)
     {
         QTimer::singleShot(200, this, SLOT(refreshChannelStats())); // 0.2 sec
         return;
     }
 
-    QHashIterator<QString, QString> i(Core::instance()->mChannelSettingsStats);
+    QHashIterator<QString, QString> i(ChannelSettingsModel::instance()->getAllStats());
     while (i.hasNext())
     {
         i.next();
@@ -944,8 +945,13 @@ void DlgChannelSettings::refreshPermissionList()
     QString strSelfModes = Nicklist::instance()->getUserModes(strMe, strChannel);
     int iSelfMaxModes = Nicklist::instance()->getUserMaxModes(strSelfModes);
 
-    if (Core::instance()->mChannelSettingsPermissions.contains(PERMISSION_OWNER, strMe) || Core::instance()->mChannelSettingsPermissions.contains(PERMISSION_OP, strMe) || Core::instance()->mChannelSettingsPermissions.contains(PERMISSION_HALFOP, strMe) || (iSelfMaxModes > 16))
+    if (ChannelSettingsModel::instance()->containsPermission(PERMISSION_OWNER, strMe)
+        || ChannelSettingsModel::instance()->containsPermission(PERMISSION_OP, strMe)
+        || ChannelSettingsModel::instance()->containsPermission(PERMISSION_HALFOP, strMe)
+        || (iSelfMaxModes > 16))
+    {
         setSettingsTabsStatus(true);
+    }
     else
     {
         ui.stackedWidget_channel_settings->setCurrentIndex(0);
@@ -954,7 +960,7 @@ void DlgChannelSettings::refreshPermissionList()
     }
 
     // refresh permissions
-    QHashIterator<QString, QString> iSettingsPermissions(Core::instance()->mChannelSettingsPermissions);
+    QHashIterator<QString, QString> iSettingsPermissions(ChannelSettingsModel::instance()->getAllPermission());
     while (iSettingsPermissions.hasNext())
     {
         iSettingsPermissions.next();
@@ -994,12 +1000,7 @@ void DlgChannelSettings::refreshPermissionList()
 
 void DlgChannelSettings::clear()
 {
-    Core::instance()->strChannelSettings.clear();
-    Core::instance()->mChannelSettingsInfo.clear();
-    Core::instance()->mChannelSettingsPermissions.clear();
-    Core::instance()->bChannelSettingsInfo = false;
-    Core::instance()->mChannelSettingsStats.clear();
-    Core::instance()->bChannelSettingsStats = false;
+    ChannelSettingsModel::instance()->clear();
 
     // summary
     ui.label_summary_datetime->setText("-");
@@ -1051,12 +1052,7 @@ void DlgChannelSettings::clear()
 
 void DlgChannelSettings::buttonClose()
 {
-    Core::instance()->strChannelSettings.clear();
-    Core::instance()->mChannelSettingsInfo.clear();
-    Core::instance()->mChannelSettingsPermissions.clear();
-    Core::instance()->bChannelSettingsInfo = false;
-    Core::instance()->mChannelSettingsStats.clear();
-    Core::instance()->bChannelSettingsStats = false;
+    ChannelSettingsModel::instance()->clear();
 
     close();
 }

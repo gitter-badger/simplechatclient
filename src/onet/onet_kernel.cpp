@@ -28,6 +28,7 @@
 #include "channel_homes_model.h"
 #include "channel_key.h"
 #include "channel_list_model.h"
+#include "channel_settings_model.h"
 #include "convert.h"
 #include "core.h"
 #include "find_nick_model.h"
@@ -1132,12 +1133,7 @@ void OnetKernel::raw_001()
     // user profile
     UserProfileModel::instance()->clear();
     // channel settings
-    Core::instance()->strChannelSettings.clear();
-    Core::instance()->mChannelSettingsInfo.clear();
-    Core::instance()->mChannelSettingsPermissions.clear();
-    Core::instance()->bChannelSettingsInfo = false;
-    Core::instance()->mChannelSettingsStats.clear();
-    Core::instance()->bChannelSettingsStats = false;
+    ChannelSettingsModel::instance()->clear();
     // moderate
     ModerationModel::instance()->clear();
 
@@ -1525,8 +1521,8 @@ void OnetKernel::raw_160n()
     if (strTopic[0] == ':') strTopic.remove(0,1);
 
     // set topic in channel settings
-    if (Core::instance()->strChannelSettings == strChannel)
-        Core::instance()->mChannelSettingsInfo["topic"] = strTopic;
+    if (ChannelSettingsModel::instance()->getChannel() == strChannel)
+        ChannelSettingsModel::instance()->setInfo("topic", strTopic);
 
     // set topic in widget
     pTabC->setTopic(strChannel, strTopic);
@@ -1553,13 +1549,14 @@ void OnetKernel::raw_161n()
     }
 
     // set data
-    if (Core::instance()->strChannelSettings == strChannel)
+    if (ChannelSettingsModel::instance()->getChannel() == strChannel)
     {
         QHashIterator <QString, QString> i(mKeyValue);
         while (i.hasNext())
         {
             i.next();
-            Core::instance()->mChannelSettingsInfo[i.key()] = i.value();
+
+            ChannelSettingsModel::instance()->setInfo(i.key(), i.value());
         }
     }
 
@@ -1598,17 +1595,17 @@ void OnetKernel::raw_162n()
 
     QString strChannel = strDataList[4];
 
-    for (int i = 5; i < strDataList.size(); i++)
+    if (ChannelSettingsModel::instance()->getChannel() == strChannel)
     {
-        QString strLine = strDataList[i];
-        if (i == 5) strLine.remove(0,1);
-        QString strKey = strLine.left(strLine.indexOf(","));
-        QString strValue = strLine.right(strLine.length() - strLine.indexOf(",")-1);
-
-        if ((!strKey.isEmpty()) && (!strValue.isEmpty()))
+        for (int i = 5; i < strDataList.size(); i++)
         {
-            if (Core::instance()->strChannelSettings == strChannel)
-                Core::instance()->mChannelSettingsPermissions.insert(strKey, strValue);
+            QString strLine = strDataList[i];
+            if (i == 5) strLine.remove(0,1);
+            QString strKey = strLine.left(strLine.indexOf(","));
+            QString strValue = strLine.right(strLine.length() - strLine.indexOf(",")-1);
+
+            if ((!strKey.isEmpty()) && (!strValue.isEmpty()))
+                ChannelSettingsModel::instance()->setPermission(strKey, strValue);
         }
     }
 }
@@ -1631,8 +1628,8 @@ void OnetKernel::raw_163n()
 
     strDT = QDateTime::fromTime_t(strDT.toInt()).toString("dd MMM yyyy hh:mm:ss");
 
-    if (Core::instance()->strChannelSettings == strChannel)
-        Core::instance()->mChannelSettingsPermissions.insert(strFlag, QString("%1;%2;%3;%4").arg(strNick, strWho, strDT, strIPNick));
+    if (ChannelSettingsModel::instance()->getChannel() == strChannel)
+        ChannelSettingsModel::instance()->setPermission(strFlag, QString("%1;%2;%3;%4").arg(strNick, strWho, strDT, strIPNick));
 }
 
 // CS INFO #scc
@@ -1643,8 +1640,8 @@ void OnetKernel::raw_164n()
 
     QString strChannel = strDataList[4];
 
-    if (Core::instance()->strChannelSettings == strChannel)
-        Core::instance()->bChannelSettingsInfo = true;
+    if (ChannelSettingsModel::instance()->getChannel() == strChannel)
+        ChannelSettingsModel::instance()->setReadyInfo(true);
 }
 
 // CS INFO #Relax
@@ -1659,8 +1656,8 @@ void OnetKernel::raw_165n()
     for (int i = 5; i < strDataList.size(); i++) { if (i != 5) strDescription += " "; strDescription += strDataList[i]; }
     if (strDescription[0] == ':') strDescription.remove(0,1);
 
-    if (Core::instance()->strChannelSettings == strChannel)
-        Core::instance()->mChannelSettingsInfo["desc"] = strDescription;
+    if (ChannelSettingsModel::instance()->getChannel() == strChannel)
+        ChannelSettingsModel::instance()->setInfo("desc", strDescription);
 }
 
 // RS INFO Merovingian
@@ -1711,13 +1708,14 @@ void OnetKernel::raw_175n()
         mKeyValue.insert(strKey, strValue);
     }
 
-    if (Core::instance()->strChannelSettings == strChannel)
+    if (ChannelSettingsModel::instance()->getChannel() == strChannel)
     {
         QHashIterator <QString, QString> i(mKeyValue);
         while (i.hasNext())
         {
             i.next();
-            Core::instance()->mChannelSettingsStats[i.key()] = i.value();
+
+            ChannelSettingsModel::instance()->setStats(i.key(), i.value());
         }
     }
 }
@@ -1729,8 +1727,8 @@ void OnetKernel::raw_176n()
 
     QString strChannel = strDataList[4];
 
-    if (Core::instance()->strChannelSettings == strChannel)
-        Core::instance()->bChannelSettingsStats = true;
+    if (ChannelSettingsModel::instance()->getChannel() == strChannel)
+        ChannelSettingsModel::instance()->setReadyStats(true);
 }
 
 // NS SET city

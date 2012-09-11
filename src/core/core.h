@@ -68,13 +68,6 @@ public:
 
     // TODO remove this
     // gui
-    // channel settings
-    QString strChannelSettings;
-    QHash<QString,QString> mChannelSettingsInfo;
-    QMultiHash<QString,QString> mChannelSettingsPermissions;
-    bool bChannelSettingsInfo;
-    QHash<QString,QString> mChannelSettingsStats;
-    bool bChannelSettingsStats;
     // channel info
     QList<QString> lChannelInfo; // moderated
 

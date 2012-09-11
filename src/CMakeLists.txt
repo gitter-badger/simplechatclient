@@ -102,6 +102,7 @@ set (scc_SRCS
 	singleton/channel_favourites_model.cpp
 	singleton/channel_homes_model.cpp
 	singleton/channel_list_model.cpp
+	singleton/channel_settings_model.cpp
 	singleton/find_nick_model.cpp
 	singleton/friends_model.cpp
 	singleton/highlight.cpp
@@ -194,6 +195,7 @@ set (scc_MOC_HDRS
 	singleton/channel_favourites_model.h
 	singleton/channel_homes_model.h
 	singleton/channel_list_model.h
+	singleton/channel_settings_model.h
 	singleton/find_nick_model.h
 	singleton/friends_model.h
 	singleton/highlight.h

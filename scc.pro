@@ -74,6 +74,7 @@ SOURCES += src/avatars/avatar.cpp \
     src/singleton/channel_favourites_model.cpp \
     src/singleton/channel_homes_model.cpp \
     src/singleton/channel_list_model.cpp \
+    src/singleton/channel_settings_model.cpp \
     src/singleton/find_nick_model.cpp \
     src/singleton/friends_model.cpp \
     src/singleton/highlight.cpp \
@@ -173,6 +174,7 @@ HEADERS += src/avatars/avatar.h \
     src/singleton/channel_favourites_model.h \
     src/singleton/channel_homes_model.h \
     src/singleton/channel_list_model.h \
+    src/singleton/channel_settings_model.h \
     src/singleton/find_nick_model.h \
     src/singleton/friends_model.h \
     src/singleton/highlight.h \
