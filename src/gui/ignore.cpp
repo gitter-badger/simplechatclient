@@ -59,7 +59,8 @@ void DlgIgnore::refresh()
 {
     ui.listWidget_nicks->clear();
 
-    foreach (QString strNick, IgnoreModel::instance()->getAll())
+    QList<QString> ignoreList = IgnoreModel::instance()->getAll();
+    foreach (QString strNick, ignoreList)
     {
         SortedListWidgetItem *item = new SortedListWidgetItem();
         item->setData(Qt::UserRole+10, false); // is nicklist

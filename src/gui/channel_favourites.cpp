@@ -71,7 +71,8 @@ void DlgChannelFavourites::refresh()
 {
     ui.listWidget_channels->clear();
 
-    foreach (QString strChannel, ChannelFavouritesModel::instance()->getAll())
+    QList<QString> favouritesList = ChannelFavouritesModel::instance()->getAll();
+    foreach (QString strChannel, favouritesList)
     {
         QString strAvatar = Channel::instance()->getAvatar(strChannel);
 

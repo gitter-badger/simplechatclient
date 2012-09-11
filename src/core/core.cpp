@@ -313,7 +313,8 @@ bool Core::removeDir(const QString &dirName)
 
     if (dir.exists(dirName))
     {
-        foreach(QFileInfo info, dir.entryInfoList(QDir::NoDotAndDotDot | QDir::System | QDir::Hidden  | QDir::AllDirs | QDir::Files, QDir::DirsFirst))
+        QFileInfoList listInfo = dir.entryInfoList(QDir::NoDotAndDotDot | QDir::System | QDir::Hidden  | QDir::AllDirs | QDir::Files, QDir::DirsFirst);
+        foreach(QFileInfo info, listInfo)
         {
             if (info.isDir())
                 result = removeDir(info.absoluteFilePath());
