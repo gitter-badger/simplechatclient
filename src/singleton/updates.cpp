@@ -27,7 +27,7 @@
 #include "settings.h"
 #include "updates.h"
 
-#define UPDATE_URL_1 "http://simplechatclien.sourceforge.net/update.php"
+#define UPDATE_URL_1 "http://simplechatclien.sourceforge.net/update.xml"
 #define UPDATE_URL_2 "http://simplechatclient.github.com/update.xml"
 
 Updates * Updates::Instance = 0;
