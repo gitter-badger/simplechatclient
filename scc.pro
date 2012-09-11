@@ -99,7 +99,7 @@ SOURCES += src/avatars/avatar.cpp \
     src/tab/tab_manager.cpp \
     src/tab/tab_widget.cpp \
     src/widgets/avatar_edit_scene.cpp \
-	src/widgets/avatar_list_widget.cpp \
+    src/widgets/avatar_list_widget.cpp \
     src/widgets/chat_view.cpp \
     src/widgets/inputline_widget.cpp \
     src/widgets/nicklist_delegate.cpp \
@@ -200,7 +200,7 @@ HEADERS += src/avatars/avatar.h \
     src/tab/tab_manager.h \
     src/tab/tab_widget.h \
     src/widgets/avatar_edit_scene.h \
-	src/widgets/avatar_list_widget.h \
+    src/widgets/avatar_list_widget.h \
     src/widgets/chat_view.h \
     src/widgets/inputline_widget.h \
     src/widgets/nicklist_delegate.h \
