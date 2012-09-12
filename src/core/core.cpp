@@ -17,6 +17,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <QCoreApplication>
 #include <QFile>
 #include <QTcpSocket>
 #include "config.h"
@@ -26,7 +27,6 @@
 #include "core.h"
 
 #ifdef Q_WS_WIN
-    #include <QCoreApplication>
     #include <QDesktopServices>
 #endif
 
