@@ -423,7 +423,7 @@ void OnetKernel::raw_join()
         Message::instance()->showMessage(strChannel, strDisplay, MessageJoin);
 
     // channel info
-    Core::instance()->lChannelInfo.removeOne(strChannel);
+    Channel::instance()->removeChannelInfo(strChannel);
 
     QString strMe = Settings::instance()->get("nick");
     if ((strNick == strMe) && (strChannel[0] != '^'))
@@ -501,7 +501,7 @@ void OnetKernel::raw_part()
     if (strNick == strMe)
     {
         // channel info
-        Core::instance()->lChannelInfo.removeOne(strChannel);
+        Channel::instance()->removeChannelInfo(strChannel);
 
         // close channel
         if ((strChannel != DEBUG_WINDOW) && (strChannel != STATUS_WINDOW))
@@ -588,7 +588,7 @@ void OnetKernel::raw_kick()
         }
 
         // channel info
-        Core::instance()->lChannelInfo.removeOne(strChannel);
+        Channel::instance()->removeChannelInfo(strChannel);
 
         // remove tab
         pTabC->removeTab(strChannel);
@@ -1136,6 +1136,8 @@ void OnetKernel::raw_001()
     ChannelSettingsModel::instance()->clear();
     // moderate
     ModerationModel::instance()->clear();
+    // channel info
+    Channel::instance()->clearChannelInfo();
 
     // protocol
     Core::instance()->pNetwork->send("PROTOCTL ONETNAMESX");
@@ -1155,9 +1157,6 @@ void OnetKernel::raw_001()
         Settings::instance()->set("ignore_raw_141", "true");
     else
         Settings::instance()->set("ignore_raw_141", "false");
-
-    // channel info
-    Core::instance()->lChannelInfo.clear();
 
     // override off
     Settings::instance()->set("override", "false");
@@ -1561,14 +1560,21 @@ void OnetKernel::raw_161n()
     }
 
     // channel info
-    if (!Core::instance()->lChannelInfo.contains(strChannel))
+    if (!Channel::instance()->containsChannelInfo(strChannel))
     {
         if (mKeyValue.value("moderated") == "1")
         {
             QString strDisplay = QString(tr("* Channel %1 is moderated").arg(strChannel));
             Message::instance()->showMessage(strChannel, strDisplay, MessageInfo);
         }
-        Core::instance()->lChannelInfo.append(strChannel);
+/*
+        if (mKeyValue.value("private") == "1")
+        {
+            QString strDisplay = QString(tr("* Channel %1 is private").arg(strChannel));
+            Message::instance()->showMessage(strChannel, strDisplay, MessageInfo);
+        }
+*/
+        Channel::instance()->addChannelInfo(strChannel);
     }
 
     // update topic author

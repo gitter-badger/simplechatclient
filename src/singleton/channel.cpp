@@ -40,6 +40,7 @@ Channel::Channel()
 
 void Channel::init()
 {
+    lChannelInfo.clear();
     lChannels.clear();
     lAvatar.clear();
     lPriv.clear();
@@ -108,6 +109,29 @@ QList<CaseIgnoreString> Channel::getSorted()
     qSort(lChannelsCaseIgnore.begin(), lChannelsCaseIgnore.end());
 
     return lChannelsCaseIgnore;
+}
+
+// channel info
+void Channel::addChannelInfo(const QString &channel)
+{
+    if (!lChannelInfo.contains(channel))
+        lChannelInfo.append(channel);
+}
+
+bool Channel::containsChannelInfo(const QString &channel)
+{
+    return lChannelInfo.contains(channel);
+}
+
+void Channel::removeChannelInfo(const QString &channel)
+{
+    if (lChannelInfo.contains(channel))
+        lChannelInfo.removeOne(channel);
+}
+
+void Channel::clearChannelInfo()
+{
+    lChannelInfo.clear();
 }
 
 // avatar

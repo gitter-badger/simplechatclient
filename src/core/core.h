@@ -61,10 +61,6 @@ public:
     // TW (important!!!)
     QHash<QString, TabWidget*> tw;
 
-    // TODO remove this
-    // channel info
-    QList<QString> lChannelInfo; // moderated
-
 public slots:
     void quit();
 

@@ -45,6 +45,11 @@ public:
     int getIndex(const QString &channel);
     QString getCurrent();
     QList<CaseIgnoreString> getSorted();
+    // display channel info
+    void addChannelInfo(const QString &channel);
+    bool containsChannelInfo(const QString &channel);
+    void removeChannelInfo(const QString &channel);
+    void clearChannelInfo();
     // avatar
     QString getAvatar(const QString &channel);
     void setAvatar(const QString &channel, const QString &path);
@@ -55,6 +60,7 @@ public:
 
 private:
     QList<QString> lChannels;
+    QList<QString> lChannelInfo; // moderated, private
     QHash<QString,QString> lAvatar;
     QHash<QString,QString> lPriv;
 
