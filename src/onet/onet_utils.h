@@ -25,6 +25,6 @@
 namespace OnetUtils
 {
     QString transformKey(QString s);
-};
+}
 
 #endif // ONET_UTILS_H

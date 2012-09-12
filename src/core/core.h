@@ -23,7 +23,6 @@
 #include "scc-config.h"
 class QTcpSocket;
 class MainWindow;
-class Updates;
 #include "nicklist_widget.h"
 #include "tab_widget.h"
 #include <QObject>
@@ -46,8 +45,6 @@ public:
     void createAndShowGui();
     void createSettings();
     // old
-    void removeOldConfig();
-    void convertOldProfiles();
     void convertOldConfig();
     // config
     void configValues();

@@ -17,19 +17,16 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <QAction>
-#include <QCoreApplication>
-#include <QDir>
-#include <QSettings>
+#include <QFile>
 #include <QTcpSocket>
 #include "config.h"
-#include "log.h"
 #include "mainwindow.h"
 #include "settings.h"
 #include "updates.h"
 #include "core.h"
 
 #ifdef Q_WS_WIN
+    #include <QCoreApplication>
     #include <QDesktopServices>
 #endif
 
@@ -69,16 +66,6 @@ Core::~Core()
 
 void Core::init()
 {
-    // clear old settings
-    QSettings oldSettings;
-    oldSettings.clear();
-
-    // remove old config
-    removeOldConfig();
-
-    // convert old profiles
-    convertOldProfiles();
-
     // create settings
     createSettings();
 
@@ -146,48 +133,7 @@ void Core::createSettings()
     fixSettings();
 }
 
-void Core::removeOldConfig()
-{
-    QString path;
-#ifdef Q_WS_WIN
-    path = QFileInfo(QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation)).absoluteFilePath();
-    path += "/scc";
-#else
-    path = QDir::homePath()+"/.scc";
-#endif
-
-    // remove file
-    if (QFile::exists(path+"/scc.conf"))
-        QFile::remove(path+"/scc.conf");
-}
-
-void Core::convertOldProfiles()
-{
-    QString path;
-#ifdef Q_WS_WIN
-    path = QFileInfo(QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation)).absoluteFilePath();
-    path += "/scc";
-#else
-    path = QDir::homePath()+"/.scc";
-#endif
-
-    path += "/profiles";
-
-    QDir dir(path);
-    QFileInfoList list = dir.entryInfoList(QStringList("*.xml"), QDir::Files | QDir::NoSymLinks);
-    foreach (QFileInfo info, list)
-    {
-        QString profile = info.fileName().remove(".xml");
-        if (!QDir().exists(path+"/"+profile))
-        {
-            QDir().mkpath(path+"/"+profile);
-            QFile::rename(path+"/"+profile+".xml", path+"/"+profile+"/profile.xml");
-        }
-        else
-            QFile::remove(path+"/"+profile+".xml");
-    }
-}
-
+// TODO wyrzucic w wersji > 1.6
 void Core::convertOldConfig()
 {
     Config *pConfig = new Config();

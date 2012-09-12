@@ -18,7 +18,6 @@
  */
 
 #include <QDesktopWidget>
-#include <QDockWidget>
 #include <QMenuBar>
 #include <QMessageBox>
 #include <QMovie>
