@@ -26,7 +26,7 @@ configure_file (${CMAKE_SOURCE_DIR}/scc-config.h.cmake ${CMAKE_BINARY_DIR}/scc-c
 
 # install
 if (UNIX AND NOT APPLE)
-	install (FILES AUTHORS ChangeLog LICENSE README scc.png TODO DESTINATION ${SCC_DATA_DIR})
+	install (FILES AUTHORS ChangeLog LICENSE README.rst scc.png TODO DESTINATION ${SCC_DATA_DIR})
 	install (FILES scc.desktop DESTINATION ${SCC_SHARE_DIR}/applications)
 	install (FILES images/user_avatar.png DESTINATION ${SCC_DATA_DIR}/images)
 	install (FILES 3rdparty/LICENSE DESTINATION ${SCC_DATA_DIR}/3rdparty)

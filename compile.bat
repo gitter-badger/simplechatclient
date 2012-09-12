@@ -94,7 +94,7 @@ echo Copying main files
 xcopy AUTHORS      %DESTINATION%\ /R /Y /Q
 xcopy ChangeLog    %DESTINATION%\ /R /Y /Q
 xcopy LICENSE      %DESTINATION%\ /R /Y /Q
-xcopy README       %DESTINATION%\ /R /Y /Q
+xcopy README.rst   %DESTINATION%\ /R /Y /Q
 xcopy TODO         %DESTINATION%\ /R /Y /Q
 xcopy VERSION      %DESTINATION%\ /R /Y /Q
 xcopy src\scc.exe  %DESTINATION%\ /R /Y /Q
