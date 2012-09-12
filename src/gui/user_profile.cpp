@@ -27,7 +27,6 @@
 #include <QToolButton>
 #include <QVBoxLayout>
 
-#include <QDate>
 #include <QDesktopWidget>
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
@@ -36,6 +35,7 @@
 #include "core.h"
 #include "user_avatar.h"
 #include "user_profile_model.h"
+#include "utils.h"
 #include "user_profile.h"
 
 DlgUserProfile::DlgUserProfile(const QString &_strNick, QWidget *parent) : QDialog(parent), strNick(_strNick)
@@ -214,21 +214,21 @@ void DlgUserProfile::refreshUserInfo()
         }
         else if (strKey == "birthdate")
         {
-            lineEdit_age->setText(convertAge(strValue));
+            lineEdit_age->setText(Utils::instance()->convertDateToAge(strValue));
             lineEdit_birthdate->setText(strValue);
         }
         else if (strKey == "city")
             lineEdit_city->setText(strValue);
         else if (strKey == "country")
-            lineEdit_country->setText(convertCodeToCountry(strValue));
+            lineEdit_country->setText(Utils::instance()->convertCodeToCountry(strValue));
         else if (strKey == "longDesc")
             plainTextEdit_hobby->setPlainText(strValue);
         else if (strKey == "sex")
-            lineEdit_sex->setText(convertSex(strValue));
+            lineEdit_sex->setText(Utils::instance()->convertCharToSex(strValue));
         else if (strKey == "shortDesc")
             textEdit_desc->setHtml(convertDesc(strValue));
         else if (strKey == "type")
-            lineEdit_type->setText(convertCharToType(strValue));
+            lineEdit_type->setText(Utils::instance()->convertIntToType(strValue));
         else if (strKey == "www")
         {
             QString strShortLink = strValue;
@@ -299,95 +299,6 @@ QString DlgUserProfile::convertDesc(QString strContent)
     Convert::convertText(strContent);
 
     return QString("<html><body style=\"background-color:white;font-size:12px;font-family:Verdana;\">%1</body></html>").arg(strContent);
-}
-
-QString DlgUserProfile::convertSex(const QString &strSex)
-{
-    if (strSex == "F")
-        return tr("Female");
-    else if (strSex == "M")
-        return tr("Male");
-    else
-        return strSex;
-}
-
-QString DlgUserProfile::convertAge(const QString &strDate)
-{
-    if (strDate.isEmpty()) return QString::null; // empty date
-    QStringList lDate = strDate.split("-");
-
-    QString strYear = lDate.value(0, 0);
-    QString strMonth = lDate.value(1, 0);
-    QString strDay = lDate.value(2, 0);
-
-    QDate dDate = QDate::currentDate();
-    QString strCurrentYear = QString::number(dDate.year());
-    QString strCurrentMonth = QString::number(dDate.month());
-    QString strCurrentDay = QString::number(dDate.day());
-
-    int iAge = strCurrentYear.toInt() - strYear.toInt();
-
-    if (strCurrentMonth.toInt() < strMonth.toInt())
-        iAge--;
-    else if ((strCurrentMonth.toInt() == strMonth.toInt()) && (strCurrentDay.toInt() < strDay.toInt()))
-        iAge--;
-
-    return QString::number(iAge);
-}
-
-QString DlgUserProfile::convertCodeToCountry(const QString &strCountryCode)
-{
-    QStringList lCodes =  (QStringList() <<
-       "AF" << "AL" << "DZ" << "AD" << "AO" << "AI" << "AQ" << "AG" << "AN" <<
-       "SA" << "AR" << "AM" << "AW" << "AU" << "AT" << "AZ" << "BS" << "BH" << "BD" <<
-       "BB" << "BE" << "BZ" << "BJ" << "BM" << "BT" << "BY" << "BO" << "BA" << "BW" <<
-       "BR" << "BN" << "IO" << "VG" << "BG" << "BF" << "BI" << "CL" << "CN" << "HR" <<
-       "CY" << "TD" << "CZ" << "DK" << "DM" << "DO" << "DJ" << "EG" << "EC" << "ER" <<
-       "EE" << "ET" << "FK" << "RU" << "FL" << "PH" << "FI" << "FR" << "GM" << "GA" <<
-       "GS" << "GH" << "GI" << "GR" << "GD" << "GL" << "GE" << "GU" << "GY" << "GF" <<
-       "GP" << "GT" << "GN" << "GW" << "GQ" << "HT" << "HM" << "ES" << "NL" << "HN" <<
-       "HK" << "IN" << "ID" << "IQ" << "IR" << "IE" << "IS" << "IL" << "JM" << "JP" <<
-       "YE" << "JO" << "YU" << "KY" << "KH" << "CM" << "CA" << "QU" << "KZ" << "KE" <<
-       "KG" << "KI" << "CO" << "KM" << "CG" << "KR" << "KP" << "CR" << "CU" << "KW" <<
-       "LA" << "LS" << "LB" << "LR" << "LY" << "LI" << "LT" << "LU" << "LV" << "MK" <<
-       "MG" << "YT" << "MO" << "MW" << "MV" << "MY" << "ML" << "MT" << "MP" << "MA" <<
-       "MQ" << "MR" << "MU" << "MX" << "FM" << "MD" << "MC" << "MN" << "MS" << "MZ" <<
-       "MM" << "NA" << "NR" << "NP" << "DE" << "NE" << "NG" << "NI" << "NU" << "NO" <<
-       "NC" << "NZ" << "OM" << "PK" << "PW" << "PA" << "PG" << "PY" << "PE" << "PN" <<
-       "PF" << "PL" << "PR" << "PT" << "ZA" << "CV" << "RE" << "RW" << "RO" << "EH" <<
-       "KN" << "LC" << "VC" << "PM" << "SV" << "WS" << "AS" << "SM" << "SN" << "SC" <<
-       "SL" << "SG" << "SK" << "SI" << "SO" << "LK" << "US" << "SZ" << "SD" << "SR" <<
-       "SJ" << "SY" << "CH" << "SE" << "TJ" << "TH" << "TW" << "TZ" << "TP" << "TG" <<
-       "TK" << "TO" << "TT" << "TN" << "TR" << "TM" << "TC" << "TV" << "UG" << "UA" <<
-       "UY" << "UZ" << "VU" << "WF" << "VA" << "VE" << "HU" << "GB" << "UK" << "VN" <<
-       "IT" << "CI" << "BV" << "CX" << "NF" << "SH" << "CK" << "VI" << "CC" << "MH" <<
-       "FO" << "SB" << "ST" << "ZR" << "ZM" << "ZW" << "AE");
-
-    QString strCountries = tr("Afghanistan,Albania,Algeria,Andorra,Angola,Anguilla,Antarctica,Antigua and Barbuda,Netherlands Antilles,Saudi Arabia,Argentina,Armenia,Aruba,Australia,Austria,Azerbaijan,Bahamas,Bahrain,Bangladesh,Barbados,Belgium,Belize,Benin,Bermuda,Bhutan,Belarus,Bolivia,Bosnia and Herzegovina,Botswana,Brazil,Brunei,British Indian Ocean Territory,British Virgin Islands,Bulgaria,Burkina Faso,Burundi,Chile,China,Croatia,Cyprus,Chad,Czech Republic,Denmark,Dominica,Dominican Republic,Djibouti,Egypt,Ecuador,Eritrea,Estonia,Ethiopia,Falkland Islands,Russian Federation,Fiji,Philippines,Finland,France,Gambia,Gaon,South Georgia and South Sandwich Islands,Ghana,Gibraltar,Greece,Grenada,Greenland,Georgia,Guam,Guyana,French Guiana,Guadeloupe,Guatemala,Guinea,Guinea Bissau,Equatorial Guinea,Haiti,Heard,Spain,Holland,Honduras,Hong Kong,India,Indonesia,Iraq,Iran,Ireland,Iceland,Israel,Jamaica,Japan,Yemen,Jordan,Yugoslavia,Cayman Islands,Cambodia,Cameroon,Canada,Qatar,Kazakhstan,Kenya,Kyrgyzstan,Kiribati,Colombia,Comoros,Congo,South Korea,North Korea,Costa Rica,Cuba,Kuwait,Laos,Lesotho,Lebanon,Liberia,Libya,Liechtenstein,Lithuania,Latvia,Luxembourg,Macedonia,Madagascar,Mayotte,Macau,Malawi,Maldives,Malaysia,Mali,Malta,Marshall Islands,Morocco,Martinique,Mauritania,Mauritius,Mexico,Micronesia,Moldova,Monaco,Mongolia,Montserrat,Mozambique,Myanmar,Namibia,Nauru,Nepal,Germany,Niger,Nigeria,Nicaragua,Niue,Norway,New Caledonia,New Zealand,Oman,Pakistan,Palau,Panama,Papua New Guinea,Paraguay,Peru,Pitcairn,French Polynesia,Poland,Puerto Rico,Portugal,South Africa,Cape Verde,Reunion,Rwanda,Romania,Western Sahara,Saint Christopher and Nevis,Saint Lucia,Saint Vincent and the Grenadines,Saint-Perr and Miquelon,Salvador,Samoa,American Samoa,San Marino,Senegal,Seychelles,Sierra Leone,Singapore,Slovakia,Slovenia,Somalia,Sri Lanka,United States,Swaziland,Sudan,Suriname,Svalbard and Jan Mayen island,Syria,Switzerland,Sweden,Tajikistan,Thailand,Taiwan,Tanzania,Timor-Leste,Togo,Tokelau,Tonga,Trinidad and Tobago,Tunisia,Turkey,Turkmenistan,Turks and Caicos Islands,Tuvalu,Uganda,Ukraine,Uruguay,Uzbekistan,Vanuatu,Wallis and Futuna Islands,Vatican City,Venezuela,Hungary,Great Britain,United Kingdom,Vietnam,Italy,Ivory Coast,Bouvet Island,Christmas Island,Norfolk Island,Saint Helena,Cook Islands,U.S. Virgin Islands,Cocos Islands,Marshall Islands,Faroe Islands,Solomon Islands,Sao Tome and Principe,Zaire,Zambia,Zimbabwe,United Arab Emirates");
-    QStringList lCountries = strCountries.split(",");
-
-    // replace if found
-    for (int i = 0; i < lCodes.size(); i++)
-    {
-        if (strCountryCode == lCodes.value(i, QString::null))
-            return lCountries.value(i, QString::null);
-    }
-
-    return QString::null;
-}
-
-QString DlgUserProfile::convertCharToType(const QString &strType)
-{
-    if (strType == "0")
-        return tr("Novice");
-    else if (strType == "1")
-        return tr("Beginner");
-    else if (strType == "2")
-        return tr("Master");
-    else if (strType == "3")
-        return tr("Guru");
-    else
-        return tr("Unknown");
 }
 
 void DlgUserProfile::showAvatar(const QString &strUrl)

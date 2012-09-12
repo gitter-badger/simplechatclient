@@ -20,6 +20,7 @@
 #include <QDir>
 #include <QPixmap>
 #include "settings.h"
+#include "utils.h"
 #include "convert.h"
 
 #ifdef Q_WS_WIN
@@ -52,8 +53,7 @@ QString findEmoticon(const QString &strEmoticon)
 
 void convertColor(QString &strData)
 {
-    QList<QString> lColors;
-    lColors << "000000" << "623c00" << "c86c00" << "ff6500" << "ff0000" << "e40f0f" << "990033" << "8800ab" << "ce00ff" << "0f2ab1" << "3030ce" << "006699" << "1a866e" << "008100" << "959595";
+    QList<QString> lColors = Utils::instance()->getColors();
 
     if (Settings::instance()->get("hide_formating") == "false")
     {
@@ -283,8 +283,7 @@ QString Convert::getFont(const QString &strData)
 
 int Convert::getColor(const QString &strData)
 {
-    QList<QString> lColors;
-    lColors << "000000" << "623c00" << "c86c00" << "ff6500" << "ff0000" << "e40f0f" << "990033" << "8800ab" << "ce00ff" << "0f2ab1" << "3030ce" << "006699" << "1a866e" << "008100" << "959595";
+    QList<QString> lColors = Utils::instance()->getColors();
 
     int iColor = 0;
     foreach (QString strColor, lColors)

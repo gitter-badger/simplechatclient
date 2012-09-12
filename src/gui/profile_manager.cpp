@@ -166,11 +166,35 @@ void DlgProfileManager::removeProfile()
 
     if (QDir().exists(path+"/"+profileName))
     {
-        Core::instance()->removeDir(path+"/"+profileName);
+        removeProfileDirectory(path+"/"+profileName);
 
         refreshAllLists();
 
         if (profileName == Settings::instance()->get("current_profile"))
             pDlgOptions->setCurrentProfile(0);
     }
+}
+
+bool DlgProfileManager::removeProfileDirectory(const QString &dirName)
+{
+    bool result = true;
+    QDir dir(dirName);
+
+    if (dir.exists(dirName))
+    {
+        QFileInfoList listInfo = dir.entryInfoList(QDir::NoDotAndDotDot | QDir::System | QDir::Hidden  | QDir::AllDirs | QDir::Files, QDir::DirsFirst);
+        foreach(QFileInfo info, listInfo)
+        {
+            if (info.isDir())
+                result = removeProfileDirectory(info.absoluteFilePath());
+            else
+                result = QFile::remove(info.absoluteFilePath());
+
+            if (!result)
+                return result;
+        }
+        result = dir.rmdir(dirName);
+    }
+
+    return result;
 }

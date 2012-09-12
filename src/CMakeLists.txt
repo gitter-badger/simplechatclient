@@ -123,6 +123,7 @@ set (scc_SRCS
 	singleton/tray.cpp
 	singleton/updates.cpp
 	singleton/user_profile_model.cpp
+	singleton/utils.cpp
 
 	tab/tab_container.cpp
 	tab/tab_manager.cpp
@@ -216,6 +217,7 @@ set (scc_MOC_HDRS
 	singleton/tray.h
 	singleton/updates.h
 	singleton/user_profile_model.h
+	singleton/utils.h
 
 	tab/tab_container.h
 	tab/tab_manager.h

@@ -25,6 +25,7 @@
 #include "core.h"
 #include "channel_list_model.h"
 #include "settings.h"
+#include "utils.h"
 #include "channel_list.h"
 
 DlgChannelList::DlgChannelList(QWidget *parent) : QDialog(parent)
@@ -143,62 +144,6 @@ void DlgChannelList::createSignals()
     connect(ui.checkBox_cult, SIGNAL(clicked()), this, SLOT(createList()));
     connect(ui.checkBox_moderated, SIGNAL(clicked()), this, SLOT(createList()));
     connect(ui.checkBox_recommended, SIGNAL(clicked()), this, SLOT(createList()));
-}
-
-bool DlgChannelList::isErotic(const QString &strChannel)
-{
-    QList<OnetChannelList> list = ChannelList::instance()->get();
-    foreach (OnetChannelList channel, list)
-    {
-        QString strName = channel.name;
-        int iType = channel.type;
-
-        if (strName == strChannel)
-        {
-            if (iType == 3)
-                return true;
-            else
-                return false;
-        }
-    }
-    return false;
-}
-
-QString DlgChannelList::channelTypeToString(int type)
-{
-    if (type == 1)
-        return tr("Teen");
-    else if (type == 2)
-        return tr("Common");
-    else if (type == 3)
-        return tr("Erotic");
-    else if (type == 4)
-        return tr("Thematic");
-    else if (type == 5)
-        return tr("Regional");
-    else
-        return QString::null;
-}
-
-QString DlgChannelList::channelCatToString(int cat, bool moderated, bool recommended)
-{
-    QString strResult;
-
-    if (cat == 0)
-        strResult = tr("Wild");
-    else if (cat == 1)
-        strResult = tr("Tame");
-    else if (cat == 2)
-        strResult = tr("With class");
-    else if (cat == 3)
-        strResult = tr("Cult");
-
-    if (moderated)
-        strResult += " "+tr("Moderated");
-    if (recommended)
-        strResult += " "+tr("Recommended");
-
-    return strResult;
 }
 
 bool DlgChannelList::showChannel(const QString &name, int people, int cat, int type, bool moderated, bool recommended)
@@ -356,48 +301,48 @@ void DlgChannelList::createList()
         {
             ui.tableWidget_all->setItem(iAllRow, 0, new SortedChannelListTableWidgetItem(strName));
             ui.tableWidget_all->setItem(iAllRow, 1, new SortedChannelListTableWidgetItem(QString::number(iPeople)));
-            ui.tableWidget_all->setItem(iAllRow, 2, new SortedChannelListTableWidgetItem(channelCatToString(iCat, bModerated, bRecommended)));
-            ui.tableWidget_all->setItem(iAllRow, 3, new SortedChannelListTableWidgetItem(channelTypeToString(iType)));
+            ui.tableWidget_all->setItem(iAllRow, 2, new SortedChannelListTableWidgetItem(Utils::instance()->convertChannelCatToString(iCat, bModerated, bRecommended)));
+            ui.tableWidget_all->setItem(iAllRow, 3, new SortedChannelListTableWidgetItem(Utils::instance()->convertChannelTypeToString(iType)));
             iAllRow++;
 
             if (iType == 1)
             {
                 ui.tableWidget_teen->setItem(iTeenRow, 0, new SortedChannelListTableWidgetItem(strName));
                 ui.tableWidget_teen->setItem(iTeenRow, 1, new SortedChannelListTableWidgetItem(QString::number(iPeople)));
-                ui.tableWidget_teen->setItem(iTeenRow, 2, new SortedChannelListTableWidgetItem(channelCatToString(iCat, bModerated, bRecommended)));
-                ui.tableWidget_teen->setItem(iTeenRow, 3, new SortedChannelListTableWidgetItem(channelTypeToString(iType)));
+                ui.tableWidget_teen->setItem(iTeenRow, 2, new SortedChannelListTableWidgetItem(Utils::instance()->convertChannelCatToString(iCat, bModerated, bRecommended)));
+                ui.tableWidget_teen->setItem(iTeenRow, 3, new SortedChannelListTableWidgetItem(Utils::instance()->convertChannelTypeToString(iType)));
                 iTeenRow++;
             }
             else if (iType == 2)
             {
                 ui.tableWidget_common->setItem(iCommonRow, 0, new SortedChannelListTableWidgetItem(strName));
                 ui.tableWidget_common->setItem(iCommonRow, 1, new SortedChannelListTableWidgetItem(QString::number(iPeople)));
-                ui.tableWidget_common->setItem(iCommonRow, 2, new SortedChannelListTableWidgetItem(channelCatToString(iCat, bModerated, bRecommended)));
-                ui.tableWidget_common->setItem(iCommonRow, 3, new SortedChannelListTableWidgetItem(channelTypeToString(iType)));
+                ui.tableWidget_common->setItem(iCommonRow, 2, new SortedChannelListTableWidgetItem(Utils::instance()->convertChannelCatToString(iCat, bModerated, bRecommended)));
+                ui.tableWidget_common->setItem(iCommonRow, 3, new SortedChannelListTableWidgetItem(Utils::instance()->convertChannelTypeToString(iType)));
                 iCommonRow++;
             }
             else if (iType == 3)
             {
                 ui.tableWidget_erotic->setItem(iEroticRow, 0, new SortedChannelListTableWidgetItem(strName));
                 ui.tableWidget_erotic->setItem(iEroticRow, 1, new SortedChannelListTableWidgetItem(QString::number(iPeople)));
-                ui.tableWidget_erotic->setItem(iEroticRow, 2, new SortedChannelListTableWidgetItem(channelCatToString(iCat, bModerated, bRecommended)));
-                ui.tableWidget_erotic->setItem(iEroticRow, 3, new SortedChannelListTableWidgetItem(channelTypeToString(iType)));
+                ui.tableWidget_erotic->setItem(iEroticRow, 2, new SortedChannelListTableWidgetItem(Utils::instance()->convertChannelCatToString(iCat, bModerated, bRecommended)));
+                ui.tableWidget_erotic->setItem(iEroticRow, 3, new SortedChannelListTableWidgetItem(Utils::instance()->convertChannelTypeToString(iType)));
                 iEroticRow++;
             }
             else if (iType == 4)
             {
                 ui.tableWidget_thematic->setItem(iThematicRow, 0, new SortedChannelListTableWidgetItem(strName));
                 ui.tableWidget_thematic->setItem(iThematicRow, 1, new SortedChannelListTableWidgetItem(QString::number(iPeople)));
-                ui.tableWidget_thematic->setItem(iThematicRow, 2, new SortedChannelListTableWidgetItem(channelCatToString(iCat, bModerated, bRecommended)));
-                ui.tableWidget_thematic->setItem(iThematicRow, 3, new SortedChannelListTableWidgetItem(channelTypeToString(iType)));
+                ui.tableWidget_thematic->setItem(iThematicRow, 2, new SortedChannelListTableWidgetItem(Utils::instance()->convertChannelCatToString(iCat, bModerated, bRecommended)));
+                ui.tableWidget_thematic->setItem(iThematicRow, 3, new SortedChannelListTableWidgetItem(Utils::instance()->convertChannelTypeToString(iType)));
                 iThematicRow++;
             }
             else if (iType == 5)
             {
                 ui.tableWidget_regional->setItem(iRegionalRow, 0, new SortedChannelListTableWidgetItem(strName));
                 ui.tableWidget_regional->setItem(iRegionalRow, 1, new SortedChannelListTableWidgetItem(QString::number(iPeople)));
-                ui.tableWidget_regional->setItem(iRegionalRow, 2, new SortedChannelListTableWidgetItem(channelCatToString(iCat, bModerated, bRecommended)));
-                ui.tableWidget_regional->setItem(iRegionalRow, 3, new SortedChannelListTableWidgetItem(channelTypeToString(iType)));
+                ui.tableWidget_regional->setItem(iRegionalRow, 2, new SortedChannelListTableWidgetItem(Utils::instance()->convertChannelCatToString(iCat, bModerated, bRecommended)));
+                ui.tableWidget_regional->setItem(iRegionalRow, 3, new SortedChannelListTableWidgetItem(Utils::instance()->convertChannelTypeToString(iType)));
                 iRegionalRow++;
             }
         }
@@ -495,7 +440,7 @@ void DlgChannelList::allCellDoubleClicked(int row, int column)
 
     QString strChannel = ui.tableWidget_all->item(row, 0)->text();
 
-    if (isErotic(strChannel))
+    if (Utils::instance()->isErotic(strChannel))
     {
         if (Settings::instance()->get("age_check") == "true")
         {
@@ -542,7 +487,7 @@ void DlgChannelList::eroticCellDoubleClicked(int row, int column)
 
     QString strChannel = ui.tableWidget_erotic->item(row, 0)->text();
 
-    if (isErotic(strChannel))
+    if (Utils::instance()->isErotic(strChannel))
     {
         if (Settings::instance()->get("age_check") == "true")
         {

@@ -82,10 +82,6 @@ private:
     void createSignals();
 
     QString convertDesc(QString strContent);
-    QString convertSex(const QString &strSex);
-    QString convertAge(const QString &strDate);
-    QString convertCodeToCountry(const QString &strCountryCode);
-    QString convertCharToType(const QString &strType);
     void showAvatar(const QString &strUrl);
 
 private slots:

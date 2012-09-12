@@ -95,6 +95,7 @@ SOURCES += src/avatars/avatar.cpp \
     src/singleton/tray.cpp \
     src/singleton/updates.cpp \
     src/singleton/user_profile_model.cpp \
+    src/singleton/utils.cpp \
     src/tab/tab_container.cpp \
     src/tab/tab_manager.cpp \
     src/tab/tab_widget.cpp \
@@ -196,6 +197,7 @@ HEADERS += src/avatars/avatar.h \
     src/singleton/tray.h \
     src/singleton/updates.h \
     src/singleton/user_profile_model.h \
+    src/singleton/utils.h \
     src/tab/tab_container.h \
     src/tab/tab_manager.h \
     src/tab/tab_widget.h \

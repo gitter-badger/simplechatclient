@@ -25,6 +25,7 @@
 #include "message.h"
 #include "replace.h"
 #include "settings.h"
+#include "utils.h"
 #include "commands.h"
 
 #ifdef Q_WS_WIN
@@ -101,25 +102,6 @@ QString Commands::execute()
     return strData;
 }
 
-bool Commands::isErotic(const QString &strChannel)
-{
-    QList<OnetChannelList> list = ChannelList::instance()->get();
-    foreach (OnetChannelList channel, list)
-    {
-        QString strName = channel.name;
-        int iType = channel.type;
-
-        if (strName.toLower() == strChannel.toLower())
-        {
-            if (iType == 3)
-                return true;
-            else
-                return false;
-        }
-    }
-    return false;
-}
-
 QString Commands::cmdRaw()
 {
     if (strDataList.value(1).isEmpty()) return QString::null;
@@ -151,7 +133,7 @@ QString Commands::cmdJoin()
     QString strKey;
     for (int i = 2; i < strDataList.size(); i++) { if (i != 2) strKey += " "; strKey += strDataList[i]; }
 
-    if (isErotic(strChannel))
+    if (Utils::instance()->isErotic(strChannel))
     {
         if (Settings::instance()->get("age_check") == "true")
         {

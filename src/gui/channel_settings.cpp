@@ -31,6 +31,7 @@
 #include "nicklist.h"
 #include "settings.h"
 #include "simple_stats_widget.h"
+#include "utils.h"
 #include "channel_settings.h"
 
 DlgChannelSettings::DlgChannelSettings(const QString &_strChannel, QWidget *parent) : QDialog(parent), strChannel(_strChannel)
@@ -196,9 +197,7 @@ void DlgChannelSettings::setDefaultValues()
     ((QListWidget*)ui.tabWidget_permissions->widget(3))->setSelectionMode(QAbstractItemView::ExtendedSelection);
 
     // font
-    QStringList comboBoxFont;
-    comboBoxFont << "Arial" << "Times" << "Verdana" << "Tahoma" << "Courier";
-
+    QStringList comboBoxFont = Utils::instance()->getFonts();
     foreach (QString strFont, comboBoxFont)
         ui.comboBox_font->addItem(strFont);
 
@@ -206,13 +205,11 @@ void DlgChannelSettings::setDefaultValues()
     ui.comboBox_color->setToolTip(tr("Font color"));
     ui.comboBox_color->setIconSize(QSize(50,10));
 
-    QStringList comboBoxColors;
-    comboBoxColors << "#000000" << "#623c00" << "#c86c00" << "#ff6500" << "#ff0000" << "#e40f0f" << "#990033" << "#8800ab" << "#ce00ff" << "#0f2ab1" << "#3030ce" << "#006699" << "#1a866e" << "#008100" << "#959595";
-
+    QList<QString> comboBoxColors = Utils::instance()->getColors();
     foreach (QString strColor, comboBoxColors)
     {
         QPixmap pixmap(50,10);
-        pixmap.fill(QColor(strColor));
+        pixmap.fill(QColor("#"+strColor));
         ui.comboBox_color->addItem(QIcon(pixmap), QString::null);
     }
 }
@@ -313,31 +310,20 @@ void DlgChannelSettings::refreshChannelInfo()
         }
         else if (strKey == "catMajor")
         {
+            QString strChannelCategory = Utils::instance()->convertChannelTypeToString(strValue.toInt());
+
+            ui.label_summary_category->setText(strChannelCategory);
+
             if (strValue.toInt() == 1) // teen
-            {
-                ui.label_summary_category->setText(tr("Teen"));
                 ui.comboBox_category->setCurrentIndex(0);
-            }
             else if (strValue.toInt() == 2) // towarzyskie
-            {
-                ui.label_summary_category->setText(tr("Common"));
                 ui.comboBox_category->setCurrentIndex(1);
-            }
             else if (strValue.toInt() == 3) // erotyczne
-            {
-                ui.label_summary_category->setText(tr("Erotic"));
                 ui.comboBox_category->setCurrentIndex(2);
-            }
             else if (strValue.toInt() == 4) // tematyczne
-            {
-                ui.label_summary_category->setText(tr("Thematic"));
                 ui.comboBox_category->setCurrentIndex(3);
-            }
             else if (strValue.toInt() == 5) // regionalne
-            {
-                ui.label_summary_category->setText(tr("Regional"));
                 ui.comboBox_category->setCurrentIndex(4);
-            }
             else
                 ui.comboBox_category->setCurrentIndex(-1);
         }
@@ -426,14 +412,9 @@ void DlgChannelSettings::refreshChannelInfo()
         }
         else if (strKey == "type")
         {
-            if (strValue.toInt() == 0)
-                ui.label_summary_type->setText(tr("Wild"));
-            else if (strValue.toInt() == 1)
-                ui.label_summary_type->setText(tr("Tame"));
-            else if (strValue.toInt() == 2)
-                ui.label_summary_type->setText(tr("With class"));
-            else if (strValue.toInt() == 3)
-                ui.label_summary_type->setText(tr("Cult"));
+            QString strChannelType = Utils::instance()->convertChannelCatToString(strValue.toInt());
+
+            ui.label_summary_type->setText(strChannelType);
         }
         else if (strKey == "www")
         {
@@ -591,7 +572,6 @@ void DlgChannelSettings::addBan(const QString &strNick, const QString &strWho, c
     }
     else
     {
-
         item->setText(strIPNick);
         item->setTextColor(QColor("#ff0000")); // set color
         item->setData(Qt::UserRole, strNick); // set original ban mask
@@ -668,11 +648,9 @@ void DlgChannelSettings::topicChanged()
     strFontName = ui.comboBox_font->currentText().toLower();
 
     // font color
-    QStringList lFontColors;
-    lFontColors << "#000000" << "#623c00" << "#c86c00" << "#ff6500" << "#ff0000" << "#e40f0f" << "#990033" << "#8800ab" << "#ce00ff" << "#0f2ab1" << "#3030ce" << "#006699" << "#1a866e" << "#008100" << "#959595";
-
+    QList<QString> lFontColors = Utils::instance()->getColors();
     if (ui.comboBox_color->currentIndex() != -1)
-        strFontColor = lFontColors.at(ui.comboBox_color->currentIndex());
+        strFontColor = "#"+lFontColors.at(ui.comboBox_color->currentIndex());
 
     // set topic
     if (bBold) strFontWeight += "b";

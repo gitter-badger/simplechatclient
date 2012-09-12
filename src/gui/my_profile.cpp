@@ -25,6 +25,7 @@
 #include "core.h"
 #include "convert.h"
 #include "my_profile_model.h"
+#include "utils.h"
 #include "my_profile.h"
 
 DlgMyProfile::DlgMyProfile(QWidget *parent) : QDialog(parent)
@@ -69,59 +70,44 @@ void DlgMyProfile::createGui()
 void DlgMyProfile::setDefaultValues()
 {
     // font
-    QStringList comboBoxFont;
-    comboBoxFont << "Arial" << "Times" << "Verdana" << "Tahoma" << "Courier";
-
-    foreach (QString strFont, comboBoxFont)
+    QList<QString> lFonts = Utils::instance()->getFonts();
+    foreach (QString strFont, lFonts)
         ui.comboBox_font->addItem(strFont);
 
     // color
     ui.comboBox_color->setToolTip(tr("Font color"));
     ui.comboBox_color->setIconSize(QSize(50,10));
 
-    QStringList comboBoxColors;
-    comboBoxColors << "#000000" << "#623c00" << "#c86c00" << "#ff6500" << "#ff0000" << "#e40f0f" << "#990033" << "#8800ab" << "#ce00ff" << "#0f2ab1" << "#3030ce" << "#006699" << "#1a866e" << "#008100" << "#959595";
-
-    foreach (QString strColor, comboBoxColors)
+    QList<QString> lColors = Utils::instance()->getColors();
+    foreach (QString strColor, lColors)
     {
         QPixmap pixmap(50,10);
-        pixmap.fill(QColor(strColor));
+        pixmap.fill(QColor("#"+strColor));
         ui.comboBox_color->addItem(QIcon(pixmap), QString::null);
     }
 
     // sex
-    QStringList lSex;
-    lSex << QString::null << tr("Male") << tr("Female");
-
+    QList<QString> lSex = Utils::instance()->getSex();
     foreach (QString strSex, lSex)
         ui.comboBox_sex->addItem(strSex);
 
     // days
-    QStringList lDays;
-    lDays << QString::null;
-    for (int i = 1; i <= 31; i++)
-        lDays << (i < 10 ? "0"+QString::number(i) : QString::number(i));
-
+    QList<QString> lDays = Utils::instance()->getDays();
     foreach (QString strDay, lDays)
         ui.comboBox_day->addItem(strDay);
 
     // months
-    QStringList lMonths;
-    lMonths << QString::null << tr("January") << tr("February") << tr("March") << tr("April") << tr("May") << tr("June") << tr("July") << tr("August") << tr("September") << tr("October") << tr("November") << tr("December");
+    QList<QString> lMonths = Utils::instance()->getMonths();
     foreach (QString strMonth, lMonths)
         ui.comboBox_month->addItem(strMonth);
 
     // years
-    QStringList lYears;
-    lYears << QString::null;
-    for (int i = 1900; i <= QDate::currentDate().year()-5; i++)
-        lYears << QString::number(i);
-
+    QList<QString> lYears = Utils::instance()->getYears();
     foreach (QString strYear, lYears)
         ui.comboBox_year->addItem(strYear);
 
     // country
-    QString strCountries = tr("Afghanistan,Albania,Algeria,Andorra,Angola,Anguilla,Antarctica,Antigua and Barbuda,Netherlands Antilles,Saudi Arabia,Argentina,Armenia,Aruba,Australia,Austria,Azerbaijan,Bahamas,Bahrain,Bangladesh,Barbados,Belgium,Belize,Benin,Bermuda,Bhutan,Belarus,Bolivia,Bosnia and Herzegovina,Botswana,Brazil,Brunei,British Indian Ocean Territory,British Virgin Islands,Bulgaria,Burkina Faso,Burundi,Chile,China,Croatia,Cyprus,Chad,Czech Republic,Denmark,Dominica,Dominican Republic,Djibouti,Egypt,Ecuador,Eritrea,Estonia,Ethiopia,Falkland Islands,Russian Federation,Fiji,Philippines,Finland,France,Gambia,Gaon,South Georgia and South Sandwich Islands,Ghana,Gibraltar,Greece,Grenada,Greenland,Georgia,Guam,Guyana,French Guiana,Guadeloupe,Guatemala,Guinea,Guinea Bissau,Equatorial Guinea,Haiti,Heard,Spain,Holland,Honduras,Hong Kong,India,Indonesia,Iraq,Iran,Ireland,Iceland,Israel,Jamaica,Japan,Yemen,Jordan,Yugoslavia,Cayman Islands,Cambodia,Cameroon,Canada,Qatar,Kazakhstan,Kenya,Kyrgyzstan,Kiribati,Colombia,Comoros,Congo,South Korea,North Korea,Costa Rica,Cuba,Kuwait,Laos,Lesotho,Lebanon,Liberia,Libya,Liechtenstein,Lithuania,Latvia,Luxembourg,Macedonia,Madagascar,Mayotte,Macau,Malawi,Maldives,Malaysia,Mali,Malta,Marshall Islands,Morocco,Martinique,Mauritania,Mauritius,Mexico,Micronesia,Moldova,Monaco,Mongolia,Montserrat,Mozambique,Myanmar,Namibia,Nauru,Nepal,Germany,Niger,Nigeria,Nicaragua,Niue,Norway,New Caledonia,New Zealand,Oman,Pakistan,Palau,Panama,Papua New Guinea,Paraguay,Peru,Pitcairn,French Polynesia,Poland,Puerto Rico,Portugal,South Africa,Cape Verde,Reunion,Rwanda,Romania,Western Sahara,Saint Christopher and Nevis,Saint Lucia,Saint Vincent and the Grenadines,Saint-Perr and Miquelon,Salvador,Samoa,American Samoa,San Marino,Senegal,Seychelles,Sierra Leone,Singapore,Slovakia,Slovenia,Somalia,Sri Lanka,United States,Swaziland,Sudan,Suriname,Svalbard and Jan Mayen island,Syria,Switzerland,Sweden,Tajikistan,Thailand,Taiwan,Tanzania,Timor-Leste,Togo,Tokelau,Tonga,Trinidad and Tobago,Tunisia,Turkey,Turkmenistan,Turks and Caicos Islands,Tuvalu,Uganda,Ukraine,Uruguay,Uzbekistan,Vanuatu,Wallis and Futuna Islands,Vatican City,Venezuela,Hungary,Great Britain,United Kingdom,Vietnam,Italy,Ivory Coast,Bouvet Island,Christmas Island,Norfolk Island,Saint Helena,Cook Islands,U.S. Virgin Islands,Cocos Islands,Marshall Islands,Faroe Islands,Solomon Islands,Sao Tome and Principe,Zaire,Zambia,Zimbabwe,United Arab Emirates");
+    QString strCountries = Utils::instance()->getCountries();
     QStringList lCountries = strCountries.split(",");
     lCountries.insert(0, QString::null);
     foreach (QString strCountry, lCountries)
@@ -178,7 +164,7 @@ void DlgMyProfile::refresh()
                 QString strMonth = lDate.value(1, 0);
                 QString strDay = lDate.value(2, 0);
 
-                strMonth = convertIntToMonth(strMonth);
+                strMonth = Utils::instance()->convertIntToMonth(strMonth);
 
                 ui.comboBox_day->setCurrentIndex(getIndex(ui.comboBox_day, strDay));
                 ui.comboBox_month->setCurrentIndex(getIndex(ui.comboBox_month, strMonth));
@@ -194,23 +180,18 @@ void DlgMyProfile::refresh()
         else if (strKey == "city")
             ui.lineEdit_city->setText(strValue);
         else if (strKey == "country")
-            ui.comboBox_country->setCurrentIndex(getIndex(ui.comboBox_country, convertCodeToCountry(strValue)));
+            ui.comboBox_country->setCurrentIndex(getIndex(ui.comboBox_country, Utils::instance()->convertCodeToCountry(strValue)));
         else if (strKey == "longDesc")
             ui.plainTextEdit_hobby->setPlainText(strValue);
         else if (strKey == "sex")
         {
-            QString strSex = strValue;
-            if (strSex == QString::null)
-                ui.comboBox_sex->setCurrentIndex(0);
-            else if (strSex == "M")
-                ui.comboBox_sex->setCurrentIndex(1);
-            else if (strSex == "F")
-                ui.comboBox_sex->setCurrentIndex(2);
+            int iSex = Utils::instance()->convertSexToInt(strValue);
+            ui.comboBox_sex->setCurrentIndex(iSex);
         }
         else if (strKey == "shortDesc")
             ui.plainTextEdit_desc->setPlainText(convertTextToDesc(strValue));
         else if (strKey == "type")
-            ui.label_type->setText(convertType(strValue));
+            ui.label_type->setText(Utils::instance()->convertIntToType(strValue));
         else if (strKey == "www")
             ui.lineEdit_www->setText(strValue);
     }
@@ -276,11 +257,9 @@ QString DlgMyProfile::convertDescToText(QString strContent)
     strFontName = ui.comboBox_font->currentText().toLower();
 
     // font color
-    QStringList lFontColors;
-    lFontColors << "#000000" << "#623c00" << "#c86c00" << "#ff6500" << "#ff0000" << "#e40f0f" << "#990033" << "#8800ab" << "#ce00ff" << "#0f2ab1" << "#3030ce" << "#006699" << "#1a866e" << "#008100" << "#959595";
-
+    QList<QString> lFontColors = Utils::instance()->getColors();
     if (ui.comboBox_color->currentIndex() != -1)
-        strFontColor = lFontColors.at(ui.comboBox_color->currentIndex());
+        strFontColor = "#"+lFontColors.at(ui.comboBox_color->currentIndex());
 
     // set topic
     if (bBold) strFontWeight += "b";
@@ -298,131 +277,6 @@ QString DlgMyProfile::convertDescToText(QString strContent)
     return strContent;
 }
 
-QString DlgMyProfile::convertCodeToCountry(const QString &strCountryCode)
-{
-    QStringList lCodes =  (QStringList() <<
-       "AF" << "AL" << "DZ" << "AD" << "AO" << "AI" << "AQ" << "AG" << "AN" <<
-       "SA" << "AR" << "AM" << "AW" << "AU" << "AT" << "AZ" << "BS" << "BH" << "BD" <<
-       "BB" << "BE" << "BZ" << "BJ" << "BM" << "BT" << "BY" << "BO" << "BA" << "BW" <<
-       "BR" << "BN" << "IO" << "VG" << "BG" << "BF" << "BI" << "CL" << "CN" << "HR" <<
-       "CY" << "TD" << "CZ" << "DK" << "DM" << "DO" << "DJ" << "EG" << "EC" << "ER" <<
-       "EE" << "ET" << "FK" << "RU" << "FL" << "PH" << "FI" << "FR" << "GM" << "GA" <<
-       "GS" << "GH" << "GI" << "GR" << "GD" << "GL" << "GE" << "GU" << "GY" << "GF" <<
-       "GP" << "GT" << "GN" << "GW" << "GQ" << "HT" << "HM" << "ES" << "NL" << "HN" <<
-       "HK" << "IN" << "ID" << "IQ" << "IR" << "IE" << "IS" << "IL" << "JM" << "JP" <<
-       "YE" << "JO" << "YU" << "KY" << "KH" << "CM" << "CA" << "QU" << "KZ" << "KE" <<
-       "KG" << "KI" << "CO" << "KM" << "CG" << "KR" << "KP" << "CR" << "CU" << "KW" <<
-       "LA" << "LS" << "LB" << "LR" << "LY" << "LI" << "LT" << "LU" << "LV" << "MK" <<
-       "MG" << "YT" << "MO" << "MW" << "MV" << "MY" << "ML" << "MT" << "MP" << "MA" <<
-       "MQ" << "MR" << "MU" << "MX" << "FM" << "MD" << "MC" << "MN" << "MS" << "MZ" <<
-       "MM" << "NA" << "NR" << "NP" << "DE" << "NE" << "NG" << "NI" << "NU" << "NO" <<
-       "NC" << "NZ" << "OM" << "PK" << "PW" << "PA" << "PG" << "PY" << "PE" << "PN" <<
-       "PF" << "PL" << "PR" << "PT" << "ZA" << "CV" << "RE" << "RW" << "RO" << "EH" <<
-       "KN" << "LC" << "VC" << "PM" << "SV" << "WS" << "AS" << "SM" << "SN" << "SC" <<
-       "SL" << "SG" << "SK" << "SI" << "SO" << "LK" << "US" << "SZ" << "SD" << "SR" <<
-       "SJ" << "SY" << "CH" << "SE" << "TJ" << "TH" << "TW" << "TZ" << "TP" << "TG" <<
-       "TK" << "TO" << "TT" << "TN" << "TR" << "TM" << "TC" << "TV" << "UG" << "UA" <<
-       "UY" << "UZ" << "VU" << "WF" << "VA" << "VE" << "HU" << "GB" << "UK" << "VN" <<
-       "IT" << "CI" << "BV" << "CX" << "NF" << "SH" << "CK" << "VI" << "CC" << "MH" <<
-       "FO" << "SB" << "ST" << "ZR" << "ZM" << "ZW" << "AE");
-
-    QString strCountries = tr("Afghanistan,Albania,Algeria,Andorra,Angola,Anguilla,Antarctica,Antigua and Barbuda,Netherlands Antilles,Saudi Arabia,Argentina,Armenia,Aruba,Australia,Austria,Azerbaijan,Bahamas,Bahrain,Bangladesh,Barbados,Belgium,Belize,Benin,Bermuda,Bhutan,Belarus,Bolivia,Bosnia and Herzegovina,Botswana,Brazil,Brunei,British Indian Ocean Territory,British Virgin Islands,Bulgaria,Burkina Faso,Burundi,Chile,China,Croatia,Cyprus,Chad,Czech Republic,Denmark,Dominica,Dominican Republic,Djibouti,Egypt,Ecuador,Eritrea,Estonia,Ethiopia,Falkland Islands,Russian Federation,Fiji,Philippines,Finland,France,Gambia,Gaon,South Georgia and South Sandwich Islands,Ghana,Gibraltar,Greece,Grenada,Greenland,Georgia,Guam,Guyana,French Guiana,Guadeloupe,Guatemala,Guinea,Guinea Bissau,Equatorial Guinea,Haiti,Heard,Spain,Holland,Honduras,Hong Kong,India,Indonesia,Iraq,Iran,Ireland,Iceland,Israel,Jamaica,Japan,Yemen,Jordan,Yugoslavia,Cayman Islands,Cambodia,Cameroon,Canada,Qatar,Kazakhstan,Kenya,Kyrgyzstan,Kiribati,Colombia,Comoros,Congo,South Korea,North Korea,Costa Rica,Cuba,Kuwait,Laos,Lesotho,Lebanon,Liberia,Libya,Liechtenstein,Lithuania,Latvia,Luxembourg,Macedonia,Madagascar,Mayotte,Macau,Malawi,Maldives,Malaysia,Mali,Malta,Marshall Islands,Morocco,Martinique,Mauritania,Mauritius,Mexico,Micronesia,Moldova,Monaco,Mongolia,Montserrat,Mozambique,Myanmar,Namibia,Nauru,Nepal,Germany,Niger,Nigeria,Nicaragua,Niue,Norway,New Caledonia,New Zealand,Oman,Pakistan,Palau,Panama,Papua New Guinea,Paraguay,Peru,Pitcairn,French Polynesia,Poland,Puerto Rico,Portugal,South Africa,Cape Verde,Reunion,Rwanda,Romania,Western Sahara,Saint Christopher and Nevis,Saint Lucia,Saint Vincent and the Grenadines,Saint-Perr and Miquelon,Salvador,Samoa,American Samoa,San Marino,Senegal,Seychelles,Sierra Leone,Singapore,Slovakia,Slovenia,Somalia,Sri Lanka,United States,Swaziland,Sudan,Suriname,Svalbard and Jan Mayen island,Syria,Switzerland,Sweden,Tajikistan,Thailand,Taiwan,Tanzania,Timor-Leste,Togo,Tokelau,Tonga,Trinidad and Tobago,Tunisia,Turkey,Turkmenistan,Turks and Caicos Islands,Tuvalu,Uganda,Ukraine,Uruguay,Uzbekistan,Vanuatu,Wallis and Futuna Islands,Vatican City,Venezuela,Hungary,Great Britain,United Kingdom,Vietnam,Italy,Ivory Coast,Bouvet Island,Christmas Island,Norfolk Island,Saint Helena,Cook Islands,U.S. Virgin Islands,Cocos Islands,Marshall Islands,Faroe Islands,Solomon Islands,Sao Tome and Principe,Zaire,Zambia,Zimbabwe,United Arab Emirates");
-    QStringList lCountries = strCountries.split(",");
-
-    // replace if found
-    for (int i = 0; i < lCodes.size(); i++)
-    {
-        if (strCountryCode == lCodes.value(i, QString::null))
-            return lCountries.value(i, QString::null);
-    }
-
-    return QString::null;
-}
-
-QString DlgMyProfile::convertCountryToCode(const QString &strCountry)
-{
-    QStringList lCodes =  (QStringList() <<
-       "AF" << "AL" << "DZ" << "AD" << "AO" << "AI" << "AQ" << "AG" << "AN" <<
-       "SA" << "AR" << "AM" << "AW" << "AU" << "AT" << "AZ" << "BS" << "BH" << "BD" <<
-       "BB" << "BE" << "BZ" << "BJ" << "BM" << "BT" << "BY" << "BO" << "BA" << "BW" <<
-       "BR" << "BN" << "IO" << "VG" << "BG" << "BF" << "BI" << "CL" << "CN" << "HR" <<
-       "CY" << "TD" << "CZ" << "DK" << "DM" << "DO" << "DJ" << "EG" << "EC" << "ER" <<
-       "EE" << "ET" << "FK" << "RU" << "FL" << "PH" << "FI" << "FR" << "GM" << "GA" <<
-       "GS" << "GH" << "GI" << "GR" << "GD" << "GL" << "GE" << "GU" << "GY" << "GF" <<
-       "GP" << "GT" << "GN" << "GW" << "GQ" << "HT" << "HM" << "ES" << "NL" << "HN" <<
-       "HK" << "IN" << "ID" << "IQ" << "IR" << "IE" << "IS" << "IL" << "JM" << "JP" <<
-       "YE" << "JO" << "YU" << "KY" << "KH" << "CM" << "CA" << "QU" << "KZ" << "KE" <<
-       "KG" << "KI" << "CO" << "KM" << "CG" << "KR" << "KP" << "CR" << "CU" << "KW" <<
-       "LA" << "LS" << "LB" << "LR" << "LY" << "LI" << "LT" << "LU" << "LV" << "MK" <<
-       "MG" << "YT" << "MO" << "MW" << "MV" << "MY" << "ML" << "MT" << "MP" << "MA" <<
-       "MQ" << "MR" << "MU" << "MX" << "FM" << "MD" << "MC" << "MN" << "MS" << "MZ" <<
-       "MM" << "NA" << "NR" << "NP" << "DE" << "NE" << "NG" << "NI" << "NU" << "NO" <<
-       "NC" << "NZ" << "OM" << "PK" << "PW" << "PA" << "PG" << "PY" << "PE" << "PN" <<
-       "PF" << "PL" << "PR" << "PT" << "ZA" << "CV" << "RE" << "RW" << "RO" << "EH" <<
-       "KN" << "LC" << "VC" << "PM" << "SV" << "WS" << "AS" << "SM" << "SN" << "SC" <<
-       "SL" << "SG" << "SK" << "SI" << "SO" << "LK" << "US" << "SZ" << "SD" << "SR" <<
-       "SJ" << "SY" << "CH" << "SE" << "TJ" << "TH" << "TW" << "TZ" << "TP" << "TG" <<
-       "TK" << "TO" << "TT" << "TN" << "TR" << "TM" << "TC" << "TV" << "UG" << "UA" <<
-       "UY" << "UZ" << "VU" << "WF" << "VA" << "VE" << "HU" << "GB" << "UK" << "VN" <<
-       "IT" << "CI" << "BV" << "CX" << "NF" << "SH" << "CK" << "VI" << "CC" << "MH" <<
-       "FO" << "SB" << "ST" << "ZR" << "ZM" << "ZW" << "AE");
-
-    QString strCountries = tr("Afghanistan,Albania,Algeria,Andorra,Angola,Anguilla,Antarctica,Antigua and Barbuda,Netherlands Antilles,Saudi Arabia,Argentina,Armenia,Aruba,Australia,Austria,Azerbaijan,Bahamas,Bahrain,Bangladesh,Barbados,Belgium,Belize,Benin,Bermuda,Bhutan,Belarus,Bolivia,Bosnia and Herzegovina,Botswana,Brazil,Brunei,British Indian Ocean Territory,British Virgin Islands,Bulgaria,Burkina Faso,Burundi,Chile,China,Croatia,Cyprus,Chad,Czech Republic,Denmark,Dominica,Dominican Republic,Djibouti,Egypt,Ecuador,Eritrea,Estonia,Ethiopia,Falkland Islands,Russian Federation,Fiji,Philippines,Finland,France,Gambia,Gaon,South Georgia and South Sandwich Islands,Ghana,Gibraltar,Greece,Grenada,Greenland,Georgia,Guam,Guyana,French Guiana,Guadeloupe,Guatemala,Guinea,Guinea Bissau,Equatorial Guinea,Haiti,Heard,Spain,Holland,Honduras,Hong Kong,India,Indonesia,Iraq,Iran,Ireland,Iceland,Israel,Jamaica,Japan,Yemen,Jordan,Yugoslavia,Cayman Islands,Cambodia,Cameroon,Canada,Qatar,Kazakhstan,Kenya,Kyrgyzstan,Kiribati,Colombia,Comoros,Congo,South Korea,North Korea,Costa Rica,Cuba,Kuwait,Laos,Lesotho,Lebanon,Liberia,Libya,Liechtenstein,Lithuania,Latvia,Luxembourg,Macedonia,Madagascar,Mayotte,Macau,Malawi,Maldives,Malaysia,Mali,Malta,Marshall Islands,Morocco,Martinique,Mauritania,Mauritius,Mexico,Micronesia,Moldova,Monaco,Mongolia,Montserrat,Mozambique,Myanmar,Namibia,Nauru,Nepal,Germany,Niger,Nigeria,Nicaragua,Niue,Norway,New Caledonia,New Zealand,Oman,Pakistan,Palau,Panama,Papua New Guinea,Paraguay,Peru,Pitcairn,French Polynesia,Poland,Puerto Rico,Portugal,South Africa,Cape Verde,Reunion,Rwanda,Romania,Western Sahara,Saint Christopher and Nevis,Saint Lucia,Saint Vincent and the Grenadines,Saint-Perr and Miquelon,Salvador,Samoa,American Samoa,San Marino,Senegal,Seychelles,Sierra Leone,Singapore,Slovakia,Slovenia,Somalia,Sri Lanka,United States,Swaziland,Sudan,Suriname,Svalbard and Jan Mayen island,Syria,Switzerland,Sweden,Tajikistan,Thailand,Taiwan,Tanzania,Timor-Leste,Togo,Tokelau,Tonga,Trinidad and Tobago,Tunisia,Turkey,Turkmenistan,Turks and Caicos Islands,Tuvalu,Uganda,Ukraine,Uruguay,Uzbekistan,Vanuatu,Wallis and Futuna Islands,Vatican City,Venezuela,Hungary,Great Britain,United Kingdom,Vietnam,Italy,Ivory Coast,Bouvet Island,Christmas Island,Norfolk Island,Saint Helena,Cook Islands,U.S. Virgin Islands,Cocos Islands,Marshall Islands,Faroe Islands,Solomon Islands,Sao Tome and Principe,Zaire,Zambia,Zimbabwe,United Arab Emirates");
-    QStringList lCountries = strCountries.split(",");
-
-    // replace if found
-    for (int i = 0; i < lCountries.size(); i++)
-    {
-        if (strCountry == lCountries.value(i, QString::null))
-            return lCodes.value(i, QString::null);
-    }
-
-    return QString::null;
-}
-
-QString DlgMyProfile::convertIntToMonth(const QString &strConvertMonth)
-{
-    QStringList lMonths;
-    lMonths << QString::null << tr("January") << tr("February") << tr("March") << tr("April") << tr("May") << tr("June") << tr("July") << tr("August") << tr("September") << tr("October") << tr("November") << tr("December");
-    for (int i = 0; i < lMonths.size(); i++)
-    {
-        QString strMonth = (i < 10 ? "0"+QString::number(i) : QString::number(i));
-        if (strMonth == strConvertMonth)
-            return lMonths.value(i, QString::null);
-    }
-
-    return QString::null;
-}
-
-QString DlgMyProfile::convertMonthToInt(const QString &strMonth)
-{
-    QStringList lMonths;
-    lMonths << QString::null << tr("January") << tr("February") << tr("March") << tr("April") << tr("May") << tr("June") << tr("July") << tr("August") << tr("September") << tr("October") << tr("November") << tr("December");
-    for (int i = 0; i < lMonths.size(); i++)
-    {
-        QString strInt = (i < 10 ? "0"+QString::number(i) : QString::number(i));
-        if (strInt == "00") strInt = QString::null; // fix 0 month
-        if (strMonth == lMonths.value(i, QString::null))
-            return strInt;
-    }
-
-    return QString::null;
-}
-
-QString DlgMyProfile::convertType(const QString &strType)
-{
-    if (strType == "0")
-        return tr("Novice");
-    else if (strType == "1")
-        return tr("Beginner");
-    else if (strType == "2")
-        return tr("Master");
-    else if (strType == "3")
-        return tr("Guru");
-    else
-        return strType;
-}
-
 void DlgMyProfile::buttonOk()
 {
     // set desc - shortDesc
@@ -432,15 +286,13 @@ void DlgMyProfile::buttonOk()
 
     // set sex
     int iSex = ui.comboBox_sex->currentIndex();
-    QString strSexChar;
-    if (iSex == 1) strSexChar = "M";
-    else if (iSex == 2) strSexChar = "F";
-    if (strSexChar != MyProfileModel::instance()->get("sex"))
-        Core::instance()->pNetwork->send(QString("NS SET sex %1").arg(strSexChar));
+    QString strSex = Utils::instance()->convertIntToSexChar(iSex);
+    if (strSex != MyProfileModel::instance()->get("sex"))
+        Core::instance()->pNetwork->send(QString("NS SET sex %1").arg(strSex));
 
     // set birthdate
     QString strDay = ui.comboBox_day->currentText();
-    QString strMonth = convertMonthToInt(ui.comboBox_month->currentText());
+    QString strMonth = Utils::instance()->convertMonthToInt(ui.comboBox_month->currentText());
     QString strYear = ui.comboBox_year->currentText();
     QString strBirthdate;
     if ((!strDay.isEmpty()) && (!strMonth.isEmpty()) && (!strYear.isEmpty()))
@@ -455,7 +307,7 @@ void DlgMyProfile::buttonOk()
 
     // set country
     QString strCountry = ui.comboBox_country->currentText();
-    QString strCountryCode = convertCountryToCode(strCountry);
+    QString strCountryCode = Utils::instance()->convertCountryToCode(strCountry);
     if (strCountryCode != MyProfileModel::instance()->get("country"))
         Core::instance()->pNetwork->send(QString("NS SET country %1").arg(strCountryCode));
 

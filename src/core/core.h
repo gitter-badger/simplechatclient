@@ -56,8 +56,6 @@ public:
     MainWindow *mainWindow();
     // language
     void refreshLanguage();
-    // remove dir
-    bool removeDir(const QString &dirName);
 
     // kamerzysta socket
     QTcpSocket *kamerzystaSocket;

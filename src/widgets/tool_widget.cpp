@@ -35,6 +35,7 @@
 #include "inputline_widget.h"
 #include "replace.h"
 #include "settings.h"
+#include "utils.h"
 #include "tool_widget.h"
 
 ToolWidget::ToolWidget(QWidget *parent) : QWidget(parent), strCurrentColor("#000000")
@@ -96,13 +97,11 @@ ToolWidget::ToolWidget(QWidget *parent) : QWidget(parent), strCurrentColor("#000
     color->setToolTip(tr("Font color"));
     color->setIconSize(QSize(20,10));
 
-    QStringList comboBoxColors;
-    comboBoxColors << "#000000" << "#623c00" << "#c86c00" << "#ff6500" << "#ff0000" << "#e40f0f" << "#990033" << "#8800ab" << "#ce00ff" << "#0f2ab1" << "#3030ce" << "#006699" << "#1a866e" << "#008100" << "#959595";
-
+    QList<QString> comboBoxColors = Utils::instance()->getColors();
     foreach (QString strColor, comboBoxColors)
     {
         QPixmap pixmap(20,10);
-        pixmap.fill(QColor(strColor));
+        pixmap.fill(QColor("#"+strColor));
         color->addItem(QIcon(pixmap), QString::null);
     }
     color->show();

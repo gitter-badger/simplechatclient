@@ -40,8 +40,6 @@ private:
     QString strData;
     QStringList strDataList;
 
-    bool isErotic(const QString &strChannel);
-
     QString cmdRaw();
     QString cmdAll();
     QString cmdJoin();

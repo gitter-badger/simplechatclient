@@ -305,27 +305,3 @@ void Core::refreshLanguage()
     if (sccTranslator.load(QString("%1/translations/scc_%2").arg(path, strLanguage)))
         qApp->installTranslator(&sccTranslator);
 }
-
-bool Core::removeDir(const QString &dirName)
-{
-    bool result = true;
-    QDir dir(dirName);
-
-    if (dir.exists(dirName))
-    {
-        QFileInfoList listInfo = dir.entryInfoList(QDir::NoDotAndDotDot | QDir::System | QDir::Hidden  | QDir::AllDirs | QDir::Files, QDir::DirsFirst);
-        foreach(QFileInfo info, listInfo)
-        {
-            if (info.isDir())
-                result = removeDir(info.absoluteFilePath());
-            else
-                result = QFile::remove(info.absoluteFilePath());
-
-            if (!result)
-                return result;
-        }
-        result = dir.rmdir(dirName);
-    }
-
-    return result;
-}

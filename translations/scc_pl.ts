@@ -1183,22 +1183,6 @@
         <translation>Ranga:</translation>
     </message>
     <message>
-        <source>Novice</source>
-        <translation>Nowicjusz</translation>
-    </message>
-    <message>
-        <source>Beginner</source>
-        <translation>Bywalec</translation>
-    </message>
-    <message>
-        <source>Master</source>
-        <translation>Wyjadacz</translation>
-    </message>
-    <message>
-        <source>Guru</source>
-        <translation>Guru</translation>
-    </message>
-    <message>
         <source>Sex:</source>
         <translation>Płeć:</translation>
     </message>
@@ -1219,72 +1203,12 @@
         <translation>Hobby:</translation>
     </message>
     <message>
-        <source>Female</source>
-        <translation>Kobieta</translation>
-    </message>
-    <message>
-        <source>Male</source>
-        <translation>Mężczyzna</translation>
-    </message>
-    <message>
         <source>Website:</source>
         <translation>Website:</translation>
     </message>
     <message>
-        <source>Afghanistan,Albania,Algeria,Andorra,Angola,Anguilla,Antarctica,Antigua and Barbuda,Netherlands Antilles,Saudi Arabia,Argentina,Armenia,Aruba,Australia,Austria,Azerbaijan,Bahamas,Bahrain,Bangladesh,Barbados,Belgium,Belize,Benin,Bermuda,Bhutan,Belarus,Bolivia,Bosnia and Herzegovina,Botswana,Brazil,Brunei,British Indian Ocean Territory,British Virgin Islands,Bulgaria,Burkina Faso,Burundi,Chile,China,Croatia,Cyprus,Chad,Czech Republic,Denmark,Dominica,Dominican Republic,Djibouti,Egypt,Ecuador,Eritrea,Estonia,Ethiopia,Falkland Islands,Russian Federation,Fiji,Philippines,Finland,France,Gambia,Gaon,South Georgia and South Sandwich Islands,Ghana,Gibraltar,Greece,Grenada,Greenland,Georgia,Guam,Guyana,French Guiana,Guadeloupe,Guatemala,Guinea,Guinea Bissau,Equatorial Guinea,Haiti,Heard,Spain,Holland,Honduras,Hong Kong,India,Indonesia,Iraq,Iran,Ireland,Iceland,Israel,Jamaica,Japan,Yemen,Jordan,Yugoslavia,Cayman Islands,Cambodia,Cameroon,Canada,Qatar,Kazakhstan,Kenya,Kyrgyzstan,Kiribati,Colombia,Comoros,Congo,South Korea,North Korea,Costa Rica,Cuba,Kuwait,Laos,Lesotho,Lebanon,Liberia,Libya,Liechtenstein,Lithuania,Latvia,Luxembourg,Macedonia,Madagascar,Mayotte,Macau,Malawi,Maldives,Malaysia,Mali,Malta,Marshall Islands,Morocco,Martinique,Mauritania,Mauritius,Mexico,Micronesia,Moldova,Monaco,Mongolia,Montserrat,Mozambique,Myanmar,Namibia,Nauru,Nepal,Germany,Niger,Nigeria,Nicaragua,Niue,Norway,New Caledonia,New Zealand,Oman,Pakistan,Palau,Panama,Papua New Guinea,Paraguay,Peru,Pitcairn,French Polynesia,Poland,Puerto Rico,Portugal,South Africa,Cape Verde,Reunion,Rwanda,Romania,Western Sahara,Saint Christopher and Nevis,Saint Lucia,Saint Vincent and the Grenadines,Saint-Perr and Miquelon,Salvador,Samoa,American Samoa,San Marino,Senegal,Seychelles,Sierra Leone,Singapore,Slovakia,Slovenia,Somalia,Sri Lanka,United States,Swaziland,Sudan,Suriname,Svalbard and Jan Mayen island,Syria,Switzerland,Sweden,Tajikistan,Thailand,Taiwan,Tanzania,Timor-Leste,Togo,Tokelau,Tonga,Trinidad and Tobago,Tunisia,Turkey,Turkmenistan,Turks and Caicos Islands,Tuvalu,Uganda,Ukraine,Uruguay,Uzbekistan,Vanuatu,Wallis and Futuna Islands,Vatican City,Venezuela,Hungary,Great Britain,United Kingdom,Vietnam,Italy,Ivory Coast,Bouvet Island,Christmas Island,Norfolk Island,Saint Helena,Cook Islands,U.S. Virgin Islands,Cocos Islands,Marshall Islands,Faroe Islands,Solomon Islands,Sao Tome and Principe,Zaire,Zambia,Zimbabwe,United Arab Emirates</source>
-        <translation>Afganistan,Albania,Algieria,Andora,Angola,Anguilla,Antarktyda,Antigua i Barbuda,Antyle Holenderskie,Arabia Saudyjska,Argentyna,Armenia,Aruba,Australia,Austria,Azerbejdżan,Bahamy,Bahrajn,Bangladesz,Barbados,Belgia,Belize,Benin,Bermudy,Bhutan,Białoruś,Boliwia,Bośnia i Hercegowina,Botswana,Brazylia,Brunei,Brytyjskie Terytorium Oceanu Indyjskiego,Brytyjskie Wyspy Dziewicze,Bułgaria,Burkina Faso,Burundi,Chile,Chiny,Chorwacja,Cypr,Czad,Czechy,Dania,Dominika,Dominikana,Dżibuti,Egipt,Ekwador,Erytrea,Estonia,Etiopia,Falklandy,Federacja Rosyjska,Fidżi,Filipiny,Finlandia,Francja,Gambia,Gaon,Georgia Południowa i Sandwich Południowy,Ghana,Gibraltar,Grecja,Grenada,Grenlandia,Gruzja,Guam,Gujana,Gujana Francuska,Gwadelupa,Gwatemala,Gwinea,Gwinea Bissau,Gwinea Równikowa,Haiti,Heard,Hiszpania,Holandia,Honduras,Hongkong,Indie,Indonezja,Irak,Iran,Irlandia,Islandia,Izrael,Jamajka,Japonia,Jemen,Jordania,Jugosławia,Kajmany,Kambodża,Kamerun,Kanada,Katar,Kazachstan,Kenia,Kirgistan,Kiribati,Kolumbia,Komory,Kongo,Korea Południowa,Korea Północna,Kostaryka,Kuba,Kuwejt,Laos,Lesoto,Liban,Liberia,Libia,Liechtenstein,Litwa,Luksemburg,Łotwa,Macedonia,Madagaskar,Majotta,Makau,Malawi,Malediwy,Malezja,Mali,Malta,Mariany Północne,Maroko,Martynika,Mauretania,Mauritius,Meksyk,Mikronezja,Mołdawia,Monako,Mongolia,Montserrat,Mozambik,Myanmar,Namibia,Nauru,Nepal,Niemcy,Niger,Nigeria,Nikaragua,Niue,Norwegia,Nowa Kaledonia,Nowa Zelandia,Oman,Pakistan,Palau,Panama,Papua-Nowa Gwinea,Paragwaj,Peru,Pitcairn,Polinezja Francuska,Polska,Portoryko,Portugalia,Republika Południowej Afryki,Republika Zielonego Przylądka,Reunion,Ruanda,Rumunia,Sahara Zachodnia,Saint Christopher i Nevis,Saint Lucia,Saint Vincent i Grenadyny,Saint-Perre i Miquelon,Salwador,Samoa,Samoa Amerykańskie,San Marino,Senegal,Seszele,Sierra Leone,Singapur,Słowacja,Słowenia,Somalia,Sri Lanka,Stany Zjednoczone,Suazi,Sudan,Surinam,Svalbard i wyspa Jan Mayen,Syria,Szwajcaria,Szwecja,Tadżykistan,Tajlandia,Tajwan,Tanzania,Timor Wschodni,Togo,Tokelau,Tonga,Trynidad i Tobago,Tunezja,Turcja,Turkmenistan,Turks i Caicos,Tuwalu,Uganda,Ukraina,Urugwaj,Uzbekistan,Vanuatu,Wallis i Futuna,Watykan,Wenezuela,Węgry,Wielka Brytania,Wielka Brytania,Wietnam,Włochy,Wybrzeże Kości Słoniowej,Wyspa Bouveta,Wyspa Bożego Narodzenia,Wyspa Norfolk,Wyspa Świętej Heleny,Wyspy Cooka,Wyspy Dziewicze Stanów Zjednoczonych,Wyspy Kokosowe,Wyspy Marshalla,Wyspy Owcze,Wyspy Salomona,Wyspy Świętego Tomasza i Książęca,Zair,Zambia,Zimbabwe,Zjednoczone Emiraty Arabskie</translation>
-    </message>
-    <message>
         <source>No photo available</source>
         <translation>Brak zdjęcia</translation>
-    </message>
-    <message>
-        <source>January</source>
-        <translation>Styczeń</translation>
-    </message>
-    <message>
-        <source>February</source>
-        <translation>Luty</translation>
-    </message>
-    <message>
-        <source>March</source>
-        <translation>Marzec</translation>
-    </message>
-    <message>
-        <source>April</source>
-        <translation>Kwiecień</translation>
-    </message>
-    <message>
-        <source>May</source>
-        <translation>Maj</translation>
-    </message>
-    <message>
-        <source>June</source>
-        <translation>Czerwiec</translation>
-    </message>
-    <message>
-        <source>July</source>
-        <translation>Lipiec</translation>
-    </message>
-    <message>
-        <source>August</source>
-        <translation>Sierpień</translation>
-    </message>
-    <message>
-        <source>September</source>
-        <translation>Wrzesień</translation>
-    </message>
-    <message>
-        <source>October</source>
-        <translation>Październik</translation>
-    </message>
-    <message>
-        <source>November</source>
-        <translation>Listopad</translation>
-    </message>
-    <message>
-        <source>December</source>
-        <translation>Grudzień</translation>
     </message>
 </context>
 <context>
@@ -1892,36 +1816,8 @@
         <translation>Ranga:</translation>
     </message>
     <message>
-        <source>Female</source>
-        <translation>Kobieta</translation>
-    </message>
-    <message>
-        <source>Male</source>
-        <translation>Mężczyzna</translation>
-    </message>
-    <message>
         <source>Website:</source>
         <translation>Website:</translation>
-    </message>
-    <message>
-        <source>Novice</source>
-        <translation>Nowicjusz</translation>
-    </message>
-    <message>
-        <source>Beginner</source>
-        <translation>Bywalec</translation>
-    </message>
-    <message>
-        <source>Master</source>
-        <translation>Wyjadacz</translation>
-    </message>
-    <message>
-        <source>Guru</source>
-        <translation>Guru</translation>
-    </message>
-    <message>
-        <source>Afghanistan,Albania,Algeria,Andorra,Angola,Anguilla,Antarctica,Antigua and Barbuda,Netherlands Antilles,Saudi Arabia,Argentina,Armenia,Aruba,Australia,Austria,Azerbaijan,Bahamas,Bahrain,Bangladesh,Barbados,Belgium,Belize,Benin,Bermuda,Bhutan,Belarus,Bolivia,Bosnia and Herzegovina,Botswana,Brazil,Brunei,British Indian Ocean Territory,British Virgin Islands,Bulgaria,Burkina Faso,Burundi,Chile,China,Croatia,Cyprus,Chad,Czech Republic,Denmark,Dominica,Dominican Republic,Djibouti,Egypt,Ecuador,Eritrea,Estonia,Ethiopia,Falkland Islands,Russian Federation,Fiji,Philippines,Finland,France,Gambia,Gaon,South Georgia and South Sandwich Islands,Ghana,Gibraltar,Greece,Grenada,Greenland,Georgia,Guam,Guyana,French Guiana,Guadeloupe,Guatemala,Guinea,Guinea Bissau,Equatorial Guinea,Haiti,Heard,Spain,Holland,Honduras,Hong Kong,India,Indonesia,Iraq,Iran,Ireland,Iceland,Israel,Jamaica,Japan,Yemen,Jordan,Yugoslavia,Cayman Islands,Cambodia,Cameroon,Canada,Qatar,Kazakhstan,Kenya,Kyrgyzstan,Kiribati,Colombia,Comoros,Congo,South Korea,North Korea,Costa Rica,Cuba,Kuwait,Laos,Lesotho,Lebanon,Liberia,Libya,Liechtenstein,Lithuania,Latvia,Luxembourg,Macedonia,Madagascar,Mayotte,Macau,Malawi,Maldives,Malaysia,Mali,Malta,Marshall Islands,Morocco,Martinique,Mauritania,Mauritius,Mexico,Micronesia,Moldova,Monaco,Mongolia,Montserrat,Mozambique,Myanmar,Namibia,Nauru,Nepal,Germany,Niger,Nigeria,Nicaragua,Niue,Norway,New Caledonia,New Zealand,Oman,Pakistan,Palau,Panama,Papua New Guinea,Paraguay,Peru,Pitcairn,French Polynesia,Poland,Puerto Rico,Portugal,South Africa,Cape Verde,Reunion,Rwanda,Romania,Western Sahara,Saint Christopher and Nevis,Saint Lucia,Saint Vincent and the Grenadines,Saint-Perr and Miquelon,Salvador,Samoa,American Samoa,San Marino,Senegal,Seychelles,Sierra Leone,Singapore,Slovakia,Slovenia,Somalia,Sri Lanka,United States,Swaziland,Sudan,Suriname,Svalbard and Jan Mayen island,Syria,Switzerland,Sweden,Tajikistan,Thailand,Taiwan,Tanzania,Timor-Leste,Togo,Tokelau,Tonga,Trinidad and Tobago,Tunisia,Turkey,Turkmenistan,Turks and Caicos Islands,Tuvalu,Uganda,Ukraine,Uruguay,Uzbekistan,Vanuatu,Wallis and Futuna Islands,Vatican City,Venezuela,Hungary,Great Britain,United Kingdom,Vietnam,Italy,Ivory Coast,Bouvet Island,Christmas Island,Norfolk Island,Saint Helena,Cook Islands,U.S. Virgin Islands,Cocos Islands,Marshall Islands,Faroe Islands,Solomon Islands,Sao Tome and Principe,Zaire,Zambia,Zimbabwe,United Arab Emirates</source>
-        <translation>Afganistan,Albania,Algieria,Andora,Angola,Anguilla,Antarktyda,Antigua i Barbuda,Antyle Holenderskie,Arabia Saudyjska,Argentyna,Armenia,Aruba,Australia,Austria,Azerbejdżan,Bahamy,Bahrajn,Bangladesz,Barbados,Belgia,Belize,Benin,Bermudy,Bhutan,Białoruś,Boliwia,Bośnia i Hercegowina,Botswana,Brazylia,Brunei,Brytyjskie Terytorium Oceanu Indyjskiego,Brytyjskie Wyspy Dziewicze,Bułgaria,Burkina Faso,Burundi,Chile,Chiny,Chorwacja,Cypr,Czad,Czechy,Dania,Dominika,Dominikana,Dżibuti,Egipt,Ekwador,Erytrea,Estonia,Etiopia,Falklandy,Federacja Rosyjska,Fidżi,Filipiny,Finlandia,Francja,Gambia,Gaon,Georgia Południowa i Sandwich Południowy,Ghana,Gibraltar,Grecja,Grenada,Grenlandia,Gruzja,Guam,Gujana,Gujana Francuska,Gwadelupa,Gwatemala,Gwinea,Gwinea Bissau,Gwinea Równikowa,Haiti,Heard,Hiszpania,Holandia,Honduras,Hongkong,Indie,Indonezja,Irak,Iran,Irlandia,Islandia,Izrael,Jamajka,Japonia,Jemen,Jordania,Jugosławia,Kajmany,Kambodża,Kamerun,Kanada,Katar,Kazachstan,Kenia,Kirgistan,Kiribati,Kolumbia,Komory,Kongo,Korea Południowa,Korea Północna,Kostaryka,Kuba,Kuwejt,Laos,Lesoto,Liban,Liberia,Libia,Liechtenstein,Litwa,Luksemburg,Łotwa,Macedonia,Madagaskar,Majotta,Makau,Malawi,Malediwy,Malezja,Mali,Malta,Mariany Północne,Maroko,Martynika,Mauretania,Mauritius,Meksyk,Mikronezja,Mołdawia,Monako,Mongolia,Montserrat,Mozambik,Myanmar,Namibia,Nauru,Nepal,Niemcy,Niger,Nigeria,Nikaragua,Niue,Norwegia,Nowa Kaledonia,Nowa Zelandia,Oman,Pakistan,Palau,Panama,Papua-Nowa Gwinea,Paragwaj,Peru,Pitcairn,Polinezja Francuska,Polska,Portoryko,Portugalia,Republika Południowej Afryki,Republika Zielonego Przylądka,Reunion,Ruanda,Rumunia,Sahara Zachodnia,Saint Christopher i Nevis,Saint Lucia,Saint Vincent i Grenadyny,Saint-Perre i Miquelon,Salwador,Samoa,Samoa Amerykańskie,San Marino,Senegal,Seszele,Sierra Leone,Singapur,Słowacja,Słowenia,Somalia,Sri Lanka,Stany Zjednoczone,Suazi,Sudan,Surinam,Svalbard i wyspa Jan Mayen,Syria,Szwajcaria,Szwecja,Tadżykistan,Tajlandia,Tajwan,Tanzania,Timor Wschodni,Togo,Tokelau,Tonga,Trynidad i Tobago,Tunezja,Turcja,Turkmenistan,Turks i Caicos,Tuwalu,Uganda,Ukraina,Urugwaj,Uzbekistan,Vanuatu,Wallis i Futuna,Watykan,Wenezuela,Węgry,Wielka Brytania,Wielka Brytania,Wietnam,Włochy,Wybrzeże Kości Słoniowej,Wyspa Bouveta,Wyspa Bożego Narodzenia,Wyspa Norfolk,Wyspa Świętej Heleny,Wyspy Cooka,Wyspy Dziewicze Stanów Zjednoczonych,Wyspy Kokosowe,Wyspy Marshalla,Wyspy Owcze,Wyspy Salomona,Wyspy Świętego Tomasza i Książęca,Zair,Zambia,Zimbabwe,Zjednoczone Emiraty Arabskie</translation>
     </message>
     <message>
         <source>Close</source>
@@ -3314,6 +3210,129 @@
     <message>
         <source>Message Of The Day:</source>
         <translation>Wiadomość dnia:</translation>
+    </message>
+</context>
+<context>
+    <name>Utils</name>
+    <message>
+        <source>Novice</source>
+        <translation>Nowicjusz</translation>
+    </message>
+    <message>
+        <source>Beginner</source>
+        <translation>Bywalec</translation>
+    </message>
+    <message>
+        <source>Master</source>
+        <translation>Wyjadacz</translation>
+    </message>
+    <message>
+        <source>Guru</source>
+        <translation>Guru</translation>
+    </message>
+    <message>
+        <source>Female</source>
+        <translation>Kobieta</translation>
+    </message>
+    <message>
+        <source>Male</source>
+        <translation>Mężczyzna</translation>
+    </message>
+    <message>
+        <source>Afghanistan,Albania,Algeria,Andorra,Angola,Anguilla,Antarctica,Antigua and Barbuda,Netherlands Antilles,Saudi Arabia,Argentina,Armenia,Aruba,Australia,Austria,Azerbaijan,Bahamas,Bahrain,Bangladesh,Barbados,Belgium,Belize,Benin,Bermuda,Bhutan,Belarus,Bolivia,Bosnia and Herzegovina,Botswana,Brazil,Brunei,British Indian Ocean Territory,British Virgin Islands,Bulgaria,Burkina Faso,Burundi,Chile,China,Croatia,Cyprus,Chad,Czech Republic,Denmark,Dominica,Dominican Republic,Djibouti,Egypt,Ecuador,Eritrea,Estonia,Ethiopia,Falkland Islands,Russian Federation,Fiji,Philippines,Finland,France,Gambia,Gaon,South Georgia and South Sandwich Islands,Ghana,Gibraltar,Greece,Grenada,Greenland,Georgia,Guam,Guyana,French Guiana,Guadeloupe,Guatemala,Guinea,Guinea Bissau,Equatorial Guinea,Haiti,Heard,Spain,Holland,Honduras,Hong Kong,India,Indonesia,Iraq,Iran,Ireland,Iceland,Israel,Jamaica,Japan,Yemen,Jordan,Yugoslavia,Cayman Islands,Cambodia,Cameroon,Canada,Qatar,Kazakhstan,Kenya,Kyrgyzstan,Kiribati,Colombia,Comoros,Congo,South Korea,North Korea,Costa Rica,Cuba,Kuwait,Laos,Lesotho,Lebanon,Liberia,Libya,Liechtenstein,Lithuania,Latvia,Luxembourg,Macedonia,Madagascar,Mayotte,Macau,Malawi,Maldives,Malaysia,Mali,Malta,Marshall Islands,Morocco,Martinique,Mauritania,Mauritius,Mexico,Micronesia,Moldova,Monaco,Mongolia,Montserrat,Mozambique,Myanmar,Namibia,Nauru,Nepal,Germany,Niger,Nigeria,Nicaragua,Niue,Norway,New Caledonia,New Zealand,Oman,Pakistan,Palau,Panama,Papua New Guinea,Paraguay,Peru,Pitcairn,French Polynesia,Poland,Puerto Rico,Portugal,South Africa,Cape Verde,Reunion,Rwanda,Romania,Western Sahara,Saint Christopher and Nevis,Saint Lucia,Saint Vincent and the Grenadines,Saint-Perr and Miquelon,Salvador,Samoa,American Samoa,San Marino,Senegal,Seychelles,Sierra Leone,Singapore,Slovakia,Slovenia,Somalia,Sri Lanka,United States,Swaziland,Sudan,Suriname,Svalbard and Jan Mayen island,Syria,Switzerland,Sweden,Tajikistan,Thailand,Taiwan,Tanzania,Timor-Leste,Togo,Tokelau,Tonga,Trinidad and Tobago,Tunisia,Turkey,Turkmenistan,Turks and Caicos Islands,Tuvalu,Uganda,Ukraine,Uruguay,Uzbekistan,Vanuatu,Wallis and Futuna Islands,Vatican City,Venezuela,Hungary,Great Britain,United Kingdom,Vietnam,Italy,Ivory Coast,Bouvet Island,Christmas Island,Norfolk Island,Saint Helena,Cook Islands,U.S. Virgin Islands,Cocos Islands,Marshall Islands,Faroe Islands,Solomon Islands,Sao Tome and Principe,Zaire,Zambia,Zimbabwe,United Arab Emirates</source>
+        <translation>Afganistan,Albania,Algieria,Andora,Angola,Anguilla,Antarktyda,Antigua i Barbuda,Antyle Holenderskie,Arabia Saudyjska,Argentyna,Armenia,Aruba,Australia,Austria,Azerbejdżan,Bahamy,Bahrajn,Bangladesz,Barbados,Belgia,Belize,Benin,Bermudy,Bhutan,Białoruś,Boliwia,Bośnia i Hercegowina,Botswana,Brazylia,Brunei,Brytyjskie Terytorium Oceanu Indyjskiego,Brytyjskie Wyspy Dziewicze,Bułgaria,Burkina Faso,Burundi,Chile,Chiny,Chorwacja,Cypr,Czad,Czechy,Dania,Dominika,Dominikana,Dżibuti,Egipt,Ekwador,Erytrea,Estonia,Etiopia,Falklandy,Federacja Rosyjska,Fidżi,Filipiny,Finlandia,Francja,Gambia,Gaon,Georgia Południowa i Sandwich Południowy,Ghana,Gibraltar,Grecja,Grenada,Grenlandia,Gruzja,Guam,Gujana,Gujana Francuska,Gwadelupa,Gwatemala,Gwinea,Gwinea Bissau,Gwinea Równikowa,Haiti,Heard,Hiszpania,Holandia,Honduras,Hongkong,Indie,Indonezja,Irak,Iran,Irlandia,Islandia,Izrael,Jamajka,Japonia,Jemen,Jordania,Jugosławia,Kajmany,Kambodża,Kamerun,Kanada,Katar,Kazachstan,Kenia,Kirgistan,Kiribati,Kolumbia,Komory,Kongo,Korea Południowa,Korea Północna,Kostaryka,Kuba,Kuwejt,Laos,Lesoto,Liban,Liberia,Libia,Liechtenstein,Litwa,Luksemburg,Łotwa,Macedonia,Madagaskar,Majotta,Makau,Malawi,Malediwy,Malezja,Mali,Malta,Mariany Północne,Maroko,Martynika,Mauretania,Mauritius,Meksyk,Mikronezja,Mołdawia,Monako,Mongolia,Montserrat,Mozambik,Myanmar,Namibia,Nauru,Nepal,Niemcy,Niger,Nigeria,Nikaragua,Niue,Norwegia,Nowa Kaledonia,Nowa Zelandia,Oman,Pakistan,Palau,Panama,Papua-Nowa Gwinea,Paragwaj,Peru,Pitcairn,Polinezja Francuska,Polska,Portoryko,Portugalia,Republika Południowej Afryki,Republika Zielonego Przylądka,Reunion,Ruanda,Rumunia,Sahara Zachodnia,Saint Christopher i Nevis,Saint Lucia,Saint Vincent i Grenadyny,Saint-Perre i Miquelon,Salwador,Samoa,Samoa Amerykańskie,San Marino,Senegal,Seszele,Sierra Leone,Singapur,Słowacja,Słowenia,Somalia,Sri Lanka,Stany Zjednoczone,Suazi,Sudan,Surinam,Svalbard i wyspa Jan Mayen,Syria,Szwajcaria,Szwecja,Tadżykistan,Tajlandia,Tajwan,Tanzania,Timor Wschodni,Togo,Tokelau,Tonga,Trynidad i Tobago,Tunezja,Turcja,Turkmenistan,Turks i Caicos,Tuwalu,Uganda,Ukraina,Urugwaj,Uzbekistan,Vanuatu,Wallis i Futuna,Watykan,Wenezuela,Węgry,Wielka Brytania,Wielka Brytania,Wietnam,Włochy,Wybrzeże Kości Słoniowej,Wyspa Bouveta,Wyspa Bożego Narodzenia,Wyspa Norfolk,Wyspa Świętej Heleny,Wyspy Cooka,Wyspy Dziewicze Stanów Zjednoczonych,Wyspy Kokosowe,Wyspy Marshalla,Wyspy Owcze,Wyspy Salomona,Wyspy Świętego Tomasza i Książęca,Zair,Zambia,Zimbabwe,Zjednoczone Emiraty Arabskie</translation>
+    </message>
+    <message>
+        <source>January</source>
+        <translation>Styczeń</translation>
+    </message>
+    <message>
+        <source>February</source>
+        <translation>Luty</translation>
+    </message>
+    <message>
+        <source>March</source>
+        <translation>Marzec</translation>
+    </message>
+    <message>
+        <source>April</source>
+        <translation>Kwiecień</translation>
+    </message>
+    <message>
+        <source>May</source>
+        <translation>Maj</translation>
+    </message>
+    <message>
+        <source>June</source>
+        <translation>Czerwiec</translation>
+    </message>
+    <message>
+        <source>July</source>
+        <translation>Lipiec</translation>
+    </message>
+    <message>
+        <source>August</source>
+        <translation>Sierpień</translation>
+    </message>
+    <message>
+        <source>September</source>
+        <translation>Wrzesień</translation>
+    </message>
+    <message>
+        <source>October</source>
+        <translation>Październik</translation>
+    </message>
+    <message>
+        <source>November</source>
+        <translation>Listopad</translation>
+    </message>
+    <message>
+        <source>December</source>
+        <translation>Grudzień</translation>
+    </message>
+    <message>
+        <source>Wild</source>
+        <translation>Dziki</translation>
+    </message>
+    <message>
+        <source>Tame</source>
+        <translation>Oswojony</translation>
+    </message>
+    <message>
+        <source>With class</source>
+        <translation>Z klasą</translation>
+    </message>
+    <message>
+        <source>Cult</source>
+        <translation>Kultowy</translation>
+    </message>
+    <message>
+        <source>Moderated</source>
+        <translation>Moderowany</translation>
+    </message>
+    <message>
+        <source>Recommended</source>
+        <translation>Polecany</translation>
+    </message>
+    <message>
+        <source>Teen</source>
+        <translation>Teen</translation>
+    </message>
+    <message>
+        <source>Common</source>
+        <translation>Towarzyskie</translation>
+    </message>
+    <message>
+        <source>Erotic</source>
+        <translation>Erotyczne</translation>
+    </message>
+    <message>
+        <source>Thematic</source>
+        <translation>Tematyczne</translation>
+    </message>
+    <message>
+        <source>Regional</source>
+        <translation>Regionalne</translation>
     </message>
 </context>
 <context>

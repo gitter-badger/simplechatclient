@@ -44,11 +44,6 @@ private:
     int getIndex(QComboBox *comboBox, const QString &strFindText);
     QString convertTextToDesc(QString strContent);
     QString convertDescToText(QString strContent);
-    QString convertCodeToCountry(const QString &strCountryCode);
-    QString convertCountryToCode(const QString &strCountry);
-    QString convertIntToMonth(const QString &strConvertMonth);
-    QString convertMonthToInt(const QString &strMonth);
-    QString convertType(const QString &strType);
 
 private slots:
     void avatarFinished(QNetworkReply *reply);

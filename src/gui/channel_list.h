@@ -36,10 +36,7 @@ private:
     void setDefaultValues();
     void createSignals();
 
-    bool isErotic(const QString &strChannel);
     void getOptions();
-    QString channelTypeToString(int type);
-    QString channelCatToString(int cat, bool moderated, bool recommended);
     bool showChannel(const QString &name, int people, int cat, int type, bool moderated, bool recommended);
 
     QString strSearch;
