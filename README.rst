@@ -11,8 +11,9 @@ The program of the assumptions is small, lightweight and stable client.
 Release Information
 *******************
 
-This repo contains in development code for future releases. To download the
-latest stable release please visit the `Simple Chat Client Downloads
+This repo contains in development code for future releases.
+
+To download the latest stable release please visit the `Simple Chat Client Downloads
 <http://simplechatclien.sourceforge.net/download/>`_ page.
 
 *******************
@@ -45,15 +46,27 @@ On Windows "make install" does not fully work. Edit cmake options in compile.bat
 Available options
 =========
 
--   -DWITH_KAMERZYSTA=ON|OFF
-      ON - compile with Kamerzysta connection (default=ON on Windows)
-      OFF - compile with internal webcam window (default=OFF on Unix/Linux)
+::
 
--   -DWITH_PHONON=ON|OFF
-      compile with Phonon (default=ON)
+	-DWITH_KAMERZYSTA=ON|OFF
 
--   -DWIN32_QCA2_DIR=DIR
-      compile with custom libQCA path i.e.: -DWIN32_QCA2_DIR=C:\QCA2
+-	ON - compile with Kamerzysta connection (default=ON on Windows)
+-	OFF - compile with internal webcam window (default=OFF on Unix/Linux)
 
--   -DCMAKE_BUILD_TYPE=Debug
-      compile with full debug
+::
+
+	-DWITH_PHONON=ON|OFF
+
+compile with Phonon (default=ON)
+
+::
+
+	-DWIN32_QCA2_DIR=DIR
+
+compile with custom libQCA path i.e.: -DWIN32_QCA2_DIR=C:\QCA2
+
+::
+
+	-DCMAKE_BUILD_TYPE=Debug
+
+compile with full debug
