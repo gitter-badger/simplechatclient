@@ -134,7 +134,8 @@ void Message::showMessage(const QString &strChannel, const QString &strData, Mes
         Awaylog::instance()->add(iTime, strChannel, strAwaylogData);
 
         // tray
-        Tray::instance()->showMessage(strChannel, strAwaylogData);
+        if (Settings::instance()->get("tray_message") == "true")
+            Tray::instance()->showMessage(strChannel, strAwaylogData);
 
         // sound
         if (Settings::instance()->get("disable_sounds") == "false")

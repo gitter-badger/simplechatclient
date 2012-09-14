@@ -190,6 +190,7 @@ QHash<QString,QString> Config::getDefaultValues()
         lDefaultValues.insert("winamp", "$song [$position/$length] //muzyka");
 
         lDefaultValues.insert("tray_message", "true");
+
         lDefaultValues.insert("always_quit", "false");
     }
 
