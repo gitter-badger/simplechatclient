@@ -40,6 +40,7 @@ private:
     QHash<QString,QString> settings;
 
     void init();
+    void clear();
 };
 
 #endif // SETTINGS_H

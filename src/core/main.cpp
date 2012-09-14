@@ -34,9 +34,10 @@
 
 void displayVersion()
 {
-    printf("Simple Chat Client\n\n"
+    printf("Simple Chat Client %s\n\n"
            "License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>\n"
-           "This is free software: you are free to change and redistribute it.\n\n");
+           "This is free software: you are free to change and redistribute it.\n\n",
+           qPrintable(Settings::instance()->get("version")));
 }
 
 void displayOptions()

@@ -43,15 +43,8 @@ public:
     Core();
     virtual ~Core();
     void createAndShowGui();
-    void createSettings();
-    // old
-    void convertOldConfig();
-    // config
-    void configValues();
-    void configProfileValues();
-    // window
+    void reloadSettings();
     MainWindow *mainWindow();
-    // language
     void refreshLanguage();
 
     // kamerzysta socket
@@ -70,6 +63,13 @@ private:
     QTranslator sccTranslator;
 
     void init();
+    void createSettings();
+    // old config
+    void convertOldConfig();
+    // reload config
+    void configValues();
+    void configProfileValues();
+    // fix settings
     void fixSettings();
 };
 

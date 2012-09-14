@@ -38,6 +38,13 @@ Settings::Settings()
 
 void Settings::init()
 {
+    clear();
+
+    set("version", "1.6.0.dev");
+}
+
+void Settings::clear()
+{
     settings.clear();
 }
 

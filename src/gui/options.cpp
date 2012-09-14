@@ -526,7 +526,7 @@ void DlgOptions::currentProfileChanged(int row)
     delete pConfig;
 
     // refresh settings
-    Core::instance()->createSettings();
+    Core::instance()->reloadSettings();
 
     // refresh options
     setDefaultValues();

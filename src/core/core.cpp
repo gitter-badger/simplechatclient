@@ -68,6 +68,7 @@ void Core::init()
 {
     // create settings
     createSettings();
+    reloadSettings();
 
     // language
     refreshLanguage();
@@ -97,12 +98,12 @@ void Core::createAndShowGui()
 void Core::createSettings()
 {
     // default settings
-    Settings::instance()->set("version", "1.6.0.dev");
     Settings::instance()->set("available_version", QString::null);
     Settings::instance()->set("whats_new", QString::null);
     Settings::instance()->set("motd", QString::null);
     Settings::instance()->set("version_status", "unknown");
     Settings::instance()->set("update_url", QString::null);
+
     Settings::instance()->set("logged", "false");
     Settings::instance()->set("busy", "false");
     Settings::instance()->set("away", "false");
@@ -119,7 +120,10 @@ void Core::createSettings()
     Settings::instance()->set("onetzuo_ticket", QString::null);
     Settings::instance()->set("last_active", "0");
     Settings::instance()->set("reconnect", "true");
+}
 
+void Core::reloadSettings()
+{
     // read config
     configValues();
 
