@@ -22,11 +22,11 @@ SOURCES += src/avatars/avatar.cpp \
     src/common/winamp.cpp \
     src/common/xml.cpp \
     src/core/core.cpp \
-    src/core/debug.cpp \
-    src/core/debug_block.cpp \
     src/core/main.cpp \
     src/core/mainwindow.cpp \
     src/core/network.cpp \
+    src/debug/debug.cpp \
+    src/debug/debug_block.cpp \
     src/gui/about.cpp \
     src/gui/avatar_edit.cpp \
     src/gui/awaylog.cpp \
@@ -123,12 +123,12 @@ HEADERS += src/avatars/avatar.h \
     src/common/winamp.h \
     src/common/xml.h \
     src/core/core.h \
-    src/core/debug.h \
-    src/core/debug_block.h \
     src/core/defines.h \
     src/core/main.h \
     src/core/mainwindow.h \
     src/core/network.h \
+    src/debug/debug.h \
+    src/debug/debug_block.h \
     src/gui/about.h \
     src/gui/avatar_edit.h \
     src/gui/awaylog.h \

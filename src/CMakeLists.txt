@@ -51,10 +51,11 @@ set (scc_SRCS
 	common/xml.cpp
 
 	core/core.cpp
-	core/debug_block.cpp
 	core/main.cpp
 	core/mainwindow.cpp
 	core/network.cpp
+
+	debug/debug_block.cpp
 
 	gui/about.cpp
 	gui/avatar_edit.cpp
@@ -240,7 +241,7 @@ set (scc_HDRS
 	common/log.cpp
 	common/replace.h
 	core/defines.h
-	core/debug_block.h
+	debug/debug_block.h
 )
 
 # debug
@@ -255,10 +256,10 @@ set (CMAKE_CXX_FLAGS "-W -Wall ${CMAKE_CXX_FLAGS}")
 # debug
 if (UNIX)
 	LIST (APPEND scc_SRCS
-		core/debug.cpp
+		debug/debug.cpp
 	)
 	LIST (APPEND scc_HDRS
-		core/debug.h
+		debug/debug.h
 	)
 endif (UNIX)
 
