@@ -45,7 +45,6 @@ public slots:
     void refreshCSS();
     void setTopic(const QString &strChannel, const QString &strTopicContent);
     void authorTopic(const QString &strChannel, const QString &strNick);
-    void setChannelAvatar(const QString &strChannel);
 
 private:
     // params

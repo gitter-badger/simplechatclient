@@ -56,12 +56,10 @@
 
 OnetKernel::OnetKernel(TabContainer *_pTabC) : pTabC(_pTabC)
 {
-    avatar = new Avatar(pTabC);
 }
 
 OnetKernel::~OnetKernel()
 {
-    delete avatar;
 }
 
 void OnetKernel::kernel(const QString &_strData)
@@ -1317,7 +1315,7 @@ void OnetKernel::raw_111n()
         if ((Settings::instance()->get("themes") == "Origin") || (Settings::instance()->get("themes") == "Adara"))
         {
             if (!strValue.isEmpty())
-                avatar->get(strNick, "nick", strValue);
+                Avatar::instance()->get(strNick, "nick", strValue);
         }
     }
 }
@@ -1590,7 +1588,7 @@ void OnetKernel::raw_161n()
     // avatar
     QString strAvatarUrl = mKeyValue.value("avatar");
     if (!strAvatarUrl.isEmpty())
-        avatar->get(strChannel, "channel", strAvatarUrl);
+        Avatar::instance()->get(strChannel, "channel", strAvatarUrl);
 }
 
 // CS INFO #lunar

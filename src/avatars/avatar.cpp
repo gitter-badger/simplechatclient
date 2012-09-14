@@ -20,18 +20,29 @@
 #include <QDir>
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
-#include <QStringList>
 #include "avatar.h"
 #include "channel.h"
 #include "nicklist.h"
 #include "settings.h"
-#include "tab_container.h"
 
 #ifdef Q_WS_WIN
     #include <QDesktopServices>
 #endif
 
-Avatar::Avatar(TabContainer *_pTabC) : pTabC(_pTabC)
+
+Avatar * Avatar::Instance = 0;
+
+Avatar * Avatar::instance()
+{
+    if (!Instance)
+    {
+        Instance = new Avatar();
+    }
+
+    return Instance;
+}
+
+Avatar::Avatar()
 {
     accessManager = new QNetworkAccessManager;
     connect(accessManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(httpFinished(QNetworkReply*)));
@@ -73,8 +84,6 @@ void Avatar::httpFinished(QNetworkReply *reply)
         else if (strCategory == "channel")
         {
             Channel::instance()->setAvatar(strNickOrChannel, strAvatarPath);
-
-            pTabC->setChannelAvatar(strNickOrChannel);
         }
     }
 }

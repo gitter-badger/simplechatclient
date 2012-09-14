@@ -187,21 +187,6 @@ void TabContainer::authorTopic(const QString &strChannel, const QString &strNick
     Core::instance()->tw[strChannel]->topic->setToolTip(strTopicDetails);
 }
 
-void TabContainer::setChannelAvatar(const QString &strChannel)
-{
-    if (!existTab(strChannel))
-        return;
-
-    int index = Channel::instance()->getIndex(strChannel);
-
-    if (index >= 0 && index <= pTabM->count())
-    {
-        QString strAvatar = Channel::instance()->getAvatar(strChannel);
-
-        pTabM->setTabIcon(index, QIcon(strAvatar));
-    }
-}
-
 void TabContainer::resizeMainWindow(QSize s)
 {
     QHashIterator<QString, TabWidget*> i(Core::instance()->tw);

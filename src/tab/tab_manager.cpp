@@ -80,6 +80,18 @@ void TabManager::setColor(int index, QColor color)
         tab->setTabTextColor(index, color);
 }
 
+void TabManager::updateIcon(const QString &channel)
+{
+    int index = Channel::instance()->getIndex(channel);
+
+    if ((index >= 0) && (index < count()))
+    {
+        QString strAvatar = Channel::instance()->getAvatar(channel);
+
+        setTabIcon(index, QIcon(strAvatar));
+    }
+}
+
 void TabManager::hideCloseButton(int index)
 {
     if ((index >= 0) && (index < count()))

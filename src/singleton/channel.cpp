@@ -143,6 +143,8 @@ QString Channel::getAvatar(const QString &channel)
 void Channel::setAvatar(const QString &channel, const QString &path)
 {
     lAvatar[channel] = path;
+
+    Core::instance()->mainWindow()->updateChannelIcon(channel);
 }
 
 // priv

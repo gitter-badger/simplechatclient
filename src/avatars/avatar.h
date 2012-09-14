@@ -22,23 +22,21 @@
 
 class QNetworkAccessManager;
 class QNetworkReply;
-class TabContainer;
 #include <QObject>
 
-/**
- * Class for downloading avatar
- * @param TabContainer* for refresh image
- */
 class Avatar : public QObject
 {
     Q_OBJECT
+    Q_DISABLE_COPY(Avatar)
+    static Avatar *Instance;
 public:
-    Avatar(TabContainer *_pTabC);
+    static Avatar *instance();
+
+    Avatar();
     virtual ~Avatar();
     void get(const QString &strNickOrChannel, const QString &strCategory, const QString &strUrl);
 
 private:
-    TabContainer *pTabC;
     QNetworkAccessManager *accessManager;
 
     QString getAvatarPath(const QString &strAvatarPath);

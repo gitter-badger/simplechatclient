@@ -684,6 +684,11 @@ void MainWindow::refreshToolButtons(const QString &strChannel)
         pToolWidget->showModeration(false);
 }
 
+void MainWindow::updateChannelIcon(const QString &channel)
+{
+    pTabM->updateIcon(channel);
+}
+
 // part tab
 void MainWindow::tabCloseRequested(int index)
 {

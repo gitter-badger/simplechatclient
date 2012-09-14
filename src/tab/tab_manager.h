@@ -34,6 +34,7 @@ public:
     TabManager(QWidget *parent = 0);
     void setAlert(int index, ChannelColor c);
     void setColor(int index, QColor color);
+    void updateIcon(const QString &channel);
 
 private:
     QTabBar *tab;
