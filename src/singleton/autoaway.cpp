@@ -72,7 +72,7 @@ void Autoaway::timeoutAutoaway()
 
         bool bAway = Settings::instance()->get("away") == "true" ? true : false;
 
-        if ((!bAway) && (iLastActive != 0) && (iCurrentTime-iLastActive > 300000))
+        if ((!bAway) && (iLastActive != 0) && (iCurrentTime-iLastActive > 300000)) // 300s
             Core::instance()->pNetwork->send(QString("AWAY :%1").arg(tr("Not here right now")));
     }
 }

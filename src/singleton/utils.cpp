@@ -44,7 +44,7 @@ void Utils::init()
 
 bool Utils::isErotic(const QString &strChannel)
 {
-    QList<OnetChannelList> list = ChannelList::instance()->get();
+    QList<OnetChannelList> list = ChannelList::instance()->getAll();
     foreach (OnetChannelList channel, list)
     {
         QString strName = channel.name;

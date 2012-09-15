@@ -87,11 +87,6 @@ bool Network::isConnected()
 
 void Network::clearAll()
 {
-#ifdef Q_WS_X11
-    if (Settings::instance()->get("debug") == "true")
-        DEBUG_BLOCK
-#endif
-
     // close cam socket
     if (Core::instance()->kamerzystaSocket->state() == QAbstractSocket::ConnectedState)
         Core::instance()->kamerzystaSocket->disconnectFromHost();
@@ -171,11 +166,6 @@ void Network::authorize()
 
 void Network::connect()
 {
-#ifdef Q_WS_X11
-    if (Settings::instance()->get("debug") == "true")
-        DEBUG_BLOCK
-#endif
-
     if (socket->state() == QAbstractSocket::UnconnectedState)
     {
         // clear all
@@ -201,11 +191,6 @@ void Network::connect()
 
 void Network::connected()
 {
-#ifdef Q_WS_X11
-    if (Settings::instance()->get("debug") == "true")
-        DEBUG_BLOCK
-#endif
-
     Lag::instance()->reset();
 
     QString strDisplay = tr("Connected to server");
@@ -218,11 +203,6 @@ void Network::connected()
 
 void Network::disconnect()
 {
-#ifdef Q_WS_X11
-    if (Settings::instance()->get("debug") == "true")
-        DEBUG_BLOCK
-#endif
-
     // clear queue
     msgSendQueue.clear();
     msgSendQueueNS.clear();
@@ -244,11 +224,6 @@ void Network::disconnect()
 
 void Network::disconnected()
 {
-#ifdef Q_WS_X11
-    if (Settings::instance()->get("debug") == "true")
-        DEBUG_BLOCK
-#endif
-
     if (socket->error() != QAbstractSocket::UnknownSocketError)
     {
         QString strError = QString(tr("Disconnected from server [%1]")).arg(socket->errorString());
@@ -270,11 +245,6 @@ void Network::disconnected()
 
 void Network::reconnect()
 {
-#ifdef Q_WS_X11
-    if (Settings::instance()->get("debug") == "true")
-        DEBUG_BLOCK
-#endif
-
     timerReconnect->stop();
 
     if (Settings::instance()->get("reconnect") == "true")
@@ -349,11 +319,6 @@ void Network::recv()
 
 void Network::error(QAbstractSocket::SocketError error)
 {
-#ifdef Q_WS_X11
-    if (Settings::instance()->get("debug") == "true")
-        DEBUG_BLOCK
-#endif
-
     if (error == QAbstractSocket::RemoteHostClosedError) return; // supported by disconnected
 
     QString strError = QString(tr("Disconnected from server [%1]")).arg(socket->errorString());
@@ -373,12 +338,7 @@ void Network::error(QAbstractSocket::SocketError error)
 void Network::stateChanged(QAbstractSocket::SocketState socketState)
 {
     if (Settings::instance()->get("debug") == "true")
-    {
-#ifdef Q_WS_X11
-        DEBUG_BLOCK
-#endif
         qDebug() << "Network socket state changed to: " << socketState;
-    }
 
     emit socketStateChanged(socketState);
 }
@@ -394,11 +354,6 @@ void Network::timeoutPong()
     // check pong timeout
     if (iActive+301000 < iCurrentTime) // 301 sec
     {
-#ifdef Q_WS_X11
-        if (Settings::instance()->get("debug") == "true")
-            DEBUG_BLOCK
-#endif
-
         if (socket->state() == QAbstractSocket::ConnectedState)
         {
             QString strDisplay = tr("No PONG reply from server in 301 seconds. Disconnecting...");

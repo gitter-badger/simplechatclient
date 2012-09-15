@@ -242,7 +242,7 @@ void DlgChannelList::createList()
     int iThematicCount = 0;
     int iRegionalCount = 0;
 
-    QList<OnetChannelList> list1 = ChannelList::instance()->get();
+    QList<OnetChannelList> list1 = ChannelList::instance()->getAll();
     foreach (OnetChannelList channel, list1)
     {
         QString strName = channel.name;
@@ -285,7 +285,7 @@ void DlgChannelList::createList()
     int iThematicRow = 0;
     int iRegionalRow = 0;
 
-    QList<OnetChannelList> list2 = ChannelList::instance()->get();
+    QList<OnetChannelList> list2 = ChannelList::instance()->getAll();
     foreach (OnetChannelList channel, list2)
     {
         QString strName = channel.name;

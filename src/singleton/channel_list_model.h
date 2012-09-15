@@ -35,7 +35,7 @@ public:
     void init();
     void clear();
     void add(const OnetChannelList &channel);
-    QList<OnetChannelList> get();
+    QList<OnetChannelList> getAll();
     void setTime(qint64 time);
     qint64 getTime();
     void setReady(bool ready);
