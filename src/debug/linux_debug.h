@@ -17,8 +17,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef DEBUG_H
-#define DEBUG_H
+#ifndef LINUX_DEBUG_H
+#define LINUX_DEBUG_H
 
 QString create_random6();
 void crashHandler();
@@ -26,4 +26,4 @@ void gotSignal(int);
 void linuxCrashHandler();
 void messageHandler(QtMsgType, const char *);
 
-#endif // DEBUG_H
+#endif // LINUX_DEBUG_H

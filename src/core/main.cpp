@@ -20,17 +20,18 @@
 #include <QtGui/QApplication>
 #include <QTextCodec>
 #include "config.h"
-
-#ifdef Q_WS_X11
-    #include "debug.h"
-#endif
-
 #include "core.h"
 #include "settings.h"
 
 #ifdef Q_WS_WIN
     #include <windows.h>
 #endif
+
+/*
+#ifdef Q_WS_X11
+    #include "linux_debug.h"
+#endif
+*/
 
 void displayVersion()
 {
@@ -71,6 +72,7 @@ int main(int argc, char *argv[])
 
     Q_INIT_RESOURCE(scc);
 
+/*
     // linux crash handler
 #ifdef Q_WS_X11
     linuxCrashHandler();
@@ -80,6 +82,7 @@ int main(int argc, char *argv[])
 #ifdef Q_WS_X11
     qInstallMsgHandler(messageHandler);
 #endif
+*/
 
     // app
     QApplication app(argc, argv);

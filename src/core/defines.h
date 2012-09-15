@@ -25,8 +25,6 @@
 #include <QString>
 #include <QTableWidgetItem>
 
-#include "debug_block.h"
-
 enum MessageCategory {
     MessageDefault,
     MessageJoin,

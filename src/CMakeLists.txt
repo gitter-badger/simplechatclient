@@ -256,10 +256,10 @@ set (CMAKE_CXX_FLAGS "-W -Wall ${CMAKE_CXX_FLAGS}")
 # debug
 if (UNIX)
 	LIST (APPEND scc_SRCS
-		debug/debug.cpp
+		debug/linux_debug.cpp
 	)
 	LIST (APPEND scc_HDRS
-		debug/debug.h
+		debug/linux_debug.h
 	)
 endif (UNIX)
 

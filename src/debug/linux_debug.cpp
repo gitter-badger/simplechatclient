@@ -34,7 +34,7 @@
 #include <stdlib.h>
 #include <execinfo.h>
 
-#include "debug.h"
+#include "linux_debug.h"
 
 // function printBacktrace is from Kadu project (kadu.net)
 void printBacktrace(const QString &header)

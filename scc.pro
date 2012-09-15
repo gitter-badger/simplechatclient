@@ -25,8 +25,8 @@ SOURCES += src/avatars/avatar.cpp \
     src/core/main.cpp \
     src/core/mainwindow.cpp \
     src/core/network.cpp \
-    src/debug/debug.cpp \
     src/debug/debug_block.cpp \
+    src/debug/linux_debug.cpp \
     src/gui/about.cpp \
     src/gui/avatar_edit.cpp \
     src/gui/awaylog.cpp \
@@ -127,8 +127,8 @@ HEADERS += src/avatars/avatar.h \
     src/core/main.h \
     src/core/mainwindow.h \
     src/core/network.h \
-    src/debug/debug.h \
     src/debug/debug_block.h \
+    src/debug/linux_debug.h \
     src/gui/about.h \
     src/gui/avatar_edit.h \
     src/gui/awaylog.h \

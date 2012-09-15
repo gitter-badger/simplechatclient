@@ -50,8 +50,7 @@ void ChannelList::clear()
 
 void ChannelList::add(const OnetChannelList &channel)
 {
-    if (!lChannelList.contains(channel))
-        lChannelList.append(channel);
+    lChannelList.append(channel);
 }
 
 QList<OnetChannelList> ChannelList::getAll()
