@@ -75,7 +75,7 @@ private slots:
 signals:
     void socketStateChanged(QAbstractSocket::SocketState socketState);
     void kernel(const QString &strData);
-    void authorize(QString strCurrentNick, QString strNick, QString strPass);
+    void authorize(QString strNick, QString strPass);
     void updateNick(const QString &strNick);
 };
 

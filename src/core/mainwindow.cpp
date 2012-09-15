@@ -312,7 +312,7 @@ void MainWindow::createSignals()
     // signals from network
     connect(Core::instance()->pNetwork, SIGNAL(socketStateChanged(QAbstractSocket::SocketState)), this, SLOT(networkStateChanged(QAbstractSocket::SocketState)));
     connect(Core::instance()->pNetwork, SIGNAL(kernel(const QString&)), pOnetKernel, SLOT(kernel(const QString&)));
-    connect(Core::instance()->pNetwork, SIGNAL(authorize(QString,QString,QString)), pOnetAuth, SLOT(authorize(QString,QString,QString)));
+    connect(Core::instance()->pNetwork, SIGNAL(authorize(QString,QString)), pOnetAuth, SLOT(authorize(QString,QString)));
     connect(Core::instance()->pNetwork, SIGNAL(updateNick(const QString&)), pToolWidget, SLOT(updateNick(const QString&)));
 }
 

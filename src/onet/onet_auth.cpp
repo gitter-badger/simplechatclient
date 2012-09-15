@@ -55,22 +55,12 @@ OnetAuth::~OnetAuth()
     cookieJar->deleteLater();
 }
 
-void OnetAuth::authorize(QString _strNick, QString _strNickAuth, QString _strPass)
+void OnetAuth::authorize(QString _strNick, QString _strPass)
 {
-    // fix too long registered nick
-    if ((_strNick.size() > 32))
-        _strNick = _strNick.left(32);
-    // fix too long unregistered nick
-    if ((_strPass.isEmpty()) && (_strNick.size() > 31))
-        _strNick = _strNick.left(31);
-    // fix too long auth nick
-    if ((_strNickAuth.size() > 32))
-        _strNickAuth = _strNickAuth.left(32);
-
-    strNick = _strNick;
-    strNickAuth = _strNickAuth;
+    strFullNick = _strNick.left(32);
+    strNick = (_strNick.startsWith('~') ? _strNick.left(31).remove(0,1) : _strNick.left(32));
     strPass = _strPass;
-    strNickLen = QString("%1").arg(strNick.length());
+    strNickLen = QString::number(strNick.length());
     bRegisteredNick = strPass.isEmpty() ? false : true;
     bOverride = Settings::instance()->get("override") == "true" ? true : false;
 
@@ -119,7 +109,7 @@ void OnetAuth::gotDeploy(const QString &strData)
 {
     strVersion = this->getVersion(strData);
     strVersion = QString("1.1(%1 - R)").arg(strVersion);
-    strVersionLen = QString("%1").arg(strVersion.length());
+    strVersionLen = QString::number(strVersion.length());
 }
 
 void OnetAuth::getKropka()
@@ -381,7 +371,7 @@ void OnetAuth::requestFinished(const QString &strData)
             // send auth
             if (Core::instance()->pNetwork->isConnected())
             {
-                Core::instance()->pNetwork->send(QString("NICK %1").arg(strNickAuth));
+                Core::instance()->pNetwork->send(QString("NICK %1").arg(strFullNick));
                 Core::instance()->pNetwork->send("AUTHKEY");
             }
         }

@@ -38,7 +38,7 @@ public:
     virtual ~OnetAuth();
 
 public slots:
-    void authorize(QString _strNick, QString _strNickAuth, QString _strPass);
+    void authorize(QString _strNick, QString _strPass);
 
 private:
     enum AuthType
@@ -62,7 +62,7 @@ private:
     QTimer *timerSk;
 
     QString strNick;
-    QString strNickAuth;
+    QString strFullNick;
     QString strPass;
     QString strNickLen;
     QString strVersionLen;

@@ -155,13 +155,8 @@ void Network::authorize()
     // update nick
     emit updateNick(strNick);
 
-    // set current nick
-    QString strCurrentNick = strNick;
-    if (strCurrentNick[0] == '~')
-        strCurrentNick = strNick.right(strNick.length()-1);
-
     // request uo key
-    emit authorize(strCurrentNick, strNick, strPass);
+    emit authorize(strNick, strPass);
 }
 
 void Network::connect()
