@@ -428,7 +428,7 @@ void OnetKernel::raw_join()
         Core::instance()->pNetwork->send(QString("CS INFO %1 i").arg(strChannel));
 
     // nick avatar
-    if (strNick[0] != '~')
+    if (!strNick.startsWith('~'))
     {
         if ((Settings::instance()->get("themes") == "Origin") || (Settings::instance()->get("themes") == "Adara")) // with avatars
             Core::instance()->pNetwork->send(QString("NS INFO %1 s").arg(strNick));
@@ -2701,7 +2701,7 @@ void OnetKernel::raw_353()
             Nicklist::instance()->addUser(strChannel, strCleanNick, strModes);
 
             // nick avatar
-            if (strCleanNick[0] != '~')
+            if (!strCleanNick.startsWith('~'))
             {
                 if ((Settings::instance()->get("themes") == "Origin") || (Settings::instance()->get("themes") == "Adara")) // with avatars
                     Core::instance()->pNetwork->send(QString("NS INFO %1 s").arg(strCleanNick));
@@ -3193,7 +3193,7 @@ void OnetKernel::raw_433()
     Settings::instance()->set("reconnect", "false");
     Core::instance()->pNetwork->disconnect();
 
-    if (strNick[0] != '~')
+    if (!strNick.startsWith('~'))
     {
         QString strMessage =
             QString("%1\r\n%2").arg(

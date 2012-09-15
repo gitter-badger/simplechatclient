@@ -58,7 +58,7 @@ OnetAuth::~OnetAuth()
 void OnetAuth::authorize(QString _strNick, QString _strPass)
 {
     strFullNick = _strNick.left(32);
-    strNick = (_strNick.startsWith('~') ? _strNick.left(31).remove(0,1) : _strNick.left(32));
+    strNick = (_strNick.startsWith('~') ? _strNick.remove(0,1).left(31) : _strNick.left(32));
     strPass = _strPass;
     strNickLen = QString::number(strNick.length());
     bRegisteredNick = strPass.isEmpty() ? false : true;

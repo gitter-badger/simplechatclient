@@ -449,9 +449,7 @@ void MainWindow::networkStateChanged(QAbstractSocket::SocketState socketState)
     {
         QString strNick = Settings::instance()->get("nick");
 
-        bool bRegistered = false;
-        if (strNick[0] != '~')
-            bRegistered = true;
+        bool bRegistered = (strNick.startsWith('~') ? false : true);
 
         if (bRegistered)
         {

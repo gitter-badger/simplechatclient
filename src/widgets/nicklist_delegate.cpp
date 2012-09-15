@@ -95,7 +95,7 @@ void NickListDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opti
     if (modes.contains(FLAG_DEV)) { icons << QIcon(":/images/dev.png"); }
 
     // avatar
-    if ((nick[0] != '~') && (strThemes == "Origin"))
+    if ((!nick.startsWith('~')) && (strThemes == "Origin"))
     {
         QIcon avatar(userAvatarPath);
 
@@ -112,7 +112,7 @@ void NickListDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opti
         painter->setFont(QFont(option.font.family(), option.font.pointSize(), busy ? QFont::Light : QFont::Normal, busy));
 
         int x = option.rect.left();
-        if (nick[0] != '~') x += 40;
+        if (!nick.startsWith('~')) x += 40;
         int y = option.rect.top() + (option.rect.height() / 2) + (option.font.pointSize() / 2);
         painter->drawText(x, y, nick);
     }

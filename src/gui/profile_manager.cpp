@@ -135,7 +135,7 @@ void DlgProfileManager::itemClicked()
 {
     QString strNick = ui.listWidget->selectedItems().at(0)->text();
 
-    if (strNick[0] != '~')
+    if (!strNick.startsWith('~'))
         ui.pushButton_edit->setEnabled(true);
     else
         ui.pushButton_edit->setEnabled(false);

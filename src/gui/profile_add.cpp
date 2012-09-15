@@ -86,7 +86,7 @@ void DlgProfileAdd::hidePass()
     QString strNick = ui.lineEdit_nick->text();
 
     // fix nick
-    if ((!strNick.isEmpty()) && (strNick[0] != '~'))
+    if ((!strNick.isEmpty()) && (!strNick.startsWith('~')))
         ui.lineEdit_nick->setText("~"+strNick);
 
     ui.lineEdit_nick->setFocus();
@@ -100,7 +100,7 @@ void DlgProfileAdd::showPass()
     QString strNick = ui.lineEdit_nick->text();
 
     // fix nick
-    if ((!strNick.isEmpty()) && (strNick[0] == '~'))
+    if ((!strNick.isEmpty()) && (strNick.startsWith('~')))
         ui.lineEdit_nick->setText(strNick.remove(0,1));
 
     ui.lineEdit_nick->setFocus();
@@ -128,7 +128,7 @@ void DlgProfileAdd::buttonOk()
     if (ui.radioButton_unregistered_nick->isChecked())
     {
         // fix nick
-        if (strNick[0] != '~')
+        if (!strNick.startsWith('~'))
             strNick = "~"+strNick;
 
         strPass = QString::null;
@@ -136,14 +136,14 @@ void DlgProfileAdd::buttonOk()
     else if (ui.radioButton_registered_nick->isChecked())
     {
         // fix nick
-        if (strNick[0] == '~')
+        if (strNick.startsWith('~'))
             strNick.remove(0,1);
 
         strPass = ui.lineEdit_password->text();
     }
 
     // fix nick
-    if ((strPass.isEmpty()) && (strNick[0] != '~'))
+    if ((strPass.isEmpty()) && (!strNick.startsWith('~')))
         strNick = '~'+strNick;
 
     // fix too long nick
