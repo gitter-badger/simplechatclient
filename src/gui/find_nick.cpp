@@ -18,8 +18,10 @@
  */
 
 #include <QDesktopWidget>
+#include <QMenu>
 #include <QTimer>
 #include "core.h"
+#include "channel.h"
 #include "defines.h"
 #include "find_nick_model.h"
 #include "find_nick.h"
@@ -38,19 +40,54 @@ DlgFindNick::DlgFindNick(QWidget *parent) : QDialog(parent)
 
 void DlgFindNick::createGui()
 {
+    ui.toolButton_options->setEnabled(false);
+
     ui.pushButton_search->setIcon(QIcon(":/images/oxygen/16x16/edit-find.png"));
     ui.pushButton_clear->setIcon(QIcon(":/images/oxygen/16x16/draw-eraser.png"));
+    ui.toolButton_options->setIcon(QIcon(":/images/oxygen/16x16/applications-system.png"));
     ui.buttonBox->button(QDialogButtonBox::Close)->setIcon(QIcon(":/images/oxygen/16x16/dialog-close.png"));
 
     ui.label_find_nick->setText(tr("Find nick:"));
     ui.pushButton_search->setText(tr("Search"));
     ui.pushButton_clear->setText(tr("Clear"));
 
+    ui.toolButton_options->setText(tr("Options"));
+
+    QMenu *optionsMenu = new QMenu(this);
+    optionsMenu->addAction(QIcon(":/images/oxygen/16x16/list-add-user.png"), tr("Priv"), this, SLOT(priv()));
+    optionsMenu->addAction(QIcon(":/images/oxygen/16x16/user-properties.png"), tr("Whois"), this, SLOT(whois()));
+
+    QMenu *mInvite = new QMenu(tr("Invite"));
+    mInvite->setIcon(QIcon(":/images/oxygen/16x16/legalmoves.png"));
+
+    QList<QString> lChannelsCleared = Channel::instance()->getCleared();
+    for (int i = 0; i < lChannelsCleared.size(); ++i)
+    {
+        QString strOpenChannel = lChannelsCleared[i];
+        if (strOpenChannel[0] == '^')
+            strOpenChannel = Channel::instance()->getPriv(strOpenChannel);
+
+        openChannelsActs[i] = new QAction(this);
+        openChannelsActs[i]->setIcon(QIcon(":/images/oxygen/16x16/irc-join-channel.png"));
+        openChannelsActs[i]->setVisible(false);
+        openChannelsActs[i]->setText(strOpenChannel);
+        openChannelsActs[i]->setData(lChannelsCleared[i]);
+        openChannelsActs[i]->setVisible(true);
+
+        connect(openChannelsActs[i], SIGNAL(triggered()), this, SLOT(invite()));
+        mInvite->addAction(openChannelsActs[i]);
+    }
+    optionsMenu->addMenu(mInvite);
+
+    ui.toolButton_options->setMenu(optionsMenu);
+
+    //focus
     ui.lineEdit_search->setFocus();
 }
 
 void DlgFindNick::createSignals()
 {
+    connect(ui.listWidget_nicks, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(itemClicked(QListWidgetItem*)));
     connect(ui.pushButton_search, SIGNAL(clicked()), this, SLOT(buttonFind()));
     connect(ui.pushButton_clear, SIGNAL(clicked()), this, SLOT(buttonClear()));
     connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(close()));
@@ -79,6 +116,7 @@ void DlgFindNick::buttonClear()
     ui.lineEdit_search->clear();
     ui.listWidget_nicks->clear();
     ui.listWidget_nicks->setEnabled(false);
+    ui.toolButton_options->setEnabled(false);
 }
 
 void DlgFindNick::refreshList()
@@ -106,4 +144,47 @@ void DlgFindNick::refreshList()
         ui.listWidget_nicks->setEnabled(true);
     else
         ui.listWidget_nicks->setEnabled(false);
+
+    ui.toolButton_options->setEnabled(false);
+}
+
+void DlgFindNick::itemClicked(QListWidgetItem *)
+{
+    if (!ui.toolButton_options->isEnabled())
+        ui.toolButton_options->setEnabled(true);
+}
+
+void DlgFindNick::priv()
+{
+    if (ui.listWidget_nicks->selectedItems().size() != 0)
+    {
+        QString strNick = ui.listWidget_nicks->selectedItems().at(0)->text();
+
+        Core::instance()->pNetwork->send(QString("PRIV %1").arg(strNick));
+    }
+}
+
+void DlgFindNick::whois()
+{
+    if (ui.listWidget_nicks->selectedItems().size() != 0)
+    {
+        QString strNick = ui.listWidget_nicks->selectedItems().at(0)->text();
+
+        Core::instance()->pNetwork->send(QString("WHOIS %1 :%1").arg(strNick));
+    }
+}
+
+void DlgFindNick::invite()
+{
+    if (ui.listWidget_nicks->selectedItems().size() != 0)
+    {
+        QString strNick = ui.listWidget_nicks->selectedItems().at(0)->text();
+
+        QAction *action = qobject_cast<QAction *>(sender());
+        if (action)
+        {
+            QString strInviteChannel = action->data().toString();
+            Core::instance()->pNetwork->send(QString("INVITE %1 %2").arg(strNick, strInviteChannel));
+        }
+    }
 }

@@ -924,6 +924,22 @@
         <source>Clear</source>
         <translation>Wyczyść</translation>
     </message>
+    <message>
+        <source>Options</source>
+        <translation>Opcje</translation>
+    </message>
+    <message>
+        <source>Priv</source>
+        <translation>Rozmowa prywatna</translation>
+    </message>
+    <message>
+        <source>Whois</source>
+        <translation>Gdzie jest</translation>
+    </message>
+    <message>
+        <source>Invite</source>
+        <translation>Zaproś</translation>
+    </message>
 </context>
 <context>
     <name>DlgEmoticons</name>

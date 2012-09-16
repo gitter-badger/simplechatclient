@@ -20,6 +20,7 @@
 #ifndef FIND_NICK_H
 #define FIND_NICK_H
 
+#include "defines.h"
 #include <QDialog>
 #include "ui_find_nick.h"
 
@@ -31,6 +32,7 @@ public:
 
 private:
     Ui::uiFindNick ui;
+    QAction *openChannelsActs[MAX_OPEN_CHANNELS];
 
     void createGui();
     void createSignals();
@@ -39,6 +41,10 @@ private slots:
     void buttonFind();
     void buttonClear();
     void refreshList();
+    void itemClicked(QListWidgetItem*);
+    void priv();
+    void whois();
+    void invite();
 };
 
 #endif // FIND_NICK_H
