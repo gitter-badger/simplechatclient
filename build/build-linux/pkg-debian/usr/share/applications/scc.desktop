@@ -1,0 +1,11 @@
+[Desktop Entry]
+Name=Simple Chat Client
+Version=1.5
+Exec=/usr/bin/scc
+Comment=Simple Chat Client
+Icon=/usr/share/scc/scc.png
+Type=Application
+Terminal=false
+StartupNotify=true
+Encoding=UTF-8
+Categories=Qt;InstantMessaging;Network; 

@@ -3,9 +3,9 @@
 set SCC_DIR=%CD%
 set DESTINATION="C:\scc\release"
 set QT_DIR="C:\Qt\4.8.2"
-set QCA2_DIR="C:\qca2"
+set QCA2_DIR="C:\qca-2.0.3"
 set OPENSSL_DIR="C:\OpenSSL-Win32"
-set QCA_OSSL_DIR=%SCC_DIR%\3rdparty\qca-ossl-2.0.0-beta3
+set QCA_OSSL_DIR="C:\qca-ossl-2.0.0-beta3"
 set MINGW_DIR="C:\MinGW"
 set CMAKE_DIR="C:\Program Files\CMake 2.8"
 set CMAKE32_DIR="C:\Program Files (x86)\CMake 2.8"
