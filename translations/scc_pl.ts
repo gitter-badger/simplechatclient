@@ -34,6 +34,17 @@
     </message>
 </context>
 <context>
+    <name>Channel</name>
+    <message>
+        <source>Topic:</source>
+        <translation>Temat:</translation>
+    </message>
+    <message>
+        <source>Topic set by %1</source>
+        <translation>Temat ustawiony przez %1</translation>
+    </message>
+</context>
+<context>
     <name>ChatView</name>
     <message>
         <source>Join channel</source>
@@ -3157,17 +3168,6 @@
     <message>
         <source>Warning: AES and Blowfish is not supported!</source>
         <translation>Ostrzeżenie: AES oraz Blowfish nie są obsługiwane!</translation>
-    </message>
-</context>
-<context>
-    <name>TabContainer</name>
-    <message>
-        <source>Topic:</source>
-        <translation>Temat:</translation>
-    </message>
-    <message>
-        <source>Topic set by %1</source>
-        <translation>Temat ustawiony przez %1</translation>
     </message>
 </context>
 <context>

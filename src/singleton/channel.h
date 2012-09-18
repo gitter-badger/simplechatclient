@@ -45,6 +45,9 @@ public:
     int getIndex(const QString &channel);
     QString getCurrent();
     QList<CaseIgnoreString> getSorted();
+    // topic
+    void setTopic(const QString &strChannel, const QString &strTopicContent);
+    void setAuthorTopic(const QString &strChannel, const QString &strNick);
     // display channel info
     void addChannelInfo(const QString &channel);
     bool containsChannelInfo(const QString &channel);

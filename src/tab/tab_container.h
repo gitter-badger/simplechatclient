@@ -33,7 +33,6 @@ class TabContainer : public QObject
 public:
     TabContainer(TabManager *_pTabM);
     virtual ~TabContainer();
-    bool existTab(const QString &strChannel);
     void addTab(const QString &strChannel);
     void removeTab(const QString &strChannel);
     void renameTab(const QString &strChannel, const QString &strNewName);
@@ -43,8 +42,6 @@ public:
 public slots:
     void refreshColors();
     void refreshCSS();
-    void setTopic(const QString &strChannel, const QString &strTopicContent);
-    void authorTopic(const QString &strChannel, const QString &strNick);
 
 private:
     // params

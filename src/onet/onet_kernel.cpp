@@ -976,7 +976,7 @@ void OnetKernel::raw_topic()
     Message::instance()->showMessage(strChannel, strDisplay, MessageMode);
 
     // set topic in widget
-    pTabC->setTopic(strChannel, strTopic);
+    Channel::instance()->setTopic(strChannel, strTopic);
 
     // get info
     Core::instance()->pNetwork->send(QString("CS INFO %1 i").arg(strChannel));
@@ -1522,7 +1522,7 @@ void OnetKernel::raw_160n()
         ChannelSettingsModel::instance()->setInfo("topic", strTopic);
 
     // set topic in widget
-    pTabC->setTopic(strChannel, strTopic);
+    Channel::instance()->setTopic(strChannel, strTopic);
 }
 
 // CS INFO #scc
@@ -1582,7 +1582,7 @@ void OnetKernel::raw_161n()
     {
         QString strDT = QDateTime::fromTime_t(strTopicDate.toInt()).toString("dd MMM yyyy hh:mm:ss");
         QString strTopicDetails = QString("%1 (%2)").arg(strTopicAuthor, strDT);
-        pTabC->authorTopic(strChannel, strTopicDetails);
+        Channel::instance()->setAuthorTopic(strChannel, strTopicDetails);
     }
 
     // avatar
@@ -2225,7 +2225,7 @@ void OnetKernel::raw_261n()
         Core::instance()->pNetwork->sendQueue(QString("CS HOMES"));
 
         // part
-        if (pTabC->existTab(strChannel))
+        if (Core::instance()->tw.contains(strChannel))
             Core::instance()->pNetwork->send(QString("PART %1").arg(strChannel));
     }
     else if (strNick.toLower() == "nickserv")
@@ -2582,7 +2582,7 @@ void OnetKernel::raw_332()
     for (int i = 4; i < strDataList.size(); i++) { if (i != 4) strTopic += " "; strTopic += strDataList[i]; }
     if (strTopic[0] == ':') strTopic.remove(0,1);
 
-    pTabC->setTopic(strChannel, strTopic);
+    Channel::instance()->setTopic(strChannel, strTopic);
 }
 
 // :cf1f1.onet 333 scc_test #scc Merovingian!26269559 1253193639
@@ -2859,7 +2859,7 @@ void OnetKernel::raw_401()
     // close inactive priv
     if (strNickChannel[0] == '^')
     {
-        if (pTabC->existTab(strNickChannel))
+        if (Core::instance()->tw.contains(strNickChannel))
             pTabC->removeTab(strNickChannel);
     }
 }
@@ -2920,7 +2920,7 @@ void OnetKernel::raw_403()
     // close inactive priv
     if (strChannel[0] == '^')
     {
-        if (pTabC->existTab(strChannel))
+        if (Core::instance()->tw.contains(strChannel))
             pTabC->removeTab(strChannel);
     }
 }
@@ -3609,7 +3609,7 @@ void OnetKernel::raw_473()
     // close inactive priv
     if (strChannel[0] == '^')
     {
-        if (pTabC->existTab(strChannel))
+        if (Core::instance()->tw.contains(strChannel))
             pTabC->removeTab(strChannel);
     }
 }

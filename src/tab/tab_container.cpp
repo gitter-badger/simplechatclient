@@ -18,7 +18,6 @@
  */
 
 #include "channel.h"
-#include "convert.h"
 #include "core.h"
 #include "log.h"
 #include "settings.h"
@@ -48,14 +47,9 @@ TabContainer::~TabContainer()
     }
 }
 
-bool TabContainer::existTab(const QString &strChannel)
-{
-    return Core::instance()->tw.contains(strChannel);
-}
-
 void TabContainer::addTab(const QString &strChannel)
 {
-    if (existTab(strChannel))
+    if (Core::instance()->tw.contains(strChannel))
         return;
 
     // update open channels
@@ -84,7 +78,7 @@ void TabContainer::addTab(const QString &strChannel)
 
 void TabContainer::removeTab(const QString &strChannel)
 {
-    if ((!existTab(strChannel)) || (strChannel == DEBUG_WINDOW) || (strChannel == STATUS_WINDOW))
+    if ((!Core::instance()->tw.contains(strChannel)) || (strChannel == DEBUG_WINDOW) || (strChannel == STATUS_WINDOW))
         return;
 
     // remove from open channels
@@ -150,41 +144,6 @@ void TabContainer::refreshCSS()
 
         Core::instance()->tw[strChannel]->pChatView->refreshCSS();
     }
-}
-
-void TabContainer::setTopic(const QString &strChannel, const QString &strTopicContent)
-{
-    if (!existTab(strChannel))
-        return;
-
-    QString strTopic = strTopicContent;
-    QString strTooltip = strTopicContent;
-
-    // convert emoticons, font
-    Convert::fixHtmlChars(strTopic);
-    Convert::convertText(strTopic);
-
-    // fix length bug
-    if (strTopic.contains(QRegExp("\\S{100}")))
-        strTopic.replace(QRegExp("(\\S{100})"), "\\1 ");
-
-    // set topic
-    Core::instance()->tw[strChannel]->topic->setText(QString("<b>%1</b> %2").arg(tr("Topic:"), strTopic));
-
-    // tooltip
-    Convert::fixHtmlChars(strTooltip);
-    Convert::simpleConvert(strTooltip);
-
-    Core::instance()->tw[strChannel]->topic->setToolTip(strTooltip);
-}
-
-void TabContainer::authorTopic(const QString &strChannel, const QString &strNick)
-{
-    if (!existTab(strChannel))
-        return;
-
-    QString strTopicDetails = QString(tr("Topic set by %1")).arg(strNick);
-    Core::instance()->tw[strChannel]->topic->setToolTip(strTopicDetails);
 }
 
 void TabContainer::resizeMainWindow(QSize s)

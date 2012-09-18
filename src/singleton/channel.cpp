@@ -18,6 +18,7 @@
  */
 
 #include "core.h"
+#include "convert.h"
 #include "mainwindow.h"
 #include "channel.h"
 
@@ -109,6 +110,39 @@ QList<CaseIgnoreString> Channel::getSorted()
     qSort(lChannelsCaseIgnore.begin(), lChannelsCaseIgnore.end());
 
     return lChannelsCaseIgnore;
+}
+
+// topic
+void Channel::setTopic(const QString &strChannel, const QString &strTopicContent)
+{
+    if (!Core::instance()->tw.contains(strChannel))
+        return;
+
+    QString strTopic = strTopicContent;
+    QString strTooltip = strTopicContent;
+
+    // convert emoticons, font
+    Convert::fixHtmlChars(strTopic);
+    Convert::convertText(strTopic);
+
+    // fix length bug
+    if (strTopic.contains(QRegExp("\\S{100}")))
+        strTopic.replace(QRegExp("(\\S{100})"), "\\1 ");
+
+    // set topic
+    Core::instance()->tw[strChannel]->topic->setText(QString("<b>%1</b> %2").arg(tr("Topic:"), strTopic));
+
+    // tooltip
+    Convert::fixHtmlChars(strTooltip);
+    Convert::simpleConvert(strTooltip);
+
+    Core::instance()->tw[strChannel]->topic->setToolTip(strTooltip);
+}
+
+void Channel::setAuthorTopic(const QString &strChannel, const QString &strNick)
+{
+    QString strTopicDetails = QString(tr("Topic set by %1")).arg(strNick);
+    Core::instance()->tw[strChannel]->topic->setToolTip(strTopicDetails);
 }
 
 // channel info
