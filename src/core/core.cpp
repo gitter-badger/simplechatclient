@@ -127,38 +127,11 @@ void Core::reloadSettings()
     // read config
     configValues();
 
-    // convert old config profile
-    convertOldConfig();
-
     // read config profile
     configProfileValues();
 
     // check settings
     fixSettings();
-}
-
-// TODO wyrzucic w wersji > 1.6
-void Core::convertOldConfig()
-{
-    Config *pConfig = new Config();
-
-    // change on off -> true false
-    QHash<QString,QString> lConfigValues = pConfig->read();
-
-    QHashIterator <QString, QString> i(lConfigValues);
-    while (i.hasNext())
-    {
-        i.next();
-        QString strKey = i.key();
-        QString strValue = i.value();
-
-        if (strValue == "on")
-            pConfig->set(strKey, "true");
-        else if (strValue == "off")
-            pConfig->set(strKey, "false");
-    }
-
-    delete pConfig;
 }
 
 void Core::configValues()

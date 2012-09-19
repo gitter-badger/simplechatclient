@@ -64,8 +64,6 @@ private:
 
     void init();
     void createSettings();
-    // old config
-    void convertOldConfig();
     // reload config
     void configValues();
     void configProfileValues();
