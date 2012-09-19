@@ -141,6 +141,9 @@ void Channel::setTopic(const QString &strChannel, const QString &strTopicContent
 
 void Channel::setAuthorTopic(const QString &strChannel, const QString &strNick)
 {
+    if (!Core::instance()->tw.contains(strChannel))
+        return;
+
     QString strTopicDetails = QString(tr("Topic set by %1")).arg(strNick);
     Core::instance()->tw[strChannel]->topic->setToolTip(strTopicDetails);
 }
