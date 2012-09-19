@@ -20,7 +20,6 @@
 #ifndef ONET_KERNEL_H
 #define ONET_KERNEL_H
 
-class Avatar;
 class TabContainer;
 #include <QObject>
 #include <QStringList>
@@ -41,7 +40,6 @@ public slots:
 private:
     TabContainer *pTabC;
 
-    Avatar *avatar;
     QString strData;
     QStringList strDataList;
 

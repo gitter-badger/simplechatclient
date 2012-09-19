@@ -972,11 +972,15 @@ void OnetKernel::raw_topic()
 
     QString strDisplay = QString(tr("* %1 changed the topic to: %2")).arg(strWho, strTopic);
 
-    // show msg
-    Message::instance()->showMessage(strChannel, strDisplay, MessageMode);
+    // exist channel
+    if (Core::instance()->tw.contains(strChannel))
+    {
+        // show msg
+        Message::instance()->showMessage(strChannel, strDisplay, MessageMode);
 
-    // set topic in widget
-    Channel::instance()->setTopic(strChannel, strTopic);
+        // set topic in widget
+        Channel::instance()->setTopic(strChannel, strTopic);
+    }
 
     // get info
     Core::instance()->network->send(QString("CS INFO %1 i").arg(strChannel));
@@ -1522,7 +1526,8 @@ void OnetKernel::raw_160n()
         ChannelSettingsModel::instance()->setInfo("topic", strTopic);
 
     // set topic in widget
-    Channel::instance()->setTopic(strChannel, strTopic);
+    if (Core::instance()->tw.contains(strChannel))
+        Channel::instance()->setTopic(strChannel, strTopic);
 }
 
 // CS INFO #scc
@@ -1545,7 +1550,7 @@ void OnetKernel::raw_161n()
         mKeyValue.insert(strKey, strValue);
     }
 
-    // set data
+    // channel settins - data
     if (ChannelSettingsModel::instance()->getChannel() == strChannel)
     {
         QHashIterator <QString, QString> i(mKeyValue);
@@ -1557,32 +1562,36 @@ void OnetKernel::raw_161n()
         }
     }
 
-    // channel info
-    if (!Channel::instance()->containsChannelInfo(strChannel))
+    // opened channel
+    if (Core::instance()->tw.contains(strChannel))
     {
-        if (mKeyValue.value("moderated") == "1")
+        // channel info
+        if (!Channel::instance()->containsChannelInfo(strChannel))
         {
-            QString strDisplay = QString(tr("* Channel %1 is moderated").arg(strChannel));
-            Message::instance()->showMessage(strChannel, strDisplay, MessageInfo);
-        }
+            if (mKeyValue.value("moderated") == "1")
+            {
+                QString strDisplay = QString(tr("* Channel %1 is moderated").arg(strChannel));
+                Message::instance()->showMessage(strChannel, strDisplay, MessageInfo);
+            }
 /*
-        if (mKeyValue.value("private") == "1")
-        {
-            QString strDisplay = QString(tr("* Channel %1 is private").arg(strChannel));
-            Message::instance()->showMessage(strChannel, strDisplay, MessageInfo);
-        }
+            if (mKeyValue.value("private") == "1")
+            {
+                QString strDisplay = QString(tr("* Channel %1 is private").arg(strChannel));
+                Message::instance()->showMessage(strChannel, strDisplay, MessageInfo);
+            }
 */
-        Channel::instance()->addChannelInfo(strChannel);
-    }
+            Channel::instance()->addChannelInfo(strChannel);
+        }
 
-    // update topic author
-    QString strTopicAuthor = mKeyValue.value("topicAuthor");
-    QString strTopicDate = mKeyValue.value("topicDate");
-    if ((!strTopicAuthor.isEmpty()) && (!strTopicDate.isEmpty()))
-    {
-        QString strDT = QDateTime::fromTime_t(strTopicDate.toInt()).toString("dd MMM yyyy hh:mm:ss");
-        QString strTopicDetails = QString("%1 (%2)").arg(strTopicAuthor, strDT);
-        Channel::instance()->setAuthorTopic(strChannel, strTopicDetails);
+        // update topic author
+        QString strTopicAuthor = mKeyValue.value("topicAuthor");
+        QString strTopicDate = mKeyValue.value("topicDate");
+        if ((!strTopicAuthor.isEmpty()) && (!strTopicDate.isEmpty()))
+        {
+            QString strDT = QDateTime::fromTime_t(strTopicDate.toInt()).toString("dd MMM yyyy hh:mm:ss");
+            QString strTopicDetails = QString("%1 (%2)").arg(strTopicAuthor, strDT);
+            Channel::instance()->setAuthorTopic(strChannel, strTopicDetails);
+        }
     }
 
     // avatar
@@ -2582,7 +2591,8 @@ void OnetKernel::raw_332()
     for (int i = 4; i < strDataList.size(); i++) { if (i != 4) strTopic += " "; strTopic += strDataList[i]; }
     if (strTopic[0] == ':') strTopic.remove(0,1);
 
-    Channel::instance()->setTopic(strChannel, strTopic);
+    if (Core::instance()->tw.contains(strChannel))
+        Channel::instance()->setTopic(strChannel, strTopic);
 }
 
 // :cf1f1.onet 333 scc_test #scc Merovingian!26269559 1253193639
