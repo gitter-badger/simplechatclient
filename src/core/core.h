@@ -50,7 +50,7 @@ public:
     // kamerzysta socket
     QTcpSocket *kamerzystaSocket;
     // network
-    Network *pNetwork;
+    Network *network;
     // TW (important!!!)
     QHash<QString, TabWidget*> tw;
 

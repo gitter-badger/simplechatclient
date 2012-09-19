@@ -219,7 +219,7 @@ void Kamerzysta::invite(QString strInviteNick)
     strInviteNick.remove(0,1);
     log(QString("Invite:%1").arg(strInviteNick));
 
-    Core::instance()->pNetwork->send(QString("PRIV %1").arg(strInviteNick));
+    Core::instance()->network->send(QString("PRIV %1").arg(strInviteNick));
 }
 
 void Kamerzysta::networkConnect()

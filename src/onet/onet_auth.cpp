@@ -369,10 +369,10 @@ void OnetAuth::requestFinished(const QString &strData)
             Settings::instance()->set("uo_nick", strNick);
 
             // send auth
-            if (Core::instance()->pNetwork->isConnected())
+            if (Core::instance()->network->isConnected())
             {
-                Core::instance()->pNetwork->send(QString("NICK %1").arg(strFullNick));
-                Core::instance()->pNetwork->send("AUTHKEY");
+                Core::instance()->network->send(QString("NICK %1").arg(strFullNick));
+                Core::instance()->network->send("AUTHKEY");
             }
         }
         else
@@ -390,7 +390,7 @@ void OnetAuth::requestFinished(const QString &strData)
 
 void OnetAuth::refreshSk()
 {
-    if (Core::instance()->pNetwork->isConnected() && bRegisteredNick)
+    if (Core::instance()->network->isConnected() && bRegisteredNick)
     {
         if (Settings::instance()->get("debug") == "true") { qDebug() << "Request: refresh_sk"; }
 

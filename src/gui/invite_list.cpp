@@ -86,7 +86,7 @@ void DlgInviteList::buttonWhois()
     QListWidgetItem *item = ui.listWidget->selectedItems().at(0);
     QString strNick = item->data(Qt::UserRole).toString();
 
-    Core::instance()->pNetwork->send(QString("WHOIS %1 %1").arg(strNick));
+    Core::instance()->network->send(QString("WHOIS %1 %1").arg(strNick));
 }
 
 void DlgInviteList::buttonReject()
@@ -99,7 +99,7 @@ void DlgInviteList::buttonReject()
     QString strChannel = item->data(Qt::UserRole+1).toString();
     ui.listWidget->takeItem(ui.listWidget->row(item));
 
-    Core::instance()->pNetwork->send(QString("INVREJECT %1 %2").arg(strNick, strChannel));
+    Core::instance()->network->send(QString("INVREJECT %1 %2").arg(strNick, strChannel));
     Invite::instance()->remove(strNick, strChannel);
 }
 
@@ -113,7 +113,7 @@ void DlgInviteList::buttonIgnore()
     QString strChannel = item->data(Qt::UserRole+1).toString();
     ui.listWidget->takeItem(ui.listWidget->row(item));
 
-    Core::instance()->pNetwork->send(QString("INVIGNORE %1 %2").arg(strNick, strChannel));
+    Core::instance()->network->send(QString("INVIGNORE %1 %2").arg(strNick, strChannel));
     Invite::instance()->remove(strNick, strChannel);
 }
 
@@ -127,6 +127,6 @@ void DlgInviteList::buttonAccept()
     QString strChannel = item->data(Qt::UserRole+1).toString();
     ui.listWidget->takeItem(ui.listWidget->row(item));
 
-    Core::instance()->pNetwork->send(QString("JOIN %1").arg(strChannel));
+    Core::instance()->network->send(QString("JOIN %1").arg(strChannel));
     Invite::instance()->remove(strNick, strChannel);
 }

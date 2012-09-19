@@ -102,7 +102,7 @@ void DlgFindNick::buttonFind()
     QString search = ui.lineEdit_search->text();
     if (!search.isEmpty())
     {
-        Core::instance()->pNetwork->send(QString("NS LIST %1 20").arg(search));
+        Core::instance()->network->send(QString("NS LIST %1 20").arg(search));
         refreshList();
     }
     else
@@ -160,7 +160,7 @@ void DlgFindNick::priv()
     {
         QString strNick = ui.listWidget_nicks->selectedItems().at(0)->text();
 
-        Core::instance()->pNetwork->send(QString("PRIV %1").arg(strNick));
+        Core::instance()->network->send(QString("PRIV %1").arg(strNick));
     }
 }
 
@@ -170,7 +170,7 @@ void DlgFindNick::whois()
     {
         QString strNick = ui.listWidget_nicks->selectedItems().at(0)->text();
 
-        Core::instance()->pNetwork->send(QString("WHOIS %1 :%1").arg(strNick));
+        Core::instance()->network->send(QString("WHOIS %1 :%1").arg(strNick));
     }
 }
 
@@ -184,7 +184,7 @@ void DlgFindNick::invite()
         if (action)
         {
             QString strInviteChannel = action->data().toString();
-            Core::instance()->pNetwork->send(QString("INVITE %1 %2").arg(strNick, strInviteChannel));
+            Core::instance()->network->send(QString("INVITE %1 %2").arg(strNick, strInviteChannel));
         }
     }
 }

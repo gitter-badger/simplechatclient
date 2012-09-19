@@ -153,7 +153,7 @@ void DlgOfflineMessages::buttonRead()
     if (ui.listWidget_nicks->selectedItems().size() == 0) return; // nothing selected
 
     QString strNick = ui.listWidget_nicks->selectedItems().at(0)->text();
-    Core::instance()->pNetwork->send(QString("NS OFFLINE GET %1").arg(strNick));
+    Core::instance()->network->send(QString("NS OFFLINE GET %1").arg(strNick));
 
     strCurrentNick = strNick;
     ui.label_nick->setText(QString(tr("Offline messages from %1")).arg(strNick));
@@ -173,7 +173,7 @@ void DlgOfflineMessages::buttonReject()
     if (ui.listWidget_nicks->selectedItems().size() == 0) return; // nothing selected
 
     QString strNick = ui.listWidget_nicks->selectedItems().at(0)->text();
-    Core::instance()->pNetwork->send(QString("NS OFFLINE REJECT %1").arg(strNick));
+    Core::instance()->network->send(QString("NS OFFLINE REJECT %1").arg(strNick));
 
     // remove nick
     removeNick(strNick);
@@ -189,12 +189,12 @@ void DlgOfflineMessages::buttonReply()
     // quote
     if (!messagesQuotedToSender.contains(strNick))
     {
-        Core::instance()->pNetwork->send(QString("NS OFFLINE QUOTE %1").arg(strNick));
+        Core::instance()->network->send(QString("NS OFFLINE QUOTE %1").arg(strNick));
         messagesQuotedToSender.append(strNick);
     }
 
     // reply
-    Core::instance()->pNetwork->send(QString("NS OFFLINE REPLY %1 %2").arg(strNick, strMessage));
+    Core::instance()->network->send(QString("NS OFFLINE REPLY %1 %2").arg(strNick, strMessage));
 
     // clear
     ui.lineEdit_reply->clear();

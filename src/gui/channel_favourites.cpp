@@ -83,7 +83,7 @@ void DlgChannelFavourites::refresh()
         else
         {
             ui.listWidget_channels->addItem(new QListWidgetItem(QIcon(":/images/channel_avatar.png"), strChannel));
-            Core::instance()->pNetwork->send(QString("CS INFO %1 i").arg(strChannel));
+            Core::instance()->network->send(QString("CS INFO %1 i").arg(strChannel));
         }
     }
 }
@@ -102,7 +102,7 @@ void DlgChannelFavourites::buttonAdd()
 
     if ((ok) && (!strText.isEmpty()))
     {
-        Core::instance()->pNetwork->send(QString("NS FAVOURITES ADD %1").arg(strText));
+        Core::instance()->network->send(QString("NS FAVOURITES ADD %1").arg(strText));
         QTimer::singleShot(1000*4, this, SLOT(refresh())); // 4 sec
     }
 }
@@ -119,7 +119,7 @@ void DlgChannelFavourites::buttonRemove()
 
     if ((ok) && (!strText.isEmpty()))
     {
-        Core::instance()->pNetwork->send(QString("NS FAVOURITES DEL %1").arg(strText));
+        Core::instance()->network->send(QString("NS FAVOURITES DEL %1").arg(strText));
         QTimer::singleShot(1000*4, this, SLOT(refresh())); // 4 sec
     }
 }
@@ -129,6 +129,6 @@ void DlgChannelFavourites::join()
     if (ui.listWidget_channels->selectedItems().size() != 0)
     {
         QString strChannel = ui.listWidget_channels->selectedItems().at(0)->text();
-        Core::instance()->pNetwork->send(QString("JOIN %1").arg(strChannel));
+        Core::instance()->network->send(QString("JOIN %1").arg(strChannel));
     }
 }

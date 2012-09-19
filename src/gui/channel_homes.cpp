@@ -95,7 +95,7 @@ void DlgChannelHomes::refresh()
         else
         {
             ui.listWidget_channels->addItem(new QListWidgetItem(QIcon(":/images/channel_avatar.png"), strChannel));
-            Core::instance()->pNetwork->send(QString("CS INFO %1 i").arg(strChannel));
+            Core::instance()->network->send(QString("CS INFO %1 i").arg(strChannel));
         }
     }
 }
@@ -124,7 +124,7 @@ void DlgChannelHomes::buttonCreate()
     {
         ChannelHomes::instance()->clear();
 
-        Core::instance()->pNetwork->send(QString("CS REGISTER %1").arg(strText));
+        Core::instance()->network->send(QString("CS REGISTER %1").arg(strText));
 
         QTimer::singleShot(200, this, SLOT(refresh())); // 0.2 sec
     }
@@ -140,7 +140,7 @@ void DlgChannelHomes::buttonRemove()
     {
         ChannelHomes::instance()->clear();
 
-        Core::instance()->pNetwork->send(QString("CS DROP %1").arg(strText));
+        Core::instance()->network->send(QString("CS DROP %1").arg(strText));
 
         QTimer::singleShot(200, this, SLOT(refresh())); // 0.2 sec
     }
@@ -151,7 +151,7 @@ void DlgChannelHomes::join()
     if (ui.listWidget_channels->selectedItems().size() != 0)
     {
         QString strChannel = ui.listWidget_channels->selectedItems().at(0)->text();
-        Core::instance()->pNetwork->send(QString("JOIN %1").arg(strChannel));
+        Core::instance()->network->send(QString("JOIN %1").arg(strChannel));
     }
 }
 

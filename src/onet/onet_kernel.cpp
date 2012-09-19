@@ -336,7 +336,7 @@ void OnetKernel::raw_ping()
     QString strServer = strDataList[1];
 
     if (!strServer.isEmpty())
-        Core::instance()->pNetwork->send(QString("PONG %1").arg(strServer));
+        Core::instance()->network->send(QString("PONG %1").arg(strServer));
 }
 
 // :cf1f4.onet PONG cf1f4.onet :1340185644095
@@ -425,13 +425,13 @@ void OnetKernel::raw_join()
 
     QString strMe = Settings::instance()->get("nick");
     if ((strNick == strMe) && (strChannel[0] != '^'))
-        Core::instance()->pNetwork->send(QString("CS INFO %1 i").arg(strChannel));
+        Core::instance()->network->send(QString("CS INFO %1 i").arg(strChannel));
 
     // nick avatar
     if (!strNick.startsWith('~'))
     {
         if ((Settings::instance()->get("themes") == "Origin") || (Settings::instance()->get("themes") == "Adara")) // with avatars
-            Core::instance()->pNetwork->send(QString("NS INFO %1 s").arg(strNick));
+            Core::instance()->network->send(QString("NS INFO %1 s").arg(strNick));
     }
 
     // nicklist
@@ -803,10 +803,10 @@ void OnetKernel::raw_mode()
             if ((strNick == Settings::instance()->get("nick")) && (strFlag == "+r"))
             {
                 // get my stats
-                Core::instance()->pNetwork->send(QString("RS INFO %1").arg(Settings::instance()->get("nick")));
+                Core::instance()->network->send(QString("RS INFO %1").arg(Settings::instance()->get("nick")));
 
                 // channel homes
-                Core::instance()->pNetwork->send("CS HOMES");
+                Core::instance()->network->send("CS HOMES");
             }
         }
     }
@@ -979,7 +979,7 @@ void OnetKernel::raw_topic()
     Channel::instance()->setTopic(strChannel, strTopic);
 
     // get info
-    Core::instance()->pNetwork->send(QString("CS INFO %1 i").arg(strChannel));
+    Core::instance()->network->send(QString("CS INFO %1 i").arg(strChannel));
 }
 
 // :~test34534!anonymous@2294E8.94913F.A00186.1A3C28 INVREJECT Merovingian #Scrabble
@@ -1138,7 +1138,7 @@ void OnetKernel::raw_001()
     Channel::instance()->clearChannelInfo();
 
     // protocol
-    Core::instance()->pNetwork->send("PROTOCTL ONETNAMESX");
+    Core::instance()->network->send("PROTOCTL ONETNAMESX");
 
     // busy
     Settings::instance()->set("busy", "false");
@@ -1148,7 +1148,7 @@ void OnetKernel::raw_001()
 
     // auto busy
     if (Settings::instance()->get("auto_busy") == "true")
-        Core::instance()->pNetwork->send("BUSY 1");
+        Core::instance()->network->send("BUSY 1");
 
     // ignore_raw_141
     if (Settings::instance()->get("disable_autojoin_favourites") == "true")
@@ -1169,10 +1169,10 @@ void OnetKernel::raw_001()
         pTabC->removeTab(strChannel);
 
     foreach (QString strChannel, lChannelsCaseIgnore)
-        Core::instance()->pNetwork->sendQueue(QString("JOIN %1").arg(strChannel));
+        Core::instance()->network->sendQueue(QString("JOIN %1").arg(strChannel));
 
     // channel list
-    Core::instance()->pNetwork->send("SLIST  R- 0 0 100 null");
+    Core::instance()->network->send("SLIST  R- 0 0 100 null");
 
     // update last active
     Settings::instance()->set("last_active", QString::number(QDateTime::currentMSecsSinceEpoch()));
@@ -1429,7 +1429,7 @@ void OnetKernel::raw_141n()
         foreach (QString strChannel, lList)
         {
             if (!Channel::instance()->contains(strChannel))
-                Core::instance()->pNetwork->sendQueue(QString("JOIN %1").arg(strChannel));
+                Core::instance()->network->sendQueue(QString("JOIN %1").arg(strChannel));
         }
     }
 
@@ -1859,10 +1859,10 @@ void OnetKernel::raw_250n()
         Message::instance()->showMessageActive(strDisplay, MessageInfo);
 
         // homes
-        Core::instance()->pNetwork->sendQueue(QString("CS HOMES"));
+        Core::instance()->network->sendQueue(QString("CS HOMES"));
 
         // join
-        Core::instance()->pNetwork->sendQueue(QString("JOIN %1").arg(strChannel));
+        Core::instance()->network->sendQueue(QString("JOIN %1").arg(strChannel));
     }
     else if (strNick.toLower() == "nickserv")
     {
@@ -2104,7 +2104,7 @@ void OnetKernel::raw_257n()
 
     QString strChannel = strDataList[4];
 
-    Core::instance()->pNetwork->send(QString("CS INFO %1 i").arg(strChannel));
+    Core::instance()->network->send(QString("CS INFO %1 i").arg(strChannel));
 }
 
 // ADMIN
@@ -2137,7 +2137,7 @@ void OnetKernel::raw_258n()
     // display
     Message::instance()->showMessage(strChannel, strDisplay, MessageInfo);
 
-    Core::instance()->pNetwork->send(QString("CS INFO %1 i").arg(strChannel));
+    Core::instance()->network->send(QString("CS INFO %1 i").arg(strChannel));
 }
 
 // ADMIN
@@ -2222,11 +2222,11 @@ void OnetKernel::raw_261n()
         Message::instance()->showMessageActive(strDisplay, MessageInfo);
 
         // homes
-        Core::instance()->pNetwork->sendQueue(QString("CS HOMES"));
+        Core::instance()->network->sendQueue(QString("CS HOMES"));
 
         // part
         if (Core::instance()->tw.contains(strChannel))
-            Core::instance()->pNetwork->send(QString("PART %1").arg(strChannel));
+            Core::instance()->network->send(QString("PART %1").arg(strChannel));
     }
     else if (strNick.toLower() == "nickserv")
     {
@@ -2704,7 +2704,7 @@ void OnetKernel::raw_353()
             if (!strCleanNick.startsWith('~'))
             {
                 if ((Settings::instance()->get("themes") == "Origin") || (Settings::instance()->get("themes") == "Adara")) // with avatars
-                    Core::instance()->pNetwork->send(QString("NS INFO %1 s").arg(strCleanNick));
+                    Core::instance()->network->send(QString("NS INFO %1 s").arg(strCleanNick));
             }
         }
     }
@@ -3071,9 +3071,9 @@ void OnetKernel::raw_412n()
     QString strMe = Settings::instance()->get("nick");
 
     if (strNick == strMe)
-        Core::instance()->pNetwork->send(QString("RS INFO %1").arg(strNick));
+        Core::instance()->network->send(QString("RS INFO %1").arg(strNick));
     else
-        Core::instance()->pNetwork->send(QString("NS INFO %1 s").arg(strNick));
+        Core::instance()->network->send(QString("NS INFO %1 s").arg(strNick));
 }
 
 // RS INFO istota_bezduszna
@@ -3191,7 +3191,7 @@ void OnetKernel::raw_433()
 
     // disconnect
     Settings::instance()->set("reconnect", "false");
-    Core::instance()->pNetwork->disconnect();
+    Core::instance()->network->disconnect();
 
     if (!strNick.startsWith('~'))
     {
@@ -3215,7 +3215,7 @@ void OnetKernel::raw_433()
             Settings::instance()->set("override", "true");
             Settings::instance()->set("reconnect", "true");
 
-            Core::instance()->pNetwork->connect();
+            Core::instance()->network->connect();
         }
     }
     else
@@ -3842,7 +3842,7 @@ void OnetKernel::raw_801()
 {
     if (strDataList.size() < 4) return;
 
-    if (!Core::instance()->pNetwork->isConnected())
+    if (!Core::instance()->network->isConnected())
         return;
 
     QString strKey = strDataList[3];
@@ -3851,11 +3851,11 @@ void OnetKernel::raw_801()
     QString strAuthKey = OnetUtils::transformKey(strKey);
     if (strAuthKey.length() == 16)
     {
-        Core::instance()->pNetwork->send(QString("AUTHKEY %1").arg(strAuthKey));
+        Core::instance()->network->send(QString("AUTHKEY %1").arg(strAuthKey));
         QString strUOKey = Settings::instance()->get("uokey");
         QString strNickUo = Settings::instance()->get("uo_nick");
         if ((!strUOKey.isEmpty()) && (!strNickUo.isEmpty()))
-            Core::instance()->pNetwork->send(QString("USER * %1 czat-app.onet.pl :%2").arg(strUOKey, strNickUo));
+            Core::instance()->network->send(QString("USER * %1 czat-app.onet.pl :%2").arg(strUOKey, strNickUo));
     }
     else
     {

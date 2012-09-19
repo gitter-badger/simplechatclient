@@ -63,13 +63,13 @@ void Busy::stop()
 
 void Busy::busyTriggered()
 {
-    if ((Core::instance()->pNetwork->isConnected()) && (Settings::instance()->get("logged") == "true"))
+    if ((Core::instance()->network->isConnected()) && (Settings::instance()->get("logged") == "true"))
     {
         bool bBusy = Settings::instance()->get("busy") == "true" ? true : false;
 
         if (bBusy)
-            Core::instance()->pNetwork->send("BUSY 0");
+            Core::instance()->network->send("BUSY 0");
         else
-            Core::instance()->pNetwork->send("BUSY 1");
+            Core::instance()->network->send("BUSY 1");
     }
 }

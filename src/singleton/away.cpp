@@ -63,7 +63,7 @@ void Away::stop()
 
 void Away::awayTriggered()
 {
-    if ((Core::instance()->pNetwork->isConnected()) && (Settings::instance()->get("logged") == "true"))
+    if ((Core::instance()->network->isConnected()) && (Settings::instance()->get("logged") == "true"))
     {
         bool bAway = Settings::instance()->get("away") == "true" ? true : false;
 
@@ -73,6 +73,6 @@ void Away::awayTriggered()
         else
             strReason = tr("Not here right now");
 
-        Core::instance()->pNetwork->send(QString("AWAY :%1").arg(strReason));
+        Core::instance()->network->send(QString("AWAY :%1").arg(strReason));
     }
 }

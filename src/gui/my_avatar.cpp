@@ -95,7 +95,7 @@ void DlgMyAvatar::refreshAvatar()
 
 void DlgMyAvatar::avatarSelected(const QString &avatarUrl)
 {
-    Core::instance()->pNetwork->send(QString("NS SET AVATAR %1").arg(avatarUrl));
+    Core::instance()->network->send(QString("NS SET AVATAR %1").arg(avatarUrl));
     // FIXME: replace by chat event
     QTimer::singleShot(1000*4, this, SLOT(refreshAvatar())); // 4 sec
 }

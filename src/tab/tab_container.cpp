@@ -113,8 +113,8 @@ void TabContainer::partTab(int index)
 
     if (!strChannel.isEmpty())
     {
-        if (Core::instance()->pNetwork->isConnected())
-            Core::instance()->pNetwork->send(QString("PART %1").arg(strChannel));
+        if (Core::instance()->network->isConnected())
+            Core::instance()->network->send(QString("PART %1").arg(strChannel));
         else
             removeTab(strChannel);
     }

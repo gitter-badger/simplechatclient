@@ -56,12 +56,12 @@ Core::~Core()
 
     // close network
     Settings::instance()->set("reconnect", "false");
-    pNetwork->disconnect();
-    pNetwork->quit();
-    pNetwork->wait();
-    pNetwork->deleteLater();
-    pNetwork->QObject::disconnect();
-    delete pNetwork;
+    network->disconnect();
+    network->quit();
+    network->wait();
+    network->deleteLater();
+    network->QObject::disconnect();
+    delete network;
 }
 
 void Core::init()
@@ -81,8 +81,8 @@ void Core::init()
     // network
     QString strServer = "czat-app.onet.pl";
     int iPort = 5015;
-    pNetwork = new Network(strServer, iPort);
-    pNetwork->start(QThread::InheritPriority);
+    network = new Network(strServer, iPort);
+    network->start(QThread::InheritPriority);
 }
 
 void Core::createAndShowGui()

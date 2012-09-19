@@ -63,26 +63,26 @@ void DlgInvite::createSignals()
 
 void DlgInvite::buttonWhois()
 {
-    Core::instance()->pNetwork->send(QString("WHOIS %1 %1").arg(strNick));
+    Core::instance()->network->send(QString("WHOIS %1 %1").arg(strNick));
 }
 
 void DlgInvite::buttonReject()
 {
-    Core::instance()->pNetwork->send(QString("INVREJECT %1 %2").arg(strNick, strChannel));
+    Core::instance()->network->send(QString("INVREJECT %1 %2").arg(strNick, strChannel));
     Invite::instance()->remove(strNick, strChannel);
     this->close();
 }
 
 void DlgInvite::buttonIgnore()
 {
-    Core::instance()->pNetwork->send(QString("INVIGNORE %1 %2").arg(strNick, strChannel));
+    Core::instance()->network->send(QString("INVIGNORE %1 %2").arg(strNick, strChannel));
     Invite::instance()->remove(strNick, strChannel);
     this->close();
 }
 
 void DlgInvite::buttonAccept()
 {
-    Core::instance()->pNetwork->send(QString("JOIN %1").arg(strChannel));
+    Core::instance()->network->send(QString("JOIN %1").arg(strChannel));
     Invite::instance()->remove(strNick, strChannel);
     this->close();
 }

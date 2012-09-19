@@ -63,7 +63,7 @@ DlgUserProfile::DlgUserProfile(const QString &_strNick, QWidget *parent) : QDial
     label_nick->setText(strNick);
 
     // get new user info
-    Core::instance()->pNetwork->send(QString("NS INFO %1").arg(strNick));
+    Core::instance()->network->send(QString("NS INFO %1").arg(strNick));
 
     // refresh
     QTimer::singleShot(200, this, SLOT(refreshUserInfo())); // 0.2 sec

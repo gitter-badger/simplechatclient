@@ -136,7 +136,7 @@ void DlgFriends::buttonAdd()
 
     if ((ok) && (!strText.isEmpty()))
     {
-        Core::instance()->pNetwork->send(QString("NS FRIENDS ADD %1").arg(strText));
+        Core::instance()->network->send(QString("NS FRIENDS ADD %1").arg(strText));
         QTimer::singleShot(1000*4, this, SLOT(refresh())); // 4 sec
     }
 }
@@ -161,7 +161,7 @@ void DlgFriends::buttonRemove()
 
     if ((ok) && (!strText.isEmpty()))
     {
-        Core::instance()->pNetwork->send(QString("NS FRIENDS DEL %1").arg(strText));
+        Core::instance()->network->send(QString("NS FRIENDS DEL %1").arg(strText));
         QTimer::singleShot(1000*4, this, SLOT(refresh())); // 4 sec
     }
 }
@@ -181,7 +181,7 @@ void DlgFriends::priv()
     }
 
     if (!strSelected.isEmpty())
-        Core::instance()->pNetwork->send(QString("PRIV %1").arg(strSelected));
+        Core::instance()->network->send(QString("PRIV %1").arg(strSelected));
 }
 
 void DlgFriends::whois()
@@ -199,7 +199,7 @@ void DlgFriends::whois()
     }
 
     if (!strSelected.isEmpty())
-        Core::instance()->pNetwork->send(QString("WHOIS %1 :%1").arg(strSelected));
+        Core::instance()->network->send(QString("WHOIS %1 :%1").arg(strSelected));
 }
 
 void DlgFriends::invite()
@@ -222,7 +222,7 @@ void DlgFriends::invite()
         if (action)
         {
             QString strInviteChannel = action->data().toString();
-            Core::instance()->pNetwork->send(QString("INVITE %1 %2").arg(strSelected, strInviteChannel));
+            Core::instance()->network->send(QString("INVITE %1 %2").arg(strSelected, strInviteChannel));
         }
     }
 }

@@ -310,10 +310,10 @@ void MainWindow::createSignals()
     connect(pTabM, SIGNAL(currentChanged(int)), this, SLOT(currentTabChanged(int)));
 
     // signals from network
-    connect(Core::instance()->pNetwork, SIGNAL(socketStateChanged(QAbstractSocket::SocketState)), this, SLOT(networkStateChanged(QAbstractSocket::SocketState)));
-    connect(Core::instance()->pNetwork, SIGNAL(kernel(const QString&)), pOnetKernel, SLOT(kernel(const QString&)));
-    connect(Core::instance()->pNetwork, SIGNAL(authorize(QString,QString)), pOnetAuth, SLOT(authorize(QString,QString)));
-    connect(Core::instance()->pNetwork, SIGNAL(updateNick(const QString&)), pToolWidget, SLOT(updateNick(const QString&)));
+    connect(Core::instance()->network, SIGNAL(socketStateChanged(QAbstractSocket::SocketState)), this, SLOT(networkStateChanged(QAbstractSocket::SocketState)));
+    connect(Core::instance()->network, SIGNAL(kernel(const QString&)), pOnetKernel, SLOT(kernel(const QString&)));
+    connect(Core::instance()->network, SIGNAL(authorize(QString,QString)), pOnetAuth, SLOT(authorize(QString,QString)));
+    connect(Core::instance()->network, SIGNAL(updateNick(const QString&)), pToolWidget, SLOT(updateNick(const QString&)));
 }
 
 void MainWindow::init()
@@ -402,20 +402,20 @@ void MainWindow::refreshToolWidgetValues()
 // buttons
 void MainWindow::buttonConnect()
 {
-    if (!Core::instance()->pNetwork->isConnected())
+    if (!Core::instance()->network->isConnected())
     {
         Settings::instance()->set("reconnect", "true");
-        Core::instance()->pNetwork->connect();
+        Core::instance()->network->connect();
     }
     else
     {
         Settings::instance()->set("reconnect", "false");
         Settings::instance()->set("logged", "false");
-        Core::instance()->pNetwork->disconnect();
+        Core::instance()->network->disconnect();
 
         if (Settings::instance()->get("debug") == "true")
             qDebug() << "Set timerReconnect: stop";
-        Core::instance()->pNetwork->timerReconnect->stop();
+        Core::instance()->network->timerReconnect->stop();
     }
 }
 
@@ -481,44 +481,44 @@ void MainWindow::openOptions()
 
 void MainWindow::openChannelList()
 {
-    if ((Core::instance()->pNetwork->isConnected()) && (Settings::instance()->get("logged") == "true"))
+    if ((Core::instance()->network->isConnected()) && (Settings::instance()->get("logged") == "true"))
         DlgChannelList(this).exec();
 }
 
 void MainWindow::openChannelHomes()
 {
-    if ((Core::instance()->pNetwork->isConnected()) && (Settings::instance()->get("logged") == "true"))
+    if ((Core::instance()->network->isConnected()) && (Settings::instance()->get("logged") == "true"))
         DlgChannelHomes(this).exec();
 }
 
 void MainWindow::openChannelFavourites()
 {
-    if ((Core::instance()->pNetwork->isConnected()) && (Settings::instance()->get("logged") == "true"))
+    if ((Core::instance()->network->isConnected()) && (Settings::instance()->get("logged") == "true"))
         DlgChannelFavourites(this).exec();
 }
 
 void MainWindow::openFriends()
 {
-    if ((Core::instance()->pNetwork->isConnected()) && (Settings::instance()->get("logged") == "true"))
+    if ((Core::instance()->network->isConnected()) && (Settings::instance()->get("logged") == "true"))
         DlgFriends(this).exec();
 }
 
 void MainWindow::openIgnore()
 {
-    if ((Core::instance()->pNetwork->isConnected()) && (Settings::instance()->get("logged") == "true"))
+    if ((Core::instance()->network->isConnected()) && (Settings::instance()->get("logged") == "true"))
         DlgIgnore(this).exec();
 }
 
 void MainWindow::openFindNick()
 {
-    if ((Core::instance()->pNetwork->isConnected()) && (Settings::instance()->get("logged") == "true"))
+    if ((Core::instance()->network->isConnected()) && (Settings::instance()->get("logged") == "true"))
         DlgFindNick(this).exec();
 }
 
 void MainWindow::openCams()
 {
 #if WITH_KAMERZYSTA
-    if ((Core::instance()->pNetwork->isConnected()) && (Settings::instance()->get("logged") == "true"))
+    if ((Core::instance()->network->isConnected()) && (Settings::instance()->get("logged") == "true"))
     {
         QString strMe = Settings::instance()->get("nick");
         (new Kamerzysta(Core::instance()->kamerzystaSocket))->show(strMe);
@@ -531,19 +531,19 @@ void MainWindow::openCams()
 
 void MainWindow::openMyStats()
 {
-    if ((Core::instance()->pNetwork->isConnected()) && (Settings::instance()->get("logged") == "true"))
+    if ((Core::instance()->network->isConnected()) && (Settings::instance()->get("logged") == "true"))
         DlgMyStats(this).exec();
 }
 
 void MainWindow::openMyProfile()
 {
-    if ((Core::instance()->pNetwork->isConnected()) && (Settings::instance()->get("logged") == "true"))
+    if ((Core::instance()->network->isConnected()) && (Settings::instance()->get("logged") == "true"))
         DlgMyProfile(this).exec();
 }
 
 void MainWindow::openMyAvatar()
 {
-    if ((Core::instance()->pNetwork->isConnected()) && (Settings::instance()->get("logged") == "true"))
+    if ((Core::instance()->network->isConnected()) && (Settings::instance()->get("logged") == "true"))
         DlgMyAvatar(this).exec();
 }
 
@@ -564,13 +564,13 @@ void MainWindow::openAwaylog()
 
 void MainWindow::openInviteList()
 {
-    if ((Core::instance()->pNetwork->isConnected()) && (Settings::instance()->get("logged") == "true"))
+    if ((Core::instance()->network->isConnected()) && (Settings::instance()->get("logged") == "true"))
         DlgInviteList(this).exec();
 }
 
 void MainWindow::openOfflineMessages()
 {
-    if ((Core::instance()->pNetwork->isConnected()) && (Settings::instance()->get("logged") == "true"))
+    if ((Core::instance()->network->isConnected()) && (Settings::instance()->get("logged") == "true"))
         DlgOfflineMessages(this).exec();
 }
 

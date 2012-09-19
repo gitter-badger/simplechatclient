@@ -131,17 +131,17 @@ void ChatView::displayMessage(const QString &strData, MessageCategory eMessageCa
 
 void ChatView::joinChannel()
 {
-    Core::instance()->pNetwork->send(QString("JOIN %1").arg(strChannel));
+    Core::instance()->network->send(QString("JOIN %1").arg(strChannel));
 }
 
 void ChatView::priv()
 {
-    Core::instance()->pNetwork->send(QString("PRIV %1").arg(strNick));
+    Core::instance()->network->send(QString("PRIV %1").arg(strNick));
 }
 
 void ChatView::whois()
 {
-    Core::instance()->pNetwork->send(QString("WHOIS %1 :%1").arg(strNick));
+    Core::instance()->network->send(QString("WHOIS %1 :%1").arg(strNick));
 }
 
 void ChatView::profile()
@@ -160,27 +160,27 @@ void ChatView::cam()
 
 void ChatView::friendsAdd()
 {
-    Core::instance()->pNetwork->send(QString("NS FRIENDS ADD %1").arg(strNick));
+    Core::instance()->network->send(QString("NS FRIENDS ADD %1").arg(strNick));
 }
 
 void ChatView::friendsDel()
 {
-    Core::instance()->pNetwork->send(QString("NS FRIENDS DEL %1").arg(strNick));
+    Core::instance()->network->send(QString("NS FRIENDS DEL %1").arg(strNick));
 }
 
 void ChatView::ignoreAdd()
 {
-    Core::instance()->pNetwork->send(QString("NS IGNORE ADD %1").arg(strNick));
+    Core::instance()->network->send(QString("NS IGNORE ADD %1").arg(strNick));
 }
 
 void ChatView::ignoreDel()
 {
-    Core::instance()->pNetwork->send(QString("NS IGNORE DEL %1").arg(strNick));
+    Core::instance()->network->send(QString("NS IGNORE DEL %1").arg(strNick));
 }
 
 void ChatView::kick()
 {
-    Core::instance()->pNetwork->send(QString("KICK %1 %2 :%3").arg(strChatViewChannel, strNick, tr("No reason")));
+    Core::instance()->network->send(QString("KICK %1 %2 :%3").arg(strChatViewChannel, strNick, tr("No reason")));
 }
 
 void ChatView::kickWithReason()
@@ -189,13 +189,13 @@ void ChatView::kickWithReason()
     if (action)
     {
         QString strPunishReason = action->data().toString();
-        Core::instance()->pNetwork->send(QString("KICK %1 %2 :%3").arg(strChatViewChannel, strNick, strPunishReason));
+        Core::instance()->network->send(QString("KICK %1 %2 :%3").arg(strChatViewChannel, strNick, strPunishReason));
     }
 }
 
 void ChatView::ban()
 {
-    Core::instance()->pNetwork->send(QString("CS BAN %1 ADD %2").arg(strChatViewChannel, strNick));
+    Core::instance()->network->send(QString("CS BAN %1 ADD %2").arg(strChatViewChannel, strNick));
 }
 
 void ChatView::kban()
@@ -206,54 +206,54 @@ void ChatView::kban()
 
     if ((ok) && (!strText.isEmpty()))
     {
-        Core::instance()->pNetwork->send(QString("CS BAN %1 ADD %2").arg(strChatViewChannel, strNick));
-        Core::instance()->pNetwork->send(QString("KICK %1 %2 :%3").arg(strChatViewChannel, strNick, strText));
+        Core::instance()->network->send(QString("CS BAN %1 ADD %2").arg(strChatViewChannel, strNick));
+        Core::instance()->network->send(QString("KICK %1 %2 :%3").arg(strChatViewChannel, strNick, strText));
     }
 }
 
 void ChatView::ipban()
 {
-    Core::instance()->pNetwork->send(QString("CS BANIP %1 ADD %2").arg(strChatViewChannel, strNick));
+    Core::instance()->network->send(QString("CS BANIP %1 ADD %2").arg(strChatViewChannel, strNick));
 }
 
 void ChatView::opAdd()
 {
-    Core::instance()->pNetwork->send(QString("CS OP %1 ADD %2").arg(strChatViewChannel, strNick));
+    Core::instance()->network->send(QString("CS OP %1 ADD %2").arg(strChatViewChannel, strNick));
 }
 
 void ChatView::opDel()
 {
-    Core::instance()->pNetwork->send(QString("CS OP %1 DEL %2").arg(strChatViewChannel, strNick));
+    Core::instance()->network->send(QString("CS OP %1 DEL %2").arg(strChatViewChannel, strNick));
 }
 
 void ChatView::halfopAdd()
 {
-    Core::instance()->pNetwork->send(QString("CS HALFOP %1 ADD %2").arg(strChatViewChannel, strNick));
+    Core::instance()->network->send(QString("CS HALFOP %1 ADD %2").arg(strChatViewChannel, strNick));
 }
 
 void ChatView::halfopDel()
 {
-    Core::instance()->pNetwork->send(QString("CS HALFOP %1 DEL %2").arg(strChatViewChannel, strNick));
+    Core::instance()->network->send(QString("CS HALFOP %1 DEL %2").arg(strChatViewChannel, strNick));
 }
 
 void ChatView::moderatorAdd()
 {
-    Core::instance()->pNetwork->send(QString("CS MODERATOR %1 ADD %2").arg(strChatViewChannel, strNick));
+    Core::instance()->network->send(QString("CS MODERATOR %1 ADD %2").arg(strChatViewChannel, strNick));
 }
 
 void ChatView::moderatorDel()
 {
-    Core::instance()->pNetwork->send(QString("CS MODERATOR %1 DEL %2").arg(strChatViewChannel, strNick));
+    Core::instance()->network->send(QString("CS MODERATOR %1 DEL %2").arg(strChatViewChannel, strNick));
 }
 
 void ChatView::voiceAdd()
 {
-    Core::instance()->pNetwork->send(QString("CS VOICE %1 ADD %2").arg(strChatViewChannel, strNick));
+    Core::instance()->network->send(QString("CS VOICE %1 ADD %2").arg(strChatViewChannel, strNick));
 }
 
 void ChatView::voiceDel()
 {
-    Core::instance()->pNetwork->send(QString("CS VOICE %1 DEL %2").arg(strChatViewChannel, strNick));
+    Core::instance()->network->send(QString("CS VOICE %1 DEL %2").arg(strChatViewChannel, strNick));
 }
 
 void ChatView::invite()
@@ -262,7 +262,7 @@ void ChatView::invite()
     if (action)
     {
         QString strInviteChannel = action->data().toString();
-        Core::instance()->pNetwork->send(QString("INVITE %1 %2").arg(strNick, strInviteChannel));
+        Core::instance()->network->send(QString("INVITE %1 %2").arg(strNick, strInviteChannel));
     }
 }
 

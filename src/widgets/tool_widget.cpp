@@ -718,7 +718,7 @@ void ToolWidget::emoticonsClicked()
 
 void ToolWidget::channelSettingsClicked()
 {
-    if (Core::instance()->pNetwork->isConnected())
+    if (Core::instance()->network->isConnected())
     {
         QString strChannel = Channel::instance()->getCurrent();
         DlgChannelSettings(strChannel).exec();
@@ -741,7 +741,7 @@ void ToolWidget::inputlineReturnPressed()
     // disable away
     bool bAway = Settings::instance()->get("away") == "true" ? true : false;
     if (bAway)
-        Core::instance()->pNetwork->send("AWAY :");
+        Core::instance()->network->send("AWAY :");
 
     // text
     QString strText = pInputLine->text().trimmed();
@@ -758,7 +758,7 @@ void ToolWidget::moderButtonClicked()
     // disable away
     bool bAway = Settings::instance()->get("away") == "true" ? true : false;
     if (bAway)
-        Core::instance()->pNetwork->send("AWAY :");
+        Core::instance()->network->send("AWAY :");
 
     // text
     QString strText = pInputLine->text().trimmed();
@@ -819,7 +819,7 @@ void ToolWidget::sendMessage(QString strText, bool bModeration)
 
     if (strCommand == "raw")
     {
-        Core::instance()->pNetwork->send(strText);
+        Core::instance()->network->send(strText);
         return;
     }
     else if (strCommand == "all")
@@ -831,7 +831,7 @@ void ToolWidget::sendMessage(QString strText, bool bModeration)
         QList<QString> lChannelsCleared = Channel::instance()->getCleared();
         foreach (QString strChannel, lChannelsCleared)
         {
-            Core::instance()->pNetwork->send(QString("PRIVMSG %1 :%2").arg(strChannel, strText));
+            Core::instance()->network->send(QString("PRIVMSG %1 :%2").arg(strChannel, strText));
             Message::instance()->showMessage(strChannel, strText, MessageDefault, strMe);
         }
 
@@ -841,7 +841,7 @@ void ToolWidget::sendMessage(QString strText, bool bModeration)
     {
         if ((strChannel != DEBUG_WINDOW) && (strChannel != STATUS_WINDOW))
         {
-            Core::instance()->pNetwork->send(strText);
+            Core::instance()->network->send(strText);
 
             if (strTextOriginal.length() > 3) strTextOriginal.remove(0,3);
 
@@ -862,14 +862,14 @@ void ToolWidget::sendMessage(QString strText, bool bModeration)
             Convert::simpleReverseConvert(strText);
             Replace::replaceEmots(strText);
 
-            Core::instance()->pNetwork->send(QString("PRIVMSG %1 :%2").arg(strChannel, strText));
+            Core::instance()->network->send(QString("PRIVMSG %1 :%2").arg(strChannel, strText));
             Message::instance()->showMessage(strChannel, strText, MessageDefault, strMe);
         }
         return;
     }
     else if (!strCommand.isEmpty())
     {
-        Core::instance()->pNetwork->send(strText);
+        Core::instance()->network->send(strText);
         return;
     }
 
@@ -885,13 +885,13 @@ void ToolWidget::sendMessage(QString strText, bool bModeration)
     // moder notice
     if (bModeration)
     {
-        Core::instance()->pNetwork->send(QString("MODERNOTICE %1 :%2").arg(strChannel, strText));
+        Core::instance()->network->send(QString("MODERNOTICE %1 :%2").arg(strChannel, strText));
         Message::instance()->showMessage(strChannel, strText, MessageModerNotice, strMe);
     }
     // standard text
     else if (!bModeration)
     {
-        Core::instance()->pNetwork->send(QString("PRIVMSG %1 :%2").arg(strChannel, strText));
+        Core::instance()->network->send(QString("PRIVMSG %1 :%2").arg(strChannel, strText));
         Message::instance()->showMessage(strChannel, strText, MessageDefault, strMe);
     }
 }
