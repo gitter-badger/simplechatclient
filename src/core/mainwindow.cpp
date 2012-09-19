@@ -524,7 +524,7 @@ void MainWindow::openCams()
         (new Kamerzysta(Core::instance()->kamerzystaSocket))->show(strMe);
     }
 #else
-    if ((Core::instance()->pNetwork->isConnected()) && (Settings::instance()->get("logged") == "true"))
+    if ((Core::instance()->network->isConnected()) && (Settings::instance()->get("logged") == "true"))
         new DlgWebcam();
 #endif
 }
