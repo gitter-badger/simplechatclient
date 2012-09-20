@@ -145,6 +145,10 @@ xcopy images\wallpaper\*.jpg %DESTINATION%\images\wallpaper\ /C /H /R /Y /Q
 echo Copying 3rdparty
 xcopy 3rdparty\LICENSE         %DESTINATION%\3rdparty\           /C /H /R /Y /Q 
 xcopy 3rdparty\emoticons\*.gif %DESTINATION%\3rdparty\emoticons\ /C /H /R /Y /Q /S
+xcopy 3rdparty\emoticons\*.jpg %DESTINATION%\3rdparty\emoticons\ /C /H /R /Y /Q /S
+xcopy 3rdparty\emoticons\*.jpeg %DESTINATION%\3rdparty\emoticons\ /C /H /R /Y /Q /S
+xcopy 3rdparty\emoticons\*.png %DESTINATION%\3rdparty\emoticons\ /C /H /R /Y /Q /S
+xcopy 3rdparty\emoticons\*.bmp %DESTINATION%\3rdparty\emoticons\ /C /H /R /Y /Q /S
 xcopy 3rdparty\sounds\*.wav    %DESTINATION%\3rdparty\sounds\    /C /H /R /Y /Q 
 
 echo Done!

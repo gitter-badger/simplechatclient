@@ -39,12 +39,15 @@ void DlgEmoticonsThread::setDir(const QString &_strDir)
 void DlgEmoticonsThread::run()
 {
     QDir dEmoticonsDir = strDir;
-    QStringList lFiles = dEmoticonsDir.entryList(QStringList("*.gif"), QDir::Files | QDir::NoSymLinks);
+
+    QStringList lSupportedEmoticons;
+    lSupportedEmoticons << "*.gif" << "*.jpg" << "*.jpeg" << "*.png" << "*.bmp";
+
+    QStringList lFiles = dEmoticonsDir.entryList(lSupportedEmoticons, QDir::Files | QDir::NoSymLinks);
 
     foreach (QString strFileName, lFiles)
     {
-        QString strEmoticon = strFileName;
-        strEmoticon.remove(".gif");
+        QString strEmoticon = QFileInfo(strFileName).baseName();
 
         QByteArray bData;
         QFile f(strDir+"/"+strFileName);
