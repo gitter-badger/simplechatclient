@@ -17,27 +17,26 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef SIMPLE_RANK_WIDGET_H
-#define SIMPLE_RANK_WIDGET_H
+#ifndef SIMPLE_PERCENTAGE_WIDGET_H
+#define SIMPLE_PERCENTAGE_WIDGET_H
 
 #include <QWidget>
 
-class SimpleRankWidget : public QWidget
+class SimplePercentageWidget : public QWidget
 {
     Q_OBJECT
 public:
-    SimpleRankWidget(QWidget *parent = 0, int _iRank = 0, int _iWidth = 250, int _iHeight = 15);
-    void setRank(int);
+    SimplePercentageWidget(QWidget *parent = 0, double _iRank = 0, int _iWidth = 200, int _iHeight = 15);
 
     QSize sizeHint() const;
 
 private:
     int iWidth;
     int iHeight;
-    int iRank;
+    double iRank;
 
 protected:
      void paintEvent(QPaintEvent *);
 };
 
-#endif // SIMPLE_RANK_WIDGET_H
+#endif // SIMPLE_PERCENTAGE_WIDGET_H

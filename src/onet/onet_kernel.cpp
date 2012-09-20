@@ -1526,7 +1526,7 @@ void OnetKernel::raw_160n()
         ChannelSettingsModel::instance()->setInfo("topic", strTopic);
 
     // set topic in widget
-    if (Core::instance()->tw.contains(strChannel))
+    if (Channel::instance()->contains(strChannel))
         Channel::instance()->setTopic(strChannel, strTopic);
 }
 
@@ -1563,7 +1563,7 @@ void OnetKernel::raw_161n()
     }
 
     // opened channel
-    if (Core::instance()->tw.contains(strChannel))
+    if (Channel::instance()->contains(strChannel))
     {
         // channel info
         if (!Channel::instance()->containsChannelInfo(strChannel))
@@ -2234,7 +2234,7 @@ void OnetKernel::raw_261n()
         Core::instance()->network->sendQueue(QString("CS HOMES"));
 
         // part
-        if (Core::instance()->tw.contains(strChannel))
+        if (Channel::instance()->contains(strChannel))
             Core::instance()->network->send(QString("PART %1").arg(strChannel));
     }
     else if (strNick.toLower() == "nickserv")
@@ -2591,7 +2591,7 @@ void OnetKernel::raw_332()
     for (int i = 4; i < strDataList.size(); i++) { if (i != 4) strTopic += " "; strTopic += strDataList[i]; }
     if (strTopic[0] == ':') strTopic.remove(0,1);
 
-    if (Core::instance()->tw.contains(strChannel))
+    if (Channel::instance()->contains(strChannel))
         Channel::instance()->setTopic(strChannel, strTopic);
 }
 
@@ -2930,7 +2930,7 @@ void OnetKernel::raw_403()
     // close inactive priv
     if (strChannel[0] == '^')
     {
-        if (Core::instance()->tw.contains(strChannel))
+        if (Channel::instance()->contains(strChannel))
             pTabC->removeTab(strChannel);
     }
 }
@@ -3619,7 +3619,7 @@ void OnetKernel::raw_473()
     // close inactive priv
     if (strChannel[0] == '^')
     {
-        if (Core::instance()->tw.contains(strChannel))
+        if (Channel::instance()->contains(strChannel))
             pTabC->removeTab(strChannel);
     }
 }

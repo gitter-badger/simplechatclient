@@ -105,6 +105,7 @@ SOURCES += src/avatars/avatar.cpp \
     src/widgets/inputline_widget.cpp \
     src/widgets/nicklist_delegate.cpp \
     src/widgets/nicklist_widget.cpp \
+    src/widgets/simple_percentage_widget.cpp \
     src/widgets/simple_rank_widget.cpp \
     src/widgets/simple_stats_widget.cpp \
     src/widgets/tool_widget.cpp \
@@ -207,6 +208,7 @@ HEADERS += src/avatars/avatar.h \
     src/widgets/inputline_widget.h \
     src/widgets/nicklist_delegate.h \
     src/widgets/nicklist_widget.h \
+    src/widgets/simple_percentage_widget.h \
     src/widgets/simple_rank_widget.h \
     src/widgets/simple_stats_widget.h \
     src/widgets/tool_widget.h \
