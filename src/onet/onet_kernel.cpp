@@ -96,6 +96,7 @@ void OnetKernel::kernel(const QString &_strData)
         else if (strCmd1 == "MODERNOTICE") raw_modernotice();
         else if (strCmd1 == "MODERATE") raw_moderate();
         else if (strCmd1 == "KILL") raw_kill();
+        else if (strCmd1 == "NICK") raw_nick();
         else
             bUnknownRaw1 = true;
 
@@ -1116,6 +1117,30 @@ void OnetKernel::raw_kill()
 
     // display
     Message::instance()->showMessageAll(strDisplay, MessageError);
+}
+
+// :Darom!12265854@devel.onet NICK dm
+void OnetKernel::raw_nick()
+{
+    if (strDataList.size() < 2) return;
+
+    QString strNick = strDataList[0];
+    if (strNick[0] == ':') strNick.remove(0,1);
+    strNick = strNick.left(strNick.indexOf('!'));
+
+    QString strNewNick = strDataList[2];
+
+    QString strDisplay = QString(tr("* %1 changed nick to %2")).arg(strNick, strNewNick);
+
+    // display
+    Message::instance()->showMessageAll(strDisplay, MessageMode);
+
+    // self
+    QString strMe = Settings::instance()->get("nick");
+    if (strNick == strMe)
+    {
+        // TODO
+    }
 }
 
 // :cf1f4.onet 001 scc_test :Welcome to the OnetCzat IRC Network scc_test!51976824@83.28.35.219

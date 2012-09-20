@@ -88,8 +88,11 @@ void Nicklist::addUser(const QString &strChannel, const QString &strNick, const 
     if (!Core::instance()->tw.contains(strChannel))
         return;
 
-    Core::instance()->tw[strChannel]->pNickListWidget->addUser(strNick, strModes);
-    Core::instance()->tw[strChannel]->users->setText(QString(tr("Users (%1)").arg(Core::instance()->tw[strChannel]->pNickListWidget->count())));
+    if (!Core::instance()->tw[strChannel]->pNickListWidget->existUser(strNick))
+    {
+        Core::instance()->tw[strChannel]->pNickListWidget->addUser(strNick, strModes);
+        Core::instance()->tw[strChannel]->users->setText(QString(tr("Users (%1)").arg(Core::instance()->tw[strChannel]->pNickListWidget->count())));
+    }
 }
 
 void Nicklist::delUser(const QString &strChannel, const QString &strNick)
@@ -97,8 +100,11 @@ void Nicklist::delUser(const QString &strChannel, const QString &strNick)
     if (!Core::instance()->tw.contains(strChannel))
         return;
 
-    Core::instance()->tw[strChannel]->pNickListWidget->delUser(strNick);
-    Core::instance()->tw[strChannel]->users->setText(QString(tr("Users (%1)").arg(Core::instance()->tw[strChannel]->pNickListWidget->count())));
+    if (Core::instance()->tw[strChannel]->pNickListWidget->existUser(strNick))
+    {
+        Core::instance()->tw[strChannel]->pNickListWidget->delUser(strNick);
+        Core::instance()->tw[strChannel]->users->setText(QString(tr("Users (%1)").arg(Core::instance()->tw[strChannel]->pNickListWidget->count())));
+    }
 }
 
 void Nicklist::quitUser(const QString &strNick, const QString &strDisplay)

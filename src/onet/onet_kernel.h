@@ -61,6 +61,7 @@ private:
     void raw_modernotice();
     void raw_moderate();
     void raw_kill();
+    void raw_nick();
     void raw_001();
     void raw_002();
     void raw_003();

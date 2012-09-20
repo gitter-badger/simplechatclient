@@ -2599,6 +2599,10 @@
         <translation>* Zostałeś rozłączony przez %1 %2</translation>
     </message>
     <message>
+        <source>* %1 changed nick to %2</source>
+        <translation>* %1 zmienił/a nicka na %2</translation>
+    </message>
+    <message>
         <source>* %1 In progress on channel %2</source>
         <translation>* %1 Właśnie trwa w pokoju %2</translation>
     </message>
