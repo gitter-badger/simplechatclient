@@ -26,7 +26,7 @@ MyStatsModel * MyStatsModel::instance()
     if (!Instance)
     {
         Instance = new MyStatsModel();
-        Instance->init();
+        Instance->clear();
     }
 
     return Instance;
@@ -34,11 +34,6 @@ MyStatsModel * MyStatsModel::instance()
 
 MyStatsModel::MyStatsModel()
 {
-}
-
-void MyStatsModel::init()
-{
-    clear();
 }
 
 void MyStatsModel::clear()

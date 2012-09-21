@@ -26,7 +26,7 @@ IgnoreModel * IgnoreModel::instance()
     if (!Instance)
     {
         Instance = new IgnoreModel();
-        Instance->init();
+        Instance->clear();
     }
 
     return Instance;
@@ -34,11 +34,6 @@ IgnoreModel * IgnoreModel::instance()
 
 IgnoreModel::IgnoreModel()
 {
-}
-
-void IgnoreModel::init()
-{
-    clear();
 }
 
 void IgnoreModel::clear()

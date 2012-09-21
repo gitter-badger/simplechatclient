@@ -32,7 +32,6 @@ public:
     static FriendsModel *instance();
 
     FriendsModel();
-    void init();
     void clear();
     bool get(const QString &key);
     QHash<QString,bool> getAll();

@@ -26,7 +26,7 @@ ChannelSettingsModel * ChannelSettingsModel::instance()
     if (!Instance)
     {
         Instance = new ChannelSettingsModel();
-        Instance->init();
+        Instance->clear();
     }
 
     return Instance;
@@ -34,11 +34,6 @@ ChannelSettingsModel * ChannelSettingsModel::instance()
 
 ChannelSettingsModel::ChannelSettingsModel()
 {
-}
-
-void ChannelSettingsModel::init()
-{
-    clear();
 }
 
 void ChannelSettingsModel::clear()

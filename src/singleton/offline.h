@@ -33,7 +33,6 @@ public:
     static Offline *instance();
 
     Offline();
-    void init();
     void addMessage(qint64 iTime, const QString &strType, const QString &strNick, const QString &strMessage);
     void removeMessage(const QString &strNick);
     void clearMessages();
@@ -52,6 +51,8 @@ public:
 private:
     QList<OnetOfflineMessage> lOfflineMessages;
     QList<QString> lOfflineNicks;
+
+    void init();
 };
 
 #endif // OFFLINE_H

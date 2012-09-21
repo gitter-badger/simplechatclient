@@ -30,6 +30,7 @@ public:
     NickListWidget(const QString &_strChannel);
     void addUser(const QString &strNick, QString strModes);
     void delUser(const QString &strNick);
+    void renameUser(const QString &strNick, const QString &strNewNick);
     bool existUser(const QString &strNick);
     void setUserAvatarPath(const QString &strNick, const QString &strValue);
     QString getUserAvatarPath(const QString &strNick);

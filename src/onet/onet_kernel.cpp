@@ -46,6 +46,7 @@
 #include "nicklist.h"
 #include "offline.h"
 #include "onet_utils.h"
+#include "profile_manager_model.h"
 #include "replace.h"
 #include "settings.h"
 #include "sound_notify.h"
@@ -1122,7 +1123,7 @@ void OnetKernel::raw_kill()
 // :Darom!12265854@devel.onet NICK dm
 void OnetKernel::raw_nick()
 {
-    if (strDataList.size() < 2) return;
+    if (strDataList.size() < 3) return;
 
     QString strNick = strDataList[0];
     if (strNick[0] == ':') strNick.remove(0,1);
@@ -1135,12 +1136,13 @@ void OnetKernel::raw_nick()
     // display
     Message::instance()->showMessageAll(strDisplay, MessageMode);
 
+    // update nicklist
+    Nicklist::instance()->renameUser(strNick, strNewNick);
+
     // self
     QString strMe = Settings::instance()->get("nick");
     if (strNick == strMe)
-    {
-        // TODO
-    }
+        ProfileManagerModel::instance()->renameProfile(strNick, strNewNick);
 }
 
 // :cf1f4.onet 001 scc_test :Welcome to the OnetCzat IRC Network scc_test!51976824@83.28.35.219

@@ -32,7 +32,6 @@ public:
     static ChannelList *instance();
 
     ChannelList();
-    void init();
     void clear();
     void add(const OnetChannelList &channel);
     QList<OnetChannelList> getAll();

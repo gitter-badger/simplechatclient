@@ -26,7 +26,7 @@ MyProfileModel * MyProfileModel::instance()
     if (!Instance)
     {
         Instance = new MyProfileModel();
-        Instance->init();
+        Instance->clear();
     }
 
     return Instance;
@@ -34,11 +34,6 @@ MyProfileModel * MyProfileModel::instance()
 
 MyProfileModel::MyProfileModel()
 {
-}
-
-void MyProfileModel::init()
-{
-    clear();
 }
 
 void MyProfileModel::clear()

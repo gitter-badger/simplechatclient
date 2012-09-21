@@ -32,7 +32,6 @@ public:
     static Awaylog *instance();
 
     Awaylog();
-    void init();
     void add(qint64 iTime, const QString &strChannel, const QString &strAwayData);
     QList<QString> get();
     void clear();
@@ -44,6 +43,7 @@ public:
 private:
     QList<QString> lAwaylog;
 
+    void init();
 };
 
 #endif // AWAYLOG_MODEL_H

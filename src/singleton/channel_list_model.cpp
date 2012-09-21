@@ -26,7 +26,7 @@ ChannelList * ChannelList::instance()
     if (!Instance)
     {
         Instance = new ChannelList();
-        Instance->init();
+        Instance->clear();
     }
 
     return Instance;
@@ -34,11 +34,6 @@ ChannelList * ChannelList::instance()
 
 ChannelList::ChannelList()
 {
-}
-
-void ChannelList::init()
-{
-    clear();
 }
 
 void ChannelList::clear()

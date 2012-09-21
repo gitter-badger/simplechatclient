@@ -32,11 +32,13 @@ public:
     static Busy *instance();
 
     Busy();
-    void init();
     void start();
     void stop();
 
     QAction *busyAction;
+
+private:
+    void init();
 
 private slots:
     void busyTriggered();

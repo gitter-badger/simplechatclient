@@ -31,8 +31,6 @@ public:
     static Utils *instance();
 
     Utils();
-    void init();
-    void clear();
 
     bool isErotic(const QString &strChannel);
 
@@ -56,7 +54,6 @@ public:
     QList<QString> getMonths();
     QList<QString> getYears();
     QString getCountries();
-
 };
 
 #endif // UTILS_H

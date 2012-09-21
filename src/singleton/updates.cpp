@@ -37,7 +37,6 @@ Updates * Updates::instance()
     if (!Instance)
     {
         Instance = new Updates();
-        Instance->init();
     }
 
     return Instance;
@@ -52,10 +51,6 @@ Updates::Updates()
 Updates::~Updates()
 {
     accessManager->deleteLater();
-}
-
-void Updates::init()
-{
 }
 
 void Updates::checkUpdate()

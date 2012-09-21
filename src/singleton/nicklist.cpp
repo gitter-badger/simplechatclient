@@ -35,17 +35,12 @@ Nicklist * Nicklist::instance()
     if (!Instance)
     {
         Instance = new Nicklist();
-        Instance->init();
     }
 
     return Instance;
 }
 
 Nicklist::Nicklist()
-{
-}
-
-void Nicklist::init()
 {
 }
 
@@ -104,6 +99,19 @@ void Nicklist::delUser(const QString &strChannel, const QString &strNick)
     {
         Core::instance()->tw[strChannel]->pNickListWidget->delUser(strNick);
         Core::instance()->tw[strChannel]->users->setText(QString(tr("Users (%1)").arg(Core::instance()->tw[strChannel]->pNickListWidget->count())));
+    }
+}
+
+void Nicklist::renameUser(const QString &strNick, const QString &strNewNick)
+{
+    QHashIterator<QString, TabWidget*> i(Core::instance()->tw);
+    while (i.hasNext())
+    {
+        i.next();
+        QString strChannel = i.key();
+
+        if (Core::instance()->tw[strChannel]->pNickListWidget->existUser(strNick))
+            Core::instance()->tw[strChannel]->pNickListWidget->renameUser(strNick, strNewNick);
     }
 }
 

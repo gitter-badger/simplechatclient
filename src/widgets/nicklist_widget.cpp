@@ -66,6 +66,13 @@ void NickListWidget::delUser(const QString &strNick)
         this->takeItem(this->row(item));
 }
 
+void NickListWidget::renameUser(const QString &strNick, const QString &strNewNick)
+{
+    QList<QListWidgetItem*> items = this->findItems(strNick, Qt::MatchExactly);
+    foreach (QListWidgetItem *item, items)
+        item->setText(strNewNick);
+}
+
 bool NickListWidget::existUser(const QString &strNick)
 {
     if (this->findItems(strNick, Qt::MatchExactly).isEmpty())

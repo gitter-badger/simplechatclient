@@ -32,7 +32,6 @@ Notification * Notification::instance()
     if (!Instance)
     {
         Instance = new Notification();
-        Instance->init();
     }
 
     return Instance;
@@ -44,10 +43,6 @@ Notification::Notification()
     notificationMenu->addAction(Awaylog::instance()->awaylogAction);
     notificationMenu->addAction(Invite::instance()->inviteAction);
     notificationMenu->addAction(Offline::instance()->offlineMessagesAction);
-}
-
-void Notification::init()
-{
 }
 
 QMenu *Notification::getNotificationMenu()

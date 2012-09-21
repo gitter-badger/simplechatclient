@@ -32,7 +32,6 @@ public:
     static Notification *instance();
 
     Notification();
-    void init();
     QMenu *getNotificationMenu();
     void refreshAwaylog();
     void refreshInvite();

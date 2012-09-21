@@ -29,7 +29,7 @@ Channel * Channel::instance()
     if (!Instance)
     {
         Instance = new Channel();
-        Instance->init();
+        Instance->clear();
     }
 
     return Instance;
@@ -39,7 +39,7 @@ Channel::Channel()
 {
 }
 
-void Channel::init()
+void Channel::clear()
 {
     lChannelInfo.clear();
     lChannels.clear();

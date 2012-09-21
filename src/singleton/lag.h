@@ -30,15 +30,13 @@ class Lag : public QObject
     static Lag *Instance;
 public:
     static Lag *instance();
+    QAction *lagAction;
 
     Lag();
-    void init();
     void update(qint64 iLag);
     void reset();
     QString createLagText(qint64 iLag);
     void calculate(const QString &strServerMSecs);
-
-    QAction *lagAction;
 };
 
 #endif // LAG_H

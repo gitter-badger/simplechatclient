@@ -32,7 +32,6 @@ public:
     static MyProfileModel *instance();
 
     MyProfileModel();
-    void init();
     void clear();
     QString get(const QString &key);
     QHash<QString,QString> getAll();

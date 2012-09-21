@@ -32,8 +32,6 @@ public:
     static Message *instance();
 
     Message();
-    void init();
-
     void showMessage(const QString &strChannel, const QString &strData, MessageCategory eMessageCategory, QString strNick = QString::null, qint64 iTime = 0);
     void showMessageAll(const QString &strData, MessageCategory eMessageCategory);
     void showMessageActive(const QString &strData, MessageCategory eMessageCategory);
@@ -42,7 +40,6 @@ private:
     void saveMessage(const QString &strChannel, const QString &strData, qint64 iTime, QString strNick = QString::null);
     bool isHideJoinPart(const QString &strChannel, MessageCategory eMessageCategory);
     bool isHighlightMessage(const QString &strMessage);
-
 };
 
 #endif // MESSAGE_H

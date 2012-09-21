@@ -31,7 +31,6 @@ public:
     static FindNick *instance();
 
     FindNick();
-    void init();
     void add(const QString &nick);
     QList<QString> get();
     void clear();

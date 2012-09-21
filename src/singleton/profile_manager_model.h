@@ -17,34 +17,27 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef USER_PROFILE_MODEL_H
-#define USER_PROFILE_MODEL_H
+#ifndef PROFILE_MANAGER_MODEL_H
+#define PROFILE_MANAGER_MODEL_H
 
-#include <QHash>
 #include <QObject>
 
-class UserProfileModel : public QObject
+class ProfileManagerModel : public QObject
 {
     Q_OBJECT
-    Q_DISABLE_COPY(UserProfileModel)
-    static UserProfileModel *Instance;
+    Q_DISABLE_COPY(ProfileManagerModel)
+    static ProfileManagerModel *Instance;
 public:
-    static UserProfileModel *instance();
+    static ProfileManagerModel *instance();
 
-    UserProfileModel();
-    void clear();
-    QString getNick();
-    void setNick(const QString &newNick);
-    QString get(const QString &key);
-    QHash<QString,QString> getAll();
-    void set(const QString &key, const QString &value);
-    bool getReady();
-    void setReady(bool readyState);
+    ProfileManagerModel();
+    bool removeProfileDirectory(const QString &strDir);
+    void renameProfile(const QString &strProfile, const QString &strNewProfile);
 
 private:
-    QString nick;
-    QHash<QString,QString> userProfile;
-    bool ready;
+    QString path;
+
+    void init();
 };
 
-#endif // USER_PROFILE_MODEL_H
+#endif // PROFILE_MANAGER_MODEL_H

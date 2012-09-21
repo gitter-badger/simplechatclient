@@ -39,7 +39,6 @@ public:
 private:
     QNetworkAccessManager *accessManager;
 
-    void init();
     void compareVersion();
     void saveSettings(QString strUpdateXml);
     void readSettings();

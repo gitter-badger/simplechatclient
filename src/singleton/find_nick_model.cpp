@@ -26,7 +26,7 @@ FindNick * FindNick::instance()
     if (!Instance)
     {
         Instance = new FindNick();
-        Instance->init();
+        Instance->clear();
     }
 
     return Instance;
@@ -34,11 +34,6 @@ FindNick * FindNick::instance()
 
 FindNick::FindNick()
 {
-}
-
-void FindNick::init()
-{
-    clear();
 }
 
 void FindNick::add(const QString &nick)

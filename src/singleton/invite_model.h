@@ -33,7 +33,6 @@ public:
     static Invite *instance();
 
     Invite();
-    void init();
     void add(const QString &nick, const QString &channel);
     void remove(const QString &nick, const QString &channel);
     void clear();
@@ -46,6 +45,7 @@ public:
 private:
     QMultiHash<QString,QString> lInvite;
 
+    void init();
 };
 
 #endif // INVITE_MODEL_H

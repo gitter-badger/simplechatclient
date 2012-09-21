@@ -28,17 +28,12 @@ Utils * Utils::instance()
     if (!Instance)
     {
         Instance = new Utils();
-        Instance->init();
     }
 
     return Instance;
 }
 
 Utils::Utils()
-{
-}
-
-void Utils::init()
 {
 }
 

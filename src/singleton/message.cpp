@@ -39,17 +39,12 @@ Message * Message::instance()
     if (!Instance)
     {
         Instance = new Message();
-        Instance->init();
     }
 
     return Instance;
 }
 
 Message::Message()
-{
-}
-
-void Message::init()
 {
 }
 

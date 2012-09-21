@@ -33,7 +33,6 @@ public:
     static Channel *instance();
 
     Channel();
-    void init();
 
     void add(const QString &channel);
     void remove(const QString &channel);
@@ -67,6 +66,7 @@ private:
     QHash<QString,QString> lAvatar;
     QHash<QString,QString> lPriv;
 
+    void clear();
 };
 
 #endif // CHANNEL_H

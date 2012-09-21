@@ -26,7 +26,7 @@ UserProfileModel * UserProfileModel::instance()
     if (!Instance)
     {
         Instance = new UserProfileModel();
-        Instance->init();
+        Instance->clear();
     }
 
     return Instance;
@@ -34,11 +34,6 @@ UserProfileModel * UserProfileModel::instance()
 
 UserProfileModel::UserProfileModel()
 {
-}
-
-void UserProfileModel::init()
-{
-    clear();
 }
 
 void UserProfileModel::clear()

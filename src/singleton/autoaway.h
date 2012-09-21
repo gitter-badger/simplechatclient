@@ -32,16 +32,16 @@ public:
     static Autoaway *instance();
 
     Autoaway();
-    void init();
     void start();
     void stop();
 
-private slots:
-    void timeoutAutoaway();
-
-
 private:
     QTimer *autoAwayTimer;
+
+    void init();
+
+private slots:
+    void timeoutAutoaway();
 };
 
 #endif // AUTOAWAY_H

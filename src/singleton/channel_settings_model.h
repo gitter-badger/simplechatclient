@@ -32,7 +32,6 @@ public:
     static ChannelSettingsModel *instance();
 
     ChannelSettingsModel();
-    void init();
     void clear();
 
     QString getChannel();

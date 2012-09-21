@@ -31,7 +31,6 @@ public:
     static IgnoreModel *instance();
 
     IgnoreModel();
-    void init();
     void clear();
     QList<QString> getAll();
     void add(const QString &key);

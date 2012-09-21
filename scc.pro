@@ -89,6 +89,7 @@ SOURCES += src/avatars/avatar.cpp \
     src/singleton/notes_model.cpp \
     src/singleton/notification.cpp \
     src/singleton/offline.cpp \
+    src/singleton/profile_manager_model.cpp \
     src/singleton/punish_reason.cpp \
     src/singleton/settings.cpp \
     src/singleton/sound_notify.cpp \
@@ -192,6 +193,7 @@ HEADERS += src/avatars/avatar.h \
     src/singleton/notes_model.h \
     src/singleton/notification.h \
     src/singleton/offline.h \
+    src/singleton/profile_manager_model.h \
     src/singleton/punish_reason.h \
     src/singleton/settings.h \
     src/singleton/sound_notify.h \

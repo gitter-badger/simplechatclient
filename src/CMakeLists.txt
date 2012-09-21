@@ -118,6 +118,7 @@ set (scc_SRCS
 	singleton/notes_model.cpp
 	singleton/notification.cpp
 	singleton/offline.cpp
+	singleton/profile_manager_model.cpp
 	singleton/punish_reason.cpp
 	singleton/settings.cpp
 	singleton/sound_notify.cpp
@@ -213,6 +214,7 @@ set (scc_MOC_HDRS
 	singleton/notes_model.h
 	singleton/notification.h
 	singleton/offline.h
+	singleton/profile_manager_model.h
 	singleton/punish_reason.h
 	singleton/settings.h
 	singleton/sound_notify.h

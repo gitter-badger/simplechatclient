@@ -30,13 +30,14 @@ class Away : public QObject
     static Away *Instance;
 public:
     static Away *instance();
+    QAction *awayAction;
 
     Away();
-    void init();
     void start();
     void stop();
 
-    QAction *awayAction;
+private:
+    void init();
 
 private slots:
     void awayTriggered();

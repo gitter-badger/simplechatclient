@@ -33,7 +33,6 @@ public:
     static ModerationModel *instance();
 
     ModerationModel();
-    void init();
     void clear();
     QMultiHash<QString,OnetModerateMessage> getAll();
     void set(const QString &id, const QString &channel, qint64 time, const QString &nick, const QString &message);

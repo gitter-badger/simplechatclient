@@ -31,11 +31,11 @@ public:
     static Notes *instance();
 
     Notes();
-    void init();
     QString get();
     void set(const QString &strContent);
 
 private:
+    void init();
     void refreshPath();
     void read();
     void save();

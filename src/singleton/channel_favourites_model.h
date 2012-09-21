@@ -31,7 +31,6 @@ public:
     static ChannelFavouritesModel *instance();
 
     ChannelFavouritesModel();
-    void init();
     void clear();
     QList<QString> getAll();
     void add(const QString &key);

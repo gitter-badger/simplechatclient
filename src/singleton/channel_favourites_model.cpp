@@ -26,7 +26,7 @@ ChannelFavouritesModel * ChannelFavouritesModel::instance()
     if (!Instance)
     {
         Instance = new ChannelFavouritesModel();
-        Instance->init();
+        Instance->clear();
     }
 
     return Instance;
@@ -34,11 +34,6 @@ ChannelFavouritesModel * ChannelFavouritesModel::instance()
 
 ChannelFavouritesModel::ChannelFavouritesModel()
 {
-}
-
-void ChannelFavouritesModel::init()
-{
-    clear();
 }
 
 void ChannelFavouritesModel::clear()

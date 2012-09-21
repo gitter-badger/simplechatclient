@@ -26,7 +26,7 @@ ModerationModel * ModerationModel::instance()
     if (!Instance)
     {
         Instance = new ModerationModel();
-        Instance->init();
+        Instance->clear();
     }
 
     return Instance;
@@ -34,11 +34,6 @@ ModerationModel * ModerationModel::instance()
 
 ModerationModel::ModerationModel()
 {
-}
-
-void ModerationModel::init()
-{
-    clear();
 }
 
 void ModerationModel::clear()

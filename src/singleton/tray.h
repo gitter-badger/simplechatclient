@@ -31,11 +31,12 @@ public:
     static Tray *instance();
 
     Tray();
-    void init();
     void showMessage(const QString &strTrayTitle, const QString &strTrayMessage);
 
 private:
     QString strLastMessageTitle;
+
+    void init();
 
 private slots:
     void messageClicked();

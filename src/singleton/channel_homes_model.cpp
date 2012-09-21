@@ -26,7 +26,7 @@ ChannelHomes * ChannelHomes::instance()
     if (!Instance)
     {
         Instance = new ChannelHomes();
-        Instance->init();
+        Instance->clear();
     }
 
     return Instance;
@@ -34,11 +34,6 @@ ChannelHomes * ChannelHomes::instance()
 
 ChannelHomes::ChannelHomes()
 {
-}
-
-void ChannelHomes::init()
-{
-    clear();
 }
 
 void ChannelHomes::clear()

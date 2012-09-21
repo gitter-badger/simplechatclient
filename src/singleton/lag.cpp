@@ -28,7 +28,6 @@ Lag * Lag::instance()
     if (!Instance)
     {
         Instance = new Lag();
-        Instance->init();
     }
 
     return Instance;
@@ -38,10 +37,6 @@ Lag::Lag()
 {
     lagAction = new QAction("Lag: ?", this);
     lagAction->setEnabled(false);
-}
-
-void Lag::init()
-{
 }
 
 void Lag::update(qint64 iLag)

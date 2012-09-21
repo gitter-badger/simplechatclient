@@ -26,7 +26,7 @@ FriendsModel * FriendsModel::instance()
     if (!Instance)
     {
         Instance = new FriendsModel();
-        Instance->init();
+        Instance->clear();
     }
 
     return Instance;
@@ -34,11 +34,6 @@ FriendsModel * FriendsModel::instance()
 
 FriendsModel::FriendsModel()
 {
-}
-
-void FriendsModel::init()
-{
-    clear();
 }
 
 void FriendsModel::clear()

@@ -31,7 +31,6 @@ public:
     static ChannelHomes *instance();
 
     ChannelHomes();
-    void init();
     void clear();
     void add(const QString &channel);
     QList<QString> get();
