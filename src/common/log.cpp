@@ -45,24 +45,23 @@ void Log::logClosed(const QString &strChannel)
 
 void Log::save(const QString &strChannel, const QString &strData)
 {
+    QString strCurrentProfile = Settings::instance()->get("current_profile");
     QString path;
-
 #ifdef Q_WS_WIN
     path = QFileInfo(QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation)).absoluteFilePath();
-    path += "/scc";
+    path += "/scc/";
 #else
-    path = QDir::homePath()+"/.scc";
+    path = QDir::homePath()+"/.scc/";
 #endif
 
-    QString strCurrentProfile = Settings::instance()->get("current_profile");
-    path += "/profiles/"+strCurrentProfile+"/log";
+    path += "profiles/"+strCurrentProfile+"/log/";
 
     // save logs by date
     bool bSaveLogsByDate = Settings::instance()->get("save_logs_by_date") == "true" ? true : false;
     if (bSaveLogsByDate)
     {
         QString strDate = QDate().currentDate().toString("yyyy-MM");
-        path += "/"+strDate;
+        path += strDate+"/";
     }
 
     // create dir if not exist
@@ -75,7 +74,7 @@ void Log::save(const QString &strChannel, const QString &strData)
     if (strFileName[0] == '^')
         strFileName = Channel::instance()->getPriv(strFileName);
 
-    QFile f(path+"/"+strFileName+".txt");
+    QFile f(path+strFileName+".txt");
     if (f.open(QIODevice::Append))
     {
         // convert

@@ -18,6 +18,7 @@
  */
 
 #include <QTabBar>
+#include "avatar.h"
 #include "channel.h"
 #include "defines.h"
 #include "tab_manager.h"
@@ -88,7 +89,13 @@ void TabManager::updateIcon(const QString &channel)
     {
         QString strAvatar = Channel::instance()->getAvatar(channel);
 
-        setTabIcon(index, QIcon(strAvatar));
+        // is valid avatar
+        if (!strAvatar.isEmpty())
+        {
+            strAvatar = Avatar::instance()->getAvatarPath(strAvatar);
+
+            setTabIcon(index, QIcon(strAvatar));
+        }
     }
 }
 

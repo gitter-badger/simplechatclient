@@ -35,12 +35,12 @@ public:
     Avatar();
     virtual ~Avatar();
     void get(const QString &strNickOrChannel, const QString &strCategory, const QString &strUrl);
+    QString getAvatarPath(const QString &strAvatar);
 
 private:
     QNetworkAccessManager *accessManager;
 
-    QString getAvatarPath(const QString &strAvatarPath);
-    void saveAvatar(const QString &strAvatarPath, const QByteArray &bAvatar);
+    void saveAvatar(const QString &strAvatar, const QByteArray &bAvatar);
 
 public slots:
     void httpFinished(QNetworkReply *reply);

@@ -313,7 +313,7 @@ void MainWindow::createSignals()
     connect(Core::instance()->network, SIGNAL(socketStateChanged(QAbstractSocket::SocketState)), this, SLOT(networkStateChanged(QAbstractSocket::SocketState)));
     connect(Core::instance()->network, SIGNAL(kernel(const QString&)), pOnetKernel, SLOT(kernel(const QString&)));
     connect(Core::instance()->network, SIGNAL(authorize(QString,QString)), pOnetAuth, SLOT(authorize(QString,QString)));
-    connect(Core::instance()->network, SIGNAL(updateNick(const QString&)), pToolWidget, SLOT(updateNick(const QString&)));
+    connect(Core::instance()->network, SIGNAL(updateNick(const QString&)), this, SLOT(updateNick(const QString&)));
 }
 
 void MainWindow::init()
@@ -680,6 +680,11 @@ void MainWindow::refreshToolButtons(const QString &strChannel)
         pToolWidget->showModeration(true);
     else
         pToolWidget->showModeration(false);
+}
+
+void MainWindow::updateNick(const QString &strNick)
+{
+    pToolWidget->updateNick(strNick);
 }
 
 void MainWindow::updateChannelIcon(const QString &channel)

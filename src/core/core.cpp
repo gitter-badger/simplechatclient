@@ -26,10 +26,6 @@
 #include "updates.h"
 #include "core.h"
 
-#ifdef Q_WS_WIN
-    #include <QDesktopServices>
-#endif
-
 Core * Core::Instance = 0;
 
 Core * Core::instance()

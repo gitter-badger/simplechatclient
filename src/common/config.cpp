@@ -34,9 +34,9 @@ Config::Config(bool _bProfileConfig, QString _strForceProfile) : bProfileConfig(
     QString path;
 #ifdef Q_WS_WIN
     path = QFileInfo(QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation)).absoluteFilePath();
-    path += "/scc";
+    path += "/scc/";
 #else
-    path = QDir::homePath()+"/.scc";
+    path = QDir::homePath()+"/.scc/";
 #endif
 
     if (bProfileConfig)
@@ -44,11 +44,11 @@ Config::Config(bool _bProfileConfig, QString _strForceProfile) : bProfileConfig(
         QString user = (strForceProfile.isEmpty() ? Settings::instance()->get("current_profile") : strForceProfile);
         if (user.isEmpty()) user = "~test";
 
-        path += "/profiles/"+user;
-        strConfigFile = path+"/profile.xml";
+        path += "profiles/"+user+"/";
+        strConfigFile = path+"profile.xml";
     }
     else
-        strConfigFile = path+"/scc.xml";
+        strConfigFile = path+"scc.xml";
 
     // create dir if not exist
     if (!QDir().exists(path))

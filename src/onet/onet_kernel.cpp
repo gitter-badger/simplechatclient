@@ -1133,16 +1133,18 @@ void OnetKernel::raw_nick()
 
     QString strDisplay = QString(tr("* %1 changed nick to %2")).arg(strNick, strNewNick);
 
-    // display
-    Message::instance()->showMessageAll(strDisplay, MessageMode);
-
     // update nicklist
-    Nicklist::instance()->renameUser(strNick, strNewNick);
+    Nicklist::instance()->renameUser(strNick, strNewNick, strDisplay);
 
     // self
     QString strMe = Settings::instance()->get("nick");
     if (strNick == strMe)
+    {
         ProfileManagerModel::instance()->renameProfile(strNick, strNewNick);
+
+        // update nick
+        Core::instance()->mainWindow()->updateNick(strNewNick);
+    }
 }
 
 // :cf1f4.onet 001 scc_test :Welcome to the OnetCzat IRC Network scc_test!51976824@83.28.35.219
@@ -1895,10 +1897,10 @@ void OnetKernel::raw_250n()
         Message::instance()->showMessageActive(strDisplay, MessageInfo);
 
         // homes
-        Core::instance()->network->sendQueue(QString("CS HOMES"));
+        Core::instance()->network->send(QString("CS HOMES"));
 
         // join
-        Core::instance()->network->sendQueue(QString("JOIN %1").arg(strChannel));
+        Core::instance()->network->send(QString("JOIN %1").arg(strChannel));
     }
     else if (strNick.toLower() == "nickserv")
     {
@@ -2258,7 +2260,7 @@ void OnetKernel::raw_261n()
         Message::instance()->showMessageActive(strDisplay, MessageInfo);
 
         // homes
-        Core::instance()->network->sendQueue(QString("CS HOMES"));
+        Core::instance()->network->send(QString("CS HOMES"));
 
         // part
         if (Channel::instance()->contains(strChannel))

@@ -246,19 +246,17 @@ void DlgOptions::setDefaultValues()
     QString strLogsPath;
 #ifdef Q_WS_WIN
     strLogsPath = QFileInfo(QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation)).absoluteFilePath();
-    strLogsPath += "/scc/profiles/"+strCurrentProfile+"/log";
-
-    // create dir if not exist
-    if (!QDir().exists(strLogsPath))
-        QDir().mkpath(strLogsPath);
+    strLogsPath += "/scc/";
 #else
     strLogsPath = QDir::homePath();
-    strLogsPath += "/.scc/profiles/"+strCurrentProfile+"/log";
+    strLogsPath += "/.scc/profiles/";
+#endif
+
+    strLogsPath += "profiles/"+strCurrentProfile+"/log/";
 
     // create dir if not exist
     if (!QDir().exists(strLogsPath))
         QDir().mkpath(strLogsPath);
-#endif
 
     ui.lineEdit_logs_folder->setText(QDir::toNativeSeparators(strLogsPath));
 
@@ -476,12 +474,12 @@ void DlgOptions::refreshProfilesList()
     QString path;
 #ifdef Q_WS_WIN
     path = QFileInfo(QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation)).absoluteFilePath();
-    path += "/scc";
+    path += "/scc/";
 #else
-    path = QDir::homePath()+"/.scc";
+    path = QDir::homePath()+"/.scc/";
 #endif
 
-    path += "/profiles";
+    path += "profiles/";
 
     // create dir if not exist
     if (!QDir().exists(path))

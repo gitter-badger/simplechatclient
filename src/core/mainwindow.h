@@ -63,6 +63,9 @@ public:
     void stopAnimatedTrayIcon();
     void inputLineKeyEvent(QKeyEvent *k);
 
+public slots:
+    void updateNick(const QString &strNick);
+
 private:
     QToolBar *toolBar;
     QMenu *fileMenu;

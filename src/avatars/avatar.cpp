@@ -73,44 +73,46 @@ void Avatar::httpFinished(QNetworkReply *reply)
         QString strNickOrChannel = reply->property("nickorchannel").toString();
         QString strCategory = reply->property("category").toString();
         QFileInfo fi(reply->url().toString());
-        QString strAvatarPath = getAvatarPath(fi.fileName());
 
-        saveAvatar(strAvatarPath, bAvatar);
+        QString strAvatarFile = fi.fileName();
+
+        saveAvatar(strAvatarFile, bAvatar);
 
         if (strCategory == "nick")
         {
-            Nicklist::instance()->setUserAvatarPath(strNickOrChannel, strAvatarPath);
+            Nicklist::instance()->setUserAvatar(strNickOrChannel, strAvatarFile);
         }
         else if (strCategory == "channel")
         {
-            Channel::instance()->setAvatar(strNickOrChannel, strAvatarPath);
+            Channel::instance()->setAvatar(strNickOrChannel, strAvatarFile);
         }
     }
 }
 
-QString Avatar::getAvatarPath(const QString &strAvatarPath)
+QString Avatar::getAvatarPath(const QString &strAvatar)
 {
+    QString strCurrentProfile = Settings::instance()->get("current_profile");
     QString path;
-
 #ifdef Q_WS_WIN
     path = QFileInfo(QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation)).absoluteFilePath();
-    path += "/scc";
+    path += "/scc/";
 #else
-    path = QDir::homePath()+"/.scc";
+    path = QDir::homePath()+"/.scc/";
 #endif
 
-    QString strCurrentProfile = Settings::instance()->get("current_profile");
-    path += "/profiles/"+strCurrentProfile+"/avatars";
+    path += "profiles/"+strCurrentProfile+"/avatars/";
 
     // create dir if not exist
     if (!QDir().exists(path))
         QDir().mkpath(path);
 
-    return path+"/"+strAvatarPath;
+    return path+strAvatar;
 }
 
-void Avatar::saveAvatar(const QString &strAvatarPath, const QByteArray &bAvatar)
+void Avatar::saveAvatar(const QString &strAvatar, const QByteArray &bAvatar)
 {
+    QString strAvatarPath = getAvatarPath(strAvatar);
+
     QFile f(strAvatarPath);
     if (f.open(QIODevice::WriteOnly))
     {

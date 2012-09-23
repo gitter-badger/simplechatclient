@@ -67,15 +67,15 @@ void Nicklist::readEmptyUserAvatar()
     path = SCC_DATA_DIR;
 #endif
 
-    strEmptyUserAvatarPath = path+"/images/user_avatar.png";
+    strEmptyUserAvatar = path+"/images/user_avatar.png";
 }
 
-QString Nicklist::getEmptyUserAvatarPath()
+QString Nicklist::getEmptyUserAvatar()
 {
-    if (strEmptyUserAvatarPath.isEmpty())
+    if (strEmptyUserAvatar.isEmpty())
         readEmptyUserAvatar();
 
-    return strEmptyUserAvatarPath;
+    return strEmptyUserAvatar;
 }
 
 void Nicklist::addUser(const QString &strChannel, const QString &strNick, const QString &strModes)
@@ -102,8 +102,10 @@ void Nicklist::delUser(const QString &strChannel, const QString &strNick)
     }
 }
 
-void Nicklist::renameUser(const QString &strNick, const QString &strNewNick)
+void Nicklist::renameUser(const QString &strNick, const QString &strNewNick, const QString &strDisplay)
 {
+    MessageCategory eMessageCategory = MessageMode;
+
     QHashIterator<QString, TabWidget*> i(Core::instance()->tw);
     while (i.hasNext())
     {
@@ -111,7 +113,10 @@ void Nicklist::renameUser(const QString &strNick, const QString &strNewNick)
         QString strChannel = i.key();
 
         if (Core::instance()->tw[strChannel]->pNickListWidget->existUser(strNick))
+        {
+            Message::instance()->showMessage(strChannel, strDisplay, eMessageCategory);
             Core::instance()->tw[strChannel]->pNickListWidget->renameUser(strNick, strNewNick);
+        }
     }
 }
 
@@ -175,7 +180,7 @@ void Nicklist::clearAllNicklist()
     }
 }
 
-void Nicklist::setUserAvatarPath(const QString &strNick, const QString &strValue)
+void Nicklist::setUserAvatar(const QString &strNick, const QString &strValue)
 {
     QHashIterator<QString, TabWidget*> i(Core::instance()->tw);
     while (i.hasNext())
@@ -184,11 +189,11 @@ void Nicklist::setUserAvatarPath(const QString &strNick, const QString &strValue
         QString strChannel = i.key();
 
         if (Core::instance()->tw[strChannel]->pNickListWidget->existUser(strNick))
-            Core::instance()->tw[strChannel]->pNickListWidget->setUserAvatarPath(strNick, strValue);
+            Core::instance()->tw[strChannel]->pNickListWidget->setUserAvatar(strNick, strValue);
     }
 }
 
-QString Nicklist::getUserAvatarPath(const QString &strNick)
+QString Nicklist::getUserAvatar(const QString &strNick)
 {
     QHashIterator<QString, TabWidget*> i(Core::instance()->tw);
     while (i.hasNext())
@@ -197,7 +202,7 @@ QString Nicklist::getUserAvatarPath(const QString &strNick)
         QString strChannel = i.key();
 
         if (Core::instance()->tw[strChannel]->pNickListWidget->existUser(strNick))
-            return Core::instance()->tw[strChannel]->pNickListWidget->getUserAvatarPath(strNick);
+            return Core::instance()->tw[strChannel]->pNickListWidget->getUserAvatar(strNick);
     }
     return QString::null;
 }

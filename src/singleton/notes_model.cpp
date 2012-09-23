@@ -52,23 +52,22 @@ void Notes::init()
 
 void Notes::refreshPath()
 {
+    QString strCurrentProfile = Settings::instance()->get("current_profile");
     QString path;
-
 #ifdef Q_WS_WIN
     path = QFileInfo(QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation)).absoluteFilePath();
-    path += "/scc";
+    path += "/scc/";
 #else
-    path = QDir::homePath()+"/.scc";
+    path = QDir::homePath()+"/.scc/";
 #endif
 
-    QString strCurrentProfile = Settings::instance()->get("current_profile");
-    path += "/profiles/"+strCurrentProfile;
+    path += "profiles/"+strCurrentProfile+"/";
 
     // create dir if not exist
     if (!QDir().exists(path))
         QDir().mkpath(path);
 
-    strNotesFile = path+"/notes.txt";
+    strNotesFile = path+"notes.txt";
     strNotesUserProfile = strCurrentProfile;
 }
 

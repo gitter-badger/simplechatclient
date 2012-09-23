@@ -32,8 +32,8 @@ public:
     void delUser(const QString &strNick);
     void renameUser(const QString &strNick, const QString &strNewNick);
     bool existUser(const QString &strNick);
-    void setUserAvatarPath(const QString &strNick, const QString &strValue);
-    QString getUserAvatarPath(const QString &strNick);
+    void setUserAvatar(const QString &strNick, const QString &strValue);
+    QString getUserAvatar(const QString &strNick);
     void changeUserFlag(const QString &strNick, QString strFlag);
     QString getUserModes(const QString &strNick);
     QList<QString> getUserList();

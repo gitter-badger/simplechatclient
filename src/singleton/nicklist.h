@@ -32,22 +32,22 @@ public:
 
     Nicklist();
     int getUserMaxModes(const QString &strModes);
-    QString getEmptyUserAvatarPath();
+    QString getEmptyUserAvatar();
     void addUser(const QString &strChannel, const QString &strNick, const QString &strModes);
     void delUser(const QString &strChannel, const QString &strNick);
-    void renameUser(const QString &strNick, const QString &strNewNick);
+    void renameUser(const QString &strNick, const QString &strNewNick, const QString &strDisplay);
     void quitUser(const QString &strNick, const QString &strDisplay);
     void changeFlag(const QString &strNick, const QString &strChannel, const QString &strFlag);
     void changeFlag(const QString &strNick, const QString &strFlag);
     void clearAllNicklist();
-    void setUserAvatarPath(const QString &strNick, const QString &strValue);
-    QString getUserAvatarPath(const QString &strNick);
+    void setUserAvatar(const QString &strNick, const QString &strValue);
+    QString getUserAvatar(const QString &strNick);
     int getUserCount(const QString &strChannel);
     QString getUserModes(const QString &strNick, const QString &strChannel);
     QList<QString> getUserList(const QString &strChannel);
 
 private:
-    QString strEmptyUserAvatarPath;
+    QString strEmptyUserAvatar;
 
     void readEmptyUserAvatar();
 };

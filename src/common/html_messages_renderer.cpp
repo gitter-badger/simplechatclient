@@ -18,6 +18,7 @@
  */
 
 #include <QDateTime>
+#include "avatar.h"
 #include "convert.h"
 #include "nicklist.h"
 #include "settings.h"
@@ -138,16 +139,18 @@ QString HtmlMessagesRenderer::renderer(QString strData, MessageCategory eMessage
     {
         if (!strNick.isEmpty())
         {
-            QString strUserAvatarPath = Nicklist::instance()->getUserAvatarPath(strNick);
+            QString strUserAvatar = Nicklist::instance()->getUserAvatar(strNick);
 
             // is valid avatar
-            if ((strUserAvatarPath != Nicklist::instance()->getEmptyUserAvatarPath()) && (QImage(strUserAvatarPath).isNull()))
-                strUserAvatarPath = Nicklist::instance()->getEmptyUserAvatarPath();
+            if (strUserAvatar.isEmpty())
+                strUserAvatar = Nicklist::instance()->getEmptyUserAvatar();
+            else
+                strUserAvatar = Avatar::instance()->getAvatarPath(strUserAvatar);
 
 #ifndef Q_WS_WIN
-            strUserAvatarPath = "file://"+strUserAvatarPath;
+            strUserAvatar = "file://"+strUserAvatar;
 #endif
-            QString strUserAvatarImg = QString("<img src=\"%1\" alt=\"avatar\" class=\"avatar\" />").arg(strUserAvatarPath);
+            QString strUserAvatarImg = QString("<img src=\"%1\" alt=\"avatar\" class=\"avatar\" />").arg(strUserAvatar);
             return QString("<table><tr><td class=\"TableText\">%1<span class=\"DefaultColor\">%2<a href=\"#\" onclick=\"return false\" name=\"nick\" style=\"color:inherit;text-decoration:none;\">%3</a>%4 </span><span class=\"%5\" %6>%7</span></td><td class=\"time\">%8</td></tr></table>").arg(strUserAvatarImg, strBeforeNick, strNick, strAfterNick, strFontClass, strTextDecoration, strData, dt.toString("hh:mm"));
         }
         else

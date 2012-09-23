@@ -18,7 +18,10 @@
  */
 
 #include <QPainter>
+#include "avatar.h"
+#include "core.h"
 #include "defines.h"
+#include "nicklist.h"
 #include "settings.h"
 #include "nicklist_delegate.h"
 
@@ -77,7 +80,7 @@ void NickListDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opti
 
     QString nick = index.data(Qt::DisplayRole).toString();
     QString modes = index.data(Qt::UserRole+12).toString();
-    QString userAvatarPath = index.data(Qt::UserRole+13).toString();
+    QString userAvatar = index.data(Qt::UserRole+13).toString();
 
     bool busy = false;
 
@@ -97,7 +100,13 @@ void NickListDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opti
     // avatar
     if ((!nick.startsWith('~')) && (strThemes == "Origin"))
     {
-        QIcon avatar(userAvatarPath);
+        // is valid avatar
+        if (userAvatar.isEmpty())
+            userAvatar = Nicklist::instance()->getEmptyUserAvatar();
+        else
+            userAvatar = Avatar::instance()->getAvatarPath(userAvatar);
+
+        QIcon avatar(userAvatar);
 
         int x = option.rect.left();
         int y = option.rect.top();

@@ -98,10 +98,10 @@ QString createRandom6()
 
 void crashHandler()
 {
-    QString path = QDir::homePath()+"/.scc";
+    QString path = QDir::homePath()+"/.scc/";
 
     QString strCurrentProfile = Settings::instance()->get("current_profile");
-    path += "/profiles/"+strCurrentProfile+"/log";
+    path += "profiles/"+strCurrentProfile+"/log/";
 
     // create dir if not exist
     if (!QDir().exists(path))

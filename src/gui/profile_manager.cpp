@@ -104,12 +104,12 @@ void DlgProfileManager::createPath()
 {
 #ifdef Q_WS_WIN
     path = QFileInfo(QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation)).absoluteFilePath();
-    path += "/scc";
+    path += "/scc/";
 #else
-    path = QDir::homePath()+"/.scc";
+    path = QDir::homePath()+"/.scc/";
 #endif
 
-    path += "/profiles";
+    path += "profiles/";
 
     // create dir if not exist
     if (!QDir().exists(path))
