@@ -1250,11 +1250,11 @@
     </message>
     <message>
         <source>Added you as a friend:</source>
-        <translation>Osoby które dodały Ciebie do przyjaciół:</translation>
+        <translation>Osoby, które dodały Ciebie do przyjaciół:</translation>
     </message>
     <message>
         <source>Added you to ignore:</source>
-        <translation>Osoby które dodały Ciebie do ignorowanych:</translation>
+        <translation>Osoby, które dodały Ciebie do ignorowanych:</translation>
     </message>
     <message>
         <source>Average time:</source>

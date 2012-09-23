@@ -95,7 +95,7 @@ void ProfileManagerModel::renameProfile(const QString &strProfile, const QString
     QDir().rename(path+"/"+strProfile, path+"/"+strNewProfile);
 
     // update config
-    Config *pProfileConfig = new Config(false);
+    Config *pProfileConfig = new Config();
     pProfileConfig->set("nick", strNewProfile);
     delete pProfileConfig;
     Settings::instance()->set("nick", strNewProfile);
