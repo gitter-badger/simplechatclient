@@ -153,6 +153,7 @@ void OnetKernel::kernel(const QString &_strData)
             case 375: raw_375(); break;
             case 376: raw_376(); break;
             case 378: raw_378(); break;
+            case 381: raw_381(); break;
             case 391: raw_391(); break;
             case 396: raw_396(); break;
             case 401: raw_401(); break;
@@ -2825,6 +2826,14 @@ void OnetKernel::raw_378()
     QString strIP = strDataList[8];
 
     QString strMessage = QString(tr("* %1 is connecting from %2 %3")).arg(strNick, strZuoIP, strIP);
+    Message::instance()->showMessageActive(strMessage, MessageInfo);
+}
+
+// OPER
+// :cf1f1.onet 381 Darom :You are now an IRC operator of type NetAdmin
+void OnetKernel::raw_381()
+{
+    QString strMessage = QString(tr("* You are now an IRC operator of type NetAdmin"));
     Message::instance()->showMessageActive(strMessage, MessageInfo);
 }
 

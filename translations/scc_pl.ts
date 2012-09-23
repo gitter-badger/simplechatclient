@@ -2751,6 +2751,10 @@
         <translation>* %1 jest połączony z %2 %3</translation>
     </message>
     <message>
+        <source>* You are now an IRC operator of type NetAdmin</source>
+        <translation>* Jesteś teraz administratorem czata</translation>
+    </message>
+    <message>
         <source>* Date and time of the server %1: %2</source>
         <translation>* Data i czas serwera %1: %2</translation>
     </message>
