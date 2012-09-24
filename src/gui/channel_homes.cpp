@@ -21,6 +21,7 @@
 #include <QInputDialog>
 #include <QMenu>
 #include <QTimer>
+#include "avatar.h"
 #include "channel.h"
 #include "core.h"
 #include "channel_settings.h"
@@ -90,6 +91,7 @@ void DlgChannelHomes::refresh()
         QString strAvatar = Channel::instance()->getAvatar(strChannel);
         if (!strAvatar.isEmpty())
         {
+            strAvatar = Avatar::instance()->getAvatarPath(strAvatar);
             ui.listWidget_channels->addItem(new QListWidgetItem(QIcon(strAvatar), strChannel));
         }
         else

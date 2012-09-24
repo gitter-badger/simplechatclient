@@ -21,6 +21,7 @@
 #include <QInputDialog>
 #include <QMenu>
 #include <QTimer>
+#include "avatar.h"
 #include "channel.h"
 #include "core.h"
 #include "channel_favourites_model.h"
@@ -78,6 +79,7 @@ void DlgChannelFavourites::refresh()
 
         if (!strAvatar.isEmpty())
         {
+            strAvatar = Avatar::instance()->getAvatarPath(strAvatar);
             ui.listWidget_channels->addItem(new QListWidgetItem(QIcon(strAvatar), strChannel));
         }
         else
