@@ -51,14 +51,20 @@ void Busy::init()
 
 void Busy::start()
 {
-    Settings::instance()->set("busy", "true");
-    busyAction->setChecked(true);
+    if (Settings::instance()->get("busy") != "true")
+    {
+        Settings::instance()->set("busy", "true");
+        busyAction->setChecked(true);
+    }
 }
 
 void Busy::stop()
 {
-    Settings::instance()->set("busy", "false");
-    busyAction->setChecked(false);
+    if (Settings::instance()->get("busy") != "false")
+    {
+        Settings::instance()->set("busy", "false");
+        busyAction->setChecked(false);
+    }
 }
 
 void Busy::busyTriggered()

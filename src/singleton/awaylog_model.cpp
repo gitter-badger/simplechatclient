@@ -75,8 +75,13 @@ void Awaylog::add(qint64 iTime, const QString &strChannel, const QString &strDat
 
     Convert::simpleConvert(strAwayLogData);
 
-    lAwaylog.append(QString("%1\n%2 %3").arg(strChannel, QDateTime::fromMSecsSinceEpoch(iTime).toString("[hh:mm:ss]"), strAwayLogData));
-    Notification::instance()->refreshAwaylog();
+    strAwayLogData = QString("%1\n%2 %3").arg(strChannel, QDateTime::fromMSecsSinceEpoch(iTime).toString("[hh:mm:ss]"), strAwayLogData);
+
+    if (!lAwaylog.contains(strAwayLogData))
+    {
+        lAwaylog.append(strAwayLogData);
+        Notification::instance()->refreshAwaylog();
+    }
 }
 
 QList<QString> Awaylog::get()

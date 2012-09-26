@@ -73,8 +73,6 @@ void Lag::calculate(const QString &strServerMSecs)
 
     qint64 iLag = iCurrentMSecs - iServerMSecs;
 
-    if ((iLag < 0) || (iLag > 301000))
-        return;
-    else
+    if ((iLag >= 0) && (iLag <= 301000))
         update(iLag);
 }

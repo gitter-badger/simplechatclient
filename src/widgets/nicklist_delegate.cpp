@@ -101,10 +101,10 @@ void NickListDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opti
     if ((!nick.startsWith('~')) && (strThemes == "Origin"))
     {
         // is valid avatar
-        if (userAvatar.isEmpty())
-            userAvatar = Nicklist::instance()->getEmptyUserAvatar();
-        else
+        if (!userAvatar.isEmpty())
             userAvatar = Avatar::instance()->getAvatarPath(userAvatar);
+        else
+            userAvatar = Nicklist::instance()->getEmptyUserAvatar();
 
         QIcon avatar(userAvatar);
 

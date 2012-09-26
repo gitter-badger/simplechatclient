@@ -47,20 +47,20 @@ void Highlight::add(QString &strHighlight)
 {
     fix(strHighlight);
 
-    if (lHighlight.contains(strHighlight))
-        return;
-
-    lHighlight.append(strHighlight);
-    save();
+    if (!lHighlight.contains(strHighlight))
+    {
+        lHighlight.append(strHighlight);
+        save();
+    }
 }
 
 void Highlight::remove(const QString &strHighlight)
 {
-    if (!lHighlight.contains(strHighlight))
-        return;
-
-    lHighlight.removeOne(strHighlight);
-    save();
+    if (lHighlight.contains(strHighlight))
+    {
+        lHighlight.removeOne(strHighlight);
+        save();
+    }
 }
 
 bool Highlight::contains(const QString &strHighlight)

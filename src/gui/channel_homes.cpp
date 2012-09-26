@@ -92,13 +92,14 @@ void DlgChannelHomes::refresh()
         if (!strAvatar.isEmpty())
         {
             strAvatar = Avatar::instance()->getAvatarPath(strAvatar);
-            ui.listWidget_channels->addItem(new QListWidgetItem(QIcon(strAvatar), strChannel));
         }
         else
         {
-            ui.listWidget_channels->addItem(new QListWidgetItem(QIcon(":/images/channel_avatar.png"), strChannel));
+            strAvatar = ":/images/channel_avatar.png";
             Core::instance()->network->send(QString("CS INFO %1 i").arg(strChannel));
         }
+
+        ui.listWidget_channels->addItem(new QListWidgetItem(QIcon(strAvatar), strChannel));
     }
 }
 

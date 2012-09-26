@@ -49,12 +49,14 @@ void Channel::clear()
 
 void Channel::add(const QString &channel)
 {
-    lChannels.append(channel);
+    if (!lChannels.contains(channel))
+        lChannels.append(channel);
 }
 
 void Channel::remove(const QString &channel)
 {
-    lChannels.removeOne(channel);
+    if (lChannels.contains(channel))
+        lChannels.removeOne(channel);
 }
 
 QList<QString> Channel::get()

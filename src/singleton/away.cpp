@@ -51,14 +51,20 @@ void Away::init()
 
 void Away::start()
 {
-    Settings::instance()->set("away", "true");
-    awayAction->setChecked(true);
+    if (Settings::instance()->get("away") != "true")
+    {
+        Settings::instance()->set("away", "true");
+        awayAction->setChecked(true);
+    }
 }
 
 void Away::stop()
 {
-    Settings::instance()->set("away", "false");
-    awayAction->setChecked(false);
+    if (Settings::instance()->get("away") != "false")
+    {
+        Settings::instance()->set("away", "false");
+        awayAction->setChecked(false);
+    }
 }
 
 void Away::awayTriggered()

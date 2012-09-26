@@ -47,17 +47,20 @@ void PunishReason::add(QString &strPunishReason)
 {
     fix(strPunishReason);
 
-    if (lPunishReason.contains(strPunishReason))
-        return;
-
-    lPunishReason.append(strPunishReason);
-    save();
+    if (!lPunishReason.contains(strPunishReason))
+    {
+        lPunishReason.append(strPunishReason);
+        save();
+    }
 }
 
 void PunishReason::remove(const QString &strPunishReason)
 {
-    lPunishReason.removeOne(strPunishReason);
-    save();
+    if (lPunishReason.contains(strPunishReason))
+    {
+        lPunishReason.removeOne(strPunishReason);
+        save();
+    }
 }
 
 bool PunishReason::contains(const QString &strPunishReason)

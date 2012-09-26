@@ -39,8 +39,8 @@ public:
     QList<OnetOfflineMessage> getMessages();
     bool isEmptyMessages();
 
-    void addNick(const QString &strNick);
-    void removeNick(const QString &strNick);
+    void addNick(const QString &nick);
+    void removeNick(const QString &nick);
     void clearNicks();
     QList<QString> getNicks();
     bool isEmptyNicks();

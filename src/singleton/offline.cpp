@@ -64,11 +64,6 @@ void Offline::removeMessage(const QString &strNick)
         if (strOfflineNick == strNick)
             lOfflineMessages.takeAt(i);
     }
-//    foreach (OfflineMsg msg, lOfflineMsg)
-//    {
-//        if (msg.nick == strNick)
-//            lOfflineMsg.removeAll(msg);
-//    }
 }
 
 void Offline::clearMessages()
@@ -86,16 +81,22 @@ bool Offline::isEmptyMessages()
     return lOfflineMessages.isEmpty();
 }
 
-void Offline::addNick(const QString &strNick)
+void Offline::addNick(const QString &nick)
 {
-    lOfflineNicks.append(strNick);
-    Notification::instance()->refreshOffline();
+    if (!lOfflineNicks.contains(nick))
+    {
+        lOfflineNicks.append(nick);
+        Notification::instance()->refreshOffline();
+    }
 }
 
-void Offline::removeNick(const QString &strNick)
+void Offline::removeNick(const QString &nick)
 {
-    lOfflineNicks.removeAll(strNick);
-    Notification::instance()->refreshOffline();
+    if (lOfflineNicks.contains(nick))
+    {
+        lOfflineNicks.removeAll(nick);
+        Notification::instance()->refreshOffline();
+    }
 }
 
 void Offline::clearNicks()
