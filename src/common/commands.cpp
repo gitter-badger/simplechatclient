@@ -44,13 +44,13 @@ QString Commands::execute()
 
     QString strCmd = strDataList[0].toLower();
 
-    if (strCmd == "raw")
+    if ((strCmd == "raw") || (strCmd == "quote"))
         return cmdRaw();
     else if (strCmd == "all")
         return cmdAll();
     else if ((strCmd == "join") || (strCmd == "j"))
         return cmdJoin();
-    else if (strCmd == "priv")
+    else if ((strCmd == "priv") || (strCmd == "query"))
         return cmdPriv();
     else if (strCmd == "ignore")
         return cmdIgnore();
