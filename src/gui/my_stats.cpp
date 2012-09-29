@@ -22,6 +22,7 @@
 #include "core.h"
 #include "my_stats_model.h"
 #include "simple_stats_widget.h"
+#include "utils.h"
 #include "my_stats.h"
 
 DlgMyStats::DlgMyStats(QWidget *parent) : QDialog(parent)
@@ -62,29 +63,6 @@ void DlgMyStats::createSignals()
     connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(close()));
 }
 
-int DlgMyStats::replaceValue(const QString &strValue)
-{
-    int iValue = 0;
-
-    // ascii to number
-    int i = 0;
-    for (int c = 97; c <= 122; c++)
-    {
-        QString strChar = QString(QChar(c));
-        if (strChar == strValue)
-        {
-            iValue = i;
-            break;
-        }
-        i++;
-    }
-
-    // percentage
-    iValue = (iValue*100)/24;
-
-    return iValue;
-}
-
 void DlgMyStats::refresh()
 {
     QHashIterator <QString, QString> i(MyStatsModel::instance()->getAll());
@@ -101,7 +79,7 @@ void DlgMyStats::refresh()
             qreal fAverageTime = 0;
             for (int i = 0; i < strValue.size(); i++)
             {
-                int iTime = replaceValue(strValue.at(i));
+                int iTime = Utils::instance()->timeToPercentage(strValue.at(i));
 
                 // add to list
                 lStats.append(iTime);

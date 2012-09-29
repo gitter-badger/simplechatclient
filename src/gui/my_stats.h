@@ -38,7 +38,6 @@ private:
     void createGui();
     void createSignals();
 
-    int replaceValue(const QString &strValue);
     void refresh();
 };
 

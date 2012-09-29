@@ -595,7 +595,7 @@ void DlgChannelSettings::addInvite(const QString &strNick, const QString &strWho
 
 void DlgChannelSettings::ownerChanged()
 {
-    QString strMsg = "<p style=\"font-weight:bold;\">"+tr("The owner of the channel can be only one!")+"</p><p>"+tr("Enter the nickname of the new owner:")+"</p>";
+    QString strMsg = "<p><b>"+tr("The owner of the channel can be only one!")+"</b></p><p>"+tr("Enter the nickname of the new owner:")+"</p>";
     bool ok;
     QString strText = QInputDialog::getText(this, tr("Changing privileges"), strMsg, QLineEdit::Normal, QString::null, &ok);
     strText = strText.trimmed();
@@ -608,7 +608,7 @@ void DlgChannelSettings::ownerChanged()
 
 void DlgChannelSettings::removeChannelClicked()
 {
-    QString strMsg = "<p style=\"font-weight:bold;\">"+tr("The removal of the channel operation is irreversible!")+"</p>";
+    QString strMsg = "<b>"+tr("The removal of the channel operation is irreversible!")+"</b>";
     bool ok;
     QString strText = QInputDialog::getText(this, tr("Changing privileges"), strMsg, QLineEdit::Normal, strChannel, &ok);
     strText = strText.trimmed();
@@ -923,10 +923,7 @@ void DlgChannelSettings::refreshPermissionList()
     QString strSelfModes = Nicklist::instance()->getUserModes(strMe, strChannel);
     int iSelfMaxModes = Nicklist::instance()->getUserMaxModes(strSelfModes);
 
-    if (ChannelSettingsModel::instance()->containsPermission(PERMISSION_OWNER, strMe)
-        || ChannelSettingsModel::instance()->containsPermission(PERMISSION_OP, strMe)
-        || ChannelSettingsModel::instance()->containsPermission(PERMISSION_HALFOP, strMe)
-        || (iSelfMaxModes > 16))
+    if (iSelfMaxModes >= 4)
     {
         setSettingsTabsStatus(true);
     }

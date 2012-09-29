@@ -336,3 +336,26 @@ QString Utils::convertChannelCatToString(int cat, bool moderated, bool recommend
 
     return strResult;
 }
+
+int Utils::timeToPercentage(const QString &strValue)
+{
+    int iValue = 0;
+
+    // ascii to number
+    int i = 0;
+    for (int c = 97; c <= 122; c++)
+    {
+        QString strChar = QString(QChar(c));
+        if (strChar == strValue)
+        {
+            iValue = i;
+            break;
+        }
+        i++;
+    }
+
+    // percentage
+    iValue = (iValue*100)/24;
+
+    return iValue;
+}

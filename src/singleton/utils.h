@@ -46,6 +46,7 @@ public:
     QString convertChannelTypeToString(int type);
     QString convertChannelCatToString(int cat);
     QString convertChannelCatToString(int cat, bool moderated, bool recommended);
+    int timeToPercentage(const QString &strValue);
 
     QList<QString> getFonts();
     QList<QString> getColors();
