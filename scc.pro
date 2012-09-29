@@ -8,8 +8,7 @@ QT += network \
 TARGET = scc
 TEMPLATE = app
 RESOURCES += scc.qrc
-SOURCES += src/avatars/avatar.cpp \
-    src/common/commands.cpp \
+SOURCES += src/common/commands.cpp \
     src/common/config.cpp \
     src/common/convert.cpp \
     src/common/html_messages_renderer.cpp \
@@ -61,41 +60,42 @@ SOURCES += src/avatars/avatar.cpp \
     src/gui/webcam.cpp \
     src/gui/webcam_mini.cpp \
     src/gui/webcam_standard.cpp \
+    src/models/channel_favourites_model.cpp \
+    src/models/channel_homes_model.cpp \
+    src/models/channel_list_model.cpp \
+    src/models/channel_settings_model.cpp \
+    src/models/find_nick_model.cpp \
+    src/models/friends_model.cpp \
+    src/models/ignore_model.cpp \
+    src/models/moderation_model.cpp \
+    src/models/my_profile_model.cpp \
+    src/models/my_stats_model.cpp \\
+    src/models/settings.cpp \
+    src/models/user_profile_model.cpp \
     src/onet/avatar_client.cpp \
     src/onet/my_avatar_model.cpp \
     src/onet/onet_auth.cpp \
     src/onet/onet_kernel.cpp \
     src/onet/onet_utils.cpp \	
+    src/singleton/avatar.cpp \
     src/singleton/autoaway.cpp \
     src/singleton/away.cpp \
     src/singleton/awaylog_model.cpp \
     src/singleton/busy.cpp \
     src/singleton/channel.cpp \
-    src/singleton/channel_favourites_model.cpp \
-    src/singleton/channel_homes_model.cpp \
-    src/singleton/channel_list_model.cpp \
-    src/singleton/channel_settings_model.cpp \
-    src/singleton/find_nick_model.cpp \
-    src/singleton/friends_model.cpp \
     src/singleton/highlight.cpp \
-    src/singleton/ignore_model.cpp \
     src/singleton/invite_model.cpp \
     src/singleton/lag.cpp \
     src/singleton/message.cpp \
-    src/singleton/moderation_model.cpp \
-    src/singleton/my_profile_model.cpp \
-    src/singleton/my_stats_model.cpp \\
     src/singleton/nicklist.cpp \
     src/singleton/notes_model.cpp \
     src/singleton/notification.cpp \
     src/singleton/offline.cpp \
     src/singleton/profile_manager_model.cpp \
     src/singleton/punish_reason.cpp \
-    src/singleton/settings.cpp \
     src/singleton/sound_notify.cpp \
     src/singleton/tray.cpp \
     src/singleton/updates.cpp \
-    src/singleton/user_profile_model.cpp \
     src/singleton/utils.cpp \
     src/tab/tab_container.cpp \
     src/tab/tab_manager.cpp \
@@ -111,8 +111,7 @@ SOURCES += src/avatars/avatar.cpp \
     src/widgets/simple_stats_widget.cpp \
     src/widgets/tool_widget.cpp \
     src/widgets/webcam_delegate.cpp
-HEADERS += src/avatars/avatar.h \
-    src/common/commands.h \
+HEADERS += src/common/commands.h \
     src/common/config.h \
     src/common/convert.h \
     src/common/log.h \
@@ -165,41 +164,42 @@ HEADERS += src/avatars/avatar.h \
     src/gui/webcam.h \
     src/gui/webcam_mini.h \
     src/gui/webcam_standard.h \
+    src/models/channel_favourites_model.h \
+    src/models/channel_homes_model.h \
+    src/models/channel_list_model.h \
+    src/models/channel_settings_model.h \
+    src/models/find_nick_model.h \
+    src/models/friends_model.h \
+    src/models/ignore_model.h \
+    src/models/moderation_model.h \
+    src/models/my_profile_model.h \
+    src/models/my_stats_model.h \
+    src/models/settings.h \
+    src/models/user_profile_model.h \
     src/onet/avatar_client.h \
     src/onet/my_avatar_model.h \
     src/onet/onet_auth.h \
     src/onet/onet_kernel.h \
     src/onet/onet_utils.h \
+    src/singleton/avatar.h \
     src/singleton/autoaway.h \
     src/singleton/away.h \
     src/singleton/awaylog_model.h \
     src/singleton/busy.h \
     src/singleton/channel.h \
-    src/singleton/channel_favourites_model.h \
-    src/singleton/channel_homes_model.h \
-    src/singleton/channel_list_model.h \
-    src/singleton/channel_settings_model.h \
-    src/singleton/find_nick_model.h \
-    src/singleton/friends_model.h \
     src/singleton/highlight.h \
-    src/singleton/ignore_model.h \
     src/singleton/invite_model.h \
     src/singleton/lag.h \
     src/singleton/message.h \
-    src/singleton/moderation_model.h \
-    src/singleton/my_profile_model.h \
-    src/singleton/my_stats_model.h \
     src/singleton/nicklist.h \
     src/singleton/notes_model.h \
     src/singleton/notification.h \
     src/singleton/offline.h \
     src/singleton/profile_manager_model.h \
     src/singleton/punish_reason.h \
-    src/singleton/settings.h \
     src/singleton/sound_notify.h \
     src/singleton/tray.h \
     src/singleton/updates.h \
-    src/singleton/user_profile_model.h \
     src/singleton/utils.h \
     src/tab/tab_container.h \
     src/tab/tab_manager.h \

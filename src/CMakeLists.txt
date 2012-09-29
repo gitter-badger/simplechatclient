@@ -39,8 +39,6 @@ set (scc_UIS
 )
 
 set (scc_SRCS
-	avatars/avatar.cpp
-
 	common/commands.cpp
 	common/config.cpp
 	common/convert.cpp
@@ -89,6 +87,19 @@ set (scc_SRCS
 	gui/user_profile.cpp
 	gui/webbrowser.cpp
 
+	models/channel_favourites_model.cpp
+	models/channel_homes_model.cpp
+	models/channel_list_model.cpp
+	models/channel_settings_model.cpp
+	models/find_nick_model.cpp
+	models/friends_model.cpp
+	models/ignore_model.cpp
+	models/moderation_model.cpp
+	models/my_profile_model.cpp
+	models/my_stats_model.cpp
+	models/settings.cpp
+	models/user_profile_model.cpp
+
 	onet/avatar_client.cpp
 	onet/my_avatar_model.cpp
 	onet/onet_auth.cpp
@@ -96,35 +107,24 @@ set (scc_SRCS
 	onet/onet_utils.cpp
 
 	singleton/autoaway.cpp
+	singleton/avatar.cpp
 	singleton/away.cpp
 	singleton/awaylog_model.cpp
 	singleton/busy.cpp
 	singleton/channel.cpp
-	singleton/channel_favourites_model.cpp
-	singleton/channel_homes_model.cpp
-	singleton/channel_list_model.cpp
-	singleton/channel_settings_model.cpp
-	singleton/find_nick_model.cpp
-	singleton/friends_model.cpp
 	singleton/highlight.cpp
-	singleton/ignore_model.cpp
 	singleton/invite_model.cpp
 	singleton/lag.cpp
 	singleton/message.cpp
-	singleton/moderation_model.cpp
-	singleton/my_profile_model.cpp
-	singleton/my_stats_model.cpp
 	singleton/nicklist.cpp
 	singleton/notes_model.cpp
 	singleton/notification.cpp
 	singleton/offline.cpp
 	singleton/profile_manager_model.cpp
 	singleton/punish_reason.cpp
-	singleton/settings.cpp
 	singleton/sound_notify.cpp
 	singleton/tray.cpp
 	singleton/updates.cpp
-	singleton/user_profile_model.cpp
 	singleton/utils.cpp
 
 	tab/tab_container.cpp
@@ -144,8 +144,6 @@ set (scc_SRCS
 )
 
 set (scc_MOC_HDRS
-	avatars/avatar.h
-
 	common/commands.h
 	common/config.h
 	common/simple_crypt.h
@@ -187,40 +185,42 @@ set (scc_MOC_HDRS
 	gui/user_profile.h
 	gui/webbrowser.h
 
+	models/channel_favourites_model.h
+	models/channel_homes_model.h
+	models/channel_list_model.h
+	models/channel_settings_model.h
+	models/find_nick_model.h
+	models/friends_model.h
+	models/ignore_model.h
+	models/moderation_model.h
+	models/my_profile_model.h
+	models/my_stats_model.h
+	models/settings.h
+	models/user_profile_model.h
+
 	onet/avatar_client.h
 	onet/onet_auth.h
 	onet/onet_kernel.h
 
+	singleton/avatar.h
 	singleton/autoaway.h
 	singleton/away.h
 	singleton/awaylog_model.h
 	singleton/busy.h
 	singleton/channel.h
-	singleton/channel_favourites_model.h
-	singleton/channel_homes_model.h
-	singleton/channel_list_model.h
-	singleton/channel_settings_model.h
-	singleton/find_nick_model.h
-	singleton/friends_model.h
 	singleton/highlight.h
-	singleton/ignore_model.h
 	singleton/invite_model.h
 	singleton/lag.h
 	singleton/message.h
-	singleton/moderation_model.h
-	singleton/my_profile_model.h
-	singleton/my_stats_model.h
 	singleton/nicklist.h
 	singleton/notes_model.h
 	singleton/notification.h
 	singleton/offline.h
 	singleton/profile_manager_model.h
 	singleton/punish_reason.h
-	singleton/settings.h
 	singleton/sound_notify.h
 	singleton/tray.h
 	singleton/updates.h
-	singleton/user_profile_model.h
 	singleton/utils.h
 
 	tab/tab_container.h
@@ -362,11 +362,11 @@ include_directories (
 	${QT_QTNETWORK_INCLUDE_DIR}
 	${CMAKE_BINARY_DIR}
 	${CMAKE_CURRENT_SOURCE_DIR}
-	${CMAKE_CURRENT_SOURCE_DIR}/avatars
 	${CMAKE_CURRENT_SOURCE_DIR}/common
 	${CMAKE_CURRENT_SOURCE_DIR}/core
 	${CMAKE_CURRENT_SOURCE_DIR}/debug
 	${CMAKE_CURRENT_SOURCE_DIR}/gui
+	${CMAKE_CURRENT_SOURCE_DIR}/models
 	${CMAKE_CURRENT_SOURCE_DIR}/onet
 	${CMAKE_CURRENT_SOURCE_DIR}/singleton
 	${CMAKE_CURRENT_SOURCE_DIR}/tab
