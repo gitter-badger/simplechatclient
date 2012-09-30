@@ -249,7 +249,7 @@ void DlgOptions::setDefaultValues()
     strLogsPath += "/scc/";
 #else
     strLogsPath = QDir::homePath();
-    strLogsPath += "/.scc/profiles/";
+    strLogsPath += "/.scc/";
 #endif
 
     strLogsPath += "profiles/"+strCurrentProfile+"/log/";
