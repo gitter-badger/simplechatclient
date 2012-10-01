@@ -2636,6 +2636,8 @@ void OnetKernel::raw_333()
 // :cf1f1.onet 340 Darom :Darom*=+12265854@89.111.111.11
 void OnetKernel::raw_340()
 {
+    if (strDataList.size() < 4) return;
+
     QString strMessage;
     for (int i = 3; i < strDataList.size(); i++) { if (i != 3) strMessage += " "; strMessage += strDataList[i]; }
     strMessage = "* "+strMessage;
