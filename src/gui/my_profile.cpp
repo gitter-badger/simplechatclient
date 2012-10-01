@@ -120,15 +120,15 @@ void DlgMyProfile::createSignals()
     connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(close()));
 }
 
-void DlgMyProfile::avatarFinished(QNetworkReply *pReply)
+void DlgMyProfile::avatarFinished(QNetworkReply *reply)
 {
-    pReply->deleteLater();
+    reply->deleteLater();
 
     // if errors
-    if (pReply->error())
+    if (reply->error())
         return;
 
-    QByteArray bData = pReply->readAll();
+    QByteArray bData = reply->readAll();
 
     // show avatar
     if (!bData.isEmpty())

@@ -232,7 +232,7 @@ void OnetAuth::networkFinished(QNetworkReply *reply)
     if (reply->error())
     {
         if (Settings::instance()->get("debug") == "true")
-            qDebug() << "Error OnetAuth network: " << reply->errorString();
+            qWarning() << "Error OnetAuth network: " << reply->errorString();
 
         bAuthorizing = false;
         return;
@@ -244,7 +244,7 @@ void OnetAuth::networkFinished(QNetworkReply *reply)
     if (bData.isEmpty())
     {
         if (Settings::instance()->get("debug") == "true")
-            qDebug() << "Error OnetAuth data empty";
+            qWarning() << "Error OnetAuth data empty";
 
         bAuthorizing = false;
         return;
@@ -306,7 +306,7 @@ void OnetAuth::networkFinished(QNetworkReply *reply)
             break;
         default:
             if (Settings::instance()->get("debug") == "true")
-                qDebug() << "Error OnetAuth undefined category";
+                qWarning() << "Error OnetAuth undefined category";
             bAuthorizing = false;
             break;
     }
@@ -360,7 +360,7 @@ void OnetAuth::requestFinished(const QString &strData)
         QString strErrorCode = dError.attributes().namedItem("err_code").nodeValue();
         QString strErrorText = dError.attributes().namedItem("err_text").nodeValue();
 
-        if (strErrorCode == "TRUE")
+        if (strErrorCode.toLower() == "true")
         {
             QString strUOKey = doc.elementsByTagName("uoKey").item(0).toElement().text();
             QString strNick = doc.elementsByTagName("zuoUsername").item(0).toElement().text();

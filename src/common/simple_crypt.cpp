@@ -54,7 +54,7 @@ QString SimpleCrypt::encrypt(QString strKey, const QString &strData)
 {
     if ((strKey.isEmpty()) || (strData.isEmpty()) || (strIv.isEmpty()))
     {
-        qDebug() << tr("Error: crypt: Cannot encrypt - empty argument");
+        qWarning() << tr("Error: crypt: Cannot encrypt - empty argument");
         return QString::null;
     }
 
@@ -62,7 +62,7 @@ QString SimpleCrypt::encrypt(QString strKey, const QString &strData)
 
     if ((!QCA::isSupported("aes256-cbc-pkcs7")) && (!QCA::isSupported("blowfish-cbc")))
     {
-        qDebug() << tr("Warning: AES and Blowfish is not supported!");
+        qWarning() << tr("Warning: AES and Blowfish is not supported!");
         return strData;
     }
 
@@ -97,7 +97,7 @@ QString SimpleCrypt::decrypt(QString strKey, const QString &strData)
 {
     if ((strKey.isEmpty()) || (strData.isEmpty()) || (strIv.isEmpty()))
     {
-        qDebug() << tr("Error: crypt: Cannot decrypt - empty argument");
+        qWarning() << tr("Error: crypt: Cannot decrypt - empty argument");
         return QString::null;
     }
 
@@ -105,7 +105,7 @@ QString SimpleCrypt::decrypt(QString strKey, const QString &strData)
 
     if ((!QCA::isSupported("aes256-cbc-pkcs7")) && (!QCA::isSupported("blowfish-cbc")))
     {
-        qDebug() << tr("Warning: AES and Blowfish is not supported!");
+        qWarning() << tr("Warning: AES and Blowfish is not supported!");
         return strData;
     }
 

@@ -239,15 +239,15 @@ void DlgUserProfile::refreshUserInfo()
     }
 }
 
-void DlgUserProfile::avatarFinished(QNetworkReply *pReply)
+void DlgUserProfile::avatarFinished(QNetworkReply *reply)
 {
-    pReply->deleteLater();
+    reply->deleteLater();
 
     // if errors
-    if (pReply->error())
+    if (reply->error())
         return;
 
-    QByteArray bData = pReply->readAll();
+    QByteArray bData = reply->readAll();
 
     // show avatar
     if (!bData.isEmpty())

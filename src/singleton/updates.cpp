@@ -148,7 +148,7 @@ void Updates::updateFinished(QNetworkReply *reply)
         else
         {
             if (Settings::instance()->get("debug") == "true")
-                qDebug() << "Error: Cannot get update xml";
+                qWarning() << "Error: Cannot get update xml";
         }
 
         return;

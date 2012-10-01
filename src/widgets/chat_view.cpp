@@ -81,7 +81,7 @@ void ChatView::createBody()
         jsCode = QByteArray::fromBase64("ZnVuY3Rpb24gYXBwZW5kTWVzc2FnZShodG1sKQ0Kew0KCXZhciBjaGF0RWxlbWVudCA9IGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCdDaGF0Jyk7DQoJdmFyIG4gPSBkb2N1bWVudC5jcmVhdGVFbGVtZW50KCdkaXYnKTsNCgluLmlubmVySFRNTCA9IGh0bWw7DQoJY2hhdEVsZW1lbnQuYXBwZW5kQ2hpbGQobik7IA0KfQ0KDQpmdW5jdGlvbiByZW1vdmVGaXJzdE1lc3NhZ2UoKQ0Kew0KCXZhciBjaGF0RWxlbWVudCA9IGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCdDaGF0Jyk7DQoJY2hhdEVsZW1lbnQucmVtb3ZlQ2hpbGQoY2hhdEVsZW1lbnQuZmlyc3RDaGlsZCk7DQp9DQoNCmZ1bmN0aW9uIGNsZWFyTWVzc2FnZXMoKQ0Kew0KCXZhciBjaGF0RWxlbWVudCA9IGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCdDaGF0Jyk7DQoJY2hhdEVsZW1lbnQuaW5uZXJIVE1MID0gJyc7DQp9DQo=").data();
 
         if (Settings::instance()->get("debug") == "true")
-            qDebug() << "Error: chat.js does not exist!";
+            qWarning() << "Error: chat.js does not exist!";
     }
 
     QString strMainHtml = "<html><head><style type=\"text/css\"></style></head><body><div id=\"Chat\"></div></body></html>";

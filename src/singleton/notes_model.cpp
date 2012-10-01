@@ -91,7 +91,7 @@ void Notes::read()
         else
         {
             if (Settings::instance()->get("debug") == "true")
-                qDebug() << tr("Error: Cannot read notes file!");
+                qWarning() << tr("Error: Cannot read notes file!");
         }
     }
 }

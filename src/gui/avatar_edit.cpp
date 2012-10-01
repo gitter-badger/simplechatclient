@@ -112,7 +112,7 @@ void DlgAvatarEdit::getAvatarReady(const QByteArray &content, const QString &ava
 
     if (!photo.loadFromData(content))
     {
-        qDebug() << "Unable to load image from " << avatarUrl;
+        qWarning() << "Unable to load image from " << avatarUrl;
         return;
     }
 

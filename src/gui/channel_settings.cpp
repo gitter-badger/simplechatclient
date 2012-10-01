@@ -1037,7 +1037,7 @@ void DlgChannelSettings::getAvatarReady(const QByteArray &content, const QString
     QPixmap pixmap;
     if (!pixmap.loadFromData(content))
     {
-        qDebug() << "Unable to load image from " << avatarUrl;
+        qWarning() << "Unable to load image from " << avatarUrl;
         return;
     }
 

@@ -43,7 +43,7 @@ void Log::logClosed(const QString &strChannel)
     Log::save(strChannel, strData);
 }
 
-void Log::save(const QString &strChannel, const QString &strData)
+void Log::save(const QString &strChannel, const QString &strMessage)
 {
     QString strCurrentProfile = Settings::instance()->get("current_profile");
     QString path;
@@ -78,14 +78,14 @@ void Log::save(const QString &strChannel, const QString &strData)
     if (f.open(QIODevice::Append))
     {
         // convert
-        QString strSaveData = strData; 
+        QString strSaveMessage = strMessage;
 
         if (strChannel != DEBUG_WINDOW)
-            Convert::simpleConvert(strSaveData);
+            Convert::simpleConvert(strSaveMessage);
 
         // save
         QTextStream out(&f);
-        out << strSaveData << "\r\n";
+        out << strSaveMessage << "\r\n";
 
         f.close();
     }

@@ -608,7 +608,7 @@ void AvatarListWidget::getAvatarReady(const QByteArray &content, const QString &
     QPixmap pixmap;
     if (!pixmap.loadFromData(content))
     {
-        qDebug() << "Unable to load image from: " << avatarUrl;
+        qWarning() << "Unable to load image from: " << avatarUrl;
         return;
     }
 
@@ -689,7 +689,7 @@ void AvatarListWidget::addAvatarClicked()
         QFile file(fileName);
         if (!file.open(QIODevice::ReadOnly))
         {
-            qDebug() << "Error opening file: " << fileName;
+            qWarning() << "Error opening file: " << fileName;
             return;
         }
         content = file.readAll();
