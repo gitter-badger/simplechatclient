@@ -224,14 +224,12 @@ QString Commands::cmdWhereis()
 
 QString Commands::cmdBusy()
 {
-    QString strBusy = Settings::instance()->get("busy");
+    bool bBusy = Settings::instance()->get("busy") == "true" ? true : false;
 
-    if (strBusy == "true")
+    if (bBusy)
         return "BUSY 0";
-    else if (strBusy == "false")
-        return "BUSY 1";
     else
-        return QString::null;
+        return "BUSY 1";
 }
 
 QString Commands::cmdAway()

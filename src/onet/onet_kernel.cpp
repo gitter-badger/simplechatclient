@@ -141,6 +141,7 @@ void OnetKernel::kernel(const QString &_strData)
             case 332: raw_332(); break;
             case 333: raw_333(); break;
             case 335: raw_335(); break;
+            case 340: raw_340(); break;
             case 341: raw_341(); break;
             case 352: raw_352(); break;
             case 353: raw_353(); break;
@@ -2629,6 +2630,17 @@ void OnetKernel::raw_332()
 void OnetKernel::raw_333()
 {
 // supported by raw 161
+}
+
+// USERIP
+// :cf1f1.onet 340 Darom :Darom*=+12265854@89.111.111.11
+void OnetKernel::raw_340()
+{
+    QString strMessage;
+    for (int i = 3; i < strDataList.size(); i++) { if (i != 3) strMessage += " "; strMessage += strDataList[i]; }
+    strMessage = "* "+strMessage;
+
+    Message::instance()->showMessageActive(strMessage, MessageInfo);
 }
 
 // :cf1f4.onet 341 Merovingian ~test34534 #Scrabble
