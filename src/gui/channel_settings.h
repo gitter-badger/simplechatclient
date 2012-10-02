@@ -25,6 +25,7 @@
 #include "ui_channel_settings.h"
 
 class SimpleStatsWidget;
+class SimplePercentageWidget;
 
 class DlgChannelSettings : public QDialog
 {
@@ -37,6 +38,7 @@ private:
     Ui::uiChannelSettings ui;
     QString strChannel;
     SimpleStatsWidget *pSimpleStatsWidget;
+    SimplePercentageWidget *pSimplePercentageWidget;
     AvatarClient *avatarClient;
     QString avatarUrl;
 

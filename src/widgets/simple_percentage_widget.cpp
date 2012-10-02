@@ -29,6 +29,11 @@ SimplePercentageWidget::SimplePercentageWidget(QWidget *parent, double _iRank, i
     setMinimumSize(iWidth, iHeight);
 }
 
+void SimplePercentageWidget::setRank(double _iRank)
+{
+    iRank = _iRank;
+}
+
 QSize SimplePercentageWidget::sizeHint() const
 {
     return QSize(iWidth, iHeight);
@@ -44,6 +49,12 @@ void SimplePercentageWidget::paintEvent(QPaintEvent *)
     painter.drawRect(0,0,this->sizeHint().width(),this->sizeHint().height());
 
     int x = (int)this->sizeHint().width()*iRank;
+
+    // min max
+    if (x < 0)
+        x = 0;
+    else if (x > iWidth)
+        x = iWidth;
 
     painter.setBrush(Qt::green);
     painter.setPen(Qt::green);

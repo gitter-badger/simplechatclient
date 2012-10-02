@@ -228,7 +228,7 @@ void DlgUserProfile::refreshUserInfo()
         else if (strKey == "shortDesc")
             textEdit_desc->setHtml(convertDesc(strValue));
         else if (strKey == "type")
-            lineEdit_type->setText(Utils::instance()->convertIntToType(strValue));
+            lineEdit_type->setText(Utils::instance()->convertIntToType(strValue.toInt()));
         else if (strKey == "www")
         {
             QString strShortLink = strValue;

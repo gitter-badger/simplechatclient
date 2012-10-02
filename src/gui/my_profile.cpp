@@ -191,7 +191,7 @@ void DlgMyProfile::refresh()
         else if (strKey == "shortDesc")
             ui.plainTextEdit_desc->setPlainText(convertTextToDesc(strValue));
         else if (strKey == "type")
-            ui.label_type->setText(Utils::instance()->convertIntToType(strValue));
+            ui.label_type->setText(Utils::instance()->convertIntToType(strValue.toInt()));
         else if (strKey == "www")
             ui.lineEdit_www->setText(strValue);
     }

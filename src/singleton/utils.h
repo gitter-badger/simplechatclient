@@ -38,7 +38,7 @@ public:
     QString convertCountryToCode(const QString &strCountry);
     QString convertIntToMonth(const QString &strConvertMonth);
     QString convertMonthToInt(const QString &strMonth);
-    QString convertIntToType(const QString &strType);
+    QString convertIntToType(int iType);
     QString convertIntToSexChar(int iSex);
     QString convertDateToAge(const QString &strDate);
     QString convertCharToSex(const QString &strSex);

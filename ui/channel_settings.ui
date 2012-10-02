@@ -1069,9 +1069,9 @@
       <property name="geometry">
        <rect>
         <x>0</x>
-        <y>10</y>
+        <y>110</y>
         <width>551</width>
-        <height>171</height>
+        <height>131</height>
        </rect>
       </property>
       <property name="title">
@@ -1081,9 +1081,9 @@
        <property name="geometry">
         <rect>
          <x>10</x>
-         <y>30</y>
+         <y>20</y>
          <width>531</width>
-         <height>121</height>
+         <height>101</height>
         </rect>
        </property>
        <layout class="QHBoxLayout" name="horizontalLayout_20">
@@ -1123,7 +1123,7 @@
       <property name="geometry">
        <rect>
         <x>0</x>
-        <y>210</y>
+        <y>260</y>
         <width>551</width>
         <height>80</height>
        </rect>
@@ -1220,6 +1220,80 @@
         </spacer>
        </item>
       </layout>
+     </widget>
+     <widget class="QGroupBox" name="groupBox_rank">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>10</y>
+        <width>551</width>
+        <height>81</height>
+       </rect>
+      </property>
+      <property name="title">
+       <string>Type</string>
+      </property>
+      <widget class="QWidget" name="horizontalLayoutWidget_7">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>20</y>
+         <width>531</width>
+         <height>51</height>
+        </rect>
+       </property>
+       <layout class="QHBoxLayout" name="horizontalLayout_23">
+        <item>
+         <widget class="QLabel" name="label_rank_current">
+          <property name="styleSheet">
+           <string notr="true">font-weight:bold</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer_12">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <layout class="QVBoxLayout" name="verticalLayout_rank"/>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer_11">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <widget class="QLabel" name="label_rank_next">
+          <property name="styleSheet">
+           <string notr="true">font-weight:bold</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
      </widget>
     </widget>
    </widget>

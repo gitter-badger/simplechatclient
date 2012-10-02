@@ -167,15 +167,15 @@ QString Utils::convertMonthToInt(const QString &strMonth)
     return QString::null;
 }
 
-QString Utils::convertIntToType(const QString &strType)
+QString Utils::convertIntToType(int iType)
 {
-    if (strType == "0")
+    if (iType == 0)
         return tr("Novice");
-    else if (strType == "1")
+    else if (iType == 1)
         return tr("Beginner");
-    else if (strType == "2")
+    else if (iType == 2)
         return tr("Master");
-    else if (strType == "3")
+    else if (iType == 3)
         return tr("Guru");
     else
         return QString::null;

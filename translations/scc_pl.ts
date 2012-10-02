@@ -749,6 +749,10 @@
         <translation>Ranga:</translation>
     </message>
     <message>
+        <source>Type</source>
+        <translation>Ranga</translation>
+    </message>
+    <message>
         <source>Wild</source>
         <translation>Dziki</translation>
     </message>

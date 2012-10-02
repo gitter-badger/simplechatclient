@@ -31,6 +31,7 @@
 #include "nicklist.h"
 #include "settings.h"
 #include "simple_stats_widget.h"
+#include "simple_percentage_widget.h"
 #include "utils.h"
 #include "channel_settings.h"
 
@@ -43,8 +44,12 @@ DlgChannelSettings::DlgChannelSettings(const QString &_strChannel, QWidget *pare
     move(QApplication::desktop()->screenGeometry(QApplication::desktop()->screenNumber(parent)).center()  - rect().center());
 
     pSimpleStatsWidget = new SimpleStatsWidget(this);
-    pSimpleStatsWidget->show();
     ui.verticalLayout_stats->addWidget(pSimpleStatsWidget);
+    pSimpleStatsWidget->show();
+
+    pSimplePercentageWidget = new SimplePercentageWidget(this);
+    ui.verticalLayout_rank->addWidget(pSimplePercentageWidget);
+    pSimplePercentageWidget->show();
 
     createGui();
     setDefaultValues();
@@ -141,6 +146,7 @@ void DlgChannelSettings::createGui()
 
     // statistics
     ui.groupBox_stats->setTitle(tr("Statistics"));
+    ui.groupBox_rank->setTitle(tr("Type"));
     ui.label_stats_lwords->setText(tr("Average per day spoken words:"));
     ui.label_stats_lfavourites->setText(tr("Channel added in favourites:"));
     ui.label_stats_lexists_days->setText(tr("Channel exists days:"));
@@ -410,11 +416,22 @@ void DlgChannelSettings::refreshChannelInfo()
                 ui.radioButton_status_pub->setChecked(true);
             }
         }
+        else if (strKey == "rank")
+        {
+            QStringList lRank = strValue.split('.');
+            double iType = lRank.value(0, 0).toDouble();
+            double iRank = strValue.toDouble();
+
+            pSimplePercentageWidget->setRank(iRank-iType);
+        }
         else if (strKey == "type")
         {
             QString strChannelType = Utils::instance()->convertChannelCatToString(strValue.toInt());
 
             ui.label_summary_type->setText(strChannelType);
+
+            ui.label_rank_current->setText(Utils::instance()->convertChannelCatToString(strValue.toInt()));
+            ui.label_rank_next->setText(Utils::instance()->convertChannelCatToString(strValue.toInt() + 1));
         }
         else if (strKey == "www")
         {
