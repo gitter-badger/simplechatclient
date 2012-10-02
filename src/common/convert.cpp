@@ -38,8 +38,8 @@ QString findEmoticon(const QString &strEmoticon)
     path = SCC_DATA_DIR;
 #endif
 
-    QDir dAllEmoticonsDirs = path+"/3rdparty/emoticons";
-    QStringList lDirs = dAllEmoticonsDirs.entryList(QStringList("*"), QDir::Dirs | QDir::NoDotAndDotDot | QDir::NoSymLinks);
+    QDir dAllEmoticonsDirs = path+"/3rdparty/emoticons/";
+    QStringList lDirs = dAllEmoticonsDirs.entryList(QStringList("*"), QDir::Dirs | QDir::NoDotAndDotDot | QDir::NoSymLinks, QDir::Name | QDir::IgnoreCase);
 
     QStringList lSupportedEmoticons;
     lSupportedEmoticons << ".gif" << ".jpg" << ".jpeg" << ".png" << ".bmp";

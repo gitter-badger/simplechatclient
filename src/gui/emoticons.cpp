@@ -43,7 +43,7 @@ void DlgEmoticonsThread::run()
     QStringList lSupportedEmoticons;
     lSupportedEmoticons << "*.gif" << "*.jpg" << "*.jpeg" << "*.png" << "*.bmp";
 
-    QStringList lFiles = dEmoticonsDir.entryList(lSupportedEmoticons, QDir::Files | QDir::NoSymLinks);
+    QStringList lFiles = dEmoticonsDir.entryList(lSupportedEmoticons, QDir::Files | QDir::NoSymLinks, QDir::Name | QDir::IgnoreCase);
 
     foreach (QString strFileName, lFiles)
     {
@@ -135,13 +135,20 @@ void DlgEmoticons::setDefaultValues()
     path = SCC_DATA_DIR;
 #endif
 
-    QDir dAllEmoticonsDirs = path+"/3rdparty/emoticons";
-    QStringList lDirs = dAllEmoticonsDirs.entryList(QStringList("*"), QDir::Dirs | QDir::NoDotAndDotDot | QDir::NoSymLinks);
+    QStringList lSupportedEmoticons;
+    lSupportedEmoticons << "*.gif" << "*.jpg" << "*.jpeg" << "*.png" << "*.bmp";
+
+    QDir dAllEmoticonsDirs = path+"/3rdparty/emoticons/";
+    QStringList lDirs = dAllEmoticonsDirs.entryList(QStringList("*"), QDir::Dirs | QDir::NoDotAndDotDot | QDir::NoSymLinks, QDir::Name | QDir::IgnoreCase);
 
     foreach (QString strDir, lDirs)
     {
-        QString strFullPath = QString("%1/%2").arg(dAllEmoticonsDirs.path(), strDir);
-        ui.tabWidget->addTab(new DlgEmoticonsTab(strFullPath), strDir);
+        QDir dEmoticonsDir = dAllEmoticonsDirs.absolutePath()+"/"+strDir;
+
+        QStringList lFiles = dEmoticonsDir.entryList(lSupportedEmoticons, QDir::Files | QDir::NoSymLinks, QDir::Name | QDir::IgnoreCase);
+        QString strFirstIconPath = dEmoticonsDir.absolutePath()+"/"+lFiles.first();
+
+        ui.tabWidget->addTab(new DlgEmoticonsTab(dEmoticonsDir.absolutePath()), QIcon(strFirstIconPath), strDir);
     }
 }
 
