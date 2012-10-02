@@ -20,7 +20,7 @@
 #include <QPainter>
 #include "simple_percentage_widget.h"
 
-SimplePercentageWidget::SimplePercentageWidget(QWidget *parent, double _iRank, int _iWidth, int _iHeight) : QWidget(parent), iWidth(_iWidth), iHeight(_iHeight), iRank(_iRank)
+SimplePercentageWidget::SimplePercentageWidget(QWidget *parent, int _iWidth, int _iHeight, double _iRank) : QWidget(parent), iWidth(_iWidth), iHeight(_iHeight), iRank(_iRank)
 {
     setBackgroundRole(QPalette::Base);
     setAutoFillBackground(true);

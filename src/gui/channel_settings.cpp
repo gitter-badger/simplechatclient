@@ -30,8 +30,8 @@
 #include "channel_settings_model.h"
 #include "nicklist.h"
 #include "settings.h"
-#include "simple_stats_widget.h"
 #include "simple_percentage_widget.h"
+#include "simple_stats_widget.h"
 #include "utils.h"
 #include "channel_settings.h"
 

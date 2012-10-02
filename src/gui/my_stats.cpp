@@ -20,7 +20,9 @@
 #include <QDesktopWidget>
 #include <QPushButton>
 #include "core.h"
+#include "my_profile_model.h"
 #include "my_stats_model.h"
+#include "simple_percentage_widget.h"
 #include "simple_stats_widget.h"
 #include "utils.h"
 #include "my_stats.h"
@@ -34,8 +36,12 @@ DlgMyStats::DlgMyStats(QWidget *parent) : QDialog(parent)
     move(QApplication::desktop()->screenGeometry(QApplication::desktop()->screenNumber(parent)).center()  - rect().center());
 
     pSimpleStatsWidget = new SimpleStatsWidget(this);
-    pSimpleStatsWidget->show();
     ui.verticalLayout_stats->addWidget(pSimpleStatsWidget);
+    pSimpleStatsWidget->show();
+
+    pSimplePercentageWidget = new SimplePercentageWidget(this);
+    ui.verticalLayout_rank->addWidget(pSimplePercentageWidget);
+    pSimplePercentageWidget->show();
 
     createGui();
     createSignals();
@@ -53,6 +59,7 @@ void DlgMyStats::createGui()
     ui.buttonBox->button(QDialogButtonBox::Close)->setIcon(QIcon(":/images/oxygen/16x16/dialog-close.png"));
 
     ui.groupBox_stats->setTitle(tr("Statistics"));
+    ui.groupBox_rank->setTitle(tr("Type"));
     ui.label_friends->setText(tr("Added you as a friend:"));
     ui.label_ignored->setText(tr("Added you to ignore:"));
     ui.label_average_time->setText(tr("Average time:"));
@@ -65,12 +72,12 @@ void DlgMyStats::createSignals()
 
 void DlgMyStats::refresh()
 {
-    QHashIterator <QString, QString> i(MyStatsModel::instance()->getAll());
-    while (i.hasNext())
+    QHashIterator <QString, QString> is(MyStatsModel::instance()->getAll());
+    while (is.hasNext())
     {
-        i.next();
-        QString strKey = i.key();
-        QString strValue = i.value();
+        is.next();
+        QString strKey = is.key();
+        QString strValue = is.value();
 
         if (strKey == "histTotal")
         {
@@ -104,6 +111,28 @@ void DlgMyStats::refresh()
         else if (strKey == "relationsIgnored")
         {
             ui.label_stats_ignored->setText(strValue);
+        }
+    }
+
+    QHashIterator <QString, QString> im(MyProfileModel::instance()->getAll());
+    while (im.hasNext())
+    {
+        im.next();
+        QString strKey = im.key();
+        QString strValue = im.value();
+
+        if (strKey == "rank")
+        {
+            QStringList lRank = strValue.split('.');
+            double iType = lRank.value(0, 0).toDouble();
+            double iRank = strValue.toDouble();
+
+            pSimplePercentageWidget->setRank(iRank-iType);
+        }
+        else if (strKey == "type")
+        {
+            ui.label_rank_current->setText(Utils::instance()->convertIntToType(strValue.toInt()));
+            ui.label_rank_next->setText(Utils::instance()->convertIntToType(strValue.toInt() + 1));
         }
     }
 }

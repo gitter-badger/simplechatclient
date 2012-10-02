@@ -21,6 +21,7 @@
 #define MY_STATS_H
 
 class SimpleStatsWidget;
+class SimplePercentageWidget;
 #include <QDialog>
 #include "ui_my_stats.h"
 
@@ -33,6 +34,7 @@ public:
 
 private:
     Ui::uiMyStats ui;
+    SimplePercentageWidget *pSimplePercentageWidget;
     SimpleStatsWidget *pSimpleStatsWidget;
 
     void createGui();

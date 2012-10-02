@@ -26,7 +26,7 @@ class SimplePercentageWidget : public QWidget
 {
     Q_OBJECT
 public:
-    SimplePercentageWidget(QWidget *parent = 0, double _iRank = 0, int _iWidth = 400, int _iHeight = 30);
+    SimplePercentageWidget(QWidget *parent = 0, int _iWidth = 400, int _iHeight = 30, double _iRank = 0);
 
     void setRank(double _iRank);
     QSize sizeHint() const;

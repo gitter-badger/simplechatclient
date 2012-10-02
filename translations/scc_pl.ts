@@ -1249,6 +1249,10 @@
         <translation>Moje statystyki</translation>
     </message>
     <message>
+        <source>Type</source>
+        <translation>Ranga</translation>
+    </message>	
+    <message>
         <source>Statistics</source>
         <translation>Statystyki</translation>
     </message>
