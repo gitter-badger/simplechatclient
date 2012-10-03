@@ -2640,6 +2640,7 @@ void OnetKernel::raw_340()
 
     QString strMessage;
     for (int i = 3; i < strDataList.size(); i++) { if (i != 3) strMessage += " "; strMessage += strDataList[i]; }
+    if (strMessage[0] == ':') strMessage.remove(0,1);
     strMessage = "* "+strMessage;
 
     Message::instance()->showMessageActive(strMessage, MessageInfo);
