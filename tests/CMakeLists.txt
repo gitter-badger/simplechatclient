@@ -1,0 +1,2 @@
+
+set (QT_USE_QTEST TRUE)

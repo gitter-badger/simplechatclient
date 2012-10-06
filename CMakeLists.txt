@@ -1,7 +1,7 @@
 # init
 project (scc)
 cmake_minimum_required (VERSION 2.8.7 FATAL_ERROR)
-set (QT_MIN_VERSION "4.8.1")
+set (QT_MIN_VERSION "4.8.0")
 find_package (Qt4 REQUIRED)
 
 # set
@@ -20,6 +20,7 @@ include (CheckIncludeFiles)
 # sub dir
 add_subdirectory (src)
 add_subdirectory (translations)
+add_subdirectory (tests)
 
 # configure
 configure_file (${CMAKE_SOURCE_DIR}/scc-config.h.cmake ${CMAKE_BINARY_DIR}/scc-config.h)
