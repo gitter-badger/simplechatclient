@@ -78,7 +78,7 @@ void ChatView::createBody()
 
     if (jsCode.isEmpty())
     {
-        jsCode = QByteArray::fromBase64("ZnVuY3Rpb24gYXBwZW5kTWVzc2FnZShodG1sKQ0Kew0KCXZhciBjaGF0RWxlbWVudCA9IGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCdDaGF0Jyk7DQoJdmFyIG4gPSBkb2N1bWVudC5jcmVhdGVFbGVtZW50KCdkaXYnKTsNCgluLmlubmVySFRNTCA9IGh0bWw7DQoJY2hhdEVsZW1lbnQuYXBwZW5kQ2hpbGQobik7IA0KfQ0KDQpmdW5jdGlvbiByZW1vdmVGaXJzdE1lc3NhZ2UoKQ0Kew0KCXZhciBjaGF0RWxlbWVudCA9IGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCdDaGF0Jyk7DQoJY2hhdEVsZW1lbnQucmVtb3ZlQ2hpbGQoY2hhdEVsZW1lbnQuZmlyc3RDaGlsZCk7DQp9DQoNCmZ1bmN0aW9uIGNsZWFyTWVzc2FnZXMoKQ0Kew0KCXZhciBjaGF0RWxlbWVudCA9IGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCdDaGF0Jyk7DQoJY2hhdEVsZW1lbnQuaW5uZXJIVE1MID0gJyc7DQp9DQo=").data();
+        jsCode = QByteArray::fromBase64("CmZ1bmN0aW9uIGFwcGVuZE1lc3NhZ2UoaHRtbCkKewp2YXIgZGl2ID0gZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoJ0NoYXQnKS5nZXRFbGVtZW50c0J5VGFnTmFtZSgnZGl2Jyk7CmlmIChkaXYubGVuZ3RoICZndDsgMzUwKQp7CnZhciBjaGF0RWxlbWVudCA9IGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCdDaGF0Jyk7CmNoYXRFbGVtZW50LnJlbW92ZUNoaWxkKGNoYXRFbGVtZW50LmZpcnN0Q2hpbGQpOwp9Cgp2YXIgY2hhdEVsZW1lbnQgPSBkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgnQ2hhdCcpOwp2YXIgbiA9IGRvY3VtZW50LmNyZWF0ZUVsZW1lbnQoJ2RpdicpOwpuLmlubmVySFRNTCA9IGh0bWw7CmNoYXRFbGVtZW50LmFwcGVuZENoaWxkKG4pOyAKfQoKZnVuY3Rpb24gY2xlYXJNZXNzYWdlcygpCnsKdmFyIGNoYXRFbGVtZW50ID0gZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoJ0NoYXQnKTsKY2hhdEVsZW1lbnQuaW5uZXJIVE1MID0gIiI7Cn0K").data();
 
         if (Settings::instance()->get("debug") == "true")
             qWarning() << "Error: chat.js does not exist!";
@@ -118,12 +118,6 @@ void ChatView::displayMessage(const QString &strData, MessageCategory eMessageCa
 
     // scroll
     bAtBottom = (this->page()->mainFrame()->scrollBarValue(Qt::Vertical) >= this->page()->mainFrame()->scrollBarMaximum(Qt::Vertical));
-
-    // remove first message
-    QWebElement document = this->page()->mainFrame()->documentElement();
-    QWebElementCollection allDiv = document.findAll("div");
-    if (allDiv.count() > 350)
-        this->page()->mainFrame()->evaluateJavaScript("removeFirstMessage()");
 
     // append
     this->page()->mainFrame()->evaluateJavaScript("appendMessage(\'"+strContent+"\')");
