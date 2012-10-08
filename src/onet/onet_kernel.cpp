@@ -820,6 +820,7 @@ void OnetKernel::raw_mode()
 // :Merovingian!26269559@2294E8.94913F.2EAEC9.11F26D PRIVMSG %#scc :hello
 // :Merovingian!26269559@2294E8.94913F.2EAEC9.11F26D PRIVMSG +#scc :hello
 // :Merovingian!26269559@2294E8.94913F.2EAEC9.11F26D PRIVMSG #scc :hello
+// :Merovingian!26269559@2294E8.94913F.2EAEC9.11F26D PRIVMSG ^scc_test :hello
 void OnetKernel::raw_privmsg()
 {
     if (strDataList.size() < 3) return;
@@ -838,23 +839,20 @@ void OnetKernel::raw_privmsg()
 
     QString strNickOrChannel = strDataList[2];
 
-    // channel or priv
-    if (strNickOrChannel.contains(QRegExp("(#|^)")))
+    //channel
+    if (strNickOrChannel.contains('#'))
     {
-        QString strChannel;
+        QString strFullChannel = strNickOrChannel;
+        QString strGroup = strFullChannel.left(strFullChannel.indexOf('#'));
+        Q_UNUSED (strGroup);
 
-        //channel
-        if (strNickOrChannel.contains('#'))
-        {
-            QString strFullChannel = strNickOrChannel;
-            QString strGroup = strFullChannel.left(strFullChannel.indexOf('#'));
-            Q_UNUSED (strGroup);
-            strChannel = strFullChannel.right(strFullChannel.length()-strFullChannel.indexOf('#'));
-        }
-        // priv
-        else
-            strChannel = strNickOrChannel;
-
+        QString strChannel = strFullChannel.right(strFullChannel.length()-strFullChannel.indexOf('#'));
+        Message::instance()->showMessage(strChannel, strMessage, MessageDefault, strNick);
+    }
+    // priv
+    else if (strNickOrChannel.contains('^'))
+    {
+        QString strChannel = strNickOrChannel;
         Message::instance()->showMessage(strChannel, strMessage, MessageDefault, strNick);
     }
     // nick
@@ -868,6 +866,11 @@ void OnetKernel::raw_privmsg()
 // :Llanero!43347263@admin.onet NOTICE #channel :test
 // :cf1f2.onet NOTICE scc_test :Your message has been filtered and opers notified: spam #2480
 // :Llanero!43347263@admin.onet NOTICE $* :458852 * * :%Fb%%C008100%Weź udział w Konkursie Mikołajkowym - skompletuj zaprzęg Świetego Mikołaja! Więcej info w Wieściach z Czata ! http://czat.onet.pl/1632594,wiesci.html
+// :Panie_kierowniku!57643619@devel.onet NOTICE Darom :458852 * * :bum
+// :Panie_kierowniku!57643619@devel.onet NOTICE Darom :458853 * * :bum
+// :Panie_kierowniku!57643619@devel.onet NOTICE Darom :458854 * * :bum
+// :Panie_kierowniku!57643619@devel.onet NOTICE Darom :458855 * * :bum
+
 void OnetKernel::raw_notice()
 {
     if (strDataList.size() < 3) return;
@@ -879,47 +882,52 @@ void OnetKernel::raw_notice()
     QString strNickOrChannel = strDataList[2];
     QString strMessage;
 
-    // channel or priv
-    if (strNickOrChannel.contains(QRegExp("(#|^)")))
+    QString strCategory = strDataList[3];
+    if (strCategory[0] == ':') strCategory.remove(0,1);
+    int iCategory = strCategory.toInt();
+    QString strCategoryString;
+
+    switch (iCategory)
     {
-        QString strChannel;
+        case NOTICE_INFO:
+            if (strCategoryString.isEmpty()) strCategoryString = tr("Information")+": ";
+        case NOTICE_WARNING:
+            if (strCategoryString.isEmpty()) strCategoryString = tr("Warning")+": ";
+        case NOTICE_ERROR:
+            if (strCategoryString.isEmpty()) strCategoryString = tr("Error")+": ";
+        case NOTICE_QUESTION:
+            if (strCategoryString.isEmpty()) strCategoryString = tr("Question")+": ";
 
-        // channel
-        if (strNickOrChannel.contains('#'))
-        {
-            QString strFullChannel = strNickOrChannel;
-            QString strGroup = strFullChannel.left(strFullChannel.indexOf('#'));
-            Q_UNUSED (strGroup);
-            strChannel = strFullChannel.right(strFullChannel.length()-strFullChannel.indexOf('#'));
-        }
-        // priv
-        else
-            strChannel = strNickOrChannel;
+            for (int i = 6; i < strDataList.size(); i++) { if (i != 6) strMessage += " "; strMessage += strDataList[i]; }
+            if (strMessage[0] == ':') strMessage.remove(0,1);
+            break;
+        default:
+            for (int i = 3; i < strDataList.size(); i++) { if (i != 3) strMessage += " "; strMessage += strDataList[i]; }
+            if (strMessage[0] == ':') strMessage.remove(0,1);
+            break;
+    }
 
-        for (int i = 3; i < strDataList.size(); i++) { if (i != 3) strMessage += " "; strMessage += strDataList[i]; }
-        if (strMessage[0] == ':') strMessage.remove(0,1);
+    QString strDisplay = QString("-%1- %2%3").arg(strWho, strCategoryString, strMessage);
 
-        QString strDisplay = QString("-%1- %2").arg(strWho, strMessage);
+    // channel
+    if (strNickOrChannel.contains('#'))
+    {
+        QString strFullChannel = strNickOrChannel;
+        QString strGroup = strFullChannel.left(strFullChannel.indexOf('#'));
+        Q_UNUSED (strGroup);
+
+        QString strChannel = strFullChannel.right(strFullChannel.length()-strFullChannel.indexOf('#'));
+        Message::instance()->showMessage(strChannel, strDisplay, MessageNotice);
+    }
+    // priv
+    else if (strNickOrChannel.contains('^'))
+    {
+        QString strChannel = strNickOrChannel;
         Message::instance()->showMessage(strChannel, strDisplay, MessageNotice);
     }
     // nick
     else
     {
-        // special notice
-        if (strNickOrChannel[0] == '$')
-        {
-            for (int i = 6; i < strDataList.size(); i++) { if (i != 6) strMessage += " "; strMessage += strDataList[i]; }
-            if (strMessage[0] == ':') strMessage.remove(0,1);
-        }
-        // standard notice
-        else
-        {
-            for (int i = 3; i < strDataList.size(); i++) { if (i != 3) strMessage += " "; strMessage += strDataList[i]; }
-            if (strMessage[0] == ':') strMessage.remove(0,1);
-        }
-
-        // display
-        QString strDisplay = QString("-%1- %2").arg(strWho, strMessage);
         Message::instance()->showMessageActive(strDisplay, MessageNotice);
     }
 }

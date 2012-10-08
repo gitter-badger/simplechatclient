@@ -2579,6 +2579,18 @@
         <translation>* %1 ma teraz flage %2</translation>
     </message>
     <message>
+        <source>Information</source>
+        <translation>Komunikat</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation>Błąd</translation>
+    </message>
+    <message>
+        <source>Question</source>
+        <translation>Pytanie</translation>
+    </message>
+    <message>
         <source>* %1 changed the topic to: %2</source>
         <translation>* %1 ustawił nowy temat: %2</translation>
     </message>

@@ -76,6 +76,11 @@ const int SECONDS_IN_MINUTE = 60;
 #define PERMISSION_BAN "b"
 #define PERMISSION_INVITE "I"
 
+const int NOTICE_INFO = 100 | 0x070000;
+const int NOTICE_WARNING = 101 | 0x070000;
+const int NOTICE_ERROR = 102 | 0x070000;
+const int NOTICE_QUESTION = 103 | 0x070000;
+
 struct OnetChannelList
 {
     QString name;
