@@ -68,12 +68,14 @@ public:
 private:
     Ui::uiEmoticons ui;
     InputLineWidget *pInputLineWidget;
+    QList<int> lReadedTabIndex;
 
     void createGui();
     void setDefaultValues();
     void createSignals();
 
 public slots:
+    void tabChanged(int index);
     void buttonInsert();
 };
 

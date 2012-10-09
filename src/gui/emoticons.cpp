@@ -83,7 +83,6 @@ DlgEmoticonsTab::DlgEmoticonsTab(const QString &_strDir, QWidget *parent) : QWid
     connect(&thread, SIGNAL(sortEmoticons()), this, SLOT(sortEmoticons()));
 
     thread.setDir(_strDir);
-    thread.start();
 }
 
 void DlgEmoticonsTab::addEmoticon(const QString &strEmoticon, const QByteArray &bData)
@@ -116,6 +115,10 @@ DlgEmoticons::DlgEmoticons(InputLineWidget *_pInputLineWidget, QWidget *parent) 
     createGui();
     setDefaultValues();
     createSignals();
+
+    // default read first tab
+    if (ui.tabWidget->count() != 0)
+        tabChanged(0);
 }
 
 void DlgEmoticons::createGui()
@@ -154,6 +157,7 @@ void DlgEmoticons::setDefaultValues()
 
 void DlgEmoticons::createSignals()
 {
+    connect(ui.tabWidget, SIGNAL(currentChanged(int)), this, SLOT(tabChanged(int)));
     connect(ui.pushButton_insert, SIGNAL(clicked()), this, SLOT(buttonInsert()));
     connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(close()));
 
@@ -172,6 +176,17 @@ DlgEmoticons::~DlgEmoticons()
         tab->thread.quit();
         tab->thread.wait();
         tab->thread.deleteLater();
+    }
+}
+
+void DlgEmoticons::tabChanged(int index)
+{
+    if (!lReadedTabIndex.contains(index))
+    {
+        lReadedTabIndex.append(index);
+
+        DlgEmoticonsTab *tab = (DlgEmoticonsTab *)ui.tabWidget->widget(index);
+        tab->thread.start();
     }
 }
 
