@@ -55,18 +55,14 @@ void Awaylog::add(qint64 iTime, const QString &strChannel, const QString &strDat
     if (Settings::instance()->get("away") == "false")
         return;
 
+    // channel
     QString strAwayLogChannel = strChannel;
+
     // fix priv
     if ((strAwayLogChannel[0] == '^') && (Channel::instance()->containsPriv(strAwayLogChannel)))
         strAwayLogChannel = Channel::instance()->getPriv(strAwayLogChannel);
 
-    // save awaylog
-    if (Settings::instance()->get("disable_logs") == "false")
-    {
-        QString strAwaylogFileData = QString("%1 %2 %3").arg(QDateTime::fromMSecsSinceEpoch(iTime).toString("[yyyy-MM-dd] [hh:mm:ss]"), strAwayLogChannel, strData);
-        Log::save("awaylog", strAwaylogFileData);
-    }
-
+    // data
     QString strAwayLogData = strData;
 
     // fix /me
@@ -80,6 +76,13 @@ void Awaylog::add(qint64 iTime, const QString &strChannel, const QString &strDat
     }
 
     Convert::simpleConvert(strAwayLogData);
+
+    // save awaylog
+    if (Settings::instance()->get("disable_logs") == "false")
+    {
+        QString strAwaylogFileData = QString("%1 %2 %3").arg(QDateTime::fromMSecsSinceEpoch(iTime).toString("[yyyy-MM-dd] [hh:mm:ss]"), strAwayLogChannel, strData);
+        Log::save("awaylog", strAwaylogFileData);
+    }
 
     strAwayLogData = QString("%1\n%2 %3").arg(strAwayLogChannel, QDateTime::fromMSecsSinceEpoch(iTime).toString("[hh:mm:ss]"), strAwayLogData);
 
