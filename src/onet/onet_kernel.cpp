@@ -578,16 +578,12 @@ void OnetKernel::raw_kick()
         // reason
         Convert::simpleConvert(strReason);
 
+        QString strDisplay = QString(tr("* You have been kicked from channel %1 by %2 Reason: %3")).arg(strChannel, strWho, strReason);
+
         if ((Core::instance()->mainWindow()->isActiveWindow()) || (Settings::instance()->get("tray_message") == "false"))
-        {
-            QString strDisplay = QString(tr("* You have been kicked from channel %1 by %2 Reason: %3")).arg(strChannel, strWho, strReason);
             Message::instance()->showMessage(STATUS_WINDOW, strDisplay, MessageKick);
-        }
         else
-        {
-            QString strDisplay = QString(tr("* You have been kicked from channel %1 by %2 Reason: %3")).arg(strChannel, strWho, strReason);
             Tray::instance()->showMessage(strChannel, strDisplay);
-        }
 
         // channel info
         Channel::instance()->removeChannelInfo(strChannel);
