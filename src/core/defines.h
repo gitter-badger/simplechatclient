@@ -81,13 +81,6 @@ const int NOTICE_WARNING = 101 | 0x070000;
 const int NOTICE_ERROR = 102 | 0x070000;
 const int NOTICE_QUESTION = 103 | 0x070000;
 
-struct Theme
-{
-    QString name;
-    bool withChannelAvatar;
-    bool withNicklistAvatar;
-};
-
 struct OnetChannelList
 {
     QString name;

@@ -35,23 +35,22 @@ ThemesModel * ThemesModel::instance()
 
 ThemesModel::ThemesModel()
 {
-    add("Standard", false, false);
-    add("Alhena", false, false);
-    add("Origin", false, true);
-    add("Adara", true, false);
+    add("Standard", ThemeFlags::Default);
+    add("Alhena");
+    add("Origin", ThemeFlags::NicklistAvatar);
+    add("Adara", ThemeFlags::ChannelAvatar);
 }
 
 void ThemesModel::init()
 {
-    updateCurrent();
+    refreshCurrent();
 }
 
-void ThemesModel::add(const QString &name, bool withChannelAvatar, bool withNicklistAvatar)
+void ThemesModel::add(const QString &name, ThemeFlags::Flags flags)
 {
     Theme add;
     add.name = name;
-    add.withChannelAvatar = withChannelAvatar;
-    add.withNicklistAvatar = withNicklistAvatar;
+    add.flags = flags;
 
     lThemes.append(add);
 }
@@ -66,10 +65,16 @@ Theme ThemesModel::get()
             return _Theme;
     }
 
-    return lThemes.at(0);
+    foreach (Theme _Theme, lThemes)
+    {
+        if (_Theme.flags & ThemeFlags::Default)
+            return _Theme;
+    }
+
+	return lThemes.at(0);
 }
 
-void ThemesModel::updateCurrent()
+void ThemesModel::refreshCurrent()
 {
     current = get();
 }
@@ -88,7 +93,7 @@ QList<QString> ThemesModel::getAll()
 
 bool ThemesModel::isCurrentWithAvatar()
 {
-    if ((current.withChannelAvatar) || (current.withNicklistAvatar))
+    if (current.flags & (ThemeFlags::ChannelAvatar | ThemeFlags::NicklistAvatar))
         return true;
     else
         return false;
@@ -96,10 +101,10 @@ bool ThemesModel::isCurrentWithAvatar()
 
 bool ThemesModel::isCurrentWithChannelAvatar()
 {
-    return current.withChannelAvatar;
+    return current.flags & ThemeFlags::ChannelAvatar;
 }
 
 bool ThemesModel::isCurrentWithNicklistAvatar()
 {
-    return current.withNicklistAvatar;
+    return current.flags & ThemeFlags::NicklistAvatar;
 }

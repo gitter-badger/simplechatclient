@@ -131,7 +131,7 @@ void Core::reloadSettings()
     fixSettings();
 
     // themes
-    ThemesModel::instance()->updateCurrent();
+    ThemesModel::instance()->refreshCurrent();
 }
 
 void Core::configValues()

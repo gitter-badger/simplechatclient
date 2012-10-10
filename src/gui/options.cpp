@@ -557,7 +557,7 @@ void DlgOptions::themesChanged(int index)
     }
 
     Settings::instance()->set("themes", strTheme);
-    ThemesModel::instance()->updateCurrent();
+    ThemesModel::instance()->refreshCurrent();
 
     Config *pConfig = new Config();
     pConfig->set("themes", strTheme);
