@@ -23,6 +23,7 @@
 #include "config.h"
 #include "mainwindow.h"
 #include "settings.h"
+#include "themes_model.h"
 #include "updates.h"
 #include "core.h"
 
@@ -128,6 +129,9 @@ void Core::reloadSettings()
 
     // check settings
     fixSettings();
+
+    // themes
+    ThemesModel::instance()->updateCurrent();
 }
 
 void Core::configValues()

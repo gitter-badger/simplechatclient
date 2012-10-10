@@ -27,6 +27,7 @@ ThemesModel * ThemesModel::instance()
     if (!Instance)
     {
         Instance = new ThemesModel();
+        Instance->init();
     }
 
     return Instance;
@@ -38,7 +39,10 @@ ThemesModel::ThemesModel()
     add("Alhena", false, false);
     add("Origin", false, true);
     add("Adara", true, false);
+}
 
+void ThemesModel::init()
+{
     updateCurrent();
 }
 

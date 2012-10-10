@@ -42,6 +42,7 @@ private:
     QList<Theme> lThemes;
     Theme current;
 
+    void init();
     void add(const QString &name, bool withNicklistAvatar, bool withChannelAvatar);
     Theme get();
 };
