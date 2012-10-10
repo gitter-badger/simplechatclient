@@ -71,6 +71,7 @@ SOURCES += src/common/commands.cpp \
     src/models/my_profile_model.cpp \
     src/models/my_stats_model.cpp \\
     src/models/settings.cpp \
+    src/models/themes_model.cpp \
     src/models/user_profile_model.cpp \
     src/onet/avatar_client.cpp \
     src/onet/my_avatar_model.cpp \
@@ -175,6 +176,7 @@ HEADERS += src/common/commands.h \
     src/models/my_profile_model.h \
     src/models/my_stats_model.h \
     src/models/settings.h \
+    src/models/themes_model.h \
     src/models/user_profile_model.h \
     src/onet/avatar_client.h \
     src/onet/my_avatar_model.h \

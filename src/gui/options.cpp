@@ -31,6 +31,7 @@
 #include "punish_reason.h"
 #include "settings.h"
 #include "sound_notify.h"
+#include "themes_model.h"
 #include "options.h"
 
 DlgOptions::DlgOptions(QWidget *parent) : QDialog(parent)
@@ -210,8 +211,7 @@ void DlgOptions::setDefaultValues()
     ui.listWidget_options->setCurrentRow(0);
 
     // themes
-    QStringList lThemes;
-    lThemes << "Standard" << "Origin" << "Alhena" << "Adara";
+    QStringList lThemes = ThemesModel::instance()->getAll();
     ui.comboBox_themes->clear();
     ui.comboBox_themes->addItems(lThemes);
 
@@ -289,9 +289,9 @@ void DlgOptions::setDefaultValues()
     // themes
     if (strThemes == "Standard")
         ui.comboBox_themes->setCurrentIndex(0);
-    else if (strThemes == "Origin")
-        ui.comboBox_themes->setCurrentIndex(1);
     else if (strThemes == "Alhena")
+        ui.comboBox_themes->setCurrentIndex(1);
+    else if (strThemes == "Origin")
         ui.comboBox_themes->setCurrentIndex(2);
     else if (strThemes == "Adara")
         ui.comboBox_themes->setCurrentIndex(3);
@@ -551,12 +551,13 @@ void DlgOptions::themesChanged(int index)
     switch (index)
     {
         case 0: strTheme = "Standard"; break;
-        case 1: strTheme = "Origin"; break;
-        case 2: strTheme = "Alhena"; break;
+        case 1: strTheme = "Alhena"; break;
+        case 2: strTheme = "Origin"; break;
         case 3: strTheme = "Adara"; break;
     }
 
     Settings::instance()->set("themes", strTheme);
+    ThemesModel::instance()->updateCurrent();
 
     Config *pConfig = new Config();
     pConfig->set("themes", strTheme);

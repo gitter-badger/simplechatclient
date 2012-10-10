@@ -51,6 +51,7 @@
 #include "settings.h"
 #include "sound_notify.h"
 #include "tab_container.h"
+#include "themes_model.h"
 #include "tray.h"
 #include "user_profile_model.h"
 #include "onet_kernel.h"
@@ -434,7 +435,7 @@ void OnetKernel::raw_join()
     // nick avatar
     if (!strNick.startsWith('~'))
     {
-        if ((Settings::instance()->get("themes") == "Origin") || (Settings::instance()->get("themes") == "Adara")) // with avatars
+        if (ThemesModel::instance()->isCurrentWithAvatar()) // with avatars
             Core::instance()->network->send(QString("NS INFO %1 s").arg(strNick));
     }
 
@@ -1351,7 +1352,7 @@ void OnetKernel::raw_111n()
     // get avatar
     if (strKey == "avatar")
     {
-        if ((Settings::instance()->get("themes") == "Origin") || (Settings::instance()->get("themes") == "Adara"))
+        if (ThemesModel::instance()->isCurrentWithAvatar())
         {
             if (!strValue.isEmpty())
                 Avatar::instance()->get(strNick, "nick", strValue);
@@ -2762,7 +2763,7 @@ void OnetKernel::raw_353()
             // nick avatar
             if (!strCleanNick.startsWith('~'))
             {
-                if ((Settings::instance()->get("themes") == "Origin") || (Settings::instance()->get("themes") == "Adara")) // with avatars
+                if (ThemesModel::instance()->isCurrentWithAvatar()) // with avatars
                     Core::instance()->network->send(QString("NS INFO %1 s").arg(strCleanNick));
             }
         }

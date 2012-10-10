@@ -98,6 +98,7 @@ set (scc_SRCS
 	models/my_profile_model.cpp
 	models/my_stats_model.cpp
 	models/settings.cpp
+	models/themes_model.cpp
 	models/user_profile_model.cpp
 
 	onet/avatar_client.cpp
@@ -196,6 +197,7 @@ set (scc_MOC_HDRS
 	models/my_profile_model.h
 	models/my_stats_model.h
 	models/settings.h
+	models/themes_model.h
 	models/user_profile_model.h
 
 	onet/avatar_client.h

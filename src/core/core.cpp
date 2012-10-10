@@ -181,7 +181,10 @@ void Core::fixSettings()
         pConfig->set("background_image", QString::null);
         Settings::instance()->set("background_image", QString::null);
     }
-    if ((Settings::instance()->get("themes") != "Standard") && (Settings::instance()->get("themes") != "Origin") && (Settings::instance()->get("themes") != "Alhena") && (Settings::instance()->get("themes") != "Adara"))
+    if ((Settings::instance()->get("themes") != "Standard") &&
+        (Settings::instance()->get("themes") != "Alhena") &&
+        (Settings::instance()->get("themes") != "Origin") &&
+        (Settings::instance()->get("themes") != "Adara"))
     {
         pConfig->set("themes", "Standard");
         Settings::instance()->set("themes", "Standard");
