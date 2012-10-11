@@ -1,9 +1,7 @@
-Version 1.5.0 (17.07.2012)
+Version 1.6.0 (unknown)
 ================================
-* Added find nick
-* Changed channel settings layout
-* Added tray notification
-* Added punish reason
-* Added channel avatars
-* Added debug window
+* Added new emoticons
+* Updated layouts
+* Added remember last 30 messages
+* Added command /all - to send message to all opened channels
 * Many bugfixes
