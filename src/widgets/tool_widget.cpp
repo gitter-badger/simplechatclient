@@ -721,7 +721,9 @@ void ToolWidget::channelSettingsClicked()
     if (Core::instance()->network->isConnected())
     {
         QString strChannel = Channel::instance()->getCurrent();
-        DlgChannelSettings(strChannel).exec();
+
+        if (!strChannel.isEmpty())
+            DlgChannelSettings(strChannel).exec();
     }
 }
 
@@ -729,7 +731,8 @@ void ToolWidget::moderationClicked()
 {
     QString strChannel = Channel::instance()->getCurrent();
 
-    DlgModeration(strChannel).exec();
+    if (!strChannel.isEmpty())
+        DlgModeration(strChannel).exec();
 }
 
 void ToolWidget::inputlineReturnPressed()
@@ -789,8 +792,12 @@ void ToolWidget::pasteMultiLine(const QString &strText, bool bModeration)
 
 void ToolWidget::sendMessage(QString strText, bool bModeration)
 {
-    if (strText.isEmpty()) return; // empty text!
     QString strChannel = Channel::instance()->getCurrent();
+
+    // empty text or channel
+    if ((strText.isEmpty()) || (strChannel.isEmpty()))
+        return;
+
     QString strMe = Settings::instance()->get("nick");
     QString strCommand;
     QString strTextOriginal;
