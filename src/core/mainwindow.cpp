@@ -626,6 +626,8 @@ void MainWindow::inputLineKeyEvent(QKeyEvent *k)
         int index = pTabM->currentIndex();
         pTabM->setCurrentIndex(index-1);
     }
+
+    /* TODO https://github.com/simplechatclient/simplechatclient/issues/14
     // alt
     else if (k->key() == Qt::Key_Alt)
     {
@@ -642,6 +644,7 @@ void MainWindow::inputLineKeyEvent(QKeyEvent *k)
         {
         }
     }
+    */
 }
 
 int MainWindow::getCurrentTabIndex()
