@@ -46,8 +46,8 @@ private:
     QString strSelectedNick;
     enum NickListRoles
     {
-        NickListModesRole = Qt::UserRole+12,
-        NickListAvatarUrlRole = Qt::UserRole+13
+        NickListModesRole = Qt::UserRole+20,
+        NickListAvatarUrlRole = Qt::UserRole+21
     };
 
     void convertFlag(QString &strFlag);
