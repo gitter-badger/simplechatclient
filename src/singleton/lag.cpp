@@ -66,11 +66,9 @@ QString Lag::createLagText(qint64 iLag)
     return lag+"s";
 }
 
-void Lag::calculate(const QString &strServerMSecs)
+void Lag::calculate(qint64 iServerMSecs)
 {
-    qint64 iServerMSecs = strServerMSecs.toLongLong();
     qint64 iCurrentMSecs = QDateTime::currentMSecsSinceEpoch();
-
     qint64 iLag = iCurrentMSecs - iServerMSecs;
 
     if ((iLag >= 0) && (iLag <= 301000))

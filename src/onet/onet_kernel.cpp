@@ -353,10 +353,9 @@ void OnetKernel::raw_pong()
     if (strServerMSecs[0] == ':') strServerMSecs.remove(0,1);
 
     // check correct pong
-    if (!strServerMSecs.contains(QRegExp("(\\d+)")))
-        return; // incorrect
-
-    Lag::instance()->calculate(strServerMSecs);
+    qint64 iServerMSecs = strServerMSecs.toLongLong();
+    if (iServerMSecs != 0)
+        Lag::instance()->calculate(iServerMSecs);
 }
 
 // ERROR :Closing link (unknown@95.48.183.154) [Registration timeout]

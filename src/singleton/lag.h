@@ -36,7 +36,7 @@ public:
     void update(qint64 iLag);
     void reset();
     QString createLagText(qint64 iLag);
-    void calculate(const QString &strServerMSecs);
+    void calculate(qint64 iServerMSecs);
 };
 
 #endif // LAG_H
