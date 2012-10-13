@@ -44,6 +44,11 @@ private:
     QAction *openChannelsActs[MAX_OPEN_CHANNELS];
     QAction *punishReasonActs[MAX_PUNISH_REASONS];
     QString strSelectedNick;
+    enum NickListRoles
+    {
+        NickListModesRole = Qt::UserRole+12,
+        NickListAvatarUrlRole = Qt::UserRole+13
+    };
 
     void convertFlag(QString &strFlag);
 

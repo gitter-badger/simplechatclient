@@ -134,7 +134,7 @@ void DlgFindNick::refreshList()
     foreach (const QString &nick, list)
     {
         SortedListWidgetItem *item = new SortedListWidgetItem();
-        item->setData(Qt::UserRole+10, false); // is nicklist
+        item->setData(SortedListWidgetNicklistRole, false); // is nicklist
         item->setText(nick);
 
         ui.listWidget_nicks->addItem(item);

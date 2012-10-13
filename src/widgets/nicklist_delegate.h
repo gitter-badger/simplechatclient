@@ -31,6 +31,13 @@ public:
 
     void paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const;
     QSize sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const;
+
+private:
+    enum NickListRoles
+    {
+        NickListModesRole = Qt::UserRole+12,
+        NickListAvatarUrlRole = Qt::UserRole+13
+    };
 };
 
 #endif // NICKLIST_DELEGATE_H

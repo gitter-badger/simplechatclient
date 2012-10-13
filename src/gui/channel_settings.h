@@ -40,6 +40,10 @@ private:
     SimpleStatsWidget *pSimpleStatsWidget;
     AvatarClient *avatarClient;
     QString avatarUrl;
+    enum BanRoles
+    {
+        OryginalBanMaskRole = Qt::UserRole
+    };
 
     void createGui();
     void setDefaultValues();

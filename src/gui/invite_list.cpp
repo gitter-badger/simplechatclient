@@ -66,8 +66,8 @@ void DlgInviteList::createList()
         QString strChannel = i.value();
 
         QListWidgetItem *item = new QListWidgetItem;
-        item->setData(Qt::UserRole, strNick);
-        item->setData(Qt::UserRole+1, strChannel);
+        item->setData(InviteNickRole, strNick);
+        item->setData(InviteChannelRole, strChannel);
 
         if (strChannel[0] == '^')
             item->setText(QString(tr("%1 invites you to priv")).arg(strNick));
@@ -84,7 +84,7 @@ void DlgInviteList::buttonWhois()
         return;
 
     QListWidgetItem *item = ui.listWidget->selectedItems().at(0);
-    QString strNick = item->data(Qt::UserRole).toString();
+    QString strNick = item->data(InviteNickRole).toString();
 
     Core::instance()->network->send(QString("WHOIS %1 %1").arg(strNick));
 }
@@ -95,8 +95,8 @@ void DlgInviteList::buttonReject()
         return;
 
     QListWidgetItem *item = ui.listWidget->selectedItems().at(0);
-    QString strNick = item->data(Qt::UserRole).toString();
-    QString strChannel = item->data(Qt::UserRole+1).toString();
+    QString strNick = item->data(InviteNickRole).toString();
+    QString strChannel = item->data(InviteChannelRole).toString();
     ui.listWidget->takeItem(ui.listWidget->row(item));
 
     Core::instance()->network->send(QString("INVREJECT %1 %2").arg(strNick, strChannel));
@@ -109,8 +109,8 @@ void DlgInviteList::buttonIgnore()
         return;
 
     QListWidgetItem *item = ui.listWidget->selectedItems().at(0);
-    QString strNick = item->data(Qt::UserRole).toString();
-    QString strChannel = item->data(Qt::UserRole+1).toString();
+    QString strNick = item->data(InviteNickRole).toString();
+    QString strChannel = item->data(InviteChannelRole).toString();
     ui.listWidget->takeItem(ui.listWidget->row(item));
 
     Core::instance()->network->send(QString("INVIGNORE %1 %2").arg(strNick, strChannel));
@@ -123,8 +123,8 @@ void DlgInviteList::buttonAccept()
         return;
 
     QListWidgetItem *item = ui.listWidget->selectedItems().at(0);
-    QString strNick = item->data(Qt::UserRole).toString();
-    QString strChannel = item->data(Qt::UserRole+1).toString();
+    QString strNick = item->data(InviteNickRole).toString();
+    QString strChannel = item->data(InviteChannelRole).toString();
     ui.listWidget->takeItem(ui.listWidget->row(item));
 
     Core::instance()->network->send(QString("JOIN %1").arg(strChannel));

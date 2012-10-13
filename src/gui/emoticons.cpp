@@ -93,7 +93,7 @@ void DlgEmoticonsTab::addEmoticon(const QString &strEmoticon, const QByteArray &
 
     QListWidgetItem *item = new QListWidgetItem;
     item->setIcon(QIcon(pix));
-    item->setData(Qt::UserRole, strEmoticon);
+    item->setData(EmoticonNameRole, strEmoticon);
     item->setToolTip(strEmoticon);
 
     listWidget->addItem(item);
@@ -199,7 +199,7 @@ void DlgEmoticons::buttonInsert()
 
     if (!tab->listWidget->selectedItems().isEmpty())
     {
-        QString strEmoticon = tab->listWidget->selectedItems().at(0)->data(Qt::UserRole).toString();
+        QString strEmoticon = tab->listWidget->selectedItems().at(0)->data(EmoticonNameRole).toString();
 
         // insert
         pInputLineWidget->insertText("//"+strEmoticon);

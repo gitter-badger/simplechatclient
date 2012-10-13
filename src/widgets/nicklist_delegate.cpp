@@ -79,8 +79,8 @@ void NickListDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opti
     }
 
     QString nick = index.data(Qt::DisplayRole).toString();
-    QString modes = index.data(Qt::UserRole+12).toString();
-    QString userAvatar = index.data(Qt::UserRole+13).toString();
+    QString modes = index.data(NickListModesRole).toString();
+    QString userAvatar = index.data(NickListAvatarUrlRole).toString();
 
     bool busy = false;
     bool statusIcons = true;

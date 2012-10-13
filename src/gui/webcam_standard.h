@@ -51,6 +51,13 @@ private:
     Ui::uiWebcamStandard ui;
     QString strNick;
     SimpleRankWidget *pSimpleRankWidget;
+    enum WebCamRoles
+    {
+        WebCamSpectatorsRole = Qt::UserRole+1,
+        WebCamRankRole = Qt::UserRole+2,
+        WebCamUdgetRole = Qt::UserRole+3,
+        WebCamUserChannelsRole = Qt::UserRole+4
+    };
 
     void createGui();
     void createSignals();

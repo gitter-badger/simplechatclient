@@ -81,11 +81,11 @@ void DlgModeration::refreshMessages()
             QString strData = QString("[%1] <%2> %3").arg(QDateTime::fromMSecsSinceEpoch(iTime).toString("hh:mm:ss"), strNick, strMessage);
 
             QListWidgetItem *item = new QListWidgetItem();
-            item->setData(Qt::UserRole, strID);
-            item->setData(Qt::UserRole+1, strChannel);
-            item->setData(Qt::UserRole+2, iTime);
-            item->setData(Qt::UserRole+3, strNick);
-            item->setData(Qt::UserRole+4, strMessage);
+            item->setData(ModerationIdRole, strID);
+            item->setData(ModerationChannelRole, strChannel);
+            item->setData(ModerationTimeRole, iTime);
+            item->setData(ModerationNickRole, strNick);
+            item->setData(ModerationMessageRole, strMessage);
             item->setText(strData);
 
             ui.listWidget_msg->addItem(item);
@@ -106,7 +106,7 @@ void DlgModeration::removeSelected()
     // remove from list
     foreach (QListWidgetItem *item, list)
     {
-        QString strID = item->data(Qt::UserRole).toString();
+        QString strID = item->data(ModerationIdRole).toString();
 
         ModerationModel::instance()->remove(strID);
     }
@@ -122,10 +122,10 @@ void DlgModeration::buttonAccept()
     // display
     foreach (QListWidgetItem *item, list)
     {
-        QString strChannel = item->data(Qt::UserRole+1).toString();
-        qint64 iTime = item->data(Qt::UserRole+2).toLongLong();
-        QString strNick = item->data(Qt::UserRole+3).toString();
-        QString strMessage = item->data(Qt::UserRole+4).toString();
+        QString strChannel = item->data(ModerationChannelRole).toString();
+        qint64 iTime = item->data(ModerationTimeRole).toLongLong();
+        QString strNick = item->data(ModerationNickRole).toString();
+        QString strMessage = item->data(ModerationMessageRole).toString();
 
         QString strSend = QString("MODERMSG %1 - %2 :%3").arg(strNick, strChannel, strMessage);
         Core::instance()->network->send(strSend);

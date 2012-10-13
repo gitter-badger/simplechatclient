@@ -563,7 +563,7 @@ void DlgChannelSettings::setOwner(const QString &strNick)
 void DlgChannelSettings::addOp(const QString &strNick)
 {
     SortedListWidgetItem *item = new SortedListWidgetItem();
-    item->setData(Qt::UserRole+10, false); // is nicklist
+    item->setData(SortedListWidgetNicklistRole, false); // is nicklist
     item->setText(strNick);
 
     ((QListWidget*)ui.tabWidget_permissions->widget(0))->addItem(item);
@@ -572,7 +572,7 @@ void DlgChannelSettings::addOp(const QString &strNick)
 void DlgChannelSettings::addHalfop(const QString &strNick)
 {
     SortedListWidgetItem *item = new SortedListWidgetItem();
-    item->setData(Qt::UserRole+10, false); // is nicklist
+    item->setData(SortedListWidgetNicklistRole, false); // is nicklist
     item->setText(strNick);
 
     ((QListWidget*)ui.tabWidget_permissions->widget(1))->addItem(item);
@@ -581,7 +581,7 @@ void DlgChannelSettings::addHalfop(const QString &strNick)
 void DlgChannelSettings::addBan(const QString &strNick, const QString &strWho, const QString &strDT, const QString &strIPNick)
 {
     SortedListWidgetItem *item = new SortedListWidgetItem();
-    item->setData(Qt::UserRole+10, false); // is nicklist
+    item->setData(SortedListWidgetNicklistRole, false); // is nicklist
     if (strIPNick.isEmpty())
     {
         item->setText(strNick);
@@ -591,7 +591,7 @@ void DlgChannelSettings::addBan(const QString &strNick, const QString &strWho, c
     {
         item->setText(strIPNick);
         item->setTextColor(QColor("#ff0000")); // set color
-        item->setData(Qt::UserRole, strNick); // set original ban mask
+        item->setData(OryginalBanMaskRole, strNick); // set original ban mask
         QString strFixedNick = strNick; strFixedNick.remove("*!*@");
         QString strIPHint = tr("IP Mask: %1").arg(strFixedNick);
         item->setToolTip(QString("%1: %2 (%3) [%4]").arg(tr("Created by"), strWho, strDT, strIPHint));
@@ -603,7 +603,7 @@ void DlgChannelSettings::addBan(const QString &strNick, const QString &strWho, c
 void DlgChannelSettings::addInvite(const QString &strNick, const QString &strWho, const QString &strDT)
 {
     SortedListWidgetItem *item = new SortedListWidgetItem();
-    item->setData(Qt::UserRole+10, false); // is nicklist
+    item->setData(SortedListWidgetNicklistRole, false); // is nicklist
     item->setText(strNick);
     item->setToolTip(QString("%1: %2 (%3)").arg(tr("Created by"), strWho, strDT));
 
@@ -912,7 +912,7 @@ void DlgChannelSettings::buttonPermissionRemove()
     {
         foreach (QListWidgetItem *removeNick, lRemoveNicks)
         {
-            if (!removeNick->data(Qt::UserRole).isNull())
+            if (!removeNick->data(OryginalBanMaskRole).isNull())
                 Core::instance()->network->send(QString("CS BANIP %1 DEL %2").arg(strChannel, removeNick->text()));
             else
                 Core::instance()->network->send(QString("CS BAN %1 DEL %2").arg(strChannel, removeNick->text()));

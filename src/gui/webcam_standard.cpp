@@ -163,8 +163,8 @@ void DlgWebcamStandard::updateUserCount(const QString &strNick, int iSpectators,
     QList<QListWidgetItem*> items = ui.listWidget_nicks->findItems(strNick, Qt::MatchExactly);
     foreach (QListWidgetItem *item, items)
     {
-        item->setData(Qt::UserRole+1, iSpectators);
-        item->setData(Qt::UserRole+2, iRank);
+        item->setData(WebCamSpectatorsRole, iSpectators);
+        item->setData(WebCamRankRole, iRank);
     }
 }
 
@@ -172,12 +172,12 @@ void DlgWebcamStandard::addUser(const QString &strNick, int iSpectators, int iRa
 {
     SortedListWidgetItem *item = new SortedListWidgetItem();
     item->setText(strNick);
-    item->setData(Qt::UserRole+1, iSpectators);
-    item->setData(Qt::UserRole+2, iRank);
-    item->setData(Qt::UserRole+3, strUdget);
-    item->setData(Qt::UserRole+4, lUserChannels);
+    item->setData(WebCamSpectatorsRole, iSpectators);
+    item->setData(WebCamRankRole, iRank);
+    item->setData(WebCamUdgetRole, strUdget);
+    item->setData(WebCamUserChannelsRole, lUserChannels);
 
-    item->setData(Qt::UserRole+10, false); // is nicklist
+    item->setData(SortedListWidgetNicklistRole, false); // is nicklist
     ui.listWidget_nicks->addItem(item);
 }
 
@@ -186,10 +186,10 @@ void DlgWebcamStandard::updateUser(const QString &strNick, int iSpectators, int 
     QList<QListWidgetItem*> items = ui.listWidget_nicks->findItems(strNick, Qt::MatchExactly);
     foreach (QListWidgetItem *item, items)
     {
-        item->setData(Qt::UserRole+1, iSpectators);
-        item->setData(Qt::UserRole+2, iRank);
-        item->setData(Qt::UserRole+3, strUdget);
-        item->setData(Qt::UserRole+4, lUserChannels);
+        item->setData(WebCamSpectatorsRole, iSpectators);
+        item->setData(WebCamRankRole, iRank);
+        item->setData(WebCamUdgetRole, strUdget);
+        item->setData(WebCamUserChannelsRole, lUserChannels);
     }
 }
 
@@ -229,7 +229,7 @@ void DlgWebcamStandard::changeUser(QListWidgetItem *item)
 
     // read nick
     QString strNewNick = item->text();
-    QStringList lNewNickChannels = item->data(Qt::UserRole+4).toStringList();
+    QStringList lNewNickChannels = item->data(WebCamUserChannelsRole).toStringList();
 
     // change user
     if (strNick.isEmpty())

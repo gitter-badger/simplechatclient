@@ -29,8 +29,8 @@ WebcamDelegate::WebcamDelegate(QObject *parent)
 void WebcamDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
     QString nick = index.data(Qt::DisplayRole).toString();
-    int spectators = index.data(Qt::UserRole+1).toInt();
-    int rank = index.data(Qt::UserRole+2).toInt();
+    int spectators = index.data(WebCamSpectatorsRole).toInt();
+    int rank = index.data(WebCamRankRole).toInt();
 
 /*
     // state

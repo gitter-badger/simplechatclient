@@ -47,6 +47,10 @@ private:
 
     AvatarClient *avatarClient;
     AvatarCollections collections; // name, id
+    enum AvatarRoles
+    {
+        AvatarUrlRole = Qt::UserRole
+    };
 
     void createGui();
     void createSignals();

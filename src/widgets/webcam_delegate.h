@@ -30,6 +30,15 @@ public:
 
     void paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const;
     QSize sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const;
+
+private:
+    enum WebCamRoles
+    {
+        WebCamSpectatorsRole = Qt::UserRole+1,
+        WebCamRankRole = Qt::UserRole+2,
+        WebCamUdgetRole = Qt::UserRole+3,
+        WebCamUserChannelsRole = Qt::UserRole+4
+    };
 };
 
 #endif // WEBCAM_DELEGATE_H

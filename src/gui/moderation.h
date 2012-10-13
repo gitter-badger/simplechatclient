@@ -32,6 +32,14 @@ public:
 private:
     Ui::uiModeration ui;
     QString strCurrentChannel;
+    enum ModerationRoles
+    {
+        ModerationIdRole = Qt::UserRole,
+        ModerationChannelRole = Qt::UserRole+1,
+        ModerationTimeRole = Qt::UserRole+2,
+        ModerationNickRole = Qt::UserRole+3,
+        ModerationMessageRole = Qt::UserRole+4
+    };
 
     void createGui();
     void createSignals();

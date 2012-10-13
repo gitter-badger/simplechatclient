@@ -297,7 +297,7 @@ void AvatarListWidget::getCollectionAvatarsReady(const QByteArray &content)
     foreach(QString avatarUrl, lCollectionAvatars)
     {
         QListWidgetItem *item = new QListWidgetItem();
-        item->setData(Qt::UserRole, avatarUrl);
+        item->setData(AvatarUrlRole, avatarUrl);
         item->setIcon(icon);
 
         // add blank avatar placeholder
@@ -646,7 +646,7 @@ void AvatarListWidget::drawAvatarFromCollection(const QPixmap &pixmap, const QSt
     {
         QListWidgetItem *item = ui.listWidget_collections->item(i);
         Q_ASSERT(item != 0);
-        QString tUrl = item->data(Qt::UserRole).toString();
+        QString tUrl = item->data(AvatarUrlRole).toString();
         if (avatarUrl == tUrl)
         {
             item->setIcon(QIcon(pixmap));
@@ -746,7 +746,7 @@ void AvatarListWidget::setCollectionAvatarClicked()
 {
     if (!ui.listWidget_collections->selectedItems().isEmpty())
     {
-        QString avatarUrl = ui.listWidget_collections->selectedItems().at(0)->data(Qt::UserRole).toString();
+        QString avatarUrl = ui.listWidget_collections->selectedItems().at(0)->data(AvatarUrlRole).toString();
 
         if (!avatarUrl.isEmpty())
         {

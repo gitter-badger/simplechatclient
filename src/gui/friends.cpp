@@ -101,7 +101,7 @@ void DlgFriends::refresh()
     {
         i.next();
         SortedListWidgetItem *item = new SortedListWidgetItem();
-        item->setData(Qt::UserRole+10, false); // is nicklist
+        item->setData(SortedListWidgetNicklistRole, false); // is nicklist
         item->setText(i.key());
         item->setIcon(QIcon(":/images/oxygen/16x16/meeting-attending.png"));
 

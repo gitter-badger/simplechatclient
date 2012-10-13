@@ -27,6 +27,11 @@ class QListWidget;
 #include <QThread>
 #include "ui_emoticons.h"
 
+enum EmoticonsRoles
+{
+    EmoticonNameRole = Qt::UserRole
+};
+
 class DlgEmoticonsThread : public QThread
 {
     Q_OBJECT

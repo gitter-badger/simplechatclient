@@ -120,6 +120,12 @@ public:
     }
 };
 
+enum SortedListWidgetRoles
+{
+    SortedListWidgetNicklistRole = Qt::UserRole+10,
+    SortedListWidgetStatusRole = Qt::UserRole+11
+};
+
 class SortedListWidgetItem : public QListWidgetItem
 {
 public:
@@ -130,15 +136,15 @@ public:
     {
         QVariant my = data(Qt::DisplayRole); // compare value 1
         QVariant other = o.data(Qt::DisplayRole); // compare value 2
-        QVariant isNickList = data(Qt::UserRole+10); // compare value 2
+        QVariant isNickList = data(SortedListWidgetNicklistRole); // compare value 2
         if (!my.isValid() || !other.isValid() || my.type() != other.type()) // valid compare
             return QListWidgetItem::operator< (o);
         if (my.canConvert(QVariant::String)) // my compare
         {
             if (isNickList.toBool() == true) // sorting by status
             {
-                int mModes = data(Qt::UserRole+11).toInt();
-                int oModes = o.data(Qt::UserRole+11).toInt();
+                int mModes = data(SortedListWidgetStatusRole).toInt();
+                int oModes = o.data(SortedListWidgetStatusRole).toInt();
                 if (mModes != oModes)
                 {
                     if (mModes < oModes)

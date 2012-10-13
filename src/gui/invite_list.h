@@ -31,6 +31,11 @@ public:
 
 private:
     Ui::uiInviteList ui;   
+    enum InviteRoles
+    {
+        InviteNickRole = Qt::UserRole,
+        InviteChannelRole = Qt::UserRole+1
+    };
 
     void createGui();
     void createSignals();

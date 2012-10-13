@@ -51,10 +51,10 @@ void NickListWidget::addUser(const QString &strNick, QString strModes)
 
     SortedListWidgetItem *item = new SortedListWidgetItem();
     item->setText(strNick);
-    item->setData(Qt::UserRole+10, true); // is nicklist
-    item->setData(Qt::UserRole+11, Nicklist::instance()->getUserMaxModes(strModes)); // max modes
-    item->setData(Qt::UserRole+12, strModes); // modes
-    item->setData(Qt::UserRole+13, QVariant()); // avatar url
+    item->setData(SortedListWidgetNicklistRole, true); // is nicklist
+    item->setData(SortedListWidgetStatusRole, Nicklist::instance()->getUserMaxModes(strModes)); // max modes
+    item->setData(NickListModesRole, strModes); // modes
+    item->setData(NickListAvatarUrlRole, QVariant()); // avatar url
 
     this->addItem(item);
 }
@@ -85,14 +85,14 @@ void NickListWidget::setUserAvatar(const QString &strNick, const QString &strVal
 {
     QList<QListWidgetItem*> items = this->findItems(strNick, Qt::MatchExactly);
     foreach (QListWidgetItem *item, items)
-        item->setData(Qt::UserRole+13, strValue);
+        item->setData(NickListAvatarUrlRole, strValue);
 }
 
 QString NickListWidget::getUserAvatar(const QString &strNick)
 {
     QList<QListWidgetItem*> items = this->findItems(strNick, Qt::MatchExactly);
     foreach (QListWidgetItem *item, items)
-        return item->data(Qt::UserRole+13).toString();
+        return item->data(NickListAvatarUrlRole).toString();
     return QString::null;
 }
 
@@ -101,7 +101,7 @@ void NickListWidget::changeUserFlag(const QString &strNick, QString strFlag)
     QList<QListWidgetItem*> items = this->findItems(strNick, Qt::MatchExactly);
     foreach (QListWidgetItem *item, items)
     {
-        QString strModes = item->data(Qt::UserRole+12).toString();
+        QString strModes = item->data(NickListModesRole).toString();
         QString plusminus = strFlag.at(0);
         strFlag.remove(0, 1);
 
@@ -125,8 +125,8 @@ void NickListWidget::changeUserFlag(const QString &strNick, QString strFlag)
         // if owner remove op
         if ((strModes.contains(FLAG_OWNER)) && (strModes.contains(FLAG_OP))) strModes.remove(FLAG_OP);
 
-        item->setData(Qt::UserRole+11, Nicklist::instance()->getUserMaxModes(strModes));
-        item->setData(Qt::UserRole+12, strModes);
+        item->setData(SortedListWidgetStatusRole, Nicklist::instance()->getUserMaxModes(strModes));
+        item->setData(NickListModesRole, strModes);
     }
 }
 
@@ -134,7 +134,7 @@ QString NickListWidget::getUserModes(const QString &strNick)
 {
     QList<QListWidgetItem*> items = this->findItems(strNick, Qt::MatchExactly);
     foreach (QListWidgetItem *item, items)
-        return item->data(Qt::UserRole+12).toString();
+        return item->data(NickListModesRole).toString();
     return QString::null;
 }
 
