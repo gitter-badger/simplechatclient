@@ -22,7 +22,6 @@
 
 #include <QUrl>
 #include <QDialog>
-#include <QCloseEvent>
 #include "ui_webbrowser.h"
 
 class DlgWebBrowser : public QDialog
@@ -30,15 +29,13 @@ class DlgWebBrowser : public QDialog
     Q_OBJECT
 public:
     DlgWebBrowser(const QUrl &url, QWidget *parent = 0);
+    virtual ~DlgWebBrowser();
 
 private:
-    Ui::uiWebBrowser ui;
+    Ui::uiWebBrowser *ui;
 
 private slots:
     void loadFinished();
-
-protected:
-    void closeEvent(QCloseEvent *event);
 };
 
 #endif // WEBBROWSER_H

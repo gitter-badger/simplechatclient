@@ -21,37 +21,33 @@
 #include <QPushButton>
 #include "webbrowser.h"
 
-DlgWebBrowser::DlgWebBrowser(const QUrl &url, QWidget *parent) : QDialog(parent)
+DlgWebBrowser::DlgWebBrowser(const QUrl &url, QWidget *parent) : ui(new Ui::uiWebBrowser), QDialog(parent)
 {
-    ui.setupUi(this);
-    setAttribute(Qt::WA_DeleteOnClose); // require by show method - prevent hangup!
+    ui->setupUi(this);
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
     setWindowTitle("YouTube");
     // center screen
     move(QApplication::desktop()->screenGeometry(QApplication::desktop()->screenNumber(parent)).center()  - rect().center());
 
-    ui.webView->settings()->setAttribute(QWebSettings::PluginsEnabled, true);
+    ui->webView->settings()->setAttribute(QWebSettings::PluginsEnabled, true);
 
-    ui.buttonBox->button(QDialogButtonBox::Close)->setIcon(QIcon(":/images/oxygen/16x16/dialog-close.png"));
+    ui->buttonBox->button(QDialogButtonBox::Close)->setIcon(QIcon(":/images/oxygen/16x16/dialog-close.png"));
 
     // signals
-    connect(ui.webView, SIGNAL(loadFinished(bool)), this, SLOT(loadFinished()));
-    connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(close()));
+    connect(ui->webView, SIGNAL(loadFinished(bool)), this, SLOT(loadFinished()));
+    connect(ui->buttonBox, SIGNAL(rejected()), this, SLOT(close()));
 
     // load
-    ui.webView->load(url);
+    ui->webView->load(url);
+}
+
+DlgWebBrowser::~DlgWebBrowser()
+{
+    delete ui;
 }
 
 void DlgWebBrowser::loadFinished()
 {
-    setWindowTitle(ui.webView->title());
-}
-
-void DlgWebBrowser::closeEvent(QCloseEvent *event)
-{
-    ui.webView->triggerPageAction(QWebPage::Stop);
-
-    event->accept();
-    deleteLater();
+    setWindowTitle(ui->webView->title());
 }
 

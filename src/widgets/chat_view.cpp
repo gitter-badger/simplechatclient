@@ -276,7 +276,7 @@ void ChatView::watchVideo()
         strYoutubeLink = "http://www.youtube.com/embed/"+exYoutube_3.cap(1);
 
     if (QUrl(strYoutubeLink).isValid())
-        (new DlgWebBrowser(QUrl(strYoutubeLink)))->show();
+        DlgWebBrowser(QUrl(strYoutubeLink)).exec();
 }
 
 void ChatView::openWebbrowser()
