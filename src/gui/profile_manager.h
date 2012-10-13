@@ -20,9 +20,9 @@
 #ifndef PROFILE_MANAGER_H
 #define PROFILE_MANAGER_H
 
-class DlgOptions;
 #include <QDialog>
 #include "ui_profile_manager.h"
+class DlgOptions;
 
 class DlgProfileManager : public QDialog
 {

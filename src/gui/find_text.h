@@ -20,9 +20,9 @@
 #ifndef FIND_TEXT_H
 #define FIND_TEXT_H
 
-class ChatView;
 #include <QDialog>
 #include "ui_find_text.h"
+class ChatView;
 
 class DlgFindText : public QDialog
 {

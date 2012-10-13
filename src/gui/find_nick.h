@@ -20,9 +20,9 @@
 #ifndef FIND_NICK_H
 #define FIND_NICK_H
 
-#include "defines.h"
 #include <QDialog>
 #include "ui_find_nick.h"
+#include "defines.h"
 
 class DlgFindNick : public QDialog
 {

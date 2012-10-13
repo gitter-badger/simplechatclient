@@ -20,9 +20,9 @@
 #ifndef FRIENDS_H
 #define FRIENDS_H
 
-#include "defines.h"
 #include <QDialog>
 #include "ui_friends.h"
+#include "defines.h"
 
 class DlgFriends : public QDialog
 {

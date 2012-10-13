@@ -20,10 +20,10 @@
 #ifndef WEBCAM_H
 #define WEBCAM_H
 
+#include <QObject>
 class WebcamEngine;
 class DlgWebcamMini;
 class DlgWebcamStandard;
-#include <QObject>
 
 class DlgWebcam : public QObject
 {

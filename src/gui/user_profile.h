@@ -20,6 +20,9 @@
 #ifndef USER_PROFILE_H
 #define USER_PROFILE_H
 
+#include <QDialog>
+
+QT_BEGIN_NAMESPACE
 class QFormLayout;
 class QHBoxLayout;
 class QLabel;
@@ -31,7 +34,7 @@ class QVBoxLayout;
 
 class QNetworkAccessManager;
 class QNetworkReply;
-#include <QDialog>
+QT_END_NAMESPACE
 
 class DlgUserProfile : public QDialog
 {

@@ -20,9 +20,9 @@
 #ifndef WEBCAM_STANDARD_H
 #define WEBCAM_STANDARD_H
 
-class SimpleRankWidget;
 #include <QDialog>
 #include "ui_webcam_standard.h"
+class SimpleRankWidget;
 
 class DlgWebcamStandard : public QDialog
 {

@@ -20,9 +20,9 @@
 #ifndef PROFILE_ADD_H
 #define PROFILE_ADD_H
 
-class DlgProfileManager;
 #include <QDialog>
 #include "ui_profile_add.h"
+class DlgProfileManager;
 
 class DlgProfileAdd : public QDialog
 {

@@ -19,9 +19,10 @@
 
 #include <QDesktopWidget>
 #include <QPushButton>
+#include <QUrl>
 #include "webbrowser.h"
 
-DlgWebBrowser::DlgWebBrowser(const QUrl &url, QWidget *parent) : ui(new Ui::uiWebBrowser), QDialog(parent)
+DlgWebBrowser::DlgWebBrowser(const QUrl &url, QWidget *parent) : QDialog(parent), ui(new Ui::uiWebBrowser)
 {
     ui->setupUi(this);
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);

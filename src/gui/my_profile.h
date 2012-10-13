@@ -20,10 +20,13 @@
 #ifndef MY_PROFILE_H
 #define MY_PROFILE_H
 
-class QNetworkAccessManager;
-class QNetworkReply;
 #include <QDialog>
 #include "ui_my_profile.h"
+
+QT_BEGIN_NAMESPACE
+class QNetworkAccessManager;
+class QNetworkReply;
+QT_END_NAMESPACE
 
 class DlgMyProfile : public QDialog
 {

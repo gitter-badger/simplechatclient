@@ -20,11 +20,14 @@
 #ifndef CAPTCHA_H
 #define CAPTCHA_H
 
+#include <QDialog>
+#include "ui_captcha.h"
+
+QT_BEGIN_NAMESPACE
 class QNetworkAccessManager;
 class QNetworkCookieJar;
 class QNetworkReply;
-#include <QDialog>
-#include "ui_captcha.h"
+QT_END_NAMESPACE
 
 class DlgCaptcha : public QDialog
 {

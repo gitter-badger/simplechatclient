@@ -20,12 +20,15 @@
 #ifndef EMOTICONS_H
 #define EMOTICONS_H
 
-class InputLineWidget;
-class QListWidget;
 #include <QDialog>
-#include <QListWidgetItem>
 #include <QThread>
 #include "ui_emoticons.h"
+class InputLineWidget;
+
+QT_BEGIN_NAMESPACE
+class QListWidgetItem;
+class QListWidget;
+QT_END_NAMESPACE
 
 enum EmoticonsRoles
 {

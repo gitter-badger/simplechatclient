@@ -20,12 +20,15 @@
 #ifndef REGISTER_NICK_H
 #define REGISTER_NICK_H
 
+#include <QDialog>
+#include "ui_register_nick.h"
+class DlgProfileAdd;
+
+QT_BEGIN_NAMESPACE
 class QNetworkAccessManager;
 class QNetworkCookieJar;
 class QNetworkReply;
-class DlgProfileAdd;
-#include <QDialog>
-#include "ui_register_nick.h"
+QT_END_NAMESPACE
 
 class DlgRegisterNick : public QDialog
 {

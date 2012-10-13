@@ -20,10 +20,10 @@
 #ifndef MY_STATS_H
 #define MY_STATS_H
 
-class SimpleStatsWidget;
-class SimplePercentageWidget;
 #include <QDialog>
 #include "ui_my_stats.h"
+class SimpleStatsWidget;
+class SimplePercentageWidget;
 
 class DlgMyStats : public QDialog
 {
