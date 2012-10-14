@@ -19,9 +19,10 @@
 
 #include <QtGui/QApplication>
 #include <QTextCodec>
-#include "config.h"
 #include "core.h"
 #include "settings.h"
+
+#include <iostream>
 
 #ifdef Q_WS_WIN
     #include <windows.h>
@@ -33,20 +34,24 @@
 #endif
 */
 
+void displayDebug()
+{
+    std::cout << "Debug enabled\n\n";
+}
+
 void displayVersion()
 {
-    printf("Simple Chat Client %s\n\n"
-           "License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>\n"
-           "This is free software: you are free to change and redistribute it.\n\n",
-           qPrintable(Settings::instance()->get("version")));
+    std::cout << "Simple Chat Client " << qPrintable(Settings::instance()->get("version")) << "\n\n"
+                 "License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>\n"
+                 "This is free software: you are free to change and redistribute it.\n\n";
 }
 
 void displayOptions()
 {
-    printf("Options:\n"
+    std::cout << "Options:\n"
            "  --help                     Display this information\n"
            "  --version                  Display version information\n"
-           "  --debug                    Enable debug output\n\n");
+           "  --debug                    Enable debug output\n\n";
 }
 
 void enableDEP()
@@ -107,7 +112,7 @@ int main(int argc, char *argv[])
         QString param = app.argv()[i];
         if (param == "--debug")
         {
-            printf("Debug enabled\n\n");
+            displayDebug();
             Settings::instance()->set("debug", "true");
         }
         else if (param == "--version")

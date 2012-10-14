@@ -20,6 +20,7 @@
 #include "channel.h"
 #include "core.h"
 #include "log.h"
+#include "nicklist_widget.h"
 #include "settings.h"
 #include "tab_manager.h"
 #include "tab_container.h"

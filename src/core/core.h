@@ -21,13 +21,15 @@
 #define CORE_H
 
 #include "scc-config.h"
-class QTcpSocket;
-class MainWindow;
-#include "nicklist_widget.h"
-#include "tab_widget.h"
 #include <QObject>
 #include <QTranslator>
 #include "network.h"
+#include "tab_widget.h"
+class MainWindow;
+
+QT_BEGIN_NAMESPACE
+class QTcpSocket;
+QT_END_NAMESPACE
 
 /**
  * Core
