@@ -20,9 +20,9 @@
 #ifndef ONET_KERNEL_H
 #define ONET_KERNEL_H
 
-class TabContainer;
 #include <QObject>
 #include <QStringList>
+class TabContainer;
 
 /**
  * Irc messages parser

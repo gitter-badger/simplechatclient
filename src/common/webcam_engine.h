@@ -21,10 +21,12 @@
 #define WEBCAM_ENGINE_H
 
 #include <QObject>
-#include <QStringList>
-#include <QTextCodec>
-
 class WebcamNetwork;
+
+QT_BEGIN_NAMESPACE
+class QStringList;
+class QTextCodec;
+QT_END_NAMESPACE
 
 class WebcamEngine : public QObject
 {

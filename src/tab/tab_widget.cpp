@@ -17,6 +17,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <QLabel>
+#include <QSplitter>
 #include <QVBoxLayout>
 #include "nicklist_delegate.h"
 #include "nicklist_widget.h"

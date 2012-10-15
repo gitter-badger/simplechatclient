@@ -20,10 +20,13 @@
 #ifndef CONFIG_H
 #define CONFIG_H
 
-class Xml;
-class QDomElement;
 #include <QHash>
 #include <QObject>
+class Xml;
+
+QT_BEGIN_NAMESPACE
+class QDomElement;
+QT_END_NAMESPACE
 
 /**
  * Class for config read/write

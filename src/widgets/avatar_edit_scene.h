@@ -22,9 +22,11 @@
 
 #include <QGraphicsScene>
 
+QT_BEGIN_NAMESPACE
 class QGraphicsSceneMouseEvent;
 class QPixmap;
 class QGraphicsPixmapItem;
+QT_END_NAMESPACE
 
 class AvatarEditScene : public QGraphicsScene
 {

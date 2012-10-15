@@ -20,8 +20,11 @@
 #ifndef MY_AVATAR_MODEL_H
 #define MY_AVATAR_MODEL_H
 
-#include <QRect>
 #include <QString>
+
+QT_BEGIN_NAMESPACE
+class QRect;
+QT_END_NAMESPACE
 
 class MyAvatarModel
 {

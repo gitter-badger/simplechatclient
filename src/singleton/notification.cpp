@@ -17,6 +17,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <QMenu>
 #include <QToolButton>
 #include "awaylog_model.h"
 #include "core.h"

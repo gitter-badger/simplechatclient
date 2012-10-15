@@ -21,7 +21,6 @@
 #define WINAMP_H
 
 #include <QString>
-
 #include <windows.h>
 
 class Winamp

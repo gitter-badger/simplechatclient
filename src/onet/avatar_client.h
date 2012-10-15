@@ -21,11 +21,13 @@
 #ifndef AVATAR_CLIENT_H
 #define AVATAR_CLIENT_H
 
-#include <QByteArray>
-#include <QNetworkAccessManager>
 #include <QNetworkReply>
-
+#include <QNetworkAccessManager>
 class MyAvatarModel;
+
+QT_BEGIN_NAMESPACE
+class QByteArray;
+QT_END_NAMESPACE
 
 class AvatarClient : public QNetworkAccessManager
 {

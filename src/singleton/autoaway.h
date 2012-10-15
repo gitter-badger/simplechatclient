@@ -20,8 +20,11 @@
 #ifndef AUTOAWAY_H
 #define AUTOAWAY_H
 
-class QTimer;
 #include <QObject>
+
+QT_BEGIN_NAMESPACE
+class QTimer;
+QT_END_NAMESPACE
 
 class Autoaway : public QObject
 {

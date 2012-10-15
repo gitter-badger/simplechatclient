@@ -21,10 +21,13 @@
 #define TAB_WIDGET_H
 
 #include "chat_view.h"
-class NickListWidget;
-#include <QLabel>
-#include <QSplitter>
 #include <QWidget>
+class NickListWidget;
+
+QT_BEGIN_NAMESPACE
+class QLabel;
+class QSplitter;
+QT_END_NAMESPACE
 
 /**
  * Main widget

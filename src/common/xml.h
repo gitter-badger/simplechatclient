@@ -20,10 +20,13 @@
 #ifndef XML_H
 #define XML_H
 
-class QDomElement;
-#include <QHash>
 #include <QDomDocument>
+#include <QHash>
 #include <QObject>
+
+QT_BEGIN_NAMESPACE
+class QDomElement;
+QT_END_NAMESPACE
 
 class Xml : public QObject
 {

@@ -20,8 +20,11 @@
 #ifndef AWAYLOG_MODEL_H
 #define AWAYLOG_MODEL_H
 
-class QAction;
 #include <QObject>
+
+QT_BEGIN_NAMESPACE
+class QAction;
+QT_END_NAMESPACE
 
 class Awaylog : public QObject
 {

@@ -21,8 +21,11 @@
 #define TAB_MANAGER_H
 
 #include "defines.h"
-class QTabBar;
 #include <QTabWidget>
+
+QT_BEGIN_NAMESPACE
+class QTabBar;
+QT_END_NAMESPACE
 
 /**
  * TabBar with highlight support

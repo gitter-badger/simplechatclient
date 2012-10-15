@@ -20,9 +20,12 @@
 #ifndef AVATAR_H
 #define AVATAR_H
 
+#include <QObject>
+
+QT_BEGIN_NAMESPACE
 class QNetworkAccessManager;
 class QNetworkReply;
-#include <QObject>
+QT_END_NAMESPACE
 
 class Avatar : public QObject
 {

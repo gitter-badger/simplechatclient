@@ -17,6 +17,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <QSplitter>
 #include "channel.h"
 #include "core.h"
 #include "log.h"

@@ -20,8 +20,8 @@
 #ifndef HIGHLIGHT_H
 #define HIGHLIGHT_H
 
-#include <QStringList>
 #include <QObject>
+#include <QStringList>
 
 class Highlight : public QObject
 {

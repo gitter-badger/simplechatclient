@@ -21,8 +21,11 @@
 #define OFFLINE_H
 
 #include "defines.h"
-#include <QAction>
 #include <QObject>
+
+QT_BEGIN_NAMESPACE
+class QAction;
+QT_END_NAMESPACE
 
 class Offline : public QObject
 {

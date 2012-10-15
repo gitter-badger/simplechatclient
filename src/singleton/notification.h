@@ -20,8 +20,11 @@
 #ifndef NOTIFICATION_H
 #define NOTIFICATION_H
 
-#include <QMenu>
 #include <QObject>
+
+QT_BEGIN_NAMESPACE
+class QMenu;
+QT_END_NAMESPACE
 
 class Notification : public QObject
 {

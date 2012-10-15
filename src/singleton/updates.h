@@ -20,9 +20,12 @@
 #ifndef UPDATES_H
 #define UPDATES_H
 
+#include <QObject>
+
+QT_BEGIN_NAMESPACE
 class QNetworkAccessManager;
 class QNetworkReply;
-#include <QObject>
+QT_END_NAMESPACE
 
 class Updates : public QObject
 {

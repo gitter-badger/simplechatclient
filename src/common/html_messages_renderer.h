@@ -21,7 +21,6 @@
 #define HTML_MESSAGES_RENDERER_H
 
 #include <QString>
-
 #include "defines.h"
 
 namespace HtmlMessagesRenderer

@@ -20,8 +20,11 @@
 #ifndef AWAY_H
 #define AWAY_H
 
-class QAction;
 #include <QObject>
+
+QT_BEGIN_NAMESPACE
+class QAction;
+QT_END_NAMESPACE
 
 class Away : public QObject
 {

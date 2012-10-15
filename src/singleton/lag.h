@@ -20,8 +20,11 @@
 #ifndef LAG_H
 #define LAG_H
 
-class QAction;
 #include <QObject>
+
+QT_BEGIN_NAMESPACE
+class QAction;
+QT_END_NAMESPACE
 
 class Lag : public QObject
 {

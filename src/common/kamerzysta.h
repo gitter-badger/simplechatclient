@@ -23,8 +23,10 @@
 #include <QAbstractSocket>
 #include <QObject>
 
+QT_BEGIN_NAMESPACE
 class QTcpSocket;
 class QTimer;
+QT_END_NAMESPACE
 
 /**
  * Cams support using Kamerzysta (http://programy.onet.pl/72,34,10195,,,Kamerzysta_3.00.159,programy.html)

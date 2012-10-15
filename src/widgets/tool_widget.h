@@ -21,13 +21,16 @@
 #define TOOL_WIDGET_H
 
 #include "defines.h"
+#include <QWidget>
+class InputLineWidget;
+
+QT_BEGIN_NAMESPACE
 class QComboBox;
 class QLabel;
 class QFrame;
 class QMenu;
 class QToolButton;
-class InputLineWidget;
-#include <QWidget>
+QT_END_NAMESPACE
 
 class ToolWidget : public QWidget
 {

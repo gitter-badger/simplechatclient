@@ -22,10 +22,12 @@
 
 #include <QObject>
 
+QT_BEGIN_NAMESPACE
 class QNetworkAccessManager;
 class QNetworkCookieJar;
 class QNetworkReply;
 class QTimer;
+QT_END_NAMESPACE
 
 /**
  * Authorize class for onet

@@ -20,8 +20,8 @@
 #ifndef PUNISH_REASON_H
 #define PUNISH_REASON_H
 
-#include <QStringList>
 #include <QObject>
+#include <QStringList>
 
 class PunishReason : public QObject
 {

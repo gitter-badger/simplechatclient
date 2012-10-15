@@ -20,9 +20,12 @@
 #ifndef INVITE_MODEL_H
 #define INVITE_MODEL_H
 
-#include <QAction>
 #include <QMultiHash>
 #include <QObject>
+
+QT_BEGIN_NAMESPACE
+class QAction;
+QT_END_NAMESPACE
 
 class Invite : public QObject
 {

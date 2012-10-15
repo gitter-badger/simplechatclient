@@ -20,8 +20,11 @@
 #ifndef BUSY_H
 #define BUSY_H
 
-class QAction;
 #include <QObject>
+
+QT_BEGIN_NAMESPACE
+class QAction;
+QT_END_NAMESPACE
 
 class Busy : public QObject
 {
