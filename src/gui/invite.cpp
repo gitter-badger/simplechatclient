@@ -18,6 +18,7 @@
  */
 
 #include <QDesktopWidget>
+#include <QMenu>
 #include "core.h"
 #include "invite_model.h"
 #include "invite.h"
@@ -42,28 +43,35 @@ DlgInvite::DlgInvite(const QString &_strNick, const QString &_strChannel, QWidge
 
 void DlgInvite::createGui()
 {
-    ui.pushButton_whois->setIcon(QIcon(":/images/oxygen/16x16/user-properties.png"));
+    ui.pushButton_accept->setIcon(QIcon(":/images/oxygen/16x16/user-online.png"));
     ui.pushButton_reject->setIcon(QIcon(":/images/oxygen/16x16/user-invisible.png"));
     ui.pushButton_ignore->setIcon(QIcon(":/images/oxygen/16x16/user-busy.png"));
-    ui.pushButton_accept->setIcon(QIcon(":/images/oxygen/16x16/user-online.png"));
+    ui.toolButton_options->setIcon(QIcon(":/images/oxygen/16x16/applications-system.png"));
 
-    ui.pushButton_whois->setText(tr("Whois"));
+    ui.pushButton_accept->setText(tr("Accept"));
     ui.pushButton_reject->setText(tr("Reject"));
     ui.pushButton_ignore->setText(tr("Ignore"));
-    ui.pushButton_accept->setText(tr("Accept"));
+
+    ui.toolButton_options->setText(tr("Options"));
+
+    QMenu *optionsMenu = new QMenu(this);
+    optionsMenu->addAction(QIcon(":/images/oxygen/16x16/user-properties.png"), tr("Whois"), this, SLOT(whois()));
+
+    ui.toolButton_options->setMenu(optionsMenu);
 }
 
 void DlgInvite::createSignals()
 {
-    connect(ui.pushButton_whois, SIGNAL(clicked()), this, SLOT(buttonWhois()));
     connect(ui.pushButton_reject, SIGNAL(clicked()), this, SLOT(buttonReject()));
     connect(ui.pushButton_ignore, SIGNAL(clicked()), this, SLOT(buttonIgnore()));
     connect(ui.pushButton_accept, SIGNAL(clicked()), this, SLOT(buttonAccept()));
 }
 
-void DlgInvite::buttonWhois()
+void DlgInvite::buttonAccept()
 {
-    Core::instance()->network->send(QString("WHOIS %1 %1").arg(strNick));
+    Core::instance()->network->send(QString("JOIN %1").arg(strChannel));
+    Invite::instance()->remove(strNick, strChannel);
+    this->close();
 }
 
 void DlgInvite::buttonReject()
@@ -80,9 +88,7 @@ void DlgInvite::buttonIgnore()
     this->close();
 }
 
-void DlgInvite::buttonAccept()
+void DlgInvite::whois()
 {
-    Core::instance()->network->send(QString("JOIN %1").arg(strChannel));
-    Invite::instance()->remove(strNick, strChannel);
-    this->close();
+    Core::instance()->network->send(QString("WHOIS %1 %1").arg(strNick));
 }

@@ -38,10 +38,10 @@ private:
     void createSignals();
 
 private slots:
-    void buttonWhois();
+    void buttonAccept();
     void buttonReject();
     void buttonIgnore();
-    void buttonAccept();
+    void whois();
 };
 
 #endif // INVITE_H
