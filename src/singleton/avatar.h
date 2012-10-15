@@ -40,7 +40,8 @@ public:
 private:
     QNetworkAccessManager *accessManager;
 
-    void saveAvatar(const QString &strAvatar, const QByteArray &bAvatar);
+    void updateAvatar(const QString &strCategory, const QString &strNickOrChannel, const QString &strAvatarFile);
+    void saveAvatar(const QString &strAvatarPath, const QByteArray &bAvatar);
 
 public slots:
     void httpFinished(QNetworkReply *reply);

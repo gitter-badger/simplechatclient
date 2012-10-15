@@ -55,9 +55,22 @@ Avatar::~Avatar()
 
 void Avatar::get(const QString &strNickOrChannel, const QString &strCategory, const QString &strUrl)
 {
-    QNetworkReply *reply = accessManager->get(QNetworkRequest(strUrl));
-    reply->setProperty("nickorchannel", strNickOrChannel);
-    reply->setProperty("category", strCategory);
+    QFileInfo fi(strUrl);
+    QString strAvatarFile = fi.fileName();
+    QString strAvatarPath = getAvatarPath(strAvatarFile);
+
+    if (!QFile::exists(strAvatarPath))
+    {
+        QNetworkReply *reply = accessManager->get(QNetworkRequest(strUrl));
+        reply->setProperty("nickorchannel", strNickOrChannel);
+        reply->setProperty("category", strCategory);
+        reply->setProperty("file", strAvatarFile);
+        reply->setProperty("path", strAvatarPath);
+    }
+    else
+    {
+        updateAvatar(strCategory, strNickOrChannel, strAvatarFile);
+    }
 }
 
 void Avatar::httpFinished(QNetworkReply *reply)
@@ -72,20 +85,23 @@ void Avatar::httpFinished(QNetworkReply *reply)
     {
         QString strNickOrChannel = reply->property("nickorchannel").toString();
         QString strCategory = reply->property("category").toString();
-        QFileInfo fi(reply->url().toString());
+        QString strAvatarFile = reply->property("file").toString();
+        QString strAvatarPath = reply->property("path").toString();
 
-        QString strAvatarFile = fi.fileName();
+        saveAvatar(strAvatarPath, bAvatar);
+        updateAvatar(strCategory, strNickOrChannel, strAvatarFile);
+    }
+}
 
-        saveAvatar(strAvatarFile, bAvatar);
-
-        if (strCategory == "nick")
-        {
-            Nicklist::instance()->setUserAvatar(strNickOrChannel, strAvatarFile);
-        }
-        else if (strCategory == "channel")
-        {
-            Channel::instance()->setAvatar(strNickOrChannel, strAvatarFile);
-        }
+void Avatar::updateAvatar(const QString &strCategory, const QString &strNickOrChannel, const QString &strAvatarFile)
+{
+    if (strCategory == "nick")
+    {
+        Nicklist::instance()->setUserAvatar(strNickOrChannel, strAvatarFile);
+    }
+    else if (strCategory == "channel")
+    {
+        Channel::instance()->setAvatar(strNickOrChannel, strAvatarFile);
     }
 }
 
@@ -109,10 +125,8 @@ QString Avatar::getAvatarPath(const QString &strAvatar)
     return path+strAvatar;
 }
 
-void Avatar::saveAvatar(const QString &strAvatar, const QByteArray &bAvatar)
+void Avatar::saveAvatar(const QString &strAvatarPath, const QByteArray &bAvatar)
 {
-    QString strAvatarPath = getAvatarPath(strAvatar);
-
     QFile f(strAvatarPath);
     if (f.open(QIODevice::WriteOnly))
     {

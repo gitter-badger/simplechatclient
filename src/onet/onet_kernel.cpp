@@ -424,23 +424,21 @@ void OnetKernel::raw_join()
     else
         Message::instance()->showMessage(strChannel, strDisplay, MessageJoin);
 
+    // nicklist
+    Nicklist::instance()->addUser(strChannel, strNick, strSuffix);
+
+    // nick avatar
+    if ((!strNick.startsWith('~')) && (ThemesModel::instance()->isCurrentWithAvatar()))
+    {
+        Core::instance()->network->send(QString("NS INFO %1 s").arg(strNick));
+    }
+
     // channel info
     Channel::instance()->removeChannelInfo(strChannel);
 
     QString strMe = Settings::instance()->get("nick");
     if ((strNick == strMe) && (strChannel[0] != '^'))
         Core::instance()->network->send(QString("CS INFO %1 i").arg(strChannel));
-
-    // nick avatar
-    if (!strNick.startsWith('~'))
-    {
-        if (ThemesModel::instance()->isCurrentWithAvatar()) // with avatars
-            Core::instance()->network->send(QString("NS INFO %1 s").arg(strNick));
-    }
-
-    // nicklist
-    if (strNick != strMe)
-        Nicklist::instance()->addUser(strChannel, strNick, strSuffix);
 }
 
 // :scc_test!51976824@3DE379.B7103A.6CF799.6902F4 PART #scc
@@ -494,7 +492,6 @@ void OnetKernel::raw_part()
     }
 
     Message::instance()->showMessage(strChannel, strDisplay, MessagePart);
-
     Nicklist::instance()->delUser(strChannel, strNick);
 
     // if self part
