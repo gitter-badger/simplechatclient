@@ -1118,8 +1118,16 @@
         <translation>Zaproszenia</translation>
     </message>
     <message>
-        <source>Whois</source>
-        <translation>Gdzie jest</translation>
+        <source>%1 invites you to channel %2</source>
+        <translation>%1 zaprasza do pokoju %2</translation>
+    </message>
+    <message>
+        <source>%1 invites you to priv</source>
+        <translation>%1 zaprasza do rozmowy prywatnej</translation>
+    </message>
+    <message>
+        <source>Accept</source>
+        <translation>Akceptuj</translation>
     </message>
     <message>
         <source>Reject</source>
@@ -1130,16 +1138,12 @@
         <translation>Ignoruj</translation>
     </message>
     <message>
-        <source>Accept</source>
-        <translation>Akceptuj</translation>
+        <source>Options</source>
+        <translation>Opcje</translation>
     </message>
     <message>
-        <source>%1 invites you to channel %2</source>
-        <translation>%1 zaprasza do pokoju %2</translation>
-    </message>
-    <message>
-        <source>%1 invites you to priv</source>
-        <translation>%1 zaprasza do rozmowy prywatnej</translation>
+        <source>Whois</source>
+        <translation>Gdzie jest</translation>
     </message>
 </context>
 <context>

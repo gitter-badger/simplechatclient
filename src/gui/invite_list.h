@@ -42,10 +42,11 @@ private:
     void createList();
 
 private slots:
-    void buttonWhois();
+    void itemClicked(QListWidgetItem *);
+    void buttonAccept();
     void buttonReject();
     void buttonIgnore();
-    void buttonAccept();
+    void whois();
 };
 
 #endif // INVITE_LIST_H

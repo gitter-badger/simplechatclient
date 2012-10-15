@@ -18,6 +18,7 @@
  */
 
 #include <QDesktopWidget>
+#include <QMenu>
 #include "core.h"
 #include "invite_model.h"
 #include "invite_list.h"
@@ -37,20 +38,31 @@ DlgInviteList::DlgInviteList(QWidget *parent) : QDialog(parent)
 
 void DlgInviteList::createGui()
 {
-    ui.pushButton_whois->setIcon(QIcon(":/images/oxygen/16x16/user-properties.png"));
+    ui.pushButton_accept->setEnabled(false);
+    ui.pushButton_reject->setEnabled(false);
+    ui.pushButton_ignore->setEnabled(false);
+    ui.toolButton_options->setEnabled(false);
+
+    ui.pushButton_accept->setIcon(QIcon(":/images/oxygen/16x16/user-online.png"));
     ui.pushButton_reject->setIcon(QIcon(":/images/oxygen/16x16/user-invisible.png"));
     ui.pushButton_ignore->setIcon(QIcon(":/images/oxygen/16x16/user-busy.png"));
-    ui.pushButton_accept->setIcon(QIcon(":/images/oxygen/16x16/user-online.png"));
+    ui.toolButton_options->setIcon(QIcon(":/images/oxygen/16x16/applications-system.png"));
 
-    ui.pushButton_whois->setText(tr("Whois"));
+    ui.pushButton_accept->setText(tr("Accept"));
     ui.pushButton_reject->setText(tr("Reject"));
     ui.pushButton_ignore->setText(tr("Ignore"));
-    ui.pushButton_accept->setText(tr("Accept"));
+
+    ui.toolButton_options->setText(tr("Options"));
+
+    QMenu *optionsMenu = new QMenu(this);
+    optionsMenu->addAction(QIcon(":/images/oxygen/16x16/user-properties.png"), tr("Whois"), this, SLOT(whois()));
+
+    ui.toolButton_options->setMenu(optionsMenu);
 }
 
 void DlgInviteList::createSignals()
 {
-    connect(ui.pushButton_whois, SIGNAL(clicked()), this, SLOT(buttonWhois()));
+    connect(ui.listWidget, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(itemClicked(QListWidgetItem*)));
     connect(ui.pushButton_reject, SIGNAL(clicked()), this, SLOT(buttonReject()));
     connect(ui.pushButton_ignore, SIGNAL(clicked()), this, SLOT(buttonIgnore()));
     connect(ui.pushButton_accept, SIGNAL(clicked()), this, SLOT(buttonAccept()));
@@ -78,15 +90,33 @@ void DlgInviteList::createList()
     }
 }
 
-void DlgInviteList::buttonWhois()
+void DlgInviteList::itemClicked(QListWidgetItem *)
+{
+    if (!ui.pushButton_accept->isEnabled())
+        ui.pushButton_accept->setEnabled(true);
+
+    if (!ui.pushButton_reject->isEnabled())
+        ui.pushButton_reject->setEnabled(true);
+
+    if (!ui.pushButton_ignore->isEnabled())
+        ui.pushButton_ignore->setEnabled(true);
+
+    if (!ui.toolButton_options->isEnabled())
+        ui.toolButton_options->setEnabled(true);
+}
+
+void DlgInviteList::buttonAccept()
 {
     if (ui.listWidget->selectedItems().isEmpty())
         return;
 
     QListWidgetItem *item = ui.listWidget->selectedItems().at(0);
     QString strNick = item->data(InviteNickRole).toString();
+    QString strChannel = item->data(InviteChannelRole).toString();
+    ui.listWidget->takeItem(ui.listWidget->row(item));
 
-    Core::instance()->network->send(QString("WHOIS %1 %1").arg(strNick));
+    Core::instance()->network->send(QString("JOIN %1").arg(strChannel));
+    Invite::instance()->remove(strNick, strChannel);
 }
 
 void DlgInviteList::buttonReject()
@@ -117,16 +147,13 @@ void DlgInviteList::buttonIgnore()
     Invite::instance()->remove(strNick, strChannel);
 }
 
-void DlgInviteList::buttonAccept()
+void DlgInviteList::whois()
 {
     if (ui.listWidget->selectedItems().isEmpty())
         return;
 
     QListWidgetItem *item = ui.listWidget->selectedItems().at(0);
     QString strNick = item->data(InviteNickRole).toString();
-    QString strChannel = item->data(InviteChannelRole).toString();
-    ui.listWidget->takeItem(ui.listWidget->row(item));
 
-    Core::instance()->network->send(QString("JOIN %1").arg(strChannel));
-    Invite::instance()->remove(strNick, strChannel);
+    Core::instance()->network->send(QString("WHOIS %1 %1").arg(strNick));
 }

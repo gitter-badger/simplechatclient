@@ -6,19 +6,19 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>422</width>
+    <width>382</width>
     <height>152</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>422</width>
+    <width>382</width>
     <height>152</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>422</width>
+    <width>382</width>
     <height>152</height>
    </size>
   </property>
@@ -30,7 +30,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>421</width>
+     <width>381</width>
      <height>151</height>
     </rect>
    </property>
@@ -45,12 +45,9 @@
     <item>
      <layout class="QHBoxLayout" name="horizontalLayout">
       <item>
-       <widget class="QPushButton" name="pushButton_whois">
+       <widget class="QPushButton" name="pushButton_accept">
         <property name="text">
-         <string>Whois</string>
-        </property>
-        <property name="flat">
-         <bool>false</bool>
+         <string>Accept</string>
         </property>
        </widget>
       </item>
@@ -69,9 +66,27 @@
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="pushButton_accept">
+       <widget class="QToolButton" name="toolButton_options">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>70</width>
+          <height>0</height>
+         </size>
+        </property>
         <property name="text">
-         <string>Accept</string>
+         <string>Options</string>
+        </property>
+        <property name="popupMode">
+         <enum>QToolButton::InstantPopup</enum>
+        </property>
+        <property name="toolButtonStyle">
+         <enum>Qt::ToolButtonTextBesideIcon</enum>
         </property>
        </widget>
       </item>
