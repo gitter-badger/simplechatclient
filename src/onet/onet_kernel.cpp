@@ -425,7 +425,7 @@ void OnetKernel::raw_join()
         Message::instance()->showMessage(strChannel, strDisplay, MessageJoin);
 
     // nicklist
-    Nicklist::instance()->addUser(strChannel, strNick, strSuffix);
+    Nicklist::instance()->addUser(strNick, strChannel, strSuffix);
 
     // nick avatar
     if ((!strNick.startsWith('~')) && (ThemesModel::instance()->isCurrentWithAvatar()))
@@ -492,7 +492,7 @@ void OnetKernel::raw_part()
     }
 
     Message::instance()->showMessage(strChannel, strDisplay, MessagePart);
-    Nicklist::instance()->delUser(strChannel, strNick);
+    Nicklist::instance()->delUser(strNick, strChannel);
 
     // if self part
     QString strMe = Settings::instance()->get("nick");
@@ -567,7 +567,7 @@ void OnetKernel::raw_kick()
     QString strDisplay = QString(tr("* %1 has been kicked from channel %2 by %3 Reason: %4")).arg(strNick, strChannel, strWho, strReason);
 
     Message::instance()->showMessage(strChannel, strDisplay, MessageKick);
-    Nicklist::instance()->delUser(strChannel, strNick);
+    Nicklist::instance()->delUser(strNick, strChannel);
 
     QString strMe = Settings::instance()->get("nick");
     if (strNick == strMe)
@@ -2754,7 +2754,7 @@ void OnetKernel::raw_353()
             if (strCleanNick.contains(FLAG_VOICE)) { strCleanNick.remove(FLAG_VOICE); strPrefix.append(FLAG_VOICE); }
 
             QString strModes = strPrefix+strSuffix;
-            Nicklist::instance()->addUser(strChannel, strCleanNick, strModes);
+            Nicklist::instance()->addUser(strCleanNick, strChannel, strModes);
 
             // nick avatar
             if (!strCleanNick.startsWith('~'))

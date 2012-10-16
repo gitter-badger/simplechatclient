@@ -80,7 +80,7 @@ QString Nicklist::getEmptyUserAvatar()
     return strEmptyUserAvatar;
 }
 
-void Nicklist::addUser(const QString &strChannel, const QString &strNick, const QString &strModes)
+void Nicklist::addUser(const QString &strNick, const QString &strChannel, const QString &strModes)
 {
     if (!Core::instance()->tw.contains(strChannel))
         return;
@@ -92,7 +92,7 @@ void Nicklist::addUser(const QString &strChannel, const QString &strNick, const 
     }
 }
 
-void Nicklist::delUser(const QString &strChannel, const QString &strNick)
+void Nicklist::delUser(const QString &strNick, const QString &strChannel)
 {
     if (!Core::instance()->tw.contains(strChannel))
         return;
