@@ -46,6 +46,22 @@ QList<QString> ChannelFavouritesModel::getAll()
     return favourites;
 }
 
+QList<CaseIgnoreString> ChannelFavouritesModel::getAllCaseIgnore()
+{
+    QList<CaseIgnoreString> lChannelsCaseIgnore;
+
+    // copy to new list
+    QList<QString> lChannels = getAll();
+
+    foreach (QString strChannel, lChannels)
+        lChannelsCaseIgnore.append(strChannel);
+
+    // sort
+    qSort(lChannelsCaseIgnore.begin(), lChannelsCaseIgnore.end());
+
+    return lChannelsCaseIgnore;
+}
+
 void ChannelFavouritesModel::add(const QString &key)
 {
     if (!favourites.contains(key))

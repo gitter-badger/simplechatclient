@@ -21,6 +21,7 @@
 #define CHANNEL_FAVOURITES_MODEL_H
 
 #include <QObject>
+#include "defines.h"
 
 class ChannelFavouritesModel : public QObject
 {
@@ -33,6 +34,7 @@ public:
     ChannelFavouritesModel();
     void clear();
     QList<QString> getAll();
+    QList<CaseIgnoreString> getAllCaseIgnore();
     void add(const QString &key);
     void remove(const QString &key);
     bool contains(const QString &key);

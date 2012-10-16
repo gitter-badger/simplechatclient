@@ -1441,27 +1441,12 @@ void OnetKernel::raw_141n()
 {
     if (strDataList.size() < 5) return;
 
-    QList<CaseIgnoreString> lList;
-
     for (int i = 4; i < strDataList.size(); i++)
     {
         QString strChannel = strDataList[i];
         if (strChannel[0] == ':') strChannel.remove(0,1);
 
         ChannelFavouritesModel::instance()->add(strChannel);
-
-        lList.append(strChannel);
-    }
-
-    // join
-    if (Settings::instance()->get("ignore_raw_141") == "false")
-    {
-        qSort(lList.begin(), lList.end());
-        foreach (QString strChannel, lList)
-        {
-            if (!Channel::instance()->contains(strChannel))
-                Core::instance()->network->sendQueue(QString("JOIN %1").arg(strChannel));
-        }
     }
 }
 
@@ -1469,6 +1454,17 @@ void OnetKernel::raw_141n()
 // :NickServ!service@service.onet NOTICE scc_test :142 :end of favourites list
 void OnetKernel::raw_142n()
 {
+    // join favourites
+    if (Settings::instance()->get("ignore_raw_141") == "false")
+    {
+        QList<CaseIgnoreString> lChannelsCaseIgnore = ChannelFavouritesModel::instance()->getAllCaseIgnore();
+        foreach (QString strChannel, lChannelsCaseIgnore)
+        {
+            if (!Channel::instance()->contains(strChannel))
+                Core::instance()->network->sendQueue(QString("JOIN %1").arg(strChannel));
+        }
+    }
+
     // turn on ignore_raw_141
     if (Settings::instance()->get("ignore_raw_141") == "false")
         Settings::instance()->set("ignore_raw_141", "true");
