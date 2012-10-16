@@ -1185,11 +1185,11 @@ void OnetKernel::raw_001()
     if (Settings::instance()->get("auto_busy") == "true")
         Core::instance()->network->send("BUSY 1");
 
-    // ignore_raw_141
+    // ignore favourites
     if (Settings::instance()->get("disable_autojoin_favourites") == "true")
-        Settings::instance()->set("ignore_raw_141", "true");
+        Settings::instance()->set("ignore_favourites", "true");
     else
-        Settings::instance()->set("ignore_raw_141", "false");
+        Settings::instance()->set("ignore_favourites", "false");
 
     // override off
     Settings::instance()->set("override", "false");
@@ -1455,7 +1455,7 @@ void OnetKernel::raw_141n()
 void OnetKernel::raw_142n()
 {
     // join favourites
-    if (Settings::instance()->get("ignore_raw_141") == "false")
+    if (Settings::instance()->get("ignore_favourites") == "false")
     {
         QList<CaseIgnoreString> lChannelsCaseIgnore = ChannelFavouritesModel::instance()->getAllCaseIgnore();
         foreach (QString strChannel, lChannelsCaseIgnore)
@@ -1465,9 +1465,9 @@ void OnetKernel::raw_142n()
         }
     }
 
-    // turn on ignore_raw_141
-    if (Settings::instance()->get("ignore_raw_141") == "false")
-        Settings::instance()->set("ignore_raw_141", "true");
+    // turn on ignore_favourites
+    if (Settings::instance()->get("ignore_favourites") == "false")
+        Settings::instance()->set("ignore_favourites", "true");
 }
 
 // CS HOMES
