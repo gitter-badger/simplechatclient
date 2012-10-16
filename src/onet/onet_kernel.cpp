@@ -707,10 +707,10 @@ void OnetKernel::raw_mode()
             else if (strFlag.at(1) == QChar('F'))
             {
                 QString strStatus;
-                if (strValue == "0") strStatus = tr("Wild");
-                else if (strValue == "1") strStatus = tr("Tame");
-                else if (strValue == "2") strStatus = tr("With class");
-                else if (strValue == "3") strStatus = tr("Cult");
+                if (strValue.toInt() == 0) strStatus = tr("Wild");
+                else if (strValue.toInt() == 1) strStatus = tr("Tame");
+                else if (strValue.toInt() == 2) strStatus = tr("With class");
+                else if (strValue.toInt() == 3) strStatus = tr("Cult");
                 else strStatus = tr("unknown");
 
                 if (strFlag.at(0) == QChar('+'))
@@ -721,11 +721,11 @@ void OnetKernel::raw_mode()
             else if (strFlag.at(1) == QChar('c'))
             {
                 QString strCategory;
-                if (strValue == "1") strCategory = tr("Teen");
-                else if (strValue == "2") strCategory = tr("Common");
-                else if (strValue == "3") strCategory = tr("Erotic");
-                else if (strValue == "4") strCategory = tr("Thematic");
-                else if (strValue == "5") strCategory = tr("Regional");
+                if (strValue.toInt() == 1) strCategory = tr("Teen");
+                else if (strValue.toInt() == 2) strCategory = tr("Common");
+                else if (strValue.toInt() == 3) strCategory = tr("Erotic");
+                else if (strValue.toInt() == 4) strCategory = tr("Thematic");
+                else if (strValue.toInt() == 5) strCategory = tr("Regional");
                 else strCategory = tr("unknown");
 
                 if (strFlag.at(0) == QChar('+'))
@@ -733,7 +733,6 @@ void OnetKernel::raw_mode()
                 else if (strFlag.at(0) == QChar('-'))
                     strDisplay = QString(tr("* %1 changed channel %2 category")).arg(strWho, strChannel);
             }
-
             else
             {
                 if (strValue.isEmpty())
@@ -1338,7 +1337,7 @@ void OnetKernel::raw_111n()
     QString strMe = Settings::instance()->get("nick");
 
     // set user info
-    if (UserProfileModel::instance()->getNick() == strNick)
+    if ((UserProfileModel::instance()->getNick() == strNick) && (!UserProfileModel::instance()->getReady()))
         UserProfileModel::instance()->set(strKey, strValue);
 
     // set my profile
@@ -1346,13 +1345,9 @@ void OnetKernel::raw_111n()
         MyProfileModel::instance()->set(strKey, strValue);
 
     // get avatar
-    if (strKey == "avatar")
+    if ((strKey == "avatar") && (!strValue.isEmpty()) && (ThemesModel::instance()->isCurrentWithAvatar()))
     {
-        if (ThemesModel::instance()->isCurrentWithAvatar())
-        {
-            if (!strValue.isEmpty())
-                Avatar::instance()->get(strNick, "nick", strValue);
-        }
+        Avatar::instance()->get(strNick, "nick", strValue);
     }
 }
 
@@ -1468,16 +1463,15 @@ void OnetKernel::raw_141n()
                 Core::instance()->network->sendQueue(QString("JOIN %1").arg(strChannel));
         }
     }
-
-    // turn on ignore_raw_141
-    if (Settings::instance()->get("ignore_raw_141") == "false")
-        Settings::instance()->set("ignore_raw_141", "true");
 }
 
 // NS FAVOURITES
 // :NickServ!service@service.onet NOTICE scc_test :142 :end of favourites list
 void OnetKernel::raw_142n()
 {
+    // turn on ignore_raw_141
+    if (Settings::instance()->get("ignore_raw_141") == "false")
+        Settings::instance()->set("ignore_raw_141", "true");
 }
 
 // CS HOMES
@@ -1495,6 +1489,7 @@ void OnetKernel::raw_151n()
     if (strNick.toLower() == "chanserv")
     {
         if (strDataList.size() < 4) return;
+        if (ChannelHomes::instance()->getReady()) return;
 
         for (int i = 4; i < strDataList.size(); i++)
         {
@@ -1673,7 +1668,7 @@ void OnetKernel::raw_163n()
 
     strDT = QDateTime::fromTime_t(strDT.toInt()).toString("dd MMM yyyy hh:mm:ss");
 
-    if (ChannelSettingsModel::instance()->getChannel() == strChannel)
+    if ((ChannelSettingsModel::instance()->getChannel() == strChannel) && (!ChannelSettingsModel::instance()->getReadyInfo()))
         ChannelSettingsModel::instance()->setPermission(strFlag, QString("%1;%2;%3;%4").arg(strNick, strWho, strDT, strIPNick));
 }
 
@@ -1753,7 +1748,7 @@ void OnetKernel::raw_175n()
         mKeyValue.insert(strKey, strValue);
     }
 
-    if (ChannelSettingsModel::instance()->getChannel() == strChannel)
+    if ((ChannelSettingsModel::instance()->getChannel() == strChannel) && (!ChannelSettingsModel::instance()->getReadyStats()))
     {
         QHashIterator <QString, QString> i(mKeyValue);
         while (i.hasNext())
@@ -2272,6 +2267,7 @@ void OnetKernel::raw_261n()
     else if (strNick.toLower() == "nickserv")
     {
         if (strDataList.size() < 4) return;
+        if (FindNick::instance()->getReady()) return;
 
         for (int i = 4; i < strDataList.size(); i++)
             FindNick::instance()->add(strDataList[i]);
@@ -4060,6 +4056,9 @@ void OnetKernel::raw_819()
     QString strChannelsString;
     for (int i = 3; i < strDataList.size(); i++) { if (i != 3) strChannelsString += " "; strChannelsString += strDataList[i]; }
     if (strChannelsString[0] == ':') strChannelsString.remove(0,1);
+
+    if (ChannelList::instance()->getReady())
+        return;
 
     QStringList strChannelsList = strChannelsString.split(",");
     for (int i = 0; i < strChannelsList.size(); i++)
