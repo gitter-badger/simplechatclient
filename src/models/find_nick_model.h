@@ -21,6 +21,7 @@
 #define FIND_NICK_MODEL_H
 
 #include <QObject>
+#include "defines.h"
 
 class FindNick : public QObject
 {
@@ -34,12 +35,12 @@ public:
     void add(const QString &nick);
     QList<QString> get();
     void clear();
-    void setReady(bool ready);
-    bool getReady();
+    void setStatus(ObjectStatus status);
+    ObjectStatus getStatus();
 
 private:
     QList<QString> lNickList;
-    bool bNickListReady;
+    ObjectStatus nickListStatus;
 };
 
 #endif // FIND_NICK_MODEL_H

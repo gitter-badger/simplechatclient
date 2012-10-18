@@ -74,7 +74,7 @@ void DlgChannelHomes::createSignals()
 void DlgChannelHomes::refresh()
 {
     // ready
-    if (!ChannelHomes::instance()->getReady())
+    if (ChannelHomes::instance()->getStatus() != StatusCompleted)
     {
         QTimer::singleShot(200, this, SLOT(refresh())); // 0.2 sec
         return;

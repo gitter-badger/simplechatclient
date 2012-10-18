@@ -50,15 +50,15 @@ QList<QString> FindNick::get()
 void FindNick::clear()
 {
     lNickList.clear();
-    bNickListReady = false;
+    nickListStatus = StatusAwaiting;
 }
 
-void FindNick::setReady(bool ready)
+void FindNick::setStatus(ObjectStatus status)
 {
-    bNickListReady = ready;
+    nickListStatus = status;
 }
 
-bool FindNick::getReady()
+ObjectStatus FindNick::getStatus()
 {
-    return bNickListReady;
+    return nickListStatus;
 }

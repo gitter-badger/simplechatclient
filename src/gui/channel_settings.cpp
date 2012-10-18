@@ -288,7 +288,7 @@ void DlgChannelSettings::refreshAll()
 
 void DlgChannelSettings::refreshChannelInfo()
 {
-    if (ChannelSettingsModel::instance()->getReadyInfo() == false)
+    if (ChannelSettingsModel::instance()->getStatusInfo() != StatusCompleted)
     {
         QTimer::singleShot(200, this, SLOT(refreshChannelInfo())); // 0.2 sec
         return;
@@ -496,7 +496,7 @@ void DlgChannelSettings::refreshChannelInfo()
 
 void DlgChannelSettings::refreshChannelStats()
 {
-    if (ChannelSettingsModel::instance()->getReadyStats() == false)
+    if (ChannelSettingsModel::instance()->getStatusStats() != StatusCompleted)
     {
         QTimer::singleShot(200, this, SLOT(refreshChannelStats())); // 0.2 sec
         return;

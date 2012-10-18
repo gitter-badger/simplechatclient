@@ -192,7 +192,7 @@ void DlgUserProfile::createSignals()
 
 void DlgUserProfile::refreshUserInfo()
 {
-    if (UserProfileModel::instance()->getReady() == false)
+    if (UserProfileModel::instance()->getStatus() != StatusCompleted)
     {
         QTimer::singleShot(200, this, SLOT(refreshUserInfo())); // 0.2 sec
         return;

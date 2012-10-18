@@ -22,6 +22,7 @@
 
 #include <QHash>
 #include <QObject>
+#include "defines.h"
 
 class UserProfileModel : public QObject
 {
@@ -38,13 +39,13 @@ public:
     QString get(const QString &key);
     QHash<QString,QString> getAll();
     void set(const QString &key, const QString &value);
-    bool getReady();
-    void setReady(bool readyState);
+    void setStatus(ObjectStatus status);
+    ObjectStatus getStatus();
 
 private:
-    QString nick;
+    QString userProfileNick;
     QHash<QString,QString> userProfile;
-    bool ready;
+    ObjectStatus userProfileStatus;
 };
 
 #endif // USER_PROFILE_MODEL_H

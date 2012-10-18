@@ -39,7 +39,8 @@ ChannelHomes::ChannelHomes()
 void ChannelHomes::clear()
 {
     lChannelHomes.clear();
-    bChannelHomesReady = false;
+
+    channelHomesStatus = StatusAwaiting;
 }
 
 void ChannelHomes::add(const QString &channel)
@@ -53,12 +54,12 @@ QList<QString> ChannelHomes::get()
     return lChannelHomes;
 }
 
-void ChannelHomes::setReady(bool ready)
+void ChannelHomes::setStatus(ObjectStatus status)
 {
-    bChannelHomesReady = ready;
+    channelHomesStatus = status;
 }
 
-bool ChannelHomes::getReady()
+ObjectStatus ChannelHomes::getStatus()
 {
-    return bChannelHomesReady;
+    return channelHomesStatus;
 }

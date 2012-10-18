@@ -38,21 +38,21 @@ UserProfileModel::UserProfileModel()
 
 void UserProfileModel::clear()
 {
-    nick = QString::null;
+    userProfileNick = QString::null;
     userProfile.clear();
-    ready = false;
+    userProfileStatus = StatusAwaiting;
 }
 
 QString UserProfileModel::getNick()
 {
-    return nick;
+    return userProfileNick;
 }
 
 void UserProfileModel::setNick(const QString &newNick)
 {
     clear();
 
-    nick = newNick;
+    userProfileNick = newNick;
 }
 
 QString UserProfileModel::get(const QString &key)
@@ -70,12 +70,12 @@ void UserProfileModel::set(const QString &key, const QString &value)
     userProfile[key] = value;
 }
 
-bool UserProfileModel::getReady()
+void UserProfileModel::setStatus(ObjectStatus status)
 {
-    return ready;
+    userProfileStatus = status;
 }
 
-void UserProfileModel::setReady(bool readyState)
+ObjectStatus UserProfileModel::getStatus()
 {
-    ready = readyState;
+    return userProfileStatus;
 }

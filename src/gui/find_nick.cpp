@@ -122,7 +122,7 @@ void DlgFindNick::buttonClear()
 void DlgFindNick::refreshList()
 {
     // ready
-    if (!FindNick::instance()->getReady())
+    if (FindNick::instance()->getStatus() != StatusCompleted)
     {
         QTimer::singleShot(200, this, SLOT(refreshList())); // 0.2 sec
         return;

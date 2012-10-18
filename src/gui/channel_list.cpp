@@ -111,7 +111,7 @@ void DlgChannelList::setDefaultValues()
 
     // need refresh
     qint64 iCheckRefresh = QDateTime::currentMSecsSinceEpoch() - ChannelList::instance()->getTime();
-    if ((ChannelList::instance()->getReady()) && (iCheckRefresh > 3600000)) // 3600
+    if ((ChannelList::instance()->getStatus() == StatusCompleted) && (iCheckRefresh > 3600000)) // 3600
         Core::instance()->network->send("SLIST  R- 0 0 100 null");
 }
 
@@ -197,7 +197,7 @@ bool DlgChannelList::showChannel(const QString &name, int people, int cat, int t
 void DlgChannelList::createList()
 {
     // ready
-    if (!ChannelList::instance()->getReady())
+    if (ChannelList::instance()->getStatus() != StatusCompleted)
     {
         QTimer::singleShot(1000, this, SLOT(createList())); // 1 sec
         return;

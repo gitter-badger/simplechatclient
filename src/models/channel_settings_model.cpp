@@ -42,10 +42,10 @@ void ChannelSettingsModel::clear()
 
     lSettingsInfo.clear();
     lSettingsPermissions.clear();
-    bReadyInfo = false;
+    infoStatus = StatusAwaiting;
 
     lSettingsStats.clear();
-    bReadyStats = false;
+    statsStatus = StatusAwaiting;
 }
 
 QString ChannelSettingsModel::getChannel()
@@ -90,14 +90,14 @@ bool ChannelSettingsModel::containsPermission(const QString &key, const QString 
     return lSettingsPermissions.contains(key, value);
 }
 
-bool ChannelSettingsModel::getReadyInfo()
+void ChannelSettingsModel::setStatusInfo(ObjectStatus status)
 {
-    return bReadyInfo;
+    infoStatus = status;
 }
 
-void ChannelSettingsModel::setReadyInfo(bool bReady)
+ObjectStatus ChannelSettingsModel::getStatusInfo()
 {
-    bReadyInfo = bReady;
+    return infoStatus;
 }
 
 QString ChannelSettingsModel::getStats(const QString &key)
@@ -115,12 +115,12 @@ void ChannelSettingsModel::setStats(const QString &key, const QString &value)
     lSettingsStats[key] = value;
 }
 
-bool ChannelSettingsModel::getReadyStats()
+void ChannelSettingsModel::setStatusStats(ObjectStatus status)
 {
-    return bReadyStats;
+    statsStatus = status;
 }
 
-void ChannelSettingsModel::setReadyStats(bool bReady)
+ObjectStatus ChannelSettingsModel::getStatusStats()
 {
-    bReadyStats = bReady;
+    return statsStatus;
 }

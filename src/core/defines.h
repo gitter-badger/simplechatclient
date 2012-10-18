@@ -20,12 +20,11 @@
 #ifndef DEFINES_H
 #define DEFINES_H
 
-#include <QList>
 #include <QListWidgetItem>
-#include <QString>
 #include <QTableWidgetItem>
 
-enum MessageCategory {
+enum MessageCategory
+{
     MessageDefault,
     MessageJoin,
     MessagePart,
@@ -40,10 +39,25 @@ enum MessageCategory {
     MessageModerNotice
 };
 
-enum ChannelColor {
+enum ChannelColor
+{
     ChannelGreen,
     ChannelRed,
     ChannelHighlight
+};
+
+enum ObjectStatus
+{
+    //StatusNotStarted,
+    StatusAwaiting,
+    //StatusInProgress,
+    StatusCompleted
+};
+
+enum SortedListWidgetRoles
+{
+    SortedListWidgetNicklistRole = Qt::UserRole+10,
+    SortedListWidgetStatusRole = Qt::UserRole+11
 };
 
 const int MAX_OPEN_CHANNELS = 30;
@@ -52,6 +66,11 @@ const int MAX_PUNISH_REASONS = 255;
 const int HOURS_IN_DAY = 24;
 const int MINUTES_IN_HOUR = 60;
 const int SECONDS_IN_MINUTE = 60;
+
+const int NOTICE_INFO = 100 | 0x070000;
+const int NOTICE_WARNING = 101 | 0x070000;
+const int NOTICE_ERROR = 102 | 0x070000;
+const int NOTICE_QUESTION = 103 | 0x070000;
 
 #define STATUS_WINDOW "Status"
 #define DEBUG_WINDOW "Debug"
@@ -75,11 +94,6 @@ const int SECONDS_IN_MINUTE = 60;
 #define PERMISSION_HALFOP "h"
 #define PERMISSION_BAN "b"
 #define PERMISSION_INVITE "I"
-
-const int NOTICE_INFO = 100 | 0x070000;
-const int NOTICE_WARNING = 101 | 0x070000;
-const int NOTICE_ERROR = 102 | 0x070000;
-const int NOTICE_QUESTION = 103 | 0x070000;
 
 struct OnetChannelList
 {
@@ -118,12 +132,6 @@ public:
     bool operator==(const QString& other) const {
         return toLower() == other.toLower();
     }
-};
-
-enum SortedListWidgetRoles
-{
-    SortedListWidgetNicklistRole = Qt::UserRole+10,
-    SortedListWidgetStatusRole = Qt::UserRole+11
 };
 
 class SortedListWidgetItem : public QListWidgetItem

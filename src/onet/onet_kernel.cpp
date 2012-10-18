@@ -1337,7 +1337,7 @@ void OnetKernel::raw_111n()
     QString strMe = Settings::instance()->get("nick");
 
     // set user info
-    if ((UserProfileModel::instance()->getNick() == strNick) && (!UserProfileModel::instance()->getReady()))
+    if ((UserProfileModel::instance()->getNick() == strNick) && (UserProfileModel::instance()->getStatus() != StatusCompleted))
         UserProfileModel::instance()->set(strKey, strValue);
 
     // set my profile
@@ -1360,7 +1360,7 @@ void OnetKernel::raw_112n()
     QString strNick = strDataList[4];
 
     if (UserProfileModel::instance()->getNick() == strNick)
-        UserProfileModel::instance()->setReady(true);
+        UserProfileModel::instance()->setStatus(StatusCompleted);
 }
 
 // NS FRIENDS
@@ -1485,7 +1485,7 @@ void OnetKernel::raw_151n()
     if (strNick.toLower() == "chanserv")
     {
         if (strDataList.size() < 4) return;
-        if (ChannelHomes::instance()->getReady()) return;
+        if (ChannelHomes::instance()->getStatus() == StatusCompleted) return;
 
         for (int i = 4; i < strDataList.size(); i++)
         {
@@ -1525,7 +1525,7 @@ void OnetKernel::raw_152n()
     {
         if (strDataList.size() < 4) return;
 
-        ChannelHomes::instance()->setReady(true);
+        ChannelHomes::instance()->setStatus(StatusCompleted);
     }
     else if (strNick.toLower() == "nickserv")
     {
@@ -1664,7 +1664,7 @@ void OnetKernel::raw_163n()
 
     strDT = QDateTime::fromTime_t(strDT.toInt()).toString("dd MMM yyyy hh:mm:ss");
 
-    if ((ChannelSettingsModel::instance()->getChannel() == strChannel) && (!ChannelSettingsModel::instance()->getReadyInfo()))
+    if ((ChannelSettingsModel::instance()->getChannel() == strChannel) && (ChannelSettingsModel::instance()->getStatusInfo() != StatusCompleted))
         ChannelSettingsModel::instance()->setPermission(strFlag, QString("%1;%2;%3;%4").arg(strNick, strWho, strDT, strIPNick));
 }
 
@@ -1677,7 +1677,7 @@ void OnetKernel::raw_164n()
     QString strChannel = strDataList[4];
 
     if (ChannelSettingsModel::instance()->getChannel() == strChannel)
-        ChannelSettingsModel::instance()->setReadyInfo(true);
+        ChannelSettingsModel::instance()->setStatusInfo(StatusCompleted);
 }
 
 // CS INFO #Relax
@@ -1744,7 +1744,7 @@ void OnetKernel::raw_175n()
         mKeyValue.insert(strKey, strValue);
     }
 
-    if ((ChannelSettingsModel::instance()->getChannel() == strChannel) && (!ChannelSettingsModel::instance()->getReadyStats()))
+    if ((ChannelSettingsModel::instance()->getChannel() == strChannel) && (ChannelSettingsModel::instance()->getStatusStats() != StatusCompleted))
     {
         QHashIterator <QString, QString> i(mKeyValue);
         while (i.hasNext())
@@ -1764,7 +1764,7 @@ void OnetKernel::raw_176n()
     QString strChannel = strDataList[4];
 
     if (ChannelSettingsModel::instance()->getChannel() == strChannel)
-        ChannelSettingsModel::instance()->setReadyStats(true);
+        ChannelSettingsModel::instance()->setStatusStats(StatusCompleted);
 }
 
 // NS SET city
@@ -2263,7 +2263,7 @@ void OnetKernel::raw_261n()
     else if (strNick.toLower() == "nickserv")
     {
         if (strDataList.size() < 4) return;
-        if (FindNick::instance()->getReady()) return;
+        if (FindNick::instance()->getStatus() == StatusCompleted) return;
 
         for (int i = 4; i < strDataList.size(); i++)
             FindNick::instance()->add(strDataList[i]);
@@ -2273,14 +2273,14 @@ void OnetKernel::raw_261n()
 // :NickServ!service@service.onet NOTICE Merovingian :262 aa :end of list
 void OnetKernel::raw_262n()
 {
-    FindNick::instance()->setReady(true);
+    FindNick::instance()->setStatus(StatusCompleted);
 }
 
 // NS LIST #scc
 // :NickServ!service@service.onet NOTICE Merovingian :263 #scc :no users found
 void OnetKernel::raw_263n()
 {
-    FindNick::instance()->setReady(true);
+    FindNick::instance()->setStatus(StatusCompleted);
 }
 
 // LUSERS
@@ -4053,7 +4053,7 @@ void OnetKernel::raw_819()
     for (int i = 3; i < strDataList.size(); i++) { if (i != 3) strChannelsString += " "; strChannelsString += strDataList[i]; }
     if (strChannelsString[0] == ':') strChannelsString.remove(0,1);
 
-    if (ChannelList::instance()->getReady())
+    if (ChannelList::instance()->getStatus() == StatusCompleted)
         return;
 
     QStringList strChannelsList = strChannelsString.split(",");
@@ -4116,7 +4116,7 @@ void OnetKernel::raw_819()
 // :cf1f3.onet 820 scc_test :End of simple channel list.
 void OnetKernel::raw_820()
 {
-    ChannelList::instance()->setReady(true);
+    ChannelList::instance()->setStatus(StatusCompleted);
     ChannelList::instance()->setTime(QDateTime::currentMSecsSinceEpoch());
 }
 

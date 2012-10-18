@@ -39,7 +39,7 @@ ChannelList::ChannelList()
 void ChannelList::clear()
 {
     lChannelList.clear();
-    bChannelListReady = false;
+    channelListStatus = StatusAwaiting;
     iChannelListTime = 0;
 }
 
@@ -63,12 +63,12 @@ qint64 ChannelList::getTime()
     return iChannelListTime;
 }
 
-void ChannelList::setReady(bool ready)
+void ChannelList::setStatus(ObjectStatus status)
 {
-    bChannelListReady = ready;
+    channelListStatus = status;
 }
 
-bool ChannelList::getReady()
+ObjectStatus ChannelList::getStatus()
 {
-    return bChannelListReady;
+    return channelListStatus;
 }

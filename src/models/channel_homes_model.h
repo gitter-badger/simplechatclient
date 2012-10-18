@@ -21,6 +21,7 @@
 #define CHANNEL_HOMES_MODEL_H
 
 #include <QObject>
+#include "defines.h"
 
 class ChannelHomes : public QObject
 {
@@ -34,12 +35,12 @@ public:
     void clear();
     void add(const QString &channel);
     QList<QString> get();
-    void setReady(bool ready);
-    bool getReady();
+    void setStatus(ObjectStatus status);
+    ObjectStatus getStatus();
 
 private:
     QList<QString> lChannelHomes;
-    bool bChannelHomesReady;
+    ObjectStatus channelHomesStatus;
 };
 
 #endif // CHANNEL_HOMES_MODEL_H

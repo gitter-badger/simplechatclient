@@ -20,8 +20,8 @@
 #ifndef CHANNEL_LIST_MODEL_H
 #define CHANNEL_LIST_MODEL_H
 
-#include "defines.h"
 #include <QObject>
+#include "defines.h"
 
 class ChannelList : public QObject
 {
@@ -37,13 +37,13 @@ public:
     QList<OnetChannelList> getAll();
     void setTime(qint64 time);
     qint64 getTime();
-    void setReady(bool ready);
-    bool getReady();
+    void setStatus(ObjectStatus status);
+    ObjectStatus getStatus();
 
 private:
     QList<OnetChannelList> lChannelList;
     qint64 iChannelListTime;
-    bool bChannelListReady;
+    ObjectStatus channelListStatus;
 };
 
 #endif // CHANNEL_LIST_MODEL_H

@@ -22,6 +22,7 @@
 
 #include <QHash>
 #include <QObject>
+#include "defines.h"
 
 class ChannelSettingsModel : public QObject
 {
@@ -45,25 +46,25 @@ public:
     void setPermission(const QString &key, const QString &value);
     bool containsPermission(const QString &key, const QString &value);
 
-    bool getReadyInfo();
-    void setReadyInfo(bool bReady);
+    void setStatusInfo(ObjectStatus status);
+    ObjectStatus getStatusInfo();
 
     QString getStats(const QString &key);
     QHash<QString,QString> getAllStats();
     void setStats(const QString &key, const QString &value);
 
-    bool getReadyStats();
-    void setReadyStats(bool bReady);
+    void setStatusStats(ObjectStatus status);
+    ObjectStatus getStatusStats();
 
 private:
     QString strChannel;
 
     QHash<QString,QString> lSettingsInfo;
     QMultiHash<QString,QString> lSettingsPermissions;
-    bool bReadyInfo;
+    ObjectStatus infoStatus;
 
     QHash<QString,QString> lSettingsStats;
-    bool bReadyStats;
+    ObjectStatus statsStatus;
 };
 
 #endif // CHANNEL_SETTINGS_MODEL_H
