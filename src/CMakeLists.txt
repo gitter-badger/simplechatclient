@@ -95,6 +95,7 @@ set (scc_SRCS
 	models/friends_model.cpp
 	models/ignore_model.cpp
 	models/moderation_model.cpp
+	models/my_avatar_model.cpp
 	models/my_profile_model.cpp
 	models/my_stats_model.cpp
 	models/settings.cpp
@@ -102,7 +103,6 @@ set (scc_SRCS
 	models/user_profile_model.cpp
 
 	onet/avatar_client.cpp
-	onet/my_avatar_model.cpp
 	onet/onet_auth.cpp
 	onet/onet_kernel.cpp
 	onet/onet_utils.cpp
@@ -248,6 +248,7 @@ set (scc_HDRS
 	common/replace.h
 	core/defines.h
 	debug/debug_block.h
+	models/my_avatar_model.h
 )
 
 # debug

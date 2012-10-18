@@ -68,13 +68,13 @@ SOURCES += src/common/commands.cpp \
     src/models/friends_model.cpp \
     src/models/ignore_model.cpp \
     src/models/moderation_model.cpp \
+    src/models/my_avatar_model.cpp \
     src/models/my_profile_model.cpp \
     src/models/my_stats_model.cpp \\
     src/models/settings.cpp \
     src/models/themes_model.cpp \
     src/models/user_profile_model.cpp \
     src/onet/avatar_client.cpp \
-    src/onet/my_avatar_model.cpp \
     src/onet/onet_auth.cpp \
     src/onet/onet_kernel.cpp \
     src/onet/onet_utils.cpp \	
@@ -173,13 +173,13 @@ HEADERS += src/common/commands.h \
     src/models/friends_model.h \
     src/models/ignore_model.h \
     src/models/moderation_model.h \
+    src/models/my_avatar_model.h \
     src/models/my_profile_model.h \
     src/models/my_stats_model.h \
     src/models/settings.h \
     src/models/themes_model.h \
     src/models/user_profile_model.h \
     src/onet/avatar_client.h \
-    src/onet/my_avatar_model.h \
     src/onet/onet_auth.h \
     src/onet/onet_kernel.h \
     src/onet/onet_utils.h \
