@@ -222,6 +222,18 @@
     <layout class="QHBoxLayout" name="horizontalLayout_23">
      <item>
       <widget class="QLabel" name="label_rank_current">
+       <property name="minimumSize">
+        <size>
+         <width>60</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>60</width>
+         <height>16777215</height>
+        </size>
+       </property>
        <property name="styleSheet">
         <string notr="true">font-weight:bold</string>
        </property>
@@ -261,6 +273,18 @@
      </item>
      <item>
       <widget class="QLabel" name="label_rank_next">
+       <property name="minimumSize">
+        <size>
+         <width>60</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>60</width>
+         <height>16777215</height>
+        </size>
+       </property>
        <property name="styleSheet">
         <string notr="true">font-weight:bold</string>
        </property>
