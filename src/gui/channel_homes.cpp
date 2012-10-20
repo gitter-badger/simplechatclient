@@ -64,7 +64,6 @@ void DlgChannelHomes::createGui()
 
 void DlgChannelHomes::createSignals()
 {
-    connect(ui.listWidget_channels, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(listClicked(QModelIndex)));
     connect(ui.listWidget_channels, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(itemClicked(QListWidgetItem*)));
     connect(ui.pushButton_create, SIGNAL(clicked()), this, SLOT(buttonCreate()));
     connect(ui.pushButton_remove, SIGNAL(clicked()), this, SLOT(buttonRemove()));
@@ -101,14 +100,6 @@ void DlgChannelHomes::refresh()
 
         ui.listWidget_channels->addItem(new QListWidgetItem(QIcon(strAvatar), strChannel));
     }
-}
-
-void DlgChannelHomes::listClicked(QModelIndex index)
-{
-    int i = index.row();
-    QString strChannel = ui.listWidget_channels->item(i)->text();
-
-    DlgChannelSettings(strChannel).exec();
 }
 
 void DlgChannelHomes::itemClicked(QListWidgetItem *)

@@ -37,7 +37,6 @@ private:
 
 private slots:
     void refresh();
-    void listClicked(QModelIndex index);
     void itemClicked(QListWidgetItem*);
     void buttonCreate();
     void buttonRemove();
