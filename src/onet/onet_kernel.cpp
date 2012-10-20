@@ -4038,7 +4038,6 @@ void OnetKernel::raw_817()
 // :cf1f3.onet 818 scc_test :Start of simple channels list.
 void OnetKernel::raw_818()
 {
-    ChannelList::instance()->clear();
 }
 
 // SLIST

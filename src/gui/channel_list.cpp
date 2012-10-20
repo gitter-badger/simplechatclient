@@ -112,7 +112,10 @@ void DlgChannelList::setDefaultValues()
     // need refresh
     qint64 iCheckRefresh = QDateTime::currentMSecsSinceEpoch() - ChannelList::instance()->getTime();
     if ((ChannelList::instance()->getStatus() == StatusCompleted) && (iCheckRefresh > 3600000)) // 3600
+    {
+        ChannelList::instance()->clear();
         Core::instance()->network->send("SLIST  R- 0 0 100 null");
+    }
 }
 
 void DlgChannelList::createSignals()

@@ -20,7 +20,6 @@ include (CheckIncludeFiles)
 # sub dir
 add_subdirectory (src)
 add_subdirectory (translations)
-add_subdirectory (tests)
 
 # configure
 configure_file (${CMAKE_SOURCE_DIR}/scc-config.h.cmake ${CMAKE_BINARY_DIR}/scc-config.h)
