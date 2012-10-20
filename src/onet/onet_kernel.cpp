@@ -564,23 +564,21 @@ void OnetKernel::raw_kick()
     for (int i = 4; i < strDataList.size(); i++) { if (i != 4) strReason += " "; strReason += strDataList[i]; }
     if (strReason[0] == ':') strReason.remove(0,1);
 
-    QString strDisplay = QString(tr("* %1 has been kicked from channel %2 by %3 Reason: %4")).arg(strNick, strChannel, strWho, strReason);
+    QString strMe = Settings::instance()->get("nick");
 
-    Message::instance()->showMessage(strChannel, strDisplay, MessageKick);
     Nicklist::instance()->delUser(strNick, strChannel);
 
-    QString strMe = Settings::instance()->get("nick");
-    if (strNick == strMe)
+    if (strNick != strMe)
     {
-        // reason
-        Convert::simpleConvert(strReason);
-
+        QString strDisplay = QString(tr("* %1 has been kicked from channel %2 by %3 Reason: %4")).arg(strNick, strChannel, strWho, strReason);
+        Message::instance()->showMessage(strChannel, strDisplay, MessageKick);
+    }
+    else
+    {
         QString strDisplay = QString(tr("* You have been kicked from channel %1 by %2 Reason: %3")).arg(strChannel, strWho, strReason);
 
-        if ((Core::instance()->mainWindow()->isActiveWindow()) || (Settings::instance()->get("tray_message") == "false"))
-            Message::instance()->showMessage(STATUS_WINDOW, strDisplay, MessageKick);
-        else
-            Tray::instance()->showMessage(strChannel, strDisplay);
+        Message::instance()->showMessage(strChannel, strDisplay, MessageKick);
+        Message::instance()->showMessage(STATUS_WINDOW, strDisplay, MessageKick);
 
         // channel info
         Channel::instance()->removeChannelInfo(strChannel);
