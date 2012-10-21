@@ -324,8 +324,8 @@ void MainWindow::init()
     // show welcome
     showWelcome();
 
-    // show options if config not exist
-    showOptions();
+    // first run - show options if config not exist
+    firstRun();
 }
 
 void MainWindow::showWelcome()
@@ -340,7 +340,7 @@ void MainWindow::showWelcome()
     Message::instance()->showMessage(STATUS_WINDOW, strWelcome, MessageDefault);
 }
 
-void MainWindow::showOptions()
+void MainWindow::firstRun()
 {
     QString strFirstRun = Settings::instance()->get("first_run");
 

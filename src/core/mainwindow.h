@@ -115,7 +115,7 @@ private:
     void createActions();
     void createMenus();
     void createSignals();
-    void showOptions();
+    void firstRun();
     void setTrayMenuVisible(bool visible);
 
 private slots:
