@@ -229,6 +229,20 @@ void NickListWidget::kickWithReason()
 {
     if (strSelectedNick.isEmpty()) return;
 
+    bool ok;
+    QString strText = QInputDialog::getText(this, tr("Kick From Channel"), tr("Reason for kicking:"), QLineEdit::Normal, tr("No reason"), &ok);
+    strText = strText.trimmed();
+
+    if ((ok) && (!strText.isEmpty()))
+    {
+        Core::instance()->network->send(QString("KICK %1 %2 :%3").arg(strChannel, strSelectedNick, strText));
+    }
+}
+
+void NickListWidget::kickWithSelectedReason()
+{
+    if (strSelectedNick.isEmpty()) return;
+
     QAction *action = qobject_cast<QAction *>(sender());
     if (action)
     {
@@ -244,7 +258,7 @@ void NickListWidget::ban()
     Core::instance()->network->send(QString("CS BAN %1 ADD %2").arg(strChannel, strSelectedNick));
 }
 
-void NickListWidget::kban()
+void NickListWidget::kbanWithReason()
 {
     if (strSelectedNick.isEmpty()) return;
 
@@ -256,6 +270,20 @@ void NickListWidget::kban()
     {
         Core::instance()->network->send(QString("CS BAN %1 ADD %2").arg(strChannel, strSelectedNick));
         Core::instance()->network->send(QString("KICK %1 %2 :%3").arg(strChannel, strSelectedNick, strText));
+    }
+}
+
+void NickListWidget::kbanWithSelectedReason()
+{
+    if (strSelectedNick.isEmpty()) return;
+
+    QAction *action = qobject_cast<QAction *>(sender());
+    if (action)
+    {
+        QString strPunishReason = action->data().toString();
+
+        Core::instance()->network->send(QString("CS BAN %1 ADD %2").arg(strChannel, strSelectedNick));
+        Core::instance()->network->send(QString("KICK %1 %2 :%3").arg(strChannel, strSelectedNick, strPunishReason));
     }
 }
 
@@ -344,10 +372,10 @@ void NickListWidget::contextMenuEvent(QContextMenuEvent *e)
     QString strSelfModes = Nicklist::instance()->getUserModes(strMe, strChannel);
     int iSelfMaxModes = Nicklist::instance()->getUserMaxModes(strSelfModes);
     QString strNickModes = Nicklist::instance()->getUserModes(strSelectedNick, strChannel);
+    QList<QString> lPunishReasons = PunishReason::instance()->get();
 
     QMenu *mInvite = new QMenu(tr("Invite"));
     mInvite->setIcon(QIcon(":/images/oxygen/16x16/legalmoves.png"));
-
     QList<QString> lChannelsCleared = Channel::instance()->getCleared();
     for (int i = 0; i < lChannelsCleared.size(); ++i)
     {
@@ -368,21 +396,40 @@ void NickListWidget::contextMenuEvent(QContextMenuEvent *e)
 
     QMenu *mKick = new QMenu(tr("Kick From Channel"));
     mKick->setIcon(QIcon(":/images/oxygen/16x16/im-kick-user.png"));
-
-    QList<QString> lPunishReasons = PunishReason::instance()->get();
+    mKick->addAction(QIcon(":/images/oxygen/16x16/view-conversation-balloon.png"), tr("(reason)"), this, SLOT(kickWithReason()));
+    if (!lPunishReasons.isEmpty()) mKick->addSeparator();
     for (int i = 0; i < lPunishReasons.size(); ++i)
     {
         QString strPunishReasons = lPunishReasons[i];
 
-        punishReasonActs[i] = new QAction(this);
-        punishReasonActs[i]->setIcon(QIcon(":/images/oxygen/16x16/view-conversation-balloon.png"));
-        punishReasonActs[i]->setVisible(false);
-        punishReasonActs[i]->setText(strPunishReasons);
-        punishReasonActs[i]->setData(lPunishReasons[i]);
-        punishReasonActs[i]->setVisible(true);
+        kickReasonAct[i] = new QAction(this);
+        kickReasonAct[i]->setIcon(QIcon(":/images/oxygen/16x16/view-conversation-balloon.png"));
+        kickReasonAct[i]->setVisible(false);
+        kickReasonAct[i]->setText(strPunishReasons);
+        kickReasonAct[i]->setData(lPunishReasons[i]);
+        kickReasonAct[i]->setVisible(true);
 
-        connect(punishReasonActs[i], SIGNAL(triggered()), this, SLOT(kickWithReason()));
-        mKick->addAction(punishReasonActs[i]);
+        connect(kickReasonAct[i], SIGNAL(triggered()), this, SLOT(kickWithSelectedReason()));
+        mKick->addAction(kickReasonAct[i]);
+    }
+
+    QMenu *mKickAndBan = new QMenu(tr("Kick & Ban"));
+    mKickAndBan->setIcon(QIcon(":/images/oxygen/16x16/im-ban-kick-user.png"));
+    mKickAndBan->addAction(QIcon(":/images/oxygen/16x16/view-conversation-balloon.png"), tr("(reason)"), this, SLOT(kbanWithReason()));
+    if (!lPunishReasons.isEmpty()) mKickAndBan->addSeparator();
+    for (int i = 0; i < lPunishReasons.size(); ++i)
+    {
+        QString strPunishReasons = lPunishReasons[i];
+
+        kbanReasonAct[i] = new QAction(this);
+        kbanReasonAct[i]->setIcon(QIcon(":/images/oxygen/16x16/view-conversation-balloon.png"));
+        kbanReasonAct[i]->setVisible(false);
+        kbanReasonAct[i]->setText(strPunishReasons);
+        kbanReasonAct[i]->setData(lPunishReasons[i]);
+        kbanReasonAct[i]->setVisible(true);
+
+        connect(kbanReasonAct[i], SIGNAL(triggered()), this, SLOT(kbanWithSelectedReason()));
+        mKickAndBan->addAction(kbanReasonAct[i]);
     }
 
     QMenu *friends = new QMenu(tr("Friends list"));
@@ -449,7 +496,7 @@ void NickListWidget::contextMenuEvent(QContextMenuEvent *e)
         menu->addAction(QIcon(":/images/oxygen/16x16/im-kick-user.png"), tr("Kick From Channel"), this, SLOT(kick()));
         menu->addMenu(mKick);
         menu->addAction(QIcon(":/images/oxygen/16x16/im-ban-user.png"), tr("Ban From Channel"), this, SLOT(ban()));
-        menu->addAction(QIcon(":/images/oxygen/16x16/im-ban-kick-user.png"), tr("Kick & Ban"), this, SLOT(kban()));
+        menu->addMenu(mKickAndBan);
         menu->addAction(QIcon(":/images/oxygen/16x16/im-user-busy.png"), tr("IP Ban"), this, SLOT(ipban()));
     }
     if (!privilege->isEmpty())

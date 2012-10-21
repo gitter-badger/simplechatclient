@@ -42,7 +42,8 @@ private:
     // other
     QString strChannel;
     QAction *openChannelsActs[MAX_OPEN_CHANNELS];
-    QAction *punishReasonActs[MAX_PUNISH_REASONS];
+    QAction *kickReasonAct[MAX_PUNISH_REASONS];
+    QAction *kbanReasonAct[MAX_PUNISH_REASONS];
     QString strSelectedNick;
     enum NickListRoles
     {
@@ -63,8 +64,10 @@ private slots:
     void ignoreDel();
     void kick();
     void kickWithReason();
+    void kickWithSelectedReason();
     void ban();
-    void kban();
+    void kbanWithReason();
+    void kbanWithSelectedReason();
     void ipban();
     void opAdd();
     void opDel();

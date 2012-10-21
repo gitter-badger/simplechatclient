@@ -140,7 +140,7 @@
     </message>
     <message>
         <source>Ban From Channel</source>
-        <translation>Cichy ban</translation>
+        <translation>Banuj</translation>
     </message>
     <message>
         <source>Kick &amp; Ban</source>
@@ -153,6 +153,10 @@
     <message>
         <source>Reason for kicking:</source>
         <translation>Podaj powód wyrzucenia:</translation>
+    </message>
+    <message>
+        <source>(reason)</source>
+        <translation>(powód wyrzucenia)</translation>
     </message>
     <message>
         <source>Send to notes</source>
@@ -2116,14 +2120,6 @@
 <context>
     <name>NickListWidget</name>
     <message>
-        <source>Reason for kicking:</source>
-        <translation>Podaj powód wyrzucenia:</translation>
-    </message>
-    <message>
-        <source>No reason</source>
-        <translation>Zachowuj się! Byle jak ale się zachowuj!</translation>
-    </message>
-    <message>
         <source>Invite</source>
         <translation>Zaproś</translation>
     </message>
@@ -2209,7 +2205,7 @@
     </message>
     <message>
         <source>Ban From Channel</source>
-        <translation>Cichy ban</translation>
+        <translation>Banuj</translation>
     </message>
     <message>
         <source>Kick &amp; Ban</source>
@@ -2218,6 +2214,18 @@
     <message>
         <source>IP Ban</source>
         <translation>Banuj IP</translation>
+    </message>
+    <message>
+        <source>Reason for kicking:</source>
+        <translation>Podaj powód wyrzucenia:</translation>
+    </message>
+    <message>
+        <source>(reason)</source>
+        <translation>(powód wyrzucenia)</translation>
+    </message>
+    <message>
+        <source>No reason</source>
+        <translation>Zachowuj się! Byle jak ale się zachowuj!</translation>
     </message>
 </context>
 <context>
