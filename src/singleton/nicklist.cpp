@@ -64,6 +64,9 @@ void Nicklist::delUser(const QString &strNick, const QString &strChannel)
         Core::instance()->tw[strChannel]->pNickListWidget->delUser(strNick);
         Core::instance()->tw[strChannel]->users->setText(QString(tr("Users (%1)").arg(Core::instance()->tw[strChannel]->pNickListWidget->count())));
     }
+
+    // avatar
+    // TODO
 }
 
 void Nicklist::renameUser(const QString &strNick, const QString &strNewNick, const QString &strDisplay)
@@ -81,6 +84,13 @@ void Nicklist::renameUser(const QString &strNick, const QString &strNewNick, con
             Message::instance()->showMessage(strChannel, strDisplay, eMessageCategory);
             Core::instance()->tw[strChannel]->pNickListWidget->renameUser(strNick, strNewNick);
         }
+    }
+
+    // avatar
+    if (lAvatar.contains(strNick))
+    {
+        lAvatar[strNewNick] = lAvatar[strNick];
+        lAvatar.remove(strNick);
     }
 }
 
@@ -101,6 +111,9 @@ void Nicklist::quitUser(const QString &strNick, const QString &strDisplay)
             Core::instance()->tw[strChannel]->users->setText(QString(tr("Users (%1)").arg(Core::instance()->tw[strChannel]->pNickListWidget->count())));
         }
     }
+
+    // avatar
+    lAvatar.remove(strNick);
 }
 
 void Nicklist::changeFlag(const QString &strNick, const QString &strChannel, const QString &strFlag)
@@ -146,6 +159,18 @@ void Nicklist::clearAllNicklist()
 
 void Nicklist::setUserAvatar(const QString &strNick, const QString &strValue)
 {
+    lAvatar[strNick] = strValue;
+
+    updateUserAvatar(strNick, strValue);
+}
+
+QString Nicklist::getUserAvatar(const QString &strNick)
+{
+    return lAvatar.value(strNick, QString::null);
+}
+
+void Nicklist::updateUserAvatar(const QString &strNick, const QString &strValue)
+{
     QHashIterator<QString, TabWidget*> i(Core::instance()->tw);
     while (i.hasNext())
     {
@@ -155,20 +180,6 @@ void Nicklist::setUserAvatar(const QString &strNick, const QString &strValue)
         if (Core::instance()->tw[strChannel]->pNickListWidget->existUser(strNick))
             Core::instance()->tw[strChannel]->pNickListWidget->setUserAvatar(strNick, strValue);
     }
-}
-
-QString Nicklist::getUserAvatar(const QString &strNick)
-{
-    QHashIterator<QString, TabWidget*> i(Core::instance()->tw);
-    while (i.hasNext())
-    {
-        i.next();
-        QString strChannel = i.key();
-
-        if (Core::instance()->tw[strChannel]->pNickListWidget->existUser(strNick))
-            return Core::instance()->tw[strChannel]->pNickListWidget->getUserAvatar(strNick);
-    }
-    return QString::null;
 }
 
 QString Nicklist::getUserModes(const QString &strNick, const QString &strChannel)

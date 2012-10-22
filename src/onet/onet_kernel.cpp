@@ -428,7 +428,7 @@ void OnetKernel::raw_join()
     Nicklist::instance()->addUser(strNick, strChannel, strSuffix);
 
     // nick avatar
-    if ((!strNick.startsWith('~')) && (ThemesModel::instance()->isCurrentWithAvatar()))
+    if ((!strNick.startsWith('~')) && (ThemesModel::instance()->isCurrentWithAvatar()) && (Nicklist::instance()->getUserAvatar(strNick) == QString::null))
     {
         Core::instance()->network->send(QString("NS INFO %1 s").arg(strNick));
     }
@@ -1343,7 +1343,7 @@ void OnetKernel::raw_111n()
         MyProfileModel::instance()->set(strKey, strValue);
 
     // get avatar
-    if ((strKey == "avatar") && (!strValue.isEmpty()) && (ThemesModel::instance()->isCurrentWithAvatar()))
+    if ((strKey == "avatar") && (!strValue.isEmpty()) && (ThemesModel::instance()->isCurrentWithAvatar()) && (Nicklist::instance()->getUserAvatar(strNick) == QString::null))
     {
         Avatar::instance()->get(strNick, "nick", strValue);
     }
@@ -1617,7 +1617,7 @@ void OnetKernel::raw_161n()
 
     // avatar
     QString strAvatarUrl = mKeyValue.value("avatar");
-    if (!strAvatarUrl.isEmpty())
+    if ((!strAvatarUrl.isEmpty()) && (Channel::instance()->getAvatar(strChannel) == QString::null))
         Avatar::instance()->get(strChannel, "channel", strAvatarUrl);
 }
 
@@ -2747,10 +2747,9 @@ void OnetKernel::raw_353()
             Nicklist::instance()->addUser(strCleanNick, strChannel, strModes);
 
             // nick avatar
-            if (!strCleanNick.startsWith('~'))
+            if ((!strCleanNick.startsWith('~')) && (ThemesModel::instance()->isCurrentWithAvatar()) && (Nicklist::instance()->getUserAvatar(strCleanNick) == QString::null))
             {
-                if (ThemesModel::instance()->isCurrentWithAvatar()) // with avatars
-                    Core::instance()->network->send(QString("NS INFO %1 s").arg(strCleanNick));
+                Core::instance()->network->send(QString("NS INFO %1 s").arg(strCleanNick));
             }
         }
     }

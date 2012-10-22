@@ -28,6 +28,8 @@
 #ifdef Q_WS_WIN
     #include <QCoreApplication>
     #include <QDesktopServices>
+#else
+    #include "scc-config.h"
 #endif
 
 Avatar * Avatar::Instance = 0;

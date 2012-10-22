@@ -54,7 +54,7 @@ void NickListWidget::addUser(const QString &strNick, QString strModes)
     item->setData(SortedListWidgetNicklistRole, true); // is nicklist
     item->setData(SortedListWidgetStatusRole, Nicklist::instance()->getUserMaxModes(strModes)); // max modes
     item->setData(NickListModesRole, strModes); // modes
-    item->setData(NickListAvatarUrlRole, QVariant()); // avatar url
+    item->setData(NickListAvatarUrlRole, Nicklist::instance()->getUserAvatar(strNick)); // avatar url
 
     this->addItem(item);
 }

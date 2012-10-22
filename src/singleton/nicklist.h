@@ -20,6 +20,7 @@
 #ifndef NICKLIST_H
 #define NICKLIST_H
 
+#include <QHash>
 #include <QObject>
 
 class Nicklist : public QObject
@@ -42,6 +43,11 @@ public:
     QString getUserAvatar(const QString &strNick);
     QString getUserModes(const QString &strNick, const QString &strChannel);
     int getUserMaxModes(const QString &strModes);
+
+private:
+    QHash<QString,QString> lAvatar;
+
+    void updateUserAvatar(const QString &strNick, const QString &strValue);
 };
 
 #endif // NICKLIST_H
