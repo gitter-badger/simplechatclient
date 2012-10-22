@@ -77,6 +77,7 @@ DlgUserProfile::~DlgUserProfile()
 void DlgUserProfile::createGui()
 {
     toolButton_zoom = new QToolButton();
+    toolButton_zoom->setEnabled(false);
     toolLayout = new QVBoxLayout();
     toolLayout->setMargin(0);
     toolLayout->addStretch();
