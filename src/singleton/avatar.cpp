@@ -26,9 +26,9 @@
 #include "settings.h"
 
 #ifdef Q_WS_WIN
+    #include <QCoreApplication>
     #include <QDesktopServices>
 #endif
-
 
 Avatar * Avatar::Instance = 0;
 
@@ -105,6 +105,16 @@ void Avatar::updateAvatar(const QString &strCategory, const QString &strNickOrCh
     }
 }
 
+void Avatar::saveAvatar(const QString &strAvatarPath, const QByteArray &bAvatar)
+{
+    QFile f(strAvatarPath);
+    if (f.open(QIODevice::WriteOnly))
+    {
+        f.write(bAvatar);
+        f.close();
+    }
+}
+
 QString Avatar::getAvatarPath(const QString &strAvatar)
 {
     QString strCurrentProfile = Settings::instance()->get("current_profile");
@@ -125,12 +135,14 @@ QString Avatar::getAvatarPath(const QString &strAvatar)
     return path+strAvatar;
 }
 
-void Avatar::saveAvatar(const QString &strAvatarPath, const QByteArray &bAvatar)
+QString Avatar::getEmptyUserAvatar()
 {
-    QFile f(strAvatarPath);
-    if (f.open(QIODevice::WriteOnly))
-    {
-        f.write(bAvatar);
-        f.close();
-    }
+    QString path;
+#ifdef Q_WS_WIN
+    path = QCoreApplication::applicationDirPath();
+#else
+    path = SCC_DATA_DIR;
+#endif
+
+    return path+"/images/user_avatar.png";
 }

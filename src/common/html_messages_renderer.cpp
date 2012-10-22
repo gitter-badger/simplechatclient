@@ -145,7 +145,7 @@ QString HtmlMessagesRenderer::renderer(QString strData, MessageCategory eMessage
             if (!strUserAvatar.isEmpty())
                 strUserAvatar = Avatar::instance()->getAvatarPath(strUserAvatar);
             else
-                strUserAvatar = Nicklist::instance()->getEmptyUserAvatar();
+                strUserAvatar = Avatar::instance()->getEmptyUserAvatar();
 
 #ifndef Q_WS_WIN
             strUserAvatar = "file://"+strUserAvatar;

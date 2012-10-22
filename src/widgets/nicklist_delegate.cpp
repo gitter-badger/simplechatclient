@@ -21,7 +21,6 @@
 #include "avatar.h"
 #include "core.h"
 #include "defines.h"
-#include "nicklist.h"
 #include "settings.h"
 #include "themes_model.h"
 #include "nicklist_delegate.h"
@@ -105,7 +104,7 @@ void NickListDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opti
         if (!userAvatar.isEmpty())
             userAvatar = Avatar::instance()->getAvatarPath(userAvatar);
         else
-            userAvatar = Nicklist::instance()->getEmptyUserAvatar();
+            userAvatar = Avatar::instance()->getEmptyUserAvatar();
 
         QIcon avatar(userAvatar);
 
