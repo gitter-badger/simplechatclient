@@ -41,9 +41,7 @@ public:
     void clearAllNicklist();
     void setUserAvatar(const QString &strNick, const QString &strValue);
     QString getUserAvatar(const QString &strNick);
-    int getUserCount(const QString &strChannel);
     QString getUserModes(const QString &strNick, const QString &strChannel);
-    QList<QString> getUserList(const QString &strChannel);
 };
 
 #endif // NICKLIST_H

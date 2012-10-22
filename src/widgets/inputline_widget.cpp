@@ -22,7 +22,6 @@
 #include "channel.h"
 #include "core.h"
 #include "mainwindow.h"
-#include "nicklist.h"
 #include "inputline_widget.h"
 
 InputLineWidget::InputLineWidget(QWidget *parent) : QLineEdit(parent), index(0), strLastWord(QString::null), iLastMessage(-1), iLastMessageLimit(30)
@@ -110,7 +109,7 @@ bool InputLineWidget::event(QEvent *e)
     {
         iLastMessage = -1;
 
-        QList<QString> usersList = Nicklist::instance()->getUserList(Channel::instance()->getCurrent());
+        QList<QString> usersList = Channel::instance()->getUserList(Channel::instance()->getCurrent());
 
         if (usersList.size() == 0)
             return true;

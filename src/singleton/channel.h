@@ -59,6 +59,9 @@ public:
     void setPriv(const QString &channel, const QString &name);
     QString getPriv(const QString &channel);
     bool containsPriv(const QString &channel);
+    // users
+    QList<QString> getUserList(const QString &strChannel);
+    int getUserCount(const QString &strChannel);
 
 private:
     QList<QString> lChannels;

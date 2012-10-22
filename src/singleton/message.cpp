@@ -24,7 +24,6 @@
 #include "highlight.h"
 #include "log.h"
 #include "mainwindow.h"
-#include "nicklist.h"
 #include "settings.h"
 #include "sound_notify.h"
 #include "tray.h"
@@ -94,7 +93,7 @@ bool Message::isHideJoinPart(const QString &strChannel, MessageCategory eMessage
         if (Settings::instance()->get("hide_join_part") == "true")
             return true;
 
-        int iNickCount = Nicklist::instance()->getUserCount(strChannel);
+        int iNickCount = Channel::instance()->getUserCount(strChannel);
         if ((Settings::instance()->get("hide_join_part_200") == "true") && (iNickCount > 200))
             return true;
     }

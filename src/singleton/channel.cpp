@@ -21,6 +21,7 @@
 #include "core.h"
 #include "convert.h"
 #include "mainwindow.h"
+#include "nicklist_widget.h"
 #include "channel.h"
 
 Channel * Channel::Instance = 0;
@@ -201,4 +202,22 @@ QString Channel::getPriv(const QString &channel)
 bool Channel::containsPriv(const QString &channel)
 {
     return lPriv.contains(channel);
+}
+
+QList<QString> Channel::getUserList(const QString &strChannel)
+{
+    QList<QString> userList;
+
+    if (Core::instance()->tw.contains(strChannel))
+        userList = Core::instance()->tw[strChannel]->pNickListWidget->getUserList();
+
+    return userList;
+}
+
+int Channel::getUserCount(const QString &strChannel)
+{
+    if (Core::instance()->tw.contains(strChannel))
+        return Core::instance()->tw[strChannel]->pNickListWidget->count();
+    else
+        return 0;
 }

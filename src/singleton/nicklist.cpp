@@ -185,28 +185,10 @@ QString Nicklist::getUserAvatar(const QString &strNick)
     return QString::null;
 }
 
-int Nicklist::getUserCount(const QString &strChannel)
-{
-    if (Core::instance()->tw.contains(strChannel))
-        return Core::instance()->tw[strChannel]->pNickListWidget->count();
-    else
-        return 0;
-}
-
 QString Nicklist::getUserModes(const QString &strNick, const QString &strChannel)
 {
     if ((Core::instance()->tw.contains(strChannel)) && (Core::instance()->tw[strChannel]->pNickListWidget->existUser(strNick)))
         return Core::instance()->tw[strChannel]->pNickListWidget->getUserModes(strNick);
     else
         return QString::null;
-}
-
-QList<QString> Nicklist::getUserList(const QString &strChannel)
-{
-    QList<QString> userList;
-
-    if (Core::instance()->tw.contains(strChannel))
-        userList = Core::instance()->tw[strChannel]->pNickListWidget->getUserList();
-
-    return userList;
 }
