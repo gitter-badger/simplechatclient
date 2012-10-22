@@ -31,7 +31,6 @@ public:
     static Nicklist *instance();
 
     Nicklist();
-    int getUserMaxModes(const QString &strModes);
     void addUser(const QString &strNick, const QString &strChannel, const QString &strModes);
     void delUser(const QString &strNick, const QString &strChannel);
     void renameUser(const QString &strNick, const QString &strNewNick, const QString &strDisplay);
@@ -42,6 +41,7 @@ public:
     void setUserAvatar(const QString &strNick, const QString &strValue);
     QString getUserAvatar(const QString &strNick);
     QString getUserModes(const QString &strNick, const QString &strChannel);
+    int getUserMaxModes(const QString &strModes);
 };
 
 #endif // NICKLIST_H

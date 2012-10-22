@@ -42,20 +42,6 @@ Nicklist::Nicklist()
 {
 }
 
-int Nicklist::getUserMaxModes(const QString &strModes)
-{
-    if (strModes.contains(FLAG_DEV)) { return 64; }
-    if (strModes.contains(FLAG_ADMIN)) { return 32; }
-    if (strModes.contains(FLAG_OWNER)) { return 16; }
-    if (strModes.contains(FLAG_OP)) { return 8; }
-    if (strModes.contains(FLAG_HALFOP)) { return 4; }
-    if (strModes.contains(FLAG_MOD)) { return 2; }
-    if (strModes.contains(FLAG_SCREENER)) { return 1; }
-    if (strModes.contains(FLAG_VOICE)) { return 0; }
-
-    return -1;
-}
-
 void Nicklist::addUser(const QString &strNick, const QString &strChannel, const QString &strModes)
 {
     if (!Core::instance()->tw.contains(strChannel))
@@ -191,4 +177,18 @@ QString Nicklist::getUserModes(const QString &strNick, const QString &strChannel
         return Core::instance()->tw[strChannel]->pNickListWidget->getUserModes(strNick);
     else
         return QString::null;
+}
+
+int Nicklist::getUserMaxModes(const QString &strModes)
+{
+    if (strModes.contains(FLAG_DEV)) { return 64; }
+    if (strModes.contains(FLAG_ADMIN)) { return 32; }
+    if (strModes.contains(FLAG_OWNER)) { return 16; }
+    if (strModes.contains(FLAG_OP)) { return 8; }
+    if (strModes.contains(FLAG_HALFOP)) { return 4; }
+    if (strModes.contains(FLAG_MOD)) { return 2; }
+    if (strModes.contains(FLAG_SCREENER)) { return 1; }
+    if (strModes.contains(FLAG_VOICE)) { return 0; }
+
+    return -1;
 }
