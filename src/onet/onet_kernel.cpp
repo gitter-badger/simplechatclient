@@ -1343,9 +1343,13 @@ void OnetKernel::raw_111n()
         MyProfileModel::instance()->set(strKey, strValue);
 
     // get avatar
-    if ((strKey == "avatar") && (!strValue.isEmpty()) && (ThemesModel::instance()->isCurrentWithAvatar()) && (Nicklist::instance()->getUserAvatar(strNick) == QString::null))
+    if ((strKey == "avatar") && (!strValue.isEmpty()) && (ThemesModel::instance()->isCurrentWithAvatar()))
     {
-        Avatar::instance()->get(strNick, "nick", strValue);
+        QString strAvatar = Nicklist::instance()->getUserAvatar(strNick);
+        if (strAvatar.isEmpty())
+            Avatar::instance()->get(strNick, "nick", strValue);
+        else
+            Nicklist::instance()->setUserAvatar(strNick, strAvatar);
     }
 }
 
@@ -1617,8 +1621,14 @@ void OnetKernel::raw_161n()
 
     // avatar
     QString strAvatarUrl = mKeyValue.value("avatar");
-    if ((!strAvatarUrl.isEmpty()) && (Channel::instance()->getAvatar(strChannel) == QString::null))
-        Avatar::instance()->get(strChannel, "channel", strAvatarUrl);
+    if (!strAvatarUrl.isEmpty())
+    {
+        QString strAvatar = Channel::instance()->getAvatar(strChannel);
+        if (strAvatar.isEmpty())
+            Avatar::instance()->get(strChannel, "channel", strAvatarUrl);
+        else
+            Channel::instance()->setAvatar(strChannel, strAvatar);
+    }
 }
 
 // CS INFO #lunar
