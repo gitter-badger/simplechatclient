@@ -42,7 +42,7 @@ void Nick::clear()
 {
     lNicks.clear();
 }
-#include <QDebug>
+
 void Nick::add(const QString &strNick, const QString &strChannel, QString strModes)
 {
     if ((strModes.contains(FLAG_OWNER)) && (strModes.contains(FLAG_OP))) strModes.remove(FLAG_OP);
@@ -52,7 +52,6 @@ void Nick::add(const QString &strNick, const QString &strChannel, QString strMod
     {
         if (lNicks[strNick].channels.contains(strChannel)) return;
 
-qDebug() << strNick << " user exist on channels:" << lNicks[strNick].channels;
         lNicks[strNick].channels.append(strChannel);
         lNicks[strNick].channel_modes[strChannel] = strModes;
         lNicks[strNick].channel_max_modes[strChannel] = iMaxModes;
@@ -61,7 +60,6 @@ qDebug() << strNick << " user exist on channels:" << lNicks[strNick].channels;
     }
     else
     {
-qDebug() << strNick << " user not exist";
         OnetNick nick;
         nick.avatar = QString::null;
         nick.channels.append(strChannel);
@@ -77,7 +75,7 @@ qDebug() << strNick << " user not exist";
 void Nick::remove(const QString &strNick, const QString &strChannel)
 {
     if (!lNicks.contains(strNick)) return;
-qDebug() << strNick << " deleting nick";
+
     Nicklist::instance()->delUser(strNick, strChannel);
 
     lNicks[strNick].channels.removeOne(strChannel);
@@ -85,17 +83,11 @@ qDebug() << strNick << " deleting nick";
     lNicks[strNick].channel_max_modes.remove(strChannel);
 
     if (lNicks[strNick].channels.count() == 0)
-    {
-qDebug() << strNick << " zero channels - removing";
         lNicks.remove(strNick);
-    }
 
     QString strMe = Settings::instance()->get("nick");
     if (strNick == strMe)
-    {
-qDebug() << "removing from all channel: " << strChannel;
         removeFromChannel(strChannel);
-    }
 }
 
 void Nick::removeFromChannel(const QString &strChannel)
@@ -109,16 +101,12 @@ void Nick::removeFromChannel(const QString &strChannel)
 
         if (lNicks[strNick].channels.contains(strChannel))
         {
-qDebug() << "removing: " << strNick;
             lNicks[strNick].channels.removeOne(strChannel);
             lNicks[strNick].channel_modes.remove(strChannel);
             lNicks[strNick].channel_max_modes.remove(strChannel);
 
             if (lNicks[strNick].channels.size() == 0)
-            {
-qDebug() << strNick << " zero channels - removing";
                 lNicks.remove(strNick);
-            }
         }
     }
 }
@@ -136,7 +124,6 @@ void Nick::rename(const QString &strNick, const QString &strNewNick, const QStri
 void Nick::quit(const QString &strNick, const QString &strDisplay)
 {
     if (!lNicks.contains(strNick)) return;
-qDebug() << strNick << " quiting nick - removing";
 
     QList<QString> lChannels = lNicks[strNick].channels;
     Nicklist::instance()->quitUser(strNick, lChannels, strDisplay);
@@ -145,7 +132,6 @@ qDebug() << strNick << " quiting nick - removing";
     QString strMe = Settings::instance()->get("nick");
     if (strNick == strMe)
     {
-qDebug() << "removing from all channels: " << lChannels;
         foreach (QString strChannel, lChannels)
             removeFromChannel(strChannel);
     }
@@ -154,7 +140,7 @@ qDebug() << "removing from all channels: " << lChannels;
 void Nick::changeFlag(const QString &strNick, const QString &strChannel, QString strFlag)
 {
     if (!lNicks.contains(strNick)) return;
-qDebug() << strNick << " change flag: " << strFlag << " channel: " << strChannel;
+
     QString strModes = lNicks[strNick].channel_modes.value(strChannel, QString::null);
     QString plusminus = strFlag.at(0);
     strFlag.remove(0, 1);
@@ -202,7 +188,7 @@ void Nick::changeFlag(const QString &strNick, const QString &strFlag)
 void Nick::setAvatar(const QString &strNick, const QString &strAvatar)
 {
     if (!lNicks.contains(strNick)) return;
-qDebug() << strNick << " set avatar: " << strAvatar;
+
     Nicklist::instance()->setUserAvatar(strNick, lNicks[strNick].channels, strAvatar);
 
     lNicks[strNick].avatar = strAvatar;

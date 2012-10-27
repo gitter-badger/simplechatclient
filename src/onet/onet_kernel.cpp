@@ -427,7 +427,6 @@ void OnetKernel::raw_join()
     // nick
     Nick::instance()->add(strNick, strChannel, strSuffix);
 
-qDebug() << strNick << " user avatar:" << Nick::instance()->getAvatar(strNick);
     // nick avatar
     if ((!strNick.startsWith('~')) && (ThemesModel::instance()->isCurrentWithAvatar()) && (Nick::instance()->getAvatar(strNick).isEmpty()))
     {
@@ -2758,7 +2757,6 @@ void OnetKernel::raw_353()
             Nick::instance()->add(strCleanNick, strChannel, strModes);
 
             // nick avatar
-qDebug() << strCleanNick << " user avatar:" << Nick::instance()->getAvatar(strCleanNick);
             if ((!strCleanNick.startsWith('~')) && (ThemesModel::instance()->isCurrentWithAvatar()) && (Nick::instance()->getAvatar(strCleanNick).isEmpty()))
             {
                 Core::instance()->network->send(QString("NS INFO %1 s").arg(strCleanNick));
