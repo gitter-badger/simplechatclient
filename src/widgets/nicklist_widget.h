@@ -49,7 +49,6 @@ private:
     };
 
     bool existUser(const QString &strNick);
-    void convertFlag(QString &strFlag);
 
 private slots:
     void priv();

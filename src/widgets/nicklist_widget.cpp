@@ -108,15 +108,6 @@ bool NickListWidget::existUser(const QString &strNick)
         return true;
 }
 
-void NickListWidget::convertFlag(QString &strFlag)
-{
-    QString strConvertFrom = "qaohXYv";
-    QString strConvertTo = "`&@%!=+";
-
-    for (int i = 0; i < strConvertFrom.size(); i++)
-        strFlag.replace(strConvertFrom.at(i), strConvertTo.at(i));
-}
-
 void NickListWidget::priv()
 {
     if (strSelectedNick.isEmpty()) return;
