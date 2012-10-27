@@ -105,17 +105,19 @@ void Nick::removeFromChannel(const QString &strChannel)
     {
         i.next();
 
-        if (i.value().channels.contains(strChannel))
-        {
-qDebug() << "removing: " << i.key();
-            i.value().channels.removeOne(strChannel);
-            i.value().channel_modes.remove(strChannel);
-            i.value().channel_max_modes.remove(strChannel);
+        QString strNick = i.key();
 
-            if (i.value().channels.size() == 0)
+        if (lNicks[strNick].channels.contains(strChannel))
+        {
+qDebug() << "removing: " << strNick;
+            lNicks[strNick].channels.removeOne(strChannel);
+            lNicks[strNick].channel_modes.remove(strChannel);
+            lNicks[strNick].channel_max_modes.remove(strChannel);
+
+            if (lNicks[strNick].channels.size() == 0)
             {
-qDebug() << i.key() << " zero channels - removing";
-                lNicks.remove(i.key());
+qDebug() << strNick << " zero channels - removing";
+                lNicks.remove(strNick);
             }
         }
     }
