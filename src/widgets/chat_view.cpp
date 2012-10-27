@@ -32,7 +32,7 @@
 #include "html_messages_renderer.h"
 #include "ignore_model.h"
 #include "notes_model.h"
-#include "nicklist.h"
+#include "nick.h"
 #include "punish_reason.h"
 #include "settings.h"
 #include "user_profile.h"
@@ -342,9 +342,9 @@ void ChatView::menuChannel(QContextMenuEvent *event)
 void ChatView::menuNick(QContextMenuEvent *event)
 {
     QString strMe = Settings::instance()->get("nick");
-    QString strSelfModes = Nicklist::instance()->getUserModes(strMe, strChatViewChannel);
-    int iSelfMaxModes = Nicklist::instance()->getUserMaxModes(strSelfModes);
-    QString strNickModes = Nicklist::instance()->getUserModes(strNick, strChatViewChannel);
+    QString strSelfModes = Nick::instance()->getModes(strMe, strChatViewChannel);
+    int iSelfMaxModes = Nick::instance()->getMaxModes(strMe, strChatViewChannel);
+    QString strNickModes = Nick::instance()->getModes(strNick, strChatViewChannel);
     QList<QString> lPunishReasons = PunishReason::instance()->get();
 
     QMenu *mInvite = new QMenu(tr("Invite"));

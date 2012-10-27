@@ -27,7 +27,7 @@
 #include "core.h"
 #include "simple_crypt.h"
 #include "lag.h"
-#include "nicklist.h"
+#include "nick.h"
 #include "message.h"
 #include "settings.h"
 #include "network.h"
@@ -103,8 +103,8 @@ void Network::clearAll()
     // update nick
     emit updateNick(tr("(Unregistered)"));
 
-    // clear nicklist
-    Nicklist::instance()->clearAllNicklist();
+    // clear nick
+    Nick::instance()->clear();
 
     // state
     Settings::instance()->set("logged", "false");

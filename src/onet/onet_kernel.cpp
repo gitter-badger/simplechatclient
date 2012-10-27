@@ -43,7 +43,7 @@
 #include "moderation_model.h"
 #include "my_profile_model.h"
 #include "my_stats_model.h"
-#include "nicklist.h"
+#include "nick.h"
 #include "offline.h"
 #include "onet_utils.h"
 #include "profile_manager_model.h"
@@ -424,11 +424,12 @@ void OnetKernel::raw_join()
     else
         Message::instance()->showMessage(strChannel, strDisplay, MessageJoin);
 
-    // nicklist
-    Nicklist::instance()->addUser(strNick, strChannel, strSuffix);
+    // nick
+    Nick::instance()->add(strNick, strChannel, strSuffix);
 
+qDebug() << strNick << " user avatar:" << Nick::instance()->getAvatar(strNick);
     // nick avatar
-    if ((!strNick.startsWith('~')) && (ThemesModel::instance()->isCurrentWithAvatar()) && (Nicklist::instance()->getUserAvatar(strNick) == QString::null))
+    if ((!strNick.startsWith('~')) && (ThemesModel::instance()->isCurrentWithAvatar()) && (Nick::instance()->getAvatar(strNick).isEmpty()))
     {
         Core::instance()->network->send(QString("NS INFO %1 s").arg(strNick));
     }
@@ -492,7 +493,7 @@ void OnetKernel::raw_part()
     }
 
     Message::instance()->showMessage(strChannel, strDisplay, MessagePart);
-    Nicklist::instance()->delUser(strNick, strChannel);
+    Nick::instance()->remove(strNick, strChannel);
 
     // if self part
     QString strMe = Settings::instance()->get("nick");
@@ -534,7 +535,7 @@ void OnetKernel::raw_quit()
     else
         strDisplay = QString(tr("* %1 has quit [%2]")).arg(strNick, strReason);
 
-    Nicklist::instance()->quitUser(strNick, strDisplay);
+    Nick::instance()->quit(strNick, strDisplay);
 }
 
 // :scc_test!51976824@3DE379.B7103A.6CF799.6902F4 KICK #scc Moment_w_atmosferze :sio
@@ -566,7 +567,7 @@ void OnetKernel::raw_kick()
 
     QString strMe = Settings::instance()->get("nick");
 
-    Nicklist::instance()->delUser(strNick, strChannel);
+    Nick::instance()->remove(strNick, strChannel);
 
     if (strNick != strMe)
     {
@@ -745,7 +746,7 @@ void OnetKernel::raw_mode()
             Message::instance()->showMessage(strChannel, strDisplay, MessageMode);
 
             if ((bNickFlag) && (!strFlag.isEmpty()))
-                Nicklist::instance()->changeFlag(strValue, strChannel, strFlag);
+                Nick::instance()->changeFlag(strValue, strChannel, strFlag);
         }
         flag_value.clear();
     }
@@ -791,7 +792,7 @@ void OnetKernel::raw_mode()
                 Message::instance()->showMessage(STATUS_WINDOW, strDisplay, MessageMode);
 
             if (!strFlag.isEmpty())
-                Nicklist::instance()->changeFlag(strNick, strFlag);
+                Nick::instance()->changeFlag(strNick, strFlag);
 
             // registered nick
             if ((strNick == Settings::instance()->get("nick")) && (strFlag == "+r"))
@@ -1133,8 +1134,8 @@ void OnetKernel::raw_nick()
 
     QString strDisplay = QString(tr("* %1 changed nick to %2")).arg(strNick, strNewNick);
 
-    // update nicklist
-    Nicklist::instance()->renameUser(strNick, strNewNick, strDisplay);
+    // update nick
+    Nick::instance()->rename(strNick, strNewNick, strDisplay);
 
     // self
     QString strMe = Settings::instance()->get("nick");
@@ -1345,11 +1346,11 @@ void OnetKernel::raw_111n()
     // get avatar
     if ((strKey == "avatar") && (!strValue.isEmpty()) && (ThemesModel::instance()->isCurrentWithAvatar()))
     {
-        QString strAvatar = Nicklist::instance()->getUserAvatar(strNick);
+        QString strAvatar = Nick::instance()->getAvatar(strNick);
         if (strAvatar.isEmpty())
             Avatar::instance()->get(strNick, "nick", strValue);
         else
-            Nicklist::instance()->setUserAvatar(strNick, strAvatar);
+            Nick::instance()->setAvatar(strNick, strAvatar);
     }
 }
 
@@ -2754,10 +2755,11 @@ void OnetKernel::raw_353()
             if (strCleanNick.contains(FLAG_VOICE)) { strCleanNick.remove(FLAG_VOICE); strPrefix.append(FLAG_VOICE); }
 
             QString strModes = strPrefix+strSuffix;
-            Nicklist::instance()->addUser(strCleanNick, strChannel, strModes);
+            Nick::instance()->add(strCleanNick, strChannel, strModes);
 
             // nick avatar
-            if ((!strCleanNick.startsWith('~')) && (ThemesModel::instance()->isCurrentWithAvatar()) && (Nicklist::instance()->getUserAvatar(strCleanNick) == QString::null))
+qDebug() << strCleanNick << " user avatar:" << Nick::instance()->getAvatar(strCleanNick);
+            if ((!strCleanNick.startsWith('~')) && (ThemesModel::instance()->isCurrentWithAvatar()) && (Nick::instance()->getAvatar(strCleanNick).isEmpty()))
             {
                 Core::instance()->network->send(QString("NS INFO %1 s").arg(strCleanNick));
             }

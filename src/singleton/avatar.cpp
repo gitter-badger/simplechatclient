@@ -22,7 +22,7 @@
 #include <QNetworkReply>
 #include "avatar.h"
 #include "channel.h"
-#include "nicklist.h"
+#include "nick.h"
 #include "settings.h"
 
 #ifdef Q_WS_WIN
@@ -99,7 +99,7 @@ void Avatar::updateAvatar(const QString &strCategory, const QString &strNickOrCh
 {
     if (strCategory == "nick")
     {
-        Nicklist::instance()->setUserAvatar(strNickOrChannel, strAvatarFile);
+        Nick::instance()->setAvatar(strNickOrChannel, strAvatarFile);
     }
     else if (strCategory == "channel")
     {

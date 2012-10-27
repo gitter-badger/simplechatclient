@@ -88,6 +88,7 @@ SOURCES += src/common/commands.cpp \
     src/singleton/invite_model.cpp \
     src/singleton/lag.cpp \
     src/singleton/message.cpp \
+    src/singleton/nick.cpp \
     src/singleton/nicklist.cpp \
     src/singleton/notes_model.cpp \
     src/singleton/notification.cpp \
@@ -193,6 +194,7 @@ HEADERS += src/common/commands.h \
     src/singleton/invite_model.h \
     src/singleton/lag.h \
     src/singleton/message.h \
+    src/singleton/nick.h \
     src/singleton/nicklist.h \
     src/singleton/notes_model.h \
     src/singleton/notification.h \

@@ -48,7 +48,7 @@
 #include "my_avatar.h"
 #include "my_profile.h"
 #include "my_stats.h"
-#include "nicklist.h"
+#include "nick.h"
 #include "notes.h"
 #include "notification.h"
 #include "offline.h"
@@ -678,7 +678,7 @@ void MainWindow::refreshToolButtons(const QString &strChannel)
         pToolWidget->showChannelSettings(true);
 
     // moderation
-    QString strModes = Nicklist::instance()->getUserModes(strMe, strChannel);
+    QString strModes = Nick::instance()->getModes(strMe, strChannel);
     if (strModes.contains(FLAG_MOD))
         pToolWidget->showModeration(true);
     else

@@ -42,109 +42,7 @@ Nicklist::Nicklist()
 {
 }
 
-void Nicklist::addUser(const QString &strNick, const QString &strChannel, const QString &strModes)
-{
-    if (!Core::instance()->tw.contains(strChannel))
-        return;
-
-    if (!Core::instance()->tw[strChannel]->pNickListWidget->existUser(strNick))
-    {
-        Core::instance()->tw[strChannel]->pNickListWidget->addUser(strNick, strModes);
-        Core::instance()->tw[strChannel]->users->setText(QString(tr("Users (%1)").arg(Core::instance()->tw[strChannel]->pNickListWidget->count())));
-    }
-}
-
-void Nicklist::delUser(const QString &strNick, const QString &strChannel)
-{
-    if (!Core::instance()->tw.contains(strChannel))
-        return;
-
-    if (Core::instance()->tw[strChannel]->pNickListWidget->existUser(strNick))
-    {
-        Core::instance()->tw[strChannel]->pNickListWidget->delUser(strNick);
-        Core::instance()->tw[strChannel]->users->setText(QString(tr("Users (%1)").arg(Core::instance()->tw[strChannel]->pNickListWidget->count())));
-    }
-
-    // avatar
-    // TODO
-}
-
-void Nicklist::renameUser(const QString &strNick, const QString &strNewNick, const QString &strDisplay)
-{
-    MessageCategory eMessageCategory = MessageMode;
-
-    QHashIterator<QString, TabWidget*> i(Core::instance()->tw);
-    while (i.hasNext())
-    {
-        i.next();
-        QString strChannel = i.key();
-
-        if (Core::instance()->tw[strChannel]->pNickListWidget->existUser(strNick))
-        {
-            Message::instance()->showMessage(strChannel, strDisplay, eMessageCategory);
-            Core::instance()->tw[strChannel]->pNickListWidget->renameUser(strNick, strNewNick);
-        }
-    }
-
-    // avatar
-    if (lAvatar.contains(strNick))
-    {
-        lAvatar[strNewNick] = lAvatar[strNick];
-        lAvatar.remove(strNick);
-    }
-}
-
-void Nicklist::quitUser(const QString &strNick, const QString &strDisplay)
-{
-    MessageCategory eMessageCategory = MessageQuit;
-
-    QHashIterator<QString, TabWidget*> i(Core::instance()->tw);
-    while (i.hasNext())
-    {
-        i.next();
-        QString strChannel = i.key();
-
-        if (Core::instance()->tw[strChannel]->pNickListWidget->existUser(strNick))
-        {
-            Message::instance()->showMessage(strChannel, strDisplay, eMessageCategory);
-            Core::instance()->tw[strChannel]->pNickListWidget->delUser(strNick);
-            Core::instance()->tw[strChannel]->users->setText(QString(tr("Users (%1)").arg(Core::instance()->tw[strChannel]->pNickListWidget->count())));
-        }
-    }
-
-    // avatar
-    lAvatar.remove(strNick);
-}
-
-void Nicklist::changeFlag(const QString &strNick, const QString &strChannel, const QString &strFlag)
-{
-    if (!Core::instance()->tw.contains(strChannel))
-        return;
-
-    if (Core::instance()->tw[strChannel]->pNickListWidget->existUser(strNick))
-        Core::instance()->tw[strChannel]->pNickListWidget->changeUserFlag(strNick, strFlag);
-
-    QString strMe = Settings::instance()->get("nick");
-    QString strCurrentChannel = Channel::instance()->getCurrent();
-
-    if ((!strCurrentChannel.isEmpty()) && (strCurrentChannel == strChannel) && (strNick == strMe))
-        Core::instance()->mainWindow()->refreshToolButtons(strChannel);
-}
-
-void Nicklist::changeFlag(const QString &strNick, const QString &strFlag)
-{
-    QHashIterator<QString, TabWidget*> i(Core::instance()->tw);
-    while (i.hasNext())
-    {
-        i.next();
-        QString strChannel = i.key();
-
-        if (Core::instance()->tw[strChannel]->pNickListWidget->existUser(strNick))
-            changeFlag(strNick, strChannel, strFlag);
-    }
-}
-
-void Nicklist::clearAllNicklist()
+void Nicklist::clearUsers()
 {
     QHashIterator<QString, TabWidget*> i(Core::instance()->tw);
     while (i.hasNext())
@@ -157,49 +55,63 @@ void Nicklist::clearAllNicklist()
     }
 }
 
-void Nicklist::setUserAvatar(const QString &strNick, const QString &strValue)
+void Nicklist::addUser(const QString &strNick, const QString &strChannel, const QString &strModes, int iMaxModes, const QString &strAvatar)
 {
-    lAvatar[strNick] = strValue;
+    if (!Core::instance()->tw.contains(strChannel)) return;
 
-    updateUserAvatar(strNick, strValue);
+    Core::instance()->tw[strChannel]->pNickListWidget->addUser(strNick, strModes, iMaxModes, strAvatar);
+    Core::instance()->tw[strChannel]->users->setText(QString(tr("Users (%1)").arg(Core::instance()->tw[strChannel]->pNickListWidget->count())));
 }
 
-QString Nicklist::getUserAvatar(const QString &strNick)
+void Nicklist::delUser(const QString &strNick, const QString &strChannel)
 {
-    return lAvatar.value(strNick, QString::null);
+    if (!Core::instance()->tw.contains(strChannel)) return;
+
+    Core::instance()->tw[strChannel]->pNickListWidget->delUser(strNick);
+    Core::instance()->tw[strChannel]->users->setText(QString(tr("Users (%1)").arg(Core::instance()->tw[strChannel]->pNickListWidget->count())));
 }
 
-void Nicklist::updateUserAvatar(const QString &strNick, const QString &strValue)
+void Nicklist::renameUser(const QString &strNick, const QString &strNewNick, const QList<QString> &lChannels, const QString &strDisplay)
 {
-    QHashIterator<QString, TabWidget*> i(Core::instance()->tw);
-    while (i.hasNext())
+    MessageCategory eMessageCategory = MessageMode;
+
+    foreach (QString strChannel, lChannels)
     {
-        i.next();
-        QString strChannel = i.key();
-
-        if (Core::instance()->tw[strChannel]->pNickListWidget->existUser(strNick))
-            Core::instance()->tw[strChannel]->pNickListWidget->setUserAvatar(strNick, strValue);
+        Message::instance()->showMessage(strChannel, strDisplay, eMessageCategory);
+        Core::instance()->tw[strChannel]->pNickListWidget->renameUser(strNick, strNewNick);
     }
 }
 
-QString Nicklist::getUserModes(const QString &strNick, const QString &strChannel)
+void Nicklist::quitUser(const QString &strNick, const QList<QString> &lChannels, const QString &strDisplay)
 {
-    if ((Core::instance()->tw.contains(strChannel)) && (Core::instance()->tw[strChannel]->pNickListWidget->existUser(strNick)))
-        return Core::instance()->tw[strChannel]->pNickListWidget->getUserModes(strNick);
-    else
-        return QString::null;
+    MessageCategory eMessageCategory = MessageQuit;
+
+    foreach (QString strChannel, lChannels)
+    {
+        Message::instance()->showMessage(strChannel, strDisplay, eMessageCategory);
+        Core::instance()->tw[strChannel]->pNickListWidget->delUser(strNick);
+        Core::instance()->tw[strChannel]->users->setText(QString(tr("Users (%1)").arg(Core::instance()->tw[strChannel]->pNickListWidget->count())));
+    }
 }
 
-int Nicklist::getUserMaxModes(const QString &strModes)
+void Nicklist::setUserModes(const QString &strNick, const QString &strChannel, const QString &strModes, int iMaxModes)
 {
-    if (strModes.contains(FLAG_DEV)) { return 64; }
-    if (strModes.contains(FLAG_ADMIN)) { return 32; }
-    if (strModes.contains(FLAG_OWNER)) { return 16; }
-    if (strModes.contains(FLAG_OP)) { return 8; }
-    if (strModes.contains(FLAG_HALFOP)) { return 4; }
-    if (strModes.contains(FLAG_MOD)) { return 2; }
-    if (strModes.contains(FLAG_SCREENER)) { return 1; }
-    if (strModes.contains(FLAG_VOICE)) { return 0; }
+    if (!Core::instance()->tw.contains(strChannel)) return;
 
-    return -1;
+    Core::instance()->tw[strChannel]->pNickListWidget->setUserModes(strNick, strModes, iMaxModes);
+
+    // channel tool buttons
+    QString strMe = Settings::instance()->get("nick");
+    QString strCurrentChannel = Channel::instance()->getCurrent();
+
+    if ((strCurrentChannel == strChannel) && (strNick == strMe))
+        Core::instance()->mainWindow()->refreshToolButtons(strChannel);
+}
+
+void Nicklist::setUserAvatar(const QString &strNick, const QList<QString> &lChannels, const QString &strAvatar)
+{
+    foreach (QString strChannel, lChannels)
+    {
+        Core::instance()->tw[strChannel]->pNickListWidget->setUserAvatar(strNick, strAvatar);
+    }
 }

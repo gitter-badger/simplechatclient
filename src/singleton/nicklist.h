@@ -20,7 +20,6 @@
 #ifndef NICKLIST_H
 #define NICKLIST_H
 
-#include <QHash>
 #include <QObject>
 
 class Nicklist : public QObject
@@ -32,22 +31,13 @@ public:
     static Nicklist *instance();
 
     Nicklist();
-    void addUser(const QString &strNick, const QString &strChannel, const QString &strModes);
+    void clearUsers();
+    void addUser(const QString &strNick, const QString &strChannel, const QString &strModes, int iMaxModes, const QString &strAvatar);
     void delUser(const QString &strNick, const QString &strChannel);
-    void renameUser(const QString &strNick, const QString &strNewNick, const QString &strDisplay);
-    void quitUser(const QString &strNick, const QString &strDisplay);
-    void changeFlag(const QString &strNick, const QString &strChannel, const QString &strFlag);
-    void changeFlag(const QString &strNick, const QString &strFlag);
-    void clearAllNicklist();
-    void setUserAvatar(const QString &strNick, const QString &strValue);
-    QString getUserAvatar(const QString &strNick);
-    QString getUserModes(const QString &strNick, const QString &strChannel);
-    int getUserMaxModes(const QString &strModes);
-
-private:
-    QHash<QString,QString> lAvatar;
-
-    void updateUserAvatar(const QString &strNick, const QString &strValue);
+    void renameUser(const QString &strNick, const QString &strNewNick, const QList<QString> &lChannels, const QString &strDisplay);
+    void quitUser(const QString &strNick, const QList<QString> &lChannels, const QString &strDisplay);
+    void setUserModes(const QString &strNick, const QString &strChannel, const QString &strModes, int iMaxModes);
+    void setUserAvatar(const QString &strNick, const QList<QString> &lChannels, const QString &strAvatar);
 };
 
 #endif // NICKLIST_H

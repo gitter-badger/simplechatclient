@@ -28,14 +28,11 @@ class NickListWidget : public QListWidget
     Q_OBJECT
 public:
     NickListWidget(const QString &_strChannel);
-    void addUser(const QString &strNick, QString strModes);
+    void addUser(const QString &strNick, const QString &strModes, int iMaxModes, const QString &strAvatar);
     void delUser(const QString &strNick);
     void renameUser(const QString &strNick, const QString &strNewNick);
-    bool existUser(const QString &strNick);
     void setUserAvatar(const QString &strNick, const QString &strValue);
-    QString getUserAvatar(const QString &strNick);
-    void changeUserFlag(const QString &strNick, QString strFlag);
-    QString getUserModes(const QString &strNick);
+    void setUserModes(const QString &strNick, const QString &strModes, int iMaxModes);
     QList<QString> getUserList();
 
 private:
@@ -51,6 +48,7 @@ private:
         NickListAvatarUrlRole = Qt::UserRole+21
     };
 
+    bool existUser(const QString &strNick);
     void convertFlag(QString &strFlag);
 
 private slots:

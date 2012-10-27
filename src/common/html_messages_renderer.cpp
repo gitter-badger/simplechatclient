@@ -20,7 +20,7 @@
 #include <QDateTime>
 #include "avatar.h"
 #include "convert.h"
-#include "nicklist.h"
+#include "nick.h"
 #include "settings.h"
 #include "html_messages_renderer.h"
 
@@ -139,7 +139,7 @@ QString HtmlMessagesRenderer::renderer(QString strData, MessageCategory eMessage
     {
         if (!strNick.isEmpty())
         {
-            QString strUserAvatar = Nicklist::instance()->getUserAvatar(strNick);
+            QString strUserAvatar = Nick::instance()->getAvatar(strNick);
 
             // is valid avatar
             if (!strUserAvatar.isEmpty())

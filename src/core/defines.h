@@ -95,6 +95,14 @@ const int NOTICE_QUESTION = 103 | 0x070000;
 #define PERMISSION_BAN "b"
 #define PERMISSION_INVITE "I"
 
+struct OnetNick
+{
+    QString avatar;
+    QList<QString> channels;
+    QHash<QString,QString> channel_modes;
+    QHash<QString,int> channel_max_modes;
+};
+
 struct OnetChannelList
 {
     QString name;

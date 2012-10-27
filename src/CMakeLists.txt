@@ -117,6 +117,7 @@ set (scc_SRCS
 	singleton/invite_model.cpp
 	singleton/lag.cpp
 	singleton/message.cpp
+	singleton/nick.cpp
 	singleton/nicklist.cpp
 	singleton/notes_model.cpp
 	singleton/notification.cpp
@@ -214,6 +215,7 @@ set (scc_MOC_HDRS
 	singleton/invite_model.h
 	singleton/lag.h
 	singleton/message.h
+	singleton/nick.h
 	singleton/nicklist.h
 	singleton/notes_model.h
 	singleton/notification.h
@@ -402,7 +404,7 @@ if (MINGW)
 	endif (GCC_VERSION VERSION_GREATER 4.5 OR GCC_VERSION VERSION_EQUAL 4.5)
 
 	# disable console on windows mingw
-	set (CMAKE_CXX_LINK_FLAGS "${CMAKE_CXX_LINK_FLAGS} -mwindows")
+	#set (CMAKE_CXX_LINK_FLAGS "${CMAKE_CXX_LINK_FLAGS} -mwindows")
 endif (MINGW)
 
 # link

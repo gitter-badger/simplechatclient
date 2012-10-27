@@ -28,7 +28,7 @@
 #include "convert.h"
 #include "core.h"
 #include "channel_settings_model.h"
-#include "nicklist.h"
+#include "nick.h"
 #include "settings.h"
 #include "simple_percentage_widget.h"
 #include "simple_stats_widget.h"
@@ -937,8 +937,7 @@ void DlgChannelSettings::refreshPermissionList()
 
     // enable tabs
     QString strMe = Settings::instance()->get("nick");
-    QString strSelfModes = Nicklist::instance()->getUserModes(strMe, strChannel);
-    int iSelfMaxModes = Nicklist::instance()->getUserMaxModes(strSelfModes);
+    int iSelfMaxModes = Nick::instance()->getMaxModes(strMe, strChannel);
 
     if (iSelfMaxModes >= 4)
     {

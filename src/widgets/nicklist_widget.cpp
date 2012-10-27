@@ -26,7 +26,7 @@
 #include "defines.h"
 #include "friends_model.h"
 #include "ignore_model.h"
-#include "nicklist.h"
+#include "nick.h"
 #include "punish_reason.h"
 #include "settings.h"
 #include "user_profile.h"
@@ -44,17 +44,16 @@ NickListWidget::NickListWidget(const QString &_strChannel) : strChannel(_strChan
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 }
 
-void NickListWidget::addUser(const QString &strNick, QString strModes)
+void NickListWidget::addUser(const QString &strNick, const QString &strModes, int iMaxModes, const QString &strAvatar)
 {
-    // if owner remove op
-    if ((strModes.contains(FLAG_OWNER)) && (strModes.contains(FLAG_OP))) strModes.remove(FLAG_OP);
+    if (existUser(strNick)) return;
 
     SortedListWidgetItem *item = new SortedListWidgetItem();
     item->setText(strNick);
     item->setData(SortedListWidgetNicklistRole, true); // is nicklist
-    item->setData(SortedListWidgetStatusRole, Nicklist::instance()->getUserMaxModes(strModes)); // max modes
+    item->setData(SortedListWidgetStatusRole, iMaxModes); // max modes
     item->setData(NickListModesRole, strModes); // modes
-    item->setData(NickListAvatarUrlRole, Nicklist::instance()->getUserAvatar(strNick)); // avatar url
+    item->setData(NickListAvatarUrlRole, strAvatar); // avatar url
 
     this->addItem(item);
 }
@@ -73,14 +72,6 @@ void NickListWidget::renameUser(const QString &strNick, const QString &strNewNic
         item->setText(strNewNick);
 }
 
-bool NickListWidget::existUser(const QString &strNick)
-{
-    if (this->findItems(strNick, Qt::MatchExactly).isEmpty())
-        return false;
-    else
-        return true;
-}
-
 void NickListWidget::setUserAvatar(const QString &strNick, const QString &strValue)
 {
     QList<QListWidgetItem*> items = this->findItems(strNick, Qt::MatchExactly);
@@ -88,54 +79,14 @@ void NickListWidget::setUserAvatar(const QString &strNick, const QString &strVal
         item->setData(NickListAvatarUrlRole, strValue);
 }
 
-QString NickListWidget::getUserAvatar(const QString &strNick)
-{
-    QList<QListWidgetItem*> items = this->findItems(strNick, Qt::MatchExactly);
-    foreach (QListWidgetItem *item, items)
-        return item->data(NickListAvatarUrlRole).toString();
-    return QString::null;
-}
-
-void NickListWidget::changeUserFlag(const QString &strNick, QString strFlag)
+void NickListWidget::setUserModes(const QString &strNick, const QString &strModes, int iMaxModes)
 {
     QList<QListWidgetItem*> items = this->findItems(strNick, Qt::MatchExactly);
     foreach (QListWidgetItem *item, items)
     {
-        QString strModes = item->data(NickListModesRole).toString();
-        QString plusminus = strFlag.at(0);
-        strFlag.remove(0, 1);
-
-        convertFlag(strFlag);
-
-        if (plusminus == "+")
-        {
-            // fix webcam flags
-            if ((strFlag == FLAG_CAM_PUB) && (strModes.contains(FLAG_CAM_PRIV))) strModes.remove(FLAG_CAM_PRIV);
-            if ((strFlag == FLAG_CAM_PRIV) && (strModes.contains(FLAG_CAM_PUB))) strModes.remove(FLAG_CAM_PUB);
-
-            if (!strModes.contains(strFlag))
-                strModes.append(strFlag);
-        }
-        else
-        {
-            if (strModes.contains(strFlag))
-                strModes.remove(strFlag);
-        }
-
-        // if owner remove op
-        if ((strModes.contains(FLAG_OWNER)) && (strModes.contains(FLAG_OP))) strModes.remove(FLAG_OP);
-
-        item->setData(SortedListWidgetStatusRole, Nicklist::instance()->getUserMaxModes(strModes));
+        item->setData(SortedListWidgetStatusRole, iMaxModes);
         item->setData(NickListModesRole, strModes);
     }
-}
-
-QString NickListWidget::getUserModes(const QString &strNick)
-{
-    QList<QListWidgetItem*> items = this->findItems(strNick, Qt::MatchExactly);
-    foreach (QListWidgetItem *item, items)
-        return item->data(NickListModesRole).toString();
-    return QString::null;
 }
 
 QList<QString> NickListWidget::getUserList()
@@ -147,6 +98,14 @@ QList<QString> NickListWidget::getUserList()
         userList.append(item->text());
 
     return userList;
+}
+
+bool NickListWidget::existUser(const QString &strNick)
+{
+    if (this->findItems(strNick, Qt::MatchExactly).isEmpty())
+        return false;
+    else
+        return true;
 }
 
 void NickListWidget::convertFlag(QString &strFlag)
@@ -369,9 +328,9 @@ void NickListWidget::contextMenuEvent(QContextMenuEvent *e)
     strSelectedNick = this->selectedItems().at(0)->text();
 
     QString strMe = Settings::instance()->get("nick");
-    QString strSelfModes = Nicklist::instance()->getUserModes(strMe, strChannel);
-    int iSelfMaxModes = Nicklist::instance()->getUserMaxModes(strSelfModes);
-    QString strNickModes = Nicklist::instance()->getUserModes(strSelectedNick, strChannel);
+    QString strSelfModes = Nick::instance()->getModes(strMe, strChannel);
+    int iSelfMaxModes = Nick::instance()->getMaxModes(strMe, strChannel);
+    QString strNickModes = Nick::instance()->getModes(strSelectedNick, strChannel);
     QList<QString> lPunishReasons = PunishReason::instance()->get();
 
     QMenu *mInvite = new QMenu(tr("Invite"));
