@@ -2704,22 +2704,6 @@ void OnetKernel::raw_352()
 // NAMES
 // :cf1f1.onet 353 scc_test = #scc :scc_test|rx,0 `@Merovingian|brx,1 @chanky|rx,1
 // :cf1f3.onet 353 Merovingian = #hack :%Hacker %weed %cvf @Majkel SzperaCZ_11 Merovingian `ChanServ %but
-
-// owner      `
-// op         @
-// halfop     %
-// mod        !
-// screener   =
-// voice      +
-
-// busy       b
-// registered r
-// encrypted  x
-// publiccam  W
-// privcam    V
-// admin      o
-// developer  O
-
 void OnetKernel::raw_353()
 {
     if (strDataList.size() < 5) return;
