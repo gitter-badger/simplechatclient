@@ -41,6 +41,7 @@ Nick::Nick()
 void Nick::clear()
 {
     lNicks.clear();
+    Nicklist::instance()->clearUsers();
 }
 
 void Nick::add(const QString &strNick, const QString &strChannel, QString strModes)

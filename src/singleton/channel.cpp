@@ -21,7 +21,6 @@
 #include "core.h"
 #include "convert.h"
 #include "mainwindow.h"
-#include "nicklist_widget.h"
 #include "channel.h"
 
 Channel * Channel::Instance = 0;
