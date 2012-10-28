@@ -203,21 +203,3 @@ bool Channel::containsPriv(const QString &channel)
 {
     return lPriv.contains(channel);
 }
-
-QList<QString> Channel::getUserList(const QString &strChannel)
-{
-    QList<QString> userList;
-
-    if (Core::instance()->tw.contains(strChannel))
-        userList = Core::instance()->tw[strChannel]->pNickListWidget->getUserList();
-
-    return userList;
-}
-
-int Channel::getUserCount(const QString &strChannel)
-{
-    if (Core::instance()->tw.contains(strChannel))
-        return Core::instance()->tw[strChannel]->pNickListWidget->count();
-    else
-        return 0;
-}

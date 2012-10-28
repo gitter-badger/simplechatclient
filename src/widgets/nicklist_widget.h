@@ -33,7 +33,6 @@ public:
     void renameUser(const QString &strNick, const QString &strNewNick);
     void setUserAvatar(const QString &strNick, const QString &strValue);
     void setUserModes(const QString &strNick, const QString &strModes, int iMaxModes);
-    QList<QString> getUserList();
 
 private:
     // other

@@ -89,17 +89,6 @@ void NickListWidget::setUserModes(const QString &strNick, const QString &strMode
     }
 }
 
-QList<QString> NickListWidget::getUserList()
-{
-    QList<QString> userList;
-
-    QList<QListWidgetItem*> items = this->findItems("*", Qt::MatchWrap | Qt::MatchWildcard);
-    foreach (QListWidgetItem *item, items)
-        userList.append(item->text());
-
-    return userList;
-}
-
 bool NickListWidget::existUser(const QString &strNick)
 {
     if (this->findItems(strNick, Qt::MatchExactly).isEmpty())

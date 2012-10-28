@@ -47,6 +47,8 @@ public:
     QString getModes(const QString &strNick, const QString &strChannel);
     int getMaxModes(const QString &strNick, const QString &strChannel);
 
+    QList<QString> getFromChannel(const QString &strChannel);
+
 private:
     QHash<QString, OnetNick> lNicks;
 
