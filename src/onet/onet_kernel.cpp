@@ -860,7 +860,6 @@ void OnetKernel::raw_privmsg()
 // :Panie_kierowniku!57643619@devel.onet NOTICE Darom :458853 * * :bum
 // :Panie_kierowniku!57643619@devel.onet NOTICE Darom :458854 * * :bum
 // :Panie_kierowniku!57643619@devel.onet NOTICE Darom :458855 * * :bum
-
 void OnetKernel::raw_notice()
 {
     if (strDataList.size() < 3) return;
