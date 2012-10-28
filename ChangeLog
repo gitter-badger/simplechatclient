@@ -7,7 +7,7 @@ Version 1.6.0 (29.10.2012)
 * Added new emoticons
 * Updated layouts
 * Added remember last 30 messages
-* Added command /all - to send message to all opened channels
+* Added commands /raw /all /query /quote /kban /kbanip
 * Many bugfixes
 
 Version 1.5.0 (17.07.2012)
