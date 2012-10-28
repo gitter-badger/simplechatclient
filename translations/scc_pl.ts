@@ -262,6 +262,14 @@
         <translation>/banip [[+|-]nick]</translation>
     </message>
     <message>
+        <source>/kban [nick] [reason]</source>
+        <translation>/kban [nick] [powód]</translation>
+    </message>
+    <message>
+        <source>/kbanip [nick] [reason]</source>
+        <translation>/kbanip [nick] [powód]</translation>
+    </message>
+    <message>
         <source>/sop [[+|-]nick]</source>
         <translation>/sop [[+|-]nick]</translation>
     </message>

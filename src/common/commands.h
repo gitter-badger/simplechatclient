@@ -61,6 +61,8 @@ private:
     QString cmdKick();
     QString cmdBan();
     QString cmdBanip();
+    QString cmdKBan();
+    QString cmdKBanip();
     QString cmdSop();
     QString cmdOp();
     QString cmdModer();

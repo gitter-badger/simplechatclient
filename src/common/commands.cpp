@@ -89,6 +89,10 @@ QString Commands::execute()
             return cmdBan();
         else if (strCmd == "banip")
             return cmdBanip();
+        else if (strCmd == "kban")
+            return cmdKBan();
+        else if (strCmd == "kbanip")
+            return cmdKBanip();
         else if (strCmd == "sop")
             return cmdSop();
         else if (strCmd == "op")
@@ -347,6 +351,8 @@ QString Commands::cmdHelp()
     strHelp.append(tr("/kick [nick] [reason] or /k [nick] [reason]")+";");
     strHelp.append(tr("/ban [[+|-]nick]")+";");
     strHelp.append(tr("/banip [[+|-]nick]")+";");
+    strHelp.append(tr("/kban [nick] [reason]")+";");
+    strHelp.append(tr("/kbanip [nick] [reason]")+";");
     strHelp.append(tr("/sop [[+|-]nick]")+";");
     strHelp.append(tr("/op [[+|-]nick]")+";");
     strHelp.append(tr("/moder [[+|-]nick] or /moderator [[+|-]nick]")+";");
@@ -501,6 +507,40 @@ QString Commands::cmdBanip()
         return QString("CS BANIP %1 DEL %2").arg(strChannel, strNick);
     else
         return QString::null;
+}
+
+QString Commands::cmdKBan()
+{
+    if (strDataList.value(1).isEmpty()) return QString::null;
+
+    QString strChannel = strChan;
+
+    QString strNick = strDataList[1];
+
+    QString strReason;
+    for (int i = 2; i < strDataList.size(); i++) { if (i != 2) strReason += " "; strReason += strDataList[i]; }
+
+    if (strReason.isEmpty())
+        strReason = tr("No reason");
+
+    return QString("CS BAN %1 ADD %2\nKICK %3 %4 :%5").arg(strChannel, strNick, strChannel, strNick, strReason);
+}
+
+QString Commands::cmdKBanip()
+{
+    if (strDataList.value(1).isEmpty()) return QString::null;
+
+    QString strChannel = strChan;
+
+    QString strNick = strDataList[1];
+
+    QString strReason;
+    for (int i = 2; i < strDataList.size(); i++) { if (i != 2) strReason += " "; strReason += strDataList[i]; }
+
+    if (strReason.isEmpty())
+        strReason = tr("No reason");
+
+    return QString("CS BANIP %1 ADD %2\nKICK %3 %4 :%5").arg(strChannel, strNick, strChannel, strNick, strReason);
 }
 
 QString Commands::cmdSop()
