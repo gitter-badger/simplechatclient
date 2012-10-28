@@ -1,8 +1,9 @@
 ChangeLog for Simple Chat Client
 ========================= 
 
-Version 1.6.0 (unknown)
+Version 1.6.0 (29.10.2012)
 ================================
+* Addded rank
 * Added new emoticons
 * Updated layouts
 * Added remember last 30 messages
