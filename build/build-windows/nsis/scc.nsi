@@ -18,7 +18,7 @@ CRCCheck force
 Name "SimpleChatClient"
 
 ; installer file
-OutFile "SCC-${VERSION}.exe"
+OutFile "scc-${VERSION}.exe"
 
 ; details
 ShowInstDetails "nevershow"
