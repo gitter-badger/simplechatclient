@@ -111,7 +111,7 @@ bool InputLineWidget::event(QEvent *e)
         iLastMessage = -1;
 
         QString strChannel = Channel::instance()->getCurrent();
-        QList<QString> usersList = Nick::instance()->getFromChannel(strChannel);
+        QList<CaseIgnoreString> usersList = Nick::instance()->getFromChannel(strChannel);
 
         if (usersList.size() == 0)
             return true;

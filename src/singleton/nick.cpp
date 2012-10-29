@@ -93,7 +93,7 @@ void Nick::remove(const QString &strNick, const QString &strChannel)
 
 void Nick::removeFromChannel(const QString &strChannel)
 {
-    QList<QString> lNicksFromChannel = getFromChannel(strChannel);
+    QList<CaseIgnoreString> lNicksFromChannel = getFromChannel(strChannel);
 
     foreach (QString strNick, lNicksFromChannel)
     {
@@ -210,9 +210,9 @@ int Nick::getMaxModes(const QString &strNick, const QString &strChannel)
     return lNicks[strNick].channel_max_modes.value(strChannel, -1);
 }
 
-QList<QString> Nick::getFromChannel(const QString &strChannel)
+QList<CaseIgnoreString> Nick::getFromChannel(const QString &strChannel)
 {
-    QList<QString> lNicksFromChannel;
+    QList<CaseIgnoreString> lNicksFromChannel;
 
     QHashIterator<QString, OnetNick> i(lNicks);
     while (i.hasNext())
@@ -224,6 +224,9 @@ QList<QString> Nick::getFromChannel(const QString &strChannel)
         if (lNicks[strNick].channels.contains(strChannel))
             lNicksFromChannel.append(strNick);
     }
+
+    // sort
+    qSort(lNicksFromChannel.begin(), lNicksFromChannel.end());
 
     return lNicksFromChannel;
 }
