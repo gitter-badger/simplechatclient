@@ -124,15 +124,14 @@ void DlgMyStats::refresh()
         if (strKey == "rank")
         {
             QStringList lRank = strValue.split('.');
-            double iType = lRank.value(0, 0).toDouble();
-            double iRank = strValue.toDouble();
+            double dType = lRank.value(0, 0).toDouble();
+            int iType = lRank.value(0, 0).toInt();
+            double dRank = strValue.toDouble();
 
-            pSimplePercentageWidget->setRank(iRank-iType);
-        }
-        else if (strKey == "type")
-        {
-            ui.label_rank_current->setText(Utils::instance()->convertIntToType(strValue.toInt()));
-            ui.label_rank_next->setText(Utils::instance()->convertIntToType(strValue.toInt() + 1));
+            pSimplePercentageWidget->setRank(dRank-dType);
+
+            ui.label_rank_current->setText(Utils::instance()->convertIntToType(iType));
+            ui.label_rank_next->setText(Utils::instance()->convertIntToType(iType + 1));
         }
     }
 }

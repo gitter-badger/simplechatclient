@@ -1,2 +1,2 @@
 #!/bin/bash
-fakeroot dpkg -b pkg-debian/ scc-1.6.0.deb 
+fakeroot dpkg -b pkg-debian/ scc-1.7.0.0.deb 
