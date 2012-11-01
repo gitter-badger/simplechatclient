@@ -49,7 +49,7 @@ public slots:
 
 private:
     Ui::uiWebcamStandard ui;
-    QString strNick;
+    QString strCurrentNick;
     SimpleRankWidget *pSimpleRankWidget;
     enum WebCamRoles
     {
