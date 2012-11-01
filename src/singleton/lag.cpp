@@ -35,7 +35,7 @@ Lag * Lag::instance()
 
 Lag::Lag()
 {
-    lagAction = new QAction("Lag: ?", this);
+    lagAction = new QAction(this);
     lagAction->setEnabled(false);
 }
 
