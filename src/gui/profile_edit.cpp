@@ -22,6 +22,7 @@
 #include <QPushButton>
 #include "config.h"
 #include "simple_crypt.h"
+#include "settings.h"
 #include "profile_edit.h"
 
 DlgProfileEdit::DlgProfileEdit(const QString &_strNick, QWidget *parent) : QDialog(parent), strNick(_strNick)
@@ -89,6 +90,11 @@ void DlgProfileEdit::buttonOk()
     Config *pConfig = new Config(true, strNick);
     pConfig->set("pass", strPassword);
     delete pConfig;
+
+    // current nick
+    QString strMe = Settings::instance()->get("nick");
+    if (strNick == strMe)
+        Settings::instance()->set("pass", strPassword);
 
     // close
     this->close();
