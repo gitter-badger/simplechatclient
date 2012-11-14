@@ -95,6 +95,10 @@ const int NOTICE_QUESTION = 103 | 0x070000;
 #define PERMISSION_BAN "b"
 #define PERMISSION_INVITE "I"
 
+// struct Theme
+
+// struct OnetChannel
+
 struct OnetNick
 {
     QString avatar;
@@ -127,6 +131,24 @@ struct OnetOfflineMessage
     QString type;
     QString nick;
     QString message;
+};
+
+namespace ThemeFlags
+{
+    enum Flag {
+        NoFlags = 0x0,
+        Default = 0x1,
+        ChannelAvatar = 0x2,
+        NicklistAvatar = 0x4
+    };
+    Q_DECLARE_FLAGS(Flags, Flag)
+}
+Q_DECLARE_OPERATORS_FOR_FLAGS(ThemeFlags::Flags)
+
+struct Theme
+{
+    QString name;
+    ThemeFlags::Flags flags;
 };
 
 class CaseIgnoreString : public QString

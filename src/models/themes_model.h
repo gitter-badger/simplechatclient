@@ -20,25 +20,8 @@
 #ifndef THEMES_MODEL_H
 #define THEMES_MODEL_H
 
+#include "defines.h"
 #include <QObject>
-
-namespace ThemeFlags
-{
-    enum Flag {
-        NoFlags = 0x0,
-        Default = 0x1,
-        ChannelAvatar = 0x2,
-        NicklistAvatar = 0x4
-    };
-    Q_DECLARE_FLAGS(Flags, Flag)
-}
-Q_DECLARE_OPERATORS_FOR_FLAGS(ThemeFlags::Flags)
-
-struct Theme
-{
-    QString name;
-    ThemeFlags::Flags flags;
-};
 
 class ThemesModel : public QObject
 {
