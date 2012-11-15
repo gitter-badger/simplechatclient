@@ -86,7 +86,7 @@ void DlgChannelHomes::refresh()
     {
         if (strChannel[0] != '#')
             strChannel = strChannel.right(strChannel.length()-1); // remove status
-
+/*
         QString strAvatar = Channel::instance()->getAvatar(strChannel);
         if (!strAvatar.isEmpty())
         {
@@ -97,6 +97,8 @@ void DlgChannelHomes::refresh()
             strAvatar = ":/images/channel_avatar.png";
             Core::instance()->network->send(QString("CS INFO %1 i").arg(strChannel));
         }
+*/
+        QString strAvatar = ":/images/channel_avatar.png";
 
         ui.listWidget_channels->addItem(new QListWidgetItem(QIcon(strAvatar), strChannel));
     }

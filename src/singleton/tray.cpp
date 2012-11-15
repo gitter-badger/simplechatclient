@@ -61,8 +61,8 @@ void Tray::showMessage(const QString &strTitle, const QString &strMessage)
     strLastMessageTitle = strTrayTitle;
 
     // fix priv
-    if ((strTrayTitle[0] == '^') && (Channel::instance()->containsPriv(strTrayTitle)))
-        strTrayTitle = Channel::instance()->getPriv(strTrayTitle);
+    if ((strTrayTitle[0] == '^') && (Channel::instance()->containsAlternativeName(strTrayTitle)))
+        strTrayTitle = Channel::instance()->getAlternativeName(strTrayTitle);
 
     Core::instance()->mainWindow()->getTrayIcon()->showMessage(strTrayTitle, strTrayMessage);
 }
@@ -73,5 +73,7 @@ void Tray::messageClicked()
     Core::instance()->mainWindow()->setWindowState(Core::instance()->mainWindow()->windowState() | Qt::WindowActive);
     Core::instance()->mainWindow()->show();
     Core::instance()->mainWindow()->activateWindow();
-    Core::instance()->mainWindow()->changeCurrentTab(strLastMessageTitle);
+
+    int index = Channel::instance()->getIndexFromName(strLastMessageTitle);
+    Core::instance()->mainWindow()->changeCurrentTab(index);
 }

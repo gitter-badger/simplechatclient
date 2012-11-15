@@ -18,8 +18,10 @@
  */
 
 #include <QLabel>
+#include "avatar.h"
 #include "core.h"
 #include "convert.h"
+#include "log.h"
 #include "mainwindow.h"
 #include "channel.h"
 
@@ -42,32 +44,80 @@ Channel::Channel()
 
 void Channel::clear()
 {
-    lChannelInfo.clear();
-    lChannels.clear();
-    lAvatar.clear();
-    lPriv.clear();
+    removeAll();
+
+    lChannelAlternativeName.clear();
 }
 
 void Channel::add(const QString &channel)
 {
-    if (!lChannels.contains(channel))
-        lChannels.append(channel);
+    if (lChannels.contains(channel))
+        return;
+
+    OnetChannel ochannel;
+    ochannel.name = channel;
+    ochannel.displayedOptions = false;
+    ochannel.index = lChannels.size();
+    ochannel.tw = new TabWidget(channel);
+
+    lChannels[channel] = ochannel;
+
+    // log
+    if (channel[0] == '^')
+    {
+        QString alternativeName = getAlternativeName(channel);
+        if (!alternativeName.isEmpty())
+            Log::logOpened(channel);
+    }
+    else
+        Log::logOpened(channel);
 }
 
 void Channel::remove(const QString &channel)
 {
-    if (lChannels.contains(channel))
-        lChannels.removeOne(channel);
+    if (!lChannels.contains(channel))
+        return;
+
+    OnetChannel ochannel = lChannels.value(channel);
+    int index = ochannel.index;
+
+    delete ochannel.tw;
+
+    lChannels.remove(channel);
+
+    // log
+    Log::logClosed(channel);
+
+    // fix index
+    foreach (OnetChannel ochannel, lChannels)
+    {
+        if (ochannel.index >= index)
+            lChannels[ochannel.name].index--;
+    }
 }
 
-QList<QString> Channel::get()
+void Channel::removeAll()
 {
-    return lChannels;
+    foreach (OnetChannel ochannel, lChannels)
+    {
+        QString channel = ochannel.name;
+
+        delete ochannel.tw;
+
+        // log
+        Log::logClosed(channel);
+    }
+
+    lChannels.clear();
 }
 
 void Channel::move(int from, int to)
 {
-    lChannels.move(from, to);
+    QString channelFrom = getNameFromIndex(from);
+    QString channelTo = getNameFromIndex(to);
+
+    if (!channelFrom.isEmpty()) lChannels[channelFrom].index = to;
+    if (!channelTo.isEmpty()) lChannels[channelTo].index = from;
 }
 
 bool Channel::contains(const QString &channel)
@@ -75,36 +125,50 @@ bool Channel::contains(const QString &channel)
     return lChannels.contains(channel);
 }
 
-QList<QString> Channel::getCleared()
+QString Channel::getNameFromIndex(int index)
 {
-    QList<QString> lChannelsCleared = lChannels;
+    foreach (OnetChannel ochannel, lChannels)
+    {
+        if (ochannel.index == index)
+            return ochannel.name;
+    }
+    return QString::null;
+}
+
+int Channel::getIndexFromName(const QString &channel)
+{
+    if (lChannels.contains(channel))
+        return lChannels[channel].index;
+    else
+        return 0;
+}
+
+QString Channel::getCurrentName()
+{
+    int index = Core::instance()->mainWindow()->getCurrentTabIndex();
+
+    return getNameFromIndex(index);
+}
+
+QList<QString> Channel::getList()
+{
+    return lChannels.keys();
+}
+
+QList<QString> Channel::getListCleared()
+{
+    QList<QString> lChannelsCleared = lChannels.keys();
     lChannelsCleared.removeOne(DEBUG_WINDOW);
     lChannelsCleared.removeOne(STATUS_WINDOW);
     return lChannelsCleared;
 }
 
-QString Channel::getFromIndex(int index)
+QList<CaseIgnoreString> Channel::getListClearedSorted()
 {
-    return lChannels.value(index, QString::null);
-}
-
-int Channel::getIndex(const QString &channel)
-{
-    return lChannels.indexOf(channel);
-}
-
-QString Channel::getCurrent()
-{
-    int index = Core::instance()->mainWindow()->getCurrentTabIndex();
-    return lChannels.value(index, QString::null);
-}
-
-QList<CaseIgnoreString> Channel::getSorted()
-{
-    QList<CaseIgnoreString> lChannelsCaseIgnore;
-
     // copy to new list
-    QList<QString> lChannels = getCleared();
+    QList<QString> lChannels = getListCleared();
+
+    QList<CaseIgnoreString> lChannelsCaseIgnore;
 
     foreach (QString strChannel, lChannels)
         lChannelsCaseIgnore.append(strChannel);
@@ -115,10 +179,107 @@ QList<CaseIgnoreString> Channel::getSorted()
     return lChannelsCaseIgnore;
 }
 
+// displayed options
+bool Channel::getDisplayedOptions(const QString &channel)
+{
+    if (lChannels.contains(channel))
+        return lChannels[channel].displayedOptions;
+    else
+        return false;
+}
+
+void Channel::setDisplayedOptions(const QString &channel, bool displayed)
+{
+    if (!lChannels.contains(channel))
+        return;
+
+    lChannels[channel].displayedOptions = displayed;
+}
+
+// avatar
+QString Channel::getAvatar(const QString &channel)
+{
+    if (lChannels.contains(channel))
+        return lChannels[channel].avatar;
+    else
+        return QString::null;
+}
+
+void Channel::setAvatar(const QString &channel, const QString &avatar)
+{
+    if (!lChannels.contains(channel))
+        return;
+
+    lChannels[channel].avatar = avatar;
+
+    if (!avatar.isEmpty())
+    {
+        int index = lChannels[channel].index;
+
+        Core::instance()->mainWindow()->updateChannelIcon(index, Avatar::instance()->getAvatarPath(avatar));
+    }
+}
+
+// alternative name
+void Channel::setAlternativeName(const QString &channel, const QString &name)
+{
+    lChannelAlternativeName[channel] = name;
+}
+
+QString Channel::getAlternativeName(const QString &channel)
+{
+    return lChannelAlternativeName.value(channel, QString::null);
+}
+
+bool Channel::containsAlternativeName(const QString &channel)
+{
+    return lChannelAlternativeName.contains(channel);
+}
+
+// tw
+
+TabWidget* Channel::getTw(const QString &channel)
+{
+    if (lChannels.contains(channel))
+    {
+        return lChannels[channel].tw;
+    }
+    else
+    {
+        add(channel);
+        return getTw(channel);
+    }
+}
+
+QLabel* Channel::getTopic(const QString &channel)
+{
+    return getTw(channel)->topic;
+}
+
+ChatView* Channel::getChatView(const QString &channel)
+{
+    return getTw(channel)->pChatView;
+}
+
+QLabel* Channel::getUsers(const QString &channel)
+{
+    return getTw(channel)->users;
+}
+
+NickListWidget* Channel::getNickListWidget(const QString &channel)
+{
+    return getTw(channel)->pNickListWidget;
+}
+
+QSplitter* Channel::getSplitter(const QString &channel)
+{
+    return getTw(channel)->splitter;
+}
+
 // topic
 void Channel::setTopic(const QString &strChannel, const QString &strTopicContent)
 {
-    if (!Core::instance()->tw.contains(strChannel))
+    if (!lChannels.contains(strChannel))
         return;
 
     QString strTopic = strTopicContent;
@@ -133,72 +294,21 @@ void Channel::setTopic(const QString &strChannel, const QString &strTopicContent
         strTopic.replace(QRegExp("(\\S{100})"), "\\1 ");
 
     // set topic
-    Core::instance()->tw[strChannel]->topic->setText(QString("<b>%1</b> %2").arg(tr("Topic:"), strTopic));
+    getTopic(strChannel)->setText(QString("<b>%1</b> %2").arg(tr("Topic:"), strTopic));
 
     // tooltip
     Convert::fixHtmlChars(strTooltip);
     Convert::simpleConvert(strTooltip);
 
-    Core::instance()->tw[strChannel]->topic->setToolTip(strTooltip);
+    getTopic(strChannel)->setToolTip(strTooltip);
 }
 
 void Channel::setAuthorTopic(const QString &strChannel, const QString &strNick)
 {
-    if (!Core::instance()->tw.contains(strChannel))
+    if (!lChannels.contains(strChannel))
         return;
 
     QString strTopicDetails = QString(tr("Topic set by %1")).arg(strNick);
-    Core::instance()->tw[strChannel]->topic->setToolTip(strTopicDetails);
-}
 
-// channel info
-void Channel::addChannelInfo(const QString &channel)
-{
-    if (!lChannelInfo.contains(channel))
-        lChannelInfo.append(channel);
-}
-
-bool Channel::containsChannelInfo(const QString &channel)
-{
-    return lChannelInfo.contains(channel);
-}
-
-void Channel::removeChannelInfo(const QString &channel)
-{
-    if (lChannelInfo.contains(channel))
-        lChannelInfo.removeOne(channel);
-}
-
-void Channel::clearChannelInfo()
-{
-    lChannelInfo.clear();
-}
-
-// avatar
-QString Channel::getAvatar(const QString &channel)
-{
-    return lAvatar.value(channel, QString::null);
-}
-
-void Channel::setAvatar(const QString &channel, const QString &path)
-{
-    lAvatar[channel] = path;
-
-    Core::instance()->mainWindow()->updateChannelIcon(channel);
-}
-
-// priv
-void Channel::setPriv(const QString &channel, const QString &name)
-{
-    lPriv[channel] = name;
-}
-
-QString Channel::getPriv(const QString &channel)
-{
-    return lPriv.value(channel, channel);
-}
-
-bool Channel::containsPriv(const QString &channel)
-{
-    return lPriv.contains(channel);
+    getTopic(strChannel)->setToolTip(strTopicDetails);
 }

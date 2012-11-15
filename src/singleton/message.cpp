@@ -72,9 +72,6 @@ bool Message::isHighlightMessage(const QString &strMessage)
 
 void Message::saveMessage(const QString &strChannel, const QString &strData, qint64 iTime, QString strNick)
 {
-    if (Settings::instance()->get("disable_logs") == "true")
-        return;
-
     QString strSaveData;
     if (!strNick.isEmpty())
         strSaveData = QString("%1 <%2> %3").arg(QDateTime::fromMSecsSinceEpoch(iTime).toString("[hh:mm:ss]"), strNick, strData);
@@ -103,7 +100,7 @@ bool Message::isHideJoinPart(const QString &strChannel, MessageCategory eMessage
 
 void Message::showMessage(const QString &strChannel, const QString &strData, MessageCategory eMessageCategory, QString strNick, qint64 iTime)
 {
-    if (!Core::instance()->tw.contains(strChannel))
+    if (!Channel::instance()->contains(strChannel))
         return;
 
     // hide join part
@@ -115,7 +112,7 @@ void Message::showMessage(const QString &strChannel, const QString &strData, Mes
         iTime = QDateTime::currentMSecsSinceEpoch();
 
     // highlight
-    if ((isHighlightMessage(strData)) && (eMessageCategory == MessageDefault) && (strChannel != DEBUG_WINDOW))
+    if ((eMessageCategory == MessageDefault) && (isHighlightMessage(strData)) && (strChannel != DEBUG_WINDOW))
     {
         // update message category
         eMessageCategory = MessageHighlight;
@@ -126,7 +123,8 @@ void Message::showMessage(const QString &strChannel, const QString &strData, Mes
             strAwaylogData = QString("<%1> %2").arg(strNick, strData);
 
         // awaylog
-        Awaylog::instance()->add(iTime, strChannel, strAwaylogData);
+        if (Settings::instance()->get("away") == "true")
+            Awaylog::instance()->add(iTime, strChannel, strAwaylogData);
 
         // tray
         if (Settings::instance()->get("tray_message") == "true")
@@ -142,27 +140,26 @@ void Message::showMessage(const QString &strChannel, const QString &strData, Mes
         Core::instance()->mainWindow()->setTabColor(strChannel, eMessageCategory);
 
     // save message
-    saveMessage(strChannel, strData, iTime, strNick);
+    if (Settings::instance()->get("disable_logs") == "false")
+        saveMessage(strChannel, strData, iTime, strNick);
 
     // display
-    Core::instance()->tw[strChannel]->pChatView->displayMessage(strData, eMessageCategory, iTime, strNick);
+    Channel::instance()->getChatView(strChannel)->displayMessage(strData, eMessageCategory, iTime, strNick);
 }
 
 void Message::showMessageAll(const QString &strData, MessageCategory eMessageCategory)
 {
-    QHashIterator<QString, TabWidget*> i(Core::instance()->tw);
-    while (i.hasNext())
-    {
-        i.next();
-        QString strChannel = i.key();
+    QList<CaseIgnoreString> lChannels = Channel::instance()->getListClearedSorted();
 
+    foreach (QString strChannel, lChannels)
+    {
         showMessage(strChannel, strData, eMessageCategory);
     }
 }
 
 void Message::showMessageActive(const QString &strData, MessageCategory eMessageCategory)
 {
-    QString strChannel = Channel::instance()->getCurrent();
+    QString strChannel = Channel::instance()->getCurrentName();
 
     showMessage(strChannel, strData, eMessageCategory);
 }

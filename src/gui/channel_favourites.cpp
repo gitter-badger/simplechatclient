@@ -75,6 +75,7 @@ void DlgChannelFavourites::refresh()
     QList<QString> favouritesList = ChannelFavouritesModel::instance()->getAll();
     foreach (QString strChannel, favouritesList)
     {
+/*
         QString strAvatar = Channel::instance()->getAvatar(strChannel);
 
         if (!strAvatar.isEmpty())
@@ -86,6 +87,8 @@ void DlgChannelFavourites::refresh()
             strAvatar = ":/images/channel_avatar.png";
             Core::instance()->network->send(QString("CS INFO %1 i").arg(strChannel));
         }
+*/
+        QString strAvatar = ":/images/channel_avatar.png";
 
         ui.listWidget_channels->addItem(new QListWidgetItem(QIcon(strAvatar), strChannel));
     }

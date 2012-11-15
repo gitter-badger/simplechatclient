@@ -52,9 +52,9 @@ public:
     void refreshToolWidgetValues();
     // for core
     int getCurrentTabIndex();
-    void changeCurrentTab(const QString &strChannel);
+    void changeCurrentTab(int index);
     void refreshToolButtons(const QString &strChannel);
-    void updateChannelIcon(const QString &channel);
+    void updateChannelIcon(int index, const QString &avatar);
     void setTabColor(const QString &strChannel, MessageCategory eMessageCategory);
     QSystemTrayIcon *getTrayIcon();
     QToolButton *getNotificationToolButton();

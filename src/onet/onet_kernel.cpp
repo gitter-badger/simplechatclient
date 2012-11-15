@@ -418,7 +418,7 @@ void OnetKernel::raw_join()
     // show message
     if (strChannel[0] == '^')
     {
-        if (Channel::instance()->containsPriv(strChannel))
+        if (Channel::instance()->containsAlternativeName(strChannel))
             Message::instance()->showMessage(strChannel, strDisplay, MessageJoin);
     }
     else
@@ -432,9 +432,6 @@ void OnetKernel::raw_join()
     {
         Core::instance()->network->send(QString("NS INFO %1 s").arg(strNick));
     }
-
-    // channel info
-    Channel::instance()->removeChannelInfo(strChannel);
 
     QString strMe = Settings::instance()->get("nick");
     if ((strNick == strMe) && (strChannel[0] != '^'))
@@ -499,9 +496,6 @@ void OnetKernel::raw_part()
 
     if (strNick == strMe)
     {
-        // channel info
-        Channel::instance()->removeChannelInfo(strChannel);
-
         // close channel
         if ((strChannel != DEBUG_WINDOW) && (strChannel != STATUS_WINDOW))
             pTabC->removeTab(strChannel);
@@ -579,9 +573,6 @@ void OnetKernel::raw_kick()
 
         Message::instance()->showMessage(strChannel, strDisplay, MessageKick);
         Message::instance()->showMessage(STATUS_WINDOW, strDisplay, MessageKick);
-
-        // channel info
-        Channel::instance()->removeChannelInfo(strChannel);
 
         // remove tab
         pTabC->removeTab(strChannel);
@@ -940,7 +931,7 @@ void OnetKernel::raw_invite()
 
     // priv name
     if (strChannel[0] == '^')
-        Channel::instance()->setPriv(strChannel, strNick);
+        Channel::instance()->setAlternativeName(strChannel, strNick);
 
     // add invite notification
     Invite::instance()->add(strNick, strChannel);
@@ -974,7 +965,7 @@ void OnetKernel::raw_topic()
     QString strDisplay = QString(tr("* %1 changed the topic to: %2")).arg(strWho, strTopic);
 
     // exist channel
-    if (Core::instance()->tw.contains(strChannel))
+    if (Channel::instance()->contains(strChannel))
     {
         // show msg
         Message::instance()->showMessage(strChannel, strDisplay, MessageMode);
@@ -1028,9 +1019,6 @@ void OnetKernel::raw_invignore()
 
     // display
     Message::instance()->showMessage(strChannel, strDisplay, MessageInfo);
-
-    // rename
-    pTabC->renameTab(strChannel, strWho);
 }
 
 // :~testa!anonymous@3DE379.B7103A.6CF799.6902F4 MODERMSG test1 - #Scrabble :%F:verdana%%Ihehe%
@@ -1166,8 +1154,6 @@ void OnetKernel::raw_001()
     ChannelSettingsModel::instance()->clear();
     // moderate
     ModerationModel::instance()->clear();
-    // channel info
-    Channel::instance()->clearChannelInfo();
 
     // protocol
     Core::instance()->network->send("PROTOCTL ONETNAMESX");
@@ -1195,7 +1181,7 @@ void OnetKernel::raw_001()
     Settings::instance()->set("age_check", "true");
 
     // auto rejoin
-    QList<CaseIgnoreString> lChannelsCaseIgnore = Channel::instance()->getSorted();
+    QList<CaseIgnoreString> lChannelsCaseIgnore = Channel::instance()->getListClearedSorted();
 
     foreach (QString strChannel, lChannelsCaseIgnore)
         pTabC->removeTab(strChannel);
@@ -1590,7 +1576,7 @@ void OnetKernel::raw_161n()
     if (Channel::instance()->contains(strChannel))
     {
         // channel info
-        if (!Channel::instance()->containsChannelInfo(strChannel))
+        if (!Channel::instance()->getDisplayedOptions(strChannel))
         {
             if (mKeyValue.value("moderated") == "1")
             {
@@ -1604,7 +1590,7 @@ void OnetKernel::raw_161n()
                 Message::instance()->showMessage(strChannel, strDisplay, MessageInfo);
             }
 */
-            Channel::instance()->addChannelInfo(strChannel);
+            Channel::instance()->setDisplayedOptions(strChannel, true);
         }
 
         // update topic author
@@ -2657,7 +2643,7 @@ void OnetKernel::raw_341()
 
     if (strChannel[0] == '^')
     {
-        Channel::instance()->setPriv(strChannel, strNick);
+        Channel::instance()->setAlternativeName(strChannel, strNick);
 
         pTabC->renameTab(strChannel, strNick);
     }
@@ -2905,7 +2891,7 @@ void OnetKernel::raw_401()
     // close inactive priv
     if (strNickChannel[0] == '^')
     {
-        if (Core::instance()->tw.contains(strNickChannel))
+        if (Channel::instance()->contains(strNickChannel))
             pTabC->removeTab(strNickChannel);
     }
 }
@@ -2955,8 +2941,8 @@ void OnetKernel::raw_403()
     QString strChannel = strDataList[3];
 
     QString strMessage;
-    if ((strChannel[0] == '^') && (Channel::instance()->containsPriv(strChannel)))
-        strMessage = QString(tr("* Invalid priv with %1").arg(Channel::instance()->getPriv(strChannel)));
+    if ((strChannel[0] == '^') && (Channel::instance()->containsAlternativeName(strChannel)))
+        strMessage = QString(tr("* Invalid priv with %1").arg(Channel::instance()->getAlternativeName(strChannel)));
     else
         strMessage = QString(tr("* %1 :Invalid channel name")).arg(strChannel);
 

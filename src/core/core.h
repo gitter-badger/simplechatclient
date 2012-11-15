@@ -24,7 +24,6 @@
 #include <QObject>
 #include <QTranslator>
 #include "network.h"
-#include "tab_widget.h"
 class MainWindow;
 
 QT_BEGIN_NAMESPACE
@@ -53,8 +52,6 @@ public:
     QTcpSocket *kamerzystaSocket;
     // network
     Network *network;
-    // TW (important!!!)
-    QHash<QString, TabWidget*> tw;
 
 public slots:
     void quit();

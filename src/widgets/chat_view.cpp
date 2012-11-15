@@ -349,12 +349,12 @@ void ChatView::menuNick(QContextMenuEvent *event)
 
     QMenu *mInvite = new QMenu(tr("Invite"));
     mInvite->setIcon(QIcon(":/images/oxygen/16x16/legalmoves.png"));
-    QList<QString> lChannelsCleared = Channel::instance()->getCleared();
+    QList<CaseIgnoreString> lChannelsCleared = Channel::instance()->getListClearedSorted();
     for (int i = 0; i < lChannelsCleared.size(); ++i)
     {
         QString strOpenChannel = lChannelsCleared[i];
         if (strOpenChannel[0] == '^')
-            strOpenChannel = Channel::instance()->getPriv(strOpenChannel);
+            strOpenChannel = Channel::instance()->getAlternativeName(strOpenChannel);
 
         openChannelsActs[i] = new QAction(this);
         openChannelsActs[i]->setIcon(QIcon(":/images/oxygen/16x16/irc-join-channel.png"));

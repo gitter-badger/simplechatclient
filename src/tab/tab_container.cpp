@@ -18,8 +18,8 @@
  */
 
 #include <QSplitter>
-#include "channel.h"
 #include "core.h"
+#include "channel.h"
 #include "log.h"
 #include "nicklist_widget.h"
 #include "settings.h"
@@ -32,70 +32,43 @@ TabContainer::TabContainer(TabManager *_pTabM) : pTabM(_pTabM)
 
 TabContainer::~TabContainer()
 {
-    QHashIterator<QString, TabWidget*> i(Core::instance()->tw);
-    while (i.hasNext())
-    {
-        i.next();
-        QString strChannel = i.key();
-
-        // remove from open channels
-        Channel::instance()->remove(strChannel);
-
-        // remove tab
-        delete Core::instance()->tw.take(strChannel);
-
-        // log
-        Log::logClosed(strChannel);
-    }
+    Channel::instance()->removeAll();
 }
 
 void TabContainer::addTab(const QString &strChannel)
 {
-    if (Core::instance()->tw.contains(strChannel))
+    if (Channel::instance()->contains(strChannel))
         return;
 
-    // update open channels
     Channel::instance()->add(strChannel);
 
     // create tab
-    Core::instance()->tw.insert(strChannel, new TabWidget(strChannel));
-    pTabM->addTab(Core::instance()->tw[strChannel], strChannel);
-    pTabM->setCurrentIndex(Core::instance()->tw.size()-1);
+    pTabM->addTab(Channel::instance()->getTw(strChannel), strChannel);
+    pTabM->setCurrentIndex(pTabM->count()-1);
 
     // if priv
     if (strChannel[0] == '^')
     {
-        QString strPrivName = Channel::instance()->getPriv(strChannel);
+        QString strAlternativeName = Channel::instance()->getAlternativeName(strChannel);
 
-        if (strPrivName != strChannel)
+        if (!strAlternativeName.isEmpty())
         {
-            pTabM->setTabText(Core::instance()->tw.size()-1, strPrivName);
-
-            Log::logOpened(strChannel);
+            pTabM->setTabText(pTabM->count()-1, strAlternativeName);
         }
     }
-    else
-        Log::logOpened(strChannel);
 }
 
 void TabContainer::removeTab(const QString &strChannel)
 {
-    if ((!Core::instance()->tw.contains(strChannel)) || (strChannel == DEBUG_WINDOW) || (strChannel == STATUS_WINDOW))
+    if ((!Channel::instance()->contains(strChannel)) || (strChannel == DEBUG_WINDOW) || (strChannel == STATUS_WINDOW))
         return;
 
-    // remove from open channels
     Channel::instance()->remove(strChannel);
-
-    // remove tab
-    delete Core::instance()->tw.take(strChannel);
-
-    // log
-    Log::logClosed(strChannel);
 }
 
 void TabContainer::renameTab(const QString &strChannel, const QString &strNewName)
 {
-    int index = Channel::instance()->getIndex(strChannel);
+    int index = Channel::instance()->getIndexFromName(strChannel);
 
     if (index >= 0 && index <= pTabM->count())
     {
@@ -111,7 +84,7 @@ void TabContainer::renameTab(const QString &strChannel, const QString &strNewNam
 
 void TabContainer::partTab(int index)
 {
-    QString strChannel = Channel::instance()->getFromIndex(index);
+    QString strChannel = Channel::instance()->getNameFromIndex(index);
 
     if (!strChannel.isEmpty())
     {
@@ -124,49 +97,43 @@ void TabContainer::partTab(int index)
 
 void TabContainer::refreshColors()
 {
-    QHashIterator<QString, TabWidget*> i(Core::instance()->tw);
-    while (i.hasNext())
-    {
-        i.next();
-        QString strChannel = i.key();
+    QList<CaseIgnoreString> lChannels = Channel::instance()->getListClearedSorted();
 
+    foreach (QString strChannel, lChannels)
+    {
         // update tab name color
-        int index = Channel::instance()->getIndex(strChannel);
+        int index = Channel::instance()->getIndexFromName(strChannel);
         pTabM->setColor(index, QColor(Settings::instance()->get("default_color")));
     }
 }
 
 void TabContainer::refreshCSS()
 {
-    QHashIterator<QString, TabWidget*> i(Core::instance()->tw);
-    while (i.hasNext())
-    {
-        i.next();
-        QString strChannel = i.key();
+    QList<CaseIgnoreString> lChannels = Channel::instance()->getListClearedSorted();
 
-        Core::instance()->tw[strChannel]->pChatView->refreshCSS();
+    foreach (QString strChannel, lChannels)
+    {
+        Channel::instance()->getChatView(strChannel)->refreshCSS();
     }
 }
 
 void TabContainer::resizeMainWindow(QSize s)
 {
-    QHashIterator<QString, TabWidget*> i(Core::instance()->tw);
-    while (i.hasNext())
-    {
-        i.next();
-        QString strChannel = i.key();
+    QList<CaseIgnoreString> lChannels = Channel::instance()->getListClearedSorted();
 
-        if (!Core::instance()->tw[strChannel]->pNickListWidget->isHidden())
+    foreach (QString strChannel, lChannels)
+    {
+        if (!Channel::instance()->getNickListWidget(strChannel)->isHidden())
         {
             int width = s.width();
             if (width > 250)
             {
-                QList<int> currentSizes = Core::instance()->tw[strChannel]->splitter->sizes();
+                QList<int> currentSizes = Channel::instance()->getSplitter(strChannel)->sizes();
 
                 currentSizes[0] = width-200;
                 currentSizes[1] = 200;
 
-                Core::instance()->tw[strChannel]->splitter->setSizes(currentSizes);
+                Channel::instance()->getSplitter(strChannel)->setSizes(currentSizes);
             }
         }
     }

@@ -690,9 +690,9 @@ void MainWindow::updateNick(const QString &strNick)
     pToolWidget->updateNick(strNick);
 }
 
-void MainWindow::updateChannelIcon(const QString &channel)
+void MainWindow::updateChannelIcon(int index, const QString &avatar)
 {
-    pTabM->updateIcon(channel);
+    pTabM->updateIcon(index, avatar);
 }
 
 // part tab
@@ -703,20 +703,17 @@ void MainWindow::tabCloseRequested(int index)
 
 void MainWindow::setTabColor(const QString &strChannel, MessageCategory eMessageCategory)
 {
-    int index = Channel::instance()->getIndex(strChannel);
-
     if (eMessageCategory == MessageHighlight)
-        pTabM->setAlert(index, ChannelHighlight);
+        pTabM->setAlert(strChannel, ChannelHighlight);
     else if (eMessageCategory != MessageDefault)
-        pTabM->setAlert(index, ChannelGreen);
+        pTabM->setAlert(strChannel, ChannelGreen);
     else
-        pTabM->setAlert(index, ChannelRed);
+        pTabM->setAlert(strChannel, ChannelRed);
 }
 
 // change tab
-void MainWindow::changeCurrentTab(const QString &strChannel)
+void MainWindow::changeCurrentTab(int index)
 {
-    int index = Channel::instance()->getIndex(strChannel);
     pTabM->setCurrentIndex(index);
 }
 
@@ -730,7 +727,7 @@ void MainWindow::currentTabChanged(int index)
     pToolWidget->clearInputLine();
 
     // refresh tool buttons
-    QString strChannel = Channel::instance()->getFromIndex(index);
+    QString strChannel = Channel::instance()->getNameFromIndex(index);
     refreshToolButtons(strChannel);
 }
 

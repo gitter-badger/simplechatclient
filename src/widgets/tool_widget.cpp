@@ -720,7 +720,7 @@ void ToolWidget::channelSettingsClicked()
 {
     if (Core::instance()->network->isConnected())
     {
-        QString strChannel = Channel::instance()->getCurrent();
+        QString strChannel = Channel::instance()->getCurrentName();
 
         if (!strChannel.isEmpty())
             DlgChannelSettings(strChannel).exec();
@@ -729,7 +729,7 @@ void ToolWidget::channelSettingsClicked()
 
 void ToolWidget::moderationClicked()
 {
-    QString strChannel = Channel::instance()->getCurrent();
+    QString strChannel = Channel::instance()->getCurrentName();
 
     if (!strChannel.isEmpty())
         DlgModeration(strChannel).exec();
@@ -792,7 +792,7 @@ void ToolWidget::pasteMultiLine(const QString &strText, bool bModeration)
 
 void ToolWidget::sendMessage(QString strText, bool bModeration)
 {
-    QString strChannel = Channel::instance()->getCurrent();
+    QString strChannel = Channel::instance()->getCurrentName();
 
     // empty text or channel
     if ((strText.isEmpty()) || (strChannel.isEmpty()))
@@ -835,7 +835,7 @@ void ToolWidget::sendMessage(QString strText, bool bModeration)
         Convert::simpleReverseConvert(strText);
         Replace::replaceEmots(strText);
 
-        QList<QString> lChannelsCleared = Channel::instance()->getCleared();
+        QList<CaseIgnoreString> lChannelsCleared = Channel::instance()->getListClearedSorted();
         foreach (QString strChannel, lChannelsCleared)
         {
             Core::instance()->network->send(QString("PRIVMSG %1 :%2").arg(strChannel, strText));
