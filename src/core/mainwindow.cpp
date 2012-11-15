@@ -626,25 +626,12 @@ void MainWindow::inputLineKeyEvent(QKeyEvent *k)
         int index = pTabM->currentIndex();
         pTabM->setCurrentIndex(index-1);
     }
-
-    /* TODO https://github.com/simplechatclient/simplechatclient/issues/14
-    // alt
-    else if (k->key() == Qt::Key_Alt)
+    // ctrl F
+    else if ((k->key() == Qt::Key_F) && (k->modifiers() == Qt::ControlModifier))
     {
-        // alt + F
-        if (k->modifiers() == Qt::Key_F)
-        {
-        }
-        // alt + A
-        else if (k->modifiers() == Qt::Key_A)
-        {
-        }
-        // alt + C
-        else if (k->modifiers() == Qt::Key_C)
-        {
-        }
+        QString strChannel = Channel::instance()->getCurrentName();
+        Channel::instance()->getChatView(strChannel)->search();
     }
-    */
 }
 
 int MainWindow::getCurrentTabIndex()

@@ -48,6 +48,9 @@ private:
     void menuWebsite(QContextMenuEvent *event);
     void menuStandard(QContextMenuEvent *event);
 
+public slots:
+    void search();
+
 private slots:
     void joinChannel();
     void priv();
@@ -77,7 +80,6 @@ private slots:
     void watchVideo();
     void openWebbrowser();
     void sendToNotes();
-    void search();
     void clear();
     void scrollToBottom();
 
