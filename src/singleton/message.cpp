@@ -149,7 +149,7 @@ void Message::showMessage(const QString &strChannel, const QString &strData, Mes
 
 void Message::showMessageAll(const QString &strData, MessageCategory eMessageCategory)
 {
-    QList<CaseIgnoreString> lChannels = Channel::instance()->getListClearedSorted();
+    QList<QString> lChannels = Channel::instance()->getList();
 
     foreach (QString strChannel, lChannels)
     {

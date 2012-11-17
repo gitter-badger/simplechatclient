@@ -44,7 +44,7 @@ Nicklist::Nicklist()
 
 void Nicklist::clearUsers()
 {
-    QList<CaseIgnoreString> lChannels = Channel::instance()->getListClearedSorted();
+    QList<QString> lChannels = Channel::instance()->getList();
     foreach (QString strChannel, lChannels)
     {
         Channel::instance()->getNickListWidget(strChannel)->clear();

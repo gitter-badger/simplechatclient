@@ -97,7 +97,7 @@ void TabContainer::partTab(int index)
 
 void TabContainer::refreshColors()
 {
-    QList<CaseIgnoreString> lChannels = Channel::instance()->getListClearedSorted();
+    QList<QString> lChannels = Channel::instance()->getList();
 
     foreach (QString strChannel, lChannels)
     {
@@ -109,7 +109,7 @@ void TabContainer::refreshColors()
 
 void TabContainer::refreshCSS()
 {
-    QList<CaseIgnoreString> lChannels = Channel::instance()->getListClearedSorted();
+    QList<QString> lChannels = Channel::instance()->getList();
 
     foreach (QString strChannel, lChannels)
     {
@@ -119,7 +119,7 @@ void TabContainer::refreshCSS()
 
 void TabContainer::resizeMainWindow(QSize s)
 {
-    QList<CaseIgnoreString> lChannels = Channel::instance()->getListClearedSorted();
+    QList<QString> lChannels = Channel::instance()->getList();
 
     foreach (QString strChannel, lChannels)
     {
