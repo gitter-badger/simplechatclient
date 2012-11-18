@@ -47,6 +47,9 @@ void Nicklist::clearUsers()
     QList<QString> lChannels = Channel::instance()->getList();
     foreach (QString strChannel, lChannels)
     {
+        if (strChannel[0] == '^')
+            Channel::instance()->setOffline(strChannel, true);
+
         Channel::instance()->getNickListWidget(strChannel)->clear();
         int iUsersCount = Channel::instance()->getNickListWidget(strChannel)->count();
         Channel::instance()->getUsers(strChannel)->setText(QString(tr("Users (%1)").arg(iUsersCount)));
@@ -56,6 +59,9 @@ void Nicklist::clearUsers()
 void Nicklist::addUser(const QString &strNick, const QString &strChannel, const QString &strModes, int iMaxModes, const QString &strAvatar)
 {
     if (!Channel::instance()->contains(strChannel)) return;
+
+    if (strChannel[0] == '^')
+        Channel::instance()->setOffline(strChannel, false);
 
     Channel::instance()->getNickListWidget(strChannel)->addUser(strNick, strModes, iMaxModes, strAvatar);
     int iUsersCount = Channel::instance()->getNickListWidget(strChannel)->count();
