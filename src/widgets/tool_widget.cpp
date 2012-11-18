@@ -899,16 +899,12 @@ void ToolWidget::sendMessage(QString strText, bool bModeration)
     else
     {
         bool bOffline = Channel::instance()->getOffline(strChannel);
+        QString strNick = Channel::instance()->getAlternativeName(strChannel);
 
-        if (bOffline)
-        {
-            QString strNick = Channel::instance()->getAlternativeName(strChannel);
+        if ((bOffline) && (!strNick.isEmpty()))
             Core::instance()->network->send(QString("NS OFFLINE MSG %1 %2").arg(strNick, strText));
-        }
         else
-        {
             Core::instance()->network->send(QString("PRIVMSG %1 :%2").arg(strChannel, strText));
-        }
 
         Message::instance()->showMessage(strChannel, strText, MessageDefault, strMe);
     }
