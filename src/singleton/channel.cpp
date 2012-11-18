@@ -57,6 +57,7 @@ void Channel::add(const QString &channel)
     OnetChannel ochannel;
     ochannel.name = channel;
     ochannel.displayedOptions = false;
+    ochannel.offline = false;
     ochannel.index = lChannels.size();
     ochannel.tw = new TabWidget(channel);
 
@@ -218,6 +219,23 @@ void Channel::setAvatar(const QString &channel, const QString &avatar)
 
         Core::instance()->mainWindow()->updateChannelIcon(index, Avatar::instance()->getAvatarPath(avatar));
     }
+}
+
+// offline
+void Channel::setOffline(const QString &channel, bool offline)
+{
+    if (!lChannels.contains(channel))
+        return;
+
+    lChannels[channel].offline = offline;
+}
+
+bool Channel::getOffline(const QString &channel)
+{
+    if (lChannels.contains(channel))
+        return lChannels[channel].offline;
+    else
+        return false;
 }
 
 // alternative name

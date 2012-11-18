@@ -66,6 +66,9 @@ void Nicklist::delUser(const QString &strNick, const QString &strChannel)
 {
     if (!Channel::instance()->contains(strChannel)) return;
 
+    if (strChannel[0] == '^')
+        Channel::instance()->setOffline(strChannel, true);
+
     Channel::instance()->getNickListWidget(strChannel)->delUser(strNick);
     int iUsersCount = Channel::instance()->getNickListWidget(strChannel)->count();
     Channel::instance()->getUsers(strChannel)->setText(QString(tr("Users (%1)").arg(iUsersCount)));
@@ -88,6 +91,9 @@ void Nicklist::quitUser(const QString &strNick, const QList<QString> &lChannels,
 
     foreach (QString strChannel, lChannels)
     {
+        if (strChannel[0] == '^')
+            Channel::instance()->setOffline(strChannel, true);
+
         Message::instance()->showMessage(strChannel, strDisplay, eMessageCategory);
         Channel::instance()->getNickListWidget(strChannel)->delUser(strNick);
         int iUsersCount = Channel::instance()->getNickListWidget(strChannel)->count();

@@ -34,6 +34,7 @@ struct OnetChannel
 //    QList<QString> flags;
 //    QHash<QString,QString> options;
     bool displayedOptions;
+    bool offline;
     TabWidget *tw;
 };
 
@@ -64,6 +65,9 @@ public:
     // avatar
     QString getAvatar(const QString &channel);
     void setAvatar(const QString &channel, const QString &avatar);
+    // offline
+    void setOffline(const QString &channel, bool offline);
+    bool getOffline(const QString &channel);
     // priv
     void setAlternativeName(const QString &channel, const QString &name);
     QString getAlternativeName(const QString &channel);
