@@ -100,50 +100,46 @@ void DlgOfflineMessages::refreshMessages()
     ui.lineEdit_reply->setEnabled(true);
     ui.pushButton_reply->setEnabled(true);
 
-    QList<OnetOfflineMessage> list = Offline::instance()->getMessages();
-    foreach (OnetOfflineMessage msg, list)
+    QList<OnetOfflineMessage> lMessages = Offline::instance()->getMessages(strCurrentNick);
+    foreach (OnetOfflineMessage msg, lMessages)
     {
         qint64 iTime = msg.datetime;
         QString strType = msg.type;
-        QString strNick = msg.nick;
         QString strMessage = msg.message;
 
-        if (strNick == strCurrentNick)
+        QString strDT = QDateTime::fromMSecsSinceEpoch(iTime).toString("[dd MMM yyyy] [hh:mm:ss]");
+
+        Convert::simpleConvert(strMessage);
+
+        if (strType == "quote")
         {
-            QString strDT = QDateTime::fromMSecsSinceEpoch(iTime).toString("[dd MMM yyyy] [hh:mm:ss]");
-
-            Convert::simpleConvert(strMessage);
-
-            if (strType == "quote")
+            if (!messagesQuoted.contains(strCurrentNick))
             {
-                if (!messagesQuoted.contains(strNick))
-                {
-                    QString strDisplay = QString(tr("* You sent offline message to %1:").arg(strNick));
-                    ui.listWidget_msg->addItem(strDisplay);
-                    messagesQuoted.append(strNick);
-                }
+                QString strDisplay = QString(tr("* You sent offline message to %1:").arg(strCurrentNick));
+                ui.listWidget_msg->addItem(strDisplay);
+                messagesQuoted.append(strCurrentNick);
+            }
 
-                QString strMe = Settings::instance()->get("nick");
+            QString strMe = Settings::instance()->get("nick");
 
-                strMessage = QString("%1 <%2> %3").arg(strDT, strMe, strMessage);
-                ui.listWidget_msg->addItem(strMessage);
-            }
-            else if (strType == "reply")
+            strMessage = QString("%1 <%2> %3").arg(strDT, strMe, strMessage);
+            ui.listWidget_msg->addItem(strMessage);
+        }
+        else if (strType == "reply")
+        {
+            if (!messagesReplied.contains(strCurrentNick))
             {
-                if (!messagesReplied.contains(strNick))
-                {
-                    QString strDisplay = QString(tr("* User %1 replied:").arg(strNick));
-                    ui.listWidget_msg->addItem(strDisplay);
-                    messagesReplied.append(strNick);
-                }
-                strMessage = QString("%1 <%2> %3").arg(strDT, strNick, strMessage);
-                ui.listWidget_msg->addItem(strMessage);
+                QString strDisplay = QString(tr("* User %1 replied:").arg(strCurrentNick));
+                ui.listWidget_msg->addItem(strDisplay);
+                messagesReplied.append(strCurrentNick);
             }
-            else if (strType == "msg")
-            {
-                strMessage = QString("%1 <%2> %3").arg(strDT, strNick, strMessage);
-                ui.listWidget_msg->addItem(strMessage);
-            }
+            strMessage = QString("%1 <%2> %3").arg(strDT, strCurrentNick, strMessage);
+            ui.listWidget_msg->addItem(strMessage);
+        }
+        else if (strType == "msg")
+        {
+            strMessage = QString("%1 <%2> %3").arg(strDT, strCurrentNick, strMessage);
+            ui.listWidget_msg->addItem(strMessage);
         }
     }
 }

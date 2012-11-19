@@ -39,7 +39,7 @@ public:
     void addMessage(qint64 iTime, const QString &strType, const QString &strNick, const QString &strMessage);
     void removeMessage(const QString &strNick);
     void clearMessages();
-    QList<OnetOfflineMessage> getMessages();
+    QList<OnetOfflineMessage> getMessages(const QString &strNick);
     bool isEmptyMessages();
 
     void addNick(const QString &nick);
@@ -52,7 +52,7 @@ public:
     QAction *offlineMessagesAction;
 
 private:
-    QList<OnetOfflineMessage> lOfflineMessages;
+    QMultiHash<QString, OnetOfflineMessage> lOfflineMessages;
     QList<QString> lOfflineNicks;
 
     void init();

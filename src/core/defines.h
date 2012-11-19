@@ -129,7 +129,6 @@ struct OnetOfflineMessage
 {
     qint64 datetime;
     QString type;
-    QString nick;
     QString message;
 };
 

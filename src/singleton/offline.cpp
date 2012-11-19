@@ -48,33 +48,27 @@ void Offline::init()
 
 void Offline::addMessage(qint64 iTime, const QString &strType, const QString &strNick, const QString &strMessage)
 {
-    OnetOfflineMessage add;
-    add.datetime = iTime;
-    add.type = strType;
-    add.nick = strNick;
-    add.message = strMessage;
+    OnetOfflineMessage omessage;
+    omessage.datetime = iTime;
+    omessage.type = strType;
+    omessage.message = strMessage;
 
-    lOfflineMessages.append(add);
+    lOfflineMessages.insert(strNick, omessage);
 }
 
 void Offline::removeMessage(const QString &strNick)
 {
-    for (int i = 0; i < lOfflineMessages.size(); i++)
-    {
-        QString strOfflineNick = lOfflineMessages.at(i).nick;
-        if (strOfflineNick == strNick)
-            lOfflineMessages.takeAt(i);
-    }
+    lOfflineMessages.remove(strNick);
 }
 
 void Offline::clearMessages()
 {
-    lOfflineNicks.clear();
+    lOfflineMessages.clear();
 }
 
-QList<OnetOfflineMessage> Offline::getMessages()
+QList<OnetOfflineMessage> Offline::getMessages(const QString &strNick)
 {
-    return lOfflineMessages;
+    return lOfflineMessages.values(strNick);
 }
 
 bool Offline::isEmptyMessages()
