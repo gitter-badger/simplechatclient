@@ -238,6 +238,42 @@ bool Channel::getOffline(const QString &channel)
         return false;
 }
 
+// moderate mesages
+QList<OnetModerateMessage> Channel::getModerateMessages(const QString &channel)
+{
+    QList<OnetModerateMessage> lMessages;
+
+    if (lChannels.contains(channel))
+        lMessages = lChannels[channel].moderateMessages;
+
+    return lMessages;
+}
+
+void Channel::addModerateMessage(const QString &channel, const QString &id, qint64 time, const QString &nick, const QString &message)
+{
+    OnetModerateMessage omessage;
+    omessage.id = id;
+    omessage.datetime = time;
+    omessage.nick = nick;
+    omessage.message = message;
+
+    lChannels[channel].moderateMessages.append(omessage);
+}
+
+void Channel::removeModerateMessage(const QString &channel, const QString &id)
+{
+    if (!lChannels.contains(channel))
+        return;
+
+    QMutableListIterator<OnetModerateMessage> i(lChannels[channel].moderateMessages);
+    while (i.hasNext())
+    {
+        OnetModerateMessage omessage = i.next();
+        if (omessage.id == id)
+            i.remove();
+    }
+}
+
 // alternative name
 void Channel::setAlternativeName(const QString &channel, const QString &name)
 {
@@ -255,7 +291,6 @@ bool Channel::containsAlternativeName(const QString &channel)
 }
 
 // tw
-
 TabWidget* Channel::getTw(const QString &channel)
 {
     if (lChannels.contains(channel))

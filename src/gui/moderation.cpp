@@ -21,8 +21,8 @@
 #include <QDesktopWidget>
 #include <QTimer>
 #include "core.h"
+#include "channel.h"
 #include "message.h"
-#include "moderation_model.h"
 #include "settings.h"
 #include "moderation.h"
 
@@ -64,32 +64,25 @@ void DlgModeration::refreshMessages()
 {
     ui.listWidget_msg->clear();
 
-    QHashIterator <QString, OnetModerateMessage> i(ModerationModel::instance()->getAll());
-    while (i.hasNext())
+    QList<OnetModerateMessage> lModerateMessages = Channel::instance()->getModerateMessages(strCurrentChannel);
+    foreach (OnetModerateMessage omessage, lModerateMessages)
     {
-        i.next();
+        QString strID = omessage.id;
+        qint64 iTime = omessage.datetime;
+        QString strNick = omessage.nick;
+        QString strMessage = omessage.message;
 
-        QString strID = i.key();
-        OnetModerateMessage msg = i.value();
-        QString strChannel = msg.channel;
-        qint64 iTime = msg.datetime;
-        QString strNick = msg.nick;
-        QString strMessage = msg.message;
+        QString strData = QString("[%1] <%2> %3").arg(QDateTime::fromMSecsSinceEpoch(iTime).toString("hh:mm:ss"), strNick, strMessage);
 
-        if (strChannel == strCurrentChannel)
-        {
-            QString strData = QString("[%1] <%2> %3").arg(QDateTime::fromMSecsSinceEpoch(iTime).toString("hh:mm:ss"), strNick, strMessage);
+        QListWidgetItem *item = new QListWidgetItem();
+        item->setData(ModerationIdRole, strID);
+        item->setData(ModerationChannelRole, strCurrentChannel);
+        item->setData(ModerationTimeRole, iTime);
+        item->setData(ModerationNickRole, strNick);
+        item->setData(ModerationMessageRole, strMessage);
+        item->setText(strData);
 
-            QListWidgetItem *item = new QListWidgetItem();
-            item->setData(ModerationIdRole, strID);
-            item->setData(ModerationChannelRole, strChannel);
-            item->setData(ModerationTimeRole, iTime);
-            item->setData(ModerationNickRole, strNick);
-            item->setData(ModerationMessageRole, strMessage);
-            item->setText(strData);
-
-            ui.listWidget_msg->addItem(item);
-        }
+        ui.listWidget_msg->addItem(item);
     }
 
     // refresh
@@ -106,9 +99,10 @@ void DlgModeration::removeSelected()
     // remove from list
     foreach (QListWidgetItem *item, list)
     {
+        QString strChannel = item->data(ModerationChannelRole).toString();
         QString strID = item->data(ModerationIdRole).toString();
 
-        ModerationModel::instance()->remove(strID);
+        Channel::instance()->removeModerateMessage(strChannel, strID);
     }
 }
 

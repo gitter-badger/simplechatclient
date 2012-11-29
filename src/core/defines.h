@@ -119,7 +119,7 @@ struct OnetChannelList
 
 struct OnetModerateMessage
 {
-    QString channel;
+    QString id;
     qint64 datetime;
     QString nick;
     QString message;

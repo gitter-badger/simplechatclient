@@ -36,6 +36,7 @@ struct OnetChannel
     bool displayedOptions;
     bool offline;
     TabWidget *tw;
+    QList<OnetModerateMessage> moderateMessages;
 };
 
 class Channel : public QObject
@@ -68,6 +69,10 @@ public:
     // offline
     void setOffline(const QString &channel, bool offline);
     bool getOffline(const QString &channel);
+    // moderate messages
+    void addModerateMessage(const QString &channel, const QString &id, qint64 time, const QString &nick, const QString &message);
+    QList<OnetModerateMessage> getModerateMessages(const QString &channel);
+    void removeModerateMessage(const QString &channel, const QString &id);
     // priv
     void setAlternativeName(const QString &channel, const QString &name);
     QString getAlternativeName(const QString &channel);

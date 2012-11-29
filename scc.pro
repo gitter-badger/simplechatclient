@@ -67,7 +67,6 @@ SOURCES += src/common/commands.cpp \
     src/models/find_nick_model.cpp \
     src/models/friends_model.cpp \
     src/models/ignore_model.cpp \
-    src/models/moderation_model.cpp \
     src/models/my_avatar_model.cpp \
     src/models/my_profile_model.cpp \
     src/models/my_stats_model.cpp \\
@@ -173,7 +172,6 @@ HEADERS += src/common/commands.h \
     src/models/find_nick_model.h \
     src/models/friends_model.h \
     src/models/ignore_model.h \
-    src/models/moderation_model.h \
     src/models/my_avatar_model.h \
     src/models/my_profile_model.h \
     src/models/my_stats_model.h \

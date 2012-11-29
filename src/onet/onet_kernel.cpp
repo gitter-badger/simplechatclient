@@ -40,7 +40,6 @@
 #include "log.h"
 #include "mainwindow.h"
 #include "message.h"
-#include "moderation_model.h"
 #include "my_profile_model.h"
 #include "my_stats_model.h"
 #include "nick.h"
@@ -1079,7 +1078,7 @@ void OnetKernel::raw_moderate()
 
     qint64 iTime = QDateTime::currentMSecsSinceEpoch();
 
-    ModerationModel::instance()->set(strID, strChannel, iTime, strNick, strMessage);
+    Channel::instance()->addModerateMessage(strChannel, strID, iTime, strNick, strMessage);
 }
 
 // :cf1f4.onet KILL scc_test :cf1f4.onet (Killed (Nickname collision))
@@ -1152,8 +1151,6 @@ void OnetKernel::raw_001()
     UserProfileModel::instance()->clear();
     // channel settings
     ChannelSettingsModel::instance()->clear();
-    // moderate
-    ModerationModel::instance()->clear();
 
     // protocol
     Core::instance()->network->send("PROTOCTL ONETNAMESX");

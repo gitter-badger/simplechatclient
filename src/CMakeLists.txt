@@ -94,7 +94,6 @@ set (scc_SRCS
 	models/find_nick_model.cpp
 	models/friends_model.cpp
 	models/ignore_model.cpp
-	models/moderation_model.cpp
 	models/my_avatar_model.cpp
 	models/my_profile_model.cpp
 	models/my_stats_model.cpp
@@ -194,7 +193,6 @@ set (scc_MOC_HDRS
 	models/find_nick_model.h
 	models/friends_model.h
 	models/ignore_model.h
-	models/moderation_model.h
 	models/my_profile_model.h
 	models/my_stats_model.h
 	models/settings.h
