@@ -153,15 +153,15 @@ void WebcamEngine::raw_250b(const QByteArray &data)
         QStringList strLineList = strLine.split(":");
         if (strLineList.size() == 6)
         {
-            QString strUser = strLineList[0];
-            int iCamOnOff = strLineList[1].toInt(); // 1 = on; 2 = off
-            QString strChannelsParams = strLineList[2];
-            int iSpectators = strLineList[3].toInt();
-            QString strUdget = strLineList[4]; // udget (012345)
-            int iRank = strLineList[5].toInt(); // -500 to 500
+            QString strUser = strLineList.at(0);
+            int iCamOnOff = strLineList.at(1).toInt(); // 1 = on; 2 = off
+            QString strChannelsParams = strLineList.at(2);
+            int iSpectators = strLineList.at(3).toInt();
+            QString strUdget = strLineList.at(4); // udget (012345)
+            int iRank = strLineList.at(5).toInt(); // -500 to 500
 
             // NO_SUCH_USER / Spectators and Rank unknown
-            if ((strLineList[3] == "-") && (strLineList[5] == "-"))
+            if ((strLineList.at(3) == "-") && (strLineList.at(5) == "-"))
                 iCamOnOff = 0; // off
 
             QStringList lUserChannels;
@@ -174,10 +174,10 @@ void WebcamEngine::raw_250b(const QByteArray &data)
                     QStringList lChannelParams = strChannelParams.split("/");
                     if (lChannelParams.size() == 4)
                     {
-                        int iChannelCategory = lChannelParams[0].toInt();
-                        int iUnknown = lChannelParams[1].toInt(); // always 0 or -2
-                        QString strChannelName = lChannelParams[2];
-                        int iCamPubPriv = lChannelParams[3].toInt(); // 0 = public; 1 = private
+                        int iChannelCategory = lChannelParams.at(0).toInt();
+                        int iUnknown = lChannelParams.at(1).toInt(); // always 0 or -2
+                        QString strChannelName = lChannelParams.at(2);
+                        int iCamPubPriv = lChannelParams.at(3).toInt(); // 0 = public; 1 = private
 
                         Q_UNUSED(iChannelCategory);
                         Q_UNUSED(iUnknown);
@@ -218,15 +218,15 @@ void WebcamEngine::raw_251b(const QByteArray &data)
     if (strLineList.size() != 6)
         return;
 
-    QString strUser = strLineList[0];
-    int iCamOnOff = strLineList[1].toInt(); // 1 = on; 2 = off
-    QString strChannelsParams = strLineList[2];
-    int iSpectators = strLineList[3].toInt();
-    QString strUdget = strLineList[4]; // udget (012345)
-    int iRank = strLineList[5].toInt(); // -500 to 500
+    QString strUser = strLineList.at(0);
+    int iCamOnOff = strLineList.at(1).toInt(); // 1 = on; 2 = off
+    QString strChannelsParams = strLineList.at(2);
+    int iSpectators = strLineList.at(3).toInt();
+    QString strUdget = strLineList.at(4); // udget (012345)
+    int iRank = strLineList.at(5).toInt(); // -500 to 500
 
     // NO_SUCH_USER / Spectators and Rank unknown
-    if ((strLineList[3] == "-") && (strLineList[5] == "-"))
+    if ((strLineList.at(3) == "-") && (strLineList.at(5) == "-"))
         iCamOnOff = 0; // off
 
     QStringList lUserChannels;
@@ -238,10 +238,10 @@ void WebcamEngine::raw_251b(const QByteArray &data)
             QStringList lChannelParams = strChannelParams.split("/");
             if (lChannelParams.size() == 4)
             {
-                int iChannelCategory = lChannelParams[0].toInt();
-                int iUnknown = lChannelParams[1].toInt(); // always 0 or -2
-                QString strChannelName = lChannelParams[2];
-                int iCamPubPriv = lChannelParams[3].toInt(); // 0 = public; 1 = private
+                int iChannelCategory = lChannelParams.at(0).toInt();
+                int iUnknown = lChannelParams.at(1).toInt(); // always 0 or -2
+                QString strChannelName = lChannelParams.at(2);
+                int iCamPubPriv = lChannelParams.at(3).toInt(); // 0 = public; 1 = private
 
                 Q_UNUSED(iChannelCategory);
                 Q_UNUSED(iUnknown);
@@ -297,9 +297,9 @@ void WebcamEngine::raw_254b(const QByteArray &data)
         QStringList strLineList = strLine.split(" ");
         if (strLineList.size() == 3) // is correct ?
         {
-            QString strUser = strLineList[0];
-            int iSpectators = strLineList[1].toInt();
-            int iRank = strLineList[2].toInt();
+            QString strUser = strLineList.at(0);
+            int iSpectators = strLineList.at(1).toInt();
+            int iRank = strLineList.at(2).toInt();
 
             emit updateUserCount(strUser, iSpectators, iRank);
         }
@@ -325,7 +325,7 @@ void WebcamEngine::textKernel(const QString &strData)
         qDebug() << "CAM <- " << strData;
 
     QStringList strDataList = strData.split(" ");
-    int cmd = strDataList[0].toInt();
+    int cmd = strDataList.at(0).toInt();
 
     switch (cmd)
     {
@@ -451,10 +451,10 @@ void WebcamEngine::raw_202(const QStringList &strDataList)
     if (strDataList.size() < 4)
         return;
 
-    QString strUser = strDataList[3];
+    QString strUser = strDataList.at(3);
 
-    pWebcamNetwork->setBytesNeed(strDataList[1].toInt());
-    if (strDataList[1].toInt() != 0)
+    pWebcamNetwork->setBytesNeed(strDataList.at(1).toInt());
+    if (strDataList.at(1).toInt() != 0)
     {
         // re-send
         if (strUser == strNick)
@@ -491,10 +491,10 @@ void WebcamEngine::raw_211(const QStringList &strDataList)
     if (strDataList.size() < 3)
         return;
 
-    if (strDataList[1].toInt() > 0)
+    if (strDataList.at(1).toInt() > 0)
     {
         pWebcamNetwork->setBText(false);
-        pWebcamNetwork->setBytesNeed(strDataList[1].toInt());
+        pWebcamNetwork->setBytesNeed(strDataList.at(1).toInt());
         iCamCmd = 211;
     }
 }
@@ -537,7 +537,7 @@ void WebcamEngine::raw_250(const QStringList &strDataList)
 
     // initial read users status
     pWebcamNetwork->setBText(false);
-    pWebcamNetwork->setBytesNeed(strDataList[1].toInt());
+    pWebcamNetwork->setBytesNeed(strDataList.at(1).toInt());
     iCamCmd = 250;
 }
 
@@ -550,7 +550,7 @@ void WebcamEngine::raw_251(const QStringList &strDataList)
         return;
 
     pWebcamNetwork->setBText(false);
-    pWebcamNetwork->setBytesNeed(strDataList[1].toInt());
+    pWebcamNetwork->setBytesNeed(strDataList.at(1).toInt());
     iCamCmd = 251;
 }
 
@@ -562,12 +562,12 @@ void WebcamEngine::raw_252(const QStringList &strDataList)
     if (strDataList.size() < 4)
         return;
 
-    if (strDataList[1].toInt() > 0)
+    if (strDataList.at(1).toInt() > 0)
     {
-        pWebcamNetwork->setBytesNeed(strDataList[1].toInt());
+        pWebcamNetwork->setBytesNeed(strDataList.at(1).toInt());
         pWebcamNetwork->setBText(false);
 
-        QString strUser = strDataList[3];
+        QString strUser = strDataList.at(3);
         if (strUser == strNick)
             iCamCmd = 252;
         else
@@ -583,8 +583,8 @@ void WebcamEngine::raw_253(const QStringList &strDataList)
     if (strDataList.size() < 5)
         return;
 
-    QString strUser = strDataList[3];
-    int iRank = strDataList[4].toInt();
+    QString strUser = strDataList.at(3);
+    int iRank = strDataList.at(4).toInt();
 
     if (strUser == strNick) // is current nick
         emit updateRank(iRank);
@@ -599,7 +599,7 @@ void WebcamEngine::raw_254(const QStringList &strDataList)
         return;
 
     pWebcamNetwork->setBText(false);
-    pWebcamNetwork->setBytesNeed(strDataList[1].toInt());
+    pWebcamNetwork->setBytesNeed(strDataList.at(1).toInt());
     iCamCmd = 254;
 
     // check keepalive
@@ -677,7 +677,7 @@ void WebcamEngine::raw_403(const QStringList &strDataList)
         return;
 
     pWebcamNetwork->setBText(false);
-    pWebcamNetwork->setBytesNeed(strDataList[1].toInt());
+    pWebcamNetwork->setBytesNeed(strDataList.at(1).toInt());
     iCamCmd = 403;
 }
 
@@ -689,7 +689,7 @@ void WebcamEngine::raw_405(const QStringList &strDataList)
     if (strDataList.size() < 4)
         return;
 
-    QString strUser = strDataList[3];
+    QString strUser = strDataList.at(3);
     if (strUser == strNick)
         emit userError(tr("User gone"));
 }
@@ -709,7 +709,7 @@ void WebcamEngine::raw_408(const QStringList &strDataList)
     if (strDataList.size() < 4)
         return;
 
-    QString strUser = strDataList[3];
+    QString strUser = strDataList.at(3);
     if (strUser == strNick)
         emit userError(tr("The specified user does not have a webcam enabled"));
 }
@@ -736,7 +736,7 @@ void WebcamEngine::raw_412(const QStringList &strDataList)
     if (strDataList.size() < 4)
         return;
 
-    QString strUser = strDataList[3];
+    QString strUser = strDataList.at(3);
     if (strUser == strNick)
         emit userError(tr("Failed to retrieve the image from the webcam"));
 }
@@ -749,7 +749,7 @@ void WebcamEngine::raw_413(const QStringList &strDataList)
     if (strDataList.size() < 4)
         return;
 
-    QString strUser = strDataList[3];
+    QString strUser = strDataList.at(3);
     if (strUser == strNick)
         emit userError(tr("Failed to retrieve the image from the webcam"));
 }

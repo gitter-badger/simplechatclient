@@ -63,7 +63,7 @@ void DlgFindNick::createGui()
     QList<CaseIgnoreString> lChannelsCleared = Channel::instance()->getListClearedSorted();
     for (int i = 0; i < lChannelsCleared.size(); ++i)
     {
-        QString strOpenChannel = lChannelsCleared[i];
+        QString strOpenChannel = lChannelsCleared.at(i);
         if (strOpenChannel[0] == '^')
             strOpenChannel = Channel::instance()->getAlternativeName(strOpenChannel);
 
@@ -71,7 +71,7 @@ void DlgFindNick::createGui()
         openChannelsActs[i]->setIcon(QIcon(":/images/oxygen/16x16/irc-join-channel.png"));
         openChannelsActs[i]->setVisible(false);
         openChannelsActs[i]->setText(strOpenChannel);
-        openChannelsActs[i]->setData(lChannelsCleared[i]);
+        openChannelsActs[i]->setData(lChannelsCleared.at(i));
         openChannelsActs[i]->setVisible(true);
 
         connect(openChannelsActs[i], SIGNAL(triggered()), this, SLOT(invite()));

@@ -68,9 +68,9 @@ void DlgUpdate::setDefaultValues()
     strVersion = Settings::instance()->get("available_version");
 
     QStringList lAvailableVersion = strVersion.split(".");
-    QString strCurrentMajor = lAvailableVersion[0];
-    QString strCurrentMinor = lAvailableVersion[1];
-    QString strCurrentPatch = lAvailableVersion[2];
+    QString strCurrentMajor = lAvailableVersion.at(0);
+    QString strCurrentMinor = lAvailableVersion.at(1);
+    QString strCurrentPatch = lAvailableVersion.at(2);
 
     QString strShortVersion = QString("%1.%2.%3").arg(strCurrentMajor).arg(strCurrentMinor).arg(strCurrentPatch);
 

@@ -42,7 +42,7 @@ QString Commands::execute()
     if (strDataList.size() == 0)
         return strData;
 
-    QString strCmd = strDataList[0].toLower();
+    QString strCmd = strDataList.at(0).toLower();
 
     if ((strCmd == "raw") || (strCmd == "quote"))
         return cmdRaw();
@@ -111,7 +111,7 @@ QString Commands::cmdRaw()
     if (strDataList.value(1).isEmpty()) return QString::null;
 
     QString strCommand;
-    for (int i = 1; i < strDataList.size(); i++) { if (i != 1) strCommand += " "; strCommand += strDataList[i]; }
+    for (int i = 1; i < strDataList.size(); i++) { if (i != 1) strCommand += " "; strCommand += strDataList.at(i); }
 
     return strCommand;
 }
@@ -121,7 +121,7 @@ QString Commands::cmdAll()
     if (strDataList.value(1).isEmpty()) return QString::null;
 
     QString strMessage;
-    for (int i = 1; i < strDataList.size(); i++) { if (i != 1) strMessage += " "; strMessage += strDataList[i]; }
+    for (int i = 1; i < strDataList.size(); i++) { if (i != 1) strMessage += " "; strMessage += strDataList.at(i); }
 
     return strMessage;
 }
@@ -130,12 +130,12 @@ QString Commands::cmdJoin()
 {
     if (strDataList.value(1).isEmpty()) return QString::null;
 
-    QString strChannel = strDataList[1];
+    QString strChannel = strDataList.at(1);
     if ((strChannel[0] != '#') && (strChannel[0] != '^'))
         strChannel = "#"+strChannel;
 
     QString strKey;
-    for (int i = 2; i < strDataList.size(); i++) { if (i != 2) strKey += " "; strKey += strDataList[i]; }
+    for (int i = 2; i < strDataList.size(); i++) { if (i != 2) strKey += " "; strKey += strDataList.at(i); }
 
     if (Utils::instance()->isErotic(strChannel))
     {
@@ -170,7 +170,7 @@ QString Commands::cmdPriv()
 {
     if (strDataList.value(1).isEmpty()) return QString::null;
 
-    QString strNick = strDataList[1];
+    QString strNick = strDataList.at(1);
 
     return QString("PRIV %1").arg(strNick);
 }
@@ -179,7 +179,7 @@ QString Commands::cmdIgnore()
 {
     if (strDataList.value(1).isEmpty()) return QString::null;
 
-    QString strNick = strDataList[1];
+    QString strNick = strDataList.at(1);
     QChar cPlusMinus =  '+';
 
     if ((strNick[0] == '+') || (strNick[0] == '-'))
@@ -200,7 +200,7 @@ QString Commands::cmdFriend()
 {
     if (strDataList.value(1).isEmpty()) return QString::null;
 
-    QString strNick = strDataList[1];
+    QString strNick = strDataList.at(1);
     QChar cPlusMinus =  '+';
 
     if ((strNick[0] == '+') || (strNick[0] == '-'))
@@ -221,7 +221,7 @@ QString Commands::cmdWhereis()
 {
     if (strDataList.value(1).isEmpty()) return QString::null;
 
-    QString strNick = strDataList[1];
+    QString strNick = strDataList.at(1);
 
     return QString("WHOIS %1 :%1").arg(strNick);
 }
@@ -239,7 +239,7 @@ QString Commands::cmdBusy()
 QString Commands::cmdAway()
 {
     QString strMessage;
-    for (int i = 1; i < strDataList.size(); i++) { if (i != 1) strMessage += " "; strMessage += strDataList[i]; }
+    for (int i = 1; i < strDataList.size(); i++) { if (i != 1) strMessage += " "; strMessage += strDataList.at(i); }
 
     Convert::simpleReverseConvert(strMessage);
     Replace::replaceEmots(strMessage);
@@ -252,10 +252,10 @@ QString Commands::cmdOffmsg()
     if (strDataList.value(1).isEmpty()) return QString::null;
     if (strDataList.value(2).isEmpty()) return QString::null;
 
-    QString strNick = strDataList[1];
+    QString strNick = strDataList.at(1);
 
     QString strMessage;
-    for (int i = 2; i < strDataList.size(); i++) { if (i != 2) strMessage += " "; strMessage += strDataList[i]; }
+    for (int i = 2; i < strDataList.size(); i++) { if (i != 2) strMessage += " "; strMessage += strDataList.at(i); }
 
     Convert::simpleReverseConvert(strMessage);
     Replace::replaceEmots(strMessage);
@@ -266,7 +266,7 @@ QString Commands::cmdOffmsg()
 QString Commands::cmdQuit()
 {
     QString strReason;
-    for (int i = 1; i < strDataList.size(); i++) { if (i != 1) strReason += " "; strReason += strDataList[i]; }
+    for (int i = 1; i < strDataList.size(); i++) { if (i != 1) strReason += " "; strReason += strDataList.at(i); }
 
     Settings::instance()->set("reconnect", "false");
 
@@ -372,7 +372,7 @@ QString Commands::cmdCycle()
     QString strChannel = strChan;
 
     QString strMessage;
-    for (int i = 1; i < strDataList.size(); i++) { if (i != 1) strMessage += " "; strMessage += strDataList[i]; }
+    for (int i = 1; i < strDataList.size(); i++) { if (i != 1) strMessage += " "; strMessage += strDataList.at(i); }
 
     if (!strMessage.isEmpty())
         return QString("PART %1 :%2\nJOIN %1").arg(strChannel, strMessage);
@@ -385,7 +385,7 @@ QString Commands::cmdMe()
     QString strChannel = strChan;
 
     QString strMessage;
-    for (int i = 1; i < strDataList.size(); i++) { if (i != 1) strMessage += " "; strMessage += strDataList[i]; }
+    for (int i = 1; i < strDataList.size(); i++) { if (i != 1) strMessage += " "; strMessage += strDataList.at(i); }
 
     Convert::createText(strMessage);
     Convert::simpleReverseConvert(strMessage);
@@ -399,7 +399,7 @@ QString Commands::cmdTopic()
     QString strChannel = strChan;
 
     QString strMessage;
-    for (int i = 1; i < strDataList.size(); i++) { if (i != 1) strMessage += " "; strMessage += strDataList[i]; }
+    for (int i = 1; i < strDataList.size(); i++) { if (i != 1) strMessage += " "; strMessage += strDataList.at(i); }
 
     Convert::createText(strMessage);
     Convert::simpleReverseConvert(strMessage);
@@ -413,7 +413,7 @@ QString Commands::cmdPart()
     QString strChannel = strChan;
 
     QString strMessage;
-    for (int i = 1; i < strDataList.size(); i++) { if (i != 1) strMessage += " "; strMessage += strDataList[i]; }
+    for (int i = 1; i < strDataList.size(); i++) { if (i != 1) strMessage += " "; strMessage += strDataList.at(i); }
 
     if (!strMessage.isEmpty())
         return QString("PART %1 :%2").arg(strChannel, strMessage);
@@ -425,7 +425,7 @@ QString Commands::cmdInvite()
 {
     if (strDataList.value(1).isEmpty()) return QString::null;
 
-    QString strNick = strDataList[1];
+    QString strNick = strDataList.at(1);
     QString strChannel = strChan;
 
     return QString("INVITE %1 %2").arg(strNick, strChannel);
@@ -436,10 +436,10 @@ QString Commands::cmdKick()
     if (strDataList.value(1).isEmpty()) return QString::null;
 
     QString strChannel = strChan;
-    QString strNick = strDataList[1];
+    QString strNick = strDataList.at(1);
 
     QString strReason;
-    for (int i = 2; i < strDataList.size(); i++) { if (i != 2) strReason += " "; strReason += strDataList[i]; }
+    for (int i = 2; i < strDataList.size(); i++) { if (i != 2) strReason += " "; strReason += strDataList.at(i); }
 
     if (strReason.isEmpty())
         strReason = tr("No reason");
@@ -453,7 +453,7 @@ QString Commands::cmdBan()
 
     QString strChannel = strChan;
 
-    QString strNick = strDataList[1];
+    QString strNick = strDataList.at(1);
     QChar cPlusMinus =  '+';
 
     if ((strNick[0] == '+') || (strNick[0] == '-'))
@@ -492,7 +492,7 @@ QString Commands::cmdBanip()
 
     QString strChannel = strChan;
 
-    QString strNick = strDataList[1];
+    QString strNick = strDataList.at(1);
     QChar cPlusMinus =  '+';
 
     if ((strNick[0] == '+') || (strNick[0] == '-'))
@@ -515,10 +515,10 @@ QString Commands::cmdKBan()
 
     QString strChannel = strChan;
 
-    QString strNick = strDataList[1];
+    QString strNick = strDataList.at(1);
 
     QString strReason;
-    for (int i = 2; i < strDataList.size(); i++) { if (i != 2) strReason += " "; strReason += strDataList[i]; }
+    for (int i = 2; i < strDataList.size(); i++) { if (i != 2) strReason += " "; strReason += strDataList.at(i); }
 
     if (strReason.isEmpty())
         strReason = tr("No reason");
@@ -532,10 +532,10 @@ QString Commands::cmdKBanip()
 
     QString strChannel = strChan;
 
-    QString strNick = strDataList[1];
+    QString strNick = strDataList.at(1);
 
     QString strReason;
-    for (int i = 2; i < strDataList.size(); i++) { if (i != 2) strReason += " "; strReason += strDataList[i]; }
+    for (int i = 2; i < strDataList.size(); i++) { if (i != 2) strReason += " "; strReason += strDataList.at(i); }
 
     if (strReason.isEmpty())
         strReason = tr("No reason");
@@ -548,7 +548,7 @@ QString Commands::cmdSop()
     if (strDataList.value(1).isEmpty()) return QString::null;
 
     QString strChannel = strChan;
-    QString strNick = strDataList[1];
+    QString strNick = strDataList.at(1);
     QChar cPlusMinus =  '+';
 
     if ((strNick[0] == '+') || (strNick[0] == '-'))
@@ -570,7 +570,7 @@ QString Commands::cmdOp()
     if (strDataList.value(1).isEmpty()) return QString::null;
 
     QString strChannel = strChan;
-    QString strNick = strDataList[1];
+    QString strNick = strDataList.at(1);
     QChar cPlusMinus =  '+';
 
     if ((strNick[0] == '+') || (strNick[0] == '-'))
@@ -592,7 +592,7 @@ QString Commands::cmdModer()
     if (strDataList.value(1).isEmpty()) return QString::null;
 
     QString strChannel = strChan;
-    QString strNick = strDataList[1];
+    QString strNick = strDataList.at(1);
     QChar cPlusMinus =  '+';
 
     if ((strNick[0] == '+') || (strNick[0] == '-'))
@@ -614,7 +614,7 @@ QString Commands::cmdVip()
     if (strDataList.value(1).isEmpty()) return QString::null;
 
     QString strChannel = strChan;
-    QString strNick = strDataList[1];
+    QString strNick = strDataList.at(1);
     QChar cPlusMinus =  '+';
 
     if ((strNick[0] == '+') || (strNick[0] == '-'))

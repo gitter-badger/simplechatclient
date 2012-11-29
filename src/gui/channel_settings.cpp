@@ -969,20 +969,20 @@ void DlgChannelSettings::refreshPermissionList()
         else if (strKey == PERMISSION_BAN)
         {
             QStringList strDataList = strValue.split(";");
-            QString strNick = strDataList[0];
-            QString strWho = strDataList[1];
-            QString strDT = strDataList[2];
-            QString strIPNick = strDataList[3];
+            QString strNick = strDataList.at(0);
+            QString strWho = strDataList.at(1);
+            QString strDT = strDataList.at(2);
+            QString strIPNick = strDataList.at(3);
 
             addBan(strNick, strWho, strDT, strIPNick);
         }
         else if (strKey == PERMISSION_INVITE)
         {
             QStringList strDataList = strValue.split(";");
-            QString strNick = strDataList[0];
-            QString strWho = strDataList[1];
-            QString strDT = strDataList[2];
-            QString strIPNick = strDataList[3];
+            QString strNick = strDataList.at(0);
+            QString strWho = strDataList.at(1);
+            QString strDT = strDataList.at(2);
+            QString strIPNick = strDataList.at(3);
             Q_UNUSED (strIPNick)
 
             addInvite(strNick, strWho, strDT);

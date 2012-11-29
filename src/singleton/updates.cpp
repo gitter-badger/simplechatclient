@@ -63,16 +63,16 @@ void Updates::compareVersion()
 {
     QString strCurrentVersion = Settings::instance()->get("version");
     QStringList lCurrentVersion = strCurrentVersion.split(".");
-    int iCurrentMajor = lCurrentVersion[0].toInt();
-    int iCurrentMinor = lCurrentVersion[1].toInt();
-    int iCurrentPatch = lCurrentVersion[2].toInt();
+    int iCurrentMajor = lCurrentVersion.at(0).toInt();
+    int iCurrentMinor = lCurrentVersion.at(1).toInt();
+    int iCurrentPatch = lCurrentVersion.at(2).toInt();
     int iCurrentVersion = (QString("%1%2%3").arg(iCurrentMajor).arg(iCurrentMinor).arg(iCurrentPatch)).toInt();
 
     QString strAvailableVersion = Settings::instance()->get("available_version");
     QStringList lAvailableVersion = strAvailableVersion.split(".");
-    int iAvailableMajor = lAvailableVersion[0].toInt();
-    int iAvailableMinor = lAvailableVersion[1].toInt();
-    int iAvailablePatch = lAvailableVersion[2].toInt();
+    int iAvailableMajor = lAvailableVersion.at(0).toInt();
+    int iAvailableMinor = lAvailableVersion.at(1).toInt();
+    int iAvailablePatch = lAvailableVersion.at(2).toInt();
     int iAvailableVersion = (QString("%1%2%3").arg(iAvailableMajor).arg(iAvailableMinor).arg(iAvailablePatch)).toInt();
 
     QString strVersionStatus;

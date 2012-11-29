@@ -247,7 +247,7 @@ QRect MyAvatarModel::stringToScaledCrop(QString s, QSize scaled, QSize original,
     {
         scale = (qreal) scaled.height() / (qreal) original.width();
     }
-    QRect crop = QRect(result[0].toInt(), result[1].toInt(), result[2].toInt(), result[3].toInt());
+    QRect crop = QRect(result.at(0).toInt(), result.at(1).toInt(), result.at(2).toInt(), result.at(3).toInt());
 
     if (rotate)
     {

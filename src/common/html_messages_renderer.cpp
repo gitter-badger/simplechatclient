@@ -29,15 +29,15 @@ void fixContextMenu(QString &strData, MessageCategory eMessageCategory)
     QStringList strDataList = strData.split(" ");
 
     // nick
-    if ((strDataList[0] == "*") && ((eMessageCategory == MessageJoin) || (eMessageCategory == MessagePart) || (eMessageCategory == MessageQuit)  || (eMessageCategory == MessageKick)))
+    if ((strDataList.at(0) == "*") && ((eMessageCategory == MessageJoin) || (eMessageCategory == MessagePart) || (eMessageCategory == MessageQuit)  || (eMessageCategory == MessageKick)))
     {
-        QString strWord = strDataList[1]; Convert::removeStyles(strWord);
+        QString strWord = strDataList.at(1); Convert::removeStyles(strWord);
         strDataList[1] = QString("<a onclick=\"return false\" name=\"nick\" style=\"color:inherit;text-decoration:none;\" href=\"#\">%1</a>").arg(strWord);
     }
 
     for (int i = 0; i < strDataList.size(); i++)
     {
-        QString strWord = strDataList[i];
+        QString strWord = strDataList.at(i);
 
         // channel
         if (strWord.startsWith('#'))
