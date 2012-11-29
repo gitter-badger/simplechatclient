@@ -27,71 +27,56 @@ void Replace::replaceEmots(QString &strData)
     if (Settings::instance()->get("disable_replaces") == "true")
         return;
 
-    // replace
-    strData.replace(":))", "%Ihaha%");
-    strData.replace(";))", "%Ioczko%");
-
-    strData.replace(":)", "%Ihaha%");
+    // applet
+    strData.replace(":*", "%Icmok%");
     strData.replace(";)", "%Ioczko%");
-
-    strData.replace(":((", "%Ibardzo_smutny%");
-    strData.replace(";((", "%Iszloch%");
-
+    strData.replace(":P", "%Ijezor%");
+    strData.replace(";P", "%Ixjezyk%");
+    strData.replace(":)", "%Ihaha%");
     strData.replace(":(", "%Izal%");
+    strData.replace(":x", "%Inie_powiem%");
+    strData.replace(":?", "%Inie_rozumiem%");
+    strData.replace(":((", "%Ibardzo_smutny%");
+    strData.replace(":|", "%Ixdepresja%");
+    strData.replace(":]", "%Iusmieszek%");
+    strData.replace(":>", "%Ixluzak%");
+    strData.replace(";>", "%Iwazniak%");
+    strData.replace(":<", "%Iumm%");
+    strData.replace(":$", "%Iskwaszony%");
+    strData.replace(";$", "%Ixkwas%");
+    strData.replace(";/", "%Ixsceptyk%");
+    if (!strData.contains(QRegExp("(ftp:|http:|https:)//"))) strData.replace(":/", "%Isceptyczny%");
+    strData.replace(";D", "%Ixhehe%");
+    strData.replace(":D", "%Ihehe%");
+    strData.replace("o_O", "%Iswir%");
+    strData.replace("!!", "%Iwykrzyknik%");
+    strData.replace("??", "%Ipytanie%");
+    strData.replace("xD", "%Ilol%");
+    strData.replace("-_-", "%Iwrr%");
     strData.replace(";(", "%Iszloch%");
 
+    // scc
+    strData.replace(":))", "%Ihaha%");
+    strData.replace(";))", "%Ioczko%");
+    strData.replace(";((", "%Iszloch%");
+    strData.replace(";(", "%Iszloch%");
     strData.replace(":p", "%Ijezyk%");
     strData.replace(";p", "%Ijezor%");
-    strData.replace(":P", "%Ijezyk%");
-    strData.replace(";P", "%Ijezor%");
-
     strData.replace(":d", "%Ihehe%");
     strData.replace(";d", "%Ihehe%");
-    strData.replace(":D", "%Ihehe%");
-    strData.replace(";D", "%Ihehe%");
-
-    strData.replace(":x", "%Inie_powiem%");
     strData.replace(";x", "%Inie_powiem%");
-    strData.replace(":X", "%Inie_powiem%");
-    strData.replace(";X", "%Inie_powiem%");
-
     strData.replace(":o", "%Ipanda%");
     strData.replace(";o", "%Ipanda%");
-    strData.replace(":O", "%Ipanda%");
-    strData.replace(";O", "%Ipanda%");
-
-    strData.replace(":>", "%Ixluzak%");
-    strData.replace(";>", "%Ixluzak%");
-    strData.replace(":<", "%Iumm%");
     strData.replace(";<", "%Ibuu%");
-
-    if (!strData.contains(QRegExp("(ftp:|http:|https:)//")))
-        strData.replace(":/", "%Isceptyczny%");
-    strData.replace(";/", "%Isceptyczny%");
-    strData.replace(":\\", "%Isceptyczny%");
-    strData.replace(";\\", "%Isceptyczny%");
-
-    strData.replace(":]", "%Iusmieszek%");
     strData.replace(";]", "%Ioczko%");
     strData.replace(":[", "%Izal%");
     strData.replace(";[", "%Iszloch%");
-
-    strData.replace(":|", "%Ixdepresja%");
     strData.replace(";|", "%Ixdepresja%");
-
-    strData.replace(":*", "%Icmok%");
     strData.replace(";*", "%Icmok2%");
-
     strData.replace(":s", "%Iskwaszony%");
     strData.replace(";s", "%Iskwaszony%");
-    strData.replace(":S", "%Iskwaszony%");
-    strData.replace(";S", "%Iskwaszony%");
-
     strData.replace("]:->", "%Ixdiabel%");
     strData.replace("];->", "%Ixdiabel%");
-
     strData.replace(";?", "%Ixco%");
-    strData.replace("??", "%Ipytanie%");
-    strData.replace("!!", "%Iwykrzyknik%");
     strData.replace("?!", "%Ipytanie%%Iwykrzyknik%");
 }
