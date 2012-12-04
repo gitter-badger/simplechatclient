@@ -122,6 +122,9 @@ BrandingText "${PROGRAM_NAME}"
 Section "${PROGRAM_NAME}" ro
 SetOverwrite on
 
+; kill process
+KillProcDLL::KillProc "scc.exe"
+
 ; delete desktop link
 Delete "$DESKTOP\${PROGRAM_NAME}.lnk"
 
@@ -142,9 +145,6 @@ Delete "$INSTDIR\*.*"
 ; delete Uninstaller And Unistall Registry Entries
 DeleteRegKey HKEY_LOCAL_MACHINE "SOFTWARE\${PROGRAM_NAME}"
 DeleteRegKey HKEY_LOCAL_MACHINE "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\${PROGRAM_NAME}"
-
-; kill process
-KillProcDLL::KillProc "scc.exe"
 
 ; install
 SetOutPath $INSTDIR\
