@@ -241,15 +241,6 @@ void OnetAuth::networkFinished(QNetworkReply *reply)
     int category = reply->property("category").toInt();
     QByteArray bData = reply->readAll();
 
-    if (bData.isEmpty())
-    {
-        if (Settings::instance()->get("debug") == "true")
-            qWarning() << "Error OnetAuth data empty";
-
-        bAuthorizing = false;
-        return;
-    }
-
     switch (category)
     {
         case AT_chat:
@@ -292,13 +283,14 @@ void OnetAuth::networkFinished(QNetworkReply *reply)
         case AT_uo:
             {
                 QString strData(bData);
-                if ((!strData.isEmpty()) && (Settings::instance()->get("logged") == "false"))
+                if (Settings::instance()->get("logged") == "false")
                 {
                     requestFinished(strData);
-                    bAuthorizing = false;
 
                     saveCookies();
                 }
+
+                bAuthorizing = false;
                 break;
             }
         case AT_refreshSk:
@@ -343,7 +335,7 @@ QString OnetAuth::getVersion(const QString &strData)
         }
     }
 
-    return "20111108-1525";
+    return "20120711-1544b";
 }
 
 void OnetAuth::requestFinished(const QString &strData)
