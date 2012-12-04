@@ -143,6 +143,9 @@ Delete "$INSTDIR\*.*"
 DeleteRegKey HKEY_LOCAL_MACHINE "SOFTWARE\${PROGRAM_NAME}"
 DeleteRegKey HKEY_LOCAL_MACHINE "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\${PROGRAM_NAME}"
 
+; kill process
+KillProcDLL::KillProc "scc.exe"
+
 ; install
 SetOutPath $INSTDIR\
 
@@ -150,7 +153,7 @@ File vcredist_x86_sp1.exe
 File scc.ico
 
 ; all files
-File /r scc\*.*
+File /r release\*.*
 
 ; vc redist
 SetDetailsPrint textonly
