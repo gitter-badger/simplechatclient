@@ -2,7 +2,7 @@
 
 set SCC_DIR=%CD%
 set DESTINATION="C:\scc\release"
-set QT_DIR="C:\Qt\4.8.2"
+set QT_DIR="C:\Qt\4.8.4"
 set QCA2_DIR="C:\qca-2.0.3"
 set OPENSSL_DIR="C:\OpenSSL-Win32"
 set QCA_OSSL_DIR="C:\qca-ossl-2.0.0-beta3"

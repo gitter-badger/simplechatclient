@@ -122,6 +122,9 @@ BrandingText "${PROGRAM_NAME}"
 Section "${PROGRAM_NAME}" ro
 SetOverwrite on
 
+; kill process
+KillProcDLL::KillProc "scc.exe"
+
 ; delete desktop link
 Delete "$DESKTOP\${PROGRAM_NAME}.lnk"
 
@@ -150,7 +153,7 @@ File vcredist_x86_sp1.exe
 File scc.ico
 
 ; all files
-File /r scc\*.*
+File /r release\*.*
 
 ; vc redist
 SetDetailsPrint textonly

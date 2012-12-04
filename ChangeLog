@@ -5,6 +5,11 @@ Version 1.7.0 (unknown)
 ================================
 * Many bugfixes
 
+Version 1.6.2 (04.12.2012)
+================================
+* Fixed auth
+* Fixed edit profile
+
 Version 1.6.1 (30.10.2012)
 ================================
 * Fixed rank
