@@ -23,14 +23,18 @@
 #include <QNetworkAccessManager>
 #include <QPushButton>
 #include <QUrl>
+#include <QtWebKit/QWebFrame>
+#include <QtWebKit/QWebElement>
+#include <QtWebKit/QWebPage>
 #include "settings.h"
 #include "update.h"
 
 #define UPDATE_LINK_1 "http://simplechatclien.sourceforge.net/download/"
 #define UPDATE_LINK_2 "https://github.com/simplechatclient/simplechatclient/downloads"
 
-#define UPDATE_DOWNLOAD_LINK_1 "http://sourceforge.net/projects/simplechatclien/files/"
-#define UPDATE_DOWNLOAD_LINK_2 "http://cloud.github.com/downloads/simplechatclient/simplechatclient/"
+#define SITE_LINK_1 "http://sourceforge.net/projects/simplechatclien/files/scc-%1.exe/download"
+#define DOWNLOAD_LINK_1 "http://%1.dl.sourceforge.net/project/simplechatclien/scc-%2.exe"
+#define DOWNLOAD_LINK_2 "http://cloud.github.com/downloads/simplechatclient/simplechatclient/scc-%1.exe"
 
 DlgUpdate::DlgUpdate(QWidget *parent) : QDialog(parent)
 {
@@ -92,12 +96,12 @@ void DlgUpdate::buttonDownload()
 #ifdef Q_WS_WIN
     if (update_url == 1)
     {
-        QNetworkReply *pReply = accessManager->get(QNetworkRequest(QUrl(QString("%1scc-%2.exe/download").arg(UPDATE_DOWNLOAD_LINK_1, strVersion))));
+        QNetworkReply *pReply = accessManager->get(QNetworkRequest(QUrl(QString(SITE_LINK_1).arg(strVersion))));
         pReply->setProperty("category", "sfsite");
     }
     else if (update_url == 2)
     {
-        QNetworkReply *pReply = accessManager->get(QNetworkRequest(QUrl(QString("%1scc-%2.exe").arg(UPDATE_DOWNLOAD_LINK_2, strVersion))));
+        QNetworkReply *pReply = accessManager->get(QNetworkRequest(QUrl(QString(DOWNLOAD_LINK_2).arg(strVersion))));
         pReply->setProperty("category", "file");
         connect(pReply, SIGNAL(downloadProgress(qint64,qint64)), this, SLOT(downloadProgress(qint64,qint64)));
         connect(pReply, SIGNAL(error(QNetworkReply::NetworkError)), this, SLOT(downloadError(QNetworkReply::NetworkError)));
@@ -111,15 +115,23 @@ void DlgUpdate::buttonDownload()
 #endif
 }
 
-// <a href="http://downloads.sourceforge.net..." class="direct-download">
+// <meta http-equiv="refresh" content="5; url=https://downloads.sourceforge.net/project/simplechatclien/scc-1.6.2.0.exe?r=&amp;ts=1354737755&amp;use_mirror=switch">
 // http://leaseweb.dl.sourceforge.net/project/simplechatclien/scc-1.0.13.917.exe
 void DlgUpdate::gotSFSite(QString site)
 {
-    site.replace(QRegExp(".*<a href=\"http://downloads.sourceforge.net.*use_mirror=(.*)\" class=\"direct-download\">.*"), "http://\\1.dl.sourceforge.net/project/simplechatclien/scc-"+strVersion+".exe");
+    QWebPage page;
+    page.mainFrame()->setHtml(site);
 
-    if (QUrl(site).isValid())
+    QWebElement document = page.mainFrame()->documentElement();
+    QWebElement head = document.findFirst("head");
+    QWebElement noscript = head.findFirst("noscript");
+
+    QString strNoScript = noscript.toPlainText();
+    QString strMirror = strNoScript.replace(QRegExp(".*use_mirror=(\\w+).*"), "\\1");
+
+    if (strMirror.size() < 25)
     {
-        QNetworkReply *pReply = accessManager->get(QNetworkRequest(QUrl(site)));
+        QNetworkReply *pReply = accessManager->get(QNetworkRequest(QUrl(QString(DOWNLOAD_LINK_1).arg(strMirror, strVersion))));
         pReply->setProperty("category", "file");
         connect(pReply, SIGNAL(downloadProgress(qint64,qint64)), this, SLOT(downloadProgress(qint64,qint64)));
         connect(pReply, SIGNAL(error(QNetworkReply::NetworkError)), this, SLOT(downloadError(QNetworkReply::NetworkError)));
@@ -163,7 +175,10 @@ void DlgUpdate::networkFinished(QNetworkReply *reply)
     reply->deleteLater();
 
     if (reply->error())
+    {
+        showError(tr("Cannot download file"));
         return;
+    }
 
     QString strCategory = reply->property("category").toString();
     QByteArray bData = reply->readAll();
