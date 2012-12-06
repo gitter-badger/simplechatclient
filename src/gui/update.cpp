@@ -21,6 +21,7 @@
 #include <QDesktopWidget>
 #include <QDir>
 #include <QNetworkAccessManager>
+#include <QNetworkCookieJar>
 #include <QPushButton>
 #include <QUrl>
 #include <QtWebKit/QWebFrame>
@@ -50,12 +51,15 @@ DlgUpdate::DlgUpdate(QWidget *parent) : QDialog(parent)
     createSignals();
 
     accessManager = new QNetworkAccessManager;
+    cookieJar = new QNetworkCookieJar();
+    accessManager->setCookieJar(cookieJar);
     connect(accessManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(networkFinished(QNetworkReply*)));
 }
 
 DlgUpdate::~DlgUpdate()
 {
     accessManager->deleteLater();
+    cookieJar->deleteLater();
 }
 
 void DlgUpdate::createGui()

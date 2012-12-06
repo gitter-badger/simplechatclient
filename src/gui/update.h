@@ -26,6 +26,7 @@
 
 QT_BEGIN_NAMESPACE
 class QNetworkAccessManager;
+class QNetworkCookieJar;
 QT_END_NAMESPACE
 
 class DlgUpdate : public QDialog
@@ -39,6 +40,7 @@ private:
     Ui::uiUpdate ui;
     QString strVersion;
     QNetworkAccessManager *accessManager;
+    QNetworkCookieJar *cookieJar;
 
     void createGui();
     void setDefaultValues();
