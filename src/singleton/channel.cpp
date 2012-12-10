@@ -18,6 +18,7 @@
  */
 
 #include <QLabel>
+#include <QUuid>
 #include "avatar.h"
 #include "core.h"
 #include "convert.h"
@@ -249,10 +250,10 @@ QList<OnetModerateMessage> Channel::getModerateMessages(const QString &channel)
     return lMessages;
 }
 
-void Channel::addModerateMessage(const QString &channel, const QString &id, qint64 time, const QString &nick, const QString &message)
+void Channel::addModerateMessage(const QString &channel, qint64 time, const QString &nick, const QString &message)
 {
     OnetModerateMessage omessage;
-    omessage.id = id;
+    omessage.id = QUuid::createUuid().toString();
     omessage.datetime = time;
     omessage.nick = nick;
     omessage.message = message;

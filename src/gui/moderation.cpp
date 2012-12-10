@@ -62,11 +62,14 @@ void DlgModeration::createSignals()
 
 void DlgModeration::refreshMessages()
 {
-    ui.listWidget_msg->clear();
-
     QList<OnetModerateMessage> lModerateMessages = Channel::instance()->getModerateMessages(strCurrentChannel);
-    foreach (OnetModerateMessage omessage, lModerateMessages)
+    int listWidgetCount = ui.listWidget_msg->count();
+    int moderateMessagesCount = lModerateMessages.size();
+
+    for (int i = listWidgetCount; i < listWidgetCount + (moderateMessagesCount - listWidgetCount); i++)
     {
+        OnetModerateMessage omessage = lModerateMessages.at(i);
+
         QString strID = omessage.id;
         qint64 iTime = omessage.datetime;
         QString strNick = omessage.nick;
@@ -86,7 +89,7 @@ void DlgModeration::refreshMessages()
     }
 
     // refresh
-    QTimer::singleShot(1000*10, this, SLOT(refreshMessages())); // 10 sec
+    QTimer::singleShot(1000*1, this, SLOT(refreshMessages())); // 1 sec
 }
 
 void DlgModeration::removeSelected()
@@ -103,6 +106,8 @@ void DlgModeration::removeSelected()
         QString strID = item->data(ModerationIdRole).toString();
 
         Channel::instance()->removeModerateMessage(strChannel, strID);
+
+        ui.listWidget_msg->takeItem(ui.listWidget_msg->row(item));
     }
 }
 

@@ -70,7 +70,7 @@ public:
     void setOffline(const QString &channel, bool offline);
     bool getOffline(const QString &channel);
     // moderate messages
-    void addModerateMessage(const QString &channel, const QString &id, qint64 time, const QString &nick, const QString &message);
+    void addModerateMessage(const QString &channel, qint64 time, const QString &nick, const QString &message);
     QList<OnetModerateMessage> getModerateMessages(const QString &channel);
     void removeModerateMessage(const QString &channel, const QString &id);
     // priv

@@ -1068,7 +1068,6 @@ void OnetKernel::raw_moderate()
 
     QString strNick = strDataList.at(3);
     QString strChannel = strDataList.at(4);
-    QString strID = strDataList.at(5);
 
     QString strMessage;
     for (int i = 6; i < strDataList.size(); i++) { if (i != 6) strMessage += " "; strMessage += strDataList.at(i); }
@@ -1078,7 +1077,7 @@ void OnetKernel::raw_moderate()
 
     qint64 iTime = QDateTime::currentMSecsSinceEpoch();
 
-    Channel::instance()->addModerateMessage(strChannel, strID, iTime, strNick, strMessage);
+    Channel::instance()->addModerateMessage(strChannel, iTime, strNick, strMessage);
 }
 
 // :cf1f4.onet KILL scc_test :cf1f4.onet (Killed (Nickname collision))
