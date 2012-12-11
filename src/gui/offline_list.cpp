@@ -18,7 +18,6 @@
  */
 
 #include <QDesktopWidget>
-#include <QMenu>
 #include "core.h"
 #include "offline.h"
 #include "offline_list.h"
