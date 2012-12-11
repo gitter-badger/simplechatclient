@@ -31,11 +31,14 @@ public:
 
 private:
     Ui::uiOfflineList ui;
+    enum OfflineMessageRoles
+    {
+        OfflineMessageNickRole = Qt::UserRole
+    };
 
     void createGui();
     void createSignals();
     void refresh();
-    void removeNick(const QString &strRemoveNick);
 
 private slots:
     void itemClicked(QListWidgetItem *);

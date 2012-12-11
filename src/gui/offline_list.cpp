@@ -72,29 +72,27 @@ void DlgOfflineList::refresh()
 
     QList<QString> list = Offline::instance()->getNicks();
     foreach (const QString &strOfflineNick, list)
-        ui.listWidget->addItem(strOfflineNick);
-}
+    {
+        QListWidgetItem *item = new QListWidgetItem;
+        item->setData(OfflineMessageNickRole, strOfflineNick);
+        item->setText(QString(tr("Offline message from %1")).arg(strOfflineNick));
 
-void DlgOfflineList::removeNick(const QString &strNick)
-{
-    // list
-    Offline::instance()->removeNick(strNick);
-
-    // widget
-    QList<QListWidgetItem*> items = ui.listWidget->findItems(strNick, Qt::MatchExactly);
-    foreach (QListWidgetItem *item, items)
-        ui.listWidget->takeItem(ui.listWidget->row(item));
+        ui.listWidget->addItem(item);
+    }
 }
 
 void DlgOfflineList::buttonRead()
 {
-    if (ui.listWidget->selectedItems().size() == 0) return; // nothing selected
+    if (ui.listWidget->selectedItems().isEmpty())
+        return;
 
-    QString strNick = ui.listWidget->selectedItems().at(0)->text();
+    QListWidgetItem *item = ui.listWidget->selectedItems().at(0);
+    QString strNick = item->data(OfflineMessageNickRole).toString();
+
+    Offline::instance()->removeNick(strNick);
+    ui.listWidget->takeItem(ui.listWidget->row(item));
+
     Core::instance()->network->send(QString("NS OFFLINE GET %1").arg(strNick));
-
-    // remove nick
-    removeNick(strNick);
 
     // dialog
     //DlgOfflineMessage(strNick, this).exec();
@@ -102,11 +100,14 @@ void DlgOfflineList::buttonRead()
 
 void DlgOfflineList::buttonReject()
 {
-    if (ui.listWidget->selectedItems().size() == 0) return; // nothing selected
+    if (ui.listWidget->selectedItems().isEmpty())
+        return;
 
-    QString strNick = ui.listWidget->selectedItems().at(0)->text();
+    QListWidgetItem *item = ui.listWidget->selectedItems().at(0);
+    QString strNick = item->data(OfflineMessageNickRole).toString();
+
+    Offline::instance()->removeNick(strNick);
+    ui.listWidget->takeItem(ui.listWidget->row(item));
+
     Core::instance()->network->send(QString("NS OFFLINE REJECT %1").arg(strNick));
-
-    // remove nick
-    removeNick(strNick);
 }

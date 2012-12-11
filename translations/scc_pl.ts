@@ -1303,6 +1303,10 @@
         <translation>Wiadomości offline</translation>
     </message>
     <message>
+        <source>Offline message from %1</source>
+        <translation>Wiadomość offline od %1</translation>
+    </message>
+    <message>
         <source>Read</source>
         <translation>Odczytaj</translation>
     </message>
@@ -1317,10 +1321,7 @@
         <source>Offline messages</source>
         <translation>Wiadomości offline</translation>
     </message>
-    <message>
-        <source>Offline messages from %1</source>
-        <translation>Wiadomości offline od %1</translation>
-    </message>
+
     <message>
         <source>Reply</source>
         <translation>Odpowiedz</translation>
