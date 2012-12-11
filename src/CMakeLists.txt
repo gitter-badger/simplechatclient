@@ -27,7 +27,7 @@ set (scc_UIS
 	../ui/my_profile.ui
 	../ui/my_stats.ui
 	../ui/notes.ui
-	../ui/offline_messages.ui
+	../ui/offline_list.ui
 	../ui/options.ui
 	../ui/profile_add.ui
 	../ui/profile_edit.ui
@@ -76,7 +76,7 @@ set (scc_SRCS
 	gui/my_profile.cpp
 	gui/my_stats.cpp
 	gui/notes.cpp
-	gui/offline_messages.cpp
+	gui/offline_list.cpp
 	gui/options.cpp
 	gui/profile_add.cpp
 	gui/profile_edit.cpp
@@ -175,7 +175,7 @@ set (scc_MOC_HDRS
 	gui/my_profile.h
 	gui/my_stats.h
 	gui/notes.h
-	gui/offline_messages.h
+	gui/offline_list.h
 	gui/options.h
 	gui/profile_add.h
 	gui/profile_edit.h

@@ -52,7 +52,7 @@
 #include "notes.h"
 #include "notification.h"
 #include "offline.h"
-#include "offline_messages.h"
+#include "offline_list.h"
 #include "options.h"
 #include "onet_auth.h"
 #include "onet_kernel.h"
@@ -571,7 +571,7 @@ void MainWindow::openInviteList()
 void MainWindow::openOfflineMessages()
 {
     if ((Core::instance()->network->isConnected()) && (Settings::instance()->get("logged") == "true"))
-        DlgOfflineMessages(this).exec();
+        DlgOfflineList(this).exec();
 }
 
 // animated tray icon

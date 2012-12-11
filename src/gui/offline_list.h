@@ -17,24 +17,20 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef OFFLINE_MESSAGES_H
-#define OFFLINE_MESSAGES_H
+#ifndef OFFLINE_LIST_H
+#define OFFLINE_LIST_H
 
 #include <QDialog>
-#include "ui_offline_messages.h"
+#include "ui_offline_list.h"
 
-class DlgOfflineMessages : public QDialog
+class DlgOfflineList : public QDialog
 {
     Q_OBJECT
 public:
-    DlgOfflineMessages(QWidget *parent = 0);
+    DlgOfflineList(QWidget *parent = 0);
 
 private:
-    Ui::uiOfflineMessages ui;
-    QString strCurrentNick;
-    QList<QString> messagesQuoted;
-    QList<QString> messagesReplied;
-    QList<QString> messagesQuotedToSender;
+    Ui::uiOfflineList ui;
 
     void createGui();
     void createSignals();
@@ -42,10 +38,9 @@ private:
     void removeNick(const QString &strRemoveNick);
 
 private slots:
-    void refreshMessages();
+    void itemClicked(QListWidgetItem *);
     void buttonRead();
     void buttonReject();
-    void buttonReply();
 };
 
-#endif // OFFLINE_MESSAGES_H
+#endif // OFFLINE_LIST_H

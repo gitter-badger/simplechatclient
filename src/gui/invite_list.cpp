@@ -47,6 +47,7 @@ void DlgInviteList::createGui()
     ui.pushButton_reject->setIcon(QIcon(":/images/oxygen/16x16/user-invisible.png"));
     ui.pushButton_ignore->setIcon(QIcon(":/images/oxygen/16x16/user-busy.png"));
     ui.toolButton_options->setIcon(QIcon(":/images/oxygen/16x16/applications-system.png"));
+    ui.buttonBox->button(QDialogButtonBox::Close)->setIcon(QIcon(":/images/oxygen/16x16/dialog-close.png"));
 
     ui.pushButton_accept->setText(tr("Accept"));
     ui.pushButton_reject->setText(tr("Reject"));
@@ -66,6 +67,7 @@ void DlgInviteList::createSignals()
     connect(ui.pushButton_reject, SIGNAL(clicked()), this, SLOT(buttonReject()));
     connect(ui.pushButton_ignore, SIGNAL(clicked()), this, SLOT(buttonIgnore()));
     connect(ui.pushButton_accept, SIGNAL(clicked()), this, SLOT(buttonAccept()));
+    connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(close()));
 }
 
 void DlgInviteList::createList()

@@ -1297,14 +1297,10 @@
     </message>
 </context>
 <context>
-    <name>DlgOfflineMessages</name>
+    <name>DlgOfflineList</name>
     <message>
         <source>Offline messages</source>
         <translation>Wiadomości offline</translation>
-    </message>
-    <message>
-        <source>Offline messages from %1</source>
-        <translation>Wiadomości offline od %1</translation>
     </message>
     <message>
         <source>Read</source>
@@ -1313,6 +1309,17 @@
     <message>
         <source>Reject</source>
         <translation>Odrzuć</translation>
+    </message>	
+</context>
+<context>
+    <name>DlgOfflineMessage</name>
+    <message>
+        <source>Offline messages</source>
+        <translation>Wiadomości offline</translation>
+    </message>
+    <message>
+        <source>Offline messages from %1</source>
+        <translation>Wiadomości offline od %1</translation>
     </message>
     <message>
         <source>Reply</source>
