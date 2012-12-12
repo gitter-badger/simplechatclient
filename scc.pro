@@ -48,6 +48,7 @@ SOURCES += src/common/commands.cpp \
     src/gui/my_stats.cpp \
     src/gui/notes.cpp \
     src/gui/offline_list.cpp \
+    src/gui/offline_message.cpp \
     src/gui/options.cpp \
     src/gui/profile_add.cpp \
     src/gui/profile_edit.cpp \
@@ -153,6 +154,7 @@ HEADERS += src/common/commands.h \
     src/gui/my_stats.h \
     src/gui/notes.h \
     src/gui/offline_list.h \
+    src/gui/offline_message.h \
     src/gui/options.h \
     src/gui/profile_add.h \
     src/gui/profile_edit.h \
@@ -240,6 +242,7 @@ FORMS += ui/about.ui \
     ui/my_stats.ui \
     ui/notes.ui \
     ui/offline_list.ui \
+    ui/offline_message.ui \
     ui/options.ui \
     ui/profile_add.ui \
     ui/profile_edit.ui \

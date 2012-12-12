@@ -1318,21 +1318,20 @@
 <context>
     <name>DlgOfflineMessage</name>
     <message>
-        <source>Offline messages</source>
-        <translation>Wiadomości offline</translation>
+        <source>Offline messages from %1</source>
+        <translation>Wiadomości offline od %1</translation>
     </message>
-
     <message>
         <source>Reply</source>
         <translation>Odpowiedz</translation>
     </message>
     <message>
-        <source>* You sent offline message to %1:</source>
-        <translation>Wysłałeś do %1 wiadomość offline:</translation>
+        <source>You sent offline messages to %1:</source>
+        <translation>Wysłałeś do %1 wiadomości offline:</translation>
     </message>
     <message>
-        <source>* User %1 replied:</source>
-        <translation>* Użytkownik %1 odpowiedział:</translation>
+        <source>User %1 replied:</source>
+        <translation>Użytkownik %1 odpowiedział:</translation>
     </message>
 </context>
 <context>

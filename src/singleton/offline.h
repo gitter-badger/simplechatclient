@@ -40,6 +40,7 @@ public:
     void removeMessage(const QString &strNick);
     void clearMessages();
     QList<OnetOfflineMessage> getMessages(const QString &strNick);
+    QList<OnetOfflineMessage> getMessagesReverted(const QString &strNick);
     bool isEmptyMessages();
 
     void addNick(const QString &nick);

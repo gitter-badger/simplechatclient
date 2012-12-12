@@ -20,6 +20,7 @@
 #include <QDesktopWidget>
 #include "core.h"
 #include "offline.h"
+#include "offline_message.h"
 #include "offline_list.h"
 
 DlgOfflineList::DlgOfflineList(QWidget *parent) : QDialog(parent)
@@ -95,7 +96,7 @@ void DlgOfflineList::buttonRead()
     Core::instance()->network->send(QString("NS OFFLINE GET %1").arg(strNick));
 
     // dialog
-    //DlgOfflineMessage(strNick, this).exec();
+    DlgOfflineMessage(strNick, this).exec();
 }
 
 void DlgOfflineList::buttonReject()

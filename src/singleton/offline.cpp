@@ -71,6 +71,17 @@ QList<OnetOfflineMessage> Offline::getMessages(const QString &strNick)
     return lOfflineMessages.values(strNick);
 }
 
+QList<OnetOfflineMessage> Offline::getMessagesReverted(const QString &strNick)
+{
+    QList<OnetOfflineMessage> lMessages = lOfflineMessages.values(strNick);
+    QList<OnetOfflineMessage> lMessagesReverted;
+
+    foreach (OnetOfflineMessage message, lMessages)
+        lMessagesReverted.prepend(message);
+
+    return lMessagesReverted;
+}
+
 bool Offline::isEmptyMessages()
 {
     return lOfflineMessages.isEmpty();
