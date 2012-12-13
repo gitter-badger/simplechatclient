@@ -1440,6 +1440,8 @@ void OnetKernel::raw_142n()
     // join favourites
     if (Settings::instance()->get("ignore_favourites") == "false")
     {
+        Settings::instance()->set("ignore_favourites", "true");
+
         QList<CaseIgnoreString> lChannelsCaseIgnore = ChannelFavouritesModel::instance()->getAllCaseIgnore();
         foreach (QString strChannel, lChannelsCaseIgnore)
         {
@@ -1447,10 +1449,6 @@ void OnetKernel::raw_142n()
                 Core::instance()->network->sendQueue(QString("JOIN %1").arg(strChannel));
         }
     }
-
-    // turn on ignore_favourites
-    if (Settings::instance()->get("ignore_favourites") == "false")
-        Settings::instance()->set("ignore_favourites", "true");
 }
 
 // CS HOMES
