@@ -1179,8 +1179,8 @@ void OnetKernel::raw_001()
     // auto rejoin
     QList<CaseIgnoreString> lChannelsCaseIgnore = Channel::instance()->getListClearedSorted();
 
-    foreach (QString strChannel, lChannelsCaseIgnore)
-        pTabC->removeTab(strChannel);
+    //foreach (QString strChannel, lChannelsCaseIgnore)
+        //pTabC->removeTab(strChannel);
 
     foreach (QString strChannel, lChannelsCaseIgnore)
         Core::instance()->network->sendQueue(QString("JOIN %1").arg(strChannel));
