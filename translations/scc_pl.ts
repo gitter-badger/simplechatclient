@@ -226,8 +226,8 @@
         <translation>/friend [[+|-]nick]</translation>
     </message>
     <message>
-        <source>/whereis [nick] or /whois [nick] or /wi [nick] or /wii [nick]</source>
-        <translation>/whereis [nick] lub /whois [nick] lub /wi [nick] lub /wii [nick]</translation>
+        <source>/whereis [nick] or /whois [nick]</source>
+        <translation>/whereis [nick] lub /whois [nick]</translation>
     </message>
     <message>
         <source>/busy</source>

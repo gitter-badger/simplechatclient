@@ -56,7 +56,7 @@ QString Commands::execute()
         return cmdIgnore();
     else if (strCmd == "friend")
         return cmdFriend();
-    else if ((strCmd == "whereis") || (strCmd == "whois")  || (strCmd == "wi")  || (strCmd == "wii"))
+    else if ((strCmd == "whereis") || (strCmd == "whois"))
         return cmdWhereis();
     else if (strCmd == "busy")
         return cmdBusy();

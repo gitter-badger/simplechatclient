@@ -166,16 +166,8 @@ void Network::connect()
         // clear all
         clearAll();
 
-        // set active
-        iActive = QDateTime::currentMSecsSinceEpoch();
-
         // connect
         socket->connectToHost(strServer, iPort);
-
-        // start timers
-        timerPong->start();
-        timerPing->start();
-        timerQueue->start();
     }
     else
     {
@@ -188,6 +180,15 @@ void Network::connected()
 {
     Lag::instance()->reset();
 
+    // set active
+    iActive = QDateTime::currentMSecsSinceEpoch();
+
+    // start timers
+    timerPong->start();
+    timerPing->start();
+    timerQueue->start();
+
+    // display
     QString strDisplay = tr("Connected to server");
     Message::instance()->showMessageAll(strDisplay, MessageError);
 
