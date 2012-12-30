@@ -37,7 +37,7 @@ Network::Network(const QString &_strServer, int _iPort) : strServer(_strServer),
     Settings::instance()->set("reconnect", "true");
 
     timerReconnect = new QTimer();
-    timerReconnect->setInterval(1000*30); // 30 sec
+    timerReconnect->setInterval(1000*60*2); // 2 min
     timerPong = new QTimer();
     timerPong->setInterval(1000*60*1); // 1 min
     timerPing = new QTimer();
