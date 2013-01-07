@@ -35,6 +35,8 @@ public:
     void clear();
     void add(const QString &channel);
     QList<QString> get();
+    QList<QString> getCleared();
+    bool contains(const QString &channel);
     void setStatus(ObjectStatus status);
     ObjectStatus getStatus();
 

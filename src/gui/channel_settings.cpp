@@ -27,6 +27,7 @@
 #include "avatar_list_widget.h"
 #include "convert.h"
 #include "core.h"
+#include "channel_homes_model.h"
 #include "channel_settings_model.h"
 #include "nick.h"
 #include "settings.h"
@@ -940,7 +941,7 @@ void DlgChannelSettings::refreshPermissionList()
     QString strMe = Settings::instance()->get("nick");
     int iSelfMaxModes = Nick::instance()->getMaxModes(strMe, strChannel);
 
-    if (iSelfMaxModes >= 4)
+    if ((iSelfMaxModes >= 4) || ((iSelfMaxModes == -1) && (ChannelHomes::instance()->contains(strChannel))))
     {
         setSettingsTabsStatus(true);
     }

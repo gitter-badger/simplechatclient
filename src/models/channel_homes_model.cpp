@@ -54,6 +54,28 @@ QList<QString> ChannelHomes::get()
     return lChannelHomes;
 }
 
+QList<QString> ChannelHomes::getCleared()
+{
+    QList<QString> lChannelHomesCleared;
+
+    QList<QString> lChannelHomes = get();
+    foreach (QString strChannel, lChannelHomes)
+    {
+        if (strChannel[0] != '#')
+            strChannel = strChannel.right(strChannel.length()-1); // remove status
+
+        lChannelHomesCleared.append(strChannel);
+    }
+
+    return lChannelHomesCleared;
+}
+
+bool ChannelHomes::contains(const QString &channel)
+{
+    QList<QString> lChannelHomesCleared = getCleared();
+    return lChannelHomesCleared.contains(channel);
+}
+
 void ChannelHomes::setStatus(ObjectStatus status)
 {
     channelHomesStatus = status;
