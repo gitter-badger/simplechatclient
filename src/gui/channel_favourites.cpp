@@ -72,12 +72,14 @@ void DlgChannelFavourites::refresh()
 {
     ui.listWidget_channels->clear();
 
-    QList<QString> favouritesList = ChannelFavouritesModel::instance()->getAll();
-    foreach (QString strChannel, favouritesList)
+    QHashIterator<QString, OnetChannelFavourites> i(ChannelFavouritesModel::instance()->getAll());
+    while (i.hasNext())
     {
-/*
-        QString strAvatar = Channel::instance()->getAvatar(strChannel);
+        i.next();
+        QString strChannel = i.key();
+        OnetChannelFavourites onetChannelFavourites = i.value();
 
+        QString strAvatar = onetChannelFavourites.avatar;
         if (!strAvatar.isEmpty())
         {
             strAvatar = Avatar::instance()->getAvatarPath(strAvatar);
@@ -87,8 +89,6 @@ void DlgChannelFavourites::refresh()
             strAvatar = ":/images/channel_avatar.png";
             Core::instance()->network->send(QString("CS INFO %1 i").arg(strChannel));
         }
-*/
-        QString strAvatar = ":/images/channel_avatar.png";
 
         ui.listWidget_channels->addItem(new QListWidgetItem(QIcon(strAvatar), strChannel));
     }

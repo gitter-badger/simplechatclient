@@ -1442,7 +1442,7 @@ void OnetKernel::raw_142n()
     {
         Settings::instance()->set("ignore_favourites", "true");
 
-        QList<CaseIgnoreString> lChannelsCaseIgnore = ChannelFavouritesModel::instance()->getAllCaseIgnore();
+        QList<CaseIgnoreString> lChannelsCaseIgnore = ChannelFavouritesModel::instance()->getAllCaseIgnoreSorted();
         foreach (QString strChannel, lChannelsCaseIgnore)
         {
             if (!Channel::instance()->contains(strChannel))
@@ -1473,7 +1473,14 @@ void OnetKernel::raw_151n()
             QString strChannel = strDataList.at(i);
             if (strChannel[0] == ':') strChannel.remove(0,1);
 
-            ChannelHomes::instance()->add(strChannel);
+            QString strFlag;
+            if (strChannel[0] != '#')
+            {
+                strFlag = strChannel[0];
+                strChannel = strChannel.remove(0,1); // remove status
+            }
+
+            ChannelHomes::instance()->add(strChannel, strFlag);
         }
     }
     else if (strNick.toLower() == "nickserv")

@@ -308,10 +308,10 @@ void OnetAuth::saveCookies()
 {
     // save cookies
     QList<QNetworkCookie> cookies = accessManager->cookieJar()->cookiesForUrl(QUrl("http://czat.onet.pl"));
-    for (QList<QNetworkCookie>::iterator i = cookies.begin(); i != cookies.end(); ++i)
+    foreach (QNetworkCookie cookie, cookies)
     {
-        QString strKey = i->name();
-        QString strValue = i->value();
+        QString strKey = cookie.name();
+        QString strValue = cookie.value();
 
         if ((strKey == "onet_ubi") || (strKey == "onet_cid") || (strKey == "onet_sid") || (strKey == "onet_uid") || (strKey == "onetzuo_ticket"))
             Settings::instance()->set(strKey, strValue);

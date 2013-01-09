@@ -41,18 +41,17 @@ void ChannelFavouritesModel::clear()
     favourites.clear();
 }
 
-QList<QString> ChannelFavouritesModel::getAll()
+QHash<QString, OnetChannelFavourites> ChannelFavouritesModel::getAll()
 {
     return favourites;
 }
 
-QList<CaseIgnoreString> ChannelFavouritesModel::getAllCaseIgnore()
+QList<CaseIgnoreString> ChannelFavouritesModel::getAllCaseIgnoreSorted()
 {
     QList<CaseIgnoreString> lChannelsCaseIgnore;
 
     // copy to new list
-    QList<QString> lChannels = getAll();
-
+    QList<QString> lChannels = getAll().keys();
     foreach (QString strChannel, lChannels)
         lChannelsCaseIgnore.append(strChannel);
 
@@ -62,19 +61,30 @@ QList<CaseIgnoreString> ChannelFavouritesModel::getAllCaseIgnore()
     return lChannelsCaseIgnore;
 }
 
-void ChannelFavouritesModel::add(const QString &key)
+void ChannelFavouritesModel::add(const QString &channel)
 {
-    if (!favourites.contains(key))
-        favourites.append(key);
+    if (!favourites.contains(channel))
+    {
+        OnetChannelFavourites onetChannel;
+        onetChannel.avatar = QString::null;
+
+        favourites[channel] = onetChannel;
+    }
 }
 
-void ChannelFavouritesModel::remove(const QString &key)
+void ChannelFavouritesModel::remove(const QString &channel)
 {
-    if (favourites.contains(key))
-        favourites.removeOne(key);
+    if (favourites.contains(channel))
+        favourites.remove(channel);
 }
 
-bool ChannelFavouritesModel::contains(const QString &key)
+bool ChannelFavouritesModel::contains(const QString &channel)
 {
-    return favourites.contains(key);
+    return favourites.contains(channel);
+}
+
+void ChannelFavouritesModel::setAvatar(const QString &channel, const QString &avatar)
+{
+    if (favourites.contains(channel))
+        favourites[channel].avatar = avatar;
 }

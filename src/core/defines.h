@@ -117,6 +117,17 @@ struct OnetChannelList
     bool recommended;
 };
 
+struct OnetChannelFavourites
+{
+    QString avatar;
+};
+
+struct OnetChannelHomes
+{
+    QString avatar;
+    QString flag;
+};
+
 struct OnetModerateMessage
 {
     QString id;

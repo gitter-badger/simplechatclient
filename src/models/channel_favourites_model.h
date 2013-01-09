@@ -33,14 +33,15 @@ public:
 
     ChannelFavouritesModel();
     void clear();
-    QList<QString> getAll();
-    QList<CaseIgnoreString> getAllCaseIgnore();
-    void add(const QString &key);
-    void remove(const QString &key);
-    bool contains(const QString &key);
+    QHash<QString, OnetChannelFavourites> getAll();
+    QList<CaseIgnoreString> getAllCaseIgnoreSorted();
+    void add(const QString &channel);
+    void remove(const QString &channel);
+    bool contains(const QString &channel);
+    void setAvatar(const QString &channel, const QString &avatar);
 
 private:
-    QList<QString> favourites;
+    QHash<QString, OnetChannelFavourites> favourites;
 };
 
 #endif // CHANNEL_FAVOURITES_MODEL_H

@@ -33,15 +33,15 @@ public:
 
     ChannelHomes();
     void clear();
-    void add(const QString &channel);
-    QList<QString> get();
-    QList<QString> getCleared();
+    void add(const QString &channel, const QString &flag);
+    QHash<QString, OnetChannelHomes> get();
     bool contains(const QString &channel);
     void setStatus(ObjectStatus status);
     ObjectStatus getStatus();
+    void setAvatar(const QString &channel, const QString &avatar);
 
 private:
-    QList<QString> lChannelHomes;
+    QHash<QString, OnetChannelHomes> lChannelHomes;
     ObjectStatus channelHomesStatus;
 };
 
