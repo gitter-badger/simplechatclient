@@ -154,8 +154,6 @@ void Updates::updateFinished(QNetworkReply *reply)
         return;
     }
 
-    Settings::instance()->set("update_url", QString::number(update_url));
-
     QString strUpdateXml = reply->readAll();
 
     if (!strUpdateXml.isEmpty())

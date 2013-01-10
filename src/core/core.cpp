@@ -99,7 +99,6 @@ void Core::createSettings()
     Settings::instance()->set("whats_new", QString::null);
     Settings::instance()->set("motd", QString::null);
     Settings::instance()->set("version_status", "unknown");
-    Settings::instance()->set("update_url", QString::null);
 
     Settings::instance()->set("logged", "false");
     Settings::instance()->set("busy", "false");

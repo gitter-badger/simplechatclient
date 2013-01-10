@@ -30,12 +30,9 @@
 #include "settings.h"
 #include "update.h"
 
-#define UPDATE_LINK_1 "http://simplechatclien.sourceforge.net/download/"
-#define UPDATE_LINK_2 "https://github.com/simplechatclient/simplechatclient/downloads"
-
-#define SITE_LINK_1 "http://sourceforge.net/projects/simplechatclien/files/scc-%1.exe/download"
-#define DOWNLOAD_LINK_1 "http://%1.dl.sourceforge.net/project/simplechatclien/scc-%2.exe"
-#define DOWNLOAD_LINK_2 "http://cloud.github.com/downloads/simplechatclient/simplechatclient/scc-%1.exe"
+#define DOWNLOAD_LINK "http://simplechatclien.sourceforge.net/download/"
+#define DOWNLOAD_SITE_LINK "http://sourceforge.net/projects/simplechatclien/files/scc-%1.exe/download"
+#define DOWNLOAD_DIRECT_LINK "http://%1.dl.sourceforge.net/project/simplechatclien/scc-%2.exe"
 
 DlgUpdate::DlgUpdate(QWidget *parent) : QDialog(parent)
 {
@@ -95,27 +92,11 @@ void DlgUpdate::buttonDownload()
 {
     ui.pushButton_download->setEnabled(false);
 
-    int update_url = Settings::instance()->get("update_url").toInt();
-
 #ifdef Q_WS_WIN
-    if (update_url == 1)
-    {
-        QNetworkReply *pReply = accessManager->get(QNetworkRequest(QUrl(QString(SITE_LINK_1).arg(strVersion))));
-        pReply->setProperty("category", "sfsite");
-    }
-    else if (update_url == 2)
-    {
-        QNetworkReply *pReply = accessManager->get(QNetworkRequest(QUrl(QString(DOWNLOAD_LINK_2).arg(strVersion))));
-        pReply->setProperty("category", "file");
-        connect(pReply, SIGNAL(downloadProgress(qint64,qint64)), this, SLOT(downloadProgress(qint64,qint64)));
-        connect(pReply, SIGNAL(error(QNetworkReply::NetworkError)), this, SLOT(downloadError(QNetworkReply::NetworkError)));
-    }
+    QNetworkReply *pReply = accessManager->get(QNetworkRequest(QUrl(QString(DOWNLOAD_SITE_LINK).arg(strVersion))));
+    pReply->setProperty("category", "sfsite");
 #else
-    QString strUrl;
-    if (update_url == 1) strUrl = UPDATE_LINK_1;
-    else if (update_url == 2) strUrl = UPDATE_LINK_2;
-
-    QDesktopServices::openUrl(QUrl(strUrl));
+    QDesktopServices::openUrl(QUrl(DOWNLOAD_LINK));
 #endif
 }
 
@@ -135,7 +116,7 @@ void DlgUpdate::gotSFSite(QString site)
 
     if (strMirror.size() < 25)
     {
-        QNetworkReply *pReply = accessManager->get(QNetworkRequest(QUrl(QString(DOWNLOAD_LINK_1).arg(strMirror, strVersion))));
+        QNetworkReply *pReply = accessManager->get(QNetworkRequest(QUrl(QString(DOWNLOAD_DIRECT_LINK).arg(strMirror, strVersion))));
         pReply->setProperty("category", "file");
         connect(pReply, SIGNAL(downloadProgress(qint64,qint64)), this, SLOT(downloadProgress(qint64,qint64)));
         connect(pReply, SIGNAL(error(QNetworkReply::NetworkError)), this, SLOT(downloadError(QNetworkReply::NetworkError)));
