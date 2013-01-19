@@ -618,13 +618,19 @@ void MainWindow::inputLineKeyEvent(QKeyEvent *k)
     if ((k->key() == Qt::Key_Tab) && (k->modifiers() == Qt::ControlModifier))
     {
         int index = pTabM->currentIndex();
-        pTabM->setCurrentIndex(index+1);
+        if (pTabM->count()-1 != index)
+            pTabM->setCurrentIndex(index+1);
+        else
+            pTabM->setCurrentIndex(0);
     }
     // ctrl+shift+tab pressed in inputline
     else if ((k->key() == Qt::Key_Backtab) && (k->modifiers() & (Qt::ControlModifier | Qt::ShiftModifier)))
     {
         int index = pTabM->currentIndex();
-        pTabM->setCurrentIndex(index-1);
+        if (index != 0)
+            pTabM->setCurrentIndex(index-1);
+        else
+            pTabM->setCurrentIndex(pTabM->count()-1);
     }
     // ctrl F
     else if ((k->key() == Qt::Key_F) && (k->modifiers() == Qt::ControlModifier))
