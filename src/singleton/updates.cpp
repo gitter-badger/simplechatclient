@@ -54,8 +54,14 @@ Updates::~Updates()
 }
 
 void Updates::checkUpdate()
-{
-    QNetworkReply *pReply = accessManager->get(QNetworkRequest(QUrl(UPDATE_URL_1)));
+{    
+    QString strContent = QString("params={\"id\":\"%1\",\"version\":\"%2\"}").arg(Settings::instance()->get("unique_id"),Settings::instance()->get("version"));
+    QString strUrl = UPDATE_URL_1;
+
+    QNetworkRequest request;
+    request.setUrl(QUrl(strUrl));
+    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
+    QNetworkReply *pReply = accessManager->post(request, strContent.toAscii());
     pReply->setProperty("update_url", "1");
 }
 

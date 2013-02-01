@@ -18,6 +18,7 @@
  */
 
 #include <QDir>
+#include <QUuid>
 #include "settings.h"
 #include "xml.h"
 #include "config.h"
@@ -119,11 +120,14 @@ QHash<QString,QString> Config::getDefaultValues()
     path = SCC_DATA_DIR;
 #endif
 
+    QString uuidStr = QUuid::createUuid().toString();
+    uuidStr.remove("{"); uuidStr.remove("}");
+
     QString strSoundBeep = path+"/3rdparty/sounds/beep.wav";
     QString strSoundQuery = path+"/3rdparty/sounds/query.wav";
     QString strBackgroundImage = path+"/images/wallpaper/default.jpg";
 
-    QString strPunishReason = "Bluzg;Flood;";
+    QString strPunishReason = "Bluzg;Flood;Spam;";
 
     QHash<QString,QString> lDefaultValues;
 
@@ -131,6 +135,7 @@ QHash<QString,QString> Config::getDefaultValues()
     {
         lDefaultValues.insert("first_run", "true");
         lDefaultValues.insert("current_profile", "~test");
+        lDefaultValues.insert("unique_id", uuidStr);
     }
     else
     {
