@@ -198,8 +198,8 @@
         <translation>/cycle [tekst] lub /hop [tekst] - wyjście i ponowne wejście do aktualnego pokoju</translation>
     </message>
     <message>
-        <source>/me [text]</source>
-        <translation>/me [tekst]</translation>
+        <source>/me [text] - action command</source>
+        <translation>/me [tekst] - komenda akcji</translation>
     </message>
     <message>
         <source>/topic [text] - change topic on current channel</source>
@@ -1438,7 +1438,7 @@
     </message>
     <message>
         <source>Busy mode after you log in to chat</source>
-        <translation>Tryb zajętości po zalogowaniu</translation>
+        <translation>Oznaczenie jako zajęty po zalogowaniu</translation>
     </message>
     <message>
         <source>Disable autojoin favourite channels</source>
@@ -1446,7 +1446,7 @@
     </message>
     <message>
         <source>Auto away on idle</source>
-        <translation>Automatyczne away</translation>
+        <translation>Automatyczne oznaczenie jako nieobecny</translation>
     </message>
     <message>
         <source>Minimize to tray</source>

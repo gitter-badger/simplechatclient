@@ -335,7 +335,7 @@ QString Commands::cmdHelp()
     strHelp.append(tr("/raw [text] - send command directly to server")+";");
     strHelp.append(tr("/all [text] - send message to all opened channels")+";");
     strHelp.append(tr("/cycle [text] or /hop [text] - part and join current channel")+";");
-    strHelp.append(tr("/me [text]")+";");
+    strHelp.append(tr("/me [text] - action command")+";");
     strHelp.append(tr("/topic [text] - change topic on current channel")+";");
     strHelp.append(tr("/join [channel] [key] or /j [channel] [key] - join channel")+";");
     strHelp.append(tr("/part [text] or /p [text] - part current channel")+";");
