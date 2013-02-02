@@ -342,7 +342,7 @@ QString Commands::cmdHelp()
     strHelp.append(tr("/priv [nick]")+";");
     strHelp.append(tr("/ignore [[+|-]nick]")+";");
     strHelp.append(tr("/friend [[+|-]nick]")+";");
-    strHelp.append(tr("/whereis [nick] or /whois [nick] or /wi [nick] or /wii [nick]")+";");
+    strHelp.append(tr("/whereis [nick] or /whois [nick]")+";");
     strHelp.append(tr("/busy")+";");
     strHelp.append(tr("/away [text]")+";");
     strHelp.append(tr("/invite [nick]")+";");
