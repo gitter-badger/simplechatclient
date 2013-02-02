@@ -149,6 +149,7 @@ QHash<QString,QString> Config::getDefaultValues()
         lDefaultValues.insert("punish_reason", strPunishReason);
 
         lDefaultValues.insert("auto_busy", "false");
+        lDefaultValues.insert("auto_away", "true");
         lDefaultValues.insert("minimize_to_tray", "false");
         lDefaultValues.insert("disable_autojoin_favourites", "false");
         lDefaultValues.insert("show_zuo_and_ip", "false");

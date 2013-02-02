@@ -55,6 +55,7 @@ private slots:
     void punishReasonAdd();
     void punishReasonRemove();
     void autoBusy(bool bValue);
+    void autoAway(bool bValue);
     void disableAutojoinFavourites(bool bValue);
     void minimizeToTray(bool bValue);
     void showZuoAndIp(bool bValue);

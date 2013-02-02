@@ -85,6 +85,7 @@ void DlgOptions::createGui()
 
     // page adv
     ui.checkBox_auto_busy->setText(tr("Busy mode after you log in to chat"));
+    ui.checkBox_auto_away->setText(tr("Auto away on idle"));
     ui.checkBox_disable_autojoin_favourites->setText(tr("Disable autojoin favourite channels"));
     ui.checkBox_minimize_to_tray->setText(tr("Minimize to tray"));
     ui.checkBox_show_zuo_and_ip->setText(tr("Show ZUO and IP"));
@@ -268,6 +269,7 @@ void DlgOptions::setDefaultValues()
     QString strLanguage = Settings::instance()->get("language");
 
     QString strAutoBusy = Settings::instance()->get("auto_busy");
+    QString strAutoAway = Settings::instance()->get("auto_away");
     QString strDisableAutojoinFavourites = Settings::instance()->get("disable_autojoin_favourites");
     QString strMinimizeToTray = Settings::instance()->get("minimize_to_tray");
     QString strShowZuoAndIp = Settings::instance()->get("show_zuo_and_ip");
@@ -311,6 +313,12 @@ void DlgOptions::setDefaultValues()
         ui.checkBox_auto_busy->setChecked(true);
     else
         ui.checkBox_auto_busy->setChecked(false);
+
+    // auto away
+    if (strAutoAway == "true")
+        ui.checkBox_auto_away->setChecked(true);
+    else
+        ui.checkBox_auto_away->setChecked(false);
 
     // auto join favourites
     if (strDisableAutojoinFavourites == "true")
@@ -424,6 +432,7 @@ void DlgOptions::createSignals()
     connect(ui.pushButton_punish_reason_add, SIGNAL(clicked()), this, SLOT(punishReasonAdd()));
     connect(ui.pushButton_punish_reason_remove, SIGNAL(clicked()), this, SLOT(punishReasonRemove()));
     connect(ui.checkBox_auto_busy, SIGNAL(clicked(bool)), this, SLOT(autoBusy(bool)));
+    connect(ui.checkBox_auto_away, SIGNAL(clicked(bool)), this, SLOT(autoAway(bool)));
     connect(ui.checkBox_disable_autojoin_favourites, SIGNAL(clicked(bool)), this, SLOT(disableAutojoinFavourites(bool)));
     connect(ui.checkBox_minimize_to_tray, SIGNAL(clicked(bool)), this, SLOT(minimizeToTray(bool)));
     connect(ui.checkBox_show_zuo_and_ip, SIGNAL(clicked(bool)), this, SLOT(showZuoAndIp(bool)));
@@ -665,6 +674,17 @@ void DlgOptions::autoBusy(bool bValue)
 
     Config *pConfig = new Config();
     pConfig->set("auto_busy", strValue);
+    delete pConfig;
+}
+
+void DlgOptions::autoAway(bool bValue)
+{
+    QString strValue = (bValue ? "true" : "false");
+
+    Settings::instance()->set("auto_away", strValue);
+
+    Config *pConfig = new Config();
+    pConfig->set("auto_away", strValue);
     delete pConfig;
 }
 

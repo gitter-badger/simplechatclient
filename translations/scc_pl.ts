@@ -1445,6 +1445,10 @@
         <translation>Wyłącz automatyczne wchodzenie do ulubionych pokoi</translation>
     </message>
     <message>
+        <source>Auto away on idle</source>
+        <translation>Automatyczne away</translation>
+    </message>
+    <message>
         <source>Minimize to tray</source>
         <translation>Minimalizacja do zasobnika</translation>
     </message>

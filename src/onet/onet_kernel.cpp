@@ -1192,7 +1192,8 @@ void OnetKernel::raw_001()
     Settings::instance()->set("last_active", QString::number(QDateTime::currentMSecsSinceEpoch()));
 
     // auto-away
-    Autoaway::instance()->start();
+    if (Settings::instance()->get("auto_away") == "true")
+        Autoaway::instance()->start();
 }
 
 // :cf1f4.onet 002 Merovingian :Your host is cf1f4.onet, running version InspIRCd-1.1
