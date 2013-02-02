@@ -186,108 +186,108 @@
         <translation>* Dostępne komendy:</translation>
     </message>
     <message>
-        <source>/raw [text]</source>
-        <translation>/raw [tekst]</translation>
+        <source>/raw [text] - send command directly to server</source>
+        <translation>/raw [tekst] - wysłanie komendy do serwera</translation>
     </message>
     <message>
-        <source>/all [text]</source>
-        <translation>/all [tekst]</translation>
+        <source>/all [text] - send message to all opened channels</source>
+        <translation>/all [tekst] - wysłanie wiadomości do wszystkich otwartych pokoi</translation>
     </message>
     <message>
-        <source>/cycle [text] or /hop [text]</source>
-        <translation>/cycle [tekst] lub /hop [tekst]</translation>
+        <source>/cycle [text] or /hop [text] - part and join current channel</source>
+        <translation>/cycle [tekst] lub /hop [tekst] - wyjście i ponowne wejście do aktualnego pokoju</translation>
     </message>
     <message>
         <source>/me [text]</source>
         <translation>/me [tekst]</translation>
     </message>
     <message>
-        <source>/topic [text]</source>
-        <translation>/topic [tekst]</translation>
+        <source>/topic [text] - change topic on current channel</source>
+        <translation>/topic [tekst] - zmiana tematu w aktualnym pokoju</translation>
     </message>
     <message>
-        <source>/join [channel] [key] or /j [channel] [key]</source>
-        <translation>/join [pokój] [klucz] lub /j [pokój] [klucz]</translation>
+        <source>/join [channel] [key] or /j [channel] [key] - join channel</source>
+        <translation>/join [pokój] [klucz] lub /j [pokój] [klucz] - wejście do pokoju</translation>
     </message>
     <message>
-        <source>/part [text] or /p [text]</source>
-        <translation>/part [tekst] lub /p [tekst]</translation>
+        <source>/part [text] or /p [text] - part current channel</source>
+        <translation>/part [tekst] lub /p [tekst] - wyjście z aktualnego pokoju</translation>
     </message>
     <message>
-        <source>/priv [nick]</source>
-        <translation>/priv [nick]</translation>
+        <source>/priv [nick] - open priv</source>
+        <translation>/priv [nick] - otwarcie rozmowy prywatnej z użytkownikiem</translation>
     </message>
     <message>
-        <source>/ignore [[+|-]nick]</source>
-        <translation>/ignore [[+|-]nick]</translation>
+        <source>/ignore [[+|-]nick] - add or remove nick from ignore list</source>
+        <translation>/ignore [[+|-]nick] - dodanie albo usunięcie użytkownika z listy ignorowanych</translation>
     </message>
     <message>
-        <source>/friend [[+|-]nick]</source>
-        <translation>/friend [[+|-]nick]</translation>
+        <source>/friend [[+|-]nick] - add or remove nick from friends list</source>
+        <translation>/friend [[+|-]nick] - dodanie albo usunięcie użytkownika z listy przyjaciół</translation>
     </message>
     <message>
-        <source>/whereis [nick] or /whois [nick]</source>
-        <translation>/whereis [nick] lub /whois [nick]</translation>
+        <source>/whereis [nick] or /whois [nick] - show where is user</source>
+        <translation>/whereis [nick] lub /whois [nick] - wyświetlenie informacji gdzie znajduje się użytkownik</translation>
     </message>
     <message>
-        <source>/busy</source>
-        <translation>/busy</translation>
+        <source>/busy - mark/unmark as busy</source>
+        <translation>/busy - włączenie lub wyłączenie zajętości</translation>
     </message>
     <message>
-        <source>/away [text]</source>
-        <translation>/away [tekst]</translation>
+        <source>/away [text] - mark/unmark as being away</source>
+        <translation>/away [tekst] - włączenie lub wyłączenie nieobecności</translation>
     </message>
     <message>
-        <source>/invite [nick]</source>
-        <translation>/invite [nick]</translation>
+        <source>/invite [nick] - invite nick to current channel</source>
+        <translation>/invite [nick] - zaproszenie użytkownika do aktualnego pokoju</translation>
     </message>
     <message>
-        <source>/offmsg [nick] [text]</source>
-        <translation>/offmsg [nick] [tekst]</translation>
+        <source>/offmsg [nick] [text] - send offline message to user</source>
+        <translation>/offmsg [nick] [tekst] - wysłanie wiadomości offline do użytkownika</translation>
     </message>
     <message>
-        <source>/logout [text] or /quit [text] or /q [text]</source>
-        <translation>/logout [tekst] lub /quit [tekst] lub /q [tekst]</translation>
+        <source>/logout [text] or /quit [text] or /q [text] - logout</source>
+        <translation>/logout [tekst] lub /quit [tekst] lub /q [tekst] - wyjście z czata</translation>
     </message>
     <message>
-        <source>/kick [nick] [reason] or /k [nick] [reason]</source>
-        <translation>/kick [nick] [powód] lub /k [nick] [powód]</translation>
+        <source>/kick [nick] [reason] or /k [nick] [reason] - kick user from current channel</source>
+        <translation>/kick [nick] [powód] lub /k [nick] [powód] - wyrzucenie użytkownika z aktualnego pokoju</translation>
     </message>
     <message>
-        <source>/ban [[+|-]nick]</source>
-        <translation>/ban [[+|-]nick]</translation>
+        <source>/ban [[+|-]nick] - ban or unban nick on current channel</source>
+        <translation>/ban [[+|-]nick] - zbanowanie albo odbanowanie użytkownika na aktualnym pokoju</translation>
     </message>
     <message>
-        <source>/banip [[+|-]nick]</source>
-        <translation>/banip [[+|-]nick]</translation>
+        <source>/banip [[+|-]nick] - ban user ip or unban user ip on current channel</source>
+        <translation>/banip [[+|-]nick] - zbanowanie adresu ip albo odbanowanie adresu ip użytkownika w aktualnym pokoju</translation>
     </message>
     <message>
-        <source>/kban [nick] [reason]</source>
-        <translation>/kban [nick] [powód]</translation>
+        <source>/kban [nick] [reason] - kick and ban nick on current channel</source>
+        <translation>/kban [nick] [powód] - wyrzucenie oraz zbanowanie użytkownika w aktualnym pokoju</translation>
     </message>
     <message>
-        <source>/kbanip [nick] [reason]</source>
-        <translation>/kbanip [nick] [powód]</translation>
+        <source>/kbanip [nick] [reason] - kick and ban user ip on current channel</source>
+        <translation>/kbanip [nick] [powód] - wyrzucenie oraz zbanowanie adresu ip użytkownika w aktualnym pokoju</translation>
     </message>
     <message>
-        <source>/sop [[+|-]nick]</source>
-        <translation>/sop [[+|-]nick]</translation>
+        <source>/sop [[+|-]nick] - add or remove super-operator privilege</source>
+        <translation>/sop [[+|-]nick] - nadanie albo odebranie uprawnień super-operatora</translation>
     </message>
     <message>
-        <source>/op [[+|-]nick]</source>
-        <translation>/op [[+|-]nick]</translation>
+        <source>/op [[+|-]nick] - add or remove operator privilege</source>
+        <translation>/op [[+|-]nick] - nadanie albo odebranie uprawnień operatora</translation>
     </message>
     <message>
-        <source>/moder [[+|-]nick] or /moderator [[+|-]nick]</source>
-        <translation>/moder [[+|-]nick] lub /moderator [[+|-]nick]</translation>
+        <source>/moder [[+|-]nick] or /moderator [[+|-]nick] - add or remove mod privilege</source>
+        <translation>/moder [[+|-]nick] lub /moderator [[+|-]nick] - nadanie albo odebranie uprawnień moderatora</translation>
     </message>
     <message>
-        <source>/vip [[+|-]nick]</source>
-        <translation>/vip [[+|-]nick]</translation>
+        <source>/vip [[+|-]nick] - add or remove vip privilege</source>
+        <translation>/vip [[+|-]nick] - nadanie albo odebranie uprawnień gościa</translation>
     </message>
     <message>
-        <source>/mp3 or /winamp</source>
-        <translation>/mp3 lub /winamp</translation>
+        <source>/mp3 or /winamp - show current song from winamp/aimp</source>
+        <translation>/mp3 lub /winamp - wyświetlenie aktualnej piosenki z winampa/aimpa</translation>
     </message>
     <message>
         <source>/help</source>
