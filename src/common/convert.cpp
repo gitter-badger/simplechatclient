@@ -200,21 +200,27 @@ void Convert::createText(QString &strText)
 
 void Convert::simpleReverseConvert(QString &strData)
 {
-    QRegExp rx("//([a-zA-Z0-9_-]+)");
+    QRegExp rx("(http:|https:){0,}//([a-zA-Z0-9_-]+)");
 
     int pos = 0;
     while ((pos = rx.indexIn(strData, pos)) != -1)
     {
-        int first = pos;
-        pos += rx.matchedLength();
-        int second = pos;
+        if (rx.cap(1).isEmpty())
+        {
+            int first = pos;
+            pos += rx.cap(2).length()+2;
+            int second = pos;
 
-        QString strEmoticon = rx.cap(1);
+            QString strEmoticon = rx.cap(2);
 
-        if (!findEmoticon(strEmoticon).isEmpty())
-            strData.replace(first, second-first, "%I"+strEmoticon+"%");
-
-        pos--;
+            if (!findEmoticon(strEmoticon).isEmpty())
+                strData.replace(first, second-first, "%I"+strEmoticon+"%");
+        }
+        else
+        {
+            pos += rx.matchedLength();
+        }
+        pos --;
     }
 }
 

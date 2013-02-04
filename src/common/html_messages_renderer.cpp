@@ -47,15 +47,18 @@ void fixContextMenu(QString &strData, MessageCategory eMessageCategory)
         }
 
         // web
-        if ((strWord.startsWith("http")) || (strWord.startsWith("www.")))
+        if ((strWord.startsWith("http:")) || (strWord.startsWith("https:")) || (strWord.startsWith("www.")))
         {
             Convert::removeStyles(strWord);
             strDataList[i] = QString("<a onclick=\"return false\" name=\"website\" style=\"color:inherit;text-decoration:none;\" href=\"%1\">%2</a>").arg(strWord, strWord);
         }
-        else if (((strWord.contains("http")) && (!strWord.startsWith("http"))) || ((strWord.contains("www.")) && (!strWord.startsWith("www."))))
+        else if (((strWord.contains("http:")) && (!strWord.startsWith("http:"))) || ((strWord.contains("https:")) && (!strWord.startsWith("https:"))) || ((strWord.contains("www.")) && (!strWord.startsWith("www."))))
         {
-            if (strWord.contains("http"))
-                strWord.replace("http", " http");
+            if ((strWord.contains("http:")) || (strWord.contains("https:")))
+            {
+                strWord.replace("http:", " http:");
+                strWord.replace("https:", " https:");
+            }
             else
                 strWord.replace("www.", " www.");
 

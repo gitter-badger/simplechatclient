@@ -45,7 +45,7 @@ void Replace::replaceEmots(QString &strData)
     strData.replace(":$", "%Iskwaszony%");
     strData.replace(";$", "%Ixkwas%");
     strData.replace(";/", "%Ixsceptyk%");
-    if (!strData.contains(QRegExp("(ftp:|http:|https:)//"))) strData.replace(":/", "%Isceptyczny%");
+    if (!strData.contains(QRegExp("(http:|https:)//"))) strData.replace(":/", "%Isceptyczny%");
     strData.replace(";D", "%Ixhehe%");
     strData.replace(":D", "%Ihehe%");
     strData.replace("o_O", "%Iswir%");
