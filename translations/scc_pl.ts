@@ -488,8 +488,8 @@
 <context>
     <name>DlgChannelHomes</name>
     <message>
-        <source>Your channels</source>
-        <translation>Twoje pokoje</translation>
+        <source>My channels</source>
+        <translation>Moje pokoje</translation>
     </message>
     <message>
         <source>Create</source>
