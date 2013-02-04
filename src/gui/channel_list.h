@@ -36,6 +36,9 @@ private:
     void setDefaultValues();
     void createSignals();
 
+    void clearFields();
+    void clearLists();
+
     void getOptions();
     bool showChannel(const QString &name, int people, int cat, int type, bool moderated, bool recommended);
 
