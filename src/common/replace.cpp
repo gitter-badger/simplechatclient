@@ -48,10 +48,10 @@ void Replace::replaceEmots(QString &strData)
     if (!strData.contains(QRegExp("(http:|https:)//"))) strData.replace(":/", "%Isceptyczny%");
     strData.replace(";D", "%Ixhehe%");
     strData.replace(":D", "%Ihehe%");
-    strData.replace("o_O", "%Iswir%");
+    //strData.replace("o_O", "%Iswir%");
     strData.replace("!!", "%Iwykrzyknik%");
     strData.replace("??", "%Ipytanie%");
-    strData.replace("xD", "%Ilol%");
+    //strData.replace("xD", "%Ilol%");
     strData.replace("-_-", "%Iwrr%");
     strData.replace(";(", "%Iszloch%");
 
