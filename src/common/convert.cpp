@@ -188,14 +188,15 @@ void convertSlashToEmoticons(QString &strData)
         if (rx.cap(1).isEmpty())
         {
             int first = pos;
-            int second = first + rx.cap(2).length() + 2;
+            int matchedLength = rx.cap(2).length() + 2;
+            int second = first + matchedLength;
 
             QString strEmoticon = rx.cap(2);
 
             if (!findEmoticon(strEmoticon).isEmpty())
                 strData.replace(first, second-first, "%I"+strEmoticon+"%");
             else
-                pos += rx.matchedLength();
+                pos += matchedLength;
         }
         else
             pos += rx.matchedLength();
