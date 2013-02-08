@@ -170,7 +170,7 @@ void convertEmoticonsToSlash(QString &strData)
         QString strEmoticonPath = findEmoticon(strEmoticon);
 
         if (!strEmoticonPath.isEmpty())
-            strData.replace(strEmoticonFull, QString("//\\1").arg(strEmoticon));
+            strData.replace(strEmoticonFull, QString("//%1").arg(strEmoticon));
         else
             pos += rx.matchedLength();
 
@@ -188,8 +188,7 @@ void convertSlashToEmoticons(QString &strData)
         if (rx.cap(1).isEmpty())
         {
             int first = pos;
-            pos += rx.cap(2).length()+2;
-            int second = pos;
+            int second = first + rx.cap(2).length() + 2;
 
             QString strEmoticon = rx.cap(2);
 
@@ -199,9 +198,8 @@ void convertSlashToEmoticons(QString &strData)
                 pos += rx.matchedLength();
         }
         else
-        {
             pos += rx.matchedLength();
-        }
+
         pos --;
     }
 }
