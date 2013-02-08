@@ -329,7 +329,8 @@ bool Convert::isBold(const QString &strData)
         else
             return false;
     }
-    return false;
+    else
+        return false;
 }
 
 bool Convert::isItalic(const QString &strData)
@@ -345,7 +346,8 @@ bool Convert::isItalic(const QString &strData)
         else
             return false;
     }
-    return false;
+    else
+        return false;
 }
 
 QString Convert::getFont(const QString &strData)
@@ -357,7 +359,8 @@ QString Convert::getFont(const QString &strData)
         QString strFontName = rx.cap(2);
         return strFontName;
     }
-    return QString::null;
+    else
+        return QString::null;
 }
 
 int Convert::getColor(const QString &strData)
