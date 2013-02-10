@@ -104,18 +104,11 @@ void convertFont(QString &strData)
             else if (strFontName == "courier") strAtributes += "font-family:Courier New;";
             else strAtributes += "font-family:Verdana;";
 
-            if (!strAtributes.isEmpty())
-            {
-                strData.replace(first, second-first, QString("<span style=\"%1\">").arg(strAtributes));
-                strData += "</span>";
-            }
-            else
-                pos += rx.matchedLength();
+            strData.replace(first, second-first, QString("<span style=\"%1\">").arg(strAtributes));
+            strData += "</span>";
         }
         else
             strData.remove(first, second-first);
-
-        pos--;
     }
 }
 
@@ -152,8 +145,6 @@ void convertEmoticons(QString &strData, bool bInsertWidthHeight)
         }
         else
             strData.replace(strEmoticonFull, QString("//%1").arg(strEmoticon));
-
-        pos--;
     }
 }
 
@@ -173,8 +164,6 @@ void convertEmoticonsToSlash(QString &strData)
             strData.replace(strEmoticonFull, QString("//%1").arg(strEmoticon));
         else
             pos += rx.matchedLength();
-
-        pos--;
     }
 }
 
@@ -200,8 +189,6 @@ void convertSlashToEmoticons(QString &strData)
         }
         else
             pos += rx.matchedLength();
-
-        pos --;
     }
 }
 
@@ -223,8 +210,6 @@ void removeFont(QString &strData)
         int second = first + rx.matchedLength();
 
         strData.remove(first, second-first);
-
-        pos--;
     }
 }
 
@@ -245,8 +230,6 @@ void removeEmoticons(QString &strData)
             strData.remove(first, second-first);
         else
             pos += rx.matchedLength();
-
-        pos--;
     }
 }
 
