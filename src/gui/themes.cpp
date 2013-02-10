@@ -50,6 +50,9 @@ void DlgThemes::setDefaultValues()
 {
     QString strCurrentTheme = Settings::instance()->get("themes");
 
+    // image
+
+
     // themes
     if (strCurrentTheme == "Standard")
         ui.listWidget->setCurrentRow(0);
@@ -81,7 +84,7 @@ void DlgThemes::changeTheme(QModelIndex index)
         case 3: strTheme = "Adara"; break;
     }
 
-    // change image
+    // image
     // TODO
 
     // save

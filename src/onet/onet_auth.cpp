@@ -363,7 +363,7 @@ void OnetAuth::requestFinished(const QString &strData)
             // send auth
             if (Core::instance()->network->isConnected())
             {
-                Core::instance()->network->send(QString("NICK %1").arg(strFullNick));
+                Core::instance()->network->send(QString("NICK %1").arg(strNick));
                 Core::instance()->network->send("AUTHKEY");
             }
         }
