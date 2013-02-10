@@ -31,7 +31,7 @@
 #include "punish_reason.h"
 #include "settings.h"
 #include "sound_notify.h"
-#include "themes_model.h"
+#include "themes.h"
 #include "options.h"
 
 DlgOptions::DlgOptions(QWidget *parent) : QDialog(parent)
@@ -51,6 +51,7 @@ DlgOptions::DlgOptions(QWidget *parent) : QDialog(parent)
 void DlgOptions::createGui()
 {
     ui.pushButton_profiles->setIcon(QIcon(":/images/oxygen/16x16/preferences-activities.png"));
+    ui.pushButton_themes->setIcon(QIcon(":/images/oxygen/16x16/view-presentation.png"));
     ui.pushButton_highlight_add->setIcon(QIcon(":/images/oxygen/16x16/list-add.png"));
     ui.pushButton_highlight_remove->setIcon(QIcon(":/images/oxygen/16x16/list-remove.png"));
     ui.pushButton_punish_reason_add->setIcon(QIcon(":/images/oxygen/16x16/list-add.png"));
@@ -71,6 +72,7 @@ void DlgOptions::createGui()
     ui.label_profile->setText(tr("Current profile:"));
     ui.pushButton_profiles->setText(tr("Profiles"));
     ui.groupBox_themes->setTitle(tr("Themes"));
+    ui.pushButton_themes->setText(tr("Themes"));
     ui.groupBox_language->setTitle(tr("Language"));
 
     // page highlight
@@ -211,11 +213,6 @@ void DlgOptions::setDefaultValues()
     // current option
     ui.listWidget_options->setCurrentRow(0);
 
-    // themes
-    QStringList lThemes = ThemesModel::instance()->getAll();
-    ui.comboBox_themes->clear();
-    ui.comboBox_themes->addItems(lThemes);
-
     // language
     QStringList lLanguage;
     lLanguage << tr("English") << tr("Polish");
@@ -265,7 +262,6 @@ void DlgOptions::setDefaultValues()
     ui.lineEdit_background_image->setText(QDir::toNativeSeparators(Settings::instance()->get("background_image")));
 
     // default values
-    QString strThemes = Settings::instance()->get("themes");
     QString strLanguage = Settings::instance()->get("language");
 
     QString strAutoBusy = Settings::instance()->get("auto_busy");
@@ -287,18 +283,6 @@ void DlgOptions::setDefaultValues()
     QString strWinamp = Settings::instance()->get("winamp");
 
     QString strTrayMessage = Settings::instance()->get("tray_message");
-
-    // themes
-    if (strThemes == "Standard")
-        ui.comboBox_themes->setCurrentIndex(0);
-    else if (strThemes == "Alhena")
-        ui.comboBox_themes->setCurrentIndex(1);
-    else if (strThemes == "Origin")
-        ui.comboBox_themes->setCurrentIndex(2);
-    else if (strThemes == "Adara")
-        ui.comboBox_themes->setCurrentIndex(3);
-    else
-        ui.comboBox_themes->setCurrentIndex(1);
 
     // language
     if (strLanguage == "en")
@@ -425,7 +409,7 @@ void DlgOptions::createSignals()
     connect(ui.listWidget_options, SIGNAL(clicked(QModelIndex)), this, SLOT(changePage(QModelIndex)));
     connect(ui.comboBox_profiles, SIGNAL(activated(int)), this, SLOT(currentProfileChanged(int)));
     connect(ui.pushButton_profiles, SIGNAL(clicked()), this, SLOT(buttonProfiles()));
-    connect(ui.comboBox_themes, SIGNAL(activated(int)), this, SLOT(themesChanged(int)));
+    connect(ui.pushButton_themes, SIGNAL(clicked()), this, SLOT(buttonThemes()));
     connect(ui.comboBox_language, SIGNAL(activated(int)), this, SLOT(languageChanged(int)));
     connect(ui.pushButton_highlight_add, SIGNAL(clicked()), this, SLOT(highlightAdd()));
     connect(ui.pushButton_highlight_remove, SIGNAL(clicked()), this, SLOT(highlightRemove()));
@@ -553,24 +537,9 @@ void DlgOptions::buttonProfiles()
     DlgProfileManager(this).exec();
 }
 
-void DlgOptions::themesChanged(int index)
+void DlgOptions::buttonThemes()
 {
-    QString strTheme = "Standard";
-
-    switch (index)
-    {
-        case 0: strTheme = "Standard"; break;
-        case 1: strTheme = "Alhena"; break;
-        case 2: strTheme = "Origin"; break;
-        case 3: strTheme = "Adara"; break;
-    }
-
-    Settings::instance()->set("themes", strTheme);
-    ThemesModel::instance()->refreshCurrent();
-
-    Config *pConfig = new Config();
-    pConfig->set("themes", strTheme);
-    delete pConfig;
+    DlgThemes(this).exec();
 }
 
 void DlgOptions::languageChanged(int index)

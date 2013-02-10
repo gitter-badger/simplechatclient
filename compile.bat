@@ -24,7 +24,7 @@ exit
 )
 
 if not exist %QT_DIR%\bin\qtvars.bat (
-echo Download Qt 4.8.2 for MinGW from http://qt-project.org/downloads#qt-lib
+echo Download Qt 4.8.4 for MinGW from http://qt-project.org/downloads#qt-lib
 pause
 exit
 )
@@ -54,7 +54,7 @@ cd /D %SCC_DIR%
 :end_compile_qca2
 
 if not exist %OPENSSL_DIR%\include\openssl\ssl.h (
-echo Download OpenSSL from http://slproweb.com/download/Win32OpenSSL-1_0_1c.exe
+echo Download OpenSSL from http://slproweb.com/download/Win32OpenSSL-1_0_1d.exe
 pause
 exit
 )

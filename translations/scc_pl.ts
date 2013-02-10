@@ -1814,6 +1814,13 @@
     </message>
 </context>
 <context>
+    <name>DlgThemes</name>
+    <message>
+        <source>Themes</source>
+        <translation>Kompozycje</translation>
+    </message>
+</context>
+<context>
     <name>DlgUpdate</name>
     <message>
         <source>Update</source>

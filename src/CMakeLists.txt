@@ -34,6 +34,7 @@ set (scc_UIS
 	../ui/profile_edit.ui
 	../ui/profile_manager.ui
 	../ui/register_nick.ui
+	../ui/themes.ui
 	../ui/update.ui
 	../ui/user_avatar.ui
 	../ui/webbrowser.ui
@@ -84,6 +85,7 @@ set (scc_SRCS
 	gui/profile_edit.cpp
 	gui/profile_manager.cpp
 	gui/register_nick.cpp
+	gui/themes.cpp
 	gui/update.cpp
 	gui/user_avatar.cpp
 	gui/user_profile.cpp
@@ -184,6 +186,7 @@ set (scc_MOC_HDRS
 	gui/profile_edit.h
 	gui/profile_manager.h
 	gui/register_nick.h
+	gui/themes.h
 	gui/update.h
 	gui/user_avatar.h
 	gui/user_profile.h

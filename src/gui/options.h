@@ -48,7 +48,7 @@ private slots:
     void changePage(QModelIndex index);
     void currentProfileChanged(int row);
     void buttonProfiles();
-    void themesChanged(int index);
+    void buttonThemes();
     void languageChanged(int index);
     void highlightAdd();
     void highlightRemove();

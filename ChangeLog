@@ -3,6 +3,7 @@ ChangeLog for Simple Chat Client
 
 Version 1.7.0 (unknown)
 ================================
+* Added theme dialog
 * Faster reconnect after wrong login
 * Added auto away turn off button
 * Added commands description

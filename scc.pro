@@ -54,6 +54,7 @@ SOURCES += src/common/commands.cpp \
     src/gui/profile_edit.cpp \
     src/gui/profile_manager.cpp \
     src/gui/register_nick.cpp \
+    src/gui/themes.cpp \
     src/gui/update.cpp \
     src/gui/user_avatar.cpp \
     src/gui/user_profile.cpp \
@@ -160,6 +161,7 @@ HEADERS += src/common/commands.h \
     src/gui/profile_edit.h \
     src/gui/profile_manager.h \
     src/gui/register_nick.h \
+    src/gui/themes.h \
     src/gui/update.h \
     src/gui/user_avatar.h \
     src/gui/user_profile.h \
@@ -248,6 +250,7 @@ FORMS += ui/about.ui \
     ui/profile_edit.ui \
     ui/profile_manager.ui \
     ui/register_nick.ui \
+    ui/themes.ui \
     ui/update.ui \
     ui/user_avatar.ui \
     ui/webbrowser.ui \
