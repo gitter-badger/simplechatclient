@@ -314,6 +314,9 @@ void MainWindow::createSignals()
     connect(Core::instance()->network, SIGNAL(kernel(const QString&)), pOnetKernel, SLOT(kernel(const QString&)));
     connect(Core::instance()->network, SIGNAL(authorize(QString,QString)), pOnetAuth, SLOT(authorize(QString,QString)));
     connect(Core::instance()->network, SIGNAL(updateNick(const QString&)), this, SLOT(updateNick(const QString&)));
+
+    // signals from auth
+    connect(pOnetAuth, SIGNAL(updateNick(const QString&)), this, SLOT(updateNick(const QString&)));
 }
 
 void MainWindow::init()

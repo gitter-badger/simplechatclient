@@ -57,6 +57,14 @@ OnetAuth::~OnetAuth()
 
 void OnetAuth::authorize(QString _strNick, QString _strPass)
 {
+    if (Settings::instance()->get("logged") == "true")
+        return; // already logged
+
+    if (bAuthorizing)
+        return; // already authorizing
+
+    bAuthorizing = true;
+
     strFullNick = _strNick.left(32);
     strNick = (_strNick.startsWith('~') ? _strNick.remove(0,1).left(31) : _strNick.left(32));
     strPass = _strPass;
@@ -71,10 +79,11 @@ void OnetAuth::authorize(QString _strNick, QString _strPass)
         qDebug() << "Authorizing: " << bAuthorizing;
     }
 
-    if (Settings::instance()->get("logged") == "true") return; // already logged
+    // update nick
+    emit updateNick(strNick);
 
-    if (bAuthorizing) return; // already authorizing
-    bAuthorizing = true;
+    // remove cookies
+    removeCookies();
 
     getChat();
 }
@@ -306,6 +315,9 @@ void OnetAuth::networkFinished(QNetworkReply *reply)
 
 void OnetAuth::saveCookies()
 {
+    QStringList constCookies;
+    constCookies << "onet_ubi" << "onet_cid" << "onet_sid" << "onet_uid" << "onetzuo_ticket" << "onet_uoi" << "onet_sgn";
+
     // save cookies
     QList<QNetworkCookie> cookies = accessManager->cookieJar()->cookiesForUrl(QUrl("http://czat.onet.pl"));
     foreach (QNetworkCookie cookie, cookies)
@@ -313,9 +325,25 @@ void OnetAuth::saveCookies()
         QString strKey = cookie.name();
         QString strValue = cookie.value();
 
-        if ((strKey == "onet_ubi") || (strKey == "onet_cid") || (strKey == "onet_sid") || (strKey == "onet_uid") || (strKey == "onetzuo_ticket"))
+        if (constCookies.contains(strKey))
             Settings::instance()->set(strKey, strValue);
     }
+}
+
+void OnetAuth::removeCookies()
+{
+    QStringList constCookies;
+    constCookies << "onet_ubi" << "onet_cid" << "onet_sid" << "onet_uid" << "onetzuo_ticket" << "onet_uoi" << "onet_sgn";
+
+    foreach (QString constCookie, constCookies)
+        Settings::instance()->set(constCookie, QString::null);
+
+    // clear from cookie jar
+    /*
+    cookieJar->deleteLater();
+    cookieJar = new QNetworkCookieJar();
+    accessManager->setCookieJar(cookieJar);
+    */
 }
 
 QString OnetAuth::getVersion(const QString &strData)
@@ -363,7 +391,7 @@ void OnetAuth::requestFinished(const QString &strData)
             // send auth
             if (Core::instance()->network->isConnected())
             {
-                Core::instance()->network->send(QString("NICK %1").arg(strNick));
+                Core::instance()->network->send(QString("NICK %1").arg(strFullNick));
                 Core::instance()->network->send("AUTHKEY");
             }
         }

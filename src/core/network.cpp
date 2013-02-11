@@ -152,9 +152,6 @@ void Network::authorize()
         delete pSimpleCrypt;
     }
 
-    // update nick
-    emit updateNick(strNick);
-
     // request uo key
     emit authorize(strNick, strPass);
 }

@@ -52,12 +52,12 @@ void AvatarClient::getCookies()
     QList<QNetworkCookie> cookies;
     QNetworkCookie cookie;
 
-    QStringList names;
-    names << "onet_ubi" << "onet_cid" << "onet_sid" << "onet_uid" << "onetzuo_ticket";
-    foreach (QString name, names)
+    QStringList constCookies;
+    constCookies << "onet_ubi" << "onet_cid" << "onet_sid" << "onet_uid" << "onetzuo_ticket" << "onet_uoi" << "onet_sgn";
+    foreach (QString constCookie, constCookies)
     {
-        cookie.setName(name.toAscii());
-        cookie.setValue(Settings::instance()->get(name).toAscii());
+        cookie.setName(constCookie.toAscii());
+        cookie.setValue(Settings::instance()->get(constCookie).toAscii());
         cookies.append(cookie);
     }
 

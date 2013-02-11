@@ -91,12 +91,15 @@ private:
 
     QString getVersion(const QString &strData);
     void saveCookies();
+    void removeCookies();
     void requestFinished(const QString &strData);
 
 private slots:
     void networkFinished(QNetworkReply *reply);
     void refreshSk();
 
+signals:
+    void updateNick(const QString &strNick);
 };
 
 #endif // ONET_AUTH_H

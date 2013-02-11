@@ -109,13 +109,14 @@ void Core::createSettings()
     Settings::instance()->set("first_run", "true");
     Settings::instance()->set("uokey", QString::null);
     Settings::instance()->set("uo_nick", QString::null);
-    Settings::instance()->set("onet_ubi", QString::null);
-    Settings::instance()->set("onet_cid", QString::null);
-    Settings::instance()->set("onet_sid", QString::null);
-    Settings::instance()->set("onet_uid", QString::null);
-    Settings::instance()->set("onetzuo_ticket", QString::null);
     Settings::instance()->set("last_active", "0");
     Settings::instance()->set("reconnect", "true");
+
+    QStringList constCookies;
+    constCookies << "onet_ubi" << "onet_cid" << "onet_sid" << "onet_uid" << "onetzuo_ticket" << "onet_uoi" << "onet_sgn";
+
+    foreach (QString constCookie, constCookies)
+        Settings::instance()->set(constCookie, QString::null);
 }
 
 void Core::reloadSettings()
