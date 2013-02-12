@@ -339,16 +339,16 @@ void OnetAuth::removeCookies()
         Settings::instance()->set(constCookie, QString::null);
 
     // clear from cookie jar
-#if QT_VERSION < 0x050000
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
+    QList<QNetworkCookie> cookies = accessManager->cookieJar()->cookiesForUrl(QUrl("http://czat.onet.pl"));
+    foreach (QNetworkCookie cookie, cookies)
+        accessManager->cookieJar()->deleteCookie(cookie);
+#else
     /*
     cookieJar->deleteLater();
     cookieJar = new QNetworkCookieJar();
     accessManager->setCookieJar(cookieJar);
     */
-#else
-    QList<QNetworkCookie> cookies = accessManager->cookieJar()->cookiesForUrl(QUrl("http://czat.onet.pl"));
-    foreach (QNetworkCookie cookie, cookies)
-        accessManager->cookieJar()->deleteCookie(cookie);
 #endif
 }
 
