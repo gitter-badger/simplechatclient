@@ -20,7 +20,6 @@
 #include <QDebug>
 #include <QDomDocument>
 #include <QFileDialog>
-#include <QMessageBox>
 
 #include "avatar_edit.h"
 
@@ -151,7 +150,7 @@ void AvatarListWidget::getCollectionsReady(const QByteArray &content)
 
     if (code != 0)
     {
-        QMessageBox::critical(0, tr("Error getCollections"), text);
+        qWarning() << "Error getCollections: " <<  text;
         return;
     }
 
@@ -240,7 +239,7 @@ void AvatarListWidget::getCollectionAvatarsReady(const QByteArray &content)
 
     if (code != 0)
     {
-        QMessageBox::critical(0, tr("Error getCollectionAvatars"), text);
+        qWarning() << "Error getCollectionAvatars: " << text;
         return;
     }
 
@@ -348,7 +347,7 @@ void AvatarListWidget::getMyAvatarsReady(const QByteArray &content)
 
     if (code != 0)
     {
-        QMessageBox::critical(0, tr("Error getMyAvatars"), text);
+        qWarning() << "Error getMyAvatars: " << text;
         return;
     }
 
@@ -437,7 +436,7 @@ void AvatarListWidget::uploadImageReady(const QByteArray &content, const QString
 
         if (code != 0)
         {
-            QMessageBox::critical(0, tr("Error uploadImage"), text);
+            qWarning() << "Error uploadImage: " << text;
             return;
         }
     }
@@ -508,7 +507,7 @@ void AvatarListWidget::updatePhotoReady(const QByteArray &content)
 
     if (code != 0)
     {
-        QMessageBox::critical(0, tr("Error updatePhoto"), text);
+        qWarning() << "Error updatePhoto: " << text;
         return;
     }
 
@@ -559,7 +558,7 @@ void AvatarListWidget::addPhotoReady(const QByteArray &content)
 
         if (code != 0)
         {
-            QMessageBox::critical(0, tr("Error addPhoto"), text);
+            qWarning() << "Error addPhoto: " << text;
             return;
         }
     }
@@ -594,7 +593,7 @@ void AvatarListWidget::deletePhotoReady(const QByteArray &content)
 
     if (code != 0)
     {
-        QMessageBox::critical(0, tr("Error deletePhoto"), text);
+        qWarning() << "Error deletePhoto: " << text;
         return;
     }
 
