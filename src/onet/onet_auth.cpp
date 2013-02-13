@@ -80,7 +80,7 @@ void OnetAuth::authorize(QString _strNick, QString _strPass)
     }
 
     // update nick
-    emit updateNick(strNick);
+    emit updateNick(strFullNick);
 
     // remove cookies
     removeCookies();
@@ -345,6 +345,8 @@ void OnetAuth::removeCookies()
         accessManager->cookieJar()->deleteCookie(cookie);
 #else
     /*
+    https://github.com/simplechatclient/simplechatclient/issues/280
+
     cookieJar->deleteLater();
     cookieJar = new QNetworkCookieJar();
     accessManager->setCookieJar(cookieJar);
