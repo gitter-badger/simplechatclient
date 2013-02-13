@@ -122,5 +122,9 @@
         <file>images/logo16x16.gif</file>
         <file>images/oxygen/16x16/applications-system.png</file>
         <file>images/oxygen/16x16/view-presentation.png</file>
+        <file>images/theme_adara.png</file>
+        <file>images/theme_alhena.png</file>
+        <file>images/theme_origin.png</file>
+        <file>images/theme_standard.png</file>
     </qresource>
 </RCC>

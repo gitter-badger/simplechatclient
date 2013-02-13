@@ -50,20 +50,31 @@ void DlgThemes::setDefaultValues()
 {
     QString strCurrentTheme = Settings::instance()->get("themes");
 
-    // image
-
-
-    // themes
     if (strCurrentTheme == "Standard")
+    {
         ui.listWidget->setCurrentRow(0);
+        ui.label->setPixmap(QPixmap(":/images/theme_standard.png"));
+    }
     else if (strCurrentTheme == "Alhena")
+    {
         ui.listWidget->setCurrentRow(1);
+        ui.label->setPixmap(QPixmap(":/images/theme_alhena.png"));
+    }
     else if (strCurrentTheme == "Origin")
+    {
         ui.listWidget->setCurrentRow(2);
+        ui.label->setPixmap(QPixmap(":/images/theme_origin.png"));
+    }
     else if (strCurrentTheme == "Adara")
+    {
         ui.listWidget->setCurrentRow(3);
+        ui.label->setPixmap(QPixmap(":/images/theme_adara.png"));
+    }
     else
-        ui.listWidget->setCurrentRow(1);
+    {
+        ui.listWidget->setCurrentRow(0);
+        ui.label->setPixmap(QPixmap(":/images/theme_standard.png"));
+    }
 }
 
 void DlgThemes::createSignals()
@@ -78,14 +89,23 @@ void DlgThemes::changeTheme(QModelIndex index)
 
     switch (index.row())
     {
-        case 0: strTheme = "Standard"; break;
-        case 1: strTheme = "Alhena"; break;
-        case 2: strTheme = "Origin"; break;
-        case 3: strTheme = "Adara"; break;
+        case 0:
+            strTheme = "Standard";
+            ui.label->setPixmap(QPixmap(":/images/theme_standard.png"));
+            break;
+        case 1:
+            strTheme = "Alhena";
+            ui.label->setPixmap(QPixmap(":/images/theme_alhena.png"));
+            break;
+        case 2:
+            strTheme = "Origin";
+            ui.label->setPixmap(QPixmap(":/images/theme_origin.png"));
+            break;
+        case 3:
+            strTheme = "Adara";
+            ui.label->setPixmap(QPixmap(":/images/theme_adara.png"));
+            break;
     }
-
-    // image
-    // TODO
 
     // save
     Settings::instance()->set("themes", strTheme);
