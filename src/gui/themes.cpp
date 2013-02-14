@@ -41,6 +41,8 @@ void DlgThemes::createGui()
 {
     ui.buttonBox->button(QDialogButtonBox::Close)->setIcon(QIcon(":/images/oxygen/16x16/dialog-close.png"));
 
+    ui.label_view->setText(tr("View"));
+
     // themes
     QStringList lThemes = ThemesModel::instance()->getAll();
     ui.listWidget->addItems(lThemes);

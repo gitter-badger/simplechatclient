@@ -1819,6 +1819,10 @@
         <source>Themes</source>
         <translation>Kompozycje</translation>
     </message>
+    <message>
+        <source>View</source>
+        <translation>Przykładowy wygląd wybranej kompozycji</translation>
+    </message>
 </context>
 <context>
     <name>DlgUpdate</name>
