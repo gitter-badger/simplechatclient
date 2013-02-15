@@ -147,7 +147,7 @@ void convertEmoticons(QString &strData, bool bInsertWidthHeight)
             strData.replace(strEmoticonFull, QString("//%1").arg(strEmoticon));
     }
 }
-
+/*
 void convertEmoticonsToSlash(QString &strData)
 {
     QRegExp rx("%I([a-zA-Z0-9_-]+)%");
@@ -166,7 +166,7 @@ void convertEmoticonsToSlash(QString &strData)
             pos += rx.matchedLength();
     }
 }
-
+*/
 void convertSlashToEmoticons(QString &strData)
 {
     QRegExp rx("(http:|https:){0,}//([a-zA-Z0-9_-]+)");
@@ -282,7 +282,8 @@ void Convert::simpleConvert(QString &strData)
 {
     removeColor(strData);
     removeFont(strData);
-    convertEmoticonsToSlash(strData);
+    strData.replace(QRegExp("%I([a-zA-Z0-9_-]+)%"), "//\\1");
+    //convertEmoticonsToSlash(strData);
 }
 
 void Convert::removeStyles(QString &strData)

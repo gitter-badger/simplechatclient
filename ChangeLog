@@ -1,7 +1,7 @@
 ChangeLog for Simple Chat Client
 ========================= 
 
-Version 1.7.0 (unknown)
+Version 1.7.0 (15.02.2013)
 ================================
 * Added theme dialog
 * Faster reconnect after wrong login
