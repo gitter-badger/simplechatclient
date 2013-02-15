@@ -25,7 +25,7 @@ Name: de; MessagesFile: "compiler:Languages\German.isl"
 Name: pl; MessagesFile: "compiler:Languages\Polish.isl"
 
 [Files]
-Source: "release\*"; DestDir: "{app}"; Flags: recursesubdirs
+Source: "release\*"; DestDir: "{app}"; Flags: recursesubdirs ignoreversion
 Source: "license.txt"; DestDir: "{app}"
 Source: "scc.ico"; DestDir: "{app}"
 Source: "vcredist_x86.exe"; DestDir: {tmp};  Flags: deleteafterinstall
