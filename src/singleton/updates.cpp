@@ -54,8 +54,15 @@ Updates::~Updates()
 }
 
 void Updates::checkUpdate()
-{    
-    QString strContent = QString("params={\"id\":\"%1\",\"version\":\"%2\"}").arg(Settings::instance()->get("unique_id"),Settings::instance()->get("version"));
+{
+    QString strPlatform = "unknown";
+#ifdef Q_WS_WIN
+    strPlatform = "windows";
+#else
+    strPlatform = "linux";
+#endif
+
+    QString strContent = QString("params={\"id\":\"%1\",\"version\":\"%2\",\"platform\":\"%3\"}").arg(Settings::instance()->get("unique_id"), Settings::instance()->get("version"), strPlatform);
     QString strUrl = UPDATE_URL_1;
 
     QNetworkRequest request;
