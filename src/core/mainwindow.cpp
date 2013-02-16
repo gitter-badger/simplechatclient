@@ -1,7 +1,7 @@
 /*
  * Simple Chat Client
  *
- *   Copyright (C) 2012 Piotr Łuczko <piotr.luczko@gmail.com>
+ *   Copyright (C) 2009-2013 Piotr Łuczko <piotr.luczko@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -52,7 +52,7 @@
 #include "notes.h"
 #include "notification.h"
 #include "offline.h"
-#include "offline_messages.h"
+#include "offline_list.h"
 #include "options.h"
 #include "onet_auth.h"
 #include "onet_kernel.h"
@@ -314,6 +314,9 @@ void MainWindow::createSignals()
     connect(Core::instance()->network, SIGNAL(kernel(const QString&)), pOnetKernel, SLOT(kernel(const QString&)));
     connect(Core::instance()->network, SIGNAL(authorize(QString,QString)), pOnetAuth, SLOT(authorize(QString,QString)));
     connect(Core::instance()->network, SIGNAL(updateNick(const QString&)), this, SLOT(updateNick(const QString&)));
+
+    // signals from auth
+    connect(pOnetAuth, SIGNAL(updateNick(const QString&)), this, SLOT(updateNick(const QString&)));
 }
 
 void MainWindow::init()
@@ -571,7 +574,7 @@ void MainWindow::openInviteList()
 void MainWindow::openOfflineMessages()
 {
     if ((Core::instance()->network->isConnected()) && (Settings::instance()->get("logged") == "true"))
-        DlgOfflineMessages(this).exec();
+        DlgOfflineList(this).exec();
 }
 
 // animated tray icon
@@ -618,33 +621,26 @@ void MainWindow::inputLineKeyEvent(QKeyEvent *k)
     if ((k->key() == Qt::Key_Tab) && (k->modifiers() == Qt::ControlModifier))
     {
         int index = pTabM->currentIndex();
-        pTabM->setCurrentIndex(index+1);
+        if (pTabM->count()-1 != index)
+            pTabM->setCurrentIndex(index+1);
+        else
+            pTabM->setCurrentIndex(0);
     }
     // ctrl+shift+tab pressed in inputline
     else if ((k->key() == Qt::Key_Backtab) && (k->modifiers() & (Qt::ControlModifier | Qt::ShiftModifier)))
     {
         int index = pTabM->currentIndex();
-        pTabM->setCurrentIndex(index-1);
+        if (index != 0)
+            pTabM->setCurrentIndex(index-1);
+        else
+            pTabM->setCurrentIndex(pTabM->count()-1);
     }
-
-    /* TODO https://github.com/simplechatclient/simplechatclient/issues/14
-    // alt
-    else if (k->key() == Qt::Key_Alt)
+    // ctrl F
+    else if ((k->key() == Qt::Key_F) && (k->modifiers() == Qt::ControlModifier))
     {
-        // alt + F
-        if (k->modifiers() == Qt::Key_F)
-        {
-        }
-        // alt + A
-        else if (k->modifiers() == Qt::Key_A)
-        {
-        }
-        // alt + C
-        else if (k->modifiers() == Qt::Key_C)
-        {
-        }
+        QString strChannel = Channel::instance()->getCurrentName();
+        Channel::instance()->getChatView(strChannel)->search();
     }
-    */
 }
 
 int MainWindow::getCurrentTabIndex()
@@ -690,9 +686,9 @@ void MainWindow::updateNick(const QString &strNick)
     pToolWidget->updateNick(strNick);
 }
 
-void MainWindow::updateChannelIcon(const QString &channel)
+void MainWindow::updateChannelIcon(int index, const QString &avatar)
 {
-    pTabM->updateIcon(channel);
+    pTabM->updateIcon(index, avatar);
 }
 
 // part tab
@@ -703,20 +699,17 @@ void MainWindow::tabCloseRequested(int index)
 
 void MainWindow::setTabColor(const QString &strChannel, MessageCategory eMessageCategory)
 {
-    int index = Channel::instance()->getIndex(strChannel);
-
     if (eMessageCategory == MessageHighlight)
-        pTabM->setAlert(index, ChannelHighlight);
+        pTabM->setAlert(strChannel, ChannelHighlight);
     else if (eMessageCategory != MessageDefault)
-        pTabM->setAlert(index, ChannelGreen);
+        pTabM->setAlert(strChannel, ChannelGreen);
     else
-        pTabM->setAlert(index, ChannelRed);
+        pTabM->setAlert(strChannel, ChannelRed);
 }
 
 // change tab
-void MainWindow::changeCurrentTab(const QString &strChannel)
+void MainWindow::changeCurrentTab(int index)
 {
-    int index = Channel::instance()->getIndex(strChannel);
     pTabM->setCurrentIndex(index);
 }
 
@@ -730,7 +723,7 @@ void MainWindow::currentTabChanged(int index)
     pToolWidget->clearInputLine();
 
     // refresh tool buttons
-    QString strChannel = Channel::instance()->getFromIndex(index);
+    QString strChannel = Channel::instance()->getNameFromIndex(index);
     refreshToolButtons(strChannel);
 }
 

@@ -1,7 +1,7 @@
 /*
  * Simple Chat Client
  *
- *   Copyright (C) 2012 Piotr Łuczko <piotr.luczko@gmail.com>
+ *   Copyright (C) 2009-2013 Piotr Łuczko <piotr.luczko@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -29,15 +29,15 @@ void fixContextMenu(QString &strData, MessageCategory eMessageCategory)
     QStringList strDataList = strData.split(" ");
 
     // nick
-    if ((strDataList[0] == "*") && ((eMessageCategory == MessageJoin) || (eMessageCategory == MessagePart) || (eMessageCategory == MessageQuit)  || (eMessageCategory == MessageKick)))
+    if ((strDataList.at(0) == "*") && ((eMessageCategory == MessageJoin) || (eMessageCategory == MessagePart) || (eMessageCategory == MessageQuit)  || (eMessageCategory == MessageKick)))
     {
-        QString strWord = strDataList[1]; Convert::removeStyles(strWord);
+        QString strWord = strDataList.at(1); Convert::removeStyles(strWord);
         strDataList[1] = QString("<a onclick=\"return false\" name=\"nick\" style=\"color:inherit;text-decoration:none;\" href=\"#\">%1</a>").arg(strWord);
     }
 
     for (int i = 0; i < strDataList.size(); i++)
     {
-        QString strWord = strDataList[i];
+        QString strWord = strDataList.at(i);
 
         // channel
         if (strWord.startsWith('#'))
@@ -47,15 +47,18 @@ void fixContextMenu(QString &strData, MessageCategory eMessageCategory)
         }
 
         // web
-        if ((strWord.startsWith("http")) || (strWord.startsWith("www.")))
+        if ((strWord.startsWith("http:")) || (strWord.startsWith("https:")) || (strWord.startsWith("www.")))
         {
             Convert::removeStyles(strWord);
             strDataList[i] = QString("<a onclick=\"return false\" name=\"website\" style=\"color:inherit;text-decoration:none;\" href=\"%1\">%2</a>").arg(strWord, strWord);
         }
-        else if (((strWord.contains("http")) && (!strWord.startsWith("http"))) || ((strWord.contains("www.")) && (!strWord.startsWith("www."))))
+        else if (((strWord.contains("http:")) && (!strWord.startsWith("http:"))) || ((strWord.contains("https:")) && (!strWord.startsWith("https:"))) || ((strWord.contains("www.")) && (!strWord.startsWith("www."))))
         {
-            if (strWord.contains("http"))
-                strWord.replace("http", " http");
+            if ((strWord.contains("http:")) || (strWord.contains("https:")))
+            {
+                strWord.replace("http:", " http:");
+                strWord.replace("https:", " https:");
+            }
             else
                 strWord.replace("www.", " www.");
 

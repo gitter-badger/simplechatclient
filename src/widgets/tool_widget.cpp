@@ -1,7 +1,7 @@
 /*
  * Simple Chat Client
  *
- *   Copyright (C) 2012 Piotr Łuczko <piotr.luczko@gmail.com>
+ *   Copyright (C) 2009-2013 Piotr Łuczko <piotr.luczko@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -720,7 +720,7 @@ void ToolWidget::channelSettingsClicked()
 {
     if (Core::instance()->network->isConnected())
     {
-        QString strChannel = Channel::instance()->getCurrent();
+        QString strChannel = Channel::instance()->getCurrentName();
 
         if (!strChannel.isEmpty())
             DlgChannelSettings(strChannel).exec();
@@ -729,7 +729,7 @@ void ToolWidget::channelSettingsClicked()
 
 void ToolWidget::moderationClicked()
 {
-    QString strChannel = Channel::instance()->getCurrent();
+    QString strChannel = Channel::instance()->getCurrentName();
 
     if (!strChannel.isEmpty())
         DlgModeration(strChannel).exec();
@@ -792,7 +792,7 @@ void ToolWidget::pasteMultiLine(const QString &strText, bool bModeration)
 
 void ToolWidget::sendMessage(QString strText, bool bModeration)
 {
-    QString strChannel = Channel::instance()->getCurrent();
+    QString strChannel = Channel::instance()->getCurrentName();
 
     // empty text or channel
     if ((strText.isEmpty()) || (strChannel.isEmpty()))
@@ -835,7 +835,7 @@ void ToolWidget::sendMessage(QString strText, bool bModeration)
         Convert::simpleReverseConvert(strText);
         Replace::replaceEmots(strText);
 
-        QList<QString> lChannelsCleared = Channel::instance()->getCleared();
+        QList<CaseIgnoreString> lChannelsCleared = Channel::instance()->getListClearedSorted();
         foreach (QString strChannel, lChannelsCleared)
         {
             Core::instance()->network->send(QString("PRIVMSG %1 :%2").arg(strChannel, strText));
@@ -896,9 +896,16 @@ void ToolWidget::sendMessage(QString strText, bool bModeration)
         Message::instance()->showMessage(strChannel, strText, MessageModerNotice, strMe);
     }
     // standard text
-    else if (!bModeration)
+    else
     {
-        Core::instance()->network->send(QString("PRIVMSG %1 :%2").arg(strChannel, strText));
+        bool bOffline = Channel::instance()->getOffline(strChannel);
+        QString strNick = Channel::instance()->getAlternativeName(strChannel);
+
+        if ((bOffline) && (!strNick.isEmpty()))
+            Core::instance()->network->send(QString("NS OFFLINE MSG %1 %2").arg(strNick, strText));
+        else
+            Core::instance()->network->send(QString("PRIVMSG %1 :%2").arg(strChannel, strText));
+
         Message::instance()->showMessage(strChannel, strText, MessageDefault, strMe);
     }
 }

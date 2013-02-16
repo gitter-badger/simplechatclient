@@ -6,7 +6,7 @@
 !define PROGRAM_NAME "SimpleChatClient"
 !define PUBLISHER "Simple Chat Client Project"
 !define CONTACT "piotr.luczko@gmail.com"
-!define VERSION "1.6.2"
+!define VERSION "1.7.0"
 !define PROGRAM_FILENAME "scc"
 !define PROGRAM_SIZE "65000"
 !define MUI_ICON "scc.ico"
@@ -55,63 +55,8 @@ BrandingText "${PROGRAM_NAME}"
 
 ; language
 !insertmacro MUI_LANGUAGE "English" ;first language is the default language
-!insertmacro MUI_LANGUAGE "Afrikaans"
-!insertmacro MUI_LANGUAGE "Albanian"
-!insertmacro MUI_LANGUAGE "Arabic"
-!insertmacro MUI_LANGUAGE "Basque"
-!insertmacro MUI_LANGUAGE "Belarusian"
-!insertmacro MUI_LANGUAGE "Bosnian"
-!insertmacro MUI_LANGUAGE "Breton"
-!insertmacro MUI_LANGUAGE "Bulgarian"
-!insertmacro MUI_LANGUAGE "Catalan"
-!insertmacro MUI_LANGUAGE "Croatian"
-!insertmacro MUI_LANGUAGE "Czech"
-!insertmacro MUI_LANGUAGE "Danish"
-!insertmacro MUI_LANGUAGE "Dutch"
-!insertmacro MUI_LANGUAGE "Esperanto"
-!insertmacro MUI_LANGUAGE "Estonian"
-!insertmacro MUI_LANGUAGE "Farsi"
-!insertmacro MUI_LANGUAGE "Finnish"
-!insertmacro MUI_LANGUAGE "French"
-!insertmacro MUI_LANGUAGE "Galician"
 !insertmacro MUI_LANGUAGE "German"
-!insertmacro MUI_LANGUAGE "Greek"
-!insertmacro MUI_LANGUAGE "Hebrew"
-!insertmacro MUI_LANGUAGE "Hungarian"
-!insertmacro MUI_LANGUAGE "Icelandic"
-!insertmacro MUI_LANGUAGE "Indonesian"
-!insertmacro MUI_LANGUAGE "Irish"
-!insertmacro MUI_LANGUAGE "Italian"
-!insertmacro MUI_LANGUAGE "Japanese"
-!insertmacro MUI_LANGUAGE "Korean"
-!insertmacro MUI_LANGUAGE "Kurdish"
-!insertmacro MUI_LANGUAGE "Latvian"
-!insertmacro MUI_LANGUAGE "Lithuanian"
-!insertmacro MUI_LANGUAGE "Luxembourgish"
-!insertmacro MUI_LANGUAGE "Macedonian"
-!insertmacro MUI_LANGUAGE "Malay"
-!insertmacro MUI_LANGUAGE "Mongolian"
-!insertmacro MUI_LANGUAGE "Norwegian"
-!insertmacro MUI_LANGUAGE "NorwegianNynorsk"
 !insertmacro MUI_LANGUAGE "Polish"
-!insertmacro MUI_LANGUAGE "Portuguese"
-!insertmacro MUI_LANGUAGE "PortugueseBR"
-!insertmacro MUI_LANGUAGE "Romanian"
-!insertmacro MUI_LANGUAGE "Russian"
-!insertmacro MUI_LANGUAGE "Serbian"
-!insertmacro MUI_LANGUAGE "SerbianLatin"
-!insertmacro MUI_LANGUAGE "SimpChinese"
-!insertmacro MUI_LANGUAGE "Slovak"
-!insertmacro MUI_LANGUAGE "Slovenian"
-!insertmacro MUI_LANGUAGE "Spanish"
-!insertmacro MUI_LANGUAGE "SpanishInternational"
-!insertmacro MUI_LANGUAGE "Swedish"
-!insertmacro MUI_LANGUAGE "Thai"
-!insertmacro MUI_LANGUAGE "TradChinese"
-!insertmacro MUI_LANGUAGE "Turkish"
-!insertmacro MUI_LANGUAGE "Ukrainian"
-!insertmacro MUI_LANGUAGE "Uzbek"
-!insertmacro MUI_LANGUAGE "Welsh"
 
 !insertmacro MUI_RESERVEFILE_LANGDLL
 
@@ -132,10 +77,6 @@ Delete "$DESKTOP\${PROGRAM_NAME}.lnk"
 Delete "$SMPROGRAMS\${PROGRAM_NAME}\*.*"
 RMDir  "$SMPROGRAMS\${PROGRAM_NAME}"
 
-; remove old folders
-RMDir /r "$INSTDIR\3rdparty\emoticons_other"
-Delete "$INSTDIR\3rdparty\emoticons\*.gif"
-
 ; remove all the files and folders
 RMDir /r "$INSTDIR\translations"
 RMDir /r "$INSTDIR\plugins"
@@ -149,7 +90,7 @@ DeleteRegKey HKEY_LOCAL_MACHINE "SOFTWARE\Microsoft\Windows\CurrentVersion\Unins
 ; install
 SetOutPath $INSTDIR\
 
-File vcredist_x86_sp1.exe
+File vcredist_x86.exe
 File scc.ico
 
 ; all files
@@ -160,7 +101,7 @@ SetDetailsPrint textonly
 DetailPrint "Installing Microsoft Visual C++ 2008 Redistributable..."
 SetDetailsPrint listonly
 
-ExecWait '"$INSTDIR\vcredist_x86_sp1.exe" /q:a /c:"VCREDI~1.EXE /q:a /c:""msiexec /i vcredist.msi /qn!"" "'  
+ExecWait '"$INSTDIR\vcredist_x86.exe" /q /norestart'  
 SetDetailsPrint both
 
 ; desktop

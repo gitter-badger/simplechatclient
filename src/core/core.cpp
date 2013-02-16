@@ -1,7 +1,7 @@
 /*
  * Simple Chat Client
  *
- *   Copyright (C) 2012 Piotr Łuczko <piotr.luczko@gmail.com>
+ *   Copyright (C) 2009-2013 Piotr Łuczko <piotr.luczko@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -99,7 +99,6 @@ void Core::createSettings()
     Settings::instance()->set("whats_new", QString::null);
     Settings::instance()->set("motd", QString::null);
     Settings::instance()->set("version_status", "unknown");
-    Settings::instance()->set("update_url", QString::null);
 
     Settings::instance()->set("logged", "false");
     Settings::instance()->set("busy", "false");
@@ -110,13 +109,14 @@ void Core::createSettings()
     Settings::instance()->set("first_run", "true");
     Settings::instance()->set("uokey", QString::null);
     Settings::instance()->set("uo_nick", QString::null);
-    Settings::instance()->set("onet_ubi", QString::null);
-    Settings::instance()->set("onet_cid", QString::null);
-    Settings::instance()->set("onet_sid", QString::null);
-    Settings::instance()->set("onet_uid", QString::null);
-    Settings::instance()->set("onetzuo_ticket", QString::null);
     Settings::instance()->set("last_active", "0");
     Settings::instance()->set("reconnect", "true");
+
+    QStringList constCookies;
+    constCookies << "onet_ubi" << "onet_cid" << "onet_sid" << "onet_uid" << "onetzuo_ticket" << "onet_uoi" << "onet_sgn";
+
+    foreach (QString constCookie, constCookies)
+        Settings::instance()->set(constCookie, QString::null);
 }
 
 void Core::reloadSettings()

@@ -1,7 +1,7 @@
 /*
  * Simple Chat Client
  *
- *   Copyright (C) 2012 Piotr Łuczko <piotr.luczko@gmail.com>
+ *   Copyright (C) 2009-2013 Piotr Łuczko <piotr.luczko@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -60,18 +60,18 @@ void DlgFriends::createGui()
     QMenu *mInvite = new QMenu(tr("Invite"));
     mInvite->setIcon(QIcon(":/images/oxygen/16x16/legalmoves.png"));
 
-    QList<QString> lChannelsCleared = Channel::instance()->getCleared();
+    QList<CaseIgnoreString> lChannelsCleared = Channel::instance()->getListClearedSorted();
     for (int i = 0; i < lChannelsCleared.size(); ++i)
     {
-        QString strOpenChannel = lChannelsCleared[i];
+        QString strOpenChannel = lChannelsCleared.at(i);
         if (strOpenChannel[0] == '^')
-            strOpenChannel = Channel::instance()->getPriv(strOpenChannel);
+            strOpenChannel = Channel::instance()->getAlternativeName(strOpenChannel);
 
         openChannelsActs[i] = new QAction(this);
         openChannelsActs[i]->setIcon(QIcon(":/images/oxygen/16x16/irc-join-channel.png"));
         openChannelsActs[i]->setVisible(false);
         openChannelsActs[i]->setText(strOpenChannel);
-        openChannelsActs[i]->setData(lChannelsCleared[i]);
+        openChannelsActs[i]->setData(lChannelsCleared.at(i));
         openChannelsActs[i]->setVisible(true);
 
         connect(openChannelsActs[i], SIGNAL(triggered()), this, SLOT(invite()));

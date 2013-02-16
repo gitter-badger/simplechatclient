@@ -1,7 +1,7 @@
 /*
  * Simple Chat Client
  *
- *   Copyright (C) 2012 Piotr Łuczko <piotr.luczko@gmail.com>
+ *   Copyright (C) 2009-2013 Piotr Łuczko <piotr.luczko@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,6 +18,7 @@
  */
 
 #include <QDir>
+#include <QUuid>
 #include "settings.h"
 #include "xml.h"
 #include "config.h"
@@ -119,11 +120,14 @@ QHash<QString,QString> Config::getDefaultValues()
     path = SCC_DATA_DIR;
 #endif
 
+    QString uuidStr = QUuid::createUuid().toString();
+    uuidStr.remove("{"); uuidStr.remove("}");
+
     QString strSoundBeep = path+"/3rdparty/sounds/beep.wav";
     QString strSoundQuery = path+"/3rdparty/sounds/query.wav";
     QString strBackgroundImage = path+"/images/wallpaper/default.jpg";
 
-    QString strPunishReason = "Bluzg;Flood;";
+    QString strPunishReason = "Bluzg;Flood;Spam;";
 
     QHash<QString,QString> lDefaultValues;
 
@@ -131,6 +135,7 @@ QHash<QString,QString> Config::getDefaultValues()
     {
         lDefaultValues.insert("first_run", "true");
         lDefaultValues.insert("current_profile", "~test");
+        lDefaultValues.insert("unique_id", uuidStr);
     }
     else
     {
@@ -144,6 +149,7 @@ QHash<QString,QString> Config::getDefaultValues()
         lDefaultValues.insert("punish_reason", strPunishReason);
 
         lDefaultValues.insert("auto_busy", "false");
+        lDefaultValues.insert("auto_away", "true");
         lDefaultValues.insert("minimize_to_tray", "false");
         lDefaultValues.insert("disable_autojoin_favourites", "false");
         lDefaultValues.insert("show_zuo_and_ip", "false");

@@ -211,7 +211,11 @@
            </spacer>
           </item>
           <item>
-           <widget class="QComboBox" name="comboBox_themes"/>
+           <widget class="QPushButton" name="pushButton_themes">
+            <property name="text">
+             <string>Themes</string>
+            </property>
+           </widget>
           </item>
           <item>
            <spacer name="horizontalSpacer_3">
@@ -1275,6 +1279,13 @@
         <widget class="QCheckBox" name="checkBox_auto_busy">
          <property name="text">
           <string>Busy mode after you log in to chat</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="checkBox_auto_away">
+         <property name="text">
+          <string>Auto away on idle</string>
          </property>
         </widget>
        </item>

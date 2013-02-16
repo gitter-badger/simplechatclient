@@ -1,7 +1,7 @@
 /*
  * Simple Chat Client
  *
- *   Copyright (C) 2012 Piotr Łuczko <piotr.luczko@gmail.com>
+ *   Copyright (C) 2009-2013 Piotr Łuczko <piotr.luczko@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -72,7 +72,7 @@ void Log::save(const QString &strChannel, const QString &strMessage)
 
     // fixed priv name
     if (strFileName[0] == '^')
-        strFileName = Channel::instance()->getPriv(strFileName);
+        strFileName = Channel::instance()->getAlternativeName(strFileName);
 
     QFile f(path+strFileName+".txt");
     if (f.open(QIODevice::Append))

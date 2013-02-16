@@ -1,7 +1,7 @@
 /*
  * Simple Chat Client
  *
- *   Copyright (C) 2012 Piotr Łuczko <piotr.luczko@gmail.com>
+ *   Copyright (C) 2009-2013 Piotr Łuczko <piotr.luczko@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -349,18 +349,18 @@ void ChatView::menuNick(QContextMenuEvent *event)
 
     QMenu *mInvite = new QMenu(tr("Invite"));
     mInvite->setIcon(QIcon(":/images/oxygen/16x16/legalmoves.png"));
-    QList<QString> lChannelsCleared = Channel::instance()->getCleared();
+    QList<CaseIgnoreString> lChannelsCleared = Channel::instance()->getListClearedSorted();
     for (int i = 0; i < lChannelsCleared.size(); ++i)
     {
-        QString strOpenChannel = lChannelsCleared[i];
+        QString strOpenChannel = lChannelsCleared.at(i);
         if (strOpenChannel[0] == '^')
-            strOpenChannel = Channel::instance()->getPriv(strOpenChannel);
+            strOpenChannel = Channel::instance()->getAlternativeName(strOpenChannel);
 
         openChannelsActs[i] = new QAction(this);
         openChannelsActs[i]->setIcon(QIcon(":/images/oxygen/16x16/irc-join-channel.png"));
         openChannelsActs[i]->setVisible(false);
         openChannelsActs[i]->setText(strOpenChannel);
-        openChannelsActs[i]->setData(lChannelsCleared[i]);
+        openChannelsActs[i]->setData(lChannelsCleared.at(i));
         openChannelsActs[i]->setVisible(true);
 
         connect(openChannelsActs[i], SIGNAL(triggered()), this, SLOT(invite()));
@@ -373,13 +373,13 @@ void ChatView::menuNick(QContextMenuEvent *event)
     if (!lPunishReasons.isEmpty()) mKick->addSeparator();
     for (int i = 0; i < lPunishReasons.size(); ++i)
     {
-        QString strPunishReasons = lPunishReasons[i];
+        QString strPunishReasons = lPunishReasons.at(i);
 
         kickReasonAct[i] = new QAction(this);
         kickReasonAct[i]->setIcon(QIcon(":/images/oxygen/16x16/view-conversation-balloon.png"));
         kickReasonAct[i]->setVisible(false);
         kickReasonAct[i]->setText(strPunishReasons);
-        kickReasonAct[i]->setData(lPunishReasons[i]);
+        kickReasonAct[i]->setData(lPunishReasons.at(i));
         kickReasonAct[i]->setVisible(true);
 
         connect(kickReasonAct[i], SIGNAL(triggered()), this, SLOT(kickWithSelectedReason()));
@@ -392,13 +392,13 @@ void ChatView::menuNick(QContextMenuEvent *event)
     if (!lPunishReasons.isEmpty()) mKickAndBan->addSeparator();
     for (int i = 0; i < lPunishReasons.size(); ++i)
     {
-        QString strPunishReasons = lPunishReasons[i];
+        QString strPunishReasons = lPunishReasons.at(i);
 
         kbanReasonAct[i] = new QAction(this);
         kbanReasonAct[i]->setIcon(QIcon(":/images/oxygen/16x16/view-conversation-balloon.png"));
         kbanReasonAct[i]->setVisible(false);
         kbanReasonAct[i]->setText(strPunishReasons);
-        kbanReasonAct[i]->setData(lPunishReasons[i]);
+        kbanReasonAct[i]->setData(lPunishReasons.at(i));
         kbanReasonAct[i]->setVisible(true);
 
         connect(kbanReasonAct[i], SIGNAL(triggered()), this, SLOT(kbanWithSelectedReason()));

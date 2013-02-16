@@ -1,7 +1,7 @@
 /*
  * Simple Chat Client
  *
- *   Copyright (C) 2012 Piotr Łuczko <piotr.luczko@gmail.com>
+ *   Copyright (C) 2009-2013 Piotr Łuczko <piotr.luczko@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,29 +17,27 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef MODERATION_MODEL_H
-#define MODERATION_MODEL_H
+#ifndef THEMES_H
+#define THEMES_H
 
-#include "defines.h"
-#include <QMultiHash>
-#include <QObject>
+#include <QDialog>
+#include "ui_themes.h"
 
-class ModerationModel : public QObject
+class DlgThemes : public QDialog
 {
     Q_OBJECT
-    Q_DISABLE_COPY(ModerationModel)
-    static ModerationModel *Instance;
 public:
-    static ModerationModel *instance();
-
-    ModerationModel();
-    void clear();
-    QMultiHash<QString,OnetModerateMessage> getAll();
-    void set(const QString &id, const QString &channel, qint64 time, const QString &nick, const QString &message);
-    void remove(const QString &id);
+    DlgThemes(QWidget *parent = 0);
 
 private:
-    QMultiHash<QString,OnetModerateMessage> moderateMessages;
+    Ui::uiThemes ui;
+
+    void createGui();
+    void setDefaultValues();
+    void createSignals();
+
+private slots:
+    void changeTheme(QModelIndex index);
 };
 
-#endif // MODERATION_MODEL_H
+#endif // THEMES_H

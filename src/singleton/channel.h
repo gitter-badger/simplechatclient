@@ -1,7 +1,7 @@
 /*
  * Simple Chat Client
  *
- *   Copyright (C) 2012 Piotr Łuczko <piotr.luczko@gmail.com>
+ *   Copyright (C) 2009-2013 Piotr Łuczko <piotr.luczko@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,8 +21,23 @@
 #define CHANNEL_H
 
 #include "defines.h"
+#include "tab_widget.h"
 #include <QHash>
 #include <QObject>
+
+struct OnetChannel
+{
+    int index;
+    QString name;
+//    QString alternativeName;
+    QString avatar;
+//    QList<QString> flags;
+//    QHash<QString,QString> options;
+    bool displayedOptions;
+    bool offline;
+    TabWidget *tw;
+    QList<OnetModerateMessage> moderateMessages;
+};
 
 class Channel : public QObject
 {
@@ -36,35 +51,46 @@ public:
 
     void add(const QString &channel);
     void remove(const QString &channel);
-    QList<QString> get();
-    QList<QString> getCleared();
+    void removeAll();
     void move(int from, int to);
     bool contains(const QString &channel);
-    QString getFromIndex(int index);
-    int getIndex(const QString &channel);
-    QString getCurrent();
-    QList<CaseIgnoreString> getSorted();
-    // topic
-    void setTopic(const QString &strChannel, const QString &strTopicContent);
-    void setAuthorTopic(const QString &strChannel, const QString &strNick);
-    // display channel info
-    void addChannelInfo(const QString &channel);
-    bool containsChannelInfo(const QString &channel);
-    void removeChannelInfo(const QString &channel);
-    void clearChannelInfo();
+    QString getNameFromIndex(int index);
+    int getIndexFromName(const QString &channel);
+    QString getCurrentName();
+    QList<QString> getList();
+    QList<QString> getListCleared();
+    QList<CaseIgnoreString> getListClearedSorted();
+    // displayed options
+    bool getDisplayedOptions(const QString &channel);
+    void setDisplayedOptions(const QString &channel, bool displayed);
     // avatar
     QString getAvatar(const QString &channel);
-    void setAvatar(const QString &channel, const QString &path);
+    void setAvatar(const QString &channel, const QString &avatar);
+    // offline
+    void setOffline(const QString &channel, bool offline);
+    bool getOffline(const QString &channel);
+    // moderate messages
+    void addModerateMessage(const QString &channel, qint64 time, const QString &nick, const QString &message);
+    QList<OnetModerateMessage> getModerateMessages(const QString &channel);
+    void removeModerateMessage(const QString &channel, const QString &id);
     // priv
-    void setPriv(const QString &channel, const QString &name);
-    QString getPriv(const QString &channel);
-    bool containsPriv(const QString &channel);
+    void setAlternativeName(const QString &channel, const QString &name);
+    QString getAlternativeName(const QString &channel);
+    bool containsAlternativeName(const QString &channel);
+    // tw
+    TabWidget* getTw(const QString &channel);
+    QLabel* getTopic(const QString &channel);
+    ChatView* getChatView(const QString &channel);
+    QLabel* getUsers(const QString &channel);
+    NickListWidget* getNickListWidget(const QString &channel);
+    QSplitter* getSplitter(const QString &channel);
+
+    void setTopic(const QString &strChannel, const QString &strTopicContent);
+    void setAuthorTopic(const QString &strChannel, const QString &strNick);
 
 private:
-    QList<QString> lChannels;
-    QList<QString> lChannelInfo; // moderated, private
-    QHash<QString,QString> lAvatar;
-    QHash<QString,QString> lPriv;
+    QHash<QString, OnetChannel> lChannels;
+    QHash<QString, QString> lChannelAlternativeName;
 
     void clear();
 };

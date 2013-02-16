@@ -1,7 +1,7 @@
 /*
  * Simple Chat Client
  *
- *   Copyright (C) 2012 Piotr Łuczko <piotr.luczko@gmail.com>
+ *   Copyright (C) 2009-2013 Piotr Łuczko <piotr.luczko@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,7 +24,6 @@
 #include <QObject>
 #include <QTranslator>
 #include "network.h"
-#include "tab_widget.h"
 class MainWindow;
 
 QT_BEGIN_NAMESPACE
@@ -53,8 +52,6 @@ public:
     QTcpSocket *kamerzystaSocket;
     // network
     Network *network;
-    // TW (important!!!)
-    QHash<QString, TabWidget*> tw;
 
 public slots:
     void quit();

@@ -1,7 +1,7 @@
 /*
  * Simple Chat Client
  *
- *   Copyright (C) 2012 Piotr Łuczko <piotr.luczko@gmail.com>
+ *   Copyright (C) 2009-2013 Piotr Łuczko <piotr.luczko@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -108,14 +108,14 @@ void DlgWebcamStandard::updateStatus(const QString &s)
 
 void DlgWebcamStandard::voteMinus()
 {
-    if (!strNick.isEmpty())
-        emit networkSend(QString("VOTE %1 -").arg(strNick));
+    if (!strCurrentNick.isEmpty())
+        emit networkSend(QString("VOTE %1 -").arg(strCurrentNick));
 }
 
 void DlgWebcamStandard::votePlus()
 {
-    if (!strNick.isEmpty())
-        emit networkSend(QString("VOTE %1 +").arg(strNick));
+    if (!strCurrentNick.isEmpty())
+        emit networkSend(QString("VOTE %1 +").arg(strCurrentNick));
 }
 
 void DlgWebcamStandard::voteOk()
@@ -166,6 +166,9 @@ void DlgWebcamStandard::updateUserCount(const QString &strNick, int iSpectators,
         item->setData(WebCamSpectatorsRole, iSpectators);
         item->setData(WebCamRankRole, iRank);
     }
+
+    if (strNick == strCurrentNick)
+        updateRank(iRank);
 }
 
 void DlgWebcamStandard::addUser(const QString &strNick, int iSpectators, int iRank, const QString &strUdget, const QStringList &lUserChannels)
@@ -191,6 +194,9 @@ void DlgWebcamStandard::updateUser(const QString &strNick, int iSpectators, int 
         item->setData(WebCamUdgetRole, strUdget);
         item->setData(WebCamUserChannelsRole, lUserChannels);
     }
+
+    if (strNick == strCurrentNick)
+        updateRank(iRank);
 }
 
 void DlgWebcamStandard::removeUser(const QString &strNick)
@@ -232,19 +238,19 @@ void DlgWebcamStandard::changeUser(QListWidgetItem *item)
     QStringList lNewNickChannels = item->data(WebCamUserChannelsRole).toStringList();
 
     // change user
-    if (strNick.isEmpty())
+    if (strCurrentNick.isEmpty())
         emit networkSend(QString("SUBSCRIBE_BIG * %1").arg(strNewNick));
     else
-        emit networkSend(QString("UNSUBSCRIBE_BIG %1").arg(strNick));
+        emit networkSend(QString("UNSUBSCRIBE_BIG %1").arg(strCurrentNick));
 
     // set nick
-    strNick = strNewNick;
+    strCurrentNick = strNewNick;
 
     // display nick
-    ui.label_nick->setText(strNick);
+    ui.label_nick->setText(strCurrentNick);
 
     // set nick
-    emit setUser(strNick);
+    emit setUser(strCurrentNick);
 
     // update channels
     QString strNewNickChannels;

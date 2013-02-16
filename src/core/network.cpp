@@ -1,7 +1,7 @@
 /*
  * Simple Chat Client
  *
- *   Copyright (C) 2012 Piotr Łuczko <piotr.luczko@gmail.com>
+ *   Copyright (C) 2009-2013 Piotr Łuczko <piotr.luczko@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -37,7 +37,7 @@ Network::Network(const QString &_strServer, int _iPort) : strServer(_strServer),
     Settings::instance()->set("reconnect", "true");
 
     timerReconnect = new QTimer();
-    timerReconnect->setInterval(1000*30); // 30 sec
+    timerReconnect->setInterval(1000*60*2); // 2 min
     timerPong = new QTimer();
     timerPong->setInterval(1000*60*1); // 1 min
     timerPing = new QTimer();
@@ -152,9 +152,6 @@ void Network::authorize()
         delete pSimpleCrypt;
     }
 
-    // update nick
-    emit updateNick(strNick);
-
     // request uo key
     emit authorize(strNick, strPass);
 }
@@ -166,16 +163,8 @@ void Network::connect()
         // clear all
         clearAll();
 
-        // set active
-        iActive = QDateTime::currentMSecsSinceEpoch();
-
         // connect
         socket->connectToHost(strServer, iPort);
-
-        // start timers
-        timerPong->start();
-        timerPing->start();
-        timerQueue->start();
     }
     else
     {
@@ -188,6 +177,15 @@ void Network::connected()
 {
     Lag::instance()->reset();
 
+    // set active
+    iActive = QDateTime::currentMSecsSinceEpoch();
+
+    // start timers
+    timerPong->start();
+    timerPing->start();
+    timerQueue->start();
+
+    // display
     QString strDisplay = tr("Connected to server");
     Message::instance()->showMessageAll(strDisplay, MessageError);
 

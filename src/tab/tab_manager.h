@@ -1,7 +1,7 @@
 /*
  * Simple Chat Client
  *
- *   Copyright (C) 2012 Piotr Łuczko <piotr.luczko@gmail.com>
+ *   Copyright (C) 2009-2013 Piotr Łuczko <piotr.luczko@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -35,9 +35,9 @@ class TabManager : public QTabWidget
     Q_OBJECT
 public:
     TabManager(QWidget *parent = 0);
-    void setAlert(int index, ChannelColor c);
+    void setAlert(const QString &channel, ChannelColor c);
     void setColor(int index, QColor color);
-    void updateIcon(const QString &channel);
+    void updateIcon(int index, const QString &avatar);
 
 private:
     QTabBar *tab;

@@ -1,7 +1,7 @@
 /*
  * Simple Chat Client
  *
- *   Copyright (C) 2012 Piotr Łuczko <piotr.luczko@gmail.com>
+ *   Copyright (C) 2009-2013 Piotr Łuczko <piotr.luczko@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -44,31 +44,40 @@ Nicklist::Nicklist()
 
 void Nicklist::clearUsers()
 {
-    QHashIterator<QString, TabWidget*> i(Core::instance()->tw);
-    while (i.hasNext())
+    QList<QString> lChannels = Channel::instance()->getList();
+    foreach (QString strChannel, lChannels)
     {
-        i.next();
-        QString strChannel = i.key();
+        if (strChannel[0] == '^')
+            Channel::instance()->setOffline(strChannel, true);
 
-        Core::instance()->tw[strChannel]->pNickListWidget->clear();
-        Core::instance()->tw[strChannel]->users->setText(QString(tr("Users (%1)").arg(Core::instance()->tw[strChannel]->pNickListWidget->count())));
+        Channel::instance()->getNickListWidget(strChannel)->clear();
+        int iUsersCount = Channel::instance()->getNickListWidget(strChannel)->count();
+        Channel::instance()->getUsers(strChannel)->setText(QString(tr("Users (%1)").arg(iUsersCount)));
     }
 }
 
 void Nicklist::addUser(const QString &strNick, const QString &strChannel, const QString &strModes, int iMaxModes, const QString &strAvatar)
 {
-    if (!Core::instance()->tw.contains(strChannel)) return;
+    if (!Channel::instance()->contains(strChannel)) return;
 
-    Core::instance()->tw[strChannel]->pNickListWidget->addUser(strNick, strModes, iMaxModes, strAvatar);
-    Core::instance()->tw[strChannel]->users->setText(QString(tr("Users (%1)").arg(Core::instance()->tw[strChannel]->pNickListWidget->count())));
+    if (strChannel[0] == '^')
+        Channel::instance()->setOffline(strChannel, false);
+
+    Channel::instance()->getNickListWidget(strChannel)->addUser(strNick, strModes, iMaxModes, strAvatar);
+    int iUsersCount = Channel::instance()->getNickListWidget(strChannel)->count();
+    Channel::instance()->getUsers(strChannel)->setText(QString(tr("Users (%1)").arg(iUsersCount)));
 }
 
 void Nicklist::delUser(const QString &strNick, const QString &strChannel)
 {
-    if (!Core::instance()->tw.contains(strChannel)) return;
+    if (!Channel::instance()->contains(strChannel)) return;
 
-    Core::instance()->tw[strChannel]->pNickListWidget->delUser(strNick);
-    Core::instance()->tw[strChannel]->users->setText(QString(tr("Users (%1)").arg(Core::instance()->tw[strChannel]->pNickListWidget->count())));
+    if (strChannel[0] == '^')
+        Channel::instance()->setOffline(strChannel, true);
+
+    Channel::instance()->getNickListWidget(strChannel)->delUser(strNick);
+    int iUsersCount = Channel::instance()->getNickListWidget(strChannel)->count();
+    Channel::instance()->getUsers(strChannel)->setText(QString(tr("Users (%1)").arg(iUsersCount)));
 }
 
 void Nicklist::renameUser(const QString &strNick, const QString &strNewNick, const QList<QString> &lChannels, const QString &strDisplay)
@@ -78,7 +87,7 @@ void Nicklist::renameUser(const QString &strNick, const QString &strNewNick, con
     foreach (QString strChannel, lChannels)
     {
         Message::instance()->showMessage(strChannel, strDisplay, eMessageCategory);
-        Core::instance()->tw[strChannel]->pNickListWidget->renameUser(strNick, strNewNick);
+        Channel::instance()->getNickListWidget(strChannel)->renameUser(strNick, strNewNick);
     }
 }
 
@@ -88,21 +97,25 @@ void Nicklist::quitUser(const QString &strNick, const QList<QString> &lChannels,
 
     foreach (QString strChannel, lChannels)
     {
+        if (strChannel[0] == '^')
+            Channel::instance()->setOffline(strChannel, true);
+
         Message::instance()->showMessage(strChannel, strDisplay, eMessageCategory);
-        Core::instance()->tw[strChannel]->pNickListWidget->delUser(strNick);
-        Core::instance()->tw[strChannel]->users->setText(QString(tr("Users (%1)").arg(Core::instance()->tw[strChannel]->pNickListWidget->count())));
+        Channel::instance()->getNickListWidget(strChannel)->delUser(strNick);
+        int iUsersCount = Channel::instance()->getNickListWidget(strChannel)->count();
+        Channel::instance()->getUsers(strChannel)->setText(QString(tr("Users (%1)").arg(iUsersCount)));
     }
 }
 
 void Nicklist::setUserModes(const QString &strNick, const QString &strChannel, const QString &strModes, int iMaxModes)
 {
-    if (!Core::instance()->tw.contains(strChannel)) return;
+    if (!Channel::instance()->contains(strChannel)) return;
 
-    Core::instance()->tw[strChannel]->pNickListWidget->setUserModes(strNick, strModes, iMaxModes);
+    Channel::instance()->getNickListWidget(strChannel)->setUserModes(strNick, strModes, iMaxModes);
 
     // channel tool buttons
     QString strMe = Settings::instance()->get("nick");
-    QString strCurrentChannel = Channel::instance()->getCurrent();
+    QString strCurrentChannel = Channel::instance()->getCurrentName();
 
     if ((strCurrentChannel == strChannel) && (strNick == strMe))
         Core::instance()->mainWindow()->refreshToolButtons(strChannel);
@@ -112,6 +125,6 @@ void Nicklist::setUserAvatar(const QString &strNick, const QList<QString> &lChan
 {
     foreach (QString strChannel, lChannels)
     {
-        Core::instance()->tw[strChannel]->pNickListWidget->setUserAvatar(strNick, strAvatar);
+        Channel::instance()->getNickListWidget(strChannel)->setUserAvatar(strNick, strAvatar);
     }
 }

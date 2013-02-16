@@ -27,12 +27,14 @@ set (scc_UIS
 	../ui/my_profile.ui
 	../ui/my_stats.ui
 	../ui/notes.ui
-	../ui/offline_messages.ui
+	../ui/offline_list.ui
+	../ui/offline_message.ui
 	../ui/options.ui
 	../ui/profile_add.ui
 	../ui/profile_edit.ui
 	../ui/profile_manager.ui
 	../ui/register_nick.ui
+	../ui/themes.ui
 	../ui/update.ui
 	../ui/user_avatar.ui
 	../ui/webbrowser.ui
@@ -76,12 +78,14 @@ set (scc_SRCS
 	gui/my_profile.cpp
 	gui/my_stats.cpp
 	gui/notes.cpp
-	gui/offline_messages.cpp
+	gui/offline_list.cpp
+	gui/offline_message.cpp
 	gui/options.cpp
 	gui/profile_add.cpp
 	gui/profile_edit.cpp
 	gui/profile_manager.cpp
 	gui/register_nick.cpp
+	gui/themes.cpp
 	gui/update.cpp
 	gui/user_avatar.cpp
 	gui/user_profile.cpp
@@ -94,7 +98,6 @@ set (scc_SRCS
 	models/find_nick_model.cpp
 	models/friends_model.cpp
 	models/ignore_model.cpp
-	models/moderation_model.cpp
 	models/my_avatar_model.cpp
 	models/my_profile_model.cpp
 	models/my_stats_model.cpp
@@ -176,12 +179,14 @@ set (scc_MOC_HDRS
 	gui/my_profile.h
 	gui/my_stats.h
 	gui/notes.h
-	gui/offline_messages.h
+	gui/offline_list.h
+	gui/offline_message.h
 	gui/options.h
 	gui/profile_add.h
 	gui/profile_edit.h
 	gui/profile_manager.h
 	gui/register_nick.h
+	gui/themes.h
 	gui/update.h
 	gui/user_avatar.h
 	gui/user_profile.h
@@ -194,7 +199,6 @@ set (scc_MOC_HDRS
 	models/find_nick_model.h
 	models/friends_model.h
 	models/ignore_model.h
-	models/moderation_model.h
 	models/my_profile_model.h
 	models/my_stats_model.h
 	models/settings.h

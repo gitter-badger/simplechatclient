@@ -1,7 +1,7 @@
 /*
  * Simple Chat Client
  *
- *   Copyright (C) 2012 Piotr Łuczko <piotr.luczko@gmail.com>
+ *   Copyright (C) 2009-2013 Piotr Łuczko <piotr.luczko@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -86,8 +86,7 @@ void convertFont(QString &strData)
     while ((pos = rx.indexIn(strData, pos)) != -1)
     {
         int first = pos;
-        pos += rx.matchedLength();
-        int second = pos;
+        int second = first + rx.matchedLength();
 
         if (Settings::instance()->get("hide_formating") == "false")
         {
@@ -105,16 +104,11 @@ void convertFont(QString &strData)
             else if (strFontName == "courier") strAtributes += "font-family:Courier New;";
             else strAtributes += "font-family:Verdana;";
 
-            if (!strAtributes.isEmpty())
-            {
-                strData.replace(first, second-first, QString("<span style=\"%1\">").arg(strAtributes));
-                strData += "</span>";
-            }
+            strData.replace(first, second-first, QString("<span style=\"%1\">").arg(strAtributes));
+            strData += "</span>";
         }
         else
             strData.remove(first, second-first);
-
-        pos--;
     }
 }
 
@@ -125,8 +119,6 @@ void convertEmoticons(QString &strData, bool bInsertWidthHeight)
     int pos = 0;
     while ((pos = rx.indexIn(strData, pos)) != -1)
     {
-        pos += rx.matchedLength();
-
         QString strEmoticon = rx.cap(1);
         QString strEmoticonFull = "%I"+strEmoticon+"%";
 
@@ -153,8 +145,91 @@ void convertEmoticons(QString &strData, bool bInsertWidthHeight)
         }
         else
             strData.replace(strEmoticonFull, QString("//%1").arg(strEmoticon));
+    }
+}
+/*
+void convertEmoticonsToSlash(QString &strData)
+{
+    QRegExp rx("%I([a-zA-Z0-9_-]+)%");
 
-        pos--;
+    int pos = 0;
+    while ((pos = rx.indexIn(strData, pos)) != -1)
+    {
+        QString strEmoticon = rx.cap(1);
+        QString strEmoticonFull = "%I"+strEmoticon+"%";
+
+        QString strEmoticonPath = findEmoticon(strEmoticon);
+
+        if (!strEmoticonPath.isEmpty())
+            strData.replace(strEmoticonFull, QString("//%1").arg(strEmoticon));
+        else
+            pos += rx.matchedLength();
+    }
+}
+*/
+void convertSlashToEmoticons(QString &strData)
+{
+    QRegExp rx("(http:|https:){0,}//([a-zA-Z0-9_-]+)");
+
+    int pos = 0;
+    while ((pos = rx.indexIn(strData, pos)) != -1)
+    {
+        if (rx.cap(1).isEmpty())
+        {
+            int first = pos;
+            int matchedLength = rx.cap(2).length() + 2;
+            int second = first + matchedLength;
+
+            QString strEmoticon = rx.cap(2);
+
+            if (!findEmoticon(strEmoticon).isEmpty())
+                strData.replace(first, second-first, "%I"+strEmoticon+"%");
+            else
+                pos += matchedLength;
+        }
+        else
+            pos += rx.matchedLength();
+    }
+}
+
+void removeColor(QString &strData)
+{
+    QList<QString> lColors = Utils::instance()->getColors();
+    foreach (QString strColor, lColors)
+        strData.remove(QString("%C%1%").arg(strColor));
+}
+
+void removeFont(QString &strData)
+{
+    QRegExp rx("%F(b|i|bi)?:?(arial|times|verdana|tahoma|courier)?%");
+
+    int pos = 0;
+    while ((pos = rx.indexIn(strData, pos)) != -1)
+    {
+        int first = pos;
+        int second = first + rx.matchedLength();
+
+        strData.remove(first, second-first);
+    }
+}
+
+void removeEmoticons(QString &strData)
+{
+    QRegExp rx("%I([a-zA-Z0-9_-]+)%");
+
+    int pos = 0;
+    while ((pos = rx.indexIn(strData, pos)) != -1)
+    {
+        int first = pos;
+        int second = first + rx.matchedLength();
+
+        QString strEmoticon = rx.cap(1);
+        QString strEmoticonPath = findEmoticon(strEmoticon);
+
+        if (!strEmoticonPath.isEmpty())
+            strData.remove(first, second-first);
+        else
+            pos += rx.matchedLength();
     }
 }
 
@@ -200,36 +275,22 @@ void Convert::createText(QString &strText)
 
 void Convert::simpleReverseConvert(QString &strData)
 {
-    QRegExp rx("//([a-zA-Z0-9_-]+)");
-
-    int pos = 0;
-    while ((pos = rx.indexIn(strData, pos)) != -1)
-    {
-        int first = pos;
-        pos += rx.matchedLength();
-        int second = pos;
-
-        QString strEmoticon = rx.cap(1);
-
-        if (!findEmoticon(strEmoticon).isEmpty())
-            strData.replace(first, second-first, "%I"+strEmoticon+"%");
-
-        pos--;
-    }
+    convertSlashToEmoticons(strData);
 }
 
 void Convert::simpleConvert(QString &strData)
 {
-    strData.remove(QRegExp("%C([a-zA-Z0-9]+)%"));
-    strData.remove(QRegExp("%F([a-zA-Z0-9:]+)%"));
+    removeColor(strData);
+    removeFont(strData);
     strData.replace(QRegExp("%I([a-zA-Z0-9_-]+)%"), "//\\1");
+    //convertEmoticonsToSlash(strData);
 }
 
 void Convert::removeStyles(QString &strData)
 {
-    strData.remove(QRegExp("%C([a-zA-Z0-9]+)%"));
-    strData.remove(QRegExp("%F([a-zA-Z0-9:]+)%"));
-    strData.remove(QRegExp("%I([a-zA-Z0-9_-]+)%"));
+    removeColor(strData);
+    removeFont(strData);
+    removeEmoticons(strData);
 }
 
 void Convert::convertText(QString &strData, bool bInsertWidthHeight)
@@ -243,8 +304,7 @@ bool Convert::isBold(const QString &strData)
 {
     QRegExp rx("%F(b|i|bi)?:?(arial|times|verdana|tahoma|courier)?%");
 
-    int pos = 0;
-    if ((pos = rx.indexIn(strData, pos)) != -1)
+    if (rx.indexIn(strData) != -1)
     {
         QString strFontStyle = rx.cap(1);
 
@@ -253,15 +313,15 @@ bool Convert::isBold(const QString &strData)
         else
             return false;
     }
-    return false;
+    else
+        return false;
 }
 
 bool Convert::isItalic(const QString &strData)
 {
     QRegExp rx("%F(b|i|bi)?:?(arial|times|verdana|tahoma|courier)?%");
 
-    int pos = 0;
-    if ((pos = rx.indexIn(strData, pos)) != -1)
+    if (rx.indexIn(strData) != -1)
     {
         QString strFontStyle = rx.cap(1);
 
@@ -270,20 +330,21 @@ bool Convert::isItalic(const QString &strData)
         else
             return false;
     }
-    return false;
+    else
+        return false;
 }
 
 QString Convert::getFont(const QString &strData)
 {
     QRegExp rx("%F(b|i|bi)?:?(arial|times|verdana|tahoma|courier)?%");
 
-    int pos = 0;
-    if ((pos = rx.indexIn(strData, pos)) != -1)
+    if (rx.indexIn(strData) != -1)
     {
         QString strFontName = rx.cap(2);
         return strFontName;
     }
-    return QString::null;
+    else
+        return QString::null;
 }
 
 int Convert::getColor(const QString &strData)

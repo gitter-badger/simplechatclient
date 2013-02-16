@@ -1,7 +1,7 @@
 /*
  * Simple Chat Client
  *
- *   Copyright (C) 2012 Piotr Łuczko <piotr.luczko@gmail.com>
+ *   Copyright (C) 2009-2013 Piotr Łuczko <piotr.luczko@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -35,6 +35,9 @@ private:
     void createGui();
     void setDefaultValues();
     void createSignals();
+
+    void clearFields();
+    void clearLists();
 
     void getOptions();
     bool showChannel(const QString &name, int people, int cat, int type, bool moderated, bool recommended);

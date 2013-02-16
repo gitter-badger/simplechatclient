@@ -1,7 +1,7 @@
 /*
  * Simple Chat Client
  *
- *   Copyright (C) 2012 Piotr Łuczko <piotr.luczko@gmail.com>
+ *   Copyright (C) 2009-2013 Piotr Łuczko <piotr.luczko@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,6 +27,7 @@
 #include "avatar_list_widget.h"
 #include "convert.h"
 #include "core.h"
+#include "channel_homes_model.h"
 #include "channel_settings_model.h"
 #include "nick.h"
 #include "settings.h"
@@ -940,7 +941,7 @@ void DlgChannelSettings::refreshPermissionList()
     QString strMe = Settings::instance()->get("nick");
     int iSelfMaxModes = Nick::instance()->getMaxModes(strMe, strChannel);
 
-    if (iSelfMaxModes >= 4)
+    if ((iSelfMaxModes >= 4) || ((iSelfMaxModes == -1) && (ChannelHomes::instance()->contains(strChannel))))
     {
         setSettingsTabsStatus(true);
     }
@@ -969,20 +970,20 @@ void DlgChannelSettings::refreshPermissionList()
         else if (strKey == PERMISSION_BAN)
         {
             QStringList strDataList = strValue.split(";");
-            QString strNick = strDataList[0];
-            QString strWho = strDataList[1];
-            QString strDT = strDataList[2];
-            QString strIPNick = strDataList[3];
+            QString strNick = strDataList.at(0);
+            QString strWho = strDataList.at(1);
+            QString strDT = strDataList.at(2);
+            QString strIPNick = strDataList.at(3);
 
             addBan(strNick, strWho, strDT, strIPNick);
         }
         else if (strKey == PERMISSION_INVITE)
         {
             QStringList strDataList = strValue.split(";");
-            QString strNick = strDataList[0];
-            QString strWho = strDataList[1];
-            QString strDT = strDataList[2];
-            QString strIPNick = strDataList[3];
+            QString strNick = strDataList.at(0);
+            QString strWho = strDataList.at(1);
+            QString strDT = strDataList.at(2);
+            QString strIPNick = strDataList.at(3);
             Q_UNUSED (strIPNick)
 
             addInvite(strNick, strWho, strDT);

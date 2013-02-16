@@ -1,7 +1,7 @@
 /*
  * Simple Chat Client
  *
- *   Copyright (C) 2012 Piotr Łuczko <piotr.luczko@gmail.com>
+ *   Copyright (C) 2009-2013 Piotr Łuczko <piotr.luczko@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,35 +17,33 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef OFFLINE_MESSAGES_H
-#define OFFLINE_MESSAGES_H
+#ifndef OFFLINE_LIST_H
+#define OFFLINE_LIST_H
 
 #include <QDialog>
-#include "ui_offline_messages.h"
+#include "ui_offline_list.h"
 
-class DlgOfflineMessages : public QDialog
+class DlgOfflineList : public QDialog
 {
     Q_OBJECT
 public:
-    DlgOfflineMessages(QWidget *parent = 0);
+    DlgOfflineList(QWidget *parent = 0);
 
 private:
-    Ui::uiOfflineMessages ui;
-    QString strCurrentNick;
-    QList<QString> messagesQuoted;
-    QList<QString> messagesReplied;
-    QList<QString> messagesQuotedToSender;
+    Ui::uiOfflineList ui;
+    enum OfflineMessageRoles
+    {
+        OfflineMessageNickRole = Qt::UserRole
+    };
 
     void createGui();
     void createSignals();
     void refresh();
-    void removeNick(const QString &strRemoveNick);
 
 private slots:
-    void refreshMessages();
+    void itemClicked(QListWidgetItem *);
     void buttonRead();
     void buttonReject();
-    void buttonReply();
 };
 
-#endif // OFFLINE_MESSAGES_H
+#endif // OFFLINE_LIST_H

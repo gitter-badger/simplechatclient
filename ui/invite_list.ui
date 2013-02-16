@@ -6,19 +6,19 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>382</width>
+    <width>452</width>
     <height>152</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>382</width>
+    <width>452</width>
     <height>152</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>382</width>
+    <width>452</width>
     <height>152</height>
    </size>
   </property>
@@ -30,7 +30,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>381</width>
+     <width>451</width>
      <height>151</height>
     </rect>
    </property>
@@ -87,6 +87,19 @@
         </property>
         <property name="toolButtonStyle">
          <enum>Qt::ToolButtonTextBesideIcon</enum>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QDialogButtonBox" name="buttonBox">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="standardButtons">
+         <set>QDialogButtonBox::Close</set>
         </property>
        </widget>
       </item>

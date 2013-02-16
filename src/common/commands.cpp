@@ -1,7 +1,7 @@
 /*
  * Simple Chat Client
  *
- *   Copyright (C) 2012 Piotr Łuczko <piotr.luczko@gmail.com>
+ *   Copyright (C) 2009-2013 Piotr Łuczko <piotr.luczko@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -42,7 +42,7 @@ QString Commands::execute()
     if (strDataList.size() == 0)
         return strData;
 
-    QString strCmd = strDataList[0].toLower();
+    QString strCmd = strDataList.at(0).toLower();
 
     if ((strCmd == "raw") || (strCmd == "quote"))
         return cmdRaw();
@@ -56,7 +56,7 @@ QString Commands::execute()
         return cmdIgnore();
     else if (strCmd == "friend")
         return cmdFriend();
-    else if ((strCmd == "whereis") || (strCmd == "whois")  || (strCmd == "wi")  || (strCmd == "wii"))
+    else if ((strCmd == "whereis") || (strCmd == "whois"))
         return cmdWhereis();
     else if (strCmd == "busy")
         return cmdBusy();
@@ -111,7 +111,7 @@ QString Commands::cmdRaw()
     if (strDataList.value(1).isEmpty()) return QString::null;
 
     QString strCommand;
-    for (int i = 1; i < strDataList.size(); i++) { if (i != 1) strCommand += " "; strCommand += strDataList[i]; }
+    for (int i = 1; i < strDataList.size(); i++) { if (i != 1) strCommand += " "; strCommand += strDataList.at(i); }
 
     return strCommand;
 }
@@ -121,7 +121,7 @@ QString Commands::cmdAll()
     if (strDataList.value(1).isEmpty()) return QString::null;
 
     QString strMessage;
-    for (int i = 1; i < strDataList.size(); i++) { if (i != 1) strMessage += " "; strMessage += strDataList[i]; }
+    for (int i = 1; i < strDataList.size(); i++) { if (i != 1) strMessage += " "; strMessage += strDataList.at(i); }
 
     return strMessage;
 }
@@ -130,12 +130,12 @@ QString Commands::cmdJoin()
 {
     if (strDataList.value(1).isEmpty()) return QString::null;
 
-    QString strChannel = strDataList[1];
+    QString strChannel = strDataList.at(1);
     if ((strChannel[0] != '#') && (strChannel[0] != '^'))
         strChannel = "#"+strChannel;
 
     QString strKey;
-    for (int i = 2; i < strDataList.size(); i++) { if (i != 2) strKey += " "; strKey += strDataList[i]; }
+    for (int i = 2; i < strDataList.size(); i++) { if (i != 2) strKey += " "; strKey += strDataList.at(i); }
 
     if (Utils::instance()->isErotic(strChannel))
     {
@@ -170,7 +170,7 @@ QString Commands::cmdPriv()
 {
     if (strDataList.value(1).isEmpty()) return QString::null;
 
-    QString strNick = strDataList[1];
+    QString strNick = strDataList.at(1);
 
     return QString("PRIV %1").arg(strNick);
 }
@@ -179,7 +179,7 @@ QString Commands::cmdIgnore()
 {
     if (strDataList.value(1).isEmpty()) return QString::null;
 
-    QString strNick = strDataList[1];
+    QString strNick = strDataList.at(1);
     QChar cPlusMinus =  '+';
 
     if ((strNick[0] == '+') || (strNick[0] == '-'))
@@ -200,7 +200,7 @@ QString Commands::cmdFriend()
 {
     if (strDataList.value(1).isEmpty()) return QString::null;
 
-    QString strNick = strDataList[1];
+    QString strNick = strDataList.at(1);
     QChar cPlusMinus =  '+';
 
     if ((strNick[0] == '+') || (strNick[0] == '-'))
@@ -221,7 +221,7 @@ QString Commands::cmdWhereis()
 {
     if (strDataList.value(1).isEmpty()) return QString::null;
 
-    QString strNick = strDataList[1];
+    QString strNick = strDataList.at(1);
 
     return QString("WHOIS %1 :%1").arg(strNick);
 }
@@ -239,7 +239,7 @@ QString Commands::cmdBusy()
 QString Commands::cmdAway()
 {
     QString strMessage;
-    for (int i = 1; i < strDataList.size(); i++) { if (i != 1) strMessage += " "; strMessage += strDataList[i]; }
+    for (int i = 1; i < strDataList.size(); i++) { if (i != 1) strMessage += " "; strMessage += strDataList.at(i); }
 
     Convert::simpleReverseConvert(strMessage);
     Replace::replaceEmots(strMessage);
@@ -252,10 +252,10 @@ QString Commands::cmdOffmsg()
     if (strDataList.value(1).isEmpty()) return QString::null;
     if (strDataList.value(2).isEmpty()) return QString::null;
 
-    QString strNick = strDataList[1];
+    QString strNick = strDataList.at(1);
 
     QString strMessage;
-    for (int i = 2; i < strDataList.size(); i++) { if (i != 2) strMessage += " "; strMessage += strDataList[i]; }
+    for (int i = 2; i < strDataList.size(); i++) { if (i != 2) strMessage += " "; strMessage += strDataList.at(i); }
 
     Convert::simpleReverseConvert(strMessage);
     Replace::replaceEmots(strMessage);
@@ -266,7 +266,7 @@ QString Commands::cmdOffmsg()
 QString Commands::cmdQuit()
 {
     QString strReason;
-    for (int i = 1; i < strDataList.size(); i++) { if (i != 1) strReason += " "; strReason += strDataList[i]; }
+    for (int i = 1; i < strDataList.size(); i++) { if (i != 1) strReason += " "; strReason += strDataList.at(i); }
 
     Settings::instance()->set("reconnect", "false");
 
@@ -332,32 +332,32 @@ QString Commands::cmdHelp()
     QString strHelp;
 
     strHelp = (tr("* Available commands:")+";");
-    strHelp.append(tr("/raw [text]")+";");
-    strHelp.append(tr("/all [text]")+";");
-    strHelp.append(tr("/cycle [text] or /hop [text]")+";");
-    strHelp.append(tr("/me [text]")+";");
-    strHelp.append(tr("/topic [text]")+";");
-    strHelp.append(tr("/join [channel] [key] or /j [channel] [key]")+";");
-    strHelp.append(tr("/part [text] or /p [text]")+";");
-    strHelp.append(tr("/priv [nick]")+";");
-    strHelp.append(tr("/ignore [[+|-]nick]")+";");
-    strHelp.append(tr("/friend [[+|-]nick]")+";");
-    strHelp.append(tr("/whereis [nick] or /whois [nick] or /wi [nick] or /wii [nick]")+";");
-    strHelp.append(tr("/busy")+";");
-    strHelp.append(tr("/away [text]")+";");
-    strHelp.append(tr("/invite [nick]")+";");
-    strHelp.append(tr("/offmsg [nick] [text]")+";");
-    strHelp.append(tr("/logout [text] or /quit [text] or /q [text]")+";");
-    strHelp.append(tr("/kick [nick] [reason] or /k [nick] [reason]")+";");
-    strHelp.append(tr("/ban [[+|-]nick]")+";");
-    strHelp.append(tr("/banip [[+|-]nick]")+";");
-    strHelp.append(tr("/kban [nick] [reason]")+";");
-    strHelp.append(tr("/kbanip [nick] [reason]")+";");
-    strHelp.append(tr("/sop [[+|-]nick]")+";");
-    strHelp.append(tr("/op [[+|-]nick]")+";");
-    strHelp.append(tr("/moder [[+|-]nick] or /moderator [[+|-]nick]")+";");
-    strHelp.append(tr("/vip [[+|-]nick]")+";");
-    strHelp.append(tr("/mp3 or /winamp")+";");
+    strHelp.append(tr("/raw [text] - send command directly to server")+";");
+    strHelp.append(tr("/all [text] - send message to all opened channels")+";");
+    strHelp.append(tr("/cycle [text] or /hop [text] - part and join current channel")+";");
+    strHelp.append(tr("/me [text] - action command")+";");
+    strHelp.append(tr("/topic [text] - change topic on current channel")+";");
+    strHelp.append(tr("/join [channel] [key] or /j [channel] [key] - join channel")+";");
+    strHelp.append(tr("/part [text] or /p [text] - part current channel")+";");
+    strHelp.append(tr("/priv [nick] - open priv")+";");
+    strHelp.append(tr("/ignore [[+|-]nick] - add or remove nick from ignore list")+";");
+    strHelp.append(tr("/friend [[+|-]nick] - add or remove nick from friends list")+";");
+    strHelp.append(tr("/whereis [nick] or /whois [nick] - show where is user")+";");
+    strHelp.append(tr("/busy - mark/unmark as busy")+";");
+    strHelp.append(tr("/away [text] - mark/unmark as being away")+";");
+    strHelp.append(tr("/invite [nick] - invite nick to current channel")+";");
+    strHelp.append(tr("/offmsg [nick] [text] - send offline message to user")+";");
+    strHelp.append(tr("/logout [text] or /quit [text] or /q [text] - logout")+";");
+    strHelp.append(tr("/kick [nick] [reason] or /k [nick] [reason] - kick user from current channel")+";");
+    strHelp.append(tr("/ban [[+|-]nick] - ban or unban nick on current channel")+";");
+    strHelp.append(tr("/banip [[+|-]nick] - ban user ip or unban user ip on current channel")+";");
+    strHelp.append(tr("/kban [nick] [reason] - kick and ban nick on current channel")+";");
+    strHelp.append(tr("/kbanip [nick] [reason] - kick and ban user ip on current channel")+";");
+    strHelp.append(tr("/sop [[+|-]nick] - add or remove super-operator privilege")+";");
+    strHelp.append(tr("/op [[+|-]nick] - add or remove operator privilege")+";");
+    strHelp.append(tr("/moder [[+|-]nick] or /moderator [[+|-]nick] - add or remove mod privilege")+";");
+    strHelp.append(tr("/vip [[+|-]nick] - add or remove vip privilege")+";");
+    strHelp.append(tr("/mp3 or /winamp - show current song from winamp/aimp")+";");
     strHelp.append(tr("/help"));
 
     QStringList lHelp = strHelp.split(";");
@@ -372,7 +372,7 @@ QString Commands::cmdCycle()
     QString strChannel = strChan;
 
     QString strMessage;
-    for (int i = 1; i < strDataList.size(); i++) { if (i != 1) strMessage += " "; strMessage += strDataList[i]; }
+    for (int i = 1; i < strDataList.size(); i++) { if (i != 1) strMessage += " "; strMessage += strDataList.at(i); }
 
     if (!strMessage.isEmpty())
         return QString("PART %1 :%2\nJOIN %1").arg(strChannel, strMessage);
@@ -385,7 +385,7 @@ QString Commands::cmdMe()
     QString strChannel = strChan;
 
     QString strMessage;
-    for (int i = 1; i < strDataList.size(); i++) { if (i != 1) strMessage += " "; strMessage += strDataList[i]; }
+    for (int i = 1; i < strDataList.size(); i++) { if (i != 1) strMessage += " "; strMessage += strDataList.at(i); }
 
     Convert::createText(strMessage);
     Convert::simpleReverseConvert(strMessage);
@@ -399,7 +399,7 @@ QString Commands::cmdTopic()
     QString strChannel = strChan;
 
     QString strMessage;
-    for (int i = 1; i < strDataList.size(); i++) { if (i != 1) strMessage += " "; strMessage += strDataList[i]; }
+    for (int i = 1; i < strDataList.size(); i++) { if (i != 1) strMessage += " "; strMessage += strDataList.at(i); }
 
     Convert::createText(strMessage);
     Convert::simpleReverseConvert(strMessage);
@@ -413,7 +413,7 @@ QString Commands::cmdPart()
     QString strChannel = strChan;
 
     QString strMessage;
-    for (int i = 1; i < strDataList.size(); i++) { if (i != 1) strMessage += " "; strMessage += strDataList[i]; }
+    for (int i = 1; i < strDataList.size(); i++) { if (i != 1) strMessage += " "; strMessage += strDataList.at(i); }
 
     if (!strMessage.isEmpty())
         return QString("PART %1 :%2").arg(strChannel, strMessage);
@@ -425,7 +425,7 @@ QString Commands::cmdInvite()
 {
     if (strDataList.value(1).isEmpty()) return QString::null;
 
-    QString strNick = strDataList[1];
+    QString strNick = strDataList.at(1);
     QString strChannel = strChan;
 
     return QString("INVITE %1 %2").arg(strNick, strChannel);
@@ -436,10 +436,10 @@ QString Commands::cmdKick()
     if (strDataList.value(1).isEmpty()) return QString::null;
 
     QString strChannel = strChan;
-    QString strNick = strDataList[1];
+    QString strNick = strDataList.at(1);
 
     QString strReason;
-    for (int i = 2; i < strDataList.size(); i++) { if (i != 2) strReason += " "; strReason += strDataList[i]; }
+    for (int i = 2; i < strDataList.size(); i++) { if (i != 2) strReason += " "; strReason += strDataList.at(i); }
 
     if (strReason.isEmpty())
         strReason = tr("No reason");
@@ -453,7 +453,7 @@ QString Commands::cmdBan()
 
     QString strChannel = strChan;
 
-    QString strNick = strDataList[1];
+    QString strNick = strDataList.at(1);
     QChar cPlusMinus =  '+';
 
     if ((strNick[0] == '+') || (strNick[0] == '-'))
@@ -492,7 +492,7 @@ QString Commands::cmdBanip()
 
     QString strChannel = strChan;
 
-    QString strNick = strDataList[1];
+    QString strNick = strDataList.at(1);
     QChar cPlusMinus =  '+';
 
     if ((strNick[0] == '+') || (strNick[0] == '-'))
@@ -515,10 +515,10 @@ QString Commands::cmdKBan()
 
     QString strChannel = strChan;
 
-    QString strNick = strDataList[1];
+    QString strNick = strDataList.at(1);
 
     QString strReason;
-    for (int i = 2; i < strDataList.size(); i++) { if (i != 2) strReason += " "; strReason += strDataList[i]; }
+    for (int i = 2; i < strDataList.size(); i++) { if (i != 2) strReason += " "; strReason += strDataList.at(i); }
 
     if (strReason.isEmpty())
         strReason = tr("No reason");
@@ -532,10 +532,10 @@ QString Commands::cmdKBanip()
 
     QString strChannel = strChan;
 
-    QString strNick = strDataList[1];
+    QString strNick = strDataList.at(1);
 
     QString strReason;
-    for (int i = 2; i < strDataList.size(); i++) { if (i != 2) strReason += " "; strReason += strDataList[i]; }
+    for (int i = 2; i < strDataList.size(); i++) { if (i != 2) strReason += " "; strReason += strDataList.at(i); }
 
     if (strReason.isEmpty())
         strReason = tr("No reason");
@@ -548,7 +548,7 @@ QString Commands::cmdSop()
     if (strDataList.value(1).isEmpty()) return QString::null;
 
     QString strChannel = strChan;
-    QString strNick = strDataList[1];
+    QString strNick = strDataList.at(1);
     QChar cPlusMinus =  '+';
 
     if ((strNick[0] == '+') || (strNick[0] == '-'))
@@ -570,7 +570,7 @@ QString Commands::cmdOp()
     if (strDataList.value(1).isEmpty()) return QString::null;
 
     QString strChannel = strChan;
-    QString strNick = strDataList[1];
+    QString strNick = strDataList.at(1);
     QChar cPlusMinus =  '+';
 
     if ((strNick[0] == '+') || (strNick[0] == '-'))
@@ -592,7 +592,7 @@ QString Commands::cmdModer()
     if (strDataList.value(1).isEmpty()) return QString::null;
 
     QString strChannel = strChan;
-    QString strNick = strDataList[1];
+    QString strNick = strDataList.at(1);
     QChar cPlusMinus =  '+';
 
     if ((strNick[0] == '+') || (strNick[0] == '-'))
@@ -614,7 +614,7 @@ QString Commands::cmdVip()
     if (strDataList.value(1).isEmpty()) return QString::null;
 
     QString strChannel = strChan;
-    QString strNick = strDataList[1];
+    QString strNick = strDataList.at(1);
     QChar cPlusMinus =  '+';
 
     if ((strNick[0] == '+') || (strNick[0] == '-'))

@@ -1,7 +1,7 @@
 /*
  * Simple Chat Client
  *
- *   Copyright (C) 2012 Piotr Łuczko <piotr.luczko@gmail.com>
+ *   Copyright (C) 2009-2013 Piotr Łuczko <piotr.luczko@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -52,9 +52,9 @@ public:
     void refreshToolWidgetValues();
     // for core
     int getCurrentTabIndex();
-    void changeCurrentTab(const QString &strChannel);
+    void changeCurrentTab(int index);
     void refreshToolButtons(const QString &strChannel);
-    void updateChannelIcon(const QString &channel);
+    void updateChannelIcon(int index, const QString &avatar);
     void setTabColor(const QString &strChannel, MessageCategory eMessageCategory);
     QSystemTrayIcon *getTrayIcon();
     QToolButton *getNotificationToolButton();

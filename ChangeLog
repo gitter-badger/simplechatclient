@@ -1,6 +1,19 @@
 ChangeLog for Simple Chat Client
 ========================= 
 
+Version 1.7.0 (15.02.2013)
+================================
+* Added theme dialog
+* Faster reconnect after wrong login
+* Added auto away turn off button
+* Added commands description
+* Added ctrl+shift arround
+* Changed reconnect from 30 sec to 120 sec
+* Changed reconnect without closing channels
+* Fixed offline messages layout
+* Fixed moderation
+* Many bugfixes
+
 Version 1.6.2 (04.12.2012)
 ================================
 * Fixed auth

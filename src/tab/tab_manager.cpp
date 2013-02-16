@@ -1,7 +1,7 @@
 /*
  * Simple Chat Client
  *
- *   Copyright (C) 2012 Piotr Łuczko <piotr.luczko@gmail.com>
+ *   Copyright (C) 2009-2013 Piotr Łuczko <piotr.luczko@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,6 @@
  */
 
 #include <QTabBar>
-#include "avatar.h"
 #include "channel.h"
 #include "defines.h"
 #include "tab_manager.h"
@@ -37,11 +36,8 @@ TabManager::TabManager(QWidget *parent) : QTabWidget(parent)
     connect(tab, SIGNAL(tabMoved(int,int)), this, SLOT(tabMovedSlot(int, int)));
 }
 
-void TabManager::setAlert(int index, ChannelColor c)
+void TabManager::setAlert(const QString &channel, ChannelColor c)
 {
-    if ((index < 0) || (index >= count()) || (index == currentIndex()))
-        return;
-
     QColor color;
     int colorPriority = 0;
 
@@ -61,6 +57,7 @@ void TabManager::setAlert(int index, ChannelColor c)
         colorPriority = 3;
     }
 
+    int index = Channel::instance()->getIndexFromName(channel);
     QColor currentColor = tab->tabTextColor(index);
     int currentPriority = 0;
 
@@ -72,7 +69,10 @@ void TabManager::setAlert(int index, ChannelColor c)
         currentPriority = 3;
 
     if (colorPriority > currentPriority)
-        tab->setTabTextColor(index, color);
+    {
+        if ((index >= 0) && (index < count()) && (index != currentIndex()))
+            tab->setTabTextColor(index, color);
+    }
 }
 
 void TabManager::setColor(int index, QColor color)
@@ -81,21 +81,11 @@ void TabManager::setColor(int index, QColor color)
         tab->setTabTextColor(index, color);
 }
 
-void TabManager::updateIcon(const QString &channel)
+void TabManager::updateIcon(int index, const QString &avatar)
 {
-    int index = Channel::instance()->getIndex(channel);
-
     if ((index >= 0) && (index < count()))
     {
-        QString strAvatar = Channel::instance()->getAvatar(channel);
-
-        // is valid avatar
-        if (!strAvatar.isEmpty())
-        {
-            strAvatar = Avatar::instance()->getAvatarPath(strAvatar);
-
-            setTabIcon(index, QIcon(strAvatar));
-        }
+        setTabIcon(index, QIcon(avatar));
     }
 }
 

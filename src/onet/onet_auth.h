@@ -1,7 +1,7 @@
 /*
  * Simple Chat Client
  *
- *   Copyright (C) 2012 Piotr Łuczko <piotr.luczko@gmail.com>
+ *   Copyright (C) 2009-2013 Piotr Łuczko <piotr.luczko@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -91,12 +91,15 @@ private:
 
     QString getVersion(const QString &strData);
     void saveCookies();
+    void removeCookies();
     void requestFinished(const QString &strData);
 
 private slots:
     void networkFinished(QNetworkReply *reply);
     void refreshSk();
 
+signals:
+    void updateNick(const QString &strNick);
 };
 
 #endif // ONET_AUTH_H

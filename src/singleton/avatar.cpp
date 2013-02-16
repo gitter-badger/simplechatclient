@@ -1,7 +1,7 @@
 /*
  * Simple Chat Client
  *
- *   Copyright (C) 2012 Piotr Łuczko <piotr.luczko@gmail.com>
+ *   Copyright (C) 2009-2013 Piotr Łuczko <piotr.luczko@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,6 +22,8 @@
 #include <QNetworkReply>
 #include "avatar.h"
 #include "channel.h"
+#include "channel_favourites_model.h"
+#include "channel_homes_model.h"
 #include "nick.h"
 #include "settings.h"
 
@@ -104,6 +106,8 @@ void Avatar::updateAvatar(const QString &strCategory, const QString &strNickOrCh
     else if (strCategory == "channel")
     {
         Channel::instance()->setAvatar(strNickOrChannel, strAvatarFile);
+        ChannelHomes::instance()->setAvatar(strNickOrChannel, strAvatarFile);
+        ChannelFavouritesModel::instance()->setAvatar(strNickOrChannel, strAvatarFile);
     }
 }
 

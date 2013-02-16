@@ -1,7 +1,7 @@
 /*
  * Simple Chat Client
  *
- *   Copyright (C) 2012 Piotr Łuczko <piotr.luczko@gmail.com>
+ *   Copyright (C) 2009-2013 Piotr Łuczko <piotr.luczko@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -30,7 +30,11 @@ DlgWebBrowser::DlgWebBrowser(const QUrl &url, QWidget *parent) : QDialog(parent)
     // center screen
     move(QApplication::desktop()->screenGeometry(QApplication::desktop()->screenNumber(parent)).center()  - rect().center());
 
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
+    ui->webView->settings()->setAttribute(QWebSettings::PluginsEnabled, false);
+#else
     ui->webView->settings()->setAttribute(QWebSettings::PluginsEnabled, true);
+#endif
 
     ui->buttonBox->button(QDialogButtonBox::Close)->setIcon(QIcon(":/images/oxygen/16x16/dialog-close.png"));
 

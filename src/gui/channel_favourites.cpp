@@ -1,7 +1,7 @@
 /*
  * Simple Chat Client
  *
- *   Copyright (C) 2012 Piotr Łuczko <piotr.luczko@gmail.com>
+ *   Copyright (C) 2009-2013 Piotr Łuczko <piotr.luczko@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -72,11 +72,14 @@ void DlgChannelFavourites::refresh()
 {
     ui.listWidget_channels->clear();
 
-    QList<QString> favouritesList = ChannelFavouritesModel::instance()->getAll();
-    foreach (QString strChannel, favouritesList)
+    QHashIterator<QString, OnetChannelFavourites> i(ChannelFavouritesModel::instance()->getAll());
+    while (i.hasNext())
     {
-        QString strAvatar = Channel::instance()->getAvatar(strChannel);
+        i.next();
+        QString strChannel = i.key();
+        OnetChannelFavourites onetChannelFavourites = i.value();
 
+        QString strAvatar = onetChannelFavourites.avatar;
         if (!strAvatar.isEmpty())
         {
             strAvatar = Avatar::instance()->getAvatarPath(strAvatar);

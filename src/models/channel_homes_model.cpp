@@ -1,7 +1,7 @@
 /*
  * Simple Chat Client
  *
- *   Copyright (C) 2012 Piotr Łuczko <piotr.luczko@gmail.com>
+ *   Copyright (C) 2009-2013 Piotr Łuczko <piotr.luczko@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -43,15 +43,26 @@ void ChannelHomes::clear()
     channelHomesStatus = StatusAwaiting;
 }
 
-void ChannelHomes::add(const QString &channel)
+void ChannelHomes::add(const QString &channel, const QString &flag)
 {
     if (!lChannelHomes.contains(channel))
-        lChannelHomes.append(channel);
+    {
+        OnetChannelHomes onetChannel;
+        onetChannel.avatar = QString::null;
+        onetChannel.flag = flag;
+
+        lChannelHomes[channel] = onetChannel;
+    }
 }
 
-QList<QString> ChannelHomes::get()
+QHash<QString, OnetChannelHomes> ChannelHomes::get()
 {
     return lChannelHomes;
+}
+
+bool ChannelHomes::contains(const QString &channel)
+{
+    return lChannelHomes.contains(channel);
 }
 
 void ChannelHomes::setStatus(ObjectStatus status)
@@ -62,4 +73,10 @@ void ChannelHomes::setStatus(ObjectStatus status)
 ObjectStatus ChannelHomes::getStatus()
 {
     return channelHomesStatus;
+}
+
+void ChannelHomes::setAvatar(const QString &channel, const QString &avatar)
+{
+    if (lChannelHomes.contains(channel))
+        lChannelHomes[channel].avatar = avatar;
 }

@@ -1,7 +1,7 @@
 /*
  * Simple Chat Client
  *
- *   Copyright (C) 2012 Piotr Łuczko <piotr.luczko@gmail.com>
+ *   Copyright (C) 2009-2013 Piotr Łuczko <piotr.luczko@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -31,7 +31,7 @@
 #include "punish_reason.h"
 #include "settings.h"
 #include "sound_notify.h"
-#include "themes_model.h"
+#include "themes.h"
 #include "options.h"
 
 DlgOptions::DlgOptions(QWidget *parent) : QDialog(parent)
@@ -51,6 +51,7 @@ DlgOptions::DlgOptions(QWidget *parent) : QDialog(parent)
 void DlgOptions::createGui()
 {
     ui.pushButton_profiles->setIcon(QIcon(":/images/oxygen/16x16/preferences-activities.png"));
+    ui.pushButton_themes->setIcon(QIcon(":/images/oxygen/16x16/view-presentation.png"));
     ui.pushButton_highlight_add->setIcon(QIcon(":/images/oxygen/16x16/list-add.png"));
     ui.pushButton_highlight_remove->setIcon(QIcon(":/images/oxygen/16x16/list-remove.png"));
     ui.pushButton_punish_reason_add->setIcon(QIcon(":/images/oxygen/16x16/list-add.png"));
@@ -71,6 +72,7 @@ void DlgOptions::createGui()
     ui.label_profile->setText(tr("Current profile:"));
     ui.pushButton_profiles->setText(tr("Profiles"));
     ui.groupBox_themes->setTitle(tr("Themes"));
+    ui.pushButton_themes->setText(tr("Themes"));
     ui.groupBox_language->setTitle(tr("Language"));
 
     // page highlight
@@ -85,6 +87,7 @@ void DlgOptions::createGui()
 
     // page adv
     ui.checkBox_auto_busy->setText(tr("Busy mode after you log in to chat"));
+    ui.checkBox_auto_away->setText(tr("Auto away on idle"));
     ui.checkBox_disable_autojoin_favourites->setText(tr("Disable autojoin favourite channels"));
     ui.checkBox_minimize_to_tray->setText(tr("Minimize to tray"));
     ui.checkBox_show_zuo_and_ip->setText(tr("Show ZUO and IP"));
@@ -210,11 +213,6 @@ void DlgOptions::setDefaultValues()
     // current option
     ui.listWidget_options->setCurrentRow(0);
 
-    // themes
-    QStringList lThemes = ThemesModel::instance()->getAll();
-    ui.comboBox_themes->clear();
-    ui.comboBox_themes->addItems(lThemes);
-
     // language
     QStringList lLanguage;
     lLanguage << tr("English") << tr("Polish");
@@ -264,10 +262,10 @@ void DlgOptions::setDefaultValues()
     ui.lineEdit_background_image->setText(QDir::toNativeSeparators(Settings::instance()->get("background_image")));
 
     // default values
-    QString strThemes = Settings::instance()->get("themes");
     QString strLanguage = Settings::instance()->get("language");
 
     QString strAutoBusy = Settings::instance()->get("auto_busy");
+    QString strAutoAway = Settings::instance()->get("auto_away");
     QString strDisableAutojoinFavourites = Settings::instance()->get("disable_autojoin_favourites");
     QString strMinimizeToTray = Settings::instance()->get("minimize_to_tray");
     QString strShowZuoAndIp = Settings::instance()->get("show_zuo_and_ip");
@@ -286,18 +284,6 @@ void DlgOptions::setDefaultValues()
 
     QString strTrayMessage = Settings::instance()->get("tray_message");
 
-    // themes
-    if (strThemes == "Standard")
-        ui.comboBox_themes->setCurrentIndex(0);
-    else if (strThemes == "Alhena")
-        ui.comboBox_themes->setCurrentIndex(1);
-    else if (strThemes == "Origin")
-        ui.comboBox_themes->setCurrentIndex(2);
-    else if (strThemes == "Adara")
-        ui.comboBox_themes->setCurrentIndex(3);
-    else
-        ui.comboBox_themes->setCurrentIndex(1);
-
     // language
     if (strLanguage == "en")
         ui.comboBox_language->setCurrentIndex(0);
@@ -311,6 +297,12 @@ void DlgOptions::setDefaultValues()
         ui.checkBox_auto_busy->setChecked(true);
     else
         ui.checkBox_auto_busy->setChecked(false);
+
+    // auto away
+    if (strAutoAway == "true")
+        ui.checkBox_auto_away->setChecked(true);
+    else
+        ui.checkBox_auto_away->setChecked(false);
 
     // auto join favourites
     if (strDisableAutojoinFavourites == "true")
@@ -417,13 +409,14 @@ void DlgOptions::createSignals()
     connect(ui.listWidget_options, SIGNAL(clicked(QModelIndex)), this, SLOT(changePage(QModelIndex)));
     connect(ui.comboBox_profiles, SIGNAL(activated(int)), this, SLOT(currentProfileChanged(int)));
     connect(ui.pushButton_profiles, SIGNAL(clicked()), this, SLOT(buttonProfiles()));
-    connect(ui.comboBox_themes, SIGNAL(activated(int)), this, SLOT(themesChanged(int)));
+    connect(ui.pushButton_themes, SIGNAL(clicked()), this, SLOT(buttonThemes()));
     connect(ui.comboBox_language, SIGNAL(activated(int)), this, SLOT(languageChanged(int)));
     connect(ui.pushButton_highlight_add, SIGNAL(clicked()), this, SLOT(highlightAdd()));
     connect(ui.pushButton_highlight_remove, SIGNAL(clicked()), this, SLOT(highlightRemove()));
     connect(ui.pushButton_punish_reason_add, SIGNAL(clicked()), this, SLOT(punishReasonAdd()));
     connect(ui.pushButton_punish_reason_remove, SIGNAL(clicked()), this, SLOT(punishReasonRemove()));
     connect(ui.checkBox_auto_busy, SIGNAL(clicked(bool)), this, SLOT(autoBusy(bool)));
+    connect(ui.checkBox_auto_away, SIGNAL(clicked(bool)), this, SLOT(autoAway(bool)));
     connect(ui.checkBox_disable_autojoin_favourites, SIGNAL(clicked(bool)), this, SLOT(disableAutojoinFavourites(bool)));
     connect(ui.checkBox_minimize_to_tray, SIGNAL(clicked(bool)), this, SLOT(minimizeToTray(bool)));
     connect(ui.checkBox_show_zuo_and_ip, SIGNAL(clicked(bool)), this, SLOT(showZuoAndIp(bool)));
@@ -544,24 +537,9 @@ void DlgOptions::buttonProfiles()
     DlgProfileManager(this).exec();
 }
 
-void DlgOptions::themesChanged(int index)
+void DlgOptions::buttonThemes()
 {
-    QString strTheme = "Standard";
-
-    switch (index)
-    {
-        case 0: strTheme = "Standard"; break;
-        case 1: strTheme = "Alhena"; break;
-        case 2: strTheme = "Origin"; break;
-        case 3: strTheme = "Adara"; break;
-    }
-
-    Settings::instance()->set("themes", strTheme);
-    ThemesModel::instance()->refreshCurrent();
-
-    Config *pConfig = new Config();
-    pConfig->set("themes", strTheme);
-    delete pConfig;
+    DlgThemes(this).exec();
 }
 
 void DlgOptions::languageChanged(int index)
@@ -665,6 +643,17 @@ void DlgOptions::autoBusy(bool bValue)
 
     Config *pConfig = new Config();
     pConfig->set("auto_busy", strValue);
+    delete pConfig;
+}
+
+void DlgOptions::autoAway(bool bValue)
+{
+    QString strValue = (bValue ? "true" : "false");
+
+    Settings::instance()->set("auto_away", strValue);
+
+    Config *pConfig = new Config();
+    pConfig->set("auto_away", strValue);
     delete pConfig;
 }
 

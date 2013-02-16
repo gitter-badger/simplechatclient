@@ -1,7 +1,7 @@
 /*
  * Simple Chat Client
  *
- *   Copyright (C) 2012 Piotr Łuczko <piotr.luczko@gmail.com>
+ *   Copyright (C) 2009-2013 Piotr Łuczko <piotr.luczko@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,8 +21,8 @@
 #include <QDesktopWidget>
 #include <QTimer>
 #include "core.h"
+#include "channel.h"
 #include "message.h"
-#include "moderation_model.h"
 #include "settings.h"
 #include "moderation.h"
 
@@ -62,38 +62,34 @@ void DlgModeration::createSignals()
 
 void DlgModeration::refreshMessages()
 {
-    ui.listWidget_msg->clear();
+    QList<OnetModerateMessage> lModerateMessages = Channel::instance()->getModerateMessages(strCurrentChannel);
+    int listWidgetCount = ui.listWidget_msg->count();
+    int moderateMessagesCount = lModerateMessages.size();
 
-    QHashIterator <QString, OnetModerateMessage> i(ModerationModel::instance()->getAll());
-    while (i.hasNext())
+    for (int i = listWidgetCount; i < listWidgetCount + (moderateMessagesCount - listWidgetCount); i++)
     {
-        i.next();
+        OnetModerateMessage omessage = lModerateMessages.at(i);
 
-        QString strID = i.key();
-        OnetModerateMessage msg = i.value();
-        QString strChannel = msg.channel;
-        qint64 iTime = msg.datetime;
-        QString strNick = msg.nick;
-        QString strMessage = msg.message;
+        QString strID = omessage.id;
+        qint64 iTime = omessage.datetime;
+        QString strNick = omessage.nick;
+        QString strMessage = omessage.message;
 
-        if (strChannel == strCurrentChannel)
-        {
-            QString strData = QString("[%1] <%2> %3").arg(QDateTime::fromMSecsSinceEpoch(iTime).toString("hh:mm:ss"), strNick, strMessage);
+        QString strData = QString("[%1] <%2> %3").arg(QDateTime::fromMSecsSinceEpoch(iTime).toString("hh:mm:ss"), strNick, strMessage);
 
-            QListWidgetItem *item = new QListWidgetItem();
-            item->setData(ModerationIdRole, strID);
-            item->setData(ModerationChannelRole, strChannel);
-            item->setData(ModerationTimeRole, iTime);
-            item->setData(ModerationNickRole, strNick);
-            item->setData(ModerationMessageRole, strMessage);
-            item->setText(strData);
+        QListWidgetItem *item = new QListWidgetItem();
+        item->setData(ModerationIdRole, strID);
+        item->setData(ModerationChannelRole, strCurrentChannel);
+        item->setData(ModerationTimeRole, iTime);
+        item->setData(ModerationNickRole, strNick);
+        item->setData(ModerationMessageRole, strMessage);
+        item->setText(strData);
 
-            ui.listWidget_msg->addItem(item);
-        }
+        ui.listWidget_msg->addItem(item);
     }
 
     // refresh
-    QTimer::singleShot(1000*10, this, SLOT(refreshMessages())); // 10 sec
+    QTimer::singleShot(1000*1, this, SLOT(refreshMessages())); // 1 sec
 }
 
 void DlgModeration::removeSelected()
@@ -106,9 +102,12 @@ void DlgModeration::removeSelected()
     // remove from list
     foreach (QListWidgetItem *item, list)
     {
+        QString strChannel = item->data(ModerationChannelRole).toString();
         QString strID = item->data(ModerationIdRole).toString();
 
-        ModerationModel::instance()->remove(strID);
+        Channel::instance()->removeModerateMessage(strChannel, strID);
+
+        ui.listWidget_msg->takeItem(ui.listWidget_msg->row(item));
     }
 }
 

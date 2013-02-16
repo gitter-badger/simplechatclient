@@ -47,12 +47,14 @@ SOURCES += src/common/commands.cpp \
     src/gui/my_profile.cpp \
     src/gui/my_stats.cpp \
     src/gui/notes.cpp \
-    src/gui/offline_messages.cpp \
+    src/gui/offline_list.cpp \
+    src/gui/offline_message.cpp \
     src/gui/options.cpp \
     src/gui/profile_add.cpp \
     src/gui/profile_edit.cpp \
     src/gui/profile_manager.cpp \
     src/gui/register_nick.cpp \
+    src/gui/themes.cpp \
     src/gui/update.cpp \
     src/gui/user_avatar.cpp \
     src/gui/user_profile.cpp \
@@ -67,7 +69,6 @@ SOURCES += src/common/commands.cpp \
     src/models/find_nick_model.cpp \
     src/models/friends_model.cpp \
     src/models/ignore_model.cpp \
-    src/models/moderation_model.cpp \
     src/models/my_avatar_model.cpp \
     src/models/my_profile_model.cpp \
     src/models/my_stats_model.cpp \\
@@ -153,12 +154,14 @@ HEADERS += src/common/commands.h \
     src/gui/my_profile.h \
     src/gui/my_stats.h \
     src/gui/notes.h \
-    src/gui/offline_messages.h \
+    src/gui/offline_list.h \
+    src/gui/offline_message.h \
     src/gui/options.h \
     src/gui/profile_add.h \
     src/gui/profile_edit.h \
     src/gui/profile_manager.h \
     src/gui/register_nick.h \
+    src/gui/themes.h \
     src/gui/update.h \
     src/gui/user_avatar.h \
     src/gui/user_profile.h \
@@ -173,7 +176,6 @@ HEADERS += src/common/commands.h \
     src/models/find_nick_model.h \
     src/models/friends_model.h \
     src/models/ignore_model.h \
-    src/models/moderation_model.h \
     src/models/my_avatar_model.h \
     src/models/my_profile_model.h \
     src/models/my_stats_model.h \
@@ -241,12 +243,14 @@ FORMS += ui/about.ui \
     ui/my_profile.ui \
     ui/my_stats.ui \
     ui/notes.ui \
-    ui/offline_messages.ui \
+    ui/offline_list.ui \
+    ui/offline_message.ui \
     ui/options.ui \
     ui/profile_add.ui \
     ui/profile_edit.ui \
     ui/profile_manager.ui \
     ui/register_nick.ui \
+    ui/themes.ui \
     ui/update.ui \
     ui/user_avatar.ui \
     ui/webbrowser.ui \

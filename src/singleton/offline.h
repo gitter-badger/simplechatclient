@@ -1,7 +1,7 @@
 /*
  * Simple Chat Client
  *
- *   Copyright (C) 2012 Piotr Łuczko <piotr.luczko@gmail.com>
+ *   Copyright (C) 2009-2013 Piotr Łuczko <piotr.luczko@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -39,7 +39,8 @@ public:
     void addMessage(qint64 iTime, const QString &strType, const QString &strNick, const QString &strMessage);
     void removeMessage(const QString &strNick);
     void clearMessages();
-    QList<OnetOfflineMessage> getMessages();
+    QList<OnetOfflineMessage> getMessages(const QString &strNick);
+    QList<OnetOfflineMessage> getMessagesReverted(const QString &strNick);
     bool isEmptyMessages();
 
     void addNick(const QString &nick);
@@ -52,7 +53,7 @@ public:
     QAction *offlineMessagesAction;
 
 private:
-    QList<OnetOfflineMessage> lOfflineMessages;
+    QMultiHash<QString, OnetOfflineMessage> lOfflineMessages;
     QList<QString> lOfflineNicks;
 
     void init();

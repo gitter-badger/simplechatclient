@@ -1,7 +1,7 @@
 /*
  * Simple Chat Client
  *
- *   Copyright (C) 2012 Piotr Łuczko <piotr.luczko@gmail.com>
+ *   Copyright (C) 2009-2013 Piotr Łuczko <piotr.luczko@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -89,21 +89,9 @@ void DlgChannelList::createGui()
 
 void DlgChannelList::setDefaultValues()
 {
-    // set checked
-    ui.checkBox_teen->setChecked(true);
-    ui.checkBox_common->setChecked(true);
-    ui.checkBox_erotic->setChecked(true);
-    ui.checkBox_thematic->setChecked(true);
-    ui.checkBox_regional->setChecked(true);
-
-    ui.checkBox_wild->setChecked(true);
-    ui.checkBox_tame->setChecked(true);
-    ui.checkBox_with_class->setChecked(true);
-    ui.checkBox_cult->setChecked(true);
-    ui.checkBox_moderated->setChecked(true);
-    ui.checkBox_recommended->setChecked(true);
-
-    ui.checkBox_hide_empty_channels->setChecked(false);
+    // clear
+    clearFields();
+    clearLists();
 
     // hide adv options
     ui.groupBox_type->hide();
@@ -197,21 +185,26 @@ bool DlgChannelList::showChannel(const QString &name, int people, int cat, int t
         return true;
 }
 
-void DlgChannelList::createList()
+void DlgChannelList::clearFields()
 {
-    // ready
-    if (ChannelList::instance()->getStatus() != StatusCompleted)
-    {
-        QTimer::singleShot(1000, this, SLOT(createList())); // 1 sec
-        return;
-    }
+    ui.checkBox_teen->setChecked(true);
+    ui.checkBox_common->setChecked(true);
+    ui.checkBox_erotic->setChecked(true);
+    ui.checkBox_thematic->setChecked(true);
+    ui.checkBox_regional->setChecked(true);
 
-    // focus
-    ui.lineEdit_search->setFocus();
+    ui.checkBox_wild->setChecked(true);
+    ui.checkBox_tame->setChecked(true);
+    ui.checkBox_with_class->setChecked(true);
+    ui.checkBox_cult->setChecked(true);
+    ui.checkBox_moderated->setChecked(true);
+    ui.checkBox_recommended->setChecked(true);
 
-    // get options
-    getOptions();
+    ui.checkBox_hide_empty_channels->setChecked(false);
+}
 
+void DlgChannelList::clearLists()
+{
     // clear
     ui.tableWidget_all->clear();
     ui.tableWidget_all->setRowCount(0);
@@ -236,6 +229,25 @@ void DlgChannelList::createList()
     ui.tableWidget_erotic->setHorizontalHeaderLabels(lLabels);
     ui.tableWidget_thematic->setHorizontalHeaderLabels(lLabels);
     ui.tableWidget_regional->setHorizontalHeaderLabels(lLabels);
+}
+
+void DlgChannelList::createList()
+{
+    // ready
+    if (ChannelList::instance()->getStatus() != StatusCompleted)
+    {
+        QTimer::singleShot(1000, this, SLOT(createList())); // 1 sec
+        return;
+    }
+
+    // focus
+    ui.lineEdit_search->setFocus();
+
+    // get options
+    getOptions();
+
+    // clear lists
+    clearLists();
 
     // count rows
     int iAllCount = 0;
@@ -537,20 +549,7 @@ void DlgChannelList::regionalCellDoubleClicked(int row, int column)
 
 void DlgChannelList::buttonClear()
 {
-    ui.checkBox_teen->setChecked(true);
-    ui.checkBox_common->setChecked(true);
-    ui.checkBox_erotic->setChecked(true);
-    ui.checkBox_thematic->setChecked(true);
-    ui.checkBox_regional->setChecked(true);
-
-    ui.checkBox_wild->setChecked(true);
-    ui.checkBox_tame->setChecked(true);
-    ui.checkBox_with_class->setChecked(true);
-    ui.checkBox_cult->setChecked(true);
-    ui.checkBox_moderated->setChecked(true);
-    ui.checkBox_recommended->setChecked(true);
-
-    ui.checkBox_hide_empty_channels->setChecked(false);
+    clearFields();
 
     ui.lineEdit_search->clear();
 

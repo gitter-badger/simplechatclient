@@ -1,7 +1,7 @@
 /*
  * Simple Chat Client
  *
- *   Copyright (C) 2012 Piotr Łuczko <piotr.luczko@gmail.com>
+ *   Copyright (C) 2009-2013 Piotr Łuczko <piotr.luczko@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -33,13 +33,15 @@ public:
 
     ChannelHomes();
     void clear();
-    void add(const QString &channel);
-    QList<QString> get();
+    void add(const QString &channel, const QString &flag);
+    QHash<QString, OnetChannelHomes> get();
+    bool contains(const QString &channel);
     void setStatus(ObjectStatus status);
     ObjectStatus getStatus();
+    void setAvatar(const QString &channel, const QString &avatar);
 
 private:
-    QList<QString> lChannelHomes;
+    QHash<QString, OnetChannelHomes> lChannelHomes;
     ObjectStatus channelHomesStatus;
 };
 

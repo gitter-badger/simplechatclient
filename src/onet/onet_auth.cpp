@@ -1,7 +1,7 @@
 /*
  * Simple Chat Client
  *
- *   Copyright (C) 2012 Piotr Łuczko <piotr.luczko@gmail.com>
+ *   Copyright (C) 2009-2013 Piotr Łuczko <piotr.luczko@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -57,6 +57,14 @@ OnetAuth::~OnetAuth()
 
 void OnetAuth::authorize(QString _strNick, QString _strPass)
 {
+    if (Settings::instance()->get("logged") == "true")
+        return; // already logged
+
+    if (bAuthorizing)
+        return; // already authorizing
+
+    bAuthorizing = true;
+
     strFullNick = _strNick.left(32);
     strNick = (_strNick.startsWith('~') ? _strNick.remove(0,1).left(31) : _strNick.left(32));
     strPass = _strPass;
@@ -71,10 +79,11 @@ void OnetAuth::authorize(QString _strNick, QString _strPass)
         qDebug() << "Authorizing: " << bAuthorizing;
     }
 
-    if (Settings::instance()->get("logged") == "true") return; // already logged
+    // update nick
+    emit updateNick(strFullNick);
 
-    if (bAuthorizing) return; // already authorizing
-    bAuthorizing = true;
+    // remove cookies
+    removeCookies();
 
     getChat();
 }
@@ -306,16 +315,43 @@ void OnetAuth::networkFinished(QNetworkReply *reply)
 
 void OnetAuth::saveCookies()
 {
+    QStringList constCookies;
+    constCookies << "onet_ubi" << "onet_cid" << "onet_sid" << "onet_uid" << "onetzuo_ticket" << "onet_uoi" << "onet_sgn";
+
     // save cookies
     QList<QNetworkCookie> cookies = accessManager->cookieJar()->cookiesForUrl(QUrl("http://czat.onet.pl"));
-    for (QList<QNetworkCookie>::iterator i = cookies.begin(); i != cookies.end(); ++i)
+    foreach (QNetworkCookie cookie, cookies)
     {
-        QString strKey = i->name();
-        QString strValue = i->value();
+        QString strKey = cookie.name();
+        QString strValue = cookie.value();
 
-        if ((strKey == "onet_ubi") || (strKey == "onet_cid") || (strKey == "onet_sid") || (strKey == "onet_uid") || (strKey == "onetzuo_ticket"))
+        if (constCookies.contains(strKey))
             Settings::instance()->set(strKey, strValue);
     }
+}
+
+void OnetAuth::removeCookies()
+{
+    QStringList constCookies;
+    constCookies << "onet_ubi" << "onet_cid" << "onet_sid" << "onet_uid" << "onetzuo_ticket" << "onet_uoi" << "onet_sgn";
+
+    foreach (QString constCookie, constCookies)
+        Settings::instance()->set(constCookie, QString::null);
+
+    // clear from cookie jar
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
+    QList<QNetworkCookie> cookies = accessManager->cookieJar()->cookiesForUrl(QUrl("http://czat.onet.pl"));
+    foreach (QNetworkCookie cookie, cookies)
+        accessManager->cookieJar()->deleteCookie(cookie);
+#else
+    /*
+    https://github.com/simplechatclient/simplechatclient/issues/280
+
+    cookieJar->deleteLater();
+    cookieJar = new QNetworkCookieJar();
+    accessManager->setCookieJar(cookieJar);
+    */
+#endif
 }
 
 QString OnetAuth::getVersion(const QString &strData)
@@ -371,12 +407,16 @@ void OnetAuth::requestFinished(const QString &strData)
         {
             QString strError = QString(tr("Error: Authentication error [%1]")).arg(strErrorText);
             Message::instance()->showMessageActive(strError, MessageError);
+
+            Core::instance()->network->disconnect();
         }
     }
     else
     {
         QString strError = tr("Error: Authorization Failed.");
         Message::instance()->showMessageActive(strError, MessageError);
+
+        Core::instance()->network->disconnect();
     }
 }
 
