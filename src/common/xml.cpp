@@ -204,7 +204,8 @@ void Xml::save()
     QString xml = doc.toString();
     if (xml.isEmpty())
     {
-        qWarning() << QString(tr("Error: Cannot save xml file %1")).arg(strFile);
+        if (Settings::instance()->get("debug") == "true")
+            qWarning() << QString(tr("Error: Cannot save xml file %1")).arg(strFile);
         return;
     }
 

@@ -39,6 +39,7 @@ public:
     void setStatus(ObjectStatus status);
     ObjectStatus getStatus();
     void setAvatar(const QString &channel, const QString &avatar);
+    QString getAvatar(const QString &channel);
 
 private:
     QHash<QString, OnetChannelHomes> lChannelHomes;

@@ -88,3 +88,11 @@ void ChannelFavouritesModel::setAvatar(const QString &channel, const QString &av
     if (favourites.contains(channel))
         favourites[channel].avatar = avatar;
 }
+
+QString ChannelFavouritesModel::getAvatar(const QString &channel)
+{
+    if (favourites.contains(channel))
+        return favourites[channel].avatar;
+    else
+        return QString::null;
+}

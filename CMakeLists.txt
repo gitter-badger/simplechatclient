@@ -4,6 +4,30 @@ cmake_minimum_required (VERSION 2.8.7 FATAL_ERROR)
 set (QT_MIN_VERSION "4.8.0")
 find_package (Qt4 REQUIRED)
 
+# optimization
+set(CMAKE_BUILD_TYPE Release)
+#set (CMAKE_C_FLAGS "-W -Wall ${CMAKE_C_FLAGS}")
+#set (CMAKE_CXX_FLAGS "-W -Wall ${CMAKE_CXX_FLAGS}")
+
+# debug
+#if (UNIX)
+#	set (CMAKE_CXX_FLAGS "-ggdb ${CMAKE_CXX_FLAGS}")
+#endif (UNIX)
+
+if (MINGW)
+	execute_process(COMMAND ${CMAKE_C_COMPILER} -dumpversion OUTPUT_VARIABLE GCC_VERSION)
+
+	if (GCC_VERSION VERSION_GREATER 4.5 OR GCC_VERSION VERSION_EQUAL 4.5)
+		# enable ASLR
+		set (CMAKE_CXX_LINK_FLAGS "${CMAKE_CXX_LINK_FLAGS} -Wl,--dynamicbase -Wl,--nxcompat")
+	else (GCC_VERSION VERSION_GREATER 4.5 OR GCC_VERSION VERSION_EQUAL 4.5)
+		message(STATUS "DEP and ASLR not supported. Use GCC 4.5 or greater.")
+	endif (GCC_VERSION VERSION_GREATER 4.5 OR GCC_VERSION VERSION_EQUAL 4.5)
+
+	# disable console on windows mingw
+	set (CMAKE_CXX_LINK_FLAGS "${CMAKE_CXX_LINK_FLAGS} -mwindows")
+endif (MINGW)
+
 # set
 set (CMAKE_INSTALL_PREFIX /usr)
 set (SCC_BIN_DIR ${CMAKE_INSTALL_PREFIX}/bin)

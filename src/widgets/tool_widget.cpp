@@ -814,6 +814,8 @@ void ToolWidget::sendMessage(QString strText, bool bModeration)
 
         if (!strCommand.isEmpty())
         {
+            strCommand = strCommand.toLower();
+
             Commands *pCommands = new Commands(strChannel, strText);
             strText = pCommands->execute();
             delete pCommands;

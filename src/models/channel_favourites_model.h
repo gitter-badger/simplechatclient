@@ -39,6 +39,7 @@ public:
     void remove(const QString &channel);
     bool contains(const QString &channel);
     void setAvatar(const QString &channel, const QString &avatar);
+    QString getAvatar(const QString &channel);
 
 private:
     QHash<QString, OnetChannelFavourites> favourites;

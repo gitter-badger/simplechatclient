@@ -26,6 +26,7 @@
 #include "avatar_list_widget.h"
 #include "my_profile_model.h"
 #include "core.h"
+#include "settings.h"
 
 #include "my_avatar.h"
 
@@ -75,7 +76,8 @@ void DlgMyAvatar::getAvatarReady(const QByteArray &content, const QString &avata
     QPixmap pixmap;
     if (!pixmap.loadFromData(content))
     {
-        qWarning() << "Unable to load image from " << avatarUrl;
+        if (Settings::instance()->get("debug") == "true")
+            qWarning() << "Unable to load image from " << avatarUrl;
         return;
     }
 

@@ -73,7 +73,7 @@ private slots:
     void timeoutQueue();
 
 signals:
-    void socketStateChanged(QAbstractSocket::SocketState socketState);
+    void socketStateChanged();
     void kernel(const QString &strData);
     void authorize(QString strNick, QString strPass);
     void updateNick(const QString &strNick);

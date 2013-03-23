@@ -80,3 +80,11 @@ void ChannelHomes::setAvatar(const QString &channel, const QString &avatar)
     if (lChannelHomes.contains(channel))
         lChannelHomes[channel].avatar = avatar;
 }
+
+QString ChannelHomes::getAvatar(const QString &channel)
+{
+    if (lChannelHomes.contains(channel))
+        return lChannelHomes[channel].avatar;
+    else
+        return QString::null;
+}

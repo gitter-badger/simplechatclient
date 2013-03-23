@@ -27,6 +27,13 @@
     </message>
 </context>
 <context>
+    <name>Avatar</name>
+    <message>
+        <source>Error: Cannot save avatar file %1</source>
+        <translation>Błąd: Nie można zapisać pliku awatara %1</translation>
+    </message>
+</context>
+<context>
     <name>Busy</name>
     <message>
         <source>Mark as busy</source>
@@ -2263,6 +2270,10 @@
     <message>
         <source>Error: Cannot read notes file!</source>
         <translation>Błąd: Nie można odczytać pliku notatek!</translation>
+    </message>
+    <message>
+        <source>Error: Cannot write notes file!</source>
+        <translation>Błąd: Nie można zapisać pliku notatek!</translation>
     </message>
 </context>
 <context>

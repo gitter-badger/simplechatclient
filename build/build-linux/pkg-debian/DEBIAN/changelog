@@ -1,12 +1,5 @@
-Version 1.7.0 (15.02.2013)
+Version 1.7.1 (23.03.2013)
 ================================
-* Added theme dialog
-* Faster reconnect after wrong login
-* Added auto away turn off button
-* Added commands description
-* Added ctrl+shift arround
-* Changed reconnect from 30 sec to 120 sec
-* Changed reconnect without closing channels
-* Fixed offline messages layout
-* Fixed moderation
-* Many bugfixes
+* Fixed replace emoticons
+* Fixed reconnect
+* Fixed avatars bug

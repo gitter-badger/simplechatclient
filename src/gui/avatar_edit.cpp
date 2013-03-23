@@ -26,6 +26,7 @@
 #include "avatar_edit.h"
 #include "avatar_edit_scene.h"
 #include "my_avatar_model.h"
+#include "settings.h"
 
 #include "avatar_edit.h"
 
@@ -112,7 +113,8 @@ void DlgAvatarEdit::getAvatarReady(const QByteArray &content, const QString &ava
 
     if (!photo.loadFromData(content))
     {
-        qWarning() << "Unable to load image from " << avatarUrl;
+        if (Settings::instance()->get("debug") == "true")
+            qWarning() << "Unable to load image from " << avatarUrl;
         return;
     }
 

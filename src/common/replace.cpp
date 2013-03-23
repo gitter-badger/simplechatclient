@@ -17,7 +17,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <QRegExp>
+#include <QStringList>
 #include "settings.h"
 #include "replace.h"
 
@@ -27,56 +27,73 @@ void Replace::replaceEmots(QString &strData)
     if (Settings::instance()->get("disable_replaces") == "true")
         return;
 
-    // applet
-    strData.replace(":*", "%Icmok%");
-    strData.replace(";)", "%Ioczko%");
-    strData.replace(":P", "%Ijezor%");
-    strData.replace(";P", "%Ixjezyk%");
-    strData.replace(":)", "%Ihaha%");
-    strData.replace(":(", "%Izal%");
-    strData.replace(":x", "%Inie_powiem%");
-    strData.replace(":?", "%Inie_rozumiem%");
-    strData.replace(":((", "%Ibardzo_smutny%");
-    strData.replace(":|", "%Ixdepresja%");
-    strData.replace(":]", "%Iusmieszek%");
-    strData.replace(":>", "%Ixluzak%");
-    strData.replace(";>", "%Iwazniak%");
-    strData.replace(":<", "%Iumm%");
-    strData.replace(":$", "%Iskwaszony%");
-    strData.replace(";$", "%Ixkwas%");
-    strData.replace(";/", "%Ixsceptyk%");
-    if (!strData.contains(QRegExp("(http:|https:)//"))) strData.replace(":/", "%Isceptyczny%");
-    strData.replace(";D", "%Ixhehe%");
-    strData.replace(":D", "%Ihehe%");
-    //strData.replace("o_O", "%Iswir%");
-    strData.replace("!!", "%Iwykrzyknik%");
-    strData.replace("??", "%Ipytanie%");
-    //strData.replace("xD", "%Ilol%");
-    strData.replace("-_-", "%Iwrr%");
-    strData.replace(";(", "%Iszloch%");
+    QHash<QString, QString> lEmoticons;
+    lEmoticons[":*"] = "%Icmok%";
+    lEmoticons[";)"] = "%Ioczko%";
+    lEmoticons[":P"] = "%Ijezor%";
+    lEmoticons[";P"] = "%Ixjezyk%";
+    lEmoticons[":)"] = "%Ihaha%";
+    lEmoticons[":("] = "%Izal%";
+    lEmoticons[":x"] = "%Inie_powiem%";
+    lEmoticons[":?"] = "%Inie_rozumiem%";
+    lEmoticons[":(("] = "%Ibardzo_smutny%";
+    lEmoticons[":|"] = "%Ixdepresja%";
+    lEmoticons[":]"] = "%Iusmieszek%";
+    lEmoticons[":>"] = "%Ixluzak%";
+    lEmoticons[";>"] = "%Iwazniak%";
+    lEmoticons[":<"] = "%Iumm%";
+    lEmoticons[":$"] = "%Iskwaszony%";
+    lEmoticons[";$"] = "%Ixkwas%";
+    lEmoticons[";/"] = "%Ixsceptyk%";
+    lEmoticons[":/"] = "%Isceptyczny%";
+    lEmoticons[";D"] = "%Ixhehe%";
+    lEmoticons[":D"] = "%Ihehe%";
+    lEmoticons["o_O"] = "%Iswir%";
+    lEmoticons["!!"] = "%Iwykrzyknik%";
+    lEmoticons["??"] = "%Ipytanie%";
+    lEmoticons["xD"] = "%Ilol%";
+    lEmoticons["-_-"] = "%Iwrr%";
+    lEmoticons[";("] = "%Iszloch%";
 
     // scc
-    strData.replace(":))", "%Ihaha%");
-    strData.replace(";))", "%Ioczko%");
-    strData.replace(";((", "%Iszloch%");
-    strData.replace(";(", "%Iszloch%");
-    strData.replace(":p", "%Ijezyk%");
-    strData.replace(";p", "%Ijezor%");
-    strData.replace(":d", "%Ihehe%");
-    strData.replace(";d", "%Ihehe%");
-    strData.replace(";x", "%Inie_powiem%");
-    strData.replace(":o", "%Ipanda%");
-    strData.replace(";o", "%Ipanda%");
-    strData.replace(";<", "%Ibuu%");
-    strData.replace(";]", "%Ioczko%");
-    strData.replace(":[", "%Izal%");
-    strData.replace(";[", "%Iszloch%");
-    strData.replace(";|", "%Ixdepresja%");
-    strData.replace(";*", "%Icmok2%");
-    strData.replace(":s", "%Iskwaszony%");
-    strData.replace(";s", "%Iskwaszony%");
-    strData.replace("]:->", "%Ixdiabel%");
-    strData.replace("];->", "%Ixdiabel%");
-    strData.replace(";?", "%Ixco%");
-    strData.replace("?!", "%Ipytanie%%Iwykrzyknik%");
+    lEmoticons[":))"] = "%Ihaha%";
+    lEmoticons[";))"] = "%Ioczko%";
+    lEmoticons[";(("] = "%Iszloch%";
+    lEmoticons[";("] = "%Iszloch%";
+    lEmoticons[":p"] = "%Ijezyk%";
+    lEmoticons[";p"] = "%Ijezor%";
+    lEmoticons[":d"] = "%Ihehe%";
+    lEmoticons[";d"] = "%Ihehe%";
+    lEmoticons[";x"] = "%Inie_powiem%";
+    lEmoticons[":o"] = "%Ipanda%";
+    lEmoticons[";o"] = "%Ipanda%";
+    lEmoticons[";<"] = "%Ibuu%";
+    lEmoticons[";]"] = "%Ioczko%";
+    lEmoticons[":["] = "%Izal%";
+    lEmoticons[";["] = "%Iszloch%";
+    lEmoticons[";|"] = "%Ixdepresja%";
+    lEmoticons[";*"] = "%Icmok2%";
+    lEmoticons[":s"] = "%Iskwaszony%";
+    lEmoticons[";s"] = "%Iskwaszony%";
+    lEmoticons["]:->"] = "%Ixdiabel%";
+    lEmoticons["];->"] = "%Ixdiabel%";
+    lEmoticons[";?"] = "%Ixco%";
+    lEmoticons["?!"] = "%Ipytanie%%Iwykrzyknik%";
+
+    // replace
+    QStringList strDataList = strData.split(" ");
+    for (int i = 0; i < strDataList.size(); i++)
+    {
+        QString strWord = strDataList.at(i);
+
+        QHashIterator<QString, QString> it(lEmoticons);
+        while (it.hasNext())
+        {
+            it.next();
+
+            if (strWord == it.key())
+                strDataList[i] = it.value();
+        }
+    }
+    strData = strDataList.join(" ");
 }

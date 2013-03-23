@@ -258,15 +258,6 @@ set (scc_HDRS
 )
 
 # debug
-#if (UNIX)
-#	set (CMAKE_CXX_FLAGS "-ggdb ${CMAKE_CXX_FLAGS}")
-#endif (UNIX)
-
-# wall
-set (CMAKE_C_FLAGS "-W -Wall ${CMAKE_C_FLAGS}")
-set (CMAKE_CXX_FLAGS "-W -Wall ${CMAKE_CXX_FLAGS}")
-
-# debug
 if (UNIX)
 	LIST (APPEND scc_SRCS
 		debug/linux_debug.cpp
@@ -396,20 +387,6 @@ qt_wrap_cpp (scc MOC_FILES ${scc_MOC_HDRS})
 set (scc_RESOURCE ../scc_mingw.rc)
 
 include_directories (${CMAKE_SOURCE_DIR}/ui)
-
-if (MINGW)
-	execute_process(COMMAND ${CMAKE_C_COMPILER} -dumpversion OUTPUT_VARIABLE GCC_VERSION)
-
-	if (GCC_VERSION VERSION_GREATER 4.5 OR GCC_VERSION VERSION_EQUAL 4.5)
-		# enable ASLR
-		set (CMAKE_CXX_LINK_FLAGS "${CMAKE_CXX_LINK_FLAGS} -Wl,--dynamicbase -Wl,--nxcompat")
-	else (GCC_VERSION VERSION_GREATER 4.5 OR GCC_VERSION VERSION_EQUAL 4.5)
-		message(STATUS "DEP and ASLR not supported. Use GCC 4.5 or greater.")
-	endif (GCC_VERSION VERSION_GREATER 4.5 OR GCC_VERSION VERSION_EQUAL 4.5)
-
-	# disable console on windows mingw
-	set (CMAKE_CXX_LINK_FLAGS "${CMAKE_CXX_LINK_FLAGS} -mwindows")
-endif (MINGW)
 
 # link
 if (MINGW) # mingw

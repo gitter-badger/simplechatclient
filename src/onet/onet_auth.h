@@ -71,8 +71,6 @@ private:
     bool bRegisteredNick;
     bool bOverride;
 
-    bool bAuthorizing;
-
     QString strVersion;
     QString strCaptcha;
 
@@ -100,6 +98,7 @@ private slots:
 
 signals:
     void updateNick(const QString &strNick);
+    void authStateChanged();
 };
 
 #endif // ONET_AUTH_H

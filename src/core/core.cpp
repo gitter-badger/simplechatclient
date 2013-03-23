@@ -111,6 +111,8 @@ void Core::createSettings()
     Settings::instance()->set("uo_nick", QString::null);
     Settings::instance()->set("last_active", "0");
     Settings::instance()->set("reconnect", "true");
+    Settings::instance()->set("socket_state", "disconnected");
+    Settings::instance()->set("authorizing", "false");
 
     QStringList constCookies;
     constCookies << "onet_ubi" << "onet_cid" << "onet_sid" << "onet_uid" << "onetzuo_ticket" << "onet_uoi" << "onet_sgn";

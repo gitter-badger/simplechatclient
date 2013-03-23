@@ -1328,7 +1328,7 @@ void OnetKernel::raw_111n()
     if ((strKey == "avatar") && (!strValue.isEmpty()) && (ThemesModel::instance()->isCurrentWithAvatar()))
     {
         QString strAvatar = Nick::instance()->getAvatar(strNick);
-        if (strAvatar.isEmpty())
+        if ((strAvatar.isEmpty()) || (strAvatar != strValue))
             Avatar::instance()->get(strNick, "nick", strValue);
         else
             Nick::instance()->setAvatar(strNick, strAvatar);
@@ -1610,11 +1610,20 @@ void OnetKernel::raw_161n()
     QString strAvatarUrl = mKeyValue.value("avatar");
     if (!strAvatarUrl.isEmpty())
     {
-        QString strAvatar = Channel::instance()->getAvatar(strChannel);
-        if (strAvatar.isEmpty())
-            Avatar::instance()->get(strChannel, "channel", strAvatarUrl);
+        QString strChannelAvatar = Channel::instance()->getAvatar(strChannel);
+        QString strChannelHomesAvatar = ChannelHomes::instance()->getAvatar(strChannel);
+        QString strChannelFavouritesAvatar = ChannelFavouritesModel::instance()->getAvatar(strChannel);
+
+        if ((!strChannelAvatar.isEmpty()) && (strChannelAvatar == strAvatarUrl) &&
+            (!strChannelHomesAvatar.isEmpty()) && (strChannelHomesAvatar == strAvatarUrl) &&
+            (!strChannelFavouritesAvatar.isEmpty()) && (strChannelFavouritesAvatar == strAvatarUrl))
+        {
+            Channel::instance()->setAvatar(strChannel, strChannelAvatar);
+            ChannelHomes::instance()->setAvatar(strChannel, strChannelHomesAvatar);
+            ChannelFavouritesModel::instance()->setAvatar(strChannel, strChannelFavouritesAvatar);
+        }
         else
-            Channel::instance()->setAvatar(strChannel, strAvatar);
+            Avatar::instance()->get(strChannel, "channel", strAvatarUrl);
     }
 }
 

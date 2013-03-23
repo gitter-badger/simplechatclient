@@ -34,12 +34,14 @@
 
 #define AJAX_API "http://czat.onet.pl/include/ajaxapi.xml.php3"
 
-OnetAuth::OnetAuth() : bAuthorizing(false)
+OnetAuth::OnetAuth()
 {
     accessManager = new QNetworkAccessManager();
     cookieJar = new QNetworkCookieJar();
     accessManager->setCookieJar(cookieJar);
     connect(accessManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(networkFinished(QNetworkReply*)));
+
+    Settings::instance()->set("authorizing", "false");
 
     timerSk = new QTimer();
     timerSk->setInterval(1000*60*9); // 9 min
@@ -60,10 +62,11 @@ void OnetAuth::authorize(QString _strNick, QString _strPass)
     if (Settings::instance()->get("logged") == "true")
         return; // already logged
 
-    if (bAuthorizing)
+    if (Settings::instance()->get("authorizing") == "true")
         return; // already authorizing
 
-    bAuthorizing = true;
+    Settings::instance()->set("authorizing", "true");
+    emit authStateChanged();
 
     strFullNick = _strNick.left(32);
     strNick = (_strNick.startsWith('~') ? _strNick.remove(0,1).left(31) : _strNick.left(32));
@@ -76,7 +79,7 @@ void OnetAuth::authorize(QString _strNick, QString _strPass)
     {
         qDebug() << "Override: " << bOverride;
         qDebug() << "Logged: " << Settings::instance()->get("logged");
-        qDebug() << "Authorizing: " << bAuthorizing;
+        qDebug() << "Authorizing: " << Settings::instance()->get("authorizing");
     }
 
     // update nick
@@ -243,7 +246,8 @@ void OnetAuth::networkFinished(QNetworkReply *reply)
         if (Settings::instance()->get("debug") == "true")
             qWarning() << "Error OnetAuth network: " << reply->errorString();
 
-        bAuthorizing = false;
+        Settings::instance()->set("authorizing", "false");
+        emit authStateChanged();
         return;
     }
 
@@ -299,7 +303,8 @@ void OnetAuth::networkFinished(QNetworkReply *reply)
                     saveCookies();
                 }
 
-                bAuthorizing = false;
+                Settings::instance()->set("authorizing", "false");
+                emit authStateChanged();
                 break;
             }
         case AT_refreshSk:
@@ -308,7 +313,9 @@ void OnetAuth::networkFinished(QNetworkReply *reply)
         default:
             if (Settings::instance()->get("debug") == "true")
                 qWarning() << "Error OnetAuth undefined category";
-            bAuthorizing = false;
+
+            Settings::instance()->set("authorizing", "false");
+            emit authStateChanged();
             break;
     }
 }

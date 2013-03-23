@@ -270,7 +270,8 @@ void AvatarClient::replyFinished(QNetworkReply *reply)
 
     if (reply->error() != 0)
     {
-        qWarning() << "An error occured during the Avatar request (" << reply->error() << " :: Request: " << requestType << ")" ;
+        if (Settings::instance()->get("debug") == "true")
+            qWarning() << "An error occured during the Avatar request (" << reply->error() << " :: Request: " << requestType << ")" ;
         emit errorOccured(reply->error());
     }
     else

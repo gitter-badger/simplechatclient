@@ -108,6 +108,11 @@ void Notes::save()
         out << strNotesContent;
         f.close();
     }
+    else
+    {
+        if (Settings::instance()->get("debug") == "true")
+            qWarning() << tr("Error: Cannot save notes file!");
+    }
 }
 
 QString Notes::get()

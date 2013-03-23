@@ -18,6 +18,7 @@
  */
 
 #include <QDir>
+#include <QDebug>
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
 #include "avatar.h"
@@ -63,7 +64,19 @@ void Avatar::get(const QString &strNickOrChannel, const QString &strCategory, co
     QString strAvatarFile = fi.fileName();
     QString strAvatarPath = getAvatarPath(strAvatarFile);
 
-    if (!QFile::exists(strAvatarPath))
+    bool bDownloadAvatar = true;
+    if (QFile::exists(strAvatarPath))
+    {
+        QPixmap pixmap;
+        if (!pixmap.load(strAvatarPath))
+            bDownloadAvatar = true;
+        else
+            bDownloadAvatar = false;
+    }
+    else
+        bDownloadAvatar = true;
+
+    if (bDownloadAvatar)
     {
         QNetworkReply *reply = accessManager->get(QNetworkRequest(strUrl));
         reply->setProperty("nickorchannel", strNickOrChannel);
@@ -118,6 +131,11 @@ void Avatar::saveAvatar(const QString &strAvatarPath, const QByteArray &bAvatar)
     {
         f.write(bAvatar);
         f.close();
+    }
+    else
+    {
+        if (Settings::instance()->get("debug") == "true")
+            qWarning() << tr("Error: Cannot save avatar file %1").arg(strAvatarPath);
     }
 }
 

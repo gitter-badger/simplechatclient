@@ -310,19 +310,23 @@ void MainWindow::createSignals()
     connect(pTabM, SIGNAL(currentChanged(int)), this, SLOT(currentTabChanged(int)));
 
     // signals from network
-    connect(Core::instance()->network, SIGNAL(socketStateChanged(QAbstractSocket::SocketState)), this, SLOT(networkStateChanged(QAbstractSocket::SocketState)));
+    connect(Core::instance()->network, SIGNAL(socketStateChanged()), this, SLOT(updateButtons()));
     connect(Core::instance()->network, SIGNAL(kernel(const QString&)), pOnetKernel, SLOT(kernel(const QString&)));
     connect(Core::instance()->network, SIGNAL(authorize(QString,QString)), pOnetAuth, SLOT(authorize(QString,QString)));
     connect(Core::instance()->network, SIGNAL(updateNick(const QString&)), this, SLOT(updateNick(const QString&)));
 
     // signals from auth
     connect(pOnetAuth, SIGNAL(updateNick(const QString&)), this, SLOT(updateNick(const QString&)));
+    connect(pOnetAuth, SIGNAL(authStateChanged()), this, SLOT(updateButtons()));
 }
 
 void MainWindow::init()
 {
     // focus
     pToolWidget->setFocus();
+
+    // add default tabs
+    addDefaultTabs();
 
     // show welcome
     showWelcome();
@@ -331,7 +335,7 @@ void MainWindow::init()
     firstRun();
 }
 
-void MainWindow::showWelcome()
+void MainWindow::addDefaultTabs()
 {
     // debug
     if (Settings::instance()->get("debug") == "true")
@@ -339,6 +343,10 @@ void MainWindow::showWelcome()
 
     // status
     pTabC->addTab(STATUS_WINDOW);
+}
+
+void MainWindow::showWelcome()
+{
     QString strWelcome = "%Fi:courier%"+tr("Welcome to the Simple Chat Client")+" %Ihehe%";
     Message::instance()->showMessage(STATUS_WINDOW, strWelcome, MessageDefault);
 }
@@ -422,30 +430,33 @@ void MainWindow::buttonConnect()
     }
 }
 
-void MainWindow::networkStateChanged(QAbstractSocket::SocketState socketState)
+void MainWindow::updateButtons()
 {
     bool bUpdateMenu = false;
 
-    if (socketState == QAbstractSocket::UnconnectedState)
-    {
-        bUpdateMenu = true;
-        connectAction->setEnabled(true);
-        connectAction->setText(tr("&Connect"));
-        connectAction->setIconText(tr("&Connect"));
-        connectAction->setIcon(QIcon(":/images/oxygen/16x16/network-connect.png"));
-    }
-    else if (socketState == QAbstractSocket::ConnectedState)
-    {
-        bUpdateMenu = true;
-        connectAction->setEnabled(true);
-        connectAction->setText(tr("&Disconnect"));
-        connectAction->setIconText(tr("&Disconnect"));
-        connectAction->setIcon(QIcon(":/images/oxygen/16x16/network-disconnect.png"));
-    }
-    else
+    if ((Settings::instance()->get("socket_state") == "unknown") || (Settings::instance()->get("authorizing") == "true"))
     {
         bUpdateMenu = false;
         connectAction->setEnabled(false);
+    }
+    else
+    {
+        if (Settings::instance()->get("socket_state") == "disconnected")
+        {
+            bUpdateMenu = true;
+            connectAction->setEnabled(true);
+            connectAction->setText(tr("&Connect"));
+            connectAction->setIconText(tr("&Connect"));
+            connectAction->setIcon(QIcon(":/images/oxygen/16x16/network-connect.png"));
+        }
+        else if (Settings::instance()->get("socket_state") == "connected")
+        {
+            bUpdateMenu = true;
+            connectAction->setEnabled(true);
+            connectAction->setText(tr("&Disconnect"));
+            connectAction->setIconText(tr("&Disconnect"));
+            connectAction->setIcon(QIcon(":/images/oxygen/16x16/network-disconnect.png"));
+        }
     }
 
     if (bUpdateMenu)

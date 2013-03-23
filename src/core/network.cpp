@@ -333,7 +333,14 @@ void Network::stateChanged(QAbstractSocket::SocketState socketState)
     if (Settings::instance()->get("debug") == "true")
         qDebug() << "Network socket state changed to: " << socketState;
 
-    emit socketStateChanged(socketState);
+    if (socketState == QAbstractSocket::UnconnectedState)
+        Settings::instance()->set("socket_state", "disconnected");
+    else if (socketState == QAbstractSocket::ConnectedState)
+        Settings::instance()->set("socket_state", "connected");
+    else
+        Settings::instance()->set("socket_state", "unknown");
+
+    emit socketStateChanged();
 }
 
 void Network::timeoutPong()

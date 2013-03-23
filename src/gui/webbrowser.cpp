@@ -25,6 +25,7 @@
 DlgWebBrowser::DlgWebBrowser(const QUrl &url, QWidget *parent) : QDialog(parent), ui(new Ui::uiWebBrowser)
 {
     ui->setupUi(this);
+    setAttribute(Qt::WA_DeleteOnClose); // require by show method - prevent hangup!
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
     setWindowTitle("YouTube");
     // center screen

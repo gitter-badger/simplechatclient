@@ -23,6 +23,7 @@
 
 #include "avatar_edit.h"
 
+#include "settings.h"
 #include "avatar_list_widget.h"
 #include "ui_avatar_list_widget.h"
 
@@ -150,7 +151,8 @@ void AvatarListWidget::getCollectionsReady(const QByteArray &content)
 
     if (code != 0)
     {
-        qWarning() << "Error getCollections: " <<  text;
+        if (Settings::instance()->get("debug") == "true")
+            qWarning() << "Error getCollections: " <<  text;
         return;
     }
 
@@ -239,7 +241,8 @@ void AvatarListWidget::getCollectionAvatarsReady(const QByteArray &content)
 
     if (code != 0)
     {
-        qWarning() << "Error getCollectionAvatars: " << text;
+        if (Settings::instance()->get("debug") == "true")
+            qWarning() << "Error getCollectionAvatars: " << text;
         return;
     }
 
@@ -347,7 +350,8 @@ void AvatarListWidget::getMyAvatarsReady(const QByteArray &content)
 
     if (code != 0)
     {
-        qWarning() << "Error getMyAvatars: " << text;
+        if (Settings::instance()->get("debug") == "true")
+            qWarning() << "Error getMyAvatars: " << text;
         return;
     }
 
@@ -436,7 +440,8 @@ void AvatarListWidget::uploadImageReady(const QByteArray &content, const QString
 
         if (code != 0)
         {
-            qWarning() << "Error uploadImage: " << text;
+            if (Settings::instance()->get("debug") == "true")
+                qWarning() << "Error uploadImage: " << text;
             return;
         }
     }
@@ -507,7 +512,8 @@ void AvatarListWidget::updatePhotoReady(const QByteArray &content)
 
     if (code != 0)
     {
-        qWarning() << "Error updatePhoto: " << text;
+        if (Settings::instance()->get("debug") == "true")
+            qWarning() << "Error updatePhoto: " << text;
         return;
     }
 
@@ -558,7 +564,8 @@ void AvatarListWidget::addPhotoReady(const QByteArray &content)
 
         if (code != 0)
         {
-            qWarning() << "Error addPhoto: " << text;
+            if (Settings::instance()->get("debug") == "true")
+                qWarning() << "Error addPhoto: " << text;
             return;
         }
     }
@@ -593,7 +600,8 @@ void AvatarListWidget::deletePhotoReady(const QByteArray &content)
 
     if (code != 0)
     {
-        qWarning() << "Error deletePhoto: " << text;
+        if (Settings::instance()->get("debug") == "true")
+            qWarning() << "Error deletePhoto: " << text;
         return;
     }
 
@@ -607,7 +615,8 @@ void AvatarListWidget::getAvatarReady(const QByteArray &content, const QString &
     QPixmap pixmap;
     if (!pixmap.loadFromData(content))
     {
-        qWarning() << "Unable to load image from: " << avatarUrl;
+        if (Settings::instance()->get("debug") == "true")
+            qWarning() << "Unable to load image from: " << avatarUrl;
         return;
     }
 
@@ -688,7 +697,8 @@ void AvatarListWidget::addAvatarClicked()
         QFile file(fileName);
         if (!file.open(QIODevice::ReadOnly))
         {
-            qWarning() << "Error opening file: " << fileName;
+            if (Settings::instance()->get("debug") == "true")
+                qWarning() << "Error opening file: " << fileName;
             return;
         }
         content = file.readAll();

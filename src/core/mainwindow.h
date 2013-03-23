@@ -30,7 +30,6 @@ class OnetKernel;
 class TabContainer;
 class TabManager;
 class ToolWidget;
-#include <QAbstractSocket>
 #include <QSystemTrayIcon>
 #include <QMainWindow>
 
@@ -115,6 +114,7 @@ private:
     void createActions();
     void createMenus();
     void createSignals();
+    void addDefaultTabs();
     void firstRun();
     void setTrayMenuVisible(bool visible);
 
@@ -142,7 +142,7 @@ private slots:
     void openInviteList();
     void openOfflineMessages();
 
-    void networkStateChanged(QAbstractSocket::SocketState socketState);
+    void updateButtons();
     void tabCloseRequested(int index);
     void currentTabChanged(int index);
 
