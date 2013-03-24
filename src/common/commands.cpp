@@ -387,9 +387,9 @@ QString Commands::cmdMe()
     QString strMessage;
     for (int i = 1; i < strDataList.size(); i++) { if (i != 1) strMessage += " "; strMessage += strDataList.at(i); }
 
-    Convert::createText(strMessage);
     Convert::simpleReverseConvert(strMessage);
     Replace::replaceEmots(strMessage);
+    Convert::createText(strMessage);
 
     return QString("PRIVMSG %1 :%2ACTION %3%4").arg(strChannel, QString(QByteArray("\x01")), strMessage, QString(QByteArray("\x01")));
 }
@@ -401,9 +401,9 @@ QString Commands::cmdTopic()
     QString strMessage;
     for (int i = 1; i < strDataList.size(); i++) { if (i != 1) strMessage += " "; strMessage += strDataList.at(i); }
 
-    Convert::createText(strMessage);
     Convert::simpleReverseConvert(strMessage);
     Replace::replaceEmots(strMessage);
+    Convert::createText(strMessage);
 
     return QString("CS SET %1 TOPIC %2").arg(strChannel, strMessage);
 }

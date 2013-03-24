@@ -25,6 +25,7 @@
 DlgNotes::DlgNotes(QWidget *parent) : QDialog(parent)
 {
     ui.setupUi(this);
+    setAttribute(Qt::WA_DeleteOnClose); // require by show method - prevent hangup!
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
     setWindowTitle(tr("Notes"));
     // center screen

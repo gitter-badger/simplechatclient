@@ -1,6 +1,11 @@
 ChangeLog for Simple Chat Client
 ========================= 
 
+Version 1.7.2 (24.03.2013)
+================================
+* Fixed replace emoticons
+* Fixed notes
+
 Version 1.7.1 (23.03.2013)
 ================================
 * Fixed replace emoticons

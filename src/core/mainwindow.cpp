@@ -563,7 +563,7 @@ void MainWindow::openMyAvatar()
 
 void MainWindow::openNotes()
 {
-    DlgNotes(this).exec();
+    (new DlgNotes(this))->show();
 }
 
 void MainWindow::openAbout()

@@ -833,9 +833,9 @@ void ToolWidget::sendMessage(QString strText, bool bModeration)
     }
     else if (strCommand == "all")
     {
-        Convert::createText(strText);
         Convert::simpleReverseConvert(strText);
         Replace::replaceEmots(strText);
+        Convert::createText(strText);
 
         QList<CaseIgnoreString> lChannelsCleared = Channel::instance()->getListClearedSorted();
         foreach (QString strChannel, lChannelsCleared)
@@ -854,9 +854,9 @@ void ToolWidget::sendMessage(QString strText, bool bModeration)
 
             if (strTextOriginal.length() > 3) strTextOriginal.remove(0,3);
 
-            Convert::createText(strTextOriginal);
             Convert::simpleReverseConvert(strTextOriginal);
             Replace::replaceEmots(strTextOriginal);
+            Convert::createText(strTextOriginal);
 
             QString strDisplay = QString("%1ACTION %2%3").arg(QString(QByteArray("\x01")), strTextOriginal, QString(QByteArray("\x01")));
             Message::instance()->showMessage(strChannel, strDisplay, MessageMe, strMe);
@@ -867,9 +867,9 @@ void ToolWidget::sendMessage(QString strText, bool bModeration)
     {
         if ((strChannel != DEBUG_WINDOW) && (strChannel != STATUS_WINDOW))
         {
-            Convert::createText(strText);
             Convert::simpleReverseConvert(strText);
             Replace::replaceEmots(strText);
+            Convert::createText(strText);
 
             Core::instance()->network->send(QString("PRIVMSG %1 :%2").arg(strChannel, strText));
             Message::instance()->showMessage(strChannel, strText, MessageDefault, strMe);
@@ -887,9 +887,9 @@ void ToolWidget::sendMessage(QString strText, bool bModeration)
         return;
 
     // convert
-    Convert::createText(strText);
     Convert::simpleReverseConvert(strText);
     Replace::replaceEmots(strText);
+    Convert::createText(strText);
 
     // moder notice
     if (bModeration)
