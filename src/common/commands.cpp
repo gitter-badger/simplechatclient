@@ -245,7 +245,7 @@ QString Commands::cmdHelp()
     strHelp.append(tr("/busy - mark/unmark as busy")+";");
     strHelp.append(tr("/cycle [text] or /hop [text] - part and join current channel")+";");
     strHelp.append(tr("/friend [[+|-]nick] - add or remove nick from friends list")+";");
-    strHelp.append(tr("/help"));
+    strHelp.append(tr("/help")+";");
     strHelp.append(tr("/ignore [[+|-]nick] - add or remove nick from ignore list")+";");
     strHelp.append(tr("/invite [nick] - invite nick to current channel")+";");
     strHelp.append(tr("/join [channel] [key] or /j [channel] [key] - join channel")+";");
@@ -264,7 +264,7 @@ QString Commands::cmdHelp()
     strHelp.append(tr("/sop [[+|-]nick] - add or remove super-operator privilege")+";");
     strHelp.append(tr("/topic [text] - change topic on current channel")+";");
     strHelp.append(tr("/vip [[+|-]nick] - add or remove vip privilege")+";");
-    strHelp.append(tr("/whereis [nick] or /whois [nick] - show where is user")+";");
+    strHelp.append(tr("/whereis [nick] or /whois [nick] - show where is user"));
 
     QStringList lHelp = strHelp.split(";");
     foreach (QString strDisplay, lHelp)
