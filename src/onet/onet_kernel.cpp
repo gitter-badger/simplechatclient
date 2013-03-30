@@ -813,8 +813,9 @@ void OnetKernel::raw_privmsg()
     for (int i = 3; i < strDataList.size(); i++) { if (i != 3) strMessage += " "; strMessage += strDataList.at(i); }
     if (strMessage[0] == ':') strMessage.remove(0,1);
 
-    // fix emots
+    // convert emots //
     Convert::simpleReverseConvert(strMessage);
+    // convert emots :)
     Replace::replaceEmots(strMessage);
 
     QString strNickOrChannel = strDataList.at(2);
