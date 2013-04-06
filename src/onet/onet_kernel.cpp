@@ -179,6 +179,7 @@ void OnetKernel::kernel(const QString &_strData)
             case 473: raw_473(); break;
             case 474: raw_474(); break;
             case 475: raw_475(); break;
+            case 480: raw_480(); break;
             case 481: raw_481(); break;
             case 482: raw_482(); break;
             case 484: raw_484(); break;
@@ -3680,6 +3681,19 @@ void OnetKernel::raw_475()
     Message::instance()->showMessageActive(strMessage, MessageInfo);
 
     (new DlgChannelKey(strChannel))->show(); // should be show - prevent hangup!
+}
+
+// :cf1f3.onet 480 scc_test :Can't KNOCK on #Scrabble, channel is not invite only so knocking is pointless!
+void OnetKernel::raw_480()
+{
+    if (strDataList.size() < 3) return;
+
+    QString strMessage;
+    for (int i = 3; i < strDataList.size(); i++) { if (i != 3) strMessage += " "; strMessage += strDataList.at(i); }
+    if (strMessage[0] == ':') strMessage.remove(0,1);
+    strMessage = "* "+strMessage;
+
+    Message::instance()->showMessageActive(strMessage, MessageInfo);
 }
 
 // :cf1f4.onet 481 Merovingian :Permission Denied - You do not have the required operator privileges
