@@ -122,6 +122,7 @@ QString Commands::cmdAway()
     for (int i = 1; i < strDataList.size(); i++) { if (i != 1) strMessage += " "; strMessage += strDataList.at(i); }
 
     Convert::simpleReverseConvert(strMessage);
+    Replace::replaceEmots(strMessage);
 
     return QString("AWAY :%1").arg(strMessage);
 }
@@ -401,6 +402,7 @@ QString Commands::cmdMe()
     for (int i = 1; i < strDataList.size(); i++) { if (i != 1) strMessage += " "; strMessage += strDataList.at(i); }
 
     Convert::simpleReverseConvert(strMessage);
+    Replace::replaceEmots(strMessage);
     Convert::createText(strMessage);
 
     return QString("PRIVMSG %1 :%2ACTION %3%4").arg(strChannel, QString(QByteArray("\x01")), strMessage, QString(QByteArray("\x01")));
@@ -485,6 +487,7 @@ QString Commands::cmdOffmsg()
     for (int i = 2; i < strDataList.size(); i++) { if (i != 2) strMessage += " "; strMessage += strDataList.at(i); }
 
     Convert::simpleReverseConvert(strMessage);
+    Replace::replaceEmots(strMessage);
 
     return QString("NS OFFLINE MSG %1 %2").arg(strNick, strMessage);
 }
@@ -543,6 +546,7 @@ QString Commands::cmdQuit()
     if (!strReason.isEmpty())
     {
         Convert::simpleReverseConvert(strReason);
+        Replace::replaceEmots(strReason);
 
         return QString("QUIT :%1").arg(strReason);
     }
@@ -590,6 +594,7 @@ QString Commands::cmdTopic()
     for (int i = 1; i < strDataList.size(); i++) { if (i != 1) strMessage += " "; strMessage += strDataList.at(i); }
 
     Convert::simpleReverseConvert(strMessage);
+    Replace::replaceEmots(strMessage);
     Convert::createText(strMessage);
 
     return QString("CS SET %1 TOPIC %2").arg(strChannel, strMessage);

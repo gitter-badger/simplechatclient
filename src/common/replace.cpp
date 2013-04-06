@@ -45,7 +45,7 @@ void Replace::replaceEmots(QString &strData)
     lEmoticons[":$"] = "%Iskwaszony%";
     lEmoticons[";$"] = "%Ixkwas%";
     lEmoticons[";/"] = "%Ixsceptyk%";
-    lEmoticons[":/"] = "%Isceptyczny%";
+    //lEmoticons[":/"] = "%Isceptyczny%";
     lEmoticons[";D"] = "%Ixhehe%";
     lEmoticons[":D"] = "%Ihehe%";
     lEmoticons["o_O"] = "%Iswir%";
@@ -80,20 +80,20 @@ void Replace::replaceEmots(QString &strData)
     lEmoticons[";?"] = "%Ixco%";
     lEmoticons["?!"] = "%Ipytanie%%Iwykrzyknik%";
 
-    // replace
-    QStringList strDataList = strData.split(" ");
-    for (int i = 0; i < strDataList.size(); i++)
+    QHashIterator<QString, QString> it(lEmoticons);
+    while (it.hasNext())
     {
-        QString strWord = strDataList.at(i);
+        it.next();
 
-        QHashIterator<QString, QString> it(lEmoticons);
-        while (it.hasNext())
-        {
-            it.next();
+        QString strKey = it.key();
+        QString strValue = it.value();
 
-            if (strWord == it.key())
-                strDataList[i] = it.value();
-        }
+        strData.replace(strKey, strValue);
     }
-    strData = strDataList.join(" ");
+
+    // exception
+    // :/
+
+    // TODO fix in Qt 5.x
+    if (!strData.contains(QRegExp("(http:|https:)//"))) strData.replace(":/", "%Isceptyczny%");
 }
