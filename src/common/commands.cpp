@@ -240,13 +240,13 @@ QString Commands::cmdHelp()
     strHelp = (tr("* Available commands:")+";");
     strHelp.append(tr("/all [text] - send message to all opened channels")+";");
     strHelp.append(tr("/away [text] - mark/unmark as being away")+";");
-    strHelp.append(tr("/ban [[+|-]nick] - ban or unban nick on current channel")+";");
-    strHelp.append(tr("/banip [[+|-]nick] - ban user ip or unban user ip on current channel")+";");
+    strHelp.append(tr("/ban [nick] or /ban -[nick] - ban or unban nick on current channel")+";");
+    strHelp.append(tr("/banip [nick] or /ban -[nick] - ban user ip or unban user ip on current channel")+";");
     strHelp.append(tr("/busy - mark/unmark as busy")+";");
     strHelp.append(tr("/cycle [text] or /hop [text] - part and join current channel")+";");
-    strHelp.append(tr("/friend [[+|-]nick] - add or remove nick from friends list")+";");
+    strHelp.append(tr("/friend [nick] or /friend -[nick] - add or remove nick from friends list")+";");
     strHelp.append(tr("/help")+";");
-    strHelp.append(tr("/ignore [[+|-]nick] - add or remove nick from ignore list")+";");
+    strHelp.append(tr("/ignore [nick] or /ignore -[nick] - add or remove nick from ignore list")+";");
     strHelp.append(tr("/invite [nick] - invite nick to current channel")+";");
     strHelp.append(tr("/join [channel] [key] or /j [channel] [key] - join channel")+";");
     strHelp.append(tr("/kban [nick] [reason] - kick and ban nick on current channel")+";");
@@ -254,16 +254,16 @@ QString Commands::cmdHelp()
     strHelp.append(tr("/kick [nick] [reason] or /k [nick] [reason] - kick user from current channel")+";");
     strHelp.append(tr("/logout [text] or /quit [text] or /q [text] - logout")+";");
     strHelp.append(tr("/me [text] - action command")+";");
-    strHelp.append(tr("/moder [[+|-]nick] or /moderator [[+|-]nick] - add or remove mod privilege")+";");
+    strHelp.append(tr("/moder [nick] or /moder -[nick] or /moderator [nick] or /moderator -[nick] - add or remove mod privilege")+";");
     strHelp.append(tr("/mp3 or /winamp - show current song from winamp/aimp")+";");
     strHelp.append(tr("/offmsg [nick] [text] - send offline message to user")+";");
-    strHelp.append(tr("/op [[+|-]nick] - add or remove operator privilege")+";");
+    strHelp.append(tr("/op [nick] or /op -[nick] - add or remove operator privilege")+";");
     strHelp.append(tr("/part [text] or /p [text] - part current channel")+";");
     strHelp.append(tr("/priv [nick] - open priv")+";");
     strHelp.append(tr("/raw [text] - send command directly to server")+";");
-    strHelp.append(tr("/sop [[+|-]nick] - add or remove super-operator privilege")+";");
+    strHelp.append(tr("/sop [nick] or /sop -[nick] - add or remove super-operator privilege")+";");
     strHelp.append(tr("/topic [text] - change topic on current channel")+";");
-    strHelp.append(tr("/vip [[+|-]nick] - add or remove vip privilege")+";");
+    strHelp.append(tr("/vip [nick] or /vip -[nick] - add or remove vip privilege")+";");
     strHelp.append(tr("/whereis [nick] or /whois [nick] - show where is user"));
 
     QStringList lHelp = strHelp.split(";");

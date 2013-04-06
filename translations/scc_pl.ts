@@ -193,80 +193,48 @@
         <translation>* Dostępne komendy:</translation>
     </message>
     <message>
-        <source>/raw [text] - send command directly to server</source>
-        <translation>/raw [tekst] - wysłanie komendy do serwera</translation>
-    </message>
-    <message>
         <source>/all [text] - send message to all opened channels</source>
         <translation>/all [tekst] - wysłanie wiadomości do wszystkich otwartych pokoi</translation>
-    </message>
-    <message>
-        <source>/cycle [text] or /hop [text] - part and join current channel</source>
-        <translation>/cycle [tekst] lub /hop [tekst] - wyjście i ponowne wejście do aktualnego pokoju</translation>
-    </message>
-    <message>
-        <source>/me [text] - action command</source>
-        <translation>/me [tekst] - komenda akcji</translation>
-    </message>
-    <message>
-        <source>/topic [text] - change topic on current channel</source>
-        <translation>/topic [tekst] - zmiana tematu w aktualnym pokoju</translation>
-    </message>
-    <message>
-        <source>/join [channel] [key] or /j [channel] [key] - join channel</source>
-        <translation>/join [pokój] [klucz] lub /j [pokój] [klucz] - wejście do pokoju</translation>
-    </message>
-    <message>
-        <source>/part [text] or /p [text] - part current channel</source>
-        <translation>/part [tekst] lub /p [tekst] - wyjście z aktualnego pokoju</translation>
-    </message>
-    <message>
-        <source>/priv [nick] - open priv</source>
-        <translation>/priv [nick] - otwarcie rozmowy prywatnej z użytkownikiem</translation>
-    </message>
-    <message>
-        <source>/ignore [[+|-]nick] - add or remove nick from ignore list</source>
-        <translation>/ignore [[+|-]nick] - dodanie albo usunięcie użytkownika z listy ignorowanych</translation>
-    </message>
-    <message>
-        <source>/friend [[+|-]nick] - add or remove nick from friends list</source>
-        <translation>/friend [[+|-]nick] - dodanie albo usunięcie użytkownika z listy przyjaciół</translation>
-    </message>
-    <message>
-        <source>/whereis [nick] or /whois [nick] - show where is user</source>
-        <translation>/whereis [nick] lub /whois [nick] - wyświetlenie informacji gdzie znajduje się użytkownik</translation>
-    </message>
-    <message>
-        <source>/busy - mark/unmark as busy</source>
-        <translation>/busy - włączenie lub wyłączenie zajętości</translation>
     </message>
     <message>
         <source>/away [text] - mark/unmark as being away</source>
         <translation>/away [tekst] - włączenie lub wyłączenie nieobecności</translation>
     </message>
     <message>
+        <source>/ban [nick] or /ban -[nick] - ban or unban nick on current channel</source>
+        <translation>/ban [nick] lub /ban -[nick] - zbanowanie albo odbanowanie użytkownika na aktualnym pokoju</translation>
+    </message>
+    <message>
+        <source>/banip [nick] or /banip -[nick] - ban user ip or unban user ip on current channel</source>
+        <translation>/banip [nick] lub /banip -[nick] - zbanowanie adresu ip albo odbanowanie adresu ip użytkownika w aktualnym pokoju</translation>
+    </message>
+    <message>
+        <source>/busy - mark/unmark as busy</source>
+        <translation>/busy - włączenie lub wyłączenie zajętości</translation>
+    </message>
+    <message>
+        <source>/cycle [text] or /hop [text] - part and join current channel</source>
+        <translation>/cycle [tekst] lub /hop [tekst] - wyjście i ponowne wejście do aktualnego pokoju</translation>
+    </message>
+    <message>
+        <source>/friend [nick] or /friend -[nick] - add or remove nick from friends list</source>
+        <translation>/friend [nick] lub /friend -[nick] - dodanie albo usunięcie użytkownika z listy przyjaciół</translation>
+    </message>
+    <message>
+        <source>/help</source>
+        <translation>/help lub /pomoc</translation>
+    </message>
+    <message>
+        <source>/ignore [nick] or /ignore -[nick] - add or remove nick from ignore list</source>
+        <translation>/ignore [nick] lub /ignore -[nick] - dodanie albo usunięcie użytkownika z listy ignorowanych</translation>
+    </message>
+    <message>
         <source>/invite [nick] - invite nick to current channel</source>
         <translation>/invite [nick] - zaproszenie użytkownika do aktualnego pokoju</translation>
     </message>
     <message>
-        <source>/offmsg [nick] [text] - send offline message to user</source>
-        <translation>/offmsg [nick] [tekst] - wysłanie wiadomości offline do użytkownika</translation>
-    </message>
-    <message>
-        <source>/logout [text] or /quit [text] or /q [text] - logout</source>
-        <translation>/logout [tekst] lub /quit [tekst] lub /q [tekst] - wyjście z czata</translation>
-    </message>
-    <message>
-        <source>/kick [nick] [reason] or /k [nick] [reason] - kick user from current channel</source>
-        <translation>/kick [nick] [powód] lub /k [nick] [powód] - wyrzucenie użytkownika z aktualnego pokoju</translation>
-    </message>
-    <message>
-        <source>/ban [[+|-]nick] - ban or unban nick on current channel</source>
-        <translation>/ban [[+|-]nick] - zbanowanie albo odbanowanie użytkownika na aktualnym pokoju</translation>
-    </message>
-    <message>
-        <source>/banip [[+|-]nick] - ban user ip or unban user ip on current channel</source>
-        <translation>/banip [[+|-]nick] - zbanowanie adresu ip albo odbanowanie adresu ip użytkownika w aktualnym pokoju</translation>
+        <source>/join [channel] [key] or /j [channel] [key] - join channel</source>
+        <translation>/join [pokój] [klucz] lub /j [pokój] [klucz] - wejście do pokoju</translation>
     </message>
     <message>
         <source>/kban [nick] [reason] - kick and ban nick on current channel</source>
@@ -277,28 +245,60 @@
         <translation>/kbanip [nick] [powód] - wyrzucenie oraz zbanowanie adresu ip użytkownika w aktualnym pokoju</translation>
     </message>
     <message>
-        <source>/sop [[+|-]nick] - add or remove super-operator privilege</source>
-        <translation>/sop [[+|-]nick] - nadanie albo odebranie uprawnień super-operatora</translation>
+        <source>/kick [nick] [reason] or /k [nick] [reason] - kick user from current channel</source>
+        <translation>/kick [nick] [powód] lub /k [nick] [powód] - wyrzucenie użytkownika z aktualnego pokoju</translation>
     </message>
     <message>
-        <source>/op [[+|-]nick] - add or remove operator privilege</source>
-        <translation>/op [[+|-]nick] - nadanie albo odebranie uprawnień operatora</translation>
+        <source>/logout [text] or /quit [text] or /q [text] - logout</source>
+        <translation>/logout [tekst] lub /quit [tekst] lub /q [tekst] - wyjście z czata</translation>
     </message>
     <message>
-        <source>/moder [[+|-]nick] or /moderator [[+|-]nick] - add or remove mod privilege</source>
-        <translation>/moder [[+|-]nick] lub /moderator [[+|-]nick] - nadanie albo odebranie uprawnień moderatora</translation>
+        <source>/me [text] - action command</source>
+        <translation>/me [tekst] - komenda akcji</translation>
     </message>
     <message>
-        <source>/vip [[+|-]nick] - add or remove vip privilege</source>
-        <translation>/vip [[+|-]nick] - nadanie albo odebranie uprawnień gościa</translation>
+        <source>/moder [nick] or /moder -[nick] or /moderator [nick] or /moderator -[nick] - add or remove mod privilege</source>
+        <translation>/moder [nick] lub /moder -[nick] lub /moderator [nick] lub /moderator -[nick] - nadanie albo odebranie uprawnień moderatora</translation>
     </message>
     <message>
         <source>/mp3 or /winamp - show current song from winamp/aimp</source>
         <translation>/mp3 lub /winamp - wyświetlenie aktualnej piosenki z winampa/aimpa</translation>
     </message>
     <message>
-        <source>/help</source>
-        <translation>/help lub /pomoc</translation>
+        <source>/offmsg [nick] [text] - send offline message to user</source>
+        <translation>/offmsg [nick] [tekst] - wysłanie wiadomości offline do użytkownika</translation>
+    </message>
+    <message>
+        <source>/op [nick] or /op -[nick] - add or remove operator privilege</source>
+        <translation>/op [nick] lub /op -[nick] - nadanie albo odebranie uprawnień operatora</translation>
+    </message>
+    <message>
+        <source>/part [text] or /p [text] - part current channel</source>
+        <translation>/part [tekst] lub /p [tekst] - wyjście z aktualnego pokoju</translation>
+    </message>
+    <message>
+        <source>/priv [nick] - open priv</source>
+        <translation>/priv [nick] - otwarcie rozmowy prywatnej z użytkownikiem</translation>
+    </message>
+    <message>
+        <source>/raw [text] - send command directly to server</source>
+        <translation>/raw [tekst] - wysłanie komendy do serwera</translation>
+    </message>
+    <message>
+        <source>/sop [nick] or /sop -[nick] - add or remove super-operator privilege</source>
+        <translation>/sop [nick] lub /sop -[nick] - nadanie albo odebranie uprawnień super-operatora</translation>
+    </message>
+    <message>
+        <source>/topic [text] - change topic on current channel</source>
+        <translation>/topic [tekst] - zmiana tematu w aktualnym pokoju</translation>
+    </message>
+    <message>
+        <source>/vip [nick] or /vip -[nick] - add or remove vip privilege</source>
+        <translation>/vip [nick] lub /vip -[nick] - nadanie albo odebranie uprawnień gościa</translation>
+    </message>
+    <message>
+        <source>/whereis [nick] or /whois [nick] - show where is user</source>
+        <translation>/whereis [nick] lub /whois [nick] - wyświetlenie informacji gdzie znajduje się użytkownik</translation>
     </message>
     <message>
         <source>No reason</source>
