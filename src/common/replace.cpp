@@ -95,5 +95,6 @@ void Replace::replaceEmots(QString &strData)
     // :/
 
     // TODO fix in Qt 5.x
+    // using http://qt-project.org/doc/qt-5.0/qtcore/qregularexpression.html
     if (!strData.contains(QRegExp("(http:|https:)//"))) strData.replace(":/", "%Isceptyczny%");
 }
