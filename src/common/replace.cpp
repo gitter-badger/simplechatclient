@@ -48,11 +48,11 @@ void Replace::replaceEmots(QString &strData)
     //lEmoticons[":/"] = "%Isceptyczny%";
     lEmoticons[";D"] = "%Ixhehe%";
     lEmoticons[":D"] = "%Ihehe%";
-    lEmoticons["o_O"] = "%Iswir%";
+    //lEmoticons["o_O"] = "%Iswir%";
     lEmoticons["!!"] = "%Iwykrzyknik%";
     lEmoticons["??"] = "%Ipytanie%";
-    lEmoticons["xD"] = "%Ilol%";
-    lEmoticons["-_-"] = "%Iwrr%";
+    //lEmoticons["xD"] = "%Ilol%";
+    //lEmoticons["-_-"] = "%Iwrr%";
     lEmoticons[";("] = "%Iszloch%";
 
     // scc
