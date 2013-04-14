@@ -241,7 +241,7 @@ QString Commands::cmdHelp()
     strHelp.append(tr("/all [text] - send message to all opened channels")+";");
     strHelp.append(tr("/away [text] - mark/unmark as being away")+";");
     strHelp.append(tr("/ban [nick] or /ban -[nick] - ban or unban nick on current channel")+";");
-    strHelp.append(tr("/banip [nick] or /ban -[nick] - ban user ip or unban user ip on current channel")+";");
+    strHelp.append(tr("/banip [nick] or /banip -[nick] - ban user ip or unban user ip on current channel")+";");
     strHelp.append(tr("/busy - mark/unmark as busy")+";");
     strHelp.append(tr("/cycle [text] or /hop [text] - part and join current channel")+";");
     strHelp.append(tr("/friend [nick] or /friend -[nick] - add or remove nick from friends list")+";");
