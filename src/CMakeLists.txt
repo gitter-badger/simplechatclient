@@ -55,82 +55,79 @@ set (scc_SRCS
 	core/mainwindow.cpp
 	core/network.cpp
 
-	debug/debug_block.cpp
+	gui/about_gui.cpp
+	gui/avatar_edit_gui.cpp
+	gui/awaylog_gui.cpp
+	gui/captcha_gui.cpp
+	gui/channel_favourites_gui.cpp
+	gui/channel_homes_gui.cpp
+	gui/channel_key_gui.cpp
+	gui/channel_list_gui.cpp
+	gui/channel_settings_gui.cpp
+	gui/emoticons_gui.cpp
+	gui/find_nick_gui.cpp
+	gui/find_text_gui.cpp
+	gui/friends_gui.cpp
+	gui/ignore_gui.cpp
+	gui/invite_gui.cpp
+	gui/invite_list_gui.cpp
+	gui/moderation_gui.cpp
+	gui/my_avatar_gui.cpp
+	gui/my_profile_gui.cpp
+	gui/my_stats_gui.cpp
+	gui/notes_gui.cpp
+	gui/offline_list_gui.cpp
+	gui/offline_message_gui.cpp
+	gui/options_gui.cpp
+	gui/profile_add_gui.cpp
+	gui/profile_edit_gui.cpp
+	gui/profile_manager_gui.cpp
+	gui/register_nick_gui.cpp
+	gui/themes_gui.cpp
+	gui/update_gui.cpp
+	gui/user_avatar_gui.cpp
+	gui/user_profile_gui.cpp
+	gui/webbrowser_gui.cpp
 
-	gui/about.cpp
-	gui/avatar_edit.cpp
-	gui/awaylog.cpp
-	gui/captcha.cpp
-	gui/channel_favourites.cpp
-	gui/channel_homes.cpp
-	gui/channel_key.cpp
-	gui/channel_list.cpp
-	gui/channel_settings.cpp
-	gui/emoticons.cpp
-	gui/find_nick.cpp
-	gui/find_text.cpp
-	gui/friends.cpp
-	gui/ignore.cpp
-	gui/invite.cpp
-	gui/invite_list.cpp
-	gui/moderation.cpp
-	gui/my_avatar.cpp
-	gui/my_profile.cpp
-	gui/my_stats.cpp
-	gui/notes.cpp
-	gui/offline_list.cpp
-	gui/offline_message.cpp
-	gui/options.cpp
-	gui/profile_add.cpp
-	gui/profile_edit.cpp
-	gui/profile_manager.cpp
-	gui/register_nick.cpp
-	gui/themes.cpp
-	gui/update.cpp
-	gui/user_avatar.cpp
-	gui/user_profile.cpp
-	gui/webbrowser.cpp
-
-	models/channel_favourites_model.cpp
-	models/channel_homes_model.cpp
-	models/channel_list_model.cpp
-	models/channel_settings_model.cpp
-	models/find_nick_model.cpp
-	models/friends_model.cpp
-	models/ignore_model.cpp
-	models/my_avatar_model.cpp
-	models/my_profile_model.cpp
-	models/my_stats_model.cpp
+	models/autoaway.cpp
+	models/avatar.cpp
+	models/away.cpp
+	models/awaylog.cpp
+	models/busy.cpp
+	models/channel.cpp
+	models/channel_favourites.cpp
+	models/channel_homes.cpp
+	models/channel_list.cpp
+	models/channel_settings.cpp
+	models/find_nick.cpp
+	models/friends.cpp
+	models/highlight.cpp
+	models/ignore.cpp
+	models/invite.cpp
+	models/lag.cpp
+	models/message.cpp
+	models/my_avatar.cpp
+	models/my_profile.cpp
+	models/my_stats.cpp
+	models/nick.cpp
+	models/nicklist.cpp
+	models/notes.cpp
+	models/notification.cpp
+	models/offline.cpp
+	models/profile_manager.cpp
+	models/punish_reason.cpp
 	models/settings.cpp
-	models/themes_model.cpp
-	models/user_profile_model.cpp
+	models/sound_notify.cpp
+	models/themes.cpp
+	models/tray.cpp
+	models/update.cpp
+	models/user_profile.cpp
+	models/utils.cpp
 
 	onet/avatar_client.cpp
 	onet/onet_auth.cpp
 	onet/onet_kernel.cpp
 	onet/onet_utils.cpp
-
-	singleton/autoaway.cpp
-	singleton/avatar.cpp
-	singleton/away.cpp
-	singleton/awaylog_model.cpp
-	singleton/busy.cpp
-	singleton/channel.cpp
-	singleton/highlight.cpp
-	singleton/invite_model.cpp
-	singleton/lag.cpp
-	singleton/message.cpp
-	singleton/nick.cpp
-	singleton/nicklist.cpp
-	singleton/notes_model.cpp
-	singleton/notification.cpp
-	singleton/offline.cpp
-	singleton/profile_manager_model.cpp
-	singleton/punish_reason.cpp
-	singleton/sound_notify.cpp
-	singleton/tray.cpp
-	singleton/updates.cpp
-	singleton/utils.cpp
 
 	tab/tab_container.cpp
 	tab/tab_manager.cpp
@@ -158,78 +155,77 @@ set (scc_MOC_HDRS
 	core/mainwindow.h
 	core/network.h
 
-	gui/about.h
-	gui/avatar_edit.h
-	gui/awaylog.h
-	gui/captcha.h
-	gui/channel_favourites.h
-	gui/channel_homes.h
-	gui/channel_key.h
-	gui/channel_list.h
-	gui/channel_settings.h
-	gui/emoticons.h
-	gui/find_nick.h
-	gui/find_text.h
-	gui/friends.h
-	gui/ignore.h
-	gui/invite.h
-	gui/invite_list.h
-	gui/moderation.h
-	gui/my_avatar.h
-	gui/my_profile.h
-	gui/my_stats.h
-	gui/notes.h
-	gui/offline_list.h
-	gui/offline_message.h
-	gui/options.h
-	gui/profile_add.h
-	gui/profile_edit.h
-	gui/profile_manager.h
-	gui/register_nick.h
-	gui/themes.h
-	gui/update.h
-	gui/user_avatar.h
-	gui/user_profile.h
-	gui/webbrowser.h
+	gui/about_gui.h
+	gui/avatar_edit_gui.h
+	gui/awaylog_gui.h
+	gui/captcha_gui.h
+	gui/channel_favourites_gui.h
+	gui/channel_homes_gui.h
+	gui/channel_key_gui.h
+	gui/channel_list_gui.h
+	gui/channel_settings_gui.h
+	gui/emoticons_gui.h
+	gui/find_nick_gui.h
+	gui/find_text_gui.h
+	gui/friends_gui.h
+	gui/ignore_gui.h
+	gui/invite_gui.h
+	gui/invite_list_gui.h
+	gui/moderation_gui.h
+	gui/my_avatar_gui.h
+	gui/my_profile_gui.h
+	gui/my_stats_gui.h
+	gui/notes_gui.h
+	gui/offline_list_gui.h
+	gui/offline_message_gui.h
+	gui/options_gui.h
+	gui/profile_add_gui.h
+	gui/profile_edit_gui.h
+	gui/profile_manager_gui.h
+	gui/register_nick_gui.h
+	gui/themes_gui.h
+	gui/update_gui.h
+	gui/user_avatar_gui.h
+	gui/user_profile_gui.h
+	gui/webbrowser_gui.h
 
-	models/channel_favourites_model.h
-	models/channel_homes_model.h
-	models/channel_list_model.h
-	models/channel_settings_model.h
-	models/find_nick_model.h
-	models/friends_model.h
-	models/ignore_model.h
-	models/my_profile_model.h
-	models/my_stats_model.h
+	models/autoaway.h
+	models/avatar.h
+	models/away.h
+	models/awaylog.h
+	models/busy.h
+	models/channel.h
+	models/channel_favourites.h
+	models/channel_homes.h
+	models/channel_list.h
+	models/channel_settings.h
+	models/find_nick.h
+	models/friends.h
+	models/highlight.h
+	models/ignore.h
+	models/invite.h
+	models/lag.h
+	models/message.h
+	models/my_profile.h
+	models/my_stats.h
+	models/nick.h
+	models/nicklist.h
+	models/notes.h
+	models/notification.h
+	models/offline.h
+	models/profile_manager.h
+	models/punish_reason.h
 	models/settings.h
-	models/themes_model.h
-	models/user_profile_model.h
+	models/sound_notify.h
+	models/themes.h
+	models/tray.h
+	models/update.h
+	models/user_profile.h
+	models/utils.h
 
 	onet/avatar_client.h
 	onet/onet_auth.h
 	onet/onet_kernel.h
-
-	singleton/avatar.h
-	singleton/autoaway.h
-	singleton/away.h
-	singleton/awaylog_model.h
-	singleton/busy.h
-	singleton/channel.h
-	singleton/highlight.h
-	singleton/invite_model.h
-	singleton/lag.h
-	singleton/message.h
-	singleton/nick.h
-	singleton/nicklist.h
-	singleton/notes_model.h
-	singleton/notification.h
-	singleton/offline.h
-	singleton/profile_manager_model.h
-	singleton/punish_reason.h
-	singleton/sound_notify.h
-	singleton/tray.h
-	singleton/updates.h
-	singleton/utils.h
 
 	tab/tab_container.h
 	tab/tab_manager.h
@@ -253,19 +249,8 @@ set (scc_HDRS
 	common/log.cpp
 	common/replace.h
 	core/defines.h
-	debug/debug_block.h
-	models/my_avatar_model.h
+	models/my_avatar.h
 )
-
-# debug
-if (UNIX)
-	LIST (APPEND scc_SRCS
-		debug/linux_debug.cpp
-	)
-	LIST (APPEND scc_HDRS
-		debug/linux_debug.h
-	)
-endif (UNIX)
 
 # kamerzysta/cam
 if (WITH_KAMERZYSTA)
@@ -285,17 +270,17 @@ else (WITH_KAMERZYSTA)
 	LIST (APPEND scc_SRCS
 		common/webcam_engine.cpp
 		common/webcam_network.cpp
-		gui/webcam.cpp
-		gui/webcam_standard.cpp
-		gui/webcam_mini.cpp
+		gui/webcam_gui.cpp
+		gui/webcam_standard_gui.cpp
+		gui/webcam_mini_gui.cpp
 		widgets/webcam_delegate.cpp
 	)
 	LIST (APPEND scc_MOC_HDRS
 		common/webcam_engine.h
 		common/webcam_network.h
-		gui/webcam.h
-		gui/webcam_standard.h
-		gui/webcam_mini.h
+		gui/webcam_gui.h
+		gui/webcam_standard_gui.h
+		gui/webcam_mini_gui.h
 		widgets/webcam_delegate.h
 	)
 endif (WITH_KAMERZYSTA)
@@ -364,11 +349,9 @@ include_directories (
 	${CMAKE_CURRENT_SOURCE_DIR}
 	${CMAKE_CURRENT_SOURCE_DIR}/common
 	${CMAKE_CURRENT_SOURCE_DIR}/core
-	${CMAKE_CURRENT_SOURCE_DIR}/debug
 	${CMAKE_CURRENT_SOURCE_DIR}/gui
 	${CMAKE_CURRENT_SOURCE_DIR}/models
 	${CMAKE_CURRENT_SOURCE_DIR}/onet
-	${CMAKE_CURRENT_SOURCE_DIR}/singleton
 	${CMAKE_CURRENT_SOURCE_DIR}/tab
 	${CMAKE_CURRENT_SOURCE_DIR}/widgets
 )

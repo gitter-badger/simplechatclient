@@ -22,7 +22,7 @@
 #include "core.h"
 #include "defines.h"
 #include "settings.h"
-#include "themes_model.h"
+#include "themes.h"
 #include "nicklist_delegate.h"
 
 NickListDelegate::NickListDelegate(QObject *parent)

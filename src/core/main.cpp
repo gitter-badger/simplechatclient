@@ -28,12 +28,6 @@
     #include <windows.h>
 #endif
 
-/*
-#ifdef Q_WS_X11
-    #include "linux_debug.h"
-#endif
-*/
-
 void displayDebug()
 {
     std::cout << "Debug enabled\n\n";
@@ -76,18 +70,6 @@ int main(int argc, char *argv[])
     enableDEP();
 
     Q_INIT_RESOURCE(scc);
-
-/*
-    // linux crash handler
-#ifdef Q_WS_X11
-    linuxCrashHandler();
-#endif
-
-    // message handler
-#ifdef Q_WS_X11
-    qInstallMsgHandler(messageHandler);
-#endif
-*/
 
     // app
     QApplication app(argc, argv);

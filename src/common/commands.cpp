@@ -20,7 +20,7 @@
 #include <QIcon>
 #include <QMessageBox>
 #include <QPushButton>
-#include "channel_list_model.h"
+#include "channel_list.h"
 #include "convert.h"
 #include "message.h"
 #include "replace.h"

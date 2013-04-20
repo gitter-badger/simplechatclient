@@ -31,7 +31,7 @@
 #include <QUuid>
 
 #include "settings.h"
-#include "my_avatar_model.h"
+#include "my_avatar.h"
 
 #include "avatar_client.h"
 

@@ -23,7 +23,7 @@
 #include <QWidget>
 
 #include "avatar_client.h"
-#include "my_avatar_model.h"
+#include "my_avatar.h"
 
 #include "ui_avatar_list_widget.h"
 

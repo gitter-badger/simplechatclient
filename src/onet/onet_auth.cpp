@@ -26,7 +26,7 @@
 #include <QTimer>
 #include <QUrl>
 
-#include "captcha.h"
+#include "captcha_gui.h"
 #include "core.h"
 #include "message.h"
 #include "settings.h"

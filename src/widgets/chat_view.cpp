@@ -27,16 +27,16 @@
 #include <QtWebKit/QWebElement>
 #include "channel.h"
 #include "core.h"
-#include "find_text.h"
-#include "friends_model.h"
+#include "find_text_gui.h"
+#include "friends.h"
 #include "html_messages_renderer.h"
-#include "ignore_model.h"
-#include "notes_model.h"
+#include "ignore.h"
+#include "notes.h"
 #include "nick.h"
 #include "punish_reason.h"
 #include "settings.h"
-#include "user_profile.h"
-#include "webbrowser.h"
+#include "user_profile_gui.h"
+#include "webbrowser_gui.h"
 #include "chat_view.h"
 
 #ifdef Q_WS_WIN
@@ -46,7 +46,7 @@
 #if WITH_KAMERZYSTA
     #include "kamerzysta.h"
 #else
-    #include "webcam.h"
+    #include "webcam_gui.h"
 #endif
 
 ChatView::ChatView(const QString &_strChatViewChannel) : strChatViewChannel(_strChatViewChannel), bAtBottom(true)

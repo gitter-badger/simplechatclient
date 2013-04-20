@@ -24,18 +24,18 @@
 #include "channel.h"
 #include "core.h"
 #include "defines.h"
-#include "friends_model.h"
-#include "ignore_model.h"
+#include "friends.h"
+#include "ignore.h"
 #include "nick.h"
 #include "punish_reason.h"
 #include "settings.h"
-#include "user_profile.h"
+#include "user_profile_gui.h"
 #include "nicklist_widget.h"
 
 #if WITH_KAMERZYSTA
     #include "kamerzysta.h"
 #else
-    #include "webcam.h"
+    #include "webcam_gui.h"
 #endif
 
 NickListWidget::NickListWidget(const QString &_strChannel) : strChannel(_strChannel), strSelectedNick(QString::null)
