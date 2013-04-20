@@ -1,6 +1,10 @@
 ChangeLog for Simple Chat Client
 ========================= 
 
+Version dev (unknown)
+================================
+* Changed default emoticons,sounds dir
+
 Version 1.7.3 (07.04.2013)
 ================================
 * Fixed replace emoticons

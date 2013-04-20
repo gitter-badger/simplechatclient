@@ -123,8 +123,8 @@ QHash<QString,QString> Config::getDefaultValues()
     QString uuidStr = QUuid::createUuid().toString();
     uuidStr.remove("{"); uuidStr.remove("}");
 
-    QString strSoundBeep = path+"/3rdparty/sounds/beep.wav";
-    QString strSoundQuery = path+"/3rdparty/sounds/query.wav";
+    QString strSoundBeep = path+"/sounds/beep.wav";
+    QString strSoundQuery = path+"/sounds/query.wav";
     QString strBackgroundImage = path+"/images/wallpaper/default.jpg";
 
     QString strPunishReason = "Bluzg;Flood;Spam;";

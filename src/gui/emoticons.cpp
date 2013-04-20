@@ -141,7 +141,7 @@ void DlgEmoticons::setDefaultValues()
     QStringList lSupportedEmoticons;
     lSupportedEmoticons << "*.gif" << "*.jpg" << "*.jpeg" << "*.png" << "*.bmp";
 
-    QDir dAllEmoticonsDirs = path+"/3rdparty/emoticons/";
+    QDir dAllEmoticonsDirs = path+"/emoticons/";
     QStringList lDirs = dAllEmoticonsDirs.entryList(QStringList("*"), QDir::Dirs | QDir::NoDotAndDotDot | QDir::NoSymLinks, QDir::Name | QDir::IgnoreCase);
 
     foreach (QString strDir, lDirs)
