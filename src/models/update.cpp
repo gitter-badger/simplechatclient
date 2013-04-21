@@ -62,7 +62,14 @@ void Update::checkUpdate()
     strPlatform = "linux";
 #endif
 
-    QString strContent = QString("params={\"id\":\"%1\",\"version\":\"%2\",\"platform\":\"%3\"}").arg(Settings::instance()->get("unique_id"), Settings::instance()->get("version"), strPlatform);
+    QString strVersion = Settings::instance()->get("version");
+    QString strUUID = Settings::instance()->get("unique_id");
+
+    QRegExp rUUID("^[a-f0-9]{8}-([a-f0-9]{4}-){3}[a-f0-9]{12}$");
+    if (!rUUID.exactMatch(strUUID))
+        return;
+
+    QString strContent = QString("params={\"id\":\"%1\",\"version\":\"%2\",\"platform\":\"%3\"}").arg(strUUID, strVersion, strPlatform);
     QString strUrl = UPDATE_URL_1;
 
     QNetworkRequest request;
