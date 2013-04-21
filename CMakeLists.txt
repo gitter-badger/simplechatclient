@@ -53,8 +53,6 @@ if (UNIX AND NOT APPLE)
 	install (FILES AUTHORS ChangeLog LICENSE README.rst scc.png TODO DESTINATION ${SCC_DATA_DIR})
 	install (FILES scc.desktop DESTINATION ${SCC_SHARE_DIR}/applications)
 	install (FILES images/user_avatar.png DESTINATION ${SCC_DATA_DIR}/images)
-	install (FILES sounds/LICENSE DESTINATION ${SCC_DATA_DIR}/sounds)
-	install (FILES emoticons/LICENSE DESTINATION ${SCC_DATA_DIR}/emoticons)
 
 	install (DIRECTORY scripts DESTINATION ${SCC_DATA_DIR})
 	install (DIRECTORY images/wallpaper DESTINATION ${SCC_DATA_DIR}/images)
