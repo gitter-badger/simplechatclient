@@ -41,7 +41,7 @@ Nick::Nick()
 void Nick::clear()
 {
     lNicks.clear();
-    Nicklist::instance()->clearUsers();
+    NickList::instance()->clearUsers();
 }
 
 void Nick::add(const QString &strNick, const QString &strChannel, QString strModes)
@@ -57,7 +57,7 @@ void Nick::add(const QString &strNick, const QString &strChannel, QString strMod
         lNicks[strNick].channel_modes[strChannel] = strModes;
         lNicks[strNick].channel_max_modes[strChannel] = iMaxModes;
 
-        Nicklist::instance()->addUser(strNick, strChannel, strModes, iMaxModes, lNicks[strNick].avatar);
+        NickList::instance()->addUser(strNick, strChannel, strModes, iMaxModes, lNicks[strNick].avatar);
     }
     else
     {
@@ -69,7 +69,7 @@ void Nick::add(const QString &strNick, const QString &strChannel, QString strMod
 
         lNicks[strNick] = nick;
 
-        Nicklist::instance()->addUser(strNick, strChannel, strModes, iMaxModes, QString::null);
+        NickList::instance()->addUser(strNick, strChannel, strModes, iMaxModes, QString::null);
     }
 }
 
@@ -77,7 +77,7 @@ void Nick::remove(const QString &strNick, const QString &strChannel)
 {
     if (!lNicks.contains(strNick)) return;
 
-    Nicklist::instance()->delUser(strNick, strChannel);
+    NickList::instance()->delUser(strNick, strChannel);
 
     lNicks[strNick].channels.removeOne(strChannel);
     lNicks[strNick].channel_modes.remove(strChannel);
@@ -110,7 +110,7 @@ void Nick::rename(const QString &strNick, const QString &strNewNick, const QStri
 {
     if (!lNicks.contains(strNick)) return;
 
-    Nicklist::instance()->renameUser(strNick, strNewNick, lNicks[strNick].channels, strDisplay);
+    NickList::instance()->renameUser(strNick, strNewNick, lNicks[strNick].channels, strDisplay);
 
     lNicks[strNewNick] = lNicks[strNick];
     lNicks.remove(strNick);
@@ -121,7 +121,7 @@ void Nick::quit(const QString &strNick, const QString &strDisplay)
     if (!lNicks.contains(strNick)) return;
 
     QList<QString> lChannels = lNicks[strNick].channels;
-    Nicklist::instance()->quitUser(strNick, lChannels, strDisplay);
+    NickList::instance()->quitUser(strNick, lChannels, strDisplay);
     lNicks.remove(strNick);
 
     QString strMe = Settings::instance()->get("nick");
@@ -168,7 +168,7 @@ void Nick::changeFlag(const QString &strNick, const QString &strChannel, QString
     lNicks[strNick].channel_modes[strChannel] = strModes;
     lNicks[strNick].channel_max_modes[strChannel] = iMaxModes;
 
-    Nicklist::instance()->setUserModes(strNick, strChannel, strModes, iMaxModes);
+    NickList::instance()->setUserModes(strNick, strChannel, strModes, iMaxModes);
 }
 
 void Nick::changeFlag(const QString &strNick, const QString &strFlag)
@@ -184,7 +184,7 @@ void Nick::setAvatar(const QString &strNick, const QString &strAvatar)
 {
     if (!lNicks.contains(strNick)) return;
 
-    Nicklist::instance()->setUserAvatar(strNick, lNicks[strNick].channels, strAvatar);
+    NickList::instance()->setUserAvatar(strNick, lNicks[strNick].channels, strAvatar);
 
     lNicks[strNick].avatar = strAvatar;
 }

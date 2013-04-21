@@ -26,23 +26,23 @@
 #include "settings.h"
 #include "nicklist.h"
 
-Nicklist * Nicklist::Instance = 0;
+NickList * NickList::Instance = 0;
 
-Nicklist * Nicklist::instance()
+NickList * NickList::instance()
 {
     if (!Instance)
     {
-        Instance = new Nicklist();
+        Instance = new NickList();
     }
 
     return Instance;
 }
 
-Nicklist::Nicklist()
+NickList::NickList()
 {
 }
 
-void Nicklist::clearUsers()
+void NickList::clearUsers()
 {
     QList<QString> lChannels = Channel::instance()->getList();
     foreach (QString strChannel, lChannels)
@@ -56,7 +56,7 @@ void Nicklist::clearUsers()
     }
 }
 
-void Nicklist::addUser(const QString &strNick, const QString &strChannel, const QString &strModes, int iMaxModes, const QString &strAvatar)
+void NickList::addUser(const QString &strNick, const QString &strChannel, const QString &strModes, int iMaxModes, const QString &strAvatar)
 {
     if (!Channel::instance()->contains(strChannel)) return;
 
@@ -68,7 +68,7 @@ void Nicklist::addUser(const QString &strNick, const QString &strChannel, const 
     Channel::instance()->getUsers(strChannel)->setText(QString(tr("Users (%1)").arg(iUsersCount)));
 }
 
-void Nicklist::delUser(const QString &strNick, const QString &strChannel)
+void NickList::delUser(const QString &strNick, const QString &strChannel)
 {
     if (!Channel::instance()->contains(strChannel)) return;
 
@@ -80,7 +80,7 @@ void Nicklist::delUser(const QString &strNick, const QString &strChannel)
     Channel::instance()->getUsers(strChannel)->setText(QString(tr("Users (%1)").arg(iUsersCount)));
 }
 
-void Nicklist::renameUser(const QString &strNick, const QString &strNewNick, const QList<QString> &lChannels, const QString &strDisplay)
+void NickList::renameUser(const QString &strNick, const QString &strNewNick, const QList<QString> &lChannels, const QString &strDisplay)
 {
     MessageCategory eMessageCategory = MessageMode;
 
@@ -91,7 +91,7 @@ void Nicklist::renameUser(const QString &strNick, const QString &strNewNick, con
     }
 }
 
-void Nicklist::quitUser(const QString &strNick, const QList<QString> &lChannels, const QString &strDisplay)
+void NickList::quitUser(const QString &strNick, const QList<QString> &lChannels, const QString &strDisplay)
 {
     MessageCategory eMessageCategory = MessageQuit;
 
@@ -107,7 +107,7 @@ void Nicklist::quitUser(const QString &strNick, const QList<QString> &lChannels,
     }
 }
 
-void Nicklist::setUserModes(const QString &strNick, const QString &strChannel, const QString &strModes, int iMaxModes)
+void NickList::setUserModes(const QString &strNick, const QString &strChannel, const QString &strModes, int iMaxModes)
 {
     if (!Channel::instance()->contains(strChannel)) return;
 
@@ -121,7 +121,7 @@ void Nicklist::setUserModes(const QString &strNick, const QString &strChannel, c
         Core::instance()->mainWindow()->refreshToolButtons(strChannel);
 }
 
-void Nicklist::setUserAvatar(const QString &strNick, const QList<QString> &lChannels, const QString &strAvatar)
+void NickList::setUserAvatar(const QString &strNick, const QList<QString> &lChannels, const QString &strAvatar)
 {
     foreach (QString strChannel, lChannels)
     {

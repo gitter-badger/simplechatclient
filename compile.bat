@@ -142,6 +142,10 @@ echo Copying images
 xcopy images\user_avatar.png %DESTINATION%\images\           /C /H /R /Y /Q 
 xcopy images\wallpaper\*.jpg %DESTINATION%\images\wallpaper\ /C /H /R /Y /Q 
 
+echo Copying sounds
+xcopy sounds\LICENSE         %DESTINATION%\sounds\           /C /H /R /Y /Q 
+xcopy sounds\*.wav    %DESTINATION%\sounds\    /C /H /R /Y /Q 
+
 echo Copying emoticons
 xcopy emoticons\LICENSE         %DESTINATION%\emoticons\           /C /H /R /Y /Q 
 xcopy emoticons\*.gif %DESTINATION%\emoticons\ /C /H /R /Y /Q /S
@@ -149,10 +153,6 @@ xcopy emoticons\*.jpg %DESTINATION%\emoticons\ /C /H /R /Y /Q /S
 xcopy emoticons\*.jpeg %DESTINATION%\emoticons\ /C /H /R /Y /Q /S
 xcopy emoticons\*.png %DESTINATION%\emoticons\ /C /H /R /Y /Q /S
 xcopy emoticons\*.bmp %DESTINATION%\emoticons\ /C /H /R /Y /Q /S
-
-echo Copying sounds
-xcopy sounds\LICENSE         %DESTINATION%\sounds\           /C /H /R /Y /Q 
-xcopy sounds\*.wav    %DESTINATION%\sounds\    /C /H /R /Y /Q 
 
 echo Done!
 pause

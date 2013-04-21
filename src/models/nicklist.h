@@ -17,20 +17,20 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef NICKLIST_H
-#define NICKLIST_H
+#ifndef NICK_LIST_H
+#define NICK_LIST_H
 
 #include <QObject>
 
-class Nicklist : public QObject
+class NickList : public QObject
 {
     Q_OBJECT
-    Q_DISABLE_COPY(Nicklist)
-    static Nicklist *Instance;
+    Q_DISABLE_COPY(NickList)
+    static NickList *Instance;
 public:
-    static Nicklist *instance();
+    static NickList *instance();
 
-    Nicklist();
+    NickList();
     void clearUsers();
     void addUser(const QString &strNick, const QString &strChannel, const QString &strModes, int iMaxModes, const QString &strAvatar);
     void delUser(const QString &strNick, const QString &strChannel);
@@ -40,4 +40,4 @@ public:
     void setUserAvatar(const QString &strNick, const QList<QString> &lChannels, const QString &strAvatar);
 };
 
-#endif // NICKLIST_H
+#endif // NICK_LIST_H
